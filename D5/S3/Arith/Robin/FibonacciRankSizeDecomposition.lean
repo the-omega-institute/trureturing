@@ -21,15 +21,15 @@ open D5.S3.Arith.Robin.FibonacciRankEulerTail
 the small-rank Euler factors. The remaining logarithmic mass is bounded by
 the number of divisors of the common index. -/
 theorem result (j : ℕ) (Y : ℝ) (hj : 3 ≤ j) (hY : 5 ≤ Y)
-    (hA : 2 ≤ ∏ d ∈ j.divisors.filter (fun d => (d : ℝ) ≤ Y), Nat.fib d) :
-    let A := ∏ d ∈ j.divisors.filter (fun d => (d : ℝ) ≤ Y), Nat.fib d
+    (hA : 2 ≤ ∏ d ∈ j.divisors.filter (fun d : ℕ => (d : ℝ) ≤ Y), Nat.fib d) :
+    let A := ∏ d ∈ j.divisors.filter (fun d : ℕ => (d : ℝ) ≤ Y), Nat.fib d
     ∃ R : ℝ,
       (Nat.fib j : ℝ) / (Nat.totient (Nat.fib j) : ℝ) =
         (A : ℝ) / (Nat.totient A : ℝ) * Real.exp R ∧
       0 ≤ R ∧ R ≤ 6 * (j.divisors.card : ℝ) * (1 + Real.log Y) / Y := by
   classical
-  let smallD := j.divisors.filter (fun d => (d : ℝ) ≤ Y)
-  let largeD := j.divisors.filter (fun d => ¬ (d : ℝ) ≤ Y)
+  let smallD := j.divisors.filter (fun d : ℕ => (d : ℝ) ≤ Y)
+  let largeD := j.divisors.filter (fun d : ℕ => ¬ (d : ℝ) ≤ Y)
   let A := ∏ d ∈ smallD, Nat.fib d
   let primes := (Nat.fib j).primeFactors
   let low := primes.filter (fun p => (zeroRank p : ℝ) ≤ Y)
@@ -63,8 +63,8 @@ theorem result (j : ℕ) (Y : ℝ) (hj : 3 ≤ j) (hY : 5 ≤ Y)
         ⟨Nat.mem_divisors.mpr ⟨(entry p hp j).mp hpj, hj0⟩, hpY⟩
   have low_support : low = A.primeFactors := by
     ext p
-    simp only [low, primes, Finset.mem_filter, Nat.mem_primeFactors, hfib0, hA0,
-      and_true]
+    simp only [low, primes, Finset.mem_filter,
+      Nat.mem_primeFactors_of_ne_zero hfib0, Nat.mem_primeFactors_of_ne_zero hA0]
     constructor
     · rintro ⟨⟨hp, hpj⟩, hpY⟩
       exact ⟨hp, (small_support p hp).mpr ⟨hpj, hpY⟩⟩
@@ -97,15 +97,16 @@ theorem result (j : ℕ) (Y : ℝ) (hj : 3 ≤ j) (hY : 5 ≤ Y)
       have hklt := (Finset.mem_Ico.mp hk).2
       omega
     · intro hp
-      have hpd := (Finset.mem_filter.mp hp).1
-      have hprime := Nat.prime_of_mem_primeFactors hpd
+      have hpd := hp
+      simp only [rankBucket, Finset.mem_filter] at hpd
+      have hprime := Nat.prime_of_mem_primeFactors hpd.1
       have hz := prime_zero_rank_facts p hprime
       have heq : zeroRank p = d := Nat.le_antisymm
-        (hz.2.2 d hdpos (Nat.dvd_of_mem_primeFactors hpd))
+        (hz.2.2 d hdpos (Nat.dvd_of_mem_primeFactors hpd.1))
         (rank_bucket_min d p hp (zeroRank p) hz.1 hz.2.1)
       refine Finset.mem_filter.mpr ⟨Finset.mem_filter.mpr ⟨?_, ?_⟩, heq⟩
       · exact Nat.mem_primeFactors.mpr ⟨hprime,
-          dvd_trans (Nat.dvd_of_mem_primeFactors hpd)
+          dvd_trans (Nat.dvd_of_mem_primeFactors hpd.1)
             (Nat.fib_dvd d j (Nat.mem_divisors.mp hdj).1), hfib0⟩
       · simpa only [heq, not_le] using hdY
   have regroup : (∑ p ∈ high, mass p) =
@@ -164,7 +165,8 @@ theorem result (j : ℕ) (Y : ℝ) (hj : 3 ≤ j) (hY : 5 ≤ Y)
       convert h using 2
       apply Finset.prod_congr rfl
       intro p hp
-      exact (Nat.cast_sub (Nat.prime_of_mem_primeFactors hp).one_le).symm
+      simpa only [Nat.cast_one] using
+        (Nat.cast_sub (R := ℝ) (Nat.prime_of_mem_primeFactors hp).one_le).symm
     dsimp only [factor]
     rw [Finset.prod_div_distrib]
     apply (div_eq_div_iff ht hden).mpr
