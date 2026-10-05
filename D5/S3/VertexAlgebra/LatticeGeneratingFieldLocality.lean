@@ -4,7 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual lattice creation coefficients have graded binomial contraction.
+   digest: Actual lattice creation coefficients have graded binomial contraction. -/
+
+/-
    The arbitrary-rank charge-changing fields use the prescribed exponential
    creation coefficients and polynomial translations of Bakalov--Kac, section
    4.1. Translation of each actual creation coefficient gives its binomial
