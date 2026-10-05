@@ -42,6 +42,14 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
                 + "error gives the absolute profile bound. The logarithm tangent inequality gives the signed upper bound, "
                 + "and d/(M-d) <= 1/2 gives the final cap. Both bounds cover the whole interval, including both sides of m.",
                 DescribeRole.Theorem),
+            Node("parity-count", "Prescribed parity composition count", "composition_parity_count",
+                Seq(Forall, Sp, F.Xi, Comma, Sp, Equal(Call("card", Call("parityFiber", Dv, Mv, F.Xi)),
+                    Call("ite", And(Parity(), Relation(Hv, Leq, Mv)),
+                        Call("choose", Subtract(Add(Ratio(Subtract(Mv, Hv), D(2)), Dv), D(1)),
+                            Subtract(Dv, D(1))), D(0)))),
+                "In every positive dimension, a legal parity vector has choose((M-h)/2+d-1,d-1) weak compositions. "
+                + "The coordinatewise substitution r_i=2t_i+xi_i is bijective. An illegal parity vector has no preimage.",
+                DescribeRole.Theorem),
             Node("normalization", "Composition mass normalization", "actual_normalization", NormalizationFormula(),
                 "For every positive dimension d and every natural total M, the composition parity masses sum to one. "
                 + "The sum runs over all Boolean vectors xi : Fin d -> Bool. The weak compositions of M partition "
@@ -52,7 +60,7 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
             Node("moments", "Conditional centered moments", "reference_moments", MomentsFormula(),
                 "The independent Bernoulli vector has generating function (1-nu+nu z)^d. "
                 + "Its value at z=-1 gives the parity event probability; differentiating twice at z=1 gives "
-                + "the centered second moment d nu (1-nu). For M >= 3d, eta <= 1/7 and p_e >= 1/3. "
+                + "the centered second moment d nu (1-nu). For d >= 1 and M >= d, eta <= 1/3 and p_e >= 1/3. "
                 + "Restricting the nonnegative squared deviation to the parity event and dividing by p_e "
                 + "bounds its conditional expectation by 3d/4. Weighted Cauchy-Schwarz then gives "
                 + "the absolute deviation bound sqrt(3d)/2. Both moments are centered at m=d nu.",
@@ -115,7 +123,9 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
             Leq, Ratio(Multiply(D(3), Dv), D(4)));
         Formula first = Relation(Seq(Index(Sum, F.Xi), Sp, Multiply(q, Abs(delta))),
             Leq, Ratio(Call("sqrt", Multiply(D(3), Dv)), D(2)));
-        return Quantified(And(mass, And(eventBound, And(second, first))));
+        return Seq(Forall, Sp, Dv, Comma, Mv, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+            Paren(And(Relation(D(1), Leq, Dv), Relation(Dv, Leq, Mv))), Sp, Rightarrow, Sp,
+            And(mass, And(eventBound, And(second, first))));
     }
 
     private static Formula ResultFormula()

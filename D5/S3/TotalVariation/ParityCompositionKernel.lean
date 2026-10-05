@@ -310,9 +310,13 @@ private theorem profile_estimate (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
       linarith
     exact hupper.trans (hstep.trans (hstep2.trans hcap))
 
-/-- Summing the guarded parity counts partitions the complete weak-composition fiber. -/
-private theorem actual_normalization (d M : ℕ) (hd : 1 ≤ d) :
-    (∑ ξ : Fin d → Bool, R d M ξ) = 1 := by
+/-- The weak-composition fiber with a prescribed complete parity vector has the
+stars-and-bars cardinality for its halved residual total, and is empty otherwise. -/
+theorem composition_parity_count (d M : ℕ) (hd : 1 ≤ d) (ξ : Fin d → Bool) :
+    (((univ : Finset (Fin d)).finsuppAntidiag M).filter
+      (fun r => (fun i => decide (r i % 2 = 1)) = ξ)).card =
+      if (∑ i, (ξ i).toNat) % 2 = M % 2 ∧ (∑ i, (ξ i).toNat) ≤ M then
+        ((M - ∑ i, (ξ i).toNat) / 2 + d - 1).choose (d - 1) else 0 := by
   classical
   let A : Finset (Fin d →₀ ℕ) := univ.finsuppAntidiag M
   let parity : (Fin d →₀ ℕ) → (Fin d → Bool) := fun r i => decide (r i % 2 = 1)
@@ -330,66 +334,74 @@ private theorem actual_normalization (d M : ℕ) (hd : 1 ≤ d) :
     intro i _
     rw [hbit]
     simpa only [Nat.add_comm] using (Nat.mod_add_div (r i) 2).symm
-  have hcount (ξ : Fin d → Bool) :
-      (A.filter (fun r => parity r = ξ)).card =
-        if h ξ % 2 = M % 2 ∧ h ξ ≤ M then
-          ((M - h ξ) / 2 + d - 1).choose (d - 1) else 0 := by
-    by_cases hg : h ξ % 2 = M % 2 ∧ h ξ ≤ M
-    · rw [if_pos hg]
-      let s : ℕ := (M - h ξ) / 2
-      have hs : 2 * s + h ξ = M := by dsimp [s]; omega
-      let B : Finset (Fin d →₀ ℕ) := univ.finsuppAntidiag s
-      let encode : (Fin d →₀ ℕ) → (Fin d →₀ ℕ) := fun t =>
-        Finsupp.equivFunOnFinite.symm (fun i => 2 * t i + (ξ i).toNat)
-      have hcard : B.card = (A.filter (fun r => parity r = ξ)).card := by
-        apply card_bij (fun t _ => encode t)
-        · intro t ht
-          have htS : ∑ i, t i = s := by simpa [B] using ht
-          apply mem_filter.mpr
-          constructor
-          · simp only [A, mem_finsuppAntidiag, Finset.subset_univ, and_true]
-            change (∑ i, (2 * t i + (ξ i).toNat)) = M
-            rw [sum_add_distrib, ← mul_sum, htS]
-            exact hs
-          · funext i
-            dsimp [parity, encode]
-            have hb (b : Bool) : decide ((2 * t i + b.toNat) % 2 = 1) = b := by
-              simpa only [Nat.bodd, Nat.testBit_zero, Nat.bit_val] using
-                Nat.bodd_bit b (t i)
-            exact hb (ξ i)
-        · intro t ht u hu he
-          ext i
-          have hi := congrArg (fun r : Fin d →₀ ℕ => r i) he
-          change 2 * t i + (ξ i).toNat = 2 * u i + (ξ i).toNat at hi
+  change (A.filter (fun r => parity r = ξ)).card =
+    if h ξ % 2 = M % 2 ∧ h ξ ≤ M then
+      ((M - h ξ) / 2 + d - 1).choose (d - 1) else 0
+  by_cases hg : h ξ % 2 = M % 2 ∧ h ξ ≤ M
+  · rw [if_pos hg]
+    let s : ℕ := (M - h ξ) / 2
+    have hs : 2 * s + h ξ = M := by dsimp [s]; omega
+    let B : Finset (Fin d →₀ ℕ) := univ.finsuppAntidiag s
+    let encode : (Fin d →₀ ℕ) → (Fin d →₀ ℕ) := fun t =>
+      Finsupp.equivFunOnFinite.symm (fun i => 2 * t i + (ξ i).toNat)
+    have hcard : B.card = (A.filter (fun r => parity r = ξ)).card := by
+      apply card_bij (fun t _ => encode t)
+      · intro t ht
+        have htS : ∑ i, t i = s := by simpa [B] using ht
+        apply mem_filter.mpr
+        constructor
+        · simp only [A, mem_finsuppAntidiag, Finset.subset_univ, and_true]
+          change (∑ i, (2 * t i + (ξ i).toNat)) = M
+          rw [sum_add_distrib, ← mul_sum, htS]
+          exact hs
+        · funext i
+          dsimp [parity, encode]
+          have hb (b : Bool) : decide ((2 * t i + b.toNat) % 2 = 1) = b := by
+            simpa only [Nat.bodd, Nat.testBit_zero, Nat.bit_val] using
+              Nat.bodd_bit b (t i)
+          exact hb (ξ i)
+      · intro t ht u hu he
+        ext i
+        have hi := congrArg (fun r : Fin d →₀ ℕ => r i) he
+        change 2 * t i + (ξ i).toNat = 2 * u i + (ξ i).toNat at hi
+        omega
+      · intro r hr
+        obtain ⟨hrA, hrP⟩ := mem_filter.mp hr
+        let t : Fin d →₀ ℕ := Finsupp.equivFunOnFinite.symm (fun i => r i / 2)
+        have hrS := hsplit r hrA
+        rw [hrP] at hrS
+        have htS : (∑ i, t i) = s := by
+          change (∑ i, r i / 2) = s
           omega
-        · intro r hr
-          obtain ⟨hrA, hrP⟩ := mem_filter.mp hr
-          let t : Fin d →₀ ℕ := Finsupp.equivFunOnFinite.symm (fun i => r i / 2)
-          have hrS := hsplit r hrA
-          rw [hrP] at hrS
-          have htS : (∑ i, t i) = s := by
-            change (∑ i, r i / 2) = s
-            omega
-          refine ⟨t, ?_, ?_⟩
-          · simpa [B] using htS
-          · ext i
-            change 2 * (r i / 2) + (ξ i).toNat = r i
-            rw [← hrP, hbit]
-            omega
-      rw [← hcard, card_finsuppAntidiag_nat_eq_choose]
-      simp only [card_univ, Fintype.card_fin]
-      change (d + s - 1).choose s = (s + d - 1).choose (d - 1)
-      rw [show d + s - 1 = s + d - 1 by omega]
-      exact Nat.choose_symm_of_eq_add (by omega)
-    · rw [if_neg hg]
-      apply card_eq_zero.mpr
-      apply Finset.eq_empty_iff_forall_notMem.mpr
-      intro r hr
-      obtain ⟨hrA, hrP⟩ := mem_filter.mp hr
-      have hrS := hsplit r hrA
-      rw [hrP] at hrS
-      apply hg
-      omega
+        refine ⟨t, ?_, ?_⟩
+        · simpa [B] using htS
+        · ext i
+          change 2 * (r i / 2) + (ξ i).toNat = r i
+          rw [← hrP, hbit]
+          omega
+    rw [← hcard, card_finsuppAntidiag_nat_eq_choose]
+    simp only [card_univ, Fintype.card_fin]
+    change (d + s - 1).choose s = (s + d - 1).choose (d - 1)
+    rw [show d + s - 1 = s + d - 1 by omega]
+    exact Nat.choose_symm_of_eq_add (by omega)
+  · rw [if_neg hg]
+    apply card_eq_zero.mpr
+    apply Finset.eq_empty_iff_forall_notMem.mpr
+    intro r hr
+    obtain ⟨hrA, hrP⟩ := mem_filter.mp hr
+    have hrS := hsplit r hrA
+    rw [hrP] at hrS
+    apply hg
+    omega
+
+/-- Summing the guarded parity counts partitions the complete weak-composition fiber. -/
+private theorem actual_normalization (d M : ℕ) (hd : 1 ≤ d) :
+    (∑ ξ : Fin d → Bool, R d M ξ) = 1 := by
+  classical
+  let A : Finset (Fin d →₀ ℕ) := univ.finsuppAntidiag M
+  let parity : (Fin d →₀ ℕ) → (Fin d → Bool) := fun r i => decide (r i % 2 = 1)
+  let h : (Fin d → Bool) → ℕ := fun ξ => ∑ i, (ξ i).toNat
+  have hcount := composition_parity_count d M hd
   have htotal : A.card = (M + d - 1).choose (d - 1) := by
     rw [card_finsuppAntidiag_nat_eq_choose]
     simp only [card_univ, Fintype.card_fin]
@@ -413,7 +425,7 @@ private theorem actual_normalization (d M : ℕ) (hd : 1 ≤ d) :
       rw [← sum_div, ← Nat.cast_sum, hsum, htotal, div_self hden]
 
 /-- Normalization and centered conditional moments of the same biased parity law. -/
-private theorem reference_moments (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
+theorem reference_moments (d M : ℕ) (hd : 1 ≤ d) (hM : d ≤ M) :
     let ν : ℝ := M / (2 * M + d)
     let h : (Fin d → Bool) → ℕ := fun ξ => ∑ i, (ξ i).toNat
     (∑ ξ, Q d M ξ) = 1 ∧
@@ -431,19 +443,19 @@ private theorem reference_moments (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) 
   have hMd : (d : ℝ) ≤ M := by exact_mod_cast (by omega : d ≤ M)
   have hden : (0 : ℝ) < 2 * M + d := by positivity
   have heta0 : 0 ≤ η := by dsimp [η]; positivity
-  have heta1 : η ≤ 1 / 7 := by
+  have heta1 : η ≤ 1 / 3 := by
     dsimp [η]
     rw [div_le_iff₀ hden]
-    have hh : (3 : ℝ) * d ≤ M := by exact_mod_cast hM
+    have hh : (d : ℝ) ≤ M := by exact_mod_cast hM
     linarith
-  have hpow : η ^ d ≤ 1 / 7 := by
+  have hpow : η ^ d ≤ 1 / 3 := by
     calc
       η ^ d ≤ η ^ 1 := pow_le_pow_of_le_one heta0 (by linarith) (by omega)
       _ = η := pow_one _
-      _ ≤ 1 / 7 := heta1
+      _ ≤ 1 / 3 := heta1
   have hsign : |(-1 : ℝ) ^ M| = 1 := by simp
   have hp : 1 / 3 ≤ p := by
-    have habs : |(-1 : ℝ) ^ M * η ^ d| ≤ 1 / 7 := by
+    have habs : |(-1 : ℝ) ^ M * η ^ d| ≤ 1 / 3 := by
       rw [abs_mul, hsign, one_mul, abs_of_nonneg (pow_nonneg heta0 _)]
       exact hpow
     have hlo := (abs_le.mp habs).1
@@ -644,7 +656,7 @@ theorem result :
     have hν0 : 0 ≤ ν := by dsimp [ν]; positivity
     have hν1 : ν ≤ 1 := by dsimp [ν]; rw [div_le_iff₀ (by positivity)]; linarith
     have hmν : m = (d : ℝ) * ν := by dsimp [m, ν]; ring
-    have hq := reference_moments d M hd hM
+    have hq := reference_moments d M (by omega) (by omega)
     have hqn : (∑ ξ, Q d M ξ) = 1 := hq.1
     have hq0 (ξ : Fin d → Bool) : 0 ≤ Q d M ξ := by
       have hp := hq.2.1
@@ -672,7 +684,7 @@ theorem result :
       have hν1 : ν < 1 := by dsimp [ν]; rw [div_lt_one (by positivity)]; linarith
       have hτ0 : 0 < τ := by dsimp [τ]; positivity
       have hp : 0 < p := by
-        have hm := (reference_moments d M hd hM).2.1
+        have hm := (reference_moments d M (by omega) (by omega)).2.1
         change (1 / 3 : ℝ) ≤ p at hm
         linarith
       have hF : 0 < F := by dsimp [F]; positivity
