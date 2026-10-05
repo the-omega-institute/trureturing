@@ -64,12 +64,12 @@ case "$VERB" in
   quarantine)
     [[ -n "$PAYLOAD" ]] || usage
     exec dotnet run --project "$PROJECT" --configuration Release -- \
-      quarantine-atom --request "$PAYLOAD" --base "$BASE"
+      quarantine-atom --request "$PAYLOAD"
     ;;
   quarantine-clear)
     [[ -n "$PAYLOAD" ]] || usage
     exec dotnet run --project "$PROJECT" --configuration Release -- \
-      quarantine-atom --clear "$PAYLOAD" --base "$BASE"
+      quarantine-atom --clear "$PAYLOAD"
     ;;
   *)
     usage

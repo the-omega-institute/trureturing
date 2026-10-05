@@ -17,9 +17,8 @@ internal static class DecomposeAtomCommand
     {
         try
         {
-            var (id, revision, dryRun, reconcileChain, splitAt) = Parse(arguments);
+            var (id, dryRun, reconcileChain, splitAt) = Parse(arguments);
             var raw = repository.ReadCurrent();
-            _ = repository.ReadRevision(revision);
             var snapshot = Decode(raw);
             var ledger = BackfillInventoryLoader.Load(snapshot);
             var matches = ledger.RequireDigestionEntries().Where(entry => entry.AtomId == id).ToArray();
@@ -116,20 +115,18 @@ internal static class DecomposeAtomCommand
         SnapshotDecodeOutcome.InfrastructureFailure failure => throw new FormatException(failure.Message),
     };
 
-    private static (string AtomId, string BaseRevision, bool DryRun, bool ReconcileChain, ImmutableArray<int> SplitAt) Parse(IReadOnlyList<string> arguments)
+    private static (string AtomId, bool DryRun, bool ReconcileChain, ImmutableArray<int> SplitAt) Parse(IReadOnlyList<string> arguments)
     {
         string? atom = null;
-        string? revision = null;
         var dryRun = false;
         var reconcileChain = false;
         var splitAt = ImmutableArray.CreateBuilder<int>();
-        var invalid = new FormatException("ARGUMENTS_INVALID USAGE: StrataLint decompose-atom --atom ATOM_ID --base REV [--reconcile-chain] [--split-at BYTE_OFFSET ...] [--dry-run]");
+        var invalid = new FormatException("ARGUMENTS_INVALID USAGE: StrataLint decompose-atom --atom ATOM_ID [--reconcile-chain] [--split-at BYTE_OFFSET ...] [--dry-run]");
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
             {
                 case "--atom" when atom is null && index + 1 < arguments.Count: atom = arguments[++index]; break;
-                case "--base" when revision is null && index + 1 < arguments.Count: revision = arguments[++index]; break;
                 case "--dry-run" when !dryRun: dryRun = true; break;
                 case "--reconcile-chain" when !reconcileChain: reconcileChain = true; break;
                 case "--split-at":
@@ -141,9 +138,8 @@ internal static class DecomposeAtomCommand
                 default: throw invalid;
             }
         }
-        if (atom is null || !DigestionFingerprint.IsCanonicalSha256("sha256:" + atom)
-            || string.IsNullOrWhiteSpace(revision) || revision != revision.Trim() || revision.StartsWith("--", StringComparison.Ordinal))
+        if (atom is null || !DigestionFingerprint.IsCanonicalSha256("sha256:" + atom))
             throw invalid;
-        return (atom, revision, dryRun, reconcileChain, splitAt.ToImmutable());
+        return (atom, dryRun, reconcileChain, splitAt.ToImmutable());
     }
 }
