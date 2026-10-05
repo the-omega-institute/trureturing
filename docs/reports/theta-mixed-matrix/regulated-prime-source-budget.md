@@ -1,0 +1,238 @@
+# Regulated complete-prime costs on a common source
+
+Use the [original weighted high comparison](../../../Library/Weil/fukushima2011dirichlet.md#spatially-weighted-high-inverse-at-every-subcritical-parameter)
+and [common-source constrained inverse](sharp-center.md#pay-weighted-action-errors-with-one-common-dual-source)
+on the unchanged even minimal realization. The
+[critical-zero range obstruction](critical-prime-source-range.md) excludes
+a blanket exact endpoint factorization. A positive exterior reserve
+instead permits the quantitative full-prime budget below.
+
+This is a conditional paper application of inherited original-model and
+published counting premises. It gives no numerical result, low-block
+sign, all-input half-bound, full Robin, RH, generic theorem, priority
+or Lean certificate.
+
+## A complete count controls the positive-reserve budget
+
+The existing [Johnston--Yang all-prime-power estimate](../../../Library/Weil/johnstonyang2022pnt.md)
+and [half-weight partial summation](../../../Library/Weil/chirrehelfgott2025nonnegative.md#a-complete-lower-interval-budget-from-the-same-source)
+already supply the counting input needed here. Reuse them without new
+prime enumeration, zero verification or source acquisition. The relative
+Johnston--Yang envelope has a finite supremum; for example the fixed
+constant
+
+$$
+C_\Psi=1+9.39\left(\frac{3.03}{0.8274e}\right)^{3.03}
+$$
+
+gives $\Psi(X)\le C_\Psi X$ for $X\ge1$. The interval $1\le X<2$
+has no Mangoldt atoms. The existing partial summation then gives
+
+$$
+A_{1/2}(X)=\sum_{n\le X}\frac{\Lambda(n)}{\sqrt n}
+\le 2C_\Psi\sqrt X,\qquad X\ge1.
+$$
+
+These are applications of the pinned complete cumulative bound, not a
+new PNT or signed discrepancy estimate. Keep the [original theta envelope](vanishing-exterior-reserve.md)'s
+$s(x)\le K\exp(-b e^{2|x|})$, and write $s_*=\|s\|_\infty$.
+For any bounded even $u$, set $h=su$ and retain the complete action
+
+$$
+\mathcal P h(x)=\sum_{n\ge2}\frac{\Lambda(n)}{\sqrt n}
+[h(x-\log n)+h(x+\log n)].
+$$
+Define the finite positive constant
+
+$$
+C_{\rm p}=4C_\Psi\sqrt e\left[
+s_*+K\sqrt2\sum_{k\ge0}2^{k/2}e^{-b e^2 4^k}\right].
+$$
+
+Then
+
+$$
+|\mathcal P(su)(x)|
+\le C_{\rm p}\|u\|_\infty e^{|x|/2}. \tag{RP1}
+$$
+
+For $x\ge0$, split at $X=e^{x+1}$. The initial complete half-weight
+is at most $2C_\Psi\sqrt X$; each of its two responses is at most
+$s_*\|u\|_\infty$. In the block $2^kX<n\le2^{k+1}X$, both theta
+factors are at most $K e^{-b e^2 4^k}$, and the full half-weight is
+at most $2C_\Psi\sqrt{2^{k+1}X}$. Sum these nonnegative bounds.
+Evenness covers the other half-line. The same majorants prove absolute
+convergence. Both shifted responses and every prime power are retained.
+
+For $a,\delta>0$ set
+
+$$
+\begin{aligned}
+A&=\frac{aK^2}{\delta},& \kappa&=2b,&
+T&=\max\{1,\kappa^{-1}\log A\},\\
+\mathcal L(A)&=2(\sqrt T-1)+\frac1{\kappa\sqrt T}.
+\end{aligned}
+$$
+
+The complete prime action satisfies the regulated allowance
+
+$$
+\int_{\mathbb R}
+\frac{|s\mathcal P(su)|^2}{\delta+a s^2}\,dx
+\le\frac{C_{\rm p}^2}{a}\mathcal L(A)\|u\|_\infty^2.
+\tag{RP2}
+$$
+
+Indeed
+
+$$
+\frac{s^2}{\delta+a s^2}
+\le\frac1a\min\{1,Ae^{-\kappa e^{2|x|}}\}.
+$$
+
+After squaring (RP1), substitution $t=e^{2|x|}$ on both half-lines
+leaves
+
+$$
+\int_1^\infty t^{-1/2}\min\{1,Ae^{-\kappa t}\}\,dt.
+$$
+
+The segment $[1,T]$ contributes at most $2(\sqrt T-1)$. Since
+$Ae^{-\kappa T}\le1$, the remaining segment is at most
+$T^{-1/2}\int_0^\infty e^{-\kappa v}dv$. This also covers
+$A\le e^\kappa$, when $T=1$. No lower envelope for $s$ is assumed.
+For fixed $a$, the resulting upper allowance grows at most as
+$\sqrt{\log(1/\delta)}$. It keeps $\delta>0$ and is compatible with
+the endpoint range obstruction; it does not give an exact endpoint
+factorization or a lower bound on the actual inverse cost.
+
+## Use one centered source in the constrained inverse
+
+Use exactly (WH1)'s $\varepsilon,c,\delta,N,a_N$, original high
+operator $C$ and unit ground $v_0$. Take $u$ in the original even
+$H^2$ operator-domain class used for the high trials. Full-ground-center
+the same source:
+
+$$
+\bar u=u-\langle u,v_0\rangle v_0,\qquad
+T_c\bar u=T_cu,\qquad r=QT_cu.
+$$
+
+This map is linear under the first-slot-linear convention. It does not
+change the high residual. The original centered action gives
+
+$$
+\begin{aligned}
+T_c\bar u&=\varepsilon\bar u+
+s[g_{\bar u}-\mathcal P(s\bar u)],\\
+g_{\bar u}&=m(\mathsf D)(s\bar u)+c_\Gamma s\bar u\in L^2.
+\end{aligned}
+\tag{RP3}
+$$
+
+The inherited bounded theta derivatives and logarithmic symbol estimate
+give the stated $L^2$ membership. Choose the actual low dual lift
+$h_{\rm low}=PT_cu$. Reuse (SC19) with
+$F=M_{\delta+a_Ns^2}+c|v_0\rangle\langle v_0|$ and
+$0\preceq F^{-1}\preceq M_w$; the three-term squared-norm bound yields
+
+$$
+\begin{aligned}
+\langle r,C^{-1}r\rangle
+&\le J(r)\le\langle T_c\bar u,F^{-1}T_c\bar u\rangle\\
+&\le3\left[
+\frac{\varepsilon^2}{\delta}\|\bar u\|_2^2+
+\frac{\|g_{\bar u}\|_2^2}{a_N}+
+\frac{C_{\rm p}^2}{a_N}
+\mathcal L\!\left(\frac{a_NK^2}{\delta}\right)
+\|\bar u\|_\infty^2\right].
+\end{aligned}
+\tag{RP4}
+$$
+
+The inverse retains the exact rank-one ground. Dropping its nonnegative
+inverse saving enlarges this explicit allowance. No new shorting theorem
+or endpoint high comparison is introduced.
+
+For one finite common linear source $u(z)$, let $G_0,G_g$ be its actual
+centered Hermitian Grams for $\|\bar u(z)\|_2^2$ and
+$\|g_{\bar u(z)}\|_2^2$. Choose a simultaneous positive Hermitian
+upper Gram $G_\infty$ for $\|\bar u(z)\|_\infty^2$, with
+$G_\infty e_0=0$ when $u_0=v_0$. This ground-null requirement is part
+of the certificate; it does not follow for an arbitrary upper Gram.
+For a fixed family of $d$ columns, the valid choice
+$d\,\operatorname{diag}(\|\bar u_i\|_\infty^2)$ follows from
+Cauchy--Schwarz and has this exact ground-nullity. Its dimension factor
+must remain in a growing-family budget. The same coefficients give
+
+$$
+\langle r(z),C^{-1}r(z)\rangle
+\le3z^*\left[
+4\varepsilon G_0+\frac{G_g}{a_N}+
+\frac{C_{\rm p}^2}{a_N}
+\mathcal L\!\left(\frac{a_NK^2}{\delta}\right)G_\infty
+\right]z. \tag{RP5}
+$$
+
+When $u_0=v_0$, centering makes all these residual source Grams have
+exactly zero ground row and column. The nonzero ground trial contribution
+from (SC14) remains; only the residual-cost allowance vanishes there.
+
+## The cofinal rate still requires the actual common Grams
+
+The first (WH1) cutoff gives
+$\mu_\varepsilon\le\frac14\log(N/2)-1$. Combine it with (WF3)'s
+$m(N/2)\ge\frac12\log(N/2)-1$ to obtain
+
+$$
+a_N\ge\frac14\log(N/2). \tag{RP6}
+$$
+
+This uses no boundedness assumption on $\mu_\varepsilon$. The other
+(WH1) cutoff, with the nonzero original $\|s''\|_2$, implies
+$a_N\ge\frac18\log(1/\varepsilon)+O(1)$. Consequently along every
+(WH1) sequence $\varepsilon\downarrow0$,
+
+$$
+\frac1{a_N}\longrightarrow0,\qquad
+\frac{\mathcal L(a_NK^2/\delta)}{a_N}\longrightarrow0.
+\tag{RP7}
+$$
+
+For the second limit use
+$\mathcal L(A)=O(1+\sqrt{\log_+A})$ and
+$\log A=\log(1/\varepsilon)+\log a_N+O(1)$.
+Both $\sqrt{\log(1/\varepsilon)}/a_N$ and
+$\sqrt{\log_+a_N}/a_N$ tend to zero. Faster bandwidth growth does
+not invalidate this scalar limit.
+
+For an actual changing coefficient family, the explicit upper allowance
+in (RP5) tends to zero if its common Grams satisfy
+
+$$
+\varepsilon\|G_0\|\to0,\qquad
+\frac{\|G_g\|}{a_N}\to0,\qquad
+\frac{\mathcal L(a_NK^2/\delta)}{a_N}\|G_\infty\|\to0.
+\tag{RP8}
+$$
+
+Uniformly bounded common Grams suffice. A growing low unit sphere can
+instead have $\|p\|_\infty^2$ of order $N$; increasing the band alone
+does not establish (RP8).
+
+For a fixed finite original $H^2$ family $u_i$, including the true ground,
+choose $p_{i,N}=P_Nu_i$ and $q_{i,N}=-Q_Nu_i$. These are legitimate
+original low inputs and regular high trials, and their residual is
+$Q_NT_cu_i$. The centered sources and common Grams are fixed, so (RP5)'s
+residual allowance tends to zero on that one (WH1) sequence. This is a
+quantitative complete-prime source budget for the fixed family.
+The existing (FF) result already supplies finite approximation; no
+additional rank theorem, finite numerical benchmark or algorithmic
+improvement is claimed.
+
+Using this allowance for a growing all-input family requires establishing
+(RP8) together with its actual low and complementary-low signs on the same
+sequence. These are sufficient budget conditions, not necessary conditions
+for convergence of the actual inverse cost or for RH. Neither sign follows
+from this budget. The original all-input half-bound,
+full Robin, RH, numerical enclosure and Lean certification remain unresolved.
