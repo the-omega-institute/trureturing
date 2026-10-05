@@ -37,10 +37,10 @@ local notation "Route" => fun k : Nat =>
 local notation "Seed" => fun k : Nat => Fin k × Fin 3 × (Fin k → Fin 3)
 
 /-- A route leaf selects a prototype or requests full acquisition. -/
-def stopAt {k : Nat} (i : Option (Index k)) : Route k := (.stop, fun _ => i)
+private def stopAt {k : Nat} (i : Option (Index k)) : Route k := (.stop, fun _ => i)
 
 /-- A real address query and its three coarse continuations, with chronological decoding. -/
-def ask {k : Nat} (q : Address) (nu alpha beta : Route k) : Route k :=
+private def ask {k : Nat} (q : Address) (nu alpha beta : Route k) : Route k :=
   (.query q (fun y => match y with
     | none => nu.1 | some true => alpha.1 | some false => beta.1),
    fun h => match h with
@@ -49,7 +49,7 @@ def ask {k : Nat} (q : Address) (nu alpha beta : Route k) : Route k :=
       | none => nu.2 rest | some true => alpha.2 rest | some false => beta.2 rest)
 
 /-- The three slot rules use the literal address column of the four-exit family. -/
-def scanSlot (k : Nat) (j : Fin k) (s : Fin 3) (next : Route k) : Route k :=
+private def scanSlot (k : Nat) (j : Fin k) (s : Fin 3) (next : Route k) : Route k :=
   let q := literal_addresses k j
   let out := fun r : Fin 4 => stopAt (some (.inr (j,r)))
   let bad := stopAt (k := k) none
@@ -62,7 +62,7 @@ def scanSlot (k : Nat) (j : Fin k) (s : Fin 3) (next : Route k) : Route k :=
       (ask (q 0) (out 1) bad (ask (q 1) (out 2) bad next))
 
 /-- The A, B, and C tails distinguish the retained five rows using actual requests. -/
-def tailRoute (k : Nat) (j : Fin k) (s : Fin 3) : Route k :=
+private def tailRoute (k : Nat) (j : Fin k) (s : Fin 3) : Route k :=
   let q := literal_addresses k j
   let out := fun r : Fin 4 => stopAt (some (.inr (j,r)))
   let base := stopAt (some (.inl ()))
@@ -76,19 +76,19 @@ def tailRoute (k : Nat) (j : Fin k) (s : Fin 3) : Route k :=
       (ask (q 3) base bad (ask (q 4) (out 2) bad (out 1)))
 
 /-- All scan kinds and the tail are fixed before execution. -/
-def scanList (k : Nat) (j : Fin k) (s : Fin 3) (d : Fin k → Fin 3) :
+private def scanList (k : Nat) (j : Fin k) (s : Fin 3) (d : Fin k → Fin 3) :
     List (Fin k) → Route k
   | [] => tailRoute k j s
   | l :: rest => scanSlot k l (d l) (scanList k j s d rest)
 
 /-- Exact nonleaf column indices for an exceptional row in a scanned slot. -/
-def scanNonleaves (s : Fin 3) (r : Fin 4) : Finset (Fin 10) :=
+private def scanNonleaves (s : Fin 3) (r : Fin 4) : Finset (Fin 10) :=
   match s.val, r.val with
   | 0, 0 => {0,4} | 1, 1 => {0,6} | 2, 0 => {2} | 2, 3 => {2,6}
   | _, 0 => {0} | _, 1 => {0} | _, 2 => {1} | _, _ => {2}
 
 /-- Exact nonleaf columns for the baseline and the four retained exceptional rows. -/
-def tailNonleaves (s : Fin 3) (r : Option (Fin 4)) : Finset (Fin 10) :=
+private def tailNonleaves (s : Fin 3) (r : Option (Fin 4)) : Finset (Fin 10) :=
   match s.val, r with
   | 0, none => {9} | _, none => {3}
   | 0, some r => match r.val with | 0 => ∅ | 1 => {7} | 2 => {7,4} | _ => {8}
@@ -96,14 +96,14 @@ def tailNonleaves (s : Fin 3) (r : Option (Fin 4)) : Finset (Fin 10) :=
   | _, some r => match r.val with | 0 => {2,5} | 1 => ∅ | 2 => {4} | _ => {2}
 
 /-- The real query paths on the four exceptional rows of a scanned slot. -/
-def scanColumns (s : Fin 3) (r : Fin 4) : List (Fin 10) :=
+private def scanColumns (s : Fin 3) (r : Fin 4) : List (Fin 10) :=
   match s.val, r.val with
   | 2, 0 | 2, 3 => [2,6] | 2, 1 => [2,0] | 2, _ => [2,0,1]
   | 0, 0 | 0, 1 => [0,4] | 1, 0 | 1, 1 => [0,6]
   | _, 2 => [0,1] | _, _ => [0,1,2]
 
 /-- The real query paths on the five retained rows. -/
-def tailColumns (s : Fin 3) (r : Option (Fin 4)) : List (Fin 10) :=
+private def tailColumns (s : Fin 3) (r : Option (Fin 4)) : List (Fin 10) :=
   match s.val, r with
   | 0, none => [7,8,9]
   | 0, some r => match r.val with
@@ -145,7 +145,7 @@ def seedWeight (k : Nat) (seed : Seed k) : ℚ :=
   (tailWeight k seed.2.1 / k) * ∏ l : Fin k, scanWeight k (seed.2.2 l)
 
 /-- The excess vector read from the exact nonleaf address table. -/
-def rowExcess (k : Nat) (seed : Seed k) (i : Index k) : Nat :=
+private def rowExcess (k : Nat) (seed : Seed k) (i : Index k) : Nat :=
   match i with
   | .inl _ => 1
   | .inr (l,r) => if l = seed.1 then
