@@ -5515,3 +5515,36 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 三个具名目标的精确临时 Lean 首轮真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-virtually-nilpotent-common-axis.lean` 为 169830 字节，SHA256 `5c4d17b63da957f9d8b5b9ee21b8171a6229826287ca518ed533108e355768ec`；前述成功幂零源码完整 offset0 字节前缀保留，没有新增 import 或依赖构建。
 
 该已有有限指数正幂、原有限阶固定点及原缩放轴接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。尚未消费原作用离散性以得到循环轴群及真实轴管商，亦未完成单位缩放尖点的平移格子、有限体积薄部分解、原流形覆盖或同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad；完整官方验收仍未完成。
+
+
+### 原对数字符、实际轴位移与离散轴群循环性
+
+由同一个原表示的实际正缩放字符构造 `infinityLogScaleCharacter : Additive G →+ ℝ`，在前述自由、虚幂零、稳定实际无穷远点及存在非单位缩放元素的条件下，证明同一个对数字符单射。对内部构造的同一完整原轴，保留全部原群元素和全部实参数的实际评价 `ρ(g)(verticalAxisLine z t) = verticalAxisLine z (log(infinityScale (ρ(g))) + t)`；原轴的等距性给出实际位移距离恰为 `|log(infinityScale (ρ(g)))|`，无需方向假设。
+
+循环性进一步消费显式绑定同一原 `ρ` 的轨道间隔条件：每个原 `p` 存在 `r > 0`，全部 `g ≠ 1` 满足 `r ≤ dist p (ρ(g)(p))`。把这个条件应用于同一内部轴点，得到实际对数字符像与 `Ioo 0 r` 不交；钉版 `AddSubgroup.cyclic_of_isolated_zero` 构造该像的代数生成元。通过真实字符像的原像和字符单射，得到原 `generator : G`，使每个原 `g` 都是该元素的某个整数幂。这里 `AddSubgroup.closure` 是代数生成的子群，没有将它解释成拓扑闭包。原 `H.FiniteIndex`、`H` 幂零、同一个自由作用与原表示均保留，未预设轴、生成元或群循环性。
+
+六个具名目标的精确临时 Lean 已完整编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-axis-log-discrete-cyclic.lean` 为 176980 字节，SHA256 `aece6b0ab135644aeb8487a459e4e0154663969d6c9aca732c2ee4ee69a536e4`。仅复用已有热缓存钉版 `Mathlib.GroupTheory.Archimedean` import；此前成功虚幂零源码的完整 169830 字节连续块在该新 header 后偏移 39 保留，没有新增依赖闭包构建。
+
+该原轴、实对数及既有子群循环分类接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批没有从 `ProperSpace H3` 推断原作用离散，亦未构造一般原流形的覆盖及 deck 作用来提供所需间隔。真实轴管商、单位缩放尖点平移格子与有限体积薄部分解，以及同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 同一原表示的 properly discontinuous 性质内部推出间隔与循环性
+
+复用现有 `D5/S3/Geometry/MostowPrasadCovering.lean` 的 `representationMulAction ρ` 和 `ProperlyDiscontinuousRepresentation ρ`，把局部作用逐字绑定为原 `ρ(g)(p)`。同一个原表示的紧集像交有限性构造该作用的 `ProperlyDiscontinuousSMul`，原等距性提供逐元素连续性。既有邻域分离接口和实际原度量球给出每个原点的真实正半径；若非单位原元素的实际位移小于该半径，原像交中的同一点强迫该元素固定原点，再由原自由性推出其为单位元。因而上述原轨道间隔由原自由性与同一 `ρ` 的 properly discontinuous 性质内部推出，无需另供间隔前提。
+
+将这个内部间隔实际代入已编译的原对数字符消费者，在原全群存在真正有限指数幂零子群、稳定实际无穷远点及具有非单位缩放元素的条件下，得到同一个原 `G` 的真实生成元，其整数幂覆盖全部原群。没有用 `ProperSpace H3` 代替作用的 properly discontinuous 性质，也没有换用一个与 `ρ` 无关的作用实例。
+
+两个具名目标的完整精确临时 Lean 首轮真实编译通过，host `46417` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-proper-discrete-cyclic.lean` 为 179235 字节，SHA256 `6889650df9fc589a7944ad67c22ccf6d07f85e96e7522bfc543dcaab0d04eecc`。仅新增已有热缓存 canonical covering import；上一成功 176980 字节源码在 43 字节 header 后完整保留，没有新增依赖闭包构建或版本变更。
+
+该既有原作用、邻域分离及已验循环性接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。这里仍明确消费同一原表示的 properly discontinuous 前提；一般原流形原度量覆盖与完整 deck 作用尚未内部构造来提供它。未归一化原表示的统一分类、真实轴管商、尖点平移格子与有限体积薄部分解，以及同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 同一原表示限制与实际环境等距共轭保持自由性和 properly discontinuous 性质
+
+对原 `ρ : G →* (H3 ≃ᵢ H3)` 构造真实共轭同态 `g ↦ e * ρ(g) * e⁻¹`，其原点评价逐字为 `e(ρ(g)(e.symm p))`。原自由性及 canonical `ProperlyDiscontinuousRepresentation ρ` 分别传递到同一原表示的任意实际子群限制和这个实际共轭表示，未输入新的自由性、proper 性质或替代作用。
+
+子群限制的自由性通过 subtype 单射回到原元素；proper 性质通过同一紧集交点有限集合在 `Subtype.val` 下的单射原像得到。共轭作用的固定点通过实际 `e.symm` 拉回原固定点；对紧集 `K,L`，同一个 `e.symm` 的实际像仍紧，每个同一原元素 `g` 的共轭交点拉回为 `ρ(g)` 在这两个原紧像中的交点。因此共轭交点元素集合包含于一个由原 proper 性质得到的有限集合。原 H³ 度量及全原群元素均保留，包含反向等距变换。
+
+五个具名构造与保持目标的完整精确临时 Lean 首轮真实编译通过，host `82888` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-representation-preservation.lean` 为 181958 字节，SHA256 `5c2dc12c9c23e21bbe39cda4fd97631b9f6b20333b21a2c8ec14dd0923408022`；前述成功 proper 源码为完整 offset0 字节前缀，未新增 import 或依赖构建。协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该原同态、subtype 原像、紧像及固定点接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批闭合下一步实际共同边界归一化所需的性质传递，尚未组装未归一化原群分类；一般原流形覆盖供给 proper 性质、真实尖点和轴管商、有限体积薄部分解及完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
