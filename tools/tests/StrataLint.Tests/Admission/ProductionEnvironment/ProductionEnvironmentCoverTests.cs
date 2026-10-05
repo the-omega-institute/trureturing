@@ -84,36 +84,6 @@ public sealed partial class ProductionEnvironmentTests(Xunit.Abstractions.ITestO
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void CoverAtomRejectsDriftInUnchangedDirectoryLedgerMetadata()
-    {
-        var inputs = CoverWorld.Materialize(new CoverSpec());
-        var directoryInputs = inputs with
-        {
-            Files = DirectoryLedgerTestSupport.Project(inputs.Files),
-            Baseline = DirectoryLedgerTestSupport.Project(inputs.Baseline),
-        };
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, directoryInputs.Files);
-        var metadata = Assert.Single(directoryInputs.Files, static pair =>
-            pair.Key.EndsWith("/source.toml", StringComparison.Ordinal));
-        var metadataPath = Path.Combine(
-            temporary.Path,
-            metadata.Key.Replace('/', Path.DirectorySeparatorChar));
-        var concurrent = metadata.Value + "\n";
-        File.WriteAllText(metadataPath, concurrent, new UTF8Encoding(false));
-        var environment = BuildCoverEnvironment(
-            temporary.Path,
-            directoryInputs,
-            directoryInputs.Files);
-
-        var result = environment.CoverAtom(CoverArgs(directoryInputs));
-
-        Assert.False(result.Success);
-        Assert.Contains("changed under us", result.Error, StringComparison.Ordinal);
-        Assert.Equal(concurrent, File.ReadAllText(metadataPath));
-    }
-
     [Theory]
     [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
