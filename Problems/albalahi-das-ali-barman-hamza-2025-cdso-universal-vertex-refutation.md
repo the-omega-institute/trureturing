@@ -58,7 +58,7 @@ The declaration `D5.S3.Combinatorics.Graph.CdsoUniversalVertexRefutation.result`
 |---:|---:|---:|---:|---:|---|---|
 | 3 | 1 | 1 | 1 | 4.242640687119 | $(2,2,2)$ | `Bw` |
 | 4 | 1 | 2 | 1 | 4.872006966072 | $(3,2,2,1)$ | `CN` |
-| 4 | 2 | 1 | 1 | 6.221615262992 | $(3,3,2,2)$ | `C|` |
+| 4 | 2 | 1 | 1 | 6.221615262992 | $(3,3,2,2)$ | `C\|` |
 | 4 | 3 | 1 | 1 | 8.485281374239 | $(3,3,3,3)$ | `C~` |
 | 5 | 1 | 5 | 1 | 5.711834352682 | $(4,2,2,1,1)$ | `D@{` |
 | 5 | 2 | 5 | 1 | 6.920545234214 | $(4,3,2,2,1)$ | `DjW` |
@@ -103,6 +103,43 @@ for n in range(1,8):
     g=winners[0]
     print(f"{n}\t{ell}\t{len(gs)}\t{len(winners)}\t{m:.12f}\t{key(g)}\t{nx.to_graph6_bytes(g,header=False).strip().decode()}")
 ```
+
+### Mechanism and the range of the failure at $\ell=1$
+
+- **Proved (by the settled comparison):** For $\ell=1$ a graph with a universal vertex is unique up to isomorphism. It is the hub of degree $n-1$ carrying one triangle and $n-3$ pendant vertices. Its CDSO is
+  $U_n=2\sqrt{(n-1)^2+4}/(n-1)+\sqrt2+(n-3)\sqrt{(n-1)^2+1}/(n-1)$.
+- **Computed:** The graph $T_n$ is obtained by moving one hub pendant onto a triangle vertex. Its hub has degree $n-2$, with neighbours of degrees $3$ and $2$, and the moved pendant hangs from the degree-3 vertex. Its CDSO is
+  $T_n=\sqrt{(n-2)^2+9}/(n-2)+\sqrt{(n-2)^2+4}/(n-2)+\sqrt{13}/3+(n-4)\sqrt{(n-2)^2+1}/(n-2)+\sqrt{10}/3$.
+  The sign of $T_n-U_n$:
+  - positive for $n=5,6$: $0.214265$ and $0.057839$;
+  - negative for every $7\le n\le 20000$, with the smallest gap $U_n-T_n=0.018996$ at $n=7$;
+  - tending to $\sqrt{13}/3+\sqrt{10}/3-1-\sqrt2\approx-0.158271$.
+
+  So the CDSO half of Conjecture 4.1 fails at $\ell=1$ for every computed order $7\le n\le 20000$. An all-$n$ proof is open.
+- **Mechanism:** On a universal hub, each edge to a pendant costs about $1$. A triangle on the hub costs about $2+\sqrt2$ for its three edges. Moving one pendant onto a triangle vertex replaces the triangle edge $\sqrt2$ and a hub pendant edge by $\sqrt{13}/3+\sqrt{10}/3$. Once the hub degree is large enough for its edges to cost nearly $1$, this is cheaper by about $0.158$. At $\ell=0$ the star still minimizes, so the intuition from trees and from all connected graphs does not carry over to a fixed positive cyclomatic number.
+
+Script for the computed items above, run with Python 3. Exit code: 0. Script SHA-256: `b30e70f6ef5da3ca6a25008b11e645bd003133992d179165ef9ffb6f839bc061`.
+
+```python
+from math import sqrt
+f=lambda x,y: sqrt(x*x+y*y)/max(x,y)
+def U(n):
+    d=n-1
+    return 2*f(d,2)+f(2,2)+(n-3)*f(d,1)
+def T(n):
+    d=n-2
+    return f(d,3)+f(d,2)+f(3,2)+(n-4)*f(d,1)+f(3,1)
+for n in (5,6,7,8,10,20,100,1000):
+    print(n, f"{T(n)-U(n):.6f}")
+print(all(T(n)<U(n) for n in range(7,20001)), f"{min(U(n)-T(n) for n in range(7,20001)):.6f}")
+```
+
+### What the refutation changes in the source
+
+- **Checked (source read):** The arXiv v1 TeX states every result of the paper in Sections 2 and 3, before the concluding remarks. Section 2 has five propositions, two lemmas and one theorem quoted from Deng et al. Section 3 has six propositions and one corollary. None of them cites the conjectured statement. Conjecture 4.1 appears only in Section 4, "Concluding Remarks", as a question for further work. No proved result of the paper depends on it, so all of them stand.
+- **Consequence:** Conjecture 4.1 is a conjunction. Its CDSO half is false, so the conjecture as stated is refuted. Its HSO half is a separate assertion about maximizers and remains open.
+- **Consequence for the follow-up question:** Conjecture 4.2 concerns maximizers of CDSO and minimizers of HSO for $\ell\ge2$, the opposite extremal problems. It does not use the CDSO-minimizer statement, so this refutation leaves it open.
+- **Revised CDSO statement:** Within the computed scope, a universal vertex in the CDSO minimizer holds at $\ell=1$ exactly for $3\le n\le 6$, and at $\ell\in\{2,3\}$ for every computed order $n\le7$. Whether $\ell\ge2$ also fails for larger $n$ is open.
 
 - **Open:** The HSO half of Conjecture 4.1 is not addressed.
 - **Open:** Conjecture 4.2, concerning minimum and maximum degrees in $\{2,3\}$ for $\ell\ge 2$ and $n>5(\ell-1)$, is not addressed.
