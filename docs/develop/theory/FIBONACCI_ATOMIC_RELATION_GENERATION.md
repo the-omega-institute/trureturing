@@ -59300,14 +59300,16 @@ $$
 
 这给每个固定 $a>0$ 的 $O_a(x/\log^a x)$。在（384.4）中将 $d\le\sqrt x$ 与 $d>\sqrt x$ 分开：前者使用 $\log(x/d)\ge\frac12\log x$，后者使用 $|\mathfrak M(x/d)|\le x/d$ 和（385.9）的指数尾。故实际 $H$ 同样满足 $H(x)=O_a(x/\log^a x)$。取 $a=4$ 足以支付下面的两个绝对矩及一次微分。定性 PNT 的 $o(x)$ 本身不承担这个绝对收敛义务。
 
-对 $F(s)=\mathcal C(s)/s$，§385 的部分求和身份及绝对收敛的延拓给
+对 §385 的 $\mathcal C(s)$，部分求和身份及绝对收敛的延拓给
 
 $$
-F(s)=\sum_{m\ge1}H_m[m^{-s}-(m+1)^{-s}],\qquad s\ge1.
+\mathcal C(s)=\sum_{m\ge1}H_m[m^{-s}-(m+1)^{-s}],\qquad s\ge1.
 \tag{390.6}
 $$
 
-$\zeta(s)=(s-1)^{-1}+\gamma+O(s-1)$ 给 $F(1)=0$、$F'(1)=\mathcal B(1)$。这一经典 Laurent 展开的出处见 [DLMF §25.2](https://dlmf.nist.gov/25.2)。在（390.6）中从右侧微分，导数权重在一处为 $-v_m$，即得（390.3）。这里只应用已有 $\mathcal C=\mathcal B/\zeta$，没有另证无零性或 RH。
+这里在每个整数区间上有 $s\int_m^{m+1}t^{-s-1}\,dt=m^{-s}-(m+1)^{-s}$，所以（385.5）中积分前的 $s$ 已被吸收到离散权重；若另记 $F(s)=\mathcal C(s)/s$，则（390.6）右侧也必须除以 $s$。
+
+$\zeta(s)=(s-1)^{-1}+\gamma+O(s-1)$ 给 $\mathcal C(1)=0$、$\mathcal C'(1)=\mathcal B(1)$。这一经典 Laurent 展开的出处见 [DLMF §25.2](https://dlmf.nist.gov/25.2)。在（390.6）中从右侧微分，导数权重在一处为 $-v_m$，即得（390.3）。除以 $s$ 也不改变这两个一处读数，因为 $\mathcal C(1)=0$。这里只应用已有 $\mathcal C=\mathcal B/\zeta$，没有另证无零性或 RH。
 
 对（390.2）的 $G$，有
 
