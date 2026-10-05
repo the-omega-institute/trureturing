@@ -7,16 +7,25 @@
    digest: QDPI fails for the cumulant-based Renyi functional at every alpha > 1, by a dephased qubit pair. -/
 
 /-
-proof_shape: bind-only (result and its consumed helpers).
+proof_shape: result: bind-only. Each private theorem is bind-only and is used on the proof
+  path of result; no private theorem is unused.
 escape_witness: none
-admission_basis: open-problem-resolution (#13439).
-The two-point CFC identities and Kraus complete positivity are instantiated from Mathlib
-and the frozen quantum foundation. The logarithmic separation is obtained by their
-monotonicity identities and exact normalization of this parameterized qubit family.
+admission_basis: open-problem-resolution (#13439; Refuted)
+Direct frozen dependencies:
+  D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.IsDensity
+    statement_id: sha256:4ba4e6b5fd69f7af3d48c8ecc93d1d3efe0fbd32799aa8b021b502f76ad76988
+  D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.IsCPTP
+    statement_id: sha256:1440f7e681ed2017e7c90aedfe54aa0ad218d57311655f9d554863853dd8f53c
+  D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap
+    statement_id: sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
+  D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus
+    statement_id: sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287
+  D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus_isCompletelyPositive
+    statement_id: sha256:522daaecff9970808def6ecdd938d4b89107d2820c79bafbf378ab083767f57f
+  Mathlib constants are pinned upstream dependencies, not frozen repository nodes.
 -/
 
 import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 
 set_option autoImplicit false
