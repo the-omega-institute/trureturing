@@ -14,6 +14,24 @@ triage: anchor
 
 # Characteristic-three flat-plus-spike ambiguity
 
+## Verified locator
+
+The exact upstream locator is:
+https://arxiv.org/abs/2608.11850v1
+
+The arXiv record and HTML source were retrieved successfully. Equation (62)
+gives the flat-plus-spike state in the paper's characteristic-two discussion;
+equations (68) and (69) give its ambiguity calculation. Section IV.2 and
+Section VI state the characteristic-three uniform-stability question as open,
+while Appendix F, equations (147)--(150), gives the finite-field label and
+spectral interface. The repository theorem below is a characteristic-three
+derivation from that construction, not a claim that the paper proves it.
+
+The verified scope is the phase-zero state, finite fields of characteristic
+three, and additive characters into the complex numbers. The canonical
+trace-character family and the projector-Gram/Rayleigh bridge remain outside
+this note's attested source locator.
+
 The source is arXiv:2608.11850v1, Xiuwu Zhu and Yu Wang. Section IV.1,
 equations (62), (68), and (69), gives the flat-plus-spike state and its
 ambiguity calculation in characteristic two. Section IV.2 and Section VI

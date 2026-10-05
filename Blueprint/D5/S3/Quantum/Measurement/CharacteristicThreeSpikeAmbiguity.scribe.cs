@@ -71,8 +71,8 @@ internal sealed class CharacteristicThreeSpikeAmbiguityDocument : IScribeDocumen
                 + "The dimension-independent constant follows from (s-1)^2>=0. "
                 + "This bounds normalized ambiguity intensities, not an assumed spectrum."),
             Paragraph(Text(
-                "Issue #13556 remains open at the formalized Gram/Rayleigh interface: "
-                + "the original target is one unit vector on each F_(3^r), for every integer r>=1, "
+                "The formalized Gram/Rayleigh interface remains open: the target is "
+                + "one unit vector on each F_(3^r), for every integer r>=1, "
                 + "with one c>0 such that Re(w*G^Pi w) >= c q/(q+1) sum |w|^2 whenever sum w=0. "
                 + "A canonical trace-character instantiation and a proved finite-field "
                 + "Weyl/Fourier Gram identity are still required to use c=1/8. "
@@ -88,7 +88,7 @@ internal sealed class CharacteristicThreeSpikeAmbiguityDocument : IScribeDocumen
         Seq(Operatorname, Grp(F.Id("indicatorZero")), Open, F.Id(variable), Close);
 
     private static Formula NormSq(Formula value) =>
-        Seq(Vert, value, Vert, Caret, Grp(D(2)));
+        Seq(Vert, Sp, value, Sp, Vert, Caret, Grp(D(2)));
 
     private static Formula Apply(string name, params Formula[] arguments)
     {
