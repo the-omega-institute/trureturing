@@ -1,0 +1,13 @@
+**来源 9.1（不可变仓库供应）。** 下列引用固定到完整提交地址。首零、记录商、字母表等价及已知宽块／临界块结果作为供应使用；其普通数学证据不自动获得形式化地位。
+
+| 来源 | 本卷复用的准确接口 |
+| --- | --- |
+| [S1：不可逆目标取得](https://github.com/the-omega-institute/trureturing/blob/f64d9e5dc37301e04ffc33332c919dd56a81ed6f/docs/develop/theory/KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md) | 第1–2节的实际来源、INITIAL 目标及两字母表等价；引理4.2–4.3的全一前奏及首零损失；定理5.2的取得正规形。 |
+| [S2：最小匹配模值观察器](https://github.com/the-omega-institute/trureturing/blob/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md) | 第13–14节的匹配系数周期及实际行为记录；不以观察器状态数替代取得块费。 |
+| [S3：自校准边界](https://github.com/the-omega-institute/trureturing/blob/84aeabc092530002a1a9f17079c15a8c803e38cd/docs/develop/theory/KBONACCI_SELF_CALIBRATING_BOUNDARIES.md) | 第15节、引理15.1的同词联合记录满射。 |
+| [S4：实际取得几何](https://github.com/the-omega-institute/trureturing/blob/dc3fa13ad47f1171fbc8dac1306273339091cd43/docs/develop/theory/KBONACCI_ACTUAL_ACQUISITION_GEOMETRY.md) | 命题4.1的精确尾分解、命题5.3的匹配商短词像、命题7.1的合法同支撑机制；这些已知源编码／词像结果不是未知初始目标的最优费用。 |
+| [S5：宽块目标费用](https://github.com/the-omega-institute/trureturing/blob/3fa4d2325f1e8bcf3f4f9813f83fdf4c1156fdd0/docs/develop/theory/KBONACCI_TARGET_ACQUISITION_COST.md) | 定理3.1的宽块任意目标法则、开放问题7.3；查询空间条件 $a+T+1\le m$ 不能用于本卷的 $m<T$。 |
+| [S6：临界块宽目标费用](https://github.com/the-omega-institute/trureturing/blob/0e51d0ec80c86e888fcdde78982665a7c5c17c79/docs/develop/theory/KBONACCI_CRITICAL_WIDTH_TARGET_COST.md) | 定理2.2的循环边掩码、首零和终端尾联合反演，定理3.1证明中的共同尾二叉下界；$m=k$ 的精确费用不能代替全部窄宽度。 |
+| [S7：关系观察恢复几何](https://github.com/the-omega-institute/trureturing/blob/7d65d83f72d972406830eaf4b51d7aad0c520efb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md) | 第8节的既有有限策略首步分解与合法子树拼接；命题8.10保留常值动作改变未来可调用能力的情形。本文没有另交付通用 Bellman 框架，也不剪掉付费等待块。 |
+| [S8：关系续接几何](https://github.com/the-omega-institute/trureturing/blob/f6a4a894f2377f2a529748b9729b0637bd0ae006/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) | 定义3.2–3.3、4.1的纤维与行为商；全部未来响应可表达不代表沿一条实际轨道可免费取得。 |
+

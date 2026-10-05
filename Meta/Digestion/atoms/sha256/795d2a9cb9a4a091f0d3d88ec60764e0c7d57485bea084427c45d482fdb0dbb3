@@ -1,0 +1,50 @@
+**定义 1.1（匹配读者）。** 固定整数 $k\ge2$、完整块宽 $m\ge1$。词从左到右按低位先读，合法词避免连续子词 $1^k$。位置从零计数，位置区间均指整数区间。原阶权重为
+
+$$
+G_i=2^i\quad(0\le i<k),\qquad
+G_i=\sum_{j=1}^kG_{i-j}\quad(i\ge k),\qquad
+V_k(w)=\sum_{i<|w|}w_iG_i.
+\tag{1.1}
+$$
+
+合法数值输出是 $V_k(w)\bmod2$，不是任意选择的线性读口。记
+
+$$
+T=k+1,\qquad c_i=G_i\bmod2,
+\qquad c_i=\mathbf1_{\{0,-1\}}(i\bmod T).
+\tag{1.2}
+$$
+
+[S2] 第13–14节供应这个最小正周期 $T$。指标按周期延伸到全部整数。匹配商的规范多项式是 $\Phi_k=X^k-\sum_{i<k}X^i$；[S4] 命题5.3供应其模二商中 $x$ 的精确阶 $T$、短合法词像及全一代表的唯一缺项。本卷不以 $X^k-X-1$ 或不同阶的商替代它。
+
+令
+
+$$
+g=\gcd(m,T),\qquad p=T/g,\qquad P=g\mathbb Z/T\mathbb Z,
+\qquad \theta_j=-jg\pmod T\quad(0\le j<p).
+\tag{1.3}
+$$
+
+完整块端点的合法记录集以及独立拒绝记录是
+
+$$
+Q=\bigl(\mathbb F_2\times P\times\{0,\ldots,k-1\}\bigr)
+\sqcup\{\bot\}.
+\tag{1.4}
+$$
+
+合法记录 $(v,\theta,s)$ 分别保留模二值、历史长度模 $T$ 的相位、词尾连续一的长度。拒绝是独立符号 $\bot\notin\mathbb F_2$，拒绝后吸收。为定义块内行为，允许中间相位在整个 $\mathbb Z/T\mathbb Z$ 中，逐位转移为
+
+$$
+\delta_b(v,\theta,s)=
+\begin{cases}
+(v,\theta+1,0),&b=0,\\
+(v\oplus c_\theta,\theta+1,s+1),&b=1,\ s<k-1,\\
+\bot,&b=1,\ s=k-1,
+\end{cases}
+\qquad \delta_b(\bot)=\bot.
+\tag{1.5}
+$$
+
+完整块转移按词序复合 $m$ 次，端点重新属于 $Q$。只有端点输出 $o(v,\theta,s)=v$ 或 $o(\bot)=\bot$ 可见；式（1.5）不提供块内观测。
+
