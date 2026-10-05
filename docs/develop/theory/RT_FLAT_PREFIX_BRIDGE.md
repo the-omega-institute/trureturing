@@ -1,12 +1,15 @@
-# RT bridge theorem after `equilibrium_weight_endpoint_interior`
+# Flat-prefix RT specialization: existing result and formalization checklist
 
-This is a standalone bridge note; it does not alter any existing source file.
-It records a Lean-ready theorem that instantiates the existing finite-sector
-channel construction with flat-prefix residual spectra, and separates the
-hypotheses needed for a physical realization from the unrestricted recursive
-formula.
+This note is a formalization checklist, not a new mathematical theorem. The
+positive flat-prefix construction, its kernel and the optimal diamond error
+are already proved on paper in `ARITHMETIC_HOLOGRAPHIC_RT.md`, Theorem 34.1.
+The generic channel construction and optimality used below are already present
+in `FiniteSectorPhysicalConstruction.lean` and
+`FiniteSectorChannelOptimality.lean`. PR #13249 supplies explicit coordinates
+for an existing recurrence. Merely combining these suppliers in a new wrapper
+would not constitute an independent mathematical contribution.
 
-## Theorem (flat-prefix physical bridge)
+## Existing flat-prefix specialization
 
 Let `n : N`. The case `n=0` is the trivial single-sector bridge: `v=(1)`,
 `T=0`, and `delta=0`; below assume `n >= 1`. Let `1 <= m_0 < ... < m_n` be
@@ -44,9 +47,10 @@ Take sectors `S = Fin (n+1)` and the model in
    `X_ik -> K_ik X_ik`, with `K` the same kernel as in (2).
 5. Let `v_i = equilibriumWeight n ell i` and `Z = sum_i v_i`. Since `ell` is
    monotone, the existing theorem `ExponentialSectorKernel.result` supplies
-   `K v = 1`, `v >= 0`, `Z = 1 + sum_i tanh((ell_{i+1}-ell_i)/4)`, and
+   `K v = 1`, `v > 0` under the strict ordering, `Z = 1 + sum_i tanh((ell_{i+1}-ell_i)/4)`, and
    `p*=v/Z` in the simplex with `min_{p in Delta} p^T K p = 1/Z`. The
-   endpoint/interior formula from #13249 identifies
+   endpoint/interior formula from #13249, applied to `n-1` when `n >= 1`,
+   identifies (the interior formula ranges over `1 <= i < n`)
 
    ```
    v_0 = 1/(1+sqrt(m_0/m_1)),
@@ -68,8 +72,14 @@ Take sectors `S = Fin (n+1)` and the model in
    optimizer for the *actual* finite channel once integer ranks and the
    ordered flat-prefix spectrum are supplied.
 
-### Proof obligations for a Lean PR
+### Remaining proof-engineering obligations for a formal specialization
 
+* `source_transport`: the generic model's local source carrier has dimension
+  `sum_i d_i*M`, with zero Schmidt coefficients outside `j<m_i`. The actual
+  flat-rank carrier has dimension `sum_i d_i*m_i`. To state the result on that
+  smaller carrier, construct the support embedding and prove restriction and
+  CPTP extension preserve the encoded channel actions and errors. Equal Schmidt
+  rank alone is not a complete typed transport proof.
 * `PrefixModel`: prove `sigma_nonneg`, `sigma_sum`, and `sigma_antitone`; these
   are finite sums over a prefix of `Fin M` and do not require new analysis.
 * `prefix_kernel`: split the sum at `min m_i m_k`; each nonzero summand is
@@ -88,36 +98,51 @@ Take sectors `S = Fin (n+1)` and the model in
 No new channel optimality argument is needed: the generic theorem already
 proves the all-local-CPTP lower bound and the matching splitting channel.
 
-## Precise obstruction to the naive unrestricted bridge
+## Exact failure of the unsorted recurrence, not of the physical channel
 
-The #13249 recurrence is quantified over *arbitrary* real `loss : N -> R`.
-Without ordering, its vector need not be the inverse-kernel equilibrium vector
-and need not be a probability. For example, with
+Ordering is a choice of sector labels and can always be achieved by relabeling.
+It is needed when applying this particular recurrence to the absolute-distance
+kernel. It is not a physical obstruction to a channel with unsorted ranks.
 
-```
-loss = [0, 10, 20, 0]
-q0 = exp(-5), q1 = exp(-5), q2 = exp(10)
-```
-
-(the `q_i` are the three `edge` values), #13249's coordinate formula gives
+For an exact example take the positive integer ranks
 
 ```
-v = [ 1/(1+q0),
-      1/(1+q0)+1/(1+q1)-1,
-      1/(1+q1)+1/(1+q2)-1,
-      1/(1+q2) ]
-  ~= [0.993307, 0.986614, -0.006647, 0.0000454].
+m = [1, 4, 16, 1],
+loss = [0, log 4, log 16, 0],
+edge = [1/2, 1/2, 4].
 ```
 
-Thus `v_2 < 0`, and direct multiplication by the kernel
-`K_ij = exp(-|loss_i-loss_j|/2)` gives `(K v)_2 ~= 4.54e-5`, not `1`.
-Consequently no simplex optimizer or CPTP environment interpretation exists
-for this unsorted input. The monotonicity hypothesis in
-`ExponentialSectorKernel.result` is therefore essential, rather than a
-formal convenience. A second independent obstruction is integrality: if
-`exp(loss_i)` is not a positive integer ratio, no finite Schmidt ranks
-`r_i=m_i d_i` realize the spectrum even when the recurrence vector is
-positive.
+The unrestricted #13249 recurrence then gives
 
-The bridge theorem must therefore state (or derive by sorting/collapsing
-sectors) both conditions: ordered losses and integer flat-prefix ratios.
+```
+v = [2/3, 1/3, -2/15, 1/5],
+K = [[1,   1/2, 1/4, 1  ],
+     [1/2, 1,   1/2, 1/2],
+     [1/4, 1/2, 1,   1/4],
+     [1,   1/2, 1/4, 1  ]],
+K v = [1, 7/10, 1/4, 1].
+```
+
+All these equalities are exact rational calculations. Thus the vector from
+this unsorted recurrence has a negative coordinate and does not solve
+`K v = 1`; normalizing it does not produce a simplex point. Nevertheless,
+`K` is the Gram matrix of the genuine nested maximally entangled states
+`Phi_1, Phi_4, Phi_16, Phi_1`, so the two-sided splitter channel exists in
+precisely this original label order. Sorting and merging equal-rank groups
+restores the ordered optimizer without changing the physical task.
+
+For completeness, prescribed flat residual ranks must be positive integers,
+but absolute integrality of `exp(loss_i)` is not necessary for realizing the
+same kernel: adding a common constant to every loss leaves `K` unchanged.
+A common shift that turns every `exp(loss_i)` into an integer suffices for the
+flat-prefix realization. For finitely many losses such a common scaling exists
+exactly when all ratios `exp(loss_i-loss_0)` are rational. This is a restriction
+on this flat, maximally entangled rank realization, not a denial of a general
+Schur CPTP realization of the exponential Gram kernel.
+
+## Status
+
+No new Lean declaration, kernel compilation, or independent new theorem is
+claimed. The positive result is already in Theorem 34.1; the unsorted example
+only warns against deleting an existing hypothesis. CI on this Markdown file
+checks repository workflow eligibility, not these mathematical claims.
