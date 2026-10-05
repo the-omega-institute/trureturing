@@ -10,10 +10,10 @@
 proof_shape: result: content.
 escape_witness: exponent_exclusions (for r, s ≤ d, 3 * 2 ^ s is not congruent to 2 ^ r
   modulo 2 ^ (d + 1) - 1), used on the proof path of result through correlation_units and
-  cross_correlation. The private theorems whose proof path contains it are content:
-  inverse_power_sum_zero, correlation_units, cross_correlation, hx_ones, pair_centralizer,
-  small_centralizer_zero, distance_lower_bound. Every other private theorem is bind-only and
-  is used on the proof path of result.
+  cross_correlation. The private theorems whose proof path uses it are content:
+  correlation_units, cross_correlation, hx_ones, pair_centralizer, small_centralizer_zero,
+  distance_lower_bound. Every other private theorem is bind-only and is used on the proof
+  path of result (inverse_power_sum_zero uses only the first conjunct, n ∤ 2 ^ r).
 admission_basis: open-problem-resolution (#13470; Proved)
 Direct frozen dependencies: none; only pinned Mathlib is imported.
 -/

@@ -93,8 +93,9 @@ The canonical source is
 declarations are `K`, `n`, `tr`, `tauH`, `tauQ`, `Hz`, `Hx`, `centralizer`,
 `stabilizers`, `wt`, `claim` and `result`; circulants are Mathlib's
 `Matrix.circulant`. The proof applies `FiniteField.sum_pow_units`,
-`FiniteField.algebraMap_trace_eq_sum_pow`, `FiniteField.trace_to_zmod_nondegenerate`,
-`GaloisField.card`, `GaloisField.finrank` and `Matrix.circulant_mul`. It uses
+`FiniteField.algebraMap_trace_eq_sum_pow`, `traceForm_nondegenerate`,
+`AddMonoidHom.card_fiber_eq_of_mem_range`, `GaloisField.card`,
+`GaloisField.finrank` and `Matrix.circulant_mul`. It uses
 only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no
 `sorry`, `native_decide`, or new axiom. The frozen module state has statement identity
 `sha256:9fa8b8b18f3e77936d5e984b004288ada6e8995b2577454001d6c55398e7de6b`.
@@ -119,7 +120,7 @@ before any Lean. `theorem`; resolution `proved`.
 | --- | --- | --- | --- |
 | result | content | `exponent_exclusions` | open-problem-resolution |
 
-The escape witness `exponent_exclusions` is the arithmetic fact of Route step 1; it is on the proof path of `result` through `correlation_units` and `cross_correlation`. The private theorems whose proof path contains it (`inverse_power_sum_zero`, `correlation_units`, `cross_correlation`, `hx_ones`, `pair_centralizer`, `small_centralizer_zero`, `distance_lower_bound`) are content; every other private theorem is bind-only and is used on the proof path of `result` (CLAUDE.md §3.2 「有消费的辅助声明」). Utility is `none`: the module proves a universal statement and
+The escape witness `exponent_exclusions` is the arithmetic fact of Route step 1; it is on the proof path of `result` through `correlation_units` and `cross_correlation`. The private theorems whose proof path uses it (`correlation_units`, `cross_correlation`, `hx_ones`, `pair_centralizer`, `small_centralizer_zero`, `distance_lower_bound`) are content; every other private theorem, including `inverse_power_sum_zero` (which uses only the first conjunct $n\nmid2^r$), is bind-only and is used on the proof path of `result` (CLAUDE.md §3.2 「有消费的辅助声明」). Utility is `none`: the module proves a universal statement and
 contains no finite enumeration, checker, numeric reduction or certified
 instance. There is no digestion atom.
 
@@ -138,11 +139,17 @@ whose weights are $0$, $n$, $2^{m-1}$ and $2^{m-1}-1$ (`row_weights`).
 **Argued, not formalized.**
 
 - The same argument gives $u\equiv\mathbf1$ for every exponent $\xi$ in place
-  of 3 that is not congruent to a power of 2 modulo $n$, for both parities of
-  $d$; the paper's structural remark needs $\gcd(3,n)=1$ and covers only $d$
-  even. For $\xi\equiv2^t$, $\operatorname{Tr}(x^\xi)=\operatorname{Tr}(x)$ and
-  the conclusion fails (computed for $\xi=2$, $d\le5$; $\xi=5,7$ give
-  $u\equiv\mathbf1$ for $d\le10$, computed).
+  of 3 with $\xi\not\equiv0$ and $\xi\not\equiv2^t\pmod n$, for both
+  parities of $d$; the paper's structural remark needs $\gcd(3,n)=1$ and covers
+  only $d$ even. Both conditions are needed: for $\xi\equiv0$ the quadric
+  indicator is constant (at $d=2$, $\xi=7$, $\operatorname{Tr}(1)=1$ makes it
+  zero and $u\ne\mathbf1$), and for $\xi\equiv2^t$,
+  $\operatorname{Tr}(x^\xi)=\operatorname{Tr}(x)$ (with $\xi=2$, $u$ is not
+  all-ones for $d\le5$). Computed: for $\xi=5$ and $\xi=7$, every
+  $d=2,\dots,10$ satisfying both conditions gives $u\equiv\mathbf1$, including
+  the cases where $\xi$ divides $n$ ($d=3,7$ for $\xi=5$; $d=5,8$ for
+  $\xi=7$); the only excluded pair, $d=2$ with $\xi=7$, gives
+  $u\ne\mathbf1$.
 - The map $(c,b)\mapsto(c+\operatorname{Tr}(b\alpha^{-j}))_j$ is injective, so
   the row space of $A$, and of $H=(A\mid J)$, has dimension $m+1=d+2$. The code
   is therefore $[[2^{d+1}-1,\,2^{d+1}-d-3,\,2]]_2$ for every $d\ge2$, matching
