@@ -61086,3 +61086,189 @@ $$
 （398.11）允许继续估计同一实际 $S_M^{\mathrm{low}}(x)$，而不重复支付高商修正的较粗预算；（398.15）则明确规定了尺度同变时必须保留的符号。即使已知固定阈值后的核最终为正，$\sum H_mL_x(m)$ 的符号仍需针对实际 $e=\mu*\beta$ 证明。这些身份与核符号不决定完整 Robin 余量或黎曼猜想。
 
 ## 追加锚（本行以下为增补区）
+
+## 399. 共同比例尺度的实际核轮廓、符号转折与同源窗口预算
+
+**定义 399.1（比例轮廓与参数范围）。** 保留 §398 的同一实际 $R,A,D,\mu_0,c_{\mathrm{diag}}$。本节的符号转折结论使用参数范围 $A>0$、$D>A$ 与 $c_{\mathrm{diag}}<0$；估计公式只需 $D>A>0$。令
+
+$$
+\begin{aligned}
+\ell&=\log x,\qquad u=\log(s/x),\\
+\mathcal G_x(r)&=\mathcal V_x(r)+\mathcal Z_R(r),\\
+p(u)&=\frac A2u^2+(D-A)u+c_{\mathrm{diag}},\\
+C(U)&=\frac A6U^3+\frac D2U^2+(2D-A)U+D+\mu_0(2U+11),\\
+a_*&=\min\{A,D-A\}>0.
+\end{aligned}
+\tag{399.1}
+$$
+
+这里的 $u$ 保留同一实际 $s$ 与 $x$ 的比例；它不是独立选择两个来源的规模。沿用（398.5）的 $J_x(m)=\int_m^{m+1}s^{-2}\mathcal G_x(\log s)\,ds$。
+
+**定理 399.2（已付高商矩的统一比例估计）。** 对 $x\ge e$、$U\ge0$ 和 $0\le u\le U$，有
+
+$$
+\boxed{
+\left|\ell\mathcal G_x(\ell+u)-p(u)\right|
+\le\frac{C(U)}\ell.}
+\tag{399.2}
+$$
+
+同一个核在全部 $r\ge\ell$ 上还满足
+
+$$
+\boxed{
+\mathcal G_x'(r)\ge\frac{a_*}\ell-\frac{22\mu_0}{\ell^2}.}
+\tag{399.3}
+$$
+
+证明。复用（398.7）的低商原函数，置 $k(t)=1/t+1/t^2$。对 $u\ge0$，在固定 $x$ 的参数内微分给
+
+$$
+\mathcal V_x(\ell+u)
+=\int_0^u[(D-A)+A(u-v)]k(\ell+v)\,dv
+-Dk(\ell+u).
+\tag{399.4}
+$$
+
+对 $v\ge0$ 有 $|\ell k(\ell+v)-1|\le(v+1)/\ell$。因为括号中的系数非负，积分及端点误差共同给
+
+$$
+\left|\ell\mathcal V_x(\ell+u)
+-\left[\frac A2u^2+(D-A)u-D\right]\right|
+\le\frac{A u^3/6+D u^2/2+(2D-A)u+D}\ell.
+\tag{399.5}
+$$
+
+高商部分直接使用同一来源的（398.8）与（398.15）。已有绝对包络进一步支付
+
+$$
+\int_1^\infty\frac{|R(y)|\log y}{y^2}\,dy
+\le\mu_0\int_1^\infty\frac{(1+\log y)\log y}{y^2}\,dy
+=3\mu_0.
+\tag{399.6}
+$$
+
+这是经典幂—对数积分的应用，不新增独立的算术增长前提。对 $v=\log y\ge0$，
+
+$$
+|\ell h(\ell+u+v)-1|
+\le\frac{u+v+2}\ell+\frac2{\ell^2}.
+$$
+
+故 $\mathcal M_R=D+c_{\mathrm{diag}}$ 给
+
+$$
+\left|\ell\mathcal Z_R(\ell+u)-\mathcal M_R\right|
+\le\frac{\mu_0(2u+7)}\ell+\frac{4\mu_0}{\ell^2}.
+\tag{399.7}
+$$
+
+合并（399.5）与（399.7），并用 $\ell\ge1$，得到（399.2）；其中 $-D+\mathcal M_R=c_{\mathrm{diag}}$，没有删除高商的有符号矩。
+
+再直接微分（398.1）：
+
+$$
+\mathcal V_x'(r)
+=A\log(r/\ell)+\frac A\ell+\frac{D-2A}{r}
++\frac{2D-A}{r^2}+\frac{2D}{r^3}.
+\tag{399.8}
+$$
+
+当 $D-2A<0$ 时，中间两项之和至少为 $(D-A)/\ell$；当 $D-2A\ge0$ 时至少为 $A/\ell$。其余项非负，故 $\mathcal V_x'\ge a_*/\ell$。高商微分仍采用 §398 已使用的共同局部邻域与可积包络；这里 $|R(y)|/y^2$ 也支配 $r$ 导数。由 $|h'(r)|=r^{-2}+4r^{-3}+6r^{-4}$ 的递减性和（398.8），
+
+$$
+|\mathcal Z_R'(r)|
+\le2\mu_0(\ell^{-2}+4\ell^{-3}+6\ell^{-4})
+\le22\mu_0/\ell^2.
+$$
+
+这证明（399.3）。所用参数积分微分定理直接复用 [Mathlib 的既有接口](../../../Library/Analytic/mathlib2026parametricintegral.md)；新增估计是实际低商、实际高商矩与共同比例域的组合。$\square$
+
+**定理 399.3（全比例正锥与唯一转折）。** 假设定义399.1的符号范围成立。多项式 $p$ 在 $[0,\infty)$ 严格递增，具有唯一正根
+
+$$
+u_*=
+\frac{-2c_{\mathrm{diag}}}
+{D-A+\sqrt{(D-A)^2-2Ac_{\mathrm{diag}}}}.
+\tag{399.9}
+$$
+
+对任意 $0<u_-<u_*<u_+$，若
+
+$$
+\ell>
+\max\left\{
+1,\frac{22\mu_0}{a_*},
+\frac{C(u_-)}{-p(u_-)},
+\frac{C(u_+)}{p(u_+)}
+\right\},
+\tag{399.10}
+$$
+
+则对所有整数 $m$ 同时成立
+
+$$
+\begin{aligned}
+x\le m,\quad m+1\le e^{u_-}x&\ \Longrightarrow\ J_x(m)<0,\\
+m\ge e^{u_+}x&\ \Longrightarrow\ J_x(m)>0.
+\end{aligned}
+\tag{399.11}
+$$
+
+此外，对全部充分大的 $x$，存在唯一 $s_x>x$ 使 $\mathcal G_x(\log s_x)=0$，并有
+
+$$
+\boxed{\log(s_x/x)\longrightarrow u_*\quad(x\to\infty).}
+\tag{399.12}
+$$
+
+这份正锥也可直接用于原五模式：若 $z=(a,b)$、$a,b\in\mathbb N$、$n=q(z)=2a+3b>0$，使用已有 $S=M^3$ 与 $d_\sigma$，令 $m_\sigma=q(Sz+d_\sigma)$。当 $x=n$ 满足（399.10）且 $u_+>u_*$、$e^{u_+}\le4$ 时，五个分支都满足 $J_n(m_\sigma)>0$。
+
+证明。$p'(u)=Au+D-A>0$，$p(0)<0$，且 $p(u)\to\infty$，给唯一正根与（399.9）。由（399.3）及（399.10），$\mathcal G_x$ 在全部 $r\ge\ell$ 上严格递增；（399.2）在 $u_-$ 与 $u_+$ 上给严格相反的符号。因此零点存在且唯一，并位于 $xe^{u_-}$ 与 $xe^{u_+}$ 之间。负区间的全部相邻积分以及正锥上的全部相邻积分分别保留该符号，得到（399.11）。任取包围 $u_*$ 的两个正数，每个都有与所有充分大 $x$ 共同的（399.10）阈值；再缩小这两个数之间的间隔，即得（399.12）。这是共同尺度的结论，不是将固定 $x$ 的阈值误当统一阈值。
+
+最后只消费既有五模式仿射式：$q(d_\sigma)\in\{0,2,3,7,5\}$，故 $m_\sigma=8a+13b+q(d_\sigma)\ge4n$，于是（399.11）给五个分支的正性。这不是新的五模式或换框架定理。五个后继不穷尽全部核指标；各个实际 $H_{m_\sigma}$ 仍可能具有不同符号，所以该应用不代替完整有符号抵消。$\square$
+
+**定理 399.4（实际有符号窗口的轮廓运输）。** 对 $x\ge e$ 和 $U\ge0$，令
+
+$$
+\mathcal I_{x,U}=\{m\in\mathbb N:x\le m,\ m+1\le e^Ux\},
+\qquad
+\Pi_x(m)=\int_m^{m+1}\frac{p(\log(s/x))}{s^2}\,ds.
+\tag{399.13}
+$$
+
+使用（397.5）的同一实际 $H_m$ 与任意满足其条件的 $C_H$，有
+
+$$
+\boxed{
+\left|
+\sum_{m\in\mathcal I_{x,U}}H_mJ_x(m)
+-\frac1\ell\sum_{m\in\mathcal I_{x,U}}H_m\Pi_x(m)
+\right|
+\le C(U)U\min\left\{
+\frac{310}{441\ell^2},\frac{C_H}{\ell^6}
+\right\}.}
+\tag{399.14}
+$$
+
+证明。窗口中每个完整相邻区间均保持 $0\le\log(s/x)\le U$，故（399.2）给
+
+$$
+\left|J_x(m)-\frac{\Pi_x(m)}\ell\right|
+\le\frac{C(U)}{\ell^2m(m+1)}.
+\tag{399.15}
+$$
+
+这里对轮廓保留整个相邻积分，不用单点值冒充权重。$m\ge x$ 给 $|H_m|\le C_Hm/\ell^4$。若窗口非空，令其首末指标为 $a,b$；经典调和积分比较给
+
+$$
+\sum_{m=a}^b\frac1{m+1}
+\le\int_a^{b+1}\frac{dt}t
+=\log\frac{b+1}a\le U.
+$$
+
+将（399.15）乘同一个实际 $|H_m|$ 并求和，得到带 $C_H/\ell^6$ 的上界。另一份上界直接复用（384.6）及经典 $|\mathfrak M(N)|\le N$：$|H_m|\le(\beta_1+T)m$，而（384.5）、$\beta_1=\log(1+q)\le q$ 及 $q<2/5$ 给 $\beta_1+T\le775q/441<310/441$。同一个调和积分于是给 $310C(U)U/(441\ell^2)$。两份上界对同一实际窗口同时成立，故可以取较小者；后一份不需要 $C_H$ 的数值证书。空窗口两和都为零。所控制的只是实际窗口与同一窗口轮廓和的差，不是轮廓和本身的符号，也不是 $\sum_{m\ge1}H_mJ_x(m)$ 的完整预算。$\square$
+
+（399.14）把比例窗口内的真实算术输入与轮廓保持在同一实现上。其误差是对数尺度，未达到 Robin 所需的临界幂尺度。继续估计仍须控制真实的 $\sum H_m\Pi_x(m)$、窗口外补集及它们的联合关系；核符号转折和五模式正锥并不支付这些算术预算。
+
+## 追加锚（本行以下为增补区）

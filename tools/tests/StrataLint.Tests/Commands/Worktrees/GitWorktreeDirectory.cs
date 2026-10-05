@@ -1,4 +1,4 @@
-namespace StrataLint.Cli;
+namespace StrataLint.Tests;
 
 internal static class GitWorktreeDirectory
 {
@@ -13,7 +13,7 @@ internal static class GitWorktreeDirectory
         return directory;
     }
 
-    internal static string ResolvePath(string repositoryRoot, string? pointer)
+    private static string ResolvePath(string repositoryRoot, string? pointer)
     {
         var root = Path.GetFullPath(repositoryRoot);
         if (pointer is null) return Path.Combine(root, ".git");
