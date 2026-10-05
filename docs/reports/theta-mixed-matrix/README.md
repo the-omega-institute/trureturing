@@ -319,3 +319,11 @@ common ground-complement action error at the unchanged cutoffs; no old
 source acquisition is replayed. Its approximately $0.20175$ weighted/scalar
 budget ratio compares truncation allowances, not inverse-cost or matrix
 signs. New weighted Gram integration and common cofinal signs remain open.
+
+The [finite-core common residual correction](weighted-residual-core.md)
+integrates a step-weight gain from the already saved full-Gamma action
+rows and whole-line residual Gram. It pays continuum, sample, prime and
+exact-frame uncertainty on the same coefficient map. The enclosed gain
+reduces the existing scalar residual allowance on a specified frame
+direction; it does not certify positivity of the entire gain matrix or
+recompute the global comparison. No old action grid is regenerated.
