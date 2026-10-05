@@ -5468,4 +5468,50 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 
 四个具名目标经缓存保护入口第三轮真实编译成功，host `55246` exit0，零错误、零警告，无 `sorryAx`，各具名公理闭包仅含 `propext, Classical.choice, Quot.sound`。两轮完整失败源和日志整体保留排除：首轮六处高度分母、复数投影名称及平方化简错误与四项未使用 simp 参数，第二轮两处公共原高度分母消去错误；均按实际诊断修复，没有关闭 linter 或接纳失败批的局部成功。协作方实施、调用方只读复核同一原矩阵的行列关系、实际范数正根和原满射构造，没有新增 SSHX 共识。源码 `.lake/mostow-h3-infinity-horizontal.lean` 的 SHA256 为 `b15a0078aeb0121122e2ddf830d22cb0d6aec39278928af42ab5d11bc1c57efc`，142264 字节，相邻收据记录真实终态。已成功高度源码的完整字节前缀保留，imports、版本及构建闭包未改。
 
-后续先库后证已定位钉版 `Complex.linear_isometry_complex` 和 `IsometryEquiv.toRealLinearIsometryEquiv`／`toRealAffineIsometryEquiv`；对应 olean 均实际在位。它们可消费本批真实单位缩放平面等距双射，不需重证旋转／反射分类或仿射化。本批没有新增这些 import 或声称已经得到群表示、平移核及指数界。该原模型与配对、坐标、范数及双射接口的消费按 §3.2 判 `proof_shape: bind-only`、`admission_basis: none`；精确 Lean 保持本地临时证据，远端 required CI 仅验证本 Library 说明，不新增绑定 Lean 库声明、Describe、登记或冻结，不改预算、工具或判官。原单位自由作用的平移核、非单位共同中心与轴、薄部尖点和轴管、有限尖点与紧核心、一般原流形原度量覆盖及完整 Mostow–Prasad 继续未完成；两侧原度量、同一个给定 `h` 与完整 `d`、独立宇宙、非紧有限体积尖点及非可定向范围继续保留。
+后续先库后证已定位钉版根命名空间的 `linear_isometry_complex` 和 `IsometryEquiv.toRealLinearIsometryEquiv`／`toRealAffineIsometryEquiv`；对应 olean 均实际在位。它们可消费本批真实单位缩放平面等距双射，不需重证旋转／反射分类或仿射化。本批没有新增这些 import 或声称已经得到群表示、平移核及指数界。该原模型与配对、坐标、范数及双射接口的消费按 §3.2 判 `proof_shape: bind-only`、`admission_basis: none`；精确 Lean 保持本地临时证据，远端 required CI 仅验证本 Library 说明，不新增绑定 Lean 库声明、Describe、登记或冻结，不改预算、工具或判官。原单位自由作用的平移核、非单位共同中心与轴、薄部尖点和轴管、有限尖点与紧核心、一般原流形原度量覆盖及完整 Mostow–Prasad 继续未完成；两侧原度量、同一个给定 `h` 与完整 `d`、独立宇宙、非紧有限体积尖点及非可定向范围继续保留。
+
+
+### 原单位缩放自由群的正规有限指数平移核
+
+对任意宇宙的原群 `G`、同一个原表示 `ρ : G →* (H3 ≃ᵢ H3)`，假设原作用逐点自由，且每个原 `ρ(g)` 固定实际无穷远点 `nullFramePoint 3`、满足 `infinityScale (ρ(g)) = 1`。实际构造子群 `H ≤ G`，证明 `H.Normal`、`H.FiniteIndex`、`H.index ≤ 2`，并构造同一个偏移函数 `u : H → ℂ`，使全部 `h : H` 满足原等距映射等式 `ρ(h) = horizontalTranslation (u(h))`。有限指数性质独立证明，排除无限指数在自然数索引中记为零所造成的漏洞；没有可定向假设。
+
+构造消费上述全部原点水平评价与原高度律，得到同一作用的真实平面群表示 `r : G →* (ℂ ≃ᵢ ℂ)`；平面固定点在原高度一的点上提升为原固定点，因此消费同一个原自由性。钉版 Mazur–Ulam 接口给出真实线性表示 `Q(g)(z) = r(g)(z) − r(g)(0)`。钉版根命名空间的 `linear_isometry_complex` 分类同一个 `Q(g)`；非单位旋转的实际仿射中心 `r(g)(0)/(1−a)` 被原自由性排除。两个反射的积是旋转，因此全部非单位线性像相同；通过实际单射 `Q.range → Bool` 得到有限线性像和基数至多二。取 `H = Q.ker`，消费现有 `Subgroup.finiteIndex_ker` 与 `Subgroup.index_ker` 得到所需正规性、真正有限指数及指数界。核中原水平评价与原高度律最后恢复原 `horizontalTranslation` 的全部点评价，进而得到原等距映射等式。
+
+四个具名目标的精确临时 Lean 已真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-unit-infinity-translation-kernel.lean` 为 151347 字节，SHA256 `ce1701e3e0a94e240276227372957deab8a9f8b50fa10acd40f2e7b978a667b8`。复用两个已有热缓存钉版 import：`Mathlib.Analysis.Normed.Affine.MazurUlam`、`Mathlib.Analysis.Complex.Isometry`；前述成功水平源码的完整 142264 字节连续块位于这两个 import 后的偏移 89，逐字保持。没有新增依赖闭包构建或版本变更。
+
+该现有原模型及钉版分类接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据；远端 required CI 验证说明，尚无新增绑定 Lean 声明或完整官方验收。上述结果要求全部群元素单位缩放，未证明一般小位移群满足此条件。非单位共同中心与轴、离散平移群与实际尖点、有限体积薄部分解、原流形覆盖及同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 仍未完成。
+
+
+### 原非单位缩放的唯一中心与交换者共同测地轴
+
+对同一个原 `e : H3 ≃ᵢ H3`，假设它固定实际无穷远点且实际正缩放 `λ = infinityScale e ≠ 1`，内部构造唯一水平坐标 `z : ℂ` 满足同一个 `infinityHorizontalMap e z = z`。当 `λ < 1` 时，原水平距离等式构造实际压缩映射，消费钉版 Banach 不动点接口；当 `λ > 1` 时，先证明原逆等距变换稳定同一点及 `λ(e) λ(e⁻¹) = 1`，在实际原逆水平映射上构造中心，再由原水平复合与逆关系恢复同一个原 `e` 的存在唯一性。没有预设中心或可定向性。
+
+实际构造 `verticalAxisLine z t = coordinatePoint z (exp t)`，识别为原 `horizontalTranslation z` 作用于已有原 `geodesicLine`。原距离律证明它是整个实直线到原 `H3` 的等距映射；原正高度的对数与坐标重构证明其像恰为所有水平坐标等于 `z` 的原点，因此得到完整原测地轴。对任意原 `f : H3 ≃ᵢ H3`，若它也稳定同一个无穷远点且与原 `e` 交换，原水平复合律和中心唯一性推出 `infinityHorizontalMap f z = z`。对每个实际 `s > 0`，证明同一个原 `f(z,s) = (z, infinityScale f · s)`；再用实际原逆 `f⁻¹` 证明整个原轴的集合像等于自身，未把正向包含冒充集合相等。本批无需自由性、离散性或方向假设。
+
+四个具名目标的精确临时 Lean 已真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-nonunit-common-axis.lean` 为 160707 字节，SHA256 `1d6a8fcd1359f057fd32df8b3e3729bb18b7dcb663950de79c7634e2798c0c38`。仅增加已有热缓存钉版 `Mathlib.Topology.MetricSpace.Contracting` import；成功平移核源码完整 151347 字节连续块在新 import 后偏移 48 逐字保留，无新增依赖闭包构建。
+
+该原模型与现有压缩映射、测地线及坐标接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。尚未证明一般群所有元素与本批原 `e` 交换，亦未得到离散轴群循环性、原轴管商或有限体积薄部分解；同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 及官方验收继续未完成。
+
+
+### 原幂零自由群的共同轴与单射缩放字符
+
+保留任意宇宙的同一个原群 `G`、真实 `[Group.IsNilpotent G]`、原表示 `ρ : G →* (H3 ≃ᵢ H3)`、同一个原逐点自由性，以及全部原群元素稳定实际无穷远点的条件。若存在一个原群元素满足实际 `infinityScale (ρ(g)) ≠ 1`，则内部构造一个水平坐标 `z`，使全部原 `ρ(G)` 保持同一个完整原测地轴。保留每个原群元素对全部正高度点的实际作用 `ρ(g)(z,s) = (z, infinityScale (ρ(g)) · s)`，以及整个原轴集合像等于自身，没有额外提供全群交换或共同轴前提。
+
+实际非单位元素先推出原 `G` 非平凡；现有 `Group.IsNilpotent.center_ne_bot` 提供真实非平凡中心元素 `c`。由于同一个原 `ρ(c)` 与原非单位元素交换，前述共同轴消费者适用。若原 `ρ(c)` 的缩放等于一，其对该轴高度一的实际原点作用就是固定点，原自由性迫使 `c = 1`，与所取中心元素矛盾。因此同一个原 `ρ(c)` 是非单位缩放，对它再次消费唯一中心与交换者共同轴；中心性把该实际同轴结论推广到全部原 `ρ(G)`。
+
+原稳定缩放的实际乘法律和单位元律构造真实 `infinityScaleCharacter : G →* ℝ`（实数乘法幺半群），并保留全部值严格正。其核中元素固定实际共同轴高度一的原点，因此同一个原自由性给出核平凡；现有群到幺半群的 `injective_iff_map_eq_one` 得到实际字符单射。实数乘法交换性与这个真实单射最后推出原 `g * h = h * g`，未把交换性作为前提。
+
+五个具名目标的精确临时 Lean 已真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-nilpotent-common-axis.lean` 为 165186 字节，SHA256 `aacd20386d782dfcbb79cfc0749112e51352ed8e8b66f5ab29b7bc276333db66`；前述成功非单位轴源码为 offset0 完整字节前缀，未新增 import、依赖构建或版本变更。
+
+该已有幂零中心、原轴与缩放接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。结论目前要求原群本身幂零及已归一化稳定实际无穷远点；尚未完成一般虚幂零全群分类、离散轴群循环性与真实轴管商、尖点平移格子与有限体积薄部分解，亦未完成原流形覆盖、同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 或官方验收。
+
+
+### 原虚幂零非单位分支的全群同轴分类
+
+进一步只要求同一个任意宇宙原群 `G` 存在真正有限指数子群 `H`，且 `H` 本身幂零；保留同一个原 `ρ`、全部原群元素逐点自由、稳定实际无穷远点，以及至少一个原非单位缩放元素。证明原全群的实际 `infinityScaleCharacter` 单射、全部原群元素交换，并内部构造全 `ρ(G)` 共同的完整原测地轴，保留每个原群元素对全部正高度点的实际缩放评价及整个原轴像等于自身。不要求 `H` 正规或 `G` 幂零。
+
+真正 `H.FiniteIndex` 提供任意原元素的正幂落在 `H`。将同一个原非单位元素取正幂，并消费原缩放正性与实数正幂单射，得到 `H` 中的实际非单位元素，因此上述幂零字符单射可用于原限制表示。若某个全群原元素 `g` 缩放等于一，其落在 `H` 的正幂仍缩放为一；`H` 的真实字符单射迫使同一个原 `g` 的该正幂等于一。既有原有限阶等距变换固定点定理构造原 `ρ(g)` 的实际固定点，原自由性最终迫使 `g = 1`。因此全群字符也单射，实数乘法交换性得到原全群交换性；最后对原非单位元素消费已验交换者共同轴，得到全部原群元素的真实同轴结论。无额外无挠、正规核或预设轴前提。
+
+三个具名目标的精确临时 Lean 首轮真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-virtually-nilpotent-common-axis.lean` 为 169830 字节，SHA256 `5c4d17b63da957f9d8b5b9ee21b8171a6229826287ca518ed533108e355768ec`；前述成功幂零源码完整 offset0 字节前缀保留，没有新增 import 或依赖构建。
+
+该已有有限指数正幂、原有限阶固定点及原缩放轴接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。尚未消费原作用离散性以得到循环轴群及真实轴管商，亦未完成单位缩放尖点的平移格子、有限体积薄部分解、原流形覆盖或同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad；完整官方验收仍未完成。
