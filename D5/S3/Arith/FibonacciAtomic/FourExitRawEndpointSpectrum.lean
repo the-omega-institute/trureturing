@@ -433,6 +433,40 @@ theorem local_two_excess (k : Nat) (j : Fin k) (pi : Strategy)
   rw [hr b.succ, leaflen b.succ] at h
   exact le_trans (by omega) h
 
+theorem comb_slot_readout : ∀ (n : Nat) (f : Fin n → Source) (q : Source) (i : Fin n) (u : Address),
+    readout (List.replicate i.val true ++ false :: u) (comb n f q) = readout u (f i) := by
+  intro n
+  induction n with
+  | zero => intro f q i; exact Fin.elim0 i
+  | succ n ih =>
+    intro f q i u
+    refine Fin.cases ?_ (fun i => ?_) i
+    · rfl
+    · simpa only [Fin.val_succ, List.replicate_succ, List.cons_append, comb, readout] using
+        ih (fun i => f i.succ) q i u
+theorem comb_tail_readout : ∀ (n : Nat) (f : Fin n → Source) (q : Source) (u : Address),
+    readout (List.replicate n true ++ u) (comb n f q) = readout u q := by
+  intro n
+  induction n with
+  | zero => intro f q u; rfl
+  | succ n ih =>
+    intro f q u
+    simpa only [List.replicate_succ, List.cons_append, comb, readout] using
+      ih (fun i => f i.succ) q u
+
+def literal_addresses (k : Nat) (j : Fin k) : Fin 10 → Address := fun q =>
+  match q.val with
+  | 0 => List.replicate j.val true ++ false :: [false, false, false, false]
+  | 1 => List.replicate j.val true ++ false :: [false, true, false]
+  | 2 => List.replicate j.val true ++ false :: [true, false, false]
+  | 3 => List.replicate j.val true ++ false :: [false, true, false, false, false]
+  | 4 => List.replicate j.val true ++ false :: [false, false, false, false, false, false]
+  | 5 => List.replicate j.val true ++ false :: [true, false, false, false, false]
+  | 6 => List.replicate j.val true ++ false :: [false, false]
+  | 7 => List.replicate k true ++ [false, true, false, false, true]
+  | 8 => List.replicate k true ++ [true, false, false, false, false]
+  | _ => List.replicate k true ++ [true, true, false, false, false, false]
+
 /-- The six literal tails attain their gains and actual costs on the five local rows. -/
 theorem local_tail_attainment (k : Nat) (j : Fin k) :
     let F := fun i : Fin 5 => match i.val with
@@ -468,26 +502,8 @@ theorem local_tail_attainment (k : Nat) (j : Fin k) :
         | _ => [1, 0, 1, 1, 2]).getD i.val 0
   change ∀ m : Fin 6, ∃ r : Recipe F Finset.univ, (∀ i, gain r i = V m i) ∧
     ∃ pi : Strategy, ∀ i, cost pi (F i) = 8 * k + 16 + V m i
-  have at_slot : ∀ (n : Nat) (f : Fin n → Source) (q : Source) (i : Fin n) (u : Address),
-      readout (List.replicate i.val true ++ false :: u) (comb n f q) = readout u (f i) := by
-    intro n
-    induction n with
-    | zero => intro f q i; exact Fin.elim0 i
-    | succ n ih =>
-      intro f q i u
-      refine Fin.cases ?_ (fun i => ?_) i
-      · rfl
-      · simpa only [Fin.val_succ, List.replicate_succ, List.cons_append, comb, readout] using
-          ih (fun i => f i.succ) q i u
-  have at_comp : ∀ (n : Nat) (f : Fin n → Source) (q : Source) (u : Address),
-      readout (List.replicate n true ++ u) (comb n f q) = readout u q := by
-    intro n
-    induction n with
-    | zero => intro f q u; rfl
-    | succ n ih =>
-      intro f q u
-      simpa only [List.replicate_succ, List.cons_append, comb, readout] using
-        ih (fun i => f i.succ) q u
+  have at_slot := comb_slot_readout
+  have at_comp := comb_tail_readout
   have image : ∀ i : Index k, thirdImage (preFamily k i) = family k i := by
     have fold : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
         thirdImage (comb n f q) = comb n (fun i => thirdImage (f i)) (thirdImage q) := by
@@ -557,18 +573,7 @@ theorem local_tail_attainment (k : Nat) (j : Fin k) :
       have hk := Nat.zero_lt_of_lt l.isLt
       have ht := total r
       omega
-  let qs : Fin 10 → Address := fun q =>
-    match q.val with
-    | 0 => List.replicate j.val true ++ false :: [false, false, false, false]
-    | 1 => List.replicate j.val true ++ false :: [false, true, false]
-    | 2 => List.replicate j.val true ++ false :: [true, false, false]
-    | 3 => List.replicate j.val true ++ false :: [false, true, false, false, false]
-    | 4 => List.replicate j.val true ++ false :: [false, false, false, false, false, false]
-    | 5 => List.replicate j.val true ++ false :: [true, false, false, false, false]
-    | 6 => List.replicate j.val true ++ false :: [false, false]
-    | 7 => List.replicate k true ++ [false, true, false, false, true]
-    | 8 => List.replicate k true ++ [true, false, false, false, false]
-    | _ => List.replicate k true ++ [true, true, false, false, false, false]
+  let qs := literal_addresses k j
   let vv : Fin 10 → Fin 5 → Reply := fun q i =>
     (match q.val with
     | 0 => [Reply.beta, Reply.absent, Reply.branch, Reply.beta, Reply.beta]
@@ -585,7 +590,7 @@ theorem local_tail_attainment (k : Nat) (j : Fin k) :
     intro q
     fin_cases q <;> funext i <;> fin_cases i
     all_goals
-      simp only [vector, F, qs, vv, family, at_slot, at_comp, if_pos rfl]
+      simp only [vector, F, qs, literal_addresses, vv, family, at_slot, at_comp, if_pos rfl]
       rfl
   have injective : Function.Injective F := by
     have distinct : Function.Injective (fun i => (vv 0 i, vv 1 i, vv 2 i)) := by decide
