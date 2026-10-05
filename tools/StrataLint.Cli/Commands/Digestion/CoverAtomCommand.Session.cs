@@ -20,17 +20,15 @@ internal static partial class CoverAtomCommand
         internal FrozenStatementIndex FrozenStatements { get; }
         internal IReadOnlyDictionary<RepoPath, TruthState> TruthStates { get; }
         internal ValidatedPolicy Policy { get; }
-        internal IScribeEmissionVerifier Scribe { get; }
         internal RawChangeSet Changes { get; private set; }
         internal Action? ValidateInputs { get; set; }
         internal bool Invalidated { get; private set; }
 
         internal Session(string root, IRepositoryGateway repository, ILeanReportSource reportSource,
-            IScribeEmissionVerifier scribe, DateTimeOffset recordedAtUtc, string baselineRevision, string firstGid)
+            DateTimeOffset recordedAtUtc, string baselineRevision, string firstGid)
         {
             this.root = root;
             this.baselineRevision = baselineRevision;
-            Scribe = scribe;
             CurrentRaw = repository.ReadCurrent();
             Current = Decode(CurrentRaw);
             Baseline = Decode(repository.ReadRevision(baselineRevision));
