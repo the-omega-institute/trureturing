@@ -40,11 +40,19 @@ public static class ScribeEmitter
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(changedPaths);
         ArgumentNullException.ThrowIfNull(loadLeanReport);
-        var selection = ScribeDefinitionSelector.Select(repositoryRoot, changedPaths);
+        var changes = changedPaths.ToArray();
+        var selection = ScribeDefinitionSelector.Select(repositoryRoot, changes);
         if (!selection.IsSuccess)
         {
             error.WriteLine(selection.Failure);
             return 2;
+        }
+
+        var admission = ScribeSdkAdmission.Check(repositoryRoot, selection.Paths);
+        if (admission.ExitCode != 0)
+        {
+            admission.WriteFailure(error);
+            return admission.ExitCode;
         }
 
         if (selection.Paths.IsEmpty)
@@ -229,7 +237,8 @@ public static class ScribeEmitter
                     leanReport,
                     declarationCatalog: declarationCatalog,
                     frozenState: frozenState,
-                    frozenStatements: frozenStatements);
+                    frozenStatements: frozenStatements,
+                    singleDocument: !validateDocumentGraph);
                 if (!findings.IsEmpty)
                 {
                     foreach (var finding in findings)

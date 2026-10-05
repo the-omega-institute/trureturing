@@ -404,7 +404,7 @@ public sealed class ScribeScriptHostTests
 
     private static TemporaryRoot PrepareCommandRoot()
     {
-        var root = new TemporaryRoot();
+        var root = new TemporaryRoot(sdkConfiguration: true);
         TemporaryFileSystem.File.WriteAllText(root.Resolve("global.json"), "{}");
         TemporaryFileSystem.Directory.CreateDirectory(root.Resolve("Blueprint"));
         return root;

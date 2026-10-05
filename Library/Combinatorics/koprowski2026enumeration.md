@@ -32,6 +32,13 @@ The following arXiv-version numbers are the numbers displayed in the primary
 HTML text; the journal numbers are given separately because its theorem
 environments use separate counters.
 
+Conjecture 3.1 is the original general count for both antitone masks over
+every finite field and every positive k. The two mask lengths satisfy
+$0\leq\mu_j\leq\lambda_j\leq k-j$ and $\mu_j<k-j$ in zero-based column
+indices. The nondegeneracy condition is the nonvanishing of the boundary-format
+Cayley hyperdeterminant. Its integral coefficient determinant specification
+is described in [the tensor-complex source](../HomologicalAlgebra/berkesch2013tensorcomplexes.md).
+
 - Definition 4.4 (`wc`) gives $w=\sigma\bar\pi$ and
   $c=\bar\pi^{-1}(1\ 2\ \cdots\ k+1)\bar\pi$; hence
   $wc(i)=\sigma(\pi(i)+1)$ for $i\leq k$, and $wc(k+1)=\sigma(1)$.

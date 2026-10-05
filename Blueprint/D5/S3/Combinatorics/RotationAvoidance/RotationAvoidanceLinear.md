@@ -30,7 +30,7 @@ Lean statement: `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceLinear.b
 
 *Commentary.*
 
-For every nonnegative integer n, the number of permutations of one through n avoiding 231, 2134 and 4213 is 2^n - n.
+For every nonnegative integer n, the number of permutations of one through n avoiding 231, 2134 and 4213 is 2^n - n. Increasing relabelling preserves containment, and the separated blocks occupy consecutive low and high intervals. The resulting classical avoidance decomposition combines the counts for avoiding 213 and 231.
 
 ## References
 

@@ -589,3 +589,233 @@ The Gamma conductance alone supplies the crossing. Thus the inherited
 positivity preservation does not supply all-times order-two positivity
 for a spectral-ordering argument. This paper application retains every
 prime power and supplies no sharp Poincare or RH conclusion.
+
+## Even polynomials in the same minimal form norm
+
+The following is a paper application of the existing theta tail,
+cutoff and Fourier-approximation estimates, without a new generic
+density theorem, originality claim or Lean certification. It concerns
+the unchanged $J$, $\nu$ and $\mathcal F_{\min,\rm even}$ above. The
+[Fourier/Laurent core at bounded support](connesconsanimoscovici2026spectral.md)
+belongs to a different realization and is not used as a core theorem
+for this domain. The project's finite polynomial Mellin windows likewise
+do not establish density in this form norm.
+
+First let $h$ be smooth, with
+$|h(x)|+|h'(x)|\le C e^{a|x|}$ for some fixed $C,a>0$.
+The [original theta bound](../Analytic/romik2021orthogonal.md#weighted-fourier-coefficient-suppliers)
+implies, for every fixed $0<b<\pi$,
+$\Phi(x)\le C_b\exp(-b e^{2|x|})$. In particular
+$h\in L^2(\nu)$. For Gamma jumps $0<t<1$, the square increment is
+bounded by $C_a t^2 e^{2a|x|}$; boundedness of $\Phi(x+t)$ and
+integrability of $e^{2a|x|}\Phi(x)$ pay the diagonal singularity.
+For $t\ge1$, use the two separate bounds
+$|h(x+t)-h(x)|^2\le2C^2(e^{2a|x|}+e^{2a|x+t|})$ and
+$\psi(t)\le C e^{-t/2}$. The resulting double integral is finite.
+
+For the prime shifts put $t=\log n$ and
+$S=e^{2|x|}+e^{2|x+t|}$. Absorbing the fixed exponential growth into
+the two theta tails gives, with a fixed $b>0$,
+
+$$
+\begin{aligned}
+\Phi(x)\Phi(x+t)|h(x+t)-h(x)|^2
+&\le C_a e^{-bS}\\
+&\le C_a e^{-bn}\exp\!\left(-\tfrac b2e^{2|x|}\right),
+\qquad S\ge2n. \tag{PC1}
+\end{aligned}
+$$
+
+The final factor is integrable in $x$; multiplication by
+$\Lambda(n)/\sqrt n\le\log n/\sqrt n$ leaves a summable series.
+Thus (PC1) pays every prime power, rather than integrating a constant
+over an infinite line. The same majorants, with constants uniform in
+$R\ge1$, apply to $(1-\chi_R)h$ and its derivative. Their increments
+tend pointwise to zero. Dominated convergence yields
+$\chi_Rh\to h$ in the original form norm, hence
+$h\in\mathcal F_{\min}$. Even $h$ lies in its even restriction.
+
+Next fix $h\in C_{c,\rm even}^\infty$. Choose an even smooth Fourier
+cutoff $\eta$ supported on $[-1,1]$, equal to one near zero, and put
+
+$$
+h_A(x)=\frac1{2\pi}\int_{-A}^A
+\eta(\xi/A)\widehat h(\xi)e^{i\xi x}\,d\xi.
+$$
+
+Fourier inversion and integrability of $\widehat h$ and
+$\xi\widehat h$ give uniform convergence of $h_A$ and $h_A'$ to
+$h$ and $h'$. Each $h_A$ is even and entire, with bounded function
+and derivative on the real line, so the preceding cutoff argument
+puts it in the same minimal domain. The global second moment gives
+directly, also for these noncompact Lipschitz differences,
+
+$$
+D(h_A-h)\le\tfrac12M_2\|h_A'-h'\|_\infty^2\longrightarrow0.
+\tag{PC2}
+$$
+
+For fixed $A$, let $p_{A,N}$ be the Taylor polynomial of $h_A$ through
+degree $2N$. Odd coefficients vanish. Termwise integration of the
+finite Taylor sum, and then the exponential series, give
+
+$$
+|p_{A,N}(x)|\le C_A e^{A|x|},\qquad
+|p_{A,N}'(x)|\le A C_A e^{A|x|},
+$$
+
+uniformly in $N$. Both polynomials and their derivatives converge
+pointwise to $h_A$ and $h_A'$. The complete Gamma and prime majorants
+above therefore show $p_{A,N}\to h_A$ in the same form norm.
+Combining this with (PC2) and the established compact smooth even core
+shows that even polynomials are form-dense in
+$\mathcal F_{\min,\rm even}$.
+
+For $j,k\ge1$ define the original finite matrices
+
+$$
+H^{(m)}_{jk}=D(x^{2j},x^{2k})
+-\tfrac12\left[\nu(x^{2j+2k})-\nu(x^{2j})\nu(x^{2k})\right],
+\qquad 1\le j,k\le m.
+$$
+
+Constants have zero energy and variance. Continuity in the original
+form norm consequently makes the full half-bound equivalent to
+$H^{(m)}\succeq0$ for **every** $m$. The
+[two-direction polynomial certificate](../../docs/reports/theta-mixed-matrix/theta-polynomial-energy-bounds.md)
+only addresses $m=2$. No all-degree PSD result, effective exhaustion
+rate, uniformly conditioned polynomial basis or RH/Robin conclusion
+is supplied by this density argument.
+
+## Quantitative polynomial approximation by published weighted estimates
+
+The [weighted Favard and Brascamp–Lieb application](../Analytic/itoh2015weightedapproximation.md)
+uses (WF2), the original coefficient suppliers and the same full
+fixed-gap spectral map to obtain a conditional polynomial approximation
+in this minimal form norm. It projects the physical derivative in an
+admissible auxiliary weight and integrates that one projection; it does
+not treat a Fourier cutoff of $Uh$ as a physical-bandlimited input.
+For fixed $\varepsilon$, its prescribed dimension has asymptotic cost
+$O_\varepsilon(\tau^{-3}\log(e/\tau)^5)$, with unevaluated external
+Favard constant. This is an application of published approximation
+and variance inequalities, not a new generic core theorem or a numerical
+rank certificate. Original matrix positivity and cofinal control remain
+unproved, so it supplies no RH or Robin conclusion.
+
+## The sharp pointwise gradient route fails on the original core
+
+This is a conditional paper check of a sufficient semigroup mechanism,
+using the same minimal even form, original measure and all prime powers.
+It reuses the Markov semigroup's invariance, the
+[existing critical eigenvector](lagarias2004li.md#the-full-derivative-family-and-the-remaining-estimate)
+and the [original PNT rate argument](lenz2010compactness.md#exact-prime-diagonal-and-bounded-off-diagonal-operator). It supplies no new
+generic curvature theorem, numerical acquisition or Lean certification.
+
+Write $L=-T$, $P_t=e^{-tT}$, and for a real even form input define its
+jump energy density
+
+$$
+\mathcal G(h)(x)=\frac1{4\cosh(x/2)}\left[
+ \int\Phi(y)\psi_\Gamma(|x-y|)|h(y)-h(x)|^2dy
+ +\sum_{n\ge2}\frac{\Lambda(n)}{\sqrt n}
+ \sum_{\epsilon=\pm1}\Phi(x+\epsilon\log n)
+ |h(x+\epsilon\log n)-h(x)|^2\right]. \tag{SG1}
+$$
+
+The diagonal integral uses squared increments, not a finite total jump
+rate. Tonelli gives $\int\mathcal G(h)d\nu=D(h)$; in particular this
+nonnegative function lies in $L^1(\nu)$. The original minimal jump
+representation supplies its almost-everywhere value on the form domain.
+
+Consider the sharp pointwise semigroup estimate
+
+$$
+\mathcal G(P_t h)\le e^{-t}P_t\mathcal G(h)
+\quad\nu\text{-almost everywhere},\qquad t>0, \tag{SG2}
+$$
+
+for every real even compact smooth $h$. The semigroup on the right
+uses its invariant $L^1(\nu)$ extension. This is the explicit estimate
+being tested. It is a standard sufficient gradient route toward a
+one-half Poincare inequality; no diffusion chain rule is assumed and
+no equivalence to a curvature condition on an unspecified algebra is
+claimed for this jump operator.
+
+First transport (SG2) through the existing minimal closure. The actual
+increment representation and Cauchy--Schwarz give
+
+$$
+\|\mathcal G(f)-\mathcal G(g)\|_{L^1(\nu)}
+\le\sqrt{D(f-g)}\,[\sqrt{D(f)}+\sqrt{D(g)}]. \tag{SG3}
+$$
+
+The spectral semigroup contracts the form norm, and its invariant
+$L^1$ extension contracts the $L^1$ norm. Thus core approximation and the
+closed positive cone of $L^1$ extend (SG2) to every real even form input.
+These are standard continuity properties applied to the unchanged
+increment maps; (SG3) does not replace the original covariance.
+
+Use the already established $v=\Phi''/\Phi-1/4$, with
+$v\in D(T)$ and $Tv=v/2$. If (SG2) held, $P_t v=e^{-t/2}v$ would give
+
+$$
+\mathcal G(v)\le P_t\mathcal G(v). \tag{SG4}
+$$
+
+Invariance makes the two $L^1$ integrals equal, so (SG4) is equality
+almost everywhere. Every invariant nonnegative $g\in L^1(\nu)$ here
+is constant: Jensen applied to $g\wedge M$ and invariance make each
+bounded truncation invariant, and the spectral theorem puts it in
+$\ker T=\mathbb R1$. Taking $M\to\infty$ gives the assertion for $g$.
+This uses the known constant kernel of the same operator, rather than
+positivity on the unknown critical quotient. Consequently (SG2)
+would force $\mathcal G(v)$ to be constant.
+
+That conclusion fails in the actual prime geometry. Differentiating
+the normally convergent theta series twice and retaining its first term
+and differentiated tail gives
+
+$$
+v(x)\sim4\pi^2e^{4x}\qquad(x\to+\infty). \tag{SG5}
+$$
+
+This does not differentiate an asymptotic remainder. Choose a real even
+nonzero $0\le\zeta\le1$ in $C_c^\infty(-1,1)$ and put
+$M=\sup_{|y|\le1}|v(y)|$. The incoming compact-target rate is
+
+$$
+a_\zeta(x)=\frac1{2\cosh(x/2)}\sum_{n\ge2}
+ \frac{\Lambda(n)}{\sqrt n}\Phi(x-\log n)\zeta(x-\log n).
+$$
+
+The existing ordinary PNT rate argument applies to the same smooth
+compact weight $y^{-1/2}\Phi(\log y)\zeta(\log y)$, giving
+
+$$
+a_\zeta(x)\longrightarrow
+ A_\zeta:=\int_{\mathbb R}e^{r/2}\Phi(r)\zeta(r)dr>0. \tag{SG6}
+$$
+
+It retains every prime power; the target interval restricts only a
+nonnegative lower minorant. For all sufficiently large $x$, positivity
+of the other energy terms yields
+
+$$
+\mathcal G(v)(x)\ge\frac12a_\zeta(x)(|v(x)|-M)^2
+\longrightarrow\infty. \tag{SG7}
+$$
+
+The original density is strictly positive, so this is also a
+nonconstant almost-everywhere function. It contradicts the required
+constant energy density. Hence the all-input sharp estimate (SG2)
+cannot hold even when first requested only on the original compact core.
+The argument uses no prime truncation, fixed-zero-height hypothesis,
+finite matrix signs or RH assumption.
+
+This excludes that sufficient pointwise gradient route at rate
+$e^{-t}$. It excludes neither a weaker gradient estimate nor an
+integrated or directly estimated global half-bound. The [accepted conditional $0.41$ lower bound](../../docs/reports/theta-mixed-matrix/sharper-exterior.md)
+remains reusable, while positivity on
+the complete critical quotient, the one-half bound, Robin and RH
+remain unresolved. No precise smaller optimal curvature constant is
+asserted.

@@ -579,3 +579,60 @@ discretization bound. The required input's small-spectral-value error
 and the projected transfer estimate remain unproved. Positive finite
 regularization does not remove the existing exact raw Schur-certificate
 obstruction.
+
+### A complete block minorant improves the inverse constant
+
+The [whole-space negative-edge block estimate](../../docs/reports/theta-mixed-matrix/theta-negative-block-gap.md)
+reuses the existing depth-two five-mode FIB tiling of $[0,3/2]$, adds
+the whole outside cell and integrates the actual folded theta masses.
+A nonnegative block conductance minorant separates within-cell
+conditional variance from block means. Directed congruence and
+Gershgorin margins verify both sufficient conditions at $c_{**}=1/100$.
+Under the inherited actual-model and numerical-supplier premises this
+gives, for every ambient even $h\in L^2(\nu)$,
+
+$$
+\frac1{100}\operatorname{Var}_\nu(h)\le\|C_-h\|^2
+\le\frac12\operatorname{Var}_\nu(h),\qquad
+\|G^{-1}\|\le100,\quad\kappa(G)\le50,\quad
+\|I_N-2G\|\le\frac{49}{50}.
+$$
+
+The outside cell retains its conditional variance, so the assertion
+does not restrict $h$ to block-constant functions. It is a conditional
+paper estimate with directed numerical evidence, not a new generic
+Poincare theorem or Lean result. It improves common-source inverse
+conditioning; the original energy's half-bound, cofinal projected
+comparison, Robin and RH remain unproved.
+
+### The critical eigenvector also tests sharp gradient mechanisms
+
+The [actual jump-gradient check](fukushima2011dirichlet.md#the-sharp-pointwise-gradient-route-fails-on-the-original-core)
+uses the same first critical vector $v_1$, the invariant minimal even
+semigroup and the original all-prime PNT rate. The proposed pointwise
+estimate $\mathcal G(P_t h)\le e^{-t}P_t\mathcal G(h)$ would force
+$\mathcal G(v_1)$ to be invariant and hence constant. Its incoming
+prime edges to a compact interval instead give an unbounded lower
+minorant, so that estimate fails on the original core. This is a
+conditional paper obstruction to that sufficient gradient route,
+without a diffusion-curvature equivalence or new Lean certification.
+It does not determine the sign of the integrated half-slack on
+$\mathcal R$, or invalidate the existing conditional $0.41$ bound.
+The full half-bound, Robin and RH remain unresolved.
+
+### Positive radial derivative transport needs a different interface
+
+The [published birth–death derivative interface](chafaijoulin2013intertwining.md)
+uses a positive Feynman–Kac transport of a weighted first derivative.
+Its radial analogue would preserve nondecreasing functions of $|x|$.
+The original theta model's reflected prime-two map
+$r\mapsto|\log2-r|$ gives two ordered compact averaging probes with
+reversed short-time averages for a smooth monotone plateau input.
+The complete Gamma and other prime-power row backgrounds converge to
+the same limit, while this one actual atom switches by a positive amount.
+Under the original minimal-form and semigroup premises, that paper test
+excludes this radial monotonicity interface independently of the existing
+order-two determinant obstruction. It does not exclude ordinary Markov
+positivity, signed or vector derivative transports, other orders or
+fixed-time estimates. No new Lean certification or all-input half-bound
+is supplied; actual cofinal signs, full Robin and RH remain unresolved.

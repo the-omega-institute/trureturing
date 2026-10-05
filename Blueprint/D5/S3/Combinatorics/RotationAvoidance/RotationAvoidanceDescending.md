@@ -30,7 +30,7 @@ Lean statement: `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceDescendi
 
 *Commentary.*
 
-For positive first with first plus three at most size, the number of permutations of one through size that begin with first, end with first plus one, and have 1432 in exactly the uncut rotation equals 2 to the power size minus first, minus twice size minus first minus one, minus two, minus the binomial coefficient choosing three from size minus first.
+For positive first with first plus three at most size, the number of permutations of one through size that begin with first, end with first plus one, and have 1432 in exactly the uncut rotation equals 2 to the power size minus first, minus twice size minus first minus one, minus two, minus the binomial coefficient choosing three from size minus first. Increasing relabelling and reversal identify the upper interval with the classical class avoiding 123 and 3412, after removing its decreasing permutation.
 
 ## References
 
