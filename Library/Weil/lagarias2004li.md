@@ -604,3 +604,18 @@ paper estimate with directed numerical evidence, not a new generic
 Poincare theorem or Lean result. It improves common-source inverse
 conditioning; the original energy's half-bound, cofinal projected
 comparison, Robin and RH remain unproved.
+
+### The critical eigenvector also tests sharp gradient mechanisms
+
+The [actual jump-gradient check](fukushima2011dirichlet.md#the-sharp-pointwise-gradient-route-fails-on-the-original-core)
+uses the same first critical vector $v_1$, the invariant minimal even
+semigroup and the original all-prime PNT rate. The proposed pointwise
+estimate $\mathcal G(P_t h)\le e^{-t}P_t\mathcal G(h)$ would force
+$\mathcal G(v_1)$ to be invariant and hence constant. Its incoming
+prime edges to a compact interval instead give an unbounded lower
+minorant, so that estimate fails on the original core. This is a
+conditional paper obstruction to that sufficient gradient route,
+without a diffusion-curvature equivalence or new Lean certification.
+It does not determine the sign of the integrated half-slack on
+$\mathcal R$, or invalidate the existing conditional $0.41$ bound.
+The full half-bound, Robin and RH remain unresolved.
