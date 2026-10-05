@@ -59408,3 +59408,171 @@ $$
 [定向探针报告](../../reports/fib-robin-boundary/neutral-response.md) 读取 §388 已发布的逆系数，在 $J=F_6,F_9,F_{12}$ 即 $8,34,144$ 构造183个帐篷脉冲。对应响应除以 $\sqrt{64J^3}$ 约为 $1.021401313728$、$4.944374777036$、$17.390949642898$。这些三位 Fibonacci 日程只索引已付核分辨率，不赋予一般探针实际五模式来源。有限数据核对同源矩、权重、增量与商接缝；全称结论由上述纸面构造承担，未完成 Lean 编译。实际 $H$ 的临界增长、Robin 有符号积分及共同序列符号条件仍未解决。
 
 ## 追加锚（本行以下为增补区）
+
+## 391. 实际 Binet 系数的 Nyman 半直线运输与自然前缀障碍
+
+本节把 §§384–386 的实际 $e=\mu*\beta$ 接到 §146 已引用的 Nyman–Beurling 半直线任务。经典自然前缀不收敛结论直接复用 Báez-Duarte，[arXiv:math/0011254v1，Proposition 4.4，PDF p. 17](https://arxiv.org/pdf/math/0011254v1)；其条件与子序列边界见[文献条目](../../../Library/Weil/baezduarte2000natural.md)。下面的运输是标准伸缩、绝对可和 Dirichlet 逆和序列收敛事实在同一实际输入上的纸面应用，不作为新的经典判据、重新证明文献结论或原创性声明。新增接口未完成 Lean 核验。
+
+### 391.1. 系数与目标必须共同运输
+
+**定义 391.1（实际 Hilbert 目标与残差）。** 在 $\mathscr H=L^2((0,\infty),dx)$ 中，取
+
+$$
+\chi=\mathbf1_{(0,1]},\qquad
+\varrho_n(x)=\left\{\frac1{nx}\right\},\qquad
+(U_df)(x)=f(dx)\quad(d,n\ge1).
+\tag{391.1}
+$$
+
+这里 $\varrho_n$ 是分数部分探针，不是 FIB 原始替换 $\rho$。直接使用同一实际 $\beta_d=\log(1-(-q)^d)$、$\gamma=\beta^{-1}$、$e=\mu*\beta$，定义
+
+$$
+\mathscr B_\beta=\sum_{d\ge1}\beta_dU_d,\qquad
+\mathscr B_\gamma=\sum_{d\ge1}\gamma_dU_d,\qquad
+\Phi_\beta=\mathscr B_\beta\chi.
+\tag{391.2}
+$$
+
+对整数 $N\ge0$，空和按零解释，置
+
+$$
+E_N^\mu=\chi+\sum_{m=1}^N\mu(m)\varrho_m,\qquad
+E_N^{\rm Fib}=\Phi_\beta+\sum_{n=1}^Ne_n\varrho_n.
+\tag{391.3}
+$$
+
+$E_0^\mu=\chi$、$E_0^{\rm Fib}=\Phi_\beta$ 是本节逼近残差的零截断约定；它们不是 §386 的算术零项 $e_0=H_0=0$。残差的加号对应文献自然前缀趋近 $-\chi$ 的符号。
+
+**命题 391.2（可逆目标运输与全截断身份）。** 两个算子均按算子范数绝对收敛，并且
+
+$$
+\begin{aligned}
+\|U_d\|&=d^{-1/2},\qquad U_dU_a=U_{da},\qquad U_d\varrho_m=\varrho_{dm},\\
+\|\mathscr B_\beta\|&\le B_{1/2},\qquad
+\|\mathscr B_\gamma\|\le\sum_{d\ge1}|\gamma_d|d^{-1/2}
+\le\frac1{\beta_1-T},\\
+\mathscr B_\gamma\mathscr B_\beta&=
+\mathscr B_\beta\mathscr B_\gamma=I.
+\end{aligned}
+\tag{391.4}
+$$
+
+对每个整数 $N\ge0$，两个残差有绝对收敛的精确式
+
+$$
+\boxed{
+E_N^{\rm Fib}
+=\sum_{d\ge1}\beta_dU_dE_{\lfloor N/d\rfloor}^\mu,
+\qquad
+E_N^\mu
+=\sum_{d\ge1}\gamma_dU_dE_{\lfloor N/d\rfloor}^{\rm Fib}.}
+\tag{391.5}
+$$
+
+**证明。** 半直线 Lebesgue 测度下的换元给 $\|U_df\|_2^2=d^{-1}\|f\|_2^2$；探针身份与复合律按定义成立。§384 已有 $\sum|\beta_d|=\beta_1+T<\infty$ 及 $\beta_1>T$。标准绝对卷积逆预算给
+
+$$
+\sum_{d\ge1}|\gamma_d|\le(\beta_1-T)^{-1}.
+\tag{391.6}
+$$
+
+这一通用预算已有仓内实现 `D5/S3/Arith/DirichletInverseAbsBudget.lean`；此处复用其数学内容，不另立包装声明，也不声称本节的具体应用已编译。算子级数于是绝对收敛，复合律与 $\gamma*\beta=\beta*\gamma=\mathbf1$ 给（391.4）。
+
+固定 $N$ 后，在（391.5）第一式中分离目标：所有 $d$ 的目标项恰为 $\Phi_\beta$；其余和只涉及 $dm\le N$，所以可以重排有限和，指标 $n$ 的系数就是 $\sum_{d\mid n}\beta_d\mu(n/d)=e_n$。第二式同理，目标为 $\mathscr B_\gamma\Phi_\beta=\chi$，有限系数为 $(\gamma*e)_n=\mu(n)$。无限部分只含一个固定目标向量，故（391.6）支付绝对收敛，不要求实际残差序列预先有全局界。$\square$
+
+特别地，第一式的 $d>N$ 部分是
+
+$$
+\sum_{d>N}\beta_dU_d\chi,
+\tag{391.7}
+$$
+
+而不是零。若仅将 $\mathscr B_\beta$ 作用于同一个 $E_N^\mu$，有限函数项会含 $dm>N$ 的额外系数；那也不是实际 $e_n$ 的 $n\le N$ 前缀。系数截断不能与整体卷积交换。实际目标在 $1/2<x\le1$ 上等于 $\beta_1$，因此也不能把它默认为未运输的 $\chi$。
+
+### 391.2. 稳定逆把经典障碍一并带回
+
+**命题 391.3（完整自然前缀的收敛性等价与文献排除）。** 当 $N$ 经过全部非负整数时，有
+
+$$
+\|E_N^{\rm Fib}\|_2\longrightarrow0
+\quad\Longleftrightarrow\quad
+\|E_N^\mu\|_2\longrightarrow0.
+\tag{391.8}
+$$
+
+文献 Proposition 4.4 已无条件排除右侧，故左侧也不成立。这是该实际 Binet 核的完整自然前缀路线障碍；不表示 RH 被反驳，也不排除自由系数逼近、其他平滑方式或某个选定子序列。
+
+**证明。** 对有界的 $\mathscr H$ 值序列 $F=(F_N)_{N\ge0}$，定义
+
+$$
+(\mathsf T_bF)_N=\sum_{d\ge1}b_dU_dF_{\lfloor N/d\rfloor}.
+\tag{391.9}
+$$
+
+当 $\sum|b_d|d^{-1/2}<\infty$ 时，这个级数在序列上有统一绝对界。若 $F_N\to0$，先将 $d$ 截到一个固定有限范围：每个固定 $d$ 的 $\lfloor N/d\rfloor\to\infty$，因此有限部分趋零；其余部分由 $\sup_N\|F_N\|_2$ 乘可和系数尾统一控制。故 $\mathsf T_bF$ 也趋零。取 $b=\beta$ 或 $b=\gamma$，并使用（391.5），得到双向蕴含。收敛性假设本身保证输入序列有界，包括零截断，因此这里没有预先给实际序列添加未证界。
+
+经典文献令 $S_N=\sum_{m\le N}\mu(m)\varrho_m$，其空间、系数、目标符号和全部整数截断都与这里的 $E_N^\mu=\chi+S_N$ 相符。Proposition 4.4 用临界线已有零点排除半直线 $L^2$ 收敛，不需要 RH。此处直接引用这个已发表结论，不重复其证明或扫描 Gram 矩阵。$\square$
+
+若只要求 $N=F_{3L}$ 或其它稀疏日程上的收敛，（391.5）仍会调用 $\lfloor F_{3L}/d\rfloor$，它通常不在同一日程内。没有这些缩放日程的联合控制，（391.8）的全序列证明不能转用于该子序列。原文在 p. 18 明确将某些子序列的可能性与完整自然前缀失败区分。
+
+### 391.3. 对数平滑的有限接口与目标修正
+
+文献 2002 加强式的 Introduction 已讨论 Selberg 对数平滑；这里不证明它的临界收敛性，仅将同一权重运到实际 $e$。为避免与 §386 的 $K$ 或原有 $S=M^3$ 混名，对实数 $t>1$ 定义
+
+$$
+\widetilde E^\mu(t)
+=\chi+\sum_{m\le t}\mu(m)
+\left(1-\frac{\log m}{\log t}\right)\varrho_m,
+\qquad
+\widetilde E^{\rm Fib}(t)
+=\Phi_\beta+\sum_{n\le t}e_n
+\left(1-\frac{\log n}{\log t}\right)\varrho_n.
+\tag{391.10}
+$$
+
+约定 $\widetilde E^\mu(t)=\chi$ 对 $0\le t\le1$ 成立。对整数 $N>1$，令
+
+$$
+a_N(d)=\max\left\{0,1-\frac{\log d}{\log N}\right\},\qquad
+C_N=\sum_{d\ge1}\beta_d(1-a_N(d))U_d\chi,
+\qquad
+L_\beta=\sum_{d\ge1}\frac{|\beta_d|\log d}{\sqrt d}<\infty.
+\tag{391.11}
+$$
+
+**命题 391.4（精确平滑运输及其有限修正）。** 有
+
+$$
+\boxed{
+\widetilde E^{\rm Fib}(N)
+=\sum_{d\ge1}\beta_da_N(d)U_d\widetilde E^\mu(N/d)+C_N,
+\qquad
+\|C_N\|_2\le\frac{L_\beta}{\log N}.}
+\tag{391.12}
+$$
+
+若另有尚未在本节建立的估计 $\|\widetilde E^\mu(t)\|_2\to0$（$t\to\infty$，全部实数截断），则（391.12）推出 $\|\widetilde E^{\rm Fib}(N)\|_2\to0$。本节不将 RH、点态收敛或数字几何长度守恒当作这个估计的证明。
+
+**证明。** 对 $d<N$、$dm\le N$，权重满足精确乘积式
+
+$$
+a_N(d)\left(1-\frac{\log m}{\log(N/d)}\right)
+=1-\frac{\log(dm)}{\log N}.
+\tag{391.13}
+$$
+
+$d=N$ 时外因子为零，实际 $n=N$ 的权重也为零；使用 $t=1$ 的上述约定，不引入 $0/0$。$d>N$ 时 $a_N(d)=0$。由有限卷积重排，函数项恰为（391.10）的实际 $e_n$ 前缀；剩下的目标就是（391.11）的 $C_N$，包括全部 $d>N$ 目标尾。
+
+由于 $d\ge1$、$N>1$，有 $0\le1-a_N(d)\le\log d/\log N$。又 $\|\chi\|_2=1$，（391.4）给修正项上界。$L_\beta$ 的收敛直接由 §385 的实际指数界 $|\beta_d|\le q^d/(1-q)$ 给出。
+
+在额外收敛条件下，$\widetilde E^\mu(t)$ 全域有界：远处由趋零保证，有限范围内由有限和及权重位于 $[0,1]$ 保证。每个固定 $d$ 的 $N/d\to\infty$，而 $0\le a_N(d)\le1$，故同一个有限部分加可和尾的论证使（391.12）的主和趋零；修正项也趋零。$\square$
+
+已有条件最优估计直接复用 [PZG_BEDC.md，条目 26.11](PZG_BEDC.md) 的 Bettin–Conrey–Farmer 结果。原始来源 [arXiv:1211.5191v1，Theorem 1](https://arxiv.org/abs/1211.5191v1) 使用同一对数权重，但保留 RH 及某个 $\delta>0$ 的 $\sum_{|\Im\rho|\le T}|\zeta'(\rho)|^{-2}\ll T^{3/2-\delta}$ 前提；后者还隐含非平凡零点单纯性。这里不另写最优性证明，不删除这些前提，也不把条件结果用作无条件 RH 证明。
+
+### 391.4. 与五模式分辨率及 Robin 目标的关系
+
+五模式日程可以决定读到哪个 $N$，但半直线测度 $dx$、伸缩范数 $d^{-1/2}$ 与约数系数 $e=\mu*\beta$ 是本节运输实际使用的关系。它没有把合法窗口的区间长度权重改称为 Möbius 权重，也没有从某个 $N$ 的模余数或收缩坐标恢复全部 Hilbert 残差。
+
+这里得到的是实际系数、固定目标和有限截断之间的接口，以及经典失败路线的直接排除。平滑修正可控制，不等于平滑主和可控制。接下来仍需同源临界估计，或一组合法可优化系数的全域误差界；§390 的实际中心化式中还必须保留低商余核。完整 Robin 不等式、实际 $H_N$ 的临界增长和 RH 仍未解决。
+
+## 追加锚（本行以下为增补区）
