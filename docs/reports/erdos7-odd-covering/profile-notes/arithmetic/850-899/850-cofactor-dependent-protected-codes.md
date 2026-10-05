@@ -3871,6 +3871,193 @@ fibres and their service at every second digit, or another valid
 whole-family replacement. Counting more numerical companions
 does not by itself establish the required simultaneous allocation.
 
+### Component changes preserve whole owners only with current labels
+
+Return to an actual globally count-then-modulus-sum minimal distinct
+odd nonunit whole cover. Let q be prime, $W>0$ with $\gcd(W,3q)=1$
+and $\gcd(3,q)=1$, and write every original numerical modulus as
+$3^{a_i}q^{j_i}m_i$ with $a_i,j_i\le2$ and $m_i\mid W$.
+Fix its pure original h of modulus $q^2$, and let D be all
+height-two originals with h's first q-digit.
+The base used here is the complete actual private-source projection
+
+$$
+K=\{(y\bmod9,y\bmod W):y\in\mathbb N\text{ is private to }h\},\qquad
+C_i=K\cap F_i\quad(i\in D),
+\tag{CD133}
+$$
+
+where $F_i$ is the full ternary-and-cofactor support of original i.
+In particular, K is not an independently chosen rectangle or mask.
+Write $t_i$ for i's literal second q-digit. A permutation $\pi_b$ at
+each base point and an effective digit $\delta_i$ obey the whole-owner
+invariant when
+
+$$
+\pi_b^{-1}(t_i)=\delta_i\qquad(b\in C_i).
+\tag{CD134}
+$$
+
+Initially $\pi_b$ is the identity and $\delta_i=t_i$. Choose two
+current effective digits a and b, form the intersection graph of
+their owners' complete supports $C_i$, and choose one connected
+component. Let $\tau_x$ swap a and b on the union of that component's
+supports and be the identity elsewhere. Component constancy makes
+this choice constant on each active owner's whole support. Owners
+of other effective digits are fixed by the swap. Therefore the update
+
+$$
+\pi'_x=\pi_x\circ\tau_x,\qquad
+\delta'_i=\tau_x(\delta_i)\quad(x\in C_i)
+\tag{CD135}
+$$
+
+preserves CD134; for an empty support, use the same chosen-component
+rule for its effective label. The graphs must use the current effective
+digits, and the swap is composed on the right. Repeated left swaps
+on graphs of the original digits are not the update asserted here.
+Every supplied finite sequence of CD135 preserves the invariant.
+
+For any fixed initial code $f_0$, this gives the whole-support identity
+
+$$
+\{x:b(x)\in C_i,\ \pi_{b(x)}(f_0(x))=t_i\}
+=\{x:b(x)\in C_i,\ f_0(x)=\delta_i\}.
+\tag{CD136}
+$$
+
+This identity alone does not assert that a fibre of an arbitrary
+$f_0$ is one arithmetic progression.
+
+### From effective digits to actual residue changes
+
+For CD134 there is a direct arithmetic realization. Keep every
+numerical modulus. Leave non-D residues unchanged, and for each
+$i\in D$ choose one CRT residue satisfying
+
+$$
+\rho'_i\equiv\rho_i\pmod{9W},\qquad
+\rho'_i\equiv(\rho_i\bmod q)+q\delta_i\pmod{q^2}.
+\tag{CD137}
+$$
+
+The resulting family covers all integers. To see the source of this
+claim, take a target in the complete deletion hole, keep its entire
+modulo-9W coordinate and first q-digit, and replace its second digit
+t by $\pi_{b(x)}(t)$. The exact-hole identity keeps that source in
+the old hole, so an old covering owner i lies in D. Its full base
+support contains $b(x)$, and CD134 forces $\delta_i=t$. Hence the
+single new CRT progression for i covers the target. Outside the
+hole the unchanged original complement pays. Finite periodicity
+supplies integer coverage.
+
+All numerical moduli, their distinctness, oddness and nonunit property
+are unchanged. Both global minimality properties are inherited because
+their comparison bounds use the same class count and modulus sum.
+There is no requirement that the permutations fix the unit digits,
+the donor digit, or previously selected pair symbols.
+
+Scoped transient Lean applications check the actual whole-owner
+finite-sequence specialization and this whole-integer CRT realization,
+using only standard axioms. They reuse existing component, CRT,
+exact-hole and finite-family results; no binding declaration is retained.
+They do not produce an improving sequence. Under the earlier q=23
+standing hypotheses, including the actual pure originals 3 and 9,
+CD127 applies anew to the rephased family with its own witnesses;
+the unit-digit set can change. Finding a legal rephasing that
+violates that obstruction remains a separate existence problem.
+
+### The exact service criterion for residue rephasing
+
+The permutation invariant is a sufficient construction. The full
+criterion can instead be stated directly on the fixed supports.
+For an assignment $\delta:D\to\mathbb F_q$, define
+
+$$
+\operatorname{Service}(\delta)
+\iff
+\forall b\in K\ \forall t\in\mathbb F_q\quad
+\exists i\in D:\ b\in F_i\ \land\ \delta_i=t.
+\tag{CD138}
+$$
+
+Thus every color class of original labels must cover the same
+complete K. A label receives one digit valid on its entire support;
+different source points cannot choose different digits for that label.
+The exact equivalence is
+
+$$
+\boxed{\operatorname{Service}(\delta)
+\iff\text{there exists a whole cover with the same numerical moduli,
+ the unchanged non-D residues, and the D residues prescribed by CD137}.}
+\tag{CD139}
+$$
+
+For sufficiency, take a target in the old deletion hole. Its base
+belongs to K. Apply CD138 to its literal second digit, and choose
+the original label i supplied there. Its ternary-and-cofactor
+conditions are the target's actual conditions, its first q-digit
+is the common donor prefix, and its new second digit is the target's
+digit. The CRT progression CD137 therefore covers the target.
+The unchanged complement covers all remaining targets.
+
+For necessity, fix one $b\in K$ and one digit t. Choose an actual
+old private witness over b and use CRT to insert t while preserving
+the full modulo-9W data and first q-digit. The resulting integer
+belongs to the old complete deletion hole. A new covering owner
+cannot be a retained non-D original. Its D residue gives second
+digit t, and preservation of its modulo-9W phase gives membership
+in its old support $F_i$. This is exactly CD138. This necessity
+argument does not separately require preservation of every first
+q-digit; the more restrictive CD137 contract supplies it for the
+equivalence and the invariance below.
+
+The criterion uses no equality constraint on the new colors of
+overlapping owners that originally had the same color. It is a
+cover-decomposition problem on complete actual supports, rather
+than an assumption that all admissible assignments are generated
+by the component moves CD135. The polychromatic terminology and
+the balanced-incidence sufficient theorem are already used in
+the discussion following CD39 and [Report385 Section142](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#142-balanced-depth-layers-with-stable-heavy-incidence-give-fixed-original-label-codes).
+That theorem requires balancedness; no balancedness of the present
+actual incidence matrix is asserted here.
+
+### The complete private base survives a successful reset
+
+For any actual reset satisfying the CD139 contract, form the new
+coordinates from its actual residues. Then
+
+$$
+D'=D,\qquad F'_i=F_i\quad\text{for every original }i,
+\qquad K'=K.
+\tag{CD140}
+$$
+
+The first equality follows from the unchanged first q-digits. The
+second follows by reducing the preserved modulo-9W phases to the
+original ternary and cofactor moduli. Both actual deletion holes
+are identical, since they delete the same index set and retain
+the same other progressions. Apply the exact-hole identity to each
+family: an old private witness supplies a new private witness with
+the same full modulo-9W coordinate, and conversely. Their projections
+are therefore equal. The private integers themselves need not be
+the same, since the donor's second digit may change.
+
+Consequently the masks $C_i$ and their actual intersections can be
+reused after a reset. A different unit-digit set or different effective
+labels must still be read from the new residues. Scoped transient
+Lean applications verify both directions of CD139 and all three
+equalities in CD140 from the stated original-family hypotheses,
+with standard axiom closures and no retained binding declaration.
+
+The remaining existence obligation is now precise: find one fixed
+assignment on these complete arithmetic supports that satisfies
+CD138 and creates a forbidden exchange under the earlier q=23
+conditions, or find a different fully paid whole-family replacement.
+These checks establish the criterion and its preservation, not such
+an assignment. The q=23 exclusion, the complete height-two branch
+and unrestricted Erdős #7 remain unresolved.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
