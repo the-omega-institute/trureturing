@@ -59,14 +59,7 @@ internal sealed class FiniteColorVirtualNilpotenceDocument : IScribeDocumentDefi
                     + "to K. This completes the general implication. It does not prove that any "
                     + "particular hyperbolic deck representation supplies the required coloring "
                     + "and subgroup, or establish Mostow-Prasad rigidity. Exact original H3 "
-                    + "integration and recovery of missing local geometric sources remain open.")),
-                Paragraph(Text(
-                    "The source-owner escape audit is unfinished: the complete dependent-family "
-                    + "source reconstruction, occurrence binding, realization bridge, whole-family "
-                    + "variation, sensitivity and observational dependence are not supplied. "
-                    + "Registration is paused under CLAUDE section 3.9; see GitHub issue 13225. "
-                    + "No declared_validated registration is claimed. The separate earlier "
-                    + "hyperbolic-geometry audit remains tracked by issue 11339."))),
+                    + "integration is a separate mathematical obligation."))),
             DescribeRole.Theorem))));
 
     private static Formula Statement()
