@@ -28,7 +28,7 @@ def snapshot (withCatalog : Bool) : MetaM Json := do
   let input ← RegistrationAssessmentInput.capture root
   let rows ← TemplateBinding.assessJoined input
   unless rows.size == 1 do throwError "control:assessment_count:{rows.size}"
-  let wire ← TemplateBinding.recordJson rows[0]!
+  let wire := TemplateBinding.recordJson (m := Id) rows[0]!
   return Json.mkObj [
     ("record", wire), ("roots", toJson snapshot.roots.size), ("modules", toJson owners.size)]
 

@@ -176,9 +176,16 @@ def InformationRegistry.hasOccurrence (env : Environment)
 def InformationRegistry.hasUnit (env : Environment) (n : Name) : Bool :=
   (entries env).any fun entry => entry.unitName == n
 
-/-- Reachability is relative to the requested registration root, which can be
-an imported module in a report environment containing unrelated roots. -/
-def moduleReachable (env : Environment) (root owner : Name) : Bool := Id.run do
+/-- Reflect direct module imports; graph queries consume only these names. -/
+def moduleImports (env : Environment) (name : Name) : Array Name :=
+  let imports := if name == env.header.mainModule then env.header.imports else
+    match env.getModuleIdx? name with
+    | some index => env.header.moduleData[index.toNat]!.imports
+    | none => #[]
+  imports.map (·.module)
+
+/-- Reachability is relative to the requested registration root. -/
+def moduleReachable (importsOf : Name → Array Name) (root owner : Name) : Bool := Id.run do
   let mut seen : NameSet := {}
   let mut pending := [root]
   while let name :: rest := pending do
@@ -186,33 +193,23 @@ def moduleReachable (env : Environment) (root owner : Name) : Bool := Id.run do
     if seen.contains name then continue
     if name == owner then return true
     seen := seen.insert name
-    let imports := if name == env.header.mainModule then env.header.imports else
-      match env.getModuleIdx? name with
-      | some index => env.header.moduleData[index.toNat]!.imports
-      | none => #[]
-    pending := imports.toList.map (·.module) ++ pending
+    pending := (importsOf name).toList ++ pending
   return false
 
-/-- Every module reachable from `root`, including `root`: the same relation as
-`moduleReachable`, computed once so that a caller filtering many owners
-traverses the import graph once rather than once per owner. -/
-def reachableModules (env : Environment) (root : Name) : NameSet := Id.run do
+/-- The root's complete import closure, shared by owner filters and joins. -/
+def reachableModules (importsOf : Name → Array Name) (root : Name) : NameSet := Id.run do
   let mut seen : NameSet := {}
   let mut pending := [root]
   while let name :: rest := pending do
     pending := rest
     if seen.contains name then continue
     seen := seen.insert name
-    let imports := if name == env.header.mainModule then env.header.imports else
-      match env.getModuleIdx? name with
-      | some index => env.header.moduleData[index.toNat]!.imports
-      | none => #[]
-    pending := imports.toList.map (·.module) ++ pending
+    pending := (importsOf name).toList ++ pending
   return seen
 
 def InformationRegistry.forRoot (env : Environment) (root : Name) :
     Array InformationRegistryEntry :=
-  let reachable := reachableModules env root
+  let reachable := reachableModules (moduleImports env) root
   entries env |>.filter (fun entry => reachable.contains entry.registrationModuleName)
 
 /-- A deterministic identity for the theorem type stored in the elaborated environment. -/

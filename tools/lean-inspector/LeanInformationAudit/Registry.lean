@@ -113,7 +113,7 @@ def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
     throwError "incomplete_closure:dtr.event_unit_owner"
   let realizationOwner := GeneratedDeclarations.ownerOf env event.realizationName
   unless env.contains event.realizationName &&
-      moduleReachable env event.key.registrationModule realizationOwner do
+      moduleReachable (moduleImports env) event.key.registrationModule realizationOwner do
     throwError "incomplete_closure:dtr.event_unit_owner"
 
 /-- Snapshot for the complete imported join. Original producer records retain
@@ -142,11 +142,11 @@ Callers must establish complete governed registration inputs before claiming cov
 def assessJoined (input : RegistrationAssessmentInput) : MetaM (Array BindingRecord) := do
   unless sameRegistrationEnvironment input.environment (← getEnv) do
     throwError "incomplete_closure:dtr.assessment_environment"
-  joinRecords input.environment (reachableModules input.environment input.rootId) input.options
+  joinRecords input.environment (reachableModules (moduleImports input.environment) input.rootId) input.options
 
 private def snapshotRecords (env : Environment) (rootId : Name) (options : Options) :
     MetaM JoinedRecords := do
-  let reachable := reachableModules env rootId
+  let reachable := reachableModules (moduleImports env) rootId
   let selected ← joinRecords env reachable options
   let originals ← ((inventory env).filter fun event =>
       reachable.contains event.key.registrationModule).mapM fun event => do
@@ -231,7 +231,7 @@ private def escapeContinuationJson (residual : EscapeContinuationIdentity) : Jso
   ("chain_name", toJson (residual.chainName.map Name.toString))]
 
 /-- Shared record wire for the inspector and census authoritative snapshots. -/
-def recordJson (record : BindingRecord) : MetaM Json := do
+def recordJson [Applicative m] (record : BindingRecord) : m Json := do
   let (state, diagnostic, certificate) := match record.result with
     | .undeclared => ("undeclared", toJson (missingDeclarationDiagnostic record.occurrence.key), Json.null)
     | .declaredUnresolved diagnostic => ("declared_unresolved", toJson diagnostic, Json.null)
@@ -249,14 +249,14 @@ def recordJson (record : BindingRecord) : MetaM Json := do
     ("state", toJson state), ("diagnostic", diagnostic), ("certificate", certificate)]
 
 /-- Each record is exported only by its registration owner. -/
-private def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
-    (registered : Array TemplateOccurrenceKey) : MetaM Json := do
-  let env ← getEnv
+private def moduleJson [Monad m] (events : Array TemplateOccurrenceEvent)
+    (snapshot : JoinedRecords) (moduleName : Name)
+    (registered : Array TemplateOccurrenceKey) : m Json := do
   let rows ← (snapshot.selected.filter
     (·.occurrence.key.registrationModule == moduleName)).mapM recordJson
   return Json.mkObj [
     ("schema_version", toJson (1 : Nat)),
-    ("inventory", Json.arr ((inventory env).filter
+    ("inventory", Json.arr (events.filter
       (·.key.registrationModule == moduleName) |>.map (keyJson ∘ TemplateOccurrenceEvent.key))),
     ("registered", Json.arr (registered.map keyJson)), ("records", Json.arr rows)]
 
@@ -269,12 +269,13 @@ def reportRoots (env : Environment) (modules : Array Name) : Array Name :=
 of loaded modules the target does not import take no part in it. The caller
 validates native coherence of the batch around all of its targets. -/
 def targetJson (target : Name) (registered : Array TemplateOccurrenceKey) : MetaM Json := do
-  moduleJson (← snapshotRecords (← getEnv) target (← getOptions)) target registered
+  moduleJson (inventory (← getEnv))
+    (← snapshotRecords (← getEnv) target (← getOptions)) target registered
 
 /-- The row of a target that reaches no recorded input: the row `targetJson`
 produces for it after its (empty) assessment. -/
-def emptyTargetJson (target : Name) : MetaM Json :=
-  moduleJson { selected := #[], originals := #[] } target #[]
+def emptyTargetJson [Monad m] (target : Name) : m Json :=
+  moduleJson #[] { selected := #[], originals := #[] } target #[]
 
 /-- Validate the complete native union around a report transaction. Each native
 snapshot is still checked against the loaded image; shared imports are rehashed

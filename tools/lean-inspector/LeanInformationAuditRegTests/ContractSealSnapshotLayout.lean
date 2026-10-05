@@ -15,7 +15,7 @@ private def occurrenceJson (row : LeanInformationAudit.ExpectedOccurrence) : Jso
 
 /-- Assess and seal one layout in its compiler import environment. -/
 def snapshot (root : Name) : MetaM Json := do
-  let reachable := reachableModules (← getEnv) root
+  let reachable := reachableModules (moduleImports (← getEnv)) root
   let owners := ((← getEnv).header.moduleNames.filter fun owner =>
     reachable.contains owner && (`Reg).isPrefixOf owner).filter (· != root) |>.push root
   let requirements ← RootStructure.requiredFor owners Discovery.moduleSource

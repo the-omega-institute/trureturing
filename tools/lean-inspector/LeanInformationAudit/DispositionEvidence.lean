@@ -368,7 +368,7 @@ def replayStructuralRegistrations (rootId : Name) : CommandElabM Unit := do
   let declarations := structuralDeclarationInputs.getState env
   for entry in structuralRegistry.getState env do
     unless entry.registrationModule != env.header.mainModule &&
-        moduleReachable env rootId entry.registrationModule do continue
+        moduleReachable (moduleImports env) rootId entry.registrationModule do continue
     let declaration := (declarations.find? (·.1 == entry.theoremName)).bind (·.2)
     GeneratedDeclarations.withOwner entry.registrationModule do
       liftTermElabM do

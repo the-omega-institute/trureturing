@@ -7,7 +7,7 @@ open Lean Meta Elab Command
 /-- Discover the target import closure from compiled declarations and source paths. -/
 def targetSnapshot (root : Name) : MetaM Discovery.Snapshot := do
   let env ← getEnv
-  let reachable := reachableModules env root
+  let reachable := reachableModules (moduleImports env) root
   let owners := (env.header.moduleNames.push env.header.mainModule).filter fun owner =>
     reachable.contains owner && (`Reg).isPrefixOf owner
   let requirements ← RootStructure.requiredFor owners Discovery.moduleSource
