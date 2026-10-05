@@ -48,9 +48,9 @@ internal sealed class TriangularSharedImplementationDocument : IScribeDocumentDe
             Definition("SharedActive", "Shared and singleton activities", "The shared active carrier "
                 + "is the disjoint union of P_k for k < floor(m/2) and one V_(r,e,k) for every "
                 + "non-immediate original slot. Terminals form a separate copy of Fin(m)."),
-            Definition("color", "Activity and terminal colors", "All activity states have color none. "
-                + "Terminal i has color some(i), so terminals are pairwise distinct in color. "
-                + "The index i in Fin(m) denotes the source label i+1."),
+            Paragraph(Text("The color map is Sum.getRight?: activities have color none, and terminal "
+                + "i has color some(i). Thus terminal colors are distinct. The index i in Fin(m) "
+                + "denotes source label i+1.")),
             Definition("root", "Original root", "For every m >= 2 the root is the active slot (1,m,0)."),
             Definition("outputCount", "Length of the ordered output list", "For the one action the "
                 + "output count q is e; for zero(h) it is h. In particular h=0 gives an empty list."),
@@ -89,7 +89,7 @@ internal sealed class TriangularSharedImplementationDocument : IScribeDocumentDe
                 DeclarationHandle.Create(Prefix + "result"), H("Complete stream preservation and activity count"),
                 StatementSource.FromAuthor(Disp(ResultFormula())), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For every m >= 2 and every legal stationary table f, there are "
-                        + "a surjective projection pi and a fixed ordered shared transition delta. "
+                        + "a surjective projection pi and a fixed ordered transition delta on a finite shared carrier. "
                         + "The projection preserves activity and every terminal label, and it commutes "
                         + "with each bit transition. For every infinite stream, the first terminal "
                         + "label and stopping length agree, all prefix charges agree, and nontermination "
@@ -138,7 +138,7 @@ internal sealed class TriangularSharedImplementationDocument : IScribeDocumentDe
                 All("s", original, Equal(Fn("color", Fn("pi", s)), Fn("color", s))),
                 All("s", original, All("u", bits,
                     Equal(Fn("pi", Fn("originalStep", f, s, u)), Fn("delta", Fn("pi", s), u)))),
-                response, bills, paid, nonstop,
+                response, bills, paid, nonstop, Fn("Finite", shared),
                 Equal(Fn("card", Fn("SharedActive", m)), Fn("B", m)),
                 Rel(Fn("card", Fn("ReachableActive", delta, imageStart)), Le, Fn("B", m)),
                 Equal(Fn("card", labels), m),

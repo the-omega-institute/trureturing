@@ -29,13 +29,13 @@ structure Table (m : ℕ) where
   legal : ∀ s, 0 < s.e → s.r < s.e → s.e ≤ m → Legal m s (action s)
 
 /-- The original slot coordinates e, r, k; empty Fin r removes zero residual slots. -/
-def Slot (m : ℕ) := Σ e : Fin (m + 1), Σ r : Fin e.val, Fin r.val
+@[reducible] def Slot (m : ℕ) := Σ e : Fin (m + 1), Σ r : Fin e.val, Fin r.val
 
 /-- The aggregate state of an original slot. -/
 def aggregate {m : ℕ} (s : Slot m) : State := ⟨s.2.1.val, s.1.val⟩
 
 /-- Slots with the same one-bit ordered terminal pair can share a vertex. -/
-def Immediate {m : ℕ} (s : Slot m) : Prop :=
+@[reducible] def Immediate {m : ℕ} (s : Slot m) : Prop :=
   s.1.val ≤ 2 * s.2.1.val ∧ s.2.2.val < s.1.val / 2
 
 /-- Shared one-bit vertices and all remaining singleton slots. -/
@@ -44,16 +44,14 @@ def SharedActive (m : ℕ) := Fin (m / 2) ⊕ {s : Slot m // ¬Immediate s}
 local notation "Original" m:arg => (Slot m ⊕ Fin m)
 local notation "Shared" m:arg => (SharedActive m ⊕ Fin m)
 
-/-- Activities have no terminal label; distinct terminals retain their own labels. -/
-def color {m : ℕ} {A : Type} : A ⊕ Fin m → Option (Fin m)
-  | .inl _ => none
-  | .inr i => some i
+-- Sum.getRight? is the existing activity/terminal color map.
+local notation "color" => Sum.getRight?
 
 /-- The source root has coordinates (r,e,k)=(1,m,0). -/
 def root (m : ℕ) (hm : 2 ≤ m) : Original m :=
   .inl ⟨⟨m, by omega⟩, ⟨⟨1, by change 1 < m; omega⟩, ⟨0, by change 0 < 1; omega⟩⟩⟩
 
-/-- Ordered output count and the successor prescribed by the original column. -/
+/-- Length of the ordered output list prescribed by the original column. -/
 def outputCount (a : Action) (e : ℕ) : ℕ :=
   match a with
   | .one => e
@@ -77,7 +75,8 @@ def originalStep {m : ℕ} (f : Table m) : Original m → Fin 2 → Original m
     have action_legal : (match a with
         | .one => s.1.val ≤ 2 * s.2.1.val
         | .zero h => 2 * s.2.1.val < s.1.val ∧ h ≤ 2 * s.2.1.val) := by
-      simpa only [aggregate] using hl.2.2.2
+      change Legal m (aggregate s) a at hl
+      exact hl.2.2.2
     have hz : z < 2 * s.2.1.val := by
       have H := s.2.2.isLt
       have H' := u.isLt
@@ -117,6 +116,7 @@ def originalStep {m : ℕ} (f : Table m) : Original m → Fin 2 → Original m
             simp [successor, ha, aggregate]
             omega⟩,
           ⟨z - q, by
+            change z - q < (successor (aggregate s) a).r
             cases ha : a with
             | one =>
               have H : s.1.val ≤ 2 * s.2.1.val := by
@@ -179,6 +179,8 @@ def ReachableActive {m : ℕ} (δ : Shared m → Fin 2 → Shared m) (s : Shared
 def bound (m : ℕ) : ℕ :=
   m * (m - 1) * (m + 1) / 6 - (∑ e ∈ Finset.range (m + 1), (e / 2) ^ 2) + m / 2
 
+noncomputable section
+
 /-- Every stationary legal table has an explicit color-preserving shared implementation,
 with identical first-stop responses and bills on every stream and the stated general bound. -/
 theorem result (m : ℕ) (hm : 2 ≤ m) (f : Table m) :
@@ -194,6 +196,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (f : Table m) :
         charged (originalStep f) color (root m hm) ω n = n) ∧
       (∀ ω, Nonstop (originalStep f) color (root m hm) ω ↔
         Nonstop δ color (π (root m hm)) ω) ∧
+      Finite (Shared m) ∧
       Nat.card (SharedActive m) = bound m ∧
       Nat.card (ReachableActive δ (π (root m hm))) ≤ bound m ∧
       Nat.card (Fin m) = m ∧
@@ -256,7 +259,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (f : Table m) :
       color (trace (originalStep f) (root m hm) ω n) =
       color (trace (sharedStep f) (projection (root m hm)) ω n) := by
     have H := List.foldl_hom projection (g₁ := originalStep f) (g₂ := sharedStep f)
-      (l := List.ofFn (fun j : Fin n => ω j.val)) (a₁ := root m hm)
+      (l := List.ofFn (fun j : Fin n => ω j.val)) (init := root m hm)
       (fun s u => (commutes s u).symm)
     exact (colors _).symm.trans (congrArg color H.symm)
   have stop (ω : ℕ → Fin 2) (i : Fin m) (n : ℕ) :
@@ -293,31 +296,29 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (f : Table m) :
           have H' := t.2.2.isLt
           omega⟩⟩⟩, by
             constructor
-            · have H := t.2.1.isLt; omega
+            · change t.1.val ≤ 2 * (t.1.val - t.1.val / 2 + t.2.1.val)
+              have H := t.2.1.isLt; omega
             · exact t.2.2.isLt⟩
       left_inv := by
-        intro s
+        rintro ⟨⟨⟨e, he⟩, ⟨⟨r, hr⟩, ⟨k, hk⟩⟩⟩, hi⟩
         apply Subtype.ext
-        dsimp
-        have H := s.property.1
-        have Hr := s.val.2.1.isLt
-        have heq : s.val.1.val - s.val.1.val / 2 +
-            (s.val.2.1.val - (s.val.1.val - s.val.1.val / 2)) = s.val.2.1.val := by omega
-        simp only [heq, Fin.eta]
+        dsimp [Immediate] at hi ⊢
+        have heq : e - e / 2 + (r - (e - e / 2)) = r := by omega
+        simp only [heq]
       right_inv := by
-        intro t
+        rintro ⟨⟨e, he⟩, ⟨⟨r, hr⟩, ⟨k, hk⟩⟩⟩
         dsimp
-        have H := t.2.1.isLt
-        have heq : (t.1.val - t.1.val / 2 + t.2.1.val) -
-            (t.1.val - t.1.val / 2) = t.2.1.val := by omega
-        simp only [heq, Fin.eta, Prod.eta, Sigma.eta] }
-  have removed : Fintype.card {s : Slot m // Immediate s} =
+        have heq : (e - e / 2 + r) - (e - e / 2) = r := by omega
+        simp only [heq] }
+  have removed : Nat.card {s : Slot m // Immediate s} =
       ∑ e ∈ Finset.range (m + 1), (e / 2) ^ 2 := by
-    rw [Fintype.card_congr removedEquiv]
-    simp [Fintype.card_sigma, Fintype.card_prod, sq, Fin.sum_univ_eq_sum_range]
-  have total : Fintype.card (Slot m) = m * (m - 1) * (m + 1) / 6 := by
+    rw [Nat.card_congr removedEquiv]
+    simp only [Nat.card_sigma, Nat.card_prod, Nat.card_fin, ← sq]
+    exact Fin.sum_univ_eq_sum_range (fun e : ℕ => (e / 2) ^ 2) (m + 1)
+  have total : Nat.card (Slot m) = m * (m - 1) * (m + 1) / 6 := by
     have hs : (∑ e ∈ Finset.range (m + 1), e.choose 2) = (m + 1).choose 3 := by
       rw [← Nat.sum_Icc_choose m 2]
+      symm
       apply Finset.sum_subset
       · intro e he
         simp only [Finset.mem_Icc, Finset.mem_range] at he ⊢
@@ -327,9 +328,11 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (f : Table m) :
         simp only [Finset.mem_range, Finset.mem_Icc, not_and] at he hn
         omega
     calc
-      Fintype.card (Slot m) = ∑ e ∈ Finset.range (m + 1), e.choose 2 := by
-        simp [Slot, Fintype.card_sigma, Fin.sum_univ_eq_sum_range,
-          Finset.sum_range_id, Nat.choose_two_right]
+      Nat.card (Slot m) = ∑ e ∈ Finset.range (m + 1), e.choose 2 := by
+        simp only [Slot, Nat.card_sigma, Nat.card_fin]
+        simp_rw [Fin.sum_univ_eq_sum_range (fun r : ℕ => r),
+          Finset.sum_range_id, ← Nat.choose_two_right]
+        exact Fin.sum_univ_eq_sum_range (fun e : ℕ => e.choose 2) (m + 1)
       _ = (m + 1).choose 3 := hs
       _ = _ := by
         rw [Nat.choose_eq_descFactorial_div_factorial]
@@ -340,8 +343,10 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (f : Table m) :
         simp only [H, Nat.add_sub_cancel, Nat.sub_zero, mul_one]
         ring
   have activity : Nat.card (SharedActive m) = bound m := by
-    simp only [SharedActive, Nat.card_eq_fintype_card, Fintype.card_sum,
-      Fintype.card_fin, Fintype.card_subtype_compl, total, removed, bound]
+    have compl : Nat.card {s : Slot m // ¬Immediate s} =
+        Nat.card (Slot m) - Nat.card {s : Slot m // Immediate s} := by
+      simp only [Nat.card_eq_fintype_card, Fintype.card_subtype_compl]
+    simp only [SharedActive, Nat.card_sum, Nat.card_fin, compl, total, removed, bound]
     omega
   have reachable : Nat.card (ReachableActive (sharedStep f) (projection (root m hm))) ≤ bound m := by
     rw [← activity]
@@ -403,22 +408,18 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (f : Table m) :
     have No := N_exact (2 * q + 1)
     have he : 2 * q - 1 + 1 = 2 * q := by omega
     have e_poly : (2 * q) * (2 * q - 1) * (2 * q + 1) + 2 * q = 8 * q ^ 3 := by
-      calc
-        _ = (2 * q) * (2 * q - 1) * (2 * q + 1) +
-            (2 * q) * ((2 * q + 1) - (2 * q - 1)) / 2 := by
-              have H : (2 * q + 1) - (2 * q - 1) = 2 := by omega
-              rw [H]
-              simp
-        _ = _ := by nlinarith only [he]
+      have H := congrArg (fun x : ℕ => 2 * q * x * (2 * q + 1)) he
+      nlinarith only [H]
     have o_poly : (2 * q + 1) * (2 * q + 1 - 1) * (2 * q + 1 + 1) =
         8 * q ^ 3 + 12 * q ^ 2 + 4 * q := by
       simp only [Nat.add_sub_cancel]
       ring
     have he_div : (2 * q) / 2 = q := by omega
     have ho_div : (2 * q + 1) / 2 = q := by omega
+    have qcube : q ≤ q ^ 3 := le_self_pow hq (by decide)
     have le_even : 2 * (∑ j ∈ Finset.range q, j ^ 2) + q ^ 2 ≤
         (2 * q) * (2 * q - 1) * (2 * q + 1) / 6 := by
-      nlinarith only [S, Ne, e_poly, hq]
+      nlinarith only [S, Ne, e_poly, qcube]
     have le_odd : 2 * (∑ j ∈ Finset.range q, j ^ 2) + 2 * q ^ 2 ≤
         (2 * q + 1) * (2 * q + 1 - 1) * (2 * q + 1 + 1) / 6 := by
       nlinarith only [S, No, o_poly, hq]
@@ -434,6 +435,8 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (f : Table m) :
       nlinarith only [H, S, No, o_poly]
     constructor <;> omega
   exact ⟨projection, sharedStep f, onto, colors, commutes, stop, bills, paid,
-    no_stop, activity, reachable, Nat.card_fin m, closed⟩
+    no_stop, inferInstance, activity, reachable, Nat.card_fin m, closed⟩
+
+end
 
 end D5.S3.Arith.FibonacciAtomic.TriangularSharedImplementation
