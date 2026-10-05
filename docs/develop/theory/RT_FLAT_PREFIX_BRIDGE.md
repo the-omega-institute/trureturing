@@ -8,8 +8,10 @@ formula.
 
 ## Theorem (flat-prefix physical bridge)
 
-Let `n : N`, let `1 <= m_0 < ... < m_n` be integers, and let `1 <= d_i` be
-integers. Put `r_i = m_i d_i`, `ell_i = log m_i`, and let `M = m_n`. Define,
+Let `n : N`. The case `n=0` is the trivial single-sector bridge: `v=(1)`,
+`T=0`, and `delta=0`; below assume `n >= 1`. Let `1 <= m_0 < ... < m_n` be
+integers, and let `1 <= d_i` be integers. Put `r_i = m_i d_i`,
+`ell_i = log m_i`, and let `M = m_n`. Define,
 for `j : Fin M`,
 
 ```
