@@ -4373,6 +4373,183 @@ within a cofactor group are also unaffected: swapping two equal digits does
 not lower the count. CD147 supplies no six-request existence or
 q=23 exclusion.
 
+## Full prime guards exclude the q=23 branch at ternary height two
+
+For this section, fix one actual finite cover with pairwise distinct
+odd numerical moduli greater than one, globally minimum in class
+count and then in modulus sum among all such whole covers. The
+comparison class is unrestricted: competing covers need not preserve
+ternary height, prime support, or residue normal form. Assume actual
+pure3 and pure9 classes and write every original numerical label as
+
+$$
+ d_i=3^{a_i}23^{e_i}m_i,
+ \qquad 0\le a_i\le2,\quad e_i\ge0,
+ \qquad m_i\mid W,\quad W>0,\quad (W,69)=1.
+$$
+
+Choose a positive common period Q for all original moduli. Let
+$P_i(Q)$ be the complete private set of original i in $\mathbb Z/Q$,
+and let $c_3$ be the actual pure3 root. Define the literal set
+
+$$
+ R_Q=\left\{p>3:\ p\text{ prime, an original }g_p\text{ has }d_{g_p}=p,
+ \quad\pi_3(P_{g_p}(Q))=\mathbb F_3\setminus\{c_3\}\right\}.
+$$
+
+The following conclusion uses $R_Q\subseteq\{23\}$, not equality.
+It allows 23 to be absent from the actual prime support. All
+nonternary prime heights are arbitrary finite heights.
+
+**CD148.** Under these conditions, no such whole cover exists.
+No actual $9\cdot23^2$ unit, protected-nine normal form, aligned
+unit phases, private-hull equality, or six-request lower bound is
+an additional premise.
+
+Every actual support prime $p\ne3,23$ occurs in an actual cofactor.
+The finite-period singleton implication supplies one fixed actual
+class of modulus $3p$ whose first-p phase occurs in no other
+p-bearing original. Its ternary root is live. Choose these
+singletons once for the whole original family. They give a single
+partition of all non23 support primes between the two roots
+$c_9,c_*$ outside $c_3$, where $c_9$ is the actual pure9 root.
+The pure9 root is live because otherwise pure9 would be contained
+in pure3.
+
+The complete private region of the actual pure-p class lies in
+its singleton's root. At $c_9$ it can occupy at most two modulo9
+words; at $c_*$ it can occupy at most three. Apply the actual
+whole-cover terminal-donor descent SC440 with these complete
+private projections. Use the actual finite maximum
+$M=\max_i e_i$ and auxiliary common period $9\cdot23^M W$;
+no uniform bound on M is assumed. For $p>27$, descent occurs whenever
+$27k+1\le p+9$, with $k=2$ or $3$. Global count/sum minimality
+therefore gives
+
+$$
+ p\le43\quad\text{at }c_9,
+ \qquad p\le71\quad\text{at }c_*.
+ \tag{CD149}
+$$
+
+These are consequences of the same actual family and the fixed
+singleton choices. No stronger SC442 threshold is used.
+
+### One full product law on each root
+
+Fix either live root c. On every opposite-root prime axis, fix the
+complete prime-power word at its actual singleton phase. This
+excludes every original bearing that prime, including row-zero
+originals. On every remaining axis p, including 23 when present,
+condition the uniform full prime-power word on avoiding every
+actual pure $p^h$ phase and every actual $3p^h$ phase, for all
+positive depths. The latter guards are imposed regardless of their
+ternary root. Missing numerical labels may receive dummy forbidden
+prefixes; these only impose extra restrictions.
+
+If $H_p$ is the actual maximum depth, put
+
+$$
+ \sigma_p=\sum_{h=1}^{H_p}p^{-h},
+ \qquad \rho_p=\Pr(\text{both full guard families are avoided}),
+ \qquad b_p=\frac{\sigma_p}{\rho_p}.
+$$
+
+The union bound on that one axis gives
+$\rho_p\ge1-2\sigma_p>0$. A positive-depth literal prefix has
+conditional mass at most $p^{-h}/\rho_p$; depth zero has mass
+exactly one. Thus
+
+$$
+ 0\le b_p\le\frac1{p-3},
+ \qquad b_{23}\le\frac1{20}.
+$$
+
+For the ternary coordinate, retain uniformly the two modulo9 words
+over $c_9$ outside pure9, or all three over $c_*$. Take the product
+of this law and the full prime-axis laws. CRT turns every product
+point into one integer tested against the unchanged original
+moduli and residues. Original whole coverage is therefore coverage
+of this same probability space.
+
+Let $P_c=\prod_p(1+b_p)$ and $B_c=\sum_p b_p$, over the active
+nonternary axes. Every numerical label has at most one owner.
+In rows zero and one, all zero-support and single-prime-support
+labels have zero probability: they are nonunit-excluded, pure3,
+one of the imposed actual guards, or excluded by an opposite-root
+fixed axis. In row two, the zero-support label is pure9 and also has probability zero. Summing the remaining
+original event bounds by their actual exponent vectors gives
+
+$$
+ 1\le2(P_c-1-B_c)+\kappa_c(P_c-1),
+ \qquad \kappa_{c_9}=\frac12,
+ \quad\kappa_{c_*}=\frac13.
+ \tag{CD150}
+$$
+
+The subtraction here removes exact numerical slots before bounding
+the sum. It does not subtract unrelated upper estimates. Inactive
+positive-depth coordinates contribute zero only through exclusion
+of actual original events; a matching prefix under a fixed-point
+law need not itself have zero probability.
+
+### The two necessary budgets are incompatible
+
+Set
+
+$$
+ S=\{5,7,11,13,17,19,29,31,37,41,43\},
+ \qquad T=\{47,53,59,61,67,71\}.
+$$
+
+For any finite $B\subseteq S\cup T$, define
+
+$$
+ E_\kappa(B)
+ =(2+\kappa)\left[
+   \left(1+\frac1{20}\right)
+   \prod_{p\in B}\left(1+\frac1{p-3}\right)-1\right]
+ -2\left[\frac1{20}+\sum_{p\in B}\frac1{p-3}\right].
+$$
+
+The load in CD150 is coordinatewise nondecreasing for nonnegative
+weights: $P_c-1-B_c$ is the sum of all product monomials of degree
+at least two, and $P_c-1$ contains all positive degrees. Consequently
+one may increase weights to their displayed caps and pad absent
+primes, including an absent 23. Take A to be the actual non23
+primes at $c_9$. By CD149, $A\subseteq S$ and the other root's
+non23 primes are contained in $(S\setminus A)\cup T$. Both roots
+would therefore require
+
+$$
+ E_{1/2}(A)\ge1,
+ \qquad E_{1/3}((S\setminus A)\cup T)\ge1.
+$$
+
+Exact rational comparison over the $2^{11}$ subsets proves
+
+$$
+ \forall A\subseteq S,\qquad
+ E_{1/2}(A)<1\ \text{or}\
+ E_{1/3}((S\setminus A)\cup T)<1.
+ \tag{CD151}
+$$
+
+This contradicts the two necessary budgets and proves CD148.
+The finite comparison is checked directly by Lean's kernel; the
+full scoped transient application also derives the singleton
+palette, actual product events, guarded zero slots, exponent-vector
+injection and both necessary budgets from the stated original-family
+hypotheses. Its axiom closure contains only `propext`,
+`Classical.choice` and `Quot.sound`. This is an exact application
+check, not a new frozen declaration or atom-coverage claim.
+
+CD148 excludes the specified q=23 branch of a globally extremal
+cover. It does not establish that every hypothetical odd distinct
+cover reduces to this branch. Other exceptional-prime sets, larger
+ternary height, and unrestricted odd distinct covering remain
+unresolved. The exclusion allows arbitrary finite 23-height.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
@@ -4443,6 +4620,8 @@ The component routes have $n\ge83$ under the additional GHA11 height
 envelope, enough for CD15. They still need an upper bound on the actual
 profiles or word-availability moment contradicting CD12 or CD16.
 Every surviving repeated-digit and distinct-digit profile must be
-included. SC483 supplies none of these upper bounds by itself. The
-height-two branch and unrestricted odd distinct covering
-remain unresolved.
+included. SC483 supplies none of these upper bounds by itself.
+The remaining ternary-height-two cases, including other
+exceptional-prime sets, and unrestricted odd distinct covering remain
+unresolved. CD148 excludes the specified q=23 case by a separate
+full-prime-guard argument.
