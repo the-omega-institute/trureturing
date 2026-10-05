@@ -1604,6 +1604,80 @@ factorization, finite sums and the stated minimality comparator;
 no new canonical binding declaration, freeze or coverage record is
 introduced.
 
+## Actual pure guards reduce the second-digit alphabet to 45
+
+Take an actual globally count-then-modulus-sum-minimal odd
+distinct nonunit whole cover with factorization
+$d_i=3^{a_i}q^{j_i}m_i$, $a_i\le2$, $m_i\mid W$, and the stated
+conditions $W>0$, $\gcd(W,3q)=\gcd(3,q)=1$. Suppose in addition that
+the original family contains actual moduli 3 and 9. Then
+
+$$
+q\ge45\quad\Longrightarrow\quad j_i\le1\text{ for every original }i.
+\tag{CD44}
+$$
+
+No primality of q, bound on $\omega(W)$, bound on the other
+q-heights, or independent tag-allocation premise is required.
+
+Let the two actual guard residues be $r_3\bmod3$ and $r_9\bmod9$.
+The modulus-nine class cannot be contained in the modulus-three
+class: removing a contained original contradicts minimal class
+count. Thus $r_9\not\equiv r_3\pmod3$. The uncovered guard residues
+in the modulus-81 window form
+
+$$
+S=\{u\in\mathbb Z/81\mathbb Z:
+ u\not\equiv r_3\pmod3,\ u\not\equiv r_9\pmod9\},
+\qquad |S|=81-27-9=45.
+\tag{CD45}
+$$
+
+Choose one fixed injection $c:S\hookrightarrow\{0,\ldots,q-1\}$.
+For targets outside the two actual guards, replace $b=x\bmod81$
+in CD41 by $b=c(x\bmod81)$. The CRT source still preserves
+$x\bmod9W$ and the first q-digit. Targets inside either guard
+are already covered by that retained original.
+
+For each height-two original, let
+$r_i=\lfloor\rho_i/q\rfloor\bmod q$. Assign a fixed decoded tag
+$t_i=c^{-1}(r_i)$ when $r_i$ belongs to the image of c, choosing
+any fixed default tag otherwise. Use the same three numerical
+output labels as CD42, with $t_i$ in place of $r_i$ in the
+ternary output conditions. A safe target's actual height-two
+owner satisfies $r_i=c(x\bmod81)$, so injectivity gives
+
+$$
+x\equiv t_i\pmod{81}.
+\tag{CD46}
+$$
+
+The first-q and cofactor conditions transfer exactly as in CD41.
+All higher originals undergo the same literal second-digit
+deletion, and all shallow originals are retained. Consequently
+the one fixed output family covers every target. Every original
+still has exactly one output, including owners with no selected
+source preimage. Distinctness, oddness, nonunit status and the
+strict price ratios are those of CD42--43; an actual deep
+original would strictly decrease the total sum at unchanged
+class count. This proves CD44.
+
+For an original support prime $q\ge47$, the actual-guard version
+therefore gives q-height at most one. It does not remove q from
+the support or exclude a cover whose q-heights are all at most
+one. The actual guard classes are hypotheses, not freely added
+classes in the comparison cover.
+
+A scoped transient Lean application verifies the entire CD44--46
+chain, including actual guard separation, the 45-element safe
+alphabet, its fixed injection and inverse tags, actual-source
+payment, complete integer coverage and the unchanged-count
+strict sum contradiction. All seventeen axiom-closure reports
+use only `propext`, `Classical.choice` and `Quot.sound`, with no
+errors or `sorryAx`. It reuses finite CRT, finite embeddings,
+modular identities and minimality; it adds no canonical binding
+declaration, freeze or coverage record.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
