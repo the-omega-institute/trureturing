@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
-  "report_cache_release_semantic_version": 18,
-  "report_extraction_semantic_version": 1,
+  "report_cache_release_semantic_version": 19,
   "report_execution": {
     "toolchain": "lean-toolchain",
     "tools": ["lake", "lean"],

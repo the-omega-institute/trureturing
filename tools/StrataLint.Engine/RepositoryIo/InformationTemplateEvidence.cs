@@ -15,7 +15,7 @@ internal static class InformationTemplateEvidence
 {
     private static void ValidateManifestVersions(RepositorySnapshot snapshot)
     {
-        const string error = "DTR-ManifestVersion: lean-report-inputs.json requires positive integer report_cache_release_semantic_version and report_extraction_semantic_version";
+        const string error = "DTR-ManifestVersion: lean-report-inputs.json requires positive integer report_cache_release_semantic_version";
         if (!snapshot.Files.TryGetValue(RepoPath.CreateKnown("lean-report-inputs.json"), out var manifest))
             throw new FormatException(error);
         try
@@ -23,7 +23,7 @@ internal static class InformationTemplateEvidence
             using var document = JsonDocument.Parse(manifest.RawBytes.AsMemory());
             var root = document.RootElement;
             if (root.ValueKind != JsonValueKind.Object) throw new FormatException(error);
-            foreach (var field in new[] { "report_cache_release_semantic_version", "report_extraction_semantic_version" })
+            foreach (var field in new[] { "report_cache_release_semantic_version" })
             {
                 if (root.EnumerateObject().Count(p => p.Name == field) != 1
                     || !root.TryGetProperty(field, out var value)

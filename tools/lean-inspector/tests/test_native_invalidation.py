@@ -27,7 +27,7 @@ import native
 from test_native_support import *
 
 class NativeInvalidationTests:
-    def test_native_two_semantic_domains(self):
+    def test_native_typed_owner_version_scope(self):
         self.copy('tools/lean-inspector/Inspector.lean')
         self.compiler_seed = None
         self.env['STRATALINT_ACCEPT_COLD_BUILD'] = '1'
@@ -77,7 +77,7 @@ structure Seal where
             result = self.guarded_command(['make', 'lean',
                 'LEAN_TARGETS=@trureturing/LeanInformationAudit.SealCommand :report'],
                 cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
-            self.assertEqual(result.returncode, 0, '[FAIL] native_semantic_domain_production\n' + result.stdout + result.stderr)
+            self.assertEqual(result.returncode, 0, '[FAIL] native_typed_owner_production\n' + result.stdout + result.stderr)
             return result.stdout + result.stderr
 
         run()
@@ -96,23 +96,16 @@ structure Seal where
         self.write('lean-report-inputs.json', json.dumps(policy))
         output = run()
         self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, own_inputs,
-                         '[FAIL] R_only_invalidates_typed_owners')
+                         '[FAIL] version_bump_invalidates_typed_owners')
         self.assertEqual({path.name: path.stat().st_mtime_ns for path in projections.glob('*.json')},
-                         fact_times, '[FAIL] R_only_reuses_input_facts')
+                         fact_times, '[FAIL] version_bump_reuses_input_facts')
         self.assertEqual({path.name: path.read_bytes() for path in projections.glob('*.json')}, facts)
         for name in all_modules - own_inputs:
             self.assertEqual((native.state(self.root) / 'modules' / (name + '.zip')).read_bytes(), artifacts[name],
-                             '[FAIL] R_only_keeps_nonowner_artifact_bytes')
-            self.assertEqual(self.origins()[name], origins[name], '[FAIL] scoped_origin_accepts_old_R')
+                             '[FAIL] version_bump_keeps_nonowner_artifact_bytes')
+            self.assertEqual(self.origins()[name], origins[name], '[FAIL] scoped_origin_accepts_previous_version')
         self.publish()
 
-        before = self.stamps()
-        policy['report_extraction_semantic_version'] += 1
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        run()
-        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, all_modules,
-                         '[FAIL] E_invalidates_every_module')
-        self.publish()
         before = self.stamps()
         driver = self.root / 'LeanInformationAudit/SealCommand.lean'
         driver.write_text(driver.read_text().replace(':= 1', ':= 1 + 0'))
@@ -135,7 +128,7 @@ structure Seal where
         run()
         self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]},
                          (own_inputs - {'InputRegistration'}) | {'InputEmpty'},
-                         '[FAIL] changed_ownership_controls_next_R_bump')
+                         '[FAIL] changed_ownership_controls_next_version_bump')
 
     def test_native_compatibility_preimage(self):
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
@@ -143,7 +136,7 @@ structure Seal where
             policy['report_cache_release_semantic_version'] = version
             self.write('lean-report-inputs.json', json.dumps(policy))
             expected = hashlib.sha256(
-                b'schema=stratalint-lean-report-compatibility-v2\nextraction=1\nregistration=' +
+                b'schema=stratalint-lean-report-compatibility-v2\nregistration=' +
                 str(version).encode('ascii') + b'\n').hexdigest()
             self.assertEqual(publication.selection.Selection(self.root).compatibility(), expected)
 
@@ -249,9 +242,6 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         policy['report_cache_release_semantic_version'] += 1
         self.write('lean-report-inputs.json', json.dumps(policy))
         changed(set())
-        policy['report_extraction_semantic_version'] += 1
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        changed(set(before))
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text().replace(':= 1', ':= 2'))
         changed({'D5.B', 'D5.A', 'Fixture'})
 
@@ -432,9 +422,6 @@ class NativeSemanticConsumerTests:
         policy['report_cache_release_semantic_version'] += 1
         self.write('lean-report-inputs.json', json.dumps(policy))
         changed(set())
-        policy['report_extraction_semantic_version'] += 1
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        changed(set(before))
         self.assertEqual(self.report()[1:], original)
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text() + '-- content bytes\n')
         changed({'D5.B'})

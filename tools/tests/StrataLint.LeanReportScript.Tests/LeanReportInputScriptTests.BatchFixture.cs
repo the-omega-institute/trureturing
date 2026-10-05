@@ -34,7 +34,6 @@ public sealed partial class LeanReportInputScriptTests
         using var policy = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, "lean-report-inputs.json")));
         var versions = new
         {
-            report_extraction_semantic_version = policy.RootElement.GetProperty("report_extraction_semantic_version").GetInt32(),
             report_cache_release_semantic_version = policy.RootElement.GetProperty("report_cache_release_semantic_version").GetInt32(),
         };
         using var document = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllBytes(report));

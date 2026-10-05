@@ -9,6 +9,8 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+import weakref
+import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import materials
@@ -20,7 +22,7 @@ def manifest_fixture(root, version=9):
     path = root / 'lean-report-inputs.json'
     if not path.exists():
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-        path.write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=version, report_extraction_semantic_version=1,
+        path.write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=version,
             report_modules=paths(), inspector_sources=paths(), config_inputs=paths(),
             producer_scopes={'lean-report': paths('lean-report-inputs.json',
                 'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -60,8 +62,8 @@ class ManifestVersionTests(unittest.TestCase):
 
     def test_missing_or_malformed_manifest_version_rejected(self):
         cases = [None, '{}', '{', '[]']
-        for field in ('report_cache_release_semantic_version', 'report_extraction_semantic_version'):
-            valid = dict(report_cache_release_semantic_version=9, report_extraction_semantic_version=1)
+        for field in ('report_cache_release_semantic_version',):
+            valid = dict(report_cache_release_semantic_version=9)
             missing = dict(valid)
             del missing[field]
             cases.append(json.dumps(missing))
@@ -102,6 +104,86 @@ class ManifestVersionTests(unittest.TestCase):
                 str(spool), str(output), str(manifest)], cwd=spool, capture_output=True)
             self.assertEqual(result.returncode, 1)
             self.assertIn(b'unexpected fields', result.stderr)
+
+
+class NativeBatchStateTests(unittest.TestCase):
+    def test_batch_reuses_selection_and_releases_module_validation_state(self):
+        with tempfile.TemporaryDirectory(prefix='native batch ') as directory:
+            root = Path(directory)
+            manifest_fixture(root)
+            loader = root / publication.selection.LOADER
+            loader.parent.mkdir(parents=True)
+            loader.write_text('')
+            state = native.state(root)
+            (state / 'judge-inputs').mkdir(parents=True)
+            requests = []
+            for name in ('D5.A', 'Reg.B', 'Reg.C'):
+                source = root / (name.replace('.', '/') + '.lean')
+                source.parent.mkdir(exist_ok=True)
+                source.write_text('def value : Nat := 1\n')
+                utility = root / (name + '.utility.json')
+                utility.write_text(json.dumps(dict(source_path=source.relative_to(root).as_posix(),
+                    utilities=[], claims=[])))
+                Path(str(utility) + '.sources.json').write_text('[]')
+                projection = dict(schema='stratalint-judge-input-projection-v1', module=name,
+                    inputs=[] if name == 'D5.A' else [dict(owner=name, name=name + '.entry',
+                        type='LeanInformationAudit.Contract.Registration')])
+                (state / 'judge-inputs' / (name + '.json')).write_text(json.dumps(projection))
+                requests.append([str(root), name, str(source), str(utility), '/fixture-inspector',
+                    str(root / (name + '.zip'))])
+            origin = dict(semantic_versions=publication.selection.Selection(root).semantic_versions(),
+                producer_sources_sha256='a' * 64, inspector_executable_sha256='b' * 64)
+
+            def inspect(command, **kwargs):
+                arguments = json.loads(Path(command[-1]).read_text())
+                spool = Path(arguments[arguments.index('--material-spool') + 1])
+                rows = []
+                for index, (name, path, sha) in enumerate(zip(*[iter(arguments[6:])]*3)):
+                    material = str(index) + '.statement'
+                    (spool / material).write_text('Nat')
+                    rows.append(dict(module=name, source_path=path, source_sha256=sha, imports=[],
+                        declarations=[dict(axioms=[], include_in_statement=True, kind='def',
+                            material_file=material, name='value', name_key='ns(n0,5:value)')]))
+                Path(arguments[1]).write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=rows)))
+
+            retained, completed_rows, references = [], [], []
+            read_json = publication.read_json
+            class ReportRow(dict):
+                pass
+            def read(data):
+                value = read_json(data)
+                if isinstance(value, dict) and value.get('schema') == materials.SPOOL_SCHEMA:
+                    value['modules'] = [ReportRow(row) for row in value['modules']]
+                    references.extend(weakref.ref(row) for row in value['modules'])
+                return value
+            validate_rows = publication.validate_rows
+            def validate(report, archive, verified_materials=None, **kwargs):
+                completed_rows.append(sum(reference() is not None
+                    for reference in references[:len(retained)]))
+                retained.append(len(verified_materials or {}))
+                return validate_rows(report, archive, verified_materials, **kwargs)
+
+            with patch.object(native.selection, 'Selection', wraps=native.selection.Selection) as selections, \
+                    patch.object(publication, 'production_origin', return_value=origin), \
+                    patch.object(native.subprocess, 'run', side_effect=inspect), \
+                    patch.object(publication, 'read_json', side_effect=read), \
+                    patch.object(publication, 'validate_rows', side_effect=validate):
+                native.produce_batch_chunk(requests)
+            self.assertEqual(selections.call_count, 2,
+                '[FAIL] batch_selection_scans_independent_of_module_count')
+            self.assertEqual(retained, [0, 0, 0],
+                '[FAIL] completed_module_validation_state_released')
+            self.assertEqual(completed_rows, [0, 0, 0],
+                '[FAIL] completed_module_report_rows_released')
+            for _, name, _, utility, _, output in requests:
+                with zipfile.ZipFile(output) as archive:
+                    row = json.loads(archive.read(publication.RAW))['modules'][0]
+                    self.assertEqual(row['module'], name)
+                    decl = row['declarations'][0]
+                    self.assertEqual(decl['statement_id'], materials.declaration_statement_id(
+                        row['source_path'], 'def', 'ns(n0,5:value)', 'Nat'))
+                    record = json.loads(archive.read(publication.RAW + '.provenance.json'))
+                    publication.check_origin(record, row, origin['semantic_versions'])
 
 
 class StreamingTests(unittest.TestCase):
@@ -247,7 +329,7 @@ class PublicationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=4, report_extraction_semantic_version=1,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=4,
                 report_modules=paths('X.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json',
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -334,7 +416,7 @@ class PublicationTests(unittest.TestCase):
             claim = root / 'Claim.lean'
             claim.write_text('def claim : Prop := False\n')
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1, report_extraction_semantic_version=1,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
                 report_modules=paths('X.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json',
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -640,7 +722,7 @@ class EntryPointTests(unittest.TestCase):
             (root / loader).parent.mkdir(parents=True)
             (root / loader).write_text(Path(native.selection.__file__).read_text())
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1, report_extraction_semantic_version=1,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
                 report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json', loader), 'scribe-content': paths()})))
             binary = root / 'candidate producer.dll'
@@ -695,7 +777,7 @@ class EntryPointTests(unittest.TestCase):
                     write(name, (repository / name).read_text())
                 write('Trureturing.lean', 'def x : Nat := 1\n')
                 paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-                write('lean-report-inputs.json', json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1, report_extraction_semantic_version=1,
+                write('lean-report-inputs.json', json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
                     report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
                     producer_scopes={'lean-report': paths('lean-report-inputs.json',
                         'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))

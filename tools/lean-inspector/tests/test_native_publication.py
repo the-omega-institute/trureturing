@@ -84,7 +84,7 @@ class NativePublicationConsumerTests:
                                    if not key.endswith('.materials.zip')}, 'invalid native artifact members'),
             'other_module': (entries(artifacts[1]), 'membership mismatch'),
             'compatibility': (dict(original, **{provenance: materials.canonical_json(
-                dict(origin, semantic_versions=dict(origin['semantic_versions'], report_extraction_semantic_version=999)))}), 'compatibility mismatch')}
+                dict(origin, semantic_versions=dict(report_cache_release_semantic_version=0)))}), 'positive integers')}
         for damage, (members, message) in cases.items():
             with self.subTest(damage=damage):
                 candidate = self.root / (damage + '.zip')
@@ -349,16 +349,16 @@ class NativePublicationConsumerTests:
         original = self.report()[1:]
         origins = self.origins()
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_extraction_semantic_version'] = 2
+        policy['report_cache_release_semantic_version'] += 1
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.run_lake('--no-build', 'build', ':report', success=False)
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         self.build()
-        self.assertEqual({name for name, value in self.stamps().items() if value != before[name]}, set(before))
+        self.assertEqual(self.stamps(), before)
         records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
-        self.assertEqual(sum(r['count'] for r in records if r['kind'] == 'extract'), len(before))
+        self.assertEqual(sum(r['count'] for r in records if r['kind'] == 'extract'), 0)
         self.assertEqual(original, self.report()[1:])
-        self.assertNotEqual(origins['Fixture']['semantic_versions'], self.origins()['Fixture']['semantic_versions'])
+        self.assertEqual(origins, self.origins())
         self.publish()
         self.build()
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')

@@ -169,9 +169,8 @@ def prepare(root):
             utility = [by_path[path]] if path in by_path else []
             write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
                 'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
-        for field, file in [('report_extraction_semantic_version', 'extraction-version'),
-                            ('report_cache_release_semantic_version', 'registration-version')]:
-            write_if_changed(state(root) / file, (str(inputs.data[field]) + '\n').encode('ascii'))
+        write_if_changed(state(root) / 'registration-version',
+            (str(inputs.data['report_cache_release_semantic_version']) + '\n').encode('ascii'))
     # Membership and full config identity affect aggregation only. Each module
     # traces compatibility, source, utility inputs and Lake's compiler dependencies.
     with phase('native-input-coordinates'):
@@ -281,8 +280,7 @@ def produce_batch_chunk(requests):
     root = Path(requests[0][0])
     template_inputs = selection.Selection(root)
     executable = requests[0][4]
-    origin = public.production_origin(root, executable)
-    verified_materials = {}
+    origin = public.production_origin(root, executable, inputs=template_inputs)
     if any(Path(row[0]) != root or row[4] != executable for row in requests):
         raise ValueError('mixed native batch owners')
     with tempfile.TemporaryDirectory(prefix='.inspection.', dir=state(root)) as directory:
@@ -312,7 +310,11 @@ def produce_batch_chunk(requests):
         raw = public.read_json((directory / 'spool.json').read_bytes())
         if [row['module'] for row in raw['modules']] != sorted(bindings):
             raise ValueError('incomplete native inspection batch')
-        for row in raw['modules']:
+        declarations = 0
+        for index in range(len(raw['modules'])):
+            row = raw['modules'][index]
+            raw['modules'][index] = None
+            declarations += len(row['declarations'])
             name = row['module']
             utility_path, output = bindings[name]
             row_dir = directory / name
@@ -327,21 +329,21 @@ def produce_batch_chunk(requests):
             report = row_dir / public.RAW
             materials.compact(spool_report, row_spool, report, root / 'lean-report-inputs.json')
             public.write_origin(report, name, origin, input_projection(root, name))
-            validate_module(report, root, name, utility_path, verified_materials=verified_materials,
-                            template_inputs=template_inputs)
+            validate_module(report, root, name, utility_path, template_inputs=template_inputs)
             output.parent.mkdir(parents=True, exist_ok=True)
             artifact = row_dir / 'module.zip'
             public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
             os.replace(artifact, output)
+            del row
         if list(spool.iterdir()):
             raise ValueError('unreferenced batch materials')
-        for row in raw['modules']:
-            print('LEAN_INSPECTOR_EXTRACT module=' + row['module'])
-            print('LEAN_INSPECTOR_ASSESS module=' + row['module'])
-            module_work('assess', [row['module']])
-        module_work('extract', [row['module'] for row in raw['modules']])
+        for name in bindings:
+            print('LEAN_INSPECTOR_EXTRACT module=' + name)
+            print('LEAN_INSPECTOR_ASSESS module=' + name)
+            module_work('assess', [name])
+        module_work('extract', list(bindings))
         activity('extract', len(requests))
-        print(f'LEAN_INSPECTOR_EXTRACT modules={len(requests)} declarations={sum(len(row["declarations"]) for row in raw["modules"])}')
+        print(f'LEAN_INSPECTOR_EXTRACT modules={len(requests)} declarations={declarations}')
 
 
 def produce_batch(requests):
@@ -473,7 +475,7 @@ def validate_module(report, root, name, utility, *, verified_materials=None, tem
                                 manifest=Path(root) / 'lean-report-inputs.json')
     row_binding(rows, root, name, utility, template_inputs=template_inputs)
     # prepare validated the manifest before any facet could accept an artifact.
-    compatibility = selection.Selection(root).semantic_versions()
+    compatibility = (template_inputs if template_inputs is not None else selection.Selection(root)).semantic_versions()
     origin = public.validate_origin(report, rows, compatibility)
     return rows, origin
 

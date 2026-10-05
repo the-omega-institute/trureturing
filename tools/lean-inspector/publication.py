@@ -102,9 +102,9 @@ def coordinates(repository):
     return dict(repository=repository_id, producer=producer, sources=sources, config=config, input=pair[0])
 
 
-def production_origin(repository, executable):
+def production_origin(repository, executable, *, inputs=None):
     """Actual generation evidence, never a Lake report dependency or currentness test."""
-    inputs = selection.Selection(repository)
+    inputs = inputs if inputs is not None else selection.Selection(repository)
     inputs.validate('lean-report')
     fingerprint = hashlib.sha256()
     for path in inputs.producer_paths('lean-report'):
@@ -138,8 +138,7 @@ def validate_input_projection(projection, module):
 
 
 def validate_semantic_versions(value):
-    materials.require_keys(value, {'report_extraction_semantic_version',
-                                  'report_cache_release_semantic_version'}, 'report semantic versions')
+    materials.require_keys(value, {'report_cache_release_semantic_version'}, 'report semantic versions')
     if any(type(version) is not int or version <= 0 for version in value.values()):
         raise ValueError('report semantic versions require positive integers')
 
@@ -150,9 +149,7 @@ def check_origin(origin, row, compatibility):
     validate_input_projection(origin['input_projection'], row['module'])
     validate_semantic_versions(origin['semantic_versions'])
     validate_semantic_versions(compatibility)
-    fields = ['report_extraction_semantic_version']
-    if origin['input_projection']['inputs']:
-        fields.append('report_cache_release_semantic_version')
+    fields = ['report_cache_release_semantic_version'] if origin['input_projection']['inputs'] else []
     if (origin['module'] != row['module']
             or any(origin['semantic_versions'][field] != compatibility[field] for field in fields)
             or any(not isinstance(origin[k], str) or not HEX.fullmatch(origin[k]) for k in

@@ -222,13 +222,13 @@ def read_manifest_versions(manifest: pathlib.Path) -> dict[str, int]:
         if not isinstance(data, dict):
             raise ValueError("manifest must be an object")
         versions = {}
-        for field in ('report_cache_release_semantic_version', 'report_extraction_semantic_version'):
+        for field in ('report_cache_release_semantic_version',):
             if type(data.get(field)) is not int or data[field] <= 0:
                 raise ValueError(field + " requires a positive integer")
             versions[field] = data[field]
         return versions
     except (OSError, UnicodeError, ValueError, KeyError, TypeError) as error:
-        raise ValueError("DTR-ManifestVersion: lean-report-inputs.json requires positive integer report_cache_release_semantic_version and report_extraction_semantic_version") from error
+        raise ValueError("DTR-ManifestVersion: lean-report-inputs.json requires positive integer report_cache_release_semantic_version") from error
 
 
 def validate_template_evidence(value: object, manifest: pathlib.Path) -> None:

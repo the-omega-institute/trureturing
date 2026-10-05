@@ -102,14 +102,14 @@ package_facet reportSourceModules (pkg : Package) : Lean.NameSet := do
     let names ← strings (← readJson path) "modules"
     return names.foldl (fun set name => set.insert name.toName) {}
 
-/-- Trace semantic compatibility after validating registered inputs.
-Raw configuration identity belongs to the aggregate; module exports carry
-Lake's compiler dependencies. Producer compilation is a separate obligation. -/
+/-- Validate registered inputs without tracing producer implementation.
+Configuration identity belongs to aggregation; module exports carry compiler
+dependencies and typed input owners separately trace the semantic version. -/
 package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
   discard <| (← fetch <| pkg.facet `reportInputs).await
-  return Job.nil.mix (← inputBinFile ((← repositoryDir pkg) / ".lake/build/lean-inspector" / "extraction-version"))
+  return Job.nil
 
-/-- Input classification is a compiler fact. Registration versions and producer
+/-- Input classification is a compiler fact. Semantic versions and producer
 program traces do not invalidate it. Read only the target's own olean parts. -/
 module_facet judgeInputs (mod : Module) : FilePath := withCurrPackage mod.pkg do
   let pkg := (← getWorkspace).root

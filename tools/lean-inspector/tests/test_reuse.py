@@ -31,7 +31,7 @@ class ReuseTests(unittest.TestCase):
         self.addCleanup(temporary.cleanup)
         self.root = Path(temporary.name)
         paths = lambda *values: dict(include=[dict(pattern=v, optional=False) for v in values], exclude=[])
-        self.policy = dict(schema_version=1, report_cache_release_semantic_version=1, report_extraction_semantic_version=1,
+        self.policy = dict(schema_version=1, report_cache_release_semantic_version=1,
             report_modules=paths('D5/**/*.lean'), inspector_sources=paths('Inspector.lean'),
             dependency_sources=paths('Audit.lean'), config_inputs=paths('lean-toolchain', 'lakefile.toml'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json',
@@ -206,7 +206,6 @@ class ReuseTests(unittest.TestCase):
             result = api.probe(self.root, self.report)
         self.assertTrue(result['needs_lake'])
         self.assertEqual(result['mismatch'], dict(cached_semantic_version=1, current_semantic_version=2,
-            cached_extraction_version=1, current_extraction_version=1,
             added_inputs=1, removed_inputs=1, changed_inputs=1, execution_changed=True))
         output = io.StringIO()
         with patch.dict(os.environ, GITHUB_ACTIONS='true'):
@@ -214,7 +213,7 @@ class ReuseTests(unittest.TestCase):
         warning = output.getvalue()
         self.assertTrue(warning.startswith('::warning title=Lean report cache mismatch::'))
         self.assertIn('cached_version=1 current_version=2', warning)
-        self.assertIn('registration-version changes invalidate only typed input owners', warning)
+        self.assertIn('Semantic-version changes invalidate only typed input owners', warning)
         self.assertIn('LEAN_CACHE and LEAN_INSPECTOR_WORK', warning)
         self.assertNotIn('private-toolchain-value', json.dumps(result) + warning)
 
@@ -282,7 +281,7 @@ class ReuseTests(unittest.TestCase):
                                  '[FAIL] producer_program_change_keeps_receipt')
                 source.write_bytes(original)
                 source.chmod(mode)
-        for field in ['report_cache_release_semantic_version', 'report_extraction_semantic_version']:
+        for field in ['report_cache_release_semantic_version']:
             with self.subTest(version=field):
                 self.policy[field] += 1
                 self.write_policy()
