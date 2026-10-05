@@ -39,10 +39,6 @@ internal sealed class CalderonReciprocalMomentsDocument : IScribeDocumentDefinit
                 H("The moment conjecture holds"), StatementSource.FromAuthor(Disp(V("claim"))),
                 AssessedProvenance.FromRepo(Note),
                 Blocks(Paragraph(Text("Positive coordinates identify U bijectively with the units of the finite quadratic quotient. Multiplication by 2 permutes those units; cancellation of 3 makes their inverse-square sum zero. Reflect each coordinate a<p^k to p^k-a and fix a=p^k. The resulting affine correction has two boundary strips; each reduces to a scalar inverse-square sum modulo p^k. The exact inverse identity then gives the first-moment bound after cancellation of 2. Both conjuncts hold for every admissible parameter, without an extra assumption.")),
-                    Paragraph(Text("For a positive representative and any unit u with that underlying value, the identity below specifies the value without naming a proof term.")),
-                    new DocumentBlock.DisplayFormula(Params(All("x",Nat,All("y",Nat,All("u",Call("Units",Ring),
-                        Imp(Eqn(Coerce(V("u"),Ring),Element(V("x"),V("y"))),
-                            Eqn(Call("val",V("u")),Element(V("x"),V("y"))))))))),
                     Paragraph(Text("The omega-Ljunggren analogue (Conjecture 6.4) has its stated Conjecture 6.3 reciprocal-moment premise discharged; its translated-block and Newton-identity conclusion remains open. The omega-Bailey analogue (Conjecture 6.5) remains open under its stated inert-prime and digit-range hypotheses; the source gives Frobenius strip factorizations without a Conjecture 6.3 premise. Sharpness remains open."))), DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("calderon-2026-quadratic-order-reciprocal-moments"),

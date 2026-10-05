@@ -116,12 +116,6 @@ $$claim$$
 
 Positive coordinates identify U bijectively with the units of the finite quadratic quotient. Multiplication by 2 permutes those units; cancellation of 3 makes their inverse-square sum zero. Reflect each coordinate a<p^k to p^k-a and fix a=p^k. The resulting affine correction has two boundary strips; each reduces to a scalar inverse-square sum modulo p^k. The exact inverse identity then gives the first-moment bound after cancellation of 2. Both conjuncts hold for every admissible parameter, without an extra assumption.
 
-For a positive representative and any unit u with that underlying value, the identity below specifies the value without naming a proof term.
-
-$$
-\forall p \in \mathrm{Nat},\; [\operatorname{Fact}\left(\operatorname{Prime}\left(p\right)\right)], \forall T \in \mathbb{Z},\; \forall N \in \mathbb{Z},\; \forall x \in \mathrm{Nat},\; \forall y \in \mathrm{Nat},\; \forall u \in \operatorname{Units}\left(\operatorname{R}\left(p, T, N\right)\right),\; ((u : \operatorname{R}\left(p, T, N\right)) = \operatorname{element}\left(p, T, N, x, y\right)) \Rightarrow (\operatorname{val}\left(u\right) = \operatorname{element}\left(p, T, N, x, y\right))
-$$
-
 The omega-Ljunggren analogue (Conjecture 6.4) has its stated Conjecture 6.3 reciprocal-moment premise discharged; its translated-block and Newton-identity conclusion remains open. The omega-Bailey analogue (Conjecture 6.5) remains open under its stated inert-prime and digit-range hypotheses; the source gives Frobenius strip factorizations without a Conjecture 6.3 premise. Sharpness remains open.
 
 ## References
