@@ -70,7 +70,7 @@ internal sealed class CarryGraphFiniteSamplerDocument : IScribeDocumentDefinitio
                 Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                     H("Finite control attains the critical bit bill"),
                     StatementSource.FromAuthor(Disp(ResultFormula())), AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text("For every m at least two, a critical stationary table has a finite slot machine. Its policy path gamma starts at the root, and p is the law obtained from that path's fixed label digits. At every index on every tape, a returned scan label and charge agree with the machine control and invoice; a continuing scan slot agrees with the machine's carry state and slot. Thus their first-return samples and total bills coincide even on exceptional divergent tapes.")),
+                    Blocks(Paragraph(Text("For every m at least two, a critical stationary table with a positive anchor exists. Every stationary table whose positive anchor and path cost satisfy C=alpha(m) times the anchor has a finite slot machine. Its policy path gamma starts at the root, and p is the law obtained from that path's fixed label digits. At every index on every tape, a returned scan label and charge agree with the machine control and invoice; a continuing scan slot agrees with the machine's carry state and slot. Thus their first-return samples and total bills coincide even on exceptional divergent tapes. In the display, core(x) is the stored carry state and slot(x) is its natural slot; treeSample and treeBill denote the existing fixed-label tree sample and bill.")),
                         Paragraph(Text("The active-control bound is m squared times (m-1) divided by two, with m additional absorbing output labels. The output law is strictly positive and normalized, its minimum is the positive anchor, its label probabilities are the digit sums, and its stopping tail is r(d)/2 raised to d. It returns almost surely and every returned invoice equals the total bill. The expected bill equals the policy-path cost, the dyadic cost of p and alpha(m) times the anchor.")),
                         Paragraph(Text("The statement gives no rationality claim, minimum-state claim or uniform bound on the number of bits read."))),
                     DescribeRole.Theorem))));
@@ -124,10 +124,14 @@ internal sealed class CarryGraphFiniteSamplerDocument : IScribeDocumentDefinitio
                 t, Colon, Sp, V("Tape"), Comma, Sp, Ex(i, indices, Ex(n, natural, Returned(n))))),
             Equal(Call("lintegral", V("fairTape"), Call("bill", m, f, start)), Call("ofReal", cost)),
             Equal(cost, Call("cost", p)), Equal(Call("cost", p), Mul(Call("alpha", m), anchor)));
-        return All(m, natural, Imp(Leq(D(2), m), Ex(f, Call("P", m), Ex(g, V("Path"),
+        var orbit = Call("policyPath", m, f, Call("root", m));
+        var existsCritical = Ex(f, Call("P", m), And(Pos(Call("anchorValue", orbit)),
+            Equal(Call("pathCost", orbit), Mul(Call("alpha", m), Call("anchorValue", orbit)))));
+        var everyCritical = All(f, Call("P", m), Ex(g, V("Path"),
             Ex(p, Seq(indices, Sp, To, Sp, Ty("R")), And(
-                Equal(g, Call("policyPath", m, f, Call("root", m))),
+                Equal(g, orbit),
                 All(i, indices, Equal(Call("p", i), Call("ofDigits", Call("labelDigit", g, i)))),
-                clauses))))));
+                Imp(Pos(anchor), Imp(Equal(cost, Mul(Call("alpha", m), anchor)), clauses))))));
+        return All(m, natural, Imp(Leq(D(2), m), And(existsCritical, everyCritical)));
     }
 }
