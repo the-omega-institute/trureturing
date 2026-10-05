@@ -2886,3 +2886,109 @@ $$
 (26.5) 及其逆向把每一个原始实际面生成步与 $Z$ 内生成步精确对应，再按等价闭包归纳，得到原始 $R_{\rm geom}$ 正是 $R_Z$ 的同胚拉回。因此 $R_{\rm geom}$ 闭；从一个固定起点出发，每个目标系数向量均为它的某个坐标置换，故每条纤维至多含 $24|T|$ 个带标签点。每个 $P_t$ 紧，有限不交并紧且 Hausdorff，闭关系商 $Q_{\rm geom}$ 因而紧且 Hausdorff，商映射为闭映射。第 15.3 节由同一个 $h_t$ 构成的带标记商同胚 $\overline h:(Q,B)\to(Q_{\rm geom},B_{\rm geom})$，将这些结论运输到第 5 节的原始 $(Q,B)$。
 
 本节是规定面映射、变化的单位系数域与有限零约束闭关系之间的书面组合证明，不申报 Lean kernel 核验、冻结或 atom 覆盖。它保持原始面配对、六个有序标记及完整生成等价闭包；实际展开图卡、角和、张量下降及同一带标记流形上的双曲实现仍由第 19–23 节各自的条件与证明承担。
+
+
+## 27. 原始仿射块与单位 Gram 字典
+
+固定同一个原始仿射块，其四个顶点为 $v_i\in\mathbb R\times\mathbb R^3$，使用同一个 $L((t,z),(s,w))=-ts+z\cdot w$。原输入是
+$$
+(v_i)_0=1,\qquad \{v_i\}_{i=0}^3\text{ 线性独立},\qquad L(v_i,v_i)>0,
+$$
+以及对每个 $i\ne j$，存在 $s\in(0,1)$ 使 $L((1-s)v_i+sv_j,(1-s)v_i+sv_j)<0$。以下从这些仿射顶点条件导出 §24 所需的单位 Gram 输入和完整带标签集合识别。
+
+仍记 $\mathbb H^3=\{X:L(X,X)=-1,\ X_0>0\}$，$\pi(X)=X/X_0$。以原始凸包和极平面定义完整截断块及其带标签闭面：
+$$
+\begin{aligned}
+P&=\{X\in\mathbb H^3:\pi(X)\in\operatorname{conv}\{v_i\},\ L(X,v_i)\le0\ (\forall i)\},\\
+M_f&=\{X\in P:\pi(X)\in\operatorname{conv}\{v_i:i\ne f\}\},\\
+K_i&=\{X\in P:L(X,v_i)=0\},\\
+Z_{ij}&=\{X\in K_i:\pi(X)\in[v_i,v_j]\}\quad(i\ne j).
+\end{aligned}
+$$
+其中所有凸包、线段和 cut 均包含边界。
+
+设 $r_i=\sqrt{L(v_i,v_i)}>0$，$U_i=v_i/r_i$。这是同一原始顶点射线上的正单位代表，$L(U_i,U_i)=1$、$(U_i)_0=1/r_i>0$，四个 $U_i$ 线性独立。对 $i\ne j$，定义 $x_{ij}=-L(U_i,U_j)$。
+
+**原输入确定负号。** 取开边条件中的 $s$，记 $a=L(v_i,v_i)$、$b=L(v_j,v_j)$、$c=L(v_i,v_j)$、$\alpha=1-s$、$\beta=s$。有
+$$
+\begin{aligned}
+0&>L(\alpha v_i+\beta v_j,\alpha v_i+\beta v_j)\\
+&=(\alpha\sqrt a-\beta\sqrt b)^2+2\alpha\beta(c+\sqrt a\sqrt b).
+\end{aligned}
+$$
+平方项非负，且 $\alpha,\beta>0$，所以 $c<-\sqrt a\sqrt b$，即 $x_{ij}>1$。对称性给出 $x_{ij}=x_{ji}$。这从原始开边输入导出 §24 所需的有符号 Gram，未用无向 cap 距离代替符号。
+
+为把本节的零基标签接入 §17、§24 的一基公式，固定顺序保持字典
+$$
+\alpha:\{0,1,2,3\}\longrightarrow\{1,2,3,4\},\qquad \alpha(i)=i+1.
+$$
+§27 中凡调用 §17、§24 的向量和系数，均按
+$$
+V_i:=V^{17}_{\alpha(i)},\qquad \lambda^{17}_{\alpha(i)}:=\lambda_i;
+$$
+缺顶点（缺面）索引按 $f\mapsto\alpha(f)$，有序端点索引按 $(i,j)\mapsto(\alpha(i),\alpha(j))$ 运输。于是 §17 原槽序 $12,13,14,34,24,23$ 的六个输入在本节坐标中明确为
+$$
+(x^{17}_{12},x^{17}_{13},x^{17}_{14},x^{17}_{34},x^{17}_{24},x^{17}_{23})
+=(x_{01},x_{02},x_{03},x_{23},x_{13},x_{12}).
+$$
+按本节零基标签令 $G_{ii}=1$、$G_{ij}=-x_{ij}$。于是 $L(U_i,U_j)=G_{ij}$；§24.1 的原始线性独立性论证给出 $\det G<0$，且导入的判别式恒等式在本节坐标中是
+$$
+D(x)=(x_{01}^2-1)(-\det G)>0.
+$$
+§24.2 给出的同一个闭系数体是
+$$
+C_x=\{\lambda:\lambda_i\ge0,\ \sum_i\lambda_i=1,\ G\lambda\le0\}.
+$$
+记 $S_U(\lambda)=\sum_i\lambda_iU_i$、$q(\lambda)=\lambda^{\mathsf T}G\lambda$。§24.2 的 cut 论证适用于整张 $C_x$，给出 $q(\lambda)<0$；此处 $S_U(\lambda)_0=\sum_i\lambda_i/r_i>0$，所以
+$$
+N_U(\lambda)=\frac{S_U(\lambda)}{\sqrt{-q(\lambda)}}\in\mathbb H^3
+$$
+在整个闭系数体上有定义。
+
+**两种系数的双向正尺度。** 原始仿射系数 $\theta_i\ge0$、$\sum_i\theta_i=1$ 与单位射线系数 $\lambda_i\ge0$、$\sum_i\lambda_i=1$ 的转换是
+$$
+R(\theta)=\sum_i\theta_ir_i>0,\qquad \lambda_i=\frac{\theta_ir_i}{R(\theta)}, \tag{27.1}
+$$
+以及
+$$
+d(\lambda)=\sum_i\frac{\lambda_i}{r_i}>0,\qquad \theta_i=\frac{\lambda_i/r_i}{d(\lambda)}. \tag{27.2}
+$$
+两式互逆，$d(\lambda)=R(\theta)^{-1}$，逐坐标保留零与正，并且
+$$
+S_U(\lambda)=\frac{\sum_i\theta_iv_i}{R(\theta)},\qquad \sum_i\theta_iv_i=\frac{S_U(\lambda)}{d(\lambda)}. \tag{27.3}
+$$
+因而 $\pi(N_U(\lambda))=\sum_i\theta_iv_i$。这一步使用原始顶点的各自尺度；两个凸包中的系数不能直接同名识别。
+
+**同一个完整原始块。** 若 $\lambda\in C_x$，则 (27.2)–(27.3) 给出原始凸包条件，而
+$$
+L(N_U(\lambda),v_k)=\frac{r_k}{\sqrt{-q(\lambda)}}(G\lambda)_k \tag{27.4}
+$$
+给出四个原始 cut。因此 $N_U(\lambda)\in P$。反过来，若 $X\in P$，有限凸包给出 $\pi(X)=\sum_i\theta_iv_i$。用 (27.1) 取 $\lambda$，则 $X=X_0R(\theta)S_U(\lambda)$，其中 $X_0R(\theta)>0$。原始四个 cut 给出 $G\lambda\le0$，故 $\lambda\in C_x$；单位 Lorentz 方程又给出 $X_0R(\theta)=1/\sqrt{-q(\lambda)}$。所以
+$$
+P=N_U(C_x). \tag{27.5}
+$$
+若两个归一化像相等，$U_i$ 的线性独立性给出两个系数向量正比例；系数和均为一使比例为一。$N_U$ 连续、$C_x$ 紧、$P$ Hausdorff，故它是同胚。这证明原始块的完整集合等式，包含所有边界。
+
+**每张主面与全部 polar cut。** 线性独立性使原始凸包系数唯一。缺顶点 $f$ 的凸包系数补零后仍是同一个全凸包系数，所以它恰要求 $\theta_f=0$；(27.1)–(27.2) 又使它恰等价于 $\lambda_f=0$。式 (27.4) 的因子严格正，逐 cap 保留不等式、等式和严格不等式。因此
+$$
+M_f=N_U(C_x\cap\{\lambda_f=0\}),\qquad K_i=N_U(C_x\cap\{(G\lambda)_i=0\}). \tag{27.6}
+$$
+这给出同一个原始块的全部四张主面和四个 cap，不只识别它们的内部。
+
+**有序端点的存在与唯一性。** 由唯一系数和正尺度转换，$\pi(X)\in[v_i,v_j]$ 恰要求其 $\lambda$ 的支持包含于 $\{i,j\}$。再加 $i$-cap 等式，就得到 $\lambda_i-x_{ij}\lambda_j=0$ 和 $\lambda_i+\lambda_j=1$。唯一解是 §24.2 的同一个 $\lambda^{ij}=(x_{ij}e_i+e_j)/(x_{ij}+1)$；该节已经验证其在整个 $C_x$ 中，恰一个 cap cut 活跃，其他三个严格负。所以
+$$
+Z_{ij}=\{N_U(\lambda^{ij})\},\qquad N_U(\lambda^{ij})=\frac{x_{ij}U_i+U_j}{\sqrt{x_{ij}^2-1}}. \tag{27.7}
+$$
+这里等式同时给出存在和唯一性。$Z_{ij}$ 的点恰属于 $f\ne i,j$ 的主面，$Z_{ji}$ 的点恰在另一 cap 上，两个有序端点不同。每个 $f$ 上的全部六个有序 marks 均保留。
+
+**与 §17、§24 的同一个实现对应。** 对上述同一 $x$、$U_i$ 使用 §24.3 的唯一未来 Lorentz 标架 $A$，其按字典对应的 $V_i=V^{17}_{\alpha(i)}$ 是 §17 的显式向量。同一 $a(X)=AX$ 满足 $a(N_U(\lambda))=\nu_x(\lambda)$，故 (27.5)–(27.7) 给出
+$$
+\begin{aligned}
+a(P)&=P_x=\nu_x(C_x),\\
+a(M_f)&=\nu_x(C_x\cap\{\lambda_f=0\}),\\
+a(Z_{ij})&=\{\nu_x(\lambda^{ij})\}.
+\end{aligned}
+$$
+cap 及其全部边界同样由 (27.6) 运输。实际光滑性与切张量运输使用 §24.4–24.5 的同一个 $A$。
+
+对同一个原始块族与原始面配对逐块使用此字典。若 $(t,f)$ 配对至 $(u,g)$，规定闭面映射仍是 §24、§26 的同一个 $I_{t,f}$，其运输只取 $I^x_{t,f}=a_u\circ I_{t,f}\circ a_t^{-1}$。原始有序端点的成员条件结合 (27.7)，成为实际面上的六个端点等式。原来的逆配对律、整张闭面的等距性和实际切张量距离由 §24 的同一共轭及张量论证保持。这把原始仿射块的完整闭面、cap 与全部有序标记接到既有单位 Gram 实现，没有另选规定面映射。
