@@ -263,14 +263,14 @@ public sealed partial class MakeWorkflowTests
         var set = Run(0, "quarantine", "baseline", "request.toml");
         Assert.Equal(0, set.ExitCode);
         Assert.Contains(
-            "quarantine-atom --request request.toml --base baseline",
+            "quarantine-atom --request request.toml",
             Encoding.UTF8.GetString(set.StandardOutput),
             StringComparison.Ordinal);
 
         var clear = Run(0, "quarantine-clear", "baseline", "atom-id");
         Assert.Equal(0, clear.ExitCode);
         Assert.Contains(
-            "quarantine-atom --clear atom-id --base baseline",
+            "quarantine-atom --clear atom-id",
             Encoding.UTF8.GetString(clear.StandardOutput),
             StringComparison.Ordinal);
 

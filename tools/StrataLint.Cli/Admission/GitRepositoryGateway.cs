@@ -161,14 +161,24 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 
     public RawRepositorySnapshot ReadCurrent() => GitRepositorySnapshotReader.ReadCurrent(root);
 
-    public RawRepositorySnapshot ReadRevision(string revision) =>
+    public RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> pathspecs) =>
+        GitRepositorySnapshotReader.ReadCurrent(root, pathspecs: RequireScope(pathspecs));
+
+    public RawRepositorySnapshot ReadRevision(string revision) => ReadRevision(revision, paths: null);
+
+    public RawRepositorySnapshot ReadRevision(string revision, IReadOnlyList<string>? paths) =>
         GitRepositorySnapshotReader.ReadRevision(
             revision,
             (arguments, maximumOutputBytes, standardInput) => GitRaw(
                 arguments,
                 allowNonzero: false,
                 maximumOutputBytes,
-                standardInput));
+                standardInput),
+            paths is null ? null : RequireScope(paths));
+
+    // git reads everything when no path follows the separator.
+    private static IReadOnlyList<string> RequireScope(IReadOnlyList<string> scope) =>
+        scope.Count > 0 ? scope : throw new ArgumentException("a scoped read needs at least one path", nameof(scope));
 
     private string GitText(params string[] arguments) => StrictUtf8.GetString(GitBytes(arguments));
 

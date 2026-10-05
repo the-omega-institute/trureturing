@@ -155,7 +155,7 @@ public sealed class QuarantineAtomCommandTests
         var execution = Execute(
             Request(),
             [Source("source", Entry(receipts: Receipts(quarantine: quarantine)))],
-            ["quarantine-atom", "--request", "quarantine-request.toml", "--base", "baseline", "--replace"]);
+            ["quarantine-atom", "--request", "quarantine-request.toml", "--replace"]);
 
         Assert.Equal(0, execution.ExitCode);
         Assert.Equal(string.Empty, execution.Console.Error);
@@ -175,7 +175,7 @@ public sealed class QuarantineAtomCommandTests
         var execution = Execute(
             Request(),
             [Source("source", Entry(receipts: Receipts(quarantine: quarantine)))],
-            ["quarantine-atom", "--clear", AtomId, "--base", "baseline"]);
+            ["quarantine-atom", "--clear", AtomId]);
 
         Assert.Equal(0, execution.ExitCode);
         Assert.Equal(string.Empty, execution.Console.Error);
@@ -189,7 +189,7 @@ public sealed class QuarantineAtomCommandTests
     {
         var execution = Execute(
             Request(),
-            arguments: ["quarantine-atom", "--clear", AtomId, "--base", "baseline"]);
+            arguments: ["quarantine-atom", "--clear", AtomId]);
 
         AssertInvalid(execution, "QUARANTINE_ABSENT");
     }
@@ -218,7 +218,7 @@ public sealed class QuarantineAtomCommandTests
                 Entry(receipts: Receipts(
                     quarantine: quarantine,
                     unresolvedSubitems: UnresolvedSubitems)))],
-            ["quarantine-atom", "--request", "quarantine-request.toml", "--base", "baseline", "--replace"]);
+            ["quarantine-atom", "--request", "quarantine-request.toml", "--replace"]);
 
         Assert.Equal(0, execution.ExitCode);
         AssertReceiptCollectionPreservedByteExactly(
@@ -237,7 +237,7 @@ public sealed class QuarantineAtomCommandTests
                 Entry(receipts: Receipts(
                     quarantine: quarantine,
                     unresolvedSubitems: UnresolvedSubitems)))],
-            ["quarantine-atom", "--clear", AtomId, "--base", "baseline"]);
+            ["quarantine-atom", "--clear", AtomId]);
 
         Assert.Equal(0, execution.ExitCode);
         AssertReceiptCollectionPreservedByteExactly(execution, null);
@@ -255,7 +255,7 @@ public sealed class QuarantineAtomCommandTests
         Assert.Equal(
             [$"{BackfillInventoryLoader.RootPath}source/residual-open/{AtomId}.yaml"],
             ChangedPaths(execution));
-        Assert.Equal(["baseline"], execution.Repository.ReadRevisionCalls);
+        Assert.Empty(execution.Repository.ReadRevisionCalls);
         Assert.Equal(1, execution.RequestReadCalls);
         Assert.Equal(1, execution.ApplyCalls);
         var entry = Assert.Single(
@@ -378,8 +378,6 @@ public sealed class QuarantineAtomCommandTests
             "quarantine-atom",
             "--request",
             "quarantine-request.toml",
-            "--base",
-            "baseline",
         ];
 
         var writeAtomCalls = 0;

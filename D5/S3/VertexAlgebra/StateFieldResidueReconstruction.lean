@@ -22,8 +22,8 @@ locality polynomial and by the product of the other two locality polynomials.
 Expansion in the commuting coefficient shifts kills every finite summand,
 giving a vector-independent locality order for the actual nonnegative residue.
 Vacuum covariance and coefficient extraction prove relative uniqueness, without
-an image-of-Y premise. Supported integer Pascal reindexing and two nested
-inductions extend the composition identity to every integer mode parameter.
+an image-of-Y premise. Creative vacuum uniqueness identifies all-integer residue closure,
+and direct coefficient extraction gives the finite Ring.choose iterate identity.
 admission_basis: escape-witness
 -/
 
@@ -708,7 +708,7 @@ theorem residue_closure
         index) 0 vector) - weightedSum (Y b) (Y a) (r + index) 0 (translationOp vector)) := by module
       _ = _ := by rw [firstLaw, secondLaw]; module
   have creation : (((residueField (Y := Y) r a b).operator) [[-1]]) vacuum = mu (Y := Y) a r b ∧ ∀ index : ℤ, 0 ≤ index → (((residueField (Y := Y) r a b).operator) [[index]]) vacuum = 0 := by
-  
+
     have rightZero (index : ℤ) : residueRight (Y := Y) r index a b vacuum = 0 := by
       unfold residueRight; apply finsum_eq_zero_of_forall_eq_zero; intro offset; rw [creative a offset (by omega)]
       simp
@@ -721,41 +721,7 @@ theorem residue_closure
     · intro index nonnegative
       rw [(residueField r a b).coefficient, residueCoefficient, rightZero, smul_zero, sub_zero]; unfold residueLeft
       apply finsum_eq_zero_of_forall_eq_zero; intro offset; rw [creative b (index + (offset : ℤ)) (by omega)]; simp
-  
-  let shiftLeft : Module.End ℂ (ℤ → ℤ → Module.End ℂ V) := {
-    toFun value := fun first second => value (first + 1) second
-    map_add' _ _ := rfl
-    map_smul' _ _ := rfl }
-  let shiftRight : Module.End ℂ (ℤ → ℤ → Module.End ℂ V) := {
-    toFun value := fun first second => value first (second + 1)
-    map_add' _ _ := rfl
-    map_smul' _ _ := rfl }
-  have binomial (value : ℤ → ℤ → Module.End ℂ V) (order : ℕ) (first second : ℤ) : ((deltaEnd ^ order) value) first second = ∑ offset ∈ Finset.range (order + 1), (((-1 : ℂ) ^
-    offset) * (order.choose offset : ℂ)) • value (first + (order : ℤ) - offset) (second + offset) := by
-    have commute : Commute (-shiftRight) shiftLeft := by apply LinearMap.ext; intro distribution; funext left right; simp [shiftLeft, shiftRight]
-    have leftPower (degree : ℕ) (distribution : ℤ → ℤ → Module.End ℂ V) : (shiftLeft ^ degree) distribution = fun left right => distribution (left + degree) right := by
-      induction degree with
-      | zero => simp
-      | succ degree inductionHypothesis =>
-        rw [pow_succ', Module.End.mul_apply, inductionHypothesis]; funext left right
-        change distribution (left + 1 + degree) right = distribution (left + (degree + 1 : ℕ)) right; congr 1; push_cast; omega
-    have rightPower (degree : ℕ) (distribution : ℤ → ℤ → Module.End ℂ V) : ((-shiftRight) ^ degree) distribution = fun left right => ((-1 : ℂ) ^ degree) • distribution left
-      (right + degree) := by
-      induction degree with
-      | zero => simp
-      | succ degree inductionHypothesis =>
-        rw [pow_succ', Module.End.mul_apply, inductionHypothesis]; funext left right
-        change -(((-1 : ℂ) ^ degree) • distribution left (right + 1 + degree)) = ((-1 : ℂ) ^ (degree + 1)) • distribution left (right + (degree + 1 : ℕ))
-        rw [pow_succ', mul_smul, neg_one_smul]
-        have indices : right + 1 + (degree : ℤ) = right + (degree + 1 : ℕ) := by push_cast; omega
-        rw [indices]
-    have equation : (deltaEnd : Module.End ℂ (ℤ → ℤ → Module.End ℂ V)) = -shiftRight + shiftLeft := by
-      apply LinearMap.ext; intro distribution; funext left right; simp [deltaEnd, delta, shiftLeft, shiftRight]
-      abel
-    rw [equation, commute.add_pow, LinearMap.sum_apply]; simp only [Finset.sum_apply]; apply Finset.sum_congr rfl; intro offset member
-    have within : offset ≤ order := by simpa using Finset.mem_range.mp member
-    simp only [Module.End.mul_apply, Module.End.natCast_apply, map_nsmul, rightPower, leftPower, Pi.smul_apply]
-    rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, mul_comm]; congr 2; push_cast [Int.natCast_sub within]; omega
+
   let difference := (residueField (Y := Y) r a b).operator - Y (mu (Y := Y) a r b)
   have differenceCreative : ∀ index : ℤ, 0 ≤ index → (difference [[index]]) vacuum = 0 := by
     intro index nonnegative

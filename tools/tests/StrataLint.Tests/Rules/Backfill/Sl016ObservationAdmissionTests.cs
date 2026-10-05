@@ -31,7 +31,7 @@ public sealed class Sl016ObservationAdmissionTests(ITestOutputHelper output)
         if (reopenChild)
         {
             var clear = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "",
-                ["--clear", parent.Receipts.ChainAtoms[0], "--base", "baseline"]);
+                ["--clear", parent.Receipts.ChainAtoms[0]]);
             Assert.True(clear.Success, clear.Error);
             Assert.Contains("SETTLE_ALIGN_REQUIRED ancestors=" + parent.AtomId, clear.Output, StringComparison.Ordinal);
             fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
