@@ -1,0 +1,23 @@
+# First Nonzero Digit Order
+
+## Abstract
+
+A tight accepted base path has no earlier nonzero output coefficient.
+
+**Theorem 1.1 (The literal minimum-position transition law).**
+
+$$\forall s \in \operatorname{Fin}\left(1492\right),\; \forall t \in \operatorname{Fin}\left(1492\right),\; \forall xs \in \operatorname{List}\left(\mathbb{Z} \times \mathbb{Z} \times \mathbb{Z} \times \mathbb{Z}\right),\; \left(s \in \operatorname{start}\left(\operatorname{baseAutomaton}\left(\operatorname{true}\right)\right) \land t \in \operatorname{accept}\left(\operatorname{baseAutomaton}\left(\operatorname{true}\right)\right)\right) \Rightarrow \left(\forall p \in \operatorname{Path}\left(\operatorname{baseAutomaton}\left(\operatorname{true}\right), s, t, xs\right),\; \operatorname{pathCharge}\left(\lambda [\operatorname{Fin}\left(1492\right)] a:\mathbb{Z} \times \mathbb{Z} \times \mathbb{Z} \times \mathbb{Z} [\operatorname{Fin}\left(1492\right)] \mapsto \operatorname{fst}\left(a\right), p\right) = 1 \Rightarrow \left(\forall i \in \mathbb{N},\; \operatorname{getD}\left(\operatorname{getElemOption}\left(\operatorname{pathOutputs}\left(\lambda [\operatorname{Fin}\left(1492\right)] [\mathbb{Z} \times \mathbb{Z} \times \mathbb{Z} \times \mathbb{Z}] q:\operatorname{Fin}\left(1492\right) \mapsto \operatorname{getD}\left(\operatorname{getElemOption}\left(\operatorname{fst}\left(\operatorname{baseTable}\left(\operatorname{val}\left(q\right)\right)\right), 12\right), 0\right), p\right), i\right), 0\right) \ne 0 \Rightarrow \left(\exists k \in \mathbb{N},\; k \le i \land \operatorname{getD}\left(\operatorname{getElemOption}\left(\operatorname{pathOutputs}\left(\lambda [\operatorname{Fin}\left(1492\right)] [\mathbb{Z} \times \mathbb{Z} \times \mathbb{Z} \times \mathbb{Z}] q:\operatorname{Fin}\left(1492\right) \mapsto \operatorname{getD}\left(\operatorname{getElemOption}\left(\operatorname{fst}\left(\operatorname{baseTable}\left(\operatorname{val}\left(q\right)\right)\right), 10\right), 0\right), p\right), k\right), 0\right) \ne 0\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Palindromes/PeriodDoubling/BaseLowestPosition.base_path_lowest_order` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The lowest-position product records an output nonzero coefficient before the first input nonzero coefficient. Lifting the base path preserves every label, so a true terminal flag would contradict its bound zero on a path with f charge one. The persistent flag is therefore false. Induction along the base path, using the literal first-sign memory checker, supplies a nonzero input coefficient no later than any nonzero output coefficient. Optional list entries use default zero. The coefficients include the dummy leading zero, so both streams use the same indexing.
+
+## References
+
+- Truth anchor: `D5/S1/Words/Palindromes/PeriodDoubling/BaseLowestPosition.base_path_lowest_order`
+- Dependency: [D5/S1/Words/Palindromes/PeriodDoubling/BaseQArithmetic](BaseQArithmetic.md)
+- Dependency: [D5/S1/Words/Palindromes/PeriodDoubling/MinimumPathRealization](MinimumPathRealization.md)

@@ -4,7 +4,6 @@ authors: Alfred J. Menezes, Paul C. van Oorschot, Scott A. Vanstone
 year: 1996
 title: "Handbook of Applied Cryptography"
 doi: null
-arxiv: null
 url: https://cacr.uwaterloo.ca/hac/about/chap14.pdf
 claim: "Fact 14.124 gives uniqueness and minimum nonzero-digit count for sparse signed binary representations."
 strata_touched:

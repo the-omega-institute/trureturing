@@ -4,7 +4,6 @@ authors: D. Bulgakova, A. Frid, and J. Scanvic
 year: 2022
 title: "Prefix palindromic length of the Sierpinski word"
 doi: null
-arxiv: 2201.09556v3
 url: https://arxiv.org/abs/2201.09556v3
 claim: "The abstract recalls the conjectured failure of 2-regularity for period-doubling prefix palindromic length; the paper treats the Sierpinski word."
 strata_touched:

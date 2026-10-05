@@ -1,0 +1,36 @@
+# Complete Representation of Palindrome Cuts
+
+## Abstract
+
+Every actual palindrome cut from class S is represented by the complete finite transducer.
+
+**Definition 1.1 (The literal signed-digit class S).**
+
+$$\forall n \in \mathbb{N},\; \operatorname{classS}\left(n\right) \Leftrightarrow \left(\exists h \in \mathbb{N},\; 3 \cdot \operatorname{div}\left(n + 1, 2\right) < 2^{h + 1} \land \left(\forall i \in \operatorname{Fin}\left(h\right),\; \forall j \in \operatorname{Fin}\left(h\right),\; \left(\left(\left(\left(\operatorname{val}\left(i\right) < \operatorname{val}\left(j\right) \land \operatorname{getD}\left(\operatorname{getElemOption}\left(\operatorname{tripleSignedDigits}\left(\operatorname{div}\left(n + 1, 2\right), h\right), \operatorname{val}\left(i\right)\right), 0\right) \ne 0\right) \land \operatorname{getD}\left(\operatorname{getElemOption}\left(\operatorname{tripleSignedDigits}\left(\operatorname{div}\left(n + 1, 2\right), h\right), \operatorname{val}\left(j\right)\right), 0\right) \ne 0\right) \land \left(\forall k \in \mathbb{N},\; \left(\operatorname{val}\left(i\right) < k \land k < \operatorname{val}\left(j\right)\right) \Rightarrow \operatorname{getD}\left(\operatorname{getElemOption}\left(\operatorname{tripleSignedDigits}\left(\operatorname{div}\left(n + 1, 2\right), h\right), k\right), 0\right) = 0\right)\right) \land \operatorname{getD}\left(\operatorname{getElemOption}\left(\operatorname{tripleSignedDigits}\left(\operatorname{div}\left(n + 1, 2\right), h\right), \operatorname{val}\left(i\right)\right), 0\right) \ne \operatorname{getD}\left(\operatorname{getElemOption}\left(\operatorname{tripleSignedDigits}\left(\operatorname{div}\left(n + 1, 2\right), h\right), \operatorname{val}\left(j\right)\right), 0\right)\right) \Rightarrow 3 \le \operatorname{NatSub}\left(\operatorname{val}\left(j\right), \operatorname{val}\left(i\right)\right)\right)\right)$$
+
+*Formalization.* `D5/S1/Words/Palindromes/PeriodDoubling/CutRepresentation.classS` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Class S consists of endpoints whose rounded-half nonadjacent expansion has a gap of at least three between consecutive nonzero digits of different signs. The existential length has an explicit bound making the triple-binary expansion complete. Indices i and j range over Fin h; intermediate indices k range over the naturals. Entry means option lookup with default zero, div and mod mean natural integer quotient and remainder, and NatSub is truncated natural subtraction.
+
+**Theorem 1.2 (Literal legal cuts give accepting paths).**
+
+$$\forall n \in \mathbb{N},\; \forall j \in \mathbb{N},\; \forall minimumLength \in \mathbb{N},\; \left(\left(\operatorname{classS}\left(n\right) \land j < n\right) \land \operatorname{Palindrome}\left(\operatorname{ofFn}\left(i:\operatorname{Fin}\left(\operatorname{NatSub}\left(n, j\right)\right) \mapsto \left(u_{\mathrm{pd}}\right)\left(j + \operatorname{val}\left(i\right)\right)\right)\right)\right) \Rightarrow \left(\exists charge \in \operatorname{Bool},\; \exists s \in \operatorname{Fin}\left(1492\right),\; \exists t \in \operatorname{Fin}\left(1492\right),\; \exists xs \in \operatorname{List}\left(\mathbb{Z} \times \mathbb{Z} \times \mathbb{Z} \times \mathbb{Z}\right),\; \left(\left(\left(\left(\left(\left(s \in \operatorname{start}\left(\operatorname{baseAutomaton}\left(charge\right)\right) \land t \in \operatorname{accept}\left(\operatorname{baseAutomaton}\left(charge\right)\right)\right) \land \operatorname{Nonempty}\left(\operatorname{Path}\left(\operatorname{baseAutomaton}\left(charge\right), s, t, xs\right)\right)\right) \land \operatorname{getD}\left(\operatorname{getElemOption}\left(\operatorname{fst}\left(\operatorname{baseTable}\left(\operatorname{val}\left(s\right)\right)\right), 2\right), 0\right) = \operatorname{cast}\left(\operatorname{mod}\left(n, 2\right), \mathbb{Z}\right)\right) \land \operatorname{getD}\left(\operatorname{getElemOption}\left(\operatorname{fst}\left(\operatorname{baseTable}\left(\operatorname{val}\left(s\right)\right)\right), 3\right), 0\right) = \operatorname{cast}\left(\operatorname{mod}\left(j, 2\right), \mathbb{Z}\right)\right) \land \operatorname{foldr}\left(\lambda a:\mathbb{Z} \times \mathbb{Z} \times \mathbb{Z} \times \mathbb{Z} x:\mathbb{Z} \mapsto \operatorname{fst}\left(\operatorname{snd}\left(\operatorname{snd}\left(a\right)\right)\right) + 2 \cdot x, 0, xs\right) = \operatorname{cast}\left(\operatorname{div}\left(n, 2\right), \mathbb{Z}\right)\right) \land \operatorname{foldr}\left(\lambda a:\mathbb{Z} \times \mathbb{Z} \times \mathbb{Z} \times \mathbb{Z} x:\mathbb{Z} \mapsto \operatorname{snd}\left(\operatorname{snd}\left(\operatorname{snd}\left(a\right)\right)\right) + 2 \cdot x, 0, xs\right) = \operatorname{cast}\left(\operatorname{div}\left(j, 2\right), \mathbb{Z}\right)\right) \land minimumLength \le \operatorname{length}\left(xs\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Palindromes/PeriodDoubling/CutRepresentation.cut_representation_completeness` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every nonempty palindromic suffix from j to n with n in class S, an accepting path records both endpoint parities and both shifted endpoint values. Either acceptance mode may occur: true has a valid output class, and false records an output class violation. The proof builds the bit-relation path from the actual dyadic palindrome radius, pads it by zero bits, supplies complete nonadjacent signed expansions, derives distance-two input spacing from the consecutive-sign condition, and performs the carry realization. The accepting path has at least the requested minimum length. This theorem supplies complete legal-cut representation; tightness is used separately to exclude the class-violation mode.
+
+## References
+
+- Truth anchor: `D5/S1/Words/Palindromes/PeriodDoubling/CutRepresentation.classS`
+- Truth anchor: `D5/S1/Words/Palindromes/PeriodDoubling/CutRepresentation.cut_representation_completeness`
+- Dependency: [D5/S1/Words/Palindromes/PeriodDoubling/BaseDigitRealization](BaseDigitRealization.md)
+- Dependency: [D5/S1/Words/Palindromes/PeriodDoubling/BaseQArithmetic](BaseQArithmetic.md)

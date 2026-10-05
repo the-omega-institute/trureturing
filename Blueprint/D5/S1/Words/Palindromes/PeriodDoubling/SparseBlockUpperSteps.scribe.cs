@@ -14,6 +14,8 @@ internal sealed class SparseBlockUpperStepsDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(MainFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("The displayed sums are the literal integers with binary blocks (100) repeated p times, a gap of z zeros and (10) repeated c times. For epsilon zero or one, an even gap and at least three tail blocks permit four cuts; an odd gap and at least one tail block permit two cuts. The construction uses the exact long and short odd-palindrome radii and preserves the higher prefix. NatSub is truncated natural subtraction; mod is natural remainder; val is the natural value of a finite index."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula Upd(Formula n) =>
+        new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
@@ -38,7 +40,7 @@ internal sealed class SparseBlockUpperStepsDocument : IScribeDocumentDefinition
         return Add(high, tail);
     }
     private static Formula P(Formula n) => Call("PL", Call("ofFn",
-        Lam("i", Call("Fin", n), Call("upd", Call("val", V("i"))))));
+        Lam("i", Call("Fin", n), Upd(Call("val", V("i"))))));
     private static Formula MainFormula()
     {
         var input = P(Add(State(V("p"), V("z"), V("c")), V("eps")));

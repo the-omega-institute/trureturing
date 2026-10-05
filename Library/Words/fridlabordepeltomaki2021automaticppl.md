@@ -4,7 +4,6 @@ authors: Anna E. Frid, Enzo Laborde, and Jarkko Peltomäki
 year: 2021
 title: "On prefix palindromic length of automatic words"
 doi: 10.1016/j.tcs.2021.08.016
-arxiv: 2009.02934v2
 url: https://arxiv.org/abs/2009.02934v2
 claim: "Section 5.1, Conjecture 17 asks whether the period-doubling PPL-difference is not 2-automatic and its prefix palindromic length is not 2-regular."
 strata_touched:

@@ -27,45 +27,29 @@ internal sealed class MinimumPositionCertificateDocument : IScribeDocumentDefini
             Blocks(Paragraph(Text("Kernel reduction checks all 1710 rows, verifies complete lifting of the base graph, and proves the source, goal and reverse-closed potential inequalities. Every accepting run has total f charge at most zero. This graph statement requires an arithmetic identification of f with the signed-weight difference before it can imply a statement about actual cuts."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula NfaMk(params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V("NFA"), Dot, V("mk"))), [.. args]);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
-    private static Formula Q() => Seq(Mathbb, Grp(V("Q")));
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Ty(name), [.. args]);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula ListOf(Formula value) => Call("List", value);
-    private static Formula Fn(Formula from, Formula to) => Seq(from, Sp, To, Sp, to);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
-    private static Formula Ex(string name, Formula type, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
     private static Formula Eqn(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula LtF(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula LeF(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Mem(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
     private static Formula And(params Formula[] items) => items.Aggregate((a, b) => new Formula.Logic(a, FormulaLogicOperator.And, b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
-    private static Formula IffF(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
-    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
-    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
 
-    private static Formula Prop() => Ty("Prop");
-    private static Formula SetOf(Formula a) => Call("Set", a);
     private static Formula Product(params Formula[] a) => SeqWithTimes(a);
     private static Formula SeqWithTimes(Formula[] a) =>
         a.Skip(1).Aggregate(a[0], (x,y) => Seq(x, Sp, Times, Sp, y));
     private static Formula Lam(string n, Formula t, Formula b) =>
         Seq(V(n), Colon, t, Sp, Mapsto, Sp, b);
-    private static Formula NotF(Formula a) => new Formula.Not(a);
-    private static Formula Ite(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
-    private static Formula NegF(Formula a) => Call("neg", a);
-    private static Formula At(Formula f, Formula x) => Call("val", f, x);
-    private static Formula Cast(Formula x, Formula t) => Call("cast", x, t);
-    private static Formula ListNil() => Seq(OpenBracket, CloseBracket);
     private static Formula Tuple(params Formula[] a) =>
         Parenthesized(a.Skip(1).Aggregate(a[0], (x,y) => Seq(x, Comma, Sp, y)));
 
@@ -92,14 +76,14 @@ internal sealed class MinimumPositionCertificateDocument : IScribeDocumentDefini
         var fin = Call("Fin", D(1,7,1,0));
         var sources = Seq(OpenBrace, V("i"), Colon, fin, Sp, Mid, Sp, LtF(Call("val", V("i")), D(7)), CloseBrace);
         var successors = Seq(OpenBrace, V("j"), Colon, fin, Sp, Mid, Sp,
-            Mem(Tuple(Call("val", V("j")), V("a")), Call("edges", Call("minimumTable", Call("val", V("i"))))), CloseBrace);
+            Mem(Tuple(Call("val", V("j")), V("a")), Call("fst", Call("snd", Call("snd", Call("minimumTable", Call("val", V("i"))))))), CloseBrace);
         var baseIndex = Call("fst", Call("minimumTable", Call("val", V("i"))));
         var baseState = Call("fst", Call("baseTable", baseIndex));
         var flag = Call("fst", Call("snd", Call("minimumTable", Call("val", V("i")))));
         var condition = Call("andBool", Call("andBool", flag, Call("baseTerminal", baseState)),
             Call("beq", Call("getD", Call("getElemOption", baseState, D(1,8)), D(0)), D(0)));
         var accepted = Seq(OpenBrace, V("i"), Colon, fin, Sp, Mid, Sp, condition, CloseBrace);
-        return Disp(Eqn(Call("minimumAutomaton"), Call("NFAmk", Lam("i", fin, Lam("a", Alphabet(), successors)), sources, accepted)));
+        return Disp(Eqn(Call("minimumAutomaton"), NfaMk(Lam("i", fin, Lam("a", Alphabet(), successors)), sources, accepted)));
     }
     private static Formula BoundFormula()
     {

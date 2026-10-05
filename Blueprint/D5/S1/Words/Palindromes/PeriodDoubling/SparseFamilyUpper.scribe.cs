@@ -14,6 +14,8 @@ internal sealed class SparseFamilyUpperDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(MainFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("For positive odd a, odd b at least 2a minus one, and epsilon zero or one, repeated six-cut reductions produce the displayed uniform bound. At b equal to 2a minus one both endpoints have at most 3a factors. At larger odd b the bounds are a+b and a+b+1. The diagonal terminal uses a three-factor construction at an even exponent; the other terminal uses the alternating-tail reduction. NatSub denotes truncated natural subtraction, mod denotes natural remainder, and val denotes the natural value of a finite index."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula Upd(Formula n) =>
+        new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
@@ -38,7 +40,7 @@ internal sealed class SparseFamilyUpperDocument : IScribeDocumentDefinition
         return Add(high, tail);
     }
     private static Formula P(Formula n) => Call("PL", Call("ofFn",
-        Lam("i", Call("Fin", n), Call("upd", Call("val", V("i"))))));
+        Lam("i", Call("Fin", n), Upd(Call("val", V("i"))))));
     private static Formula MainFormula()
     {
         var input = P(Add(State(V("a"), D(0), V("b")), V("eps")));

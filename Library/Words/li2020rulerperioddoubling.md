@@ -4,7 +4,6 @@ authors: Shuo Li
 year: 2020
 title: "Palindromic length sequence of the ruler sequence and of the period-doubling sequence"
 doi: null
-arxiv: 2007.08317v1
 url: https://arxiv.org/abs/2007.08317v1
 claim: "Theorem 2 bounds period-doubling prefix palindromic length between one third of the binary run count and that run count."
 strata_touched:

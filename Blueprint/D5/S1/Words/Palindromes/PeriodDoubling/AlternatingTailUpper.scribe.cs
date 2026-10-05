@@ -14,6 +14,8 @@ internal sealed class AlternatingTailUpperDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(MainFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("For epsilon zero or one, two odd palindromic suffix cuts remove two alternating binary blocks and preserve the endpoint bit. Their centers use odd parts nine and one. Induction repeats the construction and ends at the empty prefix or a singleton. PL is the true minimum number of nonempty palindrome factors, and val denotes the natural value of a finite index."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula Upd(Formula n) =>
+        new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
@@ -29,7 +31,7 @@ internal sealed class AlternatingTailUpperDocument : IScribeDocumentDefinition
     {
         var length = Add(Call("sum", Call("range", Mul(D(2), V("k"))),
             Lam("j", N(), new Formula.Power(D(2), Add(Mul(D(2), V("j")), D(1))))), V("eps"));
-        var word = Call("ofFn", Lam("i", Call("Fin", length), Call("upd", Call("val", V("i")))));
+        var word = Call("ofFn", Lam("i", Call("Fin", length), Upd(Call("val", V("i")))));
         return Disp(All("k", N(), All("eps", N(), Imp(Le(V("eps"), D(1)),
             Le(Call("PL", word), Add(Mul(D(2), V("k")), V("eps")))))));
     }
