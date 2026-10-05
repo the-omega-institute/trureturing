@@ -228,7 +228,7 @@ private theorem isOpen_fiber (m : ℕ) (S : Finset ℕ) (p : (t : S) → X m) :
   rw [show fiber m S p = ⋂ t : S,
       (fun z : Circle => z + goldenPhase (t.val : ℤ)) ⁻¹' A (p t) by
     ext z
-    simp only [fiber, Set.mem_setOf_eq, Set.mem_iInter, Set.mem_preimage]]
+    simp only [fiber, Set.mem_ofPred_eq, Set.mem_iInter, Set.mem_preimage]]
   apply isOpen_iInter_of_finite
   intro t
   exact (QuotientAddGroup.isOpenMap_coe _ isOpen_Ioo).preimage
@@ -240,13 +240,14 @@ private theorem phase_tail_dense (bound : ℕ) :
     AddCircle.denseRange_zsmul_coe_iff.mpr (by simpa using Real.goldenRatio_irrational)
   have hn : DenseRange (fun n : ℕ => n • (Real.goldenRatio : Circle)) :=
     denseRange_zsmul_iff_nsmul.mp hz
-  have hd := ((Homeomorph.addRight ((bound + 1) • (Real.goldenRatio : Circle)))
-    .surjective.denseRange).comp hn (Homeomorph.addRight _).continuous
+  let shift := Homeomorph.addRight ((bound + 1) • (Real.goldenRatio : Circle))
+  have hd := shift.surjective.denseRange.comp hn shift.continuous
   convert hd using 1
   funext n
-  simp only [goldenPhase, Int.cast_natCast, ← AddCircle.coe_nsmul, nsmul_eq_mul,
-    Nat.cast_add, Nat.cast_one, ← AddCircle.coe_add]
+  simp only [goldenPhase, ← AddCircle.coe_nsmul, nsmul_eq_mul,
+    Nat.cast_add, Nat.cast_one]
   congr 1
+  push_cast
   ring
 
 /-- For width at least two, every nonempty time tuple fibre is precisely one
@@ -260,8 +261,8 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
       fiber m S p = connectedComponentIn (regularDomain m S) z) ∧
     (∀ (p q : (t : S) → X m) (z w : Circle),
       z ∈ fiber m S p → w ∈ fiber m S q →
-      connectedComponentIn (regularDomain m S) z =
-        connectedComponentIn (regularDomain m S) w → p = q) ∧
+      (connectedComponentIn (regularDomain m S) z =
+        connectedComponentIn (regularDomain m S) w ↔ p = q)) ∧
     (∀ z ∈ regularDomain m S, ∃! p : (t : S) → X m, z ∈ fiber m S p) ∧
     (E '' (↑(cuts m S) : Set ℕ)).ncard = (cuts m S).card ∧
     (∀ p : (t : S) → X m, (fiber m S p).Nonempty → ∀ bound : ℕ,
@@ -329,13 +330,18 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
         ⟨z, mem_connectedComponentIn (hsubset p hz), hz t⟩
         isPreconnected_connectedComponentIn hw
   refine ⟨heq, ?_, ?_, ?_, ?_⟩
-  · intro p q z w hz hw hsame
-    have hw' : w ∈ fiber m S p := by
-      rw [heq p z hz, hsame]
-      exact mem_connectedComponentIn (hsubset q hw)
-    funext t
-    exact arc_unique m (by omega) (p t) (q t)
-      (w + goldenPhase (t.val : ℤ)) (hw' t) (hw t)
+  · intro p q z w hz hw
+    constructor
+    · intro hsame
+      have hw' : w ∈ fiber m S p := by
+        rw [heq p z hz, hsame]
+        exact mem_connectedComponentIn (hsubset q hw)
+      funext t
+      exact arc_unique m (by omega) (p t) (q t)
+        (w + goldenPhase (t.val : ℤ)) (hw' t) (hw t)
+    · intro hpq
+      subst q
+      exact (heq p z hz).symm.trans (heq p w hw)
   · intro z hz
     have hc (t : S) : ∃ p : X m, z + goldenPhase (t.val : ℤ) ∈ A p :=
       arc_cover m (by omega) _ ((regular_domain_iff m S z).mp hz t)
