@@ -60241,3 +60241,198 @@ $$
 固定共因子面板内部确实发生符号相加，但实际黄金原子阻止它恰好消去整个素数尺度的主项。无限调和权重趋零是已有整体矩的结果；它没有给移动 $D=D(k)$ 的统一素数核误差，也没有控制同一来源的 $\mathcal R_{D(k)}(k)$。要达到完整临界估计，仍需同时支付增长的共因子范围、素数尺度变化与其余来源，而不是仅令 $g_e(D)$ 趋零，或把（394.15）两个量词顺序交换。这里不把任何有限面板的符号障碍当作 RH、Robin 或完整有符号系数的反例。
 
 ## 追加锚（本行以下为增补区）
+
+## 395. 实际 Robin 残差积分的尺度变化与一个 Mellin 绝对矩
+
+本节保留 §§386–390 的原始积分权重，以正尺度换元将算术阶跃留在固定积分变量上。承重估计同时支付光滑权函数的变化和移动阈值的跨越；只控制光滑部分不足以得到完整结论。经典正尺度换元、微积分基本定理与非负 Tonelli 定理作为中间步骤使用。
+
+### 395.1 可测残差的完整加权尺度界
+
+**定义 395.1（残差的 Mellin 绝对矩与尺度积分）。** 固定 $x>1$、$0<\alpha<1$，令 $L=\log x$、$b=1-\alpha$，并定义
+
+$$
+w(t)=\frac{\log t+1}{t^2\log^2t},\qquad
+h_1=1+\frac1L,\qquad h_2=1+\frac2L+\frac2{L^2}.
+$$
+
+取正半轴上的可测实函数 $R$，假设非负被积函数的真实 Lebesgue 积分有限：
+
+$$
+M_\alpha(R)=\int_0^\infty |R(y)|y^{-\alpha-1}\,dy<\infty.
+\tag{395.1}
+$$
+
+对 $s>0$ 记
+
+$$
+P_x(s)=\int_x^\infty R(t/s)w(t)\,dt,
+\qquad J_x(m)=P_x(m)-P_x(m+1)\quad(m\ge1).
+\tag{395.2}
+$$
+
+**定理 395.2（尺度差分由同一个绝对矩控制）。** 每个 $P_x(s)$ 都绝对存在，而且
+
+$$
+\boxed{\sum_{m\ge1}m^\alpha|J_x(m)|
+\le\frac{x^{\alpha-1}}{\log x}
+\left(h_1+\frac{h_2}{1-\alpha}\right)M_\alpha(R).}
+\tag{395.3}
+$$
+
+这里不要求 $R$ 连续或可微。
+
+**证明。** 换元 $t=sy$，在 $sy\ge x$ 上置
+
+$$
+f(s,y)=s w(sy)=\frac1{s y^2}
+\left[\frac1{\log(sy)}+\frac1{\log^2(sy)}\right]>0.
+$$
+
+对固定 $s>0$，令 $z=x/s>0$。因为 $\log(sy)\ge L$，有
+
+$$
+f(s,y)\le\frac{h_1}{Lsy^2},\qquad
+ y^{-2}\le z^{\alpha-1}y^{-\alpha-1}\quad(y\ge z).
+$$
+
+式（395.1）遂保证 $\int_z^\infty|R(y)|f(s,y)dy$ 有限，证明每个 $P_x(s)$ 的绝对存在及换元的合法性。
+
+固定 $y>0$，函数 $f$ 在 $sy\ge x$ 上光滑递减，直接微分给
+
+$$
+g(s,y):=-\partial_sf(s,y)
+=\frac1{s^2y^2}\left[
+\frac1{\log(sy)}+\frac2{\log^2(sy)}+\frac2{\log^3(sy)}\right]
+\ge0,
+\qquad g(s,y)\le\frac{h_2}{Ls^2y^2}.
+\tag{395.4}
+$$
+
+将 $P_x(m+1)$ 的积分域在 $x/m$ 处分开，得到准确的相邻尺度分解
+
+$$
+\begin{aligned}
+J_x(m)={}&\int_{x/m}^\infty
+R(y)[f(m,y)-f(m+1,y)]dy\\
+&-\int_{x/(m+1)}^{x/m}R(y)f(m+1,y)dy.
+\end{aligned}
+\tag{395.5}
+$$
+
+两段均绝对可积。第一段中的 $y\ge x/m$ 保证所有 $s\in[m,m+1]$ 满足 $sy\ge x$。微积分基本定理给
+
+$$
+f(m,y)-f(m+1,y)=\int_m^{m+1}g(s,y)ds.
+$$
+
+取绝对值，使用 $m^\alpha\le s^\alpha$，再以非负 Tonelli 交换并放大积分域，第一段的全部加权和不超过
+
+$$
+\int_1^\infty s^\alpha
+\int_{x/s}^\infty|R(y)|g(s,y)dy\,ds.
+\tag{395.6}
+$$
+
+第二段满足 $m\le x/y\le m+1$，因此递减性给
+
+$$
+m^\alpha f(m+1,y)
+\le(x/y)^\alpha f(x/y,y)
+=(x/y)^{\alpha+1}w(x).
+$$
+
+半开区间 $(x/(m+1),x/m]$ 对 $m\ge1$ 两两不交并覆盖 $(0,x]$；积分端点单点不影响数值。于是第二段的全部加权和不超过
+
+$$
+x^{\alpha+1}w(x)\int_0^x|R(y)|y^{-\alpha-1}dy
+\le\frac{x^{\alpha-1}h_1}{L}M_\alpha(R).
+\tag{395.7}
+$$
+
+这项准确支付阈值跨越，不能从光滑导数项中删去。
+
+在（395.6）中使用（395.4），非负 Tonelli 将 $s$ 的下限变为 $\max(1,x/y)$。放大到 $x/y$ 后，因 $\alpha<1$，
+
+$$
+\int_{x/y}^\infty s^{\alpha-2}ds
+=\frac{(x/y)^{\alpha-1}}{1-\alpha}.
+$$
+
+故完整光滑部分不超过
+
+$$
+\frac{h_2}{L}\int_0^\infty\frac{|R(y)|}{y^2}
+\int_{x/y}^\infty s^{\alpha-2}ds\,dy
+=\frac{x^{\alpha-1}h_2}{(1-\alpha)L}M_\alpha(R).
+\tag{395.8}
+$$
+
+两项相加即得（395.3）。非负 Tonelli 可以先在扩展非负值中使用，式（395.7）、（395.8）随后证明全部交换的量有限。等价地，对每个有限 $m$ 前缀实行相同非负估计，再由非负部分和的一致上界推出完整级数收敛；没有交换未受控的有符号级数。$\square$
+
+### 395.2 实际 Fibonacci 残差的同源代入
+
+沿用 §387 的实际 $K(y)$、$A=1/\mathcal B(1)>0$、$D=1/\mathcal B(1)+\mathcal B'(1)/\mathcal B(1)^2$ 与真实 $\delta>0$，令 $\mu_0=1/\delta$。这里 $\mu_0$ 是实常数，区别于 Möbius 函数。取全部正数上的同一个实际残差
+
+$$
+R(y)=K(y)-Ay\log y+Dy.
+$$
+
+式（387.17）给 $|R(y)|\le\mu_0(1+\log y)$ 对 $y\ge1$；当 $0<y<1$，$K(y)=0$，所以
+
+$$
+R(y)=Dy-Ay\log y,\qquad
+|R(y)|\le y(|D|+A\log(1/y)).
+\tag{395.9}
+$$
+
+**推论 395.3（实际核的全尺度常数）。** 对该实际残差与全部 $0<\alpha<1$，
+
+$$
+M_\alpha(R)\le
+\mu_0\left(\frac1\alpha+\frac1{\alpha^2}\right)
++\frac{|D|}{1-\alpha}+\frac A{(1-\alpha)^2}.
+\tag{395.10}
+$$
+
+因此（395.3）成立，右侧可将 $M_\alpha(R)$ 换成（395.10）的显式上界。特别地，
+
+$$
+\boxed{\sum_{m\ge1}\sqrt m\,|J_x(m)|
+\le\frac{(6+10/L+8/L^2)(3\mu_0+2A+|D|)}{\sqrt x\log x}.}
+\tag{395.11}
+$$
+
+$x\ge e$ 时分子可用 $72\mu_0+48A+24|D|$。
+
+**证明。** $R$ 是局部有限阶跃函数减连续函数，故可测。对高商包络使用经典幂—对数积分
+
+$$
+\int_1^\infty(1+\log y)y^{-\alpha-1}dy
+=\frac1\alpha+\frac1{\alpha^2};
+$$
+
+对真实低商式（395.9）使用
+
+$$
+\int_0^1y^{-\alpha}dy=\frac1{1-\alpha},\qquad
+\int_0^1y^{-\alpha}\log(1/y)dy=\frac1{(1-\alpha)^2}.
+$$
+
+三项均有限，得到（395.10）。$\alpha=1/2$ 时该上界为 $6\mu_0+2|D|+4A$，而 $h_1+2h_2=3+5/L+4/L^2$，相乘即（395.11）。$L\ge1$ 给最后的统一常数。$\square$
+
+### 395.3 积分变化量与实际输入预算的不同责任
+
+**推论 395.4（有界输入的条件运输）。** 若一个实数列 $u_m$ 满足 $|u_m|\le Bm^\alpha$（$m\ge1$，$B\ge0$），则由（395.3），$\sum_m u_mJ_x(m)$ 绝对收敛，且
+
+$$
+\left|\sum_{m\ge1}u_mJ_x(m)\right|
+\le B\frac{x^{\alpha-1}}{\log x}
+\left(h_1+\frac{h_2}{1-\alpha}\right)M_\alpha(R).
+\tag{395.12}
+$$
+
+证明。逐项有 $|u_mJ_x(m)|\le Bm^\alpha|J_x(m)|$，用（395.3）求和及级数三角不等式即可。$\square$
+
+这条条件运输没有证明实际 $H_m$ 的平方根预算，也没有识别原始 $I_\psi(x)$ 与 $\sum_mH_mJ_x(m)$。后一个身份还需要实际卷积恢复、两条仿射矩以及积分前的绝对条件 $\sum_m\int_x^\infty|H_m[R(t/m)-R(t/(m+1))]|w(t)dt<\infty$；积分之后的变化量界不能替代该 Fubini 责任。实际核的 Mellin 矩和实际输入 $H$ 的增长分别属于不同对象。本节没有 Robin 全称符号或 RH 结论。
+
+## 追加锚（本行以下为增补区）
