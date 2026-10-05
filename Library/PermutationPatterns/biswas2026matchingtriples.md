@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2609.08562v1
 claim: "Classifies triples of patterns of length three up to shape-Wilf-equivalence and enumerates the perfect matchings avoiding each triple class except P1 = {123, 132, 213} and P13 = {132, 213, 321}; Section 6, Question 1 asks for these two enumerations."
 strata_touched:
   - D5/S3/Combinatorics/PatternMatchings/TripleAvoidingMatchings
+  - D5/S3/Combinatorics/PatternMatchings/P13Correspondence
 license: citation-only
 triage: anchor
 ---
@@ -24,6 +25,13 @@ Question 1 asks for both.
 
 The module `D5/S3/Combinatorics/PatternMatchings/TripleAvoidingMatchings` answers the P1 clause with the generating
 function (1 − zH)/(1 − z − zH), H = Σ Cat_k F_{k+3} z^k.
+
+The module `D5/S3/Combinatorics/PatternMatchings/P13Correspondence` proves the structural bridge for P13:
+for every n ≥ 0, actual P13-avoiding perfect matchings of Fin(2n) are in bijection with complete general-rank scans
+accepted by explicit normalized S/T transitions. Post-closure base survivors and pending openings are separate.
+Source labels {132, 213, 321} correspond to chronological closing words {231, 312, 123}. The equivalence includes
+empty and disconnected matchings; it does not enumerate P13 or give its generating function. That part of
+Section 6, Question 1 remains open.
 
 ## Verified locator
 

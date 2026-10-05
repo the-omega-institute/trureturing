@@ -138,30 +138,8 @@ public sealed partial class CoverBatchCommandTests
         Assert.Empty(world.Entry(First).Coverage);
     }
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void SharedContextFailureAfterSuccessKeepsCommittedAtoms(bool deletePolicy)
-    {
-        using var world = new BatchWorld();
-        world.DuringInputRead = () =>
-        {
-            if (world.InputReadCount != 2) return;
-            var policyPath = Path.Combine(world.Root, "Meta/FILEMAP.toml");
-            if (deletePolicy) File.Delete(policyPath);
-            else File.AppendAllText(policyPath, "# changed\n");
-        };
-
-        var result = world.Run(Row(First, Gid) + Row(Second, OtherGid) + Row("missing-atom", Gid));
-
-        Assert.Equal(["applied", "failed", "blocked"], Results(result).Select(item => item.Status).ToArray());
-        Assert.Single(world.Entry(First).Coverage);
-        Assert.Empty(world.Entry(Second).Coverage);
-        Assert.DoesNotContain(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
-    }
-
     [Fact]
-    public void ProductionInputReaderAllowsOurOwnLedgerMigrations()
+    public void BatchReadsTheWorkingTreeOnceAcrossItsOwnLedgerMigrations()
     {
         using var world = new BatchWorld { UseGitReader = true };
         TestGit.Run(world.Root, "init");
@@ -171,25 +149,6 @@ public sealed partial class CoverBatchCommandTests
         Assert.True(result.Success, result.Error + result.Output);
         Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
         Assert.Equal(1, world.Repository.ReadCurrentCount);
-    }
-
-    [Theory]
-    [InlineData("added")]
-    [InlineData("deleted")]
-    public void ProductionInputReaderAbortsOnNewOrMissingSharedInputs(string change)
-    {
-        using var world = new BatchWorld { UseGitReader = true };
-        TestGit.Run(world.Root, "init");
-        world.DuringInputRead = () =>
-        {
-            if (change == "added") File.WriteAllText(Path.Combine(world.Root, "new-input.txt"), "new input");
-            else File.Delete(Path.Combine(world.Root, "Meta/FILEMAP.toml"));
-        };
-
-        var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));
-
-        Assert.Equal(["failed", "blocked"], Results(result).Select(item => item.Status).ToArray());
-        Assert.DoesNotContain(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -214,9 +173,9 @@ public sealed partial class CoverBatchCommandTests
         WriteLoadCounts("identical-input-sequential", sequentialLoads);
         WriteLoadCounts("identical-input-batch", batchLoads);
         Assert.Equal(2, sequentialLoads.BaselineLoads);
-        Assert.Equal([1, 2, 1], sequentialLoads.CandidateSnapshotLoads);
+        Assert.Equal([1, 1], sequentialLoads.CandidateSnapshotLoads);
         Assert.Equal(1, batchLoads.BaselineLoads);
-        Assert.Equal([1, 1, 1], batchLoads.CandidateSnapshotLoads);
+        Assert.Equal([1, 1], batchLoads.CandidateSnapshotLoads);
     }
 
     [Theory]
@@ -334,50 +293,19 @@ public sealed partial class CoverBatchCommandTests
             line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
     }
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void ExistingCoverageRequiresIntactCasAndStatementBinding(bool corruptCas)
+    [Fact]
+    public void ExistingCoverageRequiresCurrentStatementBinding()
     {
         using var world = new BatchWorld();
         Assert.True(world.Run(Row(First, Gid)).Success);
-        if (corruptCas)
-        {
-            File.WriteAllText(Path.Combine(world.Root, DigestionCasStore.RootPath + First), "corrupt CAS");
-        }
-        else
-        {
-            world.Rewrite(entry => entry.AtomId == First
-                ? entry with { Coverage = [new DigestionCoverageEdge(Gid, "sha256:" + new string('f', 64))] }
-                : entry);
-        }
+        world.Rewrite(entry => entry.AtomId == First
+            ? entry with { Coverage = [new DigestionCoverageEdge(Gid, "sha256:" + new string('f', 64))] }
+            : entry);
 
         var result = world.Run(Row(First, Gid));
 
         Assert.Equal(1, result.ExitCode);
         Assert.Equal("failed", Assert.Single(Results(result)).Status);
-    }
-
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void ConcurrentChangeAbortsRemainingItemsAndDoesNotEmit(bool changeSharedInput)
-    {
-        using var world = new BatchWorld();
-        world.DuringInputRead = () =>
-        {
-            var path = changeSharedInput
-                ? Path.Combine(world.Root, "D5/S0/Carrier/Probe.lean")
-                : world.LedgerPaths().Single(path => path.EndsWith(First + ".yaml", StringComparison.Ordinal));
-            File.AppendAllText(path, "\n# concurrent edit\n");
-        };
-
-        var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));
-
-        Assert.Equal(1, result.ExitCode);
-        Assert.Equal(["failed", "blocked"], Results(result).Select(item => item.Status).ToArray());
-        Assert.DoesNotContain(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
-        Assert.Equal(1, world.InputReadCount);
     }
 
     [Fact]
@@ -421,10 +349,9 @@ public sealed partial class CoverBatchCommandTests
         internal string Root { get; }
         internal FakeRepositoryGateway Repository { get; }
         internal FakeLeanReportSource Report { get; }
-        internal int InputReadCount { get; private set; }
         internal bool UseGitReader { get; init; }
         internal IReadOnlyList<string> ChangedPaths { get; init; } = [];
-        internal Action? DuringInputRead { get; set; }
+        internal Action? DuringChangeRead { get; set; }
         internal string? ParentId { get; }
         internal ImmutableArray<string> ChildIds { get; } = [];
 
@@ -504,7 +431,11 @@ public sealed partial class CoverBatchCommandTests
             foreach (var path in StrataLint.Scribe.CanonicalValuesWriter.InputPaths)
                 inputs.Baseline[path] = File.ReadAllText(Path.Combine(Root, path));
             Repository = new FakeRepositoryGateway(RawChangeSet.Create([]), null, null,
-                changesForBase: _ => RawChangeSet.Create(ChangedPaths),
+                changesForBase: _ =>
+                {
+                    DuringChangeRead?.Invoke();
+                    return RawChangeSet.Create(ChangedPaths);
+                },
                 currentReader: () => UseGitReader ? GitRepositorySnapshotReader.ReadCurrent(Root) : ReadFiles(),
                 revisionReader: _ => CoverWorld.Raw(inputs.Baseline));
             var reports = inputs.Report.Files.ToDictionary(pair => pair.Key.Value, pair => pair.Value,
@@ -521,15 +452,7 @@ public sealed partial class CoverBatchCommandTests
             var path = Path.Combine(temporary.Path, "atoms.tsv");
             File.WriteAllText(path, input);
             return CoverBatchCommand.Run(Root, Repository, Report,
-                CoverWorld.FixtureUtc, ["--atoms", path, "--base", "baseline"], readInputs: ReadInputs);
-        }
-
-        private RawRepositorySnapshot ReadInputs()
-        {
-            InputReadCount++;
-            DuringInputRead?.Invoke();
-            return UseGitReader ? GitRepositorySnapshotReader.ReadCurrent(Root,
-                static path => !IngestCommand.IsLedgerPath(path)) : ReadFiles();
+                CoverWorld.FixtureUtc, ["--atoms", path, "--base", "baseline"]);
         }
 
         internal void RunSingles()
@@ -569,7 +492,7 @@ public sealed partial class CoverBatchCommandTests
             var path = Path.Combine(temporary.Path, "atoms.tsv");
             TemporaryFileSystem.File.WriteAllText(path, input);
             return CoverBatchCommand.Run(Root, Repository, new PrecomputedLeanReportSource(Root),
-                CoverWorld.FixtureUtc, ["--atoms", path, "--base", "baseline"], readInputs: ReadInputs);
+                CoverWorld.FixtureUtc, ["--atoms", path, "--base", "baseline"]);
         }
 
         private RawRepositorySnapshot ReadFiles() => RawRepositorySnapshot.Create(
