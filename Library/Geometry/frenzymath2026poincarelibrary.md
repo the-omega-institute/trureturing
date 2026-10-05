@@ -5638,3 +5638,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 具名目标 `originalCoveringRepresentation_orbitQuotientHomeomorph` 的完整精确临时 Lean 首轮真实编译通过，host `80961` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-quotient-homeomorph.lean` 为 211714 字节，SHA256 `ba0fd7d8216b3c887978f83a7f3a0ddd949978c54e92c403e743c581c883c30d`；前批成功原群可数源码为完整 offset0 前缀，无新增 import、依赖构建或版本变更。实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
 
 该实际 quotient lift、覆盖连续性和 quotient-map 接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。既有 canonical `IsometricOrbitMetric.orbitMetricSpace` 和 `orbitProperSpace` 可提供实际轨道商度量及其 proper 性质，不能据此直接认定原底空间度量匹配。本批不完成原商度量与体积的匹配、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 或官方验收。
+
+
+### 实际原覆盖作用的轨道商投影在原正半径球上保距
+
+对同一个原等距表示 `ρ` 和原点 `p`，真实正轨道间隔 `r` 使每个非单位原元素在 `p` 的位移至少为 `r`。若原 `x,y` 均在实际球 `ball p (r/4)`，三角不等式和同一 `ρ(g)` 的等距性给出非单位平移的 `dist x (ρ(g)(y))` 至少为 `dist x y`。单位元素给出原距离本身；canonical `IsometricOrbitMetric.orbitDistance` 的实际轨道距离下确界因此逐字等于原 `dist x y`。没有另供局部保距结论，没有重证或替换 canonical 商度量。
+
+实际原覆盖消费者仅需原自由性、真正给定的覆盖 `π` 和同一表示的纤维保持，内部提供每个原点的正间隔及 canonical proper 性质。在由这个实际 proper 证明给出的 `orbitMetricSpace ρ` 中，实际 `orbitQuotientMk ρ` 限制到每个原点附近的某个正半径球是 `Isometry`。原群和目标空间保持独立宇宙，不要求有限生成、虚幂零、满射或纤维轨道传递性。商度量保持原 quotient topology；该结论尚未与原底空间 `M` 的实际度量相匹配。
+
+两个具名目标 `originalRepresentation_orbitDistance_eq_dist_of_pointGap` 与 `freeOriginalCoveringRepresentation_locallyIsometricOrbitProjection` 的完整精确临时 Lean 第二轮真实编译通过，host `67218` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-locally-isometric-orbit.lean` 为 214278 字节，SHA256 `d5f05f64042315b6f625f7dba38a7ba1ab885324bbc74133d9c7b4765f92b56a`；仅新增 43 字节的热缓存 canonical `IsometricOrbitMetric` import，其后完整保留前批成功原商同胚源码，无新依赖构建或版本变更。首轮实际 exit0 但含一条局部 `letI` 风格警告，完整源码日志保留排除；仅改证明内部绑定为 `let`，未关闭 linter。第二轮实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该原三角估计、已有轨道距离下确界与实际 canonical 商度量消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。后续原度量桥仍须从一般原流形条件内部构造覆盖及 H³ 等距识别；原商到 `M` 同胚的保距性、体积匹配、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
