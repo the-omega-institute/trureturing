@@ -120,8 +120,7 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Files),
                 null),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
-            atomHistorySource: FakeAtomHistorySource.ForPaths(fixture.Files.Keys));
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
         var result = environment.DigestStatus(["--json"]);
 
@@ -143,8 +142,7 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Files),
                 null),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
-            atomHistorySource: FakeAtomHistorySource.ForPaths(fixture.Files.Keys));
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
         var result = environment.DigestStatus(["--json"]);
 
@@ -165,8 +163,7 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Files),
                 null),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
-            atomHistorySource: FakeAtomHistorySource.ForPaths(fixture.Files.Keys));
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
         var result = environment.DigestStatus(["--json"]);
 
@@ -209,8 +206,7 @@ public sealed partial class ProductionEnvironmentTests
 
         var json = DigestStatusCommand.RenderJson(
             evaluation,
-            DigestionFrontierTestProjection.Create(evaluation),
-            FakeAtomHistorySource.Project(evaluation, DigestionFrontierTestProjection.Create(evaluation)));
+            DigestionFrontierTestProjection.Create(evaluation));
         var text = DigestStatusCommand.RenderText(evaluation);
 
         using var document = JsonDocument.Parse(json);
@@ -244,8 +240,7 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Files),
                 null),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
-            atomHistorySource: FakeAtomHistorySource.ForPaths(fixture.Files.Keys));
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
         var result = environment.DigestStatus(["--residual-summary"]);
 
@@ -300,8 +295,7 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Files),
                 Snapshot(fixture.Baseline)),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
-            atomHistorySource: FakeAtomHistorySource.ForPaths(fixture.Files.Keys));
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
         var result = environment.DigestStatus(["--json", "--base", "baseline"]);
 
@@ -487,8 +481,7 @@ public sealed partial class ProductionEnvironmentTests
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline)),
         new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-        new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
-        atomHistorySource: FakeAtomHistorySource.ForPaths(fixture.Files.Keys));
+        new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
     private static ProductionCliEnvironment DigestStatusHistoricalCoverageEnvironment(
         RawChangeSet changes)

@@ -35,8 +35,7 @@ public sealed partial class ProductionEnvironmentTests
         var changes = RawChangeSet.Create([RuleFixture.RingPath]);
         var environment = new ProductionCliEnvironment("/repo",
             new FakeRepositoryGateway(changes, Snapshot(fixture.Files), Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)), verifier, CoverWorld.TimeProvider,
-            atomHistorySource: FakeAtomHistorySource.ForPaths(fixture.Files.Keys));
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)), verifier, CoverWorld.TimeProvider);
 
         var result = environment.DigestStatus(["--json", "--base", "baseline"]);
 
@@ -112,8 +111,7 @@ public sealed partial class ProductionEnvironmentTests
         var verifier = new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty);
         var environment = new ProductionCliEnvironment(temporary.Path,
             new FakeRepositoryGateway(RawChangeSet.Create([]), Snapshot(fixture.Files), Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)), verifier, CoverWorld.TimeProvider,
-            atomHistorySource: FakeAtomHistorySource.ForPaths(fixture.Files.Keys));
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)), verifier, CoverWorld.TimeProvider);
 
         var result = environment.AlignDigestionStatus(refresh
             ? ["--base", "baseline", "--refresh-source", "fixture-source", "--plan"]
