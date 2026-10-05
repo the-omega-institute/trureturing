@@ -58,10 +58,9 @@ their exact-type importing clients compile under the pinned Lean/Mathlib
 environment; the importing client's axiom closure is only
 `propext`, `Classical.choice`, and `Quot.sound`.
 
-*Resolves.* `D5/S1/Words/RankOneMorphismIterationBound.effective_iteration_bound`
-(`Proved`) for preregistration issue #13429.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"filimonova-puzynina-2026-rank-one-iteration-bound","declaration_gid":"D5/S1/Words/RankOneMorphismIterationBound.effective_iteration_bound","resolution_kind":"proved"} -->
+The formal `Proved` resolution binding will be attached after the new source
+module enters the frozen declaration state.  Issue #13429 records the
+preregistration and the complete kernel-checked evidence.
 
 ## Triage
 

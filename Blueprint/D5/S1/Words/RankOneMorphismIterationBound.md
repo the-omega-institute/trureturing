@@ -38,13 +38,12 @@ preperiods.
 
 *Proof.* Machine-checked in Lean as the declarations above (`✓ std3`). ∎
 
-*Resolves.* `Problems/filimonova-puzynina-2026-rank-one-iteration-bound` (proved)
-by `D5/S1/Words/RankOneMorphismIterationBound.effective_iteration_bound`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"filimonova-puzynina-2026-rank-one-iteration-bound","declaration_gid":"D5/S1/Words/RankOneMorphismIterationBound.effective_iteration_bound","resolution_kind":"proved"} -->
+The formal resolution binding is added after this new source module enters the
+frozen declaration state; issue #13429 records the preregistration and proof
+evidence during this promotion.
 
 ## References
 
 - Truth anchor: `D5/S1/Words/RankOneMorphismIterationBound.effective_iteration_bound`
 - Truth anchor: `D5/S1/Words/RankOneMorphismIterationBound.finiteChecker_uap`
-- Dependency: [Library/Words/filimonova-puzynina2026abelianperiodicity](../../../Library/Words/filimonova-puzynina2026abelianperiodicity.md)
+- Dependency: [Library/Words/filimonovapuzynina2026abelianperiodicity](../../../Library/Words/filimonovapuzynina2026abelianperiodicity.md)

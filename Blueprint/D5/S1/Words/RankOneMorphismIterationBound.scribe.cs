@@ -27,10 +27,7 @@ internal sealed class RankOneMorphismIterationBoundDocument : IScribeDocumentDef
                     + "1 ≤ K ≤ 2^((f 0).length + (f 1).length). The witness uses exact "
                     + "Parikh equality and nonempty common-vector blocks on both complete "
                     + "rotations."))),
-                DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("filimonova-puzynina-2026-rank-one-iteration-bound"),
-                    ResolutionKind.Proved)),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finite-checker-uap"),
                 DeclarationHandle.Create(Prefix + "finiteChecker_uap"),
