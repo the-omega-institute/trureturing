@@ -4058,6 +4058,133 @@ These checks establish the criterion and its preservation, not such
 an assignment. The q=23 exclusion, the complete height-two branch
 and unrestricted Erdős #7 remain unresolved.
 
+### Actual prime-private roots permit independent second-digit permutations
+
+Keep the original family and coordinates of CD133–CD140, including
+unrestricted count-then-modulus-sum minimality, the actual pure
+$q^2$ original h, $a_i,j_i\le2$, $m_i\mid W$ and $(W,3q)=1$.
+Assume an actual pure3 original g is present. Let $Q>0$ be any common
+period divisible by every original modulus, and put
+$r_3=\rho_g\bmod3$. Numerical divisor closure supplies the pure-p
+original for every support prime. For each such original p, define
+
+$$
+V_p=\{x\bmod3:0\le x<Q,\ x\text{ is private to the original }p\},
+\qquad T=(\mathbb Z/3\mathbb Z)\setminus\{r_3\}.
+$$
+
+The source condition is the original nonconcentrated-prime condition
+of [Report385, Sections70–71](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#71-only-nonconcentrated-prime-support-can-supply-nonconcentrated-ancestors),
+written without normalizing the pure3 phase:
+
+$$
+R=\{p>3:p\text{ is an actual support prime and }V_p=T\}
+\subseteq\{q\}.
+\tag{CD141}
+$$
+
+This permits $R=\varnothing$ and requires no nonconcentration of q
+or its higher powers. The finite private sets retain every original
+class test; they are not selected witnesses or an independently
+supplied color partition.
+
+Write $t_i=\lfloor\rho_i/q\rfloor\bmod q$ and keep the exact unit
+image $U=\{t_i:i\in D,\ m_i=1\}$. There is one fixed function
+$\kappa:\mathbb N\to\mathbb Z/3\mathbb Z$, depending on the original
+family, such that
+
+$$
+m_i>1,\ a_i>0\quad\Longrightarrow\quad
+\rho_i\equiv\kappa(m_i)\pmod3.
+\tag{CD142}
+$$
+
+For EVERY family of permutations $\pi_c$ of $\mathbb F_q$, indexed
+by $c\in\mathbb Z/3\mathbb Z$ and fixing U pointwise, prescribe
+
+$$
+\delta_i=
+\begin{cases}
+t_i,&m_i=1,\\
+\pi_{\kappa(m_i)}(t_i),&m_i>1.
+\end{cases}
+$$
+
+Apply this prescription only to $i\in D$. It gives an actual whole
+cover with the same numerical moduli, unchanged non-D residues,
+all residues preserved modulo $9W$, and all first q-digits preserved.
+The new second digit of each D owner is $\delta_i$. In particular,
+
+$$
+D'=D,\qquad F'_i=F_i\ \text{for every original }i,
+\qquad K'=K,\qquad U'=U.
+\tag{CD143}
+$$
+
+The function $\kappa$ is chosen before the permutations and depends
+only on the numerical cofactor. Thus existing same-m companions use
+the same permutation, including row zero. CD142 concerns the first
+ternary root of positive rows; their complete modulo9 phases are
+preserved separately. Both global minimum objectives are inherited.
+
+To derive the actual prime inputs, take any prime $p\mid m_i$.
+Numerical divisor closure supplies the original pure p class, while
+coprimality and oddness give $p>3$ and $p\ne q$. Irredundancy gives
+it a private point, and every such point avoids the actual pure3
+phase. Reduction modulo Q preserves privacy because every original
+modulus divides Q; it also preserves the ternary root because $3\mid Q$.
+If its complete private projection had both live roots, CD141 would
+force $p=q$. It therefore has one actual private root $\alpha_p$.
+These are consequences of the original R condition.
+
+The actual concentrated-prime result supplies an original $3p$ with
+ternary root $\alpha_p$ and a first-p phase used by no other original
+whose modulus is divisible by p. For any finite set P of these primes
+and any source x whose ternary root differs from every $\alpha_p$,
+finite CRT produces y at those actual singleton phases with the same
+ternary root as x. It preserves the entire modulus coordinate of every
+original containing no prime of P. Every P-bearing original misses y:
+its p-phase would force it
+to be the corresponding $3p$ original, whose ternary root is wrong.
+No abstract pruning hypothesis enters this reset.
+
+Applying this reset to a private point also shows that every private
+point of a p-bearing original has root $\alpha_p$: otherwise all
+P-bearing classes are removed and all remaining class tests stay
+false, contradicting whole coverage. One may take
+$\kappa(m)=\alpha_{\min\operatorname{PrimeDiv}(m)}$ for occurring
+$m>1$. An original private point then proves CD142.
+
+For the complete Service argument, fix $b\in K$ and a target digit t.
+Choose an actual h-private witness w over b, put $c=w\bmod3$, and
+insert $\pi_c^{-1}(t)$ as its second q-digit while preserving its
+entire modulo-$9W$ coordinate. The exact prefix-liability identity
+places this source x in the full retained-family hole. Reset the
+finite set of actual cofactor primes with $\alpha_p\ne c$.
+Every retained class still misses the resulting y: it is either
+removed by the reset or has its whole original modulus coordinate
+preserved from x. Original whole coverage supplies an owner i in D.
+It contains no reset prime, so the SAME whole-modulus preservation
+transfers its membership back from y to x. Hence $b\in F_i$ and
+$t_i=\pi_c^{-1}(t)$. If $m_i>1$, its selected cofactor prime has
+$\alpha_p=c$, giving $\delta_i=t$. If $m_i=1$, then $t_i\in U$ and
+pointwise fixation of U gives the same conclusion. This proves CD138
+on the complete K, without a product decomposition or an assumed
+Service certificate. CD139 supplies the actual residue realization;
+CD140 and the fixed unit digits give CD143.
+
+A scoped transient Lean application verifies this theorem from the
+finite-period R premise, including divisor closure, private-point
+reduction, the actual singleton/reset construction, Service and all
+stated invariances. It reuses the frozen prime-prefix liability
+result and pinned Mathlib CRT and finite-family results; its axiom
+closures contain only `propext`, `Classical.choice` and `Quot.sound`.
+No retained mathematical declaration or new originality claim is made.
+Among D owners with the same numerical cofactor, these permutations
+preserve equality of second digits.
+They do not force six payable cells, a strict exchange, or exclusion
+of $q=23$; those existence obligations remain unresolved.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
