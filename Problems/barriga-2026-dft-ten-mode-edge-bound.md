@@ -118,9 +118,15 @@ What the refutation shows beyond the single bound:
   coupling graph is therefore not an invariant of the realized transform, and
   edge bounds based on the number of variables need not hold.
 - **Factorized constructions (argued, not formalized).** For coprime
-  $N=mn$, the Good–Thomas factorization gives $H=H_m\otimes I+I\otimes H_n$
-  with edge count $n|E_m|+m|E_n|$. Any reduction in a factor's realization
-  therefore propagates.
+  $N=mn$, the Good–Thomas relabeling $x\mapsto(x\bmod m,x\bmod n)$ turns
+  $H=H_m\otimes I+I\otimes H_n$ into a coupling with
+  $n|E_m|+m|E_n|$ edges, and $e^{-iH}=e^{-iH_m}\otimes e^{-iH_n}$. This gives
+  a realization of $F_N$ with diagonal input and output phases only when the
+  factor realizations of $F_m$ and $F_n$ use diagonal phases, and when the
+  resulting phases and the Chinese-remainder relabeling combine into a
+  diagonal correction of $F_N$, as the congruence $5ab+4jk\equiv-xy\pmod{10}$
+  does for $N=10$. Permutation-equivalent factor realizations do not suffice
+  by themselves.
 - **Further reductions (open).** The eigenspaces $t=1,4$ and $t=2,3$ of $C_0$
   each admit further shifts. Whether more edges of $K$ can be removed at once,
   or whether $F_5$ itself has a realization with fewer than 9 edges and exact
