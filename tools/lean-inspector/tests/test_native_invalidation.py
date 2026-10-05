@@ -27,6 +27,147 @@ import native
 from test_native_support import *
 
 class NativeInvalidationTests:
+    def test_compiled_only_reader_and_failure_boundary(self):
+        # Acceptance 1: this real driver must never execute for nonowners.
+        # Existing invalidation probes do not detect judge import or evaluation.
+        self.copy('tools/lean-inspector/Inspector.lean')
+        self.compiler_seed = None
+        self.env['STRATALINT_ACCEPT_COLD_BUILD'] = '1'
+        self.env['STRATALINT_INSPECTOR_PROFILE'] = '1'
+        self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
+namespace LeanInformationAudit
+abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
+''')
+        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
+namespace LeanInformationAudit
+open Lean
+initialize judgeTripwire : Unit ← do
+  if let some path ← IO.getEnv "RAW_JUDGE_TRIPWIRE" then IO.FS.writeFile path "executed"
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun _ _ =>
+  throwError "raw_judge_driver_executed"
+''')
+        # Acceptance 2: private facts and an inductive/constructor SCC must not
+        # acquire the exported theorem-as-axiom view or lose an axiom on a cycle.
+        self.write('D5/B.lean', '''module
+public section
+namespace D5
+private axiom secret : Nat
+noncomputable def hidden : Nat := secret
+inductive Token where
+  | mk : Fin hidden → Token
+theorem hidden_self : hidden = hidden := rfl
+''')
+        self.write('D5/A.lean', 'import D5.B\nnoncomputable def value : Nat := D5.hidden\n')
+        self.ensure()
+        result = self.guarded_command(['make', 'lean',
+            'LEAN_TARGETS=@trureturing/LeanInformationAudit.SealCommand :report'],
+            cwd=self.root, env=self.env, timeout=120)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('raw_read_ns=', result.stdout + result.stderr)
+        self.assertNotIn(' import_ns=', result.stdout + result.stderr)
+        self.assertNotIn('LEAN_INSPECTOR_ASSESS', result.stdout + result.stderr)
+        rows = self.report()[0]
+        for row in rows:
+            self.assertEqual(row['information_templates'],
+                dict(schema_version=1, inventory=[], registered=[], records=[]))
+        row = next(row for row in rows if row['module'] == 'D5.B')
+        declarations = {d['name']: d for d in row['declarations']}
+        private_axioms = declarations['D5.hidden']['axioms']
+        self.assertTrue(any('secret' in name for name in private_axioms))
+        self.assertEqual(declarations['D5.Token']['axioms'], private_axioms)
+        self.assertEqual(declarations['D5.Token.mk']['axioms'], private_axioms)
+        self.assertEqual(declarations['D5.hidden_self']['kind'], 'theorem')
+        self.assertTrue(next(r for r in rows if r['module'] == 'Fixture')
+                        ['utility_refutation']['is_closed_negation'])
+
+        executable = native.state(self.root) / 'producer/bin/reportInspector'
+        env = dict(self.env, RAW_JUDGE_TRIPWIRE=str(self.root / 'judge-tripwire'),
+            LEAN_SYSROOT=str(Path(self.lake).parent.parent),
+            LEAN_PATH=os.pathsep.join(str(path) for path in
+                (self.root / '.lake').rglob('lib/lean')))
+        output, spool = self.root / 'raw.json', self.root / 'raw-spool'
+        utilities = native.state(self.root) / 'inputs/Fixture.json'
+        encoded = self.root / 'raw-utilities.json'
+        encoded.write_text(json.dumps(json.loads(utilities.read_text())['utilities']))
+        arguments = ['--output', str(output), '--material-spool', str(spool),
+            '--utility-input', str(encoded), 'Fixture', 'Fixture.lean',
+            'sha256:' + publication.digest(self.root / 'Fixture.lean')]
+
+        def inspect(extra, success=True):
+            output.unlink(missing_ok=True)
+            result = self.guarded_command([str(executable), *extra, *arguments],
+                cwd=self.root, env=env, timeout=120)
+            self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
+            self.assertFalse((self.root / 'judge-tripwire').exists())
+            return result.stdout + result.stderr
+
+        inspect(['--compiled-only'])
+        driver = self.root / '.lake/build/lib/lean/LeanInformationAudit/SealCommand.olean'
+        driver_bytes = driver.read_bytes()
+        try:
+            driver.unlink()
+            inspect(['--compiled-only'])
+        finally:
+            driver.write_bytes(driver_bytes)
+        # An omitted mode must fail before import, rather than use the judge.
+        self.assertIn('raw.mode_requires_compiled_only', inspect([], False))
+        own = self.root / '.lake/build/lib/lean/D5/B.olean'
+        private = own.with_name(own.name + '.private')
+        original = private.read_bytes()
+        try:
+            private.unlink()
+            self.assertIn('raw.missing_olean_part:D5.B:private',
+                          inspect(['--compiled-only'], False))
+            self.assertFalse(output.exists())
+        finally:
+            private.write_bytes(original)
+        original = own.read_bytes()
+        try:
+            for data, error in [(original[:5], 'raw.invalid_header'),
+                    (original[:5] + b'\x03' + original[6:], 'raw.unknown_format'),
+                    (original[:40] + bytes([original[40] ^ 1]) + original[41:],
+                     'raw.compiler_identity')]:
+                own.unlink()
+                own.write_bytes(data)
+                self.assertIn(error, inspect(['--compiled-only'], False))
+                self.assertFalse(output.exists())
+        finally:
+            own.unlink()
+            own.write_bytes(original)
+
+        # Acceptance 1: an ABI-valid but incomplete constant graph must fail,
+        # rather than collect the missing reference as an empty axiom set.
+        self.write('ArtifactFactory.lean', '''import Lean
+open Lean
+def main (args : List String) : IO Unit := do
+  let info : DefinitionVal := {
+    name := `Broken.value
+    levelParams := []
+    type := mkConst ``Nat
+    value := mkConst `raw_missing
+    hints := .abbrev
+    safety := .safe }
+  let data : ModuleData := {
+    isModule := false
+    imports := #[{ module := `Init }]
+    constNames := #[info.name]
+    constants := #[.defnInfo info]
+    extraConstNames := #[]
+    entries := #[] }
+  saveModuleData args.head! `Broken data
+''')
+        with (self.root / 'lakefile.toml').open('a') as config:
+            config.write('[[lean_exe]]\nname = "artifactFactory"\nroot = "ArtifactFactory"\n')
+        self.make_lean('artifactFactory')
+        factory = self.root / '.lake/build/bin/artifactFactory'
+        broken = self.root / '.lake/build/lib/lean/Broken.olean'
+        result = self.guarded_command([str(factory), str(broken)], cwd=self.root, env=env)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        arguments[-3:] = ['Broken', 'Broken.lean', 'sha256:' + '0' * 64]
+        arguments = arguments[:4] + arguments[6:]
+        self.assertIn('raw.incomplete_closure:raw_missing', inspect(['--compiled-only'], False))
+        self.assertFalse(output.exists())
+
     def test_native_typed_owner_version_scope(self):
         self.copy('tools/lean-inspector/Inspector.lean')
         self.compiler_seed = None

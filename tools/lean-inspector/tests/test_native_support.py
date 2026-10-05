@@ -157,6 +157,7 @@ defaultFacets = ["static"]
                 '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n')
         for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh', 'build_work.py']:
             self.copy('tools/lean-inspector/' + name)
+        self.copy('tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean')
         # The native-report fixtures supply their own tiny driver at the root.
         # Keep the production facets verbatim with a fixture package header;
         # the real D5/Interface/Impl/Reg graph is tested on the full repository.
@@ -167,9 +168,9 @@ defaultFacets = ["static"]
             + '  buildDir := "../../.lake/build/lean-inspector/producer"\n\n'
             + '  leanLibDir := "../../lib/lean"\n\n'
             + 'lean_lib LeanInformationAudit where\n'
-            + '  roots := #[`LeanInformationAudit.Contract.SourceAudit, '
+            + '  roots := #[`LeanInformationAudit.RawArtifacts, `LeanInformationAudit.Contract.SourceAudit, '
             + '`LeanInformationAudit.Contract.Literal, `LeanInformationAudit.Contract.InputDiscovery]\n'
-            + '  globs := #[.one `LeanInformationAudit.Contract.SourceAudit, '
+            + '  globs := #[.one `LeanInformationAudit.RawArtifacts, .one `LeanInformationAudit.Contract.SourceAudit, '
             + '.one `LeanInformationAudit.Contract.Literal, .one `LeanInformationAudit.Contract.InputDiscovery]\n\n'
             + source[source.index('target nativeImage'):].replace(
                 'lean_exe reportInspector where', '@[default_target]\nlean_exe reportInspector where'))
@@ -207,13 +208,15 @@ defaultFacets = ["static"]
         self.utility()
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
         policy = dict(schema_version=1, report_cache_release_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
-            inspector_sources=paths('tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean'),
+            inspector_sources=paths('tools/lean-inspector/Inspector.lean',
+                'tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean', 'tools/lean-inspector/lakefile.lean'),
             dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/SealCommand.lean'),
             config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json',
                 'Reg/lakefile.toml', 'Reg/lake-manifest.json',
                 'tools/lean-inspector-reg/lakefile.toml', 'tools/lean-inspector-reg/lake-manifest.json'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
-                'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean',
+                'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean',
+                'tools/lean-inspector/lakefile.lean',
                 'tools/lean-inspector/native.py', 'tools/lean-inspector/native_image.c', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
                 'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})

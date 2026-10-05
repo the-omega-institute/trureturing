@@ -121,8 +121,16 @@ class NativeRegConsumerTests(NativeRegSupport):
             self.assertEqual(moved, row)
             leaf = 'Reg/Support/Entry.lean'
             original = (donor / leaf).read_text()
+            report_stamps = self.stamps()
+            artifacts = {name: (self.root / '.lake/build/lean-inspector/modules' / (name + '.zip')).read_bytes()
+                         for name in report_stamps}
             self.write(leaf, original + 'def relocatedOnly : Nat := 73\n')
             self.build_reg_report()
+            self.assertEqual({name for name, stamp in self.stamps().items()
+                              if stamp != report_stamps[name]}, {'Reg.Support.Entry'})
+            for name in report_stamps.keys() - {'Reg.Support.Entry'}:
+                self.assertEqual((self.root / '.lake/build/lean-inspector/modules' / (name + '.zip')).read_bytes(),
+                                 artifacts[name], '[FAIL] Reg_leaf_keeps_peer_artifact_bytes')
             changed = next(r for r in self.report()[0] if r['module'] == 'Reg.Support.Entry')
             self.assertEqual(changed['source_sha256'], 'sha256:' + publication.digest(self.root / leaf))
             self.assertNotEqual(changed['source_sha256'], row['source_sha256'])
