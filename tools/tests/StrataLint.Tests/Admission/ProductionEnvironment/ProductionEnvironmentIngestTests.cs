@@ -735,11 +735,14 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         InstallProjectedLedger(fixture, ledger, oldAtom);
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(
+        // A regular file where the source's ledger directory belongs makes every
+        // atom write under it fail.
+        var sourceDirectory = Path.Combine(
             temporary.Path,
-            $"{BackfillInventoryLoader.RootPath}fixture-source/source.toml"
+            $"{BackfillInventoryLoader.RootPath}fixture-source"
                 .Replace('/', Path.DirectorySeparatorChar));
-        Directory.CreateDirectory(outputPath);
+        Directory.CreateDirectory(Path.GetDirectoryName(sourceDirectory)!);
+        File.WriteAllText(sourceDirectory, "not a directory", new UTF8Encoding(false));
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(

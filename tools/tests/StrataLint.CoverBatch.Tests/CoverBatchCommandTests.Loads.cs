@@ -22,7 +22,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.True(result.Success, result.Error + result.Output);
         WriteLoadCounts("duplicate-multi-gid-batch", loads);
         Assert.Equal(1, loads.BaselineLoads);
-        Assert.Equal([1, 1, 1], loads.CandidateSnapshotLoads);
+        Assert.Equal([1, 1], loads.CandidateSnapshotLoads);
     }
 
     [Fact]
@@ -42,8 +42,8 @@ public sealed partial class CoverBatchCommandTests
         Assert.Single(world.Entry(Second).Coverage);
         WriteLoadCounts("disposition-then-independent-batch", loads);
         Assert.Equal(1, loads.BaselineLoads);
-        // Initial, rejected coverage candidate, committed disposition, independent success.
-        Assert.Equal([1, 1, 1, 1], loads.CandidateSnapshotLoads);
+        // Initial, committed disposition.
+        Assert.Equal([1, 1], loads.CandidateSnapshotLoads);
     }
 
     private void WriteLoadCounts(string scenario, LedgerLoadCounter loads) =>
