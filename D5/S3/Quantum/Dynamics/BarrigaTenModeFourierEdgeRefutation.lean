@@ -242,23 +242,33 @@ private def realCertificate : PLift (K = Real.pi • κ ∧
     fin_cases j <;> fin_cases k <;>
       simp [P, κ, Ccoeff, h2, h3, h4] <;>
       simp [γ, ω, c, q, u] <;> ring_nf <;> simp only [hs] <;> ring
+  have hPsymm : P.IsSymm := by
+    rw [hPtable]
+    ext j k
+    fin_cases j <;> fin_cases k <;> rfl
   have hCcoeffP : Ccoeff * P = (-4 : ℝ) • P := by
     simp only [hPtable]
     ext j k
     fin_cases j <;> fin_cases k <;>
       simp [Matrix.mul_apply, Fin.sum_univ_succ, κ, Ccoeff] <;>
       ring_nf <;> simp only [hs] <;> ring
-  have hPP : P * P = P := by
+  have hPPupper : ∀ j k : Fin 5, j ≤ k → (P * P) j k = P j k := by
     simp only [hPtable]
-    ext j k
-    fin_cases j <;> fin_cases k <;>
+    intro j k hjk
+    fin_cases j <;> fin_cases k <;> simp at hjk
+    all_goals
       simp [Matrix.mul_apply, Fin.sum_univ_succ, κ, Ccoeff] <;>
-      ring_nf <;> simp only [hs, hu2] <;>
-      ring_nf <;> simp only [hs] <;> ring
-  have hPsymm : P.IsSymm := by
-    rw [hPtable]
-    ext j k
-    fin_cases j <;> fin_cases k <;> rfl
+        ring_nf <;> simp only [hs, hu2] <;> ring_nf <;> simp only [hs] <;> ring
+  have hPP : P * P = P := by
+    apply Matrix.ext
+    intro j k
+    by_cases hjk : j ≤ k
+    · exact hPPupper j k hjk
+    · have hp : (P * P)ᵀ = P * P := by
+        rw [Matrix.transpose_mul, show Pᵀ = P from hPsymm]
+      have he := congrFun (congrFun hp j) k
+      have heP := congrFun (congrFun hPsymm j) k
+      exact he.symm.trans ((hPPupper k j (le_of_not_ge hjk)).trans heP)
   have hCcoeffsymm : Ccoeff.IsSymm := by
     ext j k
     fin_cases j <;> fin_cases k <;> rfl
