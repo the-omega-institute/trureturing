@@ -347,3 +347,178 @@ this escaped family. This interface determines a boundary of the
 bounded-window fit; it supplies no divergence result for the actual
 projected inverse, no original all-input half-bound, and no signs on
 a common cofinal sequence. Full Robin and RH remain unresolved.
+
+## A bounded synthesis from the actual endpoint translations
+
+This conditional paper interface retains the original $N$, $\nu$,
+unitary $U$, domain and common correction from (R1)–(R6), (E1)–(E6)
+and (G1)–(G4). The original theta tail supplies the additional
+quantitative step below. Gamma, convolution, Hilbert–Schmidt and
+compact-class convergence facts are reused. No new generic theorem,
+numerical producer, Lean certification or originality claim is made.
+
+For sufficiently large $R_0$ and $R\ge R_0$ put
+
+$$
+t(R)=\tfrac12\log\frac2{1+e^{-2R}},\qquad
+n_R=n_{t(R)},\qquad
+E_R(x)=\frac{G(x-R)+G(-x-R)}{\sqrt2\|G\|_2}.
+$$
+
+The original two-term theta tail improves (E2) to
+
+$$
+\|n_R-E_R\|_2\le C e^{-R}\qquad(R\ge R_0). \tag{NC1}
+$$
+
+To verify the rate, fix $A>t_c+1$. Write on the positive tail
+$\Phi(x)=4\pi^2e^{9x/2-\pi e^{2x}}\ell(x)$, where the supplied
+two-term expansion gives $\ell(x)=1+O(e^{-2x})$. Uniformly for
+$t_c/2\le t<t_c$ and $x\ge A$, the dominant physical ratio equals
+
+$$
+\frac{v_0(x)\Phi(x-t)}{2\Phi(x)}
+=\pi e^{-9t/2}e^{5x/2-(\pi/2)\eta_te^{2x}}
+ \frac{\sqrt{1+e^{-x}}\ell(x-t)}{\sqrt{\ell(x)}}.
+$$
+
+The last factor is $1+O(e^{-x})$. After $x=R+y$ and division by
+$A_{t(R)}$, its error is at most $Ce^{-R}G(y)e^{-y}$, whose
+$L^2(dy)$ norm is finite. The compact-region, centering and
+wrong-shift terms in (E1) have divided norm $O(e^{-5R/2})$; the
+wrong-half ideal profile has that bound as well. Evenness pays the
+other spatial tail. The overlap integrand of the two ideal profiles is
+
+$$
+e^{-5R}\exp\{-\tfrac\pi2(e^{2(x-R)}+e^{-2(x+R)})\}.
+$$
+
+Its integral is $O((1+R)e^{-5R})$: on $x\ge0$ drop the second
+positive exponential and split $x-R$ at zero, then reflect.
+Normalization therefore preserves the $O(e^{-R})$ error. This uses
+the actual original-series remainder, without differentiating an
+asymptotic or inferring a rate from (E2) alone.
+
+For compactly supported coefficients in $L^2((R_0,\infty),dR)$
+define $S_nh=\int_{R_0}^\infty n_Rh(R)dR$, and define $S_E$ with
+the $E_R$ columns. Extending $h$ by zero, Young's convolution bound
+and reflection make $S_E$ bounded. Equation (NC1) gives
+
+$$
+\|S_n-S_E\|_{\rm HS}^2
+\le\int_{R_0}^\infty C^2e^{-2R}dR
+=\tfrac12C^2e^{-2R_0}. \tag{NC2}
+$$
+
+Thus $S_n$ extends boundedly to all such $L^2$ coefficients. Finite
+coefficient truncations have range in the closed $N_c$, so its full
+range is in $N_c$. The infinite integral means this bounded extension;
+pointwise absolute integrability for every coefficient is not assumed.
+No lower frame bound or completeness for all of $N_c$ is asserted.
+
+Use the unitary angular-frequency convention
+$\widehat f(\xi)=(2\pi)^{-1/2}\int f(x)e^{-i\xi x}dx$.
+The Euler substitution $v=(\pi/2)e^{2y}$ gives
+
+$$
+\widehat G(\xi)=\frac1{2\sqrt{2\pi}}
+ (\pi/2)^{-(5/4-i\xi/2)}\Gamma(5/4-i\xi/2). \tag{NC3}
+$$
+
+The classical Gamma nonvanishing theorem gives a positive minimum
+of $|\widehat G|$ on each fixed compact band. Define the bounded
+coefficient map $W_\Lambda$ on sharp-low inputs by
+$\widehat{W_\Lambda p}=\widehat p/(\sqrt{2\pi}\widehat G)$.
+Then $G*(W_\Lambda p)=p$. The coefficient map need not preserve
+evenness, and its norm is not asserted uniformly bounded as
+$\Lambda$ grows. These are applications of the existing Gamma and
+Fourier tools, not a new Wiener theorem.
+
+## The actual low residual is Hilbert–Schmidt
+
+Let $J_+$ restrict the coefficient line to $(R_0,\infty)$. Define
+on the whole even sharp-low space
+
+$$
+\mathcal L_\Lambda p=\sqrt2\|G\|_2S_nJ_+W_\Lambda p,
+\qquad K_\Lambda p=p-\mathcal L_\Lambda p. \tag{NC4}
+$$
+
+The principal map is bounded and has range in the original $N_c$.
+For $h=W_\Lambda p$, compare its ideal version on $x>0$ with
+$p(x)=\int_{\mathbb R}G(x-R)h(R)dR$. The residual has a missing
+coefficient kernel $G(x-R)$ for $R<R_0$, and a reflected-tail kernel
+$G(-x-R)$ for $R>R_0$. Their full squared kernel integrals are
+
+$$
+\begin{aligned}
+\int_{x>0,\ R<R_0}|G(x-R)|^2dx\,dR
+ &=\int_{y>-R_0}(y+R_0)|G(y)|^2dy<\infty,\\
+\int_{x>0,\ R>R_0}|G(-x-R)|^2dx\,dR
+ &=\int_{y<-R_0}(-y-R_0)|G(y)|^2dy<\infty.
+\end{aligned}
+$$
+
+Evenness transports this residual to the negative half-line. The
+actual-minus-ideal synthesis is Hilbert–Schmidt by (NC2). Composing
+these maps with bounded $W_\Lambda$ proves that $K_\Lambda$ is
+Hilbert–Schmidt on the entire even sharp-low space. This supplies
+the original-theta interface; a generic compactness theorem alone
+does not supply these kernels or their range in $N_c$.
+
+For the actual centered class set
+$\mathcal E_\Lambda=P_\Lambda L^2_{\rm even}\cap v_0^\perp$.
+Each $\mathcal L_\Lambda p$ is exactly ground-orthogonal, since
+each $n_R$ is. For $p\in\mathcal E_\Lambda$, $K_\Lambda p$ is
+centered and lies in the original form domain: (SC1) admits $p$,
+and the accepted critical-domain premise admits
+$\mathcal L_\Lambda p\in N_c$ after transport by $U^{-1}$.
+
+## A corrected fit converges uniformly at each fixed band
+
+The actual correction $\mathcal R$ fixes $N_c$. Clason's normal
+equation accepts arbitrary Hilbert data; its $B$-metric contraction
+and the existing $cI\le B\le I/2$ on the centered space give
+$\sup_{\varepsilon>0}\|\mathcal R_\varepsilon\|\le(2c)^{-1/2}$.
+The known strong convergence consequently extends from the dense
+form domain to all centered ambient inputs. Reuse that convergence
+on the compact image of the $K_\Lambda$ unit ball, rather than
+on the entire original unit ball.
+
+Define the corrected common-source fit on $\mathcal E_\Lambda$ by
+
+$$
+\begin{aligned}
+\mathcal R_{\Lambda,\varepsilon}p
+ &=\mathcal L_\Lambda p+
+    \mathcal R_\varepsilon K_\Lambda p,\\
+\mathcal Rp-\mathcal R_{\Lambda,\varepsilon}p
+ &=(\mathcal R-\mathcal R_\varepsilon)K_\Lambda p.
+\end{aligned} \tag{NC5}
+$$
+
+For each fixed $\Lambda>0$, the right side tends to zero in
+operator norm as $\varepsilon\downarrow0$. It also tends to zero
+in Hilbert–Schmidt norm by the standard strong-times-Hilbert–Schmidt
+convergence fact. Both terms of the fit lie in the same $N_c$.
+The existing common critical-edge bound therefore gives
+
+$$
+\sup_{\substack{p\in\mathcal E_\Lambda\\\|p\|_2=1}}
+ \|C_\pm U^{-1}(\mathcal Rp-\mathcal R_{\Lambda,\varepsilon}p)\|
+\le\frac1{\sqrt2}
+ \|\mathcal R-\mathcal R_{\Lambda,\varepsilon}\|_{
+       \mathcal E_\Lambda\to L^2}
+\longrightarrow0. \tag{NC6}
+$$
+
+The principal map is noncompact, consistently with (E5). Replacing
+its synthesis by any fixed finite $R$ interval makes it compact
+and cannot preserve this full-sphere uniform conclusion. The
+construction is an infinite-source representation, without an
+all-input finite acquisition algorithm or an effective regularization
+rate. Constants depend on the band; no growing-band or common
+cofinal error estimate is supplied. The full residual comparison,
+original all-input half-bound, actual joint cofinal signs, full Robin
+and RH remain unresolved. This is conditional paper analysis with
+no new Lean certification or originality claim.
