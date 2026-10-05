@@ -13,6 +13,11 @@ strata_touched:
   - D5/S3/FiniteGroups/NikolovSegal/BoundedTupleLift
   - D5/S3/FiniteGroups/NikolovSegal/FiniteNormalInduction
   - D5/S3/FiniteGroups/NikolovSegal/GeneratorDecomposition
+  - D5/S3/FiniteGroups/NikolovSegal/MinimalNormalSocle
+  - D5/S3/FiniteGroups/NikolovSegal/MinimalNormalStructure
+  - D5/S3/FiniteGroups/NikolovSegal/MinimalNormalConjugacy
+  - D5/S3/FiniteGroups/NikolovSegal/SimpleSectionsOfProducts
+  - D5/S3/FiniteGroups/NikolovSegal/LargeMinimalNormalStructure
 license: No redistribution license asserted for the paper; citation only
 triage: anchor
 ---
@@ -109,3 +114,66 @@ Proposition 4, the restricted Burnside order bound and the unconditional
 profinite conclusions are not consequences of this induction alone.
 The source is *Powers in finite groups*, DOI 10.4171/GGD/136; no mathematical
 novelty or resolution of an open problem is claimed.
+
+## Elementary structure before Proposition 2
+
+Proposition 3, Case 1, on printed page 504 uses the structure of a minimal
+nontrivial normal subgroup N outside the bounded alternating-section class.
+For fixed natural C and k with k at least four and 2C less than k factorial,
+the elementary structural conclusion holds for every finite ambient group G
+and every such N with alpha(N) greater than k. N is perfect and centerless.
+Its actual minimal nontrivial normal subgroups form a finite family of
+nonabelian simple factors, each of order greater than C. Their internal
+product is isomorphic to N, and N modulo its center is isomorphic to that
+same product. Factor finiteness follows from ambient finiteness.
+
+The native formalization proves these facts without the classification of
+finite simple groups. Characteristic subgroups of N are trivial or full.
+Its socle is characteristic and contains a minimal nontrivial normal
+subgroup, hence fills N. Distinct factors commute. A subgroup normal in one
+factor is normalized by that factor and centralized by all others, so it is
+normal in N; minimality then proves simplicity. Centerlessness gives full
+supremum independence, which makes the canonical product map injective.
+The full socle makes it surjective.
+
+Ambient conjugates of any nontrivial subgroup of N join to N. This proves
+transitivity of ambient conjugation on the actual factors and supplies
+isomorphisms between them. A simple section of a finite product occurs in
+one factor even if its section subgroup is arbitrary. Thus the alternating
+section of degree n = alpha(N), with n at least five, occurs in one factor.
+Its order n factorial divided by two bounds that factor's order from below.
+The fixed factorial inequality gives order greater than C, and conjugacy
+transfers the bound to every factor. No decomposition or conjugacy
+hypothesis is added. The abelian elementary-abelian decomposition is not
+needed for this conclusion.
+
+The remaining power input is stronger than ordinary power width within
+each simple factor. For each positive q, it requires constants m(q) and
+C(q) fixed before G: whenever a normal subgroup N of arbitrary finite G is
+a product of nonabelian simple groups of order greater than C(q), every
+prescribed ordered tuple h of length m(q) and every a in N admit a tuple b
+in N of the same length satisfying
+
+\[
+\prod_{i=0}^{m(q)-1}(b_i h_i)^q
+  = a\prod_{i=0}^{m(q)-1}h_i^q.
+\]
+
+This uniform prescribed-coset surjectivity is unproved here. It would imply
+the explicit `LargeMinimalNormalAbsorption` premise of the inherited
+generator induction; the elementary structure alone does not. The 2011
+Proposition 2, printed page 503, permits perfect normal subgroups with a
+nontrivial center as well. The centerless specialization suffices at this
+minimal-normal step.
+
+The deep supplier is Nikolov and Segal, *On finitely generated profinite
+groups, I: strong completeness and uniform bounds*, Annals of Mathematics
+165 (2007), 171–238, Proposition 10.1, printed pages 226–232, DOI
+<https://doi.org/10.4007/annals.2007.165.171>. Its proof uses Proposition
+10.2 and the uniform twisted-commutator and automorphism-power results
+proved in Part II, *Products in quasisimple groups*, Annals of Mathematics
+165 (2007), 239–273, Theorems 1.1 and 1.2, DOI
+<https://doi.org/10.4007/annals.2007.165.239>. These citations supply no
+imported Lean theorem. Uniform coset surjectivity, the remaining uniform
+width and acceptable-subgroup results, restricted Burnside bounds, and
+unconditional strong completeness remain outside this formalization.
