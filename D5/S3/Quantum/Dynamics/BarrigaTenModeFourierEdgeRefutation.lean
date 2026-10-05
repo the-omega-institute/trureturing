@@ -259,14 +259,33 @@ private def realCertificate : PLift (K = Real.pi • κ ∧
     simp only [hPtable]
     ext j k
     fin_cases j <;> fin_cases k <;>
-      simp [Matrix.mul_apply, Fin.sum_univ_succ, κ, Ccoeff] <;>
+      simp only [one_div, κ, neg_mul, Fin.zero_eta, Fin.isValue, Matrix.mul_apply, Ccoeff,
+        Fin.coe_ofNat_eq_mod, Nat.zero_mod, tsub_zero, Nat.add_mod_right, Matrix.smul_apply,
+        Matrix.sub_apply, of_apply, cons_val', cons_val_zero, cons_val_fin_one, zero_add,
+        smul_eq_mul, ite_mul, zero_mul, Fin.sum_univ_succ, ↓reduceIte, Fin.val_succ,
+        cons_val_succ, Fin.succ_ne_zero, Nat.reduceSubDiff, Fin.succ_zero_eq_one, zero_ne_one,
+        Nat.one_mod, OfNat.one_ne_ofNat, or_false, Nat.mod_succ, OfNat.ofNat_ne_one, or_true,
+        zero_sub, mul_neg, Fin.succ_one_eq_two, Fin.reduceEq, Nat.reduceAdd, Nat.reduceMod,
+        Nat.reduceEqDiff, or_self, Fin.reduceSucc, Finset.univ_unique, Fin.default_eq_zero,
+        Fin.val_eq_zero, Nat.add_one_sub_one, Finset.sum_singleton, Fin.mk_one,
+        cons_val_one, neg_neg, Fin.reduceFinMk, cons_val, Nat.mod_self, OfNat.zero_ne_ofNat,
+        one_ne_zero, add_zero] <;>
       ring_nf <;> simp only [hs] <;> ring
   have hPPupper : ∀ j k : Fin 5, j ≤ k → (P * P) j k = P j k := by
     simp only [hPtable]
     intro j k hjk
     fin_cases j <;> fin_cases k <;> simp at hjk
     all_goals
-      simp [Matrix.mul_apply, Fin.sum_univ_succ, κ, Ccoeff]
+      simp only [one_div, κ, neg_mul, Fin.zero_eta, Fin.isValue, Matrix.mul_apply,
+        Matrix.smul_apply, Matrix.sub_apply, of_apply, cons_val', cons_val_fin_one, cons_val_zero,
+        Ccoeff, Fin.coe_ofNat_eq_mod, Nat.zero_mod, tsub_zero, Nat.add_mod_right, smul_eq_mul,
+        zero_add, Fin.sum_univ_succ, ↓reduceIte, cons_val_succ, Fin.val_succ,
+        Fin.succ_ne_zero, Nat.reduceSubDiff, Fin.succ_zero_eq_one, zero_ne_one, Nat.one_mod,
+        OfNat.one_ne_ofNat, or_false, zero_sub, mul_neg, Nat.mod_succ, OfNat.ofNat_ne_one,
+        or_true, neg_neg, Fin.succ_one_eq_two, Fin.reduceEq, Nat.reduceAdd, Nat.reduceMod,
+        Nat.reduceEqDiff, or_self, Fin.reduceSucc, Finset.univ_unique, Fin.default_eq_zero,
+        Fin.val_eq_zero, Nat.add_one_sub_one, Finset.sum_singleton, Fin.mk_one, cons_val_one,
+        Fin.reduceFinMk, cons_val, Nat.mod_self, OfNat.zero_ne_ofNat, one_ne_zero]
       ring_nf
       simp only [hs, hu2]
       ring_nf
