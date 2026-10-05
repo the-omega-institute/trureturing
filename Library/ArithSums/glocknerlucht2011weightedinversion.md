@@ -55,3 +55,15 @@ Hewitt and Williamson, *Note on absolutely convergent Dirichlet series*,
 Proc. Amer. Math. Soc. 8 (1957), 863–868, DOI
 10.1090/S0002-9939-1957-0090680-X. That predecessor is secondary attribution
 here; its original theorem text has not been directly verified.
+
+## Verified locator
+
+Canonical source: https://arxiv.org/abs/1112.0749v2.
+The v2 PDF, *Weighted inversion of general Dirichlet series*, defines the
+absolute coefficient convolution Banach algebra and its submultiplicative
+norm on page 1. Page 3 identifies ordinary Dirichlet series with the
+additive semigroup log N. Theorem 2(a), page 4, gives invertibility for
+norm distance from the unit less than one. The dominant-head inverse
+absolute sum bound above is the elementary Neumann-series consequence
+of that norm perturbation principle; no separately numbered theorem in
+the paper is attributed to the displayed quantitative constant.
