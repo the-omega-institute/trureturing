@@ -15,7 +15,7 @@ internal sealed class CoarseEndpointSpectrumDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("coarse-endpoint-spectrum-route"),
                 DeclarationHandle.Create(Prefix + "endpointRoute"), H("Literal small-family routes"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Indices are P0, Xj and Yi, with j and i zero based in Lean. Write qt=L R^(t-1) L L R, bh=R L R^(h-1) L L R and d=R R. At k=1 the lists for P0, X1 and Y0 are respectively [q1,q2], [q2,d] and [q1,b2]. At k=2 the lists for P0, Y0 and Y1 are [q1,b1,q2,q3], [q1,b1,b2,b3] and [q1,b1,q2,b2]. The route continues on the target leaf label and stops on the first merged nonleaf reply. Values of endpointRoute outside these cases impose no safety assertion."))),
+                Blocks(Paragraph(Text("The source names are P0, X1 through Xk, and Y0 through Y(k-1). Lean stores Xj at index j-1 and Yi at index i. Write qt=L R^(t-1) L L R, bh=R L R^(h-1) L L R and d=R R. At k=1 the lists for P0, X1 and Y0 are respectively [q1,q2], [q2,d] and [q1,b2]. At k=2 the lists for P0, Y0 and Y1 are [q1,b1,q2,q3], [q1,b1,b2,b3] and [q1,b1,q2,b2]. The route continues on the target leaf label and stops on the first merged nonleaf reply. Values of endpointRoute outside these cases impose no safety assertion."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("coarse-endpoint-spectrum-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Exact targets and paid sets"),
@@ -58,7 +58,7 @@ internal sealed class CoarseEndpointSpectrumDocument : IScribeDocumentDefinition
         Formula realization = Some("pi", V("Strategy"), And(
             Call("CoarseObservable", Call("policy", pi)),
             All("i", indices, Eq(Call("C", pi, tree(i)),
-                Seq(D(3), k, Plus, D(14), Minus, Call("indicator", Eq(i, z))))),
+                Seq(D(3), k, Plus, D(1, 4), Minus, Call("indicator", Eq(i, z))))),
             Eq(Call("J", pi, tree(z)), Call("L", tree(z))), exit));
         return All("k", V("Nat"), Imp(Seq(D(1), Sp, Le, Sp, k), All("z", indices,
             And(spectrum, Imp(eligible, And(Call("Safe", V("F"), z, route), realization))))));
