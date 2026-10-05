@@ -20,7 +20,8 @@ internal sealed class SignedDirichletPositiveResponseDocument : IScribeDocumentD
             Blocks(
                 Paragraph(Text("Let b, f and g be real sequences on the natural numbers. "
                     + "Assume g(n)>=0 for every n>0 and g(m)<=g(n) whenever 0<m<=n. "
-                    + "For every natural n, assume the sums of max(-b(d),0) and "
+                    + "Write D(n) for the finite set of positive divisors of n, with "
+                    + "D(0) defined to be empty. For every natural n, assume the sums of max(-b(d),0) and "
                     + "max(b(d),0) over divisors d of n other than 1 are at most E and P, "
                     + "respectively. Assume E+P<b(1). At every positive n the exact "
                     + "divisor convolution sum b(d) f(n/d) equals g(n). Then f(n) lies "
@@ -54,7 +55,7 @@ internal sealed class SignedDirichletPositiveResponseDocument : IScribeDocumentD
         Formula b1 = Call("b", D(1));
         Formula denominator = Seq(b1, Minus, e);
         Formula tail(Formula coefficient) => Seq(
-            new Formula.Subscript(Sum, Seq(d, Mid, Sp, n, Comma, Sp, d, Neq, Sp, D(1))),
+            new Formula.Subscript(Sum, Seq(d, InMacro, Sp, Call("D", n), Comma, Sp, d, Neq, Sp, D(1))),
             coefficient);
         Formula budget(Formula coefficient, Formula bound) => Seq(
             Forall, Sp, n, InMacro, Sp, naturals, Comma, Sp,
@@ -66,21 +67,22 @@ internal sealed class SignedDirichletPositiveResponseDocument : IScribeDocumentD
             Call("g", m), Le, Sp, Call("g", n));
         Formula convolution = Seq(Forall, Sp, n, InMacro, Sp, naturals, Comma,
             Sp, D(0), Lt, Sp, n, Rightarrow, Sp,
-            new Formula.Subscript(Sum, Seq(d, Mid, Sp, n)),
+            new Formula.Subscript(Sum, Seq(d, InMacro, Sp, Call("D", n))),
             Call("b", d), Cdot, Call("f", new Formula.Fraction(n, d)),
             Eq, Sp, Call("g", n));
         Formula conclusion = Seq(Forall, Sp, n, InMacro, Sp, naturals, Comma,
             Sp, D(0), Lt, Sp, n, Rightarrow, Sp,
             new Formula.Fraction(Seq(b1, Minus, e, Minus, p),
-                Seq(b1, Cdot, Grp(denominator))), Cdot, Call("g", n),
+                Seq(b1, Cdot, Open, denominator, Close)), Cdot, Call("g", n),
             Le, Sp, Call("f", n), Le, Sp,
             new Formula.Fraction(Call("g", n), denominator));
         return Disp(Seq(Forall, Sp, b, Comma, f, Comma, g, Colon, Sp,
             naturals, To, Sp, reals, Comma, Sp, Forall, Sp, e, Comma, p,
-            InMacro, Sp, reals, Comma, Sp, Open, forcing, Land, Sp, monotone,
-            Land, Sp, budget(Call("max", Seq(Minus, Call("b", d)), D(0)), e),
-            Land, Sp, budget(Call("max", Call("b", d), D(0)), p),
-            Land, Sp, e, Plus, p, Lt, Sp, b1, Land, Sp, convolution, Close,
+            InMacro, Sp, reals, Comma, Sp, Open, Open, forcing, Close,
+            Land, Sp, Open, monotone, Close,
+            Land, Sp, Open, budget(Call("max", Seq(Minus, Call("b", d)), D(0)), e), Close,
+            Land, Sp, Open, budget(Call("max", Call("b", d), D(0)), p), Close,
+            Land, Sp, e, Plus, p, Lt, Sp, b1, Land, Sp, Open, convolution, Close, Close,
             Rightarrow, Sp, conclusion));
     }
 }
