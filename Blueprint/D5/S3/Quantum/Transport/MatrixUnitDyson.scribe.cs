@@ -13,8 +13,8 @@ internal sealed class MatrixUnitDysonDocument : IScribeDocumentDefinition
             H("Ordered integrals and complete unitary transport"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(
-                LibraryNoteRef.Create("D5/L/Quantum/baake2011peanobaker"),
-                LibraryNoteRef.Create("D5/L/Quantum/dyson1949radiation"),
+                LibraryNoteRef.Create("D5/L/Analytic/baake2011peanobaker"),
+                LibraryNoteRef.Create("D5/L/QuantumStates/dyson1949radiation"),
                 LibraryNoteRef.Create("D5/L/Quantum/kato1950adiabatic")),
             Blocks(
                 Paragraph(Text("For every continuous matrix path K on [0,T] with T nonnegative, the recursive Bochner integral orderedTerm equals the independently defined closed-simplex integral simplexTerm. The simplex product is List.ofFn followed by List.prod in decreasing time order, so no commutation is imposed. Each nonnegative uniform bound M gives the estimate (Mt)^m/m!, including m=0 and T=0.")),
