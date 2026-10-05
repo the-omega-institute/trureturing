@@ -60,6 +60,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/GeneralizedFidelity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rajaei-qubit-generalized-fidelity-dpi` (refuted) by `D5/S3/Quantum/GeneralizedFidelity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rajaei-qubit-generalized-fidelity-dpi","declaration_gid":"D5/S3/Quantum/GeneralizedFidelity.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Reza Rajaei (2026). *Generalized Fidelity and the Data Processing Inequality*. URL: <https://arxiv.org/html/2609.09753v1>.

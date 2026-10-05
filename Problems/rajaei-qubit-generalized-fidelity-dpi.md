@@ -110,9 +110,21 @@ the normalized finite-Kraus channel and the strict source inequalities
 $B_{\rm in}<3/5<B_{\rm out}$. The rectangle bound is an exact real
 polynomial inequality; no finite numerical scan substitutes for the
 interval proof. The canonical Blueprint describes the four source
-definitions and this single authored theorem.
+definitions and this single authored theorem. Its `Refuted` resolution
+claim binds this dossier to the exact frozen `result`, whose type is the
+closed negation of the source-faithful `claim`.
 
 ## Triage
+
+Tier 1; resolution **Refuted** by
+`D5/S3/Quantum/GeneralizedFidelity.result`. The declaration retains
+`proof_shape: bind-only` and `escape_witness: bind-only`;
+`admission_basis: open-problem-resolution` is the published-problem
+exception under preregistration
+[#13116](https://github.com/the-omega-institute/trureturing/issues/13116).
+The computational utility is `certified-instance` with `basis: refutes`,
+and the typed result is `Not claim`. No companion theorem or additional
+mathematical declaration is part of this resolution.
 
 The inherited bounded qualification inspected Rajaei v1, Afham--Ferrie v2,
 Vuong v1 and the indexed Afham citing work arXiv:2608.15833, together with

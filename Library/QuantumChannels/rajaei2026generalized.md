@@ -58,3 +58,21 @@ question. The introduction defines the ordered matrix-root fidelity and
 the generalized Bures--Wasserstein quantity and permits rank-deficient
 input states. *The Qubit Case* gives the two-dimensional PSD-root formula
 and the two sufficient qubit DPI conditions.
+
+## Repository resolution
+
+The unrestricted qubit assertion is **Refuted** by the frozen
+[`GeneralizedFidelity.result`](../../D5/S3/Quantum/GeneralizedFidelity.lean).
+This closed theorem negates the full universal assertion using the source's
+actual ordered PSD-root trace and a normalized two-Kraus CPTP channel.
+Its proof establishes $B_{\rm in}<3/5<B_{\rm out}$ for every real
+$0<\varepsilon\le1/1000$ before selecting a witness for the negation.
+The source's two sufficient qubit conditions remain separate results.
+
+The resolution dossier is
+[`rajaei-qubit-generalized-fidelity-dpi`](../../Problems/rajaei-qubit-generalized-fidelity-dpi.md).
+Admission uses `open-problem-resolution` under preregistration
+[#13116](https://github.com/the-omega-institute/trureturing/issues/13116),
+with `proof_shape: bind-only`. Global prior-solution exclusion remains
+`ASSUMED-UNVERIFIED`; no worldwide priority is claimed. Registration is
+paused and the information-escape audit is unfinished.

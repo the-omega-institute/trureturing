@@ -81,13 +81,17 @@ internal sealed class GeneralizedFidelityDocument : IScribeDocumentDefinition
                 + "the interval. Instantiating e=1/1000 contradicts the universal assertion. "
                 + "The conclusion has no term premises. It neither repeats the source's "
                 + "higher-dimensional counterexample nor classifies all reference bases.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rajaei-qubit-generalized-fidelity-dpi"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("generalized-fidelity-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula FidelityFormula()
     {
