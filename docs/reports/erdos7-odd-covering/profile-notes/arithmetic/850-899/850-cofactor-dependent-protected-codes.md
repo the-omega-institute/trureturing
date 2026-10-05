@@ -2699,6 +2699,139 @@ All 82 reported axiom closures use only `propext`, `Classical.choice`
 and `Quot.sound`; the complete check has no errors or `sorry`.
 These are transient applications of existing results, with no retained
 mathematical declaration, freeze or coverage record.
+## Three-child payment excludes the q=37 square layer
+
+Let F be one actual globally count-then-modulus-sum-minimal finite
+cover by distinct odd nonunit moduli. Assume that F contains the
+actual moduli 3 and 9, every original has ternary height at most
+two, and its moduli have the common coordinate factorization
+
+$$
+d_i=3^{a_i}37^{j_i}m_i,\qquad
+ a_i\le2,\quad m_i\mid W,\quad W>0,\quad\gcd(W,111)=1.
+\tag{CD82}
+$$
+
+Then no original has $j_i\ge2$. Equivalently, the 37 direction
+has height at most one under these assumptions. The comparison
+covers used by global minimality may have higher ternary height.
+This excludes the square layer at 37; it does not exclude
+originals divisible by 37, the entire ternary-height-two branch,
+or an unrestricted odd distinct covering system.
+
+Suppose instead that an actual deep original exists. The
+previous actual-family constructions supply the pure donor
+$h$ of modulus $37^2$, the five-word private projection
+$\Lambda$, the unit guard digits, and at least 29 safe digits
+saturated at all words of $\Lambda$. Set $q=37$ and let
+$c=\rho_h\bmod q$ be the donor's first-q phase. Choose two different such
+digits $a,b$ and any $u\in\Lambda$. Write
+
+$$
+ A=C(a,u),\qquad B=C(b,u),\qquad |B|\le2.
+\tag{CD83}
+$$
+
+Choose three distinct top originals at a whose old ternary
+words differ from u, and use them for the direct outputs
+$27q,81,81q$ in CD76. Choose three distinct top originals at b
+whose old ternary words also differ from u, and call this
+three-element set O. Each choice is available from the four
+other saturated words. The pure donor supplies the direct
+output 27. All these choices refer to actual originals in
+the same cover.
+
+Use the existing guarded code with a as its terminal digit and
+b as its continuing short digit. Let $z\bmod27$ be that short
+leaf, with $z\bmod9=u$. Its three children are
+
+$$
+ z,\quad z+27,\quad z+54\pmod{81}.
+\tag{CD84}
+$$
+
+Keep every original low-row output at both a and b in its
+original cofactor phase, with ternary tag z modulo 27. Keep all other
+normal outputs except O. Set the normal top tags for B to z
+and those for A to $z+27$. Add one output for each $i\in B$
+with modulus $81qm_i$, ternary tag $z+54$, first-q phase c,
+and original cofactor phase $\rho_i\bmod m_i$.
+
+### Coverage of the complete deletion hole
+
+Every point x in the exact hole has first-q phase c and one
+actual private point y satisfying $y\equiv x\pmod{9W}$.
+Outside the continuing short leaf, the original guarded source
+map gives the existing direct or normal payment. Its continuing
+owner has second digit different from a and b, so it cannot
+belong to O, and its normal tag is unchanged.
+
+On the short leaf, $y\bmod9=u$. If y lies in a low cofactor
+class at a or b, the corresponding preserved low output pays
+x throughout the leaf. Otherwise insert a or b into y's
+second q digit while preserving its entire 9W coordinate.
+The exact-hole identity and actual whole cover then supply
+a top cofactor class in A and one in B. These facts hold for
+every private y in the residual, not only for one selected
+contact point. The three child payments are
+
+$$
+\begin{array}{c|c|c}
+ x\bmod81 & \text{actual cofactor family} & \text{output modulus}\\
+ \hline
+ z & B & 81m_i\\
+ z+27 & A & 81m_i\\
+ z+54 & B & 81qm_i.
+\end{array}
+\tag{CD85}
+$$
+
+The last output's first-q condition is already satisfied by
+every point in the hole. No product of two cofactors or common
+intersection of their original q-squared APs is needed. The
+three a terminals lie outside u, so none consumes an A output.
+Every omitted owner in O has digit b and an old word different
+from u: it has no continuing inverse outside the short leaf
+and cannot be the needed B top inside it. No low output is
+omitted or rephased.
+
+### Distinct labels and strict count decrease
+
+The normal nonunit output signatures are $27m,27qm,81m$.
+All normal outputs remain injective by the existing output-label
+result. The unit backups $243,243q$ have ternary height five,
+different from the other output signatures.
+The added $81qm$ signature is different from all three because
+$m$ is coprime to $3q$. Its only pure counterpart is the
+special output $81q$, and the safe digit b excludes cofactor
+one. Distinct members of A and B have distinct cofactors:
+their original moduli are the distinct labels $9q^2m$.
+Every replacement label is odd, greater than one, and divisible
+by 27, so none coincides with a retained original.
+
+If D is the complete original deletion set, the replacement
+index set is the disjoint union
+
+$$
+ J=(D\setminus O)\sqcup B,\qquad
+ |J|=|D|-3+|B|\le |D|-1.
+\tag{CD86}
+$$
+
+Thus the unchanged originals together with J form a full
+integer cover with fewer distinct odd nonunit moduli than F.
+This contradicts its global count minimality and proves the
+claim in CD82. The final step requires no modulus-sum estimate.
+
+A complete scoped transient Lean check verifies the outside-word
+selections, every point of the source payment, all output labels,
+strict count decrease, and the final contradiction from the original
+family assumptions in CD82. The final theorem assumes no supplied
+saturation, contact, allocation or replacement condition. All 86
+reported axiom closures use only `propext`, `Classical.choice` and
+`Quot.sound`; the complete check has no errors or `sorry`. These
+are exact applications of existing results, with no retained
+mathematical declaration, freeze or coverage record.
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
