@@ -2463,4 +2463,96 @@ $$
 
 在带标签不交并上使用 $\mathcal A(t,z)=(t,a_tz)$。每个原始实际面生成步按共轭公式对应一个显式载体的生成步，逆映射给出反方向。对反身、对称和传递逐项使用同一个 $\mathcal A$，得到完整等价闭包的对应。商拓扑的通用性质随后给出连续的商映射及连续逆；全部 cap 也逐块对应，故商同胚精确保留原始边界标记、自粘合和出现次数。
 
+### 24.4 同一环境映射的全局坐标、光滑性与实际切张量
+
+上一节的同一个 $A$ 在整个未来单位双曲面上给出 $a(X)=AX$，逆映射是 $A^{-1}$ 的限制。使用全局空间坐标
+
+$$
+\Phi(z)=\bigl(\sqrt{1+\|z\|^2},z\bigr),\qquad
+\Psi(X)=X_{\rm sp},\qquad z\in\mathbb R^3.
+$$
+
+它们互逆，且均实解析。把 $A$ 相对于时间坐标与空间坐标分块为
+
+$$
+A=\begin{pmatrix}\alpha&r^{\mathsf T}\\ b&M\end{pmatrix}.
+$$
+
+则同一个 $a$ 的空间表达及其导数为
+
+$$
+F(z)=\Psi\bigl(A\Phi(z)\bigr)=b\sqrt{1+\|z\|^2}+Mz,
+\qquad
+D F_z(u)=Mu+b\frac{z\cdot u}{\sqrt{1+\|z\|^2}}. \tag{24.1}
+$$
+
+分母在整个 $\mathbb R^3$ 上严格正。用 $A^{-1}$ 的分块得到同样实解析的 $F_{A^{-1}}(z)=\Psi(A^{-1}\Phi(z))$。因为 $A$ 和 $A^{-1}$ 均保持未来单位双曲面，有 $\Phi(F(z))=A\Phi(z)$ 和 $\Phi(F_{A^{-1}}(z))=A^{-1}\Phi(z)$；因此 $F_{A^{-1}}\circ F=\operatorname{id}$、$F\circ F_{A^{-1}}=\operatorname{id}$。故这是整个双曲面的同一个实解析微分同胚，特别地它双向光滑；没有另选一个仅在块上相同的坐标映射。
+
+实际切空间是 $T_X\mathbb H^3=X^\perp$，其正定内积是 $L$ 的限制。空间坐标的切向识别由
+
+$$
+d\Phi_z(u)=\left(\frac{z\cdot u}{\sqrt{1+\|z\|^2}},u\right)
+$$
+
+给出，故坐标张量为
+
+$$
+g_z(u,v)=L(d\Phi_z(u),d\Phi_z(v))
+=u\cdot v-\frac{(z\cdot u)(z\cdot v)}{1+\|z\|^2}. \tag{24.2}
+$$
+
+由 $\Phi\circ F=A\circ\Phi$ 微分得到精确的切向量运输关系
+
+$$
+A\,d\Phi_z(u)=d\Phi_{F(z)}(D F_z(u)). \tag{24.3}
+$$
+
+因此
+
+$$
+g_{F(z)}(D F_z(u),D F_z(v))=g_z(u,v). \tag{24.4}
+$$
+
+在实际切空间中，$da_X$ 就是 $A|_{X^\perp}$，目标为 $(AX)^\perp$；式 (24.3) 是它在源、目标纤维空间坐标中的同一表达。它保留实际 Riemannian 内积和由该内积定义的范数。逆向用同一个 $A^{-1}$ 得到相同结论。这里保留的范数是实际切张量的范数；空间坐标中的欧氏范数并不等于式 (24.2) 的范数。
+
+对任意闭区间上的有限分片 $C^1$ 路径，链式法则和 (24.4) 给出其在 $a$ 下的同长像。对路径长度取下确界，再对 $a^{-1}$ 作同一论证，得到整个双曲面的实际 Riemannian 距离等式
+
+$$
+d_{\mathbb H}(aX,aY)=d_{\mathbb H}(X,Y).
+$$
+
+该距离是第 23.1 节从实际切张量校准的路径距离；它也等于 $\operatorname{arcosh}(-L(X,Y))$。这些计算使用第 24.3 节原始 Gram 映射内部已经取得的 Lorentz 恒等式及未来分支保持性，没有给原始六长度几何再添加一个光滑性、导数或张量相容前提。
+
+### 24.5 原始射线的非负锥与同一闭截断块
+
+记四条原始射线生成的非负锥及其截断为
+
+$$
+K_U=\left\{\sum_i\mu_iU_i:\mu_i\ge0\right\},\qquad
+\widehat P_U=\{X\in\mathbb H^3:X\in K_U,\ L(X,U_i)\le0\ \text{对所有 }i\}.
+$$
+
+这是原始四条射线的锥包；生成系数允许为零，不要求每个点位于块内部。对 $X\in\widehat P_U$，写 $X=\sum_i\mu_iU_i$，令 $s=\sum_i\mu_i$。$L(X,X)=-1$ 排除全部系数为零，故 $s>0$。取 $\lambda_i=\mu_i/s$，则 $\lambda\in C_x$，因为
+
+$$
+(G\lambda)_i=L\left(U_i,\sum_j\lambda_jU_j\right)
+=\frac{L(U_i,X)}s\le0.
+$$
+
+同时 $S_U(\lambda)=X/s$，故 $\lambda^{\mathsf T}G\lambda=-1/s^2$，归一化恰恢复 $X$。反过来，第 24.2 节的每个归一化像都在 $K_U$ 中、属于未来单位双曲面且满足全部 cap 不等式。因此
+
+$$
+\widehat P_U=\nu_U(C_x)=P. \tag{24.5}
+$$
+
+对 $V$ 有同一等式 $\widehat P_V=\nu_V(C_x)=P_x$。由 $AU_i=V_i$、$A^{-1}V_i=U_i$ 及 Lorentz 恒等式，逐点得到
+
+$$
+X\in\widehat P_U\quad\Longleftrightarrow\quad aX\in\widehat P_V.
+$$
+
+所以完整闭块的限制同胚就是全局 $a$ 的限制，逆向就是同一个 $a^{-1}$ 的限制；包括十二个顶点、cap 边和全部闭主面的值都使用相同环境公式。其实际环境 Riemannian 距离等式也直接限制到这些点。
+
+块内路径距离另由凸性核对。若 $X,Y\in\widehat P_U$ 且 $X\ne Y$，第 23.1 节式 (23.5) 的两端测地段在每个时刻是 $X,Y$ 的非负线性组合，故仍在 $K_U$ 中，并保留全部 cap 半空间不等式。它属于未来单位双曲面，因而整段留在同一块中。同点使用常曲线。所以块内实际路径距离也等于 $d_{\mathbb H}$，并由同一个限制映射保持。这项结论不把闭块的角点宣称为无边界光滑流形；第 24.4 节的光滑性及切空间陈述属于环境双曲面，闭块限制的路径距离使用上述凸性。
+
 本节提供原始非退化完全截断块到显式六长度载体的书面等距桥梁，不申报 Lean kernel 核验、冻结或消化覆盖。极截断的 projective 定义沿用第 16.6 节所引 Frigerio–Petronio 的完全截断情形；[同一论文 Proposition 2.7、Lemma 4.6(1) 及第 6 节的 Proposition 2.7 证明](https://arxiv.org/abs/math/0109012v1)分别给出无理想顶点时的旧边长度刚性、有侧向条件的负 cosh 配对和 Lorentz 基映射路线。此处正长度情形满足这些条件，完整面格及规定映射的共轭另由上文逐项落实；不申报文献原创性。参数域、原始流形图册、解析张量及流收敛仍遵守各自条件，不由单块等距识别自动结算。
