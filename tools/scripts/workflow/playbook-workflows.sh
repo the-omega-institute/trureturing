@@ -18,7 +18,7 @@ run_cli() {
 }
 
 run_digest_status() {
-  run_cli digest-status --base "$BASE"
+  run_cli digest-status
 }
 
 align_delivery_ledger() {
