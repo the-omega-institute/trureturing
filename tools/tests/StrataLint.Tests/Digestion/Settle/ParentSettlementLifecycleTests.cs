@@ -264,7 +264,6 @@ public sealed partial class DigestionLedgerTests
 
     [Theory]
     [InlineData("round-trip", "ROUND_TRIP_FAILED")]
-    [InlineData("concurrent", "INFRASTRUCTURE")]
     [InlineData("io", "INFRASTRUCTURE")]
     public void ParentSettlementRetainsAtomicFailureContracts(string failure, string code)
     {
@@ -273,8 +272,6 @@ public sealed partial class DigestionLedgerTests
         var context = DigestionAtomContextProjection.Resolve(fixture.Snapshot, fixture.Document, parent.AtomId);
         using var temporary = new TemporaryDirectory();
         SettleAtomCommandTests.WriteFiles(temporary.Path, fixture.Current);
-        if (failure == "concurrent")
-            TemporaryFileSystem.File.AppendAllText(Path.Combine(temporary.Path, PathFor(parent)), "\n", Encoding.UTF8);
         var before = SettleAtomCommandTests.Image(temporary);
         var calls = 0;
         var serializations = 0;

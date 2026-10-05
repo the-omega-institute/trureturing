@@ -3,6 +3,7 @@ bibkey: ganatra2018frobenius
 authors: Sheel Ganatra
 year: 2018
 title: Math 535a Differential Geometry
+doi: null
 url: https://sheelganatra.com/spring2018_math535a/
 claim: The course states the classical Frobenius criterion that a smooth constant-rank distribution is integrable exactly when it is involutive.
 strata_touched: []
