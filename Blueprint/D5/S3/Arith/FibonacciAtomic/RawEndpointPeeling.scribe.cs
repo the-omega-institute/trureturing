@@ -23,7 +23,7 @@ internal sealed class RawEndpointPeelingDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For k at least one, m=2k+1 and n=3k+13. Fk is the existing nested-compensation family transported from Unit plus Fin(k) plus Fin(k) to Fin(m) by Fintype.equivFin. This bijection changes only the member indices. All members are positive, distinct, nonconflicting and have n leaves. The target z ranges over every member. The indicator is one when its equality holds and zero otherwise; subtraction is natural subtraction.")),
-                    Paragraph(Text("C(pi,U), J(pi,U) and T(pi,U) denote the existing cost, paid terminal-history set and terminal outcome. CostVector(pi,Fk,z,n) abbreviates the displayed universal endpoint equation C(pi,Fk(i))=n+1-indicator(i=z). c(Fk,z,qs) is peelController(Fk,z,univ,qs), O(c,U) is controllerOutcome(c,U), and P(c) is controllerPolicy(c). First(qs,Fk,i) is List.find? with the actual nonleaf predicate chi(readout(a,Fk(i)))=1. Thus some(q) identifies the first exit address, including in lists with repeated requests.")),
+                    Paragraph(Text("C(pi,U), J(pi,U) and T(pi,U) denote the existing cost, paid terminal-history set and terminal outcome. c(Fk,z,qs) is peelController(Fk,z,univ,qs), O(c,U) is controllerOutcome(c,U), and P(c) is controllerPolicy(c). First(qs,Fk,i) is List.find? with the actual nonleaf predicate chi(readout(a,Fk(i)))=1. Thus some(q) identifies the first exit address, including in lists with repeated requests.")),
                     Paragraph(Text("Necessity uses a recursive actual-response route whose costs are no greater than those of the given strategy. Zero target excess makes every query on its path a target leaf. Each branch or absent child has zero remaining excess on all its members; nonconflict forces such a child to be a singleton. Following the target child therefore yields a safe finite list. Conversely the listed controller follows matching leaves until the first nonleaf response, selects that unique member, and verifies its complete frontier. Earlier queries are that member's leaves; its exit is its sole nonleaf. On the target all route queries are leaves. Complete verification yields exactly the asserted paid sets and endpoint costs on every family member. The existing execution contract connects every controller outcome to the policy's actual finite run on every source."))),
                 DescribeRole.Theorem))));
 
@@ -43,7 +43,7 @@ internal sealed class RawEndpointPeelingDocument : IScribeDocumentDefinition
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
     private static Formula And(params Formula[] xs) =>
         Seq(xs.Select((x, i) => i == 0 ? Par(x) : Seq(Sp, Land, Sp, Par(x))).ToArray());
-    private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, Equal, Sp, b);
+    private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
 
     private static Formula ResultFormula()
     {
@@ -53,7 +53,8 @@ internal sealed class RawEndpointPeelingDocument : IScribeDocumentDefinition
         Formula tree(Formula j) => Call("Fk", j);
         Formula leaves(Formula j) => Call("L", tree(j));
         Formula paid(Formula j) => Call("J", pi, tree(j));
-        Formula costs = Call("CostVector", pi, family, z, n);
+        Formula costs = All("i", indices, Eq(Call("C", pi, tree(i)),
+            Seq(n, Sp, Plus, Sp, D(1), Sp, Minus, Sp, Call("indicator", Eq(i, z)))));
         Formula peels = Call("Peels", family, z, V("univ"), qs);
         Formula controller = Call("c", family, z, qs);
         Formula exits = All("i", indices, Imp(Seq(i, Sp, Neq, Sp, z), Some("q", address, And(

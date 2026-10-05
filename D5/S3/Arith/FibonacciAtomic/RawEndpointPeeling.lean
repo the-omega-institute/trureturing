@@ -224,7 +224,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
                 (qs.find? (fun q => decide (chi (readout q (F i)) = 1))).toFinset hleaf))
           · simpa [hci, List.find?] using hnone
         · have hci : chi (readout q (F i)) = 1 := by
-            cases hr : readout q (F i) <;> simp only [hr, chi]
+            cases hr : readout q (F i) <;> simp only [chi]
             · exact False.elim (he (agree q i z (by simp [hr, chi]) hcz))
             · exact False.elim (he (agree q i z (by simp [hr, chi]) hcz))
           have hycard : (survivors S (vector F q) (readout q (F i))).card ≤ 1 := by
@@ -293,12 +293,10 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         change (paid (terminal π (F z)).1).card = _
         rw [target, leaf_card z]
         simp
-        all_goals omega
       · obtain ⟨q, he, hn, hb⟩ := exits i hiz
         change (paid (terminal π (F i)).1).card = _
         rw [hb, Finset.union_singleton, Finset.card_insert_of_notMem hn, leaf_card i]
         simp only [if_neg hiz, Nat.sub_zero]
-        all_goals omega
     exact ⟨π, rfl, terminal_eq, costs, target, exits⟩
   refine ⟨⟨?_, ?_⟩, realize⟩
   · rintro ⟨π, hcost⟩
