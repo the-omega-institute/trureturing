@@ -1470,6 +1470,140 @@ freeze or coverage record is introduced. The balanced-hypergraph
 coloring implication retains the external-result boundary stated
 above.
 
+## The preserved first q-digit supplies a second label coordinate
+
+Keep one finite globally count-then-modulus-sum minimal distinct odd
+nonunit whole cover, with actual labels
+$d_i=3^{a_i}q^{j_i}m_i$, $a_i\le2$, positive $W$, $m_i\mid W$,
+and $\gcd(3,q)=\gcd(W,3q)=1$. Suppose $q\ge81$.
+The second-digit transport has a further available coordinate: the
+first q-digit is preserved. It can distinguish numerical output labels
+without demanding another ternary digit.
+
+This gives the qualified height conclusion
+
+$$
+j_i\le1\qquad\text{for every actual original }i.
+\tag{CD40}
+$$
+
+The conclusion excludes an actual deep q-original under these
+hypotheses. It does not exclude height-one q-originals or establish
+noncoverage of the whole ternary-height-two branch.
+
+### One fixed source and three short output signatures
+
+To prove CD40, assume an actual $g$ has $j_g\ge2$. Choose a finite
+$G\ge2$ bounding all actual q-heights. For each nonnegative target x
+put $b=x\bmod81$, so $b<q$, and choose the CRT source
+
+$$
+\begin{aligned}
+T(x)&\equiv (x\bmod q)+qb+q^2\lfloor x/q\rfloor
+       &&\pmod{q^G},\\
+T(x)&\equiv x&&\pmod{9W}.
+\end{aligned}
+\tag{CD41}
+$$
+
+It preserves the original ternary and cofactor data and the first
+q-digit. Its second q-digit is exactly $x\bmod81$.
+
+Retain every original with $j_i\le1$. Transport every $j_i\ge3$
+original by literal second-digit deletion to its CD35 progression
+$H_i$, of modulus $d_i/q$. For a height-two original define
+$r_i=\lfloor\rho_i/q\rfloor\bmod q$ and use the following single
+CRT progression, retaining its actual cofactor phase in every row:
+
+| Old row $a_i$ | New numerical modulus | Required output conditions |
+| --- | --- | --- |
+| $0$ | $27m_i$ | $x\equiv r_i\pmod{27}$ and $x\equiv\rho_i\pmod{m_i}$ |
+| $1$ | $27qm_i$ | $x\equiv r_i\pmod{27}$, $x\equiv\rho_i\pmod q$, and $x\equiv\rho_i\pmod{m_i}$ |
+| $2$ | $81m_i$ | $x\equiv r_i\pmod{81}$ and $x\equiv\rho_i\pmod{m_i}$ |
+
+The three signatures, written as powers of 3 and q, are
+
+$$
+(3,0),\qquad(3,1),\qquad(4,0).
+\tag{CD42}
+$$
+
+Emit one output for every height-two original, including those with
+$r_i\ge81$. The latter need not have any selected source preimage;
+their additional APs do not impede coverage, legality or strict cost
+reduction. Thus the complete output uses exactly one class per original.
+
+### Complete coverage without a tag-allocation hypothesis
+
+Take any target x. Original whole coverage supplies an actual owner i
+of the single source $T(x)$. If $j_i\le1$, preservation of the old
+ternary data, cofactor and first q-digit puts x in that retained
+original. If $j_i\ge3$, the literal stripped-prefix identity puts x
+in $H_i$.
+
+If $j_i=2$, actual source ownership forces
+$r_i=x\bmod81$. It also supplies the original cofactor phase at x.
+For row one, preservation of the first q-digit additionally supplies
+$x\equiv\rho_i\pmod q$. Hence x satisfies the appropriate row of
+the table. Every target is covered by this one fixed output family;
+no independent polychromatic coloring, balancedness or separate
+pointwise tag choice is assumed. Finite periodicity gives coverage
+of all integers.
+
+### Numerical legality and the strict comparison
+
+The short outputs have ternary height three or four, whereas both
+retained originals and higher stripped outputs have ternary height
+at most two. Within the short family, CD42 and coprimality recover
+the old row and cofactor, hence its old height-two numerical label.
+The high outputs have q-height at least two, separating them from
+retained q-heights at most one; multiplication by q recovers their
+old labels. All output numerical moduli are therefore distinct,
+odd and greater than one.
+
+Every changed label is strictly smaller, with ratios
+
+$$
+\frac{d_i'}{d_i}=
+\begin{cases}
+1/q,&j_i\ge3,\\
+27/q^2,&j_i=2,\ a_i=0,\\
+9/q,&j_i=2,\ a_i=1,\\
+9/q^2,&j_i=2,\ a_i=2.
+\end{cases}
+\tag{CD43}
+$$
+
+The assumed actual deep original g makes the total modulus sum
+strictly smaller at the unchanged class count. This contradicts
+global minimality and proves CD40. The comparison permits larger
+ternary heights in the competing cover; minimality only inside the
+original height-two class would not suffice.
+
+In particular an original support prime $q\ge83$ has height at most
+one in this setting. At $q=113$, the actual-deep premise used in
+CD35--39 is excluded. The q-free short-output restriction in that
+earlier construction was stronger than necessary: retaining the
+first q-digit in the middle output supplies a legal way around its
+remaining common-tag obligation.
+
+The height-one case has no preserved first q-digit when that digit
+itself is deleted. The construction above consequently does not
+settle that case, does not remove the prime q from the original
+support, and does not prove unrestricted Erdős #7.
+
+A scoped transient Lean application verifies CD40--43, including
+the actual single-source coverage, the three short signatures,
+all new numerical collisions, oddness and nonunit conditions,
+periodic extension to all integers, and the unchanged-count strict
+sum comparison. Its fifteen axiom-closure reports use only
+`propext`, `Classical.choice` and `Quot.sound`, with no errors or
+`sorryAx`. The proof assumes neither a tag allocation nor a
+candidate-count bound. It reuses finite CRT, modular identities,
+factorization, finite sums and the stated minimality comparator;
+no new canonical binding declaration, freeze or coverage record is
+introduced.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
