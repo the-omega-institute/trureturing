@@ -83,10 +83,10 @@ internal sealed class CarryGraphEmbeddingDocument : IScribeDocumentDefinition
                     "Every column has a legal action and its recorded next state is that action's successor, starting from the root."),
                 Def("anchorValue", "Anchor series", All(g, V("Path"), Equal(Call("anchorValue", g),
                     Sum(d, N, new Formula.Fraction(Call("b", action), Pow(Add(d, D(1))))))),
-                    "The anchor value is the real infinite sum of column bits, with column zero weighted by one half. This convention includes terminating binary expansions."),
+                    "The anchor value is the real infinite sum of column bits, with column zero weighted by one half. This convention includes terminating binary expansions. An unsummable real series on an arbitrary raw path has the totalized value zero."),
                 Def("pathCost", "Residual tail cost", All(g, V("Path"), Equal(Call("pathCost", g),
                     Sum(d, N, new Formula.Fraction(Call("r", state), Pow(d))))),
-                    "The cost is the real infinite sum of normalized residual widths, including the depth-zero term. These whole-column quantities do not charge r separate reads in a machine step."),
+                    "The cost is the real infinite sum of normalized residual widths, including the depth-zero term. These whole-column quantities do not charge r separate reads in a machine step. An unsummable series on a raw path has the totalized value zero."),
                 Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                     H("Complete canonical embedding"), StatementSource.FromAuthor(Disp(ResultFormula())),
                     AssessedProvenance.FromRepo(), Blocks(
