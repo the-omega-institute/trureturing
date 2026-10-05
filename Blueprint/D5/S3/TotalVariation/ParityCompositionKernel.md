@@ -42,7 +42,7 @@ The continuous profile is the sum of the logarithms of all d-1 composition facto
 
 **Theorem 1.4 (Centered endpoint error).**
 
-$$\forall d,M \in \mathbb{N}, ((2 \leq d) \land (3 \cdot d \leq M)) \Rightarrow (\operatorname{HasDerivAt}\left(\operatorname{logProfile}\left(d, M\right), s, m\right)) \land ((0 \leq s) \land (s \leq \frac{1}{M - d}))$$
+$$\forall d,M \in \mathbb{N}, ((2 \leq d) \land (3 \cdot d \leq M)) \Rightarrow (0 \leq s) \land (s \leq \frac{1}{M - d})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParityCompositionKernel.profile_endpoint` (`✓ std3`). ∎
 
@@ -50,7 +50,7 @@ $$\forall d,M \in \mathbb{N}, ((2 \leq d) \land (3 \cdot d \leq M)) \Rightarrow 
 
 *Commentary.*
 
-For d >= 2 and M >= 3d, the derivative at m is s = -sum_{j=1}^{d-1} 1/(M-m+2j) - log(tau). The integral of 1/(M-m+2y) from zero to d is exactly -log(tau). The function is positive and decreasing. Comparing its complete reciprocal sum with the two shifted integrals leaves an error between zero and the integral from zero to one, which is at most 1/(M-d).
+For d >= 2 and M >= 3d, the centered reciprocal error is s = -sum_{j=1}^{d-1} 1/(M-m+2j) - log(tau). The integral of 1/(M-m+2y) from zero to d is exactly -log(tau). The function is positive and decreasing. Comparing its complete reciprocal sum with the two shifted integrals leaves an error between zero and the integral from zero to one, which is at most 1/(M-d).
 
 **Theorem 1.5 (Full interval profile bound).**
 
@@ -64,7 +64,19 @@ $$\forall d,M \in \mathbb{N}, ((2 \leq d) \land (3 \cdot d \leq M)) \Rightarrow 
 
 Put Delta = x-m, T = M-d and L = M-d/2. Since m <= d/2, each centered factor a_j = M-m+2j satisfies a_j >= L and a_j-|Delta| >= T. The logarithm-series remainder bounds |log(1-Delta/a_j)+Delta/a_j| by Delta^2/(L T). Summing all d-1 remainders and using the centered endpoint error gives the absolute profile bound. The logarithm tangent inequality gives the signed upper bound, and d/(M-d) <= 1/2 gives the final cap. Both bounds cover the whole interval, including both sides of m.
 
-**Theorem 1.6 (Composition mass normalization).**
+**Theorem 1.6 (Prescribed parity composition count).**
+
+$$\forall d,M \in \mathbb{N}, 1 \leq d \Rightarrow \forall \xi, \operatorname{card}\left(\operatorname{parityFiber}\left(d, M, \xi\right)\right) = \operatorname{ite}\left((\operatorname{mod}\left(h, 2\right) = \operatorname{mod}\left(M, 2\right)) \land (h \leq M), \operatorname{choose}\left(\frac{M - h}{2} + d - 1, d - 1\right), 0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParityCompositionKernel.composition_parity_count` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+In every positive dimension, a legal parity vector has choose((M-h)/2+d-1,d-1) weak compositions. The coordinatewise substitution r_i=2t_i+xi_i is bijective. An illegal parity vector has no preimage.
+
+**Theorem 1.7 (Composition mass normalization).**
 
 $$\forall d,M \in \mathbb{N}, 1 \leq d \Rightarrow \sum_{\xi} \operatorname{R}\left(d, M, \xi\right) = 1$$
 
@@ -76,9 +88,9 @@ $$\forall d,M \in \mathbb{N}, 1 \leq d \Rightarrow \sum_{\xi} \operatorname{R}\l
 
 For every positive dimension d and every natural total M, the composition parity masses sum to one. The sum runs over all Boolean vectors xi : Fin d -> Bool. The weak compositions of M partition according to their complete parity vector. A legal vector with h occupied coordinates has exactly choose((M-h)/2+d-1,d-1) preimages, through the bijection r_i = 2t_i + xi_i. An illegal vector has no preimages. Summing these fiber counts and dividing by the total choose(M+d-1,d-1) proves normalization.
 
-**Theorem 1.7 (Conditional centered moments).**
+**Theorem 1.8 (Conditional centered moments).**
 
-$$\forall d,M \in \mathbb{N}, ((2 \leq d) \land (3 \cdot d \leq M)) \Rightarrow (\sum_{\xi} \operatorname{Q}\left(d, M, \xi\right) = 1) \land ((\frac{1}{3} \leq p_{e}) \land ((\sum_{\xi} \operatorname{Q}\left(d, M, \xi\right) \cdot (h - m)^{2} \leq \frac{3 \cdot d}{4}) \land (\sum_{\xi} \operatorname{Q}\left(d, M, \xi\right) \cdot |h - m| \leq \frac{\operatorname{sqrt}\left(3 \cdot d\right)}{2})))$$
+$$\forall d,M \in \mathbb{N}, ((1 \leq d) \land (d \leq M)) \Rightarrow (\sum_{\xi} \operatorname{Q}\left(d, M, \xi\right) = 1) \land ((\frac{1}{3} \leq p_{e}) \land ((\sum_{\xi} \operatorname{Q}\left(d, M, \xi\right) \cdot (h - m)^{2} \leq \frac{3 \cdot d}{4}) \land (\sum_{\xi} \operatorname{Q}\left(d, M, \xi\right) \cdot |h - m| \leq \frac{\operatorname{sqrt}\left(3 \cdot d\right)}{2})))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParityCompositionKernel.reference_moments` (`✓ std3`). ∎
 
@@ -86,11 +98,11 @@ $$\forall d,M \in \mathbb{N}, ((2 \leq d) \land (3 \cdot d \leq M)) \Rightarrow 
 
 *Commentary.*
 
-The independent Bernoulli vector has generating function (1-nu+nu z)^d. Its value at z=-1 gives the parity event probability; differentiating twice at z=1 gives the centered second moment d nu (1-nu). For M >= 3d, eta <= 1/7 and p_e >= 1/3. Restricting the nonnegative squared deviation to the parity event and dividing by p_e bounds its conditional expectation by 3d/4. Weighted Cauchy-Schwarz then gives the absolute deviation bound sqrt(3d)/2. Both moments are centered at m=d nu.
+The independent Bernoulli vector has generating function (1-nu+nu z)^d. Its value at z=-1 gives the parity event probability; differentiating twice at z=1 gives the centered second moment d nu (1-nu). For d >= 1 and M >= d, eta <= 1/3 and p_e >= 1/3. Restricting the nonnegative squared deviation to the parity event and dividing by p_e bounds its conditional expectation by 3d/4. Weighted Cauchy-Schwarz then gives the absolute deviation bound sqrt(3d)/2. Both moments are centered at m=d nu.
 
-**Theorem 1.8 (Finite total variation bound).**
+**Theorem 1.9 (Finite total variation bound).**
 
-$$(\forall d,M \in \mathbb{N}, ((2 \leq d) \land (3 \cdot d \leq M)) \Rightarrow \frac{1}{2} \cdot \sum_{\xi} |\operatorname{R}\left(d, M, \xi\right) - \operatorname{Q}\left(d, M, \xi\right)| \leq \operatorname{min}\left(1, 5 \cdot (\frac{\operatorname{sqrt}\left(d\right)}{M} + \frac{d \cdot \left(d - 1\right)}{M^{2}})\right)) \land (\forall M \in \mathbb{N}, 1 \leq M \Rightarrow \operatorname{R}\left(1, M\right) = \operatorname{Q}\left(1, M\right))$$
+$$(\forall d,M \in \mathbb{N}, ((2 \leq d) \land (3 \cdot d \leq M)) \Rightarrow \operatorname{totalVariation}\left(\operatorname{R}\left(d, M\right), \operatorname{Q}\left(d, M\right)\right) \leq \operatorname{min}\left(1, 5 \cdot (\frac{\operatorname{sqrt}\left(d\right)}{M} + \frac{d \cdot \left(d - 1\right)}{M^{2}})\right)) \land (\forall M \in \mathbb{N}, 1 \leq M \Rightarrow \operatorname{R}\left(1, M\right) = \operatorname{Q}\left(1, M\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParityCompositionKernel.result` (`✓ std3`). ∎
 
@@ -105,6 +117,7 @@ For all natural d >= 2 and M >= 3d, one half of the sum over every Boolean vecto
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.Q`
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.R`
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.actual_normalization`
+- Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.composition_parity_count`
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.logProfile`
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.profile_endpoint`
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.profile_estimate`

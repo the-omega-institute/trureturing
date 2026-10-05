@@ -28,7 +28,7 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
             Node("parity", "Complete gap parity record", "gapParity",
                 Equal(Call("xi", Tv, Iv), Call("decide", Equal(Call("mod", Index(F.Id("r"), Iv), D(2)), D(1)))),
                 "The Boolean vector has one coordinate for every gap, including both outside gaps. "
-                + "Its occupied-coordinate count h is the sum of the Boolean digits. Its terminal parity is M mod 2.",
+                + "Its occupied-coordinate count h is the sum of the Boolean digits, and h mod 2 equals M mod 2.",
                 DescribeRole.Definition),
             Node("reference", "Reference tree mass", "referenceTreeMass",
                 Equal(Call("V", Tv), Ratio(Call("Q", Dv, Mv, Call("xi", Tv)),
@@ -44,7 +44,7 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
                 + "The reference mass is nonnegative, sums to one, and its parity pushforward equals Q(d,M). "
                 + "The total variation of the two tree laws equals that of R and Q. "
                 + "When d>=2 and M>=3d, every event A in the actual composition fiber satisfies "
-                + "max(0,U_ref(A)-epsilon)<=U(A)<=min(1,U_ref(A)+epsilon), where "
+                + "max(0,V(A)-epsilon)<=U(A)<=min(1,V(A)+epsilon), where "
                 + "epsilon=min(1,5(sqrt(d)/M+d(d-1)/M^2)). For d=1 the actual and reference tree laws coincide. "
                 + "The shape-gap equivalence reduces parity-fiber counting to the coordinatewise bijection r_i=2t_i+xi_i. "
                 + "The resulting fiber count normalizes a common uniform conditional kernel. Summing the absolute "
