@@ -40,7 +40,8 @@ internal sealed class RestrictedSchurDocument : IScribeDocumentDefinition
                     + "in the proposed interval. That interval is contained in the larger interval "
                     + "from the preceding theorem, contradicting the absence of such a solution. "
                     + "Here claim denotes the eventual equality defined in RestrictedSchurDefs.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("gaiser-restricted-schur-three-colours"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,

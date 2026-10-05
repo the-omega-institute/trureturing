@@ -38,6 +38,10 @@ $$\neg (claim)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/RestrictedSchur/RestrictedSchur.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gaiser-restricted-schur-three-colours` (refuted) by `D5/S3/Combinatorics/RestrictedSchur/RestrictedSchur.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gaiser-restricted-schur-three-colours","declaration_gid":"D5/S3/Combinatorics/RestrictedSchur/RestrictedSchur.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Collier Gaiser (2026). *Restricted generalized Schur numbers*. DOI: [10.48550/arXiv.2608.08789](https://doi.org/10.48550/arXiv.2608.08789). URL: <https://arxiv.org/abs/2608.08789v1>.
