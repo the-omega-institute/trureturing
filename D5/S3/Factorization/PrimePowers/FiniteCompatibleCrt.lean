@@ -21,7 +21,7 @@ open CompatibleResidueJointImage
    Mathlib's ZMod.prodEquivPi supplies finite coprime gluing. Neither supplies the
    finite noncoprime overlap induction below. -/
 
-private theorem gcd_lcm_distrib (u v n : ℕ) :
+theorem gcd_lcm_distrib (u v n : ℕ) :
     Nat.gcd (Nat.lcm u v) n = Nat.lcm (Nat.gcd u n) (Nat.gcd v n) := by
   rcases eq_or_ne u 0 with rfl | hu
   · simp only [Nat.lcm_zero_left, Nat.gcd_zero_left]
