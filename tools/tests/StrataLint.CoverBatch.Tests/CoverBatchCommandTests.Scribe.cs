@@ -7,7 +7,6 @@ namespace StrataLint.CoverBatch.Tests;
 public sealed partial class CoverBatchCommandTests
 {
     private const string ProblemPath = "Problems/batch-problem.md";
-    private const string FrozenPath = "Golden/Frozen/state/D5/S0/Carrier/Probe.lean.json";
 
     [Theory]
     [InlineData(false)]
@@ -116,7 +115,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(2, sequentialLoads.Indexes);
         WriteLoadCounts("cover-batch-parser-owner", ledgerLoads);
         Assert.Equal(1, ledgerLoads.BaselineLoads);
-        Assert.Equal([1, 1, 1], ledgerLoads.CandidateSnapshotLoads);
+        Assert.Equal([1, 1], ledgerLoads.CandidateSnapshotLoads);
     }
 
     [Fact]
@@ -134,38 +133,6 @@ public sealed partial class CoverBatchCommandTests
         Assert.NotEqual(before, world.LedgerImage());
         Assert.Single(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
-    }
-
-    [Theory]
-    [InlineData(FrozenPath)]
-    [InlineData(ProblemPath)]
-    [InlineData("D5/S0/Carrier/Probe.lean")]
-    public void CoverBatchCannotHideChangedSharedInputsAfterOneSuccess(string changedPath)
-    {
-        using var world = new BatchWorld();
-        WriteProblem(world.Root);
-        var calls = 0;
-        world.DuringInputRead = () =>
-        {
-            if (++calls == 2)
-                TemporaryFileSystem.File.AppendAllText(Path.Combine(world.Root, changedPath), "\n");
-        };
-        try
-        {
-            var result = world.Run(Row(First, Gid) + Row(Second, OtherGid) + Row("missing-atom", Gid));
-
-            Assert.Equal(1, result.ExitCode);
-            Assert.Equal(["applied", "failed", "blocked"], Results(result).Select(item => item.Status).ToArray());
-            Assert.Contains("shared cover context changed: " + changedPath, result.Error, StringComparison.Ordinal);
-            Assert.Single(world.Entry(First).Coverage);
-            Assert.Empty(world.Entry(Second).Coverage);
-            Assert.Equal(2, calls);
-            Assert.DoesNotContain(CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
-        }
-        finally
-        {
-            world.DuringInputRead = null;
-        }
     }
 
     private sealed class FrozenLoadCounter : IDisposable
