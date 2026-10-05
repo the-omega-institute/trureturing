@@ -108,6 +108,10 @@ $$(\exists L \in \mathbb{R},\; \operatorname{Tendsto}\left(\left(\frac{\operator
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/AbelianBorders/MutualAbelianBorderDensity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/maity-krishna-2025-mutual-abelian-border-limits` (proved) by `D5/S3/Combinatorics/AbelianBorders/MutualAbelianBorderDensity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"maity-krishna-2025-mutual-abelian-border-limits","declaration_gid":"D5/S3/Combinatorics/AbelianBorders/MutualAbelianBorderDensity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Anuran Maity, K. V. Krishna (2025). *Mutually Abelian-Bordered Binary Words*. DOI: [10.1007/978-3-032-17801-5_6](https://doi.org/10.1007/978-3-032-17801-5_6). URL: <https://arxiv.org/abs/2509.20773v1>.

@@ -69,7 +69,10 @@ internal sealed class MutualAbelianBorderDensityDocument : IScribeDocumentDefini
                 + "The reflection count bounds the exceptional pairs by a central binomial coefficient. "
                 + "Its normalized value tends to zero; swapping the two words gives the same bound for external borders. "
                 + "The union bound and squeeze give both limits.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("maity-krishna-2025-mutual-abelian-border-limits"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
