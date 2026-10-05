@@ -212,8 +212,6 @@ theorem result (m : ℕ) (_hm : 2 ≤ m) (x : ℝ) (e : ℕ)
   have no_split_mass (e r : ℕ) (hr : r < e) :
       (∑' j : ℕ, (anchorDigit ((noSplit e r hr).action j) : ℝ) / (2 : ℝ) ^ (j + 1)) =
         (r : ℝ) / e := by
-    have sb := Real.summable_ofDigitsTerm
-      (digits := fun j => anchorDigit ((noSplit e r hr).action j))
     have digits : (fun j => (anchorDigit ((noSplit e r hr).action j) : ℝ) /
         (2 : ℝ) ^ (j + 1)) =
         (fun j => ((rho e r j : ℝ) / (2 : ℝ) ^ j -
