@@ -7,6 +7,9 @@
    digest: Actual ordered lattice fields share a recipient-finite pair kernel. -/
 
 /-
+utility:none is appropriate because this family quantifies over all finite-rank
+forms, charges, integer indices, arbitrary polynomials and finite-charge vectors,
+rather than finite computational content.
 proof_shape: actual_lattice_field_products: content
 admission_basis: escape-witness
 escape_witness: Polynomial translation of the composed actual modes is
