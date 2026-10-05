@@ -113,6 +113,9 @@ domains:
   GraphInvariants:
     stratum: S3
     definition: Polynomial and simplicial invariants of finite simple graphs, such as chromatic polynomials, independence complexes and their acyclic Morse matchings, and whether these invariants distinguish graphs.
+  Hamming:
+    stratum: S3
+    definition: Mixed-alphabet Hamming graph partitions, coordinate-line cliques, and their maximality and direction-completeness.
   History:
     stratum: S0
     definition: Finite marker and event histories, their append operation, and faithful self-encoding bridges.
