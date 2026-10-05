@@ -4993,14 +4993,208 @@ This contradiction proves CD163. The proof does not require a
 positive selected measure for the private25 source, a GLC collision
 graph, any new exchange operation, or saturation of the inventory.
 The actual-source argument is an ordinary mathematical proof.
-Its source-to-law construction has not yet been compiled as a
-single Lean theorem. The separate exact scalar check does not
-by itself discharge that construction.
+Transient Lean checks verify the three pairwise scalar contradictions,
+the two-word pigeonhole step, the product-law pair-union identity,
+injective replacement of two original inventory slots, and containment
+of literal $9p$ events in their corresponding axial rectangles.
+These checks compile with only the standard axioms. The complete
+source-to-law inventory and mandatory-label construction has not yet
+been compiled as a single Lean theorem; the separate checked pieces
+do not by themselves discharge it.
 
 CD163 excludes precisely the displayed shared-five palette. Other
 ordinary palettes for shared five, multiple exceptional primes,
 higher ternary height and unrestricted odd distinct covering remain
 unresolved.
+
+## Whole axial towers and the remaining joint-realization gap
+
+Keep the same globally count-then-modulus-sum minimal hypothetical
+cover, actual 3 and 9, ternary height two, and shared-prime set
+$R_Q=\{5\}$. Allow an arbitrary ordinary palette $A$ at a live root.
+Use one root-selective product law, and let $k=2$ at the pure-nine
+root and $k=3$ at the other live root. All original numerical labels
+and their residues remain fixed.
+
+For ordinary primes put
+
+$$
+ g_p=\frac1{p-3},\quad
+ W=\prod_{p\in A}(1+g_p)-1,\quad
+ B=\sum_{p\in A}g_p,\quad D=W-B,\quad
+ L=2D,\quad P=\prod_{p\in A}(1-g_p).
+ \tag{CD172}
+$$
+
+Let $L_0$ be the complete five-free low union under this law and
+$\ell=\mu(L_0)$. The ordinary low inventory gives $\ell\le L$.
+This event depends only on ordinary coordinates. With the actual
+shared-five depth masses $\sigma,\tau,\eta$, choose upper caps
+$b\ge\sigma/\rho$ and $r\ge\eta/\rho$, with $0\le b,r\le1/2$,
+where $\rho$ is the surviving shared-coordinate density.
+The previous bounds retain
+low five-bearing allowance $2bW$ and nonsingle-axis high allowance
+$((1+b)W-B)/k$.
+
+For each safe complete ternary word $j$, take the coordinate union
+of all actual high labels $9p^a$ assigned to that word, including
+all positive finite depths. Its coordinate mass is $x_{p,j}$.
+Define $x_{5,j}$ in the same way for the shared-five unit tower.
+Unique original labels and the geometric bounds imply
+
+$$
+ x_{p,j}\ge0,\quad \sum_jx_{p,j}\le g_p,\qquad
+ x_{5,j}\ge0,\quad \sum_jx_{5,j}\le r.
+ \tag{CD173}
+$$
+
+Missing labels contribute zero. On each word the ordinary axial
+union has probability $1-\prod_p(1-x_{p,j})$ on the complete
+product law. The five coordinate is independent of the whole
+ordinary event $L_0$. Consequently the union of all axial high
+labels, intersected with the complete low complement, is at most
+$G_\ell(x)/k$, where
+
+$$
+ G_\ell(x)=\sum_j\left[
+ x_{5,j}(1-\ell)+(1-x_{5,j})
+ \left(1-\prod_{p\in A}(1-x_{p,j})\right)\right].
+ \tag{CD174}
+$$
+
+This uses independence before conditioning on the low complement.
+It does not assert independence on that complement.
+
+Define the finite partition quantity
+
+$$
+ M_k(s)=\min_{f:A\to\{0,\ldots,k-1\}}
+ \left[(1-s)\prod_{f(p)=0}(1-g_p)
+       +\sum_{j=1}^{k-1}\prod_{f(p)=j}(1-g_p)\right].
+ \tag{CD175}
+$$
+
+Empty products are one. The expression in CD174 is affine in each
+axis vector separately. Each vector lies in the simplex specified
+by CD173, so successive maximization sends every vector to a vertex.
+The ordinary-axis coefficients are nonnegative. The shared-axis
+coefficient at word $j$ is $\prod_p(1-x_{p,j})-\ell$, which is
+nonnegative if $\ell\le P$. Under an established upper bound
+$\ell\le\bar L\le P$, all axis caps may therefore be used at
+vertices of this relaxation, giving
+
+$$
+ G_\ell(x)\le k-M_k(r)-r\ell.
+ \tag{CD176}
+$$
+
+This optimization bounds the response of one fixed actual source.
+It does not reassign the residues or word ownership of that source.
+Keeping every other numerical allowance once, and using $k-r>0$
+to replace $\ell$ by $\bar L$, whole coverage implies
+
+$$
+ M_k(r)\le(k-r)\bar L+(2k+1)bW+D.
+ \tag{CD177}
+$$
+
+The left side is a minimum over assignments. A particular assignment
+satisfying this inequality certifies feasibility of the relaxed
+criterion; the inequality is not required for every assignment.
+No simultaneous attainability of the remaining allowances follows.
+
+### Reusing independence to sharpen the low allowance
+
+For a fixed disjoint split $A=S\sqcup T$, write
+$L_S=2(\prod_{p\in S}(1+g_p)-1-\sum_{p\in S}g_p)$ and similarly
+for $T$. The actual low subfamilies supported wholly inside these
+two blocks depend on disjoint ordinary coordinate sets. If their
+masses are $x,y$, their union has mass $x+y-xy$. When $L_S,L_T\le1$,
+monotonicity on $[0,1]^2$ bounds it by $L_S+L_T-L_SL_T$.
+All cross-block low slots retain their old allowances. Thus
+
+$$
+ \ell\le\bar L=L-L_SL_T.
+ \tag{CD178}
+$$
+
+This is the existing independent-union formula applied to two
+complete subfamilies in the same inventory. It subtracts no alleged
+actual intersection from an unknown total. The full $L_0$ still
+includes the cross-block labels.
+
+### A finite shared-label allocation survives these inequalities
+
+The joint criterion remains feasible even with unique finite
+ownership of the shared labels. Take
+
+$$
+ \begin{aligned}
+ A_c&=\{7,17,23,37\},\\
+ A_d&=\{11,13,19,29,31,41,43,47,53,59,61,67,71\}.
+ \end{aligned}
+ \tag{CD179}
+$$
+
+At shared height four, assign the low unit labels 15 and 75 to $c$,
+and 375 and 1875 to $d$. Assign high unit label 45 to $c$, and
+225, 1125 and 5625 to $d$. This assigns each listed numerical label
+once; it is not a construction of the rest of a covering family.
+Normalize each mass by four. Then
+
+$$
+ \begin{aligned}
+ u&=4\sum_{e=1}^4 5^{-e}=\frac{624}{625},\\
+ (t_c,t_d)&=\left(\frac{24}{25},\frac{24}{625}\right),&
+ (v_c,v_d)&=\left(\frac45,\frac{124}{625}\right),\\
+ b_i&=\frac{u}{4-u-t_i},& r_i&=\frac{v_i}{4-u-t_i},\\
+ (b_c,b_d)&=\left(\frac{156}{319},\frac{156}{463}\right),&
+ (r_c,r_d)&=\left(\frac{125}{319},\frac{31}{463}\right).
+ \end{aligned}
+ \tag{CD180}
+$$
+
+These are finite-height caps, obtained from
+$\rho_i\ge1-\sigma-\tau_i$; neither shared pool is replaced by its
+infinite-height limit. For the high-axis assignments in CD175,
+put the shared-five axis at word zero on each root. At $c$, put
+all ordinary axes at word one. At $d$, use the three groups
+$\{19,29,59\}$, $\{13,31,41,43,67\}$ and
+$\{11,47,53,61,71\}$ in word order.
+
+For CD178 choose $S_c=\{7,17\}$ and $T_c=\{23,37\}$; choose
+$S_d=\{11,13,19,71\}$ and $T_d=A_d\setminus S_d$. Both block
+caps are at most one and $0\le\bar L_i\le L_i\le P_i$.
+The low corrections $L_SL_T$ are $1/9520$ at $c$ and
+$569764945282797/200211880214528000$ at $d$.
+Direct exact evaluation of the displayed assignments gives the
+following positive differences between the right side of CD177
+and the particular assignment's left side:
+
+$$
+ \begin{aligned}
+ \Delta_c&=\frac{250233}{6073760}>0,\\
+ \Delta_d&=\frac{65201864993954333721}{4078716423730364416000}>0.
+ \end{aligned}
+ \tag{CD181}
+$$
+
+Since $M_k$ is no larger than a particular assignment's value,
+these inequalities establish feasibility of this capacity model.
+They do not provide actual ordinary prefixes or realize the low,
+axial-high and mixed-high allowances jointly. The same finite
+shared-label ownership survives the whole-tower and the displayed
+disjoint-low-block improvements, so these inequalities alone cannot
+exclude every remaining palette. Further progress requires additional
+constraints on their common actual realization, or a different
+necessary criterion.
+
+A transient Lean check verifies the finite shared-label pools, the
+stated disjoint partitions, the two low-block corrections, their
+admissible bounds and both feasibility inequalities for these explicit
+word assignments. It uses only the standard axioms. The general
+actual-source derivation of CD173–CD178 is the ordinary argument above;
+this finite check does not formalize that entire implication.
 
 ### Verification scope and remaining inequality
 
