@@ -31,7 +31,10 @@ internal sealed class SubsystemLanczosPositivityRefutationDocument : IScribeDocu
                 "claim", DescribeRole.Definition),
             Node("result", "Refutation by an entangled two-qubit state", Disp(new Formula.Not(F.Id("claim"))),
                 "Section 3.1, printed p. 15, conjectures: \"At present, however, we are unable to establish the sign of (bₙ⁽ᴬ⁾)² in full generality. Based on all the examples discussed in this manuscript, we conjecture that (bₙ⁽ᴬ⁾)²>0 for every n, and hence that all the coefficients bₙ⁽ᴬ⁾ are real.\" Take ψ = (3/5)|00⟩ + (4/5)|11⟩ and H = X_A ⊗ |0⟩⟨0|_B. The state has norm one and H is Hermitian. Differentiating the matrix exponential, conjugation, partial trace and fixed-normalization overlap yields initial purity 337/625, first overlap derivative 0, and second overlap derivative 126/625. Thus moment(ψ,H,1) = 0 and moment(ψ,H,2) = 126/337. The witness has (μ_1)^2 − μ_2 = −126/337, so the first squared coefficient contradicts strict positivity. No higher Lanczos coefficient is needed for the refutation.",
-                "result", DescribeRole.Theorem, true)),
+                "result", DescribeRole.Theorem, true,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("caputa-di-giulio-loc-subsystem-lanczos-positivity"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,

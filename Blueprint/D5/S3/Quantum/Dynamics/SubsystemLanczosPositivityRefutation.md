@@ -70,6 +70,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/SubsystemLanczosPositivityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/caputa-di-giulio-loc-subsystem-lanczos-positivity` (refuted) by `D5/S3/Quantum/Dynamics/SubsystemLanczosPositivityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"caputa-di-giulio-loc-subsystem-lanczos-positivity","declaration_gid":"D5/S3/Quantum/Dynamics/SubsystemLanczosPositivityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Pawel Caputa, Giuseppe Di Giulio, Tran Quang Loc (2026). *Complexity Inequalities for Quantum Subsystems*. DOI: [10.48550/arXiv.2606.20790](https://doi.org/10.48550/arXiv.2606.20790). URL: <https://arxiv.org/abs/2606.20790v2>.
