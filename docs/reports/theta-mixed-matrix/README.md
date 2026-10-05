@@ -341,3 +341,10 @@ the simple multiplier allowance infinite; this fixed-source obstruction
 does not decide the actual constrained inverse or a moving cofinal family.
 The existing unprojected common dual-source construction is reused, with
 its growing source budgets and the actual low signs still unpaid.
+
+The [critical-zero source-range check](critical-prime-source-range.md)
+uses the full prime-power action to exclude a blanket exact factorization
+of every discarded low source as $Q(sf+a v_0)$, $f\in L^2$, after any
+finite low removal. This conditional paper obstruction concerns that
+stronger source requirement; positive-reserve approximate estimates and
+the actual cofinal form signs remain unresolved.
