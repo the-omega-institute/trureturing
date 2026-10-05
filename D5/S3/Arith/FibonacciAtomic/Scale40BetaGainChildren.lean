@@ -447,15 +447,14 @@ theorem result {m : Nat} (F : Fin m → Source) (S : Finset (Fin m))
       · obtain ⟨j, hj, hr⟩ := Finset.mem_image.mp (Finset.mem_filter.mp hz).1
         exact False.elim (unitAbsent hw j hj hr)
     simpa only [Finset.card_singleton] using Finset.card_le_card hsub
-  dsimp only
-  refine ⟨betaGrowth.1, betaGrowth.2, leafUnique, nLower, ?_, unitAbsent⟩
-  apply Nat.le_min.mpr
-  refine ⟨nUpper, ?_⟩
-  change N.card ≤ (psi (H ++ [⟨u, y⟩]) \ psi H).card
-  rcases betaGrowth.1 with hw | hw | hw
-  · rw [hw]
-    exact nUnit hw
-  · omega
-  · omega
+  have nGain : N.card ≤ (psi (H ++ [⟨u, y⟩]) \ psi H).card := by
+    rcases betaGrowth.1 with hw | hw | hw
+    · rw [hw]
+      exact nUnit hw
+    · omega
+    · omega
+  have nMin : N.card ≤ min 2 (psi (H ++ [⟨u, y⟩]) \ psi H).card :=
+    Nat.le_min.mpr ⟨nUpper, nGain⟩
+  exact ⟨betaGrowth.1, betaGrowth.2, leafUnique, nLower, nMin, unitAbsent⟩
 
 end D5.S3.Arith.FibonacciAtomic.Scale40BetaGainChildren
