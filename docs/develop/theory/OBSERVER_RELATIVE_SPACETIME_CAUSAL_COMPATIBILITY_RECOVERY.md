@@ -3329,3 +3329,95 @@ $$
 [K66FSM]: https://eprints.whiterose.ac.uk/id/eprint/230260/1/Ordered_Wset_Accepted.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 67. 原 K 同深度、同终端尾的同源保全推论
+
+**推论 67.1（同一原档案上的共同深度与共同终端尾）。** 固定[原 K 卷][K67]约定 1.1 的读者，因而
+$$
+3\le m<k,\qquad T=k+1,\qquad g=\gcd(m,T)\ge2,\qquad
+T=gp,\quad m=gu,\quad \theta_j=-gj\pmod T .
+\tag{67.1}
+$$
+取任意原 K 定义 1.2 的实际已付费零后档案，记已付深度为 $b$、非空相位支撑为 $S$、共同当前值和实际尾为 $v_b,\sigma<k$，并保留该档案的全部原实际历史
+$$
+\Omega=\bigsqcup_{j\in S}\Omega_j .
+$$
+这里 $h\in\Omega_j$ 的 INITIAL 相位是 $\theta_j$，原 INITIAL 标签是 $\lambda(j)$；$\Omega_j$ 包含该相位在档案中全部实际合并的历史，不以选出的见证替换它们。固定一棵确定有限原自适应树 $\mathcal A$，假设每个 $h\in\Omega$ 的原续接都成功、正确返回 $\lambda(j(h))$，并且都恰在同一个原追加深度 $D\ge0$ 停止；再假设这些原终端记录的尾坐标都等于同一个 $\tau<k$。则存在在开始前固定的同一串恰好 $D$ 个原完整块及端点解码，使每一个 $h\in\Omega$：
+
+* 全程成功，保留原档案和原树执行的每一个完整块端点值前缀；
+* 返回原 INITIAL 标签 $\lambda(j(h))$，新增付费块数恰为 $D$，总已付块数恰为 $b+D$；
+* 终端原 K 记录 $(v,\theta,s)$ 与该 $h$ 的原树终端记录逐坐标相等。
+
+该结论同时适用于原 K 的两个控制字母表。它不剪枝、不重标来源、不补加块、不复位、不复制、不取得隐藏初始时钟、不增加读口；“端点前缀保持”只指可见端点值序列，不指原树的字面动作序列。
+
+**证明。** 对同一个 $j$，档案端点记录、已观察档案和原 INITIAL 标签相同；确定转移和确定控制因此使 $\Omega_j$ 的全部历史在 $\mathcal A$ 中走同一路径。记该路径第 $t$ 个原块为 $B^{\mathcal A}_t(j)$，并令
+$$
+q_t(j)=\bigoplus_{i=0}^{m-1}B^{\mathcal A}_t(j)_i\,
+c_{-gj+(b+t)m+i},\qquad j\in S,\quad0\le t<D .
+\tag{67.2}
+$$
+这只是为全部实际历史共同编号，未选择一个历史代替 $\Omega_j$。仅为构造，将 $q_t$ 在 $S$ 外延拓为零。原 K 的周期系数 $c_i=\mathbf1_{\{0,-1\}}(i\bmod T)$ 给出块内全部非零列组
+$$
+L_0=\{0\},\qquad L_a=\{ag-1,ag\}\ (1\le a<u),\qquad L_u=\{m-1\}.
+\tag{67.3}
+$$
+在新增时刻 $t$，$L_a$ 的两个位（端点组在 $a=0,u$ 时退化为一个位）只命中
+$$
+j_{t,a}=((b+t)u+a)\pmod p .
+$$
+因为 $u<p$，这些列组和顶点互不相同；因此 $q_t(j)=0$，只要 $j$ 不在
+$$
+W_t=\{((b+t)u+a)\pmod p:0\le a\le u\}.
+\tag{67.4}
+$$
+
+若 $D=0$，取空串；原终端尾只能是 $\tau=\sigma$，端点、标签和完整记录均保持。以下设 $D>0$，写 $n=Dm$。若 $\tau\ge n$，追加的 $n$ 个位中没有零，故每条原路径的续接都是同一串 $1^n$，且 $\tau=\sigma+n<k$；直接采用这串原块即可。
+
+设 $\tau<n$。每条原路径最后一个零都位于共同位置
+$$
+z=n-\tau-1=rm+\ell,\qquad 0\le r<D,\quad0\le\ell<m,
+\tag{67.5}
+$$
+并在其后恰有 $\tau$ 个一。若 $r=0$，根动作对所有来源相同，且根块之后全部是全一块；取原根块，再取 $D-1$ 个 $1^m$，即得到同一续接。以下设 $r\ge1$。
+
+对 $t<r$，在式 (67.4) 的每个窗口顶点放置延拓后的 $q_t(j)$，用原 K 定理 2.2 的实际字面位置
+$$
+B_t(ag)=q_t(((b+t)u+a)\bmod p)\quad(0\le a<u),\qquad
+B_t(m-1)=q_t(((b+t)u+u)\bmod p)
+\tag{67.6}
+$$
+实现，其余字面位全置零；同一顶点不在两个列组中重复命中，窗口外来源的原差也为零。令第 $r$ 块的位 $\ell$ 为零，所有 $i>\ell$ 的位为一。对每个组 $L_a$ 置
+$$
+E_a=L_a\cap\{0,\ldots,\ell-1\},\qquad
+F_a=\bigl|L_a\cap\{\ell+1,\ldots,m-1\}\bigr|\pmod2 .
+\tag{67.7}
+$$
+若 $E_a\ne\varnothing$，只在其最大位置放一个修正位：当 $j_{r,a}\in S$ 时取 $q_r(j_{r,a})\oplus F_a$，否则取零；其它自由位置全取零。若 $E_a=\varnothing$ 且 $j_{r,a}\in S$，则该顶点的同一来源原块 $B^{\mathcal A}_r(j_{r,a})$ 已在 $\ell$ 发零并在其后全发一，组内没有其它自由位，故其原组奇偶恰为 $F_a$，必有 $q_r(j_{r,a})=F_a$。因此无自由位的组也相容；不在 $S$ 的顶点不施加响应要求。对 $t>r$ 全部取 $B_t=1^m$，与各来源原路径的对应后缀相同。整串只由原树的有限路径数据和档案数据在执行前确定。
+
+这些块都成功。对 $t<r$，稀疏字面选择的领先一串至多一，块内及末尾一串至多二，后继接缝至多三。若 $\sigma=k-1$，原安全根块强制首位为零；首顶点 $bu\bmod p$ 仅由 $L_0$ 命中，所以它在 $S$ 中时 $q_0(bu\bmod p)=0$，缺失时也按延拓取零。若 $\sigma\le k-2$，首块接缝至多 $k-1$。参数排除了 $(k,m)=(4,3)$，故本族必有 $k\ge5$，后继稀疏接缝的三小于 $k$。
+
+修正块在 $\ell$ 以前的可选一位位于 $0,g,\ldots,(u-1)g$，间距至少二；至多一个列组在 $\ell=ag$（$1\le a<u$）时把代表从 $ag$ 移到 $ag-1$。所以这个零前片段的领先及内部一串都至多二，接上前一稀疏块的尾至多形成四个一。$4<k$ 保证安全，包括最小参数 $k=5,m=4$。位置 $\ell$ 的零把此前接缝同后面的恰 $\tau<k$ 个一隔开；后面全一块的收费与尾增长也包含在这段原长度后缀中。此核对包括 $\ell=0$、$\ell=m-1$、组边界零、$\tau=0$、$u=1$、窗口回绕、$u=p-1$ 及跨越多个完整块的末串一。$\tau\ge n$ 和 $r=0$ 的两种情形沿用原成功续接，故同样安全。因 $m<k$，两个字母表的局部字面动作集相同，跨块接缝按同一规则检查。
+
+由 (67.6)、(67.7) 和全一后缀，对每个 $h\in\Omega_j$、每个 $t<D$，新块和原路径给出同一个差值 $q_t(j)$；从共同 $v_b$ 出发，逐步归纳得到完全相同的端点值前缀。解码器保存 $\mathcal A$ 的虚拟节点，使用原树的虚拟动作和这些相同端点值推进，所以在第 $D$ 个端点返回 $\lambda(j(h))$；虚拟动作不冒充实际发出的固定块。每条来源实际发出恰好 $D$ 个完整块，故总费为 $b+D$，相位推进为 $\theta_{j(h)}+(b+D)m\pmod T$，共同最后零之后的尾为 $\tau$。因此新终端记录
+$$
+\left(v^{\mathcal A}_{b+D}(h),\;
+\theta_{j(h)}+(b+D)m\pmod T,\;\tau\right)
+\tag{67.8}
+$$
+逐坐标等于原记录；档案以前的端点值前缀则由原实际历史原样保留。证毕。
+
+**范围、复用与比较。** 本条复用原 K 定理 2.2 的稀疏字面实现、定理 3.4 的原路径差提取、定义 4.2 的同词尾更新，[实际取得几何][K67S4]命题 4.1 的最后零分解，以及[窄块卷][K67S10]接口 2.1 的实际列约束；增加的是共同最后零后缀的列兼容核对与四位接缝界。K 定理 3.4 的最小最坏费用合同不保留任意原树的规定停止尾；本卷定理 66.3 无条件保留 $(v,\theta)$，定理 66.7 则把完整终端提升归于有限同词条件。本条证明共同 $D,\tau$ 足以满足该条件，仍保留每一棵给定原树的全部来源和原次数。[多标签卷][K67S13]第 8 节的一块安全切口判据只决定残余标签能否一块取得。[联合响应与接缝卷][K67SEAM]式 (1.2) 把中央第 2–3 节限定为 $\gcd(m,k+1)=1$；其局部最小尾归一化、定理 3.3–3.4 的证书和孔条件，以及第 4 节父块约束，都不供应本条 $g\ge2$ 上任意给定树的共同深度、指定终端尾与精确次数的同时保全。本条是源特定派生推论，不建立通用框架或文献优先权。
+
+完整终端仅是原 K 的 $(v,\theta,s)$。对只依赖这个记录和原字面块的 K 消费者，相等停止记录可按定理 66.7 后的原转移归纳接同一允许后缀；这不供应全部原生消费者的控制记忆、权限或调度合同。原字面动作、中间尾、控制器记忆和动作所有权、调度、已校准持续时间、原生／噪声／物理成本、物理符合性及高效或最优的通用计算均不由此保全。噪声、校准及物理／因果解释仍需各自模型和同源对应。结论限原匹配系数、原 K 定义 1.2 实际零后档案、$3\le m<k$、$g\ge2$、两个原控制字母表和共同 $D,\tau$；不扩展到互素、宽块、缺少同源合并条件的混合 INITIAL 尾档案或不同停止深度。档案内已合并的不同 INITIAL 尾及隐藏初始长度的全部历史仍被量化。有效构造以所供有限档案摘要和完整有限树为输入，逐候选相位模拟；无需枚举底层历史或发现真实隐藏相位。离线计算与解码记忆另计，没有任意目标表示的复杂度或可判定性承诺；K 原卷第 6 节的全参数最优费用及本卷第 44、46、50 节的原生、校准与物理桥梁仍保留各自未决范围。
+
+[Türker–Hierons–Mousavi–El-Fakih 接受稿][K67FSM]正文定义 11–15 的状态／刻画词对覆盖合同确允许无额外转移的路径，正文定义 18 约束转移总长；它们没有本条对另一给定实验的逐来源端点前缀、精确块费和指定终端记录保全。补充材料另有编号流，定义 18 是 X3C，转移预算及存在问题为定义 19–20。[Moore 1956][K67Moore]定理 8 在状态两两可区分时取得实验末状态的知识，也不供应这些保全量词。定理 66.5 的混合停止反例保留原范围，不作为本条证明前提，也未由本条重审。本条只有上述普通数学证明，不具有 Lean 核验或当前硬件实现证据。
+
+[K67]: https://github.com/the-omega-institute/trureturing/blob/5e14c126e8a9b94996efbc5d54cea8ec39b6b748/docs/develop/theory/KBONACCI_RESPONSE_CODES_AND_ADAPTIVITY_BOUNDARIES.md
+[K67S4]: https://raw.githubusercontent.com/the-omega-institute/trureturing/dc3fa13ad47f1171fbc8dac1306273339091cd43/docs/develop/theory/KBONACCI_ACTUAL_ACQUISITION_GEOMETRY.md
+[K67S10]: https://raw.githubusercontent.com/the-omega-institute/trureturing/84c05a76262b9b8c1a491c02afdee34e60535e9b/docs/develop/theory/KBONACCI_NARROW_QUERY_WINDOW_COST.md
+[K67S13]: https://raw.githubusercontent.com/the-omega-institute/trureturing/6850a89acdb12d4f17af57dacee2d67e0b514be4/docs/develop/theory/KBONACCI_MULTILABEL_PREFIX_AND_TERMINAL_COST.md
+[K67SEAM]: https://github.com/the-omega-institute/trureturing/blob/26d349bd94803b70415db96980a65ea51d3861b5/docs/develop/theory/KBONACCI_JOINT_RESPONSE_AND_SEAM_COST.md
+[K67FSM]: https://eprints.whiterose.ac.uk/id/eprint/230260/1/Ordered_Wset_Accepted.pdf
+[K67Moore]: https://www.cs.cmu.edu/~cdm/resources/Moore1956-gedanken-experiments.pdf
+
+## 追加锚（本行以下为增补区）
