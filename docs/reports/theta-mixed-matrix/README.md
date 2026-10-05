@@ -388,3 +388,14 @@ whole centered low sphere. This conditional paper interface preserves
 individual-input convergence and noncompact alternatives; it supplies
 no inverse divergence, actual cofinal signs, half-bound or RH/Robin
 conclusion, and has no new Lean certification or originality claim.
+
+Under the inherited whole-critical-domain, mixed-nullity and
+metric-coercivity premises, the [actual endpoint synthesis](../../../Library/Dynamics/clason2021regularization.md#a-bounded-synthesis-from-the-actual-endpoint-translations)
+leaves a Hilbert–Schmidt residual on every fixed even sharp-low band,
+and its [corrected common-source fit](../../../Library/Dynamics/clason2021regularization.md#a-corrected-fit-converges-uniformly-at-each-fixed-band)
+converges uniformly on that band's whole centered unit sphere.
+The principal synthesis retains the infinite translation tail; it is
+noncompact. This conditional paper construction supplies no effective
+regularization or growing-band rate, finite all-input acquisition,
+actual cofinal signs, half-bound or RH/Robin conclusion, and has no
+new Lean certification or originality claim.
