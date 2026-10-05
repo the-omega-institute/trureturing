@@ -5179,3 +5179,16 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 在原点 `p` 直接使用原商覆盖的局部不相交邻域，取其原距离正半径球 `B(p,r)`。上述公式在 `p₀` 的第零坐标给出 `cosh(dist(p,g·p))=(L(ρₚ(g)))₀₀`，因此同一个近矩阵单位元子群 `Hₚ` 获得实际正隔离间隙 `cosh(r)−1`，由已冻结近单位元定理得 `Hₚ` 幂零。将上一节在 `p₀`、位移界一处已选定的有限颜色沿 `ρₚ` 拉回，颜色数 `m` 与 `p,M,F,ρ` 无关，同色商落在同一个 `Hₚ`。在原点 `p` 调用已冻结有限颜色群论结果，以同一个 `ε=1/(m+1)>0` 得到上述原小位移生成子群虚幂零。覆盖邻域及 `Hₚ` 可随点变化，最终 `ε` 不随点变化。
 
 本批的完整任意点精确应用和点变换公式已通过编译，完整应用的具名公理闭包仅含 `propext, Classical.choice, Quot.sound`。这些绑定应用仅作临时精确证据，本批追加数学说明，不新增绑定 Lean 库声明、Describe、登记或冻结。实际双曲流形的原度量商覆盖及同一 `ρ` 的完整评价桥仍待构造；薄部分类、有限尖点、紧核心、全局边界控制以及完整 Mostow–Prasad 刚性仍未完成，保留两侧原度量、同一个给定同伦等价 `h` 及完整诱导同构 `d`、独立流形宇宙、非紧有限体积尖点和非可定向情形。
+
+
+## TauCeti 的完整甲板群入口与钉版差异
+
+对 TauCeti 固定修订 `f610f8c59f917604dd7eec0960479700e3a4edb5` 的源码审查找到以下复用入口；本节报告源码中的声明和依赖，不报告在本仓编译通过或公理闭包核验。
+
+- [Deck/Quotient/ActingGroup.lean](https://github.com/TauCetiProject/TauCeti/blob/f610f8c59f917604dd7eec0960479700e3a4edb5/TauCeti/AlgebraicTopology/UniversalCover/Deck/Quotient/ActingGroup.lean) 的 `TauCeti.Deck.IsQuotientCoveringMap.deckMulEquiv` 接受 `IsQuotientCoveringMap f G`、楼上 `PreconnectedSpace E` 和 `Nonempty E`，声明 `G ≃* deck f`；其逐点评价及逆评价引理连接原作用与完整甲板变换。`toDeckHom_surjective` 在非空分支用同一纤维中的作用元素和覆盖提升唯一性识别任意甲板变换，空空间分支则直接处理。
+- [Deck/Quotient/Covering.lean](https://github.com/TauCetiProject/TauCeti/blob/f610f8c59f917604dd7eec0960479700e3a4edb5/TauCeti/AlgebraicTopology/UniversalCover/Deck/Quotient/Covering.lean) 的 `TauCeti.Deck.IsRegular.isQuotientCoveringMap` 接受楼上预连通性、`IsRegular p` 和 `IsCoveringMap p`，声明同一个 `p` 是完整 `deck p` 作用的商覆盖；同文件也有任意作用群的商覆盖到正规甲板作用的方向。它没有从任意覆盖自动取得正规性。
+- [Hyperbolic/Mostow.lean](https://github.com/TauCetiProject/TauCeti/blob/f610f8c59f917604dd7eec0960479700e3a4edb5/TauCeti/Geometry/Manifold/Riemannian/Hyperbolic/Mostow.lean) 的 `IsMostowRigid` 定义针对同一个紧致、连通、无边界流形上维数至少三的两套双曲度量；`isMostowRigid_of` 接受这条刚性结论本身，`IsMostowRigid.isometry` 从刚性假设取等距映射。该文件还定义并特化通用命题 `MostowRigidity`，没有无刚性前提的证明，也没有给定同伦等价的同伦及唯一性、非紧有限体积尖点条款。此审查只对该文件作此判断，不推断整个生态不存在证明。
+
+上游该修订的 [lean-toolchain](https://github.com/TauCetiProject/TauCeti/blob/f610f8c59f917604dd7eec0960479700e3a4edb5/lean-toolchain) 为 `leanprover/lean4:v4.35.0-rc3`，[lake-manifest.json](https://github.com/TauCetiProject/TauCeti/blob/f610f8c59f917604dd7eec0960479700e3a4edb5/lake-manifest.json) 的 mathlib 修订为 `6b7abb3c7686292736be2955bd3eb9ebf63b456a`。本仓当前钉版分别为 `v4.33.0` 和 `db584cd6d46c92f209a44c0f1c829460d327499d`。上游 [Deck/Basic.lean](https://github.com/TauCetiProject/TauCeti/blob/f610f8c59f917604dd7eec0960479700e3a4edb5/TauCeti/AlgebraicTopology/UniversalCover/Deck/Basic.lean) 依赖 `Mathlib.Topology.Covering.Deck`，本仓钉版缺此模块；因此这些入口不能直接作为当前依赖导入。按 A17.2，只能评估满足逐声明准入、版权与完整许可证、依赖适配、标准公理闭包及本仓钉版退役条件的移植，或保留为研究入口；本批没有移植、升级依赖或重证。
+
+这为上一节仍缺少的完整甲板群商覆盖与每元素每点评价提供了具名候选。对原 H³ 的标准自由且适当不连续等距作用商，仍需在本仓核验楼上预连通性、完整甲板群的身份及作用对应、完整商覆盖字段，以及与同一个原等距表示的连接，再实际应用统一半径；源码命中不结算这些义务。对一般原始流形的覆盖与原度量保持、薄部和有限尖点分类、紧核心及完整 Mostow–Prasad 目标也仍未完成，范围继续包含两侧原度量、同一个给定 `h` 与完整 `d`、独立宇宙、非紧尖点及非可定向情形。
