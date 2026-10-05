@@ -1,6 +1,6 @@
 # Operation-compatible naming on a finite common state space
 
-`compatible_quotient.py` computes the least equivalence containing specified
+[compatible_quotient.py](../../../experiments/naming-compatibility/compatible_quotient.py) computes the least equivalence containing specified
 permutation identifications and preserved by specified unary operations. This
 is classical generated congruence, used to test whether naming, operations and
 a target can coexist. Mathematical context and the signed Fibonacci application
@@ -9,9 +9,9 @@ are in [Naming Relations and Stability, §§9–12](../../develop/theory/NAMING_
 Run from the repository root with Python 3.9 or newer; no third-party packages:
 
 ```sh
-python3 docs/reports/naming-compatibility/compatible_quotient.py > /tmp/naming-result.json
+python3 experiments/naming-compatibility/compatible_quotient.py > /tmp/naming-result.json
 cmp /tmp/naming-result.json docs/reports/naming-compatibility/result.json
-python3 docs/reports/naming-compatibility/compatible_quotient.py --input /path/to/model.json
+python3 experiments/naming-compatibility/compatible_quotient.py --input /path/to/model.json
 ```
 
 A model has a positive number of states, indexed from zero, permutations called
