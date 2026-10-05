@@ -85,26 +85,26 @@ internal sealed class InvolutionOrbitSplitDocument : IScribeDocumentDefinition
     private static Formula Orbit(Formula x) => Call("RotationOrbit", R(), x);
     private static Formula C(Formula x) => Call("Component", S(), T(), x);
     private static Formula Same(Formula x, Formula y) => Call("SameCycle", R(), x, y);
-    private static Formula Header(Formula body, bool free = false) =>
+    private static Formula ForInvolutions(Formula body, bool free = false) =>
         Disp(All("X", F.Id("Type"), All("s", Call("Perm", X()),
             All("t", Call("Perm", X()), Imp(And(Inv(S()), Inv(T())),
                 free ? Imp(And(Free(S()), Free(T())), body) : body)))));
 
-    private static Formula ReflectionFormula() => Header(Iff(And(Free(S()), Free(T())),
+    private static Formula ReflectionFormula() => ForInvolutions(Iff(And(Free(S()), Free(T())),
         All("k", F.Id("Int"), All("x", X(), NotEqual(
             App(Multiply(Pow(R(), F.Id("k")), S()), F.Id("x")), F.Id("x"))))));
 
-    private static Formula SeparationFormula() => Header(Iff(And(Free(S()), Free(T())),
+    private static Formula SeparationFormula() => ForInvolutions(Iff(And(Free(S()), Free(T())),
         All("x", X(), new Formula.Not(Same(F.Id("x"), App(S(), F.Id("x")))))));
 
-    private static Formula ReachabilityFormula() => Header(All("x", X(), All("y", X(),
+    private static Formula ReachabilityFormula() => ForInvolutions(All("x", X(), All("y", X(),
         Iff(Call("Connected", S(), T(), F.Id("x"), F.Id("y")),
             Or(Same(F.Id("x"), F.Id("y")), Same(App(S(), F.Id("x")), F.Id("y")))))));
 
     private static Formula SplitFormula()
     {
         var x = F.Id("x"); var a = Orbit(x); var b = Orbit(App(S(), x));
-        return Header(All("x", X(),
+        return ForInvolutions(All("x", X(),
             And(Call("Disjoint", a, b), And(Call("Nonempty", a),
                 And(Call("Nonempty", b), And(Equal(C(x), Call("Union", a, b)),
                     And(Equal(Call("Image", S(), a), b), Equal(Call("Image", T(), a), b))))))), true);
@@ -113,7 +113,7 @@ internal sealed class InvolutionOrbitSplitDocument : IScribeDocumentDefinition
     private static Formula ClassesFormula()
     {
         var x = F.Id("x"); var a = Orbit(x); var b = Orbit(App(S(), x));
-        return Header(All("x", X(),
+        return ForInvolutions(All("x", X(),
             And(Equal(Call("OrbitClasses", R(), C(x)), Call("PairSet", a, b)),
                 NotEqual(a, b))), true);
     }
