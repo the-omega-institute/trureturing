@@ -991,3 +991,10 @@ The local finite-input certificate does not assume a global square-root
 bound for the actual FIB error. Actual centered cancellation, signed
 Robin tails, common cofinal signs, RH and new Lean certification remain
 unresolved.
+
+[The neutral-response probe](neutral-response.md) reads the published
+inverse prefix and tests the centered-response interface in FIB §389.
+Two exact moment constraints and bounded adjacent increments do not
+supply a uniform square-root transmission bound for the general input
+class. The probe inputs are not the actual FIB error; its arithmetic
+correlations and the signed Robin budget still require estimates.
