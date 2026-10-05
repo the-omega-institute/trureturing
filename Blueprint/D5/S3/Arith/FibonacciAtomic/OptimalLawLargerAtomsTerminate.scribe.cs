@@ -30,9 +30,41 @@ internal sealed class OptimalLawLargerAtomsTerminateDocument : IScribeDocumentDe
                 new Formula.Fraction(n, new Formula.Power(D(2), d)))))));
         var statement = All(m, Ty("N"), All(p, Seq(indices, Sp, To, Sp, Ty("R")),
             Imp(hypotheses, conclusion)));
+        var count = F.Id("n"); var subset = F.Id("I"); var q = F.Id("q");
+        var enumFn = F.Id("e"); var delta = F.Id("delta"); var P = F.Id("P");
+        var h = F.Id("h"); var depth = F.Id("d");
+        Formula Pow(Formula x) => new Formula.Power(D(2), x);
+        Formula Floor(Formula x) => Seq(Lfloor, x, Rfloor);
+        Formula Times(Formula x, Formula y) => Seq(x, Sp, Cdot, Sp, y);
+        Formula SumLaw(string law, Formula labels) =>
+            Seq(new Formula.Subscript(F.Sum, Seq(i, Sp, InMacro, Sp, labels)), Call(law, i));
+        var shallow = All(h, Ty("N"), Imp(Seq(h, Sp, Lt, Sp, depth), Equal(
+            Floor(Times(Pow(h), Seq(Open, Call("p", j), Sp, Minus, Sp,
+                new Formula.Fraction(D(1), Pow(depth)), Close))),
+            Floor(Times(Pow(h), Call("p", j))))));
+        var transferHyp = And(Equal(SumLaw("p", indices), D(1)),
+            All(i, Call("Fin", count), Seq(D(0), Sp, Le, Sp, Call("q", i))),
+            Equal(SumLaw("q", Call("Fin", count)), D(1)),
+            Seq(Neg, Open, j, Sp, InMacro, Sp, subset, Close), shallow);
+        var transferConclusion = And(Equal(SumLaw("P", indices), D(1)),
+            Seq(Call("cost", P), Sp, Le, Sp, Call("cost", p), Sp, Plus, Sp,
+                Times(new Formula.Fraction(D(1), Pow(depth)), Call("cost", q))));
+        var transferStatement = All(m, Ty("N"), All(count, Ty("N"),
+            All(p, Seq(indices, Sp, To, Sp, Ty("R")),
+            All(subset, Call("Finset", indices),
+            All(enumFn, Call("Equiv", subset, Call("Fin", count)),
+            All(q, Seq(Call("Fin", count), Sp, To, Sp, Ty("R")),
+            All(j, indices, All(depth, Ty("N"), Imp(transferHyp, transferConclusion)))))))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "Every atom above the minimum in an optimal real probability law is a terminating binary rational.",
             H("Terminating Larger Atoms of Optimal Laws"), Blocks(
+                Describe.Lean(DescribeId.Create("transfer"),
+                    DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLawLargerAtomsTerminate.transfer"),
+                    H("Dyadic mass transfer bound"), StatementSource.FromAuthor(Disp(transferStatement)),
+                    AssessedProvenance.FromRepo(), Blocks(
+                        Paragraph(Text("Here I is a finite subset of the m labels, e is a bijection from I to Fin(n), and the donor j lies outside I. Extend q by zero outside I: R(i)=q(e(i)) on I and R(i)=0 elsewhere. With delta=2^(-d), set P(i)=p(i)+delta*R(i)-delta*1(i=j). The law p has total mass one; q is nonnegative and has total mass one. No positivity condition on p is needed for this algebraic floor-tail inequality.")),
+                        Paragraph(Text("Assume that subtracting delta from the donor leaves every floor count at depths h<d unchanged. Receiver floor counts can only increase at those depths. At depths d+h, the donor loses the integral count 2^h, and the receivers gain at least the floor counts of q. Both normalized floor-tail series converge, since the sum of fractional parts is nonnegative and bounded by the number of labels. Splitting at d and summing the tail bounds proves cost(P) <= cost(p)+delta*cost(q), while conservation of transferred mass proves normalization."))),
+                    DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("result"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLawLargerAtomsTerminate.result"),
                     H("Larger atoms terminate"), StatementSource.FromAuthor(Disp(statement)),
