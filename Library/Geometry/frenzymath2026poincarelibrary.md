@@ -5468,4 +5468,15 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 
 四个具名目标经缓存保护入口第三轮真实编译成功，host `55246` exit0，零错误、零警告，无 `sorryAx`，各具名公理闭包仅含 `propext, Classical.choice, Quot.sound`。两轮完整失败源和日志整体保留排除：首轮六处高度分母、复数投影名称及平方化简错误与四项未使用 simp 参数，第二轮两处公共原高度分母消去错误；均按实际诊断修复，没有关闭 linter 或接纳失败批的局部成功。协作方实施、调用方只读复核同一原矩阵的行列关系、实际范数正根和原满射构造，没有新增 SSHX 共识。源码 `.lake/mostow-h3-infinity-horizontal.lean` 的 SHA256 为 `b15a0078aeb0121122e2ddf830d22cb0d6aec39278928af42ab5d11bc1c57efc`，142264 字节，相邻收据记录真实终态。已成功高度源码的完整字节前缀保留，imports、版本及构建闭包未改。
 
-后续先库后证已定位钉版 `Complex.linear_isometry_complex` 和 `IsometryEquiv.toRealLinearIsometryEquiv`／`toRealAffineIsometryEquiv`；对应 olean 均实际在位。它们可消费本批真实单位缩放平面等距双射，不需重证旋转／反射分类或仿射化。本批没有新增这些 import 或声称已经得到群表示、平移核及指数界。该原模型与配对、坐标、范数及双射接口的消费按 §3.2 判 `proof_shape: bind-only`、`admission_basis: none`；精确 Lean 保持本地临时证据，远端 required CI 仅验证本 Library 说明，不新增绑定 Lean 库声明、Describe、登记或冻结，不改预算、工具或判官。原单位自由作用的平移核、非单位共同中心与轴、薄部尖点和轴管、有限尖点与紧核心、一般原流形原度量覆盖及完整 Mostow–Prasad 继续未完成；两侧原度量、同一个给定 `h` 与完整 `d`、独立宇宙、非紧有限体积尖点及非可定向范围继续保留。
+后续先库后证已定位钉版根命名空间的 `linear_isometry_complex` 和 `IsometryEquiv.toRealLinearIsometryEquiv`／`toRealAffineIsometryEquiv`；对应 olean 均实际在位。它们可消费本批真实单位缩放平面等距双射，不需重证旋转／反射分类或仿射化。本批没有新增这些 import 或声称已经得到群表示、平移核及指数界。该原模型与配对、坐标、范数及双射接口的消费按 §3.2 判 `proof_shape: bind-only`、`admission_basis: none`；精确 Lean 保持本地临时证据，远端 required CI 仅验证本 Library 说明，不新增绑定 Lean 库声明、Describe、登记或冻结，不改预算、工具或判官。原单位自由作用的平移核、非单位共同中心与轴、薄部尖点和轴管、有限尖点与紧核心、一般原流形原度量覆盖及完整 Mostow–Prasad 继续未完成；两侧原度量、同一个给定 `h` 与完整 `d`、独立宇宙、非紧有限体积尖点及非可定向范围继续保留。
+
+
+### 原单位缩放自由群的正规有限指数平移核
+
+对任意宇宙的原群 `G`、同一个原表示 `ρ : G →* (H3 ≃ᵢ H3)`，假设原作用逐点自由，且每个原 `ρ(g)` 固定实际无穷远点 `nullFramePoint 3`、满足 `infinityScale (ρ(g)) = 1`。实际构造子群 `H ≤ G`，证明 `H.Normal`、`H.FiniteIndex`、`H.index ≤ 2`，并构造同一个偏移函数 `u : H → ℂ`，使全部 `h : H` 满足原等距映射等式 `ρ(h) = horizontalTranslation (u(h))`。有限指数性质独立证明，排除无限指数在自然数索引中记为零所造成的漏洞；没有可定向假设。
+
+构造消费上述全部原点水平评价与原高度律，得到同一作用的真实平面群表示 `r : G →* (ℂ ≃ᵢ ℂ)`；平面固定点在原高度一的点上提升为原固定点，因此消费同一个原自由性。钉版 Mazur–Ulam 接口给出真实线性表示 `Q(g)(z) = r(g)(z) − r(g)(0)`。钉版根命名空间的 `linear_isometry_complex` 分类同一个 `Q(g)`；非单位旋转的实际仿射中心 `r(g)(0)/(1−a)` 被原自由性排除。两个反射的积是旋转，因此全部非单位线性像相同；通过实际单射 `Q.range → Bool` 得到有限线性像和基数至多二。取 `H = Q.ker`，消费现有 `Subgroup.finiteIndex_ker` 与 `Subgroup.index_ker` 得到所需正规性、真正有限指数及指数界。核中原水平评价与原高度律最后恢复原 `horizontalTranslation` 的全部点评价，进而得到原等距映射等式。
+
+四个具名目标的精确临时 Lean 已真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-unit-infinity-translation-kernel.lean` 为 151347 字节，SHA256 `ce1701e3e0a94e240276227372957deab8a9f8b50fa10acd40f2e7b978a667b8`。复用两个已有热缓存钉版 import：`Mathlib.Analysis.Normed.Affine.MazurUlam`、`Mathlib.Analysis.Complex.Isometry`；前述成功水平源码的完整 142264 字节连续块位于这两个 import 后的偏移 89，逐字保持。没有新增依赖闭包构建或版本变更。
+
+该现有原模型及钉版分类接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据；远端 required CI 验证说明，尚无新增绑定 Lean 声明或完整官方验收。上述结果要求全部群元素单位缩放，未证明一般小位移群满足此条件。非单位共同中心与轴、离散平移群与实际尖点、有限体积薄部分解、原流形覆盖及同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 仍未完成。
