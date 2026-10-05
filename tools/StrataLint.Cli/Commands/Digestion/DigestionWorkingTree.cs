@@ -15,9 +15,10 @@ internal static class DigestionWorkingTree
     internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) Read(
         IRepositoryGateway repository,
         Func<RawRepositorySnapshot, RepositorySnapshot> decode,
-        Func<RepositorySnapshot, BackfillInventoryDocument> load)
+        Func<RepositorySnapshot, BackfillInventoryDocument> load,
+        params string[] additional)
     {
-        var scopedRaw = repository.ReadCurrent(Scope);
+        var scopedRaw = repository.ReadCurrent([.. Scope, .. additional]);
         var scoped = decode(scopedRaw);
         var document = load(scoped);
         var declared = DeclaredPaths(document).Concat(RegisteredBuildInputs(scoped))

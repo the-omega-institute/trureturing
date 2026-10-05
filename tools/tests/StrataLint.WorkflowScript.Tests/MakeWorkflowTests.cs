@@ -197,7 +197,7 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain(" address --repository ", script, StringComparison.Ordinal);
         Assert.DoesNotContain("git -C \"$ROOT\" archive", script, StringComparison.Ordinal);
         Assert.DoesNotContain("report_input_state", script, StringComparison.Ordinal);
-        Assert.Contains("ingest_args=(ingest --base \"$BASE\")", script, StringComparison.Ordinal);
+        Assert.Contains("ingest_args=(ingest)", script, StringComparison.Ordinal);
         Assert.Contains("align-digestion-status)", script, StringComparison.Ordinal);
         Assert.Contains(
             "--role digestion-alignment-consumer --report \"$REPORT\"",
@@ -283,9 +283,9 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
-    [InlineData("", "ingest --base HEAD")]
-    [InlineData("alpha beta", "ingest --base HEAD --source alpha --source beta")]
-    public void IngestWrapperForwardsBaseAndSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
+    [InlineData("", "ingest")]
+    [InlineData("alpha beta", "ingest --source alpha --source beta")]
+    public void IngestWrapperForwardsSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
     {
         if (OperatingSystem.IsWindows()) return;
 
