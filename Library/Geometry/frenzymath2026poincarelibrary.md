@@ -5784,3 +5784,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 已核验的原等距内蕴保距与原竖直曲线内蕴距离公式，将任意原两点的实际所选度量距离识别为 `ENNReal.ofReal (dist p q)`，从而得到上述全局等式。局部显式安装同一实际 `nativeRiemannianMetric` 的 `Bundle.RiemannianBundle` 后，原 H3 满足实际 `IsRiemannianManifold (𝓡 3) H3`；没有将默认欧氏切向范数当作此黎曼范数。
 
 上述原点固定等距、原两点竖直规范化、全局距离等式及原黎曼流形兼容已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用原 Lorentz 反射／正时间重建、原距离核、已核验的实际内蕴保距和竖直长度接口；逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。实际曲率 −1、一般原流形覆盖及有限体积绑定、非紧尖点和完整给定 `h,d` 的 Mostow–Prasad 及官方验收仍未完成。
+
+
+### 原 H3 的平坦切丛度量、实际联络存在性与对数高度梯度
+
+在同一原 H3 拓扑及实际欧氏三维单图册上，`nativeFlatRiemannianMetric` 是实际全局 C∞ 黎曼度量，其两切向量内积为原图册模型的欧氏内积。正定性、切向单位球有界性及切丛截面的光滑性均已内部证明。原 `FiberBundle.extend` 在此实际单图册上恰为常值切向场；其真实总空间截面可微性由公开扩张接口给出。
+
+固定上游版本 `432c38f2aa5a30efb13871292d17b4a3309a496a` 的一般 Levi–Civita 存在定理，实际应用于同一原 H3 的上述平坦度量及原高度负二次幂度量，分别给出真正兼容、无挠联络数据的存在性。所需原流形图册、全局光滑度量、Hausdorff 性与第二可数性来自已有原对象构造，未提供额外联络存在前提。LC／梯度依赖闭包含 13 个原源码模块及一个只将未使用参数 `D` 重命名为 `_D` 的梯度兼容模块；该兼容改动保留声明、类型和数学定义，不关闭检查。
+
+对于任意上述实际平坦 Levi–Civita 数据 `D`，原 `nativeLogHeight` 的实际 `D.gradient` 等于原高度倒数乘以高度投影的欧氏对偶单位向量。该向量的实际自内积为 1，故平坦度量下真实梯度范数平方精确为原高度平方的倒数；梯度识别直接由公开 `inner_gradient`、已核验的原对数高度实际微分及对偶向量内积公式推出。原高度倒数的实际微分以及 `exp(±2*logheight)` 的精确原高度公式也已核验。
+
+上述原对象构造与消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。常值切向场的实际协变导数为零、平坦曲率与真正 Hessian、原高度缩放度量的曲率 −1 仍待闭合；一般原流形的通用度量覆盖及有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 和官方验收仍未完成。
