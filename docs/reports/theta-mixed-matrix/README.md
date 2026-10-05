@@ -228,8 +228,12 @@ correction maps from those saved actions and reuses the ground moments
 to control both complementary ground tails. Under the same paper premises
 it gives a whole-form ground-orthogonal gap greater than $0.00186736$
 at $c=0.45$. At $c=0.46$ the finite restriction passes, while the
-requested joint gap $1/1000$ fails its sufficient comparison. Neither
-result closes the cofinal, RH, full Robin or Lean obligations.
+requested joint gap $1/1000$ fails its sufficient comparison. Reusing
+the same positive blocks with the existing three-block norm lift gives
+a smaller whole-form gap greater than $1/2000$ and the conditional
+original bound $D\ge0.4605\operatorname{Var}_\nu$, without new actions
+or another numerical target. These fixed-band results retain the
+cofinal, RH, full Robin and Lean obligations.
 
 The [fixed-test and centered-window interface](centered-window.md)
 distinguishes the relative scalar conversion from a sufficient absolute
