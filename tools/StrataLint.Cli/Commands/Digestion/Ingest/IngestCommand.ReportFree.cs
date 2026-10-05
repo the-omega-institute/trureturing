@@ -25,15 +25,16 @@ internal static partial class IngestCommand
         try
         {
             var options = ParseReportFreeArguments(arguments);
-            var inputs = ReadInputs(
+            // Undeclared theory documents are registered from the theory directory itself.
+            var (currentRaw, current, document) = DigestionWorkingTree.Read(
                 repository,
-                options.BaselineRevision,
-                requireBaselineSourceMetadata: true);
-            var (sourceIds, registrationPaths) = ResolveSources(inputs, options.Sources);
+                Decode,
+                static snapshot => LoadDocument(snapshot),
+                DigestionOpaquePathPolicy.TheoryRootPath.TrimEnd('/'));
+            var (sourceIds, registrationPaths) = ResolveSources(document, current, options.Sources);
             var plan = ReportFreeDigestionIngestor.Plan(
-                inputs.CurrentDocument,
-                inputs.Current,
-                inputs.BaselineDocument,
+                document,
+                current,
                 sourceIds,
                 registrationPaths,
                 dependencies.AtomizerResolver,
@@ -47,14 +48,14 @@ internal static partial class IngestCommand
 
             var finalRaw = AddCasObjects(
                 AppendLedger(
-                    inputs.CurrentRaw,
-                    inputs.CurrentDocument,
+                    currentRaw,
+                    document,
                     plan),
                 plan.CasObjects);
             return WriteReportFreeResult(
                 repositoryRoot,
-                inputs.CurrentRaw,
-                inputs.CurrentDocument,
+                currentRaw,
+                document,
                 finalRaw,
                 plan,
                 sourceIds,
@@ -147,22 +148,17 @@ internal static partial class IngestCommand
             .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item.Token, StringComparer.Ordinal)
             .ToImmutableArray();
-        // The stage barrier runs after validation, outside the commit lock, so a peer can finish here.
         dependencies.BeforeCommit?.Invoke();
-        ImmutableArray<string> createdCasPaths;
-        using (AcquireReportFreeCommitLock(repositoryRoot))
+        RequireUnclaimedAtomIds(repositoryRoot, plan.AddedAtomIds);
+        var createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
+        try
         {
-            RequireUnclaimedAtomIds(repositoryRoot, plan.AddedAtomIds);
-            createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
-            try
-            {
-                ApplyLedgerAdditionsAtomically(repositoryRoot, ledgerUpdates, dependencies.CommitLedgerFile);
-            }
-            catch (Exception exception) when (exception is not OutOfMemoryException)
-            {
-                RollbackCasObjects(createdCasPaths, exception);
-                throw;
-            }
+            ApplyLedgerAdditionsAtomically(repositoryRoot, ledgerUpdates, dependencies.CommitLedgerFile);
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            RollbackCasObjects(createdCasPaths, exception);
+            throw;
         }
 
         return new CommandResult(
@@ -190,30 +186,21 @@ internal static partial class IngestCommand
 
     private static ReportFreeOptions ParseReportFreeArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count >= 2
-            && arguments[0] == "--base"
-            && !string.IsNullOrWhiteSpace(arguments[1]))
+        var sources = ImmutableArray.CreateBuilder<string>();
+        for (var index = 0; index < arguments.Count; index += 2)
         {
-            var sources = ImmutableArray.CreateBuilder<string>();
-            for (var index = 2; index < arguments.Count; index += 2)
-            {
-                if (arguments[index] != "--source")
-                    throw SourceUsage($"unexpected argument '{arguments[index]}'");
-                if (index + 1 == arguments.Count)
-                    throw SourceUsage("--source missing value");
-                if (string.IsNullOrWhiteSpace(arguments[index + 1]))
-                    throw SourceUsage($"invalid --source selector '{arguments[index + 1]}'");
-                sources.Add(arguments[index + 1]);
-            }
-            return new ReportFreeOptions(arguments[1], sources.ToImmutable());
+            if (arguments[index] != "--source")
+                throw SourceUsage($"unexpected argument '{arguments[index]}'");
+            if (index + 1 == arguments.Count)
+                throw SourceUsage("--source missing value");
+            if (string.IsNullOrWhiteSpace(arguments[index + 1]))
+                throw SourceUsage($"invalid --source selector '{arguments[index + 1]}'");
+            sources.Add(arguments[index + 1]);
         }
-
-        throw SourceUsage("invalid arguments");
+        return new ReportFreeOptions(sources.ToImmutable());
     }
 
-    private sealed record ReportFreeOptions(
-        string BaselineRevision,
-        ImmutableArray<string> Sources);
+    private sealed record ReportFreeOptions(ImmutableArray<string> Sources);
 
     private sealed record IngestInputs(
         RawRepositorySnapshot CurrentRaw,

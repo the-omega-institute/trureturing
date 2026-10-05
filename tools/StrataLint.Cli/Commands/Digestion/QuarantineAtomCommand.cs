@@ -54,9 +54,7 @@ internal static class QuarantineAtomCommand
                 ? null
                 : LoadRequest(repositoryRoot, options.RequestPath, readRequest);
             var atomId = request?.AtomId ?? options.ClearAtomId!;
-            var currentRaw = repository.ReadCurrent();
-            var current = Decode(currentRaw);
-            var document = BackfillInventoryLoader.Load(current);
+            var (currentRaw, current, document) = DigestionWorkingTree.Read(repository, Decode, BackfillInventoryLoader.Load);
             var target = LocateTarget(document, atomId);
             RequireWritable(target);
             var path = LocateShard(currentRaw, target);

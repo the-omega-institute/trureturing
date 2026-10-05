@@ -27,9 +27,7 @@ internal sealed partial class ProductionCliEnvironment
             repository,
             leanReportSource,
             scribeEmissionVerifier,
-            arguments,
-            atomHistorySource,
-            timeProvider);
+            arguments);
 
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         ShowAtomCommand.Run(repository, arguments);
@@ -48,9 +46,7 @@ internal sealed partial class ProductionCliEnvironment
                 repository,
                 leanReportSource,
                 scribeEmissionVerifier,
-                arguments,
-                atomHistorySource,
-                timeProvider);
+                arguments);
 
     public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
         GateAuthorityCommand.Run(repositoryRoot, arguments);
