@@ -36,9 +36,11 @@ from the earlier outcomes.
 
 The paper characterizes perfect non-adaptive strategies and exhibits a
 connected five-qubit code with none, while an adaptive strategy exists for it.
-Perfect adaptive strategies reach the upper bound $1-(1-P_B)^n$ on the success
-probability of a logical Bell measurement (Reiß and van Loock,
-arXiv:2601.08820, Theorem 1).
+If the physical fusions succeed independently, each with probability $P_B$, a
+perfect adaptive strategy succeeds whenever at least one of the $n$ fusions
+does, that is with probability $1-(1-P_B)^n$, the upper bound of Reiß and van
+Loock (arXiv:2601.08820, Theorem 1). This probability statement is not
+formalized here; the Lean result is the outcome-wise implication.
 `D5/S3/Quantum/Measurements/ConnectedProgenitorPerfectAdaptiveFusion.result`
 proves the conjecture.
 
@@ -108,6 +110,12 @@ in issue #13256 before any Lean. `theorem`; resolution `proved`. The public
 theorem has `proof_shape: content`; its escape witness is the parity
 recursion along the chordless geodesic. Admission basis
 `open-problem-resolution`; utility `none`.
+
+Scope: the formal statement quantifies over graph codes given by a progenitor
+graph (a finite simple graph with an encoding vertex incident to an edge). The
+paper's reduction of an arbitrary $[[n,1,d]]$ stabilizer code to a graph code
+up to local Cliffords and relabeling of logical operators (Section 4) is not
+formalized here.
 
 What the proof shows beyond the conjecture:
 
