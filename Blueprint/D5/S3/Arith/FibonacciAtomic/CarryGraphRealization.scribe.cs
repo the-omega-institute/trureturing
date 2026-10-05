@@ -119,9 +119,9 @@ internal sealed class CarryGraphRealizationDocument : IScribeDocumentDefinition
                 Equal(Call("fairTape", returned), Call("ofReal", P(i))))),
             All(d, n, And(Call("MeasurableSet", tail), Equal(Call("fairTape", tail),
                 Call("ofReal", new Formula.Fraction(Call("r", Call("state", g, d)),
-                    new Formula.Superscript(D(2), d)))))),
-            Seq(new Formula.Superscript(Forall, Call("ae", V("fairTape"))), Sp,
-                t, Colon, Sp, V("Tape"), Comma, Sp, Ex(i, indices, Ex(k, n, Returned(k)))),
+                    new Formula.Power(D(2), d)))))),
+            Par(Seq(new Formula.Power(Forall, Call("ae", V("fairTape"))), Sp,
+                t, Colon, Sp, V("Tape"), Comma, Sp, Ex(i, indices, Ex(k, n, Returned(k))))),
             Equal(Call("lintegral", V("fairTape"), Call("bill", m, g)), Call("ofReal", cost)),
             Seq(cost, Sp, Le, Sp, m), Seq(Call("cost", Par(Seq(i, Colon, Sp, indices, Sp, Mapsto, Sp, P(i)))), Sp, Le, Sp, cost));
         return All(m, n, Imp(Seq(D(2), Sp, Le, Sp, m), All(g, V("Path"),
