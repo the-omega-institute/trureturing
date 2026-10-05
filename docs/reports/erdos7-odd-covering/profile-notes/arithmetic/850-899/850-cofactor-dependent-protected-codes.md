@@ -3355,6 +3355,102 @@ No new retained declaration, freeze or coverage record is introduced.
 The remaining five-word case at 23 and unrestricted Erdős #7 remain
 unresolved.
 
+### A squared 17 also needs four or five private ternary words
+
+Keep the original globally count-then-modulus-sum-minimal distinct
+odd nonunit whole cover F, actual pure moduli 3 and 9, original
+ternary heights at most two, and the factorization, positive W
+and coprimality assumptions of CD87. At $q=17$, an actual original
+of q-height at least two implies an actual pure $q^2$ original h
+with
+
+$$
+\boxed{|\Lambda_h|\in\{4,5\}.}
+\tag{CD110}
+$$
+
+The two-terminal capacity bound leaves only sizes three, four and
+five. To exclude three, let U be the actual unit-cofactor digit
+set, of size at most three, and let
+
+$$
+P=\{d\notin U:n_d>0\}.
+\tag{CD111}
+$$
+
+The pure original h has second digit $\alpha\in U$. No Changed
+top original can have that digit: it would be contained in h.
+Consequently $n_\alpha=0$. The component support bound gives at
+least three top-positive digits, and removing U removes at most
+two of them. Thus $|P|\ge1$.
+
+If $|P|\ge4$, choose five disjoint safe pairs, at least four with a
+top-positive a-digit and any remaining pairs with both top sets
+empty. The general parent matching assigns these pairs good
+parents outside one reserved private word. The four-pure-output
+code fits because
+
+$$
+9\cdot3\le17+5+5.
+\tag{CD112}
+$$
+
+At least four units of pair gain remain. Retaining three omitted
+top owners for the pure outputs still gives a strict reduction
+in the number of classes.
+
+If $1\le|P|\le3$, choose seven disjoint safe pairs. Every positive
+a-digit belongs to a distinguished set G of at most three pairs;
+the other pairs have two empty top sets. Reserve only two
+modulo-27 parents for the pure outputs 27 and $27q$. Seven parents
+remain. A pair in G forbids at most one private word, so even
+after these reservations it has at least four available parents.
+Every other pair allows all seven parents. Hall's condition holds:
+a subset of at most four requests fits the menu of one request,
+and a subset of five or more includes a request with the full
+seven-parent menu.
+
+Each of the seven parents is then collapsed to its own b-digit.
+The two-pure code fits exactly:
+
+$$
+9\cdot3=17+3+7.
+\tag{CD113}
+$$
+
+The pair gain is at least one. Retaining one omitted owner for
+the second pure output gives a replacement with no more classes
+than F. This branch needs the modulus-sum part of minimality.
+Use unit backup labels 81 and $81q$. For nonunit cofactor m, the
+ordinary outputs in rows zero, one and two have moduli $27m$,
+$27qm$ and $81m$. A duplicated b-top receives $81m$ and $81qm$
+together. At $q=17$ the comparisons are
+
+$$
+27<289,\qquad459<867,\qquad81<2601,\qquad
+81(1+17)=1458<2601.
+\tag{CD114}
+$$
+
+The pure output replacing h is smaller than $q^2$; the second
+pure output is smaller than its retained top donor. Unit backups
+are smaller than their original row-one and row-two moduli.
+Numerical label signatures keep every replacement label distinct,
+and the source construction retains each actual cofactor phase.
+All retained unchanged originals keep their old moduli. Thus the
+whole replacement has strictly smaller modulus sum. If its class
+count drops, count minimality is contradicted; otherwise its
+smaller sum contradicts the second stage of global minimality.
+This excludes size three in both cases.
+
+A complete scoped transient Lean application checks CD110 from
+the original family assumptions and an actual deep original. Its
+138 axiom reports use only `propext`, `Classical.choice` and
+`Quot.sound`, with no errors or `sorryAx`. No new retained
+declaration, freeze or coverage record is introduced. The
+four- and five-word cases at 17, the entire ternary-height-two
+branch and unrestricted Erdős #7 remain unresolved.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
