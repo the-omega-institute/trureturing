@@ -701,3 +701,121 @@ Favard constant. This is an application of published approximation
 and variance inequalities, not a new generic core theorem or a numerical
 rank certificate. Original matrix positivity and cofinal control remain
 unproved, so it supplies no RH or Robin conclusion.
+
+## The sharp pointwise gradient route fails on the original core
+
+This is a conditional paper check of a sufficient semigroup mechanism,
+using the same minimal even form, original measure and all prime powers.
+It reuses the Markov semigroup's invariance, the
+[existing critical eigenvector](lagarias2004li.md#the-full-derivative-family-and-the-remaining-estimate)
+and the [original PNT rate argument](lenz2010compactness.md#exact-prime-diagonal-and-bounded-off-diagonal-operator). It supplies no new
+generic curvature theorem, numerical acquisition or Lean certification.
+
+Write $L=-T$, $P_t=e^{-tT}$, and for a real even form input define its
+jump energy density
+
+$$
+\mathcal G(h)(x)=\frac1{4\cosh(x/2)}\left[
+ \int\Phi(y)\psi_\Gamma(|x-y|)|h(y)-h(x)|^2dy
+ +\sum_{n\ge2}\frac{\Lambda(n)}{\sqrt n}
+ \sum_{\epsilon=\pm1}\Phi(x+\epsilon\log n)
+ |h(x+\epsilon\log n)-h(x)|^2\right]. \tag{SG1}
+$$
+
+The diagonal integral uses squared increments, not a finite total jump
+rate. Tonelli gives $\int\mathcal G(h)d\nu=D(h)$; in particular this
+nonnegative function lies in $L^1(\nu)$. The original minimal jump
+representation supplies its almost-everywhere value on the form domain.
+
+Consider the sharp pointwise semigroup estimate
+
+$$
+\mathcal G(P_t h)\le e^{-t}P_t\mathcal G(h)
+\quad\nu\text{-almost everywhere},\qquad t>0, \tag{SG2}
+$$
+
+for every real even compact smooth $h$. The semigroup on the right
+uses its invariant $L^1(\nu)$ extension. This is the explicit estimate
+being tested. It is a standard sufficient gradient route toward a
+one-half Poincare inequality; no diffusion chain rule is assumed and
+no equivalence to a curvature condition on an unspecified algebra is
+claimed for this jump operator.
+
+First transport (SG2) through the existing minimal closure. The actual
+increment representation and Cauchy--Schwarz give
+
+$$
+\|\mathcal G(f)-\mathcal G(g)\|_{L^1(\nu)}
+\le\sqrt{D(f-g)}\,[\sqrt{D(f)}+\sqrt{D(g)}]. \tag{SG3}
+$$
+
+The spectral semigroup contracts the form norm, and its invariant
+$L^1$ extension contracts the $L^1$ norm. Thus core approximation and the
+closed positive cone of $L^1$ extend (SG2) to every real even form input.
+These are standard continuity properties applied to the unchanged
+increment maps; (SG3) does not replace the original covariance.
+
+Use the already established $v=\Phi''/\Phi-1/4$, with
+$v\in D(T)$ and $Tv=v/2$. If (SG2) held, $P_t v=e^{-t/2}v$ would give
+
+$$
+\mathcal G(v)\le P_t\mathcal G(v). \tag{SG4}
+$$
+
+Invariance makes the two $L^1$ integrals equal, so (SG4) is equality
+almost everywhere. Every invariant nonnegative $g\in L^1(\nu)$ here
+is constant: Jensen applied to $g\wedge M$ and invariance make each
+bounded truncation invariant, and the spectral theorem puts it in
+$\ker T=\mathbb R1$. Taking $M\to\infty$ gives the assertion for $g$.
+This uses the known constant kernel of the same operator, rather than
+positivity on the unknown critical quotient. Consequently (SG2)
+would force $\mathcal G(v)$ to be constant.
+
+That conclusion fails in the actual prime geometry. Differentiating
+the normally convergent theta series twice and retaining its first term
+and differentiated tail gives
+
+$$
+v(x)\sim4\pi^2e^{4x}\qquad(x\to+\infty). \tag{SG5}
+$$
+
+This does not differentiate an asymptotic remainder. Choose a real even
+nonzero $0\le\zeta\le1$ in $C_c^\infty(-1,1)$ and put
+$M=\sup_{|y|\le1}|v(y)|$. The incoming compact-target rate is
+
+$$
+a_\zeta(x)=\frac1{2\cosh(x/2)}\sum_{n\ge2}
+ \frac{\Lambda(n)}{\sqrt n}\Phi(x-\log n)\zeta(x-\log n).
+$$
+
+The existing ordinary PNT rate argument applies to the same smooth
+compact weight $y^{-1/2}\Phi(\log y)\zeta(\log y)$, giving
+
+$$
+a_\zeta(x)\longrightarrow
+ A_\zeta:=\int_{\mathbb R}e^{r/2}\Phi(r)\zeta(r)dr>0. \tag{SG6}
+$$
+
+It retains every prime power; the target interval restricts only a
+nonnegative lower minorant. For all sufficiently large $x$, positivity
+of the other energy terms yields
+
+$$
+\mathcal G(v)(x)\ge\frac12a_\zeta(x)(|v(x)|-M)^2
+\longrightarrow\infty. \tag{SG7}
+$$
+
+The original density is strictly positive, so this is also a
+nonconstant almost-everywhere function. It contradicts the required
+constant energy density. Hence the all-input sharp estimate (SG2)
+cannot hold even when first requested only on the original compact core.
+The argument uses no prime truncation, fixed-zero-height hypothesis,
+finite matrix signs or RH assumption.
+
+This excludes that sufficient pointwise gradient route at rate
+$e^{-t}$. It excludes neither a weaker gradient estimate nor an
+integrated or directly estimated global half-bound. The [accepted conditional $0.41$ lower bound](../../docs/reports/theta-mixed-matrix/sharper-exterior.md)
+remains reusable, while positivity on
+the complete critical quotient, the one-half bound, Robin and RH
+remain unresolved. No precise smaller optimal curvature constant is
+asserted.

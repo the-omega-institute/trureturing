@@ -1,4 +1,4 @@
-# A target-dependent correction at c=0.45
+# A target-dependent correction at c=0.45 and c=0.46
 
 The [actual coupling comparison](actual-coupling.md) transports the
 base form with a fixed correction. A new correction chosen for a new
@@ -153,6 +153,66 @@ $$
 LDL pivots are not eigenvalues. This implication controls the whole
 ground-orthogonal form, rather than selected Galerkin vectors alone.
 
+### Reuse the positive blocks when a requested gap test fails
+
+The requested test at $\tau=1/1000$ is sufficient, not necessary for
+positivity. Once the finite restriction supplies $a>0$ and the same
+comparison has $\gamma_c,\delta_c>0$, (TC9) already gives the standard
+norm bound
+
+$$
+T_c[x]\ge
+\frac{\min\{a,\gamma_c,\delta_c\}}{\|M\|_F^2}\|x\|^2,
+\qquad x\perp v_0. \tag{TC11}
+$$
+
+Indeed, $\|x\|^2\le\|My\|^2\le\|M\|_F^2\|y\|^2$, while
+$y^*\mathcal D y\ge\min\{a,\gamma_c,\delta_c\}\|y\|^2$.
+This reuses the existing three-block lift and the ordinary Frobenius
+norm estimate; it is not a new lifting theorem or sign mechanism.
+
+For the [saved $c=23/50$ result](target-correction-c23-50-result.json),
+all 94 restricted pivot lower endpoints are positive. Its serialized
+dyadic endpoints imply the exact rational comparisons
+
+$$
+\begin{gathered}
+a=\frac1{100},\qquad
+\delta_c>\frac{33}{5000},\qquad
+\gamma_c>\frac{39}{1000},\\
+\frac{d_c}{\gamma_c}<\frac{21}{10000},\qquad
+l_t<\frac3{10000},\qquad
+l_E+l_t\frac{d_c}{\gamma_c}<\frac{61}{20}.
+\end{gathered}
+$$
+
+All entries of the lifting cap are nonnegative, so these bounds give
+
+$$
+\|M\|_F^2<
+3+\left(\frac{21}{10000}\right)^2
+ +\left(\frac3{10000}\right)^2
+ +\left(\frac{61}{20}\right)^2
+=\frac{24605009}{2000000}<\frac{25}{2}.
+$$
+
+Consequently (TC11) gives a whole-form ground-orthogonal gap greater
+than $33/62500>1/2000$ at $c=23/50$. Transport through the same original
+unitary identification and variance term yields
+
+$$
+ D(h)\ge\frac{921}{2000}\operatorname{Var}_\nu(h)
+ =0.4605\operatorname{Var}_\nu(h)
+ \qquad(h\in\mathcal F_{\min,\mathrm{even}}). \tag{TC12}
+$$
+
+This is a conditional paper corollary of the existing saved comparison,
+with every analytic, numerical-supplier, ground and domain premise
+retained. The rational endpoint comparisons acquire no new actions,
+Grams, moments or numerical target, and do not rerun the failed
+$1/1000$ test. They do not establish a cofinal estimate or Lean
+certification.
+
 ## Directed results and the cofinal boundary
 
 The [producer](target_correction.py) uses 192-bit ball arithmetic.
@@ -172,9 +232,11 @@ Rounded bounds below are outward, and retain the paper premises above.
 
 See [the passing result](target-correction-c9-20-result.json) and
 [the failed requested joint test](target-correction-c23-50-result.json).
-The latter does not establish operator negativity, an RH counterexample,
-or failure of a smaller-gap comparison. No old action solve, numerical
-integration or fixed-target matrix is replayed by this producer.
+The latter retains its failed $1/1000$ test; the smaller positive gap in
+(TC11)--(TC12) follows from its already accepted component bounds.
+It does not establish operator negativity or an RH counterexample.
+No old action solve, numerical integration or fixed-target matrix is
+replayed by this producer.
 
 The present exterior allowance requires $g<\delta_0<1/8$.
 It cannot reach cofinal $c\uparrow1/2$ at fixed $N=64$ by the

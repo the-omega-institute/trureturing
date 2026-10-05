@@ -1,0 +1,15 @@
+**定理 37.2（两张 Campbell 余数图正则及上下文无关恰在模一、二）。** 在约定 37.1 的来源前提下，对每个外部固定整数 $M\ge1$，
+
+$$
+\begin{aligned}
+\operatorname{Reg}(\Gamma_M^{\mathrm{can}})
+&\Longleftrightarrow\operatorname{Reg}(\Gamma_M^{\mathrm{all}})\\
+&\Longleftrightarrow\operatorname{CFL}(\Gamma_M^{\mathrm{can}})
+\Longleftrightarrow\operatorname{CFL}(\Gamma_M^{\mathrm{all}})
+\Longleftrightarrow M\in\{1,2\}.
+\end{aligned}
+\tag{37.4}
+$$
+
+具体地，$M=1,2$ 时两张图均正则；每个 $M\ge3$ 时两张图各自都不是上下文无关语言。
+
