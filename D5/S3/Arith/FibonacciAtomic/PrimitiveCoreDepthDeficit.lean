@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.FibonacciAtomic.GlobalGcdSampling
 import D5.S0.Carrier.Norm
+import D5.S3.Axis.AxisConvergence
 import Mathlib.NumberTheory.Real.GoldenRatio
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
@@ -110,15 +111,11 @@ private theorem quantity_bounds (j : ℕ) (c : ℕ × ℕ) (hc : c.2 < c.1) :
       φ ^ n ≤ (Nat.fib (n + 2) : ℝ) ∧ (Nat.fib (n + 2) : ℝ) ≤ φ ^ (n + 1) := by
     have hrec : (Nat.fib (n + 2) : ℝ) = (Nat.fib n : ℝ) + Nat.fib (n + 1) := by
       exact_mod_cast Nat.fib_add_two (n := n)
-    have hmono : (Nat.fib (n + 1) : ℝ) ≤ Nat.fib (n + 2) := by
-      exact_mod_cast Nat.fib_le_fib_succ (n := n + 1)
     have h₁ := Real.goldenRatio_mul_fib_succ_add_fib n
-    have h₂ := Real.goldenRatio_mul_fib_succ_add_fib (n + 1)
-    rw [show n + 1 + 1 = n + 2 by omega, pow_add] at h₂
-    have hsq := Real.goldenRatio_sq
-    have hp := pow_pos Real.goldenRatio_pos n
     constructor
-    · nlinarith [Real.goldenRatio_pos]
+    · have h := D5.S3.Axis.AxisConvergence.goldenRatio_pow_div_le_fib_succ (n + 1)
+      simpa only [Nat.add_assoc, pow_succ,
+        mul_div_cancel_right₀ _ Real.goldenRatio_pos.ne'] using h
     · nlinarith [Real.one_lt_goldenRatio, Nat.cast_nonneg (α := ℝ) (Nat.fib (n + 1))]
   have hq := D5.S3.Arith.FibonacciAtomic.GlobalGcdSampling.actual_source_value j c
   have hs : (c.2 : ℝ) ≤ c.1 := by exact_mod_cast hc.le
