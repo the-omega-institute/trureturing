@@ -5,7 +5,7 @@ full-length and next-to-full-length prefix-reversal edges. In every selected
 E coset, replace the next-to-full edges by the n−2 reversal edges. The result
 has all 360 full-length matching edges and forms one 720-vertex closed cycle.
 
-Run from any working directory:
+Run from the repository root:
 
 ```sh
 python3 docs/reports/big3-necklace-transitions/verify_finite_state.py
