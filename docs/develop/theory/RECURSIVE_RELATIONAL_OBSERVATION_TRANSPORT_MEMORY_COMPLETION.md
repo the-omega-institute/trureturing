@@ -16781,9 +16781,11 @@ $$
 
 ## 54. Complete unit-family supplied advice: linear capacity and actual acquisition
 
-This appendix proves a structural part of the minimum-advice question left by TM51. On the **complete actual unit-history family**, the minimum supplied alphabet grows linearly with the public cap. Two explicit constructions give different alphabet/depth tradeoffs, and a separate policy determines the exact minimum through cap 31. The exact minimum at caps $H\ge32$, the sharp leading alphabet coefficient, and a normalization of minimum-alphabet policies by accepted replacement depth remain unresolved. These are ordinary mathematical proofs under the conditional supplied-advice interface, without a Lean verification claim.
+This appendix refines the conditional minimum-advice question on the **complete actual unit-history family**. [OR68.5][OR68] already proves linear growth with the public cap and the exact values 1 at $8\le H\le19$ and 2 at $20\le H\le35$. [OR69.4][OR69] gives 2 at $36\le H\le39$ and 3 at $40\le H\le55$. Here the all-policy lower bound improves OR68's $h/8$ leading lower to $\gamma h$, where $h=\lfloor H/4\rfloor$ and $\gamma=(7-3\sqrt3)/11$. Two explicit constructions give separate alphabet/depth/call tradeoffs, and a cap-28–31 policy supplies a particular call bound and a fixed-executor separation for already known numerical exactness.
 
-All project premises below are taken from the immutable revision `e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74`.
+The general exact function, the sharp leading alphabet coefficient, existence of a normalized limit, and normal forms for minimum-alphabet policies remain unresolved; particular caps can be settled when valid bounds coincide. These are ordinary mathematical proofs under the conditional supplied-advice interface, without a Lean verification claim.
+
+The structural premises below are taken from the immutable revision `e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74`; the published OR68–69 comparisons use `511f1920bceaaf9f6ec6411030fbd4da42abfbfd`.
 
 ### 54.1 The task and its actual source correspondence
 
@@ -17149,9 +17151,9 @@ As before, each dictionary is injective in the acquired coordinate, and the simu
 
 The two constructions have different coordinates. Theorem 54.5 gives the smaller asymptotic alphabet $7h/18+O(1)$ with accepted depth at most 2. Theorem 54.6 gives $2h/5+O(1)$ with accepted depth at most 1. Each separately has the same stated total-call upper bound. Combining the smaller alphabet from one with the smaller accepted-depth bound from the other is not justified. Neither theorem prices label production, material, memory or physical duration.
 
-### 54.6 Exact two-label recovery through cap 31 and a fixed-archive counterexample
+### 54.6 Reused exact values through cap 31 and a fixed-archive counterexample
 
-**Theorem 54.7 (exact nonempty small-cap advice).** On the complete actual family,
+**Theorem 54.7 (reused small-cap exactness and explicit execution).** On the complete actual family,
 
 $$
 A_U(H)=\begin{cases}
@@ -17161,7 +17163,7 @@ A_U(H)=\begin{cases}
 \tag{TM.5429}
 $$
 
-At $28\le H\le31$, two labels suffice with at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+3$ calls, whereas the fixed executor that ignores the label, attempts $\rho$ immediately and then applies $\operatorname{Size}_H$ requires three labels for subsequent original-target decoding.
+The numerical values in (TM.5429) are already published in [OR68.5][OR68], whose two-label interval continues through cap 35. The explicit protocol below establishes that at $28\le H\le31$, two labels suffice with at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+3$ calls, whereas the fixed executor that ignores the label, attempts $\rho$ immediately and then applies $\operatorname{Size}_H$ requires three labels for subsequent original-target decoding.
 
 **Proof.** The first interval is the published TM51.6–8 result. At $h=5,6$, both (TM.5418) and (TM.5425) yield alphabet 2. TM51.7 proves one label impossible for every $H\ge20$. This settles $20\le H\le27$.
 
@@ -17198,7 +17200,7 @@ At $h=7$, the $w=7$ record fiber contains actual targets $(4,7),(5,7),(6,7)$. Th
 
 ### 54.7 All-cap bounds, growth and supplied bits
 
-**Corollary 54.8 (explicit all-cap envelope and growth order).** For every $H\ge8$, with the empty convention of Definition 54.1 handled separately, the exact small-cap values are (TM.5429). At every $H\ge32$,
+**Corollary 54.8 (envelope of these constructions and reused growth order).** For every $H\ge8$, with the empty convention of Definition 54.1 handled separately, the reused small-cap values in (TM.5429) hold. At every $H\ge32$,
 
 $$
 \max\{2,B(\lfloor H/4\rfloor)\}
@@ -17207,7 +17209,7 @@ $$
 \tag{TM.5432}
 $$
 
-The same two sufficient constructions and the same necessary inequality apply at $12\le H\le31$, with Theorem 54.7 supplying the improved exact value at $28\le H\le31$. All bounds are finite explicit integer formulas, with positive-part and empty-block conventions stated above. As $H\to\infty$,
+The same two sufficient constructions and the same necessary inequality apply at $12\le H\le31$, with Theorem 54.7 supplying a separate two-label protocol at $28\le H\le31$. All bounds are finite explicit integer formulas, with positive-part and empty-block conventions stated above. As $H\to\infty$,
 
 $$
 \gamma h-O(1)\le A_U(H)\le\frac7{18}h+O(1),
@@ -17216,7 +17218,7 @@ $$
 \tag{TM.5433}
 $$
 
-Thus $A_U(H)=\Theta(H)$. Its minimum advice-only fixed binary width is
+Thus $A_U(H)=\Theta(H)$, as already established by [OR68.5][OR68]. Its minimum advice-only fixed binary width, also a consequence of that published growth order, is
 
 $$
 b_U(H)=\lceil\log_2 A_U(H)\rceil=\log_2H+O(1)
@@ -17226,26 +17228,35 @@ $$
 
 **Proof.** Combine Theorems 54.3–7; at $h=2$ the sole target permits direct constant output. Both constructive families are uniformly effective and cover every source, so their smaller alphabet is a valid capacity upper bound, with its own stated depth coordinate. Theorem 54.4 supplies a positive linear lower bound. For $A$ occupied symbols, any fixed-width exact code has $2^b\ge A$, while a public numbering of the symbols attains $\lceil\log_2A\rceil$ bits. The minimum-alphabet theorem therefore gives (TM.5434); $A=1$ uses the single empty bit string. Alphabet size, actual source calls and accepted replacement depth are distinct quantities. $\square$
 
-Some exact integer instantiations illustrate the envelope; upper columns retain their separate depth guarantees. They are not evidence for extrapolated exact values.
+Equations (TM.5432–3) record the envelope of the two constructions here. For comparison on the same task, [OR68.2, 68.4–5][OR68] give the lower $\max(2,\lfloor(h+10)/8\rfloor)$ and the paired upper $K-p$, where
+$p=\min(\lfloor(K-1)/2\rfloor,\lfloor(3K+3-h)/4\rfloor)$ and $K-p=3h/8+O(1)$. That upper uses at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+4$ calls. The $7h/18+O(1)$, depth-$\le2$ construction and the $2h/5+O(1)$, depth-$\le1$ construction here each use at most $\lceil\log_2H\rceil+3$ calls. Each alphabet, depth and call bound belongs to its own simultaneous construction. In particular OR68's smaller leading alphabet does not acquire either construction's $+3$ call guarantee. The stronger leading lower $\gamma>1/8$ comes from Theorems 54.3–4.
 
-| Public caps $H$ | $h$ | Necessary alphabet $\max(2,B(h))$ for $H\ge20$ | $T_2$ (depth $\le2$) | $T_1$ (depth $\le1$) | Exact value established here |
+[OR69.2–4][OR69] supply complete same-source target dictionaries giving the exact values 2 at $36\le H\le39$ and 3 at $40\le H\le55$, with at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+5$ calls. Their three-label necessity uses a thirteen-source obstruction against all ambient actions and arbitrary tree-dependent binary labels. These published numerical results are credited comparison context; the protocols and lower proofs above retain their own costs and scope.
+
+Some exact integer instantiations illustrate the envelope of these constructions; upper columns retain their separate depth guarantees and the $+3$ call bound. The last column records known values with their sources. These entries do not extrapolate a general exact formula.
+
+| Public caps $H$ | $h$ | Necessary alphabet $\max(2,B(h))$ for $H\ge20$ | $T_2$ (depth $\le2$) | $T_1$ (depth $\le1$) | Known exact value and source |
 |---|---:|---:|---:|---:|---|
-| 20–23 | 5 | 2 | 2 | 2 | 2 |
-| 24–27 | 6 | 2 | 2 | 2 | 2 |
-| 28–31 | 7 | 2 | 3 | 3 | 2, by (TM.5430) |
-| 32–35 | 8 | 2 | 3 | 3 | unresolved |
-| 48–51 | 12 | 3 | 4 | 4 | unresolved |
-| 80–83 | 20 | 4 | 7 | 8 | unresolved |
-| 400–403 | 100 | 17 | 39 | 40 | unresolved |
+| 20–23 | 5 | 2 | 2 | 2 | 2, [OR68.5][OR68] |
+| 24–27 | 6 | 2 | 2 | 2 | 2, [OR68.5][OR68] |
+| 28–31 | 7 | 2 | 3 | 3 | 2, [OR68.5][OR68]; explicit protocol (TM.5430) |
+| 32–35 | 8 | 2 | 3 | 3 | 2, [OR68.5][OR68] |
+| 48–51 | 12 | 3 | 4 | 4 | 3, [OR69.4][OR69] |
+| 80–83 | 20 | 4 | 7 | 8 | not settled by the displayed or cited bounds |
+| 400–403 | 100 | 17 | 39 | 40 | not settled by the displayed or cited bounds |
 
 ### 54.8 Sources, costs, proof scope and unresolved obligations
 
-The mathematical delta is the complete unit table's exact row/column load, its finite necessary inequality and profile root against all protocols, and the simultaneous cutoff allocations covering all original bands. The one-replacement and two-replacement sufficient alphabets have separate uses, and the complete-family cap-28 policy separates unrestricted acquisition from one fixed execution. Actual source generation, complete Euler/bracketing coverage, $N_H$, the quartet, behavioral congruence, terminal filling and finite planning are suppliers, not new results of this appendix.
+Relative to OR68–69, the substantive refinements are the complete unit table's exact row/column load, its finite necessary inequality and profile root against all protocols, and the simultaneous cutoff allocations covering all original bands. The leading lower $\gamma h$ improves the published $h/8$ lower; the two sufficient alphabets offer their own depth guarantees with the $+3$ call bound. The complete-family cap-28–31 policy establishes its explicit two-label execution and separates unrestricted acquisition from one fixed execution. Linear growth, its logarithmic advice-width consequence and the numerical small-cap exactness are credited reuse. Actual source generation, complete Euler/bracketing coverage, $N_H$, the quartet, behavioral congruence, terminal filling and finite planning are suppliers, not new results of this appendix.
 
-The source dependencies are the following two published project files, in each case at `e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74`:
+The structural proof dependencies are the first two published files below, at `e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74`; published comparison context is supplied by OR68–69 at `511f1920bceaaf9f6ec6411030fbd4da42abfbfd`:
 
 - [FIBONACCI_ATOMIC_RELATION_GENERATION.md](https://github.com/the-omega-institute/trureturing/blob/e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), Atomic359 and Atomic360.2–4: common-source windows, positive unit witnesses, connected eight-edge criterion, all Euler words and every ordered bracketing. These match the actual source, composition and unit-window premise of (TM.5404–6).
 - [RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md](https://github.com/the-omega-institute/trureturing/blob/e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), TM30.1–2: exact whole guards and behavior on the ambient $\mathcal T_H$; TM32.1–2: advice selected before execution versus repair after a fixed record; TM37.2 and TM37.7: all-context first-attempt constraints and the Low/archive/High construction architecture; TM38.1: permanent collisions on one common record; TM44.5 and TM51.5: actual terminal entry-size acquisition; TM45.1–4: original/current history pairing; TM47.1–2, 47.4 and 47.8: actual representative coverage, full-context correspondence and finite planning; TM51.1–3 and 51.6–11: the full unit task, small-cap baseline, constant-label obstruction and source-preserving production/cost boundary. These premises retain the same source, original target, actions, universal quantifiers and resource coordinates used above. The lower bound on the larger full $\mathcal T_H$ from TM37 is not transferred to the smaller $U_H$.
+- [OR68 §§68.1–5][OR68]: the same conditional full-family $A_U(H)$, paired construction, all-policy $\max(2,\lfloor(h+10)/8\rfloor)$ lower, exact values through cap 35 and linear growth. Its upper has its own one-replacement/$+4$-call cost coordinates.
+- [OR69 §§69.1–3][OR69]: the same task's full-family dictionaries, thirteen-source full-action binary obstruction and exact values at caps 36–55. Its upper has its own one-replacement/$+5$-call cost coordinates.
+
+The parameter and interface correspondence is exact on nonempty tasks: OR68's $\nu=z+s$ is this appendix's $w$, and OR69's $(x,y)$ is $(z,w)$, with the same $r,s,h,H=4h+\delta$. OR69's finite $C_{r,s}$ is $\tau_h(r+s,r+2s)$, and $Z_x$ is the tag-0 target denoted here by $(z,\infty)$. Both published definitions quantify the complete actual ordered-tree family, the same initial $q_H$, arbitrary total labels authentic to that unmodified initial tree, common deterministic initialization, arbitrary acquired histories and all ambient TM30 actions with whole-candidate guards and equality acceptance. This appendix's optional empty-task convention is separate. The correspondence supplies no actual-source label producer or archive access.
 
 No external state-identification, learning, homing or side-information coding theorem carries proof weight in this appendix. The source-specific results above are deductions from the stated pinned suppliers; no global originality claim is made. Neither TM52 nor TM53 is a premise.
 
@@ -17253,8 +17264,11 @@ The uniform programs have fixed descriptions plus public integer input $H$. Thei
 
 The upper suppliers are computable from an already supplied initial target or from a genuine initial-tree archive. Archive acquisition, parsing, family membership certification, pairing with this same running tree, label production, delivery and retention remain separate. TM51.9 applies unchanged: a common-initialized TM30 program required to finish with each exact original unit tree can output only a constant. Every accepted context strictly adds leaves, and every accepted replacement adds leaves because unit sources have positive $\beta$ count; no permitted action reverses that increase. Without accepted modifications, all reads are the same unit and all attempted modifications reject, giving a common record. Thus the nonconstant supplied labels here are not produced by such a preserving consumer. An equivalent canonical witness or another tree's archive does not establish identity with the executed source.
 
-Full word/bracketing coverage follows from the pinned ordinary theorem. The all-policy lower bound rests on the simultaneous-history proof in Theorem 54.3. Bounded enumeration does not supply either universal claim, and finite tests do not justify an exact value at $H=32$. These ordinary proofs carry no Lean, build or CI verification claim.
+Full word/bracketing coverage follows from the pinned ordinary theorem. The all-policy lower bound rests on the simultaneous-history proof in Theorem 54.3. Bounded enumeration does not supply either universal claim; the known exact value at $H=32$ is supplied by OR68's ordinary upper and lower proofs. These ordinary proofs carry no Lean, build or CI verification claim.
 
-The remaining full question is explicit. Exact $A_U(H)$ for every $H\ge32$, the sharp leading alphabet coefficient or even existence of its normalized limit, and a normal form for minimum-alphabet policies under all depths and mixed positive contexts are not determined. The count (TM.5412) discards action compatibility and is not known sufficient; the cutoff constructions are not shown necessary or optimal. The whole complete family, all original bands and every ambient action remain in this unresolved optimization. The appendix does not replace that goal with a tag-1 subfamily, a fixed archive, a depth restriction or a finite solver instance. It also leaves genuinely produced/certified label costs, optimal total calls/memory, physical instrument conformity, original-tree/bracketing recovery and the persistent relation-recovery goal unsettled.
+The remaining full question is explicit. The general exact function $A_U(H)$, the sharp leading alphabet coefficient or even existence of its normalized limit, and a normal form for minimum-alphabet policies under all depths and mixed positive contexts are not determined. OR68–69 settle the nonempty interval through cap 55; other particular caps can be settled when valid lower and upper bounds coincide, without supplying a general exact formula. The count (TM.5412) discards action compatibility and is not known sufficient; the cutoff constructions are not shown necessary or optimal. The whole complete family, all original bands and every ambient action remain in this unresolved optimization. The appendix does not replace that goal with a tag-1 subfamily, a fixed archive, a depth restriction or a finite solver instance. It also leaves genuinely produced/certified label costs, optimal total calls/memory, physical instrument conformity, original-tree/bracketing recovery and the persistent relation-recovery goal unsettled.
+
+[OR68]: https://github.com/the-omega-institute/trureturing/blob/511f1920bceaaf9f6ec6411030fbd4da42abfbfd/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#68-完整单位原树的条件补充字母表配对上界与增长必要性
+[OR69]: https://github.com/the-omega-institute/trureturing/blob/511f1920bceaaf9f6ec6411030fbd4da42abfbfd/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#69-完整单位原树在三十六至五十五上限的条件字母表精确值
 
 ## 追加锚（本行以下为增补区）
