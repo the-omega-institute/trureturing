@@ -5592,3 +5592,16 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 两个具名目标的完整精确临时 Lean 首轮真实编译通过，host `26940` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-orbit-gap.lean` 为 200772 字节，SHA256 `40cb28b6aa11ce05c9421efe5e99fbcfa8212d9198c0e62d39d82a11144076ca`；此前成功 horoball 源码为完整 offset0 字节前缀，没有新增 import、依赖构建或版本变更。调用方实际编译与同一覆盖／原自由性／原度量语义复核完成，没有新增 SSHX 共识。
 
 该既有原覆盖、局部单射、原度量球及轴循环性消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批消费真正给定的 `π` 及同一表示的纤维保持性；尚未从一般原 `M,N` 的双曲流形假设内部构造其原度量普适覆盖、完整 deck 表示或这些数据。间隔到原 compact-pair properly discontinuous 性质的证明仍在推进；原商度量、体积、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 单点原轨道间隔推出紧集交点有限性与实际原覆盖作用的 proper 性质
+
+对同一个原等距表示 `ρ`，仅需在一个原点 `p₀` 给出正数 `r`，使非单位元素的原位移至少为 `r`。原乘法律与同一个原等距变换将 `g⁻¹h` 的位移传递为两个轨道点的距离，因此不同原群元素的 `p₀` 轨道点彼此距离至少为 `r`。原 H³ 的紧闭球和钉版 totally bounded 接口提供有限个半径 `r/3` 的覆盖球；给有界位移原元素选择所属球心，相同球心将迫使两轨道点距离小于 `2r/3`，与原间隔矛盾。因此对每个实际实数界 `R`，原集合 `{g | dist p₀ (ρ(g)(p₀)) ≤ R}` 有限。未给出任何群元素集合有限性前提。
+
+两个实际原紧集 `K,L` 在同一个 `p₀` 的原距离分别有界。如果同一原 `ρ(g)` 将 `K` 的某点送入 `L`，原三角不等式和原等距性便给出该同一 `g` 在 `p₀` 的位移至多为两界之和。原紧集交点元素集合包含于刚证明有限的原位移集合，故得到 canonical `ProperlyDiscontinuousRepresentation ρ`。这没有仅凭 `ProperSpace H3` 推断作用 proper；正轨道间隔与同一原等距作用均实际参与证明。
+
+最后消费前批真实覆盖、同一表示纤维保持及原自由性所内部构造的原间隔，得到实际覆盖作用的 canonical proper 性质。保持任意原群宇宙与独立目标空间宇宙；无需另供 proper 性质或轨道间隔，也不要求覆盖纤维轨道传递性。一般原流形原度量覆盖的构造仍须另行完成。
+
+三个具名目标的完整精确临时 Lean 第二轮真实编译通过，host `6444` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-proper-action.lean` 为 204716 字节，SHA256 `b0af58ed2b9a0f074937f3adf7eb2916f7aa57781383f2aca95289be93fee627`；此前成功原覆盖间隔源码为完整 offset0 字节前缀，无新增 import、依赖构建或版本变更。首轮两处接口名称和存在量词展开错误的完整源码日志保留排除；使用实际 root `isCompact_closedBall` 与 `exists_prop` 修复，没有弱化目标。协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该原等距乘法、紧闭球、有限球覆盖与紧集距离界消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批消除了实际覆盖作用另供 proper 性质的前提，未从一般原 `M,N` 双曲流形数据内部构造该覆盖。原商度量、体积、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
