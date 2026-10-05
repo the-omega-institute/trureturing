@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d58d3a7a19ab12e3ce12cf5c343580ca107fa08981500a466d72ffb4bcb68537
   normalized_sha256: sha256:d58d3a7a19ab12e3ce12cf5c343580ca107fa08981500a466d72ffb4bcb68537
 cas_ref: sha256:d58d3a7a19ab12e3ce12cf5c343580ca107fa08981500a466d72ffb4bcb68537
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/PrefixDeficitKernel.result
+    target_statement_id: sha256:bb7cc169f24106237866bed7262076abbc0c445fb4dd80271d76cc3c0e400f4a
 receipts:
   unresolved_subitems: []
