@@ -171,7 +171,7 @@ theorem result :
   have collision : E (.mul α α) = 1 ∧ E (.mul (.mul α α) (.mul α α)) = 1 ∧
       E (substitution (.mul α α)) = -1 ∧
       E (substitution (.mul (.mul α α) (.mul α α))) = 1 := by
-    simp [E, substitution, FreeMagma.liftAux, aa, bb]
+    simp [E, substitution, aa, bb]
   have neg_ne : (-1 : C) ≠ 1 := by
     intro h
     have hm := congrArg (fun c : C => rep c 0 0) h

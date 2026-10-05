@@ -47,7 +47,7 @@ internal sealed class CliffordLeafOrbitDocument : IScribeDocumentDefinition
     private static Formula Formula()
     {
         Formula j=V("j"), k=V("k"), g=V("g");
-        Formula add(Formula x, int y) => Seq(x, Plus, D(y));
+        Formula add(Formula x, int y) => Seq(x, Plus, D((byte)y));
         Formula iff(Formula x, Formula y) => Seq(Par(x), Sp, Leftrightarrow, Sp, Par(y));
         Formula c=All("j", EqOf(Call("c",Call("T",j)),Call("atomicBlock",j)));
         Formula p=All("j", EqOf(Call("X",j),Call("P",Mod(j))));
@@ -59,8 +59,8 @@ internal sealed class CliffordLeafOrbitDocument : IScribeDocumentDefinition
         Formula collision=And(EqOf(Call("E",V("t2")),D(1)),And(EqOf(Call("E",V("t4")),D(1)),
             And(EqOf(Call("E",Call("rho",V("t2"))),Seq(Minus,D(1))),EqOf(Call("E",Call("rho",V("t4"))),D(1)))));
         Formula bracket=Ex("p,q",And(EqOf(Call("c",s),Par(Seq(D(3),Comma,D(0)))),And(EqOf(Call("c",r),Par(Seq(D(3),Comma,D(0)))),
-            And(EqOf(Call("leafLabels",s),Call("leafLabels",r)),And(Seq(s,Neq,r),EqOf(Call("E",s),Call("E",r)))))));
-        Formula finite=All("Y,g",Ex("f",All("j",Seq(Par(Seq(j,Lt,D(6))),Implies,Par(EqOf(Call("f",Call("X",j)),Call("g",j)))))));
+            And(EqOf(Call("leafLabels",s),Call("leafLabels",r)),And(Seq(s,Sp,Neq,Sp,r),EqOf(Call("E",s),Call("E",r)))))));
+        Formula finite=All("Y,g",Ex("f",All("j",Seq(Par(Seq(j,Sp,Lt,Sp,D(6))),Implies,Par(EqOf(Call("f",Call("X",j)),Call("g",j)))))));
         return Disp(And(c,And(p,And(fibers,And(readers,And(successor,And(noAll,And(collision,And(bracket,finite)))))))));
     }
 }
