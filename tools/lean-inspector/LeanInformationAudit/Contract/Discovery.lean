@@ -19,18 +19,9 @@ structure Snapshot where
   seals : Array (Name × SealInput) := #[]
 
 def checkDefinition (info : ConstantInfo) : MetaM DefinitionVal := do
-  if info.type.isForall then throwError "contract.discovery:forall:{info.name}"
-  unless SourceAudit.heads.contains (info.type.getAppFn.constName?.getD .anonymous) do
-    throwError "contract.discovery:type_alias_or_wrapper:{info.name}"
-  let .defnInfo value := info | throwError "contract.discovery:not_def:{info.name}"
-  unless value.safety == .safe do throwError "contract.discovery:unsafe:{info.name}"
-  unless Literal.closed value.type && Literal.closed value.value do
-    throwError "contract.discovery:open_term:{info.name}"
-  if value.value.isLambda then throwError "contract.discovery:lambda:{info.name}"
-  let head := info.type.getAppFn.constName!.str "mk"
-  unless value.value.consumeMData.getAppFn.constName? == some head do
-    throwError "contract.discovery:forwarding_or_computed:{info.name}"
-  return value
+  match SourceAudit.checkInputDefinition info with
+  | .ok value => return value
+  | .error error => throwError error
 
 def requireRange (name : Name) : MetaM DeclarationRanges := do
   let some range ← findDeclarationRanges? name

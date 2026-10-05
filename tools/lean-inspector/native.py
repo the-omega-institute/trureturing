@@ -37,6 +37,15 @@ def activity(kind, count):
             target.write(json.dumps({'kind': kind, 'count': count}) + '\n')
 
 
+def module_work(operation, names):
+    """Live module work, separate from Lake's replayable build logs."""
+    path = os.environ.get('STRATALINT_INSPECTOR_MODULE_WORK')
+    if path:
+        with Path(path).open('a', encoding='utf-8') as target:
+            for name in names:
+                target.write(json.dumps({'operation': operation, 'module': name}) + '\n')
+
+
 def diagnostic_failure(label, error):
     try:
         print(f'LEAN_INSPECTOR_DIAGNOSTIC_UNAVAILABLE {label}: {error}', file=sys.stderr)
@@ -160,7 +169,8 @@ def prepare(root):
             utility = [by_path[path]] if path in by_path else []
             write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
                 'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
-        write_if_changed(state(root) / 'compatibility', (inputs.compatibility() + '\n').encode('ascii'))
+        write_if_changed(state(root) / 'registration-version',
+            (str(inputs.data['report_cache_release_semantic_version']) + '\n').encode('ascii'))
     # Membership and full config identity affect aggregation only. Each module
     # traces compatibility, source, utility inputs and Lake's compiler dependencies.
     with phase('native-input-coordinates'):
@@ -183,6 +193,33 @@ def validate_dependency_paths(root, utility_path):
     materials.require_sorted_strings(sorted(set(paths)), 'native dependency sources')
     if set(paths) - allowed:
         raise ValueError('unregistered native dependency sources: ' + ', '.join(sorted(set(paths) - allowed)))
+
+
+def discover(root, name, executable, output, olean):
+    """Project only the target's compiler-owned constants, never imported owners."""
+    output = Path(output)
+    with tempfile.TemporaryDirectory(prefix='.input-projection.', dir=output.parent) as directory:
+        directory = Path(directory)
+        manifest = directory / 'parts.json'
+        parts = [olean + suffix for suffix in ('', '.server', '.private')
+                 if Path(olean + suffix).is_file()]
+        if not parts or parts[0] != olean:
+            raise ValueError('contract.discovery:missing_olean:' + name)
+        manifest.write_bytes(materials.canonical_json(parts))
+        projected = directory / 'projection.json'
+        subprocess.run([executable, '--discover-inputs', name, str(manifest), str(projected)],
+                       cwd=root, check=True)
+        projection = public.read_json(projected.read_bytes())
+        public.validate_input_projection(projection, name)
+        os.replace(projected, output)
+    print('LEAN_INSPECTOR_DISCOVER module=' + name + ' inputs=' + str(len(projection['inputs'])))
+    module_work('discover', [name])
+
+
+def input_projection(root, name):
+    projection = public.read_json((state(root) / 'judge-inputs' / (name + '.json')).read_bytes())
+    public.validate_input_projection(projection, name)
+    return projection
 
 
 def row_binding(rows, root, module_name, utility_path, *, template_inputs=None):
@@ -225,13 +262,16 @@ def module(root, name, source, utility_path, executable, output):
         with phase('native-inspect', request_capture=capture):
             subprocess.run([str(executable), *arguments], check=True, cwd=root)
         materials.compact(directory / 'spool.json', spool, report, root / 'lean-report-inputs.json')
-        public.write_origin(report, name, public.production_origin(root, executable))
+        public.write_origin(report, name, public.production_origin(root, executable), input_projection(root, name))
         # Like an olean, an artifact is validated once, when it is produced;
         # Lake's trace alone decides later reuse.
         rows, _ = validate_module(report, root, name, utility_path)
         artifact = directory / 'module.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
         os.replace(artifact, output)
+        print('LEAN_INSPECTOR_ASSESS module=' + name)
+        module_work('assess', [name])
+        module_work('extract', [name])
         activity('extract', 1)
         print(f'LEAN_INSPECTOR_EXTRACT module={name} declarations={len(rows[0]["declarations"])}')
 
@@ -240,8 +280,7 @@ def produce_batch_chunk(requests):
     root = Path(requests[0][0])
     template_inputs = selection.Selection(root)
     executable = requests[0][4]
-    origin = public.production_origin(root, executable)
-    verified_materials = {}
+    origin = public.production_origin(root, executable, inputs=template_inputs)
     if any(Path(row[0]) != root or row[4] != executable for row in requests):
         raise ValueError('mixed native batch owners')
     with tempfile.TemporaryDirectory(prefix='.inspection.', dir=state(root)) as directory:
@@ -271,7 +310,11 @@ def produce_batch_chunk(requests):
         raw = public.read_json((directory / 'spool.json').read_bytes())
         if [row['module'] for row in raw['modules']] != sorted(bindings):
             raise ValueError('incomplete native inspection batch')
-        for row in raw['modules']:
+        declarations = 0
+        for index in range(len(raw['modules'])):
+            row = raw['modules'][index]
+            raw['modules'][index] = None
+            declarations += len(row['declarations'])
             name = row['module']
             utility_path, output = bindings[name]
             row_dir = directory / name
@@ -285,17 +328,22 @@ def produce_batch_chunk(requests):
             spool_report.write_bytes(materials.canonical_json({'schema': materials.SPOOL_SCHEMA, 'modules': [row]}))
             report = row_dir / public.RAW
             materials.compact(spool_report, row_spool, report, root / 'lean-report-inputs.json')
-            public.write_origin(report, name, origin)
-            validate_module(report, root, name, utility_path, verified_materials=verified_materials,
-                            template_inputs=template_inputs)
+            public.write_origin(report, name, origin, input_projection(root, name))
+            validate_module(report, root, name, utility_path, template_inputs=template_inputs)
             output.parent.mkdir(parents=True, exist_ok=True)
             artifact = row_dir / 'module.zip'
             public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
             os.replace(artifact, output)
+            del row
         if list(spool.iterdir()):
             raise ValueError('unreferenced batch materials')
+        for name in bindings:
+            print('LEAN_INSPECTOR_EXTRACT module=' + name)
+            print('LEAN_INSPECTOR_ASSESS module=' + name)
+            module_work('assess', [name])
+        module_work('extract', list(bindings))
         activity('extract', len(requests))
-        print(f'LEAN_INSPECTOR_EXTRACT modules={len(requests)} declarations={sum(len(row["declarations"]) for row in raw["modules"])}')
+        print(f'LEAN_INSPECTOR_EXTRACT modules={len(requests)} declarations={declarations}')
 
 
 def produce_batch(requests):
@@ -331,6 +379,7 @@ def aggregate(root, output, *artifacts):
     """Concatenate module artifacts that were validated when produced."""
     root, output = Path(root), Path(output)
     config = public.read_json((state(root) / 'inputs.json').read_bytes())
+    versions = selection.Selection(root).semantic_versions()
     if len(artifacts) != len(config['modules']):
         raise ValueError('native aggregate membership mismatch')
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -351,8 +400,7 @@ def aggregate(root, output, *artifacts):
                 origin = public.read_json(data['.provenance.json'])
                 if [row['module'] for row in current] != [name]:
                     raise ValueError('native aggregate membership mismatch')
-                if origin['compatibility_sha256'] != config['coordinates']['producer']:
-                    raise ValueError('native aggregate compatibility mismatch')
+                public.check_origin(origin, current[0], versions)
                 origins[name] = origin
                 rows.extend(current)
                 # Produced materials matched their content addresses; move their
@@ -383,7 +431,7 @@ def aggregate(root, output, *artifacts):
                 if len(data) != size:
                     raise ValueError('truncated private material spool')
                 append_compressed(archive, info, data)
-        public.write_sidecars(report, config['coordinates'], origins)
+        public.write_sidecars(report, config['coordinates'], origins, semantic_versions=versions)
         artifact = directory / 'report.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in public.SUFFIXES])
         os.replace(artifact, output)
@@ -427,7 +475,7 @@ def validate_module(report, root, name, utility, *, verified_materials=None, tem
                                 manifest=Path(root) / 'lean-report-inputs.json')
     row_binding(rows, root, name, utility, template_inputs=template_inputs)
     # prepare validated the manifest before any facet could accept an artifact.
-    compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()
+    compatibility = (template_inputs if template_inputs is not None else selection.Selection(root)).semantic_versions()
     origin = public.validate_origin(report, rows, compatibility)
     return rows, origin
 
@@ -448,7 +496,7 @@ def publish(root, destination):
 
 
 def main():
-    actions = {'prepare': prepare, 'module': module, 'aggregate': aggregate, 'publish': publish, 'batch': batch}
+    actions = {'prepare': prepare, 'discover': discover, 'module': module, 'aggregate': aggregate, 'publish': publish, 'batch': batch}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, publish, or batch')
     actions[sys.argv[1]](*sys.argv[2:])

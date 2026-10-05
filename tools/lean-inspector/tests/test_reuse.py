@@ -80,9 +80,10 @@ class ReuseTests(unittest.TestCase):
         origins = {row['module']: dict(module=row['module'],
             report_sha256=hashlib.sha256(materials.canonical_json(
                 dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest(),
-            compatibility_sha256=inputs.compatibility(), producer_sources_sha256='a' * 64,
+            semantic_versions=inputs.semantic_versions(),
+            input_projection=dict(schema='stratalint-judge-input-projection-v1', module=row['module'], inputs=[]), producer_sources_sha256='a' * 64,
             inspector_executable_sha256='b' * 64) for row in rows}
-        publication.write_sidecars(self.report, publication.coordinates(self.root), origins)
+        publication.write_sidecars(self.report, publication.coordinates(self.root), origins, semantic_versions=inputs.semantic_versions())
 
     def receipt(self):
         import reuse
@@ -212,7 +213,7 @@ class ReuseTests(unittest.TestCase):
         warning = output.getvalue()
         self.assertTrue(warning.startswith('::warning title=Lean report cache mismatch::'))
         self.assertIn('cached_version=1 current_version=2', warning)
-        self.assertIn('Previous-version module reports are incompatible', warning)
+        self.assertIn('Semantic-version changes invalidate only typed input owners', warning)
         self.assertIn('LEAN_CACHE and LEAN_INSPECTOR_WORK', warning)
         self.assertNotIn('private-toolchain-value', json.dumps(result) + warning)
 
@@ -228,7 +229,7 @@ class ReuseTests(unittest.TestCase):
         self.assertEqual(probe.returncode, 0, probe.stderr)
         self.assertTrue(json.loads(probe.stdout)['needs_lake'])
         self.assertIn('::warning title=Lean report cache mismatch::', probe.stderr)
-        self.assertIn('Lake will determine which module reports can be reused', probe.stderr)
+        self.assertIn('Lake determines the module work from compiler traces', probe.stderr)
         self.assertNotIn('Previous-version module reports are incompatible', probe.stderr)
         self.assertEqual(reuse.returncode, 3, reuse.stderr)
         self.assertIn('::warning title=Lean report cache mismatch::', reuse.stdout)
@@ -280,11 +281,15 @@ class ReuseTests(unittest.TestCase):
                                  '[FAIL] producer_program_change_keeps_receipt')
                 source.write_bytes(original)
                 source.chmod(mode)
-        self.policy['report_cache_release_semantic_version'] += 1
-        self.write_policy()
-        result = api.probe(self.root, self.report)
-        self.assertTrue(result['needs_lake'] and result['reason'] == 'seed-rejected',
-                        '[FAIL] semantic_version_bump_rejects_seed: ' + repr(result))
+        for field in ['report_cache_release_semantic_version']:
+            with self.subTest(version=field):
+                self.policy[field] += 1
+                self.write_policy()
+                result = api.probe(self.root, self.report)
+                self.assertTrue(result['needs_lake'] and result['reason'] == 'seed-rejected',
+                                '[FAIL] explicit_semantic_versions_gate_receipt')
+                self.policy[field] -= 1
+                self.write_policy()
 
     def test_legacy_and_corrupt_receipts_and_bundles_require_lake(self):
         api = self.receipt()

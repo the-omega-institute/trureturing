@@ -18,6 +18,23 @@ def heads : Array Name := #[
   `LeanInformationAudit.Contract.ExpectedDeclaration,
   `LeanInformationAudit.Contract.Seal]
 
+/-- The same exact compiler type heads and literal-definition checks serve
+discovery and its small, non-assessing input projection. -/
+def checkInputDefinition (info : ConstantInfo) : Except String DefinitionVal := do
+  if info.type.isForall then throw s!"contract.discovery:forall:{info.name}"
+  unless heads.contains (info.type.getAppFn.constName?.getD .anonymous) do
+    throw s!"contract.discovery:type_alias_or_wrapper:{info.name}"
+  let .defnInfo value := info | throw s!"contract.discovery:not_def:{info.name}"
+  unless value.safety == .safe do throw s!"contract.discovery:unsafe:{info.name}"
+  let closed (e : Expr) := !e.hasFVar && !e.hasMVar && !e.hasLooseBVars && !e.hasLevelMVar
+  unless closed value.type && closed value.value do
+    throw s!"contract.discovery:open_term:{info.name}"
+  if value.value.isLambda then throw s!"contract.discovery:lambda:{info.name}"
+  let head := info.type.getAppFn.constName!.str "mk"
+  unless value.value.consumeMData.getAppFn.constName? == some head do
+    throw s!"contract.discovery:forwarding_or_computed:{info.name}"
+  return value
+
 partial def termHead (stx : Syntax) : Syntax :=
   if stx.isOfKind ``Parser.Term.paren then termHead stx[1]
   else if stx.isOfKind ``Parser.Term.app then termHead stx[0]

@@ -211,7 +211,7 @@ attestation。发布继续使用 mathlib 分区内的 run/attempt 快照及 draf
 不能作为可用种子。传输失败不改变已经完成的构建与报告结论。
 旧两段或三段哈希的 `lean-cache-v1` 归档都只作为同 mathlib/平台的增量种子，消费时核对
 manifest 与 tag 的声明地址；不恢复 config/exact/same-toolchain 选择。Lake trace 与
-`report_cache_release_semantic_version` 决定还原后的报告复用；验证器只查结构与工件完整性。
+仅 H 适用的语义版本决定还原后的报告复用；验证器只查结构与工件完整性。
 正常 Lean-cache 负责依赖物化和既有构建归档；
 [ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
 规则播种当前工作树的私有 `.lake`，支持时使用 clonefile，复制后的写入与 donor 隔离。
@@ -223,15 +223,15 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 `lake-manifest.json` 中 mathlib 的 resolved revision 与 OS/架构，不证明项目工件已齐全或报告仍有效。
 缺失或损坏的 stamp 不等于 pin 已变；ensure 按现有规则补齐或原地重产。
 缺 stamp、项目 olean 为冷且 `.lake/build` 不存在时，也可走 donor 的 missing-build 播种路径。
-报告是否可复用由 Lake trace 和 `report_cache_release_semantic_version` 决定。正常入口在 ensure 前不创建
+报告是否可复用由 Lake trace、仅 H 适用的语义版本决定。正常入口在 ensure 前不创建
 默认输出或日志目录，以保留新工作树的 donor 播种条件。
 
 程序编译义务由 `inspect.sh` 的默认目标选择；直接调用可用排序后的 JSON 列表通过
 `STRATALINT_LEAN_BUILD_TARGETS` 覆盖。报告、materials 与这些构建产物随项目
 `.lake/build` 缓存运输，不另建报告缓存。
-正常入口校验可选 `.reuse.json`：报告语义版本号、登记的报告模块与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
+正常入口校验可选 `.reuse.json`：唯一报告语义版本号、登记的报告模块与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
 一致，并且报告五件套与收据逐字节相符、信封和输入坐标仍为当前时，复用报告数据。选中的程序目标仍须通过 Lake 增量编译；未选程序目标的命中不恢复 Lean 重缓存。
-缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，其兼容性只由 `report_cache_release_semantic_version` 表达；实际构建或检查失败仍失败，缓存命中不能代替判词。未提供覆盖值的直接调用使用 Inspector 默认程序目标。
+缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，其兼容性只由该语义版本表达；实际构建或检查失败仍失败，缓存命中不能代替判词。未提供覆盖值的直接调用使用 Inspector 默认程序目标。
 `:report` 只构建登记报告模块及实际依赖，不隐式追加包的默认目标；选中的程序目标在报告命中与未命中时均须执行。
 程序构建义务独立于模块报告失效；只影响这些构建义务、未改变报告依赖的编辑，不会因此重提取无关模块报告。实际缺失或失效的模块
 提取会合批以共享加载工作，失效选择仍由 Lake 决定。输出
@@ -251,23 +251,17 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 共同给出允许捕获的本地 Lean 源码范围；它是登记清单，不是另一套失效规划器。
 仅登记为 producer、未进入模块或 utility claim 依赖闭包的文件，不会因此使报告失效。
 
-清单中的单一正整数 `report_cache_release_semantic_version` 是开发者维护的报告语义兼容版本，
-其值以清单为准，与清单格式的 `schema_version` 分开。
+清单中的唯一必填正整数 `report_cache_release_semantic_version` 承担报告语义兼容，值以清单为准，与清单格式的 `schema_version` 分开。版本升级只重新评定自有类型化判官输入的 H 模块，其余模块报告工件逐字节复用。
 
-兼容的生成器重构、性能优化保持 `report_cache_release_semantic_version` 不变：在报告输入、配置及
-版本均未变时，仅 producer 源码或可执行文件字节变化不会强制重提取有效模块报告，
-进入原生生产或选中 inspector 程序目标时，当前 inspector 仍须编译成功。改变报告含义或接受语义时必须增加此版本，例如改变
-声明选择、statement identity 计算或 utility 证据含义；即使 JSON schema 完全相同
-也须 bump。例如从 `3` 增加到 `4` 会使全部模块报告及汇总失效，即使最终 report 和
-materials 的内容字节相同。版本是明确的兼容承诺，不是机器自动判定源码编辑是否兼容。
+兼容的生成器重构、性能优化保持版本不变：在报告输入、配置及版本均未变时，仅 producer 源码或可执行文件字节变化不会强制重提取有效模块报告；进入原生生产或选中 inspector 程序目标时，当前 inspector 仍须编译成功。改变报告含义或接受语义时须增加该版本，即使 JSON schema 完全相同。版本是明确的兼容承诺，不是机器自动判定源码编辑是否兼容。
 
 [原生依赖](lakefile.lean)按以下输入决定报告工作：
-逐模块工件 trace 只取模块及 utility claim 的编译闭包与语义版本；固定 judge 驱动和 inspector 程序仅等待构建成功，不额外混入其 trace 或源码绑定。
+逐模块工件 trace 只取模块及 utility claim 的编译闭包、utility 输入与仅 H 适用的语义版本；固定 judge 驱动和 inspector 程序仅等待构建成功，不额外混入其 trace 或源码绑定。
 enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessment 消费编译信息，导入源码的纯注释编辑不改变它们。
 
 | 输入变化 | 失效范围 |
 | --- | --- |
-| `report_cache_release_semantic_version` 增加 | 所有模块报告及汇总。 |
+| `report_cache_release_semantic_version`增加 | 自有类型化判官输入的 H 模块报告及汇总；其余模块工件整份复用。 |
 | 模块源文件、编译工件或传递 import 工件变化 | Lake 依赖 trace 对应的模块报告；模块自身源码逐字节追踪，导入模块只按编译工件追踪，注释不改变编译工件时复用导入者。 |
 | 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
 | 登记的 `config_inputs` 文件字节变化 | 通过 Lake 影响实际编译依赖；整体配置身份只影响聚合。 |
@@ -275,11 +269,13 @@ enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessm
 | 固定 Registry 驱动及其传递编译工件变化，语义版本不变 | 仅自身或 utility claim 的编译闭包实际导入该模块的报告失效；其他报告复用，驱动仍须构建成功。 |
 
 `information_templates` 分区携带 occurrence inventory 和 BindingRecord，
-其 `compatibility_version` 等于 manifest 的缓存发布版本；复用验证检查结构，不重算当前源码摘要。
+其闭合字段为 `schema_version`、`inventory`、`registered`、`records`，不写全局版本；复用验证检查结构，不重算当前源码摘要。
 C# 消费者另行检查完整证据语义、sidecar 归属及 debt 约束。固定驱动属于 judge，
 没有模板模块的隐式导入。独立编码测试使用显式 `--statements-only`，其结果不含
 binding evidence，不能通过声明模板的严格消费者。
-`LeanInformationAuditRegTests` 的生产证据检查要求实际导出的 wire 等于对应 `Compiled*Wire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；bump `report_cache_release_semantic_version` 时同步更新当前 wire 的 `compatibility_version`。
+`LeanInformationAuditRegTests` 的生产证据检查要求实际导出的 wire 等于对应 `Compiled*Wire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；当前 wire 只在实际内容改变时同步更新。
+
+唯一语义版本只配置于 `lean-report-inputs.json`。兼容程序改动不 bump，不兼容改动在同次交付 bump；契约接口改动须同时迁移全部用法，不做历史兼容。H 由目标自身编译常量的精确契约类型头与 owner 判定，包含 Registration、TemplateEnrollment、RootCatalog、Seal；只 import 登记的汇总模块不在 H。小型类型/owner/名字投影只以编译闭包追踪，不持久化评定权威，版本升级的暖路径复用它。模块 trace 包含编译闭包与 utility，仅 H 加入语义版本。origin 保留实际生成的版本和输入投影，仅 H 校验版本相等；聚合与整份收据绑定该版本，旧格式拒读。程序字节永不进入数据工件复用条件。
 
 Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖；编译工件 trace
 包含 inspector 私有导入所需的传递依赖。捕获结果写入模块输入旁的 `.sources.json`，
@@ -288,7 +284,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 导出证据和来源 sidecar 不重复存储导入源码的原始摘要。
 外部包依赖由登记的 Lake manifest pin 约束。
 
-兼容身份与实际产地分别记录。[provenance-v2](publication.py) 的
+兼容身份与实际产地分别记录。[provenance-v3](publication.py) 的
 `producer_sha256`、`repository_inspector_sha256` 承载语义兼容标识；实际生成来源的摘要记在
 `module_origins` 各模块的 `producer_sources_sha256` 和
 `inspector_executable_sha256`，并绑定该模块报告哈希。复用保持原始来源，增量汇总可含
@@ -343,8 +339,8 @@ mathematical fields. The report reconstructs companions, E1–E8 assessments and
 seal proofs inside its kernel environment. Runtime DTOs live in Impl; no recorder
 or registration command runs during Reg compilation. Implementation edits rebuild
 no Reg modules; report reuse depends on Lake inputs and the manual semantic
-version. Interface edits atomically migrate every use, remove the old path and
-bump that version. Historical compatibility is not supported. Existing
+version applied only to typed input owners. Interface edits atomically migrate every
+use, remove the old path and bump that version. Historical compatibility is not supported. Existing
 representation upgrades preserving mathematical evidence and registration
 semantics are outside the registration pause.
 
@@ -352,3 +348,5 @@ The report driver calls the Inspector once per completed target. The consumer
 serializes that target before the driver releases its Environment and proof
 objects. Cross-target collision checks retain only names and digest strings;
 there is no array of target environments or constant bodies.
+
+`STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和固定驱动完成的逐目标 `assess`（包括空 assessment）；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。

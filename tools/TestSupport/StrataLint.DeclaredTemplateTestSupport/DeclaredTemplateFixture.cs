@@ -53,8 +53,7 @@ internal static class DeclaredTemplateFixture
             var own = path == Registration ? keys : [];
             var wire = JsonSerializer.SerializeToElement(new
             {
-                schema_version = 1, compatibility_version = ManifestVersion(files),
-                inventory = own.Select(InformationTemplateJson.KeyJson),
+                schema_version = 1, inventory = own.Select(InformationTemplateJson.KeyJson),
                 registered = own.Select(InformationTemplateJson.KeyJson),
                 records = own.Select(key => new
                 {

@@ -7,6 +7,7 @@ import Lean.PrivateName
 import Lean.Util.CollectAxioms
 import Lean.Meta
 import Lean.Elab.Term
+import LeanInformationAudit.Contract.SourceAudit
 
 namespace LeanInformationAudit.InspectorProducer
 
@@ -617,6 +618,27 @@ private unsafe def templateBindings (env : Environment) (inputs : Array ModuleIn
       (driver (inputs.map (·.moduleName.toName)) consume)).1
   throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
 
+/-- Detach the compiler input fact before releasing mapped olean regions. -/
+@[noinline] private unsafe def emitInputProjection (moduleName : String)
+    (paths : Array String) (destination : String) : IO (Array CompactedRegion) := do
+  let parts ← readModuleDataParts (paths.map System.FilePath.mk)
+  let mut constants : Std.HashMap Name ConstantInfo := {}
+  for (data, _) in parts do
+    for info in data.constants do constants := constants.insert info.name info
+  let mut inputs := #[]
+  for (name, info) in constants.toArray.qsort (fun a b => a.1.toString < b.1.toString) do
+    let head := info.type.getAppFn.constName?.getD .anonymous
+    unless LeanInformationAudit.Contract.SourceAudit.heads.contains head do continue
+    discard <| IO.ofExcept (LeanInformationAudit.Contract.SourceAudit.checkInputDefinition info)
+    if head == `LeanInformationAudit.Contract.ExpectedDeclaration then
+      throw <| IO.userError s!"contract.root_structure:independent_expected_not_allowed:{moduleName}:{name}"
+    inputs := inputs.push (Json.mkObj [("type", toJson head.toString),
+      ("owner", toJson moduleName), ("name", toJson name.toString)])
+  IO.FS.writeFile destination ((Json.mkObj [
+    ("schema", toJson "stratalint-judge-input-projection-v1"),
+    ("module", toJson moduleName), ("inputs", Json.arr inputs)]).compress ++ "\n")
+  return parts.map (·.2)
+
 unsafe def main (args : List String) : IO Unit := do
   let args ← match args with
     | ["--request-file", path] =>
@@ -627,6 +649,12 @@ unsafe def main (args : List String) : IO Unit := do
     return
   if let ["--statement-identities", manifest, request] := args then
     statementIdentities manifest request
+    return
+  if let ["--discover-inputs", moduleName, manifest, destination] := args then
+    let paths ← IO.ofExcept <| (Json.parse (← IO.FS.readFile manifest) >>= fromJson?
+      (α := Array String))
+    let regions ← emitInputProjection moduleName paths destination
+    for region in regions.reverse do region.free
     return
   -- Statement-only output deliberately has no binding fields and cannot meet
   -- the declared-template admission consumer. It serves standalone encoders.

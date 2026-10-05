@@ -27,13 +27,116 @@ import native
 from test_native_support import *
 
 class NativeInvalidationTests:
+    def test_native_typed_owner_version_scope(self):
+        self.copy('tools/lean-inspector/Inspector.lean')
+        self.compiler_seed = None
+        self.env['STRATALINT_ACCEPT_COLD_BUILD'] = '1'
+        self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
+namespace LeanInformationAudit
+abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
+''')
+        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
+namespace LeanInformationAudit
+open Lean
+def producerValue : Nat := 1
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names consume => do
+  let env ← getEnv
+  for name in names do
+    consume name (Json.mkObj [("schema_version", toJson (1 : Nat)),
+      ("inventory", Json.arr #[]), ("registered", Json.arr #[]),
+      ("records", Json.arr #[])]) #[] env
+''')
+        self.write('LeanInformationAudit/ContractInputs.lean', '''namespace LeanInformationAudit.Contract
+structure Registration where
+  value : Nat
+structure TemplateEnrollment where
+  value : Nat
+structure RootCatalog where
+  value : Nat
+structure Seal where
+  value : Nat
+''')
+        kinds = {'InputRegistration': 'Registration', 'InputEnrollment': 'TemplateEnrollment',
+                 'InputRoot': 'RootCatalog', 'InputSeal': 'Seal'}
+        for name, kind in kinds.items():
+            self.write(name + '.lean', 'import LeanInformationAudit.ContractInputs\n'
+                + f'def {name}.entry : LeanInformationAudit.Contract.{kind} := {{ value := 1 }}\n')
+        self.write('InputAggregate.lean', 'import InputRegistration\ndef InputAggregate.unrelated : Nat := 1\n')
+        self.write('InputEmpty.lean', 'import LeanInformationAudit.ContractInputs\ndef InputEmpty.unrelated : Nat := 1\n')
+        with (self.root / 'lakefile.toml').open('a') as out:
+            for name in [*kinds, 'InputAggregate', 'InputEmpty']:
+                out.write(f'[[lean_lib]]\nname = "{name}"\n')
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['dependency_sources']['include'].append(dict(pattern='LeanInformationAudit/**/*.lean', optional=True))
+        for name in [*kinds, 'InputAggregate', 'InputEmpty']:
+            policy['report_modules']['include'].append(dict(pattern=name + '.lean', optional=False))
+        self.write('lean-report-inputs.json', json.dumps(policy))
+
+        def run():
+            self.write('activity.jsonl', '')
+            result = self.guarded_command(['make', 'lean',
+                'LEAN_TARGETS=@trureturing/LeanInformationAudit.SealCommand :report'],
+                cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
+            self.assertEqual(result.returncode, 0, '[FAIL] native_typed_owner_production\n' + result.stdout + result.stderr)
+            return result.stdout + result.stderr
+
+        run()
+        all_modules = set(self.stamps())
+        own_inputs = set(kinds)
+        projections = native.state(self.root) / 'judge-inputs'
+        self.assertEqual({path.stem for path in projections.glob('*.json')
+                          if json.loads(path.read_text())['inputs']}, own_inputs,
+                         '[FAIL] typed_input_owner_membership')
+        before, origins = self.stamps(), self.origins()
+        artifacts = {name: (native.state(self.root) / 'modules' / (name + '.zip')).read_bytes()
+                     for name in all_modules}
+        facts = {path.name: path.read_bytes() for path in projections.glob('*.json')}
+        fact_times = {path.name: path.stat().st_mtime_ns for path in projections.glob('*.json')}
+        policy['report_cache_release_semantic_version'] += 1
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        output = run()
+        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, own_inputs,
+                         '[FAIL] version_bump_invalidates_typed_owners')
+        self.assertEqual({path.name: path.stat().st_mtime_ns for path in projections.glob('*.json')},
+                         fact_times, '[FAIL] version_bump_reuses_input_facts')
+        self.assertEqual({path.name: path.read_bytes() for path in projections.glob('*.json')}, facts)
+        for name in all_modules - own_inputs:
+            self.assertEqual((native.state(self.root) / 'modules' / (name + '.zip')).read_bytes(), artifacts[name],
+                             '[FAIL] version_bump_keeps_nonowner_artifact_bytes')
+            self.assertEqual(self.origins()[name], origins[name], '[FAIL] scoped_origin_accepts_previous_version')
+        self.publish()
+
+        before = self.stamps()
+        driver = self.root / 'LeanInformationAudit/SealCommand.lean'
+        driver.write_text(driver.read_text().replace(':= 1', ':= 1 + 0'))
+        run()
+        self.assertEqual(self.stamps(), before, '[FAIL] compatible_program_edit_keeps_reports')
+
+        # First and last entries change ownership through the compiler fact.
+        self.write('InputEmpty.lean', 'import LeanInformationAudit.ContractInputs\n'
+            'def InputEmpty.entry : LeanInformationAudit.Contract.Registration := { value := 1 }\n')
+        run()
+        self.assertTrue(json.loads((projections / 'InputEmpty.json').read_text())['inputs'],
+                        '[FAIL] first_entry_acquires_ownership')
+        self.write('InputRegistration.lean', 'import LeanInformationAudit.ContractInputs\ndef InputRegistration.unrelated : Nat := 1\n')
+        run()
+        self.assertFalse(json.loads((projections / 'InputRegistration.json').read_text())['inputs'],
+                         '[FAIL] last_entry_removes_ownership')
+        before = self.stamps()
+        policy['report_cache_release_semantic_version'] += 1
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        run()
+        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]},
+                         (own_inputs - {'InputRegistration'}) | {'InputEmpty'},
+                         '[FAIL] changed_ownership_controls_next_version_bump')
+
     def test_native_compatibility_preimage(self):
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         for version in [9, 10]:
             policy['report_cache_release_semantic_version'] = version
             self.write('lean-report-inputs.json', json.dumps(policy))
             expected = hashlib.sha256(
-                b'schema=stratalint-lean-report-compatibility\nversion=' +
+                b'schema=stratalint-lean-report-compatibility-v2\nregistration=' +
                 str(version).encode('ascii') + b'\n').hexdigest()
             self.assertEqual(publication.selection.Selection(self.root).compatibility(), expected)
 
@@ -75,7 +178,7 @@ class NativeInvalidationTests:
         with self.assertRaisesRegex(ValueError, 'expected fields', msg='[FAIL] old_manifest_key_rejected'):
             publication.selection.Selection(self.root)
         with self.assertRaisesRegex(ValueError, 'DTR-ManifestVersion'):
-            materials.read_manifest_version(manifest)
+            materials.read_manifest_versions(manifest)
 
     def test_native_module_binding_scope(self):
         # This synthetic driver supplies empty registration rows;
@@ -95,7 +198,6 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
   let rows ← names.mapM fun _ => do
     let result ← IO.Process.output { cmd := "python3", args := #["-c",
       "import json,pathlib; print(json.dumps(dict(schema_version=1," ++
-      "compatibility_version=json.loads(pathlib.Path('lean-report-inputs.json').read_text())['report_cache_release_semantic_version']," ++
       "inventory=[],registered=[],records=[])))"] }
     IO.ofExcept (Json.parse result.stdout)
   let env ← getEnv
@@ -139,7 +241,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         changed(set())
         policy['report_cache_release_semantic_version'] += 1
         self.write('lean-report-inputs.json', json.dumps(policy))
-        changed(set(before))
+        changed(set())
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text().replace(':= 1', ':= 2'))
         changed({'D5.B', 'D5.A', 'Fixture'})
 
@@ -319,7 +421,7 @@ class NativeSemanticConsumerTests:
 
         policy['report_cache_release_semantic_version'] += 1
         self.write('lean-report-inputs.json', json.dumps(policy))
-        changed(set(before))
+        changed(set())
         self.assertEqual(self.report()[1:], original)
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text() + '-- content bytes\n')
         changed({'D5.B'})

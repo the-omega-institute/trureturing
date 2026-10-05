@@ -34,11 +34,11 @@ public sealed class InformationTemplateEvidenceTests
         return DeclaredTemplateFixture.Tree(files);
     }
 
-    private static JsonElement Wire(bool declared = false, bool foreignClaim = false, int? compatibility = null) =>
-        JsonSerializer.SerializeToElement(new
+    private static JsonElement Wire(bool declared = false, bool foreignClaim = false, int? compatibility = null)
+    {
+        var result = JsonSerializer.SerializeToElement(new
         {
             schema_version = 1,
-            compatibility_version = compatibility ?? InformationTemplateFixture.ManifestVersion(InformationTemplateFixture.PolicyFiles()),
             inventory = foreignClaim ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
             registered = foreignClaim ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
             records = new[] { new
@@ -65,6 +65,12 @@ public sealed class InformationTemplateEvidenceTests
                 } : null,
             } },
         });
+        if (compatibility is null) return result;
+        var retired = JsonSerializer.SerializeToNode(result)!.AsObject();
+        retired["compatibility_version"] = compatibility;
+        return JsonSerializer.SerializeToElement(retired);
+    }
+
 
     private static System.Text.Json.Nodes.JsonObject SourceWire()
     {
@@ -503,8 +509,7 @@ public sealed class InformationTemplateEvidenceTests
         var owner = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
         var bridge = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(new
         {
-            schema_version = 1, compatibility_version = InformationTemplateFixture.ManifestVersion(InformationTemplateFixture.PolicyFiles()),
-            inventory = System.Array.Empty<object>(), registered = System.Array.Empty<object>(),
+            schema_version = 1, inventory = System.Array.Empty<object>(), registered = System.Array.Empty<object>(),
             records = System.Array.Empty<object>(),
         }), PathB, snapshot);
         return Collect(snapshot, LeanAxiomReport.Create(

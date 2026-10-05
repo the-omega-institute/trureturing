@@ -104,8 +104,9 @@ class Selection:
         fields(self.data, keys, 'declaration')
         if type(self.data['schema_version']) is not int or self.data['schema_version'] != 1:
             fail('schema_version', 'unsupported version')
-        if type(self.data['report_cache_release_semantic_version']) is not int or self.data['report_cache_release_semantic_version'] <= 0:
-            fail('report_cache_release_semantic_version', 'must be a positive integer')
+        for field in ('report_cache_release_semantic_version',):
+            if type(self.data[field]) is not int or self.data[field] <= 0:
+                fail(field, 'must be a positive integer')
         for name in ('report_modules', 'inspector_sources', 'config_inputs'):
             path_set(self.data[name], name)
         if 'dependency_sources' in self.data:
@@ -136,8 +137,12 @@ class Selection:
 
     def compatibility(self):
         return hashlib.sha256(
-            f"schema=stratalint-lean-report-compatibility\nversion={self.data['report_cache_release_semantic_version']}\n".encode('ascii')
+            f"schema=stratalint-lean-report-compatibility-v2\nregistration={self.data['report_cache_release_semantic_version']}\n".encode('ascii')
         ).hexdigest()
+
+    def semantic_versions(self):
+        return {field: self.data[field] for field in
+                ('report_cache_release_semantic_version',)}
 
     def safe_file(self, relative):
         validate_pattern(relative, 'path')
