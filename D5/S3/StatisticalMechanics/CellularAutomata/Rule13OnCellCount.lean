@@ -9,7 +9,7 @@
 /-
 proof_shape: rule13, onCount: definition (Wolfram rule 13, and the number of ON cells among
   positions -n..n of its single-seed evolution on ℤ)
-proof_shape: claim: definition (the four conjectured forms recorded in OEIS A266285)
+proof_shape: claim: definition (the five conjectured formulas recorded in OEIS A266285)
 proof_shape: result: content
 escape_witness: form (2): the conclusion `result` itself, produced on its live path by the row
   invariant `hrow` (row 2k is ON exactly at the even x with 0 ≤ x ≤ 2k, and row 2k + 1 is OFF

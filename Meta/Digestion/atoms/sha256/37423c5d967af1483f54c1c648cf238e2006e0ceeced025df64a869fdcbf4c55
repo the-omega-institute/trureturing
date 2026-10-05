@@ -1,0 +1,28 @@
+## 1. 记号与数学来源
+
+令 $N\in\mathbb N$，$p\in[1/4,3/4]$，有限支持为 $I_N=\{0,1,\ldots,N\}$。在这个支持上定义实际二项计数质量、最大质量及模态惊讶
+
+$$
+q_{N,p}(n)=\binom Nn p^n(1-p)^{N-n},\qquad
+M_{N,p}=\max_{n\in I_N}q_{N,p}(n),\qquad
+S_{N,p}(n)=-\log\frac{q_{N,p}(n)}{M_{N,p}}.
+$$
+
+这个质量就是 [BinomialLocalGaussian.binomialMass](../../../D5/S3/AnalyticClosure/BinomialLocalGaussian.lean) 在 $n\le N$ 上的取值；二项系数是质量的一部分。对实数 $\alpha$ 定义有限配分函数与归一化惊讶矩
+
+$$
+Z_\alpha(N,p)=\sum_{n\in I_N}e^{-\alpha S_{N,p}(n)},\qquad
+E_{\alpha,k}(N,p)=
+\frac{\sum_{n\in I_N}S_{N,p}(n)^k e^{-\alpha S_{N,p}(n)}}{Z_\alpha(N,p)},\quad k\in\mathbb N.
+$$
+
+自然数零次幂取 $x^0=1$，包括 $x=0$。当 $N\ge1$ 时记
+
+$$
+z_{N,p}(n)=\frac{n-Np}{\sqrt{Np(1-p)}}.
+$$
+
+数学来源为 `repo-derived`：以下有限递推推导针对[谱边界卷](PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)式 (117.25)–(117.26) 的单组质量，给出明确的模态距离估计、共同常数和各自然阶惊讶矩。式 (119.39) 使用这些单组矩界；其低组乘积律以及输出条件与低组的关系是另外的数学条件。
+
+Joseph B. Kadane 的 *Sums of Possibly Associated Bernoulli Variables: The Conway–Maxwell–Binomial Distribution*，[arXiv:1404.1856v1](https://arxiv.org/html/1404.1856v1)，第 2 节式 (1)，给出幂二项系数分布的既有定义。这里的 escort 对应其规模 $m=N$、幂 $\nu=\alpha$ 与成功参数 $p^\alpha/(p^\alpha+(1-p)^\alpha)$；这个识别不提供下面的有限一致估计。Frédéric Ouimet 的 *A precise local limit theorem for the multinomial distribution and some applications*，[arXiv:2001.08512v4](https://arxiv.org/html/2001.08512v4)，定理 2.1 给出中央区域的局部极限展开；下面直接使用有限相邻质量递推，不以该渐近展开作为前提。二项恒等式、标量对数不等式、有限几何求和与指数对多项式的支配均为经典工具。
+

@@ -228,8 +228,12 @@ correction maps from those saved actions and reuses the ground moments
 to control both complementary ground tails. Under the same paper premises
 it gives a whole-form ground-orthogonal gap greater than $0.00186736$
 at $c=0.45$. At $c=0.46$ the finite restriction passes, while the
-requested joint gap $1/1000$ fails its sufficient comparison. Neither
-result closes the cofinal, RH, full Robin or Lean obligations.
+requested joint gap $1/1000$ fails its sufficient comparison. Reusing
+the same positive blocks with the existing three-block norm lift gives
+a smaller whole-form gap greater than $1/2000$ and the conditional
+original bound $D\ge0.4605\operatorname{Var}_\nu$, without new actions
+or another numerical target. These fixed-band results retain the
+cofinal, RH, full Robin and Lean obligations.
 
 The [fixed-test and centered-window interface](centered-window.md)
 distinguishes the relative scalar conversion from a sufficient absolute
@@ -260,3 +264,32 @@ unit ball by 512 closed frequency cells. Its complete upper allowance
 is below $5.45645802$, compared to the same operator's prior $T=128$
 allowance above $14.70575975$. No old producer is replayed; the
 low sign, common cofinal comparison, RH and full Robin remain open.
+
+
+The [spatially weighted high inverse](../../../Library/Weil/fukushima2011dirichlet.md#spatially-weighted-high-inverse-at-every-subcritical-parameter)
+retains the spatial term already supplied by (WF5) at each
+$0<\varepsilon\le1/2$ and its prescribed finite bandwidth. The
+[complete residual consumer](sharp-center.md#retain-this-spatial-weight-in-the-complete-inverse-residual)
+uses it to reduce the same full-residual scalar allowance by a
+nonnegative common source Gram, while preserving the exact ground column.
+This is a conditional application of existing high-form and inverse-residual
+suppliers. Weighted residual entries have not been evaluated; the
+[target correction's cofinal boundary](target-correction.md#directed-results-and-the-cofinal-boundary)
+still requires actual low and complementary-low signs on the same
+parameter sequence. Saved fixed-band matrices do not supply those signs.
+
+
+The [projection and exact-ground corrections](sharp-center.md#keep-the-projection-and-ground-corrections-on-the-same-residual)
+retain the actual high-space constraint in that same residual allowance.
+They reuse classical positive block and rank-one inverses and supply a
+projection credit without an infinite-dimensional inverse computation.
+Its entries remain unevaluated; no low sign or cofinal certificate is supplied.
+
+
+The [weighted omitted-action supplier](forward-action.md#weighted-omitted-actions-before-the-sharp-high-projection)
+feeds a [common dual-source allowance](sharp-center.md#pay-weighted-action-errors-with-one-common-dual-source)
+by reconstructing the unprojected action on the exact ground complement.
+It reuses the complete Gamma and prime envelopes and the same constrained
+inverse tools, keeping the chosen low trial and ground correction joint.
+It pays only action truncation errors; retained action and source Grams
+remain unevaluated, and no matrix or cofinal sign is supplied.
