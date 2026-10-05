@@ -241,3 +241,9 @@ uv run --no-project --python 3.13.12 --with python-flint==0.9.0 python docs/repo
 The program is project-authored; python-flint/FLINT supplies exact
 rational polynomial operations and directed arithmetic with its
 dependency licensing.
+
+The [continuous-sinc reconstruction](sinc-weighted-residual-core.md)
+reuses this integration and exact-frame machinery with the already saved
+unprojected rows. It pays reconstruction/source arithmetic separately
+and uses the actual core weight mass. Its smaller error cap and named
+direction comparison do not assert a uniform matrix gain or new sign.

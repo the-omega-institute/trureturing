@@ -327,3 +327,9 @@ exact-frame uncertainty on the same coefficient map. The enclosed gain
 reduces the existing scalar residual allowance on a specified frame
 direction; it does not certify positivity of the entire gain matrix or
 recompute the global comparison. No old action grid is regenerated.
+
+The [sinc reconstruction of that same core](sinc-weighted-residual-core.md)
+reuses the existing continuous projection on saved unprojected rows,
+then calls the same cardinal integration and exact-frame code. Its
+source/kernel errors remain joint; the smaller error allowance does not
+establish all-direction gain, a new global sign or cofinal positivity.
