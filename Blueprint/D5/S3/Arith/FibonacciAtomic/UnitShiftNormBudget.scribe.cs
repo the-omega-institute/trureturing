@@ -10,6 +10,15 @@ internal sealed class UnitShiftNormBudgetDocument : IScribeDocumentDefinition
     private static Formula V(string s) => F.Id(s);
     private static Formula P(Formula x, Formula p) => new Formula.Power(x, p);
     private static Formula Fr(Formula x, Formula y) => new Formula.Fraction(x, y);
+    private static Formula Par(Formula x) => Seq(Open, x, Close);
+    private static Formula All(string variables, Formula body) =>
+        Seq(Forall, Sp, Seq(variables.Split(',').Select((v, i) =>
+            i == 0 ? V(v) : Seq(Comma, Sp, V(v))).ToArray()), Comma, Sp, body);
+    private static Formula Some(string variable, Formula body) =>
+        Seq(Exists, Sp, V(variable), Comma, Sp, body);
+    private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
+    private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
+    private static Formula LeOf(Formula a, Formula b) => Seq(a, Sp, Le, Sp, b);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual coordinate normalization imposes a cubic shift cost and joint growth budgets.",
@@ -65,6 +74,13 @@ internal sealed class UnitShiftNormBudgetDocument : IScribeDocumentDefinition
                         + "give the two power inequalities uniformly over these sources and shifts. "
                         + "Moreover U tends uniformly to infinity: for each real M there is a threshold "
                         + "depending only on alpha, beta, and M above which every such U is at least M.")),
+                    Paragraph(Text("In the display, j and g range over natural numbers, r over integers, "
+                        + "and alpha, beta, omega, M, T over real numbers. The predicate admissible(j,g,r) "
+                        + "means j>=3, g>=2, -1<g(A+Bpsi)<phi-1, and both actual shifted coordinates "
+                        + "are nonnegative. The predicate budget(alpha,beta) means alpha>=0, beta>=0, "
+                        + "and 4alpha+3beta<1. The predicate growth(j,g,r,alpha,beta) means "
+                        + "g<=N^alpha and abs(r)<=N^beta. N, U, D, and R=1+abs(r) always refer "
+                        + "to the same quantified j,g,r.")),
                     Paragraph(Text("The coordinate gcd divides "
                         + "P=r^2-3r+1+g^2(-1)^j. For g>=2 this polynomial never vanishes at an "
                         + "integer r: its even case is positive after completing a square; in its "
@@ -94,18 +110,24 @@ internal sealed class UnitShiftNormBudgetDocument : IScribeDocumentDefinition
     {
         var n = V("N"); var g = V("g"); var r = V("R");
         var alpha = V("alpha"); var beta = V("beta");
+        var admissible = Call("admissible", V("j"), g, V("r"));
+        var budget = Call("budget", alpha, beta);
+        var growth = Call("growth", V("j"), g, V("r"), alpha, beta);
         Formula epsilon = Seq(D(1), Minus, D(4), alpha, Minus, D(3), beta);
         Formula delta = Seq(D(1), Minus, D(2), alpha, Minus, D(2), beta);
         Formula cubic = Fr(n, Seq(D(4), P(Seq(Open, P(g, D(2)), Plus, D(1), Close), D(2)), P(r, D(3))));
-        return Disp(Seq(V("D"), Gt, cubic, Comma, Sp,
-            Open, g, Le, P(n, alpha), Land, Seq(r, Minus, D(1)), Le, P(n, beta), Close,
-            Implies, Open, V("D"), Gt, Fr(P(n, epsilon), D(5, 0)), Land,
-            V("U"), Ge, Fr(P(n, delta), D(5)), Close, Comma, Sp,
-            Forall, V("omega"), Comma, D(0), Lt, V("omega"), Lt, Fr(D(1), D(2)),
-            Implies, Exists, V("T"), Comma, Forall, V("j"), Comma, V("g"), Comma, V("r"),
-            Comma, Call("hypotheses", V("j"), V("g"), V("r"), alpha, beta), Land,
-            n, Ge, V("T"), Implies,
-            Call("log", Call("log", Seq(D(2), Plus, V("D")))), Gt,
-            P(Call("log", Call("log", Call("log", V("U")))), V("omega"))));
+        Formula power = And(Seq(V("D"), Gt, Fr(P(n, epsilon), D(5, 0))),
+            LeOf(Fr(P(n, delta), D(5)), V("U")));
+        Formula pointwise = All("j,g,r", Imp(admissible,
+            And(Seq(V("D"), Gt, cubic), All("alpha,beta", Imp(And(budget, growth), power)))));
+        Formula threshold = And(And(admissible, growth), LeOf(V("T"), n));
+        Formula divergence = All("alpha,beta", Imp(budget, All("M", Some("T",
+            All("j,g,r", Imp(threshold, LeOf(V("M"), V("U"))))))));
+        Formula omegaRange = Seq(D(0), Lt, V("omega"), Lt, Fr(D(1), D(2)));
+        Formula comparison = Seq(Call("log", Call("log", Seq(D(2), Plus, V("D")))), Gt,
+            P(Call("log", Call("log", Call("log", V("U")))), V("omega")));
+        Formula logarithmic = All("alpha,beta", Imp(budget, All("omega", Imp(omegaRange,
+            Some("T", All("j,g,r", Imp(threshold, comparison)))))));
+        return Disp(And(pointwise, And(divergence, logarithmic)));
     }
 }
