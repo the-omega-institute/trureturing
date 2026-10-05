@@ -2996,6 +2996,89 @@ It reuses existing source and finite-set results, including Mathlib's
 finite Hall theorem. No new retained declaration, freeze or coverage
 record is introduced. The square layers at smaller primes and the
 unrestricted-height problem remain unresolved.
+### A squared 23 forces the full five-word private projection
+
+Keep the original family assumptions of CD87, but take $q=23$.
+If an actual original has q-height at least two, the actual pure
+$q^2$ original h supplied by divisor closure satisfies
+
+$$
+\boxed{|\Lambda_h|=5.}
+\tag{CD94}
+$$
+
+The conclusion is a projection restriction. It does not exclude
+$q^2$ itself. CD65 already gives $|\Lambda_h|\in\{4,5\}$, so it
+suffices to rule out four words.
+
+Assume $s=4$. Use the same unit-digit exclusion set U as in CD88,
+and write E for all safe digits outside U. Let P be the full set
+of digits in E with at least one actual top owner in D. This is
+the full top support, rather than merely the rooted-component image
+used to bound it. CD56 gives
+
+$$
+|E|\ge20,\qquad |P|\ge6.
+\tag{CD95}
+$$
+
+Choose eight disjoint pairs outside U. If $|P|\ge8$, give every
+pair a positive a-digit and choose its b-digit from the remaining
+safe digits. If $|P|<8$, place every member of P among the a-digits,
+fill the remaining a-positions with digits outside P, and choose all
+b-digits outside these eight a-digits. Then at least six pairs have
+a positive a-count. Every remaining pair has no top owners on either
+side, because all safe top-positive digits have already been placed
+among the a-digits.
+
+For positive pairs use the strict-good-word condition CD90. For a
+pair with no top owners on either side, allow every word and assign
+gain zero. Such a pair makes no contribution to either the omitted
+or duplicated top families; it remains a lawful source operation
+because the original low-row outputs are retained.
+
+The leaf matching extends to eight pairs on four words. After one
+reserved word v is removed there are nine parents, and every pair
+has at least six allowed parents. Choose v to be a word forbidden
+by at least seven pairs, if one exists. There can be at most one
+such word among eight pairs. Hall subsets of size at most six fit
+inside a single menu; every larger subset then reaches all nine
+parents. This gives eight distinct allowed parents.
+
+For this choice the active code has exactly the required capacity:
+
+$$
+9s-8-2r=12=23-3-r,
+\qquad s=4,\ r=8.
+\tag{CD96}
+$$
+
+The whole-source payment and label comparison from CD92--CD93 apply
+unchanged. Positive pairs each contribute at least one unit of net
+top saving, and all other pairs contribute zero. Keeping three
+omitted owners for the pure outputs therefore changes the class
+count by at most
+
+$$
+3-\sum_{t=1}^{8}g_t(u_t)\le3-6=-3.
+\tag{CD97}
+$$
+
+The resulting distinct odd nonunit whole cover contradicts global
+count minimality. Thus the four-word case is impossible and CD94
+follows. The proof supplies its positive and zero-top pairs from the
+actual original family; it assumes no extra inventory or allocation.
+
+A complete scoped transient Lean application checks the conclusion
+from the original family, pure 3 and 9 guards, $q=23$ and an actual
+deep original. It constructs an actual pure $q^2$ original with
+row zero, height two, cofactor one and private projection of size
+five. All 115 axiom reports use only the same standard axioms as
+CD87, with no errors or `sorryAx`. No new retained declaration,
+freeze or coverage record is introduced. The five-word case at 23,
+the smaller prime square layers, and unrestricted Erdős #7 remain
+unresolved.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
