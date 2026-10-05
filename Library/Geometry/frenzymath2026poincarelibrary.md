@@ -5627,3 +5627,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 两个具名目标 `originalRepresentation_countableGroup_of_pointGap` 与 `freeOriginalCoveringRepresentation_countableGroup` 的完整精确临时 Lean 首轮真实编译通过，host `70182` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-countable-group.lean` 为 209739 字节，SHA256 `a7f48c2cde61982babb04b0fba333110d126a67912e54263124e0c46a462e9cd`；前批成功原覆盖分类源码为完整 offset0 前缀，无新增 import、依赖构建或版本变更。实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
 
 该原有界位移有限性、可数并和自然数上界接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批可消除后续原覆盖作用消费者的外供群可数性前提；原流形度量覆盖构造、原商度量与体积的匹配、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 同一实际覆盖的原轨道商到原底空间同胚
+
+对任意独立宇宙的实际底空间 `M`、同一原等距表示 `ρ` 与真正给定的实际覆盖 `π : H3 → M`，另明确要求 `π` 满射、同一表示逐点纤维保持，以及同一原群在每条实际纤维上传递：若 `π p = π q`，存在原 `g : G` 使 `ρ(g)(p)=q`。内部构造真实 `e : OrbitQuotient ρ ≃ₜ M`，逐原点满足 `e (orbitQuotientMk ρ p) = π p`。没有把纤维保持偷换成纤维传递，没有假设这个同胚，也不需要原自由性或 proper 性质。
+
+同一 `π` 的 quotient lift 借助纤维保持良定义；纤维传递使其单射，实际满射性使其满射。原覆盖连续性给出正向连续性，实际满射覆盖的 quotient-map 接口和精确的逆复合等式 `e.symm ∘ π = orbitQuotientMk ρ` 给出逆向连续性。因此不是仅构造集合等价，也没有换用另一个覆盖或另一个原作用。这里得到拓扑同胚，未宣称它保持原 `M` 度量、黎曼结构或体积；构造一般原流形的实际覆盖及完整 deck 纤维传递性仍须独立完成。
+
+具名目标 `originalCoveringRepresentation_orbitQuotientHomeomorph` 的完整精确临时 Lean 首轮真实编译通过，host `80961` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-quotient-homeomorph.lean` 为 211714 字节，SHA256 `ba0fd7d8216b3c887978f83a7f3a0ddd949978c54e92c403e743c581c883c30d`；前批成功原群可数源码为完整 offset0 前缀，无新增 import、依赖构建或版本变更。实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该实际 quotient lift、覆盖连续性和 quotient-map 接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。既有 canonical `IsometricOrbitMetric.orbitMetricSpace` 和 `orbitProperSpace` 可提供实际轨道商度量及其 proper 性质，不能据此直接认定原底空间度量匹配。本批不完成原商度量与体积的匹配、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 或官方验收。
