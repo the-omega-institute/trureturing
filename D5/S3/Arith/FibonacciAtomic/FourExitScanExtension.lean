@@ -48,18 +48,7 @@ theorem ordinary_scan_completion (k : Nat) (_hk : 1 ≤ k)
   have slot_eval (n : Nat) : ∀ (f : Fin n → Source) (v : Source)
       (j : Fin n) (u : Address),
       readout (List.replicate j.val true ++ false :: u) (comb n f v) =
-        readout u (f j) := by
-    induction n with
-    | zero => exact fun _ _ j => Fin.elim0 j
-    | succ n ih =>
-      intro f v j u
-      cases j using Fin.cases with
-      | zero => rfl
-      | succ j =>
-        change readout (List.replicate (j.val + 1) true ++ false :: u)
-          (.mul (f 0) (comb n (fun x => f x.succ) v)) = _
-        simp only [List.replicate_succ, List.cons_append, readout]
-        exact ih (fun x => f x.succ) v j u
+        readout u (f j) := comb_slot_readout n
   have profile (t : Fin 3) (j : Fin k) (i : Fin (4 * k + 1)) :
       (a t j).val i = match e i with
       | .inl _ => .alpha
