@@ -13,6 +13,22 @@ internal sealed class MarkedPrefixCertificatesDocument : IScribeDocumentDefiniti
             DeclarationHandle.Create(Prefix + "prefixTable"), H("The complete marked-prefix product graph"),
             StatementSource.FromAuthor(TableFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("Indices zero through 4261 list the eight-component marker state, every labelled product edge, and the two optional potentials. The components are the base-state index, marker phase, flip flag, marker parity, retained flag, input phase, output phase and bad flag. Outside this range the final row is returned; all paths use Fin 4262."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("pd-markedprefixcertificates-nextmarker"),
+            DeclarationHandle.Create(Prefix + "nextMarker"), H("The literal marker-state update"),
+            StatementSource.FromAuthor(NextMarkerFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The marker modes are zero before selection, one and two while reading the two separating zeros, three before the next positive coefficient, and four during the final zeros. The formula displays the complete branch update. Boolean comparison, conjunction, disjunction and negation use beq, bne, andBool, orBool and notBool. Each Boolean flag is converted to a natural number and then to an integer for storage."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("pd-markedprefixcertificates-successors"),
+            DeclarationHandle.Create(Prefix + "successors"), H("Literal marker transitions"),
+            StatementSource.FromAuthor(SuccessorFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Every base edge is passed to the marker-state transition nextMarker. The unmarked phase may remain unmarked or select a positive digit with two preceding zeros; marked phases read two zeros and the next positive digit, and phase four flushes leading zeros. Output-class violations are excluded and the flip, phase, parity, retention and bad flags follow the literal marker update."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("pd-markedprefixcertificates-prefixrealizationrowcheck"),
+            DeclarationHandle.Create(Prefix + "prefixRealizationRowCheck"), H("The successor-completeness checker"),
+            StatementSource.FromAuthor(RealizationRowFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The checker compares every literal marker successor against the decoded indexed edge list, then verifies every target index is below 4262. It checks transition completeness independently of the potential inequalities."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("pd-markedprefixcertificates-prefixrealizationblockcheck"),
+            DeclarationHandle.Create(Prefix + "prefixRealizationBlockCheck"), H("Bounded reconstruction windows"),
+            StatementSource.FromAuthor(RealizationBlockFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Each window checks count consecutive rows starting at start. Separate kernel certificates cover all windows, and their union covers every marker state."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-markedprefixcertificates-prefixoffset"),
             DeclarationHandle.Create(Prefix + "prefixOffset"), H("The terminal marked-prefix charge correction"),
             StatementSource.FromAuthor(OffsetFormula()), AssessedProvenance.FromRepo(),
@@ -74,6 +90,65 @@ internal sealed class MarkedPrefixCertificatesDocument : IScribeDocumentDefiniti
     private static Formula TableFormula() => Disp(All("i", N(), Seq(Call("prefixTable", V("i")), Colon,
         Product(ListOf(Z()), ListOf(Product(N(), Z(), Z(), Z(), Z())), Call("Option", Z()), Call("Option", Z())))));
     private static Formula Entry(Formula f, int i) => Call("getD", Call("getElemOption", f, new Formula.Number(i)), D(0));
+    private static Formula NextMarkerFormula()
+    {
+        var full=V("full"); var e=V("e");
+        var edgeType=Product(N(),Z(),Z(),Z(),Z());
+        var old=Call("fst",Call("baseTable",Call("toNat",Entry(full,0))));
+        var next=Call("fst",Call("baseTable",Call("fst",e)));
+        var nd=Entry(next,10); var jd=Entry(next,12); var m=Entry(full,1);
+        var flip=Call("bne",Entry(full,2),D(0)); var parity=Entry(full,3);
+        var keep=Entry(full,4); var ni=Entry(full,5); var nj=Entry(full,6);
+        var bad=Call("bne",Entry(full,7),D(0));
+        Formula AndB(Formula a,Formula b) => Call("andBool",a,b);
+        Formula OrB(Formula a,Formula b) => Call("orBool",a,b);
+        Formula NotB(Formula a) => Call("notBool",a);
+        Formula Beq(Formula a,Formula b) => Call("beq",a,b);
+        Formula Bne(Formula a,Formula b) => Call("bne",a,b);
+        Formula Flag(Formula a) => Cast(Call("toNat",a),Z());
+        Formula Items(params Formula[] items) => Seq(OpenBracket,
+            items.Skip(1).Aggregate(items[0],(a,b)=>Seq(a,Comma,Sp,b)),CloseBracket);
+        Formula Finish(Formula mode,Formula fl,Formula par,Formula kp,Formula an,Formula aj,Formula bd) =>
+            Tuple(Items(Cast(Call("fst",e),Z()),mode,fl,par,kp,an,aj,bd),Call("fst",Call("snd",e)),
+                Call("fst",Call("snd",Call("snd",e))),
+                Call("fst",Call("snd",Call("snd",Call("snd",e)))),
+                Call("snd",Call("snd",Call("snd",Call("snd",e)))));
+        var unmarked=Finish(D(0),Flag(AndB(flip,Beq(Add(nd,jd),D(0)))),D(0),D(0),D(0),D(0),D(0));
+        var an=OrB(Call("decide",LtF(Entry(old,16),D(0))),AndB(Beq(Entry(old,16),D(0)),Beq(Entry(old,2),D(1))));
+        var aj=OrB(Call("decide",LtF(Entry(old,17),D(0))),AndB(Beq(Entry(old,17),D(0)),Beq(Entry(old,3),D(1))));
+        var kp=Beq(jd,D(1));
+        var bd=OrB(OrB(OrB(Bne(Entry(old,12),D(0)),Bne(Entry(old,13),D(0))),AndB(Bne(jd,D(0)),Bne(jd,D(1)))),
+            AndB(NotB(kp),OrB(OrB(NotB(an),aj),NotB(flip))));
+        var marked=Finish(D(1),Flag(flip),Entry(old,1),Flag(kp),Flag(an),Flag(aj),Flag(bd));
+        var unselected=Ite(And(Eqn(nd,D(1)),Eqn(Entry(old,10),D(0)),Eqn(Entry(old,11),D(0))),Items(unmarked,marked),Items(unmarked));
+        var middle=Ite(Bne(nd,D(0)),ListNil(),Items(Finish(Add(m,D(1)),Flag(flip),parity,keep,ni,nj,Flag(OrB(bad,Bne(nd,jd))))));
+        var third=Ite(AndB(Bne(nd,D(0)),Bne(nd,D(1))),ListNil(),
+            Items(Finish(Ite(Eqn(nd,D(1)),D(1),D(4)),Flag(flip),parity,keep,ni,nj,Flag(OrB(bad,Bne(nd,jd))))));
+        var final=Ite(Bne(nd,D(0)),ListNil(),Items(Finish(D(4),Flag(flip),parity,keep,ni,nj,Flag(OrB(bad,Bne(nd,jd))))));
+        var update=Ite(Bne(Entry(next,18),D(0)),ListNil(),Ite(Eqn(m,D(0)),unselected,
+            Ite(new Formula.Logic(Eqn(m,D(1)),FormulaLogicOperator.Or,Eqn(m,D(2))),middle,Ite(Eqn(m,D(3)),third,final))));
+        return Disp(All("full",ListOf(Z()),All("e",edgeType,Eqn(Call("nextMarker",full,e),update))));
+    }
+    private static Formula SuccessorFormula()
+    {
+        var edges=Call("fst",Call("snd",Call("baseTable",Call("toNat",Entry(V("full"),0)))));
+        var edgeType=Product(N(),Z(),Z(),Z(),Z());
+        return Disp(All("full",ListOf(Z()),Eqn(Call("successors",V("full")),
+            Call("flatMap",Lam("e",edgeType,Call("nextMarker",V("full"),V("e"))),edges))));
+    }
+    private static Formula RealizationRowFormula()
+    {
+        var row=Call("prefixTable",V("i"));
+        var edges=Call("fst",Call("snd",row));
+        var edgeType=Product(N(),Z(),Z(),Z(),Z());
+        var decoded=Call("map",Lam("e",edgeType,Tuple(Call("fst",Call("prefixTable",Call("fst",V("e")))),Call("snd",V("e")))),edges);
+        var complete=Call("all",Lam("a",Product(ListOf(Z()),Z(),Z(),Z(),Z()),Call("contains",decoded,V("a"))),Call("successors",Call("fst",row)));
+        var valid=Call("all",Lam("e",edgeType,Call("decide",LtF(Call("fst",V("e")),D(4,2,6,2)))),edges);
+        return Disp(All("i",N(),Eqn(Call("prefixRealizationRowCheck",V("i")),Call("andBool",complete,valid))));
+    }
+    private static Formula RealizationBlockFormula() => Disp(All("start",N(),All("count",N(),
+        Eqn(Call("prefixRealizationBlockCheck",V("start"),V("count")),
+            Call("all",Lam("k",N(),Call("prefixRealizationRowCheck",Add(V("start"),V("k")))),Call("range",V("count")))))));
     private static Formula OffsetFormula()
     {
         var full = V("full");

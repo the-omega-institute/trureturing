@@ -561,7 +561,7 @@ def prefixTable (i : ℕ) : List ℤ × List (ℕ × ℤ × ℤ × ℤ × ℤ) �
   ([717,2,1,1,1,1,0,1],[(3818,0,0,0,0),(3819,0,0,1,1)],some (0),none))) else (if i < 4251 then (if i < 4250 then ([718,2,1,1,1,1,0,1],[],none,none) else ([1262,2,1,1,0,1,0,1],[(3779,0,0,0,0),(3780,0,0,1,1)],some (0),none)) else (if i < 4252 then ([1263,2,1,1,0,1,0,1],[],none,none) else ([1256,2,1,1,1,0,1,1],[(3840,0,0,0,0),(3841,0,0,1,1)],some (0),none)))) else (if i < 4257 then (if i < 4255 then (if i < 4254 then ([1257,2,1,1,1,0,1,1],[],none,none) else ([726,2,1,1,0,0,1,1],[(3792,0,0,0,0),(3793,0,0,1,1)],some (0),none)) else (if i < 4256 then ([727,2,1,1,0,0,1,1],[],none,none) else 
   ([839,2,1,1,1,1,0,1],[(3919,0,0,0,0),(3920,0,0,1,1)],some (0),none))) else (if i < 4259 then (if i < 4258 then ([840,2,1,1,1,1,0,1],[],none,none) else ([1330,2,1,1,1,0,1,1],[(3931,0,0,0,0),(3932,0,0,1,1)],some (0),none)) else (if i < 4260 then ([1331,2,1,1,1,0,1,1],[],none,none) else (if i < 4261 then ([865,2,1,1,0,0,1,1],[(3893,0,0,0,0),(3894,0,0,1,1)],some (0),none) else ([866,2,1,1,0,0,1,1],[],none,none))))))))))))))
 
-private def nextMarker (full : List ℤ) (e : ℕ × ℤ × ℤ × ℤ × ℤ) :
+def nextMarker (full : List ℤ) (e : ℕ × ℤ × ℤ × ℤ × ℤ) :
     List (List ℤ × ℤ × ℤ × ℤ × ℤ) :=
   let s := (baseTable (full[0]?.getD 0).toNat).1
   let ns := (baseTable e.1).1
@@ -597,8 +597,18 @@ private def nextMarker (full : List ℤ) (e : ℕ × ℤ × ℤ × ℤ × ℤ) :
   else if nd != 0 then [] else
     [finish [e.1,4,Bool.toNat flip,parity,keep,ni,nj,Bool.toNat (bad || nd != jd)]]
 
-private def successors (full : List ℤ) : List (List ℤ × ℤ × ℤ × ℤ × ℤ) :=
+def successors (full : List ℤ) : List (List ℤ × ℤ × ℤ × ℤ × ℤ) :=
   (baseTable (full[0]?.getD 0).toNat).2.1.flatMap (nextMarker full)
+
+/-- The indexed marker table contains every literal successor and valid target indices. -/
+def prefixRealizationRowCheck (i : ℕ) : Bool :=
+  let row:=prefixTable i
+  let actual:=row.2.1.map fun e => ((prefixTable e.1).1,e.2)
+  (successors row.1).all actual.contains && row.2.1.all (fun e => decide (e.1 < 4262))
+
+/-- A bounded window of the literal reconstruction checker. -/
+def prefixRealizationBlockCheck (start count : ℕ) : Bool :=
+  (List.range count).all fun k => prefixRealizationRowCheck (start+k)
 
 private def terminal (full : List ℤ) : Bool :=
   full[1]?.getD 0 == 4 && baseTerminal (baseTable (full[0]?.getD 0).toNat).1
