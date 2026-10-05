@@ -13,8 +13,9 @@ have not been established for the AP choices.
 
 Sections 1–8 give ordinary mathematical literature and interface results.
 The cited statements are source-checked, not independently certified
-proofs of the papers. Sections 9–10 give an exact component-orientation
-deletion test and an actual pure-prime obstruction with scoped Lean checks.
+proofs of the papers. Sections 9–11 give an exact component-orientation
+deletion test, an actual pure-prime obstruction, and a parent-local retained
+target at ternary height two, with scoped Lean checks.
 Neither literature novelty
 nor a resolution of unrestricted Erdős #7 is claimed. The period-12,
 period-144 and affine period-921600 controls below are actual covers
@@ -678,8 +679,10 @@ moduli except $n_r$ and therefore has one fewer class. Global count
 minimality prohibits it. In particular, for every parent-local retained
 $r$, the complete actual signed formula must be unsatisfiable.
 
-This gives an exact test of one specified deletion mechanism. It does
-not supply a parent-local retained class or a satisfying orientation.
+This gives an exact test of one specified deletion mechanism. At arbitrary
+height it does not supply a parent-local retained class; section 11 supplies
+one at height two with an original modulus 3. Neither result supplies a
+satisfying orientation.
 Several local constraints may each admit an orientation while their
 common formula is inconsistent. Full arithmetic phase and cofactor
 relations are still needed to force a contradiction from that
@@ -796,3 +799,63 @@ accepted axioms, with no sorry terms. The new check is an application of
 the existing private-point and prefix-liability results, Mathlib CRT and
 prime-power decomposition, and the component transport; no bind-only
 declaration is retained as new project mathematics.
+
+## 11. The height-two branch has an actual parent-local retained target
+
+Specialize AC1 to $H=2$ and assume the original modulus $3$ also occurs,
+with label $g$. Keep the original anchor $n_h=9$ and let
+$\tau=a_h\bmod3$. Global count minimality alone then supplies an actual
+original $r$ and a cofactor $m$ such that
+
+$$
+ n_r=3m,\qquad m>1,\qquad m\mid M,\qquad (3,m)=1,
+ \qquad a_r\equiv\tau\pmod3.
+ \tag{AC11}
+$$
+
+In particular $r\notin D$ and its complete liability is parent-local:
+
+$$
+ J_r\subseteq A_r\subseteq\{x:x\equiv\tau\pmod3\}.
+ \tag{AC12}
+$$
+
+This reuses the branch-restriction argument in
+[Report350, section 2](350-extremal-paired-branch-and-source-support.md#2-exact-branch-restriction-retains-every-higher-digit).
+The existence assertion needs neither modulus-sum minimality nor divisor
+closure. Those stronger hypotheses in Report350 also supply the original
+companion of modulus $m$, which is not required here.
+
+To see this, the original $9$-class cannot be contained in the original
+$3$-class, since it has a private point. Thus their residues modulo $3$
+differ. Restrict the whole cover to $x=\tau+3y$; the original $3$-class
+disappears. Each $3$-free original pulls back to one class with its old
+modulus. Each active $3$-bearing original pulls back to one class with
+modulus $n_i/3$.
+
+Suppose there were no active original of exact $3$-height one. Every
+active $3$-bearing modulus would then be divisible by $9$, so every
+normalized modulus in that group would still be divisible by $3$.
+The other group's moduli are coprime to $3$. Hence the two normalized
+palettes cannot collide; within either group the numerical map is
+injective. All normalized moduli remain distinct odd nonunits. The
+restricted family covers every integer and has fewer original labels,
+contradicting global count minimality. An active exact-height-one owner
+therefore exists. This owner is not $g$, so $m>1$; exact height one gives
+$(3,m)=1$; the period bound $n_r\mid9M$ then gives $m\mid M$.
+Equation AC12 follows from its actual residue.
+
+This supplies a genuine target for the complete-liability test in section
+9. It does not supply a satisfying component orientation or an arbitrary
+Service extension. At greater ternary height, a first-digit child need
+not have its complete liability inside the anchor's full parent prefix;
+the height-two locality conclusion must not be transferred to that case.
+
+A scoped Lean check verifies AC11–AC12 from the actual covering system,
+global count minimum, original moduli $3$ and $9$, and the common-period
+condition. The checked implication does not require coprimality of $3$
+and $M$ as a separate hypothesis. Its fourteen reported theorem axiom
+closures, including the reused section 9 checks, use only the standard
+accepted axioms, with no sorry terms. The proof specializes the existing
+finite-cardinality and modular-cancellation results; no additional
+bind-only Lean declaration is retained.
