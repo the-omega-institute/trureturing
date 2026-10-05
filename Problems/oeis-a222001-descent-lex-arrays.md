@@ -67,7 +67,7 @@ for every `n : ℕ` with `1 ≤ n`,
 `Arrays n` is defined from actual `Equiv.Perm (Fin 3)` rows and literal adjacent
 descent and lexicographic predicates. The proof's decomposition and its
 Mathlib counting and sorting suppliers are described in
-`Library/Combinatorics/hardin2013a222001.md`; the source citation is OEIS
+`Library/PermutationPatterns/hardin2013a222001.md`; the source citation is OEIS
 A222001.
 
 ## Triage

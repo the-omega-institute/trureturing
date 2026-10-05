@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PermutationArrays;
 internal sealed class DescentLexCountDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/hardin2013a222001");
+        LibraryNoteRef.Create("D5/L/PermutationPatterns/hardin2013a222001");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positive-length three-column permutation arrays have count 2+(n+1)(n+2)(n+3)/6.",
