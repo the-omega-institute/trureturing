@@ -128,10 +128,11 @@ internal sealed class TriangularSharedImplementationDocument : IScribeDocumentDe
             Rel(Fn("Nonstop", raw, V("color"), start, omega), Iff,
                 Fn("Nonstop", delta, V("color"), imageStart, omega)));
         var cube = new Formula.Power(q, D(3)); var square = new Formula.Power(q, D(2));
-        var even = Equal(Fn("B", Seq(D(2), Cdot, q)),
-            new Formula.Fraction(Seq(D(2), Cdot, cube, Plus, q), D(3)));
-        var odd = Equal(Fn("B", Seq(D(2), Cdot, q, Plus, D(1))),
-            new Formula.Fraction(Seq(D(2), Cdot, cube, Plus, D(3), Cdot, square, Plus, D(4), Cdot, q), D(3)));
+        var even = Equal(Fn("B", Seq(D(2), Sp, Cdot, Sp, q)),
+            new Formula.Fraction(Seq(D(2), Sp, Cdot, Sp, cube, Plus, q), D(3)));
+        var odd = Equal(Fn("B", Seq(D(2), Sp, Cdot, Sp, q, Plus, D(1))),
+            new Formula.Fraction(Seq(D(2), Sp, Cdot, Sp, cube, Plus,
+                D(3), Sp, Cdot, Sp, square, Plus, D(4), Sp, Cdot, Sp, q), D(3)));
         return All("m", nat, Imp(Rel(m, Ge, D(2)), All("f", Fn("Table", m),
             Some("pi", Arrow(original, shared), Some("delta", Arrow(shared, Arrow(bits, shared)), And(
                 Fn("Surjective", pi),
