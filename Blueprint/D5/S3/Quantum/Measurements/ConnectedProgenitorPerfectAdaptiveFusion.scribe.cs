@@ -139,7 +139,7 @@ internal sealed class ConnectedProgenitorPerfectAdaptiveFusionDocument : IScribe
         Formula causal = All("w", F.Id("V"), All("o", outcomes, All("r", outcomes,
             Implies(earlier, Equal(axis(w, o), axis(w, o2))))));
         Formula fields = And(And(Member(Call("rank", s), Arrow(F.Id("V"), Integers())),
-            Member(Call("axis", s), Arrow(F.Id("V"), Arrow(outcomes, PauliType())))),
+            Member(Call("axis", s), Arrow(F.Id("V"), Arrow(Parenthesized(outcomes), PauliType())))),
             And(injective, And(nonIdentity, causal)));
         return Disp(All("V", Named("Type"), All("e", F.Id("V"),
             All("S", Call("AdaptiveStrategy", e), fields))));
