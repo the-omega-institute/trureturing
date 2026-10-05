@@ -13,6 +13,10 @@ internal sealed class BaseChargeArithmeticDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + "digitStreamCharge"), H("Signed-stream charge with incoming memory"),
             StatementSource.FromAuthor(ChargeFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("A zero digit contributes nothing and preserves the previous nonzero sign. A nonzero digit contributes 1 + 2 par and an extra unit when its sign differs from a nonzero incoming sign. The parity switches after every digit. This is the position-weight and sign-change part of Q, without its terminal endpoint-parity correction. Boolean neqBool and andBool denote inequality testing and Boolean conjunction; toNat and cast embed their indicators in the integers."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("pd-basechargearithmetic-digit-stream-charge-formula"),
+            DeclarationHandle.Create(Prefix + "digit_stream_charge_formula"), H("The literal position and sign-change sum"),
+            StatementSource.FromAuthor(StreamFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Enumerate the digits from natural position p and discard the zeros. The charge is the sum of 1 + 2(i mod 2) over the surviving positions, plus the number of changes between successive surviving signs, plus the change from a nonzero incoming sign to the first surviving sign. An empty nonzero list has zero incoming correction. mod is natural remainder; OptionElim is zero for none and applies the displayed function for some."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("pd-basechargearithmetic-base-path-charge-reconstruction"),
             DeclarationHandle.Create(Prefix + "base_path_charge_reconstruction"), H("q is the difference of the two stream charges"),
             StatementSource.FromAuthor(ReconstructionFormula()), AssessedProvenance.FromRepo(),
@@ -74,6 +78,21 @@ internal sealed class BaseChargeArithmeticDocument : IScribeDocumentDefinition
             Add(Contribution(par,previous,d),Call("digitStreamCharge",Sub(D(1),par),Ite(Eqn(d,D(0)),previous,d),ds)));
         step=All("par",Z(),All("previous",Z(),All("d",Z(),All("ds",ListOf(Z()),step))));
         return Disp(And(Parenthesized(zero),Parenthesized(step)));
+    }
+    private static Formula StreamFormula()
+    {
+        var pair=Product(Z(),N());
+        var nz=Call("filter",Lam("z",pair,Call("neqBool",Call("fst",V("z")),D(0))),Call("zipIdx",V("ds"),V("p")));
+        var weights=Call("sum",Call("map",Lam("z",pair,Add(D(1),Mul(D(2),Call("mod",Call("snd",V("z")),D(2))))),nz));
+        var flips=Call("length",Call("filter",Lam("z",Product(pair,pair),
+            Call("neqBool",Call("fst",Call("fst",V("z"))),Call("fst",Call("snd",V("z"))))),
+            Call("zip",nz,Call("tail",nz))));
+        var initial=Call("OptionElim",D(0),Lam("z",pair,
+            Cast(Call("toNat",Call("andBool",Call("neqBool",V("previous"),D(0)),
+                Call("neqBool",V("previous"),Call("fst",V("z"))))),Z())),Call("headOption",nz));
+        var body=Eqn(Call("digitStreamCharge",Cast(Call("mod",V("p"),D(2)),Z()),V("previous"),V("ds")),
+            Add(Add(Cast(weights,Z()),Cast(flips,Z())),initial));
+        return Disp(All("ds",ListOf(Z()),All("p",N(),All("previous",Z(),body))));
     }
     private static Formula ReconstructionFormula()
     {

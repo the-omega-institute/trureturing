@@ -7,8 +7,8 @@
    digest: The q edge charges count alternating position weights and changes of nonzero signs. -/
 
 /-
-proof_shape: content (base_path_charge_reconstruction)
-escape_witness: Complete charge-update checks and path induction reconstruct the signed-stream sum.
+proof_shape: content (digit_stream_charge_formula, base_path_charge_reconstruction)
+escape_witness: Filtered-list induction and complete charge-update checks reconstruct the stream sum.
 admission_basis: escape-witness
 Direct frozen dependencies: none; BaseSignedStreams is delivered with this module.
 Information-escape registration is paused under CLAUDE.md section 3.9.
@@ -51,6 +51,40 @@ private def chargeRowCheck (i : ℕ) : Bool :=
 private def chargeBlockCheck (start count : ℕ) : Bool :=
   (List.range count).all fun k => chargeRowCheck (start+k)
 
+/-- The recursive charge equals the position sum, consecutive-sign changes and incoming correction. -/
+theorem digit_stream_charge_formula (ds : List ℤ) (p : ℕ) (previous : ℤ) :
+    let nz := (ds.zipIdx p).filter (fun z => z.1 != 0)
+    digitStreamCharge ((p%2 : ℕ) : ℤ) previous ds =
+      (((nz.map (fun z => (1+2*(z.2%2) : ℕ))).sum : ℕ) : ℤ) +
+      (((nz.zip nz.tail).filter (fun z => z.1.1 != z.2.1)).length : ℤ) +
+      (match nz.head? with
+       | none => 0
+       | some z => (Bool.toNat (previous != 0 && previous != z.1) : ℤ)) := by
+  induction ds generalizing p previous with
+  | nil => simp [digitStreamCharge]
+  | cons d ds ih =>
+    have hp : (((p+1)%2 : ℕ) : ℤ) = 1-((p%2 : ℕ) : ℤ) := by omega
+    by_cases hd : d=0
+    · subst d
+      simpa only [List.zipIdx_cons,List.filter_cons,show ((0:ℤ)!=0)=false by decide,
+        Bool.false_eq_true,if_false,digitStreamCharge,if_true,zero_add,← hp] using ih (p+1) previous
+    · simp only [List.zipIdx_cons,List.filter_cons,show (d != 0)=true by simp [hd],
+        if_true,digitStreamCharge,if_neg hd]
+      rw [← hp,ih (p+1) d]
+      cases hnz : ((ds.zipIdx (p+1)).filter (fun z => z.1 != 0)) with
+      | nil => simp
+      | cons z zs =>
+        simp only [List.map_cons,List.sum_cons,List.tail_cons,List.zip_cons_cons,
+          List.filter_cons,List.head?_cons,Nat.cast_add,Nat.cast_one]
+        by_cases hz : (d != z.1) = true
+        · simp only [show (d != 0) = true by simp [hd],Bool.true_and,hz,if_true,
+            Bool.toNat_true,List.length_cons,Nat.cast_add,Nat.cast_one,Nat.cast_mul,Nat.cast_ofNat]
+          omega
+        · have hz' : (d != z.1) = false := by simpa only [Bool.not_eq_true] using hz
+          simp only [show (d != 0) = true by simp [hd],Bool.true_and,hz',Bool.false_eq_true,if_false,
+            Bool.toNat_false,Nat.cast_mul,Nat.cast_ofNat]
+          omega
+
 /-- Every finite path's q charges are the exact difference of its two stream charges. -/
 theorem base_path_charge_reconstruction (charge : Bool)
     {s t : Fin 1492} {xs : List (ℤ × ℤ × ℤ × ℤ)}
@@ -88,3 +122,5 @@ theorem base_path_charge_reconstruction (charge : Bool)
 end D5.S1.Words.Palindromes.PeriodDoubling
 
 #print axioms D5.S1.Words.Palindromes.PeriodDoubling.base_path_charge_reconstruction
+
+#print axioms D5.S1.Words.Palindromes.PeriodDoubling.digit_stream_charge_formula
