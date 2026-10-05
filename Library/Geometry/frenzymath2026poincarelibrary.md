@@ -5605,3 +5605,126 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 三个具名目标的完整精确临时 Lean 第二轮真实编译通过，host `6444` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-proper-action.lean` 为 204716 字节，SHA256 `b0af58ed2b9a0f074937f3adf7eb2916f7aa57781383f2aca95289be93fee627`；此前成功原覆盖间隔源码为完整 offset0 字节前缀，无新增 import、依赖构建或版本变更。首轮两处接口名称和存在量词展开错误的完整源码日志保留排除；使用实际 root `isCompact_closedBall` 与 `exists_prop` 修复，没有弱化目标。协作实施与调用方只读复核完成，没有新增 SSHX 共识。
 
 该原等距乘法、紧闭球、有限球覆盖与紧集距离界消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批消除了实际覆盖作用另供 proper 性质的前提，未从一般原 `M,N` 双曲流形数据内部构造该覆盖。原商度量、体积、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 实际原覆盖内部提供 proper 性质后的未归一化原群分类
+
+统一消费者只输入任意宇宙的同一原等距表示 `ρ`、原自由性、独立目标宇宙的实际覆盖 `π : H3 → M`、同一表示逐点纤维保持，以及原群中真正有限指数幂零子群 `H`。先内部消费前批原覆盖间隔与紧集交点有限性，得到 canonical 同一 `ρ` 的 proper 性质；再消费此前共同边界点与真实原等距共轭分类。因此实际共同边界点、正逆归一化、归一化后的自由性与 proper 性质均内部提供，无需另给 proper 性质、间隔、边界点、归一化或生成元。
+
+单位缩放分支返回原群中正规有限指数至多二的实际平移核 `K`、单射实际加法位移字符 `U : Additive K →+ ℂ`，以及逐元素的真实共轭平移等式和原表示等式。实际 `U.range.toIntSubmodule` 是离散、有限、自由的整数模，整数秩至多二；同时对任意实际高度阈值，归一化后的同一表示在原 horoball 子空间的轨道商投影是拓扑覆盖。非单位缩放分支返回同一个原 `G` 的整数幂生成元。保留反向等距变换，不要求原 `H` 正规，也未推出秩恰二、余紧性、有限体积或尖点嵌入。
+
+完整具名目标 `virtuallyNilpotentFreeOriginalCoveringRepresentation_elementaryModuleClassification` 的精确临时 Lean 第四次实际编译 exit0，host `65796`；完整日志零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-elementary-module.lean` 为 208343 字节，SHA256 `f6e1b487e09a366471923df202b8b6290e196a87c74dec657acfef257bf1cd94`；前批成功 proper 源码为完整 offset0 前缀，无新增 import、依赖构建或版本变更。前两次命名空间及局部 proper 类型推断失败的完整源码日志保留排除；第三次日志虽无诊断，但恢复后进程句柄失效，实际退出码无法读取，故不作为成功证据。第四次同时读取实际退出码并持久化，源码未改。协作实施与调用方只读语义复核完成，没有新增 SSHX 共识。
+
+该原覆盖、既有分类、真实平移模和 horoball 覆盖消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批组装实际原覆盖前提下的统一分类，尚未从一般原流形假设构造覆盖或完整 deck 表示。原商度量与体积的匹配、尖点分离、有限体积薄部分解、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 实际原覆盖作用内部推出同一原群可数
+
+对同一个任意宇宙的原等距表示 `ρ`，仅要求在一个原点有正轨道间隔，前批证明使每个实际自然数界的原位移元素集合有限。钉版可数并接口使这些有限集合的自然数并可数；每个原群元素的实际位移是实数，`exists_nat_ge` 提供包含它的自然数界。因此全部原群元素包含于这个可数并，得到真实 `Countable G`，没有可数性、有限生成或虚幂零输入，也没有只证明轨道点集合可数后遗漏原元素的单射性。
+
+实际原覆盖消费者从原自由性、真正给定的覆盖和同一表示逐点纤维保持内部提供间隔，故同一原 `G` 可数。目标空间与原群保持独立宇宙，不要求覆盖满射或纤维轨道传递性。这里仍消费实际给定覆盖，未从一般原流形数据构造它；群可数也不提供有限体积或完整刚性。
+
+两个具名目标 `originalRepresentation_countableGroup_of_pointGap` 与 `freeOriginalCoveringRepresentation_countableGroup` 的完整精确临时 Lean 首轮真实编译通过，host `70182` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-countable-group.lean` 为 209739 字节，SHA256 `a7f48c2cde61982babb04b0fba333110d126a67912e54263124e0c46a462e9cd`；前批成功原覆盖分类源码为完整 offset0 前缀，无新增 import、依赖构建或版本变更。实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该原有界位移有限性、可数并和自然数上界接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批可消除后续原覆盖作用消费者的外供群可数性前提；原流形度量覆盖构造、原商度量与体积的匹配、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 同一实际覆盖的原轨道商到原底空间同胚
+
+对任意独立宇宙的实际底空间 `M`、同一原等距表示 `ρ` 与真正给定的实际覆盖 `π : H3 → M`，另明确要求 `π` 满射、同一表示逐点纤维保持，以及同一原群在每条实际纤维上传递：若 `π p = π q`，存在原 `g : G` 使 `ρ(g)(p)=q`。内部构造真实 `e : OrbitQuotient ρ ≃ₜ M`，逐原点满足 `e (orbitQuotientMk ρ p) = π p`。没有把纤维保持偷换成纤维传递，没有假设这个同胚，也不需要原自由性或 proper 性质。
+
+同一 `π` 的 quotient lift 借助纤维保持良定义；纤维传递使其单射，实际满射性使其满射。原覆盖连续性给出正向连续性，实际满射覆盖的 quotient-map 接口和精确的逆复合等式 `e.symm ∘ π = orbitQuotientMk ρ` 给出逆向连续性。因此不是仅构造集合等价，也没有换用另一个覆盖或另一个原作用。这里得到拓扑同胚，未宣称它保持原 `M` 度量、黎曼结构或体积；构造一般原流形的实际覆盖及完整 deck 纤维传递性仍须独立完成。
+
+具名目标 `originalCoveringRepresentation_orbitQuotientHomeomorph` 的完整精确临时 Lean 首轮真实编译通过，host `80961` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-quotient-homeomorph.lean` 为 211714 字节，SHA256 `ba0fd7d8216b3c887978f83a7f3a0ddd949978c54e92c403e743c581c883c30d`；前批成功原群可数源码为完整 offset0 前缀，无新增 import、依赖构建或版本变更。实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该实际 quotient lift、覆盖连续性和 quotient-map 接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。既有 canonical `IsometricOrbitMetric.orbitMetricSpace` 和 `orbitProperSpace` 可提供实际轨道商度量及其 proper 性质，不能据此直接认定原底空间度量匹配。本批不完成原商度量与体积的匹配、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 或官方验收。
+
+
+### 实际原覆盖作用的轨道商投影在原正半径球上保距
+
+对同一个原等距表示 `ρ` 和原点 `p`，真实正轨道间隔 `r` 使每个非单位原元素在 `p` 的位移至少为 `r`。若原 `x,y` 均在实际球 `ball p (r/4)`，三角不等式和同一 `ρ(g)` 的等距性给出非单位平移的 `dist x (ρ(g)(y))` 至少为 `dist x y`。单位元素给出原距离本身；canonical `IsometricOrbitMetric.orbitDistance` 的实际轨道距离下确界因此逐字等于原 `dist x y`。没有另供局部保距结论，没有重证或替换 canonical 商度量。
+
+实际原覆盖消费者仅需原自由性、真正给定的覆盖 `π` 和同一表示的纤维保持，内部提供每个原点的正间隔及 canonical proper 性质。在由这个实际 proper 证明给出的 `orbitMetricSpace ρ` 中，实际 `orbitQuotientMk ρ` 限制到每个原点附近的某个正半径球是 `Isometry`。原群和目标空间保持独立宇宙，不要求有限生成、虚幂零、满射或纤维轨道传递性。商度量保持原 quotient topology；该结论尚未与原底空间 `M` 的实际度量相匹配。
+
+两个具名目标 `originalRepresentation_orbitDistance_eq_dist_of_pointGap` 与 `freeOriginalCoveringRepresentation_locallyIsometricOrbitProjection` 的完整精确临时 Lean 第二轮真实编译通过，host `67218` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-locally-isometric-orbit.lean` 为 214278 字节，SHA256 `d5f05f64042315b6f625f7dba38a7ba1ab885324bbc74133d9c7b4765f92b56a`；仅新增 43 字节的热缓存 canonical `IsometricOrbitMetric` import，其后完整保留前批成功原商同胚源码，无新依赖构建或版本变更。首轮实际 exit0 但含一条局部 `letI` 风格警告，完整源码日志保留排除；仅改证明内部绑定为 `let`，未关闭 linter。第二轮实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该原三角估计、已有轨道距离下确界与实际 canonical 商度量消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。后续原度量桥仍须从一般原流形条件内部构造覆盖及 H³ 等距识别；原商到 `M` 同胚的保距性、体积匹配、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 原 H³ 距离的实际坐标方向右侧度量斜率
+
+在同一个原 `H3` 和同一个原 `dist` 中，对任意原点 `p`、实际欧氏 `Ambient ℂ = WithLp 2 (ℂ × ℝ)` 方向 `v`，构造坐标扰动 `p.coordinates + s • v`。原高度正性与连续性内部保证它在零的邻域仍属于实际正半空间；域外返回原 `p` 仅使函数全域定义，不影响该邻域中的真实扰动。随后证明当实际 `s → 0+` 时，`dist (nativeCoordinatePerturbation p v s) p / s` 收敛到 `‖v‖ / height p.coordinates`。没有换用另一个距离，也未将距离函数在零的普通可微性作为输入或结论。
+
+原距离的实际 `2 * arsinh` 公式将正步长扰动距离写为 `2 * arsinh (s * K(s))`，其中 `K(s)` 趋于 `‖v‖ / (2 * height p)`。钉版 `arsinh` 的导数与补洞斜率连续性给出 `arsinh(z)/z → 1`；完整保留零方向分支，避免要求 `v ≠ 0`。显式坐标消费者使用实际 `WithLp` 的 L² 距离接口，将方向范数识别为 `sqrt(‖a‖²+b²)`，得到右侧极限 `sqrt(‖a‖²+b²) / height p`。没有把默认乘积的 max 范数误当作欧氏平方和。
+
+五个具名构造与目标的完整精确临时 Lean 第四轮真实编译通过，host `40015` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-native-coordinate-infinitesimal-metric.lean` 为 219775 字节，SHA256 `b3845c4fc791a948e7b8397cf24950838c196161ba09ed4b2ad82219b38b350d`；仅新增 45 字节热缓存 `Mathlib.Analysis.Calculus.Deriv.Slope` import，其后完整保留前批成功局部商保距源码，无新依赖构建或版本变更。前两轮实际类型与滤子推断失败的源码日志保留排除；第三轮实际 exit0 但含三条冗余 tactic 警告，也保留排除。只补明确类型并去除冗余，未弱化右侧极限、原距离或零方向分支，未关闭 linter。最终实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该实际原距离公式、欧氏范数、导数斜率和滤子连续性接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批识别的是原坐标直线的局部右侧度量速度，尚未构造实际黎曼度量、其曲率或与原距离的完整内蕴等式。固定外部库的 scalar derivative bound 到内蕴距离 Lipschitz 接口可用于后续实际 `log height` 下界；仍须提供同一实际模型的切向度量和导数界。完整原流形覆盖、原度量／体积匹配、尖点分离、给定 `h`／完整 `d` 的 Mostow–Prasad 与官方验收继续未完成。
+
+
+### 原 Lorentz 坐标嵌入的真实导数、切向正定配对与原等距作用变换律
+
+对同一个实际原点 `p` 和实际方向 `(a,b) : ℂ × ℝ`，显式构造四个原 Lorentz 坐标的方向导数 `nativeLorentzCoordinateTangent p a b`。它不是只有形式上的候选向量：原正高度邻域内实际坐标扰动的平方范数和四个有理坐标函数的导数，逐分量组合为真实 `HasDerivAt`，其函数逐字是原 `v (nativeCoordinatePerturbation p (WithLp.toLp 2 (a,b)) s)`。
+
+两个实际方向 `(a,b),(c,d)` 的原 Lorentz 配对满足精确恒等式：负配对等于 `(a.re*c.re + a.im*c.im + b*d) / height(p)^2`。同一导数向量与原 `v(p)` 正交；其负自配对是 `(‖a‖²+b²) / height(p)^2`，因此只要实际方向非零就严格为正。原高度正性和实际欧氏平方和均参与证明，没有给出正定性前提，没有把默认 max 范数当作欧氏范数。
+
+对任意同一个原 `e : H3 ≃ᵢ H3`，同一原扰动经实际 `e` 再经原 `v` 的函数，其真实导数是 `actionMatrix e` 乘以上述真实导数向量。这里消费已验的逐原点 `action_formula`，将同一个实际矩阵视为连续线性映射并使用导数链式法则；没有另供 `e` 的光滑性、另一个作用或替代度量。该结论仍是原 Lorentz 坐标中的曲线导数变换律，尚未单独构造全局平滑切丛或证明内蕴距离相等。
+
+三个连贯临时源码增量都真实编译 exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。实际导数与双线性配对源码 `.lake/mostow-h3-native-lorentz-coordinate-tangent.lean` 为 225174 字节，SHA256 `522fb8d31093c04b58ccf0b715255cdffad30775a158640a0c4bc8d144257b0f`，仅在完整前批成功源码前增加 44 字节热缓存 `Deriv.Prod` import。正交及正定性源码 `.lake/mostow-h3-native-lorentz-tangent-positive.lean` 为 227021 字节，SHA256 `9aa02734e9f5e46da13327aefd6a2af2c6682c718b644565752258d07637a721`，首轮 host `21797` 通过。原等距导数变换的完整累计源码 `.lake/mostow-h3-native-isometry-lorentz-derivative.lean` 为 227805 字节，SHA256 `11ee5c7bd6437e34fb48d31e0a37e892ad5808cf06ec9202fabeb07bd97f1738`，第二轮真实编译通过；后两批保持各自成功前批为完整 offset0 前缀，无新 import。所有失败或含警告轮次的完整源码日志保留排除，未降低陈述或关闭 linter。实际退出码和完整公理输出保留，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该原有理坐标导数、Lorentz 配对代数和既有线性作用接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批为同一原模型的黎曼度量构造提供真实切向数据；仍须构造实际平滑度量与全局内蕴距离匹配、曲率 −1、原流形覆盖和体积绑定。有限体积格子同构产生边界交比保持的全局推导、完整给定 `h`／完整 `d` 的 Mostow–Prasad 及官方验收继续未完成。
+
+
+### 原 Lorentz 坐标的实际逆恢复及任意曲线坐标导数（2026-10-06）
+
+本闭合小批接续原等距的 Lorentz 导数变换，仍使用同一原 H3、原 `v` 与原坐标。`nativeLorentz_heightDifference` 给出 `v p 0 - v p 3 = 1 / height p.coordinates`；其非零性由原点的正高度内部推出。实际高度、水平实部、水平虚部依次由 `1/(v₀-v₃)`、`v₁/(v₀-v₃)`、`v₂/(v₀-v₃)` 恢复。
+
+对于任意实际曲线 `Q : ℝ → H3`，若 `v ∘ Q` 在实际参数 `s` 的导数为 `u : Fin 4 → ℝ`，则原高度的导数为 `-(u 0-u 3) * height (Q s).coordinates ^ 2`；原水平实部导数为 `height (Q s).coordinates * u 1 - (Q s).coordinates.1.fst.re * height (Q s).coordinates * (u 0-u 3)`，虚部对应以 `u 2` 和实际虚部替换。三个 `HasDerivAt` 结论用同一个 `Q,s,u`，不额外假设原坐标曲线已有导数；实际分母非零由上述恒等式证明。本批不主张全局光滑度或原内蕴距离兼容已完成。
+
+完整累计临时源码 `.lake/mostow-h3-native-lorentz-coordinate-recovery.lean` 为 232372 字节，SHA256 `148c523af6ae45d9793245275610fb29db0495ffd097430e2170d650dfda6a45`，前批 227805 字节源码为完整 offset0 前缀，无新 import。第三轮真实编译 exit0，零错误、零警告，173 条公理输出仅含 `propext, Classical.choice, Quot.sound`，无 `sorryAx`；完整日志 22695 字节，SHA256 `c106d5f416580419634afc48d620a669fe6446a7beef5d5faa5f0bec31417f0d`。调用方已核对源码、前缀、预登记、日志及真实退出收据的长度和哈希，排除前两轮失败；没有新增 SSHX 共识。
+
+逐声明 `proof_shape: bind-only`、`admission_basis: none`：复用现有 Lorentz 高度配对恒等式、分量导数及除法求导，新增步骤为实际参数绑定与代数规范化。只提交本 Library 复用说明，精确 Lean 与成功/失败证据留在本次临时结果目录；远端 CI 验证本说明，不代表完整 Mostow 验收。全局原光滑度量、原内蕴距离等式、曲率 −1、原流形覆盖/有限体积及同一规定 `h,d` 的完整 Mostow–Prasad 仍未闭合。
+
+
+### 原等距映射的实际坐标导数及切向配对保持（2026-10-06）
+
+此闭合单元将两个相邻成功批次接成同一原等距切空间作用接口。`nativeLorentzTangentDirection p w` 从原 `v p` 的 Lorentz 正交向量 `w` 明确恢复原 `Ambient ℂ = WithLp 2 (ℂ × ℝ)` 方向；在 `pairing (v p) w = 0` 下，恢复方向的原 Lorentz 坐标切向量等于同一个完整 `w`，未另加切向量实现假设。
+
+对于同一实际 `e : H3 ≃ᵢ H3`、原点 `p` 及任意方向 `(a,b)`，定义 `nativeIsometryCoordinateDirection e p a b` 为在原 `e p` 恢复 `actionMatrix e *ᵥ nativeLorentzCoordinateTangent p a b` 所得的方向。该方向的实际 Lorentz 切向量等于上述矩阵像，正交性由原 `action_formula` 与全向量 `action_preserves_pairing` 内部推出。原 `e` 作用于原坐标扰动后的高度、水平实部、水平虚部，在同一参数零点分别有此方向对应分量的实际 `HasDerivAt`。本批还核验原扰动在零处确为同一 `p`。
+
+两任意方向 `(a,b),(c,d)` 的像满足明确双线性等式：像方向的原坐标欧氏内积除以 `height (e p).coordinates ^ 2`，等于 `(a.re*c.re+a.im*c.im+b*d)/height p.coordinates ^ 2`。这包含不同方向之间的配对保持，既未供给原 `e` 光滑性前提，也未替换原空间距离；结论当前是明确原坐标导数与代数切向形式，尚未当作全局 `mfderiv` 或已构造光滑度量的保持。
+
+切向恢复源码 `.lake/mostow-h3-native-lorentz-tangent-recovery.lean` 为 235989 字节，SHA256 `6316cdc805f3e21535ff483e03a3af7983de62af5e2d5975e50bec20f0c30518`，第三轮真实 exit0、零错误/警告，175 条标准公理闭包输出。原等距坐标导数及双线性配对源码 `.lake/mostow-h3-native-isometry-coordinate-derivative.lean` 为 240434 字节，SHA256 `9a6b255f6fb1547a747d558abc063e2caa50ed493f292e04024734a551896f25`，第二轮真实 exit0、零错误/警告，182 条标准公理闭包输出；成功日志 23884 字节，SHA256 `73cd724fc6887c5de7d46879f36144f12a4bde9c6b13abfd6e62765672ffef46`。两批各保持成功前批完整 offset0 前缀，无新 import；公理仅 `propext, Classical.choice, Quot.sound`，无 `sorryAx`。调用方复核全部源码/前缀/预登记/日志/真实退出收据哈希，失败轮次完整保留排除，没有新增 SSHX 共识。
+
+逐声明 `proof_shape: bind-only`、`admission_basis: none`：现有全向量 Lorentz 保持、原实际曲线坐标求导及实际坐标切向配对供给原子事实，本批为绑定及规范化。只交付此 Library 复用说明，精确 Lean 与证据保留在临时结果目录；远端 CI 验证说明。原全局光滑度量、原全局光滑等距作用与 `mfderiv`、原内蕴距离等式、曲率 −1、原流形覆盖/有限体积和同一规定 `h,d` 的完整 Mostow–Prasad 仍未完成。
+
+
+### 原 H3 拓扑上的实际光滑坐标图与高度缩放（2026-10-06）
+
+本闭合小批仍使用同一原 `H3`、原 `coordinatesHomeomorph` 和原度量诱导的拓扑。`nativeAmbientEuclideanIsometry` 复用 `Complex.orthonormalBasisOneI.prod (OrthonormalBasis.singleton (Fin 1) ℝ)`，经 `finSumFinEquiv` 重索引取 `.repr`，得到原 `Ambient ℂ = WithLp 2 (ℂ × ℝ)` 到 `EuclideanSpace ℝ (Fin 3)` 的实线性等距；没有将原坐标欧氏范数改成默认乘积最大范数。
+
+原坐标映射及其欧氏三维组合都是实际 `IsOpenEmbedding`：原高度正域的开放性由原连续高度投影证明，组合的是原同胚和上述线性等距。使用原 `rayOrigin` 内部提供 `Nonempty H3`，再复用 `singletonChartedSpace` 与 `isManifold_singleton`，在同一原拓扑上得到实际 `ChartedSpace`、`IsManifold (𝓡 3) ∞ H3`，以及原欧氏坐标映射的全局 `ContMDiff`。这一步未安装新的空间距离或假设原内蕴距离兼容。
+
+`nativeEuclideanHeightCLM` 为原线性等距逆映射后接原 `WithLp.sndL`；其作用于原欧氏坐标时确等于同一 `height p.coordinates`。由实际线性映射和原坐标的光滑性得到原高度全局 C∞。`nativeHeightInverseSquare p = (height p.coordinates ^ 2)⁻¹` 也全局 C∞、处处严格正；实际分母非零和正性由原点的正高度内部推出，未供给额外正性或光滑性前提。
+
+完整累计临时源码 `.lake/mostow-h3-native-euclidean-open-chart.lean` 为 244302 字节，SHA256 `dc8a876210963a0902d75fef3a9e4a87a91cc7510b49434e9e183b772a717d08`；前批 240434 字节成功源码完整保持在 offset199，仅加入具名热缓存 import。第六轮 host `17811` 真实 exit0，零错误/警告，192 条公理闭包仅含 `propext, Classical.choice, Quot.sound`，无 `sorryAx`。成功日志 25101 字节，SHA256 `89ee87b7ba1ae6d686db26b14a8da93e57c4fb46b6c7b5e7de1f5a6292270e56`。调用方已复核全部源、前缀、预登记、日志、真实退出收据哈希及全部公理输出；先前失败或中止轮次完整保留排除。实际修复只处理 scope、具名 smooth multiplication instance 与定义等式包装，没有改陈述、pin 或关闭检查，没有新增 SSHX 共识。
+
+逐声明 `proof_shape: bind-only`、`admission_basis: none`：复用既有实线性等距基、原同胚、开放嵌入单图册及光滑复合/幂/逆函数规则；本批只交付此 Library 复用说明，精确 Lean 与证据保留在临时结果目录，远端 CI 验证说明。实际光滑 `g` 的构造、原全局等距作用光滑性及 `mfderiv`、原内蕴距离等式、曲率 −1、原流形覆盖/有限体积和同一规定 `h,d` 的完整 Mostow–Prasad 仍未完成。
+
+
+### 原 H3 光滑切丛上的实际黎曼度量
+
+在原 `H3` 的同一拓扑和上述实际欧氏三维单图册上，构造 `nativeRiemannianMetric : Bundle.ContMDiffRiemannianMetric (𝓡 3) ∞ NativeEuclidean3 (fun p : H3 => TangentSpace (𝓡 3) p)`。对任意原点 `p` 和两个实际切向量 `V,W`，其内积精确为 `⟪V,W⟫_ℝ / height p.coordinates ^ 2`；这里的欧氏切向量表示来自该原坐标图。原正高度内部给出对称性和严格正定性，度量的切向单位球正是欧氏空间中以原高度为半径的球，因而满足实际有界性要求。
+
+实际单图册的切向坐标变换、切丛正向及逆向平凡化均为恒等连续线性映射。原高度负二次幂的全局光滑性因此给出上述双线性形式作为切丛截面的全局 C∞，没有把逐点正定形式直接当作光滑度量。同一原欧氏坐标开放嵌入还内部提供 `SecondCountableTopology H3`，无需添加第二可数性假设。
+
+该精确构造及内积公式已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用的是既有单图册、切丛平凡化、欧氏内积和光滑标量乘法接口；本项交付为 Library 复用说明。尚须证明原等距作用的实际 `mfderiv` 保持该度量、其内蕴距离等于原 H3 距离，以及实际曲率 −1。一般原流形的覆盖和体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 及官方验收仍未完成。
+
+
+### 原 H3 全部等距映射的全局光滑性
+
+对任意同一个原 `e : H3 ≃ᵢ H3`，在原 H3 拓扑上的实际欧氏三维图册中，`nativeIsometry_contMDiff e` 给出 `ContMDiff (𝓡 3) (𝓡 3) ∞ e`。这一量化同样适用于原 `e.symm`，不要求定向性，也不额外假设 `e` 已经光滑；原空间距离及原映射均保留。
+
+原水平坐标的实部、虚部和原高度全局光滑，因此原 Lorentz 嵌入 `v` 的四个实际有理分量全局光滑。已有原作用公式 `v (e p) = actionMatrix e *ᵥ v p` 将同一 `v ∘ e` 识别为一个实际连续线性映射与 `v` 的复合。实际分母 `v (e p) 0 - v (e p) 3` 等于原高度倒数，由原正高度内部保证处处非零；其三个有理恢复公式给出原 `e` 的高度、水平实部和虚部的光滑性。最后由原坐标开放嵌入的实际单图册接口得到 `e` 的全局 C∞，没有把曲线方向导数直接当作全局微分。
+
+该精确原映射结论及所有所用坐标光滑接口已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用既有原线性作用、实际逆坐标恢复和光滑复合／除法／开放嵌入接口；本项交付为 Library 复用说明。实际 `mfderiv` 的方向识别及对上述黎曼度量的保持、原内蕴距离等式、曲率 −1、一般原流形覆盖和体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 及官方验收仍未完成。

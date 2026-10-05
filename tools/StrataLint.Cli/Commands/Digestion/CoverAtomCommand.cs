@@ -7,20 +7,12 @@ namespace StrataLint.Cli;
 // existing open residual atom by writing a coverage edge.
 // cover is the narrow sibling of ingest — it reuses
 // DigestionStatusEvaluator for the structural gates and never adds residual
-// atoms or rebinds boundaries. The write is all-or-nothing with a fail-closed
-// check-then-act guard: every gate must pass and the on-disk ledger must still
-// exist and be unchanged before ReplaceLedgerAtomically touches disk, otherwise
-// BACKFILL.yaml is byte-unchanged. This is not a true CAS/lock — a residual
-// sub-millisecond TOCTOU window remains between the reread and the atomic rename
-// (serialized manual/CI invocation makes it sufficient; an OS file lock for a
-// hard guarantee is deferred).
+// atoms or rebinds boundaries. Every gate must pass before the ledger files are
+// replaced; a failed replacement restores the files it touched.
 //
 // kind exclusion remains a producer responsibility (spec section 5), not cover's.
 internal static partial class CoverAtomCommand
 {
-    private const string ImplementationPath =
-        "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.cs";
-
     internal static CommandResult Run(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -36,7 +28,7 @@ internal static partial class CoverAtomCommand
         {
             var options = ParseArguments(arguments);
             var session = new Session(repositoryRoot, repository, leanReportSource,
-                recordedAtUtc, options.BaselineRevision, options.Gids[0]);
+                recordedAtUtc, options.Gids[0]);
             return Apply(session, options, allowAlreadyApplied: false);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -192,9 +184,7 @@ internal static partial class CoverAtomCommand
                 frozenStatements: frozenStatements);
             var evaluationChanges = authorityImpact.EvaluationChanges;
             var receiptVerificationChanges = receiptImpact.ReceiptVerificationChanges;
-            var evaluationScope = DigestionEvaluationScopes.ForChanges(
-                authorityChanges,
-                ImplementationPath, EngineeringProjectRegistry.ReadRuleBuildInputs(current));
+            const DigestionEvaluationScope evaluationScope = DigestionEvaluationScope.ChangedSet;
 
             bool ValueChanged(string path)
             {
@@ -232,22 +222,8 @@ internal static partial class CoverAtomCommand
                 }
             }
 
-            var beforeEvaluation = DigestionStatusEvaluator.Evaluate(
-                evaluationScope,
-                document,
-                current,
-                lean,
-                baselineDocument,
-                baselineSnapshot: baseline,
-                changes: receiptVerificationChanges,
-                projectedStatusChanges: evaluationChanges,
-                truthStates: truthStates,
-                frozenStatementIndex: frozenStatements);
-            IngestCommand.RequireNoReceiptIntegrityFailure(beforeEvaluation);
-
             if (allowAlreadyApplied && addedGids.Length == 0)
             {
-                session.RequireUnchanged();
                 return new CommandResult(true,
                     $"COVER atom_id={options.AtomId} ledger_changed=false\n", string.Empty);
             }
@@ -276,59 +252,7 @@ internal static partial class CoverAtomCommand
                 frozenStatementIndex: frozenStatements);
             IngestCommand.RequireNoReceiptIntegrityFailure(derived);
 
-            var statusByAtomId = derived.Entries.ToDictionary(
-                static item => item.Entry.AtomId,
-                static item => item.DerivedStatus,
-                StringComparer.Ordinal);
-            var refreshed = plannedDocument.WithDigestionSources(
-                plannedDocument.RequireDigestionSources()
-                    .Select(source => source with
-                    {
-                        Entries = source.Entries
-                            .Select(entry => entry with
-                            {
-                                ProjectedStatus = statusByAtomId[entry.AtomId],
-                            })
-                            .ToImmutableArray(),
-                    })
-                    .ToImmutableArray());
-
-            var finalRaw = IngestCommand.ReplaceLedger(
-                currentRaw,
-                document,
-                refreshed);
-            var finalSnapshot = Decode(finalRaw);
-            LeanTruthStates.RequireSameManagedInputs(current, finalSnapshot);
-            var finalDocument = LoadDocument(finalSnapshot);
-            var evaluation = DigestionStatusEvaluator.Evaluate(
-                evaluationScope,
-                finalDocument,
-                finalSnapshot,
-                lean,
-                baselineDocument,
-                baselineSnapshot: baseline,
-                changes: receiptVerificationChanges,
-                projectedStatusChanges: evaluationChanges,
-                truthStates: truthStates,
-                frozenStatementIndex: frozenStatements);
-            IngestCommand.RequireNoReceiptIntegrityFailure(evaluation);
-            var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
-                finalDocument,
-                finalSnapshot,
-                baseline,
-                session.Policy,
-                lean,
-                DigestionEvaluationScopes.ResolveChanges(
-                    evaluationScope,
-                    receiptVerificationChanges),
-                projectedStatusChanges: DigestionEvaluationScopes.ResolveChanges(
-                    evaluationScope,
-                    evaluationChanges),
-                baselineDocument: baselineDocument,
-                frozenStatementIndex: frozenStatements,
-                truthStates: truthStates);
-
-            var finalTarget = EvaluationFor(evaluation, options.AtomId);
+            var finalTarget = EvaluationFor(derived, options.AtomId);
             if (target.CoverageGids.Length == 0)
             {
                 // Initial cover requires the atom to become
@@ -350,22 +274,53 @@ internal static partial class CoverAtomCommand
                 // pretending that its remaining semantic residuals were discharged.
                 // Its migration/truth projection and gap set may only stay equal or
                 // improve.
+                var before = DigestionStatusEvaluator.Evaluate(
+                    evaluationScope,
+                    document,
+                    current,
+                    lean,
+                    baselineDocument,
+                    baselineSnapshot: baseline,
+                    changes: receiptVerificationChanges,
+                    projectedStatusChanges: evaluationChanges,
+                    truthStates: truthStates,
+                    frozenStatementIndex: frozenStatements);
                 RequireHostedExtension(
-                    EvaluationFor(beforeEvaluation, options.AtomId),
+                    EvaluationFor(before, options.AtomId),
                     finalTarget,
                     addedGids,
                     truthStates);
             }
 
-            var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw, document, finalDocument);
+            var statusByAtomId = derived.Entries.ToDictionary(
+                static item => item.Entry.AtomId,
+                static item => item.DerivedStatus,
+                StringComparer.Ordinal);
+            var refreshed = plannedDocument.WithDigestionSources(
+                plannedDocument.RequireDigestionSources()
+                    .Select(source => source with
+                    {
+                        Entries = source.Entries
+                            .Select(entry => entry with
+                            {
+                                ProjectedStatus = statusByAtomId[entry.AtomId],
+                            })
+                            .ToImmutableArray(),
+                    })
+                    .ToImmutableArray());
+
+            var finalRaw = IngestCommand.ReplaceLedger(
+                currentRaw,
+                document,
+                refreshed);
+            var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw, document, refreshed);
             var changed = ledgerUpdates.Length > 0;
-            session.Commit(finalRaw, finalSnapshot, finalDocument, ledgerUpdates);
+            session.Commit(finalRaw, ledgerUpdates);
 
             return new CommandResult(
                 true,
                 $"COVER atom_id={options.AtomId} gid={string.Join(',', options.Gids)} "
-                + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
-                + backfillObservations,
+                + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n",
                 string.Empty);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -476,23 +431,19 @@ internal static partial class CoverAtomCommand
                 Receipts = target.Receipts with { CoverDisposition = disposition },
             });
         var dispositionRaw = IngestCommand.ReplaceLedger(session.CurrentRaw, session.Document, dispositionDocument);
-        var dispositionSnapshot = Decode(dispositionRaw);
-        var finalDispositionDocument = LoadDocument(dispositionSnapshot);
-        var ledgerUpdates = IngestCommand.LedgerUpdates(
-            session.CurrentRaw, dispositionRaw, session.Document, finalDispositionDocument);
-        session.Commit(dispositionRaw, dispositionSnapshot, finalDispositionDocument, ledgerUpdates);
+        session.Commit(
+            dispositionRaw,
+            IngestCommand.LedgerUpdates(session.CurrentRaw, dispositionRaw, session.Document, dispositionDocument));
     }
 
     private sealed record CoverArguments(
         string AtomId,
-        ImmutableArray<string> Gids,
-        string BaselineRevision);
+        ImmutableArray<string> Gids);
 
     private static CoverArguments ParseArguments(IReadOnlyList<string> arguments)
     {
         string? atomId = null;
         var gids = ImmutableArray.CreateBuilder<string>();
-        string? baselineRevision = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -508,9 +459,6 @@ internal static partial class CoverAtomCommand
                 case "--gid":
                     gids.Add(arguments[index + 1]);
                     break;
-                case "--base" when baselineRevision is null:
-                    baselineRevision = arguments[index + 1];
-                    break;
                 default:
                     throw Usage();
             }
@@ -519,37 +467,19 @@ internal static partial class CoverAtomCommand
         if (string.IsNullOrWhiteSpace(atomId)
             || gids.Count == 0
             || gids.Any(string.IsNullOrWhiteSpace)
-            || gids.Distinct(StringComparer.Ordinal).Count() != gids.Count
-            || string.IsNullOrWhiteSpace(baselineRevision))
+            || gids.Distinct(StringComparer.Ordinal).Count() != gids.Count)
         {
             throw Usage();
         }
 
-        return new CoverArguments(atomId, gids.ToImmutable(), baselineRevision);
+        return new CoverArguments(atomId, gids.ToImmutable());
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID [--gid DECL_GID ...] --base REV");
+        "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID [--gid DECL_GID ...]");
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         IngestCommand.LoadDocument(snapshot);
-
-    private static ValidatedPolicy LoadPolicy(RepositorySnapshot snapshot)
-    {
-        if (!snapshot.TryGetFile("Meta/FILEMAP.toml", out _)
-            || !snapshot.TryGetFile("Meta/domains.yaml", out _))
-        {
-            throw new InvalidOperationException(
-                "cover requires Meta/FILEMAP.toml and Meta/domains.yaml");
-        }
-
-        return RepositoryPolicyLoader.Load(snapshot) switch
-        {
-            PolicyLoadOutcome.Accepted accepted => accepted.Policy,
-            PolicyLoadOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
-    }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch
