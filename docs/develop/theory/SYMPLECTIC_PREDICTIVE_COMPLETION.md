@@ -3257,3 +3257,112 @@ $$
 标量指数余项、Hilbert rank-one 算子、$L^2$ 范数控制及紧性闭性复用既有分析结论。这里组合构造的是同一实际窗口的有序单项式截断和显式算子误差，不主张文献原创性。本结论提供定理 2.4 所需的有限窗口逼近；一般态的有限秩紧性、向量级数表示、位置与动量的一阶域及协方差关系仍需各自的证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 33. 有限秩紧性与同一态向量级数
+
+本节的复内积在第一变量共轭线性、第二变量线性。记 $B(H)$ 为复 Hilbert 空间 $H$ 上的实际有界复线性算子代数，$1$ 为恒等算子。对一个指标族，$\operatorname{HasSum}$ 表示有限指标子集上的部分和网收敛到所示值；它不只断言某个排列的部分和收敛。
+
+**定理 33.1（有限秩紧性产生同一态向量级数）。** 任取复 Hilbert 空间 $H$，以及保持正序的复线性映射 $\varphi:B(H)\to\mathbb C$，满足 $\varphi(1)=1$。取任意算子序列 $E_j\in B(H)$，其中每个 $E_j$ 都自伴且幂等，实际像 $E_j(H)$ 为有限维复空间，并且
+
+$$
+\operatorname{Re}\varphi(1-E_j)\longrightarrow 0
+\qquad (j\longrightarrow\infty).
+$$
+
+则存在同一个向量族 $u:\mathbb N\to H$，同时满足
+
+$$
+\operatorname{HasSum}\bigl(k\mapsto\|u_k\|^2,1\bigr)
+\quad\text{以及}\quad
+\forall S\in B(H),\qquad
+\operatorname{HasSum}\bigl(k\mapsto\langle u_k,Su_k\rangle,\varphi(S)\bigr).
+$$
+
+第一个级数取值于 $\mathbb R$，第二个取值于 $\mathbb C$。向量族在量化 $S$ 之前选定，因而表示整个泛函。条件不要求 $H$ 可分、$\varphi$ 正常、$E_j$ 单调或两两交换，也不预先给定态向量族或谱标签。
+
+证明。首先对任意正且归一的泛函 $f$，在其 pre-GNS 空间中令 $q(A)$ 为 $A$ 的类的范数。正性与 GNS 左乘算子界给出
+
+$$
+q(1)=1,\qquad q(AB)\le\|A\|q(B),\qquad
+|f(A^*B)|\le q(A)q(B),\qquad q(A)\le\|A\|.
+$$
+
+这里复用的是 GNS 左乘的有界性与内积 Cauchy–Schwarz。特别地 $|f(A)|\le\|A\|$，所以 $f$ 连续。若 $P$ 是任意实际自伴幂等算子，令 $R=1-P$；则 $q(P)\le1$ 且 $q(R)=\sqrt{\operatorname{Re}f(R)}$。由
+
+$$
+S-PSP=RS+PSR
+$$
+
+以及 $q(S^*P)\le\|S\|$，分别控制两个配对项，得到
+
+$$
+|f(S)-f(PSP)|\le
+2\|S\|\sqrt{\operatorname{Re}f(1-P)}.
+$$
+
+这个估计对每个 $S\in B(H)$ 成立，不要求 $S$ 自伴。
+
+定义实际秩一算子 $R_{x,y}z=\langle y,z\rangle x$。连续的半双线性形式 $(v,u)\mapsto\varphi(R_{u,v})$ 经 Hilbert 空间的 Riesz 表示给出有界算子 $\rho$，满足
+
+$$
+\langle\rho v,u\rangle=\varphi(R_{u,v}),
+\qquad
+\langle y,\rho x\rangle=\varphi(R_{x,y}).
+$$
+
+第二式使用正泛函保持伴随与 $R_{x,y}^*=R_{y,x}$。正性使 $\rho\ge0$。复用正算子的连续函数演算平方根，取 $T=\sqrt\rho$，则 $T$ 自伴且 $T^2=\rho$，从而
+
+$$
+\|Tx\|^2=\operatorname{Re}\varphi(R_{x,x}).
+$$
+
+取任意 Hilbert 基 $(b_i)_{i\in I}$，不假设 $I$ 可数，并令 $v_i=Tb_i$。对每个有限集 $F\subset I$，正交性使 $P_F=\sum_{i\in F}R_{b_i,b_i}$ 成为实际自伴幂等算子。于是
+
+$$
+\sum_{i\in F}\|v_i\|^2
+=\operatorname{Re}\varphi(P_F)\le1,
+$$
+
+因为 $1-P_F\ge0$。非负族的有限和有界判据给出平方范数的可和性及总质量 $m=\sum_{i\in I}\|v_i\|^2\le1$。对任意有界算子 $S$，
+
+$$
+|\langle v_i,Sv_i\rangle|\le\|S\|\|v_i\|^2,
+$$
+
+故 $\psi(S)=\sum_{i\in I}\langle v_i,Sv_i\rangle$ 定义一个正复线性泛函，且 $\psi(1)=m$。此时尚未使用 $m=1$。
+
+Parseval 恒等式与 $T$ 的自伴性给出秩一算子的精确配对方向：
+
+$$
+\begin{aligned}
+\psi(R_{x,y})
+&=\sum_{i\in I}\langle Ty,b_i\rangle\langle b_i,Tx\rangle\\
+&=\langle Ty,Tx\rangle
+=\langle y,\rho x\rangle
+=\varphi(R_{x,y}).
+\end{aligned}
+$$
+
+若 $P$ 的实际像有限维，取该像的正交归一基 $(e_a)$。有限投影展开给出 $P=\sum_aR_{e_a,e_a}$，因此
+
+$$
+PSP=\sum_aR_{PSe_a,e_a},
+\qquad \psi(PSP)=\varphi(PSP).
+$$
+
+像为零时这些和为空，上式仍成立。特别地 $\psi(E_j)=\varphi(E_j)$。由 $\psi(1-E_j)\ge0$ 得 $\operatorname{Re}\varphi(E_j)\le m$；另一方面，归一与所给紧性使 $\operatorname{Re}\varphi(E_j)\to1$。结合 $m\le1$，得到 $m=1$。所以 $\psi$ 也归一，且 $\psi(1-E_j)=\varphi(1-E_j)$。
+
+现在对 $\varphi$ 与 $\psi$ 分别应用前述压缩估计，并使用在 $E_jSE_j$ 上的相等，得到
+
+$$
+|\varphi(S)-\psi(S)|\le
+4\|S\|\sqrt{\operatorname{Re}\varphi(1-E_j)}\longrightarrow0.
+$$
+
+因此 $\psi(S)=\varphi(S)$ 对所有 $S\in B(H)$ 同时成立，原族 $(v_i)$ 的质量级数与每个算子配对级数都有所需的 $\operatorname{HasSum}$ 值。
+
+最后，平方范数可和使 $\{i\in I:v_i\ne0\}$ 可数。将这个集合单射到 $\mathbb N$，在其像上保留原向量，在其余指标填零，得到同一个族 $(u_k)$。可和族的支集限制与单射零延拓保持两个 $\operatorname{HasSum}$：分别用于 $x\mapsto\|x\|^2$ 与每个 $x\mapsto\langle x,Sx\rangle$ 即得结论。有限支集同样适用；不需要把整个 Hilbert 基与 $\mathbb N$ 等同。
+
+GNS、Riesz 表示、正平方根、Hilbert 基、Parseval、有限投影展开与可数支集提供上述各个基础步骤。这里从实际泛函构造 $\rho$ 与向量族，由所给有限秩紧性确定其总质量，再由压缩误差极限确定整个有界算子泛函。本条件定理没有从原定理 2.4 的位置或动量上界推出有限秩紧性，也没有识别一阶算子域、建立协方差或完成原定理 2.4。
+
+## 追加锚（本行以下为增补区）
