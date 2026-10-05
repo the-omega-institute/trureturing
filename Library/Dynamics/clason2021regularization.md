@@ -1475,3 +1475,104 @@ analytic approximation interface. Source and archimedean costs, actual
 primal/dual Gram acquisition, low and complementary-low signs on one
 common original cofinal sequence, the all-input half-bound, Robin, RH and
 Lean certification remain unresolved.
+
+
+## Retain both actual endpoint decay rates
+
+The original spatial decomposition retains both decay rates:
+
+$$
+\begin{aligned}
+C_s&=\sqrt2\,C_{\rm dom},\\
+C_f&=\sqrt2(C_{\rm comp}+C_{\rm wrong}
+                   +C_{\rm ideal,c}+C_{\rm ideal,-})+C_{\rm ctr},\\
+\|d_z-p_z\|_{H^1}
+&\le C_s e^{-R}+C_f e^{-5R/2},\qquad R\ge R_b.
+\end{aligned}
+$$
+
+For $C_s>0$, set
+
+$$
+\begin{aligned}
+C_b&=2C_s,\\
+Q_b&=4g_0C_b+C_b^2e^{-R_b}
+           +4(R_b+H_\theta)e^{-4R_b},\\
+R_b^*&=\max\{R_b,\tfrac23\log(C_f/C_s),
+                    \log(4Q_b/a_0^2)\}.
+\end{aligned}
+$$
+
+For $R\ge R_b^*$ the faster term obeys
+$C_f e^{-3R/2}\le C_s$, hence
+$\|d_z-p_z\|_{H^1}\le C_b e^{-R}$.
+The same bilinear calculation then gives
+$|q(z)-a_0^2|\le Q_b e^{-R}$; its zero-free disk holds for
+$R>R_b^*$ with the same unused strip margin.
+
+Use $C_b,Q_b$ instead of the collapsed $C_\theta,Q_\theta$ in
+the existing $C_{\theta,n},N_\theta,M_\theta,C_d$ formulas, with
+any certified threshold larger than $R_b^*$. The old ground/compact
+and relative-series constants remain exactly the same suppliers.
+This applies the existing normalization argument to the two
+original decay allowances.
+
+Choosing this threshold fixes its $R_0=R_*+1$ for the
+principal/residual split before acquisition. The coarse and balanced source columns are different families;
+a Gram certificate applies to its own chosen family.
+
+
+The same Banach-valued Cauchy estimate supplies the parameter jet as well:
+for $R\ge R_0$ and $d=1/16$,
+
+$$
+\|\partial_R(n_R-E_R)\|_{H^1}
+\le16e^{1/16}C_{\theta,n}e^{-R}.
+$$
+
+Its circle lies inside the established original normalization strip and
+above the threshold. Thus both spatial components of (J1) use the
+same normalized constant, and their parameter derivatives use this
+existing Cauchy allowance. No new generic derivative theorem is introduced.
+
+## Directed caps for the same endpoint choice
+
+The [constant producer](../../docs/reports/theta-mixed-matrix/theta_endpoint_constants.py)
+evaluates these conditional original-series bounds with Python 3.13.12,
+python-flint 0.9.0 and 256-bit precision. It reuses the existing
+`derivative_supplier` definitions and scalar WC constants; the old
+derivative grid and small-window translation producer are not executed.
+Convergent moments use positive partial sums and certified geometric tails.
+The ground polynomial cap uses the full positive-line maximum
+$(m/\zeta)^me^{-m}$, which also bounds its restriction to $u\ge1$;
+a rounded maximizer is not substituted.
+
+The [directed result](../../docs/reports/theta-mixed-matrix/theta-endpoint-constants-result.json)
+records exact dyadic upper caps, both supplier hashes and the chosen
+threshold. The coarse and two-rate choices give the following valid
+allowances in the same inherited model:
+
+| Choice | Sufficient integer $R_*$ | Normalized $H^1$ error cap |
+|---|---:|---:|
+| Collapse both terms to $e^{-R}$ | 176 | $1.593\times10^{76}$ |
+| Retain $e^{-R}$ and $e^{-5R/2}$ before normalization | 58 | $920$ |
+
+For the retained choice, $R_0=59$, the outer/inner parameter-strip
+widths are $1/6$ and $1/8$, and the analytic-disk radius is $1/16$.
+For $\Re z\ge58$ in the outer strip the paper bound gives
+$|q(z)-a_0^2|/a_0^2<6.061\times10^{-24}$ and
+$\|n_z\|_{H^1}<9.645$. With the same original symbolic WF2
+coefficients,
+
+$$
+M_\theta<1.601\sqrt{c_0+c_1},\qquad
+C_d<182.395\sqrt{c_0+c_1}.
+$$
+
+These are upper allowances from the original series estimates, not
+sampled values of actual columns or Grams. Numerical WF2 coefficients,
+column and coefficient-functional enclosures, actual same-source
+primal/dual complex Grams, source and archimedean costs, common-sequence
+low/complementary-low signs, the all-input half-bound, Robin, RH and
+Lean certification remain unresolved. A residual-column count does not
+supply a runtime guarantee.
