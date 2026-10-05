@@ -66,8 +66,7 @@ The eight `pell_near_collisions` rows use the exact recurrence
 state `(-q/p,2q/p)`, both readings, their error from `(1,1)`, and the gap in
 the target `a²` relative to `(1,0)`. The Pell invariant is `p²-5q²=1`.
 The readout error is exactly `1/p²`, while the target gap is strictly greater
-than `4/5`. The all-index induction and error bound `81^-n` are in the theory
-text; computing eight rows does not certify the infinite statement.
+than `4/5`. The all-index induction and error bound `81^-n` are in the [research analysis, §15.2](analysis.md#152-无浮点平方根的任意精度近碰撞); computing eight rows does not certify the infinite statement.
 
 The experiment supports finite collision search, counterexample discovery and
 exact near-collision generation. It does not implement recovery from noisy
