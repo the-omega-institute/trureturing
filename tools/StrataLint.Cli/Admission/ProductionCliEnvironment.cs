@@ -24,13 +24,11 @@ internal interface IRepositoryGateway
 
     RawRepositorySnapshot ReadCurrent();
 
-    /// Reads only the working-tree paths selected by the git pathspecs.
-    RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> pathspecs);
+    /// Reads the files at the given paths straight from the working directory, without
+    /// git; a directory selects everything under it.
+    RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths);
 
     RawRepositorySnapshot ReadRevision(string revision);
-
-    /// Reads only the given paths of the revision; a directory selects everything under it.
-    RawRepositorySnapshot ReadRevision(string revision, IReadOnlyList<string> paths);
 
     RawChangeSet ReadCurrentChanges();
 
