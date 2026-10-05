@@ -39,7 +39,7 @@ def signedDigitCharge (n : ℕ) : ℕ :=
       | none => 0
       | some z => Bool.toNat ((n%2 == 1) != decide (z.1 < 0)))
 
-private def memoryRowCheck (i : ℕ) : Bool :=
+def memoryRowCheck (i : ℕ) : Bool :=
   let S := (baseTable i).1
   (baseTable i).2.1.all fun e =>
     let T := (baseTable e.1).1

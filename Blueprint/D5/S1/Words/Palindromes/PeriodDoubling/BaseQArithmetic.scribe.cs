@@ -17,6 +17,10 @@ internal sealed class BaseQArithmeticDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + "signedDigitCharge"), H("Q from positions, sign changes and endpoint parity"),
             StatementSource.FromAuthor(QFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("Take X = div(n+1,2) and h = log(2,3X)+1. Enumerate its nonadjacent digits, discard zeros, and sum the weights 1+2(i mod 2), consecutive sign changes, and endpoint parity XOR the negativity of the first surviving sign. The last indicator is zero when no digit survives. OptionElim returns its first argument for none and applies its displayed function for some; neqBool, eqBool and decide denote Boolean tests."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("pd-baseqarithmetic-memoryrowcheck"),
+            DeclarationHandle.Create(Prefix + "memoryRowCheck"), H("Endpoint and first-sign memory checker"),
+            StatementSource.FromAuthor(MemoryFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Every outgoing edge must preserve the two endpoint parities and update both first-nonzero-sign memories only while their incoming memory is zero. This Boolean checker is reused by the charge identification and by the lowest-position arithmetic interpretation."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-baseqarithmetic-base-path-q-semantics"),
             DeclarationHandle.Create(Prefix + "base_path_Q_semantics"), H("Exact charge of every accepting path"),
             StatementSource.FromAuthor(PathFormula()), AssessedProvenance.FromRepo(),
@@ -105,4 +109,17 @@ internal sealed class BaseQArithmeticDocument : IScribeDocumentDefinition
         return Disp(All("n",N(),All("j",N(),All("s",f,All("t",f,All("xs",ListOf(Alphabet()),
             All("p",Call("Path",graph,V("s"),V("t"),V("xs")),body)))))));
     }
+    private static Formula MemoryFormula()
+    {
+        var source=Call("fst",Call("baseTable",V("i")));
+        var target=Call("fst",Call("baseTable",Call("fst",V("e"))));
+        var edges=Call("fst",Call("snd",Call("baseTable",V("i"))));
+        Formula E(Formula state,int k) => Call("getD",Call("getElemOption",state,new Formula.Number(k)),D(0));
+        var cond=And(Eqn(E(target,2),E(source,2)),Eqn(E(target,3),E(source,3)),
+            Eqn(E(target,14),Ite(Eqn(E(source,14),D(0)),E(target,10),E(source,14))),
+            Eqn(E(target,15),Ite(Eqn(E(source,15),D(0)),E(target,12),E(source,15))));
+        var check=Call("all",Seq(LambdaLower,Sp,V("e"),Colon,Product(N(),Z(),Z(),Z(),Z()),Sp,Mapsto,Sp,Call("decide",cond)),edges);
+        return Disp(All("i",N(),Eqn(Call("memoryRowCheck",V("i")),check)));
+    }
+
 }
