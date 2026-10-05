@@ -60,7 +60,7 @@ def discoverWithStructure (requirements : Array RootStructure.Requirement)
   let original ← getEnv
   setEnv (original.setExporting false)
   try
-    RootStructure.checkScope requirements moduleNames
+    Decoder.liftLiteral <| RootStructure.checkScope requirements moduleNames
     let mut result : Snapshot := {}
     let mut seen : NameSet := {}
     for owner in moduleNames do
@@ -85,7 +85,7 @@ def discoverWithStructure (requirements : Array RootStructure.Requirement)
         else if head == ``Contract.Seal then
           result := { result with seals := result.seals.push (owner, ← Decoder.readSeal info.name info.value) }
       result := { result with definitions := result.definitions ++ definitions }
-    RootStructure.check requirements moduleNames result.roots result.seals
+    Decoder.liftLiteral <| RootStructure.check requirements moduleNames result.roots result.seals
     return result
   finally setEnv original
 

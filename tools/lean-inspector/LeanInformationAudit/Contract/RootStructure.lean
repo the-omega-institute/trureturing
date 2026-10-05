@@ -2,7 +2,7 @@ import LeanInformationAudit.Registry.Repository
 import LeanInformationAudit.RuntimeInputs
 
 namespace LeanInformationAudit.Contract.RootStructure
-open Lean Meta
+open Lean
 
 /-- Ordinary modules have neither structural entry. Catalog modules own one
 RootCatalog; sealed catalogs additionally own one Seal for the same root. -/
@@ -51,20 +51,20 @@ def required (env : Environment) : IO (Array Requirement) :=
     fun owner => Repository.source (owner.toString.replace "." "/" ++ ".lean")
 
 /-- Required owners cannot disappear through the discover module filter. -/
-def checkScope (requirements : Array Requirement) (modules : Array Name) : MetaM Unit := do
+def checkScope (requirements : Array Requirement) (modules : Array Name) : Except String Unit := do
   let mut seen : NameSet := {}
   for requirement in requirements do
     if seen.contains requirement.owner then
-      throwError "contract.root_structure:duplicate_requirement:{requirement.owner}"
+      throw s!"contract.root_structure:duplicate_requirement:{requirement.owner}"
     seen := seen.insert requirement.owner
     unless modules.contains requirement.owner do
-      throwError "contract.root_structure:required_module_missing:{requirement.owner}"
+      throw s!"contract.root_structure:required_module_missing:{requirement.owner}"
 
 /-- File kinds fix cardinalities and root identities. A Seal covers only its
 declared root; its RootCatalog retains ordered expected/source/baseline arrays. -/
 def check (requirements : Array Requirement) (modules : Array Name)
     (roots : Array (Name × RootCatalogContract)) (seals : Array (Name × SealInput))
-    : MetaM Unit := do
+    : Except String Unit := do
   for owner in modules do
     let rule := requirements.find? (·.owner == owner)
     unless (`Reg).isPrefixOf owner || rule.isSome do continue
@@ -75,14 +75,14 @@ def check (requirements : Array Requirement) (modules : Array Name)
     let requiredCatalogs := if kind == .ordinary then 0 else 1
     let requiredSeals := if kind == .sealedCatalog then 1 else 0
     unless catalogs.size == requiredCatalogs do
-      throwError "contract.root_structure:root_catalog_count:{owner}:expected={requiredCatalogs}:actual={catalogs.size}"
+      throw s!"contract.root_structure:root_catalog_count:{owner}:expected={requiredCatalogs}:actual={catalogs.size}"
     unless sealEntries.size == requiredSeals do
-      throwError "contract.root_structure:seal_count:{owner}:expected={requiredSeals}:actual={sealEntries.size}"
+      throw s!"contract.root_structure:seal_count:{owner}:expected={requiredSeals}:actual={sealEntries.size}"
     for (_, catalog) in catalogs do
       unless catalog.rootId == rootId do
-        throwError "contract.root_structure:root_catalog_owner:{owner}:{catalog.rootId}"
+        throw s!"contract.root_structure:root_catalog_owner:{owner}:{catalog.rootId}"
     for (_, sealEntry) in sealEntries do
       unless sealEntry.rootId == rootId do
-        throwError "contract.root_structure:seal_owner:{owner}:{sealEntry.rootId}"
+        throw s!"contract.root_structure:seal_owner:{owner}:{sealEntry.rootId}"
 
 end LeanInformationAudit.Contract.RootStructure
