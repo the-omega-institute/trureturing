@@ -5733,6 +5733,305 @@ inventory bounds CD187–CD197 remain ordinary mathematical derivations
 and are not claimed as formalized. No unrestricted Erdős #7 conclusion
 follows.
 
+## Deep excess and the actual45 payment share one covering budget
+
+Keep the same original family and selected law as CD186–CD197,
+with $\nu(Y)>0$. The deletion hole remains the complete
+$E_{\mathcal M}$ for
+$\mathcal M=\{n\in D:e_n\ge1,\ m_n>1\}$; it is not the
+narrower Q2P deletion hole. Retain all the original phases,
+the safe-word measure in $\nu$, and the same $\mu$.
+
+Write
+
+$$
+ q(y)=\sum_{n\in\mathcal T}5^{1-e_n}\mathbf1_{C_n}(y),
+ \qquad
+ S=(k-r)\bar L+(2k+1)bW+D-M_k(r).
+$$
+
+CD186 gives $q\ge d$ on $Y$. The excess $q-d$ counts raw deep
+capacity beyond the complete hole's demand. Both capacity spent
+on retained originals and multiplicity inside the hole can be
+paid from the original budget.
+
+### An exact majorant keeps the sources of loss disjoint
+
+Let $V_5$ be the union of all actual high unit-five events
+$9\cdot5^e$, and let $V_o$ be the union of the actual ordinary
+axial events $9p^a$. Let $\mathcal I_{\rm ind}$ consist of the
+remaining individually counted originals: mixed-five low labels
+and nonaxial high labels. This is a budget classification, not a
+new deleted family. In particular
+$\mathcal H\cup\mathcal T\subseteq\mathcal I_{\rm ind}$ and
+$\mathcal H\cap\mathcal T=\varnothing$.
+
+Use the actual-cofactor raw allowances
+
+$$
+ u_n=
+ \begin{cases}
+  5^{-e_n}\nu(C_n)/\rho,&e_n\ge1,\\
+  \nu(C_n),&e_n=0.
+ \end{cases}
+$$
+
+They satisfy $u_n\ge\mu(A_n)$ and are no larger than their
+existing coordinate-product slots. Hence
+$\sum_{n\in\mathcal I_{\rm ind}}u_n
+ \le2bW+(bW+D)/k$.
+On the support of the same $\mu$, define
+
+$$
+ F=\mathbf1_{L_0}
+   +\sum_{n\in\mathcal I_{\rm ind}}\mathbf1_{A_n}
+   +\mathbf1_{L_0^c}
+       \bigl(\mathbf1_{V_5}
+                +(1-\mathbf1_{V_5})\mathbf1_{V_o}\bigr).
+ \tag{CD198}
+$$
+
+Every original of positive selected measure belongs to one of
+these groups. Whole coverage therefore gives $F\ge1$.
+The axial term is the exact axial union restricted to $L_0^c$;
+its expectation is
+$k^{-1}\sum_j(a'_j+x_{5,j}c_j)$, using CD188's actual coefficients.
+Put
+
+$$
+ \mathcal B=\ell+\sum_{n\in\mathcal I_{\rm ind}}u_n
+                +\frac1k\sum_j(a'_j+x_{5,j}c_j).
+$$
+
+Finite expectation gives the exact decomposition and the old
+axis-envelope upper bound
+
+$$
+ \begin{aligned}
+ \mathcal B-1
+   &=\sum_{n\in\mathcal I_{\rm ind}}
+                  \bigl(u_n-\mu(A_n)\bigr)
+                      +\int(F-1)\,d\mu,\\
+ \mathcal B-1+\frac{\chi s c_{j_0}}k&\le\frac Sk.
+ \end{aligned}
+ \tag{CD199}
+$$
+
+Every term in the first line is nonnegative. For the second
+line, add $s$ to the same actual45 coordinate when $\chi=1$.
+The resulting $z_5$ satisfies the original total cap $r$, and
+
+$$
+ \sum_j(a'_j+x_{5,j}c_j)+\chi s c_{j_0}
+   =\sum_j(a'_j+z_{5,j}c_j)
+   \le G_\ell(z_5)\le k-M_k(r)-r\ell.
+$$
+
+Combine this with the individual raw-slot bound and
+$\ell\le\bar L$. This is the same actual45 payment as CD189;
+no second $r\mapsto r-s$ deduction is made.
+
+### Raw deep losses and surviving overcount combine exactly
+
+For $n\in\mathcal H$, its raw-slot loss is exactly
+$s\nu(C_n)$. Now restrict the pointwise overcount to
+
+$$
+ \mathscr F=Y\times(Z_5\cap B_\omega).
+$$
+
+On this set all five-free and all first-five-depth originals
+are absent. The only individually counted events are those in
+$\mathcal T$, and the only retained owners still possible are
+the high unit-five events. Thus, pointwise on $\mathscr F$,
+
+$$
+ F-1=\sum_{n\in\mathcal T}\mathbf1_{A_n}
+                       -\mathbf1_{E_{\mathcal M}}.
+$$
+
+For each $n\in\mathcal T$, its raw-slot loss restricted to
+cofactors in $Y$ is
+$5^{-e_n}\nu(Y\cap C_n)/\rho-\mu(A_n\cap\mathscr F)$.
+It is nonnegative, as is its complementary raw-slot loss.
+Adding these restricted losses to the integral of the preceding
+identity cancels the actual deep event masses and leaves exactly
+$(5\rho)^{-1}\int_Y(q-d)\,d\nu$.
+
+The shallow and deep label sets are disjoint. Their chosen
+losses, the nonnegative overcount on $\mathscr F$, and the
+actual45 axis payment therefore give
+
+$$
+ \begin{aligned}
+ \mathfrak D_*&:=
+      s\sum_{n\in\mathcal H}\nu(C_n)
+       +\frac{\chi s c_{j_0}}k
+       +\frac1{5\rho}\int_Y(q-d)\,d\nu,\\
+ 0\le\mathfrak D_*&\le\frac Sk.
+ \end{aligned}
+ \tag{CD200}
+$$
+
+The deep integral pays for both overlapping surviving deep events
+and raw deep prefixes removed by retained guards. These charges
+are obtained from CD199's exact decomposition, not by subtracting
+an alleged overlap from an unknown event union.
+
+### Deep charge must stay close to the complete five-free source
+
+Let $a=\nu(Y)$, $t=\mathsf T$ from CD192, and
+$\zeta_0=\nu(R_5)$. Then $a\le\min\{\zeta_0,t\}$.
+The first two terms of $\mathfrak D_*$ are at least
+$s(\zeta_0-a)$ by CD190. The last is at least
+$d_G(t-a)/(5\rho)$. Eliminating $a$ gives
+
+$$
+ \begin{aligned}
+ \mathfrak D_*&\ge
+       s[\zeta_0-t]_++\frac{d_G}{5\rho}[t-\zeta_0]_+,\\
+ \zeta_0-\frac{S}{ks}
+       &\le t\le\zeta_0+\frac{5\rho S}{kd_G}
+                        \qquad(S\ge0).
+ \end{aligned}
+ \tag{CD201}
+$$
+
+Thus making the deep charge large also consumes budget. These
+are two bounds on the same deficit; they are not extra losses
+to add to CD200.
+
+The same argument prevents cancellation between safe words.
+Put $\zeta_{0,j}=q_j/k$ and
+$t_j=k^{-1}\int_{Y_j}q/d_j\,d\lambda$ for $j\in I$; set
+$t_j=0$ at the word removed by45. On that removed word take
+$\widehat d_j=d_G$ solely as a coefficient convention; its actual
+hole is empty. Elsewhere put $\widehat d_j=d_j$. Then
+
+$$
+ S\ge k\sum_{j\in J}\left(
+      s[\zeta_{0,j}-t_j]_+
+          +\frac{\widehat d_j}{5\rho}[t_j-\zeta_{0,j}]_+
+                         \right).
+ \tag{CD202}
+$$
+
+At the removed word the second positive part is zero, and the
+first is paid by $s c_{j_0}/k\ge s q_{j_0}/k$.
+
+### A certificate on the whole five-free survivor
+
+For every $y\in R_5$, extend the literal fibre notation by
+$E_y=\{t\in B_\omega:(y,t)\in E_{\mathcal M}\}$.
+This is the same complete deletion hole, including the empty
+fibres at a first-depth unit owner. For $n\in\mathcal T$, put
+$P_n=[a_n]_{5^{e_n}}\subseteq\mathbb Z/5^G$ and
+$V_{\mathcal T}(y)=\bigcup_{n\in\mathcal T,\,y\in C_n}P_n$.
+Define
+
+$$
+ \mathcal O(y)=
+ \frac{\displaystyle
+       \sum_{n\in\mathcal T}\mathbf1_{C_n}(y)|P_n|
+                        -|E_y\cap V_{\mathcal T}(y)|}{|Z_5|}.
+ \tag{CD203}
+$$
+
+This is nonnegative. On $Y$, whole coverage gives
+$E_y\subseteq V_{\mathcal T}(y)$, so
+$\mathcal O(y)=(q(y)-d(y))/(5\rho)$.
+On $(R_5\setminus U_1)\setminus Y$, at least one actual
+$\mathcal H$ cofactor cylinder is present and its shallow loss
+pays $s$. The remaining part $R_5\cap U_1$ is the actual45
+word; its mass times $s$ is paid by $\chi s c_{j_0}/k$.
+Consequently
+
+$$
+ \int_{R_5}\min\{s,\mathcal O(y)\}\,d\nu(y)
+       \le\mathfrak D_*\le\frac Sk.
+ \tag{CD204}
+$$
+
+Unlike CD197, this necessary certificate does not contain the
+shallow ordinary deletion mask $Y$. The deep family and its
+phases remain actual originals; no replacement congruences or
+new source law have been introduced.
+
+To see its finite meaning, let
+$m(y,v)=\sum_{n\in\mathcal T}\mathbf1_{C_n}(y)\mathbf1_{P_n}(v)$.
+The numerator of CD203 is
+
+$$
+ \sum_{v\in B_\omega}
+       \bigl(m(y,v)-\mathbf1_{E_y\cap V_{\mathcal T}(y)}(v)\bigr).
+$$
+
+Inside the reached part of the hole it counts multiplicity minus
+one. Outside the hole it counts all raw deep capacity, including
+prefixes outside $Z_5$. Those prefix cardinalities account for
+unused original allowances; they are not probabilities under an
+unrelated favorable law.
+
+### One original matching certifies part of the paid excess
+
+Choose one fixed matching $\mathcal P$ of original numerical
+labels in $\mathcal T$. Each label occurs in at most one pair.
+Require every pair $\{n,m\}$ to have compatible full prefixes,
+
+$$
+ a_n\equiv a_m\pmod{5^{\min(e_n,e_m)}}.
+$$
+
+Put
+
+$$
+ F_{\mathcal P}(y)=
+    \sum_{\{n,m\}\in\mathcal P}
+       \frac{5^{-\max(e_n,e_m)}}{\rho}
+                         \mathbf1_{C_n\cap C_m}(y).
+$$
+
+Then $\mathcal O(y)\ge F_{\mathcal P}(y)$ throughout $R_5$.
+At a five-coordinate with multiplicity $m\ge1$, at most
+$\lfloor m/2\rfloor\le m-1$ matched pairs occur; outside the
+reached hole the available charge is the larger value $m$.
+A compatible pair has exactly
+$5^{G-\max(e_n,e_m)}$ common five-coordinate points. Summing
+these pointwise inequalities proves
+
+$$
+ \begin{aligned}
+ k\int_{R_5}\min\{s,F_{\mathcal P}(y)\}\,d\nu(y)&\le S,\\
+ \frac{k\,5^{-\max(e_n,e_m)}}{\rho}
+       \nu(R_5\cap C_n\cap C_m)&\le S
+               \quad\text{for one compatible pair}.
+ \end{aligned}
+ \tag{CD205}
+$$
+
+The second line uses
+$5^{-\max(e_n,e_m)}/\rho\le1/(25\rho)\le s$, so a single
+pair needs no clipping. A matching with several pairs still
+requires the clipping shown in the first line. Their cofactor
+intersections and blockers are evaluated under the same $\nu$;
+product structure alone gives no lower bound for those intersections.
+
+The remaining sufficient source assertion is now precise: some
+admissible live-root budget must satisfy
+$\int_{R_5}\min\{s,\mathcal O\}\,d\nu>S/k$.
+A stronger sufficient assertion is the same strict inequality
+with one actual-label $F_{\mathcal P}$ in place of $\mathcal O$.
+Neither the positive reserve nor the existence of at least two
+suppliers forces this excess or compatible-pair mass. These
+certificates, the two-sided charge bounds and the shallow debit
+are alternative lower bounds on the same $\mathfrak D_*$ and
+cannot be added again without disjoint accounting.
+
+CD198–CD205 are ordinary finite mathematical deductions. No exact
+Lean application of their common majorant, actual45 boost or
+local excess identity is claimed here, and no unrestricted
+Erdős #7 conclusion is asserted.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
