@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:2ed7770ccbd83099850a49ae4d433e4cf2ef9ed17778645ffb3662f1659afd3e
   normalized_sha256: sha256:2ed7770ccbd83099850a49ae4d433e4cf2ef9ed17778645ffb3662f1659afd3e
 cas_ref: sha256:2ed7770ccbd83099850a49ae4d433e4cf2ef9ed17778645ffb3662f1659afd3e
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/SelfCalibratingRawWords.raw_word_signed_bound
+    target_statement_id: sha256:e88bb980e8a0ce6dcd221aca035d1df3b0544f8d7043c730352f4c010711ec20
 receipts:
   unresolved_subitems: []

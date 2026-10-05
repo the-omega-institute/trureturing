@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:627ef3c66aeebe2b3e19f5b451768ed1d4a0be23f115785bfdb83336d39d6b55
   normalized_sha256: sha256:627ef3c66aeebe2b3e19f5b451768ed1d4a0be23f115785bfdb83336d39d6b55
 cas_ref: sha256:627ef3c66aeebe2b3e19f5b451768ed1d4a0be23f115785bfdb83336d39d6b55
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/CarryTransport/FibonacciOutputAlgebra.result
+    target_statement_id: sha256:88a61903af2740b7391d039a57ab9fc9432d0d8c36910c6bedf133233f3110e4
 receipts:
   unresolved_subitems: []
