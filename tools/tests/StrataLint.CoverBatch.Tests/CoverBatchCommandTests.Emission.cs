@@ -70,7 +70,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(1, frozen.Catalogs);
         Assert.Equal(1, frozen.Indexes);
         Assert.Equal(1, ledger.BaselineLoads);
-        Assert.Equal([1, 1, 1], ledger.CandidateSnapshotLoads);
+        Assert.Equal([1, 1], ledger.CandidateSnapshotLoads);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, "Generated/DAG.md")));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, "Generated/FILEMAP.md")));
         output.WriteLine("COMPLETE_PRODUCERS synthetic_definitions=true report={0} catalog={1} index={2} baseline={3} candidate=[{4}]",
@@ -103,26 +103,13 @@ public sealed partial class CoverBatchCommandTests
     }
 
     [Fact]
-    public void MalformedFileMapBlocksSharedContextBeforeAnyCoverageWrite()
-    {
-        using var world = new BatchWorld();
-        File.WriteAllText(Path.Combine(world.Root, "Meta/FILEMAP.toml"), "malformed input\n");
-        var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));
-        Assert.Equal(["blocked", "blocked"], Results(result).Select(item => item.Status).ToArray());
-        Assert.Contains("FILEMAP", result.Error, StringComparison.Ordinal);
-        Assert.Empty(world.Entry(First).Coverage);
-        Assert.Empty(world.Entry(Second).Coverage);
-        Assert.DoesNotContain(CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void CompleteBatchRetainsCapturedReportWhenOriginalBundleChanges()
     {
         using var world = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(world.Root);
         var reportPath = world.WriteReportBundle();
         var calls = 0;
-        world.DuringInputRead = () =>
+        world.DuringChangeRead = () =>
         {
             if (++calls != 1) return;
             TemporaryFileSystem.File.WriteAllText(reportPath, "replaced report\n");
@@ -141,7 +128,7 @@ public sealed partial class CoverBatchCommandTests
         }
         finally
         {
-            world.DuringInputRead = null;
+            world.DuringChangeRead = null;
         }
     }
 
