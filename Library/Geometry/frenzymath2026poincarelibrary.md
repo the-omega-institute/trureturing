@@ -5605,3 +5605,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 三个具名目标的完整精确临时 Lean 第二轮真实编译通过，host `6444` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-proper-action.lean` 为 204716 字节，SHA256 `b0af58ed2b9a0f074937f3adf7eb2916f7aa57781383f2aca95289be93fee627`；此前成功原覆盖间隔源码为完整 offset0 字节前缀，无新增 import、依赖构建或版本变更。首轮两处接口名称和存在量词展开错误的完整源码日志保留排除；使用实际 root `isCompact_closedBall` 与 `exists_prop` 修复，没有弱化目标。协作实施与调用方只读复核完成，没有新增 SSHX 共识。
 
 该原等距乘法、紧闭球、有限球覆盖与紧集距离界消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批消除了实际覆盖作用另供 proper 性质的前提，未从一般原 `M,N` 双曲流形数据内部构造该覆盖。原商度量、体积、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 实际原覆盖内部提供 proper 性质后的未归一化原群分类
+
+统一消费者只输入任意宇宙的同一原等距表示 `ρ`、原自由性、独立目标宇宙的实际覆盖 `π : H3 → M`、同一表示逐点纤维保持，以及原群中真正有限指数幂零子群 `H`。先内部消费前批原覆盖间隔与紧集交点有限性，得到 canonical 同一 `ρ` 的 proper 性质；再消费此前共同边界点与真实原等距共轭分类。因此实际共同边界点、正逆归一化、归一化后的自由性与 proper 性质均内部提供，无需另给 proper 性质、间隔、边界点、归一化或生成元。
+
+单位缩放分支返回原群中正规有限指数至多二的实际平移核 `K`、单射实际加法位移字符 `U : Additive K →+ ℂ`，以及逐元素的真实共轭平移等式和原表示等式。实际 `U.range.toIntSubmodule` 是离散、有限、自由的整数模，整数秩至多二；同时对任意实际高度阈值，归一化后的同一表示在原 horoball 子空间的轨道商投影是拓扑覆盖。非单位缩放分支返回同一个原 `G` 的整数幂生成元。保留反向等距变换，不要求原 `H` 正规，也未推出秩恰二、余紧性、有限体积或尖点嵌入。
+
+完整具名目标 `virtuallyNilpotentFreeOriginalCoveringRepresentation_elementaryModuleClassification` 的精确临时 Lean 第四次实际编译 exit0，host `65796`；完整日志零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-elementary-module.lean` 为 208343 字节，SHA256 `f6e1b487e09a366471923df202b8b6290e196a87c74dec657acfef257bf1cd94`；前批成功 proper 源码为完整 offset0 前缀，无新增 import、依赖构建或版本变更。前两次命名空间及局部 proper 类型推断失败的完整源码日志保留排除；第三次日志虽无诊断，但恢复后进程句柄失效，实际退出码无法读取，故不作为成功证据。第四次同时读取实际退出码并持久化，源码未改。协作实施与调用方只读语义复核完成，没有新增 SSHX 共识。
+
+该原覆盖、既有分类、真实平移模和 horoball 覆盖消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批组装实际原覆盖前提下的统一分类，尚未从一般原流形假设构造覆盖或完整 deck 表示。原商度量与体积的匹配、尖点分离、有限体积薄部分解、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
