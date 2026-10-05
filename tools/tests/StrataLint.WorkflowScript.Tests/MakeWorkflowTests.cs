@@ -197,7 +197,7 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain(" address --repository ", script, StringComparison.Ordinal);
         Assert.DoesNotContain("git -C \"$ROOT\" archive", script, StringComparison.Ordinal);
         Assert.DoesNotContain("report_input_state", script, StringComparison.Ordinal);
-        Assert.Contains("ingest_args=(ingest --base \"$BASE\")", script, StringComparison.Ordinal);
+        Assert.Contains("ingest_args=(ingest)", script, StringComparison.Ordinal);
         Assert.Contains("align-digestion-status)", script, StringComparison.Ordinal);
         Assert.Contains(
             "--role digestion-alignment-consumer --report \"$REPORT\"",
@@ -263,14 +263,14 @@ public sealed partial class MakeWorkflowTests
         var set = Run(0, "quarantine", "baseline", "request.toml");
         Assert.Equal(0, set.ExitCode);
         Assert.Contains(
-            "quarantine-atom --request request.toml --base baseline",
+            "quarantine-atom --request request.toml",
             Encoding.UTF8.GetString(set.StandardOutput),
             StringComparison.Ordinal);
 
         var clear = Run(0, "quarantine-clear", "baseline", "atom-id");
         Assert.Equal(0, clear.ExitCode);
         Assert.Contains(
-            "quarantine-atom --clear atom-id --base baseline",
+            "quarantine-atom --clear atom-id",
             Encoding.UTF8.GetString(clear.StandardOutput),
             StringComparison.Ordinal);
 
@@ -283,9 +283,9 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
-    [InlineData("", "ingest --base HEAD")]
-    [InlineData("alpha beta", "ingest --base HEAD --source alpha --source beta")]
-    public void IngestWrapperForwardsBaseAndSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
+    [InlineData("", "ingest")]
+    [InlineData("alpha beta", "ingest --source alpha --source beta")]
+    public void IngestWrapperForwardsSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
     {
         if (OperatingSystem.IsWindows()) return;
 

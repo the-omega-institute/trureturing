@@ -22,6 +22,10 @@ internal sealed class FakeRepositoryGateway(
 
     internal List<string> ReadChangesCalls { get; } = [];
 
+    internal int WholeTreeReadCount { get; private set; }
+
+    internal List<IReadOnlyList<string>> ScopedCurrentReads { get; } = [];
+
     internal int CurrentRevisionResolutionCount { get; private set; }
 
     public AdmissionTopologyOutcome InspectAdmissionTopology() =>
@@ -47,6 +51,24 @@ internal sealed class FakeRepositoryGateway(
 
     public RawRepositorySnapshot ReadCurrent()
     {
+        WholeTreeReadCount++;
+        return ReadWholeCurrent();
+    }
+
+    public RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths)
+    {
+        ScopedCurrentReads.Add(paths);
+        return Scoped(ReadWholeCurrent(), paths);
+    }
+
+    public RawRepositorySnapshot ReadRevision(string revision)
+    {
+        WholeTreeReadCount++;
+        return ReadWholeRevision(revision);
+    }
+
+    private RawRepositorySnapshot ReadWholeCurrent()
+    {
         ReadCount++;
         ReadCurrentCount++;
         return WithAtomizerData(
@@ -55,7 +77,7 @@ internal sealed class FakeRepositoryGateway(
             ?? throw new InvalidOperationException("current snapshot should not be read"));
     }
 
-    public RawRepositorySnapshot ReadRevision(string revision)
+    private RawRepositorySnapshot ReadWholeRevision(string revision)
     {
         ReadCount++;
         ReadRevisionCalls.Add(revision);
@@ -71,6 +93,11 @@ internal sealed class FakeRepositoryGateway(
         ReadChangesCalls.Add(revision);
         return changesForBase?.Invoke(revision) ?? changes;
     }
+
+    // A path selects itself and, as a directory, everything under it.
+    private static RawRepositorySnapshot Scoped(RawRepositorySnapshot snapshot, IReadOnlyList<string> paths) =>
+        RawRepositorySnapshot.Create(snapshot.Entries.Where(entry => paths.Any(path =>
+            entry.Path == path || entry.Path.StartsWith(path + "/", StringComparison.Ordinal))));
 
     private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>
         snapshot.Entries.Any(static entry => entry.Path == TheoryAtomizerDataLoader.DataPath)

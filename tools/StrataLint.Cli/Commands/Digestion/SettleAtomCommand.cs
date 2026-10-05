@@ -8,7 +8,7 @@ namespace StrataLint.Cli;
 
 internal static partial class SettleAtomCommand
 {
-    private const string Usage = "USAGE: StrataLint settle-atom --request FILE --base REV | settle-atom --clear ATOM_ID --base REV";
+    private const string Usage = "USAGE: StrataLint settle-atom --request FILE | settle-atom --clear ATOM_ID";
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     internal static CommandResult Run(string root, IRepositoryGateway repository, IReadOnlyList<string> arguments,
@@ -33,10 +33,7 @@ internal static partial class SettleAtomCommand
             var options = ParseArguments(arguments);
             var request = options.RequestPath is null ? null : LoadRequest(readRequest(root, options.RequestPath));
             var atomId = request?.AtomId ?? options.ClearAtomId!;
-            var current = repository.ReadCurrent();
-            _ = repository.ReadRevision(options.BaseRevision);
-            var snapshot = Decode(current);
-            var document = BackfillInventoryLoader.Load(snapshot);
+            var (current, snapshot, document) = DigestionWorkingTree.Read(repository, Decode, BackfillInventoryLoader.Load);
             var target = LocateTarget(document, atomId);
             DigestionLedgerEntry updated;
             if (request is null)
@@ -291,24 +288,23 @@ internal static partial class SettleAtomCommand
 
     private static SettleOptions ParseArguments(IReadOnlyList<string> arguments)
     {
-        string? request = null, clear = null, baseline = null;
+        string? request = null, clear = null;
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
             {
                 case "--request" when request is null && index + 1 < arguments.Count: request = arguments[++index]; break;
                 case "--clear" when clear is null && index + 1 < arguments.Count: clear = arguments[++index]; break;
-                case "--base" when baseline is null && index + 1 < arguments.Count: baseline = arguments[++index]; break;
                 default: throw Invalid("ARGUMENTS_INVALID", Usage);
             }
         }
-        if (string.IsNullOrWhiteSpace(baseline) || baseline != baseline.Trim() || (request is null) == (clear is null)
+        if ((request is null) == (clear is null)
             || (clear is not null && !DigestionNonpropositional.IsAtomId(clear)))
             throw Invalid("ARGUMENTS_INVALID", Usage);
-        return new SettleOptions(request, clear, baseline);
+        return new SettleOptions(request, clear);
     }
 
-    private sealed record SettleOptions(string? RequestPath, string? ClearAtomId, string BaseRevision);
+    private sealed record SettleOptions(string? RequestPath, string? ClearAtomId);
     private sealed record SettleRequest(string AtomId, string Justification, string? PreviousAtomId, string? NextAtomId,
         int? OccurrenceIndex);
 }

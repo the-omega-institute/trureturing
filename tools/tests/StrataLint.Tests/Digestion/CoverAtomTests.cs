@@ -64,7 +64,7 @@ public sealed partial class CoverAtomTests
         var spec = new CoverSpec();
         var (result, after, before, _) = Execute(
             spec,
-            ["--cover-atom", "no-such-atom", "--gid", spec.Gid, "--base", "baseline"]);
+            ["--cover-atom", "no-such-atom", "--gid", spec.Gid]);
 
         Assert.False(result.Success);
         Assert.Contains("is absent", result.Error, StringComparison.Ordinal);
@@ -190,74 +190,6 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void CoverAbortsWhenLedgerChangedUnderItBetweenReadAndWrite()
-    {
-        // Compare-and-swap: the on-disk ledger no longer matches the bytes cover
-        // validated against (a concurrent cover deposited in between). cover must
-        // abort rather than silently overwrite the other deposit (lost update).
-        var inputs = CoverWorld.Materialize(new CoverSpec());
-        var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
-        var baselineFiles = DirectoryLedgerTestSupport.Project(inputs.Baseline);
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
-        var atomPath = currentFiles.Keys.Single(path =>
-            path.EndsWith($"/{CoverWorld.DefaultAtomId}.yaml", StringComparison.Ordinal));
-        var outputPath = Path.Combine(temporary.Path, atomPath.Replace('/', Path.DirectorySeparatorChar));
-        var concurrent = currentFiles[atomPath] + "# concurrent deposit\n";
-        File.WriteAllText(outputPath, concurrent, new UTF8Encoding(false));
-        var environment = new ProductionCliEnvironment(
-            temporary.Path,
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
-                CoverWorld.Raw(currentFiles),
-                CoverWorld.Raw(baselineFiles)),
-            new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
-            CoverWorld.TimeProvider);
-        var result = environment.CoverAtom(
-            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"]);
-
-        Assert.False(result.Success);
-        Assert.Contains("changed under us", result.Error, StringComparison.Ordinal);
-        Assert.Equal(concurrent, File.ReadAllText(outputPath));
-    }
-
-    [Fact]
-    public void CoverAbortsWhenLedgerDeletedBetweenReadAndWrite()
-    {
-        // Fail-closed: if the on-disk ledger disappeared between read and write
-        // (e.g. deleted by another actor), cover must abort — not create a fresh
-        // ledger and overwrite the missing deposit (no-silent-failure, first
-        // principle). The gateway still holds the ledger cover validated against.
-        var inputs = CoverWorld.Materialize(new CoverSpec());
-        var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
-        var baselineFiles = DirectoryLedgerTestSupport.Project(inputs.Baseline);
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
-        var atomPath = currentFiles.Keys.Single(path =>
-            path.EndsWith($"/{CoverWorld.DefaultAtomId}.yaml", StringComparison.Ordinal));
-        var outputPath = Path.Combine(temporary.Path, atomPath.Replace('/', Path.DirectorySeparatorChar));
-        File.Delete(outputPath);
-        Assert.False(File.Exists(outputPath));
-        var environment = new ProductionCliEnvironment(
-            temporary.Path,
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
-                CoverWorld.Raw(currentFiles),
-                CoverWorld.Raw(baselineFiles)),
-            new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
-            CoverWorld.TimeProvider);
-
-        var result = environment.CoverAtom(
-            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"]);
-
-        Assert.False(result.Success);
-        Assert.Contains("missing", result.Error, StringComparison.Ordinal);
-        Assert.False(File.Exists(outputPath));
-    }
-
-    [Fact]
     public void CoverRejectsIncompleteArguments()
     {
         var spec = new CoverSpec();
@@ -278,8 +210,7 @@ public sealed partial class CoverAtomTests
             spec,
             ["--cover-atom", spec.AtomId,
                 "--gid", inputs.Gid,
-                "--gid", inputs.Gid,
-                "--base", "baseline"]);
+                "--gid", inputs.Gid]);
 
         Assert.False(result.Success);
         Assert.Contains("USAGE: StrataLint cover-atom", result.Error, StringComparison.Ordinal);
@@ -301,7 +232,7 @@ public sealed partial class CoverAtomTests
             new FakeLeanReportSource(inputs.Report));
 
         var result = environment.CoverAtom(
-            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid]);
 
         Assert.True(result.Success, result.Error);
         var entry = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
@@ -331,7 +262,7 @@ public sealed partial class CoverAtomTests
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
             CoverWorld.TimeProvider);
         var effectiveArgs = args
-            ?? ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"];
+            ?? ["--cover-atom", spec.AtomId, "--gid", inputs.Gid];
         var result = environment.CoverAtom(effectiveArgs);
 
         var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);

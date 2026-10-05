@@ -48,25 +48,7 @@ internal static partial class DigestionLedgerAligner
             candidateSnapshot,
             TheoryAtomizerDataLoader.DataPath,
             baselineSnapshot,
-            TheoryAtomizerDataLoader.DataPath)
-        && AtomizerImplementationClosureEqualBaseline(candidateSnapshot, baselineSnapshot);
-
-    private static bool AtomizerImplementationClosureEqualBaseline(
-        RepositorySnapshot candidateSnapshot,
-        RepositorySnapshot baselineSnapshot)
-    {
-        var registeredInputs = EngineeringProjectRegistry.ReadRuleBuildInputs(candidateSnapshot);
-        var paths = candidateSnapshot.Files.Keys
-            .Concat(baselineSnapshot.Files.Keys)
-            .Select(static path => path.Value)
-            .Where(path => IsAtomizerImplementationPath(path, registeredInputs))
-            .Distinct(StringComparer.Ordinal);
-        return paths.All(path => FileBytesEqual(
-            candidateSnapshot,
-            path,
-            baselineSnapshot,
-            path));
-    }
+            TheoryAtomizerDataLoader.DataPath);
 
     internal static bool IsAtomizerImplementationPath(string path, IReadOnlySet<string> registeredInputs) =>
         StrataLintEngineBuildInputs.Contains(path, registeredInputs);

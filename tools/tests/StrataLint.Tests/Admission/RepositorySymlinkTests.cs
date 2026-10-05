@@ -274,6 +274,27 @@ public sealed class RepositorySymlinkTests
     }
 
     [Fact]
+    public void WorkingTreeReadTakesNamedPathsAndSkipsDotNamesBelowDirectories()
+    {
+        using var repository = new TemporaryDirectory();
+        Write(repository.Path, "Meta/Digestion/atomizers.toml", "rules\n");
+        Write(repository.Path, "Meta/.DS_Store", "finder\n");
+        Write(repository.Path, "Reg/Probe.lean", "theorem probe : True := True.intro\n");
+        Write(repository.Path, "Reg/.lake/build/Probe.olean", "compiled\n");
+        Write(repository.Path, "Reg.lean", "sibling of the Reg directory\n");
+        Write(repository.Path, ".editorconfig", "root = true\n");
+        Write(repository.Path, "docs/reports/unrelated.json", "{}\n");
+
+        var read = WorkingTreeReader.Read(repository.Path, ["Meta", "Reg", ".editorconfig", "absent/path"]);
+
+        Assert.Equal(
+            [".editorconfig", "Meta/Digestion/atomizers.toml", "Reg/Probe.lean"],
+            read.Entries.Select(entry => entry.Path));
+        Assert.Equal("rules\n", Text(read, "Meta/Digestion/atomizers.toml"));
+        Assert.Throws<ArgumentException>(() => WorkingTreeReader.Read(repository.Path, ["../outside"]));
+    }
+
+    [Fact]
     public void ScopedReadValidatesTheWholeReferentDirectoryWhenItsScopeCoversPart()
     {
         using var repository = new TemporaryDirectory();
