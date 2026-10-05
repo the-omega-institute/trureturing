@@ -30,7 +30,8 @@ theorem result : alpha 1 = 0 ∧ alpha 2 = 2 ∧
       (∀ d, 0 ≤ DyadicSupportLines.residual p d) ∧
       Summable (fun d => DyadicSupportLines.residual p d / (2 : ℝ) ^ d) ∧ 1 ≤ cost p := by
     obtain ⟨γ, hγ, hr, _, _, _, _⟩ := (CarryGraphEmbedding.result n hn).2.2.2 p hp hs k hk
-    have bounds (d : ℕ) : 0 ≤ DyadicSupportLines.residual p d ∧ DyadicSupportLines.residual p d ≤ n := by
+    have bounds (d : ℕ) : 0 ≤ DyadicSupportLines.residual p d ∧
+        DyadicSupportLines.residual p d ≤ n := by
       have H := (hγ.2 d).1.1
       dsimp [IsState] at H
       rw [← hr d]
@@ -58,7 +59,8 @@ theorem result : alpha 1 = 0 ∧ alpha 2 = 2 ∧
     rintro y ⟨q, j, hq, hsum, hj, rfl⟩
     exact div_nonneg (by linarith [(law_data n hn q hq hsum j hj).2.2]) (hq j).le
   have single_cost : cost (fun _ : Fin 1 => (1 : ℝ)) = 0 := by
-    have zeros (d : ℕ) : DyadicSupportLines.residual (fun _ : Fin 1 => (1 : ℝ)) d / (2 : ℝ) ^ d = 0 := by
+    have zeros (d : ℕ) :
+        DyadicSupportLines.residual (fun _ : Fin 1 => (1 : ℝ)) d / (2 : ℝ) ^ d = 0 := by
       have integer_pow : ⌊(2 : ℝ) ^ d⌋ = (2 : ℤ) ^ d := by
         exact_mod_cast (Int.floor_intCast ((2 : ℤ) ^ d))
       simp [DyadicSupportLines.residual, integer_pow]
@@ -113,8 +115,8 @@ theorem result : alpha 1 = 0 ∧ alpha 2 = 2 ∧
   obtain ⟨n, rfl⟩ : ∃ n, m = n + 1 := ⟨m - 1, by omega⟩
   have hn : 2 ≤ n := by omega
   simp only [Nat.add_sub_cancel]
-  haveI : Nonempty (Fin n) := ⟨⟨0, by omega⟩⟩
-  haveI : Nonempty (Fin (n + 1)) := ⟨⟨0, by omega⟩⟩
+  have : Nonempty (Fin n) := ⟨⟨0, by omega⟩⟩
+  have : Nonempty (Fin (n + 1)) := ⟨⟨0, by omega⟩⟩
   obtain ⟨V, f, H⟩ := CarryGraphCriticalAttainment.result (n + 1) (by omega)
   rcases H with ⟨_, _, _, _, _, H⟩
   dsimp only at H
