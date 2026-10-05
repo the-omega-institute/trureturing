@@ -24,7 +24,7 @@ internal sealed class SomborEnergyIntegerRefutationDocument : IScribeDocumentDef
                 "Take the cycles 0–1–2–3–0, 0–4–5–6–0 and 0–7–8–9–0. Vertex 0 has degree six; all other vertices have degree two. Thus the six central edges have weight a = √40 and the remaining six edges have weight b = √8. An explicit ten-column eigenvector matrix P has eigenvalues d = (16, -16, 4, -4, 4, -4, 0, 0, 0, 0) and satisfies PᵀP = diagonal(768, 768, 32, 32, 96, 96, 2, 2, 2, 128). Consequently Q = diagonal(768⁻¹, 768⁻¹, 32⁻¹, 32⁻¹, 96⁻¹, 96⁻¹, 2⁻¹, 2⁻¹, 2⁻¹, 128⁻¹)Pᵀ is its inverse. The identity somborMatrix G · P = P · diagonal d gives characteristic polynomial x⁴(x−16)(x+16)(x−4)²(x+4)². The Hermitian spectral theorem identifies its root multiset with the eigenvalue multiset. The absolute values sum to 48, contradicting claim at z = 48.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("ghanbari-2022-sombor-energy-conjecture-3-8"),
+                    ProblemSlugRef.Create("ghanbari-2022-sombor-energy-integer-refutation"),
                     ResolutionKind.Refuted))),
         []));
 

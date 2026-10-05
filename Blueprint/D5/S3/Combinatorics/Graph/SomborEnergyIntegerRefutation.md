@@ -34,9 +34,9 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SomborEnergyIntegerRefutation.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/ghanbari-2022-sombor-energy-conjecture-3-8` (refuted) by `D5/S3/Combinatorics/Graph/SomborEnergyIntegerRefutation.result`.
+*Resolves.* `Problems/ghanbari-2022-sombor-energy-integer-refutation` (refuted) by `D5/S3/Combinatorics/Graph/SomborEnergyIntegerRefutation.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ghanbari-2022-sombor-energy-conjecture-3-8","declaration_gid":"D5/S3/Combinatorics/Graph/SomborEnergyIntegerRefutation.result","resolution_kind":"refuted"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ghanbari-2022-sombor-energy-integer-refutation","declaration_gid":"D5/S3/Combinatorics/Graph/SomborEnergyIntegerRefutation.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
