@@ -1,4 +1,4 @@
-"""Directed endpoint constants; original form coefficients and signs stay unpaid.
+"""Directed endpoint and conservative form caps; Grams and signs stay unpaid.
 
 Requires Python 3.10+ and python-flint 0.9.0. Reuse the existing derivative
 supplier definitions; neither its old grid nor translation producer runs.
@@ -122,6 +122,16 @@ def produce(canonical, precision, terms):
     maxima = [(power/zeta)**power*arb(-power).exp() for power in (1, 3)]
     K0 = wc0.sqrt()*maxima[0]
     K1 = wc0.sqrt()*(gamma1/2+arb(fmpq(1, 4)))*maxima[1]
+    edge_rate = (-2*bs).exp()
+    integer_edge_sum = edge_rate/(1-edge_rate)**2-edge_rate
+    prime_B_cap = 2*K0*K0*integer_edge_sum
+    wf2_terms = 128
+    M2_partial = sum((arb(2)/(2*arb(k)+arb(fmpq(1, 2)))**3
+                      for k in range(wf2_terms+1)), arb(0))
+    M2_tail = 1/(2*(2*arb(wf2_terms)+arb(fmpq(1, 2)))**2)
+    M2_cap = M2_partial+M2_tail
+    c0_cap = arb(fmpq(3, 2))+prime_B_cap+2*M2_cap*K1*K1*edge_rate
+    c1_cap = 2*M2_cap*K0*K0*edge_rate
     ground_h1 = (1+(K0/2+2*K1)**2
                  *(2*bs)**arb(fmpq(-1, 2))*(2*bs).gamma_upper(arb(fmpq(1, 2)))).sqrt()
     centering = inverse_factor*(tc/2).cosh()*ground_h1
@@ -171,12 +181,21 @@ def produce(canonical, precision, terms):
                          +pi*pi*exterior(12, pi, arb(0)))).sqrt()
     negative_tail = arb(fmpq(2, 25)).sqrt()*(arb(fmpq(5, 2))+pi)
     form_tail_factor = positive_tail+negative_tail+g*Cnormalized
+    cF_cap = (c0_cap+c1_cap).sqrt()
+    form_kernel_numeric = (2*(c0_cap*g0*g0+c1_cap*g1*g1)).sqrt()
+    form_kernel_numeric += a0*cF_cap*Cnormalized*(-(arb(R0)-d)).exp()
+    form_tail_numeric = (2*(c0_cap*exterior(8, pi, arb(0))
+        +c1_cap*(arb(fmpq(25, 4))*exterior(8, pi, arb(0))
+                  +5*pi*exterior(10, pi, arb(0))
+                  +pi*pi*exterior(12, pi, arb(0))))).sqrt()
+    form_tail_numeric += (arb(fmpq(2, 25))*(
+        c0_cap+c1_cap*(arb(fmpq(5, 2))+pi)**2)).sqrt()+g*Cnormalized*cF_cap
     values = {"relative_D0": D0, "relative_D1": D1, "Cslow": slow, "Cfast": fast, "Ctheta": Ctheta,
               "Qtheta": Qtheta, "Cnormalized": Cnormalized, "Ntheta": Ntheta,
               "form_kernel_factor": form_kernel_factor, "form_tail_factor": form_tail_factor,
               "zero_free_relative_radius": Qtheta*arb(-Rstar).exp()/(a0*a0)}
     return {
-        "scope": "Conditional original-theta endpoint column and bilinear normalization caps; symbolic WF2 coefficients, actual Grams and signs remain unpaid.",
+        "scope": "Conditional original-theta endpoint and conservative WF2/form caps; actual Grams and signs remain unpaid.",
         "runtime": {"python": sys.version.split()[0], "python_flint": flint.__version__,
                     "precision_bits": precision},
         "retained_moment_terms": terms,
@@ -192,7 +211,18 @@ def produce(canonical, precision, terms):
         "R0": R0, "analytic_disk_radius": "1/16",
         "outer_strip": "1/6", "inner_strip": "1/8", "spatial_split": "3/2",
         "bounds": {name: upper_record(value) for name, value in values.items()},
-        "form_factor_contract": "Mtheta <= form_kernel_factor*sqrt(c0+c1); Cd <= form_tail_factor*sqrt(c0+c1); original WF2 c0,c1 are not numerically acquired.",
+        "form_factor_contract": "Mtheta <= form_kernel_factor*sqrt(c0+c1); Cd <= form_tail_factor*sqrt(c0+c1). Conservative enlarged WF2 coefficients supply absolute caps, not exact norms or optimal coefficients.",
+        "WF2": {
+            "moment_retained_terms": wf2_terms+1,
+            "moment_tail_contract": "sum_{k>K} 2/(2k+1/2)^3 <= 1/[2(2K+1/2)^2]",
+            "complete_prime_B_contract": "Both shifted directions; all prime powers dominated by integer edges: ||B|| <= 2 K0^2 [r/(1-r)^2-r], r=exp(-3/4)",
+            "supremum_contract": "||s||_infinity^2 <= K0^2 exp(-3/4); ||s_prime||_infinity^2 <= K1^2 exp(-3/4)",
+            "caps": {name: upper_record(value) for name, value in {
+                "M2": M2_cap, "complete_prime_B_norm": prime_B_cap,
+                "c0": c0_cap, "c1": c1_cap,
+                "form_kernel_absolute": form_kernel_numeric,
+                "form_tail_absolute": form_tail_numeric}.items()},
+        },
         "normalization_disk_certified_from_paper_bound": True,
         "numerical_actual_columns_or_grams_acquired": False,
         "Lean_certification": False,
