@@ -34,7 +34,7 @@ public sealed partial class CoverBatchCommandTests
     {
         using var sequential = new BatchWorld();
         WriteProblem(sequential.Root);
-        sequential.RunSingles(new ProductionScribeEmissionVerifier(typeof(BatchClaimDefinition).Assembly));
+        sequential.RunSingles();
         using var batch = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(batch.Root);
         var reportPath = batch.WriteReportBundle();
@@ -49,29 +49,19 @@ public sealed partial class CoverBatchCommandTests
         LedgerLoadCounter ledger;
         ReportLoadCounter reports;
         CommandResult result;
-        var discoveries = 0;
-        BatchClaimDefinition.Creating.Value = () => discoveries++;
-        try
-        {
-            using (frozen = new FrozenLoadCounter())
-            using (ledger = new LedgerLoadCounter())
-            using (reports = new ReportLoadCounter())
-                result = batch.RunProducers(input);
-        }
-        finally
-        {
-            BatchClaimDefinition.Creating.Value = null;
-        }
+        using (frozen = new FrozenLoadCounter())
+        using (ledger = new LedgerLoadCounter())
+        using (reports = new ReportLoadCounter())
+            result = batch.RunProducers(input);
 
         output.WriteLine(result.Output + result.Error);
-        Assert.Equal(3, discoveries);
         Assert.Equal(partialFailure ? 1 : 0, result.ExitCode);
         Assert.Equal(partialFailure ? ["applied", "failed", "applied"] : ["applied", "applied"],
             Results(result).Select(item => item.Status).ToArray());
         Assert.Equal(sequential.LedgerImage(), batch.LedgerImage());
         Assert.Empty(result.Error);
-        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", CanonicalValuesWriter.RelativePath,
-                     "tools/Generated/scribe-emissions.v1.json" })
+        Assert.False(File.Exists(Path.Combine(batch.Root, "Blueprint/D5/S0/Carrier/Probe.md")));
+        foreach (var path in new[] { CanonicalValuesWriter.RelativePath })
         {
             Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(batch.Root, path)));
             Assert.Single(result.Output.Split('\n'), line => line.Contains(path, StringComparison.Ordinal));
@@ -83,9 +73,9 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal([1, 1, 1], ledger.CandidateSnapshotLoads);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, "Generated/DAG.md")));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, "Generated/FILEMAP.md")));
-        output.WriteLine("COMPLETE_PRODUCERS synthetic_assembly=true report={0} catalog={1} index={2} baseline={3} candidate=[{4}] discoveries={5}",
+        output.WriteLine("COMPLETE_PRODUCERS synthetic_definitions=true report={0} catalog={1} index={2} baseline={3} candidate=[{4}]",
             reports.Loads, frozen.Catalogs, frozen.Indexes, ledger.BaselineLoads,
-            string.Join(',', ledger.CandidateSnapshotLoads), discoveries);
+            string.Join(',', ledger.CandidateSnapshotLoads));
         Assert.True(TemporaryFileSystem.File.Exists(reportPath));
 
         Assert.Equal(sequential.LedgerImage(), batch.LedgerImage());
@@ -108,7 +98,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Contains(diagnostic, result.Error, StringComparison.Ordinal);
         Assert.Single(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
-        Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, "tools/Generated/scribe-emissions.v1.json")));
+        Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(world.Root, "tools/Generated/scribe-emissions.v1.json")));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(world.Root, "Generated/DAG.md")));
     }
 
@@ -122,7 +112,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Contains("FILEMAP", result.Error, StringComparison.Ordinal);
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Empty(world.Entry(Second).Coverage);
-        Assert.Equal(0, world.EmitCount);
+        Assert.DoesNotContain(CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -132,7 +122,7 @@ public sealed partial class CoverBatchCommandTests
         WriteEmissionInputs(world.Root);
         var reportPath = world.WriteReportBundle();
         var calls = 0;
-        BatchClaimDefinition.Creating.Value = () =>
+        world.DuringInputRead = () =>
         {
             if (++calls != 1) return;
             TemporaryFileSystem.File.WriteAllText(reportPath, "replaced report\n");
@@ -151,7 +141,7 @@ public sealed partial class CoverBatchCommandTests
         }
         finally
         {
-            BatchClaimDefinition.Creating.Value = null;
+            world.DuringInputRead = null;
         }
     }
 
@@ -192,12 +182,25 @@ public sealed partial class CoverBatchCommandTests
 
     private static void WriteEmissionInputs(string root)
     {
+        TemporaryFileSystem.File.Delete(Path.Combine(root, ScribeEmissionAttestation.RelativePath));
         WriteProblem(root);
         WriteScribeFixture(root, "Trureturing.lean", "-- synthetic root module\n");
         WriteScribeFixture(root, ".gitignore",
             File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".gitignore")));
         WriteScribeFixture(root, "Blueprint/D5/S0/Carrier/Probe.md", "old blueprint projection\n");
         WriteScribeFixture(root, CanonicalValuesWriter.RelativePath, "old values projection\n");
+        WriteValuesInputs(root);
+        var repositoryRoot = TestRepositoryLayout.FindRoot();
+        var documents = FileMapDocuments.Resolve(
+            File.ReadAllBytes(Path.Combine(repositoryRoot, AdmissionPlanePolicy.FileMapPath)),
+            AdmissionPlanePolicy.FileMapPath,
+            path => File.ReadAllBytes(Path.Combine(repositoryRoot, path)));
+        foreach (var document in documents)
+            WriteScribeFixture(root, document.Path, Encoding.UTF8.GetString(document.Bytes.AsSpan()));
+    }
+
+    private static void WriteValuesInputs(string root)
+    {
         foreach (var path in CanonicalValuesWriter.InputPaths)
         {
             if (!TemporaryFileSystem.File.Exists(Path.Combine(root, path)))
@@ -218,13 +221,6 @@ public sealed partial class CoverBatchCommandTests
             refs = {}
             computation = "none"
             """ + "\n");
-        var repositoryRoot = TestRepositoryLayout.FindRoot();
-        var documents = FileMapDocuments.Resolve(
-            File.ReadAllBytes(Path.Combine(repositoryRoot, AdmissionPlanePolicy.FileMapPath)),
-            AdmissionPlanePolicy.FileMapPath,
-            path => File.ReadAllBytes(Path.Combine(repositoryRoot, path)));
-        foreach (var document in documents)
-            WriteScribeFixture(root, document.Path, Encoding.UTF8.GetString(document.Bytes.AsSpan()));
     }
 
     private sealed class ReportLoadCounter : IDisposable

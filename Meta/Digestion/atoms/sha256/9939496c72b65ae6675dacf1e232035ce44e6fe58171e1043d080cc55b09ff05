@@ -1,0 +1,8 @@
+**命题 4.3（Injectivity and the actual image）。** The tree action is injective and is not surjective. The composition action on $X$ is injective with image
+
+$$
+\rho(X)=\{(u,w)\in X:w\ge u\},
+$$
+
+and inverse $(u,w)\mapsto(w-u,u)$ on that image.
+

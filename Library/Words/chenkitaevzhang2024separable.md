@@ -13,6 +13,8 @@ strata_touched:
   - D5/S1/Words/Patterns/Separable/ProperCut
   - D5/S1/Words/Patterns/Separable/RecordPeak
   - D5/S1/Words/Patterns/Separable/RecordTransport
+  - D5/S1/Words/Patterns/Separable/RecordFirstDecline
+  - D5/S1/Words/Patterns/Separable/RecordNewtonPositivity
 license: citation-only
 triage: anchor
 ---
@@ -128,10 +130,32 @@ of every coefficient of $F(q(t))$. The theorem applies the existing
 record transports directly. It has no conditional generating-function
 premise and uses no finite length cutoff.
 
+[`RecordNewtonPositivity.actual_q_record_newton_nonnegative`](../../Blueprint/D5/S1/Words/Patterns/Separable/RecordNewtonPositivity.md)
+proves $[t^n]G_r(q(t))\ge0$ for all natural kernel indices $r$ and length
+indices $n$, using the actual scalar $q=tL(t)$. In the independent variable
+$u$, let $a=u(3+2u)$, $b=u(1+u)^3$, $c=u(4+3u)$ and
+$M(z)=(1-az)^{-1}C(bz^2/(1-az)^2)$, where $C$ is Mathlib's Catalan
+series. With $T_r=[z^r]M$, the kernel is
+
+$$
+G_r=(1+u)^2(T_r+T_{r+1})
+-u(1-u)(1+u)(T_r+2T_{r+1}+T_{r+2}).
+$$
+
+The proof derives the universal recurrence
+$(r+4)T_{r+2}=(2r+5)aT_{r+1}+(r+1)cT_r$ inside the live theorem.
+Twelve exact derivative-quotient certificates give the initial kernels.
+Two consecutive certificates for each of $E_1T_r$ and $E_2T_r$, with
+$E_1=(1+u)^2(1-u-2u^2+3u^3)$ and
+$E_2=(1+u)^2(1-2u-2u^2+4u^3)$, propagate by that recurrence to every
+remaining kernel. The reduction uses the actual scalar identity
+$t(1+q)=q(1-q)$; there is no parameter cutoff or assumed sign premise.
+
 The declining inequalities at arbitrary $k\ge4$ and the global maximum
-at three remain open. The universal Motzkin differential recurrence,
-support and Newton identity, the other quotient certificates, and their
-actual-series applications are not established by these partial results.
+at three remain open. The missing inference is the normalized actual
+record-coefficient formula and its Newton transform connecting each
+actual difference to these nonnegative kernels. The unbounded sign law
+alone supplies neither correspondence.
 The [problem dossier](../../Problems/chenkitaevzhang-2024-separable-record-peak-three.md)
 keeps the complete target distinct from them. Full CKZ Conjecture 2 and C15
 remain OPEN; no partial theorem is a full external resolution, novelty or

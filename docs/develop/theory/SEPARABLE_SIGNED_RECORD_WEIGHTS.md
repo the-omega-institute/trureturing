@@ -321,3 +321,113 @@ The transports of Theorem 5.2 give the other three comparisons. Their
 singleton corrections vanish at record indices three and four.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. An unbounded sign law for the record kernels
+
+Definition 5.1 uses this volume's local numbering. Its source-class and
+statistic locators are Chen–Kitaev–Zhang, arXiv:2404.18517v1, Sections 1
+and 1.2; the full peak-three question is Section 3, Conjecture 2, page 17.
+The positive classes, proper cuts and strict unshifted comparisons are
+those of Definitions 1.1, 5.1 and 6.1 in this volume.
+
+**Definition 7.1 (Motzkin record kernels).** Work in $\mathbb Q[[u]][[z]]$.
+Let $C(w)$ be the Catalan series supplied by Mathlib, with
+$C(w)=1+wC(w)^2$. Put
+
+$$
+\begin{aligned}
+a(u)&=u(3+2u),& b(u)&=u(1+u)^3,& c(u)&=u(4+3u)=4b(u)-a(u)^2,\\
+M(z)&=\frac{1}{1-az}C\left(\frac{bz^2}{(1-az)^2}\right),&
+T_r(u)&=[z^r]M(z).
+\end{aligned}
+$$
+
+Every denominator here has constant one. Define
+
+$$
+G_r(u)=(1+u)^2(T_r+T_{r+1})
+-u(1-u)(1+u)(T_r+2T_{r+1}+T_{r+2}).
+$$
+
+The name record Newton kernel denotes this exact expression. Its
+correspondence with the normalized actual record coefficients is a
+separate obligation. The actual scalar $q(t)$ is the positive avoider
+series of Theorem 3.2, with $q=tL(t)$ for the large Schröder series $L$.
+
+**Theorem 7.2 (Every kernel is nonnegative after actual substitution).**
+For every natural $r$ and $n$,
+
+$$
+[t^n]G_r(q(t))\ge0.
+$$
+
+Proof. Catalan substitution gives $M=1+azM+bz^2M^2$. Differentiating
+this quadratic and eliminating the quadratic term gives
+
+$$
+z(1-2az-cz^2)M'+(2-3az-cz^2)M=2.
+$$
+
+The eliminated factor $2bz^2M+az-1$ has constant $-1$ and is nonzero.
+Coefficient extraction gives $T_0=1$, $T_1=a$, and for every $r\ge0$,
+
+$$
+(r+4)T_{r+2}=(2r+5)aT_{r+1}+(r+1)cT_r.
+$$
+
+The actual scalar has nonnegative coefficients and satisfies
+$q=t+tq+q^2$. Thus $t(1+q)=q(1-q)$ and
+$(1-2q-q^2)q'=(1+q)^2$. For any polynomial $f(u)$ with $f(0)\ge0$,
+an exact nonnegative series $V(u)$ satisfying
+
+$$
+(1-2u-u^2)V(u)=(1+u)^2f'(u)
+$$
+
+proves $f(q(t))$ is nonnegative: the chain rule gives
+$(f(q(t)))'=V(q(t))$, and formal integration divides each positive-index
+coefficient by its positive index. To construct $V$, match its initial
+coefficients through one index past the numerator's degree. Beyond that
+degree the coefficient identity is the universal recurrence
+$v_{m+2}=2v_{m+1}+v_m$. Nonnegative consecutive initial values therefore
+prove all later coefficients nonnegative. This is an exact polynomial
+certificate followed by induction, rather than a finite-length test.
+
+Apply this certificate rule to $G_0,\ldots,G_{11}$ and to the four
+polynomials $E_1T_1,E_1T_2,E_2T_{13},E_2T_{14}$, where
+
+$$
+\begin{aligned}
+E_1&=(1+u)^2(1-u-2u^2+3u^3),\\
+E_2&=(1+u)^2(1-2u-2u^2+4u^3).
+\end{aligned}
+$$
+
+The exact coefficient vectors are part of the Lean theorem's local
+certificates. For any fixed $E$, multiplying the universal recurrence
+by $E$ shows that nonnegativity of $(ET_s)(q(t))$ and
+$(ET_{s+1})(q(t))$ propagates to every index at least $s$: both $a(q(t))$
+and $c(q(t))$ are nonnegative, and division by $r+4$ preserves the sign.
+Consequently $(E_1T_r)(q(t))$ is nonnegative for every $r\ge1$, and
+$(E_2T_r)(q(t))$ is nonnegative for every $r\ge13$.
+
+For every $r$, the same recurrence gives the exact reduction
+
+$$
+(r+4)G_r=(r+4)(E_1T_r+E_2T_{r+1})
++3u(1-u)(1+u)(cT_r+aT_{r+1}).
+$$
+
+The $T_r$ themselves are nonnegative by the recurrence and $T_0=1$,
+$T_1=a$. After actual substitution the last summand is
+$3t(1+q)^2(c(q)T_r(q)+a(q)T_{r+1}(q))$, so it is nonnegative.
+For $r\ge12$ both other summands are nonnegative by the propagated
+laws. Division by $r+4$ proves the remaining indices, and the twelve
+base certificates finish the result.
+
+The normalized actual $J_k$ formula and its Newton transform remain
+separate obligations. The sign law alone does not prove the actual
+comparison $a(n,k+1)\le a(n,k)$ for arbitrary $k\ge4$, the global maximum
+at three, or the full conjecture.
+
+## 追加锚（本行以下为增补区）

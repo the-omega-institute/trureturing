@@ -110,6 +110,9 @@ domains:
   Geometry:
     stratum: S3
     definition: Finite point configurations in metric and Euclidean spaces, and the distance sets they determine.
+  GraphInvariants:
+    stratum: S3
+    definition: Polynomial and simplicial invariants of finite simple graphs, such as chromatic polynomials, independence complexes and their acyclic Morse matchings, and whether these invariants distinguish graphs.
   History:
     stratum: S0
     definition: Finite marker and event histories, their append operation, and faithful self-encoding bridges.
@@ -119,6 +122,9 @@ domains:
   Ledger:
     stratum: S1
     definition: Prime-exponent generation ledgers, their length readings, and the monotonicity of legal generation.
+  LieTheory:
+    stratum: S3
+    definition: Finite-type root data and Cartan matrices, their Weyl-group and Gram-form normalizations, and the q-series attached to them such as specializations of Toda and Whittaker eigenfunctions.
   Midline:
     stratum: S3
     definition: Dual and multiple characterizations of the critical midline sigma equals one half.
@@ -134,6 +140,9 @@ domains:
   ObserverMemory:
     stratum: S3
     definition: Finite epistemic-state and forgetting-ledger certificate structures of the observer program.
+  PermutationPatterns:
+    stratum: S3
+    definition: Classical, vincular and mesh patterns in permutations, their occurrence statistics on all permutations and on subclasses such as involutions, and the Wilf- and distribution-equivalence of patterns.
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.

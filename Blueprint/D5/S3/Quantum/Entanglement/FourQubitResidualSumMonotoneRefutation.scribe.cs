@@ -26,6 +26,21 @@ internal sealed class FourQubitResidualSumMonotoneRefutationDocument : IScribeDo
             Node("claim", "The conjectured monotonicity", ClaimFormula(),
                 "An entanglement monotone does not increase on average under LOCC. A complete instrument K_0, ..., K_{n-1} on qubit A, with sum_j K_j^dagger K_j = I, is a one-step LOCC protocol; K_j acts on qubit A (index 0) through the existing localOp, the product operator with factor K_j at qubit 0 and the identity elsewhere, applied to psi by matrix-vector multiplication: the outcome j occurs with probability p_j = ||K_j psi||^2 (the weights p of the display) and leaves the normalized state K_j psi / sqrt(p_j). The displayed statement asserts sum_j p_j M(K_j psi / sqrt(p_j)) <= M(psi) for every normalized four-qubit vector and every such instrument, omitting the outcomes with p_j = 0; it is a consequence of the conjecture that M is an entanglement monotone.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("pair-equiv", "Coordinates of a pair", PairEquivFormula(),
+                "For distinct qubits p and q, pairEquiv reads a configuration x of the pair {p, q} as the ordered pair (x(p), x(q)) in Fin 2 x Fin 2.",
+                "pairEquiv", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("out-equiv", "Coordinates outside a pair", OutEquivFormula(),
+                "When the qubits r and s are exactly the two qubits outside {p, q}, outEquiv reads a configuration z of those qubits as (z(r), z(s)).",
+                "outEquiv", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("single-equiv", "Coordinate of one qubit", SingleEquivFormula(),
+                "singleEquiv reads a configuration x of the single qubit k as its value x(k) in Fin 2.",
+                "singleEquiv", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("out3-equiv", "Coordinates outside one qubit", Out3EquivFormula(),
+                "When the qubits r, s and t are exactly the three qubits other than k, out3Equiv reads a configuration z of those qubits as (z(r), z(s), z(t)).",
+                "out3Equiv", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("four-equiv", "Coordinates of four qubits", FourEquivFormula(),
+                "fourEquiv reads a configuration w of the four qubits as (w(0), w(1), w(2), w(3)).",
+                "fourEquiv", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("psi", "The counterexample state", PsiFormula(),
                 "The state is (20|0001> + 2|1000> + 6|1011> + |1110>)/21, with norm one since 400 + 4 + 36 + 1 = 441.",
                 "psi", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
@@ -91,6 +106,89 @@ internal sealed class FourQubitResidualSumMonotoneRefutationDocument : IScribeDo
     private static Formula PairSet(Formula p, Formula q) =>
         Seq(Esc, OpenBrace, p, Comma, Sp, q, Esc, CloseBrace);
     private static Formula Ket(params byte[] digits) => Seq(Bar, D(digits), Rangle);
+
+    private static Formula Vars(params Formula[] names)
+    {
+        var parts = new System.Collections.Generic.List<Formula>();
+        for (var i = 0; i < names.Length; i++)
+        {
+            if (i > 0)
+            {
+                parts.Add(Comma);
+                parts.Add(Sp);
+            }
+            parts.Add(names[i]);
+        }
+        return Seq([.. parts]);
+    }
+
+    private static Formula Configs(Formula set) => Parenthesized(Seq(set, Sp, To, Sp, Fin(2)));
+
+    private static Formula Outside(Formula set) => Call(F.Id("Outside"), set);
+
+    private static Formula NotIn(Formula x, Formula set) =>
+        new Formula.Not(Parenthesized(Rel(x, FormulaRelationOperator.MemberOf, set)));
+
+    private static Formula Covered(Formula set, params Formula[] names)
+    {
+        Formula i = F.Id("i");
+        Formula cover = Rel(i, FormulaRelationOperator.Equal, names[0]);
+        for (var n = 1; n < names.Length; n++)
+        {
+            cover = new Formula.Logic(cover, FormulaLogicOperator.Or, Rel(i, FormulaRelationOperator.Equal, names[n]));
+        }
+        return All(i, Fin(4), Imp(NotIn(i, set), cover));
+    }
+
+    private static Formula PairEquivFormula()
+    {
+        Formula p = F.Id("p"), q = F.Id("q"), x = F.Id("x");
+        return Disp(All(Vars(p, q), Fin(4), Imp(Rel(p, FormulaRelationOperator.NotEqual, q),
+            All(x, Configs(PairSet(p, q)),
+                EqTo(Call(F.Id("pairEquiv"), p, q, x), Parenthesized(Vars(Of(x, p), Of(x, q))))))));
+    }
+
+    private static Formula OutEquivFormula()
+    {
+        Formula p = F.Id("p"), q = F.Id("q"), r = F.Id("r"), s = F.Id("s"), z = F.Id("z");
+        Formula pair = PairSet(p, q);
+        Formula premises = Logic(Logic(NotIn(r, pair), FormulaLogicOperator.And, NotIn(s, pair)),
+            FormulaLogicOperator.And,
+            Logic(Rel(r, FormulaRelationOperator.NotEqual, s), FormulaLogicOperator.And, Covered(pair, r, s)));
+        return Disp(All(Vars(p, q, r, s), Fin(4), Imp(premises, All(z, Configs(Outside(pair)),
+            EqTo(Call(F.Id("outEquiv"), p, q, r, s, z), Parenthesized(Vars(Of(z, r), Of(z, s))))))));
+    }
+
+    private static Formula SingleEquivFormula()
+    {
+        Formula k = F.Id("k"), x = F.Id("x");
+        return Disp(All(k, Fin(4), All(x, Configs(Singleton(k)),
+            EqTo(Call(F.Id("singleEquiv"), k, x), Of(x, k)))));
+    }
+
+    private static Formula Out3EquivFormula()
+    {
+        Formula k = F.Id("k"), r = F.Id("r"), s = F.Id("s"), t = F.Id("t"), z = F.Id("z");
+        Formula single = Singleton(k);
+        Formula outside = Logic(Logic(NotIn(r, single), FormulaLogicOperator.And, NotIn(s, single)),
+            FormulaLogicOperator.And, NotIn(t, single));
+        Formula distinct = Logic(Logic(Rel(r, FormulaRelationOperator.NotEqual, s), FormulaLogicOperator.And,
+            Rel(r, FormulaRelationOperator.NotEqual, t)), FormulaLogicOperator.And,
+            Rel(s, FormulaRelationOperator.NotEqual, t));
+        Formula premises = Logic(Logic(outside, FormulaLogicOperator.And, distinct),
+            FormulaLogicOperator.And, Covered(single, r, s, t));
+        return Disp(All(Vars(k, r, s, t), Fin(4), Imp(premises, All(z, Configs(Outside(single)),
+            EqTo(Call(F.Id("out3Equiv"), k, r, s, t, z),
+                Parenthesized(Vars(Of(z, r), Of(z, s), Of(z, t))))))));
+    }
+
+    private static Formula FourEquivFormula()
+    {
+        Formula w = F.Id("w");
+        return Disp(All(w, Configs(Fin(4)),
+            EqTo(Call(F.Id("fourEquiv"), w),
+                Parenthesized(Vars(Of(w, D(0)), Of(w, D(1)), Of(w, D(2)), Of(w, D(3)))))));
+    }
 
     private static Formula TauFormula()
     {

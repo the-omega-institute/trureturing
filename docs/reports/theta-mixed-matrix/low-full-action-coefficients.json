@@ -1,0 +1,88 @@
+{
+  "scope": "Candidate low-unit-ball action and ground-moment allowances; no95 low actions, common matrices or sign evaluated",
+  "input_sha256": {
+    "strip-root-bounds-result.json": "d3057a0ff4017ee12be9825498080c8c925fdcfc3a1d676465795103039139de",
+    "full-gamma-periodic-result.json": "04003b6bf45dcae458a30d49a97bb81308dfaaa676afc155206421892a542248",
+    "continuous-projection-result.json": "b6ede09833c48b5716d5aa07b63b82e89096f19022e234e682c19aba799fb3c8",
+    "forward-action-result.json": "23e59d29ae6a4ff995a8443c838621f405873ce7e667d2e69542f722ed2bb957",
+    "high-trial-bounds-result.json": "88bb6871cc29fedecbfd79076e37b39d65b33337a26076b2f15c49cbd88d669a"
+  },
+  "precision_bits": 192,
+  "bandwidth_N": 64,
+  "low_orthonormal_columns": 95,
+  "sample_spacing_h": "1/256",
+  "physical_period": 128,
+  "low_strip_unit_ball_upper": {
+    "display": "[2980.95798704172827474359209945288867375596793913283570221 +/- 1.61e-55]",
+    "dyadic": [
+      "4568304822650004683150207862871200752090827621816488379509",
+      "-180"
+    ]
+  },
+  "low_wide_strip_unit_ball_upper": {
+    "display": "[11308.7646108395967210654703518986006801858247207034941152 +/- 3.93e-53]",
+    "dyadic": [
+      "541582229337926590898582261478367293004019613090881001093",
+      "-175"
+    ]
+  },
+  "low_full_Gamma_core_analytic_error_upper": {
+    "display": "[2.67809982155517786199359888536149515275791007922066460318e-17 +/- 4.05e-74]",
+    "dyadic": [
+      "6056694795389799492633040853288145489410091140291765085077",
+      "-247"
+    ]
+  },
+  "low_full_H_line_L2_upper": {
+    "display": "[715479.087700357714070835329216613495971533061667659191964 +/- 3.43e-52]",
+    "dyadic": [
+      "267692507686423931554268744480668101084944044367170271833",
+      "-168"
+    ]
+  },
+  "low_full_H_pointwise_envelope_coefficient_upper": {
+    "display": "[54357748563.7470684681923409923317136297894720835015446308 +/- 4.37e-47]",
+    "dyadic": [
+      "620655769746389664429220716283329960554226873428249658823",
+      "-153"
+    ]
+  },
+  "low_full_H_physical_and_lattice_tail_upper": {
+    "display": "[2.74976461972989221339925264780627328001443708848530976837e-2020 +/- 3.62e-2077]",
+    "dyadic": [
+      "3517755098958514074472517310141669872176137362762924620227",
+      "-6900"
+    ]
+  },
+  "low_continuous_PH_analytic_error_upper": {
+    "display": "[1.62868167906105901288746238427411555812457141174377619847e-78 +/- 1.80e-135]",
+    "dyadic": [
+      "2367577827784734355715428223338356664677985792981175156815",
+      "-449"
+    ]
+  },
+  "low_exact_ground_moment_quadrature_and_tail_upper": {
+    "display": "[5.42458064740829045961270870632372045747665877626762022603e-84 +/- 4.28e-141]",
+    "dyadic": [
+      "4134320501005619468593452632716823645545158948329558417569",
+      "-468"
+    ]
+  },
+  "low_H_core_Gamma_and_mean_analytic_error_upper": {
+    "display": "[2.67809982155517786199359888536149515275791007922066460318e-17 +/- 4.49e-74]",
+    "dyadic": [
+      "3028347397694899746316520426644072744705045570145882542539",
+      "-246"
+    ]
+  },
+  "low_complete_omitted_prime_L2_action_upper": {
+    "display": "[9.2916739166712295667443496070268208086e-19 +/- 2.20e-57]",
+    "dyadic": [
+      "11391559075582838301837063959410127985",
+      "-183"
+    ]
+  },
+  "low_actions_evaluated": false,
+  "Schur_sign_certified": false,
+  "Lean_certification": false
+}

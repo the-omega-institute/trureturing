@@ -26,6 +26,7 @@ public sealed partial class ProductionEnvironmentTests
         var history = new FakeAtomHistorySource(() => historyAvailable
             ? FakeAtomHistorySource.ForPaths(fixture.Files.Keys).Read()
             : throw new IOException("synthetic history unavailable"));
+        var verifier = new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -33,12 +34,14 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Files),
                 Snapshot(fixture.Baseline)),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
+            verifier,
             atomHistorySource: history);
 
         var emitted = environment.EchoVerify(["--emit", "--base", "baseline"]);
 
         Assert.Equal(0, emitted.ExitCode);
+        Assert.NotEmpty(verifier.Scopes);
+        Assert.All(verifier.Scopes, scope => Assert.Equal([RuleFixture.RingPath], scope.Paths.Select(path => path.Value).ToArray()));
         Assert.Contains("## age", emitted.Output, StringComparison.Ordinal);
         Assert.StartsWith(
             "<!-- echo-residual-summary:v3 residual=sha256:",

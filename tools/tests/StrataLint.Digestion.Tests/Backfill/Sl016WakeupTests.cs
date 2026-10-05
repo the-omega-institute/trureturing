@@ -157,6 +157,35 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
+    public void BlueprintChangeOfCoverageTargetDoesNotWakeReferencedEdge()
+    {
+        const string targetGid = "D5/S0/Carrier/BackfillTarget";
+        var documentGid = ScribeEmissionAttestation.DocumentGid(targetGid);
+        var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
+        var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
+        var fixture = CoverageReceiptFixture(
+            targetGid,
+            FrozenStatementReceiptTestData.Id('a'));
+        fixture.Files[definitionPath] = "// candidate definition change\n";
+        fixture.Files[emissionPath] = "candidate projection change\n";
+        var context = fixture.Build(RawChangeSet.Create([definitionPath, emissionPath]));
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+        var impact = BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            context.Lean.Report,
+            document,
+            context.Changes);
+        var entry = Assert.Single(document.RequireDigestionEntries());
+
+        Assert.False(impact.HasAffectedEdges);
+        Assert.False(DigestionCasStore.EntryChanged(entry, impact.EvaluationChanges));
+    }
+
+    [Fact]
     public void ReportFreeIngestDoesNotComparePersistedTargetAgainstMissingReport()
     {
         const string targetGid = "D5/S0/Carrier/BackfillTarget";

@@ -26,6 +26,23 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
+    public void RegisteredProgramCompileInputsExcludeBlueprintDefinitions()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var paths = StrataLint.FileMap.FileMapPolicy.TrackedPaths(root);
+        var registry = EngineeringProjectRegistry.Read(paths.Select(path => new EngineeringSource(path,
+            path == EngineeringProjectRegistry.ManifestPath ? File.ReadAllText(Path.Combine(root, path)) : string.Empty)).ToArray());
+        Assert.All(registry.Projects, project => Assert.DoesNotContain(project.Include,
+            input => input.StartsWith("Blueprint/", StringComparison.Ordinal)));
+        foreach (var project in registry.Projects)
+        {
+            var xml = XDocument.Load(Path.Combine(root, project.Path));
+            Assert.DoesNotContain(xml.Descendants("Compile"), compile =>
+                ((string?)compile.Attribute("Include"))?.Contains("Blueprint", StringComparison.Ordinal) is true);
+        }
+    }
+
+    [Fact]
     public void CliReferencesExactlyConfigurationEngineScribeTestEvidenceTomlynAndTruth()
     {
         Assert.Equal(
@@ -35,7 +52,6 @@ public sealed class DependencyDirectionTests
                 "StrataLint.FileMap",
                 "StrataLint.Lean",
                 "StrataLint.Scribe",
-                "StrataLint.Scribe.Documents",
                 "StrataLint.TestEvidence",
                 "Tomlyn",
                 "Trureturing.Truth",

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b58fa2ac313ad661fac8a19ae5d0394ba5fc1ba61e3c53fe50522dd6e63e27f3
+  normalized_sha256: sha256:b58fa2ac313ad661fac8a19ae5d0394ba5fc1ba61e3c53fe50522dd6e63e27f3
+cas_ref: sha256:b58fa2ac313ad661fac8a19ae5d0394ba5fc1ba61e3c53fe50522dd6e63e27f3
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/EigenbasisGraphCore.eigenbasis_graph_coefficients
+    target_statement_id: sha256:57e8baa276071b63d8d688775fdb288bf5b5605d1ce98c16b796e2619275e804
+receipts:
+  unresolved_subitems: []

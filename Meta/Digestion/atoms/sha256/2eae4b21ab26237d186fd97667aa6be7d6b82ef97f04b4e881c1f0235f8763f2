@@ -1,0 +1,10 @@
+**theorem 2.1 (Uniform extension by an arbitrary fresh vertex).** For every finite vertex set $V$, every positive integer $k$, and every simple graph $G$ on the tagged disjoint union $V\sqcup\{x\}$, if the induced graph obtained by deleting $x$ belongs to $R_k$, then $R_{k+1}(G)$ holds. The old neighborhood of $x$ is arbitrary; the old carrier may be empty. All counts and adjacency equivalences concern the same actual full carrier $V\sqcup\{x\}$.
+
+Proof. Choose old representing words $w,v$. Enumerate the old nonneighbors once in a word $N$ and the old neighbors once in a word $T$, and put $Q=NT$. Construct
+
+$$
+W=x^k w xNT,\qquad Z=x^k vNxT.
+$$
+
+Every old vertex occurs $k+1$ times in each new word. The fresh vertex occurs $k+1$ times. For an old pair $a,b$, the fresh letters disappear and both projections append the common suffix $\pi_{a,b}(Q)$ to the old projections. Right cancellation therefore preserves both edges and nonedges. For an old neighbor $a$, both fresh/old projections are $x^ka^kxa$. For an old nonneighbor $a$, they are $x^ka^kxa$ and $x^ka^{k+1}x$. Cancel their common prefix $x^ka^k$; the remaining heads are $x$ and $a$, which are distinct. Reversing the pair does not change its projection, and graph symmetry covers both argument orders. With no old vertices the two words are simply $x^{k+1}$. This construction gives the claimed representation for every positive $k$.
+

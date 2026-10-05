@@ -38,4 +38,40 @@ public sealed class LeanCompiledArtifactReportsTests
 
         Assert.Contains(configured, exception.Message, StringComparison.Ordinal);
     }
+    [Fact]
+    public void FileReportReadsAllReportModulesWithoutReadingOtherFiles()
+    {
+        using var root = new TemporaryRoot();
+        var entries = new[]
+        {
+            RawRepositoryEntry.FromText("Trureturing.lean", "-- root\n"),
+            RawRepositoryEntry.FromText("D5/S0/Synthetic/Probe.lean", "-- content\n"),
+            RawRepositoryEntry.FromText("Reg/D5/S0/Synthetic/Probe.lean", "-- registration\n"),
+        };
+        foreach (var entry in entries)
+            File.WriteAllBytes(root.Resolve(entry.Path), entry.Bytes.AsSpan());
+        File.WriteAllBytes(root.Resolve("Blueprint/unrelated.md"), [0xff]);
+        File.WriteAllBytes(root.Resolve("tools/unrelated.lean"), [0xff]);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries))).Snapshot;
+        var reportPath = root.Resolve("report.json");
+        RawLeanReportArtifact.WriteFile(reportPath, snapshot, LeanAxiomReport.Create(
+            entries.ToDictionary(entry => entry.Path, _ => new LeanFileReport([], []))));
+
+        var report = LeanCompiledArtifactReports.ReadRepositoryFiles(root.Path, "report.json");
+
+        Assert.False(Directory.Exists(root.Resolve(".git")));
+        Assert.Equal(entries.Select(entry => entry.Path).Order(StringComparer.Ordinal),
+            report.Files.Keys.Select(path => path.Value).Order(StringComparer.Ordinal));
+        File.WriteAllText(root.Resolve("Reg/Additional.lean"), "-- new module\n");
+        Assert.Contains("Raw Lean report is missing modules: Reg/Additional.lean",
+            Assert.Throws<FormatException>(() => LeanCompiledArtifactReports.ReadRepositoryFiles(root.Path, "report.json")).Message,
+            StringComparison.Ordinal);
+        File.Delete(root.Resolve("Reg/Additional.lean"));
+        File.Delete(root.Resolve("Trureturing.lean"));
+        Assert.Contains("Raw Lean report contains unknown module Trureturing",
+            Assert.Throws<FormatException>(() => LeanCompiledArtifactReports.ReadRepositoryFiles(root.Path, "report.json")).Message,
+            StringComparison.Ordinal);
+    }
+
 }

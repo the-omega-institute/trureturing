@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2eae4b21ab26237d186fd97667aa6be7d6b82ef97f04b4e881c1f0235f8763f2
+  normalized_sha256: sha256:2eae4b21ab26237d186fd97667aa6be7d6b82ef97f04b4e881c1f0235f8763f2
+cas_ref: sha256:2eae4b21ab26237d186fd97667aa6be7d6b82ef97f04b4e881c1f0235f8763f2
+coverage_gids:
+  - gid: D5/S1/Words/GraphRepresentation/UniformVertexExtension.vertex_extension
+    target_statement_id: sha256:fa548c61fd1e59a2ee4c43772142ede41d3af318c7dc48f9b3387b8225e08db5
+receipts:
+  unresolved_subitems: []

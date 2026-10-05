@@ -1,0 +1,29 @@
+**定理 15.3（共振块宽下的精确响应签名）。** 在 $g\ge2$ 时，$H=0$ 的合法记录按当前值 $v$ 分为两类；加入拒绝后总类数为
+
+$$
+ C_0=3.
+ \tag{15.15}
+$$
+
+对 $H\ge1$，合法记录 $(v,\theta,s)$ 的完整长度至多 $H$ 签名恰为
+
+$$
+ \begin{cases}
+ \bigl(v,\tau_b(s),W_b(\theta)\bigr),&s<k-1,\\[2mm]
+ \bigl(v,\mathsf T,W_{b-1}(\theta+1)\bigr),&s=k-1,
+ \end{cases}
+ \tag{15.16}
+$$
+
+其中 $\theta\in P$。因此包括吸收拒绝的精确类数为
+
+$$
+ C_H
+ =1+2\left[
+ \min(b,k-1)\min\!\left(p,\frac bg+2\right)
+ +\min\!\left(p,\frac bg+1\right)
+ \right]
+ \qquad(H\ge1).
+ \tag{15.17}
+$$
+

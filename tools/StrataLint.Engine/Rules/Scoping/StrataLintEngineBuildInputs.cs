@@ -51,18 +51,9 @@ internal static class StrataLintEngineBuildInputs
         || path.StartsWith(RulesDirectory + "/", StringComparison.Ordinal)
             && path.EndsWith(".cs", StringComparison.Ordinal);
 
-    /// <summary>
-    /// The judge-source side of the CI judge content address. Every non-test path under
-    /// <c>tools/</c> can change the program that interprets repository facts. Blueprint scribe
-    /// definitions are also judge source because
-    /// <c>tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj</c>
-    /// compiles <c>Blueprint/**/*.scribe.cs</c>. Membership is therefore structural rather than a
-    /// list of today's transitive helpers.
-    /// </summary>
+    /// <summary>Non-test tool sources belong to the judge build inputs.</summary>
     internal static bool ContainsJudgeSource(string path) =>
         path.StartsWith("tools/", StringComparison.Ordinal)
-            && !path.StartsWith("tools/tests/", StringComparison.Ordinal)
-        || path.StartsWith("Blueprint/", StringComparison.Ordinal)
-            && path.EndsWith(".scribe.cs", StringComparison.Ordinal);
+            && !path.StartsWith("tools/tests/", StringComparison.Ordinal);
 
 }

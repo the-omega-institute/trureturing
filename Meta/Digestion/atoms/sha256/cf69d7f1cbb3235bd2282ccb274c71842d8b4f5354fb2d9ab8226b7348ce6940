@@ -1,0 +1,24 @@
+## Receiving construction and boundary
+
+The receiving proof establishes Gaussian-polynomial integrability and iterated
+Hermite lowering, then uses weighted integration by parts to obtain factorial
+weighted orthogonality for arbitrary one-dimensional indices. It normalizes and
+rescales each coordinate by its positive physical length. The finite product
+integral and the actual measure-preserving Euclidean coordinate equivalence
+supply the displayed all-dimension integral.
+
+Each factor is a real number embedded in Complex. Thus conjugating the first
+factor gives the same integral; this correspondence is used directly inside
+consumers and adds no separate normalization or conjugation theorem.
+
+Receiving source:
+[PhysicalProductOrthonormality.lean](../../D5/S3/Quantum/Analysis/Hermite/PhysicalProductOrthonormality.lean),
+`D5.S3.Quantum.Analysis.Hermite.PhysicalProductOrthonormality.physical_product_orthonormal_integral`.
+
+This conclusion supplies the physical integral pairing. Hilbert-basis assembly,
+Hamiltonian action, maximal domains, operator cores, tensor-operator domains,
+metaplectic transport and heat or Gibbs statements require their own results.
+
+At a future Mathlib pin, retire the port when a direct application proves this
+same displayed-function, all-dimension, all-positive-parameter statement and its
+actual consumers validate after the port is removed.

@@ -1,0 +1,36 @@
+**外加权重与压力 292.1。** 给边附加可观测增量 `f_e`，令 `S(\gamma)=\sum_{e\in\gamma}f_e`，并定义倾斜矩阵
+
+$$
+T_j(\theta)_{uv}=1_{(u,v)\in E_j}\exp(\theta f_{uv}).
+\tag{292.4}
+$$
+
+端口配分函数为
+
+$$
+Z_j^{ab}(\theta,z)=\sum_{\gamma:a\to b}z^{|\gamma|}e^{\theta S(\gamma)}.
+\tag{292.5}
+$$
+
+在有限图且 `|z|\rho(T_j(\theta))<1` 时，路径总和是相应的矩阵逆。若压力按固定物理长度 `L_j` 统计，应使用固定长度配分函数
+
+$$
+Z_{j,L_j}^{ab}(\theta)=\sum_{\substack{\gamma:a\to b\\|\gamma|=L_j}}e^{\theta S(\gamma)},
+\tag{292.6}
+$$
+
+或使用给定终端/吸收边界的截断配分函数。固定长度情形相应取 `P_j(\theta)=L_j^{-1}\log Z_{j,L_j}(\theta)`；只有在 `z=1` 明确收敛（例如外加权重使 `\rho(T_j(\theta))<1` 且没有未截断的正权循环）时，才可把 `Z_j(\theta,1)` 代入 `P_j(\theta)=L_j^{-1}\log Z_j(\theta,1)`。接缝误差有界、边界贡献可控且归一化采用同一长度时，才可由几乎可加性得到 `P(\theta)=\lim_jP_j(\theta)`；若只有上、下界，应保留 `P^+=\limsup P_j` 与 `P^-=\liminf P_j`，不能任意把两者宣布相等。
+
+Fibonacci 层级的非自治矩阵一般不交换。这里的 `A/B` 例子是外加一阶 transfer 特例；二阶接缝递归可通过把相邻块提升为块矩阵后嵌入同一乘积分析。即使 `\rho(A)=\rho(B)=2`，取
+
+$$
+A=\begin{pmatrix}2&0\\0&1/2\end{pmatrix},
+\qquad
+B=\begin{pmatrix}1/2&0\\0&2\end{pmatrix},
+\tag{292.7}
+$$
+
+也有 `AB=I`。交替乘积的单位层压力为零，而重复使用 `A` 的压力为 `\log2`。因此单层谱半径不能替代接缝矩阵乘积的 Lyapunov 指数或几乎可加分析。随机环境还必须区分淬火压力 `\lim L_j^{-1}\mathbb E\log Z_j` 与退火压力 `\lim L_j^{-1}\log\mathbb EZ_j`。
+
+第 291 节的 `P_j` 是归一化的 Markov 转移核，而本节的 `T_j(\theta)` 是计数或倾斜核；后者一般不行随机，也不因共享 FIB 支撑而等同于前者。
+

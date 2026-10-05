@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
+# Requires Bash, git, and the SDK selected by global.json.
+# BASE selects the comparison revision (default origin/dev). PATHS supplies an
+# existing NUL-separated manifest instead of computing tracked and untracked changes.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
-PROJECT="$ROOT/tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+PROJECT="$ROOT/tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
 LEAN_REPORT="$ROOT/.lake/build/stratalint/raw-lean-report.json"
 CONSUMER="$ROOT/tools/scripts/report/report-consumer.sh"
 MODE="${1:-}"
@@ -12,9 +15,25 @@ case "$MODE" in
   *) echo "usage: scribe.sh emit" >&2; exit 2 ;;
 esac
 
+cd "$ROOT"
+PATHS_FILE="${PATHS:-}"
+TEMP_PATHS=
+cleanup() { if [[ -n "$TEMP_PATHS" ]]; then rm -f -- "$TEMP_PATHS"; fi; }
+trap cleanup EXIT
+if [[ -n "$PATHS_FILE" ]]; then
+  [[ -f "$PATHS_FILE" && -r "$PATHS_FILE" ]] || { echo "scribe: PATHS must be a readable regular file" >&2; exit 2; }
+else
+  command -v git >/dev/null || { echo "scribe: git is required to select changes" >&2; exit 2; }
+  TEMP_PATHS="$(mktemp "${TMPDIR:-/tmp}/scribe-paths.XXXXXXXX")"
+  PATHS_FILE="$TEMP_PATHS"
+  git diff --name-only -z "${BASE:-origin/dev}" -- > "$PATHS_FILE"
+  git ls-files --others --exclude-standard -z >> "$PATHS_FILE"
+fi
+
 run_scribe() {
   local command=(dotnet run --project "$PROJECT" --configuration Release -- "$1")
   if [[ "$1" == "emit" ]]; then
+    command+=(--paths-from "$PATHS_FILE")
     "$CONSUMER" --role scribe-consumer --report "$LEAN_REPORT" -- "${command[@]}"
   else
     "${command[@]}"
@@ -30,5 +49,4 @@ run_generator() {
 
 generators=(emit emit-values)
 
-cd "$ROOT"
 for generator in "${generators[@]}"; do run_generator "$generator"; done

@@ -1,0 +1,26 @@
+**theorem 4.1 (complete prefix liability).** Let $I$ be a finite index set and let $A_i=[r_i]_{d_i}$ be arithmetic progressions covering all natural numbers. Let $q$ be prime, let $R>0$ be coprime to $q$, and suppose every positive modulus $d_i$ divides $q^G R$. Fix $0\le k<G$ and an index $j$ with $d_j=q^{k+1}$. Put
+
+$$
+\begin{aligned}
+J&=\{i:q^{k+1}\mid d_i,\ r_i\equiv r_j\pmod{q^k}\},\\
+E&=\mathbb N\setminus\bigcup_{i\notin J}A_i,\\
+P_j&=A_j\setminus\bigcup_{i\ne j}A_i.
+\end{aligned}
+$$
+
+Assume that for every $i\in J\setminus\{j\}$ the progression $A_i$ is not contained in $A_j$: explicitly there is a natural number in $A_i$ but outside $A_j$. Then, for every natural number $x$,
+
+$$
+x\in E
+\quad\Longleftrightarrow\quad
+x\equiv r_j\pmod{q^k}
+\quad\text{and}\quad
+\exists y\in P_j:\ y\equiv x\pmod R.
+$$
+
+Proof. Every deleted progression is contained in the parent cylinder $[r_j]_{q^k}$, so whole coverage puts $E$ inside that parent. Within the parent, each retained progression of $q$-height at most $k$ depends only on the fixed parent prefix and the residue modulo $R$. Every retained progression of larger $q$-height has a different parent prefix and is absent throughout the parent. Membership in $E$ therefore depends only on these preserved coordinates.
+
+If another deleted progression met $A_j$, divisibility by $q^{k+1}$ would make it contained in $A_j$, contradicting the stated assumption. Consequently $E\cap A_j=P_j$. For any $x\in E$, the Chinese remainder theorem gives $y\equiv x\pmod R$ and $y\equiv r_j\pmod{q^{k+1}}$. The preserved-coordinate property puts $y$ in $E$, hence in $P_j$. Conversely a private point $y$ belongs to $E$, and any point in the parent with the same residue modulo $R$ belongs to $E$ by that same property.
+
+The identity retains the complete $R$ coordinate and the literal original parent prefix. It makes no claim that arbitrary simultaneous deletions can be reconstructed from individual private regions. Neither oddness, pairwise distinctness of the moduli, nor nonemptiness of the private region is needed; irredundancy of the original family is a sufficient condition for the stated noncontainments.
+

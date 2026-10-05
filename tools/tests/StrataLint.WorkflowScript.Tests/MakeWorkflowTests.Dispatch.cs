@@ -190,6 +190,9 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Single(Regex.Matches(openRecipe, Regex.Escape(PrOpenScriptPath)));
         Assert.Single(Regex.Matches(watchRecipe, Regex.Escape(PrWatchScriptPath)));
+        Assert.Contains("AUTO_MERGE ?= 1", makefile, StringComparison.Ordinal);
+        Assert.Contains("pr: pr-open", makefile, StringComparison.Ordinal);
+        Assert.Contains("$(if $(filter 1,$(DRAFT)),--draft,", openRecipe, StringComparison.Ordinal);
         Assert.Contains("$(if $(filter 1,$(AUTO_MERGE)),--auto-merge,)", openRecipe, StringComparison.Ordinal);
         Assert.Contains("--timeout-seconds \"$(WATCH_TIMEOUT_SECONDS)\"", openRecipe, StringComparison.Ordinal);
         Assert.Contains("--interval-seconds \"$(WATCH_INTERVAL_SECONDS)\"", openRecipe, StringComparison.Ordinal);
@@ -234,7 +237,7 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains(".DEFAULT_GOAL := help", makefile, StringComparison.Ordinal);
         Assert.Contains(
-            "HERE := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))",
+            "HERE := $(shell cd \"$$(dirname \"$(MAKEFILE_LIST)\")\" && pwd -P)",
             makefile,
             StringComparison.Ordinal);
         var phony = Assert.Single(

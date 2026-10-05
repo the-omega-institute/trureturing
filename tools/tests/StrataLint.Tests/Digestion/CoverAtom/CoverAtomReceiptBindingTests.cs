@@ -239,6 +239,36 @@ public sealed partial class CoverAtomTests
         Assert.DoesNotContain("scribe:", written, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CoverDoesNotExecuteScribeDefinitionsAndPreservesCoverage(bool definitionChanged)
+    {
+        var spec = new CoverSpec { BaselineTargetIdentical = true };
+        var inputs = spec.Materialize();
+        var current = DirectoryLedgerTestSupport.Project(inputs.Files);
+        var baseline = DirectoryLedgerTestSupport.Project(inputs.Baseline);
+        var path = ScribeEmissionAttestation.DefinitionPath(spec.ModuleGid);
+        if (definitionChanged) current[path] += "// changed definition\n";
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, current);
+        var verifier = new FakeScribeEmissionVerifier(null);
+        var environment = new ProductionCliEnvironment(temporary.Path,
+            new FakeRepositoryGateway(RawChangeSet.Create(definitionChanged ? [path] : []),
+                CoverWorld.Raw(current), CoverWorld.Raw(baseline)),
+            new FakeLeanReportSource(inputs.Report), verifier, CoverWorld.TimeProvider);
+
+        var result = environment.CoverAtom(["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(0, verifier.CallCount);
+        Assert.Empty(verifier.Scopes);
+        var entry = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
+            candidate => candidate.AtomId == spec.AtomId);
+        Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
+        Assert.Equal(spec.TargetStatementId, Assert.Single(entry.Coverage).TargetStatementId);
+    }
+
     private static void Replace(
         IDictionary<string, string> target,
         IReadOnlyDictionary<string, string> source)

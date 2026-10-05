@@ -12,6 +12,6 @@ git add -A && git commit -q -F "$CMSG" || { echo "GOV_FAIL commit"; exit 3; }
 git fetch -q origin && git merge -q --no-edit origin/dev || { echo "GOV_FAIL merge-dev"; exit 3; }
 git push -q -u origin "$BR" || { echo "GOV_FAIL push"; exit 4; }
 LOG=$(mktemp)
-if [ "$AUTO" = "1" ]; then make pr-open HEAD="$BR" MESSAGE="$PMSG" AUTO_MERGE=1 2>&1 | tee "$LOG"; else make pr-open HEAD="$BR" MESSAGE="$PMSG" 2>&1 | tee "$LOG"; fi
+make pr-open HEAD="$BR" MESSAGE="$PMSG" AUTO_MERGE="$AUTO" 2>&1 | tee "$LOG"
 PR=$(grep -o 'pull/[0-9]*' "$LOG" | head -1 | cut -d/ -f2)
 echo "GOV_PR_OK pr=${PR:-unknown} head=$(git rev-parse HEAD)"
