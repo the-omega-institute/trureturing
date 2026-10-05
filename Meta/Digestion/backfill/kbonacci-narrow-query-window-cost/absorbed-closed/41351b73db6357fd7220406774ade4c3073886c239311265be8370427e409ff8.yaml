@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:41351b73db6357fd7220406774ade4c3073886c239311265be8370427e409ff8
   normalized_sha256: sha256:41351b73db6357fd7220406774ade4c3073886c239311265be8370427e409ff8
 cas_ref: sha256:41351b73db6357fd7220406774ade4c3073886c239311265be8370427e409ff8
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/RepeatedGuardrailCost.original_repeated_guardrail_cost
+    target_statement_id: sha256:58a0940ce733fe84eac465817f2087dddc9fa5974c22a15bed9ef6a62c54b67e
 receipts:
   unresolved_subitems: []
