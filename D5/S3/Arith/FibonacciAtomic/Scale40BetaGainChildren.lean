@@ -7,13 +7,14 @@
    digest: Actual leaf reports fix beta resources in literal Fibonacci blocks. -/
 
 import D5.S3.Arith.FibonacciAtomic.ActualStrictHistoryCapacity
+import Mathlib.Tactic.ClearExcept
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.FibonacciAtomic.Scale40BetaGainChildren
 
-open GenealogicalFiberTransport (Source)
+open GenealogicalFiberTransport (Source substitution)
 open ActualTreeReadoutAcquisition (Address Reply readout Positive)
 open ActualImageSevenLeafSeparation (thirdImage E A C Nonconflict leafAddresses leafLabel)
 open ActualLeafHistoryRigidity
@@ -30,24 +31,34 @@ def psi (H : Hist (fun _ : Address => Reply)) : Finset Address :=
   (forcedBlocks (reports H)).biUnion fun b =>
     (betaLeaves b.2.tree).image (b.1 ++ ·)
 
-/-- At any actual strict split with a leaf child, the fixed beta resource grows by
-one, two or three. Unit growth is exactly completion of a C whose left A was fixed. -/
+/-- A strict split has a unique leaf label and gains one, two or three fixed beta
+addresses. Unit growth completes a C whose left A was fixed and excludes an absent
+child. The nonempty nonleaf child count lies between one and both two and the gain. -/
 theorem result {m : Nat} (F : Fin m → Source) (S : Finset (Fin m))
     (hpos : ∀ i ∈ S, Positive (F i))
+    (hnc : ∀ i ∈ S, ∀ j ∈ S, Nonconflict (F i) (F j))
     (H : Hist (fun _ : Address => Reply)) (u : Address) (y : Reply)
     (hy : y = .alpha ∨ y = .beta)
     (hleaf : ∃ i ∈ queue F S H, readout u (F i) = y)
     (hstrict : 2 ≤ ((queue F S H).image (fun i => readout u (F i))).card) :
     (∀ i ∈ queue F S H, psi H ⊆ betaLeaves (F i)) ∧
     let w := (psi (H ++ [⟨u, y⟩]) \ psi H).card
+    let d := (((queue F S H).image (fun i => readout u (F i))).filter
+      (fun z => z = .branch ∨ z = .absent)).card
     (w = 1 ∨ w = 2 ∨ w = 3) ∧
     (w = 1 ↔ ∃ v : Address, decodeBlock u y = some (v, BlockKind.c) ∧
-      (v ++ [false], BlockKind.a) ∈ forcedBlocks (reports H)) := by
+      (v ++ [false], BlockKind.a) ∈ forcedBlocks (reports H)) ∧
+    (∀ z : Reply, (z = .alpha ∨ z = .beta) →
+      (∃ i ∈ queue F S H, readout u (F i) = z) → z = y) ∧
+    1 ≤ d ∧ d ≤ min 2 w ∧
+    (w = 1 → ∀ i ∈ queue F S H, readout u (F i) ≠ .absent) := by
   classical
   rcases actual_address_geometry with
     ⟨classify, small, rows, decode, blocks, overlap, recovery, absent,
       leafPrefix, contexts, gammaMem, gammaInv, oneAlpha, readAt,
       subtreeAppend, leafSubtree, alphaMem⟩
+  clear small rows recovery absent leafPrefix contexts gammaMem gammaInv oneAlpha
+    leafSubtree alphaMem
   have betaMem (P : Source) (x : Address) :
       x ∈ betaLeaves P ↔ readout x P = .beta := by
     constructor
@@ -178,7 +189,7 @@ theorem result {m : Nat} (F : Fin m → Source) (S : Finset (Fin m))
     simp [reports, forcedBlocks, List.filterMap_append, hd, Finset.union_comm]
   have psiAppend : psi (H ++ [⟨u, y⟩]) =
       (betaLeaves k.tree).image (v ++ ·) ∪ psi H := by
-    simp only [psi, addBlock, Finset.biUnion_insert, Prod.fst, Prod.snd]
+    simp only [psi, addBlock, Finset.biUnion_insert]
   have incomparableLeaves (b : Address × BlockKind)
       (hn : ¬ v.IsPrefix b.1 ∧ ¬ b.1.IsPrefix v) (x : Address)
       (hx : x ∈ (betaLeaves k.tree).image (v ++ ·)) :
@@ -260,16 +271,191 @@ theorem result {m : Nat} (F : Fin m → Source) (S : Finset (Fin m))
       exact ⟨hk, hleft⟩
     · rintro ⟨hk, hleft⟩
       exact ⟨v, by simpa only [hk] using hd, hleft⟩
+  have betaGrowth :
+      let w := (psi (H ++ [⟨u, y⟩]) \ psi H).card
+      (w = 1 ∨ w = 2 ∨ w = 3) ∧
+      (w = 1 ↔ ∃ v : Address, decodeBlock u y = some (v, BlockKind.c) ∧
+        (v ++ [false], BlockKind.a) ∈ forcedBlocks (reports H)) := by
+    dsimp only
+    rw [gainCard, unitIff]
+    by_cases hk : k = .c ∧ (v ++ [false], BlockKind.a) ∈ forcedBlocks (reports H)
+    · simp only [hk, if_pos, true_and, Nat.reduceEqDiff, true_or]
+    · rw [if_neg hk]
+      cases k with
+      | a => simp
+      | c =>
+        have hn : (v ++ [false], BlockKind.a) ∉ forcedBlocks (reports H) :=
+          fun hl => hk ⟨rfl, hl⟩
+        simp [hn]
+  have leafUnique (z : Reply) (hz : z = .alpha ∨ z = .beta)
+      (hchild : ∃ j ∈ queue F S H, readout u (F j) = z) : z = y := by
+    obtain ⟨j, hj, hjz⟩ := hchild
+    have hncij := hnc i (Finset.mem_filter.mp hi).1 j (Finset.mem_filter.mp hj).1
+    have labelLaw := (ActualImageSevenLeafSeparation.seven_leaf_separation.2.1
+      (F i) (F j)).2.2.mp hncij
+    rcases hy with rfl | rfl <;> rcases hz with rfl | rfl
+    · rfl
+    · have hbad := labelLaw u true false
+        (by simp only [leafLabel, hiy]) (by simp only [leafLabel, hjz])
+      cases hbad
+    · have hbad := labelLaw u false true
+        (by simp only [leafLabel, hiy]) (by simp only [leafLabel, hjz])
+      cases hbad
+    · rfl
+  have imageBranch (q : Source) : ∃ l r, thirdImage q = .mul l r := by
+    cases q with
+    | of b => cases b <;> exact ⟨_, _, rfl⟩
+    | mul q r =>
+      refine ⟨thirdImage q, thirdImage r, ?_⟩
+      exact Function.Semiconj₂.iterate
+        (show Function.Semiconj₂ substitution FreeMagma.mul FreeMagma.mul from
+          fun s t => substitution.map_mul s t) 3 q r
+  have rightChildren (P : Source) (hP : Positive P) (v : Address)
+      (hleft : subtree (v ++ [false]) P = some A) :
+      readout (v ++ [true, false]) P ≠ .absent ∧
+      readout (v ++ [true, true]) P ≠ .absent := by
+    cases hv : subtree v P with
+    | none => rw [subtreeAppend, hv] at hleft; contradiction
+    | some Y =>
+      rw [subtreeAppend, hv] at hleft
+      cases Y with
+      | of b => simp only [Option.bind_some, subtree, reduceCtorEq] at hleft
+      | mul X T =>
+        simp only [Option.bind_some, subtree, Option.some.injEq] at hleft
+        subst X
+        obtain ⟨Q, hQ⟩ := hP
+        have hclass := (classify Q v (.mul A T)).mp (by rw [show thirdImage Q = P from hQ]; exact hv)
+        rcases hclass with ⟨q, r, _, he⟩ | ⟨a, b, z, _, _, hz⟩
+        · have hT : T = thirdImage r := by injection he
+          obtain ⟨l, r', hr⟩ := imageBranch r
+          constructor
+          · rw [readAt, hv]
+            change readout [false] T ≠ .absent
+            rw [hT, hr]
+            cases l with
+            | of b => cases b <;> intro h <;> cases h
+            | mul _ _ => intro h; cases h
+          · rw [readAt, hv]
+            change readout [true] T ≠ .absent
+            rw [hT, hr]
+            cases r' with
+            | of b => cases b <;> intro h <;> cases h
+            | mul _ _ => intro h; cases h
+        · have hT : T = E := by
+            clear * - T b hz
+            cases b with
+            | false =>
+              simp only [BlockOffset, Bool.false_eq_true, if_false] at hz
+              rcases hz with ⟨_, he⟩ | ⟨_, he⟩ | ⟨_, he⟩ | ⟨_, he⟩ |
+                ⟨_, he⟩ | ⟨_, he⟩ | ⟨_, he⟩ | ⟨_, he⟩ | ⟨_, he⟩
+              all_goals
+                first
+                | change FreeMagma.mul A T = .mul A E at he
+                  injection he
+                | cases he
+            | true =>
+              simp only [BlockOffset, if_true] at hz
+              rcases hz with ⟨_, he⟩ | ⟨_, he⟩ | ⟨_, he⟩ | ⟨_, he⟩ | ⟨_, he⟩
+              all_goals cases he
+          constructor <;> rw [readAt, hv, hT] <;> intro h <;> cases h
+  have cSuffix (x v : Address) (z : Reply)
+      (h : decodeBlock x z = some (v, BlockKind.c)) :
+      x = v ++ [true, false] ∨ x = v ++ [true, true] := by
+    cases z with
+    | branch => simp [decodeBlock] at h
+    | absent => simp [decodeBlock] at h
+    | beta =>
+      cases hr : x.reverse with
+      | nil => simp [decodeBlock, hr] at h
+      | cons d t =>
+        cases d with
+        | true => simp [decodeBlock, hr] at h
+        | false =>
+          cases t with
+          | nil => simp [decodeBlock, hr] at h
+          | cons d t =>
+            cases d with
+            | false => simp [decodeBlock, hr] at h
+            | true =>
+              simp only [decodeBlock, hr, Option.some.injEq, Prod.mk.injEq] at h
+              have hx : x = t.reverse ++ [true, false] := by
+                simpa [List.reverse_cons, List.append_assoc] using congrArg List.reverse hr
+              exact Or.inl (hx.trans (congrArg (· ++ [true, false]) h.1))
+    | alpha =>
+      cases hr : x.reverse with
+      | nil => simp [decodeBlock, hr] at h
+      | cons d t =>
+        cases d with
+        | false => simp [decodeBlock, hr] at h
+        | true =>
+          cases t with
+          | nil => simp [decodeBlock, hr] at h
+          | cons d t =>
+            cases d with
+            | false => simp [decodeBlock, hr] at h
+            | true =>
+              simp only [decodeBlock, hr, Option.some.injEq, Prod.mk.injEq] at h
+              have hx : x = t.reverse ++ [true, true] := by
+                simpa [List.reverse_cons, List.append_assoc] using congrArg List.reverse hr
+              exact Or.inr (hx.trans (congrArg (· ++ [true, true]) h.1))
+  have unitAbsent (hw : (psi (H ++ [⟨u, y⟩]) \ psi H).card = 1) :
+      ∀ j ∈ queue F S H, readout u (F j) ≠ .absent := by
+    obtain ⟨v', hd', hleft⟩ := betaGrowth.2.mp hw
+    intro j hj
+    have hl := fixed j hj (v' ++ [false], .a) hleft
+    have hr := rightChildren (F j) (compatible j hj).1 v' hl
+    exact (cSuffix u v' y hd').elim (fun hu => hu ▸ hr.1) (fun hu => hu ▸ hr.2)
+  let R := (queue F S H).image (fun j => readout u (F j))
+  let N := R.filter (fun z => z = .branch ∨ z = .absent)
+  have notY : y ∉ N := by
+    rcases hy with rfl | rfl <;> simp [N]
+  have Rinsert : R = insert y N := by
+    apply Finset.Subset.antisymm
+    · intro z hz
+      by_cases hl : z = .alpha ∨ z = .beta
+      · have hzEq := leafUnique z hl (Finset.mem_image.mp hz)
+        exact Finset.mem_insert.mpr (Or.inl hzEq)
+      · apply Finset.mem_insert.mpr
+        apply Or.inr
+        apply Finset.mem_filter.mpr
+        refine ⟨hz, ?_⟩
+        cases z with
+        | alpha => exact False.elim (hl (Or.inl rfl))
+        | beta => exact False.elim (hl (Or.inr rfl))
+        | branch => exact Or.inl rfl
+        | absent => exact Or.inr rfl
+    · intro z hz
+      rcases Finset.mem_insert.mp hz with rfl | hz
+      · exact Finset.mem_image.mpr ⟨i, hi, hiy⟩
+      · exact (Finset.mem_filter.mp hz).1
+  have splitCount : R.card = N.card + 1 := by
+    rw [Rinsert, Finset.card_insert_of_notMem notY]
+  have nLower : 1 ≤ N.card := by
+    have hs : 2 ≤ R.card := hstrict
+    omega
+  have nUpper : N.card ≤ 2 := by
+    have hsub : N ⊆ ({Reply.branch, Reply.absent} : Finset Reply) := by
+      intro z hz
+      simpa only [Finset.mem_insert, Finset.mem_singleton] using (Finset.mem_filter.mp hz).2
+    exact (Finset.card_le_card hsub).trans (by decide)
+  have nUnit (hw : (psi (H ++ [⟨u, y⟩]) \ psi H).card = 1) : N.card ≤ 1 := by
+    have hsub : N ⊆ {Reply.branch} := by
+      intro z hz
+      have hzNL := (Finset.mem_filter.mp hz).2
+      rcases hzNL with rfl | rfl
+      · exact Finset.mem_singleton.mpr rfl
+      · obtain ⟨j, hj, hr⟩ := Finset.mem_image.mp (Finset.mem_filter.mp hz).1
+        exact False.elim (unitAbsent hw j hj hr)
+    simpa only [Finset.card_singleton] using Finset.card_le_card hsub
   dsimp only
-  rw [gainCard, unitIff]
-  by_cases hk : k = .c ∧ (v ++ [false], BlockKind.a) ∈ forcedBlocks (reports H)
-  · simp only [hk, if_pos, true_and, Nat.reduceEqDiff, or_true, true_or]
-  · rw [if_neg hk]
-    cases k with
-    | a => simp
-    | c =>
-      have hn : (v ++ [false], BlockKind.a) ∉ forcedBlocks (reports H) :=
-        fun hl => hk ⟨rfl, hl⟩
-      simp [hn]
+  refine ⟨betaGrowth.1, betaGrowth.2, leafUnique, nLower, ?_, unitAbsent⟩
+  apply Nat.le_min.mpr
+  refine ⟨nUpper, ?_⟩
+  change N.card ≤ (psi (H ++ [⟨u, y⟩]) \ psi H).card
+  rcases betaGrowth.1 with hw | hw | hw
+  · rw [hw]
+    exact nUnit hw
+  · omega
+  · omega
 
 end D5.S3.Arith.FibonacciAtomic.Scale40BetaGainChildren
