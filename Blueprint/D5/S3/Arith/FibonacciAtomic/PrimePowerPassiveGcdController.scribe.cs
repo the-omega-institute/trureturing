@@ -36,6 +36,13 @@ internal sealed class PrimePowerPassiveGcdControllerDocument : IScribeDocumentDe
                 + "with c<e scans times 1 through zeroRank(p), then continues from its first "
                 + "threshold hit with e-c-1 remaining lifts. Every other label stops. "
                 + "These choices depend on p,e and the actual history alone."),
+            Node("protocol_spec", "The concrete original tree", DescribeRole.Theorem,
+                "For every natural prime p and every natural e>=1, the exact tree protocol(p,e) "
+                + "has at most zeroRank(p)+(e-1)*(p-1)+2 actual queries on every natural pair. "
+                + "For all natural pairs v,w, equal completed histories of that tree imply "
+                + "actualGcd(p^e,k,v)=actualGcd(p^e,k,w) for every positive natural k. "
+                + "The original source and full natural replies are retained, including zero "
+                + "coordinates, saturated content and stagnant rank lifts."),
             Node("result", "One bounded tree determines the entire positive future", DescribeRole.Theorem,
                 "For every natural prime p and every natural e>=1, there exists one tree T "
                 + "over positive natural times with natural answers. For every natural pair v, "

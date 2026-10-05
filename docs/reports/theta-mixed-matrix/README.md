@@ -378,3 +378,36 @@ original positive-reserve schedule; archimedean costs and actual signs
 remain payable. The [full-low derivative check](centered-prime-discrepancy-budget.md#a-high-lift-cannot-hide-the-full-low-spheres-derivative-cost)
 shows why arbitrary regular high lifts cannot make the earlier derivative
 certificate uniformly cheap. Neither estimate decides RH or full Robin.
+
+The [actual critical-translation boundary](../../../Library/Dynamics/clason2021regularization.md#the-real-translation-boundary-retains-fixed-sharp-low-mass)
+retains a two-tail escaped family inside the original small-window
+critical closure, with positive mass in every fixed sharp-low band.
+Its [common-source metric error bound](../../../Library/Dynamics/clason2021regularization.md#a-compact-fit-has-a-fixed-error-on-the-whole-sharp-low-sphere)
+tests uniform approximation by the bounded-window compact fit on the
+whole centered low sphere. This conditional paper interface preserves
+individual-input convergence and noncompact alternatives; it supplies
+no inverse divergence, actual cofinal signs, half-bound or RH/Robin
+conclusion, and has no new Lean certification or originality claim.
+
+Under the inherited whole-critical-domain, mixed-nullity and
+metric-coercivity premises, the [actual endpoint synthesis](../../../Library/Dynamics/clason2021regularization.md#a-bounded-synthesis-from-the-actual-endpoint-translations)
+leaves a Hilbert–Schmidt residual on every fixed even sharp-low band,
+and its [corrected common-source fit](../../../Library/Dynamics/clason2021regularization.md#a-corrected-fit-converges-uniformly-at-each-fixed-band)
+converges uniformly on that band's whole centered unit sphere.
+The principal synthesis retains the infinite translation tail; it is
+noncompact. This conditional paper construction supplies no effective
+regularization or growing-band rate, finite all-input acquisition,
+actual cofinal signs, half-bound or RH/Robin conclusion, and has no
+new Lean certification or originality claim.
+
+
+The [actual endpoint-jet and original-form residual interface](../../../Library/Dynamics/clason2021regularization.md#actual-endpoint-jets-in-the-original-form)
+extends that conditional construction with spatial/parameter jet bounds,
+original-form-norm tail and midpoint allowances, and the
+[existing common-source certificate on the sampled residual columns](../../../Library/Dynamics/clason2021regularization.md#pay-the-finite-remainder-with-the-existing-common-source-certificate).
+The principal synthesis remains infinite; only its compact residual is
+truncated. An actual simultaneous residual Gram and the growing-band
+coefficient cost still require certification. This is conditional paper
+analysis with unevaluated constants, without an effective regularization
+rate, new numerical or Lean result, actual cofinal signs, half-bound,
+Robin or RH conclusion.
