@@ -7,6 +7,9 @@ It reuses the saved original-theta derivative norms and complete prime
 majorant. It supplies an operator-action truncation error, rather than a
 new inverse-residual theorem or a retained matrix sign.
 
+Complex pairings and rank-one operators follow the
+[first-slot-linear matrix convention](README.md#complex-inner-products-for-matrix-reports).
+
 ## Same operator and whole-line inputs
 
 Keep $c=3/8$, $N=64$, $P=\mathbf1_{|\mathsf D|<N}$ on the even space,
@@ -15,7 +18,7 @@ Write the full operator on its domain as
 
 $$
 Tp=\alpha p+s\,m(\mathsf D)(sp)+c_\Gamma s^2p-Bp
-       +c\langle v_0,p\rangle v_0.
+       +c\langle p,v_0\rangle v_0.
 $$
 
 Let $T_{J,L}$ replace only the Gamma symbol by its first $J$ positive

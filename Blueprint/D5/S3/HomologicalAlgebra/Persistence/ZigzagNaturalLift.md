@@ -10,7 +10,7 @@ $$\forall K \in Type, D \in \operatorname{ActualZigzag}\left(K\right), n \in \op
 
 *Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/Persistence/ZigzagNaturalLift.exists_unique_natural_endomorphism` (`✓ std3`). ∎
 
-*Citation.* Gunnar Carlsson and Vin de Silva (2008). *Zigzag Persistence*. URL: <https://arxiv.org/abs/0812.0197v1>.
+*Citation.* Gunnar Carlsson; Vin de Silva (2008). *Zigzag Persistence*. URL: <https://arxiv.org/abs/0812.0197v1>.
 
 *Commentary.*
 
