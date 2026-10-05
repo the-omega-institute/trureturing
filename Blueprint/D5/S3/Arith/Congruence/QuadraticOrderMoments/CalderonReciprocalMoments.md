@@ -122,7 +122,7 @@ $$
 \forall p \in \mathrm{Nat},\; [\operatorname{Fact}\left(\operatorname{Prime}\left(p\right)\right)], \forall T \in \mathbb{Z},\; \forall N \in \mathbb{Z},\; \forall x \in \mathrm{Nat},\; \forall y \in \mathrm{Nat},\; \forall u \in \operatorname{Units}\left(\operatorname{R}\left(p, T, N\right)\right),\; ((u : \operatorname{R}\left(p, T, N\right)) = \operatorname{element}\left(p, T, N, x, y\right)) \Rightarrow (\operatorname{val}\left(u\right) = \operatorname{element}\left(p, T, N, x, y\right))
 $$
 
-The omega-Ljunggren and omega-Bailey conjectures remain separate conclusions; their reciprocal-moment premise is discharged. Sharpness remains open.
+The omega-Ljunggren analogue (Conjecture 6.4) has its stated Conjecture 6.3 reciprocal-moment premise discharged; its translated-block and Newton-identity conclusion remains open. The omega-Bailey analogue (Conjecture 6.5) remains open under its stated inert-prime and digit-range hypotheses; the source gives Frobenius strip factorizations without a Conjecture 6.3 premise. Sharpness remains open.
 
 ## References
 

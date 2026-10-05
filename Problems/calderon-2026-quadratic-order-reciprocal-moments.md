@@ -102,8 +102,8 @@ route. Finite agreement alone does not prove the universal claim.
 The theorem is `CalderonReciprocalMoments.result` in
 `D5/S3/Arith/Congruence/QuadraticOrderMoments/CalderonReciprocalMoments.lean`.
 Its public surface consists of `R`, `element`, `Admissible`, `U`, `H1`, `H2`,
-`claim`, and this one theorem. The axiom closure is the standard
-`propext`, `Classical.choice`, `Quot.sound`.
+`claim`, and this one theorem. The axiom closure of every public declaration
+is contained in {propext, Classical.choice, Quot.sound}.
 
 A compiled exact check inhabits the assumptions at $p=7,T=0,N=1$ and
 inhabits `R` by zero. No `sorry`, private axiom or `native_decide` is used.
@@ -131,11 +131,13 @@ are recorded in `Library/QuadraticForms/calderon2026rectangular.md`.
 - **Open:** weakening the admissibility conditions, changing the
   representative rectangle, higher reciprocal powers, and sharpness of
   the two valuations. The delivered theorem asserts no relaxed version.
-- **Open:** Conjectures 6.4 and 6.5, the omega-Ljunggren and omega-Bailey
-  conclusions. The source's reciprocal-moment premise is supplied by
-  Conjecture 6.3 as proved here; the translated-block, Newton-identity and
-  factorization arguments needed for those further conclusions are not
-  additional conclusions of this module.
+- **Open:** Conjecture 6.4, the omega-Ljunggren analogue. Its stated
+  Conjecture 6.3 reciprocal-moment premise is discharged. The translated-block
+  and Newton-identity conclusion remains open.
+- **Open:** Conjecture 6.5, the omega-Bailey analogue, under its stated
+  inert-prime and digit-range hypotheses. The source gives Frobenius strip
+  factorizations without a Conjecture 6.3 premise; the resulting congruence
+  remains open.
 
 ## ASSUMED-UNVERIFIED
 

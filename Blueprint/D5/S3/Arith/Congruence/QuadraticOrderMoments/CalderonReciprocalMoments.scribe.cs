@@ -43,7 +43,7 @@ internal sealed class CalderonReciprocalMomentsDocument : IScribeDocumentDefinit
                     new DocumentBlock.DisplayFormula(Params(All("x",Nat,All("y",Nat,All("u",Call("Units",Ring),
                         Imp(Eqn(Coerce(V("u"),Ring),Element(V("x"),V("y"))),
                             Eqn(Call("val",V("u")),Element(V("x"),V("y"))))))))),
-                    Paragraph(Text("The omega-Ljunggren and omega-Bailey conjectures remain separate conclusions; their reciprocal-moment premise is discharged. Sharpness remains open."))), DescribeRole.Theorem,
+                    Paragraph(Text("The omega-Ljunggren analogue (Conjecture 6.4) has its stated Conjecture 6.3 reciprocal-moment premise discharged; its translated-block and Newton-identity conclusion remains open. The omega-Bailey analogue (Conjecture 6.5) remains open under its stated inert-prime and digit-range hypotheses; the source gives Frobenius strip factorizations without a Conjecture 6.3 premise. Sharpness remains open."))), DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("calderon-2026-quadratic-order-reciprocal-moments"),
                     ResolutionKind.Proved)))));

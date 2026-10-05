@@ -11,7 +11,7 @@ escape_witness: none
 admission_basis: open-problem-resolution (#13205; Proved)
 Direct frozen dependencies:
 D5/S3/Combinatorics/Parking/OperationalDynamics.orbitEquiv;
-statement_id: sha256:7a2a15a1b63548294db90f3b7804999b8dd0d1cb9c5024983de75c344f29f375.
+statement_id: sha256:bf8f1cce8b8f2869286843dd050c8db90b4f5169d6e4ec2c48f0e41f91913dc7.
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 import Mathlib.Algebra.QuadraticAlgebra.Basic
