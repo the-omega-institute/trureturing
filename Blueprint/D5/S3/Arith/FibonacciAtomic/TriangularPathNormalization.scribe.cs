@@ -9,7 +9,7 @@ internal sealed class TriangularPathNormalizationDocument : IScribeDocumentDefin
     private const string Prefix = "D5/S3/Arith/FibonacciAtomic/TriangularPathNormalization.";
     private static Formula V(string s) => F.Id(s);
     private static Formula Fn(string s, params Formula[] args) => Call(s, args);
-    private static ScribeNode Def(string name, string title, Formula formula, string prose) =>
+    private static DocumentBlock Def(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(name), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
@@ -57,5 +57,47 @@ internal sealed class TriangularPathNormalizationDocument : IScribeDocumentDefin
                 Seq(D(2), Cdot, Fn("prefix", V("i"), V("d")), Plus, Fn("a", V("i"), V("d")))),
                 "The empty prefix is zero. Each new digit doubles the previous prefix and "
                 + "adds that digit. Thus a length D prefix represents the weighted sum "
-                + "of digits with weights 2^(D-1-d)."))));
+                + "of digits with weights 2^(D-1-d)."),
+            Describe.Lean(DescribeId.Create("canonical-law"), DeclarationHandle.Create(Prefix + "result"),
+                H("Canonical law and exact layer cost"), StatementSource.FromAuthor(ResultFormula()),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every m >= 2 and every legal root path, all output coordinates "
+                        + "are nonnegative and sum to one. For every label and every depth D, "
+                        + "floor(2^D p_i) equals the integer prefix of the first D written digits. "
+                        + "The minimum coordinate equals t, and C equals the classical dyadic "
+                        + "cost L(p). If t is positive then every coordinate is positive.")),
+                    Paragraph(Text("At each depth the total future output mass, in that depth's "
+                        + "units, equals r. Every retained label has future mass at least that of "
+                        + "the anchor. Hence the anchor future mass a satisfies 0 <= a <= r/e < 1. "
+                        + "A label leaving at column D+1 exceeds the anchor by "
+                        + "(1-a_(D+1))/2^(D+1), which is strictly positive. Labels that never leave "
+                        + "write the anchor digits. The strict tail bound rules out all-one tails; "
+                        + "the integer prefixes therefore coincide with actual floor prefixes. "
+                        + "Summing these floors identifies every layer residual and the two costs.")),
+                    Paragraph(Text("Zero anchor mass and zero residual self-loops are included. "
+                        + "The assertion concerns the reduced triangular graph; arbitrary paths "
+                        + "in a larger carry graph can write noncanonical all-one tails."))), DescribeRole.Theorem))));
+
+    private static Formula All(Formula x, Formula type, Formula body) =>
+        Seq(Forall, Sp, x, Colon, Sp, type, Comma, Sp, body);
+    private static Formula And(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Land, Sp, b, Close);
+
+    private static Formula ResultFormula()
+    {
+        var m = V("m"); var gamma = V("gamma"); var i = V("i"); var d = V("D");
+        var nat = Seq(Mathbb, Grp(V("N"))); var indices = Fn("Fin", m);
+        var p = Fn("p", i);
+        var nonneg = All(i, indices, Seq(D(0), Sp, Le, Sp, p));
+        var normalization = Equal(Fn("sum", p), D(1));
+        var canonical = All(i, indices, All(d, nat, Equal(
+            new Formula.Floor(Seq(new Formula.Power(D(2), d), Cdot, p)), Fn("prefix", i, d))));
+        var minimum = Equal(Fn("min", V("p")), V("t"));
+        var cost = Equal(V("C"), Fn("L", V("p")));
+        var positive = Seq(Open, D(0), Sp, Lt, Sp, V("t"), Sp, Implies, Sp,
+            All(i, indices, Seq(D(0), Sp, Lt, Sp, p)), Close);
+        return Disp(All(m, nat, Seq(Open, m, Sp, Ge, Sp, D(2), Sp, Implies, Sp,
+            All(gamma, Fn("RootPath", m), And(nonneg, And(normalization,
+                And(canonical, And(minimum, And(cost, positive)))))), Close)));
+    }
 }
