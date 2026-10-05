@@ -6,7 +6,7 @@
    utility: none
    digest: Every positive attaining law has at least two labels at its minimum mass. -/
 
-import D5.S3.Arith.FibonacciAtomic.OptimalLawNearestStrictCeiling
+import D5.S3.Arith.FibonacciAtomic.OptimalLawLargerAtomsTerminate
 import Mathlib.Algebra.BigOperators.Ring.Nat
 
 set_option autoImplicit false
@@ -171,15 +171,9 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
     have hpow : (0 : ℝ) < (2 : ℝ) ^ D := by positivity
     have H := (div_lt_div_iff_of_pos_right hpow).mp (by simpa [numD_spec, hk] using hlt)
     exact_mod_cast H
-  have floor_grid (i : Fin m) :
-      ⌊(2 : ℝ) ^ D * p i⌋ = (numD i : ℤ) := by
-    rw [numD_spec i]
-    field_simp
-    norm_num [Int.floor_intCast]
   have not_grid_pred := Dmin (D - 1) (by omega)
   push_neg at not_grid_pred
   obtain ⟨odd_i, hodd_i⟩ := not_grid_pred
-  obtain ⟨Nodd, hNodd⟩ := all_grid odd_i
   have pow_prev : (2 : ℝ) ^ D = (2 : ℝ) ^ (D - 1) * 2 := by
     calc
       (2 : ℝ) ^ D = (2 : ℝ) ^ (D - 1 + 1) := by
@@ -218,15 +212,6 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
       (by simpa using sum_even)
     simpa [oddSet] using H
   have odd_mem_num (i : Fin m) (hi : i ∈ oddSet) : Odd (numD i) := (odd_mem i).mp hi
-  have floor_pred_grid (i : Fin m) (hi : i ∈ oddSet) :
-      ⌊(2 : ℝ) ^ (D - 1) * p i⌋ = (numD i / 2 : ℕ) := by
-    have H := Int.floor_div_natCast ((2 : ℝ) ^ D * p i) 2
-    have divide : (2 : ℝ) ^ D * p i / (2 : ℕ) =
-        (2 : ℝ) ^ (D - 1) * p i := by
-      rw [pow_prev]
-      ring
-    rw [divide, floor_grid i] at H
-    exact_mod_cast H
   have law_data (r : Fin m → ℝ) (hr : ∀ i, 0 ≤ r i) (hsr : ∑ i, r i = 1) :
       (∀ d, 0 ≤ DyadicSupportLines.residual r d ∧ DyadicSupportLines.residual r d ≤ m) ∧
         Summable (fun d => DyadicSupportLines.residual r d / (2 : ℝ) ^ d) := by
@@ -273,15 +258,6 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
     linarith
   let δ : ℝ := 1 / (2 : ℝ) ^ D
   have δpos : 0 < δ := by dsimp only [δ]; positivity
-  have prev_floor (i : Fin m) :
-      ⌊(2 : ℝ) ^ (D - 1) * p i⌋ = (numD i / 2 : ℕ) := by
-    have H := Int.floor_div_natCast ((2 : ℝ) ^ D * p i) 2
-    have divide : (2 : ℝ) ^ D * p i / (2 : ℕ) =
-        (2 : ℝ) ^ (D - 1) * p i := by
-      rw [pow_prev]
-      ring
-    rw [divide, floor_grid i] at H
-    exact_mod_cast H
   have shallow_odd (j : Fin m) (hjodd : Odd (numD j)) :
       ∀ h : ℕ, h < D →
         ⌊(2 : ℝ) ^ h * (p j - δ)⌋ = ⌊(2 : ℝ) ^ h * p j⌋ := by
@@ -323,16 +299,41 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
     rw [divide, floor_reduced] at H
     rw [divide, floor_expansion] at H'
     exact H.trans H'.symm
+  have alpha_pos : 0 < alpha m := by
+    have alpha_pos_all : ∀ n : ℕ, 2 ≤ n → 0 < alpha n := by
+      intro n
+      induction n using Nat.strong_induction_on with
+      | h n ih =>
+          intro hn
+          by_cases h2 : n = 2
+          · simpa [h2, OptimalLawStrictSlope.result.2.1]
+          · have hn3 : 3 ≤ n := by omega
+            have hslope := OptimalLawStrictSlope.result.2.2 n hn3
+            have hprev := ih (n - 1) (by omega) (by omega)
+            linarith
+    exact alpha_pos_all m hm
   have contradiction_single (j : Fin m) (hjk : j ≠ k)
       (hjodd : Odd (numD j)) (hgap : numD k + 2 ≤ numD j)
       : False := by
     let P : Fin m → ℝ := fun i => p i + (if i = k then δ else 0) -
       (if i = j then δ else 0)
-    have Psum : ∑ i, P i = 1 := by
-      simp only [P, Finset.sum_sub_distrib, Finset.sum_add_distrib,
-        Finset.sum_ite_eq', Finset.mem_univ, if_true]
-      ring_nf
-      exact hs
+    let I : Finset (Fin m) := {k}
+    let enum : I ≃ Fin 1 := Fintype.equivFinOfCardEq (by simp [I])
+    let q : Fin 1 → ℝ := fun _ => 1
+    have transfer_data : (∑ i, P i) = 1 ∧ cost P ≤ cost p + δ * cost q := by
+      have H := OptimalLawLargerAtomsTerminate.transfer m 1 p hs I enum q
+        (fun _ => by norm_num [q]) (by simp [q]) j (by simpa [I] using hjk)
+        D (shallow_odd j hjodd)
+      simpa [I, q, P, δ] using H
+    have Psum : ∑ i, P i = 1 := transfer_data.1
+    have qresidual (h : ℕ) : DyadicSupportLines.residual q h = 0 := by
+      have power : (2 : ℝ) ^ h = ((2 ^ h : ℕ) : ℝ) := by norm_cast
+      simp only [DyadicSupportLines.residual, q, mul_one, Fin.sum_univ_one,
+        power, Int.floor_natCast, Int.cast_natCast, sub_self]
+    have qcost : cost q = 0 := by
+      simp [DyadicSupportLines.cost, qresidual]
+    have cost_le : cost P ≤ cost p := by
+      simpa [qcost] using transfer_data.2
     have Plower (i : Fin m) : t + δ ≤ P i := by
       by_cases hik : i = k
       · subst i
@@ -360,181 +361,19 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
     have Ppos (i : Fin m) : 0 < P i := by
       have H := Plower i
       linarith [tpos, δpos]
-    have Pgrid (i : Fin m) : ∃ N : ℕ,
-        P i = (N : ℝ) / (2 : ℝ) ^ D := by
-      by_cases hik : i = k
-      · subst i
-        refine ⟨numD k + 1, ?_⟩
-        simp [P, hjk, hjk.symm]
-        rw [numD_spec k]
-        dsimp only [δ]
-        field_simp
-      · by_cases hij : i = j
-        · subst i
-          refine ⟨numD j - 1, ?_⟩
-          have hn : 1 ≤ numD j := by omega
-          simp [P, hjk, hjk.symm]
-          rw [numD_spec j]
-          dsimp only [δ]
-          field_simp
-          norm_num [Nat.cast_sub hn]
-        · refine ⟨numD i, ?_⟩
-          simp only [P, if_neg hik, if_neg hij, sub_zero, add_zero]
-          exact numD_spec i
-    have floor_change (h : ℕ) (hh : h < D) (i : Fin m) :
-        ⌊(2 : ℝ) ^ h * p i⌋ ≤ ⌊(2 : ℝ) ^ h * P i⌋ := by
-      by_cases hik : i = k
-      · subst i
-        simp [P, hjk, hjk.symm]
-        apply Int.floor_mono
-        have hpow : 0 ≤ (2 : ℝ) ^ h := by positivity
-        have hmul : 0 ≤ (2 : ℝ) ^ h * δ := mul_nonneg hpow δpos.le
-        nlinarith
-      · by_cases hij : i = j
-        · subst i
-          simp [P, hjk, hjk.symm]
-          exact (shallow_odd j hjodd h hh).symm.le
-        · simp [P, hik, hij]
-    have residual_le (h : ℕ) (hh : h < D) : DyadicSupportLines.residual P h ≤ DyadicSupportLines.residual p h := by
-      simp only [DyadicSupportLines.residual, Int.cast_sum]
-      have H : (∑ i, (⌊(2 : ℝ) ^ h * p i⌋ : ℝ)) ≤
-          ∑ i, (⌊(2 : ℝ) ^ h * P i⌋ : ℝ) := by
-        apply Finset.sum_le_sum
-        intro i hi
-        exact_mod_cast floor_change h hh i
-      linarith
-    have floor_k_strict (hkodd : Odd (numD k)) :
-        ⌊(2 : ℝ) ^ (D - 1) * P k⌋ =
-          ⌊(2 : ℝ) ^ (D - 1) * p k⌋ + 1 := by
-      rcases hkodd with ⟨q, hq⟩
-      have expansion : (2 : ℝ) ^ (D - 1) * p k = (q : ℝ) + 1 / 2 := by
-        rw [numD_spec k, hq]
-        rw [pow_prev]
-        field_simp
-        norm_num [Nat.cast_add, Nat.cast_mul]
-      have expandedP : (2 : ℝ) ^ (D - 1) * P k = (q : ℝ) + 1 := by
-        simp [P, hjk, hjk.symm]
-        rw [mul_add, expansion]
-        dsimp only [δ]
-        field_simp [pow_prev]
-        rw [pow_prev]
-        ring
-      rw [expandedP, expansion]
-      norm_num [Int.floor_intCast]
-    have residual_strict (hkodd : Odd (numD k)) :
-        DyadicSupportLines.residual P (D - 1) < DyadicSupportLines.residual p (D - 1) := by
-      simp only [DyadicSupportLines.residual, Int.cast_sum]
-      have Hle : (∑ i ∈ (Finset.univ.erase k),
-          (⌊(2 : ℝ) ^ (D - 1) * p i⌋ : ℝ)) ≤
-          ∑ i ∈ (Finset.univ.erase k), (⌊(2 : ℝ) ^ (D - 1) * P i⌋ : ℝ) := by
-        apply Finset.sum_le_sum
-        intro i hi
-        exact_mod_cast floor_change (D - 1) (by omega) i
-      have HsumP := Finset.sum_erase_add (Finset.univ : Finset (Fin m))
-        (fun i => (⌊(2 : ℝ) ^ (D - 1) * P i⌋ : ℝ)) (Finset.mem_univ k)
-      have Hsump := Finset.sum_erase_add (Finset.univ : Finset (Fin m))
-        (fun i => (⌊(2 : ℝ) ^ (D - 1) * p i⌋ : ℝ)) (Finset.mem_univ k)
-      have Hfloor : (⌊(2 : ℝ) ^ (D - 1) * P k⌋ : ℝ) =
-          (⌊(2 : ℝ) ^ (D - 1) * p k⌋ : ℝ) + 1 := by
-        exact_mod_cast floor_k_strict hkodd
-      rw [← HsumP, ← Hsump, Hfloor]
-      linarith
-    have residual_zero (r : Fin m → ℝ) (hrgrid : ∀ i, ∃ N : ℕ,
-        r i = (N : ℝ) / (2 : ℝ) ^ D)
-        (hsgrid : ∑ i, ((Classical.choose (hrgrid i) : ℕ) : ℝ) = (2 : ℝ) ^ D)
-        (d : ℕ) (hd : D ≤ d) : DyadicSupportLines.residual r d = 0 := by
-      simp only [DyadicSupportLines.residual, Int.cast_sum]
-      have floors (i : Fin m) :
-          ⌊(2 : ℝ) ^ d * r i⌋ = (((2 ^ (d - D) * Classical.choose (hrgrid i) : ℕ) : ℕ) : ℤ) := by
-        let N : ℕ := Classical.choose (hrgrid i)
-        have hN : r i = (N : ℝ) / (2 : ℝ) ^ D := Classical.choose_spec (hrgrid i)
-        change ⌊(2 : ℝ) ^ d * r i⌋ = (((2 ^ (d - D) * N : ℕ) : ℤ))
-        have hpow : (2 : ℝ) ^ d = (2 : ℝ) ^ D * (2 : ℝ) ^ (d - D) := by
-          rw [← pow_add, Nat.add_sub_of_le hd]
-        have hmul : (2 : ℝ) ^ d * ((N : ℝ) / (2 : ℝ) ^ D) =
-            (2 : ℝ) ^ (d - D) * (N : ℝ) := by
-          rw [hpow]
-          field_simp
-        have hcast : (2 : ℝ) ^ (d - D) * (N : ℝ) =
-            (((2 ^ (d - D) * N : ℕ) : ℤ) : ℝ) := by norm_num
-        have hfloorN : ⌊(2 : ℝ) ^ d * ((N : ℝ) / (2 : ℝ) ^ D)⌋ =
-            (((2 ^ (d - D) * N : ℕ) : ℤ)) := by
-          rw [hmul, hcast]
-          exact Int.floor_intCast _
-        calc
-          ⌊(2 : ℝ) ^ d * r i⌋ =
-              ⌊(2 : ℝ) ^ d * ((N : ℝ) / (2 : ℝ) ^ D)⌋ := by rw [hN]
-          _ = (((2 ^ (d - D) * N : ℕ) : ℤ)) := hfloorN
-      simp_rw [floors]
-      norm_num [Int.cast_sum, Int.cast_mul, Nat.cast_mul, Nat.cast_pow]
-      rw [← Finset.mul_sum]
-      rw [hsgrid]
-      rw [show (2 : ℝ) ^ d = (2 : ℝ) ^ D * (2 : ℝ) ^ (d - D) by
-        rw [← pow_add, Nat.add_sub_of_le hd]]
-      ring
-    have term_le (h : ℕ) : DyadicSupportLines.residual P h / (2 : ℝ) ^ h ≤
-        DyadicSupportLines.residual p h / (2 : ℝ) ^ h := by
-      by_cases hh : h < D
-      · exact div_le_div_of_nonneg_right (residual_le h hh) (by positivity)
-      · have Psum_grid :
-          (∑ i, ((Classical.choose (Pgrid i) : ℕ) : ℝ)) = (2 : ℝ) ^ D := by
-          have H : (∑ i, ((Classical.choose (Pgrid i) : ℕ) : ℝ) /
-              (2 : ℝ) ^ D) = 1 := by
-            calc
-              _ = ∑ i, P i := by
-                exact Finset.sum_congr rfl
-                  (fun i _ => (Classical.choose_spec (Pgrid i)).symm)
-              _ = 1 := Psum
-          have H' :
-              (∑ i, ((Classical.choose (Pgrid i) : ℕ) : ℝ)) /
-                (2 : ℝ) ^ D = 1 := by
-            rw [Finset.sum_div]
-            exact H
-          have hpow : (2 : ℝ) ^ D ≠ 0 := by positivity
-          simpa only [one_mul] using (div_eq_iff hpow).mp H'
-        rw [residual_zero P Pgrid Psum_grid h (le_of_not_gt hh),
-          residual_zero p (fun i => all_grid i) hsum_num_real h (le_of_not_gt hh)]
-    have data_p := law_data p (fun i => (hp i).le) hs
-    have data_P := law_data P (fun i => (Ppos i).le) Psum
-    have cost_le : cost P ≤ cost p := by
-      exact data_P.2.tsum_le_tsum term_le data_p.2
-    have cost_strict (hkodd : Odd (numD k)) : cost P < cost p := by
-      exact data_p.2.tsum_lt_tsum_of_nonneg
-        (fun h => div_nonneg (data_P.1 h).1 (by positivity))
-        term_le
-        (div_lt_div_of_pos_right (residual_strict hkodd) (by positivity))
     obtain ⟨z, hz⟩ := Finset.exists_min_image (Finset.univ : Finset (Fin m)) P
       Finset.univ_nonempty
     have hz' : ∀ i, P z ≤ P i := fun i => hz.2 i (Finset.mem_univ i)
     have lower_bound : alpha m * P z ≤ cost P := optimal_lower P Ppos Psum z hz'
     have min_strict : t + δ ≤ P z := Plower z
-    have alpha_pos : 0 < alpha m := by
-      have alpha_pos_all : ∀ n : ℕ, 2 ≤ n → 0 < alpha n := by
-        intro n
-        induction n using Nat.strong_induction_on with
-        | h n ih =>
-            intro hn
-            by_cases h2 : n = 2
-            · simpa [h2, OptimalLawStrictSlope.result.2.1]
-            · have hn3 : 3 ≤ n := by omega
-              have hslope := OptimalLawStrictSlope.result.2.2 n hn3
-              have hprev := ih (n - 1) (by omega) (by omega)
-              linarith
-      exact alpha_pos_all m hm
     have new_lower : alpha m * (t + δ) ≤ cost P :=
       (mul_le_mul_of_nonneg_left min_strict alpha_pos.le).trans lower_bound
     have old : cost p = alpha m * t := by simpa [t] using hopt
-    by_cases hkodd' : Odd (numD k)
-    · have : cost P < alpha m * (t + δ) := by
-        calc cost P < cost p := cost_strict hkodd'
-             _ = alpha m * t := old
-             _ < alpha m * (t + δ) := by nlinarith [mul_pos alpha_pos δpos]
-      exact (not_lt_of_ge new_lower) this
-    · have : cost P < alpha m * (t + δ) := by
-        calc cost P ≤ cost p := cost_le
-             _ = alpha m * t := old
-             _ < alpha m * (t + δ) := by nlinarith [mul_pos alpha_pos δpos]
-      exact (not_lt_of_ge new_lower) this
+    have : cost P < alpha m * (t + δ) := by
+      calc cost P ≤ cost p := cost_le
+           _ = alpha m * t := old
+           _ < alpha m * (t + δ) := by nlinarith [mul_pos alpha_pos δpos]
+    exact (not_lt_of_ge new_lower) this
   have contradiction_double (j₁ j₂ : Fin m) (hjk₁ : j₁ ≠ k) (hjk₂ : j₂ ≠ k)
       (h12 : j₁ ≠ j₂) (hodd₁ : Odd (numD j₁)) (hodd₂ : Odd (numD j₂))
       (heq₁ : numD j₁ = numD k + 1) (heq₂ : numD j₂ = numD k + 1)
@@ -722,19 +561,6 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
       Finset.univ_nonempty
     have hz' : ∀ i, P z ≤ P i := fun i => hz.2 i (Finset.mem_univ i)
     have lower_bound : alpha m * P z ≤ cost P := optimal_lower P Ppos Psum z hz'
-    have alpha_pos : 0 < alpha m := by
-      have alpha_pos_all : ∀ n : ℕ, 2 ≤ n → 0 < alpha n := by
-        intro n
-        induction n using Nat.strong_induction_on with
-        | h n ih =>
-            intro hn
-            by_cases h2 : n = 2
-            · simpa [h2, OptimalLawStrictSlope.result.2.1]
-            · have hn3 : 3 ≤ n := by omega
-              have hslope := OptimalLawStrictSlope.result.2.2 n hn3
-              have hprev := ih (n - 1) (by omega) (by omega)
-              linarith
-      exact alpha_pos_all m hm
     have new_lower : alpha m * t ≤ cost P :=
       (mul_le_mul_of_nonneg_left (Plower z) alpha_pos.le).trans lower_bound
     have old : cost p = alpha m * t := by simpa [t] using hopt
