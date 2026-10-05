@@ -187,3 +187,9 @@ head, bandwidth, derivatives and shared coefficient map. These estimates
 and the low/complementary-low signs must be obtained on one common
 subcritical sequence. No such scale-uniform signed supplier, original
 all-input half-bound, RH or full Robin conclusion is supplied here.
+
+The [regulated complete-prime source budget](regulated-prime-source-budget.md)
+uses the existing complete count at a positive exterior reserve.
+At each stage, its schedule uses that stage's prescribed source family
+and one common parameter/band choice. Band-dependent source norms and
+the actual low/complementary-low signs remain separate obligations.
