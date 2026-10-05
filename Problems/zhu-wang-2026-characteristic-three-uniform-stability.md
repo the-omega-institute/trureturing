@@ -124,9 +124,10 @@ instance. There is no digestion atom.
 
 ### What the settlement shows
 
-**Proved by `result`:** for every $r\ge1$ the normalized fiducial
-$\phi\propto u+|0\rangle$ on $\mathbb C^{\mathrm{GF}(3^r)}$ has
-$\lambda(\phi)\ge\frac18\frac q{q+1}$, so $\eta(\phi)\ge1/8$ uniformly.
+**Proved by `result`:** the existential `claim`. Its proof takes $c=1/8$
+and, for every $r\ge1$, the normalized fiducial $\phi\propto u+|0\rangle$ on
+$\mathbb C^{\mathrm{GF}(3^r)}$, for which $\lambda(\phi)\ge\frac18\frac q{q+1}$, so
+$\eta(\phi)\ge1/8$ uniformly.
 
 **Established inside the proof.** The decisive fact is arithmetic: in
 characteristic three the character takes only the cube roots of unity, so
