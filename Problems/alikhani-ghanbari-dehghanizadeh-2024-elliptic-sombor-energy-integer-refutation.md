@@ -1,5 +1,5 @@
 ---
-slug: alikhani-ghanbari-dehghanizadeh-conjecture-3-9-elliptic-sombor
+slug: alikhani-ghanbari-dehghanizadeh-2024-elliptic-sombor-energy-integer-refutation
 bibkey: alikhanighanbaridehghanizadeh2024ellipticsombor
 doi: 10.48550/arXiv.2404.18622
 url: https://arxiv.org/abs/2404.18622v1
@@ -73,64 +73,95 @@ computed formulas for its listed graph classes survive; only the universal
 nonintegrality conjecture is removed. Whether every graph with integer
 elliptic Sombor energy is bipartite is open.
 
-Computed by `python3 /private/tmp/eso-triage.py` (exit 0), with script
-SHA-256 `f41150af0365cf0650d268431f82b7c505619309ce77b15d3a83e228521c0e5e`.
-The tested scope is `B_k` for `k = 1, 2, 3, 4`; a uniform statement for all
-other `k` is open. The elliptic energies are `32√2`, `144`,
-`64 + 32√61`, and `96 + 16√854`, respectively; only `B_2` is integral in
-this tested scope.
+Computed: exact characteristic polynomials, spectra and energies for every
+`B_k`, `k = 1..10`, using Python 3 and SymPy 1.14.0 (exit 0).
+`B_k` consists of `k` copies of `C₄` sharing vertex zero and has `3k + 1`
+vertices. The script constructs the degree-weighted matrix and computes its
+SymPy characteristic polynomial before extracting all roots with algebraic
+multiplicity. Energy and integrality use exact symbolic arithmetic.
+
+In the spectrum column, `[m]` gives the multiplicity of each displayed
+value; `±a [m]` means that each of `−a` and `a` has multiplicity `m`.
+Values without a bracket have multiplicity one.
+
+| k | Characteristic polynomial (computed) | Spectrum (computed) | Energy (computed) | Integer? (computed) |
+| ---: | --- | --- | --- | --- |
+| 1 | $x^2(x^2-512)$ | $0\ [2],\ \pm16\sqrt{2}$ | $32\sqrt{2}$ | no |
+| 2 | $x^3(x^2-256)(x^2-3136)$ | $0\ [3],\ \pm16,\ \pm56$ | $144$ | yes |
+| 3 | $x^4(x^2-256)^2(x^2-15616)$ | $0\ [4],\ \pm16\ [2],\ \pm16\sqrt{61}$ | $64+32\sqrt{61}$ | no |
+| 4 | $x^5(x^2-256)^3(x^2-54656)$ | $0\ [5],\ \pm16\ [3],\ \pm8\sqrt{854}$ | $96+16\sqrt{854}$ | no |
+| 5 | $x^6(x^2-256)^4(x^2-150016)$ | $0\ [6],\ \pm16\ [4],\ \pm16\sqrt{586}$ | $128+32\sqrt{586}$ | no |
+| 6 | $x^7(x^2-256)^5(x^2-348352)$ | $0\ [7],\ \pm16\ [5],\ \pm8\sqrt{5443}$ | $160+16\sqrt{5443}$ | no |
+| 7 | $x^8(x^2-256)^6(x^2-717056)$ | $0\ [8],\ \pm16\ [6],\ \pm16\sqrt{2801}$ | $192+32\sqrt{2801}$ | no |
+| 8 | $x^9(x^2-256)^7(x^2-1348096)$ | $0\ [9],\ \pm16\ [7],\ \pm16\sqrt{5266}$ | $224+32\sqrt{5266}$ | no |
+| 9 | $x^{10}(x^2-256)^8(x^2-2361856)$ | $0\ [10],\ \pm16\ [8],\ \pm16\sqrt{9226}$ | $256+32\sqrt{9226}$ | no |
+| 10 | $x^{11}(x^2-256)^9(x^2-3910976)$ | $0\ [11],\ \pm16\ [9],\ \pm8\sqrt{61109}$ | $288+16\sqrt{61109}$ | no |
+
+Only `B_2` is integral in this computed range. A uniform statement for all
+other `k` is open.
 
 The same computation applied to the ordinary Sombor matrix gives energies
 `8√2`, `8 + 8√6`, `48`, and `24 + 8√35` for `k = 1, 2, 3, 4`.
 Thus `B_3` gives the separately preregistered Ghanbari Conjecture 3.8
 (refuted in issue #13388); this dossier does not settle any further Sombor
-statement. A uniform extension beyond the tested four values is open.
+statement. A uniform extension of the ordinary Sombor readings beyond the
+tested four values is open.
 
-The computation script source is:
+The computation script source is below. Save the block as
+`bouquet-triage.py` and run `python3 bouquet-triage.py` with SymPy 1.14.0
+(`python3 -m pip install sympy==1.14.0`). The SHA-256 of its UTF-8 bytes,
+with LF line endings and one final newline, is
+`da792c23330de23a81685943c3c4b39caec7e9390e109f77d76f656e2251164e`.
 
 ```python
+import json
 import sympy as sp
+
+x = sp.Symbol("x")
 
 
 def bouquet(k):
-    n = 3 * k + 1
     edges = set()
     for r in range(k):
         a, b, c = 3 * r + 1, 3 * r + 2, 3 * r + 3
         edges.update({(0, a), (a, b), (b, c), (c, 0)})
-    deg = [0] * n
+    degrees = [0] * (3 * k + 1)
     for i, j in edges:
-        deg[i] += 1
-        deg[j] += 1
-    return edges, deg
+        degrees[i] += 1
+        degrees[j] += 1
+    return edges, degrees
 
 
-def energy(k, elliptic):
-    edges, deg = bouquet(k)
-    n = len(deg)
-    matrix = sp.zeros(n)
+def reading(k, elliptic):
+    edges, degrees = bouquet(k)
+    matrix = sp.zeros(len(degrees))
     for i, j in edges:
+        value = sp.sqrt(degrees[i] ** 2 + degrees[j] ** 2)
         if elliptic:
-            value = (deg[i] + deg[j]) * sp.sqrt(deg[i] ** 2 + deg[j] ** 2)
-        else:
-            value = sp.sqrt(deg[i] ** 2 + deg[j] ** 2)
-        matrix[i, j] = value
-        matrix[j, i] = value
-    spectrum = matrix.eigenvals()
-    total = 0
-    for value, multiplicity in spectrum.items():
-        sign = 1 if float(value.evalf()) >= 0 else -1
-        total += sign * value * multiplicity
-    return sp.simplify(total), spectrum
+            value *= degrees[i] + degrees[j]
+        matrix[i, j] = matrix[j, i] = value
+    polynomial = sp.Poly(sp.expand(matrix.charpoly(x).as_expr()), x)
+    roots = sp.roots(polynomial.as_expr(), x)
+    assert sum(roots.values()) == matrix.rows
+    assert sp.Poly(sp.prod((x - value) ** count for value, count in roots.items()).expand(), x) == polynomial
+    assert all(value.is_real is True for value in roots)
+    energy = sp.simplify(sum(sp.Abs(value) * count for value, count in roots.items()))
+    assert energy.is_integer in (True, False)
+    return {
+        "k": k,
+        "vertices": matrix.rows,
+        "characteristic_polynomial": str(sp.factor(polynomial.as_expr())),
+        "spectrum": [{"eigenvalue": str(value), "multiplicity": int(count)} for value, count in sorted(roots.items(), key=lambda item: sp.default_sort_key(item[0]))],
+        "energy": str(energy),
+        "integer": bool(energy.is_integer),
+    }
 
 
-print("family: B_k is k copies of C4 sharing vertex 0")
-for k in range(1, 5):
-    eso, _ = energy(k, True)
-    so, spectrum = energy(k, False)
-    print(f"k={k} vertices={3*k+1} elliptic_energy={eso} integral={eso.is_integer} sombor_energy={so} integral={so.is_integer}")
-    if k == 3:
-        print("B_3_sombor_spectrum=", spectrum)
+print(json.dumps({
+    "sympy_version": sp.__version__,
+    "elliptic": [reading(k, True) for k in range(1, 11)],
+    "ordinary_sombor": [reading(k, False) for k in range(1, 5)],
+}, indent=2))
 ```
 
 Open: whether every graph with integer elliptic Sombor energy is bipartite,

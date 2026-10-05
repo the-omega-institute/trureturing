@@ -34,9 +34,9 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/EllipticSomborEnergyIntegerRefutation.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/alikhani-ghanbari-dehghanizadeh-conjecture-3-9-elliptic-sombor` (refuted) by `D5/S3/Combinatorics/Graph/EllipticSomborEnergyIntegerRefutation.result`.
+*Resolves.* `Problems/alikhani-ghanbari-dehghanizadeh-2024-elliptic-sombor-energy-integer-refutation` (refuted) by `D5/S3/Combinatorics/Graph/EllipticSomborEnergyIntegerRefutation.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alikhani-ghanbari-dehghanizadeh-conjecture-3-9-elliptic-sombor","declaration_gid":"D5/S3/Combinatorics/Graph/EllipticSomborEnergyIntegerRefutation.result","resolution_kind":"refuted"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alikhani-ghanbari-dehghanizadeh-2024-elliptic-sombor-energy-integer-refutation","declaration_gid":"D5/S3/Combinatorics/Graph/EllipticSomborEnergyIntegerRefutation.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 

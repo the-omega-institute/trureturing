@@ -25,7 +25,7 @@ internal sealed class EllipticSomborEnergyIntegerRefutationDocument : IScribeDoc
                 "Use the edges 0–1–2–3–0 and 0–4–5–6–0. Vertex zero has degree four and every other vertex has degree two. The four edges incident to zero have weight 12√5, and the other four have weight 8√2. An explicit invertible change of basis diagonalizes this real symmetric matrix with diagonal entries −56, −16, 0, 0, 0, 16, 56. Its characteristic polynomial is x³(x−56)(x+56)(x−16)(x+16). Mathlib's spectral theorem identifies the roots with the Hermitian eigenvalue multiset. The absolute values therefore sum to 144, an integer, so the conjecture is false.",
                 AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("alikhani-ghanbari-dehghanizadeh-conjecture-3-9-elliptic-sombor"),
+                    ProblemSlugRef.Create("alikhani-ghanbari-dehghanizadeh-2024-elliptic-sombor-energy-integer-refutation"),
                     ResolutionKind.Refuted))),
         []));
 
