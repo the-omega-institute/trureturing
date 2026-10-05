@@ -30,7 +30,10 @@ internal sealed class SilverSlopeAbelianPeriodsDocument : IScribeDocumentDefinit
                 H("The silver-slope period set equality"),
                 StatementSource.FromAuthor(Disp(new Formula.Relation(Call("silverAbelianPeriodSet"),FormulaRelationOperator.Equal,Call("silverCandidateSet")))),
                 AssessedProvenance.FromRepo(Source),Blocks(Paragraph(Text(
-                    "Every Pell denominator, twice a denominator and positive adjacent-denominator sum is realised. Singular-window packing excludes all other minimum periods."))),DescribeRole.Theorem)),
+                    "Every Pell denominator, twice a denominator and positive adjacent-denominator sum is realised. Singular-window packing excludes all other minimum periods."))),DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("peltomaki-2020-silver-slope-abelian-periods"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock SourceQuotation() => Paragraph(

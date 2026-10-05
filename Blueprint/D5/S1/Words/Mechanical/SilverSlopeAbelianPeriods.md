@@ -24,6 +24,10 @@ $$\operatorname{silverAbelianPeriodSet}() = \operatorname{silverCandidateSet}()$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/SilverSlopeAbelianPeriods.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/peltomaki-2020-silver-slope-abelian-periods` (proved) by `D5/S1/Words/Mechanical/SilverSlopeAbelianPeriods.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"peltomaki-2020-silver-slope-abelian-periods","declaration_gid":"D5/S1/Words/Mechanical/SilverSlopeAbelianPeriods.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. Peltomäki (2020). *Abelian periods of factors of Sturmian words*. DOI: [10.1016/j.jnt.2020.04.007](https://doi.org/10.1016/j.jnt.2020.04.007). URL: <https://arxiv.org/abs/1905.06138>.
