@@ -1,0 +1,8 @@
+## 3. Source status
+
+The exact correspondence between the same matrix $D$, the same selected region
+$R$, the anchor elimination, and the padded native map $V_R$ is repo-derived.
+The proof uses only finite-dimensional linear algebra, the displayed
+characteristic-$p$ consequence, and rank-nullity; it makes no claim about an
+external open problem or about originality of those standard ingredients.
+

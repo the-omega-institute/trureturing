@@ -134,3 +134,216 @@ form-domain membership of x^2. Its upper enclosure does not reach 1e-4
 and is not a lower bound on attainable residuals. It supplies neither
 R5 on the required input class nor the projected transfer/norm comparison,
 original half-bound, Robin or RH, and has no new Lean certification.
+
+## The real translation boundary retains fixed sharp-low mass
+
+This is a conditional paper application of the
+[original theta tail](../Analytic/romik2021orthogonal.md#reusable-theta-tail-and-its-local-scale),
+(R1)–(R5), and the accepted actual-model premises above. It keeps the
+small-window generated space $N$ and the original measure. The theta
+asymptotic, analytic identity principle, weak translation convergence
+and Fourier projection tools are reused; no new generic regularization
+theorem, numerical producer, Lean certification or originality claim
+is supplied.
+
+Put $v_0(x)=\sqrt{2\Phi(x)\cosh(x/2)}$, $Uh=v_0h$ and $N_c=UN$.
+The complex theta series is normally convergent on $|\Im z|<\pi/4$.
+For the translation parameter define
+
+$$
+t_c=\frac{\log2}{2},\qquad
+\mathcal D=\{z:|\Im z|<\pi/4,\
+2e^{-2|\Re z|}\cos(2\Im z)>1\}.
+$$
+
+This domain is connected, contains $I$ and has real section
+$(-t_c,t_c)$. For each compact $E\subset\mathcal D$, the normally
+convergent series and the positive real first-term denominator give
+on either spatial tail
+
+$$
+|Uw_z(x)|^2\le C_Ee^{5|x|}
+ e^{-\pi k_Ee^{2|x|}}+C_Ev_0(x)^2,\qquad
+k_E=\min_{z\in E}(2e^{-2|\Re z|}\cos(2\Im z)-1)>0.
+$$
+
+On compact spatial intervals use the positive minimum of $\Phi$.
+This common integrable majorant makes $z\mapsto w_z$ Hilbert-valued
+holomorphic. Its projection onto $N^\perp$ vanishes on $I$ by (R2),
+so the analytic identity principle makes it vanish on $\mathcal D$.
+Centering and evenness extend as well. Consequently $w_t\in N$ for
+every real $|t|<t_c$, without enlarging the original $N$.
+
+For $0<t<t_c$ set
+
+$$
+\begin{gathered}
+\eta_t=2e^{-2t}-1,\qquad R_t=\tfrac12\log(1/\eta_t),\\
+G(y)=e^{5y/2-(\pi/2)e^{2y}},\qquad
+A_t=\pi e^{-9t/2}\eta_t^{-5/4}.
+\end{gathered}
+$$
+
+The actual two-tail profile, as $t\uparrow t_c$, is
+
+$$
+\left\|A_t^{-1}Uw_t-G(\cdot-R_t)-G(-\cdot-R_t)\right\|_2
+\longrightarrow0. \tag{E1}
+$$
+
+To pay both tails, fix $A>t_c+1$ and $t\ge t_c/2$. On $x\ge A$,
+the dominant numerator is $\Phi(x-t)$. The source tail comparison
+gives
+
+$$
+\frac{v_0(x)\Phi(x-t)}{2\Phi(x)}
+\le Ce^{5x/2}e^{-(\pi/2)\eta_te^{2x}}.
+$$
+
+After $x=R_t+y$ and division by $A_t$, this is bounded by $CG(y)$
+on $y\ge A-R_t$. For each fixed $y$, the original first-term relative
+asymptotic and $2\cosh(x/2)\sim e^{x/2}$ give convergence to $G(y)$.
+Extend the term by zero below $A-R_t$ and apply $L^2$ dominated
+convergence. On this right tail the other numerator has an
+$\eta_t$-independent integrable envelope, because $2e^{2t}-1$ is
+bounded away from zero. Its divided norm tends to zero, as does that
+of $\cosh(t/2)v_0$. The compact interval $[-A,A]$ contributes a
+bounded numerator divided by $A_t\to\infty$. Evenness supplies the
+left tail, where $\Phi(x+t)$ is dominant. The wrong-half profile
+tails vanish since $G\in L^2$; neither shifted numerator is asserted
+globally bounded.
+
+The two full profiles have overlap tending to zero. Thus
+
+$$
+\begin{gathered}
+n_t:=\frac{Uw_t}{\|Uw_t\|_2}\in N_c,\qquad
+\|Uw_t\|_2\sim\sqrt2A_t\|G\|_2,\\
+\left\|n_t-\frac{G(\cdot-R_t)+G(-\cdot-R_t)}
+ {\sqrt2\|G\|_2}\right\|_2\longrightarrow0,\qquad
+n_t\rightharpoonup0. \tag{E2}
+\end{gathered}
+$$
+
+At real $|t|\ge t_c$, use $w_t=w_{|t|}$ and put
+$\eta_{|t|}=2e^{-2|t|}-1\le0$. The same leading ratio has an
+$e^{5x/2}$ prefactor and exponent $-(\pi/2)\eta_{|t|}e^{2x}$,
+so $w_t\notin L^2(\nu)$. The bounded centering
+subtraction cannot cancel it. This is a real translation-integrability
+boundary, not a zero ordinate or an eigenvalue.
+
+For any fixed bandwidth $\Lambda>0$ let
+$P_\Lambda=\mathbf1_{|\mathsf D|<\Lambda}$ on the even physical
+space. Compute the projection of $G$ in the full physical space,
+since $G$ itself is not even. Plancherel and Riemann–Lebesgue give
+
+$$
+\|P_\Lambda n_t\|_2^2\longrightarrow
+\gamma_\Lambda:=
+\frac{\|\mathbf1_{|\mathsf D|<\Lambda}G\|_2^2}{\|G\|_2^2}>0.
+\tag{E3}
+$$
+
+The two projected translated profiles have equal norms and an
+oscillatory cross integral with an $L^1$ frequency density. Positivity
+uses $G\in L^1$, $G>0$ and its Fourier transform nonzero near zero.
+Also $\gamma_\Lambda\uparrow1$ as $\Lambda\to\infty$. Hence the
+fixed-band restriction of the actual critical space is noncompact;
+this is a restricted-class interface to (R5).
+
+## A compact fit has a fixed error on the whole sharp-low sphere
+
+Use the family (E2), the actual negative-edge metric (G2) and its
+already supplied positive coercivity. No inverse-constant computation
+is repeated. In physical coordinates,
+
+$$
+\widetilde B=UBU^{-1}=M_d-\mathcal K,\qquad
+d(x)=\tfrac12\int a(x,y)d\nu(y),\qquad
+\mathcal K(x,y)=\tfrac12v_0(x)v_0(y)a(x,y),
+$$
+
+with the same $a(x,y)$ as (G2); assign its null diagonal value zero.
+Since $0\le a\le1$ and $\nu$ is a probability, $\mathcal K$ is
+Hilbert–Schmidt. For each fixed $y$, $a(x,y)\to1$ as
+$|x|\to\infty$, so $d(x)\to1/2$. Compactness makes
+$\mathcal K n_t\to0$, and (E2) makes the mass on every fixed
+compact interval tend to zero. Therefore
+
+$$
+\|(\widetilde B-\tfrac12I)n_t\|_2\longrightarrow0. \tag{E4}
+$$
+
+Remove the original ground state exactly. With first-slot-linear
+pairings, put $p_0=P_\Lambda v_0\ne0$ and
+
+$$
+b_t=P_\Lambda n_t-
+ \frac{\langle P_\Lambda n_t,p_0\rangle}{\|p_0\|^2}p_0,
+\qquad p_t=b_t/\|b_t\|.
+$$
+
+Here $p_0\ne0$ because $v_0$ is positive, belongs to $L^1$ and has
+Fourier transform nonzero at zero. Weak escape makes the removed
+coefficient tend to zero. For $t$ sufficiently close to $t_c$ the
+normalization is nonzero, and $p_t$ is an even sharp-low unit input,
+$\langle p_t,v_0\rangle=0$, $p_t\rightharpoonup0$,
+$\|b_t\|\to\sqrt{\gamma_\Lambda}$ and
+$\langle p_t,n_t\rangle\to\sqrt{\gamma_\Lambda}$.
+The existing [sharp-center (SC1)](../../docs/reports/theta-mixed-matrix/sharp-center.md#operator-domain-and-complete-block)
+places every physical finite-band input in the original minimal
+operator domain; in $L^2(\nu)$ the corresponding input is $U^{-1}p_t$.
+
+Let $\mathcal R p=Un_{U^{-1}p}$ be the exact common critical
+correction from (G4). It is bounded on the centered ambient space
+and has range in $N_c$. Its defining metric projection gives
+
+$$
+\langle\mathcal R p,\widetilde Bz\rangle
+=\langle p,\widetilde Bz\rangle\qquad(z\in N_c).
+$$
+
+With $z=n_t$, boundedness and (E4) give
+$\langle\mathcal R p_t,n_t\rangle\to\sqrt{\gamma_\Lambda}$.
+For every fixed $\varepsilon>0$ the original (R4) correction
+$\mathcal R_\varepsilon=UP_\varepsilon U^{-1}$ is compact, so
+$\mathcal R_\varepsilon p_t\to0$. Consequently
+
+$$
+\begin{gathered}
+\liminf_{t\uparrow t_c}
+ \|(\mathcal R-\mathcal R_\varepsilon)p_t\|_2
+ \ge\sqrt{\gamma_\Lambda},\\
+\sup_{\substack{p\in P_\Lambda L^2_{\rm even},\ \|p\|_2=1\\
+                 \langle p,v_0\rangle=0}}
+ \|(\mathcal R-\mathcal R_\varepsilon)p\|_2
+ \ge\sqrt{\gamma_\Lambda}. \tag{E5}
+\end{gathered}
+$$
+
+The paired-edge statement retains the same source. Set
+$z_t=(\mathcal R-\mathcal R_\varepsilon)p_t\in N_c$.
+Then $\langle z_t,\widetilde Bn_t\rangle\to
+\sqrt{\gamma_\Lambda}/2$ and
+$\langle n_t,\widetilde Bn_t\rangle\to1/2$.
+Cauchy–Schwarz in the $B$ metric, with mixed critical nullity, gives
+
+$$
+\liminf_{t\uparrow t_c}\|C_\pm U^{-1}z_t\|
+\ge\sqrt{\gamma_\Lambda/2}. \tag{E6}
+$$
+
+This applies to the whole fixed infinite-dimensional sharp-low
+centered sphere for each positive regularization parameter. The source
+norm argument also tests any fixed compact source approximation into
+the ambient space. Extending the paired-edge conclusion requires the
+approximation's range in $N_c$ with the inherited form-domain
+membership, as satisfied by $\mathcal R_\varepsilon$.
+It does not contradict strong convergence on each individual input,
+or give this lower bound on a finite frame or a spatially restricted
+source class. Uniform accuracy on the stated sphere needs a
+noncompact approximation mechanism or a source restriction excluding
+this escaped family. This interface determines a boundary of the
+bounded-window fit; it supplies no divergence result for the actual
+projected inverse, no original all-input half-bound, and no signs on
+a common cofinal sequence. Full Robin and RH remain unresolved.
