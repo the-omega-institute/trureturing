@@ -74,7 +74,7 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
     private static Formula FinOf(Formula d) => Fn("Fin", d);
     private static Formula Prod(Formula a, Formula b) => Par(Seq(a, Times, b));
     private static Formula Pair(Formula a, Formula b) => Par(Seq(a, Comma, b));
-    private static Formula Lam(string name, Formula type, Formula body) => Par(Seq(F.Id(name), Colon, type, new Formula.LatexMacro(FormulaLatexMacro.Mapsto), body));
+    private static Formula Lam(string name, Formula type, Formula body) => Par(Seq(F.Id(name), Colon, type, Mapsto, body));
     private static Formula Code(Formula d) => Prod(FinOf(d), FinOf(d));
     private static Formula Mat(Formula a, Formula b) => Fn("Matrix", a, b, ComplexType);
     private static Formula CP(Formula a, Formula b) => Fn("CompletelyPositiveMap", Fn("CStarMatrix", a, a, ComplexType), Fn("CStarMatrix", b, b, ComplexType));
