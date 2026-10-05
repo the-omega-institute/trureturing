@@ -49,3 +49,9 @@ direction families, higher-dimensional spaces, or projective blocking sets.
 The known finite-geometry theorem is attributed to the cited source; the
 formal proof uses the existing Mathlib evaluation-sum theorem rather than
 formalizing the full Alon--Furedi theorem or its general finite-grid bounds.
+
+## Verified locator
+
+DOI resolver: https://doi.org/10.48550/arXiv.1508.06020
+Declared URL: https://arxiv.org/abs/1508.06020v2
+Corollary 6.8, manuscript page 16; Theorem 6.1(c), manuscript page 14.
