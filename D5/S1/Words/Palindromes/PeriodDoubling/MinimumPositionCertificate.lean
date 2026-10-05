@@ -456,7 +456,7 @@ def minimumTable (i : ℕ) : ℕ × Bool × List (ℕ × ℤ × ℤ × ℤ × �
    else (if i < 1705 then (996,true,[(851,0,0,0,0),(1426,0,0,1,1)],some (-1)) else (997,true,[(1685,0,0,0,0),(1686,0,0,1,1)],some (-1)))) else (if i < 1708 then (if i < 1707 then (1488,false,[(1415,0,0,0,0),(1416,0,0,1,1)],none) else (1489,false,[(805,0,0,0,0)],none))
    else (if i < 1709 then (1490,false,[(1500,0,0,0,0),(1501,0,0,1,1)],none) else (1491,false,[(944,0,0,0,0)],none))))))))))))
 
-private def successors (i : ℕ) : List (ℕ × Bool × ℤ × ℤ × ℤ × ℤ) :=
+def successors (i : ℕ) : List (ℕ × Bool × ℤ × ℤ × ℤ × ℤ) :=
   let row := minimumTable i
   let s := (baseTable row.1).1
   (baseTable row.1).2.1.map fun e =>

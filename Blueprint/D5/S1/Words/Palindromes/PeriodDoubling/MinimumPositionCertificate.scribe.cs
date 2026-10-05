@@ -13,6 +13,10 @@ internal sealed class MinimumPositionCertificateDocument : IScribeDocumentDefini
             DeclarationHandle.Create(Prefix + "minimumTable"), H("The complete lifted lowest-position graph"),
             StatementSource.FromAuthor(TableFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("Indices zero through 1709 list the base-state index, the persistent lowest-position escape flag, every lifted edge, and the optional integer potential. Base states are the 1492 states of baseTable. Outside this range lookup returns the final row; all runs use Fin 1710."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("pd-minimumpositioncertificate-successors"),
+            DeclarationHandle.Create(Prefix + "successors"), H("The literal lowest-position flag update"),
+            StatementSource.FromAuthor(SuccessorsFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For every outgoing base edge, preserve its four labels and attach the persistent flag. The flag is set when the first-input-sign memory is still zero, the newly emitted input digit is zero, and the newly emitted output digit is nonzero. This is the arithmetic update used both by the potential checker and by complete path realization."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-minimumpositioncertificate-minimumautomaton"),
             DeclarationHandle.Create(Prefix + "minimumAutomaton"), H("The lowest-position escape automaton"),
             StatementSource.FromAuthor(AutomatonFormula()), AssessedProvenance.FromRepo(),
@@ -69,6 +73,20 @@ internal sealed class MinimumPositionCertificateDocument : IScribeDocumentDefini
     private static Formula Alphabet() => Product(Z(), Z(), Z(), Z());
     private static Formula TableFormula() => Disp(All("i", N(), Seq(Call("minimumTable", V("i")), Colon,
         Product(N(), Ty("Bool"), ListOf(Product(N(), Z(), Z(), Z(), Z())), Call("Option", Z())))));
+    private static Formula SuccessorsFormula()
+    {
+        var row=Call("minimumTable",V("i"));
+        var state=Call("fst",Call("baseTable",Call("fst",row)));
+        var target=Call("fst",Call("baseTable",Call("fst",V("e"))));
+        Formula Entry(Formula a,int k) => Call("getD",Call("getElemOption",a,new Formula.Number(k)),D(0));
+        var flag=Call("orBool",Call("fst",Call("snd",row)),
+            Call("andBool",Call("andBool",Call("beq",Entry(state,14),D(0)),Call("beq",Entry(target,10),D(0))),
+                Call("bne",Entry(target,12),D(0))));
+        var value=Tuple(Call("fst",V("e")),flag,Call("snd",V("e")));
+        var edges=Call("fst",Call("snd",Call("baseTable",Call("fst",row))));
+        var body=Call("map",Seq(LambdaLower,Sp,V("e"),Colon,Product(N(),Alphabet()),Sp,Mapsto,Sp,value),edges);
+        return Disp(All("i",N(),Eqn(Call("successors",V("i")),body)));
+    }
     private static Formula AutomatonFormula()
     {
         var fin = Call("Fin", D(1,7,1,0));
