@@ -1,13 +1,9 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.Blueprint.D5.S3.Zeros.ActualZeroGeometryDocument;
-using static StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability.AnalyticLogarithmicContinuationDocument;
-using static StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability.CanonicalLiGrowthZeroFreeDocument;
+using F = StrataLint.Scribe.FormulaDsl;
+using static StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability.CanonicalLiDiskEquivalenceFormula;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability;
 
-[ScribeSharedSource("Blueprint/D5/S3/Zeros/ActualZeroGeometry.scribe.cs")]
-[ScribeSharedSource("Blueprint/D5/S3/Weil/Probability/AnalyticLogarithmicContinuation.scribe.cs")]
-[ScribeSharedSource("Blueprint/D5/S3/Weil/Probability/CanonicalLiGrowthZeroFree.scribe.cs")]
 internal sealed class CanonicalLiDiskEquivalenceDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Weil/Probability/CanonicalLiDiskEquivalence.";
@@ -70,4 +66,47 @@ internal sealed class CanonicalLiDiskEquivalenceDocument : IScribeDocumentDefini
                 Blocks(Paragraph(Text("The conclusion concerns every point of the full disk, not a local germ or a finite coefficient prefix."))), DescribeRole.Theorem))));
     private static Formula Expansion => Call("HasSum", Lambda("n", Natural,
         Multiply(Li(Add(Id("n"), Num(1))), Pow(Id("z"), Id("n")))), Call("liGenerator", Id("z")));
+}
+
+internal static class CanonicalLiDiskEquivalenceFormula
+{
+    internal static Formula Complex => F.Seq(F.Mathbb, F.Grp(F.Id("C")));
+    internal static Formula Real => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
+    internal static Formula Natural => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+    internal static Formula NNReal => F.Seq(Real, F.Underscore, F.Grp(F.Geq, F.D(0)));
+    internal static Formula RH => Id("RiemannHypothesis");
+    internal static Formula OneHalf => Div(Num(1), Num(2));
+    internal static Formula All(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), domain, body);
+    internal static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    internal static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
+    internal static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    internal static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    internal static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
+    internal static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
+    internal static Formula Norm(Formula a) => new Formula.Norm(a);
+    internal static Formula Abs(Formula a) => new Formula.Absolute(a);
+    internal static Formula Lambda(string variable, Formula domain, Formula body) =>
+        F.Seq(F.Open, F.Id(variable), F.Colon, domain, F.Mapsto, body, F.Close);
+    internal static Formula Nontrivial(Formula rho) => Call("IsNontrivialZero", rho);
+    internal static Formula Xi(Formula s) => Call("xiReading", s);
+    internal static Formula Mobius(Formula z) => Div(Num(1), Subtract(Num(1), z));
+    internal static Formula Cayley(Formula rho) => Subtract(Num(1), Div(Num(1), rho));
+    internal static Formula Disk(Formula body) => All("z", Complex, Imp(Lt(Norm(Id("z")), Num(1)), body));
+    internal static Formula DiskFree => Disk(NotEqual(Call("canonicalXiDisk", Id("z")), Num(0)));
+    internal static Formula LiteralDiskFree => Disk(NotEqual(Xi(Mobius(Id("z"))), Num(0)));
+    internal static Formula HalfFree => All("s", Complex,
+        Imp(Lt(OneHalf, Call("Re", Id("s"))), NotEqual(Xi(Id("s")), Num(0))));
+    internal static Formula OnLine => All("rho", Complex,
+        Imp(Nontrivial(Id("rho")), Equal(Call("Re", Id("rho")), OneHalf)));
+    internal static Formula CentralReal => All("z", Complex,
+        Imp(Equal(Xi(Add(OneHalf, Multiply(Id("i"), Id("z")))), Num(0)), Equal(Call("Im", Id("z")), Num(0))));
+    internal static Formula CayleyUnit => All("rho", Complex,
+        Imp(Nontrivial(Id("rho")), Equal(Norm(Cayley(Id("rho"))), Num(1))));
+    internal static Formula UnitDisk => Call("ball", Num(0), Num(1));
+    internal static Formula AnalyticFormula(Formula f, Formula domain) => Call("AnalyticOnNhd", Complex, f, domain);
+    internal static Formula Li(Formula n) => Call("canonicalLiCoefficient", n);
+    internal static Formula Weighted(Formula radius) => Multiply(Abs(Li(Add(Id("n"), Num(1)))), Pow(radius, Id("n")));
+    internal static Formula SummableAt(Formula radius) => Call("Summable", Lambda("n", Natural, Weighted(radius)));
+    internal static Formula AllSummable => All("r", NNReal, Imp(Lt(Id("r"), Num(1)), SummableAt(Id("r"))));
 }

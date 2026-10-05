@@ -104,6 +104,13 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
                 ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value))).ToArray();
         else
         {
+            var admission = ScribeSdkAdmission.Check(materialized.Root, selection.Paths);
+            if (admission.ExitCode != 0)
+            {
+                var error = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
+                admission.WriteFailure(error);
+                throw new ScribeSdkAdmissionException(admission.ExitCode, error.ToString());
+            }
             var results = ScribeScriptHost.ExecuteBatch(materialized.Root, selection.Paths);
             var failures = results.Where(result => !result.IsSuccess).ToArray();
             if (failures.Length != 0)

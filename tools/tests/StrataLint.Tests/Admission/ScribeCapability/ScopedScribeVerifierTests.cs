@@ -50,6 +50,8 @@ public sealed class ScopedScribeVerifierTests
     private static RepositorySnapshot Snapshot()
     {
         var fixture = new RuleFixture();
+        foreach (var (path, text) in StrataLint.TestSupport.ScribeSdkFixtureInputs.Read())
+            fixture.Files[path] = text;
         fixture.Files["Meta/ReportProducers/scribe-content.json"] = """
             {"schema":"report-producer-scope-v2","registration":"lean-report-inputs.json",
              "scope":"scribe-content","projects":[]}

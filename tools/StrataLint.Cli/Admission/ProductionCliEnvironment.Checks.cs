@@ -75,6 +75,10 @@ internal sealed partial class ProductionCliEnvironment
             }
             return RenderStage(result, planeObservations);
         }
+        catch (ScribeSdkAdmissionException exception)
+        {
+            return new(exception.ExitCode, RenderPlaneObservations(planeObservations), exception.Message + "\n");
+        }
         catch (Exception exception)
         {
             return new(2, RenderPlaneObservations(planeObservations), "INFRASTRUCTURE_FAILURE " + exception.Message + "\n");

@@ -1,0 +1,10 @@
+### 69.5 既有结果的归属与白盒迁移边界
+
+Scale38 供应这个字面嵌套族、前像、组成、NC、$P_0$ 的原始端点和 $D_{\rm raw}=n+1$；这些是既有结果。Scale18、23、25、27、29、34 及本卷 66.13、68.11 供应必查叶、完整认证、实际历史、独立阶段与真实缓存。有关正文分别见 [Scale 固定版本](https://github.com/the-omega-institute/trureturing/blob/e5ce02cc2aec6c038a4f965e642e0c4b7be73913/docs/develop/theory/FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md)、[实际取得](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)、[联合费用](../../../D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.lean)、[七叶分离](../../../D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.lean)、[谱系纤维](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)、[单孔恢复](../../../D5/S3/Arith/FibonacciAtomic/ActualHistorySingleHoleRecovery.lean)与[叶历史刚性](../../../D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity.lean)。这里使用这些基础各自的接口，不把它们扩称为本章全参数端点谱。有限确定性决策树与证书方法是成熟框架；这里承担的是实际嵌套几何下的一次非叶历史不变量、精确目标谱和粗极小极大差值。来源对应限于这些指定结果，不作全球缺失或世界优先权断言。
+
+第 66、67 章的逐坐标端点重标依赖每个成员都有 $n/n+1$ 端点。该前提在当前族 $k\ge2$ 为假，不能据此推出嵌套族的付费或随机最优。失败还直接落在重标操作上：先完整认证 $X_2$、不匹配才后备，给一个全域正确控制器在 $X_2$ 只付 $n$；但任何本族端点在 $X_2$ 都付 $n+1$，所以用已有端点替换会增加这一坐标。这里排除的是这项逐坐标归约的实例化，不是所有可能的随机改进。
+
+Scale38/39 的原始确定性一次超额容量密度 $2/3$ 另有原始接口与容量量词，不转成粗读出或随机结论。全端点性质失败也不等于一次超额极小极大失败：原始接口仍由既有 $P_0$ 端点达到 $n+1$；粗接口在 $k=2$ 也有端点，只有 $k\ge3$ 才必须增加一个地址。
+
+费用只度量同一不变实际树上的不同地址请求；接口变粗改变可区分的响应组。迁移到机器学习模型须分别建立对象与可达状态、合法操作、读出、费用的保持对应，再核对全域任务及评价族的量词。可表达或可逆不自动提供地址取得权限或同价执行。本章没有训练、精度、泛化、Bayes 风险、因果、物理时间／能量结论，也不把端点障碍解释成神经或物理不可能性；族外只保证逐输入正确与有限终止。
+

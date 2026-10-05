@@ -1,0 +1,76 @@
+**定义 66.11（完整原型与带标签前沿）。** 取既有字面块
+
+$$
+\begin{gathered}
+E=\langle\beta,\alpha\rangle,\quad A=\langle E,\beta\rangle,
+\quad C=\langle A,E\rangle,\quad B=\langle C,A\rangle,\\
+T=\langle A,C\rangle,\quad W_1=\langle B,C\rangle,
+\quad K_T=\langle T,A\rangle.
+\end{gathered}
+$$
+
+$T$ 是固定块，来源域仍写 $\mathcal T$。三树族与五树族分别为 Scale 第 36 章的 $k=1,2$ 实例；各族内使用以下局部名字和指标顺序：
+
+$$
+\begin{aligned}
+F^{(3)}=(P_0,U_1,V_1)
+ &=\bigl(\langle C,K_T\rangle,\ \langle T,B\rangle,\ \langle W_1,A\rangle\bigr),\\
+F^{(5)}=(P_0,U_1,V_1,U_2,V_2)
+ &=\bigl(\langle C,\langle C,K_T\rangle\rangle,
+ \langle T,\langle C,B\rangle\rangle,
+ \langle W_1,\langle C,A\rangle\rangle,\\
+ &\hspace{18mm}\langle C,\langle T,B\rangle\rangle,
+ \langle C,\langle W_1,A\rangle\rangle\bigr).
+\end{aligned}
+$$
+
+把每个块 $A,C,B,T,W_1,K_T$ 分别换成
+
+$$
+\alpha,\quad\beta,\quad\langle\beta,\alpha\rangle,
+\quad\langle\alpha,\beta\rangle,
+\quad\langle\langle\beta,\alpha\rangle,\beta\rangle,
+\quad\langle\langle\alpha,\beta\rangle,\alpha\rangle
+$$
+
+并保留原型外层的全部括号，便给出每棵原型的实际完整 $\rho^3$ 前像。三树前像组成均为 $(2,2)$，五树前像均为 $(2,3)$；由 $c(\rho^3X)=\left(\begin{smallmatrix}1&2\\2&3\end{smallmatrix}\right)c(X)$，像组成分别为 $(6,10)$ 与 $(8,13)$，每棵分别有 $16$ 与 $21$ 片叶。各族的异常活动槽位置和块类型不同，所以成员两两不同；所给前像直接证明全部原型为正例。
+
+带标签前沿递归定义为
+
+$$
+\mathcal F(\alpha)=\{(\varepsilon,\alpha)\},\quad
+\mathcal F(\beta)=\{(\varepsilon,\beta)\},\quad
+\mathcal F(\langle X,Y\rangle)=\mathtt L\mathcal F(X)\sqcup\mathtt R\mathcal F(Y).
+$$
+
+前缀作用保留标签，$L(X)$ 是其地址投影。完整块前沿为
+
+$$
+\begin{aligned}
+\mathcal F(E)&=\{(\mathtt L,\beta),(\mathtt R,\alpha)\},\\
+\mathcal F(A)&=\{(\mathtt{LL},\beta),(\mathtt{LR},\alpha),(\mathtt R,\beta)\},\\
+\mathcal F(C)&=\mathtt L\mathcal F(A)\sqcup\mathtt R\mathcal F(E),\\
+\mathcal F(B)&=\mathtt L\mathcal F(C)\sqcup\mathtt R\mathcal F(A),\\
+\mathcal F(T)&=\mathtt L\mathcal F(A)\sqcup\mathtt R\mathcal F(C),\\
+\mathcal F(W_1)&=\mathtt L\mathcal F(B)\sqcup\mathtt R\mathcal F(C),\\
+\mathcal F(K_T)&=\mathtt{LL}\mathcal F(A)\sqcup\mathtt{LR}\mathcal F(C)
+                   \sqcup\mathtt R\mathcal F(A).
+\end{aligned}
+$$
+
+这些等式与五棵、三棵原型的外层构造递归地指定了每一片实际叶及标签，没有省略的叶。认证时按左右字典序请求所选原型的全部 $16$ 或全部 $21$ 片带标签叶。
+
+称两棵树非冲突，若每个共享叶地址上的标签相同，记为 $\operatorname{NC}$。下表穷尽所需局部交集；非空项同时表示两边相同的完整带标签限制：
+
+| 块对 | 共享带标签前沿 |
+| --- | --- |
+| $(E,C)$ | $\varnothing$ |
+| $(A,B)$ | $\varnothing$ |
+| $(A,K_T)$ | $\varnothing$ |
+| $(C,T)$ | $\mathtt L\mathcal F(A)$ |
+| $(T,W_1)$ | $\mathtt R\mathcal F(C)$ |
+| $(C,W_1)$ | $\varnothing$ |
+| $(B,K_T)$ | $\mathtt{LL}\mathcal F(A)\sqcup\mathtt R\mathcal F(A)$ |
+
+确实，$E$ 的叶在 $C$ 中均为分支，$A$ 的叶在 $B,K_T$ 中均为分支；余项逐左右孩子分解即得。活动槽取 $C,T,W_1$，末槽取 $K_T,B,A$，两组各自两两非冲突。槽根前缀不可比，使共享全局叶只能来自同一槽，故两族全部不同成员都非冲突。
+
