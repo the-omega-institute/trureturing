@@ -24,8 +24,8 @@ internal sealed class DescentLexCountDocument : IScribeDocumentDefinition
                     + "comparisons. The descent count is the sum of the two indicators for "
                     + "entry 1 exceeding entry 2 and entry 2 exceeding entry 3. Lexicographic "
                     + "comparison tests the first entry, then the second, then the third.")),
-                Paragraph(Text("Arrays n consists of functions from Fin n to these actual rows. "
-                    + "The descent counts are nondecreasing along the original row indices, "
+                Paragraph(Text("The type Arrays n consists of functions from Fin n to these actual "
+                    + "rows. The descent counts are nondecreasing along the original row indices, "
                     + "and the rows are lexicographically nonincreasing. Equal rows are allowed. "
                     + "For every n at least one, the cardinality is "
                     + "2+(n+1)*(n+2)*(n+3)/6, where the division is exact natural division.")),
@@ -48,5 +48,8 @@ internal sealed class DescentLexCountDocument : IScribeDocumentDefinition
                     + "The cited OEIS entry publishes the formula as a conjecture. "
                     + "This statement concerns that exact array count, without an assertion "
                     + "about publication priority or external acceptance."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("oeis-a222001-descent-lex-arrays"),
+                ResolutionKind.Proved)))));
 }
