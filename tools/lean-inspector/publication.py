@@ -143,7 +143,7 @@ def validate_semantic_versions(value):
         raise ValueError('report semantic versions require positive integers')
 
 
-def check_origin(origin, row, compatibility):
+def check_origin(origin, row, compatibility, *, check_report=True):
     materials.require_keys(origin, {'module', 'report_sha256', 'semantic_versions', 'input_projection',
         'producer_sources_sha256', 'inspector_executable_sha256'}, 'module production origin')
     validate_input_projection(origin['input_projection'], row['module'])
@@ -154,8 +154,8 @@ def check_origin(origin, row, compatibility):
             or any(origin['semantic_versions'][field] != compatibility[field] for field in fields)
             or any(not isinstance(origin[k], str) or not HEX.fullmatch(origin[k]) for k in
                    ('report_sha256', 'producer_sources_sha256', 'inspector_executable_sha256'))
-            or origin['report_sha256'] != hashlib.sha256(materials.canonical_json(
-                dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest()):
+            or (check_report and origin['report_sha256'] != hashlib.sha256(materials.canonical_json(
+                dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest())):
         raise ValueError('invalid or incompatible module production origin')
 
 

@@ -165,6 +165,7 @@ defaultFacets = ["static"]
         lakefile.write_text(source[:source.index('package leanInspector where')]
             + 'package leanInspector where\n'
             + '  buildDir := "../../.lake/build/lean-inspector/producer"\n\n'
+            + '  leanLibDir := "../../lib/lean"\n\n'
             + 'lean_lib LeanInformationAudit where\n'
             + '  roots := #[`LeanInformationAudit.Contract.SourceAudit, '
             + '`LeanInformationAudit.Contract.Literal, `LeanInformationAudit.Contract.InputDiscovery]\n'

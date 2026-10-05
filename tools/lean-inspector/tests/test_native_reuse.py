@@ -15,17 +15,22 @@ class NativeReportConsumerTests:
         self.reg_package()
         self.build()  # Restore the native fixture's private compiler stage.
         root_config = self.root / 'lakefile.toml'
-        root_config.write_text(root_config.read_text().replace(
-            '[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n', ''))
+        source = root_config.read_text()
+        start = source.index('[[lean_lib]]\nname = "LeanInformationAudit"\n')
+        stop = source.find('[[', start + 2)
+        root_config.write_text(source[:start] + (source[stop:] if stop != -1 else ''))
         registry = 'LeanInformationAudit/SealCommand.lean'
         registry_owner = 'tools/lean-inspector/' + registry
-        for module in [registry, 'LeanInformationAudit/Contract/SourceAudit.lean']:
+        for module in [registry]:
             owner = self.root / 'tools/lean-inspector' / module
             owner.parent.mkdir(parents=True, exist_ok=True)
             (self.root / module).rename(owner)
-        with (self.root / 'tools/lean-inspector/lakefile.lean').open('a') as stream:
-            stream.write('\nlean_lib LeanInformationAudit where\n'
-                         '  globs := #[.submodules `LeanInformationAudit]\n')
+        inspector_config = self.root / 'tools/lean-inspector/lakefile.lean'
+        source = inspector_config.read_text()
+        start = source.index('lean_lib LeanInformationAudit where\n')
+        stop = source.index('target nativeImage', start)
+        inspector_config.write_text(source[:start] + 'lean_lib LeanInformationAudit where\n'
+            '  globs := #[.submodules `LeanInformationAudit]\n\n' + source[stop:])
         def implementation(name, body):
             return (f'namespace LeanInformationAudit.{name}\n'
                     f'def fixtureValue (input : Nat) : Nat := {body}\n'
