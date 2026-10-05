@@ -19,13 +19,13 @@ usage() {
 case "$VERB" in
   ingest)
     [[ $# -le 3 ]] || usage
-    ingest_args=(ingest --base "$BASE")
+    ingest_args=(ingest)
     set -f
     for selector in $PAYLOAD; do
       ingest_args+=(--source "$selector")
     done
     set +f
-    if [[ -n "$PAYLOAD" && ${#ingest_args[@]} -eq 3 ]]; then
+    if [[ -n "$PAYLOAD" && ${#ingest_args[@]} -eq 1 ]]; then
       echo "SOURCE must contain at least one selector" >&2
       usage
     fi
@@ -64,12 +64,12 @@ case "$VERB" in
   quarantine)
     [[ -n "$PAYLOAD" ]] || usage
     exec dotnet run --project "$PROJECT" --configuration Release -- \
-      quarantine-atom --request "$PAYLOAD" --base "$BASE"
+      quarantine-atom --request "$PAYLOAD"
     ;;
   quarantine-clear)
     [[ -n "$PAYLOAD" ]] || usage
     exec dotnet run --project "$PROJECT" --configuration Release -- \
-      quarantine-atom --clear "$PAYLOAD" --base "$BASE"
+      quarantine-atom --clear "$PAYLOAD"
     ;;
   *)
     usage

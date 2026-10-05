@@ -20,7 +20,7 @@ public sealed class DecomposeAtomTests
         Assert.Equal(DecomposeFixture.Bold, string.Concat(parent.Receipts.ChainAtoms.Select(id =>
             Encoding.UTF8.GetString(f.Current.Entries.Single(e => e.Path == DigestionCasStore.RootPath + id).Bytes.AsSpan()))));
         Assert.Equal(1, f.Writes);
-        Assert.Equal(["baseline"], f.Gateway.ReadRevisionCalls);
+        Assert.Empty(f.Gateway.ReadRevisionCalls);
     }
 
     [Fact]

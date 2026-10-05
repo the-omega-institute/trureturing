@@ -1,0 +1,8 @@
+**定义 11.1（有效 FIB 语义实现）。** 对每个类型 $X$ 给出 $\delta_X:D_X\to X$。对基本操作 $f:X_1\times\cdots\times X_k\to Y$，给出名字程序 $F:D_{X_1}\times\cdots\times D_{X_k}\to D_Y$ 与证书
+
+$$
+\delta_Y(F(p_1,\ldots,p_k))=f(\delta_{X_1}(p_1),\ldots,\delta_{X_k}(p_k)).
+$$
+
+部分操作还要声明合法域和失败语义；无限输出只要求按合同产生所请求的有限信息。
+

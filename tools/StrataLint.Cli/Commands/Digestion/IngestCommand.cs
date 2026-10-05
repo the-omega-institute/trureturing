@@ -132,7 +132,6 @@ internal static partial class IngestCommand
 
             var finalRaw = fixedPointRaw;
             var finalSnapshot = fixedPointSnapshot;
-            LeanTruthStates.RequireSameManagedInputs(plannedSnapshot, finalSnapshot);
             var finalDocument = LoadDocument(finalSnapshot);
             var finalChanges = EffectiveChanges(prepared.BaselineRaw, finalRaw);
             var finalCasChanges = DigestionIngestor.IncludeCasReverseDependencies(
@@ -188,8 +187,7 @@ internal static partial class IngestCommand
 
     private static IngestInputs ReadInputs(
         IRepositoryGateway repository,
-        string baselineRevision,
-        bool requireBaselineSourceMetadata = false)
+        string baselineRevision)
     {
         var currentRaw = repository.ReadCurrent();
         var baselineRaw = repository.ReadRevision(baselineRevision);
@@ -201,9 +199,7 @@ internal static partial class IngestCommand
             current,
             baseline,
             LoadDocument(current),
-            requireBaselineSourceMetadata
-                ? BackfillInventoryLoader.Load(baseline)
-                : BackfillInventoryLoader.LoadBaseline(baseline));
+            BackfillInventoryLoader.LoadBaseline(baseline));
     }
 
     private static DigestionIngestPlan Plan(
@@ -412,13 +408,14 @@ internal static partial class IngestCommand
                 $"ingest cannot remove directory ledger atom {key.AtomId}");
         }
 
+        var atomPaths = ExistingAtomPaths(entries.Keys);
         foreach (var (key, replacementEntry) in replacementEntries)
         {
             if (currentEntries.TryGetValue(key, out var currentEntry))
             {
                 var currentBytes = BackfillInventoryWriter.WriteAtom(currentEntry);
                 var replacementBytes = BackfillInventoryWriter.WriteAtom(replacementEntry);
-                var currentPath = ExistingAtomPath(entries.Keys, key.SourceId, key.AtomId);
+                var currentPath = ExistingAtomPath(atomPaths, key.SourceId, key.AtomId);
                 var replacementPath = NewAtomPath(replacementEntry);
                 if (currentPath == replacementPath
                     && currentBytes.AsSpan().SequenceEqual(replacementBytes.AsSpan()))
@@ -463,17 +460,36 @@ internal static partial class IngestCommand
             StringComparer.Ordinal)
         && current.AcknowledgedStale.SequenceEqual(replacement.AcknowledgedStale);
 
+    // Indexes every ledger path by its source directory and atom file name, so
+    // each atom's existing path is one probe instead of a scan of the snapshot.
+    private static ILookup<(string SourceId, string AtomId), string> ExistingAtomPaths(
+        IEnumerable<string> paths)
+    {
+        const string extension = ".yaml";
+        return paths
+            .Where(static path =>
+                path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
+                && path.EndsWith(extension, StringComparison.Ordinal))
+            .Select(static path =>
+            {
+                var sourceEnd = path.IndexOf('/', BackfillInventoryLoader.RootPath.Length);
+                var nameStart = path.LastIndexOf('/') + 1;
+                return (Path: path, SourceEnd: sourceEnd, NameStart: nameStart);
+            })
+            .Where(static item => item.SourceEnd >= 0)
+            .ToLookup(
+                static item => (
+                    item.Path[BackfillInventoryLoader.RootPath.Length..item.SourceEnd],
+                    item.Path[item.NameStart..^extension.Length]),
+                static item => item.Path);
+    }
+
     private static string ExistingAtomPath(
-        IEnumerable<string> paths,
+        ILookup<(string SourceId, string AtomId), string> atomPaths,
         string sourceId,
         string atomId)
     {
-        var sourceRoot = $"{BackfillInventoryLoader.RootPath}{sourceId}/";
-        var suffix = $"/{atomId}.yaml";
-        var matches = paths.Where(path =>
-                path.StartsWith(sourceRoot, StringComparison.Ordinal)
-                && path.EndsWith(suffix, StringComparison.Ordinal))
-            .ToArray();
+        var matches = atomPaths[(sourceId, atomId)].ToArray();
         return matches.Length == 1
             ? matches[0]
             : throw new InvalidOperationException(

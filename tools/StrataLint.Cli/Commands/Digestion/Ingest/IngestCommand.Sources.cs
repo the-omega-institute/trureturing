@@ -6,15 +6,16 @@ namespace StrataLint.Cli;
 internal static partial class IngestCommand
 {
     private static InvalidOperationException SourceUsage(string reason) => new(
-        "USAGE: StrataLint ingest --base REV [--source X]...; " + reason);
+        "USAGE: StrataLint ingest [--source X]...; " + reason);
 
     private static (ImmutableHashSet<string>? SourceIds, ImmutableHashSet<string>? RegistrationPaths) ResolveSources(
-        IngestInputs inputs,
+        BackfillInventoryDocument document,
+        RepositorySnapshot current,
         ImmutableArray<string> selectors)
     {
         if (selectors.IsEmpty) return (null, null);
 
-        var sources = inputs.CurrentDocument.RequireDigestionSources();
+        var sources = document.RequireDigestionSources();
         var claims = sources.ToDictionary(static source => source.SourceId,
             static source => source.SourcePath, StringComparer.Ordinal);
         var ids = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
@@ -29,7 +30,7 @@ internal static partial class IngestCommand
             }
             if (!selector.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
                 || !selector.EndsWith(".md", StringComparison.Ordinal)
-                || !inputs.Current.TryGetFile(selector, out _))
+                || !current.TryGetFile(selector, out _))
                 throw SourceUsage($"unknown --source selector '{selector}'");
 
             var id = DigestionIngestor.DeriveSourceId(selector);

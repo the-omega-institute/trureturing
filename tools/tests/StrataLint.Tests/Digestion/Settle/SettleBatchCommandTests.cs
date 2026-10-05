@@ -141,7 +141,7 @@ public sealed partial class SettleBatchCommandTests
             currentReader: () => ReadFiles(temporary));
         var environment = new ProductionCliEnvironment(temporary.Path, gateway, new FakeLeanReportSource(null));
         var console = new BufferedConsole();
-        var exit = CliApplication.Run(["settle-batch", "--requests", path, "--base", "baseline"], environment, console);
+        var exit = CliApplication.Run(["settle-batch", "--requests", path], environment, console);
         return new(exit == 0, console.Output, console.Error, exit);
     }
 }
