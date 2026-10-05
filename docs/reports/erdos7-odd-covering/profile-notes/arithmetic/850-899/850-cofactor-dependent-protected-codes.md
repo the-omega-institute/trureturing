@@ -1678,6 +1678,123 @@ errors or `sorryAx`. It reuses finite CRT, finite embeddings,
 modular identities and minimality; it adds no canonical binding
 declaration, freeze or coverage record.
 
+## Two preserved q-digits bound the remaining depths
+
+Take the same actual globally count-then-modulus-sum-minimal odd
+distinct nonunit whole cover, with $d_i=3^{a_i}q^{j_i}m_i$,
+$a_i\le2$, $m_i\mid W$, $W>0$ and
+$\gcd(W,3q)=\gcd(3,q)=1$. There are two depth bounds:
+
+$$
+\begin{aligned}
+q\ge27&\quad\Longrightarrow\quad j_i\le2\quad\text{for every }i,\\
+q\ge15\text{ and actual original moduli }3,9
+ &\quad\Longrightarrow\quad j_i\le2\quad\text{for every }i.
+\end{aligned}
+\tag{CD47}
+$$
+
+Neither assertion assumes primality of q or a prior upper bound on
+the original q-heights. The guarded bound uses the actual two pure
+classes in the original family.
+
+Assume some actual $g$ has $j_g\ge3$. For the guarded assertion,
+the safe residues modulo 27, outside those two disjoint guards,
+number $27-9-3=15$. Choose one fixed injection of this safe set
+into the q digits. At a safe target x denote its selected digit
+by $b(x)$. Choose finite $G\ge3$ bounding every original q-height,
+and use one CRT source
+
+$$
+\begin{aligned}
+T(x)&\equiv (x\bmod q^2)+q^2b(x)+q^3\lfloor x/q^2\rfloor
+ &&\pmod{q^G},\\
+T(x)&\equiv x&&\pmod{9W}.
+\end{aligned}
+\tag{CD48}
+$$
+
+This preserves both first q-digits and inserts the selected third
+digit. For the unguarded assertion use $b(x)=x\bmod27$ on every
+target, which is a q digit when $q\ge27$.
+
+Retain every original with $j_i\le2$. For every $j_i\ge4$, delete
+the literal third digit of its q-prefix and use one progression
+of modulus $d_i/q$. For $j_i=3$, assign a fixed tag $t_i$ modulo
+27 by decoding its literal third digit through the selected
+injection, with an arbitrary default outside the image. Its
+single replacement is
+
+$$
+\begin{gathered}
+d_i'=27q^{a_i}m_i,\\
+x\equiv t_i\pmod{27},\qquad
+x\equiv\rho_i\pmod{q^{a_i}},\qquad
+x\equiv\rho_i\pmod{m_i}.
+\end{gathered}
+\tag{CD49}
+$$
+
+In the unguarded case $t_i$ is just the original third q-digit.
+The three CRT moduli in CD49 are pairwise coprime. Actual ownership
+of the single source forces its decoded tag; preservation modulo
+$q^2$ supplies the q-prefix condition since $a_i\le2$. Hence every
+safe target lies in its owner's retained or replacement class.
+The actual guards cover unsafe targets. All originals contribute
+one output, including those without any selected source preimage,
+and finite periodicity extends the coverage to all integers.
+
+The short labels have signatures $(v_3,v_q)=(3,0),(3,1),(3,2)$
+when q is prime; the same coprime-power factorization distinguishes
+the labels for composite q. The old row and cofactor are recovered
+from each short label. Its ternary exponent three separates it
+from every retained or higher stripped label. Higher stripped
+labels have q-exponent at least three, whereas retained labels
+have exponent at most two. Thus all output moduli are distinct
+odd nonunits. Their strict price ratios are
+
+$$
+\frac{d_i'}{d_i}=
+\begin{cases}
+1/q,&j_i\ge4,\\
+27/q^3,&j_i=3,\ a_i=0,\\
+9/q^2,&j_i=3,\ a_i=1,\\
+3/q,&j_i=3,\ a_i=2.
+\end{cases}
+\tag{CD50}
+$$
+
+They are less than one for $q>3$. The actual deep original g
+forces strict sum decrease at unchanged class count, contradicting
+global minimality and proving CD47.
+
+Combining the guarded cases of CD44 and CD47 gives the following
+restrictions on actual support primes in this same family:
+
+$$
+\begin{cases}
+H_q\le2,&17\le q\le43,\\
+H_q\le1,&q\ge47.
+\end{cases}
+\tag{CD51}
+$$
+
+The primes $5,7,11,13$ retain their previously established bounds.
+These conclusions reduce the permissible exponent profiles; they
+do not exclude all phases on the remaining profiles, or supply
+the full squarefree-modulus hypothesis of the known squarefree
+noncoverage theorem.
+
+A scoped transient Lean application verifies both versions of CD47,
+their single-source transport, safe-domain decoding, literal
+third-digit deletion, legal short labels and the complete same-count
+sum contradiction. All eighteen axiom-closure reports use only
+`propext`, `Classical.choice` and `Quot.sound`, with no errors or
+`sorryAx`. It reuses modular arithmetic, finite CRT, finite
+embeddings, coprime-power decoding and the original minimality
+comparator. It introduces no canonical binding declaration,
+freeze or coverage record.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
