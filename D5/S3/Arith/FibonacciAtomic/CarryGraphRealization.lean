@@ -27,9 +27,8 @@ def labelSet (m : ℕ) (γ : Path) (d : ℕ) : Finset (Fin m) :=
     else (γ.state d).e - (γ.action d).h ≤ (i.val : ℤ) ∧
       (i.val : ℤ) < (γ.state d).e + (γ.action d).c
 
-/-- Each column emits its selected labels in increasing order. -/
-def labels (m : ℕ) (γ : Path) (d : ℕ) : List (Fin m) :=
-  (labelSet m γ d).sort (· ≤ ·)
+local notation "labels" => (fun (m : ℕ) (γ : Path) (d : ℕ) =>
+  Finset.sort (labelSet m γ d) (fun i j => i ≤ j))
 
 /-- The zero-or-one digit belonging to a fixed output label. -/
 def labelDigit {m : ℕ} (γ : Path) (i : Fin m) (d : ℕ) : Fin 2 :=
@@ -116,7 +115,7 @@ private theorem tree_layers (m : ℕ) (γ : Path) (hγ : IsRootPath m γ) :
         let i : Fin m := ⟨z.toNat, by omega⟩
         have hi : (i.val : ℤ) = z := Int.toNat_of_nonneg hz0
         refine ⟨i, (membership i).mpr (hi ▸ hz), hi⟩
-    rw [labels, Finset.length_sort, card, Int.card_Ico, Int.toNat_of_nonneg
+    rw [Finset.length_sort, card, Int.card_Ico, Int.toNat_of_nonneg
       (sub_nonneg.mpr range_bounds.2.1)]
     dsimp only [hi, lo, ones, s, a]
     split_ifs <;> ring
@@ -239,10 +238,10 @@ private theorem scan_tree (m : ℕ) (γ : Path) (hγ : IsRootPath m γ) :
             omega
           have hq : q ≤ 2 * a + (tape d).toNat := by
             by_contra H
-            have H' : 2 * a + (tape d).toNat < (labels m γ d).length := by
-              dsimp only [q] at H
-              omega
-            simp [scan, hp, H'] at hs
+            have H' : 2 * a + (tape d).toNat < (labels m γ d).length :=
+              Nat.lt_of_not_ge H
+            simp only [scan, hp, dif_pos H'] at hs
+            cases hs
           have he : 2 * a + (tape d).toNat - q = j := by
             simpa only [scan, hp, show ¬ 2 * a + (tape d).toNat <
               (labels m γ d).length by change ¬ _ < q; omega,
@@ -431,7 +430,7 @@ private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPat
         if i ∈ labelSet m γ d then 1 else 0 := by
       by_cases H : i ∈ labelSet m γ d <;> simp [labelDigit, H]
     simp_rw [digit_indicator]
-    simp [labels]
+    simp
   have Nsum : ∀ d, (∑ i : Fin m, N d i) = (2 : ℤ) ^ d - (γ.state d).r := by
     intro d
     induction d with
