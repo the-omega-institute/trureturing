@@ -11,10 +11,11 @@ coverage liability retained. Conflict-free perfect-matching results
 are relevant to that interface, but their degree and conflict bounds
 have not been established for the AP choices.
 
-This is an ordinary mathematical literature and interface report.
+Sections 1–8 give ordinary mathematical literature and interface results.
 The cited statements are source-checked, not independently certified
-proofs of the papers. No new Lean verification, literature novelty,
-or resolution of unrestricted Erdős #7 is claimed. The period-12,
+proofs of the papers. Section 9 gives an exact component-orientation
+deletion test with a scoped Lean check. Neither literature novelty
+nor a resolution of unrestricted Erdős #7 is claimed. The period-12,
 period-144 and affine period-921600 controls below are actual covers
 with even moduli; they are not odd-cover or extremal-cover counterexamples.
 
@@ -546,3 +547,158 @@ have capacity `|E|w_E`. This is another conditional transport
 model, not an established AP constraint. Either use requires an
 actual simultaneous selection or allocation theorem, followed by
 the complete return and strict-improvement obligations of section 7.
+
+## 9. Arbitrary ternary height gives a complete signed-choice deletion test
+
+Fix one finite, globally count-minimal whole cover by distinct odd moduli greater
+than one. Write its actual classes as $A_i=[a_i]_{n_i}$ and assume
+
+$$
+ n_i\mid 3^H M,\qquad H\ge1,\qquad M>0,\qquad (3,M)=1,
+ \qquad n_h=3^H.
+ \tag{AC1}
+$$
+
+The pure anchor is an explicit original label. Count minimality alone is
+not used to supply it. No bound on $H$, the other prime heights, or the
+number of support primes is imposed. Let $\tau=a_h\bmod3^{H-1}$ and let
+$\alpha$ be the last ternary digit of $a_h\bmod3^H$. Write the two other
+digits as $\beta,\gamma$.
+
+Remove the full-height originals above this same parent:
+
+$$
+ D=\{i:3^H\mid n_i,\ a_i\equiv\tau\pmod{3^{H-1}}\},
+ \qquad R=I\setminus D.
+ \tag{AC2}
+$$
+
+For $i\in D$, put $m_i=n_i/3^H$, retain its full cofactor cylinder
+$B_i=[a_i]_{m_i}\subseteq\mathbb Z/M\mathbb Z$, and let $d_i$ be its last
+ternary digit. Let $K$ be the full cofactor projection of the actual
+private region of $h$. The existing prime-prefix liability theorem gives
+
+$$
+ (\mathbb Z/3^H M\mathbb Z)\setminus\bigcup_{i\in R}A_i
+   =\{\tau\}\times\{\alpha,\beta,\gamma\}\times K.
+ \tag{AC3}
+$$
+
+Every original has a private point by global count minimality. In
+particular $K$ is nonempty. If $i\in D\setminus\{h\}$ had digit $\alpha$,
+its whole class would be contained in $A_h$, contradicting its private
+point. Thus every such owner has digit $\beta$ or $\gamma$. Original
+coverage supplies both digits at every point of $K$.
+
+### Whole-owner component orientations preserve actual coverage
+
+Build the overlap graph on the owners in $D\setminus\{h\}$, joining
+distinct $i,j$ when $K\cap B_i\cap B_j$ is nonempty. Same-digit edges
+are included. Choose one bit $\varepsilon_C$ for each connected component;
+when it is one, exchange $\beta$ and $\gamma$ for every owner in that
+component. Each owner receives one digit on its entire cylinder.
+
+Keep all numerical moduli and every retained residue unchanged. For each
+changed owner use CRT to preserve its parent $\tau$ and full cofactor
+phase while installing its selected last digit. Preserve the anchor's
+last digit. These prescriptions construct an actual whole integer
+cover. Indeed, all owners through one base point in $K$ belong to a
+single component, so the common flip preserves service of both
+$\beta$ and $\gamma$ there; the anchor supplies $\alpha$. Equation AC3
+accounts for the entire old deletion hole. Every other point already
+has an unchanged retained supplier.
+
+This is a simultaneous phase change on actual originals. It does not
+choose a different digit for different points of one owner, and does
+not assume every valid two-color assignment is reachable by these
+component flips.
+
+### Deleting a retained class exposes its complete liability
+
+For $r\in R$, define
+
+$$
+ J_r=A_r\setminus\bigcup_{j\in R\setminus\{r\}} A_j,
+ \qquad Z_r=\operatorname{proj}_M(J_r).
+ \tag{AC4}
+$$
+
+This includes points that were also covered by old owners in $D$.
+Keeping only the old private region of $r$ would omit such points.
+The full hole of $R\setminus\{r\}$ is the disjoint union of AC3 and
+$J_r$.
+
+Every changed class lies in parent $\tau$. Therefore deletion can work
+only when $J_r$ lies entirely in that parent. Under this locality
+condition, every retained class has constant membership on the three
+last-digit lifts of a fixed parent and cofactor point: a lower-height
+modulus divides $3^{H-1}M$, while a retained full-height class has a
+different parent. Hence
+
+$$
+ J_r=\{\tau\}\times\{\alpha,\beta,\gamma\}\times Z_r,
+ \qquad Z_r\cap K=\varnothing.
+ \tag{AC5}
+$$
+
+The anchor pays the $\alpha$ lift. The complete remaining condition is
+that the oriented top owners pay both other lifts at every $v\in Z_r$.
+These payments must use the full $B_i$, including their portions
+outside $K$.
+
+### The simultaneous condition is a signed NAE formula
+
+Encode $\beta$ by zero and $\gamma$ by one. For a component $C$ and a
+base $v\in Z_r$, retain the set of original signs
+
+$$
+ S_C(v)=\{s_i:i\in C,\ v\in B_i\}\subseteq\{0,1\}.
+ \tag{AC6}
+$$
+
+If some $S_C(v)=\{0,1\}$, that component supplies both required digits
+under either orientation. Otherwise every nonempty $S_C(v)$ is a
+singleton, say $\{s_C(v)\}$. The exact requirement at $v$ is
+
+$$
+ \operatorname{NAE}\bigl(s_C(v)\mathbin{\oplus}\varepsilon_C:
+                    S_C(v)\ne\varnothing\bigr),
+ \tag{AC7}
+$$
+
+where NAE means that the list contains both zero and one. An empty
+list or a singleton list fails this condition. All base points use
+the same component bits $\varepsilon_C$.
+
+Thus the actual rephased family with $r$ removed is a whole integer
+cover exactly when its complete $J_r$ is parent-local and every
+nonautomatic constraint AC7 holds. Such a cover retains all original
+moduli except $n_r$ and therefore has one fewer class. Global count
+minimality prohibits it. In particular, for every parent-local retained
+$r$, the complete actual signed formula must be unsatisfiable.
+
+This gives an exact test of one specified deletion mechanism. It does
+not supply a parent-local retained class or a satisfying orientation.
+Several local constraints may each admit an orientation while their
+common formula is inconsistent. Full arithmetic phase and cofactor
+relations are still needed to force a contradiction from that
+inconsistency or to construct a different improvement.
+
+### Verification scope
+
+A scoped Lean check verifies the actual same-modulus whole integer cover,
+the integer deletion equivalence, the complete-liability necessity,
+$Z_r\cap K=\varnothing$ under parent locality, the full-cylinder signed
+NAE equivalence, and the resulting count-minimum obstruction. The check
+uses the existing prime-prefix liability theorem, Mathlib CRT and graph
+components, finite periodicity, and Boolean normalization. Its thirteen
+reported theorem axiom closures use only the standard accepted axioms;
+there are no sorry terms. These are applications of existing results,
+so no additional bind-only Lean declarations are retained.
+
+The component transport reuses the whole-owner construction in
+[Report850](../arithmetic/850-899/850-cofactor-dependent-protected-codes.md#component-changes-preserve-whole-owners-only-with-current-labels).
+Here the ternary height is arbitrary, the pure anchor is explicit, and
+the deletion condition concerns the complete retained-only liability.
+The checked result does not establish existence of a successful deletion
+or settle unrestricted Erdős #7.
