@@ -383,7 +383,7 @@ private theorem actual_routes (k : Nat) (hk : 1 ≤ k) :
   exact attained
 
 /-- All parameters are chosen before the input. Costs refer to actual requested addresses. -/
-example (k : Nat) (hk : 1 ≤ k) :
+theorem result (k : Nat) (hk : 1 ≤ k) :
     ∃ pi : Seed k → Strategy,
       (∀ seed, 0 ≤ seedWeight k seed) ∧ (∑ seed : Seed k, seedWeight k seed) = 1 ∧
       (∀ seed,
@@ -695,7 +695,8 @@ example (k : Nat) (hk : 1 ≤ k) :
     · apply Finset.sup'_le
       intro i _
       rw [mean_cost]
-      exact add_le_add_left (average_bound i) _
+      simpa only [target,add_comm] using
+        (add_le_add_left (average_bound i) (((8*k+16 : Nat) : ℚ)))
     · let l : Fin k := ⟨0,by omega⟩
       apply Finset.le_sup'_of_le (fun i : Index k =>
         ∑ seed : Seed k, seedWeight k seed * (cost (pi seed) (family k i) : ℚ))
