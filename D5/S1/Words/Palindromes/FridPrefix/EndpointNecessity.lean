@@ -11,26 +11,22 @@ proof_shape: content (palindrome_endpoint).
 escape_witness: construction of reflected unequal-letter witnesses and all-word monitor induction.
 admission_basis: escape-witness.
 Direct frozen dependencies:
-  D5/S0/Automata/BinaryZeckendorfLanguage.NoAdjacentOnes
-    statement_id: sha256:87b15f790efca613794d25fe2bc822ee2420eb2ab847760e509a3059c25a8f17
-  D5/S0/Conventions/WDigits.wdigits
-    statement_id: sha256:aa2180b1084af7cbefca6a68881fef42788c73bdfa5199bf42d3e0334fe883d6
-  D5/S0/Conventions/WDigits.wdigits_unique
-    statement_id: sha256:aa2180b1084af7cbefca6a68881fef42788c73bdfa5199bf42d3e0334fe883d6
-  D5/S1/Digit/GoldenBase4IntervalMachine.fibPair
-    statement_id: sha256:fa818cf4cfbb993ac00cef7564eb29f10e600559bada3288823702175e0943fa
-  D5/S1/Digit/GoldenBase4IntervalMachine.fibPair_append_digit
-    statement_id: sha256:fa818cf4cfbb993ac00cef7564eb29f10e600559bada3288823702175e0943fa
-  D5/S1/Digit/ZeckendorfRawWindow.source_word_coordinates
-    statement_id: sha256:841fd6e8c2b015fd6ce98338ffd97a31a2b4aec15051a79663831dce874157da
-  D5/S1/Digit/ZeckendorfRawWindow.support
-    statement_id: sha256:841fd6e8c2b015fd6ce98338ffd97a31a2b4aec15051a79663831dce874157da
-  D5/S1/Words/GoldenFactorComplexity.goldenFactor
-    statement_id: sha256:df6050c1b101dcd4fec43d349d0113d19f3b79299ce649379ef3d12887619f3e
-  D5/S1/Words/GoldenWord.goldenWord
-    statement_id: sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
-  D5/S1/Words/GoldenWord.goldenWord_eq_zeckendorf_criterion
-    statement_id: sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
+  D5/S0/Automata/BinaryZeckendorfLanguage; module statement_id sha256:87b15f790efca613794d25fe2bc822ee2420eb2ab847760e509a3059c25a8f17
+    D5/S0/Automata/BinaryZeckendorfLanguage.NoAdjacentOnes: sha256:5f646bb806cb8cd8c7f639908d761f070355bdbbfede407d3acc033120cb2fce
+  D5/S0/Conventions/WDigits; module statement_id sha256:aa2180b1084af7cbefca6a68881fef42788c73bdfa5199bf42d3e0334fe883d6
+    D5/S0/Conventions/WDigits.wdigits: sha256:dbbd02d012e74f26be610b7e393f5377722c7d06adb53e7c4c73bbbb488f25a0
+    D5/S0/Conventions/WDigits.wdigits_unique: sha256:a85c044d3f237c1d3c2a95a515470e2bcc94ebca613e89c39f603471e61bd20f
+  D5/S1/Digit/GoldenBase4IntervalMachine; module statement_id sha256:fa818cf4cfbb993ac00cef7564eb29f10e600559bada3288823702175e0943fa
+    D5/S1/Digit/GoldenBase4IntervalMachine.fibPair: sha256:cbaa673b2d8bdcd2f56ac60fbd4b8496a29d1b3a9a6aa673af463265b40f3053
+    D5/S1/Digit/GoldenBase4IntervalMachine.fibPair_append_digit: sha256:7a0a621968ae16cd10eaf33651c664ef339406e303978ed9f593bef57ffdf8c7
+  D5/S1/Digit/ZeckendorfRawWindow; module statement_id sha256:841fd6e8c2b015fd6ce98338ffd97a31a2b4aec15051a79663831dce874157da
+    D5/S1/Digit/ZeckendorfRawWindow.source_word_coordinates: sha256:deeba6dbde4255f8972f23006c02b555aa13a8eb176d45ddc52b66429d5fc2b2
+    D5/S1/Digit/ZeckendorfRawWindow.support: sha256:6e85f7358067b00dc6b9dd199d81bc985b8e710bf1a0136ac0450f0c136dec49
+  D5/S1/Words/GoldenFactorComplexity; module statement_id sha256:df6050c1b101dcd4fec43d349d0113d19f3b79299ce649379ef3d12887619f3e
+    D5/S1/Words/GoldenFactorComplexity.goldenFactor: sha256:45653c076830e3d013ea9e728d954ed6444072d1161a1656d45e0c92ab921ed8
+  D5/S1/Words/GoldenWord; module statement_id sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
+    D5/S1/Words/GoldenWord.goldenWord: sha256:8f1246e0f7522a641bfb80a0177aa34160f096f22a06c1e4b8b73d07921da29b
+    D5/S1/Words/GoldenWord.goldenWord_eq_zeckendorf_criterion: sha256:d9a6a3a64cfb0d977689cda13bc159abda2ae8ea746c279711077d4eac231078
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 

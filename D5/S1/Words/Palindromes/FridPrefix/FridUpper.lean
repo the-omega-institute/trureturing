@@ -11,30 +11,24 @@ proof_shape: content (frid_upper).
 escape_witness: increasing symmetric cuts and induction on their palindrome factorisations.
 admission_basis: escape-witness.
 Direct frozen dependencies:
-  D5/S0/Tower/GoldenGapWord.fibWord
-    statement_id: sha256:cdb325ce53ff53959ea3b3de305df2d88f1d96e3874184a481eab5e31ab99105
-  D5/S1/Digit/GoldenBase4IntervalMachine.fibPair
-    statement_id: sha256:fa818cf4cfbb993ac00cef7564eb29f10e600559bada3288823702175e0943fa
-  D5/S1/Words/GoldenFactorComplexity.goldenFactor
-    statement_id: sha256:df6050c1b101dcd4fec43d349d0113d19f3b79299ce649379ef3d12887619f3e
-  D5/S1/Words/GoldenWord.fibWord_length
-    statement_id: sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
-  D5/S1/Words/GoldenWord.goldenWord
-    statement_id: sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
-  D5/S1/Words/GoldenWord.goldenWord_eq_fibWord_get
-    statement_id: sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
-  D5/S1/Words/Palindromes/GoldenPalindromicPrefix.fibPalCore
-    statement_id: sha256:21d1068a7fe4ff64e5c470d35523b7f9db5c4856b9455f35c2d32bcee8a691ed
-  D5/S1/Words/Palindromes/GoldenPalindromicPrefix.fibPalCore_length
-    statement_id: sha256:21d1068a7fe4ff64e5c470d35523b7f9db5c4856b9455f35c2d32bcee8a691ed
-  D5/S1/Words/Palindromes/GoldenPalindromicPrefix.fibPalCore_palindrome
-    statement_id: sha256:21d1068a7fe4ff64e5c470d35523b7f9db5c4856b9455f35c2d32bcee8a691ed
-  D5/S1/Words/Powers/WordPower.length_wordPower
-    statement_id: sha256:a0ef906082beca39a4e1b33ef15215caf1af27b940976e0e624e541a11caad48
-  D5/S1/Words/Powers/WordPower.wordPower
-    statement_id: sha256:a0ef906082beca39a4e1b33ef15215caf1af27b940976e0e624e541a11caad48
-  D5/S1/Words/Powers/WordPower.wordPower_succ
-    statement_id: sha256:a0ef906082beca39a4e1b33ef15215caf1af27b940976e0e624e541a11caad48
+  D5/S0/Tower/GoldenGapWord; module statement_id sha256:cdb325ce53ff53959ea3b3de305df2d88f1d96e3874184a481eab5e31ab99105
+    D5/S0/Tower/GoldenGapWord.fibWord: sha256:c8520ae54a0eace400fd18644db28aa25debda739a3315d6cdc8d4de6eebee63
+  D5/S1/Digit/GoldenBase4IntervalMachine; module statement_id sha256:fa818cf4cfbb993ac00cef7564eb29f10e600559bada3288823702175e0943fa
+    D5/S1/Digit/GoldenBase4IntervalMachine.fibPair: sha256:cbaa673b2d8bdcd2f56ac60fbd4b8496a29d1b3a9a6aa673af463265b40f3053
+  D5/S1/Words/GoldenFactorComplexity; module statement_id sha256:df6050c1b101dcd4fec43d349d0113d19f3b79299ce649379ef3d12887619f3e
+    D5/S1/Words/GoldenFactorComplexity.goldenFactor: sha256:45653c076830e3d013ea9e728d954ed6444072d1161a1656d45e0c92ab921ed8
+  D5/S1/Words/GoldenWord; module statement_id sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
+    D5/S1/Words/GoldenWord.fibWord_length: sha256:5a1d44cf15492ea9a6ff43c74e45238ca5f5a566d96b8b42041061ea6c98c408
+    D5/S1/Words/GoldenWord.goldenWord: sha256:8f1246e0f7522a641bfb80a0177aa34160f096f22a06c1e4b8b73d07921da29b
+    D5/S1/Words/GoldenWord.goldenWord_eq_fibWord_get: sha256:7be520e3583f7e49ff9381fd7da2849dbe777596ec9bdad180cebc4f2824798a
+  D5/S1/Words/Palindromes/GoldenPalindromicPrefix; module statement_id sha256:21d1068a7fe4ff64e5c470d35523b7f9db5c4856b9455f35c2d32bcee8a691ed
+    D5/S1/Words/Palindromes/GoldenPalindromicPrefix.fibPalCore: sha256:3f40284cf61afcce4df82d31142b4bd49f1b8469186a92731b352f63e5655305
+    D5/S1/Words/Palindromes/GoldenPalindromicPrefix.fibPalCore_length: sha256:0c959afe34a61a1028bf84864cbda37db398aa6eae5a4107da514b8754c2d4a4
+    D5/S1/Words/Palindromes/GoldenPalindromicPrefix.fibPalCore_palindrome: sha256:968775ab16ecaf47afae1af915a6ffceddc28088285630e7ddd658e3d5152734
+  D5/S1/Words/Powers/WordPower; module statement_id sha256:a0ef906082beca39a4e1b33ef15215caf1af27b940976e0e624e541a11caad48
+    D5/S1/Words/Powers/WordPower.length_wordPower: sha256:debf5e4132f97f82101c3032c0cf4922d3f005aae64c4067de34e835705ee5bf
+    D5/S1/Words/Powers/WordPower.wordPower: sha256:a6e228e7ee6ecdc474ee0b218a6a0c370496359d57e770a78cc40f1991acc416
+    D5/S1/Words/Powers/WordPower.wordPower_succ: sha256:2555a0f5d0c0ce76d62ea9dc70d6f8b1554ec0d5a37821080b16cbaabc5c2b5d
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 

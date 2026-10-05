@@ -11,52 +11,41 @@ proof_shape: content (result).
 escape_witness: all-word reflected-mismatch exclusion, product-potential inequalities and the rank cycle.
 admission_basis: escape-witness (#13044; Proved).
 Direct frozen dependencies:
-  D5/S0/Automata/BinaryZeckendorfLanguage.NoAdjacentOnes
-    statement_id: sha256:87b15f790efca613794d25fe2bc822ee2420eb2ab847760e509a3059c25a8f17
-  D5/S0/Conventions/WDigits.wdigits
-    statement_id: sha256:aa2180b1084af7cbefca6a68881fef42788c73bdfa5199bf42d3e0334fe883d6
-  D5/S0/Conventions/WDigits.wdigits_unique
-    statement_id: sha256:aa2180b1084af7cbefca6a68881fef42788c73bdfa5199bf42d3e0334fe883d6
-  D5/S0/Tower/GoldenGapWord.fibWord
-    statement_id: sha256:cdb325ce53ff53959ea3b3de305df2d88f1d96e3874184a481eab5e31ab99105
-  D5/S1/Digit/GoldenBase4AutomataOracle.zeckendorfMSDWord
-    statement_id: sha256:f990811fc98754f8e49e726dbf288e55de8d9aad4a9c0ea717c835a7ba4cd55c
-  D5/S1/Digit/GoldenBase4AutomataOracle.zeckendorfWordLength
-    statement_id: sha256:f990811fc98754f8e49e726dbf288e55de8d9aad4a9c0ea717c835a7ba4cd55c
-  D5/S1/Digit/GoldenBase4DenseInput.zeckendorfMSDWord_value
-    statement_id: sha256:c9eb04d540060a6fcc48cfdae6a854fc9f415cdf25074b548701230488fe7948
-  D5/S1/Digit/GoldenBase4IntervalMachine.fibPair
-    statement_id: sha256:fa818cf4cfbb993ac00cef7564eb29f10e600559bada3288823702175e0943fa
-  D5/S1/Digit/GoldenBase4IntervalMachine.fibPair_append_digit
-    statement_id: sha256:fa818cf4cfbb993ac00cef7564eb29f10e600559bada3288823702175e0943fa
-  D5/S1/Digit/GoldenZeckendorfLanguage.zeckendorfMSDWord_noAdjacentOnes
-    statement_id: sha256:2baef40b44d5e279f984bb35fae6a9d5722c4b323008612d55ec215ec508b085
-  D5/S1/Digit/ZeckendorfRawWindow.source_word_coordinates
-    statement_id: sha256:841fd6e8c2b015fd6ce98338ffd97a31a2b4aec15051a79663831dce874157da
-  D5/S1/Digit/ZeckendorfRawWindow.support
-    statement_id: sha256:841fd6e8c2b015fd6ce98338ffd97a31a2b4aec15051a79663831dce874157da
-  D5/S1/Words/GoldenFactorComplexity.goldenFactor
-    statement_id: sha256:df6050c1b101dcd4fec43d349d0113d19f3b79299ce649379ef3d12887619f3e
-  D5/S1/Words/GoldenWord.fibWord_length
-    statement_id: sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
-  D5/S1/Words/GoldenWord.goldenWord
-    statement_id: sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
-  D5/S1/Words/GoldenWord.goldenWord_eq_fibWord_get
-    statement_id: sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
-  D5/S1/Words/GoldenWord.goldenWord_eq_zeckendorf_criterion
-    statement_id: sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
-  D5/S1/Words/Palindromes/GoldenPalindromicPrefix.fibPalCore
-    statement_id: sha256:21d1068a7fe4ff64e5c470d35523b7f9db5c4856b9455f35c2d32bcee8a691ed
-  D5/S1/Words/Palindromes/GoldenPalindromicPrefix.fibPalCore_length
-    statement_id: sha256:21d1068a7fe4ff64e5c470d35523b7f9db5c4856b9455f35c2d32bcee8a691ed
-  D5/S1/Words/Palindromes/GoldenPalindromicPrefix.fibPalCore_palindrome
-    statement_id: sha256:21d1068a7fe4ff64e5c470d35523b7f9db5c4856b9455f35c2d32bcee8a691ed
-  D5/S1/Words/Powers/WordPower.length_wordPower
-    statement_id: sha256:a0ef906082beca39a4e1b33ef15215caf1af27b940976e0e624e541a11caad48
-  D5/S1/Words/Powers/WordPower.wordPower
-    statement_id: sha256:a0ef906082beca39a4e1b33ef15215caf1af27b940976e0e624e541a11caad48
-  D5/S1/Words/Powers/WordPower.wordPower_succ
-    statement_id: sha256:a0ef906082beca39a4e1b33ef15215caf1af27b940976e0e624e541a11caad48
+  D5/S0/Automata/BinaryZeckendorfLanguage; module statement_id sha256:87b15f790efca613794d25fe2bc822ee2420eb2ab847760e509a3059c25a8f17
+    D5/S0/Automata/BinaryZeckendorfLanguage.NoAdjacentOnes: sha256:5f646bb806cb8cd8c7f639908d761f070355bdbbfede407d3acc033120cb2fce
+  D5/S0/Conventions/WDigits; module statement_id sha256:aa2180b1084af7cbefca6a68881fef42788c73bdfa5199bf42d3e0334fe883d6
+    D5/S0/Conventions/WDigits.wdigits: sha256:dbbd02d012e74f26be610b7e393f5377722c7d06adb53e7c4c73bbbb488f25a0
+    D5/S0/Conventions/WDigits.wdigits_unique: sha256:a85c044d3f237c1d3c2a95a515470e2bcc94ebca613e89c39f603471e61bd20f
+  D5/S0/Tower/GoldenGapWord; module statement_id sha256:cdb325ce53ff53959ea3b3de305df2d88f1d96e3874184a481eab5e31ab99105
+    D5/S0/Tower/GoldenGapWord.fibWord: sha256:c8520ae54a0eace400fd18644db28aa25debda739a3315d6cdc8d4de6eebee63
+  D5/S1/Digit/GoldenBase4AutomataOracle; module statement_id sha256:f990811fc98754f8e49e726dbf288e55de8d9aad4a9c0ea717c835a7ba4cd55c
+    D5/S1/Digit/GoldenBase4AutomataOracle.zeckendorfMSDWord: sha256:acb410a3ea49a128f721dc40e1297b58e930c4445b049527d09d30b129159dfa
+    D5/S1/Digit/GoldenBase4AutomataOracle.zeckendorfWordLength: sha256:d567999b715031c71e756eecb88aa78e0e2d5c0ee1c4640ce1421c04fcbd5508
+  D5/S1/Digit/GoldenBase4DenseInput; module statement_id sha256:c9eb04d540060a6fcc48cfdae6a854fc9f415cdf25074b548701230488fe7948
+    D5/S1/Digit/GoldenBase4DenseInput.zeckendorfMSDWord_value: sha256:af5bc097afc0c12837ab22022f2fa9057009b6972f487b6c8e0cd9b1a12d60ea
+  D5/S1/Digit/GoldenBase4IntervalMachine; module statement_id sha256:fa818cf4cfbb993ac00cef7564eb29f10e600559bada3288823702175e0943fa
+    D5/S1/Digit/GoldenBase4IntervalMachine.fibPair: sha256:cbaa673b2d8bdcd2f56ac60fbd4b8496a29d1b3a9a6aa673af463265b40f3053
+    D5/S1/Digit/GoldenBase4IntervalMachine.fibPair_append_digit: sha256:7a0a621968ae16cd10eaf33651c664ef339406e303978ed9f593bef57ffdf8c7
+  D5/S1/Digit/GoldenZeckendorfLanguage; module statement_id sha256:2baef40b44d5e279f984bb35fae6a9d5722c4b323008612d55ec215ec508b085
+    D5/S1/Digit/GoldenZeckendorfLanguage.zeckendorfMSDWord_noAdjacentOnes: sha256:53808d78bf10fcdcbf7d5a7e9aac002db41496b64bcb55cab8456c5b632a71be
+  D5/S1/Digit/ZeckendorfRawWindow; module statement_id sha256:841fd6e8c2b015fd6ce98338ffd97a31a2b4aec15051a79663831dce874157da
+    D5/S1/Digit/ZeckendorfRawWindow.source_word_coordinates: sha256:deeba6dbde4255f8972f23006c02b555aa13a8eb176d45ddc52b66429d5fc2b2
+    D5/S1/Digit/ZeckendorfRawWindow.support: sha256:6e85f7358067b00dc6b9dd199d81bc985b8e710bf1a0136ac0450f0c136dec49
+  D5/S1/Words/GoldenFactorComplexity; module statement_id sha256:df6050c1b101dcd4fec43d349d0113d19f3b79299ce649379ef3d12887619f3e
+    D5/S1/Words/GoldenFactorComplexity.goldenFactor: sha256:45653c076830e3d013ea9e728d954ed6444072d1161a1656d45e0c92ab921ed8
+  D5/S1/Words/GoldenWord; module statement_id sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
+    D5/S1/Words/GoldenWord.fibWord_length: sha256:5a1d44cf15492ea9a6ff43c74e45238ca5f5a566d96b8b42041061ea6c98c408
+    D5/S1/Words/GoldenWord.goldenWord: sha256:8f1246e0f7522a641bfb80a0177aa34160f096f22a06c1e4b8b73d07921da29b
+    D5/S1/Words/GoldenWord.goldenWord_eq_fibWord_get: sha256:7be520e3583f7e49ff9381fd7da2849dbe777596ec9bdad180cebc4f2824798a
+    D5/S1/Words/GoldenWord.goldenWord_eq_zeckendorf_criterion: sha256:d9a6a3a64cfb0d977689cda13bc159abda2ae8ea746c279711077d4eac231078
+  D5/S1/Words/Palindromes/GoldenPalindromicPrefix; module statement_id sha256:21d1068a7fe4ff64e5c470d35523b7f9db5c4856b9455f35c2d32bcee8a691ed
+    D5/S1/Words/Palindromes/GoldenPalindromicPrefix.fibPalCore: sha256:3f40284cf61afcce4df82d31142b4bd49f1b8469186a92731b352f63e5655305
+    D5/S1/Words/Palindromes/GoldenPalindromicPrefix.fibPalCore_length: sha256:0c959afe34a61a1028bf84864cbda37db398aa6eae5a4107da514b8754c2d4a4
+    D5/S1/Words/Palindromes/GoldenPalindromicPrefix.fibPalCore_palindrome: sha256:968775ab16ecaf47afae1af915a6ffceddc28088285630e7ddd658e3d5152734
+  D5/S1/Words/Powers/WordPower; module statement_id sha256:a0ef906082beca39a4e1b33ef15215caf1af27b940976e0e624e541a11caad48
+    D5/S1/Words/Powers/WordPower.length_wordPower: sha256:debf5e4132f97f82101c3032c0cf4922d3f005aae64c4067de34e835705ee5bf
+    D5/S1/Words/Powers/WordPower.wordPower: sha256:a6e228e7ee6ecdc474ee0b218a6a0c370496359d57e770a78cc40f1991acc416
+    D5/S1/Words/Powers/WordPower.wordPower_succ: sha256:2555a0f5d0c0ce76d62ea9dc70d6f8b1554ec0d5a37821080b16cbaabc5c2b5d
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 

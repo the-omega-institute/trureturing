@@ -28,7 +28,7 @@ $$\forall k \in \mathbb{N},\; 1 \le k \Rightarrow PL\left(goldenFactor\left(N\le
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Petr Ambrož, Ondřej Kadlec, Edita Masáková, Zuzana Pelantová (2019). *Palindromic length of words and morphisms in class P*. DOI: [10.1016/j.tcs.2019.02.024](https://doi.org/10.1016/j.tcs.2019.02.024). URL: <https://arxiv.org/abs/1812.00711v2>.
+*Acknowledgement.* Petr Ambrož, Ondřej Kadlec, Zuzana Masáková, Edita Pelantová (2019). *Palindromic length of words and morphisms in class P*. DOI: [10.1016/j.tcs.2019.02.024](https://doi.org/10.1016/j.tcs.2019.02.024). URL: <https://arxiv.org/abs/1812.00711v2>.
 
 *Acknowledgement.* Anna E. Frid (2018). *Sturmian numeration systems and decompositions to palindromes*. DOI: [10.1016/j.ejc.2018.04.003](https://doi.org/10.1016/j.ejc.2018.04.003). URL: <https://arxiv.org/abs/1710.11553v2>.
 

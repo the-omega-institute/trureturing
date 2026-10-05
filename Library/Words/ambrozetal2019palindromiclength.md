@@ -1,6 +1,6 @@
 ---
 bibkey: ambrozetal2019palindromiclength
-authors: Petr Ambrož, Ondřej Kadlec, Edita Masáková, Zuzana Pelantová
+authors: Petr Ambrož, Ondřej Kadlec, Zuzana Masáková, Edita Pelantová
 year: 2019
 title: Palindromic length of words and morphisms in class P
 doi: 10.1016/j.tcs.2019.02.024

@@ -43,7 +43,7 @@ A value of `k ≥ 1` for which the prefix `goldenFactor (N(k)) 0` has a factoris
 
 ## Triage
 
-`theorem`; the external named open problem is proved in the settling module under issue #13044. The public result keeps repository provenance because the source states Conjecture 2 without proof; its literature notes record the source and restatement. The exact value `2*k+1` is proved for every `k ≥ 1`. The endpoint rule necessity is proved in this delivery. The statement `PL(goldenFactor n 0) = S_A(n)` for every `n` is open; its finite computation is supporting evidence only. The exact global limsup constant remains open.
+`theorem`; the external named open problem is proved in the settling module under issue #13044. The public result keeps repository provenance because the source states Conjecture 2 without proof; its literature notes record the source and restatement. The exact value `2*k+1` is proved for every `k ≥ 1`. The endpoint rule necessity is proved in this delivery. Target B is the source's explicit lower bound `limsup PL(prefix_n)/log n ≥ 1/(3 log φ)`; Ambrož, Kadlec, Masáková and Pelantová give the paper proof in *Palindromic length of words and morphisms in class P*, Section 4, by applying the Frid-family equality and the asymptotic `log N_k = 6*k*log φ + O(1)`. Target B is not formalised in this delivery. The statement `PL(goldenFactor n 0) = S_A(n)` for every `n` is open; the finite all-index score computation was carried out for `n ≤ 10^6` and is supporting evidence only. The exact global limsup constant remains open.
 
 ### What the settlement shows
 

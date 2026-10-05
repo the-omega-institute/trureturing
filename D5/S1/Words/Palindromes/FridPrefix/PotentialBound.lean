@@ -11,10 +11,10 @@ proof_shape: content (potential_pl_bound).
 escape_witness: induction over the actual nonempty palindrome factors and their numeric cuts.
 admission_basis: escape-witness.
 Direct frozen dependencies:
-  D5/S1/Words/GoldenFactorComplexity.goldenFactor
-    statement_id: sha256:df6050c1b101dcd4fec43d349d0113d19f3b79299ce649379ef3d12887619f3e
-  D5/S1/Words/GoldenWord.goldenWord
-    statement_id: sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
+  D5/S1/Words/GoldenFactorComplexity; module statement_id sha256:df6050c1b101dcd4fec43d349d0113d19f3b79299ce649379ef3d12887619f3e
+    D5/S1/Words/GoldenFactorComplexity.goldenFactor: sha256:45653c076830e3d013ea9e728d954ed6444072d1161a1656d45e0c92ab921ed8
+  D5/S1/Words/GoldenWord; module statement_id sha256:5b627b7ad0e8bf353fc2f705e2a1b10313bd8a4217a1734f4074c6797bfc5c6a
+    D5/S1/Words/GoldenWord.goldenWord: sha256:8f1246e0f7522a641bfb80a0177aa34160f096f22a06c1e4b8b73d07921da29b
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
