@@ -522,3 +522,507 @@ cofinal error estimate is supplied. The full residual comparison,
 original all-input half-bound, actual joint cofinal signs, full Robin
 and RH remain unresolved. This is conditional paper analysis with
 no new Lean certification or originality claim.
+
+
+## Actual endpoint jets in the original form
+
+Under the same original-theta, whole-critical-space minimal-domain,
+mixed-nullity and coercive negative-edge premises as (NC1)–(NC6),
+the original series supplies spatial and parameter jets of the
+normalized endpoint columns. This is a conditional paper application
+of that series and the existing
+[global form comparison (WF2)](../Weil/fukushima2011dirichlet.md#transformed-form-and-a-global-derivative-comparison),
+without a new generic regularization theorem, numerical producer,
+Lean certification or originality claim.
+
+Retain $t(R)$, $n_R$, $E_R$ and sufficiently large $R_0>0$. For
+$j,\ell\in\{0,1\}$ there are finite original-series constants
+$C_{j,\ell}$ such that
+
+$$
+\|\partial_x^j\partial_R^\ell(n_R-E_R)\|_2
+\le C_{j,\ell}e^{-R},\qquad R\ge R_0. \tag{J1}
+$$
+
+To pay the derivatives, fix $A>t_c+1$ and write
+$\Phi(x)=4\pi^2e^{9x/2-\pi e^{2x}}\ell_\theta(x)$ on
+$x\ge A-t_c$. The first theta term gives
+$\ell_\theta(x)=1-(3/(2\pi))e^{-2x}$ plus the terms with
+$n\ge2$. Apply the supplied derivative polynomials to these terms
+before removing the first exponential. Their normally convergent
+series gives, for $0\le m\le2$,
+
+$$
+|\ell_\theta^{(m)}(x)-\mathbf1_{m=0}|
+\le D_m e^{-2x},\qquad \inf_{x\ge A-t_c}\ell_\theta(x)>0.
+$$
+
+The polynomial factors $e^{2mx}$ in the remaining terms are absorbed
+by $e^{-3\pi e^{2x}}$. This differentiates the original series,
+rather than an asymptotic remainder.
+
+Put $A_R=\pi e^{-9t(R)/2}e^{5R/2}$,
+$d_R=A_R^{-1}Uw_{t(R)}$ and
+$p_R=G(\cdot-R)+G(-\cdot-R)$. On the positive tail the dominant
+term of $d_R$ is exactly $G(x-R)b(x,t(R))$, where
+
+$$
+b(x,t)=\frac{\sqrt{1+e^{-x}}\ell_\theta(x-t)}
+              {\sqrt{\ell_\theta(x)}},\qquad
+ t'(R)=\frac{e^{-2R}}{1+e^{-2R}}.
+$$
+
+For $j=0,1$ the same series bounds give
+$|\partial_x^j(b-1)|\le De^{-x}$ and
+$|\partial_x^j\partial_R b(x,t(R))|\le De^{-2R-2x}$.
+After $y=x-R$, the errors are bounded by $e^{-R}$ times finite
+linear combinations of $e^{-y}G(y)$, $e^{-y}G'(y)$ and
+$e^{-y}G''(y)$, all in $L^2$. The compact-region, centering,
+wrong-shift and wrong-half ideal jets are $O(e^{-5R/2})$:
+$A_R'/A_R$ is bounded, and the wrong shift retains a uniform
+positive tail exponent, including its differentiated series.
+Reflection pays the other spatial tail. These facts prove (J1)
+first with $d_R-p_R$ in place of $n_R-E_R$.
+
+The ideal overlap and its $R$ derivative are
+$O((1+R)e^{-5R})$, by differentiating the overlap integrand in
+(NC1) and using the same two-half-line split. Set
+$a_0=\sqrt2\|G\|_2$ and $a_R=\|d_R\|_2$. The preceding jet bounds
+therefore give $a_R\ge a_0/2$ after increasing $R_0$,
+$|a_R-a_0|=O(e^{-R})$ and $|a_R'|=O(e^{-R})$, using
+$a_R'=\operatorname{Re}\langle d_R,d_R'\rangle/a_R$.
+Spatial derivatives commute with this scalar normalization.
+Substitute $n_R=d_R/a_R$ and $E_R=p_R/a_0$ to obtain (J1),
+including the mixed spatial–parameter derivative.
+
+Use $\|v\|_{\mathcal F_c}=\|U^{-1}v\|_{\mathcal F}$ for the
+original minimal form norm in physical coordinates. The existing
+(WF2) comparison supplies
+
+$$
+\|v\|_{\mathcal F_c}^2
+\le c_0\|v\|_2^2+c_1\|v'\|_2^2,
+\quad
+c_0=\tfrac32+\|B_{\rm prime}\|
+       +2M_2\|s'\|_\infty^2,
+\quad c_1=2M_2\|s\|_\infty^2.
+$$
+
+Here $B_{\rm prime}$ is the complete prime operator in (WF1),
+distinct from the negative-edge metric $B$ in (R3)–(R5).
+Every prime power remains. The $C_{j,\ell}$ are unevaluated
+original-series constants, rather than numerical certificates.
+Ordinary spatial smoothness does not assert a source condition
+for the actual small-window Gram.
+
+
+## Truncate and sample only the actual compact residual
+
+For $x>0$ define a kernel on the whole coefficient line by
+
+$$
+k_R(x)=\mathbf1_{R<R_0}G(x-R)
+-\mathbf1_{R>R_0}G(-x-R)
+-a_0\mathbf1_{R>R_0}(n_R-E_R)(x).
+$$
+
+Let $Hh$ be its integral against $h(R)$ on $x>0$, reflected evenly.
+The missing and reflected squared kernel integrals are those in
+(NC4), with $G$ replaced by $G^{(j)}$ for $j=0,1$; (J1) pays the
+actual-error kernel. Even reflection preserves $H^1$, so $H$ is
+Hilbert–Schmidt into $H^1$ and hence into the original
+$\mathcal F_c$ by (WF2). The separate reflected columns need not
+have zero derivative trace at zero; they are not declared $H^2$.
+
+For $p\in\mathcal E_\Lambda$, the same $W_\Lambda$ gives
+
+$$
+K_\Lambda p=HW_\Lambda p=H_0W_\Lambda p,
+\qquad H_0=Q_0H,
+\quad Q_0=I-|v_0\rangle\langle v_0|. \tag{J2}
+$$
+
+The second equality uses the exact centering of $K_\Lambda p$.
+It does not make $Hh$ centered for arbitrary coefficients.
+Since the original constant has zero energy, $Q_0$ is contractive
+in $\mathcal F_c$.
+
+For $T>R_0$, restrict the coefficient kernel to $[-T,T]$, giving
+$H_T$ and $H_{0,T}=Q_0H_T$. The same actual kernels imply
+
+$$
+\begin{aligned}
+\|H_0-H_{0,T}\|_{\rm HS(L^2\to\mathcal F_c)}&\le d(T),\\
+d(T)&=\left[
+2\sum_{j=0}^1c_j\int_{y>T}(y-T)|G^{(j)}(y)|^2dy
+\right]^{1/2}\\
+&\quad+\left[
+2\sum_{j=0}^1c_j\int_{y<-T}(-y-T)|G^{(j)}(y)|^2dy
+\right]^{1/2}\\
+&\quad+\|G\|_2 e^{-T}
+    (c_0C_{0,0}^2+c_1C_{1,0}^2)^{1/2}.
+\end{aligned} \tag{J3}
+$$
+
+The first integral comes from $R<-T$, the second from $R>T$,
+and the last term truncates the actual-minus-ideal columns.
+Their respective orders are super-exponential,
+$O(e^{-5T/2})$ and $O(e^{-T})$. This truncates the
+Hilbert–Schmidt residual, not the noncompact principal $S_n$.
+
+Split $[-T,T]$ exactly at $R_0$. On its two open pieces the
+kernel columns are continuously differentiable in $R$ with values
+in $\mathcal F_c$. Equation (J1) supplies the uniform bounds
+
+$$
+\begin{aligned}
+M_-&=[2(c_0\|G'\|_2^2+c_1\|G''\|_2^2)]^{1/2},\\
+M_+&=M_-+a_0e^{-R_0}
+       (c_0C_{0,1}^2+c_1C_{1,1}^2)^{1/2},\qquad
+M=\max(M_-,M_+).
+\end{aligned}
+$$
+
+For cells $I_i$ in these pieces, lengths $\Delta_i$ and midpoints
+$R_i$, put $r_i=Q_0k_{R_i}^{\rm even}$ and define
+
+$$
+\begin{aligned}
+D_{\Lambda,T,\mathcal I}p
+ &=\sum_i r_i\int_{I_i}(W_\Lambda p)(R)dR,\\
+\|K_\Lambda-D_{\Lambda,T,\mathcal I}\|_{
+       \mathcal E_\Lambda\to\mathcal F_c}
+ &\le Q_\Lambda
+   [d(T)+M\Delta_{\max}\sqrt{T/6}],\qquad
+Q_\Lambda=\|W_\Lambda\|.
+\end{aligned} \tag{J4}
+$$
+
+The columns are centered and in the original minimal form domain
+by (WF2). Reuse the midpoint mean-square column estimate:
+its Hilbert–Schmidt sampling error is at most
+$(\sum_iM_i^2\Delta_i^3/12)^{1/2}$, bounded by the displayed
+mesh term because the total coefficient length is $2T$.
+The split at $R_0$ avoids an across-jump derivative estimate.
+All complex coefficients retain one actual $W_\Lambda$.
+
+Equation (J4) is a joint parameter inequality in the original
+jet constants, band inverse norm, tail cutoff and mesh.
+It gives no band-independent constant. Column evaluation and
+integration certification remain acquisitions to perform;
+no sampled values or numerical producer are supplied here.
+If finite coefficient-functional representations are required,
+reuse the repository's
+[finite Fourier-window supplier](../../Blueprint/D5/S3/Quantum/Analysis/FourierWindowFiniteRank.md).
+The infinite principal synthesis remains present.
+
+
+## Pay the finite remainder with the existing common-source certificate
+
+The new kernel columns in (J4) can be used by the existing
+[actual primal/dual residual certificate](../../docs/reports/theta-mixed-matrix/theta-common-residual-bounds.md),
+conditionally on acquiring their simultaneous residual Gram.
+This reuses (G4)'s metric inverse and the common coefficient estimate;
+it is not a new generic Gram or projection theorem.
+
+Write $\mathcal B=UBU^{-1}$ for the negative-edge metric on the
+centered physical space, with $b_0I\le\mathcal B\le I/2$.
+Retain the same $\mathcal R$ and $N_c$. Normalize the cells by
+
+$$
+e_i=\sqrt{\Delta_i}r_i,
+\qquad z_i(p)=\Delta_i^{-1/2}\int_{I_i}(W_\Lambda p)(R)dR,
+\qquad D_{\Lambda,T,\mathcal I}p=\sum_i e_i z_i(p).
+$$
+
+The normalized cell indicators are orthonormal in coefficient
+$L^2$, so $\|z(p)\|_{\ell^2}\le Q_\Lambda\|p\|_2$.
+There is no dimension factor or independent column optimization.
+For each of these same $e_i$, choose an actual critical
+$\eta_i\in N_c$ and an exact dual $\omega_i\in N_c^\perp$, and put
+
+$$
+b_i=\mathcal B(e_i-\eta_i)-\omega_i.
+$$
+
+A positive Hermitian upper Gram $G_b$ must certify
+$\|\sum_i z_i b_i\|_2^2\le z^*G_bz$ for all complex coefficients.
+Individual samples and the previously acquired quadratic-input rows
+do not certify this different family. Each dual needs a legitimate
+orthogonality witness; no completeness of a real-zero family or RH
+is assumed.
+
+The existing inverse $G_N=P_{N_c}\mathcal B|_{N_c}$ satisfies
+$G_N(\mathcal R e_i-\eta_i)=P_{N_c}b_i$ and
+$\|G_N^{-1}\|\le b_0^{-1}$. Retain the infinite principal map and set
+
+$$
+\begin{aligned}
+\mathcal F_{\Lambda,T,\mathcal I}p
+ &=\mathcal L_\Lambda p+\sum_i\eta_i z_i(p),\\
+\sup_{\substack{p\in\mathcal E_\Lambda\\\|p\|_2=1}}
+\|\mathcal Rp-\mathcal F_{\Lambda,T,\mathcal I}p\|_2
+ &\le (2b_0)^{-1/2}\delta_\Lambda
+       +\frac{Q_\Lambda}{b_0}\sqrt{\|G_b\|},
+\end{aligned} \tag{J5}
+$$
+
+Here $\delta_\Lambda$ is any valid (J4) upper allowance.
+Use the existing $\|\mathcal R\|\le(2b_0)^{-1/2}$ on
+$K_\Lambda-D_{\Lambda,T,\mathcal I}$, then the same metric inverse
+on its finite columns. The difference is critical, so both original
+edge errors are bounded by the (J5) right side divided by $\sqrt2$.
+They use one source family, coefficient map and simultaneous Gram.
+Only the compact residual is finitely acquired.
+
+For a growing band, sufficient conditions for the explicit (J5)
+upper allowance to vanish are that $\delta_\Lambda\to0$ and
+$Q_\Lambda\sqrt{\|G_b\|}\to0$ on the required common sequence.
+These are not asserted necessary conditions for actual approximation. No numerical $G_b$, selected $\eta_i,\omega_i$,
+effective regularization rate or finite all-input algorithm is
+supplied. Equation (J5) does not say that an arbitrary finite dual
+family can attain those residuals. The old quadratic-input experiment
+is not rerun, and its values are not reassigned to these columns.
+
+Under the inherited mixed-nullity premise,
+$p-K_\Lambda p=\mathcal L_\Lambda p$ is critical, so the exact
+original half-slack
+$\mathfrak q(v)=D(U^{-1}v)-\|Q_0v\|_2^2/2$ satisfies
+$\mathfrak q(p)=\mathfrak q(K_\Lambda p)$.
+The usual bounded-form estimate gives, for $p\in\mathcal E_\Lambda$,
+
+$$
+|\mathfrak q(p)-\mathfrak q(D_{\Lambda,T,\mathcal I}p)|
+\le\delta_\Lambda
+ (2\|K_\Lambda\|_{\mathcal E_\Lambda\to\mathcal F_c}
+   +\delta_\Lambda)\|p\|_2^2.
+$$
+
+This is an error bound, not positivity: a finite-rank approximation
+has an infinite-dimensional low kernel, and its absolute error alone
+cannot certify the entire low-space sign.
+
+Equations (J1)–(J5) supply original-form residual, tail, mesh and
+conditional acquisition interfaces. They give no small-eigenvalue
+mass bound for the actual $\mathcal B^{1/2}UFF^*U^{-1}
+\mathcal B^{1/2}$, hence no effective rate for the old
+$(\mathcal R-\mathcal R_\varepsilon)K_\Lambda$.
+Actual residual certification, source and archimedean costs,
+low and complementary-low signs on one common cofinal sequence,
+the full half-bound, Robin, RH and Lean certification remain
+unresolved. Unevaluated series constants and paper reviews do not
+supply numerical certificates or a runtime guarantee.
+
+
+## The actual normalized endpoint columns have a complex parameter strip
+
+Retain the original theta, small-window critical space, whole-critical-space
+minimal-domain and mixed-nullity premises, and negative-edge metric from
+(E1)–(E6), (NC1)–(NC6) and (J1)–(J5). The new interface is the actual
+normalized theta column in a complex endpoint parameter; ideal-profile
+analyticity alone does not supply it. This is conditional paper analysis,
+without a numerical constant, Lean certificate or originality claim.
+The theta series, derivative polynomials, analytic identity principle
+and global form comparison (WF2) are reused.
+
+Fix $0<\vartheta_0<\vartheta_1<\pi/4$ and take sufficiently large
+$R_*$ and $R_0$. On $\Re z>R_*$, $|\Im z|<\vartheta_1$, define
+
+$$
+\begin{gathered}
+t(z)=\tfrac12\operatorname{Log}\frac2{1+e^{-2z}},\qquad
+A(z)=\pi e^{-9t(z)/2}e^{5z/2},\\
+d_z=A(z)^{-1}Uw_{t(z)},\qquad
+p_z=G(\cdot-z)+G(-\cdot-z),\qquad
+a_0=\sqrt2\|G\|_2.
+\end{gathered}
+$$
+
+The principal logarithm is legitimate since
+$\Re(1+e^{-2z})>0$. For large $R_*$, $\Re t(z)>0$,
+$|\Im t(z)|<\pi/4$ and
+
+$$
+\Re(2e^{-2t(z)})-1=e^{-2\Re z}\cos(2\Im z)>0.
+$$
+
+Also $\Re(2e^{2t(z)})-1=\Re[4/(1+e^{-2z})]-1$ is uniformly
+positive. Thus $t(z)$ lies in the original domain $\mathcal D$ from
+(E1). No enlargement of that integrability domain or of $N_c$ is used.
+
+The normally convergent original theta series, its spatial derivative
+series and the positive real denominator $\Phi(x)$ make $d_z$
+$H^1$-valued holomorphic. Uniformly on $|\Im z|\le\vartheta_0$,
+
+$$
+\|d_z-p_z\|_{H^1}\le C_{\vartheta_0}e^{-\Re z}. \tag{A1}
+$$
+
+To pay this bound from the actual series, keep the positive-tail factor
+$b(x,t)$ used in (J1). The dominant term is exactly
+$G(x-z)b(x,t(z))$. The series at $x-t(z)$ has a uniformly positive
+exponential real part and gives the same
+$|\ell_\theta-1|+|\ell_\theta'|=O(e^{-2x})$ tail bound.
+The factor $\sqrt{1+e^{-x}}$ remains independent of $z$.
+After $y=x-\Re z$, the error majorants are $e^{-\Re z}$ times
+linear combinations of $e^{-y}G(y-i\Im z)$ and its first spatial
+derivative. Their $L^2$ bounds are uniform because
+$\cos(2\vartheta_0)>0$. The compact-region, centering, wrong-shift
+and wrong-half terms and their first spatial derivatives have order
+$O(e^{-5\Re z/2})$. Reflection pays the other spatial tail.
+These are differentiated original-series estimates, rather than a
+complex extension of a real asymptotic remainder. They hold on every
+fixed closed strip of width less than $\pi/4$, after increasing $R_*$.
+
+The ordinary complex $L^2$ norm is not a holomorphic normalization.
+Use the continuous complex bilinear scalar
+
+$$
+q(z)=\int_{\mathbb R}d_z(x)^2\,dx.
+$$
+
+It is holomorphic and agrees with $\|d_R\|_2^2$ for real $R$,
+because those actual columns are real. The single-profile integral
+$\int G(x-z)^2\,dx$ is holomorphic on $|\Im z|<\pi/4$ and
+constant there by its real translation identity and the identity
+theorem. The ideal cross integrand is
+
+$$
+G(x-z)G(-x-z)=e^{-5z}
+ \exp\{-\pi e^{-2z}\cosh(2x)\}.
+$$
+
+Its integral has modulus at most
+$C_{\vartheta_0}(1+\Re z)e^{-5\Re z}$: use
+$\cos(2\vartheta_0)>0$ and the two-half-line split from (NC1).
+Consequently $\int p_z^2=a_0^2+
+O((1+\Re z)e^{-5\Re z})$, and (A1) with the uniformly bounded
+profile norms gives
+
+$$
+|q(z)-a_0^2|\le C_{\vartheta_0}e^{-\Re z}.
+$$
+
+Apply the same estimate on a slightly larger closed strip still narrower
+than $\pi/4$, and increase $R_*$ so that
+$|q(z)-a_0^2|<a_0^2/2$ throughout the holomorphic domain.
+This disk avoids zero and the negative real axis. Its principal
+holomorphic square root $a(z)$ therefore exists and satisfies
+$a(R)=\|d_R\|_2$ on real $R$. Set
+
+$$
+n_z=d_z/a(z),\qquad E_z=p_z/a_0.
+$$
+
+These columns match the actual $n_R$ and $E_R$ from (J1) and obey
+
+$$
+\|n_z-E_z\|_{H^1}\le C_{\vartheta_0}e^{-\Re z},\qquad
+\sup_{\substack{\Re z>R_*\\|\Im z|\le\vartheta_0}}
+ \|n_z\|_{H^1}<\infty. \tag{A2}
+$$
+
+Membership in $N_c$ follows from the original (E1) domain and survives
+scalar normalization. The continuous embedding (WF2) transports this
+holomorphy and these bounds to the original minimal form
+$\mathcal F_c$; the whole-critical-domain premise is unchanged.
+This constructs an actual zero-free normalization bridge, not an
+assumption that the ordinary norm has an analytic extension.
+
+
+## Apply existing analytic approximation to the actual compact residual
+
+For $x>0$ extend the two separate (J2) kernel formulas by
+
+$$
+k_z^-(x)=G(x-z),\qquad
+k_z^+(x)=-G(-x-z)-a_0(n_z-E_z)(x).
+$$
+
+Even-reflect them and apply $Q_0$ to obtain the centered form columns
+$r_z^-$ and $r_z^+$. Choose a fixed $d>0$ with
+$d<\vartheta_0$ and $R_0-d>R_*$. Each formula is holomorphic
+on the radius-$d$ disks around all its real mesh centers, with a
+uniform $\mathcal F_c$ bound $M_\vartheta$. The left formula uses
+the strip bounds for translated $G$ at arbitrary real center;
+the right uses (A1)–(A2). Even reflection is bounded in $H^1$,
+and (WF2) and $Q_0$ preserve the form bound. The right formula
+extends slightly below $R_0$, and the left formula beyond it.
+The real coefficient integration still splits exactly at $R_0$.
+No analytic gluing at this jump or $H^2$ regularity is assumed.
+
+Partition $[-T,T]$, $T>R_0$, into cells $I_i$ split at $R_0$,
+with lengths at most $d$. On each cell use the Taylor polynomial
+$P_i$ of degrees $0,\ldots,m-1$, $m\ge1$, of the appropriate
+$r_z^\pm$ at its midpoint. Apply the standard Banach-valued
+Cauchy remainder on its radius-$d$ disk: the pointwise form error is
+at most $2M_\vartheta2^{-m}$. This is reuse of the analytic
+approximation theorem on the new actual columns, not a new
+generic interpolation result.
+
+Define
+
+$$
+D^{(m)}_{\Lambda,T,\mathcal I}p
+ =\sum_i\int_{I_i}P_i(R)(W_\Lambda p)(R)\,dR.
+$$
+
+The unchanged tail allowance $d(T)$ from (J3) and the
+Hilbert–Schmidt column estimate give
+
+$$
+\|K_\Lambda-D^{(m)}_{\Lambda,T,\mathcal I}\|_{
+       \mathcal E_\Lambda\to\mathcal F_c}
+\le Q_\Lambda[d(T)+2M_\vartheta\sqrt{2T}\,2^{-m}]. \tag{A3}
+$$
+
+The parameter polynomial approximates only the compact residual;
+the principal $\mathcal L_\Lambda$ retains its infinite synthesis.
+Every cell uses the same actual $W_\Lambda$, not separately
+optimized coefficients.
+
+Reuse the real orthonormal Legendre polynomials $\psi_{i,k}$ on
+each cell, extended by zero to the coefficient line. For $0\le k<m$
+put
+
+$$
+e_{i,k}=\int_{I_i}P_i(R)\psi_{i,k}(R)\,dR,\qquad
+z_{i,k}(p)=\int_{I_i}\psi_{i,k}(R)(W_\Lambda p)(R)\,dR.
+$$
+
+Then $D^{(m)}p=\sum_{i,k}e_{i,k}z_{i,k}(p)$ and Bessel gives
+$\|z(p)\|_{\ell^2}\le Q_\Lambda\|p\|_2$, with no dimension
+factor. All these columns lie in the original centered form domain.
+For this same family, (J5) applies with (A3) as
+$\delta_\Lambda$, provided an actual simultaneous complex residual
+Gram certifies its chosen primal and dual witnesses. Neither the
+old quadratic-input rows nor a separately optimal column choice
+certifies these new residuals.
+
+If $d(T)\le C_d e^{-T}$ above a fixed threshold $T_*>R_0$,
+sufficient parameters for the (A3) upper allowance to be at most
+$\tau>0$ are
+
+$$
+\begin{aligned}
+T&\ge\max\{T_*,\log(2C_dQ_\Lambda/\tau)\},\\
+m&\ge\max\{1,\lceil
+ \log_2(4M_\vartheta Q_\Lambda\sqrt{2T}/\tau)\rceil\}.
+\end{aligned} \tag{A4}
+$$
+
+There exists a partition split at $R_0$ with at most
+$2T/d+2$ cells, hence at most $m(2T/d+2)$ columns.
+The usual Gamma/Stirling growth for (NC3) makes this count polynomial
+in $\Lambda$ and $\log(1/\tau)$ when $0<\tau\le1$ and the
+original constants are fixed and certified. This sufficient
+column-count estimate is not an optimal acquisition-cost bound or
+a runtime guarantee; derivative evaluation, coefficient integrals
+and simultaneous Gram certification still require work.
+
+The constants $C_d,M_\vartheta$, normalization threshold $R_*$
+and Gram are unevaluated. No effective small-window regularization
+rate or finite all-input acquisition of the noncompact principal
+follows. Actual source and archimedean costs, low and complementary-low
+signs on one common original cofinal sequence, the full all-input
+half-bound, Robin, RH and Lean certification remain unresolved.

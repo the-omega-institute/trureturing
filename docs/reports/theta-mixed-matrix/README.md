@@ -399,3 +399,29 @@ noncompact. This conditional paper construction supplies no effective
 regularization or growing-band rate, finite all-input acquisition,
 actual cofinal signs, half-bound or RH/Robin conclusion, and has no
 new Lean certification or originality claim.
+
+
+The [actual endpoint-jet and original-form residual interface](../../../Library/Dynamics/clason2021regularization.md#actual-endpoint-jets-in-the-original-form)
+extends that conditional construction with spatial/parameter jet bounds,
+original-form-norm tail and midpoint allowances, and the
+[existing common-source certificate on the sampled residual columns](../../../Library/Dynamics/clason2021regularization.md#pay-the-finite-remainder-with-the-existing-common-source-certificate).
+The principal synthesis remains infinite; only its compact residual is
+truncated. An actual simultaneous residual Gram and the growing-band
+coefficient cost still require certification. This is conditional paper
+analysis with unevaluated constants, without an effective regularization
+rate, new numerical or Lean result, actual cofinal signs, half-bound,
+Robin or RH conclusion.
+
+
+The [actual complex endpoint parameter](../../../Library/Dynamics/clason2021regularization.md#the-actual-normalized-endpoint-columns-have-a-complex-parameter-strip)
+extends the original normalized theta columns using a zero-free bilinear
+normalization, rather than a holomorphic ordinary norm. Its
+[high-order residual interface](../../../Library/Dynamics/clason2021regularization.md#apply-existing-analytic-approximation-to-the-actual-compact-residual)
+reuses Cauchy/Taylor and Legendre/Bessel tools on separately analytic
+kernel pieces, with sufficient parameter and residual-column-count
+bounds. It preserves the original critical/minimal-form premises, one
+coefficient map and simultaneous complex Gram, and the infinite
+principal synthesis. Constants and actual residual Grams remain
+uncertified; this conditional paper analysis supplies no numerical
+runtime, effective regularization rate, new Lean result, actual cofinal
+signs, all-input half-bound, Robin or RH conclusion.
