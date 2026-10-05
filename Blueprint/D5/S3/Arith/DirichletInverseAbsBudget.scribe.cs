@@ -16,7 +16,7 @@ internal sealed class DirichletInverseAbsBudgetDocument : IScribeDocumentDefinit
                 H("A finite tail budget controls the entire inverse"),
                 StatementSource.FromAuthor(ResultFormula()),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Dirichlet/glocknerlucht2011weightedinversion")),
+                    LibraryNoteRef.Create("D5/L/Arith/glocknerlucht2011weightedinversion")),
                 Blocks(
                     Paragraph(Text("Let b and g be real ArithmeticFunction values and T a real number. "
                         + "This carrier includes b(0)=g(0)=0. Multiplication means Dirichlet convolution, "
