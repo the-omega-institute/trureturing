@@ -57460,4 +57460,334 @@ $$
 
 分子不超过二，分母趋于正无穷，故素数自身最终满足严格 Robin 不等式；闭包造成的无界损失并不改变这一事实。整个证明只使用既有实际最小上界、经典 Fibonacci 递推增长、上述有出处的低秩计数方法与无条件素数计数供给，没有对生成指标的基数、最大值、原始素因子或 RH 增添假设。$\square$
 
+## 382. 奇约数对数收缩与实际 Fibonacci 原子误差的双向累积
+
+**定义 382.1（原子偏差与奇核参数）。** 沿用定义 362.1 的 Fibonacci 数列、实际正整数原子 $\Psi_n$、$c_n=\log\Psi_n$、$D(S)$ 与 $M(S)$，并记
+
+$$
+\Phi=\frac{1+\sqrt5}{2},\qquad L=\log\Phi,\qquad q=\Phi^{-2},\qquad
+E_n=c_n-L\varphi(n)\quad(n\ge1).
+\tag{382.1}
+$$
+
+所有对数均为自然对数。把正整数唯一写成 $n=2^a m$，其中 $a\ge0$、$m$ 为奇数；令 $R=\operatorname{rad}(m)$、$h=m/R$，约定 $\operatorname{rad}(1)=1$。于是 $R$ 为奇平方自由数、$h$ 为正奇数。对任意奇平方自由数 $R\ge1$ 和 $0<t\le2/5$，定义有限和
+
+$$
+S_+(R,t)=\sum_{d\mid R}\mu(d)\log(1+t^d).
+\tag{382.2}
+$$
+
+这里 $\mu$ 是 Möbius 函数；$R=1$ 时该和只有 $d=1$ 一项。
+
+**引理 382.2（奇平方自由约数的较小正对数包络）。** 对定义 382.1 中的每个 $R,t$，
+
+$$
+0<S_+(R,t)\le\log(1+t),
+\qquad
+S_+(R,t)=\log(1+t)\ \Longleftrightarrow\ R=1.
+\tag{382.3}
+$$
+
+**证明。** 令 $f(d)=\log(1+t^d)>0$。由 $0<t<1$ 及对 $u>0$ 的积分恒等式，有
+
+$$
+\frac{u}{1+u}\le\log(1+u)\le u.
+\tag{382.4}
+$$
+
+$R$ 的每个非平凡约数都是不小于三的奇数，且 $|\mu(d)|=1$。有限约数集合是这些奇数的子集，故逐项取绝对值再嵌入正项几何级数，得到
+
+$$
+\begin{aligned}
+|S_+(R,t)-f(1)|
+&\le\sum_{\substack{d\mid R\\d>1}}f(d)
+\le\sum_{j\ge0}t^{3+2j}=\frac{t^3}{1-t^2},\\
+\frac{t^3}{(1-t^2)f(1)}
+&\le\frac{t^2(1+t)}{1-t^2}
+=\frac{t^2}{1-t}\le\frac4{15}<1.
+\end{aligned}
+\tag{382.5}
+$$
+
+最后的不等式使用 $t^2\le4/25$、$1-t\ge3/5$。因此 $S_+(R,t)>0$，包括空尾和的 $R=1$ 情形。
+
+若 $R>1$，令 $p$ 为其最小素因子。$p\ge3$、$\mu(p)=-1$；除 $1,p$ 外的每个约数都是至少 $p+2$ 的奇数。因此
+
+$$
+S_+(R,t)=f(1)-f(p)+T,
+\qquad
+|T|\le\sum_{j\ge0}t^{p+2+2j}
+=\frac{t^{p+2}}{1-t^2}.
+\tag{382.6}
+$$
+
+由（382.4）及 $t^p\le t$，
+
+$$
+\frac{|T|}{f(p)}
+\le\frac{t^2(1+t^p)}{1-t^2}
+\le\frac{t^2}{1-t}\le\frac4{15}<1.
+\tag{382.7}
+$$
+
+所以 $-f(p)+T<0$，即 $S_+(R,t)<f(1)$。若 $R=1$，定义直接给 $S_+(1,t)=f(1)$，证明了等号的充要条件。所有几何级数仅用于支配有限符号和，其项均为正且公比 $t^2<1$。$\square$
+
+**定理 382.3（实际原子偏差的奇核与二进层精细界）。** $E_1=-L$。对 $n>1$，取定义 382.1 的 $a,m,R,h$，有精确公式
+
+$$
+E_n=
+\begin{cases}
+\displaystyle\mu(R)\sum_{d\mid R}\mu(d)\log(1+q^{hd}),&a=0,\\[4pt]
+\displaystyle\mu(R)\sum_{d\mid R}\mu(d)\log(1-q^{hd}),&a=1,\\[4pt]
+\displaystyle\mu(R)\sum_{d\mid R}\mu(d)\log(1+q^{2^{a-1}hd}),&a\ge2.
+\end{cases}
+\tag{382.8}
+$$
+
+其符号和精细绝对值包络为
+
+$$
+\begin{array}{c|c|c}
+\text{指标情形}&\operatorname{sgn}(E_n)&\text{绝对值界}\\ \hline
+ a=0,\ n>1&\mu(R)&0<|E_n|\le\log(1+q^h)\\
+ a=1&-\mu(R)&0<|E_n|\le-\log(1-q^h)\\
+ a\ge2&\mu(R)&0<|E_n|\le\log(1+q^{2^{a-1}h})
+\end{array}
+\tag{382.9}
+$$
+
+每一行的上界取等当且仅当 $R=1$；第一行因 $n>1$ 而没有这样的指标。特别地，
+
+$$
+-\log(1+q^{24})<E_{5040}<0,
+\qquad
+E_{2p}=L+\log(1-q^p)\in(0,L)
+\quad(p\text{ 为奇素数}).
+\tag{382.10}
+$$
+
+若 $n>1$ 为平方满整数，即每个素因子的指数至少为二，则
+
+$$
+|E_n|\le\log(1+q^{\sqrt n}),
+\tag{382.11}
+$$
+
+故平方满指标趋于无穷时 $E_n\to0$；而沿奇素数 $p\to\infty$，$E_{2p}\to L$。
+
+**证明。** 由 $\Phi^2=\Phi+1$、$3/2<\Phi<2$，
+
+$$
+q=2-\Phi\in(0,2/5),\qquad
+1-q=\Phi^{-1},\qquad
+-\log(1-q)=L,\qquad
+\log(1+q)<L.
+\tag{382.12}
+$$
+
+最后一步等价于 $3-\Phi<\Phi$。Binet 公式和 Möbius 反演给
+
+$$
+\begin{aligned}
+\log F_e&=eL-\tfrac12\log5+\log(1-(-q)^e),\\
+c_n&=\sum_{e\mid n}\mu(n/e)\log F_e,\\
+E_n&=\sum_{e\mid n}\mu(n/e)\log(1-(-q)^e)\quad(n>1).
+\end{aligned}
+\tag{382.13}
+$$
+
+这里 $F_e>0$，而 $1-(-q)^e>0$；$\sum_{e\mid n}\mu(n/e)=0$ 消去了常数项，$\sum_{e\mid n}e\mu(n/e)=\varphi(n)$ 给主项。$n=1$ 则直接用 $\Psi_1=1$、$\varphi(1)=1$ 得 $E_1=-L$。这些经典原子的因式分解和对数主项参见 Carlo Sanna，*On the l.c.m. of shifted Fibonacci numbers*，[arXiv:2007.13330v1，§2，式（2）–（4）及 Lemma 2.2](https://arxiv.org/pdf/2007.13330v1)；本节 $\Psi_n$ 与其原子由因式分解的 Möbius 反演对应。
+
+现在逐一改变（382.13）的约数。若 $a=0$，非零系数要求 $n/e$ 为平方自由数，即 $n/e\mid R$。写 $n/e=R/d$，便唯一得到 $e=hd$、$d\mid R$；反过来每个这样的 $d$ 都给一个非零系数。由于 $R$ 平方自由，
+
+$$
+\mu(R/d)=\mu(R)\mu(d).
+\tag{382.14}
+$$
+
+且 $hd$ 为奇数，所以 $1-(-q)^{hd}=1+q^{hd}$，得到第一行。
+
+若 $a\ge1$，写任意 $e\mid n$ 为 $e=2^b u$，其中 $0\le b\le a$、$u\mid m$。非零系数要求 $a-b\in\{0,1\}$ 且 $m/u\mid R$，后者又等价于 $u=hd$、$d\mid R$。每个 $d\mid R$ 恰给 $b=a$ 与 $b=a-1$ 两项；其系数分别为 $\mu(R)\mu(d)$ 与 $-\mu(R)\mu(d)$。因此
+
+$$
+E_n=\mu(R)\sum_{d\mid R}\mu(d)
+\left[\log(1-(-q)^{2^a hd})
+-\log(1-(-q)^{2^{a-1}hd})\right].
+\tag{382.15}
+$$
+
+当 $a=1$ 时，$hd$ 为奇数；置 $x=q^{hd}\in(0,1)$，括号为
+
+$$
+\log(1-x^2)-\log(1+x)=\log(1-x).
+\tag{382.16}
+$$
+
+当 $a\ge2$ 时，两个指标均为偶数；置 $x=q^{2^{a-1}hd}\in(0,1)$，括号为
+
+$$
+\log(1-x^2)-\log(1-x)=\log(1+x).
+\tag{382.17}
+$$
+
+两式的因子全为正，故对数的乘除法则合法。这证明（382.8）。以上配对也适用于 $m=1$，此时 $R=h=1$、约数集为 $\{1\}$，给 $E_2=\log(1-q)=-L$ 及 $E_{2^a}=\log(1+q^{2^{a-1}})$（$a\ge2$）。$a=0,m=1$ 已由 $n=1$ 的单独计算处理，不使用常数项的消去。
+
+第一、三行的参数 $q^h$、$q^{2^{a-1}h}$ 均属于 $(0,2/5)$，于是引理 382.2 给符号、界及等号条件。为在同一证明中处理第二行，记 $g(d)=-\log(1-t^d)>0$，其中 $t=q^h$。经典积分界给
+
+$$
+t^d\le g(d)\le\frac{t^d}{1-t^d}\le\frac{t^d}{1-t}.
+\tag{382.18}
+$$
+
+令 $A=\sum_{d\mid R}\mu(d)g(d)$。按（382.5）的同一有限集合嵌入，
+
+$$
+\frac{|A-g(1)|}{g(1)}
+\le\frac{t^2}{(1-t^2)(1-t)}
+\le\frac{20}{63}<1.
+\tag{382.19}
+$$
+
+若 $R>1$、$p$ 为其最小素因子，写 $A=g(1)-g(p)+T_-$，则（382.18）还给
+
+$$
+\frac{|T_-|}{g(p)}
+\le\frac{t^2}{(1-t^2)(1-t)}
+\le\frac{20}{63}<1.
+\tag{382.20}
+$$
+
+两处使用的正项尾和分别从三与 $p+2$ 开始，公比为 $t^2$；常数来自 $t^2\le4/25$、$1-t^2\ge21/25$、$1-t\ge3/5$。故 $0<A<g(1)$；$R=1$ 时 $A=g(1)$。第二行的 $E_n=-\mu(R)A$，完成（382.9）。这个负对数中间界也由 G. J. O. Jameson，*The cyclotomic polynomials*，[Proposition 1.20，pp. 9–10](https://www.maths.lancs.ac.uk/~jameson/cyp.pdf) 的经典区间得到：对 $R>1$，普通 cyclotomic 多项式 $\operatorname{Cyc}_R(t)$ 满足
+
+$$
+\log\operatorname{Cyc}_R(t)
+=\mu(R)\sum_{d\mid R}\mu(d)\log(1-t^d)
+=-\mu(R)A,
+\tag{382.21}
+$$
+
+而其平方自由约化见同文 Theorem 1.12。该经典区间提供 $-\log(1-t)$ 的包络；引理 382.2 的正对数包络使用的是较小的 $\log(1+t)$。
+
+由（382.9）、（382.12）随即有经典粗结论 $|E_n|\le L$，等号恰在 $n=1,2$：奇指标大于一和 $a\ge2$ 的指标有 $|E_n|\le\log(1+q)<L$；$a=1,R>1$ 时 $|E_n|<-\log(1-q^h)\le L$，而 $R=1$ 只给 $n=2$。这一粗结论及符号亦可由上述 Jameson 区间与 cyclotomic 约化直接获得。
+
+对 $5040=2^4\cdot3^2\cdot5\cdot7$，有 $R=105$、$h=3$、$\mu(R)=-1$、$\varphi(5040)=1152$，第三行的参数为 $q^{2^3\cdot3}=q^{24}$，且 $R>1$，故得（382.10）的第一个严格区间。对 $n=2p$，$R=p$、$h=1$、$\mu(R)=-1$，第二行直接给
+
+$$
+E_{2p}=-\log(1-q)+\log(1-q^p)=L+\log(1-q^p).
+\tag{382.22}
+$$
+
+$q^p<q$ 保证此数为正，而 $\log(1-q^p)<0$ 保证它小于 $L$；沿奇素数 $p\to\infty$，$q^p\to0$，故该数趋于 $L$。
+
+最后，平方满的 $m$ 满足 $R\le\sqrt m$，所以 $h\ge\sqrt m$。平方满的 $n>1$ 或为奇数，或有 $a\ge2$；前者 $h\ge\sqrt n$，后者
+
+$$
+2^{a-1}h\ge2^{a/2}\sqrt m=\sqrt n.
+\tag{382.23}
+$$
+
+由于 $q\in(0,1)$，相应正对数上界给（382.11），并随 $n\to\infty$ 趋零。故附加素数幂所产生的收缩，与单纯让指标变大是两个不同条件。$\square$
+
+**定理 382.4（实际有限族的有符号原子收费不能统一有界）。** 对任意有限指标集 $S\subseteq\mathbb N_{>0}$，定义依赖此表示的 Euler 权重及其实际偏差
+
+$$
+W(S)=\sum_{d\in D(S)}\varphi(d),
+\qquad
+\Delta(S)=\log M(S)-LW(S)
+=\sum_{d\in D(S)}E_d.
+\tag{382.24}
+$$
+
+最后一个等式使用（362.9）的同一实际族分解。$W$ 是指标表示 $S$ 的函数，本定理不把它定义成整数 $M(S)$ 的函数。设 $P$ 是非空有限的互异奇素数集合，$k=\#P$，$P_2=\{2p:p\in P\}$。则
+
+$$
+\begin{aligned}
+\Delta(P)
+&=\left(L-\tfrac12\log5\right)k-L
++\sum_{p\in P}\log(1+q^p)
+\le-L-(2L-\log2)k,\\
+\Delta(P_2)
+&=\left(2L-\tfrac12\log5\right)k-2L
++\sum_{p\in P}\log(1-q^{2p})
+\ge-2L+(\log8-4L)k,
+\end{aligned}
+\tag{382.25}
+$$
+
+其中 $2L-\log2>0$、$\log8-4L>0$。存在实际有限族 $S_j^-$、$S_j^+$，使
+
+$$
+\begin{aligned}
+M(S_j^-)&\longrightarrow\infty,&\Delta(S_j^-)&\longrightarrow-\infty,\\
+M(S_j^+)&\longrightarrow\infty,&\Delta(S_j^+)&\longrightarrow+\infty.
+\end{aligned}
+\tag{382.26}
+$$
+
+因此不存在一个有限常数 $C$，使所有实际有限族都满足 $|\log M(S)-LW(S)|\le C$；即使把族限制为 $M(S)>5040$，这样的常数仍不存在。
+
+**证明。** 经典强整除律 $\gcd(F_r,F_s)=F_{\gcd(r,s)}$ 已用于（361.8）–（361.10）；其强整除序列背景参见 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorems 1.2、1.3、2.1](https://arxiv.org/pdf/1310.2416v1)。对不同的奇素数 $p,r$，$\gcd(p,r)=1$、$\gcd(2p,2r)=2$，而 $F_1=F_2=1$。故两个族各自的 Fibonacci 项两两互素，实际 lcm 等于实际乘积：
+
+$$
+M(P)=\prod_{p\in P}F_p,
+\qquad
+M(P_2)=\prod_{p\in P}F_{2p}.
+\tag{382.27}
+$$
+
+完整的指标约数集是
+
+$$
+D(P)=\{1\}\cup P,
+\qquad
+D(P_2)=\{1,2\}\cup P\cup P_2.
+\tag{382.28}
+$$
+
+右侧各部分互不相交。由 $\varphi(1)=\varphi(2)=1$、$\varphi(p)=\varphi(2p)=p-1$，
+
+$$
+W(P)=1+\sum_{p\in P}(p-1),
+\qquad
+W(P_2)=2+2\sum_{p\in P}(p-1).
+\tag{382.29}
+$$
+
+将 Binet 公式（382.13）分别用于奇指标 $p$ 与偶指标 $2p$，再从（382.27）的对数减去（382.29）的 $L$ 倍，便得（382.25）的两个精确等式。特别是 $D(P)$ 中的 $1$ 给 $-L$，$D(P_2)$ 中的 $1,2$ 给 $-2L$；这两项不随生成项两两互素而消失。
+
+由于 $p\ge3$，$q^p\le q^3$、$q^{2p}\le q^6$。使用实际递推值 $F_3=2$、$F_6=8$，Binet 公式给
+
+$$
+\begin{aligned}
+\log(1+q^p)&\le\log(1+q^3)
+=\log2-3L+\tfrac12\log5,\\
+\log(1-q^{2p})&\ge\log(1-q^6)
+=\log8-6L+\tfrac12\log5.
+\end{aligned}
+\tag{382.30}
+$$
+
+代入两个精确等式就得到各自的单侧线性界。常数的严格正性来自
+
+$$
+\Phi^2=\Phi+1>2,
+\qquad
+\Phi^4=3\Phi+2<8,
+\tag{382.31}
+$$
+
+第二式用 $\Phi<2$。这还表明两个界的等号都恰在 $P=\{3\}$ 发生，因为对数的单调性使（382.30）在 $p>3$ 时严格。
+
+奇素数有无穷多个。按递增顺序取其前 $j$ 个组成 $P_j$，令 $S_j^-=P_j$、$S_j^+=\{2p:p\in P_j\}$。Fibonacci 递推的正性给 $F_p\ge F_3=2$、$F_{2p}\ge F_6=8$，故
+
+$$
+M(S_j^-)\ge2^j,
+\qquad M(S_j^+)\ge8^j.
+\tag{382.32}
+$$
+
+（382.25）以严格正的固定斜率使两个偏差分别趋于负无穷和正无穷，同时（382.32）使两个实际整数趋于无穷并最终超过 $5040$，证明（382.26）及统一常数的不存在。
+
+由（362.10）或定理 382.3 逐原子求和所给的 $O(\#D(S))$ 误差，因而不能在全部实际有限族上改成统一的 $O(1)$。这里的障碍仅针对（382.24）的实际原子成本近似；它没有估计 $\sigma(M)/M$ 的 Euler 因子或其有符号 Robin 尾项，因而不构成 Robin 不等式或 RH 的反例，也不把实际族的收费转移到任意整数。$\square$
+
 ## 追加锚（本行以下为增补区）
