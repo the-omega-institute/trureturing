@@ -62,8 +62,9 @@ statement and each lemma on prefixes of length at least 2048.
 - Computed: Lemma 7 of the paper is false as printed (the apwenian prefix 110011111 satisfies its right-hand
   condition but is not period-doubling); the paper's use of it is protected by its earlier prefix hypothesis, and the
   proof above does not use it.
-- Open: Conjecture 1 of the paper, the representation of every binary 2-automatic apwenian sequence by a directive
-  sequence over a finite alphabet.
+- Proved (formalized): Conjecture 1, the finite-alphabet level representation of every binary 2-automatic
+  apwenian sequence, in `D5/S3/Combinatorics/Apwenian/GuoHanGeneration.result`; see
+  [the complete representation problem](guo-han-binary-automatic-apwenian-level-generation.md).
 
 ## ASSUMED-UNVERIFIED
 
