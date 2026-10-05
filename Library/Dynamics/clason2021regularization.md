@@ -812,3 +812,119 @@ low and complementary-low signs on one common cofinal sequence,
 the full half-bound, Robin, RH and Lean certification remain
 unresolved. Unevaluated series constants and paper reviews do not
 supply numerical certificates or a runtime guarantee.
+
+
+## The actual normalized endpoint columns have a complex parameter strip
+
+Retain the original theta, small-window critical space, whole-critical-space
+minimal-domain and mixed-nullity premises, and negative-edge metric from
+(E1)–(E6), (NC1)–(NC6) and (J1)–(J5). The new interface is the actual
+normalized theta column in a complex endpoint parameter; ideal-profile
+analyticity alone does not supply it. This is conditional paper analysis,
+without a numerical constant, Lean certificate or originality claim.
+The theta series, derivative polynomials, analytic identity principle
+and global form comparison (WF2) are reused.
+
+Fix $0<\vartheta_0<\vartheta_1<\pi/4$ and take sufficiently large
+$R_*$ and $R_0$. On $\Re z>R_*$, $|\Im z|<\vartheta_1$, define
+
+$$
+\begin{gathered}
+t(z)=\tfrac12\operatorname{Log}\frac2{1+e^{-2z}},\qquad
+A(z)=\pi e^{-9t(z)/2}e^{5z/2},\\
+d_z=A(z)^{-1}Uw_{t(z)},\qquad
+p_z=G(\cdot-z)+G(-\cdot-z),\qquad
+a_0=\sqrt2\|G\|_2.
+\end{gathered}
+$$
+
+The principal logarithm is legitimate since
+$\Re(1+e^{-2z})>0$. For large $R_*$, $\Re t(z)>0$,
+$|\Im t(z)|<\pi/4$ and
+
+$$
+\Re(2e^{-2t(z)})-1=e^{-2\Re z}\cos(2\Im z)>0.
+$$
+
+Also $\Re(2e^{2t(z)})-1=\Re[4/(1+e^{-2z})]-1$ is uniformly
+positive. Thus $t(z)$ lies in the original domain $\mathcal D$ from
+(E1). No enlargement of that integrability domain or of $N_c$ is used.
+
+The normally convergent original theta series, its spatial derivative
+series and the positive real denominator $\Phi(x)$ make $d_z$
+$H^1$-valued holomorphic. Uniformly on $|\Im z|\le\vartheta_0$,
+
+$$
+\|d_z-p_z\|_{H^1}\le C_{\vartheta_0}e^{-\Re z}. \tag{A1}
+$$
+
+To pay this bound from the actual series, keep the positive-tail factor
+$b(x,t)$ used in (J1). The dominant term is exactly
+$G(x-z)b(x,t(z))$. The series at $x-t(z)$ has a uniformly positive
+exponential real part and gives the same
+$|\ell_\theta-1|+|\ell_\theta'|=O(e^{-2x})$ tail bound.
+The factor $\sqrt{1+e^{-x}}$ remains independent of $z$.
+After $y=x-\Re z$, the error majorants are $e^{-\Re z}$ times
+linear combinations of $e^{-y}G(y-i\Im z)$ and its first spatial
+derivative. Their $L^2$ bounds are uniform because
+$\cos(2\vartheta_0)>0$. The compact-region, centering, wrong-shift
+and wrong-half terms and their first spatial derivatives have order
+$O(e^{-5\Re z/2})$. Reflection pays the other spatial tail.
+These are differentiated original-series estimates, rather than a
+complex extension of a real asymptotic remainder. They hold on every
+fixed closed strip of width less than $\pi/4$, after increasing $R_*$.
+
+The ordinary complex $L^2$ norm is not a holomorphic normalization.
+Use the continuous complex bilinear scalar
+
+$$
+q(z)=\int_{\mathbb R}d_z(x)^2\,dx.
+$$
+
+It is holomorphic and agrees with $\|d_R\|_2^2$ for real $R$,
+because those actual columns are real. The single-profile integral
+$\int G(x-z)^2\,dx$ is holomorphic on $|\Im z|<\pi/4$ and
+constant there by its real translation identity and the identity
+theorem. The ideal cross integrand is
+
+$$
+G(x-z)G(-x-z)=e^{-5z}
+ \exp\{-\pi e^{-2z}\cosh(2x)\}.
+$$
+
+Its integral has modulus at most
+$C_{\vartheta_0}(1+\Re z)e^{-5\Re z}$: use
+$\cos(2\vartheta_0)>0$ and the two-half-line split from (NC1).
+Consequently $\int p_z^2=a_0^2+
+O((1+\Re z)e^{-5\Re z})$, and (A1) with the uniformly bounded
+profile norms gives
+
+$$
+|q(z)-a_0^2|\le C_{\vartheta_0}e^{-\Re z}.
+$$
+
+Apply the same estimate on a slightly larger closed strip still narrower
+than $\pi/4$, and increase $R_*$ so that
+$|q(z)-a_0^2|<a_0^2/2$ throughout the holomorphic domain.
+This disk avoids zero and the negative real axis. Its principal
+holomorphic square root $a(z)$ therefore exists and satisfies
+$a(R)=\|d_R\|_2$ on real $R$. Set
+
+$$
+n_z=d_z/a(z),\qquad E_z=p_z/a_0.
+$$
+
+These columns match the actual $n_R$ and $E_R$ from (J1) and obey
+
+$$
+\|n_z-E_z\|_{H^1}\le C_{\vartheta_0}e^{-\Re z},\qquad
+\sup_{\substack{\Re z>R_*\\|\Im z|\le\vartheta_0}}
+ \|n_z\|_{H^1}<\infty. \tag{A2}
+$$
+
+Membership in $N_c$ follows from the original (E1) domain and survives
+scalar normalization. The continuous embedding (WF2) transports this
+holomorphy and these bounds to the original minimal form
+$\mathcal F_c$; the whole-critical-domain premise is unchanged.
+This constructs an actual zero-free normalization bridge, not an
+assumption that the ordinary norm has an analytic extension.
