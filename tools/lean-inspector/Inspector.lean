@@ -300,10 +300,11 @@ def collectAxiomsShared (find : Name → Option ConstantInfo)
   strongConnect find state constant
   return ((← state.get).closure.find? constant).getD #[]
 
-def resolveIncludedDeclaration (env : Environment) (moduleName selector : String) : Option ConstantInfo := do
-  let moduleIdx ← env.getModuleIdx? moduleName.toName
-  let selected := env.header.moduleData[moduleIdx]!.constNames.filterMap fun name => do
-    let info ← env.find? name
+def resolveIncludedDeclaration (moduleData : String → Option ModuleData)
+    (find : Name → Option ConstantInfo) (moduleName selector : String) : Option ConstantInfo := do
+  let data ← moduleData moduleName
+  let selected := data.constNames.filterMap fun name => do
+    let info ← find name
     if name.getString! == selector && includeInStatement name info then some info else none
   if selected.size == 1 then selected[0]? else none
 
@@ -322,21 +323,21 @@ def runReportMeta (env : Environment) (phase : String) (action : MetaM α) : IO 
   return (result, state.env)
 
 /-- This checks one declared relationship, not the usefulness or classification of a module. -/
-def closedNegation (env : Environment) (input : ModuleInput) (utility : UtilityInput) : IO Bool := do
+def closedNegation (moduleData : String → Option ModuleData)
+    (find : Name → Option ConstantInfo) (input : ModuleInput) (utility : UtilityInput) : IO Bool := do
   if utility.resultModule != input.moduleName || utility.claimGid == utility.resultGid then return false
-  let some (.defnInfo claim) := resolveIncludedDeclaration env utility.claimModule utility.claimSelector
+  let some (.defnInfo claim) := resolveIncludedDeclaration moduleData find utility.claimModule utility.claimSelector
     | return false
-  let some (.thmInfo result) := resolveIncludedDeclaration env utility.resultModule utility.resultSelector
+  let some (.thmInfo result) := resolveIncludedDeclaration moduleData find utility.resultModule utility.resultSelector
     | return false
   if !claim.levelParams.isEmpty || !result.levelParams.isEmpty
       || !closedExpression claim.type || !closedExpression claim.value
       || !closedExpression result.type || !closedExpression result.value then return false
-  let check : MetaM Bool := Meta.withTransparency .all do
-    if !(← Meta.isDefEq claim.type (mkSort .zero)) then return false
-    let expected := mkApp (mkConst ``Not) (mkConst claim.name)
-    if !(← Meta.isDefEq result.type expected) then return false
-    return ← Meta.isDefEq (← Meta.inferType result.value) expected
-  return (← runReportMeta env s!"utility-refutation:{utility.resultModule}.{utility.resultSelector}" check).1
+  let start ← IO.getNumHeartbeats
+  if !(← RawArtifacts.equalTypes find start 0 claim.type (mkSort .zero)) then return false
+  -- The compiler already checked the theorem's proof against result.type.
+  -- The report computes only the relationship between the two compiled types.
+  RawArtifacts.equalTypes find start 0 result.type (mkApp (mkConst ``Not) (mkConst claim.name))
 
 elab "informationMaterialWriterProgram" : term => do
   let path := (System.FilePath.mk (← getFileName)).parent.getD "." / "materials.py"
@@ -441,7 +442,9 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     | throw <| IO.userError s!"module not loaded: {input.moduleName}"
   let environment := env.setExporting false
   inspectData env.header.moduleData[index]! (environment.find? ·)
-    (closedNegation environment input) cache writer materialCounter
+    (closedNegation (fun name => do
+      let idx ← env.getModuleIdx? name.toName
+      return env.header.moduleData[idx]!) (environment.find? ·) input) cache writer materialCounter
     utilities generatedNames informationTemplates input
 
 def hexDigit (value : Nat) : Char :=
@@ -650,30 +653,6 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
     try IO.FS.removeFile reportOutput catch _ => pure ()
     throw error
 
-private def resolveCompiledDeclaration (store : RawArtifacts.Store)
-    (moduleName selector : String) : Option ConstantInfo := do
-  let data ← store.modules.find? moduleName.toName
-  let selected := data.constNames.filterMap fun name => do
-    let info ← store.constants[name]?
-    if name.getString! == selector && includeInStatement name info then some info else none
-  if selected.size == 1 then selected[0]? else none
-
-private def compiledNegation (store : RawArtifacts.Store)
-    (input : ModuleInput) (utility : UtilityInput) : IO Bool := do
-  if utility.resultModule != input.moduleName || utility.claimGid == utility.resultGid then return false
-  let some (.defnInfo claim) := resolveCompiledDeclaration store utility.claimModule utility.claimSelector
-    | return false
-  let some (.thmInfo result) := resolveCompiledDeclaration store utility.resultModule utility.resultSelector
-    | return false
-  if !claim.levelParams.isEmpty || !result.levelParams.isEmpty
-      || !closedExpression claim.type || !closedExpression claim.value
-      || !closedExpression result.type || !closedExpression result.value then return false
-  let start ← IO.getNumHeartbeats
-  if !(← RawArtifacts.equalTypes store start 0 claim.type (mkSort .zero)) then return false
-  -- The compiled theorem already types its proof at result.type. Only the
-  -- external utility relationship remains to be computed from the raw types.
-  RawArtifacts.equalTypes store start 0 result.type (mkApp (mkConst ``Not) (mkConst claim.name))
-
 @[noinline] private unsafe def ownInputFact (name : Name) : IO (Bool × Array CompactedRegion) := do
   let (data, regions) ← RawArtifacts.readOwn name
   return (RawArtifacts.hasTypedInputs data, regions)
@@ -699,7 +678,8 @@ private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath
     for h : index in [:inputs.size] do
       let input := inputs[index]
       let data ← store.getModule input.moduleName.toName
-      let row ← inspectData data (store.constants[·]?) (compiledNegation store input)
+      let row ← inspectData data (store.constants[·]?) (closedNegation (fun name => store.modules.find? name.toName)
+          (store.constants[·]?) input)
         cache writer counter utilities #[] empty input
       if index > 0 then out.putStr ", "
       out.putStr (renderModule row)

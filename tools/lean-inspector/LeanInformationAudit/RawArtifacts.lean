@@ -27,11 +27,11 @@ private def checkHeader (path : System.FilePath) : IO Unit := do
         && (header.extract 40 80) == githash.toUTF8 do
       throw <| IO.userError s!"raw.compiler_identity:{path}"
 
-private def isPropCheap (constants : Std.HashMap Name ConstantInfo) (type : Expr) : Bool := Id.run do
+private def isPropCheap (find : Name → Option ConstantInfo) (type : Expr) : Bool := Id.run do
   let mut type := type
   while type.isForall do type := type.bindingBody!
   let .const name .. := type.getAppFn | return false
-  let some info := constants[name]? | return false
+  let some info := find name | return false
   let mut result := info.type
   for _ in [:type.getAppNumArgs] do
     unless result.isForall do return false
@@ -46,7 +46,7 @@ private def subsumes (constants : Std.HashMap Name ConstantInfo)
     match left, right with
     | .thmInfo a, .thmInfo b => a.all == b.all
     | .thmInfo a, .axiomInfo b => a.all == [b.name] && !b.isUnsafe
-    | .axiomInfo a, .axiomInfo b => a.isUnsafe == b.isUnsafe && isPropCheap constants a.type
+    | .axiomInfo a, .axiomInfo b => a.isUnsafe == b.isUnsafe && isPropCheap (constants[·]?) a.type
     | _, _ => false
 
 private unsafe def readOwnParts (name : Name) : IO (ModuleData × Array CompactedRegion) := do
@@ -108,8 +108,8 @@ def Store.getModule (store : Store) (name : Name) : IO ModuleData := do
     | throw <| IO.userError s!"raw.missing_module:{name}"
   return data
 
-def Store.getConstant (store : Store) (name : Name) : IO ConstantInfo := do
-  let some info := store.constants[name]?
+def getConstant (find : Name → Option ConstantInfo) (name : Name) : IO ConstantInfo := do
+  let some info := find name
     | throw <| IO.userError s!"raw.incomplete_closure:{name}"
   return info
 
@@ -123,14 +123,14 @@ private def checkReductionBudget (start depth : Nat) : IO Unit := do
   if limit != 0 && (← IO.getNumHeartbeats) - start > limit then
     throw <| IO.userError "raw.utility_maxHeartbeats"
 
-partial def whnf (store : Store) (start depth : Nat) (expression : Expr) : IO Expr := do
+partial def whnf (find : Name → Option ConstantInfo) (start depth : Nat) (expression : Expr) : IO Expr := do
   checkReductionBudget start depth
-  let reduce := whnf store start (depth + 1)
+  let reduce := whnf find start (depth + 1)
   match expression with
   | .mdata _ body => reduce body
   | .letE _ _ value body _ => reduce (body.instantiate1 value)
   | .const name levels =>
-    match ← store.getConstant name with
+    match ← getConstant find name with
     | .defnInfo info => reduce (info.value.instantiateLevelParams info.levelParams levels)
     | _ => return expression
   | .app function argument =>
@@ -139,26 +139,26 @@ partial def whnf (store : Store) (start depth : Nat) (expression : Expr) : IO Ex
       return ← reduce (body.instantiate1 argument)
     let result := mkApp function argument
     if let .const name _ := result.getAppFn then
-      if (← store.getConstant name) matches .recInfo _ then
+      if (← getConstant find name) matches .recInfo _ then
         throw <| IO.userError s!"raw.utility_unsupported_reduction:{name}"
     return result
   | .proj name index value =>
     let value ← reduce value
     let .const ctor _ := value.getAppFn
       | throw <| IO.userError s!"raw.utility_unsupported_projection:{name}"
-    let .ctorInfo info ← store.getConstant ctor
+    let .ctorInfo info ← getConstant find ctor
       | throw <| IO.userError s!"raw.utility_unsupported_projection:{name}"
     let some field := value.getAppArgs[info.numParams + index]?
       | throw <| IO.userError s!"raw.utility_incomplete_projection:{name}"
     return ← reduce field
   | _ => return expression
 
-partial def equalTypes (store : Store) (start depth : Nat) (left right : Expr) : IO Bool := do
+partial def equalTypes (find : Name → Option ConstantInfo) (start depth : Nat) (left right : Expr) : IO Bool := do
   checkReductionBudget start depth
-  let equal := equalTypes store start (depth + 1)
+  let equal := equalTypes find start (depth + 1)
   if left == right then return true
-  let left ← whnf store start (depth + 1) left
-  let right ← whnf store start (depth + 1) right
+  let left ← whnf find start (depth + 1) left
+  let right ← whnf find start (depth + 1) right
   if left == right then return true
   match left, right with
   | .app f a, .app g b =>
@@ -172,9 +172,9 @@ partial def equalTypes (store : Store) (start depth : Nat) (left right : Expr) :
     -- A proof's body and constructor parameters can be irrelevant to kernel
     -- equality. Do not classify an unequal proof term as unequal data.
     for name in [a, b] do
-      let info ← store.getConstant name
+      let info ← getConstant find name
       if (match info with | .thmInfo _ | .axiomInfo _ | .opaqueInfo _ => true | _ => false)
-          || isPropCheap store.constants info.type then
+          || isPropCheap find info.type then
         throw <| IO.userError s!"raw.utility_unsupported_proof_equality:{name}"
     return a == b && u.map Level.normalize == v.map Level.normalize
   | .bvar _, .bvar _ => throw <| IO.userError "raw.utility_unsupported_bound_equality"
