@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Lee, Lee and Kjos-Hanssen (arXiv:2609.40154) define the quantum Cerny complexity qc(w) of a binary word w as the least dimension d for which two quantum channels on d x d density matrices and a start state make w the unique shortest synchronizing word, and conjecture that the Thue-Morse prefix 01101001 has qc = 2. No qubit instance has this word as its unique shortest synchronizing word, so the conjecture fails; with the authors' upper bound qc(w) <= 3 the value is 3.
+Lee, Lee and Kjos-Hanssen (arXiv:2609.40154) define the quantum Cerny complexity qc(w) of a binary word w as the least dimension d for which two quantum channels on d x d density matrices and a start state make w the unique shortest synchronizing word, and conjecture that the Thue-Morse prefix 01101001 has qc = 2. No qubit instance has this word as its unique shortest synchronizing word, so the conjecture fails. Combined with the authors' upper bound qc(w) <= 3, which is proved in the paper and not formalized here, the value is 3.
 
 **Definition 1.1 (The channel of a word).**
 
@@ -102,7 +102,7 @@ Open problem 1 of the paper: the Thue-Morse prefix has quantum Cerny complexity 
 
 **Definition 1.9 (The linear map of a word).**
 
-$$\forall K, V : \operatorname{Type}\left(\right), ((\operatorname{Field}\left(K\right)) \land (\operatorname{Module}\left(K, V\right))) \Rightarrow (\forall f : \operatorname{Fin}\left(2\right) \to \operatorname{End}\left(K, V\right), (\operatorname{wordComp}\left(f, []\right) = \operatorname{id}) \land (\forall a : \operatorname{Fin}\left(2\right), \forall u : \operatorname{List}\left(\operatorname{Fin}\left(2\right)\right), \operatorname{wordComp}\left(f, a :: u\right) = \operatorname{wordComp}\left(f, u\right) \circ f\left(a\right)))$$
+$$\forall K, V : \operatorname{Type}\left(\right), (((\operatorname{Field}\left(K\right)) \land (\operatorname{AddCommGroup}\left(V\right))) \land (\operatorname{Module}\left(K, V\right))) \Rightarrow (\forall f : \operatorname{Fin}\left(2\right) \to \operatorname{End}\left(K, V\right), (\operatorname{wordComp}\left(f, []\right) = \operatorname{id}) \land (\forall a : \operatorname{Fin}\left(2\right), \forall u : \operatorname{List}\left(\operatorname{Fin}\left(2\right)\right), \operatorname{wordComp}\left(f, a :: u\right) = \operatorname{wordComp}\left(f, u\right) \circ f\left(a\right)))$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.wordComp` (`✓ std3`).
 
@@ -112,11 +112,11 @@ $$\forall K, V : \operatorname{Type}\left(\right), ((\operatorname{Field}\left(K
 
 *Commentary.*
 
-For two linear maps f(0), f(1) of a vector space V over a field K, the empty word gives the identity and the word a :: u gives the map of u after f(a).
+For two linear maps f(0), f(1) of a vector space V (an additive commutative group with a K-module structure) over a field K, the empty word gives the identity and the word a :: u gives the map of u after f(a).
 
 **Theorem 1.10 (A dimension lemma for the Thue-Morse prefix).**
 
-$$\forall K, V : \operatorname{Type}\left(\right), (((\operatorname{Field}\left(K\right)) \land (\operatorname{Module}\left(K, V\right))) \land (\operatorname{FiniteDimensional}\left(K, V\right))) \Rightarrow (\forall f : \operatorname{Fin}\left(2\right) \to \operatorname{End}\left(K, V\right), ((\operatorname{dim}\left(K, V\right) \le 3) \land (\operatorname{wordComp}\left(f, [0, 1, 1, 0, 1, 0, 0, 1]\right) = 0)) \Rightarrow (((\operatorname{wordComp}\left(f, [0, 1, 1, 0, 1]\right) = 0) \lor (\operatorname{wordComp}\left(f, [0, 1, 0, 0, 1]\right) = 0)) \lor ((\operatorname{wordComp}\left(f, [1, 1, 0, 1, 0, 0, 1]\right) = 0) \lor (\operatorname{wordComp}\left(f, [0, 1, 1, 0, 1, 0, 0]\right) = 0))))$$
+$$\forall K, V : \operatorname{Type}\left(\right), ((((\operatorname{Field}\left(K\right)) \land (\operatorname{AddCommGroup}\left(V\right))) \land (\operatorname{Module}\left(K, V\right))) \land (\operatorname{FiniteDimensional}\left(K, V\right))) \Rightarrow (\forall f : \operatorname{Fin}\left(2\right) \to \operatorname{End}\left(K, V\right), ((\operatorname{dim}\left(K, V\right) \le 3) \land (\operatorname{wordComp}\left(f, [0, 1, 1, 0, 1, 0, 0, 1]\right) = 0)) \Rightarrow (((\operatorname{wordComp}\left(f, [0, 1, 1, 0, 1]\right) = 0) \lor (\operatorname{wordComp}\left(f, [0, 1, 0, 0, 1]\right) = 0)) \lor ((\operatorname{wordComp}\left(f, [1, 1, 0, 1, 0, 0, 1]\right) = 0) \lor (\operatorname{wordComp}\left(f, [0, 1, 1, 0, 1, 0, 0]\right) = 0))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/QuantumCernyThueMorseRefutation.mortal_thueMorse` (`✓ std3`). ∎
 

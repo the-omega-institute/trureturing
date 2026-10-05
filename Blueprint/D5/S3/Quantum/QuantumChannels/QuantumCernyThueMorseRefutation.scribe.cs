@@ -11,7 +11,7 @@ internal sealed class QuantumCernyThueMorseRefutationDocument : IScribeDocumentD
         LibraryNoteRef.Create("D5/L/QuantumChannels/lee2026quantumcerny");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Lee, Lee and Kjos-Hanssen (arXiv:2609.40154) define the quantum Cerny complexity qc(w) of a binary word w as the least dimension d for which two quantum channels on d x d density matrices and a start state make w the unique shortest synchronizing word, and conjecture that the Thue-Morse prefix 01101001 has qc = 2. No qubit instance has this word as its unique shortest synchronizing word, so the conjecture fails; with the authors' upper bound qc(w) <= 3 the value is 3.",
+        "Lee, Lee and Kjos-Hanssen (arXiv:2609.40154) define the quantum Cerny complexity qc(w) of a binary word w as the least dimension d for which two quantum channels on d x d density matrices and a start state make w the unique shortest synchronizing word, and conjecture that the Thue-Morse prefix 01101001 has qc = 2. No qubit instance has this word as its unique shortest synchronizing word, so the conjecture fails. Combined with the authors' upper bound qc(w) <= 3, which is proved in the paper and not formalized here, the value is 3.",
         H("The Thue-Morse prefix 01101001 needs more than one qubit"),
         Blocks(
             Node("apply", "The channel of a word", ApplyFormula(),
@@ -39,7 +39,7 @@ internal sealed class QuantumCernyThueMorseRefutationDocument : IScribeDocumentD
                 "Open problem 1 of the paper: the Thue-Morse prefix has quantum Cerny complexity 2.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("comp", "The linear map of a word", CompFormula(),
-                "For two linear maps f(0), f(1) of a vector space V over a field K, the empty word gives the identity and the word a :: u gives the map of u after f(a).",
+                "For two linear maps f(0), f(1) of a vector space V (an additive commutative group with a K-module structure) over a field K, the empty word gives the identity and the word a :: u gives the map of u after f(a).",
                 "wordComp", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("lemma", "A dimension lemma for the Thue-Morse prefix", LemmaFormula(),
                 "Let P, Q and T be the maps of 01101, 01 and 001, so that the map of 01101001 is T after P, and suppose that this map vanishes while the maps of 01101, 01001, 1101001 and 0110100 are all nonzero. The image of P lies in the image of Q. If the two images had equal dimension they would coincide; then for each x there is y with Q x = P y, so T Q x = T P y = 0 and the map of 01001, which is T after Q, would vanish. Hence the image of Q has larger dimension than the image of P, which is at least 1 because P is nonzero. The map f(0) is not surjective, since otherwise the map of 1101001 would vanish: the map of 01101001 is the map of 1101001 after f(0). So the image of Q, the image of the image of f(0) under f(1), has dimension at most 2, hence exactly 2. The image of Q lies in the image of f(1); if they coincided, then for each x there would be y with f(1) x = Q y, and the map of 1101001, which is the map of 101001 after f(1), would send x to the map of 01101001 applied to y, which is 0. So f(1) has rank 3, it is injective, and the map of 0110100 vanishes because f(1) after it is the map of 01101001.",
@@ -192,7 +192,7 @@ internal sealed class QuantumCernyThueMorseRefutationDocument : IScribeDocumentD
         Formula empty = EqTo(Call("wordComp", f, Seq(OpenBracket, CloseBracket)), Named(F.Id("id")));
         Formula step = EqTo(Call("wordComp", f, Cons(x, u)),
             Seq(Call("wordComp", f, u), Sp, Circ, Sp, Of(f, x)));
-        Formula structure = And(Call("Field", k), Call("Module", k, v));
+        Formula structure = And(And(Call("Field", k), Call("AddCommGroup", v)), Call("Module", k, v));
         return Disp(All(Vars(k, v), Call("Type"), Imp(structure, All(f, maps,
             And(empty, All(x, Fin(D(2)), All(u, Words(), step)))))));
     }
@@ -205,7 +205,8 @@ internal sealed class QuantumCernyThueMorseRefutationDocument : IScribeDocumentD
         Formula hyp = And(LeTo(Call("dim", k, v), D(3)), zero(0, 1, 1, 0, 1, 0, 0, 1));
         Formula concl = Or(Or(zero(0, 1, 1, 0, 1), zero(0, 1, 0, 0, 1)),
             Or(zero(1, 1, 0, 1, 0, 0, 1), zero(0, 1, 1, 0, 1, 0, 0)));
-        Formula structure = And(And(Call("Field", k), Call("Module", k, v)), Call("FiniteDimensional", k, v));
+        Formula structure = And(And(And(Call("Field", k), Call("AddCommGroup", v)), Call("Module", k, v)),
+            Call("FiniteDimensional", k, v));
         return Disp(All(Vars(k, v), Call("Type"), Imp(structure, All(f, maps, Imp(hyp, concl)))));
     }
 }
