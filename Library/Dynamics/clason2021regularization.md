@@ -347,3 +347,89 @@ this escaped family. This interface determines a boundary of the
 bounded-window fit; it supplies no divergence result for the actual
 projected inverse, no original all-input half-bound, and no signs on
 a common cofinal sequence. Full Robin and RH remain unresolved.
+
+## A bounded synthesis from the actual endpoint translations
+
+This conditional paper interface retains the original $N$, $\nu$,
+unitary $U$, domain and common correction from (R1)–(R6), (E1)–(E6)
+and (G1)–(G4). The original theta tail supplies the additional
+quantitative step below. Gamma, convolution, Hilbert–Schmidt and
+compact-class convergence facts are reused. No new generic theorem,
+numerical producer, Lean certification or originality claim is made.
+
+For sufficiently large $R_0$ and $R\ge R_0$ put
+
+$$
+t(R)=\tfrac12\log\frac2{1+e^{-2R}},\qquad
+n_R=n_{t(R)},\qquad
+E_R(x)=\frac{G(x-R)+G(-x-R)}{\sqrt2\|G\|_2}.
+$$
+
+The original two-term theta tail improves (E2) to
+
+$$
+\|n_R-E_R\|_2\le C e^{-R}\qquad(R\ge R_0). \tag{NC1}
+$$
+
+To verify the rate, fix $A>t_c+1$. Write on the positive tail
+$\Phi(x)=4\pi^2e^{9x/2-\pi e^{2x}}\ell(x)$, where the supplied
+two-term expansion gives $\ell(x)=1+O(e^{-2x})$. Uniformly for
+$t_c/2\le t<t_c$ and $x\ge A$, the dominant physical ratio equals
+
+$$
+\frac{v_0(x)\Phi(x-t)}{2\Phi(x)}
+=\pi e^{-9t/2}e^{5x/2-(\pi/2)\eta_te^{2x}}
+ \frac{\sqrt{1+e^{-x}}\ell(x-t)}{\sqrt{\ell(x)}}.
+$$
+
+The last factor is $1+O(e^{-x})$. After $x=R+y$ and division by
+$A_{t(R)}$, its error is at most $Ce^{-R}G(y)e^{-y}$, whose
+$L^2(dy)$ norm is finite. The compact-region, centering and
+wrong-shift terms in (E1) have divided norm $O(e^{-5R/2})$; the
+wrong-half ideal profile has that bound as well. Evenness pays the
+other spatial tail. The overlap integrand of the two ideal profiles is
+
+$$
+e^{-5R}\exp\{-\tfrac\pi2(e^{2(x-R)}+e^{-2(x+R)})\}.
+$$
+
+Its integral is $O((1+R)e^{-5R})$: on $x\ge0$ drop the second
+positive exponential and split $x-R$ at zero, then reflect.
+Normalization therefore preserves the $O(e^{-R})$ error. This uses
+the actual original-series remainder, without differentiating an
+asymptotic or inferring a rate from (E2) alone.
+
+For compactly supported coefficients in $L^2((R_0,\infty),dR)$
+define $S_nh=\int_{R_0}^\infty n_Rh(R)dR$, and define $S_E$ with
+the $E_R$ columns. Extending $h$ by zero, Young's convolution bound
+and reflection make $S_E$ bounded. Equation (NC1) gives
+
+$$
+\|S_n-S_E\|_{\rm HS}^2
+\le\int_{R_0}^\infty C^2e^{-2R}dR
+=\tfrac12C^2e^{-2R_0}. \tag{NC2}
+$$
+
+Thus $S_n$ extends boundedly to all such $L^2$ coefficients. Finite
+coefficient truncations have range in the closed $N_c$, so its full
+range is in $N_c$. The infinite integral means this bounded extension;
+pointwise absolute integrability for every coefficient is not assumed.
+No lower frame bound or completeness for all of $N_c$ is asserted.
+
+Use the unitary angular-frequency convention
+$\widehat f(\xi)=(2\pi)^{-1/2}\int f(x)e^{-i\xi x}dx$.
+The Euler substitution $v=(\pi/2)e^{2y}$ gives
+
+$$
+\widehat G(\xi)=\frac1{2\sqrt{2\pi}}
+ (\pi/2)^{-(5/4-i\xi/2)}\Gamma(5/4-i\xi/2). \tag{NC3}
+$$
+
+The classical Gamma nonvanishing theorem gives a positive minimum
+of $|\widehat G|$ on each fixed compact band. Define the bounded
+coefficient map $W_\Lambda$ on sharp-low inputs by
+$\widehat{W_\Lambda p}=\widehat p/(\sqrt{2\pi}\widehat G)$.
+Then $G*(W_\Lambda p)=p$. The coefficient map need not preserve
+evenness, and its norm is not asserted uniformly bounded as
+$\Lambda$ grows. These are applications of the existing Gamma and
+Fourier tools, not a new Wiener theorem.
