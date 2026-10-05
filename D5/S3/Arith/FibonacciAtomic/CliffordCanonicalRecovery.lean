@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.FibonacciAtomic.CliffordLeafOrbit
 import D5.S3.Arith.FibonacciAtomic.GlobalGcdSampling
+import D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra
 import Mathlib.Order.SuccPred.Archimedean
 
 set_option autoImplicit false
@@ -19,6 +20,10 @@ open CliffordLeafOrbit (Q E X Factors)
 open GenealogicalFiberTransport (Source substitution composition)
 open GraftAffineClosure (atomicBlock residue step quantity)
 
+local notation "κ" d:max j:max =>
+  D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry d
+    (residue d (atomicBlock j))
+
 local notation "C" => CliffordAlgebra Q
 local notation "A" => CliffordAlgebra.ι Q (1, 0)
 local notation "α" => (FreeMagma.of true : Source)
@@ -26,11 +31,8 @@ local notation "α" => (FreeMagma.of true : Source)
 /-- Standard low representatives of the actual canonical composition. -/
 def low (d j : ℕ) : ℕ × ℕ := ((atomicBlock j).1 % d, (atomicBlock j).2 % d)
 
-/-- The integer carry of the next Fibonacci composition step. -/
-def carry (d j : ℕ) : ℕ := ((low d j).1 + (low d j).2) / d
-
 /-- The next-step carry vector, reduced modulo the output modulus. -/
-def K (d e j : ℕ) : ZMod e × ZMod e := (0, carry d j)
+def K (d e j : ℕ) : ZMod e × ZMod e := (0, κ d j)
 
 /-- The current high representatives, reduced modulo the output modulus. -/
 def H (d e j : ℕ) : ZMod e × ZMod e :=
@@ -44,7 +46,7 @@ theorem result :
     (∀ D : ℕ, 1 ≤ D → (Factors (fun j => residue D (atomicBlock j)) ↔ D ∣ 4)) ∧
     (∀ d e : ℕ, 1 ≤ d → 2 ≤ e → (Factors (K d e) ↔ d ∣ 4)) ∧
     (∀ d : ℕ, 1 ≤ d → Factors (K d 1) ∧ ∀ j, K d 1 j = 0) ∧
-    (∀ e : ℕ, 1 ≤ e → Factors (K 1 e) ∧ ∀ j, low 1 j = 0 ∧ carry 1 j = 0 ∧ K 1 e j = 0) ∧
+    (∀ e : ℕ, 1 ≤ e → Factors (K 1 e) ∧ ∀ j, low 1 j = 0 ∧ κ 1 j = 0 ∧ K 1 e j = 0) ∧
     (∀ d e : ℕ, 1 ≤ d → 1 ≤ e → (Factors (L d e) ↔ d * e ∣ 4)) ∧
     (∀ d e : ℕ, 1 ≤ d → 1 ≤ e → d ∣ 4 → (Factors (H d e) ↔ d * e ∣ 4)) ∧
     (∀ e : ℕ, 1 ≤ e → (Factors (L 1 e) ↔ e ∣ 4)) ∧
@@ -68,6 +70,11 @@ theorem result :
         ∀ j, j < 6 → f ⟨X j, ⟨j, rfl⟩⟩ = g j)) := by
   classical
   have criterion := CliffordLeafOrbit.result.{0}.2.2.2.1
+  have carry_low (d j : ℕ) :
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry d
+        (residue d (atomicBlock j)) = ((low d j).1 + (low d j).2) / d := by
+    simp only [D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry,
+      residue, ZMod.val_natCast, low]
   have block_succ (j : ℕ) : atomicBlock (j + 1) = step (atomicBlock j) :=
     Function.iterate_succ_apply' step j (1, 0)
   have block_six (j : ℕ) : atomicBlock (j + 6) =
@@ -154,25 +161,27 @@ theorem result :
     rw [criterion]
     constructor
     · intro hk
-      have cbound (j : ℕ) : carry d j < 2 := by
+      have cbound (j : ℕ) : κ d j < 2 := by
         have h1 := Nat.mod_lt (atomicBlock j).1 (by omega : 0 < d)
         have h2 := Nat.mod_lt (atomicBlock j).2 (by omega : 0 < d)
-        dsimp [carry, low]
+        rw [carry_low]
+        dsimp only [low]
         apply (Nat.div_lt_iff_lt_mul (by omega : 0 < d)).mpr
         omega
-      have cp (j : ℕ) : carry d (j + 6) = carry d j := by
+      have cp (j : ℕ) : κ d (j + 6) = κ d j := by
         have h := congrArg Prod.snd (hk j)
         have h' := (ZMod.natCast_eq_natCast_iff' _ _ _).mp h
         rw [Nat.mod_eq_of_lt (lt_of_lt_of_le (cbound _) he),
           Nat.mod_eq_of_lt (lt_of_lt_of_le (cbound _) he)] at h'
         exact h'
       have next (j : ℕ) : (low d (j + 1)).1 = (low d j).2 ∧
-          (low d (j + 1)).2 + d * carry d j = (low d j).1 + (low d j).2 := by
+          (low d (j + 1)).2 + d * κ d j = (low d j).1 + (low d j).2 := by
         rw [low, block_succ]
         simp only [step]
         constructor
         · rfl
-        · dsimp [low, carry]
+        · rw [carry_low]
+          dsimp only [low]
           rw [Nat.add_mod]
           exact Nat.mod_add_div _ _
       let a : ℕ → ℤ := fun j => ((low d (j + 6)).2 : ℤ) - (low d j).2
@@ -213,8 +222,8 @@ theorem result :
       norm_num at hg
       exact hg
     · intro hdiv j
-      unfold K carry
-      rw [low_period d hdiv]
+      unfold K
+      rw [carry_low, carry_low, low_period d hdiv]
   have digits (d e n m : ℕ) :
       n % d = m % d ∧ (n / d : ZMod e) = (m / d : ZMod e) ↔
         (n : ZMod (d * e)) = (m : ZMod (d * e)) := by
@@ -259,8 +268,8 @@ theorem result :
     have zero (j : ℕ) : K d 1 j = 0 := by ext <;> exact Subsingleton.elim _ _
     exact ⟨(criterion _ _).mpr (fun j => (zero _).trans (zero _).symm), zero⟩
   · intro e _
-    have zero (j : ℕ) : low 1 j = 0 ∧ carry 1 j = 0 ∧ K 1 e j = 0 := by
-      simp only [low, carry, K, Nat.mod_one, Nat.zero_add, Nat.zero_div,
+    have zero (j : ℕ) : low 1 j = 0 ∧ κ 1 j = 0 ∧ K 1 e j = 0 := by
+      simp only [K, carry_low, low, Nat.mod_one, Nat.zero_add, Nat.zero_div,
         Nat.cast_zero, Prod.zero_eq_mk, and_self]
     exact ⟨(criterion _ _).mpr (fun j => (zero _).2.2.trans (zero _).2.2.symm), zero⟩
   · intro e he
@@ -270,15 +279,19 @@ theorem result :
       rfl
     refine ⟨rfl, x6, rfl, rfl, rfl, rfl, rfl, rfl, ?_, rfl, rfl, ?_, ?_, ?_, ?_⟩
     · intro e he
-      refine ⟨by norm_num [K, carry, low, atomicBlock, Function.iterate_succ_apply', step],
-        by norm_num [K, carry, low, atomicBlock, Function.iterate_succ_apply', step], ?_⟩
+      refine ⟨by norm_num [K, D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry,
+          residue, ZMod.val_natCast, ZMod.val_ofNat, ZMod.val_one_eq_one_mod, low, atomicBlock, Function.iterate_succ_apply', step],
+        by norm_num [K, D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry,
+          residue, ZMod.val_natCast, ZMod.val_ofNat, ZMod.val_one_eq_one_mod, low, atomicBlock, Function.iterate_succ_apply', step], ?_⟩
       intro h
       have h01 := congrArg Prod.snd h
-      norm_num [K, carry, low, atomicBlock, Function.iterate_succ_apply', step] at h01
+      norm_num [K, D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry,
+          residue, ZMod.val_natCast, ZMod.val_ofNat, ZMod.val_one_eq_one_mod, low, atomicBlock, Function.iterate_succ_apply', step] at h01
       have hd := (ZMod.natCast_eq_zero_iff 1 e).mp (by simpa using h01.symm)
       have hle := Nat.le_of_dvd (by decide : 0 < 1) hd
       omega
-    all_goals norm_num [K, H, carry, low, atomicBlock, Function.iterate_succ_apply',
+    all_goals norm_num [K, H, D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry,
+      residue, ZMod.val_natCast, ZMod.val_ofNat, ZMod.val_one_eq_one_mod, low, atomicBlock, Function.iterate_succ_apply',
       step, Prod.zero_eq_mk]
     all_goals decide
 

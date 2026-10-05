@@ -7,6 +7,7 @@
    digest: Exact six-phase fibers of the actual Clifford leaf product. -/
 
 import D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport
+import D5.S3.Arith.FibonacciAtomic.SourceTransportCentralizer
 import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Data.Nat.Periodic
@@ -87,18 +88,9 @@ theorem result :
     abel
   have recurrence (j : ℕ) : X (j + 2) = X (j + 1) * X j := by
     have tree (n : ℕ) : T (n + 2) = FreeMagma.mul (T (n + 1)) (T n) := by
-      induction n with
-      | zero => rfl
-      | succ n ih =>
-        change substitution^[n + 1 + 2] α = _
-        rw [show n + 1 + 2 = (n + 2) + 1 by omega, Function.iterate_succ_apply']
-        change substitution (T (n + 2)) = _
-        conv_lhs => rw [ih]
-        change substitution (T (n + 1)) * substitution (T n) = _
-        dsimp only
-        rw [Function.iterate_succ_apply' substitution (n + 1) α,
-          Function.iterate_succ_apply' substitution n α]
-        rfl
+      have h := (SourceTransportCentralizer.source_transport_centralizer.1 (T n)).mpr
+        ⟨n, rfl⟩
+      simpa only [Function.iterate_succ_apply'] using h
     rw [X, tree]
     exact E.map_mul _ _
   have phase_rec (i : Fin 6) :
@@ -170,12 +162,12 @@ theorem result :
       exact Subtype.ext (periodic j)
     · intro hg
       have reduce := Function.Periodic.map_mod_nat (show Function.Periodic g 6 from hg)
-      refine ⟨fun x => g ((Classical.choose x.property) % 6), ?_⟩
-      intro j
-      have h := (fibers (Classical.choose (show X j ∈ Set.range X from ⟨j, rfl⟩)) j).mp
-        (Classical.choose_spec (show X j ∈ Set.range X from ⟨j, rfl⟩))
-      change g _ = g j
-      rw [h, reduce j]
+      letI : Nonempty Y := ⟨g 0⟩
+      obtain ⟨f, hf⟩ := (Function.factorsThrough_iff (f := X) g).mp (by
+        intro j k h
+        have hmod := (fibers j k).mp h
+        rw [← reduce j, ← reduce k, hmod])
+      exact ⟨fun x => f x.val, fun j => (congrFun hf j).symm⟩
   have collision : E (.mul α α) = 1 ∧ E (.mul (.mul α α) (.mul α α)) = 1 ∧
       E (substitution (.mul α α)) = -1 ∧
       E (substitution (.mul (.mul α α) (.mul α α))) = 1 := by

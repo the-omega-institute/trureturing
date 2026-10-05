@@ -12,10 +12,10 @@ internal sealed class CliffordCanonicalRecoveryDocument : IScribeDocumentDefinit
         H("Sharp Clifford Canonical Recovery"), Blocks(
             Paragraph(Text("Use the Clifford algebra and leaf observation E from CliffordLeafOrbit. The canonical source is T(j)=rho^j(alpha), "
                 + "its observation is X(j), and its composition is z(j)=M^j(1,0), with M(a,b)=(b,a+b). "
-                + "A factorizing reader is a function on the range of X; it receives the algebra element alone.")),
+                + "A factorizing reader is a function on the range of X; it receives the algebra element alone. The residueTarget(D) maps j to z(j) modulo D.")),
             Def("low", "Standard low representatives", "For positive d, low(d,j) is the pair of standard representatives of z(j) modulo d."),
-            Def("carry", "Next-step integer carry", "carry(d,j) is floor((low(d,j)[0]+low(d,j)[1])/d). It is zero or one for positive d."),
-            Def("K", "Next-step carry output", "K(d,e,j)=(0,carry(d,j)) modulo e."),
+            Paragraph(Text("The integer carry kappa(d,j) is floor((low(d,j)[0]+low(d,j)[1])/d), using the standard residue-pair carry. It is zero or one for positive d.")),
+            Def("K", "Next-step carry output", "K(d,e,j)=(0,kappa(d,j)) modulo e."),
             Def("H", "Current high output", "H(d,e,j) is the pair of quotients of the coordinates of z(j) by d, reduced modulo e."),
             Def("L", "Complete current target", "L(d,e,j) pairs low(d,j) with H(d,e,j). Both components come from the same source."),
             Describe.Lean(DescribeId.Create("clifford-canonical-recovery-result"), DeclarationHandle.Create(Prefix + "result"),
@@ -65,7 +65,7 @@ internal sealed class CliffordCanonicalRecoveryDocument : IScribeDocumentDefinit
         Formula carry=All("d,e",Imp(And(Positive(d),Seq(D(2),Leq,e)),IffOf(Call("Factors",Call("K",d,e)),Divides(d,D(4)))));
         Formula eone=All("d",Imp(Positive(d),And(Call("Factors",Call("K",d,D(1))),All("j",EqOf(Call("K",d,D(1),j),D(0))))));
         Formula done=All("e",Imp(Positive(e),And(Call("Factors",Call("K",D(1),e)),All("j",And(EqOf(Call("low",D(1),j),D(0)),
-            EqOf(Call("carry",D(1),j),D(0)),EqOf(Call("K",D(1),e,j),D(0)))))));
+            EqOf(Call("kappa",D(1),j),D(0)),EqOf(Call("K",D(1),e,j),D(0)))))));
         Formula complete=All("d,e",Imp(And(Positive(d),Positive(e)),IffOf(Call("Factors",Call("L",d,e)),Divides(Seq(d,e),D(4)))));
         Formula high=All("d,e",Imp(And(Positive(d),Positive(e),Divides(d,D(4))),IffOf(Call("Factors",Call("H",d,e)),Divides(Seq(d,e),D(4)))));
         Formula doneComplete=All("e",Imp(Positive(e),IffOf(Call("Factors",Call("L",D(1),e)),Divides(e,D(4)))));
