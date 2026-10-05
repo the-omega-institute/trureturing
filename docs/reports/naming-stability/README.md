@@ -1,6 +1,6 @@
 # 圆周代表选择的低预算稳定性实验
 
-本目录保存[命名的关系与稳定性](../../develop/theory/NAMING_RELATIONS_AND_STABILITY.md)第 5–6 章的独立实验程序与结果。目标是检验低预算精确误差候选，不把更大的玩具枚举当作通用理论成果。
+本目录保存[命名的关系与稳定性](../../develop/theory/NAMING_RELATIONS_AND_STABILITY.md)第 5–6 章的实验说明与结果。目标是检验低预算精确误差候选，不把更大的玩具枚举当作通用理论成果。
 
 固定圆周双覆盖、两侧内禀弧长度量、均匀归一化测度与平方复弦损失。令 $a=2L\in[0,1)$。候选误差为
 
@@ -8,7 +8,7 @@ $$
 2-\frac{4a\cos(\pi a/2)}{\pi(1-a^2)}.
 $$
 
-[程序](density_check.py)只依赖 Python 标准库，[数据](result.json)由默认运行产生。复现命令：`python3 docs/reports/naming-stability/density_check.py`。`--max-cells` 可取 512、2048、8192，默认 8192；程序拒绝关闭核对断言的 `-O` 模式。
+[程序](../../../experiments/naming-stability/density_check.py)只依赖 Python 标准库，[数据](result.json)由默认运行产生。复现命令：`python3 experiments/naming-stability/density_check.py`。`--max-cells` 可取 512、2048、8192，默认 8192；程序拒绝关闭核对断言的 `-O` 模式。
 
 程序对七个预算逐一运行三种网格，使用有理数验证密度上下界及总质量，用浮点目标值分别核对密度原始解、阈值对偶证书和实际周期三角映射的输入积分。三角映射另检查包含圆周接缝的有限距离对。对圆周映射全部可行类的归约与全局最优性，依赖理论卷的普通数学推导，尚未完成 Lean 核验。
 
