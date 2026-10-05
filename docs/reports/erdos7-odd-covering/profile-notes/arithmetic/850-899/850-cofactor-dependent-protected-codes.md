@@ -1968,7 +1968,7 @@ $$
 \tag{CD58}
 $$
 
-At $q=41$, each component requires at least 27 distinct second
+At $q=37$, each component requires at least 23 distinct second
 digits in each row; at $q=17$ it requires at least three per row.
 These assertions do not place any particular numerical pure
 $q^2$, $3q^2$ or $9q^2$ original in every component, align their
@@ -2150,31 +2150,148 @@ makes the deleted set nonempty; the same class count therefore
 has smaller total modulus, contradicting global minimality. This
 proves CD62 with the whole common-source liability retained.
 
-For the still-permitted squared primes above 13, CD62 gives
-
-| Actual squared prime q | Required private residues modulo 9 |
-| ---: | ---: |
-| 17, 19, 23 | $s_h\ge3$ |
-| 29, 31 | $s_h\ge4$ |
-| 37, 41 | $s_h=5$ |
-
-At 37 and 41, every one of the five guard-safe residues occurs
-in the donor's private projection. The witnesses for different
-residues may have different coordinates modulo W. These
-constraints do not provide one cofactor coordinate common to all
-five residues, align the phases of different pure originals, or
-exclude the entire ternary-height-two branch.
+CD62 requires at least three private words for every squared
+prime above 13. The two-output construction in CD65--68 gives
+the stronger projection requirements and prime-height cutoff.
+Neither a projection cardinality nor its equality with the five
+guard-safe words provides one cofactor coordinate common to
+those words.
 
 A scoped transient Lean application verifies CD61--64, including
 the canonical prime-prefix liability specialization, actual private
 projection, finite alphabet, same-source CRT transport, fixed owner
 tags, unchanged class count and strict sum comparison. The actual
-height cap is derived within the final application; the three
-numerical table rows are checked in the same compilation. All
+height cap is derived within the final application, and its
+scalar consequences are checked in the same compilation. All
 thirty-two axiom-closure reports use only `propext`,
 `Classical.choice` and `Quot.sound`, with no errors or `sorryAx`.
 The application adds no canonical binding declaration, freeze or
 coverage record.
+
+## A second actual deleted class supplies a second short output
+
+Keep the prime-q and actual-family hypotheses of CD61. The
+private-projection constraint strengthens to
+
+$$
+\boxed{q<9s_h-4,\qquad 1\le s_h\le5.}
+\tag{CD65}
+$$
+
+The second saving uses an actual deleted class whose new output
+can discard its cofactor. It does not require an aligned pure
+$3q^2$ donor, a common cofactor point across private words, or an
+empty top-row cell.
+
+Let h be the actual pure $q^2$ original, c its first q-digit,
+and D the height-two originals with first digit c. There is an
+original in $D\setminus\{h\}$. Indeed, start with an actual
+private point of h and replace only its second q-digit by a
+different digit, preserving 9W and its first digit. The exact
+hole identity CD63 keeps the new point in E. Its actual covering
+owner belongs to D and cannot be h.
+
+Choose $h_1\in D\setminus\{h\}$, giving priority to the original
+of numerical modulus $3q^2$ if that original belongs to D.
+Numerical distinctness makes this preferred original unique.
+Let b and $b_1$ be the actual second digits of h and $h_1$.
+They are different: otherwise the entire original class of
+$h_1$ would be contained in h, contradicting count minimality.
+These are all statements about the same original family.
+
+Replace the normal output for $h_1$ by modulus $27q$. For every
+other member of D use the established row labels. The complete
+assignment is
+
+$$
+M_i=
+\begin{cases}
+27q,&i=h_1,\\
+27m_i,&i\ne h_1,\ a_i=0,\\
+27qm_i,&i\ne h_1,\ a_i=1,\\
+81m_i,&i\ne h_1,\ a_i=2.
+\end{cases}
+\tag{CD66}
+$$
+
+The only normal output that could equal $27q$ is the row-one
+unit-cofactor output, belonging to the actual numerical $3q^2$.
+The priority rule selects it whenever it is in D, so this slot
+cannot collide with another output. Coprimality separates it
+from the other two row signatures. Every new label has ternary
+height at least three, making it fresh against all retained
+originals. The ordinary outputs remain pairwise distinct.
+
+The selected $h_1$ is a proper numerical multiple of $q^2$,
+so its old modulus is at least $2q^2>27q$ for $q\ge15$.
+Thus its modified output is strictly cheaper even when its
+original row is zero or two. All other outputs keep their
+previous strict savings. The new family has one output for
+each deleted original.
+
+Suppose $9s_h-4\le q$. There are $3s_h\ge3$ residues modulo
+27 above $\Lambda_h$, so select two distinct ones, $z,z_1$.
+Map the three modulo-81 lifts of z to b, and the three lifts
+of $z_1$ to $b_1$. Inject the other $9s_h-6$ fine words into
+the remaining $q-2$ digits. The total alphabet is
+
+$$
+9s_h-6+2=9s_h-4.
+\tag{CD67}
+$$
+
+Pay the first short leaf directly by h's new modulus 27 and
+residue z. Pay the second directly by the new modulus $27q$,
+with residue $z_1$ modulo 27 and c modulo q. This second output
+covers the whole cofactor fiber. Its residue need not preserve
+$h_1$'s former ternary or cofactor phase: the new arithmetic
+progression pays the entire selected target leaf directly.
+
+On any other code fiber the inserted digit is neither b nor
+$b_1$. The actual CRT source, preserving the target's full 9W
+coordinate and first q-digit, remains in the exact hole E.
+Its original owner belongs to D and is neither h nor $h_1$.
+The unique modulo-81 decoder and the original cofactor phase
+supply that owner's ordinary CD66 output. In particular,
+$h_1$ has no continuing inverse left unpaid. Retained originals
+cover outside E. This gives a whole cover with the same number
+of distinct odd nonunit moduli and a strictly smaller sum,
+proving CD65.
+
+Consequently the same actual-family assumptions give
+
+$$
+\boxed{q\ge41\quad\Longrightarrow\quad j_i\le1
+       \text{ for every original }i.}
+\tag{CD68}
+$$
+
+For an actual squared prime above 13, the remaining necessary
+private-projection values are
+
+| Actual squared prime q | Required private residues modulo 9 |
+| ---: | ---: |
+| 17, 19 | $s_h\ge3$ |
+| 23, 29, 31 | $s_h\ge4$ |
+| 37 | $s_h=5$ |
+
+Thus the second output also strengthens the bound at 23.
+The five words at 37 may still have different cofactor witnesses.
+No exclusion of all squared primes, of the whole ternary-height-two
+branch, or of unrestricted odd distinct covering follows here.
+
+A scoped transient Lean application verifies CD65--68, including
+the second original's existence and priority choice, two short
+code fibers, full actual-hole transport, modified numerical
+labels, whole-family coverage and same-count strict sum descent.
+The final application derives the height cap and, for CD68, the
+actual pure-square donor; neither a second donor nor a coding
+pool is an extra hypothesis. Its three scalar table checks also
+pass. All thirty-nine axiom-closure reports use only `propext`,
+`Classical.choice` and `Quot.sound`, with no errors or `sorryAx`.
+This reuses the existing source and comparison interfaces and
+introduces no canonical binding declaration, freeze or coverage
+record.
 
 ### Verification scope and remaining inequality
 
