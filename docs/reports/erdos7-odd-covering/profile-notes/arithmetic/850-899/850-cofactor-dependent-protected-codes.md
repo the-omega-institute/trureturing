@@ -4836,6 +4836,172 @@ case, multiple exceptional primes, greater ternary height or
 unrestricted odd distinct covers. In particular, no reduction of
 every hypothetical odd cover to this source class is assumed.
 
+## Three axial high labels exclude the shared-five palette {7,11}
+
+Fix one globally count-minimal, then same-count modulus-sum-minimal
+finite odd distinct nonunit whole cover F. Assume actual pure3 and
+pure9, ternary height at most two, and the complete private-root set
+$R_Q=\{5\}$ in the actual least common period Q. At the root c of
+the actual pure9 original, suppose the ordinary concentrated prime
+palette is exactly $\{7,11\}$. All other prime heights are arbitrary
+finite heights. The competing covers in both minimality conditions
+remain unrestricted.
+
+**CD163.** No whole cover satisfies these conditions.
+
+The proof retains the actual residues and uses the literal
+opposite-root singleton elimination of CD148–CD150. The key
+additional constraint is the joint union of the three numerical
+labels 45, 63 and 99. They cannot independently occupy the same
+safe modulo9 word at their separate maximal capacities.
+
+For each $p\in\{5,7,11\}$, remove from the uniform coordinate
+$\mathbb Z/p^{v_p(Q)}\mathbb Z$ every prefix of an actual pure
+$p^a$ original and every prefix of an actual $3p^a$ original at c.
+Let $Z_p$ be the complement and $\rho_p$ its ambient density.
+Only actual guards at their actual roots are removed. Each tower
+has total measure at most $\sum_{a\ge1}p^{-a}$, so
+
+$$
+ \rho_p\ge\frac{p-3}{p-1}>0,\qquad
+ \rho_5\ge\frac12,\quad
+ \rho_7\ge\frac23,\quad
+ \rho_{11}\ge\frac45.
+ \tag{CD164}
+$$
+
+Choose the three coordinates independently and uniformly on their
+respective $Z_p$. Choose independently one of the two complete
+modulo9 words above c that avoid the actual pure9 residue. Fix
+the opposite-color prime coordinates at their established singleton
+values. Denote this one product law by $\mu$. Every sample is an
+actual CRT point and is covered by an original of F. After literal
+opposite-color elimination, each event of positive measure has
+numerical modulus $3^j5^e7^a11^b$, with $0\le j\le2$.
+
+For positive exponents use the coordinate bounds
+
+$$
+ f_5(e)=2\,5^{-e},\qquad
+ f_7(a)=\frac32\,7^{-a},\qquad
+ f_{11}(b)=\frac54\,11^{-b},
+ \quad f_p(0)=1.
+ \tag{CD165}
+$$
+
+Their positive-exponent sums are respectively $1/2,1/4,1/8$.
+They bound each actual prefix under the same chosen law;
+they are not assertions that any event attains its bound.
+
+Let $L_0$ be the complete actual five-free low union, consisting
+of the surviving row-zero and row-one events. The single-axis
+low events were removed by the actual guards. Every remaining
+member of $L_0$ uses both 7 and 11, and $L_0$ depends only on
+those ordinary coordinates. With $\ell=\mu(L_0)$ and
+$W=(1+1/4)(1+1/8)-1=13/32$, numerical distinctness gives
+
+$$
+ 0\le\ell\le\frac1{16},\qquad
+ \mu(L_5)\le W,\qquad
+ \sum_{\substack{e,a,b\ge0\\a+b\ge1}}
+       \frac12 f_5(e)f_7(a)f_{11}(b)
+       =\frac{39}{128}.
+ \tag{CD166}
+$$
+
+Here $L_5$ is the remaining actual low union. Set
+$U=(L_0\cup L_5)^c$, the complement of the complete low union.
+Every point of U must be covered by a high event. For the unit
+high label $9\cdot5^e$, independence from $L_0$ and CD164 yield
+
+$$
+ \mu(A_{9\cdot5^e}\cap U)
+ \le5^{-e}(1-\ell).
+ \tag{CD167}
+$$
+
+Consequently the individual45 allowance is $(1-\ell)/5$,
+and all other unit high labels together have allowance at most
+$(1-\ell)/20$. An absent or inactive label contributes zero.
+The infinite geometric sums merely enlarge the finite numerical
+inventory; each actual numerical label is counted once.
+Whole coverage now implies
+
+$$
+ \begin{aligned}
+ 1&\le\ell+W+\frac{39}{128}
+          +\frac{1-\ell}{5}+\frac{1-\ell}{20}\\
+  &=\frac{123}{128}+\frac34\ell
+   \le\frac{129}{128}.
+ \end{aligned}
+ \tag{CD168}
+$$
+
+If45 has zero contribution, its omission saves at least
+$(1-\ell)/5\ge3/16>1/128$, contradicting CD168.
+The ordinary-bearing high inventory contains one63 allowance
+$3/28$ and one99 allowance $5/88$. Omitting either also saves
+more than $1/128$. Thus all three labels actually occur and
+have positive selected measure. Each must occupy one of the
+two safe complete words above c. This argument derives their
+existence and root ownership from the inventory itself.
+
+Let $x_5,x_7,x_{11}$ be their actual first-prime cylinder
+probabilities. Then
+
+$$
+ 0<x_5\le\frac25,\qquad
+ 0<x_7\le\frac3{14},\qquad
+ 0<x_{11}\le\frac5{44}.
+ \tag{CD169}
+$$
+
+If two of these labels use the same safe word, their complete
+union on $\mu$ has probability
+$(x_p+x_q-x_px_q)/2$. This equality uses independence on the
+complete product law before intersection with U. No independence
+conditioned on U is assumed. Since $x+y-xy$ is increasing on
+$[0,1]^2$, replace the two individual allowances in CD168 by
+this joint bound and retain every other allowance unchanged.
+The guaranteed decreases are
+
+$$
+ \begin{array}{c|c}
+ \text{equal-word pair}&\text{decrease in the same inventory}\\\hline
+ 63,99&15/1232\\
+ 45,63&3/70-\ell/5\ge17/560\\
+ 45,99&1/44-\ell/5\ge9/880.
+ \end{array}
+ \tag{CD170}
+$$
+
+The $\ell/5$ terms pay for replacing the old45 allowance on
+$L_0^c$ by a complete-union allowance. The other unit labels
+retain their separate bound on U. Thus this replacement never
+subtracts an alleged actual loss from an unknown event measure.
+
+Three labels on two safe words contain an equal-word pair.
+Every decrease in CD170 exceeds $1/128$; even the weakest gives
+
+$$
+ 1\le\frac{129}{128}-\frac9{880}
+   =\frac{7023}{7040}<1.
+ \tag{CD171}
+$$
+
+This contradiction proves CD163. The proof does not require a
+positive selected measure for the private25 source, a GLC collision
+graph, any new exchange operation, or saturation of the inventory.
+The actual-source argument is an ordinary mathematical proof.
+Its source-to-law construction has not yet been compiled as a
+single Lean theorem. The separate exact scalar check does not
+by itself discharge that construction.
+
+CD163 excludes precisely the displayed shared-five palette. Other
+ordinary palettes for shared five, multiple exceptional primes,
+higher ternary height and unrestricted odd distinct covering remain
+unresolved.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
@@ -4907,8 +5073,9 @@ envelope, enough for CD15. They still need an upper bound on the actual
 profiles or word-availability moment contradicting CD12 or CD16.
 Every surviving repeated-digit and distinct-digit profile must be
 included. SC483 supplies none of these upper bounds by itself.
-The remaining ternary-height-two cases, including a single exceptional
-5 and multiple exceptional primes, and unrestricted odd distinct
+The remaining ternary-height-two cases, including other ordinary
+palettes for a single exceptional5 and multiple exceptional primes,
+and unrestricted odd distinct
 covering remain unresolved. CD148, CD152 and CD159 exclude every
 specified single exceptional prime q at least seven by full-prime-guard
 arguments, with separate shared-label pools required for q=7.
