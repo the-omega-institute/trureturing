@@ -5616,3 +5616,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 完整具名目标 `virtuallyNilpotentFreeOriginalCoveringRepresentation_elementaryModuleClassification` 的精确临时 Lean 第四次实际编译 exit0，host `65796`；完整日志零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-elementary-module.lean` 为 208343 字节，SHA256 `f6e1b487e09a366471923df202b8b6290e196a87c74dec657acfef257bf1cd94`；前批成功 proper 源码为完整 offset0 前缀，无新增 import、依赖构建或版本变更。前两次命名空间及局部 proper 类型推断失败的完整源码日志保留排除；第三次日志虽无诊断，但恢复后进程句柄失效，实际退出码无法读取，故不作为成功证据。第四次同时读取实际退出码并持久化，源码未改。协作实施与调用方只读语义复核完成，没有新增 SSHX 共识。
 
 该原覆盖、既有分类、真实平移模和 horoball 覆盖消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批组装实际原覆盖前提下的统一分类，尚未从一般原流形假设构造覆盖或完整 deck 表示。原商度量与体积的匹配、尖点分离、有限体积薄部分解、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 实际原覆盖作用内部推出同一原群可数
+
+对同一个任意宇宙的原等距表示 `ρ`，仅要求在一个原点有正轨道间隔，前批证明使每个实际自然数界的原位移元素集合有限。钉版可数并接口使这些有限集合的自然数并可数；每个原群元素的实际位移是实数，`exists_nat_ge` 提供包含它的自然数界。因此全部原群元素包含于这个可数并，得到真实 `Countable G`，没有可数性、有限生成或虚幂零输入，也没有只证明轨道点集合可数后遗漏原元素的单射性。
+
+实际原覆盖消费者从原自由性、真正给定的覆盖和同一表示逐点纤维保持内部提供间隔，故同一原 `G` 可数。目标空间与原群保持独立宇宙，不要求覆盖满射或纤维轨道传递性。这里仍消费实际给定覆盖，未从一般原流形数据构造它；群可数也不提供有限体积或完整刚性。
+
+两个具名目标 `originalRepresentation_countableGroup_of_pointGap` 与 `freeOriginalCoveringRepresentation_countableGroup` 的完整精确临时 Lean 首轮真实编译通过，host `70182` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-countable-group.lean` 为 209739 字节，SHA256 `a7f48c2cde61982babb04b0fba333110d126a67912e54263124e0c46a462e9cd`；前批成功原覆盖分类源码为完整 offset0 前缀，无新增 import、依赖构建或版本变更。实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该原有界位移有限性、可数并和自然数上界接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批可消除后续原覆盖作用消费者的外供群可数性前提；原流形度量覆盖构造、原商度量与体积的匹配、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
