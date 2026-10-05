@@ -38,10 +38,10 @@ abbrev Pauli := Bool × Bool
 def pauliI : Pauli := (false, false)
 
 /-- The letter `X`. -/
-def pauliX : Pauli := (true, false)
+private def pauliX : Pauli := (true, false)
 
 /-- The letter `Z`. -/
-def pauliZ : Pauli := (false, true)
+private def pauliZ : Pauli := (false, true)
 
 variable {V : Type}
 
@@ -99,11 +99,11 @@ section Construction
 variable (G : SimpleGraph V) (e : V)
 
 /-- Graph distance from the encoding vertex. -/
-noncomputable def depth (w : V) : ℕ := G.dist e w
+private noncomputable def depth (w : V) : ℕ := G.dist e w
 
 open Classical in
 /-- A neighbour one step closer to the encoding vertex. -/
-noncomputable def parent (hc : G.Connected) (w : V) : V :=
+private noncomputable def parent (hc : G.Connected) (w : V) : V :=
   if hw : w = e then e else
     Classical.choose (show ∃ y, G.Adj w y ∧ depth G e y + 1 = depth G e w by
       obtain ⟨p, hp⟩ := hc.exists_walk_length_eq_dist w e
@@ -121,28 +121,28 @@ noncomputable def parent (hc : G.Connected) (w : V) : V :=
             _ = G.dist e y + 1 := by rw [(dist_eq_one_iff_adj).2 h.symm])
 
 /-- `w` is an internal vertex of the chosen geodesic from `v` to the encoding vertex. -/
-def OnPath (hc : G.Connected) (v w : V) : Prop :=
+private def OnPath (hc : G.Connected) (v w : V) : Prop :=
   ∃ k, 1 ≤ k ∧ k < depth G e v ∧ (parent G e hc)^[k] v = w
 
 /-- Vertices farther from the encoding vertex are attempted first. -/
-noncomputable def rankOf [Fintype V] [DecidableEq V] (w : V) : ℤ :=
+private noncomputable def rankOf [Fintype V] [DecidableEq V] (w : V) : ℤ :=
   -((depth G e w : ℤ) * Fintype.card V) + ((Fintype.equivFin V w : ℕ) : ℤ)
 
 /-- `v` is the first successful fusion among the vertices attempted before `w`. -/
-def FirstSuccessBefore [Fintype V] [DecidableEq V] (o : V → Bool) (w v : V) : Prop :=
+private def FirstSuccessBefore [Fintype V] [DecidableEq V] (o : V → Bool) (w v : V) : Prop :=
   v ≠ e ∧ o v = true ∧ rankOf G e v < rankOf G e w ∧
     ∀ u, u ≠ e → rankOf G e u < rankOf G e v → o u = false
 
 open Classical in
 /-- The failure axis: `X` on the internal vertices of the geodesic to the first success, once
 that success has been observed, and `Z` otherwise. -/
-noncomputable def axisOf [Fintype V] [DecidableEq V] (hc : G.Connected) (w : V)
+private noncomputable def axisOf [Fintype V] [DecidableEq V] (hc : G.Connected) (w : V)
     (o : V → Bool) : Pauli :=
   if ∃ v, FirstSuccessBefore G e o w v ∧ OnPath G e hc v w then pauliX else pauliZ
 
 /-- The adaptive strategy of the construction: attempts in order of decreasing distance from the
 encoding vertex, failure axes from `axisOf`. -/
-noncomputable def strategy [Fintype V] [DecidableEq V] (hc : G.Connected) :
+private noncomputable def strategy [Fintype V] [DecidableEq V] (hc : G.Connected) :
     AdaptiveStrategy e where
   rank := rankOf G e
   rank_inj := by
