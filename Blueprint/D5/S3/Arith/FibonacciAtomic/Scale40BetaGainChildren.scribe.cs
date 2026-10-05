@@ -20,5 +20,14 @@ internal sealed class Scale40BetaGainChildrenDocument : IScribeDocumentDefinitio
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For each block decoded from an actual leaf report, prefix its actual beta frontier by its block root. "
                     + "Take the finite union of these addresses. A contributes LL and R; C contributes LLL, LR and RL. "
-                    + "Branch and absent reports contribute no blocks, and repeated addresses are counted once."))), DescribeRole.Definition))));
+                    + "Branch and absent reports contribute no blocks, and repeated addresses are counted once."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("strict-beta-growth"),
+                DeclarationHandle.Create(Prefix + "result"), H("Strict beta growth"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let a finite family consist of actual third images, and retain the members matching every report in a finite history. "
+                    + "Suppose an actual address strictly splits this survivor queue and has a nonempty alpha or beta leaf child. "
+                    + "The old fixed beta union is contained in every surviving member's beta frontier. "
+                    + "Adding the leaf report increases the fixed union by one, two or three addresses. "
+                    + "The increase is one exactly when the report forces C and its immediately left A was already decoded from the history. "
+                    + "A new A contributes two beta addresses; a new C contributes three unless its left A already contributes LLL and LR."))), DescribeRole.Theorem))));
 }
