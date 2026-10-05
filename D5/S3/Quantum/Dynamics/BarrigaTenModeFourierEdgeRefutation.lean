@@ -148,10 +148,10 @@ private def edgeRel (x y : Fin 10) : Prop :=
 private def z (x : Fin 10) : ℂ :=
   (-I) ^ (x.val % 2) * ω ^ (4 * (x.val % 5) ^ 2)
 
-private def rootFacts : s ^ 2 = 5 ∧ d ^ 2 = (5 + s) / 8 ∧
+private def rootFacts : PLift (s ^ 2 = 5 ∧ d ^ 2 = (5 + s) / 8 ∧
     ω ^ 2 = (-(s + 1) / 4 : ℝ) + (((s - 1) * d / 2 : ℝ) : ℂ) * I ∧
     ω ^ 3 = (-(s + 1) / 4 : ℝ) - (((s - 1) * d / 2 : ℝ) : ℂ) * I ∧
-    ω ^ 4 = (c : ℂ) - (d : ℂ) * I ∧ ω ^ 5 = 1 := by
+    ω ^ 4 = (c : ℂ) - (d : ℂ) * I ∧ ω ^ 5 = 1) := ⟨by
   have hs_nonneg : 0 ≤ s := Real.sqrt_nonneg _
   have hs : s ^ 2 = 5 := Real.sq_sqrt (by norm_num)
   have hd : d ^ 2 = (5 + s) / 8 := by
@@ -164,26 +164,29 @@ private def rootFacts : s ^ 2 = 5 ∧ d ^ 2 = (5 + s) / 8 ∧
   have h3 : ω ^ 3 = (-(s + 1) / 4 : ℝ) - (((s - 1) * d / 2 : ℝ) : ℂ) * I := by
     rw [pow_succ, h2]
     apply Complex.ext <;> simp [ω, c, Complex.mul_re, Complex.mul_im] <;>
-      nlinarith [hs, hd, show s ^ 2 * d = 5 * d by rw [hs], show s * (d ^ 2) = s * ((5 + s) / 8) by rw [hd]]
+      nlinarith [hs, hd, show s ^ 2 * d = 5 * d by rw [hs],
+        show s * (d ^ 2) = s * ((5 + s) / 8) by rw [hd]]
   have h4 : ω ^ 4 = (c : ℂ) - (d : ℂ) * I := by
     rw [pow_succ, h3]
     apply Complex.ext <;> simp [ω, c, Complex.mul_re, Complex.mul_im] <;>
-      nlinarith [hs, hd, show s ^ 2 * d = 5 * d by rw [hs], show s * (d ^ 2) = s * ((5 + s) / 8) by rw [hd]]
+      nlinarith [hs, hd, show s ^ 2 * d = 5 * d by rw [hs],
+        show s * (d ^ 2) = s * ((5 + s) / 8) by rw [hd]]
   have h5 : ω ^ 5 = 1 := by
     rw [pow_succ, h4]
     apply Complex.ext <;> simp [ω, c, Complex.mul_re, Complex.mul_im] <;>
       nlinarith [hs, hd]
-  exact ⟨hs, hd, h2, h3, h4, h5⟩
+  exact ⟨hs, hd, h2, h3, h4, h5⟩⟩
 
 set_option maxHeartbeats 1000000 in
-private def realCertificate : K = Real.pi • κ ∧
+-- The 25 matrix entries require polynomial normalization.
+private def realCertificate : PLift (K = Real.pi • κ ∧
     (∀ j k : Fin 5, j ≠ k →
       (κ j k = 0 ↔ (j = 0 ∧ k = 1) ∨ (j = 1 ∧ k = 0))) ∧
     (∀ j k : Fin 5, j ≠ k → 0 ≤ κ j k) ∧
     Commute (C0.map (↑) : Matrix (Fin 5) (Fin 5) ℂ) (P.map (↑)) ∧
-    (P.map (↑) : Matrix (Fin 5) (Fin 5) ℂ) * P.map (↑) = P.map (↑) := by
+    (P.map (↑) : Matrix (Fin 5) (Fin 5) ℂ) * P.map (↑) = P.map (↑)) := ⟨by
   classical
-  obtain ⟨hs, hd, h2, h3, h4, h5⟩ := rootFacts
+  obtain ⟨hs, hd, h2, h3, h4, h5⟩ := rootFacts.down
   have hs_nonneg : 0 ≤ s := Real.sqrt_nonneg _
   have hK : K = Real.pi • κ := by
     ext j k
@@ -233,10 +236,6 @@ private def realCertificate : K = Real.pi • κ ∧
     calc
       s ^ 3 = s ^ 2 * s := by ring
       _ = 5 * s := by rw [hs]
-  have hs4 : s ^ 4 = 25 := by
-    calc
-      s ^ 4 = (s ^ 2) ^ 2 := by ring
-      _ = 25 := by rw [hs]; norm_num
   have hu2 : u ^ 2 = 381 * s / 160 - 165 / 32 := by
     dsimp [u]
     rw [mul_pow, hd, hr]
@@ -254,14 +253,14 @@ private def realCertificate : K = Real.pi • κ ∧
     ext j k
     fin_cases j <;> fin_cases k <;>
       simp [Matrix.mul_apply, Fin.sum_univ_succ, κ, Ccoeff] <;>
-      ring_nf <;> simp only [hs, hs3, hs4] <;> ring
+      ring_nf <;> simp only [hs] <;> ring
   have hPP : P * P = P := by
     simp only [hPtable]
     ext j k
     fin_cases j <;> fin_cases k <;>
       simp [Matrix.mul_apply, Fin.sum_univ_succ, κ, Ccoeff] <;>
-      ring_nf <;> simp only [hs, hs3, hs4, hu2] <;>
-      ring_nf <;> simp only [hs, hs3, hs4] <;> ring
+      ring_nf <;> simp only [hs, hu2] <;>
+      ring_nf <;> simp only [hs] <;> ring
   have hPsymm : P.IsSymm := by
     rw [hPtable]
     ext j k
@@ -288,11 +287,11 @@ private def realCertificate : K = Real.pi • κ ∧
     have he := congrArg (fun M : Matrix (Fin 5) (Fin 5) ℝ => M.map Complex.ofRealHom) hPP
     simp only [Matrix.map_mul] at he
     exact he
-  exact ⟨hK, hκ_zero, hκ_nonneg, hcomm, hPPc⟩
+  exact ⟨hK, hκ_zero, hκ_nonneg, hcomm, hPPc⟩⟩
 
-private def expIdempotent : ∀ {n : Type} [Fintype n] [DecidableEq n]
+private def expIdempotent : PLift (∀ {n : Type} [Fintype n] [DecidableEq n]
       (Q : Matrix n n ℂ), Q * Q = Q → ∀ t : ℂ,
-      NormedSpace.exp (t • Q) = 1 + (NormedSpace.exp t - 1) • Q := by
+      NormedSpace.exp (t • Q) = 1 + (NormedSpace.exp t - 1) • Q) := ⟨by
   intro n _ _ Q hQ t
   have hpow : ∀ k : ℕ, Q ^ (k + 1) = Q := by
     intro k
@@ -316,13 +315,14 @@ private def expIdempotent : ∀ {n : Type} [Fintype n] [DecidableEq n]
     _ = 1 + (∑' k : ℕ, (((k + 1).factorial : ℂ)⁻¹) * t ^ (k + 1)) • Q := by
       simp_rw [smul_pow, hpow, smul_smul]
       rw [hs'.tsum_smul_const]
-    _ = _ := by rw [ht]
+    _ = _ := by rw [ht]⟩
 
 set_option maxHeartbeats 1000000 in
-private def circulantCertificate : Complex.exp (2 * Real.pi * I / 5) = ω ∧
-    hamiltonianPropagator (C0.map (↑)) 1 = U5 := by
+-- The Fourier diagonalization requires polynomial normalization.
+private def circulantCertificate : PLift (Complex.exp (2 * Real.pi * I / 5) = ω ∧
+    hamiltonianPropagator (C0.map (↑)) 1 = U5) := ⟨by
   classical
-  obtain ⟨hs, hd, h2, h3, h4, h5⟩ := rootFacts
+  obtain ⟨hs, hd, h2, h3, h4, h5⟩ := rootFacts.down
   have hsC : (s : ℂ) ^ 2 = 5 := by exact_mod_cast hs
   have hsum : 1 + ω + ω ^ 2 + ω ^ 3 + ω ^ 4 = 0 := by
     rw [h2, h3, h4]
@@ -345,9 +345,21 @@ private def circulantCertificate : Complex.exp (2 * Real.pi * I / 5) = ω ∧
       V * diagonal μ := by
     ext j k
     fin_cases j <;> fin_cases k <;>
-      simp [Matrix.mul_apply, Fin.sum_univ_succ, Ccoeff, V, μ, h2, h3, h4] <;>
-      (try simp [ω, c]) <;> push_cast <;> ring_nf <;>
-      (try simp only [hsC, Complex.I_sq]) <;> ring
+      simp only [Fin.zero_eta, Fin.isValue, Matrix.mul_apply, map_apply, Ccoeff,
+        Fin.coe_ofNat_eq_mod,
+        Nat.zero_mod, tsub_zero, Nat.add_mod_right, V, mul_zero, pow_zero, mul_one,
+        Fin.sum_univ_succ, ↓reduceIte, ofReal_zero, Fin.val_succ, Fin.succ_zero_eq_one,
+        zero_ne_one, zero_add, Nat.one_mod, OfNat.one_ne_ofNat, or_false, ofReal_div, ofReal_sub,
+        ofReal_ofNat, ofReal_mul, Fin.succ_one_eq_two, Fin.reduceEq, Nat.reduceAdd, Nat.reduceMod,
+        OfNat.ofNat_ne_one, Nat.reduceEqDiff, or_self, ofReal_add, Fin.reduceSucc,
+        Finset.univ_unique, Fin.default_eq_zero, Fin.val_eq_zero, Nat.mod_succ, or_true,
+        Finset.sum_singleton, μ, zero_mul, one_mul, diagonal_apply_eq, cons_val_zero, ne_eq,
+        Fin.succ_ne_zero, not_false_eq_true, diagonal_apply_ne, Finset.sum_const_zero, add_zero,
+        Fin.mk_one, pow_one, h2, neg_add_rev, ofReal_neg, ofReal_one, h3, h4, cons_val_one,
+        Fin.reduceFinMk, Nat.reduceMul, cons_val, Nat.add_one_sub_one, one_ne_zero, mul_neg,
+        Nat.reduceSubDiff, one_mul, Nat.mod_self, OfNat.zero_ne_ofNat] <;>
+      (try simp only [ω, c]) <;> push_cast <;> ring_nf <;>
+      (try simp only [hsC]) <;> ring
   have hcos : Real.cos (2 * Real.pi / 5) = c := by
     rw [show 2 * Real.pi / 5 = 2 * (Real.pi / 5) by ring,
       Real.cos_two_mul, Real.cos_pi_div_five]
@@ -389,11 +401,11 @@ private def circulantCertificate : Complex.exp (2 * Real.pi * I / 5) = ω ∧
   have hU : (1 / 5 : ℂ) • (V * diagonal E * W) = U5 := by
     ext j k
     fin_cases j <;> fin_cases k <;>
-      simp [V, W, E, U5, Matrix.mul_apply, Matrix.mul_diagonal, Fin.sum_univ_succ] <;>
+      simp [V, W, E, U5, Matrix.mul_apply, Fin.sum_univ_succ] <;>
       field_simp [hs_ne] <;> ring_nf <;>
       (try simp only [h5, h6, h7, h8, h9, h10]) <;>
       (try simp only [h2, h3, h4]) <;> (try simp only [ω, c]) <;>
-      push_cast <;> ring_nf <;> (try simp only [hsC, Complex.I_sq]) <;> ring
+      push_cast <;> ring_nf <;> (try simp only [hsC]) <;> ring
   have hright : V * ((1 / 5 : ℂ) • W) = 1 := by
     rw [Matrix.mul_smul, hVW, smul_smul]
     norm_num
@@ -424,11 +436,11 @@ private def circulantCertificate : Complex.exp (2 * Real.pi * I / 5) = ω ∧
       rw [Pi.coe_exp, Pi.smul_apply, smul_eq_mul, ← Complex.exp_eq_exp_ℂ]
       exact congrFun hE k
     rw [hEc, hVinv, Matrix.mul_smul, hU]
-  exact ⟨hexpω, hexpC0⟩
+  exact ⟨hexpω, hexpC0⟩⟩
 
-private def expTensor : ∀ (A : Matrix (Fin 2) (Fin 2) ℂ)
+private def expTensor : PLift (∀ (A : Matrix (Fin 2) (Fin 2) ℂ)
       (B : Matrix (Fin 5) (Fin 5) ℂ), NormedSpace.exp (A ⊗ₖ 1 + 1 ⊗ₖ B) =
-      NormedSpace.exp A ⊗ₖ NormedSpace.exp B := by
+      NormedSpace.exp A ⊗ₖ NormedSpace.exp B) := ⟨by
   intro A B
   have hL : Continuous L := by
     change Continuous (fun A : Matrix (Fin 2) (Fin 2) ℂ =>
@@ -451,9 +463,9 @@ private def expTensor : ∀ (A : Matrix (Fin 2) (Fin 2) ℂ)
     ← NormedSpace.map_exp R hR]
   change (NormedSpace.exp A ⊗ₖ 1) * (1 ⊗ₖ NormedSpace.exp B) = _
   rw [← mul_kronecker_mul]
-  simp
+  simp⟩
 
-private def expTwo : NormedSpace.exp ((-I) • A2) = U2 := by
+private def expTwo : PLift (NormedSpace.exp ((-I) • A2) = U2) := ⟨by
   let V2 : Matrix (Fin 2) (Fin 2) ℂ := !![1, 1; 1, -1]
   have hright : V2 * ((1 / 2 : ℂ) • V2) = 1 := by
     ext j k
@@ -482,8 +494,8 @@ private def expTwo : NormedSpace.exp ((-I) • A2) = U2 := by
       ![(Real.sqrt 2 / 2 : ℂ) * (1 - I), (Real.sqrt 2 / 2 : ℂ) * (1 + I)] := by
     funext k
     fin_cases k
-    · simp [Pi.coe_exp, ← Complex.exp_eq_exp_ℂ]
-      convert hneg using 1 <;> ring
+    · simpa only [Pi.coe_exp, Fin.zero_eta, Matrix.cons_val_zero,
+        ← Complex.exp_eq_exp_ℂ, neg_mul, neg_div] using hneg
     · simpa [Pi.coe_exp, ← Complex.exp_eq_exp_ℂ] using hpos
   rw [hgen, Matrix.exp_conj _ _ ((Matrix.isUnit_iff_isUnit_det V2).mpr hdet),
     Matrix.exp_diagonal, hphase, hVinv]
@@ -495,23 +507,24 @@ private def expTwo : NormedSpace.exp ((-I) • A2) = U2 := by
   ext j k
   fin_cases j <;> fin_cases k <;>
     simp [V2, U2, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two] <;>
-    field_simp [hn] <;> ring_nf <;> (try rw [hs]) <;> ring
+    field_simp [hn] <;> ring_nf <;> (try rw [hs]) <;> ring⟩
 
-set_option maxHeartbeats 4000000 in
+set_option maxHeartbeats 1000000 in
+-- The finite graph and phase certificates share one proof.
 /-- A connected real symmetric nonnegative coupling matrix with 23 edges realizes `F10`
 after diagonal phase shifts, refuting the claimed 25-edge lower bound. -/
 theorem result : ¬ claim := by
   classical
-  obtain ⟨hK, hκ_zero, hκ_nonneg, hcomm, hPPc⟩ := realCertificate
-  obtain ⟨hexpω, hexpC0⟩ := circulantCertificate
-  have h5 : ω ^ 5 = 1 := rootFacts.2.2.2.2.2
+  obtain ⟨hK, hκ_zero, hκ_nonneg, hcomm, hPPc⟩ := realCertificate.down
+  obtain ⟨hexpω, hexpC0⟩ := circulantCertificate.down
+  have h5 : ω ^ 5 = 1 := rootFacts.down.2.2.2.2.2
   have hexpP : NormedSpace.exp (((-I) * (2 * Real.pi : ℂ)) • P.map (↑)) =
       (1 : Matrix (Fin 5) (Fin 5) ℂ) := by
     have he : NormedSpace.exp ((-I) * (2 * Real.pi : ℂ)) = (1 : ℂ) := by
       rw [← Complex.exp_eq_exp_ℂ,
         show (-I) * (2 * Real.pi : ℂ) = ((-1 : ℤ) : ℂ) * (2 * Real.pi * I) by ring]
       exact Complex.exp_int_mul_two_pi_mul_I (-1)
-    rw [expIdempotent _ hPPc, he]
+    rw [expIdempotent.down _ hPPc, he]
     simp
   have hexpK : hamiltonianPropagator (K.map (↑)) 1 =
       hamiltonianPropagator (C0.map (↑)) 1 := by
@@ -529,7 +542,7 @@ theorem result : ¬ claim := by
           (1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K.map (↑)) := by
     ext x y
     fin_cases x <;> fin_cases y <;>
-      simp [H, A2, crt, Matrix.reindex_apply, Matrix.kronecker_apply] <;> ring
+      simp [H, A2, crt, Matrix.reindex_apply]
   have hexpH : hamiltonianPropagator (H.map (↑)) 1 =
       Matrix.reindex crt.symm crt.symm (U2 ⊗ₖ U5) := by
     let T := Matrix.reindexRingEquiv ℂ crt.symm
@@ -543,13 +556,13 @@ theorem result : ¬ claim := by
           (1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ ((-I) • K.map (↑))) := by
       rw [hHtensor]
       ext x y
-      simp [T, Matrix.reindex_apply, Matrix.kronecker_apply]
+      simp [T, Matrix.reindex_apply]
       ring
     have hexpK5 : NormedSpace.exp ((-I) • (K.map (↑) : Matrix (Fin 5) (Fin 5) ℂ)) = U5 := by
       have he := hexpK.trans hexpC0
       simpa only [hamiltonianPropagator, one_smul, hamiltonianGenerator] using he
     simp only [hamiltonianPropagator, one_smul, hamiltonianGenerator]
-    rw [hG, ← NormedSpace.map_exp T hT, expTensor, expTwo, hexpK5]
+    rw [hG, ← NormedSpace.map_exp T hT, expTensor.down, expTwo.down, hexpK5]
     rfl
   have hnormω : ‖ω‖ = 1 := by
     have he := congrArg norm h5
@@ -557,8 +570,8 @@ theorem result : ¬ claim := by
     exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) (by norm_num)).mp he
   have hnormz : ∀ x, ‖z x‖ = 1 := by
     intro x
-    simp [z, norm_mul, norm_pow, hnormω]
-  have hω_ne : ω ≠ 0 := by intro he; simpa [he] using hnormω
+    simp [z, norm_pow, hnormω]
+  have hω_ne : ω ≠ 0 := by intro he; simp [he] at hnormω
   have hz_ne : ∀ x, z x ≠ 0 := by intro x he; simpa [he] using hnormz x
   have hfactor : Matrix.reindex crt.symm crt.symm (U2 ⊗ₖ U5) =
       ω • (diagonal z * F10 * diagonal z) := by
@@ -571,8 +584,18 @@ theorem result : ¬ claim := by
         ((n10 x y : ℕ) : ℂ) * (Real.pi * I) +
         ((m10 x y : ℕ) : ℂ) * (2 * Real.pi * I / 5) +
         ((k10 x y : ℤ) : ℂ) * (2 * Real.pi * I) := by
+      have hindices : ∀ x y : Fin 10,
+          -((x.val * y.val : ℕ) : ℤ) =
+            5 * (n10 x y : ℤ) + 2 * (m10 x y : ℤ) + 10 * k10 x y := by
+        simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+        repeat' apply And.intro
+        all_goals decide
       intro x y
-      fin_cases x <;> fin_cases y <;> norm_num [n10, m10, k10] <;> ring
+      have hi : -((x.val * y.val : ℕ) : ℂ) =
+          5 * (n10 x y : ℂ) + 2 * (m10 x y : ℂ) + 10 * (k10 x y : ℂ) := by
+        exact_mod_cast hindices x y
+      push_cast at hi
+      linear_combination (Real.pi * I / 5) * hi
     have hFourier : ∀ x y : Fin 10, F10 x y =
         (-1 : ℂ) ^ ((x.val % 2) * (y.val % 2)) *
           ω ^ (2 * (x.val % 5) * (y.val % 5)) / Real.sqrt 10 := by
@@ -581,8 +604,6 @@ theorem result : ¬ claim := by
       rw [hphase10, Complex.exp_add, Complex.exp_add, Complex.exp_nat_mul,
         Complex.exp_nat_mul, Complex.exp_int_mul_two_pi_mul_I,
         Complex.exp_pi_mul_I, hexpω, mul_one]
-    have hred : ∀ n : ℕ, 5 ≤ n → ω ^ n = ω ^ (n % 5) :=
-      fun n _ => pow_eq_pow_mod n h5
     have hsqrt10 : (Real.sqrt 10 : ℂ) = (Real.sqrt 2 : ℂ) * (s : ℂ) := by
       have he : Real.sqrt 10 = Real.sqrt 2 * s := by
         dsimp [s]
@@ -593,13 +614,30 @@ theorem result : ¬ claim := by
       (Real.sqrt_ne_zero'.mpr (by norm_num))
     have hs2_ne : (Real.sqrt 2 : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr
       (Real.sqrt_ne_zero'.mpr (by norm_num))
+    have hU2factor : ∀ j k : Fin 2,
+        U2 j k = (1 / (Real.sqrt 2 : ℂ)) *
+          ((-I) ^ j.val * (-1) ^ (j.val * k.val) * (-I) ^ k.val) := by
+      intro j k
+      fin_cases j <;> fin_cases k <;> simp [U2]
+    have hU5factor : ∀ j k : Fin 5,
+        U5 j k = ω / (s : ℂ) *
+          (ω ^ (4 * j.val ^ 2) * ω ^ (2 * j.val * k.val) * ω ^ (4 * k.val ^ 2)) := by
+      have hindices : ∀ j k : Fin 5,
+          (4 * (j.val + 5 - k.val) ^ 2) % 5 =
+            (4 * j.val ^ 2 + 2 * j.val * k.val + 4 * k.val ^ 2) % 5 := by
+        simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+        repeat' apply And.intro
+        all_goals decide
+      intro j k
+      simp only [U5]
+      rw [hindices, ← pow_eq_pow_mod _ h5, pow_add, pow_add]
     ext x y
     simp only [Matrix.diagonal_mul, Matrix.mul_diagonal, Matrix.smul_apply, smul_eq_mul]
     rw [hFourier]
-    fin_cases x <;> fin_cases y <;>
-      simp [crt, Matrix.reindex_apply, Matrix.kronecker_apply, U2, U5, z, hsqrt10, hred] <;>
-      field_simp [hs_ne, hs2_ne] <;> ring_nf <;>
-      (try simp [hred, Complex.I_sq]) <;> ring
+    change U2 (crt x).1 (crt y).1 * U5 (crt x).2 (crt y).2 = _
+    rw [hU2factor, hU5factor, hsqrt10]
+    simp only [crt, Equiv.coe_fn_mk, z]
+    field_simp [hs_ne, hs2_ne]
   have hsymm : H.IsSymm := by
     have hκ_symm : κ.IsSymm := by
       ext j k
@@ -612,7 +650,6 @@ theorem result : ¬ claim := by
     simp only [H, Matrix.transpose_apply]
     rw [hK_symm]
     simp only [eq_comm, ne_comm]
-
   have hnonneg : ∀ x y, x ≠ y → 0 ≤ H x y := by
     intro x y hxy
     unfold H
@@ -630,7 +667,6 @@ theorem result : ¬ claim := by
         exact hxy (Fin.ext hval)
       · exact le_refl 0
     · split_ifs <;> positivity
-
   have hH_nonzero : ∀ x y : Fin 10, x ≠ y → (H x y ≠ 0 ↔ edgeRel x y) := by
     intro x y hxy
     fin_cases x <;> fin_cases y <;>
@@ -664,16 +700,15 @@ theorem result : ¬ claim := by
     · exact h27
     · exact ((hgraph 2 8).mpr (by unfold edgeRel; decide)).reachable
     · exact h27.trans ((hgraph 7 9).mpr (by unfold edgeRel; decide)).reachable
-
   have hphases : ∃ Φout Φin, IsUnimodularDiagonal Φout ∧ IsUnimodularDiagonal Φin ∧
       Φout * hamiltonianPropagator (H.map (↑)) 1 * Φin = F10 := by
     refine ⟨diagonal (fun x => ω⁻¹ * (z x)⁻¹), diagonal (fun x => (z x)⁻¹), ?_, ?_, ?_⟩
-    · exact ⟨_, fun x => by simp [norm_mul, hnormω, hnormz], rfl⟩
+    · exact ⟨_, fun x => by simp [hnormω, hnormz], rfl⟩
     · exact ⟨_, fun x => by simp [hnormz], rfl⟩
     · rw [hexpH, hfactor]
       ext x y
       simp only [Matrix.diagonal_mul, Matrix.mul_diagonal, Matrix.smul_apply, smul_eq_mul]
-      field_simp [hω_ne, hz_ne] <;> ring
+      field_simp [hω_ne, hz_ne]
   have hedges : edgeCount H = 23 := by
     have he : ∀ p : Fin 10 × Fin 10,
         (p.1 < p.2 ∧ H p.1 p.2 ≠ 0) ↔ (p.1 < p.2 ∧ edgeRel p.1 p.2) := by
@@ -681,16 +716,15 @@ theorem result : ¬ claim := by
       by_cases hp : p.1 < p.2
       · simp only [hp, true_and, hH_nonzero p.1 p.2 (ne_of_lt hp)]
       · simp only [hp, false_and]
-    letI : DecidableRel edgeRel := fun x y => by unfold edgeRel; infer_instance
+    let : DecidableRel edgeRel := fun x y => by unfold edgeRel; infer_instance
     have hc : ((Finset.univ : Finset (Fin 10 × Fin 10)).filter
         (fun p => p.1 < p.2 ∧ edgeRel p.1 p.2)).card = 23 := by decide
     unfold edgeCount
     rw [← hc]
     congr 1
     ext p
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and, edgeCount]
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
     exact he p
-
   intro h
   have hbound := h H hsymm hnonneg hconnected hphases
   rw [hedges] at hbound
