@@ -42,8 +42,8 @@ theorem transfer (m n : ℕ) (p : Fin m → ℝ) (hs : ∑ i, p i = 1)
       Summable (fun d => residual P d / (2 : ℝ) ^ d) := by
     have frac (d : ℕ) :
         residual P d = ∑ i, Int.fract ((2 : ℝ) ^ d * P i) := by
-      simp only [DyadicSupportLines.residual, Int.fract, Finset.sum_sub_distrib, ← Finset.mul_sum, hS,
-        mul_one, Int.cast_sum]
+      simp only [DyadicSupportLines.residual, Int.fract, Finset.sum_sub_distrib,
+        ← Finset.mul_sum, hS, mul_one, Int.cast_sum]
     have bounds (d : ℕ) : 0 ≤ residual P d ∧ residual P d ≤ n := by
       rw [frac]
       refine ⟨Finset.sum_nonneg (fun i _ => Int.fract_nonneg _), ?_⟩

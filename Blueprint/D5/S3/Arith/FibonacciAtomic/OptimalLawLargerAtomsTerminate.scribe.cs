@@ -31,7 +31,7 @@ internal sealed class OptimalLawLargerAtomsTerminateDocument : IScribeDocumentDe
         var statement = All(m, Ty("N"), All(p, Seq(indices, Sp, To, Sp, Ty("R")),
             Imp(hypotheses, conclusion)));
         var count = F.Id("n"); var subset = F.Id("I"); var q = F.Id("q");
-        var enumFn = F.Id("e"); var delta = F.Id("delta"); var P = F.Id("P");
+        var enumFn = F.Id("e"); var P = F.Id("P");
         var h = F.Id("h"); var depth = F.Id("d");
         Formula Pow(Formula x) => new Formula.Power(D(2), x);
         Formula Floor(Formula x) => Seq(Lfloor, x, Rfloor);
