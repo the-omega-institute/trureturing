@@ -619,3 +619,21 @@ without a diffusion-curvature equivalence or new Lean certification.
 It does not determine the sign of the integrated half-slack on
 $\mathcal R$, or invalidate the existing conditional $0.41$ bound.
 The full half-bound, Robin and RH remain unresolved.
+
+### Positive radial derivative transport needs a different interface
+
+The [published birth–death derivative interface](chafaijoulin2013intertwining.md)
+uses a positive Feynman–Kac transport of a weighted first derivative.
+Its radial analogue would preserve nondecreasing functions of $|x|$.
+The original theta model's reflected prime-two map
+$r\mapsto|\log2-r|$ gives two ordered compact averaging probes with
+reversed short-time averages for a smooth monotone plateau input.
+The complete Gamma and other prime-power row backgrounds converge to
+the same limit, while this one actual atom switches by a positive amount.
+Under the original minimal-form and semigroup premises, that paper test
+excludes this radial monotonicity interface independently of the existing
+order-two determinant obstruction. It does not exclude ordinary Markov
+positivity, signed or vector derivative transports, other orders or
+fixed-time estimates. No new Lean certification or all-input half-bound
+is supplied; actual cofinal signs, full Robin and RH remain unresolved.
+
