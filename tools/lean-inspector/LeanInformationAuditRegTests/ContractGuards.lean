@@ -27,7 +27,9 @@ def updatedForm : LeanInformationAudit.Contract.Seal.{0,0} :=
 run_meta do
   for name in #[``structureForm, ``constructorForm, ``referenceForm, ``updatedForm] do
     let .defnInfo info ← getConstInfo name | throwError "compiled form definition missing"
-    let decoded ← LeanInformationAudit.Contract.Decoder.readSeal name info.value
+    let decoded ← LeanInformationAudit.Contract.Decoder.liftLiteral <|
+      LeanInformationAudit.Contract.Decoder.readSeal ((← getEnv).find? ·)
+        (← collectAxioms name) name info.value
     assertTest s!"compiled_forms.{name.getString!}"
       (decoded.rootId == `CompiledContractForms && decoded.catalogs.isEmpty)
 

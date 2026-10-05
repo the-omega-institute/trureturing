@@ -33,7 +33,7 @@ run_meta do
       ("MissingTargetLevels", [], false),
       ("ExtraTargetLevels", [Level.zero, Level.zero], false)] do
     let mut error := "accepted"
-    try discard <| Decoder.checkTarget ``universeTarget (.const ``universeTarget levels)
+    try discard <| Decoder.liftLiteral <| Decoder.checkTarget (env.find? ·) ``universeTarget (.const ``universeTarget levels)
     catch ex => error := ← ex.toMessageData.toString
     assertTest s!"policy.target.{label}"
       (if accepted then error == "accepted"

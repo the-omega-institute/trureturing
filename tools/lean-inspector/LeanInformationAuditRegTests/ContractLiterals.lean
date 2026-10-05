@@ -61,7 +61,8 @@ run_meta do
     | .error error => error
   assertTest "literal.duplicate_option" (error == "contract.literal:options:duplicate:maxRecDepth")
   let .defnInfo info ← getConstInfo ``constructorTypes | throwError "setup: enrollment"
-  let input ← Decoder.enrollment (← getEnv).header.mainModule info ""
+  let env ← getEnv
+  let input ← Decoder.liftLiteral <| Decoder.enrollment (env.find? ·) env.header.mainModule info ""
   assertTest "literal.type_reference" (input.constructors == #[`Nat] && input.name == `Nat.succ)
 
 end LeanInformationAuditRegTests.ContractLiterals

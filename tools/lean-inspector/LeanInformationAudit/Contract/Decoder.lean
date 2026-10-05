@@ -29,9 +29,12 @@ def referencedValue (value : Expr) (seen : NameSet := {}) : MetaM Expr := do
 def fields (name : Name) (e : Expr) (count : Nat) : MetaM (Array Expr) := do
   liftLiteral <| Literal.fields ((← getEnv).find? ·) name e count
 
+def compiledMetadata (find : Name → Option ConstantInfo) (value : Expr)
+    (decode : Expr → Except String α) : Except String α := do
+  decode (← Literal.resolveReferences find value)
+
 def metadata (value : Expr) (decode : Expr → Except String α) : MetaM α := do
-  let resolved ← liftLiteral <| LeanInformationAudit.Contract.Literal.resolveReferences ((← getEnv).find? ·) value
-  liftLiteral (decode resolved)
+  liftLiteral <| compiledMetadata ((← getEnv).find? ·) value decode
 
 private def constantName (role : String) (value : Expr) : MetaM Name := do
   liftLiteral <| Literal.constantName ((← getEnv).find? ·) role value
@@ -95,21 +98,23 @@ private def continuation (e : Expr) : MetaM (Bool × Option Expr) := do
     return (false, some (← reference "continuation" e.getAppArgs.back!).2)
   throwError "unclassified_form:contract.continuation"
 
-def checkTarget (name : Name) (value : Expr) : MetaM ConstantInfo := do
+def checkTarget (find : Name → Option ConstantInfo) (name : Name)
+    (value : Expr) : Except String ConstantInfo := do
   let value := value.consumeMData
   unless value.isConst && value.constName! == name do
-    throwError "unclassified_form:contract.target_identity:{name}"
-  let info ← getConstInfo name
+    throw s!"unclassified_form:contract.target_identity:{name}"
+  let some info := find name
+    | throw s!"contract.cannot_decode:{name}:missing_constant"
   unless info.isTheorem && Literal.closed info.type do
-    throwError "unclassified_form:contract.target_theorem:{name}"
+    throw s!"unclassified_form:contract.target_theorem:{name}"
   unless value.constLevels!.length == info.levelParams.length do
-    throwError "unclassified_form:contract.target_statement:{name}"
+    throw s!"unclassified_form:contract.target_statement:{name}"
   return info
 
-def rigidLevels (info : DefinitionVal) (value : Expr) : MetaM Unit := do
+def rigidLevels (info : DefinitionVal) (value : Expr) : Except String Unit := do
   let value := value.consumeMData
   unless value.isConst && value.constLevels! == info.levelParams.map Level.param do
-    throwError "contract.discovery:rigid_universes:{info.name}"
+    throw s!"contract.discovery:rigid_universes:{info.name}"
 
 def registration (owner : Name) (info : DefinitionVal) (source : String)
     : MetaM CompanionInput := do
@@ -119,8 +124,8 @@ def registration (owner : Name) (info : DefinitionVal) (source : String)
   let typeArgs := info.type.getAppArgs
   unless typeArgs.size == 5 do throwError "contract.registration:target_arity"
   let theoremName ← constantName "target" typeArgs[1]!
-  discard <| checkTarget theoremName typeArgs[1]!
-  rigidLevels info typeArgs[1]!
+  discard <| liftLiteral <| checkTarget ((← getEnv).find? ·) theoremName typeArgs[1]!
+  liftLiteral <| rigidLevels info typeArgs[1]!
   let fs := all.extract 4 all.size
   let (arenaName, _) ← arenaReference "arena" fs[0]!
   let (objectArenaName, _) ← arenaReference "object_arena" fs[1]!
@@ -234,63 +239,82 @@ def registration (owner : Name) (info : DefinitionVal) (source : String)
       realizationSource }
     generated, bridge, target := typeArgs[1]!, variation := variation.map Prod.snd, positive, unit }
 
-def expectedRow (e : Expr) : MetaM SnapshotOccurrence := do
-  let fs ← fields ``Contract.ExpectedOccurrence e 6
-  let theoremName ← metadata fs[2]! (Literal.name "name")
-  let info ← checkTarget theoremName fs[1]!
-  let objectArenaName ← metadata fs[3]! (Literal.name "name")
-  discard <| getConstInfo objectArenaName
-  let statementIdentity ← (← optional fs[4]!).mapM fun e =>
-    metadata e (Literal.string "statement_identity")
-  let registrationModuleName ← metadata fs[5]! (Literal.name "name")
+private def compiledConstant (find : Name → Option ConstantInfo)
+    (name : Name) : Except String ConstantInfo := do
+  let some info := find name
+    | throw s!"contract.cannot_decode:{name}:missing_constant"
+  return info
+
+private def compiledOptional (find : Name → Option ConstantInfo)
+    (e : Expr) : Except String (Option Expr) := do
+  Literal.optional "option" (← Literal.referencedValue find e)
+
+private def compiledArray (find : Name → Option ConstantInfo)
+    (e : Expr) : Except String (Array Expr) := do
+  Literal.array "array" (← Literal.referencedValue find e)
+
+/-- The original theorem type and identity come from compiled constant data. -/
+def expectedRow (find : Name → Option ConstantInfo) (e : Expr) :
+    Except String SnapshotOccurrence := do
+  let fs ← Literal.fields find ``Contract.ExpectedOccurrence e 6
+  let theoremName ← compiledMetadata find fs[2]! (Literal.name "name")
+  let info ← checkTarget find theoremName fs[1]!
+  let objectArenaName ← compiledMetadata find fs[3]! (Literal.name "name")
+  discard <| compiledConstant find objectArenaName
+  let statementIdentity ← (← compiledOptional find fs[4]!).mapM fun e =>
+    compiledMetadata find e (Literal.string "statement_identity")
+  let registrationModuleName ← compiledMetadata find fs[5]! (Literal.name "name")
   return {
     theoremName, objectArenaName
     statementIdentity := statementIdentity.getD ""
     capturedStatement := if statementIdentity.isSome then none else some info.type
     registrationModuleName }
 
-def rootCatalog (e : Expr) : MetaM RootCatalogContract := do
-  let outer ← fields ``Contract.RootCatalog e 1
-  let fs ← fields ``Contract.RootCatalogData outer[0]! 5
-  let rootId ← metadata fs[0]! (Literal.name "name")
-  let expected ← (← arrayValues fs[1]!).mapM expectedRow
-  let source ← (← arrayValues fs[2]!).mapM expectedRow
-  let baseline ← (← arrayValues fs[3]!).mapM expectedRow
-  let companionPrefix ← (← optional fs[4]!).mapM fun e =>
-    metadata e (Literal.name "companion_prefix")
+def rootCatalog (find : Name → Option ConstantInfo) (e : Expr) :
+    Except String RootCatalogContract := do
+  let outer ← Literal.fields find ``Contract.RootCatalog e 1
+  let fs ← Literal.fields find ``Contract.RootCatalogData outer[0]! 5
+  let rootId ← compiledMetadata find fs[0]! (Literal.name "name")
+  let expected ← (← compiledArray find fs[1]!).mapM (expectedRow find)
+  let source ← (← compiledArray find fs[2]!).mapM (expectedRow find)
+  let baseline ← (← compiledArray find fs[3]!).mapM (expectedRow find)
+  let companionPrefix ← (← compiledOptional find fs[4]!).mapM fun e =>
+    compiledMetadata find e (Literal.name "companion_prefix")
   return { rootId, expected, source, baseline, companionPrefix }
 
-def enrollment (owner : Name) (info : DefinitionVal) (source : String) :
-    MetaM TemplateEnrollmentInput := do
-  let fs ← fields ``Contract.TemplateEnrollment info.value 4
-  let name ← metadata fs[0]! (Literal.name "name")
+def enrollment (find : Name → Option ConstantInfo) (owner : Name)
+    (info : DefinitionVal) (source : String) : Except String TemplateEnrollmentInput := do
+  let fs ← Literal.fields find ``Contract.TemplateEnrollment info.value 4
+  let name ← compiledMetadata find fs[0]! (Literal.name "name")
   let args := info.type.getAppArgs
   unless args.size ≥ 2 && args[1]!.getAppFn.constName? == some name do
-    throwError "unclassified_form:contract.template_identity:{name}"
+    throw s!"unclassified_form:contract.template_identity:{name}"
   rigidLevels info args[1]!
-  discard <| getConstInfo name
-  let version ← metadata fs[1]! (Literal.nat "nat")
-  let constructors ← (← arrayValues fs[2]!).mapM fun e => do
-    let fs ← fields ``Contract.TypeRef e 2
-    let name ← metadata fs[0]! (Literal.name "name")
+  discard <| compiledConstant find name
+  let version ← compiledMetadata find fs[1]! (Literal.nat "nat")
+  let constructors ← (← compiledArray find fs[2]!).mapM fun e => do
+    let fs ← Literal.fields find ``Contract.TypeRef e 2
+    let name ← compiledMetadata find fs[0]! (Literal.name "name")
     unless fs[1]!.getAppFn.constName? == some name do
-      throwError "unclassified_form:contract.constructor_identity:{name}"
-    discard <| getConstInfo name
+      throw s!"unclassified_form:contract.constructor_identity:{name}"
+    discard <| compiledConstant find name
     return name
-  let options ← metadata fs[3]! Literal.options
+  let options ← compiledMetadata find fs[3]! Literal.options
   return { owner, name, version, constructors, sourceText := source, options }
 
-def readSeal (source : Name) (e : Expr) : MetaM SealInput := do
-  let fs ← fields ``Contract.Seal e 3
-  let axioms ← collectAxioms source
+/-- Axiom closure is read from compiled dependencies by the caller; no proof
+checking, environment access or row-function evaluation occurs here. -/
+def readSeal (find : Name → Option ConstantInfo) (axioms : Array Name)
+    (source : Name) (e : Expr) : Except String SealInput := do
+  let fs ← Literal.fields find ``Contract.Seal e 3
   unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
-    throwError "IE-C009 ProofConstructionFailed: {source} unapproved axiom dependency"
-  let catalogs ← (← arrayValues fs[1]!).mapM fun value => do
-    let cs ← fields ``Contract.SealCatalog value 15
-    let arenaName ← metadata cs[0]! (Literal.name "seal.arena")
-    let catalogId ← metadata cs[1]! (Literal.name "seal.catalog")
+    throw s!"IE-C009 ProofConstructionFailed: {source} unapproved axiom dependency"
+  let catalogs ← (← compiledArray find fs[1]!).mapM fun value => do
+    let cs ← Literal.fields find ``Contract.SealCatalog value 15
+    let arenaName ← compiledMetadata find cs[0]! (Literal.name "seal.arena")
+    let catalogId ← compiledMetadata find cs[1]! (Literal.name "seal.catalog")
     return ({ source, arenaName, catalogId, value } : CompiledSealCatalog)
-  return { rootId := ← metadata fs[0]! (Literal.name "seal.root")
-           catalogs, options := ← metadata fs[2]! Literal.options }
+  return { rootId := ← compiledMetadata find fs[0]! (Literal.name "seal.root")
+           catalogs, options := ← compiledMetadata find fs[2]! Literal.options }
 
 end LeanInformationAudit.Contract.Decoder

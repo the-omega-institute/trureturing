@@ -58,6 +58,7 @@ def discoverWithStructure (requirements : Array RootStructure.Requirement)
     (moduleNames : Array Name)
     (sourceOf : Name → IO System.FilePath := moduleSource) : MetaM Snapshot := do
   let original ← getEnv
+  let compiled := original.setExporting false
   setEnv (original.setExporting false)
   try
     Decoder.liftLiteral <| RootStructure.checkScope requirements moduleNames
@@ -77,13 +78,18 @@ def discoverWithStructure (requirements : Array RootStructure.Requirement)
         if head == ``Contract.Registration then
           result := { result with registrations := result.registrations.push (owner, ← Decoder.registration owner info source) }
         else if head == ``Contract.TemplateEnrollment then
-          result := { result with enrollments := result.enrollments.push (owner, ← Decoder.enrollment owner info source) }
+          let value ← Decoder.liftLiteral <| Decoder.enrollment (compiled.find? ·) owner info source
+          result := { result with enrollments := result.enrollments.push (owner, value) }
         else if head == ``Contract.RootCatalog then
-          result := { result with roots := result.roots.push (owner, ← Decoder.rootCatalog info.value) }
+          let value ← Decoder.liftLiteral <| Decoder.rootCatalog (compiled.find? ·) info.value
+          result := { result with roots := result.roots.push (owner, value) }
         else if head == ``Contract.ExpectedDeclaration then
           throwError "contract.root_structure:independent_expected_not_allowed:{owner}:{info.name}"
         else if head == ``Contract.Seal then
-          result := { result with seals := result.seals.push (owner, ← Decoder.readSeal info.name info.value) }
+          let axioms ← collectAxioms info.name
+          let value ← Decoder.liftLiteral <|
+            Decoder.readSeal (compiled.find? ·) axioms info.name info.value
+          result := { result with seals := result.seals.push (owner, value) }
       result := { result with definitions := result.definitions ++ definitions }
     Decoder.liftLiteral <| RootStructure.check requirements moduleNames result.roots result.seals
     return result
