@@ -20826,6 +20826,154 @@ labels, and a count or modulus-sum decrease. Choosing a different
 favorable root at each cofactor point does not establish those
 conditions. Unrestricted noncoverage is not inferred.
 
+### A common alphabet excludes an entire low-row replacement
+
+Keep one finite whole cover by distinct odd moduli greater than one,
+globally minimal first in class count and then in modulus sum. Write its
+actual original labels and phases as
+
+$$
+d_i=3^{a_i}q^{j_i}m_i,\qquad
+0\le a_i\le2,\quad m_i\mid W,\quad W>0,\quad
+\gcd(W,3q)=\gcd(3,q)=1,\quad q>44.
+\tag{SNC7}
+$$
+
+The integers $j_i$ are arbitrary nonnegative finite heights. Assume that
+actual originals with numerical moduli 3 and 9 are present. No bound on
+$\omega(W)$ or on the maximum $j_i$ is imposed. For a designated prime
+$q$, the displayed size and coprimality conditions hold whenever $q\ge47$
+and $3q$ is coprime to $W$.
+
+Fix a first q-digit $c$. Let $E_c$ be the set of bases
+$b=(u,w)\in(\mathbb Z/9\mathbb Z)\times(\mathbb Z/W\mathbb Z)$
+that match no q-free original and no q-height-one original of first digit
+$c$. Every match uses both the original ternary phase and its literal
+cofactor phase. Suppose an actual original $g$ has $j_g\ge2$ and first
+digit $c$. Its complete private integer gives a base in $E_c$.
+
+Call a second digit $d$ common if every integer in every fiber
+$\mathscr F_{b,c,d}$ given by the same congruence formula as SNC4, now
+with this q, for every $b\in E_c$, has an actual
+owner $i$ with $j_i\ge2$, $a_i\le1$ and first digit $c$. The owner may
+vary with the base, second digit and remaining coordinates. Then
+
+$$
+\#\{d:d\text{ is common on }E_c\}\le44.
+\tag{SNC8}
+$$
+
+Here the same set of digits must work over the entire residual. A set of
+many available digits chosen separately at each base does not satisfy this
+condition.
+
+#### One source map and complete inverse enclosures
+
+Suppose instead that a set $D$ of at least 45 common digits exists, and
+choose $C\subseteq D$ of size 45. The actual 3- and 9-classes are
+disjoint: containment would contradict class-count minimality. Their
+complement has five residues modulo 9 and hence 45 safe residues modulo
+81. Fix one bijection from these safe residues to $C$. For each later
+pair of ternary digits, inject its nine possible values into the q-digit
+alphabet. This gives one prefix-compatible code, shared by every
+cofactor base.
+
+Let $G\ge2$ bound all the original q-heights. For a target integer $x$
+with first q-digit $c$ and base in $E_c$, use CRT to choose its source
+$\Psi(x)$ preserving $x$ modulo $9W$, keeping first q-digit $c$, and
+encoding the remaining q-digits by the fixed code. Equality of two source
+q-prefixes of length $2\le j\le G$ forces the targets to agree modulo
+$3^{2j}$. Retained originals keep all their higher-q conditions and are evaluated
+at the target $x$ itself.
+
+Replace exactly the originals with $a_i\le1$, $j_i\ge2$ and first digit
+$c$. Retain every other original, including all top-row originals and all
+other first colors. Assign each replaced original the modulus
+
+$$
+d_i'=3^{3+2(j_i-2)+a_i}\,q\,m_i.
+\tag{SNC9}
+$$
+
+Its complete inverse under $\Psi$, restricted to the stated target
+domain, has one ternary prefix modulo $3^{2j_i}$, fixed first q-digit
+$c$, and its original residue modulo $m_i$. Since
+$3+2(j_i-2)+a_i\le2j_i$, this entire inverse lies in one AP with modulus
+$d_i'$. Choose that AP; if the inverse is empty, any residue for $d_i'$
+is valid. Emit one replacement for every replaced original.
+
+Every new ternary exponent is at least three, so no new modulus equals
+any retained original. Its parity recovers $a_i$, after which its value
+recovers $j_i$; removing the ternary power and $q$ recovers $m_i$.
+Original numerical distinctness thus gives distinct new moduli. They
+remain odd and greater than one.
+
+Targets outside first color $c$ have retained owners. Targets of that
+color with base outside $E_c$ have retained q-free or height-one owners.
+For every remaining target, the common code supplies a source in a
+stipulated whole low-row fiber. Its actual owner is replaced, and the
+corresponding inverse enclosure covers the target. This proves whole
+integer coverage, with no change in the number of classes.
+
+The actual private point of $g$ makes the target domain nonempty.
+Applying common service at its source supplies at least one replaced
+original. Every replaced modulus strictly decreases:
+
+$$
+\frac{d_i'}{d_i}
+ =\frac{27}{q}\left(\frac9q\right)^{j_i-2}<1.
+\tag{SNC10}
+$$
+
+The total modulus sum therefore strictly decreases at equal class count,
+contradicting global minimality. This proves SNC8 without using the
+pointwise 76-root estimate or its cofactor-support and height bounds.
+
+#### The global obstruction is exactly the top-row root image
+
+Define the image of all actual same-color deep top originals by
+
+$$
+T_c=\{\lfloor\rho_i/q\rfloor\bmod q:
+ a_i=2,\ j_i\ge2,\ \rho_i\equiv c\pmod q\}.
+\tag{SNC11}
+$$
+
+A digit $d$ is common on $E_c$ if and only if $d\notin T_c$. For the
+reverse direction, whole coverage supplies an owner at each integer in
+its fiber. The residual definition excludes heights zero and one, and
+$d\notin T_c$ excludes row two. For the forward direction, an actual
+top original contributing $d$ has a complete private integer. Its base
+lies in $E_c$, but no low-row original covers that private integer.
+Thus
+
+$$
+|T_c|\ge q-44
+\quad\text{whenever first color }c\text{ contains an actual deep original}.
+\tag{SNC12}
+$$
+
+In particular, at $q=113$ there must be at least 69 distinct top-row
+second digits across the entire actual family for each such fixed first
+color $c$. This conclusion imposes
+no bound on the cofactor prime support or maximum q-height. It does not
+assert that these digits occur at one common base. Under the additional
+hypotheses of SNC3, at most 37 top digits can be active at a single base;
+the global lower bound and the pointwise upper bound are compatible.
+
+The common source, inverse enclosures, fresh numerical labels and exact
+same-count cost comparison are essential. The conclusion supplies a
+necessary global constraint on a minimal cover; it neither constructs
+the forbidden common alphabet nor proves unrestricted noncoverage.
+
+The general whole-family construction and SNC8--SNC12 have a
+cache-guarded exact Lean check: 21 axiom-closure reports use only
+`propext`, `Classical.choice` and `Quot.sound`, with no errors or
+`sorryAx`. The final statement has no externally supplied height bound
+or cofactor-prime cap. It reuses the existing arithmetic word embedding,
+CRT, original-cover comparison and finite-sum facts; no additional
+canonical Lean declaration or freeze is asserted.
+
 ## 168. An actual63 overlap excludes shared7 at height one
 
 Keep ONE EB1 original whole cover with R={7},5 concentrated and H_5=1. Then
