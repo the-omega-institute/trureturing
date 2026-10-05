@@ -104,6 +104,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/QuadraticOrderMoments/CalderonReciprocalMoments.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/calderon-2026-quadratic-order-reciprocal-moments` (proved) by `D5/S3/Arith/Congruence/QuadraticOrderMoments/CalderonReciprocalMoments.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"calderon-2026-quadratic-order-reciprocal-moments","declaration_gid":"D5/S3/Arith/Congruence/QuadraticOrderMoments/CalderonReciprocalMoments.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Kevin Calderon (2026). *Ljunggren–Jacobsthal and Bailey-Type Congruences for Rectangular Gaussian Binomial Coefficients*. DOI: [10.48550/arXiv.2608.00347](https://doi.org/10.48550/arXiv.2608.00347). URL: <https://arxiv.org/abs/2608.00347v1>.

@@ -43,7 +43,10 @@ internal sealed class CalderonReciprocalMomentsDocument : IScribeDocumentDefinit
                     new DocumentBlock.DisplayFormula(Params(All("x",Nat,All("y",Nat,All("u",Call("Units",Ring),
                         Imp(Eqn(Coerce(V("u"),Ring),Element(V("x"),V("y"))),
                             Eqn(Call("val",V("u")),Element(V("x"),V("y"))))))))),
-                    Paragraph(Text("The omega-Ljunggren and omega-Bailey conjectures remain separate conclusions; their reciprocal-moment premise is discharged. Sharpness remains open."))), DescribeRole.Theorem))));
+                    Paragraph(Text("The omega-Ljunggren and omega-Bailey conjectures remain separate conclusions; their reciprocal-moment premise is discharged. Sharpness remains open."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("calderon-2026-quadratic-order-reciprocal-moments"),
+                    ResolutionKind.Proved)))));
     private static DocumentBlock Definition(string id, string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("calderon-"+id),Handle(name),H(title),StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromLiterature(Note),Blocks(Paragraph(Text(prose))),DescribeRole.Definition);
