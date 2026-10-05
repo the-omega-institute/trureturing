@@ -275,7 +275,7 @@ C# 消费者另行检查完整证据语义、sidecar 归属及 debt 约束。固
 binding evidence，不能通过声明模板的严格消费者。
 `LeanInformationAuditRegTests` 的生产证据检查要求实际导出的 wire 等于对应 `Compiled*Wire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；当前 wire 只在实际内容改变时同步更新。
 
-唯一语义版本只配置于 `lean-report-inputs.json`。兼容程序改动不 bump，不兼容改动在同次交付 bump；契约接口改动须同时迁移全部用法，不做历史兼容。H 由目标自身编译常量的精确契约类型头与 owner 判定，包含 Registration、TemplateEnrollment、RootCatalog、Seal；只 import 登记的汇总模块不在 H。小型类型/owner/名字投影只以编译闭包追踪，不持久化评定权威，版本升级的暖路径复用它。模块 trace 包含编译闭包与 utility，仅 H 加入语义版本。origin 保留实际生成的版本和输入投影，仅 H 校验版本相等；聚合与整份收据绑定该版本，旧格式拒读。程序字节永不进入数据工件复用条件。
+唯一语义版本只配置于 `lean-report-inputs.json`。兼容程序改动不 bump，不兼容改动在同次交付 bump；契约接口改动须同时迁移全部用法，不做历史兼容。H 由目标自身编译常量的精确契约类型头与 owner 判定，包含 Registration、TemplateEnrollment、RootCatalog、Seal；只 import 登记的汇总模块不在 H。小型类型/owner/名字投影由 Lake 直接调用独立的 `inputDiscovery` 程序产生；它只读取目标的 olean parts，复用相同类型与字面定义检查。投影只以编译闭包追踪，不持久化评定权威，版本升级的暖路径复用它。模块 trace 包含编译闭包与 utility，仅 H 加入语义版本。origin 保留实际生成的版本和输入投影，仅 H 校验版本相等；聚合与整份收据绑定该版本，旧格式拒读。程序字节永不进入数据工件复用条件。
 
 Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖；编译工件 trace
 包含 inspector 私有导入所需的传递依赖。捕获结果写入模块输入旁的 `.sources.json`，

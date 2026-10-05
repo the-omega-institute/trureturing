@@ -145,12 +145,16 @@ defaultFacets = ["static"]
         self.write('ClaimSupport.lean', 'def claimSupport : Prop := False\n')
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         self.write('LeanInformationAudit/SealCommand.lean', 'def fixtureDriver : Nat := 1\n')
-        for name in ['SourceAudit', 'Literal']:
+        for name in ['SourceAudit', 'Literal', 'InputDiscovery']:
             self.write('tools/lean-inspector/LeanInformationAudit/Contract/' + name + '.lean',
                        (ROOT / ('tools/lean-inspector/LeanInformationAudit/Contract/' + name + '.lean')).read_text())
         with (self.root / 'lakefile.toml').open('a') as target:
             target.write('[[lean_lib]]\nname = "External"\n[[lean_lib]]\nname = "ClaimSupport"\n')
-            target.write('[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n')
+            target.write('[[lean_lib]]\nname = "LeanInformationAudit"\n'
+                'roots = ["LeanInformationAudit.SealCommand", "LeanInformationAudit.RegistryTypes", '
+                '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n'
+                'globs = ["LeanInformationAudit.SealCommand", "LeanInformationAudit.RegistryTypes", '
+                '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n')
         for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh', 'build_work.py']:
             self.copy('tools/lean-inspector/' + name)
         # The native-report fixtures supply their own tiny driver at the root.
@@ -162,7 +166,10 @@ defaultFacets = ["static"]
             + 'package leanInspector where\n'
             + '  buildDir := "../../.lake/build/lean-inspector/producer"\n\n'
             + 'lean_lib LeanInformationAudit where\n'
-            + '  globs := #[.submodules `LeanInformationAudit]\n\n'
+            + '  roots := #[`LeanInformationAudit.Contract.SourceAudit, '
+            + '`LeanInformationAudit.Contract.Literal, `LeanInformationAudit.Contract.InputDiscovery]\n'
+            + '  globs := #[.one `LeanInformationAudit.Contract.SourceAudit, '
+            + '.one `LeanInformationAudit.Contract.Literal, .one `LeanInformationAudit.Contract.InputDiscovery]\n\n'
             + source[source.index('target nativeImage'):].replace(
                 'lean_exe reportInspector where', '@[default_target]\nlean_exe reportInspector where'))
         self.write('tools/lean-inspector/lake-manifest.json', json.dumps(dict(

@@ -31,6 +31,9 @@ lean_exe reportInspector where
   supportInterpreter := true
   moreLinkObjs := #[{key := .mk (.packageTarget .anonymous `nativeImage)}]
 
+lean_exe inputDiscovery where
+  root := `LeanInformationAudit.Contract.InputDiscovery
+
 -- Resolve Lake's current package at runtime; copied config oleans contain no host root.
 private partial def repositoryDir (pkg : Package) : IO FilePath := do
   let rec ascend (dir : FilePath) : IO FilePath := do
@@ -117,15 +120,17 @@ module_facet judgeInputs (mod : Module) : FilePath := withCurrPackage mod.pkg do
   let root ← repositoryDir pkg
   let deps ← fetch <| pkg.facet `reportProducer
   let exportJob ← mod.exportInfo.fetch
-  let inspector ← reportInspector.fetch
-  (deps.add exportJob |>.add inspector).mapM fun _ => do
+  let discovery ← inputDiscovery.fetch
+  (deps.add exportJob |>.add discovery).mapM fun _ => do
     let info ← exportJob.await
     addTrace (info.allArtsTrace.mix info.legacyTransTrace)
     let file := root / ".lake/build/lean-inspector" / "judge-inputs" / s!"{mod.name}.json"
     buildFileUnlessUpToDate' file do
       IO.FS.createDirAll file.parent.get!
-      proc { (← nativeCommand pkg #["discover", root.toString, mod.name.toString,
-        (← inspector.await).toString, file.toString, mod.oleanFile.toString]) with
+      proc {
+        cmd := (← discovery.await).toString,
+        args := #[mod.name.toString, mod.oleanFile.toString, file.toString],
+        cwd := some root,
         env := (← getWorkspace).augmentedEnvVars }
       pure PUnit.unit
     return file

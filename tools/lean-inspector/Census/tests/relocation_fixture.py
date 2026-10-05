@@ -62,7 +62,11 @@ class NativeRelocationTests(NativeTestSupport, unittest.TestCase):
              if package["name"] == "trureturing")["dir"] = ".."
         self.write("declaration package/lake-manifest.json", json.dumps(manifest))
         config = self.root / "lakefile.toml"
-        config.write_text(config.read_text().replace('name = "LeanInformationAudit"\n',
+        source = config.read_text()
+        start = source.index('roots = ["LeanInformationAudit.SealCommand"')
+        stop = source.index('\n', source.index('globs = ', start))
+        source = source[:start] + 'globs = ["LeanInformationAudit.+"]' + source[stop:]
+        config.write_text(source.replace('name = "LeanInformationAudit"\n',
             'name = "LeanInformationAudit"\nsrcDir = "tools/lean-inspector"\n') +
             '\n[[require]]\nname = "leanInspectorInterface"\npath = "declaration package"\n')
         manifest = json.loads((self.root / "lake-manifest.json").read_text())
@@ -70,6 +74,11 @@ class NativeRelocationTests(NativeTestSupport, unittest.TestCase):
             manifestFile="lake-manifest.json", inherited=False, dir="declaration package",
             configFile="lakefile.toml"))
         self.write("lake-manifest.json", json.dumps(manifest))
+        inspector_config = self.root / "tools/lean-inspector/lakefile.lean"
+        source = inspector_config.read_text()
+        start = source.index('lean_lib LeanInformationAudit where\n')
+        stop = source.index('target nativeImage', start)
+        inspector_config.write_text(source[:start] + source[stop:])
         self.ensure()
         command = ["make", "lean", "LEAN_TARGETS=@trureturing/LeanInformationAudit.Census.Stream "
                    "@trureturing/LeanInformationAudit.Census.Membership"]

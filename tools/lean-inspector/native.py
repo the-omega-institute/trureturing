@@ -195,27 +195,6 @@ def validate_dependency_paths(root, utility_path):
         raise ValueError('unregistered native dependency sources: ' + ', '.join(sorted(set(paths) - allowed)))
 
 
-def discover(root, name, executable, output, olean):
-    """Project only the target's compiler-owned constants, never imported owners."""
-    output = Path(output)
-    with tempfile.TemporaryDirectory(prefix='.input-projection.', dir=output.parent) as directory:
-        directory = Path(directory)
-        manifest = directory / 'parts.json'
-        parts = [olean + suffix for suffix in ('', '.server', '.private')
-                 if Path(olean + suffix).is_file()]
-        if not parts or parts[0] != olean:
-            raise ValueError('contract.discovery:missing_olean:' + name)
-        manifest.write_bytes(materials.canonical_json(parts))
-        projected = directory / 'projection.json'
-        subprocess.run([executable, '--discover-inputs', name, str(manifest), str(projected)],
-                       cwd=root, check=True)
-        projection = public.read_json(projected.read_bytes())
-        public.validate_input_projection(projection, name)
-        os.replace(projected, output)
-    print('LEAN_INSPECTOR_DISCOVER module=' + name + ' inputs=' + str(len(projection['inputs'])))
-    module_work('discover', [name])
-
-
 def input_projection(root, name):
     projection = public.read_json((state(root) / 'judge-inputs' / (name + '.json')).read_bytes())
     public.validate_input_projection(projection, name)
@@ -496,7 +475,7 @@ def publish(root, destination):
 
 
 def main():
-    actions = {'prepare': prepare, 'discover': discover, 'module': module, 'aggregate': aggregate, 'publish': publish, 'batch': batch}
+    actions = {'prepare': prepare, 'module': module, 'aggregate': aggregate, 'publish': publish, 'batch': batch}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, publish, or batch')
     actions[sys.argv[1]](*sys.argv[2:])
