@@ -9,30 +9,33 @@ def closed (e : Expr) : Bool :=
 
 /-- Decode bare constant references inside metadata constructor trees. Applied
 functions remain opaque; no beta, zeta, projection or recursor evaluation runs. -/
-partial def resolveReferences (find : Name → Option ConstantInfo)
-    (e : Expr) (seen : NameSet := {}) (work : Nat := 4096) : Except String Expr := do
-  if work == 0 then throw "contract.cannot_decode:metadata:reference_work"
-  match e with
-  | .const name levels =>
-    match find name with
-    | some (.defnInfo info) =>
-      unless info.safety == .safe && info.levelParams.length == levels.length do
-        throw s!"contract.cannot_decode:metadata:{name}:unsafe_or_invalid_reference"
-      if seen.contains name then throw s!"contract.cannot_decode:metadata:{name}:reference_cycle"
-      resolveReferences find (info.value.instantiateLevelParams info.levelParams levels)
-        (seen.insert name) (work - 1)
-    | some _ => return e
-    | none => throw s!"contract.cannot_decode:metadata:{name}:missing_constant"
-  | .app .. =>
-    let args ← e.getAppArgs.mapM fun arg => resolveReferences find arg seen (work - 1)
-    return mkAppN e.getAppFn args
-  | .mdata data body => return .mdata data (← resolveReferences find body seen (work - 1))
-  | .letE name type value body nondep =>
-    if closed body then return ← resolveReferences find body seen (work - 1)
-    return .letE name type (← resolveReferences find value seen (work - 1))
-      (← resolveReferences find body seen (work - 1)) nondep
-  | .lam .. | .proj .. => throw "contract.cannot_decode:metadata:computation_required"
-  | _ => return e
+def resolveReferences (find : Name → Option ConstantInfo)
+    (e : Expr) (seen : NameSet := {}) (work : Nat := 4096) : Except String Expr :=
+  match work with
+  | 0 => throw "contract.cannot_decode:metadata:reference_work"
+  | work + 1 => do
+    match e with
+    | .const name levels =>
+      match find name with
+      | some (.defnInfo info) =>
+        unless info.safety == .safe && info.levelParams.length == levels.length do
+          throw s!"contract.cannot_decode:metadata:{name}:unsafe_or_invalid_reference"
+        if seen.contains name then throw s!"contract.cannot_decode:metadata:{name}:reference_cycle"
+        resolveReferences find (info.value.instantiateLevelParams info.levelParams levels)
+          (seen.insert name) work
+      | some _ => return e
+      | none => throw s!"contract.cannot_decode:metadata:{name}:missing_constant"
+    | .app .. =>
+      let args ← e.getAppArgs.mapM fun arg => resolveReferences find arg seen work
+      return mkAppN e.getAppFn args
+    | .mdata data body => return .mdata data (← resolveReferences find body seen work)
+    | .letE name type value body nondep =>
+      if closed body then return ← resolveReferences find body seen work
+      return .letE name type (← resolveReferences find value seen work)
+        (← resolveReferences find body seen work) nondep
+    | .lam .. | .proj .. => throw "contract.cannot_decode:metadata:computation_required"
+    | _ => return e
+termination_by work
 
 def reject {α : Type} (field : String) (e : Expr) : Except String α :=
   .error s!"contract.literal:{field}:nonliteral:{e.getAppFn.constName?.getD .anonymous}"

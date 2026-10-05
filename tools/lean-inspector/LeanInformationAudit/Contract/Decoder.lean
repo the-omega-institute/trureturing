@@ -21,21 +21,29 @@ def liftLiteral {α : Type} (value : Except String α) : MetaM α :=
   | .ok value => pure value
   | .error error => throwError "{error}"
 
-/-- Follow a compiled constant reference. Applications, lets, projections and
-recursors require computation and have no decoding route. -/
-partial def referencedValue (value : Expr) (seen : NameSet := {}) : MetaM Expr := do
-  let value := value.consumeMData
-  if let .letE _ _ _ body _ := value then
-    if Literal.closed body then return ← referencedValue body seen
-  let .const name levels := value | return value
-  let info ← getConstInfo name
-  let .defnInfo definition := info | return value
-  unless definition.safety == .safe && definition.levelParams.length == levels.length do
-    throwError "contract.cannot_decode:{name}:unsafe_or_invalid_reference"
-  if seen.contains name then throwError "contract.cannot_decode:{name}:reference_cycle"
-  if seen.size >= 4096 then throwError "contract.cannot_decode:{name}:reference_work"
-  referencedValue (definition.value.instantiateLevelParams definition.levelParams levels)
-    (seen.insert name)
+/-- Closed bodies retain no reference to their discarded let binding. -/
+private def closedBody : Expr → Expr
+  | .mdata _ body => closedBody body
+  | value@(.letE _ _ _ body _) => if Literal.closed body then closedBody body else value
+  | value => value
+
+/-- Follow at most 4096 compiled definition references. Applications,
+projections and recursors require computation and have no decoding route. -/
+def referencedValue (value : Expr) (seen : NameSet := {}) : MetaM Expr := do
+  let mut value := value
+  let mut seen := seen
+  for _ in [:4097] do
+    value := closedBody value
+    let .const name levels := value | return value
+    let info ← getConstInfo name
+    let .defnInfo definition := info | return value
+    unless definition.safety == .safe && definition.levelParams.length == levels.length do
+      throwError "contract.cannot_decode:{name}:unsafe_or_invalid_reference"
+    if seen.contains name then throwError "contract.cannot_decode:{name}:reference_cycle"
+    if seen.size >= 4096 then throwError "contract.cannot_decode:{name}:reference_work"
+    value := definition.value.instantiateLevelParams definition.levelParams levels
+    seen := seen.insert name
+  throwError "contract.cannot_decode:reference_work"
 
 def fields (name : Name) (e : Expr) (count : Nat) : MetaM (Array Expr) := do
   let .ctorInfo ctor ← getConstInfo (name.str "mk")
