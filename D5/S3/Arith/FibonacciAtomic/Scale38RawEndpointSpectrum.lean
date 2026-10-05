@@ -135,12 +135,21 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       have haddr : a ∈ leafAddresses P := by simpa [leafAddresses] using ha
       obtain ⟨b, hb⟩ := (seven_leaf_separation.1 P).2 a |>.mp haddr
       have labels := (seven_leaf_separation.2.1 P Q).2.2.mp hconf a
-      cases hp : readout a P <;> cases hq : readout a Q <;>
-        simp only [leafLabel, hp, hq] at hb labels ⊢
-      all_goals try { exact Or.inl rfl }
-      all_goals try { exact Or.inr (Or.inl rfl) }
-      all_goals try { exact Or.inr (Or.inr rfl) }
-      all_goals simp_all
+      cases hq : readout a Q with
+      | alpha =>
+        have hc : b = true := labels b true hb (by simp only [leafLabel, hq])
+        subst b
+        left
+        cases hp : readout a P <;>
+          simp only [leafLabel, hp, Option.some.injEq, reduceCtorEq] at hb ⊢
+      | beta =>
+        have hc : b = false := labels b false hb (by simp only [leafLabel, hq])
+        subst b
+        left
+        cases hp : readout a P <;>
+          simp only [leafLabel, hp, Option.some.injEq, reduceCtorEq] at hb ⊢
+      | branch => exact Or.inr (Or.inl rfl)
+      | absent => exact Or.inr (Or.inr rfl)
     
     have leaf_agreement_of_rows {k : Nat} (hk : 1 ≤ k)
         {Z U V : Index k} (hUZ : U ≠ Z) (hVZ : V ≠ Z)
@@ -200,15 +209,15 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       | xExceptional j' => rfl
       | xTail j' => rfl
       | xRight j' => rfl
-      | pSlot t => simp [LeafRow.target] at ht
-      | pTail => simp [LeafRow.target] at ht
-      | pOuter b => simp [LeafRow.target] at ht
-      | pInner => simp [LeafRow.target] at ht
-      | ySlot i t => simp [LeafRow.target] at ht
-      | yLeftTail i => simp [LeafRow.target] at ht
-      | yRightSlot i h => simp [LeafRow.target] at ht
-      | yRightTail i => simp [LeafRow.target] at ht
-      | yRightA i => simp [LeafRow.target] at ht
+      | pSlot t => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | pTail => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | pOuter b => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | pInner => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | ySlot i t => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | yLeftTail i => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | yRightSlot i h => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | yRightTail i => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | yRightA i => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
     · intro i hi
       let u : Fin k := ⟨i.val+1, by omega⟩
       let v : Fin k := ⟨i.val+2, by omega⟩
@@ -231,14 +240,14 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       | yRightSlot i' h => rfl
       | yRightTail i' => rfl
       | yRightA i' => rfl
-      | pSlot t => simp [LeafRow.target] at ht
-      | pTail => simp [LeafRow.target] at ht
-      | pOuter b => simp [LeafRow.target] at ht
-      | pInner => simp [LeafRow.target] at ht
-      | xSlot j t h => simp [LeafRow.target] at ht
-      | xExceptional j => simp [LeafRow.target] at ht
-      | xTail j => simp [LeafRow.target] at ht
-      | xRight j => simp [LeafRow.target] at ht
+      | pSlot t => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | pTail => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | pOuter b => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | pInner => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | xSlot j t h => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | xExceptional j => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | xTail j => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+      | xRight j => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
   have safe_scan {m n : Nat} (F : Fin m → Source) (z : Fin m)
       (q : Nat → Address) (exit : Fin m → Nat)
       (leaf : ∀ t < n, q t ∈ leaves (F z) ∧ chi (readout (q t) (F z)) = 0)
