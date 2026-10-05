@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/DyckValleys/ValleyBargraphBijection
    mirror-E: none(waiver:mu-welker-conjecture-three-nine-proof-core)
-   anchors: [D5/S3/Combinatorics/DyckValleys/ValleyBargraphDefs]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.DyckWord, mathlib/module/Mathlib.Data.Set.Card]
    utility: none
    digest: Contracting valleys and expanding bargraph profile horizontal edges are inverse list operations. -/
 
