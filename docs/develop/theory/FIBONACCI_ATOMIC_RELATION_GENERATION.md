@@ -58021,4 +58021,237 @@ $$
 
 与（383.18）合并便得（383.10）。阈值只依赖 $\varepsilon$ 和固定常数 $C$，故量词对指标表示的全部变化统一成立。定理 382.4 的两个绝对偏差发散族由（383.4）必有 $W(S)\to\infty$，其绝对发散与这里的相对误差、双重对数误差趋零相容。以上估计控制实际原子成本及 Robin 分母变换；它没有给出 $\sigma(M)/M$ 的 Euler 分子估计、有符号 Robin 尾项、任意整数的传输或 RH 结论。$\square$
 
+## 384. 实际 Fibonacci 前缀成本的 Mertens 缩放恒等式与稳定逆
+
+**定义 384.1（精确中心项与 Binet 核）。** 沿用定义 358.1、362.1 的实际 Fibonacci 数列与正整数原子，令
+
+$$
+\Phi=\frac{1+\sqrt5}{2},\qquad L=\log\Phi,\qquad q=\Phi^{-2},
+\qquad \beta_d=\log(1-(-q)^d)\quad(d\ge1).
+\tag{384.1}
+$$
+
+对每个整数 $N\ge1$，定义
+
+$$
+Q_N=\operatorname{lcm}(F_1,\ldots,F_N),\qquad
+W_N=\sum_{n=1}^N\varphi(n),\qquad
+\Delta_N=\log Q_N-LW_N,\qquad
+H_N=\Delta_N+\log\sqrt5.
+\tag{384.2}
+$$
+
+另记 $\mathfrak M(0)=0$、$\mathfrak M(N)=\sum_{n=1}^N\mu(n)$，并令
+
+$$
+T=\sum_{d=2}^{\infty}|\beta_d|,\qquad
+B_a=\sum_{d=1}^{\infty}|\beta_d|d^{-a}\quad(a\ge0).
+\tag{384.3}
+$$
+
+这些级数的收敛由下述估计给出。$W_N$ 保留精确求和；$\beta_d$ 不占用 §§362、382 的 $c_d=\log\Psi_d$ 记号。
+
+**定理 384.2（精确误差、全部非负幂尺度与可逆关系）。** 对所有整数 $N\ge1$，有
+
+$$
+H_N=\sum_{d=1}^N\beta_d\,\mathfrak M(\lfloor N/d\rfloor).
+\tag{384.4}
+$$
+
+同一个实际 $q$ 满足 $0<q<2/5$，且
+
+$$
+\beta_1\ge\frac{4q}{5},\qquad
+T\le\frac{q^2}{(1-q^2)^2}+\frac{q^3}{1-q^2}
+\le\frac{334q}{441},\qquad
+\beta_1-T\ge\frac{94q}{2205}>0.
+\tag{384.5}
+$$
+
+因此，对每个实数 $a\ge0$、$C\ge0$，有两个全截断估计：
+
+$$
+\begin{aligned}
+\bigl[\forall N\ge1,\ |\mathfrak M(N)|\le CN^a\bigr]
+&\Longrightarrow
+\bigl[\forall N\ge1,\ |H_N|\le CB_aN^a
+\le C(\beta_1+T)N^a\bigr],\\
+\bigl[\forall N\ge1,\ |H_N|\le CN^a\bigr]
+&\Longrightarrow
+\bigl[\forall N\ge1,\ |\mathfrak M(N)|
+\le\tfrac{2205C}{94q}N^a\bigr].
+\end{aligned}
+\tag{384.6}
+$$
+
+特别地，包括 $a=0$ 在内，
+
+$$
+\Delta_N=O(N^a)\quad\Longleftrightarrow\quad
+\mathfrak M(N)=O(N^a).
+\tag{384.7}
+$$
+
+使用经典的全截断 Mertens–RH 判据作为中间结论，还得到
+
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\forall\varepsilon>0,\qquad
+\log Q_N-L\sum_{n=1}^N\varphi(n)
+=O_\varepsilon(N^{1/2+\varepsilon}).
+\tag{384.8}
+$$
+
+这里的极限经过全部正整数 $N$；（384.8）是增长条件的等价传递，并未证明该增长条件成立。本条是实际前缀重构、精确 Binet 误差与稳定逆估计的本仓综合推导；经典中间步骤的出处附于证明，不主张文献原创性。
+
+**证明。** 首先，$\Phi^2=\Phi+1$ 给 $q=2-\Phi>0$；$\sqrt5>11/5$ 给 $\Phi>8/5$，故 $q<2/5$。实际重构（358.3）或（362.8）–（362.9）给
+
+$$
+Q_N=\prod_{n=1}^N\Psi_n,\qquad
+\log Q_N=\sum_{n=1}^N\log\Psi_n.
+\tag{384.9}
+$$
+
+此处的经典强整除序列与最小公倍数重构参见 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorem 2.1](https://arxiv.org/pdf/1310.2416v1)。Fibonacci 原子的因式分解与 Binet 公式参见 Carlo Sanna，*On the l.c.m. of shifted Fibonacci numbers*，[arXiv:2007.13330v1，§2，式（2）–（4）、Lemma 2.2](https://arxiv.org/pdf/2007.13330v1)。这里直接使用实际 $Q_N$ 与实际 $\Psi_n$ 的重构，不另置重构假设。
+
+对每个 $e\ge1$，$F_e>0$、$1-(-q)^e>0$，所以 Binet 公式给
+
+$$
+\log F_e=eL-\log\sqrt5+\beta_e.
+\tag{384.10}
+$$
+
+将其代入 $\log\Psi_n=\sum_{e\mid n}\mu(n/e)\log F_e$，并使用经典恒等式 $\sum_{e\mid n}e\mu(n/e)=\varphi(n)$ 与 $\sum_{e\mid n}\mu(n/e)=\mathbf1_{n=1}$，得到对全部 $n\ge1$ 有效的精确式
+
+$$
+\log\Psi_n-L\varphi(n)
+=-\log\sqrt5\,\mathbf1_{n=1}
++\sum_{e\mid n}\mu(n/e)\beta_e.
+\tag{384.11}
+$$
+
+将（384.11）按 $1\le n\le N$ 求和，使用（384.9），再以 $n=ed$ 重排有限和，得到
+
+$$
+\begin{aligned}
+\Delta_N+\log\sqrt5
+&=\sum_{n=1}^N\sum_{e\mid n}\mu(n/e)\beta_e\\
+&=\sum_{e=1}^N\beta_e\sum_{d=1}^{\lfloor N/e\rfloor}\mu(d)
+=\sum_{e=1}^N\beta_e\mathfrak M(\lfloor N/e\rfloor).
+\end{aligned}
+\tag{384.12}
+$$
+
+这证明（384.4）。单位校正也可直接检查：$\Psi_1=\Psi_2=Q_1=Q_2=1$、$\varphi(1)=\varphi(2)=1$，所以两个原子误差都为 $-L$，而 $\Delta_1=-L$、$\Delta_2=-2L$。由 $F_1=F_2=1$ 在（384.10）中分别取 $e=1,2$，有
+
+$$
+\beta_1=\log\sqrt5-L,
+\qquad \beta_2=\log\sqrt5-2L.
+\tag{384.13}
+$$
+
+又 $\mathfrak M(1)=1$、$\mathfrak M(2)=0$，故（384.4）在 $N=1$ 的右端为 $\beta_1=H_1$，在 $N=2$ 的右端为 $\beta_2=H_2$。$N=0$ 不在（384.4）的定义域内，不能把 $\log\sqrt5$ 校正删除。
+
+接着证明（384.5）。下述估计对任意 $0<q\le2/5$ 都成立。由 $1/(1+t)\ge1-t$（$t\ge0$）积分，
+
+$$
+\beta_1=\log(1+q)\ge q-\frac{q^2}{2}\ge\frac{4q}{5}.
+\tag{384.14}
+$$
+
+偶指标给 $|\beta_{2j}|=-\log(1-q^{2j})$；奇指标 $2j+1\ge3$ 给 $|\beta_{2j+1}|=\log(1+q^{2j+1})$。用 $-\log(1-x)\le x/(1-x)$（$0\le x<1$）、$\log(1+x)\le x$（$x\ge0$）和几何级数，得到
+
+$$
+\begin{aligned}
+\sum_{j\ge1}|\beta_{2j}|
+&\le\frac1{1-q^2}\sum_{j\ge1}q^{2j}
+=\frac{q^2}{(1-q^2)^2},\\
+\sum_{j\ge1}|\beta_{2j+1}|
+&\le\sum_{j\ge1}q^{2j+1}
+=\frac{q^3}{1-q^2}.
+\end{aligned}
+\tag{384.15}
+$$
+
+这同时证明 $T<\infty$；因 $d^{-a}\le1$，也有 $B_a\le\beta_1+T<\infty$。两个关于 $q$ 的非负因子分别随 $q$ 增大，故
+
+$$
+\begin{aligned}
+\frac{T}{q}
+&\le\frac{q}{(1-q^2)^2}+\frac{q^2}{1-q^2}\\
+&\le\frac{2/5}{(1-4/25)^2}
++\frac{4/25}{1-4/25}
+=\frac{250}{441}+\frac4{21}=\frac{334}{441}.
+\end{aligned}
+\tag{384.16}
+$$
+
+与（384.14）合并，
+
+$$
+\beta_1-T\ge
+q\left(\frac45-\frac{334}{441}\right)
+=\frac{94q}{2205}>0.
+\tag{384.17}
+$$
+
+现在固定 $a\ge0$。若 $|\mathfrak M(n)|\le Cn^a$ 对所有 $n\ge1$ 成立，则对 $1\le d\le N$ 有 $1\le\lfloor N/d\rfloor\le N/d$，因而
+
+$$
+|H_N|\le\sum_{d=1}^N|\beta_d|\,C\lfloor N/d\rfloor^a
+\le CN^a\sum_{d=1}^N|\beta_d|d^{-a}
+\le CB_aN^a.
+\tag{384.18}
+$$
+
+反之，设 $|H_N|\le CN^a$ 对所有 $N\ge1$ 成立，置 $K=2205C/(94q)\ge0$。对 $N\ge1$ 作强归纳。由（384.4）拆出 $d=1$ 得
+
+$$
+\beta_1\mathfrak M(N)
+=H_N-\sum_{d=2}^N\beta_d\mathfrak M(\lfloor N/d\rfloor).
+\tag{384.19}
+$$
+
+当 $2\le d\le N$ 时，$1\le\lfloor N/d\rfloor<N$，所以归纳假设及 $a\ge0$ 给 $|\mathfrak M(\lfloor N/d\rfloor)|\le KN^a$。于是
+
+$$
+\beta_1|\mathfrak M(N)|
+\le(C+KT)N^a\le K\beta_1N^a,
+\tag{384.20}
+$$
+
+因为（384.17）给 $K(\beta_1-T)\ge C$。$\beta_1>0$，可约去，完成归纳；$N=1$ 时尾和为空，是同一证明的起步情形。这证明（384.6）的逆估计，并没有预先假定 $\mathfrak M$ 的任何全局范数界。
+
+对任意序列 $f(N)$，若某个 $|f(N)|\le CN^a$ 只在 $N\ge N_0$ 时成立，将常数扩大为 $C$ 与有限多个 $|f(N)|/N^a$（$1\le N<N_0$）的最大值，即得全截断界。又 $N^a\ge1$，所以增加或减去常数 $\log\sqrt5$ 不改变 $O(N^a)$。将这两点与（384.6）合并，证明（384.7），包括 $a=0$。
+
+为说明这个实际变换的代数结构，在 $f(0)=0$ 的序列上记
+
+$$
+D_df(N)=f(\lfloor N/d\rfloor),\qquad
+T_bf(N)=\sum_{d=1}^N b(d)D_df(N).
+\tag{384.21}
+$$
+
+正整数的除法恒等式给 $D_dD_e=D_{de}$；重排有限和给
+
+$$
+T_bT_cf=T_{b*c}f,
+\qquad (b*c)(n)=\sum_{d\mid n}b(d)c(n/d).
+\tag{384.22}
+$$
+
+因此缩放算子是正整数乘法幺半群的表示；首系数非零的 Dirichlet 核在卷积下可逆。对本定理的 $b=\beta$，更具体地，给定 $g(N)$ 后可依（384.19）按 $N$ 递归恢复唯一的 $f(N)$，因为尾部只调用较小正指标且 $\beta_1>0$。对满足 $\sup_{N\ge1}|g(N)|/N^a<\infty$ 的 $g$，同一个强归纳证明给恢复序列的有限增长范数，常数至多 $2205/(94q)$；（384.18）给正向常数 $B_a$。首系数非零负责代数逆的存在，严格的首尾差则负责这个实际逆在全部 $a\ge0$ 的增长尺度上稳定。这是（384.7）的双向关系。
+
+最后说明（384.8）的经典解析供给。Nathan Ng，*The distribution of the summatory function of the Möbius function*，Proc. London Math. Soc. (3) **89** (2004), 361–389，[作者稿，§1，p. 5](https://www.cs.uleth.ca/~nathanng/RESEARCH/mobius2b.pdf)，明确陈述 RH 等价于某个固定 $c>0$ 下的 $\mathfrak M(x)=O(x^{1/2}\exp(c\log x/\log\log x))$，并引用 Titchmarsh 第二版 p. 371。这个经典 RH 方向给出每个 $\varepsilon>0$ 的 $O_\varepsilon(x^{1/2+\varepsilon})$。反方向可由同文 pp. 1–2 的经典分部求和式
+
+$$
+\frac1{\zeta(s)}=s\int_1^\infty\mathfrak M(x)x^{-s-1}\,dx
+\qquad(\Re s>1)
+\tag{384.23}
+$$
+
+得到：若每个正 $\varepsilon$ 的幂界都成立，右端积分在 $\Re s>1/2$ 局部一致收敛，故为解析函数；在这个半平面删去 $s=1$ 后，其与 $\zeta(s)$ 的乘积在 $\Re s>1$ 等于一，由解析延拓排除该域内的零点。$s=1$ 是 $\zeta$ 的极点，不是零点；再由经典功能方程的零点对称性得到 RH。正整数截断与实数截断等价，因为 $\mathfrak M(x)=\mathfrak M(\lfloor x\rfloor)$ 且 $\lfloor x\rfloor\le x<\lfloor x\rfloor+1\le2\lfloor x\rfloor$（$x\ge1$）。应用（384.7）于 $a=1/2+\varepsilon$ 即得（384.8）；这里未使用 Ng 后续定理中的零点单纯性或负矩假设。
+
+这一推导保留 $\sum_{n\le N}\varphi(n)$ 的精确中心项。§358 的二次渐近误差界不能替代它来建立（384.8）的抵消尺度；§383 的任意有限族绝对估计也未供应（384.8）所需的有符号增长界。$\square$
+
 ## 追加锚（本行以下为增补区）
