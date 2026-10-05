@@ -27,7 +27,7 @@ internal sealed class BarrigaTenModeFourierEdgeRefutationDocument : IScribeDocum
                 "A diagonal matrix whose diagonal entries are complex numbers of modulus 1, the input and output phase shifters of the paper.",
                 "IsUnimodularDiagonal", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The conjectured bound for N = 10", ClaimFormula(),
-                "The third conjecture of the paper for N = 10 with l = 5, read for the most restrictive notion of solution: every real symmetric coupling matrix with nonnegative off-diagonal entries and connected coupling graph whose propagator exp(-i H) (the frozen hamiltonianPropagator at time 1) gives F10 after input and output phase shifters has at least 25 edges.",
+                "The third conjecture of the paper for N = 10 with l = 5, read for the most restrictive notion of solution: every real symmetric coupling matrix with nonnegative off-diagonal entries and connected coupling graph whose propagator exp(-i H) gives F10 after input and output phase shifters has at least 25 edges. The propagator is the frozen hamiltonianPropagator at time 1, applied to the complex matrix map(H, ofReal) obtained by casting each real entry of H to a complex number.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The bound fails", Disp(new Formula.Not(F.Id("claim"))),
                 "Let s = sqrt 5 and let C0 be the symmetric circulant on Z_5 with a = pi (35 - 13 s)/25 at distance 1 and b = pi (35 + 13 s)/25 at distance 2. Its Fourier eigenvalues are 28 pi/5, -4 pi, 6 pi/5, 6 pi/5 and -4 pi, so exp(-i C0) has entries (w/sqrt 5) w^(4 (j - k)^2) with w = exp(2 pi i/5). With q = (21 s - 65)/20 and g = q + i sqrt(1 - q^2), the matrix P with entries (Re(g w^(j + k - 1)) + cos(2 pi (j - k)/5))/5 is a rank-one projector onto a vector of the -4 pi eigenspace. Hence K = C0 + 2 pi P commutes with C0 and exp(-i K) = exp(-i C0) exp(-2 pi i P) = exp(-i C0). The value of q makes K 0 1 = 0, and every other off-diagonal entry of K is positive. Through x -> (x mod 2, x mod 5) the ten-mode matrix is H = (pi/4) X (x) I + I (x) K. Its exponential is w D F10 D for the unimodular diagonal D with entries (-i)^(x mod 2) w^(4 (x mod 5)^2), by the congruence 5ab + 4jk = -xy mod 10. The coupling graph consists of the cliques on the even and on the odd modes without the edges {0, 6} and {1, 5}, together with the five edges {x, x + 5}. It is connected and has 23 < 25 edges.",
@@ -115,7 +115,7 @@ internal sealed class BarrigaTenModeFourierEdgeRefutationDocument : IScribeDocum
         Formula nonnegative = All("x", Modes(), All("y", Modes(),
             Implies(NotEqual(x, y), LessEq(D(0), Entry(h, x, y)))));
         Formula connected = Call("Connected", Call("supportGraph", h));
-        Formula propagator = Call("hamiltonianPropagator", h, D(1));
+        Formula propagator = Call("hamiltonianPropagator", Call("map", h, Named("ofReal")), D(1));
         Formula realizes = Some("Q", ComplexMatrices(), Some("R", ComplexMatrices(),
             And(And(Call("IsUnimodularDiagonal", po), Call("IsUnimodularDiagonal", pi)),
                 Equal(Seq(po, Sp, Cdot, Sp, propagator, Sp, Cdot, Sp, pi), Named("F10")))));

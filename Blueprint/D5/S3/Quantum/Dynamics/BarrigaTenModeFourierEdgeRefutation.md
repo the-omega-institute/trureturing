@@ -54,7 +54,7 @@ A diagonal matrix whose diagonal entries are complex numbers of modulus 1, the i
 
 **Definition 1.5 (The conjectured bound for N = 10).**
 
-$$claim \Leftrightarrow (\forall H \in \operatorname{Matrix}\left(\operatorname{Fin}\left(10\right), \operatorname{Fin}\left(10\right), \mathbb{R}\right),\; \operatorname{IsSymm}\left(H\right) \Rightarrow (\left(\forall x \in \operatorname{Fin}\left(10\right),\; \forall y \in \operatorname{Fin}\left(10\right),\; x \ne y \Rightarrow (0 \le H\left(x, y\right))\right) \Rightarrow (\operatorname{Connected}\left(\operatorname{supportGraph}\left(H\right)\right) \Rightarrow (\left(\exists Q \in \operatorname{Matrix}\left(\operatorname{Fin}\left(10\right), \operatorname{Fin}\left(10\right), \mathbb{C}\right),\; \exists R \in \operatorname{Matrix}\left(\operatorname{Fin}\left(10\right), \operatorname{Fin}\left(10\right), \mathbb{C}\right),\; \left(\operatorname{IsUnimodularDiagonal}\left(Q\right) \land \operatorname{IsUnimodularDiagonal}\left(R\right)\right) \land Q \cdot \operatorname{hamiltonianPropagator}\left(H, 1\right) \cdot R = \operatorname{F10}\right) \Rightarrow (25 \le \operatorname{edgeCount}\left(H\right))))))$$
+$$claim \Leftrightarrow (\forall H \in \operatorname{Matrix}\left(\operatorname{Fin}\left(10\right), \operatorname{Fin}\left(10\right), \mathbb{R}\right),\; \operatorname{IsSymm}\left(H\right) \Rightarrow (\left(\forall x \in \operatorname{Fin}\left(10\right),\; \forall y \in \operatorname{Fin}\left(10\right),\; x \ne y \Rightarrow (0 \le H\left(x, y\right))\right) \Rightarrow (\operatorname{Connected}\left(\operatorname{supportGraph}\left(H\right)\right) \Rightarrow (\left(\exists Q \in \operatorname{Matrix}\left(\operatorname{Fin}\left(10\right), \operatorname{Fin}\left(10\right), \mathbb{C}\right),\; \exists R \in \operatorname{Matrix}\left(\operatorname{Fin}\left(10\right), \operatorname{Fin}\left(10\right), \mathbb{C}\right),\; \left(\operatorname{IsUnimodularDiagonal}\left(Q\right) \land \operatorname{IsUnimodularDiagonal}\left(R\right)\right) \land Q \cdot \operatorname{hamiltonianPropagator}\left(\operatorname{map}\left(H, \operatorname{ofReal}\right), 1\right) \cdot R = \operatorname{F10}\right) \Rightarrow (25 \le \operatorname{edgeCount}\left(H\right))))))$$
 
 *Formalization.* `D5/S3/Quantum/Dynamics/BarrigaTenModeFourierEdgeRefutation.claim` (`✓ std3`).
 
@@ -62,7 +62,7 @@ $$claim \Leftrightarrow (\forall H \in \operatorname{Matrix}\left(\operatorname{
 
 *Commentary.*
 
-The third conjecture of the paper for N = 10 with l = 5, read for the most restrictive notion of solution: every real symmetric coupling matrix with nonnegative off-diagonal entries and connected coupling graph whose propagator exp(-i H) (the frozen hamiltonianPropagator at time 1) gives F10 after input and output phase shifters has at least 25 edges.
+The third conjecture of the paper for N = 10 with l = 5, read for the most restrictive notion of solution: every real symmetric coupling matrix with nonnegative off-diagonal entries and connected coupling graph whose propagator exp(-i H) gives F10 after input and output phase shifters has at least 25 edges. The propagator is the frozen hamiltonianPropagator at time 1, applied to the complex matrix map(H, ofReal) obtained by casting each real entry of H to a complex number.
 
 **Theorem 1.6 (The bound fails).**
 
