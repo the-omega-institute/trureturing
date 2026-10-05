@@ -84,7 +84,6 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
           (2 : ℝ) ^ a * x - 1 / 2 := by
         rw [da, pow_succ]
         field_simp
-        <;> ring
       rw [scale]
       constructor <;> linarith [expansion]
     refine ⟨d, by dsimp [d]; omega, ?_, ?_⟩
@@ -99,7 +98,6 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
           rw [← pow_add, Nat.add_sub_of_le ha]
         rw [power]
         field_simp
-        <;> ring
       have H := Int.floor_div_natCast ((2 : ℝ) ^ a * (x - 1 / (2 : ℝ) ^ d))
         ((2 : ℕ) ^ (a - h))
       have H' := Int.floor_div_natCast ((2 : ℝ) ^ a * x) ((2 : ℕ) ^ (a - h))
@@ -109,7 +107,8 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
   have data (n : ℕ) (P : Fin n → ℝ) (hS : ∑ i, P i = 1) :
       (∀ d, 0 ≤ residual P d) ∧
       Summable (fun d => residual P d / (2 : ℝ) ^ d) := by
-    have frac (d : ℕ) : residual P d = ∑ i, Int.fract ((2 : ℝ) ^ d * P i) := by
+    have frac (d : ℕ) :
+        residual P d = ∑ i, Int.fract ((2 : ℝ) ^ d * P i) := by
       simp only [DyadicSupportLines.residual, Int.fract, Finset.sum_sub_distrib, ← Finset.mul_sum, hS,
         mul_one, Int.cast_sum]
     have bounds (d : ℕ) : 0 ≤ residual P d ∧ residual P d ≤ n := by
@@ -206,7 +205,8 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
     calc
       _ = ∑ i ∈ I.attach, F (q (enum i)) :=
         (Finset.sum_attach_eq_sum_dite I (fun i => F (q (enum i)))).symm
-      _ = ∑ i : I, F (q (enum i)) := (Finset.sum_coe_sort_eq_attach I (fun i => F (q (enum i)))).symm
+      _ = ∑ i : I, F (q (enum i)) :=
+        (Finset.sum_coe_sort_eq_attach I (fun i => F (q (enum i)))).symm
       _ = _ := enum.sum_comp (fun a => F (q a))
   have Rnonneg (i : Fin m) : 0 ≤ R i := by
     dsimp only [R]
@@ -233,7 +233,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
   have tpos : 0 < t := hp k
   obtain ⟨B, hB⟩ := pow_unbounded_of_one_lt ((1 + u) / g)
     (by norm_num : (1 : ℝ) < 2)
-  obtain ⟨d, hd, digit, shallow⟩ := deep (p j) (hp j) hnondyadic B
+  obtain ⟨d, hd, _, shallow⟩ := deep (p j) (hp j) hnondyadic B
   let δ := 1 / (2 : ℝ) ^ d
   have δpos : 0 < δ := by dsimp only [δ]; positivity
   have δsmall : δ * (1 + u) < g := by
@@ -303,10 +303,10 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
       rw [scale]
       by_cases hij : i = j
       · subst i
-        rw [Rj, mul_zero, Int.floor_zero, add_zero, add_zero, if_pos rfl,
-          Int.floor_sub_intCast]
-      · rw [if_neg hij, sub_zero, sub_zero]
-        exact Int.le_floor_add _ _
+        simp only [Rj, mul_zero, Int.floor_zero, add_zero, if_true,
+          Int.floor_sub_intCast, le_refl]
+      · simpa only [if_neg hij, sub_zero] using
+          Int.le_floor_add ((2 : ℝ) ^ (h + d) * p i) ((2 : ℝ) ^ h * R i)
     have relabel : (∑ i, (⌊(2 : ℝ) ^ h * R i⌋ : ℝ)) =
         ∑ a, (⌊(2 : ℝ) ^ h * q a⌋ : ℝ) :=
       relabel_sum (fun x => (⌊(2 : ℝ) ^ h * x⌋ : ℝ)) (by simp)
@@ -332,7 +332,6 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
         dsimp only [δ]
         rw [pow_add]
         field_simp
-        <;> ring
   have tail_sum : (∑' h, residual P (h + d) / (2 : ℝ) ^ (h + d)) ≤
       (∑' h, residual p (h + d) / (2 : ℝ) ^ (h + d)) + δ * cost q := by
     have shiftedP := (summable_nat_add_iff d).mpr PD.2
@@ -354,7 +353,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
     (fun i => receiver_mass ▸ lower i)
   have improvement : alpha m * t + δ * (alpha e * u) < alpha m * (t + δ * u) := by
     have H := mul_lt_mul_of_pos_right hα (mul_pos δpos upos)
-    nlinarith
+    nlinarith only [H]
   rw [receiver_mass] at contradicts
   have bound : cost P ≤ alpha m * t + δ * (alpha e * u) := by
     simpa only [optimum, hcost] using cost_bound
