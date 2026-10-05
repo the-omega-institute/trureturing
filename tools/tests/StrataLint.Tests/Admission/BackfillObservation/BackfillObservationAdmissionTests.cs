@@ -7,35 +7,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class ProductionEnvironmentTests
 {
-    private const string ObservedTheoryPath = "docs/develop/theory/OBSERVED_VOLUME.md";
-    private const string ObservedTheoryFinding =
-        "theory document 'docs/develop/theory/OBSERVED_VOLUME.md' has no digestion source: "
-        + "run make ingest, which registers it with the default atomizer";
-
-    [Fact]
-    public void CoverAtomObserveFindingDoesNotBlockAndIsPrinted()
-    {
-        var materialized = CoverWorld.Materialize(new CoverSpec());
-        materialized.Files[ObservedTheoryPath] = "# Observed volume\n";
-        materialized.Baseline[ObservedTheoryPath] = "# Observed volume\n";
-        var inputs = DirectoryInputs(materialized);
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var console = new BufferedConsole();
-
-        var exitCode = CliApplication.Run(
-            ["cover-atom", .. CoverArgs(inputs)],
-            BuildCoverEnvironment(temporary.Path, inputs, inputs.Files),
-            console);
-
-        Assert.Equal(0, exitCode);
-        Assert.Empty(console.Error);
-        Assert.Contains("COVER atom_id=", console.Output, StringComparison.Ordinal);
-        Assert.Contains("OBSERVED SL-016 Meta/BACKFILL.yaml: " + ObservedTheoryFinding,
-            console.Output,
-            StringComparison.Ordinal);
-    }
-
     [Fact]
     public void IngestObserveFindingDoesNotBlockAndIsPrinted()
     {

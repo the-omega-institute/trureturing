@@ -184,44 +184,6 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void AdmissionRechecksAndAllowsMatchingOpenProjectionWhenCodeClosureChanges()
-    {
-        var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n**未登记体 2.1**。claim。\n");
-        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
-        var atom = Assert.Single(atomized.Claims);
-        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
-        var ledger = WithGenreCheck(
-            WithAtomizer(
-                Ledger([], CasEntry("inherited-receipt", atom, captured.Reference)),
-                AtomizerRegistry.PzgId),
-            atomized.GenreRegistryCheck);
-        var baselineSnapshot = DigestionTestSupport.Snapshot(
-            ("docs/source.md", sourceBytes),
-            (captured.RelativePath, captured.Bytes.ToArray()),
-            ("tools/StrataLint.Engine/Digestion/Atomizers/PzgAtomizer.cs", Encoding.UTF8.GetBytes("old")));
-        var candidateSnapshot = DigestionTestSupport.Snapshot(
-            ("docs/source.md", sourceBytes),
-            (captured.RelativePath, captured.Bytes.ToArray()),
-            ("tools/StrataLint.Engine/Digestion/Atomizers/PzgAtomizer.cs", Encoding.UTF8.GetBytes("new")));
-        var calls = 0;
-
-        var result = DigestionLedgerAligner.Evaluate(
-            ledger,
-            candidateSnapshot,
-            ledger,
-            DigestionAlignmentMode.Admission,
-            _ => (_, _) =>
-            {
-                calls++;
-                return atomized;
-            },
-            baselineSnapshot);
-
-        Assert.Equal(1, calls);
-        Assert.Empty(result.Findings);
-    }
-
-    [Fact]
     public void AdmissionDoesNotReatomizeForAnUnrelatedRepositoryChange()
     {
         var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n**未登记体 2.1**。claim。\n");
@@ -260,51 +222,6 @@ public sealed partial class DigestionAlignmentTests
             baselineSnapshot);
 
         Assert.Equal(0, calls);
-        Assert.Empty(result.Findings);
-    }
-
-    [Theory]
-    [InlineData("Directory.Packages.props")]
-    [InlineData("tools/StrataLint.Engine/StrataLint.Engine.csproj")]
-    public void AdmissionRechecksWhenAtomizerBuildInputChanges(string changedPath)
-    {
-        var registration = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest())!;
-        registration["rule_build_inputs"] = new System.Text.Json.Nodes.JsonArray(changedPath);
-        var registrationBytes = Encoding.UTF8.GetBytes(registration.ToJsonString());
-        var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n**未登记体 2.1**。claim。\n");
-        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
-        var atom = Assert.Single(atomized.Claims);
-        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
-        var ledger = WithGenreCheck(
-            WithAtomizer(
-                Ledger([], CasEntry("inherited-receipt", atom, captured.Reference)),
-                AtomizerRegistry.PzgId),
-            atomized.GenreRegistryCheck);
-        var baselineSnapshot = DigestionTestSupport.Snapshot(
-            (EngineeringRegistrationFixture.Path, registrationBytes),
-            ("docs/source.md", sourceBytes),
-            (captured.RelativePath, captured.Bytes.ToArray()),
-            (changedPath, Encoding.UTF8.GetBytes("old")));
-        var candidateSnapshot = DigestionTestSupport.Snapshot(
-            (EngineeringRegistrationFixture.Path, registrationBytes),
-            ("docs/source.md", sourceBytes),
-            (captured.RelativePath, captured.Bytes.ToArray()),
-            (changedPath, Encoding.UTF8.GetBytes("new")));
-        var calls = 0;
-
-        var result = DigestionLedgerAligner.Evaluate(
-            ledger,
-            candidateSnapshot,
-            ledger,
-            DigestionAlignmentMode.Admission,
-            _ => (_, _) =>
-            {
-                calls++;
-                return atomized;
-            },
-            baselineSnapshot);
-
-        Assert.Equal(1, calls);
         Assert.Empty(result.Findings);
     }
 

@@ -1,0 +1,47 @@
+## 定理 16.4：不可恢复的陷阱证书
+
+设 $\mathcal L\subseteq\mathfrak B$ 满足：
+
+$$
+\mathcal L\cap\mathcal W_0=\varnothing,
+$$
+
+并且对每个 $B\in\mathcal L$，每个共同合法动作 $a$，都存在一个非空响应分支，使：
+
+$$
+B_{a,r}\in\mathcal L.
+$$
+
+则：
+
+$$
+\mathcal L\cap\mathcal W_{\mathrm{fin}}=\varnothing.
+$$
+
+### 16.4 证明
+
+归纳证明 $\mathcal L\cap\mathcal W_n=\varnothing$。
+
+零层由假设成立。若某个 $B\in\mathcal L$ 能在下一层加入，就应有一个动作使所有响应后继进入 $\mathcal W_n$。但陷阱条件保证至少有一个后继仍在 $\mathcal L$，与归纳假设矛盾。∎
+
+这与成功证书对偶：
+
+$$
+\begin{aligned}
+\text{成功证书：}&\quad
+\exists\text{动作，所有响应都严格推进};\\
+\text{失败证书：}&\quad
+\forall\text{动作，总有响应留在障碍中}.
+\end{aligned}
+$$
+
+在有限模型中，取：
+
+$$
+\mathcal L=\mathfrak B\setminus\mathcal W_{\mathrm{fin}},
+$$
+
+就得到完整的失败域。
+
+---
+
