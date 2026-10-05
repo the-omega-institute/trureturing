@@ -22,6 +22,7 @@ local notation "S" => (fun m : ℕ => {s : State // IsState m s})
 local notation "A" => (fun (m : ℕ) (s : State) => {a : Action // Legal m s a})
 set_option quotPrecheck false in
 local notation "P" => (fun m : ℕ => (s : S m) → A m s.val)
+set_option quotPrecheck false in
 local notation "labels" => (fun (m : ℕ) (s : State) (a : Action) =>
   Finset.sort (CarryGraphRealization.labelSet m ⟨fun _ => s, fun _ => a⟩ 0)
     (fun i j => i ≤ j))
