@@ -249,8 +249,21 @@ private def realCertificate : PLift (K = Real.pi • κ ∧
   have hPtable : P = (1 / 2 : ℝ) • (κ - Ccoeff) := by
     ext j k
     fin_cases j <;> fin_cases k <;>
-      simp [P, κ, Ccoeff, h2, h3, h4] <;>
-      simp [γ, ω, c, q, u] <;> ring_nf <;> simp only [hs] <;> ring
+      simp only [P, add_zero, zero_add, Nat.mod_succ, h4, mul_re, sub_re, ofReal_re, I_re,
+        mul_zero, ofReal_im, I_im, mul_one, sub_self, sub_zero, sub_im, mul_im, zero_sub, mul_neg,
+        sub_neg_eq_add, tsub_zero, Nat.mod_self, pow_zero, one_re, one_div, κ, neg_mul,
+        Fin.zero_eta, Fin.isValue, Matrix.smul_apply, Matrix.sub_apply, of_apply, cons_val',
+        cons_val_zero, cons_val_fin_one, Ccoeff, ↓reduceIte, smul_eq_mul, Nat.reduceAdd,
+        Nat.add_one_sub_one, Fin.mk_one, cons_val_one, zero_ne_one, Fin.coe_ofNat_eq_mod,
+        Nat.one_mod, Nat.zero_mod, Nat.reduceMod, OfNat.one_ne_ofNat, or_false, pow_one,
+        Nat.reduceSub, h3, neg_add_rev, ofReal_div, ofReal_add, ofReal_neg, ofReal_one,
+        ofReal_ofNat, ofReal_mul, ofReal_sub, div_ofNat_re, add_re, neg_re, one_im, div_ofNat_im,
+        zero_mul, zero_div, Fin.reduceFinMk, cons_val, Fin.reduceEq, OfNat.ofNat_ne_one,
+        Nat.reduceEqDiff, or_self, h2, add_im, neg_im, neg_zero, or_true, one_ne_zero] <;>
+      simp only [γ, q, ofReal_div, ofReal_sub, ofReal_mul, ofReal_ofNat, add_re, div_ofNat_re,
+        sub_re, mul_re, re_ofNat, ofReal_re, im_ofNat, ofReal_im, mul_zero, sub_zero, I_re, I_im,
+        mul_one, sub_self, add_zero, c, add_im, div_ofNat_im, sub_im, mul_im, zero_mul, zero_div,
+        zero_add, u, ω, ofReal_one, one_re, one_im] <;> ring_nf <;> simp only [hs] <;> ring
   have hPsymm : P.IsSymm := by
     rw [hPtable]
     ext j k
@@ -378,7 +391,15 @@ private def circulantCertificate : PLift (Complex.exp (2 * Real.pi * I / 5) = ω
   have hVW : V * W = (5 : ℂ) • (1 : Matrix (Fin 5) (Fin 5) ℂ) := by
     ext j k
     fin_cases j <;> fin_cases k <;>
-      simp [V, W, Matrix.mul_apply, Fin.sum_univ_succ] <;>
+      simp only [Fin.zero_eta, Fin.isValue, Matrix.mul_apply, V, Fin.coe_ofNat_eq_mod,
+        Nat.zero_mod, zero_mul, pow_zero, W, mul_zero, tsub_zero, Nat.mod_self, mul_one,
+        Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, Nat.cast_ofNat,
+        Matrix.smul_apply, one_apply_eq, smul_eq_mul, Fin.mk_one, Nat.one_mod, one_mul,
+        Fin.sum_univ_succ, Fin.val_succ, zero_add, Nat.add_one_sub_one, Nat.mod_succ,
+        Nat.reduceAdd, Nat.reduceMod, Nat.reduceSub, Finset.univ_unique, Fin.default_eq_zero,
+        Fin.val_eq_zero, pow_one, Finset.card_singleton, one_smul, ne_eq, zero_ne_one,
+        not_false_eq_true, one_apply_ne, Fin.reduceFinMk, Nat.reduceMul, Fin.reduceEq,
+        one_ne_zero] <;>
       ring_nf <;> (try simp only [h5, h6, h7, h8]) <;>
       first | ring1 | linear_combination hsum
   have hCV : (Ccoeff.map (↑) : Matrix (Fin 5) (Fin 5) ℂ) * V =
@@ -441,7 +462,15 @@ private def circulantCertificate : PLift (Complex.exp (2 * Real.pi * I / 5) = ω
   have hU : (1 / 5 : ℂ) • (V * diagonal E * W) = U5 := by
     ext j k
     fin_cases j <;> fin_cases k <;>
-      simp [V, W, E, U5, Matrix.mul_apply, Fin.sum_univ_succ] <;>
+      simp only [one_div, E, Fin.zero_eta, Fin.isValue, Matrix.smul_apply, Matrix.mul_apply, V,
+        Fin.coe_ofNat_eq_mod, Nat.zero_mod, zero_mul, pow_zero, one_mul, Fin.sum_univ_succ,
+        Fin.succ_zero_eq_one, Fin.succ_one_eq_two, Fin.reduceSucc, Finset.univ_unique,
+        Fin.default_eq_zero, Finset.sum_singleton, W, mul_zero, tsub_zero, Nat.mod_self, mul_one,
+        diagonal_apply_eq, cons_val_zero, ne_eq, one_ne_zero, not_false_eq_true,
+        diagonal_apply_ne, Fin.reduceEq, add_zero, zero_ne_one, cons_val_one, zero_add, cons_val,
+        smul_eq_mul, U5, Nat.reducePow, Nat.reduceMul, Nat.reduceMod, Fin.mk_one, Nat.one_mod,
+        Fin.val_succ, Nat.add_one_sub_one, Nat.mod_succ, Nat.reduceAdd, Nat.reduceSub,
+        Fin.val_eq_zero, pow_one, Fin.reduceFinMk, one_pow] <;>
       field_simp [hs_ne] <;> ring_nf <;>
       (try simp only [h5, h6, h7, h8, h9, h10]) <;>
       (try simp only [h2, h3, h4]) <;> (try simp only [ω, c]) <;>
