@@ -427,6 +427,18 @@ runtime, effective regularization rate, new Lean result, actual cofinal
 signs, all-input half-bound, Robin or RH conclusion.
 
 
+The [two actual midpoint residual columns](theta-profile-residual-gram.md)
+acquire a first full-space simultaneous complex-coefficient Gram for
+the left J4 profiles at centers 0 and 1/2, with widths 1/2 and zero
+primal/dual witnesses. Fresh original negative-edge actions, common
+cross entries, whole-cell derivative transport and both tails give
+a positive upper Gram with norm below 0.001698. The interior enclosure
+error dominates this coarse baseline. The complete growing family,
+nonzero shared correction, common coefficient cost and cofinal signs
+remain unresolved. The old quadratic rows and grid producers are unused;
+there is no new Lean, original half-bound, Robin or RH result.
+
+
 The [explicit actual-endpoint constants](../../../Library/Dynamics/clason2021regularization.md#explicit-original-series-constants-for-the-actual-endpoint-strip)
 reuse the relative theta remainder and original derivative polynomials.
 The [two-rate normalization bound](../../../Library/Dynamics/clason2021regularization.md#retain-both-actual-endpoint-decay-rates)
