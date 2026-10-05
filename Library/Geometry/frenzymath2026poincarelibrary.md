@@ -5795,3 +5795,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 对于任意上述实际平坦 Levi–Civita 数据 `D`，原 `nativeLogHeight` 的实际 `D.gradient` 等于原高度倒数乘以高度投影的欧氏对偶单位向量。该向量的实际自内积为 1，故平坦度量下真实梯度范数平方精确为原高度平方的倒数；梯度识别直接由公开 `inner_gradient`、已核验的原对数高度实际微分及对偶向量内积公式推出。原高度倒数的实际微分以及 `exp(±2*logheight)` 的精确原高度公式也已核验。
 
 上述原对象构造与消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。常值切向场的实际协变导数为零、平坦曲率与真正 Hessian、原高度缩放度量的曲率 −1 仍待闭合；一般原流形的通用度量覆盖及有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 原 H3 的实际平坦联络、零曲率与无条件对数高度 Hessian
+
+对同一原 H3 的实际平坦度量及任意实际 Levi–Civita 数据 `D`，原常值切向场的 Lie 括号和协变导数均为零。原欧氏坐标图的真实 `mfderiv` 为恒等映射；公开 `mpullback_mlieBracket` 将目标欧氏空间常值场的零括号搬回原切丛。真实常值切丛截面的可微性、常数内积的零微分及原零括号代入公开 Koszul 恒等式，再由正定内积，内部推出 `D.connection (fun _ => Y) p = 0`，没有额外提供联络为零的前提。
+
+上游实际点态曲率使用的 `FiberBundle.extend` 在原单图册上恰为同一常值场，因此其一阶、二阶协变导数及括号项均为零；得到原平坦度量实际 `D.curvature p U V W = 0` 和实际总化截面曲率为零。此处零曲率包含退化向量对；后续高度缩放度量的曲率 −1 仍须保留向量对线性无关或 Gram 非零条件。
+
+原对数高度的真正 Hessian 现无条件满足 `D.hessian nativeLogHeight p V W = -nativeEuclideanHeightCLM V * nativeEuclideanHeightCLM W / height p.coordinates ^ 2`。先前辅助定理的联络为零前提由上述原对象证明内部闭合；保留相同原度量、实际 `D`、原函数、原点和切向量。
+
+上述原联络、平坦曲率和无条件 Hessian 已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。原高度缩放度量的实际曲率 −1、一般原流形覆盖与有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 及官方验收仍未完成。
