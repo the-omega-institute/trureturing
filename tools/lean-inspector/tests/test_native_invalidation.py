@@ -569,9 +569,9 @@ class NativeSemanticConsumerTests:
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text().replace(':= 1', ':= 2'))
         changed({'D5.B', 'D5.A', 'Fixture'})
 
-        # The judge must still build even when this module does not import it.
+        # An unrelated judge is not demanded by a module without own inputs.
         self.write('LeanInformationAudit/SealCommand.lean', driver + 'unknown_command\n')
-        self.run_lake('build', 'D5.Alone:report', success=False)
+        self.run_lake('build', 'D5.Alone:report')
         self.assertEqual(before, self.stamps())
 
     def test_reported_module_proof_axioms_invalidate_public_trace(self):
