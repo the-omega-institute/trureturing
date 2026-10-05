@@ -9,7 +9,6 @@
 import D5.S3.TotalVariation.ParityCompositionKernel
 import D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport
 import D5.S3.Combinatorics.Geometry.CrownOrderPolytopeEnumeration
-import D5.S3.TotalVariation.Equality.DataProcessingEquality
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -53,7 +52,7 @@ noncomputable def intervals (a b : ℕ) (hv : 1 ≤ a + b) :
           blocks_sum := by
             have hr : ∑ i, r.val i = M := (mem_finsuppAntidiag.mp r.property).1
             rw [List.sum_ofFn, sum_add_distrib, hr]
-            simp only [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one]
+            simp only [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, Nat.cast_id, mul_one]
             omega },
         List.length_ofFn⟩
       left_inv := by
@@ -190,7 +189,7 @@ theorem result :
       calc
         _ = ∑ r ∈ T, if par r = z then (1 : ℕ) else 0 :=
           Finset.sum_coe_sort T (fun r => if par r = z then (1 : ℕ) else 0)
-        _ = _ := by simp only [sum_boole]
+        _ = _ := by simp only [sum_boole, Nat.cast_id]
     have he := Equiv.sum_comp (intervals a b hv)
       (fun p => if par p.2.val = z then (1 : ℕ) else 0)
     have hc : Fintype.card (BinaryTree.treesOfNumNodesEq (a + b - 1)) = C := by
@@ -200,7 +199,18 @@ theorem result :
       rw [card_eq_sum_ones, sum_filter]
       change (∑ t : Fiber (a, b), if par (intervals a b hv t).2.val = z then 1 else 0) = _
       rw [he, Fintype.sum_prod_type]
-      simp only [hsum, sum_const, card_univ, hc, nsmul_eq_mul]
+      calc
+        _ = ∑ _s : BinaryTree.treesOfNumNodesEq (a + b - 1),
+            (T.filter (fun r => par r = z)).card := by
+          apply sum_congr rfl
+          intro s _
+          calc
+            _ = ∑ r : T, if par r.val = z then (1 : ℕ) else 0 := by
+              apply sum_congr rfl
+              intro r _
+              by_cases hp : par r.val = z <;> simp [hp]
+            _ = _ := hsum
+        _ = _ := by simp only [sum_const, card_univ, hc, nsmul_eq_mul, Nat.cast_id]
     rw [hf, hcomp]
     dsimp [legal, N, B, h]
     split <;> simp
@@ -246,7 +256,6 @@ theorem result :
     dsimp only [N]
     push_cast
     field_simp
-    <;> ring
   have hkernel (z : Fin d → Bool) (hz : legal z) :
       (∑ t ∈ univ.filter (fun t : Fiber (a, b) => f t = z), (N z : ℝ)⁻¹) = 1 := by
     rw [sum_const, nsmul_eq_mul, hcount, if_pos hz]
@@ -255,7 +264,9 @@ theorem result :
       D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward f p z =
         ∑ t ∈ univ.filter (fun t : Fiber (a, b) => f t = z), p t := by
     simp only [D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward, sum_filter]
-    rfl
+    apply sum_congr rfl
+    intro t _
+    by_cases ht : f t = z <;> simp [ht]
   have hzero (z : Fin d → Bool) (hz : ¬ legal z) : R d M z = 0 ∧ Q d M z = 0 := by
     have hp : h z % 2 ≠ M % 2 := by
       intro he
@@ -312,7 +323,7 @@ theorem result :
           apply sum_congr rfl
           intro t ht
           rw [hUconditional, href, (mem_filter.mp ht).2, ← sub_div, abs_div,
-            abs_of_nonneg (Nat.cast_nonneg (N z)), div_eq_mul_inv]
+            abs_of_nonneg (show (0 : ℝ) ≤ (N z : ℝ) from Nat.cast_nonneg _), div_eq_mul_inv]
         _ = |R d M z - Q d M z| := by
           rw [← mul_sum, hkernel z hz, mul_one]
     · rw [show univ.filter (fun t : Fiber (a, b) => f t = z) = ∅ from

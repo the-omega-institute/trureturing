@@ -16,7 +16,7 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
         H("Tree Parity Kernels"),
         Blocks(
             Node("intervals", "Shapes and complete gaps", "intervals",
-                Seq(Call("Fiber", Av, Bv), Sp, Cong, Sp,
+                Seq(Call("Fiber", Av, Bv), Sp, Sim, Sp,
                     Call("Shapes", Subtract(Nv, D(1))), Sp, Times, Sp, Call("WeakCompositions", Dv, Mv)),
                 "For natural a and b with a+b>=1, set n=a+b, k=min(a,b), M=max(a,b), and d=k+1. "
                 + "An actual ordered binary tree separates into its ordered shape and the complete gaps between its minority leaves. "
