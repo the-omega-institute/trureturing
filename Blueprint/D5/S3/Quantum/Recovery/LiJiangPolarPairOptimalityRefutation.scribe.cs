@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
 internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Quantum/lijiang2026highrank");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuantumChannels/lijiang2026highrank");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A feasible qubit rank-one encoder strictly improves the source polar pair.",

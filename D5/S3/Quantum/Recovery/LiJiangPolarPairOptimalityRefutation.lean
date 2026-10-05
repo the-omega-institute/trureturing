@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
-   utility: Refutes fixed-noise optimality of the Li-Jiang polar encoder and right trace pair.
+   utility: none
    digest: A feasible qubit rank-one encoder strictly improves the source polar pair. -/
 
 /- Stage-A judgement:
