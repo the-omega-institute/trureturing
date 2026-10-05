@@ -9,6 +9,10 @@ internal sealed class BaseClassStreamsDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S1/Words/Palindromes/PeriodDoubling/BaseClassStreams.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Both signed streams of any path ending at a valid charge-mode goal forbid opposite digits at distance two.", H("Class Spacing of Transducer Outputs"), Blocks(
+        Describe.Lean(DescribeId.Create("pd-baseclassstreams-classrowcheck"),
+            DeclarationHandle.Create(Prefix + "classRowCheck"), H("Digit memories and persistent class flag"),
+            StatementSource.FromAuthor(RowFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The checker tests both shifted digit memories, immediate rejection of an input violation, and backward propagation of the output violation flag on every base edge."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-baseclassstreams-base-path-class-spacing"),
             DeclarationHandle.Create(Prefix + "base_path_class_spacing"), H("No opposite signs two digit positions apart"),
             StatementSource.FromAuthor(ClassFormula()), AssessedProvenance.FromRepo(),
@@ -59,6 +63,19 @@ internal sealed class BaseClassStreamsDocument : IScribeDocumentDefinition
 
 
     private static Formula Alphabet() => Product(Z(), Z(), Z(), Z());
+    private static Formula Entry(Formula s,int k) => Call("getD",Call("getElemOption",s,new Formula.Number(k)),D(0));
+    private static Formula RowFormula()
+    {
+        var state=Call("fst",Call("baseTable",V("i")));
+        var target=Call("fst",Call("baseTable",Call("fst",V("e"))));
+        var rule=And(Eqn(Entry(target,11),Entry(state,10)),Eqn(Entry(target,13),Entry(state,12)),
+            Ne(Mul(Entry(target,10),Entry(state,11)),NegF(D(1))),
+            Imp(Eqn(Entry(target,18),D(0)),And(Eqn(Entry(state,18),D(0)),
+                Ne(Mul(Entry(target,12),Entry(state,13)),NegF(D(1))))));
+        var edges=Call("fst",Call("snd",Call("baseTable",V("i"))));
+        return Disp(All("i",N(),Eqn(Call("classRowCheck",V("i")),
+            Call("all",Lam("e",Product(N(),Z(),Z(),Z(),Z()),Call("decide",rule)),edges))));
+    }
     private static Formula ClassFormula()
     {
         var auto = Call("baseAutomaton", Ty("true"));

@@ -24,7 +24,7 @@ namespace D5.S1.Words.Palindromes.PeriodDoubling
 
 open BaseCertificates
 
-private def classRowCheck (i : ℕ) : Bool :=
+def classRowCheck (i : ℕ) : Bool :=
   let S := (baseTable i).1
   (baseTable i).2.1.all fun e =>
     let T := (baseTable e.1).1
