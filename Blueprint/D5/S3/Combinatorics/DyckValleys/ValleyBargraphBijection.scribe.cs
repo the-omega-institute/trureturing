@@ -45,6 +45,6 @@ internal sealed class ValleyBargraphBijectionDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The project’s zipped adjacent-pair definition of valleys agrees with the kernel count obtained by contracting DU factors."))),
-                DescribeRole.Theorem))),
+                DescribeRole.Theorem)),
         []));
 }

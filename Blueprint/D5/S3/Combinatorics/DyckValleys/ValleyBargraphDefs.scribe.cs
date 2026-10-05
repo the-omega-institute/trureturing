@@ -23,7 +23,7 @@ internal sealed class ValleyBargraphDefsDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For n ≥ 2 and 1 ≤ i ≤ n − 1, the finite set of UUDD-avoiding Dyck words of semilength n with i valleys has the same cardinality as the finite set of bargraph height lists of length i and semiperimeter n. This file records the exact open target; it does not claim that the target is already resolved."))),
-                DescribeRole.Definition))),
+                DescribeRole.Definition)),
         []));
 
     private static DocumentBlock Node(string id, string title, string prose) =>
