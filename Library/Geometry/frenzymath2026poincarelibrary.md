@@ -5537,3 +5537,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 两个具名目标的完整精确临时 Lean 首轮真实编译通过，host `46417` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-proper-discrete-cyclic.lean` 为 179235 字节，SHA256 `6889650df9fc589a7944ad67c22ccf6d07f85e96e7522bfc543dcaab0d04eecc`。仅新增已有热缓存 canonical covering import；上一成功 176980 字节源码在 43 字节 header 后完整保留，没有新增依赖闭包构建或版本变更。
 
 该既有原作用、邻域分离及已验循环性接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。这里仍明确消费同一原表示的 properly discontinuous 前提；一般原流形原度量覆盖与完整 deck 作用尚未内部构造来提供它。未归一化原表示的统一分类、真实轴管商、尖点平移格子与有限体积薄部分解，以及同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 同一原表示限制与实际环境等距共轭保持自由性和 properly discontinuous 性质
+
+对原 `ρ : G →* (H3 ≃ᵢ H3)` 构造真实共轭同态 `g ↦ e * ρ(g) * e⁻¹`，其原点评价逐字为 `e(ρ(g)(e.symm p))`。原自由性及 canonical `ProperlyDiscontinuousRepresentation ρ` 分别传递到同一原表示的任意实际子群限制和这个实际共轭表示，未输入新的自由性、proper 性质或替代作用。
+
+子群限制的自由性通过 subtype 单射回到原元素；proper 性质通过同一紧集交点有限集合在 `Subtype.val` 下的单射原像得到。共轭作用的固定点通过实际 `e.symm` 拉回原固定点；对紧集 `K,L`，同一个 `e.symm` 的实际像仍紧，每个同一原元素 `g` 的共轭交点拉回为 `ρ(g)` 在这两个原紧像中的交点。因此共轭交点元素集合包含于一个由原 proper 性质得到的有限集合。原 H³ 度量及全原群元素均保留，包含反向等距变换。
+
+五个具名构造与保持目标的完整精确临时 Lean 首轮真实编译通过，host `82888` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-representation-preservation.lean` 为 181958 字节，SHA256 `5c2dc12c9c23e21bbe39cda4fd97631b9f6b20333b21a2c8ec14dd0923408022`；前述成功 proper 源码为完整 offset0 字节前缀，未新增 import 或依赖构建。协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该原同态、subtype 原像、紧像及固定点接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批闭合下一步实际共同边界归一化所需的性质传递，尚未组装未归一化原群分类；一般原流形覆盖供给 proper 性质、真实尖点和轴管商、有限体积薄部分解及完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
