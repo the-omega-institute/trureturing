@@ -236,3 +236,70 @@ sequence. These are sufficient budget conditions, not necessary conditions
 for convergence of the actual inverse cost or for RH. Neither sign follows
 from this budget. The original all-input half-bound,
 full Robin, RH, numerical enclosure and Lean certification remain unresolved.
+
+## Choose one schedule for prescribed growing sources
+
+The uniform-Gram condition is sufficient but need not be imposed on
+every growing family. Let $\mathcal U_j$ be a prescribed finite original
+$H^2$ source family, including the true ground. Its columns and common
+Grams are fixed before selecting the new $\varepsilon_j,N_j$.
+Let $\tau_j>0$ tend to zero, set $N_0=0$, and write
+
+$$
+M_{0,j}=\|G_{0,j}\|,\qquad
+M_{g,j}=\|G_{g,j}\|,\qquad
+M_{\infty,j}=\|G_{\infty,j}\|.
+$$
+
+These finite norms may grow. Choose a single decreasing sequence with
+
+$$
+0<\varepsilon_j\le
+\min\left\{\frac14,\frac{\varepsilon_{j-1}}2,
+\frac{\tau_j}{36\max\{1,M_{0,j}\}}\right\},
+\qquad \delta_j=\varepsilon_j/4,
+\tag{RP9}
+$$
+
+where the previous-parameter constraint is omitted at the first index.
+At this already chosen parameter select one
+$N_j\ge\max\{N_w(\varepsilon_j),N_{j-1}+1,j\}$ so large that its
+actual $a_j=m(N_j/2)-\mu_{\varepsilon_j}$ satisfies
+
+$$
+\frac{M_{g,j}}{a_j}\le\frac{\tau_j}{9},\qquad
+\frac{C_{\rm p}^2M_{\infty,j}}{a_j}
+\mathcal L\!\left(\frac{a_jK^2}{\delta_j}\right)
+\le\frac{\tau_j}{9}. \tag{RP10}
+$$
+
+For each fixed $\varepsilon_j$, $\mu_{\varepsilon_j}$ is finite
+and $a_N\to\infty$ as $N\to\infty$. The scalar function
+$\mathcal L(aK^2/\delta_j)/a$ tends to zero. Thus both conditions
+can be met by the same finite $N_j$, with the original (WH1) high
+comparison intact. No bounded-$\mu$ assumption or independent best
+choices of sources, parameter and band are combined.
+
+With the actual $p_{i,j}=P_{N_j}u_{i,j}$,
+$q_{i,j}=-Q_{N_j}u_{i,j}$ and the same coefficient vector, (RP5) gives
+
+$$
+\langle r_j(z),C_j^{-1}r_j(z)\rangle
+\le J_j(r_j(z))\le\tau_j\|z\|^2.
+\tag{RP11}
+$$
+
+Indeed each of (RP5)'s three nonnegative terms is at most
+$\tau_j\|z\|^2/3$. This organizes the actual complete-prime residual
+budget on one common cofinal sequence for the prescribed source
+families; it is an application of the existing parameter limits,
+not a new generic diagonal or finite-approximation theorem.
+
+The construction gives existence and an explicit inequality interface
+in the actual source norms, without certified numerical values or a
+runtime bound. If a family instead depends on the newly selected band,
+its changing norms must still be controlled jointly; (RP9)--(RP10)
+cannot treat them as constants selected beforehand. The entire
+complementary-low space has not been covered. Actual low and
+complementary-low signs on this sequence, the original all-input
+half-bound, full Robin and RH remain unproved.
