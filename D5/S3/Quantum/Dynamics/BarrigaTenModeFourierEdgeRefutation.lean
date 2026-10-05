@@ -4,15 +4,9 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Dynamics/BarrigaTenModeFourierEdgeRefutation.claim; result=D5/S3/Quantum/Dynamics/BarrigaTenModeFourierEdgeRefutation.result; claim=D5/S3/Quantum/Dynamics/BarrigaTenModeFourierEdgeRefutation.claim
-   digest: Refutes the 25-edge lower bound of Barriga et al. for ten-mode Fourier transforms: a connected 23-edge real coupling matrix realizes F_10. -/
+   digest: Refutes the N = 10 edge bound of Barriga et al.: a 23-edge coupling realizes F_10. -/
 
 import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.LinearAlgebra.Matrix.Reindex
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.LinearCombination
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -148,10 +142,15 @@ private def edgeRel (x y : Fin 10) : Prop :=
 private def z (x : Fin 10) : ℂ :=
   (-I) ^ (x.val % 2) * ω ^ (4 * (x.val % 5) ^ 2)
 
-private def rootFacts : PLift (s ^ 2 = 5 ∧ d ^ 2 = (5 + s) / 8 ∧
-    ω ^ 2 = (-(s + 1) / 4 : ℝ) + (((s - 1) * d / 2 : ℝ) : ℂ) * I ∧
-    ω ^ 3 = (-(s + 1) / 4 : ℝ) - (((s - 1) * d / 2 : ℝ) : ℂ) * I ∧
-    ω ^ 4 = (c : ℂ) - (d : ℂ) * I ∧ ω ^ 5 = 1) := ⟨by
+set_option maxHeartbeats 1000000 in
+-- The 25 matrix entries require polynomial normalization.
+private theorem realCertificate : (K = Real.pi • κ ∧
+    (∀ j k : Fin 5, j ≠ k →
+      (κ j k = 0 ↔ (j = 0 ∧ k = 1) ∨ (j = 1 ∧ k = 0))) ∧
+    (∀ j k : Fin 5, j ≠ k → 0 ≤ κ j k) ∧
+    Commute (C0.map (↑) : Matrix (Fin 5) (Fin 5) ℂ) (P.map (↑)) ∧
+    (P.map (↑) : Matrix (Fin 5) (Fin 5) ℂ) * P.map (↑) = P.map (↑)) := by
+  classical
   have hs_nonneg : 0 ≤ s := Real.sqrt_nonneg _
   have hs : s ^ 2 = 5 := Real.sq_sqrt (by norm_num)
   have hd : d ^ 2 = (5 + s) / 8 := by
@@ -175,18 +174,6 @@ private def rootFacts : PLift (s ^ 2 = 5 ∧ d ^ 2 = (5 + s) / 8 ∧
     rw [pow_succ, h4]
     apply Complex.ext <;> simp [ω, c, Complex.mul_re, Complex.mul_im] <;>
       nlinarith [hs, hd]
-  exact ⟨hs, hd, h2, h3, h4, h5⟩⟩
-
-set_option maxHeartbeats 1000000 in
--- The 25 matrix entries require polynomial normalization.
-private def realCertificate : PLift (K = Real.pi • κ ∧
-    (∀ j k : Fin 5, j ≠ k →
-      (κ j k = 0 ↔ (j = 0 ∧ k = 1) ∨ (j = 1 ∧ k = 0))) ∧
-    (∀ j k : Fin 5, j ≠ k → 0 ≤ κ j k) ∧
-    Commute (C0.map (↑) : Matrix (Fin 5) (Fin 5) ℂ) (P.map (↑)) ∧
-    (P.map (↑) : Matrix (Fin 5) (Fin 5) ℂ) * P.map (↑) = P.map (↑)) := ⟨by
-  classical
-  obtain ⟨hs, hd, h2, h3, h4, h5⟩ := rootFacts.down
   have hs_nonneg : 0 ≤ s := Real.sqrt_nonneg _
   have hs_bounds : 11 / 5 < s ∧ s < 9 / 4 := by
     constructor <;> nlinarith [hs]
@@ -340,11 +327,11 @@ private def realCertificate : PLift (K = Real.pi • κ ∧
     have he := congrArg (fun M : Matrix (Fin 5) (Fin 5) ℝ => M.map Complex.ofRealHom) hPP
     simp only [Matrix.map_mul] at he
     exact he
-  exact ⟨hK, hκ_zero, hκ_nonneg, hcomm, hPPc⟩⟩
+  exact ⟨hK, hκ_zero, hκ_nonneg, hcomm, hPPc⟩
 
-private def expIdempotent : PLift (∀ {n : Type} [Fintype n] [DecidableEq n]
+private theorem expIdempotent : (∀ {n : Type} [Fintype n] [DecidableEq n]
       (Q : Matrix n n ℂ), Q * Q = Q → ∀ t : ℂ,
-      NormedSpace.exp (t • Q) = 1 + (NormedSpace.exp t - 1) • Q) := ⟨by
+      NormedSpace.exp (t • Q) = 1 + (NormedSpace.exp t - 1) • Q) := by
   intro n _ _ Q hQ t
   have hpow : ∀ k : ℕ, Q ^ (k + 1) = Q := by
     intro k
@@ -368,14 +355,36 @@ private def expIdempotent : PLift (∀ {n : Type} [Fintype n] [DecidableEq n]
     _ = 1 + (∑' k : ℕ, (((k + 1).factorial : ℂ)⁻¹) * t ^ (k + 1)) • Q := by
       simp_rw [smul_pow, hpow, smul_smul]
       rw [hs'.tsum_smul_const]
-    _ = _ := by rw [ht]⟩
+    _ = _ := by rw [ht]
 
 set_option maxHeartbeats 1000000 in
 -- The Fourier diagonalization requires polynomial normalization.
-private def circulantCertificate : PLift (Complex.exp (2 * Real.pi * I / 5) = ω ∧
-    hamiltonianPropagator (C0.map (↑)) 1 = U5) := ⟨by
+private theorem circulantCertificate : (Complex.exp (2 * Real.pi * I / 5) = ω ∧
+    hamiltonianPropagator (C0.map (↑)) 1 = U5) := by
   classical
-  obtain ⟨hs, hd, h2, h3, h4, h5⟩ := rootFacts.down
+  have hs_nonneg : 0 ≤ s := Real.sqrt_nonneg _
+  have hs : s ^ 2 = 5 := Real.sq_sqrt (by norm_num)
+  have hd : d ^ 2 = (5 + s) / 8 := by
+    have h := Real.sq_sqrt (show 0 ≤ 10 + 2 * s by linarith)
+    dsimp [d]
+    nlinarith
+  have h2 : ω ^ 2 = (-(s + 1) / 4 : ℝ) + (((s - 1) * d / 2 : ℝ) : ℂ) * I := by
+    apply Complex.ext <;> simp [ω, c, pow_two, Complex.mul_re, Complex.mul_im] <;>
+      nlinarith [hs, hd]
+  have h3 : ω ^ 3 = (-(s + 1) / 4 : ℝ) - (((s - 1) * d / 2 : ℝ) : ℂ) * I := by
+    rw [pow_succ, h2]
+    apply Complex.ext <;> simp [ω, c, Complex.mul_re, Complex.mul_im] <;>
+      nlinarith [hs, hd, show s ^ 2 * d = 5 * d by rw [hs],
+        show s * (d ^ 2) = s * ((5 + s) / 8) by rw [hd]]
+  have h4 : ω ^ 4 = (c : ℂ) - (d : ℂ) * I := by
+    rw [pow_succ, h3]
+    apply Complex.ext <;> simp [ω, c, Complex.mul_re, Complex.mul_im] <;>
+      nlinarith [hs, hd, show s ^ 2 * d = 5 * d by rw [hs],
+        show s * (d ^ 2) = s * ((5 + s) / 8) by rw [hd]]
+  have h5 : ω ^ 5 = 1 := by
+    rw [pow_succ, h4]
+    apply Complex.ext <;> simp [ω, c, Complex.mul_re, Complex.mul_im] <;>
+      nlinarith [hs, hd]
   have hsC : (s : ℂ) ^ 2 = 5 := by exact_mod_cast hs
   have hsum : 1 + ω + ω ^ 2 + ω ^ 3 + ω ^ 4 = 0 := by
     rw [h2, h3, h4]
@@ -505,11 +514,11 @@ private def circulantCertificate : PLift (Complex.exp (2 * Real.pi * I / 5) = ω
       rw [Pi.coe_exp, Pi.smul_apply, smul_eq_mul, ← Complex.exp_eq_exp_ℂ]
       exact congrFun hE k
     rw [hEc, hVinv, Matrix.mul_smul, hU]
-  exact ⟨hexpω, hexpC0⟩⟩
+  exact ⟨hexpω, hexpC0⟩
 
-private def expTensor : PLift (∀ (A : Matrix (Fin 2) (Fin 2) ℂ)
+private theorem expTensor : (∀ (A : Matrix (Fin 2) (Fin 2) ℂ)
       (B : Matrix (Fin 5) (Fin 5) ℂ), NormedSpace.exp (A ⊗ₖ 1 + 1 ⊗ₖ B) =
-      NormedSpace.exp A ⊗ₖ NormedSpace.exp B) := ⟨by
+      NormedSpace.exp A ⊗ₖ NormedSpace.exp B) := by
   intro A B
   have hL : Continuous L := by
     change Continuous (fun A : Matrix (Fin 2) (Fin 2) ℂ =>
@@ -532,9 +541,9 @@ private def expTensor : PLift (∀ (A : Matrix (Fin 2) (Fin 2) ℂ)
     ← NormedSpace.map_exp R hR]
   change (NormedSpace.exp A ⊗ₖ 1) * (1 ⊗ₖ NormedSpace.exp B) = _
   rw [← mul_kronecker_mul]
-  simp⟩
+  simp
 
-private def expTwo : PLift (NormedSpace.exp ((-I) • A2) = U2) := ⟨by
+private theorem expTwo : (NormedSpace.exp ((-I) • A2) = U2) := by
   let V2 : Matrix (Fin 2) (Fin 2) ℂ := !![1, 1; 1, -1]
   have hright : V2 * ((1 / 2 : ℂ) • V2) = 1 := by
     ext j k
@@ -576,7 +585,7 @@ private def expTwo : PLift (NormedSpace.exp ((-I) • A2) = U2) := ⟨by
   ext j k
   fin_cases j <;> fin_cases k <;>
     simp [V2, U2, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two] <;>
-    field_simp [hn] <;> ring_nf <;> (try rw [hs]) <;> ring⟩
+    field_simp [hn] <;> ring_nf <;> (try rw [hs]) <;> ring
 
 set_option maxHeartbeats 1000000 in
 -- The finite graph and phase certificates share one proof.
@@ -584,16 +593,38 @@ set_option maxHeartbeats 1000000 in
 after diagonal phase shifts, refuting the claimed 25-edge lower bound. -/
 theorem result : ¬ claim := by
   classical
-  obtain ⟨hK, hκ_zero, hκ_nonneg, hcomm, hPPc⟩ := realCertificate.down
-  obtain ⟨hexpω, hexpC0⟩ := circulantCertificate.down
-  have h5 : ω ^ 5 = 1 := rootFacts.down.2.2.2.2.2
+  obtain ⟨hK, hκ_zero, hκ_nonneg, hcomm, hPPc⟩ := realCertificate
+  obtain ⟨hexpω, hexpC0⟩ := circulantCertificate
+  have hs_nonneg : 0 ≤ s := Real.sqrt_nonneg _
+  have hs : s ^ 2 = 5 := Real.sq_sqrt (by norm_num)
+  have hd : d ^ 2 = (5 + s) / 8 := by
+    have h := Real.sq_sqrt (show 0 ≤ 10 + 2 * s by linarith)
+    dsimp [d]
+    nlinarith
+  have h2 : ω ^ 2 = (-(s + 1) / 4 : ℝ) + (((s - 1) * d / 2 : ℝ) : ℂ) * I := by
+    apply Complex.ext <;> simp [ω, c, pow_two, Complex.mul_re, Complex.mul_im] <;>
+      nlinarith [hs, hd]
+  have h3 : ω ^ 3 = (-(s + 1) / 4 : ℝ) - (((s - 1) * d / 2 : ℝ) : ℂ) * I := by
+    rw [pow_succ, h2]
+    apply Complex.ext <;> simp [ω, c, Complex.mul_re, Complex.mul_im] <;>
+      nlinarith [hs, hd, show s ^ 2 * d = 5 * d by rw [hs],
+        show s * (d ^ 2) = s * ((5 + s) / 8) by rw [hd]]
+  have h4 : ω ^ 4 = (c : ℂ) - (d : ℂ) * I := by
+    rw [pow_succ, h3]
+    apply Complex.ext <;> simp [ω, c, Complex.mul_re, Complex.mul_im] <;>
+      nlinarith [hs, hd, show s ^ 2 * d = 5 * d by rw [hs],
+        show s * (d ^ 2) = s * ((5 + s) / 8) by rw [hd]]
+  have h5 : ω ^ 5 = 1 := by
+    rw [pow_succ, h4]
+    apply Complex.ext <;> simp [ω, c, Complex.mul_re, Complex.mul_im] <;>
+      nlinarith [hs, hd]
   have hexpP : NormedSpace.exp (((-I) * (2 * Real.pi : ℂ)) • P.map (↑)) =
       (1 : Matrix (Fin 5) (Fin 5) ℂ) := by
     have he : NormedSpace.exp ((-I) * (2 * Real.pi : ℂ)) = (1 : ℂ) := by
       rw [← Complex.exp_eq_exp_ℂ,
         show (-I) * (2 * Real.pi : ℂ) = ((-1 : ℤ) : ℂ) * (2 * Real.pi * I) by ring]
       exact Complex.exp_int_mul_two_pi_mul_I (-1)
-    rw [expIdempotent.down _ hPPc, he]
+    rw [expIdempotent _ hPPc, he]
     simp
   have hexpK : hamiltonianPropagator (K.map (↑)) 1 =
       hamiltonianPropagator (C0.map (↑)) 1 := by
@@ -631,7 +662,7 @@ theorem result : ¬ claim := by
       have he := hexpK.trans hexpC0
       simpa only [hamiltonianPropagator, one_smul, hamiltonianGenerator] using he
     simp only [hamiltonianPropagator, one_smul, hamiltonianGenerator]
-    rw [hG, ← NormedSpace.map_exp T hT, expTensor.down, expTwo.down, hexpK5]
+    rw [hG, ← NormedSpace.map_exp T hT, expTensor, expTwo, hexpK5]
     rfl
   have hnormω : ‖ω‖ = 1 := by
     have he := congrArg norm h5
