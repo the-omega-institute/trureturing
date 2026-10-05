@@ -18,15 +18,11 @@ internal static class DigestStatusCommand
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
-        IReadOnlyList<string> arguments,
-        IAtomHistorySource atomHistorySource,
-        TimeProvider ageTimeProvider)
+        IReadOnlyList<string> arguments)
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(leanReportSource);
         ArgumentNullException.ThrowIfNull(arguments);
-        ArgumentNullException.ThrowIfNull(atomHistorySource);
-        ArgumentNullException.ThrowIfNull(ageTimeProvider);
         try
         {
             var options = ParseArguments(arguments);
@@ -187,22 +183,14 @@ internal static class DigestStatusCommand
                     readinessDiagnostics);
             }
 
-            var age = options.ResidualSummary || options.Json
-                ? DigestAtomAge.Read(evaluation, frontier!, atomHistorySource, ageTimeProvider)
-                : null;
             return new CommandResult(
                 true,
                 options.ResidualSummary
-                    ? DigestResidualSummary.Render(evaluation, frontier!) + age!.RenderSummary()
+                    ? DigestResidualSummary.Render(evaluation, frontier!)
                     : options.Json
-                        ? RenderJson(evaluation, frontier!, age!)
+                        ? RenderJson(evaluation, frontier!)
                         : RenderText(evaluation),
                 string.Empty);
-        }
-        catch (AtomHistoryUnavailableException exception)
-        {
-            return new CommandResult(false, string.Empty,
-                $"DIGEST_AGE_HISTORY_UNAVAILABLE {exception.Message}\n");
         }
         catch (Exception exception) when (
             exception is FormatException
@@ -348,8 +336,7 @@ internal static class DigestStatusCommand
 
     internal static string RenderJson(
         DigestionLedgerEvaluation evaluation,
-        DigestionFrontierProjection frontier,
-        DigestAtomAge age)
+        DigestionFrontierProjection frontier)
     {
         ArgumentNullException.ThrowIfNull(evaluation);
         ArgumentNullException.ThrowIfNull(frontier);
@@ -358,7 +345,6 @@ internal static class DigestStatusCommand
             schema = "stratalint-digest-status-v1",
             entries_total = evaluation.Entries.Length,
             deletable_now = evaluation.DeletableCount,
-            age_histogram = new { total = age.Total, per_source = age.PerSource },
             frontier = new
             {
                 total = FrontierCounts(frontier.Total),
@@ -376,9 +362,6 @@ internal static class DigestStatusCommand
                     kind_label = entry.KindLabel,
                     is_chain_child = entry.IsChainChild,
                     parent_atom_ids = entry.ParentAtomIds,
-                    first_seen_date = age.Entries[entry.Entry.AtomId].FirstSeenDate,
-                    age_days = age.Entries[entry.Entry.AtomId].AgeDays,
-                    age_bucket = age.Entries[entry.Entry.AtomId].AgeBucket,
                 }),
             },
             entries = evaluation.Entries
@@ -393,9 +376,6 @@ internal static class DigestStatusCommand
                     migration = DigestionStatusNames.Migration(item.DerivedStatus.Migration),
                     truth = DigestionStatusNames.Truth(item.DerivedStatus.Truth),
                     deletable = item.Deletable,
-                    first_seen_date = age.Entries.GetValueOrDefault(item.Entry.AtomId)?.FirstSeenDate,
-                    age_days = age.Entries.GetValueOrDefault(item.Entry.AtomId)?.AgeDays,
-                    age_bucket = age.Entries.GetValueOrDefault(item.Entry.AtomId)?.AgeBucket,
                     gaps = item.Gaps.Select(static gap => new
                     {
                         code = gap.Code,
