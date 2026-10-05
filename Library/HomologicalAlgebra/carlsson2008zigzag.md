@@ -5,8 +5,9 @@ year: 2008
 title: "Zigzag Persistence"
 doi: null
 url: https://arxiv.org/abs/0812.0197v1
-claim: "The endomorphism remark following Lemma 3.18 gives the unique reconstruction of a zigzag endomorphism from a terminal component preserving the induced filtration."
+claim: "Proposition 3.11 constructs complementary summands for induced subspaces of filtered vector spaces; the endomorphism remark following Lemma 3.18 gives unique reconstruction from a terminal component preserving the induced filtration."
 strata_touched:
+  - D5/S3/HomologicalAlgebra/FilteredVectorSpaceComplement
   - D5/S3/HomologicalAlgebra/Persistence/ZigzagNaturalLift
 license: citation-only
 triage: anchor
@@ -23,14 +24,28 @@ direction.
 
 ## Verified locator
 
-The checked primary version is https://arxiv.org/abs/0812.0197v1, Lemma 3.18
-and the endomorphism remark immediately following it, on PDF pages 16–17.
+The checked primary version is https://arxiv.org/abs/0812.0197v1.
+Proposition 3.11 and its proof, on PDF pages 13–14, construct a complementary
+summand for every induced subspace of a filtered vector space by successively
+extending complements inside its increasing layers.
+
+Lemma 3.18 and the endomorphism remark immediately following it are on PDF
+pages 16–17.
 That remark is the literature source for the terminal-filtration
 reconstruction formalized in `ZigzagNaturalLift`.
 
 ## Mathematical scope
 
-The repository theorem makes the predecessor reconstruction explicit for a
+The paper works over a field with finite-dimensional vector spaces. Its
+filtered spaces start at zero, and the complement construction takes place
+inside the terminal layer. `FilteredVectorSpaceComplement` proves a broader
+statement over any division ring, without a dimension bound or prescribed
+chain endpoints: one complement of an arbitrary submodule in the ambient
+space splits every layer of a finite increasing chain, including an empty
+chain and repeated layers. This is a proved generalization of the recursive
+construction, not an attribution of the exact broader statement to the paper.
+
+The theorem in `ZigzagNaturalLift` makes the predecessor reconstruction explicit for a
 finite actual oriented path, allows zero vertices and arbitrary
 characteristic, and does not require finite-dimensional vertex spaces. The
 note attests the cited reconstruction principle; it does not claim that the
