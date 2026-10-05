@@ -18034,3 +18034,374 @@ Authentic label production and delivery, source membership and pairing, archive 
 [TM56OR70]: https://github.com/the-omega-institute/trureturing/blob/4f981b86a637c4aff1f1825ec0efe41dd5bb36e2/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#70-完整单位原树的-ferrers-截角与更强条件字母表下界
 
 ## 追加锚（本行以下为增补区）
+
+## 57. A complete paid ideal realization of the original ordered-tree interface
+
+This construction realizes the actual TM30 source, including its preparation, whole actions, original responses, growing records, record-only verification and consumer output. Its quantifiers are all public integers $H\ge1$, all nonempty ordered $\alpha/\beta$ trees with at most $H$ leaves, all actual nonempty finite contexts, and all effective lawful finite original protocols. The machine is an explicitly declared ideal finite-control process with constructed finite tapes. All proofs here are ordinary mathematics. Physical conformance, a native implementation and optimality are separate questions.
+
+### 57.1 The unchanged source and the exact target
+
+Let $\mathcal T$ be the free nonempty ordered binary-tree algebra on $\alpha,\beta$. Its equality retains both brackets and order. Put $c(t)=(a,b)$, $\lambda(t)=a+b$, and $\mathcal T_H=\{t:1\le\lambda(t)\le H\}$. The actual substitution is
+
+$$
+\rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{PR57.01}
+$$
+
+At an idle original cut the menu is `Read`, $\rho$, `Left(v)` and `Right(v)`, with any named actual $v\in\mathcal T$. Read returns the exact current $E$ and leaves the source unchanged. The three modifications form respectively $\rho t$, $\langle v,t\rangle$ and $\langle t,v\rangle$. The entire candidate is tested against $\lambda\le H$. Acceptance publishes only `accept` and installs that candidate; rejection publishes only `reject` and retains the old source. There is no candidate Read on rejection. Arbitrarily large finite contexts remain typed requests. There is no source navigation, reset, duplication, inverse, size port or request quota. Serial busy cuts admit only the next prescribed microtransition, not another original request.
+
+Use the pinned Clifford algebra with $A^2=1$, $B^2=-1$, $AB+BA=1$, and $S=BA$. Its faithful coordinates are $N(e,k,p)=(-1)^eS^kA^p$. Write $u_i(t)$ for the normal coordinates of $E(\rho^it)$ and $\eta(t)=((u_0,u_1,u_2),c(t))$. Set $\lambda_0=a+b$, $\lambda_1=a+2b$, $\lambda_2=2a+3b$. The target is literally
+
+$$
+q_H(t)=\begin{cases}
+(0,E(t),\lambda_0),&\lambda_1>H,\\
+(1,(a,b),E(t),E(\rho t)),&\lambda_1\le H<\lambda_2,\\
+(2,((u_0,u_1,u_2),(a,b))),&\lambda_2\le H.
+\end{cases}
+\tag{PR57.02}
+$$
+
+In particular the tag-2 output contains $\eta$, not an unexplained flattened coefficient tuple. The initial target and the current target have different identities throughout. A preparation identity names an occurrence, not a tree value. The public prior $D$ is any declared nonempty subset of the finite $\mathcal T_H$; the unrestricted case is $D=\mathcal T_H$. An arbitrary such subset can be supplied by its complete membership bit-vector in the enumeration of §57.10. Its creation and transmission are paid. Public effective prior predicates can instead be evaluated on every enumerated tree; termination on this finite enumeration is the meaning of an effective declaration. No private predicate or source-dependent choice of program is allowed.
+
+### 57.2 Finite primitives, actual tapes and literal control
+
+**Definition PR57.D1 (constructed-tape machine).** There are 64 fixed tape ports, a finite public control state, eight finite symbol latches (their bit subfields supply Boolean operands), finite port-ownership tokens and a meter. The port assignments are fixed: control and public arithmetic 0–15, producer private data 16–23, actor 24–31, verifier 32–39, consumer 40–47, mailboxes 48–55, and meter/readout 56–63. Every ordinary tape is a finite word between a left marker $L$ and a right marker $R$ with one head. A second head is permitted on the meter only. Head marks are finite tracks on the constructed cells: a move changes the two adjacent marks, so a head position never occupies a hidden natural-number register. Ordinary symbols are $L,R,\square,0,1,\mathsf{sep},\mathsf{seal},\mathsf F$; each cell occupies eight model bits: three symbol bits, three head/append/read marks, a seal mark and one reserved bit. Ordinary tapes use only their designated head mark. The unused marks are zero. Every move/extension changes a fixed finite set of adjacent symbol/mark bits. No cell beyond $R$ exists. Head positions are physical cursor relations to existing cells, not stored integer registers. The finite control and token storage has its actual finite encoded size $b_{\rm ctl}$.
+
+The following are the primitive core occurrences. Each acts on a fixed finite set of adjacent tape cells or one finite latch/token; no action reads or changes an unbounded interval. A control successor is part of that occurrence.
+
+| core occurrence | exact effect |
+| --- | --- |
+| `RD(i,j)` | read the symbol at port $i$ into finite latch $j$; no head movement |
+| `WR(i,s)` | write one symbol, or one latched bit, at the current writable ordinary cell |
+| `ML(i)`, `MR(i)` | move one cell within the constructed interval; crossing $L$ or $R$ is disabled |
+| `EX(i)` | at $R$, replace $R$ by $\square$, construct one new $R$ immediately to its right, and leave the head at the new blank cell |
+| `BF(f)` | apply one specified Boolean truth table to the bit subfields of operand latches 0–2 and put its bit in result latch 3 |
+| `IN(i)` | put the next supplied bit in the input latch for the declared public or private ingress; it does not move or write a tape |
+| `OUT(j)` | transmit one bit from a declared public output latch |
+| `TOK(a,b)` | transfer one of the finitely many port/availability tokens from $a$ to $b$ |
+| `CTL` | take a finite control edge, including seal, phase change, request/response commitment or halt |
+
+`RD` and `WR` do not hide a seek. A move is not an allocation. `EX` is a literal one-cell constructor, including initialization to $\square$ and right-marker replacement. Zero initialization still requires `WR(0)`. A three-input truth table has exactly eight bits and 256 possible codes. The model does not make addition, string copying, integer-address lookup or integer comparison a primitive.
+
+Each core occurrence simultaneously appends one receipt symbol at the meter's append head: the old meter $R$ becomes a receipt and one new $R$ is constructed. A receipt is either ordinary or a fence, as selected by a `CTL` fence edge. This fixed one-cell side effect is part of the finite transition rule, including for `EX`, meter scans and readout. The event has one logical tick and two fee units: one core unit and one receipt-construction unit. This is a finite-symbol primitive convention, not an atomic operation on an unbounded numeral. At a cut after $n$ events the actual meter contains exactly $n$ receipts and a right marker. There is no second fee counter, automatic binary increment or automatic transcript of private values.
+
+All 63 ordinary tape boundary pairs are constructed by fixed boot constructor edges, each constructing one ordinary cell (the boundary-construction case of `EX`); the meter is the remaining port. Every control-description bit and initial finite control/token bit is installed by a bit ingress/write edge, one bit at a time, with the same receipt side effect. Boundary constructor edges and control-bit installation are finitely many boot variants of the core `EX` and `WR` operations, not an unbounded installation primitive. The finite bootstrap has only the states `next`, `input-bit`, `write-bit`, `advance`, `done`; it installs a prescribed finite literal encoding and the ordinary pairs of boundary markers, then enables the main control. The meter initially has its two boundary markers and append head, supplied as the irreducible primitive port. Their sixteen bits and the fixed primitive control bits are the initial constant $S_0$, also included in storage. There is no preconstructed data arena. The primitive port convention is the foundation of this ideal model; it is not a theorem about constructing hardware from nothing.
+
+Here is a fully encodable specification of the control, with a mechanical finite expansion. A native row is
+
+$$
+U(q)\;U({\rm op})\;U(i)\;U(j)\;U(s)\;U(q_0)\;U(q_1),
+\qquad U(n)=1^n0.
+\tag{PR57.03}
+$$
+
+Unused fields are zero. State numbers are assigned in the order of the routines below, then textual occurrence order. On a testing `RD` row the predicate is equality of the newly read symbol to the finite immediate $s$; on a testing `CTL` row it is equality of the designated public latch $j$ to $s$. All other rows have $q_0=q_1$. Thus the predicate is encoded in the row, not a missing instruction field. Composite public tests first compute their Boolean bit by the listed routines. A boundary test on a private tape distinguishes only $L$ or $R$ from all ordinary symbols and takes the same successor on private 0 and 1. The opcode order is the table above, with Boolean codes in lexicographic bit order. Public tests may select a successor. Private latches may only feed `BF` and bit writes; they never select a successor, port or move. The public observation of the PC is this native row number and routine phase; private latch contents are excluded.
+
+For avoidance of an implicit compiler, the finite expansion rules are part of the specification. Sequence joins the exit edge of the first finite graph to the entry of the second. `if public P` inserts one `RD`/finite-test edge to the two entries and joins their exits. `while public P` inserts that edge, an edge back from the body exit, and an exit edge. `for each 1 in a finite unary tape` is `RD; if 0 exit; body; MR; back`. The loop head is a real tape head. A fixed subroutine call is inlined. Finite alternatives over the eight symbols, 64 ports and 256 truth tables are expanded into those finitely many cases; they do not create states indexed by integers. Parameters and return data are on tapes. All uses of these rules below have a finite static nesting depth. The generator's depth-first expression traversal uses a constructed stack of frames, not native recursive calls. Push and pop are the append/scan routines below. Thus the control graph is finite independently of $H$, contexts, program length and request count. Its encoding is (PR57.03); the boot installs its bits literally. Its size is $|\operatorname{enc}(\operatorname{expand}(\mathcal R))|$, where $\mathcal R$ is the finite list of routines specified in §§57.3–57.10. This is a computable length of a given encoding, not an assigned service constant. Dynamic instructions use a different explicit encoding in §57.5.
+
+All native control is constructed once. Reading a native rule and changing its finite control state is the primitive finite mechanism just declared; it is not a word-sized instruction service whose fetch is secretly omitted. Dynamic code, policies, address strings, descriptors and data are ordinary tape contents and are fetched by charged scans. No generator generates its interpreter, allocator or own control.
+
+### 57.3 Complete tape service routines and progress
+
+**Definition PR57.D2 (service library).** Each arrow in the following recipes is an occurrence from Definition PR57.D1. No recipe has an integer-valued atomic step.
+
+`Home(i)` repeatedly reads the current cell; on $L$ it stops, otherwise it moves left and repeats. From position $h$ relative to $L$ it costs exactly $2h+1$ core occurrences. Only the boundary test controls this loop; ordinary private bits are ignored. `Tail(i)` analogously seeks $R$. A traverse of $h$ intervening cells costs $2h+1$ from its starting point. Positions and boundaries are public.
+
+`Append(i,b)` requires the head at $R$ and performs `EX; WR(b); MR`. It costs three core occurrences and constructs exactly one cell. `AppendWord(i,w)` reads every symbol of the finite sealed $w$, appends it, and moves its source head once per symbol. Its per-symbol body is `RD; EX; WR; MR(destination); MR(source)`, of length five. Homes and seeks to the two specified starting positions are separately counted. This routine is used for descriptors, instructions, literal public input, stack frames and string copies; no bulk write is primitive.
+
+`Allocate(i,k)` takes a real unary $U(k)$ at its first bit and the arena head at $R$. For each leading 1 it executes `RD(counter); EX(i); WR(i,0); MR(i); MR(counter)`; the terminal 0 is read once. Its body count is $5k+1$, plus actual counter/arena positioning and delimiter/descriptor construction. Before allocation, `Base(i)` obtains the actual arena offset: `Home`, then move past $L$ and scan to the already existing $R$, appending one 1 to a separate public counter for each intervening cell and then 0. Only the $R$ test controls it. For $b$ existing data cells its body is $5b+4$ occurrences (`RD; Append(1); MR` per cell, then `RD(R); Append(0)`), plus home/initial movement/positioning. This constructs $U(b)$ before any new arena cell is created. A descriptor is the concatenation of owner code, arena-port code, $U(b)$, $U(k)$, initialization flag, mutability flag and creation/request ordinal, where $b$ is the arena offset. Its bits are created with `AppendWord`; $U(b)$ is this actually constructed `Base` result, copied to the descriptor. Every appended cache/code/stack block uses the same `Base` routine for its starting reference; no cursor position is converted into a numeral without this scan. `Allocate` appends a delimiter and never changes a preceding block. Allocation, descriptor creation, zeroing and later copying are distinct executed bodies. Fresh intervals cannot alias. An erase is a full seek plus one `WR(0); MR` per designated cell; erased cells remain constructed and counted in storage.
+
+`Seek(i,U(a))` first executes `Home(i)`, then one `MR(i)` to data index zero. Starting at the first bit of a real address string, for every leading 1 it performs `RD(address); MR(i); MR(address)`, then reads the terminal 0. Its cost is
+
+$$
+\operatorname{SeekCost}(h,a)=2h+1+1+3a+1=2h+3a+3,
+\tag{PR57.04}
+$$
+
+plus positioning the address head. The data tape must already contain that cell. Code generation/validation checks this public bound. A read or write at the result adds one occurrence. Offset zero means the first cell after $L$. Marker tests in `Home` never branch on an ordinary bit. All addresses of a private gate execution are supplied by public code, so all these seeks are source independent.
+
+Unbounded public naturals and references use $U(n)$, including zero. Increment constructs a new version: append all old leading 1s, one extra 1, then 0; retire but retain the old version. Addition concatenates leading-1 parts and a terminator. Subtraction of $v\le u$ walks paired 1s, then copies the remaining $u-v$ 1s. Comparison walks two strings together until a terminator. Multiplication repeats a full leading-1 copy once for every 1 of its first argument. A finite bound $B$ can be converted to a binary width by the loop $w=1,P=2$; while $P\le B$, increment $w$ and double $P$ by unary concatenation. It stops because $2^w>B$ for some $w\le B+1$. Every intermediate string, comparison and copy is constructed by the displayed routines. There is no modular wrap. These inefficient algorithms suffice for every finite public integer, including address arithmetic and generation ordinals.
+
+`Promote(x,w,w')`, $w'\ge w$, allocates a fresh $w'$-bit vector, copies all $w$ old bits by seeks/reads/writes, then writes zero extension for unsigned values or the copied sign bit for signed values at each of the remaining $w'-w$ positions. All iterations and addresses are public. Old vectors remain retained or are erased by a complete scan. Unary references have no finite address width to promote; a relocation constructs a fresh descriptor and copies every unary reference to its new version with the same routines. No reference is truncated.
+
+**Lemma PR57.L1 (service termination and constructive storage).** Every invocation above with finite constructed inputs and a valid finite bound terminates and leaves only finitely many constructed cells. It has a unique next primitive occurrence at every unfinished cut.
+
+**Proof.** `Home` decreases the head distance to $L$; `Tail` decreases distance to the already existing $R$. An append has exactly three occurrences. An allocate/copy/seek loop consumes a fixed, already sealed unary string or sealed finite block. Newly created cells lie on a different tape or beyond the source fence and cannot extend that loop's bound. Nested multiplication loops have the two fixed finite operands as bounds. Width search strictly increases $P$ by doubling and stops no later than $B+1$ increments; its inner copies have fixed finite inputs. Promotion consumes $w'$ positions. These arguments give a natural outer-iteration bound and a finite inner bound for every invocation, rather than a rank that increases when more allocator work is created. Only `EX` constructs cells, one at a time; finitely many terminating bodies imply finite construction. The deterministic recipe gives a successor at each unfinished cut. $\square$
+
+### 57.4 Ticks, fee numerals, identities and charged readout
+
+**Definition PR57.D3 (closed-cut readout).** The public microtrace contains one tick pulse and the fee increment 2 at every occurrence. Its cumulative mathematical coordinates after $n$ pulses are $(n,2n)$. These coordinates are not automatically stored accessible binary numerals. What is stored is the meter's unary receipt sequence. A fence occurrence writes a distinguished receipt $\mathsf F$. A public unary counter counts fences, with the increment recipe of §57.3. The read head scans from $L$, counting fence markers with paid unary arithmetic, until the declared already existing fence number is reached. It also constructs a separate bound tape by appending one 1 for each receipt visited, then a terminal 0 at the selected fence. It stops at that marker, even though new receipts are being appended during the scan. The resulting bound is an actual stored $U(n)$, not an execution index used as a free loop bound.
+
+For a fence at event $n$, a second scan driven by that stored bound constructs $U(n)$ and $U(2n)$: for every leading 1, `RD(bound); RD(meter)`, append one 1 to the tick tape, append two 1s to the fee tape, `MR(meter); MR(bound)`; read the terminal bound 0 once, then append a terminal 0 to each output tape. The body is exactly $13n+7$ core occurrences, plus fence selection, bound creation and positioning. The two numeral blocks are sealed, actually copied and, if requested, printed one bit per `OUT`. Their type is `tick/fee at fence f`. They report the old closed cut; the readout's own events increase the current meter. The complete pulse sequence determines that increase exactly. There is no requirement to print a number that already includes the act of printing that number, and no recursive free counter.
+
+An event identity is a receipt-cell occurrence in this append chain. A tape address is the port, its origin and a finite cursor path. The trace exposes all moves, reads, writes, extensions and origin resets, hence exactly which existing cell each occurrence touches. A request/block/row reference is a stored unary ordinal plus its actual creation chain; its numeric wire representation is constructed and copied using §57.3. An address can also be serialized by scanning its finite path and appending $U(a)$. Merely mentioning a mathematical address or event index in a proof does not supply such a serialization. No primitive emits an arbitrarily long numeric label.
+
+Preparation/version identifiers are complete public finite bit strings actually installed and copied. A preparation ordinal advances by paid unary increment independently of source content. A current-generation field records the accepted-update count, advanced after the original `accept` response; an attempt field advances on every call. Original identity never changes. These counters are distinct from the meter and may not substitute for it.
+
+**Lemma PR57.L2 (exact nonrecursive metering).** At every finite cut, meter receipts, tick pulses and charged fees have counts $n,n,2n$. Every requested closed-cut numeral is correct and finite, including when its readout creates more receipts.
+
+**Proof.** Each primitive appends exactly one receipt and emits exactly one tick and fee increment 2. Induction establishes the counts, beginning at the irreducible port. Fence ordinals are maintained by a separate paid routine whose bounds are finite; the selected fence existed before the readout. Its prefix has $n$ cells permanently, so the readout appends exactly $n$ and $2n$ ones. New receipts occur strictly after the fence and are excluded from the loop. The terminal zeros and output are paid. No meter value is an input to a primitive transition and no self-inclusive readout equation is used. $\square$
+
+### 57.5 Literal gate instructions and a terminating generator
+
+**Definition PR57.D4 (dynamic Boolean tape).** A generated gate record is the literal bit string
+
+$$
+1\;f_0f_1\cdots f_7\;U(d)\;U(a)\;U(b)\;U(c).
+\tag{PR57.05}
+$$
+
+The first bit 0 instead means end of program. Each record has length $13+d+a+b+c$. $f$ is the full truth table in input order 000,…,111; $d$ is the destination and $a,b,c$ are operand bit addresses on the specified private or public workspace tape. All four address fields are present, including for constants and unary gates. There is no immediate-width ambiguity, implicit next-PC or hidden arithmetic opcode. Unused operands point to the constructed zero cell. Instructions execute in record order.
+
+The fixed interpreter does the following: read header and eight truth-table bits into finite public control, moving once after each (18 occurrences); copy each complete unary field onto its own public address tape; seek/read the three operands; apply `BF(f)` once; seek/write the destination; resume at the next record. Copying an address-field bit uses `RD(code); EX(address); WR(address,bit); MR(address); MR(code)`, exactly five occurrences. All four field copies and their positioning are executed. The three operand values stay in latches 0–2. All public code, boundary and address scans use latch 4; the result in latch 3 survives destination positioning. No private latch value is tested by control. Let $P_g$ be the actual address-field positioning and scratch-sealing occurrences in this invocation, and $h_{g,r}$ the actual workspace head position before the $r$th seek. With $v=(a,b,c,d)$,
+
+$$
+I(g)=18+5\sum_{r=1}^4(v_r+1)
+ +\sum_{r=1}^4(2h_{g,r}+3v_r+3)+4+1+P_g.
+\tag{PR57.06}
+$$
+
+The 4 means three operand reads and one result write; 1 is `BF(f)`. $P_g$ is not an unnamed service charge: it is the sum of the `Home`, `Seek`, `CTL` and `WR` occurrences prescribed above for the actual four address tapes. Each newly cached field has a descriptor for its actual start offset; before each workspace seek its address head is positioned there by the complete `Seek` recipe on that public tape. Each such positioning is $2h+3b+3$, plus positioning its descriptor; each seal/control edge is one occurrence. The descriptor seeks terminate on the literal finite descriptor, whose start was represented by `Base` before its append, or by a full origin scan to its delimiter with its paid unary block ordinal. Such a scan counts delimiters by the unary increment/compare recipes, including those extra occurrences; it does not use a mathematical offset as an uncharged stopping test. Every delimiter scan uses `RD; MR` until that declared public delimiter. No positioning is a random-access primitive. Equivalently expand the recipe and count its finite event word; (PR57.06) groups that word. End-of-program costs one header `RD` plus its prescribed exit `CTL`. Initialization, generator work and later output/copy are outside $I(g)$ and are counted where executed.
+
+The gate generator is a native public routine, not a generated gate list. Its finite stack machine has frames `(kind, children left to visit, result references)` encoded by fixed tags and unary references. It first visits every child in order, pushing its finite expression frame; on completion it allocates one fresh result bit, emits (PR57.05) by `AppendWord`, and pushes the resulting reference. Literals emit constant truth tables; variable leaves emit projection tables. MUX emits all three children and then its truth table. A fold is a public loop over its declared finite index string. Bounds, addresses and offsets are computed by unary routines. Every `Emit(f,d,a,b,c)` writes all record bits by the append recipe; no instruction is assumed to exist before that write.
+
+The finite expression templates used here are exactly Boolean gates and the following bit recurrences. At each position an adder emits
+
+$$
+t=x\mathbin\oplus y,\quad s=t\mathbin\oplus c,
+\quad u=x\land y,\quad v=c\land t,\quad c'=u\lor v.
+\tag{PR57.07}
+$$
+
+It uses five gates per bit, including the final carry computation. Subtraction emits $\neg y$ at every bit and uses that same adder with initial carry 1; negation uses complement and addition of 1. Equality folds `(NOT XOR)` with AND, three gates per position. Unsigned less-than scans most significant first with old $e,l$, emitting
+
+$$
+z=\neg(x\oplus y),\quad n=\neg x,\quad u=e\land n,
+\quad v=u\land y,\quad l'=l\lor v,\quad e'=e\land z;
+\tag{PR57.08}
+$$
+
+this is seven gates per position because $z$ needs XOR and NOT. Signed comparison flips each sign bit before this comparison. Every bit MUX uses one full three-input truth table. All initial constants and copies are themselves emitted. Evaluating both arms means executing their gates even if their values will not be selected. Vector widths are chosen from public bounds before generation; all arithmetic values and even unused arithmetic arms lie inside the declared signed range. Bits are only a representation of these integers; overflow is never assigned an integer meaning.
+
+**Lemma PR57.L3 (noncircular generation and gate execution).** Every finite template and finite public loop bound yields a finite literal gate tape and a finite interpreter execution. Its instruction/address/extension trace is independent of private operands.
+
+**Proof.** A depth-first stack frame either descends to a proper subexpression or completes one visited child. The finite expanded expression forest, including all public fold iterations, bounds the number of visits; each `Emit` is a terminating finite append. The generator's arithmetic and allocator are native service routines already installed by the finite bootstrap. They do not call gate generation to instantiate themselves. The interpreter consumes one whole record at a time and stops at its fixed terminal 0. Field copying and seeking terminate by Lemma PR57.L1; every address has a publicly checked allocated destination. No private value bit controls an edge or head motion; truth-table evaluation changes only latch/data values. Thus a gate tape determines the entire precommit trace and its finite cost. $\square$
+
+### 57.6 Actual paid input, contexts and policy computation
+
+**Definition PR57.D5 (material supply).** Put $N=2H-1$. Private preparation is exactly $2N$ `IN` occurrences, in pairs, followed by their actual writes to $N$ token slots of the freshly allocated producer block. Each input bit has `IN; WR; MR`; the slots and their masks are allocated and zeroed first. The private choices define the source occurrence. There is no externally traversed variable-length tree or free $t\mapsto\operatorname{code}(t)$ routine. The choices are just the initial source material, whose ingress/write occurrences are charged. The typed valid packets below have a bijection with actual $\mathcal T_H$. Every actual $t$ is represented by its unique choices. This is a representation of the initial input, not a program selected by that input. An effective upstream creator, if part of a protocol, executes on the same tapes before these writes; its work and material are counted as supply work.
+
+The token alphabet is `PAD=00`, `alpha=01`, `beta=10`, `PAIR=11`. The active packet is the literal preorder tree code followed by PAD to length $N$. On all $N$ slots a generated circuit starts with need 1, closed 0, leaves 0, validity 1. PAD while not closed sets validity to 0: **padding is forbidden before closure**. A non-PAD after closure also sets validity to 0. Before closure PAIR adds one needed child slot; a leaf subtracts one and increments leaves. Closure is sticky when the updated need is zero. Invalid inputs never shorten the scan. The final test is validity, closure, need zero and $1\le$ leaves $\le H$. Explicitly, with old $(n,z,l,v)$ for need, closed, leaf count and validity, let $P,A,B$ test PAIR, alpha and beta, $L=A\lor B$, $T=P\lor L$, and $I=(\mathtt{PAD}\land\neg z)\lor(T\land z)$. Compute $n_* = n+[P]-[L]$, $n'=\operatorname{MUX}(T\land\neg z,n_*,n)$, $l'=l+[L\land\neg z]$, $z'=z\lor[n'=0]$, $v'=v\land\neg I$. Every candidate is computed before selection. These are bit-circuit templates made solely of the arithmetic/Boolean recipes already specified. A signed width $N+4$ suffices for all need/count arms, including unused need-minus-one at zero. Validity is committed only at the end. The source domain concerns valid preparations; malformed packets have the same finite validation schedule and a failure, with no target receipt.
+
+For an actual public context, the material packet contains its name and exact finite preorder token sequence, with its stored length. Every symbol is generated by the actor's public program or received by a charged `IN; WR; MR` sequence. The complete packet is parsed, copied and retained on paid tapes. A context given as an effective expression is expanded by the public stack generator: a leaf appends its token; a branch appends PAIR and pushes right then left, with every frame and token actually written. The number of unvisited expression nodes decreases after each completed expansion. Arbitrary effective context-creation computation is included through the policy interpreter below. No semantic $d_i(v),h_i(v)$ or ownership/name test is a free supplier. Contexts with $d>H$ are still completely constructed, validated, retained and processed by the service. Identical algebraic values or equal leaf counts do not replace the named actual tree.
+
+An effective original policy is supplied as a finite deterministic Turing transition table and its finite public initial tape; both are installed bit by bit by the same append/ingress routines. A row contains unary state and symbol codes, a new state/symbol, and one of the three finite directions. The interpreter scans every row of the sealed table for each simulated step, compares complete unary state/symbol codes using the service routines, stores the unique matching row, writes the simulated symbol and new state, and moves the simulated head by one. A virtual two-sided tape is represented by two finite stacks and a current symbol; pushing is `AppendWord`, popping scans the finite stack to its last sealed frame and constructs a new prefix version. Blank extension uses `Allocate`, not an infinite blank tape. State and head numerals are never assumed stored by the mathematical simulation. A finite alphabet may be encoded into fixed blocks, with their block width part of the installed program.
+
+Input to this interpreter is precisely the public initialization and original projected record. Output is a request plus full named context packet, or stop plus a proposed target. Writing all those bits is policy work. A restart-on-history policy or a persistent-state policy is represented by its own table; retained machine tapes supply its actual state. Every effective deterministic original protocol has such a finite machine description; the specific step-by-step interpretation just given establishes the supply connection, rather than appealing to computability to skip it. The construction does not decide whether a program terminates. A lawful finite computation is one whose actual table execution reaches its output state in finitely many simulated steps. Each such step is itself a finite paid tape schedule. Only public data or already committed responses influence that policy's branches.
+
+**Theorem PR57.T1 (literal source representation and parser correspondence).** Valid fixed packets are in bijection with $\mathcal T_H$; private preparation has the same public trace for every valid source. Their active tokens transduce faithfully to `AtomicPrefixParser.code`.
+
+**Proof.** Open slots initially number one. PAIR consumes one slot and creates two; a leaf consumes one. Before closure there is no PAD and after closure there are only PADs. Thus closure separates exactly one complete ordered binary tree from its suffix. There are $m$ leaves and $m-1$ branches, hence $2m-1\le N$ active tokens. Conversely structural preorder traversal has these properties and uniquely determines the packet. The actual primitive ingress and the generated validation tape have fixed public length/addresses. Secret validity/count values are only circuit operands. The transduction is PAIR $\mapsto[\mathrm{false}]$, alpha $\mapsto[\mathrm{true},\mathrm{true}]$, beta $\mapsto[\mathrm{true},\mathrm{false}]$, with PAD omitted only after closure. By structural induction this is exactly the pinned parser code of the same `FreeMagma Bool` tree, with true labeling alpha. An $m$-leaf token code becomes $3m-1$ bits. If the transduction is executed internally, it reserves $2N$ slots, forms lengths 0/1/2 and prefix offsets by fixed circuits, scatters with equality masks, retaining the result and its active-length mask privately. Public context transduction may serialize its canonical bit string by paid public work. No private source transduction is published, and no private length is used as an address or a public precommit loop bound. The parser's parse/remainder equivalence and injectivity therefore apply to this transduced active word, not to the two-bit token alphabet itself. $\square$
+
+### 57.7 The complete whole-action source schedules
+
+All private source work is on generated fixed gate tapes. Each call computes $A_i=[X_i\ne\mathtt{PAD}]$ and $L_i=A_i\land\neg A_{i+1}$, with the public sentinel $A_N=0$, by full scans of the $N$ slots. The unique last-active mask is therefore literal, not a private traversal stopping condition. These masks and private offsets are operands, never addresses. Every candidate array is freshly allocated and fully initialized. Counts/offsets use signed width $W=3N+C+8$, where $C$ is that call's public candidate capacity; this exceeds every intermediate absolute count and offset, including arithmetic arms later discarded.
+
+For $\rho$ an active PAIR emits `(PAIR)`, alpha emits `(beta)`, beta emits `(PAIR,beta,alpha)`, and PAD emits the empty chunk. The chunk length $\ell_i$ lies in 0,…,3 and the private offset is $o_i=\sum_{k<i}\ell_k$. Reserve $C=3N$ token slots, initialized to PAD. For every $j<C$, $i<N$, $r<3$ and each token bit, OR the terms
+
+$$
+[r<\ell_i]\land[j=o_i+r]\land\operatorname{chunkbit}(i,r).
+\tag{PR57.09}
+$$
+
+Every term and every fold gate is executed. The generator's loops have public bounds $C,N,3$, and each equality/comparison is the complete $W$-bit recipe. The resulting candidate is its actual preorder concatenation, followed by padding.
+
+For a context of $d$ leaves and $M=2d-1$ active tokens reserve $C=1+N+M$. Slot zero is PAIR. In `Left(v)`, place context token $k$ at $1+k$ and active source token $i$ at $1+M+i$, using a full $j$-by-input equality scatter. In `Right(v)`, place active source token $i$ at $1+i$, and context token $k$ under all masks
+
+$$
+L_i\land[j=2+i+k].
+\tag{PR57.10}
+$$
+
+The source's last active token is $i$; thus $2+i$ is the first context position. All $i,k,j$ are scanned, whether their masks are true or false. Nonmatches contribute zero and unused suffix positions are PAD. The two directions preserve actual brackets and order.
+
+The candidate parser of §57.6 scans all $C$ slots, retaining full grammar/leaf-count results. It computes $g=[\lambda({\rm candidate})\le H]$ together with candidate validity. At every original source slot and bit it executes `MUX(g,candidate_i,old_i)` and writes the result to the current-source block. All $N$ slots are written. The block is unavailable throughout this phase, and the successor is logically committed only after its final write. On rejection each old source bit is retained, with the same source-block/preparation identity and accepted-generation count. Scratch arrays and offsets are erased by whole scans; their allocated cells remain counted. The only committed response is the one-bit guard result. The candidate's $E$ is neither evaluated for an update response nor exposed.
+
+A Read reserves four $D=H+5$-bit signed vectors in the faithful basis $(1,S,A,SA)$, starts with $(x,y,u,v)=(1,0,0,0)$ and at every token computes both
+
+$$
+R_\alpha=(u,v,x,y),\qquad R_\beta=(u-v,-u,y,x+y).
+\tag{PR57.11}
+$$
+
+It selects $R_\alpha$ on alpha, $R_\beta$ on beta and the old tuple on PAIR/PAD, evaluating every candidate and selection bit. It converts at full width to the original faithful coefficient tuple
+
+$$
+(c_0,c_A,c_B,c_{AB})=(x+y,u,v,-y).
+\tag{PR57.12}
+$$
+
+A fixed-length $4D$-bit response block is written completely before its response-commit token is released. That release makes one complete typed response available; it does not perform an uncharged copy or serial transmission. Subsequent delivery copies/prints the block through the routines below. Canonical signed-binary trimming, if desired, happens only after commitment and is a public computation on the returned original $E$. Equal coefficients denote precisely equal original responses. An accept/reject block is likewise complete before release. At no precommit cut is any response block readable by the actor.
+
+**Theorem PR57.T2 (actual source and original Read conformance).** For all $H,t\in\mathcal T_H$, every original context of arbitrary finite size, and every finite lawful call sequence, these schedules give the exact original responses and evolving actual trees. Rejection preserves the original source; Read does not mutate it.
+
+**Proof.** The representation theorem supplies exactly the current literal preorder code. The chunk substitution is (PR57.01) on each token and preserves branch tokens, so concatenating chunks gives the exact code of $\rho t$. Distinct output offsets have a unique contributing chunk position; the equality OR therefore writes that code and PAD suffix. The left/right equations give PAIR followed by the exact two actual subtree codes in their specified order. The parser counts the complete candidate, so $g$ is exactly the original whole guard, including equality at $H$. If accepted, its $2\lambda-1$ active tokens fit $N$; if rejected, every MUX gives the old bit. Nothing splits a whole context into sequential interface calls.
+
+For Read, $S^2=S+1$ and $SA=B$ give the displayed right-multiplication formulas. Preorder visits leaves in their original left-to-right order. Induction through the $N$ slots therefore gives the product $E(t)$; PAIR and PAD are identities of the scan, not source leaves. The coefficient $\ell_1$ norm grows by at most a factor two per active leaf, so selected coefficients have magnitude at most $2^H$. Even the unselected one-step candidates and final conversion have magnitude at most $2^{H+2}$. Signed width $H+5$ contains them strictly, with no overflow. The Read program writes only workspace/response cells. Induction over calls now gives exact source and response conformance. $\square$
+
+### 57.8 Observation at every cut and one causal simulator
+
+**Definition PR57.D6 (complete visible trace).** At each primitive cut observers see the current public phase/native instruction identity, finite owner/token state, busy/idle availability, port and exact cursor-cell occurrence touched, move direction and extension, channel direction, tick pulse and fee increment, and public material/instruction fields actually released or transmitted. A cursor-cell occurrence is identified by port and its origin/move history; its printed numeral is available only after a paid serialization. Block identities, stored ordinals, seal/handoff occurrences and declared immutable reference chains are public. Public code, context packets, policy parameters, delivered archives, receipts and task output are accessible only through their declared paid reads/copies. Private source bits, source-parser counts, masks, offsets, gate latches and unreleased candidate/response blocks have no observation port. Physical electrical activity is not an additional label.
+
+An original response commits at its complete response-block release. The observation correspondence consumes precisely that original response then, before simulating its delivery or any subsequent response-dependent work. This defines partial-delivery cuts too: after release the simulator may serialize the acquired $y$, but before release it may not inspect $y$. Availability has exactly the same pattern for all valid sources with the same public history. Original calls are admitted only at idle cuts; all intermediate generator, allocation, gate, copy and control cuts are present in the microtrace with their unique next transition.
+
+Let $\omega$ be the actually committed original prefix. The public simulator is the very same native control, public generator, allocator, policy interpreter and copy schedules, with private bit values erased. For each public request it executes the public parameter work and builds the same gate tape; executes gate seeks/writes using arbitrary dummy bits while retaining only their labels; stops at response release; consumes the single original response $y$; then fills the now-public response block with the faithful encoding of $y$ and executes all postcommit work. It maintains its actual unary ordinals, addresses, meter receipts and public tapes. Preparation uses dummy private input bits with the same $2N$ ingress labels and validation schedule, with the domain's valid-preparation result. It does not select an enumerated representative source and it never maintains a speculative original source or initial target.
+
+**Theorem PR57.T3 (uniform prefix-causal full observation correspondence).** This is one effective source-uniform correspondence covering every allowed cut, with exact instructions, addresses, availability, identities, ticks/fees, preparation, material creation, growth/copy, verification and consumer use. Erasing its added microstructure yields precisely the unchanged original trace.
+
+**Proof.** Before a response release, the source affects only private circuit bits. Lemma PR57.L3 gives the same code, control edges, tape movements, allocations and cost counts for equal public initialization, prefix and request. Fixed preparation length likewise gives equal ingress/validation labels. Each receipt side effect is fixed. Source-data writes differ privately, but their cell occurrences and instruction labels agree. Theorem PR57.T2 supplies exactly one original $y$ at release; no earlier label uses it. Every later branch, trimming choice, copy length or accepted-generation increment may depend on that $y$, which is now in the acquired prefix. Policy, context creation, archive, verifier and consumer routines read only that prefix and public inputs, so their complete subsequent computations are simulated literally. Induction on primitive cuts, interrupted only by these original response releases, gives equality of the complete visible trace. Truncating the execution at any cut truncates the same simulator run, so the maps are prefix compatible. Original enabledness is idle/menu, and micro enabledness is the prescribed successor on both sides. Projection keeps each actual original request and exactly its response, with the same source successor and stop decision. No future response, private initial target or representative source is used. $\square$
+
+In particular a fee or address threshold does not supply a new source distinction: it is a function of public input and responses already acquired. The simulator itself can be run on paid tapes if a protocol elects to use it; its computed work is then additional public policy work, not a free selector.
+
+### 57.9 Owned growth, complete copying and authentic records
+
+**Definition PR57.D7 (records and channels).** Producer $P$, actor $A$, verifier $V$ and consumer $C$ have disjoint archive/workspace ports. A mailbox is a separately constructed tape interval, not an alias of an archive or receiver snapshot. Sender writes, seal, token handoff, receiver copy and acknowledgement are serial. A sealed sender block remains immutable throughout the copy. The complete destination length is allocated/initialized first. For a $k$-bit payload, after actual positioning, the sender loop is `RD(sender); WR(mailbox); MR(sender); MR(mailbox)` for each bit, then one seal `CTL` and one token handoff. The receiver loop is the same four occurrences from mailbox to destination, then one seal and one acknowledgement handoff. Its body has exactly
+
+$$
+8k+4
+\tag{PR57.13}
+$$
+
+core occurrences. Allocation/zeroing, all homes/seeks, unary length/identity descriptors and any serial output are additional occurrences, disjoint from these two loops. The head movements are part of this count and cannot be omitted. A destination becomes readable only at its final seal. Source, mailbox and destination coexist. Mailbox data and markers may be retained; all constructed storage is counted.
+
+Every original call, including every reject, appends one producer row. Its literal fields are length-framed finite bit strings: model/version/preparation identity, `INITIAL-SOURCE` identity, request ordinal, previous row reference, exact original request, complete context name and code reference, exact committed original response, accepted-generation count before/after, schedule/template identity, start-fence and response-commit-fence references, and the row's creation/seal occurrence chain. Natural fields use $U(n)$. A Read field contains the exact coefficient representation. A rejected update has only reject and no candidate value. Each context reference points to the complete actually retained packet, never to a representative with the same leaf count or $E$. Length framing is `U(length)` followed by that many actual bits; its prefix and payload are produced by the append routines.
+
+Start and response-commit fence numerals are obtained by the closed-cut scans of §57.4. They refer to those closed cuts, not to the future end of the row's own serialization. Row completion is a distinct seal occurrence. There is consequently no self-referential fee-range field. The fee interval between start and response commitment is obtained by subtraction of the two represented fee numerals; row/copy completion costs are separate exact event intervals. Old row fields are never edited. Each complete row is copied to $A$ through a distinct mailbox; context material is copied as well if not already present there.
+
+At stop, $P$ freezes the actual row/context prefix and copies it completely, with its framing and descriptors, through a fresh mailbox to a fresh $V$ snapshot. $P$'s archive, $A$'s archive, mailbox and $V$'s snapshot all coexist. Verification begins only after complete snapshot seal. There is no arbitrary external transcript-import port. Names are checked, but authenticity comes from these allowed write/copy transitions. A row's original-preparation field is never changed to its current-generation field. Rejected attempts still advance the request ordinal and retain their actual row.
+
+**Lemma PR57.L4 (copy and archive authenticity).** Every readable receiver block equals its designated sealed sender block bit for bit and retains that sender's original identities. Every verifier snapshot is exactly the producer's frozen actual prefix.
+
+**Proof.** Each loop reads and writes the same indexed bit once; positioning and constructed length ensure its exact interval. During the sender loop only the sender owns the mailbox write token; during the receiver loop it is sealed and the destination is inaccessible until completion. Induction on $k$ gives bit equality. The framing/identity payload is part of that same copy, not generated by a receiver's choice. Induction over appended rows gives continuity, immutability and unchanged original preparation identity. Freezing precedes the snapshot copy, so the snapshot is the actual frozen prefix. This is ideal exclusive-ownership provenance, not a cryptographic theorem about hostile writers. $\square$
+
+### 57.10 Whole-fiber verification, literal tag-2 decoding and actual use
+
+**Definition PR57.D8 (exhaustive paid record verifier).** $V$ uses only its snapshot, copied public initialization/prior and proposed target. It has no source port. For an explicit enumeration without a hidden table, form all length-$N$ token words in base four: start at all PAD; increment by scanning every slot with a carry from the last slot, emitting a fresh version; stop after all PAIR. This is exactly $4^N$ words. Parse every word with the fixed circuit of §57.6, retaining the valid ones. By Theorem PR57.T1 they enumerate $\mathcal T_H$ once. Apply the declared prior to every valid word, paying its actual table/program computation. Exhaustive whole scanning never stops at its first survivor or disagreement. Invalid words are fully processed by the parser and then skipped publicly; they are not sources.
+
+For each retained $s\in D$, save its initial target in a distinct initial-target block, then replay **every** authentic original row from the beginning on a separate current-candidate block. A Read row is compared to the exact computed current $E$. An accepted update must have the true whole guard and installs the actual complete candidate. A reject must have the false guard and preserves the old candidate. All context packets are loaded from the snapshot and processed on their actual side. The running survival bit is the AND of all comparisons; a false bit never shortens replay. Original metadata, row continuity, framing, identities and copy references are scanned completely. Verification is a public computation on enumerated candidates and acquired data; even source-dependent branches within a candidate calculation are branches on public enumerated values. Using the same fixed circuits is sufficient and fixes all replay costs explicitly.
+
+Initial $q_H(s)$ is computed from this enumerated $s$, not from the actual hidden source. Count $(a,b)$ by full token scan and choose the tag using (PR57.02). To obtain tag 2, directly fold the original leaf contributions
+
+$$
+g_\alpha=((0,0,1),(0,1,1),(0,1,0)),\qquad
+ g_\beta=((0,1,1),(0,1,0),(0,2,1))
+\tag{PR57.14}
+$$
+
+from the temporary triple unit using, in each coordinate,
+
+$$
+(e,k,p)(f,\ell,q)=(e+f+p\ell\bmod2, k+(-1)^p\ell, p+q\bmod2).
+\tag{PR57.15}
+$$
+
+The unit is an arithmetic initialization, not an empty source. These folds give $u_0,u_1,u_2$ for that same actual candidate $s$. Initial and current blocks stay distinct even after irreversible updates.
+
+A precise wire encoding is tag $U(j)$ followed by the fields of (PR57.02), in that order; pairs/tuples have fixed arity and each finite string is length framed. A signed integer uses a sign bit and a length-framed magnitude, zero with sign zero. Tag 2 is `U(2); (u0,u1,u2); (a,b)`, with each $u_i=(e_i,k_i,p_i)$ in that order. It decodes literally to $(2,\eta)$.
+
+If a proposal arrives instead as tag plus three coefficient windows and composition, a paid adapter first converts each window from the original basis by
+
+$$
+(c_0,c_A,c_B,c_{AB})\mapsto(c_0+c_{AB},-c_{AB},c_A,c_B)
+\tag{PR57.16}
+$$
+
+and checks that only one of the even/odd coefficient pairs is nonzero. For the nonzero pair $(x,y)$ it enumerates the full pairs for $S^0$, $S^1$, $S^k=(F_{k-1},F_k)$, $k\ge2$, and $S^{-n}=(-1)^n(F_{n+1},-F_n)$, $n\ge1$, testing both global signs. Fibonacci values are generated by actual additions; stop once the next tested Fibonacci magnitude exceeds $\max(|x|,|y|)$, after also testing the boundary pair. Because $F_{n+2}\ge2F_n$, only finitely many pairs can match. A convenient total schedule tests $k=0,1$, and then all positive/negative pairs with indices through the first $r+2$ such that $F_r>\max(|x|,|y|)$; redundant final tests avoid any boundary ambiguity. The normal-form uniqueness supplies a unique $(e,k,p)$ or a failure. Reverse conversion is paid Fibonacci generation with the same formulas and basis change. Thus coefficients and normal coordinates are faithfully interconverted on their actual image; mixed-grade/zero/nonunit inputs fail. The adapter uses only returned/proposed coefficients, never an additional source Read. Complete pair tests handle negative exponents and $F_1=F_2=1$ without approximate logarithms. Bit arithmetic uses the same literal gates with sufficiently promoted public widths.
+
+Let $b_s(\omega)$ be the final replay survival bit. Compute by the complete enumeration
+
+$$
+\mathsf{nonempty}=\bigvee_{s\in D}b_s(\omega),\qquad
+\mathsf{constant}=\bigwedge_{s\in D}
+ (\neg b_s(\omega)\lor[q_H(s)=\tau]).
+\tag{PR57.17}
+$$
+
+Accept iff metadata/proposal checks, nonempty and constant are all true. Empty fibers fail; ambiguous fibers fail. Retain a typed `INITIAL-q_H` receipt containing the literal original target, immutable prefix end, original preparation/version identity, prior description, verification occurrence and actual snapshot reference. Failure yields a refusal with no accepted receipt.
+
+Consumer $C$ receives a complete actual copy through a fresh mailbox. It scans framing, type, prior, original identity, snapshot/prefix end and receipt-creation references, compares every target field to its proposed task value, and checks the actual accepted receipt seal. Only after all checks does it allocate, initialize and write its task-output block by bit copies. The output's type is `INITIAL-q_H`. A wrong type, malformed receipt, wrong original identity, ambiguous fiber or refusal produces no task output. These checks are executed before the decision, and failures have paid finite schedules too. A receipt remains bound to that frozen prefix; a later current source cannot reinterpret it.
+
+**Theorem PR57.T4 (record-only soundness, complete-fiber acceptance and use).** For every authentic prefix on an actual $t_0\in D$, that source survives replay. A target proposal is accepted exactly when it is constant on the entire nonempty compatible original-source fiber and the declared structural checks succeed. Every consumer output equals the actual initial $q_H(t_0)$.
+
+**Proof.** The enumeration is complete and duplicate-free by Theorem PR57.T1, and the declared prior retains exactly $D$. Lemma PR57.L4 gives the actual rows and contexts. Theorem PR57.T2 applied row by row to $t_0$ makes every comparison true. Conversely a surviving $s$ has exactly every recorded original response under the same requests and complete contexts; induction gives precisely membership in the original record fiber. Initial target computation uses (PR57.14)–(PR57.15), the pinned group law and the tag tests, so it is the literal $q_H(s)$. The coefficient adapter is an injective change of basis followed by exhaustive testing of the unique normal form; hence it does not change that target. Formula (PR57.17) is exactly nonempty fiber constancy, with no survivor selected as actual. Applying constancy to $s=t_0$ proves $\tau=q_H(t_0)$. Actual receipt copying and complete consumer checks retain that identity and value; its bit writes decode to precisely that target. No initial-target oracle was used. $\square$
+
+### 57.11 Complete occurrence partition, simultaneous storage and protocol transfer
+
+**Definition PR57.D9 (same-execution costs).** Every core occurrence has its native opcode and exactly one routine-purpose tag. The tag is installed in public control at entry and restored at exit. The disjoint purpose classes are: boot/control description; input/context/program/prior supply; standalone allocation/initialization/descriptors/promotion/erase; unary arithmetic, identity and closed-cut readout; expression generation and instruction construction; dynamic source-gate execution including fetch/seek; policy table interpretation and request construction; archive framing/append/freeze; channel transfer; verification/enumeration/replay/adapter; receipt/consumer checking and task output. These are tags on actual occurrences, not sums of overlapping whole-phase bounds. Untagged helpers such as `Home`, `Seek` and `Append` inherit the caller's tag. Explicit calls of `Allocate` or `Promote` enter the allocation tag. The gate interpreter inherits verification during replay and has the dynamic-source-gate tag during a source call. Consequently a verification-gate `RD` is counted once in verification with subtag `gate-fetch`. A code-field `EX` inside the gate fetch is dynamic gate work, and is also one constructed cell in the separate storage coordinate; it is not charged again as standalone allocation. A channel loop's `WR` is channel transfer, while its destination's earlier allocation/zeroing is allocation. A tag change is itself a `CTL` occurrence assigned to its entering routine. Failure and stop edges carry their actual phase's tag. The independent opcode partition below further identifies every constructor, read, write, move, evaluation, input, output and control occurrence.
+
+Let $n_{p,o}(r)$ count the actual core occurrences with purpose $p$ and opcode $o$ in a finite execution $r$. Let $e(r)=\sum_{p,o}n_{p,o}(r)$ and let $a(r)$ count ordinary `EX` constructions plus actual finite boot cell constructors, excluding the meter. Then
+
+$$
+T(r)=e(r),\qquad F(r)=2e(r),\qquad
+F_{\rm core}=\sum_{p,o}n_{p,o}(r),\quad F_{\rm meter}=e(r).
+\tag{PR57.18}
+$$
+
+Thus there is no undefined “paid descriptor work” summand. Counts are obtained by the actual recipes: `Append` is 3, `Allocate` is $5k+1$ plus its stated positioning/descriptor events, `Seek` is (PR57.04), `Gate` is (PR57.06), complete channel body is (PR57.13), and a selected closed-prefix readout body is $13n+7$. Sequence adds these expanded event-word lengths; a public loop sums its body over its actual stored finite bound; a public branch uses its actual chosen event word. Gate counts for arithmetic are the bit recurrences of §57.5. Generator instruction writes are three occurrences per written code bit plus actual source/descriptor/ordinal reads and moves. Boot writes its complete native encoding, masks/markers and program bits with the same primitive rules. Policy costs sum complete table-step scans and simulated-tape work. Verification costs sum all $4^N$ parser executions, every prior evaluation and every row replay for every retained candidate. Nothing assigns these unexecuted sums as a free prepaid certificate.
+
+This recurrence is an effective exact evaluation of a finite schedule, not an efficiency estimate. At any unfinished permitted cut the completed prefix is counted in the same way. Private values affect Boolean results but not the precommit event word; postcommit public branches use only actual acquired data. Allocation costs never include a channel loop or instruction fetch a second time. Erasure is work and does not recover a previous construction charge. The mandatory meter occurrence belongs only to $F_{\rm meter}$, even when its associated core event is a readout scan.
+
+All constructed ordinary cells are retained in this model, including erased/replaced scratch versions. If $A(c)$ is their number at cut $c$ and $n(c)$ the meter receipt count, the actual simultaneous storage is
+
+$$
+S(c)=S_0+b_{\rm ctl}(c)+8A(c)+8n(c),\qquad
+S^{\rm peak}(r)=\max_{c\preceq r}S(c).
+\tag{PR57.19}
+$$
+
+Here $b_{\rm ctl}(c)$ counts the installed finite control/token/latch bits already constructed; tape-encoded dynamic code/descriptors are in $A(c)$. The fixed finite primitive port is included in $S_0$; head marks on all subsequently constructed cells are included in the factors 8. A head is a marked-cell relation, not an extra free accessible address integer. Storage is monotone, so its finite-run peak occurs at the last cut. The sum includes simultaneously the current private source, all candidates/offsets, code/address tapes, native description, policy state, all complete context material, producer/actor archives, distinct mailboxes, verifier snapshots/enumeration/replay, initial/current target blocks, receipts, meter and consumer output. At a snapshot of $k$ retained archive bits, the four independent archive copies contribute at least $4k$ payload bits (and their actual eight-bit cell encodings, framing and descriptors), while all other constructed cells coexist. No separate maximum is substituted for this sum.
+
+**Theorem PR57.T5 (whole-runtime progress and all finite protocol transfer).** Every finite lawful original request sequence with finite effective supply/control work has a unique finite lifted execution through all its preparation, services and deliveries. Every pointwise terminating uniformly correct effective original protocol on its declared $D$ lifts to the same original calls, responses, stop and initial proposal, followed by accepted verification and actual correct consumer output. There is no fixed bound on request count, context size, reference width or total memory.
+
+**Proof.** Bootstrap is a finite literal installation. Lemmas PR57.L1–L3 give termination of each tape routine, parameter construction, generator and fixed gate execution. Material-expression expansion consumes a finite expression; a lawful policy step has a finite table scan and finite stack work, and a lawful local policy computation has finitely many such steps. A source call has finite public nested bounds $N,C,W,D$ and a finite gate tape; copy/framing loops have the already constructed finite payload as bound. Meter readout stops at an existing fence. The verifier's outer base-four enumeration has exactly $4^N$ words; each prior computation terminates by its declaration; each replay has the frozen finite row count and actual finite context bounds. Its adapter Fibonacci loop terminates by geometric growth, and its consumer loops consume finite sealed blocks. These give explicit finite bounds for the subroutines that can create new work; a lexicographic rank that omits newly created allocator work is unnecessary.
+
+A finite concatenation of these terminating schedules terminates. At each unfinished microcut the native routine has a prescribed successor. Recursive construction of that successor yields a nonempty unique execution; there is no optional wait or scheduler fairness hypothesis. Each finite cut has finitely many `EX` and receipt constructions. More lawful requests start fresh finite schedules, never a quota failure or wrap.
+
+For transfer, run the same installed policy table on the projected authentic original history. Theorem PR57.T3 and source conformance give exactly its old next decision and old response, by induction on original cuts. Its actual finite local work is paid, so pointwise termination gives a finite stop prefix. For any $s\in D$ producing that same terminal record, determinism gives the same stop proposal. Uniform correctness of the original policy makes it $q_H(s)$ for every such $s$. The actual $t_0$ supplies nonemptiness. Theorem PR57.T4 therefore accepts and produces the actual initial target at the consumer. This is a total realization of the interface and all lawful finite behavior; correctness of a chosen acquisition policy remains exactly its original domain-specific property. $\square$
+
+**Corollary PR57.C1 (the unchanged impossibility).** For $D=\mathcal T_H$ and $H\ge9$, the realized interface has no uniformly correct deterministic effective initial-target acquisition protocol using its permitted observations.
+
+**Proof.** Any such finite acquisition protocol can be run on the original responses with the effective causal simulator supplying all additional microobservations. Its effective local work becomes original local computation. It would then violate pinned TM31 Theorem 31.4. In particular after a first irreversible merge the new verifier rejects an ambiguous initial-target fiber; additional journal, addresses or record copies are functions of the same acquired original history and cannot distinguish it. $\square$
+
+### 57.12 Edge cases, falsifiable boundaries and immutable suppliers
+
+PAD before closure is a substantive error: at $H=2$, `PAD,alpha,PAD` must fail while `alpha,PAD,PAD` succeeds. A rule that only checks final need and absence of active tokens after closure accepts both and loses the literal-code bijection. At $H=1$, alpha has tag 1: its first $\rho$ still has one leaf and accepts, and its second has two leaves and rejects. Beta has tag 0 and its first $\rho$ rejects. A rule equating acceptance with strict leaf growth mishandles alpha.
+
+Whole action and source identity matter even for immediate rejection. A context larger than $H$ is allowed; both concatenations are fully processed and rejected without changing the source. Splitting it into leaf appends can accept an initial fragment and is a different operation. At $H=9$, let $X=\beta\beta\alpha\beta\beta$, $Y=\alpha^9$ and $Z=\alpha\beta^4$, each with fixed left-associated brackets. $X,Y$ have the same initial $A$ and post-$\rho$ $B$, yet initial compositions $(1,4)$ and $(9,0)$. Their shared Read/accept/Read/Right(alpha)-reject prefix has at least two initial targets and only one current tag-0 boundary. It must not receive a single initial-target receipt.
+
+For $t=\langle X,\alpha\rangle$ and $u=\langle Z,\alpha\rangle$, both initial boundaries at $H=9$ are $(0,1,6)$; both $\rho$ candidates have ten leaves and reject. Their candidate $E$ values differ: the first is $-1$, the second is $(BS^4)B=-2-3AB$, since $S^4=2+3S$. In the pinned representation $A=\operatorname{diag}(1,-1)$, $B=\left(\begin{smallmatrix}1/2&1\\-5/4&-1/2\end{smallmatrix}\right)$, this second value is $\left(\begin{smallmatrix}-7/2&-3\\-15/4&-7/2\end{smallmatrix}\right)$. Publishing that rejected value breaks Theorem PR57.T3. Similarly the private preparation code lengths for $X,Y$ are 9 and 17 tokens; emitting those lengths publicly would add a distinction absent from their initial Read. Fixed $N=17$ preparation avoids it. A finite-width ordinal or a fixed request cap fails on a sufficiently long finite Read sequence. A readout that scans the live meter end rather than a pre-existing fence need not terminate: its scan events create new receipts to chase.
+
+The construction assumes the declared finite-symbol primitive machine, including its one-cell event receipt side effect and ideal exclusive ownership. It supplies no extra information about the original source. An alternative primitive machine must redo the schedules and observation proof; costs are not representation independent. The existence result does not claim efficient circuits, minimal storage, optimal policy computation or a polynomial verifier. It does not decide arbitrary program termination, prove hostile-message authenticity, handle concurrent/interrupted calls, noise, finite physical exhaustion, speculation or native timing. All-source interface realization is distinct from all-source initial-target acquisition. The realization theorem has no fixed request bound or external runtime-realization premise. Native software and mechanized checking of this finite-control description remain separate validation work, not premises silently used here.
+
+The immutable supplier revision for all links below is `17b26a61db5577d2f67031c777e9d86e91c3e617`. The following exact subsection roles delimit the reused facts; they supply no uncharged runtime service.
+
+| immutable supplier | precise reused fact |
+| --- | --- |
+| [AtomicPrefixParser.lean, theorem `result`](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/D5/S3/Arith/FibonacciAtomic/AtomicPrefixParser.lean#L49) | literal leaf `[true,b]`, branch `false::left++right`; parse with actual remainder, injectivity, prefix freedom and complete decode; the transduction is proved in PR57.T1 |
+| [GenealogicalFiberTransport.lean, `Source`, `substitution`, `composition`](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean#L31) | `FreeMagma Bool`, actual ordered substitution and leaf composition |
+| [Atomic §355, Definition 355.1 and proof of Theorem 355.3](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#355-clifford-叶积的组成余数与进位恢复边界) | the specified quadratic form, Clifford leaf product, relations and faithful four-coefficient basis |
+| [Atomic §356, Lemmas 356.2–356.3](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#356-连续-clifford-叶积窗口的尖锐闭合与历史纤维) | same-source three-window identities and grade-preserving conjugation; no different source model |
+| [Atomic §357, Lemma 357.2](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#357-全原树-clifford-历史的有限字符与尖锐算术恢复) | integer subring and original-basis coefficient multiplication |
+| [TM §28.1–§28.2, Lemma 28.1, (28.3), (28.5)](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#281-来源整数正规形与六步运输) | unique normal coordinates, actual multiplication and leaf triple contributions |
+| [TM §29.1, Definition 29.2](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#291-同一来源与叶阈值合同) | literal $\eta=(\mathbf u,c)$, used in original tag 2 |
+| [TM §30.1, (TM.3003), Lemma 30.1 and Theorem 30.2](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#301-三个窗口与固定上限的分层记录) | exact fixed-$H$ whole-action/reject contract and target |
+| [TM §31.1–§31.2, Definition 31.1 and Theorem 31.4](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#312-初始边界的精确八叶阈值) | common initialization, initial-target acquisition quantifiers and full-family $H\ge9$ impossibility |
+| [TM §48.5, Proposition 48.10](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#485-已返回系数的付费精确转换) | already-returned exact coefficient adapter, including negative powers; 48.10 is a proposition within subsection 48.5 |
+| [TargetRecoveryCriterion.lean, `target_recovery_criterion`](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean#L37) | nonempty-source fiber-constancy criterion; PR57.T4 supplies its actual record fiber by replay |
+| [Observer-relative §§58–64, especially Definitions 60.3, 61.1, 61.3 and 64.1](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#64-实际字面调度的完整符号费用与空间) | ownership, actual copies, consumer type/use and logical-unit accounting templates; its fixed widths/request bounds and atomic numeral maintenance are not imported |
+| [Process geometry §3, Theorems 3.2 and 3.4](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md#3-可执行任务商与联合拼接) | legality, labels, successor and finite adaptive trace coordinates must all be retained; ordinary PR57.T3 proves them for this runtime |
+
+The supplier facts concern their stated actual images, exact representations and contracts. A mathematical normal form, finite source set or abstract recovery map alone is not a supply channel. Every material, representation conversion and control computation used above is connected to its own finite paid transitions.
+
+## 追加锚（本行以下为增补区）
