@@ -26,7 +26,6 @@ Direct frozen dependencies: D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumC
 -/
 
 import D5.S3.Quantum.Foundation.FiniteStateChannel
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
