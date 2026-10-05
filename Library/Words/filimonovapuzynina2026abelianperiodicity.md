@@ -35,7 +35,9 @@ bound and does not restrict to pure periodicity.
 
 ## Verified locator
 
-The source is arXiv v1, 28 May 2026.  The open question is in Section 4:
+URL: https://arxiv.org/abs/2605.30306v1
+
+Locator: arXiv v1, 28 May 2026, Section 4.  The open question is:
 “is there an upper bound on M from Theorem 1 making our criterion
 algorithmic?”  The Lean source uses `K` for this iteration variable.
 
