@@ -26,6 +26,7 @@ internal sealed class FourExitCoarseLowerBoundsDocument : IScribeDocumentDefinit
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string name, params Formula[] xs) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. xs]);
+    private static Formula Fr(Formula a, Formula b) => new Formula.Fraction(a,b);
     private static Formula Le(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
     private static Formula And(params Formula[] xs) => Seq(xs.Select((x, i) =>

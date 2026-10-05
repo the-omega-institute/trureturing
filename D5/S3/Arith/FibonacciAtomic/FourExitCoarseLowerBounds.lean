@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Coarse actual-tree executions and the two four-exit subset potentials. -/
+   digest: Arbitrary-law coarse four-exit lower bounds from subset potentials. -/
 
 import D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutCompletion
 import D5.S3.Arith.FibonacciAtomic.FourExitRawDomination
