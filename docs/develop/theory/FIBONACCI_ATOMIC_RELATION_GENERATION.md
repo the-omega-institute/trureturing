@@ -58255,3 +58255,419 @@ $$
 这一推导保留 $\sum_{n\le N}\varphi(n)$ 的精确中心项。§358 的二次渐近误差界不能替代它来建立（384.8）的抵消尺度；§383 的任意有限族绝对估计也未供应（384.8）所需的有符号增长界。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 385. 实际原子误差的无零乘子、零点重数与临界尺度
+
+**定义 385.1（校正原子误差及其临界振幅）。** 沿用 §384 的实际 Fibonacci 原子 $\Psi_n$、前缀最小公倍数 $Q_N$、$L=\log\Phi$、$q=\Phi^{-2}$、$\beta_d=\log(1-(-q)^d)$ 与精确中心误差 $\Delta_N$。对 $n\ge1$ 及复数 $s$，置
+
+$$
+e_n=\log\Psi_n-L\varphi(n)+\log\sqrt5\,\mathbf1_{n=1},
+\qquad
+\mathcal B(s)=\sum_{d=1}^{\infty}\beta_d d^{-s},
+\tag{385.1}
+$$
+
+其中 $d^{-s}=\exp(-s\log d)$。对实数 $x\ge1$，置
+
+$$
+H(x)=\sum_{n\le x}e_n=\Delta_{\lfloor x\rfloor}+\log\sqrt5.
+\tag{385.2}
+$$
+
+对每个实数 $\kappa\ge0$，定义取值于 $[0,+\infty]$ 的振幅
+
+$$
+\mathcal A_\kappa
+=\limsup_{N\to\infty}
+\frac{|\Delta_N|}{\sqrt N(\log N)^\kappa}
+=\limsup_{N\to\infty}
+\frac{|H(N)|}{\sqrt N(\log N)^\kappa}.
+\tag{385.3}
+$$
+
+两个极限只取整数 $N\ge2$；相等性来自常数校正除以该分母后趋零。
+
+**定理 385.2（实际原子变换的无消去桥与重数振幅障碍）。** 乘子 $\mathcal B$ 是整函数，且
+
+$$
+\Re\mathcal B(s)\ge\frac{94q}{2205}>0
+\qquad(\Re s\ge0).
+\tag{385.4}
+$$
+
+实际原子误差的 Dirichlet 级数在 $\Re s>1$ 绝对收敛，并满足
+
+$$
+\mathcal C(s):=\sum_{n=1}^{\infty}e_n n^{-s}
+=\frac{\mathcal B(s)}{\zeta(s)}
+=s\int_1^\infty H(x)x^{-s-1}\,dx.
+\tag{385.5}
+$$
+
+设 $\rho=1/2+i\tau$ 是任意给定的实际 $\zeta$ 零点，重数为整数 $m\ge1$。在 $\rho$ 处，$\mathcal B/\zeta$ 的极点阶恰为 $m$，最高阶系数为
+
+$$
+\frac{m!\,\mathcal B(\rho)}{\zeta^{(m)}(\rho)}.
+\tag{385.6}
+$$
+
+对任意 $\kappa\ge0$，若 $\mathcal A_\kappa<\infty$，则 RH 成立，且每个上述零点都有 $m\le\kappa+1$。在匹配的对数尺度上，无论 $\mathcal A_{m-1}$ 是否有限，均有
+
+$$
+\boxed{
+\mathcal A_{m-1}
+\ge
+\frac{m|\mathcal B(\rho)|}{|\rho|\,|\zeta^{(m)}(\rho)|}
+\ge
+\frac{94mq}{2205|\rho|\,|\zeta^{(m)}(\rho)|}>0.
+}
+\tag{385.7}
+$$
+
+特别地，若 $m\ge2$，则 $\mathcal A_0=+\infty$；若 $\mathcal A_0<\infty$，则全部临界线零点单纯，且对每个这样的零点有
+
+$$
+\mathcal A_0\ge
+\frac{|\mathcal B(\rho)|}{|\rho|\,|\zeta'(\rho)|}.
+\tag{385.8}
+$$
+
+**证明。** 对 $d\ge1$，由 $0<q<1$ 及实对数的几何级数估计，
+
+$$
+|\beta_d|\le\frac{q^d}{1-q^d}\le\frac{q^d}{1-q}.
+\tag{385.9}
+$$
+
+在任意固定条带 $|\Re s|\le R$ 上，级数的第 $d$ 项以及任意固定阶导数，分别由常数倍的 $q^d d^R$ 与 $q^d d^R(\log d)^j$ 控制。这些控制级数均收敛，故逐项求导和局部一致收敛证明 $\mathcal B$ 为整函数。若 $\Re s\ge0$，则 $|d^{-s}|\le1$；由（384.5）与（384.17），
+
+$$
+\Re\mathcal B(s)
+\ge\beta_1-\left|\sum_{d\ge2}\beta_d d^{-s}\right|
+\ge\beta_1-\sum_{d\ge2}|\beta_d|
+\ge\frac{94q}{2205}.
+\tag{385.10}
+$$
+
+这既给无零性，也给全部虚部统一的定量间隙。
+
+实际重构（384.11）给 $e_n=\sum_{d\mid n}\mu(n/d)\beta_d$，故 $|e_n|\le\beta_1+\sum_{d\ge2}|\beta_d|$。当 $\sigma=\Re s>1$ 时，
+
+$$
+\sum_{d,r\ge1}|\beta_d\mu(r)|(dr)^{-\sigma}
+\le\left(\sum_{d\ge1}|\beta_d|d^{-\sigma}\right)
+\left(\sum_{r\ge1}r^{-\sigma}\right)<\infty.
+\tag{385.11}
+$$
+
+因而可重排双和，并使用经典的 $\sum\mu(r)r^{-s}=1/\zeta(s)$，得到（385.5）的第一个等式。每个 $x\ge1$ 的 $H(x)$ 是实际 $e_n$ 的部分和；对绝对收敛的级数逐项积分，$s\int_n^\infty x^{-s-1}\,dx=n^{-s}$，得到第二个等式。这里使用的经典倒数 Dirichlet 级数与部分求和接口见 Nathan Ng，*The distribution of the summatory function of the Möbius function*，[作者稿，pp. 1–2](https://www.cs.uleth.ca/~nathanng/RESEARCH/mobius2b.pdf)；本节将其接到实际校正原子系数，未使用该文后续的零点单纯性或负矩假设。该作者稿 p. 5 已讨论 Mertens 和的经典重零点增长障碍，p. 4 讨论弱 Mertens 猜想的单纯性后果；下面的结论把经典增长与极点阶方法接到实际 Fibonacci 误差，保留其乘子加权的振幅常数及非整数对数指数。
+
+先假定某个 $\mathcal A_\kappa=A<\infty$。对每个 $\eta>0$，存在整数 $N_\eta\ge2$，使所有 $N\ge N_\eta$ 都满足
+
+$$
+|H(N)|\le(A+\eta)\sqrt N(\log N)^\kappa.
+\tag{385.12}
+$$
+
+$x\mapsto\sqrt x(\log x)^\kappa$ 在 $x>1$ 递增，所以 $H(x)=H(\lfloor x\rfloor)$ 给同一个全部实数尾域的界。任意固定 $\sigma_0>1/2$ 上，积分及其复导数由 $x^{-1-(\sigma_0-1/2)}$ 乘有限次对数幂控制。因而（385.5）的积分在 $\Re s>1/2$ 定义全纯函数 $\mathcal C$，并由解析延拓在该域中除 $s=1$ 外满足 $\zeta\mathcal C=\mathcal B$。若该域有 $\zeta$ 零点，左侧在该点为零而（385.4）的右侧非零，矛盾。经典功能方程的零点反射对称性于是给 RH。这一段先由增长前提排除右侧零点，没有预设 RH。
+
+现在取 $s=\rho+\sigma$，其中 $\sigma>0$ 趋零。有限区间 $1\le x<N_\eta$ 的积分有界，乘 $\sigma^{\kappa+1}$ 后趋零。尾部满足
+
+$$
+\int_{N_\eta}^{\infty}|H(x)|x^{-3/2-\sigma}\,dx
+\le(A+\eta)\int_1^\infty
+x^{-1-\sigma}(\log x)^\kappa\,dx
+=(A+\eta)\Gamma(\kappa+1)\sigma^{-\kappa-1}.
+\tag{385.13}
+$$
+
+最后一步令 $t=\log x$，使用 $\Gamma(\kappa+1)=\int_0^\infty e^{-t}t^\kappa\,dt$。令 $\eta\downarrow0$，得到
+
+$$
+\limsup_{\sigma\downarrow0}
+\sigma^{\kappa+1}|\mathcal C(\rho+\sigma)|
+\le|\rho|\Gamma(\kappa+1)\mathcal A_\kappa.
+\tag{385.14}
+$$
+
+由于 $\rho$ 是重数 $m$ 的零点，局部 Taylor 分解为
+
+$$
+\zeta(s)=(s-\rho)^m u_\rho(s),\qquad
+u_\rho(\rho)=\frac{\zeta^{(m)}(\rho)}{m!}\ne0.
+\tag{385.15}
+$$
+
+（385.4）保证 $\mathcal B(\rho)\ne0$，因此（385.6）及
+
+$$
+\lim_{\sigma\downarrow0}
+\sigma^m|\mathcal C(\rho+\sigma)|
+=\frac{m!|\mathcal B(\rho)|}{|\zeta^{(m)}(\rho)|}>0
+\tag{385.16}
+$$
+
+成立。若 $m>\kappa+1$，（385.14）使（385.16）的左端趋零，矛盾，故 $m\le\kappa+1$。取 $\kappa=m-1$ 并用 $\Gamma(m)=(m-1)!$，得到（385.7）的第一个下界，第二个来自（385.4）。如果 $\mathcal A_{m-1}=+\infty$，同一下界在扩展实数意义下自动成立，故不需要增加有限振幅假设。取 $\kappa=0$ 给最后两个子句。$\square$
+
+**定理 385.3（同一零点在 Robin 尾项与原子误差中的不同临界读出）。** 沿用 §87.3 的实际有符号尾项 $\Phi(x)=I_\psi(x)$，令 $\mathscr Z$ 为不同的非平凡零点集合、$m_\rho$ 为其解析重数。其零点项的源函数 $-\zeta'/\zeta$ 在每个 $\rho\in\mathscr Z$ 都有简单极点，留数为 $-m_\rho$；（385.5）的实际原子源函数在 $\Re\rho\ge0$ 的同一点具有恰为 $m_\rho$ 阶的极点。
+
+若 RH 成立，则不增加单纯性假设就有
+
+$$
+\left|\sqrt x\log x\,\Phi(x)\right|
+\le
+\left(1+\frac1{\log x}\right)
+\sum_{\rho\in\mathscr Z}\frac{m_\rho}{|\rho|^2}
++\frac{\log(2\pi)}{\sqrt x}
++\frac1{2\sqrt x(x^2-1)}
+\qquad(x\ge12),
+\tag{385.17}
+$$
+
+其中零点和有限。与此相对，$\mathcal A_0<\infty$ 要求 RH 和全部临界线零点单纯，并受（385.8）的倒数导数振幅约束。
+
+**证明。** 对（385.15）取对数导数，
+
+$$
+-\frac{\zeta'(s)}{\zeta(s)}
+=-\frac{m_\rho}{s-\rho}-\frac{u_\rho'(s)}{u_\rho(s)}.
+\tag{385.18}
+$$
+
+第二项在该点全纯，所以源函数的极点仍是简单极点，重数进入留数。实际原子源函数的另一种极点阶已由定理 385.2 给出。
+
+在同一点附近还有精确转换
+
+$$
+\left(-\frac{\zeta'(s)}{\mathcal B(s)}\right)\mathcal C(s)
+=-\frac{\zeta'(s)}{\zeta(s)}.
+\tag{385.19}
+$$
+
+由于 $\mathcal B(\rho)\ne0$，转换乘子在重数 $m$ 的零点处恰有 $m-1$ 阶零点：对（385.15）求导，$\zeta'(s)=(s-\rho)^{m-1}[m u_\rho(s)+(s-\rho)u_\rho'(s)]$，括号在 $\rho$ 处非零。这说明前一个源函数完整保留的重数，进入后一个源函数时怎样变为留数；转换乘子本身在重零点处没有全纯逆。
+
+
+对 Robin 尾项，使用 [ZECKENDORF_EULER_5040.md](ZECKENDORF_EULER_5040.md) 定理 7.1 中已给出的同一实际显式公式，按不同零点合并重数：
+
+$$
+\Phi(x)=-\sum_{\rho\in\mathscr Z}m_\rho K_\rho(x)
+-\frac{\log(2\pi)}{x\log x}
++\varepsilon_{\mathrm{triv}}(x),
+\qquad
+0\le\varepsilon_{\mathrm{triv}}(x)
+\le\frac1{2x(x^2-1)\log x},
+\tag{385.20}
+$$
+
+其中
+
+$$
+K_\rho(x)=\int_0^\infty
+\frac{(1+u)x^{\rho-1-u}}{\rho(1+u-\rho)}\,du.
+\tag{385.21}
+$$
+
+RH 下 $\rho=1/2+i\tau$，故 $|1+u-\rho|\ge|\rho|$，于是
+
+$$
+|K_\rho(x)|
+\le\frac{x^{-1/2}}{|\rho|^2}
+\int_0^\infty(1+u)x^{-u}\,du
+=\frac{x^{-1/2}}{|\rho|^2}
+\left(\frac1{\log x}+\frac1{\log^2x}\right).
+\tag{385.22}
+$$
+
+经典的带重数零点计数 $N(T)=O(T\log T)$ 给 $\sum_{\rho\in\mathscr Z}m_\rho/|\rho|^2<\infty$：按 $2^j\le|\Im\rho|<2^{j+1}$ 分组，尾部至多为常数倍的 $\sum_j(j+1)2^{-j}$，有限低零点单独计入。此计数的经典来源和公式见 Ng 上引作者稿 p. 2；零点的功能方程对称性见 [DLMF §25.10](https://dlmf.nist.gov/25.10)。因此（385.20）可绝对取界，乘 $\sqrt x\log x$ 得（385.17）。最后的原子约束由定理 385.2 给出。
+
+（385.4）表明实际 Fibonacci 乘子不会消去右半平面的 $\zeta$ 零点；（385.6）进一步表明它保留零点的解析重数。因而 §384 的全部 $N^{1/2+\varepsilon}$ 增长尺度等价，与（385.17）的 Robin 尾项读出可以共同使用同一个零点集合，但不能把两者恰在临界尺度上的界互相替换。上述必要单纯性和振幅下界没有证明 $\mathcal A_0$ 有限，也没有给出无条件的 Robin 尾项符号。 $\square$
+
+## 386. 实际 Fibonacci 原子到素数幂的正响应核与临界尺度障碍
+
+**定义 386.1（实际有符号核的对数响应）。** 沿用 §§384–385 的同一个实际 $q=\Phi^{-2}$、$\beta_n=\log(1-(-q)^n)$、校正原子误差 $e_n$ 与精确部分和 $H_N$。约定 $\beta_0=e_0=H_0=0$，并定义
+
+$$
+\ell(0)=0,\qquad \ell(n)=\log n\quad(n\ge1),\qquad
+E=\sum_{j=1}^{\infty}(-\beta_{2j}),\qquad
+P=\sum_{j=1}^{\infty}\beta_{2j+1}.
+\tag{386.1}
+$$
+
+这些级数收敛，且 $E,P\ge0$、$E+P=T$，因为实际偶指标系数为负、奇指标系数为正。对零值约定为零的算术函数，记经典 Dirichlet 卷积为
+
+$$
+(u*v)(n)=\sum_{d\mid n}u(d)v(n/d)\quad(n\ge1),\qquad
+(u*v)(0)=0.
+\tag{386.2}
+$$
+
+它的单位元是仅在指标一取值一的算术函数。由于 $\beta_1>0$，$\beta$ 有唯一的 Dirichlet 逆 $\gamma$。置
+
+$$
+k=\gamma*\ell,\qquad
+\mathfrak c=\frac{\beta_1-T}{\beta_1(\beta_1-E)}>0,\qquad
+K(y)=\sum_{1\le d\le y}k(d)\quad(y\ge0).
+\tag{386.3}
+$$
+
+$K$ 的指标是整数；$y$ 可为实数。差值的正性与分母的正性由（384.5）及 $T=E+P$ 给出，不另要求 $\beta_1>E+2P$。
+
+**定理 386.2（实际正响应、精确素数恢复与无界作用）。** 上述实际核满足
+
+$$
+k(0)=k(1)=0,\qquad
+\boxed{\mathfrak c\log n\le k(n)\le\frac{\log n}{\beta_1-E}}
+\quad(n\ge2).
+\tag{386.4}
+$$
+
+因此 $k(n)>0$ 对每个 $n\ge2$ 成立，且
+
+$$
+k(2)=\frac{\log2}{\beta_1},\qquad
+k(3)=\frac{\log3}{\beta_1},\qquad
+k*e=\Lambda.
+\tag{386.5}
+$$
+
+这里 $\Lambda$ 是实际 von Mangoldt 函数。对每个整数 $N\ge0$，有两个精确的部分和身份：
+
+$$
+\boxed{\psi(N)=\sum_{d=1}^N k(d)H_{\lfloor N/d\rfloor}
+=\sum_{m=1}^N H_m\left[K(N/m)-K(N/(m+1))\right].}
+\tag{386.6}
+$$
+
+所有方括号内的权重非负。在 $\Re s>1$，实际核的绝对收敛 Dirichlet 级数满足
+
+$$
+\sum_{n=1}^{\infty}k(n)n^{-s}
+=-\frac{\zeta'(s)}{\mathcal B(s)},
+\qquad \mathcal B(s)=\sum_{n=1}^{\infty}\beta_n n^{-s}.
+\tag{386.7}
+$$
+
+对正整数指标上的实序列 $f$，定义
+
+$$
+(\mathcal T_k f)(N)=\sum_{d=1}^N k(d)f(\lfloor N/d\rfloor),
+\qquad
+\|f\|_a=\sup_{N\ge1}\frac{|f(N)|}{N^a}.
+\tag{386.8}
+$$
+
+$\mathcal T_k$ 在正整数序列上单射，但对每个 $0\le a\le1$，它都不把所有有限 $\|f\|_a$ 的序列映到有限 $\|\mathcal T_k f\|_a$ 的序列。对每个 $a>1$，则有
+
+$$
+\|\mathcal T_k f\|_a
+\le\left(\sum_{d=1}^{\infty}k(d)d^{-a}\right)\|f\|_a
+\le\frac{-\zeta'(a)}{\beta_1-E}\|f\|_a.
+\tag{386.9}
+$$
+
+**证明。** 先证实际响应的正性。逆的定义给 $\beta*k=\ell$，因而对每个正整数 $n$，有
+
+$$
+\beta_1k(n)=\log n-
+\sum_{\substack{d\mid n\\d\ne1}}\beta_d k(n/d).
+\tag{386.10}
+$$
+
+置 $D=\beta_1-E>0$。同时强归纳证明 $\mathfrak c\log n\le k(n)\le\log n/D$。$n=1$ 的尾和为空，且 $\log1=0$，故 $k(1)=0$，归纳初步成立。若 $d\mid n$ 且 $d\ne1$，则 $1\le n/d<n$。由已经证明的下界、上界及对数的单调性，有
+
+$$
+0\le k(n/d)\le\frac{\log(n/d)}D\le\frac{\log n}D=:U_n.
+\tag{386.11}
+$$
+
+实际偶项负、奇项正，因此分别使用负尾和正尾的完整预算，得到
+
+$$
+-EU_n\le
+\sum_{\substack{d\mid n\\d\ne1}}\beta_d k(n/d)
+\le PU_n.
+\tag{386.12}
+$$
+
+（386.10）与左侧估计给 $\beta_1k(n)\le\log n+EU_n=\beta_1U_n$；与右侧估计给
+
+$$
+\beta_1k(n)\ge\log n-PU_n
+=\frac{D-P}{D}\log n.
+\tag{386.13}
+$$
+
+除以正数 $\beta_1$ 得到两个所需结论，因为 $D-P=\beta_1-T$。当前指标的正性由本步下界推出；尾项估计只使用严格较小指标的正性，没有循环。该证明使用（384.5）的既有首尾差，不依赖更强的附加间隙。$n=2,3$ 时尾部只含 $k(1)=0$，给出（386.5）的前两个等式。
+
+接着使用经典卷积代数。由（384.11）与（385.1），实际误差是 $e=\mu*\beta$，而经典 Möbius–对数恒等式是 $\mu*\ell=\Lambda$。后一个身份来自 $\ell(n)=\sum_{d\mid n}\Lambda(d)$ 的 Möbius 反演：若 $n=\prod p^{v_p(n)}$，其右侧为 $\sum_p v_p(n)\log p=\log n$。这些是既有经典中间步骤，见 Tom M. Apostol，*Introduction to Analytic Number Theory*，算术函数与 Dirichlet 卷积章节，[DOI:10.1007/978-1-4757-5579-4](https://doi.org/10.1007/978-1-4757-5579-4)。交换、结合并消去实际 $\gamma*\beta$，得到
+
+$$
+k*e=(\gamma*\ell)*(\mu*\beta)=\mu*\ell=\Lambda.
+\tag{386.14}
+$$
+
+对（386.14）作有限求和并重排 $dj\le N$，得到
+
+$$
+\sum_{n=1}^N\Lambda(n)
+=\sum_{d=1}^N k(d)\sum_{j=1}^{\lfloor N/d\rfloor}e_j,
+\tag{386.15}
+$$
+
+即（386.6）的第一个身份；内和正是实际 $H_{\lfloor N/d\rfloor}$。将 $d$ 按商 $m=\lfloor N/d\rfloor$ 分组，其精确区间为 $N/(m+1)<d\le N/m$，得到第二个身份。$k\ge0$ 保证 $K$ 单调，故所有分组权重非负；$N=0$ 的两侧均为空和。
+
+由（386.4），$\sum k(n)n^{-s}$ 在 $\Re s>1$ 绝对收敛。$\beta$ 指数衰减，而 $\sum\ell(n)n^{-s}=-\zeta'(s)$ 是经典收敛半平面的逐项微分身份。在该半平面，绝对收敛允许把 $\beta*k=\ell$ 的卷积换序为级数乘积。由于（385.4）保证 $\mathcal B(s)\ne0$，除法给出（386.7）。这里不要求 $\gamma$ 的系数为正；事实上
+
+$$
+\gamma(3)=-\frac{\beta_3}{\beta_1^2}<0.
+\tag{386.16}
+$$
+
+正性是逆作用于单调非负对数后的性质，并非逆对所有非负输入保正的结论。
+
+虽然 $k(1)=0$ 使 $k$ 不是 Dirichlet 单位，对 $\mathcal T_k$ 仍可按输出的指标 $2n$ 恢复输入的第 $n$ 项：
+
+$$
+(\mathcal T_k f)(2n)
+=k(2)f(n)+\sum_{d=3}^{2n}k(d)f(\lfloor2n/d\rfloor).
+\tag{386.17}
+$$
+
+右侧尾部的每个参数都严格小于 $n$，且 $k(2)>0$。从 $n=1$ 开始归纳，两个输入若有相同全部输出，则全部正指标值相同。这证明单射，不证明临界尺度上的有界逆。
+
+最后取固定输入 $f(1)=1$、$f(N)=0$（$N\ge2$）；对每个 $a\ge0$ 都有 $\|f\|_a=1$。输出只有商为一的项，所以对整数 $N\ge4$，
+
+$$
+(\mathcal T_k f)(N)
+=\sum_{\lfloor N/2\rfloor<d\le N}k(d)
+\ge\mathfrak c\bigl(N-\lfloor N/2\rfloor\bigr)\log(N/2)
+\ge\frac{\mathfrak c}2N\log(N/2).
+\tag{386.18}
+$$
+
+当 $0\le a\le1$，除以 $N^a$ 后至少为 $\mathfrak c\log(N/2)/2$，趋于无穷，故给出对固定实际核的无界性。若 $a>1$，则（386.4）给 $\sum k(d)d^{-a}\le(-\zeta'(a))/(\beta_1-E)<\infty$，并且 $\lfloor N/d\rfloor^a\le(N/d)^a$；逐项取绝对值即得（386.9）。$\square$
+
+**推论 386.3（实际输入中的中心化抵消仍须控制）。** 实际部分和在最初两个指标已满足
+
+$$
+H_1=\beta_1>0,\qquad H_2=\beta_2<0,
+\tag{386.19}
+$$
+
+且对每个整数 $N\ge1$，有精确的中心化式
+
+$$
+\psi(N)-N
+=\sum_{m=1}^N H_m\left[K(N/m)-K(N/(m+1))\right]-N.
+\tag{386.20}
+$$
+
+**证明。** $e=\mu*\beta$ 给 $e_1=\beta_1$、$e_2=\beta_2-\beta_1$，从而得到（386.19）；（386.20）直接由（386.6）减去 $N$。因此实际输入含相反符号，而正权重恢复的素数和仍须减去主项。对（386.6）逐项取绝对值会丢失这一步所需的抵消；（386.18）还给出平方根增长空间上普遍有界传输的具体反例。该反例的输入是固定探测序列，不是实际 $H$ 的替代物。§§87、385 中的实际 Robin 有符号积分
+
+$$
+I_\psi(x)=\int_x^\infty[\psi(t)-t]
+\frac{1+\log t}{t^2\log^2t}\,dt
+\tag{386.21}
+$$
+
+仍需要针对同一实际中心化输入、保留其余项 $R(x)$ 的估计。上述正核与精确身份未证明该积分的所需符号、统一尾部界或 RH。$\square$
