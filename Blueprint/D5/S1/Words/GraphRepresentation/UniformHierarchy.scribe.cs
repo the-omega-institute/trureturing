@@ -52,17 +52,13 @@ internal sealed class UniformHierarchyDocument : IScribeDocumentDefinition
                     + "and strengthens its existential clause by specifying the finite "
                     + "ambient membership graph. This additional witness refinement "
                     + "is repository-derived, not attributed to the source.")))),
-            Describe.Remark(DescribeId.Create("uniform-hierarchy-literature-nonuniversality"),
-                DeclarationHandle.Create(Prefix + "result"),
-                H("The internal known nonuniversality component"),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text(
-                    "Theorem 29 supplies the known conclusion that no fixed positive-k "
-                    + "class contains every finite graph. The full consumer discharges "
-                    + "that conclusion internally, using the actual membership graph "
-                    + "and the repository cut reconstruction. Its chosen bound m=64k^2 "
-                    + "and local proof are not attributed to the paper. No independent "
-                    + "known-result declaration or theorem parameter is introduced.")))),
+            Paragraph(Ref(Source.Value), Text(": "
+                + "Theorem 29 supplies the known conclusion that no fixed positive-k "
+                + "class contains every finite graph. The full consumer discharges "
+                + "that conclusion internally, using the actual membership graph "
+                + "and the repository cut reconstruction. Its chosen bound m=64k^2 "
+                + "and local proof are not attributed to the paper. No independent "
+                + "known-result declaration or theorem parameter is introduced.")),
             Node("result", "Every adjacent inclusion is proper", ClaimFormula(),
                 "For inclusion, enumerate the finite carrier once in q and append the "
                 + "same q to both words. Counts increase by one; projected suffixes are "

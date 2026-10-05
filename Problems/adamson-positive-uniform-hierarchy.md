@@ -8,6 +8,7 @@ motivation_gids:
   - D5/S1/Words/GraphRepresentation/ExplicitNonTwoUniform
   - D5/S0/Diagonal/PigeonholeFiber
   - D5/S1/Words/GraphRepresentation/UniformVertexExtension
+  - D5/S1/Words/GraphRepresentation/UniformHierarchy.result
 ---
 
 # Every positive-uniform adjacent class inclusion is proper
@@ -116,8 +117,8 @@ Conjecture 31 assertion in issue 12945. The graph and claim are supporting
 definitions, not separate settlements. `utility: none` denotes an unbounded
 structural proof, without finite graph enumeration, a checker, numerical
 reduction or certified positive instance. Reg enrollment is paused.
-Independent final-byte review, canonical freezing and ordinary required-CI
-publication remain necessary before a normally merged problem settlement
+Narrow final-byte review and ordinary required-CI publication remain
+necessary before a normally merged problem settlement
 can increment the KPI.
 
 ## ASSUMED-UNVERIFIED

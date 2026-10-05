@@ -46,19 +46,9 @@ Lean statement: `D5/S1/Words/GraphRepresentation/UniformHierarchy.claim`
 
 Conjecture 31 states: for each k in the source's natural numbers, the inclusion G_k subset G_(k+1) is proper. The source natural numbers begin at one. The claim retains this whole assertion and strengthens its existential clause by specifying the finite ambient membership graph. This additional witness refinement is repository-derived, not attributed to the source.
 
-**Remark 1.4 (The internal known nonuniversality component).**
+`D5/L/Words/adamson2026twoword`: Theorem 29 supplies the known conclusion that no fixed positive-k class contains every finite graph. The full consumer discharges that conclusion internally, using the actual membership graph and the repository cut reconstruction. Its chosen bound m=64k^2 and local proof are not attributed to the paper. No independent known-result declaration or theorem parameter is introduced.
 
-Lean statement: `D5/S1/Words/GraphRepresentation/UniformHierarchy.result`
-
-*Formalization.* `D5/S1/Words/GraphRepresentation/UniformHierarchy.result` (`✓ std3`).
-
-*Citation.* Duncan Adamson, Amanita Dietz, Pamela Fleischmann, Annika Huch, and Silas Cato Sacher (2026). *2-word-π-representable Graphs*. URL: <https://arxiv.org/abs/2605.27183v1>.
-
-*Commentary.*
-
-Theorem 29 supplies the known conclusion that no fixed positive-k class contains every finite graph. The full consumer discharges that conclusion internally, using the actual membership graph and the repository cut reconstruction. Its chosen bound m=64k^2 and local proof are not attributed to the paper. No independent known-result declaration or theorem parameter is introduced.
-
-**Theorem 1.5 (Every adjacent inclusion is proper).**
+**Theorem 1.4 (Every adjacent inclusion is proper).**
 
 $$\forall k: \mathbb{N}, (0 < k) \implies ((\forall V: \operatorname{Type}, (\operatorname{Finite}\left(V\right)) \implies (\forall G: \operatorname{SimpleGraph}\left(V\right), (\operatorname{InG}\left(k, G\right)) \implies (\operatorname{InG}\left(k + 1, G\right)))) \land (\exists s: \operatorname{Finset}\left(\operatorname{Omega}\left(64 \cdot k^{2}\right)\right), (\operatorname{InG}\left(k + 1, \operatorname{H}\left(s\right)\right)) \land (\neg\operatorname{InG}\left(k, \operatorname{H}\left(s\right)\right))))$$
 
@@ -86,7 +76,6 @@ The live inference directly reuses `D5/S0/Diagonal/PigeonholeFiber.finite_readin
 - Truth anchor: `D5/S1/Words/GraphRepresentation/UniformHierarchy.claim`
 - Truth anchor: `D5/S1/Words/GraphRepresentation/UniformHierarchy.claim`
 - Truth anchor: `D5/S1/Words/GraphRepresentation/UniformHierarchy.membershipGraph`
-- Truth anchor: `D5/S1/Words/GraphRepresentation/UniformHierarchy.result`
 - Truth anchor: `D5/S1/Words/GraphRepresentation/UniformHierarchy.result`
 - Truth anchor: `D5/S1/Words/GraphRepresentation/UniformVertexExtension.InG`
 - Truth anchor: `D5/S1/Words/GraphRepresentation/UniformVertexExtension.vertex_extension`
