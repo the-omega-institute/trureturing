@@ -4731,6 +4731,111 @@ frozen declaration or atom-coverage result. The single exceptional
 5 case, multiple exceptional primes and higher ternary height
 remain outside CD152.
 
+## Every single exceptional prime at least eleven is excluded
+
+Keep one globally count-minimal, then same-count modulus-sum-minimal
+odd distinct nonunit whole cover, with actual pure3 and pure9.
+Let q be any prime at least eleven. Suppose the literal original
+moduli satisfy
+
+$$
+ d_i=3^{a_i}q^{e_i}m_i,\qquad a_i\le2,\quad m_i\mid W,
+ \qquad W>0,\quad\gcd(W,3q)=1,
+$$
+
+and, in a positive common period Q, the complete private-root set
+satisfies $R_Q\subseteq\{q\}$. All nonternary heights are arbitrary
+finite heights, and q is not required to occur. The competing covers
+in the two minimality conditions are unrestricted odd distinct
+nonunit whole covers.
+
+**CD159.** No whole cover satisfies these conditions.
+
+Use the construction of CD148–CD150 with q in place of 23.
+For every actual prime other than 3 and q, choose its fixed actual
+3p singleton. The complete private modulo9 projection of the actual
+pure-p donor yields the same bounds 43 at the pure9 root and 71 at
+the other root. Put
+
+$$
+ \begin{aligned}
+ S&=\{5,7,11,13,17,19,23,29,31,37,41,43\},\\
+ T&=\{47,53,59,61,67,71\},\\
+ S_q&=S\setminus\{q\},\qquad T_q=T\setminus\{q\}.
+ \end{aligned}
+$$
+
+Let A be the actual ordinary primes whose chosen singleton owners
+have the pure9 root. Then $A\subseteq S_q$, and the other root's
+ordinary primes belong to $(S_q\setminus A)\cup T_q$. Each root
+uses its own full product law with opposite-root singleton
+coordinates fixed. All actual pure $p^h$ and $3p^h$ prefixes on
+active axes are guarded, at every height. The shared axis has
+$b_q\le1/(q-3)$, and the same estimate holds on each ordinary axis
+with its own p. No separate shared-tower allocation is needed in
+this range of q.
+
+For $\kappa\in\{1/2,1/3\}$ and $B\subseteq S_q\cup T_q$, define
+
+$$
+ E_{q,\kappa}(B)
+ =(2+\kappa)\left[
+ \left(1+\frac1{q-3}\right)
+ \prod_{p\in B}\left(1+\frac1{p-3}\right)-1\right]
+ -2\left[\frac1{q-3}+\sum_{p\in B}\frac1{p-3}\right].
+ \tag{CD160}
+$$
+
+The exact original-label inventory and monotone padding used in
+CD150 imply both necessary inequalities
+
+$$
+ 1\le E_{q,1/2}(A),\qquad
+ 1\le E_{q,1/3}((S_q\setminus A)\cup T_q).
+ \tag{CD161}
+$$
+
+Padding may include an absent q. It enlarges a nonnegative inventory
+bound; it does not create an original class. Erasing q from the
+ordinary palettes avoids counting the same prime twice.
+
+For prime $11\le q\le71$, exact rational comparison proves
+
+$$
+ \forall A\subseteq S_q,\qquad
+ E_{q,1/2}(A)<1\quad\text{or}\quad
+ E_{q,1/3}((S_q\setminus A)\cup T_q)<1.
+ \tag{CD162}
+$$
+
+The q=23 case is CD151. The remaining small-palette primes
+$11,13,17,19,29,31,37,41,43$ each have $2^{11}$ partitions;
+the six tail primes each have $2^{12}$ partitions.
+
+For q at least 73, it is outside both ordinary palettes and
+$1/(q-3)\le1/70$. Coordinatewise monotonicity in the shared
+weight allows the uniform replacement $1/(q-3)\mapsto1/70$.
+A further exact comparison over the $2^{12}$ subsets of S gives
+CD162 for this entire unbounded prime range. Thus the finite
+comparisons, together with the monotonicity argument, contradict
+CD161 for every prime q at least eleven, proving CD159.
+
+The scoped transient Lean application verifies the complete
+original-family implication, including the finite-prime cases,
+the uniform large-prime comparison, the actual source laws and
+label injection. Its final axiom closure contains only `propext`,
+`Classical.choice` and `Quot.sound`. The kernel finite comparisons
+cover 47,104 cases in addition to CD151's 2,048 q=23 cases.
+This is an exact application check, not a new frozen declaration
+or atom-coverage claim.
+
+Together CD152 and CD159 exclude every single-exception hypothesis
+$R_Q\subseteq\{q\}$ for prime $q\ge7$ under their displayed source
+conditions. They give no exclusion of the single exceptional 5
+case, multiple exceptional primes, greater ternary height or
+unrestricted odd distinct covers. In particular, no reduction of
+every hypothetical odd cover to this source class is assumed.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
@@ -4802,8 +4907,8 @@ envelope, enough for CD15. They still need an upper bound on the actual
 profiles or word-availability moment contradicting CD12 or CD16.
 Every surviving repeated-digit and distinct-digit profile must be
 included. SC483 supplies none of these upper bounds by itself.
-The remaining ternary-height-two cases, including other
-exceptional-prime sets, and unrestricted odd distinct covering remain
-unresolved. CD148 and CD152 exclude the specified q=23 and q=7
-cases by full-prime-guard arguments, with separate shared-label
-pools required for q=7.
+The remaining ternary-height-two cases, including a single exceptional
+5 and multiple exceptional primes, and unrestricted odd distinct
+covering remain unresolved. CD148, CD152 and CD159 exclude every
+specified single exceptional prime q at least seven by full-prime-guard
+arguments, with separate shared-label pools required for q=7.
