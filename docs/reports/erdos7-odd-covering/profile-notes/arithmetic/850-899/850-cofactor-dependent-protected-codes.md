@@ -4992,15 +4992,19 @@ $$
 This contradiction proves CD163. The proof does not require a
 positive selected measure for the private25 source, a GLC collision
 graph, any new exchange operation, or saturation of the inventory.
-The actual-source argument is an ordinary mathematical proof.
-Transient Lean checks verify the three pairwise scalar contradictions,
-the two-word pigeonhole step, the product-law pair-union identity,
-injective replacement of two original inventory slots, and containment
-of literal $9p$ events in their corresponding axial rectangles.
-These checks compile with only the standard axioms. The complete
-source-to-law inventory and mandatory-label construction has not yet
-been compiled as a single Lean theorem; the separate checked pieces
-do not by themselves discharge it.
+A complete scoped transient Lean application verifies CD163 directly
+from the original whole cover and the displayed source conditions.
+It constructs the cofactor coordinates and the guarded product law,
+derives the clipped covering inequality and all three positive actual
+label owners, and combines the equal-word pair with the joint union
+bound. The endpoint takes neither a supplied coordinate frame nor a
+scalar covering inequality as a premise. Both minimality conditions
+range over all odd distinct nonunit integer covers; the private-root
+set is measured on the original family's exact least common period,
+and the ordinary palette uses its actual $3p$ singleton owners.
+The check compiles without warnings; its final axiom closure contains
+only `propext`, `Classical.choice` and `Quot.sound`. This is a transient
+exact check, not a retained declaration, freeze or atom-coverage claim.
 
 CD163 excludes precisely the displayed shared-five palette. Other
 ordinary palettes for shared five, multiple exceptional primes,
