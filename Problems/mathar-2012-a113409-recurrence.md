@@ -82,11 +82,32 @@ Tier 1 external named conjecture, preregistered in #13334.
   and its weighted Pascal identities supply the difference relation used by
   the induction. These local identities describe the argument's scope; they
   are not separate exported settlement theorems.
+- **Computed:** the literal sum equals the OEIS data for every `0 <= n < 20`
+  (20 exact integer matches), using the fetched b-file
+  `https://oeis.org/A113409/b113409.txt`.
+- **Computed:** the displayed recurrence residual is zero for every
+  `4 <= n < 40` (36 exact integer residuals), evaluated on the literal sum.
+  Both computations use
+  `python3 /Users/auric/.sshx/86bc0b314415216d22d436a5/attempt-1/check-a113409.py`,
+  exit 0; script SHA-256
+  `f9b2d9148205cf8880fe2613013bd47616f619d565338ec8993b39011ba92376`.
+  These finite checks do not establish an unbounded statement.
+- **Open to kernel verification in this delivery (derived, not kernel-verified):**
+  the generating-function equation `HY² = V²` from #13334. Its definitions are
+  `G(x) = sum_{n>=0} a(n)x^n`, `H = 1-2x+x²-4x⁴`,
+  `V = 1-x+2x²`, and `Y = 1+2x²G`. The issue derives the equation by
+  substituting `w = x²/(1-x)` into
+  `(1-4w²)(2wB(w)+1)² = (1+2w)²`, where
+  `B(w) = sum_{k>=0} C(k, floor(k/2))w^k` and
+  `G(x) = (1-x)⁻¹B(x²/(1-x))`. This is the issue's generating-function
+  derivation, not a consequence kernel-verified by `result`.
+- **Open in this delivery:** Kotesovec's asymptotic
+  `a(n) ~ 2^(n+3/2)/sqrt(3πn)`, as stated in the OEIS A113409 FORMULA
+  field and attributed there to Vaclav Kotesovec. The delivered `result`
+  supplies no proof of this asymptotic.
 - **Open:** an extension below index four requires a specified convention for
-  negative sequence indices. The source's generating-function equation and
-  asymptotic formula remain separate assertions. This module proves neither
-  those assertions nor a dependency from this recurrence to other source
-  results, and settles no additional named conjecture.
+  negative sequence indices. This module proves no dependency from the
+  recurrence to other source results and settles no additional named conjecture.
 
 ## ASSUMED-UNVERIFIED
 
