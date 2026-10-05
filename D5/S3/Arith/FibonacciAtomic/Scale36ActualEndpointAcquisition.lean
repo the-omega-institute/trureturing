@@ -310,7 +310,7 @@ theorem endpoints (k : Nat) (hk : 1 ≤ k) :
   have leaf_test (U : Source) (q : Address) :
       q ∈ leafAddresses U ↔ leafLabel U q ≠ none := by
     rw [(ActualImageSevenLeafSeparation.seven_leaf_separation.1 U).2 q]
-    exact Option.ne_none_iff_exists.symm
+    cases h : leafLabel U q <;> simp [h]
   have retained_data (j : Fin k) (s : Fin 2) (row : Option (Fin 2)) :
       let i : Index k := match row with | none => .inl () | some r => .inr (j,r)
       let p := retained k (.inr (j,s))
@@ -329,26 +329,26 @@ theorem endpoints (k : Nat) (hk : 1 ≤ k) :
       rw [leaf_test, h]; simp
     cases row with
     | none =>
-      have hq := out_leaf (.inl ()) 2 (by rw [profile]; rfl)
-      have ha := in_leaf (.inl ()) 0 (by rw [profile]; rfl)
+      have hq := out_leaf (.inl ()) 2 (by simp [profile, column])
+      have ha := in_leaf (.inl ()) 0 (by simp [profile, column])
       fin_cases s <;>
         simp [retained, runPassiveProtocol, profile, column, extra,
-          Finset.insert_sdiff_of_mem _ ha, Finset.insert_sdiff_of_notMem _ hq]
+          ha, hq, Finset.insert_sdiff_of_mem _ ha, Finset.insert_sdiff_of_notMem _ hq]
     | some r =>
       fin_cases r
-      · have ha := in_leaf (.inr (j,0)) 0 (by rw [profile]; rfl)
-        have hq := in_leaf (.inr (j,0)) 2 (by rw [profile]; rfl)
-        have hr := out_leaf (.inr (j,0)) 3 (by rw [profile]; rfl)
+      · have ha := in_leaf (.inr (j,0)) 0 (by simp [profile, column])
+        have hq := in_leaf (.inr (j,0)) 2 (by simp [profile, column])
+        have hr := out_leaf (.inr (j,0)) 3 (by simp [profile, column])
         fin_cases s <;>
           simp [retained, runPassiveProtocol, profile, column, extra,
-            Finset.insert_sdiff_of_mem _ ha, Finset.insert_sdiff_of_mem _ hq,
+            ha, hq, hr, Finset.insert_sdiff_of_mem _ ha, Finset.insert_sdiff_of_mem _ hq,
             Finset.insert_sdiff_of_notMem _ hr]
-      · have ha := out_leaf (.inr (j,1)) 0 (by rw [profile]; rfl)
-        have hq := in_leaf (.inr (j,1)) 2 (by rw [profile]; rfl)
-        have hr := in_leaf (.inr (j,1)) 3 (by rw [profile]; rfl)
+      · have ha := out_leaf (.inr (j,1)) 0 (by simp [profile, column])
+        have hq := in_leaf (.inr (j,1)) 2 (by simp [profile, column])
+        have hr := in_leaf (.inr (j,1)) 3 (by simp [profile, column])
         fin_cases s <;>
           simp [retained, runPassiveProtocol, profile, column, extra,
-            Finset.insert_sdiff_of_notMem _ ha, Finset.insert_sdiff_of_mem _ hq,
+            ha, hq, hr, Finset.insert_sdiff_of_notMem _ ha, Finset.insert_sdiff_of_mem _ hq,
             Finset.insert_sdiff_of_mem _ hr]
   have scan_data (target : Index k) : ∀ ls : List (Fin k),
       (∀ (j : Fin k) (r : Fin 2), target = .inr (j,r) → j ∉ ls) →
@@ -369,15 +369,15 @@ theorem endpoints (k : Nat) (hk : 1 ≤ k) :
         cases row with
         | inl v => simp [scan, retained, runPassiveProtocol, extra]
         | inr p =>
-          obtain ⟨s,hs⟩ := (cover p.1 p.2 rfl).resolve_left (List.not_mem_nil _)
+          obtain ⟨s,hs⟩ := (cover p.1 p.2 rfl).resolve_left (by simp)
           contradiction
       | inr p =>
         rcases p with ⟨j,s⟩
         cases row with
-        | inl v => simpa [scan] using retained_data j s none
+        | inl v => cases v; simpa [scan] using retained_data j s none
         | inr q =>
-          obtain ⟨t,ht⟩ := (cover q.1 q.2 rfl).resolve_left (List.not_mem_nil _)
-          have he : j = q.1 := (Sum.inr.inj ht).1
+          obtain ⟨t,ht⟩ := (cover q.1 q.2 rfl).resolve_left (by simp)
+          have he : j = q.1 := congrArg Prod.fst (Sum.inr.inj ht)
           subst j
           simpa [scan] using retained_data q.1 s (some q.2)
     | cons l ls ih =>
@@ -392,35 +392,33 @@ theorem endpoints (k : Nat) (hk : 1 ≤ k) :
             target = .inr (j,s) → j ≠ l := by
           intro j s h he; subst j; exact outside s h
         have ha0 : addresses k l 0 ∈ leafAddresses (family k (.inr (l,0))) := by
-          rw [leaf_test, profile]; decide
+          simp [leaf_test, profile, column]
         have hb0 : addresses k l 1 ∉ leafAddresses (family k (.inr (l,0))) := by
-          rw [leaf_test, profile]; decide
+          simp [leaf_test, profile, column]
         have ha1 : addresses k l 0 ∉ leafAddresses (family k (.inr (l,1))) := by
-          rw [leaf_test, profile]; decide
+          simp [leaf_test, profile, column]
         cases target with
         | inl u =>
           fin_cases r <;>
             simp [scan, runPassiveProtocol, profile, column, extra,
-              Finset.insert_sdiff_of_mem _ ha0, Finset.insert_sdiff_of_notMem _ hb0,
+              ha0, hb0, ha1, Finset.insert_sdiff_of_mem _ ha0, Finset.insert_sdiff_of_notMem _ hb0,
               Finset.insert_sdiff_of_notMem _ ha1]
         | inr p =>
           rcases p with ⟨j,s⟩
           have hlj : l ≠ j := (target_slot j s rfl).symm
           fin_cases r <;> fin_cases s <;>
-            simp [scan, runPassiveProtocol, profile, column, extra, hlj,
-              Finset.insert_sdiff_of_mem _ ha0, Finset.insert_sdiff_of_notMem _ hb0,
+            simp [scan, runPassiveProtocol, profile, column, extra, hlj, Ne.symm hlj,
+              ha0, hb0, ha1, Finset.insert_sdiff_of_mem _ ha0, Finset.insert_sdiff_of_notMem _ hb0,
               Finset.insert_sdiff_of_notMem _ ha1]
       · have inactive : ∀ r : Fin 2, row ≠ .inr (l,r) := by simpa using hit
         have replies (q : Fin 4) (hq : q.val < 2) :
             leafLabel (family k row) (addresses k l q) = some true := by
-          rw [profile]
           cases row with
-          | inl u => fin_cases q <;> first | rfl | omega
+          | inl u => fin_cases q <;> simp [profile, column] at hq ⊢
           | inr p =>
             rcases p with ⟨j,r⟩
             have hlj : l ≠ j := by intro h; subst j; exact inactive r rfl
-            rw [if_neg hlj]
-            fin_cases q <;> first | rfl | omega
+            fin_cases q <;> simp [profile, hlj, column] at hq ⊢
         have ha := (leaf_test _ _).mpr (show leafLabel (family k row) (addresses k l 0) ≠ none by
           rw [replies 0 (by decide)]; decide)
         have hb := (leaf_test _ _).mpr (show leafLabel (family k row) (addresses k l 1) ≠ none by
@@ -462,17 +460,20 @@ theorem endpoints (k : Nat) (hk : 1 ≤ k) :
   have billed := (paid_rows (e row) decoded).2
   have bill : paid (terminal pi (family k row)).1 =
       leafAddresses (family k row) ∪ (extra k target row).toFinset := by
-    simpa only [F, Function.comp_apply, e.symm_apply_apply,
-      ← Finset.sdiff_union_self_eq_union, (routes row).2, Finset.union_comm] using billed
+    simp only [F, Function.comp_apply, e.symm_apply_apply] at billed
+    rw [← Finset.sdiff_union_self_eq_union, (routes row).2, Finset.union_comm] at billed
+    exact billed
   refine ⟨bill, ?_⟩
   have card_leaves := (family_structure k hk).2.1 row |>.2.2.2
   have separate : Disjoint (leafAddresses (family k row)) (extra k target row).toFinset := by
     rw [← (routes row).2]
-    exact Finset.disjoint_sdiff_self_right
+    exact Finset.disjoint_sdiff
   change (paid (terminal pi (family k row)).1).card = _
   rw [bill, Finset.card_union_of_disjoint separate, card_leaves]
   by_cases same : target = row
-  · simp [extra, same]
+  · subst target
+    simp [extra]
+    omega
   · have one : (extra k target row).toFinset.card = 1 := by
       cases row with
       | inl u => cases target with
@@ -481,7 +482,7 @@ theorem endpoints (k : Nat) (hk : 1 ≤ k) :
       | inr p =>
         rcases p with ⟨j,r⟩
         fin_cases r <;> cases target <;> simp [extra, same]
-        all_goals split_ifs <;> simp
+        all_goals split_ifs <;> simp_all
     rw [one, if_neg same]
     omega
 
