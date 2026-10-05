@@ -41,7 +41,7 @@ public sealed partial class DigestionLedgerTests
         var baseline = ReadParentFiles(temporary);
         var requestPath = WriteParentRequest(requests, parent, context, batch: false);
         var before = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates", "--base", "baseline");
-        var set = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--request", requestPath, "--base", "baseline");
+        var set = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--request", requestPath);
         Assert.True(set.Exit == 0, set.Error);
         fixture.Current = ReadParentFiles(temporary);
         AssertParentOnlyChanged(baseline, fixture.Current, parent.AtomId);
@@ -51,7 +51,7 @@ public sealed partial class DigestionLedgerTests
         Assert.Empty(full.Findings);
         Assert.Equal(State, StateName(full.Entries.Single(e => e.Entry.AtomId == parent.AtomId).DerivedStatus));
         var after = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates", "--base", "baseline");
-        var clear = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--clear", parent.AtomId, "--base", "baseline");
+        var clear = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--clear", parent.AtomId);
         Assert.True(clear.Exit == 0, clear.Error);
         AssertParentOnlyChanged(baseline, ReadParentFiles(temporary), parent.AtomId);
         var cleared = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates", "--base", "baseline");
@@ -80,7 +80,7 @@ public sealed partial class DigestionLedgerTests
         var baseline = ReadParentFiles(temporary);
         var requestPath = WriteParentRequest(requests, parent, context, batch);
         var result = RunParentCli(temporary, baseline, false,
-            batch ? "settle-batch" : "settle-atom", batch ? "--requests" : "--request", requestPath, "--base", "baseline");
+            batch ? "settle-batch" : "settle-atom", batch ? "--requests" : "--request", requestPath);
         Assert.True(result.Exit == 0, result.Error);
         fixture.Current = ReadParentFiles(temporary);
         Assert.Equal(State, StateName(Target(fixture).ProjectedStatus));
@@ -108,7 +108,7 @@ public sealed partial class DigestionLedgerTests
         WriteParentReport(temporary, fixture);
         var baseline = ReadParentFiles(temporary);
         var requestPath = WriteParentRequest(requests, parent, context, batch: false);
-        var set = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--request", requestPath, "--base", "baseline");
+        var set = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--request", requestPath);
         Assert.True(set.Exit == 0, set.Error);
         var settledQuery = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates", "--base", "baseline");
         Assert.True(settledQuery.Exit == 0, settledQuery.Error);
@@ -117,7 +117,7 @@ public sealed partial class DigestionLedgerTests
             && !e.Receipts.ChainAtoms.IsEmpty);
         var child = fixture.Document.RequireDigestionEntries().First(e => branch.Receipts.ChainAtoms.Contains(e.AtomId)
             && e.Receipts.Nonpropositional is not null);
-        var clear = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--clear", child.AtomId, "--base", "baseline");
+        var clear = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--clear", child.AtomId);
         Assert.True(clear.Exit == 0, clear.Error);
         Assert.Contains(parent.AtomId, clear.Output, StringComparison.Ordinal);
         var before = SettleAtomCommandTests.Image(temporary);
@@ -126,9 +126,9 @@ public sealed partial class DigestionLedgerTests
         Assert.Contains("entry " + parent.AtomId + " handwritten status", query.Error, StringComparison.Ordinal);
         Assert.Contains("differs from derived partial-open", query.Error, StringComparison.Ordinal);
         Assert.Equal(before, SettleAtomCommandTests.Image(temporary));
-        Assert.Equal(0, RunParentCli(temporary, baseline, fullScan, "settle-atom", "--clear", parent.AtomId, "--base", "baseline").Exit);
+        Assert.Equal(0, RunParentCli(temporary, baseline, fullScan, "settle-atom", "--clear", parent.AtomId).Exit);
         before = SettleAtomCommandTests.Image(temporary);
-        var reset = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--request", requestPath, "--base", "baseline");
+        var reset = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--request", requestPath);
         Assert.Equal(2, reset.Exit);
         Assert.Contains("SETTLE_INVALID CHAIN_INCOMPLETE", reset.Error, StringComparison.Ordinal);
         Assert.Equal(before, SettleAtomCommandTests.Image(temporary));
@@ -181,7 +181,7 @@ public sealed partial class DigestionLedgerTests
         TemporaryFileSystem.File.WriteAllText(requestPath, (batch ? "[[requests]]\n" : "") + request, new UTF8Encoding(false));
         var before = SettleAtomCommandTests.Image(temporary);
         var result = RunParentCli(temporary, fixture.Current, false,
-            batch ? "settle-batch" : "settle-atom", batch ? "--requests" : "--request", requestPath, "--base", "baseline");
+            batch ? "settle-batch" : "settle-atom", batch ? "--requests" : "--request", requestPath);
         if (evidence != "valid")
         {
             Assert.Equal(2, result.Exit);
@@ -217,7 +217,7 @@ public sealed partial class DigestionLedgerTests
         var baseline = fixture.Current;
         var nested = fixture.Document.RequireDigestionEntries().Single(e => e.AtomId != parent.AtomId && !e.Receipts.ChainAtoms.IsEmpty);
         var childId = nested.Receipts.ChainAtoms[0];
-        var clear = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "", ["--clear", childId, "--base", "baseline"]);
+        var clear = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "", ["--clear", childId]);
         Assert.True(clear.Success, clear.Error);
         var ids = new[] { nested.AtomId, parent.AtomId }.Order(StringComparer.Ordinal).ToArray();
         Assert.Contains("SETTLE_ALIGN_REQUIRED ancestors=" + string.Join(',', ids), clear.Output, StringComparison.Ordinal);
@@ -254,7 +254,7 @@ public sealed partial class DigestionLedgerTests
             Assert.Equal("partial-open", StateName(entry.ProjectedStatus));
             Assert.NotNull(entry.Receipts.Nonpropositional);
         }
-        var clearedParent = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "", ["--clear", parent.AtomId, "--base", "baseline"]);
+        var clearedParent = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "", ["--clear", parent.AtomId]);
         Assert.True(clearedParent.Success, clearedParent.Error);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         Assert.Null(Target(fixture).Receipts.Nonpropositional);
