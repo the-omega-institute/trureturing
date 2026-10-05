@@ -60436,3 +60436,217 @@ $$
 这条条件运输没有证明实际 $H_m$ 的平方根预算，也没有识别原始 $I_\psi(x)$ 与 $\sum_mH_mJ_x(m)$。后一个身份还需要实际卷积恢复、两条仿射矩以及积分前的绝对条件 $\sum_m\int_x^\infty|H_m[R(t/m)-R(t/(m+1))]|w(t)dt<\infty$；积分之后的变化量界不能替代该 Fubini 责任。实际核的 Mellin 矩和实际输入 $H$ 的增长分别属于不同对象。本节没有 Robin 全称符号或 RH 结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 396. 移动共因子素切面的对数主项与同源补集抵消
+
+**定义 396.1（随 Newton 指标增长的共因子边界）。** 保留 §§385、390、392–394 的同一实际 $q=\varphi^{-2}$、$\beta$、$e=\mu*\beta$、$H(x)=\sum_{n\le x}e_n$、$\mathcal B(s)$、完整 $c_k^e$，以及互不重复的共因子面板 $\mathcal J_D(k)$ 与其实际指标补集 $\mathcal R_D(k)$。固定
+
+$$
+0<\vartheta<\frac14,\qquad
+D_k=\lfloor k^\vartheta\rfloor,\qquad
+X=\sqrt k,\qquad L=\log X.
+\tag{396.1}
+$$
+
+以下渐近取整数 $k\to\infty$；常数可以依赖固定的 $\vartheta$。$\vartheta$ 是共因子截断指数，不是黄金整数生成元，也不是文献中正概率权重的参数。
+
+**定理 396.2（实际移动面板与补集的共同对数主项）。** 在（396.1）的范围内，
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal J_{D_k}(k)
+&=\frac{2\sqrt\pi\,\mathcal B(1)}{\sqrt k(\log k)^2}
+ +O_\vartheta\!\left(\frac1{\sqrt k(\log k)^3}\right),\\
+\mathcal R_{D_k}(k)
+&=-\frac{2\sqrt\pi\,\mathcal B(1)}{\sqrt k(\log k)^2}
+ +O_\vartheta\!\left(\frac1{\sqrt k(\log k)^3}\right).
+\end{aligned}}
+\tag{396.2}
+$$
+
+两份主项来自同一实际指标分解，且 $\mathcal B(1)>0$。与此同时，完整有符号和满足经典有符号部分求和的实际应用：
+
+$$
+\forall A>0,\qquad
+c_k^e=O_A\!\left(\frac1{\sqrt k(\log k)^A}\right).
+\tag{396.3}
+$$
+
+因此，两份移动子和各自不满足 $O(k^{-3/4+\varepsilon})$（$0<\varepsilon<1/4$），但它们的主项确实在完整同源和中抵消。（396.3）仍不是该临界幂估计，也不证明全部目标整数的 Robin 不等式。
+
+**证明。** 本证明直接使用既有定量 PNT、Gaussian 积分和 Abel 部分求和，不另立这些经典结论。定量 PNT 的原文输入取 [Rosser–Schoenfeld](../../../Library/Arith/rosser1962approximate.md) 印刷页 66 式（2.21）—（2.22）；它给每个固定 $A>0$ 的
+
+$$
+E_\pi(y):=\pi(y)-\operatorname{Li}(y)
+=O_A\!\left(\frac{y}{(\log y)^A}\right).
+\tag{396.4}
+$$
+
+素数—共因子双和与一致范围的现代表述见 [Sun 的原稿 §3](../../../Library/Analytic/sun2026giantprimecofactor.md)。其正权重分布不用于替代本证明的有符号 $e_m$。筛后 Möbius 和的另一类范围见 [Alamoudi 原稿定理 1.1](../../../Library/Analytic/alamoudi2026subradicallysifted.md)；最小素因子筛选不等于本节的共因子面板，其次幂以下的主定理截断范围也不自动包含（396.1）。
+
+一、先保留实际有符号矩。由（390.3）、（390.5）、（394.8）及经典部分求和，对每个固定 $A>0$，
+
+$$
+\begin{aligned}
+g_e(D)&:=\sum_{m\le D}\frac{e_m}{m}
+=O_A((\log D)^{-A}),\\
+h_e(D)&:=\sum_{m\le D}\frac{e_m\log m}{m}
+=-\mathcal B(1)+O_A((\log D)^{-A}).
+\end{aligned}
+\tag{396.5}
+$$
+
+第二式的整体矩由已有 $\mathcal C=\mathcal B/\zeta$ 的 $\mathcal C'(1)=\mathcal B(1)$ 提供，符号为负：部分求和将 $\sum e_m\log m/m$ 送到 $\int_1^\infty H(x)(\log x-1)x^{-2}\,dx=-\mathcal C'(1)$。尾部由 $H(x)=O_r(x/(\log x)^r)$ 支付，取 $r$ 任意大即给（396.5）。这里绝对收敛的是 $H$ 加权积分；不把两份 $e$ 加权级数宣称为绝对收敛。
+
+同一既有增长界给有限常数
+
+$$
+\mathfrak K=
+\sup_{x\ge1}\frac{|H(x)|(1+(\log x)^2)}x
++\int_1^\infty\frac{|H(x)|(1+(\log x)^2)}{x^2}\,dx
+<\infty.
+\tag{396.6}
+$$
+
+二、素数核误差在全部 $m\le D_k$ 上一致。复用（394.2）的精确实际分解 $e_{mp}=-e_m+\eta_{m,p}$。由（394.13）与 $\sum_{m\ge1}\tau(m)/m^2=\zeta(2)^2$，整个 $\eta$ 部分的绝对值至多
+
+$$
+C_q\exp[-c_q(k/D_k^2)^{1/3}],
+\tag{396.7}
+$$
+
+其中 $C_q,c_q>0$。这一步只组合同一实际 $mp$ 核上的界。
+
+对 $n\ge2$，经典 $\log(1-u)$ 余项及 $1-e^{-v}\le v$ 给
+
+$$
+0\le e^{-k/n^2}-(1-n^{-2})^k
+\le C\frac{k}{n^4}e^{-k/n^2}.
+\tag{396.8}
+$$
+
+面板指标互不重复，且 $|e_n|\le B$，所以替换整个面板 Newton 核的误差由 $CBk\sum_{n\ge2}n^{-6}e^{-k/n^2}=O(k^{-3/2})$ 支付。最后的尺度来自单峰正函数的和—积分比较及 Gaussian 换元；不使用有符号估计去支付这个绝对替换误差。
+
+令
+
+$$
+F_m(y)=\frac1{m^2y^2}e^{-(X/(my))^2}.
+\tag{396.9}
+$$
+
+对每个固定 $A$，在 $D=D_k$ 足够大时，（396.4）与 Stieltjes 部分求和给
+
+$$
+\begin{aligned}
+\left|
+\sum_{p>D}F_m(p)-\int_D^\infty\frac{F_m(y)}{\log y}\,dy
+\right|
+&\le\frac{C_A}{(\log D)^A}
+\left[D|F_m(D)|+\int_D^\infty y|F_m'(y)|\,dy\right]\\
+&\le\frac{C_A'}{mX(\log D)^A}.
+\end{aligned}
+\tag{396.10}
+$$
+
+素数和仍只取素数 $p$。第二行由 $z=X/(my)$ 的 Gaussian 换元得到，常数与 $m,D,k$ 无关。端点 $D$ 的项被保留，因此 $p>D$ 的开端点没有被替换成 $p\ge D$。对所有 $m\le D$ 用 $|e_m|\le B$ 求和，误差为 $O_{\vartheta,A}(X^{-1}(\log k)^{1-A})$；取 $A=4$ 足够。
+
+三、用实际部分和控制共因子内部的非线性余项。记
+
+$$
+h(t)=t^{-2}e^{-t^{-2}},\qquad
+u=k^{\vartheta-1/4}.
+\tag{396.11}
+$$
+
+在（396.10）的主积分中作 $y=Xt/m$，得到
+
+$$
+\int_D^\infty\frac{F_m(y)}{\log y}\,dy
+=\frac1{mX}\int_{mD/X}^\infty
+\frac{h(t)}{L+\log t-\log m}\,dt.
+\tag{396.12}
+$$
+
+因为 $mD/X\le D^2/X\le u^2<u$，各积分从自己的下端点到 $u$ 的部分，可用 $\log y\ge\log D$、$\sum_{m\le D}1/m=O(\log D)$ 和 $\int_0^u h(t)\,dt=O(u e^{-u^{-2}})$ 统一支付。其整个绝对误差为 $O_\vartheta(X^{-1}u e^{-u^{-2}})$。留下的共同范围 $t\ge u$ 满足，对所有 $1\le x\le D$，
+
+$$
+L+\log t-\log x\ge\frac L2.
+\tag{396.13}
+$$
+
+令 $v=\log t$。在该共同范围，精确展开为
+
+$$
+\frac1{L+v-\log m}
+=\frac1L+\frac{\log m-v}{L^2}
++\frac{(\log m-v)^2}{L^2(L+v-\log m)}.
+\tag{396.14}
+$$
+
+最后一项必须保留有符号 $e_m$；若先取绝对值，其共因子对数质量不能提供所需的统一余项。置
+
+$$
+w_{L,v}(x)=\frac{(\log x-v)^2}{x(L+v-\log x)}.
+\tag{396.15}
+$$
+
+当 $L\ge1$ 时，由（396.13）及直接微分，
+
+$$
+|w_{L,v}'(x)|
+\le\frac{20(1+(\log x)^2+v^2)}{Lx^2},
+\qquad
+|w_{L,v}(D)|
+\le\frac{4((\log D)^2+v^2)}{LD}.
+\tag{396.16}
+$$
+
+经典有限 Abel 身份与（396.6）于是给
+
+$$
+\begin{aligned}
+\left|\sum_{m\le D}e_m w_{L,v}(m)\right|
+&=\left|H(D)w_{L,v}(D)-\int_1^D H(x)w_{L,v}'(x)\,dx\right|\\
+&\le\frac{24\mathfrak K(1+v^2)}L.
+\end{aligned}
+\tag{396.17}
+$$
+
+这里保留 $m=1$ 与 $H(1)=e_1$；它已经包含在有限部分求和中，不另删首行。结合（396.5）与（396.14），得到对全部 $t\ge u$ 一致的
+
+$$
+\sum_{m\le D}\frac{e_m}{m(L+\log t-\log m)}
+=-\frac{\mathcal B(1)}{L^2}
++O_\vartheta\!\left(\frac{1+|\log t|^2}{L^3}\right).
+\tag{396.18}
+$$
+
+使用 $\int_0^\infty h(t)(1+|\log t|^2)\,dt<\infty$，并直接复用经典半 Gaussian 积分 $\int_0^\infty h(t)\,dt=\sqrt\pi/2$，把（396.7）—（396.18）在同一面板中组合，得到
+
+$$
+\mathcal J_{D_k}(k)
+=\frac{\sqrt\pi\,\mathcal B(1)}{2XL^2}
++O_\vartheta(X^{-1}L^{-3}).
+\tag{396.19}
+$$
+
+$L=(\log k)/2$ 给（396.2）第一行。这不是把固定 $D$ 的（394.9）代入 $D_k$：共因子内部的一阶对数矩以及一致余项共同承担了这一极限。
+
+四、独立支付完整有符号和，再恢复实际补集。对 $k\ge2$，令 $f_k(x)=x^{-2}(1-x^{-2})^k$（$x\ge1$）。已有有符号 Abel 公式在同一实际 $e,H$ 上给
+
+$$
+c_k^e=-\int_1^\infty H(x)f_k'(x)\,dx,
+\qquad
+|f_k'(x)|
+\le2(x^{-3}+kx^{-5})e^{-k/(2x^2)}.
+\tag{396.20}
+$$
+
+$f_k(1)=0$，且 $H(x)f_k(x)\to0$；这两个端点承担上述身份。将积分分成 $1\le x<k^{1/4}$ 与 $x\ge k^{1/4}$。前者由 $|H(x)|\le Bx$ 给 $O_B((1+k)e^{-\sqrt k/2})$；后者用既有 $H(x)=O_A(x/(\log x)^A)$ 和 Gaussian 换元，给 $O_A(k^{-1/2}(\log k)^{-A})$。这证明（396.3），只是在实际输入上应用经典部分求和工具，并未将其列为新的通用 Möbius 判据。
+
+最后，实际补集与面板的绝对来源拆分已由 §394 给出。以（396.3）取 $A=3$，在这个同一来源的身份 $c_k^e=\mathcal J_{D_k}(k)+\mathcal R_{D_k}(k)$ 中代入（396.19），得到（396.2）第二行。$\mathcal B(1)>0$ 直接由（385.4）提供。两份子和的非临界性来自各自非零主项；完整和的余界来自独立的实际 $H$ 增长界，不能反过来把子和主项当作完整系数下界。
+
+本定理的范围是每个固定 $0<\vartheta<1/4$，不要求该区间边缘的一致常数，也不据此排除其他截断指数的估计。全部对数幂改进仍弱于 $k^{-1/4+\varepsilon}$ 的额外幂收益：对固定 $A$ 与 $0<\varepsilon<1/4$，$k^{1/4-\varepsilon}/(\log k)^A\to\infty$。因此（396.3）不达到既有完整 Báez-Duarte—Robin 归约所需的临界指数；未支付的仍是完整实际有符号和的额外幂尺度，而不是这两份对数主项是否能够在同一来源中抵消。$\square$
+
+## 追加锚（本行以下为增补区）

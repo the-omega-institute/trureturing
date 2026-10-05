@@ -13,22 +13,21 @@ internal static partial class SettleAtomCommand
     internal static CommandResult RunBatch(string root, IRepositoryGateway repository, IReadOnlyList<string> arguments,
         ILeanReportSource? reportSource = null)
     {
-        string? file = null, baseline = null;
+        string? file = null;
         TomlTableArray requests;
         try
         {
-            const string usage = "USAGE: StrataLint settle-batch --requests FILE --base REV";
+            const string usage = "USAGE: StrataLint settle-batch --requests FILE";
             for (var index = 0; index < arguments.Count; index += 2)
             {
                 if (index + 1 >= arguments.Count) throw new FormatException(usage);
                 switch (arguments[index])
                 {
                     case "--requests" when file is null: file = arguments[index + 1]; break;
-                    case "--base" when baseline is null: baseline = arguments[index + 1]; break;
                     default: throw new FormatException(usage);
                 }
             }
-            if (file is null || string.IsNullOrWhiteSpace(baseline) || baseline != baseline.Trim())
+            if (file is null)
                 throw new FormatException(usage);
             var table = TomlSerializer.Deserialize<TomlTable>(DecodeRequest(ReadRequest(root, file)));
             if (table is null || table.Count != 1 || !table.TryGetValue("requests", out var value)
@@ -49,7 +48,7 @@ internal static partial class SettleAtomCommand
                 && DigestionNonpropositional.IsAtomId(id.Trim()) ? id.Trim() : "invalid";
             // Reuse the complete single writer, including fresh repository reads,
             // request validation, adjacency, round-trip validation and atomic commit.
-            var result = Run(root, repository, ["--request", file, "--base", baseline],
+            var result = Run(root, repository, ["--request", file],
                 BackfillInventoryWriter.WriteAtom,
                 (_, _) => [.. StrictUtf8.GetBytes(TomlSerializer.Serialize(table))],
                 static (directory, current, updates) => IngestCommand.ApplyLedgerUpdatesAtomically(directory, current, updates), reportSource);
