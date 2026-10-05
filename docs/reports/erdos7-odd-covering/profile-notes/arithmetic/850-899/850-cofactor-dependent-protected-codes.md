@@ -3451,6 +3451,133 @@ declaration, freeze or coverage record is introduced. The
 four- and five-word cases at 17, the entire ternary-height-two
 branch and unrestricted Erdős #7 remain unresolved.
 
+### Vacant lower slots force a rectangle of numerical triples
+
+Retain the original-family assumptions of CD94 at $q=23$, with
+pure h, five private words $\Lambda$, and a set U of at most three
+digits containing every actual unit-cofactor digit. The following
+condition uses the entire deleted family D, not just one cell:
+
+$$
+\begin{aligned}
+\operatorname{Clean}(d,u)\iff
+\forall i\in C(d,u),\quad&
+\neg\exists j\in D:\ \operatorname{row}(j)=0,\ m_j=m_i\\
+&\quad\lor\quad
+\neg\exists j\in D:\ \operatorname{row}(j)=1,\ m_j=m_i.
+\end{aligned}
+\tag{CD115}
+$$
+
+The disjunction is inside the universal quantifier. Each actual
+top owner may use a different vacant lower slot. An empty cell is
+clean. A cell that is not clean contains an actual top cofactor m
+whose two lower numerical companions both occur somewhere in D.
+Their second digits and cofactor phases need not equal those of
+the top owner.
+
+For a fixed nonunit cofactor m, there are at most three Changed
+owners, one per ternary row, because their original moduli are
+$m q^2$, $3m q^2$ and $9m q^2$. Give them distinct slots from
+
+$$
+27m,\qquad27qm,\qquad81m.
+\tag{CD116}
+$$
+
+Every low owner needs one of the first two slots. A top owner at
+a selected clean cell also needs one of those slots. Cleanliness
+ensures that no group demands three short slots. The existing
+three-row slot-assignment theorem therefore assigns all groups
+simultaneously. Labels in different groups remain distinct by
+coprimality with $3q$. A top can exchange row roles with a lower
+owner without exchanging their cofactor phases.
+
+A single source digit can now serve a whole modulo-27 parent at
+a clean cell: every target point has its own actual covering
+owner, which receives a short slot if it is low or belongs to
+that selected cell. The source insertion preserves the complete
+$9W$ coordinate. The same grouping also supports the earlier
+paired parents: their three modulo-81 children are still paid by
+b, a and the extra b-output. The extra modulus $81qm$ occupies a
+separate slot signature. No common cofactor witness is assumed.
+
+Suppose five distinct safe digits could be assigned five distinct
+parents at clean cells. At most three parents can have any one
+private word. Removing these five digits leaves at least fifteen
+safe digits and at least eleven top-positive digits by CD99.
+Choose seven disjoint pairs, each with a top-positive a-digit.
+For every pair, at least twelve of the fifteen parents lie at good
+words. Removing the five clean parents leaves at least seven
+choices. Hall's theorem assigns distinct parents to all seven
+pairs. The three unassigned parents carry the four pure outputs:
+two whole parents and two children of the third.
+
+The remaining code consists of twelve collapsed parents and one
+fine cell. Seven pairs supply at least seven units of gain;
+retaining three top donors leaves a class-count decrease of at
+least four. The grouped source, label comparison and whole-cover
+construction therefore imply
+
+$$
+\boxed{\nu\le4,}
+\tag{CD117}
+$$
+
+where $\nu$ is the maximum number of distinct safe digits that can
+be assigned clean cells, with capacity three at each private word.
+The three pure parents need not lie above the same private word.
+
+Write $E=(\mathbb Z/q\mathbb Z)\setminus U$ and, for $V\subseteq\Lambda$,
+
+$$
+N(V)=\{d\in E:\exists u\in V,\ \operatorname{Clean}(d,u)\}.
+\tag{CD118}
+$$
+
+A finite Hall argument gives a useful form of the obstruction.
+Attach ten universal dummy digits to the fifteen parent slots.
+A matching covering all slots would use at least five real digits,
+contradicting CD117. Thus a deficient subset K of slots has word
+projection V satisfying
+
+$$
+|N(V)|+10<|K|\le3|V|.
+\tag{CD119}
+$$
+
+Since $|V|\le5$, either $|V|=4$ and $|N(V)|\le1$, or $V=\Lambda$
+and $|N(V)|\le4$. Removing $N(V)$ from E gives a blocked rectangle
+$T\times V$ of one of the two sizes
+
+$$
+\boxed{
+|T|\ge19,\ |V|=4
+\quad\text{or}\quad
+|T|\ge16,\ |V|=5.
+}
+\tag{CD120}
+$$
+
+Every cell of this rectangle supplies an actual numerical triple
+$m q^2,3m q^2,9m q^2$ in D. Different cells supply different
+cofactors: equal cofactors would give equal top moduli, hence the
+same original top owner and the same cell. All these cofactors
+are nonunit and divide W. Consequently there are at least 76
+distinct such cofactors; the second alternative gives at least 80.
+This is a numerical triple condition, not the stronger C1
+condition that places all three owners at one digit and word.
+
+A complete scoped transient Lean application checks the blocked
+rectangle and distinct-cofactor conclusion from the original
+family assumptions and an actual deep original. Its 155 axiom
+reports use only `propext`, `Classical.choice` and `Quot.sound`,
+with no errors or `sorryAx`. It reuses the existing grouped-slot
+result and Mathlib's finite Hall theorem. No new retained
+declaration, freeze or coverage record is introduced. A joint
+exchange using the companion locations, and exclusion of the
+remaining squared-23 branch, remain unresolved.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
