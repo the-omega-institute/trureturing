@@ -1,0 +1,4 @@
+# 十七、一个完全 FIB 合法的单历史障碍
+
+有限状态机理论早已区分分离实验与自适应识别序列；并不是所有机器都存在能够完整识别初态的单个区分序列。这里给出与 FIB 合法语言直接匹配的具体构造。[OUP Academic](https://academic.oup.com/comjnl/article-abstract/58/11/3089/449735)
+

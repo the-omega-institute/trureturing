@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-// IngestCommand 的账本原子写入一族:ApplyLedgerUpdatesAtomically / ReadLedgerFiles /
+// IngestCommand 的账本原子写入一族:ApplyLedgerUpdatesAtomically /
 // PruneEmptyLedgerDirectories / RollbackLedgerUpdates / AddCasObjects / WriteCasObjects。
 //
 // 余量:宿主原 786 行,是全仓离 SL-003 的 800 行硬线最近的文件(余量 14)。
@@ -30,16 +30,18 @@ internal static partial class IngestCommand
         }
 
         var root = Path.GetFullPath(repositoryRoot);
-        var actual = RequireLedgerUnchanged(root, current);
-
+        var updated = updates.Select(static update => update.Path).ToHashSet(StringComparer.Ordinal);
+        var read = current.Entries
+            .Where(entry => updated.Contains(entry.Path))
+            .ToDictionary(static entry => entry.Path, static entry => entry.Bytes, StringComparer.Ordinal);
         var originals = updates.ToDictionary(
             static update => update.Path,
-            update => actual.TryGetValue(update.Path, out var bytes)
+            update => read.TryGetValue(update.Path, out var bytes)
                 ? (ImmutableArray<byte>?)bytes
                 : null,
             StringComparer.Ordinal);
-        // The caller's complete input precondition belongs after the ledger reread,
-        // before any directory creation, replacement or rollback-visible touch.
+        // The caller's complete input precondition belongs before any directory
+        // creation, replacement or rollback-visible touch.
         requireInputsUnchanged?.Invoke();
         var touched = new List<string>(updates.Length);
         try
@@ -71,63 +73,9 @@ internal static partial class IngestCommand
         }
     }
 
-    internal static Dictionary<string, ImmutableArray<byte>> RequireLedgerUnchanged(
-        string repositoryRoot, RawRepositorySnapshot current)
-    {
-        var expected = current.Entries
-            .Where(static entry => IsLedgerPath(entry.Path))
-            .ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
-        var actual = ReadLedgerFiles(Path.GetFullPath(repositoryRoot));
-        if (expected.Keys.Except(actual.Keys, StringComparer.Ordinal).Any())
-        {
-            throw new InvalidOperationException(
-                "ledger went missing between read and write; aborting to avoid a lost update");
-        }
-
-        if (actual.Keys.Except(expected.Keys, StringComparer.Ordinal).Any()
-            || expected.Any(pair => !pair.Value.Bytes.AsSpan().SequenceEqual(actual[pair.Key].AsSpan())))
-        {
-            throw new InvalidOperationException(
-                "ledger changed under us between read and write; aborting to avoid a lost update");
-        }
-        return actual;
-    }
-
     internal static bool IsLedgerPath(string path) =>
         string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
         || BackfillInventoryLoader.IsCanonicalPath(path);
-
-    private static Dictionary<string, ImmutableArray<byte>> ReadLedgerFiles(string root)
-    {
-        var result = new Dictionary<string, ImmutableArray<byte>>(StringComparer.Ordinal);
-        AddIfFile(BackfillInventoryLoader.RelativePath);
-        var directory = Path.Combine(
-            root,
-            BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar));
-        if (Directory.Exists(directory))
-        {
-            foreach (var path in Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories))
-            {
-                Add(Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/'), path);
-            }
-        }
-
-        return result;
-
-        void AddIfFile(string relativePath)
-        {
-            var fullPath = Path.Combine(
-                root,
-                relativePath.Replace('/', Path.DirectorySeparatorChar));
-            if (File.Exists(fullPath))
-            {
-                Add(relativePath, fullPath);
-            }
-        }
-
-        void Add(string relativePath, string fullPath) =>
-            result.Add(relativePath, ImmutableArray.CreateRange(File.ReadAllBytes(fullPath)));
-    }
 
     private static void PruneEmptyLedgerDirectories(
         string root,

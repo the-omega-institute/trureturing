@@ -2,7 +2,7 @@
 slug: peltomaki-2020-silver-slope-abelian-periods
 bibkey: peltomaki2020abelianperiods
 doi: 10.1016/j.jnt.2020.04.007
-url: https://arxiv.org/abs/1905.06138v3
+url: https://arxiv.org/abs/1905.06138
 triage: theorem
 motivation_gids:
   - D5/S1/Words/Mechanical/SilverSlopeAbelianPeriods.result

@@ -1,0 +1,28 @@
+## ——控制相容性、最小记忆与闭环可验证几何
+
+> **参考输入与来源边界。** 本卷保留用户在本会话提供的稿件；具体作者、作者类别及模型未独立核实（`ASSUMED-UNVERIFIED`）。纸面证明与有限例算均不构成 Lean kernel 核验；本库数学真源是经核验的 Lean 声明及其公理闭包。文中“本次”“本轮”和读取时的 `dev` 状态属于原稿来源报告，不表示本卷认证了过去执行。本卷不提出新颖性主张。
+>
+> **编号与导航。** 续篇局部编号独立于[原卷](FIB_RELATIONAL_FIBER_CALCULUS.md)补充部分的 13–16，不改动原卷。[续篇一](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION.md)与[续篇二](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md)相互衔接；相关既有来源为[关系延拓几何](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)、[观察者相对时空恢复](OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md)和[尺度读出与逆许可](FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md)。本卷按 `generic-v1` 作为参考输入摄入；纳入后的正文保持不变，勘误与增补写在文末追加锚之后。
+
+
+
+本篇以本次读取的项目 `dev` 提交 `6f2cb461…` 为固定基准。下面新增条目给出纸面定义与证明，不认定为已经完成的 Lean 核验。
+
+> **来源提交说明。** 前缀解析为 `6f2cb461acb38755b85722d62db443d5af968662`；“读取时为 `dev`”仍是原稿来源报告，未独立认证其历史分支状态。
+
+
+
+项目已有两条直接相关的基础：一条是动态充分商必须保留合法后继和响应，不能只保当前读数；另一条是有限取证深度必须从完成条件递归构造，而循环方程本身不证明可执行或终止。 
+
+本篇进一步区分：
+
+$$
+\text{完整行为的最小表示}
+\quad\text{与}\quad
+\text{完成特定任务的最小控制器}.
+$$
+
+这与输出反馈控制研究中“抽象状态上的策略，如何由实际可见输出实现”的问题相接，但下文只研究明确给出的有限确定性合同。[arXiv](https://arxiv.org/abs/2002.02687?utm_source=chatgpt.com)
+
+---
+

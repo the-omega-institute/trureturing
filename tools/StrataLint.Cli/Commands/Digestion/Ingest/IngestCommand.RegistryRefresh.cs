@@ -93,7 +93,6 @@ internal static partial class IngestCommand
             if (EffectiveChanges(inputs.CurrentRaw, repository.ReadCurrent()).Entries.Length != 0
                 || EffectiveChanges(inputs.BaselineRaw, repository.ReadRevision(arguments[1])).Entries.Length != 0)
                 throw new InvalidOperationException("registry refresh inputs changed during validation");
-            RequireLedgerUnchanged(root, inputs.CurrentRaw);
             if (arguments[4] == "--apply")
                 ApplyLedgerUpdatesAtomically(root, inputs.CurrentRaw, updates,
                     requireInputsUnchanged: RequireInputsUnchanged);
