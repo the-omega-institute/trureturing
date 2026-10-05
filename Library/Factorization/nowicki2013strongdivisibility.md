@@ -18,6 +18,7 @@ triage: anchor
 
 The primary source is Andrzej Nowicki, *Strong divisibility and
 lcm-sequences*, arXiv:1310.2416v1, submitted 9 October 2013.
+The version record is https://arxiv.org/abs/1310.2416v1.
 The title, author, abstract, introduction and Theorem 2.1 were directly
 read from https://arxiv.org/pdf/1310.2416v1, PDF pp. 1 and 4.
 The saved primary PDF has SHA-256
