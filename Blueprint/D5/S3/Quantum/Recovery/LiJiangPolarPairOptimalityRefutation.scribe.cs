@@ -9,11 +9,8 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
     private const string Prefix = "D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Quantum/lijiang2026highrank");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        DocumentHeader.Create(GidRef.Create(Prefix[..^1]), StrataLint.Engine.Generality.General,
-            GidRef.Create("D5/B/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation"),
-            new EvidenceMirror.Waiver(WaiverReason.Create("finite-algebraic-proof")), [],
-            Digest.Create("A feasible qubit rank-one encoder strictly improves the source polar pair.")),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A feasible qubit rank-one encoder strictly improves the source polar pair.",
         H("Li–Jiang polar-pair optimality: an exact finite-noise refutation"),
         Blocks(
             Def("lambda1", "First source parameter", Parameters("lambda1"), "Source Eq. 18: d is the logical dimension and p is the noise parameter."),
