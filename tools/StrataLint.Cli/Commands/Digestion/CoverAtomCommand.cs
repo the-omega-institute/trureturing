@@ -3,7 +3,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-// Phase 1 cover transaction: bind one or more already-proven Lean declarations to an
+// Cover transaction: bind one or more already-proven Lean declarations to an
 // existing open residual atom by writing a coverage edge.
 // cover is the narrow sibling of ingest — it reuses
 // DigestionStatusEvaluator for the structural gates and never adds residual
@@ -25,20 +25,18 @@ internal static partial class CoverAtomCommand
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        IScribeEmissionVerifier scribeEmissionVerifier,
         DateTimeOffset recordedAtUtc,
         IReadOnlyList<string> arguments)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(leanReportSource);
-        ArgumentNullException.ThrowIfNull(scribeEmissionVerifier);
         ArgumentNullException.ThrowIfNull(arguments);
         try
         {
             var options = ParseArguments(arguments);
             var session = new Session(repositoryRoot, repository, leanReportSource,
-                scribeEmissionVerifier, recordedAtUtc, options.BaselineRevision, options.Gids[0]);
+                recordedAtUtc, options.BaselineRevision, options.Gids[0]);
             return Apply(session, options, allowAlreadyApplied: false);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -154,9 +152,6 @@ internal static partial class CoverAtomCommand
                 }
 
                 inputPaths.Add(gid.Path.Value);
-                var documentGid = ScribeEmissionAttestation.DocumentGid(gidText);
-                inputPaths.Add(ScribeEmissionAttestation.DefinitionPath(documentGid));
-                inputPaths.Add(ScribeEmissionAttestation.EmissionPath(documentGid));
             }
 
             var repositoryPaths = repositoryChanges.Entries
@@ -237,12 +232,6 @@ internal static partial class CoverAtomCommand
                 }
             }
 
-            session.Scribe.Verify(
-                current,
-                report,
-                receiptVerificationChanges,
-                session.FrozenState,
-                session.FrozenStatements);
             var beforeEvaluation = DigestionStatusEvaluator.Evaluate(
                 evaluationScope,
                 document,
@@ -342,7 +331,7 @@ internal static partial class CoverAtomCommand
             var finalTarget = EvaluationFor(evaluation, options.AtomId);
             if (target.CoverageGids.Length == 0)
             {
-                // Initial cover keeps the old semantics exactly: the atom must become
+                // Initial cover requires the atom to become
                 // deletable Closed with no residual gap.
                 if (!IsClosedDeletable(finalTarget))
                 {

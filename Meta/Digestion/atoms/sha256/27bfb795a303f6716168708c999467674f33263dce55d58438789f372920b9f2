@@ -1,0 +1,20 @@
+**命题 70.41（被排除的边界与真正的高侧跳跃）。** 边界律 $v^{(a)}=(1/B,t_0,\ldots,t_0)$ 有 $L_m=At_0$；将式（70.14）形式上用于此律会误得 $H_0=At_0+2t_0$。此外确有严格高侧律趋向该边界而满足
+
+$$
+\lim_{\varepsilon\downarrow0}L_m(p^\varepsilon)
+=At_0+\frac2B> L_m(v^{(a)}).
+\tag{70.16}
+$$
+
+**证明。** 边界的位长由式（70.7）取 $r=a$ 给出。形式上 $q=(1,0,\ldots,0)$ 是零位点律，却不能使用高侧早层 floor：边界的大原子恰为 $1/B$，在深度 $a$ 的 floor 已变为一。
+
+为证明实际跳跃，取 $0<\varepsilon<1/m$，令
+
+$$
+q^\varepsilon=(1-B\varepsilon,\varepsilon,\ldots,\varepsilon),\qquad
+p_i^\varepsilon=\frac{B-1+q_i^\varepsilon}{B^2}.
+\tag{70.17}
+$$
+
+这是正概率律，$t(p^\varepsilon)=t_0+\varepsilon/B^2>t_0$，且 $p^\varepsilon\to v^{(a)}$。任意固定深度 $d$，当 $\varepsilon$ 足够小时，小原子的 floor 全为零，大原子的 floor 为 $2^d-1$，故 $R_d(q^\varepsilon)=1$。统一界 $R_d\le B$ 使深度 $D$ 之后的尾和至多 $B\sum_{d>D}2^{-d}$，独立于 $\varepsilon$ 且趋于零。先取有限深度极限，再控制此几何尾，得到 $L_m(q^\varepsilon)\to\sum_{d\ge0}2^{-d}=2$。严格高侧恒等式给极限 $H_0+2/B^2=At_0+2/B$。误用公式的差 $2t_0$ 与真正跳跃 $2/B$ 是不同数值。证毕。
+

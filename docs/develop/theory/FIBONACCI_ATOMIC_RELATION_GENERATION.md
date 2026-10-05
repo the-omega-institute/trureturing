@@ -55674,6 +55674,17 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+## 素数幂的同源正时刻被动取得
+
+**定义 366.1（实际正时刻历史）。** 对素数 $p$、整数 $e\ge1$ 及未知来源 $v=(a,b)\in\mathbb N^2$，令
+$$g_{p,e}(k,v)=\gcd(F_{k+3}a+F_{k+4}b,p^e),\qquad k>0.$$
+有限确定性被动协议在每一步只由既有实际历史选择下一正时刻，记录所选时刻及其实际答案，或停止；同一协议适用于所有来源。查询次数是历史长度，重复查询也逐次计费。
+
+**待证命题 366.2（完整未来的保守查询上界）。** 对每个素数 $p$ 和每个 $e\ge1$，存在仅依赖 $p,e$ 的一个有限确定性被动协议，使所有实际历史的长度至多
+$$z(p)+(e-1)(p-1)+2,$$
+且任意两个来源 $v,w\in\mathbb N^2$ 的实际完整历史相等时，对所有 $k>0$ 都有 $g_{p,e}(k,v)=g_{p,e}(k,w)$。这里 $z(m)$ 是 Fibonacci 的正零入口秩。结论包括零来源、内容饱和、未知公因子、所有素数及不增长的秩提升；它不声称查询次数最优，也不约束最大查询时刻。
+
+拟议构造与证明。先付费查询时刻一、二，由既有连续数量 gcd 不变量取得截断公因子；饱和时停止。否则仅在证明中除去公因子，实际读数仍取原始来源。扫描一至 $z(p)$ 找第一层命中，全部缺失则全局灭绝。随后保留一个实际历史上仍存活的父相位。秩增长时逐一实际测试 $p-1$ 个子相位，全部缺失仅推出未测子相位的阈值成员关系，不写入其答案；秩不增长时总是付费查询当前存活代表，缺失证明全局灭绝，命中则继续。联合归纳应证明各实际历史纤维上的存活关系、全未来解码及剩余查询递推。算术前置沿用既有素数幂相位与连续数量不变量；新待证内容是这一个同源实际历史控制器的构造与纤维一致性。此构造不供应免费初始读数、已知来源、平移、嫁接、替换词或额外轨道分类假设。§127.1、§127.4 已有同源纯正时刻 $H=5040$ 七问策略；本命题的目标是所有素数幂的上述统一界。
 ## 371. FIB 递归上的加性观测、更新算子与极限定律接口
 
 第 367 节给出路径生成函数，第 368 节说明隐藏状态如何产生记忆，第 370 节区分组合骨架与外加语义。本节把这些接口连接到随机奖励：FIB 原生递归决定奖励可以沿哪些路径累加、在哪个接缝分解，却不决定选路概率、奖励分布或长期归一化。
@@ -57240,3 +57251,774 @@ $$
 并在额外几何识别下等于相应 Chern 数的常数倍。若无谱隙、相关函数不可积、接触项未定义，或有限窗口先于体极限取极限，式（380.8）不能推出量子化输运。FIB 路径重叠可影响电流算子的稀疏支撑，却不替代响应函数的联合状态和极限证明。
 
 **边界 380.4（拓扑量与原生递归的分离）。** 拓扑不变量保持的是连续变形、同伦或谱隙下的投影类，而不是 Fibonacci 叶数本身。相同 FIB 递归可以通过不同周期粘合产生不同基本群，通过不同结构群赋值产生不同 Holonomy，通过不同 Hamiltonian 产生平凡或非平凡 Chern 数。因而 FIB ATOM 能给出拓扑输运的可组合路径骨架和边界接口；指数、异常、量子化电导与拓扑相分类仍是外加几何、群表示、谱和测度的条件结论。
+
+## 381. 实际 Fibonacci 闭包的密度一双重对数损失
+
+**定义 381.1（实际族、整除内核与最小实际上界）。** 沿用 §362、§363 及首个 §366 的标准 Fibonacci 序列 $F_0=0$、$F_1=F_2=1$、$F_{r+2}=F_{r+1}+F_r$。令
+
+$$
+\mathcal M=\left\{\operatorname{lcm}_{s\in S}F_s:
+S\subseteq\mathbb N_{>0}\text{ 有限}\right\},
+\qquad \operatorname{lcm}\varnothing=1.
+\tag{381.4}
+$$
+
+对整数 $a\ge2$，$z(a)=\min\{r\ge1:a\mid F_r\}$ 为既有入口秩。对正整数 $n$ 定义
+
+$$
+\begin{aligned}
+B(n)&=\operatorname{lcm}\{F_d:d\ge3,\ F_d\mid n\},\\
+C(n)&=\operatorname{lcm}_{p^a\parallel n}F_{z(p^a)},
+\qquad C(1)=1.
+\end{aligned}
+\tag{381.5}
+$$
+
+这里 $p^a\parallel n$ 表示 $p$ 为素数且 $a=v_p(n)\ge1$；两个空最小公倍数均取一。$B(n)$ 的指标集有限，由下述证明中的递推增长估计保证。$C$ 正是（362.11）的 $\mathscr C$，不是以最大指标或原始素因子替代的上界。
+
+**定义 381.2（双重对数损失与相对素数密度）。** 所有对数均为自然对数；对正实数 $t$ 和实数 $b$，$t^b=\exp(b\log t)$。对整数 $n>5040$，记
+
+$$
+D(n)=\frac{\log\log C(n)}{\log\log n},
+\qquad
+\pi(x)=\#\{p\le x:p\text{ 为素数}\}\quad(x\ge0).
+$$
+
+（362.11）给 $n\mid C(n)$，所以 $C(n)\ge n>5040>e$，双重对数都有定义，分母严格为正。给定实数 $K>0$，令
+
+$$
+\mathcal G_K=\{p:p\text{ 为素数},\ p>5040,\ B(p)=1,\ D(p)>K\}.
+$$
+
+素数集合 $\mathcal G$ 的相对素数密度一，指实数 $x\to+\infty$ 时 $\#(\mathcal G\cap[0,x])/\pi(x)\to1$。
+
+**定理 381.3（实际整除内核为一的素数上的密度一无界损失）。** 对每个实数 $K>0$，有
+
+$$
+\lim_{\substack{x\to+\infty\\x\in\mathbb R}}
+\frac{\#\{p\le x:p\text{ 为素数},\ p>5040,\ B(p)=1,\ D(p)>K\}}
+{\pi(x)}=1.
+\tag{381.6}
+$$
+
+因而 $D(n)$ 在全部整数 $n>5040$ 上没有有限的统一上界。该结论中的集合只由 $K$ 决定；证明中的辅助指数不属于其定义。
+
+**证明。** 给定 $K>0$。在证明内任取并固定 $0<\beta<1/2$，例如 $\beta=1/4$。先从递推式得到本证明所需的经典增长估计，不另使用 Binet 误差或原始素因子结论。正性由 $F_1=F_2=1$ 和递推归纳得到；同一递推给 $F_{r+1}\ge F_r$（$r\ge1$），从而 $F_{r+2}\ge2F_r$。上界的两个初值满足 $F_1\le2^0$、$F_2\le2^1$；若相邻两项的上界成立，则
+
+$$
+F_{r+2}=F_{r+1}+F_r
+\le2^r+2^{r-1}\le2^{r+1}.
+$$
+
+因此 $F_r\le2^{r-1}$ 对所有 $r\ge1$ 成立。下界按奇偶两条递推分别归纳：对每个整数 $m\ge0$，从 $F_1=1$ 得 $F_{2m+1}\ge2^m$，从 $F_2=1$ 得 $F_{2m+2}\ge2^m$。合起来即
+
+$$
+2^{\lfloor(r-1)/2\rfloor}\le F_r\le2^{r-1}\quad(r\ge1),
+\qquad
+\log F_r\ge c_0r\quad(r\ge4),
+\qquad c_0=\frac{\log2}{4}>0.
+\tag{381.7}
+$$
+
+最后一个不等式的指标边界也可直接核对：若 $r=2m\ge4$，则 $m\ge2$ 且 $\lfloor(r-1)/2\rfloor=m-1\ge m/2=r/4$；若 $r=2m+1\ge5$，则 $\lfloor(r-1)/2\rfloor=m\ge(2m+1)/4$。这证明（381.7）的完整范围。
+
+由这个下界，$F_d\to+\infty$；而 $F_d\mid n$ 时 $F_d\le n$，故定义 $B(n)$ 所用的指标集确实有限。每个生成项整除 $n$，于是 $B(n)\mid n$，且该有限指标集自身实现 $B(n)\in\mathcal M$。这里只使用这些直接的整除关系。另一方面，（362.11）及 §363 的最小实际上界证明已经给出 $C(n)\in\mathcal M$、$n\mid C(n)$，以及 $n\in\mathcal M$ 时 $C(n)=n$。特别地，对每个素数 $p$，这些既有事实在同一实际对象上给
+
+$$
+C(p)=F_{z(p)},\qquad
+B(p)>1\ \Longrightarrow\ B(p)=p\in\mathcal M
+\ \Longrightarrow\ C(p)=p.
+\tag{381.8}
+$$
+
+其中第一步是（381.5）对唯一最大素幂 $p^1$ 的精确取值；第二步使用 $B(p)\mid p$ 和素性，并未把任意约数视为实际族成员。
+
+现在估计移动低秩例外。所用素数乘积计数方法是已有方法：Paolo Leonetti、Carlo Sanna，*On the greatest common divisor of n and the nth Fibonacci number*，[arXiv:1704.00151v2，Lemma 2.4 的证明，3–4 页](https://arxiv.org/pdf/1704.00151v2)，对 $\{p:z(p)<p^\gamma\}$ 用 $\prod_{r\le x^\gamma}F_r$ 得到 $O(x^{2\gamma})$ 计数。下面在本证明内保留非严格的秩阈值与递推给出的具体上界。对实数 $x>0$，置
+
+$$
+E_\beta(x)=\{p\le x:p\text{ 为素数},\ z(p)\le p^\beta\},
+\qquad R=\lfloor x^\beta\rfloor.
+$$
+
+当 $p\in E_\beta(x)$ 时，整数 $z(p)$ 满足 $1\le z(p)\le R$，而 $p\mid F_{z(p)}$。这些素数彼此不同，故它们的平方自由乘积整除同一个正整数 $\prod_{r=1}^{R}F_r$。每个素数至少为二，结合（381.7）得到
+
+$$
+2^{\#E_\beta(x)}
+\le\prod_{p\in E_\beta(x)}p
+\le\prod_{r=1}^{R}F_r
+\le2^{\sum_{r=1}^{R}(r-1)}
+=2^{R(R-1)/2},
+\qquad
+\#E_\beta(x)\le\frac{R(R-1)}2\le\frac{x^{2\beta}}2.
+\tag{381.9}
+$$
+
+$R=0$ 时两个相应空乘积均为一，$E_\beta(x)=\varnothing$；$R=1$ 时 Fibonacci 乘积为 $F_1=1$，也不含素因子。这两个边界均给计数零，与 $R(R-1)/2=0$ 一致。这里只计不同素数，不要求各 Fibonacci 项互素。
+
+所需素数计数下界取自 Pierre Dusart，*Estimates of Some Functions Over Primes without R.H.*，[arXiv:1002.0442v1，Theorem 6.9，式（6.5），9 页](https://arxiv.org/pdf/1002.0442v1)：对每个实数 $x\ge599$，
+
+$$
+\pi(x)\ge\frac{x}{\log x}\left(1+\frac1{\log x}\right)
+\ge\frac{x}{\log x}>0.
+\tag{381.10}
+$$
+
+这是无条件的经典素数计数供给。因 $1-2\beta>0$，（381.9）–（381.10）给
+
+$$
+0\le\frac{\#E_\beta(x)}{\pi(x)}
+\le\frac{\log x}{2x^{1-2\beta}}\longrightarrow0.
+\tag{381.11}
+$$
+
+为明确此处的极限，令 $a=1-2\beta>0$、$u=\log x>0$；指数级数给 $e^{au}\ge(au)^2/2$，所以 $u/e^{au}\le2/(a^2u)\to0$。以上移动例外估计对证明内任意先固定的 $\beta\in(0,1/2)$ 成立。
+
+下一步在让计数截止 $x$ 变化之前选定一个有限阈值。置
+
+$$
+\begin{aligned}
+T_{\beta,K}
+&=1+\max\left\{1,\log5040,\frac{\log4}{\beta},
+\frac{2}{c_0\beta^2},\frac{2|\log c_0|}{\beta},
+\left(\frac{4K}{\beta}\right)^2\right\},\\
+P_{\beta,K}&=\exp(T_{\beta,K}).
+\end{aligned}
+\tag{381.12}
+$$
+
+所有项有限，且这个阈值只依赖已经固定的 $\beta,K$ 和常数 $c_0$。若素数 $p\ge P_{\beta,K}$ 满足 $z(p)>p^\beta$，令 $t=\log p\ge T_{\beta,K}$、$r=z(p)$。阈值保证 $p>5040$、$p^\beta>4$、$r\ge4$。由（381.7）和（381.8），
+
+$$
+\begin{aligned}
+\log C(p)&=\log F_r\ge c_0r>c_0p^\beta,\\
+\log\log C(p)&>\beta\log p+\log c_0=\beta t+\log c_0.
+\end{aligned}
+\tag{381.13}
+$$
+
+双重对数合法，因为 $C(p)\ge p>5040>e$。还需同时验证 $C(p)>p$ 和所需严格损失界。由指数级数及（381.12），
+
+$$
+c_0p^\beta=c_0e^{\beta t}
+\ge\frac{c_0\beta^2t^2}{2}>t=\log p.
+$$
+
+与（381.13）合并即得 $C(p)>p$。同时，$t>1$ 时
+
+$$
+\log t=\int_1^t\frac{ds}{s}
+\le\int_1^t\frac{ds}{\sqrt s}
+=2(\sqrt t-1)\le2\sqrt t.
+$$
+
+阈值的另两个条件给
+
+$$
+\beta t+\log c_0
+\ge\beta t-|\log c_0|
+>\frac{\beta t}{2}>2K\sqrt t\ge K\log t.
+$$
+
+由于 $\log t=\log\log p>0$，（381.13）除以这个正分母得到 $D(p)>K$。若 $B(p)>1$，则（381.8）强迫 $C(p)=p$，与刚才的 $C(p)>p$ 矛盾。因此已在同一阈值上证明
+
+$$
+p\text{ 为素数},\quad p\ge P_{\beta,K},\quad z(p)>p^\beta
+\quad\Longrightarrow\quad p\in\mathcal G_K.
+\tag{381.14}
+$$
+
+这也给出在非例外素数上趋于无穷的一致下界，而没有让阈值依赖计数截止。
+
+记固定有限数 $N_{\beta,K}=\#\{p<P_{\beta,K}:p\text{ 为素数}\}$。对任意实数 $x\ge599$，每个不属于 $\mathcal G_K$ 的素数 $p\le x$，或者小于这个固定阈值，或者属于 $E_\beta(x)$。于是
+
+$$
+0\le1-\frac{\#(\mathcal G_K\cap[0,x])}{\pi(x)}
+\le\frac{\#E_\beta(x)+N_{\beta,K}}{\pi(x)}
+\le\frac{\log x}{2x^{1-2\beta}}
++N_{\beta,K}\frac{\log x}{x}\longrightarrow0.
+\tag{381.15}
+$$
+
+第二项用上面指数级数的同一估计、取 $a=1$ 即趋零。这证明（381.6）的实数截止极限。$\beta$ 只用于证明中控制例外和选阈值；最后计数的集合仍是定义 381.2 的 $\mathcal G_K$。
+
+由于（381.10）使 $\pi(x)\to+\infty$，密度一结论保证每个 $K>0$ 都有、且有无穷多个 $p>5040$ 满足 $D(p)>K$。若存在有限实数 $U$ 使每个整数 $n>5040$ 都有 $D(n)\le U$，取 $K>\max\{0,U\}$ 并取上述素数便矛盾。这证明统一上界不存在。
+
+最后将同一个结论接回（362.12），其中 $\mathcal R(n)=\sigma(n)/(e^\gamma n\log\log n)$：
+
+$$
+\mathcal R(n)\le\mathcal R(C(n))D(n)\qquad(n>5040).
+\tag{381.16}
+$$
+
+若只代入实际族上的固定上界 $\mathcal R(M)\le A$（$A>0$），这一比较给出的就是 $\mathcal R(n)\le A D(n)$；本定理说明其右侧比较上界在密度一的素数输入上无界，不能仅凭该比较得到对任意整数原样不变的上界 $A$。即使实际族的固定上界只从某个固定大小起成立，（381.13）仍保证这里的 $C(p)$ 最终进入其适用范围。这是该比较的损失，而不是 Robin 反例或其他证明路线的否定。事实上，对素数有精确恒等式
+
+$$
+\mathcal R(p)=\frac{1+1/p}{e^\gamma\log\log p}\longrightarrow0
+\qquad(p\to+\infty\text{ 沿素数}).
+\tag{381.17}
+$$
+
+分子不超过二，分母趋于正无穷，故素数自身最终满足严格 Robin 不等式；闭包造成的无界损失并不改变这一事实。整个证明只使用既有实际最小上界、经典 Fibonacci 递推增长、上述有出处的低秩计数方法与无条件素数计数供给，没有对生成指标的基数、最大值、原始素因子或 RH 增添假设。$\square$
+
+## 382. 奇约数对数收缩与实际 Fibonacci 原子误差的双向累积
+
+**定义 382.1（原子偏差与奇核参数）。** 沿用定义 362.1 的 Fibonacci 数列、实际正整数原子 $\Psi_n$、$c_n=\log\Psi_n$、$D(S)$ 与 $M(S)$，并记
+
+$$
+\Phi=\frac{1+\sqrt5}{2},\qquad L=\log\Phi,\qquad q=\Phi^{-2},\qquad
+E_n=c_n-L\varphi(n)\quad(n\ge1).
+\tag{382.1}
+$$
+
+所有对数均为自然对数。把正整数唯一写成 $n=2^a m$，其中 $a\ge0$、$m$ 为奇数；令 $R=\operatorname{rad}(m)$、$h=m/R$，约定 $\operatorname{rad}(1)=1$。于是 $R$ 为奇平方自由数、$h$ 为正奇数。对任意奇平方自由数 $R\ge1$ 和 $0<t\le2/5$，定义有限和
+
+$$
+S_+(R,t)=\sum_{d\mid R}\mu(d)\log(1+t^d).
+\tag{382.2}
+$$
+
+这里 $\mu$ 是 Möbius 函数；$R=1$ 时该和只有 $d=1$ 一项。
+
+**引理 382.2（奇平方自由约数的较小正对数包络）。** 对定义 382.1 中的每个 $R,t$，
+
+$$
+0<S_+(R,t)\le\log(1+t),
+\qquad
+S_+(R,t)=\log(1+t)\ \Longleftrightarrow\ R=1.
+\tag{382.3}
+$$
+
+**证明。** 令 $f(d)=\log(1+t^d)>0$。由 $0<t<1$ 及对 $u>0$ 的积分恒等式，有
+
+$$
+\frac{u}{1+u}\le\log(1+u)\le u.
+\tag{382.4}
+$$
+
+$R$ 的每个非平凡约数都是不小于三的奇数，且 $|\mu(d)|=1$。有限约数集合是这些奇数的子集，故逐项取绝对值再嵌入正项几何级数，得到
+
+$$
+\begin{aligned}
+|S_+(R,t)-f(1)|
+&\le\sum_{\substack{d\mid R\\d>1}}f(d)
+\le\sum_{j\ge0}t^{3+2j}=\frac{t^3}{1-t^2},\\
+\frac{t^3}{(1-t^2)f(1)}
+&\le\frac{t^2(1+t)}{1-t^2}
+=\frac{t^2}{1-t}\le\frac4{15}<1.
+\end{aligned}
+\tag{382.5}
+$$
+
+最后的不等式使用 $t^2\le4/25$、$1-t\ge3/5$。因此 $S_+(R,t)>0$，包括空尾和的 $R=1$ 情形。
+
+若 $R>1$，令 $p$ 为其最小素因子。$p\ge3$、$\mu(p)=-1$；除 $1,p$ 外的每个约数都是至少 $p+2$ 的奇数。因此
+
+$$
+S_+(R,t)=f(1)-f(p)+T,
+\qquad
+|T|\le\sum_{j\ge0}t^{p+2+2j}
+=\frac{t^{p+2}}{1-t^2}.
+\tag{382.6}
+$$
+
+由（382.4）及 $t^p\le t$，
+
+$$
+\frac{|T|}{f(p)}
+\le\frac{t^2(1+t^p)}{1-t^2}
+\le\frac{t^2}{1-t}\le\frac4{15}<1.
+\tag{382.7}
+$$
+
+所以 $-f(p)+T<0$，即 $S_+(R,t)<f(1)$。若 $R=1$，定义直接给 $S_+(1,t)=f(1)$，证明了等号的充要条件。所有几何级数仅用于支配有限符号和，其项均为正且公比 $t^2<1$。$\square$
+
+**定理 382.3（实际原子偏差的奇核与二进层精细界）。** $E_1=-L$。对 $n>1$，取定义 382.1 的 $a,m,R,h$，有精确公式
+
+$$
+E_n=
+\begin{cases}
+\displaystyle\mu(R)\sum_{d\mid R}\mu(d)\log(1+q^{hd}),&a=0,\\[4pt]
+\displaystyle\mu(R)\sum_{d\mid R}\mu(d)\log(1-q^{hd}),&a=1,\\[4pt]
+\displaystyle\mu(R)\sum_{d\mid R}\mu(d)\log(1+q^{2^{a-1}hd}),&a\ge2.
+\end{cases}
+\tag{382.8}
+$$
+
+其符号和精细绝对值包络为
+
+$$
+\begin{array}{c|c|c}
+\text{指标情形}&\operatorname{sgn}(E_n)&\text{绝对值界}\\ \hline
+ a=0,\ n>1&\mu(R)&0<|E_n|\le\log(1+q^h)\\
+ a=1&-\mu(R)&0<|E_n|\le-\log(1-q^h)\\
+ a\ge2&\mu(R)&0<|E_n|\le\log(1+q^{2^{a-1}h})
+\end{array}
+\tag{382.9}
+$$
+
+每一行的上界取等当且仅当 $R=1$；第一行因 $n>1$ 而没有这样的指标。特别地，
+
+$$
+-\log(1+q^{24})<E_{5040}<0,
+\qquad
+E_{2p}=L+\log(1-q^p)\in(0,L)
+\quad(p\text{ 为奇素数}).
+\tag{382.10}
+$$
+
+若 $n>1$ 为平方满整数，即每个素因子的指数至少为二，则
+
+$$
+|E_n|\le\log(1+q^{\sqrt n}),
+\tag{382.11}
+$$
+
+故平方满指标趋于无穷时 $E_n\to0$；而沿奇素数 $p\to\infty$，$E_{2p}\to L$。
+
+**证明。** 由 $\Phi^2=\Phi+1$、$3/2<\Phi<2$，
+
+$$
+q=2-\Phi\in(0,2/5),\qquad
+1-q=\Phi^{-1},\qquad
+-\log(1-q)=L,\qquad
+\log(1+q)<L.
+\tag{382.12}
+$$
+
+最后一步等价于 $3-\Phi<\Phi$。Binet 公式和 Möbius 反演给
+
+$$
+\begin{aligned}
+\log F_e&=eL-\tfrac12\log5+\log(1-(-q)^e),\\
+c_n&=\sum_{e\mid n}\mu(n/e)\log F_e,\\
+E_n&=\sum_{e\mid n}\mu(n/e)\log(1-(-q)^e)\quad(n>1).
+\end{aligned}
+\tag{382.13}
+$$
+
+这里 $F_e>0$，而 $1-(-q)^e>0$；$\sum_{e\mid n}\mu(n/e)=0$ 消去了常数项，$\sum_{e\mid n}e\mu(n/e)=\varphi(n)$ 给主项。$n=1$ 则直接用 $\Psi_1=1$、$\varphi(1)=1$ 得 $E_1=-L$。这些经典原子的因式分解和对数主项参见 Carlo Sanna，*On the l.c.m. of shifted Fibonacci numbers*，[arXiv:2007.13330v1，§2，式（2）–（4）及 Lemma 2.2](https://arxiv.org/pdf/2007.13330v1)；本节 $\Psi_n$ 与其原子由因式分解的 Möbius 反演对应。
+
+现在逐一改变（382.13）的约数。若 $a=0$，非零系数要求 $n/e$ 为平方自由数，即 $n/e\mid R$。写 $n/e=R/d$，便唯一得到 $e=hd$、$d\mid R$；反过来每个这样的 $d$ 都给一个非零系数。由于 $R$ 平方自由，
+
+$$
+\mu(R/d)=\mu(R)\mu(d).
+\tag{382.14}
+$$
+
+且 $hd$ 为奇数，所以 $1-(-q)^{hd}=1+q^{hd}$，得到第一行。
+
+若 $a\ge1$，写任意 $e\mid n$ 为 $e=2^b u$，其中 $0\le b\le a$、$u\mid m$。非零系数要求 $a-b\in\{0,1\}$ 且 $m/u\mid R$，后者又等价于 $u=hd$、$d\mid R$。每个 $d\mid R$ 恰给 $b=a$ 与 $b=a-1$ 两项；其系数分别为 $\mu(R)\mu(d)$ 与 $-\mu(R)\mu(d)$。因此
+
+$$
+E_n=\mu(R)\sum_{d\mid R}\mu(d)
+\left[\log(1-(-q)^{2^a hd})
+-\log(1-(-q)^{2^{a-1}hd})\right].
+\tag{382.15}
+$$
+
+当 $a=1$ 时，$hd$ 为奇数；置 $x=q^{hd}\in(0,1)$，括号为
+
+$$
+\log(1-x^2)-\log(1+x)=\log(1-x).
+\tag{382.16}
+$$
+
+当 $a\ge2$ 时，两个指标均为偶数；置 $x=q^{2^{a-1}hd}\in(0,1)$，括号为
+
+$$
+\log(1-x^2)-\log(1-x)=\log(1+x).
+\tag{382.17}
+$$
+
+两式的因子全为正，故对数的乘除法则合法。这证明（382.8）。以上配对也适用于 $m=1$，此时 $R=h=1$、约数集为 $\{1\}$，给 $E_2=\log(1-q)=-L$ 及 $E_{2^a}=\log(1+q^{2^{a-1}})$（$a\ge2$）。$a=0,m=1$ 已由 $n=1$ 的单独计算处理，不使用常数项的消去。
+
+第一、三行的参数 $q^h$、$q^{2^{a-1}h}$ 均属于 $(0,2/5)$，于是引理 382.2 给符号、界及等号条件。为在同一证明中处理第二行，记 $g(d)=-\log(1-t^d)>0$，其中 $t=q^h$。经典积分界给
+
+$$
+t^d\le g(d)\le\frac{t^d}{1-t^d}\le\frac{t^d}{1-t}.
+\tag{382.18}
+$$
+
+令 $A=\sum_{d\mid R}\mu(d)g(d)$。按（382.5）的同一有限集合嵌入，
+
+$$
+\frac{|A-g(1)|}{g(1)}
+\le\frac{t^2}{(1-t^2)(1-t)}
+\le\frac{20}{63}<1.
+\tag{382.19}
+$$
+
+若 $R>1$、$p$ 为其最小素因子，写 $A=g(1)-g(p)+T_-$，则（382.18）还给
+
+$$
+\frac{|T_-|}{g(p)}
+\le\frac{t^2}{(1-t^2)(1-t)}
+\le\frac{20}{63}<1.
+\tag{382.20}
+$$
+
+两处使用的正项尾和分别从三与 $p+2$ 开始，公比为 $t^2$；常数来自 $t^2\le4/25$、$1-t^2\ge21/25$、$1-t\ge3/5$。故 $0<A<g(1)$；$R=1$ 时 $A=g(1)$。第二行的 $E_n=-\mu(R)A$，完成（382.9）。这个负对数中间界也由 G. J. O. Jameson，*The cyclotomic polynomials*，[Proposition 1.20，pp. 9–10](https://www.maths.lancs.ac.uk/~jameson/cyp.pdf) 的经典区间得到：对 $R>1$，普通 cyclotomic 多项式 $\operatorname{Cyc}_R(t)$ 满足
+
+$$
+\log\operatorname{Cyc}_R(t)
+=\mu(R)\sum_{d\mid R}\mu(d)\log(1-t^d)
+=-\mu(R)A,
+\tag{382.21}
+$$
+
+而其平方自由约化见同文 Theorem 1.12。该经典区间提供 $-\log(1-t)$ 的包络；引理 382.2 的正对数包络使用的是较小的 $\log(1+t)$。
+
+由（382.9）、（382.12）随即有经典粗结论 $|E_n|\le L$，等号恰在 $n=1,2$：奇指标大于一和 $a\ge2$ 的指标有 $|E_n|\le\log(1+q)<L$；$a=1,R>1$ 时 $|E_n|<-\log(1-q^h)\le L$，而 $R=1$ 只给 $n=2$。这一粗结论及符号亦可由上述 Jameson 区间与 cyclotomic 约化直接获得。
+
+对 $5040=2^4\cdot3^2\cdot5\cdot7$，有 $R=105$、$h=3$、$\mu(R)=-1$、$\varphi(5040)=1152$，第三行的参数为 $q^{2^3\cdot3}=q^{24}$，且 $R>1$，故得（382.10）的第一个严格区间。对 $n=2p$，$R=p$、$h=1$、$\mu(R)=-1$，第二行直接给
+
+$$
+E_{2p}=-\log(1-q)+\log(1-q^p)=L+\log(1-q^p).
+\tag{382.22}
+$$
+
+$q^p<q$ 保证此数为正，而 $\log(1-q^p)<0$ 保证它小于 $L$；沿奇素数 $p\to\infty$，$q^p\to0$，故该数趋于 $L$。
+
+最后，平方满的 $m$ 满足 $R\le\sqrt m$，所以 $h\ge\sqrt m$。平方满的 $n>1$ 或为奇数，或有 $a\ge2$；前者 $h\ge\sqrt n$，后者
+
+$$
+2^{a-1}h\ge2^{a/2}\sqrt m=\sqrt n.
+\tag{382.23}
+$$
+
+由于 $q\in(0,1)$，相应正对数上界给（382.11），并随 $n\to\infty$ 趋零。故附加素数幂所产生的收缩，与单纯让指标变大是两个不同条件。$\square$
+
+**定理 382.4（实际有限族的有符号原子收费不能统一有界）。** 对任意有限指标集 $S\subseteq\mathbb N_{>0}$，定义依赖此表示的 Euler 权重及其实际偏差
+
+$$
+W(S)=\sum_{d\in D(S)}\varphi(d),
+\qquad
+\Delta(S)=\log M(S)-LW(S)
+=\sum_{d\in D(S)}E_d.
+\tag{382.24}
+$$
+
+最后一个等式使用（362.9）的同一实际族分解。$W$ 是指标表示 $S$ 的函数，本定理不把它定义成整数 $M(S)$ 的函数。设 $P$ 是非空有限的互异奇素数集合，$k=\#P$，$P_2=\{2p:p\in P\}$。则
+
+$$
+\begin{aligned}
+\Delta(P)
+&=\left(L-\tfrac12\log5\right)k-L
++\sum_{p\in P}\log(1+q^p)
+\le-L-(2L-\log2)k,\\
+\Delta(P_2)
+&=\left(2L-\tfrac12\log5\right)k-2L
++\sum_{p\in P}\log(1-q^{2p})
+\ge-2L+(\log8-4L)k,
+\end{aligned}
+\tag{382.25}
+$$
+
+其中 $2L-\log2>0$、$\log8-4L>0$。存在实际有限族 $S_j^-$、$S_j^+$，使
+
+$$
+\begin{aligned}
+M(S_j^-)&\longrightarrow\infty,&\Delta(S_j^-)&\longrightarrow-\infty,\\
+M(S_j^+)&\longrightarrow\infty,&\Delta(S_j^+)&\longrightarrow+\infty.
+\end{aligned}
+\tag{382.26}
+$$
+
+因此不存在一个有限常数 $C$，使所有实际有限族都满足 $|\log M(S)-LW(S)|\le C$；即使把族限制为 $M(S)>5040$，这样的常数仍不存在。
+
+**证明。** 经典强整除律 $\gcd(F_r,F_s)=F_{\gcd(r,s)}$ 已用于（361.8）–（361.10）；其强整除序列背景参见 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorems 1.2、1.3、2.1](https://arxiv.org/pdf/1310.2416v1)。对不同的奇素数 $p,r$，$\gcd(p,r)=1$、$\gcd(2p,2r)=2$，而 $F_1=F_2=1$。故两个族各自的 Fibonacci 项两两互素，实际 lcm 等于实际乘积：
+
+$$
+M(P)=\prod_{p\in P}F_p,
+\qquad
+M(P_2)=\prod_{p\in P}F_{2p}.
+\tag{382.27}
+$$
+
+完整的指标约数集是
+
+$$
+D(P)=\{1\}\cup P,
+\qquad
+D(P_2)=\{1,2\}\cup P\cup P_2.
+\tag{382.28}
+$$
+
+右侧各部分互不相交。由 $\varphi(1)=\varphi(2)=1$、$\varphi(p)=\varphi(2p)=p-1$，
+
+$$
+W(P)=1+\sum_{p\in P}(p-1),
+\qquad
+W(P_2)=2+2\sum_{p\in P}(p-1).
+\tag{382.29}
+$$
+
+将 Binet 公式（382.13）分别用于奇指标 $p$ 与偶指标 $2p$，再从（382.27）的对数减去（382.29）的 $L$ 倍，便得（382.25）的两个精确等式。特别是 $D(P)$ 中的 $1$ 给 $-L$，$D(P_2)$ 中的 $1,2$ 给 $-2L$；这两项不随生成项两两互素而消失。
+
+由于 $p\ge3$，$q^p\le q^3$、$q^{2p}\le q^6$。使用实际递推值 $F_3=2$、$F_6=8$，Binet 公式给
+
+$$
+\begin{aligned}
+\log(1+q^p)&\le\log(1+q^3)
+=\log2-3L+\tfrac12\log5,\\
+\log(1-q^{2p})&\ge\log(1-q^6)
+=\log8-6L+\tfrac12\log5.
+\end{aligned}
+\tag{382.30}
+$$
+
+代入两个精确等式就得到各自的单侧线性界。常数的严格正性来自
+
+$$
+\Phi^2=\Phi+1>2,
+\qquad
+\Phi^4=3\Phi+2<8,
+\tag{382.31}
+$$
+
+第二式用 $\Phi<2$。这还表明两个界的等号都恰在 $P=\{3\}$ 发生，因为对数的单调性使（382.30）在 $p>3$ 时严格。
+
+奇素数有无穷多个。按递增顺序取其前 $j$ 个组成 $P_j$，令 $S_j^-=P_j$、$S_j^+=\{2p:p\in P_j\}$。Fibonacci 递推的正性给 $F_p\ge F_3=2$、$F_{2p}\ge F_6=8$，故
+
+$$
+M(S_j^-)\ge2^j,
+\qquad M(S_j^+)\ge8^j.
+\tag{382.32}
+$$
+
+（382.25）以严格正的固定斜率使两个偏差分别趋于负无穷和正无穷，同时（382.32）使两个实际整数趋于无穷并最终超过 $5040$，证明（382.26）及统一常数的不存在。
+
+由（362.10）或定理 382.3 逐原子求和所给的 $O(\#D(S))$ 误差，因而不能在全部实际有限族上改成统一的 $O(1)$。这里的障碍仅针对（382.24）的实际原子成本近似；它没有估计 $\sigma(M)/M$ 的 Euler 因子或其有符号 Robin 尾项，因而不构成 Robin 不等式或 RH 的反例，也不把实际族的收费转移到任意整数。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 383. 有限 totient 支撑拥挤与实际 Fibonacci 收费的统一对数传输
+
+**定义 383.1（同一实际族的权重与对数变量）。** 沿用定义 362.1、382.1 的 Fibonacci 数列 $F_n$、$\Phi=(1+\sqrt5)/2$、$L=\log\Phi>0$、实际正整数原子 $\Psi_d$ 和 $E_d=\log\Psi_d-L\varphi(d)$。对每个有限集合 $S\subseteq\mathbb N_{>0}$，记
+
+$$
+\begin{aligned}
+D(S)&=\{d\in\mathbb N_{>0}:\exists s\in S,\ d\mid s\},\\
+M(S)&=\operatorname{lcm}\{F_s:s\in S\},\\
+W(S)&=\sum_{d\in D(S)}\varphi(d),& k(S)&=\#D(S),\\
+\Delta(S)&=\log M(S)-LW(S),& C&=16^{1/3}.
+\end{aligned}
+\tag{383.1}
+$$
+
+空最小公倍数取一，空和取零。$W(S)$ 依赖指标表示 $S$，不定义为整数 $M(S)$ 的函数。所有对数均为自然对数；正底数实幂取 $t^a=\exp(a\log t)$，零权重处约定 $0^{2/3}=0$。当 $W(S)>0$ 时，定义
+
+$$
+\eta(S)=2C\,W(S)^{-1/3},\qquad B(S)=\log(LW(S));
+\tag{383.2}
+$$
+
+当 $\log M(S)>0$ 时，定义 $D_0(S)=\log(\log M(S))$。$\sigma$ 与 Euler 常数 $\gamma$ 沿用（362.2）。
+
+**定理 383.2（全部有限实际族的权重控制与 Robin 分母传输）。** 对每个有限集合 $A\subseteq\mathbb N_{>0}$，令 $k_A=\#A$、$W_A=\sum_{d\in A}\varphi(d)$，则
+
+$$
+k_A^3\le16W_A^2.
+\tag{383.3}
+$$
+
+对每个有限集合 $S\subseteq\mathbb N_{>0}$，同一实际对象满足
+
+$$
+|\Delta(S)|\le Lk(S)\le LC\,W(S)^{2/3}.
+\tag{383.4}
+$$
+
+对每个满足 $W=W(S)\ge128$ 的这样的 $S$，简记 $M=M(S)$、$\Delta=\Delta(S)$、$\eta=\eta(S)$、$B=B(S)$、$D_0=D_0(S)$，则 $D_0$ 有定义，并且
+
+$$
+\begin{gathered}
+0<\eta\le1,\qquad
+\left|\frac{\Delta}{LW}\right|\le\frac\eta2\le\frac12,
+\qquad \log M\ge\frac{LW}{2}>0,\\
+|\log(\log M)-\log(LW)|=|D_0-B|\le\eta,
+\qquad B>1\ge\eta,\qquad D_0\ge B-\eta>0.
+\end{gathered}
+\tag{383.5}
+$$
+
+因此有两个方向的相对分母估计
+
+$$
+\left|\frac{D_0}{B}-1\right|\le\frac\eta B,
+\qquad
+\left|\frac B{D_0}-1\right|\le\frac\eta{B-\eta}.
+\tag{383.6}
+$$
+
+若还满足 $M>5040$，令
+
+$$
+\mathcal R_W(S)=\frac{\sigma(M)}{e^\gamma M B}>0,
+\qquad
+\mathcal R(M)=\frac{\sigma(M)}{e^\gamma M D_0}>0.
+\tag{383.7}
+$$
+
+则有精确传输及其对数误差
+
+$$
+\mathcal R(M)=\mathcal R_W(S)\frac B{D_0},
+\qquad
+|\log\mathcal R(M)-\log\mathcal R_W(S)|
+\le\frac\eta{B-\eta}.
+\tag{383.8}
+$$
+
+特别地，对每个 $\varepsilon>0$，先于所有有限指标集选定
+
+$$
+W_0(\varepsilon)=\max\left\{128,\left(\frac{4C}{\varepsilon}\right)^3\right\},
+\tag{383.9}
+$$
+
+就有
+
+$$
+\forall S\subseteq\mathbb N_{>0}\text{ 有限},\qquad
+W(S)\ge W_0(\varepsilon)
+\ \Longrightarrow\
+|\log(\log M(S))-\log(LW(S))|<\varepsilon.
+\tag{383.10}
+$$
+
+所有量词均无基数、最大指标、嵌套、删除方式或平方自由条件。（383.3）也不要求 $A$ 对约数封闭。本定理是有限 totient 支撑计数与 §§362、382 实际原子估计的本仓综合推导；经典分量的先例附于下述证明。
+
+**证明。** 首先在本证明内使用经典 Euler 素数幂公式。对 $n\ge1$，$\varphi(p^a)=p^{a-1}(p-1)$ 及乘法性给
+
+$$
+\frac{n}{\varphi(n)^2}
+=\prod_{p^a\parallel n}\frac{p^{2-a}}{(p-1)^2}\le2.
+\tag{383.11}
+$$
+
+确切地，若 $p\ge3$、$a\ge1$，则 $p^{2-a}\le p\le(p-1)^2$，所以相应因子至多一；若 $p=2$，则该因子 $2^{2-a}$ 至多二，且乘积中只有一个这样的素数因子。$n=1$ 时空乘积为一。因此每个正整数都满足 $n\le2\varphi(n)^2$。关于 $N_\varphi(x)=\#\{n\ge1:\varphi(n)\le x\}$ 的成熟计数先例，Paul T. Bateman，*The distribution of values of the Euler function*，Acta Arithmetica **21**，329–345，[doi:10.4064/aa-21-1-329-345，§1，式（1.1）](https://doi.org/10.4064/aa-21-1-329-345)，给出 $N_\varphi(x)/x\to\zeta(2)\zeta(3)/\zeta(6)$；这里的显式有限界只使用（383.11），不使用该渐近式。
+
+若 $A=\varnothing$，则 $k_A=W_A=0$，所以（383.3）成立。若 $k=k_A>0$，置 $x=\sqrt{k}/2$，将 $A$ 分成
+
+$$
+A_{\rm low}=\{d\in A:\varphi(d)\le x\},
+\qquad A_{\rm high}=A\setminus A_{\rm low}.
+\tag{383.12}
+$$
+
+对每个 $d\in A_{\rm low}$，（383.11）给 $1\le d\le2x^2=k/2$。这些 $d$ 是互异正整数，因而
+
+$$
+\#A_{\rm low}\le\lfloor k/2\rfloor,
+\qquad
+\#A_{\rm high}\ge k-\lfloor k/2\rfloor\ge k/2.
+\tag{383.13}
+$$
+
+高部分的每个权重都大于 $x$，且所有权重非负，于是
+
+$$
+W_A\ge\sum_{d\in A_{\rm high}}\varphi(d)
+\ge x\,\#A_{\rm high}\ge\frac{k^{3/2}}4.
+\tag{383.14}
+$$
+
+两边非负，平方即得（383.3）。这一步只计互异正指标，未把 $A$ 限制为任何约数集合。
+
+现在固定任意有限 $S$。每个 $F_s$ 都是正整数，故 $M(S)\ge1$。同一实际族的经典原子重构已由（362.8）–（362.9）的逐素幂重数计算给出：
+
+$$
+M(S)=\prod_{d\in D(S)}\Psi_d,
+\qquad \log M(S)=\sum_{d\in D(S)}\log\Psi_d.
+\tag{383.15}
+$$
+
+其强整除序列分量参见 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorems 1.2、1.3、2.1](https://arxiv.org/pdf/1310.2416v1)。Fibonacci 原子及其 $\varphi(d)L+O(1)$ 主项参见 Carlo Sanna，*On the l.c.m. of shifted Fibonacci numbers*，[arXiv:2007.13330v1，§2，式（3）–（4）、Lemma 2.2](https://arxiv.org/pdf/2007.13330v1)；这里使用的精确误差常数是定理 382.3 的 $|E_d|\le L$，其经典 cyclotomic 分量参见 G. J. O. Jameson，*The cyclotomic polynomials*，[Theorem 1.12、Proposition 1.20，pp. 5、9–10](https://www.maths.lancs.ac.uk/~jameson/cyp.pdf)。本步直接引用既有实际重构与原子界，不附加重构假设。
+
+因此 $\Delta(S)=\sum_{d\in D(S)}E_d$，三角不等式给 $|\Delta(S)|\le Lk(S)$。将（383.3）应用于这个实际的 $D(S)$，得 $k(S)^3\le16W(S)^2$。对 $W(S)>0$ 取非负立方根即有 $k(S)\le C W(S)^{2/3}$。若 $W(S)=0$，每个正指标的 $\varphi(d)\ge1$ 迫使 $D(S)=\varnothing$；因每个 $s\in S$ 都属于 $D(S)$，此时 $S=\varnothing$、$M(S)=1$、$k(S)=\Delta(S)=0$，故（383.4）在零权重约定下仍成立。
+
+接着设 $W=W(S)\ge128$，所以空集情形已排除，$LW>0$。令 $\delta=\Delta/(LW)$。（383.4）给
+
+$$
+|\delta|\le C W^{-1/3}\le C\,128^{-1/3}=\frac12,
+\qquad 0<\eta=2C W^{-1/3}\le1.
+\tag{383.16}
+$$
+
+在使用双重对数法则之前，由定义先得到
+
+$$
+\log M=LW+\Delta=LW(1+\delta)\ge LW/2>0,
+\qquad 1+\delta\in[1/2,3/2].
+\tag{383.17}
+$$
+
+这些正性允许对 $\log M=LW(1+\delta)$ 取对数。于是
+
+$$
+D_0-B=\log(1+\delta),
+\qquad
+|D_0-B|
+=\left|\int_1^{1+\delta}\frac{dt}{t}\right|
+\le2|\delta|\le\eta,
+\tag{383.18}
+$$
+
+因为积分经过的正区间上 $1/t\le2$。这证明双重对数误差，同时保留其实际正整数来源。
+
+为验证后续除法与对数的正性，$\Phi>3/2$ 给
+
+$$
+L>\log(3/2)=\int_1^{3/2}\frac{dt}{t}>\frac13.
+\tag{383.19}
+$$
+
+经典指数级数给 $e=\sum_{j\ge0}1/j!<3$：对 $j\ge2$ 有 $j!\ge2^{j-1}$，且 $j=3$ 时严格，故级数尾和严格小于一。因此 $LW\ge128L>128/3>e$，从而 $B=\log(LW)>1\ge\eta$。结合（383.18），$D_0\ge B-\eta>0$，完成（383.5）的所有正性结论。此时
+
+$$
+\left|\frac{D_0}{B}-1\right|
+=\frac{|D_0-B|}{B}\le\frac\eta B,
+\qquad
+\left|\frac B{D_0}-1\right|
+=\frac{|B-D_0|}{D_0}\le\frac\eta{B-\eta},
+\tag{383.20}
+$$
+
+证明（383.6）。
+
+若 $M>5040$，则（383.7）中的 $M,B,D_0,e^\gamma$ 均为正，且 $\sigma(M)>0$，所以两个 Robin 量为正。它们的共同分子与共同因子精确消去，给（383.8）的第一个恒等式。其对数形式是
+
+$$
+\begin{aligned}
+\log\mathcal R(M)
+&=\log\sigma(M)-\gamma-\log M-\log(\log(\log M)),\\
+\log\mathcal R_W(S)
+&=\log\sigma(M)-\gamma-\log M-\log B,\\
+\log\mathcal R(M)-\log\mathcal R_W(S)
+&=\log B-\log D_0.
+\end{aligned}
+\tag{383.21}
+$$
+
+特别是第一行包含的是三重对数。$B$ 与 $D_0$ 之间的整段区间都在 $[B-\eta,\infty)$ 内，故对正实数上的对数使用中值估计，得到
+
+$$
+|\log B-\log D_0|
+\le\frac{|B-D_0|}{B-\eta}
+\le\frac\eta{B-\eta},
+\tag{383.22}
+$$
+
+证明（383.8）的第二个估计。
+
+最后固定任意 $\varepsilon>0$，取（383.9）的阈值。每个满足 $W(S)\ge W_0(\varepsilon)$ 的有限 $S$ 都有
+
+$$
+\eta(S)=2C W(S)^{-1/3}\le\varepsilon/2<\varepsilon.
+\tag{383.23}
+$$
+
+与（383.18）合并便得（383.10）。阈值只依赖 $\varepsilon$ 和固定常数 $C$，故量词对指标表示的全部变化统一成立。定理 382.4 的两个绝对偏差发散族由（383.4）必有 $W(S)\to\infty$，其绝对发散与这里的相对误差、双重对数误差趋零相容。以上估计控制实际原子成本及 Robin 分母变换；它没有给出 $\sigma(M)/M$ 的 Euler 分子估计、有符号 Robin 尾项、任意整数的传输或 RH 结论。$\square$
+
+## 追加锚（本行以下为增补区）

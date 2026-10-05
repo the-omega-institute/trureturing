@@ -1,0 +1,12 @@
+**Proof.** Choose the two colliding minimum indices $a,b$. The sets $M_a$
+and $M_b$ are disjoint: simultaneous strict inequalities contradict dominance
+at their common point. Inserting $x\notin\tau$ preserves dominance exactly
+when $x$ is the maximum of $M_a$ or of $M_b$. Such maxima are outside
+$\tau$. Erasing an index preserves dominance exactly in the empty-set cases
+of Lemma 2.1. Thus a nonempty $M_a$ contributes
+$(\tau\cup\{r_a\},D)$, while an empty $M_a$ contributes
+$(\tau,D\setminus\{a\})$; the same holds for $b$. Disjointness makes
+the two inserted maxima distinct; inserted-point and erased-index cases are
+distinct; and two erased color sets differ because $a\ne b$. The same
+characterization exhausts all rooms in each of the four cases.
+

@@ -1,0 +1,3 @@
+### 62.14. 文献与方法来源
+
+- Bshouty–Costa，*Exact Learning of Juntas from Membership Queries*，[arXiv:1706.06934v1](https://arxiv.org/abs/1706.06934v1)。布尔成员查询和自适应/非自适应相关变量学习是既有问题；其完整输入查询有 $O(n)$ 时间费用，不能把查询计数当作总时间。

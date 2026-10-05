@@ -1,0 +1,13 @@
+**Proof.** Since the coordinates of $x$ and $f(x)$ have the same unit sum,
+there is a coordinate $i$ with $x_i\leq f(x)_i$. Choose such a coordinate
+as the color of each projected lattice point. Scarf's lemma gives a colorful
+dominant cell at every mesh size $l=k+1$. There are only finitely many
+possible index sets, so one occurs along an increasing subsequence.
+Compactness supplies a further increasing subsequence of cell points
+converging to $z\in\Delta_n$. The coordinate estimates make cell diameters
+tend to zero, so points of each selected color converge to the same $z$.
+Continuity gives $z_i\leq f(z)_i$ for selected colors. All other coordinates
+of $z$ vanish. Nonnegativity and equality of the total sums force equality
+in every coordinate, including the unselected ones. Thus $f(z)=z$.
+The case $n=1$ is the singleton simplex and is included.
+

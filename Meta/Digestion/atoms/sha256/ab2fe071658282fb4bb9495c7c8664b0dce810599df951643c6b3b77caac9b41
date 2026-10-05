@@ -1,0 +1,9 @@
+**命题 63.1。** 对任意不同商类 $\theta,\tau$，有
+
+$$
+\mu_n^+(C_\theta\ne C_\tau)\ge\gamma:=5^{-5}=1/3125,
+\qquad
+s_{\theta\tau}:=\mathbb E_{\mu_n^+}(C_\theta-C_\tau)^2\ge\gamma.
+\tag{63.10}
+$$
+

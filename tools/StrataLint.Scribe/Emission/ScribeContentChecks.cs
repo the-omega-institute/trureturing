@@ -8,14 +8,17 @@ internal static class ScribeContentChecks
     internal static int Run(string root, ImmutableArray<string> changedPaths, LeanAxiomReport report,
         bool checkContent, TextWriter output, TextWriter error)
     {
-        var selection = ScribeDefinitionSelector.Select(root, changedPaths.Concat(
-            changedPaths.Where(static path => path.StartsWith("Blueprint/", StringComparison.Ordinal)
-                && path.EndsWith(".md", StringComparison.Ordinal))
-                .Select(static path => path[..^3] + ".scribe.cs")));
+        var selection = ScribeDefinitionSelector.Select(root, changedPaths);
         if (!selection.IsSuccess)
         {
             error.WriteLine(selection.Failure);
             return 2;
+        }
+        var admission = ScribeSdkAdmission.Check(root, selection.Paths);
+        if (admission.ExitCode != 0)
+        {
+            admission.WriteFailure(error);
+            return admission.ExitCode;
         }
         return StatementProjectionFixtureLoader.WithFreshRepositoryRoot(root, () =>
         {
@@ -45,6 +48,10 @@ internal static class ScribeContentChecks
             }
             var scope = new MarkdownFormulaScope(root,
                 changedPaths.Concat(definitions.Select(static definition => definition.RelativePath.Value)));
+            var selectedMarkdown = definitions.Select(static definition => definition.RelativePath.Value)
+                .ToHashSet(StringComparer.Ordinal);
+            foreach (var path in scope.Paths.Except(selectedMarkdown, StringComparer.Ordinal))
+                scope.InspectCommitted(path);
             return ScribeEmitter.CheckMarkdown(root, output, error, report, scope, definitions, scoped: true);
         });
     }

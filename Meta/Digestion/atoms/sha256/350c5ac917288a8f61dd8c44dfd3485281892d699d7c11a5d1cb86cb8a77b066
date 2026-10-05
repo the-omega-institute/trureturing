@@ -1,0 +1,1 @@
+| 工作存储（位） | $O(n\log(m_E+1)+n+\log m_E+L_{\rm in})$ | $O(n+\log n+\log m_D+L_{\rm in})$

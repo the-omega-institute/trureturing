@@ -83,15 +83,9 @@ step() {
   complete_step passed
 }
 
-# 该 atom id 是否真的解析得到一个账目条目。三处都认,因为账目有三种既有形态:
+# 该 atom id 必须解析得到一个账目条目。账目有三种形态:
 # CAS blob、per-atom 的 backfill 分片、以及 Meta/BACKFILL.yaml 单文件。三者皆无即拒。
-#
-# 立条依据 #6676(2026-09-10 实测):require_transaction_arguments 原本**只查字符形状**
-# (`^[a-z0-9-]+$`),不查该 atom 是否存在;而 deposit 分支的次序是
-#   require_transaction_arguments → … → freeze_module_if_needed → cover_row
-# 于是一个凭空杜撰的 id(实例:`ATOM_ID=none`,该串完全满足那个正则)会**先把模块冻掉**,
-# 再在 cover 处失败,留下一个已冻结而无覆盖的模块。冻结不可逆(第 1.3 条),
-# 而不可逆动作排在了唯一能证伪其前提的那一步之前 —— 次序反了(第 7.8 条)。
+# 字符形状合法不代表条目存在;存在性检查必须先于不可逆的冻结动作。
 atom_id_resolves() {
   [[ -e "Meta/Digestion/atoms/sha256/$1" ]] && return 0
   local hit
@@ -317,14 +311,12 @@ case "$COMMAND" in
   deposit)
     require_transaction_arguments
     deposit_module
-    if cover_row; then
-      step emit make emit
-    else
+    cover_row || {
       status=$?
       printf 'PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id=%s gid=%s reason=%s\n' \
         "$ATOM_ID" "$GID" "$COVER_FAILURE_REASON" >&2
       exit "$status"
-    fi
+    }
     ;;
   deposit-uncovered)
     if [[ "$#" -ne 3 || -n "${ATOM_ID+x}" ]]; then
@@ -340,7 +332,6 @@ case "$COMMAND" in
     require_transaction_arguments
     step lean-report make lean-report
     cover_row
-    step emit make emit
     ;;
   cover-batch)
     require_cover_batch_arguments

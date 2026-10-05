@@ -61,9 +61,8 @@ internal sealed class DescribeReport
 
     internal int ProjectionOpenCount => Unprojectable.Length;
 
-    // Two states, not three. "needs-classification" counted nodes whose provenance was unassessed,
-    // and no node can carry that any more: the interface only accepts an assessed provenance, so the
-    // branch was unreachable and the count it read was structurally zero.
+    // The interface requires assessed provenance. Red findings therefore distinguish
+    // invalid inputs from classified ones without a separate unassessed state.
     internal string Status => RedFindings.IsEmpty ? "classified" : "invalid";
 
     internal static DescribeReport Build(

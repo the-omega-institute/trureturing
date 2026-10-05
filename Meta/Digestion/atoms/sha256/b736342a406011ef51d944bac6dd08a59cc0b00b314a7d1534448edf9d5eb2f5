@@ -1,0 +1,1 @@
+| RAM 工作充分上界 | $O(nm_E)+I_{\rm bit}$ | $O(nm_D+nt+Q+T)+I_{\rm bit}$

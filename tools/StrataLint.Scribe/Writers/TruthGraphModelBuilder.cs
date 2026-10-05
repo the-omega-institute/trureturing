@@ -9,7 +9,7 @@ public sealed record DocumentGraphDocument(
     ScribeDocument Document,
     string Receipt);
 
-/// Builds the moved <see cref="TruthGraphExportModel"/> from the Scribe-owned truth projection.
+/// Builds <see cref="TruthGraphExportModel"/> from the Scribe-owned truth projection.
 /// The model record lives in Trureturing.Truth (zero StrataLint dependency); this construction
 /// step reads TruthDagProjection and therefore stays in Scribe, which references Engine.
 public static class TruthGraphModelBuilder
@@ -87,7 +87,7 @@ public static class TruthGraphModelBuilder
     };
 }
 
-/// Builds the moved <see cref="DocumentGraphExportProjection"/> from Scribe/Engine document graph
+/// Builds <see cref="DocumentGraphExportProjection"/> from Scribe/Engine document graph
 /// material. The projection record lives in Trureturing.Truth; this assembly step depends on the
 /// document AST and declaration catalog and therefore stays in Scribe.
 public static class DocumentGraphExportProjectionExtensions

@@ -30,7 +30,7 @@ Lean statement: `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceCounts.b
 
 *Commentary.*
 
-For every positive integer n, the number of permutations of one through n avoiding both 213 and 231 is 2^(n - 1).
+For every positive integer n, the number of permutations of one through n avoiding both 213 and 231 is 2^(n - 1). The recurrence for the classical avoidance family removes an extreme first entry; increasing relabelling preserves containment in the smaller family.
 
 **Theorem 1.3 (Decomposition of avoidance of 213 and 4132).**
 

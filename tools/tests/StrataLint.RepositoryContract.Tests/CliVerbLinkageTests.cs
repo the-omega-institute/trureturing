@@ -7,20 +7,12 @@ namespace StrataLint.RepositoryContract.Tests;
 // 引用完整性(CLAUDE.md 第Ⅵ节「引用必须机械可判,悬空即红」):凡一处工件指向一个 CLI 动词,
 // 就必须有机器验证那个动词存在。
 //
-// 立条案由:`make c0-verify` / `make c0-reconcile-trust-root` / `make record-golden` 三个目标
-// 各自把一个 dispatch 表里不存在的动词交给 CLI,实跑得 `UNKNOWN_COMMAND ... exit=2`。
-// 既有的 MakeWorkflowTests 对此全绿——它断言的是「Makefile 文本里有这段字符串」,
-// 验的是语法不是指向。本测试住在 StrataLint.RepositoryContract.Tests,由候选侧 EngineeringTestPlanPolicy
-// 的选择器路由;base 判官及其 required-project floor 已按 CLAUDE.md 第 19 条禁令退役
-// (#5170 / #5319),不再有 base 侧执行链守它。
-//
-// 本测试刻意是纯 in-process 断言(不 spawn 进程),直接落在该全量 tools-test 中。
+// 本测试提取 Makefile 与脚本交给 CLI 的动词,并核对 dispatch 表中的注册,
+// 以判定引用是否可解析。断言在进程内执行,不启动 CLI 子进程。
 public sealed class CliVerbLinkageTests
 {
-    // 正则允许 `@` 与 `dotnet run` 之间有前缀:这四个目标在同一物理行上先做一次
-    // 「二进制缺失即建」检查(新 worktree 无构建产物,否则首个此类目标以裸进程启动异常失败;
-    // 2026-09-11 五个实施席中两席共撞六次)。放宽前缀不削弱本测试的判据——它验的是
-    // 交给 CLI 的动词字面仍在 Makefile 里且已注册,而动词仍逐字匹配。
+    // 正则允许 `@` 与 `dotnet run` 之间有前缀,以识别同一行上的「二进制缺失即建」检查。
+    // 交给 CLI 的动词仍须逐字匹配 Makefile 字面并已注册。
     [Fact]
     public void SettleMakeTargetsLinkToRegisteredVerb()
     {

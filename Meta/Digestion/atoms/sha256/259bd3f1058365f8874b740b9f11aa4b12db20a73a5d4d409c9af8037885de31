@@ -1,0 +1,18 @@
+**约定 1.1（规范原阶和匹配模二值）。** 固定 $k\ge2$、$m\ge1$。所有词从左到右按低位先读，合法语言为避免连续子词 $1^k$ 的二进制词。使用原阶权重
+
+$$
+G_i=2^i\quad(0\le i<k),\qquad
+G_i=\sum_{j=1}^kG_{i-j}\quad(i\ge k),\qquad
+V_k(w)=\sum_{i<|w|}w_iG_i.
+$$
+
+匹配标量读口为 $V_k(w)\bmod2$，对应规范多项式 $\Phi_k=X^k-\sum_{j<k}X^j$。它不是 $X^k-X-1$ 的一般阶接口，也不是任意选择的标量泛函。令
+
+$$
+T=k+1,\qquad c_i=G_i\bmod2,
+\qquad c_i=1\Longleftrightarrow i\equiv0,-1\pmod T.
+\tag{1.1}
+$$
+
+式（1.1）及最小正周期 $T$ 由固定版本观察器 [R1] 第13–14节供应。指标按周期延伸到所有整数。
+
