@@ -17689,3 +17689,348 @@ The next research question keeps the entire task: can a uniformly effective genu
 [TM55OR70]: https://github.com/the-omega-institute/trureturing/blob/4f981b86a637c4aff1f1825ec0efe41dd5bb36e2/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#70-完整单位原树的-ferrers-截角与更强条件字母表下界
 
 ## 追加锚（本行以下为增补区）
+
+## 56. The common physical-prefix barrier
+
+One fixed actual positive-context attempt followed by the first $\rho$ attempt imposes a supplied-alphabet barrier even when every subsequent original action remains available. On the complete actual unit family the barrier is $h/3-2$, where $H=4h+\delta$ and $0\le\delta\le3$. A separate ten-fiber class at $H=36,37,38,39$ admits one-symbol recovery with a second context chosen after the first rejection, but no one-symbol controller with a fixed one-context/first-$\rho$ prefix can recover that class. Both impossibility arguments retain complete acquired records and the distinction between the initial required target and current behavior.
+
+The source/action premises are [Atomic359–360][TM56Atomic] and [TM30, TM38, TM44–47 and TM51][TM56Base] at immutable pin `28a41b31247b847af1b1b3118f7cb00ffd3b9cda`. The matching residue executor is reused directly from [TM55.5][TM56Residue] and [TM55.6][TM56Residue6] at immutable pin `dc14da97f120bbc04038a3bbc7996c78d001b9f1`; [the source binding](#TM56-L3) gives the same-source correspondence. The new interface check places that executor in the declared prefix class. The resulting sharp leading coefficient concerns this class alone.
+
+### 56.1 Complete actual sources, resource types, and the prefix class
+
+<a id="TM56-S1"></a>
+**Reused source and target correspondence.** An actual source is a nonempty ordered binary tree $t::=\alpha\mid\beta\mid\langle t,t\rangle$. Tree equality retains leaf order and every bracket. The original substitution is $\rho\alpha=\beta$, $\rho\beta=\langle\beta,\alpha\rangle$, extended structurally to trees. Write $E_j(t)=E(\rho^jt)$ and distinguish the letter composition $c(t)=(a_\alpha,a_\beta)$ from the resource pair $(m,n)=(a_\alpha+a_\beta,a_\alpha+2a_\beta)$. The complete unit family is
+
+<a id="TM56-E01"></a>
+$$
+U_H=\{t:1\le m(t)\le H,\ (E_0(t),E_1(t),E_2(t))=(1,1,1)\},
+\qquad H=4h+\delta,\quad 0\le\delta\le3.
+\tag{TM.5601}
+$$
+
+Atomic360.2–4 and TM51.2–3 give exactly the initial compositions and resource coordinates
+
+<a id="TM56-E02"></a>
+$$
+\begin{gathered}
+c(t)=(4r,4s),\qquad r,s\ge1,\qquad r+s\le h,\\
+z=r+s,\quad w=r+2s,\qquad
+2\le z\le h,\quad z+1\le w\le2z-1,\\
+m=4z,\quad n=4w,\qquad r=2z-w,\quad s=w-z.
+\end{gathered}
+\tag{TM.5602}
+$$
+
+For $w\le h$, the initial target is
+
+<a id="TM56-E03"></a>
+$$
+\tau_h(z,w)=
+\begin{cases}
+(2,(4(2z-w),4(w-z)),(1,1,1)),&z+w\le h,\\
+(1,(4(2z-w),4(w-z)),1,1),&z+w>h.
+\end{cases}
+\tag{TM.5603}
+$$
+
+For $w>h$, it is $(0,1,4z)$, with hidden $w$ irrelevant to that initial target. A tag-0 row exists exactly when $2\le z\le h$ and $2z-1>h$. A genuine witness for every positive pair is any fixed ordered bracketing of
+
+<a id="TM56-E04"></a>
+$$
+\omega_{r,s}=\alpha^{2r-1}\beta^{2s}\alpha\beta^{2s-1}\alpha^{2r}\beta.
+\tag{TM.5604}
+$$
+
+Its eight Atomic360 edge multiplicities are $(r,r,r,r;s,s,s,s)$, positive, balanced and with connected support. The tag-0 row $z$ has witness $\omega_{1,z-1}$. Atomic360.3 includes every qualifying leaf word and every ordered binary bracketing, not only these witnesses. Selecting a witness in a lower argument never substitutes it for the running source.
+
+The ambient action contract is TM30.1–2. A whole current `Read` returns actual current $E$ and preserves the source. A whole $\rho$ attempt or whole left/right concatenation with an actual nonempty positive context accepts exactly when the entire candidate has at most $H$ leaves; equality accepts. Rejection preserves the complete source and provides no candidate read. The record retains public inputs, supplied label, action and context identities, all responses and all actual reads. There is no reset, copy, inverse, source replacement, navigation, size port, target port or additional observation. The required output remains the **initial** $q_H(t)$ throughout; current $q_H(t_{\rm cur})$ describes future behavior only.
+
+<a id="TM56-D1"></a>
+**Definition TM56.1 (common physical prefix).** Fix public $H$, one public actual nonempty positive context $v$ and one fixed side. A controller belongs to $\mathrm{CPF}(v,H)$ if on every run it attempts this same context and then its first whole $\rho$, independently of the supplied symbol. These are its first two modifying attempts. Finitely many harmless current `Read` calls may precede the context or intervene between it and $\rho$; the attempts are consecutive after deleting those Reads. No additional modifying attempt, even a rejected one, occurs before that first $\rho$. After it, arbitrary ambient TM30 actions are allowed: either side, mixed positive contexts, Reads, arbitrary retained records and any finite accepted replacement depth. Continuation decisions may depend on the supplied label and the actual record.
+
+Advice is a genuinely supplied function $\ell:U_H\to\mathcal L$ of the same unmodified initial source, authentic to that source before online actions. Lower bounds permit any exact-tree function, including dependence on leaf order and brackets, without target factorization or computability restrictions. Controllers are effective deterministic programs with common public initialization for equal labels and must stop correctly after finitely many source calls on each declared input. Exhibited upper suppliers are conditional constructions from authentic initial-target information or a certified same-tree archive; their production and pairing are separate obligations.
+
+For the context put $p=d_0(v)>0$ and $q=d_1(v)$, so $p\le q\le2p$, and define
+
+<a id="TM56-E05"></a>
+$$
+c=\left\lfloor\frac{H-p}{4}\right\rfloor,
+\qquad k=\left\lfloor\frac{H-q}{4}\right\rfloor,
+\qquad k\le c\le h.
+\tag{TM.5605}
+$$
+
+Here scalar $c$ is a cutoff, whereas $c(t)$ denotes letter composition. The context accepts exactly at $z\le c$. On acceptance the subsequent $\rho$ accepts exactly at $w\le k$; on context rejection the source is unchanged and $\rho$ accepts exactly at $w\le h$. These guards include equality. In particular $c<0$ makes the context always reject.
+
+<a id="TM56-E06"></a>
+$$
+\begin{aligned}
+(m,n)&=(4z,4w)\\
+&\xrightarrow{\text{accepted context}}(4z+p,4w+q)\\
+&\xrightarrow{\text{accepted }\rho}(4w+q,\ 4(z+w)+p+q).
+\end{aligned}
+\tag{TM.5606}
+$$
+
+All three pairs in (TM.5606) are current/next **sizes**, not $\alpha/\beta$ letter counts. An accepted context adds letter composition $(2p-q,q-p)$; an accepted $\rho$ sends letter composition $(a,b)$ to $(b,a+b)$. Thus its post-$\rho$ next resource is exactly $m+n+p+q$. For an all-$\alpha$ context $p=q=P$, this is $m+n+2P$. Rejection changes neither the resource pair nor the actual tree. These are the typed TM30 transport formulas, with no omitted contribution.
+
+<a id="TM56-S2"></a>
+**Reused permanent-collision principle.** TM30.2 and TM38.1 apply to two actual sources with equal complete acquired records and equal current $q_H$, even when their initial targets differ. Every common later action then has the same response, actual reads and successor behavior on both. Pointwise finite stopping gives the same output, so recovery of both different initial targets is impossible. This principle covers all ambient continuations, including sources that have left $U_H$. It requires equality of the full record and current target; equality of a terminal size alone would not suffice.
+
+### 56.2 A uniform lower bound after the common prefix
+
+<a id="TM56-T1"></a>
+**Theorem TM56.1 (common-prefix barrier).** For every $H\ge8$, every fixed actual positive context $v$ on either fixed side, and every $\mathrm{CPF}(v,H)$ controller recovering the initial target on complete $U_H$ with a finite supplied alphabet $\mathcal L$,
+
+<a id="TM56-E07"></a>
+$$
+|\mathcal L|\ge\frac h3-2.
+\tag{TM.5607}
+$$
+
+This quantifies arbitrary exact-source labels, all three initial target bands, all actual words and brackets, and every permitted post-prefix continuation. It imposes no terminal `Size_H` hypothesis.
+
+**Proof.** Let $z_0=\lfloor h/2\rfloor+1$. For $h\ge7$, all pairs selected below are positive finite unit targets. Choose one genuine $\omega_{2z-w,w-z}$ per selected target with a fixed ordered bracketing, and retain the label actually supplied on that exact tree. If there are more selected targets than labels, two witnesses share a label. Their initial Reads are all 1. Reads after a common accepted context are also equal: they give the same ordered product with $E_0(v)$ and the original unit read. Thus equal labels and the displayed common responses give equal complete prefix records, including the number and identities of any intervening Reads.
+
+If $c\le2h/3$, including $c<0$, select
+
+<a id="TM56-E08"></a>
+$$
+S_{RA}=\{(z,h):\max(z_0,c+1)\le z\le h-1\},
+\qquad
+|S_{RA}|=h-\max(z_0,c+1)\ge h/3-1.
+\tag{TM.5608}
+$$
+
+Every context rejects since $z>c$, and every unchanged first $\rho$ accepts at $w=h$, including $4h\le H$. The original targets are tag 1. The post-$\rho$ resource pair is $(4h,4(z+h))$, with $4(z+h)>H$, and the current read is the original $E_1=1$. Thus all current targets equal $(0,1,4h)$. Two equal labels would give a permanent collision of distinct initial targets. Each label can therefore cover at most one selected witness. The size estimate uses $z_0\le h/2+1$ and $c+1\le2h/3+1$.
+
+If $c>2h/3$, then $c\ge z_0$. For $k\le2h/3$ select the accepted-context, rejected-$\rho$ row
+
+<a id="TM56-E09"></a>
+$$
+S_R=\{(z_0,w):\max(z_0+1,k+1)\le w\le h\},
+\qquad |S_R|=h-\max(z_0,k).
+\tag{TM.5609}
+$$
+
+The inequalities $w\le h\le2z_0-1$ and $z_0+w>h$ make every pair a genuine original tag-1 target. The context accepts and $\rho$ rejects because $w>k$. Each resulting source has next size $4w+q>H$, current size $4z_0+p$ and common current read $E_0(v)$, on either fixed context side. Hence its current target is $(0,E_0(v),4z_0+p)$ and equal labels yield equal complete records and a permanent collision. For $k\le h/2$ the row has at least $h-z_0\ge h/2-1$ members; for $h/2<k\le2h/3$ it has $h-k\ge h/3$ members.
+
+If $2h/3<k<h$, use
+
+<a id="TM56-E10"></a>
+$$
+S_A=\left\{(z,k):
+\max\left(\left\lfloor\frac k2\right\rfloor+1,h-k+1\right)
+\le z\le k-1\right\}.
+\tag{TM.5610}
+$$
+
+We have $z\le k-1\le c$, $k\le2z-1$ and $z+k>h$. Thus all selected pairs are positive original tag-1 targets and both prefix actions accept. The exact boundary-column arithmetic is
+
+<a id="TM56-E11"></a>
+$$
+4k+q\le H<4(k+1)+q,
+\qquad
+4(z+k)+p+q\ge4(h+1)+p+q>H.
+\tag{TM.5611}
+$$
+
+The post-$\rho$ current read is $E_1(v)$: it is the ordered context factor times the original $E_1=1$, on the chosen side. Every current target is consequently $(0,E_1(v),4k+q)$. Equal labels give the same complete record and the same current target before any later continuation. Their initial targets remain distinct. The column size is
+
+<a id="TM56-E12"></a>
+$$
+\begin{aligned}
+|S_A|
+&=k-\max\left(\left\lfloor\frac k2\right\rfloor+1,h-k+1\right)\\
+&=\min\left(\left\lceil\frac k2\right\rceil-1,2k-h-1\right)
+\ge h/3-1.
+\end{aligned}
+\tag{TM.5612}
+$$
+
+Finally, $k\ge h$ forces $k=c=h$ by (TM.5605). Use
+
+<a id="TM56-E13"></a>
+$$
+S_A'=\{(z,h):z_0\le z\le h-1\},
+\qquad |S_A'|=h-z_0\ge h/2-1.
+\tag{TM.5613}
+$$
+
+Both attempts accept, the current size is $4h+q\le H$, and the next size is $4(z+h)+p+q>H$. The common current target is $(0,E_1(v),4h+q)$, giving the same collision. This endpoint is possible only when $0<p\le q\le\delta$, and is retained wherever the actual context allows it.
+
+Every case therefore requires at least as many labels as its selected witness set. For $h\ge7$ these counts exceed the stated $h/3-2$ bound; for $2\le h\le6$ its right side is nonpositive. This proves (TM.5607) for all $H\ge8$ and all four residues. The actual label of each selected tree, rather than any target-factorized advice, drives the pigeonhole argument. Even an attempted earlier stop on equal labels and equal Reads cannot return two different initial targets. $\square$
+
+If a particular continuation is `Size_H`, the three main sets enter it at $4h$, $4z_0+p$ and $4k+q$, respectively. The theorem instead uses equal complete records and equal current $q_H$ at the prefix boundary, which proves impossibility for every ambient continuation.
+
+### 56.3 Direct residue reuse and the matching class interface
+
+<a id="TM56-P2"></a>
+**Proposition TM56.2 (TM55 residue executor belongs to the prefix class).** For $h\ge5$, put
+
+<a id="TM56-E14"></a>
+$$
+L=\left\lfloor\frac{h+1}{3}\right\rfloor,
+\qquad c=h-L+1,
+\qquad P=H-4c=4(L-1)+\delta>0.
+\tag{TM.5614}
+$$
+
+The supplier of [TM55.5][TM56Residue] and its [TM55.6 executor][TM56Residue6], with the actual right context $v=\alpha^P$ under its fixed public bracketing, belong to $\mathrm{CPF}(v,H)$. On complete actual $U_H$ that same construction simultaneously has $L$ supplied symbols, no Reads, at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+3$ whole source calls, including terminal rejection.
+
+**Interface check.** The parameters satisfy $L\ge2$, $1\le c<h$, $h-c=L-1$ and $c\le2L+2$, precisely the hypotheses of TM55.5 (TM.5518). Positivity of $P$ holds in every cap residue because $L\ge2$. The context has letter composition $(P,0)$ and resource increments $p=q=P$, hence both scalar cutoffs in (TM.5605) are exactly $c$. The first two modifying attempts are this fixed actual context followed by one $\rho$ on either context response, with no intervening Reads or other attempts. The later `Size_H` is an allowed ambient continuation. Its entry source has size in $[1,H]$ by the preceding actual guards; it need not belong to $U_H$.
+
+The source correspondence is literal: TM55's $U_H$, $(r,s)$, $(z,w)$, $\omega_{r,s}$ and initial $\tau_h$ are those of (TM.5601–4). Its conditional supplier is exactly TM55 (TM.5520): $\operatorname{rep}_L(w-z)$ on finite targets, $\operatorname{rep}_L(c-z)$ on padded tag-0 rows, and 1 on unpadded tag-0 rows, where $\operatorname{rep}_L(x)=1+((x-1)\bmod L)$. The retained symbol and actual response bits are passed to the original-target decoder TM55 (TM.5521), without changing any label meaning. In its four actual histories $AA,AR,RA,RR$, terminal entries are respectively $4w+P,4z+P,4w,4z$. These entries are current sizes; they are not compositions or initial-target replacements. All words and brackets lift by the same Atomic360/TM47.2 correspondence. The residue correctness proof and supplier/decoder are reused, not new mathematical contributions of Proposition TM56.2. The simultaneous alphabet/depth/call guarantee is TM55.6 (TM.5524–25). $\square$
+
+Let $A_{\mathrm{CPF}}(H)$ minimize the conditional alphabet over all fixed actual nonempty contexts, fixed sides, arbitrary exact-source suppliers and successful controllers in their CPF classes. For $h\ge5$, [Theorem TM56.1](#TM56-T1) and [Proposition TM56.2](#TM56-P2) give
+
+<a id="TM56-E15"></a>
+$$
+\frac h3-2\le A_{\mathrm{CPF}}(H)
+\le\left\lfloor\frac{h+1}{3}\right\rfloor
+=\frac h3+O(1).
+\tag{TM.5615}
+$$
+
+Thus the leading coefficient $1/3$ is sharp **in this class**, with the exhibited costs belonging to its one actual execution. TM55.6's $h=2,3,4$ bases use one symbol, no padding, one $\rho$ and `Size_H`, with at most $\lceil\log_2H\rceil+2$ calls. Those no-padding protocols are outside the nonempty-context CPF class and are not upper certificates for (TM.5615). No unrestricted $h/3-O(1)$ necessity, minimum-depth assertion or unrestricted normalization theorem follows.
+
+### 56.4 Ten complete fibers and an adaptive second context
+
+<a id="TM56-T3"></a>
+**Theorem TM56.3 (ten-fiber separation).** For each $H=36+\delta$, $0\le\delta\le3$, let
+
+<a id="TM56-E16"></a>
+$$
+\begin{aligned}
+S_9=\{&(3,4),(3,5),(4,6),(5,6),(5,7),\\
+&(5,9),(6,8),(6,9),(7,9),(8,9)\},\\
+\mathcal F_{9,H}
+&=\{t\in U_H:q_H(t)\in\{\tau_9(z,w):(z,w)\in S_9\}\}.
+\end{aligned}
+\tag{TM.5616}
+$$
+
+One common supplied symbol admits a same-source controller recovering the initial target on every complete fiber in $\mathcal F_{9,H}$, with no Reads, at most two context attempts before the first $\rho$, at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+4$ whole source calls. Conversely, for every fixed actual nonempty positive context on either fixed side, every one-symbol controller with that CPF prefix fails on $\mathcal F_{9,H}$, even with harmless Reads, arbitrary acquired records and arbitrary ambient continuation after the first $\rho$.
+
+**Proof of membership and construction.** The first two points are initial tag 2 and the other eight are initial tag 1. The genuine witnesses from (TM.5604) are:
+
+| Initial $(z,w)$ | $(r,s)$ | Actual witness | Initial band |
+|---|---|---|---|
+| $(3,4)$ | $(2,1)$ | $\omega_{2,1}$ | 2 |
+| $(3,5)$ | $(1,2)$ | $\omega_{1,2}$ | 2 |
+| $(4,6)$ | $(2,2)$ | $\omega_{2,2}$ | 1 |
+| $(5,6)$ | $(4,1)$ | $\omega_{4,1}$ | 1 |
+| $(5,7)$ | $(3,2)$ | $\omega_{3,2}$ | 1 |
+| $(5,9)$ | $(1,4)$ | $\omega_{1,4}$ | 1 |
+| $(6,8)$ | $(4,2)$ | $\omega_{4,2}$ | 1 |
+| $(6,9)$ | $(3,3)$ | $\omega_{3,3}$ | 1 |
+| $(7,9)$ | $(5,2)$ | $\omega_{5,2}$ | 1 |
+| $(8,9)$ | $(7,1)$ | $\omega_{7,1}$ | 1 |
+
+For example $\omega_{2,1}=\alpha^3\beta^2\alpha\beta\alpha^4\beta$ realizes $(3,4)$. The genuine source $\omega_{1,7}$ instead has $(z,w)=(8,15)$ and initial target $(0,1,32)$; it witnesses the tag-0 row 8 in $U_H$, outside this ten-fiber class. The finite point $(8,9)$ is realized by $\omega_{7,1}$. Every witness permits any ordered bracketing, and (TM.5616) retains the entire actual fibers.
+
+Supply $\star$ to every input. First attempt the actual right context
+
+<a id="TM56-E17"></a>
+$$
+\alpha^{H-19}=\alpha^{17+\delta}.
+\tag{TM.5617}
+$$
+
+Its guard is $4z+(H-19)\le H$, exactly $z\le4$. On acceptance attempt $\rho$, whose guard is $4w+(H-19)\le H$, exactly $w\le4$. Only $(3,4)$ accepts that replacement. The two rejecting points $(3,5)$ and $(4,6)$ enter `Size_H` at $M=4z+(H-19)$, with distinct rows 3 and 4. All guard equalities are included.
+
+On first-context rejection the complete original source is unchanged. Attempt the actual right context
+
+<a id="TM56-E18"></a>
+$$
+K(d,e)=\alpha^{2d-e}\beta^{e-d},
+\qquad
+(d,e)=
+\begin{cases}
+(1,1),&\delta=0,\\
+(\delta,\delta+1),&\delta=1,2,3.
+\end{cases}
+\tag{TM.5618}
+$$
+
+Zero exponents denote absence of that letter, not an empty context. The four actual nonempty words are $\alpha,\beta,\alpha\beta,\alpha^2\beta$, with increments $(1,1),(1,2),(2,3),(3,4)$. Each accepts on every remaining input: the largest row is $z=8$ and $4z+d\le H$ in all residues. Now attempt $\rho$. Its exact guard is
+
+<a id="TM56-E19"></a>
+$$
+4w+e\le H\quad\Longleftrightarrow\quad w\le8.
+\tag{TM.5619}
+$$
+
+The accepting points have distinct columns $w=6,7,8$, and the four rejecting points at $w=9$ have distinct rows $z=5,6,7,8$. Their `Size_H` entry sizes are respectively $4w+e$ and $4z+d$. A public decoder for the actual acquired record is:
+
+| First context | First $\rho$ | Retained terminal entry | Initial output |
+|---|---|---|---|
+| accepts | accepts | $M=16+(H-19)$ | $\tau_9(3,4)$ |
+| accepts | rejects | $z=(M-(H-19))/4\in\{3,4\}$ | $\tau_9(3,5)$ if $z=3$; $\tau_9(4,6)$ if $z=4$ |
+| rejects; second context accepts | accepts | $w=(M-e)/4\in\{6,7,8\}$ | $\tau_9(5,6)$, $\tau_9(5,7)$, $\tau_9(6,8)$, respectively |
+| rejects; second context accepts | rejects | $z=(M-d)/4\in\{5,6,7,8\}$ | $\tau_9(z,9)$ |
+
+The first branch may also run `Size_H` in its accepting case, as in this uniform dictionary. Each entry is an actual size in $[1,H]$, so TM51.5 supplies finite terminal acquisition with no Read or replacement and at most $\lceil\log_2H\rceil+1$ calls, including final rejection. There are two prior source calls on the first-context-accepted branch and three on the second-context branch. Hence their whole-call bounds are $\lceil\log_2H\rceil+3$ and $\lceil\log_2H\rceil+4$. Only the single first $\rho$ attempt can be an accepted replacement. These alphabet, depth and call bounds hold simultaneously on the same running-source execution. TM30.2 and TM47.2 lift the dictionary to every actual word and bracketing in each complete fiber. No reset, copy, private row or replacement by a witness occurs.
+
+**Proof of impossibility for every fixed first context.** Fix any actual nonempty positive context with increments $(d,e)$, $d>0$, $d\le e\le2d$, and either fixed side. Give all sources the same symbol and public initialization. Put
+
+<a id="TM56-E20"></a>
+$$
+t=\left\lfloor\frac{H-d}{4}\right\rfloor,
+\qquad u=\left\lfloor\frac{H-e}{4}\right\rfloor.
+\tag{TM.5620}
+$$
+
+If $t\le6$, the actual witnesses for $(7,9)$ and $(8,9)$ both reject the context. Their unchanged first $\rho$ attempts accept at current size $4w=36\le H$. Their next sizes are $4(7+9)$ and $4(8+9)$, both above $H$. Thus their current targets are both $(0,1,36)$ and their complete records agree, including any harmless Reads. Their different initial targets form a permanent collision. Success would therefore require $t\ge7$.
+
+With $t\ge7$, the context accepts the row-5 points $(5,6),(5,7),(5,9)$ and the column-6 points $(4,6),(5,6)$. If $u\le6$, the row points $(5,7)$ and $(5,9)$ both reject $\rho$: their next sizes $4w+e$ exceed $H$, their current sizes are both $20+d$ and their current reads are both $E_0(v)$. They have the same current target $(0,E_0(v),20+d)$ and equal complete records. Avoiding this permanent collision requires $u\ge7$.
+
+If $u\ge6$, both column-6 points accept $\rho$. Their current sizes are both $24+e\le H$, and their next sizes are $4(4+6)+d+e$ and $4(5+6)+d+e$. Both exceed $H$ already at their original $40$ and $44$, since $H\le39$. Their current reads are both $E_1(v)$, so both current targets are $(0,E_1(v),24+e)$ and their complete records agree. Avoiding this collision requires $u<6$, contradicting $u\ge7$.
+
+The witness argument uses equal complete records and current $q_H$, so TM38.1 excludes every ambient continuation, with arbitrary retained memory and finite accepted depth. Harmless Reads cannot break these equalities and add no modifying action before first $\rho$. An earlier stop with the one common symbol and unit Reads likewise cannot distinguish the initial targets. The impossibility is for a common symbol; arbitrary distinct advice symbols can distinguish the targets and are not excluded by this theorem. $\square$
+
+A common physical context can produce different subsequent numeric cutoffs on its accepted and rejected branches: its contributions are present on acceptance and absent on rejection. In Theorem TM56.3 a second actual context is issued on the rejection branch. That extra modifying attempt places its successful one-symbol controller outside CPF.
+
+### 56.5 Bound sources, bounded evidence, and remaining scope
+
+<a id="TM56-L1"></a>
+[Atomic359–360 at `28a41b31247b847af1b1b3118f7cb00ffd3b9cda`][TM56Atomic] supplies the ordered triple/common-source correspondence, actual positive witnesses, balanced connected edge support and every Euler word and ordered bracketing. Atomic360 (360.4–5) retains those supplier equation labels. [TM30.1–2 at that same pin][TM56Base], (TM.3001–4), supplies whole guards, equality acceptance, unchanged rejection, ordered source transport and behavioral congruence. TM38.1 supplies the full-record permanent collision used in both lower arguments. These source mechanisms are reused.
+
+<a id="TM56-L2"></a>
+[TM44.5 (TM.4419–20), TM51.5 and TM47.1–2 at that pin][TM56Base] supply terminal entry-size acquisition and complete-target lifting. `Size_H` needs only an actual ambient entry size in $[1,H]$, uses no Read or replacement, and costs at most $\lceil\log_2H\rceil+1$ calls including final rejection. TM45 retains ordered outer factors and initial/current pairing. TM51.2–3 supplies the complete unit target coordinates used throughout. None is an additional online observation.
+
+<a id="TM56-L3"></a>
+[TM55.5][TM56Residue] and [TM55.6][TM56Residue6] at `dc14da97f120bbc04038a3bbc7996c78d001b9f1` are the bound residue source in `docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md`. TM55.5 assumes $h\ge2$ and integers $L,c$ satisfying $L\ge2$, $1\le c<h$, $c\le2L+2$ and $h-c\le L-1$. TM55.6 applies for every integer $H\ge8$, with $h=\lfloor H/4\rfloor$ and $L=\lfloor(h+1)/3\rfloor$; for $h\ge5$ it uses $c=h-L+1$ and $P=H-4c>0$, whereas its $h=2,3,4$ bases omit padding. Both use the same complete $U_H$, initial target, conditional same-unmodified-initial-source advice and actual source/action correspondence as this chapter. The Atomic359–360 and TM30/38/44/45/47/51 source sections are byte-identical at that immutable source and this chapter's `28a41b31247b847af1b1b3118f7cb00ffd3b9cda` pin, so the common-source premises agree. The alphabet, Read, replacement and call guarantees hold simultaneously on the same running-source execution.
+
+<a id="TM56-L4"></a>
+[TM54 at merged revision `20b37ca68329a5d1ee0b67c28ffe2c90e89f4fce`][TM56Prior54] uses the same complete $U_H$, initial target and conditional same-source advice contract. Its complete-family necessary count (TM.5412) and upper constructions in Theorems 54.5–6 remain prior comparison results. The current CPF lower bound is not a bound over all the controllers minimized there, and the residue upper remains attributed to TM55.5–6.
+
+<a id="TM56-L5"></a>
+[OR68 Definition 68.1][TM56OR68] and [OR69 Definition 69.1][TM56OR69] use the same full-source conditional task: OR68's $\nu$ and OR69's $y$ are this chapter's $w$, and OR69's $x$ is $z$. The finite target $C_{r,s}$ is $\tau_h(r+s,r+2s)$; $Z_x$ is $(0,1,4z)$. Their arbitrary exact-tree labels and full ambient controllers retain a larger policy domain than CPF. OR68's linear growth and small-cap results, [OR69's complete-family exact intervals][TM56OR69], and [OR70's Ferrers necessary bound][TM56OR70] remain comparison/reuse boundaries. In particular the published complete-family value at $36\le H\le39$ is 2, whereas Theorem TM56.3 concerns a proper ten-target-fiber class with one common symbol. It adds no complete-family exact-small-cap claim. OR70 supplies a further unrestricted necessary bound, not unrestricted $h/3$ necessity or a general exact formula. The immutable comparison revisions are `511f1920bceaaf9f6ec6411030fbd4da42abfbfd` for OR68–69 and `4f981b86a637c4aff1f1825ec0efe41dd5bb36e2` for OR70.
+
+<a id="TM56-V1"></a>
+**Bounded arithmetic evidence.** The reported finite arithmetic checks have the following scopes, separate from the universal proofs above:
+
+| Arithmetic scope | Reported result |
+|---|---|
+| $7\le h\le40$, all four $\delta$, $1\le p\le H+2$, $p\le q\le2p$: selected lower witness sets and exact prefix size arithmetic | No counterexample to validity or the $h/3-2$ count; exit 0 |
+| $2\le h\le60$, all four $\delta$, every finite and tag-0 target: residue branch/entry/label dictionary | No duplicate decoder key; exit 0 |
+| $H=36,37,38,39$, the ten target fibers: actual second-context increments, equality guards and decoder keys | Ten distinct initial-target keys; exit 0 |
+
+These are bounded integer falsifiers, not arbitrary-policy enumeration, all-word testing or proofs of universal impossibility. The residue dictionary check supports the reused TM55 construction, not a new residue theorem. The source witnesses and full-fiber coverage follow from Atomic360 and the typed parameter correspondence; the one-symbol witness for $(8,9)$ is specifically $\omega_{7,1}$.
+
+<a id="TM56-O1"></a>
+**Remaining scope.** The unrestricted complete-family minimum $A_U(H)$, its sharp leading coefficient and existence of an unrestricted normalized limit remain undetermined here. Controllers with arbitrary pre-$\rho$ modifications, label-dependent contexts, multiple cutoffs, $\rho$-first schedules or other adaptive prehistories are outside the CPF lower theorem. Their post-$\rho$ actions are not restrictions inside that theorem: every ambient finite continuation remains quantified. The ten-fiber controller and counterexample do not give a general depth normal form or an exact complete-family capacity.
+
+Authentic label production and delivery, source membership and pairing, archive parsing and retention, full-record storage, context material, guard/replacement work, integer arithmetic and memory/time costs remain separately charged. All statements are ordinary mathematics on the declared source/action interface. This chapter supplies neither Lean kernel verification nor physical verification, and does not settle the unrestricted complete-family goal.
+
+[TM56Atomic]: https://github.com/the-omega-institute/trureturing/blob/28a41b31247b847af1b1b3118f7cb00ffd3b9cda/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md
+[TM56Base]: https://github.com/the-omega-institute/trureturing/blob/28a41b31247b847af1b1b3118f7cb00ffd3b9cda/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[TM56Residue]: https://github.com/the-omega-institute/trureturing/blob/dc14da97f120bbc04038a3bbc7996c78d001b9f1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM55-P5
+[TM56Residue6]: https://github.com/the-omega-institute/trureturing/blob/dc14da97f120bbc04038a3bbc7996c78d001b9f1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM55-T6
+[TM56Prior54]: https://github.com/the-omega-institute/trureturing/blob/20b37ca68329a5d1ee0b67c28ffe2c90e89f4fce/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#54-complete-unit-family-supplied-advice-linear-capacity-and-actual-acquisition
+[TM56OR68]: https://github.com/the-omega-institute/trureturing/blob/511f1920bceaaf9f6ec6411030fbd4da42abfbfd/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#68-完整单位原树的条件补充字母表配对上界与增长必要性
+[TM56OR69]: https://github.com/the-omega-institute/trureturing/blob/511f1920bceaaf9f6ec6411030fbd4da42abfbfd/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#69-完整单位原树在三十六至五十五上限的条件字母表精确值
+[TM56OR70]: https://github.com/the-omega-institute/trureturing/blob/4f981b86a637c4aff1f1825ec0efe41dd5bb36e2/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#70-完整单位原树的-ferrers-截角与更强条件字母表下界
+
+## 追加锚（本行以下为增补区）
