@@ -86,7 +86,9 @@ def cardinal_kernel():
     return arb_mat(kernel), arb(sum(maxima, fmpq(0)))
 
 
-def produce(directory):
+def produce(directory, reconstruction="saved"):
+    if reconstruction not in ("saved", "sinc"):
+        raise ValueError("Known residual reconstruction required")
     hashes = {}
 
     def load(name):
@@ -106,6 +108,18 @@ def produce(directory):
     saved = load('restricted-schur-result.json')
     moments = load('exact-ground-moments-result.json')
     trials = load('common-trials.json')
+    cp = load('continuous-projection-result.json') if reconstruction == 'sinc' else None
+    if cp is not None:
+        if (cp['bandwidth_N'], cp['trial_gamma_terms'], cp['trial_prime_cutoff'],
+                cp['sample_spacing_h'], cp['physical_input_radius_X'],
+                cp['contour_delta']) != (64, 1024, 64, '1/256', 4, '1/8'):
+            raise ValueError('Compatible continuous projection supplier required')
+        shared = {}
+        for source in (cp, local, gram, off, low_caps):
+            for name, digest in source.get('input_sha256', {}).items():
+                if name in shared and shared[name] != digest:
+                    raise ValueError('Common projection provenance mismatch: ' + name)
+                shared[name] = digest
     for source in (weight, low, high, local, low_result, high_result, gram,
                    low_caps, off, saved, moments):
         for name, digest in source.get('input_sha256', {}).items():
@@ -163,32 +177,37 @@ def produce(directory):
         beta.append(1/delta - 1/potential)
     bmax = ball(max(beta))
 
-    rows, sample_errors = [], []
-    for k in range(415):
-        lo, hi, src = low['samples'][k], high['samples'][k], local['samples'][k]
-        if any(len(lo.get(key, [])) != 95 for key in ('H', 'PH')) or any(
-                len(row.get(key, [])) != 4 for row, key in ((hi, 'HZ'), (hi, 'PHZ'), (src, 'H'), (src, 'PH'))):
-            raise ValueError('Complete common source columns required')
-        lm, lr = [], []
-        for left, right in zip(lo['H'], lo['PH']):
-            pairs = [(Fraction(int(v[0]))*Fraction(2)**-80,
-                      Fraction(int(v[1]))*Fraction(2)**-80) for v in (left, right)]
-            if any(x > y for x, y in pairs):
-                raise ValueError('Ordered low sample endpoints required')
-            lm.append(sum((x + y)/2*t for (x, y), t in zip(pairs, (1, -1))))
-            lr.append(sum((y - x)/2 for x, y in pairs))
-        zm, zr, hm, hr = [], [], [], []
-        for j in range(4):
-            z0, z1 = pair(src['H'][j]), pair(src['PH'][j])
-            h0, h1 = pair(hi['HZ'][j]), pair(hi['PHZ'][j])
-            zm.append(z0[0] - z1[0]); zr.append(z0[1] + z1[1])
-            hm.append(h0[0] - h1[0]); hr.append(h0[1] + h1[1])
-        rows.append([ball(lm[j] - sum((zm[t]/8 + hm[t])*a[t][j] for t in range(4)))
-                     for j in range(95)])
-        sample_errors.append(ball(sum(v*v for v in lr)).sqrt()
-                             + ball(fa)*(ball(sum(v*v for v in zr)).sqrt()/8
-                                         + ball(sum(v*v for v in hr)).sqrt()))
-    sample_error = max(endpoint(bound(v)) for v in sample_errors)
+    row_metadata = {}
+    if reconstruction == 'sinc':
+        from sinc_residual_rows import reconstruct
+        rows, sample_error, row_metadata = reconstruct(low, high, local, a)
+    else:
+        rows, sample_errors = [], []
+        for k in range(415):
+            lo, hi, src = low['samples'][k], high['samples'][k], local['samples'][k]
+            if any(len(lo.get(key, [])) != 95 for key in ('H', 'PH')) or any(
+                    len(row.get(key, [])) != 4 for row, key in ((hi, 'HZ'), (hi, 'PHZ'), (src, 'H'), (src, 'PH'))):
+                raise ValueError('Complete common source columns required')
+            lm, lr = [], []
+            for left, right in zip(lo['H'], lo['PH']):
+                pairs = [(Fraction(int(v[0]))*Fraction(2)**-80,
+                          Fraction(int(v[1]))*Fraction(2)**-80) for v in (left, right)]
+                if any(x > y for x, y in pairs):
+                    raise ValueError('Ordered low sample endpoints required')
+                lm.append(sum((x + y)/2*t for (x, y), t in zip(pairs, (1, -1))))
+                lr.append(sum((y - x)/2 for x, y in pairs))
+            zm, zr, hm, hr = [], [], [], []
+            for j in range(4):
+                z0, z1 = pair(src['H'][j]), pair(src['PH'][j])
+                h0, h1 = pair(hi['HZ'][j]), pair(hi['PHZ'][j])
+                zm.append(z0[0] - z1[0]); zr.append(z0[1] + z1[1])
+                hm.append(h0[0] - h1[0]); hr.append(h0[1] + h1[1])
+            rows.append([ball(lm[j] - sum((zm[t]/8 + hm[t])*a[t][j] for t in range(4)))
+                         for j in range(95)])
+            sample_errors.append(ball(sum(v*v for v in lr)).sqrt()
+                                 + ball(fa)*(ball(sum(v*v for v in zr)).sqrt()/8
+                                             + ball(sum(v*v for v in hr)).sqrt()))
+        sample_error = max(endpoint(bound(v)) for v in sample_errors)
     kernel, lebesgue = cardinal_kernel()
     line_caps = [endpoint(low_caps['low_full_H_line_L2_upper']),
                  endpoint(off['retained_prime_full_HZ_line_L2_upper']),
@@ -202,8 +221,26 @@ def produce(directory):
     product = math.prod(fmpq(2*j + 1, 2)**2 for j in range(2, 32))
     analytic = line/(arb.pi()*(strip - circle)).sqrt()*(h/circle)**64*arb(product)
     point_error = analytic + lebesgue*ball(sample_error)
+    if reconstruction == 'sinc':
+        projection_caps = [endpoint(low_caps['low_full_H_physical_and_lattice_tail_upper']),
+                           endpoint(off['retained_prime_full_HZ_sinc_projection_pointwise_error_upper']),
+                           endpoint(cp['combined_sinc_quadrature_and_physical_tail_pointwise_error_upper'])]
+        if min(projection_caps) < 0:
+            raise ValueError('Nonnegative continuous projection allowances required')
+        lattice_ratio = (-2*arb.pi()*strip/h).exp()
+        sinc_line = ((2*64*strip).sinh()/(2*arb.pi()*strip)).sqrt()
+        low_projection = (2*ball(line_caps[0])*sinc_line*lattice_ratio/(1 - lattice_ratio)
+                          + (64/arb.pi())*ball(projection_caps[0]))
+        projection_error = low_projection + ball(fa)*(ball(projection_caps[1])
+                                                     + ball(projection_caps[2])/8)
+        row_metadata['common_continuous_projection_operator_error_upper'] = bound(projection_error)
+        point_error = analytic + lebesgue*(ball(sample_error) + projection_error)
     rho, prime_error = ball(rho_value), ball(prime_value)
     integration_error = bmax*(2*rho*arb(3).sqrt()*point_error + 3*point_error**2)
+    if reconstruction == 'sinc':
+        mass = 6*h*ball(sum(beta, Fraction(0)))
+        integration_error = 2*rho*(bmax*mass).sqrt()*point_error + mass*point_error**2
+        row_metadata['core_weight_gain_mass_upper'] = bound(mass)
     prime_core_error = bmax*(2*rho*prime_error + prime_error**2)
     integration_item, prime_item = bound(integration_error), bound(prime_core_error)
     total_item = bound(ball(endpoint(integration_item) + endpoint(prime_item)))
@@ -257,6 +294,7 @@ def produce(directory):
         'theta_callbacks_executed': 0, 'old_producers_rerun': False,
         'new_parameter_or_cofinal_sign_certified': False,
         'saved_global_04605_recomputed': False, 'Lean_certification': False,
+        **row_metadata,
     }
 
 
@@ -264,10 +302,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--input-dir', type=Path, default=Path(__file__).resolve().parent)
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--reconstruction', choices=['saved', 'sinc'], default='saved')
     args = parser.parse_args()
     ctx.prec = 192
-    result = produce(args.input_dir)
-    output = args.output or args.input_dir/'weighted-residual-core-result.json'
+    result = produce(args.input_dir, args.reconstruction)
+    name = ('sinc-weighted-residual-core-result.json' if args.reconstruction == 'sinc'
+            else 'weighted-residual-core-result.json')
+    output = args.output or args.input_dir/name
     output.write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({k: v for k, v in result.items() if k != 'restricted_gain_entry_intervals'}, indent=2))
 
