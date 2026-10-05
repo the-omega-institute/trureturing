@@ -3257,6 +3257,104 @@ The four- and five-word cases at 19, complete exclusion of its square
 layer, the whole ternary-height-two branch, and unrestricted Erdős #7
 remain unresolved.
 
+### Sixteen safe digits must each occur at four private words
+
+Retain the original-family assumptions at $q=23$ in CD94, and the
+actual pure $q^2$ original h and unit-digit set U supplied in CD99.
+For each safe digit d define its empty private-word cells by
+
+$$
+E(d)=\{u\in\Lambda:C(d,u)=\varnothing\}.
+\tag{CD106}
+$$
+
+Then the stronger distribution constraint is
+
+$$
+\boxed{
+\#\{d\notin U:|E(d)|\ge2\}\le4,\qquad
+\#\{d\notin U:\#\{u\in\Lambda:C(d,u)\ne\varnothing\}\ge4\}\ge16.
+}
+\tag{CD107}
+$$
+
+The cells contain actual original top owners with their own cofactors
+and phases. No common owner, common cofactor or simultaneous meeting
+point is asserted across cells.
+
+Suppose five distinct safe digits $d_1,\ldots,d_5$ each had at least
+two empty private-word cells. Removing them leaves at least fifteen
+safe digits and, by CD99, at least eleven top-positive digits. Choose
+seven disjoint pairs with every a-digit top-positive. All endpoints
+avoid the five individual digits. Each pair has at most one bad
+private word for the strict gain inequality CD90.
+
+There is a joint assignment of the seven pairs and five individual
+digits to twelve distinct modulo-27 parents outside one private
+word v. A pair is assigned at a good word; an individual digit is
+assigned at one of its empty cells. The reservation can be verified
+directly by Hall's condition. Put
+
+$$
+\begin{aligned}
+b(u)&=\#\{t:u\text{ is bad for pair }t\},\\
+h(u)&=\#\{j:u\notin E(d_j)\},\\
+m(v,u)&=\#\{j:E(d_j)=\{v,u\}\}.
+\end{aligned}
+\tag{CD108}
+$$
+
+Choose v so that for every other private word u, $m(v,u)\le3$ and
+either $b(u)\le4$ or $h(u)\le2$. Such a choice exists: at most one
+word is bad for five or more pairs. If four or more individual hole
+sets equal the same two-element set, reserve a word outside that
+set, choosing the heavy bad word itself when it is outside. At an
+endpoint of that hole pair, at most one individual menu omits the
+word. If no hole pair occurs four times, reserve the heavy bad word
+when one exists, and otherwise any private word.
+
+After reserving v, each pair has at least nine available parents
+and each individual digit at least three. A set of at most nine
+requests containing a pair satisfies Hall immediately. Four or
+five individual requests cannot all be confined to one word,
+because $m(v,u)\le3$; smaller individual sets fit one menu. Any set
+of ten or more requests has at least five pairs and three individuals.
+If its union omitted a remaining word u, both $b(u)\ge5$ and
+$h(u)\ge3$ would hold, contrary to the choice of v. Its union therefore
+contains all twelve parents. This proves the joint assignment.
+
+Use the same thirteen-symbol mixed code as CD100. At a parent
+assigned to $d_j$, the source preserves the complete $9W$ coordinate
+and inserts $d_j$. If its actual covering owner had row two, that
+owner would belong to the selected empty cell $C(d_j,u_j)$, a
+contradiction. For each target point in that parent, an actual low owner
+supplies coverage at its own original phase. Tops at other words for this individual digit are
+not omitted and require no extra output.
+
+The seven pairs each supply at least one unit of gain. Omissions
+and duplications are still confined to paired top owners. Retaining
+three omitted owners for the pure outputs gives
+
+$$
+-|O|+|C|\le3-7=-4.
+\tag{CD109}
+$$
+
+The unchanged label comparison constructs a strictly smaller
+whole cover, a contradiction. Thus at most four safe digits have
+two or more empty private-word cells. Since there are at least
+twenty safe digits and exactly five private words, at least sixteen
+digits each have top owners at four or more private words.
+
+A complete scoped transient Lean application checks CD107 from the
+original globally count-then-modulus-sum-minimal whole family,
+pure 3 and 9, original ternary heights at most two, $q=23$ and an
+actual deep original. Its 135 axiom reports use only `propext`,
+`Classical.choice` and `Quot.sound`, with no errors or `sorryAx`.
+No new retained declaration, freeze or coverage record is introduced.
+The remaining five-word case at 23 and unrestricted Erdős #7 remain
+unresolved.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
