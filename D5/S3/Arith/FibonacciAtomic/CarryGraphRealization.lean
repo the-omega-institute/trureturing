@@ -183,7 +183,6 @@ private theorem tree_layers (m : ℕ) (γ : Path) (hγ : IsRootPath m γ) :
     rcases List.mem_flatMap.mp hw'.1 with ⟨v, hv, hwv⟩
     simp only [List.mem_cons, List.not_mem_nil, or_false] at hwv
     rcases hwv with he | he <;> rw [he] <;> simp [(layer d).2.2 v hv]
-
 private theorem scan_tree (m : ℕ) (γ : Path) (hγ : IsRootPath m γ) :
     (∀ d (tape : Tape) j, scan m γ tape d = Sum.inr j ↔
       ∃ hj : j < (continuing m γ d).length,
@@ -403,7 +402,6 @@ private theorem scan_tree (m : ℕ) (γ : Path) (hγ : IsRootPath m γ) :
       have hz' : 2 * a + (tape d).toNat = z := by rw [ht, hb]
       simp only [scan, hs, hz', dif_pos hz, hi]
   exact ⟨active_words, leaf_words, origin⟩
-
 private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath m γ) :
     (∀ i : Fin m, 0 ≤ (law γ : m) i) ∧
     (∑ i : Fin m, (law γ : m) i) = 1 ∧
@@ -619,7 +617,6 @@ private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPat
   · intro ht i; rw [← anchor] at ht; exact lt_of_lt_of_le ht (minimum i)
   · exact Summable.tsum_mono dyadic_summable summable
       (fun d => div_le_div_of_nonneg_right (residual_compare d) (by positivity))
-
 private theorem fair_tail (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath m γ) :
     (∀ d, MeasurableSet {tape : Tape | (scan m γ tape d).isRight} ∧
       fairTape {tape : Tape | (scan m γ tape d).isRight} =
@@ -751,7 +748,6 @@ private theorem fair_tail (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath
     · intro d; exact div_nonneg (by exact_mod_cast (hγ.2 d).1.1.1) (by positivity)
     · exact (law_bounds m hm γ hγ).2.2.2.2.2.1
   exact ⟨active, terminates, expectation, prefix_measure⟩
-
 private theorem returned_law (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath m γ) :
     (∀ tape (i : Fin m) n, sample m γ tape = some (i, n) ↔
       scan m γ tape n = Sum.inl (i, n)) ∧
@@ -927,8 +923,7 @@ private theorem returned_law (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootP
     rfl
   exact ⟨sample_eq, charged, tail_event, prefix_free, returned⟩
 
-/-- Every legal root path realizes its fixed-label law on the independent fair
-bit tape, with its own prefix leaves, charged stopping length and tail cost. -/
+/-- Legal root paths realize fixed-label laws, charged prefix leaves and stopping tail costs. -/
 theorem result (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath m γ) :
     (∀ i : Fin m, 0 ≤ (law γ : m) i) ∧
     (∑ i : Fin m, (law γ : m) i) = 1 ∧
@@ -952,13 +947,14 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath m γ) :
           ENNReal.ofReal (((γ.state d).r : ℝ) / (2 : ℝ) ^ d)) ∧
     (∀ᵐ tape ∂fairTape, ∃ i n, sample m γ tape = some (i, n)) ∧
     (∫⁻ tape, bill m γ tape ∂fairTape) = ENNReal.ofReal (pathCost γ) ∧
-    pathCost γ ≤ m ∧ DyadicSupportLines.cost ((law γ : m)) ≤ pathCost γ := by
+    pathCost γ ≤ m ∧ DyadicSupportLines.cost ((law γ : m)) ≤ pathCost γ ∧
+    (∃ δ : Path, IsRootPath 2 δ ∧ DyadicSupportLines.cost ((law δ : 2)) < pathCost δ) := by
   classical
   obtain ⟨nonneg, total, anchor, minimum, positive, _, upper, lower⟩ := law_bounds m hm γ hγ
   obtain ⟨first, charged, tail_event, prefix_free, returned⟩ := returned_law m hm γ hγ
   obtain ⟨tails, terminates, expectation, _⟩ := fair_tail m hm γ hγ
   refine ⟨nonneg, total, anchor, minimum, positive, prefix_free, ?_, ?_, charged,
-    returned, ?_, ?_, expectation, upper, lower⟩
+    returned, ?_, ?_, expectation, upper, lower, ?_⟩
   · intro d
     exact ⟨((tree_layers m γ hγ).2.2 d).1, ((tree_layers m γ hγ).2.2 d).2.2⟩
   · intro tape i d
@@ -971,5 +967,34 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath m γ) :
     | inl returned =>
       refine ⟨returned.1, returned.2, (first tape returned.1 returned.2).mpr ?_⟩
       exact ((scan_tree m γ hγ).2.2 d tape returned.1 returned.2 hs).2.2.1
+  · let δ : Path := ⟨fun d => ⟨1, if d = 0 then 2 else 1⟩,
+      fun d => if d = 0 then ⟨0, 1, 0⟩ else ⟨1, 0, 0⟩⟩
+    have legal : IsRootPath 2 δ := by
+      refine ⟨rfl, fun d => ?_⟩
+      cases d <;> norm_num [δ, Legal, IsState, successor, ones]
+    have half : (law δ : 2) 0 = 1 / 2 := by
+      dsimp only; rw [Real.ofDigits_eq_sum_add_ofDigits _ 1]
+      have tail : (fun i : ℕ => labelDigit δ (0 : Fin 2) (i + 1)) = fun _ => Fin.last 1 := by
+        funext i; simp [labelDigit, labelSet, δ]
+      rw [tail, Real.ofDigits_const_last_eq_one]
+      norm_num [labelDigit, labelSet, δ, Real.ofDigitsTerm]
+    have uniform : (law δ : 2) = (fun _ : Fin 2 => (1 / 2 : ℝ)) := by
+      have total := (law_bounds 2 (by decide) δ legal).2.1
+      simp only [Fin.sum_univ_two, half] at total
+      funext i; fin_cases i <;> dsimp <;> linarith
+    have dyadic : DyadicSupportLines.cost ((law δ : 2)) = 1 := by
+      rw [uniform, DyadicSupportLines.cost, tsum_eq_single 0]
+      · norm_num [DyadicSupportLines.residual, Fin.sum_univ_two]
+      · intro d hd
+        obtain ⟨d, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hd
+        have floor : ⌊(2 : ℝ) ^ (d + 1) * (1 / 2)⌋ = (2 : ℤ) ^ d := by
+          rw [show (2 : ℝ) ^ (d + 1) * (1 / 2) = ((2 : ℤ) ^ d : ℝ) by push_cast; ring]
+          simpa only [Int.cast_pow, Int.cast_ofNat] using
+            (Int.floor_intCast (R := ℝ) ((2 : ℤ) ^ d))
+        simp only [DyadicSupportLines.residual, Fin.sum_univ_two, floor,
+          Int.cast_add, Int.cast_pow, Int.cast_ofNat]; rw [pow_succ]; ring
+    have paid : pathCost δ = 2 := by
+      simpa [pathCost, δ, one_div, inv_pow] using tsum_geometric_inv_two
+    exact ⟨δ, legal, by rw [dyadic, paid]; norm_num⟩
 
 end D5.S3.Arith.FibonacciAtomic.CarryGraphRealization
