@@ -5673,3 +5673,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 三个连贯临时源码增量都真实编译 exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。实际导数与双线性配对源码 `.lake/mostow-h3-native-lorentz-coordinate-tangent.lean` 为 225174 字节，SHA256 `522fb8d31093c04b58ccf0b715255cdffad30775a158640a0c4bc8d144257b0f`，仅在完整前批成功源码前增加 44 字节热缓存 `Deriv.Prod` import。正交及正定性源码 `.lake/mostow-h3-native-lorentz-tangent-positive.lean` 为 227021 字节，SHA256 `9aa02734e9f5e46da13327aefd6a2af2c6682c718b644565752258d07637a721`，首轮 host `21797` 通过。原等距导数变换的完整累计源码 `.lake/mostow-h3-native-isometry-lorentz-derivative.lean` 为 227805 字节，SHA256 `11ee5c7bd6437e34fb48d31e0a37e892ad5808cf06ec9202fabeb07bd97f1738`，第二轮真实编译通过；后两批保持各自成功前批为完整 offset0 前缀，无新 import。所有失败或含警告轮次的完整源码日志保留排除，未降低陈述或关闭 linter。实际退出码和完整公理输出保留，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
 
 该原有理坐标导数、Lorentz 配对代数和既有线性作用接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批为同一原模型的黎曼度量构造提供真实切向数据；仍须构造实际平滑度量与全局内蕴距离匹配、曲率 −1、原流形覆盖和体积绑定。有限体积格子同构产生边界交比保持的全局推导、完整给定 `h`／完整 `d` 的 Mostow–Prasad 及官方验收继续未完成。
+
+
+### 原 Lorentz 坐标的实际逆恢复及任意曲线坐标导数（2026-10-06）
+
+本闭合小批接续原等距的 Lorentz 导数变换，仍使用同一原 H3、原 `v` 与原坐标。`nativeLorentz_heightDifference` 给出 `v p 0 - v p 3 = 1 / height p.coordinates`；其非零性由原点的正高度内部推出。实际高度、水平实部、水平虚部依次由 `1/(v₀-v₃)`、`v₁/(v₀-v₃)`、`v₂/(v₀-v₃)` 恢复。
+
+对于任意实际曲线 `Q : ℝ → H3`，若 `v ∘ Q` 在实际参数 `s` 的导数为 `u : Fin 4 → ℝ`，则原高度的导数为 `-(u 0-u 3) * height (Q s).coordinates ^ 2`；原水平实部导数为 `height (Q s).coordinates * u 1 - (Q s).coordinates.1.fst.re * height (Q s).coordinates * (u 0-u 3)`，虚部对应以 `u 2` 和实际虚部替换。三个 `HasDerivAt` 结论用同一个 `Q,s,u`，不额外假设原坐标曲线已有导数；实际分母非零由上述恒等式证明。本批不主张全局光滑度或原内蕴距离兼容已完成。
+
+完整累计临时源码 `.lake/mostow-h3-native-lorentz-coordinate-recovery.lean` 为 232372 字节，SHA256 `148c523af6ae45d9793245275610fb29db0495ffd097430e2170d650dfda6a45`，前批 227805 字节源码为完整 offset0 前缀，无新 import。第三轮真实编译 exit0，零错误、零警告，173 条公理输出仅含 `propext, Classical.choice, Quot.sound`，无 `sorryAx`；完整日志 22695 字节，SHA256 `c106d5f416580419634afc48d620a669fe6446a7beef5d5faa5f0bec31417f0d`。调用方已核对源码、前缀、预登记、日志及真实退出收据的长度和哈希，排除前两轮失败；没有新增 SSHX 共识。
+
+逐声明 `proof_shape: bind-only`、`admission_basis: none`：复用现有 Lorentz 高度配对恒等式、分量导数及除法求导，新增步骤为实际参数绑定与代数规范化。只提交本 Library 复用说明，精确 Lean 与成功/失败证据留在本次临时结果目录；远端 CI 验证本说明，不代表完整 Mostow 验收。全局原光滑度量、原内蕴距离等式、曲率 −1、原流形覆盖/有限体积及同一规定 `h,d` 的完整 Mostow–Prasad 仍未闭合。
