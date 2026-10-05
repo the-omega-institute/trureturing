@@ -13,35 +13,35 @@ internal sealed class WeightedInghamRateDocument : IScribeDocumentDefinition
     private static Formula Phi(Formula x) => Call("Phi", x);
     private static Formula Constant() => new Formula.Fraction(D(2), Seq(Sqrt, Grp(D(5))));
     private static Formula Row(Formula n) => Seq(
-        new Formula.Subscript(Sum, Seq(D(1), Le, F.Id("k"), Le, n)),
+        new Formula.Subscript(Sum, Seq(D(1), Sp, Le, Sp, F.Id("k"), Sp, Le, Sp, n)),
         Phi(new Formula.Fraction(Fib(F.Id("k")), Fib(n))));
 
     private static Formula WeightedSumFormula()
     {
         Formula n = F.Id("n"), k = F.Id("k");
         return Disp(Equal(W(n), Seq(
-            new Formula.Subscript(Sum, Seq(D(1), Le, k, Le, n)),
-            Fib(k), Cdot, Call("fract", new Formula.Fraction(Fib(n), Fib(k))))));
+            new Formula.Subscript(Sum, Seq(D(1), Sp, Le, Sp, k, Sp, Le, Sp, n)),
+            Fib(k), Cdot, Sp, Call("fract", new Formula.Fraction(Fib(n), Fib(k))))));
     }
 
     private static Formula KernelFormula()
     {
         Formula x = F.Id("x");
-        return Disp(Equal(Phi(x), Seq(x, Cdot,
+        return Disp(Equal(Phi(x), Seq(x, Cdot, Sp,
             new Formula.Floor(new Formula.Fraction(D(1), x)))));
     }
 
     private static Formula ResultFormula()
     {
         Formula n = F.Id("n"), c = F.Id("C"), n0 = F.Id("N0");
-        Formula rate = Seq(c, Cdot,
+        Formula rate = Seq(c, Cdot, Sp,
             new Formula.Power(F.Id("phi"), new Formula.Fraction(Seq(Minus, n), D(2))));
         return Disp(new Formula.Aligned([
-            Seq(Exists, Sp, c, Gt, D(0), Comma, Sp, Exists, Sp, n0, InMacro,
+            Seq(Exists, Sp, c, Sp, Gt, Sp, D(0), Comma, Sp, Exists, Sp, n0, InMacro,
                 Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Forall, Sp, n, InMacro,
-                Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, n0, Le, n, Rightarrow),
-            Seq(Abs(Seq(new Formula.Fraction(W(n), Fib(n)), Minus, Constant())), Le, rate, Land),
-            Seq(Abs(Seq(Row(n), Minus, Open, n, Minus, Constant(), Close)), Le, rate)
+                Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, n0, Sp, Le, Sp, n, Sp, Rightarrow),
+            Seq(Abs(Seq(new Formula.Fraction(W(n), Fib(n)), Minus, Constant())), Sp, Le, Sp, rate, Sp, Land),
+            Seq(Abs(Seq(Row(n), Minus, Open, n, Minus, Constant(), Close)), Sp, Le, Sp, rate)
         ]));
     }
 
