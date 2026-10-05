@@ -74,7 +74,6 @@ internal sealed class EquiprobablePgmActiveSetRefutationDocument : IScribeDocume
     private static Formula Frac(Formula top, Formula bottom) => new Formula.Fraction(top, bottom);
     private static Formula Pow(Formula b, Formula e) => new Formula.Power(b, e);
     private static Formula NumberSet(Formula name) => Seq(Mathbb, Grp(name));
-    private static Formula Real() => NumberSet(F.Id("R"));
     private static Formula Complex() => NumberSet(F.Id("C"));
     private static Formula Nat() => NumberSet(F.Id("N"));
     private static Formula Fin(Formula n) => Call(F.Id("Fin"), n);

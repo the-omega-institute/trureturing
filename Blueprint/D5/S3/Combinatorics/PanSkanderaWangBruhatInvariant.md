@@ -102,7 +102,21 @@ $$\forall n \in \mathbb {N}, r \in \mathbb {N}, a \in \operatorname{List}\left(\
 
 Ordinary insertion places the new maximum n at the one-based position r.
 
-**Theorem 1.8 (Matched insertion preserves the invariant).**
+**Theorem 1.8 (Pair swapping preserves length).**
+
+$$\forall x \in \operatorname{List}\left(\mathbb {N}\right),\; \operatorname{length}\left(\operatorname{swapPairs}\left(x\right)\right) = \operatorname{length}\left(x\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PanSkanderaWangBruhatInvariant.swapPairs_length` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Sihong Pan, Mark Skandera, Jiayuan Wang (2026). *Permanental Inequalities and Unit Interval Orders*. DOI: [10.4204/EPTCS.445.17](https://doi.org/10.4204/EPTCS.445.17). URL: <https://arxiv.org/abs/2606.13162v1>.
+
+*Commentary.*
+
+Pair swapping preserves the length of every list.
+
+**Theorem 1.9 (Matched insertion preserves the invariant).**
 
 $$\forall n \in \mathbb {N}, m \in \mathbb {N}, r \in \mathbb {N}, s \in \mathbb {N}, a \in \operatorname{List}\left(\mathbb {N}\right), b \in \operatorname{List}\left(\mathbb {N}\right),\; ((n = m + 1) \land \left((\operatorname{IsPerm}\left(m, a\right)) \land \left((\operatorname{IsPerm}\left(m, b\right)) \land \left((\operatorname{SelectionInvariant}\left(m, a, b\right)) \land \left((1 \le r) \land \left((r \le n) \land \left((s = 2 \cdot r - n) \land (1 \le s)\right)\right)\right)\right)\right)\right)) \Rightarrow (\operatorname{SelectionInvariant}\left(n, \operatorname{insertMax}\left(n, r, a\right), \operatorname{inss}\left(s, b\right)\right))$$
 
@@ -126,4 +140,5 @@ Matched ordinary insertion and suffix-swapping insertion preserve the full selec
 - Truth anchor: `D5/S3/Combinatorics/PanSkanderaWangBruhatInvariant.selectionInvariant_insert`
 - Truth anchor: `D5/S3/Combinatorics/PanSkanderaWangBruhatInvariant.selectionInvariant_ru`
 - Truth anchor: `D5/S3/Combinatorics/PanSkanderaWangBruhatInvariant.selectionPositions`
+- Truth anchor: `D5/S3/Combinatorics/PanSkanderaWangBruhatInvariant.swapPairs_length`
 - Dependency: [D5/S3/Combinatorics/PanSkanderaWangBruhatDefs](PanSkanderaWangBruhatDefs.md)

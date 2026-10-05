@@ -88,25 +88,19 @@ internal sealed partial class ProductionCliEnvironment
                 arguments);
 
     public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
-        scribeEmissionVerifier is null
-            ? new CommandResult(
-                false,
-                string.Empty,
-                "COVER_INVALID Scribe emission verifier is unavailable\n")
-            : CoverAtomCommand.Run(
-                repositoryRoot,
-                repository,
-                leanReportSource,
-                scribeEmissionVerifier,
-                timeProvider.GetUtcNow(),
-                arguments);
+        CoverAtomCommand.Run(
+            repositoryRoot,
+            repository,
+            leanReportSource,
+            timeProvider.GetUtcNow(),
+            arguments);
 
     public CommandResult QuarantineAtom(IReadOnlyList<string> arguments) =>
         QuarantineAtomCommand.Run(repositoryRoot, repository, arguments);
 
     public CommandResult CoverBatch(IReadOnlyList<string> arguments) =>
         CoverBatchCommand.Run(repositoryRoot, repository, leanReportSource,
-            scribeEmissionVerifier, timeProvider.GetUtcNow(), arguments);
+            timeProvider.GetUtcNow(), arguments);
 
     public CommandResult SettleBatch(IReadOnlyList<string> arguments) =>
         SettleAtomCommand.RunBatch(repositoryRoot, repository, arguments, leanReportSource);

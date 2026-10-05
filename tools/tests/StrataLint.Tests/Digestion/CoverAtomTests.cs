@@ -287,10 +287,11 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void CoverIsUnavailableWithoutScribeVerifier()
+    public void CoverWritesCoverageWithoutScribeVerifier()
     {
         var inputs = new CoverSpec().Materialize();
         using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, DirectoryLedgerTestSupport.Project(inputs.Files));
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -302,8 +303,10 @@ public sealed partial class CoverAtomTests
         var result = environment.CoverAtom(
             ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"]);
 
-        Assert.False(result.Success);
-        Assert.Contains("Scribe emission verifier is unavailable", result.Error, StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
+        var entry = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
     }
 
     private static CoverExecution Execute(CoverSpec spec,
