@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SomborEnergyIntegerRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ghanbari-2022-sombor-energy-conjecture-3-8` (refuted) by `D5/S3/Combinatorics/Graph/SomborEnergyIntegerRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ghanbari-2022-sombor-energy-conjecture-3-8","declaration_gid":"D5/S3/Combinatorics/Graph/SomborEnergyIntegerRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nima Ghanbari (2022). *On the Sombor characteristic polynomial and Sombor energy of a graph*. DOI: [10.1007/s40314-022-01957-5](https://doi.org/10.1007/s40314-022-01957-5). URL: <https://arxiv.org/abs/2108.08552v1>.
