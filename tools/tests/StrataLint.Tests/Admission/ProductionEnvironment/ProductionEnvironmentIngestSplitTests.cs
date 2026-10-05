@@ -7,8 +7,7 @@ namespace StrataLint.Tests;
 
 public sealed partial class ProductionEnvironmentTests
 {
-    private static readonly string[] ReportInputUnchangedArguments =
-        ["--base", "baseline"];
+    private static readonly string[] ReportInputUnchangedArguments = [];
 
     [Fact]
     public void IngestUncoveredOnlyDoesNotLoadLeanOrVerifyScribeAndMatchesAlignedBytes()
@@ -148,31 +147,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("skipped_existing=1", result.Output, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(before, GeneratedIngestImage(temporary));
-    }
-
-    [Fact]
-    public void IngestPreservesRemovedExistingReceiptedEntryWithoutRestoringIt()
-    {
-        const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
-        var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        var existingAtomId = ExistingAtomId(fixture);
-        var atomPath = DirectoryAtomPath(existingAtomId, "residual-open");
-        fixture.Baseline[atomPath] = fixture.Baseline[atomPath]
-            .Replace(
-                "coverage_gids: []",
-                $"coverage_gids:\n  - gid: {coverageGid}\n    target_statement_id: null",
-                StringComparison.Ordinal)
-            .Replace(
-                "  unresolved_subitems: []",
-                "  unresolved_subitems:\n    - inherited-open-clause",
-                StringComparison.Ordinal);
-        Assert.True(fixture.Files.Remove(atomPath));
-        var casPath = Assert.Single(fixture.Files.Keys, DigestionCasStore.IsCanonicalPath);
-        Assert.True(fixture.Files.Remove(casPath));
-
-        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
-            fixture,
-            RawChangeSet.Create([atomPath, casPath]));
     }
 
     [Fact]

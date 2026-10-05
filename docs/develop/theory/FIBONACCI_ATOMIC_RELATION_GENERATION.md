@@ -60650,3 +60650,439 @@ $f_k(1)=0$，且 $H(x)f_k(x)\to0$；这两个端点承担上述身份。将积�
 本定理的范围是每个固定 $0<\vartheta<1/4$，不要求该区间边缘的一致常数，也不据此排除其他截断指数的估计。全部对数幂改进仍弱于 $k^{-1/4+\varepsilon}$ 的额外幂收益：对固定 $A$ 与 $0<\varepsilon<1/4$，$k^{1/4-\varepsilon}/(\log k)^A\to\infty$。因此（396.3）不达到既有完整 Báez-Duarte—Robin 归约所需的临界指数；未支付的仍是完整实际有符号和的额外幂尺度，而不是这两份对数主项是否能够在同一来源中抵消。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 397. 实际中心余核的积分前绝对预算与原始 Robin 尾项恢复
+
+**定义 397.1（同源余核的绝对尺度差分）。** 保留 §§386、387、390、395 的同一实际 $k,K,H,\mathcal B,A,D,\delta$，记 $\mu_0=\delta^{-1}>0$。在全部 $y>0$ 上使用
+
+$$
+G(y)=Ay\log y-Dy,\qquad R(y)=K(y)-G(y).
+\tag{397.1}
+$$
+
+因此 $0<y<1$ 时仍为 $R(y)=Dy-Ay\log y$。固定实数 $x>1$，置
+
+$$
+w(t)=\frac{1+\log t}{t^2\log^2t},\qquad
+W_x=\frac{1+\log x}{\log^2x},\qquad
+Q_x(m)=\int_x^\infty
+\left|R(t/m)-R(t/(m+1))\right|w(t)\,dt.
+\tag{397.2}
+$$
+
+这里的 $Q_x$ 先取绝对值再积分，区别于 §395 的 $|J_x(m)|$。再记
+
+$$
+\begin{aligned}
+a_2&=\mu_0+A,\\
+a_1&=3\mu_0+2A(1+\log2)+2|D|,\\
+a_0&=4\mu_0,\\
+c_1&=\mu_0(3+2\log2)+|D|+A\log2.
+\end{aligned}
+\tag{397.3}
+$$
+
+实际 $A>0$。这些常数保留实际逆核与连续主项的参数，不另选独立最优值。
+
+**定理 397.2（实际阶跃与连续主项共同支付积分前预算）。** 对每个 $x>1$，所有 $Q_x(m)$ 有限，并有
+
+$$
+Q_x(1)\le W_xc_1,
+\qquad
+\boxed{Q_x(m)\le\frac{W_x}{m^2}
+\left[a_2(\log m)^2+a_1\log m+a_0\right]}
+\quad(m\ge2).
+\tag{397.4}
+$$
+
+存在有限常数 $C_H$ 使 $|H_m|\le C_Hm/(\log m)^4$ 对全部整数 $m\ge2$ 成立。对任何这样的常数，以及每个整数 $M\ge2$，
+
+$$
+\boxed{
+\sum_{m>M}|H_m|Q_x(m)
+\le C_HW_x\left[
+\frac{a_2}{\log M}
++\frac{a_1}{2(\log M)^2}
++\frac{a_0}{3(\log M)^3}\right].}
+\tag{397.5}
+$$
+
+特别地，完整实际序列满足积分前的绝对条件
+
+$$
+\sum_{m\ge1}\int_x^\infty
+\left|H_m[R(t/m)-R(t/(m+1))]\right|w(t)\,dt<\infty.
+\tag{397.6}
+$$
+
+**证明。** 直接复用（386.4）、（387.17）及（390.5）的实际应用。因为 $\beta_1-E\ge\delta>0$，有
+
+$$
+0\le k(d)\le\mu_0\log d\quad(d\ge1),\qquad
+|R(y)|\le\mu_0(1+\log y)\quad(y\ge1).
+\tag{397.7}
+$$
+
+第一式包括 $k(1)=0$。§390 已给对每个固定正数 $r$ 的 $H_m=O_r(m/(\log m)^r)$；取 $r=4$ 并扩大常数以包含有限初段，得到上述 $C_H$。这里不重证定量 PNT 或这份实际卷积增长界。
+
+当 $t\ge x$ 时，$w(t)\le W_xt^{-2}$。对 $m\ge2$，令 $c=m/(m+1)$，正尺度换元给
+
+$$
+Q_x(m)\le\frac{W_x}{m}
+\int_{x/m}^\infty|R(y)-R(cy)|\frac{dy}{y^2}.
+\tag{397.8}
+$$
+
+先处理 $y\le m$ 的部分；若其下端超过 $m$，该部分为空。其积分域包含在 $[1/m,m]$ 中，且
+
+$$
+|R(y)-R(cy)|
+\le K(y)-K(cy)+|G(y)-G(cy)|.
+\tag{397.9}
+$$
+
+阶跃项非负。整数 $d$ 对这个阶跃差的贡献恰好出现在 $d\le y<d/c$；与当前积分域相交时必有 $d\le m$。有限求和与积分交换后，
+
+$$
+\begin{aligned}
+\int_{x/m}^{m}[K(y)-K(cy)]\frac{dy}{y^2}
+&\le(1-c)\sum_{d\le m}\frac{k(d)}d\\
+&\le\frac{\mu_0}{m+1}\log m(1+\log m).
+\end{aligned}
+\tag{397.10}
+$$
+
+若下端超过上端，该式的左侧按空域积分取零。每个完整阶跃区间的积分是 $(1-c)/d$；接缝裁切只减小这个非负积分。最后使用经典调和和上界 $\sum_{d\le m}d^{-1}\le1+\log m$。
+
+连续主项在正半轴可微，且 $G'(u)=A(1+\log u)-D$。对 $cy\le u\le y$，$|\log u|\le|\log y|+\log2$，故微积分基本定理给
+
+$$
+|G(y)-G(cy)|
+\le\frac{y}{m+1}
+\left[A(1+\log2+|\log y|)+|D|\right].
+\tag{397.11}
+$$
+
+这同时包括 $y<1$，没有删除低商连续尾。经典幂—对数积分给
+
+$$
+\int_{1/m}^{m}\frac{dy}{y}=2\log m,
+\qquad
+\int_{1/m}^{m}\frac{|\log y|}{y}\,dy=(\log m)^2.
+\tag{397.12}
+$$
+
+因此连续项的低域积分至多
+
+$$
+\frac{A(\log m)^2+2[A(1+\log2)+|D|]\log m}{m+1}.
+\tag{397.13}
+$$
+
+再处理 $y\ge m$ 的部分。$m\ge2$ 保证 $cy\ge m^2/(m+1)>1$，两份读数都在（397.7）的实际余项包络内。于是
+
+$$
+\int_m^\infty|R(y)-R(cy)|\frac{dy}{y^2}
+\le2\mu_0\int_m^\infty\frac{1+\log y}{y^2}\,dy
+=\frac{2\mu_0(\log m+2)}m.
+\tag{397.14}
+$$
+
+如果原下端 $x/m>m$，扩大到 $[m,\infty)$ 仍是合法上界。在（397.8）中合并（397.10）、（397.13）、（397.14），并使用 $1/[m(m+1)]\le m^{-2}$，即得（397.4）的 $m\ge2$ 子句。这里在低域使用真实阶跃区间，在高域使用已经中心化的 $R$ 包络；没有把 $K$ 和 $G$ 在无穷高域的绝对质量分别求和。
+
+$m=1$ 时，在 $1<t<2$ 使用 $|R(t)|\le\mu_0(1+\log2)$ 及低商式 $|R(t/2)|\le|D|+A\log2$。在 $t\ge2$ 使用 $|R(t)-R(t/2)|\le2\mu_0(1+\log t)$。将 $[x,\infty)$ 分别扩大到这两个正域，并用
+
+$$
+\int_1^2t^{-2}dt\le1,\qquad
+\int_2^\infty(1+\log t)t^{-2}dt=\frac{\log2+2}{2},
+$$
+
+得到 $Q_x(1)\le W_xc_1$。所有被积函数可测：$K$ 是局部有限阶跃函数，$G$ 连续，尺度换元和取绝对值保持可测性；上述有限上界同时证明各积分存在。
+
+最后将（397.4）乘以实际 $|H_m|$。对 $m\ge2$，它被
+
+$$
+C_HW_x\left[
+\frac{a_2}{m(\log m)^2}
++\frac{a_1}{m(\log m)^3}
++\frac{a_0}{m(\log m)^4}\right]
+\tag{397.15}
+$$
+
+控制。三个经典正项级数都收敛；其项在 $m>1$ 递减，积分比较给
+
+$$
+\sum_{m>M}\frac1{m(\log m)^j}
+\le\frac1{(j-1)(\log M)^{j-1}}\quad(j=2,3,4).
+\tag{397.16}
+$$
+
+这证明（397.5）。首项由 $|H_1|Q_x(1)<\infty$ 支付，故（397.6）成立。$\square$
+
+**定理 397.3（原始有符号 Robin 积分的同源恢复）。** 沿用 §395 的 $P_x(s)$ 和 $J_x(m)=P_x(m)-P_x(m+1)$。对全部实数 $x>1$，有绝对收敛身份
+
+$$
+\boxed{I_\psi(x)=\sum_{m\ge1}H_mJ_x(m),}
+\qquad
+J_x(m)=\int_x^\infty
+[R(t/m)-R(t/(m+1))]w(t)\,dt.
+\tag{397.17}
+$$
+
+其实际有限前缀误差满足
+
+$$
+\left|I_\psi(x)-\sum_{m=1}^{M}H_mJ_x(m)\right|
+\le C_HW_x\left[
+\frac{a_2}{\log M}
++\frac{a_1}{2(\log M)^2}
++\frac{a_0}{3(\log M)^3}\right]
+\quad(M\ge2).
+\tag{397.18}
+$$
+
+**证明。** §395 已证明每个 $P_x(s)$ 绝对存在，积分线性性给第二个式子；也可直接由（397.4）得到差分的可积性。对每个 $t\ge x$，直接复用（390.4）的同源中心化身份
+
+$$
+\psi(t)-t=\sum_{m\ge1}H_m[R(t/m)-R(t/(m+1))].
+$$
+
+（397.6）恰好提供经典绝对 Fubini 所需的积分范数可和性。因此可交换该级数与原始 $I_\psi$ 的积分，得到（397.17）；完整结果级数的绝对收敛由 $|J_x(m)|\le Q_x(m)$ 同时给出。这里直接使用已发表的积分—级数交换定理，例如 [Mathlib 的精确接口](../../../Library/Analytic/mathlib2026absoluteintegralsum.md)，不把 Fubini 本身列为新增结论。将真实补集 $m>M$ 保留在（397.5）中，得到（397.18）。常数 $C_H$ 的存在是已知增长界的应用；没有在此给出它的数值上界，故（397.18）不自动成为已计算的数值证书。$\square$
+
+**同源估计的回接。** （397.17）补足的是 §395 留下的来源身份与交换条件。若实际输入另外满足 $|H_m|\le Bm^\alpha$（$0<\alpha<1$，$B\ge0$），可在这个已经建立的身份中直接使用（395.3）、（395.10）、（395.12），得到
+
+$$
+|I_\psi(x)|\le B\frac{x^{\alpha-1}}{\log x}
+\left(h_1+\frac{h_2}{1-\alpha}\right)M_\alpha(R).
+\tag{397.19}
+$$
+
+这仍是既有界的实际应用，不另立新的通用尺度定理。特别地，假设全部实际 $|H_m|\le B\sqrt m$，则（395.11）给 $x\ge e$ 时
+
+$$
+\sqrt x\log x\,|I_\psi(x)|
+\le B(72\mu_0+48A+24|D|).
+\tag{397.20}
+$$
+
+积分前预算（397.6）已由无条件的对数改进支付；它不支付（397.19）中的幂增长前提。特别是固定平方根范数并非仅由 RH 自动给出，§385 的重数障碍仍保留。继续证明完整 Robin 需要控制同一实际 $\sum H_mJ_x(m)$ 的有符号预算；逐项绝对平方根界只是一种充分路线，不能把它升为所有可用路线的必要条件。五模式地址、实际约数商块与连续积分在（397.17）中保持共同来源，交换合法性不代替完整有符号和的临界估计或 Robin 全称符号。
+
+## 追加锚（本行以下为增补区）
+
+## 398. 真实积分尾权重的低商显式核、同源有符号尾与对角负号
+
+沿用 §§387、390、395、397 的同一实际 $\beta,\mathcal B,k,K,H,A,D,\delta$，记 $\mu_0=\delta^{-1}$。不重新建立 PNT、两条实际输入矩或积分前绝对交换条件。这里将（397.17）的实际尾权重分成可以精确积分的低商部分和一个高商修正；后者的包络不能替代前者的有符号 $H$ 和。
+
+**定义 398.1（低商原函数与高商修正）。** 固定 $x>1$，令 $\ell=\log x$。对 $r>0$ 定义
+
+$$
+\begin{aligned}
+\mathcal E_x(r)
+={}&(Ar+D-A)\log(r/\ell)+\frac{Ar+D}{\ell}
+-Ar+A\ell-A-\frac D r,\\
+\mathcal V_x(r)
+={}&(Ar+D-2A)\log(r/\ell)+\frac{Ar+D-A}{\ell}
+-Ar+A\ell-A+\frac{A-2D}{r}-\frac D{r^2},\\
+h(r)={}&\frac1r+\frac2{r^2}+\frac2{r^3}.
+\end{aligned}
+\tag{398.1}
+$$
+
+在 $y>0$ 上保持原来的 $R(y)=K(y)-Ay\log y+Dy$。特别地，$0<y<1$ 时 $R(y)=Dy-Ay\log y$。对 $r>0$ 置
+
+$$
+\mathcal Z_R(r)=\int_1^\infty \frac{R(y)}{y^2}h(r+\log y)\,dy.
+\tag{398.2}
+$$
+
+对整数 $m\ge x$ 定义实际低商相邻尺度权重
+
+$$
+L_x(m)=\frac{\mathcal E_x(\log m)}m
+-\frac{\mathcal E_x(\log(m+1))}{m+1}.
+\tag{398.3}
+$$
+
+本节 $L_x(m)$ 不是 §382 的常数 $L=\log\varphi$，$\mathcal Z_R$ 也不是完整 Robin 比值。
+
+**定理 398.2（实际积分后的精确分解）。** 对 $s\ge x$，同一个 $P_x(s)$ 满足
+
+$$
+P_x(s)=\frac{\mathcal E_x(\log s)}s
++\frac1s\int_1^\infty\frac{R(y)}{y^2}
+\left[\frac1{\log s+\log y}+\frac1{(\log s+\log y)^2}\right]dy.
+\tag{398.4}
+$$
+
+对 $s>x$，其导数以及每个整数 $m\ge x$ 的真实相邻差满足
+
+$$
+\begin{aligned}
+-P_x'(s)&=\frac{\mathcal V_x(\log s)+\mathcal Z_R(\log s)}{s^2},\\
+J_x(m)&=L_x(m)+\rho_x(m),\qquad
+\rho_x(m)=\int_m^{m+1}\frac{\mathcal Z_R(\log s)}{s^2}\,ds,\\
+|\rho_x(m)|&\le\frac{2\mu_0h(\log m)}{m(m+1)}.
+\end{aligned}
+\tag{398.5}
+$$
+
+若某个实际 $m\ge x$ 满足 $L_x(m)>2\mu_0h(\log m)/[m(m+1)]$，便有 $J_x(m)>0$。对于每个固定的 $x>1$，还成立
+
+$$
+\boxed{L_x(m)\sim J_x(m)\sim
+\frac{A\log m\log\log m}{m^2}\quad(m\to\infty).}
+\tag{398.6}
+$$
+
+因此存在依赖该固定 $x$ 的整数 $m_x$，使全部 $m\ge m_x$ 的 $J_x(m)$ 为正。（398.6）不声称对同时变化的 $x$ 一致。
+
+证明。在（395.2）中采用已经合法的换元 $t=sy$，并在 $y=1$ 分开。低商部分再令 $u=\log t$。当 $s\ge x$、$r=\log s$ 时，该部分精确等于
+
+$$
+\frac1s\int_\ell^r[D+A(r-u)]\frac{1+u}{u^2}\,du
+=\frac{\mathcal E_x(r)}s.
+\tag{398.7}
+$$
+
+这只是经典微积分基本定理的实际应用；$\mathcal E_x(\ell)=0$，所以 $s=x$ 的空低商区间仍被保留。高商部分即（398.4）的第二项。已有 $|R(y)|\le\mu_0(1+\log y)$ 给
+
+$$
+B_R:=\int_1^\infty\frac{|R(y)|}{y^2}\,dy\le2\mu_0.
+\tag{398.8}
+$$
+
+固定任意 $s_0>x$，在一个仍满足 $s>x$ 的紧邻域内，$s$ 与 $\log s$ 都有统一严格正下界。高商被积函数及其 $s$ 导数因此被常数倍的 $|R(y)|/y^2$ 控制。其可测性与导数连续性也由同一实际 $R$ 保留。由经典的支配参数微分定理，可在积分内微分；例如 [Mathlib 的参数积分接口](../../../Library/Analytic/mathlib2026parametricintegral.md) 明确要求这种与 $y$ 无关的局部邻域和可积包络，不只要求逐点导数存在。直接微分给
+
+$$
+-\frac{d}{ds}\left\{\frac1s\left[
+\frac1{\log s+\log y}+\frac1{(\log s+\log y)^2}\right]\right\}
+=\frac{h(\log s+\log y)}{s^2}.
+$$
+
+低商项则给 $-[\mathcal E_x(\log s)/s]'=[\mathcal E_x(\log s)-\mathcal E_x'(\log s)]/s^2$，而（398.1）的 $\mathcal V_x$ 恰为这个差。所得导数连续。公式还在 $s\downarrow x$ 时连续收敛，故微积分基本定理也处理 $m=x$ 的端点，得到（398.5）的两个身份。$h$ 在正轴递减，且
+
+$$
+|\mathcal Z_R(r)|\le B_Rh(r)\le2\mu_0h(r),\qquad
+\int_m^{m+1}s^{-2}ds=\frac1{m(m+1)},
+$$
+
+证明误差界与所列正性充分条件。
+
+最后保持 $x$ 固定。（398.1）直接给
+
+$$
+\mathcal V_x(r)=Ar\log r+O_x(r+\log r),\qquad
+\mathcal Z_R(r)=O(r^{-1}).
+\tag{398.9}
+$$
+
+这里的常数允许依赖同一实际 $A,D,\mu_0$ 和该固定 $x$。在 $m\le s\le m+1$ 上，$\log s/\log m\to1$、$s/m\to1$，上述主项的比值一致趋于一。对（398.5）的导数积分即得 $J_x$ 的渐近式；只保留 $\mathcal V_x$ 给 $L_x$ 的同一个渐近式。实际 $A>0$，故其最终符号严格为正。$\square$
+
+**定理 398.3（原始尾项的有符号低商和与修正预算）。** 对任意整数 $M\ge\max(2,x)$，使用（397.17）的同一来源定义
+
+$$
+T_M(x)=I_\psi(x)-\sum_{m=1}^M H_mJ_x(m),\qquad
+S_M^{\mathrm{low}}(x)=\sum_{m>M}H_mL_x(m).
+\tag{398.10}
+$$
+
+这两个尾和绝对存在。对任意已经满足（397.5）条件的 $C_H$，有
+
+$$
+\boxed{
+|T_M(x)-S_M^{\mathrm{low}}(x)|
+\le2\mu_0C_H\left[
+\frac1{4(\log M)^4}
++\frac2{5(\log M)^5}
++\frac1{3(\log M)^6}\right].}
+\tag{398.11}
+$$
+
+（398.11）控制的是剥去低商有符号和后的修正，不是 $|T_M(x)|$ 本身。
+
+证明。（397.17）已经给出完整 $\sum H_mJ_x(m)$ 的绝对收敛，不再次交换原始积分。由（398.5）与已有 $|H_m|\le C_Hm/(\log m)^4$，修正的绝对级数被
+
+$$
+2\mu_0C_H\sum_{m>M}
+\left[\frac1{m(\log m)^5}
++\frac2{m(\log m)^6}
++\frac2{m(\log m)^7}\right]
+\tag{398.12}
+$$
+
+控制。其中使用 $1/(m+1)\le1/m$。直接复用（397.16）的经典递减正项积分比较，即得（398.11）。$|L_x(m)|\le|J_x(m)|+|\rho_x(m)|$ 同时保证低商尾和绝对存在。有限前缀和实际补集仍是同一个 $H$ 的分解；没有分别替换它们的符号或独立最优值。$\square$
+
+**定义 398.4（高商的有符号 Mellin 矩与对角系数）。** 令 $\gamma_1$ 为 Stieltjes 常数，采用标准 Laurent 约定
+
+$$
+\zeta(1+z)=\frac1z+\gamma-\gamma_1z+O(z^2).
+\tag{398.13}
+$$
+
+本处 $\gamma_1$ 不是非平凡零点的纵坐标。写 $B=\mathcal B(1)>0$、$B'=\mathcal B'(1)$、$B''=\mathcal B''(1)$，并定义
+
+$$
+\mathcal M_R=\int_1^\infty\frac{R(y)}{y^2}\,dy,
+\qquad
+c_{\mathrm{diag}}=\frac{(B')^2}{B^3}-\frac{B''}{2B^2}+\frac{\gamma_1}B.
+\tag{398.14}
+$$
+
+**定理 398.5（同源 Mellin 矩与共同尺度的极限）。** 对实际 $R$，有
+
+$$
+\boxed{\mathcal M_R=D+c_{\mathrm{diag}},\qquad
+\lim_{m\to\infty}m^2\log m\,J_m(m)=c_{\mathrm{diag}}.}
+\tag{398.15}
+$$
+
+第二个极限沿正整数 $m$，且观察阈值与相邻尺度同时取 $x=m$；它与（398.6）中固定 $x$ 的极限不同。如果 $c_{\mathrm{diag}}<0$，则 $J_m(m)<0$ 对全部足够大的 $m$ 成立，所以不存在一个只要求 $m\ge x$ 就保证真实尾核为正的全称原则。
+
+证明。首先（398.8）保证 $\mathcal M_R$ 绝对存在。对实数 $s>1$，直接复用（386.7）的实际 Dirichlet 级数及经典部分求和，得到
+
+$$
+\int_1^\infty K(y)y^{-s-1}dy
+=-\frac{\zeta'(s)}{s\mathcal B(s)}.
+\tag{398.16}
+$$
+
+$K(1)=0$，且 $K(y)=O(y\log y)$，因此两个积分端点合法。对连续主项直接使用经典幂—对数积分，便有
+
+$$
+\int_1^\infty R(y)y^{-s-1}dy
+=-\frac{\zeta'(s)}{s\mathcal B(s)}
+-\frac A{(s-1)^2}+\frac D{s-1}.
+\tag{398.17}
+$$
+
+各项先在 $s>1$ 的同一收敛域相减；不分别在 $s=1$ 代入发散的 $K$ 与连续主项。使用 [DLMF §25.2.4](https://dlmf.nist.gov/25.2.E4) 的已知 Laurent 展开与实际整个函数 $\mathcal B$ 的 Taylor 展开，右侧在 $s\downarrow1$ 时的有限常数为
+
+$$
+A+\frac{B'}{B^2}+\frac{(B')^2}{B^3}
+-\frac{B''}{2B^2}+\frac{\gamma_1}B
+=D+c_{\mathrm{diag}}.
+$$
+
+左侧由（398.8）的包络支配收敛到 $\mathcal M_R$，得到第一式。这里仅复用 Laurent 展开；新增的对应是它与同一个实际高商余核矩的连接。
+
+再对 $\mathcal Z_R$ 使用支配收敛：对 $u=\log y\ge0$、$r\ge1$，
+
+$$
+rh(r+u)\le1+2/r+2/r^2\le5,
+\qquad rh(r+u)\longrightarrow1.
+$$
+
+于是 $r\mathcal Z_R(r)\to\mathcal M_R$。当 $x=m$、$\ell=\log m$ 时，（398.1）在 $r=\ell$ 的值是
+
+$$
+\mathcal V_m(\ell)=-\frac D\ell-\frac D{\ell^2}.
+\tag{398.18}
+$$
+
+在 $m\le s\le m+1$ 上有 $0\le\log s-\ell\le1/m$。直接微分（398.1）可见，$\mathcal V_m'(r)$ 在 $\ell\le r\le\ell+1/m$、$\ell\ge1$ 的范围有与 $m$ 无关的有限包络：$\log(r/\ell)\le1/(m\ell)$，而 $1/\ell$、$1/r$ 及 $\ell/r$ 都一致有界。因此 $\ell[\mathcal V_m(\log s)-\mathcal V_m(\ell)]\to0$ 一致成立。（398.18）给 $\ell\mathcal V_m(\log s)\to-D$；另有 $\ell/\log s\to1$，所以 $\ell\mathcal Z_R(\log s)\to\mathcal M_R$ 也一致成立。
+
+将这两项代入（398.5）的同一相邻尺度积分，并使用 $m^2/s^2\to1$，即得第二式。若 $c_{\mathrm{diag}}<0$，普通极限的定义给最终负号；这不涉及任何 $H$ 的未知增长或符号。$\square$
+
+（398.11）允许继续估计同一实际 $S_M^{\mathrm{low}}(x)$，而不重复支付高商修正的较粗预算；（398.15）则明确规定了尺度同变时必须保留的符号。即使已知固定阈值后的核最终为正，$\sum H_mL_x(m)$ 的符号仍需针对实际 $e=\mu*\beta$ 证明。这些身份与核符号不决定完整 Robin 余量或黎曼猜想。
+
+## 追加锚（本行以下为增补区）

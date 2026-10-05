@@ -18,8 +18,8 @@ internal static class AtomContextCommand
                 || !DigestionFingerprint.IsCanonicalSha256("sha256:" + arguments[1]))
                 throw new DigestionAtomContextException(DigestionAtomContextError.ARGUMENTS_INVALID,
                     "USAGE: StrataLint atom-context --atom-id ATOM_ID");
-            var snapshot = Decode(repository.ReadCurrent());
-            var contexts = DigestionAtomContextProjection.ResolveOccurrences(snapshot, BackfillInventoryLoader.Load(snapshot), arguments[1]);
+            var (_, snapshot, document) = DigestionWorkingTree.Read(repository, Decode, BackfillInventoryLoader.Load);
+            var contexts = DigestionAtomContextProjection.ResolveOccurrences(snapshot, document, arguments[1]);
             return new CommandResult(true, Render(contexts), string.Empty);
         }
         catch (DigestionAtomContextException error)

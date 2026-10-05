@@ -16,9 +16,11 @@ triage: anchor
 The primary version is [arXiv math/0504402v1](https://arxiv.org/abs/math/0504402v1),
 published 2005-04-20. The manuscript identifies its text as 2004-11-22,
 with comments added 2005-04-19. The arXiv record supplies no journal reference
-or DOI. The original TeX abstract and Sections 1–2 were inspected; no claim
-is made about the proofs or results in unread sections. No source text is
-vendored.
+or DOI. The inspected original TeX scope is the abstract, Sections 1–2 and
+the hypotheses and conclusion of the `GL1` lemma in Section 3.1; the
+complete analytic proofs and the other results are not independently
+certified here. No source text is vendored. The source archive has SHA256
+`3654ec2a72bdae5d567ab0968d7283a636894928c07464a7986b19bcc491aeef`.
 
 In Section 2, write
 
@@ -58,3 +60,35 @@ That actual-source conclusion and the cofactor prime-panel asymptotic are
 repository derivations, not statements attributed to this paper. The
 paper's symbol \(\phi\) for a convolution test function is not the FIB
 volume's golden ratio \(\varphi\).
+
+## The existing Mellin convolution input
+
+Section 2 defines
+
+$$
+N_a(f)=\int_0^\infty|f(t)|t^{-a-1}\,dt.
+$$
+
+Section 3.1, the lemma labeled `GL1`, assumes $N_0(\phi)<\infty$ and
+uses the classical convolution algebra on the multiplicative group
+$(0,\infty)$ with Haar measure $dt/t$. Its norm conclusion is
+
+$$
+N_0(G\phi)\le N_0(g)N_0(\phi),\qquad
+g(x)=\sum_{n\le x}\frac{\mu(n)}n.
+$$
+
+This is an existing absolute-convolution tool. The project's finite
+$N_\alpha(R)$ for $0<\alpha<1$ does not by itself supply $N_0(R)$;
+the displayed $O(1+\log y)$ high-quotient envelope alone also does not
+prove that latter integral finite. No substitution $\phi=R$ or
+identification $G\phi=I_\psi$ is asserted from those bounds.
+
+The actual discrete adjacent-dilation difference in FIB §397 instead
+retains the jump intervals of $K$ and the low-quotient continuous part
+of $R$. It verifies the countable integral-norm premise for that
+same-source series before using
+[the existing integral-sum theorem](mathlib2026absoluteintegralsum.md).
+The classical norm theorem and its Mellin formulation are not new
+FIB results; the manuscript application remains without a complete
+Lean verification or an RH/Robin conclusion.

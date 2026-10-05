@@ -33,9 +33,7 @@ internal static partial class SettleAtomCommand
             var options = ParseArguments(arguments);
             var request = options.RequestPath is null ? null : LoadRequest(readRequest(root, options.RequestPath));
             var atomId = request?.AtomId ?? options.ClearAtomId!;
-            var current = repository.ReadCurrent();
-            var snapshot = Decode(current);
-            var document = BackfillInventoryLoader.Load(snapshot);
+            var (current, snapshot, document) = DigestionWorkingTree.Read(repository, Decode, BackfillInventoryLoader.Load);
             var target = LocateTarget(document, atomId);
             DigestionLedgerEntry updated;
             if (request is null)
