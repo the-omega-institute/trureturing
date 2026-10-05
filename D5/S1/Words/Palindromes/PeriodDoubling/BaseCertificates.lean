@@ -827,7 +827,6 @@ def baseTable (i : ℕ) : List ℤ × List (ℕ × ℤ × ℤ × ℤ × ℤ) × 
     ,some (0),none) else (if i < 1491 then ([0,1,1,0,0,0,0,0,0,0,0,1,0,0,-1,1,1,1,1],[(1334,0,0,0,0),(1335,0,0,1,1)],some (0),none) else ([0,1,1,0,0,0,1,1,0,0,0,1,0,0,-1,1,1,1,1],[(861,0,0,0,0)]
     ,some (0),none))))))))))))
 
-private def sourceIds : List ℕ := [0, 1, 2, 3, 4, 5, 6]
 private def baseRowCheck (i : ℕ) (charge : Bool) : Bool :=
   let row := baseTable i
   let state := row.1
