@@ -4550,6 +4550,187 @@ cover reduces to this branch. Other exceptional-prime sets, larger
 ternary height, and unrestricted odd distinct covering remain
 unresolved. The exclusion allows arbitrary finite 23-height.
 
+## Separate actual label pools exclude a single exceptional seven
+
+Replace 23 by 7 in the original-family conditions of CD148: the
+same globally count-minimal, then same-count modulus-sum-minimal odd
+distinct nonunit whole cover has actual pure3 and pure9, every
+original modulus has the form
+
+$$
+ d_i=3^{a_i}7^{e_i}m_i,\qquad a_i\le2,\quad m_i\mid W,
+ \qquad W>0,\quad\gcd(W,21)=1,
+$$
+
+and the complete private-root set in a positive common period Q
+satisfies $R_Q\subseteq\{7\}$. Minimality still ranges over all odd
+distinct nonunit whole covers; competitors are not restricted to
+this displayed coordinate system. The prime 7 may be absent, and
+all nonternary heights are arbitrary finite heights.
+
+**CD152.** No whole cover satisfies these conditions.
+
+The singleton construction and complete pure-prime donor descent
+used in CD149 apply to every actual prime other than 3 and 7.
+Choose the singleton owners once. Put
+
+$$
+ S_7=\{5,11,13,17,19,23,29,31,37,41,43\},
+ \qquad T=\{47,53,59,61,67,71\}.
+$$
+
+If A is the set of ordinary primes whose fixed 3p singleton
+owners lie in the pure9 root c, then
+$A\subseteq S_7$, and the other root d uses primes from
+$(S_7\setminus A)\cup T$. The 43/71 bounds count complete private
+modulo9 words of the actual pure-p donor, not of its 3p singleton.
+The coarser bound $b_7\le1/4$ on both roots does not by itself
+exclude every partition. The additional restriction below is on
+two separate inventories of the same actual numerical labels.
+
+### Root-specific guards and two separate shared inventories
+
+Suppose 7 occurs, and let H be its actual finite maximum height.
+For each live root r define
+
+$$
+ \begin{aligned}
+ \sigma&=\sum_{h=1}^{H}7^{-h},\\
+ \tau_r&=\sum_{\substack{1\le h\le H:\
+     \text{an actual }3\cdot7^h\text{ class has root }r}}7^{-h},\\
+ \eta_r&=\sum_{\substack{1\le h\le H:\
+     \text{an actual }9\cdot7^h\text{ class has root }r}}7^{-h},\\
+ t_r&=6\tau_r,\qquad v_r=6\eta_r.
+ \end{aligned}
+ \tag{CD153}
+$$
+
+Each numerical label $3\cdot7^h$ or $9\cdot7^h$ has at most
+one original owner, and any such owner lies in one ternary root.
+The two roots therefore satisfy
+
+$$
+ t_c,t_d,v_c,v_d\ge0,\qquad
+ t_c+t_d\le1,\qquad v_c+v_d\le1.
+ \tag{CD154}
+$$
+
+There is no claim that the 3-tower and 9-tower root assignments
+coincide. They are different inventories constrained separately.
+
+On root r, keep the ordinary-axis law of CD150, including the
+fixed opposite-root singleton coordinates. On the 7-axis, condition
+on avoiding all actual pure $7^h$ prefixes and only the actual
+$3\cdot7^h$ prefixes whose ternary root is r. Absent pure labels
+may be padded with forbidden prefixes. No absent 3-tower label is
+counted in $\tau_r$. If $\rho_r$ is this guard-survival probability,
+then
+
+$$
+ \rho_r\ge1-\sigma-\tau_r>0,\qquad
+ b_{7,r}=\frac{\sigma}{\rho_r}\le\frac1{5-t_r},\qquad
+ \frac{\eta_r}{\rho_r}\le\frac{v_r}{5-t_r}.
+ \tag{CD155}
+$$
+
+These estimates use $6\sigma\le1$. They keep the same conditional
+law in the prefix bounds, the event inventory and the shared
+high-label contribution.
+
+For the ordinary active weights $b_p$, let
+
+$$
+ P_r=\prod_p(1+b_p),\qquad B_r=\sum_p b_p,
+ \qquad C_r=(2+\kappa_r)(P_r-1),\qquad
+ \beta_r=C_r-2B_r,
+$$
+
+where $\kappa_c=1/2$ and $\kappa_d=1/3$. The exact numerical-slot
+sum before applying CD155 is
+
+$$
+ \beta_r+C_r b_{7,r}+\kappa_r\frac{\eta_r}{\rho_r}.
+$$
+
+Rows zero and one have no surviving single-prime slots. In row
+two, a shared-only slot contributes only when its actual
+$9\cdot7^h$ owner has root r. Opposite-root owners have zero event
+probability. Every remaining label is counted once by its original
+exponent vector. Since $C_r\ge0$, whole coverage forces
+
+$$
+ 1\le \beta_r+\frac{C_r+\kappa_r v_r}{5-t_r}.
+ \tag{CD156}
+$$
+
+In the absent-7 case the ordinary inventory gives the same
+necessary upper envelope with $t_r=v_r=0$: its added nonnegative
+term only weakens that necessary condition. No fictitious 7-owner
+or allocation is asserted.
+
+### A finite certificate excludes every coupled allocation
+
+For $B\subseteq S_7\cup T$ and $\kappa\in\{1/2,1/3\}$, put
+
+$$
+ \begin{aligned}
+ P(B)&=\prod_{p\in B}\left(1+\frac1{p-3}\right),\qquad
+ B_1(B)=\sum_{p\in B}\frac1{p-3},\\
+ C_\kappa(B)&=(2+\kappa)(P(B)-1),\qquad
+ \beta_\kappa(B)=C_\kappa(B)-2B_1(B),\\
+ E_\kappa(B;t,v)&=\beta_\kappa(B)+
+          \frac{C_\kappa(B)+\kappa v}{5-t},\\
+ D_\kappa(B;t)&=
+          \frac{(1-\beta_\kappa(B))(5-t)-C_\kappa(B)}{\kappa}.
+ \end{aligned}
+ \tag{CD157}
+$$
+
+Coordinatewise monotonicity allows ordinary weights to increase
+to $1/(p-3)$ and missing ordinary primes to be padded. For
+$0\le t,v\le1$, the coarse envelope is
+
+$$
+ E_\kappa(B;t,v)\le
+ \beta_\kappa(B)+\frac{C_\kappa(B)+\kappa}{4}.
+$$
+
+An exact rational comparison over all $2^{11}$ choices
+$A\subseteq S_7$, with $A'=(S_7\setminus A)\cup T$, proves that
+either one root's coarse envelope is below one, or both
+
+$$
+ \begin{aligned}
+ D_{1/2}(A;0)+D_{1/3}(A';1)&>1,\\
+ D_{1/2}(A;1)+D_{1/3}(A';0)&>1.
+ \end{aligned}
+ \tag{CD158}
+$$
+
+In the second case, increase $t_d$ to $1-t_c$ in its envelope.
+This is safe because its numerator is nonnegative. The two
+necessary budgets imply
+
+$$
+ v_c\ge D_{1/2}(A;t_c),\qquad
+ v_d\ge D_{1/3}(A';1-t_c).
+$$
+
+Their sum is affine in $t_c\in[0,1]$ and is greater than one at
+both endpoints by CD158. This contradicts $v_c+v_d\le1$.
+The argument does not assume $\beta_r\le1$ and does not infer
+monotonicity from a possibly negative demand slope. This proves
+CD152.
+
+The scoped transient Lean application checks CD152 from the full
+original-family hypotheses, including the absent-7 branch. Its
+finite comparison is evaluated by the kernel, and the final
+axiom closure contains only `propext`, `Classical.choice` and
+`Quot.sound`. This supplies an exact application check, not a new
+frozen declaration or atom-coverage result. The single exceptional
+5 case, multiple exceptional primes and higher ternary height
+remain outside CD152.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
@@ -4623,5 +4804,6 @@ Every surviving repeated-digit and distinct-digit profile must be
 included. SC483 supplies none of these upper bounds by itself.
 The remaining ternary-height-two cases, including other
 exceptional-prime sets, and unrestricted odd distinct covering remain
-unresolved. CD148 excludes the specified q=23 case by a separate
-full-prime-guard argument.
+unresolved. CD148 and CD152 exclude the specified q=23 and q=7
+cases by full-prime-guard arguments, with separate shared-label
+pools required for q=7.
