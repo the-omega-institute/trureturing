@@ -55,13 +55,6 @@ private abbrev Cube (n : ℕ) := Fin n → Bool
 private def flip {n : ℕ} (x : Cube n) (i : Fin n) : Cube n :=
   Function.update x i (!(x i))
 
-@[simp] private theorem flip_flip {n : ℕ} (x : Cube n) (i : Fin n) :
-    flip (flip x i) i = x := by
-  funext j
-  by_cases h : j = i
-  · subst j; simp [flip]
-  · simp [flip, h]
-
 private structure Selector (n : ℕ) where
   z : Fin n
   choose : Cube n → Fin n
@@ -101,6 +94,11 @@ private theorem orbit_choose {n : ℕ} (s : Selector n) {x : Cube n} (h : orbit 
 
 private theorem orbit_flip {n : ℕ} (s : Selector n) (x : Cube n) :
     orbit s (flip x (s.choose x)) ↔ orbit s x := by
+  have hinv (y : Cube n) : flip (flip y s.z) s.z = y := by
+    funext j
+    by_cases h : j = s.z
+    · subst j; simp [flip]
+    · simp [flip, h]
   constructor
   · intro h
     have hc := orbit_choose s h
@@ -108,34 +106,22 @@ private theorem orbit_flip {n : ℕ} (s : Selector n) (x : Cube n) :
     rcases h with h | h
     · right
       have := congrArg (fun t => flip t s.z) h
-      simpa [hcx] using this
+      simpa [hcx, hinv] using this
     · left
       have := congrArg (fun t => flip t s.z) h
-      simpa [hcx] using this
+      simpa [hcx, hinv] using this
   · intro h
     have hc := orbit_choose s h
     rw [hc]
     rcases h with h | h
     · right; rw [h]
-    · left; rw [h, flip_flip]
+    · left; rw [h, hinv]
 
 private theorem b_outside {n : ℕ} (s : Selector n) : ¬ orbit s s.b := by
   rintro (h | h)
   · exact s.distinct h.symm
   · have hz := congr_fun h s.z
     simp [flip, s.a_zero, s.b_zero] at hz
-
-@[simp] private theorem init_flip_last {n : ℕ} (x : Cube (n + 1)) :
-    Fin.init (flip x (Fin.last n)) = Fin.init x := by
-  funext i
-  simp [Fin.init, flip]
-
-@[simp] private theorem init_flip_cast {n : ℕ} (x : Cube (n + 1)) (i : Fin n) :
-    Fin.init (flip x i.castSucc) = flip (Fin.init x) i := by
-  funext j
-  by_cases h : j = i
-  · subst j; simp [Fin.init, flip]
-  · simp [Fin.init, flip, h]
 
 private noncomputable def step {n : ℕ} (s : Selector n) : Selector (n + 1) := by
   classical
@@ -155,10 +141,19 @@ private noncomputable def step {n : ℕ} (s : Selector n) : Selector (n + 1) := 
       distinct := ?_ }
   · intro x
     by_cases h : orbit s (Fin.init x)
-    · simp [c, h]
-    · have ho : ¬ orbit s (flip (Fin.init x) (s.choose (Fin.init x))) :=
+    · have hi : Fin.init (flip x (Fin.last n)) = Fin.init x := by
+        funext i
+        simp [Fin.init, flip]
+      simp [c, h, hi]
+    · have hi : Fin.init (flip x (s.choose (Fin.init x)).castSucc) =
+          flip (Fin.init x) (s.choose (Fin.init x)) := by
+        funext j
+        by_cases hj : j = s.choose (Fin.init x)
+        · subst j; simp [Fin.init, flip]
+        · simp [Fin.init, flip, hj]
+      have ho : ¬ orbit s (flip (Fin.init x) (s.choose (Fin.init x))) :=
         fun hh => h ((orbit_flip s (Fin.init x)).mp hh)
-      simp [c, h, ho, s.stable]
+      simp [c, h, hi, ho, s.stable]
   · intro i
     refine Fin.lastCases ?_ (fun j => ?_) i
     · exact ⟨Fin.snoc s.a false, by simp [c, orbit]⟩
