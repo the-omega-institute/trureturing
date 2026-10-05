@@ -46,7 +46,7 @@ chain and repeated layers. This is a proved generalization of the recursive
 construction, not an attribution of the exact broader statement to the paper.
 
 The theorem in `ZigzagNaturalLift` makes the predecessor reconstruction explicit for a
-finite actual oriented path, allows zero vertices and arbitrary
+finite actual oriented path, allows a single vertex with zero edges (`n = 0`) and arbitrary
 characteristic, and does not require finite-dimensional vertex spaces. The
 note attests the cited reconstruction principle; it does not claim that the
 paper states the repository's exact Lean formulation or that the formal
