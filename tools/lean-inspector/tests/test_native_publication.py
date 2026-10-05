@@ -489,8 +489,8 @@ class NativeArtifactConsumerTests:
             else: environment.pop(name, None)
         state = native.state(self.root)
         write_origin = publication.write_origin
-        def damaged(report, name, origin):
-            write_origin(report, name, origin)
+        def damaged(report, name, origin, projection):
+            write_origin(report, name, origin, projection)
             provenance = publication.member(report, '.provenance.json')
             provenance.write_bytes(materials.canonical_json(
                 dict(json.loads(provenance.read_bytes()), report_sha256='0' * 64)))
