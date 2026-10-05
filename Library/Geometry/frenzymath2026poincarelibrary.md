@@ -5710,3 +5710,12 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 完整累计临时源码 `.lake/mostow-h3-native-euclidean-open-chart.lean` 为 244302 字节，SHA256 `dc8a876210963a0902d75fef3a9e4a87a91cc7510b49434e9e183b772a717d08`；前批 240434 字节成功源码完整保持在 offset199，仅加入具名热缓存 import。第六轮 host `17811` 真实 exit0，零错误/警告，192 条公理闭包仅含 `propext, Classical.choice, Quot.sound`，无 `sorryAx`。成功日志 25101 字节，SHA256 `89ee87b7ba1ae6d686db26b14a8da93e57c4fb46b6c7b5e7de1f5a6292270e56`。调用方已复核全部源、前缀、预登记、日志、真实退出收据哈希及全部公理输出；先前失败或中止轮次完整保留排除。实际修复只处理 scope、具名 smooth multiplication instance 与定义等式包装，没有改陈述、pin 或关闭检查，没有新增 SSHX 共识。
 
 逐声明 `proof_shape: bind-only`、`admission_basis: none`：复用既有实线性等距基、原同胚、开放嵌入单图册及光滑复合/幂/逆函数规则；本批只交付此 Library 复用说明，精确 Lean 与证据保留在临时结果目录，远端 CI 验证说明。实际光滑 `g` 的构造、原全局等距作用光滑性及 `mfderiv`、原内蕴距离等式、曲率 −1、原流形覆盖/有限体积和同一规定 `h,d` 的完整 Mostow–Prasad 仍未完成。
+
+
+### 原 H3 光滑切丛上的实际黎曼度量
+
+在原 `H3` 的同一拓扑和上述实际欧氏三维单图册上，构造 `nativeRiemannianMetric : Bundle.ContMDiffRiemannianMetric (𝓡 3) ∞ NativeEuclidean3 (fun p : H3 => TangentSpace (𝓡 3) p)`。对任意原点 `p` 和两个实际切向量 `V,W`，其内积精确为 `⟪V,W⟫_ℝ / height p.coordinates ^ 2`；这里的欧氏切向量表示来自该原坐标图。原正高度内部给出对称性和严格正定性，度量的切向单位球正是欧氏空间中以原高度为半径的球，因而满足实际有界性要求。
+
+实际单图册的切向坐标变换、切丛正向及逆向平凡化均为恒等连续线性映射。原高度负二次幂的全局光滑性因此给出上述双线性形式作为切丛截面的全局 C∞，没有把逐点正定形式直接当作光滑度量。同一原欧氏坐标开放嵌入还内部提供 `SecondCountableTopology H3`，无需添加第二可数性假设。
+
+该精确构造及内积公式已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用的是既有单图册、切丛平凡化、欧氏内积和光滑标量乘法接口；本项交付为 Library 复用说明。尚须证明原等距作用的全局光滑性及实际 `mfderiv` 保持该度量、其内蕴距离等于原 H3 距离，以及实际曲率 −1。一般原流形的覆盖和体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 及官方验收仍未完成。
