@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/PatternMatchings/TripleAvoidingMatchings.re
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PatternMatchings/TripleAvoidingMatchings.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/biswas-shankar-sivasubramanian-p1-matchings` (proved) by `D5/S3/Combinatorics/PatternMatchings/TripleAvoidingMatchings.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"biswas-shankar-sivasubramanian-p1-matchings","declaration_gid":"D5/S3/Combinatorics/PatternMatchings/TripleAvoidingMatchings.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sucharita Biswas, Umesh Shankar, Sivaramakrishnan Sivasubramanian (2026). *Matchings and shape-Wilf-Equivalence of sets of patterns of length three I: Triples*. DOI: [10.48550/arXiv.2609.08562](https://doi.org/10.48550/arXiv.2609.08562). URL: <https://arxiv.org/abs/2609.08562v1>.
