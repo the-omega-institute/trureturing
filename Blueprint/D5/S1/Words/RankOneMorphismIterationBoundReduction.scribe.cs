@@ -16,5 +16,5 @@ internal sealed class RankOneMorphismIterationBoundReductionDocument : IScribeDo
                 Blocks(Paragraph(Text(
                     "This module is a repository-derived supporting slice for the effective "
                         + "iteration bound. Its declarations are checked by Lean in the actual "
-                        + "binary rank-one morphism setting."))))));
+                        + "binary rank-one morphism setting.")))))));
 }
