@@ -4273,6 +4273,106 @@ the same numerical cofactor remain equal under CD142's common
 permutation. The required actual incidence or alternative exchange,
 the q=23 exclusion and unrestricted Erdős #7 remain unresolved.
 
+### A same-root protected digit can be removed from safe-top companions
+
+Keep the original whole-cover hypotheses of CD144–CD145, including
+q=23 and CD141. Suppose the unit original $g$ of modulus $9q^2$
+belongs to D, and its first ternary root agrees with that of the
+pure9 original z. Write
+
+$$
+c=\rho_g\bmod3=\rho_z\bmod3,\qquad
+\gamma=\lfloor\rho_g/q\rfloor\bmod q\in U.
+\tag{CD146}
+$$
+
+There is an actual whole-cover representative with the same numerical
+modulus at every index, the same non-D and unit-D residues, the same
+first q-digits, and the same complete K and exact U, such that
+
+$$
+\boxed{
+\begin{gathered}
+i\in D,\quad a_i=2,\quad t_i\notin U,\quad
+\rho_i\bmod3=c,\\
+j\in D,\quad a_j\le1,\quad m_j=m_i
+\quad\Longrightarrow\quad t_j\ne\gamma.
+\end{gathered}
+}
+\tag{CD147}
+$$
+
+Here all residues and digits in CD147 are read in the new representative.
+Both global minimum objectives are retained. Its finite-period private
+root set still satisfies $R\subseteq\{q\}$; equality with the old R
+is not asserted. The individual full supports may change.
+
+For the construction, retain each actual cofactor-prime singleton
+guard of modulus 3p from CD141's proof. Its literal first-p phase
+is used by no other p-bearing original. Consider all actual whole
+covers with the fixed data above that preserve these guards, and
+minimize the number of row-two D owners whose second digit is outside U.
+The original family supplies a candidate, so well-ordering of the
+attained natural counts gives a minimum. No third minimum is assumed
+of the original family.
+
+Fixed singleton guards recover the complete private-root constraint
+in every candidate. At a private point in the wrong ternary root,
+reset p to its guard phase while preserving the whole modulus of
+every p-free original. All p-bearing originals then miss the new
+point, as do all p-free originals, contradicting coverage. This
+argument uses the candidate's actual cover; it does not assume its
+private-root classification was preserved.
+
+Suppose the minimum candidate violates CD147 with top i and low j.
+Their common cofactor is nonunit. The preceding private-root law
+places every private point of j at root c. Such a point avoids
+the pure9 word and the unit $9q^2$ word: its full q-square phase
+already agrees with that unit. These two modulo9 words are different,
+since otherwise the unit class would be contained in pure9. Only
+one word over c remains. Hence all private points of j agree
+modulo $9q^2m_i$.
+
+Apply the comparable private-hull exchange of
+[Report385, Section176](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#176-reciprocal-private-hull-swaps-leave-one-exact-joint-liability).
+Give the low numerical label a private point of i as residue, and
+the top numerical label a private point of j. The new low class
+covers the entire old top class; the new top covers every old
+private point of j. Comparable old classes are disjoint, so every
+remaining target has an unchanged owner. Thus the replacement
+preserves whole coverage with the same numerical labels.
+
+The two changed labels have the same cofactor. At each prime
+dividing their common cofactor, the new phases exchange the two old
+phases, both avoiding the fixed singleton phase. At every other
+cofactor prime, both changed labels are prime-free and every
+prime-bearing label is unchanged.
+Both changed labels stay in the same first-q parent, and neither is
+a unit. The swap is therefore another candidate. The top digit
+changes from outside U to gamma, while the changed low row is not
+counted. The minimized count strictly falls, a contradiction.
+
+Equality of K follows from the unchanged D and non-D complement,
+then the exact-hole identity applied to both actual families.
+It does not follow from unchanged owner supports. The fixed singleton
+guards give concentrated private roots for every cofactor prime in
+the new family, which proves its finite-period $R\subseteq\{q\}$.
+
+A complete scoped transient Lean application verifies the actual
+representative construction, including the singleton-root argument,
+whole private-hull swap, candidate invariants and attained-count
+minimum. Its checked axiom closures contain only `propext`,
+`Classical.choice` and `Quot.sound`. No retained Lean declaration,
+freeze or coverage record is introduced.
+
+The conclusion removes this protected-digit alternative in one
+representative and in the specified root. If the unit $9q^2$ root
+differs from the pure9 root, two private words can remain, so this
+argument no longer guarantees a single-class payment. Equal safe digits
+within a cofactor group are also unaffected: swapping two equal digits does
+not lower the count. CD147 supplies no six-request existence or
+q=23 exclusion.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
