@@ -1010,6 +1010,62 @@ $$
 上述紧完全截断情形对应 [Roberto Frigerio、Carlo Petronio, *Construction and Recognition of Hyperbolic 3-Manifolds with Geodesic Boundary*, arXiv:math/0109012v1](https://arxiv.org/abs/math/0109012v1) 的 Definitions 1.6–1.8（正文第 6–7 页）中 $I=Z=\varnothing$ 的几何实现：没有 ideal vertices 或 length-zero edges，截断面与侧面正交。Definition 1.10（正文第 8 页）在紧可定向流形去除规定的 tori 和 annuli 后，把 partially truncated triangulation 定义为各个 $\Delta^*$ 按指定侧面配对实现原流形；这里沿用其实际剖分语义，由已固定的 $r$ 和第 15 节的 $\overline h$ 保持同一个 marked 对应。Theorem 2.13 及 Remark 2.14（正文第 20 页）区分侧面一致性、实际内边角和 $2\pi$ 与两端 ideal 时的额外返回方程；Remark 2.14 的无 toric end 情形说明内边长度匹配和角和条件已足够处理相应匹配。该定理原文的全局陈述另有可定向、规定剖分及边界负 Euler 特征等前提；这里没有把那些前提从裸面配对中推断出来，而是在既有带标记截断实现上给出上述紧块的直接局部拼接证明。原文随后的 completeness discussion 也明确把有边界流形的完备性与双倍的完备性对应起来，并单独处理非紧端的方程。
 
 本节是标准双曲块拼接结论在原始出现、实际面映射和同一标记上的书面落实，不申报数学原创性或 Lean kernel 核验。它以真正紧块、实际兼容等距配对、边不反转、精确出现角和以及已有带标记实现为条件；不从较弱组合条件制造共同真长度或零缺陷，不将拓扑实现代替光滑度量证明，也不结算独立的实际体积、Schläfli、全局流收敛或预先指定 atlas 的相容性义务。
+
+### 16.7 字面源截断实现与固定模型商的比较
+
+固定指定流形 $N$ 的原始理想剖分 $(T,p)$，在每个源四面体 $\Delta_t$ 中取该剖分实现所用的、与实际单纯面配对相容的充分小开顶点星 $S_{t,v}$，记
+$$
+C_t=\Delta_t\setminus\bigcup_v S_{t,v},\qquad
+F^C_{t,f}=C_t\cap\{z_f=0\},\qquad U^C_{t,v}=C_t\cap\operatorname{Fr}_{\Delta_t}S_{t,v}.
+$$
+这里 $C_t$ 是字面源截断块，$U^C_{t,v}$ 是诱导 cap；它们不按定义等于第 5 节取 $z_v\le3/4$ 的固定模型 $K$ 及其 cap。
+[CFMP, arXiv:math/0402339v2, 正文第 3 页、Theorem 0.2 前的 triangulation 定义](https://arxiv.org/abs/math/0402339v2) 把从 $|T|$ 删除开顶点星所得空间同胚于指定 $N$ 作为剖分语义；删除全部顶点星即 ideal triangulation。
+同文正文第 6 页 “Triangulations” 的 $\Delta^*$、$M(T)$ 定义把实际单纯面配对限制到侧六边形，截断三角形诱导边界剖分，并明确允许 multiple adjacencies 和 self-adjacencies。
+令 $p^C_{t,f}:F^C_{t,f}\to F^C_{u,g}$ 为这些实际限制，$R_C$ 为其生成等价关系，定义
+$$
+X_C=\coprod_{t\in T}C_t,\qquad Q_C=X_C/R_C,\qquad
+q_C:X_C\to Q_C,\qquad B_C=q_C\Bigl(\coprod_{t,v}U^C_{t,v}\Bigr).
+$$
+原始理想剖分的上述源实现给出 $r_C:(Q_C,B_C)\xrightarrow{\cong}(N,\partial N)$，保留实际块、面、边及 cap 出现的诱导标记。
+逐块映射 $\chi_t(x)=r_C(q_C(t,x))$ 是特征映射；有自粘合时不要求它在整个闭 $C_t$ 上单射，不能把源实现读成互不重叠的全局嵌入闭块。
+$r_C$ 所带的是源截断诱导的 cap 参数；它足以运输本节的边界标记。要求它吻合一个独立预先指定的 $\partial N$ 参数化，是额外的比较条件。
+
+有限几何单纯细分中的真正闭顶点星有 $\operatorname{St}(v)=v*\operatorname{Lk}(v)=\bigcup_{\lambda\in\operatorname{Lk}(v)}v*\lambda$ 的锥形表示，开星取其相应开部分。
+该并集可非凸；任意顶点邻域或任意截断 profile 不因此成为这样的字面单纯星。不同开星不交也不推出其闭包不交。
+源星的实际细分、大小、诱导 cap 和边、共同面上的一致性都必须明确；若比较需要闭星分离，应另行检查或选择，不能从开集不交中补出。
+
+要把这个源见证用于第 16 节，还须独立构造带标签块同胚 $a_t:C_t\xrightarrow{\cong}K$，将每个 $F^C_{t,f}$、$U^C_{t,v}$ 和诱导旧边、cap 边及端点分别送到同标签模型层，并对每个实际生成配对满足
+$$
+a_u\bigl(p^C_{t,f}(x)\bigr)=P_{\sigma_{t,f}}a_t(x)
+\qquad(x\in F^C_{t,f}),\qquad
+ a_u(F^C_{u,g})=K\cap\{z_g=0\}.
+$$
+该等式要求整个受限面上的相容，不只要求顶点对应、边长相等或两块各自同胚；源星与固定模型星的比较仍是显式条件。
+令 $A(t,x)=(t,a_t(x))$。上述等式将每个 $R_C$ 生成识别送到第 5 节的 $R$ 生成识别；在对应模型面上代入 $x=a_t^{-1}(z)$ 得到
+$$
+a_u^{-1}(P_{\sigma_{t,f}}z)=p^C_{t,f}(a_t^{-1}(z))
+\qquad(z\in K,\ z_f=0).
+$$
+故 $A^{-1}$ 也将每个实际生成识别送回源生成识别；对反身、对称及有限传递逐步应用两式，得到 $R_C(\xi,\eta)\iff R(A\xi,A\eta)$。
+商拓扑的通用性质于是给出连续互逆映射
+$$
+a:(Q_C,B_C)\xrightarrow{\cong}(Q,B),\qquad
+ a(q_C(t,x))=q(t,a_t(x)),\qquad
+ a^{-1}(q(t,z))=q_C(t,a_t^{-1}(z)).
+$$
+cap 的逐标签对应给出 $a(B_C)=B$。因而第 16 节所需的实现及运输映射可取为
+$$
+r=r_C\circ a^{-1},\qquad j=\overline h\circ a\circ r_C^{-1},\qquad
+r\circ a=r_C,\qquad j\circ r_C=\overline h\circ a.
+$$
+结合第 15 节的整个面等式，这还给出 $H_t=h_t\circ a_t:C_t\to P_t$ 及 $H_u\circ p^C_{t,f}=I_{t,f}\circ H_t$，所有自配对与重复出现仍逐生成元保留。
+
+[FP, arXiv:math/0109012v1, Definitions 1.7、1.8（正文第 7 页）与 1.10（第 8 页）](https://arxiv.org/abs/math/0109012v1) 分别规定源 $\Delta^*$、其到 $\mathbb H^3$ 的几何嵌入及实现指定流形的实际剖分。
+在此紧完全截断情形，FP 的 $I=Z=\varnothing$ 表示没有 FP 意义的双曲 ideal vertices 或 length-0 edges，四个顶点均按非 ideal 顶点取星截断；CFMP 的 topological ideal vertices 则通过删除顶点星对应 $N$ 的边界分量，两种术语不相互否定。
+当 $C_t$ 正是该源 $\Delta_t^*$ 且上述比较已构造时，$H_t$ 嵌入实际源块，具有规定的全测地 cap、侧面及正交关系，而不是以任意模型商代替源剖分。
+在 FP Theorem 2.13 的可定向、边界负 Euler 特征、指定剖分及四面体定向使粘合反转诱导面定向的前提下，Remark 2.14 的无 toric end 分支（正文第 20 页）把条件约化为匹配内部边长度和各实际内边总角 $2\pi$；所得结构位于该剖分实现的同一个 $N$ 上。
+这项文献应用不提供缺失的 $a_t$：在完整实际小星呈示及面相容比较取得前，$r_C$ 只实现源商 $Q_C$，不能据它直接假定模型商 $Q\cong N$。
+
 ## 17. 原始六参数块上的实际旧边领圈与参数恢复
 
 本节把第 16.2 节的标准 Fermi 领圈接回原始六参数的极面截断块，给出支撑不等式、逆参数及相对开集的具体公式。所有六个参数独立变化，不假设等边。沿用原始槽序 $12,13,14,34,24,23$，令 $x_{ij}>1$，并要求原始判别式 $D(x)>0$。在原始 Lorentz 模型中，记实际向量为 $V_1,\ldots,V_4$，其 Gram 矩阵为
