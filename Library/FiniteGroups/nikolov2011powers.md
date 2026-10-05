@@ -55,3 +55,10 @@ Nachrichten 14 (1955), 249–252, and points to Fried and Jarden,
 - DOI: 10.4171/GGD/136
 - URL: https://doi.org/10.4171/GGD/136
 - Locator: printed page 504, Lemma 1, the fixed-set extension of Gaschutz lifting.
+
+- Locator: printed page 504, Lemma 2, the alternating-section supplement.
+  For every finite group G and normal subgroup N, some subgroup L satisfies
+  N join L = G and alpha(L) ≤ max(alpha(G/N), 4). Here alpha is the largest
+  alternating section degree, and a section is a quotient of an arbitrary
+  subgroup. The same Sylow-normalizer supplement transfers every alternating
+  section of degree at least five to G/N.

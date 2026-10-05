@@ -18,11 +18,6 @@ internal static partial class IngestCommand
         string backfillObservations)
     {
         var pendingCas = ReadPendingCasObjects(repositoryRoot, prepared.Plan.CasObjects);
-        if (ledgerUpdates.Length > 0)
-        {
-            RequireLedgerUnchanged(repositoryRoot, prepared.CurrentRaw);
-        }
-
         var current = prepared.CurrentRaw.Entries.ToDictionary(
             static entry => entry.Path, StringComparer.Ordinal);
         var writes = pendingCas.Select(item => new

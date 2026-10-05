@@ -5,7 +5,7 @@ year: 1962
 title: "Approximate formulas for some functions of prime numbers"
 doi: 10.1215/ijm/1255631807
 url: https://doi.org/10.1215/ijm/1255631807
-claim: "Theorem 8, equations (3.28) and (3.29), gives explicit lower and upper bounds for the reciprocal prime product, implying the prime-product ratio used in the odd-cover large-prime continuation."
+claim: "Theorem 8 gives explicit reciprocal prime-product bounds; Corollary 3, equation (3.8), gives a dyadic prime-count lower bound used in the actual Fibonacci mixed-prime Newton subseries."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -56,3 +56,24 @@ This elementary consequence is the premise used in
 and [Chapter 33, SH11](../../docs/reports/erdos7-odd-covering/problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md).
 Their rational certificates evaluate its consumers; they do not
 prove the cited analytic theorem.
+
+## Dyadic prime-count lower bound
+
+On printed page 69 (PDF page 6 of the same scan), Corollary 3 states
+
+\[
+\frac{3x}{5\log x}<\pi(2x)-\pi(x)
+\qquad\left(x\ge\frac{41}{2}\right).\tag{3.8}
+\]
+
+The threshold printed as the mixed fraction \(20\tfrac12\) was checked
+against the page image. It is not \(\sqrt{20}\). The count includes
+primes in \((x,2x]\). This theorem has no RH premise and is used directly;
+it is not rederived from a qualitative prime number theorem or replaced
+by the weaker assertion that the interval contains one prime.
+
+The [FIB volume](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+§393 applies this count to the actual coefficients at indices \(4p\).
+The original prime-count theorem remains a literature input. Its use in
+an actual coefficient subseries is a separate model derivation, and the
+source statement is not a Lean proof of that derivation.
