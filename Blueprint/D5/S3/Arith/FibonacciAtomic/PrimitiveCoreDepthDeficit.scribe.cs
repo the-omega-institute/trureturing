@@ -22,7 +22,7 @@ internal sealed class PrimitiveCoreDepthDeficitDocument : IScribeDocumentDefinit
                     + "gcd(a,b)=1, there is a unique natural depth j and natural core "
                     + "c=(r,s) with r>s and x=M^j(c). Here M(a,b)=(b,a+b) and "
                     + "q(a,b)=2a+3b are the Fibonacci step and quantity. The norm Q(x) "
-                    + "is the existing golden integer norm of a+b phi: a^2+ab-b^2. "
+                    + "is the golden integer norm of a+b phi: a^2+ab-b^2. "
                     + "The core is primitive, and D=abs(Q(x))=r^2+rs-s^2.")),
                 Paragraph(Text("The depth deficit L(x)=log(q(x))/log(phi)-j uses the "
                     + "natural real logarithm and phi=(1+sqrt(5))/2. Both displayed "
@@ -56,22 +56,23 @@ internal sealed class PrimitiveCoreDepthDeficitDocument : IScribeDocumentDefinit
         Formula deficit = Call("L", x);
         return Disp(new Formula.Aligned([
             Seq(Forall, Sp, x, InMacro, new Formula.Power(nat, D(2)), Comma,
-                x, Neq, Seq(Open, D(0), Comma, D(0), Close), Land, Call("gcd", new Formula.Subscript(x, D(1)),
+                x, Neq, Seq(Open, D(0), Comma, D(0), Close), Land, Sp,
+                Call("gcd", new Formula.Subscript(x, D(1)),
                     new Formula.Subscript(x, D(2))), Eq, D(1), Rightarrow),
             Seq(Exists, Sp, j, InMacro, nat, Comma, r, Comma, s, InMacro, nat, Comma,
                 r, Gt, s, Ge, D(0), Comma,
                 x, Eq, Call("iterate", F.Id("M"), j, Seq(Open, r, Comma, s, Close))),
             Seq(Forall, Sp, k, InMacro, nat, Comma, u, Comma, v, InMacro, nat, Comma,
-                u, Gt, v, Ge, D(0), Land, x, Eq,
+                u, Gt, v, Ge, D(0), Land, Sp, x, Eq,
                 Call("iterate", F.Id("M"), k, Seq(Open, u, Comma, v, Close)),
-                Rightarrow, k, Eq, j, Land, u, Eq, r, Land, v, Eq, s),
+                Rightarrow, Sp, k, Eq, j, Land, Sp, u, Eq, r, Land, Sp, v, Eq, s),
             Seq(Call("gcd", r, s), Eq, D(1), Comma, d, Eq, Call("abs", Call("Q", x)),
-                Eq, new Formula.Power(r, D(2)), Plus, r, Cdot, s, Minus,
+                Eq, new Formula.Power(r, D(2)), Plus, r, Cdot, Sp, s, Minus,
                 new Formula.Power(s, D(2))),
             Seq(new Formula.Fraction(Seq(ld, Minus,
-                    Call("log", new Formula.Fraction(D(5), D(4)))), Seq(D(2), Cdot, lp)),
+                    Call("log", new Formula.Fraction(D(5), D(4)))), Seq(D(2), Cdot, Sp, lp)),
                 Plus, D(1), Le, deficit, Le,
-                new Formula.Fraction(ld, Seq(D(2), Cdot, lp)), Plus, D(4))
+                new Formula.Fraction(ld, Seq(D(2), Cdot, Sp, lp)), Plus, D(4))
         ]));
     }
 }
