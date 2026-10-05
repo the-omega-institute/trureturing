@@ -522,3 +522,95 @@ cofinal error estimate is supplied. The full residual comparison,
 original all-input half-bound, actual joint cofinal signs, full Robin
 and RH remain unresolved. This is conditional paper analysis with
 no new Lean certification or originality claim.
+
+
+## Actual endpoint jets in the original form
+
+Under the same original-theta, whole-critical-space minimal-domain,
+mixed-nullity and coercive negative-edge premises as (NC1)–(NC6),
+the original series supplies spatial and parameter jets of the
+normalized endpoint columns. This is a conditional paper application
+of that series and the existing
+[global form comparison (WF2)](../Weil/fukushima2011dirichlet.md#transformed-form-and-a-global-derivative-comparison),
+without a new generic regularization theorem, numerical producer,
+Lean certification or originality claim.
+
+Retain $t(R)$, $n_R$, $E_R$ and sufficiently large $R_0>0$. For
+$j,\ell\in\{0,1\}$ there are finite original-series constants
+$C_{j,\ell}$ such that
+
+$$
+\|\partial_x^j\partial_R^\ell(n_R-E_R)\|_2
+\le C_{j,\ell}e^{-R},\qquad R\ge R_0. \tag{J1}
+$$
+
+To pay the derivatives, fix $A>t_c+1$ and write
+$\Phi(x)=4\pi^2e^{9x/2-\pi e^{2x}}\ell_\theta(x)$ on
+$x\ge A-t_c$. The first theta term gives
+$\ell_\theta(x)=1-(3/(2\pi))e^{-2x}$ plus the terms with
+$n\ge2$. Apply the supplied derivative polynomials to these terms
+before removing the first exponential. Their normally convergent
+series gives, for $0\le m\le2$,
+
+$$
+|\ell_\theta^{(m)}(x)-\mathbf1_{m=0}|
+\le D_m e^{-2x},\qquad \inf_{x\ge A-t_c}\ell_\theta(x)>0.
+$$
+
+The polynomial factors $e^{2mx}$ in the remaining terms are absorbed
+by $e^{-3\pi e^{2x}}$. This differentiates the original series,
+rather than an asymptotic remainder.
+
+Put $A_R=\pi e^{-9t(R)/2}e^{5R/2}$,
+$d_R=A_R^{-1}Uw_{t(R)}$ and
+$p_R=G(\cdot-R)+G(-\cdot-R)$. On the positive tail the dominant
+term of $d_R$ is exactly $G(x-R)b(x,t(R))$, where
+
+$$
+b(x,t)=\frac{\sqrt{1+e^{-x}}\ell_\theta(x-t)}
+              {\sqrt{\ell_\theta(x)}},\qquad
+ t'(R)=\frac{e^{-2R}}{1+e^{-2R}}.
+$$
+
+For $j=0,1$ the same series bounds give
+$|\partial_x^j(b-1)|\le De^{-x}$ and
+$|\partial_x^j\partial_R b(x,t(R))|\le De^{-2R-2x}$.
+After $y=x-R$, the errors are bounded by $e^{-R}$ times finite
+linear combinations of $e^{-y}G(y)$, $e^{-y}G'(y)$ and
+$e^{-y}G''(y)$, all in $L^2$. The compact-region, centering,
+wrong-shift and wrong-half ideal jets are $O(e^{-5R/2})$:
+$A_R'/A_R$ is bounded, and the wrong shift retains a uniform
+positive tail exponent, including its differentiated series.
+Reflection pays the other spatial tail. These facts prove (J1)
+first with $d_R-p_R$ in place of $n_R-E_R$.
+
+The ideal overlap and its $R$ derivative are
+$O((1+R)e^{-5R})$, by differentiating the overlap integrand in
+(NC1) and using the same two-half-line split. Set
+$a_0=\sqrt2\|G\|_2$ and $a_R=\|d_R\|_2$. The preceding jet bounds
+therefore give $a_R\ge a_0/2$ after increasing $R_0$,
+$|a_R-a_0|=O(e^{-R})$ and $|a_R'|=O(e^{-R})$, using
+$a_R'=\operatorname{Re}\langle d_R,d_R'\rangle/a_R$.
+Spatial derivatives commute with this scalar normalization.
+Substitute $n_R=d_R/a_R$ and $E_R=p_R/a_0$ to obtain (J1),
+including the mixed spatial–parameter derivative.
+
+Use $\|v\|_{\mathcal F_c}=\|U^{-1}v\|_{\mathcal F}$ for the
+original minimal form norm in physical coordinates. The existing
+(WF2) comparison supplies
+
+$$
+\|v\|_{\mathcal F_c}^2
+\le c_0\|v\|_2^2+c_1\|v'\|_2^2,
+\quad
+c_0=\tfrac32+\|B_{\rm prime}\|
+       +2M_2\|s'\|_\infty^2,
+\quad c_1=2M_2\|s\|_\infty^2.
+$$
+
+Here $B_{\rm prime}$ is the complete prime operator in (WF1),
+distinct from the negative-edge metric $B$ in (R3)–(R5).
+Every prime power remains. The $C_{j,\ell}$ are unevaluated
+original-series constants, rather than numerical certificates.
+Ordinary spatial smoothness does not assert a source condition
+for the actual small-window Gram.
