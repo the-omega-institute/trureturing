@@ -187,8 +187,7 @@ internal static partial class IngestCommand
 
     private static IngestInputs ReadInputs(
         IRepositoryGateway repository,
-        string baselineRevision,
-        bool requireBaselineSourceMetadata = false)
+        string baselineRevision)
     {
         var currentRaw = repository.ReadCurrent();
         var baselineRaw = repository.ReadRevision(baselineRevision);
@@ -200,9 +199,7 @@ internal static partial class IngestCommand
             current,
             baseline,
             LoadDocument(current),
-            requireBaselineSourceMetadata
-                ? BackfillInventoryLoader.Load(baseline)
-                : BackfillInventoryLoader.LoadBaseline(baseline));
+            BackfillInventoryLoader.LoadBaseline(baseline));
     }
 
     private static DigestionIngestPlan Plan(
