@@ -51,9 +51,17 @@ representatives, including pᵏ for the zero residue.
 
 The paper states Conjecture 6.3 as a conjecture. The Lean result proves both
 congruences for all its admissible parameters, using the literal adjoin-root
-ring over the p-adic integers. The ω-Ljunggren and ω-Bailey conjectures remain
-separate questions; this result discharges their reciprocal-moment premise.
-Sharpness of the moment bounds is open.
+ring over the p-adic integers. Conjecture 6.4, the ω-Ljunggren analogue, uses
+the hypotheses of Conjecture 6.3, with k ≥ 1, A ≥ C ≥ 1 and B ≥ D ≥ 1.
+Its preceding derivation assumes the two bounds H₁,ω(k) ∈ p²ᵏOω,p and
+H₂,ω(k) ∈ pᵏOω,p; this result discharges that reciprocal-moment premise.
+Conjecture 6.5, the ω-Bailey analogue, instead states the inert-prime
+condition (6.3) and the digit ranges 1 ≤ γ ≤ α ≤ p − 1 and
+1 ≤ δ ≤ β ≤ p − 1. The source precedes it with Frobenius strip
+factorizations and states no Conjecture 6.3 reciprocal-moment premise for
+it, so this result discharges no such premise for Conjecture 6.5.
+Both neighbouring conjectures' conclusions and sharpness of the moment
+bounds remain open.
 
 ## Definition fidelity
 

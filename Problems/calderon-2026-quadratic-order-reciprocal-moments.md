@@ -46,8 +46,8 @@ encodes this statement; `result : claim` has no additional hypotheses.
 Issue #13205 preregisters this external, first-tier named conjecture. It asks
 whether the extra power of $p$ in the first moment is uniform in the
 quadratic order and its chosen basis. The conclusion supplies the local
-reciprocal-moment premise used in the source's proposed extension of
-Gaussian rectangular congruences.
+reciprocal-moment premise used in the source's proposed omega-Ljunggren
+extension of Gaussian rectangular congruences.
 
 ## Gap
 
@@ -105,8 +105,10 @@ Its public surface consists of `R`, `element`, `Admissible`, `U`, `H1`, `H2`,
 `claim`, and this one theorem. The axiom closure of every public declaration
 is contained in {propext, Classical.choice, Quot.sound}.
 
-A compiled exact check inhabits the assumptions at $p=7,T=0,N=1$ and
-inhabits `R` by zero. No `sorry`, private axiom or `native_decide` is used.
+The producer reports a compiled exact check inhabiting the assumptions
+at $p=7,T=0,N=1$ and inhabiting `R` by zero; its command and exit code
+are not independently verified here. No `sorry`, private axiom or
+`native_decide` is used.
 The Scribe result carries a `ResolutionKind.Proved` claim for this dossier.
 The source formulas and the interpretation of their positive endpoints
 are recorded in `Library/QuadraticForms/calderon2026rectangular.md`.
@@ -132,17 +134,23 @@ are recorded in `Library/QuadraticForms/calderon2026rectangular.md`.
   representative rectangle, higher reciprocal powers, and sharpness of
   the two valuations. The delivered theorem asserts no relaxed version.
 - **Open:** Conjecture 6.4, the omega-Ljunggren analogue. Its stated
-  Conjecture 6.3 reciprocal-moment premise is discharged. The translated-block
-  and Newton-identity conclusion remains open.
+  hypotheses are those of Conjecture 6.3, with $k\geq1$, $A\geq C\geq1$
+  and $B\geq D\geq1$. The preceding derivation assumes
+  $H_{1,\omega}(k)\in p^{2k}\mathcal O_{\omega,p}$ and
+  $H_{2,\omega}(k)\in p^k\mathcal O_{\omega,p}$; Conjecture 6.3
+  discharges these moment bounds. The translated-block and Newton-identity
+  conclusion remains open.
 - **Open:** Conjecture 6.5, the omega-Bailey analogue, under its stated
-  inert-prime and digit-range hypotheses. The source gives Frobenius strip
-  factorizations without a Conjecture 6.3 premise; the resulting congruence
+  inert-prime condition (6.3), $1\leq\gamma\leq\alpha\leq p-1$ and
+  $1\leq\delta\leq\beta\leq p-1$. The source gives Frobenius strip
+  factorizations without a Conjecture 6.3 reciprocal-moment premise, so
+  Conjecture 6.3 discharges no such premise here. The resulting congruence
   remains open.
 
 ## ASSUMED-UNVERIFIED
 
-The external literature-search counts and finite numerical checks above
-are producer-reported. Exhaustive absence of an earlier proof and
+The external literature-search counts, finite numerical checks and
+compiled exact check above are producer-reported. Exhaustive absence of an earlier proof and
 historical priority are not verified. Sharpness, relaxed hypotheses and
 the source's remaining conjectures are open; this settlement does not
 prove them.
