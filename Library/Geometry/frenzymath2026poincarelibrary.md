@@ -5649,3 +5649,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 两个具名目标 `originalRepresentation_orbitDistance_eq_dist_of_pointGap` 与 `freeOriginalCoveringRepresentation_locallyIsometricOrbitProjection` 的完整精确临时 Lean 第二轮真实编译通过，host `67218` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-locally-isometric-orbit.lean` 为 214278 字节，SHA256 `d5f05f64042315b6f625f7dba38a7ba1ab885324bbc74133d9c7b4765f92b56a`；仅新增 43 字节的热缓存 canonical `IsometricOrbitMetric` import，其后完整保留前批成功原商同胚源码，无新依赖构建或版本变更。首轮实际 exit0 但含一条局部 `letI` 风格警告，完整源码日志保留排除；仅改证明内部绑定为 `let`，未关闭 linter。第二轮实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
 
 该原三角估计、已有轨道距离下确界与实际 canonical 商度量消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。后续原度量桥仍须从一般原流形条件内部构造覆盖及 H³ 等距识别；原商到 `M` 同胚的保距性、体积匹配、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 原 H³ 距离的实际坐标方向右侧度量斜率
+
+在同一个原 `H3` 和同一个原 `dist` 中，对任意原点 `p`、实际欧氏 `Ambient ℂ = WithLp 2 (ℂ × ℝ)` 方向 `v`，构造坐标扰动 `p.coordinates + s • v`。原高度正性与连续性内部保证它在零的邻域仍属于实际正半空间；域外返回原 `p` 仅使函数全域定义，不影响该邻域中的真实扰动。随后证明当实际 `s → 0+` 时，`dist (nativeCoordinatePerturbation p v s) p / s` 收敛到 `‖v‖ / height p.coordinates`。没有换用另一个距离，也未将距离函数在零的普通可微性作为输入或结论。
+
+原距离的实际 `2 * arsinh` 公式将正步长扰动距离写为 `2 * arsinh (s * K(s))`，其中 `K(s)` 趋于 `‖v‖ / (2 * height p)`。钉版 `arsinh` 的导数与补洞斜率连续性给出 `arsinh(z)/z → 1`；完整保留零方向分支，避免要求 `v ≠ 0`。显式坐标消费者使用实际 `WithLp` 的 L² 距离接口，将方向范数识别为 `sqrt(‖a‖²+b²)`，得到右侧极限 `sqrt(‖a‖²+b²) / height p`。没有把默认乘积的 max 范数误当作欧氏平方和。
+
+五个具名构造与目标的完整精确临时 Lean 第四轮真实编译通过，host `40015` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-native-coordinate-infinitesimal-metric.lean` 为 219775 字节，SHA256 `b3845c4fc791a948e7b8397cf24950838c196161ba09ed4b2ad82219b38b350d`；仅新增 45 字节热缓存 `Mathlib.Analysis.Calculus.Deriv.Slope` import，其后完整保留前批成功局部商保距源码，无新依赖构建或版本变更。前两轮实际类型与滤子推断失败的源码日志保留排除；第三轮实际 exit0 但含三条冗余 tactic 警告，也保留排除。只补明确类型并去除冗余，未弱化右侧极限、原距离或零方向分支，未关闭 linter。最终实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该实际原距离公式、欧氏范数、导数斜率和滤子连续性接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批识别的是原坐标直线的局部右侧度量速度，尚未构造实际黎曼度量、其曲率或与原距离的完整内蕴等式。固定外部库的 scalar derivative bound 到内蕴距离 Lipschitz 接口可用于后续实际 `log height` 下界；仍须提供同一实际模型的切向度量和导数界。完整原流形覆盖、原度量／体积匹配、尖点分离、给定 `h`／完整 `d` 的 Mostow–Prasad 与官方验收继续未完成。
