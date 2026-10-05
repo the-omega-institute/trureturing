@@ -5697,3 +5697,16 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 切向恢复源码 `.lake/mostow-h3-native-lorentz-tangent-recovery.lean` 为 235989 字节，SHA256 `6316cdc805f3e21535ff483e03a3af7983de62af5e2d5975e50bec20f0c30518`，第三轮真实 exit0、零错误/警告，175 条标准公理闭包输出。原等距坐标导数及双线性配对源码 `.lake/mostow-h3-native-isometry-coordinate-derivative.lean` 为 240434 字节，SHA256 `9a6b255f6fb1547a747d558abc063e2caa50ed493f292e04024734a551896f25`，第二轮真实 exit0、零错误/警告，182 条标准公理闭包输出；成功日志 23884 字节，SHA256 `73cd724fc6887c5de7d46879f36144f12a4bde9c6b13abfd6e62765672ffef46`。两批各保持成功前批完整 offset0 前缀，无新 import；公理仅 `propext, Classical.choice, Quot.sound`，无 `sorryAx`。调用方复核全部源码/前缀/预登记/日志/真实退出收据哈希，失败轮次完整保留排除，没有新增 SSHX 共识。
 
 逐声明 `proof_shape: bind-only`、`admission_basis: none`：现有全向量 Lorentz 保持、原实际曲线坐标求导及实际坐标切向配对供给原子事实，本批为绑定及规范化。只交付此 Library 复用说明，精确 Lean 与证据保留在临时结果目录；远端 CI 验证说明。原全局光滑度量、原全局光滑等距作用与 `mfderiv`、原内蕴距离等式、曲率 −1、原流形覆盖/有限体积和同一规定 `h,d` 的完整 Mostow–Prasad 仍未完成。
+
+
+### 原 H3 拓扑上的实际光滑坐标图与高度缩放（2026-10-06）
+
+本闭合小批仍使用同一原 `H3`、原 `coordinatesHomeomorph` 和原度量诱导的拓扑。`nativeAmbientEuclideanIsometry` 复用 `Complex.orthonormalBasisOneI.prod (OrthonormalBasis.singleton (Fin 1) ℝ)`，经 `finSumFinEquiv` 重索引取 `.repr`，得到原 `Ambient ℂ = WithLp 2 (ℂ × ℝ)` 到 `EuclideanSpace ℝ (Fin 3)` 的实线性等距；没有将原坐标欧氏范数改成默认乘积最大范数。
+
+原坐标映射及其欧氏三维组合都是实际 `IsOpenEmbedding`：原高度正域的开放性由原连续高度投影证明，组合的是原同胚和上述线性等距。使用原 `rayOrigin` 内部提供 `Nonempty H3`，再复用 `singletonChartedSpace` 与 `isManifold_singleton`，在同一原拓扑上得到实际 `ChartedSpace`、`IsManifold (𝓡 3) ∞ H3`，以及原欧氏坐标映射的全局 `ContMDiff`。这一步未安装新的空间距离或假设原内蕴距离兼容。
+
+`nativeEuclideanHeightCLM` 为原线性等距逆映射后接原 `WithLp.sndL`；其作用于原欧氏坐标时确等于同一 `height p.coordinates`。由实际线性映射和原坐标的光滑性得到原高度全局 C∞。`nativeHeightInverseSquare p = (height p.coordinates ^ 2)⁻¹` 也全局 C∞、处处严格正；实际分母非零和正性由原点的正高度内部推出，未供给额外正性或光滑性前提。
+
+完整累计临时源码 `.lake/mostow-h3-native-euclidean-open-chart.lean` 为 244302 字节，SHA256 `dc8a876210963a0902d75fef3a9e4a87a91cc7510b49434e9e183b772a717d08`；前批 240434 字节成功源码完整保持在 offset199，仅加入具名热缓存 import。第六轮 host `17811` 真实 exit0，零错误/警告，192 条公理闭包仅含 `propext, Classical.choice, Quot.sound`，无 `sorryAx`。成功日志 25101 字节，SHA256 `89ee87b7ba1ae6d686db26b14a8da93e57c4fb46b6c7b5e7de1f5a6292270e56`。调用方已复核全部源、前缀、预登记、日志、真实退出收据哈希及全部公理输出；先前失败或中止轮次完整保留排除。实际修复只处理 scope、具名 smooth multiplication instance 与定义等式包装，没有改陈述、pin 或关闭检查，没有新增 SSHX 共识。
+
+逐声明 `proof_shape: bind-only`、`admission_basis: none`：复用既有实线性等距基、原同胚、开放嵌入单图册及光滑复合/幂/逆函数规则；本批只交付此 Library 复用说明，精确 Lean 与证据保留在临时结果目录，远端 CI 验证说明。实际光滑 `g` 的构造、原全局等距作用光滑性及 `mfderiv`、原内蕴距离等式、曲率 −1、原流形覆盖/有限体积和同一规定 `h,d` 的完整 Mostow–Prasad 仍未完成。

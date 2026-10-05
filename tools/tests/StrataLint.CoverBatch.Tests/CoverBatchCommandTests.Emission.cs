@@ -69,7 +69,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(1, reports.Loads);
         Assert.Equal(1, frozen.Catalogs);
         Assert.Equal(1, frozen.Indexes);
-        Assert.Equal(1, ledger.BaselineLoads);
+        Assert.Equal(0, ledger.BaselineLoads);
         Assert.Equal([1, 1], ledger.CandidateSnapshotLoads);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, "Generated/DAG.md")));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, "Generated/FILEMAP.md")));
@@ -108,10 +108,12 @@ public sealed partial class CoverBatchCommandTests
         using var world = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(world.Root);
         var reportPath = world.WriteReportBundle();
-        var calls = 0;
-        world.DuringChangeRead = () =>
+        var loads = 0;
+        var previous = BackfillInventoryLoader.DocumentLoading.Value;
+        // The second ledger load belongs to the second item, after the report was read.
+        BackfillInventoryLoader.DocumentLoading.Value = (_, _) =>
         {
-            if (++calls != 1) return;
+            if (++loads != 2) return;
             TemporaryFileSystem.File.WriteAllText(reportPath, "replaced report\n");
             TemporaryFileSystem.File.WriteAllText(reportPath + ".sha256", "replaced sidecar\n");
             TemporaryFileSystem.File.WriteAllText(reportPath + ".materials.zip", "replaced materials\n");
@@ -128,7 +130,7 @@ public sealed partial class CoverBatchCommandTests
         }
         finally
         {
-            world.DuringChangeRead = null;
+            BackfillInventoryLoader.DocumentLoading.Value = previous;
         }
     }
 

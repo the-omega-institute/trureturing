@@ -50,7 +50,7 @@ preliminary bounds for a wider range; those are not treated here as a
 verified replacement for the main theorem's expansion.
 
 [The FIB volume](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
-§395 uses \(n=mp\), \(m\le D<p\), with \(D\) a fixed positive power of its
+§396 uses \(n=mp\), \(m\le D<p\), with \(D\) a fixed positive power of its
 Newton scale. The cofactor may contain small primes, so this is not the
 least-prime-factor sieve condition \(p_1(n)>y\). Its coefficient
 \(e_n=(\mu*\beta)_n\) and smooth Newton kernel also differ from the displayed

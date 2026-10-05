@@ -50,7 +50,7 @@ ratios when \(0<\gamma\le1\).
 
 These tools organize a joint prime/cofactor range. They are reused as
 literature context for [the FIB volume](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
-§395. The positive probability law is not instantiated with the signed
+§396. The positive probability law is not instantiated with the signed
 sequence \(e=\mu*\beta\), and the source's exponential prime weight is not
 the FIB Newton kernel. The actual signed logarithmic moment and remainder
 estimate must be supplied separately. No exact theorem covering that entire

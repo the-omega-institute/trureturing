@@ -118,7 +118,7 @@ were checked against the original page image. Consequently, for each fixed
 It is a classical literature input, not a newly derived prime number theorem
 or a claim about the strongest available PNT error.
 
-The FIB volume §395 combines this existing bound with Stieltjes partial
+The FIB volume §396 combines this existing bound with Stieltjes partial
 summation for its Gaussian prime kernel. The kernel's derivative
 and endpoint budgets give errors uniform over its particular growing
 cofactor range. That actual signed-source interface is separate from the

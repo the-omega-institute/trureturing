@@ -868,7 +868,7 @@ Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `fron
 `diagnostics` 保留同次计算的 `{cross_volume_clearance_gaps:string,backfill_observations:string,silent_zero_sources:[{source_id,source_path}],fallback_sources:[{source_id,reason}],open_genres:[{source_id,token}],digestion_status_text:string}`；fallback 来源数组表示这些来源未完成 atomization，不因成功预览而隐去不完整警告。预览不创建持久化 CAS/账本文件或目录；现有 Scribe 临时快照及其释放保持原契约，临时 GUID 文件、目录创建/修剪、缓存与回滚事件不属于该持久化清单。普通 apply 仍重新计算并执行既有 writer，不消费计划文件或哈希；两次调用的字节等价要求调用方保持输入及物理 CAS 状态不变，输入变更后须丢弃旧预览。该观察不提供跨进程原子校验或新的完整输入 TOCTOU 保证。
 
 
-`DigestionLedgerEvaluation.HasReceiptIntegrityFailure` 对 coverage target mismatch 的**绝对式谓词本体**不因 M:N 放开而弱化;`digest-status` 等全账读侧仍如实报告全部 fatal identity,闭合仍要求 entry 的全部 GID 边与 Lean 条件齐备。为避免存量 backlog 令所有无关写入全局自锁,`cover-atom` 的写前门采用 fork-point delta:按 `(code,atom_id,detail)` 只 grandfather baseline 已存在的同一 fatal identity,任何 candidate-new identity 与所有结构 findings 仍 fail-closed;这只是 writer 消费作用域,不改上述中央谓词。
+`DigestionLedgerEvaluation.HasReceiptIntegrityFailure` 对 coverage target mismatch 的**绝对式谓词本体**不因 M:N 放开而弱化;`digest-status` 等全账读侧仍如实报告全部 fatal identity,闭合仍要求 entry 的全部 GID 边与 Lean 条件齐备。为避免存量 backlog 令所有无关写入全局自锁,`cover-atom` 的写前门以命令启动时读到的账本为参照:按 `(code,atom_id,detail)` 不阻断其中已存在的同一 fatal identity,本次写入新增的 identity 与所有结构 findings 仍 fail-closed;这只是 writer 消费作用域,不改上述中央谓词。`cover-atom` 与 `cover-batch` 不读 git 修订与变更集,不接受 `--base`。
 
 **cover 终判词与选择重试(#2137)。** `cover-atom` 已通过 Lean/Scribe 与结构门、但结果仍非 deletable `closed` 时,命令虽保持失败退出,仍须把该次机器终判词原子写入同一 canonical atom 文件 `Meta/Digestion/backfill/<source>/<projected-state>/<atom_id>.yaml` 的 `receipts.cover_disposition`;不得另建 session 清单或第二套 governance store。此字段与人工语义隔离用的 `receipts.quarantine` 分工明确:前者是 cover 机器对一次精确 GID 集的失败结果,后者是带 justification/reentry condition 的人工治理判断;两者不得共存。精确账形为:
 
