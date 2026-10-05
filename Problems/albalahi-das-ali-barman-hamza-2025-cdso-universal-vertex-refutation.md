@@ -106,9 +106,9 @@ for n in range(1,8):
 
 ### Mechanism and the range of the failure at $\ell=1$
 
-- **Proved (by the settled comparison):** For $\ell=1$ a graph with a universal vertex is unique up to isomorphism. It is the hub of degree $n-1$ carrying one triangle and $n-3$ pendant vertices. Its CDSO is
+- **Paper argument (formalized only for $n=7$):** For $\ell=1$ a graph with a universal vertex is unique up to isomorphism. It is the hub of degree $n-1$ carrying one triangle and $n-3$ pendant vertices. Its CDSO is
   $U_n=2\sqrt{(n-1)^2+4}/(n-1)+\sqrt2+(n-3)\sqrt{(n-1)^2+1}/(n-1)$.
-- **Computed:** The graph $T_n$ is obtained by moving one hub pendant onto a triangle vertex. Its hub has degree $n-2$, with neighbours of degrees $3$ and $2$, and the moved pendant hangs from the degree-3 vertex. Its CDSO is
+- **Computed:** For $n\ge5$, the graph $T_n$ is obtained by moving one hub pendant onto a triangle vertex. Its hub has degree $n-2$, with neighbours of degrees $3$ and $2$, and the moved pendant hangs from the degree-3 vertex. Its CDSO is
   $T_n=\sqrt{(n-2)^2+9}/(n-2)+\sqrt{(n-2)^2+4}/(n-2)+\sqrt{13}/3+(n-4)\sqrt{(n-2)^2+1}/(n-2)+\sqrt{10}/3$.
   The sign of $T_n-U_n$:
   - positive for $n=5,6$: $0.214265$ and $0.057839$;
