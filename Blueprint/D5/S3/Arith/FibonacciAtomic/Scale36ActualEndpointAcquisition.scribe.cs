@@ -33,7 +33,7 @@ internal sealed class Scale36ActualEndpointAcquisitionDocument : IScribeDocument
                 + "Two alpha reports continue. A Uj target scans all other slots, then uses a,q in its "
                 + "retained slot; a Vj target uses q,r. Unexpected beta reports invoke acquisition.")),
             Describe.Lean(DescribeId.Create("scale36-actual-endpoints"),
-                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Scale36ActualEndpointAcquisition.endpoints"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Scale36ActualEndpointAcquisition.result"),
                 H("All Actual Endpoints and Exact Paid Sets"),
                 StatementSource.FromAuthor(EndpointFormula()), AssessedProvenance.FromRepo(),
                 Blocks(
@@ -67,21 +67,23 @@ internal sealed class Scale36ActualEndpointAcquisitionDocument : IScribeDocument
         Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
     private static Formula Guard(Formula body) => Disp(All("k",V("Nat"),
         Seq(Par(Seq(D(1),Sp,Leq,Sp,V("k"))),Sp,Implies,Sp,Par(body))));
-    private static Formula FamilyFormula()
+    private static Formula StructureFormula()
     {
         Formula k=V("k"), i=V("i"), j=V("j"), indices=Call("I",k), n=Call("n",k);
         Formula Tree(Formula x) => Call("F",k,x);
-        return Guard(And(Call("Injective",Call("F",k)), All("i",indices,And(
+        return And(Call("Injective",Call("F",k)), All("i",indices,And(
             EqOf(Call("rho3",Call("Q",k,i)),Tree(i)),Call("Positive",Tree(i)),
             EqOf(Call("length",Tree(i)),n),EqOf(Call("card",Call("L",Tree(i))),n))),
-            All("i",indices,All("j",indices,Call("NC",Tree(i),Tree(j))))));
+            All("i",indices,All("j",indices,Call("NC",Tree(i),Tree(j)))));
     }
+    private static Formula FamilyFormula() => Guard(StructureFormula());
     private static Formula EndpointFormula()
     {
         Formula k=V("k"), i=V("i"), j=V("j"), p=V("pi"), indices=Call("I",k), tree=Call("F",k,j);
-        return Guard(All("i",indices,Some("pi",V("Strategy"),And(
+        return Guard(And(StructureFormula(),EqOf(Call("card",indices),Add(Mul(D(2),k),D(1))),
+            All("i",indices,Some("pi",V("Strategy"),And(
             Call("CoarseObservable",Call("policy",p)),All("j",indices,And(
                 EqOf(Call("J",p,tree),Seq(Call("L",tree),Sp,Cup,Sp,Call("X",k,i,j))),
-                EqOf(Call("cost",p,tree),Sub(Add(Call("n",k),D(1)),Call("indicator",EqOf(i,j))))))))));
+                EqOf(Call("cost",p,tree),Sub(Add(Call("n",k),D(1)),Call("indicator",EqOf(i,j)))))))))));
     }
 }

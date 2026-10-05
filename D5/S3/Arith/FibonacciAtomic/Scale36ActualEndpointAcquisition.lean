@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Literal Scale36 family and actual conditional routing addresses. -/
+   digest: Complete Scale36 family structure and all coarse-observable actual endpoint bills. -/
 
 import D5.S3.Arith.FibonacciAtomic.FourExitRawEndpointSpectrum
 import D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutCompletion
@@ -278,13 +278,22 @@ theorem family_structure (k : Nat) (hk : 1 ≤ k) :
 
 /-- Every target has a coarse-observable original strategy with exactly the
 literal routing bill. Its correctness and finite termination cover all sources. -/
-theorem endpoints (k : Nat) (hk : 1 ≤ k) :
-    ∀ target : Index k, ∃ pi : Strategy, CoarseObservable pi.policy ∧
+theorem result (k : Nat) (hk : 1 ≤ k) :
+    Function.Injective (family k) ∧
+    (∀ i : Index k, thirdImage (preFamily k i) = family k i ∧
+      Positive (family k i) ∧ (family k i).length = 5 * k + 11 ∧
+      (leafAddresses (family k i)).card = 5 * k + 11) ∧
+    (∀ i j : Index k, Nonconflict (family k i) (family k j)) ∧
+    Fintype.card (Index k) = 2 * k + 1 ∧
+    (∀ target : Index k, ∃ pi : Strategy, CoarseObservable pi.policy ∧
       (∀ row : Index k,
         paid (terminal pi (family k row)).1 =
           leafAddresses (family k row) ∪ (extra k target row).toFinset ∧
-        cost pi (family k row) = 5 * k + 12 - if target = row then 1 else 0) := by
+        cost pi (family k row) = 5 * k + 12 - if target = row then 1 else 0)) := by
   classical
+  refine ⟨(family_structure k hk).1, (family_structure k hk).2.1,
+    (family_structure k hk).2.2, ?_, ?_⟩
+  · simp [Fintype.card_sum, Fintype.card_prod, Nat.mul_comm, Nat.add_comm]
   let column : Fin 3 → Fin 4 → Option Bool := fun r q =>
     match r.val, q.val with
     | 0, 0 | 0, 1 | 1, 0 | 1, 2 | 2, 2 | 2, 3 => some true
@@ -473,16 +482,22 @@ theorem endpoints (k : Nat) (hk : 1 ≤ k) :
   by_cases same : target = row
   · subst target
     simp [extra]
-    omega
   · have one : (extra k target row).toFinset.card = 1 := by
+      unfold extra
+      rw [if_neg same]
       cases row with
       | inl u => cases target with
         | inl v => exact False.elim (same (by congr))
-        | inr p => simp [extra, same]
+        | inr p => rfl
       | inr p =>
         rcases p with ⟨j,r⟩
-        fin_cases r <;> cases target <;> simp [extra, same]
-        all_goals split_ifs <;> simp_all
+        dsimp only
+        by_cases h : r.val = 1
+        · rw [if_pos h]; rfl
+        · rw [if_neg h]
+          cases target with
+          | inl u => rfl
+          | inr q => dsimp only; split_ifs <;> rfl
     rw [one, if_neg same]
     omega
 
