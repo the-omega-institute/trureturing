@@ -345,19 +345,19 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         intro q hq
         have eq : q = query j.val := Finset.mem_singleton.mp hq
         subst q
-        exact raw_nonleaf (.inr (.inl j)) (by simp only [Sum.inr_ne_inl,not_false_eq_true])
+        exact raw_nonleaf (.inr (.inl j)) (by intro h; cases h)
       | inr i =>
         intro q hq
         dsimp only [Sum.elim] at hq
         split_ifs at hq with hi
         · rcases Finset.mem_insert.mp hq with rfl | hq
-          · exact raw_nonleaf (.inr (.inr i)) (by simp only [Sum.inr_ne_inl,not_false_eq_true])
+          · exact raw_nonleaf (.inr (.inr i)) (by intro h; cases h)
           · have eq : q = discriminator (i.val+1) := Finset.mem_singleton.mp hq
             subst q
             exact secondary_nonleaf i
         · have eq : q = query (i.val+1) := Finset.mem_singleton.mp hq
           subst q
-          exact raw_nonleaf (.inr (.inr i)) (by simp only [Sum.inr_ne_inl,not_false_eq_true])
+          exact raw_nonleaf (.inr (.inr i)) (by intro h; cases h)
   have unique (i : Index k) : (route k i ++ secondary k i).Nodup := by
     apply List.nodup_append.mpr
     refine ⟨List.Nodup.map qinj List.nodup_range,?_,?_⟩
@@ -425,8 +425,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         simp only [secondary,Scale38NestedCompensation.extra,Sum.inr_ne_inl,↓reduceIte,
           stop,Sum.elim_inr]
         by_cases hi : i.val+1 < k
-        · rw [if_pos hi]
-          simp only [List.toFinset_cons,List.toFinset_nil,Finset.insert_empty]
+        · simp only [if_pos hi,List.toFinset_cons,List.toFinset_nil,Finset.insert_empty]
           rw [Finset.union_assoc,Finset.singleton_union]
         · simp only [if_neg hi,List.toFinset_nil,Finset.union_empty]
   have costs (i : Index k) : cost π (family k i) = 3*k+13 + excess k i := by
@@ -437,19 +436,21 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     | inl u => simpa using leaf_card
     | inr p => cases p with
       | inl j =>
-        rw [Finset.union_singleton,Finset.card_insert_of_notMem
-          (raw_nonleaf (.inr (.inl j)) (by simp only [Sum.inr_ne_inl,not_false_eq_true])),leaf_card]
+        dsimp only [Sum.elim]
+        have q_nonleaf : query j.val ∉ leafAddresses (family k (.inr (.inl j))) :=
+          raw_nonleaf (.inr (.inl j)) (by intro h; cases h)
+        rw [Finset.union_singleton,Finset.card_insert_of_notMem q_nonleaf,leaf_card]
       | inr i =>
         dsimp only [Sum.elim]
+        have q_nonleaf : query (i.val+1) ∉ leafAddresses (family k (.inr (.inr i))) :=
+          raw_nonleaf (.inr (.inr i)) (by intro h; cases h)
         split_ifs with hi
         · rw [Finset.union_insert,Finset.union_singleton,
             Finset.card_insert_of_notMem (by
               simp only [Finset.mem_insert,not_or]
-              exact ⟨different (i.val+1) (i.val+1),raw_nonleaf (.inr (.inr i)) (by simp only [Sum.inr_ne_inl,not_false_eq_true])⟩),
+              exact ⟨different (i.val+1) (i.val+1),q_nonleaf⟩),
             Finset.card_insert_of_notMem (secondary_nonleaf i),leaf_card]
-          omega
-        · rw [Finset.union_singleton,Finset.card_insert_of_notMem
-            (raw_nonleaf (.inr (.inr i)) (by simp only [Sum.inr_ne_inl,not_false_eq_true])),leaf_card]
+        · rw [Finset.union_singleton,Finset.card_insert_of_notMem q_nonleaf,leaf_card]
   refine ⟨?_,routes,π,policy,observable,execution,?_,?_⟩
   · intro t ht0 ht
     refine ⟨pair t ht0 ht,gx ⟨t,ht⟩,?_,?_,(fun s => different s t)⟩
@@ -477,11 +478,12 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       rw [costs]
       cases i with
       | inl u => simp
-      | inr p => cases p <;> dsimp only [Sum.elim]; split_ifs <;> omega
+      | inr p => cases p with
+        | inl j => dsimp only [Sum.elim]; omega
+        | inr i => dsimp only [Sum.elim]; split_ifs <;> omega
     · refine ⟨.inr (.inr ⟨0,by omega⟩),?_⟩
       rw [costs]
       simp only [Sum.elim_inr,Fin.val_mk]
       rw [if_pos (by omega)]
-      omega
 
 end D5.S3.Arith.FibonacciAtomic.Scale38CoarseTwoExcess
