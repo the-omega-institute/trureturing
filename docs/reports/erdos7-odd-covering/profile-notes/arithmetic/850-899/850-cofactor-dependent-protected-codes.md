@@ -6027,10 +6027,26 @@ certificates, the two-sided charge bounds and the shallow debit
 are alternative lower bounds on the same $\mathfrak D_*$ and
 cannot be added again without disjoint accounting.
 
-CD198–CD205 are ordinary finite mathematical deductions. No exact
-Lean application of their common majorant, actual45 boost or
-local excess identity is claimed here, and no unrestricted
-Erdős #7 conclusion is asserted.
+CD198–CD205 are ordinary finite mathematical deductions. A scoped
+transient Lean check verifies their finite rational-law accounting
+components: the common original-event majorant, nonnegative slot losses,
+the exact total-budget decomposition, the restricted deep-loss identity,
+and the distinguished unit-prefix deficit and coordinate boost. Its
+joint application uses the same source law, original event family and
+prefix data, including equality of the distinguished prefix with the
+local first-five fibre. The complete hole quantifies over every supplied
+retained original index. All checked axiom closures contain only
+`propext`, `Classical.choice` and `Quot.sound`.
+
+The actual integer-family construction of those data and incidence
+premises has not been kernel-checked. In particular, the distinguished
+label's modulus being 45, its quantitative deficit, the original-family
+classification of deleted indices, and the complete-source exclusions
+remain arithmetic bridge obligations. The aggregate shallow-loss
+combination and CD176's scalar envelope were not checked by this
+application. The final original-family $S$ budget and unrestricted
+Erdős #7 are not thereby Lean verified. These checks directly reuse
+finite-law and cardinality results and add no frozen declarations.
 
 ## Fixed exceptional originals and different-color tuple moments
 
@@ -6378,6 +6394,391 @@ The actual45 term is already charged once inside `D_*`; no additional
 
 No Lean verification of CD206–CD222 or unrestricted Erdős #7 conclusion
 is asserted.
+
+## A complete local hole can be tiled with zero excess
+
+The positive complete-hole reserve and two actual deep suppliers do not
+force positive raw excess without further whole-cover restrictions.
+Consider this explicit family, with common period $Q=32175$:
+
+| Modulus | Residue | A private point modulo $Q$ |
+| ---: | ---: | ---: |
+| 3 | 0 | 4728 |
+| 5 | 1 | 30611 |
+| 9 | 1 | 15310 |
+| 11 | 0 | 18040 |
+| 13 | 0 | 25870 |
+| 15 | 13 | 29038 |
+| 25 | 0 | 19600 |
+| 33 | 1 | 15115 |
+| 39 | 1 | 13495 |
+| 45 | 22 | 5872 |
+| 55 | 25 | 9265 |
+| 65 | 55 | 20920 |
+| 75 | 55 | 17455 |
+| 99 | 13 | 12190 |
+| 117 | 67 | 1120 |
+| 165 | 70 | 6340 |
+| 195 | 160 | 8545 |
+| 225 | 85 | 4585 |
+| 275 | 215 | 490 |
+| 325 | 45 | 15970 |
+| 495 | 445 | 3415 |
+| 585 | 265 | 28345 |
+| 825 | 40 | 29740 |
+| 975 | 670 | 3595 |
+| 2475 | 2065 | 26815 |
+| 2925 | 2920 | 23395 |
+
+These are exactly the nonunit divisors of 2475 or 2925. All moduli are
+odd and distinct, and all ternary and five depths are at most two.
+Every listed private point has its indicated class as its unique owner.
+Every proper comparable pair of originals has incompatible residues.
+The qualifying full-ternary DR8 parents are 225, 495, 585, 2475 and
+2925; each of their proper-descendant phase buckets has at most two
+original labels.
+
+The entire first-five-zero fibre above the five-free source
+$y=580\pmod{1287}$ consists of the following five points. Its ordinary
+coordinates are $8\pmod{11}$ and $8\pmod{13}$, and its full ternary
+word is $4\pmod9$.
+
+| Five coordinate modulo 25 | Point modulo $Q$ | Unique original owner modulus |
+| ---: | ---: | ---: |
+| 0 | 13450 | 25 |
+| 5 | 580 | 75 |
+| 10 | 19885 | 225 |
+| 15 | 7015 | 2475 |
+| 20 | 26320 | 2925 |
+
+In particular 13450 is private to the actual25 original, so 580 is
+in its complete five-free projection. Delete all and only originals
+with positive five depth and nonunit ordinary cofactor. The retained
+family still includes every present unit, including 25, 75 and 225.
+Its complete hole in this fibre is exactly the two points with five
+coordinates 15 and 20. Thus the hole has relative size $2/5>1/4$.
+
+The actual originals of moduli 2475 and 2925 meet those two points
+respectively, with disjoint singleton traces. They exactly tile the
+hole, so their raw deep excess is zero. Under the same pure-five and
+root-specific unit guards, the five complement has 13 points, three
+at first-five phase zero. Hence $\rho=13/25$, $\gamma=3/13$ and
+$s=2/13>0$: positive guard loss also does not force a local excess.
+
+A transient Lean check verifies this literal family, all displayed
+private witnesses, divisor and phase conditions, the complete CRT
+fibre, exact retained hole, its disjoint original suppliers and the
+zero excess. It also verifies that 23890 is uncovered by every
+original. Its axiom closures are contained in the standard set
+`propext`, `Classical.choice`, `Quot.sound`; no new frozen declaration
+is introduced.
+
+This is a noncover, so it cannot realize EB1 or contradict the
+whole-cover budget. It rules out the implication from the displayed
+local restrictions alone to positive excess. The required whole-source
+service and global replacement restrictions remain additional inputs.
+
+## Two-word escape charges the same original excess
+
+Keep one EB1 original odd distinct nonunit whole cover, actual3 and9,
+ternary height at most two, and shared-prime set `{5}`. Keep one live
+ternary root with safe full words `J`, `k=|J|` in `{2,3}`, and the same
+guarded ordinary product law `lambda` as CD186--CD205. Write
+
+$$
+Q=9\cdot5^G M,\qquad (M,15)=1,\quad G\ge2,
+\qquad \nu=U_J\otimes\lambda.
+$$
+
+All labels, residues and sections below belong to this one family.
+Write an original modulus as `3^h 5^e m`, with `(m,15)=1`.
+The first-five phase `omega` is the phase of the actual25 original.
+The deletion removes exactly all originals with `e>=1` and `m>1`.
+Every unit original `5^e`, `3*5^e`, `9*5^e` remains, including75,
+225 and every higher unit. Let `E_(u,w)` be the complete hole of
+all retained originals, restricted to the first-five fibre `B_omega`.
+
+Let `R_u` be the section at full word `u` of the complete five-free
+survivor `R_5`. Let `Y_v` be the section at `v` of the complete
+private25 cofactor source `Y`: it excludes every five-free original
+and every first-five-depth cofactor cylinder at phase `omega`,
+including unit exclusions. These are actual sets in the same
+ordinary carrier. A selected private witness or a narrower deletion
+source cannot replace either complete set.
+
+For every original deep ordinary supplier `n` with first phase
+`omega`, retain its literal ambient five-prefix `P_n` in
+`Z/(5^G)` and its complete cofactor incidence at `(u,w)`.
+Let `V_T(u,w)` be the union of these incident prefixes. The existing
+raw excess and clipped word debit are
+
+$$
+\begin{aligned}
+O(u,w)&=\frac{\sum_{n\in\mathcal T}
+          \mathbf1_{C_n}(u,w)|P_n|
+          -|E_{(u,w)}\cap V_{\mathcal T}(u,w)|}{|Z_5|},\\
+\mathcal D_u&=\int_{R_u}\min(s,O(u,w))\,d\lambda(w),
+\qquad \sum_{u\in J}\mathcal D_u\le S.
+\end{aligned}                                                    \tag{CD223}
+$$
+
+Here `rho=|Z_5|/5^G` and `s>=1/(25*rho)>0` are unchanged from
+CD203--CD205. The last inequality is exactly the existing bound
+`k integral_(R_5) min(s,O) dnu <= S`. Raw prefixes may extend
+outside `Z_5`; their unused allowances remain part of `O`.
+
+### Guarded descendants retain a uniform conditional bound
+
+At an active ordinary prime `p`, the coordinate law is uniform on
+the actual guard complement `Z_p`. The guards consist of the pure
+`p^a` prefixes and the applicable `3*p^a` prefixes at this root,
+with at most two forbidden prefixes at each positive depth.
+Let `C` be a literal depth-`a` prefix with `C intersect Z_p` nonempty;
+depth zero means the whole coordinate. No guard of depth at most
+`a` can contain `C`, since prefixes in one prime coordinate are
+nested or disjoint. Only deeper guards can remove points of `C`.
+For any literal proper descendant prefix `D` of `C` and ambient prime
+height `H_p`, their union bound gives
+
+$$
+\frac{|C\cap Z_p|}{|C|}
+\ge1-2\sum_{r=1}^{H_p-a}p^{-r}
+\ge\frac{p-3}{p-1}.
+\qquad
+\frac{|D\cap Z_p|}{|C\cap Z_p|}
+\le\frac{p-1}{p(p-3)}\quad(D\subsetneq C).
+                                                               \tag{CD224}
+$$
+
+The second bound uses `|D|<=|C|/p`. It conditions on the actual
+live prefix `C`; an unconditional coordinate cap alone would not
+justify it. All active ordinary primes are at least7. Define
+
+$$
+\eta_{\mathcal A}=\max\left\{\frac15,
+       \max_{p\in\mathcal A}\frac{p-1}{p(p-3)}\right\}
+\le\frac3{14}.
+\qquad
+7\notin\mathcal A\ \Longrightarrow\ \eta_{\mathcal A}=\frac15.
+                                                               \tag{CD225}
+$$
+
+For an empty active palette the maximum is `1/5`.
+At `p=7` the ordinary bound is `3/14`; for `p>=11` it is below
+`1/5`. Opposite-root coordinates are fixed at their established
+singletons. An original section annihilated by those coordinates
+has zero mass and may be omitted. This exclusion concerns the
+actual original classes, not arbitrary prefixes under a point mass.
+
+For a high original `i`, put `d_i=5^(e_i)*m_i`, and write
+`C_i^ord` for its literal ordinary section. Assume
+`lambda(C_i^ord)>0` and set `alpha_i=|P_i|/|Z_5|`.
+For another live high original `b`, ambient section containment is
+
+$$
+P_i\times C_i^{\rm ord}\subseteq P_b\times C_b^{\rm ord}
+\quad\Longleftrightarrow\quad
+d_b\mid d_i\ \text{ and }\ a_i\equiv a_b\pmod{d_b}.
+                                                               \tag{CD226}
+$$
+
+The comparison omits only the ternary coordinate; different full
+words remain attached to the two original labels. If containment
+fails, incompatible prefixes give an empty intersection. Otherwise
+some coordinate of `b` imposes an additional digit on `i`.
+A five-digit costs at most `1/5`; an ordinary digit costs at most
+CD224, including when `i` has depth zero in that coordinate. Thus
+
+$$
+\beta_{ib}:=\frac{|P_i\cap P_b|}{|Z_5|}
+      \lambda(C_i^{\rm ord}\cap C_b^{\rm ord})
+\le\eta_{\mathcal A}\alpha_i\lambda(C_i^{\rm ord}).             \tag{CD227}
+$$
+
+The factorization is under the full product law `lambda`, or its
+conditioning on the rectangular literal section `C_i^ord`.
+No independence after conditioning on `R_u`, `Y_v` or their
+intersection is asserted. The five factor is a raw cardinal ratio,
+not a replacement probability law on the five-coordinate.
+
+### Escape from another word forces loss at the original word
+
+Choose an actual high deep ordinary original
+`n_i=9*5^(e_i)*m_i`, with `e_i>=2`, `m_i>1`, full word `u`,
+first-five phase `omega`, and positive ordinary-section mass.
+Put `tau_i=a_i mod25`. Choose a different safe word `v` such that
+the phase `(v mod9,tau_i mod25)` is not the actual225 phase.
+Let `B_(v,tau_i)` contain every proper original multiple of225
+in that phase. It includes all high unit originals `9*5^e` there.
+[Report385, DR8](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md)
+gives
+
+$$
+|\mathcal B_{v,\tau_i}|\le2.                                  \tag{CD228}
+$$
+
+Assume no member with nonzero actual ordinary section contains
+`i`'s section in CD226. Define the unmasked raw escape function
+
+$$
+e_{i\to v}(w)=\frac{\mathbf1_{C_i^{\rm ord}}(w)}{|Z_5|}
+\left|P_i\setminus
+  \bigcup_{\substack{b\in\mathcal B_{v,\tau_i}\\w\in C_b^{\rm ord}}}P_b
+\right|.                                                       \tag{CD229}
+$$
+
+Take `w in R_u intersect Y_v` and a five-coordinate `z` counted
+by CD229. Apply whole original coverage to the actual CRT point
+`(v,w,z)`, including when `z` lies outside `Z_5`. The complete
+definition of `Y_v` excludes every five-free original and every
+depth-one original at first phase `omega`. A high original of
+five depth at least two would lie in the bucket CD228, except for
+actual225 itself; that label was excluded by the phase condition.
+All bucket owners were removed from CD229. Therefore some covering
+original has ternary height at most one and five depth at least two.
+
+Such a low original also covers `(u,w,z)`, since `u` and `v` have
+the same ternary root. Outside the retained hole, `i`'s full raw
+slot is charged by `O`. Inside the hole the low owner cannot be a
+retained unit, so it is an ordinary-bearing member of `T`, distinct
+from high original `i`. The deep multiplicity is then at least two
+and the reached-hole term subtracts at most one. Consequently
+
+$$
+\mathbf1_{Y_v}(w)e_{i\to v}(w)\le O(u,w)\quad(w\in R_u),
+\qquad
+0\le e_{i\to v}(w)\le\alpha_i
+=\frac1{\rho5^{e_i}}\le\frac1{25\rho}\le s.                    \tag{CD230}
+$$
+
+This is a statement about the complete intersection `R_u intersect
+Y_v`. Neither survivor can be discarded from the debit implication.
+The last scale bound allows this single contribution through the
+existing clipping. Integrating the raw union bound in CD229 gives
+
+$$
+\begin{aligned}
+\mathcal D_u
+&\ge\alpha_i\lambda(C_i^{\rm ord}\cap R_u\cap Y_v)
+       -\sum_{b\in\mathcal B_{v,\tau_i}}\beta_{ib},\\
+\mathcal D_u
+&\ge\alpha_i\left[
+   \lambda(C_i^{\rm ord}\cap R_u\cap Y_v)
+   -|\mathcal B_{v,\tau_i}|\eta_{\mathcal A}
+             \lambda(C_i^{\rm ord})\right]_+.
+\end{aligned}                                                   \tag{CD231}
+$$
+
+In the first line the nonnegative opponent intersections over the
+source were bounded above by their full-law values `beta_ib`.
+No conditional-product estimate on the source is used.
+Using CD225 and CD228 replaces the loss coefficient by `3/7`, or by
+`2/5` when7 is inactive. If all of `C_i^ord` survives in the two
+required sections up to a null set, then
+
+$$
+\mathcal D_u\ge\frac47\alpha_i\lambda(C_i^{\rm ord}),
+\quad\text{or }\frac35\alpha_i\lambda(C_i^{\rm ord})
+             \text{ when }7\notin\mathcal A.                   \tag{CD232}
+$$
+
+For an admissible comparison phase, a bound `D_u<=epsilon`
+therefore forces either an actual containing opponent or
+
+$$
+\lambda(C_i^{\rm ord}\setminus(R_u\cap Y_v))
+\ge\frac47\lambda(C_i^{\rm ord})-\rho5^{e_i}\varepsilon.        \tag{CD233}
+$$
+
+### A packet charges each unit of the same debit once
+
+For each target word `u`, select a finite set `I_u` of distinct
+actual high originals at that word. Fix for each label its own
+comparison word `v_i` satisfying the preceding phase and
+noncontainment conditions. Require the raw-capacity condition
+
+$$
+\sum_{i\in I_u}\alpha_i\le s.                                 \tag{CD234}
+$$
+
+The pointwise packet function must retain each label's source mask:
+
+$$
+F_u(w)=\sum_{i\in I_u}\mathbf1_{Y_{v_i}}(w)e_{i\to v_i}(w).
+                                                               \tag{CD235}
+$$
+
+Fix `w in R_u` and one raw five-coordinate. Let `r` count selected
+high labels whose masked contributions reach that coordinate.
+Outside the retained hole all `r` raw slots are charged. Inside
+the hole, if `r>0`, coverage at any one of the corresponding
+comparison words supplies an additional low ordinary owner at `u`.
+It is distinct from all `r` high labels. The deep multiplicity is
+at least `r+1`, and subtracting the reached-hole indicator leaves
+at least `r`. The case `r=0` uses nonnegativity. Summing coordinates
+and using CD234 proves
+
+$$
+0\le F_u(w)\le O(u,w),\qquad F_u(w)\le s,
+\qquad F_u(w)\le\min(s,O(u,w))\quad(w\in R_u).                  \tag{CD236}
+$$
+
+The unmasked sum of CD229 has no such asserted bound. Its summands
+may lack the complete `Y_(v_i)` condition needed to force low
+service. Integrating CD236, then applying the separate nonnegative
+escape integrals as in CD231, yields
+
+$$
+\begin{aligned}
+k\int_{R_5}\min(s,O)\,d\nu
+\ge\sum_{u\in J}\sum_{i\in I_u}\alpha_i
+\Big[\lambda(C_i^{\rm ord}\cap R_u\cap Y_{v_i})
+-|\mathcal B_{v_i,\tau_i}|\eta_{\mathcal A}
+       \lambda(C_i^{\rm ord})\Big]_+.
+\end{aligned}                                                   \tag{CD237}
+$$
+
+The exact-intersection summand is
+`[alpha_i*lambda(C_i^ord intersect R_u intersect Y_(v_i))
+  - sum_b beta_ib]_+`.
+The addition in CD237 follows from the multiplicity argument CD236;
+it is not addition of separate lower bounds on the same debit.
+CD223 and CD237 give a sufficient contradiction criterion:
+
+$$
+\sum_{u\in J}\sum_{i\in I_u}\alpha_i
+\Big[\lambda(C_i^{\rm ord}\cap R_u\cap Y_{v_i})
+-|\mathcal B_{v_i,\tau_i}|\eta_{\mathcal A}
+       \lambda(C_i^{\rm ord})\Big]_+>S.                        \tag{CD238}
+$$
+
+### Arithmetic meaning and the unproved extraction step
+
+A containing high opponent has `d_b | d_i` with compatible
+five/ordinary phases. Both full moduli have ternary exponent two,
+so `n_b | n_i`; numerical distinctness gives `n_b<n_i`.
+These actual ancestor relations are acyclic and may terminate at
+a retained high unit. Their full original APs still have different
+ternary words. Section containment does not authorize moving them.
+
+No result here forces an admissible packet with CD238, sufficient
+common-section mass, or the required absence of containing
+ancestors. The two root laws remain separate, and the root without
+active7 need not carry enough source mass. The bound may vanish
+when the comparison `Y_v` is empty, for example when `k=2` and
+actual45 at phase `omega` leaves only one available source word.
+An effective different comparison word is not guaranteed.
+The two-supplier local noncover does not supply the whole-coverage
+implication used in CD230 or CD236.
+
+Five-fibre tree contraction also does not supply a full-label
+integer replacement: different leaves may have different ordinary
+cofactors and complete old regions. The related extraction and
+literature boundaries in [Report853, section8](853-paid-packet-absorption-and-residual-moment.md#8-literature-mechanisms-and-the-remaining-extraction-problem)
+remain applicable. No literature theorem is used to infer CD238.
+CD237 is another lower bound on the already paid quantity in CD223;
+it is not added again to the actual45 charge or the CD200 debit.
+These are conditional ordinary mathematical deductions; no Lean verification or unrestricted Erdős #7 conclusion is asserted.
 
 ### Verification scope and remaining inequality
 
