@@ -5660,3 +5660,16 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 五个具名构造与目标的完整精确临时 Lean 第四轮真实编译通过，host `40015` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-native-coordinate-infinitesimal-metric.lean` 为 219775 字节，SHA256 `b3845c4fc791a948e7b8397cf24950838c196161ba09ed4b2ad82219b38b350d`；仅新增 45 字节热缓存 `Mathlib.Analysis.Calculus.Deriv.Slope` import，其后完整保留前批成功局部商保距源码，无新依赖构建或版本变更。前两轮实际类型与滤子推断失败的源码日志保留排除；第三轮实际 exit0 但含三条冗余 tactic 警告，也保留排除。只补明确类型并去除冗余，未弱化右侧极限、原距离或零方向分支，未关闭 linter。最终实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
 
 该实际原距离公式、欧氏范数、导数斜率和滤子连续性接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批识别的是原坐标直线的局部右侧度量速度，尚未构造实际黎曼度量、其曲率或与原距离的完整内蕴等式。固定外部库的 scalar derivative bound 到内蕴距离 Lipschitz 接口可用于后续实际 `log height` 下界；仍须提供同一实际模型的切向度量和导数界。完整原流形覆盖、原度量／体积匹配、尖点分离、给定 `h`／完整 `d` 的 Mostow–Prasad 与官方验收继续未完成。
+
+
+### 原 Lorentz 坐标嵌入的真实导数、切向正定配对与原等距作用变换律
+
+对同一个实际原点 `p` 和实际方向 `(a,b) : ℂ × ℝ`，显式构造四个原 Lorentz 坐标的方向导数 `nativeLorentzCoordinateTangent p a b`。它不是只有形式上的候选向量：原正高度邻域内实际坐标扰动的平方范数和四个有理坐标函数的导数，逐分量组合为真实 `HasDerivAt`，其函数逐字是原 `v (nativeCoordinatePerturbation p (WithLp.toLp 2 (a,b)) s)`。
+
+两个实际方向 `(a,b),(c,d)` 的原 Lorentz 配对满足精确恒等式：负配对等于 `(a.re*c.re + a.im*c.im + b*d) / height(p)^2`。同一导数向量与原 `v(p)` 正交；其负自配对是 `(‖a‖²+b²) / height(p)^2`，因此只要实际方向非零就严格为正。原高度正性和实际欧氏平方和均参与证明，没有给出正定性前提，没有把默认 max 范数当作欧氏范数。
+
+对任意同一个原 `e : H3 ≃ᵢ H3`，同一原扰动经实际 `e` 再经原 `v` 的函数，其真实导数是 `actionMatrix e` 乘以上述真实导数向量。这里消费已验的逐原点 `action_formula`，将同一个实际矩阵视为连续线性映射并使用导数链式法则；没有另供 `e` 的光滑性、另一个作用或替代度量。该结论仍是原 Lorentz 坐标中的曲线导数变换律，尚未单独构造全局平滑切丛或证明内蕴距离相等。
+
+三个连贯临时源码增量都真实编译 exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。实际导数与双线性配对源码 `.lake/mostow-h3-native-lorentz-coordinate-tangent.lean` 为 225174 字节，SHA256 `522fb8d31093c04b58ccf0b715255cdffad30775a158640a0c4bc8d144257b0f`，仅在完整前批成功源码前增加 44 字节热缓存 `Deriv.Prod` import。正交及正定性源码 `.lake/mostow-h3-native-lorentz-tangent-positive.lean` 为 227021 字节，SHA256 `9aa02734e9f5e46da13327aefd6a2af2c6682c718b644565752258d07637a721`，首轮 host `21797` 通过。原等距导数变换的完整累计源码 `.lake/mostow-h3-native-isometry-lorentz-derivative.lean` 为 227805 字节，SHA256 `11ee5c7bd6437e34fb48d31e0a37e892ad5808cf06ec9202fabeb07bd97f1738`，第二轮 host `71421` 通过；后两批保持各自成功前批为完整 offset0 前缀，无新 import。所有失败或含警告轮次的完整源码日志保留排除，未降低陈述或关闭 linter。实际退出码和完整公理输出保留，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该原有理坐标导数、Lorentz 配对代数和既有线性作用接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批为同一原模型的黎曼度量构造提供真实切向数据；仍须构造实际平滑度量与全局内蕴距离匹配、曲率 −1、原流形覆盖和体积绑定。有限体积格子同构产生边界交比保持的全局推导、完整给定 `h`／完整 `d` 的 Mostow–Prasad 及官方验收继续未完成。
