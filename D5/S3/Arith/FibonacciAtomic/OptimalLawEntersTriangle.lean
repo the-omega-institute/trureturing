@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/OptimalLawEntersTriangle
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/OptimalLawEntersTriangle
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
