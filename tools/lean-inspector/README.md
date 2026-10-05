@@ -16,11 +16,10 @@ make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
 和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
 ensure、原生 Lake 报告构建和发布。
 
-Typed contract discovery inspects the five direct Contract heads. Admitted entries
-are safe, closed `def` declarations with a structure literal body; standalone
-ExpectedDeclaration is rejected by the root structure rule. Rigid universes remain
-unchanged. Parentheses around the result head are accepted. Term parameters and
-used section variables cannot supply a closed entry.
+Typed contract discovery inspects the five direct compiled Contract heads.
+Entries have safe, closed definition values; the decoder accepts constructor
+trees and safe constant references. Standalone ExpectedDeclaration is rejected
+by the root structure rule. Rigid universe checks apply to the compiled terms.
 
 `Contract.Ref` stores only `value`. The decoder reads its compiled constant head
 by stripping Expr metadata and following application functions. Lambda, let,
@@ -271,5 +270,15 @@ The report driver calls the Inspector once per completed target. The consumer
 serializes that target before the driver releases its Environment and proof
 objects. Cross-target collision checks retain only names and digest strings;
 there is no array of target environments or constant bodies.
+
+The production reader is not yet environment-free. Targets without their own
+typed contract inputs use `RawArtifacts.Store`, which reads compiler module
+parts without initializing extensions. Its utility relationship check still
+performs term reduction and type conversion. Typed input owners use
+`importModules`, extension initialization and the MetaM report driver;
+companion publication still infers types and adds declarations. Seal consumption
+still reduces row functions and computes primitive statistics. These operations
+do not meet the compiled-only reporting boundary. Reuse of an existing report
+does not exercise or verify its regeneration path.
 
 `STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和固定驱动完成的逐目标 `assess`（包括空 assessment）；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。
