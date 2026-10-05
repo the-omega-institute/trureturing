@@ -167,8 +167,8 @@ private theorem profile_endpoint (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
     · apply HasDerivAt.fun_sum
       intro j hj
       simpa only [neg_div] using hD j
-    · simpa only [one_mul] using
-        (hasDerivAt_id m).mul_const (log ((M : ℝ) / (M + d)))
+    · simpa only [id_eq, one_smul, smul_eq_mul, one_mul] using
+        (hasDerivAt_id m).smul_const (log ((M : ℝ) / (M + d)))
   · dsimp [f, a] at hsumhi
     rw [hint] at hsumhi
     dsimp [m] at hsumhi ⊢
