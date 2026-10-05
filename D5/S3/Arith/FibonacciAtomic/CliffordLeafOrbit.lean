@@ -54,7 +54,17 @@ theorem result :
     (∀ j, X j = phases ⟨j % 6, Nat.mod_lt j (by decide)⟩) ∧
     (∀ j k, X j = X k ↔ j % 6 = k % 6) ∧
     (∀ (Y : Type u) (g : ℕ → Y), Factors g ↔ ∀ j, g (j + 6) = g j) ∧
-    Factors (fun j => X (j + 1)) := by
+    Factors (fun j => X (j + 1)) ∧
+    (¬ ∃ R : Set.range E → C, ∀ t : Source,
+      R ⟨E t, ⟨t, rfl⟩⟩ = E (substitution t)) ∧
+    (E (.mul α α) = 1 ∧ E (.mul (.mul α α) (.mul α α)) = 1 ∧
+      E (substitution (.mul α α)) = -1 ∧
+      E (substitution (.mul (.mul α α) (.mul α α))) = 1) ∧
+    (∃ p q : Source, composition p = (3, 0) ∧ composition q = (3, 0) ∧
+      List.ofFn (GenealogicalFiberTransport.indexedEquiv p).2 =
+        List.ofFn (GenealogicalFiberTransport.indexedEquiv q).2 ∧ p ≠ q ∧ E p = E q) ∧
+    (∀ (Y : Type u) (g : ℕ → Y), ∃ f : Set.range X → Y,
+      ∀ j, j < 6 → f ⟨X j, ⟨j, rfl⟩⟩ = g j) := by
   classical
   have aa : A * A = 1 := by
     rw [CliffordAlgebra.ι_sq_scalar, show Q (1, 0) = 1 by
@@ -166,7 +176,15 @@ theorem result :
         (Classical.choose_spec (show X j ∈ Set.range X from ⟨j, rfl⟩))
       change g _ = g j
       rw [h, reduce j]
-  refine ⟨?_, fun j => (orbit j).1, fibers, criterion, ?_⟩
+  have collision : E (.mul α α) = 1 ∧ E (.mul (.mul α α) (.mul α α)) = 1 ∧
+      E (substitution (.mul α α)) = -1 ∧
+      E (substitution (.mul (.mul α α) (.mul α α))) = 1 := by
+    simp [E, substitution, FreeMagma.liftAux, aa, bb]
+  have neg_ne : (-1 : C) ≠ 1 := by
+    intro h
+    have hm := congrArg (fun c : C => rep c 0 0) h
+    norm_num at hm
+  refine ⟨?_, fun j => (orbit j).1, fibers, criterion, ?_, ?_, collision, ?_, ?_⟩
   · intro j
     exact (GenealogicalFiberTransport.fiberMap (1, 0) j ⟨α, rfl⟩).property
   · refine ⟨fun x => X (Classical.choose x.property + 1), ?_⟩
@@ -175,5 +193,28 @@ theorem result :
     have h := (fibers (Classical.choose (show X j ∈ Set.range X from ⟨j, rfl⟩)) j).mp
       (Classical.choose_spec (show X j ∈ Set.range X from ⟨j, rfl⟩))
     omega
+  · rintro ⟨R, hR⟩
+    have h2 := hR (.mul α α)
+    have h4 := hR (.mul (.mul α α) (.mul α α))
+    have hx : (⟨E (.mul α α), ⟨.mul α α, rfl⟩⟩ : Set.range E) =
+        ⟨E (.mul (.mul α α) (.mul α α)), ⟨.mul (.mul α α) (.mul α α), rfl⟩⟩ := by
+      apply Subtype.ext
+      exact collision.1.trans collision.2.1.symm
+    have hval := congrArg R hx
+    rw [h2, h4, collision.2.2.1, collision.2.2.2] at hval
+    exact neg_ne hval
+  · refine ⟨.mul (.mul α α) α, .mul α (.mul α α), rfl, rfl, ?_, ?_, ?_⟩
+    · decide
+    · intro h
+      cases h
+    · exact mul_assoc A A A
+  · intro Y g
+    have hperiod : ∀ j, g ((j + 6) % 6) = g (j % 6) := by
+      intro j
+      congr 1
+      omega
+    obtain ⟨f, hf⟩ := (criterion Y (fun j => g (j % 6))).mpr hperiod
+    refine ⟨f, fun j hj => ?_⟩
+    simpa only [Nat.mod_eq_of_lt hj] using hf j
 
 end D5.S3.Arith.FibonacciAtomic.CliffordLeafOrbit
