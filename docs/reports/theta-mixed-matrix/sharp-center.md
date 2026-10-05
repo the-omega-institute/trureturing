@@ -384,3 +384,55 @@ signs remain necessary at every chosen $c_j\uparrow1/2$; (SC15) alone
 proves neither sign, the endpoint half-bound, RH or full Robin.
 The saved $N=64$ matrices and residuals are not data for these other
 bands, and no old producer or new numerical target is executed.
+
+
+## Keep the projection and ground corrections on the same residual
+
+Use precisely the (SC13) common family and the same subcritical parameter,
+bandwidth, full $T_c$ and high $C$ as (WH1). Reuse $J$ from the
+[constrained weighted comparison](../../../Library/Weil/fukushima2011dirichlet.md#keep-the-high-constraint-and-the-exact-ground-term),
+with its $A,R,g=Qv_0$ and $\beta$. Define the Hermitian allowance
+$U_{\rm cw}$ by its value on every common coefficient vector:
+
+$$
+z^*U_{\rm cw}z=2\Re\langle k(z),q(z)\rangle-C[q(z)]+J(r(z))
+\ge\langle k(z),C^{-1}k(z)\rangle.
+\tag{SC16}
+$$
+
+The inverse-residual identity and (WH8) supply the inequality. Relative
+to the identical weighted allowance (SC14), the exact saving is
+
+$$
+\begin{aligned}
+z^*(U_w-U_{\rm cw})z
+&=\langle P(wr(z)),A^{-1}P(wr(z))\rangle
+  +\beta|\langle Rg,r(z)\rangle|^2\\
+&\ge\delta\|P(wr(z))\|_2^2.
+\end{aligned}
+\tag{SC17}
+$$
+
+These are common-source Grams, retaining all cross entries. The ground
+correction must use the same constrained $R$; independent full-space
+projection and ground optima cannot be added. No support or localization
+is assigned to the projected full residual.
+
+A simpler admissible consumer defines
+$z^*G_Pz=\|P(wr(z))\|_2^2$ and
+$U_{\rm proj}=U_w-\delta G_P$. Then
+$U_{\rm cw}\preceq U_{\rm proj}\preceq U_w$, and each remains above
+the actual inverse-coupling matrix. This directly usable projection
+credit requires no inverse computation on the infinite-dimensional
+$PH$ and no new high trial family. Its Fourier projection entries and
+all source errors still require directed enclosures.
+
+For the exact ground column (SC13)--(SC15), $r_0=0$, so both new
+correction matrices have zero ground row and column. The exact trial
+contribution $C[q_0]$ remains. The corrections can vanish on other
+directions, and the rank-one correction vanishes when $c=0$.
+No uniform fractional saving or evaluated matrix is supplied. This
+conditional paper interface reuses block and rank-one inversion;
+actual low and complementary-low signs on one common cofinal sequence,
+the endpoint half-bound, RH, full Robin and Lean certification remain
+unresolved. Saved fixed-band matrices do not supply these entries.
