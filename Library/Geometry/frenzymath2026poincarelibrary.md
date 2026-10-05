@@ -5402,3 +5402,16 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 完整具名应用经缓存保护入口第二轮编译成功，零错误、零警告，无 `sorry`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。首轮虽 exit0 但有两项局部实例书写警告，其完整源码与日志保留排除；按钉版建议修复，没有关闭 linter。协作方实施、调用方只读语义复核完成，没有新增 SSHX 多视角共识。源码 `.lake/mostow-h3-nilpotent-common-boundary.lean` 的 SHA256 为 `e5fa43a6dcb2c6c7ab1007fb5d4ea4b81d59bba187ee6e583ec3cd12f3fbeeec`，115521 字节，相邻收据记录真实退出码。仅新增钉版已有热缓存 `Mathlib.GroupTheory.Nilpotent`，未升级依赖或构建新闭包。
 
 该实际原几何构造与既有中心和群同态接口的消费按 §3.2 判 `proof_shape: bind-only`、`admission_basis: none`；精确源码保持临时证据，不新增绑定 Lean 库声明、Describe、登记或冻结，不改预算、工具或判官。这里只结算原自由幂零作用的共同边界点，尚未构造虚幂零有限边界轨道、薄部与有限尖点、原流形原度量覆盖或全局格子边界刚性。两侧原度量、同一个给定 `h` 与完整 `d`、独立宇宙、非紧有限体积尖点及非可定向的完整 Mostow–Prasad 继续未完成。
+
+
+## 原自由虚幂零作用的实际有限边界轨道与小位移子群应用范围
+
+对任意类型宇宙中的群 `G`、原 H³ 自由等距表示 `ρ` 及实际有限指数幂零子群 `H≤G`，内部构造实际归一化 null 点 `b`，证明整个 `G` 在同一个原边界作用下的 `b` 轨道有限。不要求 `H` 正规，也不输入边界点、有限轨道、离散性、有限体积或定向；包含反向等距变换。
+
+实际限制同一个 `ρ` 到 `H`，由原自由性继承子群自由性，消费前批幂零共同点构造得到由 `H` 固定的实际 `b`。当 `x⁻¹y∈H` 时，原表示的乘法保持与原 null 作用的乘法公式给出 `ρ(x)b=ρ(y)b`。因此实际轨道函数下降到非正规左陪集商 `G/H`；钉版有限指数接口给出该商有限，真实 `Quotient.lift` 的有限像包含整个原 `G` 的轨道。没有把有限像或商作用另列为假设。
+
+与现有统一小位移结论的只读组合范围已核对：`all_points_cutoff` 给出的是实际 `S_p=Subgroup.closure {d : fullDeckGroup F | dist p (d • p)<ε}` 的虚幂零性。应用本批结论时取 `G:=S_p`，把同一个原 deck 表示限制到 `S_p`，并取虚幂零性提供的内部见证 `H≤S_p`。原覆盖的 `IsCancelSMul` 与同一表示的评价相容性提供自由性，故得到的是小位移生成子群 `S_p` 的实际有限边界轨道；没有把 `H` 在 `S_p` 中的有限指数误作其在完整 deck 群中的有限指数，也不声称整个有限体积格子有有限边界轨道。这里只核对精确接口，没有新增组合包装或重编既有统一小位移源码。
+
+完整具名应用经缓存保护入口第二轮真实编译成功，host `90512` exit0，零错误、零警告，无 `sorryAx`，具名公理闭包仅含 `propext, Classical.choice, Quot.sound`。首轮陪集关系字段和群同态改写错误的完整失败源码与日志保留排除；成功基底的字节前缀未改。协作方实施、调用方只读复核实际限制、陪集下降和应用范围，没有新增 SSHX 共识。源码 `.lake/mostow-h3-virtually-nilpotent-finite-boundary-orbit.lean` 的 SHA256 为 `fe5ea1ce1a680bbcaaf352f08611668789aa9d747f82689ed0cf9b27e7d54679`，117259 字节，相邻收据记录实际退出码。仅新增钉版已有热缓存 `Mathlib.GroupTheory.Index`，未升级依赖或构建新闭包。
+
+该原模型与既证幂零共同点、陪集和有限像接口的消费按 §3.2 判 `proof_shape: bind-only`、`admission_basis: none`；精确 Lean 源码保持临时证据，远端 PR CI 仅验证本 Library 说明，不新增绑定 Lean 库声明、Describe、登记或冻结，不改预算、工具或判官。有限轨道的更精确 elementary 分类、薄部尖点和轴管、有限尖点与紧核心、一般原流形的原度量覆盖、全局边界控制及格子共轭仍未完成。两侧原度量、同一个给定 `h` 与完整 `d`、独立宇宙、非紧有限体积尖点及非可定向的完整 Mostow–Prasad 继续未完成。
