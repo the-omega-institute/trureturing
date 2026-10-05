@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundDigits
    mirror-E: none(waiver:consumed-source-digit-semantics)
    anchors: []
+   utility: none
    digest: Retained MSB digits and exact finite source-height evaluation. -/
 import D5.S1.Words.RankOneMorphismIterationBoundAutomaton
 import D5.S1.Words.RankOneMorphismIterationBoundCyclic

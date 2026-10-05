@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundPrimitivity
    mirror-E: none(waiver:actual-uniform-primitivity)
    anchors: []
+   utility: none
    digest: Primitivity proved for the actual indexed uniform morphism. -/
 import D5.S1.Words.RankOneMorphismIterationBoundInfinitePresentation
 

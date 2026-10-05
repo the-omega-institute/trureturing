@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundArithmetic
    mirror-E: none(waiver:consumed-source-arithmetic)
    anchors: []
+   utility: none
    digest: Positive primitive rank-one binary incidence parameters and exact iterated counts. -/
 import D5.S1.Words.RankOneMorphismIterationBoundDefs
 

@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundAutomaton
    mirror-E: none(waiver:consumed-source-subset-automaton)
    anchors: []
+   utility: none
    digest: The actual indexed-image roots and 2^N finite subset checker. -/
 import D5.S1.Words.RankOneMorphismIterationBoundPresentation
 

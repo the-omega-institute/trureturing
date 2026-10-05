@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundDefs
    mirror-E: none(waiver:source-facing-definitions)
    anchors: []
+   utility: none
    digest: Exact binary morphism, Parikh charge and original cyclic-block witness for Filimonova–Puzynina 2605.30306. -/
 import D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs
 import D5.S0.Automata.DFAOStateLowerBound

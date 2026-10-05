@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundFinite
    mirror-E: none(waiver:source-witness-finite-bridge)
    anchors: []
+   utility: none
    digest: Actual cyclic witness iff source subset roots, consuming the 2^N cutoff. -/
 import D5.S1.Words.RankOneMorphismIterationBoundDigits
 import D5.S1.Words.RankOneMorphismIterationBoundNormalization

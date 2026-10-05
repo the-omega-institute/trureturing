@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundPresentation
    mirror-E: none(waiver:consumed-source-presentation)
    anchors: []
+   utility: none
    digest: Actual indexed binary expansion and uniform height presentation. -/
 import D5.S1.Words.RankOneMorphismIterationBoundArithmetic
 

@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundChecker
    mirror-E: none(waiver:actual-finite-checker)
    anchors: []
+   utility: none
    digest: Total checker computed only from actual two finite image words. -/
 import D5.S1.Words.RankOneMorphismIterationBoundFinite
 

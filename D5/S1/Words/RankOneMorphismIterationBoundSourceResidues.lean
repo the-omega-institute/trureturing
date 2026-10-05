@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundSourceResidues
    mirror-E: none(waiver:binary-source-translation)
    anchors: []
+   utility: none
    digest: Actual source block starts and the binary d-translation argument. -/
 import D5.S1.Words.RankOneMorphismIterationBoundResidues
 

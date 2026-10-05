@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundNormalization
    mirror-E: none(waiver:consumed-source-normalization)
    anchors: []
+   utility: none
    digest: Original four-word witness iff exact gcd-spaced finite prefix samples. -/
 import D5.S1.Words.RankOneMorphismIterationBoundCyclic
 

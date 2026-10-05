@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundExtraction
    mirror-E: none(waiver:actual-source-supertile-extraction)
    anchors: []
+   utility: none
    digest: A normalized one-sided height ray yields actual source supertile witnesses. -/
 import D5.S1.Words.RankOneMorphismIterationBoundSoundness
 import D5.S1.Words.RankOneMorphismIterationBoundPeriod

@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundResidues
    mirror-E: none(waiver:one-sided-source-occurrence-residues)
    anchors: []
+   utility: none
    digest: One-sided occurrence residue subgroup and cosets of the actual indexed fixed word. -/
 import D5.S1.Words.RankOneMorphismIterationBoundPrimitivity
 import Mathlib.FieldTheory.Finite.Basic

@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundInfinitePresentation
    mirror-E: none(waiver:actual-indexed-fixed-word)
    anchors: []
+   utility: none
    digest: Indexed uniform presentation tied to the actual original fixed word. -/
 import D5.S1.Words.RankOneMorphismIterationBoundDigits
 import D5.S1.Words.RankOneMorphismIterationBoundFixedWord

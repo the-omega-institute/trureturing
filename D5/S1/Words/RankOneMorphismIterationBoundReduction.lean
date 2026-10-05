@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundReduction
    mirror-E: none(waiver:one-sided-source-period-reduction)
    anchors: []
+   utility: none
    digest: Arbitrary one-sided UAP periods yield actual original cyclic witnesses. -/
 import D5.S1.Words.RankOneMorphismIterationBoundSourceResidues
 import D5.S1.Words.RankOneMorphismIterationBoundExtraction

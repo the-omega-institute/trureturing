@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBound
    mirror-E: none(waiver:source-open-question-resolution)
    anchors: []
+   utility: none
    digest: Effective 2^N bound and finite decision of arbitrary-preperiod abelian periodicity for primitive binary rank-one morphisms. -/
 import D5.S1.Words.RankOneMorphismIterationBoundReduction
 import D5.S1.Words.RankOneMorphismIterationBoundChecker

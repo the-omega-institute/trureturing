@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundCyclic
    mirror-E: none(waiver:consumed-cyclic-source-semantics)
    anchors: []
+   utility: none
    digest: Exact complete block decompositions and cyclic source prefix heights. -/
 import D5.S1.Words.RankOneMorphismIterationBoundArithmetic
 

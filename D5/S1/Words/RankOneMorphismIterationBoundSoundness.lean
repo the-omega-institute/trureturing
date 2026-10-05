@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundSoundness
    mirror-E: none(waiver:actual-source-soundness)
    anchors: []
+   utility: none
    digest: Complete cyclic source witnesses imply UAP of the actual morphic fixed word. -/
 import D5.S1.Words.RankOneMorphismIterationBoundNormalization
 import D5.S1.Words.RankOneMorphismIterationBoundFixedWord

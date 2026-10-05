@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundFixedWord
    mirror-E: none(waiver:consumed-actual-fixed-word)
    anchors: []
+   utility: none
    digest: Actual prolongable binary fixed word and exact one-sided prefix semantics. -/
 import D5.S1.Words.RankOneMorphismIterationBoundPresentation
 import D5.S1.Words.RankOneMorphismIterationBoundCyclic

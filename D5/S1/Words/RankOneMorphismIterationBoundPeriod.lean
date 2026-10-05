@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/RankOneMorphismIterationBoundPeriod
    mirror-E: none(waiver:consumed-source-period-arithmetic)
    anchors: []
+   utility: none
    digest: Effective lambda-factor stripping with exact divisibility and one-sided phases. -/
 import D5.S1.Words.RankOneMorphismIterationBoundFixedWord
 
