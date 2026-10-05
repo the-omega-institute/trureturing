@@ -8,7 +8,7 @@ url: "https://arxiv.org/abs/2607.12084v3"
 claim: "The preprint's final section explicitly retains a global bilinear remainder estimate as unresolved; its truncated norm formulas do not supply an unconditional RH proof."
 strata_touched: []
 license: "Citation only; no source text is reproduced."
-triage: partial
+triage: anchor
 ---
 <!-- GID: D5/L/Weil/pyvovarov2026baezduarteremarks -->
 # Exponential approximants and the retained remainder
