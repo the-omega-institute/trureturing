@@ -2598,6 +2598,107 @@ existing two-owner cap. These applications reuse existing results;
 no new mathematical declaration, freeze or coverage record is
 retained. All 78 reported axiom closures use only `propext`, `Classical.choice`
 and `Quot.sound`; the complete check has no errors or `sorry`.
+## Two low-row families miss one common private point
+
+Retain the actual-family assumptions, pure donor h, five-word
+projection Λ, saturated set T and unit guards from CD73--75.
+For a digit d, collect every actual low-row cofactor class at
+that digit:
+
+$$
+L_d=\bigcup_{\substack{i\in D,\ a_i\le1\\b_i=d}}
+\{y\in\mathbb N:y\equiv\rho_i\pmod{m_i}\}.
+\tag{CD79}
+$$
+
+There is no old ternary-phase compatibility restriction in this
+union. It includes both rows zero and one, with their actual
+cofactor phases. The allowed digits exclude b0 and β, so these
+low originals have nonunit cofactors.
+
+For every a in T, every b outside {b0,a,β,γ}, and every u in Λ,
+there is one actual private point simultaneously outside both
+low-row families:
+
+$$
+\{y\in P_h:y\equiv u\pmod9\}\setminus(L_a\cup L_b)
+\ne\varnothing.
+\tag{CD80}
+$$
+
+Moreover, that same y meets actual top cofactor classes from
+both digit cells:
+
+$$
+\exists i\in C(a,u),\ \exists j\in C(b,u):\quad
+ y\equiv\rho_i\pmod{m_i},\qquad
+ y\equiv\rho_j\pmod{m_j}.
+\tag{CD81}
+$$
+
+The top originals are different because their second digits
+are a and b. Their cofactor classes meet on the actual private
+section. This does not say that their full original APs meet:
+the two different q² digits make those APs disjoint.
+
+### Fix all phases before removing the paid low rows
+
+Use the same four direct terminal pieces and one continuing
+short leaf as in CD76. For every output retaining an original
+cofactor, keep its phase modulo that cofactor equal to the
+original phase. The low originals at a
+have no continuing inverse under the compressed source; their
+outputs can be placed at the target short leaf. Low originals
+at b already have any continuing inverse within that leaf.
+The labels 27m and 27qm therefore cover their respective
+cofactor classes throughout the leaf within the common first-q
+cylinder c. Incompatible old ternary
+phases cause no problem: the new ternary tag is chosen for this
+leaf and preserves every old source liability.
+
+Suppose the private u-section were contained in L_a union L_b.
+For an unpaid top-source point on the short leaf, the exact
+9W source identity supplies a private y with the same ternary
+word and cofactor data. Choose the actual low owner at a or b
+that covers y's cofactor coordinate. Its fixed output covers
+the original target point as well. This choice may vary with
+the point; the emitted label and phase of each owner stay fixed.
+All other source points have the complete payments already
+established in CD76. Numerical distinctness, freshness, equal
+count and strict sum decrease give the same global minimality
+contradiction, proving CD80.
+
+Take y from CD80 and separately insert digit a and digit b into
+its q² coordinate while preserving its complete 9W coordinate
+and first q-digit c. Each transported point lies in the same
+complete deletion hole, so an actual original in D covers it.
+A low-row owner would put the unchanged y into L_a or L_b,
+contradicting its selection. Both owners are therefore top
+rows and have ternary word u, giving CD81 with this one y.
+
+The auxiliary low outputs at a are part of the fixed payment.
+A later reallocation that changes or removes one of them must
+preserve its auxiliary coverage, even though its primary
+compressed-source inverse was empty. Otherwise the residual
+used in CD80 would no longer correspond to the emitted family.
+
+This is a statement about every allowed pair of digits. It
+does not produce one private point or one set of top owners
+working for all digit pairs simultaneously. Distinct fresh
+labels and affordable total cost for a replacement of the
+remaining top intersections are still required; CD80--81 alone
+give no contradiction for the original whole cover.
+
+A complete scoped transient Lean check verifies the pointwise
+fixed-phase payment, the nonempty simultaneous residual, and
+both actual top contacts from the original family assumptions.
+No low-coverage, shared-point or allocation condition is added
+to the final theorem. The earlier CD75 and CD78 consumers are
+also checked against the generalized pointwise payment.
+All 82 reported axiom closures use only `propext`, `Classical.choice`
+and `Quot.sound`; the complete check has no errors or `sorry`.
+These are transient applications of existing results, with no retained
+mathematical declaration, freeze or coverage record.
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
