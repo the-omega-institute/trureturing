@@ -1,11 +1,11 @@
 {
-  "scope": "Method probes for homogeneous perturbations, not the actual FIB input, prime error, Robin or RH. General construction in FIB section389 is not Lean-verified; finite ball enclosures check its application.",
+  "scope": "Method probes for homogeneous perturbations, not the actual FIB input, prime error, Robin or RH. General construction in FIB section390 is not Lean-verified; finite ball enclosures check its application.",
   "runtime": {
     "python": "3.13.12",
     "python_flint": "0.9.0",
     "precision_bits": 256
   },
-  "producer_sha256": "e68b11bfc1bbd1ed39216b5e88de8dfebed6b8d690e7b54c5955ffb1d7b13fb1",
+  "producer_sha256": "50216733e4db12d14a52cf91367c8264539f356b0fd706d492bb6bdad0080c6e",
   "inverse_source": "binet-inverse-tail.json",
   "inverse_source_sha256": "28f07ec8e6574cbbb2a755a271fb0c4a0f85e0ab6fcc45e0f56f924fe1d2ee08",
   "reused": "Published inverse coefficients only; no inverse regeneration or old producer run.",

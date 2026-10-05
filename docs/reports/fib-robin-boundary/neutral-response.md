@@ -4,8 +4,10 @@ The actual Binet response kernel from FIB §§384–387 is reused. The program
 reads the published inverse coefficients in `binet-inverse-tail.json`; it
 does not regenerate the inverse or run the earlier numerical producers.
 The two actual-input moment identities are classical partial-summation
-applications. FIB §389 gives their exact centering formula and a paper
+applications. FIB §390 gives their exact centering formula and a paper
 construction testing what these identities alone can control.
+The unrestricted two-moment sampling obstruction in FIB §389 is reused;
+this probe additionally bounds every adjacent input increment.
 
 For a probe sequence $f$, the two homogeneous constraints are
 
@@ -69,6 +71,9 @@ Cutoffs must be distinct increasing integers at least two and fit the
 published coefficient prefix. Input-artifact and producer overwrite,
 including hardlink overwrite, are rejected. No whole-integer grid up to
 $N$ is required; the finite tents and exact quotient intervals suffice.
+The numerical payload retains its completed acquisition. The current section
+locator and producer hash are synchronized as metadata; the arithmetic was
+not regenerated.
 
 The program is an independently usable method probe. The paper construction
 and the actual moment/centering application have not been Lean-verified.

@@ -993,7 +993,7 @@ Robin tails, common cofinal signs, RH and new Lean certification remain
 unresolved.
 
 [The neutral-response probe](neutral-response.md) reads the published
-inverse prefix and tests the centered-response interface in FIB §389.
+inverse prefix and tests the centered-response interface in FIB §390.
 Two exact moment constraints and bounded adjacent increments do not
 supply a uniform square-root transmission bound for the general input
 class. The probe inputs are not the actual FIB error; its arithmetic

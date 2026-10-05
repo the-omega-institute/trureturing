@@ -130,7 +130,7 @@ def produce(source, cutoffs=(8, 34, 144), precision=256):
                         'response_over_sqrt_N': endpoints(ratio),
                         'kernel_mass_over_16_sqrt_cutoff': endpoints(lower_comparison),
                         'pulses': pulses})
-    return {'scope': 'Method probes for homogeneous perturbations, not the actual FIB input, prime error, Robin or RH. General construction in FIB section389 is not Lean-verified; finite ball enclosures check its application.',
+    return {'scope': 'Method probes for homogeneous perturbations, not the actual FIB input, prime error, Robin or RH. General construction in FIB section390 is not Lean-verified; finite ball enclosures check its application.',
             'runtime': {'python': sys.version.split()[0], 'python_flint': flint.__version__,
                         'precision_bits': precision},
             'producer_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
