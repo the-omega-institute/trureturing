@@ -70,9 +70,9 @@ private theorem breakpoints_card {alpha : Real} (halpha : Irrational alpha) (n :
     (breakpoints alpha n).card = n := by
   rw [breakpoints, Finset.card_image_of_injective _ (breakpoint_injective halpha),
     Finset.card_range]
-noncomputable def phase (alpha rho : Real) (i : Nat) : Real :=
+private noncomputable def phase (alpha rho : Real) (i : Nat) : Real :=
   Int.fract (rho + (i : Real) * alpha)
-theorem exists_phase_mem_Ioo {alpha rho a b : Real} (halpha : Irrational alpha)
+private theorem exists_phase_mem_Ioo {alpha rho a b : Real} (halpha : Irrational alpha)
     (ha : 0 ≤ a) (hab : a < b) (hb : b ≤ 1) :
     ∃ i, phase alpha rho i ∈ Ioo a b := by
   have hz : DenseRange (fun z : Int => z • ((alpha : Real) : AddCircle (1 : Real))) := by
@@ -228,7 +228,7 @@ private theorem factor_eq_of_rank_eq {alpha rho : Real}
       simp only [if_neg hi, if_pos hj] at hindicator
       omega
     rw [Bool.eq_false_of_not_eq_true hi, Bool.eq_false_of_not_eq_true hj]
-theorem window_counts_eq_of_factor_eq {alpha rho : Real} {n i j m : Nat}
+private theorem window_counts_eq_of_factor_eq {alpha rho : Real} {n i j m : Nat}
     (hm : m ≤ n)
     (h : lowerMechanicalFactor alpha rho n i = lowerMechanicalFactor alpha rho n j) :
     lowerMechanicalWindowTrueCount alpha rho i m =
