@@ -277,3 +277,19 @@ suppliers. Weighted residual entries have not been evaluated; the
 [target correction's cofinal boundary](target-correction.md#directed-results-and-the-cofinal-boundary)
 still requires actual low and complementary-low signs on the same
 parameter sequence. Saved fixed-band matrices do not supply those signs.
+
+
+The [projection and exact-ground corrections](sharp-center.md#keep-the-projection-and-ground-corrections-on-the-same-residual)
+retain the actual high-space constraint in that same residual allowance.
+They reuse classical positive block and rank-one inverses and supply a
+projection credit without an infinite-dimensional inverse computation.
+Its entries remain unevaluated; no low sign or cofinal certificate is supplied.
+
+
+The [weighted omitted-action supplier](forward-action.md#weighted-omitted-actions-before-the-sharp-high-projection)
+feeds a [common dual-source allowance](sharp-center.md#pay-weighted-action-errors-with-one-common-dual-source)
+by reconstructing the unprojected action on the exact ground complement.
+It reuses the complete Gamma and prime envelopes and the same constrained
+inverse tools, keeping the chosen low trial and ground correction joint.
+It pays only action truncation errors; retained action and source Grams
+remain unevaluated, and no matrix or cofinal sign is supplied.
