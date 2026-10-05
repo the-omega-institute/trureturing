@@ -101,76 +101,32 @@ variable (G : SimpleGraph V) (e : V)
 /-- Graph distance from the encoding vertex. -/
 noncomputable def depth (w : V) : ℕ := G.dist e w
 
-theorem depth_adj_le (hc : G.Connected) {a b : V} (h : G.Adj a b) :
-    depth G e a ≤ depth G e b + 1 := by
-  unfold depth
-  calc G.dist e a ≤ G.dist e b + G.dist b a := hc.dist_triangle
-    _ = G.dist e b + 1 := by rw [(dist_eq_one_iff_adj).2 h.symm]
-
-theorem exists_parent (hc : G.Connected) {w : V} (hw : w ≠ e) :
-    ∃ y, G.Adj w y ∧ depth G e y + 1 = depth G e w := by
-  obtain ⟨p, hp⟩ := hc.exists_walk_length_eq_dist w e
-  cases p with
-  | nil => exact absurd rfl hw
-  | @cons _ y _ h q =>
-    refine ⟨y, h, le_antisymm ?_ ?_⟩
-    · have h1 : depth G e y ≤ q.length := by
-        unfold depth; rw [dist_comm]; exact dist_le q
-      have h2 : depth G e w = q.length + 1 := by
-        unfold depth; rw [dist_comm, ← hp]; rfl
-      omega
-    · exact depth_adj_le G e hc h
-
 open Classical in
 /-- A neighbour one step closer to the encoding vertex. -/
 noncomputable def parent (hc : G.Connected) (w : V) : V :=
-  if hw : w = e then e else Classical.choose (exists_parent G e hc hw)
-
-theorem parent_spec (hc : G.Connected) {w : V} (hw : w ≠ e) :
-    G.Adj w (parent G e hc w) ∧ depth G e (parent G e hc w) + 1 = depth G e w := by
-  unfold parent
-  rw [dif_neg hw]
-  exact Classical.choose_spec (exists_parent G e hc hw)
+  if hw : w = e then e else
+    Classical.choose (show ∃ y, G.Adj w y ∧ depth G e y + 1 = depth G e w by
+      obtain ⟨p, hp⟩ := hc.exists_walk_length_eq_dist w e
+      cases p with
+      | nil => exact absurd rfl hw
+      | @cons _ y _ h q =>
+        refine ⟨y, h, le_antisymm ?_ ?_⟩
+        · have h1 : depth G e y ≤ q.length := by
+            unfold depth; rw [dist_comm]; exact dist_le q
+          have h2 : depth G e w = q.length + 1 := by
+            unfold depth; rw [dist_comm, ← hp]; rfl
+          omega
+        · unfold depth
+          calc G.dist e w ≤ G.dist e y + G.dist y w := hc.dist_triangle
+            _ = G.dist e y + 1 := by rw [(dist_eq_one_iff_adj).2 h.symm])
 
 /-- `w` is an internal vertex of the chosen geodesic from `v` to the encoding vertex. -/
 def OnPath (hc : G.Connected) (v w : V) : Prop :=
   ∃ k, 1 ≤ k ∧ k < depth G e v ∧ (parent G e hc)^[k] v = w
 
-theorem depth_iterate (hc : G.Connected) (v : V) :
-    ∀ k, k ≤ depth G e v → depth G e ((parent G e hc)^[k] v) = depth G e v - k
-  | 0, _ => by simp
-  | k + 1, hk => by
-    have ih := depth_iterate hc v k (by omega)
-    have hne : (parent G e hc)^[k] v ≠ e := by
-      intro h
-      rw [h] at ih
-      have : depth G e e = 0 := by unfold depth; simp
-      omega
-    rw [Function.iterate_succ_apply']
-    have := (parent_spec G e hc hne).2
-    omega
-
 /-- Vertices farther from the encoding vertex are attempted first. -/
 noncomputable def rankOf [Fintype V] [DecidableEq V] (w : V) : ℤ :=
   -((depth G e w : ℤ) * Fintype.card V) + ((Fintype.equivFin V w : ℕ) : ℤ)
-
-theorem rankOf_lt_of_depth_lt [Fintype V] [DecidableEq V] {a b : V}
-    (h : depth G e b < depth G e a) :
-    rankOf G e a < rankOf G e b := by
-  unfold rankOf
-  have ha := (Fintype.equivFin V a).isLt
-  have hcard : (0 : ℤ) ≤ Fintype.card V := Int.natCast_nonneg _
-  have hd : (depth G e b : ℤ) + 1 ≤ depth G e a := by exact_mod_cast h
-  nlinarith
-
-theorem rankOf_inj [Fintype V] [DecidableEq V] {a b : V} (h : rankOf G e a = rankOf G e b) :
-    a = b := by
-  rcases lt_trichotomy (depth G e a) (depth G e b) with hab | hab | hab
-  · exact absurd h (rankOf_lt_of_depth_lt G e hab).ne'
-  · have hidx : ((Fintype.equivFin V a : ℕ) : ℤ) = ((Fintype.equivFin V b : ℕ) : ℤ) := by
-      unfold rankOf at h; rw [hab] at h; linarith
-    exact (Fintype.equivFin V).injective (Fin.ext (by exact_mod_cast hidx))
-  · exact absurd h (rankOf_lt_of_depth_lt G e hab).ne
 
 /-- `v` is the first successful fusion among the vertices attempted before `w`. -/
 def FirstSuccessBefore [Fintype V] [DecidableEq V] (o : V → Bool) (w v : V) : Prop :=
@@ -180,46 +136,81 @@ def FirstSuccessBefore [Fintype V] [DecidableEq V] (o : V → Bool) (w v : V) : 
 open Classical in
 /-- The failure axis: `X` on the internal vertices of the geodesic to the first success, once
 that success has been observed, and `Z` otherwise. -/
-noncomputable def axisOf [Fintype V] [DecidableEq V] (hc : G.Connected) (w : V) (o : V → Bool) :
-    Pauli :=
+noncomputable def axisOf [Fintype V] [DecidableEq V] (hc : G.Connected) (w : V)
+    (o : V → Bool) : Pauli :=
   if ∃ v, FirstSuccessBefore G e o w v ∧ OnPath G e hc v w then pauliX else pauliZ
 
-theorem axisOf_causal [Fintype V] [DecidableEq V] (hc : G.Connected) (w : V) (o o' : V → Bool)
-    (h : ∀ u, u ≠ e → rankOf G e u < rankOf G e w → o u = o' u) :
-    axisOf G e hc w o = axisOf G e hc w o' := by
-  have key : (∃ v, FirstSuccessBefore G e o w v ∧ OnPath G e hc v w) ↔
-      (∃ v, FirstSuccessBefore G e o' w v ∧ OnPath G e hc v w) := by
-    constructor
-    · rintro ⟨v, ⟨hv, hov, hlt, hfirst⟩, hp⟩
-      refine ⟨v, ⟨hv, (h v hv hlt) ▸ hov, hlt, fun u hu hlu => ?_⟩, hp⟩
-      rw [← h u hu (hlu.trans hlt)]; exact hfirst u hu hlu
-    · rintro ⟨v, ⟨hv, hov, hlt, hfirst⟩, hp⟩
-      refine ⟨v, ⟨hv, (h v hv hlt).symm ▸ hov, hlt, fun u hu hlu => ?_⟩, hp⟩
-      rw [h u hu (hlu.trans hlt)]; exact hfirst u hu hlu
-  unfold axisOf
-  by_cases hq : ∃ v, FirstSuccessBefore G e o w v ∧ OnPath G e hc v w
-  · rw [if_pos hq, if_pos (key.1 hq)]
-  · rw [if_neg hq, if_neg (fun h' => hq (key.2 h'))]
-
-/-- The adaptive strategy of the construction. -/
-noncomputable def strategy [Fintype V] [DecidableEq V] (hc : G.Connected) : AdaptiveStrategy e where
+/-- The adaptive strategy of the construction: attempts in order of decreasing distance from the
+encoding vertex, failure axes from `axisOf`. -/
+noncomputable def strategy [Fintype V] [DecidableEq V] (hc : G.Connected) :
+    AdaptiveStrategy e where
   rank := rankOf G e
-  rank_inj := fun _ _ _ _ h => rankOf_inj G e h
+  rank_inj := by
+    intro a b _ _ h
+    have hlt : ∀ {a b : V}, depth G e b < depth G e a → rankOf G e a < rankOf G e b := by
+      intro a b hab
+      unfold rankOf
+      have ha := (Fintype.equivFin V a).isLt
+      have hcard : (0 : ℤ) ≤ Fintype.card V := Int.natCast_nonneg _
+      have hd : (depth G e b : ℤ) + 1 ≤ depth G e a := by exact_mod_cast hab
+      nlinarith
+    rcases lt_trichotomy (depth G e a) (depth G e b) with hab | hab | hab
+    · exact absurd h (hlt hab).ne'
+    · have hidx : ((Fintype.equivFin V a : ℕ) : ℤ) = ((Fintype.equivFin V b : ℕ) : ℤ) := by
+        unfold rankOf at h; rw [hab] at h; linarith
+      exact (Fintype.equivFin V).injective (Fin.ext (by exact_mod_cast hidx))
+    · exact absurd h (hlt hab).ne
   axis := axisOf G e hc
   axis_ne := by
     intro w o
     unfold axisOf
     split_ifs <;> decide
-  causal := axisOf_causal G e hc
+  causal := by
+    intro w o o' h
+    have key : (∃ v, FirstSuccessBefore G e o w v ∧ OnPath G e hc v w) ↔
+        (∃ v, FirstSuccessBefore G e o' w v ∧ OnPath G e hc v w) := by
+      constructor
+      · rintro ⟨v, ⟨hv, hov, hlt, hfirst⟩, hp⟩
+        refine ⟨v, ⟨hv, (h v hv hlt) ▸ hov, hlt, fun u hu hlu => ?_⟩, hp⟩
+        rw [← h u hu (hlu.trans hlt)]; exact hfirst u hu hlu
+      · rintro ⟨v, ⟨hv, hov, hlt, hfirst⟩, hp⟩
+        refine ⟨v, ⟨hv, (h v hv hlt).symm ▸ hov, hlt, fun u hu hlu => ?_⟩, hp⟩
+        rw [h u hu (hlu.trans hlt)]; exact hfirst u hu hlu
+    unfold axisOf
+    by_cases hq : ∃ v, FirstSuccessBefore G e o w v ∧ OnPath G e hc v w
+    · rw [if_pos hq, if_pos (key.1 hq)]
+    · rw [if_neg hq, if_neg (fun h' => hq (key.2 h'))]
 
 end Construction
 
-open Classical in
-theorem perfect [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj] (e : V)
-    (hc : G.Connected)
-    (o : V → Bool) (hs : ∃ w, w ≠ e ∧ o w = true) :
-    ¬ LogicalFailure G e (strategy G e hc) o := by
+/-- Every graph code with a connected progenitor graph has a perfect adaptive fusion strategy. -/
+theorem result : claim := by
+  intro V _ _ G _ e hc _
+  classical
+  refine ⟨strategy G e hc, fun o hs => ?_⟩
   rintro ⟨P, ⟨U, hPU, hUe⟩, hP⟩
+  have hadjle : ∀ {a b : V}, G.Adj a b → depth G e a ≤ depth G e b + 1 := by
+    intro a b h
+    unfold depth
+    calc G.dist e a ≤ G.dist e b + G.dist b a := hc.dist_triangle
+      _ = G.dist e b + 1 := by rw [(dist_eq_one_iff_adj).2 h.symm]
+  have hpar : ∀ {w : V}, w ≠ e →
+      G.Adj w (parent G e hc w) ∧ depth G e (parent G e hc w) + 1 = depth G e w := by
+    intro w hw
+    unfold parent
+    rw [dif_neg hw]
+    exact Classical.choose_spec
+      (p := fun y => G.Adj w y ∧ depth G e y + 1 = depth G e w) _
+  have hzero : depth G e e = 0 := by unfold depth; simp
+  have hdepth_eq_zero : ∀ x, depth G e x = 0 → x = e := fun x hx => by
+    unfold depth at hx; exact ((hc.dist_eq_zero_iff).1 hx).symm
+  have hrank : ∀ {a b : V}, depth G e b < depth G e a → rankOf G e a < rankOf G e b := by
+    intro a b hab
+    unfold rankOf
+    have ha := (Fintype.equivFin V a).isLt
+    have hcard : (0 : ℤ) ≤ Fintype.card V := Int.natCast_nonneg _
+    have hd : (depth G e b : ℤ) + 1 ≤ depth G e a := by exact_mod_cast hab
+    nlinarith
   -- the first successful fusion
   obtain ⟨v, hvmem, hvmin⟩ :=
     (Finset.univ.filter fun w => w ≠ e ∧ o w = true).exists_min_image
@@ -233,11 +224,22 @@ theorem perfect [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.
     exact absurd hlt (not_lt.2 this)
   set q : ℕ → V := fun k => (parent G e hc)^[k] v with hq
   set ℓ := depth G e v with hℓ
-  have hdepth : ∀ k, k ≤ ℓ → depth G e (q k) = ℓ - k :=
-    fun k hk => depth_iterate G e hc v k hk
-  have hzero : depth G e e = 0 := by unfold depth; simp
-  have hdepth_eq_zero : ∀ x, depth G e x = 0 → x = e := fun x hx => by
-    unfold depth at hx; exact ((hc.dist_eq_zero_iff).1 hx).symm
+  have hdepth : ∀ k, k ≤ ℓ → depth G e (q k) = ℓ - k := by
+    intro k
+    induction k with
+    | zero => intro _; simp [hq, hℓ]
+    | succ k ih =>
+      intro hk
+      have ihk := ih (by omega)
+      have hne : q k ≠ e := by
+        intro h
+        rw [h, hzero] at ihk
+        omega
+      have hstep : q (k + 1) = parent G e hc (q k) := by
+        simp only [hq]; rw [Function.iterate_succ_apply']
+      rw [hstep]
+      have := (hpar hne).2
+      omega
   have hℓpos : 1 ≤ ℓ := by
     by_contra h0
     exact hve (hdepth_eq_zero v (by omega))
@@ -249,7 +251,7 @@ theorem perfect [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.
   have hqe : q ℓ = e := hdepth_eq_zero _ (by rw [hdepth ℓ le_rfl]; simp)
   have hqadj : ∀ k, k < ℓ → G.Adj (q k) (q (k + 1)) := by
     intro k hk
-    have := (parent_spec G e hc (hqne k hk)).1
+    have := (hpar (hqne k hk)).1
     simpa [hq, Function.iterate_succ_apply'] using this
   -- the realized axes
   have hX : ∀ w, OnPath G e hc v w → (strategy G e hc).axis w o = pauliX := by
@@ -258,8 +260,10 @@ theorem perfect [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.
     change axisOf G e hc _ o = pauliX
     unfold axisOf
     rw [if_pos]
-    refine ⟨v, ⟨hve, hov, rankOf_lt_of_depth_lt G e ?_, hfirst⟩, ⟨k, hk1, hkℓ, rfl⟩⟩
-    rw [depth_iterate G e hc v k hkℓ.le]; omega
+    refine ⟨v, ⟨hve, hov, hrank ?_, hfirst⟩, ⟨k, hk1, hkℓ, rfl⟩⟩
+    have := hdepth k hkℓ.le
+    simp only [hq] at this
+    rw [this]; omega
   have hZ : ∀ w, ¬ OnPath G e hc v w → (strategy G e hc).axis w o = pauliZ := by
     intro w hw
     change axisOf G e hc w o = pauliZ
@@ -269,7 +273,7 @@ theorem perfect [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.
     have hvv : v' = v := by
       rcases lt_trichotomy (rankOf G e v') (rankOf G e v) with h | h | h
       · exact absurd (hvmin v' (by simp [hv'e, hov'])) (not_le.2 h)
-      · exact rankOf_inj G e h
+      · exact (strategy G e hc).rank_inj v' v hv'e hve h
       · exact absurd (hfirst' v hve h) (by simp [hov])
     exact hw (hvv ▸ hp)
   -- letters forced by the outcome constraints
@@ -307,8 +311,8 @@ theorem perfect [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.
   have hidx : ∀ k j, k ≤ ℓ → j ≤ ℓ → G.Adj (q k) (q j) →
       j + 1 = k ∨ j = k + 1 := by
     intro k j hk hj hadj
-    have h1 := depth_adj_le G e hc hadj
-    have h2 := depth_adj_le G e hc hadj.symm
+    have h1 := hadjle hadj
+    have h2 := hadjle hadj.symm
     rw [hdepth k hk, hdepth j hj] at h1 h2
     have hne : k ≠ j := by
       rintro rfl; exact hadj.ne rfl
@@ -321,7 +325,8 @@ theorem perfect [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.
       intro h1
       have hq0 : q 0 = v := rfl
       refine ⟨hq0 ▸ hnotU v hve (fun ⟨k, hk1, hkℓ, hk⟩ => ?_), fun h1U => ?_⟩
-      · have := depth_iterate G e hc v k hkℓ.le
+      · have := hdepth k hkℓ.le
+        simp only [hq] at this
         rw [hk] at this; omega
       · apply heven v hve (Or.inl rfl)
         have hsub : U.filter (G.Adj v) = {q 1} := by
@@ -365,10 +370,5 @@ theorem perfect [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.
   apply hUe
   rw [hUempty]
   simp [genProduct, pauliI]
-
-/-- Every graph code with a connected progenitor graph has a perfect adaptive fusion strategy. -/
-theorem result : claim := by
-  intro V _ _ G _ e hc _
-  exact ⟨strategy G e hc, perfect G e hc⟩
 
 end D5.S3.Quantum.Measurements.ConnectedProgenitorPerfectAdaptiveFusion
