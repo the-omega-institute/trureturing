@@ -66,8 +66,8 @@ theorem result {m : Nat} (F : Fin m → Source) (S : Finset (Fin m))
   have fixed (i : Fin m) (hi : i ∈ queue F S H) := (blocks _ _ (compatible i hi)).1
   have betaFixed (i : Fin m) (hi : i ∈ queue F S H) : psi H ⊆ betaLeaves (F i) := by
     intro x hx
-    obtain ⟨b, hb, z, hz, rfl⟩ := Finset.mem_biUnion.mp hx |>.imp_right
-      (fun h => Finset.mem_image.mp h)
+    obtain ⟨b, hb, hx⟩ := Finset.mem_biUnion.mp hx
+    obtain ⟨z, hz, rfl⟩ := Finset.mem_image.mp hx
     apply (betaMem _ _).mpr
     rw [readAt, fixed i hi b hb]
     exact (betaMem _ _).mp hz
@@ -90,16 +90,22 @@ theorem result {m : Nat} (F : Fin m → Source) (S : Finset (Fin m))
           simp only [decodeBlock, hr, Option.some.injEq] at h
           subst b
           refine ⟨[true], ?_⟩
-          simpa using congrArg List.reverse hr
+          simpa using (congrArg List.reverse hr).symm
         | false =>
           cases t with
           | nil => simp [decodeBlock, hr] at h
           | cons d t =>
-            cases d <;>
-              simp only [decodeBlock, hr, Option.some.injEq] at h <;> subst b
-            all_goals
-              refine ⟨_, ?_⟩
-              simpa [List.reverse_cons, List.append_assoc] using congrArg List.reverse hr
+            cases d with
+            | false =>
+              simp only [decodeBlock, hr, Option.some.injEq] at h
+              subst b
+              refine ⟨[false, false], ?_⟩
+              simpa [List.reverse_cons, List.append_assoc] using (congrArg List.reverse hr).symm
+            | true =>
+              simp only [decodeBlock, hr, Option.some.injEq] at h
+              subst b
+              refine ⟨[true, false], ?_⟩
+              simpa [List.reverse_cons, List.append_assoc] using (congrArg List.reverse hr).symm
     | alpha =>
       cases hr : x.reverse with
       | nil => simp [decodeBlock, hr] at h
@@ -110,11 +116,17 @@ theorem result {m : Nat} (F : Fin m → Source) (S : Finset (Fin m))
           cases t with
           | nil => simp [decodeBlock, hr] at h
           | cons d t =>
-            cases d <;>
-              simp only [decodeBlock, hr, Option.some.injEq] at h <;> subst b
-            all_goals
-              refine ⟨_, ?_⟩
-              simpa [List.reverse_cons, List.append_assoc] using congrArg List.reverse hr
+            cases d with
+            | false =>
+              simp only [decodeBlock, hr, Option.some.injEq] at h
+              subst b
+              refine ⟨[false, true], ?_⟩
+              simpa [List.reverse_cons, List.append_assoc] using (congrArg List.reverse hr).symm
+            | true =>
+              simp only [decodeBlock, hr, Option.some.injEq] at h
+              subst b
+              refine ⟨[true, true], ?_⟩
+              simpa [List.reverse_cons, List.append_assoc] using (congrArg List.reverse hr).symm
   obtain ⟨z, huz⟩ := decoderPrefix u y (v, k) hd
   have notFixed : ¬ ∀ j ∈ queue F S H, subtree v (F j) = some k.tree := by
     intro hall
@@ -132,8 +144,11 @@ theorem result {m : Nat} (F : Fin m → Source) (S : Finset (Fin m))
     simp only [Finset.card_singleton] at hc
     omega
   have kindInject : Function.Injective BlockKind.tree := by
-    intro a b h
-    cases a <;> cases b <;> simp [BlockKind.tree, A, C, E] at h ⊢
+    intro aKind bKind h
+    cases aKind <;> cases bKind <;> try rfl
+    all_goals
+      have hh := congrArg FreeMagma.length h
+      norm_num [BlockKind.tree, A, C, E, FreeMagma.length] at hh
   have oldOverlap (b : Address × BlockKind) (hb : b ∈ forcedBlocks (reports H)) :
       (¬ v.IsPrefix b.1 ∧ ¬ b.1.IsPrefix v) ∨
       (k = .c ∧ b = (v ++ [false], .a)) := by
@@ -196,61 +211,65 @@ theorem result {m : Nat} (F : Fin m → Source) (S : Finset (Fin m))
         ({[true, false]} : Finset Address).image (v ++ ·)
       else (betaLeaves k.tree).image (v ++ ·)) := by
     rw [psiAppend, Finset.union_sdiff_right]
-    ext x
-    rw [Finset.mem_sdiff]
-    by_cases hx : x ∈ (betaLeaves k.tree).image (v ++ ·)
-    · rw [overlapMem x hx]
-      by_cases hk : k = .c ∧ (v ++ [false], BlockKind.a) ∈ forcedBlocks (reports H)
-      · rw [if_pos hk]
-        rcases hk with ⟨rfl, _⟩
+    by_cases hk : k = .c ∧ (v ++ [false], BlockKind.a) ∈ forcedBlocks (reports H)
+    · rw [if_pos hk]
+      rcases hk with ⟨rfl, hleft⟩
+      ext x
+      rw [Finset.mem_sdiff]
+      by_cases hx : x ∈ (betaLeaves BlockKind.c.tree).image (v ++ ·)
+      · rw [overlapMem x hx]
+        simp only [hx, hleft, true_and]
         simp only [BlockKind.tree, betaLiteral.2, Finset.mem_image, Finset.mem_insert,
-          Finset.mem_singleton] at hx ⊢
-        rcases hx with ⟨a, ha, rfl⟩
-        simp only [prefixInject.eq_iff]
+          Finset.mem_singleton] at hx
+        obtain ⟨a, ha, rfl⟩ := hx
+        simp only [Finset.mem_image, Finset.mem_insert, Finset.mem_singleton,
+          prefixInject.eq_iff]
         rcases ha with rfl | rfl | rfl <;> simp
-      · rw [if_neg hk]
-        simp only [hx, true_and, not_false_eq_true, hk, false_and]
-    · have hn : x ∉ ({[true, false]} : Finset Address).image (v ++ ·) := by
-        intro h
-        apply hx
-        by_cases hk : k = .c
-        · subst k
+      · have hn : x ∉ ({[true, false]} : Finset Address).image (v ++ ·) := by
+          intro h
+          apply hx
           exact Finset.image_subset_image (by simp [BlockKind.tree, betaLiteral.2]) h
-        · cases k <;> simp_all
-      split <;> simp_all
-  rw [gainSet]
-  simp only [Finset.card_image_of_injective _ prefixInject]
-  by_cases hk : k = .c ∧ (v ++ [false], BlockKind.a) ∈ forcedBlocks (reports H)
-  · rw [if_pos hk]
-    simp only [Finset.card_singleton]
-    refine ⟨Or.inl rfl, ?_⟩
+        simp only [hx, false_and, hn]
+    · rw [if_neg hk]
+      ext x
+      rw [Finset.mem_sdiff]
+      constructor
+      · exact And.left
+      · intro hx
+        refine ⟨hx, ?_⟩
+        intro hold
+        have hh := (overlapMem x hx).mp hold
+        exact hk ⟨hh.1, hh.2.1⟩
+  have gainCard : (psi (H ++ [⟨u, y⟩]) \ psi H).card =
+      if k = .c ∧ (v ++ [false], BlockKind.a) ∈ forcedBlocks (reports H) then 1
+      else if k = .a then 2 else 3 := by
+    rw [gainSet]
+    split
+    · simp only [Finset.card_image_of_injective _ prefixInject, Finset.card_singleton]
+    · rw [Finset.card_image_of_injective _ prefixInject]
+      cases k <;> simp [BlockKind.tree, betaLiteral]
+  have unitIff : (∃ v' : Address, decodeBlock u y = some (v', BlockKind.c) ∧
+      (v' ++ [false], BlockKind.a) ∈ forcedBlocks (reports H)) ↔
+      k = .c ∧ (v ++ [false], BlockKind.a) ∈ forcedBlocks (reports H) := by
     constructor
-    · intro _
-      exact ⟨v, by simpa [hk.1] using hd, hk.2⟩
-    · intro _
-      rfl
+    · rintro ⟨v', hd', hleft⟩
+      have he := Option.some.inj (hd.symm.trans hd')
+      have hv : v = v' := congrArg Prod.fst he
+      have hk : k = .c := congrArg Prod.snd he
+      subst v'
+      exact ⟨hk, hleft⟩
+    · rintro ⟨hk, hleft⟩
+      exact ⟨v, by simpa only [hk] using hd, hleft⟩
+  dsimp only
+  rw [gainCard, unitIff]
+  by_cases hk : k = .c ∧ (v ++ [false], BlockKind.a) ∈ forcedBlocks (reports H)
+  · simp only [hk, if_pos, true_and, Nat.reduceEqDiff, or_true, true_or]
   · rw [if_neg hk]
-    have count : (betaLeaves k.tree).card = (if k = .a then 2 else 3) := by
-      cases k <;> rw [BlockKind.tree] <;> simp [betaLiteral]
-    rw [count]
-    cases hkind : k with
-    | a =>
-      simp only [if_pos rfl]
-      refine ⟨Or.inr (Or.inl rfl), ?_⟩
-      constructor
-      · omega
-      · rintro ⟨v', hd', _⟩
-        have he := Option.some.inj (hd.symm.trans hd')
-        cases he
+    cases k with
+    | a => simp
     | c =>
-      simp only [reduceCtorEq, if_false]
-      refine ⟨Or.inr (Or.inr rfl), ?_⟩
-      constructor
-      · omega
-      · rintro ⟨v', hd', hleft⟩
-        have he := Option.some.inj (hd.symm.trans hd')
-        have hv := congrArg Prod.fst he
-        subst v'
-        exact False.elim (hk ⟨rfl, hleft⟩)
+      have hn : (v ++ [false], BlockKind.a) ∉ forcedBlocks (reports H) :=
+        fun hl => hk ⟨rfl, hl⟩
+      simp [hn]
 
 end D5.S3.Arith.FibonacciAtomic.Scale40BetaGainChildren
