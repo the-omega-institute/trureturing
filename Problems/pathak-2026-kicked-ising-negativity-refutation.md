@@ -101,6 +101,64 @@ so it supplies no counterexample to assertions restricted to either class.
 The source's solvable-class early-time derivations retain their stated hypotheses;
 those derivations are literature results, not additional conclusions of this module.
 
+**Computed, general-order obstruction:** for the periodic chain at $L=6$,
+$A=\{0,1\}$, $B=\{2,3\}$, $C=\{4,5\}$, $t=1$, every field one,
+every phase zero and initial state $|r⟩^{\otimes6}$, exact arithmetic gives
+$2𝓔(1)=2\log(41/25)=0.98939248367221410933\ldots$ and
+$I^{(2)}_{A:B}(1)=2\log(625/497)=0.45832324727954554394\ldots$.
+Their difference is $2\log(20377/15625)>0$, so the general-$α$ equality
+fails at $α=2$ in this one-kick early-regime instance.
+The computed reduced-state and marginal purities are all $247009/390625$;
+the partial-transpose trace norm is $41/25$.
+**Open:** extending this discrepancy to every block size $\ge2$ is not
+established by this $2/2/2$ computation.
+
+**Computed, product-of-pairs coincidence:** at $t=1$ the same $L=6$ state
+has $2𝓔(1)=I^{(1/2)}_{A:B}(1)=2\log(41/25)$ exactly. The square-root
+traces of both marginals and the joint reduced state are all $41/25$.
+For the second tested instance, $L=9$, blocks $3/3/3$, every field one
+and the source's generic parameters $θ_i=φ_i=1$, the two measures both give
+$1.07073215876048042531\ldots$ at $t=1$.
+After removing block-local kick, field and internal controlled-Z gates,
+these one-kick instances are products of three boundary pairs; tracing $C$
+leaves two local mixed factors and one pure pair shared by $A$ and $B$.
+The $L=9$ numerical difference is below $5\times10^{-80}$ at 80 decimal
+digits of working precision. These are the two tested product-of-pairs
+instances; a uniform statement for untested states or block sizes remains open.
+
+**Computed, source-parameter late-time obstruction:** for the periodic chain
+at $L=9$, $A=\{0,1,2\}$, $B=\{3,4,5\}$, $C=\{6,7,8\}$,
+every field one and $θ_i=φ_i=1$, literal $U_KU_I$ evolution gives:
+
+| $t$ | $2𝓔(t)$ | $I^{(1/2)}_{A:B}(t)$ | $2𝓔-I^{(1/2)}$ |
+| --- | --- | --- | --- |
+| 2 | 1.90965474035335934242 | 1.87948241846317954029 | 0.03017232189017980213 |
+| 3 | 1.79478990018210113283 | 2.05114059682648315862 | −0.25635069664438202579 |
+
+Thus equality fails at the two computed times $t=2,3$.
+**Open:** “every $t\ge2$” is not established by this table.
+
+These three computed items were independently recomputed by the codex-cli
+implementation seat. Their candidate setups are attributed to the search
+seat and Claude Code orchestrator in #13296. The checks use SymPy 1.14.0
+for exact $L=6$ spectra, and mpmath 1.3.0 at 60 and 80 decimal digits for
+$L=9$; the displayed 50-significant-digit outputs agree between precisions.
+The half-order numerical entropy treats eigenvalues of magnitude at most
+$10^{-\mathrm{dps}+8}$ as zero; normalization errors are below $2\times10^{-80}$
+at 80 digits. The calculations are computed evidence, not additional Lean proofs.
+The script computes partial traces and partial-transpose spectra from the
+states; the exact one-kick check uses their periodic controlled-Z representative,
+whose omitted field and kick factors are local unitaries.
+
+Script: `/Users/auric/.sshx/6655bf963c7b2d7d963c5f20/attempt-1/triage-compute.py`; SHA-256:
+`61cf4809591718e2ab448bde137ba261c20c85da78b2f8cb98c226add7b3fa66`.
+
+| Computation command | Exit |
+| --- | --- |
+| `python3 /Users/auric/.sshx/6655bf963c7b2d7d963c5f20/attempt-1/triage-compute.py alpha2` | 0 |
+| `python3 /Users/auric/.sshx/6655bf963c7b2d7d963c5f20/attempt-1/triage-compute.py pairs-half` | 0 |
+| `python3 /Users/auric/.sshx/6655bf963c7b2d7d963c5f20/attempt-1/triage-compute.py generic-half` | 0 |
+
 **Open in this module:** the nearest unresolved extension is the half-order
 relation for generic states in the thermodynamic early-time regime.
 No claim about that relation follows from this finite-chain witness.
