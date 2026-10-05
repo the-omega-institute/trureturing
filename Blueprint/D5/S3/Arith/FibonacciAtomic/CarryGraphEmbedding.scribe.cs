@@ -13,9 +13,9 @@ internal sealed class CarryGraphEmbeddingDocument : IScribeDocumentDefinition
     private static Formula N => Seq(Mathbb, Grp(V("N")));
     private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula All(Formula x, Formula type, Formula body) =>
-        Seq(Forall, Sp, x, Colon, Sp, type, Comma, Sp, body);
+        Par(Seq(Forall, Sp, x, Colon, Sp, type, Comma, Sp, body));
     private static Formula Ex(Formula x, Formula type, Formula body) =>
-        Seq(Exists, Sp, x, Colon, Sp, type, Comma, Sp, body);
+        Par(Seq(Exists, Sp, x, Colon, Sp, type, Comma, Sp, body));
     private static Formula And(params Formula[] parts) =>
         Par(Seq(parts.SelectMany((f, i) => i == 0
             ? new[] { f } : new[] { Sp, Land, Sp, f }).ToArray()));
@@ -112,8 +112,8 @@ internal sealed class CarryGraphEmbeddingDocument : IScribeDocumentDefinition
                     Equal(Call("c", a), D(0)), Equal(Call("successor", s, a), s))))));
         var singleton = All(s, V("State"), All(a, V("Action"),
             Imp(Equal(Call("e", s), D(1)), Imp(Call("Legal", m, s, a), Equal(Call("h", a), D(0))))));
-        var group = Seq(V("card"), Grp(Seq(OpenBrace, i, Sp, InMacro, Sp, indices, Mid,
-            PrefixAt(i, d), Sp, Eq, Sp, PrefixAt(k, d), CloseBrace)));
+        var group = Call("card", Seq(OpenBrace, i, Sp, InMacro, Sp, indices, Mid,
+            PrefixAt(i, d), Sp, Eq, Sp, PrefixAt(k, d), CloseBrace));
         var embedding = All(p, Seq(indices, Sp, To, Sp, Real),
             Imp(All(i, indices, Seq(D(0), Sp, Lt, Sp, Call("p", i))),
             Imp(Equal(Sum(i, indices, Call("p", i)), D(1)), All(k, indices,
