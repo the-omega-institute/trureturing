@@ -60,6 +60,60 @@ internal sealed class CarryGraphCriticalAttainmentDocument : IScribeDocumentDefi
                     All(m, Ty("N"), All(f, policies, All(start, states, All(d, Ty("N"), And(
                         Equal(Call("state", Call("policyPath", m, f, start), d), stateOrbit),
                         Equal(Call("action", Call("policyPath", m, f, start), d), Call("f", stateOrbit))))))),
-                    "P(m) consists of all dependent tables assigning one legal action to each legal state. The map step(f) sends a state to the successor of its selected action. Its iterate defines the state sequence and the table gives the action sequence."))));
+                    "P(m) consists of all dependent tables assigning one legal action to each legal state. The map step(f) sends a state to the successor of its selected action. Its iterate defines the state sequence and the table gives the action sequence."),
+                Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
+                    H("Root prices and critical attainment"), StatementSource.FromAuthor(Disp(ResultFormula())),
+                    AssessedProvenance.FromRepo(), Blocks(
+                        Paragraph(Text("For every m>=2 there are value functions and deterministic legal tables for all real prices. Each value is the unique finite Bellman fixed point on every state, and each table attains the one-step minimum at every state. The root is o=(1,m). The selected stationary root path attains the minimum over all legal root paths, not merely an infimum.")),
+                        Paragraph(Text("The root is nonnegative exactly at prices at most alpha(m). At the critical price it is zero. The critical table has a positive anchor. Its fixed-label tree, given by labelDigit, sample and bill, returns a strictly positive normalized real law, with minimum mass equal to that anchor. It stops almost surely, has that return law under the independent fair bit tape, and its expected charged bill equals both the whole-column path cost and the dyadic cost. These costs equal alpha(m) times the anchor.")),
+                        Paragraph(Text("Finite legal actions supply statewise minimum selectors. The half-discount fixed point comes from the finite Bellman contraction. Summing the one-step inequalities telescopes the discounted value sequence; bounded state values make the tail vanish. The inequalities are equalities along the selected table, so the root path attains the full path minimum.")),
+                        Paragraph(Text("Canonical paths of positive real laws compare the root price with every cost-to-minimum-mass ratio. Arbitrarily close ratios to the infimum give root values smaller than epsilon/m at the critical price, so that value is zero without assuming attainment. The root path cost is at least one, which rules out a zero anchor. Its actual output law then gives alpha times the anchor at most the dyadic cost, at most the path cost, with both endpoints equal. This forces all costs to agree."))),
+                    DescribeRole.Theorem))));
     }
+    private static Formula ResultFormula()
+    {
+        var m = V("m"); var x = V("x"); var values = V("V"); var tables = V("f");
+        var s = V("s"); var w = V("w"); var gamma = V("gamma"); var i = V("i");
+        var tape = V("tape"); var n = V("n"); var root = V("o");
+        var states = Call("S", m); var policies = Call("P", m); var indices = Call("Fin", m);
+        var valueType = Seq(states, Sp, To, Sp, Ty("R")); var alpha = Call("alpha", m);
+        Formula Value(Formula price, Formula state) => Call("V", price, state);
+        Formula G(Formula price) => Call("policyPath", m, Call("f", price), root);
+        Formula C(Formula path) => Call("pathCost", path);
+        Formula T(Formula path) => Call("anchorValue", path);
+        Formula Fixed(Formula price, Formula value) =>
+            Equal(Call("bellman", m, price, value), value);
+        Formula RootPrice(Formula price, Formula path) => Sub(C(path), Mul(price, T(path)));
+        var action = Call("f", x, s);
+        var selected = Add(Call("r", s), Mul(Frac(D(1), D(2)),
+            Sub(Value(x, Call("successor", s, action)), Mul(x, Call("b", action)))));
+        var unique = All(x, Ty("R"), And(Fixed(x, Call("V", x)),
+            All(w, valueType, Imp(Fixed(x, w), Equal(w, Call("V", x))))));
+        var greedy = All(x, Ty("R"), All(s, states, Equal(Value(x, s), selected)));
+        var pathMinimum = All(x, Ty("R"), And(Call("IsRootPath", m, G(x)),
+            Equal(Value(x, root), RootPrice(x, G(x))),
+            All(gamma, V("Path"), Imp(Call("IsRootPath", m, gamma),
+                Leq(Value(x, root), RootPrice(x, gamma))))));
+        var sign = All(x, Ty("R"), Par(Seq(Leq(D(0), Value(x, root)), Sp, Iff, Sp, Leq(x, alpha))));
+        var star = G(alpha);
+        Formula Pstar(Formula index) => Call("ofDigits", Call("labelDigit", star, index));
+        var law = Par(Seq(i, Colon, Sp, indices, Sp, Mapsto, Sp, Pstar(i)));
+        var minimum = Call("inf", Seq(OpenBrace, Pstar(i), Mid, i, Sp, InMacro, Sp, indices, CloseBrace));
+        var fair = V("fairTape");
+        var returned = Equal(Call("sample", m, star, tape), Call("some", Par(Seq(i, Comma, Sp, n))));
+        var eventSet = Seq(OpenBrace, tape, Sp, InMacro, Sp, V("Tape"), Mid, Ex(n, Ty("N"), returned), CloseBrace);
+        var critical = And(Pos(T(star)), All(i, indices, Pos(Pstar(i))),
+            Equal(Seq(new Formula.Subscript(F.Sum, Seq(i, Sp, InMacro, Sp, indices)), Pstar(i)), D(1)),
+            Equal(minimum, T(star)),
+            Par(Seq(new Formula.Power(Forall, Call("ae", fair)), Sp, tape, Colon, Sp, V("Tape"), Comma, Sp,
+                Ex(i, indices, Ex(n, Ty("N"), returned)))),
+            All(i, indices, Equal(Call("fairTape", eventSet), Call("ofReal", Pstar(i)))),
+            Equal(Call("lintegral", fair, Call("bill", m, star)), Call("ofReal", C(star))),
+            Equal(C(star), Call("cost", law)), Equal(Call("cost", law), Mul(alpha, T(star))));
+        return All(m, Ty("N"), Imp(Leq(D(2), m),
+            Ex(values, Seq(Ty("R"), Sp, To, Sp, valueType),
+            Ex(tables, Seq(Ty("R"), Sp, To, Sp, policies),
+                And(unique, greedy, pathMinimum, sign, Equal(Value(alpha, root), D(0)), critical)))));
+    }
+
 }
