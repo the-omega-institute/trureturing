@@ -5504,3 +5504,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 五个具名目标的精确临时 Lean 已真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-nilpotent-common-axis.lean` 为 165186 字节，SHA256 `aacd20386d782dfcbb79cfc0749112e51352ed8e8b66f5ab29b7bc276333db66`；前述成功非单位轴源码为 offset0 完整字节前缀，未新增 import、依赖构建或版本变更。
 
 该已有幂零中心、原轴与缩放接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。结论目前要求原群本身幂零及已归一化稳定实际无穷远点；尚未完成一般虚幂零全群分类、离散轴群循环性与真实轴管商、尖点平移格子与有限体积薄部分解，亦未完成原流形覆盖、同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 或官方验收。
+
+
+### 原虚幂零非单位分支的全群同轴分类
+
+进一步只要求同一个任意宇宙原群 `G` 存在真正有限指数子群 `H`，且 `H` 本身幂零；保留同一个原 `ρ`、全部原群元素逐点自由、稳定实际无穷远点，以及至少一个原非单位缩放元素。证明原全群的实际 `infinityScaleCharacter` 单射、全部原群元素交换，并内部构造全 `ρ(G)` 共同的完整原测地轴，保留每个原群元素对全部正高度点的实际缩放评价及整个原轴像等于自身。不要求 `H` 正规或 `G` 幂零。
+
+真正 `H.FiniteIndex` 提供任意原元素的正幂落在 `H`。将同一个原非单位元素取正幂，并消费原缩放正性与实数正幂单射，得到 `H` 中的实际非单位元素，因此上述幂零字符单射可用于原限制表示。若某个全群原元素 `g` 缩放等于一，其落在 `H` 的正幂仍缩放为一；`H` 的真实字符单射迫使同一个原 `g` 的该正幂等于一。既有原有限阶等距变换固定点定理构造原 `ρ(g)` 的实际固定点，原自由性最终迫使 `g = 1`。因此全群字符也单射，实数乘法交换性得到原全群交换性；最后对原非单位元素消费已验交换者共同轴，得到全部原群元素的真实同轴结论。无额外无挠、正规核或预设轴前提。
+
+三个具名目标的精确临时 Lean 首轮真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-virtually-nilpotent-common-axis.lean` 为 169830 字节，SHA256 `5c4d17b63da957f9d8b5b9ee21b8171a6229826287ca518ed533108e355768ec`；前述成功幂零源码完整 offset0 字节前缀保留，没有新增 import 或依赖构建。
+
+该已有有限指数正幂、原有限阶固定点及原缩放轴接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。尚未消费原作用离散性以得到循环轴群及真实轴管商，亦未完成单位缩放尖点的平移格子、有限体积薄部分解、原流形覆盖或同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad；完整官方验收仍未完成。
