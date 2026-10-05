@@ -1314,6 +1314,162 @@ pigeonhole, Hall and CRT argument. The Lean graph check does not
 formalize the 793-class arithmetic construction or claim a whole
 cover, EB1, or unrestricted noncoverage.
 
+## Q-free short outputs and transport of every higher original
+
+A broader replacement uses the literal second-digit deletion for every
+original with $j_i\ge3$, including the top row. For height-two low
+originals, the output need not retain the first q-digit. Keep the same
+finite globally count-then-sum-minimal distinct odd nonunit whole cover,
+$a_i\le2$, positive $W$, $m_i\mid W$ and
+$\gcd(3,q)=\gcd(W,3q)=1$. For this replacement assume $q^2>27$ and
+at least one actual deep original. No upper bound on the q-heights is
+imposed.
+
+Retain exactly the originals with $j_i\le1$. For every $j_i\ge3$, let
+$H_i$ be the AP with the original ternary and cofactor phases, the
+q-prefix obtained by deleting the second q-digit, and modulus
+$d_i/q$. Define
+
+$$
+U_*=(R\cap\mathbb N)\setminus\bigcup_{j_i\ge3}H_i.
+\tag{CD35}
+$$
+
+For each height-two low original, choose one fixed tag and the q-free
+output
+
+$$
+P_i(\sigma_i)=\left\{x\in\mathbb N:
+ x\equiv\sigma_i\pmod{3^{a_i+3}},\quad
+ x\equiv\rho_i\pmod{m_i}\right\},
+\qquad a_i\le1,\quad j_i=2.
+\tag{CD36}
+$$
+
+Its modulus is $3^{a_i+3}m_i$. The remaining sufficient condition is
+
+$$
+U_*\subseteq\bigcup_{a_i\le1,\ j_i=2}P_i(\sigma_i).
+\tag{CD37}
+$$
+
+There is no old first-q or old ternary-phase test in CD36. The tags are
+arbitrary fixed residues, and this is direct coverage by replacement
+APs. A short original providing such an output need not own the earlier
+inserted source $T_b(x)$. That source-ownership claim is not used.
+
+### Legality and complete payment
+
+Emit one output for every $j_i\ge3$ original and every height-two low
+original. Only the height-two top originals have no output. The high
+outputs have q-height at least two and ternary height at most two;
+the retained labels have q-height at most one. Coprimality separates
+these two groups, and division by the same q preserves distinctness
+within the high group. The short outputs have ternary height three or
+four, which determines $a_i$ and then $m_i$. These identify their old
+numerical labels $3^{a_i}q^2m_i$, so short outputs are distinct and
+fresh against both other groups. They are odd nonunits.
+
+CD35--37 cover the complete nonnegative deletion residual. The
+retained originals cover the complement of $R$, and finite periodicity gives
+coverage of all integers. The class count decreases if a height-two
+top original is deleted. Otherwise it stays equal, and every changed
+label is cheaper:
+
+$$
+\frac{d_i'}{d_i}=
+\begin{cases}
+1/q,&j_i\ge3,\\
+27/q^2,&j_i=2,\ a_i\le1.
+\end{cases}
+\tag{CD38}
+$$
+
+An actual deep original supplies either a deleted class or a strict
+price decrease. Thus CD37 contradicts global minimality. In particular
+$U_*$ is nonempty. This conclusion does not require pure originals of
+modulus 3 or 9, a cofactor-prime cap, or a bound on the original
+q-heights.
+
+### Actual short supply without a height cap
+
+Now additionally suppose q is prime, $q\ge5$, and write
+$\omega(W)$ for the number of its distinct prime factors. At an
+$x\in U_*$, consider all q inserted sources, with the old modulo-$9W$
+data and first q-digit preserved. An actual owner cannot have
+$j_i\le1$, since then x would be covered by a retained original. It
+cannot have $j_i\ge3$, since its literal stripped AP would contain x,
+contradicting CD35. Every source owner therefore has height exactly two.
+
+At this same old modulo-9 word, first q-digit and complete cofactor
+source, the existing prime-degree and matching restrictions bound
+nonunit top owners by $\omega(W)+1$. Height-two unit top owners have
+only one possible numerical label, $9q^2$, so there is at most one.
+Consequently at least $q-\omega(W)-2$ second digits have an actual
+height-two low payer. Different second digits require different actual
+originals. Let $J(x)$ contain all height-two low originals matching
+only x's cofactor phase. It includes the actual same-source payers,
+so
+
+$$
+|J(x)|+\omega(W)+2\ge q
+\qquad(x\in U_*).
+\tag{CD39}
+$$
+
+Neither an old ternary-phase test nor a first- or second-q-digit test
+belongs to the pooled set $J(x)$. The argument uses each actual
+owner at its own inserted source; it does not aggregate choices from
+different cofactor sources. At $q=113$ and $\omega(W)\le27$, CD39
+gives at least 84 actual short low originals at every x in $U_*$,
+without the earlier height-ten assumption.
+
+### Reusing the balanced-incidence criterion on the pooled cofactors
+
+Let $P$ be the actual projection of $U_*$ to $\mathbb Z/W$. Index
+columns by all original height-two low labels, and put an entry one
+at row w precisely when $w\equiv\rho_i\pmod{m_i}$. This includes
+short labels from every old ternary phase and first q-color. The
+pooled set in CD39 is precisely the row at $w=x\bmod W$, so every
+row has at least $q-\omega(W)-2$ entries.
+
+If the actual originals 3 and 9 are present, their disjoint phases
+leave exactly 45 safe residues modulo81. Under the additional
+hypotheses that this pooled incidence matrix is balanced and
+$q-\omega(W)-2\ge45$, the classical polychromatic theorem already
+cited in Report385 Section142 supplies one of 45 colors to every
+original column, with every row seeing every color. Associate the
+colors with the safe residues modulo81. A middle original receives
+that residue modulo81; a bottom original receives its reduction
+modulo27. For any x in $U_*$, a column of color $x\bmod81$ supplies
+CD36. Hence CD37 holds, contradicting minimality.
+
+This is an application of the cited ordinary balanced-hypergraph
+result, not a new coloring theorem or a Lean verification of that
+external result. The bottom output is one modulo27 AP; extending
+from its chosen modulo81 residue does not clone the original or
+create extra output labels. The earlier mixed-depth boundary-stability
+premise is not required for this sufficient condition.
+
+Balancedness of this actual cofactor-incidence matrix has not been
+proved. CD39 supplies a uniform multiplicity bound, not a common
+coloring. A forbidden incidence cycle at selected rows does not by
+itself give a legal replacement of the complete original APs. The
+remaining task is to obtain a simultaneous allocation on the actual
+projection P, using whole-cover and minimality constraints that a
+local noncover control cannot supply.
+
+A scoped transient Lean application verifies the replacement-label
+legality, the direct complete-coverage contradiction under CD37,
+nonemptiness of CD35, the generic cofactor-only supply bound CD39,
+and its 84-owner specialization. Its fifty axiom-closure reports use
+only `propext`, `Classical.choice` and `Quot.sound`, with no errors or
+`sorryAx`. These are applications of existing finite-family, modular,
+counting and minimality results; no new canonical Lean declaration,
+freeze or coverage record is introduced. The balanced-hypergraph
+coloring implication retains the external-result boundary stated
+above.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
