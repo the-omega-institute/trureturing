@@ -10,7 +10,13 @@ internal sealed class TriangularPathNormalizationDocument : IScribeDocumentDefin
     private static Formula V(string s) => F.Id(s);
     private static Formula Fn(string s, params Formula[] args) => Call(s, args);
     private static DocumentBlock Def(string name, string title, Formula formula, string prose) =>
-        Describe.Lean(DescribeId.Create(name switch { "State" => "state", "Action" => "action", "Legal" => "legal", "RootPath" => "root-path", "anchorDigit" => "anchor-digit", "anchorMass" => "anchor-mass", "pathCost" => "path-cost", "binaryPrefix" => "binary-prefix", _ => name }), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create(name switch
+        {
+            "State" => "state", "Action" => "action", "Legal" => "legal",
+            "RootPath" => "root-path", "anchorDigit" => "anchor-digit",
+            "anchorMass" => "anchor-mass", "pathCost" => "path-cost",
+            "binaryPrefix" => "binary-prefix", _ => name
+        }), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
@@ -41,16 +47,16 @@ internal sealed class TriangularPathNormalizationDocument : IScribeDocumentDefin
                 + "write zero. Retained labels write one for the one action; under zero(h), "
                 + "precisely e-h <= i < e write one. The digit belongs to Fin(2)."),
             Def("probability", "Output probability", Equal(Fn("p", V("i")),
-                Fn("tsum", new Formula.Fraction(Fn("a", V("i"), V("d")),
+                IndexedSum(V("d"), Seq(Mathbb, Grp(V("N"))), new Formula.Fraction(Fn("a", V("i"), V("d")),
                     new Formula.Power(D(2), Seq(V("d"), Plus, D(1)))))),
                 "For each label, its probability is the sum of its depth d digit divided by "
                 + "2^(d+1), for d starting at zero. Digits are interpreted as real numbers."),
             Def("anchorMass", "Anchor probability", Equal(V("t"),
-                Fn("tsum", new Formula.Fraction(Fn("b", V("d")),
+                IndexedSum(V("d"), Seq(Mathbb, Grp(V("N"))), new Formula.Fraction(Fn("b", V("d")),
                     new Formula.Power(D(2), Seq(V("d"), Plus, D(1)))))),
                 "The anchor mass is the same binary series formed from the anchor digits."),
             Def("pathCost", "Residual layer cost", Equal(V("C"),
-                Fn("tsum", new Formula.Fraction(Fn("r", V("d")), new Formula.Power(D(2), V("d"))))),
+                IndexedSum(V("d"), Seq(Mathbb, Grp(V("N"))), new Formula.Fraction(Fn("r", V("d")), new Formula.Power(D(2), V("d"))))),
                 "The path cost sums r_d/2^d over all depths. It counts expected paid bits, "
                 + "rather than charging r_d bits for a single transition."),
             Def("binaryPrefix", "Integer digit prefix", Equal(Fn("prefix", V("i"), Seq(V("d"), Plus, D(1))),
@@ -79,7 +85,9 @@ internal sealed class TriangularPathNormalizationDocument : IScribeDocumentDefin
                         + "in a larger carry graph can write noncanonical all-one tails."))), DescribeRole.Theorem))));
 
     private static Formula All(Formula x, Formula type, Formula body) =>
-        Seq(Forall, Sp, x, Colon, Sp, type, Comma, Sp, body);
+        Seq(Open, Forall, Sp, x, Colon, Sp, type, Comma, Sp, body, Close);
+    private static Formula IndexedSum(Formula i, Formula domain, Formula body) =>
+        Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, domain)), body);
     private static Formula And(Formula a, Formula b) =>
         Seq(Open, a, Sp, Land, Sp, b, Close);
 
@@ -89,7 +97,7 @@ internal sealed class TriangularPathNormalizationDocument : IScribeDocumentDefin
         var nat = Seq(Mathbb, Grp(V("N"))); var indices = Fn("Fin", m);
         var p = Fn("p", i);
         var nonneg = All(i, indices, Seq(D(0), Sp, Le, Sp, p));
-        var normalization = Equal(Fn("sum", p), D(1));
+        var normalization = Equal(IndexedSum(i, indices, p), D(1));
         var canonical = All(i, indices, All(d, nat, Equal(
             new Formula.Floor(Seq(new Formula.Power(D(2), d), Cdot, p)), Fn("prefix", i, d))));
         var minimum = Equal(Fn("min", V("p")), V("t"));

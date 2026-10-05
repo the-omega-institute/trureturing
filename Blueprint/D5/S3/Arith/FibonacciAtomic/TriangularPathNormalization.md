@@ -90,7 +90,7 @@ Indices i in Fin(m) represent labels i+1. At depth d, labels outside 0 <= i < e 
 
 **Definition 1.8 (Output probability).**
 
-$$\operatorname{p}\left(i\right) = \operatorname{tsum}\left(\frac{\operatorname{a}\left(i, d\right)}{2^{d+1}}\right)$$
+$$\operatorname{p}\left(i\right) = \sum_{d \in \mathbb{N}}\frac{\operatorname{a}\left(i, d\right)}{2^{d+1}}$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/TriangularPathNormalization.probability` (`✓ std3`).
 
@@ -102,7 +102,7 @@ For each label, its probability is the sum of its depth d digit divided by 2^(d+
 
 **Definition 1.9 (Anchor probability).**
 
-$$t = \operatorname{tsum}\left(\frac{\operatorname{b}\left(d\right)}{2^{d+1}}\right)$$
+$$t = \sum_{d \in \mathbb{N}}\frac{\operatorname{b}\left(d\right)}{2^{d+1}}$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/TriangularPathNormalization.anchorMass` (`✓ std3`).
 
@@ -114,7 +114,7 @@ The anchor mass is the same binary series formed from the anchor digits.
 
 **Definition 1.10 (Residual layer cost).**
 
-$$C = \operatorname{tsum}\left(\frac{\operatorname{r}\left(d\right)}{2^{d}}\right)$$
+$$C = \sum_{d \in \mathbb{N}}\frac{\operatorname{r}\left(d\right)}{2^{d}}$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/TriangularPathNormalization.pathCost` (`✓ std3`).
 
@@ -138,7 +138,7 @@ The empty prefix is zero. Each new digit doubles the previous prefix and adds th
 
 **Theorem 1.12 (Canonical law and exact layer cost).**
 
-$$\forall m: \mathbb{N}, (m \ge 2 \implies \forall gamma: \operatorname{RootPath}\left(m\right), (\forall i: \operatorname{Fin}\left(m\right), 0 \le \operatorname{p}\left(i\right) \land (\operatorname{sum}\left(\operatorname{p}\left(i\right)\right) = 1 \land (\forall i: \operatorname{Fin}\left(m\right), \forall D: \mathbb{N}, \left\lfloor2^{D}\cdot\operatorname{p}\left(i\right)\right\rfloor = \operatorname{prefix}\left(i, D\right) \land (\operatorname{min}\left(p\right) = t \land (C = \operatorname{L}\left(p\right) \land (0 < t \implies \forall i: \operatorname{Fin}\left(m\right), 0 < \operatorname{p}\left(i\right))))))))$$
+$$(\forall m: \mathbb{N}, (m \ge 2 \implies (\forall gamma: \operatorname{RootPath}\left(m\right), ((\forall i: \operatorname{Fin}\left(m\right), 0 \le \operatorname{p}\left(i\right)) \land (\sum_{i \in \operatorname{Fin}\left(m\right)}\operatorname{p}\left(i\right) = 1 \land ((\forall i: \operatorname{Fin}\left(m\right), (\forall D: \mathbb{N}, \left\lfloor2^{D}\cdot\operatorname{p}\left(i\right)\right\rfloor = \operatorname{prefix}\left(i, D\right))) \land (\operatorname{min}\left(p\right) = t \land (C = \operatorname{L}\left(p\right) \land (0 < t \implies (\forall i: \operatorname{Fin}\left(m\right), 0 < \operatorname{p}\left(i\right)))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/TriangularPathNormalization.result` (`✓ std3`). ∎
 
