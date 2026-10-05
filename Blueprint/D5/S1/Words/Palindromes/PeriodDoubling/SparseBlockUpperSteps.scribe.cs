@@ -12,8 +12,11 @@ internal sealed class SparseBlockUpperStepsDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S1/Words/Palindromes/PeriodDoubling/SparseBlockUpperSteps.sparse_block_upper_steps"),
             H("The two reductions and both endpoint bits"),
             StatementSource.FromAuthor(MainFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("The displayed sums are the literal integers with binary blocks (100) repeated p times, a gap of z zeros and (10) repeated c times. For epsilon zero or one, an even gap and at least three tail blocks permit four cuts; an odd gap and at least one tail block permit two cuts. The construction uses the exact long and short odd-palindrome radii and preserves the higher prefix. NatSub is truncated natural subtraction; mod is natural remainder; val is the natural value of a finite index."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("The displayed sums are the literal integers with binary blocks (100) repeated p times, a gap of z zeros and (10) repeated c times. For epsilon zero or one, an even gap and at least three tail blocks permit four cuts; an odd gap and at least one tail block permit two cuts. The construction uses the exact long and short odd-palindrome radii and preserves the higher prefix. Nat.sub is truncated natural subtraction; mod is natural remainder; val is the natural value of a finite index."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Upd(Formula n) =>
         new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
@@ -30,7 +33,7 @@ internal sealed class SparseBlockUpperStepsDocument : IScribeDocumentDefinition
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
-    private static Formula SubN(Formula a, Formula b) => Call("NatSub", a, b);
+    private static Formula SubN(Formula a, Formula b) => DottedCall("Nat", "sub", a, b);
     private static Formula State(Formula p, Formula z, Formula c)
     {
         var high = Call("sum", Call("range", p), Lam("s", N(),

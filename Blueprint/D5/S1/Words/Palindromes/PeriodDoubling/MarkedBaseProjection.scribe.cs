@@ -14,6 +14,13 @@ internal sealed class MarkedBaseProjectionDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(ProjectionFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("The underlying base index follows every raw marker transition. Starting from any valid base index, path induction constructs an indexed base path with the same labels. Its terminal index is exact, and its input and output signed-digit streams equal those observed through the raw marker states. toNat denotes integer conversion to a natural number, and getD uses zero for absent entries."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
     private static Formula Call(string name, params Formula[] args) =>
@@ -36,7 +43,7 @@ internal sealed class MarkedBaseProjectionDocument : IScribeDocumentDefinition
 
 
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());
-    private static Formula Entry(Formula xs,Formula k) => Call("getD",Call("getElemOption",xs,k),D(0));
+    private static Formula Entry(Formula xs,Formula k) => Call("getD",OptionalIndex(xs,k),D(0));
     private static Formula ProjectionFormula()
     {
         var fin=Call("Fin",D(1,4,9,2));

@@ -14,6 +14,13 @@ internal sealed class MarkedInputAnnotationDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(AnnotationFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("The base path ends at a valid charge-mode goal. Its input digit stream is a lower tail followed by a nonempty repetition of [1,0,0], and at least one final zero. The two preceding input digits vanish, with the two stored source digits included when the lower tail has fewer than two entries. The initial full marker state stores the base source index and mode zero. There exists a path of the literal marker relation with exactly the same arithmetic labels, ending in mode four at the same base endpoint. The persistent output class flag is zero throughout an accepted base path, so every required marker transition is available. The first marker is selected precisely after the lower tail; all preceding modes remain zero. This statement supplies path existence; interpretation of the retained or removed lowest digit and its terminal charge correction requires further arithmetic information."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
@@ -39,7 +46,7 @@ internal sealed class MarkedInputAnnotationDocument : IScribeDocumentDefinition
 
 
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());
-    private static Formula Entry(Formula f,int k) => Call("getD",Call("getElemOption",f,new Formula.Number(k)),D(0));
+    private static Formula Entry(Formula f,int k) => Call("getD",OptionalIndex(f,new Formula.Number(k)),D(0));
 
     private static Formula AnnotationFormula()
     {
@@ -62,7 +69,7 @@ internal sealed class MarkedInputAnnotationDocument : IScribeDocumentDefinition
         var position=Call("length",V("lower"));
         var chosen=Ex("pp",Call("Path",Ty("prefixRawAutomaton"),V("full"),V("u"),V("xs")),And(
             Eqn(Call("take",position,modes),Call("replicate",position,D(0))),
-            Eqn(Call("getElemOption",modes,position),Call("some",D(1)))));
+            Eqn(OptionalIndex(modes,position),Call("some",D(1)))));
         var conclusion=Ex("u",list,And(Eqn(Entry(V("u"),0),Cast(Call("val",V("t")),Z())),
             Eqn(Entry(V("u"),1),D(4)),chosen));
         return Disp(All("s",fin,All("t",fin,All("xs",ListOf(Alphabet()),

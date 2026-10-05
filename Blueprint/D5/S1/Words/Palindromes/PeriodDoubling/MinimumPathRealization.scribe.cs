@@ -14,6 +14,19 @@ internal sealed class MinimumPathRealizationDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(RealizationFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("The lift preserves each of the four labels and the initial and final base-state indices. It starts with a false flag. Its final flag equals the Boolean disjunction of the path events: no input nonzero has yet been recorded, the current input digit is zero, and the current output digit is nonzero. No accepting-endpoint premise is needed for path construction; if the flag is true and the base endpoint accepts, the lifted path accepts in minimumAutomaton. any is Boolean list disjunction, id is the Boolean identity, and the anonymous bracket in the event lambda represents the unused edge-label argument."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula BooleanEq(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+    private static Formula BooleanNe(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
     private static Formula Call(string name, params Formula[] args) =>
@@ -40,11 +53,11 @@ internal sealed class MinimumPathRealizationDocument : IScribeDocumentDefinition
         var baseGraph=Call("baseAutomaton",V("true"));var productGraph=V("minimumAutomaton");
         Formula Row(Formula x) => Call("minimumTable",Call("val",x));
         Formula State(Formula x) => Call("fst",Call("baseTable",Call("val",x)));
-        Formula Entry(Formula x,int k) => Call("getD",Call("getElemOption",x,new Formula.Number(k)),D(0));
+        Formula Entry(Formula x,int k) => Call("getD",OptionalIndex(x,new Formula.Number(k)),D(0));
         var eventLambda=Seq(LambdaLower,Sp,V("s0"),Colon,baseFin,Sp,OpenBracket,Alphabet(),CloseBracket,Sp,
             V("q"),Colon,baseFin,Sp,Mapsto,Sp,
-            Call("andBool",Call("andBool",Call("beq",Entry(State(V("s0")),14),D(0)),
-                Call("beq",Entry(State(V("q")),10),D(0))),Call("bne",Entry(State(V("q")),12),D(0))));
+            DottedCall("Bool", "and",DottedCall("Bool", "and",BooleanEq(Entry(State(V("s0")),14), D(0)),
+                BooleanEq(Entry(State(V("q")),10), D(0))),BooleanNe(Entry(State(V("q")),12), D(0))));
         var events=Call("any",V("id"),Call("pathOutputs",eventLambda,V("p")));
         var body=Ex("u",productFin,Ex("v",productFin,And(Mem(V("u"),Call("start",productGraph)),
             Eqn(Call("fst",Row(V("u"))),Call("val",V("s"))),Eqn(Call("fst",Row(V("v"))),Call("val",V("t"))),

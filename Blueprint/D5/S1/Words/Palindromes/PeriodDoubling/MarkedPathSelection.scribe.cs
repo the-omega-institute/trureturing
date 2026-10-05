@@ -14,6 +14,17 @@ internal sealed class MarkedPathSelectionDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(SelectionFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("Every path from mode zero to mode four whose final bad flag is zero has a selected transition from mode zero to mode one. Its preceding path is the unmarked lower tail. Input and output streams agree after the selected transition. The two preceding signed digits vanish in both streams. The selected input digit is one. Its output is either one, or zero with input negative phase one, output negative phase zero and an unbroken lower negation flag. Marker parity, retention and both phases at the terminal state are exactly the snapshots saved on the selected transition."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula BooleanEq(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
@@ -43,27 +54,27 @@ internal sealed class MarkedPathSelectionDocument : IScribeDocumentDefinition
 
 
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());
-    private static Formula Entry(Formula f,int k) => Call("getD",Call("getElemOption",f,new Formula.Number(k)),D(0));
+    private static Formula Entry(Formula f,int k) => Call("getD",OptionalIndex(f,new Formula.Number(k)),D(0));
 
     private static Formula SelectionFormula()
     {
         var list=ListOf(Z());var alpha=Alphabet();
         Formula Path(Formula s, Formula t, Formula xs) => Call("Path",Ty("prefixRawAutomaton"),s,t,xs);
-        Formula Digit(Formula q, int k) => Entry(Call("fst",Call("baseTable",Call("toNat",Entry(q,0)))),k);
+        Formula Digit(Formula q, int k) => Call("digit",q,new Formula.Number(k));
         Formula Output(int k, Formula p) => Call("pathOutputs",Seq(LambdaLower,Sp,OpenBracket,list,CloseBracket,Sp,
             OpenBracket,alpha,CloseBracket,Sp,V("q"),Colon,list,Sp,Mapsto,Sp,Digit(V("q"),k)),p);
-        Formula Phase(int sign, int parity) => Call("orBool",Call("decide",LtF(Digit(V("u"),sign),D(0))),
-            Call("andBool",Call("beq",Digit(V("u"),sign),D(0)),Call("beq",Digit(V("u"),parity),D(1))));
+        Formula Phase(int sign, int parity) => DottedCall("Bool", "or",Call("decide",LtF(Digit(V("u"),sign),D(0))),
+            DottedCall("Bool", "and",BooleanEq(Digit(V("u"),sign), D(0)),BooleanEq(Digit(V("u"),parity), D(1))));
         Formula BoolInt(Formula b) => Cast(Call("toNat",b),Z());
         var data=All("k",N(),Imp(And(LeF(D(3),V("k")),LeF(V("k"),D(6))),
-            Eqn(Call("getD",Call("getElemOption",V("t"),V("k")),D(0)),
-                Call("getD",Call("getElemOption",V("v"),V("k")),D(0)))));
+            Eqn(Call("getD",OptionalIndex(V("t"),V("k")),D(0)),
+                Call("getD",OptionalIndex(V("v"),V("k")),D(0)))));
         var removed=And(Eqn(Digit(V("v"),12),D(0)),Eqn(Entry(V("v"),5),D(1)),
             Eqn(Entry(V("v"),6),D(0)),Ne(Entry(V("u"),2),D(0)));
         var selected=And(Eqn(Digit(V("v"),10),D(1)),Eqn(Digit(V("u"),10),D(0)),
             Eqn(Digit(V("u"),11),D(0)),Eqn(Digit(V("u"),12),D(0)),Eqn(Digit(V("u"),13),D(0)),
             Eqn(Entry(V("v"),3),Digit(V("u"),1)),
-            Eqn(Entry(V("v"),4),BoolInt(Call("beq",Digit(V("v"),12),D(1)))),
+            Eqn(Entry(V("v"),4),BoolInt(BooleanEq(Digit(V("v"),12), D(1)))),
             Eqn(Entry(V("v"),5),BoolInt(Phase(16,2))),Eqn(Entry(V("v"),6),BoolInt(Phase(17,3))),
             new Formula.Logic(Eqn(Digit(V("v"),12),D(1)),FormulaLogicOperator.Or,removed));
         var facts=And(Eqn(V("xs"),Call("append",V("as"),Call("cons",V("a"),V("bs")))),
@@ -81,7 +92,12 @@ internal sealed class MarkedPathSelectionDocument : IScribeDocumentDefinition
         var conclusion=Ex("u",list,Ex("v",list,Ex("as",ListOf(alpha),Ex("bs",ListOf(alpha),Ex("a",alpha,
             Ex("before",Path(V("s"),V("u"),V("as")),Ex("after",Path(V("v"),V("t"),V("bs")),facts)))))));
         var hypotheses=And(Eqn(Entry(V("s"),1),D(0)),Eqn(Entry(V("t"),1),D(4)),Eqn(Entry(V("t"),7),D(0)));
-        return Disp(All("s",list,All("t",list,All("xs",ListOf(alpha),
-            All("p",Path(V("s"),V("t"),V("xs")),Imp(hypotheses,conclusion))))));
+        var body=All("s",list,All("t",list,All("xs",ListOf(alpha),
+            All("p",Path(V("s"),V("t"),V("xs")),Imp(hypotheses,conclusion)))));
+        var row=Call("fst",Call("baseTable",Call("toNat",Entry(V("q"),0))));
+        var digitValue=Seq(LambdaLower,Sp,V("q"),Colon,list,Sp,V("k"),Colon,N(),Sp,Mapsto,Sp,
+            Call("getD",OptionalIndex(row,V("k")),D(0)));
+        var digitType=new Formula.TypeArrow(list,new Formula.TypeArrow(N(),Z()));
+        return Disp(new Formula.Apply(Seq(LambdaLower,Sp,V("digit"),Colon,digitType,Sp,Mapsto,Sp,body),[digitValue]));
     }
 }

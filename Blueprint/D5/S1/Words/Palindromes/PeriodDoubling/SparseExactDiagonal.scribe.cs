@@ -9,8 +9,11 @@ internal sealed class SparseExactDiagonalDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-sparseexactdiagonal-diagonal-exact-family"),
             DeclarationHandle.Create("D5/S1/Words/Palindromes/PeriodDoubling/SparseExactDiagonal.diagonal_exact_family"),
             H("Exact Sparse Diagonal"),StatementSource.FromAuthor(MainFormula()),AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("For every positive odd a, the sparse integer whose binary expansion is (100)^a followed by (10)^(2a minus one) has prefix palindromic length 3a. The signed-weight lower bound is 3a minus one. The marked charge obstruction excludes attainment of that lower bound; the explicit sparse cut path supplies the matching upper bound. NatSub denotes truncated natural subtraction."))),DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("For every positive odd a, the sparse integer whose binary expansion is (100)^a followed by (10)^(2a minus one) has prefix palindromic length 3a. The signed-weight lower bound is 3a minus one. The marked charge obstruction excludes attainment of that lower bound; the explicit sparse cut path supplies the matching upper bound. Nat.sub denotes truncated natural subtraction."))),DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Upd(Formula n) =>
         new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
@@ -41,7 +44,7 @@ internal sealed class SparseExactDiagonalDocument : IScribeDocumentDefinition
     private static Formula MainFormula()
     {
         var a=V("a");
-        var b=Call("NatSub",Mul(D(2),a),D(1));
+        var b=DottedCall("Nat", "sub",Mul(D(2),a),D(1));
         var n=Sparse(a,b);
         return Disp(All("a",N(),Imp(And(LtF(D(0),a),Eqn(Call("mod",a,D(2)),D(1))),Eqn(P(n),Mul(D(3),a)))));
     }

@@ -12,9 +12,12 @@ internal sealed class SignedCutLowerBoundDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-signedcutlowerbound-palindromic-suffix-signed-bound"),
             DeclarationHandle.Create(Prefix + "palindromic_suffix_signed_bound"), H("A lower bound for the true prefix palindromic length"),
             StatementSource.FromAuthor(CutFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("For an actual palindrome suffix from cut j to endpoint n, the signed binary weight of the rounded half of n is at most one more than the weight at j. The short-radius and long-radius cases use different dyadic estimates, and the even-palindrome case has length two. Strong induction along optimal suffix cuts gives the second clause for every prefix. NatSub is truncated natural subtraction, NatDiv is natural integer division, and cast denotes the natural-to-integer embedding."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("For an actual palindrome suffix from cut j to endpoint n, the signed binary weight of the rounded half of n is at most one more than the weight at j. The short-radius and long-radius cases use different dyadic estimates, and the even-palindrome case has length two. Strong induction along optimal suffix cuts gives the second clause for every prefix. Nat.sub is truncated natural subtraction, Nat.div is natural integer division, and cast denotes the natural-to-integer embedding."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Upd(Formula n) =>
         new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
@@ -35,11 +38,11 @@ internal sealed class SignedCutLowerBoundDocument : IScribeDocumentDefinition
     private static Formula Cast(Formula x, Formula t) => Call("cast", x, t);
 
 
-    private static Formula RoundedWeight(Formula n) => Call("signedWeight", Cast(Call("NatDiv", Add(n, D(1)), D(2)), Z()));
+    private static Formula RoundedWeight(Formula n) => Call("signedWeight", Cast(DottedCall("Nat", "div", Add(n, D(1)), D(2)), Z()));
     private static Formula CutFormula()
     {
         var n = V("n"); var j = V("j");
-        var window = Call("ofFn", Lam("i", Call("Fin", Call("NatSub", n, j)),
+        var window = Call("ofFn", Lam("i", Call("Fin", DottedCall("Nat", "sub", n, j)),
             Upd(Add(j, Call("val", V("i"))))));
         var cut = All("n", N(), All("j", N(), Imp(And(LtF(j, n), Call("Palindrome", window)),
             LeF(RoundedWeight(n), Add(RoundedWeight(j), D(1))))));

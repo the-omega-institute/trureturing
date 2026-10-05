@@ -12,8 +12,11 @@ internal sealed class TightCutChargeDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-tightcutcharge-tight-cut-class-and-q"),
             DeclarationHandle.Create(Prefix + "tight_cut_class_and_Q"), H("The tight-cut transition law"),
             StatementSource.FromAuthor(CutFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("A cut is tight when the minimum signed weight of the rounded half drops by exactly one. Complete path realization gives an accepting base path. The class-escape potential bound zero excludes the invalid-output mode, since its f charge is one. In the valid-output mode the q+3f bound with terminal phase gives Q(j)≤Q(n). The path's output signed expansion has the literal rounded-half value and class spacing; equal-length zero padding and nonadjacent uniqueness identify it with the triple-binary expansion defining class S. div denotes natural integer quotient, and NatSub denotes truncated natural subtraction."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("A cut is tight when the minimum signed weight of the rounded half drops by exactly one. Complete path realization gives an accepting base path. The class-escape potential bound zero excludes the invalid-output mode, since its f charge is one. In the valid-output mode the q+3f bound with terminal phase gives Q(j)≤Q(n). The path's output signed expansion has the literal rounded-half value and class spacing; equal-length zero padding and nonadjacent uniqueness identify it with the triple-binary expansion defining class S. div denotes natural integer quotient, and Nat.sub denotes truncated natural subtraction."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Upd(Formula n) =>
         new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
@@ -38,7 +41,7 @@ internal sealed class TightCutChargeDocument : IScribeDocumentDefinition
     private static Formula CutFormula()
     {
         Formula Weight(Formula n) => Call("signedWeight",Cast(Call("div",Add(n,D(1)),D(2)),Z()));
-        var word=Call("ofFn",Lam("i",Call("Fin",Call("NatSub",V("n"),V("j"))),Upd(Add(V("j"),Call("val",V("i"))))));
+        var word=Call("ofFn",Lam("i",Call("Fin",DottedCall("Nat", "sub",V("n"),V("j"))),Upd(Add(V("j"),Call("val",V("i"))))));
         var assumptions=And(Call("classS",V("n")),LtF(V("j"),V("n")),Call("Palindrome",word),
             Eqn(Weight(V("n")),Add(Weight(V("j")),D(1))));
         var conclusion=And(Call("classS",V("j")),LeF(Call("signedDigitCharge",V("j")),Call("signedDigitCharge",V("n"))));

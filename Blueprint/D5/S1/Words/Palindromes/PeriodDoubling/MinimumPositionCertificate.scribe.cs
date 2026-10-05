@@ -27,6 +27,19 @@ internal sealed class MinimumPositionCertificateDocument : IScribeDocumentDefini
             Blocks(Paragraph(Text("Kernel reduction checks all 1710 rows, verifies complete lifting of the base graph, and proves the source, goal and reverse-closed potential inequalities. Every accepting run has total f charge at most zero. This graph statement requires an arithmetic identification of f with the signed-weight difference before it can imply a statement about actual cuts."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula BooleanEq(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+    private static Formula BooleanNe(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula NfaMk(params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V("NFA"), Dot, V("mk"))), [.. args]);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
@@ -62,10 +75,10 @@ internal sealed class MinimumPositionCertificateDocument : IScribeDocumentDefini
         var row=Call("minimumTable",V("i"));
         var state=Call("fst",Call("baseTable",Call("fst",row)));
         var target=Call("fst",Call("baseTable",Call("fst",V("e"))));
-        Formula Entry(Formula a,int k) => Call("getD",Call("getElemOption",a,new Formula.Number(k)),D(0));
-        var flag=Call("orBool",Call("fst",Call("snd",row)),
-            Call("andBool",Call("andBool",Call("beq",Entry(state,14),D(0)),Call("beq",Entry(target,10),D(0))),
-                Call("bne",Entry(target,12),D(0))));
+        Formula Entry(Formula a,int k) => Call("getD",OptionalIndex(a,new Formula.Number(k)),D(0));
+        var flag=DottedCall("Bool", "or",Call("fst",Call("snd",row)),
+            DottedCall("Bool", "and",DottedCall("Bool", "and",BooleanEq(Entry(state,14), D(0)),BooleanEq(Entry(target,10), D(0))),
+                BooleanNe(Entry(target,12), D(0))));
         var value=Tuple(Call("fst",V("e")),flag,Call("snd",V("e")));
         var edges=Call("fst",Call("snd",Call("baseTable",Call("fst",row))));
         var body=Call("map",Seq(LambdaLower,Sp,V("e"),Colon,Product(N(),Alphabet()),Sp,Mapsto,Sp,value),edges);
@@ -80,8 +93,8 @@ internal sealed class MinimumPositionCertificateDocument : IScribeDocumentDefini
         var baseIndex = Call("fst", Call("minimumTable", Call("val", V("i"))));
         var baseState = Call("fst", Call("baseTable", baseIndex));
         var flag = Call("fst", Call("snd", Call("minimumTable", Call("val", V("i")))));
-        var condition = Call("andBool", Call("andBool", flag, Call("baseTerminal", baseState)),
-            Call("beq", Call("getD", Call("getElemOption", baseState, D(1,8)), D(0)), D(0)));
+        var condition = DottedCall("Bool", "and", DottedCall("Bool", "and", flag, Call("baseTerminal", baseState)),
+            BooleanEq(Call("getD", OptionalIndex(baseState, D(1,8)), D(0)), D(0)));
         var accepted = Seq(OpenBrace, V("i"), Colon, fin, Sp, Mid, Sp, condition, CloseBrace);
         return Disp(Eqn(Call("minimumAutomaton"), NfaMk(Lam("i", fin, Lam("a", Alphabet(), successors)), sources, accepted)));
     }

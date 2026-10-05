@@ -19,6 +19,13 @@ internal sealed class BaseClassStreamsDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("output selects target component 12 when true and component 10 when false. Zip the digit stream with its tail. Consecutive pairs (a,b) and (b,c) satisfy a times c unequal to minus one. Together with the sparse signed-digit property, this is the class S condition that consecutive nonzero digits of opposite signs have gap at least three. The input transducer rejects violations immediately. The output stores a persistent violation flag, which is zero at every charge-mode accepting goal. Induction propagates that flag backwards and reconstructs each triple from the two digit memories. This result does not assert completeness for actual palindrome cuts."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
@@ -44,7 +51,7 @@ internal sealed class BaseClassStreamsDocument : IScribeDocumentDefinition
 
 
     private static Formula Alphabet() => Product(Z(), Z(), Z(), Z());
-    private static Formula Entry(Formula s,int k) => Call("getD",Call("getElemOption",s,new Formula.Number(k)),D(0));
+    private static Formula Entry(Formula s,int k) => Call("getD",OptionalIndex(s,new Formula.Number(k)),D(0));
     private static Formula RowFormula()
     {
         var state=Call("fst",Call("baseTable",V("i")));
@@ -61,7 +68,7 @@ internal sealed class BaseClassStreamsDocument : IScribeDocumentDefinition
     {
         var auto = Call("baseAutomaton", Ty("true"));
         var state = Call("fst", Call("baseTable", Call("val", V("q"))));
-        var digit = Call("getD", Call("getElemOption", state, Ite(V("output"), D(1,2), D(1,0))), D(0));
+        var digit = Call("getD", OptionalIndex(state, Ite(V("output"), D(1,2), D(1,0))), D(0));
         var emit = Seq(LambdaLower, Sp, OpenBracket, Call("Fin", D(1,4,9,2)), CloseBracket, Sp,
             OpenBracket, Alphabet(), CloseBracket, Sp, V("q"), Colon, Call("Fin", D(1,4,9,2)),
             Sp, Mapsto, Sp, digit);

@@ -20,8 +20,16 @@ internal sealed class MarkedPrefixArithmeticDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-markedprefixarithmetic-marked-prefix-tail-bound"),
             DeclarationHandle.Create(Prefix + "marked_prefix_tail_bound"), H("Strict tail bound and positive endpoint"),
             StatementSource.FromAuthor(BoundFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("A nonempty marked block dominates the separated signed tail. Bounded signed-list evaluation gives the strict absolute tail bound, including positions below three where the tail vanishes, and the lowest positive marked summand forces the endpoint to be positive. NatSub is truncated natural subtraction."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("A nonempty marked block dominates the separated signed tail. Bounded signed-list evaluation gives the strict absolute tail bound, including positions below three where the tail vanishes, and the lowest positive marked summand forces the endpoint to be positive. Nat.sub is truncated natural subtraction."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
@@ -67,7 +75,7 @@ internal sealed class MarkedPrefixArithmeticDocument : IScribeDocumentDefinition
                 new Formula.Logic(Eqn(V("z"),D(0)),FormulaLogicOperator.Or,Eqn(V("z"),D(1))))));
         var sparse=Call("IsChain",V("tail"),Seq(LambdaLower,Sp,V("a"),Colon,Z(),Sp,V("b"),Colon,Z(),Sp,Mapsto,Sp,
             new Formula.Logic(Eqn(V("a"),D(0)),FormulaLogicOperator.Or,Eqn(V("b"),D(0)))));
-        var support=All("k",N(),Imp(Ne(Call("getD",Call("getElemOption",V("tail"),V("k")),D(0)),D(0)),
+        var support=All("k",N(),Imp(Ne(Call("getD",OptionalIndex(V("tail"),V("k")),D(0)),D(0)),
             LeF(Add(V("k"),D(3)),V("p"))));
         var value=Eqn(Cast(Call("div",Add(V("n"),D(1)),D(2)),Z()),Add(Cast(B(),Z()),V("T")));
         return Disp(All("n",N(),All("m",N(),All("p",N(),All("T",Z(),IffF(Call("markedPrefix",V("n"),V("m"),V("p"),V("T")),
@@ -75,5 +83,5 @@ internal sealed class MarkedPrefixArithmeticDocument : IScribeDocumentDefinition
     }
     private static Formula BoundFormula() => Disp(All("n",N(),All("m",N(),All("p",N(),All("T",Z(),
         Imp(And(LtF(D(0),V("m")),Call("markedPrefix",V("n"),V("m"),V("p"),V("T"))),
-            And(LtF(Call("abs",V("T")),Cast(Pow(D(2),Call("NatSub",V("p"),D(2))),Z())),LtF(D(0),V("n")))))))));
+            And(LtF(Call("abs",V("T")),Cast(Pow(D(2),DottedCall("Nat", "sub",V("p"),D(2))),Z())),LtF(D(0),V("n")))))))));
 }

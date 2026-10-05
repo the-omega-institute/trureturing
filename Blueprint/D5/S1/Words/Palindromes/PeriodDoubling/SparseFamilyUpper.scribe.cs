@@ -12,8 +12,11 @@ internal sealed class SparseFamilyUpperDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S1/Words/Palindromes/PeriodDoubling/SparseFamilyUpper.sparse_family_upper"),
             H("Diagonal and off-diagonal upper bounds"),
             StatementSource.FromAuthor(MainFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("For positive odd a, odd b at least 2a minus one, and epsilon zero or one, repeated six-cut reductions produce the displayed uniform bound. At b equal to 2a minus one both endpoints have at most 3a factors. At larger odd b the bounds are a+b and a+b+1. The diagonal terminal uses a three-factor construction at an even exponent; the other terminal uses the alternating-tail reduction. NatSub denotes truncated natural subtraction, mod denotes natural remainder, and val denotes the natural value of a finite index."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("For positive odd a, odd b at least 2a minus one, and epsilon zero or one, repeated six-cut reductions produce the displayed uniform bound. At b equal to 2a minus one both endpoints have at most 3a factors. At larger odd b the bounds are a+b and a+b+1. The diagonal terminal uses a three-factor construction at an even exponent; the other terminal uses the alternating-tail reduction. Nat.sub denotes truncated natural subtraction, mod denotes natural remainder, and val denotes the natural value of a finite index."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Upd(Formula n) =>
         new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
@@ -30,7 +33,7 @@ internal sealed class SparseFamilyUpperDocument : IScribeDocumentDefinition
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
-    private static Formula SubN(Formula a, Formula b) => Call("NatSub", a, b);
+    private static Formula SubN(Formula a, Formula b) => DottedCall("Nat", "sub", a, b);
     private static Formula State(Formula p, Formula z, Formula c)
     {
         var high = Call("sum", Call("range", p), Lam("s", N(),

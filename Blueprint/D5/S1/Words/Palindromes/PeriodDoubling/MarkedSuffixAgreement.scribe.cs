@@ -14,6 +14,13 @@ internal sealed class MarkedSuffixAgreementDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(AgreementFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("The starting marker has already selected its lowest positive digit, so its mode is one, two, three or four. If the final bad flag is zero, every later input coefficient equals its output coefficient and the starting bad flag is zero. Slots three through six, which store the marker parity, retention flag and the two tail phases, keep their starting values throughout the path."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
@@ -34,7 +41,7 @@ internal sealed class MarkedSuffixAgreementDocument : IScribeDocumentDefinition
 
 
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());
-    private static Formula Entry(Formula f,int k) => Call("getD",Call("getElemOption",f,new Formula.Number(k)),D(0));
+    private static Formula Entry(Formula f,int k) => Call("getD",OptionalIndex(f,new Formula.Number(k)),D(0));
 
     private static Formula AgreementFormula()
     {
@@ -47,8 +54,8 @@ internal sealed class MarkedSuffixAgreementDocument : IScribeDocumentDefinition
             new Formula.Logic(Eqn(mode,D(2)),FormulaLogicOperator.Or,
             new Formula.Logic(Eqn(mode,D(3)),FormulaLogicOperator.Or,Eqn(mode,D(4)))));
         var data=All("k",N(),Imp(And(LeF(D(3),V("k")),LeF(V("k"),D(6))),
-            Eqn(Call("getD",Call("getElemOption",V("t"),V("k")),D(0)),
-                Call("getD",Call("getElemOption",V("s"),V("k")),D(0)))));
+            Eqn(Call("getD",OptionalIndex(V("t"),V("k")),D(0)),
+                Call("getD",OptionalIndex(V("s"),V("k")),D(0)))));
         var conclusion=And(Eqn(Entry(V("s"),7),D(0)),Eqn(Output(10),Output(12)),data);
         var path=Call("Path",Ty("prefixRawAutomaton"),V("s"),V("t"),V("xs"));
         return Disp(All("s",list,All("t",list,All("xs",ListOf(Alphabet()),All("p",path,

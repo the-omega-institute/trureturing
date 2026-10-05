@@ -12,13 +12,26 @@ internal sealed class BaseSignedStreamsDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-basesignedstreams-pathoutputs"),
             DeclarationHandle.Create(Prefix + "pathOutputs"), H("Ordered transition observations"),
             StatementSource.FromAuthor(OutputDefinition()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("pathOutputs reads one transition observation per edge in path order. PathNil and PathCons denote the Lean nil and cons path constructors. The nil constructor emits the empty list; cons prepends emit s a q to the observations of the remaining path. Its automaton, alphabet, state and output types are arbitrary."))), DescribeRole.Definition),
+            Blocks(Paragraph(Text("pathOutputs reads one transition observation per edge in path order. The nil constructor emits the empty list; cons prepends emit s a q to the observations of the remaining path. Its automaton, alphabet, state and output types are arbitrary."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-basesignedstreams-base-path-sparse-signed-digits"),
             DeclarationHandle.Create(Prefix + "base_path_sparse_signed_digits"), H("Exact sparse signed-digit reconstruction"),
             StatementSource.FromAuthor(StreamFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("output selects the fourth edge coordinate and target-state component 12 when true, or the third edge coordinate and component 10 when false. Every emitted digit is minus one, zero, or one; consecutive digits cannot both be nonzero. Folding z + 2 x gives twice the encoded rounded half. The first emitted digit is the dummy zero at position minus one. All path lengths are allowed. This is a statement about accepted graph paths; completeness for actual palindrome cuts and the Q interpretation remain separate obligations."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+    private static Formula OptionalHead(Formula xs) =>
+        Call("ite", Eqn(xs, Seq(OpenBracket, CloseBracket)), Call("none"),
+            Call("some", DottedCall("List", "head", xs)));
+
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(owner == "NFA.Path"
+            ? Seq(V("NFA"), Dot, V("Path"), Dot, V(member))
+            : Seq(V(owner), Dot, V(member)))), [.. args]);
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
     private static Formula Call(string name, params Formula[] args) =>
@@ -47,7 +60,7 @@ internal sealed class BaseSignedStreamsDocument : IScribeDocumentDefinition
 
     private static Formula Alphabet() => Product(Z(), Z(), Z(), Z());
     private static Formula Cons(Formula a, Formula xs) => Call("cons", a, xs);
-    private static Formula Entry(Formula state, Formula k) => Call("getD", Call("getElemOption", state, k), D(0));
+    private static Formula Entry(Formula state, Formula k) => Call("getD", OptionalIndex(state, k), D(0));
     private static Formula Outputs(Formula emit, Formula path) => Call("pathOutputs", V("M"), emit, path);
     private static Formula Common(Formula body) =>
         All("alpha", Ty("Type"), All("sigma", Ty("Type"), All("beta", Ty("Type"),
@@ -56,8 +69,8 @@ internal sealed class BaseSignedStreamsDocument : IScribeDocumentDefinition
     private static Formula OutputDefinition()
     {
         var nil = Common(All("s", V("sigma"), Eqn(
-            Outputs(V("emit"), Call("PathNil", V("M"), V("s"))), ListNil())));
-        var cons = Eqn(Outputs(V("emit"), Call("PathCons", V("M"), V("q"), V("s"), V("t"),
+            Outputs(V("emit"), DottedCall("NFA.Path", "nil", V("s"))), ListNil())));
+        var cons = Eqn(Outputs(V("emit"), DottedCall("NFA.Path", "cons", V("q"), V("s"), V("t"),
             V("a"), V("xs"), V("hstep"), V("p"))),
             Cons(Call("emit", V("s"), V("a"), V("q")), Outputs(V("emit"), V("p"))));
         var edge = Mem(V("q"), Call("step", V("M"), V("s"), V("a")));
@@ -87,7 +100,7 @@ internal sealed class BaseSignedStreamsDocument : IScribeDocumentDefinition
         var source = Call("fst", Call("baseTable", Call("val", V("s"))));
         var identity = Eqn(value, Mul(D(2), Parenthesized(Add(raw, Entry(source, Ite(V("output"), D(3), D(2)))))));
         var body = All("p", Call("Path", auto, V("s"), V("t"), V("xs")),
-            And(coefficients, sparse, identity, Eqn(Call("headOption", stream), Call("some", D(0)))));
+            And(coefficients, sparse, identity, Eqn(OptionalHead( stream), Call("some", D(0)))));
         body = Imp(And(Mem(V("s"), Call("start", auto)), Mem(V("t"), Call("accept", auto))), body);
         return Disp(All("charge", Ty("Bool"), All("output", Ty("Bool"), All("s", Call("Fin", D(1,4,9,2)),
             All("t", Call("Fin", D(1,4,9,2)), All("xs", ListOf(Alphabet()), body))))));

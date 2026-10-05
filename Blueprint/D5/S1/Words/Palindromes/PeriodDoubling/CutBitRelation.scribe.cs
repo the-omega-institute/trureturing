@@ -16,8 +16,11 @@ internal sealed class CutBitRelationDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-cutbitrelation-cut-bit-relation-completeness"),
             DeclarationHandle.Create(Prefix + "cut_bit_relation_completeness"), H("All actual palindrome cuts are represented"),
             StatementSource.FromAuthor(CutFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("For any nonempty palindromic suffix from prefix j to prefix n, the remaining bit pairs have an accepting path to zero and encode div(n,2) and div(j,2). Equal endpoint parities choose the even-cut source 6; the pair (1,0) additionally permits the already-flushed source 0. Other odd cuts start in source 1 or 2. Every emitted input is zero or one. The proof uses the exact dyadic palindrome radius to construct the complementary A runs and the skipped-bit B runs, and the valuation parity to construct the even-00 runs. No bound is imposed on the length of these runs. div and mod denote natural integer quotient and remainder, and NatSub denotes truncated natural subtraction. This theorem concerns the bit relation; adjoining the signed-digit memories is a separate obligation."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("For any nonempty palindromic suffix from prefix j to prefix n, the remaining bit pairs have an accepting path to zero and encode div(n,2) and div(j,2). Equal endpoint parities choose the even-cut source 6; the pair (1,0) additionally permits the already-flushed source 0. Other odd cuts start in source 1 or 2. Every emitted input is zero or one. The proof uses the exact dyadic palindrome radius to construct the complementary A runs and the skipped-bit B runs, and the valuation parity to construct the even-00 runs. No bound is imposed on the length of these runs. div and mod denote natural integer quotient and remainder, and Nat.sub denotes truncated natural subtraction. This theorem concerns the bit relation; adjoining the signed-digit memories is a separate obligation."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Upd(Formula n) =>
         new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
@@ -72,7 +75,7 @@ internal sealed class CutBitRelationDocument : IScribeDocumentDefinition
         var conclusion=Ex("r",Z(),Ex("xs",ListOf(Pair()),And(Mem(V("r"),modes),
             Call("Nonempty",Call("Path",V("cutBitAutomaton"),V("r"),D(0),V("xs"))),
             Eqn(Fold("fst"),Call("div",V("n"),D(2))),Eqn(Fold("snd"),Call("div",V("j"),D(2))),bits)));
-        var word=Call("ofFn",Lam("i",Call("Fin",Call("NatSub",V("n"),V("j"))),Upd(Add(V("j"),Call("val",V("i"))))));
+        var word=Call("ofFn",Lam("i",Call("Fin",DottedCall("Nat", "sub",V("n"),V("j"))),Upd(Add(V("j"),Call("val",V("i"))))));
         return Disp(All("n",N(),All("j",N(),Imp(And(LtF(V("j"),V("n")),Call("Palindrome",word)),conclusion))));
     }
     private static Formula SetBuilder(string n, Formula t, Formula p) => Seq(OpenBrace,V(n),Colon,t,Sp,Bar,Sp,p,CloseBrace);

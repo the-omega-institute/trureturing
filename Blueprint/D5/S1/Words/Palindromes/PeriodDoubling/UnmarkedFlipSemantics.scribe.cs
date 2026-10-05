@@ -14,6 +14,13 @@ internal sealed class UnmarkedFlipSemanticsDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(FlipFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("A path ending in marker mode zero has remained unmarked throughout. Its final flip flag is nonzero exactly when the starting flag is nonzero and every emitted input/output coefficient pair sums to zero. The two streams have the same length because each transition emits one coefficient on each side. Starting with flip flag one therefore records exact negation of the whole lower signed tail."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
     private static Formula Call(string name, params Formula[] args) =>
@@ -36,7 +43,7 @@ internal sealed class UnmarkedFlipSemanticsDocument : IScribeDocumentDefinition
 
 
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());
-    private static Formula Entry(Formula f,int k) => Call("getD",Call("getElemOption",f,new Formula.Number(k)),D(0));
+    private static Formula Entry(Formula f,int k) => Call("getD",OptionalIndex(f,new Formula.Number(k)),D(0));
 
 
     private static Formula FlipFormula()

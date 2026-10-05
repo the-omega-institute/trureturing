@@ -37,7 +37,7 @@ internal sealed class WordDocument : IScribeDocumentDefinition
                 H("The infinite fixed word"),
                 StatementSource.FromAuthor(WordFormula()),
                 AssessedProvenance.FromLiterature(Flp),
-                Blocks(Paragraph(Text("Section 5.1, printed page 12: “The period-doubling word u_pd is the 2-automatic word” u_pd = φ_pd^ω(a) = abaaabababaaabaa…, with φ_pd(a) = ab and φ_pd(b) = aa. The zero-based n-th symbol is read from phi_pd^(n+1)(a); the block theorem proves that this position is covered and agrees with every longer approximant. getElemOption is optional list indexing and getD supplies its stated default."))),
+                Blocks(Paragraph(Text("Section 5.1, printed page 12: “The period-doubling word u_pd is the 2-automatic word” u_pd = φ_pd^ω(a) = abaaabababaaabaa…, with φ_pd(a) = ab and φ_pd(b) = aa. The zero-based n-th symbol is read from phi_pd^(n+1)(a); the block theorem proves that this position is covered and agrees with every longer approximant. Optional indexing returns some at an in-range position and none otherwise; getD supplies its stated default."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("pd-word-block-valuation"),
@@ -49,6 +49,13 @@ internal sealed class WordDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula Upd(Formula n) =>
         new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
@@ -71,12 +78,12 @@ internal sealed class WordDocument : IScribeDocumentDefinition
         Eqn(Call("pdBlock", V("e")), Call("morphismPower", Ty("pdMorphism"), V("e"),
             Seq(OpenBracket, Ty("false"), CloseBracket)))));
     private static Formula WordFormula() => Disp(All("n", N(),
-        Eqn(Upd(V("n")), Call("getD", Call("getElemOption",
+        Eqn(Upd(V("n")), Call("getD", OptionalIndex(
             Call("pdBlock", Add(V("n"), D(1))), V("n")), Ty("false")))));
     private static Formula ValuationFormula() => Disp(All("e", N(), And(
         Eqn(Call("length", Call("pdBlock", V("e"))), Pow(D(2), V("e"))),
         All("i", N(), Imp(LtF(V("i"), Pow(D(2), V("e"))),
-            Eqn(Call("getElemOption", Call("pdBlock", V("e")), V("i")),
+            Eqn(OptionalIndex(Call("pdBlock", V("e")), V("i")),
                 Call("some", Call("decide", Eqn(Call("mod",
                     Call("padicValNat", D(2), Add(V("i"), D(1))), D(2)), D(1))))))))));
 

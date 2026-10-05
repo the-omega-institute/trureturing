@@ -6,7 +6,7 @@ A dyadic boundary has exactly two possible carry costs.
 
 **Theorem 1.1 (The exact dyadic minimum).**
 
-$$\forall h \in \mathbb{N},\; \forall M \in \mathbb{Z},\; \forall u \in \mathbb{N},\; u \le 2^{h} \Rightarrow \operatorname{signedWeight}\left(M \cdot 2^{h} + \operatorname{cast}\left(u, \mathbb{Z}\right)\right) = \operatorname{min}\left(\operatorname{signedWeight}\left(M\right) + \operatorname{signedWeight}\left(\operatorname{cast}\left(u, \mathbb{Z}\right)\right), \operatorname{signedWeight}\left(M + 1\right) + \operatorname{signedWeight}\left(\operatorname{cast}\left(\operatorname{NatSub}\left(2^{h}, u\right), \mathbb{Z}\right)\right)\right)$$
+$$\forall h \in \mathbb{N},\; \forall M \in \mathbb{Z},\; \forall u \in \mathbb{N},\; u \le 2^{h} \Rightarrow \operatorname{signedWeight}\left(M \cdot 2^{h} + \operatorname{cast}\left(u, \mathbb{Z}\right)\right) = \operatorname{min}\left(\operatorname{signedWeight}\left(M\right) + \operatorname{signedWeight}\left(\operatorname{cast}\left(u, \mathbb{Z}\right)\right), \operatorname{signedWeight}\left(M + 1\right) + \operatorname{signedWeight}\left(\operatorname{cast}\left(\operatorname{Nat.sub}\left(2^{h}, u\right), \mathbb{Z}\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Palindromes/PeriodDoubling/DyadicSignedWeight.signed_weight_dyadic_split` (`✓ std3`). ∎
 

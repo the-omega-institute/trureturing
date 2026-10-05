@@ -12,8 +12,11 @@ internal sealed class EvenTightPathsDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-eventightpaths-even-tight-path-has-only-odd-cuts"),
             DeclarationHandle.Create(Prefix + "even_tight_path_has_only_odd_cuts"), H("The path obstruction"),
             StatementSource.FromAuthor(CutFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("The initial endpoint belongs to class S and is even, and its rounded-half signed weight is even. The descending path ends at zero and every cut is a literal palindrome whose signed weight drops by one. Induction makes the number of cuts equal to the initial signed weight and balances endpoint parity with the count of equal-parity edges. The one-even-cut bound then forces that count to zero, so all endpoint parities differ. div denotes natural integer quotient and NatSub denotes truncated natural subtraction. The last-option expression is none for an empty list and some(List.getLast(...)) otherwise; the nonempty proof argument is implicit."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("The initial endpoint belongs to class S and is even, and its rounded-half signed weight is even. The descending path ends at zero and every cut is a literal palindrome whose signed weight drops by one. Induction makes the number of cuts equal to the initial signed weight and balances endpoint parity with the count of equal-parity edges. The one-even-cut bound then forces that count to zero, so all endpoint parities differ. div denotes natural integer quotient and Nat.sub denotes truncated natural subtraction. The last-option expression is none for an empty list and some(List.getLast(...)) otherwise; the nonempty proof argument is implicit."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula LastOption(Formula xs) =>
         Ite(Eqn(xs, ListNil()), Ty("none"), Call("some",
             new Formula.Apply(Seq(Operatorname, Grp(V("List"), Dot, V("getLast"))), [xs])));
@@ -46,7 +49,7 @@ internal sealed class EvenTightPathsDocument : IScribeDocumentDefinition
         var s=V("s"); var t=V("t");
         Formula Mod2(Formula n) => Call("mod",n,D(2));
         Formula Weight(Formula n) => Call("signedWeight",Cast(Call("div",Add(n,D(1)),D(2)),Z()));
-        var word=Call("ofFn",Lam("i",Call("Fin",Call("NatSub",s,t)),Upd(Add(t,Call("val",V("i"))))));
+        var word=Call("ofFn",Lam("i",Call("Fin",DottedCall("Nat", "sub",s,t)),Upd(Add(t,Call("val",V("i"))))));
         var relation=Lam("s",N(),Lam("t",N(),And(LtF(t,s),Call("Palindrome",word),Eqn(Weight(s),Add(Weight(t),D(1))))));
         var path=Call("cons",V("n"),V("cuts"));
         var assumptions=And(Call("classS",V("n")),Eqn(Mod2(V("n")),D(0)),Eqn(Mod2(Weight(V("n"))),D(0)),

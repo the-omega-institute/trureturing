@@ -14,6 +14,13 @@ internal sealed class PrefixInputShapeDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(InputFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("A path begins in marker mode zero and ends in mode four. Its input coefficients consist of an arbitrary lower tail, a nonempty repetition of the block [1,0,0], and at least one final zero. Coefficients are read least significant first. Modes one and two require the two zeros after a selected positive digit; mode three either starts the next block or ends the marker; mode four accepts only zeros."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
@@ -37,7 +44,7 @@ internal sealed class PrefixInputShapeDocument : IScribeDocumentDefinition
 
 
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());
-    private static Formula Entry(Formula f,int k) => Call("getD",Call("getElemOption",f,new Formula.Number(k)),D(0));
+    private static Formula Entry(Formula f,int k) => Call("getD",OptionalIndex(f,new Formula.Number(k)),D(0));
     private static Formula InputFormula()
     {
         var list=ListOf(Z());

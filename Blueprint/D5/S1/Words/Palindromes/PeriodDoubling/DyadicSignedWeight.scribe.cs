@@ -15,6 +15,9 @@ internal sealed class DyadicSignedWeightDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("The high part M is any integer. The low part u is a natural number in the closed interval from zero to the dyadic power. The second branch uses truncated natural subtraction 2^h minus u, then coerces to an integer. Binary induction couples both carries, including the two endpoints."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
@@ -36,7 +39,7 @@ internal sealed class DyadicSignedWeightDocument : IScribeDocumentDefinition
     {
         var term = Add(Mul(V("M"), Pow(D(2), V("h"))), Cast(V("u"), Z()));
         var first = Add(Call("signedWeight", V("M")), Call("signedWeight", Cast(V("u"), Z())));
-        var tail = Cast(Call("NatSub", Pow(D(2), V("h")), V("u")), Z());
+        var tail = Cast(DottedCall("Nat", "sub", Pow(D(2), V("h")), V("u")), Z());
         var second = Add(Call("signedWeight", Add(V("M"), D(1))), Call("signedWeight", tail));
         return Disp(All("h", N(), All("M", Z(), All("u", N(),
             Imp(LeF(V("u"), Pow(D(2), V("h"))),

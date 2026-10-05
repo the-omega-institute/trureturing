@@ -14,6 +14,9 @@ internal sealed class SignedDigitPhaseDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(PhaseFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("The finite signed binary list is read least significant first. Every coefficient is minus one, zero or plus one. Its highest nonzero digit dominates all lower positions, so 2T minus the Boolean parity is negative exactly when the last nonzero sign is negative, or when the tail is empty and the parity is one. Nonadjacency is unnecessary. The empty list and absent last element use default zero. The last-option expression is none for an empty list and some(List.getLast(...)) otherwise; the nonempty proof argument is implicit."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula BooleanNe(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+
     private static Formula LastOption(Formula xs) =>
         Ite(Eqn(xs, ListNil()), Ty("none"), Call("some",
             new Formula.Apply(Seq(Operatorname, Grp(V("List"), Dot, V("getLast"))), [xs])));
@@ -49,7 +52,7 @@ internal sealed class SignedDigitPhaseDocument : IScribeDocumentDefinition
             new Formula.Logic(Eqn(V("z"),D(0)),FormulaLogicOperator.Or,Eqn(V("z"),D(1))))));
         var value=Call("foldr",Seq(LambdaLower,Sp,V("z"),Colon,Z(),Sp,V("x"),Colon,Z(),Sp,Mapsto,Sp,
             Add(V("z"),Mul(D(2),V("x")))),D(0),d);
-        var nz=Call("filter",Lam("z",Z(),Call("bne",V("z"),D(0))),d);
+        var nz=Call("filter",Lam("z",Z(),BooleanNe(V("z"), D(0))),d);
         var phase=LtF(Sub(Mul(D(2),value),Cast(Call("toNat",V("delta")),Z())),D(0));
         var sign=new Formula.Logic(LtF(Call("getD",LastOption(nz),D(0)),D(0)),FormulaLogicOperator.Or,
             And(Eqn(nz,ListNil()),Eqn(V("delta"),Ty("true"))));

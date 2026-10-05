@@ -30,7 +30,7 @@ The e-th approximant is the e-th morphism iterate of the one-letter word a. Iter
 
 **Definition 1.3 (The infinite fixed word).**
 
-$$\forall n \in \mathbb{N},\; \left(u_{\mathrm{pd}}\right)\left(n\right) = \operatorname{getD}\left(\operatorname{getElemOption}\left(\operatorname{pdBlock}\left(n + 1\right), n\right), \operatorname{false}\right)$$
+$$\forall n \in \mathbb{N},\; \left(u_{\mathrm{pd}}\right)\left(n\right) = \operatorname{getD}\left(\operatorname{ite}\left(n < \operatorname{List.length}\left(\operatorname{pdBlock}\left(n + 1\right)\right), \operatorname{some}\left(\operatorname{GetElem.getElem}\left(\operatorname{pdBlock}\left(n + 1\right), n\right)\right), \operatorname{none}\left(\right)\right), \operatorname{false}\right)$$
 
 *Formalization.* `D5/S1/Words/Palindromes/PeriodDoubling/Word.u_pd` (`✓ std3`).
 
@@ -38,11 +38,11 @@ $$\forall n \in \mathbb{N},\; \left(u_{\mathrm{pd}}\right)\left(n\right) = \oper
 
 *Commentary.*
 
-Section 5.1, printed page 12: “The period-doubling word u_pd is the 2-automatic word” u_pd = φ_pd^ω(a) = abaaabababaaabaa…, with φ_pd(a) = ab and φ_pd(b) = aa. The zero-based n-th symbol is read from phi_pd^(n+1)(a); the block theorem proves that this position is covered and agrees with every longer approximant. getElemOption is optional list indexing and getD supplies its stated default.
+Section 5.1, printed page 12: “The period-doubling word u_pd is the 2-automatic word” u_pd = φ_pd^ω(a) = abaaabababaaabaa…, with φ_pd(a) = ab and φ_pd(b) = aa. The zero-based n-th symbol is read from phi_pd^(n+1)(a); the block theorem proves that this position is covered and agrees with every longer approximant. Optional indexing returns some at an in-range position and none otherwise; getD supplies its stated default.
 
 **Theorem 1.4 (Every approximant has the valuation letters).**
 
-$$\forall e \in \mathbb{N},\; \operatorname{length}\left(\operatorname{pdBlock}\left(e\right)\right) = 2^{e} \land \left(\forall i \in \mathbb{N},\; i < 2^{e} \Rightarrow \operatorname{getElemOption}\left(\operatorname{pdBlock}\left(e\right), i\right) = \operatorname{some}\left(\operatorname{decide}\left(\operatorname{mod}\left(\operatorname{padicValNat}\left(2, i + 1\right), 2\right) = 1\right)\right)\right)$$
+$$\forall e \in \mathbb{N},\; \operatorname{length}\left(\operatorname{pdBlock}\left(e\right)\right) = 2^{e} \land \left(\forall i \in \mathbb{N},\; i < 2^{e} \Rightarrow \operatorname{ite}\left(i < \operatorname{List.length}\left(\operatorname{pdBlock}\left(e\right)\right), \operatorname{some}\left(\operatorname{GetElem.getElem}\left(\operatorname{pdBlock}\left(e\right), i\right)\right), \operatorname{none}\left(\right)\right) = \operatorname{some}\left(\operatorname{decide}\left(\operatorname{mod}\left(\operatorname{padicValNat}\left(2, i + 1\right), 2\right) = 1\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Palindromes/PeriodDoubling/Word.block_valuation` (`✓ std3`). ∎
 

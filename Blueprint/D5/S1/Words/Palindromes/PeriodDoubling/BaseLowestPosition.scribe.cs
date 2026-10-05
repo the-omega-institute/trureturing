@@ -14,6 +14,13 @@ internal sealed class BaseLowestPositionDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(CutFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("The lowest-position product records an output nonzero coefficient before the first input nonzero coefficient. Lifting the base path preserves every label, so a true terminal flag would contradict its bound zero on a path with f charge one. The persistent flag is therefore false. Induction along the base path, using the literal first-sign memory checker, supplies a nonzero input coefficient no later than any nonzero output coefficient. Optional list entries use default zero. The coefficients include the dummy leading zero, so both streams use the same indexing."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
@@ -37,12 +44,12 @@ internal sealed class BaseLowestPositionDocument : IScribeDocumentDefinition
 
 
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());
-    private static Formula Entry(Formula s, int k) => Call("getD",Call("getElemOption",s,new Formula.Number(k)),D(0));
+    private static Formula Entry(Formula s, int k) => Call("getD",OptionalIndex(s,new Formula.Number(k)),D(0));
     private static Formula CutFormula()
     {
         var fin=Call("Fin",D(1,4,9,2));
         var M=Call("baseAutomaton",Ty("true"));
-        Formula Coeff(int k,Formula i) => Call("getD",Call("getElemOption",
+        Formula Coeff(int k,Formula i) => Call("getD",OptionalIndex(
             Call("pathOutputs",Seq(LambdaLower,Sp,OpenBracket,fin,CloseBracket,Sp,
                 OpenBracket,Alphabet(),CloseBracket,Sp,V("q"),Colon,fin,Sp,Mapsto,Sp,
                 Entry(Call("fst",Call("baseTable",Call("val",V("q")))),k)),V("p")),i),D(0));

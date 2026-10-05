@@ -32,11 +32,11 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-basecertificates-baseoffset"),
             DeclarationHandle.Create(Prefix + "baseOffset"), H("The final parity and lowest-sign correction"),
             StatementSource.FromAuthor(OffsetFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("getD(getElemOption(s,k),0) reads a state component with default zero. Components 2 and 3 contain the two fixed endpoint parities; 14 and 15 contain their lowest nonzero signs. The formula is precisely the difference of the two final corrections."))), DescribeRole.Definition),
+            Blocks(Paragraph(Text("Optional lookup reads a state component with default zero. Components 2 and 3 contain the two fixed endpoint parities; 14 and 15 contain their lowest nonzero signs. The formula is precisely the difference of the two final corrections."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-basecertificates-baseterminal"),
             DeclarationHandle.Create(Prefix + "baseTerminal"), H("Flushed relation and arithmetic state"),
             StatementSource.FromAuthor(TerminalFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("A state is terminal precisely when its relation component is zero and all six arithmetic carry and previous-bit components at indices 4 through 9 are zero. Boolean beq and andBool denote equality testing and Boolean conjunction."))), DescribeRole.Definition),
+            Blocks(Paragraph(Text("A state is terminal precisely when its relation component is zero and all six arithmetic carry and previous-bit components at indices 4 through 9 are zero."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-basecertificates-baseautomaton"),
             DeclarationHandle.Create(Prefix + "baseAutomaton"), H("The graph with selected terminal states"),
             StatementSource.FromAuthor(AutomatonFormula()), AssessedProvenance.FromRepo(),
@@ -47,6 +47,19 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("The complete row checks reconstruct every possible transition, enforce in-range successor indices, verify the source and goal conditions, and check reverse-closed integer potential inequalities. Kernel reduction checks 24 blocks of at most 64 rows in both modes. The partial-potential path theorem then applies to arbitrary finite accepted runs. This statement concerns graph paths; identifying such paths with actual integer palindrome cuts requires a separate arithmetic bridge."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula BooleanEq(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+    private static Formula BooleanNe(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula NfaMk(params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V("NFA"), Dot, V("mk"))), [.. args]);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
@@ -82,7 +95,7 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
 
     private static Formula State() => ListOf(Z());
     private static Formula Alphabet() => Product(Z(), Z(), Z(), Z());
-    private static Formula Entry(Formula s, int k) => Call("getD", Call("getElemOption", s, new Formula.Number(k)), D(0));
+    private static Formula Entry(Formula s, int k) => Call("getD", OptionalIndex(s, new Formula.Number(k)), D(0));
     private static Formula Bits() => Seq(OpenBracket, D(0), Comma, D(1), CloseBracket);
     private static Formula IntList(params Formula[] xs) =>
         Seq(OpenBracket, xs.Skip(1).Aggregate(xs[0], (a,b) => Seq(a,Comma,Sp,b)), CloseBracket);
@@ -105,22 +118,35 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
     private static Formula NextFormula()
     {
         var s=V("s");var n=V("n");var j=V("j");var r=V("r");
-        var nv=Add(n,Entry(s,4));var jv=Add(j,Entry(s,5));
-        var xn=Call("mod",nv,D(2));var xj=Call("mod",jv,D(2));
-        var nt=Add(Add(xn,Entry(s,6)),Entry(s,8));var jt=Add(Add(xj,Entry(s,7)),Entry(s,9));
-        var nd=Sub(Call("mod",nt,D(2)),xn);var jd=Sub(Call("mod",jt,D(2)),xj);
+        var bindings=new List<(string Name,Formula Value)>();
+        Formula BindValue(string name,Formula value)
+        {
+            bindings.Add((name,value));
+            return V(name);
+        }
+        var nv=BindValue("nv",Add(n,Entry(s,4)));var jv=BindValue("jv",Add(j,Entry(s,5)));
+        var xn=BindValue("xn",Call("mod",nv,D(2)));var xj=BindValue("xj",Call("mod",jv,D(2)));
+        var nt=BindValue("nt",Add(Add(xn,Entry(s,6)),Entry(s,8)));
+        var jt=BindValue("jt",Add(Add(xj,Entry(s,7)),Entry(s,9)));
+        var nd=BindValue("nd",Sub(Call("mod",nt,D(2)),xn));
+        var jd=BindValue("jd",Sub(Call("mod",jt,D(2)),xj));
         Formula Indicator(Formula b) => Cast(Call("toNat",b),Z());
         Formula Cost(Formula d,int prev) => Ite(Eqn(d,D(0)),D(0),Add(Add(D(1),Mul(D(2),Entry(s,1))),
-            Indicator(Call("andBool",Call("neqBool",Entry(s,prev),D(0)),Call("neqBool",Entry(s,prev),d)))));
-        var f=Sub(Indicator(Call("neqBool",nd,D(0))),Indicator(Call("neqBool",jd,D(0))));
+            Indicator(DottedCall("Bool", "and",BooleanNe(Entry(s,prev), D(0)),BooleanNe(Entry(s,prev), d)))));
+        var f=Sub(Indicator(BooleanNe(nd, D(0))),Indicator(BooleanNe(jd, D(0))));
         var state=IntList(r,Sub(D(1),Entry(s,1)),Entry(s,2),Entry(s,3),
             Call("div",nv,D(2)),Call("div",jv,D(2)),xn,xj,Call("div",nt,D(2)),Call("div",jt,D(2)),
             nd,Entry(s,10),jd,Entry(s,12),Ite(Eqn(Entry(s,14),D(0)),nd,Entry(s,14)),
             Ite(Eqn(Entry(s,15),D(0)),jd,Entry(s,15)),Ite(Eqn(nd,D(0)),Entry(s,16),nd),
-            Ite(Eqn(jd,D(0)),Entry(s,17),jd),Indicator(Call("orBool",Call("neqBool",Entry(s,18),D(0)),
-                Call("eqBool",Mul(jd,Entry(s,13)),Call("neg",D(1))))));
+            Ite(Eqn(jd,D(0)),Entry(s,17),jd),Indicator(DottedCall("Bool", "or",BooleanNe(Entry(s,18), D(0)),
+                BooleanEq(Mul(jd,Entry(s,13)), Call("neg",D(1))))));
         var value=Ite(Eqn(Mul(nd,Entry(s,11)),Call("neg",D(1))),Ty("none"),
             Call("some",Tuple(state,f,Sub(Cost(jd,17),Cost(nd,16)),n,j)));
+        for(var i=bindings.Count-1;i>=0;i--)
+        {
+            var binding=bindings[i];
+            value=new Formula.Apply(Seq(LambdaLower,Sp,V(binding.Name),Colon,Z(),Sp,Mapsto,Sp,value),[binding.Value]);
+        }
         return Disp(All("s",State(),All("n",Z(),All("j",Z(),All("r",Z(),Eqn(Call("baseNext",s,n,j,r),value))))));
     }
     private static Formula SuccessorsFormula()
@@ -155,9 +181,9 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
     {
         var indices = Seq(OpenBracket, D(4), Comma, D(5), Comma, D(6), Comma,
             D(7), Comma, D(8), Comma, D(9), CloseBracket);
-        var all = Call("all", Lam("k", N(), Call("beq", Call("getD", Call("getElemOption", V("s"), V("k")), D(0)), D(0))), indices);
+        var all = Call("all", Lam("k", N(), BooleanEq(Call("getD", OptionalIndex(V("s"), V("k")), D(0)), D(0))), indices);
         return Disp(All("s", State(), Eqn(Call("baseTerminal", V("s")),
-            Call("andBool", Call("beq", Entry(V("s"),0), D(0)), all))));
+            DottedCall("Bool", "and", BooleanEq(Entry(V("s"),0), D(0)), all))));
     }
     private static Formula AutomatonFormula()
     {

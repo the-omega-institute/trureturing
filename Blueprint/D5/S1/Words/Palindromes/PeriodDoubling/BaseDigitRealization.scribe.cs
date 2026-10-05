@@ -14,6 +14,13 @@ internal sealed class BaseDigitRealizationDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(RealizationFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("Both supplied signed expansions have the length of the bit input and evaluate to twice the respective ceiling half-endpoint. Their coefficients are minus one, zero or one, and adjacent digits cannot both be nonzero. The input additionally forbids opposite signs at distance two, including the two initial zero memories. Modulo-four rigidity identifies the emitted digits at each step; bounded converter carries preserve the residual value and the input spacing prevents rejection. The terminal bit state and zero residual force all converter carries to flush. The finite graph then realizes this arithmetic run with exactly one transition per supplied bit. The charge-mode Boolean selects one of the two graph acceptance sets. div and mod are natural integer quotient and remainder."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
@@ -45,7 +52,7 @@ internal sealed class BaseDigitRealizationDocument : IScribeDocumentDefinition
     private static Formula Pair() => Product(N(),N());
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());
     private static Formula Ints(params Formula[] xs) => Seq(OpenBracket,xs.Skip(1).Aggregate(xs[0],(a,b)=>Seq(a,Comma,Sp,b)),CloseBracket);
-    private static Formula Entry(Formula s, int k) => Call("getD",Call("getElemOption",s,new Formula.Number(k)),D(0));
+    private static Formula Entry(Formula s, int k) => Call("getD",OptionalIndex(s,new Formula.Number(k)),D(0));
     private static Formula Fold(Formula xs, Formula elem, Formula value, Formula term) =>
         Call("foldr",Seq(LambdaLower,Sp,V("a"),Colon,elem,Sp,V("x"),Colon,value,Sp,Mapsto,Sp,
             Add(term,Mul(D(2),V("x")))),D(0),xs);

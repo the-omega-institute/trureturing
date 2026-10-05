@@ -14,6 +14,13 @@ internal sealed class BasePositionMemoryDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(MemoryFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("For a path starting in an initial state, slot one is the parity of the next signed-digit position. The first emitted digit is the dummy digit at position minus one, so the parity is the path length plus one modulo two. Slots two and three retain the endpoint parities. For either stream the current and previous digit slots are entries zero and one of the reversed emitted list, with zero used when an entry is absent. The last-sign slot is the last nonzero emitted digit, also with default zero. These identities apply at intermediate states as well as accepting states. The last-option expression is none for an empty list and some(List.getLast(...)) otherwise; the nonempty proof argument is implicit."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula LastOption(Formula xs) =>
         Ite(Eqn(xs, ListNil()), Ty("none"), Call("some",
             new Formula.Apply(Seq(Operatorname, Grp(V("List"), Dot, V("getLast"))), [xs])));
@@ -51,10 +58,10 @@ internal sealed class BasePositionMemoryDocument : IScribeDocumentDefinition
         var input=Ite(V("output"),D(1,2),D(1,0));
         var previous=Ite(V("output"),D(1,3),D(1,1));
         var last=Ite(V("output"),D(1,7),D(1,6));
-        Formula Slot(Formula q, Formula k) => Call("getD",Call("getElemOption",Call("fst",Call("baseTable",Call("val",q))),k),D(0));
+        Formula Slot(Formula q, Formula k) => Call("getD",OptionalIndex(Call("fst",Call("baseTable",Call("val",q))),k),D(0));
         var ds=Call("pathOutputs",Seq(LambdaLower,Sp,OpenBracket,fin,CloseBracket,Sp,
             OpenBracket,Alphabet(),CloseBracket,Sp,V("q"),Colon,fin,Sp,Mapsto,Sp,Slot(V("q"),input)),V("p"));
-        Formula LastDigit(int k) => Call("getD",Call("getElemOption",Call("reverse",ds),new Formula.Number(k)),D(0));
+        Formula LastDigit(int k) => Call("getD",OptionalIndex(Call("reverse",ds),new Formula.Number(k)),D(0));
         var filtered=Call("filter",Lam("z",Z(),Ne(V("z"),D(0))),ds);
         var stream=All("output",Ty("Bool"),And(Eqn(Slot(V("t"),input),LastDigit(0)),
             Eqn(Slot(V("t"),previous),LastDigit(1)),

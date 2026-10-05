@@ -14,8 +14,11 @@ internal sealed class MarkedPrefixRigidityDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + "marked_prefix_rigidity_and_charge"),
             H("Retained and removed prefix alternatives"),
             StatementSource.FromAuthor(RigidityFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("A tight palindromic cut between endpoints of opposite parity preserves every positive digit of a literal marked prefix, or removes precisely its lowest digit. In the retained case, the lower tail may change and the difference of signed-digit charges is bounded after correcting by the difference of lower-tail phases. In the removed case, the new lower tail is the exact negative of the old one, with input phase one and output phase zero. The position weight is 1+2(p mod 2), and the phase is the indicator of 2T minus the endpoint parity being negative. The selected digit position and phase snapshots are reconstructed from the path before the marker; the terminal potential then supplies the charge inequality. div and mod denote natural integer quotient and remainder, and NatSub denotes truncated natural subtraction."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("A tight palindromic cut between endpoints of opposite parity preserves every positive digit of a literal marked prefix, or removes precisely its lowest digit. In the retained case, the lower tail may change and the difference of signed-digit charges is bounded after correcting by the difference of lower-tail phases. In the removed case, the new lower tail is the exact negative of the old one, with input phase one and output phase zero. The position weight is 1+2(p mod 2), and the phase is the indicator of 2T minus the endpoint parity being negative. The selected digit position and phase snapshots are reconstructed from the path before the marker; the terminal potential then supplies the charge inequality. div and mod denote natural integer quotient and remainder, and Nat.sub denotes truncated natural subtraction."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Upd(Formula n) =>
         new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
@@ -55,7 +58,7 @@ internal sealed class MarkedPrefixRigidityDocument : IScribeDocumentDefinition
     private static Formula RigidityFormula()
     {
         var n=V("n"); var j=V("j"); var m=V("m"); var p=V("p"); var tail=V("T");
-        var pal=Call("Palindrome",Call("ofFn",Seq(LambdaLower,Sp,V("i"),Colon,Call("Fin",Call("NatSub",n,j)),Sp,Mapsto,Sp,
+        var pal=Call("Palindrome",Call("ofFn",Seq(LambdaLower,Sp,V("i"),Colon,Call("Fin",DottedCall("Nat", "sub",n,j)),Sp,Mapsto,Sp,
             Upd(Add(j,Call("val",V("i")))))));
         var hypotheses=And(LtF(D(0),m),Call("classS",n),Call("markedPrefix",n,m,p,tail),LtF(j,n),
             Ne(Mod(n),Mod(j)),pal,
@@ -63,7 +66,7 @@ internal sealed class MarkedPrefixRigidityDocument : IScribeDocumentDefinition
         var retained=Ex("U",Z(),And(Call("markedPrefix",j,m,p,V("U")),
             LeF(Add(ChargeDifference(),Mul(Parenthesized(Sub(Weight(p),D(1))),
                 Parenthesized(Sub(Eta(j,V("U")),Eta(n,tail))))),D(0))));
-        var removed=And(Call("markedPrefix",j,Call("NatSub",m,D(1)),Add(p,D(3)),NegF(tail)),
+        var removed=And(Call("markedPrefix",j,DottedCall("Nat", "sub",m,D(1)),Add(p,D(3)),NegF(tail)),
             Eqn(Eta(n,tail),D(1)),Eqn(Eta(j,NegF(tail)),D(0)),
             LeF(Add(Add(ChargeDifference(),Weight(p)),D(1)),D(0)));
         return Disp(All("n",N(),All("j",N(),All("m",N(),All("p",N(),All("T",Z(),

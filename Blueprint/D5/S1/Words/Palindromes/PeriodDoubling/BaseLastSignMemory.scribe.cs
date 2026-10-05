@@ -14,6 +14,16 @@ internal sealed class BaseLastSignMemoryDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(CutFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("For either emitted stream, each literal base edge updates the most recent sign when its new coefficient is nonzero. Induction along an arbitrary source path identifies the terminal memory with the last nonzero coefficient of the emitted stream. All source memories start at zero, and absent last entries use default zero. Acceptance and tightness are unnecessary; this statement also applies to the partial path before a marker is selected. The last-option expression is none for an empty list and some(List.getLast(...)) otherwise; the nonempty proof argument is implicit."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula BooleanNe(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula LastOption(Formula xs) =>
         Ite(Eqn(xs, ListNil()), Ty("none"), Call("some",
             new Formula.Apply(Seq(Operatorname, Grp(V("List"), Dot, V("getLast"))), [xs])));
@@ -42,11 +52,11 @@ internal sealed class BaseLastSignMemoryDocument : IScribeDocumentDefinition
     {
         var fin=Call("Fin",D(1,4,9,2));
         var M=Call("baseAutomaton",V("charge"));
-        Formula EntryAt(Formula x,Formula i) => Call("getD",Call("getElemOption",x,i),D(0));
+        Formula EntryAt(Formula x,Formula i) => Call("getD",OptionalIndex(x,i),D(0));
         var coeff=EntryAt(Call("fst",Call("baseTable",Call("val",V("q")))),Ite(V("output"),new Formula.Number(12),new Formula.Number(10)));
         var stream=Call("pathOutputs",Seq(LambdaLower,Sp,OpenBracket,fin,CloseBracket,Sp,
             OpenBracket,Alphabet(),CloseBracket,Sp,V("q"),Colon,fin,Sp,Mapsto,Sp,coeff),V("p"));
-        var nz=Call("filter",Lam("z",Z(),Call("bne",V("z"),D(0))),stream);
+        var nz=Call("filter",Lam("z",Z(),BooleanNe(V("z"), D(0))),stream);
         var last=Call("getD",LastOption(nz),D(0));
         var memory=EntryAt(Call("fst",Call("baseTable",Call("val",V("t")))),Ite(V("output"),new Formula.Number(17),new Formula.Number(16)));
         var body=Imp(Mem(V("s"),Call("start",M)),All("p",Call("Path",M,V("s"),V("t"),V("xs")),Eqn(memory,last)));

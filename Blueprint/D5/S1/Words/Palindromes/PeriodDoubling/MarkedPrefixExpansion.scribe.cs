@@ -14,6 +14,13 @@ internal sealed class MarkedPrefixExpansionDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(ExpansionFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("Any nonadjacent signed expansion of twice the rounded half-endpoint, of length at least p+3m+2, consists of a lower tail of length p+1, then m blocks [1,0,0], then at least one leading zero. The lower tail evaluates to twice T and its nonzero positions i satisfy i+2 at most p. Adding the two initial zero memories gives two zero digits immediately before the selected marker, including p=0. The proof constructs the literal expansion, evaluates the geometric block, and applies nonadjacent digit uniqueness. div is natural integer quotient; option lookups have default zero."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
@@ -40,7 +47,7 @@ internal sealed class MarkedPrefixExpansionDocument : IScribeDocumentDefinition
 
     private static Formula SignedEval(Formula ds) => Call("foldr",Seq(LambdaLower,Sp,V("z"),Colon,Z(),Sp,
         V("x"),Colon,Z(),Sp,Mapsto,Sp,Add(V("z"),Mul(D(2),V("x")))),D(0),ds);
-    private static Formula E(Formula ds, Formula i) => Call("getD",Call("getElemOption",ds,i),D(0));
+    private static Formula E(Formula ds, Formula i) => Call("getD",OptionalIndex(ds,i),D(0));
     private static Formula Ints(params Formula[] xs) => Seq(OpenBracket,xs.Skip(1).Aggregate(xs[0],(a,b)=>Seq(a,Comma,Sp,b)),CloseBracket);
     private static Formula ExpansionFormula()
     {

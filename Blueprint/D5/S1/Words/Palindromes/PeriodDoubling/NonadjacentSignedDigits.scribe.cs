@@ -15,6 +15,9 @@ internal sealed class NonadjacentSignedDigitsDocument : IScribeDocumentDefinitio
             Blocks(Paragraph(Text("The list contains only minus one, zero, and one, in increasing binary-position order. Each adjacent pair contains a zero. Folding by z+2 acc computes its signed binary value, and filtering nonzero digits counts its weight. List induction resolves both possible nonzero low digits and proves that this count is the true minimum over all signed-power representations."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula BooleanNe(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
     private static Formula Call(string name, params Formula[] args) =>
@@ -43,7 +46,7 @@ internal sealed class NonadjacentSignedDigitsDocument : IScribeDocumentDefinitio
             new Formula.Logic(Eqn(V("a"), D(0)), FormulaLogicOperator.Or, Eqn(V("b"), D(0)))));
         var gap = Call("IsChain", V("digits"), relation);
         var fold = Call("foldr", Lam("z", Z(), Lam("acc", Z(), Add(V("z"), Mul(D(2), V("acc"))))), D(0), V("digits"));
-        var count = Call("length", Call("filter", Lam("z", Z(), Call("bne", V("z"), D(0))), V("digits")));
+        var count = Call("length", Call("filter", Lam("z", Z(), BooleanNe(V("z"), D(0))), V("digits")));
         return Disp(All("digits", ListOf(Z()), Imp(And(alphabet, gap), Eqn(Call("signedWeight", fold), count))));
     }
 

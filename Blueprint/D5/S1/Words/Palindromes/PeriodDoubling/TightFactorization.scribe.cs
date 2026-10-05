@@ -12,9 +12,12 @@ internal sealed class TightFactorizationDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-tightfactorization-tight-factorization-iff"),
             DeclarationHandle.Create(Prefix + "tight_factorization_iff"), H("Equality is equivalent to a tight cut path"),
             StatementSource.FromAuthor(TightFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("The list starts at the prefix endpoint n and ends at zero. Each successive pair decreases the endpoint, removes a nonempty palindromic suffix, and lowers the signed weight of the rounded half by exactly one. An optimal factorization supplies such a path when equality holds; conversely, a tight path constructs a factorization meeting the lower bound. NatSub denotes truncated natural subtraction and NatDiv denotes natural integer division. The last-option expression is none for an empty list and some(List.getLast(...)) otherwise; the nonempty proof argument is implicit."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("The list starts at the prefix endpoint n and ends at zero. Each successive pair decreases the endpoint, removes a nonempty palindromic suffix, and lowers the signed weight of the rounded half by exactly one. An optimal factorization supplies such a path when equality holds; conversely, a tight path constructs a factorization meeting the lower bound. Nat.sub denotes truncated natural subtraction and Nat.div denotes natural integer division. The last-option expression is none for an empty list and some(List.getLast(...)) otherwise; the nonempty proof argument is implicit."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula LastOption(Formula xs) =>
         Ite(Eqn(xs, ListNil()), Ty("none"), Call("some",
             new Formula.Apply(Seq(Operatorname, Grp(V("List"), Dot, V("getLast"))), [xs])));
@@ -43,12 +46,12 @@ internal sealed class TightFactorizationDocument : IScribeDocumentDefinition
     private static Formula ListNil() => Seq(OpenBracket, CloseBracket);
 
 
-    private static Formula RoundedWeight(Formula n) => Call("signedWeight", Cast(Call("NatDiv", Add(n, D(1)), D(2)), Z()));
+    private static Formula RoundedWeight(Formula n) => Call("signedWeight", Cast(DottedCall("Nat", "div", Add(n, D(1)), D(2)), Z()));
     private static Formula TightFormula()
     {
         var n = V("n"); var cuts = V("cuts"); var s = V("s"); var t = V("t");
         var prefix = Call("ofFn", Lam("i", Call("Fin", n), Upd(Call("val", V("i")))));
-        var window = Call("ofFn", Lam("i", Call("Fin", Call("NatSub", s, t)),
+        var window = Call("ofFn", Lam("i", Call("Fin", DottedCall("Nat", "sub", s, t)),
             Upd(Add(t, Call("val", V("i"))))));
         var rel = Lam("s", N(), Lam("t", N(), And(LtF(t, s), Call("Palindrome", window),
             Eqn(RoundedWeight(s), Add(RoundedWeight(t), D(1))))));

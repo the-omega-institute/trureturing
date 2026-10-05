@@ -16,7 +16,7 @@ internal sealed class BaseQArithmeticDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-baseqarithmetic-signeddigitcharge"),
             DeclarationHandle.Create(Prefix + "signedDigitCharge"), H("Q from positions, sign changes and endpoint parity"),
             StatementSource.FromAuthor(QFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("Take X = div(n+1,2) and h = log(2,3X)+1. Enumerate its nonadjacent digits, discard zeros, and sum the weights 1+2(i mod 2), consecutive sign changes, and endpoint parity XOR the negativity of the first surviving sign. The last indicator is zero when no digit survives. OptionElim returns its first argument for none and applies its displayed function for some; neqBool, eqBool and decide denote Boolean tests."))), DescribeRole.Definition),
+            Blocks(Paragraph(Text("Take X = div(n+1,2) and h = log(2,3X)+1. Enumerate its nonadjacent digits, discard zeros, and sum the weights 1+2(i mod 2), consecutive sign changes, and endpoint parity XOR the negativity of the first surviving sign. The last indicator is zero when no digit survives. Option.elim returns the displayed default for none and applies its function for some."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-baseqarithmetic-memoryrowcheck"),
             DeclarationHandle.Create(Prefix + "memoryRowCheck"), H("Endpoint and first-sign memory checker"),
             StatementSource.FromAuthor(MemoryFormula()), AssessedProvenance.FromRepo(),
@@ -26,6 +26,22 @@ internal sealed class BaseQArithmeticDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(PathFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("For an accepting charge-mode path whose source parities and binary folds encode n and j, the sum of q edge charges plus the terminal phase correction is Q(j)-Q(n). Component 2 or 3 of the source is the endpoint parity; the last two components of an edge label are bits of the integer quotients div(n,2) and div(j,2). The proof checks all sign-memory transitions and identifies the padded output streams with the unique nonadjacent expansions of the rounded halves. The dummy initial zero contributes no weight."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula BooleanNe(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+    private static Formula BooleanEq(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+    private static Formula OptionalHead(Formula xs) =>
+        Call("ite", Eqn(xs, Seq(OpenBracket, CloseBracket)), Call("none"),
+            Call("some", DottedCall("List", "head", xs)));
+
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
@@ -55,7 +71,7 @@ internal sealed class BaseQArithmeticDocument : IScribeDocumentDefinition
 
 
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());
-    private static Formula Entry(Formula s, int k) => Call("getD",Call("getElemOption",s,new Formula.Number(k)),D(0));
+    private static Formula Entry(Formula s, int k) => Call("getD",OptionalIndex(s,new Formula.Number(k)),D(0));
 
     private static Formula Digits(Formula x, Formula h) => Call("tripleSignedDigits",x,h);
     private static Formula DigitValue(Formula x, Formula i) =>
@@ -68,12 +84,11 @@ internal sealed class BaseQArithmeticDocument : IScribeDocumentDefinition
         var pair=Product(Z(),N());
         var x=Call("div",Add(V("n"),D(1)),D(2));
         var h=Add(Call("log",D(2),Mul(D(3),x)),D(1));
-        var nz=Call("filter",Lam("z",pair,Call("neqBool",Call("fst",V("z")),D(0))),Call("zipIdx",Digits(x,h),D(0)));
+        var nz=Call("filter",Lam("z",pair,BooleanNe(Call("fst",V("z")), D(0))),Call("zipIdx",Digits(x,h),D(0)));
         var weights=Call("sum",Call("map",Lam("z",pair,Add(D(1),Mul(D(2),Call("mod",Call("snd",V("z")),D(2))))),nz));
         var flips=Call("length",Call("filter",Lam("z",Product(Parenthesized(pair),Parenthesized(pair)),
-            Call("neqBool",Call("fst",Call("fst",V("z"))),Call("fst",Call("snd",V("z"))))),Call("zip",nz,Call("tail",nz))));
-        var initial=Call("OptionElim",D(0),Lam("z",pair,Call("toNat",Call("neqBool",Call("eqBool",Call("mod",V("n"),D(2)),D(1)),
-            Call("decide",LtF(Call("fst",V("z")),D(0)))))),Call("headOption",nz));
+            BooleanNe(Call("fst",Call("fst",V("z"))), Call("fst",Call("snd",V("z"))))),Call("zip",nz,Call("tail",nz))));
+        var initial=DottedCall("Option", "elim", OptionalHead(nz), D(0), Lam("z",pair,Call("toNat",BooleanNe(BooleanEq(Call("mod",V("n"),D(2)), D(1)), Call("decide",LtF(Call("fst",V("z")),D(0)))))));
         return Disp(All("n",N(),Eqn(Call("signedDigitCharge",V("n")),Add(Add(weights,flips),initial))));
     }
     private static Formula PathFormula()
@@ -99,7 +114,7 @@ internal sealed class BaseQArithmeticDocument : IScribeDocumentDefinition
         var source=Call("fst",Call("baseTable",V("i")));
         var target=Call("fst",Call("baseTable",Call("fst",V("e"))));
         var edges=Call("fst",Call("snd",Call("baseTable",V("i"))));
-        Formula E(Formula state,int k) => Call("getD",Call("getElemOption",state,new Formula.Number(k)),D(0));
+        Formula E(Formula state,int k) => Call("getD",OptionalIndex(state,new Formula.Number(k)),D(0));
         var cond=And(Eqn(E(target,2),E(source,2)),Eqn(E(target,3),E(source,3)),
             Eqn(E(target,14),Ite(Eqn(E(source,14),D(0)),E(target,10),E(source,14))),
             Eqn(E(target,15),Ite(Eqn(E(source,15),D(0)),E(target,12),E(source,15))));

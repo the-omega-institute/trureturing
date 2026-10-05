@@ -15,6 +15,9 @@ internal sealed class OddPalindromeRadiusDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("The center is the positive one-based index 2^r u, with odd u. The tested radius is strictly below the center, so every left index remains positive. For u=1 all available reflections agree. Otherwise the first disagreement is at q=2^r when the maximum adjacent valuation is even, and at 3q when it is odd. The word uses zero-based indexing, hence the subtraction of one from both positive endpoints. Natural subtraction is truncated, and mod is natural remainder."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Upd(Formula n) =>
         new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
@@ -42,9 +45,9 @@ internal sealed class OddPalindromeRadiusDocument : IScribeDocumentDefinition
         var q = Pow(D(2), V("r"));
         var center = Mul(q, V("u"));
         var window = Call("ofFn", Lam("i", Call("Fin", Add(Mul(D(2), V("R")), D(1))),
-            Upd(Add(Call("NatSub", Call("NatSub", center, V("R")), D(1)), Call("val", V("i"))))));
+            Upd(Add(DottedCall("Nat", "sub", DottedCall("Nat", "sub", center, V("R")), D(1)), Call("val", V("i"))))));
         var palindrome = Call("Palindrome", window);
-        var s = Call("max", Call("padicValNat", D(2), Call("NatSub", V("u"), D(1))),
+        var s = Call("max", Call("padicValNat", D(2), DottedCall("Nat", "sub", V("u"), D(1))),
             Call("padicValNat", D(2), Add(V("u"), D(1))));
         var radius = Ite(Eqn(V("u"), D(1)), q,
             Ite(Eqn(Call("mod", s, D(2)), D(0)), q, Mul(D(3), q)));

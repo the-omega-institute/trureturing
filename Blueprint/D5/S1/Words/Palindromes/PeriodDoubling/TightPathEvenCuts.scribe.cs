@@ -12,8 +12,14 @@ internal sealed class TightPathEvenCutsDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-tightpathevencuts-tight-path-at-most-one-even-cut"),
             DeclarationHandle.Create(Prefix + "tight_path_at_most_one_even_cut"), H("The path obstruction"),
             StatementSource.FromAuthor(CutFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("The path is any finite descending list of literal tight palindrome cuts beginning in class S. Its even cuts are exactly the pairs with equal endpoint parity. An even palindrome has length two. Signed-weight arithmetic and the source letters force a tight even cut to start at an odd integer at least five with odd rounded half; its successor has positive dyadic valuation. Class preservation and lowest-position monotonicity keep that valuation positive until zero, excluding any further even cut. Induction counts the exceptional first even cut. The statement does not require the path to end at zero. div denotes natural integer quotient and NatSub denotes truncated natural subtraction."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("The path is any finite descending list of literal tight palindrome cuts beginning in class S. Its even cuts are exactly the pairs with equal endpoint parity. An even palindrome has length two. Signed-weight arithmetic and the source letters force a tight even cut to start at an odd integer at least five with odd rounded half; its successor has positive dyadic valuation. Class preservation and lowest-position monotonicity keep that valuation positive until zero, excluding any further even cut. Induction counts the exceptional first even cut. The statement does not require the path to end at zero. div denotes natural integer quotient and Nat.sub denotes truncated natural subtraction."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
+    private static Formula BooleanEq(Formula a, Formula b) =>
+        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+
     private static Formula Upd(Formula n) =>
         new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [n]);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
@@ -44,11 +50,11 @@ internal sealed class TightPathEvenCutsDocument : IScribeDocumentDefinition
     {
         var s=V("s"); var t=V("t");
         Formula Weight(Formula n) => Call("signedWeight",Cast(Call("div",Add(n,D(1)),D(2)),Z()));
-        var word=Call("ofFn",Lam("i",Call("Fin",Call("NatSub",s,t)),Upd(Add(t,Call("val",V("i"))))));
+        var word=Call("ofFn",Lam("i",Call("Fin",DottedCall("Nat", "sub",s,t)),Upd(Add(t,Call("val",V("i"))))));
         var relation=Lam("s",N(),Lam("t",N(),And(LtF(t,s),Call("Palindrome",word),Eqn(Weight(s),Add(Weight(t),D(1))))));
         var path=Call("cons",V("n"),V("cuts"));
         var pairs=Call("zip",path,V("cuts"));
-        var parity=Call("beq",Call("mod",Call("fst",V("e")),D(2)),Call("mod",Call("snd",V("e")),D(2)));
+        var parity=BooleanEq(Call("mod",Call("fst",V("e")),D(2)), Call("mod",Call("snd",V("e")),D(2)));
         var count=Call("length",Call("filter",Lam("e",Pair(),parity),pairs));
         return Disp(All("n",N(),All("cuts",ListOf(N()),
             Imp(And(Call("classS",V("n")),Call("IsChain",path,relation)),LeF(count,D(1))))));

@@ -15,6 +15,13 @@ internal sealed class BaseArithmeticDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("The third and fourth edge coordinates encode successive binary digits, least significant first, above the endpoint's bit zero. Folding a + 2 x reconstructs the shifted integer. Source components 2 and 3 supply the fixed bit-zero parities, so adding them reconstructs the two rounded halves. The carry identities and the forced even remainder after a nonzero signed digit give the signed-weight change at each edge; path induction telescopes it. cast denotes the natural-to-integer embedding. This theorem identifies f weights and does not assert that all legal palindrome cuts have already been represented by accepted paths."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula DottedCall(string owner, string member, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
+    private static Formula OptionalIndex(Formula xs, Formula i) =>
+        Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
+            DottedCall("List", "length", xs)),
+            Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
+
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));
     private static Formula Call(string name, params Formula[] args) =>
@@ -39,7 +46,7 @@ internal sealed class BaseArithmeticDocument : IScribeDocumentDefinition
 
 
     private static Formula Alphabet() => Product(Z(), Z(), Z(), Z());
-    private static Formula Entry(Formula s, int k) => Call("getD", Call("getElemOption", s, new Formula.Number(k)), D(0));
+    private static Formula Entry(Formula s, int k) => Call("getD", OptionalIndex(s, new Formula.Number(k)), D(0));
     private static Formula ArithmeticFormula()
     {
         var automaton = Call("baseAutomaton", V("charge"));
