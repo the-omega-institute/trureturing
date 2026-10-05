@@ -239,6 +239,13 @@ full Robin, RH, numerical enclosure and Lean certification remain unresolved.
 
 ## Choose one schedule for prescribed growing sources
 
+The existence of a cofinal schedule for prescribed finite sources
+already follows from the existing scalar (WH4) floor and strong sharp
+Fourier-tail convergence. Reuse that existence result. The construction
+below only makes (RP5)'s complete-prime source-norm conditions explicit;
+it supplies no additional existence or finite-approximation theorem.
+
+
 The uniform-Gram condition is sufficient but need not be imposed on
 every growing family. Let $\mathcal U_j$ be a prescribed finite original
 $H^2$ source family, including the true ground. Its columns and common

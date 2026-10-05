@@ -190,6 +190,6 @@ all-input half-bound, RH or full Robin conclusion is supplied here.
 
 The [regulated complete-prime source budget](regulated-prime-source-budget.md)
 uses the existing complete count at a positive exterior reserve.
-Its prescribed growing-family schedule keeps the same source and
-parameter throughout; band-dependent source norms and the actual
-low/complementary-low signs remain separate obligations.
+At each stage, its schedule uses that stage's prescribed source family
+and one common parameter/band choice. Band-dependent source norms and
+the actual low/complementary-low signs remain separate obligations.
