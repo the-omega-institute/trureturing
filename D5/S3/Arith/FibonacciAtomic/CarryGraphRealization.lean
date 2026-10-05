@@ -221,7 +221,8 @@ private theorem scan_tree (m : ℕ) (γ : Path) (hγ : IsRootPath m γ) :
       let q := (labels m γ d).length
       have next_words : continuing m γ (d + 1) = (children ws).drop q := rfl
       have drop_at (j : ℕ) (hj : j < (continuing m γ (d + 1)).length) :
-          (continuing m γ (d + 1))[j] = (children ws)[q + j]'(by rw [next_words, List.length_drop] at hj; omega) := List.getElem_drop
+          (continuing m γ (d + 1))[j] = (children ws)[q + j]'(by
+            rw [next_words, List.length_drop] at hj; omega) := List.getElem_drop
       have word_step : List.ofFn (fun i : Fin (d + 1) => tape i.val) =
           List.ofFn (fun i : Fin d => tape i.val) ++ [tape d] := by
         simpa using List.ofFn_succ_last (f := fun i : Fin (d + 1) => tape i.val)
@@ -295,7 +296,7 @@ private theorem scan_tree (m : ℕ) (γ : Path) (hγ : IsRootPath m γ) :
   have active_before (d : ℕ) (tape : Tape) (hd : (scan m γ tape d).isRight)
       (j : ℕ) (hjd : j ≤ d) : (scan m γ tape j).isRight := by
     cases hs : scan m γ tape j with
-    | inr a => simp [hs]
+    | inr a => simp
     | inl returned =>
       have H := persistent j d hjd tape returned hs
       simp [H] at hd
@@ -400,7 +401,7 @@ private theorem scan_tree (m : ℕ) (γ : Path) (hγ : IsRootPath m γ) :
       have hs : scan m γ tape d = Sum.inr a :=
         (active_words d tape a).mpr ⟨ha, split_word.1⟩
       have hz' : 2 * a + (tape d).toNat = z := by rw [ht, hb]
-      simpa only [scan, hs, hz', dif_pos hz, hi]
+      simp only [scan, hs, hz', dif_pos hz, hi]
   exact ⟨active_words, leaf_words, origin⟩
 
 private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath m γ) :
@@ -457,10 +458,10 @@ private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPat
     rcases hs with ⟨hr0, hr1, he0, he1⟩
     rcases ha with ha | ha
     · rcases ha with ⟨hb, hh, hc0, hc1⟩
-      have H : k ∈ labelSet m γ d := by simp [labelSet, hb, k] <;> omega
+      have H : k ∈ labelSet m γ d := by simp [labelSet, hb, k]; omega
       simp [labelDigit, H, hb]
     · rcases ha with ⟨hb, hh0, hh1, hc0, hc1⟩
-      have H : k ∉ labelSet m γ d := by simp [labelSet, hb, k] <;> omega
+      have H : k ∉ labelSet m γ d := by simp [labelSet, hb, k]; omega
       simp [labelDigit, H, hb]
   have group : ∀ d (i : Fin m),
       ((i.val : ℤ) < (γ.state d).e → N d i = N d k) ∧
@@ -484,7 +485,7 @@ private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPat
         constructor
         · intro hi
           have old : (i.val : ℤ) < (γ.state d).e := by omega
-          have mem : i ∈ labelSet m γ d := by simp [labelSet, ha] <;> omega
+          have mem : i ∈ labelSet m γ d := by simp [labelSet, ha]; omega
           have bit : ((labelDigit γ i d).val : ℤ) = 1 := by simp [labelDigit, mem]
           rw [Nstep, Nstep, bit, hk, ha, (ih i).1 old]
         · intro hi
@@ -496,12 +497,12 @@ private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPat
         constructor
         · intro hi
           have old : (i.val : ℤ) < (γ.state d).e := by omega
-          have mem : i ∉ labelSet m γ d := by simp [labelSet, ha] <;> omega
+          have mem : i ∉ labelSet m γ d := by simp [labelSet, ha]; omega
           have bit : ((labelDigit γ i d).val : ℤ) = 0 := by simp [labelDigit, mem]
           rw [Nstep, Nstep, bit, hk, ha, (ih i).1 old]
         · intro hi
           by_cases old : (i.val : ℤ) < (γ.state d).e
-          · have mem : i ∈ labelSet m γ d := by simp [labelSet, ha] <;> omega
+          · have mem : i ∈ labelSet m γ d := by simp [labelSet, ha]; omega
             have bit : ((labelDigit γ i d).val : ℤ) = 1 := by simp [labelDigit, mem]
             rw [Nstep, Nstep, bit, hk, ha, (ih i).1 old]
             omega
@@ -575,7 +576,8 @@ private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPat
         _ ≤ ∑' d : ℕ, (m - 1 : ℝ) * (1 / 2 : ℝ) ^ (d + 1) :=
           Summable.tsum_mono (summable.comp_injective (fun a b h => Nat.add_right_cancel h))
             (((summable_geometric_of_lt_one (by norm_num : (0 : ℝ) ≤ 1 / 2)
-              (by norm_num : (1 / 2 : ℝ) < 1)).comp_injective (fun a b h => Nat.add_right_cancel h)).mul_left _)
+              (by norm_num : (1 / 2 : ℝ) < 1)).comp_injective
+                (fun a b h => Nat.add_right_cancel h)).mul_left _)
             (fun d => residual_upper (d + 1))
         _ = m - 1 := by
           have geo : (∑' x : ℕ, ((2 : ℝ) ^ x)⁻¹) = 2 := by
