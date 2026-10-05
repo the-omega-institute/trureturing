@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:94d2b7e128af8b0f19c15776f8526d29777a2807ba4d9235df520caac502f130
   normalized_sha256: sha256:94d2b7e128af8b0f19c15776f8526d29777a2807ba4d9235df520caac502f130
 cas_ref: sha256:94d2b7e128af8b0f19c15776f8526d29777a2807ba4d9235df520caac502f130
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Estimation/TimeArrow/ActualMarkedPathPgfPoissonEnvelope.actual_marked_path_pgf_poisson_envelope
+    target_statement_id: sha256:b49c0bab8d76d529e0de2d48cbcf213746ca3b61f46a9fad689fadb6acdb67ba
 receipts:
   unresolved_subitems: []
