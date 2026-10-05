@@ -144,6 +144,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
       obtain ⟨a, hmin⟩ := exists_eq_ciInf_of_finite (f := q)
       have qmin : (⨅ a, q a) = q a := hmin.symm
       obtain ⟨f, hf⟩ := Function.surjective_eval (β := fun t : S m => A m t.val) s a
+      change f s = a at hf
       change Finset.univ.inf' _ (fun f => loss s f + (↑(1 / 2 : NNReal) : ℝ) * v (next s f)) = _
       rw [show (↑(1 / 2 : NNReal) : ℝ) = 1 / 2 by norm_num]
       change _ = (s.val.r : ℝ) + (1 / 2 : ℝ) * ⨅ a, q a
@@ -382,7 +383,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
       let γ := policyPath m (f x) o
       have hγ := (optimal_path x).1
       let p : Fin m → ℝ := fun i => Real.ofDigits (CarryGraphRealization.labelDigit γ i)
-      obtain ⟨hnonneg, hs, ha, hmin, hpos, _, _, _, _, _, _, _, _, _, hlower⟩ :=
+      obtain ⟨hnonneg, hs, ha, hmin, hpos, _, _, _, _, _, _, _, _, _, hlower, _⟩ :=
         CarryGraphRealization.result m hm γ hγ
       change p ⟨0, by omega⟩ = anchorValue γ at ha
       change DyadicSupportLines.cost p ≤ pathCost γ at hlower
@@ -424,7 +425,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
   let γ := policyPath m (f (alpha m)) o
   let p : Fin m → ℝ := fun i => Real.ofDigits (CarryGraphRealization.labelDigit γ i)
   have hγ := (optimal_path (alpha m)).1
-  obtain ⟨hnonneg, hs, ha, hmin, hpos, _, _, _, _, hreturn, _, hterminate, hexpect, _, hlower⟩ :=
+  obtain ⟨hnonneg, hs, ha, hmin, hpos, _, _, _, _, hreturn, _, hterminate, hexpect, _, hlower, _⟩ :=
     CarryGraphRealization.result m hm γ hγ
   change p ⟨0, by omega⟩ = anchorValue γ at ha
   change DyadicSupportLines.cost p ≤ pathCost γ at hlower
