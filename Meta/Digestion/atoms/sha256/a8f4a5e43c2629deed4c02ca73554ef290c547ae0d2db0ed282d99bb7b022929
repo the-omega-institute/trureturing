@@ -1,0 +1,64 @@
+### 38.3 命题：前缀尺度与已知分支的删窗运输
+
+设
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad t=\phi^{-1},\qquad
+\gamma=-t^3,\qquad I_0=[-1,\phi],\quad I_1=[-1,t],
+$$
+
+并取
+
+$$
+\Delta_{\mathrm{null}}=0,\quad\Delta_{[2]}=1,\quad
+\Delta_{[3]}=-t,\quad\Delta_{[25]}=2-t,\quad
+\Delta_{[5]}=t^2.
+$$
+
+对 $\omega\in A_s$ 定义
+
+$$
+\kappa_s(\omega)=\sum_{j\geq0}\gamma^j\Delta_{a_j(\omega)},
+\qquad f_a(y)=\Delta_a-t^3y.
+$$
+
+源卷定义14.5、命题14.6和定理14.7证明 $\kappa_s(A_s)=I_s$；完整地址编码在内部柱端点可有两条地址，$\kappa_0|_D$ 则单射。不同 $s$ 上的 $\kappa_s$ 是同一数值级数在不同合法域上的限制。
+
+每条合法边 $a:s\to s'$ 满足
+
+$$
+\kappa_sP_a=f_a\kappa_{s'},\qquad TP_a=\operatorname{id}_{A_{s'}}.
+$$
+
+对合法 $h$ 窗前缀 $w=a_0\cdots a_{h-1}$，末接缝记为 $s_h$，有
+
+$$
+\kappa_s(w\nu)=\sum_{j=0}^{h-1}\gamma^j\Delta_{a_j}
++\gamma^h\kappa_{s_h}(\nu),\qquad T^h(w\nu)=\nu.
+$$
+
+因此 $f_w=f_{a_0}\circ\cdots\circ f_{a_{h-1}}$ 的有符号斜率为 $(-t^3)^h$；对任意子区间 $J\subseteq I_{s_h}$，
+
+$$
+|f_w(J)|=t^{3h}|J|=\phi^{-3h}|J|.
+$$
+
+它仅在 $h$ 为奇数时反转次序。
+
+证明。有限标签使级数绝对收敛。拆出第一项即得第一条交换式，字面删除给第二条；保持每个实际接缝反复代入，得到前缀式。仿射复合的斜率相乘，故长度公式与奇偶结论成立。$\square$
+
+在已知分支像上，$r_a(x)=(x-\Delta_a)/\gamma$ 是 $f_a$ 的逆，且 $r_a\kappa_sP_a=\kappa_{s'}$。这不提供整个区间上的单值删窗。确实，取合法周期尾
+
+$$
+L=([3],[25])^\infty,\qquad R=([25],[3])^\infty.
+$$
+
+由 $f_{[3]}(\phi)=-1$、$f_{[25]}(-1)=\phi$ 及收缩，$\kappa_0(L)=-1$、$\kappa_0(R)=\phi$。于是
+
+$$
+\kappa_0([3]L)=-t+t^3=t-1
+=-t^3\phi=\kappa_0(\mathrm{null}R),
+$$
+
+而两地址删窗后的坐标分别为 $-1$ 与 $\phi$。任何单值 $g:I_0\to I_0$ 都不能满足 $g\kappa_0=\kappa_0T$。此为源卷命题14.8的实际端点碰撞；它发生在完整 $\Omega$，不能移作规范有限编码的数量碰撞。
+

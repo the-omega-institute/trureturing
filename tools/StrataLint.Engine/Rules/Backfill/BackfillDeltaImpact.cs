@@ -50,8 +50,8 @@ internal static class BackfillDeltaImpactResolver
             frozenState,
             frozenStatements);
 
-        // Raw frozen and Lean paths have historically widened one dependency change to every
-        // edge. Their value changes are represented by the affected entry paths above instead.
+        // Represent frozen and Lean value changes by their affected entry paths so one
+        // dependency change does not widen evaluation to unrelated edges.
         var evaluationEntries = repositoryChanges.Entries
             .Where(static change =>
                 !FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value)

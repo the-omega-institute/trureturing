@@ -91,8 +91,7 @@ public sealed partial class LeanReportInputScriptTests
         Assert.Equal(before, fixture.Producer());
     }
 
-    // Retain existing engineering test identities while replacing the removed
-    // discovery mechanism with registered-input failures and declarations.
+    // Report inputs and their failure boundaries come from explicit registrations.
     [Fact]
     public void CompileClosureFailureCannotProduceCollidingValidAddresses()
     {

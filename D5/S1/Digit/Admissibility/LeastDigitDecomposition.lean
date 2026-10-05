@@ -35,7 +35,7 @@ noncomputable def dropDigits (offset : Nat) (r : RawDigits) : RawDigits :=
     dropDigits offset r i = r (offset + i) := by
   rfl
 
-private theorem shift_drop_digits_eq (offset : Nat) (r : RawDigits)
+theorem shift_drop_digits_eq (offset : Nat) (r : RawDigits)
     (low : ∀ i, i < offset → r i = 0) :
     shiftDigits offset (dropDigits offset r) = r := by
   apply Finsupp.mapDomain_comapDomain
@@ -46,7 +46,7 @@ private theorem shift_drop_digits_eq (offset : Nat) (r : RawDigits)
       exact (Finsupp.mem_support_iff.mp hi) (low i (Nat.lt_of_not_ge h))
     exact Set.mem_range.mpr ⟨i - offset, Nat.add_sub_of_le hoffset⟩
 
-private theorem canonical_drop_digits {r : RawDigits} (canonical : CanonicalRaw r)
+theorem canonical_drop_digits {r : RawDigits} (canonical : CanonicalRaw r)
     (offset : Nat) : CanonicalRaw (dropDigits offset r) := by
   constructor
   · intro i

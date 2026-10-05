@@ -15,9 +15,9 @@ internal sealed class RotationAvoidanceGroupsDocument : IScribeDocumentDefinitio
         ), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
-        DescribeRole role) =>
+        DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 }
 
