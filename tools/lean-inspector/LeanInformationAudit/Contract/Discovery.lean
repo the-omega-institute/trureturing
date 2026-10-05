@@ -1,6 +1,5 @@
 import LeanInformationAudit.Contract.Decoder
 import LeanInformationAudit.Contract.SourceAudit
-import LeanInformationAudit.Contract.SourceLiteral
 import LeanInformationAudit.Contract.RootStructure
 
 namespace LeanInformationAudit.Contract.Discovery
@@ -33,202 +32,22 @@ def moduleSource (name : Name) : IO System.FilePath := do
     Repository.source ("tools/lean-inspector/" ++ name.toString.replace "." "/" ++ ".lean")
   else ArenaProvenance.moduleSource name
 
-/-- Audit the compiler import DAG, restricted to source files inside this
-checkout. Core Lean and pinned external libraries supply the permitted builtin
-syntax. Missing repository sources are errors, never silently skipped. -/
-def importExpansionKeys (owner : Name) (sourceOf : Name → IO System.FilePath)
-    : MetaM NameSet := do
-  let env ← getEnv
-  let root ← Repository.root
-  let mut pending := #[owner]
-  let mut seen : NameSet := {}
-  let mut keys : NameSet := {}
-  while !pending.isEmpty do
-    let moduleName := pending.back!
-    pending := pending.pop
-    if seen.contains moduleName then continue
-    seen := seen.insert moduleName
-    if let some idx := env.getModuleIdx? moduleName then
-      pending := pending ++ env.header.moduleData[idx.toNat]!.imports.map (·.module)
-    else if moduleName == env.header.mainModule then
-      pending := pending ++ env.header.imports.map (·.module)
-    let path ← if moduleName == owner then sourceOf moduleName
-      else pure (root / LeanInformationAudit.TemplateAudit.sourcePath moduleName)
-    unless ← path.pathExists do
-      if Repository.isModule moduleName || Repository.isImplementationSourceModule moduleName then
-        throwError "contract.source_literal:source_missing:{moduleName}"
-      continue
-    let path ← IO.FS.realPath path
-    unless moduleName == owner ||
-        ((root.toString ++ "/").isPrefixOf path.toString &&
-          !((root / ".lake").toString ++ "/").isPrefixOf path.toString) do continue
-    let source ← IO.FS.readFile path
-    -- Ordinary imported mathematics needs no source expander inventory.
-    -- Compiled exported attributes are inspected below independently.
-    if moduleName == owner || #["macro_rules", "elab_rules", "term_elab",
-        "builtin_macro", "command_elab", "tactic_elab", "@[macro"].any
-        (fun token => (source.splitOn token).length > 1) then
-      let entries ← SourceAudit.parse env source moduleName.toString
-      for key in (SourceAudit.expansionKeys entries {}).toArray do keys := keys.insert key
-    if let some idx := env.getModuleIdx? moduleName then
-      for entry in Elab.macroAttribute.ext.ext.getModuleEntries env idx do
-        let value := match entry with | .global e | .scoped _ e => e
-        keys := keys.insert value.key
-      for entry in Elab.Term.termElabAttribute.ext.ext.getModuleEntries env idx do
-        let value := match entry with | .global e | .scoped _ e => e
-        keys := keys.insert value.key
-      for entry in Elab.Tactic.tacticElabAttribute.ext.ext.getModuleEntries env idx do
-        let value := match entry with | .global e | .scoped _ e => e
-        keys := keys.insert value.key
-      for entry in Elab.Command.commandElabAttribute.ext.ext.getModuleEntries env idx do
-        let value := match entry with | .global e | .scoped _ e => e
-        keys := keys.insert value.key
-  return keys
-
-/-- Exact nonrecursive equation suffixes emitted for literal entries by the
-pinned compiler. No numbered family, matcher, where or let-rec prefix is allowed. -/
-def entryEquationSuffixes : Array String := #["eq_1", "eq_def"]
-
-/-- Equation permission requires the compiler reserved identity, a theorem with
-its simple reflexive equation shape, no authored ownership or elaboration, and
-same-module ownership. Every other compiled constant is audited normally. -/
-def generatedEntryAuxiliary (owner : Name) (entries : Array SourceAudit.Entry)
-    (definitions : Array Definition) (env : Environment) (name : Name)
-    (forbidden : NameSet := {}) : MetaM Bool := do
-  if entries.any (fun entry => entry.authoredNames.contains (privateToUserName name)) then
-    return false
-  let belongs := if owner == env.header.mainModule then env.getModuleIdxFor? name == none
-    else env.getModuleIdxFor? name == env.getModuleIdx? owner
-  unless belongs do return false
-  let some (.thmInfo info) := env.find? name | return false
-  let .str _ suffix := name | return false
-  unless entryEquationSuffixes.contains suffix do return false
-  for definition in definitions do
-    let parent := privateToUserName definition.info.name
-    let child := privateToUserName name
-    let some entry := entries.find? (·.sourceName == some parent) | continue
-    if SourceAudit.entryHasAuthoredElaboration entry forbidden then continue
-    unless name == Meta.mkEqLikeNameFor env definition.info.name suffix &&
-        isReservedName env name do continue
-    if entries.any (fun entry => entry.authoredNames.any fun authored =>
-        authored != parent && authored.isPrefixOf child) then continue
-    unless info.type.isAppOfArity ``Eq 3 &&
-        info.type.getAppArgs[1]!.isConstOf definition.info.name &&
-        info.type.getAppArgs[2]!.consumeMData == definition.info.value.consumeMData &&
-        info.value.isAppOfArity ``Eq.refl 2 &&
-        info.value.getAppArgs[1]!.isConstOf definition.info.name do continue
-    if let some range ← findDeclarationRanges? name then
-      let outer := definition.range.range
-      let inner := range.range
-      unless (outer.pos.line < inner.pos.line ||
-          (outer.pos.line == inner.pos.line && outer.pos.column ≤ inner.pos.column)) &&
-          (inner.endPos.line < outer.endPos.line ||
-          (inner.endPos.line == outer.endPos.line && inner.endPos.column ≤ outer.endPos.column)) do
-        continue
-    return true
-  return false
-
-/-- Compiler-extracted proofs may mention the indexed contract in their type.
-They must be live dependencies of an accepted entry in the same module, have
-no authored declaration or custom elaboration, and retain the proof-only
-compiler name shape. This grants no permission to value helpers. -/
-def generatedEntryProof (owner : Name) (entries : Array SourceAudit.Entry)
-    (definitions : Array Definition) (env : Environment) (name : Name)
-    (forbidden : NameSet := {}) : MetaM Bool := do
-  let belongs := if owner == env.header.mainModule then env.getModuleIdxFor? name == none
-    else env.getModuleIdxFor? name == env.getModuleIdx? owner
-  unless belongs do return false
-  unless (match env.find? name with | some (.thmInfo _) => true | _ => false) do
-    return false
-  let .str parent suffix := privateToUserName name | return false
-  unless suffix.startsWith "_proof_" &&
-      (suffix.drop 7).toString.toNat?.isSome do return false
-  if entries.any (fun entry => entry.authoredNames.contains (privateToUserName name)) ||
-      SourceAudit.hasAuthoredElaboration entries forbidden then return false
-  for definition in definitions do
-    unless privateToUserName definition.info.name == parent do continue
-    let mut pending := definition.info.value.getUsedConstants
-    let mut visited : NameSet := {}
-    while !pending.isEmpty do
-      let next := pending.back!
-      pending := pending.pop
-      if next == name then return true
-      if visited.contains next then continue
-      visited := visited.insert next
-      if env.getModuleIdxFor? next != env.getModuleIdxFor? name then continue
-      if let some info := env.find? next then
-        pending := pending ++ ((info.value? (allowOpaque := true)).map Expr.getUsedConstants
-          |>.getD #[])
-  return false
-
-/-- Source and compiled inventories must agree, including private declarations.
-Rigid level parameters and their occurrences remain the compiler's original data. -/
-def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := do
+/-- Read the compiler inventory and declaration positions. Source text does not
+authorize declarations or constrain their spelling. -/
+def auditModule (owner : Name) (_source : String) : MetaM (Array Definition) := do
   let env := (← getEnv).setExporting false
-  let entries ← SourceAudit.parse env source owner.toString
-  if (`Reg).isPrefixOf owner then
-    match SourceAudit.auditRegCommands owner entries with
-    | .error error => throwError error
-    | .ok _ => pure ()
-  let map := FileMap.ofString source
-  let mut found : Array Definition := #[]
-  let mut expansionKeys : Option NameSet := none
   let names := if owner == env.header.mainModule then
       env.constants.map₂.toList.toArray.map Prod.fst
     else if let some idx := env.getModuleIdx? owner then
       env.header.moduleData[idx.toNat]!.constNames
     else #[]
-  let constants ← names.mapM fun name => do
+  let mut found := #[]
+  for name in names do
     let some info := env.find? name | throwError "contract.discovery:constant_missing:{name}"
-    return (name, info)
-  for (name, info) in constants do
-    let head := info.type.getAppFn.constName?.getD .anonymous
-    unless SourceAudit.heads.contains head do continue
-    -- A generated auxiliary is not an authored entry, even if it has a head.
-    unless entries.any (fun entry => entry.sourceName == some (privateToUserName name)) do
-      continue
-    let range ← requireRange name
-    let start := map.ofPosition range.range.pos
-    let stop := map.ofPosition range.range.endPos
-    let some entry := entries.find? fun entry => entry.start ≤ start && stop ≤ entry.stop
-      | throwError "contract.discovery:source_inventory_missing:{name}"
-    if entry.command[1].isOfKind ``Parser.Command.definition then
-      unless SourceAudit.isHeadSpelling
-          (SourceAudit.termHead entry.command[1][2][1][0][1]) head do continue
-    match SourceAudit.audit entry.command head with
-    | .error error => throwError "{error}:{name}"
-    | .ok _ => pure ()
-    if expansionKeys.isNone then
-      expansionKeys := some (← importExpansionKeys owner fun _ => do
-        return ← moduleSource owner)
-    match SourceLiteral.audit env (.record head) entry.command[1][3][1] name.toString (expansionKeys.getD {}) with
-    | .error error => throwError "{error}"
-    | .ok _ => pure ()
+    unless SourceAudit.isInput info do continue
     let value ← checkDefinition info
-    unless entry.sourceName == some (privateToUserName name) do
-      throwError "contract.discovery:source_name_mismatch:{name}"
+    let range ← requireRange name
     found := found.push ⟨owner, value, range⟩
-  for (name, info) in constants do
-    if found.any (fun definition => definition.info.name == name) then continue
-    if ← generatedEntryAuxiliary owner entries found env name (expansionKeys.getD {}) then continue
-    if ← generatedEntryProof owner entries found env name (expansionKeys.getD {}) then continue
-    let references := SourceAudit.directInterfaceReferences env info
-    unless references.isEmpty do
-      throwError "contract.reg:contract_reference_outside_entry:{name}:{references}"
-  for entry in entries do
-    unless entry.command.isOfKind ``Parser.Command.declaration do continue
-    if SourceAudit.hasInventory entry.command then
-      let mut present := false
-      for name in names do
-        unless entry.sourceName.isNone ||
-            entry.sourceName == some (privateToUserName name) do continue
-        if let some range ← findDeclarationRanges? name then
-          if entry.start ≤ map.ofPosition range.range.pos &&
-              map.ofPosition range.range.endPos ≤ entry.stop then
-            present := true
-            break
-      unless present do
-        throwError "contract.discovery:compiled_inventory_missing:{owner}:{entry.sourceName}"
   return found.qsort fun a b =>
     a.range.range.pos.line < b.range.range.pos.line ||
       (a.range.range.pos.line == b.range.range.pos.line &&
@@ -249,7 +68,8 @@ def discoverWithStructure (requirements : Array RootStructure.Requirement)
       seen := seen.insert owner
       unless owner == original.header.mainModule || (original.getModuleIdx? owner).isSome do
         throwError "contract.discovery:module_missing:{owner}"
-      let source ← IO.FS.readFile (← sourceOf owner)
+      discard <| sourceOf owner
+      let source := ""
       let definitions ← auditModule owner source
       for definition in definitions do
         let info := definition.info

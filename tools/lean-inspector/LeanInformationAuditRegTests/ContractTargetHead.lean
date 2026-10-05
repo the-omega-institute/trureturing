@@ -47,10 +47,5 @@ run_meta do
   catch ex => ex.toMessageData.toString
   assertTest "target.negative.arity" (error.startsWith "contract.registration:target_arity")
   assertTest "target.fixture.closed" (Literal.closed target)
-  let source ← ofExcept <| Parser.runParserCategory (← getEnv) `term "{ targetName := `Nat.zero }"
-  let result := SourceLiteral.audit (← getEnv) (.record ``Registration) source "registration"
-  assertTest "target.schema.removed_name" (match result with
-    | .error error => error.startsWith "contract.source_literal:nonliteral:registration:"
-    | .ok _ => false)
 
 end LeanInformationAuditRegTests.ContractTargetHead

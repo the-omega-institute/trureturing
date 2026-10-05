@@ -21,12 +21,33 @@ def liftLiteral {α : Type} (value : Except String α) : MetaM α :=
   | .ok value => pure value
   | .error error => throwError "{error}"
 
+/-- Follow a compiled constant reference. Applications, lets, projections and
+recursors require computation and have no decoding route. -/
+partial def referencedValue (value : Expr) (seen : NameSet := {}) : MetaM Expr := do
+  let value := value.consumeMData
+  if let .letE _ _ _ body _ := value then
+    if Literal.closed body then return ← referencedValue body seen
+  let .const name levels := value | return value
+  let info ← getConstInfo name
+  let .defnInfo definition := info | return value
+  unless definition.safety == .safe && definition.levelParams.length == levels.length do
+    throwError "contract.cannot_decode:{name}:unsafe_or_invalid_reference"
+  if seen.contains name then throwError "contract.cannot_decode:{name}:reference_cycle"
+  if seen.size >= 4096 then throwError "contract.cannot_decode:{name}:reference_work"
+  referencedValue (definition.value.instantiateLevelParams definition.levelParams levels)
+    (seen.insert name)
+
 def fields (name : Name) (e : Expr) (count : Nat) : MetaM (Array Expr) := do
   let .ctorInfo ctor ← getConstInfo (name.str "mk")
     | throwError "contract.literal:unknown_structure:{name}"
+  let value ← referencedValue e
   let args ← liftLiteral <| Literal.constructor (name.str "mk")
-    (ctor.numParams + count) name.toString e
+    (ctor.numParams + count) name.toString value
   return args.extract ctor.numParams args.size
+
+def metadata (value : Expr) (decode : Expr → Except String α) : MetaM α := do
+  let resolved ← liftLiteral <| LeanInformationAudit.Contract.Literal.resolveReferences ((← getEnv).find? ·) value
+  liftLiteral (decode resolved)
 
 private def constantHead (e : Expr) : Option Name :=
   match e with
@@ -52,8 +73,8 @@ def reference (role : String) (e : Expr) : MetaM (Name × Expr) := do
   let value := fs[0]!
   return (← constantName role value, value)
 
-private def optional (e : Expr) : MetaM (Option Expr) :=
-  liftLiteral <| Literal.optional "option" e
+private def optional (e : Expr) : MetaM (Option Expr) := do
+  liftLiteral <| Literal.optional "option" (← referencedValue e)
 
 private def optionalRef (role : String) (e : Expr) : MetaM (Option (Name × Expr)) := do
   (← optional e).mapM (reference role)
@@ -66,7 +87,7 @@ private def obligation (e : Expr) : MetaM (CompiledObligationState × Option (Na
     let args := e.getAppArgs
     return (.evidence, some (← reference "obligation" args[args.size - 2]!))
   if e.isAppOf ``Contract.Obligation.unsupported then
-    let name ← liftLiteral <| Literal.name "obligation.unsupported" e.getAppArgs.back!
+    let name ← metadata e.getAppArgs.back! (Literal.name "obligation.unsupported")
     return (.unsupported, some (name, mkConst name))
   if e.isAppOf ``Contract.Obligation.unknown then return (.unknown, none)
   if e.isAppOf ``Contract.Obligation.absent then return (.absent, none)
@@ -87,11 +108,11 @@ private def arenaReference (role : String) (e : Expr) : MetaM (Name × Expr) := 
     throwError "contract.literal:arena:{role}"
   reference role e.getAppArgs.back!
 
-private def arrayValues (e : Expr) : MetaM (Array Expr) :=
-  liftLiteral <| Literal.array "array" e
+private def arrayValues (e : Expr) : MetaM (Array Expr) := do
+  liftLiteral <| Literal.array "array" (← referencedValue e)
 
 private def sourceSelection (e : Expr) : MetaM LeanInformationAudit.SourceSelection := do
-  let s ← liftLiteral <| Literal.sourceSelection e
+  let s ← metadata e Literal.sourceSelection
   return { owner := s.owner
            definition := s.definition.map fun d => { owner := d.owner, name := d.name, path := d.path }
            coordinates := s.coordinates
@@ -138,8 +159,8 @@ def registration (owner : Name) (info : DefinitionVal) (source : String)
   let (objectArenaName, _) ← arenaReference "object_arena" fs[1]!
   unless !arenaName.isAnonymous && !objectArenaName.isAnonymous do
     throwError "contract.registration:arena_identity"
-  let catalog ← liftLiteral <| Literal.name "catalog" fs[2]!
-  let localNames ← liftLiteral <| Literal.bool "local_names" fs[3]!
+  let catalog ← metadata fs[2]! (Literal.name "catalog")
+  let localNames ← metadata fs[3]! (Literal.bool "local_names")
   let implementation := fs[4]!.consumeMData
   let head := implementation.getAppFn.constName?.getD .anonymous
   unless #[``Contract.Implementation.legacy, ``Contract.Implementation.forward,
@@ -156,13 +177,13 @@ def registration (owner : Name) (info : DefinitionVal) (source : String)
   let occurrence := !sourceBound && !localNames
   let family ← (← optional fs[14]!).mapM fun e =>
     reference "family_record" e.getAppArgs.back!
-  let unitName ← liftLiteral <| Literal.name "unit_name" all[0]!
-  let realizationName ← liftLiteral <| Literal.name "realization_name" all[1]!
+  let unitName ← metadata all[0]! (Literal.name "unit_name")
+  let realizationName ← metadata all[1]! (Literal.name "realization_name")
   let realizationSource ← (← optional all[2]!).mapM fun e =>
-    liftLiteral <| Literal.name "realization_source" e
+    metadata e (Literal.name "realization_source")
   if realizationSource.any (· != suppliedName) then
     throwError "contract.registration:realization_source_identity"
-  let generated ← liftLiteral <| Literal.bool "generated" all[3]!
+  let generated ← metadata all[3]! (Literal.bool "generated")
   unless !unitName.isAnonymous && !realizationName.isAnonymous do
     throwError "contract.registration:companion_identity"
   if sourceBound && (generated || realizationName != suppliedName) then
@@ -209,7 +230,7 @@ def registration (owner : Name) (info : DefinitionVal) (source : String)
   let origin ← optional fs[11]!
   let selection ← (← optional fs[12]!).mapM sourceSelection
   let (openContinuation, residual) ← continuation fs[13]!
-  let options ← liftLiteral <| Literal.options fs[15]!
+  let options ← metadata fs[15]! Literal.options
   let correspondenceFields ← fields ``Contract.Implementation.Correspondence fs[5]! 2
   let stage ← obligationState correspondenceFields[0]!
   let objectStage ← obligationState correspondenceFields[1]!
@@ -248,13 +269,13 @@ def registration (owner : Name) (info : DefinitionVal) (source : String)
 
 def expectedRow (e : Expr) : MetaM SnapshotOccurrence := do
   let fs ← fields ``Contract.ExpectedOccurrence e 6
-  let theoremName ← liftLiteral <| Literal.name "name" fs[2]!
+  let theoremName ← metadata fs[2]! (Literal.name "name")
   let info ← checkTarget theoremName fs[1]!
-  let objectArenaName ← liftLiteral <| Literal.name "name" fs[3]!
+  let objectArenaName ← metadata fs[3]! (Literal.name "name")
   discard <| getConstInfo objectArenaName
   let statementIdentity ← (← optional fs[4]!).mapM fun e =>
-    liftLiteral <| Literal.string "statement_identity" e
-  let registrationModuleName ← liftLiteral <| Literal.name "name" fs[5]!
+    metadata e (Literal.string "statement_identity")
+  let registrationModuleName ← metadata fs[5]! (Literal.name "name")
   return {
     theoremName, objectArenaName
     statementIdentity := statementIdentity.getD ""
@@ -264,32 +285,32 @@ def expectedRow (e : Expr) : MetaM SnapshotOccurrence := do
 def rootCatalog (e : Expr) : MetaM RootCatalogContract := do
   let outer ← fields ``Contract.RootCatalog e 1
   let fs ← fields ``Contract.RootCatalogData outer[0]! 5
-  let rootId ← liftLiteral <| Literal.name "name" fs[0]!
+  let rootId ← metadata fs[0]! (Literal.name "name")
   let expected ← (← arrayValues fs[1]!).mapM expectedRow
   let source ← (← arrayValues fs[2]!).mapM expectedRow
   let baseline ← (← arrayValues fs[3]!).mapM expectedRow
   let companionPrefix ← (← optional fs[4]!).mapM fun e =>
-    liftLiteral <| Literal.name "companion_prefix" e
+    metadata e (Literal.name "companion_prefix")
   return { rootId, expected, source, baseline, companionPrefix }
 
 def enrollment (owner : Name) (info : DefinitionVal) (source : String) :
     MetaM TemplateEnrollmentInput := do
   let fs ← fields ``Contract.TemplateEnrollment info.value 4
-  let name ← liftLiteral <| Literal.name "name" fs[0]!
+  let name ← metadata fs[0]! (Literal.name "name")
   let args := info.type.getAppArgs
   unless args.size ≥ 2 && args[1]!.getAppFn.constName? == some name do
     throwError "unclassified_form:contract.template_identity:{name}"
   rigidLevels info args[1]!
   discard <| getConstInfo name
-  let version ← liftLiteral <| Literal.nat "nat" fs[1]!
+  let version ← metadata fs[1]! (Literal.nat "nat")
   let constructors ← (← arrayValues fs[2]!).mapM fun e => do
     let fs ← fields ``Contract.TypeRef e 2
-    let name ← liftLiteral <| Literal.name "name" fs[0]!
+    let name ← metadata fs[0]! (Literal.name "name")
     unless fs[1]!.getAppFn.constName? == some name do
       throwError "unclassified_form:contract.constructor_identity:{name}"
     discard <| getConstInfo name
     return name
-  let options ← liftLiteral <| Literal.options fs[3]!
+  let options ← metadata fs[3]! Literal.options
   return { owner, name, version, constructors, sourceText := source, options }
 
 def readSeal (source : Name) (e : Expr) : MetaM SealInput := do
@@ -299,10 +320,10 @@ def readSeal (source : Name) (e : Expr) : MetaM SealInput := do
     throwError "IE-C009 ProofConstructionFailed: {source} unapproved axiom dependency"
   let catalogs ← (← arrayValues fs[1]!).mapM fun value => do
     let cs ← fields ``Contract.SealCatalog value 15
-    let arenaName ← liftLiteral (Literal.name "seal.arena" cs[0]!)
-    let catalogId ← liftLiteral (Literal.name "seal.catalog" cs[1]!)
+    let arenaName ← metadata cs[0]! (Literal.name "seal.arena")
+    let catalogId ← metadata cs[1]! (Literal.name "seal.catalog")
     return ({ source, arenaName, catalogId, value } : CompiledSealCatalog)
-  return { rootId := ← liftLiteral <| Literal.name "seal.root" fs[0]!
-           catalogs, options := ← liftLiteral <| Literal.options fs[2]! }
+  return { rootId := ← metadata fs[0]! (Literal.name "seal.root")
+           catalogs, options := ← metadata fs[2]! Literal.options }
 
 end LeanInformationAudit.Contract.Decoder

@@ -12,7 +12,7 @@ open Lean
   let mut inputs := #[]
   for (name, info) in constants.toArray.qsort (fun a b => a.1.toString < b.1.toString) do
     let head := info.type.getAppFn.constName?.getD .anonymous
-    unless LeanInformationAudit.Contract.SourceAudit.heads.contains head do continue
+    unless LeanInformationAudit.Contract.SourceAudit.isInput info do continue
     discard <| IO.ofExcept (LeanInformationAudit.Contract.SourceAudit.checkInputDefinition info)
     if head == `LeanInformationAudit.Contract.ExpectedDeclaration then
       throw <| IO.userError s!"contract.root_structure:independent_expected_not_allowed:{moduleName}:{name}"

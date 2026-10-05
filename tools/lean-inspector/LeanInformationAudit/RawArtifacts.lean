@@ -80,8 +80,7 @@ unsafe def readOwn (name : Name) : IO (ModuleData × Array CompactedRegion) := d
 /-- The exact compiler heads of the input-projection wire schema. An owner
 cannot select the compiled-only route by supplying an empty projection. -/
 def hasTypedInputs (data : ModuleData) : Bool :=
-  data.constants.any fun info => Contract.SourceAudit.heads.contains
-    (info.type.getAppFn.constName?.getD .anonymous)
+  data.constants.any Contract.SourceAudit.isInput
 
 unsafe def loadModule (name : Name) (store : IO.Ref Store) : IO Unit := do
   let state ← store.get

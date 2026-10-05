@@ -11,54 +11,36 @@ def finiteArena : D5.S3.ConceptDynamics.InformationEscape.Arena where
   stateFintype := inferInstance
   stateDecidableEq := inferInstance
 
+def metadataRoot : Lean.Name := `CompiledContractForms
+
+def structureForm : LeanInformationAudit.Contract.Seal.{0,0} :=
+  { rootId := metadataRoot, catalogs := #[], options := #[] }
+
+def constructorForm : LeanInformationAudit.Contract.Seal.{0,0} :=
+  ⟨metadataRoot, #[], #[]⟩
+
+abbrev referenceForm : LeanInformationAudit.Contract.Seal.{0,0} := structureForm
+
+def updatedForm : LeanInformationAudit.Contract.Seal.{0,0} :=
+  { structureForm with rootId := metadataRoot, catalogs := #[], options := #[] }
+
+run_meta do
+  for name in #[``structureForm, ``constructorForm, ``referenceForm, ``updatedForm] do
+    let .defnInfo info ← getConstInfo name | throwError "compiled form definition missing"
+    let decoded ← LeanInformationAudit.Contract.Decoder.readSeal name info.value
+    assertTest s!"compiled_forms.{name.getString!}"
+      (decoded.rootId == `CompiledContractForms && decoded.catalogs.isEmpty)
+
+
 run_meta do
   let env := (← getEnv).setExporting false
   let interfaceModules := env.header.moduleNames.filter
     ((`LeanInformationAuditInterface.Contract).isPrefixOf ·)
   assertTest "interface.contract_modules" (interfaceModules.size >= 4)
   for owner in interfaceModules do
-    let source ← IO.FS.readFile (← LeanInformationAudit.Repository.source
-      (LeanInformationAudit.TemplateAudit.sourcePath owner))
-    let entries ← LeanInformationAudit.Contract.SourceAudit.parse env source owner.toString
-    let result := LeanInformationAudit.Contract.InterfaceGuard.audit env owner entries
+    let result := LeanInformationAudit.Contract.InterfaceGuard.audit env owner
     assertTest s!"interface.types_only.{owner.getString!}" result.isOk
     if let .error error := result then logInfo m!"CONTRACT_DIAGNOSTIC {error}"
-  for (label, source) in #[
-      ("variable", "variable (n : Nat)"),
-      ("attribute", "attribute [simp] Nat"),
-      ("set_option", "set_option pp.universes true"),
-      ("run_meta", "run_meta pure ()"),
-      ("initialize", "initialize x : IO Unit := pure ()"),
-      ("macro", "macro \"x\" : command => `(skip)") ] do
-    let entries ← LeanInformationAudit.Contract.SourceAudit.parse env source "InterfacePolicyNegative"
-    let result := LeanInformationAudit.Contract.InterfaceGuard.audit env
-      `InterfacePolicyNegative entries
-    assertTest s!"interface.command_allowlist.{label}" (match result with
-      | .error error => error.startsWith "contract.interface:command_not_allowed:"
-      | .ok _ => false)
-  for (label, source) in #[
-      ("run_meta", "run_meta pure ()"),
-      ("macro", "macro \"x\" : command => `(skip)"),
-      ("notation", "notation \"x\" => 1"),
-      ("run_cmd", "run_cmd do pure ()") ] do
-    let entries ← LeanInformationAudit.Contract.SourceAudit.parse env source "Reg.PolicyNegative"
-    let result := LeanInformationAudit.Contract.SourceAudit.auditRegCommands
-      `Reg.PolicyNegative entries
-    assertTest s!"reg.metaprogramming_ban.{label}" (match result with
-      | .error error => error.startsWith "contract.reg:metaprogramming_not_allowed:"
-      | .ok _ => false)
-  for (kind, source) in #[
-      ("def", "def x : Nat := 17"),
-      ("theorem", "theorem x : True := by trivial"),
-      ("abbrev", "abbrev x : Nat := 17"),
-      ("opaque", "opaque x : Nat := 17"),
-      ("instance", "instance x : Inhabited Nat := ⟨17⟩"),
-      ("axiom", "axiom x : Nat")] do
-    let entries ← LeanInformationAudit.Contract.SourceAudit.parse env source "InterfaceNegative"
-    let result := LeanInformationAudit.Contract.InterfaceGuard.auditSource entries
-    assertTest s!"interface.authored_non_type.{kind}" (match result with
-      | .error error => error.startsWith "contract.interface:authored_non_type:"
-      | .ok _ => false)
   let structures := #[
     ``LeanInformationAudit.Contract.Ref, ``LeanInformationAudit.Contract.OptionSetting,
     ``LeanInformationAudit.Contract.ReadoutSelection,

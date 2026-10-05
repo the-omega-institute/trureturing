@@ -54,14 +54,5 @@ run_meta do
       assertTest s!"reference.head.negative.{role}.{label}"
         (error.startsWith (diagnostic ++ role))
       logInfo m!"CONTRACT_DIAGNOSTIC reference.head.{role}.{label} {error}"
-  let source ← ofExcept <| Parser.runParserCategory (← getEnv) `term
-    "{ name := `Nat.zero, value := Nat.zero }"
-  let result := SourceLiteral.audit (← getEnv) (.record ``Ref) source "reference"
-  assertTest "reference.schema.removed_name" (match result with
-    | .error error => error.startsWith "contract.source_literal:nonliteral:reference:"
-    | .ok _ => false)
-  let source ← ofExcept <| Parser.runParserCategory (← getEnv) `term "{ value := Nat.zero }"
-  assertTest "reference.schema.value_only"
-    (SourceLiteral.audit (← getEnv) (.record ``Ref) source "reference").isOk
 
 end LeanInformationAuditRegTests.ContractReferenceHeads

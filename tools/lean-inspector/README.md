@@ -52,123 +52,16 @@ the original definitional correspondence; propositional equality, equality
 transport and computed tokens do not supply literal matching evidence. Unknown,
 absent and unsupported constructors keep arbitrary actual indices representable.
 
-Compiler-extracted proofs in indexed fields must be live dependencies of their
-literal entry in the same module, have the compiler's proof-only name shape,
-and have no authored declaration or custom elaboration. Value helpers receive
-no such permission. Numeral and array decoders use structural recursion and
-retain the same literal grammar inside the audited seal publication closure.
+The judge discovers typed declarations in compiler inventories. It decodes
+constructor trees and constant references, independently of source syntax,
+modifiers, suffixes, options, notation or metaprogramming commands. A value
+requiring computation fails by name as `contract.cannot_decode` or the
+field-specific `contract.literal` diagnostic. Missing compiled declarations and
+unknown constructor layouts fail without a fallback.
 
-Metadata uses the following closed grammar. Mathematical payload fields keep
-ordinary Lean elaboration; metadata never unfolds user definitions or evaluates
-user code.
-
-| Metadata shape | Accepted source forms | Compiled forms |
-| --- | --- | --- |
-| Name | quoted names; `Lean.Name.anonymous`, `str`, `num`; qualified, opened namespace and dot constructors | Name constructors and core quotation shorthands |
-| Nat | numerals; `Nat.zero`, nested `Nat.succ`, including dot constructors | Nat literals/constructors and the fixed core OfNat instance |
-| Int | numerals, unary minus; `Int.ofNat`, `Int.negSucc`; `OfNat.ofNat n`, `Neg.neg i` | Int constructors and the fixed core OfNat/Neg instances |
-| Bool/String | true/false constructors and string literals | Bool constructors and string literals |
-| Optional/array | `none`, `some literal`, `#[literal, …]` | Option constructors and core List.toArray/Array.mk constructor trees, including the pinned compiler's literal list-tail bindings |
-| Contract records | complete structure literals, anonymous constructors, fixed named constructors | exact schema constructors |
-| Parentheses/ascriptions | parentheses on literal terms; `(literal : T)` for the exact literal or record type, with qualified or opened short spelling | the corresponding literal/constructor expression |
-
-Array and Option type ascriptions, user aliases, references, updates and
-computations are outside this grammar and receive
-`contract.source_literal:nonliteral`. The expression decoder separately verifies
-constructor arities and exact core numeric instances. Literal list-tail bindings
-are decoded structurally with closed elements, without expression substitution
-or evaluation.
-
-For metadata syntax, discovery reads macro and term elaborator registration keys
-from the entry module’s compiler import DAG, plus source patterns for local
-rules. A repository extension capable of processing a metadata node receives
-`contract.source_literal:term_expander`; the audit never invokes it. Parser
-choices are checked across alternatives. Unrelated mathematical notation and
-mathematical payload expansion remain available. Core numeric instances are
-verified separately by the expression decoder.
-
-The `Contract` interface modules accept imports, namespace/section
-scaffolding, `open`, `universe`, documentation comments, bare
-`structure`/`inductive` declarations and sort-valued index families. Declaration syntax has a finite node
-table in `Contract.InterfaceGuard.typeSyntaxKinds`: identifiers, numeric
-literals, application, arrows/Pi binders, Sort/Type/Prop, parentheses, type
-ascription, explicit/implicit/strict implicit/instance binders, explicit universe
-arguments, universe max/imax/addition/parentheses, and the listed declaration,
-field, constructor and documentation containers. Index families additionally use
-pure matches, projections and the listed logical type constructors; their compiled
-result must be a sort. Unknown nodes, defaults,
-attributes, deriving, tactics, do, quotations and every elaboration node
-(including `Lean.byElab`) receive
-`contract.interface:command_not_allowed`; unknown node kinds include the
-`type_syntax_not_allowed` suffix.
-The lexical gate precedes the compiled companion inventory; names cannot grant
-permission to rejected source commands.
-
-Reg commands also have a complete finite command-kind table in
-`Contract.SourceAudit.ordinaryRegCommands`. Only listed ordinary mathematical
-scaffolding, bare `set_option` and allowed attributes
-pass. The ordinary parser kinds are `declaration`, `end`, `moduleDoc`,
-`namespace`, `open`, `printAxioms`, `section`, `universe` and `variable` in
-`Lean.Parser.Command`.
-`in` and `mutual` recursively audit their inner commands. Unknown commands,
-`run_meta`, `run_elab`, macros, syntax, elaborators, initialization and evaluation
-commands receive `contract.reg:metaprogramming_not_allowed`.
-`run_cmd` and `notation`, including local notation, receive the same
-metaprogramming rejection for every Reg module and command body. Catalogs use
-typed RootCatalog entries; seals use typed Seal entries in SealedCatalog modules.
-No audit executes a source command or macro.
-
-Standalone `attribute` and `@[…]` accept
-only `instance` and `reducible`, with no priority or other attribute arguments.
-Local/scoped markers do not expand the attribute-name table. Unlisted names
-receive `contract.reg:metaprogramming_not_allowed:…:attribute`.
-
-Source `set_option` accepts exactly `autoImplicit`, `relaxedAutoImplicit`,
-`backward.isDefEq.respectTransparency`,
-`backward.isDefEq.respectTransparency.types`, `maxHeartbeats`, `maxRecDepth`,
-`trace.InformationRegistration.check`, and `maxSynthPendingDepth`. Values are
-literals of the option type: Boolean for the implicit/transparency/trace options,
-Nat for the resource bounds. Name prefixes grant no permission. Other names
-receive `contract.reg:option_not_allowed`; mistyped literals receive
-`contract.reg:option_literal_type`.
-
-Every Reg declaration rejects `unsafe` and `partial` with
-`contract.reg:declaration_modifier_not_allowed`; `noncomputable`, `private`, and
-`protected` remain permitted. These checks traverse the complete source trees,
-including `in`, `mutual`, and command/term/tactic `set_option`. Unrecognized command
-wrappers fail by name. Authored elaboration reads deduplicated origin commands,
-including their wrappers.
-
-Every audited Reg constant outside a validated contract entry is forbidden to
-directly reference any constant owned by an imported
-`LeanInformationAuditInterface.Contract.*` module in its compiled type or body.
-The check uses `ConstantInfo.getUsedConstantsAsSet`, including opaque bodies,
-and reads the explicit structure names of primitive `Expr.proj` nodes that Lean
-`foldConsts` omits. Constructors, projections, Ref, readout and option types all
-participate. It emits
-`contract.reg:contract_reference_outside_entry`. No dependency closure, reduction,
-carrier projection table, result-type shape gate or type-alias tracker is used.
-Ordinary mathematical definitions and theorems obey the same rule without shape
-restrictions. Entry heads, closed terms, literal metadata, Reg command permissions,
-interface command permissions and source/compiled inventory reconciliation remain
-checked.
-
-Contract entries have no declaration suffix: `where`, termination hints,
-`decreasing_by` and `deriving` receive
-`contract.entry:declaration_suffix_not_allowed`.
-
-Only `eq_1` and `eq_def` have entry auxiliary permission. Both must be
-same-module theorem constants at Lean v4.33.0 reserved equation identities, with
-the simple reflexive equation shape with the validated entry body as its right
-hand side. Source
-where/let-rec declarations retain their own authored inventory. Authored term
-elaboration in the entry command tree, including imported repository
-term/tactic/command expanders, grants no equation permission. Enclosing wrappers
-remain in that tree; sibling declarations in a mutual block do not. Unrelated
-mathematical declarations retain their ordinary syntax permissions. The import syntax keys are checked against the complete
-source command trees. All other compiled constants,
-including named elaboration children, obey the ordinary direct-reference rule.
-Private compiler identities and source user spellings remain distinct.
+The interface inventory checks compiled contract types and compiler-generated
+products. Reg's transitive dependency closure excludes the judge implementation
+through `REG-IMPLEMENTATION`. Source text does not supply a second writing gate.
 
 Reg module kinds come from the `Reg/Catalogs/**` subtree: its exact
 `RootCatalog.lean` leaf is a catalog and `SealedCatalog.lean` is a sealed catalog.
@@ -365,8 +258,7 @@ Lean、audit、工具构建和发布失败也返回非零。阶段失败输出�
 `make lean-report` 入口重试。
 
 The interface consists of typed contract structures, inductives and sort-valued index families. Every Reg
-entry uses `def x.{u…} : Contract.<type> := {…}` with literal metadata and typed
-mathematical fields checked by the Reg compiler. The report reconstructs structural
+entry has a contract type and mathematical fields checked by the Reg compiler. The report reconstructs structural
 relations and E1–E8 assessments and consumes the compiled seal obligations. Runtime DTOs live in Impl; no recorder
 or registration command runs during Reg compilation. Implementation edits rebuild
 no Reg modules; report reuse depends on Lake inputs and the manual semantic
