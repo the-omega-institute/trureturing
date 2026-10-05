@@ -67,21 +67,24 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_label_card) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (M * N + 1))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_label_card) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (M * N + 1))
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "CharacterSelection") "PeriodicGridHolonomy") "flat_label_card") "Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy/Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (M * N + 1))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -148,21 +151,24 @@ def dimensionRegistration : Registration dimensionArena (dimensionArena.Law dime
   sensitivity := dimension_sensitivity_proof
   dependence := dimension_dependence_proof
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.periodic_grid_linear_statistics) (type_of% (dimensionArena)) (type_of% (dimensionArena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => M * N + 1)
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.periodic_grid_linear_statistics) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => M * N + 1)
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "CharacterSelection") "PeriodicGridHolonomy") "periodic_grid_linear_statistics") "Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy/Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(dimensionArena)⟩,
-  objectArena := ⟨(dimensionArena)⟩,
+  arena := .source ⟨(dimensionArena)⟩,
+  objectArena := .source ⟨(dimensionArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (dimensionArena) ⟨(dimensionRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => M * N + 1)
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg", "fn", "arg", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -230,21 +236,24 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_holonomy_constant) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p i => rowHolonomy p.2.2 i)
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_holonomy_constant) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p i => rowHolonomy p.2.2 i)
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "CharacterSelection") "PeriodicGridHolonomy") "flat_holonomy_constant") "Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy/Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p i => rowHolonomy p.2.2 i)
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0, 1, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -300,21 +309,24 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.edge_label_card) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (2 * M * N))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.edge_label_card) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (2 * M * N))
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "CharacterSelection") "PeriodicGridHolonomy") "edge_label_card") "Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy/Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (2 * M * N))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -372,21 +384,24 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-noncomputable def registration_5 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.anchored_vertex_card) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (M * N - 1))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_5 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.anchored_vertex_card) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (M * N - 1))
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "CharacterSelection") "PeriodicGridHolonomy") "anchored_vertex_card") "Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy/Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (M * N - 1))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -444,21 +459,24 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-noncomputable def registration_6 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.holonomy_sector_card) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (M * N - 1))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_6 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.holonomy_sector_card) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (M * N - 1))
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "CharacterSelection") "PeriodicGridHolonomy") "holonomy_sector_card") "Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy/Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (M * N - 1))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -516,21 +534,24 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-noncomputable def registration_7 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.exact_label_card) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (M * N - 1))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_7 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.exact_label_card) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (M * N - 1))
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "CharacterSelection") "PeriodicGridHolonomy") "exact_label_card") "Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy/Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun (_ : Unit) (M N : ℕ) => 2 ^ (M * N - 1))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -596,19 +617,22 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-noncomputable def registration_8 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.seam_holonomy) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ v => v) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_8 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.seam_holonomy) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ v => v) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "CharacterSelection") "PeriodicGridHolonomy") "seam_holonomy") "Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy/Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ v => v) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0, 1, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

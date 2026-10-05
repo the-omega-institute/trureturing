@@ -79,25 +79,31 @@ def registration : Registration arena (arena.Law actual) where
     rw [decoded]
     decide
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@_root_.PredictiveThermodynamic.BinaryNames.conventional_one_query_run)
-    (type_of% arena) (type_of% arena)
-    (type_of% (realize signature (fun _ _ w => Conventional.rawCount w) (fun e => nomatch e)))
-    Unit Unit Unit Unit Unit := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.PredictiveThermodynamic.BinaryNames.conventional_one_query_run) (type_of% (realize signature (fun _ _ w => Conventional.rawCount w) (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Dynamics.PhysicalProtocol.BinaryClauseOracleProtocol.informationUnit,
   realizationName := `Reg.D5.S3.Quantum.Dynamics.PhysicalProtocol.BinaryClauseOracleProtocol.registration,
-  realizationSource := none, generated := false,
-  arena := ⟨arena⟩, objectArena := ⟨arena⟩, catalog := Lean.Name.anonymous,
-  localNames := false, realization := .source arena ⟨registration⟩,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize signature (fun _ _ w => Conventional.rawCount w) (fun e => nomatch e)),
-  variation := none, sensitivity := none, escapeFrom := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.Quantum.Dynamics.PhysicalProtocol.BinaryClauseOracleProtocol, definition := none,
     coordinates := #[0], readouts := #[{
       path := #["body","body","arg","body","arg","arg","fn","arg","arg"],
       stateBinder := 0, functionOperand := false,
       stateOperand := some #["arg"], booleanPredicate := false }] },
-  continuation := .unknown, familyRecord := none,
+  continuation := .unknown,
+  familyRecord := none,
   options := #[{ name := `autoImplicit, value := .bool false },
     { name := `backward.isDefEq.respectTransparency, value := .bool false }] }
 

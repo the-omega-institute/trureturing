@@ -22,19 +22,22 @@ open _root_.D5.S3.ConceptDynamics.ConceptJoinUniversal
 
 
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts) (type_of% (recognitionArena)) (type_of% (recognitionArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessRealization ((Bool → Bool) × (Bool → Bool) × Bool × Bool) (fun w => D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w = true) (fun w => instDecidableEqBool (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w) true))) (type_of% (recognition_lawSensitive)) (type_of% (recognition_slotSensitive)) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessRealization ((Bool → Bool) × (Bool → Bool) × Bool × Bool) (fun w => D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w = true) (fun w => instDecidableEqBool (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w) true))) (Unit) (Unit) := {
   unitName := `Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts.__information_unit,
   realizationName := `D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognition_bridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(recognitionArena)⟩,
-  objectArena := ⟨(recognitionArena)⟩,
+  arena := .law ⟨(recognitionArena)⟩,
+  objectArena := .law ⟨(recognitionArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (recognitionArena) (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionRealization) (recognitionRealization.toPrimitiveBundle) ⟨(recognition_bridge)⟩,
+  realization := .legacy (recognitionArena) (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionRealization) (recognitionRealization.toPrimitiveBundle) ⟨(recognition_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (recognition_bridge) (@_root_.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((recognitionRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessRealization ((Bool → Bool) × (Bool → Bool) × Bool × Bool) (fun w => D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w = true) (fun w => instDecidableEqBool (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w) true)),
-  variation := some ⟨(recognition_lawSensitive)⟩,
-  sensitivity := some ⟨(recognition_slotSensitive)⟩,
+  variation := .evidence ⟨(recognition_lawSensitive)⟩ (by first | exact (recognition_lawSensitive) | exact ⟨_, _, (recognition_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(recognition_slotSensitive)⟩ (by exact (recognition_slotSensitive)),
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := none,
   continuation := .absent,

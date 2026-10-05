@@ -98,19 +98,22 @@ def registration : Registration arena.{u} (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{u + 2, u + 2, u, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, u, 0, 0, 0} (@_root_.D5.S3.Fourier.GaussianIsometry.exists_gaussian_isometry.{u}) (type_of% (arena.{u})) (type_of% (arena.{u})) (type_of% (realize.{0, 0, u, 0, 0} signature.{u} (fun _ _ x => gaussianReal 0 x) emptyAnchor)) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.GaussianIsometry.exists_gaussian_isometry.{u}) (type_of% (realize.{0, 0, u, 0, 0} signature.{u} (fun _ _ x => gaussianReal 0 x) emptyAnchor)) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "GaussianIsometry") "exists_gaussian_isometry") "Reg.D5.S3.Fourier.GaussianIsometry/Reg.D5.S3.Fourier.GaussianIsometry.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Fourier.GaussianIsometry.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u})⟩,
-  objectArena := ⟨(arena.{u})⟩,
+  arena := .source ⟨(arena.{u})⟩,
+  objectArena := .source ⟨(arena.{u})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u}) ⟨(registration.{u})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, u, 0, 0} signature.{u} (fun _ _ x => gaussianReal 0 x) emptyAnchor),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Fourier.GaussianIsometry, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "arg", "body", "arg", "body", "fn", "arg", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,

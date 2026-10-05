@@ -86,25 +86,28 @@ def forwardRegistration : Registration forwardArena (forwardArena.Law forwardAct
   sensitivity := forward_sensitivity
   dependence := forward_dependence
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forward_inner_product) (type_of% (forwardArena)) (type_of% (forwardArena)) (type_of% (realize.{0, 0, 0, 0, 0} profilePairStepSignature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forward_inner_product) (type_of% (realize.{0, 0, 0, 0, 0} profilePairStepSignature
     (fun _ p s => (uniformPathMean s
       (fun x => forwardLikelihood p.2.1 s x * forwardLikelihood p.2.2 s x) : ℝ))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Estimation") "TimeArrow") "ParityPathLikelihoodProducts") "forward_inner_product") "Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts/Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(forwardArena)⟩,
-  objectArena := ⟨(forwardArena)⟩,
+  arena := .source ⟨(forwardArena)⟩,
+  objectArena := .source ⟨(forwardArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (forwardArena) ⟨(forwardRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} profilePairStepSignature
     (fun _ p s => (uniformPathMean s
       (fun x => forwardLikelihood p.2.1 s x * forwardLikelihood p.2.2 s x) : ℝ))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -169,25 +172,28 @@ def backwardRegistration : Registration backwardArena (backwardArena.Law backwar
   sensitivity := backward_sensitivity
   dependence := backward_dependence
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backward_inner_product) (type_of% (backwardArena)) (type_of% (backwardArena)) (type_of% (realize.{0, 0, 0, 0, 0} profilePairStepSignature
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backward_inner_product) (type_of% (realize.{0, 0, 0, 0, 0} profilePairStepSignature
     (fun _ p s => (uniformPathMean s
       (fun x => backwardLikelihood p.2.1 s x * backwardLikelihood p.2.2 s x) : ℝ))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Estimation") "TimeArrow") "ParityPathLikelihoodProducts") "backward_inner_product") "Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts/Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(backwardArena)⟩,
-  objectArena := ⟨(backwardArena)⟩,
+  arena := .source ⟨(backwardArena)⟩,
+  objectArena := .source ⟨(backwardArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (backwardArena) ⟨(backwardRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} profilePairStepSignature
     (fun _ p s => (uniformPathMean s
       (fun x => backwardLikelihood p.2.1 s x * backwardLikelihood p.2.2 s x) : ℝ))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -253,25 +259,28 @@ def mixedRegistration : Registration mixedArena (mixedArena.Law mixedActual) whe
   sensitivity := mixed_sensitivity
   dependence := mixed_dependence
 
-noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forward_backward_inner_product) (type_of% (mixedArena)) (type_of% (mixedArena)) (type_of% (realize.{0, 0, 0, 0, 0} profilePairStepSignature
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forward_backward_inner_product) (type_of% (realize.{0, 0, 0, 0, 0} profilePairStepSignature
     (fun _ p s => (uniformPathMean s
       (fun x => forwardLikelihood p.2.1 s x * backwardLikelihood p.2.2 s x) : ℝ))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Estimation") "TimeArrow") "ParityPathLikelihoodProducts") "forward_backward_inner_product") "Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts/Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(mixedArena)⟩,
-  objectArena := ⟨(mixedArena)⟩,
+  arena := .source ⟨(mixedArena)⟩,
+  objectArena := .source ⟨(mixedArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (mixedArena) ⟨(mixedRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} profilePairStepSignature
     (fun _ p s => (uniformPathMean s
       (fun x => forwardLikelihood p.2.1 s x * backwardLikelihood p.2.2 s x) : ℝ))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts, definition := none, coordinates := #[0, 2, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

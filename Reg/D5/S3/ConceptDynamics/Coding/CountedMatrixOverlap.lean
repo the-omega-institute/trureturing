@@ -82,19 +82,22 @@ def joinRegistration : Registration joinArena (joinArena.Law joinActual) where
     change ∃ p : joinSignature.Params, ∃ x y : joinSignature.State p, x ≠ y
     exact ⟨⟨1, 1, U, V⟩, a, b, by simp [a, b]⟩
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.join_split) (type_of% (joinArena)) (type_of% (joinArena)) (type_of% (realize.{0, 0, 0, 0, 0} joinSignature (fun _ _ a => a) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.join_split) (type_of% (realize.{0, 0, 0, 0, 0} joinSignature (fun _ _ a => a) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "CountedMatrixOverlap") "join_split") "Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap/Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(joinArena)⟩,
-  objectArena := ⟨(joinArena)⟩,
+  arena := .source ⟨(joinArena)⟩,
+  objectArena := .source ⟨(joinArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (joinArena) ⟨(joinRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} joinSignature (fun _ _ a => a) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap, definition := none, coordinates := #[0, 1, 2, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -168,19 +171,22 @@ def splitRegistration : Registration splitArena (splitArena.Law splitActual) whe
     have hn := congrArg (fun e : Edge U => e.number.val) h
     exact Nat.zero_ne_one hn
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.split_join) (type_of% (splitArena)) (type_of% (splitArena)) (type_of% (realize.{0, 0, 0, 0, 0} splitSignature (fun _ _ a => a) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.split_join) (type_of% (realize.{0, 0, 0, 0, 0} splitSignature (fun _ _ a => a) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "CountedMatrixOverlap") "split_join") "Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap/Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(splitArena)⟩,
-  objectArena := ⟨(splitArena)⟩,
+  arena := .source ⟨(splitArena)⟩,
+  objectArena := .source ⟨(splitArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (splitArena) ⟨(splitRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} splitSignature (fun _ _ a => a) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

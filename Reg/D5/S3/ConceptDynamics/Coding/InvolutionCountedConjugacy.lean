@@ -48,19 +48,22 @@ def minimumRegistration : Registration minimumArena.{u}
   sensitivity := elementSensitivity minimumArena.Law minimum_rejected_law
   dependence := elementDependence
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{u + 3, u + 3, u + 1, 1, 1, 0, 1, 1, 0, 0, 0, u + 1, u, 0, u, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.involution_minimum_one.{u}) (type_of% (minimumArena.{u})) (type_of% (minimumArena.{u})) (type_of% (realize.{u + 1, u, 0, u, 0} elementSignature.{u} (fun _ _ t => t) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.involution_minimum_one.{u}) (type_of% (realize.{u + 1, u, 0, u, 0} elementSignature.{u} (fun _ _ t => t) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "InvolutionCountedConjugacy") "involution_minimum_one") "Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy/Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.minimumArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.minimumRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(minimumArena.{u})⟩,
-  objectArena := ⟨(minimumArena.{u})⟩,
+  arena := .source ⟨(minimumArena.{u})⟩,
+  objectArena := .source ⟨(minimumArena.{u})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (minimumArena.{u}) ⟨(minimumRegistration.{u})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{u + 1, u, 0, u, 0} elementSignature.{u} (fun _ _ t => t) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "fn", "arg", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -101,19 +104,22 @@ def productsRegistration : Registration productsArena.{u}
   sensitivity := elementSensitivity productsArena.Law products_rejected_law
   dependence := elementDependence
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{u + 3, u + 3, u + 1, 1, 1, 0, 1, 1, 0, 0, 0, u + 1, u, 0, u, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.natural_factor_products.{u}) (type_of% (productsArena.{u})) (type_of% (productsArena.{u})) (type_of% (realize.{u + 1, u, 0, u, 0} elementSignature.{u} (fun _ _ t => t) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.natural_factor_products.{u}) (type_of% (realize.{u + 1, u, 0, u, 0} elementSignature.{u} (fun _ _ t => t) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "InvolutionCountedConjugacy") "natural_factor_products") "Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy/Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.productsArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.productsRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(productsArena.{u})⟩,
-  objectArena := ⟨(productsArena.{u})⟩,
+  arena := .source ⟨(productsArena.{u})⟩,
+  objectArena := .source ⟨(productsArena.{u})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (productsArena.{u}) ⟨(productsRegistration.{u})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{u + 1, u, 0, u, 0} elementSignature.{u} (fun _ _ t => t) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

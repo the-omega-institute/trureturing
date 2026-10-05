@@ -66,21 +66,24 @@ theorem regularitySensitivity : FiniteSlotSensitivity regularityArena.toPrimitiv
   · intro i
     exact Fin.elim0 i
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutRegularity.geometric_readout_continuity_and_jump) (type_of% (regularityArena)) (type_of% (regularityArena)) (type_of% (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))) (type_of% (regularityVariation)) (type_of% (regularitySensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutRegularity.geometric_readout_continuity_and_jump) (type_of% (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutRegularity.D5.S1.Words.Mechanical.MechanicalReadoutRegularity.geometric_readout_continuity_and_jump.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutRegularity.regularityBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(regularityArena)⟩,
-  objectArena := ⟨(regularityArena)⟩,
+  arena := .object ⟨(regularityArena)⟩,
+  objectArena := .object ⟨(regularityArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.regularityArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.completionRealization) (completionRealization.toPrimitiveBundle) ⟨(regularityBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.regularityArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.completionRealization) (completionRealization.toPrimitiveBundle) ⟨(regularityBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (regularityBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutRegularity.geometric_readout_continuity_and_jump))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((completionRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.actualCompletion)),
-  variation := some ⟨(regularityVariation)⟩,
-  sensitivity := some ⟨(regularitySensitivity)⟩,
+  variation := .evidence ⟨(regularityVariation)⟩ (by first | exact (regularityVariation) | exact ⟨_, _, (regularityVariation)⟩),
+  sensitivity := .evidence ⟨(regularitySensitivity)⟩ (by exact (regularitySensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,

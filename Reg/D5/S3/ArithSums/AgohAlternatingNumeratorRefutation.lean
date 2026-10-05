@@ -21,21 +21,24 @@ open LeanInformationAudit
 open _root_.D5.S3.ArithSums.AgohAlternatingNumeratorRefutation
 attribute [local instance] _root_.D5.S3.ArithSums.AgohAlternatingNumeratorRefutation.instDecidableEqStateCoefficientArena in
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ArithSums.AgohAlternatingNumeratorRefutation.result) (type_of% (coefficientArena)) (type_of% (coefficientArena)) (type_of% (@coefficientRealization CoefficientCode
-      (fun code index => actualCoefficientReadout code index))) (type_of% (coefficient_variation)) (type_of% (coefficient_sensitivity)) (type_of% (actualCode)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ArithSums.AgohAlternatingNumeratorRefutation.result) (type_of% (@coefficientRealization CoefficientCode
+      (fun code index => actualCoefficientReadout code index))) (type_of% (actualCode)) (Unit) := {
   unitName := `Reg.D5.S3.ArithSums.AgohAlternatingNumeratorRefutation.D5.S3.ArithSums.AgohAlternatingNumeratorRefutation.result.__information_unit,
   realizationName := `D5.S3.ArithSums.AgohAlternatingNumeratorRefutation.coefficient_bridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(coefficientArena)⟩,
-  objectArena := ⟨(coefficientArena)⟩,
+  arena := .law ⟨(coefficientArena)⟩,
+  objectArena := .law ⟨(coefficientArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (coefficientArena) (D5.S3.ArithSums.AgohAlternatingNumeratorRefutation.actualRealization) (actualRealization.toPrimitiveBundle) ⟨(coefficient_bridge)⟩,
+  realization := .legacy (coefficientArena) (D5.S3.ArithSums.AgohAlternatingNumeratorRefutation.actualRealization) (actualRealization.toPrimitiveBundle) ⟨(coefficient_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (coefficient_bridge) (@_root_.D5.S3.ArithSums.AgohAlternatingNumeratorRefutation.result))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((actualRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@coefficientRealization CoefficientCode
       (fun code index => actualCoefficientReadout code index)),
-  variation := some ⟨(coefficient_variation)⟩,
-  sensitivity := some ⟨(coefficient_sensitivity)⟩,
+  variation := .evidence ⟨(coefficient_variation)⟩ (by first | exact (coefficient_variation) | exact ⟨_, _, (coefficient_variation)⟩),
+  sensitivity := .evidence ⟨(coefficient_sensitivity)⟩ (by exact (coefficient_sensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (actualCode),
   sourceSelection := none,
   continuation := .unknown,

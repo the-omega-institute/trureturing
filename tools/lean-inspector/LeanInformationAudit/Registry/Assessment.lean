@@ -513,7 +513,7 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let exposed ← forwardActual event.key.theoremName name actual
     if !(← equalRaw descriptor exposed) && !(← matchesPlan context body exposed) then
       throwError "unclassified_form:dtr.realization_mismatch"
-    if escape.bridgeKind == "witness" then
+    if escape.bridgeKind == "witness" && event.compiledMathematics.isNone then
       let rawActual := (← getConstInfo event.realizationName).type.getAppArgs[2]!
       unless ← RegistrationGates.bounded (do
           let computed ← mkAppM (RegistrationElaboration.witnessArenaName.str "realization") #[event.arena]

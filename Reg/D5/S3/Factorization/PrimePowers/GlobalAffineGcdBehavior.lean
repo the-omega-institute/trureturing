@@ -70,23 +70,26 @@ def registration : Registration arena (arena.Law actual) where
     change (1 : Nat) ≠ 2
     decide
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Factorization.PrimePowers.GlobalAffineGcdBehavior.global_encoding_complete) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Factorization.PrimePowers.GlobalAffineGcdBehavior.global_encoding_complete) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ p x => Nat.gcd (runWord (update p.2.1) p.2.2 x).val p.1)
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "PrimePowers") "GlobalAffineGcdBehavior") "global_encoding_complete") "Reg.D5.S3.Factorization.PrimePowers.GlobalAffineGcdBehavior/Reg.D5.S3.Factorization.PrimePowers.GlobalAffineGcdBehavior.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Factorization.PrimePowers.GlobalAffineGcdBehavior.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ p x => Nat.gcd (runWord (update p.2.1) p.2.2 x).val p.1)
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Factorization.PrimePowers.GlobalAffineGcdBehavior, definition := none, coordinates := #[0, 2, 5], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "body", "body", "arg", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg", "arg", "arg"], booleanPredicate := false }] },
   continuation := .unknown,

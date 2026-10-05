@@ -1,4 +1,5 @@
 import LeanInformationAudit.RegistryTypes
+import LeanInformationAudit.Contract.Decoder
 import LeanInformationAudit.CatalogBuilder
 import LeanInformationAudit.Sha256
 import D5.S3.ConceptDynamics.InformationEscapeCounting.FusedCorrectness
@@ -31,74 +32,17 @@ def occurrenceTypeMatches (actual : Expr) (head : Name) (catalog index : Expr) :
     (← isDefEq occurrence.getAppArgs[2]! index) &&
     (← isDefEq actual (← mkAppM head #[catalog, index]))
 
-private structure CountingRouteSnapshot where
-  root : Name
-  catalogId : Name
-  catalog : Expr
-  method : String
-  proofs : Array (Name × Expr)
-
-private initialize countingRouteExt : SimplePersistentEnvExtension CountingRouteSnapshot
-    (Array CountingRouteSnapshot) ← registerSimplePersistentEnvExtension {
-  addEntryFn := Array.push
-  addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
-
-/-- Only the proof builder records this route; output metadata cannot select it. -/
+/-- Bind the report method to a retained projection of compiled Reg evidence. -/
 def validateCountingRoute (root catalogId : Name) (catalog : Expr) (method : String) : MetaM Unit := do
   let env ← getEnv
-  let candidates := (countingRouteExt.getState env).filter fun entry =>
-    entry.root == root && entry.catalogId == catalogId
-  for entry in candidates do
-    if ← isDefEq catalog entry.catalog then
-      let staged := entry.proofs.all fun (name, expected) =>
-        match env.find? name with
-        | some (.thmInfo actual) => actual.value == expected
-        | _ => false
-      if method == entry.method && staged then return
-  throwError "IE-C028 AnalysisCertificateMismatch root={root} catalog={catalogId} \
-component=proof-method expected=certified-catalog actual=different"
-
-/-- A strict host-side copy of one reflected catalog-wide count. -/
-private structure ReflectedFusedSnapshot where
-  full : Nat
-  unique : Array Nat
-  roleBins : Array (Array Nat)
-
-/-- Marker consumed only by the custom `ReduceEval` instance below. -/
-private def reflectedSnapshotRequest {n : Nat}
-    (counts : Catalog.FusedCounts (Fin n)) : Catalog.FusedCounts (Fin n) :=
-  counts
+  let compiled := if catalog.isConst then compiledSealEvidence? env catalog.constName! else none
+  if compiled.isSome && method == "reg-kernel" then return
+  throwError "IE-C028 AnalysisCertificateMismatch root={root} catalog={catalogId} component=proof-method expected=certified-catalog actual=different"
 
 private def finValue (index size : Nat) : MetaM Expr := do
   let bound ← mkLT (mkNatLit index) (mkNatLit size)
   let boundProof ← mkDecideProof bound
   mkAppM ``Fin.mk #[mkNatLit index, boundProof]
-
-private instance : ReduceEval ReflectedFusedSnapshot where
-  reduceEval request := do
-    unless request.isAppOfArity ``reflectedSnapshotRequest 2 do
-      throwError "reduceEval: expected a reflected fused snapshot request"
-    let size : Nat ← reduceEval (request.getArg! 0)
-    let counts ← whnf (request.getArg! 1)
-    unless counts.isAppOfArity ``Catalog.FusedCounts.mk 4 do
-      throwError "reduceEval: failed to match the fused counts constructor"
-    let full : Nat ← reduceEval (counts.getArg! 1)
-    let uniqueFn := counts.getArg! 2
-    let roleBinsFn := counts.getArg! 3
-    let mut unique := #[]
-    let mut roleBins := #[]
-    for indexNat in [:size] do
-      let index ← finValue indexNat size
-      unique := unique.push (← reduceEval (mkApp uniqueFn index))
-      let mut bins := #[]
-      for bucketNat in [:15] do
-        let bucket ← finValue bucketNat 15
-        bins := bins.push (← reduceEval (mkApp2 roleBinsFn index bucket))
-      roleBins := roleBins.push bins
-    pure { full, unique, roleBins }
-
-private def natValue (expr : Expr) : MetaM Nat :=
-  reduceEval expr
 
 private def primitiveCount {X : Type u} (bundle : PrimitiveBundle X) : Nat :=
   @Fintype.card bundle.Index bundle.indexFintype
@@ -147,13 +91,6 @@ def primitiveKernelAddress (stateFintype bundle : Expr) : MetaM String := do
   let serialization := String.intercalate ";" (toString classes.size :: encodedClasses)
   pure ("sha256:" ++ Sha256.hex serialization.toUTF8)
 
-private def uniqueCaptureSignatureCount {arena : Arena.{u}}
-    (catalog : Catalog.{u, v, w} arena) (index : catalog.Index)
-    (cutBit flowBit admitBit anchorBit : Bool) : Nat :=
-  let signature : Fin 4 → Bool := ![cutBit, flowBit, admitBit, anchorBit]
-  ((catalog.uniqueCapturePairs index).filter fun pair =>
-    (catalog.theoremAt index).primitives.roleSignature pair.1 pair.2 = signature).card
-
 private def signatureBit (mask coordinate : Nat) : Bool :=
   mask / (2 ^ (3 - coordinate)) % 2 == 1
 
@@ -161,474 +98,118 @@ private def signatureLabel (mask : Nat) : String :=
   String.ofList <| (List.range 4).map fun coordinate =>
     if signatureBit mask coordinate then '1' else '0'
 
-/-- Keep CIRPT-40(8) as an independent host-side check on all fifteen buckets. -/
-private def validateRoleHistogram (theoremName : Name) (uniqueCount : Nat)
-    (roleBins : Array Nat) : Except String Unit := do
-  let histogramTotal := roleBins.foldl (init := 0) (· + ·)
-  unless histogramTotal == uniqueCount do
-    throw s!"IE-C009 ProofConstructionFailed: {theoremName}\nrole histogram mismatch"
-
-private def natArrayJson (values : Array Nat) : String :=
-  (Json.arr <| values.map toJson).compress
-
-private def catalogIndexCount {arena : Arena.{u}}
-    (catalog : Catalog.{u, v, w} arena) : Nat :=
-  @Fintype.card catalog.Index catalog.indexFintype
-
-/-- Bind the checked vector to the compiled catalog's full index domain. -/
-def validateCompleteCountVector (rootId : Name) (catalogId : CatalogId)
-    (memberCount : Nat) (expectedCounts checkedCounts : Array Nat) : Except String Unit := do
-  unless expectedCounts.size == memberCount && checkedCounts == expectedCounts do
-    let expected := toJson (memberCount, expectedCounts)
-    let actual := toJson (checkedCounts.size, checkedCounts)
-    throw s!"IE-C028 AnalysisCertificateMismatch root={rootId} catalog={catalogId} \
-component=count-vector expected={expected.compress} actual={actual.compress}"
-
-/-- Independently derive and check every zero index from the complete count vector. -/
-def validateRedundantIndices (rootId : Name) (catalogId : CatalogId)
-    (uniqueCounts certified : Array Nat) (phase : String) : Except String Unit := do
-  let expected := (uniqueCounts.foldl (init := (#[], 0))
-    (fun (result, index) count =>
-      (if count == 0 then result.push index else result, index + 1))).1
-  unless expected == certified do
-    throw s!"IE-C033 IncompleteRedundantIndexSet key={rootId}/{catalogId} \
-expected={natArrayJson expected} certified={natArrayJson certified} phase={phase}"
-
-private structure ReflectedRoute where
-  witness : Expr
-  indices : Expr
-  counts : Expr
-  snapshot : ReflectedFusedSnapshot
-
-private inductive CountingRoute where
-  | decide
-  | reflected (route : ReflectedRoute)
-
-private def proofConstruction (theoremName : Name)
-    (action : Lean.Elab.Term.TermElabM α) : Lean.Elab.Term.TermElabM α := do
-  try action catch error =>
-    throwError "IE-C009 ProofConstructionFailed: {theoremName}\n{error.toMessageData}"
-
-private def discoverCountingRoute (prepared : PreparedCatalog) (arena : Expr) :
-    Lean.Elab.Term.TermElabM CountingRoute := do
+/-- Bind the raw compiled vector to the independently reconstructed catalog,
+then read its kernel-checked fields. No seal proof is constructed or rechecked. -/
+private def compiledTheoremProofs (prepared : PreparedCatalog) (input : CompiledSealCatalog) :
+    Lean.Elab.Term.TermElabM SealArenaRecord := do
+  let fs ← Contract.Decoder.fields ``Contract.SealCatalog input.value 15
   let record := prepared.record
-  let witnessName := record.arenaName.str "__state_enumeration"
+  let size ← Contract.Decoder.liftLiteral (Contract.Literal.nat "seal.size" fs[3]!)
+  unless size == record.units.size && input.arenaName == record.arenaName &&
+      input.catalogId == record.catalogId do
+    throwError "IE-C028 AnalysisCertificateMismatch root={record.rootId} catalog={record.catalogId} component=reg-membership expected=raw-catalog actual=different"
+  let compiledCatalog ← mkAppM ``Catalog.ofVector #[fs[4]!]
+  unless ← isDefEq compiledCatalog prepared.value do
+    throwError "IE-C028 AnalysisCertificateMismatch root={record.rootId} catalog={record.catalogId} component=reg-vector expected=raw-catalog actual=different"
+  let stateCard ← Contract.Decoder.liftLiteral (Contract.Literal.nat "seal.stateCard" fs[7]!)
+  let full ← Contract.Decoder.liftLiteral (Contract.Literal.nat "seal.full" fs[9]!)
+  let keep (name : Name) (proof : Expr) : Lean.Elab.Term.TermElabM Unit :=
+    modifyEnv fun env => retainCompiledSealEvidence env name input.source proof
+  keep record.catalogName compiledCatalog
+  keep (record.catalogName.str "__reg_nondegenerate") fs[5]!
   let env ← getEnv
-  match env.find? witnessName with
-  | none => pure .decide
-  | some _ =>
-      let _ ← getConstInfo witnessName
-      let witness ← mkConstWithFreshMVarLevels witnessName
-      let expectedType ← mkAppM
-        `D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration #[arena]
-      unless ← isDefEq (← inferType witness) expectedType do
-        throwError
-          "IE-C009 ProofConstructionFailed: {witnessName}\nexpected type \
-Arena.StateEnumeration {record.arenaName}.toArena"
-      let indices ← mkAppM
-        `D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration
-        #[mkNatLit record.units.size]
-      let counts ← mkAppM
-        `D5.S3.ConceptDynamics.InformationEscape.Catalog.fusedCounts
-        #[prepared.value, witness, indices]
-      let request ← mkAppM ``reflectedSnapshotRequest #[counts]
-      let failureName := (record.units.map (·.theoremName))[0]!
-      let snapshot ← proofConstruction failureName <|
-        reduceEval request
-      pure <| .reflected { witness, indices, counts, snapshot }
-
-private def finSuccN (offset : Nat) (index : Expr) : MetaM Expr := do
-  let mut result := index
-  for _ in [:offset] do
-    result ← mkAppM ``Fin.succ #[result]
-  pure result
-
-private def loweringMotive (catalog : Expr) (offset remaining : Nat) : MetaM Expr := do
-  let finType := mkApp (mkConst ``Fin) (mkNatLit remaining)
-  withLocalDeclD `index finType fun index => do
-    let globalIndex ← finSuccN offset index
-    let target ← mkAppM
-      `D5.S3.ConceptDynamics.InformationEscape.Catalog.LowersEscape
-      #[catalog, globalIndex]
-    mkLambdaFVars #[index] target
-
-private def finCasesValue (catalog : Expr) (names : Array Name)
-    (offset remaining : Nat) (index : Expr) : MetaM Expr := do
-  if remaining = 0 then
-    let globalIndex ← finSuccN offset index
-    let target ← mkAppM
-      `D5.S3.ConceptDynamics.InformationEscape.Catalog.LowersEscape
-      #[catalog, globalIndex]
-    pure <| mkApp2 (mkConst ``Fin.elim0 [0]) target index
-  else
-    let motive ← loweringMotive catalog offset remaining
-    let head := mkConst names[offset]!
-    let tailType := mkApp (mkConst ``Fin) (mkNatLit (remaining - 1))
-    let tail ← withLocalDeclD `index tailType fun tailIndex => do
-      let body ← finCasesValue catalog names (offset + 1) (remaining - 1) tailIndex
-      mkLambdaFVars #[tailIndex] body
-    pure <| mkAppN (mkConst ``Fin.cases [0])
-      #[mkNatLit (remaining - 1), motive, head, tail, index]
-termination_by remaining
-decreasing_by omega
-
-private def irredundantFromLoweringProofs (catalog : Expr)
-    (names : Array Name) : MetaM Expr := do
-  let finType := mkApp (mkConst ``Fin) (mkNatLit names.size)
-  withLocalDeclD `index finType fun index => do
-    let body ← finCasesValue catalog names 0 names.size index
-    mkLambdaFVars #[index] body
-
-/-- Classes are certified by pairwise kernel refinement; addresses are diagnostics. -/
-def prepareCollisionClasses (record : CatalogRecord) (catalog : Expr)
-    (theoremRecords : Array SealTheoremRecord) : MetaM
-    (Array Declaration × Array (Array Name × Array Name)) := do
-  let redundantIndices := (Array.range theoremRecords.size).filter
-    (fun i => theoremRecords[i]!.uniqueCaptureCount == 0)
-  let mut declarations := #[]
-  let mut collisionClasses := #[]
-  let mut classified := #[]
-  for i in redundantIndices do
-    if classified.contains i then continue
-    let mut members := #[record.units[i]!.theoremName]
-    let mut certificates := #[]
-    for j in redundantIndices do
-      if j <= i || classified.contains j then
-        continue
-      let left ← finValue i record.units.size
-      let right ← finValue j record.units.size
-      let proof ← try
-        let refinement (a b : Expr) := do
-          let type ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.KernelRefines #[catalog, a, b]
-          try
-            forallTelescopeReducing type fun args goal => do
-              unless ← isDefEq (← inferType args.back!) goal do throwError "nonreflexive"
-              mkLambdaFVars args args.back!
-          catch _ => mkDecideProof type
-        let proof ← mkAppM ``And.intro #[← refinement left right, ← refinement right left]
-        checkWithKernel proof
-        pure (some proof)
-      catch _ => pure none
-      let some proof := proof | continue
-      let name := catalogQualifiedName record.rootId record.arenaName record.catalogId
-        record.arenaName s!"__kernel_collision_{i}_{j}"
-      declarations := declarations.push <| .thmDecl {
-        name, levelParams := [], type := ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.KernelEquivalent #[catalog, left, right],
-        value := proof }
-      members := members.push record.units[j]!.theoremName
-      certificates := certificates.push name
-      classified := classified.push j
-    if members.size > 1 then collisionClasses := collisionClasses.push (members, certificates)
-  return (declarations, collisionClasses)
-
-private def theoremProofs (prepared : PreparedCatalog) : Lean.Elab.Term.TermElabM
-    (Array Declaration × SealArenaRecord) := do
-  let env ← getEnv
-  let record := prepared.record
-  let catalog := prepared.value
-  let arena := prepared.arenaValue
-  let nondegenerateType ← mkAppM
-    `D5.S3.ConceptDynamics.InformationEscape.Arena.Nondegenerate #[arena]
-  let nondegenerateProof ← mkDecideProof nondegenerateType
-  let stateCardExpr ← mkAppM
-    `D5.S3.ConceptDynamics.InformationEscape.Arena.card #[arena]
-  let stateCard ← natValue stateCardExpr
-  let route ← discoverCountingRoute prepared arena
-  let pairBudget := stateCard * (stateCard - 1)
-  if pairBudget > 65536 then
-    match route with
-    | .decide =>
-        throwError
-          "IE-C032 SizeBudgetRequiresReflectedSeal root={record.rootId} \
-catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.rootId}"
-    | .reflected _ => pure ()
-  let fullCount ← match route with
-    | .decide =>
-        let fullSet ← mkAppM
-          `D5.S3.ConceptDynamics.InformationEscape.Catalog.fullIndexSet #[catalog]
-        let fullExpr ← mkAppM
-          `D5.S3.ConceptDynamics.InformationEscape.Catalog.escapeNumerator
-          #[catalog, fullSet]
-        natValue fullExpr
-    | .reflected reflected => pure reflected.snapshot.full
-  let mut declarations := #[]
-  let mut theoremRecords := #[]
-  let mut loweringProofNames := #[]
-  let mut uniqueCounts := #[]
-  let mut withoutCounts := #[]
+  let nameFor (name : Name) (suffix : String) := if record.localSealNames then
+      localCompanionName env record.rootId name suffix
+    else catalogQualifiedName record.rootId record.arenaName record.catalogId name suffix
+  let mut theorems : Array SealTheoremRecord := #[]
   for unit in record.units do
-    let index <- finValue unit.index record.units.size
-    let uniqueExpr <- mkAppM
-      `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
-      #[catalog, index]
-    let uniqueCount <- match route with
-      | .decide => natValue uniqueExpr
-      | .reflected reflected => pure reflected.snapshot.unique[unit.index]!
-    let withoutCount <- match route with
-      | .decide =>
-          let withoutSet <- mkAppM
-            `D5.S3.ConceptDynamics.InformationEscape.Catalog.without #[catalog, index]
-          let withoutExpr <- mkAppM
-            `D5.S3.ConceptDynamics.InformationEscape.Catalog.escapeNumerator
-            #[catalog, withoutSet]
-          natValue withoutExpr
-      | .reflected _ => pure (fullCount + uniqueCount)
-    uniqueCounts := uniqueCounts.push uniqueCount
-    withoutCounts := withoutCounts.push withoutCount
-  let compiledSize ← natValue (← mkAppM ``catalogIndexCount #[catalog])
-  let expectedCounts ← match route with
-    | .decide => (Array.range compiledSize).mapM fun indexNat => do
-        let index ← finValue indexNat compiledSize
-        natValue (← mkAppM
-          `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
-          #[catalog, index])
-    | .reflected reflected => pure reflected.snapshot.unique
-  let mut redundantIndices := #[]
-  for index in [:uniqueCounts.size] do
-    if uniqueCounts[index]! == 0 then
-      redundantIndices := redundantIndices.push index
-  let mut zeroProofs := #[]
-  let mut certifiedRedundantIndices := #[]
-  for indexNat in redundantIndices do
-    let index <- finValue indexNat record.units.size
-    let uniqueExpr <- mkAppM
-      `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
-      #[catalog, index]
-    let zeroProof <- proofConstruction record.units[indexNat]!.theoremName <| match route with
-      | .decide => do
-          let zeroType <- mkEq uniqueExpr (mkNatLit 0)
-          mkDecideProof zeroType
-      | .reflected reflected => do
-          let fusedUnique <- mkAppM
-            `D5.S3.ConceptDynamics.InformationEscape.Catalog.FusedCounts.unique
-            #[reflected.counts, index]
-          let fusedZero <- mkDecideProof (← mkEq fusedUnique (mkNatLit 0))
-          let fusedEq <- mkAppM
-            `D5.S3.ConceptDynamics.InformationEscape.Catalog.fusedUnique_eq_uniqueCaptureCount
-            #[catalog, reflected.witness, reflected.indices, index]
-          let actualToFused <- mkAppM ``Eq.symm #[fusedEq]
-          mkAppM ``Eq.trans #[actualToFused, fusedZero]
-    checkWithKernel zeroProof
-    zeroProofs := zeroProofs.push (indexNat, zeroProof)
-    certifiedRedundantIndices := certifiedRedundantIndices.push indexNat
-  match validateRedundantIndices record.rootId record.catalogId expectedCounts
-      certifiedRedundantIndices "complete-scan" with
-  | .ok () => pure ()
-  | .error message => throwError message
-  match validateCompleteCountVector record.rootId record.catalogId compiledSize
-      expectedCounts uniqueCounts with
-  | .ok () => pure ()
-  | .error message => throwError message
-  let stateEnumeration ← if redundantIndices.isEmpty then pure none else do
-    match route with
-    | .reflected reflected => pure (some reflected.witness.constName!)
-    | .decide =>
-      let fintype ← mkAppM ``Arena.stateFintype #[arena]
-      let elems ← mkAppOptM ``Fintype.elems #[none, some fintype]
-      let multiset ← whnf (← mkAppM ``Finset.val #[elems])
-      unless multiset.isAppOfArity ``Quot.mk 3 do throwError "IE-C009 state enumeration"
-      let states := multiset.getArg! 2
-      let nodup ← mkDecideProof (← mkAppM ``List.Nodup #[states])
-      let complete ← mkEqRefl elems
-      let value ← mkAppOptM ``Arena.StateEnumeration.mk
-        #[some arena, some states, some nodup, some complete]
-      let name := record.catalogName.str "__zero_state_enumeration"
-      declarations := declarations.push <| .defnDecl {
-        name, levelParams := [], type := ← inferType value, value, hints := .abbrev, safety := .safe }
-      pure (some name)
-  for unit in record.units do
-    let theoremName := unit.theoremName
-    let unitName := unit.unitName
-    let indexNat := unit.index
-    let index ← finValue indexNat record.units.size
-    let unitExpr := mkConst unitName
-    let primitives ← mkAppM
-      `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.primitives
-      #[unitExpr]
-    let primitiveCountExpr ← mkAppM ``primitiveCount #[primitives]
-    let primitiveCount ← natValue primitiveCountExpr
-    let mut primitiveAxes := #[]
-    for (axisName, label) in
-        #[( ``PrimitiveAxis.cut, "cut"), (``PrimitiveAxis.flow, "flow"),
-          (``PrimitiveAxis.admit, "admit"), (``PrimitiveAxis.anchor, "anchor")] do
-      let countExpr ← mkAppM ``primitiveAxisCount
-        #[primitives, mkConst axisName]
-      let count ← natValue countExpr
-      for _ in [:count] do
-        primitiveAxes := primitiveAxes.push label
-    let uniqueExpr ← mkAppM
-      `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
-      #[catalog, index]
-    let uniqueCount := uniqueCounts[indexNat]!
-    let withoutCount := withoutCounts[indexNat]!
-    if uniqueCount == 0 then
-      let some (_, zero) := zeroProofs.find? (·.1 == indexNat)
-        | throwError "missing certified zero"
-      let trivialType ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.TrivialInCatalog #[catalog, index]
-      let emptyIff ← mkAppOptM ``Finset.card_eq_zero
-        #[none, some (← mkAppM ``Catalog.uniqueCapturePairs #[catalog, index])]
-      let proof ← mkAppM ``Iff.mp #[emptyIff, zero]
-      let name := if record.localSealNames then
-        localCompanionName env record.rootId theoremName "__trivial_in_catalog" else
-        catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
-          "__trivial_in_catalog"
-      declarations := declarations.push <| .thmDecl {
-        name, levelParams := [], type := trivialType, value := proof }
-      let notLowers ← mkAppM ``Iff.mp #[
-        ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.trivialInCatalog_iff_not_lowersEscape #[catalog, index, nondegenerateProof], proof]
-      let closure ← mkAppM ``of_not_not #[← mkAppM ``Iff.mp #[
-        ← mkAppM ``not_congr #[← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.lowersEscape_iff_not_mem_semanticClosureWithout
-          #[catalog, index, nondegenerateProof]], notLowers]]
-      let closureCertificate := name.str "closure"
-      declarations := declarations.push <| .thmDecl {
-        name := closureCertificate, levelParams := [], type := ← inferType closure, value := closure }
-      theoremRecords := theoremRecords.push {
-        theoremName, unitName, realizationName := unit.realizationName, certificate := .trivial name,
-        closureCertificate := some closureCertificate,
-        registrationModuleName := unit.registrationModuleName, index := indexNat,
-        primitiveCount, primitiveAxes, primitiveKernelAddress := "", uniqueCaptureCount := 0,
-        fullEscapeCount := fullCount, withoutEscapeCount := withoutCount, roleSignatureHistogram := #[],
-        proofMethod := match route with
-          | .decide => if record.localSealNames then "decide" else "direct"
-          | .reflected _ => "reflected-fused-counts" }
-      continue
-    let positiveType ← mkLT (mkNatLit 0) uniqueExpr
-    let positiveProof ← match route with
-      | .decide => proofConstruction theoremName <| mkDecideProof positiveType
-      | .reflected reflected => proofConstruction theoremName do
-          let fusedUnique ← mkAppM
-            `D5.S3.ConceptDynamics.InformationEscape.Catalog.FusedCounts.unique
-            #[reflected.counts, index]
-          let fusedPositiveType ← mkLT (mkNatLit 0) fusedUnique
-          let fusedPositiveProof ← mkDecideProof fusedPositiveType
-          mkAppM
-            `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount_pos_of_fused
-            #[catalog, reflected.witness, reflected.indices, index, fusedPositiveProof]
-    let mut roleBins := #[]
-    let mut roleSignatureHistogram := #[]
+    let index ← finValue unit.index size
+    let row ← whnf (mkApp fs[11]! index)
+    let rs ← Contract.Decoder.fields ``Contract.SealRow row 8
+    let unique ← Contract.Decoder.liftLiteral (Contract.Literal.nat "seal.unique" rs[0]!)
+    let without ← Contract.Decoder.liftLiteral (Contract.Literal.nat "seal.without" rs[2]!)
+    let conclusion ← whnf rs[7]!
+    let positive := conclusion.isAppOf ``Contract.SealRowConclusion.positive
+    let suffix := if positive then "__lowers_escape" else "__trivial_in_catalog"
+    let name := nameFor unit.theoremName suffix
+    let args := conclusion.getAppArgs
+    let proof := args[args.size - (if positive then 1 else 2)]!
+    keep name proof
+    let closureCertificate ← if positive then pure none else do
+      let closureName := name.str "closure"
+      keep closureName args.back!
+      pure (some closureName)
+    let mut roles := #[]
     for bucket in [:15] do
-      let signatureCount ← match route with
-        | .decide =>
-            let mask := bucket + 1
-            let signatureCountExpr ← mkAppM ``uniqueCaptureSignatureCount
-              #[catalog, index,
-                mkConst (if signatureBit mask 0 then ``Bool.true else ``Bool.false),
-                mkConst (if signatureBit mask 1 then ``Bool.true else ``Bool.false),
-                mkConst (if signatureBit mask 2 then ``Bool.true else ``Bool.false),
-                mkConst (if signatureBit mask 3 then ``Bool.true else ``Bool.false)]
-            natValue signatureCountExpr
-        | .reflected reflected =>
-            pure (reflected.snapshot.roleBins[indexNat]!)[bucket]!
-      roleBins := roleBins.push signatureCount
-      if signatureCount != 0 then
-        roleSignatureHistogram := roleSignatureHistogram.push
-          (signatureLabel (bucket + 1), signatureCount)
-    match validateRoleHistogram theoremName uniqueCount roleBins with
-    | .ok () => pure ()
-    | .error message => throwError message
-    let (lowersProof, lowersType) ← proofConstruction theoremName do
-      let characterization ← mkAppM
-        `D5.S3.ConceptDynamics.InformationEscape.Catalog.lowersEscape_iff_uniqueCaptureCount_pos
-        #[catalog, index, nondegenerateProof]
-      let lowersProof ← mkAppM ``Iff.mpr #[characterization, positiveProof]
-      pure (lowersProof, ← inferType lowersProof)
-    let lowersName := if record.localSealNames then
-      localCompanionName env record.rootId theoremName "__lowers_escape"
-    else
-      catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
-        "__lowers_escape"
-    loweringProofNames := loweringProofNames.push lowersName
-    declarations := declarations.push <| .thmDecl {
-      name := lowersName
-      levelParams := []
-      type := lowersType
-      value := lowersProof
-    }
-    let theoremExpr := mkConst theoremName
-    let theoremType ← inferType theoremExpr
-    let enrichedType ← mkAppM ``And #[theoremType, lowersType]
-    let enrichedProof := mkAppN (mkConst ``And.intro)
-      #[theoremType, lowersType, theoremExpr, mkConst lowersName]
-    let enrichedName := if record.localSealNames then
-      localCompanionName env record.rootId theoremName "__escape_enriched"
-    else
-      catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
-        "__escape_enriched"
-    declarations := declarations.push <| .thmDecl {
-      name := enrichedName
-      levelParams := []
-      type := enrichedType
-      value := enrichedProof
-    }
-    theoremRecords := theoremRecords.push {
-      theoremName
-      unitName
-      realizationName := unit.realizationName
-      certificate := .positive lowersName
-      registrationModuleName := unit.registrationModuleName
-      index := indexNat
-      primitiveCount
-      primitiveAxes
-      primitiveKernelAddress := ""
-      uniqueCaptureCount := uniqueCount
-      fullEscapeCount := fullCount
-      withoutEscapeCount := withoutCount
-      roleSignatureHistogram
-      proofMethod := match route with
-        | .decide => if record.localSealNames then "decide" else "direct"
-        | .reflected _ => "reflected-fused-counts"
-    }
-  let (collisionProofs, collisionClasses) ← prepareCollisionClasses record catalog theoremRecords
-  declarations := declarations ++ collisionProofs
-  let stateFintype ← mkAppM ``Arena.stateFintype #[arena]
-  theoremRecords ← theoremRecords.mapM fun row => do
-    let bundle ← mkAppM ``TheoremUnit.primitives #[mkConst row.unitName]
-    return { row with primitiveKernelAddress := ← primitiveKernelAddress stateFintype bundle }
-  let irredundantProof ← if let some (indexNat, zero) := zeroProofs[0]? then do
-      let type ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.CatalogRedundant #[catalog]
-      let predicate := (← whnf type).appArg!
-      mkAppOptM ``Exists.intro
-        #[none, some predicate, some (← finValue indexNat record.units.size), some zero]
-    else irredundantFromLoweringProofs catalog loweringProofNames
-  let suffix := if zeroProofs.isEmpty then "__catalog_irredundant" else "__catalog_redundant"
-  let irredundantType ← mkAppM
-    (if zeroProofs.isEmpty then ``CatalogIrredundant else `D5.S3.ConceptDynamics.InformationEscape.Catalog.CatalogRedundant) #[catalog]
-  let irredundantName := if record.localSealNames then
-    localCompanionName env record.rootId record.arenaName suffix
-  else
-    catalogQualifiedName record.rootId record.arenaName record.catalogId record.arenaName suffix
-  declarations := declarations.push <| .thmDecl {
-    name := irredundantName
-    levelParams := []
-    type := irredundantType
-    value := irredundantProof
-  }
-  let method := match route with
-    | .decide => if record.localSealNames then "decide" else "direct"
-    | .reflected _ => "reflected-fused-counts"
-  modifyEnv fun env => countingRouteExt.addEntry env {
-    root := record.rootId, catalogId := record.catalogId, catalog, method,
-    proofs := declarations.filterMap fun declaration => match declaration with
-      | .thmDecl info => some (info.name, info.value)
-      | _ => none }
-  pure (declarations, {
-    catalog := record
-    collisionClasses
-    stateEnumeration
-    verdict := if zeroProofs.isEmpty then .irredundant irredundantName else .redundant irredundantName
-    proofMethod := method
-    stateCard
-    offDiagonalPairCount := stateCard * (stateCard - 1)
-    fullEscapeCount := fullCount
-    theorems := theoremRecords
-  })
+      let count : Nat ← reduceEval (mkApp rs[4]! (← finValue bucket 15))
+      if count > 0 then roles := roles.push (signatureLabel (bucket + 1), count)
+    let bundle ← mkAppM ``TheoremUnit.primitives #[mkConst unit.unitName]
+    let count : Nat ← reduceEval (← mkAppM ``primitiveCount #[bundle])
+    let mut axes := #[]
+    for (axis, label) in #[( ``PrimitiveAxis.cut, "cut"), (``PrimitiveAxis.flow, "flow"),
+        (``PrimitiveAxis.admit, "admit"), (``PrimitiveAxis.anchor, "anchor")] do
+      let axisCount : Nat ← reduceEval (← mkAppM ``primitiveAxisCount #[bundle, mkConst axis])
+      axes := axes ++ Array.replicate axisCount label
+    let fintype ← mkAppM ``Arena.stateFintype #[prepared.arenaValue]
+    theorems := theorems.push {
+      theoremName := unit.theoremName, unitName := unit.unitName, realizationName := unit.realizationName,
+      registrationModuleName := unit.registrationModuleName, index := unit.index,
+      certificate := if positive then .positive name else .trivial name, closureCertificate,
+      primitiveCount := count, primitiveAxes := axes,
+      primitiveKernelAddress := ← primitiveKernelAddress fintype bundle,
+      uniqueCaptureCount := unique, fullEscapeCount := full, withoutEscapeCount := without,
+      roleSignatureHistogram := roles, proofMethod := "reg-kernel" }
+  let pairs ← Contract.Decoder.liftLiteral (Contract.Literal.array "seal.collisions" fs[12]!)
+  let mut classes : Array (Array Name × Array Name) := #[]
+  for pair in pairs do
+    let args := pair.getAppArgs
+    let left := args[args.size - 2]!
+    let nested := args.back!.getAppArgs
+    let right := nested[nested.size - 2]!
+    let i : Nat ← reduceEval (← mkAppM ``Fin.val #[left])
+    let j : Nat ← reduceEval (← mkAppM ``Fin.val #[right])
+    let proof := nested.back!.getAppArgs.back!
+    let name := catalogQualifiedName record.rootId record.arenaName record.catalogId
+      record.arenaName s!"__kernel_collision_{i}_{j}"
+    keep name proof
+    let leftName := record.units[i]!.theoremName
+    let rightName := record.units[j]!.theoremName
+    if let some classIndex := classes.findIdx? (fun c => c.1[0]? == some leftName) then
+      classes := classes.modify classIndex fun c => (c.1.push rightName, c.2.push name)
+    else classes := classes.push (#[leftName, rightName], #[name])
+  let conclusion ← whnf fs[13]!
+  let redundant := conclusion.isAppOf ``Contract.SealCatalogConclusion.redundant
+  let verdictName := nameFor record.arenaName
+    (if redundant then "__catalog_redundant" else "__catalog_irredundant")
+  keep verdictName conclusion.getAppArgs.back!
+  let stateEnumeration ← do
+    let name := record.catalogName.str "__zero_state_enumeration"
+    keep name fs[14]!
+    pure (some name)
+  let result : SealArenaRecord := {
+    catalog := record, compiledEvidence := true, collisionClasses := classes,
+    stateEnumeration,
+    verdict := if redundant then .redundant verdictName else .irredundant verdictName,
+    proofMethod := "reg-kernel", stateCard, offDiagonalPairCount := stateCard * (stateCard - 1),
+    fullEscapeCount := full, theorems }
 
-/-- Construct theorem declarations without installing them, retaining their counting route. -/
-def prepareProofs (catalogs : Array PreparedCatalog) : CommandElabM PreparedProofs := do
-  let results ← liftTermElabM <| catalogs.mapM theoremProofs
-  pure {
-    declarations := results.foldl (init := #[]) fun all result => all ++ result.1
-    records := results.map (·.2)
-  }
+  modifyEnv (retainCompiledSealRecord · result)
+  return result
+
+/-- Consume only a complete compiled catalog family; raw membership and order
+are reconstructed independently before this function is called. -/
+def consumeCompiledSeal (catalogs : Array PreparedCatalog) (inputs : Array CompiledSealCatalog) :
+    CommandElabM PreparedProofs := do
+  unless inputs.size == catalogs.size do
+    throwError "IE-C028 AnalysisCertificateMismatch component=reg-catalog-domain expected={catalogs.size} actual={inputs.size}"
+  let records ← liftTermElabM <| catalogs.mapM fun catalog => do
+    let matchingInputs := inputs.filter fun input => input.arenaName == catalog.record.arenaName &&
+      input.catalogId == catalog.record.catalogId
+    unless matchingInputs.size == 1 do
+      throwError "IE-C028 AnalysisCertificateMismatch component=reg-catalog-identity"
+    let some matching := matchingInputs[0]?
+      | throwError "IE-C028 AnalysisCertificateMismatch component=reg-catalog-identity"
+    compiledTheoremProofs catalog matching
+  return { declarations := #[], records }
 
 end LeanInformationAudit

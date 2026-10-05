@@ -20,21 +20,24 @@ open _root_.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling
 
 
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled) (type_of% (openCodeArena)) (type_of% (openCodeArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.IffRegistrationTemplates.iffRealization
-    (Fin 5) (fun i => openPermissionReadout i) (fun i => openUnsettledReadout i))) (type_of% (open_lawSensitive)) (type_of% (open_slotSensitive)) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.IffRegistrationTemplates.iffRealization
+    (Fin 5) (fun i => openPermissionReadout i) (fun i => openUnsettledReadout i))) (Unit) (Unit) := {
   unitName := `Reg.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled.__information_unit,
   realizationName := `D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.open_bridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(openCodeArena)⟩,
-  objectArena := ⟨(openCodeArena)⟩,
+  arena := .law ⟨(openCodeArena)⟩,
+  objectArena := .law ⟨(openCodeArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (openCodeArena) (D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openRealization) (openRealization.toPrimitiveBundle) ⟨(open_bridge)⟩,
+  realization := .legacy (openCodeArena) (D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openRealization) (openRealization.toPrimitiveBundle) ⟨(open_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (open_bridge) (@_root_.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((openRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@D5.S3.ConceptDynamics.InformationEscape.IffRegistrationTemplates.iffRealization
     (Fin 5) (fun i => openPermissionReadout i) (fun i => openUnsettledReadout i)),
-  variation := some ⟨(open_lawSensitive)⟩,
-  sensitivity := some ⟨(open_slotSensitive)⟩,
+  variation := .evidence ⟨(open_lawSensitive)⟩ (by first | exact (open_lawSensitive) | exact ⟨_, _, (open_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(open_slotSensitive)⟩ (by exact (open_slotSensitive)),
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := none,
   continuation := .absent,

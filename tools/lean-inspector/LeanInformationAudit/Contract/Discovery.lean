@@ -128,6 +128,39 @@ def generatedEntryAuxiliary (owner : Name) (entries : Array SourceAudit.Entry)
     return true
   return false
 
+/-- Compiler-extracted proofs may mention the indexed contract in their type.
+They must be live dependencies of an accepted entry in the same module, have
+no authored declaration or custom elaboration, and retain the proof-only
+compiler name shape. This grants no permission to value helpers. -/
+def generatedEntryProof (owner : Name) (entries : Array SourceAudit.Entry)
+    (definitions : Array Definition) (env : Environment) (name : Name)
+    (forbidden : NameSet := {}) : MetaM Bool := do
+  let belongs := if owner == env.header.mainModule then env.getModuleIdxFor? name == none
+    else env.getModuleIdxFor? name == env.getModuleIdx? owner
+  unless belongs do return false
+  unless (match env.find? name with | some (.thmInfo _) => true | _ => false) do
+    return false
+  let .str parent suffix := privateToUserName name | return false
+  unless suffix.startsWith "_proof_" &&
+      (suffix.drop 7).toString.toNat?.isSome do return false
+  if entries.any (fun entry => entry.authoredNames.contains (privateToUserName name)) ||
+      SourceAudit.hasAuthoredElaboration entries forbidden then return false
+  for definition in definitions do
+    unless privateToUserName definition.info.name == parent do continue
+    let mut pending := definition.info.value.getUsedConstants
+    let mut visited : NameSet := {}
+    while !pending.isEmpty do
+      let next := pending.back!
+      pending := pending.pop
+      if next == name then return true
+      if visited.contains next then continue
+      visited := visited.insert next
+      if env.getModuleIdxFor? next != env.getModuleIdxFor? name then continue
+      if let some info := env.find? next then
+        pending := pending ++ ((info.value? (allowOpaque := true)).map Expr.getUsedConstants
+          |>.getD #[])
+  return false
+
 /-- Source and compiled inventories must agree, including private declarations.
 Rigid level parameters and their occurrences remain the compiler's original data. -/
 def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := do
@@ -178,6 +211,7 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
   for (name, info) in constants do
     if found.any (fun definition => definition.info.name == name) then continue
     if ← generatedEntryAuxiliary owner entries found env name (expansionKeys.getD {}) then continue
+    if ← generatedEntryProof owner entries found env name (expansionKeys.getD {}) then continue
     let references := SourceAudit.directInterfaceReferences env info
     unless references.isEmpty do
       throwError "contract.reg:contract_reference_outside_entry:{name}:{references}"
@@ -229,7 +263,7 @@ def discoverWithStructure (requirements : Array RootStructure.Requirement)
         else if head == ``Contract.ExpectedDeclaration then
           throwError "contract.root_structure:independent_expected_not_allowed:{owner}:{info.name}"
         else if head == ``Contract.Seal then
-          result := { result with seals := result.seals.push (owner, ← Decoder.readSeal info.value) }
+          result := { result with seals := result.seals.push (owner, ← Decoder.readSeal info.name info.value) }
       result := { result with definitions := result.definitions ++ definitions }
     RootStructure.check requirements moduleNames result.roots result.seals
     return result

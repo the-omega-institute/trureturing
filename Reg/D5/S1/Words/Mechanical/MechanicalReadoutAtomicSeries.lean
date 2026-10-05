@@ -76,21 +76,24 @@ theorem seriesSensitivity : FiniteSlotSensitivity seriesArena.toPrimitiveLawAren
   · intro i
     exact Fin.elim0 i
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass) (type_of% (seriesArena)) (type_of% (seriesArena)) (type_of% (@mechanicalReadoutRealization SeriesOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => MechanicalReadoutSources.seriesReadout))) (type_of% (seriesVariation)) (type_of% (seriesSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass) (type_of% (@mechanicalReadoutRealization SeriesOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.seriesReadout))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.seriesBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(seriesArena)⟩,
-  objectArena := ⟨(seriesArena)⟩,
+  arena := .object ⟨(seriesArena)⟩,
+  objectArena := .object ⟨(seriesArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicSeriesRegistration.seriesArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicSeriesRegistration.seriesRealization) (seriesRealization.toPrimitiveBundle) ⟨(seriesBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicSeriesRegistration.seriesArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicSeriesRegistration.seriesRealization) (seriesRealization.toPrimitiveBundle) ⟨(seriesBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (seriesBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((seriesRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization SeriesOutput (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.seriesReadout)),
-  variation := some ⟨(seriesVariation)⟩,
-  sensitivity := some ⟨(seriesSensitivity)⟩,
+  variation := .evidence ⟨(seriesVariation)⟩ (by first | exact (seriesVariation) | exact ⟨_, _, (seriesVariation)⟩),
+  sensitivity := .evidence ⟨(seriesSensitivity)⟩ (by exact (seriesSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,

@@ -14,26 +14,26 @@ private def computedIdentity (a b : α) : Bool := unsafe !(ptrEq a b)
 
 private def swappedIdentity (a b : α) : Bool := unsafe ptrEq b a
 
-private def publishIdentity (_snapshot : ValidatedSourceSnapshot) : CommandElabM Unit := do
+private def publishIdentity (_snapshot : ValidatedSourceSnapshot) (_input : SealInput) : CommandElabM Unit := do
   let env ← getEnv
   if identity env env then pure () else throwError "identity failure"
 
-private def publishFile (_snapshot : ValidatedSourceSnapshot) : CommandElabM Unit := do
+private def publishFile (_snapshot : ValidatedSourceSnapshot) (_input : SealInput) : CommandElabM Unit := do
   let env ← getEnv
   if fileIdentity env env then pure () else throwError "identity failure"
 
-private def publishComputed (_snapshot : ValidatedSourceSnapshot) : CommandElabM Unit := do
+private def publishComputed (_snapshot : ValidatedSourceSnapshot) (_input : SealInput) : CommandElabM Unit := do
   let env ← getEnv
   if computedIdentity env env then pure () else throwError "identity failure"
 
-private def publishSwapped (_snapshot : ValidatedSourceSnapshot) : CommandElabM Unit := do
+private def publishSwapped (_snapshot : ValidatedSourceSnapshot) (_input : SealInput) : CommandElabM Unit := do
   let env ← getEnv
   if swappedIdentity env env then pure () else throwError "identity failure"
 
-private def identityCommand : ValidatedSourceSnapshot → CommandElab := terminalSealCommand publishIdentity
-private def fileCommand : ValidatedSourceSnapshot → CommandElab := terminalSealCommand publishFile
-private def computedCommand : ValidatedSourceSnapshot → CommandElab := terminalSealCommand publishComputed
-private def swappedCommand : ValidatedSourceSnapshot → CommandElab := terminalSealCommand publishSwapped
+private def identityCommand : ValidatedSourceSnapshot → SealInput → CommandElab := terminalSealCommand publishIdentity
+private def fileCommand : ValidatedSourceSnapshot → SealInput → CommandElab := terminalSealCommand publishFile
+private def computedCommand : ValidatedSourceSnapshot → SealInput → CommandElab := terminalSealCommand publishComputed
+private def swappedCommand : ValidatedSourceSnapshot → SealInput → CommandElab := terminalSealCommand publishSwapped
 
 -- Audit only: none of the candidate publication closures is executed.
 run_cmd do

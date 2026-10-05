@@ -16,19 +16,22 @@ namespace Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparat
 open _root_.Reg.Support.LegacyCausalFinite
 open _root_.Reg.Support.LegacyCausalSlots (slotRealization)
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention) (type_of% (_root_.Reg.Support.LegacyCausalSlots.oiDomainArena)) (type_of% (Reg.Support.LegacyCausalCoordinates.objectArena)) (type_of% (slotRealization (fun i x => oiRead i x))) (type_of% (oi_variation)) (type_of% (_root_.Reg.Support.LegacyCausalSlots.oi_sensitivity)) (type_of% (_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention) (type_of% (slotRealization (fun i x => oiRead i x))) (type_of% (_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM)) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interventions") "ObservationInterventionSeparation") "observation_strictly_weaker_than_intervention") "Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.UnifiedCausalRegistration/Reg.Support.LegacyCausalCoordinates.objectArena/«causal-unified-transitions»") "__information_unit"),
   realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interventions") "ObservationInterventionSeparation") "observation_strictly_weaker_than_intervention") "Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.UnifiedCausalRegistration/Reg.Support.LegacyCausalCoordinates.objectArena/«causal-unified-transitions»") "__primitive_realization"),
   realizationSource := some `Reg.Support.LegacyCausalFinite.oi_bridge,
   generated := false,
-  arena := ⟨(_root_.Reg.Support.LegacyCausalSlots.oiDomainArena)⟩,
-  objectArena := ⟨(Reg.Support.LegacyCausalCoordinates.objectArena)⟩,
+  arena := .object ⟨(_root_.Reg.Support.LegacyCausalSlots.oiDomainArena)⟩,
+  objectArena := .finite ⟨(Reg.Support.LegacyCausalCoordinates.objectArena)⟩,
   catalog := (Lean.Name.str Lean.Name.anonymous "causal-unified-transitions"),
   localNames := false,
-  realization := .legacy (Reg.Support.LegacyCausalSlots.oiArena) (Reg.Support.LegacyCausalFinite.oiActual) (oiActual.toPrimitiveBundle) ⟨(oi_bridge)⟩,
+  realization := .legacy (Reg.Support.LegacyCausalSlots.oiArena) (Reg.Support.LegacyCausalFinite.oiActual) (oiActual.toPrimitiveBundle) ⟨(oi_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (oi_bridge) (@_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((oiActual.toPrimitiveBundle)).Nonempty; decide),
   readout := some (slotRealization (fun i x => oiRead i x)),
-  variation := some ⟨(oi_variation)⟩,
-  sensitivity := some ⟨(_root_.Reg.Support.LegacyCausalSlots.oi_sensitivity)⟩,
+  variation := .evidence ⟨(oi_variation)⟩ (by first | exact (oi_variation) | exact ⟨_, _, (oi_variation)⟩),
+  sensitivity := .evidence ⟨(_root_.Reg.Support.LegacyCausalSlots.oi_sensitivity)⟩ (by exact (_root_.Reg.Support.LegacyCausalSlots.oi_sensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM),
   sourceSelection := none,
   continuation := .unknown,

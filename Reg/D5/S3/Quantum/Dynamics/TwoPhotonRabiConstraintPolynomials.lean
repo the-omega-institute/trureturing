@@ -57,19 +57,22 @@ def registration : Registration arena (claim) where
     have hc := congrArg (fun p : ℝ[X] => p.coeff 1) h
     norm_num [actual, realize, constraintPoly, Polynomial.coeff_one] at hc
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.result) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p n => constraintPoly p.1 p.2.1 p.2.2 1 n) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.result) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p n => constraintPoly p.1 p.2.1 p.2.2 1 n) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Dynamics") "TwoPhotonRabiConstraintPolynomials") "result") "Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials/Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p n => constraintPoly p.1 p.2.1 p.2.2 1 n) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, definition := some { owner := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, name := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.claim, path := #[] }, coordinates := #[0, 1, 3], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,

@@ -89,21 +89,24 @@ def registration : Registration arena
     change Chebyshev.psi 0 - 0 ≠ Chebyshev.psi 1 - 1
     norm_num [Chebyshev.psi_zero, Chebyshev.psi_one]
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.MediumPNT) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
-    (fun _ _ x => Chebyshev.psi x - x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.MediumPNT) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ x => Chebyshev.psi x - x) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "MediumPNT") "Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT/Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ _ x => Chebyshev.psi x - x) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Weil.PrimeNumberTheorem.MediumPNT, definition := none, coordinates := #[], readouts := #[{ path := #["arg", "body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

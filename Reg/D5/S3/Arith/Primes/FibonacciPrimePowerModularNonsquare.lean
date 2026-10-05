@@ -69,23 +69,26 @@ def registration : Registration arena
       Nat.fib (7 ^ (1 + 1)) / Nat.fib (7 ^ 1)
     decide
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.Primes.FibonacciPrimePowerModularNonsquare.fibonacci_prime_power_modular_nonsquare) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.Primes.FibonacciPrimePowerModularNonsquare.fibonacci_prime_power_modular_nonsquare) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ q k => Nat.fib (q ^ (k + 1)) / Nat.fib (q ^ k))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "Primes") "FibonacciPrimePowerModularNonsquare") "fibonacci_prime_power_modular_nonsquare") "Reg.D5.S3.Arith.Primes.FibonacciPrimePowerModularNonsquare/Reg.D5.S3.Arith.Primes.FibonacciPrimePowerModularNonsquare.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.Primes.FibonacciPrimePowerModularNonsquare.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ q k => Nat.fib (q ^ (k + 1)) / Nat.fib (q ^ k))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.Primes.FibonacciPrimePowerModularNonsquare, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

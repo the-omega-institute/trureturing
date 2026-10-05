@@ -101,19 +101,22 @@ def registration : Registration arena.{u, v} (arena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.finite_spectral_family_geometry.{u_1, u_2}) (type_of% (arena.{u_1, u_2})) (type_of% (arena.{u_1, u_2})) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => 1 - x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.finite_spectral_family_geometry.{u_1, u_2}) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => 1 - x) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Entanglement") "SpectralFamilyGeometry") "finite_spectral_family_geometry") "Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry/Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u_1, u_2})⟩,
-  objectArena := ⟨(arena.{u_1, u_2})⟩,
+  arena := .source ⟨(arena.{u_1, u_2})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u_1, u_2}) ⟨(registration.{u_1, u_2})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => 1 - x) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,

@@ -62,8 +62,8 @@ end {namespace}
                                        ('loader', 'Lean.findOLean'), ('mutate', 'Lean.setEnv'),
                                        ('clean', None)]:
                 stem = f'probe{index}_{action}'
-                declarations.append(f'''def {stem}Publication (_ : ValidatedSourceSnapshot) : CommandElabM Unit := {namespace}.{action}
-def {stem}Seal : ValidatedSourceSnapshot → CommandElab := terminalSealCommand {stem}Publication
+                declarations.append(f'''def {stem}Publication (_ : ValidatedSourceSnapshot) (_ : SealInput) : CommandElabM Unit := {namespace}.{action}
+def {stem}Seal : ValidatedSourceSnapshot → SealInput → CommandElab := terminalSealCommand {stem}Publication
 def {stem}StageBody (_ : Name) : CommandElabM Unit := {namespace}.{action}
 def {stem}Stage : CommandElab := terminalInformationAnalysisStageCommand {stem}StageBody
 def {stem}ExportBody (_ : Name) (_ : List ArtifactKind) : CommandElabM AnalysisExportPlan := do
@@ -154,7 +154,8 @@ run_cmd do
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         (package / 'TypedInputs.lean').write_text('''import LeanInformationAuditInterface.Contract.Catalog
 open LeanInformationAudit
-def sealInput : Contract.Seal := { rootId := `TypedInputs, options := #[] }
+def rootInput : Contract.RootCatalog := { data := {
+  rootId := `TypedInputs, expected := #[], source := #[], baseline := #[], companionPrefix := none } }
 def templateInput : Contract.TemplateEnrollment Nat := {
   name := `Nat, version := 1, constructors := #[], options := #[] }
 ''')

@@ -113,27 +113,30 @@ def sharpRegistration : Registration sharpArena
       exact nomatch i
   dependence := actual_dependence
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lower_bound) (type_of% (lowerArena)) (type_of% (lowerArena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lower_bound) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun (_ : Unit) (_ : ℝ≥0)
       (s : AddCircle.{0} (2 * Real.pi) → AddCircle.{0} (2 * Real.pi)) =>
       (∫ x : AddCircle.{0} (2 * Real.pi), circle_error s x ∂AddCircle.haarAddCircle : ℝ))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Topology") "CircleDoubleCoverLipschitzError") "lower_bound") "Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError/Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(lowerArena)⟩,
-  objectArena := ⟨(lowerArena)⟩,
+  arena := .source ⟨(lowerArena)⟩,
+  objectArena := .source ⟨(lowerArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (lowerArena) ⟨(lowerRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun (_ : Unit) (_ : ℝ≥0)
       (s : AddCircle.{0} (2 * Real.pi) → AddCircle.{0} (2 * Real.pi)) =>
       (∫ x : AddCircle.{0} (2 * Real.pi), circle_error s x ∂AddCircle.haarAddCircle : ℝ))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -141,27 +144,30 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2
   options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
 
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpness) (type_of% (sharpArena)) (type_of% (sharpArena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpness) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun (_ : Unit) (_ : ℝ≥0)
       (s : AddCircle.{0} (2 * Real.pi) → AddCircle.{0} (2 * Real.pi)) =>
       (∫ x : AddCircle.{0} (2 * Real.pi), circle_error s x ∂AddCircle.haarAddCircle : ℝ))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Topology") "CircleDoubleCoverLipschitzError") "sharpness") "Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError/Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(sharpArena)⟩,
-  objectArena := ⟨(sharpArena)⟩,
+  arena := .source ⟨(sharpArena)⟩,
+  objectArena := .source ⟨(sharpArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (sharpArena) ⟨(sharpRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun (_ : Unit) (_ : ℝ≥0)
       (s : AddCircle.{0} (2 * Real.pi) → AddCircle.{0} (2 * Real.pi)) =>
       (∫ x : AddCircle.{0} (2 * Real.pi), circle_error s x ∂AddCircle.haarAddCircle : ℝ))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "arg", "body", "arg", "fn", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

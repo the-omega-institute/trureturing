@@ -92,21 +92,24 @@ theorem slopeSensitivity : FiniteSlotSensitivity slopeArena.toPrimitiveLawArena 
   · intro i
     exact Fin.elim0 i
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.local_slope_disagreement_law) (type_of% (slopeArena)) (type_of% (slopeArena)) (type_of% (@mechanicalReadoutRealization SlopeOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => MechanicalReadoutSources.slopeReadout))) (type_of% (slopeVariation)) (type_of% (slopeSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.local_slope_disagreement_law) (type_of% (@mechanicalReadoutRealization SlopeOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.slopeReadout))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.local_slope_disagreement_law.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.slopeBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(slopeArena)⟩,
-  objectArena := ⟨(slopeArena)⟩,
+  arena := .object ⟨(slopeArena)⟩,
+  objectArena := .object ⟨(slopeArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.slopeArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.slopeRealization) (slopeRealization.toPrimitiveBundle) ⟨(slopeBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.slopeArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.slopeRealization) (slopeRealization.toPrimitiveBundle) ⟨(slopeBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (slopeBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.local_slope_disagreement_law))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((slopeRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization SlopeOutput (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.slopeReadout)),
-  variation := some ⟨(slopeVariation)⟩,
-  sensitivity := some ⟨(slopeSensitivity)⟩,
+  variation := .evidence ⟨(slopeVariation)⟩ (by first | exact (slopeVariation) | exact ⟨_, _, (slopeVariation)⟩),
+  sensitivity := .evidence ⟨(slopeSensitivity)⟩ (by exact (slopeSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,

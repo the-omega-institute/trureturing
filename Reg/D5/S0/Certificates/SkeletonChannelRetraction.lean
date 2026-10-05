@@ -21,23 +21,26 @@ open _root_.D5.S0.Certificates.SkeletonChannelRetraction
 
 
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two) (type_of% (digitArena)) (type_of% (digitArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
     (Fin 4) (Fin 4) (instDecidableEqFin 4)
-    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrentReadout d) (fun _ => digitTwo))) (type_of% (recurrent_lawSensitive)) (type_of% (digit_slotSensitive)) (type_of% (Fin 4)) (type_of% (recurrentResidual)) (Unit) := {
+    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrentReadout d) (fun _ => digitTwo))) (type_of% (Fin 4)) (type_of% (recurrentResidual)) := {
   unitName := `Reg.D5.S0.Certificates.SkeletonChannelRetraction.D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two.__information_unit,
   realizationName := `D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrent_bridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(digitArena)⟩,
-  objectArena := ⟨(digitArena)⟩,
+  arena := .law ⟨(digitArena)⟩,
+  objectArena := .law ⟨(digitArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (digitArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrentRealization) (recurrentRealization.toPrimitiveBundle) ⟨(recurrent_bridge)⟩,
+  realization := .legacy (digitArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrentRealization) (recurrentRealization.toPrimitiveBundle) ⟨(recurrent_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (recurrent_bridge) (@_root_.D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((recurrentRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
     (Fin 4) (Fin 4) (instDecidableEqFin 4)
     (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrentReadout d) (fun _ => digitTwo)),
-  variation := some ⟨(recurrent_lawSensitive)⟩,
-  sensitivity := some ⟨(digit_slotSensitive)⟩,
+  variation := .evidence ⟨(recurrent_lawSensitive)⟩ (by first | exact (recurrent_lawSensitive) | exact ⟨_, _, (recurrent_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(digit_slotSensitive)⟩ (by exact (digit_slotSensitive)),
+  partialSensitivity := none,
   escapeFrom := some (Fin 4),
   sourceSelection := none,
   continuation := .evidence ⟨(recurrentResidual)⟩,
@@ -58,23 +61,26 @@ open _root_.D5.S0.Certificates.SkeletonChannelRetraction
 
 
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero) (type_of% (digitArena)) (type_of% (digitArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
     (Fin 4) (Fin 4) (instDecidableEqFin 4)
-    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transientReadout d) (fun _ => digitZero))) (type_of% (transient_lawSensitive)) (type_of% (digit_slotSensitive)) (type_of% (Fin 4)) (type_of% (transientResidual)) (Unit) := {
+    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transientReadout d) (fun _ => digitZero))) (type_of% (Fin 4)) (type_of% (transientResidual)) := {
   unitName := `Reg.D5.S0.Certificates.SkeletonChannelRetraction.D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero.__information_unit,
   realizationName := `D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transient_bridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(digitArena)⟩,
-  objectArena := ⟨(digitArena)⟩,
+  arena := .law ⟨(digitArena)⟩,
+  objectArena := .law ⟨(digitArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (digitArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transientRealization) (transientRealization.toPrimitiveBundle) ⟨(transient_bridge)⟩,
+  realization := .legacy (digitArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transientRealization) (transientRealization.toPrimitiveBundle) ⟨(transient_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (transient_bridge) (@_root_.D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((transientRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
     (Fin 4) (Fin 4) (instDecidableEqFin 4)
     (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transientReadout d) (fun _ => digitZero)),
-  variation := some ⟨(transient_lawSensitive)⟩,
-  sensitivity := some ⟨(digit_slotSensitive)⟩,
+  variation := .evidence ⟨(transient_lawSensitive)⟩ (by first | exact (transient_lawSensitive) | exact ⟨_, _, (transient_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(digit_slotSensitive)⟩ (by exact (digit_slotSensitive)),
+  partialSensitivity := none,
   escapeFrom := some (Fin 4),
   sourceSelection := none,
   continuation := .evidence ⟨(transientResidual)⟩,

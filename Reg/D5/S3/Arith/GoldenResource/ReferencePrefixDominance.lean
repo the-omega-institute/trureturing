@@ -59,21 +59,24 @@ def registration : Registration arena
     refine ⟨⟨(1 / 2 : ℝ), 2⟩, 0, 1, ?_⟩
     norm_num [actual, realize]
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.log_geom_prefix_lt_harmonic_prefix) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
-    (fun _ p k => p.1 ^ (k + 1) / (k + 1)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.log_geom_prefix_lt_harmonic_prefix) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p k => p.1 ^ (k + 1) / (k + 1)) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "GoldenResource") "ReferencePrefixDominance") "log_geom_prefix_lt_harmonic_prefix") "Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance/Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ p k => p.1 ^ (k + 1) / (k + 1)) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.GoldenResource.ReferencePrefixDominance, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

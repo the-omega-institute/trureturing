@@ -35,21 +35,24 @@ theorem _root_.D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKer
 
 
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness.intervention_kernel_strictly_finer_than_observation) (type_of% (finiteObservationInterventionLawArena)) (type_of% (finiteObservationInterventionArena)) (type_of% (@observationFiniteRealization DeterministicBoolSCM
-    (fun M => oiObsCode M) (fun M => oiIntCode M))) (type_of% (finiteObservation_law_sensitive)) (type_of% (finiteObservation_slot_sensitive)) (type_of% (DeterministicBoolSCM)) (type_of% (finiteObservationResidual)) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness.intervention_kernel_strictly_finer_than_observation) (type_of% (@observationFiniteRealization DeterministicBoolSCM
+    (fun M => oiObsCode M) (fun M => oiIntCode M))) (type_of% (DeterministicBoolSCM)) (type_of% (finiteObservationResidual)) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "InterventionLaws") "ObservationInterventionKernelStrictness") "intervention_kernel_strictly_finer_than_observation") "Reg.D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena/finiteProbe") "__information_unit"),
   realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "InterventionLaws") "ObservationInterventionKernelStrictness") "intervention_kernel_strictly_finer_than_observation") "Reg.D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena/finiteProbe") "__primitive_realization"),
   realizationSource := some `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteProfile_bridge,
   generated := false,
-  arena := ⟨(finiteObservationInterventionLawArena)⟩,
-  objectArena := ⟨(finiteObservationInterventionArena)⟩,
+  arena := .law ⟨(finiteObservationInterventionLawArena)⟩,
+  objectArena := .finite ⟨(finiteObservationInterventionArena)⟩,
   catalog := `finiteProbe,
   localNames := false,
-  realization := .legacy (finiteObservationInterventionLawArena) (D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationRealization) (finiteObservationRealization.toPrimitiveBundle) ⟨(finiteProfile_bridge)⟩,
+  realization := .legacy (finiteObservationInterventionLawArena) (D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationRealization) (finiteObservationRealization.toPrimitiveBundle) ⟨(finiteProfile_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (finiteProfile_bridge) (@_root_.D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness.intervention_kernel_strictly_finer_than_observation))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((finiteObservationRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@observationFiniteRealization DeterministicBoolSCM
     (fun M => oiObsCode M) (fun M => oiIntCode M)),
-  variation := some ⟨(finiteObservation_law_sensitive)⟩,
-  sensitivity := some ⟨(finiteObservation_slot_sensitive)⟩,
+  variation := .evidence ⟨(finiteObservation_law_sensitive)⟩ (by first | exact (finiteObservation_law_sensitive) | exact ⟨_, _, (finiteObservation_law_sensitive)⟩),
+  sensitivity := .evidence ⟨(finiteObservation_slot_sensitive)⟩ (by exact (finiteObservation_slot_sensitive)),
+  partialSensitivity := none,
   escapeFrom := some (DeterministicBoolSCM),
   sourceSelection := none,
   continuation := .evidence ⟨(finiteObservationResidual)⟩,

@@ -18,19 +18,22 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 open Reg.Support.LegacyContextReplacement
 open LeanInformationAudit
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points) (type_of% (domainArena)) (type_of% (objectArena)) (type_of% (cutRealization (fun x : ContextData => Reg.Support.LegacyContextCausalCodes.contextCode x))) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.baselineContext)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points) (type_of% (cutRealization (fun x : ContextData => Reg.Support.LegacyContextCausalCodes.contextCode x))) (type_of% (_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.baselineContext)) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interpretation") "InterpretationFixedPoint") "context_parameters_can_select_distinct_fixed_points") "Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot/Reg.Support.LegacyContextReplacement.objectArena/Reg.Support.LegacyContextReplacement.objectArena") "__information_unit"),
   realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interpretation") "InterpretationFixedPoint") "context_parameters_can_select_distinct_fixed_points") "Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot/Reg.Support.LegacyContextReplacement.objectArena/Reg.Support.LegacyContextReplacement.objectArena") "__primitive_realization"),
   realizationSource := some `Reg.Support.LegacyContextReplacement.bridge,
   generated := false,
-  arena := ⟨(domainArena)⟩,
-  objectArena := ⟨(objectArena)⟩,
+  arena := .object ⟨(domainArena)⟩,
+  objectArena := .finite ⟨(objectArena)⟩,
   catalog := `Reg.Support.LegacyContextReplacement.objectArena,
   localNames := false,
-  realization := .legacy (Reg.Support.LegacyContextReplacement.lawArena) (Reg.Support.LegacyContextReplacement.actual) (actual.toPrimitiveBundle) ⟨(bridge)⟩,
+  realization := .legacy (Reg.Support.LegacyContextReplacement.lawArena) (Reg.Support.LegacyContextReplacement.actual) (actual.toPrimitiveBundle) ⟨(bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (bridge) (@_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((actual.toPrimitiveBundle)).Nonempty; decide),
   readout := some (cutRealization (fun x : ContextData => Reg.Support.LegacyContextCausalCodes.contextCode x)),
-  variation := some ⟨(variation)⟩,
-  sensitivity := some ⟨(sensitivity)⟩,
+  variation := .evidence ⟨(variation)⟩ (by first | exact (variation) | exact ⟨_, _, (variation)⟩),
+  sensitivity := .evidence ⟨(sensitivity)⟩ (by exact (sensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.baselineContext),
   sourceSelection := none,
   continuation := .unknown,

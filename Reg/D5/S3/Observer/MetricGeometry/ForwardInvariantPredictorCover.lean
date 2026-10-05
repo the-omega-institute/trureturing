@@ -85,19 +85,22 @@ theorem dependence : ObservationalDependence signature actual := by
 def registration : Registration arena.{u,v,w} (arena.Law actual) :=
   Registration.mk actual Iff.rfl ⟨positiveLaw, rejected, rejected_law⟩ sensitivity dependence
 
-noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Observer.MetricGeometry.ForwardInvariantPredictorCover.finite_predictor_iff_forward_invariant_cover.{u_1, u_2, u_3}) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ t => ENNReal.ofReal (2 * t)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Observer.MetricGeometry.ForwardInvariantPredictorCover.finite_predictor_iff_forward_invariant_cover.{u_1, u_2, u_3}) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ t => ENNReal.ofReal (2 * t)) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Observer") "MetricGeometry") "ForwardInvariantPredictorCover") "finite_predictor_iff_forward_invariant_cover") "Reg.D5.S3.Observer.MetricGeometry.ForwardInvariantPredictorCover/Reg.D5.S3.Observer.MetricGeometry.ForwardInvariantPredictorCover.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Observer.MetricGeometry.ForwardInvariantPredictorCover.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u_1, u_2, u_3})⟩,
-  objectArena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  arena := .source ⟨(arena.{u_1, u_2, u_3})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2, u_3})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u_1, u_2, u_3}) ⟨(registration.{u_1, u_2, u_3})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ t => ENNReal.ofReal (2 * t)) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Observer.MetricGeometry.ForwardInvariantPredictorCover, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg", "arg"], booleanPredicate := false }] },
   continuation := .unknown,

@@ -68,19 +68,22 @@ def registration : Registration arena
     change 2 * 3 ^ (1 + 1) ≠ 2 * 3 ^ (2 + 1)
     norm_num
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods.cubic_block_b_prime_period) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ j => 2 * 3 ^ (j + 1)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods.cubic_block_b_prime_period) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ j => 2 * 3 ^ (j + 1)) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "Primes") "GoldenCubicBlockPrimePeriods") "cubic_block_b_prime_period") "Reg.D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods/Reg.D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods.B.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods.B.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ j => 2 * 3 ^ (j + 1)) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -148,19 +151,22 @@ def registration : Registration arena
     change 4 * 3 ^ (1 + 1) ≠ 4 * 3 ^ (2 + 1)
     norm_num
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods.cubic_block_c_prime_period) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ j => 4 * 3 ^ (j + 1)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods.cubic_block_c_prime_period) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ j => 4 * 3 ^ (j + 1)) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "Primes") "GoldenCubicBlockPrimePeriods") "cubic_block_c_prime_period") "Reg.D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods/Reg.D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods.C.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods.C.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ j => 4 * 3 ^ (j + 1)) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

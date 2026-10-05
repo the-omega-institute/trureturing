@@ -3,6 +3,7 @@ open Lean LeanInformationAudit.Contract
 namespace Boundary.LiteralGrammar
 def parenthesized : (LeanInformationAudit.Contract.Seal) := {
   rootId := Name.str (Name.num Name.anonymous (Nat.succ Nat.zero)) "root"
+  catalogs := #[],
   options := #[
     ({ name := `nat.annotated, value := .nat (7 : Nat) } : OptionSetting),
     ⟨`nat.chain, .nat (.succ (.succ .zero))⟩,

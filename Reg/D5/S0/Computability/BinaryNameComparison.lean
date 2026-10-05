@@ -80,21 +80,26 @@ private theorem sourceBridge : LegacyPrimitiveRealization arena
     constructor
     exact ⟨fun _ => sourceLaw, fun _ => name_compare_run⟩
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@_root_.PredictiveThermodynamic.BinaryNames.name_compare_run)
-    (type_of% arena) (type_of% arena)
-    (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun b => b)))
-    (type_of% variation) (type_of% sensitivity) (type_of% Bool) Unit Unit := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.PredictiveThermodynamic.BinaryNames.name_compare_run) (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun b => b))) (type_of% Bool) Unit := {
   unitName := `Reg.D5.S0.Computability.BinaryNameComparison.informationUnit,
   realizationName := `Reg.D5.S0.Computability.BinaryNameComparison.sourceBridge,
-  realizationSource := none, generated := false,
-  arena := ⟨arena⟩, objectArena := ⟨arena⟩, catalog := Lean.Name.anonymous,
+  realizationSource := none,
+  generated := false,
+  arena := .law ⟨arena⟩,
+  objectArena := .law ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy arena symbols symbols.toPrimitiveBundle ⟨sourceBridge⟩,
+  realization := .legacy arena symbols symbols.toPrimitiveBundle ⟨sourceBridge⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit sourceBridge (@_root_.PredictiveThermodynamic.BinaryNames.name_compare_run))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change (symbols.toPrimitiveBundle).Nonempty; decide),
   readout := some (@cutRealization Bool Bool instDecidableEqBool (fun b => b)),
-  variation := some ⟨variation⟩, sensitivity := some ⟨sensitivity⟩,
-  escapeFrom := some Bool, sourceSelection := none,
-  continuation := .unknown, familyRecord := none,
+  variation := .evidence ⟨variation⟩ (by first | exact variation | exact ⟨_, _, variation⟩),
+  sensitivity := .evidence ⟨sensitivity⟩ (by exact sensitivity),
+  partialSensitivity := none,
+  escapeFrom := some Bool,
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
   options := #[{ name := `autoImplicit, value := .bool false },
     { name := `backward.isDefEq.respectTransparency, value := .bool false }] }
 

@@ -22,6 +22,7 @@ structure TemplateOccurrenceEvent where
   arena : Expr
   registrationSource : String
   registrationSourceIdentity : String
+  compiledMathematics : Option CompiledMathematics := none
   deriving Inhabited
 
 structure TemplateBindingClaim where

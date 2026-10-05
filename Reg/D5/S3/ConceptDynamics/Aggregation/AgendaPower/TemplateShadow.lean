@@ -18,19 +18,22 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape
 open _root_.Reg.Support.LegacyFiniteTransport
 open _root_.Reg.Support.LegacyAgenda
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power) (type_of% (arena)) (type_of% (arena)) (type_of% (agendaRealization (fun s => winnerCode s) (fun s => valid s))) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.Agenda)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power) (type_of% (agendaRealization (fun s => winnerCode s) (fun s => valid s))) (type_of% (_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.Agenda)) (Unit) := {
   unitName := `Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.TemplateShadow.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.__information_unit,
   realizationName := `Reg.Support.LegacyAgenda.bridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .object ⟨(arena)⟩,
+  objectArena := .object ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} Reg.Support.LegacyAgenda.arena) (Reg.Support.LegacyAgenda.actual) (actual.toPrimitiveBundle) ⟨(bridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} Reg.Support.LegacyAgenda.arena) (Reg.Support.LegacyAgenda.actual) (actual.toPrimitiveBundle) ⟨(bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (bridge) (@_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((actual.toPrimitiveBundle)).Nonempty; decide),
   readout := some (agendaRealization (fun s => winnerCode s) (fun s => valid s)),
-  variation := some ⟨(variation)⟩,
-  sensitivity := some ⟨(sensitivity)⟩,
+  variation := .evidence ⟨(variation)⟩ (by first | exact (variation) | exact ⟨_, _, (variation)⟩),
+  sensitivity := .evidence ⟨(sensitivity)⟩ (by exact (sensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.Agenda),
   sourceSelection := none,
   continuation := .unknown,

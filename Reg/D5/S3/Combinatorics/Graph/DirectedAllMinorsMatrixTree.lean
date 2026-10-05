@@ -156,19 +156,22 @@ def registration : Registration arena.{u} SourceClaim.{u} where
       exact nomatch anchor
   dependence := dependence
 
-noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{u_1 + 3, u_1 + 3, u_1 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_1 + 1, u_1, 0, u_1, 0, 0} (@_root_.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.directed_all_minors_matrix_tree.{u_1}) (type_of% (arena.{u_1})) (type_of% (arena.{u_1})) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ p M => minorValue.{u_1} p M) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.directed_all_minors_matrix_tree.{u_1}) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ p M => minorValue.{u_1} p M) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Combinatorics") "Graph") "DirectedAllMinorsMatrixTree") "directed_all_minors_matrix_tree") "Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree/Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u_1})⟩,
-  objectArena := ⟨(arena.{u_1})⟩,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ p M => minorValue.{u_1} p M) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, definition := none, coordinates := #[0, 1, 2, 3, 5, 6, 7, 8, 9], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

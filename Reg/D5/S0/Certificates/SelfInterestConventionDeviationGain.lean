@@ -20,23 +20,26 @@ open _root_.D5.S0.Certificates.SelfInterestConventionDeviationGain
 
 
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff) (type_of% (dualArena)) (type_of% (dualArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.IffRegistrationTemplates.iffRealization
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.IffRegistrationTemplates.iffRealization
     Convention (fun convention => dualFixedReadout convention)
-    (fun convention => dualAlternativesReadout convention))) (type_of% (dual_lawSensitive)) (type_of% (dual_slotSensitive)) (Unit) (Unit) (Unit) := {
+    (fun convention => dualAlternativesReadout convention))) (Unit) (Unit) := {
   unitName := `Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain.D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff.__information_unit,
   realizationName := `D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dual_bridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(dualArena)⟩,
-  objectArena := ⟨(dualArena)⟩,
+  arena := .law ⟨(dualArena)⟩,
+  objectArena := .law ⟨(dualArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (dualArena) (D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dualRealization) (dualRealization.toPrimitiveBundle) ⟨(dual_bridge)⟩,
+  realization := .legacy (dualArena) (D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dualRealization) (dualRealization.toPrimitiveBundle) ⟨(dual_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (dual_bridge) (@_root_.D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((dualRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@D5.S3.ConceptDynamics.InformationEscape.IffRegistrationTemplates.iffRealization
     Convention (fun convention => dualFixedReadout convention)
     (fun convention => dualAlternativesReadout convention)),
-  variation := some ⟨(dual_lawSensitive)⟩,
-  sensitivity := some ⟨(dual_slotSensitive)⟩,
+  variation := .evidence ⟨(dual_lawSensitive)⟩ (by first | exact (dual_lawSensitive) | exact ⟨_, _, (dual_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(dual_slotSensitive)⟩ (by exact (dual_slotSensitive)),
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := none,
   continuation := .absent,

@@ -11,7 +11,7 @@ run_meta do
     LeanInformationAudit.Repository.source
       ("tools/lean-inspector/" ++ owner.toString.replace "." "/" ++ ".lean")
   assertTest "discovery.catalog_expected_only"
-    (result.registrations.size == 12 && result.enrollments.size == 1 &&
+    (result.registrations.size == 16 && result.enrollments.size == 1 &&
       result.roots.size == 1 && result.seals.size == 1)
   assertTest "discovery.private_noncomputable"
     (result.definitions.any (fun d => isPrivateName d.info.name))
@@ -58,13 +58,59 @@ run_meta do
   let witness ← Discovery.discoverWithStructure #[] #[`LeanInformationAuditRegTests.ContractWitnessFixture] fun owner =>
     LeanInformationAudit.Repository.source
       ("tools/lean-inspector/" ++ owner.toString.replace "." "/" ++ ".lean")
-  let some (_, row) := witness.registrations[0]? | throwError "setup: witness"
+  let some (_, row) := witness.registrations.find?
+      (·.2.input.entry.unitName == `ContractTests.witness.unit)
+    | throwError "setup: witness"
   assertTest "decoder.witness_positive_variation_sensitivity"
-    (witness.registrations.size == 1 && row.positive.isSome &&
+    (witness.registrations.size == 4 && row.positive.isSome &&
       row.variation.isSome &&
       !row.input.entry.sensitivityWitness.isAnonymous &&
       row.input.declaration.any (fun d =>
         d.escapeInput.fromObject.isSome && d.escapeInput.openContinuation))
+
+  for (label, expected) in #[
+      ("missingPositive", "unclassified_form:dtr.witness_bridge_requires_positive_variation"),
+      ("missingNegative", "unclassified_form:dtr.witness_bridge_requires_negative_variation"),
+      ("unsupportedSensitivity", "unclassified_form:dtr.witness_bridge_requires_sensitivity")] do
+    let some (_, submitted) := witness.registrations.find?
+        (·.2.input.entry.unitName == ((`ContractTests.witness).str label).str "unit")
+      | throwError "setup: witness obligation fixture"
+    assertTest s!"gates.witness_incomplete.{label}"
+      ((← LeanInformationAudit.RegistrationGates.validateFinite submitted.input.entry) == some expected)
+
+  for (label, expected) in #[
+      ("missingVariation", LeanInformationAudit.CompiledObligationState.absent),
+      ("unknownVariation", .unknown), ("unsupportedVariation", .unsupported)] do
+    let some (_, row) := result.registrations.find?
+        (·.2.input.entry.unitName == ((`ContractTests).str label).str "unit")
+      | throwError "setup: compiled obligation state"
+    assertTest s!"decoder.compiled_obligation.{label}"
+      (row.input.entry.compiledMathematics.any (·.variation == expected))
+    let diagnostic ← LeanInformationAudit.RegistrationGates.validateFinite row.input.entry
+    let reason := if label == "missingVariation" then "missing_witness" else "invalid_witness"
+    let expectedDiagnostic := "IE-C048 RealizationIgnoredByLaw \
+      key=LeanInformationAuditRegTests.ContractFixtures/\
+      D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena/\
+      D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled \
+      law_arena=D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena \
+      signature=D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena.signature \
+      domain=all reason=" ++ reason
+    assertTest s!"gates.compiled_obligation.{label}" (diagnostic == some expectedDiagnostic)
+  let some (_, partialEvidence) := result.registrations.find?
+      (·.2.input.entry.unitName == `ContractTests.partialSensitivity.unit)
+    | throwError "setup: compiled partialEvidence sensitivity"
+  assertTest "decoder.partial_sensitivity.support"
+    (partialEvidence.input.entry.compiledMathematics.any (fun m =>
+      m.partialReadouts == some #[true, false] && m.partialAnchors == some #[]))
+  let diagnostic ← LeanInformationAudit.RegistrationGates.validateFinite partialEvidence.input.entry
+  let expectedDiagnostic := "IE-C049 UnusedPrimitiveInBundle \
+    key=LeanInformationAuditRegTests.ContractFixtures/\
+    D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena/\
+    D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled \
+    signature=D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena.signature \
+    primitive=readout[1] support=[\"readout[0]\"]"
+  assertTest "gates.partial_sensitivity.failed_slot_and_support"
+    (diagnostic == some expectedDiagnostic)
 
   let rows := result.registrations ++ witness.registrations
   let axes := rows.map fun (_, r) =>

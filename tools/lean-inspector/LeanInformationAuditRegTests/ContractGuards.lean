@@ -71,6 +71,12 @@ run_meta do
     ``LeanInformationAudit.Contract.RootCatalogData,
     ``LeanInformationAudit.Contract.RootCatalog,
     ``LeanInformationAudit.Contract.ExpectedDeclaration,
+    ``LeanInformationAudit.Contract.BoundTheoremUnit,
+    ``LeanInformationAudit.Contract.Implementation.PartialSlotEvidence,
+    ``LeanInformationAudit.Contract.Implementation.Correspondence,
+    ``LeanInformationAudit.Contract.Implementation.WitnessVariationEvidence,
+    ``LeanInformationAudit.Contract.SealRow,
+    ``LeanInformationAudit.Contract.SealCatalog,
     ``LeanInformationAudit.Contract.Seal]
   let mut fields : Nat := 0
   for structureName in structures do
@@ -83,7 +89,9 @@ run_meta do
   logInfo m!"CONTRACT_DEFAULT_FIELDS {fields}"
   let mut pending : Array Name := #[]
   for (name, _) in env.constants.toList do
-    if (`LeanInformationAudit.Contract).isPrefixOf name then pending := pending.push name
+    if (env.getModuleIdxFor? name).any (fun index =>
+        interfaceModules.contains env.allImportedModuleNames[index.toNat]!) then
+      pending := pending.push name
   let roots := pending.size
   let mut seen : NameSet := {}
   let mut forbidden : Array Name := #[]

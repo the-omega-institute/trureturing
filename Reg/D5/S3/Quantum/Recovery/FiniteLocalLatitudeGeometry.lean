@@ -97,19 +97,22 @@ def registration : Registration arena (∀ (r : ℝ) (hr : 0 < r)
     rw [kk] at hks
     norm_num at hks
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.all_r_flat_geometry) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ r => h r) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.all_r_flat_geometry) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ r => h r) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "FiniteLocalLatitudeGeometry") "all_r_flat_geometry") "Reg.D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry/Reg.D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ r => h r) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "arg", "fn", "arg", "arg", "body", "arg", "body", "arg", "arg", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

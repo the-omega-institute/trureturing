@@ -72,19 +72,22 @@ def registration : Registration arena
     simp only [Real.log_exp, zero_mul, one_mul, mul_one]
     exact ne_of_lt (Real.exp_pos 1)
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.SmoothedChebyshevClose) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p C => C * p.2 * p.1 * Real.log p.1) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.SmoothedChebyshevClose) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p C => C * p.2 * p.1 * Real.log p.1) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "SmoothedChebyshevClose") "Reg.D5.S3.Weil.PrimeNumberTheorem.PntSmoothing/Reg.D5.S3.Weil.PrimeNumberTheorem.PntSmoothing.SmoothedChebyshevClose.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntSmoothing.SmoothedChebyshevClose.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p C => C * p.2 * p.1 * Real.log p.1) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Weil.PrimeNumberTheorem.PntSmoothing, definition := none, coordinates := #[6, 8], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg", "fn", "arg", "fn", "arg"], booleanPredicate := false }] },
   continuation := .unknown,

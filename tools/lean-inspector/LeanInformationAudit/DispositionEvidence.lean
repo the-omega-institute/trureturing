@@ -91,6 +91,17 @@ private def constant (modules : Array Name) (key : StatementKey) (className fiel
     failClass key className s!"{field}.root_membership"
   checkedConstant key className field name
 
+private def compiledField (modules : Array Name) (key : StatementKey)
+    (className field : String) (name : Name) : MetaM Expr := do
+  let env ← getEnv
+  let some source := compiledSealEvidenceSource? env name
+    | failClass key className s!"{field}.compiled_input"
+  unless ← CensusOwnership.nameInScope env modules source do
+    failClass key className s!"{field}.root_membership"
+  let some value := compiledSealEvidence? env name
+    | failClass key className s!"{field}.compiled_input"
+  return value
+
 private def typed (modules : Array Name) (key : StatementKey) (className field : String)
     (name : Name) (expected : Expr) : MetaM Expr := do
   let value ← constant modules key className field name
@@ -167,7 +178,12 @@ private def validateFinite (root : Name) (modules : Array Name) (key : Statement
   let some (record, occurrence) :=
       finiteSealInScope? env modules key.theoremName payload.canonicalArena
     | failClass key className "maximal_catalog_seal"
-  let certificate ← constant modules key className "seal_certificate" occurrence.certificateName
+  if record.compiledEvidence then
+    unless compiledSealRecordMatches env record do
+      failClass key className "seal_certificate.compiled_record"
+  let certificate ← if record.compiledEvidence then
+    compiledField modules key className "seal_certificate" occurrence.certificateName
+    else constant modules key className "seal_certificate" occurrence.certificateName
   let catalogValue ← constant modules key className "catalog" record.catalog.catalogName
   let index ← ProjectionProof.fin occurrence.index record.theorems.size
   for row in record.theorems do
@@ -193,8 +209,20 @@ private def validateFinite (root : Name) (modules : Array Name) (key : Statement
     unless (match occurrence.certificate with | .trivial _ => true | _ => false) &&
         (match record.verdict with | .redundant _ => true | _ => false) do
       failClass key className "classification_branch"
-    discard <| typed modules key className "catalog_seal" value.catalogSeal
-      (← mkAppM ``Catalog.CatalogRedundant #[catalogValue])
+    if record.compiledEvidence then
+      discard <| compiledField modules key className "catalog_seal" value.catalogSeal
+    else
+      discard <| typed modules key className "catalog_seal" value.catalogSeal
+        (← mkAppM ``Catalog.CatalogRedundant #[catalogValue])
+  if record.compiledEvidence then
+    unless payload.nondegeneracyCertificate == record.catalog.catalogName.str "__reg_nondegenerate" &&
+        record.stateEnumeration == some payload.stateEnumerationCertificate do
+      failClass key className "arena.compiled_inputs"
+    discard <| compiledField modules key className "nondegeneracy_certificate"
+      payload.nondegeneracyCertificate
+    discard <| compiledField modules key className "state_enumeration_certificate"
+      payload.stateEnumerationCertificate
+    return
   let expected ← mkAppM
     (if trivial.isSome then ``Catalog.TrivialInCatalog else ``Catalog.LowersEscape) #[catalogValue, index]
   unless ← occurrenceTypeMatches (← inferType certificate) expected.getAppFn.constName!

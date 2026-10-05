@@ -37,7 +37,7 @@ class ExportTests(unittest.TestCase):
         self.assertEqual(result.stdout, "")
 
     def test_missing_root_named_before_build(self):
-        self.source("Reg/Catalogs/Present/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, options := #[] }\n")
+        self.source("Reg/Catalogs/Present/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, catalogs := #[], options := #[] }\n")
         result = self.invoke("--roots", "Reg.Catalogs.Absent", "--list")
         self.assertEqual(result.returncode, 66)
         self.assertIn("MissingRoot root=Reg.Catalogs.Absent", result.stderr)
@@ -55,7 +55,7 @@ class ExportTests(unittest.TestCase):
         self.assertIn("InvalidRoot", result.stderr)
 
     def test_duplicate_root_rejected(self):
-        self.source("Reg/Catalogs/Present/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, options := #[] }\n")
+        self.source("Reg/Catalogs/Present/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, catalogs := #[], options := #[] }\n")
         result = self.invoke("--roots", "Reg.Catalogs.Present.SealedCatalog", "Reg.Catalogs.Present.SealedCatalog", "--list")
         self.assertEqual(result.returncode, 64)
         self.assertIn("DuplicateRoot", result.stderr)
@@ -79,11 +79,11 @@ class ExportTests(unittest.TestCase):
         self.assertIn("MissingTypedSeal root=Reg.Catalogs.Missing.SealedCatalog", result.stderr)
 
     def test_enumerates_typed_roots_in_sorted_order(self):
-        self.source("Reg/Catalogs/Zeta/SealedCatalog.lean", "set_option maxHeartbeats 100 in\ndef «seal» : Contract.Seal := { rootId := `Test, options := #[] }\n")
+        self.source("Reg/Catalogs/Zeta/SealedCatalog.lean", "set_option maxHeartbeats 100 in\ndef «seal» : Contract.Seal := { rootId := `Test, catalogs := #[], options := #[] }\n")
         self.source("Reg/Catalogs/Alpha/SealedCatalog.lean", """
 namespace Reg.Catalogs.Alpha.SealedCatalog
 def «seal» : LeanInformationAudit.Contract.Seal := {
-  rootId := `Reg.Catalogs.Alpha.SealedCatalog, options := #[] }
+  rootId := `Reg.Catalogs.Alpha.SealedCatalog, catalogs := #[], options := #[] }
 end Reg.Catalogs.Alpha.SealedCatalog
 """)
         result = self.invoke("--list")
@@ -92,11 +92,11 @@ end Reg.Catalogs.Alpha.SealedCatalog
                          ["Reg.Catalogs.Alpha.SealedCatalog", "Reg.Catalogs.Zeta.SealedCatalog"])
 
     def test_comments_strings_and_other_paths_are_not_roots(self):
-        self.source("Reg/Catalogs/Real/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, options := #[] }\n")
+        self.source("Reg/Catalogs/Real/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, catalogs := #[], options := #[] }\n")
         self.source("Reg/Catalogs/Noise.lean", '''
-/- def «seal» : Contract.Seal := { rootId := `Test, options := #[] } /- nested -/ -/
--- def «seal» : Contract.Seal := { rootId := `Test, options := #[] }
-def text := "def «seal» : Contract.Seal := { rootId := `Test, options := #[] } \\\" Contract.Seal"
+/- def «seal» : Contract.Seal := { rootId := `Test, catalogs := #[], options := #[] } /- nested -/ -/
+-- def «seal» : Contract.Seal := { rootId := `Test, catalogs := #[], options := #[] }
+def text := "def «seal» : Contract.Seal := { rootId := `Test, catalogs := #[], options := #[] } \\\" Contract.Seal"
 ''')
         self.source("Reg/D5/SealedCatalog.lean", "def x : Contract.Seal := { }\n")
         result = self.invoke("--list")
@@ -106,14 +106,14 @@ def text := "def «seal» : Contract.Seal := { rootId := `Test, options := #[] }
 
     def test_typed_short_contract_form(self):
         self.source("Reg/Catalogs/Short/SealedCatalog.lean",
-                    "def «seal» : Contract.Seal := { rootId := `Reg.Catalogs.Short.SealedCatalog, options := #[] }\n")
+                    "def «seal» : Contract.Seal := { rootId := `Reg.Catalogs.Short.SealedCatalog, catalogs := #[], options := #[] }\n")
         result = self.invoke("--list")
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(json.loads(result.stdout)["root"], "Reg.Catalogs.Short.SealedCatalog")
 
     def test_explicit_roots_sorted_and_output_paths_deterministic(self):
         for leaf in ("Zeta", "Alpha"):
-            self.source(f"Reg/Catalogs/{leaf}/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, options := #[] }\n")
+            self.source(f"Reg/Catalogs/{leaf}/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, catalogs := #[], options := #[] }\n")
         output = (Path(self.temporary.name) / "output with spaces").resolve()
         arguments = ("--roots", "Reg.Catalogs.Zeta.SealedCatalog", "Reg.Catalogs.Alpha.SealedCatalog",
                      "--output-dir", str(output), "--list")
@@ -126,13 +126,13 @@ def text := "def «seal» : Contract.Seal := { rootId := `Test, options := #[] }
                           str(output / "Reg/Catalogs/Zeta/SealedCatalog/seal.json")])
 
     def test_repository_output_rejected(self):
-        self.source("Reg/Catalogs/Real/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, options := #[] }\n")
+        self.source("Reg/Catalogs/Real/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, catalogs := #[], options := #[] }\n")
         result = self.invoke("--output-dir", str(self.repository / "output"), "--list")
         self.assertEqual(result.returncode, 64)
         self.assertIn("OutputInsideRepository", result.stderr)
 
     def test_repository_tmpdir_rejected_before_allocating_output(self):
-        self.source("Reg/Catalogs/Real/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, options := #[] }\n")
+        self.source("Reg/Catalogs/Real/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, catalogs := #[], options := #[] }\n")
         temporary = self.repository / "temporary"
         temporary.mkdir()
         result = subprocess.run([sys.executable, str(PROGRAM), "--repository",
@@ -143,7 +143,7 @@ def text := "def «seal» : Contract.Seal := { rootId := `Test, options := #[] }
         self.assertEqual(list(temporary.iterdir()), [])
 
     def test_output_child_symlink_into_repository_rejected(self):
-        self.source("Reg/Catalogs/Real/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, options := #[] }\n")
+        self.source("Reg/Catalogs/Real/SealedCatalog.lean", "def «seal» : Contract.Seal := { rootId := `Test, catalogs := #[], options := #[] }\n")
         output = Path(self.temporary.name) / "outside output"
         output.mkdir()
         (output / "Reg").symlink_to(self.repository / "Reg", target_is_directory=True)

@@ -70,7 +70,8 @@ def publishRegistration (rootId : Name) (entry : InformationRegistryEntry) : Ela
     unitName := entry.unitName, realizationName := sourceRecord.getD entry.realizationName,
     statement := info.type, levelParams := info.levelParams, statementIdentity,
     arena := mkConst arenaName,
-    registrationSource := path, registrationSourceIdentity := sourceIdentity }
+    registrationSource := path, registrationSourceIdentity := sourceIdentity,
+    compiledMathematics := entry.compiledMathematics }
   let claim ← match currentDeclaration (← getEnv) with
     | none => pure none
     | some declaration =>
@@ -316,6 +317,29 @@ def validateRecordedBinding (input : RegistrationInput) : MetaM Unit := do
   let entry := input.entry
   if input.declaration.any (fun d => d.sourceRecord.isSome && !d.escapeInput.openContinuation) then
     throwError "unclassified_form:source.residual_requires_open"
+  if let some obligations := entry.compiledMathematics then
+    unless obligations.correspondence == .evidence do
+      throwError "IE-C006 StatementProofMismatch: {entry.theoremName}"
+    if let some source := input.realizationSource.filter (fun _ => !entry.sourceBound) then
+      unless isTheoremBridge (← getEnv) source do
+        throwError "IE-C006 StatementProofMismatch: {entry.theoremName}"
+    unless obligations.witnessStatement == .evidence do
+      throwError "unclassified_form:dtr.witness_statement_identity"
+    unless obligations.witnessActual == .evidence do
+      throwError "unclassified_form:dtr.witness_readout_tie"
+    if !entry.sourceBound then
+      let bridgeType := (← getConstInfo entry.realizationName).type
+      if bridgeType.isAppOfArity RegistrationElaboration.witnessBridgeName 3 then
+        let statement := bridgeType.getAppArgs[1]!
+        unless statement.isAppOfArity ``Not 1 && statement.appArg!.isConst do
+          throwError "unclassified_form:dtr.witness_statement_identity"
+        let .defnInfo claim ← getConstInfo statement.appArg!.constName!
+          | throwError "unclassified_form:dtr.witness_statement_identity"
+        let target ← getConstInfo entry.theoremName
+        unless claim.levelParams.isEmpty && target.levelParams.isEmpty &&
+            #[claim.type, claim.value, target.type].all (fun e => !e.hasFVar && !e.hasMVar && !e.hasLooseBVars) do
+          throwError "unclassified_form:dtr.witness_statement_identity"
+    return
   if entry.sourceBound then return
   if let some source := input.realizationSource then
     unless isTheoremBridge (← getEnv) source do
@@ -370,7 +394,7 @@ def assessRecordedEnrollment (owner : Name) (input : TemplateEnrollmentInput) :
     logWarning m!"IE-C050 ClosedTruthReadout template={input.name} {TemplateAudit.diagnosticFields message}"
 
 /-- No source syntax is re-elaborated. Compiled typed fields supply all instances,
-bridges and readouts; the judge reconstructs its own proofs and assessments. -/
+bridges and readouts; the judge consumes compiled mathematical obligations and rebuilds structural assessments. -/
 def assessRecordedEntry (owner : Name) (input : RegistrationInput) : CommandElabM Unit :=
     withScope (fun scope => { scope with opts := input.options }) do
   unless input.entry.registrationModuleName == owner && input.entry.derivedCertificate.isNone do

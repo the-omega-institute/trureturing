@@ -43,9 +43,9 @@ structure AnalysisExportPlan where
   artifacts : List (ArtifactKind × String)
 
 /-- Seal syntax is deliberately discarded before publication. -/
-def terminalSealCommand (publication : ValidatedSourceSnapshot → CommandElabM Unit) :
-    ValidatedSourceSnapshot → CommandElab :=
-  fun snapshot _ => publication snapshot
+def terminalSealCommand (publication : ValidatedSourceSnapshot → SealInput → CommandElabM Unit) :
+    ValidatedSourceSnapshot → SealInput → CommandElab :=
+  fun snapshot input _ => publication snapshot input
 
 private def absoluteName (name : Name) : Name :=
   if (`_root_).isPrefixOf name then name.replacePrefix `_root_ .anonymous else name
@@ -204,8 +204,9 @@ private def auditOwnedClosure (env : Environment) (entry rootId : Name)
 private def sealTerminalShape (value : Expr) : Bool := Id.run do
   let .lam _ _ terminal _ := value.consumeMData | return false
   let .lam _ _ syntaxBody _ := terminal.consumeMData | return false
-  let .lam _ _ body _ := syntaxBody.consumeMData | return false
-  return body.consumeMData == mkApp (.bvar 2) (.bvar 1)
+  let .lam _ _ syntaxTail _ := syntaxBody.consumeMData | return false
+  let .lam _ _ body _ := syntaxTail.consumeMData | return false
+  return body.consumeMData == mkApp2 (.bvar 3) (.bvar 2) (.bvar 1)
 
 private def exportTerminalShape (value : Expr) : Bool := Id.run do
   let .lam _ _ (.lam _ _ body _) _ := value.consumeMData | return false
@@ -224,7 +225,8 @@ private def exportTerminalShape (value : Expr) : Bool := Id.run do
 
 private def sealPublicationType : Expr :=
   .forallE `snapshot (mkConst ``ValidatedSourceSnapshot)
-    (mkApp (mkConst ``Lean.Elab.Command.CommandElabM) (mkConst ``Unit)) .default
+    (.forallE `compiled (mkConst ``SealInput)
+      (mkApp (mkConst ``Lean.Elab.Command.CommandElabM) (mkConst ``Unit)) .default) .default
 
 private def stagePublicationType : Expr :=
   Expr.forallE `_rootId (mkConst ``Name)

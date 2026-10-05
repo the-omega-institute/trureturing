@@ -90,19 +90,22 @@ def registration : Registration arena.{u,v,w,z} (arena.Law actual) where
     intro h
     exact zero_ne_one (congrFun (congrFun h (ULift.up 0)) (ULift.up 0))
 
-noncomputable def registration_1.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Contract.Registration.{u_4 + 3, u_4 + 3, u_4 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_4 + 1, u_4, 0, u_4, 0, 0} (@_root_.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.computed_recovery_of_kraus_left_inverse.{u_1, u_2, u_3, u_4}) (type_of% (arena.{u_1, u_2, u_3, u_4})) (type_of% (arena.{u_1, u_2, u_3, u_4})) (type_of% (realize.{u_4 + 1, u_4, 0, u_4, 0} signature.{u_4} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.computed_recovery_of_kraus_left_inverse.{u_1, u_2, u_3, u_4}) (type_of% (realize.{u_4 + 1, u_4, 0, u_4, 0} signature.{u_4} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "SpectralRecoveryCorrectness") "computed_recovery_of_kraus_left_inverse") "Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness/Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u_1, u_2, u_3, u_4})⟩,
-  objectArena := ⟨(arena.{u_1, u_2, u_3, u_4})⟩,
+  arena := .source ⟨(arena.{u_1, u_2, u_3, u_4})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2, u_3, u_4})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u_1, u_2, u_3, u_4}) ⟨(registration.{u_1, u_2, u_3, u_4})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{u_4 + 1, u_4, 0, u_4, 0} signature.{u_4} (fun _ _ x => x) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, definition := none, coordinates := #[3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 17, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

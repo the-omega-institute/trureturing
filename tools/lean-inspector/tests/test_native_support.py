@@ -21,8 +21,19 @@ import zipfile
 import zlib
 
 def copy_contract_interface(source, target):
-    """Copy the core and catalog contracts used by these isolated fixtures."""
+    """Copy the exact core contracts used by the native transport fixtures.
+
+    Indexed mathematical contracts compile against D5 in the Reg Lean tests.
+    These fixtures exercise transport and discovery with no mathematical library.
+    """
     shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Implementation.lean', 'Registration.lean'))
+    catalog = target / 'LeanInformationAuditInterface/Contract/Catalog.lean'
+    declarations = catalog.read_text().split('/-- Each zero row carries', 1)[0]
+    declarations = declarations.replace(
+        'import LeanInformationAuditInterface.Contract.Implementation',
+        'import LeanInformationAuditInterface.Contract.Core')
+    declarations = re.sub(r'^import D5\..*\n|^open D5\..*\n', '', declarations, flags=re.MULTILINE)
+    catalog.write_text(declarations + 'end LeanInformationAudit.Contract\n')
     config = target / 'lakefile.toml'
     config.write_text(re.sub(r'\n\[\[require\]\]\nname = "trureturing"\npath = "../.."\n', '', config.read_text()))
     manifest = target / 'lake-manifest.json'

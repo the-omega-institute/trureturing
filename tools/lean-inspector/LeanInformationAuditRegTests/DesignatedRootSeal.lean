@@ -53,13 +53,18 @@ run_cmd do
   let records := SealRecords.forRoot env root
   unless records.size == 12 do throwError "ROOT-B-designated-seal: expected twelve catalogs"
   let artifact ← liftTermElabM <| serializeSealArtifact records
-  let expectedSealDigest := "3b969421f5726c72b71662d11b77978b056189af10609ec303fcca1a0aac2d45"
+  let expectedSealDigest := "1c53d28ab45a6e7c6fb95f5fef153714983af0a146d48e9c8504bcb64bbdec60"
   unless Sha256.hex artifact.toUTF8 == expectedSealDigest do
     throwError "ROOT-B-designated-seal: independent digest mismatch; expected={expectedSealDigest}; actual={Sha256.hex artifact.toUTF8}"
   unless SealRecords.systemCatalogIrredundant env root do
     throwError "ROOT-B-designated-seal: system_catalog_irredundant lacks staged proofs"
   for record in records do
-    let some (.thmInfo _) := env.find? record.verdict.name
-      | throwError "ROOT-B-designated-seal: irredundancy certificate is not a theorem"
-    elabCommand (← `(command| #print axioms $(mkIdent record.verdict.name)))
+    let some proof := compiledSealEvidence? env record.verdict.name
+      | throwError "ROOT-B-designated-seal: missing compiled irredundancy proof"
+    liftTermElabM do
+      Meta.checkWithKernel proof
+      let axioms := (← proof.getUsedConstants.mapM collectAxioms).flatten
+      unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
+        throwError "ROOT-B-designated-seal: unapproved compiled proof axiom"
+      logInfo m!"ROOT-B-designated-seal: compiled proof axioms={axioms}"
   logInfo "ROOT-B-designated-seal: actual=expected=13 system_catalog_irredundant=true"

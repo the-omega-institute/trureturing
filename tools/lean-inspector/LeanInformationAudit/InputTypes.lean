@@ -36,6 +36,26 @@ structure AutoDerivedSemanticCertificate where
   nondegenerate : Name
   outputEvidence : Expr
 
+/-- Constructor states decoded from indexed Reg obligations. This is transient
+consumer data; it is never an importable assessment or report receipt. -/
+inductive CompiledObligationState where
+  | evidence | unknown | absent | unsupported
+  deriving Inhabited, BEq
+
+structure CompiledMathematics where
+  witness : Bool := false
+  correspondence : CompiledObligationState
+  bundleNonempty : CompiledObligationState
+  variation : CompiledObligationState
+  sensitivity : CompiledObligationState
+  witnessPositive : CompiledObligationState := .evidence
+  witnessNegative : CompiledObligationState := .evidence
+  witnessActual : CompiledObligationState := .evidence
+  witnessStatement : CompiledObligationState := .evidence
+  partialReadouts : Option (Array Bool) := none
+  partialAnchors : Option (Array Bool) := none
+  deriving Inhabited, BEq
+
 structure InformationRegistryEntry where
   sourceBound : Bool := false
   theoremName : Name
@@ -57,5 +77,6 @@ structure InformationRegistryEntry where
   /-- False exactly for registrations using occurrence-aware syntax. -/
   localRegistrationNames : Bool := true
   derivedCertificate : Option AutoDerivedSemanticCertificate := none
+  compiledMathematics : Option CompiledMathematics := none
 
 end LeanInformationAudit

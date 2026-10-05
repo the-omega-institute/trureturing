@@ -71,21 +71,24 @@ def registration : Registration arena
     norm_num [actual, realize, goldenLucas, D5.S0.Carrier.trace,
       D5.S0.Carrier.phi, pow_succ]
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Scale.golden_cubic_lucas_block) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
-    (fun _ _ (j : ℕ) => goldenLucas (3 ^ j)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Scale.golden_cubic_lucas_block) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ (j : ℕ) => goldenLucas (3 ^ j)) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Scale") "golden_cubic_lucas_block") "Reg.D5.S1.Scale.GoldenCubicBlockCongruences/Reg.D5.S1.Scale.GoldenCubicBlockCongruences.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Scale.GoldenCubicBlockCongruences.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ _ (j : ℕ) => goldenLucas (3 ^ j)) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Scale.GoldenCubicBlockCongruences, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "fn", "arg", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -150,21 +153,24 @@ def fibonacciRegistration : Registration fibonacciArena
     change Nat.fib (3 ^ (0 : ℕ)) ≠ Nat.fib (3 ^ (1 : ℕ))
     decide
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Scale.golden_cubic_fibonacci_block) (type_of% (fibonacciArena)) (type_of% (fibonacciArena)) (type_of% (realize.{0, 0, 0, 0, 0} fibonacciSignature
-    (fun _ _ (j : ℕ) => Nat.fib (3 ^ j)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Scale.golden_cubic_fibonacci_block) (type_of% (realize.{0, 0, 0, 0, 0} fibonacciSignature
+    (fun _ _ (j : ℕ) => Nat.fib (3 ^ j)) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Scale") "golden_cubic_fibonacci_block") "Reg.D5.S1.Scale.GoldenCubicBlockCongruences/Reg.D5.S1.Scale.GoldenCubicBlockCongruences.fibonacciArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Scale.GoldenCubicBlockCongruences.fibonacciRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(fibonacciArena)⟩,
-  objectArena := ⟨(fibonacciArena)⟩,
+  arena := .source ⟨(fibonacciArena)⟩,
+  objectArena := .source ⟨(fibonacciArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (fibonacciArena) ⟨(fibonacciRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} fibonacciSignature
     (fun _ _ (j : ℕ) => Nat.fib (3 ^ j)) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Scale.GoldenCubicBlockCongruences, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "fn", "arg", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -214,21 +220,24 @@ def interlevelRegistration : Registration interlevelArena
     change goldenLucas (3 ^ (0 : ℕ)) ≠ goldenLucas (3 ^ (1 : ℕ))
     norm_num [goldenLucas, D5.S0.Carrier.trace, D5.S0.Carrier.phi, pow_succ]
 
-noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Scale.golden_cubic_block_interlevel) (type_of% (interlevelArena)) (type_of% (interlevelArena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
-    (fun _ _ (j : ℕ) => goldenLucas (3 ^ j)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Scale.golden_cubic_block_interlevel) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ (j : ℕ) => goldenLucas (3 ^ j)) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Scale") "golden_cubic_block_interlevel") "Reg.D5.S1.Scale.GoldenCubicBlockCongruences/Reg.D5.S1.Scale.GoldenCubicBlockCongruences.interlevelArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Scale.GoldenCubicBlockCongruences.interlevelRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(interlevelArena)⟩,
-  objectArena := ⟨(interlevelArena)⟩,
+  arena := .source ⟨(interlevelArena)⟩,
+  objectArena := .source ⟨(interlevelArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (interlevelArena) ⟨(interlevelRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ _ (j : ℕ) => goldenLucas (3 ^ j)) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Scale.GoldenCubicBlockCongruences, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -274,21 +283,24 @@ def productRegistration : Registration productArena
     change goldenLucas (3 ^ (0 : ℕ)) ≠ goldenLucas (3 ^ (1 : ℕ))
     norm_num [goldenLucas, D5.S0.Carrier.trace, D5.S0.Carrier.phi, pow_succ]
 
-noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Scale.golden_cubic_block_product) (type_of% (productArena)) (type_of% (productArena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
-    (fun _ _ (j : ℕ) => goldenLucas (3 ^ j)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Scale.golden_cubic_block_product) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ (j : ℕ) => goldenLucas (3 ^ j)) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Scale") "golden_cubic_block_product") "Reg.D5.S1.Scale.GoldenCubicBlockCongruences/Reg.D5.S1.Scale.GoldenCubicBlockCongruences.productArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Scale.GoldenCubicBlockCongruences.productRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(productArena)⟩,
-  objectArena := ⟨(productArena)⟩,
+  arena := .source ⟨(productArena)⟩,
+  objectArena := .source ⟨(productArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (productArena) ⟨(productRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ _ (j : ℕ) => goldenLucas (3 ^ j)) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Scale.GoldenCubicBlockCongruences, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

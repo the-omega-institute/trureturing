@@ -31,7 +31,7 @@ def snapshot (root : Name) : MetaM Json := do
   liftCommandElabM <| validateRegistrySnapshot root (← getEnv)
   let expected := expectedOccurrencesForRoot (← getEnv) root
   withOptions (fun _ => sealInput.options) <| GeneratedDeclarations.withOwner root do
-    assessAndSealRegistration (← RegistrationAssessmentInput.capture root)
+    assessAndSealRegistration (← RegistrationAssessmentInput.capture root) sealInput
   let records := SealRecords.forRoot (← getEnv) root
   unless records.size == 1 do throwError "control:seal_record_count:{records.size}"
   let artifact ← serializeSealArtifact records

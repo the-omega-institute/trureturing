@@ -35,19 +35,22 @@ def registration : Registration Gaps.arena (∀ {m : ℕ} {input : List ℕ}
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.gapped_filters_slots) (type_of% (Gaps.arena)) (type_of% (Gaps.arena)) (type_of% (realize.{0, 0, 0, 0, 0} Gaps.signature (fun _ m input => gapSlots m input) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.gapped_filters_slots) (type_of% (realize.{0, 0, 0, 0, 0} Gaps.signature (fun _ m input => gapSlots m input) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "gapped_filters_slots") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.Gaps.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.GapsAudit.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(Gaps.arena)⟩,
-  objectArena := ⟨(Gaps.arena)⟩,
+  arena := .source ⟨(Gaps.arena)⟩,
+  objectArena := .source ⟨(Gaps.arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (Gaps.arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} Gaps.signature (fun _ m input => gapSlots m input) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "fn", "arg", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -82,19 +85,22 @@ def registration : Registration SuccessPerm.arena (∀ {n : ℕ} {input : List �
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.success_perm_range) (type_of% (SuccessPerm.arena)) (type_of% (SuccessPerm.arena)) (type_of% (realize.{0, 0, 0, 0, 0} SuccessPerm.signature (fun _ _ input => cyclicStackSort input) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.success_perm_range) (type_of% (realize.{0, 0, 0, 0, 0} SuccessPerm.signature (fun _ _ input => cyclicStackSort input) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "success_perm_range") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.SuccessPerm.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessPermAudit.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(SuccessPerm.arena)⟩,
-  objectArena := ⟨(SuccessPerm.arena)⟩,
+  arena := .source ⟨(SuccessPerm.arena)⟩,
+  objectArena := .source ⟨(SuccessPerm.arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (SuccessPerm.arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} SuccessPerm.signature (fun _ _ input => cyclicStackSort input) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "domain", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -128,19 +134,22 @@ def registration : Registration SuccessGapped.arena (∀ {n : ℕ} (hn : 2 ≤ n
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.successful_gapped) (type_of% (SuccessGapped.arena)) (type_of% (SuccessGapped.arena)) (type_of% (realize.{0, 0, 0, 0, 0} SuccessPerm.signature (fun _ _ input => cyclicStackSort input) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.successful_gapped) (type_of% (realize.{0, 0, 0, 0, 0} SuccessPerm.signature (fun _ _ input => cyclicStackSort input) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "successful_gapped") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.SuccessGapped.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessGappedAudit.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(SuccessGapped.arena)⟩,
-  objectArena := ⟨(SuccessGapped.arena)⟩,
+  arena := .source ⟨(SuccessGapped.arena)⟩,
+  objectArena := .source ⟨(SuccessGapped.arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (SuccessGapped.arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} SuccessPerm.signature (fun _ _ input => cyclicStackSort input) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "domain", "fn", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -175,19 +184,22 @@ def registration : Registration LowOrder.arena (∀ {n : ℕ} {input : List ℕ}
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.successful_lows_pairwise) (type_of% (LowOrder.arena)) (type_of% (LowOrder.arena)) (type_of% (realize.{0, 0, 0, 0, 0} LowOrder.signature (fun _ (n : ℕ) input => lowEntries (n / 2) input) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.successful_lows_pairwise) (type_of% (realize.{0, 0, 0, 0, 0} LowOrder.signature (fun _ (n : ℕ) input => lowEntries (n / 2) input) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "successful_lows_pairwise") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.LowOrder.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.LowOrderAudit.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(LowOrder.arena)⟩,
-  objectArena := ⟨(LowOrder.arena)⟩,
+  arena := .source ⟨(LowOrder.arena)⟩,
+  objectArena := .source ⟨(LowOrder.arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (LowOrder.arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} LowOrder.signature (fun _ (n : ℕ) input => lowEntries (n / 2) input) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -224,19 +236,22 @@ def registration : Registration OneNone.arena (∀ {slots : List (Option ℕ)} {
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration_5 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.options_one_none) (type_of% (OneNone.arena)) (type_of% (OneNone.arena)) (type_of% (realize.{0, 0, 0, 0, 0} OneNone.signature (fun _ _ slots => slots.filterMap id.{1}) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_5 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.options_one_none) (type_of% (realize.{0, 0, 0, 0, 0} OneNone.signature (fun _ _ slots => slots.filterMap id.{1}) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "options_one_none") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.OneNone.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OneNoneAudit.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(OneNone.arena)⟩,
-  objectArena := ⟨(OneNone.arena)⟩,
+  arena := .source ⟨(OneNone.arena)⟩,
+  objectArena := .source ⟨(OneNone.arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (OneNone.arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} OneNone.signature (fun _ _ slots => slots.filterMap id.{1}) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "domain", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -269,19 +284,22 @@ def registration : Registration EvenSlots.arena (∀ (m : ℕ),
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration_6 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.candidateSlots_even) (type_of% (EvenSlots.arena)) (type_of% (EvenSlots.arena)) (type_of% (realize.{0, 0, 0, 0, 0} EvenSlots.signature (fun _ _ m => candidateSlots m 0 m) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_6 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.candidateSlots_even) (type_of% (realize.{0, 0, 0, 0, 0} EvenSlots.signature (fun _ _ m => candidateSlots m 0 m) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "candidateSlots_even") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.EvenSlots.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.EvenSlotsAudit.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(EvenSlots.arena)⟩,
-  objectArena := ⟨(EvenSlots.arena)⟩,
+  arena := .source ⟨(EvenSlots.arena)⟩,
+  objectArena := .source ⟨(EvenSlots.arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (EvenSlots.arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} EvenSlots.signature (fun _ _ m => candidateSlots m 0 m) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, definition := none, coordinates := #[], readouts := #[{ path := #["body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -314,19 +332,22 @@ def registration : Registration OddSlots.arena (∀ (m omitted : ℕ) (homitted 
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration_7 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.candidateSlots_odd) (type_of% (OddSlots.arena)) (type_of% (OddSlots.arena)) (type_of% (realize.{0, 0, 0, 0, 0} OddSlots.signature (fun _ (m : ℕ) omitted => candidateSlots omitted 0 (m + 1)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_7 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.candidateSlots_odd) (type_of% (realize.{0, 0, 0, 0, 0} OddSlots.signature (fun _ (m : ℕ) omitted => candidateSlots omitted 0 (m + 1)) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "candidateSlots_odd") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.OddSlots.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OddSlotsAudit.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(OddSlots.arena)⟩,
-  objectArena := ⟨(OddSlots.arena)⟩,
+  arena := .source ⟨(OddSlots.arena)⟩,
+  objectArena := .source ⟨(OddSlots.arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (OddSlots.arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} OddSlots.signature (fun _ (m : ℕ) omitted => candidateSlots omitted 0 (m + 1)) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -361,19 +382,22 @@ def registration : Registration CandidateAssembly.arena (∀ (m highCount omitte
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration_8 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.candidate_eq_assemble) (type_of% (CandidateAssembly.arena)) (type_of% (CandidateAssembly.arena)) (type_of% (realize.{0, 0, 0, 0, 0} CandidateAssembly.signature (fun _ p omitted => candidate p.1 p.2 omitted) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_8 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.candidate_eq_assemble) (type_of% (realize.{0, 0, 0, 0, 0} CandidateAssembly.signature (fun _ p omitted => candidate p.1 p.2 omitted) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "candidate_eq_assemble") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.CandidateAssembly.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.CandidateAssemblyAudit.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(CandidateAssembly.arena)⟩,
-  objectArena := ⟨(CandidateAssembly.arena)⟩,
+  arena := .source ⟨(CandidateAssembly.arena)⟩,
+  objectArena := .source ⟨(CandidateAssembly.arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (CandidateAssembly.arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} CandidateAssembly.signature (fun _ p omitted => candidate p.1 p.2 omitted) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "fn", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -405,19 +429,22 @@ def registration : Registration FilledSome.arena (∀ (lows : List ℕ),
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration_9 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.filledUntilLast_map_some) (type_of% (FilledSome.arena)) (type_of% (FilledSome.arena)) (type_of% (realize.{0, 0, 0, 0, 0} FilledSome.signature (fun _ _ lows => lows.map some.{0}) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_9 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.filledUntilLast_map_some) (type_of% (realize.{0, 0, 0, 0, 0} FilledSome.signature (fun _ _ lows => lows.map some.{0}) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "filledUntilLast_map_some") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FilledSome.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledSomeAudit.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(FilledSome.arena)⟩,
-  objectArena := ⟨(FilledSome.arena)⟩,
+  arena := .source ⟨(FilledSome.arena)⟩,
+  objectArena := .source ⟨(FilledSome.arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (FilledSome.arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} FilledSome.signature (fun _ _ lows => lows.map some.{0}) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, definition := none, coordinates := #[], readouts := #[{ path := #["body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -449,19 +476,22 @@ def registration : Registration FilledLast.arena (∀ (lows : List ℕ),
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration_10 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.filledUntilLast_insertNone_last) (type_of% (FilledLast.arena)) (type_of% (FilledLast.arena)) (type_of% (realize.{0, 0, 0, 0, 0} FilledLast.signature (fun _ _ lows => insertNone lows.length lows) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_10 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.filledUntilLast_insertNone_last) (type_of% (realize.{0, 0, 0, 0, 0} FilledLast.signature (fun _ _ lows => insertNone lows.length lows) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "filledUntilLast_insertNone_last") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FilledLast.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledLastAudit.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(FilledLast.arena)⟩,
-  objectArena := ⟨(FilledLast.arena)⟩,
+  arena := .source ⟨(FilledLast.arena)⟩,
+  objectArena := .source ⟨(FilledLast.arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (FilledLast.arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} FilledLast.signature (fun _ _ lows => insertNone lows.length lows) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, definition := none, coordinates := #[], readouts := #[{ path := #["body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -497,19 +527,22 @@ def registration : Registration HighOrder.arena (∀ {n : ℕ} {input : List ℕ
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration_11 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.successful_highs_of_filled_until_last) (type_of% (HighOrder.arena)) (type_of% (HighOrder.arena)) (type_of% (realize.{0, 0, 0, 0, 0} HighOrder.signature (fun _ (n : ℕ) input => highEntries (n / 2) input) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_11 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.successful_highs_of_filled_until_last) (type_of% (realize.{0, 0, 0, 0, 0} HighOrder.signature (fun _ (n : ℕ) input => highEntries (n / 2) input) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "successful_highs_of_filled_until_last") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.HighOrder.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.HighOrderAudit.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(HighOrder.arena)⟩,
-  objectArena := ⟨(HighOrder.arena)⟩,
+  arena := .source ⟨(HighOrder.arena)⟩,
+  objectArena := .source ⟨(HighOrder.arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (HighOrder.arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} HighOrder.signature (fun _ (n : ℕ) input => highEntries (n / 2) input) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

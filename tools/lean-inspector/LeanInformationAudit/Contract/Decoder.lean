@@ -5,6 +5,7 @@ import LeanInformationAuditInterface.Contract.Catalog
 
 namespace LeanInformationAudit.Contract.Decoder
 open Lean Meta
+open D5.S3.ConceptDynamics.InformationEscape
 
 structure CompanionInput where
   input : RegistrationInput
@@ -13,6 +14,7 @@ structure CompanionInput where
   target : Expr
   variation : Option Expr
   positive : Option Expr
+  unit : Option Expr
 
 def liftLiteral {α : Type} (value : Except String α) : MetaM α :=
   match value with
@@ -56,6 +58,35 @@ private def optional (e : Expr) : MetaM (Option Expr) :=
 private def optionalRef (role : String) (e : Expr) : MetaM (Option (Name × Expr)) := do
   (← optional e).mapM (reference role)
 
+/-- Read an indexed obligation's constructor and the original submitted name.
+The proof field was checked when its containing Reg declaration compiled. -/
+private def obligation (e : Expr) : MetaM (CompiledObligationState × Option (Name × Expr)) := do
+  let e := e.consumeMData
+  if e.isAppOf ``Contract.Obligation.evidence then
+    let args := e.getAppArgs
+    return (.evidence, some (← reference "obligation" args[args.size - 2]!))
+  if e.isAppOf ``Contract.Obligation.unsupported then
+    let name ← liftLiteral <| Literal.name "obligation.unsupported" e.getAppArgs.back!
+    return (.unsupported, some (name, mkConst name))
+  if e.isAppOf ``Contract.Obligation.unknown then return (.unknown, none)
+  if e.isAppOf ``Contract.Obligation.absent then return (.absent, none)
+  throwError "contract.literal:obligation"
+
+private def obligationState (e : Expr) : MetaM CompiledObligationState := do
+  let head := e.consumeMData.getAppFn.constName?
+  if head == some ``Contract.Obligation.evidence || head == some ``Contract.ExactMatch.evidence then return .evidence
+  if head == some ``Contract.Obligation.unsupported || head == some ``Contract.ExactMatch.unsupported then return .unsupported
+  if head == some ``Contract.Obligation.unknown || head == some ``Contract.ExactMatch.unknown then return .unknown
+  if head == some ``Contract.Obligation.absent || head == some ``Contract.ExactMatch.absent then return .absent
+  throwError "contract.literal:obligation"
+
+private def arenaReference (role : String) (e : Expr) : MetaM (Name × Expr) := do
+  let head := e.consumeMData.getAppFn.constName?.getD .anonymous
+  unless #[``Contract.ArenaRef.law, ``Contract.ArenaRef.finite, ``Contract.ArenaRef.object,
+      ``Contract.ArenaRef.witness, ``Contract.ArenaRef.source].contains head do
+    throwError "contract.literal:arena:{role}"
+  reference role e.getAppArgs.back!
+
 private def arrayValues (e : Expr) : MetaM (Array Expr) :=
   liftLiteral <| Literal.array "array" e
 
@@ -94,15 +125,17 @@ def rigidLevels (info : DefinitionVal) (value : Expr) : MetaM Unit := do
 
 def registration (owner : Name) (info : DefinitionVal) (source : String)
     : MetaM CompanionInput := do
-  let all ← fields ``Contract.Registration info.value 17
+  let all ← fields ``Contract.Registration info.value 20
+  let axioms ← collectAxioms info.name
+  let trusted := axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·)
   let typeArgs := info.type.getAppArgs
-  unless typeArgs.size == 10 do throwError "contract.registration:target_arity"
+  unless typeArgs.size == 5 do throwError "contract.registration:target_arity"
   let theoremName ← constantName "target" typeArgs[1]!
   discard <| checkTarget theoremName typeArgs[1]!
   rigidLevels info typeArgs[1]!
   let fs := all.extract 4 all.size
-  let (arenaName, _) ← reference "arena" fs[0]!
-  let (objectArenaName, _) ← reference "object_arena" fs[1]!
+  let (arenaName, _) ← arenaReference "arena" fs[0]!
+  let (objectArenaName, _) ← arenaReference "object_arena" fs[1]!
   unless !arenaName.isAnonymous && !objectArenaName.isAnonymous do
     throwError "contract.registration:arena_identity"
   let catalog ← liftLiteral <| Literal.name "catalog" fs[2]!
@@ -115,14 +148,14 @@ def registration (owner : Name) (info : DefinitionVal) (source : String)
   let implementationArgs := implementation.getAppArgs
   let sourceBound := head == ``Contract.Implementation.source
   let witness := head == ``Contract.Implementation.witness
-  let expectedArity := if sourceBound then 3 else if witness then 6 else 5
+  let expectedArity := if sourceBound then 3 else if witness then 10 else 7
   unless implementationArgs.size == expectedArity do
     throwError "contract.registration:implementation_arity"
-  let bridgeField := if witness then implementationArgs[implementationArgs.size - 2]!
-    else implementationArgs.back!
+  let bridgeField := implementationArgs[if sourceBound then 2 else 4]!
   let (suppliedName, bridge) ← reference "realization" bridgeField
   let occurrence := !sourceBound && !localNames
-  let family ← optionalRef "family_record" fs[11]!
+  let family ← (← optional fs[14]!).mapM fun e =>
+    reference "family_record" e.getAppArgs.back!
   let unitName ← liftLiteral <| Literal.name "unit_name" all[0]!
   let realizationName ← liftLiteral <| Literal.name "realization_name" all[1]!
   let realizationSource ← (← optional all[2]!).mapM fun e =>
@@ -134,16 +167,55 @@ def registration (owner : Name) (info : DefinitionVal) (source : String)
     throwError "contract.registration:companion_identity"
   if sourceBound && (generated || realizationName != suppliedName) then
     throwError "contract.registration:source_bridge_identity"
-  let descriptor ← optional fs[5]!
+  let descriptor ← optional fs[7]!
   let primitives := if sourceBound then none else some
-    implementationArgs[implementationArgs.size - (if witness then 3 else 2)]!
-  let positive := if witness then some implementationArgs.back! else none
-  let variation ← optionalRef "variation" fs[6]!
-  let sensitivity ← optionalRef "sensitivity" fs[7]!
-  let origin ← optional fs[8]!
-  let selection ← (← optional fs[9]!).mapM sourceSelection
-  let (openContinuation, residual) ← continuation fs[10]!
-  let options ← liftLiteral <| Literal.options fs[12]!
+    implementationArgs[3]!
+  let positive := if witness then some implementationArgs[5]! else none
+  let (unit, unitCorrespondence) ← if sourceBound then pure (none, true) else do
+    let bound ← fields ``Contract.BoundTheoremUnit implementationArgs.back! 3
+    let value ← fields ``Contract.Ref bound[0]! 1
+    pure (some value[0]!, (← obligationState bound[1]!) == .evidence &&
+      (← obligationState bound[2]!) == .evidence &&
+      (← obligationState implementationArgs[if witness then 8 else 5]!) == .evidence)
+  let (variationState, variation, witnessPositive, witnessNegative) ← if witness then do
+    let parts ← fields ``Contract.Implementation.WitnessVariationEvidence fs[8]! 2
+    let (positiveState, positiveInput) ← obligation parts[0]!
+    let (negativeState, negativeInput) ← obligation parts[1]!
+    pure (if positiveState == .evidence then negativeState else positiveState,
+      positiveInput.or negativeInput, positiveState, negativeState)
+  else do
+    let (state, value) ← obligation fs[8]!
+    pure (state, value, .evidence, .evidence)
+  let (sensitivityState, sensitivity) ← obligation fs[9]!
+  let partialEvidence ← (← optional fs[10]!).mapM fun e => do
+    if sourceBound then throwError "contract.sensitivity:finite_slots_required"
+    let values ← fields ``Contract.Implementation.PartialSlotEvidence e 2
+    let arena ← if witness then do
+        pure (← RegistrationElaboration.normalizeArena implementationArgs[1]!).law
+      else pure implementationArgs[1]!
+    let sig ← mkAppM ``PrimitiveLawArena.signature #[arena]
+    let states (fn indexType fintype : Expr) := do
+      let domain ← whnf (← inferType fn).bindingDomain!
+      unless domain.isAppOf ``ULift do throwError "contract.sensitivity:index_carrier"
+      let slots ← RegistrationGates.indices indexType fintype
+      slots.mapM fun index => do
+        let lifted := mkAppN (mkConst ``ULift.up domain.getAppFn.constLevels!) (domain.getAppArgs.push index)
+        return (← obligationState (← whnf (mkApp fn lifted))) == .evidence
+    let readouts ← states values[0]! (← mkAppM ``PrimitiveSignature.Index #[sig])
+      (← mkAppM ``PrimitiveSignature.indexFintype #[sig])
+    let anchors ← states values[1]! (← mkAppM ``PrimitiveSignature.AnchorIndex #[sig])
+      (← mkAppM ``PrimitiveSignature.anchorFintype #[sig])
+    return (readouts, anchors)
+  let origin ← optional fs[11]!
+  let selection ← (← optional fs[12]!).mapM sourceSelection
+  let (openContinuation, residual) ← continuation fs[13]!
+  let options ← liftLiteral <| Literal.options fs[15]!
+  let correspondenceFields ← fields ``Contract.Implementation.Correspondence fs[5]! 2
+  let stage ← obligationState correspondenceFields[0]!
+  let objectStage ← obligationState correspondenceFields[1]!
+  let correspondence := if stage == .evidence && objectStage == .evidence then .evidence else .unsupported
+  let witnessActual ← if witness then obligationState implementationArgs[6]! else pure .evidence
+  let witnessStatement ← if witness then obligationState implementationArgs[7]! else pure .evidence
   let entry : InformationRegistryEntry := {
     theoremName, unitName, arenaName, realizationName
     catalogId := if occurrence then catalog else .anonymous
@@ -152,7 +224,13 @@ def registration (owner : Name) (info : DefinitionVal) (source : String)
     localRegistrationNames := localNames
     sourceBound, resolvedArenaName := if sourceBound then arenaName else .anonymous
     variationWitness := variation.map Prod.fst |>.getD .anonymous
-    sensitivityWitness := sensitivity.map Prod.fst |>.getD .anonymous }
+    sensitivityWitness := sensitivity.map Prod.fst |>.getD .anonymous
+    compiledMathematics := some {
+      witness, correspondence := if unitCorrespondence && trusted then correspondence else .unsupported,
+      bundleNonempty := ← obligationState fs[6]!,
+      variation := variationState, sensitivity := sensitivityState,
+      witnessPositive, witnessNegative, witnessActual, witnessStatement,
+      partialReadouts := partialEvidence.map Prod.fst, partialAnchors := partialEvidence.map Prod.snd } }
   let declaration := if descriptor.isSome || selection.isSome || origin.isSome ||
       openContinuation || residual.isSome then some {
       theoremName, arena := if occurrence then objectArenaName else arenaName
@@ -166,7 +244,7 @@ def registration (owner : Name) (info : DefinitionVal) (source : String)
     input := {
       entry, sourceText := source, options, suppliedPrimitives := primitives, declaration
       realizationSource }
-    generated, bridge, target := typeArgs[1]!, variation := variation.map Prod.snd, positive }
+    generated, bridge, target := typeArgs[1]!, variation := variation.map Prod.snd, positive, unit }
 
 def expectedRow (e : Expr) : MetaM SnapshotOccurrence := do
   let fs ← fields ``Contract.ExpectedOccurrence e 6
@@ -214,9 +292,17 @@ def enrollment (owner : Name) (info : DefinitionVal) (source : String) :
   let options ← liftLiteral <| Literal.options fs[3]!
   return { owner, name, version, constructors, sourceText := source, options }
 
-def readSeal (e : Expr) : MetaM SealInput := do
-  let fs ← fields ``Contract.Seal e 2
+def readSeal (source : Name) (e : Expr) : MetaM SealInput := do
+  let fs ← fields ``Contract.Seal e 3
+  let axioms ← collectAxioms source
+  unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
+    throwError "IE-C009 ProofConstructionFailed: {source} unapproved axiom dependency"
+  let catalogs ← (← arrayValues fs[1]!).mapM fun value => do
+    let cs ← fields ``Contract.SealCatalog value 15
+    let arenaName ← liftLiteral (Literal.name "seal.arena" cs[0]!)
+    let catalogId ← liftLiteral (Literal.name "seal.catalog" cs[1]!)
+    return ({ source, arenaName, catalogId, value } : CompiledSealCatalog)
   return { rootId := ← liftLiteral <| Literal.name "seal.root" fs[0]!
-           options := ← liftLiteral <| Literal.options fs[1]! }
+           catalogs, options := ← liftLiteral <| Literal.options fs[2]! }
 
 end LeanInformationAudit.Contract.Decoder

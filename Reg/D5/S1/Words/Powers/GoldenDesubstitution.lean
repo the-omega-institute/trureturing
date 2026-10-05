@@ -23,23 +23,26 @@ theorem _root_.D5.S1.Words.Powers.substLength_pos.«Reg.D5.S1.Words.Powers.Golde
 
 
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Powers.substLength_pos) (type_of% (strictArena)) (type_of% (objectArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Powers.substLength_pos) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization
     Bool (Fin 3) (instDecidableEqFin 3)
-    (fun _ => lengthZero) (fun b => D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.lengthReadout b))) (type_of% (positive_lawSensitive)) (type_of% (strict_slotSensitive)) (type_of% (Bool)) (type_of% (positive_empty)) (Unit) := {
+    (fun _ => lengthZero) (fun b => D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.lengthReadout b))) (type_of% (Bool)) (type_of% (positive_empty)) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Powers") "substLength_pos") "Reg.D5.S1.Words.Powers.GoldenDesubstitution/D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.objectArena/substitutionBounds") "__information_unit"),
   realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Powers") "substLength_pos") "Reg.D5.S1.Words.Powers.GoldenDesubstitution/D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.objectArena/substitutionBounds") "__primitive_realization"),
   realizationSource := some `D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.positive_bridge,
   generated := false,
-  arena := ⟨(strictArena)⟩,
-  objectArena := ⟨(objectArena)⟩,
+  arena := .law ⟨(strictArena)⟩,
+  objectArena := .finite ⟨(objectArena)⟩,
   catalog := `substitutionBounds,
   localNames := false,
-  realization := .legacy (strictArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.positiveRealization) (positiveRealization.toPrimitiveBundle) ⟨(positive_bridge)⟩,
+  realization := .legacy (strictArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.positiveRealization) (positiveRealization.toPrimitiveBundle) ⟨(positive_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (positive_bridge) (@_root_.D5.S1.Words.Powers.substLength_pos))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((positiveRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization
     Bool (Fin 3) (instDecidableEqFin 3)
     (fun _ => lengthZero) (fun b => D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.lengthReadout b)),
-  variation := some ⟨(positive_lawSensitive)⟩,
-  sensitivity := some ⟨(strict_slotSensitive)⟩,
+  variation := .evidence ⟨(positive_lawSensitive)⟩ (by first | exact (positive_lawSensitive) | exact ⟨_, _, (positive_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(strict_slotSensitive)⟩ (by exact (strict_slotSensitive)),
+  partialSensitivity := none,
   escapeFrom := some (Bool),
   sourceSelection := none,
   continuation := .evidence ⟨(positive_empty)⟩,
@@ -62,23 +65,26 @@ theorem _root_.D5.S1.Words.Powers.substLength_le_two.«Reg.D5.S1.Words.Powers.Go
 
 
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Powers.substLength_le_two) (type_of% (weakArena)) (type_of% (objectArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Powers.substLength_le_two) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization
     Bool (Fin 3) (instDecidableEqFin 3)
-    (fun b => D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.lengthReadout b) (fun _ => lengthTwo))) (type_of% (upper_lawSensitive)) (type_of% (weak_slotSensitive)) (type_of% (Bool)) (type_of% (upper_empty)) (Unit) := {
+    (fun b => D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.lengthReadout b) (fun _ => lengthTwo))) (type_of% (Bool)) (type_of% (upper_empty)) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Powers") "substLength_le_two") "Reg.D5.S1.Words.Powers.GoldenDesubstitution/D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.objectArena/substitutionBounds") "__information_unit"),
   realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Powers") "substLength_le_two") "Reg.D5.S1.Words.Powers.GoldenDesubstitution/D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.objectArena/substitutionBounds") "__primitive_realization"),
   realizationSource := some `D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.upper_bridge,
   generated := false,
-  arena := ⟨(weakArena)⟩,
-  objectArena := ⟨(objectArena)⟩,
+  arena := .law ⟨(weakArena)⟩,
+  objectArena := .finite ⟨(objectArena)⟩,
   catalog := `substitutionBounds,
   localNames := false,
-  realization := .legacy (weakArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.upperRealization) (upperRealization.toPrimitiveBundle) ⟨(upper_bridge)⟩,
+  realization := .legacy (weakArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.upperRealization) (upperRealization.toPrimitiveBundle) ⟨(upper_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (upper_bridge) (@_root_.D5.S1.Words.Powers.substLength_le_two))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((upperRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization
     Bool (Fin 3) (instDecidableEqFin 3)
     (fun b => D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.lengthReadout b) (fun _ => lengthTwo)),
-  variation := some ⟨(upper_lawSensitive)⟩,
-  sensitivity := some ⟨(weak_slotSensitive)⟩,
+  variation := .evidence ⟨(upper_lawSensitive)⟩ (by first | exact (upper_lawSensitive) | exact ⟨_, _, (upper_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(weak_slotSensitive)⟩ (by exact (weak_slotSensitive)),
+  partialSensitivity := none,
   escapeFrom := some (Bool),
   sourceSelection := none,
   continuation := .evidence ⟨(upper_empty)⟩,

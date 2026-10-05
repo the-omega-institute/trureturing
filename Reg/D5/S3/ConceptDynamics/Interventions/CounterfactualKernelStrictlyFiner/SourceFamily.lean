@@ -15,19 +15,22 @@ noncomputable def registration : Registration strictnessArena (Strictness actual
   sensitivity := strictness_sensitivity
   dependence := dependence
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer) (type_of% (strictnessArena)) (type_of% (strictnessArena)) (type_of% (realize.{0, 0, 0, 0, 0} signature actual.readout actual.anchor)) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer) (type_of% (realize.{0, 0, 0, 0, 0} signature actual.readout actual.anchor)) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interventions") "CounterfactualKernelStrictlyFiner") "counterfactual_kernel_strictly_finer") "Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily/Reg.Support.CausalSourceFamily.strictnessArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(strictnessArena)⟩,
-  objectArena := ⟨(strictnessArena)⟩,
+  arena := .source ⟨(strictnessArena)⟩,
+  objectArena := .source ⟨(strictnessArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (strictnessArena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature actual.readout actual.anchor),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner, definition := none, coordinates := #[], readouts := #[{ path := #["fn", "arg", "body", "body", "domain", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }, { path := #["fn", "arg", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

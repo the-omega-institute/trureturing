@@ -24,25 +24,28 @@ open InformationEscapeArenas.CommutingCompletionExchange
 
 
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary) (type_of% (commutingCompletionArena)) (type_of% (commutingCompletionArena)) (type_of% (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{0, 0, 0, 0, 0}
-    Reg.Support.LegacyRelations.Completion.signature Reg.Support.LegacyRelations.Completion.actual.readout Reg.Support.LegacyRelations.Completion.actual.anchor)) (type_of% (Reg.Support.LegacyRelations.Completion.finite_variation)) (type_of% (Reg.Support.LegacyRelations.Completion.finite_sensitivity)) (Unit) (Unit) (type_of% (Reg.Support.LegacyRelations.Completion.registration)) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary) (type_of% (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{0, 0, 0, 0, 0}
+    Reg.Support.LegacyRelations.Completion.signature Reg.Support.LegacyRelations.Completion.actual.readout Reg.Support.LegacyRelations.Completion.actual.anchor)) (Unit) (Unit) := {
   unitName := `Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.TemplateShadow.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary.__information_unit,
   realizationName := `D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completion_bridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(commutingCompletionArena)⟩,
-  objectArena := ⟨(commutingCompletionArena)⟩,
+  arena := .law ⟨(commutingCompletionArena)⟩,
+  objectArena := .law ⟨(commutingCompletionArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (commutingCompletionArena) (D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completionRealization) (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle.{0, 0, 0} D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.FourState D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.completionSignature D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.instDecidableEqFourState D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completionRealization) ⟨(completion_bridge)⟩,
+  realization := .legacy (commutingCompletionArena) (D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completionRealization) (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle.{0, 0, 0} D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.FourState D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.completionSignature D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.instDecidableEqFourState D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completionRealization) ⟨(completion_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (completion_bridge) (@_root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((@D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle.{0, 0, 0} D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.FourState D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.completionSignature D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.instDecidableEqFourState D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completionRealization)).Nonempty; decide),
   readout := some (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{0, 0, 0, 0, 0}
     Reg.Support.LegacyRelations.Completion.signature Reg.Support.LegacyRelations.Completion.actual.readout Reg.Support.LegacyRelations.Completion.actual.anchor),
-  variation := some ⟨(Reg.Support.LegacyRelations.Completion.finite_variation)⟩,
-  sensitivity := some ⟨(Reg.Support.LegacyRelations.Completion.finite_sensitivity)⟩,
+  variation := .evidence ⟨(Reg.Support.LegacyRelations.Completion.finite_variation)⟩ (by first | exact (Reg.Support.LegacyRelations.Completion.finite_variation) | exact ⟨_, _, (Reg.Support.LegacyRelations.Completion.finite_variation)⟩),
+  sensitivity := .evidence ⟨(Reg.Support.LegacyRelations.Completion.finite_sensitivity)⟩ (by exact (Reg.Support.LegacyRelations.Completion.finite_sensitivity)),
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange, definition := none, coordinates := #[], readouts := #[{ path := #["fn", "arg", "arg", "fn", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }, { path := #["fn", "arg", "arg", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }, { path := #["arg", "arg", "fn", "fn", "fn", "arg", "fn", "fn", "arg", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
-  familyRecord := some ⟨(Reg.Support.LegacyRelations.Completion.registration)⟩,
+  familyRecord := some ⟨_, ⟨(Reg.Support.LegacyRelations.Completion.registration)⟩⟩,
   options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency.types, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
 
 end

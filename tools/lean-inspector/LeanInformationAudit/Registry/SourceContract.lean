@@ -16,10 +16,11 @@ def validate (event : TemplateOccurrenceEvent) (arena signature actual : Expr)
   unless bridgeType.isAppOfArity (finite ++ `LegacyPrimitiveRealization) 3 do
     throwError "unclassified_form:source.finite_bridge"
   let objectArena := event.arena
-  unless ← isDefEq bridgeType.getAppArgs[0]! objectArena do
-    throwError "unclassified_form:source.finite_arena"
-  unless ← isDefEq bridgeType.getAppArgs[1]! event.statement do
-    throwError "unclassified_form:source.finite_statement"
+  if event.compiledMathematics.isNone then
+    unless ← isDefEq bridgeType.getAppArgs[0]! objectArena do
+      throwError "unclassified_form:source.finite_arena"
+    unless ← isDefEq bridgeType.getAppArgs[1]! event.statement do
+      throwError "unclassified_form:source.finite_statement"
   let finiteActual := bridgeType.getAppArgs[2]!
   let finiteSignature ← mkAppM (finite ++ `PrimitiveLawArena.signature) #[objectArena]
   let finiteType ← inferType finiteActual
@@ -40,7 +41,7 @@ def validate (event : TemplateOccurrenceEvent) (arena signature actual : Expr)
         mkLambdaFVars #[role, parameter]
           (← mkAppM (finite ++ `PrimitiveRealization.anchor) #[r, role])
     let lifted ← mkAppM (family ++ `realize) #[signature, readout, anchor]
-    checkWithKernel lifted
+    if event.compiledMathematics.isNone then checkWithKernel lifted
     pure lifted
   -- Compare whole state functions at every role, not a sample of states.
   -- Empty anchor types have no inhabitants to compare.
@@ -64,11 +65,12 @@ def validate (event : TemplateOccurrenceEvent) (arena signature actual : Expr)
     let left ← mkAppM (family ++ `Arena.Law) #[arena, ← liftRealization r]
     let right ← mkAppM (finite ++ `PrimitiveLawArena.Law) #[objectArena, r]
     unless ← isDefEq left right do throwError "unclassified_form:source.finite_full_law"
-    let unit ← mkConstWithLevelParams event.unitName
-    let expected ← mkAppM (finite ++ `LegacyPrimitiveRealization.toTheoremUnit)
-      #[bridge, ← mkConstWithLevelParams event.key.theoremName]
-    unless ← isDefEq unit expected do throwError "unclassified_form:source.finite_unit"
-    checkWithKernel bridge
+    if event.compiledMathematics.isNone then
+      let unit ← mkConstWithLevelParams event.unitName
+      let expected ← mkAppM (finite ++ `LegacyPrimitiveRealization.toTheoremUnit)
+        #[bridge, ← mkConstWithLevelParams event.key.theoremName]
+      unless ← isDefEq unit expected do throwError "unclassified_form:source.finite_unit"
+      checkWithKernel bridge
   liftM check
 
 end LeanInformationAudit.SourceFinite
@@ -138,9 +140,11 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     safe event.realizationName
     safe event.key.objectArena
     let type ← inferType record
-    unless type.isAppOfArity (family ++ `Registration) 2 &&
-        (← isDefEq type.getAppArgs[1]! info.type) do
+    unless type.isAppOfArity (family ++ `Registration) 2 do
       throwError "unclassified_form:source.record_statement"
+    if event.compiledMathematics.isNone then
+      unless ← isDefEq type.getAppArgs[1]! info.type do
+        throwError "unclassified_form:source.record_statement"
     let arena := type.getAppArgs[0]!
     let some arenaName := arena.constName? | throwError "unclassified_form:source.arena_identity"
     unless arena.equal (← atLevels event arenaName) do
@@ -157,17 +161,6 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       safe bridge
       SourceFinite.validate event arena signature actual bridge
     trace[InformationRegistration.check] "source phase=reconstruction_and_fields work={limit - (← get)}"
-    checkWithKernel record
-    let obligations := #[
-      (`bridge, mkApp2 (mkConst ``Iff) info.type law),
-      (`variation, ← mkAppM (family ++ `Variation) #[arena, actual]),
-      (`sensitivity, ← mkAppM (family ++ `Sensitivity) #[arena, actual]),
-      (`dependence, ← mkAppM (family ++ `ObservationalDependence) #[signature, actual])]
-    for (name, expected) in obligations do
-      let proof ← mkAppM (family ++ `Registration ++ name) #[record]
-      unless ← isDefEq (← inferType proof) expected do
-        throwError "unclassified_form:source.proof_obligation:{name}"
-      checkWithKernel proof
     let actual ← whnf actual
     -- Inspect every raw supplied operand before defeq can discard arguments.
     let recordInfo ← getConstInfo event.realizationName

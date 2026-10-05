@@ -74,19 +74,22 @@ def registration : Registration arena.{u,v,w} (arena.Law actual) where
     have he := congrArg (fun M : Matrix a a ℂ => M i i) h
     norm_num [actual, realize, signature] at he
 
-noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{u_1 + 3, u_1 + 3, u_1 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_1 + 1, u_1, 0, u_1, 0, 0} (@_root_.D5.S3.Quantum.Recovery.KrausCompletion.row_reset_action.{u_1, u_2, u_3}) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ X => X) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.KrausCompletion.row_reset_action.{u_1, u_2, u_3}) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ X => X) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "KrausCompletion") "row_reset_action") "Reg.D5.S3.Quantum.Recovery.KrausCompletion/Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u_1, u_2, u_3})⟩,
-  objectArena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  arena := .source ⟨(arena.{u_1, u_2, u_3})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2, u_3})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u_1, u_2, u_3}) ⟨(registration.{u_1, u_2, u_3})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ X => X) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.KrausCompletion, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn", "arg", "arg"], stateBinder := 11, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -154,19 +157,22 @@ def registration : Registration arena.{u,v,w} (arena.Law actual) where
     have he := congrArg (fun M : Matrix a a ℂ => M i i) h
     norm_num [actual, realize, signature] at he
 
-noncomputable def registration_2.{u_1, u_2, u_4} : LeanInformationAudit.Contract.Registration.{u_1 + 3, u_1 + 3, u_1 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_1 + 1, u_1, 0, u_1, 0, 0} (@_root_.D5.S3.Quantum.Recovery.KrausCompletion.complete_kraus_action.{u_1, u_2, u_4}) (type_of% (arena.{u_1, u_2, u_4})) (type_of% (arena.{u_1, u_2, u_4})) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ X => X) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_2.{u_1, u_2, u_4} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.KrausCompletion.complete_kraus_action.{u_1, u_2, u_4}) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ X => X) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "KrausCompletion") "complete_kraus_action") "Reg.D5.S3.Quantum.Recovery.KrausCompletion/Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u_1, u_2, u_4})⟩,
-  objectArena := ⟨(arena.{u_1, u_2, u_4})⟩,
+  arena := .source ⟨(arena.{u_1, u_2, u_4})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2, u_4})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u_1, u_2, u_4}) ⟨(registration.{u_1, u_2, u_4})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ X => X) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.KrausCompletion, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "arg", "arg"], stateBinder := 13, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -238,19 +244,22 @@ def registration : Registration arena.{u,v,w} (arena.Law actual) where
     have he := congrArg (fun M : Matrix a a ℂ => M i i) h
     norm_num [actual, realize, signature] at he
 
-noncomputable def registration_3.{u_1, u_2, u_4} : LeanInformationAudit.Contract.Registration.{u_1 + 3, u_1 + 3, u_1 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_1 + 1, u_1, 0, u_1, 0, 0} (@_root_.D5.S3.Quantum.Recovery.KrausCompletion.complete_quantum_channel.{u_1, u_2, u_4}) (type_of% (arena.{u_1, u_2, u_4})) (type_of% (arena.{u_1, u_2, u_4})) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ X => X) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_3.{u_1, u_2, u_4} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.KrausCompletion.complete_quantum_channel.{u_1, u_2, u_4}) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ X => X) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "KrausCompletion") "complete_quantum_channel") "Reg.D5.S3.Quantum.Recovery.KrausCompletion/Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u_1, u_2, u_4})⟩,
-  objectArena := ⟨(arena.{u_1, u_2, u_4})⟩,
+  arena := .source ⟨(arena.{u_1, u_2, u_4})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2, u_4})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u_1, u_2, u_4}) ⟨(registration.{u_1, u_2, u_4})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ X => X) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.KrausCompletion, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "fn", "arg", "arg", "arg", "arg"], stateBinder := 15, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

@@ -102,9 +102,9 @@ unsafe def registryRecords (moduleName : String) (data : ModuleData) : Except St
     -- Match the compiled contract names without importing its domain mathematics.
     if info.type.getAppFn.constName? == some `LeanInformationAudit.Contract.Registration then
       let typeArgs := info.type.getAppArgs
-      unless typeArgs.size == 10 do throw "contract.registration:target_arity"
+      unless typeArgs.size == 5 do throw "contract.registration:target_arity"
       let all ← Contract.Literal.constructor `LeanInformationAudit.Contract.Registration.mk
-        (typeArgs.size + 17) "registration" info.value
+        (typeArgs.size + 20) "registration" info.value
       let fields := all.extract typeArgs.size all.size
       let some theoremName := typeArgs[1]!.consumeMData.constName?
         | throw "unclassified_form:contract.target_identity"
@@ -115,14 +115,14 @@ unsafe def registryRecords (moduleName : String) (data : ModuleData) : Except St
         ("names", Json.arr #[nameJson unitName, nameJson realizationName])]
       let row := Json.mkObj [("key", nameJson theoremName), ("module", toJson moduleName)]
       bindings := bindings.push row
-      let readout ← Contract.Literal.optional "readout" fields[9]!
-      let origin ← Contract.Literal.optional "escape_from" fields[12]!
-      let selection ← Contract.Literal.optional "source_selection" fields[13]!
+      let readout ← Contract.Literal.optional "readout" fields[11]!
+      let origin ← Contract.Literal.optional "escape_from" fields[15]!
+      let selection ← Contract.Literal.optional "source_selection" fields[16]!
       if readout.isSome || origin.isSome || selection.isSome ||
-          fields[14]!.consumeMData.getAppFn.constName? != some ``Contract.Continuation.absent then
+          fields[17]!.consumeMData.getAppFn.constName? != some ``Contract.Continuation.absent then
         bindings := bindings.push row
     else if info.type.getAppFn.constName? == some ``Contract.Seal then
-      let fields ← Contract.Literal.constructor ``Contract.Seal.mk 2 "seal" info.value
+      let fields ← Contract.Literal.constructor ``Contract.Seal.mk 3 "seal" info.value
       seals := seals.push (toJson (← Contract.Literal.name "seal.root" fields[0]!).toString)
   for (name, entries) in data.entries do
     if privateToUserName name == `LeanInformationAudit.DispositionCensus.structuralRegistry then

@@ -81,19 +81,22 @@ def xRegistration : Registration xArena (xArena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_negative_two_adic_x) (type_of% (xArena)) (type_of% (xArena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ q => padicValRat 2 q) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_negative_two_adic_x) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ q => padicValRat 2 q) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "MordellTwoAdicNonTorsion") "infinite_add_order_of_negative_two_adic_x") "Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion/Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(xArena)⟩,
-  objectArena := ⟨(xArena)⟩,
+  arena := .source ⟨(xArena)⟩,
+  objectArena := .source ⟨(xArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (xArena) ⟨(xRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ q => padicValRat 2 q) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "domain", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -129,19 +132,22 @@ def yRegistration : Registration yArena (yArena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_unit_x_positive_two_adic_y) (type_of% (yArena)) (type_of% (yArena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ q => padicValRat 2 q) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_unit_x_positive_two_adic_y) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ q => padicValRat 2 q) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "MordellTwoAdicNonTorsion") "infinite_add_order_of_unit_x_positive_two_adic_y") "Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion/Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(yArena)⟩,
-  objectArena := ⟨(yArena)⟩,
+  arena := .source ⟨(yArena)⟩,
+  objectArena := .source ⟨(yArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (yArena) ⟨(yRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ q => padicValRat 2 q) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "domain", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

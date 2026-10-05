@@ -68,21 +68,24 @@ def timingRegistration : Registration timingArena (timingArena.Law timingActual)
     refine ⟨(), 0, 1, ?_⟩
     norm_num [timingActual, realize, earliestTime, Nat.bitIndices]
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Observer.Budget.DyadicDeadlineStaircase.exceptional_prefix_timing) (type_of% (timingArena)) (type_of% (timingArena)) (type_of% (realize.{0, 0, 0, 0, 0} timingSignature
-    (fun _ _ d => earliestTime d (2 ^ d - 1)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Observer.Budget.DyadicDeadlineStaircase.exceptional_prefix_timing) (type_of% (realize.{0, 0, 0, 0, 0} timingSignature
+    (fun _ _ d => earliestTime d (2 ^ d - 1)) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Observer") "Budget") "DyadicDeadlineStaircase") "exceptional_prefix_timing") "Reg.D5.S3.Observer.Budget.DyadicDeadlineStaircase/Reg.D5.S3.Observer.Budget.DyadicDeadlineStaircase.timingArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Observer.Budget.DyadicDeadlineStaircase.timingRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(timingArena)⟩,
-  objectArena := ⟨(timingArena)⟩,
+  arena := .source ⟨(timingArena)⟩,
+  objectArena := .source ⟨(timingArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (timingArena) ⟨(timingRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} timingSignature
     (fun _ _ d => earliestTime d (2 ^ d - 1)) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Observer.Budget.DyadicDeadlineStaircase, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

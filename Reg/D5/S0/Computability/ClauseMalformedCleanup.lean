@@ -87,19 +87,22 @@ private theorem _root_.PredictiveThermodynamic.pre_error_cleanup.__primitive_rea
     constructor
     exact ⟨fun _ => sourceLaw, fun _ => pre_error_cleanup⟩
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.PredictiveThermodynamic.pre_error_cleanup) (type_of% (arena)) (type_of% (arena)) (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun b => b))) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (Bool)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.PredictiveThermodynamic.pre_error_cleanup) (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun b => b))) (type_of% (Bool)) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Computability") "ClauseMalformedCleanup") 0) "PredictiveThermodynamic") "pre_error_cleanup") "__information_unit"),
   realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Computability") "ClauseMalformedCleanup") 0) "PredictiveThermodynamic") "pre_error_cleanup") "__primitive_realization"),
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .law ⟨(arena)⟩,
+  objectArena := .law ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (arena) ((symbols)) (symbols.toPrimitiveBundle) ⟨(PredictiveThermodynamic.pre_error_cleanup.__primitive_realization)⟩,
+  realization := .legacy (arena) ((symbols)) (symbols.toPrimitiveBundle) ⟨(PredictiveThermodynamic.pre_error_cleanup.__primitive_realization)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (PredictiveThermodynamic.pre_error_cleanup.__primitive_realization) (@_root_.PredictiveThermodynamic.pre_error_cleanup))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((symbols.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@cutRealization Bool Bool instDecidableEqBool (fun b => b)),
-  variation := some ⟨(variation)⟩,
-  sensitivity := some ⟨(sensitivity)⟩,
+  variation := .evidence ⟨(variation)⟩ (by first | exact (variation) | exact ⟨_, _, (variation)⟩),
+  sensitivity := .evidence ⟨(sensitivity)⟩ (by exact (sensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (Bool),
   sourceSelection := none,
   continuation := .unknown,

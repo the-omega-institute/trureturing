@@ -340,7 +340,7 @@ def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInp
     let continuation : Option EscapeContinuationIdentity :=
       if input.openContinuation then some { kind := "open" } else none
     return { bridgeKind := kind, continuation }
-  if kind == "witness" then
+  if kind == "witness" && event.compiledMathematics.isNone then
     let type := (← getConstInfo event.realizationName).type
     discard <| RegistrationGates.witnessStatement event.arena type.getAppArgs[1]! event.key.theoremName
   -- Structural registrations without escape slots do not consume a finite arena.

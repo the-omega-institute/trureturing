@@ -68,19 +68,22 @@ def registration : Registration arena
     change (1 : ℝ) - 1 * 0 ≠ 1 - 1 * 1
     norm_num
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.Smooth1Properties_below) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ c ε => 1 - c * ε) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.Smooth1Properties_below) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ c ε => 1 - c * ε) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "Smooth1Properties_below") "Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1/Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ c ε => 1 - c * ε) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Weil.PrimeNumberTheorem.Smooth1, definition := none, coordinates := #[3], readouts := #[{ path := #["body", "body", "body", "arg", "body", "arg", "arg", "body", "body", "body", "body", "domain", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -144,19 +147,22 @@ def registration : Registration arena
     change (1 : ℝ) + 1 * 0 ≠ 1 + 1 * 1
     norm_num
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.Smooth1Properties_above) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ c ε => 1 + c * ε) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.Smooth1Properties_above) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ c ε => 1 + c * ε) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "Smooth1Properties_above") "Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1/Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ c ε => 1 + c * ε) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Weil.PrimeNumberTheorem.Smooth1, definition := none, coordinates := #[2], readouts := #[{ path := #["body", "body", "arg", "body", "arg", "arg", "body", "body", "body", "domain", "fn", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -228,23 +234,26 @@ def registration : Registration arena
     rw [h1, h2]
     norm_num
 
-noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.MellinOfSmooth1a) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.MellinOfSmooth1a) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ p s => s⁻¹ * mellin.{0} (fun x => (p.1 x : ℂ)) (p.2 * s))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "MellinOfSmooth1a") "Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1/Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ p s => s⁻¹ * mellin.{0} (fun x => (p.1 x : ℂ)) (p.2 * s))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Weil.PrimeNumberTheorem.Smooth1, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -312,21 +321,24 @@ def registration : Registration arena
     rw [h1, h0]
     norm_num
 
-noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.Smooth1ContinuousAt) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
-    (fun _ p x => _root_.Smooth1 p.1 p.2 x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.Smooth1ContinuousAt) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p x => _root_.Smooth1 p.1 p.2 x) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "Smooth1ContinuousAt") "Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1/Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ p x => _root_.Smooth1 p.1 p.2 x) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Weil.PrimeNumberTheorem.Smooth1, definition := none, coordinates := #[0, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

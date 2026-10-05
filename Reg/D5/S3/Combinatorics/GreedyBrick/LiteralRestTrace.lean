@@ -73,21 +73,24 @@ def registration : Registration arena (arena.Law actual) where
     simp only [List.length_reverse, T.initial_capacity, List.length_singleton] at hh
     omega
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace.literal_trace_realization) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
-    (fun _ T e => (T.state e).capacity.reverse) (fun a => nomatch a))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace.literal_trace_realization) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ T e => (T.state e).capacity.reverse) (fun a => nomatch a))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Combinatorics") "GreedyBrick") "LiteralRestTrace") "literal_trace_realization") "Reg.D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace/Reg.D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ T e => (T.state e).capacity.reverse) (fun a => nomatch a)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace, definition := none, coordinates := #[0], readouts := #[{ path := #["arg", "body", "arg", "fn", "arg", "body", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

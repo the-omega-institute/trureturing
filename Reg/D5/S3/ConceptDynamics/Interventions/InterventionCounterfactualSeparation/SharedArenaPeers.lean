@@ -39,21 +39,24 @@ theorem _root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSep
 
 attribute [local instance] modelFintype modelDecidableEq in
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) (type_of% (finiteInterventionLawArena)) (type_of% (finiteInterventionArena)) (type_of% (@interventionFiniteRealization DeterministicBoolSCM
-    (fun M => icIntCode M) (fun M => icCFCode M))) (type_of% (finiteIntervention_law_sensitive)) (type_of% (finiteIntervention_slot_sensitive)) (type_of% (DeterministicBoolSCM)) (type_of% (finiteIntervention_empty)) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) (type_of% (@interventionFiniteRealization DeterministicBoolSCM
+    (fun M => icIntCode M) (fun M => icCFCode M))) (type_of% (DeterministicBoolSCM)) (type_of% (finiteIntervention_empty)) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interventions") "InterventionCounterfactualSeparation") "intervention_strictly_weaker_than_counterfactual") "Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.SharedArenaPeers/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena/finiteProbe") "__information_unit"),
   realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interventions") "InterventionCounterfactualSeparation") "intervention_strictly_weaker_than_counterfactual") "Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.SharedArenaPeers/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena/finiteProbe") "__primitive_realization"),
   realizationSource := some `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteIntervention_bridge,
   generated := false,
-  arena := ⟨(finiteInterventionLawArena)⟩,
-  objectArena := ⟨(finiteInterventionArena)⟩,
+  arena := .law ⟨(finiteInterventionLawArena)⟩,
+  objectArena := .finite ⟨(finiteInterventionArena)⟩,
   catalog := `finiteProbe,
   localNames := false,
-  realization := .legacy (finiteInterventionLawArena) (D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionRealization) (finiteInterventionRealization.toPrimitiveBundle) ⟨(finiteIntervention_bridge)⟩,
+  realization := .legacy (finiteInterventionLawArena) (D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionRealization) (finiteInterventionRealization.toPrimitiveBundle) ⟨(finiteIntervention_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (finiteIntervention_bridge) (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((finiteInterventionRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@interventionFiniteRealization DeterministicBoolSCM
     (fun M => icIntCode M) (fun M => icCFCode M)),
-  variation := some ⟨(finiteIntervention_law_sensitive)⟩,
-  sensitivity := some ⟨(finiteIntervention_slot_sensitive)⟩,
+  variation := .evidence ⟨(finiteIntervention_law_sensitive)⟩ (by first | exact (finiteIntervention_law_sensitive) | exact ⟨_, _, (finiteIntervention_law_sensitive)⟩),
+  sensitivity := .evidence ⟨(finiteIntervention_slot_sensitive)⟩ (by exact (finiteIntervention_slot_sensitive)),
+  partialSensitivity := none,
   escapeFrom := some (DeterministicBoolSCM),
   sourceSelection := none,
   continuation := .evidence ⟨(finiteIntervention_empty)⟩,

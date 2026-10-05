@@ -19,17 +19,21 @@ def constructor (name : Name) (count : Nat) (field : String)
     throw s!"contract.literal:{field}:arity:{name}"
   return args
 
-partial def nat (field : String) (e : Expr) : Except String Nat := do
-  let e := e.consumeMData
-  if let .lit (.natVal n) := e then return n
-  if e.isConstOf ``Nat.zero then return 0
-  if e.isAppOfArity ``Nat.succ 1 then return (← nat field e.getAppArgs[0]!) + 1
-  if e.isAppOfArity ``OfNat.ofNat 3 then
-    let args := e.getAppArgs
-    if args[0]!.isConstOf ``Nat && args[2]!.isAppOfArity ``instOfNatNat 1 &&
-        args[2]!.getAppArgs[0]! == args[1]! then
-      return ← nat field args[1]!
-  reject field e
+def nat (field : String) (e : Expr) : Except String Nat := do
+  match e with
+  | .mdata _ inner => nat field inner
+  | .lit (.natVal n) => pure n
+  | .const name _ => if name == ``Nat.zero then pure 0 else reject field e
+  | .app (.const name _) value =>
+    if name == ``Nat.succ then return (← nat field value) + 1
+    else reject field e
+  | .app (.app (.app (.const name _) type) value) numeralInstance =>
+    if name == ``OfNat.ofNat && type.isConstOf ``Nat &&
+        numeralInstance.isAppOfArity ``instOfNatNat 1 &&
+        numeralInstance.getAppArgs[0]! == value then
+      nat field value
+    else reject field e
+  | _ => reject field e
 
 def string (field : String) (e : Expr) : Except String String := do
   let .lit (.strVal s) := e.consumeMData | reject field e
@@ -62,10 +66,10 @@ def optional (field : String) (e : Expr) : Except String (Option Expr) := do
   if e.isAppOfArity ``Option.some 2 then return some e.getAppArgs[1]!
   reject field e
 
-private partial def listWithTails (field : String) (e : Expr)
+private def listWithTails (field : String) (e : Expr)
     (tails : Array (Array Expr)) : Except String (Array Expr) := do
-  let e := e.consumeMData
   match e with
+  | .mdata _ inner => listWithTails field inner tails
   | .letE _ type value body _ =>
     unless type.isAppOfArity ``List 1 && closed type do reject field e
     let tail ← listWithTails field value tails
@@ -73,12 +77,12 @@ private partial def listWithTails (field : String) (e : Expr)
   | .bvar index =>
     if index < tails.size then return tails[tails.size - 1 - index]!
     reject field e
-  | _ => pure ()
-  if e.isAppOfArity ``List.nil 1 then return #[]
-  if e.isAppOfArity ``List.cons 3 then
-    unless closed e.getAppArgs[1]! do reject field e
-    return #[e.getAppArgs[1]!] ++ (← listWithTails field e.getAppArgs[2]! tails)
-  reject field e
+  | .app (.const name _) _ =>
+    if name == ``List.nil then pure #[] else reject field e
+  | .app (.app (.app (.const name _) _) value) rest =>
+    unless name == ``List.cons && closed value do reject field e
+    return #[value] ++ (← listWithTails field rest tails)
+  | _ => reject field e
 
 /-- Decode the pinned compiler's literal list constructors and shared tails
 without substituting, reducing or evaluating expressions. -/

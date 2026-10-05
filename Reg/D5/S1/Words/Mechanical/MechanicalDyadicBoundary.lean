@@ -128,21 +128,24 @@ theorem stableSensitivity : FiniteSlotSensitivity stableArena.toPrimitiveLawAren
   · intro i
     exact Fin.elim0 i
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq) (type_of% (upperArena)) (type_of% (upperArena)) (type_of% (@mechanicalReadoutRealization UpperOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => upperReadout))) (type_of% (upperVariation)) (type_of% (upperSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq) (type_of% (@mechanicalReadoutRealization UpperOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => upperReadout))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.upperBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(upperArena)⟩,
-  objectArena := ⟨(upperArena)⟩,
+  arena := .object ⟨(upperArena)⟩,
+  objectArena := .object ⟨(upperArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperRealization) (upperRealization.toPrimitiveBundle) ⟨(upperBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperRealization) (upperRealization.toPrimitiveBundle) ⟨(upperBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (upperBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((upperRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization UpperOutput (Classical.decEq.{1} _)
     (fun _ : Unit => upperReadout)),
-  variation := some ⟨(upperVariation)⟩,
-  sensitivity := some ⟨(upperSensitivity)⟩,
+  variation := .evidence ⟨(upperVariation)⟩ (by first | exact (upperVariation) | exact ⟨_, _, (upperVariation)⟩),
+  sensitivity := .evidence ⟨(upperSensitivity)⟩ (by exact (upperSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,
@@ -150,21 +153,24 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2
   options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
 
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits) (type_of% (stableArena)) (type_of% (stableArena)) (type_of% (@mechanicalReadoutRealization StableOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => stableReadout))) (type_of% (stableVariation)) (type_of% (stableSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits) (type_of% (@mechanicalReadoutRealization StableOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => stableReadout))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.stableBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(stableArena)⟩,
-  objectArena := ⟨(stableArena)⟩,
+  arena := .object ⟨(stableArena)⟩,
+  objectArena := .object ⟨(stableArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.stableArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.stableRealization) (stableRealization.toPrimitiveBundle) ⟨(stableBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.stableArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.stableRealization) (stableRealization.toPrimitiveBundle) ⟨(stableBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (stableBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((stableRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization StableOutput (Classical.decEq.{1} _)
     (fun _ : Unit => stableReadout)),
-  variation := some ⟨(stableVariation)⟩,
-  sensitivity := some ⟨(stableSensitivity)⟩,
+  variation := .evidence ⟨(stableVariation)⟩ (by first | exact (stableVariation) | exact ⟨_, _, (stableVariation)⟩),
+  sensitivity := .evidence ⟨(stableSensitivity)⟩ (by exact (stableSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,

@@ -41,6 +41,10 @@ private def validateEntry (rootId : Name) (env : Environment) (entry : Informati
   match ← validatePersistedEntry rootId env entry with
   | .ok () => pure ()
   | .error message => throwError message
+  if let some obligations := entry.compiledMathematics then
+    unless obligations.bundleNonempty == .evidence do
+      throwError "IE-C013 MissingPrimitiveBundle: {entry.theoremName}"
+    return
   let unitExpr := mkConst entry.unitName
   let primitives ← mkAppM
     `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.primitives
@@ -174,9 +178,7 @@ def ValidatedSourceSnapshot.stageAliases (snapshot : ValidatedSourceSnapshot)
     throw error
 
 private def makeUnitVector (units : Array Expr) : Lean.Elab.Term.TermElabM Expr := do
-  let finZero := mkApp (mkConst ``Fin) (mkNatLit 0)
-  let mut vector ← withLocalDeclD `impossible finZero fun impossible => do
-    mkLambdaFVars #[impossible] units[0]!
+  let mut vector ← mkAppOptM ``Matrix.vecEmpty #[some (← inferType units[0]!)]
   for unit in units.reverse do
     vector ← mkAppM ``Matrix.vecCons #[unit, vector]
   pure vector
@@ -212,10 +214,11 @@ private def prepareCatalog (rootId arenaName : Name) (localSealNames : Bool)
   let some firstEntry := sorted[0]?
     | throwError "IE-C026 MissingMaximalCatalog root={rootId} arena={arenaName} occurrences=[]"
   let arena ← entryArenaValue firstEntry
-  let nondegenerate ← mkAppM
-    `D5.S3.ConceptDynamics.InformationEscape.Arena.Nondegenerate #[arena]
-  unless ← propositionIsTrue nondegenerate do
-    throwError "IE-C004 DegenerateArena: {arenaName}"
+  if !sorted.all (·.compiledMathematics.isSome) then
+    let nondegenerate ← mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.Arena.Nondegenerate #[arena]
+    unless ← propositionIsTrue nondegenerate do
+      throwError "IE-C004 DegenerateArena: {arenaName}"
   let unitExprs := sorted.map fun entry => mkConst entry.unitName
   let vector ← makeUnitVector unitExprs
   let value ← mkAppM

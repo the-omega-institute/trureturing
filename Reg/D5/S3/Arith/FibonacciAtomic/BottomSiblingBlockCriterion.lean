@@ -79,23 +79,26 @@ def registration : Registration arena (arena.Law actual) where
     rw [hx,hy]
     decide
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_common_depth_fullness) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_common_depth_fullness) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ p source => (sourceNumber source.val : ZMod p.1))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "FibonacciAtomic") "BottomSiblingBlockCriterion") "actual_common_depth_fullness") "Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion/Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ p source => (sourceNumber source.val : ZMod p.1))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion, definition := none, coordinates := #[0, 2, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "body", "body", "arg", "body", "arg", "fn", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -160,23 +163,26 @@ def nonconverseRegistration :
       exact hz
     omega
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_nonconverse) (type_of% (nonconverseArena)) (type_of% (nonconverseArena)) (type_of% (realize.{0, 0, 0, 0, 0} nonconverseSignature
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_nonconverse) (type_of% (realize.{0, 0, 0, 0, 0} nonconverseSignature
     (fun _ _ available => centers 2 4 0 1 available)
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "FibonacciAtomic") "BottomSiblingBlockCriterion") "actual_nonconverse") "Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion/Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(nonconverseArena)⟩,
-  objectArena := ⟨(nonconverseArena)⟩,
+  arena := .source ⟨(nonconverseArena)⟩,
+  objectArena := .source ⟨(nonconverseArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (nonconverseArena) ⟨(nonconverseRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} nonconverseSignature
     (fun _ _ available => centers 2 4 0 1 available)
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion, definition := none, coordinates := #[], readouts := #[{ path := #["arg", "body", "arg", "arg", "body", "fn", "arg", "fn", "arg", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -279,23 +285,26 @@ def futureRegistration : Registration futureArena (futureArena.Law futureActual)
     rw [hx,hy]
     decide
 
-noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_future_residue_equivalence) (type_of% (futureArena)) (type_of% (futureArena)) (type_of% (realize.{0, 0, 0, 0, 0} futureSignature
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_future_residue_equivalence) (type_of% (realize.{0, 0, 0, 0, 0} futureSignature
     (fun _ p source => (sourceNumber source.val : ZMod p.1))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "FibonacciAtomic") "BottomSiblingBlockCriterion") "actual_future_residue_equivalence") "Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion/Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(futureArena)⟩,
-  objectArena := ⟨(futureArena)⟩,
+  arena := .source ⟨(futureArena)⟩,
+  objectArena := .source ⟨(futureArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (futureArena) ⟨(futureRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} futureSignature
     (fun _ p source => (sourceNumber source.val : ZMod p.1))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion, definition := none, coordinates := #[0, 2, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }, { path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

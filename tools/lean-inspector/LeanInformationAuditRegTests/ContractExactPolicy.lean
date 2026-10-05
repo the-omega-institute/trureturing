@@ -13,7 +13,7 @@ universe u
 theorem universeTarget (A : Type u) : A = A := rfl
 
 def storedSignature : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature where
-  Params := Seal
+  Params := Seal.{0,0}
   State := fun _ => Unit
   Role := Unit
   finiteRole := inferInstance
@@ -22,7 +22,7 @@ def storedSignature : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Si
   Anchor := Unit
   finiteAnchor := inferInstance
 
-def storedResult : storedSignature.Params := { rootId := `Stored, options := #[] }
+def storedResult : storedSignature.Params := { rootId := `Stored, catalogs := #[], options := #[] }
 def signatureAlias := storedSignature
 def wrappedResult : Option storedSignature.Params := some storedResult
 
@@ -65,5 +65,28 @@ run_meta do
     assertTest s!"policy.interface.{label}"
       (error.startsWith "contract.interface:command_not_allowed:")
     logInfo m!"CONTRACT_DIAGNOSTIC {label} {error}"
+
+
+run_elab do
+  for (label, typeSyntax, valueSyntax, expected) in #[
+      ("literal_identity", ← `(term| ExactMatch True True),
+        ← `(term| ExactMatch.evidence), true),
+      ("proved_proposition_is_not_identity", ← `(term| ExactMatch True (1 + 1 = 2)),
+        ← `(term| ExactMatch.evidence), false),
+      ("unknown_nonidentity", ← `(term| ExactMatch True (1 + 1 = 2)),
+        ← `(term| ExactMatch.unknown), true),
+      ("absent_nonidentity", ← `(term| ExactMatch True (1 + 1 = 2)),
+        ← `(term| ExactMatch.absent), true),
+      ("unsupported_nonidentity", ← `(term| ExactMatch True (1 + 1 = 2)),
+        ← `(term| ExactMatch.unsupported `Nat.add_comm), true)] do
+    let type ← Lean.Elab.Term.elabTerm typeSyntax none
+    let accepted ← try
+      let value ← Lean.Elab.Term.elabTerm valueSyntax (some type)
+      Lean.Elab.Term.synthesizeSyntheticMVarsNoPostponing
+      let value ← instantiateMVars value
+      checkWithKernel value
+      pure true
+    catch _ => pure false
+    assertTest s!"policy.exact_correspondence.{label}" (accepted == expected)
 
 end LeanInformationAuditRegTests.ContractExactPolicy

@@ -103,21 +103,24 @@ theorem isometricSensitivity : FiniteSlotSensitivity isometricArena.toPrimitiveL
   · intro i
     exact Fin.elim0 i
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights) (type_of% (localOrderArena)) (type_of% (localOrderArena)) (type_of% (@mechanicalReadoutRealization PrefixOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => MechanicalReadoutSources.actualPrefix))) (type_of% (orderVariation)) (type_of% (orderSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights) (type_of% (@mechanicalReadoutRealization PrefixOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.actualPrefix))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.orderBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(localOrderArena)⟩,
-  objectArena := ⟨(localOrderArena)⟩,
+  arena := .object ⟨(localOrderArena)⟩,
+  objectArena := .object ⟨(localOrderArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.localOrderArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.localOrderRealization) (localOrderRealization.toPrimitiveBundle) ⟨(orderBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.localOrderArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.localOrderRealization) (localOrderRealization.toPrimitiveBundle) ⟨(orderBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (orderBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((localOrderRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization PrefixOutput (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.actualPrefix)),
-  variation := some ⟨(orderVariation)⟩,
-  sensitivity := some ⟨(orderSensitivity)⟩,
+  variation := .evidence ⟨(orderVariation)⟩ (by first | exact (orderVariation) | exact ⟨_, _, (orderVariation)⟩),
+  sensitivity := .evidence ⟨(orderSensitivity)⟩ (by exact (orderSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,
@@ -125,21 +128,24 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2
   options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
 
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion) (type_of% (isometricArena)) (type_of% (isometricArena)) (type_of% (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))) (type_of% (isometricVariation)) (type_of% (isometricSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion) (type_of% (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.isometricBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(isometricArena)⟩,
-  objectArena := ⟨(isometricArena)⟩,
+  arena := .object ⟨(isometricArena)⟩,
+  objectArena := .object ⟨(isometricArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.isometricArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.completionRealization) (completionRealization.toPrimitiveBundle) ⟨(isometricBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.isometricArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.completionRealization) (completionRealization.toPrimitiveBundle) ⟨(isometricBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (isometricBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((completionRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.actualCompletion)),
-  variation := some ⟨(isometricVariation)⟩,
-  sensitivity := some ⟨(isometricSensitivity)⟩,
+  variation := .evidence ⟨(isometricVariation)⟩ (by first | exact (isometricVariation) | exact ⟨_, _, (isometricVariation)⟩),
+  sensitivity := .evidence ⟨(isometricSensitivity)⟩ (by exact (isometricSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,

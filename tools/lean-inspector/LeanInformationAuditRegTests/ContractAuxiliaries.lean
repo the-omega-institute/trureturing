@@ -5,10 +5,33 @@ import LeanInformationAuditRegTests.ContractReferenceFixtures.ElaborationDefinit
 import LeanInformationAuditRegTests.ContractReferenceFixtures.ImportedElaboration
 
 import LeanInformationAuditRegTests.ContractReferenceFixtures.Coexistence
+import LeanInformationAuditRegTests.ContractFixtures
 
 namespace LeanInformationAuditRegTests.ContractAuxiliaries
 open Lean Meta Elab Command LeanInformationAudit.Contract
 open LeanInformationAuditRegTests.ContractGuards
+
+run_meta do
+  let owner := `LeanInformationAuditRegTests.ContractFixtures
+  let source ← IO.FS.readFile (← Discovery.moduleSource owner)
+  let entries ← SourceAudit.parse (← getEnv) source owner.toString
+  let parent := `LeanInformationAuditRegTests.ContractFixtures.partialSensitivity
+  let .defnInfo info ← getConstInfo parent | throwError "fixture:definition"
+  let definition : Discovery.Definition := ⟨owner, info, ← Discovery.requireRange parent⟩
+  let proof := parent.str "_proof_1"
+  assertTest "auxiliary.proof.live"
+    (← Discovery.generatedEntryProof owner entries #[definition] (← getEnv) proof)
+  assertTest "auxiliary.proof.same_module"
+    (!(← Discovery.generatedEntryProof `Other.Module entries #[definition] (← getEnv) proof))
+  assertTest "auxiliary.proof.live_path"
+    (!(← Discovery.generatedEntryProof owner entries #[] (← getEnv) proof))
+  let authored := entries.map fun entry =>
+    if entry.sourceName == some parent then
+      { entry with authoredNames := entry.authoredNames.push proof } else entry
+  assertTest "auxiliary.proof.authored_inventory"
+    (!(← Discovery.generatedEntryProof owner authored #[definition] (← getEnv) proof))
+  assertTest "auxiliary.proof.value_rejected"
+    (!(← Discovery.generatedEntryProof owner entries #[definition] (← getEnv) parent))
 
 run_meta do
   let imported := `LeanInformationAuditRegTests.ContractReferenceFixtures.ImportedElaboration

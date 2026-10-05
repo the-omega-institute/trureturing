@@ -10,6 +10,7 @@ private def mismatch (root catalog : Name) (component : String) : MetaM Unit :=
 component={component} expected=certified-catalog actual=different"
 
 private def certificateType (name : Name) : MetaM Expr := do
+  if let some value := compiledSealEvidence? (← getEnv) name then return ← inferType value
   let some (.thmInfo info) := (← getEnv).find? name
     | throwError "missing theorem certificate: {name}"
   return info.type
@@ -33,6 +34,7 @@ def validateCatalogArena (root catalogId arenaName : Name) (catalog arena : Expr
   let named ← mkConstWithFreshMVarLevels arenaName
   let named := (← RegistrationElaboration.normalizeArena named).finite
   unless (← isDefEq named declaredArena) && (← isDefEq named arena) do fail "object-arena"
+  if catalog.isConst && (compiledSealEvidence? (← getEnv) catalog.constName!).isSome then return
   let actualCard : Nat ← reduceEval (← mkAppM ``Arena.card #[named])
   unless actualCard == stateCard do fail "arena-counts"
 
@@ -51,7 +53,8 @@ def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
     validateCountingRoute root metadata.catalogId original counts.proofMethod
   let expectedName (name : Name) (suffix : String) :=
     catalogQualifiedName root metadata.arenaName metadata.catalogId name suffix
-  let stateCard : Nat ← reduceEval (← mkAppM ``Arena.card #[arena])
+  let stateCard : Nat ← if counts.compiledEvidence then pure counts.stateCard
+    else reduceEval (← mkAppM ``Arena.card #[arena])
   unless counts.stateCard == stateCard && counts.offDiagonalPairCount == projection.denominator do
     fail "arena-counts"
   let indices := counts.theorems.map (·.index) |>.qsort (· < ·)
@@ -59,11 +62,12 @@ def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
   let positive := projection.verdict == "irredundant"
   unless (match counts.verdict with | .irredundant _ => true | .redundant _ => false) == positive do
     fail "verdict-branch"
-  let actualVerdict ← certificateType counts.verdict.name
-  let expectedVerdict ← mkAppM
-    (if projection.verdict == "irredundant" then ``CatalogIrredundant else ``Catalog.CatalogRedundant)
-    #[original]
-  unless ← isDefEq actualVerdict expectedVerdict do fail "verdict-proposition"
+  if !counts.compiledEvidence then
+    let actualVerdict ← certificateType counts.verdict.name
+    let expectedVerdict ← mkAppM
+      (if projection.verdict == "irredundant" then ``CatalogIrredundant else ``Catalog.CatalogRedundant)
+      #[original]
+    unless ← isDefEq actualVerdict expectedVerdict do fail "verdict-proposition"
   unless counts.verdict.name ==
       expectedName metadata.arenaName counts.verdict.suffix do fail "verdict-qualification"
   for row in counts.theorems do
@@ -76,9 +80,10 @@ def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
     let index ← ProjectionProof.fin row.index counts.theorems.size
     unless ← isDefEq unit (← mkAppM ``Catalog.theoremAt #[original, index]) do
       fail "occurrence-unit"
-    unless ← isDefEq (← mkAppM ``TheoremUnit.Statement #[unit])
-        (← inferType (← mkConstWithFreshMVarLevels row.theoremName)) do
-      fail "occurrence-statement"
+    if !counts.compiledEvidence then
+      unless ← isDefEq (← mkAppM ``TheoremUnit.Statement #[unit])
+          (← inferType (← mkConstWithFreshMVarLevels row.theoremName)) do
+        fail "occurrence-statement"
     let some loo := projection.leaveOneOut.find? (·.theoremName == row.unitName)
       | fail "occurrence-leave-one-out"
     let some node := projection.nodes.find? (·.key == loo.node)
@@ -89,12 +94,13 @@ def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
         row.fullEscapeCount == counts.fullEscapeCount do fail "occurrence-counts"
     unless (match row.certificate with | .positive _ => true | .trivial _ => false) ==
         (row.uniqueCaptureCount > 0) do fail "occurrence-certificate-branch"
-    let expectedLowering ← mkAppM
-      (if row.uniqueCaptureCount > 0 then ``Catalog.LowersEscape else `D5.S3.ConceptDynamics.InformationEscape.Catalog.TrivialInCatalog)
-      #[original, index]
-    let actualLowering ← certificateType row.certificateName
-    unless ← occurrenceTypeMatches actualLowering expectedLowering.getAppFn.constName!
-        original index do fail "occurrence-certificate-proposition"
+    if !counts.compiledEvidence then
+      let expectedLowering ← mkAppM
+        (if row.uniqueCaptureCount > 0 then ``Catalog.LowersEscape else `D5.S3.ConceptDynamics.InformationEscape.Catalog.TrivialInCatalog)
+        #[original, index]
+      let actualLowering ← certificateType row.certificateName
+      unless ← occurrenceTypeMatches actualLowering expectedLowering.getAppFn.constName!
+          original index do fail "occurrence-certificate-proposition"
     let bundle ← mkAppM ``TheoremUnit.primitives #[unit]
     let bundleIndex ← mkAppM ``PrimitiveBundle.Index #[bundle]
     let bundleFintype ← mkAppM ``PrimitiveBundle.indexFintype #[bundle]
@@ -102,18 +108,19 @@ def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
       (← mkAppOptM ``Fintype.card #[some bundleIndex, some bundleFintype])
     unless row.primitiveCount == primitiveCount && row.primitiveAxes.size == primitiveCount do
       fail "primitive-count"
-    let declared ← mkConstWithFreshMVarLevels row.realizationName
-    let declaredType ← whnf (← inferType declared)
-    let realized ← if declaredType.isAppOf ``LegacyPrimitiveRealization || declaredType.isAppOf
-        `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization ||
-        declaredType.isAppOfArity RegistrationElaboration.witnessBridgeName 3 then
-        pure declaredType.appArg!
-      else if declaredType.isAppOf ``PrimitiveRealization then pure declared
-      else do fail "realization-type"; pure declared
-    let decEq ← mkAppM ``Arena.stateDecidableEq #[arena]
-    let realizedBundle ← mkAppOptM ``PrimitiveRealization.toPrimitiveBundle
-      #[none, none, some decEq, some realized]
-    unless ← isDefEq bundle realizedBundle do fail "realization-bundle"
+    if !counts.compiledEvidence then
+      let declared ← mkConstWithFreshMVarLevels row.realizationName
+      let declaredType ← whnf (← inferType declared)
+      let realized ← if declaredType.isAppOf ``LegacyPrimitiveRealization || declaredType.isAppOf
+          `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization ||
+          declaredType.isAppOfArity RegistrationElaboration.witnessBridgeName 3 then
+          pure declaredType.appArg!
+        else if declaredType.isAppOf ``PrimitiveRealization then pure declared
+        else do fail "realization-type"; pure declared
+      let decEq ← mkAppM ``Arena.stateDecidableEq #[arena]
+      let realizedBundle ← mkAppOptM ``PrimitiveRealization.toPrimitiveBundle
+        #[none, none, some decEq, some realized]
+      unless ← isDefEq bundle realizedBundle do fail "realization-bundle"
     let members ← whnf (← mkAppOptM ``Fintype.elems #[some bundleIndex, some bundleFintype])
     let list ← whnf (← mkAppM ``Finset.val #[members])
     unless list.isAppOfArity ``Quot.mk 3 do fail "primitive-enumeration"
@@ -128,15 +135,16 @@ def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
       let count : Nat ← reduceEval (← mkAppM ``List.length #[filtered])
       axes := axes ++ Array.replicate count label
     unless row.primitiveAxes == axes do fail "primitive-axes"
-    let mut roles := #[]
-    for mask in [1:16] do
-      let bits := (Array.range 4).map fun bit => mask / 2 ^ (3 - bit) % 2 == 1
-      let signature ← ProjectionProof.vector
-        (bits.map fun bit => mkConst (if bit then ``Bool.true else ``Bool.false))
-      let count : Nat ← reduceEval (← mkAppM ``Catalog.roleHistogram #[reflected, index, signature])
-      if count > 0 then
-        roles := roles.push
-          (String.ofList (bits.toList.map fun bit => if bit then '1' else '0'), count)
-    unless row.roleSignatureHistogram.qsort (fun a b => a.1 < b.1) == roles do fail "role-histogram"
+    if !counts.compiledEvidence then
+      let mut roles := #[]
+      for mask in [1:16] do
+        let bits := (Array.range 4).map fun bit => mask / 2 ^ (3 - bit) % 2 == 1
+        let signature ← ProjectionProof.vector
+          (bits.map fun bit => mkConst (if bit then ``Bool.true else ``Bool.false))
+        let count : Nat ← reduceEval (← mkAppM ``Catalog.roleHistogram #[reflected, index, signature])
+        if count > 0 then
+          roles := roles.push
+            (String.ofList (bits.toList.map fun bit => if bit then '1' else '0'), count)
+      unless row.roleSignatureHistogram.qsort (fun a b => a.1 < b.1) == roles do fail "role-histogram"
 
 end LeanInformationAudit

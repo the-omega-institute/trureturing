@@ -67,19 +67,22 @@ def boundaryRegistration : Registration boundaryArena
       exact nomatch i
   dependence := geodesicDependence
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Combinatorics.Graph.QuadripartiteH2Repair.geodesic_boundary) (type_of% (boundaryArena)) (type_of% (boundaryArena)) (type_of% (realize.{0, 0, 0, 0, 0} geodesicSignature (fun _ x y => geodesic x y) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Combinatorics.Graph.QuadripartiteH2Repair.geodesic_boundary) (type_of% (realize.{0, 0, 0, 0, 0} geodesicSignature (fun _ x y => geodesic x y) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Combinatorics") "Graph") "QuadripartiteH2Repair") "geodesic_boundary") "Reg.D5.S3.Combinatorics.Graph.QuadripartiteH2Repair/Reg.D5.S3.Combinatorics.Graph.QuadripartiteH2Repair.boundaryArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Combinatorics.Graph.QuadripartiteH2Repair.boundaryRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(boundaryArena)⟩,
-  objectArena := ⟨(boundaryArena)⟩,
+  arena := .source ⟨(boundaryArena)⟩,
+  objectArena := .source ⟨(boundaryArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (boundaryArena) ⟨(boundaryRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} geodesicSignature (fun _ x y => geodesic x y) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Combinatorics.Graph.QuadripartiteH2Repair, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "fn", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

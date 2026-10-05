@@ -1,16 +1,21 @@
 import LeanInformationAudit.Contract.SourceAudit
 
 /-!
-Interfaces use the finite command table and typeSyntaxKinds node table. Only
-identifier/numeral leaves, the listed type applications, arrows/Pi binders,
-Sort/Type/Prop, parentheses, ascriptions, binders, universes and declaration
-containers pass. Defaults, attributes, deriving, quotation, tactic/do/elab nodes
-and all unknown forms fail closed before compiled companion authorization.
-This type syntax permission remains required after P3.
+Interfaces use the command and typeSyntaxKinds tables. Indexed sort families
+may use pure matches and logical type constructors. Defaults, attributes,
+deriving, quotation, tactic/do/elab nodes and unknown forms fail closed before
+compiled companion authorization. Compiled family results must be sorts.
 -/
 
 namespace LeanInformationAudit.Contract.InterfaceGuard
 open Lean
+
+/-- A sort-valued index family is a contract type. Value-producing
+helpers and proof declarations are outside the interface surface. -/
+private def indexFamily (declaration : Syntax) : Bool :=
+  declaration.isOfKind ``Parser.Command.definition &&
+    (declaration[2][1].find? (fun node => node.isOfKind ``Parser.Term.prop ||
+      node.isOfKind ``Parser.Term.type || node.isOfKind ``Parser.Term.sort)).isSome
 
 /-- Source types authorize their compiled families, never arbitrary name prefixes. -/
 def auditSource (entries : Array SourceAudit.Entry) : Except String Unit := do
@@ -18,7 +23,7 @@ def auditSource (entries : Array SourceAudit.Entry) : Except String Unit := do
     unless entry.command.isOfKind ``Parser.Command.declaration do continue
     let declaration := entry.command[1]
     unless declaration.isOfKind ``Parser.Command.structure ||
-        declaration.isOfKind ``Parser.Command.inductive do
+        declaration.isOfKind ``Parser.Command.inductive || indexFamily declaration do
       throw s!"contract.interface:authored_non_type:{entry.sourceName}:{declaration.getKind}"
 
 /-- Fixed companion families emitted by the pinned Lean compiler. Constructor
@@ -54,7 +59,19 @@ private def typeSyntaxKinds : Array Name := #[
   ``Parser.Command.structFields, ``Parser.Command.structSimpleBinder,
   ``Parser.Command.inductive, ``Parser.Command.ctor,
   ``Parser.Command.optDeclSig, ``Parser.Command.optDeriving,
-  ``Parser.Term.app, ``Parser.Term.arrow, ``Parser.Term.forall,
+  ``Parser.Command.definition, ``Parser.Command.declValSimple,
+  ``Parser.Command.declValEqns, `Lean.Parser.Command.optDefDeriving,
+  `Lean.Parser.Termination.suffix,
+  ``Parser.Term.optType, ``Parser.Term.matchAltsWhereDecls,
+  `Lean.Parser.Term.match, `Lean.Parser.Term.matchAlt, `Lean.Parser.Term.matchAlts,
+  `Lean.Parser.Term.matchDiscr, `Lean.Parser.Term.matchDiscrs,
+  `Lean.Parser.Term.dotIdent, `Lean.Parser.Term.ellipsis,
+  `Lean.Parser.Term.hole, `Lean.Parser.Term.fun, `Lean.Parser.Term.funBinder, `Lean.Parser.Term.basicFun,
+  `Lean.Parser.Term.matchAltExpr,
+  `«term_=_», `«term_≠_», `«term_∈_», `«term_∧_», `«term_↔_»,
+  `«term¬_», `«term_<_», `«term_≤_»,
+  `«term_+_»,
+  ``Parser.Term.proj, ``Parser.Term.app, ``Parser.Term.arrow, ``Parser.Term.depArrow, ``Parser.Term.forall,
   ``Parser.Term.explicit, ``Parser.Term.explicitUniv,
   ``Parser.Term.paren, ``Parser.Term.hygienicLParen,
   ``Parser.Term.typeSpec, ``Parser.Term.type, ``Parser.Term.sort, ``Parser.Term.prop,
@@ -76,7 +93,7 @@ private partial def permittedDeclaration (command : Syntax) : Bool :=
   else
     let declaration := command[1]
     (declaration.isOfKind ``Parser.Command.structure ||
-      declaration.isOfKind ``Parser.Command.inductive) &&
+      (declaration.isOfKind ``Parser.Command.inductive || indexFamily declaration)) &&
       !hasAttribute command && (typeSyntaxIssue command).isNone &&
       !hasDerivingClause declaration
 
@@ -113,9 +130,32 @@ def audit (env : Environment) (owner : Name) (entries : Array SourceAudit.Entry)
     let some type := entry.sourceName
       | throw "contract.interface:source_type_missing"
     unless names.contains type do throw s!"contract.interface:compiled_type_missing:{type}"
-    for name in (← family env type).toArray do allowed := allowed.insert name
+    if indexFamily entry.command[1] then
+      let some (.defnInfo info) := env.find? type
+        | throw s!"contract.interface:compiled_type_missing:{type}"
+      let rec resultSort : Expr → Bool
+        | .forallE _ _ body _ => resultSort body
+        | .sort _ => true
+        | _ => false
+      unless resultSort info.type do throw s!"contract.interface:compiled_non_type:{owner}:{type}"
+      let mut pending := #[type]
+      while !pending.isEmpty do
+        let next := pending.back!
+        pending := pending.pop
+        if allowed.contains next then continue
+        allowed := allowed.insert next
+        if let some dependency := env.find? next then
+          let used := dependency.type.getUsedConstants ++
+            ((dependency.value? (allowOpaque := true)).map Expr.getUsedConstants |>.getD #[])
+          pending := pending ++ used.filter names.contains
+    else
+      for name in (← family env type).toArray do allowed := allowed.insert name
   for name in names do
-    unless allowed.contains name do
+    let compilerEquation := match name with
+      | .str parent suffix => allowed.contains parent && isReservedName env name &&
+          (suffix == "eq_def" || (suffix.startsWith "eq_" && (suffix.drop 3).toString.toNat?.isSome))
+      | _ => false
+    unless allowed.contains name || compilerEquation do
       throw s!"contract.interface:compiled_non_type:{owner}:{name}"
 
 end LeanInformationAudit.Contract.InterfaceGuard

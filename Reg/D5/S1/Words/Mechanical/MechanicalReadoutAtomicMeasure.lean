@@ -323,21 +323,24 @@ theorem rationalJumpSensitivity : FiniteSlotSensitivity rationalJumpArena.toPrim
   · intro i
     exact Fin.elim0 i
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic) (type_of% (distributionArena)) (type_of% (distributionArena)) (type_of% (@mechanicalReadoutRealization DistributionOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => MechanicalReadoutSources.distributionReadout))) (type_of% (distributionVariation)) (type_of% (distributionSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic) (type_of% (@mechanicalReadoutRealization DistributionOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.distributionReadout))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.distributionBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(distributionArena)⟩,
-  objectArena := ⟨(distributionArena)⟩,
+  arena := .object ⟨(distributionArena)⟩,
+  objectArena := .object ⟨(distributionArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.distributionArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.distributionRealization) (distributionRealization.toPrimitiveBundle) ⟨(distributionBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.distributionArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.distributionRealization) (distributionRealization.toPrimitiveBundle) ⟨(distributionBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (distributionBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((distributionRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization DistributionOutput (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.distributionReadout)),
-  variation := some ⟨(distributionVariation)⟩,
-  sensitivity := some ⟨(distributionSensitivity)⟩,
+  variation := .evidence ⟨(distributionVariation)⟩ (by first | exact (distributionVariation) | exact ⟨_, _, (distributionVariation)⟩),
+  sensitivity := .evidence ⟨(distributionSensitivity)⟩ (by exact (distributionSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,
@@ -345,21 +348,24 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2
   options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
 
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_singleton_hit) (type_of% (hitArena)) (type_of% (hitArena)) (type_of% (@mechanicalReadoutRealization HitOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => MechanicalReadoutSources.hitReadout))) (type_of% (hitVariation)) (type_of% (hitSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_singleton_hit) (type_of% (@mechanicalReadoutRealization HitOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.hitReadout))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_singleton_hit.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.hitBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(hitArena)⟩,
-  objectArena := ⟨(hitArena)⟩,
+  arena := .object ⟨(hitArena)⟩,
+  objectArena := .object ⟨(hitArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.hitArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.hitRealization) (hitRealization.toPrimitiveBundle) ⟨(hitBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.hitArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.hitRealization) (hitRealization.toPrimitiveBundle) ⟨(hitBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (hitBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_singleton_hit))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((hitRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization HitOutput (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.hitReadout)),
-  variation := some ⟨(hitVariation)⟩,
-  sensitivity := some ⟨(hitSensitivity)⟩,
+  variation := .evidence ⟨(hitVariation)⟩ (by first | exact (hitVariation) | exact ⟨_, _, (hitVariation)⟩),
+  sensitivity := .evidence ⟨(hitSensitivity)⟩ (by exact (hitSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,
@@ -367,21 +373,24 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2
   options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
 
 
-noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_support) (type_of% (supportArena)) (type_of% (supportArena)) (type_of% (@mechanicalReadoutRealization SupportOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => MechanicalReadoutSources.supportReadout))) (type_of% (supportVariation)) (type_of% (supportSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_support) (type_of% (@mechanicalReadoutRealization SupportOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.supportReadout))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_support.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.supportBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(supportArena)⟩,
-  objectArena := ⟨(supportArena)⟩,
+  arena := .object ⟨(supportArena)⟩,
+  objectArena := .object ⟨(supportArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.supportArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.supportRealization) (supportRealization.toPrimitiveBundle) ⟨(supportBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.supportArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.supportRealization) (supportRealization.toPrimitiveBundle) ⟨(supportBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (supportBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_support))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((supportRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization SupportOutput (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.supportReadout)),
-  variation := some ⟨(supportVariation)⟩,
-  sensitivity := some ⟨(supportSensitivity)⟩,
+  variation := .evidence ⟨(supportVariation)⟩ (by first | exact (supportVariation) | exact ⟨_, _, (supportVariation)⟩),
+  sensitivity := .evidence ⟨(supportSensitivity)⟩ (by exact (supportSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,
@@ -389,21 +398,24 @@ noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2
   options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
 
 
-noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form) (type_of% (rationalJumpArena)) (type_of% (rationalJumpArena)) (type_of% (@mechanicalReadoutRealization JumpOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => MechanicalReadoutSources.jumpReadout))) (type_of% (rationalJumpVariation)) (type_of% (rationalJumpSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form) (type_of% (@mechanicalReadoutRealization JumpOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.jumpReadout))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.rationalJumpBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(rationalJumpArena)⟩,
-  objectArena := ⟨(rationalJumpArena)⟩,
+  arena := .object ⟨(rationalJumpArena)⟩,
+  objectArena := .object ⟨(rationalJumpArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.rationalJumpArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.jumpRealization) (jumpRealization.toPrimitiveBundle) ⟨(rationalJumpBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.rationalJumpArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.jumpRealization) (jumpRealization.toPrimitiveBundle) ⟨(rationalJumpBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (rationalJumpBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((jumpRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization JumpOutput (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.jumpReadout)),
-  variation := some ⟨(rationalJumpVariation)⟩,
-  sensitivity := some ⟨(rationalJumpSensitivity)⟩,
+  variation := .evidence ⟨(rationalJumpVariation)⟩ (by first | exact (rationalJumpVariation) | exact ⟨_, _, (rationalJumpVariation)⟩),
+  sensitivity := .evidence ⟨(rationalJumpSensitivity)⟩ (by exact (rationalJumpSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,

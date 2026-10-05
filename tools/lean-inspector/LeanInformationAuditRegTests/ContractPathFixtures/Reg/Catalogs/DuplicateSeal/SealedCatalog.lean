@@ -7,6 +7,6 @@ def catalog : Contract.RootCatalog := { data := {
   source := #[]
   baseline := #[]
   companionPrefix := none } }
-def sealEntry : Contract.Seal := { rootId := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.DuplicateSeal.SealedCatalog, options := #[] }
-def seal2 : Contract.Seal := { rootId := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.DuplicateSeal.SealedCatalog, options := #[] }
+def sealEntry : Contract.Seal.{0,0} := { rootId := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.DuplicateSeal.SealedCatalog, catalogs := #[], options := #[] }
+def seal2 : Contract.Seal.{0,0} := { rootId := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.DuplicateSeal.SealedCatalog, catalogs := #[], options := #[] }
 end LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.DuplicateSeal.SealedCatalog

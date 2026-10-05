@@ -22,23 +22,26 @@ open _root_.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates
 
 
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates.recenter_direction) (type_of% (recenterArena)) (type_of% (recenterArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates.recenter_direction) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization
     (Fin 3) (Fin 2) (instDecidableEqFin 2)
-    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterReadout d) (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterReadout d))) (type_of% (recenter_lawSensitive)) (type_of% (recenter_slotSensitive)) (type_of% (Fin 3)) (type_of% (recenterResidual)) (Unit) := {
+    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterReadout d) (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterReadout d))) (type_of% (Fin 3)) (type_of% (recenterResidual)) := {
   unitName := `Reg.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates.recenter_direction.__information_unit,
   realizationName := `D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenter_bridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(recenterArena)⟩,
-  objectArena := ⟨(recenterArena)⟩,
+  arena := .law ⟨(recenterArena)⟩,
+  objectArena := .law ⟨(recenterArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (recenterArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterRealization) (recenterRealization.toPrimitiveBundle) ⟨(recenter_bridge)⟩,
+  realization := .legacy (recenterArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterRealization) (recenterRealization.toPrimitiveBundle) ⟨(recenter_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (recenter_bridge) (@_root_.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates.recenter_direction))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((recenterRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization
     (Fin 3) (Fin 2) (instDecidableEqFin 2)
     (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterReadout d) (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterReadout d)),
-  variation := some ⟨(recenter_lawSensitive)⟩,
-  sensitivity := some ⟨(recenter_slotSensitive)⟩,
+  variation := .evidence ⟨(recenter_lawSensitive)⟩ (by first | exact (recenter_lawSensitive) | exact ⟨_, _, (recenter_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(recenter_slotSensitive)⟩ (by exact (recenter_slotSensitive)),
+  partialSensitivity := none,
   escapeFrom := some (Fin 3),
   sourceSelection := none,
   continuation := .evidence ⟨(recenterResidual)⟩,

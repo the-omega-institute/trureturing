@@ -103,29 +103,32 @@ def registration : Registration arena
         (goldenLucas (3 ^ 1) ^ 2 + 3).natAbs ^ (2 - 1)
     norm_num [goldenLucas, D5.S0.Carrier.trace, D5.S0.Carrier.phi, pow_succ]
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.Primes.GoldenCubicBlockNativePowerPeriods.cubic_block_native_power_periods) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.Primes.GoldenCubicBlockNativePowerPeriods.cubic_block_native_power_periods) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ p b =>
       let C := (goldenLucas (3 ^ p.1) ^ 2 + 1).natAbs
       let B := (goldenLucas (3 ^ p.1) ^ 2 + 3).natAbs
       4 * 3 ^ (p.1 + 1) * C ^ (p.2 - 1) * B ^ (b - 1))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "Primes") "GoldenCubicBlockNativePowerPeriods") "cubic_block_native_power_periods") "Reg.D5.S3.Arith.Primes.GoldenCubicBlockNativePowerPeriods/Reg.D5.S3.Arith.Primes.GoldenCubicBlockNativePowerPeriods.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.Primes.GoldenCubicBlockNativePowerPeriods.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ p b =>
       let C := (goldenLucas (3 ^ p.1) ^ 2 + 1).natAbs
       let B := (goldenLucas (3 ^ p.1) ^ 2 + 3).natAbs
       4 * 3 ^ (p.1 + 1) * C ^ (p.2 - 1) * B ^ (b - 1))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.Primes.GoldenCubicBlockNativePowerPeriods, definition := none, coordinates := #[3, 4], readouts := #[{ path := #["body", "body", "body", "arg", "arg", "arg", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

@@ -37,8 +37,15 @@ structure TemplateEnrollmentInput where
   sourceText : String
   options : Options
 
+structure CompiledSealCatalog where
+  source : Name
+  arenaName : Name
+  catalogId : Name
+  value : Expr
+
 structure SealInput where
   rootId : Name
+  catalogs : Array CompiledSealCatalog := #[]
   options : Options
 
 private initialize assessmentCatalogs : EnvExtension (Array RootCatalogContract) ←

@@ -136,21 +136,24 @@ def registration.{u,v} : Registration arena.{u,v} (arena.{u,v}.Law actual.{u,v})
   sensitivity := sensitivity
   dependence := dependence
 
-noncomputable def registration_1.{u_1, u_3} : LeanInformationAudit.Contract.Registration.{max (max ((max u_1 u_3) + 2) (u_1 + 2)) ((max (u_1 + 1) (u_3 + 1)) + 2), max (max ((max u_1 u_3) + 2) (u_1 + 2)) ((max (u_1 + 1) (u_3 + 1)) + 2), max (u_1 + 1) (u_3 + 1), 1, 1, 0, 1, 1, 0, 0, 0, max (u_1 + 1) (u_3 + 1), u_1, 0, max u_1 u_3, 0, 0} (@_root_.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual_adaptive_span.{u_1, u_3}) (type_of% (arena.{u_1, u_3})) (type_of% (arena.{u_1, u_3})) (type_of% (realize.{max (u_3 + 1) (u_1 + 1), u_1, 0, max u_3 u_1, 0} signature.{u_1, u_3}
-    (fun _ p e => observation.{u_1, u_3} p e) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1.{u_1, u_3} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual_adaptive_span.{u_1, u_3}) (type_of% (realize.{max (u_3 + 1) (u_1 + 1), u_1, 0, max u_3 u_1, 0} signature.{u_1, u_3}
+    (fun _ p e => observation.{u_1, u_3} p e) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "AdaptiveLowInstrumentSpan") "actual_adaptive_span") "Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan/Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u_1, u_3})⟩,
-  objectArena := ⟨(arena.{u_1, u_3})⟩,
+  arena := .source ⟨(arena.{u_1, u_3})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_3})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u_1, u_3}) ⟨(registration.{u_1, u_3})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{max (u_3 + 1) (u_1 + 1), u_1, 0, max u_3 u_1, 0} signature.{u_1, u_3}
     (fun _ p e => observation.{u_1, u_3} p e) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, definition := none, coordinates := #[0, 3, 8], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "arg", "arg", "fn", "arg"], stateBinder := 10, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

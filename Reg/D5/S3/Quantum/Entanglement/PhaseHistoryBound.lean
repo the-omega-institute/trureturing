@@ -124,19 +124,22 @@ def registration : Registration arena.{u} (arena.Law actual) where
     norm_num [center]
 end Bound
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Entanglement.PhaseHistoryBound.actual_source_moments) (type_of% (Moments.arena)) (type_of% (Moments.arena)) (type_of% (realize.{0, 0, 0, 0, 0} Moments.signature (fun _ p φ => source p φ) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Entanglement.PhaseHistoryBound.actual_source_moments) (type_of% (realize.{0, 0, 0, 0, 0} Moments.signature (fun _ p φ => source p φ) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Entanglement") "PhaseHistoryBound") "actual_source_moments") "Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound/Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(Moments.arena)⟩,
-  objectArena := ⟨(Moments.arena)⟩,
+  arena := .source ⟨(Moments.arena)⟩,
+  objectArena := .source ⟨(Moments.arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (Moments.arena) ⟨(Moments.registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} Moments.signature (fun _ p φ => source p φ) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.PhaseHistoryBound, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg", "body", "arg", "fn", "arg", "body", "body", "body", "body", "arg", "fn", "fn", "fn", "fn"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -146,19 +149,22 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2
 
 #print axioms Moments.registration
 
-noncomputable def registration_2.{u_1} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Entanglement.PhaseHistoryBound.phase_history_bound.{u_1}) (type_of% (Bound.arena.{u_1})) (type_of% (Bound.arena.{u_1})) (type_of% (realize.{0, 0, 0, 0, 0} Bound.signature (fun _ p δ => center p.1 δ p.2) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_2.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Entanglement.PhaseHistoryBound.phase_history_bound.{u_1}) (type_of% (realize.{0, 0, 0, 0, 0} Bound.signature (fun _ p δ => center p.1 δ p.2) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Entanglement") "PhaseHistoryBound") "phase_history_bound") "Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound/Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(Bound.arena.{u_1})⟩,
-  objectArena := ⟨(Bound.arena.{u_1})⟩,
+  arena := .source ⟨(Bound.arena.{u_1})⟩,
+  objectArena := .source ⟨(Bound.arena.{u_1})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (Bound.arena.{u_1}) ⟨(Bound.registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} Bound.signature (fun _ p δ => center p.1 δ p.2) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.PhaseHistoryBound, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "arg", "fn", "arg", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

@@ -102,21 +102,24 @@ def registration : Registration arena.{u} (arena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{u + 3, u + 3, u + 1, 1, 1, 0, 1, 1, 0, 0, 0, u + 1, u, 0, u, 0, 0} (@_root_.D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.channel_kraus_stinespring.{u}) (type_of% (arena.{u})) (type_of% (arena.{u})) (type_of% (realize.{u + 1, u, 0, u, 0} signature.{u}
-    (fun _ _ X => CStarMatrix.ofMatrix.symm X) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.channel_kraus_stinespring.{u}) (type_of% (realize.{u + 1, u, 0, u, 0} signature.{u}
+    (fun _ _ X => CStarMatrix.ofMatrix.symm X) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Entanglement") "FiniteSectorChannelOptimality") "channel_kraus_stinespring") "Reg.D5.S3.Quantum.Entanglement.FiniteSectorPhysicalConstruction/Reg.D5.S3.Quantum.Entanglement.FiniteSectorPhysicalConstruction.Kraus.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPhysicalConstruction.Kraus.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u})⟩,
-  objectArena := ⟨(arena.{u})⟩,
+  arena := .source ⟨(arena.{u})⟩,
+  objectArena := .source ⟨(arena.{u})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u}) ⟨(registration.{u})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{u + 1, u, 0, u, 0} signature.{u}
     (fun _ _ X => CStarMatrix.ofMatrix.symm X) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.FiniteSectorPhysicalConstruction, definition := none, coordinates := #[1], readouts := #[{ path := #["fn", "arg", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
@@ -214,19 +217,22 @@ def registration : Registration arena.{u} (arena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{u + 2, u + 2, u, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, u, 0, 0, 0} (@_root_.D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.physical_encoding.{u}) (type_of% (arena.{u})) (type_of% (arena.{u})) (type_of% (realize.{0, 0, u, 0, 0} signature.{u} (fun _ _ x => (x : ℂ)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.physical_encoding.{u}) (type_of% (realize.{0, 0, u, 0, 0} signature.{u} (fun _ _ x => (x : ℂ)) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Entanglement") "FiniteSectorChannelOptimality") "physical_encoding") "Reg.D5.S3.Quantum.Entanglement.FiniteSectorPhysicalConstruction/Reg.D5.S3.Quantum.Entanglement.FiniteSectorPhysicalConstruction.Encoding.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPhysicalConstruction.Encoding.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u})⟩,
-  objectArena := ⟨(arena.{u})⟩,
+  arena := .source ⟨(arena.{u})⟩,
+  objectArena := .source ⟨(arena.{u})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u}) ⟨(registration.{u})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, u, 0, 0} signature.{u} (fun _ _ x => (x : ℂ)) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.FiniteSectorPhysicalConstruction, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "body", "arg", "fn", "arg", "arg", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,

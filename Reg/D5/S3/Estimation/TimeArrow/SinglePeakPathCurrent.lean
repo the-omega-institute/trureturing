@@ -145,22 +145,24 @@ def registration : Registration arena.{u} (arena.{u}.Law actual.{u}) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{u_1 + 3, u_1 + 3, u_1 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_1 + 1, u_1, 0, 0, 0, 0} (@_root_.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.log_forward_div_reverse_eq_current.{u_1}) (type_of% (arena.{u_1})) (type_of% (arena.{u_1})) (type_of% (realize.{u_1 + 1, u_1, 0, 0, 0} signedPeakPathSignature.{u_1}
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.log_forward_div_reverse_eq_current.{u_1}) (type_of% (realize.{u_1 + 1, u_1, 0, 0, 0} signedPeakPathSignature.{u_1}
     (fun _ p x => Real.log
       (forwardLaw.{u_1} (kernel.{u_1} p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1) p.2.2.2.2.2.1 x
           p.2.2.2.2.2.2 /
         reverseLaw.{u_1} (kernel.{u_1} p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1) p.2.2.2.2.2.1 x
           p.2.2.2.2.2.2))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Estimation") "TimeArrow") "SinglePeakPathCurrent") "log_forward_div_reverse_eq_current") "Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent/Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u_1})⟩,
-  objectArena := ⟨(arena.{u_1})⟩,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{u_1 + 1, u_1, 0, 0, 0} signedPeakPathSignature.{u_1}
     (fun _ p x => Real.log
       (forwardLaw.{u_1} (kernel.{u_1} p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1) p.2.2.2.2.2.1 x
@@ -168,8 +170,9 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
         reverseLaw.{u_1} (kernel.{u_1} p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1) p.2.2.2.2.2.1 x
           p.2.2.2.2.2.2))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, definition := none, coordinates := #[0, 1, 3, 5, 6, 7, 11], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 12, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

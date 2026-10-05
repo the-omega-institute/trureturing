@@ -22,23 +22,26 @@ open _root_.D5.S0.Tower.Tribonacci.Substitution (TribonacciGapLetter gapLetterSu
 
 
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S0.Tower.DBonacci.Substitution.gapLabelSubstitution_three_compatible) (type_of% (substitutionArena)) (type_of% (substitutionArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S0.Tower.DBonacci.Substitution.gapLabelSubstitution_three_compatible) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization
     (Fin 3) (Fin 3) (instDecidableEqFin 3)
-    (fun label => label) (fun label => label))) (type_of% (substitution_lawSensitive)) (type_of% (substitution_slotSensitive)) (type_of% (Fin 3)) (type_of% (substitution_empty)) (Unit) := {
+    (fun label => label) (fun label => label))) (type_of% (Fin 3)) (type_of% (substitution_empty)) := {
   unitName := `Reg.D5.S0.Tower.DBonacci.Substitution.D5.S0.Tower.DBonacci.Substitution.gapLabelSubstitution_three_compatible.__information_unit,
   realizationName := `D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.substitution_bridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(substitutionArena)⟩,
-  objectArena := ⟨(substitutionArena)⟩,
+  arena := .law ⟨(substitutionArena)⟩,
+  objectArena := .law ⟨(substitutionArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (substitutionArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.substitutionRealization) (substitutionRealization.toPrimitiveBundle) ⟨(substitution_bridge)⟩,
+  realization := .legacy (substitutionArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.substitutionRealization) (substitutionRealization.toPrimitiveBundle) ⟨(substitution_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (substitution_bridge) (@_root_.D5.S0.Tower.DBonacci.Substitution.gapLabelSubstitution_three_compatible))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((substitutionRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization
     (Fin 3) (Fin 3) (instDecidableEqFin 3)
     (fun label => label) (fun label => label)),
-  variation := some ⟨(substitution_lawSensitive)⟩,
-  sensitivity := some ⟨(substitution_slotSensitive)⟩,
+  variation := .evidence ⟨(substitution_lawSensitive)⟩ (by first | exact (substitution_lawSensitive) | exact ⟨_, _, (substitution_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(substitution_slotSensitive)⟩ (by exact (substitution_slotSensitive)),
+  partialSensitivity := none,
   escapeFrom := some (Fin 3),
   sourceSelection := none,
   continuation := .evidence ⟨(substitution_empty)⟩,

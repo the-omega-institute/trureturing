@@ -102,21 +102,24 @@ theorem phaseSensitivity : FiniteSlotSensitivity phaseArena.toPrimitiveLawArena 
   · intro i
     exact Fin.elim0 i
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalPhaseCalibration.joint_phase_calibration_law) (type_of% (phaseArena)) (type_of% (phaseArena)) (type_of% (@mechanicalReadoutRealization PhaseOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => MechanicalReadoutSources.phaseReadout))) (type_of% (phaseVariation)) (type_of% (phaseSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalPhaseCalibration.joint_phase_calibration_law) (type_of% (@mechanicalReadoutRealization PhaseOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.phaseReadout))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration.D5.S1.Words.Mechanical.MechanicalPhaseCalibration.joint_phase_calibration_law.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration.phaseBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(phaseArena)⟩,
-  objectArena := ⟨(phaseArena)⟩,
+  arena := .object ⟨(phaseArena)⟩,
+  objectArena := .object ⟨(phaseArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.phaseArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.phaseRealization) (phaseRealization.toPrimitiveBundle) ⟨(phaseBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.phaseArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.phaseRealization) (phaseRealization.toPrimitiveBundle) ⟨(phaseBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (phaseBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalPhaseCalibration.joint_phase_calibration_law))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((phaseRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization PhaseOutput (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.phaseReadout)),
-  variation := some ⟨(phaseVariation)⟩,
-  sensitivity := some ⟨(phaseSensitivity)⟩,
+  variation := .evidence ⟨(phaseVariation)⟩ (by first | exact (phaseVariation) | exact ⟨_, _, (phaseVariation)⟩),
+  sensitivity := .evidence ⟨(phaseSensitivity)⟩ (by exact (phaseSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,

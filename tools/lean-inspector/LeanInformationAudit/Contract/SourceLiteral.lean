@@ -23,12 +23,13 @@ private def fields (type : Name) : Array (Name × Shape) :=
   let options := Shape.array (recd `OptionSetting)
   match type.getString! with
   | "Registration" => #[(`unitName, name), (`realizationName, name),
-      (`realizationSource, .optional name), (`generated, lit `Bool), (`arena, ref),
-      (`objectArena, ref), (`catalog, name), (`localNames, lit `Bool),
-      (`realization, recd `Implementation), (`readout, .math), (`variation, optRef),
-      (`sensitivity, optRef), (`escapeFrom, .math),
+      (`realizationSource, .optional name), (`generated, lit `Bool), (`arena, recd `ArenaRef),
+      (`objectArena, recd `ArenaRef), (`catalog, name), (`localNames, lit `Bool),
+      (`realization, recd `Implementation), (`correspondence, .math),
+      (`bundleNonempty, .math), (`readout, .math), (`variation, .math),
+      (`sensitivity, .math), (`partialSensitivity, .math), (`escapeFrom, .math),
       (`sourceSelection, .optional (recd `SourceSelection)),
-      (`continuation, recd `Continuation), (`familyRecord, optRef), (`options, options)]
+      (`continuation, recd `Continuation), (`familyRecord, .math), (`options, options)]
   | "Ref" => #[(`value, .math)]
   | "TypeRef" => #[(`name, name), (`type, .math)]
   | "TemplateEnrollment" => #[(`name, name), (`version, lit `Nat),
@@ -48,7 +49,11 @@ private def fields (type : Name) : Array (Name × Shape) :=
       (`companionPrefix, .optional name)]
   | "RootCatalog" => #[(`data, recd `RootCatalogData)]
   | "ExpectedDeclaration" => #[(`rootId, name), (`occurrence, recd `ExpectedOccurrence)]
-  | "Seal" => #[(`rootId, name), (`options, options)]
+  | "Seal" => #[(`rootId, name), (`catalogs, .array (recd `SealCatalog)), (`options, options)]
+  | "SealCatalog" => #[(`arenaName, name), (`catalogId, name), (`arena, .math),
+      (`size, lit `Nat), (`units, .math), (`nondegenerate, .math), (`bundleNonempty, .math),
+      (`stateCard, lit `Nat), (`stateCardEq, .math), (`full, lit `Nat), (`fullEq, .math),
+      (`rows, .math), (`collisions, .math), (`conclusion, .math), (`enumeration, .math)]
   | _ => #[]
 
 private def constructorName (env : Environment) (type : Name) (stx : Syntax) : Option Name := do
@@ -76,8 +81,9 @@ private def arguments (type ctor : Name) : Array Shape :=
   else if type == `LeanInformationAudit.Contract.Implementation then
     match ctor.getString! with
     | "source" => #[.math, recd `Ref]
-    | "witness" => #[.math, .math, .math, recd `Ref, .math]
-    | _ => #[.math, .math, .math, recd `Ref]
+    | "witness" => #[.math, .math, .math, recd `Ref, .math, .math, .math, .math, .math]
+    | _ => #[.math, .math, .math, recd `Ref, .math, .math]
+  else if type == `LeanInformationAudit.Contract.ArenaRef then #[recd `Ref]
   else if type == `LeanInformationAudit.Contract.Continuation then
     if ctor.getString! == "evidence" then #[recd `Ref] else #[]
   else if type == `LeanInformationAudit.Contract.OptionValue then

@@ -38,19 +38,24 @@ private theorem variation : arena.Law reads ∧ ¬ arena.Law arena.constantTrue 
 private theorem sensitivity : FiniteSlotSensitivity arena.toPrimitiveLawArena :=
   arena.sensitivity law
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Combinatorics.Graph.SuvagiyaSignedSquareCycleRefutation.result) (type_of% (arena)) (type_of% (arena)) (type_of% (@counterexampleRealization (Fin 1) arena.check)) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (Int)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,_} (@_root_.D5.S3.Combinatorics.Graph.SuvagiyaSignedSquareCycleRefutation.result) (type_of% (@counterexampleRealization (Fin 1) arena.check)) (type_of% (Int)) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Combinatorics") "Graph") "SuvagiyaSignedSquareCycleRefutation") 0) "D5") "S3") "Combinatorics") "Graph") "SuvagiyaSignedSquareCycleRefutation") "result") "__information_unit"),
   realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Combinatorics") "Graph") "SuvagiyaSignedSquareCycleRefutation") 0) "Reg") "D5") "S3") "Combinatorics") "Graph") "SuvagiyaSignedSquareCycleRefutation") "bridge"),
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .witness ⟨(arena)⟩,
+  objectArena := .witness ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .witness (arena) (Reg.D5.S3.Combinatorics.Graph.SuvagiyaSignedSquareCycleRefutation.reads) (reads.toPrimitiveBundle) ⟨(bridge)⟩ (And.left (variation)),
+  realization := .witness (arena) (Reg.D5.S3.Combinatorics.Graph.SuvagiyaSignedSquareCycleRefutation.reads) (reads.toPrimitiveBundle) ⟨(bridge)⟩ (And.left (variation)) (.evidence) (.evidence) (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessPrimitiveRealization.toTheoremUnit (bridge) (And.left (variation)))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((reads.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@counterexampleRealization (Fin 1) arena.check),
-  variation := some ⟨(variation)⟩,
-  sensitivity := some ⟨(sensitivity)⟩,
+  variation := {
+    positive := .evidence ⟨(variation)⟩ (by exact ((variation)).1)
+    negative := .evidence ⟨(variation)⟩ (by exact ((variation)).2) },
+  sensitivity := .evidence ⟨(sensitivity)⟩ (by exact (sensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (Int),
   sourceSelection := none,
   continuation := .unknown,

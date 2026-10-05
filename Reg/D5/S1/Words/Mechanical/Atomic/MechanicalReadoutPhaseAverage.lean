@@ -78,25 +78,28 @@ theorem phaseAverageSensitivity : FiniteSlotSensitivity phaseAverageArena.toPrim
     (x := ()) (a := fun _ : PhaseAverageInput => (0 : ENNReal))
     (b := fun _ : PhaseAverageInput => (1 : ENNReal)) hne
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_phase_average) (type_of% (phaseAverageArena)) (type_of% (phaseAverageArena)) (type_of% (@homogeneousPointwiseEqRealization Unit PhaseAverageOutput
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_phase_average) (type_of% (@homogeneousPointwiseEqRealization Unit PhaseAverageOutput
     (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.phaseAverageIntegral)
-    (fun _ : Unit => MechanicalReadoutSources.phaseAverageVolume))) (type_of% (phaseAverageVariation)) (type_of% (phaseAverageSensitivity)) (type_of% (Set.{0} ℝ)) (Unit) (Unit) := {
+    (fun _ : Unit => MechanicalReadoutSources.phaseAverageVolume))) (type_of% (Set.{0} ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_phase_average.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage.phaseAverageBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(phaseAverageArena)⟩,
-  objectArena := ⟨(phaseAverageArena)⟩,
+  arena := .object ⟨(phaseAverageArena)⟩,
+  objectArena := .object ⟨(phaseAverageArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration.phaseAverageArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration.phaseAverageRealization) (phaseAverageRealization.toPrimitiveBundle) ⟨(phaseAverageBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration.phaseAverageArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration.phaseAverageRealization) (phaseAverageRealization.toPrimitiveBundle) ⟨(phaseAverageBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (phaseAverageBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_phase_average))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((phaseAverageRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@homogeneousPointwiseEqRealization Unit PhaseAverageOutput
     (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.phaseAverageIntegral)
     (fun _ : Unit => MechanicalReadoutSources.phaseAverageVolume)),
-  variation := some ⟨(phaseAverageVariation)⟩,
-  sensitivity := some ⟨(phaseAverageSensitivity)⟩,
+  variation := .evidence ⟨(phaseAverageVariation)⟩ (by first | exact (phaseAverageVariation) | exact ⟨_, _, (phaseAverageVariation)⟩),
+  sensitivity := .evidence ⟨(phaseAverageSensitivity)⟩ (by exact (phaseAverageSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (Set.{0} ℝ),
   sourceSelection := none,
   continuation := .unknown,

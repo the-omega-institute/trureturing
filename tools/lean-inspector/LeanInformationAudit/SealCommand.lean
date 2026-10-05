@@ -56,6 +56,10 @@ private def artifactJson (records : Array SealArenaRecord) : Json :=
 /-- Serialize the catalog and escape-count seal artifact. -/
 def serializeSealArtifact (records : Array SealArenaRecord) : Meta.MetaM String := do
   for record in records do
+    if record.compiledEvidence then
+      unless compiledSealRecordMatches (← getEnv) record do
+        throwError "IE-C028 AnalysisCertificateMismatch component=reg-compiled-record"
+      continue
     let catalogValue ← Meta.mkConstWithFreshMVarLevels record.catalog.catalogName
     validateCountingRoute record.catalog.rootId record.catalog.catalogId catalogValue record.proofMethod
     let positive := record.theorems.all (fun row => row.uniqueCaptureCount > 0)
@@ -136,13 +140,27 @@ def systemCatalogIrredundant (env : Environment) (rootId : Name) : Bool :=
   let records := forRoot env rootId
   !records.isEmpty && records.all fun record =>
     match record.verdict with
-    | .irredundant name => env.contains name
+    | .irredundant name => hasSealEvidence env name
     | .redundant _ => false
 
 end SealRecords
 
 /-- Resolve the evidence before projecting a context-typed IE-C007 record. -/
 def logZeroCapture (record : ZeroCaptureRecord) (catalogValue index : Expr) : Meta.MetaM Unit := do
+  if (compiledSealEvidence? (← getEnv) record.trivialityCertificate).isSome then
+    let context := match record.context with
+      | .finite full without enumeration => Json.mkObj [("kind", "finite"),
+          ("full_escape_count", toJson full), ("without_escape_count", toJson without),
+          ("state_enumeration", enumeration.toString)]
+      | .structural registration sealName => Json.mkObj [("kind", "structural"),
+          ("registration", registration.toString), ("catalog_seal", sealName.toString)]
+    let json := Json.mkObj [("root", record.root.toString), ("theorem", record.theoremName.toString),
+      ("arena", record.arena.toString), ("catalog", record.catalog.toString), ("index", toJson record.index),
+      ("realization", record.realization.toString), ("triviality_certificate", record.trivialityCertificate.toString),
+      ("context", context), ("same_kernel_candidates", toJson record.sameKernelCandidates),
+      ("closure_candidates", toJson record.closureCandidates), ("closure_certificate", toJson record.closureCertificate)]
+    logInfo s!"IE-C007 ZeroUniqueCapture: {json.compress}"
+    return
   let checked (name : Name) (expected : Expr) : Meta.MetaM Unit := do
     let value ← Meta.mkConstWithFreshMVarLevels name
     unless ← Meta.isDefEq (← Meta.inferType value) expected do
@@ -364,11 +382,11 @@ private def retainSealRecords (env : Environment) (records : Array SealArenaReco
 private def retainAnalysisState (env : Environment) (state : StagedAnalysisState) : Environment :=
   stagedAnalysisExt.modifyState env (·.push state)
 
-/-! Seal validates the registry, prepares catalogs and escape-count certificates,
-kernel-checks them locally, and publishes SealRecords. Analysis is staged separately.
-Neither publication command has an artifact selector or destination. -/
+/-! Seal reconstructs the registry and catalogs and consumes compiled Reg
+mathematical fields. Analysis is staged separately. Neither publication command
+has an artifact selector or destination. -/
 
-def prepareSealPublication (snapshot : ValidatedSourceSnapshot) : CommandElabM Unit := do
+def prepareSealPublication (snapshot : ValidatedSourceSnapshot) (compiled : SealInput) : CommandElabM Unit := do
   let baseEnv ← getEnv
   try
     withEnv baseEnv <| validateRegistrySnapshot snapshot.rootId baseEnv
@@ -376,7 +394,7 @@ def prepareSealPublication (snapshot : ValidatedSourceSnapshot) : CommandElabM U
     let snapshot ← snapshot.stageAliases catalogEntries
     let aliasEnv ← getEnv
     let catalogs ← prepareCatalogsFromSnapshot snapshot
-    let proofs ← prepareProofs catalogs
+    let proofs ← consumeCompiledSeal catalogs compiled.catalogs
     let declarations := catalogs.map (·.declaration) ++ proofs.declarations
     preflightNames aliasEnv proofs.records declarations
     let stagedEnv ← liftCoreM <| stageDeclarations (← getEnv) declarations
@@ -387,12 +405,12 @@ def prepareSealPublication (snapshot : ValidatedSourceSnapshot) : CommandElabM U
     setEnv baseEnv
     throw error
 
-private def elabSealInformationTheory : ValidatedSourceSnapshot → CommandElab :=
+private def elabSealInformationTheory : ValidatedSourceSnapshot → SealInput → CommandElab :=
   terminalSealCommand prepareSealPublication
 
 /-- The report entry uses exactly the command assessment and kernel publisher.
 Every environment change, including assessment extensions, rolls back on failure. -/
-def assessAndSealRegistration (input : RegistrationAssessmentInput) : CoreM Unit := do
+def assessAndSealRegistration (input : RegistrationAssessmentInput) (compiled : SealInput) : CoreM Unit := do
   let saved ← getEnv
   tryCatchRuntimeEx (do
     unless sameRegistrationEnvironment saved input.environment do
@@ -404,7 +422,7 @@ def assessAndSealRegistration (input : RegistrationAssessmentInput) : CoreM Unit
         let snapshot ← assessRegistrationInput input
         match auditSealOutputOnly (← getEnv) ``elabSealInformationTheory input.rootId with
         | .error message => throwError message
-        | .ok () => elabSealInformationTheory snapshot Syntax.missing
+        | .ok () => prepareSealPublication snapshot compiled
   ) fun error => do
     setEnv saved
     throw error
@@ -414,7 +432,7 @@ def prepareInformationAnalysisStage (rootId : Name) : CommandElabM Unit :=
     GeneratedDeclarations.withOwner rootId do
   let sealedEnv ← getEnv
   let sealed := SealRecords.forRoot sealedEnv rootId
-  unless !sealed.isEmpty && sealed.all (fun record => sealedEnv.contains record.verdict.name) do
+  unless !sealed.isEmpty && sealed.all (fun record => hasSealEvidence sealedEnv record.verdict.name) do
     throwError "UnsealedAnalysisStage root={rootId} catalog=system"
   if (SealRecords.analysisForRoot? sealedEnv rootId).isSome then
     throwError "AnalysisAlreadyStaged root={rootId} catalog=system"
@@ -491,7 +509,7 @@ def assessTypedRegistrations (rootId : Name) : MetaM Unit := do
   TypedAssessment.assessSnapshot snapshot
   for (owner, sealInput) in snapshot.seals do
     withOptions (fun _ => sealInput.options) <| GeneratedDeclarations.withOwner owner do
-      assessAndSealRegistration (← RegistrationAssessmentInput.capture owner)
+      assessAndSealRegistration (← RegistrationAssessmentInput.capture owner) sealInput
 
 /-- The registered occurrence keys a target owns after its own assessment. -/
 def registeredKeys (env : Environment) (target : Name) : Array TemplateOccurrenceKey :=

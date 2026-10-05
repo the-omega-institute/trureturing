@@ -8,6 +8,23 @@ universe u
 structure Ref (T : Sort u) : Type u where
   value : T
 
+/-- The evidence constructor has identical type and value indices. Literal
+evidence therefore requires the same definitional correspondence as the raw
+input binding; incomplete submissions impose no such correspondence. -/
+inductive ExactMatch {T : Sort u} (expected : T) : {S : Sort u} → S → Type u where
+  | evidence : ExactMatch expected expected
+  | unknown {S : Sort u} {actual : S} : ExactMatch expected actual
+  | absent {S : Sort u} {actual : S} : ExactMatch expected actual
+  | unsupported {S : Sort u} {actual : S} (input : Name) : ExactMatch expected actual
+
+/-- A raw mathematical obligation. Only `evidence` carries a proof of the
+indexed proposition; the other constructors preserve incomplete submissions. -/
+inductive Obligation (P : Prop) : Type where
+  | evidence {Submitted : Prop} (input : Ref Submitted) (proof : P)
+  | unknown
+  | absent
+  | unsupported (input : Name)
+
 inductive OptionValue where
   | bool (value : Bool)
   | nat (value : Nat)

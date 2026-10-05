@@ -151,12 +151,17 @@ def assess (index : Index) (head : String) (key : StatementKey)
     if entry.theoremName != key.theoremName then continue
     candidates := candidates ++ #[entry.unitName, entry.realizationName]
     let arena := (← RegistrationElaboration.normalizeArena (← mkConstWithFreshMVarLevels entry.arenaName)).finite
-    let nondegenerate ← matching index ``Arena.Nondegenerate
-      (← mkAppM ``Arena.Nondegenerate #[arena])
-    let enumerations ← matching index ``Arena.StateEnumeration
-      (← mkAppM ``Arena.StateEnumeration #[arena])
     if let some (record, occurrence) := finiteSealInScope? env index.modules key.theoremName
         entry.canonicalObjectArenaName then
+      let (nondegenerate, enumerations) ← if record.compiledEvidence then
+          pure (#[record.catalog.catalogName.str "__reg_nondegenerate"],
+            record.stateEnumeration.toArray)
+        else do
+          let nondegenerate ← matching index ``Arena.Nondegenerate
+            (← mkAppM ``Arena.Nondegenerate #[arena])
+          let enumerations ← matching index ``Arena.StateEnumeration
+            (← mkAppM ``Arena.StateEnumeration #[arena])
+          pure (nondegenerate, enumerations)
       if let (some proof, some enumeration) := (nondegenerate[0]?, enumerations[0]?) then
         if let .trivial certificate := occurrence.certificate then
           dispositions := dispositions.push <| .trivialInCatalog {

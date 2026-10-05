@@ -44,10 +44,14 @@ def prepareAnalysisQualifiedCounts (counts : SealArenaRecord) (available : Array
       originalType.appArg! counts.stateCard
   let qualified (name : Name) (suffix : String) :=
     catalogQualifiedName metadata.rootId metadata.arenaName metadata.catalogId name suffix
-  let certificateAlias (source target : Name) := withEnv certificateEnv do
+  let certificateAlias (source target : Name) := do
     if source == target then return
-    let value ← mkConstWithFreshMVarLevels source
-    let _ ← ProjectionProof.proof target value
+    if let some value := compiledSealEvidence? certificateEnv source then
+      modifyEnv (retainCompiledSealEvidence · target metadata.rootId value)
+      return
+    withEnv certificateEnv do
+      let value ← mkConstWithFreshMVarLevels source
+      let _ ← ProjectionProof.proof target value
   let mut theorems := #[]
   for row in counts.theorems do
     let unitName := qualified row.theoremName theoremUnitSuffix
@@ -112,7 +116,7 @@ def prepareAnalysisProofs (root : Name) (sealedRecords : Array SealArenaRecord) 
           let notIrredundant ← mkAppM ``Iff.mp #[
             ← mkAppM ``Catalog.catalogRedundant_iff_not_catalogIrredundant
               #[← mkConstWithFreshMVarLevels record.catalog.catalogName],
-            ← mkConstWithFreshMVarLevels record.verdict.name]
+            ← resolveSealEvidence record.verdict.name]
           let proof ← withLocalDeclD `positive proposition fun h => do
             mkLambdaFVars #[h] (mkApp notIrredundant
               (mkApp h (← ProjectionProof.fin i sealedRecords.size)))

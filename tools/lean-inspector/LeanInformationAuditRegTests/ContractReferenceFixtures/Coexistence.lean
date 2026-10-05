@@ -10,7 +10,7 @@ protected theorem arithmetic : 2 + 3 = (5 : Nat) := by decide
 noncomputable def ordinaryValue : Nat := 0
 mutual
 def mathematicalValue : Nat := by_elab pure (Lean.mkNatLit 7)
-def entry : Contract.Seal := { rootId := `root, options := #[] }
+def entry : Contract.Seal.{0,0} := { rootId := `root, catalogs := #[], options := #[] }
 end
 def catalog : Contract.RootCatalog := {
   data := {

@@ -70,19 +70,22 @@ def registration : Registration arena (arena.Law actual) where
     intro i
     exact ⟨(), 0, 1, by change (0 : ℕ) ≠ 1; decide⟩
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.rough_prime_suffix_complete) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ b => b) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.rough_prime_suffix_complete) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ b => b) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "ExponentExchange") "RoughPrimeSuffixBellman") "rough_prime_suffix_complete") "Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman/Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ b => b) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -142,21 +145,24 @@ def supportRegistration : Registration supportArena (supportArena.Law supportAct
     simp only [suffixNumber, pow_one, Nat.mul_one]
     exact (Nat.prime_nth_prime _).ne_one.symm
 
-noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.suffix_prime_factors) (type_of% (supportArena)) (type_of% (supportArena)) (type_of% (realize.{0, 0, 0, 0, 0} supportSignature (fun _ p t => suffixNumber p.1 p.2 t)
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.suffix_prime_factors) (type_of% (realize.{0, 0, 0, 0, 0} supportSignature (fun _ p t => suffixNumber p.1 p.2 t)
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "ExponentExchange") "RoughPrimeSuffixBellman") "suffix_prime_factors") "Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman/Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(supportArena)⟩,
-  objectArena := ⟨(supportArena)⟩,
+  arena := .source ⟨(supportArena)⟩,
+  objectArena := .source ⟨(supportArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (supportArena) ⟨(supportRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} supportSignature (fun _ p t => suffixNumber p.1 p.2 t)
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -198,19 +204,22 @@ def bellmanRegistration : Registration bellmanArena (bellmanArena.Law actual) wh
     intro i
     exact ⟨(), 0, 1, by change (0 : ℕ) ≠ 1; decide⟩
 
-noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellman_complete) (type_of% (bellmanArena)) (type_of% (bellmanArena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ b => b) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellman_complete) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ b => b) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "ExponentExchange") "RoughPrimeSuffixBellman") "bellman_complete") "Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman/Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(bellmanArena)⟩,
-  objectArena := ⟨(bellmanArena)⟩,
+  arena := .source ⟨(bellmanArena)⟩,
+  objectArena := .source ⟨(bellmanArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (bellmanArena) ⟨(bellmanRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ b => b) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "arg", "arg", "body", "body", "body", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
@@ -264,19 +273,22 @@ def finiteRegistration : Registration finiteArena (finiteArena.Law finiteActual)
     intro i
     exact ⟨(), [], [0], by change ([] : List ℕ) ≠ [0]; simp⟩
 
-noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.feasible_finite) (type_of% (finiteArena)) (type_of% (finiteArena)) (type_of% (realize.{0, 0, 0, 0, 0} finiteSignature (fun _ _ t => t) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.feasible_finite) (type_of% (realize.{0, 0, 0, 0, 0} finiteSignature (fun _ _ t => t) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "ExponentExchange") "RoughPrimeSuffixBellman") "feasible_finite") "Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman/Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(finiteArena)⟩,
-  objectArena := ⟨(finiteArena)⟩,
+  arena := .source ⟨(finiteArena)⟩,
+  objectArena := .source ⟨(finiteArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (finiteArena) ⟨(finiteRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} finiteSignature (fun _ _ t => t) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "arg", "arg", "body", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

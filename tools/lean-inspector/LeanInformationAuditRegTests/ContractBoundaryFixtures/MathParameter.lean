@@ -1,8 +1,8 @@
 import LeanInformationAuditInterface.Contract.Catalog
 namespace Boundary.MathParameter
 open LeanInformationAudit.Contract
-def entry : Seal := { rootId := `root, options := #[] }
-def count (s : Seal) : Nat := s.options.size
+def entry : Seal.{0,0} := { rootId := `root, catalogs := #[], options := #[] }
+def count (s : Seal.{0,0}) : Nat := s.options.size
 def ordinary : Nat := count entry
 def dependentCount : Fin (entry.options.size + 1) := ⟨0, Nat.zero_lt_succ _⟩
 def dependentSize : Fin (sizeOf entry + 1) := ⟨0, Nat.zero_lt_succ _⟩

@@ -16,8 +16,8 @@ run_meta do
   assertTest "source.anonymous_head"
     (!SourceAudit.isHeadSpelling (mkIdent Name.anonymous) Name.anonymous)
   let diagnosticPrefix := "def exampleContract : LeanInformationAudit.Contract.Seal := "
-  let value := "{ rootId := Lean.Name.anonymous, options := #[] }"
-  sourceRejected "source.alias" "def x : Alias := { rootId := Lean.Name.anonymous, options := #[] }"
+  let value := "{ rootId := Lean.Name.anonymous, catalogs := #[], options := #[] }"
+  sourceRejected "source.alias" "def x : Alias := { rootId := Lean.Name.anonymous, catalogs := #[], options := #[] }"
     "contract.discovery:type_alias_or_wrapper"
   sourceRejected "source.wrapper" "def x : Box LeanInformationAudit.Contract.Seal := wrapped"
     "contract.discovery:type_alias_or_wrapper"
@@ -39,7 +39,7 @@ run_meta do
     "contract.discovery:unsafe"
   sourceRejected "source.abbrev" "abbrev x : LeanInformationAudit.Contract.Seal := {}"
     "contract.discovery:not_def"
-  sourceRejected "source.where" "def x : LeanInformationAudit.Contract.Seal where\n rootId := Lean.Name.anonymous\n options := #[]"
+  sourceRejected "source.where" "def x : LeanInformationAudit.Contract.Seal where\n rootId := Lean.Name.anonymous\n catalogs := #[]\n options := #[]"
     "contract.discovery:structure_literal"
   for (label, suffix) in #[
       ("where_suffix", "\nwhere\n child : Nat := 0"),
@@ -51,24 +51,24 @@ run_meta do
   let mut error := "accepted"
   try
     discard <| Discovery.auditModule `Synthetic.sourceOnly
-      "def extra : LeanInformationAudit.Contract.Seal := { rootId := Lean.Name.anonymous, options := #[] }"
+      "def extra : LeanInformationAudit.Contract.Seal := { rootId := Lean.Name.anonymous, catalogs := #[], options := #[] }"
   catch ex => error := ← ex.toMessageData.toString
   assertTest "inventory.source_without_compiled_entry"
     (error.startsWith "contract.discovery:compiled_inventory_missing")
 
 def AliasType := Seal
-def forwarded : Seal := { rootId := .anonymous, options := #[] }
+def forwarded : Seal.{0,0} := { rootId := .anonymous, catalogs := #[], options := #[] }
 def viaAlias : AliasType := forwarded
-def asFunction (n : Nat) : Seal := { rootId := .num .anonymous n, options := #[] }
-opaque hidden : Seal := { rootId := .anonymous, options := #[] }
-unsafe def unsafeEntry : Seal := { rootId := .anonymous, options := #[] }
-def relay : Seal := forwarded
+def asFunction (n : Nat) : Seal.{0,0} := { rootId := .num .anonymous n, catalogs := #[], options := #[] }
+opaque hidden : Seal.{0,0} := { rootId := .anonymous, catalogs := #[], options := #[] }
+unsafe def unsafeEntry : Seal.{0,0} := { rootId := .anonymous, catalogs := #[], options := #[] }
+def relay : Seal.{0,0} := forwarded
 
 run_meta do
   let mut sourceError := "accepted"
   try
     discard <| Discovery.auditModule `Synthetic.aliasOnly
-      "def extra : LeanInformationAuditRegTests.ContractNegative.AliasType := { rootId := Lean.Name.anonymous, options := #[] }"
+      "def extra : LeanInformationAuditRegTests.ContractNegative.AliasType := { rootId := Lean.Name.anonymous, catalogs := #[], options := #[] }"
   catch ex => sourceError := ← ex.toMessageData.toString
   assertTest "inventory.alias_source_without_compiled_entry"
     (sourceError.startsWith "contract.discovery:compiled_inventory_missing")

@@ -179,14 +179,14 @@ run_meta do
     throwError "expected both complete maximal catalogs with unchanged escape counts"
   for record in records do
     unless (match record.verdict with
-        | .redundant certificate => env.contains certificate
+        | .redundant certificate => (compiledSealEvidence? env certificate).isSome
         | .irredundant _ => false) do
       throwError "zero-capture catalog requires a published redundancy certificate"
     for occurrence in record.theorems do
       unless occurrence.uniqueCaptureCount == 0 &&
           occurrence.withoutEscapeCount == record.fullEscapeCount &&
           (match occurrence.certificate with
-          | .trivial certificate => env.contains certificate
+          | .trivial certificate => (compiledSealEvidence? env certificate).isSome
           | .positive _ => false) do
         throwError "every peer requires a zero-capture triviality certificate"
   if SealRecords.systemCatalogIrredundant env `Reg.Catalogs.SharedArenaPeers.SealedCatalog then

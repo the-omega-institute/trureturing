@@ -92,23 +92,26 @@ def registration : Registration arena.{u, v} (arena.{u, v}.Law actual.{u, v}) wh
     have atOne := congrFun readingsEqual [⟨()⟩]
     norm_num [actual, realize, signature, p, Comm] at atOne
 
-noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{max (max (u_2 + 2) (u_1 + 2)) ((max (u_1 + 1) (u_2 + 1)) + 2), max (max (u_2 + 2) (u_1 + 2)) ((max (u_1 + 1) (u_2 + 1)) + 2), max (u_1 + 1) (u_2 + 1), 1, 1, 0, 1, 1, 0, 0, 0, max (u_1 + 1) (u_2 + 1), u_1, 0, u_2, 0, 0} (@_root_.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.cumulative_communication_criterion.{u_1, u_2}) (type_of% (arena.{u_1, u_2})) (type_of% (arena.{u_1, u_2})) (type_of% (realize.{max (u_1 + 1) (u_2 + 1), u_1, 0, u_2, 0} signature.{u_1, u_2}
+noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.cumulative_communication_criterion.{u_1, u_2}) (type_of% (realize.{max (u_1 + 1) (u_2 + 1), u_1, 0, u_2, 0} signature.{u_1, u_2}
     (fun _ p initial ↦ Comm.{u_1, u_2} p.2.2.1 p.2.2.2 initial)
-    (fun e ↦ nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e ↦ nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ObserverMemory") "Prediction") "ActionGraphCommunicationBound") "cumulative_communication_criterion") "Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound/Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u_1, u_2})⟩,
-  objectArena := ⟨(arena.{u_1, u_2})⟩,
+  arena := .source ⟨(arena.{u_1, u_2})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u_1, u_2}) ⟨(registration.{u_1, u_2})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{max (u_1 + 1) (u_2 + 1), u_1, 0, u_2, 0} signature.{u_1, u_2}
     (fun _ p initial ↦ Comm.{u_1, u_2} p.2.2.1 p.2.2.2 initial)
     (fun e ↦ nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound, definition := none, coordinates := #[0, 1, 7, 8], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "body", "body", "fn", "arg", "fn"], stateBinder := 14, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

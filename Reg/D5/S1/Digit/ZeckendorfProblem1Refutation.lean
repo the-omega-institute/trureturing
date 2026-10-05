@@ -75,23 +75,26 @@ def selection : _root_.Reg.Support.SourceSelection := {
     stateBinder := 0
     stateOperand := some #["fn","arg","fn","arg","fn","arg"]}] }
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Digit.ZeckendorfProblem1Refutation.problem1_refuted) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Digit.ZeckendorfProblem1Refutation.problem1_refuted) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ p a => a * p.2 ≤ minimumStates p.2 ∧ (minimumStates p.2 : ℝ) ≤ p.1 * p.2)
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Digit") "ZeckendorfProblem1Refutation") "problem1_refuted") "Reg.D5.S1.Digit.ZeckendorfProblem1Refutation/Reg.D5.S1.Digit.ZeckendorfProblem1Refutation.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S1.Digit.ZeckendorfProblem1Refutation.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ p a => a * p.2 ≤ minimumStates p.2 ∧ (minimumStates p.2 : ℝ) ≤ p.1 * p.2)
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S1.Digit.ZeckendorfProblem1Refutation, definition := some { owner := `D5.S1.Digit.ZeckendorfProblem1Refutation, name := `D5.S1.Digit.ZeckendorfProblem1Refutation.Problem1, path := #["arg"] }, coordinates := #[1, 3], readouts := #[{ path := #["arg", "arg", "body", "arg", "body", "arg", "arg", "arg", "body", "body", "body"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg", "fn", "arg", "fn", "arg"], booleanPredicate := false }] },
   continuation := .unknown,

@@ -21,23 +21,26 @@ open _root_.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdenti
 
 
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model) (type_of% (positiveFirstArena)) (type_of% (positiveFirstArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrationTemplates.guardedEqRealization
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrationTemplates.guardedEqRealization
     (Fin 3) (Fin 3) (instDecidableEqFin 3)
-    (fun model => positiveFirstReadout model) (fun model => model) (fun _ => modelXYCode))) (type_of% (positiveFirst_lawSensitive)) (type_of% (positiveFirst_slotSensitive)) (Unit) (Unit) (Unit) := {
+    (fun model => positiveFirstReadout model) (fun model => model) (fun _ => modelXYCode))) (Unit) (Unit) := {
   unitName := `Reg.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model.__information_unit,
   realizationName := `D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirst_bridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(positiveFirstArena)⟩,
-  objectArena := ⟨(positiveFirstArena)⟩,
+  arena := .law ⟨(positiveFirstArena)⟩,
+  objectArena := .law ⟨(positiveFirstArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (positiveFirstArena) (D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirstRealization) (positiveFirstRealization.toPrimitiveBundle) ⟨(positiveFirst_bridge)⟩,
+  realization := .legacy (positiveFirstArena) (D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirstRealization) (positiveFirstRealization.toPrimitiveBundle) ⟨(positiveFirst_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (positiveFirst_bridge) (@_root_.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((positiveFirstRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrationTemplates.guardedEqRealization
     (Fin 3) (Fin 3) (instDecidableEqFin 3)
     (fun model => positiveFirstReadout model) (fun model => model) (fun _ => modelXYCode)),
-  variation := some ⟨(positiveFirst_lawSensitive)⟩,
-  sensitivity := some ⟨(positiveFirst_slotSensitive)⟩,
+  variation := .evidence ⟨(positiveFirst_lawSensitive)⟩ (by first | exact (positiveFirst_lawSensitive) | exact ⟨_, _, (positiveFirst_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(positiveFirst_slotSensitive)⟩ (by exact (positiveFirst_slotSensitive)),
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := none,
   continuation := .absent,

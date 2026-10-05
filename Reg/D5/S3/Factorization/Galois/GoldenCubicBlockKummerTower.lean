@@ -75,23 +75,26 @@ def registration : Registration arena (arena.Law actual) where
         (fun j _ => witnessRoots_spec j) 1]
     norm_num
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower.golden_cubic_block_kummer_tower_degree) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower.golden_cubic_block_kummer_tower_degree) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ roots J => Module.finrank.{0, 0} Base (tower roots J))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "Galois") "GoldenCubicBlockKummerTower") "golden_cubic_block_kummer_tower_degree") "Reg.D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower/Reg.D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ roots J => Module.finrank.{0, 0} Base (tower roots J))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "fn", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

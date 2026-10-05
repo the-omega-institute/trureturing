@@ -69,21 +69,24 @@ def responseRegistration : Registration responseArena (responseArena.Law respons
     cases i
     exact ⟨⟨5, []⟩, ⟨true, [], rfl⟩, ⟨false, [.high], rfl⟩, by decide⟩
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.result) (type_of% (responseArena)) (type_of% (responseArena)) (type_of% (realize.{0, 0, 0, 0, 0} responseSignature
-    (fun _ params source => rawIndex params.1 source params.2) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.result) (type_of% (realize.{0, 0, 0, 0, 0} responseSignature
+    (fun _ params source => rawIndex params.1 source params.2) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "FibonacciAtomic") "BalancedPhaseMissingResidue") "result") "Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue/Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(responseArena)⟩,
-  objectArena := ⟨(responseArena)⟩,
+  arena := .source ⟨(responseArena)⟩,
+  objectArena := .source ⟨(responseArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (responseArena) ⟨(responseRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} responseSignature
     (fun _ params source => rawIndex params.1 source params.2) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue, definition := none, coordinates := #[0, 13], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg"], booleanPredicate := false }] },
   continuation := .unknown,

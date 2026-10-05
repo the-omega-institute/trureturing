@@ -71,23 +71,26 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
     refine ⟨⟨1, 2, fun _ => 2⟩, 1, 2, ?_⟩
     norm_num [actual, realize, Defect]
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.FibonacciAtomic.RecordCapacity.autonomous_record_capacity.{u}) (type_of% (arena.{u})) (type_of% (arena.{u})) (type_of% (realize.{0, 0, 0, 0, 0} signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.FibonacciAtomic.RecordCapacity.autonomous_record_capacity.{u}) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ t r => t.2.1 ^ (r * Fintype.card.{0} (Defect t.2.1 t.2.2)))
-    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+    (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "FibonacciAtomic") "RecordCapacity") "autonomous_record_capacity") "Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity/Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u})⟩,
-  objectArena := ⟨(arena.{u})⟩,
+  arena := .source ⟨(arena.{u})⟩,
+  objectArena := .source ⟨(arena.{u})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u}) ⟨(registration.{u})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ t r => t.2.1 ^ (r * Fintype.card.{0} (Defect t.2.1 t.2.2)))
     (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.RecordCapacity, definition := none, coordinates := #[0, 1, 6], readouts := #[{ path := #["fn", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg", "fn", "arg"], booleanPredicate := false }] },
   continuation := .unknown,

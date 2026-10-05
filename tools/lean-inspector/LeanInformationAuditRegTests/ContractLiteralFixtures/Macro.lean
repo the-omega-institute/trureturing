@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Catalog
 
 namespace LeanInformationAuditRegTests.ContractLiteralFixtures.Macro
 macro "contractLiteralMacro" : term => `(Lean.Name.anonymous)
-def macroMetadata : LeanInformationAudit.Contract.Seal := {
+def macroMetadata : LeanInformationAudit.Contract.Seal.{0,0} := {
   rootId := contractLiteralMacro
-  options := #[] }
+  catalogs := #[], options := #[] }
 end LeanInformationAuditRegTests.ContractLiteralFixtures.Macro

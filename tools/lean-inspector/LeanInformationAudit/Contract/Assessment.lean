@@ -26,7 +26,6 @@ private def publish (owner name : Name) (value : Expr) (isTheorem : Bool) (level
     unless previous.levelParams == levels && sameType &&
         previous.value? (allowOpaque := true) == some value do
       throwError "contract.companion_collision:{name}"
-    checkWithKernel value
   else
     GeneratedDeclarations.withOwner owner do
       let declaration := if isTheorem then .thmDecl { name, levelParams := levels, type, value }
@@ -35,7 +34,7 @@ private def publish (owner name : Name) (value : Expr) (isTheorem : Bool) (level
       modifyEnv (GeneratedDeclarations.record · name)
       unless isTheorem || computable do modifyEnv (addNoncomputable · name)
 
-/-- Reconstruct stable mathematical companions inside the report kernel environment. -/
+/-- Publish stable aliases of the original compiled values. -/
 def prepareCompanions (owner : Name) (row : Decoder.CompanionInput) : MetaM Unit := do
   let entry := row.input.entry
   if entry.sourceBound then
@@ -46,20 +45,8 @@ def prepareCompanions (owner : Name) (row : Decoder.CompanionInput) : MetaM Unit
     return
   if row.generated || row.bridge.constName? != some entry.realizationName then
     publish owner entry.realizationName row.bridge true
-  let realization ← mkConstWithFreshMVarLevels entry.realizationName
-  let bridgeType ← inferType realization
-  let head := bridgeType.getAppFn.constName?.getD .anonymous
-  let unit ← if head == RegistrationElaboration.witnessBridgeName then do
-      let some positive := row.positive | throwError "contract.witness:positive_missing"
-      mkAppM (RegistrationElaboration.witnessBridgeName.str "toTheoremUnit")
-        #[realization, positive]
-    else if head == TemplateAudit.escapeForwardBridge then
-      mkAppM (TemplateAudit.escapeForwardBridge.str "toTheoremUnit") #[realization, row.target]
-    else
-      mkAppM `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
-        #[realization, row.target]
-  let args := bridgeType.getAppArgs
-  let computationalInputs := args[0]!.getUsedConstants ++ args[2]!.getUsedConstants
+  let some unit := row.unit | throwError "contract.registration:unit_missing"
+  let computationalInputs := unit.getUsedConstants
   let env ← getEnv
   publish owner entry.unitName unit false none
     (!computationalInputs.any (isNoncomputable env ·))

@@ -24,19 +24,22 @@ theorem _root_.Reg.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.D5.S
 
 attribute [local instance] _root_.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.instDecidableEqStateBitArena in
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.bounded_run_union_boundary) (type_of% (bitArena)) (type_of% (bitArena)) (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b))) (type_of% (bitVariation)) (type_of% (bitSensitivity)) (type_of% (Bool)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.bounded_run_union_boundary) (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b))) (type_of% (Bool)) (Unit) := {
   unitName := `Reg.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.bounded_run_union_boundary.__information_unit,
   realizationName := `Reg.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.bounded_run_union_boundary.__primitive_realization,
   realizationSource := none,
   generated := false,
-  arena := ⟨(bitArena)⟩,
-  objectArena := ⟨(bitArena)⟩,
+  arena := .law ⟨(bitArena)⟩,
+  objectArena := .law ⟨(bitArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (bitArena) (((@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b)))) (((@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b))).toPrimitiveBundle) ⟨(Reg.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.bounded_run_union_boundary.__primitive_realization)⟩,
+  realization := .legacy (bitArena) (((@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b)))) (((@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b))).toPrimitiveBundle) ⟨(Reg.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.bounded_run_union_boundary.__primitive_realization)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (Reg.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.bounded_run_union_boundary.__primitive_realization) (@_root_.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion.bounded_run_union_boundary))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((((@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b))).toPrimitiveBundle)).Nonempty; decide),
   readout := some (@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b)),
-  variation := some ⟨(bitVariation)⟩,
-  sensitivity := some ⟨(bitSensitivity)⟩,
+  variation := .evidence ⟨(bitVariation)⟩ (by first | exact (bitVariation) | exact ⟨_, _, (bitVariation)⟩),
+  sensitivity := .evidence ⟨(bitSensitivity)⟩ (by exact (bitSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (Bool),
   sourceSelection := none,
   continuation := .unknown,

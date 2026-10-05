@@ -29,19 +29,22 @@ theorem _root_.Reg.D5.S3.Arith.WuPyramidalComplement.D5.S3.Arith.WuPyramidalComp
           D5.S3.Arith.WuPyramidalComplement.evaluateBranch (D5.S3.Arith.WuPyramidalComplement.branchSelector (@Option.some.{0} Bool Bool.true) (@Option.some.{0} Bool Bool.false) (@Option.none.{0} Bool) k n h) n h))
   D5.S3.Arith.WuPyramidalComplement.identityReadout := by exact ⟨Iff.rfl⟩
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.WuPyramidalComplement.wu_conjecture_one) (type_of% (branchArena)) (type_of% (branchArena)) (type_of% (branchRealization (fun branch : Option.{0} Bool => branch))) (type_of% (branchVariation)) (type_of% (branchSensitivity)) (type_of% (some.{0} true)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.Arith.WuPyramidalComplement.wu_conjecture_one) (type_of% (branchRealization (fun branch : Option.{0} Bool => branch))) (type_of% (some.{0} true)) (Unit) := {
   unitName := `Reg.D5.S3.Arith.WuPyramidalComplement.D5.S3.Arith.WuPyramidalComplement.wu_conjecture_one.__information_unit,
   realizationName := `Reg.D5.S3.Arith.WuPyramidalComplement.D5.S3.Arith.WuPyramidalComplement.wu_conjecture_one.__primitive_realization,
   realizationSource := none,
   generated := false,
-  arena := ⟨(branchArena)⟩,
-  objectArena := ⟨(branchArena)⟩,
+  arena := .law ⟨(branchArena)⟩,
+  objectArena := .law ⟨(branchArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (branchArena) ((identityReadout)) ((identityReadout).toPrimitiveBundle) ⟨(Reg.D5.S3.Arith.WuPyramidalComplement.D5.S3.Arith.WuPyramidalComplement.wu_conjecture_one.__primitive_realization)⟩,
+  realization := .legacy (branchArena) ((identityReadout)) ((identityReadout).toPrimitiveBundle) ⟨(Reg.D5.S3.Arith.WuPyramidalComplement.D5.S3.Arith.WuPyramidalComplement.wu_conjecture_one.__primitive_realization)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (Reg.D5.S3.Arith.WuPyramidalComplement.D5.S3.Arith.WuPyramidalComplement.wu_conjecture_one.__primitive_realization) (@_root_.D5.S3.Arith.WuPyramidalComplement.wu_conjecture_one))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change (((identityReadout).toPrimitiveBundle)).Nonempty; decide),
   readout := some (branchRealization (fun branch : Option.{0} Bool => branch)),
-  variation := some ⟨(branchVariation)⟩,
-  sensitivity := some ⟨(branchSensitivity)⟩,
+  variation := .evidence ⟨(branchVariation)⟩ (by first | exact (branchVariation) | exact ⟨_, _, (branchVariation)⟩),
+  sensitivity := .evidence ⟨(branchSensitivity)⟩ (by exact (branchSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (some.{0} true),
   sourceSelection := none,
   continuation := .unknown,

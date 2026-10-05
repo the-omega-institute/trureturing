@@ -34,19 +34,22 @@ theorem _root_.Reg.D5.S3.ArithUnits.CenteredReducedResidueProgressions.D5.S3.Ari
 
 attribute [local instance] _root_.D5.S3.ArithUnits.CenteredReducedResidueProgressions.instDecidableEqStateSourceCorrectionArena in
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ArithUnits.CenteredReducedResidueProgressions.result) (type_of% (sourceCorrectionArena)) (type_of% (sourceCorrectionArena)) (type_of% (sourceCorrectionRealization (fun x : Bool => x))) (type_of% (sourceCorrection_variation)) (type_of% (sourceCorrection_sensitivity)) (type_of% (SourceCorrection)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ArithUnits.CenteredReducedResidueProgressions.result) (type_of% (sourceCorrectionRealization (fun x : Bool => x))) (type_of% (SourceCorrection)) (Unit) := {
   unitName := `Reg.D5.S3.ArithUnits.CenteredReducedResidueProgressions.D5.S3.ArithUnits.CenteredReducedResidueProgressions.result.__information_unit,
   realizationName := `Reg.D5.S3.ArithUnits.CenteredReducedResidueProgressions.D5.S3.ArithUnits.CenteredReducedResidueProgressions.result.__primitive_realization,
   realizationSource := none,
   generated := false,
-  arena := ⟨(sourceCorrectionArena)⟩,
-  objectArena := ⟨(sourceCorrectionArena)⟩,
+  arena := .law ⟨(sourceCorrectionArena)⟩,
+  objectArena := .law ⟨(sourceCorrectionArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (sourceCorrectionArena) ((actualSourceCorrectionRealization)) ((actualSourceCorrectionRealization).toPrimitiveBundle) ⟨(Reg.D5.S3.ArithUnits.CenteredReducedResidueProgressions.D5.S3.ArithUnits.CenteredReducedResidueProgressions.result.__primitive_realization)⟩,
+  realization := .legacy (sourceCorrectionArena) ((actualSourceCorrectionRealization)) ((actualSourceCorrectionRealization).toPrimitiveBundle) ⟨(Reg.D5.S3.ArithUnits.CenteredReducedResidueProgressions.D5.S3.ArithUnits.CenteredReducedResidueProgressions.result.__primitive_realization)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (Reg.D5.S3.ArithUnits.CenteredReducedResidueProgressions.D5.S3.ArithUnits.CenteredReducedResidueProgressions.result.__primitive_realization) (@_root_.D5.S3.ArithUnits.CenteredReducedResidueProgressions.result))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change (((actualSourceCorrectionRealization).toPrimitiveBundle)).Nonempty; decide),
   readout := some (sourceCorrectionRealization (fun x : Bool => x)),
-  variation := some ⟨(sourceCorrection_variation)⟩,
-  sensitivity := some ⟨(sourceCorrection_sensitivity)⟩,
+  variation := .evidence ⟨(sourceCorrection_variation)⟩ (by first | exact (sourceCorrection_variation) | exact ⟨_, _, (sourceCorrection_variation)⟩),
+  sensitivity := .evidence ⟨(sourceCorrection_sensitivity)⟩ (by exact (sourceCorrection_sensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (SourceCorrection),
   sourceSelection := none,
   continuation := .unknown,

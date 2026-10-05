@@ -67,19 +67,22 @@ def registration : Registration arena.{u,v,w} (arena.Law actual) where
     intro h
     exact zero_ne_one (congrFun (congrFun h (ULift.up 0)) (ULift.up 0))
 
-noncomputable def registration_1.{u_1, u_2, u_5} : LeanInformationAudit.Contract.Registration.{max ((max u_1 u_2) + 2) ((max (u_1 + 1) (u_2 + 1)) + 2), max ((max u_1 u_2) + 2) ((max (u_1 + 1) (u_2 + 1)) + 2), max (u_1 + 1) (u_2 + 1), 1, 1, 0, 1, 1, 0, 0, 0, max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0, 0} (@_root_.D5.S3.Quantum.Reduction.IsometricCompression.word_intertwines.{u_1, u_2, u_5}) (type_of% (arena.{u_1, u_2, u_5})) (type_of% (arena.{u_1, u_2, u_5})) (type_of% (realize.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0} signature.{u_1, u_2} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1.{u_1, u_2, u_5} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Reduction.IsometricCompression.word_intertwines.{u_1, u_2, u_5}) (type_of% (realize.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0} signature.{u_1, u_2} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Reduction") "IsometricCompression") "word_intertwines") "Reg.D5.S3.Quantum.Reduction.IsometricCompression/Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u_1, u_2, u_5})⟩,
-  objectArena := ⟨(arena.{u_1, u_2, u_5})⟩,
+  arena := .source ⟨(arena.{u_1, u_2, u_5})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2, u_5})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u_1, u_2, u_5}) ⟨(registration.{u_1, u_2, u_5})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0} signature.{u_1, u_2} (fun _ _ x => x) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Reduction.IsometricCompression, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

@@ -81,21 +81,24 @@ private def registration : Registration arena.{u,v,w} (arena.Law actual) where
       exact nomatch anchor
   dependence := dependence
 
-noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Resource.SimplexCoverageInduction.spanningPolynomial_reverse.{u_1, u_2, u_3}) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ value => value ^ 2)
-    (fun impossible => nomatch impossible))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Resource.SimplexCoverageInduction.spanningPolynomial_reverse.{u_1, u_2, u_3}) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ value => value ^ 2)
+    (fun impossible => nomatch impossible))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Resource") "SimplexCoverageInduction") "spanningPolynomial_reverse") "Reg.D5.S3.Resource.SimplexCoverageInduction/_private.Reg.D5.S3.Resource.SimplexCoverageInduction.0.Reg.D5.S3.Resource.SimplexCoverageInduction.arena/[anonymous]") "__information_unit"),
   realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Resource") "SimplexCoverageInduction") 0) "Reg") "D5") "S3") "Resource") "SimplexCoverageInduction") "registration"),
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena.{u_1, u_2, u_3})⟩,
-  objectArena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  arena := .source ⟨(arena.{u_1, u_2, u_3})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2, u_3})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena.{u_1, u_2, u_3}) ⟨(registration.{u_1, u_2, u_3})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ value => value ^ 2)
     (fun impossible => nomatch impossible)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Resource.SimplexCoverageInduction, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg"], booleanPredicate := false }] },
   continuation := .unknown,

@@ -337,6 +337,15 @@ def compilePrimitiveBundle (arenaExpr realizationExpr : Expr) : MetaM Expr := do
 /-- Complete the declaration and definitional-equality checks shared by both phases. -/
 private def validateEntryCore (env : Environment) (entry : InformationRegistryEntry) :
     MetaM (Except String Unit) := do
+  if let some obligations := entry.compiledMathematics then
+    unless obligations.correspondence == .evidence do
+      return .error (statementMismatchError entry.theoremName)
+    if entry.sourceBound then
+      unless env.contains entry.theoremName && env.contains entry.unitName &&
+          env.contains entry.realizationName && env.contains entry.arenaName do
+        return .error "unclassified_form:source.registration_type"
+      return .ok ()
+    return validateEntryDeclarations env entry
   if entry.sourceBound then
     try
       let source ← getConstInfo entry.theoremName
@@ -460,6 +469,7 @@ def sameEntry (left right : InformationRegistryEntry) : Bool :=
   RegistrationReifier.occurrenceBinding left == RegistrationReifier.occurrenceBinding right &&
     left.catalogKind == right.catalogKind && left.statementIdentity == right.statementIdentity &&
     left.localRegistrationNames == right.localRegistrationNames && left.sourceBound == right.sourceBound &&
+    left.compiledMathematics == right.compiledMathematics &&
     sameCertificate left.derivedCertificate right.derivedCertificate
 
 /-- Validate a prospective entry before insertion; neither registry key may exist yet. -/

@@ -55,21 +55,24 @@ theorem uniformSensitivity : FiniteSlotSensitivity uniformBoundArena.toPrimitive
   · intro i
     exact Fin.elim0 i
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound) (type_of% (uniformBoundArena)) (type_of% (uniformBoundArena)) (type_of% (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
-    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))) (type_of% (uniformVariation)) (type_of% (uniformSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound) (type_of% (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))) (type_of% (ℝ)) (Unit) := {
   unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound.__information_unit,
   realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.uniformBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(uniformBoundArena)⟩,
-  objectArena := ⟨(uniformBoundArena)⟩,
+  arena := .object ⟨(uniformBoundArena)⟩,
+  objectArena := .object ⟨(uniformBoundArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.uniformBoundArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.completionRealization) (completionRealization.toPrimitiveBundle) ⟨(uniformBridge)⟩,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.uniformBoundArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.completionRealization) (completionRealization.toPrimitiveBundle) ⟨(uniformBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (uniformBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((completionRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.actualCompletion)),
-  variation := some ⟨(uniformVariation)⟩,
-  sensitivity := some ⟨(uniformSensitivity)⟩,
+  variation := .evidence ⟨(uniformVariation)⟩ (by first | exact (uniformVariation) | exact ⟨_, _, (uniformVariation)⟩),
+  sensitivity := .evidence ⟨(uniformSensitivity)⟩ (by exact (uniformSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (ℝ),
   sourceSelection := none,
   continuation := .unknown,

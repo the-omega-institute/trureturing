@@ -29,6 +29,35 @@ the decoder never reduces them. Registration target identity comes from the
 target constant in the contract type, with theorem, closure, arity and rigid
 universe checks. `Registration.targetName` is absent.
 
+Contract types bind the original mathematical obligations to the target, arena,
+actual realization, primitive bundle and catalog indices. The Reg compiler checks
+variation, slot sensitivity, witness positive/constantTrue negative claims,
+source-family obligations, seal counts, row classifications, closure membership,
+retained kernel collisions and catalog conclusions. Missing, unknown, absent and
+unsupported evidence remains a compilable submission and retains its diagnostic
+path. The report consumes these fields and reconstructs raw ownership, enrollment,
+source scope, catalog membership, ordering and joins. Checked plans, joins,
+assessments, verdicts and report receipts are never importable authority.
+
+Finite seal catalogs carry nondegeneracy and bundle nonemptiness for their exact
+arena and unit vector. Unsealed finite registrations retain their existing scope;
+they do not acquire a nondegeneracy requirement. Checked readout sensitivity
+already implies nontriviality of every readout output: the law flip forces two
+different readout functions at that slot, hence two different output values.
+These consequences have no duplicate Registration fields.
+
+Raw statement, arena and bundle correspondences use literal `ExactMatch.evidence`
+constructors whose expected and actual type indices are identical. They retain
+the original definitional correspondence; propositional equality, equality
+transport and computed tokens do not supply literal matching evidence. Unknown,
+absent and unsupported constructors keep arbitrary actual indices representable.
+
+Compiler-extracted proofs in indexed fields must be live dependencies of their
+literal entry in the same module, have the compiler's proof-only name shape,
+and have no authored declaration or custom elaboration. Value helpers receive
+no such permission. Numeral and array decoders use structural recursion and
+retain the same literal grammar inside the audited seal publication closure.
+
 Metadata uses the following closed grammar. Mathematical payload fields keep
 ordinary Lean elaboration; metadata never unfolds user definitions or evaluates
 user code.
@@ -58,14 +87,16 @@ choices are checked across alternatives. Unrelated mathematical notation and
 mathematical payload expansion remain available. Core numeric instances are
 verified separately by the expression decoder.
 
-The four `Contract` interface modules accept imports, namespace/section
-scaffolding, `open`, `universe`, documentation comments, and bare
-`structure`/`inductive` declarations. Declaration syntax has a finite node
+The `Contract` interface modules accept imports, namespace/section
+scaffolding, `open`, `universe`, documentation comments, bare
+`structure`/`inductive` declarations and sort-valued index families. Declaration syntax has a finite node
 table in `Contract.InterfaceGuard.typeSyntaxKinds`: identifiers, numeric
 literals, application, arrows/Pi binders, Sort/Type/Prop, parentheses, type
 ascription, explicit/implicit/strict implicit/instance binders, explicit universe
 arguments, universe max/imax/addition/parentheses, and the listed declaration,
-field, constructor and documentation containers. Unknown nodes, defaults,
+field, constructor and documentation containers. Index families additionally use
+pure matches, projections and the listed logical type constructors; their compiled
+result must be a sort. Unknown nodes, defaults,
 attributes, deriving, tactics, do, quotations and every elaboration node
 (including `Lean.byElab`) receive
 `contract.interface:command_not_allowed`; unknown node kinds include the
@@ -333,10 +364,10 @@ Lean、audit、工具构建和发布失败也返回非零。阶段失败输出�
 所选输出文件名后附的 `.logs/` 目录中。修正具名输入或构建错误后，仍使用同一
 `make lean-report` 入口重试。
 
-The interface consists of typed contract structures and inductives. Every Reg
+The interface consists of typed contract structures, inductives and sort-valued index families. Every Reg
 entry uses `def x.{u…} : Contract.<type> := {…}` with literal metadata and typed
-mathematical fields. The report reconstructs companions, E1–E8 assessments and
-seal proofs inside its kernel environment. Runtime DTOs live in Impl; no recorder
+mathematical fields checked by the Reg compiler. The report reconstructs structural
+relations and E1–E8 assessments and consumes the compiled seal obligations. Runtime DTOs live in Impl; no recorder
 or registration command runs during Reg compilation. Implementation edits rebuild
 no Reg modules; report reuse depends on Lake inputs and the manual semantic
 version applied only to typed input owners. Interface edits atomically migrate every

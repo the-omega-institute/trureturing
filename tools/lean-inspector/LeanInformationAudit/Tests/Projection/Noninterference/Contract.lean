@@ -15,7 +15,7 @@ declarations.
 
 open Lean Lean.Elab.Command LeanInformationAudit
 
-example : ValidatedSourceSnapshot → CommandElabM Unit := @prepareSealPublication
+example : ValidatedSourceSnapshot → SealInput → CommandElabM Unit := @prepareSealPublication
 
 example : Name -> CommandElabM Unit := @prepareInformationAnalysisStage
 

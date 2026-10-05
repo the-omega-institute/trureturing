@@ -137,21 +137,24 @@ def registration : Registration arena (
     rw [hprod]
     decide
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.GoldenResource.ThresholdChainReduction.threshold_chain_reduction) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
-    (fun _ p j => layerChain p.1 p.2.1 p.2.2 j) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.GoldenResource.ThresholdChainReduction.threshold_chain_reduction) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p j => layerChain p.1 p.2.1 p.2.2 j) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "GoldenResource") "ThresholdChainReduction") "threshold_chain_reduction") "Reg.D5.S3.Arith.GoldenResource.ThresholdChainReduction/Reg.D5.S3.Arith.GoldenResource.ThresholdChainReduction.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Arith.GoldenResource.ThresholdChainReduction.registration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(arena)⟩,
-  objectArena := ⟨(arena)⟩,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} signature
     (fun _ p j => layerChain p.1 p.2.1 p.2.2 j) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Arith.GoldenResource.ThresholdChainReduction, definition := none, coordinates := #[0, 1, 5], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "body", "body", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,

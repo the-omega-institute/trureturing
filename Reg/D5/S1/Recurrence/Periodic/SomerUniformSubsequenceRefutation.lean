@@ -22,19 +22,22 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCerti
 attribute [local instance] _root_.D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration.instDecidableEqCertificateWord
 attribute [local instance] _root_.D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration.instDecidableEqStateCertificateArena in
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation.result) (type_of% (certificateArena)) (type_of% (certificateArena)) (type_of% (@certificateWordRealization CertificateWord (fun word index => word index))) (type_of% (certificateVariation)) (type_of% (certificateSensitivity)) (type_of% (actualWord)) (Unit) (Unit) := {
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation.result) (type_of% (@certificateWordRealization CertificateWord (fun word index => word index))) (type_of% (actualWord)) (Unit) := {
   unitName := `Reg.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation.result.__information_unit,
   realizationName := `D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration.certificateBridge,
   realizationSource := none,
   generated := false,
-  arena := ⟨(certificateArena)⟩,
-  objectArena := ⟨(certificateArena)⟩,
+  arena := .law ⟨(certificateArena)⟩,
+  objectArena := .law ⟨(certificateArena)⟩,
   catalog := Lean.Name.anonymous,
   localNames := true,
-  realization := .legacy (certificateArena) (D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration.certificateRealization) (certificateRealization.toPrimitiveBundle) ⟨(certificateBridge)⟩,
+  realization := .legacy (certificateArena) (D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration.certificateRealization) (certificateRealization.toPrimitiveBundle) ⟨(certificateBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (certificateBridge) (@_root_.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation.result))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((certificateRealization.toPrimitiveBundle)).Nonempty; decide),
   readout := some (@certificateWordRealization CertificateWord (fun word index => word index)),
-  variation := some ⟨(certificateVariation)⟩,
-  sensitivity := some ⟨(certificateSensitivity)⟩,
+  variation := .evidence ⟨(certificateVariation)⟩ (by first | exact (certificateVariation) | exact ⟨_, _, (certificateVariation)⟩),
+  sensitivity := .evidence ⟨(certificateSensitivity)⟩ (by exact (certificateSensitivity)),
+  partialSensitivity := none,
   escapeFrom := some (actualWord),
   sourceSelection := none,
   continuation := .unknown,

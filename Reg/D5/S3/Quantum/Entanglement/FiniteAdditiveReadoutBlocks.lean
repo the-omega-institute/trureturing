@@ -68,21 +68,24 @@ def coefficientRegistration : Registration coefficientArena
       exact nomatch i
   dependence := coefficientDependence
 
-noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.actual_coefficient_block.{u_1, u_2, u_3}) (type_of% (coefficientArena.{u_1, u_2, u_3})) (type_of% (coefficientArena.{u_1, u_2, u_3})) (type_of% (realize.{0, 0, 0, 0, 0} coefficientSignature
-    (fun _ _ x => (Real.sqrt x : ℂ)⁻¹) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.actual_coefficient_block.{u_1, u_2, u_3}) (type_of% (realize.{0, 0, 0, 0, 0} coefficientSignature
+    (fun _ _ x => (Real.sqrt x : ℂ)⁻¹) (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Entanglement") "FiniteAdditiveReadoutBlocks") "actual_coefficient_block") "Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks/Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientRegistration,
   realizationSource := none,
   generated := false,
-  arena := ⟨(coefficientArena.{u_1, u_2, u_3})⟩,
-  objectArena := ⟨(coefficientArena.{u_1, u_2, u_3})⟩,
+  arena := .source ⟨(coefficientArena.{u_1, u_2, u_3})⟩,
+  objectArena := .source ⟨(coefficientArena.{u_1, u_2, u_3})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
   realization := .source (coefficientArena.{u_1, u_2, u_3}) ⟨(coefficientRegistration.{u_1, u_2, u_3})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
   readout := some (realize.{0, 0, 0, 0, 0} coefficientSignature
     (fun _ _ x => (Real.sqrt x : ℂ)⁻¹) (fun e => nomatch e)),
-  variation := none,
-  sensitivity := none,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg", "arg", "arg"], booleanPredicate := false }] },
   continuation := .unknown,
