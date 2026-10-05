@@ -16665,11 +16665,17 @@ $$
 
 另检查引用、行序、类型、实际 Stop 边界和提案。V 接受时形成带这些真实引用及 $g$ 的回执；C 实际收到该回执与输出包，核对同一准备、源、Stop、目标类型与提案，再实际复制/写入它的消费者寄存器。每一环的存在、接收、核对和使用分别付费。仅存在一个数学正确 $g$ 不产生就绪或使用发生。
 
-**命题 52.9（本地安全性与初始索引）。** 在假设 52.6 的真实交付下，真实 $t_0$ 始终留在 $\mathcal F_h$；式（TM.5213）成立的接受值就是 $f(t_0)$。完整有效有限候选与可判定精确相等的值表示下，checker 是有效有限的记录计算，且任何通过它的提案不会增加 $h$ 的来源区别。在 $X,Y$ 的共同原 Read–$\rho$–Read 记录上，checker 不能把 $q_9(X)$ 当作唯一初始目标接受。
+**命题 52.9（本地安全性与初始索引）。** 在假设 52.6 的真实交付下，真实 $t_0$ 始终留在 $\mathcal F_h$；式（TM.5213）成立的接受值就是 $f(t_0)$。完整有效有限候选与可判定精确相等的值表示下，checker 是有效有限的记录计算，且任何通过它的提案不会增加 $h$ 的来源区别。H9 的例子须相对于声明的 prior 取量词：令 $\mathcal F\subseteq\mathcal T_9$，令 $f=q_9\!\upharpoonright_{\mathcal F}$，并假定 $X,Y\in\mathcal F$；取实际来源 $t_0=X$ 所交付的共同原 Read–$\rho$–Read 记录
+$$
+h_{XY}=\bigl(\operatorname{Read}(A),\ \rho(\mathrm{accept}),\ \operatorname{Read}(B)\bigr).
+$$
+则 $X,Y\in\mathcal F_{h_{XY}}$、$f(X)=q_9(X)\ne q_9(Y)=f(Y)$，所以 $\operatorname{Safe}(h_{XY},q_9(X))$（以及提案 $q_9(Y)$）均不成立。特别地，取 $\mathcal F=\mathcal T_9$ 得到全家族的 H9 障碍。若 prior 排除其中一个来源，这个结论不再由该记录推出；例如 $\mathcal F=\{X,Z\}$、实际来源仍为 $X$ 时，$\operatorname{Safe}(h_{XY},q_9(X))$ 成立。
 
 **证明。** 空记录兼容所有候选，包括实际 $t_0$。每行在实际树上发生的请求、响应与 successor 由假设第 2 项正确，且第 5 项实际交付该行，所以真实行逐项与 replay 相等，归纳保持 $t_0$。Safe 中取 $s=t_0$ 即得正确性。有限有效候选可以逐个扫描，每次用有效的原树动作与有限记录做有限重放，再用目标的有效表示计算 $f(s)$，用已供应的精确相等算法比较它与提案；这给有限算法，前提不允许用任意不可判定族描述替代候选枚举。它的真实输入只有交付 $h,g$ 和公共模型，故输出、费用、地址及回执通过它们因子化；扫描有效候选的代码/表和空间须另外构造、供给和付费，不免费取得实际行。C 的绑定核对使实际使用对象仍为这个已验初始目标。
 
-命题 52.4 给 $X,Y\in\mathcal F_h$，但两初始目标不同，故该 proposal 不满足全称项。若 P 私有地比较 proposal 与自身隐藏 $q_H(t_0)$，在 $X$ 接受、$Y$ 拒绝，就增加了一个源敏感真值端口，不是式（TM.5213）的 checker。若只检查共同当前 $(0,B,9)$，则目标被换成 current，不能验证原 initial proposal。静态充分性/缺陷判据复用 TargetRecoveryCriterion；实际候选不空条件由真实 $t_0$ 提供，未编译普通应用不计为 Lean 核验。$\square$
+在上述 H9 特化中，$X,Y\in\mathcal F$ 且两者都按同一 $h_{XY}$ 重放成功，故才可推出 $X,Y\in\mathcal F_{h_{XY}}$；这一步不从 $\mathcal T_9$ 的成员资格替代任意 prior 的成员资格。两初始目标不同，故该 proposal 不满足全称项。若 P 私有地比较 proposal 与自身隐藏 $q_H(t_0)$，在 $X$ 接受、$Y$ 拒绝，就增加了一个源敏感真值端口，不是式（TM.5213）的 checker。若只检查共同当前 $(0,B,9)$，则目标被换成 current，不能验证原 initial proposal。
+
+边界由 $Z$ 给出：$E_0(Z)=A$，但 $E_1(Z)=BS^4\ne B$，所以在 $\mathcal F=\{X,Z\}$ 上，$Z$ 不属于 $\mathcal F_{h_{XY}}$，从而 $\mathcal F_{h_{XY}}=\{X\}$，式（TM.5213）对 $g=q_9(X)$ 为真。只有 prior 同时包含原记录的两个源（例如 $\mathcal T_9$ 或任何含 $X,Y$ 的声明族）时，前一段的 H9 拒绝才成立；若 prior 规则排除 $Y$，不能把全族障碍转写成该 prior 的结论。静态充分性/缺陷判据复用 TargetRecoveryCriterion；实际候选不空条件由真实 $t_0=X$ 提供，未编译普通应用不计为 Lean 核验。$\square$
 
 ### 52.5 全有限语言、有效资源供给与成本
 
@@ -16759,7 +16765,7 @@ $$
 
 **证明与有限范围说明。** 矩阵直接满足 $A^2=1,B^2=-1,AB+BA=1$，四基 determinant 非零使有限等式不因表示坍缩而伪真。一个独立枚举用实际树的递归生成、实际 $\rho$ 与整候选拼接；另一路逐词使用整数正规坐标乘法与精确矩阵叶积交叉比较，未调用任何 producer/reviewer。执行前固定失败条件：编码非单射或长度非 $2m-1$；相同 q 有不同准备写入迹；已取得 m 加真实 Gamma 不回到初始 q；guard/Read/successor 不符、reject 改源或给候选 E；H9 计数/窗口/merger 错误；隐藏初始真值 checker 能被误当作 record-only；固定 E 不能被 $\mathrm{Read}^{E+1}$ 反驳。任一断言失败须停止并否定相应有限结论，不能把失败重新归类为无限范围免责。
 
-实际退出码为 0，核对的 $H$–word 运行数为 16,356（允许同一词在不同 H 上分别运行）；三个数学窗口的整数/矩阵比较为 49,068；初始标签零/一/二分别为 14,788、1,399、169 次。全部括号树的 $H$–tree 运行数为 3,920，每次检查解析逆、$2m-1$ 长度、同 q 准备迹及初始解码。$H\le5$、上下文 $\le H+1$ 的实际 tree/context 对为 1,839,388，两侧 graft 为 3,678,776 次，其中 accept 1,344、reject 3,677,432；另有 1,364 次 Read/$\rho$。按相同 current q、请求及实际上下文分组的响应/successor 类为 239,692，均未见不一致。H9 的全部一至四叶实际上下文两侧 merger 共 204 次。共同 Read–$\rho$–Read 记录的有界左结合候选中有四词，含 X/Y，record-only checker 拒绝唯一 X 初始目标提案。$H=1,E=0,\ldots,8$ 的九个原 $\mathrm{Read}^{E+1}$ 续接均合法，固定 cap 的末端 EXHAUSTED 与原响应不同。准备/address/tick/fee/phase/stop/availability/copy 的八种人为不同标签作为负控确被视图相等检查识别；这些是局部 label 反例 fixture，不是某个真实 emitter 的 all-path 运行认证。矩阵 rank/determinant 另以独立短计算核对，退出码亦为 0。
+实际退出码为 0，核对的 $H$–word 运行数为 16,356（允许同一词在不同 H 上分别运行）；三个数学窗口的整数/矩阵比较为 49,068；初始标签零/一/二分别为 14,788、1,399、169 次。全部括号树的 $H$–tree 运行数为 3,920，每次检查解析逆、$2m-1$ 长度、同 q 准备迹及初始解码。$H\le5$、上下文 $\le H+1$ 的实际 tree/context 对为 1,839,388，两侧 graft 为 3,678,776 次，其中 accept 1,344、reject 3,677,432；另有 1,364 次 Read/$\rho$。按相同 current q、请求及实际上下文分组的响应/successor 类为 239,692，均未见不一致。H9 的全部一至四叶实际上下文两侧 merger 共 204 次。共同 Read–$\rho$–Read 记录的有界左结合候选中有四词，含 $X,Y$；在声明 $\mathcal F=\mathcal T_9$、$f=q_9$ 的实例中，record-only checker 拒绝把 $q_9(X)$ 作为唯一初始目标提案。$H=1,E=0,\ldots,8$ 的九个原 $\mathrm{Read}^{E+1}$ 续接均合法，固定 cap 的末端 EXHAUSTED 与原响应不同。准备/address/tick/fee/phase/stop/availability/copy 的八种人为不同标签作为负控确被视图相等检查识别；这些是局部 label 反例 fixture，不是某个真实 emitter 的 all-path 运行认证。矩阵 rank/determinant 另以独立短计算核对，退出码亦为 0。
 
 有限程序的范围是算术、实际有限树动作和所声明的反例记录，不是假设 52.6 的已实例化实现。一般 code-length、同核分离、全族取得与双向 correspondence 依靠前述普通证明及列明供应，不能由这些有限计数推成全称定理。普通证明与有限精确核对均不计为 Lean verification。$\square$
 
