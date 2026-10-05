@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A nonzero traceless real matrix is a positive rank-one secant exactly when its diagonal is nonzero or its offdiagonal product is negative. -/
+   digest: Exact traceless secants of strictly positive rank-one real matrices. -/
 
 import D5.S3.ConceptDynamics.Experiment.SelfCalibratingRulings
 import Mathlib.Analysis.Real.Sqrt
@@ -31,8 +31,10 @@ theorem result (a b c : ℝ)
       have e₀₁ := congrArg (fun R : Matrix (Fin 2) (Fin 2) ℝ => R 0 1) hdifference
       have e₁₀ := congrArg (fun R : Matrix (Fin 2) (Fin 2) ℝ => R 1 0) hdifference
       have e₁₁ := congrArg (fun R : Matrix (Fin 2) (Fin 2) ℝ => R 1 1) hdifference
-      simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
-        Matrix.tail_cons, Matrix.head_fin_const, Matrix.sub_apply] at e₀₀ e₀₁ e₁₀ e₁₁
+      change a = R₁.val 0 0 - R₀.val 0 0 at e₀₀
+      change b = R₁.val 0 1 - R₀.val 0 1 at e₀₁
+      change c = R₁.val 1 0 - R₀.val 1 0 at e₁₀
+      change -a = R₁.val 1 1 - R₀.val 1 1 at e₁₁
       have hp : R₁.val 0 0 = R₀.val 0 0 := by rw [ha] at e₀₀; linarith
       have hs : R₁.val 1 1 = R₀.val 1 1 := by rw [ha] at e₁₁; linarith
       have hproduct : R₁.val 0 1 * R₁.val 1 0 = R₀.val 0 1 * R₀.val 1 0 := by
@@ -85,7 +87,7 @@ theorem result (a b c : ℝ)
         dsimp only [T]
         field_simp [ha]
       have hrank : (p + a) * (s - a) = (L + b) * (L + c) := by
-        linear_combination hps + a * hsp - haT
+        linear_combination hps + a * hsp + haT
       have hpositive : 0 < p + a ∧ 0 < s - a := by
         have hprod : 0 < (p + a) * (s - a) := by rw [hrank]; exact mul_pos hLb hLc
         rcases lt_or_gt_of_ne ha with ha | ha
@@ -96,8 +98,7 @@ theorem result (a b c : ℝ)
       let R₀ : Source := ⟨!![p, L; L, s], by
         constructor
         · intro i j
-          fin_cases i <;> fin_cases j <;> simp only [Matrix.cons_val_zero,
-            Matrix.cons_val_one, Matrix.head_cons, Matrix.tail_cons, Matrix.head_fin_const]
+          fin_cases i <;> fin_cases j
           · exact hp
           · exact hL
           · exact hL
@@ -106,8 +107,7 @@ theorem result (a b c : ℝ)
       let R₁ : Source := ⟨!![p + a, L + b; L + c, s - a], by
         constructor
         · intro i j
-          fin_cases i <;> fin_cases j <;> simp only [Matrix.cons_val_zero,
-            Matrix.cons_val_one, Matrix.head_cons, Matrix.tail_cons, Matrix.head_fin_const]
+          fin_cases i <;> fin_cases j
           · exact hpositive.1
           · exact hLb
           · exact hLc
@@ -115,7 +115,7 @@ theorem result (a b c : ℝ)
         · simpa using hrank⟩
       refine ⟨R₀, R₁, ?_⟩
       ext i j
-      fin_cases i <;> fin_cases j <;> simp [R₀, R₁] <;> ring
+      fin_cases i <;> fin_cases j <;> simp [R₀, R₁]
     · have hz : a = 0 := not_ne_iff.mp ha
       have hbc : b * c < 0 := hcriterion.resolve_left ha
       have construct : ∀ (u v : ℝ), 0 < u → v < 0 →
@@ -129,22 +129,23 @@ theorem result (a b c : ℝ)
         let R₀ : Source := ⟨!![d, u; -2 * v, d], by
           constructor
           · intro i j
-            fin_cases i <;> fin_cases j <;> simp only [Matrix.cons_val_zero,
-              Matrix.cons_val_one, Matrix.head_cons, Matrix.tail_cons, Matrix.head_fin_const]
+            fin_cases i <;> fin_cases j
             · exact hd
             · exact hu
-            · linarith
+            · change 0 < -2 * v
+              linarith
             · exact hd
           · change d * d = u * (-2 * v)
             nlinarith [hdsquare]⟩
         let R₁ : Source := ⟨!![d, 2 * u; -v, d], by
           constructor
           · intro i j
-            fin_cases i <;> fin_cases j <;> simp only [Matrix.cons_val_zero,
-              Matrix.cons_val_one, Matrix.head_cons, Matrix.tail_cons, Matrix.head_fin_const]
+            fin_cases i <;> fin_cases j
             · exact hd
-            · linarith
-            · linarith
+            · change 0 < 2 * u
+              linarith
+            · change 0 < -v
+              linarith
             · exact hd
           · change d * d = (2 * u) * (-v)
             nlinarith [hdsquare]⟩
