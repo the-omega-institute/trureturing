@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The original all-path affine modulus, prime-loss coordinates, and named-edge recurrence
-   are defined independently and connected by actual named-edge cycle erasure. -/
+   digest: The original all-path affine modulus, prime-loss coordinates, and named-edge recurrence are defined independently and connected by actual named-edge cycle erasure. -/
 
 import Mathlib.Algebra.GCDMonoid.FinsetLemmas
 import Mathlib.Combinatorics.Quiver.Path.Weight

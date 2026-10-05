@@ -70,7 +70,7 @@ internal sealed class AffineModularStoppingDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem))));
 
     private static Formula Loss(Formula p, Formula path) => Seq(
-        Sum, Underscore, Grp(Seq(F.Id("e"), InMacro, path)),
+        Sum, Underscore, Grp(Seq(F.Id("e"), InMacro, Sp, path)),
         Nu, Underscore, Grp(p), Open, F.Id("a"), Underscore, Grp(F.Id("e")), Close);
 
     private static Formula ErasureFormula()
@@ -82,12 +82,12 @@ internal sealed class AffineModularStoppingDocument : IScribeDocumentDefinition
         Formula p = F.Id("p");
         return Disp(Seq(
             Forall, gamma, InMacro, Call("Path", v, w), Comma, Sp,
-            Exists, eta, InMacro, Call("Path", v, w), Colon, Sp,
+            Exists, Sp, eta, InMacro, Call("Path", v, w), Colon, Sp,
             Call("ActualSimple", eta), Land,
             Call("Sublist", Call("edges", eta), Call("edges", gamma)), Land,
             Call("A", eta), Mid, Call("A", gamma), Land,
             Call("length", eta), Leq, Bar, F.Id("V"), Bar, Minus, D(1), Land,
-            Forall, p, Comma, Loss(p, eta), Leq, Loss(p, gamma)));
+            Forall, Sp, p, Comma, Loss(p, eta), Leq, Loss(p, gamma)));
     }
 
     private static Formula MainFormula()
@@ -102,19 +102,19 @@ internal sealed class AffineModularStoppingDocument : IScribeDocumentDefinition
             F.Id("d"), Underscore, Grp(w), Close);
         Formula contribution = Seq(OpenBracket, delta, Minus, Loss(p, gamma),
             CloseBracket, Underscore, Grp(Plus));
-        Formula paths = Seq(w, InMacro, F.Id("V"), Comma, gamma, InMacro, Call("Path", v, w));
+        Formula paths = Seq(w, InMacro, Sp, F.Id("V"), Comma, gamma, InMacro, Call("Path", v, w));
         Formula bound = Seq(Bar, F.Id("V"), Bar, Minus, D(1));
         Formula simplePaths = Seq(paths, Comma, Call("ActualSimple", gamma), Comma,
             Call("length", gamma), Leq, bound);
         return Disp(Seq(
-            Forall, v, Comma, D(0), Lt, dv, Land, dv, Mid, F.Id("m"), Semi, Sp,
-            Forall, v, Comma, p, Comma, Call("Prime", p), Land, p, Mid, F.Id("m"), Implies,
-            Grp(Forall, w, Comma, gamma, InMacro, Call("Path", v, w), Comma,
+            Forall, Sp, v, Comma, D(0), Lt, dv, Land, Sp, dv, Mid, Sp, F.Id("m"), Semi, Sp,
+            Forall, Sp, v, Comma, p, Comma, Call("Prime", p), Land, Sp, p, Mid, Sp, F.Id("m"), Implies,
+            Grp(Forall, Sp, w, Comma, gamma, InMacro, Call("Path", v, w), Comma,
                 Nu, Underscore, Grp(p), Open, Call("quotient", gamma), Close, Eq, contribution), Land,
             Nu, Underscore, Grp(p), Open, dv, Close, Eq,
             Max, Underscore, Grp(paths), contribution, Eq,
             Max, Underscore, Grp(simplePaths), contribution, Semi, Sp,
-            Forall, v, Comma, n, Comma, bound, Leq, n, Implies,
+            Forall, Sp, v, Comma, n, Comma, bound, Leq, Sp, n, Implies,
             Call("iterate", n, v), Eq, dv));
     }
 
