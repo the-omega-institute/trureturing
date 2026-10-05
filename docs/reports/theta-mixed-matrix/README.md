@@ -8,6 +8,23 @@ full-probability variance. Its purpose is to exercise that implementation
 interface; this single function is not the complete approximation family
 required by the fixed-window spectral test.
 
+## Complex inner products for matrix reports
+
+The complex matrix interfaces use the upstream first-slot-linear
+convention
+
+$$
+\langle f,g\rangle_2=\int_{\mathbb R}f(x)\overline{g(x)}\,dx,
+\qquad |u\rangle\langle v|x=\langle x,v\rangle_2u.
+$$
+
+For common columns $x_j$ and $x(z)=\sum_jz_jx_j$, a Hermitian
+norm Gram written as $z^*Gz$ has
+$G_{ij}=\langle x_j,x_i\rangle_2$, so $z^*Gz=\|x(z)\|_2^2$.
+Projection coefficients are linear in the projected vector. The saved
+real columns and real matrices have the same entries under either
+inner-product convention; complex extensions must use the declared one.
+
 ## Exact inputs and model
 
 Put $\ell=\log2$, $\delta=1/2$ and
@@ -293,3 +310,12 @@ It reuses the complete Gamma and prime envelopes and the same constrained
 inverse tools, keeping the chosen low trial and ground correction joint.
 It pays only action truncation errors; retained action and source Grams
 remain unevaluated, and no matrix or cofinal sign is supplied.
+
+
+The [saved-joint-field weighted input](joint-weighted-input.md) uses all
+128 already enclosed high-floor cells at the original $N=64,c=3/8$.
+Its new coefficient-only calculation encloses the output weight and
+common ground-complement action error at the unchanged cutoffs; no old
+source acquisition is replayed. Its approximately $0.20175$ weighted/scalar
+budget ratio compares truncation allowances, not inverse-cost or matrix
+signs. New weighted Gram integration and common cofinal signs remain open.
