@@ -13,8 +13,9 @@ have not been established for the AP choices.
 
 Sections 1–8 give ordinary mathematical literature and interface results.
 The cited statements are source-checked, not independently certified
-proofs of the papers. Section 9 gives an exact component-orientation
-deletion test with a scoped Lean check. Neither literature novelty
+proofs of the papers. Sections 9–10 give an exact component-orientation
+deletion test and an actual pure-prime obstruction with scoped Lean checks.
+Neither literature novelty
 nor a resolution of unrestricted Erdős #7 is claimed. The period-12,
 period-144 and affine period-921600 controls below are actual covers
 with even moduli; they are not odd-cover or extremal-cover counterexamples.
@@ -702,3 +703,96 @@ Here the ternary height is arbitrary, the pure anchor is explicit, and
 the deletion condition concerns the complete retained-only liability.
 The checked result does not establish existence of a successful deletion
 or settle unrestricted Erdős #7.
+
+## 10. An actual pure-prime liability obstructs every component orientation
+
+Keep all assumptions and definitions AC1–AC4. In addition, let an original
+retained class have prime modulus $n_r=p$, and suppose some $i\in D$ has
+$p\mid m_i$. These are explicit hypotheses: count minimality alone is
+not used to supply the pure-prime original. Since $m_i\mid M$ and
+$(3,M)=1$, necessarily $p\ne3$. Set
+
+$$
+ E=v_p(M),\qquad N=M/p^E.
+ \tag{AC8}
+$$
+
+There exist actual bases $v\in Z_r$ and $w\in K$, independent of the
+component orientation, with
+
+$$
+ v\equiv w\pmod N,
+ \qquad v=\operatorname{proj}_M(x)
+ \quad\text{for some }x\in\operatorname{Priv}_r.
+ \tag{AC9}
+$$
+
+For every component orientation $\varepsilon$, write $\delta_j$ for its
+assigned digit. At this same $v$,
+
+$$
+ \delta_i\ne\alpha,
+ \qquad
+ \forall j\in D,\quad v\in B_j\Longrightarrow\delta_j\ne\delta_i.
+ \tag{AC10}
+$$
+
+Thus a nonanchor digit is missing at one fixed actual liability base
+under every orientation. The missing digit may depend on the chosen
+orientation. This prevents deletion of $r$ by the component mechanism,
+even if its complete liability satisfies the required parent locality.
+No parent-locality hypothesis is needed to construct AC9–AC10.
+
+### Constructing both bases from one original private point
+
+Choose $y\in\operatorname{Priv}_i$. CRT supplies $x$ with the pure-prime
+phase $x\equiv a_r\pmod p$ while preserving
+$x\equiv y\pmod{3^H N}$. Every $p$-free original has the same membership
+at $x$ and $y$. A $p$-bearing original other than $r$ cannot meet $x$:
+such a meeting would make its whole class lie in $A_r$, contradicting
+its own private point. The source original $i$ is $p$-bearing. Hence
+$x\in\operatorname{Priv}_r$.
+
+The source $y$ is uncovered by all retained originals, so AC3 gives
+$w=y\bmod M\in K$. Let $v=x\bmod M$. Since
+$\operatorname{Priv}_r\subseteq J_r$, this gives $v\in Z_r$ and AC9.
+This uses the private-prime reset of
+[Report357, section 3](357-original-private-swaps-and-prime-reset-transport.md#3-resetting-an-actual-private-point-has-bounded-congestion),
+with a full prime-free coordinate preserved.
+
+Now take any $j\in D$ whose full cofactor cylinder contains $v$.
+Its cofactor is $p$-free: otherwise its phase modulo $p$ would agree
+with $A_r$, again making $A_j\subseteq A_r$. Thus $m_j\mid N$ and
+its cylinder also contains $w$. The cylinder of $i$ contains $w$ as
+well. The two owners therefore undergo the same digit permutation at
+that point of $K$.
+
+Their old digits are different. Equality would put $x$ in $A_j$,
+because $x$ preserves the full ternary coordinate of $y$ and already
+belongs to the cofactor cylinder of $j$. This contradicts
+$x\in\operatorname{Priv}_r$. A common permutation preserves that
+inequality. Taking the anchor $h$ as $j$ also gives
+$\delta_i\ne\alpha$. This proves AC10.
+
+### Scope of the obstruction
+
+The argument depends on an old private-$r$ representative, not merely
+on a point of $Z_r$ whose prime-free coordinate meets the projection of
+$K$. The latter condition alone would place nonanchor suppliers in one component
+without excluding both signs inside that component; such a component
+already pays both digits in AC6–AC7.
+
+The obstruction applies to component orientations, which act by one
+common permutation on all owners meeting a point of $K$. It does not
+exclude arbitrary whole-owner recolorings that still supply both digits
+at every point of $K$. Nor does it address the case where $p$ divides
+none of the changed cofactors. Those require separate arguments.
+
+A scoped Lean check verifies the actual private representative, both
+base memberships, the full prime-free congruence, and AC10 simultaneously
+for all component orientations. Its fourteen reported theorem axiom
+closures, including the reused section 9 checks, use only the standard
+accepted axioms, with no sorry terms. The new check is an application of
+the existing private-point and prefix-liability results, Mathlib CRT and
+prime-power decomposition, and the component transport; no bind-only
+declaration is retained as new project mathematics.
