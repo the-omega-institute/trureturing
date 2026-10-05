@@ -14,11 +14,12 @@ def projectionPayload : Ref Nat := {
   value := by_elab pure (Lean.Expr.proj ``Prod 0 (Lean.mkConst ``pairValue)) }
 
 run_meta do
+  let find := (← getEnv).find?
   for (label, name) in #[
       ("lambda", ``lambdaPayload), ("let", ``letPayload), ("projection", ``projectionPayload)] do
     let info ← getConstInfo name
     let error ← try
-      discard <| Decoder.reference "arena" info.value!
+      discard <| Decoder.liftLiteral (Literal.reference find "arena" info.value!)
       pure "accepted"
     catch ex => ex.toMessageData.toString
     assertTest s!"reference.head.compiled.{label}"
@@ -32,7 +33,7 @@ run_meta do
     ("nested_metadata", .mdata {} (mkApp (.mdata {} (mkConst ``Nat.succ)) zero), ``Nat.succ)]
   for (label, value, expected) in values do
     let decoded ← try
-      pure (some (← Decoder.reference "arena" (refExpr value)))
+      pure (some (← Decoder.liftLiteral (Literal.reference find "arena" (refExpr value))))
     catch _ => pure none
     assertTest s!"reference.head.positive.{label}"
       (decoded.any fun (name, payload) => name == expected && payload == value)
@@ -48,7 +49,7 @@ run_meta do
       "continuation", "family_record"] do
     for (label, value, diagnostic) in negatives do
       let error ← try
-        discard <| Decoder.reference role (refExpr value)
+        discard <| Decoder.liftLiteral (Literal.reference find role (refExpr value))
         pure "accepted"
       catch ex => ex.toMessageData.toString
       assertTest s!"reference.head.negative.{role}.{label}"

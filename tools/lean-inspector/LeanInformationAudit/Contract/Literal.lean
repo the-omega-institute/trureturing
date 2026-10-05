@@ -7,6 +7,32 @@ open Lean
 def closed (e : Expr) : Bool :=
   !e.hasFVar && !e.hasMVar && !e.hasLooseBVars && !e.hasLevelMVar
 
+/-- Closed bodies retain no reference to their discarded let binding. -/
+private def closedBody : Expr → Expr
+  | .mdata _ body => closedBody body
+  | value@(.letE _ _ _ body _) => if closed body then closedBody body else value
+  | value => value
+
+/-- Follow safe compiled constant references without an environment or
+evaluation. Applied functions, projections and recursors remain undecoded. -/
+def referencedValue (find : Name → Option ConstantInfo) (value : Expr)
+    (seen : NameSet := {}) : Except String Expr := do
+  let mut value := value
+  let mut seen := seen
+  for _ in [:4097] do
+    value := closedBody value
+    let .const name levels := value | return value
+    let some info := find name
+      | throw s!"contract.cannot_decode:{name}:missing_constant"
+    let .defnInfo definition := info | return value
+    unless definition.safety == .safe && definition.levelParams.length == levels.length do
+      throw s!"contract.cannot_decode:{name}:unsafe_or_invalid_reference"
+    if seen.contains name then throw s!"contract.cannot_decode:{name}:reference_cycle"
+    if seen.size >= 4096 then throw s!"contract.cannot_decode:{name}:reference_work"
+    value := definition.value.instantiateLevelParams definition.levelParams levels
+    seen := seen.insert name
+  throw "contract.cannot_decode:reference_work"
+
 /-- Decode bare constant references inside metadata constructor trees. Applied
 functions remain opaque; no beta, zeta, projection or recursor evaluation runs. -/
 def resolveReferences (find : Name → Option ConstantInfo)
@@ -48,6 +74,39 @@ def constructor (name : Name) (count : Nat) (field : String)
   unless args.size == count do
     throw s!"contract.literal:{field}:arity:{name}"
   return args
+
+/-- Structure layout and values come exclusively from compiled constants. -/
+def fields (find : Name → Option ConstantInfo) (name : Name) (e : Expr)
+    (count : Nat) : Except String (Array Expr) := do
+  let some (.ctorInfo ctor) := find (name.str "mk")
+    | throw s!"contract.literal:unknown_structure:{name}"
+  let value ← referencedValue find e
+  let args ← constructor (name.str "mk") (ctor.numParams + count) name.toString value
+  return args.extract ctor.numParams args.size
+
+private def constantHead (e : Expr) : Option Name :=
+  match e with
+  | .mdata _ body => constantHead body
+  | .app function _ => constantHead function
+  | .const name _ => some name
+  | _ => none
+
+def constantName (find : Name → Option ConstantInfo) (role : String)
+    (value : Expr) : Except String Name := do
+  unless closed value do throw s!"incomplete_closure:contract.reference_open:{role}"
+  let some name := constantHead value
+    | throw s!"unclassified_form:contract.reference_head:{role}"
+  unless (find name).isSome do
+    throw s!"unclassified_form:contract.reference_unknown:{role}:{name}"
+  return name
+
+/-- Recover payload identity from its compiled constant head without reduction. -/
+def reference (find : Name → Option ConstantInfo) (role : String)
+    (e : Expr) : Except String (Name × Expr) := do
+  unless closed e do throw s!"incomplete_closure:contract.reference_open:{role}"
+  let fs ← fields find ``Contract.Ref e 1
+  let value := fs[0]!
+  return (← constantName find role value, value)
 
 def nat (field : String) (e : Expr) : Except String Nat := do
   match e with

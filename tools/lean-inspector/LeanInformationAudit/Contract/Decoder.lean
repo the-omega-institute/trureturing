@@ -21,65 +21,24 @@ def liftLiteral {α : Type} (value : Except String α) : MetaM α :=
   | .ok value => pure value
   | .error error => throwError "{error}"
 
-/-- Closed bodies retain no reference to their discarded let binding. -/
-private def closedBody : Expr → Expr
-  | .mdata _ body => closedBody body
-  | value@(.letE _ _ _ body _) => if Literal.closed body then closedBody body else value
-  | value => value
-
 /-- Follow at most 4096 compiled definition references. Applications,
 projections and recursors require computation and have no decoding route. -/
 def referencedValue (value : Expr) (seen : NameSet := {}) : MetaM Expr := do
-  let mut value := value
-  let mut seen := seen
-  for _ in [:4097] do
-    value := closedBody value
-    let .const name levels := value | return value
-    let info ← getConstInfo name
-    let .defnInfo definition := info | return value
-    unless definition.safety == .safe && definition.levelParams.length == levels.length do
-      throwError "contract.cannot_decode:{name}:unsafe_or_invalid_reference"
-    if seen.contains name then throwError "contract.cannot_decode:{name}:reference_cycle"
-    if seen.size >= 4096 then throwError "contract.cannot_decode:{name}:reference_work"
-    value := definition.value.instantiateLevelParams definition.levelParams levels
-    seen := seen.insert name
-  throwError "contract.cannot_decode:reference_work"
+  liftLiteral <| Literal.referencedValue ((← getEnv).find? ·) value seen
 
 def fields (name : Name) (e : Expr) (count : Nat) : MetaM (Array Expr) := do
-  let .ctorInfo ctor ← getConstInfo (name.str "mk")
-    | throwError "contract.literal:unknown_structure:{name}"
-  let value ← referencedValue e
-  let args ← liftLiteral <| Literal.constructor (name.str "mk")
-    (ctor.numParams + count) name.toString value
-  return args.extract ctor.numParams args.size
+  liftLiteral <| Literal.fields ((← getEnv).find? ·) name e count
 
 def metadata (value : Expr) (decode : Expr → Except String α) : MetaM α := do
   let resolved ← liftLiteral <| LeanInformationAudit.Contract.Literal.resolveReferences ((← getEnv).find? ·) value
   liftLiteral (decode resolved)
 
-private def constantHead (e : Expr) : Option Name :=
-  match e with
-  | .mdata _ body => constantHead body
-  | .app function _ => constantHead function
-  | .const name _ => some name
-  | _ => none
-
 private def constantName (role : String) (value : Expr) : MetaM Name := do
-  unless Literal.closed value do
-    throwError "incomplete_closure:contract.reference_open:{role}"
-  let some name := constantHead value
-    | throwError "unclassified_form:contract.reference_head:{role}"
-  unless ((← getEnv).find? name).isSome do
-    throwError "unclassified_form:contract.reference_unknown:{role}:{name}"
-  return name
+  liftLiteral <| Literal.constantName ((← getEnv).find? ·) role value
 
 /-- Recover payload identity from its compiled constant head without reduction. -/
 def reference (role : String) (e : Expr) : MetaM (Name × Expr) := do
-  unless Literal.closed e do
-    throwError "incomplete_closure:contract.reference_open:{role}"
-  let fs ← fields ``Contract.Ref e 1
-  let value := fs[0]!
-  return (← constantName role value, value)
+  liftLiteral <| Literal.reference ((← getEnv).find? ·) role e
 
 private def optional (e : Expr) : MetaM (Option Expr) := do
   liftLiteral <| Literal.optional "option" (← referencedValue e)
