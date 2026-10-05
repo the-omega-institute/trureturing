@@ -548,3 +548,14 @@ This conditional paper consumer reuses the published inverse tools and
 existing action envelopes. The common cofinal low/complementary-low
 signs, endpoint half-bound, RH, full Robin and Lean certification
 remain unresolved; the saved $N=64$ data are not transported here.
+
+
+At the original $N=64,c=3/8$, the
+[direct saved-joint-field input](joint-weighted-input.md) supplies a
+different positive weight from the already retained pointwise high
+floors, together with an evaluated common ground-complement action-tail
+budget. It reuses this dual-source algebra with that separately justified
+high weight, rather than assigning (WH1) to the old band. The differing
+old low/high action cutoffs keep the fixed trial $Z$ unchanged. Weighted
+retained-action Grams and their step-boundary integration errors still
+require directed enclosures.

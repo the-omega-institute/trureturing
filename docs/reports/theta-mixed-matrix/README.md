@@ -293,3 +293,12 @@ It reuses the complete Gamma and prime envelopes and the same constrained
 inverse tools, keeping the chosen low trial and ground correction joint.
 It pays only action truncation errors; retained action and source Grams
 remain unevaluated, and no matrix or cofinal sign is supplied.
+
+
+The [saved-joint-field weighted input](joint-weighted-input.md) uses all
+128 already enclosed high-floor cells at the original $N=64,c=3/8$.
+Its new coefficient-only calculation encloses the output weight and
+common ground-complement action error at the unchanged cutoffs; no old
+source acquisition is replayed. Its approximately $0.20175$ weighted/scalar
+budget ratio compares truncation allowances, not inverse-cost or matrix
+signs. New weighted Gram integration and common cofinal signs remain open.
