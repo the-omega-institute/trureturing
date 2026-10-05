@@ -425,3 +425,31 @@ principal synthesis. Constants and actual residual Grams remain
 uncertified; this conditional paper analysis supplies no numerical
 runtime, effective regularization rate, new Lean result, actual cofinal
 signs, all-input half-bound, Robin or RH conclusion.
+
+
+The [explicit actual-endpoint constants](../../../Library/Dynamics/clason2021regularization.md#explicit-original-series-constants-for-the-actual-endpoint-strip)
+reuse the relative theta remainder and original derivative polynomials.
+The [two-rate normalization bound](../../../Library/Dynamics/clason2021regularization.md#retain-both-actual-endpoint-decay-rates)
+and [directed caps](../../../Library/Dynamics/clason2021regularization.md#directed-caps-for-the-same-endpoint-choice)
+give a sufficient endpoint threshold 58 and normalized error cap below 920,
+with $R_0=59$. The [producer](theta_endpoint_constants.py) and
+[result](theta-endpoint-constants-result.json) preserve the actual model
+and leave WF2 form coefficients symbolic. They acquire scalar constants,
+not actual column/functional enclosures or a simultaneous Gram. Critical
+membership applies to actual normalized columns; the ideal profiles
+belong to the original form domain. Source/archimedean costs, common
+cofinal signs, the all-input half-bound, Robin, RH and Lean certification
+remain unresolved.
+
+From the repository root, with Python 3.10+ and python-flint 0.9.0:
+
+```sh
+python docs/reports/theta-mixed-matrix/theta_endpoint_constants.py --output docs/reports/theta-mixed-matrix/theta-endpoint-constants-result.json
+```
+
+The cached declared runtime may also be invoked with
+`uv run --offline --no-project --python 3.13 --with python-flint==0.9.0`
+before that command. This producer is verified on the local macOS host,
+including a different working directory, paths with spaces and a shell
+without startup files; the portable fixture reproduces the result bytes.
+No numerical acquisition or platform execution is inferred from CI.
