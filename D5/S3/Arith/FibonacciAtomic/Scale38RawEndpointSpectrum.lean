@@ -89,7 +89,7 @@ private theorem compatible_of_nonconflict {P Q : Source}
   all_goals try { exact Or.inr (Or.inr rfl) }
   all_goals simp_all
 
-private theorem frontier_row_agreement {k : Nat} (hk : 1 ≤ k)
+theorem leaf_agreement_of_rows {k : Nat} (hk : 1 ≤ k)
     {Z U V : Index k} (hUZ : U ≠ Z) (hVZ : V ≠ Z)
     (row_eq : ∀ (r : LeafRow k), r.target = Z →
       ∀ (a : Address) (c : Bool), (a, c) ∈ r.block →
@@ -109,13 +109,5 @@ private theorem frontier_row_agreement {k : Nat} (hk : 1 ≤ k)
   have hrv := responses r V (by intro h; exact hVZ (by simpa [hr] using h)) a c hblock
   exact hru.trans ((row_eq r hr a c hblock).trans hrv.symm)
 
-/-- Row-level response certificates lift to equality on every target leaf. -/
-theorem leaf_agreement_of_rows {k : Nat} (hk : 1 ≤ k)
-    {Z U V : Index k} (hUZ : U ≠ Z) (hVZ : V ≠ Z)
-    (row_eq : ∀ (r : LeafRow k), r.target = Z →
-      ∀ (a : Address) (c : Bool), (a, c) ∈ r.block →
-        r.reply U c = r.reply V c) :
-    ∀ a, a ∈ leaves (family k Z) → readout a (family k U) = readout a (family k V) :=
-  frontier_row_agreement hk hUZ hVZ row_eq
 
 end D5.S3.Arith.FibonacciAtomic.Scale38RawEndpointSpectrum
