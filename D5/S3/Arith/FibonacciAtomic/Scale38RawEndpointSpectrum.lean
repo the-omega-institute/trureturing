@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Raw endpoint address vocabulary and pairwise indistinguishability obstructions for the Scale38 family. -/
+   digest: Full-frontier pairwise obstructions to raw endpoints in the nested compensation family. -/
 
 import D5.S3.Arith.FibonacciAtomic.RawEndpointPeeling
 import D5.S3.Arith.FibonacciAtomic.Scale38LeafFrontierResponse
