@@ -18,6 +18,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.FibonacciAtomic.UnitShiftNormBudget
 
+open Filter
 open D5.S0.Carrier
 open D5.S1.Scale
 open GraftAffineClosure (quantity)
@@ -188,7 +189,8 @@ private theorem source_bounds (j g : ℕ) (r : ℤ) (hj : 3 ≤ j) (hg : 2 ≤ g
   · exact gcd_bound _ _ g r (by exact_mod_cast hg) (Q ▸ signs)
   · have lower := norm_lower (Nat.fib (j - 1)) (Nat.fib j) g r hw ha hb (by
       simpa only [sourceQuantity, quantity, Nat.cast_add, Nat.cast_mul,
-        Nat.cast_ofNat, Nat.cast_one, Int.cast_natCast] using (show 0 < (sourceQuantity j g : ℤ) by exact_mod_cast positive))
+        Nat.cast_ofNat, Nat.cast_one, Int.cast_natCast] using
+        (show 0 < (sourceQuantity j g : ℤ) by exact_mod_cast positive))
     simpa only [sourceQuantity, quantity, Nat.cast_add, Nat.cast_mul,
       Nat.cast_ofNat, Nat.cast_one, Int.cast_natCast, shiftedComposition] using lower
 
@@ -259,8 +261,67 @@ private theorem power_bounds (N G R d D α β : ℝ)
   · rw [show 1 - 2 * α - 2 * β = 1 - (2 * α + 2 * β) by ring, quotient]
     exact div_le_div_of_nonneg_left Np.le hd dbudget
 
+private theorem logarithmic_tail (ε δ ω : ℝ) (hε : 0 < ε) (hδ : 0 < δ) (hω : 0 < ω) :
+    ∃ T : ℝ, ∀ N D U : ℝ, T ≤ N → N ^ ε / 50 < D → N ^ δ / 5 ≤ U → U ≤ N →
+      (Real.log (Real.log (Real.log U))) ^ ω < Real.log (Real.log (2 + D)) := by
+  have ht : Tendsto (fun N : ℝ => Real.log (Real.log N)) atTop atTop :=
+    Real.tendsto_log_atTop.comp Real.tendsto_log_atTop
+  have hs := ((isLittleO_log_rpow_rpow_atTop ω (by norm_num : 0 < (1 : ℝ))).comp_tendsto ht).bound
+    (by norm_num : 0 < (1 / 4 : ℝ))
+  simp only [Function.comp_apply, Real.rpow_one] at hs
+  have event : ∀ᶠ N : ℝ in Filter.atTop, ∀ D U : ℝ,
+      N ^ ε / 50 < D → N ^ δ / 5 ≤ U → U ≤ N →
+      (Real.log (Real.log (Real.log U))) ^ ω < Real.log (Real.log (2 + D)) := by
+    filter_upwards [hs, Filter.eventually_gt_atTop (0 : ℝ),
+      Real.tendsto_log_atTop.eventually_gt_atTop (max 0 (2 * Real.log 50 / ε)),
+      ht.eventually_gt_atTop (max 1 (-2 * Real.log (ε / 2))),
+      (tendsto_rpow_atTop hδ).eventually_ge_atTop (5 * Real.exp (Real.exp 1))]
+      with N hsmall Np hln hll hUbig
+    intro D U hD hU hUN
+    have lnpos : 0 < Real.log N := lt_of_le_of_lt (le_max_left _ _) hln
+    have lnlarge : 2 * Real.log 50 / ε < Real.log N := lt_of_le_of_lt (le_max_right _ _) hln
+    have llpos : 0 < Real.log (Real.log N) := by
+      have := lt_of_le_of_lt (le_max_left _ _) hll; linarith
+    have lllarge : -2 * Real.log (ε / 2) < Real.log (Real.log N) :=
+      lt_of_le_of_lt (le_max_right _ _) hll
+    have Up : 0 < U := lt_of_lt_of_le (Real.exp_pos _) (show Real.exp (Real.exp 1) ≤ U by linarith)
+    have logU : Real.exp 1 ≤ Real.log U := by
+      have := Real.log_le_log (Real.exp_pos (Real.exp 1))
+        (show Real.exp (Real.exp 1) ≤ U by linarith)
+      simpa only [Real.log_exp] using this
+    have loglogU : 1 ≤ Real.log (Real.log U) := by
+      have := Real.log_le_log (Real.exp_pos 1) logU
+      simpa only [Real.log_exp] using this
+    have tripleU : 0 ≤ Real.log (Real.log (Real.log U)) := Real.log_nonneg loglogU
+    have logUp : 0 < Real.log U := lt_of_lt_of_le (Real.exp_pos 1) logU
+    have llUp : 0 < Real.log (Real.log U) := by linarith
+    have triplele : Real.log (Real.log (Real.log U)) ≤ Real.log (Real.log (Real.log N)) :=
+      Real.log_le_log llUp (Real.log_le_log logUp (Real.log_le_log Up hUN))
+    have rhs : (Real.log (Real.log (Real.log U))) ^ ω ≤ Real.log (Real.log N) / 4 := by
+      have small : (Real.log (Real.log (Real.log N))) ^ ω ≤ Real.log (Real.log N) / 4 := by
+        simpa only [Real.norm_eq_abs, abs_of_nonneg (Real.rpow_nonneg (tripleU.trans triplele) ω),
+          abs_of_pos llpos, div_eq_mul_inv, one_mul, mul_comm] using hsmall
+      exact (Real.rpow_le_rpow tripleU triplele hω.le).trans small
+    have Dp : 0 < D := lt_trans (by positivity : 0 < N ^ ε / 50) hD
+    have logD : ε * Real.log N - Real.log 50 < Real.log (2 + D) := by
+      calc
+        _ = Real.log (N ^ ε / 50) := by
+          rw [Real.log_div (by positivity) (by norm_num), Real.log_rpow Np]
+        _ < Real.log (2 + D) := Real.log_lt_log (by positivity) (by linarith)
+    have inner : (ε / 2) * Real.log N < Real.log (2 + D) := by
+      have := (div_lt_iff₀ hε).mp lnlarge
+      nlinarith
+    have lower : Real.log (Real.log N) + Real.log (ε / 2) < Real.log (Real.log (2 + D)) := by
+      calc
+        _ = Real.log ((ε / 2) * Real.log N) := by
+          rw [Real.log_mul (by positivity) lnpos.ne']; ring
+        _ < _ := Real.log_lt_log (by positivity) inner
+    linarith
+  obtain ⟨T, hT⟩ := Filter.eventually_atTop.mp event
+  exact ⟨T, fun N D U hTN => hT N hTN D U⟩
+
 /-- Actual nonnegative shifts obey a cubic cost and joint multiplier/shift power budgets. -/
-theorem result (j g : ℕ) (r : ℤ) (hj : 3 ≤ j) (hg : 2 ≤ g)
+private theorem pointwise (j g : ℕ) (r : ℤ) (hj : 3 ≤ j) (hg : 2 ≤ g)
     (hw : (g : ℝ) * ((Nat.fib (j - 1) : ℝ) + Nat.fib j * ψ) ∈
       Set.Ioo (-1) (φ - 1))
     (ha : 0 ≤ (shiftedComposition j g r).a)
@@ -279,5 +340,56 @@ theorem result (j g : ℕ) (r : ℤ) (hj : 3 ≤ j) (hg : 2 ≤ g)
   exact power_bounds _ _ _ _ _ α β hN (by exact_mod_cast hg)
     (by have := abs_nonneg (r : ℝ); linarith) (by exact_mod_cast hd)
     hdb cubic hβ hgrowth (by simpa only [add_sub_cancel_left] using hr)
+
+
+/-- Cubic costs, joint power budgets, and a source-independent logarithmic threshold. -/
+theorem result :
+    (∀ (j g : ℕ) (r : ℤ), 3 ≤ j → 2 ≤ g →
+      (g : ℝ) * ((Nat.fib (j - 1) : ℝ) + Nat.fib j * ψ) ∈ Set.Ioo (-1) (φ - 1) →
+      0 ≤ (shiftedComposition j g r).a → 0 ≤ (shiftedComposition j g r).b →
+      (sourceQuantity j g : ℝ) /
+        (4 * ((g : ℝ) ^ 2 + 1) ^ 2 * (1 + |(r : ℝ)|) ^ 3) < primitiveNorm j g r ∧
+      ∀ α β : ℝ, 0 ≤ α → 0 ≤ β → 4 * α + 3 * β < 1 →
+        (g : ℝ) ≤ (sourceQuantity j g : ℝ) ^ α →
+        |(r : ℝ)| ≤ (sourceQuantity j g : ℝ) ^ β →
+        (sourceQuantity j g : ℝ) ^ (1 - 4 * α - 3 * β) / 50 < primitiveNorm j g r ∧
+        (sourceQuantity j g : ℝ) ^ (1 - 2 * α - 2 * β) / 5 ≤ primitiveQuantity j g r) ∧
+    (∀ α β : ℝ, 0 ≤ α → 0 ≤ β → 4 * α + 3 * β < 1 →
+      ∀ M : ℝ, ∃ T : ℝ, ∀ (j g : ℕ) (r : ℤ), 3 ≤ j → 2 ≤ g →
+        (g : ℝ) * ((Nat.fib (j - 1) : ℝ) + Nat.fib j * ψ) ∈ Set.Ioo (-1) (φ - 1) →
+        0 ≤ (shiftedComposition j g r).a → 0 ≤ (shiftedComposition j g r).b →
+        (g : ℝ) ≤ (sourceQuantity j g : ℝ) ^ α →
+        |(r : ℝ)| ≤ (sourceQuantity j g : ℝ) ^ β → T ≤ (sourceQuantity j g : ℝ) →
+        M ≤ primitiveQuantity j g r) ∧
+    (∀ α β : ℝ, 0 ≤ α → 0 ≤ β → 4 * α + 3 * β < 1 →
+      ∀ ω : ℝ, 0 < ω → ω < 1 / 2 → ∃ T : ℝ, ∀ (j g : ℕ) (r : ℤ),
+        3 ≤ j → 2 ≤ g →
+        (g : ℝ) * ((Nat.fib (j - 1) : ℝ) + Nat.fib j * ψ) ∈ Set.Ioo (-1) (φ - 1) →
+        0 ≤ (shiftedComposition j g r).a → 0 ≤ (shiftedComposition j g r).b →
+        (g : ℝ) ≤ (sourceQuantity j g : ℝ) ^ α →
+        |(r : ℝ)| ≤ (sourceQuantity j g : ℝ) ^ β → T ≤ (sourceQuantity j g : ℝ) →
+        (Real.log (Real.log (Real.log (primitiveQuantity j g r)))) ^ ω <
+          Real.log (Real.log (2 + primitiveNorm j g r))) := by
+  refine ⟨pointwise, ?_, ?_⟩
+  · intro α β hα hβ hsum M
+    have δpositive : 0 < 1 - 2 * α - 2 * β := by linarith
+    obtain ⟨T, hT⟩ := eventually_atTop.mp
+      ((tendsto_rpow_atTop δpositive).eventually_ge_atTop (5 * M))
+    refine ⟨T, ?_⟩
+    intro j g r hj hg hw ha hb hgrowth hr hTN
+    have lower := ((pointwise j g r hj hg hw ha hb).2 α β hα hβ hsum hgrowth hr).2
+    have atThreshold := hT (sourceQuantity j g : ℝ) hTN
+    exact (show M ≤ (sourceQuantity j g : ℝ) ^ (1 - 2 * α - 2 * β) / 5 by linarith).trans lower
+  · intro α β hα hβ hsum ω hω _
+    obtain ⟨T, hT⟩ := logarithmic_tail (1 - 4 * α - 3 * β) (1 - 2 * α - 2 * β) ω
+      (by linarith) (by linarith) hω
+    refine ⟨T, ?_⟩
+    intro j g r hj hg hw ha hb hgrowth hr hTN
+    obtain ⟨hN, hd, _, _⟩ := source_bounds j g r hj hg hw ha hb
+    obtain ⟨hD, hU⟩ := (pointwise j g r hj hg hw ha hb).2 α β hα hβ hsum hgrowth hr
+    have upper : primitiveQuantity j g r ≤ (sourceQuantity j g : ℝ) := by
+      unfold primitiveQuantity
+      exact div_le_self (by positivity) (by exact_mod_cast hd)
+    exact hT _ _ _ hTN hD hU upper
 
 end D5.S3.Arith.FibonacciAtomic.UnitShiftNormBudget
