@@ -264,3 +264,16 @@ unit ball by 512 closed frequency cells. Its complete upper allowance
 is below $5.45645802$, compared to the same operator's prior $T=128$
 allowance above $14.70575975$. No old producer is replayed; the
 low sign, common cofinal comparison, RH and full Robin remain open.
+
+
+The [spatially weighted high inverse](../../../Library/Weil/fukushima2011dirichlet.md#spatially-weighted-high-inverse-at-every-subcritical-parameter)
+retains the spatial term already supplied by (WF5) at each
+$0<\varepsilon\le1/2$ and its prescribed finite bandwidth. The
+[complete residual consumer](sharp-center.md#retain-this-spatial-weight-in-the-complete-inverse-residual)
+uses it to reduce the same full-residual scalar allowance by a
+nonnegative common source Gram, while preserving the exact ground column.
+This is a conditional application of existing high-form and inverse-residual
+suppliers. Weighted residual entries have not been evaluated; the
+[target correction's cofinal boundary](target-correction.md#directed-results-and-the-cofinal-boundary)
+still requires actual low and complementary-low signs on the same
+parameter sequence. Saved fixed-band matrices do not supply those signs.
