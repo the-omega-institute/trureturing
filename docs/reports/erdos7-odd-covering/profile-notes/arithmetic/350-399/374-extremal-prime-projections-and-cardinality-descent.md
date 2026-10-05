@@ -17,10 +17,11 @@ occur at q=3 in this extremal odd model, at any original 3-height.
 The proof transports q complete p-root branches already covered by
 the q-free originals, and counts the resulting classes. It uses the
 literal digit map from 348's fresh-root construction with no extra
-closing classes. It is an ordinary deduction, not a new Lean theorem
-or a resolution of Erdős #7. An irredundant even control demonstrates
-the actual descent; global minimum cardinality supplies the
-contradiction in the odd-cover argument.
+closing classes. Its exact covering and private-region scope is
+Lean-checked in section5; it is not a new deposited theorem or a
+resolution of Erdős #7. An irredundant even control demonstrates the
+actual descent; global minimum cardinality supplies the contradiction
+in the odd-cover argument.
 
 ## 1. Actual residual roots and complete covered branches
 
@@ -189,3 +190,49 @@ No literature-priority claim is made. Large individual projections
 still do not determine their joint CRT compatibility or give the
 missing all-prime budget contradiction. Unrestricted Erdős #7
 remains unresolved.
+
+## 5. Exact covering and private-region scope
+
+An exact Lean application verifies the covering reduction and EP4 for
+one actual finite odd distinct cover with globally minimum class count.
+For primes q<p, it needs an original modulus divisible by q; p need
+not belong to the original support. Define
+
+    S_(q,p)={t mod p : some natural number x=t mod p avoids
+                       every actual q-free original}.
+
+The verified bound is
+
+    |S_(q,p)|>=p-q+1.
+
+The construction uses all original q-free membership tests, with a
+common period p times their modulus product. Its full p-power part
+and p-free part determine one CRT source. The surviving originals
+are precisely q-free originals hit by some source point. Each receives
+one fixed output phase and modulus d or q*d/p as in EP2. Forward
+source enclosure, odd nonunit outputs, numerical distinctness and
+strict class-count decrease are all included in the checked statement.
+An original modulus p may become q without an added closing class.
+
+If the same cover has an actual original of modulus q, the existing
+complete prefix-liability identity, applied at prefix depth zero,
+also verifies
+
+    P_q is not contained in one residue class modulo p.
+
+Here P_q is that original's COMPLETE private region. The identity
+uses the full q-free cofactor and arbitrary total q-height; it does
+not replace private regions by first-digit representatives. No pure-p
+original, divisor closure, modulus-sum minimum or height bound is
+required. The argument applies to all natural numbers; positivity
+and a common period give the equivalent integer-cover formulation.
+
+This is an exact check of the existing reduction, not a new deposited
+Lean theorem. The checked transport supplies the forward enclosure
+needed for a smaller cover; the reverse event equivalence,
+full-branch bijection and conditional-uniform-law statement in section2
+remain ordinary deductions there. The result concerns the complete
+q-free residual and, with an actual pure-q original, its complete
+private region. It supplies no transfer of these lower bounds to an
+arbitrarily selected composite original's private region and no
+joint law with simultaneous bounds at different primes.
