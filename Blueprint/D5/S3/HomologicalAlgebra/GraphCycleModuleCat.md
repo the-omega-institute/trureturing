@@ -2,26 +2,25 @@
 
 ## Abstract
 
-The binary one-dimensional `ModuleCat` homology of a finite simple graph is canonically its concrete simple-cycle space.
+The binary one-dimensional ModuleCat homology of a finite simple graph is canonically its concrete simple-cycle space.
 
-**Theorem 1.1 (Graph homology is the binary cycle space).** For a finite vertex type `V`, a finite simple graph `G`, and the chain object whose degree-one module is `G.edgeSet → ZMod 2` with endpoint-character differential, there is a `ModuleCat (ZMod 2)` isomorphism
+**Theorem 1.1 (Graph homology is the binary cycle space).**
 
-$$
-H_1(\operatorname{graphCycleComplex}(G))\;\cong\;
-\operatorname{ModuleCat.of}(\mathbb F_2,\operatorname{simpleCycleSpace}(G)).
-$$
+$$\forall V: \operatorname{Type}, [\operatorname{Fintype}\left(V\right)], [\operatorname{DecidableEq}\left(V\right)], \forall G: \operatorname{simpleGraph}\left(V\right), [\operatorname{Fintype}\left(\operatorname{edgeSet}\left(G\right)\right)], [\operatorname{Fintype}\left(\operatorname{connectedComponent}\left(G\right)\right)] \operatorname{homology}\left(\operatorname{graphCycleComplex}\left(G\right)\right) \equiv \operatorname{ModuleCatOf}\left(\operatorname{ZMod}\left(2\right), \operatorname{simpleCycleSpace}\left(G\right)\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/GraphCycleModuleCat.graphCycleHomologyIso` (`✓ std3`). ∎
 
-*Source.* Repository-derived finite binary specialization; the ordinary finite-graph homology/cycle-space correspondence is discussed by Diestel–Sprüssel, arXiv:0910.5634, Theorem 21.
+*Source.* Repository-derived.
 
-## Commentary
+*Commentary.*
 
-The chain object has zero degree-two term, binary edge labels in degree one, and the endpoint-character linear combination as its differential. Mathlib's explicit `ShortComplex` homology identifies the homology object with the differential kernel after quotienting by the zero image. The existing finite-graph cycle-space theorem identifies that kernel with the span of indicators of simple closed cycles.
+For a finite vertex type V and a finite simple graph G, the chain object in degree one is the module of binary edge labels. Its differential is the finite linear combination of the two endpoint characters, and the degree-two object is zero. The resulting ShortComplex therefore has a genuine ModuleCat homology object.
 
-The statement is finite and uses ordinary graph homology over `ZMod 2`. It does not assert the path-homology quotient in characteristic different from two or an infinite-graph compactification result.
+The proof uses Mathlib's explicit ModuleCat homology quotient. The image of the zero degree-two map is bottom, so the quotient is linearly equivalent to the differential kernel. The existing finite-graph cycle-space theorem identifies that kernel with the span of indicators of simple closed cycles, yielding the displayed categorical isomorphism.
+
+This is the finite binary specialization of the ordinary finite-graph homology/cycle-space correspondence discussed by Diestel and Sprüssel (arXiv:0910.5634, Theorem 21). It does not assert the path-homology quotient used for characteristic different from two, and it does not cover infinite Freudenthal compactifications.
 
 ## References
 
 - Truth anchor: `D5/S3/HomologicalAlgebra/GraphCycleModuleCat.graphCycleHomologyIso`
-- Diestel–Sprüssel, “On the homology of locally finite graphs”, arXiv:0910.5634, Theorem 21.
+- Dependency: [D5/S3/Fourier/CharacterSelection/SimpleGraphCycleSpace](../Fourier/CharacterSelection/SimpleGraphCycleSpace.md)
