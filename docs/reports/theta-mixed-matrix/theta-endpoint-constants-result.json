@@ -1,5 +1,5 @@
 {
-  "scope": "Conditional original-theta endpoint column and bilinear normalization caps; symbolic WF2 coefficients, actual Grams and signs remain unpaid.",
+  "scope": "Conditional original-theta endpoint and conservative WF2/form caps; actual Grams and signs remain unpaid.",
   "runtime": {
     "python": "3.13.12",
     "python_flint": "0.9.0",
@@ -106,7 +106,57 @@
       ]
     }
   },
-  "form_factor_contract": "Mtheta <= form_kernel_factor*sqrt(c0+c1); Cd <= form_tail_factor*sqrt(c0+c1); original WF2 c0,c1 are not numerically acquired.",
+  "form_factor_contract": "Mtheta <= form_kernel_factor*sqrt(c0+c1); Cd <= form_tail_factor*sqrt(c0+c1). Conservative enlarged WF2 coefficients supply absolute caps, not exact norms or optimal coefficients.",
+  "WF2": {
+    "moment_retained_terms": 129,
+    "moment_tail_contract": "sum_{k>K} 2/(2k+1/2)^3 <= 1/[2(2K+1/2)^2]",
+    "complete_prime_B_contract": "Both shifted directions; all prime powers dominated by integer edges: ||B|| <= 2 K0^2 [r/(1-r)^2-r], r=exp(-3/4)",
+    "supremum_contract": "||s||_infinity^2 <= K0^2 exp(-3/4); ||s_prime||_infinity^2 <= K1^2 exp(-3/4)",
+    "caps": {
+      "M2": {
+        "display": "[16.16596755121785784578761620277933571700485676560154376280577303616195942924 +/- 3.73e-76]",
+        "dyadic": [
+          "14624149666392001317693065388680587326893887742746141564822907844218169299465",
+          "-249"
+        ]
+      },
+      "complete_prime_B_norm": {
+        "display": "[13.53134374265924823053830016301753349304748041263871267119309043169355281497 +/- 1.94e-75]",
+        "dyadic": [
+          "97926410134424986485001246224124768948649708088581389387911940045419846163269",
+          "-252"
+        ]
+      },
+      "c0": {
+        "display": "[154090.1044779978553180280870417474814796767590536288263162992434136768700344 +/- 2.41e-71]",
+        "dyadic": [
+          "68063412202086271484120335141410425737942262708162635156347616908248254096959",
+          "-238"
+        ]
+      },
+      "c1": {
+        "display": "[84.39349419380256162833338447161401234670604434816417610074430540460404538966 +/- 2.28e-76]",
+        "dyadic": [
+          "76344523521388378320862626150713793054531373126903054600376321897844589426173",
+          "-249"
+        ]
+      },
+      "form_kernel_absolute": {
+        "display": "[117.0731748284232108979197736910411027809235989031837000826384700395902659206 +/- 2.93e-74]",
+        "dyadic": [
+          "52953701199330861728115900743122228028826382280433068606238495675280073780331",
+          "-248"
+        ]
+      },
+      "form_tail_absolute": {
+        "display": "[70582.14488426837661412699718202768134085138967309064805753635363284050143355 +/- 4.46e-72]",
+        "dyadic": [
+          "62353927757266118267504478794488366347774104178615119173161242710504303574407",
+          "-239"
+        ]
+      }
+    }
+  },
   "normalization_disk_certified_from_paper_bound": true,
   "numerical_actual_columns_or_grams_acquired": false,
   "Lean_certification": false
