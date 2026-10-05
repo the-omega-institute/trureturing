@@ -101,9 +101,14 @@ perturbing one coupling by 0.01 raises it to $1.4\cdot10^{-3}$.
 
 Tier 1 external named conjecture (§III.D of a 2026 paper), preregistered in
 issue #13297 before any Lean. `theorem`; resolution `refuted`. The public
-theorem has `proof_shape: content`; its escape witness is the exact
-exponential identity for the rank-one-shifted coupling. Admission basis
-`open-problem-resolution`; utility `certified-instance` with `refutes`.
+theorem has `proof_shape: bind-only`: after pinned-Mathlib instantiation
+(`Matrix.exp_conj`, `Matrix.exp_add_of_commute`, `NormedSpace.map_exp`,
+`IsIdempotentElem.pow_succ_eq`, the exponential series) every step is
+normalization, and it has no escape witness. Admission basis
+`open-problem-resolution`, under which a bind-only proof of the settling
+conclusion is admissible; utility `certified-instance` with `refutes`. Its
+five private helpers are bind-only and each is used on the live proof path
+of `result` (CLAUDE.md §3.2 「有消费的辅助声明」).
 
 What the refutation shows beyond the single bound:
 

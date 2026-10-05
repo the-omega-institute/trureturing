@@ -333,11 +333,7 @@ private theorem expIdempotent : (∀ {n : Type} [Fintype n] [DecidableEq n]
       (Q : Matrix n n ℂ), Q * Q = Q → ∀ t : ℂ,
       NormedSpace.exp (t • Q) = 1 + (NormedSpace.exp t - 1) • Q) := by
   intro n _ _ Q hQ t
-  have hpow : ∀ k : ℕ, Q ^ (k + 1) = Q := by
-    intro k
-    induction k with
-    | zero => simp
-    | succ k ih => rw [show k + 1 + 1 = (k + 1) + 1 by omega, pow_succ, ih, hQ]
+  have hpow : ∀ k : ℕ, Q ^ (k + 1) = Q := fun k => IsIdempotentElem.pow_succ_eq k hQ
   have hs := expSeries_summable' (𝕂 := ℂ) t
   have hs' : Summable (fun k : ℕ => (((k + 1).factorial : ℂ)⁻¹) * t ^ (k + 1)) := by
     simpa only [smul_eq_mul] using (summable_nat_add_iff 1).mpr hs
