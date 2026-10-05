@@ -59258,3 +59258,321 @@ $$
 （389.5）的显式族与这个固定输入的存在有不同量词：前者对每个大截断指定一个归一化输入，后者说明无法仅把增长常数改成依赖输入来挽救普遍结论。在 $\alpha=1/2$ 时，显式输出至少有 $N^{3/4}\log N$ 量级。此处的输入是人为指定的精确反例，不是实际原子部分和 $H_m$；命题要求分析实际输入的算术结构，尚未证明或否定其平方根增长估计及 Robin 尾项。
 
 经典分数和中的 $x^{(1+\alpha)/2}$ 误差尺度见 Karras–Li–Stucky 上引稿 p. 1 式（1.3），其中归属 Wu 与 Zhai。本文的两矩及商值方法沿用这些经典结构；实际 $k$ 的逐点正下界与更强的对数质量余差使上述具体反例族及常数得以成立，并未把约数核 $\tau$ 的定理直接当作实际 $k$ 的定理。$\square$
+## 追加锚（本行以下为增补区）
+
+## 390. 实际输入的两条矩、精确中心化与保增量探针
+
+沿用 §§384–387 的同一实际 $H$、$\beta$、$\mathcal B$、$k$、$K$、$A=1/\mathcal B(1)$ 和 $D$。 §389 已给出不限制相邻增量的双中心输入采样障碍；本节直接复用该结论，另处理实际输入的矩值与中心化接口，以及额外要求相邻增量有界后的输入类。下面的两条矩是经典部分求和与 $\zeta$ 在一处的 Laurent 展开之直接应用，不作为新的通用解析结论。它们用于剥去已知主项，并检验余项估计仍须保留哪些共同来源关系。本节的纸面推导及有限定向数据未完成 Lean 核验，不主张文献原创性。
+
+**定义 390.1（两条矩与全域余核）。** 对整数 $m\ge1$，直接使用定义 389.1 的权重，记 $u_m=w_0(m)$、$v_m=w_1(m)$。
+
+对所有实数 $y>0$，置
+
+$$
+G(y)=Ay\log y-Dy,\qquad R(y)=K(y)-G(y).
+\tag{390.2}
+$$
+
+当 $0<y<1$ 时，$K(y)=0$，故 $R(y)=Dy-Ay\log y$；当 $y\ge1$ 时，$R$ 就是（387.4）的同一个余项。这个低商定义不能在无限中心化式中删除。
+
+**命题 390.2（实际矩与精确中心化的经典应用）。** 实际输入满足两条绝对收敛恒等式
+
+$$
+\sum_{m\ge1}H_m u_m=0,\qquad
+\sum_{m\ge1}H_m v_m=-\mathcal B(1).
+\tag{390.3}
+$$
+
+因而对每个实数 $N\ge1$，有绝对收敛的精确式
+
+$$
+\boxed{\psi(N)-N
+=\sum_{m\ge1}H_m\left[R(N/m)-R(N/(m+1))\right].}
+\tag{390.4}
+$$
+
+**证明。** 直接复用 Nathan Ng，*The distribution of the summatory function of the Möbius function*，[作者稿，p. 5](https://www.cs.uleth.ca/~nathanng/RESEARCH/mobius2b.pdf) 所列的经典无条件定量界
+
+$$
+\mathfrak M(x)=O\!\left(x\exp[-c(\log x)^{3/5}(\log\log x)^{-1/5}]\right),\qquad c>0.
+\tag{390.5}
+$$
+
+这给每个固定 $a>0$ 的 $O_a(x/\log^a x)$。在（384.4）中将 $d\le\sqrt x$ 与 $d>\sqrt x$ 分开：前者使用 $\log(x/d)\ge\frac12\log x$，后者使用 $|\mathfrak M(x/d)|\le x/d$ 和（385.9）的指数尾。故实际 $H$ 同样满足 $H(x)=O_a(x/\log^a x)$。取 $a=4$ 足以支付下面的两个绝对矩及一次微分。定性 PNT 的 $o(x)$ 本身不承担这个绝对收敛义务。
+
+对 $F(s)=\mathcal C(s)/s$，§385 的部分求和身份及绝对收敛的延拓给
+
+$$
+F(s)=\sum_{m\ge1}H_m[m^{-s}-(m+1)^{-s}],\qquad s\ge1.
+\tag{390.6}
+$$
+
+$\zeta(s)=(s-1)^{-1}+\gamma+O(s-1)$ 给 $F(1)=0$、$F'(1)=\mathcal B(1)$。这一经典 Laurent 展开的出处见 [DLMF §25.2](https://dlmf.nist.gov/25.2)。在（390.6）中从右侧微分，导数权重在一处为 $-v_m$，即得（390.3）。这里只应用已有 $\mathcal C=\mathcal B/\zeta$，没有另证无零性或 RH。
+
+对（390.2）的 $G$，有
+
+$$
+G(N/m)-G(N/(m+1))
+=N[(A\log N-D)u_m-Av_m].
+\tag{390.7}
+$$
+
+乘实际 $H_m$ 后求和，（390.3）使其恰为 $A\mathcal B(1)N=N$。§387 的同源有限恢复式给 $\sum_{m\ge1}H_m[K(N/m)-K(N/(m+1))]=\psi(N)$；这里 $m>N$ 的 $K$ 差为零。相减即得（390.4）。固定 $N$ 后，无限尾为（390.7）的相反数，其绝对值由常数倍的 $N(1+\log m)/m^2$ 控制；$H_m=O(m/\log^4m)$ 支付全部尾部。$\square$
+
+**定理 390.3（两条矩及有界相邻增量仍不足以给通用平方根传输界）。** 沿用 §386 的同一实际正核 $k$。对每个整数 $J\ge2$，存在实值有限支撑序列 $f^{(J)}$，$f^{(J)}(0)=0$，同时满足
+
+$$
+\sum_{m\ge1}f^{(J)}(m)u_m=\sum_{m\ge1}f^{(J)}(m)v_m=0,
+\quad \|f^{(J)}\|_{1/2}\le1,
+\quad |f^{(J)}(m)-f^{(J)}(m-1)|\le1\ (m\ge1).
+\tag{390.8}
+$$
+
+在同一个 $N_J=64J^3$，其响应满足
+
+$$
+\boxed{\frac{(\mathcal T_kf^{(J)})(N_J)}{\sqrt{N_J}}
+\ge\frac{K(J)}{16\sqrt J}\longrightarrow+\infty.}
+\tag{390.9}
+$$
+
+因此不存在一个常数，统一控制（390.8）整个输入类的平方根响应。这里的输入随 $J$ 改变；结论不声称某个固定有限支撑输入的响应发散，也不把这些输入识别为实际 $H$。
+
+**证明。** 记 $r_m=v_m/u_m=(m+1)\log m-m\log(m+1)$。其连续延拓在 $x>0$ 满足
+
+$$
+r'(x)=\frac1x+\frac1{x+1}-\log(1+1/x)>0.
+\tag{390.10}
+$$
+
+固定 $N=64J^3$，对 $2\le j\le J$，取 $m=\lfloor N/j\rfloor$、$R_j=\lfloor\sqrt m/8\rfloor$。置离散帐篷 $b_s(n)=\max\{R_j-|n-s|,0\}$，分别取中心 $s=m-2R_j,m,m+2R_j$，记它们为 $b_-,b_0,b_+$。对三个帐篷分别取
+
+$$
+U_\nu=\sum_n b_\nu(n)u_n>0,\qquad
+V_\nu=\sum_n b_\nu(n)v_n,\qquad
+\bar r_\nu=V_\nu/U_\nu\quad(\nu=-,0,+).
+\tag{390.11}
+$$
+
+这些和只取正整数支撑。三个非零支撑严格有序，故（390.10）给 $\bar r_-<\bar r_0<\bar r_+$。置
+
+$$
+t=\frac{\bar r_+-\bar r_0}{\bar r_+-\bar r_-},\qquad
+\alpha=\frac{U_0t}{U_-},\qquad
+\eta=\frac{U_0(1-t)}{U_+},\qquad
+h_j=\frac12(b_0-\alpha b_--\eta b_+).
+\tag{390.12}
+$$
+
+$0<t<1$，重心等式逐项给 $\sum_n h_j(n)u_n=\sum_n h_j(n)v_n=0$，并且 $h_j(m)=R_j/2$。相邻增量的控制也来自同一个构造：$u_n$ 递减，向左平移相同帐篷给 $U_-\ge U_0$，故 $0<\alpha<1$。向右一支满足
+
+$$
+\frac{U_0}{U_+}
+\le\frac{(m+3R_j-1)(m+3R_j)}{(m-R_j+1)(m-R_j+2)}<2.
+\tag{390.13}
+$$
+
+最后的整数夹逼使用 $m\ge64J^2$、$R_j\le\sqrt m/8$，从而 $m\ge64R_j$ 且 $m\ge256$。因此 $0<\eta<2$。每个帐篷的离散斜率至多一，三个非零支撑不交，接缝的值为零，所以 $|h_j(n)-h_j(n-1)|\le1$。还得到 $|h_j(n)|\le R_j$，而支撑下端 $a_j=m-3R_j+1$ 满足 $R_j^2\le a_j$，故 $|h_j(n)|\le\sqrt n$。
+
+现在核对同一 $N$ 的整数商接缝。对 $1\le j\le J$，相邻实商间隔 $N/[j(j+1)]$ 满足
+
+$$
+\frac{N/[j(j+1)]}{\sqrt{N/j}}
+=\sqrt{\frac{64J^3}{j(j+1)^2}}>4.
+\tag{390.14}
+$$
+
+因为 $j\le J$、$j+1\le3J/2$。取整最多损失一，而 $R_j\le\sqrt{N/j}/8$，故相邻整数商之间的间隔超过 $32R_j-1$。$R_j$ 随 $j$ 不增，因此各支撑 $[m_j-3R_j+1,m_j+3R_j-1]$ 不交，之间留有零值位置。指标一和 $J+1$ 也由同一间隔比较排除。等价地，若 $a_j,b_j$ 是该支撑的两端，则
+
+$$
+\left\lfloor\frac N{b_j+1}\right\rfloor+1
+=\left\lfloor\frac N{a_j}\right\rfloor=j.
+\tag{390.15}
+$$
+
+所以只有除数指标 $d=j$ 能读到该支撑，并读到中心 $m_j$。令 $f^{(J)}=\sum_{j=2}^J h_j$。支撑不交和零接缝保证（390.8）的全部条件同时成立。实际正核于是给
+
+$$
+(\mathcal T_kf^{(J)})(N)
+=\frac12\sum_{j=2}^J k(j)R_j
+\ge\frac J2K(J),
+\tag{390.16}
+$$
+
+其中 $m_j\ge64J^2$ 给 $R_j\ge J$，且 $k(1)=0$。除以 $\sqrt N=8J^{3/2}$，得到（390.9）。§386 已有 $k(j)\ge\mathfrak c\log j$，故 $K(J)\ge(\mathfrak c J/2)\log(J/2)$（$J\ge4$），完成发散结论。$\square$
+
+**实际回接与仍缺的关系。** （390.3）把实际 $H$ 放在一个仿射矩类中，而（390.8）是保留这两条标量的齐次扰动。扰动没有保留 $e=\mu*\beta$、全部约数历史或实际素数幂恢复条件；它们是方法探针。固定有限支撑的齐次输入在 §387 的展开下只有 $O_f(\log N)$ 的响应，故不能把随 $J$ 改变的输入当成同一实际来源的增长列族。
+
+定理390.3强化的是通用传输方法的边界：已知主项、两条整体矩和有界相邻增量仍无法独立供应临界估计。有限常数缩放还可把增量预算改成任意指定正数，发散的统一下界仍保留。下一步若使用（390.4）估计实际 Robin 尾项，必须针对同一个实际 $H$ 的约数关联、符号接续及低商尾部，不能只给它一个范数与两条矩。
+
+[定向探针报告](../../reports/fib-robin-boundary/neutral-response.md) 读取 §388 已发布的逆系数，在 $J=F_6,F_9,F_{12}$ 即 $8,34,144$ 构造183个帐篷脉冲。对应响应除以 $\sqrt{64J^3}$ 约为 $1.021401313728$、$4.944374777036$、$17.390949642898$。这些三位 Fibonacci 日程只索引已付核分辨率，不赋予一般探针实际五模式来源。有限数据核对同源矩、权重、增量与商接缝；全称结论由上述纸面构造承担，未完成 Lean 编译。实际 $H$ 的临界增长、Robin 有符号积分及共同序列符号条件仍未解决。
+
+## 追加锚（本行以下为增补区）
+
+## 391. 实际 Binet 系数的 Nyman 半直线运输与自然前缀障碍
+
+本节把 §§384–386 的实际 $e=\mu*\beta$ 接到 §146 已引用的 Nyman–Beurling 半直线任务。经典自然前缀不收敛结论直接复用 Báez-Duarte，[arXiv:math/0011254v1，Proposition 4.4，PDF p. 17](https://arxiv.org/pdf/math/0011254v1)；其条件与子序列边界见[文献条目](../../../Library/Weil/baezduarte2000natural.md)。下面的运输是标准伸缩、绝对可和 Dirichlet 逆和序列收敛事实在同一实际输入上的纸面应用，不作为新的经典判据、重新证明文献结论或原创性声明。新增接口未完成 Lean 核验。
+
+### 391.1. 系数与目标必须共同运输
+
+**定义 391.1（实际 Hilbert 目标与残差）。** 在 $\mathscr H=L^2((0,\infty),dx)$ 中，取
+
+$$
+\chi=\mathbf1_{(0,1]},\qquad
+\varrho_n(x)=\left\{\frac1{nx}\right\},\qquad
+(U_df)(x)=f(dx)\quad(d,n\ge1).
+\tag{391.1}
+$$
+
+这里 $\varrho_n$ 是分数部分探针，不是 FIB 原始替换 $\rho$。直接使用同一实际 $\beta_d=\log(1-(-q)^d)$、$\gamma=\beta^{-1}$、$e=\mu*\beta$，定义
+
+$$
+\mathscr B_\beta=\sum_{d\ge1}\beta_dU_d,\qquad
+\mathscr B_\gamma=\sum_{d\ge1}\gamma_dU_d,\qquad
+\Phi_\beta=\mathscr B_\beta\chi.
+\tag{391.2}
+$$
+
+对整数 $N\ge0$，空和按零解释，置
+
+$$
+E_N^\mu=\chi+\sum_{m=1}^N\mu(m)\varrho_m,\qquad
+E_N^{\rm Fib}=\Phi_\beta+\sum_{n=1}^Ne_n\varrho_n.
+\tag{391.3}
+$$
+
+$E_0^\mu=\chi$、$E_0^{\rm Fib}=\Phi_\beta$ 是本节逼近残差的零截断约定；它们不是 §386 的算术零项 $e_0=H_0=0$。残差的加号对应文献自然前缀趋近 $-\chi$ 的符号。
+
+**命题 391.2（可逆目标运输与全截断身份）。** 两个算子均按算子范数绝对收敛，并且
+
+$$
+\begin{aligned}
+\|U_d\|&=d^{-1/2},\qquad U_dU_a=U_{da},\qquad U_d\varrho_m=\varrho_{dm},\\
+\|\mathscr B_\beta\|&\le B_{1/2},\qquad
+\|\mathscr B_\gamma\|\le\sum_{d\ge1}|\gamma_d|d^{-1/2}
+\le\frac1{\beta_1-T},\\
+\mathscr B_\gamma\mathscr B_\beta&=
+\mathscr B_\beta\mathscr B_\gamma=I.
+\end{aligned}
+\tag{391.4}
+$$
+
+对每个整数 $N\ge0$，两个残差有绝对收敛的精确式
+
+$$
+\boxed{
+E_N^{\rm Fib}
+=\sum_{d\ge1}\beta_dU_dE_{\lfloor N/d\rfloor}^\mu,
+\qquad
+E_N^\mu
+=\sum_{d\ge1}\gamma_dU_dE_{\lfloor N/d\rfloor}^{\rm Fib}.}
+\tag{391.5}
+$$
+
+**证明。** 半直线 Lebesgue 测度下的换元给 $\|U_df\|_2^2=d^{-1}\|f\|_2^2$；探针身份与复合律按定义成立。§384 已有 $\sum|\beta_d|=\beta_1+T<\infty$ 及 $\beta_1>T$。标准绝对卷积逆预算给
+
+$$
+\sum_{d\ge1}|\gamma_d|\le(\beta_1-T)^{-1}.
+\tag{391.6}
+$$
+
+这一通用预算已有仓内实现 `D5/S3/Arith/DirichletInverseAbsBudget.lean`；此处复用其数学内容，不另立包装声明，也不声称本节的具体应用已编译。算子级数于是绝对收敛，复合律与 $\gamma*\beta=\beta*\gamma=\mathbf1$ 给（391.4）。
+
+固定 $N$ 后，在（391.5）第一式中分离目标：所有 $d$ 的目标项恰为 $\Phi_\beta$；其余和只涉及 $dm\le N$，所以可以重排有限和，指标 $n$ 的系数就是 $\sum_{d\mid n}\beta_d\mu(n/d)=e_n$。第二式同理，目标为 $\mathscr B_\gamma\Phi_\beta=\chi$，有限系数为 $(\gamma*e)_n=\mu(n)$。无限部分只含一个固定目标向量，故（391.6）支付绝对收敛，不要求实际残差序列预先有全局界。$\square$
+
+特别地，第一式的 $d>N$ 部分是
+
+$$
+\sum_{d>N}\beta_dU_d\chi,
+\tag{391.7}
+$$
+
+而不是零。若仅将 $\mathscr B_\beta$ 作用于同一个 $E_N^\mu$，有限函数项会含 $dm>N$ 的额外系数；那也不是实际 $e_n$ 的 $n\le N$ 前缀。系数截断不能与整体卷积交换。实际目标在 $1/2<x\le1$ 上等于 $\beta_1$，因此也不能把它默认为未运输的 $\chi$。
+
+### 391.2. 稳定逆把经典障碍一并带回
+
+**命题 391.3（完整自然前缀的收敛性等价与文献排除）。** 当 $N$ 经过全部非负整数时，有
+
+$$
+\|E_N^{\rm Fib}\|_2\longrightarrow0
+\quad\Longleftrightarrow\quad
+\|E_N^\mu\|_2\longrightarrow0.
+\tag{391.8}
+$$
+
+文献 Proposition 4.4 已无条件排除右侧，故左侧也不成立。这是该实际 Binet 核的完整自然前缀路线障碍；不表示 RH 被反驳，也不排除自由系数逼近、其他平滑方式或某个选定子序列。
+
+**证明。** 对有界的 $\mathscr H$ 值序列 $F=(F_N)_{N\ge0}$，定义
+
+$$
+(\mathsf T_bF)_N=\sum_{d\ge1}b_dU_dF_{\lfloor N/d\rfloor}.
+\tag{391.9}
+$$
+
+当 $\sum|b_d|d^{-1/2}<\infty$ 时，这个级数在序列上有统一绝对界。若 $F_N\to0$，先将 $d$ 截到一个固定有限范围：每个固定 $d$ 的 $\lfloor N/d\rfloor\to\infty$，因此有限部分趋零；其余部分由 $\sup_N\|F_N\|_2$ 乘可和系数尾统一控制。故 $\mathsf T_bF$ 也趋零。取 $b=\beta$ 或 $b=\gamma$，并使用（391.5），得到双向蕴含。收敛性假设本身保证输入序列有界，包括零截断，因此这里没有预先给实际序列添加未证界。
+
+经典文献令 $S_N=\sum_{m\le N}\mu(m)\varrho_m$，其空间、系数、目标符号和全部整数截断都与这里的 $E_N^\mu=\chi+S_N$ 相符。Proposition 4.4 用临界线已有零点排除半直线 $L^2$ 收敛，不需要 RH。此处直接引用这个已发表结论，不重复其证明或扫描 Gram 矩阵。$\square$
+
+若只要求 $N=F_{3L}$ 或其它稀疏日程上的收敛，（391.5）仍会调用 $\lfloor F_{3L}/d\rfloor$，它通常不在同一日程内。没有这些缩放日程的联合控制，（391.8）的全序列证明不能转用于该子序列。原文在 p. 18 明确将某些子序列的可能性与完整自然前缀失败区分。
+
+### 391.3. 对数平滑的有限接口与目标修正
+
+文献 2002 加强式的 Introduction 已讨论 Selberg 对数平滑；这里不证明它的临界收敛性，仅将同一权重运到实际 $e$。为避免与 §386 的 $K$ 或原有 $S=M^3$ 混名，对实数 $t>1$ 定义
+
+$$
+\widetilde E^\mu(t)
+=\chi+\sum_{m\le t}\mu(m)
+\left(1-\frac{\log m}{\log t}\right)\varrho_m,
+\qquad
+\widetilde E^{\rm Fib}(t)
+=\Phi_\beta+\sum_{n\le t}e_n
+\left(1-\frac{\log n}{\log t}\right)\varrho_n.
+\tag{391.10}
+$$
+
+约定 $\widetilde E^\mu(t)=\chi$ 对 $0\le t\le1$ 成立。对整数 $N>1$，令
+
+$$
+a_N(d)=\max\left\{0,1-\frac{\log d}{\log N}\right\},\qquad
+C_N=\sum_{d\ge1}\beta_d(1-a_N(d))U_d\chi,
+\qquad
+L_\beta=\sum_{d\ge1}\frac{|\beta_d|\log d}{\sqrt d}<\infty.
+\tag{391.11}
+$$
+
+**命题 391.4（精确平滑运输及其有限修正）。** 有
+
+$$
+\boxed{
+\widetilde E^{\rm Fib}(N)
+=\sum_{d\ge1}\beta_da_N(d)U_d\widetilde E^\mu(N/d)+C_N,
+\qquad
+\|C_N\|_2\le\frac{L_\beta}{\log N}.}
+\tag{391.12}
+$$
+
+若另有尚未在本节建立的估计 $\|\widetilde E^\mu(t)\|_2\to0$（$t\to\infty$，全部实数截断），则（391.12）推出 $\|\widetilde E^{\rm Fib}(N)\|_2\to0$。本节不将 RH、点态收敛或数字几何长度守恒当作这个估计的证明。
+
+**证明。** 对 $d<N$、$dm\le N$，权重满足精确乘积式
+
+$$
+a_N(d)\left(1-\frac{\log m}{\log(N/d)}\right)
+=1-\frac{\log(dm)}{\log N}.
+\tag{391.13}
+$$
+
+$d=N$ 时外因子为零，实际 $n=N$ 的权重也为零；使用 $t=1$ 的上述约定，不引入 $0/0$。$d>N$ 时 $a_N(d)=0$。由有限卷积重排，函数项恰为（391.10）的实际 $e_n$ 前缀；剩下的目标就是（391.11）的 $C_N$，包括全部 $d>N$ 目标尾。
+
+由于 $d\ge1$、$N>1$，有 $0\le1-a_N(d)\le\log d/\log N$。又 $\|\chi\|_2=1$，（391.4）给修正项上界。$L_\beta$ 的收敛直接由 §385 的实际指数界 $|\beta_d|\le q^d/(1-q)$ 给出。
+
+在额外收敛条件下，$\widetilde E^\mu(t)$ 全域有界：远处由趋零保证，有限范围内由有限和及权重位于 $[0,1]$ 保证。每个固定 $d$ 的 $N/d\to\infty$，而 $0\le a_N(d)\le1$，故同一个有限部分加可和尾的论证使（391.12）的主和趋零；修正项也趋零。$\square$
+
+已有条件最优估计直接复用 [PZG_BEDC.md，条目 26.11](PZG_BEDC.md) 的 Bettin–Conrey–Farmer 结果。原始来源 [arXiv:1211.5191v1，Theorem 1](https://arxiv.org/abs/1211.5191v1) 使用同一对数权重，但保留 RH 及某个 $\delta>0$ 的 $\sum_{|\Im\rho|\le T}|\zeta'(\rho)|^{-2}\ll T^{3/2-\delta}$ 前提；后者还隐含非平凡零点单纯性。这里不另写最优性证明，不删除这些前提，也不把条件结果用作无条件 RH 证明。
+
+### 391.4. 与五模式分辨率及 Robin 目标的关系
+
+五模式日程可以决定读到哪个 $N$，但半直线测度 $dx$、伸缩范数 $d^{-1/2}$ 与约数系数 $e=\mu*\beta$ 是本节运输实际使用的关系。它没有把合法窗口的区间长度权重改称为 Möbius 权重，也没有从某个 $N$ 的模余数或收缩坐标恢复全部 Hilbert 残差。
+
+这里得到的是实际系数、固定目标和有限截断之间的接口，以及经典失败路线的直接排除。平滑修正可控制，不等于平滑主和可控制。接下来仍需同源临界估计，或一组合法可优化系数的全域误差界；§390 的实际中心化式中还必须保留低商余核。完整 Robin 不等式、实际 $H_N$ 的临界增长和 RH 仍未解决。
+
+## 追加锚（本行以下为增补区）
