@@ -120,6 +120,10 @@ $$\forall N \in \mathbb{N},\; \forall D \in \mathbb{N},\; \forall R \in \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/OpenIntegrableCircuitIntegrability.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/garcia-fernandez-2026-open-circuit-integrability` (proved) by `D5/S3/Quantum/Dynamics/OpenIntegrableCircuitIntegrability.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"garcia-fernandez-2026-open-circuit-integrability","declaration_gid":"D5/S3/Quantum/Dynamics/OpenIntegrableCircuitIntegrability.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Miguel Garcia Fernandez, Chiara Paletta, Ana L. Retore (2026). *Open-boundary integrable quantum circuits with different geometries*. DOI: [10.48550/arXiv.2607.02093](https://doi.org/10.48550/arXiv.2607.02093). URL: <https://arxiv.org/abs/2607.02093v1>.
