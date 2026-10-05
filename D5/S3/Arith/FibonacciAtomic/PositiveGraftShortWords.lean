@@ -190,24 +190,166 @@ private theorem word_action (d : ℕ → ℕ) (k : ℕ) (v : ℕ × ℕ) :
   let M : (ℕ × ℕ) →+ (ℕ × ℕ) :=
     { toFun := step
       map_zero' := rfl
-      map_add' := by intro x y; ext <;> simp [step] <;> omega }
+      map_add' := by intro x y; ext <;> simp [step, add_assoc, add_left_comm, add_comm] }
   induction k generalizing v with
-  | zero => simp [blockWord, run_grafts, atomicBlock]
+  | zero =>
+    simp only [blockWord, run_grafts, Function.iterate_zero, id_eq,
+      Nat.zero_add, Finset.sum_range_one, atomicBlock]
   | succ k ih =>
     simp only [blockWord, run, List.foldl_append, List.foldl_cons, Bool.false_eq_true, if_false]
     change run (1, 0) (blockWord d k)
       (step (run (1, 0) (List.replicate (d (k + 1)) true) v)) = _
     rw [run_grafts, ih, ← Function.iterate_succ_apply]
     change M^[k + 1] (v + d (k + 1) • (1, 0)) + _ = _
-    rw [iterate_map_add M, iterate_map_nsmul M, Finset.sum_range_succ]
-    change step^[k + 1] v + d (k + 1) • atomicBlock (k + 1) + _ = _
+    rw [iterate_map_add M, iterate_map_nsmul M]
+    change step^[k + 1] v + d (k + 1) • atomicBlock (k + 1) +
+      (∑ j ∈ Finset.range (k + 1), d j • atomicBlock j) =
+      step^[k + 1] v + ∑ j ∈ Finset.range ((k + 1) + 1), d j • atomicBlock j
+    rw [Finset.sum_range_succ _ (k + 1)]
     ac_rfl
 
 private theorem word_counts (d : ℕ → ℕ) (k : ℕ) :
     (blockWord d k).count false = k ∧
     (blockWord d k).count true = ∑ j ∈ Finset.range (k + 1), d j := by
   induction k with
-  | zero => simp [blockWord]
-  | succ k ih => simp [blockWord, List.count_append, ih, Finset.sum_range_succ, Nat.add_comm]
+  | zero => simp [blockWord, List.count_replicate]
+  | succ k ih =>
+    constructor
+    · simp [blockWord, List.count_replicate, ih.1]
+    · rw [Finset.sum_range_succ]
+      simp [blockWord, ih.2, Nat.add_comm]
+
+private theorem positive_coefficients (H c : ℕ) (hH : 1 < H) (hc : c < H) :
+    ∃ d : ℕ → ℕ,
+      d = (if c = 0 then (fun _ => 0) else
+        graftCoefficients (wdigits (offset H c - 2)).toFinset) ∧
+      (∀ j, horizon H < j → d j = 0) ∧
+      (∑ j ∈ Finset.range (horizon H + 1), d j * Nat.fib (j + 3)) = offset H c ∧
+      d 0 ≤ 2 ∧ d 1 ≤ 2 ∧ (∀ j, 2 ≤ j → d j ≤ 1) ∧
+      (∑ j ∈ Finset.range (horizon H + 1), d j) ≤ graftBound (horizon H) := by
+  classical
+  by_cases hz : c = 0
+  · subst c
+    refine ⟨fun _ => 0, ?_⟩
+    simp [offset, graftBound]
+  have ht : 2 ≤ offset H c ∧ offset H c ≤ H + 1 := by
+    by_cases ho : c = 1 <;> simp [offset, hz, ho] <;> omega
+  have hK : 1 ≤ horizon H ∧ H ≤ Nat.fib (horizon H + 4) := by
+    unfold horizon
+    exact Nat.find_spec (p := fun k : ℕ => 1 ≤ k ∧ H ≤ Nat.fib (k + 4)) _
+  have hu : offset H c - 2 < Nat.fib (horizon H + 4) := by omega
+  let s := (wdigits (offset H c - 2)).toFinset
+  have hd := support_data (offset H c - 2) (horizon H) hu
+  change (∀ i ∈ s, 2 ≤ i ∧ i ≤ horizon H + 3) ∧
+    (∀ i ∈ s, ∀ j ∈ s, i ≠ j → i + 2 ≤ j ∨ j + 2 ≤ i) ∧
+    (∑ i ∈ s, Nat.fib i) = offset H c - 2 at hd
+  have hsums := coefficient_sums (horizon H) hK.1 s hd.1
+  refine ⟨graftCoefficients s, by simp [hz, s], ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · intro j hj
+    obtain ⟨r, rfl⟩ := Nat.exists_eq_add_of_le (show 2 ≤ j by omega)
+    have hm : r + 5 ∉ s := by
+      intro hm
+      have := (hd.1 (r + 5) hm).2
+      omega
+    simp only [Nat.add_comm 2 r, graftCoefficients, if_neg hm]
+  · rw [hsums.1, hd.2.2]
+    omega
+  · simp only [graftCoefficients]
+    split_ifs <;> omega
+  · simp only [graftCoefficients]
+    split_ifs <;> omega
+  · intro j hj
+    obtain ⟨r, rfl⟩ := Nat.exists_eq_add_of_le hj
+    simp only [Nat.add_comm 2 r, graftCoefficients]
+    split_ifs <;> omega
+  · rw [hsums.2]
+    have hn := spaced_card (horizon H) (s.filter (3 ≤ ·))
+      (by intro i hi; exact ⟨(Finset.mem_filter.mp hi).2,
+        (hd.1 i (Finset.mem_filter.mp hi).1).2⟩)
+      (by
+        intro i hi j hj hne
+        exact hd.2.1 i (Finset.mem_filter.mp hi).1 j (Finset.mem_filter.mp hj).1 hne)
+    unfold graftBound
+    omega
+
+private theorem word_quantity (d : ℕ → ℕ) (k : ℕ) (v : ℕ × ℕ) :
+    quantity (run (1, 0) (blockWord d k) v) =
+      quantity (step^[k] v) + ∑ j ∈ Finset.range (k + 1), d j * Nat.fib (j + 3) := by
+  let Q : (ℕ × ℕ) →+ ℕ :=
+    { toFun := quantity
+      map_zero' := by simp [quantity]
+      map_add' := by intro x y; simp [quantity]; ring }
+  have hq (j : ℕ) : quantity (atomicBlock j) = Nat.fib (j + 3) := by
+    have packet := GraftAffineClosure.result.2 1 (by decide) (atomicBlock j)
+    rcases packet with
+      ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, atomic⟩
+    exact (atomic j rfl).1.1
+  rw [word_action]
+  change Q (step^[k] v + ∑ j ∈ Finset.range (k + 1), d j • atomicBlock j) = _
+  rw [map_add, map_sum]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro j hj
+  rw [map_nsmul]
+  change d j * quantity (atomicBlock j) = _
+  rw [hq]
+
+/-- Every offset has bounded positive coefficients and two exact chronological realizations. -/
+theorem result (H : ℕ) (hH : 1 < H) :
+    IsLeast {k : ℕ | 1 ≤ k ∧ H ≤ Nat.fib (k + 4)} (horizon H) ∧
+    ∀ c : ℕ, c < H → ∃ d : ℕ → ℕ,
+      d = (if c = 0 then (fun _ => 0) else
+        graftCoefficients (wdigits (offset H c - 2)).toFinset) ∧
+      (∀ j, horizon H < j → d j = 0) ∧
+      (∑ j ∈ Finset.range (horizon H + 1), d j * Nat.fib (j + 3)) = offset H c ∧
+      d 0 ≤ 2 ∧ d 1 ≤ 2 ∧ (∀ j, 2 ≤ j → d j ≤ 1) ∧
+      (∑ j ∈ Finset.range (horizon H + 1), d j) ≤ graftBound (horizon H) ∧
+      ∀ k : ℕ, k = horizon H ∨ k = horizon H + 1 →
+        (blockWord d k).count false = k ∧
+        (blockWord d k).count true ≤ graftBound (horizon H) ∧
+        ∀ v : ℕ × ℕ,
+          run (1, 0) (blockWord d k) v =
+            step^[k] v + ∑ j ∈ Finset.range (k + 1), d j • atomicBlock j ∧
+          quantity (run (1, 0) (blockWord d k) v) = quantity (step^[k] v) + offset H c ∧
+          readout H (run (1, 0) (blockWord d k) v) =
+            Nat.gcd (quantity (step^[k] v) + c) H := by
+  classical
+  have hK : 1 ≤ horizon H ∧ H ≤ Nat.fib (horizon H + 4) := by
+    unfold horizon
+    exact Nat.find_spec (p := fun k : ℕ => 1 ≤ k ∧ H ≤ Nat.fib (k + 4)) _
+  refine ⟨⟨hK, ?_⟩, ?_⟩
+  · intro k hk
+    unfold horizon
+    exact Nat.find_min' (p := fun k : ℕ => 1 ≤ k ∧ H ≤ Nat.fib (k + 4)) _ hk
+  intro c hc
+  obtain ⟨d, heq, hsupport, hweight, hzero, hone, hbinary, hcount⟩ :=
+    positive_coefficients H c hH hc
+  refine ⟨d, heq, hsupport, hweight, hzero, hone, hbinary, hcount, ?_⟩
+  intro k hk
+  have hsum (f : ℕ → ℕ) (h0 : f (horizon H + 1) = 0) :
+      (∑ j ∈ Finset.range (k + 1), f j) = ∑ j ∈ Finset.range (horizon H + 1), f j := by
+    rcases hk with rfl | rfl
+    · rfl
+    · rw [Finset.sum_range_succ, h0, Nat.add_zero]
+  have hdnext := hsupport (horizon H + 1) (by omega)
+  have hcw := word_counts d k
+  refine ⟨hcw.1, ?_, ?_⟩
+  · rw [hcw.2, hsum d hdnext]
+    exact hcount
+  intro v
+  have hq : quantity (run (1, 0) (blockWord d k) v) = quantity (step^[k] v) + offset H c := by
+    rw [word_quantity, hsum (fun j => d j * Nat.fib (j + 3)) (by rw [hdnext, zero_mul]), hweight]
+  refine ⟨word_action d k v, hq, ?_⟩
+  unfold readout
+  rw [hq]
+  by_cases hz : c = 0
+  · simp [offset, hz]
+  by_cases ho : c = 1
+  · subst c
+    change Nat.gcd (quantity (step^[k] v) + (H + 1)) H =
+      Nat.gcd (quantity (step^[k] v) + 1) H
+    rw [show quantity (step^[k] v) + (H + 1) = (quantity (step^[k] v) + 1) + H by omega,
+      Nat.gcd_add_self_left]
+  · simp [offset, hz, ho]
 
 end D5.S3.Arith.FibonacciAtomic.PositiveGraftShortWords
