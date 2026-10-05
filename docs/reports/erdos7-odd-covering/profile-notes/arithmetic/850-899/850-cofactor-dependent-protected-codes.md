@@ -5196,6 +5196,115 @@ word assignments. It uses only the standard axioms. The general
 actual-source derivation of CD173–CD178 is the ordinary argument above;
 this finite check does not formalize that entire implication.
 
+### Literal divisor-parent constraints do not force a mixed-packet loss
+
+Numerical divisor closure and disjointness of comparable original
+classes preserve useful source information, but do not alone force a
+positive loss in a packet
+
+\[
+ \{5p,15p,45p,9p,45\}.                               \tag{CD182}
+\]
+
+An explicit finite control uses all eleven nonunit divisors of315.
+The actual residues and private witnesses modulo315 are:
+
+| Modulus | Residue | Private witness |
+| --- | --- | --- |
+|3|0|3|
+|5|0|5|
+|7|0|7|
+|9|1|19|
+|15|1|31|
+|21|1|43|
+|35|24|59|
+|45|22|67|
+|63|16|79|
+|105|73|178|
+|315|193|193|
+
+Every displayed private witness lies in its own class and no other.
+For every two distinct labels with $m\mid n$, the actual residues obey
+
+\[
+ a_n\not\equiv a_m\pmod m.                         \tag{CD183}
+\]
+
+Thus the comparable classes are disjoint. The family does not cover:
+the integer2 is outside every class.
+
+Use the single uniform law on the thirty CRT cells
+
+\[
+ (z,u,v)\in\{4,7\}\times\{2,3,4\}
+                    \times\{2,3,4,5,6\},            \tag{CD184}
+\]
+
+where $z=x\bmod9$, $u=x\bmod5$ and $v=x\bmod7$. These are exactly
+the two safe words above ternary root1 and the complements of the
+actual pure/root guards at5 and7. On this same source:
+
+| Actual class | Event in $(z,u,v)$ | Probability |
+| --- | --- | --- |
+|45|$(4,2,*)$|$1/6$|
+|63|$(7,*,2)$|$1/10$|
+|35|$(*,4,3)$|$1/15$|
+|105|$(*,3,3)$|$1/15$|
+|315|$(4,3,4)$|$1/30$|
+
+All five events are pairwise disjoint. Each attains its finite
+first-depth slot cap, so their actual union has probability
+
+\[
+ \frac16+\frac1{10}+\frac1{15}+\frac1{15}+\frac1{30}
+       =\frac{13}{30}.                              \tag{CD185}
+\]
+
+In particular the mixed35/105/315 union attains the sum of its three
+slot allowances, even with the literal proper-parent inequalities
+and the unique numerical ownership retained. No universal strictly
+positive debit follows from these local conditions alone.
+
+This control has five-height1 and no25 label. It neither satisfies
+whole-cover extremality nor tests a conclusion that actually uses
+complete-private25 supply. It also makes no claim of saturating
+infinite-height caps. It specializes the existing local-compatibility
+controls of Report385 §§47,173,175 to the precise five-label packet.
+
+A transient exact Lean check verifies all eleven labels and private
+witnesses, the complete nonunit divisor inventory, comparable-class
+disjointness, the thirty conditioned points, each of the five event
+counts and their disjoint union. Its three checked endpoints use only
+the permitted standard axioms. This verifies the finite control, not
+a source transport or a whole-cover exclusion.
+
+### The complete-private25 supply still needs a source transport
+
+Report385 §174 gives a sourcewise lower bound $187/2500$ on the
+complete simultaneous-deletion hole, using its own fibre law for
+each $y\in Y$. Its supplier condition at ternary height2 includes75
+and225. Hence a supplier described as mixed with5 need not contain
+an ordinary prime. The lower bound alone does not force service
+from one of the ordinary-prime packets CD182.
+
+For a supplier that does contain an ordinary prime, numerical
+divisor closure does not copy its phase to the actual parent.
+Indeed CD183 requires a different reduced phase for every proper
+comparable parent. Projecting deep or multi-prime suppliers to a
+first-depth numerical label can also merge many distinct originals.
+A proposed charging map must retain those phase differences, all
+supplier rows and depths, and its full congestion.
+
+Finally, the literal private25 region is contained in the actual25
+class. The selected guarded law excludes that class along with the
+other pure-five guards, and therefore assigns the literal private
+region zero mass. A statement on the complete private fibre cannot
+be inserted as a positive-mass statement on that selected law.
+A useful bridge must explicitly transport complete deletion-hole
+service, with its actual source coordinates and weights, or build a
+repair of the entire deletion hole. These source conditions are
+not supplied by the local packet inequalities.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
