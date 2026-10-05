@@ -310,3 +310,17 @@ cannot treat them as constants selected beforehand. The entire
 complementary-low space has not been covered. Actual low and
 complementary-low signs on this sequence, the original all-input
 half-bound, full Robin and RH remain unproved.
+
+
+## Center before paying the complete-prime discrepancy
+
+The [centered discrepancy budget](centered-prime-discrepancy-budget.md)
+reuses the same complete Chebyshev error on exactly full-ground-centered
+even $H^2$ sources. It cancels their continuous main term while retaining
+the $t=0$ endpoint, both shifts and every prime power. Paying
+$D(u)=\|u\|_\infty+\|u'\|_\infty$ gives a regulated prime allowance
+with $\mathcal J(T)=o(\sqrt T)$ for a fixed centered source. The
+archimedean/scalar costs and SC14's separate ground trial term remain.
+Changing families still need common derivative/source Grams; no uniform
+gain, numerical saving, actual inverse convergence or cofinal sign is
+asserted.

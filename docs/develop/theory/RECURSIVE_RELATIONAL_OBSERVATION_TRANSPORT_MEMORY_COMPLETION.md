@@ -16778,3 +16778,497 @@ $$
 物理器件、校准、噪声、实际墙钟与逻辑 tick/fee 的关系没有供应。其他来源/端口、概率协议、外部不受约束调度、所有目标都需要这一充分 D 的必要性、最优硬件或普遍资源成本也不在本章结论中。本章推进的是同实际树、同初始目标下“空间/时间标签—已取得记忆—行为边界”的精确条件：latent 行为商可以相同，而真实取得记录不同；只有在完整、有效、在线且真正交付的关系及进展/资源前提成立时，策略和初始目标取得才按所证两向恢复。长期持续目标仍有上述具体未解桥梁。
 
 ## 追加锚（本行以下为增补区）
+
+## 54. Complete unit-family supplied advice: linear capacity and actual acquisition
+
+This appendix refines the conditional minimum-advice question on the **complete actual unit-history family**. [OR68.5][OR68] already proves linear growth with the public cap and the exact values 1 at $8\le H\le19$ and 2 at $20\le H\le35$. [OR69.4][OR69] gives 2 at $36\le H\le39$ and 3 at $40\le H\le55$. Here the all-policy lower bound improves OR68's $h/8$ leading lower to $\gamma h$, where $h=\lfloor H/4\rfloor$ and $\gamma=(7-3\sqrt3)/11$. Two explicit constructions give separate alphabet/depth/call tradeoffs, and a cap-28–31 policy supplies a particular call bound and a fixed-executor separation for already known numerical exactness.
+
+The general exact function, the sharp leading alphabet coefficient, existence of a normalized limit, and normal forms for minimum-alphabet policies remain unresolved; particular caps can be settled when valid bounds coincide. These are ordinary mathematical proofs under the conditional supplied-advice interface, without a Lean verification claim.
+
+The structural premises below are taken from the immutable revision `e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74`; the published OR68–69 comparisons use `511f1920bceaaf9f6ec6411030fbd4da42abfbfd`.
+
+### 54.1 The task and its actual source correspondence
+
+**Definition 54.1 (conditional supplied alphabet).** Let $H\ge1$ be a public integer, fixed throughout a run. An actual source is a nonempty ordered binary tree
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{TM.5401}
+$$
+
+Equality of trees retains leaf order and every bracket. Write $c(t)=(a,b)$ for the leaf composition, $m=a+b$, $n=a+2b$, and $E_i(t)=E(\rho^it)$. The leaf product $E$ is evaluated in the project's associative Clifford algebra, with $E(\alpha)=A$, $E(\beta)=B$, $A^2=1$, $B^2=-1$, and $AB+BA=1$. Set
+
+$$
+\begin{aligned}
+\mathcal T_H&=\{t:1\le\lambda(t)\le H\},\\
+U_H&=\{t\in\mathcal T_H:(E_0(t),E_1(t),E_2(t))=(1,1,1)\},\\
+q_H(t)&=\begin{cases}
+(0,E_0(t),m),&n>H,\\
+(1,c(t),E_0(t),E_1(t)),&n\le H<m+n,\\
+(2,c(t),(E_0(t),E_1(t),E_2(t))),&m+n\le H.
+\end{cases}
+\end{aligned}
+\tag{TM.5402}
+$$
+
+The last line is TM30's $(2,\eta)$ in its equivalent composition/three-window coordinates. Thus the target here is exactly the published $q_H$.
+
+The online actions are ambient TM30 actions: current `Read`, a whole $\rho$ attempt, and a whole left or right concatenation with a named actual nonempty positive context. The guard accepts precisely when the entire candidate has at most $H$ leaves, including equality. Rejection preserves the source and supplies no candidate read. The record includes public inputs, the supplied label, action and context identities, actual guard responses and actual reads. These semantics continue after the source leaves $U_H$. There is no reset, copy, navigation, source replacement, inverse action, row/size/target port, new cost observation, or candidate-read leakage.
+
+For nonempty $U_H$, define $A_U(H)$ to be the least cardinality of a finite nonempty alphabet $\mathcal L_H$ for which there exist a function $\ell_H:U_H\to\mathcal L_H$, genuinely supplied from the **same unmodified initial source**, and one effective deterministic controller $\Pi_H$, such that
+
+$$
+\forall t\in U_H:\quad
+\Pi_H\bigl(H,\ell_H(t);t\bigr)
+\text{ stops after finitely many source calls and outputs }q_H(t).
+\tag{TM.5403}
+$$
+
+Equal labels have equal initialization and public data. Every later choice depends only on that initialization and acquired records. The minimization allows arbitrary source-dependent supplied functions, including functions depending on leaf order or brackets; the lower proof does not require their computability or factorization through $q_H$. The upper suppliers and controllers constructed here are effective uniformly in $H$. Their supplier algorithms take already available initial-source information as input; this is not a free way to obtain that information from the unknown running source.
+
+The prior is the public logical promise of membership in the complete $U_H$, not a probability distribution. A varying supplied label is additional evidence. By Atomic360 and TM51, $U_H$ is empty exactly for $1\le H<8$. We use $A_U(H)=0$ there if an empty alphabet is permitted on an empty domain; a convention requiring nominally nonempty alphabets gives 1 instead. No depth or logarithmic advice width is assigned to the empty task. All substantive capacity claims concern $H\ge8$.
+
+**Source correspondence (reused, with coordinates for this appendix).** Put
+
+$$
+h=\lfloor H/4\rfloor,\qquad H=4h+\delta,\quad0\le\delta\le3.
+$$
+
+Atomic360.2–4 and TM51.2–3 give exactly
+
+$$
+c(t)=(4r,4s),\quad r,s\ge1,\quad r+s\le h.
+\qquad
+z=r+s,\quad w=r+2s.
+\tag{TM.5404}
+$$
+
+Consequently $m=4z$, $n=4w$, $m+n=4(z+w)$, and
+
+$$
+2\le z\le h,\quad z+1\le w\le2z-1,
+\qquad r=2z-w,\quad s=w-z.
+\tag{TM.5405}
+$$
+
+For every such pair there is an actual witness, with any fixed ordered bracketing, whose leaf word is
+
+$$
+\omega_{r,s}=
+\alpha^{2r-1}\beta^{2s}\alpha\beta^{2s-1}\alpha^{2r}\beta.
+\tag{TM.5406}
+$$
+
+Its eight state-edge multiplicities in Atomic360 are $(r,r,r,r;s,s,s,s)$: all are positive, balanced, and have connected support. The converse in that theorem is essential: **all** qualifying leaf words are the corresponding Euler-path labels, and **all** their ordered bracketings are actual members. A disconnected support with one of $r,s$ zero is excluded, and $r=s=0$ would be an excluded empty source. No merely marginally attainable resource triple is used here.
+
+Use the shorthand $\tau_h(z,w)$ for the original target of a finite pair $w\le h$:
+
+$$
+\tau_h(z,w)=
+\begin{cases}
+(2,(4(2z-w),4(w-z)),(1,1,1)),&z+w\le h,\\
+(1,(4(2z-w),4(w-z)),1,1),&z+w>h.
+\end{cases}
+\tag{TM.5407}
+$$
+
+If $w>h$, the target is $(0,1,4z)$; all its hidden compositions at that size count as one target. Such a target exists precisely when $2z-1>h$. Its actual representative is $\omega_{1,z-1}$. The symbol $(z,\infty)$ below denotes this target, not an observed or physical infinite resource.
+
+Every displayed inequality holds for every $\delta$. For instance, $w\le h$ is exactly $4w\le H$, while $z+w\ge h+1$ gives $4(z+w)>H$. This does not prove that the unrestricted optimum depends only on $h$: arbitrary ambient contexts can have lengths not divisible by four.
+
+TM30.2 states that equal initial $q_H$, equal label and common initialization force identical complete responses under every such controller. TM38.1 states that equal complete acquired records and equal **current** $q_H$, paired with different original targets, cause permanent failure of recovery. TM45.1–4 preserves these initial/current pairs throughout actual histories. Thus a construction with labels factoring through the original target lifts to every word and bracketing in that target fiber, without physically replacing the running source by a witness. For a competing arbitrary supplier in a lower bound, select one actual representative per target and retain that representative's actual label. This restriction makes no factorization assumption.
+
+### 54.2 The unit resource geometry
+
+**Lemma 54.2 (exact columns, rows and second archive load).** For $h\ge2$ define $[x]_+=\max(x,0)$. The original tag-1 column with first replacement coordinate $w\le h$ has the integer interval
+
+$$
+I_w=[a_w,w-1]\cap\mathbb Z,
+\quad a_w=\max(\lfloor w/2\rfloor+1,h-w+1),
+\quad f_w=[w-a_w]_+.
+\tag{TM.5408}
+$$
+
+The tag-1 row with original size coordinate $z$ has degree
+
+$$
+d_z=[\min(2z-1,h)-\max(z,h-z)]_+.
+\qquad
+\epsilon_z=\mathbf1_{\{2z-1>h\}}
+\tag{TM.5409}
+$$
+
+where $\epsilon_z$ counts its single additional tag-0 target. For $h\ge3$ put
+
+$$
+K=\lfloor(h-1)/2\rfloor,\quad
+D=\lfloor(h+1)/6\rfloor,\quad
+b=\lceil(h+2)/3\rceil.
+\tag{TM.5410}
+$$
+
+Then $\max_w f_w=K$, every nonempty tag-1 row has $z\ge b$, and the largest original tag-2 column at second replacement coordinate $p=z+w\le h$ has size $D$. If $D=0$, there are no such targets.
+
+**Proof.** The finite-pair conditions give $z\le w-1$ and $z\ge\lfloor w/2\rfloor+1$; tag 1 additionally requires $z\ge h-w+1$. This gives (TM.5408), including empty intervals. The row has
+
+$$
+\max(z+1,h-z+1)\le w\le\min(2z-1,h),
+$$
+
+which gives (TM.5409). The composition with largest possible $w$ at row $z$ has $w=2z-1$, proving the tag-0 indicator. The inequality $f_w\le w-1-\lfloor w/2\rfloor\le K$ is attained at $w=h$. For tag 1, $h+1\le z+w\le3z-1$, hence $z\ge b$.
+
+For tag 2 at $p=z+w$, positive $r=3z-p$ and $s=p-2z$ are equivalent to
+
+$$
+\lfloor p/3\rfloor+1\le z\le\lfloor(p-1)/2\rfloor.
+\tag{TM.5411}
+$$
+
+For $p\ge5$ its length is $\lfloor(p-1)/2\rfloor-\lfloor p/3\rfloor$. At $p=6k+a$, $a=0,1,2,3,4,5$, these lengths are respectively $k-1,k,k,k,k,k+1$. At $p<5$ the interval is empty. They are all at most $\lfloor(p+1)/6\rfloor$, and $p=6D-1\le h$ realizes $D$ when $D\ge1$. This proves the exact maximum and the empty case. Each counted point has the simultaneous actual witness (TM.5406). $\square$
+
+### 54.3 A necessary finite inequality against all policies
+
+**Theorem 54.3 (complete-family counting obstruction).** For $h\ge2$ let
+
+$$
+B(h)=\min\left\{L\in\mathbb Z_{\ge1}:
+\sum_{w=3}^{h}[f_w-L]_+
+\le\sum_{z=2}^{h}\min(d_z,L-\epsilon_z)\right\}.
+\tag{TM.5412}
+$$
+
+Empty sums are zero. This minimum exists, and every successful supplied alphabet on the complete $U_H$ has size at least $B(h)$. For $H\ge20$ it also has size at least 2, by the published TM51.7 obstruction. The finite inequality is necessary; it is not an acquisition certificate.
+
+**Proof.** Choose an actual witness for every original tag-1 target and for every original tag-0 size target, retaining whatever label the putative full-family protocol gives it. Every witness is in the same $U_H$. For each label, partition these representatives by their actual runs: $P$ consists of those stopping without a $\rho$ attempt or whose first $\rho$ attempt rejects; $C$ consists of those whose first attempt accepts. Pointwise finite stopping makes this dichotomy exhaustive. Every tag-0 witness belongs to $P$, since positive contexts cannot decrease its already excessive next size.
+
+Here is the actual-history argument underlying TM37.2, including the tag-0 extension needed by the count. Before the first $\rho$, the accepted contexts contribute common known amounts $U,V$ to current and next size, with $0\le U\le V$; each individual positive context has $1\le d_0\le d_1\le2d_0$. The current read is the same ordered product $L_0\,1\,R_0$ for sources with a common record. Left and right factors retain their actual order.
+
+Two same-label representatives in one original $z$ row have identical full records up to stopping or the first $\rho$: context guards depend only on their common $4z$ and known accepted increments; Reads agree. If a run stops before that attempt, both stop with the same output. If two such representatives are in $P$ and an attempt occurs, both first attempts reject. Their current sources then have the same size $4z+U$, the same read and current tag 0, hence the same current $q_H$. Their original targets are different, so TM30.2/TM38.1 prohibit a successful continuation. Therefore each label supplies at most one $P$ member per row, including the obligatory tag-0 member.
+
+For the column restriction, take two same-label tag-1 representatives with the same $w$ and $z_1<z_2$. Suppose the smaller source's first $\rho$ accepts after contributions $U,V$. Then $4w+V\le H$. Every context accepted along this source's actual prefix also accepts on the larger source: if its cumulative increments after that context are $U',V'$, then
+
+$$
+4z_2+U'\le4w+U'\le4w+V\le H.
+\tag{TM.5413}
+$$
+
+Here $U'\le V'\le V$, since all accepted contributions are nonnegative. Every context rejected on the smaller source also rejects on the larger, with the same preceding increments. Ordered-factor Reads agree. Induction therefore forces the larger source to follow the **same complete actual prefix**, including every context identity, side, Read and rejection. Both first $\rho$ attempts accept. The two current sizes become $4w+V$, and the two current reads become the same $L_1\,1\,R_1$. Their next sizes are $4(z_i+w)+U+V>H$, because each original source is tag 1. They have identical current tag-0 $q_H$ and identical complete records but different original targets: another permanent collision. Thus $C$ contains at most one member of each column per label. In fact an accepting member must be that label class's largest row in its column.
+
+This argument permits every actual mixed positive context, either side, arbitrary intervening reads, unlimited acquired records and all later ambient actions. It uses forced simultaneous histories, not two independently achieved windows. It places no accepted-depth bound on competing protocols.
+
+With $L$ labels, at most $L$ tag-1 representatives in column $w$ belong to $C$, so that column has at least $[f_w-L]_+$ members in $P$. Row $z$ has at most $L$ total $P$ members and already contains $\epsilon_z$ mandatory tag-0 members; hence at most $\min(d_z,L-\epsilon_z)$ tag-1 members in $P$. Counting the same actual tag-1 $P$ set by columns and rows gives (TM.5412). When $L\ge\max_w f_w$, its left side is zero and the right side is nonnegative, so $B(h)$ exists. The inequality is monotone in $L$. Restriction of a successful protocol on the full family must satisfy it. The additional 2 lower bound is TM51.7, not a new quartet theorem. $\square$
+
+**Theorem 54.4 (linear all-policy necessity).** With
+
+$$
+\gamma=\frac{7-3\sqrt3}{11}=0.163986143390306\ldots,
+\qquad B(h)=\gamma h+O(1),
+\qquad A_U(H)\ge\gamma h-O(1).
+\tag{TM.5414}
+$$
+
+The absolute error is uniform over all four cap residues.
+
+**Proof.** Write $\lambda=L/h$. The row and column degrees in Lemma 54.2 differ by a bounded amount, independent of $h$, from $h$ times the profiles
+
+$$
+G(x)=\begin{cases}
+2x-1,&1/2\le x\le2/3,\\
+x/2,&2/3\le x\le1,\\
+0,&\text{otherwise},
+\end{cases}
+\qquad
+W(y)=\begin{cases}
+3y-1,&1/3\le y\le1/2,\\
+1-y,&1/2\le y\le1,\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{TM.5415}
+$$
+
+For example, $w-a_w$ is $\min(\lceil w/2\rceil-1,2w-h-1)$ before clipping, while the row degree is the clipped difference in (TM.5409); their floor and strict-endpoint discrepancies are bounded by constants. For $0\le\lambda\le1/3$, integrate at the clipping points:
+
+$$
+\begin{aligned}
+\int_0^1[G(x)-\lambda]_+\,dx
+&=\int_{(1+\lambda)/2}^{2/3}(2x-1-\lambda)\,dx
+ +\int_{2/3}^{1}(x/2-\lambda)\,dx\\
+&=\frac16-\frac\lambda2+\frac{\lambda^2}{4},\\
+\int_0^1\min(\lambda,W(y))\,dy
+&=\int_{1/3}^{(1+\lambda)/3}(3y-1)\,dy
+ +\lambda\left(1-\lambda-\frac{1+\lambda}{3}\right)
+ +\int_{1-\lambda}^{1}(1-y)\,dy\\
+&=\frac{2\lambda}{3}-\frac{2\lambda^2}{3}.
+\end{aligned}
+\tag{TM.5416}
+$$
+
+Clipping by positive part or minimum is 1-Lipschitz. Each profile has finitely many pieces with bounded slopes, and a bounded jump at an endpoint contributes only a bounded Riemann-sum error. Thus floor errors summed over $O(h)$ entries and Riemann-sum errors both contribute $O(h)$ to the unnormalized sums, uniformly in $\lambda$. Replacing $L$ by $L-\epsilon_z$ on the row side changes that side by at most $h$. The difference between the two sides of (TM.5412) is therefore
+
+$$
+\sum_w[f_w-L]_+-\sum_z\min(d_z,L-\epsilon_z)
+=\frac{h^2}{12}(11\lambda^2-14\lambda+2)+O(h).
+\tag{TM.5417}
+$$
+
+The smaller root of $11\lambda^2-14\lambda+2$ is $\gamma$; its derivative there is $-6\sqrt3\ne0$. This polynomial decreases on $[0,1/3]$. A fixed sufficiently large constant $C$ makes (TM.5417) positive for $L\le\gamma h-C$ and negative for $L\ge\gamma h+C$ in a neighborhood of the root, for all sufficiently large $h$. Monotonicity of the exact finite inequality then gives $B(h)=\gamma h+O(1)$. Finitely many remaining $h$ are absorbed in the constant. If a competing alphabet has $L/h>1/3$, the claimed lower bound is already immediate. Theorem 54.3 proves necessity in every other case. None of this calculation asserts sufficiency of the count. $\square$
+
+### 54.4 A smaller alphabet with at most two accepted replacements
+
+**Theorem 54.5 (effective two-replacement construction).** For $h\ge3$ use (TM.5410) and define
+
+$$
+\begin{aligned}
+T_2&=\max\left(
+\left\lceil\frac{h+K-b}{3}\right\rceil,
+\left\lceil\frac{K+\max(1,D)}{2}\right\rceil
+\right),\\
+C_2&=K-T_2,\qquad J_2=2T_2-K,\qquad c_2=h-T_2-1.
+\end{aligned}
+\tag{TM.5418}
+$$
+
+There is a genuinely supplied alphabet of size $T_2$ and one controller effective uniformly in $H$ that recovers the original $q_H$ on every source in $U_H$. It uses no Read, accepts at most two $\rho$, and makes at most $\lceil\log_2H\rceil+3$ source calls. Moreover $T_2=7h/18+O(1)$.
+
+**Proof: parameter feasibility.** For $h\ge3$, $K\ge1$, $D\le K$, $b\ge2$, and $h-b\le2K$: for even $h$, $2K=h-2$; for odd $h$, $2K=h-1$. Both ceilings in (TM.5418) are at most $K$. Thus
+
+$$
+1\le T_2\le K,\quad C_2\ge0,\quad
+J_2\ge\max(1,D),\quad
+3T_2\ge h+K-b,
+\quad1\le c_2\le h-2.
+\tag{TM.5419}
+$$
+
+We give the complete supplier and decoder, abbreviating $T=T_2$, $J=J_2$, $C=C_2$, $c=c_2$. Use disjoint symbols $a_1,\ldots,a_J$ and $u_1,\ldots,u_C$, totaling $J+C=T$. If $C=0$, the latter block and all its action branches are absent.
+
+**Supplier and simultaneous load.** In every original tag-1 column, mark its lowest $[f_w-T]_+$ members Low. The remaining consecutive interval begins at
+
+$$
+\beta_w=\max(a_w,w-T).
+\tag{TM.5420}
+$$
+
+Give its first at most $J$ members label $a_{z-\beta_w+1}$. Give each remaining member, called High, label $u_{z-\beta_w-J+1}$. At most $T-J=C$ High members exist in any column. The Low members in row $z$ have exactly the interval of columns
+
+$$
+L_z=\max(z+T+1,h-z+1)\le w\le\min(2z-1,h).
+\tag{TM.5421}
+$$
+
+To see this, $z$ is Low exactly when $z\in I_w$ and $z+T\le w-1$; increasing $z$ preserves the lower endpoint of that gapless column. Formula (TM.5421) is precisely these inequalities. Its length is at most
+
+$$
+[\min(z-1,h-z)-T]_+\le K-T=C.
+\tag{TM.5422}
+$$
+
+The last maximum is exact: if $C>0$, take the single row $z=\lfloor h/2\rfloor+1$ and columns $w=z+T+1,\ldots,h$; they are all actual tag-1 Low members and there are $C$. If $C=0$, all Low intervals are empty. Label Low members by $u_{w-L_z+1}$, injectively in their own row. This independently reuses the same $u$ symbols assigned to High members.
+
+Give every original tag-0 target $a_1$. For every tag-2 target at $p=z+w$, give $a_{z-\lfloor p/3\rfloor}$. Lemma 54.2 places this index in $1,\ldots,D\subseteq1,\ldots,J$. These assignments cover all three original target bands; each target receives one label, hence each actual source receives the label of its own original target.
+
+Every Low source has $z\le h-T-1=c$. Every High source satisfies $z\ge\beta_w+J\ge a_w+J\ge b+J$. By (TM.5419),
+
+$$
+c=h-T-1<b+2T-K=b+J.
+\tag{TM.5423}
+$$
+
+Consequently one public cutoff separates **every** Low from **every** High, across all columns and repeated symbols. This is the joint compatibility that column-by-column numbering alone would not supply.
+
+**Terminal procedure (reused from TM44.5/TM51.5).** Denote by $\operatorname{Size}_H$ the actual destructive terminal acquisition of the size $M$ of its entry source. For completeness, initialize $l=0$, $u=H$, $U=0$ and maintain $l<M\le u$, $U=H-u$, current size $M+U$. While $u-l>1$, put $k=\lfloor(l+u)/2\rfloor$ and attempt one whole right context $\alpha^{u-k}$. Its positive exponent is known; its guard accepts exactly when $M\le k$. Acceptance replaces $u$ by $k$ and adds $u_{\rm old}-k$ to $U$; rejection replaces $l$ by $k$ and changes no source. Interval width decreases to at most its previous half rounded up. After at most $\lceil\log_2H\rceil$ attempts, $u-l=1$ and $M=u=H-U$. Current size is $H$. Make a final single-leaf $\alpha$ attempt, which rejects. The procedure returns the **entry** $M$ in at most $\lceil\log_2H\rceil+1$ calls. Entry $M=H$, midpoint equality, and zero accepted fill calls are all covered. No size port or partial acceptance of a rejected macro is involved.
+
+**Executable decoder.** On label $a_i$, attempt $\rho$. If it rejects, apply $\operatorname{Size}_H$ and return $(0,1,M)$. The rejected source is the original tag-0 source. If it accepts, attempt $\rho$ once more. On second rejection, apply $\operatorname{Size}_H$, obtain $4w$, set $z=\beta_w+i-1$, and output $\tau_h(z,w)$. On second acceptance, apply $\operatorname{Size}_H$, obtain $4p$, set $z=\lfloor p/3\rfloor+i$, $w=p-z$, and output $\tau_h(z,w)$. The two guard responses distinguish original tags 0, 1 and 2, including equality at the second boundary. The relevant label is injective in that measured archive column. This does not assert that an original tag-2 source becomes tag 0 after two replacements.
+
+On label $u_i$, attempt the one whole right context
+
+$$
+\alpha^{P},\qquad P=H-4c>0.
+\qquad 4z+P\le H\ \Longleftrightarrow\ z\le c.
+\tag{TM.5424}
+$$
+
+Acceptance therefore selects Low. Apply $\operatorname{Size}_H$ to obtain its entry size $M$, compute $z=(M-P)/4$, set $w=L_z+i-1$, and output $\tau_h(z,w)$. Rejection selects High and preserves the original source. Attempt $\rho$, which accepts because High is original tag 1 with $w\le h$. Apply $\operatorname{Size}_H$ to obtain $4w$, set $z=\beta_w+J+i-1$, and output $\tau_h(z,w)$. When a High member exists the archive part of its column contains exactly $J$ members, so this formula has no implicit empty-prefix convention.
+
+All size subtractions are arithmetic on known inserted material and actual terminal guard records, not inverse source operations. After padding or filling, the current source need not be unit. The terminal procedure operates on any ambient actual source and does not consult its windows. Each branch outputs the initial target, using the public original unit-window promise.
+
+**Coverage, effectivity and stopping.** The formulas use integer arithmetic, the public cap and the initial target at the supplier. If the supplier has an actual initial-tree archive, counting its leaves and computing its three windows gives these inputs by the pinned algorithms; authentic pairing with the running unmodified tree remains a separate supply obligation. The consumer gets only the symbol. Its choices depend on that symbol and actual guards; a fixed bracketing rule effectively names every positive $\alpha$ macro. No noncomputable cap-specific table or source-specific program is selected. The formulas supply a single algorithm for all $H$, with direct constant output at $h=2$.
+
+The archive branch adds at most two $\rho$ attempts to the terminal procedure; the High branch adds a cutoff rejection and one accepted $\rho$; the Low branch adds one accepted cutoff. Therefore all runs stop within the stated call bound and have accepted $\rho$ depth at most two. TM30.2 and the complete source correspondence lift correctness to every qualifying word and bracketing, with its own supplied label and original running source. Finally $K=h/2+O(1)$, $D=h/6+O(1)$, $b=h/3+O(1)$; the two terms of (TM.5418) are respectively $7h/18+O(1)$ and $h/3+O(1)$. Their maximum is $7h/18+O(1)$. $\square$
+
+### 54.5 A one-replacement alternative
+
+**Theorem 54.6 (effective one-replacement construction).** For $h\ge3$ set
+
+$$
+v=\left\lfloor\frac{3K-h+2}{5}\right\rfloor,\quad
+T_1=K-v,\quad J_1=K-2v,\quad c_1=h-T_1-1.
+\tag{TM.5425}
+$$
+
+An alphabet of size $T_1$ suffices on the complete $U_H$, with no Read, at most one accepted $\rho$, and at most $\lceil\log_2H\rceil+3$ calls. Its supplier and controller are effective uniformly in $H$, and $T_1=2h/5+O(1)$.
+
+**Proof.** For odd $h=2k+1$, $K=k$ and $3K-h+2=k+1$; for even $h=2k$, $K=k-1$ and $3K-h+2=k-1$. These are nonnegative for $h\ge3$. Also $h\ge2K+1$, so $5v\le K+1$. For $K=1$, $v=0$ and $J_1=1$. For $K\ge2$, $J_1\ge(3K-2)/5>0$, hence its integer value is at least 1. Thus $T_1\ge1$, $v\ge0$, $J_1+v=T_1$, and $1\le c_1\le h-2$.
+
+Use symbols $a_1,\ldots,a_J$, $u_1,\ldots,u_v$, where $J=J_1$ and $T=T_1$. Here the finite column includes **both** original tags 1 and 2. Its full interval is
+
+$$
+\lfloor w/2\rfloor+1\le z\le w-1,
+\qquad \widehat\beta_w=\max(\lfloor w/2\rfloor+1,w-T).
+\tag{TM.5426}
+$$
+
+Mark the members $z<\widehat\beta_w$ Low and give them label $u_{w-z-T}$. Give the next at most $J$ members label $a_{z-\widehat\beta_w+1}$. Give remaining High members label $u_{z-\widehat\beta_w-J+1}$. Give all tag-0 targets $a_1$.
+
+Low means $w\ge z+T+1$. Its exact row load is
+
+$$
+[\min(z-1,h-z)-T]_+\le K-T=v,
+\tag{TM.5427}
+$$
+
+with row indices $w-z-T=1,\ldots,$ that load. After deleting Low, a column has at most $T$ members. Its High suffix has at most $T-J=v$ members. All label indices therefore fit. As in Theorem 54.5, the maximum Low row load is realized in the single row $z=\lfloor h/2\rfloor+1$ if $v>0$. If $v=0$, both Low and High are empty, and only the $a$ branch exists.
+
+Every Low source has $z\le c_1$. Every High source has $z-J\ge\lfloor w/2\rfloor+1$, giving $w\le2(z-J)-1$. Since also $w\ge z+1$, High has $z\ge2J+2$. The choice of $v$ gives
+
+$$
+5v\le3K-h+2
+\quad\Longleftrightarrow\quad c_1\le2J+1.
+\tag{TM.5428}
+$$
+
+Thus the one common macro $\alpha^{H-4c_1}$ accepts exactly Low and rejects exactly High in every repeated $u$ class, including equality at $z=c_1$.
+
+On label $a_i$, attempt $\rho$. Rejection gives original tag 0: use $\operatorname{Size}_H$ and output $(0,1,M)$. Acceptance gives entry $4w$: use $\operatorname{Size}_H$, compute $z=\widehat\beta_w+i-1$, and return $\tau_h(z,w)$. In particular the original tag is obtained by comparing recovered $z+w$ with $h$, without attempting a second replacement or observing a second window.
+
+On label $u_i$, attempt $\alpha^{P}$ with $P=H-4c_1>0$. Acceptance gives Low: terminal entry $M$ recovers $z=(M-P)/4$ and $w=z+T+i$. Rejection leaves the original High source unchanged: one $\rho$ accepts, terminal entry gives $4w$, and $z=\widehat\beta_w+J+i-1$. In both cases return $\tau_h(z,w)$. These steps include every finite target regardless of original tag. The $u$-High branch can include original tag 2; its next windows are simply unused.
+
+As before, each dictionary is injective in the acquired coordinate, and the simultaneous cutoff selects which meaning of a repeated symbol applies. No invisible row is consulted. Effectivity, actual-source lifting, positive macro naming, ambient semantics and stopping follow by the explicit arithmetic and the same terminal procedure. There are at most two initial calls and at most one accepted replacement. Finally $v=h/10+O(1)$ and $K=h/2+O(1)$, giving $T_1=2h/5+O(1)$. $\square$
+
+The two constructions have different coordinates. Theorem 54.5 gives the smaller asymptotic alphabet $7h/18+O(1)$ with accepted depth at most 2. Theorem 54.6 gives $2h/5+O(1)$ with accepted depth at most 1. Each separately has the same stated total-call upper bound. Combining the smaller alphabet from one with the smaller accepted-depth bound from the other is not justified. Neither theorem prices label production, material, memory or physical duration.
+
+### 54.6 Reused exact values through cap 31 and a fixed-archive counterexample
+
+**Theorem 54.7 (reused small-cap exactness and explicit execution).** On the complete actual family,
+
+$$
+A_U(H)=\begin{cases}
+1,&8\le H\le19,\\
+2,&20\le H\le31.
+\end{cases}
+\tag{TM.5429}
+$$
+
+The numerical values in (TM.5429) are already published in [OR68.5][OR68], whose two-label interval continues through cap 35. The explicit protocol below establishes that at $28\le H\le31$, two labels suffice with at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+3$ calls, whereas the fixed executor that ignores the label, attempts $\rho$ immediately and then applies $\operatorname{Size}_H$ requires three labels for subsequent original-target decoding.
+
+**Proof.** The first interval is the published TM51.6–8 result. At $h=5,6$, both (TM.5418) and (TM.5425) yield alphabet 2. TM51.7 proves one label impossible for every $H\ge20$. This settles $20\le H\le27$.
+
+Now let $h=7$, $28\le H\le31$. The complete target set consists of the following two supplied classes, using the coordinate/target convention of (TM.5407):
+
+$$
+\begin{aligned}
+\mathcal C_1={}&\{(2,3),(3,4),(4,5),(5,6),(6,7),(4,6),(6,\infty),(7,\infty)\},\\
+\mathcal C_2={}&\{(3,5),(5,7),(4,7),(5,\infty)\}.
+\end{aligned}
+\tag{TM.5430}
+$$
+
+This is a complete ordinary coverage check: at $w=3,4,5,6,7$, the finite rows are respectively $\{2\}$, $\{3\}$, $\{3,4\}$, $\{4,5\}$, $\{4,5,6\}$. The tag-0 rows are $5,6,7$. They give all twelve distinct targets, each exactly once in (TM.5430). Each finite point is realized by $\omega_{2z-w,w-z}$, and each infinite marker by $\omega_{1,z-1}$. Thus the classes cover every actual word and bracketing through TM51's source correspondence.
+
+For label 1, first attempt the whole right macro $\alpha^{H-20}$; its positive length is 8, 9, 10 or 11. Acceptance is exactly $z\le5$. On acceptance, attempt $\rho$. If it accepts, the source was one of $(2,3),(3,4),(4,5)$: their $n+(H-20)$ are respectively $H-8,H-4,H$. Apply $\operatorname{Size}_H$ and distinguish those entry sizes. Output their own original targets. In particular **both $(2,3)$ and $(3,4)$ are original tag 2**; the latter satisfies $z+w=7$ on the equality boundary. The third is tag 1.
+
+If that $\rho$ rejects, the source was $(4,6)$ or $(5,6)$; their unchanged-after-attempt entry sizes are respectively $4z+(H-20)=H-4,H$. Terminal acquisition distinguishes them and returns their original tag-1 targets. If the first macro rejects, the original source is unchanged and is one of $(6,7),(6,\infty),(7,\infty)$. Attempt $\rho$: acceptance uniquely identifies $(6,7)$, since $28\le H$; rejection leaves the two tag-0 sources, distinguished by terminal entry sizes 24 and 28. The uniquely identified accepting branch may stop immediately.
+
+For label 2, first attempt the whole right macro $\alpha^{H-16}$, of positive length 12, 13, 14 or 15. Acceptance is exactly $z\le4$, selecting $(3,5)$ or $(4,7)$. Their entry sizes are respectively $H-4,H$; use $\operatorname{Size}_H$ and return the corresponding original tag-1 target, without replacement. Rejection leaves $(5,7)$ or $(5,\infty)$ unmodified. One $\rho$ attempt accepts on the former and rejects on the latter, identifying the original target immediately.
+
+Every displayed acceptance inequality uses the entire actual candidate. An all-$\alpha$ macro contributes its length equally to $m$ and $n$, by (TM.5401); after its acceptance, a $\rho$ guard therefore compares the stated $n+P$ with $H$. Rejected macros do not insert any part of their material. Every equality case accepts. Each branch has at most two prefix calls, at most one accepted $\rho$, and at most one terminal acquisition. All choices use the label and actual responses, with the public decoder just given. This proves sufficiency on the complete family. The published quartet lower proves necessity.
+
+For comparison, fix an executor independent of the supplied label: immediately attempt $\rho$, then apply $\operatorname{Size}_H$ to the actual resulting source. Its execution record retains every public input, action and context identity, guard response and read, but excludes the repair label subsequently supplied to the decoder. If the label was supplied earlier but ignored, this is the projection deleting only that initial label entry; decoding uses the pair of this record and the label. This fixed-execution repair task is distinct from Definition 54.1, where the controller uses the supplied label and the full record includes it. Its rejecting branch has one target per measured original $z$. Its accepting branch has one full record fiber for each $w$, containing all
+
+$$
+\lfloor w/2\rfloor+1\le z\le w-1.
+\tag{TM.5431}
+$$
+
+The response prefix is the same first acceptance, and the terminal procedure is deterministic from entry $4w$. Thus these are equal **complete label-independent execution records**, including every action and response, not only equal terminal summaries. Their original targets are pairwise different. The maximum fiber has $K=\lfloor(h-1)/2\rfloor$ members, achieved at $w=h$; ranks within those fibers and one reused symbol on each singleton rejecting fiber attain $K$ labels when $h\ge3$. This is the fixed-record repair calculation of TM32, scoped to this executor.
+
+At $h=7$, the $w=7$ record fiber contains actual targets $(4,7),(5,7),(6,7)$. Their sources have first resources $(16,28),(20,28),(24,28)$, all in $U_H$. The first replacement accepts, all resulting entry sizes are 28, and every subsequent terminal action and response is identical. Any decoder after this fixed execution needs three distinct labels. The two-label policy above is legal and succeeds on the complete family because its supplied label changes the execution itself. Hence the optimum over all policies is strictly smaller than this fixed-archive optimum. Adding the usual second replacement attempt before filling also gives the same three-target collision: it rejects for each source because each original $m+n>H$. This does not convert a fixed archive fiber count into a lower bound on arbitrary acquisition. $\square$
+
+### 54.7 All-cap bounds, growth and supplied bits
+
+**Corollary 54.8 (envelope of these constructions and reused growth order).** For every $H\ge8$, with the empty convention of Definition 54.1 handled separately, the reused small-cap values in (TM.5429) hold. At every $H\ge32$,
+
+$$
+\max\{2,B(\lfloor H/4\rfloor)\}
+\le A_U(H)
+\le\min\{T_2(\lfloor H/4\rfloor),T_1(\lfloor H/4\rfloor)\}.
+\tag{TM.5432}
+$$
+
+The same two sufficient constructions and the same necessary inequality apply at $12\le H\le31$, with Theorem 54.7 supplying a separate two-label protocol at $28\le H\le31$. All bounds are finite explicit integer formulas, with positive-part and empty-block conventions stated above. As $H\to\infty$,
+
+$$
+\gamma h-O(1)\le A_U(H)\le\frac7{18}h+O(1),
+\quad
+\frac{7-3\sqrt3}{44}H-O(1)\le A_U(H)\le\frac7{72}H+O(1).
+\tag{TM.5433}
+$$
+
+Thus $A_U(H)=\Theta(H)$, as already established by [OR68.5][OR68]. Its minimum advice-only fixed binary width, also a consequence of that published growth order, is
+
+$$
+b_U(H)=\lceil\log_2 A_U(H)\rceil=\log_2H+O(1)
+\quad\text{on nonempty tasks}.
+\tag{TM.5434}
+$$
+
+**Proof.** Combine Theorems 54.3–7; at $h=2$ the sole target permits direct constant output. Both constructive families are uniformly effective and cover every source, so their smaller alphabet is a valid capacity upper bound, with its own stated depth coordinate. Theorem 54.4 supplies a positive linear lower bound. For $A$ occupied symbols, any fixed-width exact code has $2^b\ge A$, while a public numbering of the symbols attains $\lceil\log_2A\rceil$ bits. The minimum-alphabet theorem therefore gives (TM.5434); $A=1$ uses the single empty bit string. Alphabet size, actual source calls and accepted replacement depth are distinct quantities. $\square$
+
+Equations (TM.5432–3) record the envelope of the two constructions here. For comparison on the same task, [OR68.2, 68.4–5][OR68] give the lower $\max(2,\lfloor(h+10)/8\rfloor)$ and the paired upper $K-p$, where
+$p=\min(\lfloor(K-1)/2\rfloor,\lfloor(3K+3-h)/4\rfloor)$ and $K-p=3h/8+O(1)$. That upper uses at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+4$ calls. The $7h/18+O(1)$, depth-$\le2$ construction and the $2h/5+O(1)$, depth-$\le1$ construction here each use at most $\lceil\log_2H\rceil+3$ calls. Each alphabet, depth and call bound belongs to its own simultaneous construction. In particular OR68's smaller leading alphabet does not acquire either construction's $+3$ call guarantee. The stronger leading lower $\gamma>1/8$ comes from Theorems 54.3–4.
+
+[OR69.2–4][OR69] supply complete same-source target dictionaries giving the exact values 2 at $36\le H\le39$ and 3 at $40\le H\le55$, with at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+5$ calls. Their three-label necessity uses a thirteen-source obstruction against all ambient actions and arbitrary tree-dependent binary labels. These published numerical results are credited comparison context; the protocols and lower proofs above retain their own costs and scope.
+
+Some exact integer instantiations illustrate the envelope of these constructions; upper columns retain their separate depth guarantees and the $+3$ call bound. The last column records known values with their sources. These entries do not extrapolate a general exact formula.
+
+| Public caps $H$ | $h$ | Necessary alphabet $\max(2,B(h))$ for $H\ge20$ | $T_2$ (depth $\le2$) | $T_1$ (depth $\le1$) | Known exact value and source |
+|---|---:|---:|---:|---:|---|
+| 20–23 | 5 | 2 | 2 | 2 | 2, [OR68.5][OR68] |
+| 24–27 | 6 | 2 | 2 | 2 | 2, [OR68.5][OR68] |
+| 28–31 | 7 | 2 | 3 | 3 | 2, [OR68.5][OR68]; explicit protocol (TM.5430) |
+| 32–35 | 8 | 2 | 3 | 3 | 2, [OR68.5][OR68] |
+| 48–51 | 12 | 3 | 4 | 4 | 3, [OR69.4][OR69] |
+| 80–83 | 20 | 4 | 7 | 8 | not settled by the displayed or cited bounds |
+| 400–403 | 100 | 17 | 39 | 40 | not settled by the displayed or cited bounds |
+
+### 54.8 Sources, costs, proof scope and unresolved obligations
+
+Relative to OR68–69, the substantive refinements are the complete unit table's exact row/column load, its finite necessary inequality and profile root against all protocols, and the simultaneous cutoff allocations covering all original bands. The leading lower $\gamma h$ improves the published $h/8$ lower; the two sufficient alphabets offer their own depth guarantees with the $+3$ call bound. The complete-family cap-28–31 policy establishes its explicit two-label execution and separates unrestricted acquisition from one fixed execution. Linear growth, its logarithmic advice-width consequence and the numerical small-cap exactness are credited reuse. Actual source generation, complete Euler/bracketing coverage, $N_H$, the quartet, behavioral congruence, terminal filling and finite planning are suppliers, not new results of this appendix.
+
+The structural proof dependencies are the first two published files below, at `e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74`; published comparison context is supplied by OR68–69 at `511f1920bceaaf9f6ec6411030fbd4da42abfbfd`:
+
+- [FIBONACCI_ATOMIC_RELATION_GENERATION.md](https://github.com/the-omega-institute/trureturing/blob/e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), Atomic359 and Atomic360.2–4: common-source windows, positive unit witnesses, connected eight-edge criterion, all Euler words and every ordered bracketing. These match the actual source, composition and unit-window premise of (TM.5404–6).
+- [RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md](https://github.com/the-omega-institute/trureturing/blob/e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), TM30.1–2: exact whole guards and behavior on the ambient $\mathcal T_H$; TM32.1–2: advice selected before execution versus repair after a fixed record; TM37.2 and TM37.7: all-context first-attempt constraints and the Low/archive/High construction architecture; TM38.1: permanent collisions on one common record; TM44.5 and TM51.5: actual terminal entry-size acquisition; TM45.1–4: original/current history pairing; TM47.1–2, 47.4 and 47.8: actual representative coverage, full-context correspondence and finite planning; TM51.1–3 and 51.6–11: the full unit task, small-cap baseline, constant-label obstruction and source-preserving production/cost boundary. These premises retain the same source, original target, actions, universal quantifiers and resource coordinates used above. The lower bound on the larger full $\mathcal T_H$ from TM37 is not transferred to the smaller $U_H$.
+- [OR68 §§68.1–5][OR68]: the same conditional full-family $A_U(H)$, paired construction, all-policy $\max(2,\lfloor(h+10)/8\rfloor)$ lower, exact values through cap 35 and linear growth. Its upper has its own one-replacement/$+4$-call cost coordinates.
+- [OR69 §§69.1–3][OR69]: the same task's full-family dictionaries, thirteen-source full-action binary obstruction and exact values at caps 36–55. Its upper has its own one-replacement/$+5$-call cost coordinates.
+
+The parameter and interface correspondence is exact on nonempty tasks: OR68's $\nu=z+s$ is this appendix's $w$, and OR69's $(x,y)$ is $(z,w)$, with the same $r,s,h,H=4h+\delta$. OR69's finite $C_{r,s}$ is $\tau_h(r+s,r+2s)$, and $Z_x$ is the tag-0 target denoted here by $(z,\infty)$. Both published definitions quantify the complete actual ordered-tree family, the same initial $q_H$, arbitrary total labels authentic to that unmodified initial tree, common deterministic initialization, arbitrary acquired histories and all ambient TM30 actions with whole-candidate guards and equality acceptance. This appendix's optional empty-task convention is separate. The correspondence supplies no actual-source label producer or archive access.
+
+No external state-identification, learning, homing or side-information coding theorem carries proof weight in this appendix. The source-specific results above are deductions from the stated pinned suppliers; no global originality claim is made. Neither TM52 nor TM53 is a premise.
+
+The uniform programs have fixed descriptions plus public integer input $H$. Their arithmetic fields, symbol index, a bounded number of branch bits and terminal interval counts can be held in $O(\log(H+1))$ bits under compact integer/context naming. This is a sufficient controller representation for these programs, not a minimum-memory theorem. Literal action identities, expanded contexts, full records and outputs have their own representation costs. The call bound counts every attempted whole macro, rejected replacement and terminal single-leaf rejection; it does not charge accepted depth for any of them except an accepted $\rho$. A call's atomic semantics does not make its context material, guard, replacement work or physical duration unit cost.
+
+The upper suppliers are computable from an already supplied initial target or from a genuine initial-tree archive. Archive acquisition, parsing, family membership certification, pairing with this same running tree, label production, delivery and retention remain separate. TM51.9 applies unchanged: a common-initialized TM30 program required to finish with each exact original unit tree can output only a constant. Every accepted context strictly adds leaves, and every accepted replacement adds leaves because unit sources have positive $\beta$ count; no permitted action reverses that increase. Without accepted modifications, all reads are the same unit and all attempted modifications reject, giving a common record. Thus the nonconstant supplied labels here are not produced by such a preserving consumer. An equivalent canonical witness or another tree's archive does not establish identity with the executed source.
+
+Full word/bracketing coverage follows from the pinned ordinary theorem. The all-policy lower bound rests on the simultaneous-history proof in Theorem 54.3. Bounded enumeration does not supply either universal claim; the known exact value at $H=32$ is supplied by OR68's ordinary upper and lower proofs. These ordinary proofs carry no Lean, build or CI verification claim.
+
+The remaining full question is explicit. The general exact function $A_U(H)$, the sharp leading alphabet coefficient or even existence of its normalized limit, and a normal form for minimum-alphabet policies under all depths and mixed positive contexts are not determined. OR68–69 settle the nonempty interval through cap 55; other particular caps can be settled when valid lower and upper bounds coincide, without supplying a general exact formula. The count (TM.5412) discards action compatibility and is not known sufficient; the cutoff constructions are not shown necessary or optimal. The whole complete family, all original bands and every ambient action remain in this unresolved optimization. The appendix does not replace that goal with a tag-1 subfamily, a fixed archive, a depth restriction or a finite solver instance. It also leaves genuinely produced/certified label costs, optimal total calls/memory, physical instrument conformity, original-tree/bracketing recovery and the persistent relation-recovery goal unsettled.
+
+[OR68]: https://github.com/the-omega-institute/trureturing/blob/511f1920bceaaf9f6ec6411030fbd4da42abfbfd/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#68-完整单位原树的条件补充字母表配对上界与增长必要性
+[OR69]: https://github.com/the-omega-institute/trureturing/blob/511f1920bceaaf9f6ec6411030fbd4da42abfbfd/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#69-完整单位原树在三十六至五十五上限的条件字母表精确值
+
+## 追加锚（本行以下为增补区）
