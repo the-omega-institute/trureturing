@@ -4185,6 +4185,94 @@ preserve equality of second digits.
 They do not force six payable cells, a strict exchange, or exclusion
 of $q=23$; those existence obligations remain unresolved.
 
+### Root-local fine sets share the same six-request obstruction
+
+Keep the actual family and finite-period condition CD141, now with
+q=23 and actual pure originals 3 and 9. Thus every original has
+ternary and q-height at most two, the cofactors divide one positive
+W coprime to 3q, and h is the actual pure $q^2$ original. Both
+minimality conditions are over all distinct odd nonunit whole covers.
+Use the literal unit-digit image U, the complete h-private modulo9
+projection $\Lambda$, and the cell predicate CD126.
+
+For each ternary root c choose four distinct safe fine digits,
+allowing a different set at each root:
+
+$$
+F_c\subseteq\mathbb F_{23}\setminus U,\qquad |F_c|=4
+\quad(c\in\mathbb Z/3\mathbb Z).
+\tag{CD144}
+$$
+
+There cannot be six requests $(d_j,w_j)$ with all the following
+properties:
+
+$$
+\boxed{
+\begin{gathered}
+w_1,\ldots,w_6\in\mathbb Z/27\mathbb Z\text{ are distinct},
+\qquad w_j\bmod9\in\Lambda,\\
+d_j\notin U\cup F_{w_j\bmod3},\\
+w_j\equiv w_k\pmod3\ \land\ d_j=d_k\ \Longrightarrow\ j=k,\\
+\operatorname{Comp}_{F_{w_j\bmod3}}(d_j,w_j\bmod9)
+\quad\text{for every }j.
+\end{gathered}
+}
+\tag{CD145}
+$$
+
+Digits may coincide across different ternary roots. The fine sets
+need not agree across roots. Each cell condition still quantifies
+over every actual top owner in that cell, including all numerical
+cofactors and their actual lower companions in D.
+
+To prove the obstruction, choose ten distinct digits outside U:
+four common fine targets and six globally distinct request targets.
+This is possible because the exact unit image has at most three
+digits. At each root, the four local fine digits, the request digits
+at that root, and U form disjoint sets. Map them respectively to the
+four common fine targets, their designated request targets, and
+themselves. The same-root distinctness in CD145 makes this map
+injective. Finite permutation extension supplies one permutation
+at each root fixing U pointwise. CD141–CD143 realize all these
+permutations in one actual whole cover.
+
+The cell conditions transfer to that cover on their full supports.
+Indeed, take any new top owner at a designated request target.
+Its digit lies outside the new unit image, so its cofactor is
+nonunit. Its preserved modulo9 phase and CD142 identify its
+cofactor color with the request's root. Inverting that root's
+permutation places it in the old requested cell. Any row-zero or
+row-one companion with the same numerical cofactor uses the same
+permutation, so the old cell condition puts its new digit among
+the four common fine targets. This handles every new top owner;
+it does not select one favorable owner per cell.
+
+The complete private-base equality CD143 transfers each requested
+parent's private witness to the new family. Apply the existing
+q=23 density result afresh to this actual family. Its pure $q^2$
+original is h by distinctness of numerical moduli. If that result
+returns a unit-digit superset, reduce it to the literal unit image:
+the safe dense-digit set only grows. CD127 now applies to the four
+common fine targets and six globally distinct request targets,
+contradicting minimality.
+
+A complete scoped transient Lean application checks this implication
+from the original whole-cover hypotheses and the literal finite-period
+R condition, including all-owner cell transport, private-base
+transport, and the new family's density and exact unit image.
+Its axiom closure contains only `propext`, `Classical.choice` and
+`Quot.sound`. The application reuses the earlier exchange and
+rephasing constructions; no new retained Lean declaration, freeze
+or coverage record is introduced.
+
+CD145 removes the need to align fine sets or request digits between
+ternary roots before testing the obstruction. It does not supply
+six requests. In particular, equal second digits of D owners with
+the same numerical cofactor remain equal under CD142's common
+permutation. The required actual incidence or alternative exchange,
+the q=23 exclusion and unrestricted Erdős #7 remain unresolved.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
