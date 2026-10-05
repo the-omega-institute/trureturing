@@ -369,3 +369,12 @@ even $H^2$ source, retaining the endpoint and every prime power. It pays
 the extra source derivative norm and improves the fixed-source regulator
 allowance in asymptotic order. Common changing-family Grams, actual
 inverse convergence and low/cofinal signs remain unresolved.
+
+
+The same [regulated budget's row and column estimate](regulated-prime-source-budget.md#the-regulator-also-pays-an-l2-source-norm)
+pays the complete prime action with the actual common $L^2$ source Gram.
+Its prime allowance vanishes uniformly on normalized sources along the
+original positive-reserve schedule; archimedean costs and actual signs
+remain payable. The [full-low derivative check](centered-prime-discrepancy-budget.md#a-high-lift-cannot-hide-the-full-low-spheres-derivative-cost)
+shows why arbitrary regular high lifts cannot make the earlier derivative
+certificate uniformly cheap. Neither estimate decides RH or full Robin.
