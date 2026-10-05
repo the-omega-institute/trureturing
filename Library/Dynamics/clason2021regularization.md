@@ -653,10 +653,10 @@ $H_T$ and $H_{0,T}=Q_0H_T$. The same actual kernels imply
 $$
 \begin{aligned}
 \|H_0-H_{0,T}\|_{\rm HS(L^2\to\mathcal F_c)}&\le d(T),\\
-d(T)&=left[
+d(T)&=\left[
 2\sum_{j=0}^1c_j\int_{y>T}(y-T)|G^{(j)}(y)|^2dy
 \right]^{1/2}\\
-&\quad+left[
+&\quad+\left[
 2\sum_{j=0}^1c_j\int_{y<-T}(-y-T)|G^{(j)}(y)|^2dy
 \right]^{1/2}\\
 &\quad+\|G\|_2 e^{-T}
