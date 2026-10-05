@@ -6,7 +6,6 @@
    utility: none
    digest: Parity masses of uniform weak compositions and biased Bernoulli vectors. -/
 
-import D5.S3.TotalVariation.Metric
 import Mathlib.Analysis.SumIntegralComparisons
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
@@ -88,10 +87,13 @@ private theorem profile_endpoint (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
       apply ht
       · intro y hy
         rw [uIcc_of_le (le_of_lt hd0)] at hy
-        convert (((hasDerivAt_const y a).add
-          ((hasDerivAt_id y).const_mul 2)).log (hfpos y hy.1).ne').div_const 2 using 1 <;>
-          dsimp [f] <;> ring
-      · exact hfcont.intervalIntegrable
+        have hD : HasDerivAt (fun z : ℝ => log (a + 2 * z) / 2)
+            ((2 / (a + 2 * y)) / 2) y := by
+          simpa only [Pi.add_apply, id_eq, zero_add, mul_one] using
+            (((hasDerivAt_const y a).add ((hasDerivAt_id y).const_mul 2)).log
+              (hfpos y hy.1).ne').div_const 2
+        exact hD.congr_deriv (by dsimp [f]; ring)
+      · exact hfcont.intervalIntegrable_of_Icc hd0.le
     have hr : (a + 2 * d) / a = (((M : ℝ) + d) / M) ^ 2 := by
       dsimp [a, m]
       field_simp [hden.ne', hM0.ne']
@@ -104,7 +106,7 @@ private theorem profile_endpoint (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
   have hdc : ((d - 1 : ℕ) : ℝ) = (d : ℝ) - 1 := by
     rw [Nat.cast_sub (by omega), Nat.cast_one]
   have hint0 : IntervalIntegrable f MeasureTheory.volume (0 : ℝ) d :=
-    hfcont.intervalIntegrable
+    hfcont.intervalIntegrable_of_Icc hd0.le
   have hsumlo : (∫ y in (1 : ℝ)..d, f y) ≤
       ∑ j ∈ range (d - 1), f (j + 1) := by
     have ht := AntitoneOn.integral_le_sum
@@ -132,26 +134,41 @@ private theorem profile_endpoint (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
     calc
       (∫ y in (0 : ℝ)..1, f y) ≤ ∫ _ in (0 : ℝ)..1, 1 / ((M : ℝ) - d) := by
         apply intervalIntegral.integral_mono_on (by norm_num)
-          (hfcont.mono (Icc_subset_Icc le_rfl (by linarith))).intervalIntegrable
-          (intervalIntegral.intervalIntegrable_const)
+          ((hfcont.mono (Icc_subset_Icc le_rfl (by linarith))).intervalIntegrable_of_Icc
+            (by norm_num))
+          intervalIntegrable_const
         intro y hy
         exact one_div_le_one_div_of_le (sub_pos.mpr hMd) (by linarith [had, hy.1])
       _ = 1 / ((M : ℝ) - d) := by simp
   have hadd : (∫ y in (0 : ℝ)..1, f y) + (∫ y in (1 : ℝ)..d, f y) =
       ∫ y in (0 : ℝ)..d, f y := by
     apply intervalIntegral.integral_add_adjacent_intervals
-    · exact (hfcont.mono (Icc_subset_Icc le_rfl (by linarith))).intervalIntegrable
-    · exact (hfcont.mono (Icc_subset_Icc (by norm_num) le_rfl)).intervalIntegrable
+    · exact (hfcont.mono (Icc_subset_Icc le_rfl (by linarith))).intervalIntegrable_of_Icc
+        (by norm_num)
+    · exact (hfcont.mono (Icc_subset_Icc (by norm_num) le_rfl)).intervalIntegrable_of_Icc
+        (by linarith)
   refine ⟨?_, ?_, ?_⟩
-  · apply HasDerivAt.sub
-    · convert HasDerivAt.fun_sum (u := range (d - 1)) (fun j hj =>
+  · have hD (j : ℕ) : HasDerivAt
+        (fun x : ℝ => log ((M : ℝ) - x + 2 * (j + 1)))
+        (-1 / ((M : ℝ) - m + 2 * (j + 1))) m := by
+      have harg : (M : ℝ) - m + 2 * (j + 1) ≠ 0 := by
+        have ht : 0 ≤ (j : ℝ) := Nat.cast_nonneg j
+        dsimp [a] at ha
+        linarith
+      simpa only [Pi.sub_apply, id_eq, zero_sub] using
         (((hasDerivAt_const m (M : ℝ)).sub (hasDerivAt_id m)).add_const
-          (2 * (j + 1))).log (by
-            have ht : 0 ≤ (j : ℝ) := Nat.cast_nonneg j
-            dsimp [a] at ha
-            linarith : (M : ℝ) - m + 2 * (j + 1) ≠ 0)) using 1
-      simp only [zero_sub, neg_div, sum_neg_distrib]
-    · exact (hasDerivAt_id m).mul_const _
+          (2 * ((j : ℝ) + 1))).log harg
+    change HasDerivAt (logProfile d M)
+      (-(∑ j ∈ range (d - 1), 1 / ((M : ℝ) - m + 2 * (j + 1))) -
+        log ((M : ℝ) / (M + d))) m
+    unfold logProfile
+    rw [← sum_neg_distrib]
+    apply HasDerivAt.sub
+    · apply HasDerivAt.fun_sum
+      intro j hj
+      simpa only [neg_div] using hD j
+    · simpa only [one_mul] using
+        (hasDerivAt_id m).mul_const (log ((M : ℝ) / (M + d)))
   · dsimp [f, a] at hsumhi
     rw [hint] at hsumhi
     dsimp [m] at hsumhi ⊢
@@ -160,5 +177,148 @@ private theorem profile_endpoint (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
     rw [hint] at hadd
     dsimp [m] at hsumlo ⊢
     linarith
+
+/- The logarithm-series remainder controls every point of the full interval,
+including both sides of the unconditioned center. -/
+private theorem profile_estimate (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
+    let m : ℝ := d * M / (2 * M + d)
+    ∀ x ∈ Icc (0 : ℝ) d,
+      |logProfile d M x - logProfile d M m| ≤
+        |x - m| / ((M : ℝ) - d) +
+          (d - 1 : ℝ) * (x - m) ^ 2 /
+            (((M : ℝ) - d / 2) * ((M : ℝ) - d)) ∧
+      logProfile d M x - logProfile d M m ≤ 1 / 2 := by
+  dsimp only
+  have hd0 : (0 : ℝ) < d := by exact_mod_cast (by omega : 0 < d)
+  have hMc : 3 * (d : ℝ) ≤ M := by exact_mod_cast hM
+  have hMd : (d : ℝ) < M := by linarith
+  have hM0 : (0 : ℝ) < M := by linarith
+  have hden : (0 : ℝ) < 2 * M + d := by positivity
+  let m : ℝ := d * M / (2 * M + d)
+  have hm0 : 0 < m := by dsimp [m]; positivity
+  have hmhalf : m ≤ (d : ℝ) / 2 := by
+    dsimp [m]
+    rw [div_le_iff₀ hden]
+    nlinarith
+  have hmd : m < d := by linarith
+  let T : ℝ := M - d
+  let L : ℝ := M - d / 2
+  have hT : 0 < T := by dsimp [T]; linarith
+  have hL : 0 < L := by dsimp [L]; linarith
+  let s : ℝ := -(∑ j ∈ range (d - 1),
+    1 / ((M : ℝ) - m + 2 * (j + 1))) - log ((M : ℝ) / (M + d))
+  have hs := profile_endpoint d M hd hM
+  change HasDerivAt (logProfile d M) s m ∧ 0 ≤ s ∧ s ≤ 1 / T at hs
+  intro x hx
+  let Δ : ℝ := x - m
+  let a : ℕ → ℝ := fun j => M - m + 2 * (j + 1)
+  have hΔ : |Δ| ≤ (d : ℝ) - m := by
+    apply abs_le.mpr
+    dsimp [Δ]
+    constructor <;> linarith [hx.1, hx.2]
+  have ha (j : ℕ) : 0 < a j ∧ L ≤ a j ∧ T ≤ a j - |Δ| := by
+    have hj : 0 ≤ (j : ℝ) := Nat.cast_nonneg j
+    dsimp [a, L, T]
+    constructor
+    · linarith
+    constructor <;> linarith
+  have hz (j : ℕ) : 0 < 1 - Δ / a j := by
+    have h := ha j
+    have hΔle := le_abs_self Δ
+    apply sub_pos.mpr
+    rw [div_lt_one (ha j).1]
+    linarith
+  have heq (j : ℕ) :
+      log ((M : ℝ) - x + 2 * (j + 1)) - log (a j) =
+        log (1 - Δ / a j) := by
+    have hb : 0 < (M : ℝ) - x + 2 * (j + 1) := by
+      have hj : 0 ≤ (j : ℝ) := Nat.cast_nonneg j
+      linarith [hx.2]
+    rw [← log_div hb.ne' (ha j).1.ne']
+    congr 1
+    calc
+      ((M : ℝ) - x + 2 * (j + 1)) / a j = (a j - Δ) / a j := by
+        congr 1
+        dsimp [a, Δ]
+        ring
+      _ = 1 - Δ / a j := by rw [sub_div, div_self (ha j).1.ne']
+  have hrem (j : ℕ) :
+      |log (1 - Δ / a j) + Δ / a j| ≤ Δ ^ 2 / (L * T) := by
+    have hj := ha j
+    have hu : |Δ / a j| < 1 := by
+      rw [abs_div, abs_of_pos hj.1, div_lt_one hj.1]
+      linarith
+    have hh := Real.abs_log_sub_add_sum_range_le hu 1
+    norm_num only [sum_range_one, pow_one, Nat.cast_one, div_one] at hh
+    rw [add_comm] at hh
+    have he : |Δ / a j| ^ 2 / (1 - |Δ / a j|) =
+        Δ ^ 2 / (a j * (a j - |Δ|)) := by
+      rw [abs_div, abs_of_pos hj.1, div_pow, sq_abs]
+      field_simp [hj.1.ne', (lt_of_lt_of_le hT hj.2.2).ne']
+    rw [he] at hh
+    refine hh.trans (div_le_div_of_nonneg_left (sq_nonneg Δ)
+      (mul_pos hL hT) ?_)
+    exact mul_le_mul hj.2.1 hj.2.2 hT.le hj.1.le
+  have htangent (j : ℕ) : log (1 - Δ / a j) ≤ -Δ / a j := by
+    have hh := log_le_sub_one_of_pos (hz j)
+    convert hh using 1
+    ring
+  have hdiff : logProfile d M x - logProfile d M m =
+      (∑ j ∈ range (d - 1), log (1 - Δ / a j)) -
+        Δ * log ((M : ℝ) / (M + d)) := by
+    dsimp [logProfile, Δ, a]
+    have hh : (∑ j ∈ range (d - 1),
+        (log ((M : ℝ) - x + 2 * (j + 1)) -
+          log ((M : ℝ) - m + 2 * (j + 1)))) =
+        ∑ j ∈ range (d - 1), log (1 - (x - m) /
+          ((M : ℝ) - m + 2 * (j + 1))) :=
+      sum_congr rfl (fun j _ => heq j)
+    rw [sum_sub_distrib] at hh
+    nlinarith only [hh]
+  have hlin : (∑ j ∈ range (d - 1), Δ / a j) +
+      Δ * log ((M : ℝ) / (M + d)) = -s * Δ := by
+    dsimp [s, a]
+    simp only [div_eq_mul_inv, ← mul_sum]
+    ring
+  have herror : |logProfile d M x - logProfile d M m - s * Δ| ≤
+      (d - 1 : ℝ) * Δ ^ 2 / (L * T) := by
+    have hh : logProfile d M x - logProfile d M m - s * Δ =
+        ∑ j ∈ range (d - 1), (log (1 - Δ / a j) + Δ / a j) := by
+      rw [sum_add_distrib, hdiff]
+      linarith
+    rw [hh]
+    refine (abs_sum_le_sum_abs _ _).trans ?_
+    calc
+      (∑ j ∈ range (d - 1), |log (1 - Δ / a j) + Δ / a j|) ≤
+          ∑ _j ∈ range (d - 1), Δ ^ 2 / (L * T) := sum_le_sum (fun j _ => hrem j)
+      _ = (d - 1 : ℝ) * Δ ^ 2 / (L * T) := by
+        simp only [sum_const, card_range, nsmul_eq_mul]
+        rw [Nat.cast_sub (by omega : 1 ≤ d), Nat.cast_one]
+        ring
+  have hupper : logProfile d M x - logProfile d M m ≤ s * Δ := by
+    rw [hdiff]
+    have hh := sum_le_sum (s := range (d - 1)) (fun j _ => htangent j)
+    simp only [neg_div, sum_neg_distrib] at hh
+    linarith
+  constructor
+  · change |logProfile d M x - logProfile d M m| ≤
+      |Δ| / T + (d - 1 : ℝ) * Δ ^ 2 / (L * T)
+    calc
+      _ ≤ |logProfile d M x - logProfile d M m - s * Δ| + |s * Δ| := by
+        simpa only [sub_add_cancel] using abs_add_le
+          (logProfile d M x - logProfile d M m - s * Δ) (s * Δ)
+      _ ≤ (d - 1 : ℝ) * Δ ^ 2 / (L * T) + (1 / T) * |Δ| := by
+        apply add_le_add herror
+        rw [abs_mul, abs_of_nonneg hs.2.1]
+        exact mul_le_mul_of_nonneg_right hs.2.2 (abs_nonneg Δ)
+      _ = _ := by ring
+  · have hΔd : Δ ≤ d := by dsimp [Δ]; linarith [hx.2]
+    have hstep := mul_le_mul_of_nonneg_left hΔd hs.2.1
+    have hstep2 := mul_le_mul_of_nonneg_right hs.2.2 hd0.le
+    have hcap : (1 / T) * d ≤ (1 : ℝ) / 2 := by
+      rw [one_div_mul_eq_div, div_le_iff₀ hT]
+      dsimp [T]
+      linarith
+    exact hupper.trans (hstep.trans (hstep2.trans hcap))
 
 end D5.S3.TotalVariation.ParityCompositionKernel
