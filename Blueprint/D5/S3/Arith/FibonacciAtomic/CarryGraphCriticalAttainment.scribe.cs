@@ -36,7 +36,7 @@ internal sealed class CarryGraphCriticalAttainmentDocument : IScribeDocumentDefi
         var states = Call("S", m); var actions = Call("A", m, s); var policies = Call("P", m);
         var lawType = Seq(Call("Fin", m), Sp, To, Sp, Ty("R"));
         var valueType = Seq(states, Sp, To, Sp, Ty("R"));
-        var ratios = Seq(OpenBrace, y, Sp, InMacro, Sp, Ty("R"), Mid,
+        var ratios = Seq(OpenBrace, y, Sp, InMacro, Sp, Ty("R"), Mid, Sp,
             Ex(p, lawType, Ex(k, Call("Fin", m), And(
                 All(i, Call("Fin", m), Pos(Call("p", i))),
                 Equal(Seq(new Formula.Subscript(F.Sum, i), Call("p", i)), D(1)),
@@ -44,7 +44,7 @@ internal sealed class CarryGraphCriticalAttainmentDocument : IScribeDocumentDefi
                 Equal(y, Frac(Call("cost", p), Call("p", k)))))), CloseBrace);
         var oneStep = Add(Call("r", s), Mul(Frac(D(1), D(2)),
             Call("inf", Seq(OpenBrace, Sub(Call("v", Call("successor", s, a)),
-                Mul(x, Call("b", a))), Mid, a, Sp, InMacro, Sp, actions, CloseBrace))));
+                Mul(x, Call("b", a))), Mid, Sp, a, Sp, InMacro, Sp, actions, CloseBrace))));
         var stateOrbit = Call("iterate", Call("step", f), d, start);
         return DocumentDefinition.Create(ScribeNode.Create(
             "The discounted root price detects the full real slope and yields a positive optimal output law.",
@@ -98,10 +98,10 @@ internal sealed class CarryGraphCriticalAttainmentDocument : IScribeDocumentDefi
         var star = G(alpha);
         Formula Pstar(Formula index) => Call("ofDigits", Call("labelDigit", star, index));
         var law = Par(Seq(i, Colon, Sp, indices, Sp, Mapsto, Sp, Pstar(i)));
-        var minimum = Call("inf", Seq(OpenBrace, Pstar(i), Mid, i, Sp, InMacro, Sp, indices, CloseBrace));
+        var minimum = Call("inf", Seq(OpenBrace, Pstar(i), Mid, Sp, i, Sp, InMacro, Sp, indices, CloseBrace));
         var fair = V("fairTape");
         var returned = Equal(Call("sample", m, star, tape), Call("some", Par(Seq(i, Comma, Sp, n))));
-        var eventSet = Seq(OpenBrace, tape, Sp, InMacro, Sp, V("Tape"), Mid, Ex(n, Ty("N"), returned), CloseBrace);
+        var eventSet = Seq(OpenBrace, tape, Sp, InMacro, Sp, V("Tape"), Mid, Sp, Ex(n, Ty("N"), returned), CloseBrace);
         var critical = And(Pos(T(star)), All(i, indices, Pos(Pstar(i))),
             Equal(Seq(new Formula.Subscript(F.Sum, Seq(i, Sp, InMacro, Sp, indices)), Pstar(i)), D(1)),
             Equal(minimum, T(star)),
