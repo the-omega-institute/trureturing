@@ -5605,3 +5605,47 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 三个具名目标的完整精确临时 Lean 第二轮真实编译通过，host `6444` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-proper-action.lean` 为 204716 字节，SHA256 `b0af58ed2b9a0f074937f3adf7eb2916f7aa57781383f2aca95289be93fee627`；此前成功原覆盖间隔源码为完整 offset0 字节前缀，无新增 import、依赖构建或版本变更。首轮两处接口名称和存在量词展开错误的完整源码日志保留排除；使用实际 root `isCompact_closedBall` 与 `exists_prop` 修复，没有弱化目标。协作实施与调用方只读复核完成，没有新增 SSHX 共识。
 
 该原等距乘法、紧闭球、有限球覆盖与紧集距离界消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批消除了实际覆盖作用另供 proper 性质的前提，未从一般原 `M,N` 双曲流形数据内部构造该覆盖。原商度量、体积、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 实际原覆盖内部提供 proper 性质后的未归一化原群分类
+
+统一消费者只输入任意宇宙的同一原等距表示 `ρ`、原自由性、独立目标宇宙的实际覆盖 `π : H3 → M`、同一表示逐点纤维保持，以及原群中真正有限指数幂零子群 `H`。先内部消费前批原覆盖间隔与紧集交点有限性，得到 canonical 同一 `ρ` 的 proper 性质；再消费此前共同边界点与真实原等距共轭分类。因此实际共同边界点、正逆归一化、归一化后的自由性与 proper 性质均内部提供，无需另给 proper 性质、间隔、边界点、归一化或生成元。
+
+单位缩放分支返回原群中正规有限指数至多二的实际平移核 `K`、单射实际加法位移字符 `U : Additive K →+ ℂ`，以及逐元素的真实共轭平移等式和原表示等式。实际 `U.range.toIntSubmodule` 是离散、有限、自由的整数模，整数秩至多二；同时对任意实际高度阈值，归一化后的同一表示在原 horoball 子空间的轨道商投影是拓扑覆盖。非单位缩放分支返回同一个原 `G` 的整数幂生成元。保留反向等距变换，不要求原 `H` 正规，也未推出秩恰二、余紧性、有限体积或尖点嵌入。
+
+完整具名目标 `virtuallyNilpotentFreeOriginalCoveringRepresentation_elementaryModuleClassification` 的精确临时 Lean 第四次实际编译 exit0，host `65796`；完整日志零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-elementary-module.lean` 为 208343 字节，SHA256 `f6e1b487e09a366471923df202b8b6290e196a87c74dec657acfef257bf1cd94`；前批成功 proper 源码为完整 offset0 前缀，无新增 import、依赖构建或版本变更。前两次命名空间及局部 proper 类型推断失败的完整源码日志保留排除；第三次日志虽无诊断，但恢复后进程句柄失效，实际退出码无法读取，故不作为成功证据。第四次同时读取实际退出码并持久化，源码未改。协作实施与调用方只读语义复核完成，没有新增 SSHX 共识。
+
+该原覆盖、既有分类、真实平移模和 horoball 覆盖消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批组装实际原覆盖前提下的统一分类，尚未从一般原流形假设构造覆盖或完整 deck 表示。原商度量与体积的匹配、尖点分离、有限体积薄部分解、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 实际原覆盖作用内部推出同一原群可数
+
+对同一个任意宇宙的原等距表示 `ρ`，仅要求在一个原点有正轨道间隔，前批证明使每个实际自然数界的原位移元素集合有限。钉版可数并接口使这些有限集合的自然数并可数；每个原群元素的实际位移是实数，`exists_nat_ge` 提供包含它的自然数界。因此全部原群元素包含于这个可数并，得到真实 `Countable G`，没有可数性、有限生成或虚幂零输入，也没有只证明轨道点集合可数后遗漏原元素的单射性。
+
+实际原覆盖消费者从原自由性、真正给定的覆盖和同一表示逐点纤维保持内部提供间隔，故同一原 `G` 可数。目标空间与原群保持独立宇宙，不要求覆盖满射或纤维轨道传递性。这里仍消费实际给定覆盖，未从一般原流形数据构造它；群可数也不提供有限体积或完整刚性。
+
+两个具名目标 `originalRepresentation_countableGroup_of_pointGap` 与 `freeOriginalCoveringRepresentation_countableGroup` 的完整精确临时 Lean 首轮真实编译通过，host `70182` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-countable-group.lean` 为 209739 字节，SHA256 `a7f48c2cde61982babb04b0fba333110d126a67912e54263124e0c46a462e9cd`；前批成功原覆盖分类源码为完整 offset0 前缀，无新增 import、依赖构建或版本变更。实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该原有界位移有限性、可数并和自然数上界接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批可消除后续原覆盖作用消费者的外供群可数性前提；原流形度量覆盖构造、原商度量与体积的匹配、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 同一实际覆盖的原轨道商到原底空间同胚
+
+对任意独立宇宙的实际底空间 `M`、同一原等距表示 `ρ` 与真正给定的实际覆盖 `π : H3 → M`，另明确要求 `π` 满射、同一表示逐点纤维保持，以及同一原群在每条实际纤维上传递：若 `π p = π q`，存在原 `g : G` 使 `ρ(g)(p)=q`。内部构造真实 `e : OrbitQuotient ρ ≃ₜ M`，逐原点满足 `e (orbitQuotientMk ρ p) = π p`。没有把纤维保持偷换成纤维传递，没有假设这个同胚，也不需要原自由性或 proper 性质。
+
+同一 `π` 的 quotient lift 借助纤维保持良定义；纤维传递使其单射，实际满射性使其满射。原覆盖连续性给出正向连续性，实际满射覆盖的 quotient-map 接口和精确的逆复合等式 `e.symm ∘ π = orbitQuotientMk ρ` 给出逆向连续性。因此不是仅构造集合等价，也没有换用另一个覆盖或另一个原作用。这里得到拓扑同胚，未宣称它保持原 `M` 度量、黎曼结构或体积；构造一般原流形的实际覆盖及完整 deck 纤维传递性仍须独立完成。
+
+具名目标 `originalCoveringRepresentation_orbitQuotientHomeomorph` 的完整精确临时 Lean 首轮真实编译通过，host `80961` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-quotient-homeomorph.lean` 为 211714 字节，SHA256 `ba0fd7d8216b3c887978f83a7f3a0ddd949978c54e92c403e743c581c883c30d`；前批成功原群可数源码为完整 offset0 前缀，无新增 import、依赖构建或版本变更。实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该实际 quotient lift、覆盖连续性和 quotient-map 接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。既有 canonical `IsometricOrbitMetric.orbitMetricSpace` 和 `orbitProperSpace` 可提供实际轨道商度量及其 proper 性质，不能据此直接认定原底空间度量匹配。本批不完成原商度量与体积的匹配、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 或官方验收。
+
+
+### 实际原覆盖作用的轨道商投影在原正半径球上保距
+
+对同一个原等距表示 `ρ` 和原点 `p`，真实正轨道间隔 `r` 使每个非单位原元素在 `p` 的位移至少为 `r`。若原 `x,y` 均在实际球 `ball p (r/4)`，三角不等式和同一 `ρ(g)` 的等距性给出非单位平移的 `dist x (ρ(g)(y))` 至少为 `dist x y`。单位元素给出原距离本身；canonical `IsometricOrbitMetric.orbitDistance` 的实际轨道距离下确界因此逐字等于原 `dist x y`。没有另供局部保距结论，没有重证或替换 canonical 商度量。
+
+实际原覆盖消费者仅需原自由性、真正给定的覆盖 `π` 和同一表示的纤维保持，内部提供每个原点的正间隔及 canonical proper 性质。在由这个实际 proper 证明给出的 `orbitMetricSpace ρ` 中，实际 `orbitQuotientMk ρ` 限制到每个原点附近的某个正半径球是 `Isometry`。原群和目标空间保持独立宇宙，不要求有限生成、虚幂零、满射或纤维轨道传递性。商度量保持原 quotient topology；该结论尚未与原底空间 `M` 的实际度量相匹配。
+
+两个具名目标 `originalRepresentation_orbitDistance_eq_dist_of_pointGap` 与 `freeOriginalCoveringRepresentation_locallyIsometricOrbitProjection` 的完整精确临时 Lean 第二轮真实编译通过，host `67218` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-locally-isometric-orbit.lean` 为 214278 字节，SHA256 `d5f05f64042315b6f625f7dba38a7ba1ab885324bbc74133d9c7b4765f92b56a`；仅新增 43 字节的热缓存 canonical `IsometricOrbitMetric` import，其后完整保留前批成功原商同胚源码，无新依赖构建或版本变更。首轮实际 exit0 但含一条局部 `letI` 风格警告，完整源码日志保留排除；仅改证明内部绑定为 `let`，未关闭 linter。第二轮实际退出码已读取并持久化，协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该原三角估计、已有轨道距离下确界与实际 canonical 商度量消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。后续原度量桥仍须从一般原流形条件内部构造覆盖及 H³ 等距识别；原商到 `M` 同胚的保距性、体积匹配、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。

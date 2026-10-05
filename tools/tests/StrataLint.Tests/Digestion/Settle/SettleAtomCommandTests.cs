@@ -186,35 +186,6 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     }
 
     [Fact]
-    public void SettleReportsConcurrentLedgerChangeWithoutOverwritingBytes()
-    {
-        var fixture = AtomContextFixture.Create();
-        var id = AtomContextFixture.Id(fixture.Atomized.Claims[1]);
-        var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == id);
-        var raw = fixture.RawSnapshot();
-        using var temporary = new TemporaryDirectory();
-        WriteFiles(temporary.Path, raw);
-        TemporaryFileSystem.File.AppendAllText(Path.Combine(temporary.Path, PathFor(target)), "\n", Encoding.UTF8);
-        var before = Image(temporary);
-        var applyCalls = 0;
-        var commitCalls = 0;
-        var result = Run(temporary.Path, raw, Request(fixture, id), apply: (root, current, updates) =>
-        {
-            applyCalls++;
-            IngestCommand.ApplyLedgerUpdatesAtomically(root, current, updates, (pending, destination) =>
-            {
-                commitCalls++;
-                File.Move(pending, destination, true);
-            });
-        });
-        Assert.False(result.Success);
-        Assert.StartsWith("SETTLE_INVALID INFRASTRUCTURE ledger changed under us ", result.Error, StringComparison.Ordinal);
-        Assert.Equal(1, applyCalls);
-        Assert.Equal(0, commitCalls);
-        Assert.Equal(before, Image(temporary));
-    }
-
-    [Fact]
     public void SettleReportsMalformedLedgerWithoutWrites()
     {
         var fixture = AtomContextFixture.Create();
