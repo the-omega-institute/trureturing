@@ -121,14 +121,9 @@ public sealed class DependencyDirectionTests
     [Fact]
     public void ScribeTestsReferenceOnlyEngineAndScribe()
     {
-        // 原为产物层(IL)断言,钉 `["StrataLint.Engine", "StrataLint.Scribe",
-        // "StrataLint.TestSupport"]`,是本族三条里唯一**没有**声明层半边的一条。
-        // 换成同形的 csproj 断言,理由与 FunctionalTests 那条相同:
-        // 直接声明为 {Scribe, TestSupport},而 Scribe 的引用集由
-        // ScribeReferencesExactlyEngineJintQuestPdfTomlynAndTruth 钉死 ⟹
-        // 传递可达的 StrataLint* 恰为 {Scribe, Engine, TestSupport} = 原 IL 断言的集合。
-        // **对照:EngineeringScopeTests 那条不能这样处理** —— 它钉住的 IL 集合是其可达集合的
-        // **真子集**(Engine 可达却未被使用),那条断言因此有可达的独有保护,保留不动。
+        // 直接项目引用由本断言核对;Scribe 的依赖由
+        // ScribeReferencesExactlyEngineJintQuestPdfTomlynAndTruth 核对。
+        // 两者共同限定声明层的传递依赖;IL 使用集是独立的检查对象。
         Assert.Equal(
             [
                 "../../StrataLint.Scribe/StrataLint.Scribe.csproj",

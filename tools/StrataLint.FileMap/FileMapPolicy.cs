@@ -98,11 +98,9 @@ internal static partial class FileMapPolicy
     private static readonly ImmutableHashSet<string> GeneratedActorWords =
         ["reader", "harness-gate", "none"];
 
-    // kind=data 的 verified_by 曾只被「至少有一个真 verifier」检查(InspectDataVerifiers),
-    // 所以一个名字死掉后,只要同条目还留着另一个活的,就永远查不出来:#1116 删掉 emit-check
-    // 目标之后,`Library/*/*.md` 仍写着它,而 LibraryNoteCatalog 还在,于是 `.Any(...)` 放行。
-    // 这里补上逐名检查——每个名字要么是已知的 loader/schema 实现,要么是规则号那种刻意的
-    // 非类型名。规则号形如 SL-017,由 RuleId 的封闭字母表背书,不是自由文本。
+    // kind=data 的 verified_by 必须逐名解析:每个名字要么是已知的 loader/schema
+    // 实现,要么符合 SL-nnn 的三位数字形状;该形状不证明规则与路径相绑定。
+    // 同条目中存在其他有效 verifier 不能豁免悬空名字。
     private static readonly Regex DataVerifierRuleName = new(
         @"^SL-\d{3}$",
         RegexOptions.CultureInvariant);

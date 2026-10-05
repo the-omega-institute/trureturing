@@ -85,9 +85,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
     [Fact]
     public void DepositRefusesAnAtomIdThatResolvesToNoLedgerEntryAndFreezesNothing()
     {
-        // #6676: 形状合法但并不存在的 atom id(实例 `ATOM_ID=none`,满足 ^[a-z0-9-]+$)
-        // 此前会先走完 freeze,再在 cover 处失败,留下已冻结而无覆盖的模块。
-        // 冻结不可逆,故这里同时断言两件事:非零退出,**且一次冻结都没有发生**。
+        // 形状合法但不存在的 atom id 必须在冻结前被拒绝。
+        // 冻结不可逆,故同时断言非零退出与零次冻结。
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         fixture.ChangeFormalization();
