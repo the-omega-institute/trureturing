@@ -3170,6 +3170,93 @@ no errors or `sorryAx`. No new retained declaration, freeze or
 coverage record is introduced. This does not exclude the five-word
 case at 23, the smaller prime square layers, or unrestricted Erdős #7.
 
+### A squared 19 needs four or five private ternary words
+
+Keep the original global count-then-modulus-sum-minimal distinct odd
+nonunit whole cover F, actual pure moduli 3 and 9, and original
+ternary heights at most two. Use the same factorization, positive
+W and coprimality assumptions as CD87, now with $q=19$. If an actual
+original has q-height at least two, an actual pure $q^2$ original h
+exists and satisfies
+
+$$
+\boxed{|\Lambda_h|\in\{4,5\}.}
+\tag{CD102}
+$$
+
+The two-terminal capacity bound CD65 already leaves only three,
+four or five words. Suppose there are three. CD56 gives at least
+five top-positive second digits. Removing the unit digits U leaves
+at least two positive digits and at least sixteen safe digits in
+all. Apply the positive-first, zero-filler selection to obtain five
+disjoint pairs $(a_t,b_t)$. At least two have positive a-count;
+every other pair has zero top count on both sides. Declare every
+word good for a zero pair and use the strict inequality of CD90
+for a positive pair. Write its guaranteed gain as $\varepsilon_t$:
+
+$$
+\varepsilon_t\in\{0,1\},\qquad
+\sum_{t=1}^{5}\varepsilon_t\ge2,\qquad
+|C(a_t,u_t)|+2|C(b_t,u_t)|+\varepsilon_t
+\le n(a_t)+n(b_t).
+\tag{CD103}
+$$
+
+The finite Hall construction supplies five distinct good
+modulo-27 parents outside one reserved private word v. Above v,
+reserve only two parents, for pure outputs 27 and 27q. Leave its
+third parent in the ordinary active code. Thus there are seven
+active parents: five collapsed pair parents and two ordinary
+parents, each of the latter split into three fine pieces.
+
+The code therefore needs eleven symbols: five b-digits for the
+paired parents and six other digits for the remaining fine pieces.
+It avoids U and all five a-digits. The exact capacity is
+
+$$
+9\cdot3-6-2\cdot5=11=19-3-5.
+\tag{CD104}
+$$
+
+Pair low outputs keep their original cofactor phases and their
+assigned parent. For a residual target in that parent, the three
+children are paid by the b-top output $81m$, the a-top output $81m$,
+and one extra b-top output $81qm$, respectively, as in CD85. The
+source preserves the entire $9W$ coordinate. The ordinary fine
+pieces and unchanged originals use the same exact-hole argument.
+There are no pure 81 or 81q outputs in this construction.
+
+Let $O_{\rm all}$ be all paired top owners outside their selected
+word and C the b-top owners at their selected word. Equation CD103
+gives $|O_{\rm all}|-|C|\ge2$. Retain one actual member of
+$O_{\rm all}$ as the pure 27q donor; h supplies pure 27. Delete the
+other members and duplicate precisely C. The total class-count
+change is at most
+
+$$
+1-|O_{\rm all}|+|C|\le1-2=-1.
+\tag{CD105}
+$$
+
+All ordinary nonunit labels remain $27m,27qm,81m$, extras are
+$81qm$, and unused unit owners use $243,243q$. Their ternary and
+q-exponents, together with their cofactor, recover the original
+numerical label; pair digits outside U ensure that extras have
+nonunit cofactor. All replacement labels are distinct odd nonunits
+and divisible by 27, hence fresh against the retained shallow
+originals. This constructs a strictly smaller whole cover and
+contradicts global count minimality, excluding the three-word case.
+
+A complete scoped transient Lean application checks CD102 from the
+original family and an actual deep original, including pair supply,
+finite code, source coverage, label legality and the strict count
+comparison. Its 130 axiom reports use only `propext`,
+`Classical.choice` and `Quot.sound`, with no errors or `sorryAx`.
+No new retained declaration, freeze or coverage record is introduced.
+The four- and five-word cases at 19, complete exclusion of its square
+layer, the whole ternary-height-two branch, and unrestricted Erdős #7
+remain unresolved.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
