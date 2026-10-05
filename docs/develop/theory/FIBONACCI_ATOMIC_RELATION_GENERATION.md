@@ -58866,3 +58866,138 @@ $$
 最后一步使用 $\log x\le2\sqrt x$。对 $0\le x<2$，$\psi(x)=0$。这些是经典 Chebyshev 中间估计，见 Tom M. Apostol，*Introduction to Analytic Number Theory*，[DOI:10.1007/978-1-4757-5579-4](https://doi.org/10.1007/978-1-4757-5579-4)，素数分布的初等估计章节。将此界代入（387.5），得到（387.6）；因为 $\log N=O(N)$，其右侧是 $O(N)$。
 
 （387.19）说明，实际首商块携带严格正的 $cN\log N$ 主项，而（387.6）证明其余实际商块携带相反的同量级主项。由 §386 的 $k\ge0$，商块权重全部非负，故这项抵消来自实际 $H_m$ 的符号。未中心化的绝对商块和至少包含首块的 $cN\log N+O(N)$ 质量；不能把有符号余块的 $O(N)$ 余差读作绝对预算。这一确定的主项抵消尚未给出 $H_N=O_\varepsilon(N^{1/2+\varepsilon})$，也未控制（386.21）的实际 Robin 有符号积分尾项。 $\square$
+## 追加锚（本行以下为增补区）
+
+## 388. 实际 Binet 逆核的四分之一矩与分辨率尾证书
+
+**定义 388.1（同一逆核的加权预算与观察截断）。** 沿用 §§384–387 的实际 $q=\Phi^{-2}=(3-\sqrt5)/2$、$\beta_d=\log(1-(-q)^d)$、$a=\beta_1>0$ 和 Dirichlet 卷积逆 $\gamma=\beta^{-1}$。定义
+
+$$
+T_{1/4}=\sum_{d=2}^{\infty}|\beta_d|d^{1/4},\qquad
+\delta_{1/4}=a-T_{1/4},\qquad
+M_{1/4}=\sum_{d=1}^{\infty}|\gamma_d|d^{1/4}.
+\tag{388.1}
+$$
+
+对整数 $D\ge1$，置 $A_D=\sum_{d=1}^D|\gamma_d|d^{1/4}$。对 $\alpha\ge0$ 及 $f(0)=0$ 的复数序列，置
+
+$$
+\|f\|_\alpha=\sup_{N\ge1}\frac{|f(N)|}{N^\alpha},\qquad
+(\mathcal S_\gamma f)(N)=\sum_{d=1}^N\gamma_df(\lfloor N/d\rfloor),
+\tag{388.2}
+$$
+
+$$
+(\mathcal S_{\gamma,D}f)(N)
+=\sum_{d=1}^{\min(D,N)}\gamma_df(\lfloor N/d\rfloor).
+\tag{388.3}
+$$
+
+这里的 $\beta_d$ 是 Binet 校正系数，不是原始树的叶子 $\beta=\rho(\alpha)$；$D$ 是这份算术逆核的指标截断，不是单一收缩坐标的精度。
+
+**推论 388.2（完整矩预算与可取得的截断误差）。** 在下述原公式、解析尾界与定向数值供应器前提下，实际核满足
+
+$$
+\boxed{\delta_{1/4}>\frac7{500},\qquad
+M_{1/4}<\frac{500}{7}.}
+\tag{388.4}
+$$
+
+对每个 $\alpha\ge0$、$D\ge1$ 和 $\|f\|_\alpha<\infty$ 的同一输入，有
+
+$$
+\boxed{
+\|\mathcal S_\gamma f-\mathcal S_{\gamma,D}f\|_\alpha
+\le\frac{M_{1/4}-A_D}{(D+1)^{\alpha+1/4}}\|f\|_\alpha
+\le\frac{500}{7(D+1)^{\alpha+1/4}}\|f\|_\alpha.}
+\tag{388.5}
+$$
+
+特别地，平方根增长空间上的逆核截断成本是 $O(D^{-3/4})$。这控制的是逆核的近似，不声称实际 $H$ 属于该空间。
+
+对每个固定整数 $N\ge1$，可将同一输入预算换成有限、较低分辨率的可观察量
+
+$$
+C_{\alpha,N,D}
+=\max_{1\le m\le\lfloor N/(D+1)\rfloor}\frac{|f(m)|}{m^\alpha},
+\tag{388.6}
+$$
+
+空最大值取零。即使 $\|f\|_\alpha=+\infty$，仍有
+
+$$
+\boxed{
+|(\mathcal S_\gamma f-\mathcal S_{\gamma,D}f)(N)|
+\le N^\alpha C_{\alpha,N,D}
+\frac{M_{1/4}-A_D}{(D+1)^{\alpha+1/4}}.}
+\tag{388.7}
+$$
+
+因此被省略的大核指标只读取较小商输入；它们的尾成本能用这些实际低商读数认证。式（388.7）并未消去保留部分中的高商读数。
+
+**依据与参数对应。** 这里直接复用 Helge Glöckner、Lutz G. Lucht，*Weighted inversion of general Dirichlet series*，[arXiv:1112.0749v2](https://arxiv.org/pdf/1112.0749v2)，Proposition 1（pp. 4–5）的带权半群 Banach 代数与 Theorem 2(a)（p. 4）的小范数求逆。取乘法半群 $\mathbb N_{>0}$、单位一和乘法权 $w(d)=d^{1/4}$。其范数满足 $\|u*v\|_w\le\|u\|_w\|v\|_w$。将 $\beta=a\varepsilon+b$ 代入已有 Neumann 逆，$\|b\|_w=T_{1/4}<a$ 给
+
+$$
+\gamma=a^{-1}\sum_{j=0}^{\infty}(-b/a)^{*j},\qquad
+\|\gamma\|_w\le\frac1{a-T_{1/4}}.
+\tag{388.8}
+$$
+
+该逆与既有形式 Dirichlet 逆相同，因为非零首项的有限逆递推唯一。这里不重新证明通用带权逆定理。特别地，在加法坐标 $\lambda=\log d$ 中，权是 $e^{\lambda/4}$，不满足该文 Theorem 1 的 admissibility 条件 $w(k\lambda)^{1/k}\to1$；不能套用那条谱定理。Proposition 1 与小范数求逆不要求该条件。
+
+完整数值预算只须求出一个有限首部，再独立支付全部系数尾部。对每个 $d\ge1$，
+
+$$
+|\beta_d|\le\frac{q^d}{1-q},\qquad d^{1/4}\le d.
+\tag{388.9}
+$$
+
+因此对 $J\ge1$，
+
+$$
+\sum_{d>J}|\beta_d|d^{1/4}
+\le\frac{q^{J+1}[(J+1)-Jq]}{(1-q)^3}.
+\tag{388.10}
+$$
+
+取 $J=64$，192 位 python-flint 0.9.0 定向计算给
+
+$$
+\begin{aligned}
+a&\approx0.3235071311574467,\\
+\sum_{d=2}^{64}|\beta_d|d^{1/4}&\approx0.3095037285290337,\\
+\text{式（388.10）的尾上界}&<1.166\times10^{-25},\\
+\delta_{1/4}&>0.0140034026284130>7/500,\\
+M_{1/4}&<71.411215297845<500/7.
+\end{aligned}
+\tag{388.11}
+$$
+
+正式数字使用 [程序](../../reports/fib-robin-boundary/binet_inverse_tail.py) 与 [结果](../../reports/fib-robin-boundary/binet-inverse-tail.json) 中的有理二进制端点，显示小数不承担证书。原始 Binet 公式与解析尾界承担无限系数部分，有限运算依赖所声明的定向供应器；新增桥接未作 Lean 核验。
+
+接着直接应用已有限化的商关系。对 $d>D$，$\lfloor N/d\rfloor\le N/d$，并且
+
+$$
+\sum_{d>D}|\gamma_d|d^{-\alpha}
+\le(D+1)^{-\alpha-1/4}\sum_{d>D}|\gamma_d|d^{1/4}
+=(D+1)^{-\alpha-1/4}(M_{1/4}-A_D).
+\tag{388.12}
+$$
+
+对同一实际输入取绝对值，得到（388.5）。所有未保留的非零商还满足 $1\le\lfloor N/d\rfloor\le\lfloor N/(D+1)\rfloor$，所以用有限 $C_{\alpha,N,D}$ 替换全域范数，得到（388.7）。这一步只是既有逆核的误差运输，不新增抽象增长判据。
+
+**实际 FIB 回接与剩余义务。** §§384–387 的同一源身份 $e=\mu*\beta$ 已给
+
+$$
+\mathfrak M(N)=(\mathcal S_\gamma H)(N),\qquad
+\mathfrak M_D(N)=\sum_{d=1}^{\min(D,N)}\gamma_dH(\lfloor N/d\rfloor).
+\tag{388.13}
+$$
+
+式（388.7）因此用实际 $H$ 的较小商读数认证 $\mathfrak M_D(N)$ 的遗漏成本。完整 RH 方向仍需 §384 的全截断 $H_N=O_\varepsilon(N^{1/2+\varepsilon})$，不能先假定这个输入预算再宣布得到 RH。§386 的正响应 $k=\gamma*\ell$ 在临界增长空间的无界性也没有改变：可控的是 $\gamma$ 的尾，不是把它与非可和的 $\ell$ 卷积后仍当成同一个有界逆。
+
+程序保留实际逆系数至 $D=F_{18}=2584$，其四分之一矩首部约为 $21.229511600221$。从完整上界中扣除该首部的**下端点**，得到剩余矩上界约为 $50.181703697624$。同一来源的平方根空间截断额度低于 $0.138421$，而只使用 $500/7$ 的全矩额度约为 $0.197028$。这是两个有效上界额度的比较，不是逆的真实范数测量，也不是实际 $H$ 的抵消强度。
+
+每三个 Fibonacci 指标取一次 $D=F_{3r+3}$，可把已知核误差记成 $O(\Phi^{-9r/4})$；这个三位窗口日程给分辨率索引，不把五种包含状态的几何长度变成 Möbius 抵消界。精确核系数、同源输入和尾证书保留了切面回接的接口，实际 Robin 有符号积分尾估计与共同序列符号条件仍未解决。本节为已发表逆原理的参数应用及其定向数据，不主张新的通用判据或文献原创性。
+
+## 追加锚（本行以下为增补区）
