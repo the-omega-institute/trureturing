@@ -30,7 +30,7 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
                 + "minus x log(tau), where tau = M/(M+d). The center m = dM/(2M+d) is the mean "
                 + "of the unconditioned Bernoulli total, rather than the conditional mean.", DescribeRole.Definition),
             Node("endpoint", "Centered endpoint error", "profile_endpoint", EndpointFormula(),
-                "For d >= 2 and M >= 3d, the derivative at m is s = -sum_{j=1}^{d-1} 1/(M-m+2j) - log(tau). "
+                "For d >= 2 and M >= 3d, the centered reciprocal error is s = -sum_{j=1}^{d-1} 1/(M-m+2j) - log(tau). "
                 + "The integral of 1/(M-m+2y) from zero to d is exactly -log(tau). "
                 + "The function is positive and decreasing. Comparing its complete reciprocal sum with the two shifted integrals "
                 + "leaves an error between zero and the integral from zero to one, which is at most 1/(M-d).",
@@ -92,8 +92,7 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
             Multiply(Xv, Call("log", Ratio(Mv, Add(Mv, Dv))))));
 
     private static Formula EndpointFormula() => Quantified(
-        And(Call("HasDerivAt", Call("logProfile", Dv, Mv), F.Id("s"), Cv),
-            And(Relation(D(0), Leq, F.Id("s")), Relation(F.Id("s"), Leq, Ratio(D(1), Subtract(Mv, Dv))))));
+        And(Relation(D(0), Leq, F.Id("s")), Relation(F.Id("s"), Leq, Ratio(D(1), Subtract(Mv, Dv)))));
 
     private static Formula EstimateFormula()
     {
@@ -121,8 +120,7 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
 
     private static Formula ResultFormula()
     {
-        Formula tv = Multiply(Ratio(D(1), D(2)),
-            Seq(Index(Sum, F.Xi), Sp, Abs(Subtract(Call("R", Dv, Mv, F.Xi), Call("Q", Dv, Mv, F.Xi)))));
+        Formula tv = Call("totalVariation", Call("R", Dv, Mv), Call("Q", Dv, Mv));
         Formula bound = Multiply(D(5), Paren(Add(Ratio(Call("sqrt", Dv), Mv),
             Ratio(Multiply(Dv, Subtract(Dv, D(1))), Power(Mv, D(2))))));
         Formula one = Seq(Forall, Sp, Mv, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,

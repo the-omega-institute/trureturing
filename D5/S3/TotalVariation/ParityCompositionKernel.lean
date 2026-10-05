@@ -63,7 +63,7 @@ private theorem profile_endpoint (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
     let m : ℝ := d * M / (2 * M + d)
     let s : ℝ := -(∑ j ∈ range (d - 1),
       1 / ((M : ℝ) - m + 2 * (j + 1))) - log ((M : ℝ) / (M + d))
-    HasDerivAt (logProfile d M) s m ∧ 0 ≤ s ∧ s ≤ 1 / ((M : ℝ) - d) := by
+    0 ≤ s ∧ s ≤ 1 / ((M : ℝ) - d) := by
   have hd0 : (0 : ℝ) < d := by exact_mod_cast (by omega : 0 < d)
   have hMd : (d : ℝ) < M := by exact_mod_cast (by omega : d < M)
   have hM0 : (0 : ℝ) < M := hd0.trans hMd
@@ -157,28 +157,7 @@ private theorem profile_endpoint (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
         (by norm_num)
     · exact (hfcont.mono (Icc_subset_Icc (by norm_num) le_rfl)).intervalIntegrable_of_Icc
         (by linarith)
-  refine ⟨?_, ?_, ?_⟩
-  · have hD (j : ℕ) : HasDerivAt
-        (fun x : ℝ => log ((M : ℝ) - x + 2 * (j + 1)))
-        (-1 / ((M : ℝ) - m + 2 * (j + 1))) m := by
-      have harg : (M : ℝ) - m + 2 * (j + 1) ≠ 0 := by
-        have ht : 0 ≤ (j : ℝ) := Nat.cast_nonneg j
-        dsimp [a] at ha
-        linarith
-      simpa only [Pi.sub_apply, id_eq, zero_sub] using
-        (((hasDerivAt_const m (M : ℝ)).sub (hasDerivAt_id m)).add_const
-          (2 * ((j : ℝ) + 1))).log harg
-    change HasDerivAt (logProfile d M)
-      (-(∑ j ∈ range (d - 1), 1 / ((M : ℝ) - m + 2 * (j + 1))) -
-        log ((M : ℝ) / (M + d))) m
-    unfold logProfile
-    rw [← sum_neg_distrib]
-    apply HasDerivAt.sub
-    · apply HasDerivAt.fun_sum
-      intro j hj
-      simpa only [neg_div] using hD j
-    · simpa only [id_eq, one_smul, smul_eq_mul, one_mul] using
-        (hasDerivAt_id m).smul_const (log ((M : ℝ) / (M + d)))
+  constructor
   · dsimp [f, a] at hsumhi
     rw [hint] at hsumhi
     dsimp [m] at hsumhi ⊢
@@ -218,7 +197,7 @@ private theorem profile_estimate (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
   let s : ℝ := -(∑ j ∈ range (d - 1),
     1 / ((M : ℝ) - m + 2 * (j + 1))) - log ((M : ℝ) / (M + d))
   have hs := profile_endpoint d M hd hM
-  change HasDerivAt (logProfile d M) s m ∧ 0 ≤ s ∧ s ≤ 1 / T at hs
+  change 0 ≤ s ∧ s ≤ 1 / T at hs
   intro x hx
   let Δ : ℝ := x - m
   let a : ℕ → ℝ := fun j => M - m + 2 * (j + 1)
@@ -319,12 +298,12 @@ private theorem profile_estimate (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
           (logProfile d M x - logProfile d M m - s * Δ) (s * Δ)
       _ ≤ (d - 1 : ℝ) * Δ ^ 2 / (L * T) + (1 / T) * |Δ| := by
         apply add_le_add herror
-        rw [abs_mul, abs_of_nonneg hs.2.1]
-        exact mul_le_mul_of_nonneg_right hs.2.2 (abs_nonneg Δ)
+        rw [abs_mul, abs_of_nonneg hs.1]
+        exact mul_le_mul_of_nonneg_right hs.2 (abs_nonneg Δ)
       _ = _ := by ring
   · have hΔd : Δ ≤ d := by dsimp [Δ]; linarith [hx.2]
-    have hstep := mul_le_mul_of_nonneg_left hΔd hs.2.1
-    have hstep2 := mul_le_mul_of_nonneg_right hs.2.2 hd0.le
+    have hstep := mul_le_mul_of_nonneg_left hΔd hs.1
+    have hstep2 := mul_le_mul_of_nonneg_right hs.2 hd0.le
     have hcap : (1 / T) * d ≤ (1 : ℝ) / 2 := by
       rw [one_div_mul_eq_div, div_le_iff₀ hT]
       dsimp [T]
@@ -642,7 +621,7 @@ private theorem reference_moments (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) 
 one-coordinate kernels agree for every positive total. -/
 theorem result :
     (∀ d M : ℕ, 2 ≤ d → 3 * d ≤ M →
-      (1 / 2 : ℝ) * (∑ ξ : Fin d → Bool, |R d M ξ - Q d M ξ|) ≤
+      D5.S3.TotalVariation.Pinsker.totalVariation (R d M) (Q d M) ≤
         min 1 (5 * (sqrt (d : ℝ) / M + (d : ℝ) * (d - 1) / (M : ℝ) ^ 2))) ∧
     (∀ M : ℕ, 1 ≤ M → R 1 M = Q 1 M) := by
   constructor
