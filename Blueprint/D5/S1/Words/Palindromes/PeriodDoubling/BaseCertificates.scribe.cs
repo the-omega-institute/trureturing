@@ -9,6 +9,14 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S1/Words/Palindromes/PeriodDoubling/BaseCertificates.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The fully reconstructed finite graph has exact integer bounds on every accepted run.", H("Concrete Period-Doubling Transducer Potentials"), Blocks(
+        Describe.Lean(DescribeId.Create("pd-basecertificates-relnext"),
+            DeclarationHandle.Create(Prefix + "relNext"), H("The nine relation-state transitions"),
+            StatementSource.FromAuthor(RelationFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("State 0 reads equal higher bits. State 1 reads complementary bits and may stop at (1,0). State 2 reads complementary lower bits, then one equal skipped bit to state 3. States 3,4,5 require a positive odd run of (0,1) before (1,0). States 6,7,8 impose the corresponding even-cut parity restriction. Inputs outside these nine relation states have no successors."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("pd-basecertificates-basenext"),
+            DeclarationHandle.Create(Prefix + "baseNext"), H("The literal arithmetic update"),
+            StatementSource.FromAuthor(NextFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The update adds the endpoint-parity carries to the next binary bits, divides by two for the new carries, adds each rounded-half bit to its preceding bit and addition carry, and subtracts that bit from the resulting remainder to emit a signed digit. It rejects an input digit opposite to the digit two positions earlier. Otherwise it returns the full 19-component state and the label (f,q,n,j). div and mod here are Euclidean integer quotient and remainder. Boolean tests are embedded in the integers by toNat followed by cast."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-basecertificates-basesuccessors"),
             DeclarationHandle.Create(Prefix + "baseSuccessors"), H("All literal arithmetic successors"),
             StatementSource.FromAuthor(SuccessorsFormula()), AssessedProvenance.FromRepo(),
@@ -88,6 +96,43 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
     private static Formula Bits() => Seq(OpenBracket, D(0), Comma, D(1), CloseBracket);
     private static Formula IntList(params Formula[] xs) =>
         Seq(OpenBracket, xs.Skip(1).Aggregate(xs[0], (a,b) => Seq(a,Comma,Sp,b)), CloseBracket);
+    private static Formula RelationFormula()
+    {
+        var r=V("r");var n=V("n");var j=V("j");var empty=ListNil();
+        var same=Eqn(n,j);var up=And(Eqn(n,D(0)),Eqn(j,D(1)));var top=And(Eqn(n,D(1)),Eqn(j,D(0)));
+        Formula body=empty;
+        body=Ite(Eqn(r,D(8)),Ite(up,IntList(D(7)),empty),body);
+        body=Ite(Eqn(r,D(7)),Ite(top,IntList(D(0)),Ite(up,IntList(D(8)),empty)),body);
+        body=Ite(Eqn(r,D(6)),Ite(up,IntList(D(7)),empty),body);
+        body=Ite(Eqn(r,D(5)),Ite(up,IntList(D(4)),empty),body);
+        body=Ite(Eqn(r,D(4)),Ite(top,IntList(D(0)),Ite(up,IntList(D(5)),empty)),body);
+        body=Ite(Eqn(r,D(3)),Ite(up,IntList(D(4)),empty),body);
+        body=Ite(Eqn(r,D(2)),Ite(same,IntList(D(3)),IntList(D(2))),body);
+        body=Ite(Eqn(r,D(1)),Ite(same,empty,Ite(top,IntList(D(1),D(0)),IntList(D(1)))),body);
+        body=Ite(Eqn(r,D(0)),Ite(same,IntList(D(0)),empty),body);
+        return Disp(All("r",Z(),All("n",Z(),All("j",Z(),Eqn(Call("relNext",r,n,j),body)))));
+    }
+    private static Formula NextFormula()
+    {
+        var s=V("s");var n=V("n");var j=V("j");var r=V("r");
+        var nv=Add(n,Entry(s,4));var jv=Add(j,Entry(s,5));
+        var xn=Call("mod",nv,D(2));var xj=Call("mod",jv,D(2));
+        var nt=Add(Add(xn,Entry(s,6)),Entry(s,8));var jt=Add(Add(xj,Entry(s,7)),Entry(s,9));
+        var nd=Sub(Call("mod",nt,D(2)),xn);var jd=Sub(Call("mod",jt,D(2)),xj);
+        Formula Indicator(Formula b) => Cast(Call("toNat",b),Z());
+        Formula Cost(Formula d,int prev) => Ite(Eqn(d,D(0)),D(0),Add(Add(D(1),Mul(D(2),Entry(s,1))),
+            Indicator(Call("andBool",Call("neqBool",Entry(s,prev),D(0)),Call("neqBool",Entry(s,prev),d)))));
+        var f=Sub(Indicator(Call("neqBool",nd,D(0))),Indicator(Call("neqBool",jd,D(0))));
+        var state=IntList(r,Sub(D(1),Entry(s,1)),Entry(s,2),Entry(s,3),
+            Call("div",nv,D(2)),Call("div",jv,D(2)),xn,xj,Call("div",nt,D(2)),Call("div",jt,D(2)),
+            nd,Entry(s,10),jd,Entry(s,12),Ite(Eqn(Entry(s,14),D(0)),nd,Entry(s,14)),
+            Ite(Eqn(Entry(s,15),D(0)),jd,Entry(s,15)),Ite(Eqn(nd,D(0)),Entry(s,16),nd),
+            Ite(Eqn(jd,D(0)),Entry(s,17),jd),Indicator(Call("orBool",Call("neqBool",Entry(s,18),D(0)),
+                Call("eqBool",Mul(jd,Entry(s,13)),Call("neg",D(1))))));
+        var value=Ite(Eqn(Mul(nd,Entry(s,11)),Call("neg",D(1))),Ty("none"),
+            Call("some",Tuple(state,f,Sub(Cost(jd,17),Cost(nd,16)),n,j)));
+        return Disp(All("s",State(),All("n",Z(),All("j",Z(),All("r",Z(),Eqn(Call("baseNext",s,n,j,r),value))))));
+    }
     private static Formula SuccessorsFormula()
     {
         var body = Call("filterMap", Call("baseNext", V("s"), V("n"), V("j")),

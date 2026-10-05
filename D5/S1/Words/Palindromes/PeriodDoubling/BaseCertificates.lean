@@ -25,7 +25,7 @@ set_option linter.style.longLine false
 
 namespace D5.S1.Words.Palindromes.PeriodDoubling.BaseCertificates
 
-private def relNext (r n j : ℤ) : List ℤ :=
+def relNext (r n j : ℤ) : List ℤ :=
   if r = 0 then (if n = j then [0] else [])
   else if r = 1 then (if n = j then [] else if n = 1 ∧ j = 0 then [1,0] else [1])
   else if r = 2 then (if n = j then [3] else [2])
@@ -37,7 +37,7 @@ private def relNext (r n j : ℤ) : List ℤ :=
   else if r = 8 then (if n = 0 ∧ j = 1 then [7] else [])
   else []
 
-private def baseNext (s : List ℤ) (n j r : ℤ) : Option (List ℤ × ℤ × ℤ × ℤ × ℤ) :=
+def baseNext (s : List ℤ) (n j r : ℤ) : Option (List ℤ × ℤ × ℤ × ℤ × ℤ) :=
   let nv := n + s[4]?.getD 0
   let jv := j + s[5]?.getD 0
   let xn := nv % 2

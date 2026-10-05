@@ -84,7 +84,7 @@ internal sealed class BaseChargeArithmeticDocument : IScribeDocumentDefinition
         var pair=Product(Z(),N());
         var nz=Call("filter",Lam("z",pair,Call("neqBool",Call("fst",V("z")),D(0))),Call("zipIdx",V("ds"),V("p")));
         var weights=Call("sum",Call("map",Lam("z",pair,Add(D(1),Mul(D(2),Call("mod",Call("snd",V("z")),D(2))))),nz));
-        var flips=Call("length",Call("filter",Lam("z",Product(pair,pair),
+        var flips=Call("length",Call("filter",Lam("z",Product(Parenthesized(pair),Parenthesized(pair)),
             Call("neqBool",Call("fst",Call("fst",V("z"))),Call("fst",Call("snd",V("z"))))),
             Call("zip",nz,Call("tail",nz))));
         var initial=Call("OptionElim",D(0),Lam("z",pair,
