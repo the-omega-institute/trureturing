@@ -35,15 +35,19 @@ internal sealed class MatharCentralBinomialTransformRecurrenceDocument : IScribe
                     + "the shifted weighted sums yields the five-term recurrence by induction. "
                     + "Terms beyond floor(n/2) vanish, identifying the extended sum used in the proof with the defining sum a(n). "
                     + "No generating-function equation or asymptotic statement is asserted here.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mathar-2012-a113409-recurrence"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("mathar-central-binomial-" + name),
         DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));

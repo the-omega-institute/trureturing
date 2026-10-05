@@ -34,6 +34,10 @@ $$\forall n \in \mathbb{N},\; 4 \le n \Rightarrow (((n : \mathbb{Z}) + 2) \cdot 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/MatharCentralBinomialTransformRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar-2012-a113409-recurrence` (proved) by `D5/S1/Recurrence/MatharCentralBinomialTransformRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-2012-a113409-recurrence","declaration_gid":"D5/S1/Recurrence/MatharCentralBinomialTransformRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar; Paul Barry; G. C. Greubel (2012). *OEIS A113409, A transform of the central binomial coefficients A001405*. URL: <https://oeis.org/A113409>.
