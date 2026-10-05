@@ -5515,3 +5515,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 三个具名目标的精确临时 Lean 首轮真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-virtually-nilpotent-common-axis.lean` 为 169830 字节，SHA256 `5c4d17b63da957f9d8b5b9ee21b8171a6229826287ca518ed533108e355768ec`；前述成功幂零源码完整 offset0 字节前缀保留，没有新增 import 或依赖构建。
 
 该已有有限指数正幂、原有限阶固定点及原缩放轴接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。尚未消费原作用离散性以得到循环轴群及真实轴管商，亦未完成单位缩放尖点的平移格子、有限体积薄部分解、原流形覆盖或同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad；完整官方验收仍未完成。
+
+
+### 原对数字符、实际轴位移与离散轴群循环性
+
+由同一个原表示的实际正缩放字符构造 `infinityLogScaleCharacter : Additive G →+ ℝ`，在前述自由、虚幂零、稳定实际无穷远点及存在非单位缩放元素的条件下，证明同一个对数字符单射。对内部构造的同一完整原轴，保留全部原群元素和全部实参数的实际评价 `ρ(g)(verticalAxisLine z t) = verticalAxisLine z (log(infinityScale (ρ(g))) + t)`；原轴的等距性给出实际位移距离恰为 `|log(infinityScale (ρ(g)))|`，无需方向假设。
+
+循环性进一步消费显式绑定同一原 `ρ` 的轨道间隔条件：每个原 `p` 存在 `r > 0`，全部 `g ≠ 1` 满足 `r ≤ dist p (ρ(g)(p))`。把这个条件应用于同一内部轴点，得到实际对数字符像与 `Ioo 0 r` 不交；钉版 `AddSubgroup.cyclic_of_isolated_zero` 构造该像的代数生成元。通过真实字符像的原像和字符单射，得到原 `generator : G`，使每个原 `g` 都是该元素的某个整数幂。这里 `AddSubgroup.closure` 是代数生成的子群，没有将它解释成拓扑闭包。原 `H.FiniteIndex`、`H` 幂零、同一个自由作用与原表示均保留，未预设轴、生成元或群循环性。
+
+六个具名目标的精确临时 Lean 已完整编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-axis-log-discrete-cyclic.lean` 为 176980 字节，SHA256 `aece6b0ab135644aeb8487a459e4e0154663969d6c9aca732c2ee4ee69a536e4`。仅复用已有热缓存钉版 `Mathlib.GroupTheory.Archimedean` import；此前成功虚幂零源码的完整 169830 字节连续块在该新 header 后偏移 39 保留，没有新增依赖闭包构建。
+
+该原轴、实对数及既有子群循环分类接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批没有从 `ProperSpace H3` 推断原作用离散，亦未构造一般原流形的覆盖及 deck 作用来提供所需间隔。真实轴管商、单位缩放尖点平移格子与有限体积薄部分解，以及同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 和官方验收仍未完成。
