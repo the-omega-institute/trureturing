@@ -13,6 +13,10 @@ internal sealed class BaseChargeArithmeticDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + "digitStreamCharge"), H("Signed-stream charge with incoming memory"),
             StatementSource.FromAuthor(ChargeFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("A zero digit contributes nothing and preserves the previous nonzero sign. A nonzero digit contributes 1 + 2 par and an extra unit when its sign differs from a nonzero incoming sign. The parity switches after every digit. This is the position-weight and sign-change part of Q, without its terminal endpoint-parity correction. Boolean neqBool and andBool denote inequality testing and Boolean conjunction; toNat and cast embed their indicators in the integers."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("pd-basechargearithmetic-chargerowcheck"),
+            DeclarationHandle.Create(Prefix + "chargeRowCheck"), H("Literal last-sign and charge updates"),
+            StatementSource.FromAuthor(RowFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Each base edge flips the position parity, updates each most recent nonzero sign exactly when a nonzero digit is emitted, and gives q the difference of the two literal position-and-sign-change contributions."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-basechargearithmetic-digit-stream-charge-formula"),
             DeclarationHandle.Create(Prefix + "digit_stream_charge_formula"), H("The literal position and sign-change sum"),
             StatementSource.FromAuthor(StreamFormula()), AssessedProvenance.FromRepo(),
@@ -78,6 +82,20 @@ internal sealed class BaseChargeArithmeticDocument : IScribeDocumentDefinition
             Add(Contribution(par,previous,d),Call("digitStreamCharge",Sub(D(1),par),Ite(Eqn(d,D(0)),previous,d),ds)));
         step=All("par",Z(),All("previous",Z(),All("d",Z(),All("ds",ListOf(Z()),step))));
         return Disp(And(Parenthesized(zero),Parenthesized(step)));
+    }
+    private static Formula RowFormula()
+    {
+        var S=Call("fst",Call("baseTable",V("i")));
+        var T=Call("fst",Call("baseTable",Call("fst",V("e"))));
+        Formula EntryAt(Formula x,int k) => Call("getD",Call("getElemOption",x,new Formula.Number(k)),D(0));
+        var dn=EntryAt(T,10); var dj=EntryAt(T,12);
+        Formula Last(Formula d,int k) => Ite(Eqn(d,D(0)),EntryAt(S,k),d);
+        Formula Cost(Formula d,int k) => Ite(Eqn(d,D(0)),D(0),
+            Add(Add(D(1),Mul(D(2),EntryAt(S,1))),Cast(Call("toNat",Call("andBool",Call("bne",EntryAt(S,k),D(0)),Call("bne",EntryAt(S,k),d))),Z())));
+        var law=And(Eqn(EntryAt(T,1),Sub(D(1),EntryAt(S,1))),Eqn(EntryAt(T,16),Last(dn,16)),
+            Eqn(EntryAt(T,17),Last(dj,17)),Eqn(Call("fst",Call("snd",Call("snd",V("e")))),Sub(Cost(dj,17),Cost(dn,16))));
+        return Disp(All("i",N(),Eqn(Call("chargeRowCheck",V("i")),
+            Call("all",Lam("e",Product(N(),Z(),Z(),Z(),Z()),Call("decide",law)),Call("fst",Call("snd",Call("baseTable",V("i"))))))));
     }
     private static Formula StreamFormula()
     {

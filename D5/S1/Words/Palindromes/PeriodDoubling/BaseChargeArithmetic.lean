@@ -33,7 +33,7 @@ def digitStreamCharge (par previous : ℤ) : List ℤ → ℤ
       (Bool.toNat (previous != 0 && previous != d) : ℤ)) +
     digitStreamCharge (1-par) (if d = 0 then previous else d) ds
 
-private def chargeRowCheck (i : ℕ) : Bool :=
+def chargeRowCheck (i : ℕ) : Bool :=
   let S := (baseTable i).1
   (baseTable i).2.1.all fun e =>
     let T := (baseTable e.1).1
