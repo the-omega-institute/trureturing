@@ -324,3 +324,130 @@ archimedean/scalar costs and SC14's separate ground trial term remain.
 Changing families still need common derivative/source Grams; no uniform
 gain, numerical saving, actual inverse convergence or cofinal sign is
 asserted.
+
+
+## The regulator also pays an L2 source norm
+
+Retain the same positive $a,\delta$, theta envelope, complete
+$\mathcal P$ and (RP1) constants. The
+[existing Schur supplier](../../../Library/Fourier/teschl2009mathematical.md#schur-criterion-for-the-local-frequency-kernel)
+provides the classical row/column estimate. Applied to the actual
+regulated translation weights, it gives an $L^2$ source budget; no
+new generic Schur, counting or cofinal-existence theorem is needed.
+This is a conditional paper/model application, without numerical,
+priority or Lean claims.
+
+Put
+
+$$
+r(x)=\frac{s(x)}{\sqrt{\delta+a s(x)^2}},\quad
+A=\frac{aK^2}{\delta},\quad T=\max\{1,\log A/(2b)\},\quad
+L=\tfrac12\log T.
+$$
+
+Then $r(x)\le a^{-1/2}\min\{1,\sqrt A e^{-b e^{2|x|}}\}$
+and $\sqrt A e^{-bT}\le1$. Define the fixed finite constants
+
+$$
+\begin{aligned}
+c_b&=(4be)^{-1/4},& S_s&=\sup_x s(x)e^{|x|/2},\\
+C_r&=4C_\Psi\sqrt e\left[1+\sqrt2
+\sum_{k\ge0}2^{k/2}e^{-b(e^2 4^k-1)}\right],\\
+C_2&=C_{\rm p}(1+c_b)S_sC_r.
+\end{aligned}
+$$
+
+The theta envelope makes $S_s$ finite. The constants do not depend
+on the source, regulator or bandwidth. Both shifts and every prime
+power remain in the nonnegative weights of
+$\mathcal A_{a,\delta}u=r\mathcal P(su)$.
+
+The row sum is $R(x)=r(x)\mathcal Ps(x)$. Reuse (RP1) at $u=1$.
+For $t=e^{2|x|}$,
+
+$$
+R(x)\le\frac{C_{\rm p}}{\sqrt a}t^{1/4}
+\min\{1,\sqrt A e^{-bt}\}
+\le\frac{C_{\rm p}(1+c_b)}{\sqrt a}T^{1/4}.
+\tag{RS1}
+$$
+
+For $t\le T$ use $t^{1/4}\le T^{1/4}$. For $t=T+v\ge T$,
+use $\sqrt A e^{-bt}\le e^{-bv}$,
+$(T+v)^{1/4}\le T^{1/4}+v^{1/4}$ and
+$v^{1/4}e^{-bv}\le c_b$. Since $T\ge1$, this includes $T=1$.
+
+The column sum of the same operator, including both shifted adjoints,
+is $C(y)=s(y)\mathcal Pr(y)$. Split the complete count at
+$X=e^{|y|+L+1}$. Each initial response is at most $1/\sqrt a$.
+In $2^kX<n\le2^{k+1}X$, both arguments satisfy
+$|y\pm\log n|\ge L+1+k\log2$, so
+
+$$
+r(y\pm\log n)\le\frac1{\sqrt a}\sqrt A e^{-bT e^2 4^k}
+\le\frac1{\sqrt a}e^{-bT(e^2 4^k-1)}
+\le\frac1{\sqrt a}e^{-b(e^2 4^k-1)}.
+$$
+
+The inherited complete half-weight count and (RP1)'s dyadic grouping give
+
+$$
+\mathcal Pr(y)\le\frac{C_r}{\sqrt a}e^{|y|/2}T^{1/4},\qquad
+C(y)\le\frac{S_sC_r}{\sqrt a}T^{1/4}.
+\tag{RS2}
+$$
+
+Cauchy--Schwarz on finite translation sums, followed by the same change
+of variables in both shifted terms, gives
+$\int|\mathcal A_{a,\delta}u|^2\le(\sup R)\int C(y)|u(y)|^2dy$.
+Tonelli and these finite majorants supply the bounded extension and
+absolute convergence almost everywhere on all complex $L^2$ sources.
+Consequently,
+
+$$
+\int_{\mathbb R}\frac{|s\mathcal P(su)|^2}{\delta+a s^2}dx
+\le\frac{C_2\sqrt T}{a}\|u\|_2^2.
+\tag{RS3}
+$$
+
+This budget needs neither a source derivative nor a source supremum.
+Evenness is unnecessary for (RS3); the original even $H^2$ source
+domain remains in its operator application. It supplies no unweighted
+$\mathcal P(su)\in L^2$ statement or zero-reserve factorization.
+
+Use (RP4)'s same WH1 parameter, original unit ground, exact
+$\bar u=u-\langle u,v_0\rangle v_0$, low dual lift and
+$\rho=QT_cu=QT_c\bar u$. Replace only its prime source term:
+
+$$
+\langle\rho,C^{-1}\rho\rangle\le
+3\left[4\varepsilon\|\bar u\|_2^2
++\frac{\|g_{\bar u}\|_2^2}{a_N}
++\frac{C_2\sqrt{T_N}}{a_N}\|\bar u\|_2^2\right],\qquad
+T_N=\max\{1,\log(a_NK^2/\delta)/(2b)\}.
+\tag{RS4}
+$$
+
+For a common family, use its actual $G_0$ with
+$z^*G_0z=\|\sum z_i\bar u_i\|_2^2$. The exact ground is in its
+kernel, with no dimension factor or separately optimized columns.
+All scalar and archimedean terms and SC14's separate ground trial
+contribution $C[q_0]$ remain. Only residual source costs vanish on
+the ground column.
+
+(RP7) already gives $\sqrt{T_N}/a_N\to0$ on every WH1 cofinal
+sequence. Thus this **prime-source allowance** vanishes uniformly on
+normalized original sources, including the exactly centered sharp-low
+unit ball with $q=0$, whose centered norm is at most one.
+The entire residual allowance has not been shown to vanish uniformly:
+the actual archimedean Gram remains payable, and high lifts must pay
+their actual $G_0$ growth. Sufficient conditions for this explicit residual upper allowance
+to vanish are $\varepsilon\|G_0\|\to0$, $\|G_g\|/a_N\to0$ and
+$(\sqrt{T_N}/a_N)\|G_0\|\to0$. They are not asserted necessary
+for actual inverse convergence or the RH/Robin targets.
+
+The [derivative-centered budget](centered-prime-discrepancy-budget.md)
+remains separately available with its derivative expense. (RS3) has
+not been shown numerically smaller. Actual inverse convergence,
+complementary-low coverage, same-sequence signs, the original all-input
+half-bound, full Robin, RH and Lean certification remain unresolved.
