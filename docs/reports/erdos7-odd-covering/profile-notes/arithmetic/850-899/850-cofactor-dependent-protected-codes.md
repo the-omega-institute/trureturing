@@ -1795,6 +1795,76 @@ embeddings, coprime-power decoding and the original minimality
 comparator. It introduces no canonical binding declaration,
 freeze or coverage record.
 
+## A remaining q-square forces an actual top-row label
+
+Assume the same actual globally count-then-modulus-sum-minimal odd
+distinct nonunit cover, $d_i=3^{a_i}q^{j_i}m_i$, $a_i\le2$,
+$m_i\mid W$, $W>0$, $\gcd(W,3q)=\gcd(3,q)=1$, and actual original
+moduli 3 and 9. A second-digit refinement gives
+
+$$
+q\ge15\ \text{and some }j_g\ge2
+\quad\Longrightarrow\quad
+\text{some actual }i\text{ has }a_i=2,\ j_i=2.
+\tag{CD52}
+$$
+
+This assertion does not require CD47's height cap as a premise.
+
+Suppose instead there is no such row-two, height-two original.
+Use the 15 safe residues modulo 27, their one fixed injection into
+q digits, and CD41's second-digit insertion. Its decoded tag need
+only be known modulo 27: every height-two owner has row zero or
+one, so its output is one of
+
+$$
+27m_i\quad\text{or}\quad27qm_i.
+\tag{CD53}
+$$
+
+Their output conditions are those of CD44--46; the absent row-two
+case requires no modulus-81 tag. Retain all $j_i\le1$ originals and
+strip the second digit of every $j_i\ge3$ original. The same
+single-source coverage, numerical distinctness, oddness and
+nonunit proof applies. Every changed modulus strictly decreases
+since $q>9$. An actual deep original makes the sum decrease at
+the unchanged class count, contradicting global minimality and
+proving CD52.
+
+The established divisor-closure argument converts this actual
+witness into the numerical-label conclusion
+
+$$
+q\ge15\ \text{and some }j_g\ge2
+\quad\Longrightarrow\quad 9q^2\in D.
+\tag{CD54}
+$$
+
+Indeed CD52 supplies an original modulus $9q^2m_i$. If its odd
+nonunit divisor $9q^2$ were absent, replace only that original by
+its containing congruence class modulo $9q^2$, keeping the original
+phase reduced modulo this divisor. Every formerly covered integer
+remains covered. The missing numerical label makes the new moduli
+distinct; absence also makes the divisor proper, so the total
+modulus sum strictly decreases at the same class count. This is
+the existing minimal-divisor replacement, not a new assumption
+that $m_i=1$.
+
+For an actual support prime $17\le q\le43$, CD51 and CD54 give
+$H_q\in\{1,2\}$, with $H_q=2$ forcing the actual numerical
+modulus $9q^2$. The supplied label has its own original phase;
+the argument prescribes no phase or cofactor source, and gives
+no exclusion of all families satisfying these necessary conditions.
+
+A scoped transient Lean application verifies CD52--54, including
+the fixed safe-27 decoder, all higher original owners, complete
+same-index replacement and the actual numerical divisor-closure
+consumer. All nineteen axiom-closure reports use only `propext`,
+`Classical.choice` and `Quot.sound`, with no errors or `sorryAx`.
+The divisor step directly reuses the existing singleton repair
+comparison and modular projection. No new canonical binding
+declaration, freeze or coverage record is introduced.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
