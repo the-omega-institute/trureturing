@@ -1865,6 +1865,128 @@ The divisor step directly reuses the existing singleton repair
 comparison and modular projection. No new canonical binding
 declaration, freeze or coverage record is introduced.
 
+## Every second-layer component needs many digits in each row
+
+Keep the actual globally count-then-modulus-sum-minimal cover,
+factorization, positivity, coprimality and actual pure 3 and 9
+hypotheses of CD52, with $q\ge15$. Consider precisely the actual
+height-two originals $J=\{i:j_i=2\}$. For $i\in J$, forget only
+its second q-digit and retain its other literal conditions:
+
+$$
+B_i=\{x\in\mathbb N:
+ x\equiv\rho_i\pmod{3^{a_i}},\quad
+ x\equiv\rho_i\pmod q,\quad
+ x\equiv\rho_i\pmod{m_i}\}.
+\tag{CD55}
+$$
+
+Connect two height-two originals when these preserved supports
+intersect. Connected components refer to this one fixed actual
+family. An intersection here need not be an intersection of the
+original progressions, whose second q-digits may differ.
+
+For the component D of any $g\in J$ and each row $t\in\{0,1,2\}$,
+form the distinct literal second q-digits of its members in that row:
+
+$$
+T_{D,t}=\{\lfloor\rho_i/q\rfloor\bmod q:i\in D,\ a_i=t\}.
+\qquad |T_{D,t}|\ge q-14.
+\tag{CD56}
+$$
+
+This counts distinct digits separately in each exact row. Fix t
+and suppose the complement of $T_{D,t}$ has at least 15 digits.
+Choose one fixed injection of the 15 safe residues modulo 27
+into that complement. CD47 supplies $j_i\le2$ for every original.
+Change only the originals in D, and put
+
+$$
+A=\bigcup_{i\in D}B_i.
+\tag{CD57}
+$$
+
+At a target outside A, an owner from the original full cover
+cannot belong to D, since each original in D is contained in
+its preserved support. This owner is retained.
+
+At a safe target in A, use the chosen safe-27 injection and the
+second-digit CRT source from the CD52 proof. This source preserves
+the target's first q-digit, ternary coordinate modulo 9 and
+cofactor coordinate modulo W. If its actual owner has height at
+most one, that retained original also covers the target. If its
+owner i has height two, the target belongs to $B_i$. It already
+belongs to some $B_d$ with $d\in D$, so this very target witnesses
+an intersection, placing i in D. Its literal second digit equals
+the selected code digit, which lies outside $T_{D,t}$. Hence this
+actual owner cannot have row t. There are no higher owners by
+CD47. Unsafe targets are covered by the retained actual guards.
+
+Every selected changed owner therefore supplies one fixed decoded
+tag modulo 27, its literal first q-digit, and its cofactor phase.
+Assign new numerical labels as follows:
+
+| Avoided row t | Output for row 0 | Output for row 1 | Output for row 2 |
+|---|---:|---:|---:|
+| 0 | $81m_i$ | $27m_i$ | $27qm_i$ |
+| 1 | $27m_i$ | $81m_i$ | $27qm_i$ |
+| 2 | $27m_i$ | $27qm_i$ | $81m_i$ |
+
+The two active rows use the tag modulo 27 and the original
+cofactor phase; the row assigned $27qm_i$ also keeps the first
+q-digit. Emit an $81m_i$ output for every member of the avoided
+row, with any fixed residue. Those owners have no selected source preimage, so their extra
+outputs do not remove coverage. Each member of D contributes
+exactly one output; every other original is retained.
+
+For each fixed t the three new signatures are a permutation of
+$(3,0),(3,1),(4,0)$ in ternary and q depth. They recover the old
+row and cofactor, so the outputs are distinct odd nonunits and
+fresh against every original outside D. The respective price
+ratios in the table are
+
+- $t=0$: $81/q^2$, $9/q^2$, $3/q$;
+- $t=1$: $27/q^2$, $27/q^2$, $3/q$;
+- $t=2$: $27/q^2$, $9/q$, $9/q^2$.
+
+All are strictly below one for $q>9$. The nonempty component
+therefore permits a same-count strict sum decrease, contradicting
+global minimality. This comparator may have ternary heights three
+and four; minimality restricted to $H_3\le2$ would not suffice.
+The digit complement has at most 14 elements, proving CD56.
+
+The construction neither assumes a common point in all the
+supports of a component nor assembles independent source choices:
+each coverage test uses one actual target and its one CRT source.
+
+Since $q\ge15$, each component has a member in each exact row.
+Every intersection preserves the literal first q-digit, yielding
+
+$$
+\forall g\in J\ \forall t\in\{0,1,2\}\ \exists i\in J:\quad
+ a_i=t,\qquad i\in D_g,\qquad \rho_i\equiv\rho_g\pmod q.
+\tag{CD58}
+$$
+
+At $q=43$, each component requires at least 29 distinct second
+digits in each row; at $q=17$ it requires at least three per row.
+These assertions do not place any particular numerical pure
+$q^2$, $3q^2$ or $9q^2$ original in every component, align their
+phases, or make the different digit witnesses simultaneously
+active at one base point. No contradictory upper bound on the
+actual component digit sets has been established.
+
+A scoped transient Lean application verifies CD55--58, including
+the actual rooted components, exact-row digit images, complementary
+code pool, fixed decoder, row-permuted legal labels, complete
+same-count replacement and the internally derived height cap.
+All thirty-three axiom-closure reports use only `propext`,
+`Classical.choice` and `Quot.sound`, with no errors or `sorryAx`.
+The application reuses finite CRT, coprime decoding, finite
+images and complements, equivalence closure and the existing
+minimality comparison. No canonical binding declaration, freeze
+or coverage record is introduced.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
