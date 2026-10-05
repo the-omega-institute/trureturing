@@ -7,6 +7,8 @@ triage: theorem
 motivation_gids:
   - D5/S1/Words/GraphRepresentation/ExplicitNonTwoUniform
   - D5/S0/Diagonal/PigeonholeFiber
+  - D5/S1/Words/GraphRepresentation/UniformVertexExtension
+  - D5/S1/Words/GraphRepresentation/UniformHierarchy.result
 ---
 
 # Every positive-uniform adjacent class inclusion is proper
@@ -47,40 +49,46 @@ No global priority or established central-bottleneck claim is made.
 
 ## Gap
 
-The declaration [`UniformVertexExtension.vertex_extension`](../D5/S1/Words/GraphRepresentation/UniformVertexExtension.lean)
-provides the prescribed-neighborhood inference on the exact full carrier Option(V): a
-positive k-uniform representation of G.comap(some) implies a (k+1)-uniform
-representation of G. Its two actual lists are none^k w none NT and
-none^k v N none T, where N,T enumerate old nonneighbors and neighbors
-once each. The argument preserves old nonedges as well as edges and treats
-both orders of each distinct pair. The empty old carrier is included.
-
-The full target still needs an internal closed all-positive-k
-nonuniversality proof, finite minimality, deletion and exact word/graph
-relabeling, common-enumeration inclusion and the unconditional full consumer.
-No coverage or resolution claim for Conjecture 31 follows from the extension.
+[`UniformHierarchy.result`](../D5/S1/Words/GraphRepresentation/UniformHierarchy.lean)
+proves the complete assertion. Its closed claim quantifies over every positive
+k and every finite carrier at an arbitrary type universe. It also supplies an
+induced subset of the finite membership graph on
+Fin(64k²) ⊕ Finset(Fin(64k²)), with a (k+1)-uniform representation and no
+k-uniform representation on precisely the same original subset subtype.
+Both representation clauses use the admitted literal InG and actual List words.
+The only hypotheses within the claim are positive k, finiteness and decidable
+equality of the arbitrary carrier; none assumes a mathematical part of the target.
 
 ## Route
 
-Bounded cut signatures for the membership graph with m=64k² are a proposed
-route to all-positive-k nonuniversality. Apply the existing arbitrary-cut
-reconstruction and pigeonhole suppliers directly, retaining both actual
-words and their exact counts. A finite minimum nonmember, together with
-deletion and relabeling, must then provide a graph whose vertex deletion
-belongs to G_k. The vertex-extension construction gives its G_(k+1)
-representation on the same carrier. Appending a common once-each vertex
-enumeration to both words supplies adjacent inclusion inside the full
-consumer. Every premise of that consumer, including nonuniversality,
-must be discharged by a closed proof.
+The known all-positive-k nonuniversality component is proved inside the full
+consumer. In the membership graph with m=64k², each right vertex has two
+ordered k-cut lists with entries at most km. Their signatures occupy at most
+(km+1)^(2k) ≤ 2^(20k²) < 2^m states. The existing arbitrary-cut reconstruction
+and pigeonhole suppliers force two distinct subsets to have equal neighborhoods,
+a contradiction. Right labels are normalized separately by their injective
+Unit-marker maps; their original differently labelled projections are not equated.
+The two left restrictions may have different orders, and tied cuts are retained.
+
+Nat.find selects a nonrepresented induced subset of least cardinality.
+The whole-set subtype is a witness by actual word transport. The empty
+subtype has []/[] representations, so a vertex x exists. The erased subset
+is represented at k by minimality. Its graph is literally the vertex deletion
+after E=optionCongr(d).trans(optionSubtypeNe(x)), where d keeps retained
+underlying vertices. The frozen extension gives actual words at k+1;
+mapping both through E preserves every count and both directions of each
+adjacency iff on the original carrier. No hereditary-class axiom or executable
+minimum search is used. A common once-each enumeration appended to both
+words proves inclusion, including the empty carrier.
 
 ## Falsifier
 
 An equivalent prior settlement, a source-model mismatch or an unresolved
 premise in the full consumer bars a named-problem settlement. An auxiliary
-checkpoint contributes no solved-problem count. The extension would fail
-its own statement if either actual list omitted a whole-carrier count or
-the adjacency equivalence omitted a distinct pair, a nonedge, a reversed
-pair, an empty old carrier or an arbitrary fresh neighborhood.
+checkpoint contributes no solved-problem count. The full result would fail
+source fidelity if either actual list omitted a whole-carrier count or the
+adjacency equivalence omitted a distinct pair, a nonedge, a reversed pair
+or an empty carrier. Kernel closure does not establish global priority.
 
 ## Evidence
 
@@ -99,15 +107,19 @@ inspected public WordRepTensor source uses single-word alternation.
 
 ## Triage
 
-`theorem` classifies the full unbounded family target. For the extension
-checkpoint, `vertex_extension` has `proof_shape: content` and
-`admission_basis: escape-witness`: the actual W,Z construction establishes
-the public conclusion on its live proof path. `InG` is the necessary
-positive-uniform representation definition. `utility: none` describes a
-structural construction over arbitrary finite carriers and positive k,
-with no bounded enumeration, checker, numerical reduction or certified
-positive finite instance. The checkpoint is not an external open-problem
-resolution and does not settle Conjecture 31.
+`theorem` classifies the full unbounded family target. The new module retains
+only the necessary parameterized membership graph, the full source claim and
+one result. `result` has `proof_shape: content`: its live ordered cut encoding,
+all-parameter cardinal estimate and minimum-induced-subset inference are not
+a specialization or logical repackaging of frozen results. Its
+`admission_basis: open-problem-resolution` is the preregistered full
+Conjecture 31 assertion in issue 12945. The graph and claim are supporting
+definitions, not separate settlements. `utility: none` denotes an unbounded
+structural proof, without finite graph enumeration, a checker, numerical
+reduction or certified positive instance. Reg enrollment is paused.
+Narrow final-byte review and ordinary required-CI publication remain
+necessary before a normally merged problem settlement
+can increment the KPI.
 
 ## ASSUMED-UNVERIFIED
 

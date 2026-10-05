@@ -1,0 +1,17 @@
+# Physical product Hermite orthonormal integrals
+
+Source: The Tau Ceti contributors, TauCetiProject/TauCeti,
+revision `f749c1bb6b118c898f8d152e8ff9ad3d2b339dfd` (Apache-2.0).
+The receiving source credits the Hermite lowering and weighted integration-by-parts
+construction in the following donor modules at that revision:
+
+- `RingTheory/Polynomial/Hermite/Derivative.lean`;
+- `Analysis/SpecialFunctions/Hermite/Orthogonality.lean`;
+- `Analysis/SpecialFunctions/Hermite/Function/Orthonormal.lean`.
+
+The physical rescaling and actual product-volume transport are constructions
+for the displayed functions below. The donor argument carries no claim of
+research originality by this adaptation. Its copyright remains in the receiving
+Lean source; the full license is in
+`docs/reports/hermite-suppliers/tauceti-LICENSE.txt`.
+

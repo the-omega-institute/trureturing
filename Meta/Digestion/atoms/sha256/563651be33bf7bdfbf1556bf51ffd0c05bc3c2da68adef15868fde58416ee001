@@ -1,0 +1,65 @@
+### 38.1 定义：五窗、接缝与不同来源域
+
+沿用低位到高位书写的三位窗口
+
+$$
+\Sigma=\{\mathrm{null},[2],[3],[25],[5]\}
+=\{000,100,010,101,001\}.
+$$
+
+$[25]$ 是掩码 $101$ 的标签，其零层数量为 $7$。地址空间及删窗为
+
+$$
+\Omega=\{\omega\in\{0,1\}^{\mathbb N}:\omega_j\omega_{j+1}=0\},
+\qquad T=\sigma^3,\qquad
+A_0=\Omega,\quad A_1=\{\omega\in\Omega:\omega_0=0\}.
+$$
+
+输入接缝 $s$ 是当前窗口下方的占位；输出接缝 $s'$ 是窗口最高位。合法边为
+
+$$
+0\longrightarrow0:\mathrm{null},[2],[3];\qquad
+0\longrightarrow1:[25],[5];\qquad
+1\longrightarrow0:\mathrm{null},[3];\qquad
+1\longrightarrow1:[5].
+$$
+
+令 $\mathbf0=\mathrm{null}^{\infty}$，并区分
+
+$$
+D=\{\omega\in\Omega:\exists n\geq0, T^n\omega=\mathbf0\},
+\qquad
+D_N=\{\omega\in\Omega:\forall j\geq N, \omega_j=0\}.
+$$
+
+$D$ 是固定外部单位位零、识别高端补零的规范有限地址域，也是可数无限的最终零地址集；$D_N$ 是以位数 $N$ 限制支持的有限集。$\Omega$ 还含无限尾与端点地址。它们均不同于一般树组成载体 $\mathbb N^2$、其整群扩张 $\mathbb Z^2$ 或实空间 $\mathbb R^2$。
+
+记组成矩阵为
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+S_c=M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\qquad q=(2,3),
+$$
+
+并依上述五标签顺序取
+
+$$
+d_a=(0,0)^{\mathsf T},\ (1,0)^{\mathsf T},\ (0,1)^{\mathsf T},\quad
+(2,1)^{\mathsf T},\ (1,1)^{\mathsf T}.
+$$
+
+对 $d\in D$，其实际组成是有限和
+
+$$
+x(d)=\sum_{j\geq0}S_c^j d_{a_j(d)}.
+$$
+
+源卷的联合完成域与实际有限来源图分别为
+
+$$
+K=\Omega\times G,\qquad G=\widehat{\mathbb Z}^{\,2},\qquad
+\Gamma=\{(d,\iota(x(d))):d\in D\}\subset K,
+$$
+
+其中 $\iota$ 是整数嵌入。$K$ 允许独立算术坐标，$\Gamma$ 的算术坐标由同一地址决定。实际图不能替换为 $D\times G$。这些区分沿用源卷定义2.1、定理2.3及命题14.15。
+

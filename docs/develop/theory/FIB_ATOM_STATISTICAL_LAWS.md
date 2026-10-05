@@ -22288,3 +22288,925 @@ $$
 本尾界不支付这些同整数成本，不构造实际 Robin 反例，不关闭 RH 或 Robin；母卷 §365 在其实际最小公倍数族上的既有归约也不替代这一预算义务。
 
 ## 追加锚（本行以下为增补区）
+
+## 284. 稀疏组成下的同源完整三维局部高斯律
+
+来源与采样沿用定义 1.1、2.1：$\mathcal T$ 是自由有序非空满二叉树代数，左右次序与全部二叉括号化均保留，$U(a,b)$ 明确取组成纤维 $\mathcal F(a,b)$ 上的均匀律。原树替换为
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+$$
+叶积观察保持叶序，满足 $A^2=1$、$B^2=-1$、$AB+BA=1$；三个窗口始终由同一实际树生成：
+$$
+W_3(t)=(E(t),E(\rho t),E(\rho^2t)).
+$$
+直接采用[母卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md)定理 359.3 的唯一正规形 $W_3(t)=L(u,v,w)R_{pq}$，令 $Z=(u,v,w)$、$p=a\bmod2$、$q=b\bmod2$。实际有限中心与完整协方差为
+$$
+\mu_{ab}=\mathbb E_{U(a,b)}Z,\qquad
+\Sigma_{ab}=\operatorname{Cov}_{U(a,b)}Z.
+$$
+令
+$$
+\Lambda_{ab}=\left\{(u,v,w)\in\mathbb Z^3:
+w-u\equiv\frac{a-p}{2}\pmod2,\quad
+u-v\equiv\frac{b-q}{2}\pmod2\right\}.
+$$
+实际支撑仍由母卷定理 360.2 的八个非负整数边重数及含起点 $00$ 的弱 Euler 连通条件共同决定；$\Lambda_{ab}$ 中未满足该完整判据的点取零概率。
+
+**定理 284.1（全部稀疏速率的完整同源局部极限）。** 对任意整数组成序列 $(a_j,b_j)$，若
+$$
+k_j=\min(a_j,b_j)\longrightarrow\infty,\qquad
+\frac{k_j}{a_j+b_j}\longrightarrow0,
+$$
+则 $\Sigma_{a_jb_j}$ 最终正定，且
+$$
+\sup_{z\in\Lambda_{a_jb_j}}\sqrt{\det\Sigma_{a_jb_j}}
+\left|\mathbb P_{U(a_j,b_j)}(Z=z)
+-4\phi_{\Sigma_{a_jb_j}}(z-\mu_{a_jb_j})\right|
+\longrightarrow0,
+\tag{284.1}
+$$
+其中
+$$
+\phi_\Sigma(y)=(2\pi)^{-3/2}(\det\Sigma)^{-1/2}
+\exp\!\left(-\frac12y^T\Sigma^{-1}y\right).
+$$
+两个稀疏方向可任意切换；除上述两个极限外，不要求其他速率条件。四是实际来源差分格的指数。
+
+**证明。** 固定任意满足假设的序列，以下省略下标。置
+$$
+M=\max(a,b),\quad d=k+1,\quad
+\delta_g=\frac d{M+d},\quad t_g=1-\delta_g,\quad
+\gamma=1-t_g^2=\delta_g(2-\delta_g),\quad
+\nu=\frac{t_g}{1+t_g},\quad
+\varrho=1-2\nu=\frac{\delta_g}{2-\delta_g}.
+$$
+$\varrho$ 是辅助奇偶链的标量相关参数，与原树替换 $\rho$ 不同；$\delta_g$ 是几何倾斜参数。原假设给 $k\to\infty$、$\delta_g\to0$，故最终 $k\ge64$、$M\ge3d$、$0<\delta_g\le1/4$。以下概率律记为 $\mathsf Q,\mathsf R$，频域盒半径另记 $R$。
+
+直接复用 §283 的实际来源回接：每个组成叶词有相同 Catalan 括号数；以少数字母分隔后，它与 $d$ 部分、总数 $M$ 的均匀弱组成一一对应。辅助层的 $r_0,\ldots,r_k$ 独立，质量为 $\delta_gt_g^m$（$m\ge0$），条件于 $L=\sum r_i=M$ 后恰为该实际组成律。沿用
+$$
+\varepsilon_0=0,\qquad
+\varepsilon_j=\left(\sum_{i<j}r_i\right)\bmod2,\qquad
+O=\sum_{\substack{1\le j\le k\\j\text{ 奇}}}\varepsilon_j,\quad
+E=\sum_{\substack{1\le j\le k\\j\text{ 偶}}}\varepsilon_j,\quad
+H=\sum_{\substack{0\le i\le k\\i\text{ 奇}}}r_i.
+$$
+不带树参数的 $E$ 是偶位置占据量，与叶积函数 $E(t)$ 不同。保留所有间隔、$\xi_k$ 和实际端点 $\varepsilon_d=M\bmod2$；八边及 Euler 支撑直接沿用 §283 与母卷 §§359—360，不以流量松弛改变来源。
+
+在未条件化层写 $r_i=2T_i+\xi_i$，则全部 $T_i,\xi_i$ 相互独立，$T_i$ 的质量为 $\gamma(t_g^2)^m$，$\xi_i\sim\operatorname{Bernoulli}(\nu)$。这一独立性只在辅助层使用。令
+$$
+h=\sum_{i=0}^k\xi_i,\qquad
+q_d(s)=\binom{s+d-1}{d-1}\gamma^d(t_g^2)^s\quad(s\in\mathbb Z_{\ge0}),
+$$
+$$
+p_L=\binom{M+d-1}{d-1}\delta_g^dt_g^M,\qquad
+p_e=\frac{1+(-1)^M\varrho^d}{2}.
+$$
+$\mathsf Q$ 为完整 $d$ 位独立 $\operatorname{Bernoulli}(\nu)$ 向量条件于 $h\equiv M\pmod2$ 的律，$\mathsf R$ 为该完整向量在实际 $L=M$ 条件律下的律。辅助独立分解精确给出
+$$
+u(\xi):=\frac{d\mathsf R}{d\mathsf Q}(\xi)
+=\frac{p_eq_d((M-h)/2)}{p_L}.
+\tag{284.2}
+$$
+对每个合法奇偶向量，$s=(M-h)/2$ 是整数且 $s\ge(M-d)/2\ge d$。
+
+下面同时给出全域密度界与典型窗比较。记 $\lambda=t_g^2$、$s_0=d\lambda/\gamma$，并对 $s>0$ 定义
+$$
+f(s)=(s+d)\log(s+d)-s\log s-d\log d
++d\log\gamma+s\log\lambda.
+$$
+直接微分与代入得
+$$
+f(s_0)=f'(s_0)=0,\qquad f''(s)=-\frac d{s(s+d)},\qquad f(s)\le0.
+$$
+采用正整数阶乘的 Stirling 公式及其全局上下界。由精确恒等式
+$$
+\binom{s+d-1}{d-1}=\frac d{s+d}\frac{(s+d)!}{s!\,d!},
+$$
+对整数 $s\ge1$ 得
+$$
+q_d(s)=\frac d{s+d}\sqrt{\frac{s+d}{2\pi ds}}\,
+e^{f(s)}(1+o(1)).
+\tag{284.3}
+$$
+当 $\min(d,s,s+d)\to\infty$ 时余项一致；全局版本把 $1+o(1)$ 换为两个绝对正常数。这里仅对正阶乘参数使用此式。
+
+为控制全部 $s\ge0$，包括零点，用质量比
+$$
+\frac{q_d(s+1)}{q_d(s)}=\lambda\frac{s+d}{s+1}.
+$$
+可取最大点 $m_d=\lfloor(d-1)\lambda/\gamma\rfloor$；比值等于一时相邻最大点同值。$d\ge65$、$\lambda\ge9/16$、$\gamma\le7/16$ 给
+$$
+\frac d{2\gamma}\le m_d\le\frac d\gamma,\qquad m_d\ge1.
+$$
+例如下界由 $m_d\ge(d-1)9/(16\gamma)-1\ge d/(2\gamma)$ 得到。因而最大点的三个阶乘参数至少为 $d$；(284.3) 的全局版本和 $f\le0$ 给
+$$
+\sup_{s\ge0}q_d(s)=q_d(m_d)
+\le C\sqrt{\frac d{m_d(m_d+d)}}\le C\frac\gamma{\sqrt d}.
+$$
+此论证没有在 $s=0$ 使用 Stirling。复用 (283.10) 的 $p_L\ge c\delta_g/\sqrt d$，且 $p_e\le1$、$\gamma/\delta_g\le2$，便有
+$$
+0\le u(\xi)\le C_{\mathrm{dens}}
+\tag{284.4}
+$$
+对全部有限参数及全部合法向量同时成立。又 $\varrho\le1/7$，故 $p_e\ge(1-1/7)/2>1/3$。
+
+固定 $A_0<\infty$，在 $|h-d\nu|\le A_0\sqrt d$ 上，精确关系
+$$
+2s_0+d\nu=M,\qquad
+s-s_0=-\frac{h-d\nu}{2}
+$$
+成立。当 $d\ge\max\{65,4A_0^2\}$ 时，$|s-s_0|\le d/4$，故 $s\ge d/(4\gamma)$，$s+d\ge d$；这些最小阶乘参数均趋于无穷。沿 $s,s_0$ 间的区间，$|f''|\le C\gamma^2/d$，所以
+$$
+|f(s)|\le C A_0^2\gamma^2,\qquad
+\frac{d}{s+d}\sqrt{\frac{s+d}{2\pi ds}}
+=\frac{\gamma}{t_g\sqrt{2\pi d}}(1+o(1))
+$$
+在该窗上一致成立。于是
+$$
+q_d((M-h)/2)=\frac{\gamma}{t_g\sqrt{2\pi d}}(1+o(1)).
+$$
+令 $N=M+d$。精确式 $p_L=\delta_g\binom Nd(d/N)^d(M/N)^M$ 在阶乘参数 $N,d,M$ 上用 Stirling；其最小值为 $d\to\infty$，幂项全部相消，得到
+$$
+p_L=\frac{\delta_g}{\sqrt{2\pi d t_g}}(1+o(1)).
+$$
+因此典型窗内
+$$
+u(\xi)=p_e\frac{2-\delta_g}{\sqrt{t_g}}(1+o(1))
+\longrightarrow1
+\tag{284.5}
+$$
+一致成立。未条件 Bernoulli 总和的方差不超过 $d/4$，端点条件只除以 $p_e\ge1/3$，故
+$$
+\mathsf Q\{|h-d\nu|>A_0\sqrt d\}\le\frac{3}{4A_0^2}.
+$$
+结合 (284.4)—(284.5)，将 $\mathbb E_{\mathsf Q}|u-1|$ 分为窗内、窗外，先沿原序列取极限，再令 $A_0\to\infty$，得
+$$
+\|\mathsf R-\mathsf Q\|_{\mathrm{TV}}
+=\frac12\mathbb E_{\mathsf Q}|u-1|\longrightarrow0.
+\tag{284.6}
+$$
+比较律始终保留变化的 $\nu$ 和全部 $d$ 位；不使用完整路径与公平独立位的接近性。
+
+先在未加端点条件的 Bernoulli 律下证明短坐标联合极限。令 $\eta_j=(-1)^{\varepsilon_j}$、$\mathscr F_j=\sigma(\xi_0,\ldots,\xi_{j-1})$，则
+$$
+\eta_j=\varrho\eta_{j-1}+\zeta_j,\qquad \eta_0=1,
+$$
+$$
+\mathbb E(\zeta_j\mid\mathscr F_{j-1})=0,\qquad
+\mathbb E(\zeta_j^2\mid\mathscr F_{j-1})=1-\varrho^2,\qquad
+|\zeta_j|\le2.
+$$
+固定实数 $a_o,a_e$，令 $a_j$ 按 $j$ 的奇偶取这两个值。精确展开为
+$$
+\sum_{j=1}^k a_j\eta_j
+=\sum_{j=1}^k a_j\varrho^j+\sum_{l=1}^k c_l^{(a)}\zeta_l,\qquad
+c_l^{(a)}=\sum_{j=l}^k a_j\varrho^{j-l}.
+$$
+$c_l^{(a)}$ 是确定数，均匀有界，且 $c_l^{(a)}-a_l=O(\varrho)$。因 $\varrho\to0$，
+$$
+\frac{1-\varrho^2}{k}\sum_{l=1}^k(c_l^{(a)})^2
+\longrightarrow\frac{a_o^2+a_e^2}{2}.
+\tag{284.7}
+$$
+Taylor 余项由 $|\zeta_l|\le2$ 给出：
+$$
+\mathbb E\!\left(e^{ic_l^{(a)}\zeta_l/\sqrt k}\mid\mathscr F_{l-1}\right)
+=b_l+e_l,\qquad
+b_l=1-\frac{(c_l^{(a)})^2(1-\varrho^2)}{2k},\qquad
+|e_l|\le C_a k^{-3/2}.
+$$
+最终 $0\le b_l\le1$。令
+$$
+\Phi_l=\mathbb E\exp\!\left(\frac i{\sqrt k}
+\sum_{r=1}^l c_r^{(a)}\zeta_r\right).
+$$
+从最后一个增量向前逐项条件积分，$\Phi_l=b_l\Phi_{l-1}+r_l$，$|r_l|\le C_a k^{-3/2}$；故
+$$
+\left|\Phi_k-\prod_{l=1}^k b_l\right|\le C_a k^{-1/2}.
+$$
+确定乘积由 (284.7) 和 $\sum_l(1-b_l)^2=O_a(k^{-1})$ 趋于 $\exp(-(a_o^2+a_e^2)/4)$。确定起始项绝对值不超过 $\max(|a_o|,|a_e|)\varrho/(1-\varrho)$，除以 $\sqrt k$ 后趋零。Cramér—Wold 给出两类状态和的联合正态极限。
+
+端点比较可对整个内部历史一次完成。令 $\sigma=(-1)^M$，则截至 $\eta_k$ 的全部历史在条件 $\eta_d=\sigma$ 下，相对未条件历史的精确密度为
+$$
+\frac{\mathbb P(\eta_d=\sigma\mid\mathscr F_k)}
+{\mathbb P(\eta_d=\sigma)}
+=\frac{1+\sigma\eta_k\varrho}{1+\sigma\varrho^d}
+=1+O(\varrho),
+\tag{284.8}
+$$
+误差在整个历史空间上一致。这一步只对内部历史的推前积分最后一位 $\xi_k$；在完整向量及长坐标中仍保留该位。令 $n_o=\lceil k/2\rceil$、$n_e=\lfloor k/2\rfloor$，利用
+$$
+O=\frac{n_o-\sum_{j\text{ 奇}}\eta_j}{2},\qquad
+E=\frac{n_e-\sum_{j\text{ 偶}}\eta_j}{2},
+$$
+先由 (284.8) 转到 $\mathsf Q$，再由 (284.6) 转到实际 $\mathsf R$，得
+$$
+\left(\frac{O-n_o/2}{\sqrt k},\frac{E-n_e/2}{\sqrt k}\right)
+\Rightarrow\mathcal N(0,\operatorname{diag}(1/8,1/8)).
+\tag{284.9}
+$$
+
+现将长坐标接入同一实际联合律。令
+$$
+N_o=n_o,\quad N_e=n_e+1,\quad \alpha=\frac{N_o}{d},\quad
+h_o=\sum_{i\text{ 奇}}\xi_i,\quad h_c=h_o-\alpha h,\quad
+S_\xi=\frac{M-h}{2}.
+$$
+给定完整 $\xi$ 且 $L=M$，整个 $T$ 向量在 $\sum T_i=S_\xi$ 的各点上质量相同。独立于 $\xi\sim\mathsf R$ 取
+$P\sim\operatorname{Dirichlet}(1,\ldots,1)$，再条件于 $(\xi,P)$ 做 $S_\xi$ 次多项抽样生成 $T$。对任意非负整数 $t_i$ 且 $\sum t_i=S_\xi$，以 $p_k=1-\sum_{i<k}p_i$ 写单纯形积分：
+$$
+(d-1)!\frac{S_\xi!}{\prod_i t_i!}
+\int_{\substack{p_0,\ldots,p_{k-1}\ge0\\\sum_{i<k}p_i\le1}}
+\prod_{i=0}^k p_i^{t_i}\,dp_0\cdots dp_{k-1}
+=\frac{S_\xi!(d-1)!}{(S_\xi+d-1)!}.
+\tag{284.10}
+$$
+积分值 $\prod_i t_i!/(S_\xi+d-1)!$ 由逐次 Beta 积分得到，故每个组成向量的质量正好等于均匀组成质量。再令 $r_i=2T_i+\xi_i$，便实现完整实际 $L=M$ 条件律，未引入新的来源采样。
+
+置 $B_o=\sum_{i\text{ 奇}}P_i$、$K_o=\sum_{i\text{ 奇}}T_i$。在这个共同实现中，
+$$
+B_o\sim\operatorname{Beta}(N_o,N_e),\qquad
+K_o\mid(\xi,B_o)\sim\operatorname{Bin}(S_\xi,B_o),\qquad
+H=2K_o+h_o,
+$$
+并且 $B_o$ 与整个 $\xi$ 独立。特别地，实际条件均值为
+$$
+\mathbb E(H\mid\xi,L=M)=\alpha M+h_c.
+\tag{284.11}
+$$
+这不是条件后的 $T,\xi$ 独立性断言。
+
+实际均匀弱组成可交换，所以 $\mathsf R$ 下的全部 $\xi_i$ 也可交换。写
+$$
+h_c=\sum_i b_i\xi_i,\qquad b_i=\mathbf1_{\{i\text{ 奇}\}}-\alpha,
+\qquad
+\sum_i b_i=0,\qquad \sum_i b_i^2=\frac{N_oN_e}{d}.
+$$
+令 $v_\xi=\operatorname{Var}_{\mathsf R}\xi_0$、
+$c_\xi=\operatorname{Cov}_{\mathsf R}(\xi_0,\xi_1)$。交换性给
+$$
+\mathbb E_{\mathsf R}h_c=0,\qquad
+\operatorname{Var}_{\mathsf R}h_c
+=(v_\xi-c_\xi)\frac{N_oN_e}{d}\le\frac d8,
+\tag{284.12}
+$$
+因为 $v_\xi-c_\xi=\tfrac12\mathbb E_{\mathsf R}(\xi_0-\xi_1)^2\le1/2$、
+$N_oN_e\le d^2/4$。整个推导保留实际条件相关。
+
+为写全 Beta 极限，取独立单位指数变量 $e_0,\ldots,e_k$，令 $P_i=e_i/\sum e_i$。总和 $u=\sum e_i$ 与单纯形坐标的换元 Jacobian 为 $u^{d-1}$，联合密度为 $u^{d-1}e^{-u}$；积分 $u$ 得常数 $(d-1)!$，正是上述 Dirichlet 密度。令 $G_o=\sum_{i\text{ 奇}}e_i$、$G_e=\sum_{i\text{ 偶}}e_i$，则 $B_o=G_o/(G_o+G_e)$，两个和独立。对单位指数律直接应用有限二阶矩的普通 iid 中心极限定理：
+$$
+U_o=\frac{G_o-N_o}{\sqrt{N_o}}\Rightarrow\mathcal N(0,1),\qquad
+U_e=\frac{G_e-N_e}{\sqrt{N_e}}\Rightarrow\mathcal N(0,1),
+$$
+两者联合极限独立。精确比值式为
+$$
+\sqrt d(B_o-\alpha)
+=\frac{(1-\alpha)\sqrt{N_o/d}\,U_o
+-\alpha\sqrt{N_e/d}\,U_e}{(G_o+G_e)/d}.
+$$
+分母在概率中趋于一，两个分子系数趋于 $1/(2\sqrt2)$，因此
+$$
+\sqrt d(B_o-\alpha)\Rightarrow\mathcal N(0,1/4),\qquad
+\mathbb E[d(B_o-\alpha)^2]=\frac{N_oN_e}{d(d+1)}\le\frac14.
+\tag{284.13}
+$$
+后一等式直接来自正形状参数 Beta 密度的二阶积分。
+
+同一实现上的精确分解是
+$$
+\frac{\delta_g(H-\alpha M)}{\sqrt k}
+=\frac{\delta_g(M-h)}{\sqrt{kd}}\sqrt d(B_o-\alpha)
++\frac{\delta_g h_c}{\sqrt k}
++\frac{2\delta_g}{\sqrt k}(K_o-S_\xi B_o).
+\tag{284.14}
+$$
+由 $\delta_gM=dt_g$ 和 $0\le h\le d$，首项系数与一的差在全部向量上一致为 $O(\delta_g+k^{-1})$；配合 (284.13)，用一替换该系数的误差在 $L^2$ 趋零。(284.12) 给第二项二阶矩至多 $\delta_g^2d/(8k)\to0$。第三项由条件二项方差得
+$$
+\mathbb E\left[\left(\frac{2\delta_g}{\sqrt k}
+(K_o-S_\xi B_o)\right)^2\right]
+=\frac{4\delta_g^2}{k}\mathbb E[S_\xi B_o(1-B_o)]
+\le\frac{\delta_g^2M}{2k}=O(\delta_g)\to0.
+$$
+$B_o$ 与完整 $\xi$ 独立，故 (284.9)、(284.13)—(284.14) 在同一来源实现中联合给
+$$
+X_0=\left(\frac{O-n_o/2}{\sqrt k},\frac{E-n_e/2}{\sqrt k},
+\frac{\delta_g(H-\alpha M)}{\sqrt k}\right)
+\Rightarrow\mathcal N(0,D_0),\qquad
+D_0=\operatorname{diag}(1/8,1/8,1/4).
+\tag{284.15}
+$$
+
+下一步用精确有限矩匹配实际中心和完整协方差。复用 §283 的
+$$
+c_j=\mathbb E[\eta_j\mid L=M],\qquad
+\mathbb E[\eta_i\eta_j\mid L=M]=c_{|i-j|}\quad(i\ne j),
+$$
+$$
+|c_j|\le\theta^j+\theta^{d-j},\qquad
+\theta=\frac d{2M}\to0,\qquad
+\sum_{j=1}^{d-1}|c_j|\le\frac{2\theta}{1-\theta}=O(\theta).
+\tag{284.16}
+$$
+因而精确短坐标均值为
+$$
+\mathbb EO=\frac{n_o-\sum_{j\text{ 奇}}c_j}{2},\qquad
+\mathbb EE=\frac{n_e-\sum_{j\text{ 偶}}c_j}{2}.
+$$
+例如奇位置集合 $\mathcal I_o$ 给
+$$
+4\operatorname{Var}O
+=n_o+\sum_{\substack{i,j\in\mathcal I_o\\i\ne j}}c_{|i-j|}
+-\left(\sum_{i\in\mathcal I_o}c_i\right)^2.
+$$
+每个距离至多出现 $2k$ 次，两个均值和均为 $O(\theta)$，故分别有
+$$
+\operatorname{Var}O=\frac{n_o}{4}+O(k\theta+\theta^2),\qquad
+\operatorname{Var}E=\frac{n_e}{4}+O(k\theta+\theta^2),
+$$
+$$
+4\operatorname{Cov}(O,E)
+=\sum_{i\in\mathcal I_o,j\in\mathcal I_e}c_{|i-j|}
+-\left(\sum_{i\in\mathcal I_o}c_i\right)
+ \left(\sum_{j\in\mathcal I_e}c_j\right)
+=O(k\theta+\theta^2).
+\tag{284.17}
+$$
+所有期望与协方差都在实际条件律下取值。再直接复用 §283 的
+$$
+\mathbb EH=\alpha M,\qquad
+\operatorname{Var}H=\frac{MN_oN_e(M+d)}{d^2(d+1)},\qquad
+\frac{\delta_g^2\operatorname{Var}H}{k}
+=\frac{t_gN_oN_e}{k(d+1)}\longrightarrow\frac14.
+\tag{284.18}
+$$
+$O,E$ 是完整 $\xi$ 的函数，故由 (284.11)
+$$
+\operatorname{Cov}(O,H)=\operatorname{Cov}(O,h_c),\qquad
+\operatorname{Cov}(E,H)=\operatorname{Cov}(E,h_c).
+$$
+Cauchy—Schwarz、(284.12)、(284.17) 分别给
+$$
+|\operatorname{Cov}(O,H)|\le
+\sqrt{\operatorname{Var}O\,\operatorname{Var}h_c}=O(k),\qquad
+|\operatorname{Cov}(E,H)|\le
+\sqrt{\operatorname{Var}E\,\operatorname{Var}h_c}=O(k).
+\tag{284.19}
+$$
+令 $X=(O,E,H)$、$\mu_X=\mathbb EX$、$R_g=\operatorname{diag}(1,1,\delta_g)$，便得
+$$
+C_g:=\frac1kR_g\operatorname{Cov}(X)R_g\longrightarrow D_0,\qquad
+\frac1{\sqrt k}R_g(X-\mu_X)\Rightarrow\mathcal N(0,D_0).
+\tag{284.20}
+$$
+第二式使用 (284.15) 以及短中心与 $n_o/2,n_e/2$ 的差为 $O(\theta)$、长中心恰为 $\alpha M$。第一式由 (284.17)—(284.19) 逐项取得，两个长短项乘 $\delta_g/k$ 后趋零；它不从弱收敛推断矩收敛，也不在有限参数下删去交叉协方差。
+
+现直接消费 §283 的实际坐标与格。令 $\kappa=k\bmod2$、
+$J=(H-O-E-\kappa M)/2$、$W=(O,E,J)$，则 $W$ 为整数向量，且其差分矩阵为
+$$
+T=\begin{pmatrix}1&0&0\\0&1&0\\-1/2&-1/2&1/2\end{pmatrix}.
+$$
+复用 (283.12)—(283.13) 的两个精确来源映射：
+$$
+Z=\left(O-E,\frac{M-2H-(-1)^kq}{2},
+\lfloor k/2\rfloor-O-E\right)\quad(a=k,b=M),
+$$
+$$
+Z=\left(E-O+pq,\lfloor k/2\rfloor-O-E+pq,
+\frac{M-2H-p}{2}\right)\quad(b=k,a=M).
+\tag{284.21}
+$$
+取实际支持点 $z_0$，复用 (283.17) 的
+$$
+B=\begin{pmatrix}2&0&1\\0&2&1\\0&0&1\end{pmatrix},\qquad
+A_1=\begin{pmatrix}1&0&0\\0&0&-1\\-1&-1&0\end{pmatrix},\qquad
+A_2=\begin{pmatrix}0&1&1\\0&0&1\\-1&-1&-2\end{pmatrix}.
+$$
+$A_1,A_2$ 为整数幺模矩阵。令
+$$
+Y=B^{-1}(Z-z_0),\qquad m=\mathbb EY,\qquad
+V=\operatorname{Cov}Y=B^{-1}\Sigma_{ab}B^{-T}.
+$$
+按方向取 $\mathcal A=A_1$ 或 $A_2$，$K=\mathcal AT$；具体为
+$$
+K_1=\begin{pmatrix}1&0&0\\1/2&1/2&-1/2\\-1&-1&0\end{pmatrix},
+\qquad
+K_2=\begin{pmatrix}-1/2&1/2&1/2\\-1/2&-1/2&1/2\\0&0&-1\end{pmatrix},
+\qquad |\det K_i|=\frac12.
+$$
+这些是差分关系，所有实际常量由中心化消去；精确地
+$$
+Y-m=K(X-\mu_X),\qquad
+V=kK R_g^{-1}C_gR_g^{-1}K^T.
+\tag{284.22}
+$$
+由 (284.20)，最终 $\|C_g-D_0\|_{\mathrm{op}}\le1/16$；此时可取 $c=1/16$、$C=5/16$，使 $cI\le C_g\le CI$，所以
+$$
+ckK R_g^{-2}K^T\le V\le CkK R_g^{-2}K^T,\qquad V\ge c'kI.
+\tag{284.23}
+$$
+后一界用 $R_g^{-2}\ge I$ 和两种固定可逆 $K$ 的共同最小奇异值取得。因此 $V$ 与 $\Sigma_{ab}$ 最终正定。这些尺度界在实际变换轴中成立，不把混合的 $Y$ 轴误当作对角轴。又 $\det D_0=1/256$，故
+$$
+\sqrt{\det V}=\frac{k^{3/2}}{2\delta_g}\sqrt{\det C_g}
+\sim\frac{k^{3/2}}{32\delta_g},\qquad
+\sqrt{\det\Sigma_{ab}}=4\sqrt{\det V}
+\sim\frac{k^{3/2}}{8\delta_g}.
+\tag{284.24}
+$$
+
+所有环面积分继续采用 §283 的未归一化 Lebesgue 测度。定义
+$$
+\Psi(\zeta)=\mathbb E e^{i\zeta\cdot(Y-m)}.
+$$
+固定频域半径 $R\ge1$，对实提升 $\zeta\in\mathbb R^3$ 令
+$$
+\eta=K^T\zeta,\qquad
+v=\left(\sqrt k\,\eta_1,\sqrt k\,\eta_2,
+\frac{\sqrt k}{\delta_g}\eta_3\right),\qquad
+\mathcal Q_R=\{\zeta:v\in[-R,R]^3\}.
+$$
+复用 §283 的 $q_H(\tau,x,y)=(x+\tau,y+\tau,2\tau)$ 与 $\Omega_R$。精确地
+$$
+T^Tq_H(\tau,x,y)=(x,y,\tau).
+$$
+因此 $\mathcal Q_R$ 的环面像就是 $\Omega_R$：$U_R$ 的零中心盒在 $q_H$ 下给出该像，另一个 H 中心盒相差核元，给出同一像。固定 $R$ 时，由两种 $K^{-T}$ 的共同范数界，最终 $\mathcal Q_R\subset(-\pi,\pi)^3$，所以局部代表唯一。换元 Jacobian 为
+$$
+d\zeta=\frac{2\delta_g}{k^{3/2}}\,dv,\qquad
+\sqrt{\det V}\,d\zeta=\sqrt{\det C_g}\,dv.
+\tag{284.25}
+$$
+并且
+$$
+\zeta\cdot(Y-m)=v\cdot\frac{R_g(X-\mu_X)}{\sqrt k},\qquad
+\zeta^TV\zeta=v^TC_gv.
+$$
+(284.20) 给每个固定 $v$ 上的特征函数极限 $\exp(-v^TD_0v/2)$；高斯项由 $C_g\to D_0$ 有同一极限。两项的模均不超过一，固定盒上有界支配收敛与 (284.25) 因而给
+$$
+\sqrt{\det V}\int_{\Omega_R}
+|\Psi(\zeta)-e^{-\zeta^TV\zeta/2}|\,d\zeta\longrightarrow0.
+\tag{284.26}
+$$
+
+在同一中心代表下定义实际格高斯和
+$$
+G(\zeta)=\sum_{\ell\in\mathbb Z^3}
+\phi_V(\ell-m)e^{i\zeta\cdot(\ell-m)}.
+$$
+对每个最终正定的有限 $V$，精确三维求和公式为
+$$
+G(\zeta)=\sum_{h\in\mathbb Z^3}e^{2\pi i h\cdot m}
+\exp\!\left[-\frac12(\zeta+2\pi h)^TV(\zeta+2\pi h)\right].
+\tag{284.27}
+$$
+为验证相位与归一化，令 $F_0=[-\pi,\pi)^3$，将右侧乘 $e^{i\zeta\cdot m}$，记所得连续周期函数为 $\mathcal H(\zeta)$。正定高斯及其整数平移级数迅速衰减，级数绝对且局部一致收敛，可逐项取整数 Fourier 系数。对任意 $\ell\in\mathbb Z^3$，换元 $u=\zeta+2\pi h$ 后有
+$$
+\begin{aligned}
+\widehat{\mathcal H}(\ell)
+&=(2\pi)^{-3}\sum_h\int_{F_0}
+e^{i\zeta\cdot m+2\pi ih\cdot m-i\zeta\cdot\ell}
+e^{-(\zeta+2\pi h)^TV(\zeta+2\pi h)/2}\,d\zeta\\
+&=(2\pi)^{-3}\int_{\mathbb R^3}
+e^{-iu\cdot(\ell-m)}e^{-u^TVu/2}\,du\\
+&=\phi_V(\ell-m).
+\end{aligned}
+$$
+整数性使 $e^{2\pi ih\cdot\ell}=1$；全部平移基本域铺满 $\mathbb R^3$。最后一个三维高斯积分由正交对角化正定 $V$，再对三个正二次系数的高斯 Fourier 积分作 Fubini 得到。另一方面，$e^{i\zeta\cdot m}G(\zeta)$ 的绝对收敛 Fourier 级数具有同样的系数；连续周期函数的 Fourier 唯一性证明 (284.27)。式中相位是正号 $e^{2\pi ih\cdot m}$。角度加 $2\pi a$ 时，$G$ 与 $\Psi$ 同乘 $e^{-2\pi ia\cdot m}$，故 $|\Psi-G|$ 是环面函数。
+
+用 (284.27) 的非零平移项和基本域铺砌，
+$$
+\begin{aligned}
+\sqrt{\det V}\int_{F_0}|G(\zeta)-e^{-\zeta^TV\zeta/2}|\,d\zeta
+&\le\sqrt{\det V}\int_{\mathbb R^3\setminus F_0}
+e^{-\zeta^TV\zeta/2}\,d\zeta\\
+&\longrightarrow0.
+\end{aligned}
+\tag{284.28}
+$$
+确实，换元 $u=V^{1/2}\zeta$ 完全消去行列式；$\zeta\notin F_0$ 给 $\|\zeta\|\ge\pi$，而 (284.23) 给 $\|u\|\ge\pi\sqrt{c'k}$。右侧于是由标准三维高斯的该径向尾控制，不引入依赖未受限 $M$ 的前因子。
+
+还要支付 $\Omega_R$ 外的格高斯尾。若环面点不在 $\Omega_R$，它的任何实提升都不在 $\mathcal Q_R$；否则该提升的投影就在 $\Omega_R$。将基本域外部的所有提升合并，(284.27)、三角不等式与 (284.25) 给
+$$
+\begin{aligned}
+\sqrt{\det V}\int_{\mathbb T^3\setminus\Omega_R}|G(\zeta)|\,d\zeta
+&\le\sqrt{\det V}\int_{\mathbb R^3\setminus\mathcal Q_R}
+e^{-\zeta^TV\zeta/2}\,d\zeta\\
+&=\sqrt{\det C_g}\int_{\mathbb R^3\setminus[-R,R]^3}
+e^{-v^TC_gv/2}\,dv.
+\end{aligned}
+\tag{284.29}
+$$
+由 $cI\le C_g\le CI$，右侧不超过固定常数乘
+$\int_{\mathbb R^3\setminus[-R,R]^3}e^{-c\|v\|^2/2}\,dv$；其上极限随 $R\to\infty$ 趋零。这里保留长短轴尺度，行列式与 Jacobian 相消，没有 $Me^{-ck}$ 或需要 $k\gg\log M$ 的余项。
+
+直接复用定理 283.1、(283.19)—(283.20) 的真实特征函数远频消费者：
+$$
+\sqrt{\det V}\int_{\mathbb T^3\setminus\Omega_R}|\Psi(\zeta)|\,d\zeta
+\le C_{\mathrm{tail}}(1+R)^{-2}.
+\tag{284.30}
+$$
+在 $\Omega_R$ 上以 (284.26)、(284.28) 控制 $|\Psi-G|$，在其补集用 (284.29)—(284.30)。先沿固定的任意原序列取上极限，再令 $R\to\infty$，得到完整充分接口
+$$
+\sqrt{\det V}\int_{\mathbb T^3}|\Psi-G|\,d\zeta\longrightarrow0.
+\tag{284.31}
+$$
+同一中心相位下，对每个整数 $y\in\mathbb Z^3$，
+$$
+\mathbb P(Y=y)-\phi_V(y-m)
+=(2\pi)^{-3}\int_{F_0}
+e^{-i\zeta\cdot(y-m)}(\Psi(\zeta)-G(\zeta))\,d\zeta.
+$$
+原律与高斯格和均绝对可和，整数字符的正交性使反演成立；取绝对值便有全整数格统一误差界。
+
+§283 的最大实际差分格及母卷整数判据给 $\Lambda_{ab}=z_0+B\mathbb Z^3$，因此 $z\in\Lambda_{ab}$ 与 $y=B^{-1}(z-z_0)\in\mathbb Z^3$ 双射。精确换元为
+$$
+y-m=B^{-1}(z-\mu_{ab}),\qquad
+\phi_V(y-m)=4\phi_{\Sigma_{ab}}(z-\mu_{ab}),\qquad
+\sqrt{\det\Sigma_{ab}}=4\sqrt{\det V}.
+$$
+(284.31) 于是证明 (284.1)，包括完整 Euler 支撑外的零质量点。两个方向只选择有限集合 $\{K_1,K_2\}$ 内的矩阵，前述常数及极限证明共用；即使方向无限次切换，结论仍成立。全证明仅使用 $k\to\infty$、$\delta_g\to0$。$\square$
+
+来源与中间工具的适用范围如下。实际有序树、均匀纤维与 Catalan 消去采用本卷定义 1.1、2.1、定理 2.2；同源正规形、八边和 Euler 判据采用[母卷 §§357、359、360 的钉定正文](https://github.com/the-omega-institute/trureturing/blob/f4d6b577d321ab7a06af770830b6945bc6173261/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)；几何条件化、两方向映射、格及精确有限矩、远频消费者采用[本卷 §283 的钉定正文](https://github.com/the-omega-institute/trureturing/blob/f4d6b577d321ab7a06af770830b6945bc6173261/docs/develop/theory/FIB_ATOM_STATISTICAL_LAWS.md)。新的同源推导是完整偏置奇偶密度的全速率比较、共同 Beta 实现及实际交叉矩桥与中央 Fourier 消费者的连接；坐标换元和既有尾界作为前置直接使用。
+
+成熟中间工具可复用于钉版 mathlib $db584cd6d46c92f209a44c0f1c829460d327499d$：[Stirling](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Stirling.lean) 的正整数全局阶乘界与阶乘渐近等价供给 (284.3)；[普通 iid 中心极限定理](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/CentralLimitTheorem.lean) 的独立同分布、有限二阶矩假设用于单位指数和；[Beta 密度及归一化](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Distributions/Beta.lean) 使用正形状参数；[高斯 Fourier 积分](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Gaussian/FourierTransform.lean) 使用正二次实部；[Poisson 求和](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Fourier/PoissonSummation.lean) 的可和衰减接口与 (284.27) 的高斯 Fourier 系数验证相容。共同 Dirichlet—多项式表示由 (284.10) 的单纯形积分直接验证，不以经典文献的未取得正文作证明前提。这些中间工具的声明域各自保留；它们不单独给出本条件三维族的完整局部极限。
+
+本定理的概率量词域与原仿射严格预算不同。在素数 $r\ge7$、$V_{\!F}=F_r$、非空连续 $I\subseteq[\lceil V_{\!F}/10\rceil,\lfloor V_{\!F}/5\rfloor]$、$N=1+V_{\!F}g$、$A>5040$、固定 $C_0>1$、$A\le N\le C_0A$、$s=\log A\,\log\log A$ 及原 Möbius 增量 $b_s$ 的同整数问题中，完整成本不等式
+$$
+C^*+H^*<
+\left(\frac{\log\log N^*}{\log\log A}\right)^s
+$$
+仍未证明。(284.1) 不支付该完整成本，不构造实际 Robin 反例，也不推出 RH 或全 Robin 命题；母卷 §365 的既有实际最小公倍数族归约仍只适用于其原量词域。
+
+## 追加锚（本行以下为增补区）
+
+
+## 285. 总长度条件下完整间隔奇偶核的显式有限误差
+
+**定义 285.1（实际树、完整间隔与共同记录）。** 沿用定义 1.1、2.1 的自由有序非空满二叉树代数 $\mathcal T$，叶为 $\alpha,\beta$；左右次序与全部二叉括号化分别保留。对非负整数组成 $(a,b)$、$a+b\ge1$，$U(a,b)$ 是组成纤维 $\mathcal F(a,b)$ 上的均匀律。原替换及叶积关系为
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle,
+\qquad A^2=1,\quad B^2=-1,\quad AB+BA=1.
+$$
+
+$E(t)$ 按原叶序相乘，三个窗口始终属于同一实际树：
+
+$$
+W_3(t)=(E(t),E(\rho t),E(\rho^2t))=L(u,v,w)R_{pq},
+\qquad Z(t)=(u,v,w),\quad p=a\bmod2,\quad q=b\bmod2.
+$$
+
+这里直接采用[母卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md)定理 359.3 的唯一正规形，置 $S=BA$，则
+
+$$
+L(u,v,w)=\bigl((-1)^vS^{2u},(-1)^wS^{2v},(-1)^uS^{2w}\bigr),
+\qquad
+R_{00}=(1,1,1),\quad R_{10}=(A,B,S),\quad
+R_{01}=(B,S,A+B),\quad R_{11}=R_{10}R_{01}.
+$$
+
+令 $k=\min(a,b)$、$M=\max(a,b)$、$d=k+1$、$n=k+M$。当 $a\le b$ 时以 $\alpha$ 分隔，叶词唯一写成
+$\beta^{r_0}\alpha\beta^{r_1}\cdots\alpha\beta^{r_k}$；当 $b<a$ 时以 $\beta$ 分隔，唯一写成
+$\alpha^{r_0}\beta\alpha^{r_1}\cdots\beta\alpha^{r_k}$。全部 $d$ 个间隔满足
+
+$$
+r_i\in\mathbb Z_{\ge0}\quad(0\le i<d),\qquad \sum_{i=0}^{d-1}r_i=M.
+$$
+
+每个叶词都有同样的 $\operatorname{Cat}_{n-1}=n^{-1}\binom{2n-2}{n-1}$ 种有序二叉括号化。采用定理 2.2 及 §§283–284 的计数回接，$U(a,b)$ 在 $r$ 上诱导总和为 $M$ 的均匀弱组成律，而给定 $r$ 后仍均匀保留全部括号。定义
+
+$$
+\xi_i=r_i\bmod2,\qquad h=\sum_{i=0}^{d-1}\xi_i,\qquad
+\varepsilon_0=0,\qquad
+\varepsilon_j=\left(\sum_{i<j}r_i\right)\bmod2\quad(1\le j\le d).
+$$
+
+实际端点为 $\varepsilon_d=M\bmod2$；$\xi_i=\varepsilon_i\mathbin{\oplus}\varepsilon_{i+1}$，其中 $\oplus$ 表示模二加法。因此全部 $d$ 位 $\xi$ 与包含端点的全部 $d+1$ 位 $\varepsilon$ 互相唯一决定。记实际完整奇偶律为 $\mathsf R_{d,M}$。在同一个 $r$ 上定义
+
+$$
+H=\sum_{\substack{0\le i<d\\i\text{ 奇}}}r_i,\qquad
+O=\sum_{\substack{1\le j\le k\\j\text{ 奇}}}\varepsilon_j,\qquad
+E=\sum_{\substack{1\le j\le k\\j\text{ 偶}}}\varepsilon_j.
+$$
+
+此处标量 $E$ 与叶积函数 $E(t)$ 由参数区分。直接使用 (283.12)–(283.13) 的同源坐标：
+
+$$
+\begin{aligned}
+Z&=\left(O-E,\frac{M-2H-(-1)^kq}{2},\lfloor k/2\rfloor-O-E\right)
+&& (a=k,b=M),\\
+Z&=\left(E-O+pq,\lfloor k/2\rfloor-O-E+pq,\frac{M-2H-p}{2}\right)
+&& (b=k,a=M).
+\end{aligned}
+\tag{285.1}
+$$
+
+两式的证明是母卷八边增量沿实际叶词求和，不需要 $k\ge64$，也不需要协方差可逆。相应实际支撑完整保留母卷定理 360.2：令
+
+$$
+X_e=\frac{a-p-2w+2u}{4},\qquad
+Y_e=\frac{b-q-2u+2v}{4},
+$$
+
+则 $X_e,Y_e$ 必须为整数，全部八个出发状态边重数
+
+$$
+\begin{aligned}
+x_{00}&=X_e+w-u+p,&x_{10}&=X_e+w,&x_{01}&=X_e,&x_{11}&=X_e-u,\\
+y_{00}&=Y_e+u+q(1-p),&y_{01}&=Y_e,&y_{10}&=Y_e-v+pq,&y_{11}&=Y_e+u-v
+\end{aligned}
+\tag{285.2}
+$$
+
+必须非负。$x_{pq}$ 是 $pq\xrightarrow{\alpha}(1-p)q$ 的次数，$y_{pq}$ 是 $pq\xrightarrow{\beta}p(1-q)$ 的次数；所有正重数边的端点连同起点 $00$，忽略方向后必须构成弱连通支撑。叶词从 $00$ 到 $(p,q)$ 的实际路径承担全部条件，不能以仅有流量方程的松弛替代。
+
+**定义 285.2（偏置参考合同与实际条件核）。** 对整数 $d\ge1,M\ge1$，置
+
+$$
+\tau=\frac{M}{M+d},\qquad
+\nu=\frac{\tau}{1+\tau}=\frac{M}{2M+d},\qquad
+\eta_0=1-2\nu=\frac{d}{2M+d},
+$$
+
+并令 $\mathsf Q_{d,M}$ 为全部 $d$ 个独立 $\operatorname{Bernoulli}(\nu)$ 位条件于
+$h\equiv M\pmod2$ 的律。独立性属于未条件参考采样；条件后的全部位不称为独立，也不称为原 $U(a,b)$ 的奇偶律。条件事件概率和单向量质量为
+
+$$
+p_e=\frac{1+(-1)^M\eta_0^d}{2}>0,\qquad
+\mathsf Q_{d,M}(\xi)=
+\frac{\nu^h(1-\nu)^{d-h}}{p_e}
+\mathbf1_{\{h\equiv M\pmod2\}}.
+\tag{285.3}
+$$
+
+实际弱组成计数给出
+
+$$
+\mathsf R_{d,M}(\xi)=
+\frac{\displaystyle\binom{(M-h)/2+d-1}{d-1}}
+{\displaystyle\binom{M+d-1}{d-1}}
+\mathbf1_{\{h\equiv M\pmod2,\ h\le M\}};
+\tag{285.4}
+$$
+
+指示条件不成立时质量为零，不对非整数或负参数解释组合数。对实际合法的完整 $\xi$，令 $s_\xi=(M-h)/2$。给定 $\xi$ 后，$r=2T+\xi$ 的实际条件核为
+
+$$
+\mathbb P(T=t\mid\xi)=
+\frac{\mathbf1_{\{t_i\in\mathbb Z_{\ge0},\ \sum_i t_i=s_\xi\}}}
+{\displaystyle\binom{s_\xi+d-1}{d-1}}.
+\tag{285.5}
+$$
+
+这是 (284.2)、(284.10) 已用的奇偶分解与均匀弱组成计数。$M\ge d$ 时，每个终端合法的 $\xi$ 都有 $s_\xi\ge0$，因而可以定义参考树律 $\widetilde U(a,b)$：先抽 $\xi\sim\mathsf Q_{d,M}$，再使用同一个实际核 (285.5) 抽 $T$，置 $r=2T+\xi$，按定义 285.1 的指定方向形成原叶词，最后均匀选择全部 $\operatorname{Cat}_{n-1}$ 种原有序括号。每一步均生成 $\mathcal F(a,b)$ 中的实际树。该律仅重加权实际奇偶纤维，属于额外参考合同；它的单树质量为
+
+$$
+\widetilde U(a,b)(t)=
+\frac{\mathsf Q_{d,M}(\xi(t))}
+{\operatorname{Cat}_{n-1}\displaystyle\binom{s_{\xi(t)}+d-1}{d-1}}.
+\tag{285.6}
+$$
+
+**命题 285.3（完整终端奇偶核的有限 TV 界及同源消费者）。** 总变差采用有限概率律的约定
+$\|P-Q\|_{\mathrm{TV}}=\frac12\sum_x|P(x)-Q(x)|$。对全部整数 $d\ge2,M\ge3d$，有
+
+$$
+\|\mathsf R_{d,M}-\mathsf Q_{d,M}\|_{\mathrm{TV}}
+\le \epsilon_{d,M}:=
+\min\left\{1,\ 5\left(\frac{\sqrt d}{M}+\frac{d(d-1)}{M^2}\right)\right\}.
+\tag{285.7}
+$$
+
+$d=1,M\ge1$ 时两律相等，取 $\epsilon_{1,M}=0$。在这些范围内，完整 $\varepsilon$ 记录的两律具有相同的 TV 距离。对任一对应组成 $(a,b)$，参考树律 (285.6) 满足
+
+$$
+\|U(a,b)-\widetilde U(a,b)\|_{\mathrm{TV}}
+=\|\mathsf R_{d,M}-\mathsf Q_{d,M}\|_{\mathrm{TV}}.
+\tag{285.8}
+$$
+
+因此，对由同一实际树计算的完整联合记录
+$(t,r,\xi,\varepsilon,H,O,E,Z,W_3(t))$ 的任意事件 $\mathcal A$，有两方向概率界
+
+$$
+\max\{0,\mathbb P_{\widetilde U}(\mathcal A)-\epsilon_{d,M}\}
+\le\mathbb P_U(\mathcal A)
+\le\min\{1,\mathbb P_{\widetilde U}(\mathcal A)+\epsilon_{d,M}\}.
+\tag{285.9}
+$$
+
+此处只将已有纤维等距提升及 TV 通道收缩作为 (285.7) 的消费者；承重的新增估计为完整密度的有限参数上界 (285.7)。它是本仓推导，不作全球优先权或最优常数断言。
+
+证明。先取 $d\ge2,M\ge3d$。此时所有终端合法向量都可实现，两律在同一完整奇偶集合上均严格为正。由 (285.3)，$\mathsf Q(\xi)$ 与 $\tau^h$ 成正比；由 (285.4) 的乘积展开，$\mathsf R(\xi)$ 与
+$\prod_{j=1}^{d-1}(M-h+2j)$ 成正比。故对 $0\le x\le d$ 定义
+
+$$
+\ell(x)=\sum_{j=1}^{d-1}\log(M-x+2j)-x\log\tau,
+\qquad m=d\nu=\frac{dM}{2M+d},
+$$
+
+则 $d\mathsf R/d\mathsf Q$ 与 $\exp(\ell(h))$ 成正比。全部对数参数为正，$0<m<d$。$m$ 只是未条件参考 Bernoulli 总和的均值，不将它认作 $\mathsf Q$ 下的条件均值。
+
+两个精确恒等式为
+
+$$
+M-m=\frac{2M^2}{2M+d},\qquad
+M-m+2d=\frac{2(M+d)^2}{2M+d}.
+$$
+
+令 $f(y)=(M-m+2y)^{-1}$，则 $f$ 正且递减，并且
+
+$$
+I_f:=\int_0^d f(y)\,dy
+=\frac12\log\frac{M-m+2d}{M-m}
+=-\log\tau.
+$$
+
+采用递减函数的积分比较：
+
+$$
+\int_1^d f(y)\,dy
+\le\sum_{j=1}^{d-1}f(j)
+\le\int_0^{d-1}f(y)\,dy
+\le I_f.
+$$
+
+因此完整离散和的端点误差满足
+
+$$
+0\le\ell'(m)=I_f-\sum_{j=1}^{d-1}f(j)
+\le\int_0^1f(y)\,dy
+\le\frac1{M-d}=:A_0.
+\tag{285.10}
+$$
+
+这里积分中心与偏置 $\nu$ 精确相消，保留的是全部 $d-1$ 项离散和的有限端点误差。全区间曲率则为
+
+$$
+\ell''(x)=-\sum_{j=1}^{d-1}\frac1{(M-x+2j)^2},
+\qquad -B_0\le\ell''(x)\le0,
+\qquad B_0=\frac{d-1}{(M-d)^2}\quad(0\le x\le d).
+\tag{285.11}
+$$
+
+置 $\Delta=h-m$、$X_\ell=\ell(h)-\ell(m)$。Taylor 积分余项和凹函数的切线界分别给出
+
+$$
+|X_\ell|\le A_0|\Delta|+\frac{B_0}{2}\Delta^2,
+\qquad
+X_\ell\le\ell'(m)\Delta\le A_0d\le\frac12.
+\tag{285.12}
+$$
+
+后一个估计同时覆盖 $\Delta<0$：这时 $\ell'(m)\Delta\le0$。上述余项覆盖全部合法向量，不丢弃尾部，也没有先作任何渐近极限。
+
+在未条件的参考 Bernoulli 律下，$h$ 的均值为 $m$、方差为 $d\nu(1-\nu)\le d/4$。由 $\eta_0\le1/7$，
+
+$$
+p_e=\frac{1+(-1)^M\eta_0^d}{2}
+\ge\frac{1-\eta_0^d}{2}\ge\frac13.
+$$
+
+将非负变量 $\Delta^2$ 的无条件期望除以条件事件概率，再用 Cauchy–Schwarz，得到
+
+$$
+\mathbb E_{\mathsf Q}\Delta^2\le\frac{3d}{4},\qquad
+\mathbb E_{\mathsf Q}|\Delta|\le\frac{\sqrt{3d}}2.
+\tag{285.13}
+$$
+
+这不是条件独立性或条件均值等式。于是
+
+$$
+\mathbb E_{\mathsf Q}|X_\ell|\le D_{d,M}:=
+\frac{\sqrt{3d}}{2(M-d)}+
+\frac{3d(d-1)}{8(M-d)^2}.
+\tag{285.14}
+$$
+
+$M-d\ge2d$、$d\ge2$ 给第一项至多 $\sqrt{3/2}/4<3/8$，第二项至多 $3(d-1)/(32d)<3/32$，故 $D_{d,M}<1/2$。令 $V_\ell=\exp(X_\ell)$、$c=\mathbb E_{\mathsf Q}V_\ell$；有限 Jensen 不等式给出完整归一化常数的下界
+
+$$
+c\ge\exp(\mathbb E_{\mathsf Q}X_\ell)\ge\exp(-D_{d,M}).
+$$
+
+由 $X_\ell\le1/2$ 和均值定理，$|V_\ell-1|\le e^{1/2}|X_\ell|$。精确归一化密度为
+$d\mathsf R/d\mathsf Q=V_\ell/c$，且
+$|c-1|\le\mathbb E_{\mathsf Q}|V_\ell-1|$，所以
+
+$$
+\begin{aligned}
+\|\mathsf R-\mathsf Q\|_{\mathrm{TV}}
+&=\frac1{2c}\mathbb E_{\mathsf Q}|V_\ell-c|\\
+&\le\frac1c\mathbb E_{\mathsf Q}|V_\ell-1|\\
+&\le\exp(1/2+D_{d,M})D_{d,M}\le eD_{d,M}.
+\end{aligned}
+\tag{285.15}
+$$
+
+最后 $M-d\ge2M/3$ 给
+
+$$
+D_{d,M}\le\frac{3\sqrt3}{4}\frac{\sqrt d}{M}
++\frac{27}{32}\frac{d(d-1)}{M^2}.
+$$
+
+使用 $e<3$、$9\sqrt3/4<5$、$81/32<5$，再用概率律的 TV 至多一，便得到 (285.7)。离散端点控制、全域曲率、条件二阶矩与归一化下界共同给出此有限 $L^1$ 误差；弱收敛或单点中心极限不承担任何一步定量换权。
+
+$d=1$ 时只有一个间隔 $r_0=M$，实际奇偶位确定为 $M\bmod2$；参考合同条件于同一奇偶后也集中在这个唯一位，故 TV 为零。固定 $\varepsilon_0=0$ 和 $\varepsilon_d=M\bmod2$ 后，$\xi\leftrightarrow\varepsilon$ 是定义 285.1 的双射，TV 因而保持。
+
+对于完整实际树，(285.5) 和均匀 Catalan 括号给共同条件核 $K_\xi(t)$，其支撑恰为奇偶记录等于 $\xi$ 的树。因而
+
+$$
+U(t)=\mathsf R(\xi(t))K_{\xi(t)}(t),\qquad
+\widetilde U(t)=\mathsf Q(\xi(t))K_{\xi(t)}(t),\qquad
+\sum_{t:\xi(t)=\xi}K_\xi(t)=1.
+$$
+
+纤维内的质量差同号，按纤维求绝对值即得
+
+$$
+\frac12\sum_t|U(t)-\widetilde U(t)|
+=\frac12\sum_\xi|\mathsf R(\xi)-\mathsf Q(\xi)|,
+$$
+
+证明 (285.8)。这是仓内 [FiberwiseEqualDistanceLift](../../../D5/S3/TotalVariation/Equality/FiberwiseEqualDistanceLift.lean) 的 `fiberwise_equal_distance_lift` 所用非空有限纤维提升的实例，参考正质量纤维的非空性由 $M\ge d$ 保证。再将同一树送入完整联合记录，采用 [DataProcessing](../../../D5/S3/TotalVariation/DataProcessing.lean) 的 `total_variation_channel_le` 对有限随机通道的收缩，任一事件的绝对概率差不超过 (285.8)，从而得到 (285.9)。这些已有中间工具不另列新增命题。
+
+有限消费者可以保留 $H$ 与全部奇偶路径的依赖。对 $k\ge1$，令
+
+$$
+n_o=\lceil k/2\rceil,\qquad n_e=\lfloor k/2\rfloor+1,
+\qquad h_o=\sum_{i\text{ 奇}}\xi_i,
+\qquad K_o=\sum_{i\text{ 奇}}T_i.
+$$
+
+$n_o,n_e\ge1$ 且 $n_o+n_e=d$。给定完整 $\xi$，将 (285.5) 的弱组成按奇、偶两组计数，直接复用 (284.10) 的 Dirichlet—多项式／Beta—二项分组核，得
+
+$$
+H=2K_o+h_o,\qquad
+\mathbb P(K_o=j\mid\xi)=
+\frac{\displaystyle\binom{j+n_o-1}{n_o-1}
+\binom{s_\xi-j+n_e-1}{n_e-1}}
+{\displaystyle\binom{s_\xi+d-1}{d-1}}
+\quad(0\le j\le s_\xi).
+\tag{285.16}
+$$
+
+$O,E$ 是同一个完整 $\xi$ 所确定的量。以 (285.16) 给定 $H$，再用 (285.1) 得 $Z(\xi,j)$；对任意 $\mathcal B\subseteq\mathbb Z^3$，参考概率的完整有限表达为
+
+$$
+\mathbb P_{\widetilde U}(Z\in\mathcal B)
+=\sum_{\substack{\xi\in\{0,1\}^d\\h\equiv M\ (2)}}
+\mathsf Q(\xi)
+\sum_{j=0}^{s_\xi}
+\frac{\displaystyle\binom{j+n_o-1}{n_o-1}
+\binom{s_\xi-j+n_e-1}{n_e-1}}
+{\displaystyle\binom{s_\xi+d-1}{d-1}}
+\mathbf1_{\{Z(\xi,j)\in\mathcal B\}}.
+\tag{285.17}
+$$
+
+对 $(\xi,\varepsilon,H,O,E,Z,W_3)$ 的联合事件，同样在指示函数中保留整份记录；若事件还依赖完整 $T$ 或括号，则使用 (285.5) 与全部 Catalan 括号求和。两律使用完全相同的条件核，没有把 $H,O,E$ 换成独立边缘。每次抽样都先生成原叶词和原树，再由原替换生成三个窗口，故 (285.2) 的八边非负整数与含 $00$ 的弱 Euler 支撑在两律中同时成立，支撑外均为零。$\square$
+
+本命题的退化边界可在同一证明中的精确质量上直接代入。$d=2$ 时，奇 $M$ 的合法向量只有 $01,10$，两律均各赋质量 $1/2$，故 TV 为零。偶 $M$ 的合法向量只有 $00,11$，实际与参考质量分别为
+
+$$
+\begin{aligned}
+\mathsf R(00)&=\frac{M+2}{2(M+1)},&
+\mathsf R(11)&=\frac{M}{2(M+1)},\\
+\mathsf Q(00)&=\frac{(M+2)^2}{(M+2)^2+M^2},&
+\mathsf Q(11)&=\frac{M^2}{(M+2)^2+M^2}.
+\end{aligned}
+$$
+
+因此在偶 $M\ge6$ 上
+
+$$
+\|\mathsf R_{2,M}-\mathsf Q_{2,M}\|_{\mathrm{TV}}
+=\frac{M(M+2)}{2(M+1)(M^2+2M+2)},\qquad
+\lim_{\substack{M\to\infty\\M\text{ 偶}}}
+M\|\mathsf R_{2,M}-\mathsf Q_{2,M}\|_{\mathrm{TV}}=\frac12.
+\tag{285.18}
+$$
+
+这只是 (285.3)–(285.4) 的边界代入，说明不能将所有固定 $d$ 的误差统一写为只有 $O(d^2/M^2)$ 的界。$k=0$ 对应 $d=1$，只有一个叶词，窗口确定，但全部 Catalan 括号仍作为不同树保留。$k=1$ 对应 $d=2$；(285.1) 在第一方向给 $u=-w$、第二方向给 $u=v$，故三维协方差奇异，不能直接使用三维高斯密度、正定性或逆协方差。
+
+对有界 $k$，(285.7) 给完整向量及树换权的 $O_k(M^{-1})$ 绝对误差。对 $d/M\to0$ 的参数族，令 $\delta_g=d/(M+d)$，由
+$\sqrt d/M=\delta_g/((1-\delta_g)\sqrt d)$ 和
+$d(d-1)/M^2\le\delta_g^2/(1-\delta_g)^2$，同一界可写为
+$O(\delta_g/\sqrt d+\delta_g^2)$；无需另加 $\delta_g\sqrt d\to0$。这些是有限界的范围解释，不给固定 $k$ 的完整三维 Gaussian，也不给单点相对局部误差或条件于罕见事件后的同一误差。$d\ge2,M<3d$ 不在 (285.7) 的估计域；$M<d$ 的范围不能无条件使用实际核 (285.5)：例如 $d=3,M=1$ 时，参考律对 $\xi=(1,1,1)$ 赋正质量，但 $s_\xi=-1$，实际质量为零。
+
+计数、几何奇偶分解、两方向坐标和 Dirichlet—多项式条件核采用本卷 §§283–284；正规形及实际支撑采用母卷 §§359–360；积分比较、Taylor 余项、Cauchy–Schwarz 与有限 Jensen 作为成熟中间工具使用。Bender–Canfield，*Locally Restricted Compositions I. Restricted Adjacent Differences*，DOI [10.37236/1954](https://doi.org/10.37236/1954)，[原文](https://mathweb.ucsd.edu/~ebender/reprints/111.pdf) Definition 1 及 Theorems 1、3 的局部限制组成、渐近计数与固定统计维数范围，不直接供应这里全部 $d$ 位、含终端条件的显式有限界；本命题也不将那些文献的渐近结论当作定量证明前提。
+
+(285.7)–(285.9) 的概率量词仅涉及原组成纤维的均匀树律与明示重加权参考律。它们不提供原仿射整数 $N^*=1+F_r g^*$ 上、保留完整素幂及全部除数的严格预算
+
+$$
+C^*+H^*<\left(\frac{\log\log N^*}{\log\log A}\right)^s,
+\qquad s=\log A\,\log\log A.
+$$
+
+该预算在原素数、连续区间、同整数和终端条件下仍为独立未决问题；统计换权不支付它，也不推出 Robin 或 RH。
+
+## 追加锚（本行以下为增补区）

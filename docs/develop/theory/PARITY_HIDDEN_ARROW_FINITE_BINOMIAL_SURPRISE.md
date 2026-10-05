@@ -1,0 +1,180 @@
+# 有限二项计数的模态惊讶与一致 escort 矩
+
+## 1. 记号与数学来源
+
+令 $N\in\mathbb N$，$p\in[1/4,3/4]$，有限支持为 $I_N=\{0,1,\ldots,N\}$。在这个支持上定义实际二项计数质量、最大质量及模态惊讶
+
+$$
+q_{N,p}(n)=\binom Nn p^n(1-p)^{N-n},\qquad
+M_{N,p}=\max_{n\in I_N}q_{N,p}(n),\qquad
+S_{N,p}(n)=-\log\frac{q_{N,p}(n)}{M_{N,p}}.
+$$
+
+这个质量就是 [BinomialLocalGaussian.binomialMass](../../../D5/S3/AnalyticClosure/BinomialLocalGaussian.lean) 在 $n\le N$ 上的取值；二项系数是质量的一部分。对实数 $\alpha$ 定义有限配分函数与归一化惊讶矩
+
+$$
+Z_\alpha(N,p)=\sum_{n\in I_N}e^{-\alpha S_{N,p}(n)},\qquad
+E_{\alpha,k}(N,p)=
+\frac{\sum_{n\in I_N}S_{N,p}(n)^k e^{-\alpha S_{N,p}(n)}}{Z_\alpha(N,p)},\quad k\in\mathbb N.
+$$
+
+自然数零次幂取 $x^0=1$，包括 $x=0$。当 $N\ge1$ 时记
+
+$$
+z_{N,p}(n)=\frac{n-Np}{\sqrt{Np(1-p)}}.
+$$
+
+数学来源为 `repo-derived`：以下有限递推推导针对[谱边界卷](PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)式 (117.25)–(117.26) 的单组质量，给出明确的模态距离估计、共同常数和各自然阶惊讶矩。式 (119.39) 使用这些单组矩界；其低组乘积律以及输出条件与低组的关系是另外的数学条件。
+
+Joseph B. Kadane 的 *Sums of Possibly Associated Bernoulli Variables: The Conway–Maxwell–Binomial Distribution*，[arXiv:1404.1856v1](https://arxiv.org/html/1404.1856v1)，第 2 节式 (1)，给出幂二项系数分布的既有定义。这里的 escort 对应其规模 $m=N$、幂 $\nu=\alpha$ 与成功参数 $p^\alpha/(p^\alpha+(1-p)^\alpha)$；这个识别不提供下面的有限一致估计。Frédéric Ouimet 的 *A precise local limit theorem for the multinomial distribution and some applications*，[arXiv:2001.08512v4](https://arxiv.org/html/2001.08512v4)，定理 2.1 给出中央区域的局部极限展开；下面直接使用有限相邻质量递推，不以该渐近展开作为前提。二项恒等式、标量对数不等式、有限几何求和与指数对多项式的支配均为经典工具。
+
+## 定理 2.1（实际有限质量的模态距离、配分函数与全自然阶惊讶矩）
+
+存在实常数 $c>0$、$C>0$ 及函数 $K:\mathbb N\to(0,\infty)$，它们在 $N,p,\alpha$ 之前统一选定，使得对每个 $N\in\mathbb N$、每个 $p\in[1/4,3/4]$ 以及每个 $n\in I_N$，都有 $q_{N,p}(n)>0$、$0<M_{N,p}\le1$ 与 $S_{N,p}(n)\ge0$。当 $N\ge1$ 时，令 $m=\lfloor(N+1)p\rfloor$，则 $m\in I_N$、$M_{N,p}=q_{N,p}(m)$，且
+
+$$
+\frac{|n-m|(|n-m|-1)}{2N}\le S_{N,p}(n),\qquad
+c\,z_{N,p}(n)^2-C\le S_{N,p}(n)\le C\bigl(1+z_{N,p}(n)^2\bigr).
+$$
+
+对每个实数 $\alpha\in[1,2]$，都有
+
+$$
+0<Z_\alpha(N,p),\qquad
+c\sqrt{N+1}\le Z_\alpha(N,p)\le C\sqrt{N+1},\qquad
+\forall k\in\mathbb N,\quad 0\le E_{\alpha,k}(N,p)\le K(k).
+$$
+
+零阶矩对所有 $N$ 都满足 $E_{\alpha,0}(N,p)=1$。当 $N=0$ 时，唯一支持点为 $0$，且 $q_{0,p}(0)=M_{0,p}=1$、$S_{0,p}(0)=0$、$Z_\alpha(0,p)=1$；每个 $k\ge1$ 都满足 $E_{\alpha,k}(0,p)=0$。这些结论包含 $n=0,N$、$p=1/4,3/4$、$\alpha=1,2$ 与模态并列的情形。可以具体取
+
+$$
+\begin{aligned}
+U&=\frac{4e^{1/8}}{1-e^{-1/8}},& D&=\frac{e^{-768}}2,\\
+c&=\min\{3/128,D\},& C&=32+U,\\
+K(k)&=\frac UD\,[2(k+1)]^k.&&
+\end{aligned}
+$$
+
+证明。由于 $p$ 与 $1-p$ 都至少为 $1/4$，而 $\binom Nn\ge1$，支持内的每个质量都严格为正。二项展开给出 $\sum_{n=0}^Nq_{N,p}(n)=(p+(1-p))^N=1$，故 $0<M_{N,p}\le1$。于是 $0<q_{N,p}(n)/M_{N,p}\le1$，从而 $S_{N,p}(n)\ge0$，所有有限配分函数也严格为正。以下暂取 $N\ge1$，并简记 $q(n),M,S(n),z(n)$。
+
+二项系数的相邻递推给出，对 $0\le i<N$，
+
+$$
+(i+1)(1-p)q(i+1)=(N-i)pq(i),\qquad
+\frac{q(i+1)}{q(i)}=\frac{(N-i)p}{(i+1)(1-p)}.
+$$
+
+写 $m=\lfloor(N+1)p\rfloor$ 及 $\delta=(N+1)p-m$。由 $0<(N+1)p<N+1$ 得 $0\le m\le N$，且 $0\le\delta<1$、$m-Np=p-\delta$，所以 $|m-Np|\le1$。相邻比值至少为 $1$ 当且仅当 $i+1\le(N+1)p$。因此质量在到达 $m$ 前非减，越过 $m$ 后严格递减，$M=q(m)$。若 $\delta=0$，则 $m\ge1$ 且 $q(m-1)=q(m)$，这不改变最大质量或惊讶的定义。
+
+相邻比值还给出确切的对数望远镜。当 $n=m+t\le N$ 时，
+
+$$
+S(m+t)=\sum_{s=1}^{t}\log
+\frac{(m+s)(1-p)}{(N-m-s+1)p}.
+$$
+
+当 $n=m-t\ge0$ 时，
+
+$$
+S(m-t)=\sum_{s=1}^{t}\log
+\frac{(N-m+s)p}{(m-s+1)(1-p)}.
+$$
+
+两式所有分子、分母都严格为正。右侧路径中分子减分母为 $s-\delta$，左侧路径中为 $\delta+s-1$；两者都至少为 $s-1$，至多为 $s$。两条路径的分子都不超过 $N$。对正实数 $A,B$，$\log(A/B)\ge1-B/A$。将它逐项应用于这两个有限和，得到
+
+$$
+S(n)\ge\sum_{s=1}^{t}\frac{s-1}{N}
+=\frac{t(t-1)}{2N}
+\ge\frac{t^2}{4N}-\frac1{4N},\qquad t=|n-m|.
+$$
+
+最后一个不等式等价于 $(t-1)^2\ge0$。令 $d=|n-Np|$。由 $d\le t+1$ 得 $d^2\le2t^2+2$，故
+
+$$
+S(n)\ge\frac{d^2}{8N}-\frac1{2N}
+\ge\frac{3}{128}z(n)^2-\frac12,
+$$
+
+这里使用 $p(1-p)=1/4-(p-1/2)^2\ge3/16$。这也证明了陈述中的模态距离下界。
+
+为得到覆盖支持端点的上界，先由 $q(n)\ge(1/4)^N$ 与 $M\le1$ 得
+
+$$
+S(n)=\log M-\log q(n)\le N\log4<2N.
+$$
+
+若 $N\ge8$ 且 $n/N\in[1/8,7/8]$，则模态也在这个区间内：$m\ge(N+1)/4-1=(N-3)/4\ge N/8$，$m\le3(N+1)/4\le7N/8$。相邻路径的每个中间指标都留在这个区间内。右侧路径的分母 $(N-m-s+1)p$ 与左侧路径的分母 $(m-s+1)(1-p)$ 因而都至少为 $N/32$。对正数 $A,B$ 使用 $\log(A/B)\le A/B-1$，并使用分子减分母至多为 $s$，得到
+
+$$
+S(n)\le\frac{32}{N}\sum_{s=1}^{t}s
+=\frac{16t(t+1)}N
+\le\frac{64d^2+80}{N}
+\le16z(n)^2+10.
+$$
+
+中间一步由 $t\le d+1$ 以及 $(d+1)(d+2)\le4d^2+5$ 给出；后者之差为 $3(d^2-d+1)>0$。最后使用 $p(1-p)\le1/4$ 与 $N\ge8$。若 $N\ge8$ 但 $n/N$ 在这个区间之外，则 $d\ge N/8$，从而 $z(n)^2\ge N/16$，上述全局上界给 $S(n)\le32z(n)^2$。若 $1\le N<8$，全局上界给 $S(n)\le7\log4<14$。合并各分支，得到每个支持点上的共同上界
+
+$$
+S(n)\le32\bigl(1+z(n)^2\bigr).
+$$
+
+现在用有限分壳控制配分函数。令 $L=\lceil\sqrt N\rceil$，则 $1\le L\le2\sqrt N$ 且 $L^2\ge N$。按照 $r=\lfloor |n-m|/L\rfloor$ 将支持分成壳 $H_r$。距离在 $rL,\ldots,(r+1)L-1$ 内只有 $L$ 个整数；每个正距离对应至多两个支持点，零距离只对应一个，所以 $|H_r|\le2L$。若 $n\in H_r$，模态距离下界给
+
+$$
+e^{-S(n)/2}\le e^{1/(8N)}e^{-|n-m|^2/(8N)}
+\le e^{1/8}e^{-r^2/8}\le e^{1/8}e^{-r/8}.
+$$
+
+最后一步使用整数 $r\ge0$ 时的 $r^2\ge r$。所有非空壳都包含在 $0\le r\le R:=\lfloor N/L\rfloor$ 内。令 $\rho=e^{-1/8}\in(0,1)$，有限几何和满足 $\sum_{r=0}^R\rho^r=(1-\rho^{R+1})/(1-\rho)\le1/(1-\rho)$，于是
+
+$$
+Z_{1/2}(N,p)\le\frac{2Le^{1/8}}{1-e^{-1/8}}
+\le U\sqrt N\le U\sqrt{N+1}.
+$$
+
+由 $S\ge0$，对每个 $\beta\ge1/2$ 都有 $Z_\beta\le Z_{1/2}$。这同时给出所需的 $\alpha\in[1,2]$ 上界和后面惊讶矩所需的半温度上界，整个推导只使用有限和。
+
+下界采用一个明确裁剪的整数平坦区。令 $B=\sqrt{N+1}$、$\ell=\lfloor B\rfloor$、$a=\min\{m,N+1-\ell\}$。由于 $B\ge1$，有 $1\le\ell\le N+1$ 及 $\ell\ge B/2$。整数区间 $P=\{a,\ldots,a+\ell-1\}$ 恰有 $\ell$ 个点且包含在 $I_N$ 内。它还包含 $m$：若 $a=m$ 即显然；若 $a=N+1-\ell$，则其右端为 $N\ge m$，左端不超过 $m$。因此每个 $n\in P$ 都满足 $|n-m|\le\ell-1$，进而 $|n-Np|\le\ell\le B$。由 $N\ge1$ 与 $p(1-p)\ge3/16$，
+
+$$
+z(n)^2\le\frac{16(N+1)}{3N}\le\frac{32}3,
+\qquad
+S(n)\le32\left(1+\frac{32}3\right)=\frac{1120}3<384.
+$$
+
+对 $1\le\alpha\le2$，平坦区中每个权重至少为 $e^{-768}$，所以
+
+$$
+Z_\alpha(N,p)\ge\ell e^{-768}\ge D\sqrt{N+1}.
+$$
+
+这个区间的定义同时处理左右支持端点，无须假定模态两侧各有固定数量的格点。
+
+最后直接控制惊讶自身的自然阶矩。对 $x\ge0$ 与整数 $k\ge1$，令 $y=x/(2k)$。由 $e^y\ge1+y\ge y$ 得 $0\le ye^{-y}\le1$，从而
+
+$$
+x^ke^{-x/2}=(2k)^k(ye^{-y})^k
+\le(2k)^k\le[2(k+1)]^k.
+$$
+
+当 $k=0$ 时，$x^0e^{-x/2}\le1=[2(k+1)]^k$。因此对所有自然数 $k$ 及 $\alpha\ge1$，
+
+$$
+x^ke^{-\alpha x}
+=\bigl(x^ke^{-x/2}\bigr)e^{-(\alpha-1/2)x}
+\le[2(k+1)]^k e^{-x/2}.
+$$
+
+取 $x=S(n)$，求有限和并除以刚证明的正配分函数下界，便得
+
+$$
+0\le E_{\alpha,k}(N,p)
+\le[2(k+1)]^k\frac{Z_{1/2}(N,p)}{Z_\alpha(N,p)}
+\le\frac UD[2(k+1)]^k=K(k).
+$$
+
+当 $N=0$ 时，直接由定义有 $q(0)=M=1$、$S(0)=0$、$Z_\beta=1$。又 $U>4$、$0<D<1/2$，所以半温度上界和配分函数下界也适用。零次幂约定给 $E_{\alpha,0}=1$，正阶矩为零；对一般 $N$，零阶分子等于分母，故零阶矩同样为 $1$。常数 $c,C,K(k)$ 都严格为正，$c\le3/128$、$c\le D$、$C\ge32$、$C\ge U$ 且 $C\ge1/2$，所以已证明的较强包络与配分函数界蕴含陈述中共用 $c,C$ 的各项不等式。
+
+作为式 (119.39) 的单组输入，在上述正归一化 escort 下有 $\operatorname{Var}(S)\le E_{\alpha,2}\le K(2)$。由 $|u-v|^4\le8(|u|^4+|v|^4)$ 与 Jensen 不等式，$\mathbb E|S-\mathbb ES|^4\le16E_{\alpha,4}\le16K(4)$。这两个单组界允许在实际低组独立乘积律下使用四阶矩展开；输出条件下是否保留该乘积律仍取决于相应比较模型的联合关系。
+
+## 追加锚（本行以下为增补区）

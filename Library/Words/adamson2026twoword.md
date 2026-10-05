@@ -5,10 +5,11 @@ year: 2026
 title: "2-word-π-representable Graphs"
 doi: null
 url: https://arxiv.org/abs/2605.27183v1
-claim: "Definitions 1 and 14 define representation by equality of two-letter projections in two k-uniform words; the conclusion asks for an explicit graph outside G2."
+claim: "Definitions 1 and 14 use adjacency iff equality of two-letter projections in two k-uniform words; Conjecture 31 asks for proper adjacent inclusion at every positive k."
 strata_touched:
   - D5/S1/Words/GraphRepresentation/ExplicitNonTwoUniform
   - D5/S1/Words/GraphRepresentation/UniformVertexExtension
+  - D5/S1/Words/GraphRepresentation/UniformHierarchy
 license: citation-only
 triage: anchor
 ---
@@ -65,10 +66,21 @@ says that only k=1 strictness was proved. The actual four-page body was read
 from <https://www.informatik.uni-giessen.de/theorietag2025/2025-Theorietag35-Schotten.pdf>.
 This earlier statement is the same problem, not an additional settlement.
 
-Conjecture 31 is not resolved by a vertex-extension theorem alone. The complete
-route still needs a closed all-k nonuniversality proof and finite
-minimal-nonmember, deletion and relabeling bridges to produce a same-carrier
-separator, as well as adjacent inclusion. A same-title bibliographic citation
+The full consumer `UniformHierarchy.result` proves adjacent inclusion for every
+positive k and every finite graph, together with a finite same-carrier separator.
+Its known Theorem 29 nonuniversality component is proved internally: for
+m=64k², the membership graph has 2^m right vertices but at most
+(km+1)^(2k) ≤ 2^(20k²) < 2^m ordered cut signatures. Reconstruction and
+injective marker cancellation force colliding signatures to have equal
+neighborhoods, a contradiction. This component is not a separate new target.
+A minimum-cardinality nonrepresented induced subset has a represented vertex
+deletion. Actual word transport and the frozen arbitrary-neighborhood extension
+give the next-uniform representation on the original subset carrier. Appending
+one common enumeration supplies inclusion. No literature theorem, minimality,
+deletion closure, relabeling or strictness is assumed as a theorem parameter.
+The two original left orders may differ and tied cuts are preserved.
+
+A same-title bibliographic citation
 lists *Gradiva*, 8(9) (2022), pp. 528–533. The journal body and SSRN DOI
 10.2139/ssrn.5336494 remain body-unverified; the SSRN abstract page returned
 HTTP 403. A title and citation match does not establish that an earlier work

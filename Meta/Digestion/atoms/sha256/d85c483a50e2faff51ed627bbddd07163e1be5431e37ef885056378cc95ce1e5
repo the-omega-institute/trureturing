@@ -1,0 +1,28 @@
+**定理 71.40（Bellman 根价格与临界取得）。** 对每个实数 $x$，算子
+
+$$
+(T_xv)(s)=r+\frac12\min_{a\in\mathcal A(s)}
+\bigl(v(s'(s,a))-xb(a)\bigr)
+\tag{71.13}
+$$
+
+有唯一有限固定点 $V_x$，并可在每个状态选择一个真正达到右端最小值的确定性驻定动作表 $f_x$。它满足
+
+$$
+V_x(o)=\min_{\gamma\text{ 为根路径}}(C_\gamma-xt_\gamma),
+\qquad
+V_x(o)\ge0\ \Longleftrightarrow\ x\le\alpha_m,
+\qquad V_{\alpha_m}(o)=0.
+\tag{71.14}
+$$
+
+$f_{\alpha_m}$ 的根路径具有 $t_\star>0$，其实际输出律取得
+
+$$
+\boxed{\quad
+\mathbb EK=C_\star=L_m(p^\star)=\alpha_m t_\star,\qquad
+p^\star\in\mathcal P_m^+,\quad \min_i p^\star_i=t_\star.
+\quad}
+\tag{71.15}
+$$
+

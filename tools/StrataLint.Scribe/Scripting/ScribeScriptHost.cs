@@ -275,7 +275,7 @@ public static class ScribeScriptHost
             ScriptCompilationOptions);
     }
 
-    private static ImmutableArray<MetadataReference> ReferenceAssemblies()
+    internal static ImmutableArray<MetadataReference> ReferenceAssemblies()
     {
         var paths = new HashSet<string>(StringComparer.Ordinal);
         var runtimeDirectory = Path.GetDirectoryName(typeof(object).Assembly.Location)!;

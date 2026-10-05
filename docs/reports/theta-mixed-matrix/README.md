@@ -8,6 +8,23 @@ full-probability variance. Its purpose is to exercise that implementation
 interface; this single function is not the complete approximation family
 required by the fixed-window spectral test.
 
+## Complex inner products for matrix reports
+
+The complex matrix interfaces use the upstream first-slot-linear
+convention
+
+$$
+\langle f,g\rangle_2=\int_{\mathbb R}f(x)\overline{g(x)}\,dx,
+\qquad |u\rangle\langle v|x=\langle x,v\rangle_2u.
+$$
+
+For common columns $x_j$ and $x(z)=\sum_jz_jx_j$, a Hermitian
+norm Gram written as $z^*Gz$ has
+$G_{ij}=\langle x_j,x_i\rangle_2$, so $z^*Gz=\|x(z)\|_2^2$.
+Projection coefficients are linear in the projected vector. The saved
+real columns and real matrices have the same entries under either
+inner-product convention; complex extensions must use the declared one.
+
 ## Exact inputs and model
 
 Put $\ell=\log2$, $\delta=1/2$ and
@@ -228,8 +245,12 @@ correction maps from those saved actions and reuses the ground moments
 to control both complementary ground tails. Under the same paper premises
 it gives a whole-form ground-orthogonal gap greater than $0.00186736$
 at $c=0.45$. At $c=0.46$ the finite restriction passes, while the
-requested joint gap $1/1000$ fails its sufficient comparison. Neither
-result closes the cofinal, RH, full Robin or Lean obligations.
+requested joint gap $1/1000$ fails its sufficient comparison. Reusing
+the same positive blocks with the existing three-block norm lift gives
+a smaller whole-form gap greater than $1/2000$ and the conditional
+original bound $D\ge0.4605\operatorname{Var}_\nu$, without new actions
+or another numerical target. These fixed-band results retain the
+cofinal, RH, full Robin and Lean obligations.
 
 The [fixed-test and centered-window interface](centered-window.md)
 distinguishes the relative scalar conversion from a sufficient absolute
@@ -260,3 +281,70 @@ unit ball by 512 closed frequency cells. Its complete upper allowance
 is below $5.45645802$, compared to the same operator's prior $T=128$
 allowance above $14.70575975$. No old producer is replayed; the
 low sign, common cofinal comparison, RH and full Robin remain open.
+
+
+The [spatially weighted high inverse](../../../Library/Weil/fukushima2011dirichlet.md#spatially-weighted-high-inverse-at-every-subcritical-parameter)
+retains the spatial term already supplied by (WF5) at each
+$0<\varepsilon\le1/2$ and its prescribed finite bandwidth. The
+[complete residual consumer](sharp-center.md#retain-this-spatial-weight-in-the-complete-inverse-residual)
+uses it to reduce the same full-residual scalar allowance by a
+nonnegative common source Gram, while preserving the exact ground column.
+This is a conditional application of existing high-form and inverse-residual
+suppliers. Weighted residual entries have not been evaluated; the
+[target correction's cofinal boundary](target-correction.md#directed-results-and-the-cofinal-boundary)
+still requires actual low and complementary-low signs on the same
+parameter sequence. Saved fixed-band matrices do not supply those signs.
+
+
+The [projection and exact-ground corrections](sharp-center.md#keep-the-projection-and-ground-corrections-on-the-same-residual)
+retain the actual high-space constraint in that same residual allowance.
+They reuse classical positive block and rank-one inverses and supply a
+projection credit without an infinite-dimensional inverse computation.
+Its entries remain unevaluated; no low sign or cofinal certificate is supplied.
+
+
+The [weighted omitted-action supplier](forward-action.md#weighted-omitted-actions-before-the-sharp-high-projection)
+feeds a [common dual-source allowance](sharp-center.md#pay-weighted-action-errors-with-one-common-dual-source)
+by reconstructing the unprojected action on the exact ground complement.
+It reuses the complete Gamma and prime envelopes and the same constrained
+inverse tools, keeping the chosen low trial and ground correction joint.
+It pays only action truncation errors; retained action and source Grams
+remain unevaluated, and no matrix or cofinal sign is supplied.
+
+
+The [saved-joint-field weighted input](joint-weighted-input.md) uses all
+128 already enclosed high-floor cells at the original $N=64,c=3/8$.
+Its new coefficient-only calculation encloses the output weight and
+common ground-complement action error at the unchanged cutoffs; no old
+source acquisition is replayed. Its approximately $0.20175$ weighted/scalar
+budget ratio compares truncation allowances, not inverse-cost or matrix
+signs. New weighted Gram integration and common cofinal signs remain open.
+
+The [finite-core common residual correction](weighted-residual-core.md)
+integrates a step-weight gain from the already saved full-Gamma action
+rows and whole-line residual Gram. It pays continuum, sample, prime and
+exact-frame uncertainty on the same coefficient map. The enclosed gain
+reduces the existing scalar residual allowance on a specified frame
+direction; it does not certify positivity of the entire gain matrix or
+recompute the global comparison. No old action grid is regenerated.
+
+The [sinc reconstruction of that same core](sinc-weighted-residual-core.md)
+reuses the existing continuous projection on saved unprojected rows,
+then calls the same cardinal integration and exact-frame code. Its
+source/kernel errors remain joint; the smaller error allowance does not
+establish all-direction gain, a new global sign or cofinal positivity.
+
+The [vanishing exterior reserve](vanishing-exterior-reserve.md) applies
+classical Fourier analytic uniqueness to the original theta weight and
+a fixed nonzero sharp-high residual. Deleting the positive reserve makes
+the simple multiplier allowance infinite; this fixed-source obstruction
+does not decide the actual constrained inverse or a moving cofinal family.
+The existing unprojected common dual-source construction is reused, with
+its growing source budgets and the actual low signs still unpaid.
+
+The [critical-zero source-range check](critical-prime-source-range.md)
+uses the full prime-power action to exclude a blanket exact factorization
+of every discarded low source as $Q(sf+a v_0)$, $f\in L^2$, after any
+finite low removal. This conditional paper obstruction concerns that
+stronger source requirement; positive-reserve approximate estimates and
+the actual cofinal form signs remain unresolved.
