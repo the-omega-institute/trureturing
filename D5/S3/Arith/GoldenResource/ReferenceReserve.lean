@@ -9,8 +9,9 @@
 import D5.S3.Arith.GoldenResource.PrefixDeficitKernel
 import D5.S3.Arith.GoldenResource.ReferencePrefixDominance
 import D5.S3.Arith.GoldenLocalThreshold
+import D5.S3.Arith.GoldenResourceOptimalInteger
+import D5.S3.Arith.GoldenResource.GoldenResourceThresholdCriterion
 import D5.S3.Arith.GoldenLayerMarginalDecay
-import D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 import D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
 import Mathlib.Analysis.SpecialFunctions.Log.Monotone
 import Mathlib.Analysis.SumIntegralComparisons
@@ -261,24 +262,6 @@ private theorem reserve_le_inv_pow {x : ℝ} (hx : 1 < x) {p : ℕ} (hp : p.Prim
     apply (div_le_iff₀ (by positivity : 0 < (referenceExponent x p : ℝ) + 1)).mpr
     nlinarith [pow_nonneg hi0.le (referenceExponent x p + 1)]
 
-private theorem actual_prime_power (lambda : ℝ) {p : ℕ} (hp : p.Prime) (a : ℕ) :
-    goldenResourceObjective lambda (p ^ a) = goldenPrimeLocalObjective lambda p a := by
-  have hsub : (p ^ a).primeFactors ⊆ ({p} : Finset ℕ) := by
-    by_cases ha : a = 0
-    · simp [ha]
-    · rw [Nat.primeFactors_prime_pow ha hp]
-  simpa only [sum_singleton, hp.factorization_pow, Finsupp.single_eq_same] using
-    D5.S3.Arith.GoldenResourceObjectiveFactorization.golden_resource_objective_sum_on
-      lambda (Nat.one_le_iff_ne_zero.mpr (pow_ne_zero _ hp.ne_zero)) {p} hsub
-
-private theorem actual_step (lambda : ℝ) {p : ℕ} (hp : p.Prime) (a : ℕ) :
-    goldenPrimeLocalObjective lambda p (a + 1) - goldenPrimeLocalObjective lambda p a =
-      (goldenLayerMarginal p (a + 1) - lambda) * Real.log p := by
-  have h := GoldenResource5040EndpointComparison.golden_resource_objective_single_layer_delta
-    lambda (Nat.one_le_iff_ne_zero.mpr (pow_ne_zero a hp.ne_zero)) hp
-  rw [← pow_succ, actual_prime_power _ hp, actual_prime_power _ hp] at h
-  simpa only [hp.factorization_pow, Finsupp.single_eq_same] using h
-
 private theorem actual_attained {x : ℝ} (hx : 1 < x) {p : ℕ} (hp : p.Prime) :
     ∃ a : ℕ, (∀ b, goldenPrimeLocalObjective (scalePrice x) p b ≤
       goldenPrimeLocalObjective (scalePrice x) p a) ∧
@@ -350,7 +333,7 @@ private theorem retained_optimizer_bound {x : ℝ} (hx : 1 < x) {K p : ℕ}
         exact hcut
       · exact (golden_layer_strict_decrease hp (by omega) hlt).trans hcut
     have hs := mul_neg_of_neg_of_pos (sub_neg.mpr hm) hlog
-    rw [← actual_step _ hp] at hs
+    rw [← golden_prime_local_objective_diff hp (scalePrice x)] at hs
     exact sub_neg.mp hs
   by_contra h
   have hka : K < a := by omega

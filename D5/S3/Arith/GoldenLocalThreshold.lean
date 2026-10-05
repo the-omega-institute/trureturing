@@ -28,7 +28,7 @@ def goldenPrimeLocalObjective (lambda : ℝ) (p a : ℕ) : ℝ :=
   Real.log ((1 - (p : ℝ)⁻¹ ^ (a + 1)) / (1 - (p : ℝ)⁻¹)) -
     lambda * a * Real.log p
 
-private theorem golden_prime_local_objective_diff {p : ℕ} (hp : p.Prime)
+theorem golden_prime_local_objective_diff {p : ℕ} (hp : p.Prime)
     (lambda : ℝ) (a : ℕ) :
     goldenPrimeLocalObjective lambda p (a + 1) - goldenPrimeLocalObjective lambda p a =
       (goldenLayerMarginal p (a + 1) - lambda) * Real.log p := by
