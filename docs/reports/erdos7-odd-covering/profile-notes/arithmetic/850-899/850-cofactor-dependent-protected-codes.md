@@ -2069,6 +2069,113 @@ the existing minimality comparison, finite embeddings, coprime
 decoding and CRT; it introduces no canonical binding declaration,
 freeze or coverage record.
 
+## The actual private ternary projection controls the second-digit alphabet
+
+Keep the actual globally count-then-modulus-sum-minimal family,
+ternary heights at most two, actual moduli 3 and 9, and the coprime
+factorization of CD52. In this section q is prime and $q\ge15$.
+Suppose an original has q-height at least two. CD47 bounds every
+q-height by two, and numerical divisor closure supplies an actual
+pure $q^2$ original h. Use its complete original private region
+
+$$
+P_h=\{y\in\mathbb N:y\equiv\rho_h\pmod{q^2},\quad
+ y\not\equiv\rho_i\pmod{d_i}\text{ for every }i\ne h\},
+\qquad
+\Lambda_h=\{y\bmod9:y\in P_h\},\qquad s_h=|\Lambda_h|.
+\tag{CD61}
+$$
+
+Count minimality makes $P_h$ nonempty. Every point in it avoids
+the actual 3 and 9 guards, whose phases are incompatible modulo
+3. Consequently $1\le s_h\le5$. The necessary alphabet condition is
+
+$$
+\boxed{q<9s_h-2.}
+\tag{CD62}
+$$
+
+This concerns the literal private region of that same original
+h. It does not select a different cover or a separate favorable
+cofactor point for each step of a replacement.
+
+Write c for h's first q-digit, and delete precisely the originals
+with q-height two and first digit c. Let E be the complete hole
+left by the retained family. The existing prime-prefix liability
+theorem, with parent depth one and preserved carrier 9W, gives
+
+$$
+x\in E\quad\Longleftrightarrow\quad
+ x\equiv\rho_h\pmod q\quad\text{and}\quad
+ \exists y\in P_h:\ y\equiv x\pmod{9W}.
+\tag{CD63}
+$$
+
+Its noncontainment hypothesis is supplied by original count
+minimality. In particular, a target in E has its residue modulo
+9 in $\Lambda_h$. Preserving its entire coordinate modulo 9W
+and its first q-digit keeps the source in E. The set
+$\Lambda_h\times\mathbb Z/W\mathbb Z$ is only an envelope for
+these source coordinates; no rectangularity of E is asserted.
+
+Suppose $9s_h-2\le q$. There are $3s_h$ residues modulo 27 and
+$9s_h$ residues modulo 81 above $\Lambda_h$. Choose one of the
+former. Map its three lifts modulo 81 to h's literal second
+q-digit, and inject the other $9s_h-3$ fine words into the other
+$q-1$ digits. The alphabet therefore has exactly
+
+$$
+9s_h-3+1=9s_h-2
+\tag{CD64}
+$$
+
+slots. Define this code on the entire projection envelope, so an
+original's decoded enclosure is not further cut by an unknown
+cofactor mask.
+
+For a target in E, use the CRT source that preserves 9W and the
+first q-digit and inserts the chosen second digit. On the collapsed
+leaf, the donor's new modulus 27 directly covers the target. On
+any other code fiber, the second digit determines one residue
+modulo 81. The source remains in the exact hole by CD63, so its
+actual owner belongs to the deleted family. The fixed decoder
+then gives the same row labels $27m_i$, $27qm_i$, $81m_i$ as in
+CD59. Outside E, an actual retained class covers the target.
+
+Emit one output for every deleted original, including empty
+inverses. The unchanged numerical-signature proof gives distinct
+odd nonunit moduli, fresh against retained labels. Their respective
+ratios $27/q^2$, $9/q$, $9/q^2$ are strictly below one. The donor
+makes the deleted set nonempty; the same class count therefore
+has smaller total modulus, contradicting global minimality. This
+proves CD62 with the whole common-source liability retained.
+
+For the still-permitted squared primes above 13, CD62 gives
+
+| Actual squared prime q | Required private residues modulo 9 |
+| ---: | ---: |
+| 17, 19, 23 | $s_h\ge3$ |
+| 29, 31 | $s_h\ge4$ |
+| 37, 41 | $s_h=5$ |
+
+At 37 and 41, every one of the five guard-safe residues occurs
+in the donor's private projection. The witnesses for different
+residues may have different coordinates modulo W. These
+constraints do not provide one cofactor coordinate common to all
+five residues, align the phases of different pure originals, or
+exclude the entire ternary-height-two branch.
+
+A scoped transient Lean application verifies CD61--64, including
+the canonical prime-prefix liability specialization, actual private
+projection, finite alphabet, same-source CRT transport, fixed owner
+tags, unchanged class count and strict sum comparison. The actual
+height cap is derived within the final application; the three
+numerical table rows are checked in the same compilation. All
+thirty-two axiom-closure reports use only `propext`,
+`Classical.choice` and `Quot.sound`, with no errors or `sorryAx`.
+The application adds no canonical binding declaration, freeze or
+coverage record.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
