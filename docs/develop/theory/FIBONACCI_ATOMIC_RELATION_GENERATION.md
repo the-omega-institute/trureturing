@@ -59001,3 +59001,260 @@ $$
 每三个 Fibonacci 指标取一次 $D=F_{3r+3}$，可把已知核误差记成 $O(\Phi^{-9r/4})$；这个三位窗口日程给分辨率索引，不把五种包含状态的几何长度变成 Möbius 抵消界。精确核系数、同源输入和尾证书保留了切面回接的接口，实际 Robin 有符号积分尾估计与共同序列符号条件仍未解决。本节为已发表逆原理的参数应用及其定向数据，不主张新的通用判据或文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 389. 两个连续主项消去后的实际商值采样障碍
+
+**定义 389.1（两个中心矩与加权输入空间）。** 沿用 §§386–387 的同一个实际正核 $k$ 和 $K$。为免混淆参数与增长指数，记
+
+$$
+b=\beta_1,\qquad \delta=b-T>0,\qquad
+A=\frac1{\mathcal B(1)},\qquad
+C_0=\frac1{\mathcal B(1)}+\frac{\mathcal B'(1)}{\mathcal B(1)^2},
+\qquad \mu_0=\frac1\delta,\qquad \kappa=\frac\delta{b^2}>0.
+\tag{389.1}
+$$
+
+对正整数 $m$，置
+
+$$
+w_0(m)=\frac1{m(m+1)},\qquad
+w_1(m)=\frac{\log m}{m}-\frac{\log(m+1)}{m+1}.
+\tag{389.2}
+$$
+
+固定 $0<\alpha<1$。$X_\alpha$ 是正整数指标上满足下述范数有限的实序列空间，赋范数
+
+$$
+\|f\|_\alpha=\sup_{m\ge1}\frac{|f(m)|}{m^\alpha},
+\qquad
+M_i(f)=\sum_{m\ge1}f(m)w_i(m)\quad(i=0,1).
+\tag{389.3}
+$$
+
+这些矩在 $X_\alpha$ 上绝对收敛。将序列延伸到零指标时，一律取 $f(0)=0$，并沿用
+
+$$
+(\mathcal T_kf)(N)=\sum_{d=1}^Nk(d)f(\lfloor N/d\rfloor)
+\quad(N\in\mathbb N,\ N\ge1).
+\tag{389.4}
+$$
+
+两个矩是商分块中 $N\log N$ 和 $N$ 连续主项的系数。它们在经典约数核 $\tau(d)$ 的分数和中已有明确先例：Meselem Karras、Ling Li、Joshua Stucky，*Hyperbolic Summation for Fractional Sums*，[arXiv:2212.05443v3](https://arxiv.org/abs/2212.05443)，p. 2 式（1.4）的 $C_1(f)$ 和 $C_3(f)$ 正是（389.3）的 $M_0(f)$ 和 $M_1(f)$。下述命题针对此处实际 Fibonacci 正核，构造同时满足两个零矩的具体输入。
+
+**定理 389.2（实际正核在双中心子空间上仍无界）。** 对每个 $0<\alpha<1$，存在下面明确给定的 $\eta>0$、整数 $N_0$ 和有限支持族 $f_N$，使所有整数 $N\ge N_0$ 满足
+
+$$
+\boxed{\|f_N\|_\alpha=1,\qquad
+M_0(f_N)=M_1(f_N)=0,\qquad
+(\mathcal T_kf_N)(N)\ge
+\frac\kappa{64}\eta^{1-\alpha}N^{(\alpha+1)/2}\log N.}
+\tag{389.5}
+$$
+
+因此，不存在常数 $C_\alpha$ 使
+
+$$
+|(\mathcal T_kf)(N)|\le C_\alpha N^\alpha\|f\|_\alpha
+\tag{389.6}
+$$
+
+对全部 $f\in X_\alpha$ 且 $M_0(f)=M_1(f)=0$、全部正整数 $N$ 成立。还存在一个固定的非零 $f\in X_\alpha$，满足两个零矩而 $\sup_N |(\mathcal T_kf)(N)|/N^\alpha=\infty$。
+
+具体地，令
+
+$$
+r=\log(4/3),\qquad c_*=\log(9/8),\qquad
+\eta=\min\left\{\frac14,\sqrt{\frac\kappa{256A}}\right\},
+\qquad \varepsilon=\frac{1-\alpha}{4}.
+\tag{389.7}
+$$
+
+以下阈值足够：
+
+$$
+N_0=\left\lceil\max\left\{
+\left(\frac4\eta\right)^4,
+\exp\!\left(\max\{1,|C_0|/A\}\right),
+\left(\max\left\{1,\frac{32\eta^{3-\alpha}}{r\varepsilon}\right\}\right)^{1/\varepsilon},
+\left(\max\left\{1,\frac{256\mu_0}{\kappa\eta^{1-\alpha}}\right\}\right)^{2/(\alpha+1)}
+\right\}\right\rceil.
+\tag{389.8}
+$$
+
+对 $N\ge N_0$，置 $D=\lfloor\eta\sqrt N\rfloor$、$m_d=\lfloor N/d\rfloor$（$2\le d\le D$），并定义
+
+$$
+p_N=\sum_{d=2}^D m_d^\alpha w_0(m_d),\qquad
+s_N=\sum_{d=2}^D m_d^\alpha w_1(m_d),
+\tag{389.9}
+$$
+
+$$
+x_N=\frac{s_N+c_*p_N}{r},\qquad
+y_N=-\frac{3(s_N+\log2\,p_N)}r.
+\tag{389.10}
+$$
+
+完整的有限支持输入是
+
+$$
+f_N(m)=
+\begin{cases}
+x_N,&m=1,\\
+y_N,&m=2,\\
+m^\alpha,&m=m_d\text{ 对某个 }2\le d\le D,\\
+0,&\text{其余正整数 }m.
+\end{cases}
+\tag{389.11}
+$$
+
+**证明。** §386 的实际正响应下界和 $E\ge0$ 给
+
+$$
+k(d)\ge\frac\delta{b(b-E)}\log d\ge\kappa\log d
+\quad(d\ge1).
+\tag{389.12}
+$$
+
+这里 $d=1$ 时两侧均为零。§387 则给全部实数 $y\ge1$ 的质量展开
+
+$$
+K(y)=Ay\log y-C_0y+R(y),\qquad
+|R(y)|\le\mu_0(1+\log y).
+\tag{389.13}
+$$
+
+由 $\eta\le1/4$ 及 $N\ge1$，
+
+$$
+D(D+1)\le\eta^2N+\eta\sqrt N\le\frac5{16}N<N.
+\tag{389.14}
+$$
+
+对 $1\le d\le D$，相邻实商之差 $N/d-N/(d+1)=N/[d(d+1)]>1$，所以其整数商严格下降。对每个 $2\le d\le D$，两侧相邻商均排除了再次取值 $m_d$ 的可能；商序列在全部 $1\le j\le N$ 上单调，故
+
+$$
+\{j\in\mathbb N:1\le j\le N,\ \lfloor N/j\rfloor=m_d\}=\{d\}.
+\tag{389.15}
+$$
+
+这也检查了 $d=D$ 的右邻 $D+1$，而不只证明选取集合内部无碰撞。阈值（389.8）保证 $D\ge4$ 及 $m_d\ge N/(2D)\ge3$，所以（389.11）的各支不冲突，且样本位置非空。
+
+两个低指标纠正位置的矩矩阵为
+
+$$
+\begin{pmatrix}
+1/2&1/6\\
+-\log2/2&\log2/2-\log3/3
+\end{pmatrix},\qquad \det=\frac16\log(4/3)=\frac r6>0.
+\tag{389.16}
+$$
+
+代入（389.10），直接得到
+
+$$
+x_Nw_0(1)+y_Nw_0(2)=-p_N,\qquad
+x_Nw_1(1)+y_Nw_1(2)=-s_N.
+\tag{389.17}
+$$
+
+因此两个矩精确为零，且此时它们都是有限和。
+
+对于样本 $m=m_d\ge3$，有
+
+$$
+w_1(m)=\int_m^{m+1}\frac{\log t-1}{t^2}\,dt,
+\qquad 0\le w_1(m)\le(\log N)w_0(m),
+\tag{389.18}
+$$
+
+因为 $m+1\le N$。故 $0\le s_N\le p_N\log N$。又 $\alpha-2<0$，所以
+
+$$
+p_N\le D\left(\frac N{2D}\right)^{\alpha-2}
+\le4\eta^{3-\alpha}N^{(\alpha-1)/2}.
+\tag{389.19}
+$$
+
+$x_N\ge0$、$y_N\le0$，且 $c_*+3\log2=2\log3<4$，从而
+
+$$
+\begin{aligned}
+|x_N|+|y_N|
+&=\frac{4s_N+2\log3\,p_N}{r}\\
+&\le\frac{16\eta^{3-\alpha}}rN^{-2\varepsilon}(1+\log N)
+\le\frac{32\eta^{3-\alpha}}{r\varepsilon}N^{-\varepsilon}\le1.
+\end{aligned}
+\tag{389.20}
+$$
+
+中间使用 $1+\log N\le(2/\varepsilon)N^\varepsilon$；最后一步由（389.8）的第三项保证。因此纠正位置的范数比值不超过一，而每个样本位置都达到比值一，证明 $\|f_N\|_\alpha=1$。
+
+由（389.15），所有样本的精确输出为
+
+$$
+U_N=\sum_{d=2}^D k(d)m_d^\alpha.
+\tag{389.21}
+$$
+
+仅保留 $\lceil D/2\rceil\le d\le D$ 的至少 $D/2$ 个非负项。第一阈值还保证 $D\ge\eta\sqrt N/2$ 和 $\log(D/2)\ge(\log N)/4$。使用（389.12）与 $m_d\ge N/(2D)$，得到
+
+$$
+U_N\ge\kappa\frac D2\left(\frac N{2D}\right)^\alpha\log(D/2)
+\ge\frac\kappa{16}\eta^{1-\alpha}N^{(\alpha+1)/2}\log N.
+\tag{389.22}
+$$
+
+为了估计纠正项，先定义连续商块
+
+$$
+P_m(N)=AN\left[\frac{\log(N/m)}m-
+\frac{\log(N/(m+1))}{m+1}\right]-C_0Nw_0(m)
+=N[(A\log N-C_0)w_0(m)-Aw_1(m)].
+\tag{389.23}
+$$
+
+由两个矩的精确纠正，
+
+$$
+x_NP_1(N)+y_NP_2(N)=-Q_N,
+\qquad Q_N=N[(A\log N-C_0)p_N-As_N].
+\tag{389.24}
+$$
+
+由于 $s_N\ge0$ 和 $\log N\ge|C_0|/A$，
+
+$$
+Q_N\le2AN(\log N)p_N
+\le8A\eta^{3-\alpha}N^{(\alpha+1)/2}\log N
+\le\frac\kappa{32}\eta^{1-\alpha}N^{(\alpha+1)/2}\log N.
+\tag{389.25}
+$$
+
+最后一步用 $\eta^2\le\kappa/(256A)$；此上界不要求 $Q_N\ge0$。
+
+实际两个低指标商块分别是 $W_1(N)=K(N)-K(N/2)$ 和 $W_2(N)=K(N/2)-K(N/3)$。只需对这两个块应用（389.13）；由于 $N/3\ge1$，
+
+$$
+|W_i(N)-P_i(N)|\le2\mu_0(1+\log N)\quad(i=1,2).
+\tag{389.26}
+$$
+
+结合（389.20）、$\log N\ge1$ 与最后的阈值，得到
+
+$$
+\begin{aligned}
+|x_N(W_1-P_1)+y_N(W_2-P_2)|
+&\le2\mu_0(1+\log N)\le4\mu_0\log N\\
+&\le\frac\kappa{64}\eta^{1-\alpha}N^{(\alpha+1)/2}\log N.
+\end{aligned}
+\tag{389.27}
+$$
+
+完整输出恰好是 $U_N-Q_N+x_N(W_1-P_1)+y_N(W_2-P_2)$。（389.22）、（389.25）、（389.27）给 $1/16-1/32-1/64=1/64$，证明（389.5）。这里先用两个矩消去纠正块的连续主项，避免把其完整 $N\log N$ 质量粗略乘以 $|x_N|+|y_N|$。
+
+将（389.5）除以 $N^\alpha$，得到至少为正常数倍 $N^{(1-\alpha)/2}\log N$ 的发散量，故（389.6）不成立。最后，$X_\alpha$ 与普通 $\ell^\infty$ 等距；$\sum m^\alpha|w_i(m)|<\infty$ 保证两个矩是连续线性泛函。因此 $Y=\ker M_0\cap\ker M_1$ 是闭 Banach 子空间。每个 $L_N(f)=N^{-\alpha}(\mathcal T_kf)(N)$ 是 $Y$ 上连续线性泛函，而（389.5）使它们的算子范数无界。经典 Banach–Steinhaus 一致有界原理的逆否命题给某个固定非零 $f\in Y$ 满足 $\sup_N|L_N(f)|=\infty$，证明最后一项。
+
+（389.5）的显式族与这个固定输入的存在有不同量词：前者对每个大截断指定一个归一化输入，后者说明无法仅把增长常数改成依赖输入来挽救普遍结论。在 $\alpha=1/2$ 时，显式输出至少有 $N^{3/4}\log N$ 量级。此处的输入是人为指定的精确反例，不是实际原子部分和 $H_m$；命题要求分析实际输入的算术结构，尚未证明或否定其平方根增长估计及 Robin 尾项。
+
+经典分数和中的 $x^{(1+\alpha)/2}$ 误差尺度见 Karras–Li–Stucky 上引稿 p. 1 式（1.3），其中归属 Wu 与 Zhai。本文的两矩及商值方法沿用这些经典结构；实际 $k$ 的逐点正下界与更强的对数质量余差使上述具体反例族及常数得以成立，并未把约数核 $\tau$ 的定理直接当作实际 $k$ 的定理。$\square$
