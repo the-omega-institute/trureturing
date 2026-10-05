@@ -399,3 +399,15 @@ noncompact. This conditional paper construction supplies no effective
 regularization or growing-band rate, finite all-input acquisition,
 actual cofinal signs, half-bound or RH/Robin conclusion, and has no
 new Lean certification or originality claim.
+
+
+The [actual endpoint-jet and original-form residual interface](../../../Library/Dynamics/clason2021regularization.md#actual-endpoint-jets-in-the-original-form)
+extends that conditional construction with spatial/parameter jet bounds,
+original-form-norm tail and midpoint allowances, and the
+[existing common-source certificate on the sampled residual columns](../../../Library/Dynamics/clason2021regularization.md#pay-the-finite-remainder-with-the-existing-common-source-certificate).
+The principal synthesis remains infinite; only its compact residual is
+truncated. An actual simultaneous residual Gram and the growing-band
+coefficient cost still require certification. This is conditional paper
+analysis with unevaluated constants, without an effective regularization
+rate, new numerical or Lean result, actual cofinal signs, half-bound,
+Robin or RH conclusion.
