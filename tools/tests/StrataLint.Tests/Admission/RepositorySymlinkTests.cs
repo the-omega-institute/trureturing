@@ -274,6 +274,25 @@ public sealed class RepositorySymlinkTests
     }
 
     [Fact]
+    public void ScopedRevisionReadReturnsOnlyTheRequestedPaths()
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        Write(repository.Path, "D5/S0/Probe.lean", "theorem probe : True := True.intro\n");
+        Write(repository.Path, "D5.lean", "sibling of the D5 directory\n");
+        Write(repository.Path, "docs/source.md", "source\n");
+        Write(repository.Path, "docs/reports/unrelated.json", "{}\n");
+        Commit(repository.Path);
+        Write(repository.Path, "docs/source.md", "edited after the commit\n");
+
+        var scoped = GitRepositorySnapshotReader.ReadRevision(
+            repository.Path, "HEAD", ["D5", "docs/source.md", "absent/path"]);
+
+        Assert.Equal(["D5/S0/Probe.lean", "docs/source.md"], scoped.Entries.Select(entry => entry.Path));
+        Assert.Equal("source\n", Text(scoped, "docs/source.md"));
+    }
+
+    [Fact]
     public void ScopedReadValidatesTheWholeReferentDirectoryWhenItsScopeCoversPart()
     {
         using var repository = new TemporaryDirectory();

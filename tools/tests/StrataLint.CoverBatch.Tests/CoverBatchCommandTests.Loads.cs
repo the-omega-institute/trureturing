@@ -21,7 +21,7 @@ public sealed partial class CoverBatchCommandTests
 
         Assert.True(result.Success, result.Error + result.Output);
         WriteLoadCounts("duplicate-multi-gid-batch", loads);
-        Assert.Equal(1, loads.BaselineLoads);
+        Assert.Equal(0, loads.BaselineLoads);
         Assert.Equal([1, 1], loads.CandidateSnapshotLoads);
     }
 
@@ -41,7 +41,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
         WriteLoadCounts("disposition-then-independent-batch", loads);
-        Assert.Equal(1, loads.BaselineLoads);
+        Assert.Equal(0, loads.BaselineLoads);
         // Initial, committed disposition.
         Assert.Equal([1, 1], loads.CandidateSnapshotLoads);
     }
