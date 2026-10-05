@@ -1017,6 +1017,303 @@ and CD21 are unchanged by this graph projection. Their unknown
 profile and moment upper bounds are therefore still required; the
 finite window is not a whole-cover contradiction.
 
+## A one-digit insertion concentrates compatibility at height two
+
+Keep one globally count-then-sum-minimal finite distinct odd nonunit whole cover
+with actual labels $d_i=3^{a_i}q^{j_i}m_i$, where $a_i\le2$, $q>27$,
+$\gcd(3,q)=\gcd(W,3q)=1$, $W>0$, and $m_i\mid W$. Fix any finite bound
+$G\ge2$ for all $j_i$. Suppose at least one actual original has
+$j_i\ge2$. Retain every original with $j_i\le1$, and let $R$ be their
+exact integer complement. Its membership depends only on
+
+$$
+s=(u,c,w)=(x\bmod9,x\bmod q,x\bmod W).
+\tag{CD28}
+$$
+
+Every actual deep original has a complete private point in $R$.
+For each source $s$ of $R$, let $\mathcal G(s)$ consist of second
+q-digits that have no top-row original active at this same source,
+at any higher q-depth. Whole original coverage then gives deep
+low-row service on every complete tail above each digit in
+$\mathcal G(s)$. This definition does not assume that the sets
+$\mathcal G(s)$ contain any fixed common alphabet.
+
+For each actual low-row height-two original $i$, assign one tag
+$\sigma_i\bmod3^{a_i+3}$. The tag belongs to that original and cannot
+vary with $w$. On nonnegative target integers, impose
+
+$$
+\begin{split}
+\forall x\in R\cap\mathbb N\quad\exists b\in\mathcal G(s(x)):
+\qquad\qquad\qquad\qquad\\
+\forall i\ [a_i\le1,\ j_i=2,\ i\text{ matches }(s(x),b)]
+\quad x\equiv\sigma_i\pmod{3^{a_i+3}}.
+\end{split}
+\tag{CD29}
+$$
+
+Matching uses the actual ternary phase, the full cofactor phase and
+both initial q-digits. All tests in CD29 depend only on $s(x)$ and
+$x\bmod81$. CD29 is an additional premise, not a consequence of a
+count of good roots at separate sources. It is sufficient, not a
+necessary characterization of every insertion decoder. It excludes
+roots where a top owner overlaps a usable low-row owner, and requires
+tag compatibility of every active short owner rather than only a
+suitable actual payer. Failure of CD29 does not exclude those broader
+choices.
+
+### Complete source and inverse payment
+
+Choose one such $b=h(x)$. For a nonnegative target $x\in R$, write
+$x\equiv c+qt\pmod{q^{G-1}}$, and use CRT to define a source $T(x)$ by
+
+$$
+T(x)\equiv x\pmod{9W},\qquad
+T(x)\equiv c+qh(x)+q^2t\pmod{q^G}.
+\tag{CD30}
+$$
+
+The $G=2$ tail is empty. The source keeps the first q-digit and the
+complete old modulo-$9W$ data, so it avoids every retained original.
+Its selected second digit excludes every top original. Its actual
+owner therefore has $a_i\le1$ and $j_i\ge2$.
+
+For an owner with $j_i\ge3$, remove its second q-digit and retain
+all later literal digits. If its q-prefix is
+$c_i+qb_i+q^2t_i\pmod{q^{j_i}}$, assign it the AP with modulus
+
+$$
+d_i'=d_i/q=3^{a_i}q^{j_i-1}m_i
+\tag{CD31}
+$$
+
+and phases $\rho_i\bmod3^{a_i}$, $c_i+qt_i\bmod q^{j_i-1}$ and
+$\rho_i\bmod m_i$. Equation CD30 puts the entire inverse
+$(R\cap\mathbb N)\cap T^{-1}(A_i)$ inside this AP. The test selecting $b_i$ may be
+dropped from the enclosure. Consequently these higher owners need no
+additional constancy of $h$ on their cofactor cylinders.
+
+For an owner with $j_i=2$, assign the AP with modulus
+
+$$
+d_i'=3^{a_i+3}q m_i
+\tag{CD32}
+$$
+
+and phases $\sigma_i\bmod3^{a_i+3}$, $c_i\bmod q$ and
+$\rho_i\bmod m_i$. CD29 supplies the required ternary congruence
+for every nonnegative point of its complete inverse. The same tag is used at all
+of its cofactor sources.
+
+Delete all originals with $j_i\ge2$, including their top rows. Emit
+one AP for each deleted low-row original, even if its inverse is
+empty. Retained originals cover the complement of $R$; every nonnegative
+target in $R$ is covered by the enclosure of the actual owner of $T(x)$.
+This first covers all nonnegative integers. Periodicity of the finite
+AP family then gives a whole integer cover.
+
+The numerical labels have three disjoint ranges. Retained originals
+have q-height at most one and ternary height at most two. Outputs
+from $j_i\ge3$ have q-height at least two and ternary height at most
+one; division by the same $q$ is injective. Outputs from $j_i=2$
+have q-height one and ternary height three or four, which recover
+$a_i$ and then $m_i$. They are injective by original numerical
+distinctness. All outputs are odd nonunits. A new label may equal
+the number of a deleted original; that is harmless. Freshness is
+required against retained labels, not against all old labels.
+
+The new class count never increases, and decreases if a deep top
+original was deleted. If it stays equal, at least one deep low-row
+original is replaced and every replacement strictly decreases its
+modulus:
+
+$$
+\frac{d_i'}{d_i}=
+\begin{cases}
+1/q,&j_i\ge3,\\
+27/q,&j_i=2.
+\end{cases}
+\tag{CD33}
+$$
+
+Either outcome contradicts global minimality. This rules out a
+simultaneous tag assignment satisfying CD29 under the stated
+whole-cover hypotheses.
+
+### What remains to force the tags
+
+Only height-two low-row owners appear in CD29. Higher low-row owners
+retain their literal tails through CD31, even when the chosen second
+root varies with the complete cofactor source. This reduces the
+synchronization problem but does not solve it.
+
+For the additional $q=113$, $G\le10$, $\omega(W)\le27$ hypotheses of
+Report385 SNC3, every source of $R$ has at least 76 good roots. This
+counts availability before the tags are chosen. The same middle-row
+owner can occur at three different modulo-9 words and receives only
+one modulo-81 tag; a bottom-row owner can span both surviving
+modulo-3 roots and receives one modulo-27 tag. Separate choices at
+these sources need not respect that common commitment.
+
+The global cap in Report385 SNC14 limits top owners at each fixed
+$(u,c,b)$ to two, across all cofactor sources. GLC1 additionally
+supplies a fixed exceptional set of at most two top owners for each
+$(u,c)$. These are actual joint constraints to preserve in a tag
+analysis; neither is replaced by a pointwise root count. No argument
+here derives CD29 from them or concludes unrestricted noncoverage.
+
+A cache-guarded exact application checks CD29 on nonnegative targets,
+the inserted source, complete higher inverse enclosure, numerical
+labels, whole integer reassembly and the minimality contradiction.
+All fifteen axiom-closure reports use only `propext`, `Classical.choice`
+and `Quot.sound`, with no errors or `sorryAx`. The final statement
+chooses its finite height bound internally. It does not prove CD29
+from the original-cover assumptions, and adds no canonical declaration
+or freeze.
+
+## A finite congruence-family control for shared tags
+
+The top-owner cap, the fixed exceptional-set condition, private points
+and the finite height envelope do not by themselves force CD29. The
+following family satisfies those restrictions and has at least 97
+projected good roots at every source, yet no shared tag assignment
+satisfies CD29. It is not a whole cover and has no EB1 property.
+
+Put $q=113$. Label the vertices of $K_{16}$ by the sixteen primes from
+17 through 79, and label its first 113 lexicographically ordered edges
+by $r=0,\ldots,112$. For each vertex prime $p$, number its incident
+edges by $k=1,\ldots,\deg(p)$. For each $u\in\{0,3,6\}$ and each
+incidence $(p,r)$, set
+
+$$
+n=(u/3)\deg(p)+k,\qquad
+ e=1+(n-1)\bmod10,\qquad
+ j=2+\lfloor(n-1)/10\rfloor.
+$$
+
+Include the top class of modulus $9q^jp^e$ with phases $u\bmod9$,
+$qr\bmod q^j$ and $k\bmod p^e$. Include one middle class $B_r$ of
+modulus $3q^2m_r$ for each root, with phases $0\bmod3$,
+$qr\bmod q^2$ and $0\bmod m_r$. Here the $m_r$ are the first 113
+lexicographically indexed distinct numbers $5^a7^b$ with
+$0\le a,b\le10$ and $(a,b)\ne(0,0)$. Finally include $1\bmod3$ and
+$2\bmod9$. Take $W$ to be the product of the tenth powers of these
+18 cofactor primes.
+
+There are 678 top classes, 113 middle classes and two retained classes.
+The pair $(e,j)$ recovers $n$, so their 793 numerical labels are
+pairwise distinct. All are odd nonunits, with ternary height at most
+two, q-height at most six and cofactor-prime heights at most ten. These satisfy the numerical
+height and prime-support envelope used with GHA11, without claiming
+its whole-cover hypotheses. Each original has a private point. For a top
+owner choose its own literal phases, set the 5- and 7-coordinates to
+one and all other vertex coordinates to zero. For $B_r$ set every
+cofactor coordinate to zero and the q-prefix to $qr$. The retained
+classes have private points 1 and 2. Nevertheless 5 is uncovered.
+Divisor closure also fails: the modulus $191535=3q^2\cdot5$ occurs,
+but the modulus 5 does not.
+
+At fixed $(u,c=0,r)$ there are exactly two top originals. At fixed
+$(u,c=0)$, distinct incidences at the same prime have distinct
+nonzero phases modulo that prime because $\deg(p)\le15<p$.
+Thus the literal collision graph is edgeless: GLC1 holds with no
+exceptional originals. Each vertex prime blocks at most one root at
+any cofactor source, leaving at least $113-16=97$ projected good roots.
+Other first-q colors have no top activity.
+
+### Shared tags fail, while separate word tags need not fail
+
+On the diagnostic sources with $u\in\{0,3,6\}$, $c=0$ and the
+5- and 7-coordinates zero, every root has complete low service from
+its own $B_r$. Each $B_r$ nevertheless receives only one tag modulo81
+across all three values of $u$. There are 27 compatible tag slots.
+Any assignment of 113 roots to those slots has a slot $z$ containing
+at most four roots. Tags incompatible with $0\bmod3$ can only reduce
+the total size of these bins.
+
+Every set of at most four distinct simple-graph edges has an injective
+choice of incident vertices. Indeed, Hall's condition could fail only
+for a subfamily having at most three incident vertices; a simple graph
+on zero, one, two or three vertices has at most zero, zero, one or
+three edges, respectively. Assign distinct endpoint primes to the
+roots in the small bin. Set each assigned prime coordinate to the
+literal incidence phase $k$, and every unassigned vertex coordinate
+to zero. CRT supplies a nonnegative target with these coordinates,
+$x\equiv z\pmod{81}$ and $x\equiv0\pmod{q^5}$.
+
+At this target, every root in the bin has an active top owner. Every
+root outside the bin has its active middle owner with the wrong tag.
+No root satisfies CD29. The extra zero q-tail also permits the selected
+top owner and $B_r$ to meet the same complete inserted source; the
+obstruction does not make that source lack a low payer.
+
+Separate tags for each fixed $u$ have only nine slots. The same graph
+contains nine pairwise edge-disjoint pools, each with five edges and
+four incident vertices. A vertex can block at most one root, so each
+pool retains a top-free root at every cofactor source. Assigning one
+pool to each of the nine slots supplies these independent wordwise
+root choices. They do not give one legal shared tag for each $B_r$.
+
+### The remaining payable-owner condition
+
+Allowing top/low overlap evades the shared-tag obstruction on the
+diagnostic sources. Assign the $B_r$ tags surjectively onto the 27
+compatible slots. For every such target, a root with the matching tag
+has its actual low payer $B_r$ on every complete tail, whether or not
+a top owner also meets the source. Its replacement of modulus
+$81qm_r$ pays the target. This does not supply service on the whole
+residual; the uncovered integer 5 remains.
+
+For the original whole-cover problem, let $T_b(x)$ be CD30 with a
+specified second digit $b$. The less restrictive sufficient obligation
+is to find one fixed tag per short low owner such that
+
+$$
+\forall x\in R\cap\mathbb N\quad\exists b\quad\exists i:
+\quad a_i\le1,\quad j_i\ge2,\quad T_b(x)\in A_i,\quad
+\bigl(j_i=2\Longrightarrow
+x\equiv\sigma_i\pmod{3^{a_i+3}}\bigr).
+\tag{CD34}
+$$
+
+The root and the payable owner may depend on the complete target.
+Top owners may overlap this source, and other active short owners
+need not have compatible tags. The selected inverse of each payer,
+rather than every source incidence of that original, must enter its
+single replacement AP. CD31 still encloses every selected higher
+inverse. The fixed tags supply CD32 for the selected height-two
+inverses. Proving this existential service on the entire residual,
+with the original family and its actual joint constraints, remains
+unresolved. Neither the failure of CD29 nor the nine wordwise pools
+settles it.
+
+A second cache-guarded exact application checks CD34 with the explicit
+CRT source and the internally chosen bound $G=\max(2,\max_i j_i)$.
+It derives the existential paid coverage used by the same replacement
+family and verifies the whole integer-cover contradiction. Its fifteen
+axiom-closure reports are standard, with no errors or `sorryAx`.
+This check assumes CD34; it neither derives it from whole coverage nor
+adds top exclusion or compatibility tests for other owners.
+
+[The exact-integer control program](../../../frontier/cover-geometry/second-insertion-tag-control/second_insertion_tag_control.py)
+and [its reproducible results](../../../frontier/cover-geometry/second-insertion-tag-control/second_insertion_tag_control.json)
+retain the concrete family and witnesses. The program rejects Python
+optimization mode rather than silently skipping its assertions.
+
+The finite graph core has a transient Lean check: the universal
+113-to-27 pigeonhole and endpoint-selection statement, the exact first
+113 edges of $K_{16}$, and the nine disjoint five-edge/four-vertex pools
+compile with six standard axiom-closure reports and no errors or
+`sorryAx`. The separate exact-integer program verifies all 793 labels
+and private points, the stated caps, concrete targets defeating CD29,
+and 27 actual top/low overlaps with successful replacement payment.
+Its supplied-tag tests are not an exhaustive search over tag vectors
+or cofactor sources. The arbitrary-tag conclusion uses the preceding
+pigeonhole, Hall and CRT argument. The Lean graph check does not
+formalize the 793-class arithmetic construction or claim a whole
+cover, EB1, or unrestricted noncoverage.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component

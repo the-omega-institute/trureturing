@@ -20974,6 +20974,56 @@ or cofactor-prime cap. It reuses the existing arithmetic word embedding,
 CRT, original-cover comparison and finite-sum facts; no additional
 canonical Lean declaration or freeze is asserted.
 
+### Each full second-root phase has at most two original top owners
+
+The existing parent-phase capacity has a direct whole-cover specialization
+that needs no original parent or divisor-closure assumption. Keep a
+finite globally count-then-sum-minimal distinct odd nonunit whole cover whose
+original moduli are not divisible by 27. Let $q\ge2$ be coprime to 3.
+For any $u\bmod9$ and $v\bmod q^2$, at most two actual originals have
+modulus divisible by $9q^2$ and literal phases $(u,v)$.
+
+Indeed, three such originals could be replaced by these three fresh APs:
+
+| Ternary phase modulo 27 | Other condition | Modulus |
+| --- | --- | --- |
+| $u$ | none | $27$ |
+| $u+9$ | $v\bmod q$ | $27q$ |
+| $u+18$ | $v\bmod q^2$ | $27q^2$ |
+
+Their union covers the entire $(u\bmod9,v\bmod q^2)$ cylinder, and hence
+the complete union of the three removed originals. The labels are
+pairwise different and fresh against every retained original. Their
+oddness follows from the oddness of an original divisible by $q$.
+Writing $L=9q^2$, three distinct odd multiples of $L$ have sum at least
+$9L$, whereas
+
+$$
+27(1+q+q^2)<81q^2=9L.
+\tag{SNC13}
+$$
+
+The replacement has the same class count and a strictly smaller modulus
+sum, contradicting global minimality. In the coordinates of SNC7 this
+states
+
+$$
+\#\{i:a_i=2,\ j_i\ge2,\ \rho_i\equiv u\pmod9,
+\ \rho_i\equiv c+qd\pmod{q^2}\}\le2.
+\tag{SNC14}
+$$
+
+The count includes every cofactor phase and every higher q-height. It
+fixes the first two q-digits rather than a complete cofactor source, so it
+does not identify the count in SNC14 with the distinct global-root count
+in SNC12. No bound on $W$, its prime support or the original q-heights
+is used in this specialization.
+
+A cache-guarded exact application checks the entire three-class repair
+and SNC14, with seven standard axiom-closure reports, no errors and no
+`sorryAx`. It reuses the existing finite cover comparison and odd-multiple
+sum bound; no new canonical declaration or freeze is asserted.
+
 ## 168. An actual63 overlap excludes shared7 at height one
 
 Keep ONE EB1 original whole cover with R={7},5 concentrated and H_5=1. Then
