@@ -43,14 +43,17 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
                 "Conjecture 1, p. 3, states verbatim: \"2𝓔(t) = I_{A:B}^{(α)}(t), hold for generic states at all times t.\" This is its α = 1/2 specialization, quantified over the chain length, real fields, product-state angles, contiguous tripartition and integer time. Each allowed tripartition has nonempty blocks. The specific fields are hᵢ = 1, with phases φᵢ = 0, for the counterexample."),
             Node("result", "Refutation", Disp(new Formula.Not(F.Id("claim"))),
                 "Take L = 4, A = {0}, B = {1}, C = {2,3}, t = 1, hᵢ = 1 and φᵢ = 0. The initial state is |+⟩|+⟩|r⟩|r⟩, where |r⟩ = (2|0⟩+|1⟩)/√5, encoded by θ = (π/2,π/2,2 arctan(1/2),2 arctan(1/2)). It is generic. Factoring the commuting kick exponentials and the diagonal Ising exponential gives U = −W^{⊗4}G, with W a single-qubit unitary and G the periodic product of controlled-Z gates. The local unitaries preserve both measures. Before their action, the reduced density matrix has spectrum {16/25,4/25,4/25,1/25}; its partial transpose has spectrum {23/50,17/50,17/50,−7/50}, and both marginals are 1/2 times the identity. Hence 2𝓔(1) = log(1024/625) and I_{A:B}^(1/2)(1) = log(100/81). Strict injectivity of the logarithm on positive reals and the unequal rational arguments contradict the asserted equality. These finite-chain values do not settle a thermodynamic-limit identity at early times.",
-                true)),
+                true, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pathak-2026-kicked-ising-negativity-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, bool derived = false) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, bool derived = false,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("pathak-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula),
             derived ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), derived ? DescribeRole.Theorem : DescribeRole.Definition);
+            Blocks(Paragraph(Text(prose))), derived ? DescribeRole.Theorem : DescribeRole.Definition, resolution);
 
     private static Formula Num(int n) => new Formula.Number(n);
     private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);

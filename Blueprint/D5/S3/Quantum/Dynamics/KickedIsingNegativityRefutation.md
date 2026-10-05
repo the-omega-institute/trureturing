@@ -178,6 +178,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/pathak-2026-kicked-ising-negativity-refutation` (refuted) by `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"pathak-2026-kicked-ising-negativity-refutation","declaration_gid":"D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* T. Pathak (2026). *Mixed-State Entanglement in a Minimal Model of Quantum Chaos*. DOI: [10.48550/arXiv.2603.14292](https://doi.org/10.48550/arXiv.2603.14292). URL: <https://arxiv.org/abs/2603.14292v1>.
