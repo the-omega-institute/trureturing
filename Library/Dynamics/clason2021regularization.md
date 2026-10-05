@@ -614,3 +614,104 @@ Every prime power remains. The $C_{j,\ell}$ are unevaluated
 original-series constants, rather than numerical certificates.
 Ordinary spatial smoothness does not assert a source condition
 for the actual small-window Gram.
+
+
+## Truncate and sample only the actual compact residual
+
+For $x>0$ define a kernel on the whole coefficient line by
+
+$$
+k_R(x)=\mathbf1_{R<R_0}G(x-R)
+-\mathbf1_{R>R_0}G(-x-R)
+-a_0\mathbf1_{R>R_0}(n_R-E_R)(x).
+$$
+
+Let $Hh$ be its integral against $h(R)$ on $x>0$, reflected evenly.
+The missing and reflected squared kernel integrals are those in
+(NC4), with $G$ replaced by $G^{(j)}$ for $j=0,1$; (J1) pays the
+actual-error kernel. Even reflection preserves $H^1$, so $H$ is
+Hilbert–Schmidt into $H^1$ and hence into the original
+$\mathcal F_c$ by (WF2). The separate reflected columns need not
+have zero derivative trace at zero; they are not declared $H^2$.
+
+For $p\in\mathcal E_\Lambda$, the same $W_\Lambda$ gives
+
+$$
+K_\Lambda p=HW_\Lambda p=H_0W_\Lambda p,
+\qquad H_0=Q_0H,
+\quad Q_0=I-|v_0\rangle\langle v_0|. \tag{J2}
+$$
+
+The second equality uses the exact centering of $K_\Lambda p$.
+It does not make $Hh$ centered for arbitrary coefficients.
+Since the original constant has zero energy, $Q_0$ is contractive
+in $\mathcal F_c$.
+
+For $T>R_0$, restrict the coefficient kernel to $[-T,T]$, giving
+$H_T$ and $H_{0,T}=Q_0H_T$. The same actual kernels imply
+
+$$
+\begin{aligned}
+\|H_0-H_{0,T}\|_{\rm HS(L^2\to\mathcal F_c)}&\le d(T),\\
+d(T)&=left[
+2\sum_{j=0}^1c_j\int_{y>T}(y-T)|G^{(j)}(y)|^2dy
+\right]^{1/2}\\
+&\quad+left[
+2\sum_{j=0}^1c_j\int_{y<-T}(-y-T)|G^{(j)}(y)|^2dy
+\right]^{1/2}\\
+&\quad+\|G\|_2 e^{-T}
+    (c_0C_{0,0}^2+c_1C_{1,0}^2)^{1/2}.
+\end{aligned} \tag{J3}
+$$
+
+The first integral comes from $R<-T$, the second from $R>T$,
+and the last term truncates the actual-minus-ideal columns.
+Their respective orders are super-exponential,
+$O(e^{-5T/2})$ and $O(e^{-T})$. This truncates the
+Hilbert–Schmidt residual, not the noncompact principal $S_n$.
+
+Split $[-T,T]$ exactly at $R_0$. On its two open pieces the
+kernel columns are continuously differentiable in $R$ with values
+in $\mathcal F_c$. Equation (J1) supplies the uniform bounds
+
+$$
+\begin{aligned}
+M_-&=[2(c_0\|G'\|_2^2+c_1\|G''\|_2^2)]^{1/2},\\
+M_+&=M_-+a_0e^{-R_0}
+       (c_0C_{0,1}^2+c_1C_{1,1}^2)^{1/2},\qquad
+M=\max(M_-,M_+).
+\end{aligned}
+$$
+
+For cells $I_i$ in these pieces, lengths $\Delta_i$ and midpoints
+$R_i$, put $r_i=Q_0k_{R_i}^{\rm even}$ and define
+
+$$
+\begin{aligned}
+D_{\Lambda,T,\mathcal I}p
+ &=\sum_i r_i\int_{I_i}(W_\Lambda p)(R)dR,\\
+\|K_\Lambda-D_{\Lambda,T,\mathcal I}\|_{
+       \mathcal E_\Lambda\to\mathcal F_c}
+ &\le Q_\Lambda
+   [d(T)+M\Delta_{\max}\sqrt{T/6}],\qquad
+Q_\Lambda=\|W_\Lambda\|.
+\end{aligned} \tag{J4}
+$$
+
+The columns are centered and in the original minimal form domain
+by (WF2). Reuse the midpoint mean-square column estimate:
+its Hilbert–Schmidt sampling error is at most
+$(\sum_iM_i^2\Delta_i^3/12)^{1/2}$, bounded by the displayed
+mesh term because the total coefficient length is $2T$.
+The split at $R_0$ avoids an across-jump derivative estimate.
+All complex coefficients retain one actual $W_\Lambda$.
+
+Equation (J4) is a joint parameter inequality in the original
+jet constants, band inverse norm, tail cutoff and mesh.
+It gives no band-independent constant. Column evaluation and
+integration certification remain acquisitions to perform;
+no sampled values or numerical producer are supplied here.
+If finite coefficient-functional representations are required,
+reuse the repository's
+[finite Fourier-window supplier](../../Blueprint/D5/S3/Quantum/Analysis/FourierWindowFiniteRank.md).
+The infinite principal synthesis remains present.
