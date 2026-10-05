@@ -8,6 +8,9 @@ the [actual transformed form](../../../Library/Weil/fukushima2011dirichlet.md)
 sharp-band center has a prescribed finite approximation with a payable
 complete remainder, on the even minimal realization.
 
+Complex pairings, rank-one operators and coefficient Grams follow the
+[first-slot-linear matrix convention](README.md#complex-inner-products-for-matrix-reports).
+
 ## Operator domain and complete block
 
 Fix $c=3/8$, $N=64$, $\alpha=1/2-c=1/8$ and
@@ -19,7 +22,7 @@ $m(\mathsf D)su\in L^2$. Consequently
 
 $$
 Tu=\alpha u+s\,m(\mathsf D)(su)+c_\Gamma s^2u-Bu
-       +c\langle v_0,u\rangle v_0. \tag{SC1}
+       +c\langle u,v_0\rangle v_0. \tag{SC1}
 $$
 
 Every term is $L^2$. First (WF2) and its compact-core approximation
@@ -266,7 +269,7 @@ z^*Uz=2\Re\langle k(z),q(z)\rangle
 \ge\langle k(z),C^{-1}k(z)\rangle. \tag{SC10}
 $$
 
-The finite lower Schur matrix is $[T(p_i,p_j)]-U$.
+The finite lower Schur matrix is $[T(p_j,p_i)]-U$.
 All cross terms and the residual Gram must use the same trials.
 Complete numerical operator residuals, useful evaluated constants,
 the retained matrix sign and cofinal $c\uparrow1/2$ remain missing.
@@ -362,7 +365,7 @@ U_{\rm scalar}-U_w\succeq b_{\varepsilon,N}G_s\succeq0.
 $$
 
 Thus the full finite Schur lower matrix
-$[T_c(p_i,p_j)]-U_w$ dominates the existing scalar-residual comparison
+$[T_c(p_j,p_i)]-U_w$ dominates the existing scalar-residual comparison
 by this explicit nonnegative source Gram. The saving is strict on any
 coefficient direction with nonzero full residual; residual null
 directions are retained. This comparison uses identical sources,
@@ -384,3 +387,181 @@ signs remain necessary at every chosen $c_j\uparrow1/2$; (SC15) alone
 proves neither sign, the endpoint half-bound, RH or full Robin.
 The saved $N=64$ matrices and residuals are not data for these other
 bands, and no old producer or new numerical target is executed.
+
+
+## Keep the projection and ground corrections on the same residual
+
+Use precisely the (SC13) common family and the same subcritical parameter,
+bandwidth, full $T_c$ and high $C$ as (WH1). Reuse $J$ from the
+[constrained weighted comparison](../../../Library/Weil/fukushima2011dirichlet.md#keep-the-high-constraint-and-the-exact-ground-term),
+with its $A,R,g=Qv_0$ and $\beta$. Define the Hermitian allowance
+$U_{\rm cw}$ by its value on every common coefficient vector:
+
+$$
+z^*U_{\rm cw}z=2\Re\langle k(z),q(z)\rangle-C[q(z)]+J(r(z))
+\ge\langle k(z),C^{-1}k(z)\rangle.
+\tag{SC16}
+$$
+
+The inverse-residual identity and (WH8) supply the inequality. Relative
+to the identical weighted allowance (SC14), the exact saving is
+
+$$
+\begin{aligned}
+z^*(U_w-U_{\rm cw})z
+&=\langle P(wr(z)),A^{-1}P(wr(z))\rangle
+  +\beta|\langle Rg,r(z)\rangle|^2\\
+&\ge\delta\|P(wr(z))\|_2^2.
+\end{aligned}
+\tag{SC17}
+$$
+
+These are common-source Grams, retaining all cross entries. The ground
+correction must use the same constrained $R$; independent full-space
+projection and ground optima cannot be added. No support or localization
+is assigned to the projected full residual.
+
+A simpler admissible consumer defines
+$z^*G_Pz=\|P(wr(z))\|_2^2$ and
+$U_{\rm proj}=U_w-\delta G_P$. Then
+$U_{\rm cw}\preceq U_{\rm proj}\preceq U_w$, and each remains above
+the actual inverse-coupling matrix. This directly usable projection
+credit requires no inverse computation on the infinite-dimensional
+$PH$ and no new high trial family. Its Fourier projection entries and
+all source errors still require directed enclosures.
+
+For the exact ground column (SC13)--(SC15), $r_0=0$, so both new
+correction matrices have zero ground row and column. The exact trial
+contribution $C[q_0]$ remains. The corrections can vanish on other
+directions, and the rank-one correction vanishes when $c=0$.
+No uniform fractional saving or evaluated matrix is supplied. This
+conditional paper interface reuses block and rank-one inversion;
+actual low and complementary-low signs on one common cofinal sequence,
+the endpoint half-bound, RH, full Robin and Lean certification remain
+unresolved. Saved fixed-band matrices do not supply these entries.
+
+
+## Pay weighted action errors with one common dual source
+
+Keep exactly (SC13)'s actual WH1 parameter, bandwidth and full residual,
+with high trials chosen in $H^2_{\rm even}\cap QH$. This extra trial
+regularity pays (WA4); it does not replace the domain of the high form.
+Low-band sources and these high trials are in the original operator
+domain. Include the exact ground trial $(p_0,q_0)=(Pv_0,-Qv_0)$.
+Reuse its existing [ground-complement construction](ground-residual.md#one-residual-map-on-the-exact-ground-complement),
+not a rounded ground column. For the same coefficient vector $z$ set
+
+$$
+\begin{aligned}
+t(z)&=\langle p(z),p_0\rangle/\|p_0\|^2,\\
+q_\perp(z)&=q(z)+t(z)Qv_0,\\
+u_\perp(z)&=p(z)-q(z)-t(z)v_0.
+\end{aligned}
+\tag{SC18}
+$$
+
+The known $T_cv_0=0$ gives $QT_cu_\perp(z)=r(z)$.
+The ground vector has $u_\perp=q_\perp=0$. All these maps share the
+same coefficients; $su_\perp\in H^2$ follows from the selected trials,
+the sharp low band, and the existing theta derivative bounds.
+For a complex multiple $p=\zeta p_0$, $q=-\zeta Qv_0$, the declared
+convention gives $t=\zeta$ and $u_\perp=q_\perp=0$, including
+$\zeta=i$.
+
+Let $F=M_V+c|v_0\rangle\langle v_0|$ on the full even space.
+The standard shorting and rank-one inversion used in (WH6)--(WH8)
+give, with $\eta=c/(1+c\langle v_0,M_wv_0\rangle)$,
+
+$$
+\begin{aligned}
+J(r)&=\min_{h\in PH}\langle r+h,F^{-1}(r+h)\rangle,\\
+F^{-1}&=M_w-\eta|wv_0\rangle\langle wv_0|.
+\end{aligned}
+\tag{SC19}
+$$
+
+This is a reuse of the bounded positive block formula, not a new
+inverse theorem. The low compressed inverse of $F^{-1}$ exists since
+$\delta I\preceq F\preceq(V_{\max}+c)I$. The variational comparison
+with the actual high form remains that of (WH7); no maximal domain or
+commutation of $Q$ with a multiplier is assumed.
+
+Choose the common low trial $h(z)=PH_cu_\perp(z)$. Since
+$Qu_\perp=-q_\perp$,
+
+$$
+r(z)+h(z)=H_cu_\perp(z)-\varepsilon q_\perp(z)=:a(z).
+\tag{SC20}
+$$
+
+Thus this trial recovers an unprojected full action rather than assigning
+localization to $r$. It need not be the minimizing trial in (SC19).
+Set $a_{J,L}=H_{c,J,L}u_\perp-\varepsilon q_\perp$ using the full
+retained action from (WA4). Define actual common Hermitian Grams by
+
+$$
+\begin{aligned}
+z^*G_0z&=\|u_\perp(z)\|_2^2,&
+z^*G_2z&=\|(su_\perp(z))''\|_2^2,\\
+z^*G_{J,L}z&=\int w|a_{J,L}(z)|^2dx
+ -\eta|\langle wv_0,a_{J,L}(z)\rangle|^2.
+\end{aligned}
+\tag{SC21}
+$$
+
+For any fixed $\theta,\tau>0$ and the complete (WA1)--(WA3)
+budgets on that same source, put
+
+$$
+G_E=(1+\theta)b_\Gamma^2G_2
+ +(1+\theta^{-1})b_{\rm p}^2G_0.
+$$
+
+The weighted action error obeys
+$\|\sqrt w(a-a_{J,L})\|_2^2\le z^*G_Ez$.
+Since $0\preceq F^{-1}\preceq M_w$, the usual squared-norm
+inequality and (SC19)--(SC20) yield
+
+$$
+\begin{aligned}
+\langle r(z),C^{-1}r(z)\rangle
+&\le J(r(z))\le\langle a(z),F^{-1}a(z)\rangle\\
+&\le z^*[(1+\tau)G_{J,L}+(1+\tau^{-1})G_E]z.
+\end{aligned}
+\tag{SC22}
+$$
+
+Use this last expression in place of the residual cost in (SC16) to
+obtain an upper Hermitian inverse-coupling allowance. This pays the
+omitted-action component of the same weighted input without solving
+$A^{-1}$ or taking $Q$ through the weight. The ground and low dual
+trial are evaluated jointly through $F^{-1}$, rather than summing
+independently optimized corrections.
+
+Every displayed Gram has exact zero ground row and column, because
+$u_\perp=q_\perp=a_{J,L}=0$ there. The full trial contribution
+$2\Re\langle k_0,q_0\rangle-C[q_0]=C[q_0]$ remains. Directed upper
+Gram enclosures must preserve that exact null column. The derivative
+and norm Grams belong to the common complement maps, not to
+independently optimized columns or a scalar error charged on the ground.
+
+The selected dual trial can cost more than the minimizing (SC19) trial;
+no domination of $U_w$, evaluated saving or matrix sign is supplied.
+The actual retained actions, derivative/source Grams and their directed
+quadrature and input-error enclosures remain unevaluated. Growing
+$a_N$ alone does not control the bandwidth-dependent derivative Gram.
+This conditional paper consumer reuses the published inverse tools and
+existing action envelopes. The common cofinal low/complementary-low
+signs, endpoint half-bound, RH, full Robin and Lean certification
+remain unresolved; the saved $N=64$ data are not transported here.
+
+
+At the original $N=64,c=3/8$, the
+[direct saved-joint-field input](joint-weighted-input.md) supplies a
+different positive weight from the already retained pointwise high
+floors, together with an evaluated common ground-complement action-tail
+budget. It reuses this dual-source algebra with that separately justified
+high weight, rather than assigning (WH1) to the old band. The differing
+old low/high action cutoffs keep the fixed trial $Z$ unchanged. Weighted
+retained-action Grams and their step-boundary integration errors still
+require directed enclosures.
