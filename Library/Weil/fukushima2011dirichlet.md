@@ -819,3 +819,172 @@ remains reusable, while positivity on
 the complete critical quotient, the one-half bound, Robin and RH
 remain unresolved. No precise smaller optimal curvature constant is
 asserted.
+
+
+## Spatially weighted high inverse at every subcritical parameter
+
+The spatial comparison in (WF5) is reused before taking its scalar
+minimum. This is a conditional paper application of (WF1)–(WF6) on the
+same minimal even form, using the classical variational inverse comparison.
+It retains the complete prime row, Gamma term and original ground.
+It supplies an inverse-coupling allowance, not a low-block sign,
+cofinal positivity or Lean certification.
+
+Fix $0<\varepsilon\le1/2$, put
+$c=1/2-\varepsilon$, $\delta=\varepsilon/4$, and choose
+
+$$
+N\ge N_w(\varepsilon):=
+\max\left\{2e^{4\mu_\varepsilon+4},
+\sqrt{\frac{512}{3\pi\varepsilon}}\|s''\|_2,2\right\}.
+\tag{WH1}
+$$
+
+Here $\mu_\varepsilon$ is exactly (WF4), computed from the same
+complete $W$ and $s$. Let $P=\mathbf1_{|\mathsf D|<N}$, $Q=I-P$,
+$v_0=\sqrt\rho$, and
+$T_c=\widetilde A-cI+c|v_0\rangle\langle v_0|$.
+Denote its actual high closed form and associated operator by $C$.
+Set
+
+$$
+m_N=m(N/2),\qquad a_N=m_N-\mu_\varepsilon,\qquad
+V_{\varepsilon,N}(x)=\delta+a_Ns(x)^2.
+\tag{WH2}
+$$
+
+The existing symbol estimate gives $m_N\ge2\mu_\varepsilon+1$,
+so $a_N\ge\mu_\varepsilon+1>0$.
+The leakage estimate (WF5) and $m_N\le16N$ give
+$m_N\eta_N^2\le\varepsilon/4$ under (WH1).
+Definition (WF4) supplies the pointwise relation
+$W+\mu_\varepsilon s^2\ge1/2-\varepsilon/2$.
+Retain its unused spatial term in the same high-form calculation:
+for every $q$ in the actual high form domain,
+
+$$
+\begin{aligned}
+C[q]
+&\ge\int(m_Ns^2+W-c)|q|^2dx
+ -m_N\eta_N^2\|q\|_2^2+c|\langle v_0,q\rangle|^2\\
+&\ge\int V_{\varepsilon,N}(x)|q(x)|^2dx.
+\end{aligned}
+\tag{WH3}
+$$
+
+The nonnegative ground term is dropped only in the last lower bound.
+This uses the closed high restriction of the original form, rather
+than a new maximal domain. The sharp low projection maps $L^2$ into
+$H^1$ and the original operator domain as in the
+[complete-column interface](../../docs/reports/theta-mixed-matrix/sharp-center.md#operator-domain-and-complete-block).
+Consequently its complementary projection preserves the minimal form
+domain. The original core approximation and (WF1), (WF5) extend the
+same inequality to that high form domain.
+
+Since $V_{\varepsilon,N}\ge\delta>0$ and $s$ is bounded,
+$w_{\varepsilon,N}=V_{\varepsilon,N}^{-1}$ is bounded and positive.
+For every $r\in QL^2_{\rm even}(dx)$, variational inversion of (WH3)
+gives
+
+$$
+\langle r,C^{-1}r\rangle
+\le\int w_{\varepsilon,N}(x)|r(x)|^2dx.
+\tag{WH4}
+$$
+
+Indeed the left side is the supremum of
+$2\Re\langle r,q\rangle-C[q]$ over the high form domain.
+After (WH3), enlarging that supremum to all even $L^2$ and completing
+the pointwise square gives the right side. No commutation of $Q$ with
+the multiplier, or equality of inverse and compression, is asserted.
+
+The accepted original cap $\|s\|_\infty^2\le9/5$ used in (FF1)
+yields the explicit saving
+
+$$
+\begin{aligned}
+\delta^{-1}\|r\|_2^2-\int w_{\varepsilon,N}|r|^2
+&=\frac{a_N}{\delta}
+ \int\frac{s^2|r|^2}{\delta+a_Ns^2}dx\\
+&\ge b_{\varepsilon,N}\|sr\|_2^2,\qquad
+b_{\varepsilon,N}:=
+\frac{a_N}{\delta(\delta+9a_N/5)}>0.
+\end{aligned}
+\tag{WH5}
+$$
+
+For every nonzero $r$ this saving is strictly positive because $s>0$.
+There is no claimed uniform fractional saving for arbitrary sources:
+$s(x)\to0$ at spatial infinity. The
+[same-residual consumer](../../docs/reports/theta-mixed-matrix/sharp-center.md#retain-this-spatial-weight-in-the-complete-inverse-residual)
+uses (WH4)–(WH5) before any scalar residual norm is taken.
+The low Schur and complementary-low signs on the same bandwidth
+sequence remain unproved; no saved fixed-band matrix is transported to
+(WH1).
+
+
+## Keep the high constraint and the exact ground term
+
+At the same (WH1) parameter and bandwidth, let $H=L^2_{\rm even}(dx)$,
+write $M_V,M_w$ for multiplication by (WH2) and its inverse, and put
+$V_{\max}=\delta+9a_N/5$. The existing cap gives
+$V_{\max}^{-1}I\preceq M_w\preceq\delta^{-1}I$. On $PH$ and $QH$ set
+
+$$
+A=PM_wP\big|_{PH},\qquad D=QM_VQ\big|_{QH},\qquad
+R=Q(M_w-M_wPA^{-1}PM_w)Q\big|_{QH}.
+\tag{WH6}
+$$
+
+Both compressed positive multipliers have bounded inverses; $P$ is
+infinite-dimensional. Reuse the standard positive block inverse identity:
+$R=D^{-1}$. The bounded positive shorting reference is
+[Antezana--Corach--Stojanoff, Theorem 2.2(4), p.5](https://arxiv.org/pdf/math/0410573v1),
+with operator $M_w$ and closed subspace $QH$; (SC2) supplies the
+existing positive block-elimination interface. For this application, the vector
+$q=M_w(r-PA^{-1}PM_wr)$ satisfies $Pq=0$ and $QM_Vq=r$ for every
+$r\in QH$. No commutation of $P$ with $M_w$ is assumed.
+
+Set $g=Qv_0$ and $\beta=c/(1+c\langle g,Rg\rangle)$. Before dropping
+the ground term, (WH3) gives $C[q]\ge\langle q,Dq\rangle+
+ c|\langle g,q\rangle|^2$ on the original high form domain.
+Variational inversion and the standard rank-one inverse identity yield
+
+$$
+C^{-1}\preceq(D+c|g\rangle\langle g|)^{-1}
+=R-\beta|Rg\rangle\langle Rg|.
+\tag{WH7}
+$$
+
+The rank-one identity reuses the general-ring Woodbury proof
+[`Matrix.invOf_add_mul_mul`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Matrix/Invertible.lean#L196).
+Take its central factor to be $I$ and absorb $c$ into the update factor,
+including $c=0$. Its algebra applies to bounded endomorphism entries; finite block
+indices impose no finite-dimensional assumption on $QH$. Invertibility
+here comes from $D\succeq\delta I$ and $c\ge0$, not from that formula.
+The inspected shorting PDF SHA-256 is
+`449b7d53831f8f2ddec744ad297e43f5bbbbff3804df19833e48a1181cb90066`.
+Only the variational supremum is enlarged to $QH$; the actual high
+operator and domain remain those of (WH3). Define, for $r\in QH$,
+
+$$
+\begin{aligned}
+J(r)&=\int w|r|^2dx
+ -\langle P(wr),A^{-1}P(wr)\rangle
+ -\beta|\langle Rg,r\rangle|^2,\\
+\langle r,C^{-1}r\rangle&\le J(r),\qquad
+\int w|r|^2dx-J(r)\ge\delta\|P(wr)\|_2^2.
+\end{aligned}
+\tag{WH8}
+$$
+
+Here $A\preceq\delta^{-1}I$ gives the last inequality. The projection
+and ground corrections are jointly valid because the latter uses the
+same constrained $R$, not the unconstrained $M_w$. Each correction can
+vanish; at $c=0$ the ground correction vanishes. The
+[same-residual application](../../docs/reports/theta-mixed-matrix/sharp-center.md#keep-the-projection-and-ground-corrections-on-the-same-residual)
+keeps all cross entries and the exact ground trial cost.
+This is a conditional paper application of existing block and rank-one
+inverse tools. It supplies no evaluated entries, low or complementary-low
+signs, cofinal certificate, endpoint half-bound, RH/Robin proof or Lean
+certification.
