@@ -53,7 +53,7 @@ def decode (k : Nat) : List Nat → CH → Option (Index k)
           else match h with
             | b :: _ =>
                 if b.2 = some true then some (.inr (.inl ⟨t,ht⟩))
-                else if b.2 = none then some (.inr (.inr ⟨t-1,by omega⟩))
+                else if b.2 = none then some (.inr (.inr ⟨t-1,lt_of_le_of_lt (Nat.sub_le t 1) ht⟩))
                 else none
             | [] => none
         else if ht : t = k ∧ 0 < k then
@@ -69,21 +69,21 @@ def secondary (k : Nat) : Index k → List Address
   | .inr (.inr i) => if i.val + 1 < k then [discriminator (i.val+1)] else []
 
 local notation "extras" => fun k : Nat => Sum.elim (fun _ : Unit => (∅ : Finset Address))
-  (Sum.elim (fun j : Fin k => {query j.val}) (fun i : Fin k =>
-    if i.val+1 < k then {query (i.val+1),discriminator (i.val+1)} else {query (i.val+1)}))
+  (Sum.elim (fun j : Fin k => {query (Fin.val j)}) (fun i : Fin k =>
+    ite (Fin.val i+1 < k) {query (Fin.val i+1),discriminator (Fin.val i+1)} {query (Fin.val i+1)}))
 local notation "excess" => fun k : Nat => Sum.elim (fun _ : Unit => (0 : Nat))
-  (Sum.elim (fun _ : Fin k => 1) (fun i : Fin k => if i.val+1 < k then 2 else 1))
+  (Sum.elim (fun _ : Fin k => 1) (fun i : Fin k => ite (Fin.val i+1 < k) 2 1))
 
 /-- An interior first merged exception has exactly two surviving rows, separated by one literal request. -/
 theorem result (k : Nat) (hk : 1 ≤ k) :
     (∀ (t : Nat) (ht0 : 0 < t) (ht : t < k),
       (∀ i : Index k,
         (compatible k t i ∧ leafLabel (family k i) (query t) = none) ↔
-          i = .inr (.inl ⟨t,ht⟩) ∨ i = .inr (.inr ⟨t-1,by omega⟩)) ∧
+          i = .inr (.inl ⟨t,ht⟩) ∨ i = .inr (.inr ⟨t-1,lt_of_le_of_lt (Nat.sub_le t 1) ht⟩)) ∧
       readout (discriminator t) (family k (.inr (.inl ⟨t,ht⟩))) = .alpha ∧
-      readout (discriminator t) (family k (.inr (.inr ⟨t-1,by omega⟩))) = .absent ∧
+      readout (discriminator t) (family k (.inr (.inr ⟨t-1,lt_of_le_of_lt (Nat.sub_le t 1) ht⟩))) = .absent ∧
       readout (false :: (List.replicate t true ++ [false]))
-        (family k (.inr (.inr ⟨t-1,by omega⟩))) = .beta ∧
+        (family k (.inr (.inr ⟨t-1,lt_of_le_of_lt (Nat.sub_le t 1) ht⟩))) = .beta ∧
       (∀ s : Nat, query s ≠ discriminator t)) ∧
     (∀ i : Index k,
       let h := runPassiveProtocol (fun q U => leafLabel U q) (scan k (List.range (k+1))) (family k i)
@@ -147,7 +147,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     simp [query,discriminator,List.count_replicate] at counts
   have pair (t : Nat) (ht0 : 0 < t) (ht : t < k) (i : Index k) :
       (compatible k t i ∧ leafLabel (family k i) (query t) = none) ↔
-        i = .inr (.inl ⟨t,ht⟩) ∨ i = .inr (.inr ⟨t-1,by omega⟩) := by
+        i = .inr (.inl ⟨t,ht⟩) ∨ i = .inr (.inr ⟨t-1,lt_of_le_of_lt (Nat.sub_le t 1) ht⟩) := by
     constructor
     · rintro ⟨hc,hn⟩
       have hs := (survivors t (by omega) i).mp hc
@@ -183,7 +183,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         simp [leafLabel,(xrow ⟨t,ht⟩).2]
       · refine ⟨(survivors t (by omega) _).mpr (Or.inr (by simp [stop]; omega)),?_⟩
         have eq : t-1+1 = t := by omega
-        have supplied := (yrow ⟨t-1,by omega⟩).2
+        have supplied := (yrow ⟨t-1,lt_of_le_of_lt (Nat.sub_le t 1) ht⟩).2
         simp only [Fin.val_mk,eq] at supplied
         simp [leafLabel,supplied]
   have interior_decode (t : Nat) (ht0 : 0 < t) (ht : t < k) (i : Index k)
@@ -193,7 +193,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         some i := by
     rcases (pair t ht0 ht i).mp ⟨hc,hn⟩ with rfl | rfl
     · simp [decode,ht,show t ≠ 0 from by omega,leafLabel,gx ⟨t,ht⟩]
-    · have supplied := gy ⟨t-1,by omega⟩
+    · have supplied := gy ⟨t-1,lt_of_le_of_lt (Nat.sub_le t 1) ht⟩
       simp only [Fin.val_mk,show t-1+1=t from by omega] at supplied
       simp [decode,ht,show t ≠ 0 from by omega,leafLabel,supplied]
   have advance (U : Source) : ∀ (pre ts : List Nat) (h : CH),
@@ -345,25 +345,27 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         intro q hq
         have eq : q = query j.val := Finset.mem_singleton.mp hq
         subst q
-        exact raw_nonleaf _ (by simp)
+        exact raw_nonleaf (.inr (.inl j)) (by simp only [Sum.inr_ne_inl,not_false_eq_true])
       | inr i =>
         intro q hq
         dsimp only [Sum.elim] at hq
         split_ifs at hq with hi
         · rcases Finset.mem_insert.mp hq with rfl | hq
-          · exact raw_nonleaf _ (by simp)
+          · exact raw_nonleaf (.inr (.inr i)) (by simp only [Sum.inr_ne_inl,not_false_eq_true])
           · have eq : q = discriminator (i.val+1) := Finset.mem_singleton.mp hq
             subst q
             exact secondary_nonleaf i
         · have eq : q = query (i.val+1) := Finset.mem_singleton.mp hq
           subst q
-          exact raw_nonleaf _ (by simp)
+          exact raw_nonleaf (.inr (.inr i)) (by simp only [Sum.inr_ne_inl,not_false_eq_true])
   have unique (i : Index k) : (route k i ++ secondary k i).Nodup := by
     apply List.nodup_append.mpr
-    refine ⟨List.Nodup.map qinj (List.nodup_range _),?_,?_⟩
+    refine ⟨List.Nodup.map qinj List.nodup_range,?_,?_⟩
     · cases i with
       | inl u => simp [secondary]
-      | inr p => cases p <;> simp [secondary]
+      | inr p =>
+        cases p <;> simp only [secondary]
+        all_goals split_ifs <;> simp only [List.nodup_singleton,List.nodup_nil]
     · intro a ha b hb eq
       obtain ⟨s,hs,rfl⟩ := List.mem_map.mp ha
       cases i with
@@ -398,22 +400,35 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     have supplied := (selected decoded).2
     simp only [Function.comp_apply,e.symm_apply_apply] at supplied
     rw [(routes i).2] at supplied
-    simpa only [List.map_map,Function.comp_def,List.map_id_fun] using supplied
+    simpa only [List.map_map,Function.comp_def,List.map_id'] using supplied
   have bills (i : Index k) :
       paid (terminal π (family k i)).1 = leafAddresses (family k i) ∪ extras k i := by
     rw [account_i,List.toFinset_append,Finset.union_right_comm,primary_bill]
     cases i with
-    | inl u => cases u; simp [secondary,Scale38NestedCompensation.extra]
+    | inl u => cases u; simp only [secondary,Scale38NestedCompensation.extra,
+        ↓reduceIte,List.toFinset_nil,Finset.union_empty,Sum.elim_inl]
     | inr p => cases p with
       | inl j =>
-        simp only [secondary,Scale38NestedCompensation.extra,Sum.inr_ne_inl,↓reduceIte,stop]
-        split_ifs with hj
-        · simp [Finset.insert_eq_of_mem (secondary_leaf j),Finset.union_assoc,Finset.union_comm,
-            Finset.union_left_comm,secondary_leaf j]
-        · simp
+        simp only [secondary,Scale38NestedCompensation.extra,Sum.inr_ne_inl,↓reduceIte,
+          stop,Sum.elim_inr,Sum.elim_inl]
+        by_cases hj : 0 < j.val
+        · rw [if_pos hj]
+          simp only [List.toFinset_cons,List.toFinset_nil,Finset.insert_empty]
+          apply Finset.union_eq_left.mpr
+          intro q hq
+          have eq : q = discriminator j.val := Finset.mem_singleton.mp hq
+          subst q
+          exact Finset.mem_union_left _ (secondary_leaf j)
+        · rw [if_neg hj]
+          exact Finset.union_empty _
       | inr i =>
-        simp only [secondary,Scale38NestedCompensation.extra,Sum.inr_ne_inl,↓reduceIte,stop]
-        split_ifs <;> ext q <;> simp <;> tauto
+        simp only [secondary,Scale38NestedCompensation.extra,Sum.inr_ne_inl,↓reduceIte,
+          stop,Sum.elim_inr]
+        by_cases hi : i.val+1 < k
+        · rw [if_pos hi]
+          simp only [List.toFinset_cons,List.toFinset_nil,Finset.insert_empty]
+          rw [Finset.union_assoc,Finset.singleton_union]
+        · simp only [if_neg hi,List.toFinset_nil,Finset.union_empty]
   have costs (i : Index k) : cost π (family k i) = 3*k+13 + excess k i := by
     unfold cost
     rw [bills]
@@ -423,36 +438,30 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     | inr p => cases p with
       | inl j =>
         rw [Finset.union_singleton,Finset.card_insert_of_notMem
-          (extras_nonleaf _ _ (Finset.mem_singleton_self _)),leaf_card]
+          (raw_nonleaf (.inr (.inl j)) (by simp only [Sum.inr_ne_inl,not_false_eq_true])),leaf_card]
       | inr i =>
         dsimp only [Sum.elim]
         split_ifs with hi
         · rw [Finset.union_insert,Finset.union_singleton,
             Finset.card_insert_of_notMem (by
               simp only [Finset.mem_insert,not_or]
-              exact ⟨different (i.val+1) (i.val+1),raw_nonleaf _ (by simp)⟩),
+              exact ⟨different (i.val+1) (i.val+1),raw_nonleaf (.inr (.inr i)) (by simp only [Sum.inr_ne_inl,not_false_eq_true])⟩),
             Finset.card_insert_of_notMem (secondary_nonleaf i),leaf_card]
           omega
         · rw [Finset.union_singleton,Finset.card_insert_of_notMem
-            (raw_nonleaf _ (by simp)),leaf_card]
+            (raw_nonleaf (.inr (.inr i)) (by simp only [Sum.inr_ne_inl,not_false_eq_true])),leaf_card]
   refine ⟨?_,routes,π,policy,observable,execution,?_,?_⟩
   · intro t ht0 ht
     refine ⟨pair t ht0 ht,gx ⟨t,ht⟩,?_,?_,(fun s => different s t)⟩
-    · have supplied := gy ⟨t-1,by omega⟩
+    · have supplied := gy ⟨t-1,lt_of_le_of_lt (Nat.sub_le t 1) ht⟩
       simpa only [Fin.val_mk,show t-1+1=t from by omega] using supplied
-    · have supplied := contracted_leaf ⟨t-1,by omega⟩
+    · have supplied := contracted_leaf ⟨t-1,lt_of_le_of_lt (Nat.sub_le t 1) ht⟩
       simpa only [Fin.val_mk,show t-1+1=t from by omega] using supplied
   · intro i
     refine ⟨unique i,bills i,?_,?_,costs i⟩
     · rw [bills]
-      ext q
-      simp only [Finset.mem_sdiff,Finset.mem_union]
-      constructor
-      · rintro ⟨hl | he,hn⟩
-        · exact False.elim (hn hl)
-        · exact he
-      · intro he
-        exact ⟨Or.inr he,extras_nonleaf i q he⟩
+      exact Finset.union_sdiff_cancel_left (Finset.disjoint_right.mpr (fun q he hl =>
+        extras_nonleaf i q he hl))
     · intro q hq
       refine ⟨?_,extras_nonleaf i q hq⟩
       have requested : q ∈ (route k i ++ secondary k i).toFinset ∪ leafAddresses (family k i) := by
@@ -461,7 +470,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       have routing : q ∈ (route k i ++ secondary k i).toFinset :=
         (Finset.mem_union.mp requested).resolve_right (extras_nonleaf i q hq)
       rw [(routes i).2]
-      simpa only [List.map_map,Function.comp_def,List.map_id_fun] using List.mem_toFinset.mp routing
+      simpa only [List.map_map,Function.comp_def,List.map_id'] using List.mem_toFinset.mp routing
   · intro hk3
     constructor
     · intro i
