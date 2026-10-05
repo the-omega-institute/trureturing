@@ -43,7 +43,7 @@ internal sealed class CoarseMinimaxBridgeDocument : IScribeDocumentDefinition
         Formula bridge = All("pi", V("Strategy"), Imp(observable,
             Imp(All("i", indices, Seq(cost, Sp, Le, Sp, D(3), k, Plus, D(1, 4))),
                 Some("z", indices, Some("qs", Call("List", V("Address")),
-                    Call("Safe", k, z, qs)))));
+                    Call("Safe", k, z, qs))))));
         Formula lower = Imp(Seq(D(3), Sp, Le, Sp, k), All("pi", V("Strategy"),
             Imp(observable, Some("i", indices,
                 Seq(D(3), k, Plus, D(1, 5), Sp, Le, Sp, cost)))));
