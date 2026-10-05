@@ -5581,3 +5581,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 七个具名构造与目标的完整精确临时 Lean 第二轮真实编译通过，host `33889` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-unit-horoball-action-covering.lean` 为 198787 字节，SHA256 `87105223e774ae161056af7e107f53f60a45cea669e6a3b39c331fc77233f022`；前述成功单位平移模源码为完整 offset0 字节前缀，无新增 import、依赖构建或版本变更。首轮虽 exit0 但含两项 noop tactic 警告，完整源码日志保留排除；仅删除两项无作用的 `change`，未关闭 linter。协作实施与调用方只读复核完成，没有新增 SSHX 共识。
 
 该实际原子空间、等距表示限制、紧像与 canonical 商覆盖接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。这里覆盖性是上述实际 horoball 的轨道商投影的拓扑结论；尚未构造其商黎曼度量、体积、到原流形尖点的嵌入或完整 deck 群下的 horoball 分离。一般原流形的原度量覆盖、有限体积薄部分解及同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 实际原覆盖与同一表示的纤维保持性内部推出原度量轨道间隔
+
+对任意独立宇宙的实际目标空间 `M`、实际覆盖 `π : H3 → M` 及同一个原等距表示 `ρ : G →* (H3 ≃ᵢ H3)`，只要求原作用逐点自由以及逐元素逐原点的实际纤维保持 `π(ρ(g)(p)) = π(p)`。内部得到每个原点的正数 `r`，使全部非单位原 `g` 的原位移满足 `r ≤ dist p (ρ(g)(p))`，没有另供轨道间隔或 properly discontinuous 性质。
+
+既有覆盖的局部同胚与局部单射接口提供实际 `π` 在原点附近的开放单射邻域，原 H³ 度量球提供真实正半径。若某个原 `ρ(g)(p)` 位于该球中，同一 `π` 的纤维保持与单射性迫使它等于原 `p`，再由原自由性推出 `g=1`。该原间隔实际代入已编译轴群消费者：保留同一个原群、实际无穷远稳定性、真正有限指数幂零子群及存在原非单位缩放元素，内部构造原群整数幂生成元。未将覆盖换成另一作用，也未把原目标空间与原 H³ 合并为一个宇宙。
+
+两个具名目标的完整精确临时 Lean 首轮真实编译通过，host `26940` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-cover-orbit-gap.lean` 为 200772 字节，SHA256 `40cb28b6aa11ce05c9421efe5e99fbcfa8212d9198c0e62d39d82a11144076ca`；此前成功 horoball 源码为完整 offset0 字节前缀，没有新增 import、依赖构建或版本变更。调用方实际编译与同一覆盖／原自由性／原度量语义复核完成，没有新增 SSHX 共识。
+
+该既有原覆盖、局部单射、原度量球及轴循环性消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批消费真正给定的 `π` 及同一表示的纤维保持性；尚未从一般原 `M,N` 的双曲流形假设内部构造其原度量普适覆盖、完整 deck 表示或这些数据。间隔到原 compact-pair properly discontinuous 性质的证明仍在推进；原商度量、体积、尖点分离、完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
