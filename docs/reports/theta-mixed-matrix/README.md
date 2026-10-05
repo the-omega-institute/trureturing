@@ -434,7 +434,7 @@ and [directed caps](../../../Library/Dynamics/clason2021regularization.md#direct
 give a sufficient endpoint threshold 58 and normalized error cap below 920,
 with $R_0=59$. The [producer](theta_endpoint_constants.py) and
 [result](theta-endpoint-constants-result.json) preserve the actual model
-and leave WF2 form coefficients symbolic. They acquire scalar constants,
+and supply conservative WF2 coefficient caps. They acquire scalar constants,
 not actual column/functional enclosures or a simultaneous Gram. Critical
 membership applies to actual normalized columns; the ideal profiles
 belong to the original form domain. Source/archimedean costs, common
@@ -453,3 +453,77 @@ before that command. This producer is verified on the local macOS host,
 including a different working directory, paths with spaces and a shell
 without startup files; the portable fixture reproduces the result bytes.
 No numerical acquisition or platform execution is inferred from CI.
+
+## Conservative WF2 coefficients and absolute endpoint allowances
+
+The same scalar producer applies the existing
+[WC2 bounds](../../../Library/Analytic/romik2021orthogonal.md)
+to the original [WF2 comparison](../../../Library/Weil/fukushima2011dirichlet.md#transformed-form-and-a-global-derivative-comparison).
+It supplies conservative enlarged coefficients under those original-model
+premises; it does not measure the exact operator norm or introduce a new
+form comparison theorem. No previous derivative or translation grid runs.
+
+Let $b=3/8$, $r=e^{-2b}$ and use the existing full-positive-line caps
+$K_0,K_1$. WC2 gives
+
+$$
+\|s\|_\infty^2\le K_0^2r,\qquad
+\|s'\|_\infty^2\le K_1^2r.
+$$
+
+The complete prime operator has $b_n(x)=w_ns(x)s(x+\log n)$,
+with every prime-power weight $w_n=\Lambda(n)/\sqrt n\le n$.
+Using $e^{2|x|}+e^{2|x+\log n|}\ge2n$ and retaining both shifted
+directions in the existing operator-norm sum gives
+
+$$
+B_{\rm cap}=2K_0^2\left(\frac r{(1-r)^2}-r\right)
+\ge\|B_{\rm complete\ prime}\|.
+$$
+
+The integer-edge majorant includes every prime power. This is WF1's
+complete prime operator, not the negative-edge metric operator called
+$B$ in the critical-source correction.
+
+For $K=128$ put
+
+$$
+\overline M_2=\sum_{k=0}^K\frac2{(2k+1/2)^3}
+               +\frac1{2(2K+1/2)^2}.
+$$
+
+The decreasing-tail integral bounds $M_2\le\overline M_2$.
+Thus the unchanged WF2 inequality can use the enlarged coefficients
+
+$$
+\overline c_0=\frac32+B_{\rm cap}+2\overline M_2K_1^2r,
+\qquad
+\overline c_1=2\overline M_2K_0^2r.
+$$
+
+The directed result gives the strict caps
+
+$$
+\overline M_2<16.166,\quad B_{\rm cap}<13.532,\quad
+\overline c_0<154091,\quad\overline c_1<84.394.
+$$
+
+Substitution in the already derived endpoint formulas, with the same
+$R_*=58$, $R_0=59$ and $d=1/16$, supplies the absolute allowances
+
+$$
+M_\theta<117.074,\qquad C_d<70582.145.
+$$
+
+Here the producer evaluates $M_-$, $C_+$ and $C_-$ with the two
+coefficients separately, and uses $\sqrt{\overline c_0+\overline c_1}$
+as a conservative bound for $c_F$. The bounds apply to the existing
+analytic residual columns and $d(T)\le C_de^{-T}$ for $T>R_0$, $T\ge1$;
+they are not actual sampled column norms or residual errors. The retained
+endpoint scalar records and supplier hashes are unchanged.
+
+Actual column and coefficient-functional enclosures, one simultaneous
+primal/dual complex Gram, the infinite noncompact principal contribution,
+source/archimedean costs and signs on one original common cofinal sequence
+still require work. These scalar instantiations supply no runtime,
+optimality, Lean, all-input half-bound, Robin or RH certificate.
