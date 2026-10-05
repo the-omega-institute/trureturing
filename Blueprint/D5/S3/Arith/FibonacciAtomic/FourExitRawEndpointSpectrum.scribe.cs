@@ -39,6 +39,18 @@ internal sealed class FourExitRawEndpointSpectrumDocument : IScribeDocumentDefin
                 Blocks(Paragraph(Text("For every k, every slot j in Fin(k), and every original Strategy pi, "
                     + "cost(pi,F(k,a_j))=8k+16 implies that some sibling b in Y, H, Z has "
                     + "cost(pi,F(k,b_j)) at least 8k+18."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("four-exit-comb-slot-readout"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.comb_slot_readout"),
+                H("Readout at a comb slot"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The address consisting of j right steps, one left step, and u "
+                    + "reads precisely u in slot j of an arbitrary right comb."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("four-exit-comb-tail-readout"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.comb_tail_readout"),
+                H("Readout in the compensation subtree"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("After k right steps the remaining address reads the "
+                    + "compensation subtree of a k-slot right comb."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("four-exit-local-tail-attainment"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.local_tail_attainment"),
                 H("Six Local Tail Costs"),
