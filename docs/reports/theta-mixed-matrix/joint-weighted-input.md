@@ -176,3 +176,10 @@ uv run --no-project --python 3.13.12 --with python-flint==0.9.0 python docs/repo
 The program is project-authored; python-flint/FLINT supplies directed
 arithmetic and its dependency licensing. Successful parameter/provenance
 checks do not establish the external mathematical premises of the data.
+
+The [paid finite-core residual correction](weighted-residual-core.md)
+uses this same step potential with the separately saved full-Gamma
+residual source and its whole-line Gram. Its local polynomial integration
+pays the step boundaries without reusing a global holomorphic trapezoid
+bound. This supplies a common residual gain input, while JW4's different
+finite-$J$ dual-action/source Grams and common cofinal signs remain open.
