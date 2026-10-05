@@ -5526,3 +5526,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 六个具名目标的精确临时 Lean 已完整编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-axis-log-discrete-cyclic.lean` 为 176980 字节，SHA256 `aece6b0ab135644aeb8487a459e4e0154663969d6c9aca732c2ee4ee69a536e4`。仅复用已有热缓存钉版 `Mathlib.GroupTheory.Archimedean` import；此前成功虚幂零源码的完整 169830 字节连续块在该新 header 后偏移 39 保留，没有新增依赖闭包构建。
 
 该原轴、实对数及既有子群循环分类接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批没有从 `ProperSpace H3` 推断原作用离散，亦未构造一般原流形的覆盖及 deck 作用来提供所需间隔。真实轴管商、单位缩放尖点平移格子与有限体积薄部分解，以及同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 同一原表示的 properly discontinuous 性质内部推出间隔与循环性
+
+复用现有 `D5/S3/Geometry/MostowPrasadCovering.lean` 的 `representationMulAction ρ` 和 `ProperlyDiscontinuousRepresentation ρ`，把局部作用逐字绑定为原 `ρ(g)(p)`。同一个原表示的紧集像交有限性构造该作用的 `ProperlyDiscontinuousSMul`，原等距性提供逐元素连续性。既有邻域分离接口和实际原度量球给出每个原点的真实正半径；若非单位原元素的实际位移小于该半径，原像交中的同一点强迫该元素固定原点，再由原自由性推出其为单位元。因而上述原轨道间隔由原自由性与同一 `ρ` 的 properly discontinuous 性质内部推出，无需另供间隔前提。
+
+将这个内部间隔实际代入已编译的原对数字符消费者，在原全群存在真正有限指数幂零子群、稳定实际无穷远点及具有非单位缩放元素的条件下，得到同一个原 `G` 的真实生成元，其整数幂覆盖全部原群。没有用 `ProperSpace H3` 代替作用的 properly discontinuous 性质，也没有换用一个与 `ρ` 无关的作用实例。
+
+两个具名目标的完整精确临时 Lean 首轮真实编译通过，host `46417` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-proper-discrete-cyclic.lean` 为 179235 字节，SHA256 `6889650df9fc589a7944ad67c22ccf6d07f85e96e7522bfc543dcaab0d04eecc`。仅新增已有热缓存 canonical covering import；上一成功 176980 字节源码在 43 字节 header 后完整保留，没有新增依赖闭包构建或版本变更。
+
+该既有原作用、邻域分离及已验循环性接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。这里仍明确消费同一原表示的 properly discontinuous 前提；一般原流形原度量覆盖与完整 deck 作用尚未内部构造来提供它。未归一化原表示的统一分类、真实轴管商、尖点平移格子与有限体积薄部分解，以及同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 和官方验收仍未完成。
