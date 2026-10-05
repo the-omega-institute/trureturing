@@ -565,3 +565,309 @@ Further tail partitions, arbitrary low-phase supports, several outside labels be
 [D12]: https://github.com/the-omega-institute/trureturing/blob/9108f2ff2eff625c527c1226b56ff957ae62a28e/D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/RepeatedGuardrailCost.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Guarded near-critical injective INITIAL tables
+
+This chapter settles exact larger fees on a full mixed-tail INITIAL family. It uses the original joint prior and literal transitions of Chapter 1. Its high label may coincide with any low label; the freshness assumptions of Definition 4.1 are not imposed. The family has one INITIAL tail threshold and an injective table on the outside phases, rather than the arbitrary two-threshold table of Chapter 5.
+
+**定义 10.1（Injective outside table and its guard）。** Fix
+
+$$
+m\ge3,\qquad 2\le r<m,\qquad T=m+r,\qquad k=T-1,
+\qquad g=\gcd(m,r),\qquad u=m/g,\qquad \rho=r/g,
+\qquad p=u+\rho.
+\tag{10.1}
+$$
+
+Then $\gcd(u,\rho)=1$, $u>\rho\ge1$, and the actual phase set is $P=g\mathbb Z/T\mathbb Z$. Put
+
+$$
+H=\{0,m\},\qquad Z=P\setminus H,\qquad n=p-2\ge3,
+\qquad d=\lceil\log_2 n\rceil,\qquad
+u\ge(d-1)\rho+1.
+\tag{10.2}
+$$
+
+Choose $\lambda:P\to Y$ injective on $Z$, and write $C=\lambda(0)$, $D=\lambda(m)$. The endpoint labels are arbitrary, including equality with each other or any outside label. Choose arbitrary labels $R,L_\bot$. On both free-value fibres define the entire target by
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R,&s\ge r-1,\\
+\lambda(j),&s<r-1,
+\end{cases}
+\quad j\in P,\quad 0\le s<k,
+\qquad f(\bot)=L_\bot.
+\tag{10.3}
+$$
+
+Thus low tails are all of $0,\ldots,r-2$, and high tails are all of $r-1,\ldots,k-1$. In particular this is not an INITIAL-tail-zero prior. Convention 1.2 supplies one whole actual history for each specified triple; all sources used below are instances of those joint witnesses. The arbitrary initial rejection label returns on the separate free rejection reading.
+
+**引理 10.2（Global parent, immutable labels, and binary lower bound）。** Every correct controller for (10.3), on either free value and with any finite worst fee, starts with $1^m$. That parent rejects exactly the high tails. On its successful positive-difference archive the actual INITIAL phases are precisely $H$, and on its zero-difference archive they are precisely $Z$, in both cases with all low INITIAL tails. Consequently
+
+$$
+C_{\rm ad}(f)\ge1+d,\qquad C_{\rm pre}(f)\ge1+d.
+\tag{10.4}
+$$
+
+The first post-parent block on the $Z$ archive must start zero. The same holds on the $H$ archive if $C\ne D$.
+
+Proof. Since $n\ge3$ distinct outside labels occur, choose an actual phase $j\in Z$ with $\lambda(j)\ne R$. At this phase and one fixed free value, take INITIAL tails $r-2$ and $r-1$. Free stopping cannot return both labels. A root whose first zero follows $b<m$ leading ones lets both reach that zero, because $(r-1)+b\le m+r-2=k-1$. The zero merges their current records and their acquired archives, although their INITIAL labels differ. No later action can restore the distinction. Thus every correct root is $1^m$, without a freshness assumption on $R$.
+
+That root rejects precisely $s+m\ge k$, or $s\ge r-1$. Its successful charge support is exactly $H$, by Interface 1.4. Each low source keeps its original label: the new record is $(v\oplus\mathbf1_H(j),-j+m,s+m)$, with its original $s$ still recorded only through the INITIAL target. The stated archive descriptions therefore follow from the full joint sources, not separately reachable coordinates.
+
+For each $j\in Z$, select the actual source at INITIAL tail $r-2$. At the root these $n$ sources have common current value and tail $k-1$ and pairwise different INITIAL labels. A first post-parent bit one rejects them all without separating any label, so a correct second block starts zero. Afterwards their tail is common; within each acquired branch it remains common under every literal action. A later rejecting action therefore merges all remaining candidates of that branch and cannot resolve different labels. Successful observations are binary. A tree of at most $h$ further blocks has at most $2^h$ distinct-label leaves, even with early stopping and paid waits. Since $2^{d-1}<n$, at least $d$ post-parent blocks are necessary. This is an all-action lower bound from the INITIAL endpoint, including the forced parent's fee. The two endpoint sources at INITIAL tail $r-2$ give the same compulsory second zero on a nonconstant $H$ archive. ∎
+
+## 11. Source-specific code lists on the guarded calendar
+
+**引理 11.1（Disjoint forbidden bands and an unrestricted phase）。** Identify an actual phase $j=gi$ with $i\in\mathbb Z/p\mathbb Z$, and set $A=(\mathbb Z/p\mathbb Z)\setminus\{0,u\}$. For query indices $t=1,\ldots,d$ after the parent, let
+
+$$
+a_t=p-t\rho=u-(t-1)\rho,
+\qquad
+\mathcal W_t=[a_t,a_t+u]\pmod p,
+\qquad
+J_t=\{u-t\rho+1,\ldots,u-(t-1)\rho\}\pmod p.
+\tag{11.1}
+$$
+
+The full physical path is $W_t=[tm,tm+m]\pmod T$, retaining all its nonactual vertices. Its actual vertices are $g\mathcal W_t$. Each $a_t$ is a positive representative, and
+
+$$
+(\mathbb Z/p\mathbb Z)\setminus(\mathcal W_t\setminus\{a_t\})=J_t.
+\tag{11.2}
+$$
+
+The sets $J_1,\ldots,J_d$ are disjoint, each has $\rho$ vertices, and at least one phase of $A$ belongs to none of them. Thus the safe code list
+
+$$
+\mathcal L_i=\{z\in\mathbb F_2^d:z_t=0\text{ whenever }i\in J_t\},
+\qquad i\in A,
+\tag{11.3}
+$$
+
+is either the full cube or a single coordinate-zero half cube. There is at least one full-cube list.
+
+Proof. The guard gives $a_d\ge1$ and $d\rho\le p-1$. Since $tm/g=tu\equiv-t\rho\pmod p$, the ordered actual path starts at $a_t$. Its last $u$ vertices, after deleting the first, have exactly the complementary band (11.2). All statements concern the circular order, even when the path or final band wraps. The bands concatenate the integer interval $u-d\rho+1,\ldots,u$, whose length is $d\rho<p$, so they are disjoint modulo $p$.
+
+Write $L=u-(d-1)\rho\ge1$. Vertex $u$ is in $J_1$. If $L\ge2$, the number of phases of $A$ outside all bands is at least
+
+$$
+(p-2)-(d\rho-1)=L-1\ge1.
+\tag{11.4}
+$$
+
+If $L=1$ and $\rho\ge2$, then $u=(d-1)\rho+1<d\rho$, so the concatenated interval also contains vertex zero. Exactly these two removed endpoint vertices belong to the bands. Hence there is exactly $p-d\rho=1$ outside phase outside all bands. The remaining possibility $L=\rho=1$ would give $u=d$ and $n=d-1$, contradicting $n>2^{d-1}$ for $d\ge2$. This proves the unrestricted list and the entire list description. ∎
+
+**引理 11.2（Hall feasibility for the actual safe lists）。** There are pairwise distinct vectors $z_i\in\mathcal L_i$ for every $i\in A$.
+
+Proof. Reuse the finite distinct-representative form of Hall's theorem, with index set $A$ and lists (11.3); its hypotheses are verified here for these specific lists. In the pinned upstream source [H11], this is `Finset.all_card_le_biUnion_card_iff_existsInjective'`. The finite theorem supplies the matching step, rather than a block-cost conclusion.
+
+A subfamily containing a full-cube list has union size $2^d\ge n$, so satisfies Hall. Otherwise let $q$ be the number of distinct forbidden coordinates among its lists. If $q=0$, the subfamily is empty. If $q\ge1$, its union contains all vectors except those with one in each of these $q$ coordinates, and therefore has size
+
+$$
+2^d-2^{d-q}.
+\tag{11.5}
+$$
+
+Each forbidden-coordinate group has at most $\rho$ sources, so a $q$-group subfamily has at most $q\rho$ sources. The guard and $n\le2^d$ imply $d\rho\le n+1\le2^d+1$.
+
+For $d=2$ this gives $\rho\le2$, settling $q=1$ against the union size two. For $d\ge3$, the elementary inequality $2^d\ge3d-1$ gives
+
+$$
+(d-1)\rho\le\frac{(d-1)(2^d+1)}d\le2^d-2.
+\tag{11.6}
+$$
+
+The sequence $(1-2^{-q})/q$ is decreasing for positive integers $q$: consecutive comparison reduces to $2^{q+1}\ge q+2$. For $1\le q\le d-1$, (11.6) consequently yields
+
+$$
+q\rho\le\frac q{d-1}(2^d-2)\le2^d-2^{d-q}.
+\tag{11.7}
+$$
+
+This verifies every such subfamily. At $q=d$, its union has size $2^d-1$. The unrestricted phase of Lemma 11.1 is excluded from this subfamily, so its size is at most $n-1\le2^d-1$. All finite Hall inequalities hold. Applying the credited finite theorem gives the required distinct representatives. ∎
+
+**引理 11.3（Slack changes the aggregate code）。** If $n<2^d$, the vectors in Lemma 11.2 can be chosen so that
+
+$$
+X=\bigoplus_{i\in A}z_i\ne0.
+\tag{11.8}
+$$
+
+If $n=2^d$, every distinct assignment has $X=0$.
+
+Proof. Begin with any matching. If its XOR is nonzero, retain it. Otherwise take the phase with full-cube list and replace its assigned vector $x$ by any unused cube vector $y$, which exists when $n<2^d$. This preserves every list condition and injectivity, and changes the aggregate from zero to $x\oplus y\ne0$. Under saturation the assigned vectors are the whole cube. Each coordinate then occurs as one exactly $2^{d-1}$ times, an even number since $d\ge2$, so the aggregate is zero. ∎
+
+## 12. Literal protocols and the exact common-stream obstruction
+
+**构造 12.1（Actual post-parent queries）。** Choose distinct codes from Lemma 11.2, using (11.8) in the nonsaturated case. For $t=1,\ldots,d$, prescribe the full physical path charges $q_t$ as follows. For every actual outside vertex $gi\in Z\cap W_t$, set
+
+$$
+q_t(gi)=z_i[t],\qquad q_t(ga_t)=0.
+\tag{12.1}
+$$
+
+The two prescriptions agree by (11.3). All actual outside vertices not in $W_t$ have response zero and their corresponding code bit is zero. Let $X_t=\bigoplus_{i\in A}z_i[t]$.
+
+When $g=1$, prescribe the endpoint charges by
+
+$$
+\begin{array}{c|cc}
+ &q_t(0)&q_t(m)\\\hline
+t=1&X_1&0\\
+2\le t\le d&0&X_t.
+\end{array}
+\tag{12.2}
+$$
+
+A charge at an endpoint outside the path means zero there. Endpoint $m$ is in every one of these paths; zero is in the first path. For $t\ge2$ the left vertex $a_t$ lies strictly between zero and $m$, so none of the donor charges in (12.2) alters the prescribed left zero. Equation (12.2) makes the full-path sum even.
+
+When $g>1$, set $q_1(0)=1$, $q_1(m)=0$, and set both endpoint charges to zero in all later rows when they are present. Every unassigned full-path vertex is zero except the nonactual donor
+
+$$
+b_t=ga_t+1\pmod T.
+\tag{12.3}
+$$
+
+This donor is the second vertex of the full physical path and is not in $P$. Set its charge to the XOR of all other prescribed charges, making the full path even. Its nonactual status does not assert an independently reachable source or confer an unobserved output.
+
+In both cases issue precisely the full literal inverse
+
+$$
+B_t(i)=\bigoplus_{h=0}^i q_t(tm+h\pmod T),\qquad 0\le i<m.
+\tag{12.4}
+$$
+
+Each $B_t$ starts zero. By Interface 1.4 its actual endpoint differences are exactly the prescribed charges. That zero clears every surviving root tail, including $k-1$. All later queries start zero as well, so no cross-block run reaches $k$. Internally a word starting zero has run length at most $m-1<k$. Thus every query is an actual legal complete block under both alphabets, on every low INITIAL tail, not an algebraic combination of block masks. Every zero bit in (12.4) is emitted inside its charged block.
+
+**命题 12.2（Adaptive attainment and compatible siblings）。** Construction 12.1 gives an adaptive protocol of worst fee $1+d$. It also gives one common preset stream of that fee whenever
+
+$$
+g>1\quad\text{or}\quad n<2^d\quad\text{or}\quad C=D.
+\tag{12.5}
+$$
+
+Proof. Start with the forced parent $B_0=1^m$. Its rejection archive returns $R$ at fee one. Its successful $Z$ archive records its own successive differences during the $d$ actual queries and obtains precisely $z_{j/g}$. The distinct code identifies the INITIAL phase, so it returns $\lambda(j)$, without evaluating the target at the cleared current tail. Stopping may occur earlier when the code prefix already fixes that label; the full $d$ rows are a uniformly finite bound. Both free-value fibres have this same difference decoder. Initial rejection returns $L_\bot$ without issuing any block.
+
+For adaptive control the $H$ archive stops at the parent if $C=D$. Otherwise it issues the single literal block
+
+$$
+0^{r-1}1\,0^{m-r}.
+\tag{12.6}
+$$
+
+Its pulse is at absolute position $T-1$, with physical charge support $\{T-1,0\}$, so it has response one at INITIAL phase zero and zero at INITIAL phase $m$. Since $r-1\ge1$, its first zero safely clears every root survivor before the pulse, and the isolated one is legal. Thus it returns $C,D$ at fee two on this archive. These are actual alternate adaptive actions on separate root archives; no sibling observation is borrowed. The outside archive has the bound $1+d\ge3$, so the global adaptive bound is $1+d$.
+
+For preset control use the one fixed literal stream $1^m\mid B_1\mid\cdots\mid B_d$ from Construction 12.1. If $g>1$, its first query already separates $H$ by $q_1(0)=1$, $q_1(m)=0$, independently of every outside code bit. If $C=D$, the endpoint archive stops before any query. In the remaining nonsaturated coprime case, (12.2) gives
+
+$$
+q_t(0)\oplus q_t(m)=X_t.
+\tag{12.7}
+$$
+
+The nonzero vector $X$ guarantees a query where the endpoint responses differ. Their preceding common archive includes both INITIAL endpoints; at that differing query, the observed difference selects its correct label. Thus their actions are prefixes of the same actual stream that handles $Z$. This verifies global sibling compatibility, rather than inferring it from independently optimal children. Lemma 10.2 makes the attained adaptive bound exact and makes the preset bound exact under (12.5); in particular some actual outside source pays at least $d$ post-parent blocks even if others stop early. ∎
+
+**引理 12.3（Saturated coprime sibling obstruction, for every action）。** If $g=1$, $n=2^d$, and $C\ne D$, no correct preset controller has worst fee at most $1+d$.
+
+Proof. Any such stream must start with $1^m$. Select again the $n$ outside sources at INITIAL tail $r-2$. They have distinct labels and common root-success value and tail $k-1$. The first query must start zero. After it, all low INITIAL sources, including the two endpoints, have a common current tail independent of phase, free value, and former INITIAL tail.
+
+A depth-$d$ binary tree can resolve exactly $2^d$ distinct labels only when all those sources reach successful leaves at depth $d$, one source per binary response vector. Indeed an early leaf would remove at least two of the $2^d$ depth-$d$ slots while resolving at most one label. A rejection at an unresolved common-tail node cannot split it. Hence no selected outside source stops early or rejects during these $d$ queries, and their successive-difference vectors comprise the whole cube $\mathbb F_2^d$.
+
+The preset stream is common. Once the first query clears the tail, survival of every later block depends only on that common tail and the literal word. Since the outside sources all survive, both endpoint sources also survive every query. There is therefore no hidden selective rejection that could separate $C,D$. At each query the full physical path has even charge, and every physical vertex is actual because $g=1$. Extending the charges by zero outside the path yields the identity
+
+$$
+q_t(0)\oplus q_t(m)=\bigoplus_{j\in Z}q_t(j),\qquad 1\le t\le d.
+\tag{12.8}
+$$
+
+In the complete outside code cube, the right side is zero at every coordinate, since $2^{d-1}$ is even. Thus the two endpoint sources have identical differences, and consequently identical acquired endpoint archives, throughout the stream. They could not have stopped on an earlier common archive with different labels and cannot stop correctly at the final one. This contradicts $C\ne D$. The argument allowed every literal query, every legal seam, and every archive-based early stopping rule; it did not assume the special safe lists or the construction's donor choice. ∎
+
+**构造 12.4（One paid terminal block in the obstructed case）。** In the saturated coprime case with $C\ne D$, use Construction 12.1 for the first $d$ queries. Its outside sources have all stopped with their immutable labels by total fee $1+d$. Its endpoint responses remain equal by (12.7), but the endpoint phases have not merged. To finish, let
+
+$$
+t=d+1,\qquad a=tm\pmod T,\qquad W_t=[tm,tm+m]\pmod T.
+\tag{12.9}
+$$
+
+Choose $h\in H\cap W_t$ and $e\in W_t\setminus\{a,0,m\}$. Assign charge one exactly at $h,e$ and zero at the other full-path vertices, then issue its complete inverse (1.5).
+
+These choices always exist. For $n\ge3$, $d\le n-1$, so $d+1\le p-2$. Coprimality implies $a\notin H$: equality to zero would require $d+1\equiv0\pmod p$, and equality to $m$ would require $d\equiv0\pmod p$. Neither is possible. The complementary arc of $W_t$ has $r-1$ vertices. It cannot contain both zero and $m$, whose two cyclic separations have $r$ and $m>r$ edges. Hence the path contains at least one endpoint $h$, distinct from its left vertex. Finally $|W_t|=m+1\ge4$, so deleting its left vertex and both endpoints leaves a donor $e$.
+
+The two charges have even parity and the left charge is zero, so the inverse starts zero. It safely clears the continuing endpoint sources' common tail and has no internal forbidden run. Its endpoint difference is one at $h$ and zero at the other endpoint, returning $C,D$. The donor is outside the continuing $H$ archive; using its literal charge does not combine histories or require a response from an already stopped outside source. This is one predetermined terminal block, charged in full. The total worst fee is $1+d+1$.
+
+**定理 12.5（Exact guarded injective-table fees）。** For the entire parameter and label domain of Definition 10.1, under both original alphabets,
+
+$$
+\boxed{\displaystyle C_{\rm ad}(f)=1+d,\qquad
+C_{\rm pre}(f)=1+d+\mathbf1_{\{g=1,\ n=2^d,\ C\ne D\}}.}
+\tag{12.10}
+$$
+
+Proof. Lemma 10.2 gives the paid global-parent and binary lower bounds on both free-value fibres. Lemmas 11.1–11.3 verify the actual safe code lists; Construction 12.1 and Proposition 12.2 realize the adaptive bound and every compatible preset case with literal actions. Lemma 12.3 supplies the remaining all-stream lower bound, and Construction 12.4 attains it. Both fibres have identical fees because the protocols use their own successive endpoint differences and the sources exist on each fibre. The initial-bottom archive is independent and stops freely. None of these arguments requires freshness of $R$, $C$, $D$, or $L_\bot$ relative to the outside table. ∎
+
+## 13. Sharp symbolic families and larger-fee examples
+
+**推论 13.1（Every odd near-critical width at $r=2$）。** For every odd $m\ge3$, set $r=2$, $k=m+1$, and let $\lambda$ be injective on $Z=P\setminus\{0,m\}$. For the entire target (10.3), with arbitrary high, endpoint, and initial-bottom label coincidences,
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)=1+\lceil\log_2 m\rceil.
+\tag{13.1}
+$$
+
+Proof. Here $g=1$, $n=m$, and $d=\lceil\log_2m\rceil\ge2$. Since $m$ is odd, $m\ge2^{d-1}+1$. The elementary inequality $2^{d-1}\ge2d-2$ for $d\ge2$ gives the guard $m\ge2d-1=(d-1)\rho+1$. An odd $m\ge3$ is not a power of two, so the nonsaturated case of Theorem 12.5 applies. ∎
+
+**推论 13.2（Unbounded exact adaptive and preset fees with a terminal surcharge）。** For every odd integer $d\ge3$, take
+
+$$
+m=2^d-1,\qquad r=3,\qquad k=2^d+1.
+\tag{13.2}
+$$
+
+For every injective $Z$ table and arbitrary high and initial-bottom labels, if $C\ne D$ then
+
+$$
+C_{\rm ad}(f)=d+1,\qquad C_{\rm pre}(f)=d+2.
+\tag{13.3}
+$$
+
+If $C=D$, both fees instead equal $d+1$.
+
+Proof. For odd $d$, $2^d-1\equiv1\pmod3$, so $g=1$ and $n=m+1=2^d$. The guard is $2^d-1\ge3d-2$, equivalently $2^d\ge3d-1$, valid for $d\ge3$. Thus Theorem 12.5 gives (13.3), with all low INITIAL tails $0,1$ and all high INITIAL tails $2,\ldots,k-1$ still included. The exact fees increase without bound; these are larger-fee laws rather than a depth-two table. ∎
+
+**例 13.3（Smallest saturated member with literal streams）。** At $m=7,r=3,T=10,k=9$, one has $g=1$, $Z=\{1,2,3,4,5,6,8,9\}$, $n=8$, and $d=3$. Give these eight phases any distinct labels, keep $C\ne D$, and allow $R$ and either endpoint label to coincide with them. One feasible code table and its full common query words are
+
+$$
+\begin{array}{c|cccccccc}
+j&1&2&3&4&5&6&8&9\\\hline
+(z_1,z_2,z_3)&110&101&001&100&011&010&111&000
+\end{array}
+\tag{13.4}
+$$
+
+The guarded code stream and its terminal block can be chosen as
+
+$$
+1111111\mid0111011\mid0100111\mid0100111\mid0100000.
+\tag{13.5}
+$$
+
+The root rejects precisely INITIAL tails at least two. The three middle words start zero and produce (13.4) on $Z$ through their own actual endpoint differences; their endpoint responses at zero and seven are equal. The final word, at absolute block index four, has even charge support $\{9,0\}$ on the ordered path $8,9,0,1,2,3,4,5$. Its first bit is zero and it separates the still-running endpoint phases. This is the preset optimum five. For adaptive control replace the endpoint archive's continuation by $0010000$, whose isolated one is at absolute position nine, and use the three code words only on the outside archive. That adaptive protocol has optimum four. Every successful low INITIAL source with tail zero or one survives the appropriate continuation. The displayed words are independent of label names and of the initial free value.
+
+## 14. Reuse boundary and the original open objective
+
+**数学引文 14.1（Exact prerequisites and uncovered deduction）。** The proof uses Chapter 1's matched coefficient cycle, whole-history realization, first-zero merger, even full-path charges, and literal inverse. Chapter 2's endpoint-return mechanism supplies the isolated pulse (12.6); its constant-outside fee is not asserted for an injective outside table. Chapters 4–6 supply the near-critical source model and depth-two boundaries with fresh rejection bands, whereas Definition 10.1 has only one threshold, permits a nonfresh high label, and has at least three different outside labels. The new exact fees therefore do not restate that depth-two frontier.
+
+The finite Hall distinct-representative result is credited reuse through [H11]. Its actual use is finite index set $A$, finite binary cube, and lists (11.3); inequalities (11.5)–(11.7) verify the whole family of required unions. The list geometry, unrestricted source, code aggregate, literal sibling realization, and saturated all-stream lower bound are deductions for this reader. No new generic adaptive-testing or Hall theorem is claimed.
+
+The response-code source [D11], Definitions 2.3, 3.1 and Theorems 2.2, 3.2–3.4, treats $g\ge2$ and an actually acquired common-value, common-tail archive. Its availability lists and simultaneous literal conversion are reusable background. Here the forced parent is paid from the full INITIAL prior, the outside support is the complement of two endpoints, and the zero-leading lists in Chapter 11 are a sufficient construction on a guarded near-critical calendar. For $g=1$, D11's noncoprime conversion does not apply; the even full-path coupling and the sibling obstruction are established directly. No necessity or exact-cost conclusion is inferred merely from these sufficient safe lists.
+
+The supplied declaration [D12], `original_repeated_guardrail_cost`, requires $g\ge2$ and a target tail-independent on the entire specified free-value fibre. Its phase labels differing from the phase-zero label are restricted to $1,\ldots,u-R\rho$, where $R=\lceil\log_2 N\rceil-1$ and $N$ is that whole-fibre label count; its exact adaptive fee is $Rh+1$ in its stated parameterization. The target (10.3) depends on the INITIAL tail, is injective over the entire outside support, and includes coprime and preset cases. Those prerequisites are not substituted for one another. S17's shorter-than-block forced-prefix family and S19's repeated-band spectrum also have different supports and calendars; their binary capacity and paid-arrival reasoning are background, not this theorem's exact law.
+
+The single-source identification contract of Moore's *Gedanken-Experiments on Sequential Machines* (pp.129–131), the compatible finite tests and adaptive distinguishing graphs of van den Bos and Vaandrager, and the binary-depth semantics in Chistopolskaya and Podolskii are mature adjacent theory as cited in Mathematical Citation 7.2. Their contracts do not provide arbitrary actual parity masks, reset/copy operations, or free phase waits. The accepted *Efficient State Identification for Finite State Machine-Based Testing* manuscript, Definitions 11–15 and 18, includes transfer-free paths and pairwise shortest separating prefixes, but optimizes state/characterising-word coverage and transfer length. That objective is not the unknown INITIAL label's worst-branch fee here. These literature comparisons supply semantics and boundaries; the reader-specific proofs above supply (12.10). The pinned finite-Hall source, these primary versions, and the named repository sources form the comparison scope, without an exhaustive absence or priority claim.
+
+**开放问题 14.2（Unchanged all-parameter target）。** Theorem 12.5 settles one guarded near-critical injective family, including arbitrary high/endpoint label coincidences on the full joint INITIAL prior. It advances the exact larger-fee and global sibling-compatibility gaps in Open Problem 9.1. It does not settle the arbitrary repeated-label outside table without this guard, additional INITIAL tail partitions, competing feasible parents, other narrow calendars, or the general all-width attainable-target optimum. The original minimum worst-branch actual emitted-complete-block fee for every arbitrary attainable INITIAL target and all $k,m$ remains open. Offline code search, the number of label names, controller storage, and the emitted-block fee remain different resources.
+
+[H11]: https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Combinatorics/Hall/Finite.lean
+
+## 追加锚（本行以下为增补区）
