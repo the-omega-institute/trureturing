@@ -126,11 +126,13 @@ What the refutation shows beyond the single bound:
   $n|E_m|+m|E_n|$ edges, realizes $F_N$ with diagonal phases when $e^{-iH_m}$
   and $e^{-iH_n}$ are diagonally equivalent to these weighted kernels.
   Diagonal equivalence to the standard $F_m$ and $F_n$ is not what is
-  required. The ratio $M_{00}M_{11}/(M_{01}M_{10})$ is invariant under left
-  and right diagonal multiplication. It equals $\omega_5^2$ for
-  $e^{-iK}=U_5$ and for the weighted kernel $\omega_5^{2jk}$, but
-  $\omega_5^{-1}$ for the standard $F_5$. So $U_5$ is diagonally equivalent to
-  the weighted kernel and not to the standard $F_5$.
+  required. With $W_{jk}=\omega_5^{2jk}/\sqrt5$ and $-8jk\equiv2jk\pmod 5$,
+  $e^{-iK}=U_5=\omega_5\,\operatorname{diag}(\omega_5^{4j^2})\,W\,
+  \operatorname{diag}(\omega_5^{4k^2})$, so $U_5$ is diagonally equivalent to
+  the weighted kernel. The ratio $M_{00}M_{11}/(M_{01}M_{10})$ is invariant
+  under left and right diagonal multiplication; it equals $\omega_5^2$ for
+  $U_5$ but $\omega_5^{-1}$ for the standard $F_5$, so $U_5$ is not diagonally
+  equivalent to the standard $F_5$.
 - **Further reductions (open).** The eigenspaces $t=1,4$ and $t=2,3$ of $C_0$
   each admit further shifts. Whether more edges of $K$ can be removed at once,
   or whether $F_5$ itself has a realization with fewer than 9 edges and exact
