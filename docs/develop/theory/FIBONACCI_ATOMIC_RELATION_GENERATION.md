@@ -60868,3 +60868,221 @@ $$
 积分前预算（397.6）已由无条件的对数改进支付；它不支付（397.19）中的幂增长前提。特别是固定平方根范数并非仅由 RH 自动给出，§385 的重数障碍仍保留。继续证明完整 Robin 需要控制同一实际 $\sum H_mJ_x(m)$ 的有符号预算；逐项绝对平方根界只是一种充分路线，不能把它升为所有可用路线的必要条件。五模式地址、实际约数商块与连续积分在（397.17）中保持共同来源，交换合法性不代替完整有符号和的临界估计或 Robin 全称符号。
 
 ## 追加锚（本行以下为增补区）
+
+## 398. 真实积分尾权重的低商显式核、同源有符号尾与对角负号
+
+沿用 §§387、390、395、397 的同一实际 $\beta,\mathcal B,k,K,H,A,D,\delta$，记 $\mu_0=\delta^{-1}$。不重新建立 PNT、两条实际输入矩或积分前绝对交换条件。这里将（397.17）的实际尾权重分成可以精确积分的低商部分和一个高商修正；后者的包络不能替代前者的有符号 $H$ 和。
+
+**定义 398.1（低商原函数与高商修正）。** 固定 $x>1$，令 $\ell=\log x$。对 $r>0$ 定义
+
+$$
+\begin{aligned}
+\mathcal E_x(r)
+={}&(Ar+D-A)\log(r/\ell)+\frac{Ar+D}{\ell}
+-Ar+A\ell-A-\frac D r,\\
+\mathcal V_x(r)
+={}&(Ar+D-2A)\log(r/\ell)+\frac{Ar+D-A}{\ell}
+-Ar+A\ell-A+\frac{A-2D}{r}-\frac D{r^2},\\
+h(r)={}&\frac1r+\frac2{r^2}+\frac2{r^3}.
+\end{aligned}
+\tag{398.1}
+$$
+
+在 $y>0$ 上保持原来的 $R(y)=K(y)-Ay\log y+Dy$。特别地，$0<y<1$ 时 $R(y)=Dy-Ay\log y$。对 $r>0$ 置
+
+$$
+\mathcal Z_R(r)=\int_1^\infty \frac{R(y)}{y^2}h(r+\log y)\,dy.
+\tag{398.2}
+$$
+
+对整数 $m\ge x$ 定义实际低商相邻尺度权重
+
+$$
+L_x(m)=\frac{\mathcal E_x(\log m)}m
+-\frac{\mathcal E_x(\log(m+1))}{m+1}.
+\tag{398.3}
+$$
+
+本节 $L_x(m)$ 不是 §382 的常数 $L=\log\varphi$，$\mathcal Z_R$ 也不是完整 Robin 比值。
+
+**定理 398.2（实际积分后的精确分解）。** 对 $s\ge x$，同一个 $P_x(s)$ 满足
+
+$$
+P_x(s)=\frac{\mathcal E_x(\log s)}s
++\frac1s\int_1^\infty\frac{R(y)}{y^2}
+\left[\frac1{\log s+\log y}+\frac1{(\log s+\log y)^2}\right]dy.
+\tag{398.4}
+$$
+
+对 $s>x$，其导数以及每个整数 $m\ge x$ 的真实相邻差满足
+
+$$
+\begin{aligned}
+-P_x'(s)&=\frac{\mathcal V_x(\log s)+\mathcal Z_R(\log s)}{s^2},\\
+J_x(m)&=L_x(m)+\rho_x(m),\qquad
+\rho_x(m)=\int_m^{m+1}\frac{\mathcal Z_R(\log s)}{s^2}\,ds,\\
+|\rho_x(m)|&\le\frac{2\mu_0h(\log m)}{m(m+1)}.
+\end{aligned}
+\tag{398.5}
+$$
+
+若某个实际 $m\ge x$ 满足 $L_x(m)>2\mu_0h(\log m)/[m(m+1)]$，便有 $J_x(m)>0$。对于每个固定的 $x>1$，还成立
+
+$$
+\boxed{L_x(m)\sim J_x(m)\sim
+\frac{A\log m\log\log m}{m^2}\quad(m\to\infty).}
+\tag{398.6}
+$$
+
+因此存在依赖该固定 $x$ 的整数 $m_x$，使全部 $m\ge m_x$ 的 $J_x(m)$ 为正。（398.6）不声称对同时变化的 $x$ 一致。
+
+证明。在（395.2）中采用已经合法的换元 $t=sy$，并在 $y=1$ 分开。低商部分再令 $u=\log t$。当 $s\ge x$、$r=\log s$ 时，该部分精确等于
+
+$$
+\frac1s\int_\ell^r[D+A(r-u)]\frac{1+u}{u^2}\,du
+=\frac{\mathcal E_x(r)}s.
+\tag{398.7}
+$$
+
+这只是经典微积分基本定理的实际应用；$\mathcal E_x(\ell)=0$，所以 $s=x$ 的空低商区间仍被保留。高商部分即（398.4）的第二项。已有 $|R(y)|\le\mu_0(1+\log y)$ 给
+
+$$
+B_R:=\int_1^\infty\frac{|R(y)|}{y^2}\,dy\le2\mu_0.
+\tag{398.8}
+$$
+
+固定任意 $s_0>x$，在一个仍满足 $s>x$ 的紧邻域内，$s$ 与 $\log s$ 都有统一严格正下界。高商被积函数及其 $s$ 导数因此被常数倍的 $|R(y)|/y^2$ 控制。其可测性与导数连续性也由同一实际 $R$ 保留。由经典的支配参数微分定理，可在积分内微分；例如 [Mathlib 的参数积分接口](../../../Library/Analytic/mathlib2026parametricintegral.md) 明确要求这种与 $y$ 无关的局部邻域和可积包络，不只要求逐点导数存在。直接微分给
+
+$$
+-\frac{d}{ds}\left\{\frac1s\left[
+\frac1{\log s+\log y}+\frac1{(\log s+\log y)^2}\right]\right\}
+=\frac{h(\log s+\log y)}{s^2}.
+$$
+
+低商项则给 $-[\mathcal E_x(\log s)/s]'=[\mathcal E_x(\log s)-\mathcal E_x'(\log s)]/s^2$，而（398.1）的 $\mathcal V_x$ 恰为这个差。所得导数连续。公式还在 $s\downarrow x$ 时连续收敛，故微积分基本定理也处理 $m=x$ 的端点，得到（398.5）的两个身份。$h$ 在正轴递减，且
+
+$$
+|\mathcal Z_R(r)|\le B_Rh(r)\le2\mu_0h(r),\qquad
+\int_m^{m+1}s^{-2}ds=\frac1{m(m+1)},
+$$
+
+证明误差界与所列正性充分条件。
+
+最后保持 $x$ 固定。（398.1）直接给
+
+$$
+\mathcal V_x(r)=Ar\log r+O_x(r+\log r),\qquad
+\mathcal Z_R(r)=O(r^{-1}).
+\tag{398.9}
+$$
+
+这里的常数允许依赖同一实际 $A,D,\mu_0$ 和该固定 $x$。在 $m\le s\le m+1$ 上，$\log s/\log m\to1$、$s/m\to1$，上述主项的比值一致趋于一。对（398.5）的导数积分即得 $J_x$ 的渐近式；只保留 $\mathcal V_x$ 给 $L_x$ 的同一个渐近式。实际 $A>0$，故其最终符号严格为正。$\square$
+
+**定理 398.3（原始尾项的有符号低商和与修正预算）。** 对任意整数 $M\ge\max(2,x)$，使用（397.17）的同一来源定义
+
+$$
+T_M(x)=I_\psi(x)-\sum_{m=1}^M H_mJ_x(m),\qquad
+S_M^{\mathrm{low}}(x)=\sum_{m>M}H_mL_x(m).
+\tag{398.10}
+$$
+
+这两个尾和绝对存在。对任意已经满足（397.5）条件的 $C_H$，有
+
+$$
+\boxed{
+|T_M(x)-S_M^{\mathrm{low}}(x)|
+\le2\mu_0C_H\left[
+\frac1{4(\log M)^4}
++\frac2{5(\log M)^5}
++\frac1{3(\log M)^6}\right].}
+\tag{398.11}
+$$
+
+（398.11）控制的是剥去低商有符号和后的修正，不是 $|T_M(x)|$ 本身。
+
+证明。（397.17）已经给出完整 $\sum H_mJ_x(m)$ 的绝对收敛，不再次交换原始积分。由（398.5）与已有 $|H_m|\le C_Hm/(\log m)^4$，修正的绝对级数被
+
+$$
+2\mu_0C_H\sum_{m>M}
+\left[\frac1{m(\log m)^5}
++\frac2{m(\log m)^6}
++\frac2{m(\log m)^7}\right]
+\tag{398.12}
+$$
+
+控制。其中使用 $1/(m+1)\le1/m$。直接复用（397.16）的经典递减正项积分比较，即得（398.11）。$|L_x(m)|\le|J_x(m)|+|\rho_x(m)|$ 同时保证低商尾和绝对存在。有限前缀和实际补集仍是同一个 $H$ 的分解；没有分别替换它们的符号或独立最优值。$\square$
+
+**定义 398.4（高商的有符号 Mellin 矩与对角系数）。** 令 $\gamma_1$ 为 Stieltjes 常数，采用标准 Laurent 约定
+
+$$
+\zeta(1+z)=\frac1z+\gamma-\gamma_1z+O(z^2).
+\tag{398.13}
+$$
+
+本处 $\gamma_1$ 不是非平凡零点的纵坐标。写 $B=\mathcal B(1)>0$、$B'=\mathcal B'(1)$、$B''=\mathcal B''(1)$，并定义
+
+$$
+\mathcal M_R=\int_1^\infty\frac{R(y)}{y^2}\,dy,
+\qquad
+c_{\mathrm{diag}}=\frac{(B')^2}{B^3}-\frac{B''}{2B^2}+\frac{\gamma_1}B.
+\tag{398.14}
+$$
+
+**定理 398.5（同源 Mellin 矩与共同尺度的极限）。** 对实际 $R$，有
+
+$$
+\boxed{\mathcal M_R=D+c_{\mathrm{diag}},\qquad
+\lim_{m\to\infty}m^2\log m\,J_m(m)=c_{\mathrm{diag}}.}
+\tag{398.15}
+$$
+
+第二个极限沿正整数 $m$，且观察阈值与相邻尺度同时取 $x=m$；它与（398.6）中固定 $x$ 的极限不同。如果 $c_{\mathrm{diag}}<0$，则 $J_m(m)<0$ 对全部足够大的 $m$ 成立，所以不存在一个只要求 $m\ge x$ 就保证真实尾核为正的全称原则。
+
+证明。首先（398.8）保证 $\mathcal M_R$ 绝对存在。对实数 $s>1$，直接复用（386.7）的实际 Dirichlet 级数及经典部分求和，得到
+
+$$
+\int_1^\infty K(y)y^{-s-1}dy
+=-\frac{\zeta'(s)}{s\mathcal B(s)}.
+\tag{398.16}
+$$
+
+$K(1)=0$，且 $K(y)=O(y\log y)$，因此两个积分端点合法。对连续主项直接使用经典幂—对数积分，便有
+
+$$
+\int_1^\infty R(y)y^{-s-1}dy
+=-\frac{\zeta'(s)}{s\mathcal B(s)}
+-\frac A{(s-1)^2}+\frac D{s-1}.
+\tag{398.17}
+$$
+
+各项先在 $s>1$ 的同一收敛域相减；不分别在 $s=1$ 代入发散的 $K$ 与连续主项。使用 [DLMF §25.2.4](https://dlmf.nist.gov/25.2.E4) 的已知 Laurent 展开与实际整个函数 $\mathcal B$ 的 Taylor 展开，右侧在 $s\downarrow1$ 时的有限常数为
+
+$$
+A+\frac{B'}{B^2}+\frac{(B')^2}{B^3}
+-\frac{B''}{2B^2}+\frac{\gamma_1}B
+=D+c_{\mathrm{diag}}.
+$$
+
+左侧由（398.8）的包络支配收敛到 $\mathcal M_R$，得到第一式。这里仅复用 Laurent 展开；新增的对应是它与同一个实际高商余核矩的连接。
+
+再对 $\mathcal Z_R$ 使用支配收敛：对 $u=\log y\ge0$、$r\ge1$，
+
+$$
+rh(r+u)\le1+2/r+2/r^2\le5,
+\qquad rh(r+u)\longrightarrow1.
+$$
+
+于是 $r\mathcal Z_R(r)\to\mathcal M_R$。当 $x=m$、$\ell=\log m$ 时，（398.1）在 $r=\ell$ 的值是
+
+$$
+\mathcal V_m(\ell)=-\frac D\ell-\frac D{\ell^2}.
+\tag{398.18}
+$$
+
+在 $m\le s\le m+1$ 上有 $0\le\log s-\ell\le1/m$。直接微分（398.1）可见，$\mathcal V_m'(r)$ 在 $\ell\le r\le\ell+1/m$、$\ell\ge1$ 的范围有与 $m$ 无关的有限包络：$\log(r/\ell)\le1/(m\ell)$，而 $1/\ell$、$1/r$ 及 $\ell/r$ 都一致有界。因此 $\ell[\mathcal V_m(\log s)-\mathcal V_m(\ell)]\to0$ 一致成立。（398.18）给 $\ell\mathcal V_m(\log s)\to-D$；另有 $\ell/\log s\to1$，所以 $\ell\mathcal Z_R(\log s)\to\mathcal M_R$ 也一致成立。
+
+将这两项代入（398.5）的同一相邻尺度积分，并使用 $m^2/s^2\to1$，即得第二式。若 $c_{\mathrm{diag}}<0$，普通极限的定义给最终负号；这不涉及任何 $H$ 的未知增长或符号。$\square$
+
+（398.11）允许继续估计同一实际 $S_M^{\mathrm{low}}(x)$，而不重复支付高商修正的较粗预算；（398.15）则明确规定了尺度同变时必须保留的符号。即使已知固定阈值后的核最终为正，$\sum H_mL_x(m)$ 的符号仍需针对实际 $e=\mu*\beta$ 证明。这些身份与核符号不决定完整 Robin 余量或黎曼猜想。
+
+## 追加锚（本行以下为增补区）
