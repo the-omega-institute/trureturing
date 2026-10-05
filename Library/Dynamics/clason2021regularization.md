@@ -249,3 +249,100 @@ uses $G\in L^1$, $G>0$ and its Fourier transform nonzero near zero.
 Also $\gamma_\Lambda\uparrow1$ as $\Lambda\to\infty$. Hence the
 fixed-band restriction of the actual critical space is noncompact;
 this is a restricted-class interface to (R5).
+
+## A compact fit has a fixed error on the whole sharp-low sphere
+
+Use the family (E2), the actual negative-edge metric (G2) and its
+already supplied positive coercivity. No inverse-constant computation
+is repeated. In physical coordinates,
+
+$$
+\widetilde B=UBU^{-1}=M_d-\mathcal K,\qquad
+d(x)=\tfrac12\int a(x,y)d\nu(y),\qquad
+\mathcal K(x,y)=\tfrac12v_0(x)v_0(y)a(x,y),
+$$
+
+with the same $a(x,y)$ as (G2); assign its null diagonal value zero.
+Since $0\le a\le1$ and $\nu$ is a probability, $\mathcal K$ is
+Hilbert–Schmidt. For each fixed $y$, $a(x,y)\to1$ as
+$|x|\to\infty$, so $d(x)\to1/2$. Compactness makes
+$\mathcal K n_t\to0$, and (E2) makes the mass on every fixed
+compact interval tend to zero. Therefore
+
+$$
+\|(\widetilde B-\tfrac12I)n_t\|_2\longrightarrow0. \tag{E4}
+$$
+
+Remove the original ground state exactly. With first-slot-linear
+pairings, put $p_0=P_\Lambda v_0\ne0$ and
+
+$$
+b_t=P_\Lambda n_t-
+ \frac{\langle P_\Lambda n_t,p_0\rangle}{\|p_0\|^2}p_0,
+\qquad p_t=b_t/\|b_t\|.
+$$
+
+Here $p_0\ne0$ because $v_0$ is positive, belongs to $L^1$ and has
+Fourier transform nonzero at zero. Weak escape makes the removed
+coefficient tend to zero. For $t$ sufficiently close to $t_c$ the
+normalization is nonzero, and $p_t$ is an even sharp-low unit input,
+$\langle p_t,v_0\rangle=0$, $p_t\rightharpoonup0$,
+$\|b_t\|\to\sqrt{\gamma_\Lambda}$ and
+$\langle p_t,n_t\rangle\to\sqrt{\gamma_\Lambda}$.
+The existing [sharp-center (SC1)](../../docs/reports/theta-mixed-matrix/sharp-center.md#operator-domain-and-complete-block)
+places every physical finite-band input in the original minimal
+operator domain; in $L^2(\nu)$ the corresponding input is $U^{-1}p_t$.
+
+Let $\mathcal R p=Un_{U^{-1}p}$ be the exact common critical
+correction from (G4). It is bounded on the centered ambient space
+and has range in $N_c$. Its defining metric projection gives
+
+$$
+\langle\mathcal R p,\widetilde Bz\rangle
+=\langle p,\widetilde Bz\rangle\qquad(z\in N_c).
+$$
+
+With $z=n_t$, boundedness and (E4) give
+$\langle\mathcal R p_t,n_t\rangle\to\sqrt{\gamma_\Lambda}$.
+For every fixed $\varepsilon>0$ the original (R4) correction
+$\mathcal R_\varepsilon=UP_\varepsilon U^{-1}$ is compact, so
+$\mathcal R_\varepsilon p_t\to0$. Consequently
+
+$$
+\begin{gathered}
+\liminf_{t\uparrow t_c}
+ \|(\mathcal R-\mathcal R_\varepsilon)p_t\|_2
+ \ge\sqrt{\gamma_\Lambda},\\
+\sup_{\substack{p\in P_\Lambda L^2_{\rm even},\ \|p\|_2=1\\
+                 \langle p,v_0\rangle=0}}
+ \|(\mathcal R-\mathcal R_\varepsilon)p\|_2
+ \ge\sqrt{\gamma_\Lambda}. \tag{E5}
+\end{gathered}
+$$
+
+The paired-edge statement retains the same source. Set
+$z_t=(\mathcal R-\mathcal R_\varepsilon)p_t\in N_c$.
+Then $\langle z_t,\widetilde Bn_t\rangle\to
+\sqrt{\gamma_\Lambda}/2$ and
+$\langle n_t,\widetilde Bn_t\rangle\to1/2$.
+Cauchy–Schwarz in the $B$ metric, with mixed critical nullity, gives
+
+$$
+\liminf_{t\uparrow t_c}\|C_\pm U^{-1}z_t\|
+\ge\sqrt{\gamma_\Lambda/2}. \tag{E6}
+$$
+
+This applies to the whole fixed infinite-dimensional sharp-low
+centered sphere for each positive regularization parameter. The source
+norm argument also tests any fixed compact source approximation into
+the ambient space. Extending the paired-edge conclusion requires the
+approximation's range in $N_c$ with the inherited form-domain
+membership, as satisfied by $\mathcal R_\varepsilon$.
+It does not contradict strong convergence on each individual input,
+or give this lower bound on a finite frame or a spatially restricted
+source class. Uniform accuracy on the stated sphere needs a
+noncompact approximation mechanism or a source restriction excluding
+this escaped family. This interface determines a boundary of the
+bounded-window fit; it supplies no divergence result for the actual
+projected inverse, no original all-input half-bound, and no signs on
+a common cofinal sequence. Full Robin and RH remain unresolved.
