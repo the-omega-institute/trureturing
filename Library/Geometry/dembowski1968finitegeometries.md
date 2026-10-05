@@ -4,6 +4,7 @@ authors: Peter Dembowski
 year: 1968
 title: Finite Geometries
 doi: null
+url: https://link.springer.com/book/10.1007/978-3-642-85820-6
 claim: Chapter I presents the coordinate model of finite affine and projective geometries, including lines over finite fields and their elementary incidence properties.
 strata_touched:
   - D5/S3/Geometry/FiniteGeometry/AffinePlaneLines
