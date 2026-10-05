@@ -378,3 +378,13 @@ original positive-reserve schedule; archimedean costs and actual signs
 remain payable. The [full-low derivative check](centered-prime-discrepancy-budget.md#a-high-lift-cannot-hide-the-full-low-spheres-derivative-cost)
 shows why arbitrary regular high lifts cannot make the earlier derivative
 certificate uniformly cheap. Neither estimate decides RH or full Robin.
+
+The [actual critical-translation boundary](../../../Library/Dynamics/clason2021regularization.md#the-real-translation-boundary-retains-fixed-sharp-low-mass)
+retains a two-tail escaped family inside the original small-window
+critical closure, with positive mass in every fixed sharp-low band.
+Its [common-source metric error bound](../../../Library/Dynamics/clason2021regularization.md#a-compact-fit-has-a-fixed-error-on-the-whole-sharp-low-sphere)
+tests uniform approximation by the bounded-window compact fit on the
+whole centered low sphere. This conditional paper interface preserves
+individual-input convergence and noncompact alternatives; it supplies
+no inverse divergence, actual cofinal signs, half-bound or RH/Robin
+conclusion, and has no new Lean certification or originality claim.
