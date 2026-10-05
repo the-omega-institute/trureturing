@@ -76,6 +76,18 @@ $$\forall d,M \in \mathbb{N}, 1 \leq d \Rightarrow \sum_{\xi} \operatorname{R}\l
 
 For every positive dimension d and every natural total M, the composition parity masses sum to one. The sum runs over all Boolean vectors xi : Fin d -> Bool. The weak compositions of M partition according to their complete parity vector. A legal vector with h occupied coordinates has exactly choose((M-h)/2+d-1,d-1) preimages, through the bijection r_i = 2t_i + xi_i. An illegal vector has no preimages. Summing these fiber counts and dividing by the total choose(M+d-1,d-1) proves normalization.
 
+**Theorem 1.7 (Conditional centered moments).**
+
+$$\forall d,M \in \mathbb{N}, ((2 \leq d) \land (3 \cdot d \leq M)) \Rightarrow (\sum_{\xi} \operatorname{Q}\left(d, M, \xi\right) = 1) \land ((\frac{1}{3} \leq p_{e}) \land ((\sum_{\xi} \operatorname{Q}\left(d, M, \xi\right) \cdot (h - m)^{2} \leq \frac{3 \cdot d}{4}) \land (\sum_{\xi} \operatorname{Q}\left(d, M, \xi\right) \cdot |h - m| \leq \frac{\operatorname{sqrt}\left(3 \cdot d\right)}{2})))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParityCompositionKernel.reference_moments` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The independent Bernoulli vector has generating function (1-nu+nu z)^d. Its value at z=-1 gives the parity event probability; differentiating twice at z=1 gives the centered second moment d nu (1-nu). For M >= 3d, eta <= 1/7 and p_e >= 1/3. Restricting the nonnegative squared deviation to the parity event and dividing by p_e bounds its conditional expectation by 3d/4. Weighted Cauchy-Schwarz then gives the absolute deviation bound sqrt(3d)/2. Both moments are centered at m=d nu.
+
 ## References
 
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.Q`
@@ -84,3 +96,4 @@ For every positive dimension d and every natural total M, the composition parity
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.logProfile`
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.profile_endpoint`
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.profile_estimate`
+- Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.reference_moments`

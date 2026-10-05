@@ -7,6 +7,9 @@
    digest: Parity masses of uniform weak compositions and biased Bernoulli vectors. -/
 
 import Mathlib.Algebra.Order.Antidiag.FinsuppEquiv
+import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Data.Nat.Bits
 import Mathlib.Analysis.SumIntegralComparisons
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
@@ -424,5 +427,210 @@ private theorem actual_normalization (d M : ℕ) (hd : 1 ≤ d) :
       split_ifs <;> simp
     _ = 1 := by
       rw [← sum_div, ← Nat.cast_sum, hsum, htotal, div_self hden]
+
+/-- Normalization and centered conditional moments of the same biased parity law. -/
+private theorem reference_moments (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
+    let ν : ℝ := M / (2 * M + d)
+    let h : (Fin d → Bool) → ℕ := fun ξ => ∑ i, (ξ i).toNat
+    (∑ ξ, Q d M ξ) = 1 ∧
+    (1 / 3 : ℝ) ≤ (1 + (-1 : ℝ) ^ M * ((d : ℝ) / (2 * M + d)) ^ d) / 2 ∧
+    (∑ ξ, Q d M ξ * ((h ξ : ℝ) - d * ν) ^ 2) ≤ 3 * (d : ℝ) / 4 ∧
+    (∑ ξ, Q d M ξ * |(h ξ : ℝ) - d * ν|) ≤ sqrt (3 * (d : ℝ)) / 2 := by
+  dsimp only
+  classical
+  let h : (Fin d → Bool) → ℕ := fun ξ => ∑ i, (ξ i).toNat
+  let ν : ℝ := M / (2 * M + d)
+  let η : ℝ := d / (2 * M + d)
+  let p : ℝ := (1 + (-1 : ℝ) ^ M * η ^ d) / 2
+  let w : (Fin d → Bool) → ℝ := fun ξ => ν ^ h ξ * (1 - ν) ^ (d - h ξ)
+  have hd0 : (0 : ℝ) < d := by exact_mod_cast (by omega : 0 < d)
+  have hMd : (d : ℝ) ≤ M := by exact_mod_cast (by omega : d ≤ M)
+  have hden : (0 : ℝ) < 2 * M + d := by positivity
+  have heta0 : 0 ≤ η := by dsimp [η]; positivity
+  have heta1 : η ≤ 1 / 7 := by
+    dsimp [η]
+    rw [div_le_iff₀ hden]
+    have hh : (3 : ℝ) * d ≤ M := by exact_mod_cast hM
+    linarith
+  have hpow : η ^ d ≤ 1 / 7 := by
+    calc
+      η ^ d ≤ η ^ 1 := pow_le_pow_of_le_one heta0 (by linarith) (by omega)
+      _ = η := pow_one _
+      _ ≤ 1 / 7 := heta1
+  have hsign : |(-1 : ℝ) ^ M| = 1 := by simp
+  have hp : 1 / 3 ≤ p := by
+    have habs : |(-1 : ℝ) ^ M * η ^ d| ≤ 1 / 7 := by
+      rw [abs_mul, hsign, one_mul, abs_of_nonneg (pow_nonneg heta0 _)]
+      exact hpow
+    have hlo := (abs_le.mp habs).1
+    dsimp [p]
+    linarith
+  have hp0 : p ≠ 0 := by linarith
+  have hgen (a b : ℝ) :
+      (∑ ξ : Fin d → Bool, a ^ h ξ * b ^ (d - h ξ)) = (a + b) ^ d := by
+    have hcomp (ξ : Fin d → Bool) : (∑ i : Fin d, ((1 : ℕ) - (ξ i).toNat)) = d - h ξ := by
+      rw [sum_tsub_distrib]
+      · simp [h]
+      · intro i _; cases ξ i <;> simp
+    have hprod (ξ : Fin d → Bool) :
+        (∏ i, if ξ i then a else b) = a ^ h ξ * b ^ (d - h ξ) := by
+      calc
+        (∏ i, if ξ i then a else b) =
+            ∏ i, a ^ (ξ i).toNat * b ^ (1 - (ξ i).toNat) := by
+          apply prod_congr rfl
+          intro i _; cases ξ i <;> simp
+        _ = (∏ i, a ^ (ξ i).toNat) * ∏ i, b ^ (1 - (ξ i).toNat) := prod_mul_distrib
+        _ = a ^ h ξ * b ^ (d - h ξ) := by
+          rw [prod_pow_eq_pow_sum, prod_pow_eq_pow_sum, hcomp]
+    calc
+      _ = ∑ ξ : Fin d → Bool, ∏ i, if ξ i then a else b := by
+        apply sum_congr rfl; intro ξ _; exact (hprod ξ).symm
+      _ = ∏ _ : Fin d, ∑ j : Bool, if j then a else b := by
+        symm
+        simpa only [Fintype.piFinset_univ] using
+          (prod_univ_sum (fun _ : Fin d => (univ : Finset Bool))
+            (fun (_ : Fin d) (j : Bool) => if j then a else b))
+      _ = (a + b) ^ d := by simp
+  have hnorm : (∑ ξ, w ξ) = 1 := by
+    simpa [w] using hgen ν (1 - ν)
+  have hpgf (z : ℝ) : (∑ ξ, w ξ * z ^ h ξ) = (ν * z + (1 - ν)) ^ d := by
+    have hh := hgen (ν * z) (1 - ν)
+    simp_rw [mul_pow] at hh
+    convert hh using 1
+    apply sum_congr rfl
+    intro ξ _
+    dsimp [w]
+    ring
+  have hfirst (z : ℝ) :
+      (∑ ξ, w ξ * (h ξ : ℝ) * z ^ (h ξ - 1)) =
+        d * (ν * z + (1 - ν)) ^ (d - 1) * ν := by
+    have hl : HasDerivAt (fun t : ℝ => ∑ ξ, w ξ * t ^ h ξ)
+        (∑ ξ, w ξ * (h ξ : ℝ) * z ^ (h ξ - 1)) z := by
+      simpa only [mul_assoc] using HasDerivAt.fun_sum (u := univ)
+        (fun ξ _ => (hasDerivAt_pow (h ξ) z).const_mul (w ξ))
+    have heq : (fun t : ℝ => ∑ ξ, w ξ * t ^ h ξ) =
+        (fun t => (ν * t + (1 - ν)) ^ d) := funext hpgf
+    rw [heq] at hl
+    have hr := (((hasDerivAt_id z).const_mul ν).add_const (1 - ν)).pow d
+    simpa only [mul_one, id_eq] using hl.unique hr
+  have hsecond (z : ℝ) :
+      (∑ ξ, w ξ * (h ξ : ℝ) * (h ξ - 1 : ℕ) * z ^ (h ξ - 2)) =
+        (d : ℝ) * (d - 1 : ℕ) * (ν * z + (1 - ν)) ^ (d - 2) * ν ^ 2 := by
+    have hl : HasDerivAt (fun t : ℝ => ∑ ξ, w ξ * (h ξ : ℝ) * t ^ (h ξ - 1))
+        (∑ ξ, w ξ * (h ξ : ℝ) * (h ξ - 1 : ℕ) * z ^ (h ξ - 2)) z := by
+      simpa only [mul_assoc, Nat.sub_sub, show (1 : ℕ) + 1 = 2 from rfl] using
+        HasDerivAt.fun_sum (u := univ)
+          (fun ξ _ => (hasDerivAt_pow (h ξ - 1) z).const_mul (w ξ * (h ξ : ℝ)))
+    have heq : (fun t : ℝ => ∑ ξ, w ξ * (h ξ : ℝ) * t ^ (h ξ - 1)) =
+        (fun t => (d : ℝ) * (ν * t + (1 - ν)) ^ (d - 1) * ν) := funext hfirst
+    rw [heq] at hl
+    have hr := (((((hasDerivAt_id z).const_mul ν).add_const (1 - ν)).pow
+      (d - 1)).const_mul (d : ℝ)).mul_const ν
+    have hh := hl.unique hr
+    rw [Nat.sub_sub] at hh
+    simp only [id_eq, mul_one, show (1 : ℕ) + 1 = 2 from rfl] at hh
+    convert hh using 1; ring
+  have hmean : (∑ ξ, w ξ * (h ξ : ℝ)) = d * ν := by
+    simpa using hfirst 1
+  have hfac : (∑ ξ, w ξ * (h ξ : ℝ) * (h ξ - 1 : ℕ)) =
+      (d : ℝ) * (d - 1) * ν ^ 2 := by
+    simpa [Nat.cast_sub (by omega : 1 ≤ d)] using hsecond 1
+  have hmoment : (∑ ξ, w ξ * ((h ξ : ℝ) - d * ν) ^ 2) =
+      (d : ℝ) * ν * (1 - ν) := by
+    have hf (ξ : Fin d → Bool) :
+        w ξ * ((h ξ : ℝ) - d * ν) ^ 2 =
+          w ξ * (h ξ : ℝ) * (h ξ - 1 : ℕ) +
+          (1 - 2 * d * ν) * (w ξ * (h ξ : ℝ)) + (d * ν) ^ 2 * w ξ := by
+      by_cases hh : h ξ = 0
+      · simp [hh]; ring
+      · rw [Nat.cast_sub (by omega : 1 ≤ h ξ)]
+        push_cast
+        ring
+    simp_rw [hf]
+    rw [sum_add_distrib, sum_add_distrib, ← mul_sum, ← mul_sum, hfac, hmean, hnorm]
+    ring
+  have hchar : (∑ ξ, (-1 : ℝ) ^ h ξ * w ξ) = η ^ d := by
+    have heta : 1 - 2 * ν = η := by
+      dsimp [ν, η]; field_simp; ring
+    have hh := hgen (-ν) (1 - ν)
+    simp_rw [neg_pow ν, mul_assoc] at hh
+    change (∑ ξ, (-1 : ℝ) ^ h ξ * (ν ^ h ξ * (1 - ν) ^ (d - h ξ))) = η ^ d
+    rw [hh]
+    congr 1
+    linarith [heta]
+  have hind (ξ : Fin d → Bool) :
+      (if h ξ % 2 = M % 2 then w ξ else 0) =
+        (w ξ + (-1 : ℝ) ^ M * ((-1 : ℝ) ^ h ξ * w ξ)) / 2 := by
+    rw [neg_one_pow_eq_pow_mod_two (R := ℝ) M,
+      neg_one_pow_eq_pow_mod_two (R := ℝ) (h ξ)]
+    have hm : M % 2 = 0 ∨ M % 2 = 1 := by omega
+    have hh : h ξ % 2 = 0 ∨ h ξ % 2 = 1 := by omega
+    rcases hm with hm | hm <;> rcases hh with hh | hh <;>
+      simp [hm, hh]
+  have hevent : (∑ ξ, if h ξ % 2 = M % 2 then w ξ else 0) = p := by
+    simp_rw [hind]
+    rw [← sum_div, sum_add_distrib, ← mul_sum, hnorm, hchar]
+  have hQnorm : (∑ ξ, Q d M ξ) = 1 := by
+    calc
+      (∑ ξ, Q d M ξ) =
+          (∑ ξ, if h ξ % 2 = M % 2 then w ξ else 0) / p := by
+        rw [sum_div]
+        apply sum_congr rfl
+        intro ξ _
+        change (if h ξ % 2 = M % 2 then w ξ / p else 0) = _
+        split <;> simp_all
+      _ = 1 := by rw [hevent, div_self hp0]
+  have hν0 : 0 ≤ ν := by dsimp [ν]; positivity
+  have hν1 : ν ≤ 1 := by
+    dsimp [ν]
+    rw [div_le_iff₀ hden]
+    linarith
+  have hw0 (ξ : Fin d → Bool) : 0 ≤ w ξ := by
+    dsimp [w]
+    exact mul_nonneg (pow_nonneg hν0 _) (pow_nonneg (sub_nonneg.mpr hν1) _)
+  have hQ (ξ : Fin d → Bool) :
+      Q d M ξ = if h ξ % 2 = M % 2 then w ξ / p else 0 := rfl
+  have hQ0 (ξ : Fin d → Bool) : 0 ≤ Q d M ξ := by
+    rw [hQ]
+    split
+    · exact div_nonneg (hw0 ξ) (by linarith)
+    · exact le_rfl
+  have hcm : (∑ ξ, Q d M ξ * ((h ξ : ℝ) - d * ν) ^ 2) ≤
+      (∑ ξ, w ξ * ((h ξ : ℝ) - d * ν) ^ 2) / p := by
+    rw [sum_div]
+    apply sum_le_sum
+    intro ξ _
+    rw [hQ]
+    split
+    · simp only [div_mul_eq_mul_div]
+      exact le_rfl
+    · simp only [zero_mul]
+      exact div_nonneg (mul_nonneg (hw0 ξ) (sq_nonneg _)) (by linarith)
+  have hV0 : 0 ≤ (d : ℝ) * ν * (1 - ν) := by positivity
+  have hcm_bound : (∑ ξ, Q d M ξ * ((h ξ : ℝ) - d * ν) ^ 2) ≤
+      3 * (d : ℝ) / 4 := by
+    calc
+      _ ≤ ((d : ℝ) * ν * (1 - ν)) / p := by simpa only [hmoment] using hcm
+      _ ≤ 3 * ((d : ℝ) * ν * (1 - ν)) := by
+        rw [div_le_iff₀ (by linarith : 0 < p)]
+        nlinarith [mul_nonneg hV0 (sub_nonneg.mpr hp)]
+      _ ≤ 3 * (d : ℝ) / 4 := by
+        have hvar : ν * (1 - ν) ≤ 1 / 4 := by nlinarith [sq_nonneg (ν - 1 / 2)]
+        nlinarith [mul_nonneg hd0.le (sub_nonneg.mpr hvar)]
+  have hcs := sum_sq_le_sum_mul_sum_of_sq_le_mul
+    (univ : Finset (Fin d → Bool))
+    (f := fun ξ => Q d M ξ)
+    (g := fun ξ => Q d M ξ * ((h ξ : ℝ) - d * ν) ^ 2)
+    (r := fun ξ => Q d M ξ * |(h ξ : ℝ) - d * ν|)
+    (fun ξ _ => hQ0 ξ)
+    (fun ξ _ => mul_nonneg (hQ0 ξ) (sq_nonneg _))
+    (by intro ξ _; rw [mul_pow, sq_abs]; ring_nf; exact le_rfl)
+  rw [hQnorm, one_mul] at hcs
+  have habs_bound : (∑ ξ, Q d M ξ * |(h ξ : ℝ) - d * ν|) ≤
+      sqrt (3 * (d : ℝ)) / 2 := by
+    have hs := sq_sqrt (by positivity : 0 ≤ 3 * (d : ℝ))
+    have hs0 := sqrt_nonneg (3 * (d : ℝ))
+    nlinarith
+  exact ⟨hQnorm, hp, hcm_bound, habs_bound⟩
 
 end D5.S3.TotalVariation.ParityCompositionKernel

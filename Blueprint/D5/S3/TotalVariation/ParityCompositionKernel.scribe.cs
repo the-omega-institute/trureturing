@@ -48,7 +48,15 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
                 + "according to their complete parity vector. A legal vector with h occupied coordinates has "
                 + "exactly choose((M-h)/2+d-1,d-1) preimages, through the bijection r_i = 2t_i + xi_i. "
                 + "An illegal vector has no preimages. Summing these fiber counts and dividing by "
-                + "the total choose(M+d-1,d-1) proves normalization.", DescribeRole.Theorem))));
+                + "the total choose(M+d-1,d-1) proves normalization.", DescribeRole.Theorem),
+            Node("moments", "Conditional centered moments", "reference_moments", MomentsFormula(),
+                "The independent Bernoulli vector has generating function (1-nu+nu z)^d. "
+                + "Its value at z=-1 gives the parity event probability; differentiating twice at z=1 gives "
+                + "the centered second moment d nu (1-nu). For M >= 3d, eta <= 1/7 and p_e >= 1/3. "
+                + "Restricting the nonnegative squared deviation to the parity event and dividing by p_e "
+                + "bounds its conditional expectation by 3d/4. Weighted Cauchy-Schwarz then gives "
+                + "the absolute deviation bound sqrt(3d)/2. Both moments are centered at m=d nu.",
+                DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
         string prose, DescribeRole role) => Describe.Lean(DescribeId.Create("parity-composition-" + id),
@@ -83,6 +91,19 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
                 Multiply(Paren(Subtract(Mv, Ratio(Dv, D(2)))), Paren(Subtract(Mv, Dv)))));
         return Quantified(Seq(Forall, Sp, Xv, Sp, InMacro, Sp, OpenBracket, D(0), Comma, Dv,
             CloseBracket, Comma, Sp, And(Relation(Abs(gap), Leq, bound), Relation(gap, Leq, Ratio(D(1), D(2))))));
+    }
+
+    private static Formula MomentsFormula()
+    {
+        Formula q = Call("Q", Dv, Mv, F.Xi);
+        Formula delta = Subtract(Hv, Cv);
+        Formula mass = Equal(Seq(Index(Sum, F.Xi), Sp, q), D(1));
+        Formula eventBound = Relation(Ratio(D(1), D(3)), Leq, Index(F.Id("p"), F.Id("e")));
+        Formula second = Relation(Seq(Index(Sum, F.Xi), Sp, Multiply(q, Power(Paren(delta), D(2)))),
+            Leq, Ratio(Multiply(D(3), Dv), D(4)));
+        Formula first = Relation(Seq(Index(Sum, F.Xi), Sp, Multiply(q, Abs(delta))),
+            Leq, Ratio(Call("sqrt", Multiply(D(3), Dv)), D(2)));
+        return Quantified(And(mass, And(eventBound, And(second, first))));
     }
 
     private static Formula Quantified(Formula body) => Seq(Forall, Sp, Dv, Comma, Mv, Sp, InMacro, Sp,
