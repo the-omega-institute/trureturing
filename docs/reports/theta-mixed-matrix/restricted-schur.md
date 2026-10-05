@@ -139,3 +139,10 @@ actual actions without repeating their generation or the coefficient
 selection solve. Source hashes and semantic parameter guards identify
 the common realization. Valid supplier estimates remain premises; their
 truth is not established by a successful JSON parse or LDL computation.
+
+The [finite-core weighted residual gain](weighted-residual-core.md)
+reuses $R_{64}$, its whole-line Gram and this exact ground frame. It
+integrates only the nonnegative core correction to the scalar residual
+allowance, preserving the baseline and trial-form prime errors. All
+restricted cross entries and new integration/input errors are retained.
+The existing LDL and global comparison are not rerun or superseded.
