@@ -192,3 +192,7 @@ unrestricted minimum-eight problem.  It uses only nonnegativity, the global
 `2π` equations, and degree counting, so it applies independently of a chosen
 co-volume or fixed-point proof.
 
+## Source anchors
+
+- Zhao, arXiv:2601.15174v2, Proposition 2.4 (strict length-domain criterion), Proposition 2.7 (extended co-volume regularity), and Proposition 2.9 (global gradient identity): https://arxiv.org/html/2601.15174v2
+- The merged analytic input is `D5.S3.Geometry.Hyperideal.FourCycleCurvature.fourcycle_curvature_box`.
