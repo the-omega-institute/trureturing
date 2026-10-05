@@ -3079,6 +3079,97 @@ freeze or coverage record is introduced. The five-word case at 23,
 the smaller prime square layers, and unrestricted Erdős #7 remain
 unresolved.
 
+### A squared 23 needs top owners at sixteen safe second digits
+
+Retain the assumptions and the actual pure $q^2$ original h of CD94.
+Use $D$ and $U$ from CD88: D contains the height-two originals with
+the same first q-digit as h, while U contains the second digits of
+the unit-cofactor originals in D. Define the complete safe top support
+and its complement by
+
+$$
+P=\{d\notin U:n(d)>0\},\qquad
+Z=\{d\notin U:n(d)=0\}.
+\tag{CD98}
+$$
+
+Then
+
+$$
+\boxed{|Z|\le4,\qquad |P|\ge16.}
+\tag{CD99}
+$$
+
+Each counted digit has an actual row-two original in D, with its
+original cofactor and phase. This is a digit inventory; it does not
+assert that these original classes meet at one point or have a
+common cofactor. The same bound holds if U is enlarged to any set
+of at most three digits containing all the unit digits.
+
+Suppose instead that there are five distinct digits in Z. Reserve
+five of them for individual short parents. At least fifteen safe
+digits remain. Removing top-free digits does not remove any positive
+top digit, so the CD56 inventory used in CD95 still supplies at least
+six positive digits among them. Choose seven disjoint pairs using the same positive-first,
+zero-filler rule as in CD95. At least six pairs have positive a-count;
+every other pair has no top owners on either side.
+
+Assign the seven pairs and five individual digits to the twelve
+modulo-27 parents outside one reserved word v. A pair allows all
+but at most one word, and an individual top-free digit allows every
+word. The same finite Hall construction gives distinct parents for
+all twelve assignments. Reserve the four pure pieces above v as
+in CD91.
+
+The seven a-digits remain unused by the ordinary source map. The
+seven b-digits and five individual digits each encode their assigned
+whole parent. Only one fine piece above v remains. The alphabet
+calculation is
+
+$$
+45-8-2\cdot12=13=23-3-7.
+\tag{CD100}
+$$
+
+Thus all thirteen active pieces receive legal source digits while
+all unit digits and all seven a-digits stay unused.
+
+An individual top-free digit needs no additional top output. Insert
+it into the private source while preserving the entire $9W$
+coordinate. The exact-hole identity and the original whole cover
+supply an actual owner in D. It cannot have row two, by the definition
+of Z. Its existing row-zero or row-one output therefore pays the
+whole assigned modulo-27 parent, using its one fixed tag and original
+cofactor phase. This argument applies separately to every target
+point; it does not posit a common low owner for the whole parent.
+
+The paired parents use the three-child payments of CD85, and all
+remaining source and retained-family cases are unchanged. Only
+paired top owners are omitted or duplicated. The seven pairs have
+at least six units of total gain, so after reserving three actual
+top owners for the pure outputs the count change again satisfies
+
+$$
+-|O|+|C|\le3-6=-3.
+\tag{CD101}
+$$
+
+No new numerical output type is needed for an individual top-free
+digit. The original row and cofactor still recover its normal output
+label, so label distinctness and freshness follow from the same
+whole-family comparison as CD93. The resulting strictly smaller
+whole cover is impossible. Therefore $|Z|\le4$, and $|U|\le3$
+gives $|P|=23-|U|-|Z|\ge16$.
+
+A complete scoped transient Lean application checks both the bound
+for every such U and its construction from the original globally
+count-then-modulus-sum-minimal family, pure 3 and 9, original ternary
+heights at most two, $q=23$ and an actual deep original. All 121 axiom
+reports use only `propext`, `Classical.choice` and `Quot.sound`, with
+no errors or `sorryAx`. No new retained declaration, freeze or
+coverage record is introduced. This does not exclude the five-word
+case at 23, the smaller prime square layers, or unrestricted Erdős #7.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
