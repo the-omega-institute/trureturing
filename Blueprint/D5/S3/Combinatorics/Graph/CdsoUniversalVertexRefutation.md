@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/CdsoUniversalVertexRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/albalahi-das-ali-barman-hamza-2025-cdso-universal-vertex-refutation` (refuted) by `D5/S3/Combinatorics/Graph/CdsoUniversalVertexRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"albalahi-das-ali-barman-hamza-2025-cdso-universal-vertex-refutation","declaration_gid":"D5/S3/Combinatorics/Graph/CdsoUniversalVertexRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. M. Albalahi, S. Das, A. Ali, J. Barman, A. E. Hamza (2025). *On the hyperbolic Sombor index and its counterpart*. DOI: [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176). URL: <https://www.dmlett.com/archive/v16/DML25_v16_pp108-115.pdf>.

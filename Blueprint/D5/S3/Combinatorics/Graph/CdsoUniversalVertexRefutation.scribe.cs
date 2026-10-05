@@ -29,7 +29,10 @@ internal sealed class CdsoUniversalVertexRefutationDocument : IScribeDocumentDef
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("On vertices 0 through 6, take the edges 01, 02, 12, 03, 04, 05 and 16. The graph is connected, has seven edges and cyclomatic number one, and its degrees are 5, 3, 2, 1, 1, 1, 1. Its CDSO is sqrt(10)/3 + sqrt(29)/5 + sqrt(34)/5 + sqrt(13)/3 + 3 sqrt(26)/5. A universal vertex in any graph of this class accounts for six edges; the unique remaining edge joins two other vertices. Relabelling thus gives the star centred at 0 with the additional edge 12, whose CDSO is sqrt(2) + 2 sqrt(10)/3 + 2 sqrt(37)/3. Rational bounds on the square roots prove a strict inequality between these two values. The finite nonempty class has a minimizer, whose value is at most the first value. Consequently every minimizer lacks a universal vertex. No assertion of uniqueness of the minimizer is needed."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("albalahi-das-ali-barman-hamza-2025-cdso-universal-vertex-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
