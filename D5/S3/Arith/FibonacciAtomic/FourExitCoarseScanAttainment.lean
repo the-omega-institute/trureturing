@@ -163,33 +163,26 @@ private theorem actual_routes (k : Nat) (hk : 1 ≤ k) :
         cost pi (family k i) = 8*k+16 + (extraAddresses k seed i).card) := by
   classical
   let col : Fin 10 → Fin 5 → Option Bool := fun q r =>
-    match q.val, r.val with
-    | 0, 0 | 0, 3 | 0, 4 | 1, 0 | 1, 4 | 2, 0 | 2, 2 | 2, 3
-    | 3, 2 | 3, 3 | 4, 2 | 5, 4 | 6, 1 | 8, 0 | 8, 1 | 8, 3 | 9, 1 => some false
-    | 7, 0 | 7, 1 | 7, 4 => some true
-    | _, _ => none
-  have profile (l : Fin k) (q : Fin 10) (i : Index k) :
-      leafLabel (family k i) (literal_addresses k l q) =
-        col q (match i with
-          | .inl _ => 0
-          | .inr (j,r) => if q.val < 7 ∧ l ≠ j then 0 else r.succ) := by
-    cases i with
-    | inl u =>
-      fin_cases q <;>
-        simp only [literal_addresses, family, comb_slot_readout, comb_tail_readout,
-          leafLabel, col] <;> rfl
-    | inr p =>
-      rcases p with ⟨j,r⟩
-      by_cases h : l = j
-      · subst j
-        fin_cases q <;> fin_cases r <;>
-          simp only [literal_addresses, family, comb_slot_readout, comb_tail_readout,
-            leafLabel, col, if_pos rfl, ne_self_iff_false, and_false, ite_false] <;> rfl
-      · fin_cases q <;>
-          simp only [literal_addresses, family, comb_slot_readout, comb_tail_readout,
-            leafLabel, col, if_neg h]
-        all_goals simp [h]
-        all_goals first | rfl | fin_cases r <;> rfl
+    (match q.val with
+      | 0 => [some false,none,none,some false,some false]
+      | 1 => [some false,none,none,none,some false]
+      | 2 => [some false,none,some false,some false,none]
+      | 3 => [none,none,some false,some false,none]
+      | 4 => [none,none,some false,none,none]
+      | 5 => [none,none,none,none,some false]
+      | 6 => [none,some false,none,none,none]
+      | 7 => [some true,some true,none,none,some true]
+      | 8 => [some false,some false,none,some false,none]
+      | _ => [none,some false,none,none,none]).getD r.val none
+  have profile_base (l : Fin k) (q : Fin 10) :
+      leafLabel (family k (.inl ())) (literal_addresses k l q) = col q 0 := by
+    fin_cases q <;>
+      simp only [literal_addresses,family,comb_slot_readout,comb_tail_readout,leafLabel,col] <;> rfl
+  have profile_active (l : Fin k) (q : Fin 10) (r : Fin 4) :
+      leafLabel (family k (.inr (l,r))) (literal_addresses k l q) = col q r.succ := by
+    fin_cases q <;> fin_cases r <;>
+      simp only [literal_addresses,family,comb_slot_readout,comb_tail_readout,
+        leafLabel,col,if_pos rfl] <;> rfl
   have leaf_test (U : Source) (q : Address) :
       q ∈ leafAddresses U ↔ leafLabel U q ≠ none := by
     rw [(ActualImageSevenLeafSeparation.seven_leaf_separation.1 U).2 q]
@@ -223,16 +216,16 @@ private theorem actual_routes (k : Nat) (hk : 1 ≤ k) :
         (scanColumns s r).map (fun q => ⟨literal_addresses k l q,
           leafLabel (family k (.inr (l,r))) (literal_addresses k l q)⟩) := by
       fin_cases s <;> fin_cases r <;>
-        simp only [scanSlot, ask, stopAt, scanColumns, runPassiveProtocol, profile, col, ne_self_iff_false, and_false, ite_false, OfNat.ofNat, Fin.val_ofNat, Fin.val_mk, Fin.val_succ, Fin.val_zero, Fin.val_one, Nat.reduceMod, List.getD, List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, List.map_cons, List.map_nil] <;> rfl
+        simp only [scanSlot, ask, stopAt, scanColumns, runPassiveProtocol, profile_base, profile_active, col, ne_self_iff_false, and_false, ite_false, OfNat.ofNat, Fin.val_ofNat, Fin.val_mk, Fin.val_succ, Fin.val_zero, Fin.val_one, Nat.reduceMod, List.getD, List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, List.map_cons, List.map_nil] <;> rfl
     refine ⟨trace, ?_, ?_⟩
     · rw [trace]
       fin_cases s <;> fin_cases r <;>
-        simp only [scanSlot, ask, stopAt, scanColumns, profile, col, ne_self_iff_false, and_false, ite_false, OfNat.ofNat, Fin.val_ofNat, Fin.val_mk, Fin.val_succ, Fin.val_zero, Fin.val_one, Nat.reduceMod, List.getD, List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, List.map_cons, List.map_nil] <;> rfl
+        simp only [scanSlot, ask, stopAt, scanColumns, profile_base, profile_active, col, ne_self_iff_false, and_false, ite_false, OfNat.ofNat, Fin.val_ofNat, Fin.val_mk, Fin.val_succ, Fin.val_zero, Fin.val_one, Nat.reduceMod, List.getD, List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, List.map_cons, List.map_nil] <;> rfl
     · rw [trace]
       simp only [List.map_map, Function.comp_def]
       rw [table_difference]
       fin_cases s <;> fin_cases r <;>
-        simp only [scanColumns, scanNonleaves, profile, col, ne_self_iff_false, and_false, ite_false,
+        simp only [scanColumns, scanNonleaves, profile_base, profile_active, col, ne_self_iff_false, and_false, ite_false,
           List.filter_cons, List.filter_nil, List.map_cons, List.map_nil, List.toFinset_cons,
           List.toFinset_nil, Finset.image_insert, Finset.image_empty, Finset.image_singleton,
           Fin.val_zero, Fin.val_one, OfNat.ofNat, Fin.val_ofNat, Fin.val_natCast, Nat.reduceMod, Fin.val_succ, List.getD,
@@ -254,26 +247,26 @@ private theorem actual_routes (k : Nat) (hk : 1 ≤ k) :
             (literal_addresses k l q)⟩) := by
       cases r with
       | none => fin_cases s <;>
-          simp only [tailRoute, ask, stopAt, tailColumns, runPassiveProtocol, profile, col, ne_self_iff_false, and_false, ite_false, OfNat.ofNat, Fin.val_ofNat, Fin.val_mk, Fin.val_succ, Fin.val_zero, Fin.val_one, Nat.reduceMod, List.getD, List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, List.map_cons, List.map_nil] <;> rfl
+          simp only [tailRoute, ask, stopAt, tailColumns, runPassiveProtocol, profile_base, profile_active, col, ne_self_iff_false, and_false, ite_false, OfNat.ofNat, Fin.val_ofNat, Fin.val_mk, Fin.val_succ, Fin.val_zero, Fin.val_one, Nat.reduceMod, List.getD, List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, List.map_cons, List.map_nil] <;> rfl
       | some r => fin_cases s <;> fin_cases r <;>
-          simp only [tailRoute, ask, stopAt, tailColumns, runPassiveProtocol, profile, col, ne_self_iff_false, and_false, ite_false, OfNat.ofNat, Fin.val_ofNat, Fin.val_mk, Fin.val_succ, Fin.val_zero, Fin.val_one, Nat.reduceMod, List.getD, List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, List.map_cons, List.map_nil] <;> rfl
+          simp only [tailRoute, ask, stopAt, tailColumns, runPassiveProtocol, profile_base, profile_active, col, ne_self_iff_false, and_false, ite_false, OfNat.ofNat, Fin.val_ofNat, Fin.val_mk, Fin.val_succ, Fin.val_zero, Fin.val_one, Nat.reduceMod, List.getD, List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, List.map_cons, List.map_nil] <;> rfl
     refine ⟨trace, ?_, ?_⟩
     · rw [trace]
       cases r with
-      | none => fin_cases s <;> simp only [tailRoute, ask, stopAt, tailColumns, profile, col, ne_self_iff_false, and_false, ite_false, OfNat.ofNat, Fin.val_ofNat, Fin.val_mk, Fin.val_succ, Fin.val_zero, Fin.val_one, Nat.reduceMod, List.getD, List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, List.map_cons, List.map_nil] <;> rfl
+      | none => fin_cases s <;> simp only [tailRoute, ask, stopAt, tailColumns, profile_base, profile_active, col, ne_self_iff_false, and_false, ite_false, OfNat.ofNat, Fin.val_ofNat, Fin.val_mk, Fin.val_succ, Fin.val_zero, Fin.val_one, Nat.reduceMod, List.getD, List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, List.map_cons, List.map_nil] <;> rfl
       | some r => fin_cases s <;> fin_cases r <;>
-          simp only [tailRoute, ask, stopAt, tailColumns, profile, col, ne_self_iff_false, and_false, ite_false, OfNat.ofNat, Fin.val_ofNat, Fin.val_mk, Fin.val_succ, Fin.val_zero, Fin.val_one, Nat.reduceMod, List.getD, List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, List.map_cons, List.map_nil] <;> rfl
+          simp only [tailRoute, ask, stopAt, tailColumns, profile_base, profile_active, col, ne_self_iff_false, and_false, ite_false, OfNat.ofNat, Fin.val_ofNat, Fin.val_mk, Fin.val_succ, Fin.val_zero, Fin.val_one, Nat.reduceMod, List.getD, List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, List.map_cons, List.map_nil] <;> rfl
     · rw [trace]
       simp only [List.map_map, Function.comp_def]
       rw [table_difference]
       cases r with
-      | none => fin_cases s <;> simp only [tailColumns, tailNonleaves, profile, col, ne_self_iff_false, and_false, ite_false,
+      | none => fin_cases s <;> simp only [tailColumns, tailNonleaves, profile_base, profile_active, col, ne_self_iff_false, and_false, ite_false,
           List.filter_cons, List.filter_nil, List.map_cons, List.map_nil, List.toFinset_cons,
           List.toFinset_nil, Finset.image_insert, Finset.image_empty, Finset.image_singleton,
           Fin.val_zero, Fin.val_one, OfNat.ofNat, Fin.val_ofNat, Fin.val_natCast, Nat.reduceMod, Fin.val_succ, List.getD,
           List.getElem?_cons_zero, List.getElem?_cons_succ, Option.getD_some, Option.some_ne_none, eq_self, decide_true, decide_false, Bool.false_eq_true, ite_true, ite_false] <;> rfl
       | some r => fin_cases s <;> fin_cases r <;>
-          simp only [tailColumns, tailNonleaves, profile, col, ne_self_iff_false, and_false, ite_false,
+          simp only [tailColumns, tailNonleaves, profile_base, profile_active, col, ne_self_iff_false, and_false, ite_false,
           List.filter_cons, List.filter_nil, List.map_cons, List.map_nil, List.toFinset_cons,
           List.toFinset_nil, Finset.image_insert, Finset.image_empty, Finset.image_singleton,
           Fin.val_zero, Fin.val_one, OfNat.ofNat, Fin.val_ofNat, Fin.val_natCast, Nat.reduceMod, Fin.val_succ, List.getD,
@@ -290,16 +283,17 @@ private theorem actual_routes (k : Nat) (hk : 1 ≤ k) :
     dsimp only
     have replies (q : Fin 10) (hq : q.val < 3) :
         leafLabel (family k i) (literal_addresses k l q) = some false := by
-      rw [profile]
       cases i with
-      | inl u => fin_cases q <;> simp only [col, Fin.val_mk, Function.id_def] at hq ⊢ <;> first | rfl | omega
+      | inl u =>
+        rw [profile_base]
+        fin_cases q <;> simp only [col,Fin.val_mk] at hq ⊢ <;> first | rfl | omega
       | inr p =>
         rcases p with ⟨j,r⟩
         have different : l ≠ j := by
           intro h; subst j; exact inactive r rfl
-        have small : q.val < 7 := by omega
-        rw [if_pos ⟨small,different⟩]
-        fin_cases q <;> simp only [col, Fin.val_mk, Function.id_def] at hq ⊢ <;> first | rfl | omega
+        fin_cases q <;> simp only [Fin.val_mk] at hq
+        all_goals first | omega |
+          (simp only [literal_addresses,family,comb_slot_readout,if_neg different,leafLabel]; rfl)
     have leaf0 := (leaf_test _ _).mpr (by rw [replies 0 (by decide)]; decide)
     have leaf1 := (leaf_test _ _).mpr (by rw [replies 1 (by decide)]; decide)
     have leaf2 := (leaf_test _ _).mpr (by rw [replies 2 (by decide)]; decide)
@@ -325,14 +319,14 @@ private theorem actual_routes (k : Nat) (hk : 1 ≤ k) :
         rcases p with ⟨l,r⟩
         have eq : l = j := by simpa using cover
         subst l
-        simpa only [scanList,extraAddresses,if_pos rfl] using (tail_actual j s (some r)).2
+        simpa only [scanList,extraAddresses,if_pos rfl,ite_true] using (tail_actual j s (some r)).2
     | cons l ls ih =>
       intro absent i cover
-      have jl : j ≠ l := fun h => absent (by simp [h])
-      have jr : j ∉ ls := fun h => absent (List.mem_cons_of_mem l h)
+      have jl : j ≠ l := List.ne_of_not_mem_cons absent
+      have jr : j ∉ ls := List.not_mem_of_not_mem_cons absent
       by_cases active : ∃ r, i = .inr (l,r)
       · obtain ⟨r,rfl⟩ := active
-        simpa only [scanList,extraAddresses,if_neg (Ne.symm jl)] using
+        simpa only [scanList,extraAddresses,if_neg (Ne.symm jl),ite_false] using
           (scan_active l (d l) (scanList k j s d ls) r).2
       · have inactive : ∀ r, i ≠ .inr (l,r) := by simpa using active
         have rest : (Sum.elim (fun _ : Unit => True) (fun p : Fin k × Fin 4 => p.1 = j ∨ p.1 ∈ ls) i) := by
@@ -414,7 +408,7 @@ example (k : Nat) (hk : 1 ≤ k) :
         (h : readout (literal_addresses k l q) (family k (.inl ())) ≠
           readout (literal_addresses k l t) (family k (.inl ()))) :
         literal_addresses k l q ≠ literal_addresses k l t := by
-      intro e; exact h (congrArg (fun a => readout a (family k (.inl ()))) e)
+      exact ne_of_apply_ne (fun a => readout a (family k (.inl ()))) h
     have d04 (l : Fin k) : literal_addresses k l 0 ≠ literal_addresses k l 4 :=
       different l 0 4 (by simp only [literal_addresses,Fin.val_zero,Fin.val_one,Fin.val_ofNat,OfNat.ofNat,Nat.reduceMod,family,comb_slot_readout]; decide)
     have d06 (l : Fin k) : literal_addresses k l 0 ≠ literal_addresses k l 6 :=
@@ -463,9 +457,9 @@ example (k : Nat) (hk : 1 ≤ k) :
       (∑ s : Fin 3, scanWeight k s) = 1 ∧
       ∀ s : Fin 3, 0 ≤ tailWeight k s ∧ 0 ≤ scanWeight k s := by
     by_cases one : k = 1
-    · subst k; norm_num [tailWeight,scanWeight,Fin.sum_univ_succ,Fin.forall_fin_succ]
+    · subst k; decide +kernel
     by_cases two : k = 2
-    · subst k; norm_num [tailWeight,scanWeight,Fin.sum_univ_succ,Fin.forall_fin_succ]
+    · subst k; decide +kernel
     have three : (3:ℚ) ≤ k := by exact_mod_cast (show 3 ≤ k by omega)
     have den : (k:ℚ)-1 ≠ 0 := by linarith
     by_cases small : k ≤ 5
@@ -501,8 +495,8 @@ example (k : Nat) (hk : 1 ≤ k) :
         apply Finset.prod_congr rfl
         intro t _
         by_cases eq : t = l
-        · simp only [eq,ite_true]
-        · simp only [eq,ite_false,mul_one,normalized.2.1]
+        · simp only [if_pos eq]
+        · simp only [if_neg eq,mul_one,normalized.2.1]
       _ = _ := Fintype.prod_ite_eq' l (fun _ => ∑ s : Fin 3, scanWeight k s * g s)
   have law_total : (∑ seed : Seed k, seedWeight k seed) = 1 := by
     have nonzero : (k:ℚ) ≠ 0 := by exact_mod_cast (by omega : k ≠ 0)
@@ -565,18 +559,18 @@ example (k : Nat) (hk : 1 ≤ k) :
         if k ≤ 5 then 1+((k:ℚ)-1)/(4*k)
         else if r = 2 then 1+1/(k:ℚ) else 1+((k:ℚ)-2)/(3*k) := by
     by_cases one : k = 1
-    · subst k; fin_cases r <;> norm_num [T,S,tailE,scanE,tailWeight,scanWeight,Fin.sum_univ_succ]
+    · subst k; fin_cases r <;> decide +kernel
     by_cases two : k = 2
-    · subst k; fin_cases r <;> norm_num [T,S,tailE,scanE,tailWeight,scanWeight,Fin.sum_univ_succ]
+    · subst k; fin_cases r <;> decide +kernel
     have three : (3:ℚ) ≤ k := by exact_mod_cast (show 3 ≤ k by omega)
     have den : (k:ℚ)-1 ≠ 0 := by linarith
     have nonzero : (k:ℚ) ≠ 0 := by linarith
     by_cases small : k ≤ 5
     · fin_cases r <;> simp [T,S,tailE,scanE,tailWeight,scanWeight,one,two,small,
-        Fin.sum_univ_succ]
+        Fin.sum_univ_succ,Fin.ext_iff,-Fin.val_eq_zero_iff]
       all_goals field_simp [den,nonzero] <;> ring
     · fin_cases r <;> simp [T,S,tailE,scanE,tailWeight,scanWeight,one,two,small,
-        Fin.sum_univ_succ]
+        Fin.sum_univ_succ,Fin.ext_iff,-Fin.val_eq_zero_iff]
       all_goals field_simp [den,nonzero] <;> ring
   have average_base :
       (∑ seed : Seed k, seedWeight k seed * (rowExcess k seed (.inl ()) : ℚ)) = 1 := by
@@ -589,12 +583,12 @@ example (k : Nat) (hk : 1 ≤ k) :
     by_cases small : k ≤ 5
     · have smallq : (k:ℚ) ≤ 5 := by exact_mod_cast small
       rw [if_pos small,max_eq_left]
-      · field_simp; ring
+      · field_simp [positive.ne']; ring
       · apply (div_le_div_iff₀ (by positivity : (0:ℚ)<3*k) (by positivity : (0:ℚ)<4*k)).mpr
         nlinarith
     · have largeq : (5:ℚ) < k := by exact_mod_cast (show 5 < k by omega)
       rw [if_neg small,max_eq_right]
-      · field_simp; ring
+      · field_simp [positive.ne']; ring
       · apply (div_le_div_iff₀ (by positivity : (0:ℚ)<4*k) (by positivity : (0:ℚ)<3*k)).mpr
         nlinarith
   have target_at_least_one : 1 ≤ target := by
@@ -625,7 +619,7 @@ example (k : Nat) (hk : 1 ≤ k) :
   have average_top (l : Fin k) :
       (∑ seed : Seed k, seedWeight k seed * (rowExcess k seed (.inr (l,0)) : ℚ)) = target := by
     rw [average_row,numerical_row,target_value]
-    split_ifs <;> rfl
+    simp only [if_neg (by decide : (0 : Fin 4) ≠ 2)]
   have row_limits (seed : Seed k) :
       (∀ i : Index k, rowExcess k seed i ≤ 2) ∧
       ∃ i : Index k, rowExcess k seed i = 2 := by
@@ -641,18 +635,18 @@ example (k : Nat) (hk : 1 ≤ k) :
         · simp only [rowExcess,eq,ite_false]
           split_ifs <;> omega
     · fin_cases s
-      · exact ⟨.inr (j,2),rfl⟩
-      · exact ⟨.inr (j,1),rfl⟩
-      · exact ⟨.inr (j,0),rfl⟩
+      · exact ⟨.inr (j,2),by simp [rowExcess]⟩
+      · exact ⟨.inr (j,1),by simp [rowExcess]⟩
+      · exact ⟨.inr (j,0),by simp [rowExcess]⟩
   have row_total (seed : Seed k) : (∑ i : Index k, rowExcess k seed i) = 5*k := by
     rcases seed with ⟨j,s,d⟩
     have retained : (∑ r : Fin 4, rowExcess k (j,s,d) (.inr (j,r))) = 4 := by
-      fin_cases s <;> norm_num [rowExcess,Fin.sum_univ_succ]
+      fin_cases s <;> simp only [rowExcess,if_pos rfl,ite_true] <;> decide
     have scanned (l : Fin k) (different : l ≠ j) :
         (∑ r : Fin 4, rowExcess k (j,s,d) (.inr (l,r))) = 5 := by
       cases ds : d l using Fin.cases with
-      | zero => norm_num [rowExcess,different,ds,Fin.sum_univ_succ]
-      | succ t => fin_cases t <;> norm_num [rowExcess,different,ds,Fin.sum_univ_succ]
+      | zero => simp only [rowExcess,if_neg different,ds,ite_false] <;> decide
+      | succ t => fin_cases t <;> simp only [rowExcess,if_neg different,ds,ite_false] <;> decide
     rw [Fintype.sum_sum_type]
     simp only [Fintype.sum_unique,Fintype.sum_prod_type]
     change 1 + (∑ l : Fin k, ∑ r : Fin 4, rowExcess k (j,s,d) (.inr (l,r))) = _
@@ -663,6 +657,7 @@ example (k : Nat) (hk : 1 ≤ k) :
     rw [Finset.sum_congr rfl others]
     simp only [Finset.sum_const,Finset.card_erase_of_mem (Finset.mem_univ j),
       Finset.card_univ,Fintype.card_fin,nsmul_eq_mul]
+    change 1 + ((k-1)*5+4) = 5*k
     omega
   choose pi hpi using actual_routes k hk
   have costs (seed : Seed k) (i : Index k) :
@@ -682,8 +677,13 @@ example (k : Nat) (hk : 1 ≤ k) :
   have mean_cost (i : Index k) :
       (∑ seed : Seed k, seedWeight k seed * (cost (pi seed) (family k i) : ℚ)) =
         (8*k+16 : Nat) + ∑ seed : Seed k, seedWeight k seed * (rowExcess k seed i : ℚ) := by
-    simp_rw [costs,Nat.cast_add,mul_add]
-    rw [Finset.sum_add_distrib,← Finset.sum_mul,law_total,one_mul]
+    calc
+      _ = ∑ seed : Seed k, (seedWeight k seed * ((8*k+16 : Nat) : ℚ) +
+          seedWeight k seed * (rowExcess k seed i : ℚ)) := by
+        apply Finset.sum_congr rfl
+        intro seed _
+        rw [costs,Nat.cast_add,mul_add]
+      _ = _ := by rw [Finset.sum_add_distrib,← Finset.sum_mul,law_total,one_mul]
   refine ⟨pi,law_nonnegative,law_total,?_,?_,?_⟩
   · intro seed
     refine ⟨(hpi seed).1,(hpi seed).2,?_,maxima seed,?_⟩
@@ -697,7 +697,9 @@ example (k : Nat) (hk : 1 ≤ k) :
       rw [mean_cost]
       exact add_le_add_left (average_bound i) _
     · let l : Fin k := ⟨0,by omega⟩
-      apply Finset.le_sup'_of_le _ (Finset.mem_univ (.inr (l,0)))
+      apply Finset.le_sup'_of_le (fun i : Index k =>
+        ∑ seed : Seed k, seedWeight k seed * (cost (pi seed) (family k i) : ℚ))
+        (Finset.mem_univ (.inr (l,0)))
       rw [mean_cost,average_top]
   · simp_rw [maxima]
     rw [← Finset.sum_mul,law_total,one_mul]
