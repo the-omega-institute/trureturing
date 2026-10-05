@@ -58671,3 +58671,198 @@ I_\psi(x)=\int_x^\infty[\psi(t)-t]
 $$
 
 仍需要针对同一实际中心化输入、保留其余项 $R(x)$ 的估计。上述正核与精确身份未证明该积分的所需符号、统一尾部界或 RH。$\square$
+
+## 387. 实际正响应核的两项质量展开与首商块强制抵消
+
+**定义 387.1（实际逆核的加权矩与其余商块）。** 沿用 §§384–386 的实际 Fibonacci 参数 $q=\Phi^{-2}$、$\beta$、$\gamma=\beta^{-1}$、$k=\gamma*\ell$、$K$ 和实际校正原子部分和 $H_m$。置
+
+$$
+a=\beta_1,\qquad T=\sum_{d=2}^{\infty}|\beta_d|,
+\qquad \delta=a-T>0,
+\qquad B_1=\mathcal B(1),
+\tag{387.1}
+$$
+
+$$
+A=\frac1{B_1},\qquad
+D=\frac1{B_1}+\frac{\mathcal B'(1)}{B_1^2},\qquad
+c=\frac{a}{2B_1},\qquad C_\psi=\log4+4.
+\tag{387.2}
+$$
+
+这里的 $\mathcal B$ 始终是 §385 的有符号整个函数；$B_1$ 不是 §384 的绝对矩。对实数 $y\ge0$，定义 $\psi(y)=\sum_{1\le n\le y}\Lambda(n)$，其中求和指标是整数。对实数 $N\ge2$，定义其余商块的实际有符号和
+
+$$
+S_{\ge2}(N)=\sum_{m=2}^{\lfloor N\rfloor}
+H_m\left[K(N/m)-K(N/(m+1))\right].
+\tag{387.3}
+$$
+
+**定理 387.2（实际质量展开及必需的负主项）。** $B_1\ge\delta>0$，因而 $c>0$。对每个实数 $y\ge1$，有
+
+$$
+\boxed{K(y)=Ay\log y-Dy+R(y),\qquad
+|R(y)|\le\frac{1+\log y}{\delta}.}
+\tag{387.4}
+$$
+
+对每个实数 $N\ge2$，还有精确的中心化预算
+
+$$
+\boxed{\left|S_{\ge2}(N)+cN\log N
++\frac a2(A\log2-D)N-\psi(N)\right|
+\le\frac a\delta(2+2\log N-\log2).}
+\tag{387.5}
+$$
+
+特别地，
+
+$$
+\begin{aligned}
+|S_{\ge2}(N)+cN\log N|
+\le{}&\left(C_\psi+\frac a2|A\log2-D|\right)N\\
+&+\frac a\delta(2+2\log N-\log2),
+\end{aligned}
+\tag{387.6}
+$$
+
+所以 $S_{\ge2}(N)=-cN\log N+O(N)$。上述结论使用实际的实截断 $N/2$，适用于奇数及非整数 $N$。
+
+**证明。** 先使用经典的绝对可和 Dirichlet 卷积逆原理，给出本处所需的显式预算。绝对可和系数的卷积代数及其 Neumann 逆是既有中间步骤，见 Helge Glöckner、Lutz G. Lucht，*Weighted inversion of general Dirichlet series*，[arXiv:1112.0749v2](https://arxiv.org/abs/1112.0749)，pp. 1–4；其普通 Dirichlet 级数先例为 Hewitt–Williamson，*Note on absolutely convergent Dirichlet series*，[DOI:10.1090/S0002-9939-1957-0090680-X](https://doi.org/10.1090/S0002-9939-1957-0090680-X)。这里可直接从有限逆递推得到同一预算，而无需先假定未知逆的全局范数。
+
+逆身份给 $\gamma_1=a^{-1}$，并对 $n>1$ 给
+
+$$
+a\gamma_n=-\sum_{\substack{d\mid n\\d>1}}\beta_d\gamma_{n/d}.
+\tag{387.7}
+$$
+
+令 $M_J=\sum_{n=1}^J|\gamma_n|$。对（387.7）取绝对值，并在有限三角区域 $dr\le J$ 内重排，得到
+
+$$
+aM_J\le1+\sum_{d=2}^J|\beta_d|M_{\lfloor J/d\rfloor}
+\le1+TM_J.
+\tag{387.8}
+$$
+
+故 $M_J\le\delta^{-1}$ 对每个 $J\ge1$ 成立。非负部分和有界，因而
+
+$$
+M:=\sum_{d=1}^{\infty}|\gamma_d|\le\delta^{-1}.
+\tag{387.9}
+$$
+
+又 $B_1=a+\sum_{d\ge2}\beta_d/d\ge a-T=\delta$。由于 $1/d\le1$ 且 $(\log d)/d$ 有界，（387.9）保证以下两个矩绝对收敛：
+
+$$
+G=\sum_{d\ge1}\frac{\gamma_d}{d},\qquad
+C=\sum_{d\ge1}\frac{\gamma_d\log d}{d}.
+\tag{387.10}
+$$
+
+对 $\beta*\gamma$ 分别用权 $1/n$ 和 $(\log n)/n$ 作绝对收敛的双和重排。第二次重排使用 $\log(dr)=\log d+\log r$，得到
+
+$$
+B_1G=1,\qquad
+\left(\sum_{d\ge1}\frac{\beta_d\log d}{d}\right)G+B_1C=0.
+\tag{387.11}
+$$
+
+这些双和的绝对收敛可分别由 $\beta,\gamma\in\ell^1$，以及 $1/d$ 和 $(\log d)/d$ 有界逐项控制。实际 $\beta$ 指数衰减，故 §385 的逐项导数给 $\mathcal B'(1)=-\sum\beta_d\log d/d$。因此
+
+$$
+G=A,\qquad C=\frac{\mathcal B'(1)}{B_1^2},\qquad G+C=D.
+\tag{387.12}
+$$
+
+$C$ 与 $\mathcal B'(1)$ 之间是正号；对逆函数求导时的负号由 $G'(1)=-C$ 吸收。这里不要求 $\gamma_d\ge0$，也不要求 $\sum|\gamma_d|\log d$ 收敛。
+
+接着作经典的对数阶乘积分夹逼。置 $F(x)=x\log x-x$（$x>0$）和
+
+$$
+\eta(x)=\log(\lfloor x\rfloor!)-F(x).
+\tag{387.13}
+$$
+
+若 $x\ge1$、$m=\lfloor x\rfloor$，对递增函数 $\log$ 的上下积分和给
+
+$$
+1\le\log(m!)-F(m)\le1+\log m,
+\qquad 0\le F(x)-F(m)\le\log x.
+\tag{387.14}
+$$
+
+于是 $|\eta(x)|\le1+\log x$。若 $0<x<1$，则 $\lfloor x\rfloor!=1$，且 $|\eta(x)|=x(1-\log x)\le1$；最后一个函数在 $(0,1)$ 上递增，并在一处取值一。这些积分夹逼是经典步骤，不使用 Stirling 渐近式的未定余项。
+
+由 $k=\gamma*\ell$，有限三角重排给
+
+$$
+K(y)=\sum_{d\le y}\gamma_d\log(\lfloor y/d\rfloor!).
+\tag{387.15}
+$$
+
+当 $d>y$ 时阶乘项为零，故可将其补为全部正整数上的级数。利用（387.13），
+
+$$
+K(y)=\sum_{d\ge1}\gamma_d F(y/d)
++\sum_{d\ge1}\gamma_d\eta(y/d).
+\tag{387.16}
+$$
+
+第一项绝对收敛，因为 $|F(y/d)|\le(y/d)(|\log y|+\log d+1)$，可由（387.10）的绝对矩控制。第二项也绝对收敛；对 $y\ge1$，其和 $R(y)$ 满足
+
+$$
+\begin{aligned}
+|R(y)|
+&\le\sum_{d\le y}|\gamma_d|[1+\log(y/d)]
++\sum_{d>y}|\gamma_d|\\
+&\le M(1+\log y)\le\frac{1+\log y}{\delta}.
+\end{aligned}
+\tag{387.17}
+$$
+
+第一项按（387.12）展开为 $y\log y\,G-y(G+C)=Ay\log y-Dy$，证明（387.4）。
+
+最后将 §386 的实际恢复身份延伸到实截断。$k*e=\Lambda$ 对有限求和给
+
+$$
+\psi(N)=\sum_{j\le N}k(j)H_{\lfloor N/j\rfloor}
+=\sum_{m=1}^{\lfloor N\rfloor}
+H_m[K(N/m)-K(N/(m+1))].
+\tag{387.18}
+$$
+
+第二个等号来自精确整数条件 $\lfloor N/j\rfloor=m\iff N/(m+1)<j\le N/m$。末块的下截断小于一，由 $K(y)=0$（$0\le y<1$）处理；不需要忽略任何末块。
+
+对 $N\ge2$，同时对 $N$ 与 $N/2$ 使用（387.4），得到
+
+$$
+K(N)-K(N/2)
+=\frac A2N\log N+\frac N2(A\log2-D)+\mathcal E(N),
+\tag{387.19}
+$$
+
+$$
+|\mathcal E(N)|\le\frac{2+2\log N-\log2}{\delta}.
+\tag{387.20}
+$$
+
+实际首项是 $H_1=a$。从（387.18）剥去首商块，即有
+
+$$
+S_{\ge2}(N)+cN\log N
++\frac a2(A\log2-D)N-\psi(N)=-a\mathcal E(N),
+\tag{387.21}
+$$
+
+证明（387.5）。经典 Chebyshev 线性估计给 $0\le\psi(N)\le C_\psi N$；此处的宽松常数可由经典 $\theta(x)\le(\log4)x$ 和素数幂分解得到：对 $x\ge2$，
+
+$$
+\psi(x)-\theta(x)=\sum_{r=2}^{\lfloor\log x/\log2\rfloor}\theta(x^{1/r})
+\le2\sqrt x\log x\le4x.
+\tag{387.22}
+$$
+
+最后一步使用 $\log x\le2\sqrt x$。对 $0\le x<2$，$\psi(x)=0$。这些是经典 Chebyshev 中间估计，见 Tom M. Apostol，*Introduction to Analytic Number Theory*，[DOI:10.1007/978-1-4757-5579-4](https://doi.org/10.1007/978-1-4757-5579-4)，素数分布的初等估计章节。将此界代入（387.5），得到（387.6）；因为 $\log N=O(N)$，其右侧是 $O(N)$。
+
+（387.19）说明，实际首商块携带严格正的 $cN\log N$ 主项，而（387.6）证明其余实际商块携带相反的同量级主项。由 §386 的 $k\ge0$，商块权重全部非负，故这项抵消来自实际 $H_m$ 的符号。未中心化的绝对商块和至少包含首块的 $cN\log N+O(N)$ 质量；不能把有符号余块的 $O(N)$ 余差读作绝对预算。这一确定的主项抵消尚未给出 $H_N=O_\varepsilon(N^{1/2+\varepsilon})$，也未控制（386.21）的实际 Robin 有符号积分尾项。 $\square$
