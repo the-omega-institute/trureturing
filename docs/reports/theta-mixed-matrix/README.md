@@ -333,3 +333,48 @@ reuses the existing continuous projection on saved unprojected rows,
 then calls the same cardinal integration and exact-frame code. Its
 source/kernel errors remain joint; the smaller error allowance does not
 establish all-direction gain, a new global sign or cofinal positivity.
+
+The [vanishing exterior reserve](vanishing-exterior-reserve.md) applies
+classical Fourier analytic uniqueness to the original theta weight and
+a fixed nonzero sharp-high residual. Deleting the positive reserve makes
+the simple multiplier allowance infinite; this fixed-source obstruction
+does not decide the actual constrained inverse or a moving cofinal family.
+The existing unprojected common dual-source construction is reused, with
+its growing source budgets and the actual low signs still unpaid.
+The same note's [divided endpoint check](vanishing-exterior-reserve.md#the-divided-endpoint-expression-cannot-have-a-strict-weighted-high-floor)
+uses the theta derivative envelopes in a topology controlling that
+expression. Its conditional paper argument excludes a strictly positive
+$s^2$-weighted endpoint floor at any fixed finite band; it asserts no
+sharp-high density in the original minimal form norm, negative energy,
+moving-cofinal obstruction or RH conclusion.
+
+The [critical-zero source-range check](critical-prime-source-range.md)
+uses the full prime-power action to exclude a blanket exact factorization
+of every discarded low source as $Q(sf+a v_0)$, $f\in L^2$, after any
+finite low removal. This conditional paper obstruction concerns that
+stronger source requirement; positive-reserve approximate estimates and
+the actual cofinal form signs remain unresolved.
+
+The [regulated complete-prime source budget](regulated-prime-source-budget.md)
+reuses the full half-weighted Mangoldt count to control a common
+unprojected source. It selects one cofinal parameter/band schedule for
+prescribed growing finite sources, retaining the exact ground.
+Band-dependent source norms, actual low/complementary-low signs and
+the full RH/Robin conclusion remain unresolved.
+
+
+The [centered complete-prime discrepancy budget](centered-prime-discrepancy-budget.md)
+cancels the continuous main term on the same exactly ground-centered
+even $H^2$ source, retaining the endpoint and every prime power. It pays
+the extra source derivative norm and improves the fixed-source regulator
+allowance in asymptotic order. Common changing-family Grams, actual
+inverse convergence and low/cofinal signs remain unresolved.
+
+
+The same [regulated budget's row and column estimate](regulated-prime-source-budget.md#the-regulator-also-pays-an-l2-source-norm)
+pays the complete prime action with the actual common $L^2$ source Gram.
+Its prime allowance vanishes uniformly on normalized sources along the
+original positive-reserve schedule; archimedean costs and actual signs
+remain payable. The [full-low derivative check](centered-prime-discrepancy-budget.md#a-high-lift-cannot-hide-the-full-low-spheres-derivative-cost)
+shows why arbitrary regular high lifts cannot make the earlier derivative
+certificate uniformly cheap. Neither estimate decides RH or full Robin.

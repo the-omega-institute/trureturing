@@ -21,11 +21,6 @@ public sealed record ScribeSdkAdmissionResult(
     }
 }
 
-public sealed class ScribeSdkAdmissionException(int exitCode, string message) : InvalidOperationException(message)
-{
-    public int ExitCode { get; } = exitCode;
-}
-
 /// <summary>SDK diagnostics for daily selections; this component never executes a definition.</summary>
 public static class ScribeSdkAdmission
 {

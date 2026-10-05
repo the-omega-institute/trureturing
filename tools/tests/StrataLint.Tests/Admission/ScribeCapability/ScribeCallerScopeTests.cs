@@ -68,6 +68,39 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Theory]
+    [InlineData(1, "describe red code=probe", false)]
+    [InlineData(2, "HostConfiguration: probe", true)]
+    public void CheckCurrentReportsScribeVerificationFailuresWithTheirOwnExitCode(
+        int exitCode, string message, bool infrastructure)
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        fixture.Files["Meta/ci-checks.json"] = CommonCheckRegistrationFixture.Manifest(
+            "tools/StrataLint.Scribe/StrataLint.Scribe.csproj");
+        var snapshot = Snapshot(fixture.Files);
+        var report = Path.Combine(temporary.Path, "report.json");
+        RawLeanReportArtifact.WriteFile(report, Decode(snapshot), LeanAxiomReport.Create(fixture.Reports));
+        var paths = Path.Combine(temporary.Path, "paths");
+        File.WriteAllText(paths, "Blueprint/D5/S0/Carrier/Probe.scribe.cs\0");
+        var environment = new ProductionCliEnvironment(temporary.Path,
+            new FakeRepositoryGateway(RawChangeSet.Create([]), snapshot, Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(null), new RejectingScribeEmissionVerifier(exitCode, message));
+
+        var result = environment.CheckCurrent(["--candidate-lean-report", report, "--scribe-paths-from", paths]);
+
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.Contains(message, result.Error, StringComparison.Ordinal);
+        Assert.Equal(infrastructure, result.Error.StartsWith("INFRASTRUCTURE_FAILURE ", StringComparison.Ordinal));
+    }
+
+    private sealed class RejectingScribeEmissionVerifier(int exitCode, string message) : IScribeEmissionVerifier
+    {
+        public VerifiedScribeEmissions Verify(RepositorySnapshot snapshot, LeanAxiomReport report, RawChangeSet? changes,
+            FrozenStateCatalog? frozenState = null, FrozenStatementIndex? frozenStatements = null) =>
+            throw new ScribeVerificationException(exitCode, message);
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void IngestAndRegistryRefreshSupplyTheirReceiptVerificationScope(bool refresh)
