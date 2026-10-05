@@ -3578,6 +3578,118 @@ declaration, freeze or coverage record is introduced. A joint
 exchange using the companion locations, and exclusion of the
 remaining squared-23 branch, remain unresolved.
 
+### Four-word occupancy strengthens the bound to eighty triples
+
+Under the same original-family assumptions, take U to be exactly
+the second-digit image of all Changed unit-cofactor owners. The
+stronger obstruction is $\nu\le3$ for this safe set. Two features
+of the actual source make this improvement possible.
+
+First, CD107 supplies at least sixteen safe digits whose top
+owners occupy four or more private words. Replacing the previous
+unit-containing set by the exact image only enlarges the safe
+set. For any such a-digit and any private word u, at least three
+actual top owners lie at other words. Since every b-cell has at
+most two top owners,
+
+$$
+\begin{aligned}
+n_a-|C(a,u)|&\ge3,\\
+n_b-2|C(b,u)|&\ge-2,\\
+g_{a,b}(u)&\ge1.
+\end{aligned}
+\tag{CD121}
+$$
+
+Thus these pairs are good at every private word. Given four clean
+digits, remove them and select eight disjoint pairs with dense
+a-digits; at least twelve dense digits and sixteen safe digits
+remain available. Assign the four clean parents first. After
+choosing a third pure parent for the one remaining fine cell,
+there are ten other parents, from which eight arbitrary distinct
+pair parents can be chosen. The other two parents carry the pure
+modulo-27 outputs. No common reserved private word is needed.
+
+Second, the boundary code can use the actual size of its forbidden
+digit set $U'$ rather than the worst-case size three. With eight
+unused a-digits and twelve collapsed parents, its capacity
+condition is
+
+$$
+9\cdot5+8+|U'|\le23+8+2\cdot12,
+\qquad\text{equivalently }|U'|\le2.
+\tag{CD122}
+$$
+
+If $|U|\le2$, use $U'=U$. If $|U|=3$, the exact unit image has
+three actual owners with distinct rows and distinct digits.
+Let $\beta$ be the digit of its row-one owner g. There are at
+least two private words outside g's modulo-3 phase, hence at
+least six eligible modulo-27 parents. Four clean parents cannot
+exhaust them. Choose the remaining fine parent there, and use
+$U'=U\setminus\{\beta\}$.
+
+Relabel the fine symbol as $\beta$, fixing all collapsed symbols,
+a-digits and other unit digits. Fine-code injectivity ensures
+that $\beta$ appears only in the chosen fine parent. Its actual
+unit owner g cannot cover the inserted source there, since the
+source keeps the old modulo-3 coordinate and that coordinate
+was chosen outside g's phase. Every other unit owner remains
+excluded. The grouped source therefore still supplies nonunit
+ordinary owners point by point. The unused unit owner's backup
+output can remain in the replacement; no extra omission is
+assumed or needed.
+
+Eight universally good pairs supply at least eight units of gain.
+Retaining three top donors still decreases the number of classes
+by at least five. Four distinct safe clean assignments would
+therefore contradict global minimality, proving
+
+$$
+\boxed{\nu\le3.}
+\tag{CD123}
+$$
+
+Use eleven universal dummy digits in the Hall argument of CD119.
+A matching covering all fifteen parents would use at least four
+real digits. Its failure gives
+
+$$
+|N(V)|+11<|K|\le3|V|.
+\tag{CD124}
+$$
+
+Consequently a four-word V has no clean neighbor at all, or all
+five words together have at most three clean neighbors. The
+resulting blocked rectangle satisfies
+
+$$
+\boxed{
+|T|\ge20,\ |V|=4
+\quad\text{or}\quad
+|T|\ge17,\ |V|=5.
+}
+\tag{CD125}
+$$
+
+The same injective assignment from rectangle cells to actual top
+cofactors now gives at least eighty distinct nonunit cofactors m,
+each dividing W and accompanied by all three actual numerical
+moduli $mq^2,3mq^2,9mq^2$ in D. The five-word alternative gives
+at least eighty-five. The lower companions can still occur at
+different second digits and cofactor phases. The next exchange
+must account for those locations jointly; this conclusion alone
+does not exclude the squared-23 branch.
+
+A complete scoped transient Lean application checks CD125 and the
+eighty-cofactor conclusion from the original family assumptions
+and an actual deep original. Its 168 axiom reports use only
+`propext`, `Classical.choice` and `Quot.sound`, with no errors or
+`sorryAx`. The finite Hall, grouped-slot and symbol-relabeling
+steps reuse existing declarations. No new retained declaration,
+freeze or coverage record is introduced. The full squared-23
+exclusion and unrestricted Erdős #7 remain unresolved.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
