@@ -8,6 +8,9 @@ the [actual transformed form](../../../Library/Weil/fukushima2011dirichlet.md)
 sharp-band center has a prescribed finite approximation with a payable
 complete remainder, on the even minimal realization.
 
+Complex pairings, rank-one operators and coefficient Grams follow the
+[first-slot-linear matrix convention](README.md#complex-inner-products-for-matrix-reports).
+
 ## Operator domain and complete block
 
 Fix $c=3/8$, $N=64$, $\alpha=1/2-c=1/8$ and
@@ -19,7 +22,7 @@ $m(\mathsf D)su\in L^2$. Consequently
 
 $$
 Tu=\alpha u+s\,m(\mathsf D)(su)+c_\Gamma s^2u-Bu
-       +c\langle v_0,u\rangle v_0. \tag{SC1}
+       +c\langle u,v_0\rangle v_0. \tag{SC1}
 $$
 
 Every term is $L^2$. First (WF2) and its compact-core approximation
@@ -266,7 +269,7 @@ z^*Uz=2\Re\langle k(z),q(z)\rangle
 \ge\langle k(z),C^{-1}k(z)\rangle. \tag{SC10}
 $$
 
-The finite lower Schur matrix is $[T(p_i,p_j)]-U$.
+The finite lower Schur matrix is $[T(p_j,p_i)]-U$.
 All cross terms and the residual Gram must use the same trials.
 Complete numerical operator residuals, useful evaluated constants,
 the retained matrix sign and cofinal $c\uparrow1/2$ remain missing.
@@ -362,7 +365,7 @@ U_{\rm scalar}-U_w\succeq b_{\varepsilon,N}G_s\succeq0.
 $$
 
 Thus the full finite Schur lower matrix
-$[T_c(p_i,p_j)]-U_w$ dominates the existing scalar-residual comparison
+$[T_c(p_j,p_i)]-U_w$ dominates the existing scalar-residual comparison
 by this explicit nonnegative source Gram. The saving is strict on any
 coefficient direction with nonzero full residual; residual null
 directions are retained. This comparison uses identical sources,
@@ -450,7 +453,7 @@ not a rounded ground column. For the same coefficient vector $z$ set
 
 $$
 \begin{aligned}
-t(z)&=\langle p_0,p(z)\rangle/\|p_0\|^2,\\
+t(z)&=\langle p(z),p_0\rangle/\|p_0\|^2,\\
 q_\perp(z)&=q(z)+t(z)Qv_0,\\
 u_\perp(z)&=p(z)-q(z)-t(z)v_0.
 \end{aligned}
@@ -461,6 +464,9 @@ The known $T_cv_0=0$ gives $QT_cu_\perp(z)=r(z)$.
 The ground vector has $u_\perp=q_\perp=0$. All these maps share the
 same coefficients; $su_\perp\in H^2$ follows from the selected trials,
 the sharp low band, and the existing theta derivative bounds.
+For a complex multiple $p=\zeta p_0$, $q=-\zeta Qv_0$, the declared
+convention gives $t=\zeta$ and $u_\perp=q_\perp=0$, including
+$\zeta=i$.
 
 Let $F=M_V+c|v_0\rangle\langle v_0|$ on the full even space.
 The standard shorting and rank-one inversion used in (WH6)--(WH8)

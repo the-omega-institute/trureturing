@@ -10,6 +10,9 @@ This is an application of existing form, inverse and action tools;
 their original-model premises remain conditions, rather than facts
 certified by parsing the saved JSON or by a new Lean proof.
 
+Complex pairings and the common coefficient maps use the
+[first-slot-linear matrix convention](README.md#complex-inner-products-for-matrix-reports).
+
 ## Keep the pointwise supplier before minimizing
 
 Let $j_i$ be the exact saved lower endpoint for
