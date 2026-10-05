@@ -24,8 +24,29 @@ All first-layer scan addresses, together with the two initial content times, bel
 
 The existing PassiveQueryMemoization result identifies empty-cache paid length with the original support cardinality and preserves equality of completed histories in both directions. The existing PrimePowerPassiveGcdController.protocol_spec then supplies equality of the complete positive numerical gcd future. These are reused suppliers; the added proof is the arbitrary-fuel support estimate distinguishing accounted and general parents. The result bounds paid query count and makes no optimality, maximum-index or total running-time assertion.
 
+**Theorem 1.2 (Exact worst history length of the fixed original tree).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdMemoSupportUpper.rank_pattern_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdMemoSupportUpper.rank_pattern_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every prime p and exponent e>=1, put r_d=zeroRank(p^d). Let g count the depths d=1 through e-1 where r_(d+1) differs from r_d. The public growthCount recursively counts precisely these changes. Let delta be zero when e=1 or the last lift is stagnant, and one otherwise. Put B=r_1+g*(p-1)-delta. Fix the same original protocol, positive-time numerical read channel and empty-cache memo. Every source v in N times N has completed history length at most B. There is one fixed natural source v with both coordinates below p^e whose completed history has length exactly B.
+
+The refined proof counts a cached parent and an arbitrary parent together. Both extra budgets are zero at zero fuel. A stagnant lift has cached cost equal to the next cached budget; its arbitrary-parent cost is one plus that budget. A growing lift has cached cost p-2 plus the next arbitrary-parent budget, and arbitrary-parent cost p-1 plus that budget. Exhaustion selects an omitted address, so its successor uses the arbitrary budget. For positive fuel the two budgets differ by one. The cached budget equals g*(p-1) minus the final-growth indicator. Prefix monotonicity includes every content depth in the upper bound. The finite prior set S is proof accounting and supplies no runtime responses or additional cache.
+
+For attainment, the public modular realization and observation inverse supply a bounded natural source with observation (0,1) modulo H=p^e. Existing actual-source identities and gcd congruence give its reading gcd(fib(k),H) at every positive k. Its content depth is zero. The first scan first hits at r_1 and visits the whole interval 1 through r_1. At depth d the phase is r_d-1. Stagnation queries r_d and hits. Growth tests q*r_d for 1<=q<=p-1, all miss the next threshold, and selects the unqueried representative r_(d+1).
+
+Along this same source, cached prior support lies at or below r_d and contains r_d, while fresh prior support lies strictly below r_d. Distinct growing multiples beyond that support add exactly p-2 or p-1 addresses, respectively. The omitted next parent is beyond every tested address and remains fresh. Stagnation adds zero or one address before becoming cached. The exact cardinal recurrence therefore matches the universal upper recurrence. The precision/fuel condition keeps every tested threshold inside H. Existing memoization then transports support cardinality to paid length.
+
+The new mathematical content is the rank-dependent support bound together with its attained cardinality on the original source domain. Rank dichotomy, bounded modular realization, actual-source identities and memo transport are reused suppliers with no new mathematical credit. This is the exact worst cost of this fixed tree; it does not claim minimum adaptive cost, arbitrary-modulus optimality, maximum query index, running time or the larger full14 goal.
+
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdMemoSupportUpper.rank_pattern_exact`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdMemoSupportUpper.result`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController](PrimePowerPassiveGcdController.md)
 - Dependency: [D5/S3/ConceptDynamics/Experiment/PassiveQueryMemoization](../../ConceptDynamics/Experiment/PassiveQueryMemoization.md)
