@@ -28,6 +28,9 @@ local notation "B" => FourExitRawEndpointSpectrum.B
 local notation "H" => fun r : Nat => comb r (fun _ => A) C
 local notation "preComb" => fun r : Nat => comb r (fun _ => FreeMagma.of true) (FreeMagma.of false)
 
+local notation "certLeaves" => fun U : Source => List.mergeSort (leaves U)
+  (fun a b : Address => decide (List.Shortlex (InvImage (· < ·) Bool.toNat) a b ∨ a = b))
+
 /-- The baseline, the single enlarged slot, and the contracted left comb. -/
 def family (k : Nat) : Index k → Source
   | .inl _ => .mul (H k) B
@@ -54,11 +57,11 @@ def choice (k t : Nat) (y : Reply) : Option (Index k) :=
 
 /-- Each selected prototype starts its complete labelled-leaf test. -/
 noncomputable def scan (k : Nat) : List Nat → Controller
-  | [] => verifyController (family k (.inl ())) (leaves (family k (.inl ())))
+  | [] => verifyController (family k (.inl ())) (certLeaves (family k (.inl ())))
   | t :: ts => .query (query t) (fun y =>
       if y = .alpha then scan k ts else
         match choice k t y with
-        | some i => verifyController (family k i) (leaves (family k i))
+        | some i => verifyController (family k i) (certLeaves (family k i))
         | none => .fallback)
 
 /-- The complete input-independent scan, with true same-address billing. -/
@@ -104,7 +107,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       (∀ i : Index k,
         controllerOutcome (controller k) (family k i) =
           ((route k i).map (fun q => ⟨q,readout q (family k i)⟩) ++
-            (leaves (family k i)).map (fun q => ⟨q,readout q (family k i)⟩), true) ∧
+            (certLeaves (family k i)).map (fun q => ⟨q,readout q (family k i)⟩), true) ∧
         paid (terminal pi (family k i)).1 = leafAddresses (family k i) ∪ extra k i ∧
         cost pi (family k i) = 3*k+13 + if i = .inl () then 0 else 1) ∧
       (∀ i : Index k, i ≠ .inl () → query (stop k i) ∉ leafAddresses (family k i)) ∧
@@ -373,17 +376,47 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           rw [(raw_Y i).2] at hh
           contradiction
         · intro h s hs; exact (raw_Y i).1 s (by omega)
+  have verifier_answer (V U : Source) (qs : List Address) :
+      (controllerOutcome (verifyController V qs) U).2 = true ↔
+        (∀ q ∈ qs, readout q U = readout q V) ∨ Positive U := by
+    induction qs with
+    | nil => simp [verifyController,controllerOutcome]
+    | cons q qs ih =>
+      by_cases hq : readout q U = readout q V
+      · simp [verifyController,controllerOutcome,hq,ih]
+      · simp [verifyController,controllerOutcome,hq,acquisition_foundation.1 U]
+  have cert_correct (V U : Source) (hv : Positive V) :
+      (controllerOutcome (verifyController V (certLeaves V)) U).2 = true ↔ Positive U := by
+    rw [verifier_answer]
+    constructor
+    · rintro (matched | positive)
+      · have same : U = V := source_foundation.2.2.1 V U (fun q hq =>
+          matched q ((List.mergeSort_perm _ _).mem_iff.mpr hq))
+        exact same.symm ▸ hv
+      · exact positive
+    · exact Or.inr
+  have cert_matched (V : Source) : ∀ qs : List Address,
+      controllerOutcome (verifyController V qs) V =
+        (qs.map (fun q => ⟨q,readout q V⟩),true) := by
+    intro qs
+    induction qs with
+    | nil => rfl
+    | cons q qs ih => simp [verifyController,controllerOutcome,ih]
+  have cert_set (V : Source) : (certLeaves V).toFinset = (leaves V).toFinset := by
+    ext q
+    simp only [List.mem_toFinset]
+    exact (List.mergeSort_perm _ _).mem_iff
   have correct_scan (ts : List Nat) (U : Source) :
       (controllerOutcome (scan k ts) U).2 = true ↔ Positive U := by
     induction ts with
-    | nil => exact ActualJointResponseCostCore.phase_foundation.2.1 _ (positive (.inl ())) U
+    | nil => exact cert_correct _ U (positive (.inl ()))
     | cons t ts ih =>
       by_cases hy : readout (query t) U = .alpha
       · simpa only [scan, controllerOutcome, hy, ↓reduceIte] using ih
       · simp only [scan, controllerOutcome, hy, ↓reduceIte]
         cases choice k t (readout (query t) U) with
         | none => exact acquisition_foundation.1 U
-        | some i => exact ActualJointResponseCostCore.phase_foundation.2.1 _ (positive i) U
+        | some i => exact cert_correct _ U (positive i)
   have scan_prefix (qs ts : List Nat) (U : Source)
       (ha : ∀ t ∈ qs, readout (query t) U = .alpha) :
       controllerOutcome (scan k (qs ++ ts)) U =
@@ -405,14 +438,14 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
   have outcomes (i : Index k) :
       controllerOutcome (controller k) (family k i) =
         ((route k i).map (fun q => ⟨q,readout q (family k i)⟩) ++
-          (leaves (family k i)).map (fun q => ⟨q,readout q (family k i)⟩), true) := by
+          (certLeaves (family k i)).map (fun q => ⟨q,readout q (family k i)⟩), true) := by
     cases i with
     | inl u =>
       cases u
       have hp := scan_prefix (List.range (k+1)) [] (family k (.inl ()))
         (fun t ht => raw_base t (by have := List.mem_range.mp ht; omega))
       simp only [List.append_nil] at hp
-      rw [controller, hp, scan, ActualJointResponseCostCore.phase_foundation.2.2.1]
+      rw [controller, hp, scan, cert_matched]
       simp only [route,stop,List.map_map,Function.comp_def]
     | inr p =>
       cases p with
@@ -421,7 +454,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           scan_prefix _ _ _ (fun t ht => (raw_X j).1 t (List.mem_range.mp ht))]
         simp [scan, controllerOutcome, (raw_X j).2,
           ↓reduceIte, choice, dif_pos j.isLt,
-          ActualJointResponseCostCore.phase_foundation.2.2.1, route, stop,
+          cert_matched, route, stop,
           List.range_succ, List.map_append, List.map_cons, List.map_nil,
           List.singleton_append, List.map_map, Function.comp_def, List.append_assoc]
       | inr i =>
@@ -431,7 +464,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         have he : (⟨i.val+1-1,by have := i.isLt; omega⟩ : Fin k) = i := Fin.ext (by simp only [Fin.val_mk]; omega)
         simp [scan, controllerOutcome, (raw_Y i).2,
           ↓reduceIte, choice, dif_pos hi, he,
-          ActualJointResponseCostCore.phase_foundation.2.2.1, route, stop,
+          cert_matched, route, stop,
           List.range_succ, List.map_append, List.map_cons, List.map_nil,
           List.singleton_append, List.map_map, Function.comp_def, List.append_assoc]
   let pi : Strategy := {
@@ -551,7 +584,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
   have bill (i : Index k) : paid (terminal pi (family k i)).1 =
       leafAddresses (family k i) ∪ extra k i := by
     rw [terminal_outcome, outcomes]
-    simp only [paid, List.map_append, List.toFinset_append, List.map_map, Function.comp_def, List.map_id_fun']
+    simp only [paid, List.map_append, List.toFinset_append, List.map_map, Function.comp_def, List.map_id_fun',cert_set]
     change (route k i).toFinset ∪ leafAddresses (family k i) = _
     apply Finset.Subset.antisymm
     · intro q hq

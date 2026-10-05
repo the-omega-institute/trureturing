@@ -23,7 +23,8 @@ internal sealed class Scale38NestedCompensationDocument : IScribeDocumentDefinit
                 "The scan requests L followed by t right turns and LLR, for t from zero through k. "
                 + "Alpha replies continue the scan. A branch selects the enlarged slot at t; "
                 + "an absent reply at t greater than zero selects contraction depth t-1. "
-                + "All alpha replies select the baseline. Every other reply starts total tree "
+                + "All alpha replies select the baseline. The complete leaf test uses shortlex order, "
+                + "with left before right at equal lengths. Every other reply starts total tree "
                 + "acquisition. A selection always starts a complete labelled-leaf test, with "
                 + "a mismatch also starting total acquisition.")),
                 Paragraph(Text(
@@ -33,6 +34,8 @@ internal sealed class Scale38NestedCompensationDocument : IScribeDocumentDefinit
                 + "with its single branch or absent exit address. The earlier scan addresses are "
                 + "actual alpha leaves of that input, and the exit address is not a leaf. "
                 + "Thus the baseline costs 3k+13 and every exceptional row costs 3k+14. "
+                + "A fresh outer cache stores only requested addresses and their truthful replies, "
+                + "contains no duplicate address, and pays the same distinct-address set. "
                 + "Every globally correct original strategy costs at least 3k+14 on some row, "
                 + "so the deterministic common cost is exactly 3k+14."))),
             DescribeRole.Theorem))));
