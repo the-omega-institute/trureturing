@@ -59,6 +59,8 @@ internal sealed class Scale36ActualEndpointAcquisitionDocument : IScribeDocument
     private static Formula Call(string name, params Formula[] xs) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. xs]);
     private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
+    private static Formula Mul(Formula a, Formula b) => Seq(a, Sp, Cdot, Sp, b);
+    private static Formula Sub(Formula a, Formula b) => Seq(a, Sp, Minus, Sp, b);
     private static Formula And(params Formula[] xs) => Seq(xs.Select((x, i) =>
         i == 0 ? Par(x) : Seq(Sp, Land, Sp, Par(x))).ToArray());
     private static Formula All(string name, Formula type, Formula body) =>
