@@ -14,15 +14,26 @@ internal sealed class Scale38NestedCompensationDocument : IScribeDocumentDefinit
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(
+                "Write (s,t) for ordered tree pairing. Let E=(beta,alpha), A=(E,beta), "
+                + "C=(A,E), and B=(C,A). The tree H_r is the right comb of r copies of A "
+                + "ending in C; h_r is the right comb of r alpha leaves ending in beta. "
+                + "The comb G_(k,j) changes its j-th A slot to B. The sources are "
+                + "P_0=(H_k,B), X_j=(G_(k,j),A), and Y_i=(H_i,(H_(k-i),A)), "
+                + "for 1 <= j <= k and 0 <= i < k.")),
+                Paragraph(Text(
+                "Their complete preimages are (h_k,E), (g_(k,j),alpha), and "
+                + "(h_i,(h_(k-i),alpha)), respectively. Here g_(k,j) has k left slots "
+                + "ending in beta, with E at slot j and alpha at every other slot.")),
+                Paragraph(Text(
                 "For every positive integer k, the baseline, the k enlarged-slot rows, and "
                 + "the k contracted-left-comb rows are distinct actual third substitution images. "
-                + "Each has the displayed unique complete preimage, with composition (k+1,2). "
+                + "Each has the stated unique complete preimage, with composition (k+1,2). "
                 + "Their image composition is (k+5,2k+8), with 3k+13 leaves. Every pair is "
                 + "nonconflicting, including pairs whose left combs end at different depths.")),
                 Paragraph(Text(
                 "The scan requests L followed by t right turns and LLR, for t from zero through k. "
-                + "Alpha replies continue the scan. A branch selects the enlarged slot at t; "
-                + "an absent reply at t greater than zero selects contraction depth t-1. "
+                + "Alpha replies continue the scan. A branch selects X_(t+1) when t < k; "
+                + "an absent reply at t greater than zero selects Y_(t-1). "
                 + "All alpha replies select the baseline. The complete leaf test uses shortlex order, "
                 + "with left before right at equal lengths. Every other reply starts total tree "
                 + "acquisition. A selection always starts a complete labelled-leaf test, with "
