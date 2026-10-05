@@ -304,29 +304,6 @@ internal sealed class FibonacciFactorCompletionDocument : IScribeDocumentDefinit
     }
 
 
-    private static Formula JointPrefixConfigurationCardinality()
-    {
-        Formula Apply(Formula f, Formula at) => Call("apply", f, at);
-        Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
-        var family = I("family"); var xs = I("xs"); var k = I("k");
-        var configuration = I("configuration"); var emittedPrefix = I("emittedPrefix");
-        var commonStem = I("commonStem");
-        var prefixSet = Call("commonStemPrefixes", commonStem, k);
-        var joint = Call("pair", Apply(configuration, xs), Apply(emittedPrefix, xs));
-        var prefixMembership = All(Imp(Call("member", xs, family),
-            Call("member", Apply(emittedPrefix, xs), prefixSet)), B("xs", Returns));
-        var premise = And(Call("InjectiveOn", joint, family), prefixMembership);
-        var conclusion = Call("le", Call("card", family),
-            Mul(Call("card", Call("image", family, configuration)), Add(k, D(1))));
-        return Disp(All(Imp(premise, conclusion),
-            B("Configuration", I("Type")),
-            B("family", Call("Finset", Returns)),
-            B("configuration", new Formula.TypeArrow(Returns, I("Configuration"))),
-            B("emittedPrefix", new Formula.TypeArrow(Returns, Call("List", I("Label")))),
-            B("commonStem", Call("List", I("Label"))), B("k", I("Nat"))));
-    }
-
-
     private static Formula DecoderConfigurationExtraction()
     {
         Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
@@ -458,12 +435,7 @@ internal sealed class FibonacciFactorCompletionDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create(Prefix + "actual_source_address_injection"),
                 H("Actual equal-weight source addresses determine their lists"),
                 StatementSource.FromAuthor(SourceAddressInjection()), AssessedProvenance.FromRepo(),
-                 Blocks(Paragraph(Text("For either actual side and either model, two return lists of the same variable weight have equal full eventually-empty source addresses only if the lists are equal. Equality of addresses determines the finite observed prefixes because their original lengths coincide. Removing the same stem and paid anchor leaves equal external label words. On the high side U and C have different second labels; on the low side V and C have different first labels. The label-block encoding is therefore uniquely recoverable. Reversing the execution-letter order preserves the letters inside each original block, and the existing complete execution parser recovers the return list. The two literal tails remain unchanged. This is a statement about literal addresses; it does not assert injectivity of the scalar coordinate or establish an asymptotic rate."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("fib-joint-prefix-configuration-cardinality"),
-                DeclarationHandle.Create(Prefix + "joint_prefix_configuration_cardinality"),
-                H("Joint configuration and common-stem prefix cardinality"),
-                StatementSource.FromAuthor(JointPrefixConfigurationCardinality()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("If the family-to-(complete configuration, emitted prefix) map is injective and every emitted prefix belongs to the prefixes of one common stem through position k, then the family has at most (k+1) times as many reached configurations. The prefix set is constructed once from the common stem, so the factor is proved by a finite image cardinality bound. This relation is the arbitrary-k bridge: an individual output-length bound without a shared stem does not supply it. The emitted prefix remains a joint counting coordinate; it is not counted as readable memory."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For either actual side and either model, two return lists of the same variable weight have equal full eventually-empty source addresses only if the lists are equal. Equality of addresses determines the finite observed prefixes because their original lengths coincide. Removing the same stem and paid anchor leaves equal external label words. On the high side U and C have different second labels; on the low side V and C have different first labels. The label-block encoding is therefore uniquely recoverable. Reversing the execution-letter order preserves the letters inside each original block, and the existing complete execution parser recovers the return list. The two literal tails remain unchanged. This is a statement about literal addresses; it does not assert injectivity of the scalar coordinate or establish an asymptotic rate."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fib-actual-decoder-configuration-extraction"),
                 DeclarationHandle.Create(Prefix + "actual_decoder_configuration_extraction"),
                 H("Complete configurations separate actual paired records"),

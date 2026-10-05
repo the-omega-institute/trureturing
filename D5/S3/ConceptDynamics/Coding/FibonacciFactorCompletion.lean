@@ -2567,49 +2567,6 @@ theorem actual_source_address_injection (j : Side) (model : Model)
   simpa only [List.reverse_reverse] using congrArg List.reverse h
 
 
-/- A common stem supplies the exact finite prefix factor in the joint
-   configuration/output count.  The prefix set is deliberately built from
-   the first k+1 prefixes of one fixed stem; per-record length bounds alone
-   do not provide this shared set. -/
-theorem joint_prefix_configuration_cardinality
-    {Configuration : Type*} [DecidableEq Configuration]
-    (family : Finset (List Return))
-    (configuration : List Return → Configuration)
-    (emittedPrefix : List Return → List Label)
-    (jointInjective : Set.InjOn (fun xs => (configuration xs, emittedPrefix xs))
-      (family : Set (List Return)))
-    (commonStem : List Label) (k : ℕ)
-    (prefixBound : ∀ xs ∈ family,
-      emittedPrefix xs ∈ (Finset.range (k + 1)).image (fun n => commonStem.take n)) :
-    family.card ≤ (family.image configuration).card * (k + 1) := by
-  classical
-  let prefixes : Finset (List Label) :=
-    (Finset.range (k + 1)).image (fun n => commonStem.take n)
-  let pairs : Finset (Configuration × List Label) :=
-    (family.image configuration).product prefixes
-  have pairSubset :
-      family.image (fun xs => (configuration xs, emittedPrefix xs)) ⊆ pairs := by
-    intro z hz
-    rcases Finset.mem_image.mp hz with ⟨xs, hxs, rfl⟩
-    apply Finset.mem_product.mpr
-    constructor
-    · exact Finset.mem_image.mpr ⟨xs, hxs, rfl⟩
-    · exact prefixBound xs hxs
-  calc
-    family.card = (family.image (fun xs =>
-        (configuration xs, emittedPrefix xs))).card := by
-      rw [Finset.card_image_of_injOn]
-      exact jointInjective
-    _ ≤ pairs.card := Finset.card_le_card pairSubset
-    _ = (family.image configuration).card * prefixes.card := by
-      simp [pairs]
-    _ ≤ (family.image configuration).card * (k + 1) := by
-      apply Nat.mul_le_mul_left
-      have hcard := Finset.card_image_le
-        (s := Finset.range (k + 1)) (f := fun n => commonStem.take n)
-      simpa [prefixes] using hcard
-
-
 set_option maxHeartbeats 4000000 in
 -- Actual record construction and finite liveness share the full decoder recurrence.
 /-- Complete readable configurations evolve without reading the append-only output.
