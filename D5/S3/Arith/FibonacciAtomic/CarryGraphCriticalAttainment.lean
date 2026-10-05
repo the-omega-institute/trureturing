@@ -72,7 +72,8 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
         ∃ i n, CarryGraphRealization.sample m γ tape = some (i, n)) ∧
       (∀ i : Fin m,
         D5.S0.Tower.DBonacci.TerminalSampling.fairTape
-          {tape | ∃ n, CarryGraphRealization.sample m γ tape = some (i, n)} = ENNReal.ofReal (p i)) ∧
+          {tape | ∃ n, CarryGraphRealization.sample m γ tape = some (i, n)} =
+            ENNReal.ofReal (p i)) ∧
       (∫⁻ tape, CarryGraphRealization.bill m γ tape
         ∂D5.S0.Tower.DBonacci.TerminalSampling.fairTape) = ENNReal.ofReal (pathCost γ) ∧
       pathCost γ = DyadicSupportLines.cost p ∧
@@ -142,10 +143,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
         v ⟨successor s.val a.val, a.property.2.2⟩ - x * (a.val.b : ℝ)
       obtain ⟨a, hmin⟩ := exists_eq_ciInf_of_finite (f := q)
       have qmin : (⨅ a, q a) = q a := hmin.symm
-      have extend : ∃ f : P m, f s = a := by
-        refine ⟨fun t => if h : t = s then h.symm ▸ a else base t, ?_⟩
-        simp
-      obtain ⟨f, hf⟩ := extend
+      obtain ⟨f, hf⟩ := Function.surjective_eval (β := fun t : S m => A m t.val) s a
       change Finset.univ.inf' _ (fun f => loss s f + (↑(1 / 2 : NNReal) : ℝ) * v (next s f)) = _
       rw [show (↑(1 / 2 : NNReal) : ℝ) = 1 / 2 by norm_num]
       change _ = (s.val.r : ℝ) + (1 / 2 : ℝ) * ⨅ a, q a
@@ -181,10 +179,12 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
         have B := bridge (embed u) s
         have H := congrFun hu s
         simp only [discountedLossBellmanOperator] at B
-        change -(discountedBellmanOperator (fun s f => -loss s f) tr (1 / 2) (-(embed u)) s) = _ at B
+        change -(discountedBellmanOperator (fun s f => -loss s f) tr (1 / 2)
+          (-(embed u)) s) = _ at B
         change _ = -u s
         change _ = u s at H
-        change -(discountedBellmanOperator (fun s f => -loss s f) tr (1 / 2) (-(embed u)) s) = bellman m x u s at B
+        change -(discountedBellmanOperator (fun s f => -loss s f) tr (1 / 2)
+          (-(embed u)) s) = bellman m x u s at B
         rw [H] at B
         linarith
       have H := hunique (-(embed u)) hneg

@@ -74,7 +74,7 @@ internal sealed class CarryGraphCriticalAttainmentDocument : IScribeDocumentDefi
     {
         var m = V("m"); var x = V("x"); var values = V("V"); var tables = V("f");
         var s = V("s"); var w = V("w"); var gamma = V("gamma"); var i = V("i");
-        var tape = V("tape"); var n = V("n"); var root = V("o");
+        var tape = V("tape"); var n = V("n"); var root = Call("root", m);
         var states = Call("S", m); var policies = Call("P", m); var indices = Call("Fin", m);
         var valueType = Seq(states, Sp, To, Sp, Ty("R")); var alpha = Call("alpha", m);
         Formula Value(Formula price, Formula state) => Call("V", price, state);
