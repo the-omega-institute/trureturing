@@ -78,13 +78,14 @@ internal sealed class CarryGraphRealizationDocument : IScribeDocumentDefinition
                     H("Every root path has its actual fair-bit tree"),
                     StatementSource.FromAuthor(Disp(ResultFormula())), AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("For every m at least two and every legal root path, the fixed digits give a nonnegative normalized law. Index zero is the minimum anchor and equals its digit series; a positive anchor makes every label positive.")),
-                        Paragraph(Text("The constructed stopping words are prefix-free and carry exactly the selected labels at each depth. The first-return sample outputs a label and length exactly when its tape prefix is that labelled leaf. Its bill is that length, so each consumed fair bit is charged once. Under the existing independent fair-tape measure its label law is the digit law, its stopping tail is r(d)/2^d, and it returns almost surely. The expected bill equals pathCost, is at most m, and dominates the existing dyadic cost. No canonical-expansion, rationality or computability hypothesis is added."))),
+                        Paragraph(Text("The constructed stopping words are prefix-free and carry exactly the selected labels at each depth. The first-return sample outputs a label and length exactly when its tape prefix is that labelled leaf. Its bill is that length, so each consumed fair bit is charged once. Under the existing independent fair-tape measure its label law is the digit law, its stopping tail is r(d)/2^d, and it returns almost surely. The expected bill equals pathCost, is at most m, and dominates the existing dyadic cost. No canonical-expansion, rationality or computability hypothesis is added.")),
+                        Paragraph(Text("The inequality can be strict. For two labels, take the root action (b,h,c)=(0,1,0) and then repeat (1,0,0) at state (1,1). The output digits are 0.01111... and 0.10000..., so both probabilities are one half. The path cost is two while the dyadic cost of its law is one."))),
                     DescribeRole.Theorem))));
     }
     private static Formula ResultFormula()
     {
         var m = V("m"); var g = V("gamma"); var i = V("i"); var d = V("d");
-        var t = V("tape"); var k = V("n"); var w = V("w");
+        var t = V("tape"); var k = V("n"); var w = V("w"); var delta = V("delta");
         var n = Seq(Mathbb, Grp(V("N"))); var indices = Call("Fin", m);
         Formula P(Formula x) => Call("ofDigits", Call("labelDigit", g, x));
         Formula A(Formula x) => Seq(D(0), Sp, Le, Sp, x);
@@ -120,7 +121,10 @@ internal sealed class CarryGraphRealizationDocument : IScribeDocumentDefinition
             Par(Seq(new Formula.Power(Forall, Call("ae", V("fairTape"))), Sp,
                 t, Colon, Sp, V("Tape"), Comma, Sp, Ex(i, indices, Ex(k, n, Returned(k))))),
             Equal(Call("lintegral", V("fairTape"), Call("bill", m, g)), Call("ofReal", cost)),
-            Seq(cost, Sp, Le, Sp, m), Seq(Call("cost", Par(Seq(i, Colon, Sp, indices, Sp, Mapsto, Sp, P(i)))), Sp, Le, Sp, cost));
+            Seq(cost, Sp, Le, Sp, m), Seq(Call("cost", Par(Seq(i, Colon, Sp, indices, Sp, Mapsto, Sp, P(i)))), Sp, Le, Sp, cost),
+            Ex(delta, V("Path"), And(Call("IsRootPath", D(2), delta),
+                Seq(Call("cost", Par(Seq(i, Colon, Sp, Call("Fin", D(2)), Sp, Mapsto, Sp,
+                    Call("ofDigits", Call("labelDigit", delta, i))))), Sp, Lt, Sp, Call("pathCost", delta)))));
         return All(m, n, Imp(Seq(D(2), Sp, Le, Sp, m), All(g, V("Path"),
             Imp(Call("IsRootPath", m, g), clauses))));
     }
