@@ -530,15 +530,6 @@ theorem fourier_window_finite_rank_approximation :
         exact integral_const_mul
           (coeff (i.1 : ℕ) * mon (i.1 : ℕ) i.2 ξ)
           (fun x => mon (i.1 : ℕ) i.2 x * f x)
-  have hSeparatedFubini (k : ℕ) (s : Fin k → Fin n) (f g : H) : (∫ ξ in B, ∫ x in A, (mon k s ξ * g ξ) * (mon k s x * f x) ∂μ ∂μ) = (∫ x in A, ∫ ξ in B,
-        (mon k s ξ * g ξ) * (mon k s x * f x) ∂μ ∂μ) := by
-    have hprod :
-        Integrable
-          (fun z : E × E => (mon k s z.1 * g z.1) * (mon k s z.2 * f z.2))
-          ((μ.restrict B).prod (μ.restrict A)) :=
-      (hmon_integrable B hB hμB b hb hξb k s g).mul_prod
-        (hmon_integrable A hA hμA a ha hxa k s f)
-    exact integral_integral_swap hprod
   have hTN_rep (N : ℕ) (f : H) :
       ⇑(TN N f) =ᵐ[μ]
         B.indicator
