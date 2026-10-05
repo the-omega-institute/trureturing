@@ -14,6 +14,7 @@ import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Positivity
+import Mathlib.Data.Real.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -141,8 +142,8 @@ def scanWeight (k : Nat) (s : Fin 3) : ℚ :=
       ((k:ℚ)-2)/(3*((k:ℚ)-1))] : List ℚ).getD s.val 0
 
 /-- A finite rational law: uniform retained slot and independent preselected choices. -/
-def seedWeight (k : Nat) (seed : Seed k) : ℚ :=
-  (tailWeight k seed.2.1 / k) * ∏ l : Fin k, scanWeight k (seed.2.2 l)
+def seedWeight {K : Type*} [Field K] (k : Nat) (tail scan : Fin 3 → K) (seed : Seed k) : K :=
+  (tail seed.2.1 / k) * ∏ l : Fin k, scan (seed.2.2 l)
 
 /-- The excess vector read from the exact nonleaf address table. -/
 private def rowExcess (k : Nat) (seed : Seed k) (i : Index k) : Nat :=
@@ -385,7 +386,7 @@ private theorem actual_routes (k : Nat) (hk : 1 ≤ k) :
 /-- All parameters are chosen before the input. Costs refer to actual requested addresses. -/
 theorem result (k : Nat) (hk : 1 ≤ k) :
     ∃ pi : Seed k → Strategy,
-      (∀ seed, 0 ≤ seedWeight k seed) ∧ (∑ seed : Seed k, seedWeight k seed) = 1 ∧
+      (∀ seed, 0 ≤ seedWeight k (tailWeight k) (scanWeight k) seed) ∧ (∑ seed : Seed k, seedWeight k (tailWeight k) (scanWeight k) seed) = 1 ∧
       (∀ seed,
         CoarseObservable (pi seed).policy ∧
         (∀ i : Index k,
@@ -396,11 +397,31 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         (Finset.univ.sup (fun i : Index k => cost (pi seed) (family k i))) = 8*k+18 ∧
         (∑ i : Index k, (extraAddresses k seed i).card) = 5*k) ∧
       (Finset.univ.sup' (Finset.univ_nonempty) (fun i : Index k =>
-        ∑ seed : Seed k, seedWeight k seed * (cost (pi seed) (family k i) : ℚ))) =
+        ∑ seed : Seed k, seedWeight k (tailWeight k) (scanWeight k) seed * (cost (pi seed) (family k i) : ℚ))) =
           (8*k+16 : Nat) + max ((5*(k:ℚ)-1)/(4*k)) ((4*(k:ℚ)-2)/(3*k)) ∧
-      (∑ seed : Seed k, seedWeight k seed *
+      (∑ seed : Seed k, seedWeight k (tailWeight k) (scanWeight k) seed *
         ((Finset.univ.sup (fun i : Index k => cost (pi seed) (family k i)) : Nat) : ℚ)) =
-          (8*k+18 : Nat) := by
+          (8*k+18 : Nat) ∧
+      (∀ tail scan : Fin 3 → ℝ,
+        (∀ s, 0 ≤ tail s ∧ 0 ≤ scan s) →
+        (∑ s : Fin 3, tail s) = 1 → (∑ s : Fin 3, scan s) = 1 →
+        (∀ seed, 0 ≤ seedWeight k tail scan seed) ∧
+        (∑ seed : Seed k, seedWeight k tail scan seed) = 1 ∧
+        (∑ seed : Seed k, seedWeight k tail scan seed *
+          (cost (pi seed) (family k (.inl ())) : ℝ)) = (8*k+16 : Nat) + 1 ∧
+        ∀ l : Fin k,
+          (∑ seed : Seed k, seedWeight k tail scan seed *
+            (cost (pi seed) (family k (.inr (l,0))) : ℝ)) =
+              (8*k+16 : Nat) + 1 + (-tail 0 + tail 2 + ((k:ℝ)-1)*scan 0)/k ∧
+          (∑ seed : Seed k, seedWeight k tail scan seed *
+            (cost (pi seed) (family k (.inr (l,2))) : ℝ)) =
+              (8*k+16 : Nat) + 1 + (tail 0 - tail 1)/k ∧
+          (∑ seed : Seed k, seedWeight k tail scan seed *
+            (cost (pi seed) (family k (.inr (l,1))) : ℝ)) =
+              (8*k+16 : Nat) + 1 + (tail 1 - tail 2 + ((k:ℝ)-1)*scan 1)/k ∧
+          (∑ seed : Seed k, seedWeight k tail scan seed *
+            (cost (pi seed) (family k (.inr (l,3))) : ℝ)) =
+              (8*k+16 : Nat) + 1 + ((k:ℝ)-1)*scan 2/k) := by
   classical
   have table_sizes (seed : Seed k) (i : Index k) :
       (extraAddresses k seed i).card = rowExcess k seed i := by
@@ -476,71 +497,78 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         field_simp [den] <;> ring
       · intro s; fin_cases s <;> simp [tailWeight,scanWeight,one,two,small]
         all_goals apply div_nonneg <;> linarith
-  have scan_total : (∑ d : Fin k → Fin 3, ∏ l : Fin k, scanWeight k (d l)) = 1 := by
-    rw [← Fintype.prod_sum (fun (_ : Fin k) (s : Fin 3) => scanWeight k s)]
-    simp only [normalized.2.1, Finset.prod_const_one]
-  have scan_mean (l : Fin k) (g : Fin 3 → ℚ) :
-      (∑ d : Fin k → Fin 3, (∏ t : Fin k, scanWeight k (d t)) * g (d l)) =
-        ∑ s : Fin 3, scanWeight k s * g s := by
+  have scan_total {K : Type} [Field K] [LinearOrder K] [IsStrictOrderedRing K] (scan : Fin 3 → K) (hd : (∑ s : Fin 3, scan s) = 1) : (∑ d : Fin k → Fin 3, ∏ l : Fin k, scan (d l)) = 1 := by
+    rw [← Fintype.prod_sum (fun (_ : Fin k) (s : Fin 3) => scan s)]
+    simp only [hd, Finset.prod_const_one]
+  have scan_mean {K : Type} [Field K] [LinearOrder K] [IsStrictOrderedRing K] (scan : Fin 3 → K) (hd : (∑ s : Fin 3, scan s) = 1) (l : Fin k) (g : Fin 3 → K) :
+      (∑ d : Fin k → Fin 3, (∏ t : Fin k, scan (d t)) * g (d l)) =
+        ∑ s : Fin 3, scan s * g s := by
     calc
       _ = ∑ d : Fin k → Fin 3, ∏ t : Fin k,
-          scanWeight k (d t) * (if t = l then g (d t) else 1) := by
+          scan (d t) * (if t = l then g (d t) else 1) := by
         apply Finset.sum_congr rfl
         intro d _
         rw [Finset.prod_mul_distrib, Fintype.prod_ite_eq' l (fun t => g (d t))]
       _ = ∏ t : Fin k, ∑ s : Fin 3,
-          scanWeight k s * (if t = l then g s else 1) := (Fintype.prod_sum (fun (t : Fin k) (s : Fin 3) =>
-        scanWeight k s * (if t = l then g s else 1))).symm
-      _ = ∏ t : Fin k, if t = l then (∑ s : Fin 3, scanWeight k s * g s) else 1 := by
+          scan s * (if t = l then g s else 1) := (Fintype.prod_sum (fun (t : Fin k) (s : Fin 3) =>
+        scan s * (if t = l then g s else 1))).symm
+      _ = ∏ t : Fin k, if t = l then (∑ s : Fin 3, scan s * g s) else 1 := by
         apply Finset.prod_congr rfl
         intro t _
         by_cases eq : t = l
         · simp only [if_pos eq]
-        · simp only [if_neg eq,mul_one,normalized.2.1]
-      _ = _ := Fintype.prod_ite_eq' l (fun _ => ∑ s : Fin 3, scanWeight k s * g s)
-  have law_total : (∑ seed : Seed k, seedWeight k seed) = 1 := by
-    have nonzero : (k:ℚ) ≠ 0 := by exact_mod_cast (by omega : k ≠ 0)
+        · simp only [if_neg eq,mul_one,hd]
+      _ = _ := Fintype.prod_ite_eq' l (fun _ => ∑ s : Fin 3, scan s * g s)
+  have law_total {K : Type} [Field K] [LinearOrder K] [IsStrictOrderedRing K] (tail scan : Fin 3 → K)
+      (ht : (∑ s : Fin 3, tail s) = 1) (hd : (∑ s : Fin 3, scan s) = 1) : (∑ seed : Seed k, seedWeight k tail scan seed) = 1 := by
+    have nonzero : (k:K) ≠ 0 := by exact_mod_cast (by omega : k ≠ 0)
     simp only [seedWeight,Fintype.sum_prod_type]
-    simp_rw [← Finset.mul_sum,scan_total,mul_one]
-    simp [← Finset.sum_div,normalized.1,nonzero]
-  have law_nonnegative (seed : Seed k) : 0 ≤ seedWeight k seed := by
+    simp_rw [← Finset.mul_sum,scan_total scan hd,mul_one]
+    simp [← Finset.sum_div,ht,nonzero]
+  have law_nonnegative {K : Type} [Field K] [LinearOrder K] [IsStrictOrderedRing K] (tail scan : Fin 3 → K)
+      (hn : ∀ s, 0 ≤ tail s ∧ 0 ≤ scan s) (seed : Seed k) : 0 ≤ seedWeight k tail scan seed := by
     apply mul_nonneg
-    · exact div_nonneg (normalized.2.2 seed.2.1).1 (Nat.cast_nonneg k)
-    · exact Finset.prod_nonneg (fun l _ => (normalized.2.2 (seed.2.2 l)).2)
-  let tailE : Fin 3 → Fin 4 → ℚ := fun s r =>
+    · exact div_nonneg (hn seed.2.1).1 (Nat.cast_nonneg k)
+    · exact Finset.prod_nonneg (fun l _ => (hn (seed.2.2 l)).2)
+  let tailE : Fin 3 → Fin 4 → Nat := fun s r =>
     ((match s.val with | 0 => [0,1,2,1] | 1 => [1,2,0,1] | _ => [2,0,1,1]).getD r.val 0 : Nat)
-  let scanE : Fin 3 → Fin 4 → ℚ := fun s r =>
+  let scanE : Fin 3 → Fin 4 → Nat := fun s r =>
     (1 + if (r = 0 ∧ s = 0) ∨ (r = 1 ∧ s = 1) ∨ (r = 3 ∧ s = 2) then 1 else 0 : Nat)
-  let T : Fin 4 → ℚ := fun r => ∑ s : Fin 3, tailWeight k s * tailE s r
-  let S : Fin 4 → ℚ := fun r => ∑ s : Fin 3, scanWeight k s * scanE s r
-  have average_row (l : Fin k) (r : Fin 4) :
-      (∑ seed : Seed k, seedWeight k seed * (rowExcess k seed (.inr (l,r)) : ℚ)) =
-        (T r + ((k:ℚ)-1)*S r)/k := by
+  let T : Fin 4 → ℚ := fun r => ∑ s : Fin 3, tailWeight k s * (tailE s r : ℚ)
+  let S : Fin 4 → ℚ := fun r => ∑ s : Fin 3, scanWeight k s * (scanE s r : ℚ)
+  have average_row {K : Type} [Field K] [LinearOrder K] [IsStrictOrderedRing K] (tail scan : Fin 3 → K)
+      (ht : (∑ s : Fin 3, tail s) = 1) (hd : (∑ s : Fin 3, scan s) = 1) (l : Fin k) (r : Fin 4) :
+      (∑ seed : Seed k, seedWeight k tail scan seed * (rowExcess k seed (.inr (l,r)) : K)) =
+        ( (∑ s : Fin 3, tail s * (tailE s r : K)) +
+          ((k:K)-1)*(∑ s : Fin 3, scan s * (scanE s r : K)))/k := by
+    let T : Fin 4 → K := fun r => ∑ s : Fin 3, tail s * (tailE s r : K)
+    let S : Fin 4 → K := fun r => ∑ s : Fin 3, scan s * (scanE s r : K)
+    change _ = (T r + ((k:K)-1)*S r)/k
     have cast_row (j : Fin k) (s : Fin 3) (d : Fin k → Fin 3) :
-        (rowExcess k (j,s,d) (.inr (l,r)) : ℚ) =
-          if l = j then tailE s r else scanE (d l) r := by
+        (rowExcess k (j,s,d) (.inr (l,r)) : K) =
+          if l = j then (tailE s r : K) else (scanE (d l) r : K) := by
       by_cases same : l = j <;> simp only [rowExcess,same,ite_true,ite_false] <;> rfl
     have inner (j : Fin k) :
         (∑ s : Fin 3, ∑ d : Fin k → Fin 3,
-          seedWeight k (j,s,d) * (rowExcess k (j,s,d) (.inr (l,r)) : ℚ)) =
+          seedWeight k tail scan (j,s,d) * (rowExcess k (j,s,d) (.inr (l,r)) : K)) =
           if j = l then T r/k else S r/k := by
       simp only [seedWeight,cast_row]
       by_cases same : j = l
       · subst j
         simp only [ite_true]
         have rearrange (s : Fin 3) (d : Fin k → Fin 3) :
-            (tailWeight k s/k * ∏ t : Fin k, scanWeight k (d t)) * tailE s r =
-              (tailWeight k s * tailE s r / k) * ∏ t : Fin k, scanWeight k (d t) := by ring
-        simp_rw [rearrange,← Finset.mul_sum,scan_total,mul_one]
+            (tail s/k * ∏ t : Fin k, scan (d t)) * (tailE s r : K) =
+              (tail s * (tailE s r : K) / k) * ∏ t : Fin k, scan (d t) := by ring
+        simp_rw [rearrange,← Finset.mul_sum,scan_total scan hd,mul_one]
         rw [← Finset.sum_div]
       · have other : l ≠ j := Ne.symm same
         simp only [other,same,ite_false]
         have rearrange (s : Fin 3) (d : Fin k → Fin 3) :
-            (tailWeight k s/k * ∏ t : Fin k, scanWeight k (d t)) * scanE (d l) r =
-              (tailWeight k s/k) * ((∏ t : Fin k, scanWeight k (d t)) * scanE (d l) r) := by ring
-        simp_rw [rearrange,← Finset.mul_sum,scan_mean l (fun s => scanE s r)]
+            (tail s/k * ∏ t : Fin k, scan (d t)) * (scanE (d l) r : K) =
+              (tail s/k) * ((∏ t : Fin k, scan (d t)) * (scanE (d l) r : K)) := by ring
+        simp_rw [rearrange,← Finset.mul_sum,scan_mean scan hd l (fun s => (scanE s r : K))]
         dsimp only [S]
-        rw [← Finset.sum_mul,← Finset.sum_div,normalized.1]
+        rw [← Finset.sum_mul,← Finset.sum_div,ht]
         ring
     simp only [Fintype.sum_prod_type]
     simp_rw [inner]
@@ -573,8 +601,8 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         Fin.sum_univ_succ,Fin.ext_iff,-Fin.val_eq_zero_iff]
       all_goals field_simp [den,nonzero] <;> ring
   have average_base :
-      (∑ seed : Seed k, seedWeight k seed * (rowExcess k seed (.inl ()) : ℚ)) = 1 := by
-    simpa [rowExcess] using law_total
+      (∑ seed : Seed k, seedWeight k (tailWeight k) (scanWeight k) seed * (rowExcess k seed (.inl ()) : ℚ)) = 1 := by
+    simpa [rowExcess] using law_total (tailWeight k) (scanWeight k) normalized.1 normalized.2.1
   let target : ℚ := max ((5*(k:ℚ)-1)/(4*k)) ((4*(k:ℚ)-2)/(3*k))
   have positive : (0:ℚ) < k := by exact_mod_cast (show 0 < k by omega)
   have target_value : target = if k ≤ 5 then 1+((k:ℚ)-1)/(4*k)
@@ -601,11 +629,11 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       have nonneg : 0 ≤ ((k:ℚ)-2)/(3*k) := div_nonneg (by linarith) (by positivity)
       linarith
   have average_bound (i : Index k) :
-      (∑ seed : Seed k, seedWeight k seed * (rowExcess k seed i : ℚ)) ≤ target := by
+      (∑ seed : Seed k, seedWeight k (tailWeight k) (scanWeight k) seed * (rowExcess k seed i : ℚ)) ≤ target := by
     cases i with
     | inl u => simpa [average_base] using target_at_least_one
     | inr p =>
-      rw [average_row,numerical_row,target_value]
+      rw [average_row (tailWeight k) (scanWeight k) normalized.1 normalized.2.1,numerical_row,target_value]
       by_cases small : k ≤ 5
       · simp [small]
       · simp only [small,ite_false]
@@ -617,8 +645,8 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           linarith
         · rfl
   have average_top (l : Fin k) :
-      (∑ seed : Seed k, seedWeight k seed * (rowExcess k seed (.inr (l,0)) : ℚ)) = target := by
-    rw [average_row,numerical_row,target_value]
+      (∑ seed : Seed k, seedWeight k (tailWeight k) (scanWeight k) seed * (rowExcess k seed (.inr (l,0)) : ℚ)) = target := by
+    rw [average_row (tailWeight k) (scanWeight k) normalized.1 normalized.2.1,numerical_row,target_value]
     simp only [if_neg (by decide : (0 : Fin 4) ≠ 2)]
   have row_limits (seed : Seed k) :
       (∀ i : Index k, rowExcess k seed i ≤ 2) ∧
@@ -674,17 +702,19 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     · obtain ⟨i,hi⟩ := (row_limits seed).2
       apply Finset.le_sup_of_le (Finset.mem_univ i)
       rw [costs,hi]
-  have mean_cost (i : Index k) :
-      (∑ seed : Seed k, seedWeight k seed * (cost (pi seed) (family k i) : ℚ)) =
-        (8*k+16 : Nat) + ∑ seed : Seed k, seedWeight k seed * (rowExcess k seed i : ℚ) := by
+  have mean_cost {K : Type} [Field K] [LinearOrder K] [IsStrictOrderedRing K] (tail scan : Fin 3 → K)
+      (ht : (∑ s : Fin 3, tail s) = 1) (hd : (∑ s : Fin 3, scan s) = 1) (i : Index k) :
+      (∑ seed : Seed k, seedWeight k tail scan seed * (cost (pi seed) (family k i) : K)) =
+        (8*k+16 : Nat) + ∑ seed : Seed k, seedWeight k tail scan seed * (rowExcess k seed i : K) := by
     calc
-      _ = ∑ seed : Seed k, (seedWeight k seed * ((8*k+16 : Nat) : ℚ) +
-          seedWeight k seed * (rowExcess k seed i : ℚ)) := by
+      _ = ∑ seed : Seed k, (seedWeight k tail scan seed * ((8*k+16 : Nat) : K) +
+          seedWeight k tail scan seed * (rowExcess k seed i : K)) := by
         apply Finset.sum_congr rfl
         intro seed _
         rw [costs,Nat.cast_add,mul_add]
-      _ = _ := by rw [Finset.sum_add_distrib,← Finset.sum_mul,law_total,one_mul]
-  refine ⟨pi,law_nonnegative,law_total,?_,?_,?_⟩
+      _ = _ := by rw [Finset.sum_add_distrib,← Finset.sum_mul,law_total tail scan ht hd,one_mul]
+  refine ⟨pi,law_nonnegative (tailWeight k) (scanWeight k) normalized.2.2,
+    law_total (tailWeight k) (scanWeight k) normalized.1 normalized.2.1,?_,?_,?_,?_⟩
   · intro seed
     refine ⟨(hpi seed).1,(hpi seed).2,?_,maxima seed,?_⟩
     · rw [costs]
@@ -694,16 +724,34 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
   · apply le_antisymm
     · apply Finset.sup'_le
       intro i _
-      rw [mean_cost]
+      rw [mean_cost (tailWeight k) (scanWeight k) normalized.1 normalized.2.1]
       simpa only [target,add_comm] using
         (add_le_add_left (average_bound i) (((8*k+16 : Nat) : ℚ)))
     · let l : Fin k := ⟨0,by omega⟩
       apply Finset.le_sup'_of_le (fun i : Index k =>
-        ∑ seed : Seed k, seedWeight k seed * (cost (pi seed) (family k i) : ℚ))
+        ∑ seed : Seed k, seedWeight k (tailWeight k) (scanWeight k) seed * (cost (pi seed) (family k i) : ℚ))
         (Finset.mem_univ (.inr (l,0)))
-      rw [mean_cost,average_top]
+      rw [mean_cost (tailWeight k) (scanWeight k) normalized.1 normalized.2.1,average_top]
   · simp_rw [maxima]
-    rw [← Finset.sum_mul,law_total,one_mul]
+    rw [← Finset.sum_mul,law_total (tailWeight k) (scanWeight k) normalized.1 normalized.2.1,one_mul]
+
+  · intro tail scan hn ht hd
+    refine ⟨law_nonnegative tail scan hn,law_total tail scan ht hd,?_,?_⟩
+    · rw [mean_cost tail scan ht hd]
+      simp only [rowExcess,Nat.cast_one,mul_one,law_total tail scan ht hd]
+    · intro l
+      have htail : tail 0 + tail 1 + tail 2 = 1 := by
+        simpa [Fin.sum_univ_succ,add_assoc] using ht
+      have hscan : scan 0 + scan 1 + scan 2 = 1 := by
+        simpa [Fin.sum_univ_succ,add_assoc] using hd
+      have nonzero : (k:ℝ) ≠ 0 := by exact_mod_cast (by omega : k ≠ 0)
+      refine ⟨?_,?_,?_,?_⟩
+      all_goals rw [mean_cost tail scan ht hd,average_row tail scan ht hd]
+      all_goals simp [tailE,scanE,Fin.sum_univ_succ,Fin.ext_iff,-Fin.val_eq_zero_iff]
+      all_goals field_simp [nonzero]
+      all_goals rw [show tail 2 = 1 - tail 0 - tail 1 by linarith,
+        show scan 2 = 1 - scan 0 - scan 1 by linarith]
+      all_goals ring
 
 
 

@@ -19,7 +19,7 @@ internal sealed class FourExitCoarseScanAttainmentDocument : IScribeDocumentDefi
                     + "rows per slot, each with n = 8k + 16 leaves. Branch and absent responses have "
                     + "one common coarse label. The retained slot, tail, and other slot scan kinds "
                     + "are chosen before execution. The scan coordinate at the retained slot is dummy; "
-                    + "it is marginalized and has no effect, including when k=1."")),
+                    + "it is marginalized and has no effect, including when k=1.")),
                 Paragraph(Text(
                     "The three scans place the second nonleaf request on A, Y, or Z. The three tails "
                     + "have excess vectors (1,0,1,2,1), (1,1,2,0,1), and (1,2,0,1,1) on the "
@@ -31,6 +31,13 @@ internal sealed class FourExitCoarseScanAttainmentDocument : IScribeDocumentDefi
                     + "leaf set together with the specified scan or tail nonleaf set. On the evaluation family each member "
                     + "has baseline excess one, maximum excess two, and total excess 5k. The cache "
                     + "merges repeated exact addresses from routing and verification.")),
+                Paragraph(Text(
+                    "For arbitrary nonnegative real tail weights (alpha,beta,gamma) and scan weights "
+                    + "(dA,dY,dZ), each triple summing to one, the uniform retained-slot mixture is "
+                    + "nonnegative and normalized. Expected costs are n+1 on the baseline, "
+                    + "n+1+(-alpha+gamma+(k-1)dA)/k on A, n+1+(alpha-beta)/k on H, "
+                    + "n+1+(beta-gamma+(k-1)dY)/k on Y, and n+1+(k-1)dZ/k on Z. "
+                    + "The same controllers realize these identities for every such pair of triples.")),
                 Paragraph(Text(
                     "The retained slot is uniform. Tail probabilities are (1/3,1/3,1/3) for k=1, "
                     + "(11/24,5/24,1/3) for k=2, ((k+3)/8,(5-k)/8,0) for 3<=k<=5, and "
