@@ -6,6 +6,15 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation.claim; result=D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation.result; claim=D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation.claim
    digest: QDPI fails for the cumulant-based Renyi functional at every alpha > 1, by a dephased qubit pair. -/
 
+/-
+proof_shape: bind-only (result and its consumed helpers).
+escape_witness: none
+admission_basis: open-problem-resolution (#13439).
+The two-point CFC identities and Kraus complete positivity are instantiated from Mathlib
+and the frozen quantum foundation. The logarithmic separation is obtained by their
+monotonicity identities and exact normalization of this parameterized qubit family.
+-/
+
 import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
@@ -73,8 +82,8 @@ private theorem two_point_cfc {n : Type} [Fintype n] [DecidableEq n]
         cfc_const_mul_id _ H hH, Algebra.algebraMap_eq_smul_one]
 
 private theorem affine_posDef {n : Type} [Fintype n] [DecidableEq n]
-    (a b : ℝ) (H : Matrix n n ℂ) (hH : IsSelfAdjoint H) (hHH : H*H=1)
-    (hp : 0 < a+b) (hm : 0 < a-b) :
+    (a b : ℝ) (H : Matrix n n ℂ) (hH : IsSelfAdjoint H) (hHH : H * H = 1)
+    (hp : 0 < a + b) (hm : 0 < a - b) :
     (a • (1 : Matrix n n ℂ) + b • H).PosDef := by
   have haff : cfc (fun x : ℝ => a+b*x) H = a • (1 : Matrix n n ℂ) + b • H := by
     rw [cfc_const_add a (fun x : ℝ => b*x) H (by fun_prop) hH,
@@ -86,7 +95,6 @@ private theorem affine_posDef {n : Type} [Fintype n] [DecidableEq n]
   rcases involution_spectrum H hH hHH hx with rfl | rfl
   · simpa using hp
   · simpa [sub_eq_add_neg] using hm
-
 
 private def pauli (z v : ℝ) : Mat 2 := !![(z : ℂ), (v : ℂ); (v : ℂ), -(z : ℂ)]
 private def N : Mat 2 := pauli (1/2) (Real.sqrt 3/2)
@@ -115,7 +123,7 @@ private theorem pauli_sa (z v : ℝ) : IsSelfAdjoint (pauli z v) := by
   ext i j
   fin_cases i <;> fin_cases j <;> simp [pauli, Matrix.conjTranspose_apply]
 
-private theorem pauli_sq (z v : ℝ) (h : z^2+v^2=1) :
+private theorem pauli_sq (z v : ℝ) (h : z ^ 2 + v ^ 2 = 1) :
     pauli z v * pauli z v = 1 := by
   have hc : (z : ℂ)^2+(v : ℂ)^2=1 := by exact_mod_cast h
   ext i j
@@ -152,7 +160,7 @@ private theorem output_states (x : ℝ) (hx : 1 < x) :
     field_simp <;> ring
 
 private theorem state_posDef (x : ℝ) (hx : 1 < x) (K : Mat 2)
-    (hK : IsSelfAdjoint K) (hKK : K*K=1) : (state x K).PosDef := by
+    (hK : IsSelfAdjoint K) (hKK : K * K = 1) : (state x K).PosDef := by
   have hd : x+1 ≠ 0 := by linarith
   change ((1/2 : ℝ) • (1 : Mat 2) + ((x-1)/(x+1)/2) • K).PosDef
   apply affine_posDef (1/2) ((x-1)/(x+1)/2) K hK hKK
@@ -164,7 +172,7 @@ private theorem state_posDef (x : ℝ) (hx : 1 < x) (K : Mat 2)
     exact div_pos zero_lt_one (by linarith)
 
 private theorem log_state (x : ℝ) (hx : 1 < x) (K : Mat 2)
-    (hK : IsSelfAdjoint K) (hKK : K*K=1) :
+    (hK : IsSelfAdjoint K) (hKK : K * K = 1) :
     CFC.log (state x K) =
       (Real.log x/2 - Real.log (x+1)) • (1 : Mat 2) +
       (Real.log x/2) • K := by
@@ -178,10 +186,10 @@ private theorem log_state (x : ℝ) (hx : 1 < x) (K : Mat 2)
     rw [em, Real.log_div (by norm_num) hd, Real.log_one, zero_sub]
   change cfc Real.log (state x K) = _
   rw [state, r, two_point_cfc Real.log (1/2) ((x-1)/(x+1)/2) K hK hKK, lp, lm]
-  congr 1 <;> ring
+  congr 1 <;> congr 1 <;> ring
 
 private theorem exp_affine (a b : ℝ) (M : Mat 2) (hM : IsSelfAdjoint M)
-    (hMM : M*M=1) :
+    (hMM : M * M = 1) :
     NormedSpace.exp (a • (1 : Mat 2)+b • M) =
       ((Real.exp (a+b)+Real.exp (a-b))/2) • (1:Mat 2) +
       ((Real.exp (a+b)-Real.exp (a-b))/2) • M := by
@@ -300,30 +308,20 @@ private theorem scalar_family_gap (t : ℝ) (ht : 0 < t) :
     rw [hlog]
     field_simp
 
-
 private theorem log_diagonal (p q : ℝ) :
     CFC.log (Matrix.diagonal ![(p : ℂ), (q : ℂ)] : Mat 2) =
       Matrix.diagonal ![(Real.log p : ℂ), (Real.log q : ℂ)] := by
-  let Z : Mat 2 := Matrix.diagonal ![(1 : ℂ), -1]
-  have hZ : IsSelfAdjoint Z := by
-    change Matrix.conjTranspose Z = Z
-    ext i j
-    fin_cases i <;> fin_cases j <;> simp [Z, Matrix.conjTranspose_apply]
-  have hZZ : Z*Z=1 := by
-    ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [Z, Matrix.mul_apply, Fin.sum_univ_two]
   have hrep : (Matrix.diagonal ![(p : ℂ), (q : ℂ)] : Mat 2) =
       ((p+q)/2) • (1:Mat 2) + ((p-q)/2) • Z := by
     ext i j
-    fin_cases i <;> fin_cases j <;> simp [Z, Matrix.diagonal] <;> ring
+    fin_cases i <;> fin_cases j <;> simp [Z, pauli, Matrix.diagonal] <;> ring
   change cfc Real.log _ = _
-  rw [hrep, two_point_cfc Real.log _ _ Z hZ hZZ]
+  rw [hrep, two_point_cfc Real.log _ _ Z (pauli_sa _ _) involutions.2.1]
   have hp : (p+q)/2 + (p-q)/2 = p := by ring
   have hq : (p+q)/2 - (p-q)/2 = q := by ring
   rw [hp, hq]
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [Z, Matrix.diagonal] <;> ring
+  fin_cases i <;> fin_cases j <;> simp [Z, pauli, Matrix.diagonal] <;> ring
 
 private theorem exp_log_diagonal (t p₀ p₁ q₀ q₁ : ℝ) :
     NormedSpace.exp (t •
@@ -344,7 +342,6 @@ private theorem exp_log_diagonal (t p₀ p₁ q₀ q₁ : ℝ) :
   fin_cases i <;> fin_cases j <;>
     simp [Matrix.diagonal, Pi.coe_exp, ← Complex.exp_eq_exp_ℂ]
 
-
 private theorem trace_input (t x : ℝ) (hx : 1 < x) :
     (Matrix.trace (state x N *
       NormedSpace.exp (t • (CFC.log (state x N) - CFC.log (state x Z))))).re =
@@ -363,7 +360,7 @@ private theorem trace_input (t x : ℝ) (hx : 1 < x) :
     Fin.sum_univ_two, Complex.real_smul]
   ring_nf
   simp [Real.sq_sqrt]
-  <;> ring
+  ring
 
 private theorem output_posDef (x : ℝ) (hx : 1 < x) :
     (dephase (state x N)).PosDef ∧ (dephase (state x Z)).PosDef := by
@@ -401,5 +398,7 @@ theorem result : ¬ claim := by
   unfold cuRenyi at hbound
   rw [trace_input t x hx, trace_output t x hx] at hbound
   exact (not_lt_of_ge hbound) hstrict
+
+#print axioms result
 
 end D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation
