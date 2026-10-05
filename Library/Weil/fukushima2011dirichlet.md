@@ -921,3 +921,70 @@ uses (WH4)–(WH5) before any scalar residual norm is taken.
 The low Schur and complementary-low signs on the same bandwidth
 sequence remain unproved; no saved fixed-band matrix is transported to
 (WH1).
+
+
+## Keep the high constraint and the exact ground term
+
+At the same (WH1) parameter and bandwidth, let $H=L^2_{\rm even}(dx)$,
+write $M_V,M_w$ for multiplication by (WH2) and its inverse, and put
+$V_{\max}=\delta+9a_N/5$. The existing cap gives
+$V_{\max}^{-1}I\preceq M_w\preceq\delta^{-1}I$. On $PH$ and $QH$ set
+
+$$
+A=PM_wP\big|_{PH},\qquad D=QM_VQ\big|_{QH},\qquad
+R=Q(M_w-M_wPA^{-1}PM_w)Q\big|_{QH}.
+\tag{WH6}
+$$
+
+Both compressed positive multipliers have bounded inverses; $P$ is
+infinite-dimensional. Reuse the standard positive block inverse identity:
+$R=D^{-1}$. The bounded positive shorting reference is
+[Antezana--Corach--Stojanoff, Theorem 2.2(4), p.5](https://arxiv.org/pdf/math/0410573v1),
+with operator $M_w$ and closed subspace $QH$; (SC2) supplies the
+existing positive block-elimination interface. For this application, the vector
+$q=M_w(r-PA^{-1}PM_wr)$ satisfies $Pq=0$ and $QM_Vq=r$ for every
+$r\in QH$. No commutation of $P$ with $M_w$ is assumed.
+
+Set $g=Qv_0$ and $\beta=c/(1+c\langle g,Rg\rangle)$. Before dropping
+the ground term, (WH3) gives $C[q]\ge\langle q,Dq\rangle+
+ c|\langle g,q\rangle|^2$ on the original high form domain.
+Variational inversion and the standard rank-one inverse identity yield
+
+$$
+C^{-1}\preceq(D+c|g\rangle\langle g|)^{-1}
+=R-\beta|Rg\rangle\langle Rg|.
+\tag{WH7}
+$$
+
+The rank-one identity reuses the general-ring Woodbury proof
+[`Matrix.invOf_add_mul_mul`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Matrix/Invertible.lean#L196).
+Take its central factor to be $I$ and absorb $c$ into the update factor,
+including $c=0$. Its algebra applies to bounded endomorphism entries; finite block
+indices impose no finite-dimensional assumption on $QH$. Invertibility
+here comes from $D\succeq\delta I$ and $c\ge0$, not from that formula.
+The inspected shorting PDF SHA-256 is
+`449b7d53831f8f2ddec744ad297e43f5bbbbff3804df19833e48a1181cb90066`.
+Only the variational supremum is enlarged to $QH$; the actual high
+operator and domain remain those of (WH3). Define, for $r\in QH$,
+
+$$
+\begin{aligned}
+J(r)&=\int w|r|^2dx
+ -\langle P(wr),A^{-1}P(wr)\rangle
+ -\beta|\langle Rg,r\rangle|^2,\\
+\langle r,C^{-1}r\rangle&\le J(r),\qquad
+\int w|r|^2dx-J(r)\ge\delta\|P(wr)\|_2^2.
+\end{aligned}
+\tag{WH8}
+$$
+
+Here $A\preceq\delta^{-1}I$ gives the last inequality. The projection
+and ground corrections are jointly valid because the latter uses the
+same constrained $R$, not the unconstrained $M_w$. Each correction can
+vanish; at $c=0$ the ground correction vanishes. The
+[same-residual application](../../docs/reports/theta-mixed-matrix/sharp-center.md#keep-the-projection-and-ground-corrections-on-the-same-residual)
+keeps all cross entries and the exact ground trial cost.
+This is a conditional paper application of existing block and rank-one
+inverse tools. It supplies no evaluated entries, low or complementary-low
+signs, cofinal certificate, endpoint half-bound, RH/Robin proof or Lean
+certification.
