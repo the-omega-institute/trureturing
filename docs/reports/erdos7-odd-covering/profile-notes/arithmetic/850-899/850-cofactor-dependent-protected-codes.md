@@ -2293,6 +2293,143 @@ This reuses the existing source and comparison interfaces and
 introduces no canonical binding declaration, freeze or coverage
 record.
 
+## A remaining square at 37 forces repeated-digit cofactor triples
+
+Assume the same actual globally count-then-modulus-sum-minimal
+odd distinct nonunit whole cover, actual pure moduli 3 and 9,
+ternary heights at most two, and the common coprime factorization
+used in CD65--68. Set q=37 and suppose an actual original has
+q-height at least two. Numerical divisor closure supplies the
+actual pure-square original h. Its complete private projection
+Λ modulo 9 has five words by CD65.
+
+Call an actual cofactor m a repeated-digit triple at (b,u) if the
+three original labels
+
+$$
+q^2m,\quad3q^2m,\quad9q^2m
+\tag{CD69}
+$$
+all have first q-digit c of h and second q-digit b, the middle
+original accepts u modulo 3, and the top original has word u
+modulo 9. The cofactor residues of the three originals remain
+their actual separate residues. This definition makes no assertion
+that those three cofactor sections have a common point, or that
+each meets a prescribed fiber of the complete deletion hole.
+
+The actual family must have a set T of at least 29 distinct second
+digits, different from h's digit, such that
+
+$$
+\boxed{\forall b\in T\;\forall u\in\Lambda,\quad
+\text{an actual nonunit repeated-digit cofactor triple exists at }(b,u).}
+\tag{CD70}
+$$
+
+Consequently at least 145 distinct nonunit numerical cofactors
+occur in these triples. This is a necessary restriction on a
+remaining cover; it does not exclude q=37.
+
+### Six available cells would give a complete exchange
+
+Choose the actual second terminal h1 with the priority in CD65:
+if the actual pure 3q² original lies in the deleted first-color
+family D, take it as h1. Let b0 and b1 be the distinct second
+digits of h and h1. If the actual pure 9q² original belongs to
+D, denote its second digit by γ; otherwise choose any γ. Exclude
+b0, b1 and γ, leaving at least 34 candidate digits.
+
+A candidate digit is free if some word u in Λ has no repeated-digit
+triple at (b,u). Suppose six candidate digits are free, and fix
+one such word for each. At a chosen cell (b,u), SNC14 gives at
+most two actual top originals. Each top original fixes its
+numerical cofactor and hence its unique possible bottom and
+middle counterparts. Since the cell is free, at least one of
+those lower counterparts must use a different digit if the three
+are to fit two selected cells. That other digit is unique.
+
+Thus each chosen digit has at most two possible conflicting
+partners. Six vertices have at most twelve directed conflicts,
+whereas there are fifteen unordered pairs. Choose a pair with
+no conflict in either direction. Write its digits as b2,b3 and
+its selected words as u2,u3. No cofactor can then have all three
+rows simultaneously compatible with these two selected cells:
+a top owner in either cell would give the excluded conflict,
+or a repeated-digit triple at that free cell.
+
+Choose four distinct leaves modulo 27 above Λ. Two leaves have
+parents u2,u3; these leaves can be distinct even when u2=u3.
+Use the other two as the b0,b1 terminals. Collapse each leaf's
+three modulo-81 lifts to its assigned digit and keep all other
+fine words distinct. The required alphabet size is
+
+$$
+4+(45-12)=37.
+\tag{CD71}
+$$
+
+Retain the exact same CRT source: preserve the entire old 9W
+coordinate and first q-digit, and replace only the second
+digit by this fixed code. The canonical complete-hole identity
+keeps every source inside the complete deletion hole. It does
+not replace that hole by a product of its projections.
+
+Pay the b0 and b1 leaves directly with pure 27 and 27q.
+For each nonunit cofactor m, allocate the remaining originals
+in its group among
+
+$$
+27m,\quad27qm,\quad81m.
+\tag{CD72}
+$$
+
+At most two inverses need a whole modulo-27 leaf, because
+three would give the excluded triple. Assign them the first two
+labels, and assign a fine or empty inverse to 81m. Equivalently,
+choose a row with no potentially short inverse and swap that
+row with slot two. This preserves injectivity within each group.
+If h1 has nonunit cofactor, its special pure output leaves both
+ordinary short slots available for the at most two remaining
+members of that group. Any remaining unit-cofactor original is
+the top row; exclusion of γ from the new short digits makes its
+inverse fine, so pure 81 suffices.
+
+For q=37, every ordinary output is smaller than q²m, irrespective
+of the original row. The three numerical signatures separate
+all groups, and all outputs have ternary depth at least three,
+so they are fresh against every retained original. The two
+special outputs have the strict prices already used in CD65.
+The two terminal leaves are fully paid, and every remaining source
+inverse has one complete enclosure. The resulting
+whole cover has unchanged class count and strictly smaller
+modulus sum, contradicting global minimality.
+
+There are therefore at most five free candidate digits. At
+least 34−5=29 candidates have a repeated-digit triple at all five
+words. Equal cofactors would give equal numerical top labels
+9q²m, hence the same actual top original and the same (b,u).
+Choosing witnesses for the 29-by-five cells therefore gives
+145 distinct cofactors. They are nonunit: a unit bottom member
+would be the actual pure q² original and would have digit b0,
+which was excluded.
+
+The remaining gap is to use this actual repeated-digit inventory
+to obtain a complete compatible replacement, or another strict
+whole-family descent. The count alone supplies neither common
+cofactor incidence nor distinct prime divisors for its witnesses.
+
+A complete scoped transient Lean check verifies this actual-family
+implication through the six-cell selection, four-leaf code, complete
+joint-hole source, grouped numerical allocation and whole-cover
+minimality contradiction. It also verifies the 29-by-five witness
+injection without an additional allocation or saturation premise.
+All 59 reported axiom closures use only `propext`, `Classical.choice`
+and `Quot.sound`; the complete check has no errors or `sorry`.
+These are temporary applications of the existing minimality,
+CRT and finite-combinatorial results, with no retained declaration,
+freeze or coverage record. The verified conclusion is the literal
+inventory CD69--70, not a common cofactor point or exclusion of 37.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
