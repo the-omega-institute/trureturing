@@ -16,12 +16,14 @@ triage: anchor
 ## Reuse the published theorem with its actual hypotheses
 
 The journal reference is *Bernoulli* 19(5A) (2013), 1855–1879.
-The inspected [author PDF](https://arxiv.org/pdf/1011.2331v4) has
+The inspected [arXiv electronic reprint](https://arxiv.org/pdf/1011.2331v4) has
 SHA-256 `38a233ff5a9c4aa95876288b268c8f3919671a5373c14c7b3612c24d195cc990`.
 Only bibliographic metadata and the model application are retained;
 no PDF, implementation or source text is copied into the project.
+The reprint explicitly has different pagination from the journal article;
+all theorem page locators below refer to that inspected reprint.
 
-Section2, Theorem2.1, printed p.1858, concerns an irreducible,
+Section2, Theorem2.1, reprint p.4, concerns an irreducible,
 nonexplosive birth–death process on $\mathbb N$. For a positive weight
 $u$, its discrete derivative is $\partial_u f(x)=(f(x+1)-f(x))/u_x$.
 The modified process has birth rate
@@ -39,8 +41,8 @@ Q_t g(x)=\mathbb E_x\!\left[
 $$
 
 The Feynman–Kac weight is positive even if the lower-bounded potential
-has some negative values. Remark2.4, printed p.1860, obtains propagation
-of monotonicity from this identity. Corollary3.3, printed p.1865, gives a
+has some negative values. Remark2.4, reprint p.6, obtains propagation
+of monotonicity from this identity. Corollary3.3, reprint p.11, gives a
 Poincare lower bound from a positive weighted Wasserstein curvature,
 using the same birth–death framework and its preceding assumptions.
 Those source results are reused, not reproved here. The original theta
