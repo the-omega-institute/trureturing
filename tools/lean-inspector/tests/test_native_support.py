@@ -146,7 +146,7 @@ defaultFacets = ["static"]
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         self.write('LeanInformationAudit/SealCommand.lean', 'def fixtureDriver : Nat := 1\n')
         for name in ['SourceAudit', 'Literal']:
-            self.write('LeanInformationAudit/Contract/' + name + '.lean',
+            self.write('tools/lean-inspector/LeanInformationAudit/Contract/' + name + '.lean',
                        (ROOT / ('tools/lean-inspector/LeanInformationAudit/Contract/' + name + '.lean')).read_text())
         with (self.root / 'lakefile.toml').open('a') as target:
             target.write('[[lean_lib]]\nname = "External"\n[[lean_lib]]\nname = "ClaimSupport"\n')
@@ -161,6 +161,8 @@ defaultFacets = ["static"]
         lakefile.write_text(source[:source.index('package leanInspector where')]
             + 'package leanInspector where\n'
             + '  buildDir := "../../.lake/build/lean-inspector/producer"\n\n'
+            + 'lean_lib LeanInformationAudit where\n'
+            + '  globs := #[.submodules `LeanInformationAudit]\n\n'
             + source[source.index('target nativeImage'):].replace(
                 'lean_exe reportInspector where', '@[default_target]\nlean_exe reportInspector where'))
         self.write('tools/lean-inspector/lake-manifest.json', json.dumps(dict(
