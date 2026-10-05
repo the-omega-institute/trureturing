@@ -7,6 +7,7 @@
    digest: Canonical minimum-anchor embedding of positive real laws in the original carry graph. -/
 
 import D5.S3.Arith.FibonacciAtomic.DyadicSupportLines
+import D5.S1.Digit.RadixFloorDigit
 import Mathlib.Analysis.Real.OfDigits
 
 set_option autoImplicit false
@@ -123,7 +124,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
       have H' := ha.2.2.1
       omega
   intro p hp hs k hk
-  letI : Nontrivial (Fin m) := Fin.nontrivial_iff_two_le.mpr hm
+  let : Nontrivial (Fin m) := Fin.nontrivial_iff_two_le.mpr hm
   let n : ℕ → Fin m → ℤ := fun d i => ⌊(2 : ℝ) ^ d * p i⌋
   let bit : ℕ → Fin m → ℤ := fun d i => n (d + 1) i - 2 * n d i
   let eqg : ℕ → Fin m → Prop := fun d i => n d i = n d k
@@ -142,12 +143,15 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
     simp only [pow_zero, one_mul]
     exact Int.floor_eq_zero_iff.mpr ⟨(hp i).le, atom_lt_one i⟩
   have bit_bounds (d : ℕ) (i : Fin m) : 0 ≤ bit d i ∧ bit d i ≤ 1 := by
-    have div : n (d + 1) i / 2 = n d i := by
-      dsimp only [n]
-      rw [pow_succ', mul_assoc]
-      exact Int.natCast_mul_floor_div_cancel (n := 2) (by norm_num) _
-    dsimp only [bit]
-    omega
+    have data := D5.S1.Digit.RadixFloorDigit.radix_floor_digit_bounds_and_decomposition
+      2 (by norm_num) ((2 : ℝ) ^ d * p i)
+    have lo : 0 ≤ bit d i := by
+      simpa only [D5.S1.Digit.RadixFloorDigit.digitInt, bit, n, pow_succ',
+        mul_assoc, Nat.cast_ofNat] using data.1
+    have hi : bit d i < 2 := by
+      simpa only [D5.S1.Digit.RadixFloorDigit.digitInt, bit, n, pow_succ',
+        mul_assoc, Nat.cast_ofNat] using data.2.1
+    exact ⟨lo, by omega⟩
   have min_prefix (d : ℕ) (i : Fin m) : n d k ≤ n d i :=
     Int.floor_mono (mul_le_mul_of_nonneg_left (hk i) (by positivity))
   have group_step (d : ℕ) (i : Fin m) :
@@ -192,7 +196,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
     have upper := Finset.sum_le_sum (s := Finset.univ) (f := fun i =>
       if eqg d i then (1 : ℤ) else 0) (g := fun _ => 1)
       (fun i _ => by split_ifs <;> omega)
-    simp only [eqg, if_pos rfl] at lower
+    simp only [eqg] at lower
     simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin,
       nsmul_eq_mul, mul_one] at upper
     exact ⟨lower, upper⟩
@@ -209,7 +213,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
     have strict : H d < E d := by
       apply Finset.sum_lt_sum
       · intro i hi
-        split_ifs <;> simp_all <;> omega
+        split_ifs <;> simp_all
       · refine ⟨k, Finset.mem_univ k, ?_⟩
         simp [eqg]
         omega
@@ -218,7 +222,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
       rw [← Finset.sum_add_distrib]
       calc
         _ ≤ ∑ _ : Fin m, (1 : ℤ) := Finset.sum_le_sum fun i _ => by
-          split_ifs <;> simp_all <;> omega
+          split_ifs <;> simp_all
         _ = m := by simp
     have zero (hbit : bit d k = 1) : H d = 0 := by
       apply Finset.sum_eq_zero
@@ -235,9 +239,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
       rcases (show bit d i = 0 ∨ bit d i = 1 by omega) with hbi | hbi <;>
         rcases (show bit d k = 0 ∨ bit d k = 1 by omega) with hbk | hbk <;>
         by_cases he : eqg d i <;>
-        simp_all only [hg, he, hbi, hbk, and_true, and_false,
-          true_and, false_and, not_true_eq_false, not_false_eq_true,
-          Int.reduceEq, ite_true, ite_false] <;> omega
+        simp_all only [and_true, and_false, true_and, Int.reduceEq, ite_true, ite_false] <;> omega
     have total : (∑ i, bit d i) =
         if bit d k = 1 then E d + C d else H d + C d := by
       by_cases hbit : bit d k = 1
@@ -266,8 +268,8 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
         intro i hi
         have hbi := bit_bounds d i
         by_cases he : eqg d i <;> by_cases hi1 : bit d i = 1 <;>
-          simp only [he, hi1, hbit0, and_true, and_false, true_and,
-            false_and, not_true_eq_false, not_false_eq_true, ite_true, ite_false] <;> omega
+          simp only [he, hi1, hbit0, and_true, and_false,
+            not_true_eq_false, not_false_eq_true, ite_true, ite_false] <;> omega
     exact ⟨Finset.sum_nonneg (fun i _ => (nonneg i).1), by omega,
       Finset.sum_nonneg (fun i _ => (nonneg i).2), by omega, zero, step, total⟩
   let γ : Path := ⟨fun d => ⟨R d, E d⟩, fun d => ⟨bit d k, H d, C d⟩⟩

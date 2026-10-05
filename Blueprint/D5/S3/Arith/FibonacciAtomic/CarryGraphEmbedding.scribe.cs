@@ -32,7 +32,7 @@ internal sealed class CarryGraphEmbeddingDocument : IScribeDocumentDefinition
             ? new[] { f } : new[] { Comma, Sp, f }).ToArray()));
 
     private static DocumentBlock Def(string name, string title, Formula formula, string prose) =>
-        Describe.Lean(DescribeId.Create(name), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
