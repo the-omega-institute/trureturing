@@ -94,6 +94,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/XYPaddedGinibreRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/abdesselam-2022-xy-pgg-cycle-refutation` (refuted) by `D5/S3/StatisticalMechanics/XYPaddedGinibreRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"abdesselam-2022-xy-pgg-cycle-refutation","declaration_gid":"D5/S3/StatisticalMechanics/XYPaddedGinibreRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Abdelmalek Abdesselam (2022). *Non-Abelian correlation inequalities and stable determinantal polynomials*. DOI: [10.48550/arXiv.2207.07603](https://doi.org/10.48550/arXiv.2207.07603). URL: <https://arxiv.org/abs/2207.07603v2>.

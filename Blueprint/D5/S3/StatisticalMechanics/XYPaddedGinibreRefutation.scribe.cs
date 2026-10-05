@@ -43,7 +43,10 @@ internal sealed class XYPaddedGinibreRefutationDocument : IScribeDocumentDefinit
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Take p = 5 and the five pairs (0,1), (1,2), (2,3), (3,4), (0,4). Let u be their indicator, m = 2, both rows V i = u, and both signs ε i = −1. Each vertex is incident to two chosen pairs, so u is even. Set Z(x) to the product of the five pair observables. Fourier orthogonality on each angle forces every surviving edge frequency to be constant around the cycle. Applying this to the first three powers gives M₁ = E[Z] = 1/16, M₂ = E[Z²] = 17/512 and M₃ = E[Z³] = 61/4096. The duplicated functional is E[Z(x)Z(y)(Z(x) − Z(y))²] = 2(M₁M₃ − M₂²) = −45/131072 < 0. The square factor is nonnegative, but the padding product Z(x)Z(y) can be negative; the exact moments show that its negative contribution prevails."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("abdesselam-2022-xy-pgg-cycle-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
