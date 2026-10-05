@@ -348,3 +348,10 @@ of every discarded low source as $Q(sf+a v_0)$, $f\in L^2$, after any
 finite low removal. This conditional paper obstruction concerns that
 stronger source requirement; positive-reserve approximate estimates and
 the actual cofinal form signs remain unresolved.
+
+The [regulated complete-prime source budget](regulated-prime-source-budget.md)
+reuses the full half-weighted Mangoldt count to control a common
+unprojected source. It selects one cofinal parameter/band schedule for
+prescribed growing finite sources, retaining the exact ground.
+Band-dependent source norms, actual low/complementary-low signs and
+the full RH/Robin conclusion remain unresolved.
