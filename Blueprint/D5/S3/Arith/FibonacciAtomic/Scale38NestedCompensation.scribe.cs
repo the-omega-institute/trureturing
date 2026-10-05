@@ -32,6 +32,8 @@ internal sealed class Scale38NestedCompensationDocument : IScribeDocumentDefinit
                 + "the leaves. On an enlarged-slot or contraction row they are the leaves together "
                 + "with its single branch or absent exit address. The earlier scan addresses are "
                 + "actual alpha leaves of that input, and the exit address is not a leaf. "
-                + "Thus the baseline costs 3k+13 and every exceptional row costs 3k+14."))),
+                + "Thus the baseline costs 3k+13 and every exceptional row costs 3k+14. "
+                + "Every globally correct original strategy costs at least 3k+14 on some row, "
+                + "so the deterministic common cost is exactly 3k+14."))),
             DescribeRole.Theorem))));
 }

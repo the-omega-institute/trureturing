@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.FibonacciAtomic.FourExitRawEndpointSpectrum
 import D5.S3.Arith.FibonacciAtomic.SourceTransportCentralizer
+import D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutCompletion
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -25,7 +26,7 @@ open scoped BigOperators ENNReal
 local notation "Index" => fun k : Nat => Unit ⊕ (Fin k ⊕ Fin k)
 local notation "B" => FourExitRawEndpointSpectrum.B
 local notation "H" => fun r : Nat => comb r (fun _ => A) C
-local notation "h" => fun r : Nat => comb r (fun _ => FreeMagma.of true) (FreeMagma.of false)
+local notation "preComb" => fun r : Nat => comb r (fun _ => FreeMagma.of true) (FreeMagma.of false)
 
 /-- The baseline, the single enlarged slot, and the contracted left comb. -/
 def family (k : Nat) : Index k → Source
@@ -35,10 +36,10 @@ def family (k : Nat) : Index k → Source
 
 /-- Complete ordered preimages, with the same root compensation position. -/
 def preFamily (k : Nat) : Index k → Source
-  | .inl _ => .mul (h k) E
+  | .inl _ => .mul (preComb k) E
   | .inr (.inl j) => .mul (comb k (fun l => if l = j then E else .of true) (.of false))
       (.of true)
-  | .inr (.inr i) => .mul (h i.val) (.mul (h (k - i.val)) (.of true))
+  | .inr (.inr i) => .mul (preComb i.val) (.mul (preComb (k - i.val)) (.of true))
 
 /-- Zero-based index: this is the literal address q_(t+1). -/
 def query (t : Nat) : Address := false :: (List.replicate t true ++ [false,false,true])
@@ -106,7 +107,15 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
             (leaves (family k i)).map (fun q => ⟨q,readout q (family k i)⟩), true) ∧
         paid (terminal pi (family k i)).1 = leafAddresses (family k i) ∪ extra k i ∧
         cost pi (family k i) = 3*k+13 + if i = .inl () then 0 else 1) ∧
-      (∀ i : Index k, i ≠ .inl () → query (stop k i) ∉ leafAddresses (family k i))) := by
+      (∀ i : Index k, i ≠ .inl () → query (stop k i) ∉ leafAddresses (family k i)) ∧
+      (∀ U : Source, ∃ n cache,
+        ActualCoarseReadoutCompletion.cachedExecute pi.policy n [] [] U =
+          some (terminal pi U,cache) ∧
+        (cache.map Sigma.fst).Nodup ∧ (∀ a ∈ cache, a.2 = readout a.1 U) ∧
+        paid cache = paid (terminal pi U).1)) ∧
+    (let e : Index k ≃ Fin (Fintype.card (Index k)) := Fintype.equivFin (Index k);
+      D (Fintype.card (Index k)) (by simp [Fintype.card_sum]) (family k ∘ e.symm) =
+        ((3*k+14 : Nat) : ℝ≥0∞)) ∧ Function.Injective query := by
   classical
   have hom (s t : Source) : thirdImage (.mul s t) = .mul (thirdImage s) (thirdImage t) :=
     Function.Semiconj₂.iterate
@@ -281,7 +290,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       Nonconflict C (comb n f C) := by
     intro n f hf
     cases n with
-    | zero => simp [A,C,E,Nonconflict,show B = .mul C A from rfl]
+    | zero => simp [comb,A,C,E,Nonconflict,show B = .mul C A from rfl]
     | succ n =>
       change Nonconflict A (f 0) ∧ Nonconflict E (comb n (fun i => f i.succ) C)
       refine ⟨?_, E_comb n _ (fun i => hf i.succ)⟩
@@ -404,13 +413,13 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         (fun t ht => raw_base t (by have := List.mem_range.mp ht; omega))
       simp only [List.append_nil] at hp
       rw [controller, hp, scan, ActualJointResponseCostCore.phase_foundation.2.2.1]
-      rfl
+      simp only [route,stop,List.map_map,Function.comp_def]
     | inr p =>
       cases p with
       | inl j =>
         rw [controller, divide j.val (le_of_lt j.isLt),
           scan_prefix _ _ _ (fun t ht => (raw_X j).1 t (List.mem_range.mp ht))]
-        simp only [scan, controllerOutcome, (raw_X j).2, Reply.noConfusion,
+        simp [scan, controllerOutcome, (raw_X j).2,
           ↓reduceIte, choice, dif_pos j.isLt,
           ActualJointResponseCostCore.phase_foundation.2.2.1, route, stop,
           List.range_succ, List.map_append, List.map_cons, List.map_nil,
@@ -419,8 +428,8 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         have hi : 0 < i.val+1 ∧ i.val+1 ≤ k := ⟨by omega, by have := i.isLt; omega⟩
         rw [controller, divide (i.val+1) hi.2,
           scan_prefix _ _ _ (fun t ht => (raw_Y i).1 t (by have := List.mem_range.mp ht; omega))]
-        have he : (⟨i.val+1-1,by omega⟩ : Fin k) = i := Fin.ext (by omega)
-        simp only [scan, controllerOutcome, (raw_Y i).2, Reply.noConfusion,
+        have he : (⟨i.val+1-1,by have := i.isLt; omega⟩ : Fin k) = i := Fin.ext (by simp only [Fin.val_mk]; omega)
+        simp [scan, controllerOutcome, (raw_Y i).2,
           ↓reduceIte, choice, dif_pos hi, he,
           ActualJointResponseCostCore.phase_foundation.2.2.1, route, stop,
           List.range_succ, List.map_append, List.map_cons, List.map_nil,
@@ -435,6 +444,89 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     have ht := (Classical.choose_spec (Classical.choose_spec (pi.correct U))).1
     exact source_foundation.2.2.2.2.2.2.2 pi.policy _ _ [] U _ _ ht
       (ActualJointResponseCostCore.phase_foundation.1 _ U)
+  have cached_replay (p : Policy) (U : Source) : ∀ n (hist tr cache : Hist (fun _ : Address => Reply))
+      (answer : Bool), execute readout p n hist U = some (tr,answer) →
+      (cache.map Sigma.fst).Nodup → (∀ a ∈ cache, a.2 = readout a.1 U) →
+      ∃ cache', ActualCoarseReadoutCompletion.cachedExecute p n hist cache U =
+          some ((tr,answer),cache') ∧
+        (cache'.map Sigma.fst).Nodup ∧ (∀ a ∈ cache', a.2 = readout a.1 U) ∧
+        paid cache' = paid cache ∪ paid tr := by
+    intro n
+    induction n with
+    | zero => intro hist tr cache answer run _ _; simp [execute] at run
+    | succ n ih =>
+      intro hist tr cache answer run unique truthful
+      cases step : p hist with
+      | inr b =>
+        simp only [execute,step,Option.some.injEq,Prod.mk.injEq] at run
+        obtain ⟨rfl,rfl⟩ := run
+        exact ⟨cache,by simp [ActualCoarseReadoutCompletion.cachedExecute,step],
+          unique,truthful,by simp [paid]⟩
+      | inl q =>
+        simp only [execute,step,Option.map_eq_some_iff] at run
+        obtain ⟨⟨rest,b⟩,child,eq⟩ := run
+        cases eq
+        cases found : cache.find? (fun a => a.1 == q) with
+        | some a =>
+          have amem := List.mem_of_find?_eq_some found
+          have addr : a.1 = q := by simpa using List.find?_some found
+          have actual : a.2 = readout q U := by simpa only [addr] using truthful a amem
+          obtain ⟨out,hout,un,truth,bill⟩ := ih _ _ cache _ child unique truthful
+          refine ⟨out,?_,un,truth,?_⟩
+          · simpa only [ActualCoarseReadoutCompletion.cachedExecute,step,found,actual,
+              Option.map_some] using congrArg
+              (Option.map (fun z => ((⟨q,readout q U⟩ :: z.1.1,z.1.2),z.2))) hout
+          · have member : q ∈ paid cache := by
+              apply List.mem_toFinset.mpr
+              exact List.mem_map.mpr ⟨a,amem,addr⟩
+            rw [bill]
+            simp only [paid,List.map_cons,List.toFinset_cons] at member ⊢
+            rw [Finset.union_insert]
+            exact (Finset.insert_eq_of_mem (Finset.mem_union_left _ member)).symm
+        | none =>
+          have absent : q ∉ cache.map Sigma.fst := by
+            intro member
+            obtain ⟨a,ha,addr⟩ := List.mem_map.mp member
+            have no := List.find?_eq_none.mp found a ha
+            exact no (by simp [addr])
+          have fresh : ((cache ++ [(⟨q,readout q U⟩ : Sigma (fun _ : Address => Reply))]).map Sigma.fst).Nodup := by
+            rw [List.map_append]
+            apply List.nodup_append.mpr
+            refine ⟨unique, by simp, ?_⟩
+            intro a ha b hb
+            have hb' : b = q := by simpa using hb
+            subst b
+            intro eq
+            subst a
+            exact absent ha
+          have true_fresh : ∀ a ∈ cache ++ [(⟨q,readout q U⟩ : Sigma (fun _ : Address => Reply))], a.2 = readout a.1 U := by
+            intro a ha
+            rcases List.mem_append.mp ha with old | new
+            · exact truthful a old
+            · have eq := List.mem_singleton.mp new; subst a; rfl
+          obtain ⟨out,hout,un,truth,bill⟩ := ih _ _ (cache ++ [(⟨q,readout q U⟩ : Sigma (fun _ : Address => Reply))]) _
+            child fresh true_fresh
+          refine ⟨out,?_,un,truth,?_⟩
+          · simpa only [ActualCoarseReadoutCompletion.cachedExecute,step,found,Option.map_some]
+              using congrArg
+                (Option.map (fun z => ((⟨q,readout q U⟩ :: z.1.1,z.1.2),z.2))) hout
+          · rw [bill]
+            simp only [paid,List.map_append,List.map_cons,List.map_nil,List.toFinset_append,
+              List.toFinset_cons,List.toFinset_nil]
+            ext u
+            simp only [Finset.mem_union,Finset.mem_insert,Finset.mem_singleton]
+            tauto
+  have cached_terminal (U : Source) : ∃ n cache,
+      ActualCoarseReadoutCompletion.cachedExecute pi.policy n [] [] U =
+        some (terminal pi U,cache) ∧
+      (cache.map Sigma.fst).Nodup ∧ (∀ a ∈ cache, a.2 = readout a.1 U) ∧
+      paid cache = paid (terminal pi U).1 := by
+    have execution := ActualJointResponseCostCore.phase_foundation.1 (controller k) U
+    obtain ⟨cache,run,unique,truth,bill⟩ := cached_replay pi.policy U _ [] _ [] _
+      execution (by simp) (by simp)
+    refine ⟨(controllerOutcome (controller k) U).1.length+1,cache,?_,unique,truth,?_⟩
+    · simpa only [terminal_outcome] using run
+    · simpa only [paid,List.map_nil,List.toFinset_nil,Finset.empty_union,terminal_outcome] using bill
   have leaf_mem (U : Source) (q : Address) :
       q ∈ leafAddresses U ↔ readout q U = .alpha ∨ readout q U = .beta := by
     rw [(ActualImageSevenLeafSeparation.seven_leaf_separation.1 U).2 q]
@@ -459,7 +551,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
   have bill (i : Index k) : paid (terminal pi (family k i)).1 =
       leafAddresses (family k i) ∪ extra k i := by
     rw [terminal_outcome, outcomes]
-    simp only [paid, List.map_append, List.toFinset_append, List.map_map, Function.comp_def]
+    simp only [paid, List.map_append, List.toFinset_append, List.map_map, Function.comp_def, List.map_id_fun']
     change (route k i).toFinset ∪ leafAddresses (family k i) = _
     apply Finset.Subset.antisymm
     · intro q hq
@@ -496,12 +588,101 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     rw [Finset.card_union_of_disjoint disjoint,
       (ActualImageSevenLeafSeparation.seven_leaf_separation.1 _).1, size]
     by_cases hb : i = .inl () <;> simp [extra,hb]
-  refine ⟨injective, ?_, ?_, nc, raw_base, raw_X, raw_Y, survivors, ?_⟩
+  let m := Fintype.card (Index k)
+  have hm : 0 < m := by simp [m,Fintype.card_sum]
+  let e : Index k ≃ Fin m := Fintype.equivFin (Index k)
+  let F : Fin m → Source := family k ∘ e.symm
+  have fin_positive (i : Fin m) : Positive (F i) := positive (e.symm i)
+  have fin_injective : Function.Injective F := injective.comp e.symm.injective
+  have leaf_length (U : Source) : (leaves U).length = U.length := by
+    induction U with
+    | of b => rfl
+    | mul s t hs ht => simp only [leaves,List.length_append,List.length_map,hs,ht,FreeMagma.length]
+  have agree (u : Address) (i j : Fin m)
+      (hi : chi (readout u (F i)) = 0) (hj : chi (readout u (F j)) = 0) :
+      readout u (F i) = readout u (F j) := by
+    have labels := (ActualImageSevenLeafSeparation.seven_leaf_separation.2.1 (F i) (F j)).2.2.mp
+      (nc (e.symm i) (e.symm j))
+    cases hr : readout u (F i) <;> cases hs : readout u (F j) <;>
+      simp only [hr,chi] at hi <;> simp only [hs,chi] at hj
+    all_goals try contradiction
+    all_goals try rfl
+    · have hh := labels u true false (by simp [ActualImageSevenLeafSeparation.leafLabel,hr])
+        (by simp [ActualImageSevenLeafSeparation.leafLabel,hs])
+      cases hh
+    · have hh := labels u false true (by simp [ActualImageSevenLeafSeparation.leafLabel,hr])
+        (by simp [ActualImageSevenLeafSeparation.leafLabel,hs])
+      cases hh
+  have root_excess (S : Finset (Fin m)) (r : ActualJointResponseCostCore.Recipe F S)
+      (hS : 2 ≤ S.card) : ∃ i ∈ S, 1 ≤ ActualJointResponseCostCore.gain r i := by
+    cases r with
+    | singleton i => simp at hS
+    | split S a hs next =>
+      by_contra! hzero
+      have charge (i : Fin m) (hi : i ∈ S) : chi (a.val i) = 0 := by
+        have hz := hzero i hi
+        simp only [ActualJointResponseCostCore.gain,hi,↓reduceDIte] at hz
+        omega
+      obtain ⟨u,hu⟩ := a.property
+      have same (i j : Fin m) (hi : i ∈ S) (hj : j ∈ S) : a.val i = a.val j := by
+        rw [← hu]
+        exact agree u i j (by simpa only [← hu,vector] using charge i hi)
+          (by simpa only [← hu,vector] using charge j hj)
+      obtain ⟨i,hi⟩ := Finset.card_pos.mp (by omega : 0 < S.card)
+      have singleton : S.image a.val = {a.val i} := by
+        ext y
+        constructor
+        · intro hy
+          obtain ⟨j,hj,rfl⟩ := Finset.mem_image.mp hy
+          exact Finset.mem_singleton.mpr (same j i hj hi)
+        · intro hy
+          rw [Finset.mem_singleton] at hy
+          subst y
+          exact Finset.mem_image.mpr ⟨i,hi,rfl⟩
+      rw [singleton,Finset.card_singleton] at hs
+      omega
+  have lower_cost (sigma : Strategy) : ∃ i : Fin m, 3*k+14 ≤ cost sigma (F i) := by
+    obtain ⟨v, ⟨r,hr⟩,hv⟩ :=
+      (ActualJointResponseCostCore.result m hm F fin_positive fin_injective).2.2.2.1 sigma
+    obtain ⟨i,hi,hgain⟩ := root_excess Finset.univ r (by
+      simp [m,Fintype.card_sum]; omega)
+    refine ⟨i,?_⟩
+    have hb := hv i
+    rw [hr i,leaf_length] at hb
+    simp only [F,Function.comp_apply,size] at hb
+    change 3*k+14 ≤ cost sigma (family k (e.symm i))
+    omega
+  have sharp : D m hm F = ((3*k+14 : Nat) : ℝ≥0∞) := by
+    apply le_antisymm
+    · apply le_trans (sInf_le (show
+        maxOn hm (fun i => (cost pi (F i) : ℝ≥0∞)) ∈
+          {z | ∃ p : Strategy, z = maxOn hm (fun i => (cost p (F i) : ℝ≥0∞))} from
+        ⟨pi,rfl⟩))
+      apply Finset.sup'_le
+      intro i _
+      have bound : cost pi (F i) ≤ 3*k+14 := by
+        change cost pi (family k (e.symm i)) ≤ 3*k+14
+        rw [costs (e.symm i)]
+        split_ifs <;> omega
+      exact_mod_cast bound
+    · apply le_sInf
+      rintro z ⟨sigma,rfl⟩
+      obtain ⟨i,hi⟩ := lower_cost sigma
+      exact le_trans (by exact_mod_cast hi)
+        (Finset.le_sup' (fun j => (cost sigma (F j) : ℝ≥0∞)) (Finset.mem_univ i))
+  have query_injective : Function.Injective query := by
+    intro a b he
+    have hl := congrArg List.length he
+    simp only [query,List.length_cons,List.length_append,List.length_replicate,
+      List.length_nil] at hl
+    omega
+  refine ⟨injective, ?_, ?_, nc, raw_base, raw_X, raw_Y, survivors, ?_, ?_, query_injective⟩
   · intro i
     refine ⟨⟨preFamily k i, images i, fun Q hQ => rho_inj (hQ.trans (images i).symm)⟩,
       images i, precomp i, comp i, size i, ?_⟩
     exact (ActualImageSevenLeafSeparation.seven_leaf_separation.1 _).1.trans (size i)
   · simp [Fintype.card_sum]; omega
-  · exact ⟨pi, rfl, terminal_outcome, fun i => ⟨outcomes i, bill i, costs i⟩, extra_out⟩
+  · exact ⟨pi, rfl, terminal_outcome, fun i => ⟨outcomes i, bill i, costs i⟩, extra_out, cached_terminal⟩
+  · exact sharp
 
 end D5.S3.Arith.FibonacciAtomic.Scale38NestedCompensation
