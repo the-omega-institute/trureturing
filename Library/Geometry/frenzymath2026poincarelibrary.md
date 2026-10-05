@@ -5684,3 +5684,16 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 完整累计临时源码 `.lake/mostow-h3-native-lorentz-coordinate-recovery.lean` 为 232372 字节，SHA256 `148c523af6ae45d9793245275610fb29db0495ffd097430e2170d650dfda6a45`，前批 227805 字节源码为完整 offset0 前缀，无新 import。第三轮真实编译 exit0，零错误、零警告，173 条公理输出仅含 `propext, Classical.choice, Quot.sound`，无 `sorryAx`；完整日志 22695 字节，SHA256 `c106d5f416580419634afc48d620a669fe6446a7beef5d5faa5f0bec31417f0d`。调用方已核对源码、前缀、预登记、日志及真实退出收据的长度和哈希，排除前两轮失败；没有新增 SSHX 共识。
 
 逐声明 `proof_shape: bind-only`、`admission_basis: none`：复用现有 Lorentz 高度配对恒等式、分量导数及除法求导，新增步骤为实际参数绑定与代数规范化。只提交本 Library 复用说明，精确 Lean 与成功/失败证据留在本次临时结果目录；远端 CI 验证本说明，不代表完整 Mostow 验收。全局原光滑度量、原内蕴距离等式、曲率 −1、原流形覆盖/有限体积及同一规定 `h,d` 的完整 Mostow–Prasad 仍未闭合。
+
+
+### 原等距映射的实际坐标导数及切向配对保持（2026-10-06）
+
+此闭合单元将两个相邻成功批次接成同一原等距切空间作用接口。`nativeLorentzTangentDirection p w` 从原 `v p` 的 Lorentz 正交向量 `w` 明确恢复原 `Ambient ℂ = WithLp 2 (ℂ × ℝ)` 方向；在 `pairing (v p) w = 0` 下，恢复方向的原 Lorentz 坐标切向量等于同一个完整 `w`，未另加切向量实现假设。
+
+对于同一实际 `e : H3 ≃ᵢ H3`、原点 `p` 及任意方向 `(a,b)`，定义 `nativeIsometryCoordinateDirection e p a b` 为在原 `e p` 恢复 `actionMatrix e *ᵥ nativeLorentzCoordinateTangent p a b` 所得的方向。该方向的实际 Lorentz 切向量等于上述矩阵像，正交性由原 `action_formula` 与全向量 `action_preserves_pairing` 内部推出。原 `e` 作用于原坐标扰动后的高度、水平实部、水平虚部，在同一参数零点分别有此方向对应分量的实际 `HasDerivAt`。本批还核验原扰动在零处确为同一 `p`。
+
+两任意方向 `(a,b),(c,d)` 的像满足明确双线性等式：像方向的原坐标欧氏内积除以 `height (e p).coordinates ^ 2`，等于 `(a.re*c.re+a.im*c.im+b*d)/height p.coordinates ^ 2`。这包含不同方向之间的配对保持，既未供给原 `e` 光滑性前提，也未替换原空间距离；结论当前是明确原坐标导数与代数切向形式，尚未当作全局 `mfderiv` 或已构造光滑度量的保持。
+
+切向恢复源码 `.lake/mostow-h3-native-lorentz-tangent-recovery.lean` 为 235989 字节，SHA256 `6316cdc805f3e21535ff483e03a3af7983de62af5e2d5975e50bec20f0c30518`，第三轮真实 exit0、零错误/警告，175 条标准公理闭包输出。原等距坐标导数及双线性配对源码 `.lake/mostow-h3-native-isometry-coordinate-derivative.lean` 为 240434 字节，SHA256 `9a6b255f6fb1547a747d558abc063e2caa50ed493f292e04024734a551896f25`，第二轮真实 exit0、零错误/警告，182 条标准公理闭包输出；成功日志 23884 字节，SHA256 `73cd724fc6887c5de7d46879f36144f12a4bde9c6b13abfd6e62765672ffef46`。两批各保持成功前批完整 offset0 前缀，无新 import；公理仅 `propext, Classical.choice, Quot.sound`，无 `sorryAx`。调用方复核全部源码/前缀/预登记/日志/真实退出收据哈希，失败轮次完整保留排除，没有新增 SSHX 共识。
+
+逐声明 `proof_shape: bind-only`、`admission_basis: none`：现有全向量 Lorentz 保持、原实际曲线坐标求导及实际坐标切向配对供给原子事实，本批为绑定及规范化。只交付此 Library 复用说明，精确 Lean 与证据保留在临时结果目录；远端 CI 验证说明。原全局光滑度量、原全局光滑等距作用与 `mfderiv`、原内蕴距离等式、曲率 −1、原流形覆盖/有限体积和同一规定 `h,d` 的完整 Mostow–Prasad 仍未完成。
