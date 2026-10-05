@@ -5309,6 +5309,430 @@ service, with its actual source coordinates and weights, or build a
 repair of the entire deletion hole. These source conditions are
 not supplied by the local packet inequalities.
 
+## Complete mixed-five deletion supplies the guarded source
+
+Keep one globally count-minimal, then same-count modulus-sum-minimal
+odd distinct nonunit whole cover, actual pure3 and pure9, ternary
+height at most two, and shared-prime set $R_Q=\{5\}$ in its actual
+least common period. The competing covers in both minimality
+conditions remain unrestricted. Assume $G=v_5(Q)\ge2$, and write
+
+$$
+ Q=5^G N,\qquad N=9M,\qquad \gcd(M,15)=1,
+ \qquad n=3^{h_n}5^{e_n}m_n,
+ \quad 0\le h_n\le2,\quad\gcd(m_n,15)=1.
+$$
+
+Every numerical label $n$ and residue $a_n$ below belongs to this
+one original family $D$. Here ordinary-bearing means $m_n>1$.
+Divisor closure supplies the original25. Put
+$\beta=a_{25}\bmod25$ and $\omega=\beta\bmod5$.
+
+Reuse [Report385, Q2P1](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#174-every-complete-private-source-of-q2-demands-a-fixed-mixed-service).
+Let $Y\subseteq\mathbb Z/N$ be the complete survivor of all
+five-free originals after removing the cofactor cylinders of every
+actual $e_n=1$ original whose first-five phase is $\omega$. Then
+$Y\ne\varnothing$ and
+$\operatorname{Priv}_{25}=\operatorname{CRT}(Y\times[\beta]_{25})$.
+No selected private witnesses replace this complete set.
+
+### The complete deletion retains every unit supplier
+
+Delete precisely
+
+$$
+ \mathcal M=\{n\in D:e_n\ge1,\ m_n>1\},\qquad
+ E_{\mathcal M}=(\mathbb Z/Q)\setminus
+                     \bigcup_{n\notin\mathcal M}A_n.
+$$
+
+All unit originals $5^e,3\cdot5^e,9\cdot5^e$ remain, including75
+and225. This deletion family differs from Q2P2's narrower $J$;
+the following lower bound is for $E_{\mathcal M}$.
+
+For every $y\in Y$, use the complete fibre
+$B_\omega=\{t\bmod5^G:t\equiv\omega\pmod5\}$ and define
+
+$$
+ E_y=\{t\in B_\omega:(y,t)\in E_{\mathcal M}\},\qquad
+ d(y)=\frac{|E_y|}{5^{G-1}},\qquad
+ C_n=\{y\bmod N:y\equiv a_n\pmod{n/5^{e_n}}\}.
+$$
+
+The fixed deep ordinary supplier family is
+$\mathcal T=\{n\in D:e_n\ge2,\ m_n>1,\ a_n\equiv\omega\pmod5\}$.
+Then
+
+$$
+ \begin{aligned}
+ d(y)&\ge d_G:=\frac14+\frac34\,5^{1-G}>\frac14,\\
+ \sum_{n\in\mathcal T}5^{1-e_n}\mathbf1_{C_n}(y)&\ge d(y).
+ \end{aligned}
+ \tag{CD186}
+$$
+
+Indeed every five-free original and every first-five-depth original
+misses this fibre by the definition of $Y$. The retained possible
+owners are therefore the three unit labels at each depth
+$2\le e\le G$. Each has relative fibre mass at most $5^{1-e}$,
+and numerical distinctness permits each label once. Their union
+has mass at most $3\sum_{e=2}^G5^{1-e}=1-d_G$.
+Whole coverage supplies the second inequality. Since one deep
+ordinary trace has relative mass at most $1/5<d_G$, at least two
+distinct actual members of $\mathcal T$ meet $E_y$. No shallow
+parent, ordinary depth or cofactor-phase agreement is inferred.
+
+### Singleton reset makes the complete hole compatible with the law
+
+Fix a live root $i$. Write its existing law as
+$\mu_i=\nu_i\otimes U_{Z_{5,i}}$, where $\nu_i$ includes the
+uniform safe full modulo9 word, all active ordinary coordinates
+on their actual guard complements, and the fixed opposite-root
+singleton coordinates. Put $\rho_i=|Z_{5,i}|/5^G$.
+
+The reset $\pi_i$ changes only those opposite-root coordinates to
+the singleton words already fixed by $\nu_i$. The actual3p
+singleton is the only p-bearing original at its first-p phase;
+it misses at root $i$, and every other p-bearing original misses
+after the reset. All other original events retain their phases.
+Thus the reset preserves private25 membership. The active guards
+and the pure3/pure9 guards already miss every private25 point.
+This is the projection/lift argument of
+[Report385, TC2](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#138-singleton-root-pruning-improves-the-two-root-original-source-budget),
+applied to the same complete shallow-safe source:
+
+$$
+ \pi_i(Y_i)\subseteq Y_i\cap\operatorname{supp}\nu_i,
+ \qquad Y_i=\{y\in Y:y\bmod3=i\}.
+$$
+
+Consequently every root with $Y_i\ne\varnothing$ has
+$\theta_i:=\nu_i(Y)>0$, and at least one such root exists.
+On this support every removed five guard is a retained unit
+original at the same root, so $E_y\subseteq Z_{5,i}$.
+For $E=\{(y,t):y\in Y,\ t\in E_y\}$, finite counting gives
+
+$$
+ \begin{aligned}
+ \mu_i(E)&=\frac1{5\rho_i}\int_Y d(y)\,d\nu_i(y)
+             \ge\frac{d_G\theta_i}{5\rho_i}>0,\\
+ \sum_{n\in\mathcal T}\mu_i(A_n\cap E)&\ge\mu_i(E).
+ \end{aligned}
+ \tag{CD187}
+$$
+
+The safe-word weight is already in $\nu_i$; there is no additional
+$1/k$ in CD187. Literal private25 still has zero $\mu_i$-mass,
+because the actual25 guard removes it. CD187 concerns the complete
+mixed-deletion hole above its cofactor source.
+
+The complete source also admits an explicitly priced transport.
+Let $\varpi=(\pi_i)_*U_{Y_i}$, retaining every reset multiplicity,
+and condition uniformly on the whole $E_y$ above each resulting
+$y$. The resulting law $\psi$ has marginal $\varpi$ and satisfies
+
+$$
+ \frac{d\psi}{d\mu_i}(y,t)
+   =\frac{5\rho_i\varpi(y)}{\nu_i(y)d(y)}\mathbf1_{E_y}(t),
+ \qquad
+ C_\varpi=5\rho_i\max_{\varpi(y)>0}
+                     \frac{\varpi(y)}{\nu_i(y)d(y)}.
+$$
+
+The price $\psi\le C_\varpi\mu_i$ is exact for this marginal
+and these fibres: the target capacity over $y$ is
+$\nu_i(y)d(y)/(5\rho_i)$, and uniform conditioning attains the
+required ratio. No height-independent price follows. Conditional
+normalization and the one-law cylinder calculation are reused
+from [Report572, FS2–FS3a](../550-599/572-compatible-fibres-lift-one-six-prime-query-law.md#1-a-compatible-fibre-lift-preserves-the-pure-q-query-contribution)
+and [Report385, CF3–CF5](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#124-complete-cofactor-fibres-refine-the-actual-joint-liability-charge).
+The source-specific input here is CD186 together with the reset
+support, rather than a new general coupling theorem.
+
+### The actual45 pays for the source word it removes
+
+Fix a root with $\nu(Y)>0$ and suppress its index. Write
+$\nu=U_J\otimes\lambda$, where $J$ is its set of $k\in\{2,3\}$
+safe full modulo9 words and $\lambda$ is its ordinary product
+law. Retain CD172's $b,r,W,D,P$ and $\ell\le\bar L\le P$;
+here $r$ is the shared-axis cap.
+
+For $j\in J$, let $A_j$ be the actual ordinary axial high union,
+and let $B_j^0$ be the actual five-free nonaxial high union.
+Both are events on the same ordinary carrier. Define
+
+$$
+ \begin{aligned}
+ P_j&=\prod_p(1-x_{p,j}),\qquad
+ a'_j=\lambda(A_j\setminus L_0),\\
+ c_j&=\lambda(L_0^c\cap A_j^c),\qquad
+ q_j=\lambda(L_0^c\cap A_j^c\cap(B_j^0)^c),\\
+ b_j^0&=\lambda(B_j^0),\qquad
+ \zeta_0=\nu(R_5)=\frac1k\sum_jq_j.
+ \end{aligned}
+ \tag{CD188}
+$$
+
+Here $R_5$ is the complete survivor of all five-free originals.
+The active single-axis low originals were already guarded, so
+this decomposition retains every remaining five-free event.
+In particular $a'_j+c_j=1-\ell$ and $q_j\le c_j$.
+
+The actual5 has first-five phase different from $\omega$, by
+comparable-original disjointness with25. An actual15 at this
+root with first-five phase $\omega$ would kill all of $Y$ there.
+Thus the first-five-depth unit-cofactor exclusion $U_1$ removes
+at most the word of actual45. Put $\chi=1$ if45 has first-five
+phase $\omega$ and a safe word $j_0$ here; otherwise put $\chi=0$.
+Let $I=J\setminus\{j_0\}$ when $\chi=1$, and $I=J$ otherwise.
+Then $\nu(R_5\setminus U_1)=\zeta_0-\chi q_{j_0}/k$.
+
+Put
+
+$$
+ \gamma=\frac{|Z_5\cap B_\omega|}{|Z_5|},\qquad
+ s=\frac1{5\rho}-\gamma\ge\frac1{25\rho}>0.
+$$
+
+The inequality uses the entire actual25 prefix removed from
+$B_\omega$. If $\chi=1$, the actual45 coordinate mass is
+$\gamma$, whereas its old numerical slot is $1/(5\rho)$.
+Every other unit slot keeps its old allowance. Thus, for the
+actual high-unit vectors of CD173,
+$\sum_jx_{5,j}+s\le r$.
+Increase only $x_{5,j_0}$ by $s$ to obtain a vector $z_5$
+in that same simplex. Keep all ordinary vectors unchanged.
+
+The exact axial-high union on $L_0^c$ has mass
+$k^{-1}\sum_j(a'_j+x_{5,j}c_j)$. Its increase at $z_5$ is
+exactly $sc_{j_0}/k$. Applying CD174–CD176 to $z_5$ therefore
+bounds the axial-high contribution on the complete low complement by
+
+$$
+ \frac{k-M_k(r)-r\ell-\chi s c_{j_0}}{k}.
+ \tag{CD189}
+$$
+
+This uses one actual45 slot and its actual coefficient $c_{j_0}$.
+The alternative cap replacement $r\mapsto r-s$ describes the
+same loss and cannot be added as a second debit.
+
+Let $\mathcal H$ be the actual $e_n=1$, ordinary-bearing family
+at first-five phase $\omega$. For each of its original slots,
+independence gives $\mu(A_n)=\gamma\nu(C_n)$, whereas its
+uncorrected slot is at least $\nu(C_n)/(5\rho)$. Hence these
+slots lose $s\sum_{n\in\mathcal H}\nu(C_n)$.
+They belong to the five-bearing low or nonaxial-high inventory;
+none belongs to $L_0$, CD178's correction or the axial tower.
+
+The exact source identity
+$Y=(R_5\setminus U_1)\setminus\bigcup_{n\in\mathcal H}C_n$
+and $q_{j_0}\le c_{j_0}$ now give
+
+$$
+ \begin{aligned}
+ \operatorname{Loss}_{\rm total}
+   &:=s\sum_{n\in\mathcal H}\nu(C_n)
+                          +\frac{\chi s c_{j_0}}k
+     \ge s[\zeta_0-\nu(Y)]_+,\\
+ M_k(r)+ks[\zeta_0-\Theta]_+
+   &\le(k-r)\bar L+(2k+1)bW+D
+       \qquad\text{whenever }\Theta\ge\nu(Y).
+ \end{aligned}
+ \tag{CD190}
+$$
+
+Thus the unit slot pays for the whole source word it removes.
+No original label is charged twice, and no alleged intersection
+is subtracted from an unknown union measure.
+
+### Wordwise inventories retain the same unit and supplier ownership
+
+The five-free nonaxial inventory gives $\sum_jb_j^0\le D$.
+Consequently
+
+$$
+ \zeta_0\ge\frac1k\sum_j[P_j-\bar L-b_j^0]_+
+          \ge\frac{[M_k(0)-k\bar L-D]_+}{k}.
+ \tag{CD191}
+$$
+
+For $j\in I$, the exact $d(y)$ depends only on the complete
+modulo9 word; denote it by $d_j$. Let $g$ be the relative
+$B_\omega$ mass removed by the pure-five and root-specific
+$3\cdot5^e$ guards. Let $u_j$ be the relative mass of the deep
+$9\cdot5^e$ union at $j$ remaining after those guards. Then
+
+$$
+ s=\frac{g}{5\rho},\qquad g\ge\frac15,\qquad
+ d_j=1-g-u_j\ge d_G.
+$$
+
+The same numerical high-unit label has one word owner, so the
+$d_j$ are not independently chosen minima.
+
+Let $C_n^{\rm ord}$ retain the literal ordinary cylinder after
+singleton elimination. Inactive ternary or opposite-root events
+contribute zero. Define
+
+$$
+ \begin{aligned}
+ L_{\rm deep}
+   &=\sum_{\substack{n\in\mathcal T\\h_n\le1}}
+           5^{1-e_n}\lambda(C_n^{\rm ord}),\\
+ H_{{\rm deep},j}
+   &=\sum_{\substack{n\in\mathcal T\\h_n=2,\ \operatorname{word}(n)=j}}
+           5^{1-e_n}\lambda(C_n^{\rm ord}),\qquad
+ a_G=\frac{1-5^{1-G}}4.
+ \end{aligned}
+$$
+
+A low original supplies one fixed column across all words; a high
+original has one actual word. CD186 on the same slices $Y_j$
+gives
+
+$$
+ \begin{aligned}
+ \nu(Y)&\le\mathsf T:={1\over k}\sum_{j\in I}{1\over d_j}
+       \int_{Y_j}\sum_{\substack{n\in\mathcal T\\n\text{ active at }j}}
+             5^{1-e_n}\mathbf1_{C_n^{\rm ord}}\,d\lambda\\
+ &\le\Theta_{\rm word}:={1\over k}\sum_{j\in I}
+                      {L_{\rm deep}+H_{{\rm deep},j}\over d_j},\\
+ L_{\rm deep}&\le2a_GW,\qquad
+ \sum_jH_{{\rm deep},j}\le a_GW.
+ \end{aligned}
+ \tag{CD192}
+$$
+
+The latter inequalities use the existing prefix caps and each
+original numerical slot once. Exact finite inventories may
+replace $W$ term by term. The deep slots bound demand above;
+they are not also subtracted from the covering budget.
+
+In particular CD190 implies
+
+$$
+ \begin{aligned}
+ M_k(r)+s[\Phi]_+&\le(k-r)\bar L+(2k+1)bW+D,\\
+ \Phi&=\sum_j[P_j-\bar L-b_j^0]_+
+                 -\sum_{j\in I}{L_{\rm deep}+H_{{\rm deep},j}\over d_j}.
+ \end{aligned}
+ \tag{CD193}
+$$
+
+A weaker independent-inventory lower substitute for $\Phi$ is
+
+$$
+ M_k(0)-k\bar L-D-a_GW
+          \left(2\sum_{j\in I}{1\over d_j}
+                         +\max_{j\in I}{1\over d_j}\right).
+$$
+
+Replacing every $d_j$ by $d_G$ weakens it further. None of these
+positive parts is asserted to be uniformly positive.
+
+### Second-five colors impose a common allocation
+
+At $j\in I$, the active depth-two unit labels25,75,225 occupy
+distinct second-five digits, by comparable-original disjointness.
+Let $\mathcal C_j$ be the unoccupied digits above $\omega$.
+Its size is four minus the indicator of an active75 at this
+root and first phase, minus the indicator of an active225 at
+this word and first phase. Thus it has two, three or four digits;
+the75 indicator is common to the root and the225 indicator is
+nonzero at at most one word.
+
+For $c\in\mathcal C_j$, let $\delta_{j,c}$ be the exact residual
+unit-hole density on its complete second-five fibre. Only the
+three unit towers at depths $e\ge3$ can remain there. Hence
+
+$$
+ \delta_{j,c}\ge h_G:=\frac14+\frac34\,5^{2-G}>\frac14.
+ \tag{CD194}
+$$
+
+At $G=2$ this density is one. Every such color requires actual
+mixed deep service at each source point. This is the complete
+sibling-fibre argument with the retained unit inventory; it does
+not select a favorable tail or infer common phases for different
+originals.
+
+Partition the same actual $\mathcal T$ labels by their fixed
+second-five color. Define $L_c,H_{j,c}$ as in CD192, retaining
+only that color and replacing $5^{1-e_n}$ by $5^{2-e_n}$.
+With $A_G=5a_G$, the common columns satisfy
+
+$$
+ \begin{aligned}
+ \lambda(Y_j)&\le\min_{c\in\mathcal C_j}
+                       {L_c+H_{j,c}\over\delta_{j,c}},\\
+ \sum_cL_c&\le2A_GW,\qquad
+ \sum_{j,c}H_{j,c}\le A_GW.
+ \end{aligned}
+ \tag{CD195}
+$$
+
+The average of these minima is a valid $\Theta$ in CD190.
+It bounds $\nu(Y)$ directly, not necessarily $\mathsf T$.
+Each low original has one color across all words, and each high
+original has one pair $(j,c)$; separate favorable allocations at
+different words are not allowed.
+
+More explicitly, take any nonnegative weights $w_{j,c}$ with
+$\sum_{c\in\mathcal C_j}\delta_{j,c}w_{j,c}\ge1$ for every
+$j\in I$, and set weights outside these pairs to zero.
+Multiplying the same color demands gives
+
+$$
+ \begin{aligned}
+ \sum_{j\in I}\lambda(Y_j)
+ &\le\sum_c\left(\sum_jw_{j,c}\right)L_c
+                         +\sum_{j,c}w_{j,c}H_{j,c}\\
+ &\le A_GW\left(2\max_c\sum_jw_{j,c}
+                              +\max_{j,c}w_{j,c}\right).
+ \end{aligned}
+ \tag{CD196}
+$$
+
+This finite weighted inequality retains the same source and
+actual supplier colors. It is not a fractional repair certificate
+from integer minimality.
+
+### The remaining source inequality
+
+Let
+$S=(k-r)\bar L+(2k+1)bW+D-M_k(r)$ be the old CD177 slack.
+For $S\ge0$, one sufficient closing condition is
+
+$$
+ \sum_jq_j-
+   \sum_{j\in I}\frac1{d_j}
+      \int_{Y_j}\sum_{\substack{n\in\mathcal T\\n\text{ active at }j}}
+         5^{1-e_n}\mathbf1_{C_n^{\rm ord}}\,d\lambda
+       >\frac{S}{s}.
+ \tag{CD197}
+$$
+
+CD195 or CD196 can replace the second sum by another certified
+upper bound for $k\nu(Y)$. Every quantity must concern the same
+$q_j,Y_j$, unit residuals, original phases and shared low columns.
+CD186–CD196 do not force CD197 for every permitted original
+source. The unresolved step is a quantitative restriction on that
+common realization; positive transport mass alone supplies no
+such inequality or whole-hole repair.
+
+A scoped transient Lean application verifies CD186 for the entire
+five-free projection of the actual25 private region: the complete
+mixed-deletion fibre bound, its actual deep-supplier bound, and two
+distinct original suppliers meeting the hole. It uses only the
+standard axioms and requires neither minimality hypothesis for this
+conditional fibre implication. It does not assert source nonemptiness
+or verify the selected-law reset. This is reuse evidence, with no new
+frozen declaration. The selected-law transport, debit and word/color
+inventory bounds CD187–CD197 remain ordinary mathematical derivations
+and are not claimed as formalized. No unrestricted Erdős #7 conclusion
+follows.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
