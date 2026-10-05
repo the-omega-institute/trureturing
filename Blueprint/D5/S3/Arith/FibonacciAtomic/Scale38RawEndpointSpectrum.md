@@ -2,50 +2,84 @@
 
 ## Abstract
 
-Raw endpoint addresses and leaf-response obstructions for the nested compensation family.
+The complete raw endpoint spectrum and exact paid sets of nested compensation scans.
 
-The nested compensation family is indexed by one baseline member and two finite-index rows. The existing Scale38 query addresses provide the left comb scan.
+The family contains the baseline P_0, enlarged-slot members X_j with indices starting at one, and contracted-position members Y_i with indices starting at zero. A raw endpoint has a safe sequence of its own leaf queries: each branch group and each absent group has at most one surviving member, and only the target survives.
 
-**Definition 1.1 (Peeling endpoint predicate).**
+**Definition 1.1 (Endpoint targets).**
 
-Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.rawEndpoint`
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.endpointTargets`
 
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.rawEndpoint` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A native family member is a raw endpoint when its transported finite family admits a Peels list from the full survivor set.
-
-**Theorem 1.2 (Equal leaf replies obstruct peeling).**
-
-Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.no_peel_of_leaf_agreement`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.no_peel_of_leaf_agreement` (`✓ std3`). ∎
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.endpointTargets` (`✓ std3`).
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-If two distinct competitors differ from the target and agree at every target leaf, then no safe raw peeling list can delete both competitors. A nonleaf response group would contain both members, while a matching response keeps both in the survivor set.
+The baseline, X_1, and contracted positions satisfying i + 2 at least k.
 
-**Theorem 1.3 (Row certificates determine all target leaves).**
+**Definition 1.2 (Literal scan lengths).**
 
-Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.leaf_agreement_of_rows`
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.scanLength`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.leaf_agreement_of_rows` (`✓ std3`). ∎
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.scanLength` (`✓ std3`).
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-When every labelled row belonging to a target gives the same reply for two competitors, the complete frontier and response table imply equality of their replies at every leaf of that target.
+The baseline and X_1 scans have k + 1 queries. The last Y position has k + 1 queries; the preceding Y position has k + 2.
+
+**Definition 1.3 (Literal scan addresses).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.scanAddress`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.scanAddress` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The baseline scans q_1 through q_(k+1). X_1 scans q_2 through q_(k+1), then d = RR. Y_(k-2) scans q_1 through q_(k-1), then b_1, b_2, b_3. Y_(k-1) scans q_1 through q_k, then b_2. Here b_h = RLR^(h-1)LLR and q_t = LR^(t-1)LLR.
+
+**Definition 1.4 (Exact competitor exit addresses).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.exitAddress`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.exitAddress` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a distinct competitor, this is its first nonleaf address in the target scan. The target has no extra paid address.
+
+**Theorem 1.5 (Complete spectrum, safe scans and exact paid sets).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.result`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For k = 1, every family member is a raw endpoint. For k = 2, the endpoints are P_0, X_1, Y_0 and Y_1. For k at least three, they are exactly P_0, X_1, Y_(k-2) and Y_(k-1). The finite-index condition i + 2 at least k selects precisely the last two Y positions, or the sole Y position when k = 1.
+
+Each displayed scan is safe. Its actual controller follows the target reply until a singleton branch or absent group exits, then runs that member's complete verifier. Following the entire target scan starts the target verifier. Other replies enter the fallback. The controller terminates correctly on the full source domain. Its cost on each family member is 3k + 14, except that the target costs 3k + 13.
+
+Every paid set is the member's complete leaf set together with its extra set Delta. Delta is empty for the target. With target P_0, X_j exits at q_j and Y_i at q_(i+2). With target X_1, P_0 exits at d, X_j for j at least two exits at q_j, and every Y_i exits at q_(i+2).
+
+With target Y_(k-2), X_j for j less than k exits at q_j, and Y_i for i at most k-3 exits at q_(i+2). The remaining competitors X_k, P_0 and Y_(k-1) exit respectively at b_1, b_2 and b_3. With target Y_(k-1), every X_j exits at q_j, each earlier Y_i exits at q_(i+2), and P_0 exits at b_2. Each competitor's extra set is the singleton containing its displayed exit address.
+
+For X_j with j at least two, Y_(j-2) and Y_(j-1) agree on every target leaf. For Y_i with i + 3 at most k, X_(i+2) and X_(i+3) agree on every target leaf. At a matching reply both competitors survive; at a branch or absent reply both would occupy one group, violating safety. The complete labelled frontier covers every leaf, so these obstructions exclude every other target without restricting the query menu.
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.leaf_agreement_of_rows`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.no_peel_of_leaf_agreement`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.rawEndpoint`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.endpointTargets`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.exitAddress`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.result`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.scanAddress`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.scanLength`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/RawEndpointPeeling](RawEndpointPeeling.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Scale38LeafFrontierResponse](Scale38LeafFrontierResponse.md)
