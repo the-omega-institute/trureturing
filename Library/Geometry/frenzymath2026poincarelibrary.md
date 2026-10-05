@@ -5391,3 +5391,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 完整具名构造经缓存保护入口首轮编译成功，零错误、零警告，无 `sorry`，公理闭包仅含 `propext, Classical.choice, Quot.sound`；无失败尝试，已成功基底的字节前缀未改。协作方实施、调用方只读语义复核完成，没有新增 SSHX 多视角共识。源码 `.lake/mostow-h3-free-element-centralizer-boundary.lean` 的 SHA256 为 `0ea486f8d82de5cd4770ea6f0c25b2effa219267268a0971c212829fbb806150`，114348 字节，相邻收据记录真实退出码。
 
 该原模型与已证幂逃逸、实际端点桥及钉版紧子列、极限、指数接口的应用按 §3.2 判 `proof_shape: bind-only`、`admission_basis: none`，精确源码保持临时证据，不新增绑定 Lean 库声明、Describe、登记或冻结；无 imports、依赖钉版、预算或工具改动。这里结算了原自由作用中单个非单位元素的中心化子共同边界点构造，尚未组装幂零子群共同点、虚幂零有限边界轨道、薄部与有限尖点或全局格子刚性。两侧原度量、同一个给定 `h` 与完整 `d`、独立宇宙、非紧有限体积尖点及非可定向的完整 Mostow–Prasad 继续未完成。
+
+
+## 原自由幂零等距群的实际共同 null 边界点
+
+对任意类型宇宙中的幂零群 `G` 及原 H³ 自由等距表示 `ρ`，内部构造实际归一化 null 点 `b`，使所有原 `ρ(g)` 均固定同一个 `b`。无需离散性、有限生成、无限阶元素、预给边界点、定向或有限体积前提，包含反向等距变换。
+
+平凡群分支选取已构造的实际 null 点并消费原单位作用公式。非平凡分支直接复用钉版 `Group.IsNilpotent.center_ne_bot` 和 `Subgroup.ne_bot_iff_exists_ne_one` 选择实际非单位中心元素 `z`；原自由作用的已证完整中心化子构造提供同一个实际 `b`。中心关系及同一个 `ρ` 的乘法保持证明所有原 `ρ(g)` 都与 `ρ(z)` 交换，故它们全部固定此同一个内部构造的点。没有把中心化子结论、逃逸序列或实际 null 极限另列为前提。
+
+完整具名应用经缓存保护入口第二轮编译成功，零错误、零警告，无 `sorry`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。首轮虽 exit0 但有两项局部实例书写警告，其完整源码与日志保留排除；按钉版建议修复，没有关闭 linter。协作方实施、调用方只读语义复核完成，没有新增 SSHX 多视角共识。源码 `.lake/mostow-h3-nilpotent-common-boundary.lean` 的 SHA256 为 `e5fa43a6dcb2c6c7ab1007fb5d4ea4b81d59bba187ee6e583ec3cd12f3fbeeec`，115521 字节，相邻收据记录真实退出码。仅新增钉版已有热缓存 `Mathlib.GroupTheory.Nilpotent`，未升级依赖或构建新闭包。
+
+该实际原几何构造与既有中心和群同态接口的消费按 §3.2 判 `proof_shape: bind-only`、`admission_basis: none`；精确源码保持临时证据，不新增绑定 Lean 库声明、Describe、登记或冻结，不改预算、工具或判官。这里只结算原自由幂零作用的共同边界点，尚未构造虚幂零有限边界轨道、薄部与有限尖点、原流形原度量覆盖或全局格子边界刚性。两侧原度量、同一个给定 `h` 与完整 `d`、独立宇宙、非紧有限体积尖点及非可定向的完整 Mostow–Prasad 继续未完成。
