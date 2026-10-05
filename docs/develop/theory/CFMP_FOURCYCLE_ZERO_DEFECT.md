@@ -39,7 +39,7 @@ vector is a genuine hyper-ideal tetrahedron exactly when its six cosines lie
 in `(-1,1)`.  Thus every block lies strictly in the geometric domain
 throughout `Ω`; if `D_t>0` denotes the usual strict-domain predicate, this is
 precisely `D_t(x)>0`.  (The merged Lean API names the criterion by the six
-strict cosine inequalities rather than by a symbol `D_o`.)  In particular,
+strict cosine inequalities rather than by a symbol `D_t`.)  In particular,
 the argument never approaches a flat block or a square-root singularity.
 Concretely, for each of the six target edges one may record the scalar
 certificate
