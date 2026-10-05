@@ -7,6 +7,7 @@
    digest: Two prime-palette envelopes with a shared seven axis cannot both reach one under their joint real allocation constraints. -/
 
 import Mathlib
+import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
