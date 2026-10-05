@@ -40,6 +40,10 @@ internal sealed class PanSkanderaWangBruhatInvariantDocument : IScribeDocumentDe
             Node("insert-max", "Ordinary maximum insertion", "insertMax", InsertMaxFormula(),
                 "Ordinary insertion places the new maximum n at the one-based position r.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("swap-pairs-length", "Pair swapping preserves length", "swapPairs_length",
+                SwapPairsLengthFormula(),
+                "Pair swapping preserves the length of every list.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("selection-invariant-insert", "Matched insertion preserves the invariant", "selectionInvariant_insert",
                 SelectionInvariantInsertFormula(),
                 "Matched ordinary insertion and suffix-swapping insertion preserve the full selection invariant under the stated parity and position conditions.",
@@ -121,6 +125,10 @@ internal sealed class PanSkanderaWangBruhatInvariantDocument : IScribeDocumentDe
                 Call("insertMax", N(), F.Id("r"), F.Id("a")),
                 Call("inss", F.Id("s"), F.Id("b"))))));
 
+    private static Formula SwapPairsLengthFormula() => Disp(ForAll("x", ListType(),
+        Equal(Call("length", Call("swapPairs", F.Id("x"))),
+            Call("length", F.Id("x")))));
+
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
     private static Formula P() => F.Id("p");
@@ -131,6 +139,8 @@ internal sealed class PanSkanderaWangBruhatInvariantDocument : IScribeDocumentDe
     private static Formula ListType() => Call("List", Naturals());
     private static Formula.BoundVariable Bound(string name, Formula domain) =>
         new Formula.BoundVariable(FormulaIdentifier.Create(name), domain);
+    private static Formula ForAll(string name, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
     private static Formula ForAllMany(Formula.BoundVariable[] variables, Formula body) =>
         new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
     private static Formula Iff(Formula left, Formula right) =>
