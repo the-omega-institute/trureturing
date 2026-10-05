@@ -1000,6 +1000,7 @@ jobs:
           python3 "$M1_DIR/watch.py" -- make lean-report
       - name: Collect measurement receipts
         if: ${{ always() }}
+        continue-on-error: true
         run: |
           python3 - <<'PY_RECEIPT'
           import hashlib,json,os,pathlib,shutil,subprocess
@@ -1008,12 +1009,14 @@ jobs:
           if logs.is_dir(): shutil.copytree(logs,root/'report-logs',dirs_exist_ok=True)
           for src in (pathlib.Path('build/lean-cache/build-work.json'),pathlib.Path('build/lean-cache/ensure.json')):
               if src.is_file(): shutil.copy2(src,root/src.name)
-          changes=subprocess.check_output(['git','diff','--name-only','ac626ffcfb1b994f9dadecb95cdc1bb5f03cc2aa','HEAD'],text=True).splitlines()
+          comparison=subprocess.run(['git','diff','--name-only','ac626ffcfb1b994f9dadecb95cdc1bb5f03cc2aa','HEAD'],text=True,capture_output=True)
+          changes={'exit_code':comparison.returncode,'paths':comparison.stdout.splitlines(),'unavailable':comparison.stderr if comparison.returncode else None}
           hashes={p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in ('tools/lean-inspector/native.py','tools/lean-inspector/lakefile.lean','tools/lean-inspector/Inspector.lean','lean-report-inputs.json','lean-toolchain')}
           (root/'identity.json').write_text(json.dumps({'head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'parents':subprocess.check_output(['git','show','-s','--format=%P','HEAD'],text=True).strip(),'diff_from_candidate':changes,'hashes':hashes},indent=2))
           PY_RECEIPT
       - name: Upload measurement receipts
         if: ${{ always() }}
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: ci-cold-m1-receipts
