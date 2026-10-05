@@ -97,6 +97,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
         bill m f (initial m hm) tape = CarryGraphRealization.bill m γ tape) ∧
       (∀ i, 0 < p i) ∧ (∑ i, p i) = 1 ∧
       0 < anchorValue γ ∧ sInf (Set.range p) = anchorValue γ ∧
+      (∀ i, ∃ q : ℚ, (q : ℝ) = p i) ∧
       (∀ i, p i = ∑' d : ℕ,
         (if i ∈ CarryGraphRealization.labelSet m γ d then (1 : ℝ) else 0) /
           (2 : ℝ) ^ (d + 1)) ∧
@@ -115,7 +116,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
       pathCost γ = DyadicSupportLines.cost p ∧
       DyadicSupportLines.cost p = alpha m * anchorValue γ := by
   classical
-  obtain ⟨V, priced, hfix, hgreedy, hpaths, hsign, hzero, hcritical⟩ :=
+  obtain ⟨V, priced, _, _, hpaths, _, hzero, hcritical⟩ :=
     CarryGraphCriticalAttainment.result m hm
   let o : S m := ⟨root m, by dsimp [IsState, root]; omega⟩
   refine ⟨?_, ?_⟩
@@ -137,7 +138,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
   change (∑ i, p i) = 1 at hsum
   change ∀ i, anchorValue γ ≤ p i at hminimum
   change DyadicSupportLines.cost p ≤ pathCost γ at hlower
-  letI : Nonempty (Fin m) := ⟨⟨0, by omega⟩⟩
+  let : Nonempty (Fin m) := ⟨⟨0, by omega⟩⟩
   have hp : ∀ i, 0 < p i := hpositive ht
   have hcost_lower : alpha m * anchorValue γ ≤ DyadicSupportLines.cost p := by
     obtain ⟨δ, hδ, _, _, _, hanchor, hδcost⟩ :=
@@ -372,12 +373,83 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
       apply tsum_congr
       intro d
       rw [active]
+  have rational : ∀ i, ∃ q : ℚ, (q : ℝ) = p i := by
+    let next : {s : State // IsState m s} → {s : State // IsState m s} := fun s =>
+      ⟨successor s.val (f s).val, (f s).property.2.2⟩
+    change ∀ i : Fin m, ∃ q : ℚ, (q : ℝ) = Real.ofDigits (CarryGraphRealization.labelDigit γ i)
+    let code : {s : State // IsState m s} →
+        (Finset.Ico (0 : ℤ) m) × (Finset.Icc (1 : ℤ) m) := fun s =>
+      (⟨s.val.r, by have hs := s.property; simp only [IsState] at hs
+                    simp only [Finset.mem_Ico]; omega⟩,
+       ⟨s.val.e, by have hs := s.property; simp only [IsState] at hs
+                    simp only [Finset.mem_Icc]; omega⟩)
+    have inj : Function.Injective code := by
+      intro s t h
+      have hr : s.val.r = t.val.r := congrArg (fun p => p.1.val) h
+      have he : s.val.e = t.val.e := congrArg (fun p => p.2.val) h
+      apply Subtype.ext
+      exact (show ∀ u v : State, u.r = v.r → u.e = v.e → u = v by
+        intro u v hr he
+        cases u
+        cases v
+        dsimp only at hr he
+        cases hr
+        cases he
+        rfl) _ _ hr he
+    let : Finite {s : State // IsState m s} := Finite.of_injective code inj
+    have collision : ∃ a b : ℕ, a < b ∧ next^[a] o = next^[b] o := by
+      obtain ⟨a, b, hne, he⟩ := Finite.exists_ne_map_eq_of_infinite (fun d : ℕ => next^[d] o)
+      rcases lt_or_gt_of_ne hne with hab | hba
+      · exact ⟨a, b, hab, he⟩
+      · exact ⟨b, a, hba, he.symm⟩
+    obtain ⟨a, b, hab, he⟩ := collision
+    intro i
+    let digits := CarryGraphRealization.labelDigit γ i
+    have tails : (fun n => digits (n + a)) = (fun n => digits (n + b)) := by
+      funext n
+      have H : next^[n + a] o = next^[n + b] o := by
+        rw [Function.iterate_add_apply, Function.iterate_add_apply, he]
+      exact congrArg (fun s : {s : State // IsState m s} =>
+        if i ∈ CarryGraphRealization.labelSet m ⟨fun _ => s.val, fun _ => (f s).val⟩ 0
+        then (1 : Fin 2) else 0) H
+    let qa : ℚ := ∑ j ∈ Finset.range a, (digits j).val / (2 : ℚ) ^ (j + 1)
+    let qb : ℚ := ∑ j ∈ Finset.range b, (digits j).val / (2 : ℚ) ^ (j + 1)
+    have castA : (qa : ℝ) = ∑ j ∈ Finset.range a, Real.ofDigitsTerm digits j := by
+      dsimp only [qa]
+      push_cast
+      apply Finset.sum_congr rfl
+      intro j hj
+      simp only [Real.ofDigitsTerm, Nat.cast_ofNat, div_eq_mul_inv]
+    have castB : (qb : ℝ) = ∑ j ∈ Finset.range b, Real.ofDigitsTerm digits j := by
+      dsimp only [qb]
+      push_cast
+      apply Finset.sum_congr rfl
+      intro j hj
+      simp only [Real.ofDigitsTerm, Nat.cast_ofNat, div_eq_mul_inv]
+    have denom : ((2 : ℝ) ^ a)⁻¹ - ((2 : ℝ) ^ b)⁻¹ ≠ 0 := by
+      apply sub_ne_zero.mpr
+      intro H
+      have H' := inv_injective H
+      exact (pow_lt_pow_right₀ (by norm_num : (1 : ℝ) < 2) hab).ne H'
+    have headA := Real.ofDigits_eq_sum_add_ofDigits digits a
+    have headB := Real.ofDigits_eq_sum_add_ofDigits digits b
+    rw [← castA] at headA
+    rw [← castB] at headB
+    rw [tails] at headA
+    refine ⟨(((2 : ℚ) ^ a)⁻¹ * qb - ((2 : ℚ) ^ b)⁻¹ * qa) /
+      (((2 : ℚ) ^ a)⁻¹ - ((2 : ℚ) ^ b)⁻¹), ?_⟩
+    push_cast
+    apply (div_eq_iff denom).mpr
+    change ((2 : ℝ) ^ a)⁻¹ * (qb : ℝ) - ((2 : ℝ) ^ b)⁻¹ * (qa : ℝ) =
+      Real.ofDigits digits * (((2 : ℝ) ^ a)⁻¹ - ((2 : ℝ) ^ b)⁻¹)
+    nlinarith [congrArg (fun y => ((2 : ℝ) ^ b)⁻¹ * y) headA,
+      congrArg (fun y => ((2 : ℝ) ^ a)⁻¹ * y) headB]
   have samples : sample m f (initial m hm) = CarryGraphRealization.sample m γ :=
     funext fun tape => (observations tape).1
   have bills : bill m f (initial m hm) = CarryGraphRealization.bill m γ :=
     funext fun tape => (observations tape).2
   refine ⟨hγ, finite_bound.1, finite_bound.2, Nat.card_fin m, sim, observations,
-    hp, hsum, ht, hmin, ?_, ?_, ?_, ?_, ?_, ?_, ?_, hcost, hratio⟩
+    hp, hsum, ht, hmin, rational, ?_, ?_, ?_, ?_, ?_, ?_, ?_, hcost, hratio⟩
   · intro i
     change Real.ofDigits (CarryGraphRealization.labelDigit γ i) =
       ∑' d : ℕ, (if i ∈ CarryGraphRealization.labelSet m γ d then (1 : ℝ) else 0) /

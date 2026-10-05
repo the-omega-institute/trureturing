@@ -71,8 +71,8 @@ internal sealed class CarryGraphFiniteSamplerDocument : IScribeDocumentDefinitio
                     H("Finite control attains the critical bit bill"),
                     StatementSource.FromAuthor(Disp(ResultFormula())), AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("For every m at least two, a critical stationary table with a positive anchor exists. Every stationary table whose positive anchor and path cost satisfy C=alpha(m) times the anchor has a finite slot machine. Its policy path gamma starts at the root, and p is the law obtained from that path's fixed label digits. At every index on every tape, a returned scan label and charge agree with the machine control and invoice; a continuing scan slot agrees with the machine's carry state and slot. Thus their first-return samples and total bills coincide even on exceptional divergent tapes. In the display, core(x) is the stored carry state and slot(x) is its natural slot; treeSample and treeBill denote the existing fixed-label tree sample and bill.")),
-                        Paragraph(Text("The active-control bound is m squared times (m-1) divided by two, with m additional absorbing output labels. The output law is strictly positive and normalized, its minimum is the positive anchor, its label probabilities are the digit sums, and its stopping tail is r(d)/2 raised to d. It returns almost surely and every returned invoice equals the total bill. The expected bill equals the policy-path cost, the dyadic cost of p and alpha(m) times the anchor.")),
-                        Paragraph(Text("The statement gives no rationality claim, minimum-state claim or uniform bound on the number of bits read."))),
+                        Paragraph(Text("The active-control bound is m squared times (m-1) divided by two, with m additional absorbing output labels. The output law is rational, strictly positive and normalized, its minimum is the positive anchor, its label probabilities are the digit sums, and its stopping tail is r(d)/2 raised to d. It returns almost surely and every returned invoice equals the total bill. The expected bill equals the policy-path cost, the dyadic cost of p and alpha(m) times the anchor.")),
+                        Paragraph(Text("The finite stationary root orbit repeats a state. Equal tail digit streams at two distinct indices, together with the finite-prefix identity for ofDigits, give a rational expression for each probability. The statement gives no minimum-state claim or uniform bound on the number of bits read."))),
                     DescribeRole.Theorem))));
     }
 
@@ -80,7 +80,7 @@ internal sealed class CarryGraphFiniteSamplerDocument : IScribeDocumentDefinitio
     {
         var m = V("m"); var f = V("f"); var g = V("gamma"); var p = V("p");
         var t = V("tape"); var d = V("d"); var i = V("i"); var n = V("n");
-        var j = V("j"); var x = V("x"); var indices = Call("Fin", m);
+        var j = V("j"); var x = V("x"); var q = V("q"); var indices = Call("Fin", m);
         var natural = Ty("N"); var active = Call("Active", m);
         var start = Call("initial", m);
         Formula Run(Formula k) => Call("execute", m, f, start, t, k);
@@ -107,6 +107,7 @@ internal sealed class CarryGraphFiniteSamplerDocument : IScribeDocumentDefinitio
             All(i, indices, Pos(Call("p", i))),
             Equal(Seq(new Formula.Subscript(F.Sum, Seq(i, Sp, InMacro, Sp, indices)), Call("p", i)), D(1)),
             Pos(anchor), Equal(Call("inf", Call("range", p)), anchor),
+            All(i, indices, Ex(q, Ty("Q"), Equal(Call("real", q), Call("p", i)))),
             All(i, indices, Equal(Call("p", i),
                 Seq(new Formula.Subscript(F.Sum, Seq(d, Sp, InMacro, Sp, natural)),
                     new Formula.Fraction(Call("indicator", Call("labelSet", m, g, d), i),
