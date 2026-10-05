@@ -152,8 +152,7 @@ rather than $I\cup\{k\}$. Phases $0,m,k$ have actually been excluded from this a
 **定理 3.1（Exact binary full-block fee）。** For the base target with $N=2$, for every arrangement of its two labels in $I$ and every coincidence of $A$ with those labels,
 
 $$
-C_{\rm ad}=C_{\rm pre}=Q+1+\mathbf1_{\{Q=2,\ m\ {
-m odd},\ A\notin\lambda[I]\}}.
+C_{\rm ad}=C_{\rm pre}=Q+1+\mathbf1_{\{Q=2,\ m\text{ odd},\ A\notin\lambda[I]\}}.
 \tag{3.1}
 $$
 
@@ -319,8 +318,7 @@ The first saturated widths $m=2^h+h+1$ are $4,7,12,21$. At these widths the main
 **定理 6.1（Six-label endpoint refinement）。** Fix $Q\ge2,m\ge3,k=Qm$, six pairwise distinct labels $A,B,C,D,E,R$, and a surjective $\lambda:I\to\{B,C\}$. Give every high INITIAL tail label $R$. On low tails give phase 0 label $D$, phase $m$ label $E$, band phase $j$ label $\lambda(j)$, and every other phase label $A$. Then
 
 $$
-C_{\rm ad}=C_{\rm pre}=Q+1+\mathbf1_{\{Q=2,\ m\ {
-m odd}\}}.
+C_{\rm ad}=C_{\rm pre}=Q+1+\mathbf1_{\{Q=2,\ m\text{ odd}\}}.
 \tag{6.1}
 $$
 
