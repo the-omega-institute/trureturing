@@ -386,47 +386,128 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     rintro ⟨qs,safe⟩
     exact obstruction Z K outside blocked Finset.univ qs
       (fun _ _ => Finset.mem_univ _) safe
+  have small_one : ∀ (e1 : Index 1 ≃ Fin (Fintype.card (Index 1))) (Z : Index 1),
+      Peels (family 1 ∘ e1.symm) (e1 Z) Finset.univ (endpointRoute 1 Z) := by
+    intro e1 Z
+    let F1 := family 1 ∘ e1.symm
+    change Peels F1 (e1 Z) Finset.univ (endpointRoute 1 Z)
+    have all : (Finset.univ : Finset (Fin (Fintype.card (Index 1)))) =
+        Finset.univ.image e1 := (Finset.image_univ_of_surjective e1.surjective).symm
+    have mapped (U : Index 1) : F1 (e1 U) = family 1 U := by
+      change family 1 (e1.symm (e1 U)) = _
+      rw [e1.symm_apply_apply]
+    have bshape : FourExitRawEndpointSpectrum.B =
+        .mul ActualImageSevenLeafSeparation.C ActualImageSevenLeafSeparation.A := rfl
+    have count0 : (fiber (fun a v => leafLabel (F1 v) a)
+        (Finset.univ.image e1) (query 0) none).card ≤ 1 := by
+      have unique (v : Fin (Fintype.card (Index 1)))
+          (hv : v ∈ fiber (fun a v => leafLabel (F1 v) a)
+            (Finset.univ.image e1) (query 0) none) :
+          v = e1 (.inr (.inl 0)) := by
+        simp only [fiber,Finset.mem_filter] at hv
+        obtain ⟨U,_,rfl⟩ := Finset.mem_image.mp hv.1
+        have no := hv.2
+        rw [mapped] at no
+        rcases U with u | (j | i)
+        all_goals first
+          | (cases u)
+          | (fin_cases j)
+          | (fin_cases i)
+        all_goals
+          simp [family,query,FourExitRawEndpointSpectrum.comb,bshape,
+            ActualImageSevenLeafSeparation.A,ActualImageSevenLeafSeparation.C,
+            ActualImageSevenLeafSeparation.E,readout,leafLabel] at no ⊢
+      exact Finset.card_le_one.mpr (fun v hv w hw => (unique v hv).trans (unique w hw).symm)
+    have count1 : (fiber (fun a v => leafLabel (F1 v) a)
+        (Finset.univ.image e1) (query 1) none).card ≤ 1 := by
+      have unique (v : Fin (Fintype.card (Index 1)))
+          (hv : v ∈ fiber (fun a v => leafLabel (F1 v) a)
+            (Finset.univ.image e1) (query 1) none) :
+          v = e1 (.inr (.inr 0)) := by
+        simp only [fiber,Finset.mem_filter] at hv
+        obtain ⟨U,_,rfl⟩ := Finset.mem_image.mp hv.1
+        have no := hv.2
+        rw [mapped] at no
+        rcases U with u | (j | i)
+        all_goals first
+          | (cases u)
+          | (fin_cases j)
+          | (fin_cases i)
+        all_goals
+          simp [family,query,FourExitRawEndpointSpectrum.comb,bshape,
+            ActualImageSevenLeafSeparation.A,ActualImageSevenLeafSeparation.C,
+            ActualImageSevenLeafSeparation.E,readout,leafLabel] at no ⊢
+      exact Finset.card_le_one.mpr (fun v hv w hw => (unique v hv).trans (unique w hw).symm)
+    have enum : (Finset.univ : Finset (Index 1)) =
+        {.inl (), .inr (.inl 0), .inr (.inr 0)} := by decide
+    rw [all,enum]
+    rw [enum] at count0 count1
+    rcases Z with u | (j | i)
+    all_goals first
+      | (cases u)
+      | (fin_cases j)
+      | (fin_cases i)
+    all_goals
+        simp only [endpointRoute,Peels,count0,count1]
+    all_goals
+        simp [endpointRoute,Peels,fiber,Finset.filter,Finset.filter_image,Finset.filter_insert,
+          Finset.filter_singleton,mapped,family,query,FourExitRawEndpointSpectrum.comb,
+          bshape,ActualImageSevenLeafSeparation.A,ActualImageSevenLeafSeparation.C,
+          ActualImageSevenLeafSeparation.E,readout,leaves,leafLabel,e1.injective.eq_iff,
+          Finset.card_image_of_injective _ e1.injective]
+  have small_two : ∀ (e1 : Index 2 ≃ Fin (Fintype.card (Index 2))) (Z : Index 2),
+      (Z = .inl () ∨ ∃ i, Z = .inr (.inr i)) →
+      Peels (family 2 ∘ e1.symm) (e1 Z) Finset.univ (endpointRoute 2 Z) := by
+    intro e1 Z kind
+    let F1 := family 2 ∘ e1.symm
+    change Peels F1 (e1 Z) Finset.univ (endpointRoute 2 Z)
+    have all : (Finset.univ : Finset (Fin (Fintype.card (Index 2)))) =
+        Finset.univ.image e1 := (Finset.image_univ_of_surjective e1.surjective).symm
+    have mapped (U : Index 2) : F1 (e1 U) = family 2 U := by
+      change family 2 (e1.symm (e1 U)) = _
+      rw [e1.symm_apply_apply]
+    have bshape : FourExitRawEndpointSpectrum.B =
+        .mul ActualImageSevenLeafSeparation.C ActualImageSevenLeafSeparation.A := rfl
+    have count0 : (fiber (fun a v => leafLabel (F1 v) a)
+        (Finset.univ.image e1) (query 0) none).card ≤ 1 := by
+      have unique (v : Fin (Fintype.card (Index 2)))
+          (hv : v ∈ fiber (fun a v => leafLabel (F1 v) a)
+            (Finset.univ.image e1) (query 0) none) :
+          v = e1 (.inr (.inl 0)) := by
+        simp only [fiber,Finset.mem_filter] at hv
+        obtain ⟨U,_,rfl⟩ := Finset.mem_image.mp hv.1
+        have no := hv.2
+        rw [mapped] at no
+        rcases U with u | (j | i)
+        all_goals first
+          | (cases u)
+          | (fin_cases j)
+          | (fin_cases i)
+        all_goals
+          simp [family,query,FourExitRawEndpointSpectrum.comb,bshape,
+            ActualImageSevenLeafSeparation.A,ActualImageSevenLeafSeparation.C,
+            ActualImageSevenLeafSeparation.E,readout,leafLabel] at no ⊢
+      exact Finset.card_le_one.mpr (fun v hv w hw => (unique v hv).trans (unique w hw).symm)
+    have enum : (Finset.univ : Finset (Index 2)) =
+        {.inl (), .inr (.inl 0), .inr (.inl 1), .inr (.inr 0), .inr (.inr 1)} := by decide
+    rw [all,enum]
+    rw [enum] at count0
+    rcases kind with rfl | ⟨i,rfl⟩
+    all_goals try fin_cases i
+    all_goals
+        simp only [endpointRoute,Peels,count0]
+    all_goals
+        simp [endpointRoute,Peels,fiber,Finset.filter,Finset.filter_image,Finset.filter_insert,
+          Finset.filter_singleton,mapped,family,query,FourExitRawEndpointSpectrum.comb,
+          bshape,ActualImageSevenLeafSeparation.A,ActualImageSevenLeafSeparation.C,
+          ActualImageSevenLeafSeparation.E,readout,leaves,leafLabel,e1.injective.eq_iff,
+          Finset.card_image_of_injective _ e1.injective]
   have small (Z : Index k)
       (allowed : k = 1 ∨ k = 2 ∧ (Z = .inl () ∨ ∃ i, Z = .inr (.inr i))) :
       Peels F (e Z) Finset.univ (endpointRoute k Z) := by
-    have all : (Finset.univ : Finset (Fin m)) = Finset.univ.image e :=
-      (Finset.image_univ_of_surjective e.surjective).symm
-    have mapped (U : Index k) : F (e U) = family k U := by
-      change family k (e.symm (e U)) = _
-      rw [e.symm_apply_apply]
     rcases allowed with one | ⟨two,kind⟩
-    · subst k
-      have enum : (Finset.univ : Finset (Index 1)) =
-          {.inl (), .inr (.inl 0), .inr (.inr 0)} := by decide
-      rw [all,enum]
-      rcases Z with u | (j | i)
-      all_goals first
-        | (change Unit at u; cases u)
-        | (change Fin 1 at j; fin_cases j)
-        | (change Fin 1 at i; fin_cases i)
-      all_goals
-        simp [endpointRoute,Peels,fiber,Finset.filter_image,Finset.filter_insert,Finset.filter_singleton,
-          mapped,family,query,FourExitRawEndpointSpectrum.comb,
-          (show FourExitRawEndpointSpectrum.B =
-            .mul ActualImageSevenLeafSeparation.C ActualImageSevenLeafSeparation.A from rfl),
-          ActualImageSevenLeafSeparation.A,ActualImageSevenLeafSeparation.C,
-          ActualImageSevenLeafSeparation.E,readout,leaves,leafLabel,e.injective.eq_iff,
-          Finset.card_image_of_injective _ e.injective]
-    · subst k
-      have enum : (Finset.univ : Finset (Index 2)) =
-          {.inl (), .inr (.inl 0), .inr (.inl 1), .inr (.inr 0), .inr (.inr 1)} := by
-        decide
-      rw [all,enum]
-      rcases kind with rfl | ⟨i,rfl⟩
-      all_goals try (change Fin 2 at i; fin_cases i)
-      all_goals
-        simp [endpointRoute,Peels,fiber,Finset.filter_image,Finset.filter_insert,Finset.filter_singleton,
-          mapped,family,query,FourExitRawEndpointSpectrum.comb,
-          (show FourExitRawEndpointSpectrum.B =
-            .mul ActualImageSevenLeafSeparation.C ActualImageSevenLeafSeparation.A from rfl),
-          ActualImageSevenLeafSeparation.A,ActualImageSevenLeafSeparation.C,
-          ActualImageSevenLeafSeparation.E,readout,leaves,leafLabel,e.injective.eq_iff,
-          Finset.card_image_of_injective _ e.injective]
+    · subst k; exact small_one e Z
+    · subst k; exact small_two e Z kind
   have classification (Z : Index k) :
       (∃ qs, Peels F (e Z) Finset.univ qs) ↔
         k = 1 ∨ k = 2 ∧ (Z = .inl () ∨ ∃ i, Z = .inr (.inr i)) := by
