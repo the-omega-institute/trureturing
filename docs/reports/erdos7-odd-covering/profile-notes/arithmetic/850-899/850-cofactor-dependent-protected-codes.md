@@ -6032,6 +6032,353 @@ Lean application of their common majorant, actual45 boost or
 local excess identity is claimed here, and no unrestricted
 Erdős #7 conclusion is asserted.
 
+## Fixed exceptional originals and different-color tuple moments
+
+### Original source and the fixed exceptional set
+
+Keep one EB1 original odd distinct nonunit whole cover with actual3,
+actual9, ternary height at most two and shared-prime set `{5}`. Keep
+one selected root, its safe full words `J`, `k=|J|` in `{2,3}`, and
+one fixed guarded ordinary product law `lambda`. All residues,
+numerical labels, five depths and ordinary coordinate laws refer to
+that same original family. Write
+
+$$
+ Q=5^G N,\qquad N=9M,\qquad (M,15)=1,\qquad G\ge2,
+ \qquad \nu=U_J\otimes\lambda.
+$$
+
+Use Report850 CD186–CD205's complete five-free cofactor source `Y`,
+first-five phase `omega`, and complete deletion of all ordinary-bearing
+positive-five originals. Every unit label `5^e,3*5^e,9*5^e` is retained,
+including actual75 and actual225. This is not the narrower Q2P deletion.
+Let `I` be the words left after the actual45 exclusion, and let `Y_j`
+be the actual ordinary source slice. For `j` outside `I`, `Y_j` is empty.
+The literal private25 set remains null under the guarded full law;
+`nu(Y)` is the non-five source mass and can be positive.
+
+For each `j`, [Report385 GLC1](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#172-literal-prime-root-collisions-have-one-fixed-exceptional-pair-across-all-sources) is applied to all actual top originals
+with full ternary word `j` and first-five phase `omega`, over all
+positive five depths. It supplies one set `X_j` of at most two
+original labels meeting every literal ordinary prime-root collision
+edge. The choice is made before any ordinary point is fixed. Thus
+outside that same `X_j`,
+
+$$
+ n\ne f,\quad \gcd(m_n,m_f)>1
+ \quad\Longrightarrow\quad
+ C_n^{\rm ord}\cap C_f^{\rm ord}=\varnothing.                 \tag{CD206}
+$$
+
+The labels of `X_j` remain in the cover. Only its intersection with
+the actual deep ordinary-bearing top labels will contribute to the
+exceptional loads below. A point-dependent choice of `X_j` would not
+justify the moment identity.
+
+The consumer permits any fixed set meeting all collision edges.
+An empty graph permits the empty set; a star permits its center;
+a triangle permits two vertices. The GLC1 source proof needs only the
+two endpoints of any edge. One may minimize the consumer over all
+valid fixed choices without changing the actual source or its law.
+
+**Verification boundary.** GLC1's original-family theorem is an
+ordinary mathematical result in Report385, not a Lean-verified source
+theorem. The present consumer is an ordinary mathematical derivation
+conditional on that source result. A finite probability identity check,
+or a check of the separate actual45 accounting, would not verify the
+original-family exchange giving GLC1.
+
+### Actual loads retain low rows and exceptional labels
+
+For `j` in `I`, let `C_j` be the available second-five digits after
+actual25 and the active depth-two unit labels75 and225. It has two,
+three or four members. For `c` in `C_j`, retain the exact residual
+unit-hole density `delta_{j,c}` on the complete second-five fibre:
+
+$$
+ \delta_{j,c}\ge h_G:=\frac14+\frac34\,5^{2-G}>0.
+                                                               \tag{CD207}
+$$
+
+This is Report850 CD194; it retains every higher unit tower. In
+particular `delta_{j,c}=1` when `G=2`.
+
+All following index sets consist of actual original labels with
+`e_n>=2`, `m_n>1`, first-five phase `omega` and second-five color `c`.
+Use the actual weight
+
+$$
+ w_n=5^{2-e_n}.
+$$
+
+Let `L_c` index the active low-row originals, with ternary height at
+most one. Let `T_{j,c}` index the top originals at full word `j`.
+Set `E_{j,c}=T_{j,c}\cap X_j` and `T^0_{j,c}=T_{j,c}\setminus X_j`.
+Define functions on the same ordinary carrier:
+
+$$
+ \begin{aligned}
+ l_c(y)&=\sum_{n\in L_c}w_n\mathbf1_{C_n^{\rm ord}}(y),\\
+ x_{j,c}(y)&=\sum_{n\in E_{j,c}}w_n\mathbf1_{C_n^{\rm ord}}(y),\\
+ h_{j,c}(y)&=\sum_{n\in T^0_{j,c}}w_n\mathbf1_{C_n^{\rm ord}}(y).
+ \end{aligned}                                                 \tag{CD208}
+$$
+
+Each low function `l_c` is shared by every safe word of the root.
+Each top original has one actual word and one actual color. Repeated
+numerical cofactors at different five depths remain separate original
+indices. None of these functions is a replacement event or a freely
+assignable scalar capacity.
+
+The complete same-color residual hole must be covered by these
+originals at every point of the source, so the original fibre union
+bound gives
+
+$$
+ y\in Y_j\quad\Longrightarrow\quad
+ l_c(y)+x_{j,c}(y)+h_{j,c}(y)\ge\delta_{j,c}.
+                                                               \tag{CD209}
+$$
+
+Write the full-law integrals as
+
+$$
+ L_c^*=\int l_c\,d\lambda,\qquad
+ X_{j,c}^*=\int x_{j,c}\,d\lambda,\qquad
+ H^0_{j,c}=\int h_{j,c}\,d\lambda.
+$$
+
+The existing inventories are retained jointly:
+
+$$
+ \sum_cL_c^*\le2A_GW,\qquad
+ \sum_{j,c}(X_{j,c}^*+H^0_{j,c})\le A_GW,
+ \qquad A_G=\sum_{e=2}^{G}5^{2-e}=\frac54(1-5^{1-G}).             \tag{CD210}
+$$
+
+They cannot be allocated independently at each word or optimized
+independently of the source. If four colors are available, at least
+two contain no exceptional labels because `|X_j|<=2`. Choosing those
+two colors removes their exceptional term, but does not remove their
+shared low-row load.
+
+### The exact different-color tuple moment
+
+For any nonempty subset `K` of `C_j`, let
+
+$$
+ Z_{j,K}=\sum_{\substack{n_c\in T^0_{j,c}\ (c\in K)\\
+                         m_{n_c}\ \text{pairwise coprime}}}
+              \prod_{c\in K}w_{n_c}\lambda(C_{n_c}^{\rm ord}).    \tag{CD211}
+$$
+
+The sum is over actual tuples of original indices, one index for each
+different color. Empty index families yield zero. Repeated numerical
+cofactors have not been merged, and the pairwise-coprime condition is
+on the cofactors of the chosen original indices.
+
+Expanding the product of the finite sums in CD208 gives a term for every
+such actual tuple. A tuple with a noncoprime pair has empty ordinary
+intersection by CD206. In every remaining tuple the ordinary prime
+supports are disjoint, so independence under the complete product
+law gives its intersection probability as the product of its actual
+marginal probabilities. Therefore
+
+$$
+ \boxed{\int\prod_{c\in K}h_{j,c}(y)\,d\lambda(y)=Z_{j,K}.}      \tag{CD212}
+$$
+
+This uses the coprime-disjoint intersection expansion of [Report387 CC12](../350-399/387-cyclic-crt-prime-capacity-and-forced-crowded-stars.md#3-explicit-survivors-give-strict-positivity), with actual-index depth weights and guarded product marginals.
+It does not import that report's uniform-Haar positivity or Shearer
+transfer: their divisor-palette and Haar hypotheses have not been
+provided here. Independence is used on the full product law, never
+asserted after conditioning on `Y_j`.
+
+From CD209, all factors are nonnegative and
+
+$$
+ \boxed{\int_{Y_j}\prod_{c\in K}
+       [\delta_{j,c}-l_c(y)-x_{j,c}(y)]_+\,d\lambda(y)
+       \le Z_{j,K}.}                                          \tag{CD213}
+$$
+
+This is the common-source relation retaining the actual tuple data,
+the same low-row functions and the fixed exceptional suppliers.
+
+For positive `delta_c` and nonnegative `a_c`, the elementary product
+inequality
+
+$$
+ \prod_c(\delta_c-a_c)_+
+ \ge\Bigl(\prod_c\delta_c\Bigr)
+          \left(1-\sum_c\frac{a_c}{\delta_c}\right)             \tag{CD214}
+$$
+
+follows from `prod(1-b_c)>=1-sum b_c` for `0<=b_c<=1`, taking
+`b_c=min(a_c/delta_c,1)`. Integrating CD214 in CD213 gives
+
+$$
+ \lambda(Y_j)\le
+ \sum_{c\in K}\frac{\int_{Y_j}(l_c+x_{j,c})\,d\lambda}
+                        {\delta_{j,c}}
+ +\frac{Z_{j,K}}{\prod_{c\in K}\delta_{j,c}}.                   \tag{CD215}
+$$
+
+Thus the following entirely actual full-law quantities are upper
+bounds:
+
+$$
+ \begin{aligned}
+ \Theta_{j,K}(X_j)
+   &=\sum_{c\in K}\frac{L_c^*+X_{j,c}^*}{\delta_{j,c}}
+       +\frac{Z_{j,K}}{\prod_{c\in K}\delta_{j,c}},\\
+ \Theta_j
+   &=\min\left(1,\min_{\substack{X_j\ \text{valid fixed}\\
+                          \varnothing\ne K\subseteq\mathcal C_j}}
+                       \Theta_{j,K}(X_j)\right),\\
+ \Theta_{\rm tuple}&=\frac1k\sum_{j\in I}\Theta_j,
+ \qquad \boxed{\nu(Y)\le\Theta_{\rm tuple}.}
+ \end{aligned}                                                 \tag{CD216}
+$$
+
+Here a valid fixed `X_j` is a subset of the original top labels, has
+cardinality at most two, and meets every collision edge for that word.
+One may instead keep a single supplied valid `X_j` in the minimum.
+For a singleton `K={c}`, `Z_{j,K}=H^0_{j,c}` and
+`X_{j,c}^*+H^0_{j,c}` is the complete top load in that color.
+Consequently the singleton term is exactly the CD195 bound;
+the minimum retains it and adds the different-color restrictions.
+CD215 is stronger when the source-restricted low and exceptional
+integrals are known.
+
+### Optional finite-palette enlargement
+
+Let `A` be the active ordinary palette and `g_p=1/(p-3)`, with
+`W=prod_p(1+g_p)-1`. For each active ordinary prime `p`, the selected law of CD164 and
+CD187 is uniform on the complement `Z_p` of the actual pure-`p`
+prefixes and the actual `3*p^a` prefixes at the selected root.
+Let `H_p=v_p(Q)` and `rho_p=|Z_p|/p^{H_p}`. Numerical distinctness
+permits at most one label in each of these two towers at each depth.
+The same one-coordinate union bound gives
+
+$$
+ \rho_p\ge1-2\sum_{a=1}^{H_p}p^{-a}
+      \ge\frac{p-3}{p-1}>0.
+$$
+
+For every actual literal depth-`a` prefix its conditional probability
+is at most `p^{-a}/rho_p`. Set
+
+$$
+ \eta_{p,a}=\frac{p^{-a}}{\rho_p}\quad(1\le a\le H_p),\qquad
+ \widetilde g_p=\sum_{a=1}^{H_p}\eta_{p,a}
+       \le\frac1{p-3}=g_p.
+$$
+
+Product independence on the actual guard complements now gives
+
+$$
+ \lambda(C_n^{\rm ord})\le\prod_{p^a\parallel m_n}\eta_{p,a}
+                                                               \tag{CD217}
+$$
+
+for the surviving actual originals supported on the active palette.
+Every original bearing an opposite-root prime is excluded by its
+fixed singleton coordinate; this statement concerns actual original
+events, not arbitrary prefixes under a point-mass law. Thus zero
+terms can first be removed. The displayed caps are derived from the
+existing selected-law guards, not assumed for an arbitrary law.
+
+For a top original, distinctness of the numerical labels makes
+`n -> (e_n,m_n)` injective. Apply CD217 to the literal probabilities in
+CD211, then enlarge the sum to all numerical depth/cofactor slots.
+The separate depth sum is `A_G` for each tuple entry. In a tuple of
+pairwise coprime nonunit cofactors each ordinary prime belongs to at
+most one color, and every color receives at least one prime. Hence,
+with `h=|K|`,
+
+$$
+ \boxed{Z_{j,K}\le A_G^hF_h(\widetilde g)\le A_G^hF_h(g),}
+ \qquad
+ F_h(g)=\sum_{a=0}^{h}(-1)^{h-a}\binom ha
+                    \prod_{p\in A}(1+a g_p).                  \tag{CD218}
+$$
+
+The positive interpretation of `F_h` assigns each prime either to
+unused or to one of the `h` colors, requires each color to be used,
+and multiplies the `g_p` of all assigned primes. This proves
+nonnegativity and coordinatewise monotonicity. Inclusion-exclusion
+on missing colors gives the displayed alternating expression.
+In particular,
+
+$$
+ F_1=W,\qquad
+ F_2=\prod_p(1+2g_p)-2\prod_p(1+g_p)+1,\qquad
+ 0\le F_h\le W^h.                                              \tag{CD219}
+$$
+
+If the palette has fewer than `h` primes, then `F_h=0`. Repeated
+cofactors at different five depths are accounted for by their
+separate original depth slots; no numerical cofactor identification
+was used in CD211 or CD212.
+
+For the fixed palette `A={7,17,23,37}` and `G=4`, exact substitution
+gives `W=487/1088` and `A_G=31/25`:
+
+| h | F_h(g) | A_G^h F_h(g) |
+| --- | --- | --- |
+| 2 | 1931/19040 | 1855691/11900000 |
+| 3 | 117/9520 | 3485547/148750000 |
+| 4 | 3/4760 | 2770563/1859375000 |
+
+Each displayed tuple allowance is strictly smaller than `(A_G W)^h`.
+These values are exact evaluations of one fixed formula and palette,
+not a palette scan or a noncoverage certificate. The low-row and
+exceptional contributions in CD215–CD216 remain payable.
+
+### Consumer of the existing excess budget
+
+Let `a=nu(Y)`, `zeta_0=nu(R_5)`, and retain the exact same-source
+normalized deep demand `t=integral_Y(q/d) dnu`. The CD200 common-budget
+bound is
+
+$$
+ s(\zeta_0-a)+c(t-a)\le\mathfrak D_*\le S/k,
+ \qquad c=\frac{d_G}{5\rho},\qquad
+ S=(k-r)\bar L+(2k+1)bW+D-M_k(r).                               \tag{CD220}
+$$
+
+All its variables refer to the same actual source, unit residuals,
+ordinary product law and original phases as CD208–CD216. Since
+`a<=zeta_0`, `a<=t` and `a<=Theta_tuple`,
+
+$$
+ \boxed{s\zeta_0+ct-(s+c)\min(\zeta_0,t,\Theta_{\rm tuple})
+          \le\mathfrak D_*\le S/k.}                           \tag{CD221}
+$$
+
+For `S>=0`, a sufficient closing condition is that the left side of
+CD221 exceed `S/k`. A weaker sufficient condition is
+
+$$
+ k s[\zeta_0-\Theta_{\rm tuple}]_+>S.                          \tag{CD222}
+$$
+
+No uniform instance of either strict inequality has been established.
+Low-row supply and the fixed exceptional originals can absorb color
+demand, and the separate source, tuple and inventory extrema cannot
+be assumed jointly attainable.
+
+Different second-five colors have disjoint five-prefix fibres.
+CD212–CD216 therefore bound the non-five source mass; they do not assert
+same-five-prefix overlap and cannot be substituted directly into
+CD205's overlap debit. Their route to a debit is CD190 or CD220–CD221.
+The actual45 term is already charged once inside `D_*`; no additional
+`r -> r-s` payment is introduced.
+
+No Lean verification of CD206–CD222 or unrestricted Erdős #7 conclusion
+is asserted.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
