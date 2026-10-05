@@ -5,7 +5,7 @@ from pathlib import Path
 from flint import acb, acb_poly, arb, ctx, fmpq
 
 
-CANONICAL = Path.cwd()/'docs/reports/theta-mixed-matrix'
+CANONICAL = Path(__file__).resolve().parent
 namespace = {'fmpq': fmpq}
 nodes = [node for node in ast.parse((CANONICAL/'derivative_bandwidth.py').read_bytes()).body
          if isinstance(node, ast.FunctionDef) and node.name == 'polys']
@@ -97,4 +97,3 @@ def positive_gap(u):
             return (1+enclosed).log()
         radius = 2*radius
     raise ValueError('Positive support branch not isolated; subdivide parameter box')
-
