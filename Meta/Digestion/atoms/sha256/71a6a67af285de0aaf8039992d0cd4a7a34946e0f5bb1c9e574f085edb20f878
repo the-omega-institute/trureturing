@@ -1,0 +1,12 @@
+**定理 8.2（黄金比例连续读出）。** 在 $\mathcal L_\infty$ 上取从离散字母表诱导的乘积拓扑，令 $\varphi=(1+\sqrt5)/2$，并定义
+
+$$
+\pi_\varphi(\varepsilon)=\sum_{j=1}^{\infty}\varepsilon_j\varphi^{-j}.
+$$
+
+则 $\pi_\varphi:\mathcal L_\infty\twoheadrightarrow[0,1]$ 连续且满射。若两个名字前 $n$ 位相同，则
+
+$$
+|\pi_\varphi(\varepsilon)-\pi_\varphi(\varepsilon')|\le\varphi^{-n}.
+$$
+

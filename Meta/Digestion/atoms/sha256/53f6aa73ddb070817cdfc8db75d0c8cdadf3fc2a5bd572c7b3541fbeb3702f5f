@@ -1,0 +1,37 @@
+**定理 32.1（同一 Fourier 窗口的有序单项式逼近与范数误差）。** 任取 $n\in\mathbb N$，令 $E=\mathbb R^n$，使用实际 Lebesgue 体积测度 $\mu$ 和复 Hilbert 空间 $H=L^2(E,\mu)$。取可测集 $A,B\subseteq E$，满足 $\mu(A),\mu(B)<\infty$，并取 $a,b\ge0$，使 $\|x\|\le a$ 对每个 $x\in A$ 成立，$\|\xi\|\le b$ 对每个 $\xi\in B$ 成立。令 $M_A,M_B$ 为实际示性函数乘法算子，$F$ 为采用相位 $e^{-2\pi i\langle x,\xi\rangle}$ 的实际酉 $L^2$ Fourier 变换，且 $T=M_BFM_A$。
+
+记 $q=-2\pi i$、$R=2\pi ab$。对 $k\in\mathbb N$ 与有序坐标元组 $s:\{0,\ldots,k-1\}\to\{0,\ldots,n-1\}$，定义
+
+$$
+m_s(x)=\prod_{j<k}x_{s(j)},\qquad
+v_{k,s}=\mathbf1_A m_s,\qquad
+w_{k,s}=\frac{q^k}{k!}\mathbf1_B m_s.
+$$
+
+这些代表函数属于实际 $L^2$。对同一组 $v_{k,s},w_{k,s}$，定义
+
+$$
+T_N f=\sum_{k<N}\ \sum_s w_{k,s}\langle v_{k,s},f\rangle,
+\qquad
+P_N(x,\xi)=\sum_{k<N}\frac{(q\langle x,\xi\rangle)^k}{k!}.
+$$
+
+内积对第一槽共轭线性；$m_s$ 为实值，因此 $\langle v_{k,s},f\rangle=\int_A m_s(x)f(x)\,d\mu(x)$。实际算子及其同一截断满足几乎处处代表公式
+
+$$
+(Tf)(\xi)=\mathbf1_B(\xi)\int_A e^{q\langle x,\xi\rangle}f(x)\,d\mu(x),
+\qquad
+(T_Nf)(\xi)=\mathbf1_B(\xi)\int_A P_N(x,\xi)f(x)\,d\mu(x).
+$$
+
+对每个 $N$，上述输入向量与输出向量各自的复线性跨度有限维，$T_N$ 的值域有限维且 $T_N$ 为紧算子。$T_0=0$，并且
+
+$$
+\frac{R}{N+1}\le\frac12
+\quad\Longrightarrow\quad
+\|T-T_N\|\le
+\sqrt{\mu(A)\mu(B)}\,\frac{2R^N}{N!}.
+$$
+
+这个比例条件对充分大的 $N$ 成立，$T_N\to T$ 按算子范数收敛，因而 $T$ 为紧算子。若 $\mu(A)=0$ 或 $\mu(B)=0$，则 $T=0$ 且每个 $T_N=0$。若 $N\ne0$ 且 $n=0$、$a=0$ 或 $b=0$ 中至少一项成立，则 $T=T_N$。零维空间的体积为实际 Dirac 体积；空元组的零次单项式为 $1$，不能从 $n=0$ 推出 $T=0$。
+
