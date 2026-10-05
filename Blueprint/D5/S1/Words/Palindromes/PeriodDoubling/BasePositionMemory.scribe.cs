@@ -45,7 +45,8 @@ internal sealed class BasePositionMemoryDocument : IScribeDocumentDefinition
         Seq(V(n), Colon, t, Sp, Mapsto, Sp, b);
     private static Formula Ite(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
     private static Formula Cast(Formula x, Formula t) => Call("cast", x, t);
-    private static Formula ListNil() => Seq(OpenBracket, CloseBracket);
+    private static Formula ListNil() => Seq(
+        OpenBracket, CloseBracket);
 
 
 

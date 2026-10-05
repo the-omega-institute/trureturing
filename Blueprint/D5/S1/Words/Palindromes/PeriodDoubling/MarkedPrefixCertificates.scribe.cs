@@ -48,9 +48,9 @@ internal sealed class MarkedPrefixCertificatesDocument : IScribeDocumentDefiniti
 
     private static Formula V(string name) => F.Id(name);
     private static Formula BooleanEq(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Eq, Eq, Sp, b));
     private static Formula BooleanNe(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Bang, Eq, Sp, b));
 
     private static Formula OptionalIndex(Formula xs, Formula i) =>
         Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
@@ -88,7 +88,8 @@ internal sealed class MarkedPrefixCertificatesDocument : IScribeDocumentDefiniti
         Seq(V(n), Colon, t, Sp, Mapsto, Sp, b);
     private static Formula Ite(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
     private static Formula Cast(Formula x, Formula t) => Call("cast", x, t);
-    private static Formula ListNil() => Seq(OpenBracket, CloseBracket);
+    private static Formula ListNil() => Seq(
+        OpenBracket, CloseBracket);
     private static Formula Tuple(params Formula[] a) =>
         Parenthesized(a.Skip(1).Aggregate(a[0], (x,y) => Seq(x, Comma, Sp, y)));
 
@@ -120,7 +121,8 @@ internal sealed class MarkedPrefixCertificatesDocument : IScribeDocumentDefiniti
         Formula Beq(Formula a,Formula b) => BooleanEq(a, b);
         Formula Bne(Formula a,Formula b) => BooleanNe(a, b);
         Formula Flag(Formula a) => Cast(Call("toNat",a),Z());
-        Formula Items(params Formula[] items) => Seq(OpenBracket,
+        Formula Items(params Formula[] items) => Seq(
+            OpenBracket,
             items.Skip(1).Aggregate(items[0],(a,b)=>Seq(a,Comma,Sp,b)),CloseBracket);
         var finishValue=Seq(LambdaLower,Sp,V("state"),Colon,ListOf(Z()),Sp,Mapsto,Sp,
             Tuple(V("state"),Call("fst",Call("snd",e)),Call("fst",Call("snd",Call("snd",e))),
@@ -146,22 +148,22 @@ internal sealed class MarkedPrefixCertificatesDocument : IScribeDocumentDefiniti
         for(var i=markedBindings.Count-1;i>=0;i--)
         {
             var binding=markedBindings[i];
-            marked=new Formula.Apply(Seq(LambdaLower,Sp,V(binding.Name),Colon,Ty("Bool"),Sp,Mapsto,Sp,marked),[binding.Value]);
+            marked=new Formula.Apply(Parenthesized(Seq(LambdaLower,Sp,V(binding.Name),Colon,Ty("Bool"),Sp,Mapsto,Sp,marked)),[binding.Value]);
         }
         var unselected=Ite(And(Eqn(nd,D(1)),Eqn(Entry(old,10),D(0)),Eqn(Entry(old,11),D(0))),Items(unmarked,marked),Items(unmarked));
-        unselected=new Formula.Apply(Seq(LambdaLower,Sp,V("unmarked"),Colon,
-            Product(ListOf(Z()),Z(),Z(),Z(),Z()),Sp,Mapsto,Sp,unselected),[unmarkedValue]);
+        unselected=new Formula.Apply(Parenthesized(Seq(LambdaLower,Sp,V("unmarked"),Colon,
+            Product(ListOf(Z()),Z(),Z(),Z(),Z()),Sp,Mapsto,Sp,unselected)),[unmarkedValue]);
         var middle=Ite(Bne(nd,D(0)),ListNil(),Items(Finish(Add(m,D(1)),Flag(flip),parity,keep,ni,nj,Flag(OrB(bad,Bne(nd,jd))))));
         var third=Ite(AndB(Bne(nd,D(0)),Bne(nd,D(1))),ListNil(),
             Items(Finish(Ite(Eqn(nd,D(1)),D(1),D(4)),Flag(flip),parity,keep,ni,nj,Flag(OrB(bad,Bne(nd,jd))))));
         var final=Ite(Bne(nd,D(0)),ListNil(),Items(Finish(D(4),Flag(flip),parity,keep,ni,nj,Flag(OrB(bad,Bne(nd,jd))))));
         var update=Ite(Bne(Entry(next,18),D(0)),ListNil(),Ite(Eqn(m,D(0)),unselected,
             Ite(new Formula.Logic(Eqn(m,D(1)),FormulaLogicOperator.Or,Eqn(m,D(2))),middle,Ite(Eqn(m,D(3)),third,final))));
-        update=new Formula.Apply(Seq(LambdaLower,Sp,V("finish"),Colon,finishType,Sp,Mapsto,Sp,update),[finishValue]);
+        update=new Formula.Apply(Parenthesized(Seq(LambdaLower,Sp,V("finish"),Colon,finishType,Sp,Mapsto,Sp,update)),[finishValue]);
         for(var i=bindings.Length-1;i>=0;i--)
         {
             var binding=bindings[i];
-            update=new Formula.Apply(Seq(LambdaLower,Sp,V(binding.Name),Colon,binding.Type,Sp,Mapsto,Sp,update),[binding.Value]);
+            update=new Formula.Apply(Parenthesized(Seq(LambdaLower,Sp,V(binding.Name),Colon,binding.Type,Sp,Mapsto,Sp,update)),[binding.Value]);
         }
         return Disp(All("full",ListOf(Z()),All("e",edgeType,Eqn(Call("nextMarker",full,e),update))));
     }
@@ -201,14 +203,17 @@ internal sealed class MarkedPrefixCertificatesDocument : IScribeDocumentDefiniti
     {
         var fin = Call("Fin", D(4,2,6,2));
         var state = Call("fst", Call("prefixTable", Call("val", V("i"))));
-        var sources = Seq(OpenBrace, V("i"), Colon, fin, Sp, Mid, Sp, LtF(Call("val", V("i")), D(5)), CloseBrace);
-        var successors = Seq(OpenBrace, V("j"), Colon, fin, Sp, Mid, Sp,
+        var sources = Seq(
+            OpenBrace, V("i"), Colon, fin, Sp, Mid, Sp, LtF(Call("val", V("i")), D(5)), CloseBrace);
+        var successors = Seq(
+            OpenBrace, V("j"), Colon, fin, Sp, Mid, Sp,
             Mem(Tuple(Call("val", V("j")), V("a")), Call("fst", Call("snd", Call("prefixTable", Call("val", V("i")))))), CloseBrace);
         var baseIndex = Call("toNat", Entry(state, 0));
         var terminal = DottedCall("Bool", "and", DottedCall("Bool", "and", BooleanEq(Entry(state, 1), D(4)),
             Call("baseTerminal", Call("fst", Call("baseTable", baseIndex)))),
             BooleanEq(Entry(state, 7), Ite(V("charge"), D(0), D(1))));
-        var accepted = Seq(OpenBrace, V("i"), Colon, fin, Sp, Mid, Sp, terminal, CloseBrace);
+        var accepted = Seq(
+            OpenBrace, V("i"), Colon, fin, Sp, Mid, Sp, terminal, CloseBrace);
         return Disp(All("charge", Ty("Bool"), Eqn(Call("prefixAutomaton", V("charge")),
             NfaMk(Lam("i", fin, Lam("a", Alphabet(), successors)), sources, accepted))));
     }

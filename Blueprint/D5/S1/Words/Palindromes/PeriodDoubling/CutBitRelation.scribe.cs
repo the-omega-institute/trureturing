@@ -55,14 +55,16 @@ internal sealed class CutBitRelationDocument : IScribeDocumentDefinition
 
 
     private static Formula Pair() => Product(N(),N());
-    private static Formula Ints(params Formula[] xs) => Seq(OpenBracket,xs.Skip(1).Aggregate(xs[0],(a,b)=>Seq(a,Comma,Sp,b)),CloseBracket);
+    private static Formula Ints(params Formula[] xs) => Seq(
+        OpenBracket,xs.Skip(1).Aggregate(xs[0],(a,b)=>Seq(a,Comma,Sp,b)),CloseBracket);
     private static Formula AutomatonFormula()
     {
         var graph=V("cutBitAutomaton");
         var first=Eqn(Call("start",graph),Call("univ",Z()));
         var next=All("s",Z(),All("a",Pair(),Eqn(Call("step",graph,V("s"),V("a")),
             SetBuilder("t",Z(),Mem(V("t"),Call("relNext",V("s"),Cast(Call("fst",V("a")),Z()),Cast(Call("snd",V("a")),Z())))))));
-        var last=Eqn(Call("accept",graph),Seq(OpenBrace,D(0),CloseBrace));
+        var last=Eqn(Call("accept",graph),Seq(
+            OpenBrace,D(0),CloseBrace));
         return Disp(And(Parenthesized(first),Parenthesized(next),Parenthesized(last)));
     }
     private static Formula CutFormula()
@@ -78,5 +80,6 @@ internal sealed class CutBitRelationDocument : IScribeDocumentDefinition
         var word=Call("ofFn",Lam("i",Call("Fin",DottedCall("Nat", "sub",V("n"),V("j"))),Upd(Add(V("j"),Call("val",V("i"))))));
         return Disp(All("n",N(),All("j",N(),Imp(And(LtF(V("j"),V("n")),Call("Palindrome",word)),conclusion))));
     }
-    private static Formula SetBuilder(string n, Formula t, Formula p) => Seq(OpenBrace,V(n),Colon,t,Sp,Bar,Sp,p,CloseBrace);
+    private static Formula SetBuilder(string n, Formula t, Formula p) => Seq(
+        OpenBrace,V(n),Colon,t,Sp,Bar,Sp,p,CloseBrace);
 }

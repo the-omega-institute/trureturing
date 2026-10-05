@@ -27,14 +27,15 @@ internal sealed class BaseChargeArithmeticDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("This equality holds for every finite path and either acceptance mode, without requiring its endpoints to be sources or goals. State component 1 is the current position parity; components 16 and 17 are the latest nonzero signs of the two streams. Every table edge updates these memories and carries the difference of the contributions. Path induction then reconstructs the entire charge. Components 10 and 12 of the successor state are the emitted input and output signed digits."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
     private static Formula BooleanNe(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Bang, Eq, Sp, b));
 
     private static Formula OptionalIndex(Formula xs, Formula i) =>
         Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
             DottedCall("List", "length", xs)),
             Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
     private static Formula OptionalHead(Formula xs) =>
-        Call("ite", Eqn(xs, Seq(OpenBracket, CloseBracket)), Call("none"),
+        Call("ite", Eqn(xs, Seq(
+            OpenBracket, CloseBracket)), Call("none"),
             Call("some", DottedCall("List", "head", xs)));
 
     private static Formula DottedCall(string owner, string member, params Formula[] args) =>
@@ -62,7 +63,8 @@ internal sealed class BaseChargeArithmeticDocument : IScribeDocumentDefinition
         Seq(V(n), Colon, t, Sp, Mapsto, Sp, b);
     private static Formula Ite(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
     private static Formula Cast(Formula x, Formula t) => Call("cast", x, t);
-    private static Formula ListNil() => Seq(OpenBracket, CloseBracket);
+    private static Formula ListNil() => Seq(
+        OpenBracket, CloseBracket);
 
 
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());

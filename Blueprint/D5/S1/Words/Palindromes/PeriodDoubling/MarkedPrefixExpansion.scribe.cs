@@ -48,7 +48,8 @@ internal sealed class MarkedPrefixExpansionDocument : IScribeDocumentDefinition
     private static Formula SignedEval(Formula ds) => Call("foldr",Seq(LambdaLower,Sp,V("z"),Colon,Z(),Sp,
         V("x"),Colon,Z(),Sp,Mapsto,Sp,Add(V("z"),Mul(D(2),V("x")))),D(0),ds);
     private static Formula E(Formula ds, Formula i) => Call("getD",OptionalIndex(ds,i),D(0));
-    private static Formula Ints(params Formula[] xs) => Seq(OpenBracket,xs.Skip(1).Aggregate(xs[0],(a,b)=>Seq(a,Comma,Sp,b)),CloseBracket);
+    private static Formula Ints(params Formula[] xs) => Seq(
+        OpenBracket,xs.Skip(1).Aggregate(xs[0],(a,b)=>Seq(a,Comma,Sp,b)),CloseBracket);
     private static Formula ExpansionFormula()
     {
         var coeff=All("z",Z(),Imp(Mem(V("z"),V("ds")),new Formula.Logic(Eqn(V("z"),NegF(D(1))),FormulaLogicOperator.Or,

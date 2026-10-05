@@ -48,9 +48,9 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
 
     private static Formula V(string name) => F.Id(name);
     private static Formula BooleanEq(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Eq, Eq, Sp, b));
     private static Formula BooleanNe(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Bang, Eq, Sp, b));
 
     private static Formula OptionalIndex(Formula xs, Formula i) =>
         Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
@@ -88,7 +88,8 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
         Seq(V(n), Colon, t, Sp, Mapsto, Sp, b);
     private static Formula Ite(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
     private static Formula Cast(Formula x, Formula t) => Call("cast", x, t);
-    private static Formula ListNil() => Seq(OpenBracket, CloseBracket);
+    private static Formula ListNil() => Seq(
+        OpenBracket, CloseBracket);
     private static Formula Tuple(params Formula[] a) =>
         Parenthesized(a.Skip(1).Aggregate(a[0], (x,y) => Seq(x, Comma, Sp, y)));
 
@@ -96,9 +97,11 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
     private static Formula State() => ListOf(Z());
     private static Formula Alphabet() => Product(Z(), Z(), Z(), Z());
     private static Formula Entry(Formula s, int k) => Call("getD", OptionalIndex(s, new Formula.Number(k)), D(0));
-    private static Formula Bits() => Seq(OpenBracket, D(0), Comma, D(1), CloseBracket);
+    private static Formula Bits() => Seq(
+        OpenBracket, D(0), Comma, D(1), CloseBracket);
     private static Formula IntList(params Formula[] xs) =>
-        Seq(OpenBracket, xs.Skip(1).Aggregate(xs[0], (a,b) => Seq(a,Comma,Sp,b)), CloseBracket);
+        Seq(
+            OpenBracket, xs.Skip(1).Aggregate(xs[0], (a,b) => Seq(a,Comma,Sp,b)), CloseBracket);
     private static Formula RelationFormula()
     {
         var r=V("r");var n=V("n");var j=V("j");var empty=ListNil();
@@ -145,7 +148,7 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
         for(var i=bindings.Count-1;i>=0;i--)
         {
             var binding=bindings[i];
-            value=new Formula.Apply(Seq(LambdaLower,Sp,V(binding.Name),Colon,Z(),Sp,Mapsto,Sp,value),[binding.Value]);
+            value=new Formula.Apply(Parenthesized(Seq(LambdaLower,Sp,V(binding.Name),Colon,Z(),Sp,Mapsto,Sp,value)),[binding.Value]);
         }
         return Disp(All("s",State(),All("n",Z(),All("j",Z(),All("r",Z(),Eqn(Call("baseNext",s,n,j,r),value))))));
     }
@@ -179,7 +182,8 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
     }
     private static Formula TerminalFormula()
     {
-        var indices = Seq(OpenBracket, D(4), Comma, D(5), Comma, D(6), Comma,
+        var indices = Seq(
+            OpenBracket, D(4), Comma, D(5), Comma, D(6), Comma,
             D(7), Comma, D(8), Comma, D(9), CloseBracket);
         var all = Call("all", Lam("k", N(), BooleanEq(Call("getD", OptionalIndex(V("s"), V("k")), D(0)), D(0))), indices);
         return Disp(All("s", State(), Eqn(Call("baseTerminal", V("s")),
@@ -188,12 +192,15 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
     private static Formula AutomatonFormula()
     {
         var row = Call("baseTable", Call("val", V("i")));
-        var sources = Seq(OpenBrace, V("i"), Colon, Call("Fin", D(1,4,9,2)), Sp, Mid, Sp,
+        var sources = Seq(
+            OpenBrace, V("i"), Colon, Call("Fin", D(1,4,9,2)), Sp, Mid, Sp,
             Call("contains", new Formula.Apply(Seq(V("List"), Dot, V("range")), [D(7)]), Call("val", V("i"))), CloseBrace);
-        var successors = Seq(OpenBrace, V("j"), Colon, Call("Fin", D(1,4,9,2)), Sp, Mid, Sp,
+        var successors = Seq(
+            OpenBrace, V("j"), Colon, Call("Fin", D(1,4,9,2)), Sp, Mid, Sp,
             Mem(Tuple(Call("val", V("j")), V("a")), Call("fst", Call("snd", row))), CloseBrace);
         var step = Lam("i", Call("Fin", D(1,4,9,2)), Lam("a", Alphabet(), successors));
-        var accepted = Seq(OpenBrace, V("i"), Colon, Call("Fin", D(1,4,9,2)), Sp, Mid, Sp,
+        var accepted = Seq(
+            OpenBrace, V("i"), Colon, Call("Fin", D(1,4,9,2)), Sp, Mid, Sp,
             And(Call("baseTerminal", Call("fst", row)),
                 Eqn(Entry(Call("fst", row),18), Ite(V("charge"), D(0), D(1)))), CloseBrace);
         return Disp(All("charge", Ty("Bool"), Eqn(Call("baseAutomaton", V("charge")),

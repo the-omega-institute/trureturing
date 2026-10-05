@@ -13,9 +13,10 @@ internal sealed class TightPathEvenCutsDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + "tight_path_at_most_one_even_cut"), H("The path obstruction"),
             StatementSource.FromAuthor(CutFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("The path is any finite descending list of literal tight palindrome cuts beginning in class S. Its even cuts are exactly the pairs with equal endpoint parity. An even palindrome has length two. Signed-weight arithmetic and the source letters force a tight even cut to start at an odd integer at least five with odd rounded half; its successor has positive dyadic valuation. Class preservation and lowest-position monotonicity keep that valuation positive until zero, excluding any further even cut. Induction counts the exceptional first even cut. The statement does not require the path to end at zero. div denotes natural integer quotient and Nat.sub denotes truncated natural subtraction."))), DescribeRole.Theorem))));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula V(string name) => F.Id(name);
     private static Formula BooleanEq(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Eq, Eq, Sp, b));
 
     private static Formula DottedCall(string owner, string member, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);

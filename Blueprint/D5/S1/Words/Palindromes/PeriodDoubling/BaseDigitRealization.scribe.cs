@@ -51,7 +51,8 @@ internal sealed class BaseDigitRealizationDocument : IScribeDocumentDefinition
 
     private static Formula Pair() => Product(N(),N());
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());
-    private static Formula Ints(params Formula[] xs) => Seq(OpenBracket,xs.Skip(1).Aggregate(xs[0],(a,b)=>Seq(a,Comma,Sp,b)),CloseBracket);
+    private static Formula Ints(params Formula[] xs) => Seq(
+        OpenBracket,xs.Skip(1).Aggregate(xs[0],(a,b)=>Seq(a,Comma,Sp,b)),CloseBracket);
     private static Formula Entry(Formula s, int k) => Call("getD",OptionalIndex(s,new Formula.Number(k)),D(0));
     private static Formula Fold(Formula xs, Formula elem, Formula value, Formula term) =>
         Call("foldr",Seq(LambdaLower,Sp,V("a"),Colon,elem,Sp,V("x"),Colon,value,Sp,Mapsto,Sp,

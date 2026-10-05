@@ -24,7 +24,8 @@ internal sealed class BaseSignedStreamsDocument : IScribeDocumentDefinition
             DottedCall("List", "length", xs)),
             Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
     private static Formula OptionalHead(Formula xs) =>
-        Call("ite", Eqn(xs, Seq(OpenBracket, CloseBracket)), Call("none"),
+        Call("ite", Eqn(xs, Seq(
+            OpenBracket, CloseBracket)), Call("none"),
             Call("some", DottedCall("List", "head", xs)));
 
     private static Formula DottedCall(string owner, string member, params Formula[] args) =>
@@ -55,7 +56,8 @@ internal sealed class BaseSignedStreamsDocument : IScribeDocumentDefinition
         Seq(V(n), Colon, t, Sp, Mapsto, Sp, b);
     private static Formula Ite(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
     private static Formula NegF(Formula a) => Call("neg", a);
-    private static Formula ListNil() => Seq(OpenBracket, CloseBracket);
+    private static Formula ListNil() => Seq(
+        OpenBracket, CloseBracket);
 
 
     private static Formula Alphabet() => Product(Z(), Z(), Z(), Z());

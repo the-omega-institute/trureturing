@@ -14,9 +14,10 @@ internal sealed class NonadjacentSignedDigitsDocument : IScribeDocumentDefinitio
             StatementSource.FromAuthor(NafFormula()), AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Words/menezesvanoorschotvanstone1996sparse")),
             Blocks(Paragraph(Text("The list contains only minus one, zero, and one, in increasing binary-position order. Each adjacent pair contains a zero. Folding by z+2 acc computes its signed binary value, and filtering nonzero digits counts its weight. List induction resolves both possible nonzero low digits and proves that this count is the true minimum over all signed-power representations."))), DescribeRole.Theorem))));
 
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula V(string name) => F.Id(name);
     private static Formula BooleanNe(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Bang, Eq, Sp, b));
 
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Z() => Seq(Mathbb, Grp(V("Z")));

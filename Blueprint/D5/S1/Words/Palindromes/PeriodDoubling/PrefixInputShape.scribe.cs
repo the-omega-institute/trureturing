@@ -52,7 +52,8 @@ internal sealed class PrefixInputShapeDocument : IScribeDocumentDefinition
         var input=Entry(Call("fst",Call("baseTable",Call("toNat",Entry(q,0)))),10);
         var output=Call("pathOutputs",Seq(LambdaLower,Sp,OpenBracket,list,CloseBracket,Sp,
             OpenBracket,Alphabet(),CloseBracket,Sp,V("q"),Colon,list,Sp,Mapsto,Sp,input),V("p"));
-        var block=Seq(OpenBracket,D(1),Comma,Sp,D(0),Comma,Sp,D(0),CloseBracket);
+        var block=Seq(
+            OpenBracket,D(1),Comma,Sp,D(0),Comma,Sp,D(0),CloseBracket);
         var suffix=Call("flatten",Call("replicate",V("m"),block));
         var zeros=Call("replicate",Add(V("k"),D(1)),D(0));
         var shape=Call("append",Call("append",V("lower"),suffix),zeros);

@@ -13,9 +13,10 @@ internal sealed class SignedDigitPhaseDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + "signed_digits_negative_phase"), H("Dominance of the highest signed coefficient"),
             StatementSource.FromAuthor(PhaseFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("The finite signed binary list is read least significant first. Every coefficient is minus one, zero or plus one. Its highest nonzero digit dominates all lower positions, so 2T minus the Boolean parity is negative exactly when the last nonzero sign is negative, or when the tail is empty and the parity is one. Nonadjacency is unnecessary. The empty list and absent last element use default zero. The last-option expression is none for an empty list and some(List.getLast(...)) otherwise; the nonempty proof argument is implicit."))), DescribeRole.Theorem))));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula V(string name) => F.Id(name);
     private static Formula BooleanNe(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Bang, Eq, Sp, b));
 
     private static Formula LastOption(Formula xs) =>
         Ite(Eqn(xs, ListNil()), Ty("none"), Call("some",
@@ -42,7 +43,8 @@ internal sealed class SignedDigitPhaseDocument : IScribeDocumentDefinition
     private static Formula Ite(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
     private static Formula NegF(Formula a) => Call("neg", a);
     private static Formula Cast(Formula x, Formula t) => Call("cast", x, t);
-    private static Formula ListNil() => Seq(OpenBracket, CloseBracket);
+    private static Formula ListNil() => Seq(
+        OpenBracket, CloseBracket);
 
 
     private static Formula PhaseFormula()

@@ -15,7 +15,7 @@ internal sealed class MarkedPathSelectionDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("Every path from mode zero to mode four whose final bad flag is zero has a selected transition from mode zero to mode one. Its preceding path is the unmarked lower tail. Input and output streams agree after the selected transition. The two preceding signed digits vanish in both streams. The selected input digit is one. Its output is either one, or zero with input negative phase one, output negative phase zero and an unbroken lower negation flag. Marker parity, retention and both phases at the terminal state are exactly the snapshots saved on the selected transition."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
     private static Formula BooleanEq(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Eq, Eq, Sp, b));
 
     private static Formula OptionalIndex(Formula xs, Formula i) =>
         Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
@@ -98,6 +98,6 @@ internal sealed class MarkedPathSelectionDocument : IScribeDocumentDefinition
         var digitValue=Seq(LambdaLower,Sp,V("q"),Colon,list,Sp,V("k"),Colon,N(),Sp,Mapsto,Sp,
             Call("getD",OptionalIndex(row,V("k")),D(0)));
         var digitType=new Formula.TypeArrow(list,new Formula.TypeArrow(N(),Z()));
-        return Disp(new Formula.Apply(Seq(LambdaLower,Sp,V("digit"),Colon,digitType,Sp,Mapsto,Sp,body),[digitValue]));
+        return Disp(new Formula.Apply(Parenthesized(Seq(LambdaLower,Sp,V("digit"),Colon,digitType,Sp,Mapsto,Sp,body)),[digitValue]));
     }
 }

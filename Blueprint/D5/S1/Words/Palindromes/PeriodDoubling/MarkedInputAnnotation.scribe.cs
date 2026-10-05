@@ -55,12 +55,15 @@ internal sealed class MarkedInputAnnotationDocument : IScribeDocumentDefinition
         var input=Call("pathOutputs",Seq(LambdaLower,Sp,OpenBracket,fin,CloseBracket,Sp,
             OpenBracket,Alphabet(),CloseBracket,Sp,V("q"),Colon,fin,Sp,Mapsto,Sp,
             Entry(Call("fst",Call("baseTable",Call("val",V("q")))),10)),V("p"));
-        var block=Seq(OpenBracket,D(1),Comma,Sp,D(0),Comma,Sp,D(0),CloseBracket);
-        var twoZeros=Seq(OpenBracket,D(0),Comma,Sp,D(0),CloseBracket);
+        var block=Seq(
+            OpenBracket,D(1),Comma,Sp,D(0),Comma,Sp,D(0),CloseBracket);
+        var twoZeros=Seq(
+            OpenBracket,D(0),Comma,Sp,D(0),CloseBracket);
         var shape=Call("append",Call("append",V("lower"),
             Call("flatten",Call("replicate",V("m"),block))),Call("replicate",Add(V("k"),D(1)),D(0)));
         var state=Call("fst",Call("baseTable",Call("val",V("s"))));
-        var history=Call("reverse",Call("append",Seq(OpenBracket,Entry(state,11),Comma,Sp,Entry(state,10),CloseBracket),V("lower")));
+        var history=Call("reverse",Call("append",Seq(
+            OpenBracket,Entry(state,11),Comma,Sp,Entry(state,10),CloseBracket),V("lower")));
         var gap=And(Eqn(Entry(history,0),D(0)),Eqn(Entry(history,1),D(0)));
         var start=And(Eqn(Entry(V("full"),0),Cast(Call("val",V("s")),Z())),Eqn(Entry(V("full"),1),D(0)),
             Mem(V("t"),Call("accept",automaton)),LtF(D(0),V("m")),gap,Eqn(input,shape));

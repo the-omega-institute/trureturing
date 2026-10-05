@@ -28,9 +28,9 @@ internal sealed class MinimumPositionCertificateDocument : IScribeDocumentDefini
 
     private static Formula V(string name) => F.Id(name);
     private static Formula BooleanEq(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Eq, Eq, Sp, b));
     private static Formula BooleanNe(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Bang, Eq, Sp, b));
 
     private static Formula OptionalIndex(Formula xs, Formula i) =>
         Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
@@ -87,15 +87,18 @@ internal sealed class MinimumPositionCertificateDocument : IScribeDocumentDefini
     private static Formula AutomatonFormula()
     {
         var fin = Call("Fin", D(1,7,1,0));
-        var sources = Seq(OpenBrace, V("i"), Colon, fin, Sp, Mid, Sp, LtF(Call("val", V("i")), D(7)), CloseBrace);
-        var successors = Seq(OpenBrace, V("j"), Colon, fin, Sp, Mid, Sp,
+        var sources = Seq(
+            OpenBrace, V("i"), Colon, fin, Sp, Mid, Sp, LtF(Call("val", V("i")), D(7)), CloseBrace);
+        var successors = Seq(
+            OpenBrace, V("j"), Colon, fin, Sp, Mid, Sp,
             Mem(Tuple(Call("val", V("j")), V("a")), Call("fst", Call("snd", Call("snd", Call("minimumTable", Call("val", V("i"))))))), CloseBrace);
         var baseIndex = Call("fst", Call("minimumTable", Call("val", V("i"))));
         var baseState = Call("fst", Call("baseTable", baseIndex));
         var flag = Call("fst", Call("snd", Call("minimumTable", Call("val", V("i")))));
         var condition = DottedCall("Bool", "and", DottedCall("Bool", "and", flag, Call("baseTerminal", baseState)),
             BooleanEq(Call("getD", OptionalIndex(baseState, D(1,8)), D(0)), D(0)));
-        var accepted = Seq(OpenBrace, V("i"), Colon, fin, Sp, Mid, Sp, condition, CloseBrace);
+        var accepted = Seq(
+            OpenBrace, V("i"), Colon, fin, Sp, Mid, Sp, condition, CloseBrace);
         return Disp(Eqn(Call("minimumAutomaton"), NfaMk(Lam("i", fin, Lam("a", Alphabet(), successors)), sources, accepted)));
     }
     private static Formula BoundFormula()

@@ -13,9 +13,10 @@ internal sealed class BaseLastSignMemoryDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + "base_path_last_sign"), H("The literal minimum-position transition law"),
             StatementSource.FromAuthor(CutFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("For either emitted stream, each literal base edge updates the most recent sign when its new coefficient is nonzero. Induction along an arbitrary source path identifies the terminal memory with the last nonzero coefficient of the emitted stream. All source memories start at zero, and absent last entries use default zero. Acceptance and tightness are unnecessary; this statement also applies to the partial path before a marker is selected. The last-option expression is none for an empty list and some(List.getLast(...)) otherwise; the nonempty proof argument is implicit."))), DescribeRole.Theorem))));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula V(string name) => F.Id(name);
     private static Formula BooleanNe(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Bang, Eq, Sp, b));
 
     private static Formula DottedCall(string owner, string member, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);
@@ -44,7 +45,8 @@ internal sealed class BaseLastSignMemoryDocument : IScribeDocumentDefinition
     private static Formula Lam(string n, Formula t, Formula b) =>
         Seq(V(n), Colon, t, Sp, Mapsto, Sp, b);
     private static Formula Ite(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
-    private static Formula ListNil() => Seq(OpenBracket, CloseBracket);
+    private static Formula ListNil() => Seq(
+        OpenBracket, CloseBracket);
 
 
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());

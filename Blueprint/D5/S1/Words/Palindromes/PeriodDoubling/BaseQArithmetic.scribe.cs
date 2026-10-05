@@ -27,16 +27,17 @@ internal sealed class BaseQArithmeticDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("For an accepting charge-mode path whose source parities and binary folds encode n and j, the sum of q edge charges plus the terminal phase correction is Q(j)-Q(n). Component 2 or 3 of the source is the endpoint parity; the last two components of an edge label are bits of the integer quotients div(n,2) and div(j,2). The proof checks all sign-memory transitions and identifies the padded output streams with the unique nonadjacent expansions of the rounded halves. The dummy initial zero contributes no weight."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
     private static Formula BooleanNe(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Bang, Eq, Sp, b));
     private static Formula BooleanEq(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Eq, Eq, Sp, b));
 
     private static Formula OptionalIndex(Formula xs, Formula i) =>
         Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,
             DottedCall("List", "length", xs)),
             Call("some", DottedCall("GetElem", "getElem", xs, i)), Call("none"));
     private static Formula OptionalHead(Formula xs) =>
-        Call("ite", Eqn(xs, Seq(OpenBracket, CloseBracket)), Call("none"),
+        Call("ite", Eqn(xs, Seq(
+            OpenBracket, CloseBracket)), Call("none"),
             Call("some", DottedCall("List", "head", xs)));
 
     private static Formula DottedCall(string owner, string member, params Formula[] args) =>

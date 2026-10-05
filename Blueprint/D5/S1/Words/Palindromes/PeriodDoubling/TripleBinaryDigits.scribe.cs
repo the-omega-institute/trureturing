@@ -14,9 +14,10 @@ internal sealed class TripleBinaryDigitsDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(TripleFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("At position i, the signed digit is the difference of the binary digits at position i+1 of 3X and X. The bound on h pads both numbers by leading zeros. The resulting signed digit list has value X, no adjacent nonzero digits, and exactly the minimum number of nonzero digits. Nat.div and mod denote natural integer division and remainder. Cast denotes the natural-to-integer embedding. Digits are listed from the lowest position upward."))), DescribeRole.Theorem))));
 
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula V(string name) => F.Id(name);
     private static Formula BooleanNe(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Bang, Eq, Sp, b));
 
     private static Formula DottedCall(string owner, string member, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(member))), [.. args]);

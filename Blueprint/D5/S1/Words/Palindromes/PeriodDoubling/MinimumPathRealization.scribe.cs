@@ -13,11 +13,12 @@ internal sealed class MinimumPathRealizationDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + "minimum_path_realization"), H("The product flag is the event disjunction"),
             StatementSource.FromAuthor(RealizationFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("The lift preserves each of the four labels and the initial and final base-state indices. It starts with a false flag. Its final flag equals the Boolean disjunction of the path events: no input nonzero has yet been recorded, the current input digit is zero, and the current output digit is nonzero. No accepting-endpoint premise is needed for path construction; if the flag is true and the base endpoint accepts, the lifted path accepts in minimumAutomaton. any is Boolean list disjunction, id is the Boolean identity, and the anonymous bracket in the event lambda represents the unused edge-label argument."))), DescribeRole.Theorem))));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula V(string name) => F.Id(name);
     private static Formula BooleanEq(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Eq, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Eq, Eq, Sp, b));
     private static Formula BooleanNe(Formula a, Formula b) =>
-        Seq(Open, a, Sp, Bang, Eq, Sp, b, Close);
+        Parenthesized(Seq(a, Sp, Bang, Eq, Sp, b));
 
     private static Formula OptionalIndex(Formula xs, Formula i) =>
         Call("ite", new Formula.Relation(i, FormulaRelationOperator.LessThan,

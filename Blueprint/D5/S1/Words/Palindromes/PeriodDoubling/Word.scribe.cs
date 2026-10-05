@@ -72,11 +72,13 @@ internal sealed class WordDocument : IScribeDocumentDefinition
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
 
     private static Formula MorphismFormula() => Disp(All("b", Ty("Bool"),
-        Eqn(Call("pdMorphism", V("b")), Seq(OpenBracket, Ty("false"), Comma,
+        Eqn(Call("pdMorphism", V("b")), Seq(
+            OpenBracket, Ty("false"), Comma,
             Call("not", V("b")), CloseBracket))));
     private static Formula BlockFormula() => Disp(All("e", N(),
         Eqn(Call("pdBlock", V("e")), Call("morphismPower", Ty("pdMorphism"), V("e"),
-            Seq(OpenBracket, Ty("false"), CloseBracket)))));
+            Seq(
+                OpenBracket, Ty("false"), CloseBracket)))));
     private static Formula WordFormula() => Disp(All("n", N(),
         Eqn(Upd(V("n")), Call("getD", OptionalIndex(
             Call("pdBlock", Add(V("n"), D(1))), V("n")), Ty("false")))));

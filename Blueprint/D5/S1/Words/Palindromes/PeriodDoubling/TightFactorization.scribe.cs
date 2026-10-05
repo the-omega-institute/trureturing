@@ -43,7 +43,8 @@ internal sealed class TightFactorizationDocument : IScribeDocumentDefinition
         Seq(V(n), Colon, t, Sp, Mapsto, Sp, b);
     private static Formula Ite(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
     private static Formula Cast(Formula x, Formula t) => Call("cast", x, t);
-    private static Formula ListNil() => Seq(OpenBracket, CloseBracket);
+    private static Formula ListNil() => Seq(
+        OpenBracket, CloseBracket);
 
 
     private static Formula RoundedWeight(Formula n) => Call("signedWeight", Cast(DottedCall("Nat", "div", Add(n, D(1)), D(2)), Z()));
