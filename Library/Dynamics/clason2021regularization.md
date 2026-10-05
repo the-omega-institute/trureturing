@@ -1026,3 +1026,553 @@ rate or finite all-input acquisition of the noncompact principal
 follows. Actual source and archimedean costs, low and complementary-low
 signs on one common original cofinal sequence, the full all-input
 half-bound, Robin, RH and Lean certification remain unresolved.
+
+
+## Explicit original-series constants for the actual endpoint strip
+
+This conditional original-model application keeps the original measure,
+unitary map, unit ground, critical space and whole-critical-space
+minimal-domain and mixed-nullity premises. It reuses the
+[relative theta factorization (SR1)–(SR3)](../../docs/reports/theta-mixed-matrix/strip-root.md),
+the [original derivative polynomials and (WC1)–(WC3)](../Analytic/romik2021orthogonal.md#weighted-fourier-coefficient-suppliers),
+and (A1)–(A4). The new suppliers below are explicit convergent-series
+and Gamma expressions for the actual endpoint constants; small-real-window
+numerical bounds are not reassigned to this endpoint family. The original
+WF2 form coefficients remain symbolic, and the principal synthesis stays
+infinite. No source condition, actual Gram/sign or Lean conclusion follows.
+
+### Fixed geometry and notation
+
+Use
+
+$$
+ \theta=\frac16,\quad \theta_0=\frac18,\quad
+ R_b=\log4,\quad \rho=\frac1{16},\quad
+ A=\frac32,\quad t_c=\frac{\log2}{2},\quad
+ a=A-t_c>1,\quad u_a=e^{2a},\quad
+ \kappa=\frac3{2\pi},\quad c=\cos(1/3),\quad \lambda=\pi c.
+$$
+
+Here $A$ is the spatial splitting point, not the endpoint normalization
+factor. Write that factor as $\mathcal A(z)$:
+
+$$
+ t(z)=\tfrac12\operatorname{Log}\frac2{1+e^{-2z}},\qquad
+ \mathcal A(z)=\pi e^{-9t(z)/2}e^{5z/2},\qquad
+ d_z=\mathcal A(z)^{-1}Uw_{t(z)}.
+$$
+
+For $R=\Re z\ge R_b$, $|\Im z|\le\theta$, put $w=e^{-2z}$.
+Then $|w|\le\rho$ and $\Re w>0$. The existing principal logarithm obeys
+
+$$
+ 0<\Re t(z)<t_c,\qquad
+ |\Im t(z)|\le\frac{\rho}{2(1-\rho)}=\frac1{30}<\frac16,
+ \qquad 2e^{-2t(z)}-1=e^{-2z}.
+$$
+
+Thus the shifted numerator lies in the existing theta strip, and
+$\Re(2e^{-2t(z)})>1$ puts $t(z)$ in the original endpoint
+integrability domain. Also set
+
+$$
+ \beta_w=\frac{4(1-\rho)}{(1+\rho)^2}-1>0,\qquad
+ E_w=\frac4{1-\rho}+1,\qquad \nu_w=\frac\pi2\beta_w.
+$$
+
+The reciprocal formula $2e^{2t(z)}=4/(1+w)$ gives
+$\Re(2e^{2t(z)}-1)\ge\beta_w$ and
+$|2e^{2t(z)}-1|\le E_w$. These pay the wrong shifted numerator.
+Finally
+
+$$
+ |\mathcal A(z)^{-1}|\le A_{\rm inv}e^{-5R/2},\qquad
+ A_{\rm inv}=\pi^{-1}e^{9t_c/2},\qquad C_t=\cosh(t_c/2),
+$$
+
+where $|\cosh(t(z)/2)|\le C_t$ uses the real part of $t(z)$.
+
+### Explicit relative theta and spatial derivative constants
+
+Define the existing relative leading factor by
+
+$$
+ \ell(v)=\frac{\Phi(v)}{4\pi^2e^{9v/2}e^{-\pi e^{2v}}}
+       =(1-\kappa e^{-2v})(1+R_{\rm SR}(v)).
+$$
+
+The subscript distinguishes the SR1 relative remainder from $R=\Re z$.
+Use the SR2 sum, with no fitted or sampled constants,
+
+$$
+ q_* =\sum_{n\ge2}n^2\frac{2\pi n^2u_a+3}{2\pi u_a-3}
+       e^{-\lambda(n^2-1)u_a}<\frac16,
+ \qquad D_0=\kappa+(u_a+\kappa)q_*.
+$$
+
+The last strict bound reuses SR3 and monotonicity in its first parameter.
+Since $3\lambda u_a>2$, each required $u^k e^{-\lambda(n^2-1)u}$,
+$0\le k\le2$, decreases for $u\ge u_a$. In particular SR2 gives
+$u|R_{\rm SR}(v)|\le u_aq_*$, where $u=e^{2\Re v}$.
+
+For the first derivative, use the stored derivative polynomial
+$P_{1,\alpha}(Z)=\alpha-2Z$ in the original summands. Equivalently their
+relative terms have the exact derivative
+
+$$
+ \partial_v\left[(n^4-\kappa n^2e^{-2v})
+                  e^{-\pi(n^2-1)e^{2v}}\right]
+ =\left[2\kappa n^2e^{-2v}
+       -2\pi(n^2-1)n^4e^{2v}
+       +2\kappa\pi(n^2-1)n^2\right]
+       e^{-\pi(n^2-1)e^{2v}}.
+$$
+
+This yields the finite explicit constant
+
+$$
+ D_1=2\kappa+\sum_{n\ge2}
+ \left[2\kappa n^2+2\pi(n^2-1)n^4u_a^2
+                  +2\kappa\pi(n^2-1)n^2u_a\right]
+ e^{-\lambda(n^2-1)u_a}.
+$$
+
+Normal convergence and the existing polynomial supplier, rather than
+differentiation of an asymptotic error, therefore give
+
+$$
+ |\ell(v)-1|\le D_0e^{-2\Re v},\qquad
+ |\ell'(v)|\le D_1e^{-2\Re v}
+ \quad(\Re v\ge a,\ |\Im v|\le1/6).
+$$
+
+On the real denominator use positivity of the original summands, separately
+from these complex upper bounds:
+
+$$
+ \ell(x)\ge L_*:=1-\kappa/u_a>0\quad(x\ge a).
+$$
+
+Let $f_A=\sqrt{1+e^{-A}}$,
+$L_-=1+2D_0e^{-2A}$, and $L_+=1+D_0e^{-2A}$.
+For the actual dominant ratio
+
+$$
+ b_-(x,t)=\sqrt{1+e^{-x}}\frac{\ell(x-t)}{\sqrt{\ell(x)}},
+$$
+
+define
+
+$$
+ \begin{aligned}
+ B_0={}&\frac{L_-}{2\sqrt{L_*}}
+  +e^{-A}\left[\frac{2D_0}{\sqrt{L_*}}
+    +\frac{D_0}{\sqrt{L_*}(\sqrt{L_*}+1)}\right],\\
+ B_1={}&\frac{L_-}{2\sqrt{L_*}}
+  +e^{-A}f_A\left[\frac{2D_1}{\sqrt{L_*}}
+    +\frac{L_-D_1}{2L_*^{3/2}}\right].
+ \end{aligned}
+$$
+
+Then $|b_--1|\le B_0e^{-x}$ and
+$|\partial_x b_-|\le B_1e^{-x}$ for $x\ge A$ throughout the
+specified parameter strip. Only $\ell(x)$, with real $x$, is square-rooted
+here. No positivity of a complex shifted theta value is assumed.
+
+For $b_+(x,t)=\sqrt{1+e^{-x}}\ell(x+t)/\sqrt{\ell(x)}$, use
+
+$$
+ \begin{aligned}
+ B_{+,0}&=f_AL_+/\sqrt{L_*},\\
+ B_{+,1}&=\frac{e^{-A}L_+/2+f_AD_1e^{-2A}}{\sqrt{L_*}}
+          +\frac{f_AL_+D_1e^{-2A}}{2L_*^{3/2}}.
+ \end{aligned}
+$$
+
+They bound $|b_+|$ and $|\partial_xb_+|$, respectively.
+
+### Direct profile integrals and the dominant allowance
+
+Use the existing profile $G(y)=e^{5y/2-(\pi/2)e^{2y}}$. For $p,k>0$
+write the already standard Euler substitutions as
+
+$$
+ I(p,k)=\tfrac12 k^{-p/2}\Gamma(p/2),\qquad
+ J_A(p,k)=\tfrac12 k^{-p/2}\Gamma(p/2,ke^{2A}).
+$$
+
+These are respectively the full-line and $[A,\infty)$ integrals of
+$e^{py-ke^{2y}}$. All incomplete Gamma arguments used below are positive.
+Here $\Gamma(s,x)=\int_x^\infty u^{s-1}e^{-u}\,du$ is the upper
+incomplete Gamma function; its later occurrence with $s=0,x>0$ is finite
+and is not the ordinary Gamma function evaluated at zero.
+Put
+
+$$
+ \begin{aligned}
+ g_0^2&=I(5,\lambda),\\
+ g_1^2&=\tfrac{25}4I(5,\lambda)+5\pi I(7,\lambda)+\pi^2I(9,\lambda),\\
+ h_0^2&=I(3,\lambda),\\
+ h_1^2&=\tfrac{25}4I(3,\lambda)+5\pi I(5,\lambda)+\pi^2I(7,\lambda),\\
+ \mathcal G&=\sqrt{g_0^2+g_1^2},\qquad
+ C_{\rm dom}=\sqrt{(B_0h_0)^2+(B_0h_1+B_1h_0)^2}.
+ \end{aligned}
+$$
+
+They bound the $L^2$ norms of $G(\cdot-iv),G'(\cdot-iv)$ and
+their $e^{-y}$-weighted versions, uniformly for $|v|\le\theta$.
+The original dominant term of $d_z$ is exactly $G(x-z)b_-(x,t(z))$.
+Consequently its positive-tail error, including its spatial derivative, is
+bounded by $C_{\rm dom}e^{-R}$ in the two-component $L^2$ norm.
+
+### Compact region, centering, wrong shift and wrong profile
+
+For clarity every other original contribution is paid independently. The
+following compact bound supplies the spatial derivative that a real
+small-window numerical estimate cannot provide at the endpoint.
+
+Let $C_j^{\rm WC}$ be the existing coefficient sums, for $j=0,1$:
+
+$$
+ C_j^{\rm WC}=\sum_{n\ge1}e^{-\pi(n^2-1)}
+ \left[4\pi^2n^4\sum_{k=0}^j|p_{j,9/2,k}|\pi^kn^{2k}
+ +6\pi n^2\sum_{k=0}^j|p_{j,5/2,k}|\pi^kn^{2k}\right],
+ \qquad \gamma_1=C_1^{\rm WC}/18.
+$$
+
+For $X=A+t_c$ define the absolute complex-series sums
+
+$$
+ N_j=\sum_{n\ge1}e^{-\lambda n^2}
+ \left[4\pi^2n^4e^{9X/2}
+       \sum_{k=0}^j|p_{j,9/2,k}|(\pi n^2e^{2X})^k
+ +6\pi n^2e^{5X/2}
+       \sum_{k=0}^j|p_{j,5/2,k}|(\pi n^2e^{2X})^k\right].
+$$
+
+Reflection of the original even analytic kernel and WC's polynomials bound
+$|\Phi^{(j)}(v)|\le N_j$ for $|\Re v|\le X,\ |\Im v|\le1/6$.
+This is an absolute bound, not complex positivity.
+
+On $0\le x\le A$ retain the real first-summand lower bound and WC1:
+
+$$
+ m_\Phi=18e^{-\pi e^{2A}},\quad
+ V_c=\sqrt{2C_0^{\rm WC}e^{9A/2}\cosh(A/2)},\quad
+ L_c=\gamma_1e^{4A}/2+1/4.
+$$
+
+Thus $\Phi(x)>m_\Phi$, $v_0(x)\le V_c$,
+$|v_0'(x)|\le V_cL_c$, and $|\Phi'(x)/\Phi(x)|\le\gamma_1e^{4A}$.
+For the uncentered numerator pair let
+
+$$
+ H_0=V_cN_0/m_\Phi,\qquad
+ H_1=V_c\left[(L_c+\gamma_1e^{4A})N_0/m_\Phi+N_1/m_\Phi\right],
+ \qquad C_{\rm comp}=A_{\rm inv}\sqrt{A(H_0^2+H_1^2)}.
+$$
+
+This pays its compact-region $H^1$ restriction by
+$C_{\rm comp}e^{-5R/2}$.
+
+The centering term is paid globally. To make the ground derivative cap
+explicit from WC2 using the full positive-line polynomial maximum, set $b_s=3/8$, $\zeta=\pi/2-b_s$,
+$M_m=(m/\zeta)^me^{-m}$, and
+
+$$
+ K_0=\sqrt{C_0^{\rm WC}}M_1,\qquad
+ K_1=\sqrt{C_0^{\rm WC}}(\gamma_1/2+1/4)M_3.
+$$
+
+Since $v_0=2\cosh(x/2)s$, the accepted $\|v_0\|_2=1$ and WC2 give
+
+$$
+ V_{\rm grd}=\left[1+(K_0/2+2K_1)^2
+             (2b_s)^{-1/2}\Gamma(1/2,2b_s)\right]^{1/2}.
+$$
+
+It bounds $\|v_0\|_{H^1}$. The centered subtraction contributes at most
+$C_{\rm ctr}e^{-5R/2}$, where
+$C_{\rm ctr}=A_{\rm inv}C_tV_{\rm grd}$.
+
+For the wrong shifted numerator on $x\ge A$ put
+
+$$
+ u_0=\tfrac52 B_{+,0}+B_{+,1},\qquad
+ u_1=\pi E_wB_{+,0},\qquad
+ C_{\rm wrong}=e^{9t_c}
+ \left[(B_{+,0}^2+u_0^2)J_A(5,2\nu_w)
+       +2u_0u_1J_A(7,2\nu_w)+u_1^2J_A(9,2\nu_w)\right]^{1/2}.
+$$
+
+The exact original ratio and $\beta_w>0$ bound that restriction and its
+first spatial derivative by $C_{\rm wrong}e^{-5R/2}$.
+
+Finally the ideal compact main profile and the wrong-half profile have the
+explicit caps
+
+$$
+ \begin{aligned}
+ C_{\rm ideal,c}&=\sqrt A\,e^{5A/2}
+       \sqrt{1+(5/2+\pi e^{2(A-R_b)})^2},\\
+ C_{\rm ideal,-}&=\sqrt{\{1+(5/2+\pi e^{-2R_b})^2\}/5}.
+ \end{aligned}
+$$
+
+They pay $G(x-z)$ on $[0,A]$ and $G(-x-z)$ on the whole positive
+half-line, respectively, each with factor $e^{-5R/2}$.
+
+All spatial splits here estimate restrictions of the actual function and its
+first derivative. They do not differentiate a sharp spatial cutoff or introduce
+an artificial zero-extension jump in $H^1$.
+
+### Actual-column constant and explicit zero-free threshold
+
+Evenness pays the negative spatial half-line. A deliberately conservative
+constant, dropping the additional factor $e^{-3R/2}\le1$, is
+
+$$
+ C_\theta=\sqrt2\left[C_{\rm dom}+C_{\rm comp}+C_{\rm wrong}
+                   +C_{\rm ideal,c}+C_{\rm ideal,-}\right]+C_{\rm ctr}.
+$$
+
+Thus, for $R\ge R_b,\ |\Im z|\le\theta$,
+
+$$
+ \|d_z-p_z\|_{H^1}\le C_\theta e^{-R},\qquad
+ p_z=G(\cdot-z)+G(-\cdot-z),\qquad
+ \|p_z\|_{H^1}\le2\mathcal G.
+$$
+
+The existing holomorphy argument now has explicit local majorants. Define the
+continuous bilinear scalar, not an ordinary complex norm,
+
+$$
+ q(z)=\int d_z(x)^2\,dx,\qquad
+ g=\|G\|_2=\sqrt{I(5,\pi)},\qquad a_0=\sqrt2g.
+$$
+
+For the ideal overlap let $H_\theta=\tfrac12\Gamma(0,\lambda/2)$. The
+two-half-line split at $x=R$ gives
+
+$$
+ \left|\int p_z^2-a_0^2\right|
+ \le4(R+H_\theta)e^{-5R}.
+$$
+
+Using the actual $L^2$ error and $\|p_z\|_2\le2g_0$, set
+
+$$
+ Q_\theta=4g_0C_\theta+C_\theta^2e^{-R_b}
+           +4(R_b+H_\theta)e^{-4R_b}.
+$$
+
+Here $(R+H_\theta)e^{-4R}$ decreases for $R\ge R_b>1/4$. Consequently
+$|q(z)-a_0^2|\le Q_\theta e^{-R}$ on the entire closed outer strip.
+An explicit sufficient threshold is
+
+$$
+ R_* =\max\left\{R_b,\log\frac{4Q_\theta}{a_0^2}\right\}.
+$$
+
+For $\Re z>R_*$, $|\Im z|<1/6$, the bilinear scalar lies in
+$|q-a_0^2|<a_0^2/4$. This disk avoids zero and the negative real axis.
+The existing principal square-root construction gives $a(z)=\sqrt{q(z)}$,
+with $a(R)=\|d_R\|_2$. No complex norm is analytically continued.
+
+Let $\alpha_a=\sqrt3/2$. Since $|a|\ge\alpha_a a_0$ and
+$|a+a_0|\ge a_0$, define
+
+$$
+ C_{\theta,n}=\frac{C_\theta}{\alpha_a a_0}
+            +\frac{2\mathcal GQ_\theta}{\alpha_a a_0^3},\qquad
+ N_\theta=\frac{2\mathcal G+C_\theta e^{-R_*}}{\alpha_a a_0}.
+$$
+
+The actual normalized columns $n_z=d_z/a(z)$, $E_z=p_z/a_0$ satisfy
+
+$$
+ \|n_z-E_z\|_{H^1}\le C_{\theta,n}e^{-\Re z},\qquad
+ \|n_z\|_{H^1}\le N_\theta.
+$$
+
+These estimates match the original real columns. The actual normalized $n_z$
+remains in the same $N_c$ under the inherited endpoint-domain and whole-critical-space
+premises. The ideal $E_z$ belongs to $H^1$ and the original minimal form by WF2;
+critical membership is not asserted. No characterization by a complete zero family
+or new inverse/source assumption is inserted.
+
+### Original form bound on the analytic residual columns
+
+Retain the original WF2 constants, which may remain symbolic:
+
+$$
+ \|v\|_{\mathcal F_c}^2\le c_0\|v\|_2^2+c_1\|v'\|_2^2.
+$$
+
+The complete prime operator in $c_0$ is not the negative-edge metric. The
+original constants and every prime power are unchanged. The exact ground
+projection $Q_0$ is contractive for this form norm.
+
+Choose $d=1/16$ and $R_0=R_*+1$. This leaves the required unused
+parameter margin and gives $R_0-d>R_*$. Set
+
+$$
+ \begin{aligned}
+ M_-&=\sqrt{2(c_0g_0^2+c_1g_1^2)},\qquad c_F=\sqrt{\max(c_0,c_1)},\\
+ M_\theta&=M_-+a_0c_F C_{\theta,n}e^{-(R_0-d)}.
+ \end{aligned}
+$$
+
+For the left residual formula $G(x-z)$, $M_-$ applies on radius-$d$
+disks around arbitrary real left-cell centers. For the right formula
+$-G(-x-z)-a_0(n_z-E_z)(x)$, the displayed $M_\theta$ applies on
+disks around all centers at or above $R_0$. The actual error is even, so
+even-reflecting its positive-half restriction gives that same whole-line
+error, without an additional $\sqrt2$ factor. Even-reflect both kernel
+pieces and apply $Q_0$, as in the existing (A3) construction. Their columns
+are holomorphic in the original form space. Only $H^1$, not $H^2$, is
+used for the separately reflected columns.
+
+If explicit real J1 parameter-jet constants are wanted on $R\ge R_0$, the
+already used Cauchy estimate on the same radius-$d$ disks permits
+$C_{j,0}=C_{\theta,n}$ and
+$C_{j,1}=e^d C_{\theta,n}/d$, $j=0,1$. This uses the actual normalized
+$H^1$-valued column, not a differentiated asymptotic remainder or an
+ideal-profile substitute.
+
+For completeness an explicit conservative J3 tail constant can also be used.
+Write $J_0(p,k)=\tfrac12k^{-p/2}\Gamma(p/2,k)$ and set
+
+$$
+ \begin{aligned}
+ C_+^2={}&2\left[c_0J_0(8,\pi)+c_1\left(
+       \tfrac{25}4J_0(8,\pi)+5\pi J_0(10,\pi)+\pi^2J_0(12,\pi)
+                                      \right)\right],\\
+ C_-&=\sqrt{\frac2{25}\{c_0+c_1(5/2+\pi)^2\}},\\
+ C_d&=C_++C_-+g C_{\theta,n}\sqrt{c_0+c_1}.
+ \end{aligned}
+$$
+
+For $T>R_0$ and $T\ge1$, the unchanged J3 allowance obeys
+$d(T)\le C_de^{-T}$. The positive-tail estimate uses
+$e^{2T}(y-T)\le e^{3y}$ for $y>T\ge1$; the negative-tail estimate
+uses $|G'|\le(5/2+\pi)e^{5y/2}$ for $y<0$. The final term uses
+the valid choice $C_{0,0}=C_{1,0}=C_{\theta,n}$ for J3: each individual
+spatial-jet norm is bounded by the displayed normalized $H^1$ error.
+No comparison with a previously chosen numerical jet constant is asserted.
+This is a conservative instantiation of J3, not a new truncation theorem.
+
+The existing (A3)–(A4) sufficient Taylor parameters can now use these symbolic
+$C_d,M_\theta,R_*$, the same $W_\Lambda$, and the same exact cell
+coefficient map. Nothing here evaluates the retained columns, their coefficient
+integrals, or the common primal/dual residual Gram.
+
+
+These explicit bounds preserve the distinction between actual critical
+columns and ideal form-domain columns. They supply constants for the existing
+analytic approximation interface. Source and archimedean costs, actual
+primal/dual Gram acquisition, low and complementary-low signs on one
+common original cofinal sequence, the all-input half-bound, Robin, RH and
+Lean certification remain unresolved.
+
+
+## Retain both actual endpoint decay rates
+
+The original spatial decomposition retains both decay rates:
+
+$$
+\begin{aligned}
+C_s&=\sqrt2\,C_{\rm dom},\\
+C_f&=\sqrt2(C_{\rm comp}+C_{\rm wrong}
+                   +C_{\rm ideal,c}+C_{\rm ideal,-})+C_{\rm ctr},\\
+\|d_z-p_z\|_{H^1}
+&\le C_s e^{-R}+C_f e^{-5R/2},\qquad R\ge R_b.
+\end{aligned}
+$$
+
+For $C_s>0$, set
+
+$$
+\begin{aligned}
+C_b&=2C_s,\\
+Q_b&=4g_0C_b+C_b^2e^{-R_b}
+           +4(R_b+H_\theta)e^{-4R_b},\\
+R_b^*&=\max\{R_b,\tfrac23\log(C_f/C_s),
+                    \log(4Q_b/a_0^2)\}.
+\end{aligned}
+$$
+
+For $R\ge R_b^*$ the faster term obeys
+$C_f e^{-3R/2}\le C_s$, hence
+$\|d_z-p_z\|_{H^1}\le C_b e^{-R}$.
+The same bilinear calculation then gives
+$|q(z)-a_0^2|\le Q_b e^{-R}$; its zero-free disk holds for
+$R>R_b^*$ with the same unused strip margin.
+
+Use $C_b,Q_b$ instead of the collapsed $C_\theta,Q_\theta$ in
+the existing $C_{\theta,n},N_\theta,M_\theta,C_d$ formulas, with
+any certified threshold larger than $R_b^*$. The old ground/compact
+and relative-series constants remain exactly the same suppliers.
+This applies the existing normalization argument to the two
+original decay allowances.
+
+Choosing this threshold fixes its $R_0=R_*+1$ for the
+principal/residual split before acquisition. The coarse and balanced source columns are different families;
+a Gram certificate applies to its own chosen family.
+
+
+The same Banach-valued Cauchy estimate supplies the parameter jet as well:
+for $R\ge R_0$ and $d=1/16$,
+
+$$
+\|\partial_R(n_R-E_R)\|_{H^1}
+\le16e^{1/16}C_{\theta,n}e^{-R}.
+$$
+
+Its circle lies inside the established original normalization strip and
+above the threshold. Thus both spatial components of (J1) use the
+same normalized constant, and their parameter derivatives use this
+existing Cauchy allowance. No new generic derivative theorem is introduced.
+
+## Directed caps for the same endpoint choice
+
+The [constant producer](../../docs/reports/theta-mixed-matrix/theta_endpoint_constants.py)
+evaluates these conditional original-series bounds with Python 3.13.12,
+python-flint 0.9.0 and 256-bit precision. It reuses the existing
+`derivative_supplier` definitions and scalar WC constants; the old
+derivative grid and small-window translation producer are not executed.
+Convergent moments use positive partial sums and certified geometric tails.
+The ground polynomial cap uses the full positive-line maximum
+$(m/\zeta)^me^{-m}$, which also bounds its restriction to $u\ge1$;
+a rounded maximizer is not substituted.
+
+The [directed result](../../docs/reports/theta-mixed-matrix/theta-endpoint-constants-result.json)
+records exact dyadic upper caps, both supplier hashes and the chosen
+threshold. The coarse and two-rate choices give the following valid
+allowances in the same inherited model:
+
+| Choice | Sufficient integer $R_*$ | Normalized $H^1$ error cap |
+|---|---:|---:|
+| Collapse both terms to $e^{-R}$ | 176 | $1.593\times10^{76}$ |
+| Retain $e^{-R}$ and $e^{-5R/2}$ before normalization | 58 | $920$ |
+
+For the retained choice, $R_0=59$, the outer/inner parameter-strip
+widths are $1/6$ and $1/8$, and the analytic-disk radius is $1/16$.
+For $\Re z\ge58$ in the outer strip the paper bound gives
+$|q(z)-a_0^2|/a_0^2<6.061\times10^{-24}$ and
+$\|n_z\|_{H^1}<9.645$. With the same original symbolic WF2
+coefficients,
+
+$$
+M_\theta<1.601\sqrt{c_0+c_1},\qquad
+C_d<182.395\sqrt{c_0+c_1}.
+$$
+
+These are upper allowances from the original series estimates, not
+sampled values of actual columns or Grams. Numerical WF2 coefficients,
+column and coefficient-functional enclosures, actual same-source
+primal/dual complex Grams, source and archimedean costs, common-sequence
+low/complementary-low signs, the all-input half-bound, Robin, RH and
+Lean certification remain unresolved. A residual-column count does not
+supply a runtime guarantee.
