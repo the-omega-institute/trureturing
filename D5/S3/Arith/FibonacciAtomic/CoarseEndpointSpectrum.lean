@@ -448,13 +448,14 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       | (fin_cases j)
       | (fin_cases i)
     all_goals
-        simp only [endpointRoute,Peels,count0,count1]
+        norm_num only [endpointRoute,Peels,count0,count1]
     all_goals
         simp [endpointRoute,Peels,fiber,Finset.filter,Finset.filter_image,Finset.filter_insert,
-          Finset.filter_singleton,mapped,family,query,FourExitRawEndpointSpectrum.comb,
+          Finset.filter_singleton,Multiset.filter_singleton,Multiset.filter_cons,mapped,family,query,FourExitRawEndpointSpectrum.comb,
           bshape,ActualImageSevenLeafSeparation.A,ActualImageSevenLeafSeparation.C,
           ActualImageSevenLeafSeparation.E,readout,leaves,leafLabel,e1.injective.eq_iff,
           Finset.card_image_of_injective _ e1.injective]
+    all_goals exact Or.inr rfl
   have small_two : ∀ (e1 : Index 2 ≃ Fin (Fintype.card (Index 2))) (Z : Index 2),
       (Z = .inl () ∨ ∃ i, Z = .inr (.inr i)) →
       Peels (family 2 ∘ e1.symm) (e1 Z) Finset.univ (endpointRoute 2 Z) := by
@@ -495,13 +496,14 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     rcases kind with rfl | ⟨i,rfl⟩
     all_goals try fin_cases i
     all_goals
-        simp only [endpointRoute,Peels,count0]
+        norm_num only [endpointRoute,Peels,count0]
     all_goals
         simp [endpointRoute,Peels,fiber,Finset.filter,Finset.filter_image,Finset.filter_insert,
-          Finset.filter_singleton,mapped,family,query,FourExitRawEndpointSpectrum.comb,
+          Finset.filter_singleton,Multiset.filter_singleton,Multiset.filter_cons,mapped,family,query,FourExitRawEndpointSpectrum.comb,
           bshape,ActualImageSevenLeafSeparation.A,ActualImageSevenLeafSeparation.C,
           ActualImageSevenLeafSeparation.E,readout,leaves,leafLabel,e1.injective.eq_iff,
           Finset.card_image_of_injective _ e1.injective]
+    all_goals exact Or.inr rfl
   have small (Z : Index k)
       (allowed : k = 1 ∨ k = 2 ∧ (Z = .inl () ∨ ∃ i, Z = .inr (.inr i))) :
       Peels F (e Z) Finset.univ (endpointRoute k Z) := by

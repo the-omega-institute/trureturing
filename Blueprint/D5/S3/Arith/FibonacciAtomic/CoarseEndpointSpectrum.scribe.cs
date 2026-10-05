@@ -54,7 +54,7 @@ internal sealed class CoarseEndpointSpectrumDocument : IScribeDocumentDefinition
                 Eq(Call("First", route, V("F"), i), Call("some", q)),
                 Seq(Neg, Sp, Par(Call("Member", q, Call("L", tree(i))))),
                 Eq(Call("J", pi, tree(i)), Seq(Call("L", tree(i)), Sp, Cup, Sp,
-                    LBrace, q, RBrace))))));
+                    OpenBrace, q, CloseBrace))))));
         Formula realization = Some("pi", V("Strategy"), And(
             Call("CoarseObservable", Call("policy", pi)),
             All("i", indices, Eq(Call("C", pi, tree(i)),
