@@ -341,6 +341,12 @@ the simple multiplier allowance infinite; this fixed-source obstruction
 does not decide the actual constrained inverse or a moving cofinal family.
 The existing unprojected common dual-source construction is reused, with
 its growing source budgets and the actual low signs still unpaid.
+The same note's [divided endpoint check](vanishing-exterior-reserve.md#the-divided-endpoint-expression-cannot-have-a-strict-weighted-high-floor)
+uses the theta derivative envelopes in a topology controlling that
+expression. Its conditional paper argument excludes a strictly positive
+$s^2$-weighted endpoint floor at any fixed finite band; it asserts no
+sharp-high density in the original minimal form norm, negative energy,
+moving-cofinal obstruction or RH conclusion.
 
 The [critical-zero source-range check](critical-prime-source-range.md)
 uses the full prime-power action to exclude a blanket exact factorization
@@ -348,3 +354,74 @@ of every discarded low source as $Q(sf+a v_0)$, $f\in L^2$, after any
 finite low removal. This conditional paper obstruction concerns that
 stronger source requirement; positive-reserve approximate estimates and
 the actual cofinal form signs remain unresolved.
+
+The [regulated complete-prime source budget](regulated-prime-source-budget.md)
+reuses the full half-weighted Mangoldt count to control a common
+unprojected source. It selects one cofinal parameter/band schedule for
+prescribed growing finite sources, retaining the exact ground.
+Band-dependent source norms, actual low/complementary-low signs and
+the full RH/Robin conclusion remain unresolved.
+
+
+The [centered complete-prime discrepancy budget](centered-prime-discrepancy-budget.md)
+cancels the continuous main term on the same exactly ground-centered
+even $H^2$ source, retaining the endpoint and every prime power. It pays
+the extra source derivative norm and improves the fixed-source regulator
+allowance in asymptotic order. Common changing-family Grams, actual
+inverse convergence and low/cofinal signs remain unresolved.
+
+
+The same [regulated budget's row and column estimate](regulated-prime-source-budget.md#the-regulator-also-pays-an-l2-source-norm)
+pays the complete prime action with the actual common $L^2$ source Gram.
+Its prime allowance vanishes uniformly on normalized sources along the
+original positive-reserve schedule; archimedean costs and actual signs
+remain payable. The [full-low derivative check](centered-prime-discrepancy-budget.md#a-high-lift-cannot-hide-the-full-low-spheres-derivative-cost)
+shows why arbitrary regular high lifts cannot make the earlier derivative
+certificate uniformly cheap. Neither estimate decides RH or full Robin.
+
+The [actual critical-translation boundary](../../../Library/Dynamics/clason2021regularization.md#the-real-translation-boundary-retains-fixed-sharp-low-mass)
+retains a two-tail escaped family inside the original small-window
+critical closure, with positive mass in every fixed sharp-low band.
+Its [common-source metric error bound](../../../Library/Dynamics/clason2021regularization.md#a-compact-fit-has-a-fixed-error-on-the-whole-sharp-low-sphere)
+tests uniform approximation by the bounded-window compact fit on the
+whole centered low sphere. This conditional paper interface preserves
+individual-input convergence and noncompact alternatives; it supplies
+no inverse divergence, actual cofinal signs, half-bound or RH/Robin
+conclusion, and has no new Lean certification or originality claim.
+
+Under the inherited whole-critical-domain, mixed-nullity and
+metric-coercivity premises, the [actual endpoint synthesis](../../../Library/Dynamics/clason2021regularization.md#a-bounded-synthesis-from-the-actual-endpoint-translations)
+leaves a Hilbert–Schmidt residual on every fixed even sharp-low band,
+and its [corrected common-source fit](../../../Library/Dynamics/clason2021regularization.md#a-corrected-fit-converges-uniformly-at-each-fixed-band)
+converges uniformly on that band's whole centered unit sphere.
+The principal synthesis retains the infinite translation tail; it is
+noncompact. This conditional paper construction supplies no effective
+regularization or growing-band rate, finite all-input acquisition,
+actual cofinal signs, half-bound or RH/Robin conclusion, and has no
+new Lean certification or originality claim.
+
+
+The [actual endpoint-jet and original-form residual interface](../../../Library/Dynamics/clason2021regularization.md#actual-endpoint-jets-in-the-original-form)
+extends that conditional construction with spatial/parameter jet bounds,
+original-form-norm tail and midpoint allowances, and the
+[existing common-source certificate on the sampled residual columns](../../../Library/Dynamics/clason2021regularization.md#pay-the-finite-remainder-with-the-existing-common-source-certificate).
+The principal synthesis remains infinite; only its compact residual is
+truncated. An actual simultaneous residual Gram and the growing-band
+coefficient cost still require certification. This is conditional paper
+analysis with unevaluated constants, without an effective regularization
+rate, new numerical or Lean result, actual cofinal signs, half-bound,
+Robin or RH conclusion.
+
+
+The [actual complex endpoint parameter](../../../Library/Dynamics/clason2021regularization.md#the-actual-normalized-endpoint-columns-have-a-complex-parameter-strip)
+extends the original normalized theta columns using a zero-free bilinear
+normalization, rather than a holomorphic ordinary norm. Its
+[high-order residual interface](../../../Library/Dynamics/clason2021regularization.md#apply-existing-analytic-approximation-to-the-actual-compact-residual)
+reuses Cauchy/Taylor and Legendre/Bessel tools on separately analytic
+kernel pieces, with sufficient parameter and residual-column-count
+bounds. It preserves the original critical/minimal-form premises, one
+coefficient map and simultaneous complex Gram, and the infinite
+principal synthesis. Constants and actual residual Grams remain
+uncertified; this conditional paper analysis supplies no numerical
+runtime, effective regularization rate, new Lean result, actual cofinal
+signs, all-input half-bound, Robin or RH conclusion.

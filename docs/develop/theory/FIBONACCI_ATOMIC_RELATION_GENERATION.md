@@ -57791,3 +57791,234 @@ $$
 由（362.10）或定理 382.3 逐原子求和所给的 $O(\#D(S))$ 误差，因而不能在全部实际有限族上改成统一的 $O(1)$。这里的障碍仅针对（382.24）的实际原子成本近似；它没有估计 $\sigma(M)/M$ 的 Euler 因子或其有符号 Robin 尾项，因而不构成 Robin 不等式或 RH 的反例，也不把实际族的收费转移到任意整数。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 383. 有限 totient 支撑拥挤与实际 Fibonacci 收费的统一对数传输
+
+**定义 383.1（同一实际族的权重与对数变量）。** 沿用定义 362.1、382.1 的 Fibonacci 数列 $F_n$、$\Phi=(1+\sqrt5)/2$、$L=\log\Phi>0$、实际正整数原子 $\Psi_d$ 和 $E_d=\log\Psi_d-L\varphi(d)$。对每个有限集合 $S\subseteq\mathbb N_{>0}$，记
+
+$$
+\begin{aligned}
+D(S)&=\{d\in\mathbb N_{>0}:\exists s\in S,\ d\mid s\},\\
+M(S)&=\operatorname{lcm}\{F_s:s\in S\},\\
+W(S)&=\sum_{d\in D(S)}\varphi(d),& k(S)&=\#D(S),\\
+\Delta(S)&=\log M(S)-LW(S),& C&=16^{1/3}.
+\end{aligned}
+\tag{383.1}
+$$
+
+空最小公倍数取一，空和取零。$W(S)$ 依赖指标表示 $S$，不定义为整数 $M(S)$ 的函数。所有对数均为自然对数；正底数实幂取 $t^a=\exp(a\log t)$，零权重处约定 $0^{2/3}=0$。当 $W(S)>0$ 时，定义
+
+$$
+\eta(S)=2C\,W(S)^{-1/3},\qquad B(S)=\log(LW(S));
+\tag{383.2}
+$$
+
+当 $\log M(S)>0$ 时，定义 $D_0(S)=\log(\log M(S))$。$\sigma$ 与 Euler 常数 $\gamma$ 沿用（362.2）。
+
+**定理 383.2（全部有限实际族的权重控制与 Robin 分母传输）。** 对每个有限集合 $A\subseteq\mathbb N_{>0}$，令 $k_A=\#A$、$W_A=\sum_{d\in A}\varphi(d)$，则
+
+$$
+k_A^3\le16W_A^2.
+\tag{383.3}
+$$
+
+对每个有限集合 $S\subseteq\mathbb N_{>0}$，同一实际对象满足
+
+$$
+|\Delta(S)|\le Lk(S)\le LC\,W(S)^{2/3}.
+\tag{383.4}
+$$
+
+对每个满足 $W=W(S)\ge128$ 的这样的 $S$，简记 $M=M(S)$、$\Delta=\Delta(S)$、$\eta=\eta(S)$、$B=B(S)$、$D_0=D_0(S)$，则 $D_0$ 有定义，并且
+
+$$
+\begin{gathered}
+0<\eta\le1,\qquad
+\left|\frac{\Delta}{LW}\right|\le\frac\eta2\le\frac12,
+\qquad \log M\ge\frac{LW}{2}>0,\\
+|\log(\log M)-\log(LW)|=|D_0-B|\le\eta,
+\qquad B>1\ge\eta,\qquad D_0\ge B-\eta>0.
+\end{gathered}
+\tag{383.5}
+$$
+
+因此有两个方向的相对分母估计
+
+$$
+\left|\frac{D_0}{B}-1\right|\le\frac\eta B,
+\qquad
+\left|\frac B{D_0}-1\right|\le\frac\eta{B-\eta}.
+\tag{383.6}
+$$
+
+若还满足 $M>5040$，令
+
+$$
+\mathcal R_W(S)=\frac{\sigma(M)}{e^\gamma M B}>0,
+\qquad
+\mathcal R(M)=\frac{\sigma(M)}{e^\gamma M D_0}>0.
+\tag{383.7}
+$$
+
+则有精确传输及其对数误差
+
+$$
+\mathcal R(M)=\mathcal R_W(S)\frac B{D_0},
+\qquad
+|\log\mathcal R(M)-\log\mathcal R_W(S)|
+\le\frac\eta{B-\eta}.
+\tag{383.8}
+$$
+
+特别地，对每个 $\varepsilon>0$，先于所有有限指标集选定
+
+$$
+W_0(\varepsilon)=\max\left\{128,\left(\frac{4C}{\varepsilon}\right)^3\right\},
+\tag{383.9}
+$$
+
+就有
+
+$$
+\forall S\subseteq\mathbb N_{>0}\text{ 有限},\qquad
+W(S)\ge W_0(\varepsilon)
+\ \Longrightarrow\
+|\log(\log M(S))-\log(LW(S))|<\varepsilon.
+\tag{383.10}
+$$
+
+所有量词均无基数、最大指标、嵌套、删除方式或平方自由条件。（383.3）也不要求 $A$ 对约数封闭。本定理是有限 totient 支撑计数与 §§362、382 实际原子估计的本仓综合推导；经典分量的先例附于下述证明。
+
+**证明。** 首先在本证明内使用经典 Euler 素数幂公式。对 $n\ge1$，$\varphi(p^a)=p^{a-1}(p-1)$ 及乘法性给
+
+$$
+\frac{n}{\varphi(n)^2}
+=\prod_{p^a\parallel n}\frac{p^{2-a}}{(p-1)^2}\le2.
+\tag{383.11}
+$$
+
+确切地，若 $p\ge3$、$a\ge1$，则 $p^{2-a}\le p\le(p-1)^2$，所以相应因子至多一；若 $p=2$，则该因子 $2^{2-a}$ 至多二，且乘积中只有一个这样的素数因子。$n=1$ 时空乘积为一。因此每个正整数都满足 $n\le2\varphi(n)^2$。关于 $N_\varphi(x)=\#\{n\ge1:\varphi(n)\le x\}$ 的成熟计数先例，Paul T. Bateman，*The distribution of values of the Euler function*，Acta Arithmetica **21**，329–345，[doi:10.4064/aa-21-1-329-345，§1，式（1.1）](https://doi.org/10.4064/aa-21-1-329-345)，给出 $N_\varphi(x)/x\to\zeta(2)\zeta(3)/\zeta(6)$；这里的显式有限界只使用（383.11），不使用该渐近式。
+
+若 $A=\varnothing$，则 $k_A=W_A=0$，所以（383.3）成立。若 $k=k_A>0$，置 $x=\sqrt{k}/2$，将 $A$ 分成
+
+$$
+A_{\rm low}=\{d\in A:\varphi(d)\le x\},
+\qquad A_{\rm high}=A\setminus A_{\rm low}.
+\tag{383.12}
+$$
+
+对每个 $d\in A_{\rm low}$，（383.11）给 $1\le d\le2x^2=k/2$。这些 $d$ 是互异正整数，因而
+
+$$
+\#A_{\rm low}\le\lfloor k/2\rfloor,
+\qquad
+\#A_{\rm high}\ge k-\lfloor k/2\rfloor\ge k/2.
+\tag{383.13}
+$$
+
+高部分的每个权重都大于 $x$，且所有权重非负，于是
+
+$$
+W_A\ge\sum_{d\in A_{\rm high}}\varphi(d)
+\ge x\,\#A_{\rm high}\ge\frac{k^{3/2}}4.
+\tag{383.14}
+$$
+
+两边非负，平方即得（383.3）。这一步只计互异正指标，未把 $A$ 限制为任何约数集合。
+
+现在固定任意有限 $S$。每个 $F_s$ 都是正整数，故 $M(S)\ge1$。同一实际族的经典原子重构已由（362.8）–（362.9）的逐素幂重数计算给出：
+
+$$
+M(S)=\prod_{d\in D(S)}\Psi_d,
+\qquad \log M(S)=\sum_{d\in D(S)}\log\Psi_d.
+\tag{383.15}
+$$
+
+其强整除序列分量参见 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorems 1.2、1.3、2.1](https://arxiv.org/pdf/1310.2416v1)。Fibonacci 原子及其 $\varphi(d)L+O(1)$ 主项参见 Carlo Sanna，*On the l.c.m. of shifted Fibonacci numbers*，[arXiv:2007.13330v1，§2，式（3）–（4）、Lemma 2.2](https://arxiv.org/pdf/2007.13330v1)；这里使用的精确误差常数是定理 382.3 的 $|E_d|\le L$，其经典 cyclotomic 分量参见 G. J. O. Jameson，*The cyclotomic polynomials*，[Theorem 1.12、Proposition 1.20，pp. 5、9–10](https://www.maths.lancs.ac.uk/~jameson/cyp.pdf)。本步直接引用既有实际重构与原子界，不附加重构假设。
+
+因此 $\Delta(S)=\sum_{d\in D(S)}E_d$，三角不等式给 $|\Delta(S)|\le Lk(S)$。将（383.3）应用于这个实际的 $D(S)$，得 $k(S)^3\le16W(S)^2$。对 $W(S)>0$ 取非负立方根即有 $k(S)\le C W(S)^{2/3}$。若 $W(S)=0$，每个正指标的 $\varphi(d)\ge1$ 迫使 $D(S)=\varnothing$；因每个 $s\in S$ 都属于 $D(S)$，此时 $S=\varnothing$、$M(S)=1$、$k(S)=\Delta(S)=0$，故（383.4）在零权重约定下仍成立。
+
+接着设 $W=W(S)\ge128$，所以空集情形已排除，$LW>0$。令 $\delta=\Delta/(LW)$。（383.4）给
+
+$$
+|\delta|\le C W^{-1/3}\le C\,128^{-1/3}=\frac12,
+\qquad 0<\eta=2C W^{-1/3}\le1.
+\tag{383.16}
+$$
+
+在使用双重对数法则之前，由定义先得到
+
+$$
+\log M=LW+\Delta=LW(1+\delta)\ge LW/2>0,
+\qquad 1+\delta\in[1/2,3/2].
+\tag{383.17}
+$$
+
+这些正性允许对 $\log M=LW(1+\delta)$ 取对数。于是
+
+$$
+D_0-B=\log(1+\delta),
+\qquad
+|D_0-B|
+=\left|\int_1^{1+\delta}\frac{dt}{t}\right|
+\le2|\delta|\le\eta,
+\tag{383.18}
+$$
+
+因为积分经过的正区间上 $1/t\le2$。这证明双重对数误差，同时保留其实际正整数来源。
+
+为验证后续除法与对数的正性，$\Phi>3/2$ 给
+
+$$
+L>\log(3/2)=\int_1^{3/2}\frac{dt}{t}>\frac13.
+\tag{383.19}
+$$
+
+经典指数级数给 $e=\sum_{j\ge0}1/j!<3$：对 $j\ge2$ 有 $j!\ge2^{j-1}$，且 $j=3$ 时严格，故级数尾和严格小于一。因此 $LW\ge128L>128/3>e$，从而 $B=\log(LW)>1\ge\eta$。结合（383.18），$D_0\ge B-\eta>0$，完成（383.5）的所有正性结论。此时
+
+$$
+\left|\frac{D_0}{B}-1\right|
+=\frac{|D_0-B|}{B}\le\frac\eta B,
+\qquad
+\left|\frac B{D_0}-1\right|
+=\frac{|B-D_0|}{D_0}\le\frac\eta{B-\eta},
+\tag{383.20}
+$$
+
+证明（383.6）。
+
+若 $M>5040$，则（383.7）中的 $M,B,D_0,e^\gamma$ 均为正，且 $\sigma(M)>0$，所以两个 Robin 量为正。它们的共同分子与共同因子精确消去，给（383.8）的第一个恒等式。其对数形式是
+
+$$
+\begin{aligned}
+\log\mathcal R(M)
+&=\log\sigma(M)-\gamma-\log M-\log(\log(\log M)),\\
+\log\mathcal R_W(S)
+&=\log\sigma(M)-\gamma-\log M-\log B,\\
+\log\mathcal R(M)-\log\mathcal R_W(S)
+&=\log B-\log D_0.
+\end{aligned}
+\tag{383.21}
+$$
+
+特别是第一行包含的是三重对数。$B$ 与 $D_0$ 之间的整段区间都在 $[B-\eta,\infty)$ 内，故对正实数上的对数使用中值估计，得到
+
+$$
+|\log B-\log D_0|
+\le\frac{|B-D_0|}{B-\eta}
+\le\frac\eta{B-\eta},
+\tag{383.22}
+$$
+
+证明（383.8）的第二个估计。
+
+最后固定任意 $\varepsilon>0$，取（383.9）的阈值。每个满足 $W(S)\ge W_0(\varepsilon)$ 的有限 $S$ 都有
+
+$$
+\eta(S)=2C W(S)^{-1/3}\le\varepsilon/2<\varepsilon.
+\tag{383.23}
+$$
+
+与（383.18）合并便得（383.10）。阈值只依赖 $\varepsilon$ 和固定常数 $C$，故量词对指标表示的全部变化统一成立。定理 382.4 的两个绝对偏差发散族由（383.4）必有 $W(S)\to\infty$，其绝对发散与这里的相对误差、双重对数误差趋零相容。以上估计控制实际原子成本及 Robin 分母变换；它没有给出 $\sigma(M)/M$ 的 Euler 分子估计、有符号 Robin 尾项、任意整数的传输或 RH 结论。$\square$
+
+## 追加锚（本行以下为增补区）

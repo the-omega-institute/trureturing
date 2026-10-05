@@ -821,7 +821,7 @@ jobs:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}').current
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 120
+    timeout-minutes: 180
     env:
       # This job writes project seeds only on dev/integration pushes.
       # Dependency and elan writes also use the PR's own merge-ref scope.

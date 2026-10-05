@@ -114,3 +114,138 @@ and to obtain the low and complementary-low lower signs that pay those
 costs. Taking the zero-reserve multiplier limit first cannot supply
 those estimates. The original all-input half-bound, common cofinal
 positivity, RH and full Robin remain unresolved.
+
+## The divided endpoint expression cannot have a strict weighted high floor
+
+The next application concerns an actual proposed endpoint comparison,
+rather than the multiplier allowance (VR2). Reuse the same analytic
+uniqueness mechanism, the [theta derivative envelopes](../../../Library/Analytic/romik2021orthogonal.md#weighted-fourier-coefficient-suppliers)
+(WC2), standard Fourier inversion and the Hahn--Banach annihilator
+criterion for density. The inherited [minimal realization](../../../Library/Weil/fukushima2011dirichlet.md#transformed-form-and-a-global-derivative-comparison)
+and [operator-domain interface](sharp-center.md#operator-domain-and-complete-block)
+remain unchanged. This is a conditional paper/model application, without
+a new generic density theorem, priority claim or Lean certification.
+
+Fix a finite $N>0$ and an auxiliary $a>1/2$. Use the even complex space
+
+$$
+X_a=H^1_{\rm even}(\mathbb R)
+\cap L^2(e^{2a|x|}dx),\qquad
+\|h\|_{X_a}^2=\|h\|_{H^1}^2+\|e^{a|x|}h\|_2^2.
+$$
+
+This is a continuity topology for the divided endpoint expression
+below. It is not the original minimal closed-form norm on the inputs
+$q$. In particular, no density of sharp-high $q$ in that original
+norm is asserted.
+
+The images of the sharp-high original inputs are dense in this space:
+
+$$
+\overline{\{sq:q\in Q_NH^2_{\rm even}\}}^{\,X_a}=X_a.
+\tag{VR5}
+$$
+
+To check the model mapping, let a continuous complex-linear functional
+$\ell$ on $X_a$ annihilate these images. The bounds for both $s$ and
+$s'$ in (WC2) make
+
+$$
+z\longmapsto s(x)\cos(zx)
+$$
+
+an $X_a$-valued entire function: each compact $z$ set and each parameter
+derivative have integrable majorants in both parts of the $X_a$ norm.
+Thus $F(z)=\ell(s\cos(zx))$ is entire. For smooth $\eta$ compactly
+supported in $(N,\infty)$, the cosine packet
+
+$$
+q_\eta(x)=\int\eta(t)\cos(tx)dt
+$$
+
+is even Schwartz and belongs to $Q_NH^2$. The same majorants justify
+the $X_a$-valued integral, so $\int\eta(t)F(t)dt=0$. Continuity makes
+$F(t)=0$ for $t>N$; the existing identity theorem gives $F=0$.
+
+For real $t$, $\|s\cos(tx)\|_{X_a}\le C_a(1+|t|)$. Schwartz
+Fourier coefficients pay this majorant, so cosine Fourier inversion
+gives $\ell(sq)=0$ for every even Schwartz $q$. Each even compact
+smooth $h$ is $s(h/s)$, with $h/s$ again compact smooth because $s$
+is positive and smooth. Cutoff and local mollification give the
+standard compact smooth density in the full $X_a$ norm. Consequently
+$\ell=0$, and the standard annihilator criterion gives (VR5).
+Ordinary $L^2$ density alone would not supply this conclusion.
+
+At $c=1/2$, write the divided endpoint expression as
+
+$$
+\begin{aligned}
+\mathfrak q_{\rm end}(h)={}&
+\langle m(\mathsf D)h,h\rangle+c_\Gamma\|h\|_2^2\\
+&-\sum_{n\ge2}\frac{\Lambda(n)}{\sqrt n}
+\bigl[\langle\tau_{\log n}h,h\rangle
++\langle\tau_{-\log n}h,h\rangle\bigr]\\
+&+\frac12\left|\int_{\mathbb R}2h(x)\cosh(x/2)dx\right|^2,
+\qquad \tau_t h(x)=h(x+t).
+\end{aligned}
+\tag{VR6}
+$$
+
+Every prime power and both translated adjoints remain. The prime term
+is an absolutely convergent bilinear series; no claim that the divided
+prime action itself is in $L^2$ is needed. For $t\ge0$,
+
+$$
+|\langle\tau_{\pm t}h,g\rangle|
+\le e^{-at}\|e^{a|x|}h\|_2\|e^{a|x|}g\|_2.
+$$
+
+Indeed $|x|+|x\pm t|\ge t$, and Cauchy--Schwarz pays the two
+translated weighted factors. Hence both directions together are bounded
+by $2\sum_{n\ge2}\Lambda(n)n^{-a-1/2}$ times the weighted norms.
+This Dirichlet series converges for $a>1/2$. The logarithmic symbol
+bound (WF3) controls the archimedean expression by the $H^1$ norm,
+and $e^{-a|x|}\cosh(x/2)\in L^2$ controls the ground functional.
+Thus (VR6) is continuous on $X_a$, without an endpoint positivity
+assumption or a maximal-domain identification.
+
+Use the original unit ground $v_0=2s\cosh(x/2)$ and
+
+$$
+T_{1/2}=\widetilde A-\tfrac12I
++\tfrac12|v_0\rangle\langle v_0|.
+$$
+
+Bounded parameter perturbation preserves the original minimal operator
+domain. On every original even $H^2$ input, (WF1) and (SC1) give
+exactly
+
+$$
+\langle T_{1/2}q,q\rangle=\mathfrak q_{\rm end}(sq).
+\tag{VR7}
+$$
+
+The unweighted identity coefficient cancels at this parameter; the
+rank-one coefficient in (VR6) is still $1/2$. The existing ground
+identity gives $T_{1/2}v_0=0$. The same theta envelopes put
+$h_0=sv_0\ne0$ in $X_a$ and give
+$\mathfrak q_{\rm end}(h_0)=0$.
+
+Consequently, no finite $N>0$ and $\kappa>0$ satisfy
+
+$$
+\langle T_{1/2}q,q\rangle\ge\kappa\|sq\|_2^2
+\quad\text{for every }q\in Q_NH^2_{\rm even}.
+\tag{VR8}
+$$
+
+For otherwise (VR5) supplies $h_j=sq_j\to h_0$ in $X_a$, with
+each $q_j$ an actual sharp-high $H^2$ input. Continuity of (VR6)
+and (VR7) would give $0\ge\kappa\|h_0\|_2^2>0$. This is a
+fixed-band obstruction to a strictly positive $s^2$-weighted endpoint
+floor. It supplies no negative energy, failure of endpoint
+nonnegativity, RH counterexample, effective approximation cost or
+moving-cofinal obstruction. The unweighted source norms are not
+controlled by this density, so a positive subcritical exterior reserve
+remains compatible with it. Actual common-sequence signs, the original
+all-input half-bound and full Robin remain unproved.
