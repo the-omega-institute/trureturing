@@ -5738,3 +5738,13 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 原欧氏坐标映射就是实际 `extChartAt`，其实际 `mfderiv` 为恒等连续线性映射。原正高度邻域中的坐标扰动曲线具有实际 `HasMFDerivAt`；连续性由原坐标开放嵌入恢复。将已核验的原等距全局光滑性与该曲线、原坐标图复合，微分链式法则和真实曲线导数的唯一性识别出 `mfderiv e p` 对每个原坐标方向的作用，恰为原 Lorentz 作用后的切向恢复方向。原双线性配对保持和原坐标线性等距的内积保持随即给出上述黎曼内积等式；由线性等距的满射性推广至任意实际 `V,W`，无需额外提供微分或内积保持前提。
 
 该精确微分及内积保持结论已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用的是实际图册微分、曲线导数、既有原 Lorentz 作用和双线性配对接口；本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。原 H3 距离与此度量内蕴距离的等式、实际曲率 −1、一般原流形覆盖及体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 原高度的实际微分与对数高度的黎曼导数界
+
+在同一原 H3 光滑图册及上述实际黎曼度量上，`nativeLogHeight p = Real.log (height p.coordinates)` 全局 C∞。原高度的实际流形微分是 `nativeEuclideanHeightCLM`；对任意实际切向量 `V : TangentSpace (𝓡 3) p`，原对数高度的实际 `mfderiv` 与实值 `mvfderiv` 均精确等于 `nativeEuclideanHeightCLM V / height p.coordinates`。这些结论通过真实坐标图微分、线性高度投影和对数求导得到，分母非零由原正高度内部保证，无需额外提供高度或对数高度的光滑性及导数前提。
+
+实际黎曼切向长度满足 `Real.sqrt (nativeRiemannianMetric.inner p V V) = EuclideanNorm(V) / height p.coordinates`，其中 `EuclideanNorm` 明确指原坐标线性等距所取的三维欧氏模型范数。原高度线性投影的绝对值不超过该欧氏模型范数，因此得到真正的导数界
+`|mvfderiv (𝓡 3) nativeLogHeight p V| ≤ Real.sqrt (nativeRiemannianMetric.inner p V V)`。此处右端是所选实际黎曼度量的切向长度；欧氏模型范数仅在上述精确缩放等式内使用。
+
+原高度实际微分、对数高度光滑性、精确微分公式及其黎曼导数界已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用原坐标图、原正高度、欧氏线性投影界及光滑对数求导接口；本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。将此导数界接到固定上游的内蕴距离估计仍需实际导入和编译；原两点距离与所选度量内蕴距离的等式、曲率 −1、一般原流形覆盖及体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 和官方验收仍未完成。
