@@ -57,8 +57,7 @@ public sealed class DepositFreezeReplayWorkflowScriptTests
         Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
     }
 
-    // This case previously returned 0 and skipped the already-frozen target.
-    // It now returns 2 without invoking ledger-align because the canonical reader
+    // This case returns 2 without invoking ledger-align because the canonical reader
     // validates every frozen-ledger shard before resolving the target.
     [Fact]
     public void DepositFailsClosedWhenAnUnrelatedFrozenLedgerShardIsMalformed()

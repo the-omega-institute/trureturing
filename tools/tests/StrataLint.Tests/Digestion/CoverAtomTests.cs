@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-// Phase 1 cover transaction gate matrix. cover binds one already-proven Lean
+// Cover transaction gate matrix. cover binds one already-proven Lean
 // declaration to an existing open residual atom by writing a coverage edge, all-or-nothing. Precondition and integrity rejects
 // leave the ledger unchanged; a terminal initial-cover failure writes only its
 // disposition.
