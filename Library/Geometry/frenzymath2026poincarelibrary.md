@@ -5491,3 +5491,16 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 四个具名目标的精确临时 Lean 已真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-nonunit-common-axis.lean` 为 160707 字节，SHA256 `1d6a8fcd1359f057fd32df8b3e3729bb18b7dcb663950de79c7634e2798c0c38`。仅增加已有热缓存钉版 `Mathlib.Topology.MetricSpace.Contracting` import；成功平移核源码完整 151347 字节连续块在新 import 后偏移 48 逐字保留，无新增依赖闭包构建。
 
 该原模型与现有压缩映射、测地线及坐标接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。尚未证明一般群所有元素与本批原 `e` 交换，亦未得到离散轴群循环性、原轴管商或有限体积薄部分解；同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 及官方验收继续未完成。
+
+
+### 原幂零自由群的共同轴与单射缩放字符
+
+保留任意宇宙的同一个原群 `G`、真实 `[Group.IsNilpotent G]`、原表示 `ρ : G →* (H3 ≃ᵢ H3)`、同一个原逐点自由性，以及全部原群元素稳定实际无穷远点的条件。若存在一个原群元素满足实际 `infinityScale (ρ(g)) ≠ 1`，则内部构造一个水平坐标 `z`，使全部原 `ρ(G)` 保持同一个完整原测地轴。保留每个原群元素对全部正高度点的实际作用 `ρ(g)(z,s) = (z, infinityScale (ρ(g)) · s)`，以及整个原轴集合像等于自身，没有额外提供全群交换或共同轴前提。
+
+实际非单位元素先推出原 `G` 非平凡；现有 `Group.IsNilpotent.center_ne_bot` 提供真实非平凡中心元素 `c`。由于同一个原 `ρ(c)` 与原非单位元素交换，前述共同轴消费者适用。若原 `ρ(c)` 的缩放等于一，其对该轴高度一的实际原点作用就是固定点，原自由性迫使 `c = 1`，与所取中心元素矛盾。因此同一个原 `ρ(c)` 是非单位缩放，对它再次消费唯一中心与交换者共同轴；中心性把该实际同轴结论推广到全部原 `ρ(G)`。
+
+原稳定缩放的实际乘法律和单位元律构造真实 `infinityScaleCharacter : G →* ℝ`（实数乘法幺半群），并保留全部值严格正。其核中元素固定实际共同轴高度一的原点，因此同一个原自由性给出核平凡；现有群到幺半群的 `injective_iff_map_eq_one` 得到实际字符单射。实数乘法交换性与这个真实单射最后推出原 `g * h = h * g`，未把交换性作为前提。
+
+五个具名目标的精确临时 Lean 已真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-nilpotent-common-axis.lean` 为 165186 字节，SHA256 `aacd20386d782dfcbb79cfc0749112e51352ed8e8b66f5ab29b7bc276333db66`；前述成功非单位轴源码为 offset0 完整字节前缀，未新增 import、依赖构建或版本变更。
+
+该已有幂零中心、原轴与缩放接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。结论目前要求原群本身幂零及已归一化稳定实际无穷远点；尚未完成一般虚幂零全群分类、离散轴群循环性与真实轴管商、尖点平移格子与有限体积薄部分解，亦未完成原流形覆盖、同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 或官方验收。
