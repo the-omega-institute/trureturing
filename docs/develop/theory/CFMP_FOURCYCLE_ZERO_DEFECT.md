@@ -196,4 +196,5 @@ co-volume or fixed-point proof.
 
 - Zhao, arXiv:2601.15174v2, Propositions 2.4, 2.7 and 2.9 (domain, co-volume, and gradient):
   https://arxiv.org/html/2601.15174v2
-- The merged analytic input is `D5.S3.Geometry.Hyperideal.FourCycleCurvature.fourcycle_curvature_box`.
+- The merged analytic input is
+  `D5.S3.Geometry.Hyperideal.FourCycleCurvature.fourcycle_curvature_box`.
