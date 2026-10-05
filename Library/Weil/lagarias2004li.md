@@ -636,4 +636,3 @@ order-two determinant obstruction. It does not exclude ordinary Markov
 positivity, signed or vector derivative transports, other orders or
 fixed-time estimates. No new Lean certification or all-input half-bound
 is supplied; actual cofinal signs, full Robin and RH remain unresolved.
-
