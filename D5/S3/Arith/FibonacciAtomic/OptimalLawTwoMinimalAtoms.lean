@@ -325,7 +325,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
     exact H.trans H'.symm
   have contradiction_single (j : Fin m) (hjk : j ≠ k)
       (hjodd : Odd (numD j)) (hgap : numD k + 2 ≤ numD j)
-      (hkodd : Odd (numD k)) : False := by
+      : False := by
     let P : Fin m → ℝ := fun i => p i + (if i = k then δ else 0) -
       (if i = j then δ else 0)
     have Psum : ∑ i, P i = 1 := by
@@ -355,6 +355,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
           rw [← hk, numD_spec k, numD_spec i]
           dsimp only [δ]
           field_simp
+          norm_num [Nat.cast_add]
           exact_mod_cast Hnum
     have Ppos (i : Fin m) : 0 < P i := by
       have H := Plower i
@@ -479,11 +480,18 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
           (∑ i, ((Classical.choose (Pgrid i) : ℕ) : ℝ)) = (2 : ℝ) ^ D := by
           have H : (∑ i, ((Classical.choose (Pgrid i) : ℕ) : ℝ) /
               (2 : ℝ) ^ D) = 1 := by
-            rw [← Psum]
-            exact Finset.sum_congr rfl (fun i _ => (Classical.choose_spec (Pgrid i)).symm)
-          rw [← Finset.sum_div] at H
-          field_simp at H
-          convert H using 1
+            calc
+              _ = ∑ i, P i := by
+                exact Finset.sum_congr rfl
+                  (fun i _ => (Classical.choose_spec (Pgrid i)).symm)
+              _ = 1 := Psum
+          have H' :
+              (∑ i, ((Classical.choose (Pgrid i) : ℕ) : ℝ)) /
+                (2 : ℝ) ^ D = 1 := by
+            rw [Finset.sum_div]
+            exact H
+          have hpow : (2 : ℝ) ^ D ≠ 0 := by positivity
+          simpa only [one_mul] using (div_eq_iff hpow).mp H'
         rw [residual_zero P Pgrid Psum_grid h (le_of_not_gt hh),
           residual_zero p (fun i => all_grid i) hsum_num_real h (le_of_not_gt hh)]
     have data_p := law_data p (fun i => (hp i).le) hs
@@ -541,20 +549,22 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
     have Plower (i : Fin m) : t ≤ P i := by
       by_cases hik : i = k
       · subst i
-        simp [P, hjk₁, hjk₂]
+        simp [P, hjk₁, hjk₂, hjk₁.symm, hjk₂.symm]
         linarith [hk, δpos.le]
       · by_cases hi₁ : i = j₁
         · subst i
-          simp only [P, if_neg hjk₁, if_pos rfl, if_neg h12]
-          rw [numD_spec j₁, numD_spec k, heq₁, hk]
+          simp [P, hjk₁, h12]
+          rw [← hk, numD_spec j₁, numD_spec k, heq₁]
           dsimp only [δ]
           field_simp
+          norm_num [Nat.cast_add]
         · by_cases hi₂ : i = j₂
           · subst i
-            simp only [P, if_neg hjk₂, if_neg h12.symm, if_pos rfl]
-            rw [numD_spec j₂, numD_spec k, heq₂, hk]
+            simp [P, hjk₂, h12.symm]
+            rw [← hk, numD_spec j₂, numD_spec k, heq₂]
             dsimp only [δ]
             field_simp
+            norm_num [Nat.cast_add]
           · simp only [P, if_neg hik, if_neg hi₁, if_neg hi₂, sub_zero, add_zero]
             exact low i
     have Ppos (i : Fin m) : 0 < P i := lt_of_lt_of_le tpos (Plower i)
@@ -563,7 +573,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
       by_cases hik : i = k
       · subst i
         refine ⟨numD k + 2, ?_⟩
-        simp only [P, if_pos rfl, if_neg hjk₁, if_neg hjk₂]
+        simp [P, hjk₁, hjk₂, hjk₁.symm, hjk₂.symm]
         rw [numD_spec k]
         dsimp only [δ]
         field_simp
@@ -571,20 +581,22 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
         · subst i
           refine ⟨numD j₁ - 1, ?_⟩
           have hn : 1 ≤ numD j₁ := by omega
-          simp only [P, if_neg hjk₁, if_pos rfl, if_neg h12]
+          simp [P, hjk₁, h12]
           rw [numD_spec j₁]
           dsimp only [δ]
-          rw [← Nat.cast_sub hn]
+          rw [← sub_div, Nat.cast_sub hn]
           field_simp
+          norm_num
         · by_cases hi₂ : i = j₂
           · subst i
             refine ⟨numD j₂ - 1, ?_⟩
             have hn : 1 ≤ numD j₂ := by omega
-            simp only [P, if_neg hjk₂, if_neg h12.symm, if_pos rfl]
+            simp [P, hjk₂, h12.symm]
             rw [numD_spec j₂]
             dsimp only [δ]
-            rw [← Nat.cast_sub hn]
+            rw [← sub_div, Nat.cast_sub hn]
             field_simp
+            norm_num
           · refine ⟨numD i, ?_⟩
             simp only [P, if_neg hik, if_neg hi₁, if_neg hi₂, sub_zero, add_zero]
             exact numD_spec i
@@ -592,52 +604,61 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
         ⌊(2 : ℝ) ^ h * p i⌋ ≤ ⌊(2 : ℝ) ^ h * P i⌋ := by
       by_cases hik : i = k
       · subst i
-        simp only [P, if_pos rfl, if_neg hjk₁, if_neg hjk₂]
-        exact Int.floor_mono (by positivity : (0 : ℝ) ≤ (2 : ℝ) ^ h)
-          (by positivity : (0 : ℝ) ≤ (2 : ℝ) ^ h * (2 * δ))
+        simp [P, hjk₁, hjk₂, hjk₁.symm, hjk₂.symm]
+        apply Int.floor_mono
+        have H : 0 ≤ (2 : ℝ) ^ h * (2 * δ) := by positivity
+        ring_nf
+        nlinarith
       · by_cases hi₁ : i = j₁
         · subst i
-          simp only [P, if_neg hjk₁, if_pos rfl, if_neg h12]
-          rw [shallow_odd j₁ hodd₁ h hh]
+          simpa [P, hjk₁, h12] using (shallow_odd j₁ hodd₁ h hh).ge
         · by_cases hi₂ : i = j₂
           · subst i
-            simp only [P, if_neg hjk₂, if_neg h12.symm, if_pos rfl]
-            rw [shallow_odd j₂ hodd₂ h hh]
+            simpa [P, hjk₂, h12.symm] using (shallow_odd j₂ hodd₂ h hh).ge
           · simp only [P, if_neg hik, if_neg hi₁, if_neg hi₂, sub_zero, add_zero]
+            exact le_rfl
     have residual_le (h : ℕ) (hh : h < D) : DyadicSupportLines.residual P h ≤ DyadicSupportLines.residual p h := by
       simp only [DyadicSupportLines.residual, Int.cast_sum]
-      have H := Finset.sum_le_sum (s := (Finset.univ : Finset (Fin m)))
-        (fun i _ => Int.cast_le.mpr (floor_change h hh i))
+      have H : (∑ i, (⌊(2 : ℝ) ^ h * p i⌋ : ℝ)) ≤
+          ∑ i, (⌊(2 : ℝ) ^ h * P i⌋ : ℝ) := by
+        apply Finset.sum_le_sum
+        intro i hi
+        exact_mod_cast floor_change h hh i
       linarith
     have floor_k_strict :
         ⌊(2 : ℝ) ^ (D - 1) * P k⌋ =
           ⌊(2 : ℝ) ^ (D - 1) * p k⌋ + 1 := by
       rcases hk_even with ⟨q, hq⟩
       have expansion : (2 : ℝ) ^ (D - 1) * p k = (q : ℝ) := by
-        rw [numD_spec k, hq]
-        rw [show (2 : ℝ) ^ D = (2 : ℝ) ^ (D - 1) * 2 by
-          rw [show D = D - 1 + 1 by omega, pow_succ]]
+        rw [numD_spec k, hq, pow_prev]
         field_simp
+        norm_num [Nat.cast_add]
+        ring
       have expandedP : (2 : ℝ) ^ (D - 1) * P k = (q : ℝ) + 1 := by
-        simp only [P, if_pos rfl, if_neg hjk₁, if_neg hjk₂]
+        simp [P, hjk₁, hjk₂, hjk₁.symm, hjk₂.symm]
         rw [mul_add, expansion]
         dsimp only [δ]
-        rw [show (2 : ℝ) ^ (D - 1) / (2 : ℝ) ^ D = 1 / 2 by
-          rw [show (2 : ℝ) ^ D = (2 : ℝ) ^ (D - 1) * 2 by
-            rw [show D = D - 1 + 1 by omega, pow_succ]]
-          field_simp]
-        ring
+        have hterm : (2 : ℝ) ^ (D - 1) * (2 * (1 / (2 : ℝ) ^ D)) = 1 := by
+          rw [pow_prev]
+          field_simp
+        rw [hterm]
       rw [expandedP, expansion]
       norm_num [Int.floor_intCast]
     have residual_strict : DyadicSupportLines.residual P (D - 1) < DyadicSupportLines.residual p (D - 1) := by
       simp only [DyadicSupportLines.residual, Int.cast_sum]
-      have Hle := Finset.sum_le_sum (s := (Finset.univ.erase k))
-        (fun i _ => Int.cast_le.mpr (floor_change (D - 1) (by omega) i))
+      have Hle : (∑ i ∈ (Finset.univ.erase k),
+          (⌊(2 : ℝ) ^ (D - 1) * p i⌋ : ℝ)) ≤
+          ∑ i ∈ (Finset.univ.erase k),
+            (⌊(2 : ℝ) ^ (D - 1) * P i⌋ : ℝ) := by
+        apply Finset.sum_le_sum
+        intro i hi
+        exact_mod_cast floor_change (D - 1) (by omega) i
       have HsumP := Finset.sum_erase_add (Finset.univ : Finset (Fin m))
-        (fun i => ⌊(2 : ℝ) ^ (D - 1) * P i⌋) (Finset.mem_univ k)
+        (fun i => (⌊(2 : ℝ) ^ (D - 1) * P i⌋ : ℝ)) (Finset.mem_univ k)
       have Hsump := Finset.sum_erase_add (Finset.univ : Finset (Fin m))
-        (fun i => ⌊(2 : ℝ) ^ (D - 1) * p i⌋) (Finset.mem_univ k)
+        (fun i => (⌊(2 : ℝ) ^ (D - 1) * p i⌋ : ℝ)) (Finset.mem_univ k)
       rw [← HsumP, ← Hsump, floor_k_strict]
+      norm_num [Int.cast_add] at *
       linarith
     have residual_zero (r : Fin m → ℝ) (hrgrid : ∀ i, ∃ N : ℕ,
         r i = (N : ℝ) / (2 : ℝ) ^ D)
@@ -646,7 +667,8 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
       simp only [DyadicSupportLines.residual, Int.cast_sum]
       have floors (i : Fin m) :
           ⌊(2 : ℝ) ^ d * r i⌋ = (((2 ^ (d - D) * Classical.choose (hrgrid i) : ℕ) : ℤ)) := by
-        obtain ⟨N, hN⟩ := hrgrid i
+        let N : ℕ := Classical.choose (hrgrid i)
+        have hN : r i = (N : ℝ) / (2 : ℝ) ^ D := Classical.choose_spec (hrgrid i)
         have hpow : (2 : ℝ) ^ d = (2 : ℝ) ^ D * (2 : ℝ) ^ (d - D) := by
           rw [← pow_add, Nat.add_sub_of_le hd]
         have hmul : (2 : ℝ) ^ d * ((N : ℝ) / (2 : ℝ) ^ D) =
@@ -659,15 +681,11 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
             (((2 ^ (d - D) * N : ℕ) : ℤ)) := by
           rw [hmul, hcast]
           exact Int.floor_intCast _
-        have hnum : N = Classical.choose (hrgrid i) := by
-          have heq := hN.symm.trans (Classical.choose_spec (hrgrid i))
-          field_simp at heq
-          exact_mod_cast heq
         calc
           ⌊(2 : ℝ) ^ d * r i⌋ =
               ⌊(2 : ℝ) ^ d * ((N : ℝ) / (2 : ℝ) ^ D)⌋ := by rw [hN]
           _ = (((2 ^ (d - D) * N : ℕ) : ℤ)) := hfloorN
-          _ = (((2 ^ (d - D) * Classical.choose (hrgrid i) : ℕ) : ℤ)) := by rw [hnum]
+          _ = (((2 ^ (d - D) * Classical.choose (hrgrid i) : ℕ) : ℤ)) := by rfl
       simp_rw [floors]
       norm_num [Int.cast_sum, Int.cast_mul, Nat.cast_mul, Nat.cast_pow]
       rw [← Finset.mul_sum, hsgrid]
@@ -684,19 +702,22 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
               (2 : ℝ) ^ D) = 1 := by
             rw [← Psum]
             exact Finset.sum_congr rfl (fun i _ => (Classical.choose_spec (Pgrid i)).symm)
-          rw [Finset.sum_div] at H
-          field_simp at H
-          linarith
+          have H' :
+              (∑ i, ((Classical.choose (Pgrid i) : ℕ) : ℝ)) /
+                (2 : ℝ) ^ D = 1 := by
+            rw [Finset.sum_div]
+            exact H
+          have hpow : (2 : ℝ) ^ D ≠ 0 := by positivity
+          simpa only [one_mul] using (div_eq_iff hpow).mp H'
         rw [residual_zero P Pgrid Psum_grid h (le_of_not_gt hh),
           residual_zero p (fun i => all_grid i) hsum_num_real h (le_of_not_gt hh)]
     have data_p := law_data p (fun i => (hp i).le) hs
     have data_P := law_data P (fun i => (Ppos i).le) Psum
     have cost_strict : cost P < cost p := by
-      apply data_P.2.tsum_lt_tsum_of_nonneg
-      · intro h; exact div_nonneg (data_P.1 h).1 (by positivity)
-      · exact term_le
-      · exact div_lt_div_of_pos_right residual_strict (by positivity)
-      · exact data_p.2
+      exact data_p.2.tsum_lt_tsum_of_nonneg
+        (fun h => div_nonneg (data_P.1 h).1 (by positivity))
+        term_le
+        (div_lt_div_of_pos_right residual_strict (by positivity))
     obtain ⟨z, hz⟩ := Finset.exists_min_image (Finset.univ : Finset (Fin m)) P
       Finset.univ_nonempty
     have hz' : ∀ i, P z ≤ P i := fun i => hz.2 i (Finset.mem_univ i)
@@ -723,6 +744,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
 
   by_cases hkodd : Odd (numD k)
   · have card_ge : 2 ≤ oddSet.card := by
+      rcases odd_card_even with ⟨q, hq⟩
       have hp' : 0 < oddSet.card := Finset.card_pos.mpr odd_nonempty
       omega
     obtain ⟨j, hjmem, hjk⟩ := Finset.exists_mem_ne (by omega : 1 < oddSet.card) k
@@ -732,7 +754,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
       rcases hjodd with ⟨b, hb⟩
       have hlt := num_lt j hjk.symm
       omega
-    exact contradiction_single j hjk hjodd hgap hkodd
+    exact contradiction_single j hjk hjodd hgap
   · have hk_even : Even (numD k) := (Nat.even_or_odd (numD k)).resolve_right hkodd
     have odd_i_ne_k : odd_i ≠ k := by
       intro e
@@ -741,6 +763,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
       rcases odd_i_num with ⟨b, hb⟩
       omega
     have card_ge : 2 ≤ oddSet.card := by
+      rcases odd_card_even with ⟨q, hq⟩
       have hp' : 0 < oddSet.card := Finset.card_pos.mpr odd_nonempty
       omega
     by_cases hsmall : ∀ j : Fin m, j ∈ oddSet → numD j = numD k + 1
@@ -755,7 +778,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
         omega
       have heq₁ := hsmall odd_i ((odd_mem odd_i).mpr odd_i_num)
       have heq₂ := hsmall j₂ hj₂mem
-      exact contradiction_double odd_i j₂ odd_i_ne_k hj₂k hj₂ne odd_i_num hj₂odd heq₁ heq₂ hk_even
+      exact contradiction_double odd_i j₂ odd_i_ne_k hj₂k hj₂ne.symm odd_i_num hj₂odd heq₁ heq₂ hk_even
     · push_neg at hsmall
       obtain ⟨j, hjmem, hjneq⟩ := hsmall
       have hjodd : Odd (numD j) := odd_mem_num j hjmem
@@ -771,6 +794,6 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
         have hlt := num_lt j hjk.symm
         omega
       have hkplus : numD k + 2 ≤ numD j := by omega
-      exact contradiction_single j hjk hjodd hkplus hkodd
+      exact contradiction_single j hjk hjodd hkplus
 
 end D5.S3.Arith.FibonacciAtomic.OptimalLawTwoMinimalAtoms
