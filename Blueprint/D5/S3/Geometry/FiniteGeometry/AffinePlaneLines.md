@@ -2,45 +2,33 @@
 
 ## Abstract
 
-The elementary affine plane over a finite field has `card F + 1` lines through
-each point, and every two distinct points determine exactly one line.
+Finite-field affine lines through a point are indexed by slopes and one vertical direction.
 
-**Theorem 1.1 (Lines through a point).** For a finite field `F` and
-`p : F × F`,
+**Theorem 1.1 (A point lies on field-cardinality plus one affine lines).**
 
-\[
-\#\{\ell : \text{AffineLine}(F) \mid p \in \ell\}=|F|+1.
-\]
+Lean statement: `D5/S3/Geometry/FiniteGeometry/AffinePlaneLines.card_affineLines_through`
 
-**Theorem 1.2 (Unique line through two points).** If `p ≠ q`, there is a
-unique affine line containing both `p` and `q`.
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteGeometry/AffinePlaneLines.card_affineLines_through` (`✓ std3`). ∎
 
-Both statements are machine-checked in Lean as
-`card_affineLines_through` and
-`exists_unique_line_through_distinct_points` in
-`D5/S3/Geometry/FiniteGeometry/AffinePlaneLines`.
+*Source.* Repository-derived.
 
-## Construction and proof
+*Commentary.*
 
-The lines are graphs `y = m x + b` and vertical lines `x = c`. For a fixed
-point `p`, each slope `m` gives the graph with intercept `p.2 - m * p.1`,
-and the one vertical line through `p` gives an `Option F` parametrization.
-The inverse reads the slope of a graph and sends a vertical line to `none`.
+For a finite field F and a point p in F x F, the graph lines y = m x + b are indexed by m in F, and one additional vertical line x = p.1 passes through p. The resulting finite set has cardinality Fintype.card F + 1.
 
-For two points with equal first coordinates, distinctness forces distinct second
-coordinates, so only the common vertical line can contain both. With unequal
-first coordinates, subtraction and division give the unique slope
-`(q.2 - p.2) / (q.1 - p.1)`, and then the intercept is forced by either point.
+**Theorem 1.2 (Two distinct points determine one affine line).**
 
-## Scope
+Lean statement: `D5/S3/Geometry/FiniteGeometry/AffinePlaneLines.exists_unique_line_through_distinct_points`
 
-This file formalizes the affine coordinate model over a field. It does not
-develop projective completion, parallel classes, or incidence axioms beyond the
-two stated consequences.
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteGeometry/AffinePlaneLines.exists_unique_line_through_distinct_points` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For distinct points, equal first coordinates force the unique vertical line; unequal first coordinates determine the unique slope and intercept by field division. The Lean proof covers both cases explicitly.
 
 ## References
 
-- Dembowski, *Finite Geometries*, Springer, 1968, Chapter I.
-- Hirschfeld, *Projective Geometries over Finite Fields*, 2nd ed., §1.1.
-- Truth anchors: `D5/S3/Geometry/FiniteGeometry/AffinePlaneLines.card_affineLines_through`,
-  `D5/S3/Geometry/FiniteGeometry/AffinePlaneLines.exists_unique_line_through_distinct_points`.
+- Truth anchor: `D5/S3/Geometry/FiniteGeometry/AffinePlaneLines.card_affineLines_through`
+- Truth anchor: `D5/S3/Geometry/FiniteGeometry/AffinePlaneLines.exists_unique_line_through_distinct_points`
