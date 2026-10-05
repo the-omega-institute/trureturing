@@ -118,21 +118,27 @@ What the refutation shows beyond the single bound:
   coupling graph is therefore not an invariant of the realized transform, and
   edge bounds based on the number of variables need not hold.
 - **Factorized constructions (argued, not formalized).** For coprime
-  $N=mn$, the Good–Thomas relabeling $x\mapsto(x\bmod m,x\bmod n)$ turns
-  $H=H_m\otimes I+I\otimes H_n$ into a coupling with
-  $n|E_m|+m|E_n|$ edges, and $e^{-iH}=e^{-iH_m}\otimes e^{-iH_n}$. This gives
-  a realization of $F_N$ with diagonal input and output phases only when the
-  factor realizations of $F_m$ and $F_n$ use diagonal phases, and when the
-  resulting phases and the Chinese-remainder relabeling combine into a
-  diagonal correction of $F_N$, as the congruence $5ab+4jk\equiv-xy\pmod{10}$
-  does for $N=10$. Permutation-equivalent factor realizations do not suffice
-  by themselves.
+  $N=mn$, under $x\mapsto(a,j)=(x\bmod m,x\bmod n)$ the kernel of $F_N$
+  factors into a weighted kernel $\zeta_m^{u\,ab}$ on $\mathbb Z_m$ and a
+  weighted kernel $\zeta_n^{v\,jk}$ on $\mathbb Z_n$, with units $u,v$ fixed by
+  the Chinese remainder theorem; for $N=10$ they come from
+  $5ab+4jk\equiv-xy\pmod{10}$. Then $H=H_m\otimes I+I\otimes H_n$, with
+  $n|E_m|+m|E_n|$ edges, realizes $F_N$ with diagonal phases when $e^{-iH_m}$
+  and $e^{-iH_n}$ are diagonally equivalent to these weighted kernels.
+  Diagonal equivalence to the standard $F_m$ and $F_n$ is not what is
+  required. The ratio $M_{00}M_{11}/(M_{01}M_{10})$ is invariant under left
+  and right diagonal multiplication. It equals $\omega_5^2$ for
+  $e^{-iK}=U_5$ and for the weighted kernel $\omega_5^{2jk}$, but
+  $\omega_5^{-1}$ for the standard $F_5$. So $U_5$ is diagonally equivalent to
+  the weighted kernel and not to the standard $F_5$.
 - **Further reductions (open).** The eigenspaces $t=1,4$ and $t=2,3$ of $C_0$
   each admit further shifts. Whether more edges of $K$ can be removed at once,
   or whether $F_5$ itself has a realization with fewer than 9 edges and exact
   phases, is not checked. The authors report a 5-edge cycle realization of
-  $F_5$ found numerically. An exact version of it would give
-  $5+2\cdot5=15$ edges for $N=10$; this is not verified here.
+  $F_5$ found numerically. An exact realization by the 5-cycle that is
+  diagonally equivalent to the weighted kernel $\omega_5^{2jk}$ (not merely to
+  the standard $F_5$) would give $5+2\cdot5=15$ edges for $N=10$; this is not
+  verified here.
 - **Effect on the paper.** The first two conjectures assert that every graph
   in a range of edges realizes the transform, and are unaffected. The third
   conjecture's lower bound fails for $N=10$; its upper bound is not tested.
