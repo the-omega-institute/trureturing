@@ -242,8 +242,8 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (f : Table m) :
     | inl s =>
       by_cases hi : Immediate s
       · rw [immediate_step s hi u]
-        simp [projection, hi, sharedStep]
-      · simp [projection, hi, sharedStep]
+        simp only [projection, dif_pos hi, sharedStep]
+      · simp only [projection, dif_neg hi, sharedStep]
   have onto : Function.Surjective (projection (m := m)) := by
     intro t
     rcases t with (k | s) | i
@@ -304,12 +304,20 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (f : Table m) :
         apply Subtype.ext
         dsimp [Immediate] at hi ⊢
         have heq : e - e / 2 + (r - (e - e / 2)) = r := by omega
-        simp only [heq]
+        refine Sigma.ext ?_ ?_
+        · rfl
+        · apply heq_of_eq
+          refine Sigma.ext ?_ ?_
+          · exact Fin.ext heq
+          · exact (Fin.heq_ext_iff heq).mpr rfl
       right_inv := by
         rintro ⟨⟨e, he⟩, ⟨⟨r, hr⟩, ⟨k, hk⟩⟩⟩
         dsimp
         have heq : (e - e / 2 + r) - (e - e / 2) = r := by omega
-        simp only [heq] }
+        refine Sigma.ext ?_ ?_
+        · rfl
+        · apply heq_of_eq
+          exact Prod.ext (Fin.ext heq) rfl }
   have removed : Nat.card {s : Slot m // Immediate s} =
       ∑ e ∈ Finset.range (m + 1), (e / 2) ^ 2 := by
     rw [Nat.card_congr removedEquiv]
