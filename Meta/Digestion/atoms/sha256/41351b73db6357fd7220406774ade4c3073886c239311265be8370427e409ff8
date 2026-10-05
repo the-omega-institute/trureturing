@@ -1,0 +1,75 @@
+**定理 6.1（$\rho$ 护栏的 $n$ 标签精确等待律）。** 固定整数
+
+$$
+g\ge2,\quad u\ge2,\quad h\ge1,\quad
+1\le\rho<u,\quad\gcd(u,\rho)=1,
+$$
+
+并设
+
+$$
+p=hu+\rho,\quad T=gp,\quad k=T-1,\quad m=gu.
+\tag{6.1}
+$$
+
+于是实际 $\gcd(m,T)=g$，且 $m<T$。令相位目标 $\lambda$ 恰有 $n\ge3$ 个不同标签，记
+
+$$
+A=\lambda(\theta_0),\qquad
+d=\lceil\log_2n\rceil,\quad R=d-1,\quad M=u-R\rho.
+\tag{6.2}
+$$
+
+要求所有非 $A$ 相位都位于 $\theta_1,\ldots,\theta_M$；可行性必要求 $M\ge n-1$。则其精确最坏费用为
+
+$$
+C_v(f)=Rh+1=(\lceil\log_2n\rceil-1)h+1.
+\tag{6.3}
+$$
+
+证明。给各 INITIAL 标签分配不同的 $d$ 位码 $\gamma(y)\in\{0,1\}^d$，令 $\gamma(A)=0^d$。码的选择是已知目标函数的离线工作。对 $\ell=0,\ldots,R$，在块索引 $\ell h$ 发出完整词
+
+$$
+B^{(\ell)}=\mathcal P_{g,u}(H_\ell),\qquad
+H_\ell=\{j+\ell\rho:1\le j\le M,\ \gamma(\lambda(\theta_j))_\ell=1\}.
+\tag{6.4}
+$$
+
+两个相邻查询块之间发出恰好 $h-1$ 个 $0^m$。由护栏，$1\le j+\ell\rho\le u$，所有脉冲都在指定块内；首零、间距、填充和终端尾均由（3.2）的同一字面词给出。即使查询块最后为一，下一收费块首零仍安全。每个 INITIAL 尾都在第一块首零清除，后续全部实际接缝安全。
+
+块索引 $\ell h$ 内的脉冲位置对应绝对位置
+
+$$
+\ell hm+(j+\ell\rho)g-1=\ell T+jg-1.
+\tag{6.5}
+$$
+
+所以每个查询块的差恰为该 INITIAL 标签的第 $\ell$ 码位。基准标签及不在 $1,\ldots,M$ 的相位都得到零码。取得全部 $d$ 个实际差后返回唯一对应的标签。各零块的差虽已知，仍占时间和费用。总收费块数是
+
+$$
+d+(d-1)(h-1)=Rh+1.
+\tag{6.6}
+$$
+
+为证下界，从每个标签选一个实际尾零代表：$A$ 选 $\theta_0$，其余选某个 $1\le j\le M$。所有来源用（1.7）实现，属于同一个初始值纤维。由引理3.1，任何成功控制器根首位为零，抑制 $\theta_0$ 的初始活动位置零。考虑前 $Rh$ 个收费块的整个位置区间 $0\le t<Rhm$。
+
+对代表 $j>0$，第 $\ell$ 周期的两活动位置为
+
+$$
+\ell T+jg-1=\ell hm+(j+\ell\rho)g-1,
+\qquad
+\ell T+jg=\ell hm+(j+\ell\rho)g.
+\tag{6.7}
+$$
+
+当 $0\le\ell<R$ 时，$1\le j+\ell\rho\le u-\rho<u$，故两位置严格位于块 $\ell h$ 内。下一周期 $\ell=R$ 的首次位置已大于等于 $Rhm+g-1$，在所考虑范围外。$\theta_0$ 的后续成对活动位置 $\ell T-1,\ell T$ 在 $1\le\ell<R$ 时也位于块 $\ell h$：由 $M\ge n-1\ge2$ 得 $\ell\rho\le R\rho\le u-2$，局部两位置为 $\ell\rho g-1,\ell\rho g$。$\ell=R$ 时，首个位置 $RT-1=Rhm+R\rho g-1\ge Rhm+1$，已在所考虑范围外；所有 $\ell>R$ 的位置更晚，也在范围外。
+
+因此这个真实子先验在前 $Rh$ 块中，只有索引
+
+$$
+0,h,2h,\ldots,(R-1)h
+\tag{6.8}
+$$
+
+的 $R$ 个块能够产生标签相关的数值区分，其余块对它们全部静默。这个活动日程由实际绝对位置确定，适应地改变输入位也不能提早活动位置。在任何共同档案上，来源的尾仍共同；若输入造成拒绝，只能统一吸收，不能增加独立第三结果。引理3.2遂使前 $Rh$ 块至多产生 $2^R$ 个有用标签叶，而 $n>2^R$。故深度 $Rh$ 的成功协议不存在，费用至少 $Rh+1$。与（6.6）相等。证毕。
+
