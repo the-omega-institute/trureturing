@@ -9,19 +9,19 @@ internal static partial class CoverAtomCommand
     {
         private readonly string root;
         private readonly string baselineRevision;
+        private RepositorySnapshot? current;
+        private BackfillInventoryDocument? document;
         internal RawRepositorySnapshot CurrentRaw { get; private set; }
-        internal RepositorySnapshot Current { get; private set; }
+        internal RepositorySnapshot Current => current ??= Decode(CurrentRaw);
         internal RepositorySnapshot Baseline { get; }
-        internal BackfillInventoryDocument Document { get; private set; }
+        internal BackfillInventoryDocument Document => document ??= LoadDocument(Current);
         internal BackfillInventoryDocument BaselineDocument { get; }
         internal LeanAxiomReport Report { get; }
         internal AcceptedLeanClosure Lean { get; }
         internal FrozenStateCatalog FrozenState { get; }
         internal FrozenStatementIndex FrozenStatements { get; }
         internal IReadOnlyDictionary<RepoPath, TruthState> TruthStates { get; }
-        internal ValidatedPolicy Policy { get; }
         internal RawChangeSet Changes { get; private set; }
-        internal Action? ValidateInputs { get; set; }
         internal bool Invalidated { get; private set; }
 
         internal Session(string root, IRepositoryGateway repository, ILeanReportSource reportSource,
@@ -30,9 +30,9 @@ internal static partial class CoverAtomCommand
             this.root = root;
             this.baselineRevision = baselineRevision;
             CurrentRaw = repository.ReadCurrent();
-            Current = Decode(CurrentRaw);
+            current = Decode(CurrentRaw);
             Baseline = Decode(repository.ReadRevision(baselineRevision));
-            Document = LoadDocument(Current);
+            document = LoadDocument(current);
             BaselineDocument = IngestCommand.LoadDocument(Baseline, baseline: true);
             Report = reportSource.Load(Current);
             Lean = ValidateLean(Current, Report);
@@ -48,33 +48,16 @@ internal static partial class CoverAtomCommand
             }
             FrozenStatements = FrozenStatementIndex.Create(FrozenState, Report);
             TruthStates = LeanTruthStates.Resolve(Current, Lean);
-            Policy = LoadPolicy(Current);
             Changes = repository.ReadChanges(baselineRevision);
         }
 
         internal CommandResult Apply(string atomId, ImmutableArray<string> gids) =>
             CoverAtomCommand.Apply(this, new CoverArguments(atomId, gids, baselineRevision), allowAlreadyApplied: true);
 
-        internal void RequireUnchanged()
+        internal void Commit(RawRepositorySnapshot raw, ImmutableArray<IngestCommand.LedgerUpdate> updates)
         {
             try
             {
-                ValidateInputs?.Invoke();
-                IngestCommand.RequireLedgerUnchanged(root, CurrentRaw);
-            }
-            catch
-            {
-                Invalidated = true;
-                throw;
-            }
-        }
-
-        internal void Commit(RawRepositorySnapshot raw, RepositorySnapshot snapshot,
-            BackfillInventoryDocument document, ImmutableArray<IngestCommand.LedgerUpdate> updates)
-        {
-            try
-            {
-                ValidateInputs?.Invoke();
                 IngestCommand.ApplyLedgerUpdatesAtomically(root, CurrentRaw, updates);
             }
             catch
@@ -103,8 +86,8 @@ internal static partial class CoverAtomCommand
             }
             Changes = RawChangeSet.CreateWithKinds(changes.Select(pair => (pair.Key, pair.Value)));
             CurrentRaw = raw;
-            Current = snapshot;
-            Document = document;
+            current = null;
+            document = null;
         }
     }
 }
