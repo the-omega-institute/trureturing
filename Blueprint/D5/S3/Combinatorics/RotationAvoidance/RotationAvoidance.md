@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidance.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidance.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/egecioglu-gaiser-yin-rotation-wilf-classes` (proved) by `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidance.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"egecioglu-gaiser-yin-rotation-wilf-classes","declaration_gid":"D5/S3/Combinatorics/RotationAvoidance/RotationAvoidance.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ömer Eğecioğlu, Collier Gaiser, Mei Yin (2026). *Pattern avoidance in permutations and their rotations*. DOI: [10.48550/arXiv.2607.20750](https://doi.org/10.48550/arXiv.2607.20750). URL: <https://arxiv.org/abs/2607.20750v1>.
