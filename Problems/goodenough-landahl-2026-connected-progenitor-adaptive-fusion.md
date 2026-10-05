@@ -38,17 +38,26 @@ The paper characterizes perfect non-adaptive strategies and exhibits a
 connected five-qubit code with none, while an adaptive strategy exists for it.
 Perfect adaptive strategies reach the upper bound $1-(1-P_B)^n$ on the success
 probability of a logical Bell measurement (Reiß and van Loock,
-arXiv:2601.08820, Theorem 2).
+arXiv:2601.08820, Theorem 1).
 `D5/S3/Quantum/Measurements/ConnectedProgenitorPerfectAdaptiveFusion.result`
 proves the conjecture.
 
 ## Gap
 
 Issue #13256 records the literature check. The paper has versions v1 and v2,
-and v2 still states the conjecture. Its single citing work found
-(arXiv:2609.39980) does not address it. Reiß and van Loock give adaptive
-schemes only for QPC, surface and tree codes.
-`not-found-in-searched-scope`.
+and v2 still states the conjecture. Its single citing work found,
+arXiv:2609.39980, cites it in §8 only as a direction for future work on fusion
+failures with photon loss. Reiß and van Loock (arXiv:2601.08820) give general
+sufficient conditions (their Theorem 2) and construct sequences meeting them
+for the quantum parity, five-qubit, standard and rotated planar surface, tree
+and Steane codes; they do not assert that every connected-progenitor graph
+code meets them, and their conditions 1–3 concern the success probability of
+each physical Bell measurement under linear optics, which the failure model of
+Proposition 3.1 does not include. The strategy here supplies, for every
+connected progenitor graph, the analogue of their failure-axis sequence (Z
+before the first success) and of their logical pairs (the two products of
+canonical generators along the geodesic, anticommuting only at the successful
+vertex). `not-found-in-searched-scope`.
 
 ## Route
 

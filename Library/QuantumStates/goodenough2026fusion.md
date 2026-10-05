@@ -44,6 +44,11 @@ when a single successful fusion guarantees a successful logical fusion
 
 - URL: https://arxiv.org/abs/2609.02559 (v2; source file `arxiv_v2.tex`, md5
   `aeae388c3964f292d0911e80481b730c`).
-- Related: Reiß and van Loock, arXiv:2601.08820, give adaptive optimal schemes
-  for QPC, surface and tree codes and the upper bound
-  $1-(1-P_B)^{\min(n_1,n_2)}$ on the success probability (their Theorem 2).
+- Related: Reiß and van Loock, arXiv:2601.08820. Their Theorem 1 bounds the
+  success probability of a logical Bell measurement by
+  $1-(1-P_B)^{\min(n_1,n_2)}$. Their Theorem 2 gives general sufficient
+  conditions for reaching it: a failure-axis sequence used before the first
+  success, a sequence of stabilizer generators, and for each position a pair
+  of logical operators that anticommute only there and commute with the
+  earlier failure axes. They construct such sequences for the quantum parity,
+  five-qubit, standard and rotated planar surface, tree and Steane codes.
