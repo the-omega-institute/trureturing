@@ -121,7 +121,7 @@ before any Lean. `theorem`; resolution `proved`.
 | --- | --- | --- | --- |
 | result | content | `exponent_exclusions` | open-problem-resolution |
 
-The escape witness `exponent_exclusions` is the arithmetic fact of Route step 1; it is on the proof path of `result` through `correlation_units` and `cross_correlation`. The private theorems whose proof path uses it (`correlation_units`, `cross_correlation`, `hx_ones`, `pair_centralizer`, `small_centralizer_zero`, `distance_lower_bound`) are content; every other private theorem, including `inverse_power_sum_zero` (which uses only the first conjunct $n\nmid2^r$), is bind-only and is used on the proof path of `result` (CLAUDE.md §3.2 「有消费的辅助声明」). Utility is `none`: the module proves a universal statement and
+The escape witness `exponent_exclusions` is the arithmetic fact of Route step 1; it is on the proof path of `result` through `correlation_units` and `cross_correlation`. The private theorems whose proof path uses it (`correlation_units`, `cross_correlation`, `hx_ones`, `pair_centralizer`, `small_centralizer_zero`, `distance_lower_bound`) are content; every other private theorem, including `inverse_power_sum_zero` (which uses only the first conjunct $n\nmid2^r$), is bind-only and is used on the proof path of `result` (CLAUDE.md §3.2 「有消费的辅助声明」). The public instance `NeZero (n d)` (`instNeZeroNatN`) is bind-only: it unfolds $n$ and applies `Nat.one_lt_pow`. `hx_ones` consumes it through the `AddGroup (Fin (n d))` instance that `Matrix.circulant_mul` requires, and `primitive_bijective`, `primitive_pow_sub`, `inverse_power_sum_zero` and `unit_inverse` through `NeZero.pos` and `NeZero.one_le`. Utility is `none`: the module proves a universal statement and
 contains no finite enumeration, checker, numeric reduction or certified
 instance. There is no digestion atom.
 
@@ -151,8 +151,16 @@ whose weights are $0$, $n$, $2^{m-1}$ and $2^{m-1}-1$ (`row_weights`).
   the cases where $\xi$ divides $n$ ($d=3,7$ for $\xi=5$; $d=5,8$ for
   $\xi=7$); the only excluded pair, $d=2$ with $\xi=7$, gives
   $u\ne\mathbf1$.
-- The map $(c,b)\mapsto(c+\operatorname{Tr}(b\alpha^{-j}))_j$ is injective, so
-  the row space of $A$, and of $H=(A\mid J)$, has dimension $m+1=d+2$. The code
+- The row space of $A$ is the image of the linear map
+  $(c,b)\mapsto(c+\operatorname{Tr}(b\alpha^{-j}))_j$ on $\mathbb F_2\times K$.
+  Row $i$ is the image of $(1,\alpha^i)$, so a combination with coefficients
+  $\varepsilon_i$ is the image of $(\sum_i\varepsilon_i,\sum_i\varepsilon_i\alpha^i)$,
+  and the pairs $(1,x)$ with $x\in K^*$ span $\mathbb F_2\times K$: for distinct
+  nonzero $x,y$ the pairs at $x$, $y$ and $x+y$ sum to $(1,0)$, and
+  $(0,x)=(1,x)+(1,0)$. The map is injective: for $b\ne0$ the image is
+  nonconstant, and $(1,0)$ maps to the all-ones vector. Hence the row space of $A$ has dimension $m+1=d+2$; so
+  has that of $H=(A\mid J)$, whose right half is $\sum_i\varepsilon_i$ times
+  the all-ones vector, i.e. $c\mathbf 1$. The code
   is therefore $[[2^{d+1}-1,\,2^{d+1}-d-3,\,2]]_2$ for every $d\ge2$, matching
   the paper's computed $k=3,10,25$ at $d=2,3,4$.
 
