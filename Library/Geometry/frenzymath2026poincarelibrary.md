@@ -5548,3 +5548,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 五个具名构造与保持目标的完整精确临时 Lean 首轮真实编译通过，host `82888` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-representation-preservation.lean` 为 181958 字节，SHA256 `5c2dc12c9c23e21bbe39cda4fd97631b9f6b20333b21a2c8ec14dd0923408022`；前述成功 proper 源码为完整 offset0 字节前缀，未新增 import 或依赖构建。协作实施与调用方只读复核完成，没有新增 SSHX 共识。
 
 该原同态、subtype 原像、紧像及固定点接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批闭合下一步实际共同边界归一化所需的性质传递，尚未组装未归一化原群分类；一般原流形覆盖供给 proper 性质、真实尖点和轴管商、有限体积薄部分解及完整给定 `h`／完整 `d` 的 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 未归一化原自由 proper 虚幂零表示的内部 elementary 分类
+
+统一消费者只输入任意宇宙的同一个原 `ρ : G →* (H3 ≃ᵢ H3)`、原自由性、canonical 同一 `ρ` 的 properly discontinuous 性质及真正有限指数幂零子群 `H≤G`。内部消费实际有限边界轨道与原自由作用周期点构造，得到原全群共同固定的实际 `b : NullSphere`，再内部构造同一个原等距变换 `e` 将它送到实际无穷远点，并保留逆作用将无穷远点送回同一个 `b`。前批保持定理把原自由性与 proper 性质传递给真实 `eρe⁻¹`，全部原群元素的无穷远稳定性也内部推出；没有输入边界点、归一化、轨道间隔、轴或生成元。
+
+在单位缩放分支，内部构造原 `G` 中正规且真正有限指数至多二的子群 `K`，以及实际水平位移 `u : K → ℂ`，逐元素保留 `eρ(h)e⁻¹ = horizontalTranslation (u h)` 和原表示评价 `ρ(h) = e⁻¹ * horizontalTranslation (u h) * e`。在非单位缩放分支，消费归一化后同一原群的自由、proper、有限指数幂零及非单位条件，得到原 `generator : G`，使全部原群元素为其整数幂。包含反向等距变换，不要求 `H` 正规或原 `G` 本身幂零。这里单位分支尚未给出平移像的离散自由整数模、格子秩或商尖点。
+
+完整具名目标的精确临时 Lean 第二轮真实编译通过，host `50945` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-original-elementary-classification.lean` 为 185261 字节，SHA256 `08436a6ca32a0681416132c1e620a6f0c285d4b8cebc5219350d88211ce2956c`。首轮四项局部 proper 性质隐式紧集推断及级联错误的完整源码、日志保留排除；修复局部声明的完整类型，数学目标未改。前述成功保持源码为完整 offset0 字节前缀，无新增 import、依赖构建或版本变更。协作实施与调用方只读语义复核完成，没有新增 SSHX 共识。
+
+该已证共同点、实际归一化、性质保持及两分支消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。本批结算的是上述原表示前提下的 elementary 分类；一般原流形的原度量覆盖及完整 deck 作用仍须提供这些前提。真实平移格子、尖点与轴管商、有限体积薄部分解、同一个给定 `h`／完整 `d` 的全局刚性及完整 Mostow–Prasad 官方验收继续未完成。
