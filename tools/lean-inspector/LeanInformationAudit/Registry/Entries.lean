@@ -58,10 +58,9 @@ Unlike unrestricted `whnfR`, this stops at constructors, projections and recurso
 and never performs structure eta. A bare named target becomes the next owner;
 an application that constructs a value retains the last named owner.
 The single budget covers both outer aliases and all work inside applications. -/
-private def resolveCanonicalArenaUsing (declarationValue : DefinitionVal → MetaM Expr)
-    (spelling : Name) : MetaM Name := do
-  let env ← getEnv
-  unless env.contains spelling do return spelling
+def resolveCanonicalArenaName (find : Name → Option ConstantInfo)
+    (spelling : Name) : Except String Name := do
+  unless (find spelling).isSome do return spelling
   let mut owner := spelling
   let mut current := AliasClosure.mk (mkConst spelling) []
   let mut arguments : List AliasClosure := []
@@ -73,7 +72,7 @@ private def resolveCanonicalArenaUsing (declarationValue : DefinitionVal → Met
     | .mdata data body =>
       if data.contains arenaConstructionMarker then return owner
       if data.contains ArenaProvenance.unsupported then
-        throwError "IE-C003 ArenaSourceUnsupported arena={spelling} owner={owner}"
+        throw s!"IE-C003 ArenaSourceUnsupported arena={spelling} owner={owner}"
       current := .mk body bindings
     | .app fn arg =>
       arguments := .mk arg bindings :: arguments
@@ -88,24 +87,16 @@ private def resolveCanonicalArenaUsing (declarationValue : DefinitionVal → Met
         current := .mk body (arg :: bindings)
     | .bvar index =>
       match bindings with
-      | [] => throwError "IE-C003 ArenaResolutionFailed: {spelling}"
+      | [] => throw s!"IE-C003 ArenaResolutionFailed: {spelling}"
       | value :: rest =>
         current := if index == 0 then value else .mk (.bvar (index - 1)) rest
     | .const name _ =>
       if arguments.isEmpty then owner := name
-      match env.find? name with
-      | some (.defnInfo info) => current := .mk (← declarationValue info) []
+      match find name with
+      | some (.defnInfo info) => current := .mk info.value []
       | _ => return owner
     | _ => return owner
-  throwError "IE-C003 ArenaResolutionBudgetExceeded arena={spelling} limit={arenaAliasWorkBudget}"
-
-/-- Acquire source construction evidence while compiling a registration. -/
-def resolveCanonicalArenaName : Name → MetaM Name :=
-  resolveCanonicalArenaUsing ArenaProvenance.declarationValue
-
-/-- Validate imported registrations using only their compiled provenance. -/
-def resolveCanonicalArenaNameFromEvidence : Name → MetaM Name :=
-  resolveCanonicalArenaUsing ArenaProvenance.compiledValue
+  throw s!"IE-C003 ArenaResolutionBudgetExceeded arena={spelling} limit={arenaAliasWorkBudget}"
 
 namespace RootCatalogs
 
@@ -114,7 +105,7 @@ row need not be registered or expected. Keep the supplied identities and members
 unchanged; only the compiler's provenance extension receives evidence. -/
 def acquireProvenance (contract : RootCatalogContract) : MetaM Unit := do
   for row in contract.expected ++ contract.source ++ contract.baseline do
-    discard <| resolveCanonicalArenaName row.objectArenaName
+    discard <| ofExcept <| resolveCanonicalArenaName ((← getEnv).find? ·) row.objectArenaName
 
 end RootCatalogs
 
@@ -272,7 +263,7 @@ def prepareRegistrationEntry (rootId : Name) (env : Environment)
     (entry : InformationRegistryEntry) : MetaM InformationRegistryEntry := do
   let spelling := if entry.objectArenaName.isAnonymous then entry.arenaName
     else entry.objectArenaName
-  let resolvedArenaName ← resolveCanonicalArenaName spelling
+  let resolvedArenaName ← ofExcept <| resolveCanonicalArenaName (env.find? ·) spelling
   return { entry with
     resolvedArenaName
     registrationModuleName := if entry.registrationModuleName.isAnonymous then
@@ -368,7 +359,7 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
       let spelling := if entry.objectArenaName.isAnonymous then entry.arenaName
         else entry.objectArenaName
       unless entry.statementIdentity == theoremStatementIdentity env entry.theoremName &&
-          entry.resolvedArenaName == (← resolveCanonicalArenaNameFromEvidence spelling) do
+          entry.resolvedArenaName == (← ofExcept <| resolveCanonicalArenaName (env.find? ·) spelling) do
         return .error "P1.CertificateBindingMismatch: current statement identity or arena ownership"
     RegistrationReifier.validateDerivedCertificate entry
   catch e => return .error (← e.toMessageData.toString)

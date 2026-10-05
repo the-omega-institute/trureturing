@@ -416,7 +416,7 @@ def assessRecordedEntry (owner : Name) (input : RegistrationInput) : CommandElab
   | some declaration =>
     let arena ← if entry.sourceBound || declaration.sourceRecord.isSome then
         pure declaration.arena
-      else liftTermElabM <| resolveCanonicalArenaName declaration.arena
+      else ofExcept <| resolveCanonicalArenaName ((← getEnv).find? ·) declaration.arena
     unless declaration.theoremName == entry.theoremName && arena == entry.canonicalObjectArenaName do
       throwError "unclassified_form:dtr.inline_occurrence"
     TemplateBinding.withDeclaration { declaration with arena } do

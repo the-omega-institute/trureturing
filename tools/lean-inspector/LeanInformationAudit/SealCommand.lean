@@ -332,7 +332,7 @@ def validateRegistrySnapshot (rootId : Name) (env : Environment) : CommandElabM 
     validateFrozenBaselineInSnapshot rootId (snapshotExpectations rootId contract.source)
   let expectedEntries ← liftTermElabM <|
     (expectedOccurrencesForRoot env rootId).mapM fun entry => do
-      let objectArenaName ← resolveCanonicalArenaNameFromEvidence entry.objectArenaName
+      let objectArenaName ← ofExcept <| resolveCanonicalArenaName (env.find? ·) entry.objectArenaName
       pure { entry with objectArenaName }
   let actualEntries := InformationRegistry.forRoot env rootId
   let expectedKeys := expectedEntries.map expectedKey |>.qsort (· < ·)

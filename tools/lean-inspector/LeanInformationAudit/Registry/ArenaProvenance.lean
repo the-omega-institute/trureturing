@@ -1,7 +1,7 @@
 import LeanInformationAudit.Registry.Repository
 
 namespace LeanInformationAudit.ArenaProvenance
-open Lean Meta
+open Lean
 
 def construction : Name := `LeanInformationAudit.arenaConstruction
 def unsupported : Name := `LeanInformationAudit.arenaSourceUnsupported
@@ -16,10 +16,5 @@ def moduleSource (name : Name) : IO System.FilePath := do
   else if name.getRoot == `LeanInformationAuditInterface then
     Repository.source ("tools/lean-inspector-interface/" ++ path)
   else findLean (← getSrcSearchPath) name
-
-/-- Only the compiled declaration value participates in arena identity. -/
-def compiledValue (info : DefinitionVal) : MetaM Expr := pure info.value
-
-def declarationValue (info : DefinitionVal) : MetaM Expr := compiledValue info
 
 end LeanInformationAudit.ArenaProvenance
