@@ -32945,6 +32945,117 @@ $$
 因此 $5040$ 可作为有限小素方向的模观察坐标；Robin 的异常阈值角色仍来自其原有算术判据。
 Fibonacci 地址不能仅凭这个共同整数把有限关卡与无穷尾部闭合。
 
+**实际原子偏差的符号读出与一个合法 null 转移反例。** 这里先把普通正整数 $n$ 按 §§104、149 的 Fibonacci 权重写成规范五窗地址，再以同一个 $n$ 作为原子偏差的指标。占位列表中的 $i$ 是权重 $F_i$ 的指标；列表的 Fibonacci 数值之和才是 $n$。
+
+为保留单位项，记
+
+$$
+e(n)=\log\Psi_n-L\varphi(n)+\mathbf1_{n=1}\log\sqrt5,
+\qquad L=\log\Phi,\quad q=\Phi^{-2}.
+$$
+
+因此 $e(n)=E_n$ 对 $n>1$，但 $E_1=-L$ 而 $e(1)=\log\sqrt5-L=\log(1+q)>0$。§382.3 的既有符号定理给出以下统一读出：
+
+$$
+2\mid\frac n{\operatorname{rad}(n)}\quad\Longleftrightarrow\quad4\mid n,
+\qquad
+\operatorname{sgn}e(n)=\mu(\operatorname{rad}(n))
+\begin{cases}-1,&4\mid n,\\1,&4\nmid n,\end{cases}
+\qquad e(n)\ne0. \tag{240.a}
+$$
+
+**证明。** 写 $n=2^a m$、$m$ 为奇数，$R=\operatorname{rad}(m)$。若 $a=0$，则 $n/\operatorname{rad}(n)=m/R$ 为奇数；若 $a\ge1$，该商为 $2^{a-1}m/R$，故其为偶数恰当 $a\ge2$。这正是 $4\mid n$。对 $n>1$，§382.3 的三行符号分别为 $\mu(R),-\mu(R),\mu(R)$；而 $\mu(\operatorname{rad}(n))$ 在 $a=0$ 时等于 $\mu(R)$，在 $a\ge1$ 时等于 $-\mu(R)$，逐行得到（240.a）。各行严格绝对值下界给非零性；$n=1$ 由上面的单位修正直接验证。$\square$
+
+特别地，在 $5040$ 的倍数中，$4$-整除条件固定。对一个已有的这类整数，增加原有素数的指数保持符号；引入 $k$ 个不同的新素因子使符号乘以 $(-1)^k$。这只是当前原子偏差的符号规律，还没有给出五窗后继中新增素数奇偶性的更新规则。
+
+下面三个实际规范地址具有 $\varepsilon=0$、最低窗 `010`、余数 $n\equiv0\pmod{5040}$，并且小素数的**精确**部分都为 $2^4 3^2 5 7=5040$：
+
+| $n$ | 下降排列的占位指标 | 组成 $(a,b)$ | 精确分解 | $\operatorname{sgn}e(n)$ |
+| --- | --- | --- | --- | --- |
+| $5040$ | $19,15,13,7,4$ | $(735,1190)$ | $2^4 3^2 5 7$ | $-1$ |
+| $55440$ | $24,20,17,15,11,6,4$ | $(8088,13088)$ | $2^4 3^2 5 7\cdot11$ | $+1$ |
+| $1627920$ | $31,27,25,20,18,15,13,7,4$ | $(237510,384300)$ | $2^4 3^2 5 7\cdot17\cdot19$ | $-1$ |
+
+每一行的相邻指标差至少二、最小指标为四；因此单位位为空且无相邻占位。指标按 $(F_{3j+3},F_{3j+4},F_{3j+5})$ 分窗后，最高整窗非零，满足规范 End。相应低到高的窗串为
+
+$$
+\begin{aligned}
+5040 &: (010,010,000,010,100,010),\\
+55440 &: (010,100,001,000,101,001,000,100),\\
+1627920 &: (010,010,000,010,100,101,000,010,100,010).
+\end{aligned}
+$$
+
+逐项 Fibonacci 求和分别得到表中的 $n$；高窗到低窗 Horner 计算得到表中组成，并满足 $n=2a+3b$。精确分解中的 $11,17,19$ 都是新增素因子。因此前两行证明：单位位、当前最低五窗标签、小素数精确部分和该余数仍不足以读出当前 $e(n)$ 的符号。
+
+即使再携带当前符号，仍不能仅用这份压缩观察确定同一 null 分支后的符号。取第一行与第三行；两者当前符号均为 $-1$。在高到低 Horner 方向补入低窗 `000`，就是 $x\mapsto Sx$；在低到高地址中这是把 `000` 放到窗串最前端，并把全部占位指标加三。新低窗全空，原地址接缝不变、单位位仍为空、最高窗仍非零，故这一步和随后的 End 都合法。实际更新为
+
+$$
+\begin{aligned}
+S(735,1190)&=(3115,5040),&
+2\cdot3115+3\cdot5040&=21350,\\
+S(237510,384300)&=(1006110,1627920),&
+2\cdot1006110+3\cdot1627920&=6895980.
+\end{aligned}
+$$
+
+它们的占位指标分别为 $22,18,16,10,7$ 与 $34,30,28,23,21,18,16,10,7$，即前述列表逐项加三。再用精确分解
+
+$$
+21350=2\cdot5^2\cdot7\cdot61,
+\qquad
+6895980=2^2\cdot3^2\cdot5\cdot7\cdot13\cdot421,
+$$
+
+其中 $61,13,421$ 均为素数，式（240.a）给
+
+$$
+\operatorname{sgn}e(21350)=+1,
+\qquad
+\operatorname{sgn}e(6895980)=-1.
+$$
+
+所以不存在仅以“单位位、最低五窗标签、上述小素数精确部分、模 $5040$ 余数、当前偏差符号”和分支标签为输入、对全部这些合法来源都正确的确定性后继符号函数：同一输入观察与同一 null 分支在这两行产生相反输出。这一有限反例为 §240.2 的联合状态要求提供了实际算术实例。完整规范地址仍唯一读出整数，完整组成仍精确计算新数量；携带更多算术信息的五分类研究可以继续。
+
+**复用与核验边界。** 符号律复用 §382.3，保留 $n=1$ 的单位项差异。商的奇偶性化简、五个实际偏差点值、三个规范地址和两个合法 null 转移已用现有 Mathlib 及 `LiteralWindowEnd.initialized` 作临时精确 Lean 核验。上述有限反例针对所列压缩观察；它未给累计 $H(N)$ 的符号、平方根预算或 Robin 有符号尾项的控制。
+
+**上述反例的一个可闭合分量：八态 $4$-整除位。** 沿用命题 149.4 及 §241 式（241.1）的高到低扫描，单位位 $\varepsilon\in\{0,1\}$ 固定并另行携带。令
+
+$$
+\alpha=a\bmod2,\qquad \beta=b\bmod4,\qquad
+p=(\alpha,\beta)\in\mathbb Z/2\mathbb Z\times\mathbb Z/4\mathbb Z.
+$$
+
+对五窗贡献 $(c,d)$，这八种模组成状态有闭合更新和当前、后继读出：
+
+$$
+\begin{aligned}
+p'&=((\alpha+c)\bmod2,\ (2\alpha+3\beta+d)\bmod4),\\
+N\bmod4&=(\varepsilon+2\alpha+3\beta)\bmod4,\\
+N'\bmod4&=(\varepsilon+\beta+2c+3d)\bmod4.
+\end{aligned} \tag{240.b}
+$$
+
+**证明。** 原更新为 $a'=a+2b+c$、$b'=2a+3b+d$、$N'=\varepsilon+8a+13b+2c+3d$。写 $a=\alpha+2r$、$b=\beta+4s$，逐坐标取模便得到（240.b）。因此沿任意原合同允许的有限窗串，保留此模状态并按（240.b）读出，就能准确更新 $4\mid N$ 这一位。五个贡献仍按 §149.4 取 $(0,0),(1,0),(0,1),(2,1),(1,1)$；单位位、接缝与 End 条件不包括在这八态中，仍须另外满足。这里没有声称八种抽象状态都由合法地址实现。$\square$
+
+null 在此模观察上的平方是恒等：它保持 $\alpha$，并使
+
+$$
+\beta''\equiv2\alpha+3(2\alpha+3\beta)=8\alpha+9\beta\equiv\beta\pmod4.
+$$
+
+这也是 §121.1 引理 121.2 证明中既有 $M^6=5I+8M$ 的直接投影：$S=M^3$，故 $S^2\equiv I\pmod4$，甚至恢复完整的 $(a,b)\bmod4$。该周期只涉及模观察，上述非零实际来源的整数数量仍增长。
+
+上述两个 null 来源的旧模状态分别为
+
+$$
+p_{5040}=(1,2),\qquad p_{1627920}=(0,0).
+$$
+
+两者当前 $N\bmod4=0$，而后继读出等于旧 $\beta$，分别为 $2,0$。因此八态准确区分 $21350$ 与 $6895980$ 的 $4$-整除位。前述精确分解还给两后继的不同素因子数分别为 $4,6$，所以它们的 $\mu(\operatorname{rad}N')$ 都为 $+1$；式（240.a）说明这组后继的符号差恰来自 $4$-整除位。
+
+这项修复仍未更新新素支撑的奇偶性。表中的另两行 $55440$ 与 $1627920$ 都有 $p=(0,0)$，单位位、最低窗、小素数精确部分和模 $5040$ 余数也相同，而当前偏差符号相反。因此八态本身不能替代 $\mu(\operatorname{rad}n)$ 的读出；该例没有否定再携带当前 Möbius 符号或更丰富状态的可能性。由此可把联合状态的任务分开：$4$-整除位已有有限闭合更新，实际素支撑的后继关系和累计有符号预算仍待控制。
+
 ### 240.2 可检验的下一步：为每个合法转移携带预算
 
 若选用逐分支归纳路线，可携带状态
@@ -59951,5 +60062,591 @@ $$
 因此乘法层标签和符号均不在这一观察的纤维上恒定。$\square$
 
 平方满子级数的快衰减与混合素子和的固定符号下界承担不同义务：（393.4）可以移去一个实际分量，而（393.12）要求其余完整分量与混合素分量在同一对象、同一 $k$ 上抵消。按原始 Báez-Duarte 判据及 §392 的稳定运输，剩余目标仍是全部实际有符号系数的临界幂估计；本节没有给出这个估计，也没有从五模式的几何长度守恒推出 Robin 的约数权重界。
+
+## 追加锚（本行以下为增补区）
+
+## 394. 共因子素切面的共同渐近与实际黄金原子的有限非消去
+
+### 394.1. 互不重复的共因子—素数来源
+
+**定义 394.1（有限共因子面板与实际调和权重）。** 保留 §§385、392–393 的实际 $\varphi=(1+\sqrt5)/2$、$q=\varphi^{-2}$、$\beta_d=\log(1-(-q)^d)$、$e=\mu*\beta$、正整数原子 $\Psi_n$ 与完整 Newton 系数 $c_k^e$。对整数 $D\ge1$，定义
+
+$$
+g_e(D)=\sum_{m=1}^D\frac{e_m}{m},
+\qquad
+\mathcal J_D(k)=\sum_{m=1}^D
+\sum_{\substack{p>D\\p\text{ 为素数}}}
+\frac{e_{mp}}{m^2p^2}(1-(mp)^{-2})^k.
+\tag{394.1}
+$$
+
+这里 $D$ 固定的是实际整数共因子 $m$；$k\ge1$ 是 Newton 指标。令 $\mathcal R_D(k)=c_k^e-\mathcal J_D(k)$，其来源为完整级数中其余全部指标。
+
+**命题 394.2（共同来源的精确分解）。** （394.1）中的不同 $(m,p)$ 对应不同整数指标，且
+
+$$
+e_{mp}=-e_m+\eta_{m,p},
+\qquad
+\eta_{m,p}=\sum_{d\mid m}\mu(m/d)\beta_{dp},
+\qquad
+|\eta_{m,p}|\le\frac{\tau(m)}{1-q}q^p.
+\tag{394.2}
+$$
+
+这些式子保留 $m=1$ 的实际 $e_1=\log(1+q)$。
+
+**证明。** $p>D\ge m$ 给 $p\nmid m$，因而 $mp$ 的约数唯一分成 $d\mid m$ 与 $dp$（$d\mid m$）。对 $d\mid m$，$\mu(mp/d)=-\mu(m/d)$，包括两边同时为零的情形。将两个约数组合直接代入既有 $e=\mu*\beta$，得到（394.2）的身份；这是已有卷积公式的参数应用，不另立一般 Möbius 分解定理。由（385.9）、$d\ge1$、$|\mu|\le1$，得到其尾界。
+
+若 $mp=m'p'$ 且 $m,m'\le D<p,p'$，则 $p\mid m'p'$ 而 $p\nmid m'$，所以 $p=p'$，继而 $m=m'$。全级数由 $B\sum n^{-2}$ 绝对支配，因此可以按这些互不重复的实际指标分成 $\mathcal J_D+\mathcal R_D$。$\square$
+
+### 394.2. 每个实际有限面板的调和权重都不恰好为零
+
+**定理 394.3（实际黄金原子的有限调和非消去）。** 对每个整数 $D\ge1$，
+
+$$
+\boxed{g_e(D)\ne0,\qquad \lim_{D\to\infty}g_e(D)=0.}
+\tag{394.3}
+$$
+
+此外，对每个固定 $r>0$，有 $g_e(D)=O_r((\log D)^{-r})$。此结论不指定有限面板的统一符号，也不提供任何固定正数 $\delta$ 下的 $O(D^{-\delta})$ 估计。
+
+**证明。** 取共同分母 $\ell_D=\operatorname{lcm}(1,\ldots,D)\ge1$，并记正整数与非负整数
+
+$$
+P_D=\prod_{n=1}^D\Psi_n^{\ell_D/n},
+\qquad
+A_D=\sum_{n=1}^D\varphi(n)\frac{\ell_D}{n}.
+\tag{394.4}
+$$
+
+这里 $\varphi(n)$ 为欧拉函数，而无参数的 $\varphi$ 为黄金比。每个 $n\le D$ 都整除 $\ell_D$。实际原子式（385.1）在同一来源上给
+
+$$
+\ell_D g_e(D)
+=\log P_D+\ell_D\log\sqrt5-A_D\log\varphi.
+\tag{394.5}
+$$
+
+假设 $g_e(D)=0$，则正实数的指数化给
+
+$$
+P_D(\sqrt5)^{\ell_D}=\varphi^{A_D}.
+\tag{394.6}
+$$
+
+直接复用已有黄金整环、实嵌入的单射性与单位范数判据：在 $\mathbb Z[\theta]$ 中，$\theta^2=\theta+1$，$\theta$ 为单位，$2\theta-1$ 映为 $\sqrt5$，且其范数为 $-5$。因而（394.6）提升为
+
+$$
+P_D(2\theta-1)^{\ell_D}=\theta^{A_D}.
+\tag{394.7}
+$$
+
+右侧为单位；在交换环中单位的因子仍为单位，非零次幂为单位则基底也是单位。$\ell_D\ge1$ 于是迫使 $2\theta-1$ 为单位，与其整数范数 $-5$ 矛盾。等价地，取两嵌入之积会给 $P_D^2(-5)^{\ell_D}=(-1)^{A_D}$，其绝对值两边分别大于一与等于一。本证明只应用已有单位、共轭及嵌入关系，不重证这些经典代数事实。单位指标的 $\log\sqrt5$ 校正保留在（394.5）中，包括 $D=1$。
+
+趋零性直接使用 §390 的实际零矩与无条件增长界。有限部分求和给
+
+$$
+g_e(D)=\frac{H_D}{D}
++\sum_{m=1}^{D-1}H_m\left(\frac1m-\frac1{m+1}\right)
+=\frac{H_D}{D}
+-\sum_{m=D}^{\infty}H_m\left(\frac1m-\frac1{m+1}\right).
+\tag{394.8}
+$$
+
+最后一式只复用（390.3）的第一条矩；其 $H$ 加权尾绝对收敛。对任意 $r>0$，§390 已有的 $H_m=O_r(m/(\log m)^{r+2})$ 与积分比较给（394.8）为 $O_r((\log D)^{-r})$，从而趋零。$\sum e_m/m$ 本身不被宣称绝对收敛。
+
+作为文献对应，经典 $g_\mu(x)=\sum_{n\le x}\mu(n)/n$ 的增长尺度和卷积方法已见 [Báez-Duarte 原文 §2](../../../Library/Analytic/baezduarte2005mobiusconvolutions.md)。有限卷积直接给 $g_e(D)=\sum_{d\le D}(\beta_d/d)g_\mu(D/d)$；不重新推导经典 RH 判据，不把实际有限非消去归给该文。$\square$
+
+### 394.3. 固定共因子面板的整个素数主项
+
+**定理 394.4（固定面板的同源素数尺度）。** 对每个固定整数 $D\ge1$，
+
+$$
+\boxed{
+\lim_{k\to\infty}\sqrt k\log k\,\mathcal J_D(k)
+=-\sqrt\pi\,g_e(D)\ne0.}
+\tag{394.9}
+$$
+
+因此，对每个固定 $0<\varepsilon<1/4$，该面板的完整有符号子和不是 $O(k^{-3/4+\varepsilon})$。这不是完整 $c_k^e$ 的下界或反例；$\mathcal R_D$ 仍可与它抵消。
+
+**证明。** 在（394.2）中先剥离 $-e_m$。对固定 $m,D$，经典素数定理与部分求和给这个平滑素数核的渐近
+
+$$
+\sum_{\substack{p>D\\p\text{ 为素数}}}
+\frac1{m^2p^2}(1-(mp)^{-2})^k
+\sim\frac{\sqrt\pi}{m\sqrt k\log k}.
+\tag{394.10}
+$$
+
+这里只使用无条件素数定理，不要求 RH 误差。为明确规范化，置 $x=\sqrt k/m$、$p=xt$。在任意固定紧区间 $0<u\le t\le v<\infty$，经典 PNT 给规范化素数计数测度 $(\log x/x)\,d\pi(xt)$ 弱收敛到 $dt$，而 $k$ 倍 Newton 核一致趋于 $t^{-2}e^{-t^{-2}}$。因为 $\log x\sim(\log k)/2$，同一缩放给
+
+$$
+\frac{2}{m}\int_0^{\infty}t^{-2}e^{-t^{-2}}dt
+=\frac{\sqrt\pi}{m}.
+\tag{394.11}
+$$
+
+半高斯积分是经典积分，不作为新增理论。高尾 $p>vx$ 由已有显式素数计数上界和部分求和，在 $\sqrt k\log k$ 归一化后为 $O_m(v^{-1})$。低尾先将 $p\le\sqrt x$ 以核 $e^{-x}$ 支配；其余 $\sqrt x<p<ux$ 分成二倍区间，用 $\log p\ge(\log x)/2$ 的同一计数上界及 $(1-z)^k\le e^{-kz}$，得到归一化尾至多常数倍
+
+$$
+\sum_{j\ge0}\frac{2^j}{u}\exp\left(-\frac{4^j}{u^2}\right),
+\tag{394.12}
+$$
+
+它随 $u\downarrow0$ 趋零。固定低素数的删去也被 Newton 核支付。故紧区间极限可提升到（394.10）；上述 PNT 与显式计数的经典来源直接复用 [Rosser–Schoenfeld](../../../Library/Arith/rosser1962approximate.md) 的素数分布估计。
+
+实际 $\eta_{m,p}$ 误差按同一个 $mp$ 核满足
+
+$$
+\begin{aligned}
+\sum_{p>D}\frac{|\eta_{m,p}|}{m^2p^2}(1-(mp)^{-2})^k
+&\le\frac{\tau(m)}{(1-q)m^2}
+\sum_{p\ge2}\frac1{p^2}
+\exp\left[-ap-\frac{k}{m^2p^2}\right]\\
+&\le\frac{\tau(m)\zeta(2)}{(1-q)m^2}
+\exp\left[-3\left(\frac{a^2k}{4m^2}\right)^{1/3}\right],
+\end{aligned}
+\tag{394.13}
+$$
+
+其中 $a=\log(1/q)>0$，最后只应用经典加权 AM–GM，权重 $2/3,1/3$，变量为 $ap/2$ 与 $k/(m^2p^2)$。这份误差在每个固定 $m$ 下越过所有幂尺度。对有限个 $m\le D$ 使用（394.10）与（394.13），便得到 $-\sqrt\pi\sum_{m\le D}e_m/m$，再用（394.3）证明（394.9）。该推导没有对无界 $m$ 交换极限。$\square$
+
+### 394.4. 移动分辨率与尚未支付的完整贡献
+
+**命题 394.5（固定 Newton 指标下，移动面板趋零）。** 对每个固定 $k\ge1$，
+
+$$
+|\mathcal J_D(k)|\le B\sum_{n>D}\frac1{n^2}\le\frac BD,
+\qquad
+\lim_{D\to\infty}\mathcal J_D(k)=0,
+\qquad
+\lim_{D\to\infty}\mathcal R_D(k)=c_k^e.
+\tag{394.14}
+$$
+
+因而对每个 $0<\varepsilon<1/4$，
+
+$$
+\lim_{D\to\infty}\limsup_{k\to\infty}
+k^{3/4-\varepsilon}|\mathcal J_D(k)|=+\infty,
+\qquad
+\limsup_{k\to\infty}\lim_{D\to\infty}
+k^{3/4-\varepsilon}|\mathcal J_D(k)|=0.
+\tag{394.15}
+$$
+
+**证明。** 每个面板指标都有 $n=mp>D$，且互不重复，故 §392 的实际 $|e_n|\le B$ 和正 Newton 核给（394.14）。整数逆平方尾的积分比较给 $\sum_{n>D}n^{-2}\le1/D$。另一方面，对每个固定 $D$，（394.9）的极限非零，故 $k^{3/4-\varepsilon}|\mathcal J_D(k)|\to\infty$；先取 $D$ 极限时（394.14）给零。这证明两个不同量词顺序的（394.15）。$\square$
+
+固定共因子面板内部确实发生符号相加，但实际黄金原子阻止它恰好消去整个素数尺度的主项。无限调和权重趋零是已有整体矩的结果；它没有给移动 $D=D(k)$ 的统一素数核误差，也没有控制同一来源的 $\mathcal R_{D(k)}(k)$。要达到完整临界估计，仍需同时支付增长的共因子范围、素数尺度变化与其余来源，而不是仅令 $g_e(D)$ 趋零，或把（394.15）两个量词顺序交换。这里不把任何有限面板的符号障碍当作 RH、Robin 或完整有符号系数的反例。
+
+## 追加锚（本行以下为增补区）
+
+## 395. 实际 Robin 残差积分的尺度变化与一个 Mellin 绝对矩
+
+本节保留 §§386–390 的原始积分权重，以正尺度换元将算术阶跃留在固定积分变量上。承重估计同时支付光滑权函数的变化和移动阈值的跨越；只控制光滑部分不足以得到完整结论。经典正尺度换元、微积分基本定理与非负 Tonelli 定理作为中间步骤使用。
+
+### 395.1 可测残差的完整加权尺度界
+
+**定义 395.1（残差的 Mellin 绝对矩与尺度积分）。** 固定 $x>1$、$0<\alpha<1$，令 $L=\log x$、$b=1-\alpha$，并定义
+
+$$
+w(t)=\frac{\log t+1}{t^2\log^2t},\qquad
+h_1=1+\frac1L,\qquad h_2=1+\frac2L+\frac2{L^2}.
+$$
+
+取正半轴上的可测实函数 $R$，假设非负被积函数的真实 Lebesgue 积分有限：
+
+$$
+M_\alpha(R)=\int_0^\infty |R(y)|y^{-\alpha-1}\,dy<\infty.
+\tag{395.1}
+$$
+
+对 $s>0$ 记
+
+$$
+P_x(s)=\int_x^\infty R(t/s)w(t)\,dt,
+\qquad J_x(m)=P_x(m)-P_x(m+1)\quad(m\ge1).
+\tag{395.2}
+$$
+
+**定理 395.2（尺度差分由同一个绝对矩控制）。** 每个 $P_x(s)$ 都绝对存在，而且
+
+$$
+\boxed{\sum_{m\ge1}m^\alpha|J_x(m)|
+\le\frac{x^{\alpha-1}}{\log x}
+\left(h_1+\frac{h_2}{1-\alpha}\right)M_\alpha(R).}
+\tag{395.3}
+$$
+
+这里不要求 $R$ 连续或可微。
+
+**证明。** 换元 $t=sy$，在 $sy\ge x$ 上置
+
+$$
+f(s,y)=s w(sy)=\frac1{s y^2}
+\left[\frac1{\log(sy)}+\frac1{\log^2(sy)}\right]>0.
+$$
+
+对固定 $s>0$，令 $z=x/s>0$。因为 $\log(sy)\ge L$，有
+
+$$
+f(s,y)\le\frac{h_1}{Lsy^2},\qquad
+ y^{-2}\le z^{\alpha-1}y^{-\alpha-1}\quad(y\ge z).
+$$
+
+式（395.1）遂保证 $\int_z^\infty|R(y)|f(s,y)dy$ 有限，证明每个 $P_x(s)$ 的绝对存在及换元的合法性。
+
+固定 $y>0$，函数 $f$ 在 $sy\ge x$ 上光滑递减，直接微分给
+
+$$
+g(s,y):=-\partial_sf(s,y)
+=\frac1{s^2y^2}\left[
+\frac1{\log(sy)}+\frac2{\log^2(sy)}+\frac2{\log^3(sy)}\right]
+\ge0,
+\qquad g(s,y)\le\frac{h_2}{Ls^2y^2}.
+\tag{395.4}
+$$
+
+将 $P_x(m+1)$ 的积分域在 $x/m$ 处分开，得到准确的相邻尺度分解
+
+$$
+\begin{aligned}
+J_x(m)={}&\int_{x/m}^\infty
+R(y)[f(m,y)-f(m+1,y)]dy\\
+&-\int_{x/(m+1)}^{x/m}R(y)f(m+1,y)dy.
+\end{aligned}
+\tag{395.5}
+$$
+
+两段均绝对可积。第一段中的 $y\ge x/m$ 保证所有 $s\in[m,m+1]$ 满足 $sy\ge x$。微积分基本定理给
+
+$$
+f(m,y)-f(m+1,y)=\int_m^{m+1}g(s,y)ds.
+$$
+
+取绝对值，使用 $m^\alpha\le s^\alpha$，再以非负 Tonelli 交换并放大积分域，第一段的全部加权和不超过
+
+$$
+\int_1^\infty s^\alpha
+\int_{x/s}^\infty|R(y)|g(s,y)dy\,ds.
+\tag{395.6}
+$$
+
+第二段满足 $m\le x/y\le m+1$，因此递减性给
+
+$$
+m^\alpha f(m+1,y)
+\le(x/y)^\alpha f(x/y,y)
+=(x/y)^{\alpha+1}w(x).
+$$
+
+半开区间 $(x/(m+1),x/m]$ 对 $m\ge1$ 两两不交并覆盖 $(0,x]$；积分端点单点不影响数值。于是第二段的全部加权和不超过
+
+$$
+x^{\alpha+1}w(x)\int_0^x|R(y)|y^{-\alpha-1}dy
+\le\frac{x^{\alpha-1}h_1}{L}M_\alpha(R).
+\tag{395.7}
+$$
+
+这项准确支付阈值跨越，不能从光滑导数项中删去。
+
+在（395.6）中使用（395.4），非负 Tonelli 将 $s$ 的下限变为 $\max(1,x/y)$。放大到 $x/y$ 后，因 $\alpha<1$，
+
+$$
+\int_{x/y}^\infty s^{\alpha-2}ds
+=\frac{(x/y)^{\alpha-1}}{1-\alpha}.
+$$
+
+故完整光滑部分不超过
+
+$$
+\frac{h_2}{L}\int_0^\infty\frac{|R(y)|}{y^2}
+\int_{x/y}^\infty s^{\alpha-2}ds\,dy
+=\frac{x^{\alpha-1}h_2}{(1-\alpha)L}M_\alpha(R).
+\tag{395.8}
+$$
+
+两项相加即得（395.3）。非负 Tonelli 可以先在扩展非负值中使用，式（395.7）、（395.8）随后证明全部交换的量有限。等价地，对每个有限 $m$ 前缀实行相同非负估计，再由非负部分和的一致上界推出完整级数收敛；没有交换未受控的有符号级数。$\square$
+
+### 395.2 实际 Fibonacci 残差的同源代入
+
+沿用 §387 的实际 $K(y)$、$A=1/\mathcal B(1)>0$、$D=1/\mathcal B(1)+\mathcal B'(1)/\mathcal B(1)^2$ 与真实 $\delta>0$，令 $\mu_0=1/\delta$。这里 $\mu_0$ 是实常数，区别于 Möbius 函数。取全部正数上的同一个实际残差
+
+$$
+R(y)=K(y)-Ay\log y+Dy.
+$$
+
+式（387.17）给 $|R(y)|\le\mu_0(1+\log y)$ 对 $y\ge1$；当 $0<y<1$，$K(y)=0$，所以
+
+$$
+R(y)=Dy-Ay\log y,\qquad
+|R(y)|\le y(|D|+A\log(1/y)).
+\tag{395.9}
+$$
+
+**推论 395.3（实际核的全尺度常数）。** 对该实际残差与全部 $0<\alpha<1$，
+
+$$
+M_\alpha(R)\le
+\mu_0\left(\frac1\alpha+\frac1{\alpha^2}\right)
++\frac{|D|}{1-\alpha}+\frac A{(1-\alpha)^2}.
+\tag{395.10}
+$$
+
+因此（395.3）成立，右侧可将 $M_\alpha(R)$ 换成（395.10）的显式上界。特别地，
+
+$$
+\boxed{\sum_{m\ge1}\sqrt m\,|J_x(m)|
+\le\frac{(6+10/L+8/L^2)(3\mu_0+2A+|D|)}{\sqrt x\log x}.}
+\tag{395.11}
+$$
+
+$x\ge e$ 时分子可用 $72\mu_0+48A+24|D|$。
+
+**证明。** $R$ 是局部有限阶跃函数减连续函数，故可测。对高商包络使用经典幂—对数积分
+
+$$
+\int_1^\infty(1+\log y)y^{-\alpha-1}dy
+=\frac1\alpha+\frac1{\alpha^2};
+$$
+
+对真实低商式（395.9）使用
+
+$$
+\int_0^1y^{-\alpha}dy=\frac1{1-\alpha},\qquad
+\int_0^1y^{-\alpha}\log(1/y)dy=\frac1{(1-\alpha)^2}.
+$$
+
+三项均有限，得到（395.10）。$\alpha=1/2$ 时该上界为 $6\mu_0+2|D|+4A$，而 $h_1+2h_2=3+5/L+4/L^2$，相乘即（395.11）。$L\ge1$ 给最后的统一常数。$\square$
+
+### 395.3 积分变化量与实际输入预算的不同责任
+
+**推论 395.4（有界输入的条件运输）。** 若一个实数列 $u_m$ 满足 $|u_m|\le Bm^\alpha$（$m\ge1$，$B\ge0$），则由（395.3），$\sum_m u_mJ_x(m)$ 绝对收敛，且
+
+$$
+\left|\sum_{m\ge1}u_mJ_x(m)\right|
+\le B\frac{x^{\alpha-1}}{\log x}
+\left(h_1+\frac{h_2}{1-\alpha}\right)M_\alpha(R).
+\tag{395.12}
+$$
+
+证明。逐项有 $|u_mJ_x(m)|\le Bm^\alpha|J_x(m)|$，用（395.3）求和及级数三角不等式即可。$\square$
+
+这条条件运输没有证明实际 $H_m$ 的平方根预算，也没有识别原始 $I_\psi(x)$ 与 $\sum_mH_mJ_x(m)$。后一个身份还需要实际卷积恢复、两条仿射矩以及积分前的绝对条件 $\sum_m\int_x^\infty|H_m[R(t/m)-R(t/(m+1))]|w(t)dt<\infty$；积分之后的变化量界不能替代该 Fubini 责任。实际核的 Mellin 矩和实际输入 $H$ 的增长分别属于不同对象。本节没有 Robin 全称符号或 RH 结论。
+
+## 追加锚（本行以下为增补区）
+
+## 396. 移动共因子素切面的对数主项与同源补集抵消
+
+**定义 396.1（随 Newton 指标增长的共因子边界）。** 保留 §§385、390、392–394 的同一实际 $q=\varphi^{-2}$、$\beta$、$e=\mu*\beta$、$H(x)=\sum_{n\le x}e_n$、$\mathcal B(s)$、完整 $c_k^e$，以及互不重复的共因子面板 $\mathcal J_D(k)$ 与其实际指标补集 $\mathcal R_D(k)$。固定
+
+$$
+0<\vartheta<\frac14,\qquad
+D_k=\lfloor k^\vartheta\rfloor,\qquad
+X=\sqrt k,\qquad L=\log X.
+\tag{396.1}
+$$
+
+以下渐近取整数 $k\to\infty$；常数可以依赖固定的 $\vartheta$。$\vartheta$ 是共因子截断指数，不是黄金整数生成元，也不是文献中正概率权重的参数。
+
+**定理 396.2（实际移动面板与补集的共同对数主项）。** 在（396.1）的范围内，
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal J_{D_k}(k)
+&=\frac{2\sqrt\pi\,\mathcal B(1)}{\sqrt k(\log k)^2}
+ +O_\vartheta\!\left(\frac1{\sqrt k(\log k)^3}\right),\\
+\mathcal R_{D_k}(k)
+&=-\frac{2\sqrt\pi\,\mathcal B(1)}{\sqrt k(\log k)^2}
+ +O_\vartheta\!\left(\frac1{\sqrt k(\log k)^3}\right).
+\end{aligned}}
+\tag{396.2}
+$$
+
+两份主项来自同一实际指标分解，且 $\mathcal B(1)>0$。与此同时，完整有符号和满足经典有符号部分求和的实际应用：
+
+$$
+\forall A>0,\qquad
+c_k^e=O_A\!\left(\frac1{\sqrt k(\log k)^A}\right).
+\tag{396.3}
+$$
+
+因此，两份移动子和各自不满足 $O(k^{-3/4+\varepsilon})$（$0<\varepsilon<1/4$），但它们的主项确实在完整同源和中抵消。（396.3）仍不是该临界幂估计，也不证明全部目标整数的 Robin 不等式。
+
+**证明。** 本证明直接使用既有定量 PNT、Gaussian 积分和 Abel 部分求和，不另立这些经典结论。定量 PNT 的原文输入取 [Rosser–Schoenfeld](../../../Library/Arith/rosser1962approximate.md) 印刷页 66 式（2.21）—（2.22）；它给每个固定 $A>0$ 的
+
+$$
+E_\pi(y):=\pi(y)-\operatorname{Li}(y)
+=O_A\!\left(\frac{y}{(\log y)^A}\right).
+\tag{396.4}
+$$
+
+素数—共因子双和与一致范围的现代表述见 [Sun 的原稿 §3](../../../Library/Analytic/sun2026giantprimecofactor.md)。其正权重分布不用于替代本证明的有符号 $e_m$。筛后 Möbius 和的另一类范围见 [Alamoudi 原稿定理 1.1](../../../Library/Analytic/alamoudi2026subradicallysifted.md)；最小素因子筛选不等于本节的共因子面板，其次幂以下的主定理截断范围也不自动包含（396.1）。
+
+一、先保留实际有符号矩。由（390.3）、（390.5）、（394.8）及经典部分求和，对每个固定 $A>0$，
+
+$$
+\begin{aligned}
+g_e(D)&:=\sum_{m\le D}\frac{e_m}{m}
+=O_A((\log D)^{-A}),\\
+h_e(D)&:=\sum_{m\le D}\frac{e_m\log m}{m}
+=-\mathcal B(1)+O_A((\log D)^{-A}).
+\end{aligned}
+\tag{396.5}
+$$
+
+第二式的整体矩由已有 $\mathcal C=\mathcal B/\zeta$ 的 $\mathcal C'(1)=\mathcal B(1)$ 提供，符号为负：部分求和将 $\sum e_m\log m/m$ 送到 $\int_1^\infty H(x)(\log x-1)x^{-2}\,dx=-\mathcal C'(1)$。尾部由 $H(x)=O_r(x/(\log x)^r)$ 支付，取 $r$ 任意大即给（396.5）。这里绝对收敛的是 $H$ 加权积分；不把两份 $e$ 加权级数宣称为绝对收敛。
+
+同一既有增长界给有限常数
+
+$$
+\mathfrak K=
+\sup_{x\ge1}\frac{|H(x)|(1+(\log x)^2)}x
++\int_1^\infty\frac{|H(x)|(1+(\log x)^2)}{x^2}\,dx
+<\infty.
+\tag{396.6}
+$$
+
+二、素数核误差在全部 $m\le D_k$ 上一致。复用（394.2）的精确实际分解 $e_{mp}=-e_m+\eta_{m,p}$。由（394.13）与 $\sum_{m\ge1}\tau(m)/m^2=\zeta(2)^2$，整个 $\eta$ 部分的绝对值至多
+
+$$
+C_q\exp[-c_q(k/D_k^2)^{1/3}],
+\tag{396.7}
+$$
+
+其中 $C_q,c_q>0$。这一步只组合同一实际 $mp$ 核上的界。
+
+对 $n\ge2$，经典 $\log(1-u)$ 余项及 $1-e^{-v}\le v$ 给
+
+$$
+0\le e^{-k/n^2}-(1-n^{-2})^k
+\le C\frac{k}{n^4}e^{-k/n^2}.
+\tag{396.8}
+$$
+
+面板指标互不重复，且 $|e_n|\le B$，所以替换整个面板 Newton 核的误差由 $CBk\sum_{n\ge2}n^{-6}e^{-k/n^2}=O(k^{-3/2})$ 支付。最后的尺度来自单峰正函数的和—积分比较及 Gaussian 换元；不使用有符号估计去支付这个绝对替换误差。
+
+令
+
+$$
+F_m(y)=\frac1{m^2y^2}e^{-(X/(my))^2}.
+\tag{396.9}
+$$
+
+对每个固定 $A$，在 $D=D_k$ 足够大时，（396.4）与 Stieltjes 部分求和给
+
+$$
+\begin{aligned}
+\left|
+\sum_{p>D}F_m(p)-\int_D^\infty\frac{F_m(y)}{\log y}\,dy
+\right|
+&\le\frac{C_A}{(\log D)^A}
+\left[D|F_m(D)|+\int_D^\infty y|F_m'(y)|\,dy\right]\\
+&\le\frac{C_A'}{mX(\log D)^A}.
+\end{aligned}
+\tag{396.10}
+$$
+
+素数和仍只取素数 $p$。第二行由 $z=X/(my)$ 的 Gaussian 换元得到，常数与 $m,D,k$ 无关。端点 $D$ 的项被保留，因此 $p>D$ 的开端点没有被替换成 $p\ge D$。对所有 $m\le D$ 用 $|e_m|\le B$ 求和，误差为 $O_{\vartheta,A}(X^{-1}(\log k)^{1-A})$；取 $A=4$ 足够。
+
+三、用实际部分和控制共因子内部的非线性余项。记
+
+$$
+h(t)=t^{-2}e^{-t^{-2}},\qquad
+u=k^{\vartheta-1/4}.
+\tag{396.11}
+$$
+
+在（396.10）的主积分中作 $y=Xt/m$，得到
+
+$$
+\int_D^\infty\frac{F_m(y)}{\log y}\,dy
+=\frac1{mX}\int_{mD/X}^\infty
+\frac{h(t)}{L+\log t-\log m}\,dt.
+\tag{396.12}
+$$
+
+因为 $mD/X\le D^2/X\le u^2<u$，各积分从自己的下端点到 $u$ 的部分，可用 $\log y\ge\log D$、$\sum_{m\le D}1/m=O(\log D)$ 和 $\int_0^u h(t)\,dt=O(u e^{-u^{-2}})$ 统一支付。其整个绝对误差为 $O_\vartheta(X^{-1}u e^{-u^{-2}})$。留下的共同范围 $t\ge u$ 满足，对所有 $1\le x\le D$，
+
+$$
+L+\log t-\log x\ge\frac L2.
+\tag{396.13}
+$$
+
+令 $v=\log t$。在该共同范围，精确展开为
+
+$$
+\frac1{L+v-\log m}
+=\frac1L+\frac{\log m-v}{L^2}
++\frac{(\log m-v)^2}{L^2(L+v-\log m)}.
+\tag{396.14}
+$$
+
+最后一项必须保留有符号 $e_m$；若先取绝对值，其共因子对数质量不能提供所需的统一余项。置
+
+$$
+w_{L,v}(x)=\frac{(\log x-v)^2}{x(L+v-\log x)}.
+\tag{396.15}
+$$
+
+当 $L\ge1$ 时，由（396.13）及直接微分，
+
+$$
+|w_{L,v}'(x)|
+\le\frac{20(1+(\log x)^2+v^2)}{Lx^2},
+\qquad
+|w_{L,v}(D)|
+\le\frac{4((\log D)^2+v^2)}{LD}.
+\tag{396.16}
+$$
+
+经典有限 Abel 身份与（396.6）于是给
+
+$$
+\begin{aligned}
+\left|\sum_{m\le D}e_m w_{L,v}(m)\right|
+&=\left|H(D)w_{L,v}(D)-\int_1^D H(x)w_{L,v}'(x)\,dx\right|\\
+&\le\frac{24\mathfrak K(1+v^2)}L.
+\end{aligned}
+\tag{396.17}
+$$
+
+这里保留 $m=1$ 与 $H(1)=e_1$；它已经包含在有限部分求和中，不另删首行。结合（396.5）与（396.14），得到对全部 $t\ge u$ 一致的
+
+$$
+\sum_{m\le D}\frac{e_m}{m(L+\log t-\log m)}
+=-\frac{\mathcal B(1)}{L^2}
++O_\vartheta\!\left(\frac{1+|\log t|^2}{L^3}\right).
+\tag{396.18}
+$$
+
+使用 $\int_0^\infty h(t)(1+|\log t|^2)\,dt<\infty$，并直接复用经典半 Gaussian 积分 $\int_0^\infty h(t)\,dt=\sqrt\pi/2$，把（396.7）—（396.18）在同一面板中组合，得到
+
+$$
+\mathcal J_{D_k}(k)
+=\frac{\sqrt\pi\,\mathcal B(1)}{2XL^2}
++O_\vartheta(X^{-1}L^{-3}).
+\tag{396.19}
+$$
+
+$L=(\log k)/2$ 给（396.2）第一行。这不是把固定 $D$ 的（394.9）代入 $D_k$：共因子内部的一阶对数矩以及一致余项共同承担了这一极限。
+
+四、独立支付完整有符号和，再恢复实际补集。对 $k\ge2$，令 $f_k(x)=x^{-2}(1-x^{-2})^k$（$x\ge1$）。已有有符号 Abel 公式在同一实际 $e,H$ 上给
+
+$$
+c_k^e=-\int_1^\infty H(x)f_k'(x)\,dx,
+\qquad
+|f_k'(x)|
+\le2(x^{-3}+kx^{-5})e^{-k/(2x^2)}.
+\tag{396.20}
+$$
+
+$f_k(1)=0$，且 $H(x)f_k(x)\to0$；这两个端点承担上述身份。将积分分成 $1\le x<k^{1/4}$ 与 $x\ge k^{1/4}$。前者由 $|H(x)|\le Bx$ 给 $O_B((1+k)e^{-\sqrt k/2})$；后者用既有 $H(x)=O_A(x/(\log x)^A)$ 和 Gaussian 换元，给 $O_A(k^{-1/2}(\log k)^{-A})$。这证明（396.3），只是在实际输入上应用经典部分求和工具，并未将其列为新的通用 Möbius 判据。
+
+最后，实际补集与面板的绝对来源拆分已由 §394 给出。以（396.3）取 $A=3$，在这个同一来源的身份 $c_k^e=\mathcal J_{D_k}(k)+\mathcal R_{D_k}(k)$ 中代入（396.19），得到（396.2）第二行。$\mathcal B(1)>0$ 直接由（385.4）提供。两份子和的非临界性来自各自非零主项；完整和的余界来自独立的实际 $H$ 增长界，不能反过来把子和主项当作完整系数下界。
+
+本定理的范围是每个固定 $0<\vartheta<1/4$，不要求该区间边缘的一致常数，也不据此排除其他截断指数的估计。全部对数幂改进仍弱于 $k^{-1/4+\varepsilon}$ 的额外幂收益：对固定 $A$ 与 $0<\varepsilon<1/4$，$k^{1/4-\varepsilon}/(\log k)^A\to\infty$。因此（396.3）不达到既有完整 Báez-Duarte—Robin 归约所需的临界指数；未支付的仍是完整实际有符号和的额外幂尺度，而不是这两份对数主项是否能够在同一来源中抵消。$\square$
 
 ## 追加锚（本行以下为增补区）

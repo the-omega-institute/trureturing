@@ -9,8 +9,8 @@ namespace StrataLint.Cli;
 internal static class QuarantineAtomCommand
 {
     private const string Usage =
-        "USAGE: StrataLint quarantine-atom --request FILE --base REV [--replace] | "
-        + "quarantine-atom --clear ATOM_ID --base REV";
+        "USAGE: StrataLint quarantine-atom --request FILE [--replace] | "
+        + "quarantine-atom --clear ATOM_ID";
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly ImmutableHashSet<string> RequestKeys =
         ImmutableHashSet.Create(
@@ -55,7 +55,6 @@ internal static class QuarantineAtomCommand
                 : LoadRequest(repositoryRoot, options.RequestPath, readRequest);
             var atomId = request?.AtomId ?? options.ClearAtomId!;
             var currentRaw = repository.ReadCurrent();
-            _ = repository.ReadRevision(options.BaseRevision);
             var current = Decode(currentRaw);
             var document = BackfillInventoryLoader.Load(current);
             var target = LocateTarget(document, atomId);
@@ -326,7 +325,6 @@ internal static class QuarantineAtomCommand
     {
         string? request = null;
         string? clearAtomId = null;
-        string? baseRevision = null;
         var replace = false;
         for (var index = 0; index < arguments.Count; index++)
         {
@@ -338,9 +336,6 @@ internal static class QuarantineAtomCommand
                 case "--clear" when clearAtomId is null && index + 1 < arguments.Count:
                     clearAtomId = arguments[++index];
                     break;
-                case "--base" when baseRevision is null && index + 1 < arguments.Count:
-                    baseRevision = arguments[++index];
-                    break;
                 case "--replace" when !replace:
                     replace = true;
                     break;
@@ -351,21 +346,17 @@ internal static class QuarantineAtomCommand
 
         var set = request is not null && clearAtomId is null;
         var clear = clearAtomId is not null && request is null && !replace;
-        if (baseRevision is null
-            || string.IsNullOrWhiteSpace(baseRevision)
-            || baseRevision != baseRevision.Trim()
-            || !(set || clear))
+        if (!(set || clear))
         {
             throw Invalid("ARGUMENTS_INVALID", Usage);
         }
 
-        return new QuarantineOptions(request, clearAtomId, baseRevision, replace);
+        return new QuarantineOptions(request, clearAtomId, replace);
     }
 
     private sealed record QuarantineOptions(
         string? RequestPath,
         string? ClearAtomId,
-        string BaseRevision,
         bool Replace);
 
     private sealed record QuarantineRequest(
