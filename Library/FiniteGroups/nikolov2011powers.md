@@ -18,6 +18,8 @@ strata_touched:
   - D5/S3/FiniteGroups/NikolovSegal/MinimalNormalConjugacy
   - D5/S3/FiniteGroups/NikolovSegal/SimpleSectionsOfProducts
   - D5/S3/FiniteGroups/NikolovSegal/LargeMinimalNormalStructure
+  - D5/S3/FiniteGroups/NikolovSegal/CosetPowerBridge
+  - D5/S3/FiniteGroups/NikolovSegal/InvariantBlockReduction
 license: No redistribution license asserted for the paper; citation only
 triage: anchor
 ---
@@ -72,6 +74,13 @@ Nachrichten 14 (1955), 249–252, and points to Fried and Jarden,
   alternating section degree, and a section is a quotient of an arbitrary
   subgroup. The same Sylow-normalizer supplement transfers every alternating
   section of degree at least five to G/N.
+
+- Related source DOI: 10.4007/annals.2007.165.171
+- Related source URL: https://doi.org/10.4007/annals.2007.165.171
+- Locator: Nikolov and Segal, *On finitely generated profinite groups, I:
+  strong completeness and uniform bounds*, printed pages 227–228,
+  equation (43), the triangular substitution and the invariant-block
+  reduction of Proposition 10.1 to Proposition 10.2.
 
 ## Proposition 3 and its absorption input
 
@@ -177,3 +186,70 @@ proved in Part II, *Products in quasisimple groups*, Annals of Mathematics
 imported Lean theorem. Uniform coset surjectivity, the remaining uniform
 width and acceptable-subgroup results, restricted Burnside bounds, and
 unconditional strong completeness remain outside this formalization.
+
+## Algebraic reduction of prescribed coset powers
+
+The reduction on printed pages 227–228 of Part I works in an arbitrary group
+G with any normal subgroup N. Fix natural q and m and an arbitrary prescribed
+tuple h indexed by Fin m. Products retain increasing index order. Use the
+paper's conventions x^g = g inverse times x times g and [x,y] = x inverse
+times y inverse times x times y. Let tau(i,h) be the inverse of the ordered
+product of h(j)^q for j less than i. The corrected element is
+(h(i) inverse)^tau(i,h), and the corresponding automorphism of N is
+Mathlib's normal conjugation by its inverse.
+
+For tuples x and b, set a(i) = x(i)^b(i) [b(i),h(i) inverse]. Equation (43)
+states that psi(a) is the ordered product of
+[b(i),((x(i)h(i))^q) inverse]^tau(i,xh), followed by psi(x) on the right,
+where psi(x) = product((x(i)h(i))^q) product(h(i)^q) inverse. The inverse
+prefixes and the rightmost psi(x) are essential in noncommutative groups.
+The corrected automorphisms generate exactly the action group generated
+by the original normal conjugations by h(i), so properties of that action
+group transfer to the corrected tuple.
+
+The independent premise `PrescribedCommutatorCoverage(A,q,m,k)` requires
+an inner tuple y chosen before every target t in A, such that some tuple c
+has ordered product
+
+\[
+\prod_{i=0}^{m-1} c_i^{-1}
+  \bigl(k_i\circ\operatorname{conj}(y_i^{-1})\bigr)^q(c_i)=t.
+\]
+
+Here conj is Mathlib's left conjugation, and composition applies the
+rightmost automorphism first. This is coverage by actual ordered
+commutator values, not generation of a commutator subgroup. Recursive
+triangular transport realizes every chosen inner tuple in N by coset
+elements x(i)h(i): at each position, only earlier coordinates determine
+the prefix. Their images in G/N agree with the prescribed prefix, which
+puts the required correction in N.
+
+Under that value-set premise for the corrected automorphisms, equation
+(43) gives, for every a in N, a tuple b in N satisfying
+
+\[
+\prod_{i=0}^{m-1}(b_i h_i)^q
+  = a\prod_{i=0}^{m-1}h_i^q.
+\]
+
+The exponent q and exact length m are unchanged. No finiteness, simple
+factor decomposition, positivity of q or restriction on the prescribed
+tuple is added to this conditional algebraic theorem. With the earlier
+large-minimal-normal structural data, a uniform value-set premise would
+therefore supply the absorption used by the generator induction.
+
+For an explicitly given equivariant isomorphism A with a product of
+groups S(r), value-set coverage in every invariant block with the same
+q and m combines to value-set coverage in A. The proof chooses the inner
+tuples before targets, combines them through the isomorphism, and transports
+automorphism powers and ordered products coordinatewise. The index type
+and factor groups need not be finite. Construction of the actual
+factor-orbit splitting and its equivariance is not supplied by this
+conditional product theorem.
+
+These are the algebraic reductions in Part I, DOI
+10.4007/annals.2007.165.171, printed pages 227–228. The uniform transitive
+Proposition 10.2 theorem, quantitative simple-group inputs, uniform power
+width, restricted Burnside bounds and unconditional strong completeness
+remain unproved. In particular no group-, rank-, factor- or tuple-dependent
+choice of m establishes the required uniform theorem.
