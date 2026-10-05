@@ -5443,3 +5443,16 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 两主目标经缓存保护入口第二轮真实编译成功，host `77597` exit0，零错误、零警告，无 `sorryAx`，具名公理闭包仅含 `propext, Classical.choice, Quot.sound`。首轮矩阵乘向量改写方向及已闭合目标后的多余 tactic 已具体修复，完整失败源码与日志整体保留排除。协作方实施、调用方只读复核真实矩阵、全向量配对与时间保持、原等距重建及同一表示共轭，没有新增 SSHX 共识。源码 `.lake/mostow-h3-boundary-normalization.lean` 的 SHA256 为 `8d282a27ad7a50c2175299192376e8288fce19960bfb7f0e6e57ebbdf9d32869`，130182 字节，相邻收据记录实际终态。最新成功基底完整字节前缀保留，没有新增 import、依赖版本或构建闭包。
 
 旧 Library 归一化笔记没有可定位的精确接受源码，未当作可调用 Lean 定理；本批直接复用已有真实原 Lorentz 接口补齐源码桥。该原模型与配对、矩阵及未来单位接口的消费按 §3.2 判 `proof_shape: bind-only`、`admission_basis: none`；精确 Lean 保持本地临时证据，远端 required CI 仅验证本 Library 说明，不新增绑定 Lean 库声明、Describe、登记或冻结，不改预算、工具或判官。单位与非单位缩放的精确几何分类、薄部、有限尖点和紧核心、一般原流形的原度量覆盖及完整 Mostow–Prasad 继续未完成；两侧原度量、同一个给定 `h` 与完整 `d`、独立宇宙、非紧有限体积尖点及非可定向范围继续保留。
+
+
+## 同一原无穷远稳定子的实际高度缩放、乘法律与 horoball 精确像
+
+对同一个原 H³ 等距变换 `e`，定义实际正数 `λ(e)=(actionMatrix e *ᵥ (nullFramePoint 3).val)₀`，其正性由真实未来 null 作用推出。若同一个原归一化边界作用固定 `t:=nullFramePoint 3`，原未归一化作用实际满足 `Aₑt=λ(e)t`。这里未把高度缩放、群特征或 horoball 像作为输入，包含反向等距变换。
+
+精确原坐标公式给出 `⟨v(p),t⟩=1/height p.coordinates`，原高度的严格正性清除分母。原全向量 Lorentz 配对保持与同一原作用公式据此推出 `λ(e)/height (e(p)).coordinates=1/height p.coordinates`，故实际原高度满足 `height (e(p)).coordinates=λ(e)·height p.coordinates`。这个高度是原上半空间坐标中的 `height p.coordinates`，没有换成另一模型的额外高度函数。
+
+对两个分别固定同一个实际 `t` 的原等距变换 `e,f`，同一原矩阵的乘法保持和上述真实射线缩放给出 `λ(ef)=λ(e)λ(f)`。没有声称这个公式对不稳定 `t` 的任意原元素也成立。高度律由真实几何消费者进一步消费：对任意实数阈值 `T`，证明原 `e` 的实际集合像 `e '' {p | T<height p.coordinates}` 恰等于 `{p | λ(e)T<height p.coordinates}`。正乘子给出正向包含，原 `e` 的满射性与同一个高度律给出反向包含；不需要预给逆元素高度律或假设 horoball 像。单位缩放因而保持这些原水平 horoball，非单位缩放则精确改变其阈值；这里尚未证明完整 deck 群中的 horoball 分离或商尖点存在性。
+
+四个具名目标经缓存保护入口第二轮真实编译成功，host `32197` exit0，零错误、零警告，无 `sorryAx`，各具名公理闭包仅含 `propext, Classical.choice, Quot.sound`。首轮原高度定义展开及正乘法不等式实例解析的三处错误已具体修复，完整失败源码和日志整体保留排除，没有接纳失败批的局部成功块。协作方实施、调用方只读复核真实原高度、同一射线缩放、乘法适用范围和实际集合像的两向证明，没有新增 SSHX 共识。源码 `.lake/mostow-h3-infinity-height-horoball.lean` 的 SHA256 为 `43ff950597de486b444c63cbb8a605ae063601ef475d72806429f0ec8ea91429`，133861 字节，相邻收据记录真实终态。已成功归一化基底的完整字节前缀保留，没有新增 import、依赖版本或构建闭包。
+
+该原模型与已有配对、正时间 null 作用、矩阵及满射接口的消费按 §3.2 判 `proof_shape: bind-only`、`admission_basis: none`；精确 Lean 保持本地临时证据，远端 required CI 仅验证本 Library 说明，不新增绑定 Lean 库声明、Describe、登记或冻结，不改预算、工具或判官。下一源码桥是从同一实际矩阵恢复水平仿射／相似分解，再消费原自由作用及离散性进入单位与非单位缩放分类；实际薄部尖点和轴管、有限尖点与紧核心、一般原流形的原度量覆盖及完整 Mostow–Prasad 继续未完成。两侧原度量、同一个给定 `h` 与完整 `d`、独立宇宙、非紧有限体积尖点及非可定向范围继续保留。
