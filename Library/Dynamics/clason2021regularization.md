@@ -134,3 +134,118 @@ form-domain membership of x^2. Its upper enclosure does not reach 1e-4
 and is not a lower bound on attainable residuals. It supplies neither
 R5 on the required input class nor the projected transfer/norm comparison,
 original half-bound, Robin or RH, and has no new Lean certification.
+
+## The real translation boundary retains fixed sharp-low mass
+
+This is a conditional paper application of the
+[original theta tail](../Analytic/romik2021orthogonal.md#reusable-theta-tail-and-its-local-scale),
+(R1)–(R5), and the accepted actual-model premises above. It keeps the
+small-window generated space $N$ and the original measure. The theta
+asymptotic, analytic identity principle, weak translation convergence
+and Fourier projection tools are reused; no new generic regularization
+theorem, numerical producer, Lean certification or originality claim
+is supplied.
+
+Put $v_0(x)=\sqrt{2\Phi(x)\cosh(x/2)}$, $Uh=v_0h$ and $N_c=UN$.
+The complex theta series is normally convergent on $|\Im z|<\pi/4$.
+For the translation parameter define
+
+$$
+t_c=\frac{\log2}{2},\qquad
+\mathcal D=\{z:|\Im z|<\pi/4,\
+2e^{-2|\Re z|}\cos(2\Im z)>1\}.
+$$
+
+This domain is connected, contains $I$ and has real section
+$(-t_c,t_c)$. For each compact $E\subset\mathcal D$, the normally
+convergent series and the positive real first-term denominator give
+on either spatial tail
+
+$$
+|Uw_z(x)|^2\le C_Ee^{5|x|}
+ e^{-\pi k_Ee^{2|x|}}+C_Ev_0(x)^2,\qquad
+k_E=\min_{z\in E}(2e^{-2|\Re z|}\cos(2\Im z)-1)>0.
+$$
+
+On compact spatial intervals use the positive minimum of $\Phi$.
+This common integrable majorant makes $z\mapsto w_z$ Hilbert-valued
+holomorphic. Its projection onto $N^\perp$ vanishes on $I$ by (R2),
+so the analytic identity principle makes it vanish on $\mathcal D$.
+Centering and evenness extend as well. Consequently $w_t\in N$ for
+every real $|t|<t_c$, without enlarging the original $N$.
+
+For $0<t<t_c$ set
+
+$$
+\begin{gathered}
+\eta_t=2e^{-2t}-1,\qquad R_t=\tfrac12\log(1/\eta_t),\\
+G(y)=e^{5y/2-(\pi/2)e^{2y}},\qquad
+A_t=\pi e^{-9t/2}\eta_t^{-5/4}.
+\end{gathered}
+$$
+
+The actual two-tail profile, as $t\uparrow t_c$, is
+
+$$
+\left\|A_t^{-1}Uw_t-G(\cdot-R_t)-G(-\cdot-R_t)\right\|_2
+\longrightarrow0. \tag{E1}
+$$
+
+To pay both tails, fix $A>t_c+1$ and $t\ge t_c/2$. On $x\ge A$,
+the dominant numerator is $\Phi(x-t)$. The source tail comparison
+gives
+
+$$
+\frac{v_0(x)\Phi(x-t)}{2\Phi(x)}
+\le Ce^{5x/2}e^{-(\pi/2)\eta_te^{2x}}.
+$$
+
+After $x=R_t+y$ and division by $A_t$, this is bounded by $CG(y)$
+on $y\ge A-R_t$. For each fixed $y$, the original first-term relative
+asymptotic and $2\cosh(x/2)\sim e^{x/2}$ give convergence to $G(y)$.
+Extend the term by zero below $A-R_t$ and apply $L^2$ dominated
+convergence. On this right tail the other numerator has an
+$\eta_t$-independent integrable envelope, because $2e^{2t}-1$ is
+bounded away from zero. Its divided norm tends to zero, as does that
+of $\cosh(t/2)v_0$. The compact interval $[-A,A]$ contributes a
+bounded numerator divided by $A_t\to\infty$. Evenness supplies the
+left tail, where $\Phi(x+t)$ is dominant. The wrong-half profile
+tails vanish since $G\in L^2$; neither shifted numerator is asserted
+globally bounded.
+
+The two full profiles have overlap tending to zero. Thus
+
+$$
+\begin{gathered}
+n_t:=\frac{Uw_t}{\|Uw_t\|_2}\in N_c,\qquad
+\|Uw_t\|_2\sim\sqrt2A_t\|G\|_2,\\
+\left\|n_t-\frac{G(\cdot-R_t)+G(-\cdot-R_t)}
+ {\sqrt2\|G\|_2}\right\|_2\longrightarrow0,\qquad
+n_t\rightharpoonup0. \tag{E2}
+\end{gathered}
+$$
+
+At real $|t|\ge t_c$ the same leading ratio has an
+$e^{5x/2}$ prefactor and exponent $-(\pi/2)\eta_te^{2x}$ with
+$\eta_t\le0$, so $w_t\notin L^2(\nu)$. The bounded centering
+subtraction cannot cancel it. This is a real translation-integrability
+boundary, not a zero ordinate or an eigenvalue.
+
+For any fixed bandwidth $\Lambda>0$ let
+$P_\Lambda=\mathbf1_{|\mathsf D|<\Lambda}$ on the even physical
+space. Compute the projection of $G$ in the full physical space,
+since $G$ itself is not even. Plancherel and Riemann–Lebesgue give
+
+$$
+\|P_\Lambda n_t\|_2^2\longrightarrow
+\gamma_\Lambda:=
+\frac{\|\mathbf1_{|\mathsf D|<\Lambda}G\|_2^2}{\|G\|_2^2}>0.
+\tag{E3}
+$$
+
+The two projected translated profiles have equal norms and an
+oscillatory cross integral with an $L^1$ frequency density. Positivity
+uses $G\in L^1$, $G>0$ and its Fourier transform nonzero near zero.
+Also $\gamma_\Lambda\uparrow1$ as $\Lambda\to\infty$. Hence the
+fixed-band restriction of the actual critical space is noncompact;
+this is a restricted-class interface to (R5).
