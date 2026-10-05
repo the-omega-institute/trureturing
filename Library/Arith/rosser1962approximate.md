@@ -5,7 +5,7 @@ year: 1962
 title: "Approximate formulas for some functions of prime numbers"
 doi: 10.1215/ijm/1255631807
 url: https://doi.org/10.1215/ijm/1255631807
-claim: "Theorem 8 gives explicit reciprocal prime-product bounds; Corollary 3, equation (3.8), gives a dyadic prime-count lower bound used in the actual Fibonacci mixed-prime Newton subseries."
+claim: "Theorem 8 gives explicit reciprocal prime-product bounds; Corollaries 1 and 3 give global and dyadic prime-count bounds used in actual Fibonacci cofactor Newton subseries."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -77,3 +77,26 @@ The [FIB volume](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.
 The original prime-count theorem remains a literature input. Its use in
 an actual coefficient subseries is a separate model derivation, and the
 source statement is not a Lean proof of that derivation.
+
+## Global prime counts and the classical PNT interface
+
+On the same printed page 69, Corollary 1 states
+
+\[
+\frac{x}{\log x}<\pi(x)\qquad(x\ge17),\tag{3.5}
+\]
+\[
+\pi(x)<1.25506\frac{x}{\log x}\qquad(x>1).\tag{3.6}
+\]
+
+Printed pages 65–67, Section 2, recall the classical prime number theorem
+and its attribution to Hadamard and de la Vallée Poussin. Equation (2.26)
+on printed page 67 gives the Stieltjes partial-summation interface for
+sums over primes. The qualitative PNT is used as an existing theorem;
+these page references do not claim an independent verification of its
+proof or of the paper's numerical tables.
+
+The FIB volume §394 uses PNT only with fixed integer cofactor \(m\) and
+fixed cutoff \(D\). Equation (3.6) controls the tails of the rescaled
+prime-count measure. It does not by itself supply an asymptotic estimate
+uniform in an unbounded cofactor range, and the volume does not claim one.
