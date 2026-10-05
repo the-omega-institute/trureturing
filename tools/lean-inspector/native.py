@@ -21,9 +21,8 @@ import publication as public
 
 selection = public.selection
 ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
-# Each native invocation imports the batch's environment and joins its whole
-# registration universe; larger batches amortize that fixed cost. Each joined
-# occurrence has its own heartbeat budget, so batch size does not bound it.
+# Each process reads one bounded compiler-artifact closure. Typed input owners
+# additionally import the fixed judge and assess their own registrations.
 NATIVE_BATCH_MODULES = 100
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
@@ -201,6 +200,23 @@ def input_projection(root, name):
     return projection
 
 
+def inspection_arguments(root, names, arguments):
+    owners = [bool(input_projection(root, name)['inputs']) for name in names]
+    if any(owners) and not all(owners):
+        raise ValueError('raw.mixed_input_owners')
+    return arguments if all(owners) else ['--compiled-only', *arguments]
+
+
+def run_inspector(root, executable, arguments, request_file=None):
+    try:
+        command = ['--request-file', str(request_file)] if request_file else arguments
+        subprocess.run([str(executable), *command], cwd=root, check=True)
+    except subprocess.CalledProcessError as error:
+        if arguments[0] == '--compiled-only':
+            raise ValueError(f'raw.reader_failed:exit={error.returncode}') from error
+        raise
+
+
 def row_binding(rows, root, module_name, utility_path, *, template_inputs=None):
     if len(rows) != 1 or rows[0]['module'] != module_name:
         raise ValueError('native module binding mismatch')
@@ -237,9 +253,10 @@ def module(root, name, source, utility_path, executable, output):
         report = directory / public.RAW
         arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
             '--utility-input', str(utility), name, record['source_path'], 'sha256:' + public.digest(source)]
+        arguments = inspection_arguments(root, [name], arguments)
         capture = retain_request(root, executable, arguments, record['utilities'])
         with phase('native-inspect', request_capture=capture):
-            subprocess.run([str(executable), *arguments], check=True, cwd=root)
+            run_inspector(root, executable, arguments)
         materials.compact(directory / 'spool.json', spool, report, root / 'lean-report-inputs.json')
         public.write_origin(report, name, public.production_origin(root, executable), input_projection(root, name))
         # Like an olean, an artifact is validated once, when it is produced;
@@ -248,8 +265,9 @@ def module(root, name, source, utility_path, executable, output):
         artifact = directory / 'module.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
         os.replace(artifact, output)
-        print('LEAN_INSPECTOR_ASSESS module=' + name)
-        module_work('assess', [name])
+        if input_projection(root, name)['inputs']:
+            print('LEAN_INSPECTOR_ASSESS module=' + name)
+            module_work('assess', [name])
         module_work('extract', [name])
         activity('extract', 1)
         print(f'LEAN_INSPECTOR_EXTRACT module={name} declarations={len(rows[0]["declarations"])}')
@@ -281,11 +299,12 @@ def produce_batch_chunk(requests):
         utility_file.write_bytes(materials.canonical_json(utilities))
         arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
                      '--utility-input', str(utility_file), *triples]
+        arguments = inspection_arguments(root, list(bindings), arguments)
         argument_file = directory / 'arguments.json'
         argument_file.write_text(json.dumps(arguments))
         capture = retain_request(root, executable, arguments, utilities, origin)
         with phase('native-inspect', request_capture=capture):
-            subprocess.run([executable, '--request-file', str(argument_file)], cwd=root, check=True)
+            run_inspector(root, executable, arguments, argument_file)
         raw = public.read_json((directory / 'spool.json').read_bytes())
         if [row['module'] for row in raw['modules']] != sorted(bindings):
             raise ValueError('incomplete native inspection batch')
@@ -318,8 +337,9 @@ def produce_batch_chunk(requests):
             raise ValueError('unreferenced batch materials')
         for name in bindings:
             print('LEAN_INSPECTOR_EXTRACT module=' + name)
-            print('LEAN_INSPECTOR_ASSESS module=' + name)
-            module_work('assess', [name])
+            if input_projection(root, name)['inputs']:
+                print('LEAN_INSPECTOR_ASSESS module=' + name)
+                module_work('assess', [name])
         module_work('extract', list(bindings))
         activity('extract', len(requests))
         print(f'LEAN_INSPECTOR_EXTRACT modules={len(requests)} declarations={declarations}')
@@ -337,7 +357,13 @@ def produce_batch(requests):
     # Chunks bound per-process memory; each chunk validates its modules
     # before writing their artifacts.
     for start in range(0, len(requests), NATIVE_BATCH_MODULES):
-        produce_batch_chunk(requests[start:start + NATIVE_BATCH_MODULES])
+        chunk = requests[start:start + NATIVE_BATCH_MODULES]
+        raw, judged = [], []
+        for row in chunk:
+            (judged if input_projection(root, row[1])['inputs'] else raw).append(row)
+        for group in (raw, judged):
+            if group:
+                produce_batch_chunk(group)
 
 
 @phase('native-batch')

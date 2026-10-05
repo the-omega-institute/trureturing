@@ -136,6 +136,8 @@ class NativeBatchStateTests(unittest.TestCase):
 
             def inspect(command, **kwargs):
                 arguments = json.loads(Path(command[-1]).read_text())
+                if arguments[0] == '--compiled-only':
+                    arguments = arguments[1:]
                 spool = Path(arguments[arguments.index('--material-spool') + 1])
                 rows = []
                 for index, (name, path, sha) in enumerate(zip(*[iter(arguments[6:])]*3)):
@@ -168,8 +170,8 @@ class NativeBatchStateTests(unittest.TestCase):
                     patch.object(native.subprocess, 'run', side_effect=inspect), \
                     patch.object(publication, 'read_json', side_effect=read), \
                     patch.object(publication, 'validate_rows', side_effect=validate):
-                native.produce_batch_chunk(requests)
-            self.assertEqual(selections.call_count, 2,
+                native.produce_batch(requests)
+            self.assertEqual(selections.call_count, 3,
                 '[FAIL] batch_selection_scans_independent_of_module_count')
             self.assertEqual(retained, [0, 0, 0],
                 '[FAIL] completed_module_validation_state_released')
@@ -561,10 +563,15 @@ raise SystemExit(37)
         (self.root / 'lean-toolchain').write_text('fixture-toolchain\n')
         manifest_fixture(self.root)
         native.state(self.root).mkdir(parents=True)
+        (native.state(self.root) / 'judge-inputs').mkdir()
         self.requests = []
         self.triples = []
         self.utilities = []
         for name in ['B', 'A']:
+            (native.state(self.root) / 'judge-inputs' / (name + '.json')).write_text(json.dumps(
+                dict(schema='stratalint-judge-input-projection-v1', module=name,
+                    inputs=[dict(owner=name, name=name + '.entry',
+                                 type='LeanInformationAudit.Contract.Registration')])))
             source = self.root / f'{name}.lean'
             source.write_text(f'-- source {name}\n')
             utility = dict(modulePath=f'{name}.lean', claimModule=f'Claims.{name}',

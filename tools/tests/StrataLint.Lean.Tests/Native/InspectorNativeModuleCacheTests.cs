@@ -11,6 +11,10 @@ public sealed class InspectorNativeModuleCacheTests(InspectorCompilerFixture com
     public void ModuleCacheValidation(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
 
     [Fact]
+    public void CompiledOnlyReaderAndFailureBoundary() => InspectorNativeTestRunner.Run(compiler,
+        "test_native.NativeTests.test_compiled_only_reader_and_failure_boundary");
+
+    [Fact]
     public void OldManifestKeyRejected() =>
         InspectorNativeTestRunner.Run(compiler, "test_native.NativeTests.test_native_old_manifest_key_rejected");
 
