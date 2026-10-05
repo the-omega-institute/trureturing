@@ -257,8 +257,12 @@ private def realCertificate : PLift (K = Real.pi • κ ∧
     intro j k hjk
     fin_cases j <;> fin_cases k <;> simp at hjk
     all_goals
-      simp [Matrix.mul_apply, Fin.sum_univ_succ, κ, Ccoeff] <;>
-        ring_nf <;> simp only [hs, hu2] <;> ring_nf <;> simp only [hs] <;> ring
+      simp [Matrix.mul_apply, Fin.sum_univ_succ, κ, Ccoeff]
+      ring_nf
+      simp only [hs, hu2]
+      ring_nf
+      simp only [hs]
+      ring
   have hPP : P * P = P := by
     apply Matrix.ext
     intro j k
