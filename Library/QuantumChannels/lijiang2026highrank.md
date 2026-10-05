@@ -14,6 +14,13 @@ triage: anchor
 
 # High-Rank Encoding Can Improve Approximate Quantum Error Correction
 
+## Verified locator
+
+- URL: https://arxiv.org/abs/2609.00778v1 (version 1, the source record inspected).
+- Scope: printed p. 17 immediately after Eq. S64 for the fixed-noise optimality
+  statement; Eqs. 18–23 and S60 on printed pp. 16–17 for the definitions used
+  by the repository refutation.
+
 Bikun Li and Liang Jiang, arXiv:2609.00778v1, 1 September 2026,
 quant-ph. The source is this version, rather than an unverified later or
 journal text. Printed p. 17, immediately after Eq. S64, states:
