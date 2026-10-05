@@ -10,7 +10,7 @@
 proof_shape: content (diagonal_exact_family)
 escape_witness: A marked-path charge obstruction excludes signed-weight optimality on the sparse diagonal.
 admission_basis: escape-witness
-Direct frozen dependencies: none; the period-doubling modules are delivered together.
+Direct frozen dependencies: D5/S1/Words/Palindromes/FridPrefix/PalindromicLength.
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
@@ -18,6 +18,8 @@ import D5.S1.Words.Palindromes.PeriodDoubling.SparseInitialArithmetic
 import D5.S1.Words.Palindromes.PeriodDoubling.MarkedPathObstruction
 import D5.S1.Words.Palindromes.PeriodDoubling.SparseFamilyUpper
 namespace D5.S1.Words.Palindromes.PeriodDoubling
+
+open D5.S1.Words.FridPrefix (PL PalFactors)
 open scoped BigOperators
 set_option autoImplicit false
 set_option maxHeartbeats 0

@@ -10,7 +10,7 @@
 proof_shape: content (marked_charge_obstruction)
 escape_witness: Induction over tight paths accumulates removed-digit charges with the phase correction.
 admission_basis: escape-witness
-Direct frozen dependencies: none; the period-doubling modules are delivered together.
+Direct frozen dependencies: D5/S1/Words/Palindromes/FridPrefix/PalindromicLength.
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
@@ -18,6 +18,8 @@ import D5.S1.Words.Palindromes.PeriodDoubling.MarkedPrefixRigidity
 import D5.S1.Words.Palindromes.PeriodDoubling.EvenTightPaths
 import D5.S1.Words.Palindromes.PeriodDoubling.TightFactorization
 namespace D5.S1.Words.Palindromes.PeriodDoubling
+
+open D5.S1.Words.FridPrefix (PL PalFactors)
 open scoped BigOperators
 set_option autoImplicit false
 set_option maxHeartbeats 0

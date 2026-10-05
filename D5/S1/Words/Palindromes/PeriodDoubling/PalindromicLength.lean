@@ -10,43 +10,29 @@
 proof_shape: content (optimal_suffix_cut, suffix_cut_lower_bound)
 escape_witness: Extracting an optimal last factor; well-founded propagation along all suffix cuts.
 admission_basis: escape-witness
-Direct frozen dependencies: none.
+Direct frozen dependencies: D5/S1/Words/Palindromes/FridPrefix/PalindromicLength.
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
-import Mathlib.Data.List.Palindrome
-import Mathlib.Order.Lattice.Nat
+import D5.S1.Words.Palindromes.FridPrefix.PalindromicLength
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S1.Words.Palindromes.PeriodDoubling
 
-/-- A concatenation of exactly `k` nonempty palindromes. -/
-def PalFactors {α : Type*} (w : List α) (k : ℕ) : Prop :=
-  ∃ ps : List (List α), ps.flatten = w ∧ ps.length = k ∧
-    ∀ p ∈ ps, p ≠ [] ∧ List.Palindrome p
-
-/-- The minimum number of nonempty palindrome factors. -/
-noncomputable def PL {α : Type*} (w : List α) : ℕ :=
-  sInf {k : ℕ | PalFactors w k}
+open D5.S1.Words.FridPrefix (PL PalFactors)
 
 /-- Some final palindromic suffix realizes the exact minimum cut recurrence. -/
 theorem optimal_suffix_cut {α : Type*} (w : List α) (hw : w ≠ []) :
     ∃ j : ℕ, j < w.length ∧ List.Palindrome (w.drop j) ∧
       PL w = PL (w.take j) + 1 := by
-  have existsFactors (v : List α) : ∃ k : ℕ, PalFactors v k := by
-    refine ⟨v.length, v.map (fun a => [a]), ?_, by simp, ?_⟩
-    · induction v with
-      | nil => rfl
-      | cons a v ih => simpa using congrArg (List.cons a) ih
-    · intro p hp
-      obtain ⟨a, _, rfl⟩ := List.mem_map.mp hp
-      exact ⟨by simp, List.Palindrome.singleton a⟩
-  have minimal (v : List α) : PalFactors v (PL v) :=
-    Nat.sInf_mem (existsFactors v)
+  classical
+  have minimal (v : List α) : PalFactors v (PL v) := by
+    unfold PL
+    exact Nat.find_spec _
   have bound {v : List α} {k : ℕ} (h : PalFactors v k) : PL v ≤ k :=
-    Nat.sInf_le h
+    Nat.find_le h
   obtain ⟨ps, hps, hlen, hp⟩ := minimal w
   cases ps using List.reverseRecOn with
   | nil => simp only [List.flatten_nil] at hps; exact (hw hps.symm).elim

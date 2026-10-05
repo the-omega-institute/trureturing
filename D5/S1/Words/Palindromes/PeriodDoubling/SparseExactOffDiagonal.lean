@@ -10,7 +10,7 @@
 proof_shape: content (offdiagonal_exact_family)
 escape_witness: The sparse cut construction and canonical signed digits attain equal upper and lower costs.
 admission_basis: escape-witness
-Direct frozen dependencies: none; the period-doubling modules are delivered together.
+Direct frozen dependencies: D5/S1/Words/Palindromes/FridPrefix/PalindromicLength.
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
@@ -18,6 +18,8 @@ import D5.S1.Words.Palindromes.PeriodDoubling.SparseInitialArithmetic
 import D5.S1.Words.Palindromes.PeriodDoubling.SparseFamilyUpper
 import D5.S1.Words.Palindromes.PeriodDoubling.SignedCutLowerBound
 namespace D5.S1.Words.Palindromes.PeriodDoubling
+
+open D5.S1.Words.FridPrefix (PL PalFactors)
 open scoped BigOperators
 set_option autoImplicit false
 theorem offdiagonal_exact_family (a b : ℕ) (ha : 0<a) (hao : a%2=1) (hbo : b%2=1) (hab : 2*a+1 ≤ b) :

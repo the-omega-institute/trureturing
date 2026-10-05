@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Words/Palindromes/PeriodDoubling/BaseClassStreams
    mirror-E: none(waiver:unbounded-class-flag-semantics)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/PrefixPalindromicLengthNotAutomatic.result; instance=D5/S1/Words/Palindromes/PeriodDoubling/BaseCertificates.baseTable
+   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/TightCutCharge.tight_cut_class_and_Q; instance=D5/S1/Words/Palindromes/PeriodDoubling/BaseCertificates.baseTable
    digest: Charge-mode accepted paths forbid opposite signed digits two positions apart. -/
 
 /-

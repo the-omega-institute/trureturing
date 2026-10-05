@@ -10,13 +10,15 @@
 proof_shape: content (sparse_block_upper_steps)
 escape_witness: The explicit four-cut and two-cut chains preserve the higher prefix and endpoint bit.
 admission_basis: escape-witness
-Direct frozen dependencies: none; the period-doubling modules are delivered together.
+Direct frozen dependencies: D5/S1/Words/Palindromes/FridPrefix/PalindromicLength.
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
 import D5.S1.Words.Palindromes.PeriodDoubling.OddPalindromeRadius
 import D5.S1.Words.Palindromes.PeriodDoubling.PalindromicLength
 namespace D5.S1.Words.Palindromes.PeriodDoubling
+
+open D5.S1.Words.FridPrefix (PL PalFactors)
 open scoped BigOperators
 set_option autoImplicit false
 set_option maxHeartbeats 0
@@ -28,6 +30,7 @@ theorem sparse_block_upper_steps (p z c eps : ℕ) (hp : 0<p) (heps : eps≤1) :
     let P : ℕ → ℕ := fun n => PL (List.ofFn (fun i : Fin n => u_pd i))
     ((z%2=0 ∧ 3 ≤ c) → P (S p z c+eps)≤P (S (p-1) (z+9) (c-3)+eps)+4) ∧
     ((z%2=1 ∧ 1 ≤ c) → P (S p z c+eps)≤P (S (p-1) (z+5) (c-1)+eps)+2) := by
+  classical
   dsimp only
   let P : ℕ → ℕ := fun n => PL (List.ofFn (fun i : Fin n => u_pd i))
   let T : ℕ → ℕ := fun m => ∑ j ∈ Finset.range m, 2^(2*j+1)
@@ -35,14 +38,8 @@ theorem sparse_block_upper_steps (p z c eps : ℕ) (hp : 0<p) (heps : eps≤1) :
   let S : ℕ → ℕ → ℕ → ℕ := fun p z c =>
       (∑ i ∈ Finset.range p, 2^(2*c+z+2+3*i)) + T c
   have minimum (w : List Bool) : PalFactors w (PL w) := by
-    apply (Nat.sInf_mem (s := {k | PalFactors w k}))
-    refine ⟨w.length,w.map (fun a => [a]),?_,by simp,?_⟩
-    · induction w with
-      | nil => rfl
-      | cons a w ih => simpa using congrArg (List.cons a) ih
-    · intro p hp
-      obtain ⟨a,_,rfl⟩ := List.mem_map.mp hp
-      exact ⟨by simp,List.Palindrome.singleton a⟩
+    unfold PL
+    exact Nat.find_spec _
   have upper (n j : ℕ) (hj : j<n)
       (hpal : List.Palindrome (List.ofFn (fun i : Fin (n-j) => u_pd (j+i)))) :
       P n≤P j+1 := by
@@ -63,7 +60,7 @@ theorem sparse_block_upper_steps (p z c eps : ℕ) (hp : 0<p) (heps : eps≤1) :
     have split := List.take_append_drop j (List.ofFn (fun i : Fin n => u_pd i))
     rw [parts.1,parts.2] at split
     obtain ⟨ps,hflat,hlen,hps⟩ := minimum (List.ofFn (fun i : Fin j => u_pd i))
-    apply Nat.sInf_le
+    apply Nat.find_le
     refine ⟨ps++[tail],?_,?_,?_⟩
     · simpa [List.flatten_append,hflat] using split
     · simpa [P,hlen]

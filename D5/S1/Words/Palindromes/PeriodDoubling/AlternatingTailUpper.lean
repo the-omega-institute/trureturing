@@ -10,30 +10,27 @@
 proof_shape: content (alternating_tail_upper)
 escape_witness: The two-cut construction removes two blocks at every scale and iterates to the endpoint.
 admission_basis: escape-witness
-Direct frozen dependencies: none; the period-doubling modules are delivered together.
+Direct frozen dependencies: D5/S1/Words/Palindromes/FridPrefix/PalindromicLength.
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
 import D5.S1.Words.Palindromes.PeriodDoubling.OddPalindromeRadius
 import D5.S1.Words.Palindromes.PeriodDoubling.PalindromicLength
 namespace D5.S1.Words.Palindromes.PeriodDoubling
+
+open D5.S1.Words.FridPrefix (PL PalFactors)
 open scoped BigOperators
 set_option autoImplicit false
 set_option maxHeartbeats 0
 
 theorem alternating_tail_upper (k eps : ℕ) (heps : eps≤1) :
     PL (List.ofFn (fun i : Fin ((∑ j ∈ Finset.range (2*k), 2^(2*j+1))+eps) => u_pd i)) ≤ 2*k+eps := by
+  classical
   let P : ℕ → ℕ := fun n => PL (List.ofFn (fun i : Fin n => u_pd i))
   let T : ℕ → ℕ := fun m => ∑ j ∈ Finset.range m, 2^(2*j+1)
   have minimum (w : List Bool) : PalFactors w (PL w) := by
-    apply (Nat.sInf_mem (s := {k | PalFactors w k}))
-    refine ⟨w.length,w.map (fun a => [a]),?_,by simp,?_⟩
-    · induction w with
-      | nil => rfl
-      | cons a w ih => simpa using congrArg (List.cons a) ih
-    · intro p hp
-      obtain ⟨a,_,rfl⟩ := List.mem_map.mp hp
-      exact ⟨by simp,List.Palindrome.singleton a⟩
+    unfold PL
+    exact Nat.find_spec _
   have upper (n j : ℕ) (hj : j<n)
       (hpal : List.Palindrome (List.ofFn (fun i : Fin (n-j) => u_pd (j+i)))) :
       P n≤P j+1 := by
@@ -54,7 +51,7 @@ theorem alternating_tail_upper (k eps : ℕ) (heps : eps≤1) :
     have split := List.take_append_drop j (List.ofFn (fun i : Fin n => u_pd i))
     rw [parts.1,parts.2] at split
     obtain ⟨ps,hflat,hlen,hps⟩ := minimum (List.ofFn (fun i : Fin j => u_pd i))
-    apply Nat.sInf_le
+    apply Nat.find_le
     refine ⟨ps++[tail],?_,?_,?_⟩
     · simpa [List.flatten_append,hflat] using split
     · simpa [P,hlen]
@@ -129,7 +126,7 @@ theorem alternating_tail_upper (k eps : ℕ) (heps : eps≤1) :
   | zero =>
     have ht : T 0=0 := by simp [T]
     rw [ht,zero_add,Nat.mul_zero,zero_add]
-    apply Nat.sInf_le
+    apply Nat.find_le
     rcases (by omega : eps=0 ∨ eps=1) with rfl|rfl
     · exact ⟨[],rfl,rfl,by simp⟩
     · refine ⟨[[u_pd 0]],?_,rfl,?_⟩

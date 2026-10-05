@@ -4,15 +4,9 @@
    mirror-E: none(waiver:finite-kernel-span-telescoping)
    anchors: []
    utility: none
-   digest: A finite difference kernel forces a finite-dimensional prefix-sum kernel span. -/
+   digest: The literal binary kernel records all power-of-two residue subsequences. -/
 
-/-
-proof_shape: content (finite_difference_kernel_span, triangular_evaluation_span_infinite)
-escape_witness: Residue-block decomposition and unbounded triangular evaluation independence.
-admission_basis: escape-witness
-Direct frozen dependencies: none.
-Information-escape registration is paused under CLAUDE.md section 3.9.
--/
+
 
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 
@@ -27,115 +21,5 @@ open scoped BigOperators
 def twoKernel {A : Type*} (f : ℕ → A) : Set (ℕ → A) :=
   {g | ∃ e r : ℕ, r < 2 ^ e ∧ g = fun n => f (2 ^ e * n + r)}
 
-/-- A finite kernel of first differences bounds the rational kernel span. -/
-theorem finite_difference_kernel_span (P : ℕ → ℚ) (hzero : P 0 = 0)
-    (hfinite : (twoKernel (fun n => P (n + 1) - P n)).Finite) :
-    FiniteDimensional ℚ (Submodule.span ℚ (twoKernel P)) := by
-  classical
-  let d : ℕ → ℚ := fun n => P (n + 1) - P n
-  let H : (ℕ → ℚ) → (ℕ → ℚ) := fun u n => ∑ k ∈ Finset.range n, u k
-  let U : Set (ℕ → ℚ) := twoKernel d ∪ H '' twoKernel d
-  have hU : U.Finite := hfinite.union (hfinite.image H)
-  have blocks (q n : ℕ) :
-      (∑ k ∈ Finset.range (q * n), d k) =
-        ∑ s ∈ Finset.range q, ∑ k ∈ Finset.range n, d (q * k + s) := by
-    induction n with
-    | zero => simp
-    | succ n ih =>
-      rw [Nat.mul_succ, Finset.sum_range_add, ih]
-      simp_rw [Finset.sum_range_succ]
-      rw [Finset.sum_add_distrib]
-  have decomposition (e r n : ℕ) :
-      P (2 ^ e * n + r) =
-        (∑ s ∈ Finset.range (2 ^ e), H (fun k => d (2 ^ e * k + s)) n) +
-          ∑ s ∈ Finset.range r, d (2 ^ e * n + s) := by
-    have ht : ∑ k ∈ Finset.range (2 ^ e * n + r), d k = P (2 ^ e * n + r) := by
-      simp only [d, Finset.sum_range_sub, hzero, sub_zero]
-    rw [← ht, Finset.sum_range_add, blocks]
-  have contain : Submodule.span ℚ (twoKernel P) ≤ Submodule.span ℚ U := by
-    apply Submodule.span_le.mpr
-    intro f hf
-    obtain ⟨e, r, hr, rfl⟩ := hf
-    have heq : (fun n => P (2 ^ e * n + r)) =
-        (∑ s ∈ Finset.range (2 ^ e), H (fun k => d (2 ^ e * k + s))) +
-          ∑ s ∈ Finset.range r, (fun n => d (2 ^ e * n + s)) := by
-      funext n
-      simpa using decomposition e r n
-    rw [heq]
-    apply Submodule.add_mem
-    · apply Submodule.sum_mem
-      intro s hs
-      apply Submodule.subset_span
-      right
-      exact ⟨fun k => d (2 ^ e * k + s), ⟨e, s, Finset.mem_range.mp hs, rfl⟩, rfl⟩
-    · apply Submodule.sum_mem
-      intro s hs
-      apply Submodule.subset_span
-      left
-      exact ⟨e, s, (Finset.mem_range.mp hs).trans hr, rfl⟩
-  haveI : FiniteDimensional ℚ (Submodule.span ℚ U) :=
-    (Submodule.fg_iff_finiteDimensional _).mp (Submodule.fg_span hU)
-  exact Submodule.finiteDimensional_of_le contain
-
-/-- Unit triangular evaluations modulo two separable terms force an infinite-dimensional span. -/
-theorem triangular_evaluation_span_infinite (S : Set (ℕ → ℚ))
-    (f : ℕ → ℕ → ℚ) (x : ℕ → ℕ) (a b : ℕ → ℚ)
-    (hf : ∀ j, f j ∈ S)
-    (habove : ∀ i j, i < j → f j (x i) = a i + b j)
-    (hdiag : ∀ i, f i (x i) = a i + b i + 1) :
-    ¬FiniteDimensional ℚ (Submodule.span ℚ S) := by
-  classical
-  intro hfinite
-  letI := hfinite
-  let E : (ℕ → ℚ) →ₗ[ℚ] (ℕ → ℚ) := LinearMap.funLeft ℚ ℚ x
-  let W : Submodule ℚ (ℕ → ℚ) :=
-    (Submodule.span ℚ S).map E ⊔ Submodule.span ℚ {a, fun _ => 1}
-  have hpair : ({a, fun _ : ℕ => (1 : ℚ)} : Set (ℕ → ℚ)).Finite := by simp
-  haveI : FiniteDimensional ℚ (Submodule.span ℚ {a, fun _ : ℕ => (1 : ℚ)}) :=
-    FiniteDimensional.span_of_finite ℚ hpair
-  haveI : FiniteDimensional ℚ W := inferInstance
-  let g : ℕ → ℕ → ℚ := fun j i => f j (x i) - a i - b j
-  have hmem (j : ℕ) : g j ∈ W := by
-    have hfj : E (f j) ∈ W := Submodule.mem_sup_left
-      (Submodule.mem_map.mpr ⟨f j, Submodule.subset_span (hf j), rfl⟩)
-    have ha : a ∈ W := Submodule.mem_sup_right (Submodule.subset_span (by simp))
-    have hb : (fun _ : ℕ => (1 : ℚ)) ∈ W :=
-      Submodule.mem_sup_right (Submodule.subset_span (by simp))
-    have hd := W.sub_mem (W.sub_mem hfj ha) (W.smul_mem (b j) hb)
-    have heq : g j = E (f j) - a - b j • (fun _ : ℕ => (1 : ℚ)) := by
-      funext i
-      simp [g, E]
-    rw [heq]
-    exact hd
-  have hzero (i j : ℕ) (hij : i < j) : g j i = 0 := by
-    dsimp [g]
-    rw [habove i j hij]
-    ring
-  have hone (i : ℕ) : g i i = 1 := by
-    dsimp [g]
-    rw [hdiag i]
-    ring
-  have hlin : LinearIndependent ℚ g := by
-    apply linearIndependent_iff'.mpr
-    intro t c hsum i hi
-    induction i using Nat.strong_induction_on with
-    | h i ih =>
-      have he : (∑ j ∈ t, c j * g j i) = 0 := by
-        have h := congrArg (fun v : ℕ → ℚ => v i) hsum
-        simpa using h
-      rw [Finset.sum_eq_single i] at he
-      · simpa [hone] using he
-      · intro j hj hji
-        rcases lt_or_gt_of_ne hji with hjlt | hjgt
-        · rw [ih j hjlt hj, zero_mul]
-        · rw [hzero i j hjgt, mul_zero]
-      · exact fun hni => (hni hi).elim
-  let v : ℕ → W := fun j => ⟨g j, hmem j⟩
-  have hv : LinearIndependent ℚ v := hlin.of_comp W.subtype
-  have hc := hv.lt_aleph0_of_finiteDimensional
-  simpa using hc
 
 end D5.S1.Words.Palindromes.PeriodDoubling
-
-#print axioms D5.S1.Words.Palindromes.PeriodDoubling.finite_difference_kernel_span
-#print axioms D5.S1.Words.Palindromes.PeriodDoubling.triangular_evaluation_span_infinite

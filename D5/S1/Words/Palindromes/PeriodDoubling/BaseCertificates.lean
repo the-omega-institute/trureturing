@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Words/Palindromes/PeriodDoubling/BaseCertificates
    mirror-E: none(waiver:complete-transducer-potential-certificates)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/PrefixPalindromicLengthNotAutomatic.result; instance=D5/S1/Words/Palindromes/PeriodDoubling/BaseCertificates.baseTable
+   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/TightCutCharge.tight_cut_class_and_Q; instance=D5/S1/Words/Palindromes/PeriodDoubling/BaseCertificates.baseTable
    digest: Complete integer potential certificates bound the class and charge transducer. -/
 
 /-
@@ -845,7 +845,7 @@ private def baseRowCheck (i : ℕ) (charge : Bool) : Bool :=
     | none => false
     | some V => V + (if charge then baseOffset state else 0) ≤ if charge then 3 else 0
     else true
-  let sources := if sourceIds.contains i then
+  let sources := if (List.range 7).contains i then
     initialStates.contains state &&
       (match potential with | none => true | some V => 0 ≤ V)
     else true
@@ -867,7 +867,7 @@ private def baseBlockCheck (start count : ℕ) (charge : Bool) : Bool :=
 
 /-- Both certificates use this same fully listed graph, with different terminal tests. -/
 def baseAutomaton (charge : Bool) : NFA (ℤ × ℤ × ℤ × ℤ) (Fin 1492) where
-  start := {i | sourceIds.contains i.val}
+  start := {i | (List.range 7).contains i.val}
   step i a := {j | (j.val, a) ∈ (baseTable i.val).2.1}
   accept := {i | baseTerminal (baseTable i.val).1 &&
     ((baseTable i.val).1[18]?.getD 0 == if charge then 0 else 1)}

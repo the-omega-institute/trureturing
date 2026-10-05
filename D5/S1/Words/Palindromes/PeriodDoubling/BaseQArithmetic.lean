@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Words/Palindromes/PeriodDoubling/BaseQArithmetic
    mirror-E: none(waiver:literal-signed-charge-semantics)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/PrefixPalindromicLengthNotAutomatic.result; instance=D5/S1/Words/Palindromes/PeriodDoubling/BaseCertificates.baseTable
+   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/TightCutCharge.tight_cut_class_and_Q; instance=D5/S1/Words/Palindromes/PeriodDoubling/BaseCertificates.baseTable
    digest: Accepted q path weights and phase offsets equal the literal endpoint Q difference. -/
 
 /-

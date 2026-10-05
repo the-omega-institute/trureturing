@@ -10,7 +10,7 @@
 proof_shape: content (palindromic_suffix_signed_bound)
 escape_witness: The dyadic estimate across short and long palindrome centers, including radius two.
 admission_basis: escape-witness
-Direct frozen dependencies: none; the imported period-doubling modules are delivered together.
+Direct frozen dependencies: D5/S1/Words/Palindromes/FridPrefix/PalindromicLength.
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
@@ -22,6 +22,8 @@ import D5.S1.Words.Palindromes.PeriodDoubling.PalindromicLength
 set_option autoImplicit false
 
 namespace D5.S1.Words.Palindromes.PeriodDoubling
+
+open D5.S1.Words.FridPrefix (PL PalFactors)
 
 set_option maxHeartbeats 2000000 in
 -- The estimate handles all dyadic scales and both odd-palindrome radius regimes.

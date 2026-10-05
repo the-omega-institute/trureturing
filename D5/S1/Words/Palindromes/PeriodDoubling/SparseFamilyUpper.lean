@@ -10,13 +10,15 @@
 proof_shape: content (sparse_family_upper)
 escape_witness: Induction combines six-cut reductions with the diagonal and alternating terminal paths.
 admission_basis: escape-witness
-Direct frozen dependencies: none; the period-doubling modules are delivered together.
+Direct frozen dependencies: D5/S1/Words/Palindromes/FridPrefix/PalindromicLength.
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
 import D5.S1.Words.Palindromes.PeriodDoubling.SparseBlockUpperSteps
 import D5.S1.Words.Palindromes.PeriodDoubling.AlternatingTailUpper
 namespace D5.S1.Words.Palindromes.PeriodDoubling
+
+open D5.S1.Words.FridPrefix (PL PalFactors)
 open scoped BigOperators
 set_option autoImplicit false
 set_option maxHeartbeats 0
@@ -28,6 +30,7 @@ theorem sparse_family_upper (a b eps : ℕ) (ha : 0<a) (hao : a%2=1) (hbo : b%2=
       (∑ j ∈ Finset.range b, 2^(2*j+1))
     PL (List.ofFn (fun i : Fin (N a b+eps) => u_pd i))  ≤ 
       if b=2*a-1 then 3*a else a+b+eps := by
+  classical
   dsimp only
   let P : ℕ → ℕ := fun n => PL (List.ofFn (fun i : Fin n => u_pd i))
   let T : ℕ → ℕ := fun c => ∑ j ∈ Finset.range c, 2^(2*j+1)
@@ -37,14 +40,8 @@ theorem sparse_family_upper (a b eps : ℕ) (ha : 0<a) (hao : a%2=1) (hbo : b%2=
       PL (List.ofFn (fun i : Fin (2^s+2+eps) => u_pd i))  ≤  3 := by
     let P : ℕ → ℕ := fun n => PL (List.ofFn (fun i : Fin n => u_pd i))
     have minimum (w : List Bool) : PalFactors w (PL w) := by
-      apply (Nat.sInf_mem (s := {k | PalFactors w k}))
-      refine ⟨w.length,w.map (fun a => [a]),?_,by simp,?_⟩
-      · induction w with
-        | nil => rfl
-        | cons a w ih => simpa using congrArg (List.cons a) ih
-      · intro p hp
-        obtain ⟨a,_,rfl⟩ := List.mem_map.mp hp
-        exact ⟨by simp,List.Palindrome.singleton a⟩
+      unfold PL
+      exact Nat.find_spec _
     have upper (n j : ℕ) (hj : j<n)
         (hpal : List.Palindrome (List.ofFn (fun i : Fin (n-j) => u_pd (j+i)))) :
         P n ≤ P j+1 := by
@@ -65,7 +62,7 @@ theorem sparse_family_upper (a b eps : ℕ) (ha : 0<a) (hao : a%2=1) (hbo : b%2=
       have split := List.take_append_drop j (List.ofFn (fun i : Fin n => u_pd i))
       rw [parts.1,parts.2] at split
       obtain ⟨ps,hflat,hlen,hps⟩ := minimum (List.ofFn (fun i : Fin j => u_pd i))
-      apply Nat.sInf_le
+      apply Nat.find_le
       refine ⟨ps++[tail],?_,?_,?_⟩
       · simpa [List.flatten_append,hflat] using split
       · simpa [P,hlen]
@@ -84,7 +81,7 @@ theorem sparse_family_upper (a b eps : ℕ) (ha : 0<a) (hao : a%2=1) (hbo : b%2=
       simpa [List.ofFn_succ] using List.Palindrome.singleton (u_pd n)
     have hzero : P 0=0 := by
       apply Nat.eq_zero_of_le_zero
-      apply Nat.sInf_le
+      apply Nat.find_le
       exact ⟨[],rfl,rfl,by simp⟩
     let q := 2^(s-1)
     have hq : 0<q := by dsimp [q];positivity

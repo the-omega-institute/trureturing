@@ -10,7 +10,7 @@
 proof_shape: content (tight_factorization_iff)
 escape_witness: Strong induction constructs and reconstructs a complete path of tight cuts.
 admission_basis: escape-witness
-Direct frozen dependencies: none; SignedCutLowerBound is delivered with this module.
+Direct frozen dependencies: D5/S1/Words/Palindromes/FridPrefix/PalindromicLength.
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
@@ -21,6 +21,8 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S1.Words.Palindromes.PeriodDoubling
 
+open D5.S1.Words.FridPrefix (PL PalFactors)
+
 /-- Equality with the signed-weight lower bound is equivalent to a path of tight cuts. -/
 theorem tight_factorization_iff (n : ℕ) :
     PL (List.ofFn (fun i : Fin n => u_pd i)) = signedWeight (((n+1)/2 : ℕ) : ℤ) ↔
@@ -28,6 +30,7 @@ theorem tight_factorization_iff (n : ℕ) :
       (n :: cuts).IsChain (fun s t => t < s ∧
         List.Palindrome (List.ofFn (fun i : Fin (s-t) => u_pd (t+i))) ∧
         signedWeight (((s+1)/2 : ℕ) : ℤ) = signedWeight (((t+1)/2 : ℕ) : ℤ) + 1) := by
+  classical
   let P : ℕ → ℕ := fun k => PL (List.ofFn (fun i : Fin k => u_pd i))
   let F : ℕ → ℕ := fun k => signedWeight (((k+1)/2 : ℕ) : ℤ)
   let Rel : ℕ → ℕ → Prop := fun s t => t < s ∧
@@ -48,18 +51,12 @@ theorem tight_factorization_iff (n : ℕ) :
       · intro i hi hi'
         simp only [List.getElem_drop, List.getElem_ofFn]
   have minimum (w : List Bool) : PalFactors w (PL w) := by
-    apply (Nat.sInf_mem (s := { k | PalFactors w k }))
-    refine ⟨w.length, w.map (fun a => [a]), ?_, by simp, ?_⟩
-    · induction w with
-      | nil => rfl
-      | cons a w ih => simpa using congrArg (List.cons a) ih
-    · intro p hp
-      obtain ⟨a, _, rfl⟩ := List.mem_map.mp hp
-      exact ⟨by simp, List.Palindrome.singleton a⟩
+    unfold PL
+    exact Nat.find_spec _
   have hzero : P 0 = F 0 := by
     have hP : P 0 = 0 := by
       apply Nat.eq_zero_of_le_zero
-      apply Nat.sInf_le
+      apply Nat.find_le
       exact ⟨[], rfl, rfl, by simp⟩
     have hF : F 0 = 0 := signed_weight_arithmetic.1
     exact hP.trans hF.symm
@@ -73,7 +70,7 @@ theorem tight_factorization_iff (n : ℕ) :
       have he := List.take_append_drop j (List.ofFn (fun i : Fin n => u_pd i))
       rw [(split n j hj.le).1, (split n j hj.le).2] at he
       exact he.symm
-    apply Nat.sInf_le
+    apply Nat.find_le
     refine ⟨ps ++ [tail], ?_, ?_, ?_⟩
     · simpa [List.flatten_append, hflat, tail] using hjoin.symm
     · simpa [P, hlen]

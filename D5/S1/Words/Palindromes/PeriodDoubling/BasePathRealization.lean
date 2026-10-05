@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Words/Palindromes/PeriodDoubling/BasePathRealization
    mirror-E: none(waiver:complete-arithmetic-path-realization)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/PrefixPalindromicLengthNotAutomatic.result; instance=D5/S1/Words/Palindromes/PeriodDoubling/BaseCertificates.baseTable
+   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/BaseDigitRealization.base_bit_path_realization; instance=D5/S1/Words/Palindromes/PeriodDoubling/BaseCertificates.baseTable
    digest: Flushed arithmetic paths lift to the finite certificate graph. -/
 
 /-

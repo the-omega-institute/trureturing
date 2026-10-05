@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Words/Palindromes/PeriodDoubling/PrefixPathRealization
    mirror-E: none(waiver:complete-symbolic-marker-realization)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/PrefixPalindromicLengthNotAutomatic.result; instance=D5/S1/Words/Palindromes/PeriodDoubling/MarkedPrefixCertificates.prefixTable
+   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/MarkedPrefixRigidity.marked_prefix_rigidity_and_charge; instance=D5/S1/Words/Palindromes/PeriodDoubling/MarkedPrefixCertificates.prefixTable
    digest: Symbolic marked-prefix paths lift to the complete finite certificate graph. -/
 
 /-

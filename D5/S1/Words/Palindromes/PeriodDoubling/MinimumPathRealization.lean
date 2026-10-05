@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Words/Palindromes/PeriodDoubling/MinimumPathRealization
    mirror-E: none(waiver:complete-lowest-position-product-realization)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/PrefixPalindromicLengthNotAutomatic.result; instance=D5/S1/Words/Palindromes/PeriodDoubling/MinimumPositionCertificate.minimumTable
+   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/BaseLowestPosition.base_path_lowest_order; instance=D5/S1/Words/Palindromes/PeriodDoubling/MinimumPositionCertificate.minimumTable
    digest: Every base path lifts to the product with the literal lowest-position escape flag. -/
 
 /-

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Words/Palindromes/PeriodDoubling/MinimumPositionCertificate
    mirror-E: none(waiver:lowest-digit-transducer-potential)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/PrefixPalindromicLengthNotAutomatic.result; instance=D5/S1/Words/Palindromes/PeriodDoubling/MinimumPositionCertificate.minimumTable
+   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/BaseLowestPosition.base_path_lowest_order; instance=D5/S1/Words/Palindromes/PeriodDoubling/MinimumPositionCertificate.minimumTable
    digest: The lowest-digit flag transducer has no positive accepted weight. -/
 
 /-

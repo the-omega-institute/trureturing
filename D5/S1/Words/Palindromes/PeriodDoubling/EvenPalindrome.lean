@@ -15,7 +15,6 @@ Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
 import D5.S1.Words.Palindromes.PeriodDoubling.Word
-import Mathlib.Data.List.Palindrome
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

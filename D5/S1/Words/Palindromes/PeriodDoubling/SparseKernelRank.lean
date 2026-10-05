@@ -10,7 +10,7 @@
 proof_shape: content (stronger_PPL_kernel_span; support expanded within this delivery)
 escape_witness: Exact sparse-family costs produce unbounded unit triangular evaluation rank.
 admission_basis: escape-witness
-Direct frozen dependencies: none; the period-doubling modules are delivered together.
+Direct frozen dependencies: D5/S1/Words/Palindromes/FridPrefix/PalindromicLength.
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
@@ -18,6 +18,8 @@ import D5.S1.Words.Palindromes.PeriodDoubling.SparseExactDiagonal
 import D5.S1.Words.Palindromes.PeriodDoubling.SparseExactOffDiagonal
 import D5.S1.Words.Palindromes.PeriodDoubling.KernelSpan
 namespace D5.S1.Words.Palindromes.PeriodDoubling
+
+open D5.S1.Words.FridPrefix (PL PalFactors)
 open scoped BigOperators
 set_option autoImplicit false
 set_option maxHeartbeats 0
@@ -53,8 +55,64 @@ theorem stronger_PPL_kernel_span :
     congr 1
     omega
   change ¬FiniteDimensional ℚ (Submodule.span ℚ (twoKernel P))
-  apply triangular_evaluation_span_infinite (twoKernel P) f (fun i=>A (a i))
-    (fun i=>(a i : ℚ)) (fun j=>(b j : ℚ))
+  have triangular_evaluation_span_infinite (S : Set (ℕ → ℚ))
+      (f : ℕ → ℕ → ℚ) (x : ℕ → ℕ) (a b : ℕ → ℚ)
+      (hf : ∀ j, f j ∈ S)
+      (habove : ∀ i j, i < j → f j (x i) = a i + b j)
+      (hdiag : ∀ i, f i (x i) = a i + b i + 1) :
+      ¬FiniteDimensional ℚ (Submodule.span ℚ S) := by
+    classical
+    intro hfinite
+    letI := hfinite
+    let E : (ℕ → ℚ) →ₗ[ℚ] (ℕ → ℚ) := LinearMap.funLeft ℚ ℚ x
+    let W : Submodule ℚ (ℕ → ℚ) :=
+      (Submodule.span ℚ S).map E ⊔ Submodule.span ℚ {a, fun _ => 1}
+    have hpair : ({a, fun _ : ℕ => (1 : ℚ)} : Set (ℕ → ℚ)).Finite := by simp
+    haveI : FiniteDimensional ℚ (Submodule.span ℚ {a, fun _ : ℕ => (1 : ℚ)}) :=
+      FiniteDimensional.span_of_finite ℚ hpair
+    haveI : FiniteDimensional ℚ W := inferInstance
+    let g : ℕ → ℕ → ℚ := fun j i => f j (x i) - a i - b j
+    have hmem (j : ℕ) : g j ∈ W := by
+      have hfj : E (f j) ∈ W := Submodule.mem_sup_left
+        (Submodule.mem_map.mpr ⟨f j, Submodule.subset_span (hf j), rfl⟩)
+      have ha : a ∈ W := Submodule.mem_sup_right (Submodule.subset_span (by simp))
+      have hb : (fun _ : ℕ => (1 : ℚ)) ∈ W :=
+        Submodule.mem_sup_right (Submodule.subset_span (by simp))
+      have hd := W.sub_mem (W.sub_mem hfj ha) (W.smul_mem (b j) hb)
+      have heq : g j = E (f j) - a - b j • (fun _ : ℕ => (1 : ℚ)) := by
+        funext i
+        simp [g, E]
+      rw [heq]
+      exact hd
+    have hzero (i j : ℕ) (hij : i < j) : g j i = 0 := by
+      dsimp [g]
+      rw [habove i j hij]
+      ring
+    have hone (i : ℕ) : g i i = 1 := by
+      dsimp [g]
+      rw [hdiag i]
+      ring
+    have hlin : LinearIndependent ℚ g := by
+      apply linearIndependent_iff'.mpr
+      intro t c hsum i hi
+      induction i using Nat.strong_induction_on with
+      | h i ih =>
+        have he : (∑ j ∈ t, c j * g j i) = 0 := by
+          have h := congrArg (fun v : ℕ → ℚ => v i) hsum
+          simpa using h
+        rw [Finset.sum_eq_single i] at he
+        · simpa [hone] using he
+        · intro j hj hji
+          rcases lt_or_gt_of_ne hji with hjlt | hjgt
+          · rw [ih j hjlt hj, zero_mul]
+          · rw [hzero i j hjgt, mul_zero]
+        · exact fun hni => (hni hi).elim
+    let v : ℕ → W := fun j => ⟨g j, hmem j⟩
+    have hv : LinearIndependent ℚ v := hlin.of_comp W.subtype
+    have hc := hv.lt_aleph0_of_finiteDimensional
+    simpa using hc
+  refine triangular_evaluation_span_infinite (twoKernel P) f (fun i=>A (a i))
+    (fun i=>(a i : ℚ)) (fun j=>(b j : ℚ)) ?_ ?_ ?_
   · intro j
     exact ⟨2*b j,r (b j),residue (b j),rfl⟩
   · intro i j hij

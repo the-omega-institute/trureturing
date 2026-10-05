@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Words/Palindromes/PeriodDoubling/BaseSignedStreams
    mirror-E: none(waiver:unbounded-transducer-stream-realization)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/PrefixPalindromicLengthNotAutomatic.result; instance=D5/S1/Words/Palindromes/PeriodDoubling/BaseCertificates.baseTable
+   utility: kind=checker; basis=consumer=D5/S1/Words/Palindromes/PeriodDoubling/BaseQArithmetic.base_path_Q_semantics; instance=D5/S1/Words/Palindromes/PeriodDoubling/BaseCertificates.baseTable
    digest: Accepted paths emit sparse signed digits with their exact radix-two value. -/
 
 /-
