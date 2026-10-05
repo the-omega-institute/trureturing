@@ -6,6 +6,8 @@
    utility: none
    digest: Parity masses of uniform weak compositions and biased Bernoulli vectors. -/
 
+import Mathlib.Algebra.Order.Antidiag.FinsuppEquiv
+import Mathlib.Data.Nat.Bits
 import Mathlib.Analysis.SumIntegralComparisons
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
@@ -320,5 +322,107 @@ private theorem profile_estimate (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) :
       dsimp [T]
       linarith
     exact hupper.trans (hstep.trans (hstep2.trans hcap))
+
+/-- Summing the guarded parity counts partitions the complete weak-composition fiber. -/
+private theorem actual_normalization (d M : ℕ) (hd : 1 ≤ d) :
+    (∑ ξ : Fin d → Bool, R d M ξ) = 1 := by
+  classical
+  let A : Finset (Fin d →₀ ℕ) := univ.finsuppAntidiag M
+  let parity : (Fin d →₀ ℕ) → (Fin d → Bool) := fun r i => decide (r i % 2 = 1)
+  let h : (Fin d → Bool) → ℕ := fun ξ => ∑ i, (ξ i).toNat
+  have hbit (r : Fin d →₀ ℕ) (i : Fin d) : (parity r i).toNat = r i % 2 := by
+    simpa only [Nat.bodd, Nat.testBit_zero, parity] using
+      (Nat.mod_two_of_bodd (r i)).symm
+  have hsplit (r : Fin d →₀ ℕ) (hr : r ∈ A) :
+      M = 2 * (∑ i, r i / 2) + h (parity r) := by
+    have hs : ∑ i, r i = M := by simpa [A] using hr
+    rw [← hs]
+    dsimp [h]
+    rw [mul_sum, ← sum_add_distrib]
+    apply sum_congr rfl
+    intro i _
+    rw [hbit]
+    simpa only [Nat.add_comm] using (Nat.mod_add_div (r i) 2).symm
+  have hcount (ξ : Fin d → Bool) :
+      (A.filter (fun r => parity r = ξ)).card =
+        if h ξ % 2 = M % 2 ∧ h ξ ≤ M then
+          ((M - h ξ) / 2 + d - 1).choose (d - 1) else 0 := by
+    by_cases hg : h ξ % 2 = M % 2 ∧ h ξ ≤ M
+    · rw [if_pos hg]
+      let s : ℕ := (M - h ξ) / 2
+      have hs : 2 * s + h ξ = M := by dsimp [s]; omega
+      let B : Finset (Fin d →₀ ℕ) := univ.finsuppAntidiag s
+      let encode : (Fin d →₀ ℕ) → (Fin d →₀ ℕ) := fun t =>
+        Finsupp.equivFunOnFinite.symm (fun i => 2 * t i + (ξ i).toNat)
+      have hcard : B.card = (A.filter (fun r => parity r = ξ)).card := by
+        apply card_bij (fun t _ => encode t)
+        · intro t ht
+          have htS : ∑ i, t i = s := by simpa [B] using ht
+          apply mem_filter.mpr
+          constructor
+          · simp only [A, mem_finsuppAntidiag, Finset.subset_univ, and_true]
+            change (∑ i, (2 * t i + (ξ i).toNat)) = M
+            rw [sum_add_distrib, ← mul_sum, htS]
+            exact hs
+          · funext i
+            dsimp [parity, encode]
+            have hb (b : Bool) : decide ((2 * t i + b.toNat) % 2 = 1) = b := by
+              simpa only [Nat.bodd, Nat.testBit_zero, Nat.bit_val] using
+                Nat.bodd_bit b (t i)
+            exact hb (ξ i)
+        · intro t ht u hu he
+          ext i
+          have hi := congrArg (fun r : Fin d →₀ ℕ => r i) he
+          change 2 * t i + (ξ i).toNat = 2 * u i + (ξ i).toNat at hi
+          omega
+        · intro r hr
+          obtain ⟨hrA, hrP⟩ := mem_filter.mp hr
+          let t : Fin d →₀ ℕ := Finsupp.equivFunOnFinite.symm (fun i => r i / 2)
+          have hrS := hsplit r hrA
+          rw [hrP] at hrS
+          have htS : (∑ i, t i) = s := by
+            change (∑ i, r i / 2) = s
+            omega
+          refine ⟨t, ?_, ?_⟩
+          · simpa [B] using htS
+          · ext i
+            change 2 * (r i / 2) + (ξ i).toNat = r i
+            rw [← hrP, hbit]
+            omega
+      rw [← hcard, card_finsuppAntidiag_nat_eq_choose]
+      simp only [card_univ, Fintype.card_fin]
+      change (d + s - 1).choose s = (s + d - 1).choose (d - 1)
+      rw [show d + s - 1 = s + d - 1 by omega]
+      exact Nat.choose_symm_of_eq_add (by omega)
+    · rw [if_neg hg]
+      apply card_eq_zero.mpr
+      apply Finset.eq_empty_iff_forall_notMem.mpr
+      intro r hr
+      obtain ⟨hrA, hrP⟩ := mem_filter.mp hr
+      have hrS := hsplit r hrA
+      rw [hrP] at hrS
+      apply hg
+      omega
+  have htotal : A.card = (M + d - 1).choose (d - 1) := by
+    rw [card_finsuppAntidiag_nat_eq_choose]
+    simp only [card_univ, Fintype.card_fin]
+    have he : d + M - 1 = M + d - 1 := by omega
+    rw [he]
+    exact Nat.choose_symm_of_eq_add (by omega)
+  have hsum : (∑ ξ : Fin d → Bool, (A.filter (fun r => parity r = ξ)).card) = A.card := by
+    exact (card_eq_sum_card_fiberwise (by intro r hr; exact mem_univ (parity r))).symm
+  have hden : ((M + d - 1).choose (d - 1) : ℝ) ≠ 0 := by
+    exact_mod_cast (Nat.choose_pos (by omega : d - 1 ≤ M + d - 1)).ne'
+  calc
+    (∑ ξ : Fin d → Bool, R d M ξ) =
+        (∑ ξ : Fin d → Bool, ((A.filter (fun r => parity r = ξ)).card : ℝ) /
+          ((M + d - 1).choose (d - 1) : ℝ)) := by
+      apply sum_congr rfl
+      intro ξ _
+      rw [hcount]
+      dsimp [R, h]
+      split_ifs <;> simp
+    _ = 1 := by
+      rw [← sum_div, ← Nat.cast_sum, hsum, htotal, div_self hden]
 
 end D5.S3.TotalVariation.ParityCompositionKernel

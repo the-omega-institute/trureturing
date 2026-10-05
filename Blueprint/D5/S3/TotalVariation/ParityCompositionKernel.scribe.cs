@@ -41,7 +41,14 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
                 + "|log(1-Delta/a_j)+Delta/a_j| by Delta^2/(L T). Summing all d-1 remainders and using the centered endpoint "
                 + "error gives the absolute profile bound. The logarithm tangent inequality gives the signed upper bound, "
                 + "and d/(M-d) <= 1/2 gives the final cap. Both bounds cover the whole interval, including both sides of m.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Node("normalization", "Composition mass normalization", "actual_normalization", NormalizationFormula(),
+                "For every positive dimension d and every natural total M, the composition parity masses sum to one. "
+                + "The sum runs over all Boolean vectors xi : Fin d -> Bool. The weak compositions of M partition "
+                + "according to their complete parity vector. A legal vector with h occupied coordinates has "
+                + "exactly choose((M-h)/2+d-1,d-1) preimages, through the bijection r_i = 2t_i + xi_i. "
+                + "An illegal vector has no preimages. Summing these fiber counts and dividing by "
+                + "the total choose(M+d-1,d-1) proves normalization.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
         string prose, DescribeRole role) => Describe.Lean(DescribeId.Create("parity-composition-" + id),
@@ -81,6 +88,9 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
     private static Formula Quantified(Formula body) => Seq(Forall, Sp, Dv, Comma, Mv, Sp, InMacro, Sp,
         Mathbb, Grp(F.Id("N")), Comma, Sp, Paren(And(Relation(D(2), Leq, Dv),
             Relation(Multiply(D(3), Dv), Leq, Mv))), Sp, Rightarrow, Sp, body);
+    private static Formula NormalizationFormula() => Seq(Forall, Sp, Dv, Comma, Mv, Sp, InMacro, Sp,
+        Mathbb, Grp(F.Id("N")), Comma, Sp, Relation(D(1), Leq, Dv), Sp, Rightarrow, Sp,
+        Equal(Seq(Index(Sum, F.Xi), Sp, Call("R", Dv, Mv, F.Xi)), D(1)));
     private static Formula Relation(Formula a, Formula op, Formula b) => Seq(a, Sp, op, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Paren(a), Sp, Land, Sp, Paren(b));
     private static Formula Ratio(Formula a, Formula b) => Seq(Frac, Grp(a), Grp(b));
