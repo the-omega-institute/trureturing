@@ -6097,12 +6097,17 @@ a triangle permits two vertices. The GLC1 source proof needs only the
 two endpoints of any edge. One may minimize the consumer over all
 valid fixed choices without changing the actual source or its law.
 
-**Verification boundary.** GLC1's original-family theorem is an
-ordinary mathematical result in Report385, not a Lean-verified source
-theorem. The present consumer is an ordinary mathematical derivation
-conditional on that source result. A finite probability identity check,
-or a check of the separate actual45 accounting, would not verify the
-original-family exchange giving GLC1.
+**Verification boundary.** The fixed-set source step for this
+ternary-height-two, q=5 regime is verified by the repository's
+[`exists_fixed_collision_exceptions`](https://github.com/the-omega-institute/trureturing/blob/d14bae95b1c0bca6860b064d070ffd4229a81bbe/D5/S3/Arith/Covering/FixedCollisionExceptions.lean#L341).
+Its carrier covers every natural number, with distinct odd nonunit
+moduli, no original modulus divisible by27, and minimum modulus sum
+among all same-count covers, with unrestricted competitor heights.
+It preserves every deleted congruence class and selects X before any
+cofactor point or probability law. The general all-height GLC1 statement
+in Report385 and the different-color moment/source consumer below remain
+ordinary mathematical derivations. No separate integer-carrier
+specialization or entire consumer chain is claimed as Lean-verified.
 
 ### Actual loads retain low rows and exceptional labels
 
@@ -6392,7 +6397,7 @@ CD205's overlap debit. Their route to a debit is CD190 or CD220–CD221.
 The actual45 term is already charged once inside `D_*`; no additional
 `r -> r-s` payment is introduced.
 
-No Lean verification of CD206–CD222 or unrestricted Erdős #7 conclusion
+No Lean verification of the CD207–CD222 moment/source consumers or unrestricted Erdős #7 conclusion
 is asserted.
 
 ## A complete local hole can be tiled with zero excess
@@ -6779,6 +6784,369 @@ remain applicable. No literature theorem is used to infer CD238.
 CD237 is another lower bound on the already paid quantity in CD223;
 it is not added again to the actual45 charge or the CD200 debit.
 These are conditional ordinary mathematical deductions; no Lean verification or unrestricted Erdős #7 conclusion is asserted.
+
+## All cofactors pay the untruncated deep excess
+
+Keep one globally count-minimal, then same-count modulus-sum-minimal odd distinct nonunit whole cover. Both comparison classes consist of all odd distinct nonunit whole covers. Assume actual3 and actual9, ternary height at most two, shared-prime set `{5}`, and five-height `G>=2`. Write
+
+\[
+Q=9\cdot5^G M,\qquad (M,15)=1,\qquad
+n=3^{h_n}5^{e_n}m_n,\quad (m_n,15)=1.
+\]
+
+Fix one live ternary root whose complete private25 cofactor source has positive selected mass. Keep its actual safe words `J`, the guarded ordinary product law `lambda`, and `nu=U_J tensor lambda`. Let `Z=Z_5`, `rho=|Z|/5^G`, and let `B=B_omega` be the first-five phase of the actual25 original. All cylinders and phases below belong to the same original family. Actual events annihilated by opposite-root singleton coordinates contribute zero; no arbitrary prefix under a point mass is declared impossible.
+
+Delete exactly
+
+\[
+\mathcal M=\{n:e_n\ge1,\ m_n>1\}.
+\]
+
+The complete hole `E_M` is the complement of every retained original, including all five-free originals and every unit original `5^e,3*5^e,9*5^e`. For every selected cofactor `y`, not only `y in R_5`, put
+
+\[
+E_y=\{z\in B:(y,z)\in E_{\mathcal M}\}.
+\]
+
+The fixed shallow and deep original sets are
+
+\[
+\begin{aligned}
+\mathcal H&=\{n:e_n=1,\ m_n>1,\ a_n\equiv\omega\pmod5\},\\
+\mathcal T&=\{n:e_n\ge2,\ m_n>1,\ a_n\equiv\omega\pmod5\}.
+\end{aligned}
+\]
+
+A scoped transient Lean check verifies the finite rational-law core of this extension: the reached-hole charge and its domination by the complete majorant, exact full-prefix cancellation, disjoint shallow/deep allocation, the retained-unit blocked-word identity, and the two-word budget. It also verifies the scalar lower inequality used below. All checked declarations use only the standard axioms. The full original-integer routing, literal modulus45 identification, arithmetic prefix-size normalization, old scalar envelope and scalar infimum attainment remain ordinary mathematical steps, not conclusions of that check. No unrestricted Erdős #7 conclusion is asserted.
+
+The argument reuses CD186–238, the literal collision theorem of Report385 §172, and the complete-liability boundaries in Report853 §8. The numerical `q=113` code geometry of Report853 is not used at `q=5`.
+
+### Full cofactor support pays the unclipped excess
+
+Reuse Report850 CD198–199, with the same individually counted original set `I_ind`, complete low five-free union `L0`, high unit-five union `V5`, high ordinary-axis union `Vo`, raw allowances `u_n`, and majorant
+
+\[
+F=1_{L_0}+\sum_{n\in I_{\rm ind}}1_{A_n}
+  +1_{L_0^c}\{1_{V_5}+(1-1_{V_5})1_{V_o}\}.
+\tag{CD239}
+\]
+
+Let `Braw` denote CD199's `mathcal B`, and `beta=chi*s*c_(j0)/k`. Then
+
+\[
+\begin{aligned}
+F&\ge1,\\
+B_{\rm raw}-1
+ &=\sum_{n\in I_{\rm ind}}(u_n-\mu(A_n))+\int(F-1)\,d\mu,\\
+B_{\rm raw}-1+\beta&\le S/k.
+\end{aligned}
+\tag{CD240}
+\]
+
+All losses and the overcount are nonnegative. Both H and T are subsets of `I_ind`, and they are disjoint. The upper bound in CD240 retains the original axis-envelope hypotheses of CD188–199, including the same valid caps `b,r`, the bound `ell<=Lbar<=P`, and the same definition of S. The finite-event identity alone does not supply that numerical envelope.
+
+For actual `n in T`, keep its entire ambient prefix `P_n=[a_n]_(5^e_n)`, including points outside `Z`. Define
+
+\[
+\begin{aligned}
+V_T(y)&=\bigcup_{n\in\mathcal T,\ y\in C_n}P_n,\\
+O_{\rm all}(y)&=
+ \frac{\sum_{n\in\mathcal T}1_{C_n}(y)|P_n|
+             -|E_y\cap V_T(y)|}{|Z|}.
+\end{aligned}
+\tag{CD241}
+\]
+
+This extends CD203's exact function to every selected cofactor. It is nonnegative by the elementary union bound. It does not redefine the deleted family, replace the complete hole, or change the source law.
+
+#### Retained-owner classification
+
+On the complete sampled support, every retained original with a nonempty actual event is represented by a contribution outside T in CD239:
+
+- A low five-free event is in `L0`, except actual guard events, which have zero selected event.
+- A high five-free event is either an ordinary axis in `Vo` or a nonaxial event in `I_ind \ T`.
+- A positive-five unit event in a low row is a pure-five or applicable `3*5^e` guard and is absent on `Z`.
+- A positive-five high unit event belongs to `V5`.
+- Pure3 and pure9 are absent at the safe words. Opposite-root ternary events and actual originals killed by fixed singleton coordinates are absent.
+
+These alternatives exhaust the retained original family. If `L0` is present, suppressing the axial term still leaves its own count one. Otherwise the expression `1_V5+(1-1_V5)1_Vo` counts any axial retained owner once. Therefore, with
+
+\[
+t(y,z)=\sum_{n\in\mathcal T}1_{A_n}(y,z),
+\]
+
+one has on the whole sampled support
+
+\[
+F(y,z)\ge t(y,z)+1_{E_{\mathcal M}^c}(y,z).
+\tag{CD242}
+\]
+
+This is stronger than the rectangle-only classification on `R_5 x (Z intersect B)`. It handles five-free retained nonaxial owners explicitly; they are not dropped merely because they share `I_ind` with T.
+
+Every excluded five guard is itself a retained unit original at the selected root, independently of the ordinary cofactor. Thus
+
+\[
+E_y\subseteq Z\quad\text{for every selected cofactor }y.
+\tag{CD243}
+\]
+
+No source condition `y in Y` or `y in R_5` is needed for CD243.
+
+#### Pointwise charge and exact cancellation
+
+Put
+
+\[
+D_T(y,z)=t(y,z)
+ -1_{\{(y,z)\in E_{\mathcal M},\ \exists n\in\mathcal T:A_n(y,z)\}}.
+\tag{CD244}
+\]
+
+Its value is nonnegative: inside the reached hole subtract one from a positive integer; elsewhere subtract zero. Moreover
+
+\[
+0\le D_T\le F-1\quad\text{on the whole sampled support}.
+\tag{CD245}
+\]
+
+Indeed outside the hole CD242 gives `F-1>=t=D_T`; inside the reached hole it gives `F-1>=t-1=D_T`; inside the unreached hole `D_T=0` and whole coverage supplies `F-1>=0`.
+
+All T prefixes lie inside B. Exact finite counting, actual factorization `A_n(y,z) iff C_n(y) and z in P_n`, and CD243 give
+
+\[
+\int D_T\,d\mu
+ =\sum_{n\in\mathcal T}\mu(A_n)
+   -\int\frac{|E_y\cap V_T(y)|}{|Z|}\,d\nu(y).
+\]
+
+Consequently the full T raw losses cancel exactly:
+
+\[
+\boxed{
+\sum_{n\in\mathcal T}(u_n-\mu(A_n))
+       +\int D_T\,d\mu
+       =\int O_{\rm all}\,d\nu.
+}
+\tag{CD246}
+\]
+
+Raw prefix points outside Z remain in `u_n`; they are paid by these raw losses. They are not counted as sampled points or silently removed from CD241.
+
+The H raw loss is exactly `s*nu(C_n)`. Its original indices are disjoint from T. Apply CD245–246 to CD240 and keep the actual45 boost as the same separate axis allowance:
+
+\[
+\boxed{
+\mathfrak D_{\rm all}:=
+ s\sum_{n\in\mathcal H}\nu(C_n)
+ +\frac{\chi s c_{j_0}}k
+ +\int O_{\rm all}\,d\nu
+ \le S/k.
+}
+\tag{CD247}
+\]
+
+This also proves the requested unclipped full-`R_5` bound by restriction. In fact outside `R_5` a retained five-free original covers the entire five-coordinate, so `E_y` is empty and
+
+\[
+\int O_{\rm all}\,d\nu
+ =\int_{R_5}O\,d\nu
+ +\sum_{n\in\mathcal T}\frac{|P_n|}{|Z|}\nu(C_n\setminus R_5).
+\tag{CD248}
+\]
+
+On Y, whole coverage and exclusion of H give `O_all=(q-d)/(5*rho)`. Hence `mathfrak D_all >= mathfrak D_*` from CD200. CD247 is a stronger allocation from the same CD240 decomposition; it is not an extra budget to add to CD200 or CD204.
+
+For CD205, any fixed original matching now gives its complete sum without clipping. For the CD235 masked packet, the multiplicity proof of `F_u<=O` does not use CD234. Only `F_u<=s` uses that raw-capacity condition. Thus CD247 permits removing CD234 while retaining every original-label distinction, comparison-word mask, noncontainment hypothesis and whole-coverage condition. Separate lower bounds on the same O still cannot be added without a common pointwise multiplicity argument.
+
+### Actual45 and two safe words
+
+Assume `J={u,v}`, actual45 has full word v and first-five phase omega, and the complete source has `Y_u` nonempty. Then `Y_v` is empty.
+
+Comparable-original disjointness follows from global count minimality: a compatible original proper multiple of an original modulus would be redundant. Every other high original with word v and first-five phase omega has modulus `9*5^e*m`, `e>=1`, and its whole class would lie inside actual45. Therefore none exists. This includes all deep high ordinary originals and all deeper high unit originals at that phase. It does not remove high shallow or deep originals at u, or high originals at other first-five phases.
+
+CD223–238's two-word certificate is identically empty in this branch. A donor at u can only compare with v, where `Y_v` is empty; a high donor at v in the relevant phase does not exist. A different nonempty comparison word is not available.
+
+Let
+
+\[
+\begin{aligned}
+l(w)&=\sum_{\substack{n\in\mathcal T\\h_n\le1}}
+          5^{1-e_n}1_{C_n^{\rm ord}}(w),\\
+h(w)&=\sum_{\substack{n\in\mathcal T\\h_n=2,\ \operatorname{word}(n)=u}}
+          5^{1-e_n}1_{C_n^{\rm ord}}(w),\\
+L&=\int l\,d\lambda=L_{\rm deep},\qquad
+H=\int h\,d\lambda=H_{{\rm deep},u}.
+\end{aligned}
+\tag{CD249}
+\]
+
+In CD249, `C_n^ord` keeps CD192's active-root convention: a ternary-inactive or opposite-root original contributes zero. The active low functions and actual prefixes are shared by both safe words. Actual45 covers all of `{v} x O x B`, so the complete retained hole at v is empty for every ordinary point. Since no relevant high T label exists there,
+
+\[
+\boxed{O_{\rm all}(v,w)=\frac{l(w)}{5\rho}}
+\quad\text{for every selected }w.
+\tag{CD250}
+\]
+
+This is the full ordinary-law low payment. Restriction to `R_v` would lose an additional positive term already paid by retained five-free overcount. No common-section lower bound is required.
+
+Writing `c=c_v`, CD247 becomes
+
+\[
+\boxed{
+2s\sum_{n\in\mathcal H}\nu(C_n)+s c
+ +\int O_{\rm all}(u,w)\,d\lambda(w)
+ +\frac{L}{5\rho}\le S.
+}
+\tag{CD251}
+\]
+
+The actual45 axis term and the last low term use different nonnegative pieces of CD240. The former increases the unit-axis allowance; the latter combines T slot losses and genuine covered-event multiplicity. They may therefore appear together once.
+
+### Scalar consumer with the source variable eliminated
+
+Put
+
+\[
+a=\lambda(Y_u),\qquad q=\lambda(R_u),\qquad
+ d=d_u>0,\qquad g=5\rho s\ge1/5,\qquad
+ O_u^*=\int O_{\rm all}(u,w)\,d\lambda(w).
+\]
+
+At u the depth-one unit exclusion is absent. The complete-source identity of CD190 therefore gives
+
+\[
+\sum_{j\in\{u,v\}}\sum_{n\in\mathcal H}
+       \lambda(C_{n,j}^{\rm ord})\ge q-a.
+\]
+
+Here high H labels at u are still counted. The claim does not replace all H by low labels.
+
+Complete deep service on `Y_u`, with the actual same-word hole density d, gives
+
+\[
+0\le a\le q,\qquad d a\le L+H,
+\qquad 0\le H\le a_G W,
+\quad a_G=\frac{1-5^{1-G}}4=\frac{A_G}{5}.
+\tag{CD252}
+\]
+
+Multiply CD251 by `5*rho` and retain its nonnegative u-word excess. Since `L>=0`,
+
+\[
+5\rho S\ge5\rho O_u^*+g c+g(q-a)+[d a-H]_+.
+\tag{CD253}
+\]
+
+For `g>=0,d>0,H>=0,q>=0`, direct minimization of this continuous piecewise-linear function yields
+
+\[
+\inf_{0\le a\le q}\{g(q-a)+[d a-H]_+\}
+ =\min(g,d)[q-H/d]_+.
+\tag{CD254}
+\]
+
+If `H>=d*q`, take `a=q`; the value is zero. Otherwise the breakpoint is `a=H/d`. Below it the slope is `-g`; above it the slope is `d-g`. The minimum is the breakpoint value when `d>=g` and the right-endpoint value when `d<=g`.
+
+Thus the same actual family satisfies
+
+\[
+\boxed{
+5\rho S\ge5\rho O_u^*+g c+\min(g,d)[q-H/d]_+
+ \ge5\rho O_u^*+g c+\min(g,d)[q-a_GW/d]_+.
+}
+\tag{CD255}
+\]
+
+Keeping actual H is stronger. The inventory substitution uses its upper bound in the correct direction and does not assume independent attainability of source and supply extrema. A strict reverse inequality in any admissible branch would close that branch. No uniform strict inequality is asserted.
+
+### Fixed-exception tuple consumer now charges all low load
+
+At word u choose one fixed valid original exceptional set `X_u`, supplied by the fixed-collision theorem, before fixing any ordinary point. Retain Report850 CD208's actual second-color functions `l_c,x_(u,c),h_(u,c)`, residual hole densities `delta_c in (0,1]`, and exact actual tuple moment `Z_(u,K)`. Low and exceptional functions remain distinct, and all retained unit towers remain in `delta_c`.
+
+For any nonempty set K of available colors, define
+
+\[
+\begin{aligned}
+\delta_{\min,K}&=\min_{c\in K}\delta_c,\\
+\theta_K&=\sum_{c\in K}\frac{X^*_{u,c}}{\delta_c}
+             +\frac{Z_{u,K}}{\prod_{c\in K}\delta_c},\\
+t_K&=\delta_{\min,K}/5.
+\end{aligned}
+\tag{CD256}
+\]
+
+The source-restricted exceptional integral from CD215 may replace the full `X^*` for a sharper actual quantity. Using the full `X^*` keeps `theta_K` independent of the scalar relaxation variable a.
+
+CD215 and nonnegativity give
+
+\[
+a\le\sum_{c\in K}\frac{L_c^*}{\delta_c}+\theta_K
+ \le\frac{5L}{\delta_{\min,K}}+\theta_K.
+\]
+
+The last inequality uses `L=(1/5)*sum_(all second colors) L_c^*`; colors occupied by retained unit labels remain in that full low inventory even though K uses only available colors. Consequently
+
+\[
+L\ge t_K[a-\theta_K]_+.
+\tag{CD257}
+\]
+
+Combine CD257 with the same CD251, rather than adding it to CD255. Applying CD254 with `d=t_K,H=t_K*theta_K` gives
+
+\[
+\boxed{
+5\rho S\ge5\rho O_u^*+g c+\min(g,t_K)[q-\theta_K]_+
+ =5\rho O_u^*+g c+t_K[q-\theta_K]_+.
+}
+\tag{CD258}
+\]
+
+The equality uses `g>=1/5` and `delta_min<=1`. If four colors are available, at least two contain no exceptional label; choosing such K removes its exceptional term completely. It does not discard low supply. If a valid smaller X is available, use it with the same original tuple data.
+
+Keeping all these lower bounds for the same L gives the common scalar relaxation
+
+\[
+5\rho S\ge5\rho O_u^*+g c+
+\inf_{0\le a\le q}\left[
+ g(q-a)+\max\left\{0,d a-H,
+                  \max_K t_K(a-\theta_K)\right\}\right].
+\tag{CD259}
+\]
+
+Every term in the maximum is a lower bound for the same actual L. Separate resulting lower bounds may be maximized, not added. Evaluating CD259 is a finite piecewise-linear calculation when actual data are supplied; no new scan is asserted here.
+
+The tuple moment uses independence only under the full guarded product law. It still supplies no conditional independence on Y. CD250 is what permits the tuple's full-law low load to enter the debit without an unknown `Y_u intersect R_v` overlap. Exceptional top service and the regular tuple allowance remain payable, and the necessary strict inequality is unresolved.
+
+### Remaining strict inequality
+
+The two-word packet degenerates, but the all-cofactor budget preserves a new full-law low payment in the blocked word. CD255 and CD258–259 are necessary same-family inequalities. No theorem here forces their strict reverse inequality in every allowed palette, unit configuration and actual source.
+
+Report385 §175 only disproves a local probe-to-parent-payment shortcut and is deliberately not a whole cover. Report850's 26-label zero-excess control has actual45 at a different first-five phase; it is not a counterexample to this same-omega blocked-word branch. Report853 requires whole inverse containment, common payment and legal numerical ownership; pair intersections or a fractional allocation do not supply them. None of these controls refutes the hypothetical EB1 whole-cover assumptions, and none closes unrestricted Erdős #7.
+
+### Extremal-event identities and their positivity boundary
+
+Under the full guarded ordinary product law, the fixed regular high
+family outside X has disjoint events whenever two original cofactors
+share a prime. A collection with disjoint prime supports is jointly
+independent. This is Condition5 of Guo, Jerrum and Liu,
+[*Uniform Sampling through the Lovász Local Lemma*, arXiv:1611.01647v4](https://arxiv.org/abs/1611.01647v4).
+Their section3, equation(3), computes exact event-occurrence probabilities
+by inclusion–exclusion at the actual marginals. Report387 CC12 and CD212
+already provide the corresponding intersection expansion; this is reuse,
+not an additional strict estimate.
+
+The indices are original labels, including distinct originals with the
+same numerical cofactor. Variables are complete guarded prime-power
+coordinates, not independent digits; zero events may be removed and
+unit-cofactor labels stay outside the regular family. Conditioning on Y
+or R does not preserve the required product law automatically. The
+paper's Theorem13 additionally assumes positive avoidance probability,
+and Theorem8 conditions its output law on halting. Neither premise
+follows from the intersection identity. Thus this citation supplies no
+strict-closing term to add to CD247, CD255 or CD258.
+
 
 ### Verification scope and remaining inequality
 
