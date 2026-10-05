@@ -188,12 +188,6 @@ private def realCertificate : PLift (K = Real.pi • κ ∧
   classical
   obtain ⟨hs, hd, h2, h3, h4, h5⟩ := rootFacts.down
   have hs_nonneg : 0 ≤ s := Real.sqrt_nonneg _
-  have hK : K = Real.pi • κ := by
-    ext j k
-    fin_cases j <;> fin_cases k <;>
-      simp [K, C0, P, κ, h2, h3, h4] <;>
-      simp [a, b, γ, ω, c, q, u] <;>
-      nlinarith only [hs, show Real.pi * s ^ 2 = Real.pi * 5 by rw [hs]]
   have hs_bounds : 11 / 5 < s ∧ s < 9 / 4 := by
     constructor <;> nlinarith [hs]
   have hq_bounds : -1 < q ∧ q < -7 / 8 := by
@@ -247,7 +241,7 @@ private def realCertificate : PLift (K = Real.pi • κ ∧
     ext j k
     fin_cases j <;> fin_cases k <;>
       simp [P, κ, Ccoeff, h2, h3, h4] <;>
-      simp [γ, ω, c, q, u] <;> nlinarith only [hs]
+      simp [γ, ω, c, q, u] <;> ring_nf <;> simp only [hs] <;> ring
   have hCcoeffP : Ccoeff * P = (-4 : ℝ) • P := by
     simp only [hPtable]
     ext j k
@@ -277,6 +271,10 @@ private def realCertificate : PLift (K = Real.pi • κ ∧
     change C0 j k = Real.pi * Ccoeff j k
     unfold C0 Ccoeff a b
     split_ifs <;> ring
+  have hK : K = Real.pi • κ := by
+    rw [K, hC0, hPtable, smul_smul]
+    rw [show (2 * Real.pi) * (1 / 2 : ℝ) = Real.pi by ring, smul_sub]
+    abel
   have hcomm : Commute (C0.map (↑) : Matrix (Fin 5) (Fin 5) ℂ) (P.map (↑)) := by
     have he : C0 * P = P * C0 := by
       rw [hC0, Matrix.smul_mul, Matrix.mul_smul, hCcoeffP, hPCcoeff]
