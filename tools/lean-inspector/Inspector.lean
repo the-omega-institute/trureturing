@@ -7,6 +7,7 @@ import Lean.PrivateName
 import Lean.Util.CollectAxioms
 import Lean.Meta
 import Lean.Elab.Term
+import LeanInformationAudit.RawArtifacts
 
 namespace LeanInformationAudit.InspectorProducer
 
@@ -242,7 +243,7 @@ reaches first, so this SCC treatment is required for byte-identical reports. The
 shared `state` walks each constant's subgraph at most once for the whole run, where
 the stock routine (a fresh cache per call) re-walked the imported closure for every
 referencing declaration. -/
-partial def strongConnect (environment : Environment)
+partial def strongConnect (find : Name → Option ConstantInfo)
     (state : IO.Ref AxiomClosureState) (constant : Name) : IO Unit := do
   state.modify fun s => { s with
     index := s.index.insert constant s.counter
@@ -250,11 +251,13 @@ partial def strongConnect (environment : Environment)
     counter := s.counter + 1
     onStack := s.onStack.insert constant
     stack := s.stack.push constant }
-  let dependencies := ((environment.find? constant).map declarationDependencies).getD #[]
+  let some info := find constant
+    | throw <| IO.userError s!"raw.incomplete_closure:{constant}"
+  let dependencies := declarationDependencies info
   for dependency in dependencies do
     let s ← state.get
     if !(s.index.contains dependency) then
-      strongConnect environment state dependency
+      strongConnect find state dependency
       let s ← state.get
       let lowDependency := (s.low.find? dependency).getD 0
       if lowDependency < (s.low.find? constant).getD 0 then
@@ -276,9 +279,9 @@ partial def strongConnect (environment : Environment)
     let memberSet : NameSet := members.foldl (init := {}) (fun set name => set.insert name)
     let mut axioms : NameSet := {}
     for member in members do
-      if (environment.find? member) matches some (.axiomInfo _) then
+      if (find member) matches some (.axiomInfo _) then
         axioms := axioms.insert member
-      for dependency in (((environment.find? member).map declarationDependencies).getD #[]) do
+      for dependency in (((find member).map declarationDependencies).getD #[]) do
         if !(memberSet.contains dependency) then
           for entry in ((s.closure.find? dependency).getD #[]) do
             axioms := axioms.insert entry
@@ -290,11 +293,11 @@ partial def strongConnect (environment : Environment)
 
 /-- Transitive axiom closure of `constant`, memoized across every declaration in the
 run through `state` (see `strongConnect`). -/
-def collectAxiomsShared (environment : Environment)
+def collectAxiomsShared (find : Name → Option ConstantInfo)
     (state : IO.Ref AxiomClosureState) (constant : Name) : IO (Array Name) := do
   if let some cached := (← state.get).closure.find? constant then
     return cached
-  strongConnect environment state constant
+  strongConnect find state constant
   return ((← state.get).closure.find? constant).getD #[]
 
 def resolveIncludedDeclaration (env : Environment) (moduleName selector : String) : Option ConstantInfo := do
@@ -355,18 +358,14 @@ def writeMaterial (writer : MaterialWriter) (info : ConstantInfo) : IO Unit := d
   unless (← writer.stdout.getLine) == "ok\n" do
     throw <| IO.userError "statement spool writer did not acknowledge the material"
 
-def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
+def inspectData (moduleData : ModuleData) (find : Name → Option ConstantInfo)
+    (refute : UtilityInput → IO Bool) (cache : IO.Ref AxiomClosureState)
     (writer : MaterialWriter) (materialCounter : IO.Ref Nat)
     (utilities : Array UtilityInput)
     (generatedNames : Array Name) (informationTemplates : Json)
     (input : ModuleInput) : IO ModuleReport := do
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   let enumerationStart ← if profiling then IO.monoNanosNow else pure 0
-  let moduleName := input.moduleName.toName
-  let some moduleIdx := env.getModuleIdx? moduleName
-    | throw <| IO.userError s!"module not loaded: {input.moduleName}"
-  let moduleData := env.header.moduleData[moduleIdx]!
-  let environment := env.setExporting false
   let allNames := moduleData.constNames ++ generatedNames
   let metadata := allNames.filter fun name =>
     match name with
@@ -374,7 +373,7 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     | _ => false
   let mut informationRegistrationErrors := #[]
   for name in metadata do
-    match environment.find? name with
+    match find name with
     | some (.defnInfo info) =>
       match info.type, info.value with
       | .const ``String [], .lit (.strVal message) =>
@@ -388,10 +387,10 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
   let sccNanos ← IO.mkRef 0
   let encodingNanos ← IO.mkRef 0
   let declarations ← names.mapM fun name => do
-    let some info := environment.find? name
+    let some info := find name
       | throw <| IO.userError s!"declaration missing: {name}"
     let sccStart ← if profiling then IO.monoNanosNow else pure 0
-    let axioms ← collectAxiomsShared environment cache name
+    let axioms ← collectAxiomsShared find cache name
     let encodeStart ← if profiling then IO.monoNanosNow else pure 0
     sccNanos.modify (· + (encodeStart - sccStart))
     let materialIndex ← materialCounter.get
@@ -415,7 +414,7 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
   let refutation ← match obligations[0]? with
     | none => pure none
     | some utility => do
-      let valid ← closedNegation environment input utility
+      let valid ← refute utility
       pure <| some {
         claimGid := utility.claimGid
         claimSourcePath := utility.claimSourcePath
@@ -433,6 +432,17 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     sourceSha256 := input.sourceSha256
     refutation
   }
+
+def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
+    (writer : MaterialWriter) (materialCounter : IO.Ref Nat)
+    (utilities : Array UtilityInput) (generatedNames : Array Name)
+    (informationTemplates : Json) (input : ModuleInput) : IO ModuleReport := do
+  let some index := env.getModuleIdx? input.moduleName.toName
+    | throw <| IO.userError s!"module not loaded: {input.moduleName}"
+  let environment := env.setExporting false
+  inspectData env.header.moduleData[index]! (environment.find? ·)
+    (closedNegation environment input) cache writer materialCounter
+    utilities generatedNames informationTemplates input
 
 def hexDigit (value : Nat) : Char :=
   Char.ofNat <| if value < 10 then '0'.toNat + value else 'A'.toNat + value - 10
@@ -587,9 +597,8 @@ private unsafe def dependencies (manifest destination mode : String) : IO Unit :
     for region in regions.reverse do region.free
     out.flush
 
-/-- Report mode loads the fixed Registry judge independently of the requested
-source modules. Even an empty inventory requires its source/native verifier.
-The two producer identities are fixed judge APIs, never content callbacks. -/
+/-- Typed input owners load the fixed Registry judge independently of the
+requested source modules. The producer identities are fixed judge APIs. -/
 private unsafe def templateBindings (env : Environment) (inputs : Array ModuleInput)
     (consume : Name → Json → Array Name → Environment → MetaM Unit) : IO Unit := do
   let selected := if env.header.moduleNames.contains `LeanInformationAudit.DispositionEvidence then
@@ -617,6 +626,85 @@ private unsafe def templateBindings (env : Environment) (inputs : Array ModuleIn
       (driver (inputs.map (·.moduleName.toName)) consume)).1
   throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
 
+private def withReportWriter (reportOutput materialSpool : System.FilePath)
+    (statementOnly : Bool) (action : MaterialWriter → IO.FS.Handle → IO Unit) : IO Unit := do
+  let localWriter := System.FilePath.mk "tools/lean-inspector/materials.py"
+  let writerProgram := if (← localWriter.pathExists) || !statementOnly then
+    localWriter.toString else informationMaterialWriterProgram
+  let writer ← IO.Process.spawn {
+    cmd := "python3", args := #["-I", writerProgram, "stream", materialSpool.toString],
+    stdin := .piped, stdout := .piped, stderr := .inherit }
+  try
+    IO.FS.withFile reportOutput .write fun out => do
+      out.putStr "{\"modules\": ["
+      action writer out
+      writer.stdin.putStr "done\n"
+      writer.stdin.flush
+      unless (← writer.stdout.getLine) == "done\n" && (← writer.wait) == 0 do
+        throw <| IO.userError "statement spool writer did not complete"
+      out.putStr "], \"schema\": \"stratalint-lean-inspector-spool-v1\"}\n"
+      out.flush
+  catch error =>
+    try writer.kill catch _ => pure ()
+    try discard <| writer.wait catch _ => pure ()
+    try IO.FS.removeFile reportOutput catch _ => pure ()
+    throw error
+
+private def resolveCompiledDeclaration (store : RawArtifacts.Store)
+    (moduleName selector : String) : Option ConstantInfo := do
+  let data ← store.modules.find? moduleName.toName
+  let selected := data.constNames.filterMap fun name => do
+    let info ← store.constants[name]?
+    if name.getString! == selector && includeInStatement name info then some info else none
+  if selected.size == 1 then selected[0]? else none
+
+private def compiledNegation (store : RawArtifacts.Store)
+    (input : ModuleInput) (utility : UtilityInput) : IO Bool := do
+  if utility.resultModule != input.moduleName || utility.claimGid == utility.resultGid then return false
+  let some (.defnInfo claim) := resolveCompiledDeclaration store utility.claimModule utility.claimSelector
+    | return false
+  let some (.thmInfo result) := resolveCompiledDeclaration store utility.resultModule utility.resultSelector
+    | return false
+  if !claim.levelParams.isEmpty || !result.levelParams.isEmpty
+      || !closedExpression claim.type || !closedExpression claim.value
+      || !closedExpression result.type || !closedExpression result.value then return false
+  let start ← IO.getNumHeartbeats
+  if !(← RawArtifacts.equalTypes store start 0 claim.type (mkSort .zero)) then return false
+  -- The compiled theorem already types its proof at result.type. Only the
+  -- external utility relationship remains to be computed from the raw types.
+  RawArtifacts.equalTypes store start 0 result.type (mkApp (mkConst ``Not) (mkConst claim.name))
+
+@[noinline] private unsafe def ownInputFact (name : Name) : IO (Bool × Array CompactedRegion) := do
+  let (data, regions) ← RawArtifacts.readOwn name
+  return (RawArtifacts.hasTypedInputs data, regions)
+
+private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath)
+    (statementOnly : Bool) (inputs : Array ModuleInput) (utilities : Array UtilityInput) : IO Unit := do
+  let start ← IO.monoNanosNow
+  let state ← IO.mkRef ({} : RawArtifacts.Store)
+  for name in sortedUnique (inputs.map (·.moduleName) ++ utilities.map (·.claimModule)) do
+    RawArtifacts.loadModule name.toName state
+  let store ← state.get
+  for input in inputs do
+    if RawArtifacts.hasTypedInputs (← store.getModule input.moduleName.toName) then
+      throw <| IO.userError s!"raw.mode_requires_judge:{input.moduleName}"
+  if (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1" then
+    (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE raw_read_ns={(← IO.monoNanosNow) - start} raw_modules={store.modules.toList.length} raw_constants={store.constants.size}"
+  let cache ← IO.mkRef ({} : AxiomClosureState)
+  let counter ← IO.mkRef 0
+  let empty := if statementOnly then Json.null else Json.mkObj [
+    ("schema_version", toJson (1 : Nat)), ("inventory", Json.arr #[]),
+    ("registered", Json.arr #[]), ("records", Json.arr #[])]
+  withReportWriter reportOutput materialSpool statementOnly fun writer out => do
+    for h : index in [:inputs.size] do
+      let input := inputs[index]
+      let data ← store.getModule input.moduleName.toName
+      let row ← inspectData data (store.constants[·]?) (compiledNegation store input)
+        cache writer counter utilities #[] empty input
+      if index > 0 then out.putStr ", "
+      out.putStr (renderModule row)
+      out.flush
+
 unsafe def main (args : List String) : IO Unit := do
   let args ← match args with
     | ["--request-file", path] =>
@@ -632,11 +720,22 @@ unsafe def main (args : List String) : IO Unit := do
   -- the declared-template admission consumer. It serves standalone encoders.
   let statementOnly := args.head? == some "--statements-only"
   let args := if statementOnly then args.drop 1 else args
+  let compiledOnly := args.head? == some "--compiled-only"
+  let args := if compiledOnly then args.drop 1 else args
   let (reportOutput, materialSpool, utilityInput, inputs) ← match parseArguments args with
     | .ok parsed => pure parsed
     | .error message => throw <| IO.userError message
   IO.FS.createDirAll materialSpool
   initSearchPath (← findSysroot)
+  -- Production mode is checked against each target's own compiler facts,
+  -- before any environment import or extension initialization is possible.
+  if !statementOnly && !compiledOnly then
+    for input in inputs do
+      let (ownsInputs, regions) ← ownInputFact input.moduleName.toName
+      -- No borrowed ModuleData reference survives freeing these own-only views.
+      for region in regions.reverse do region.free
+      unless ownsInputs do
+        throw <| IO.userError s!"raw.mode_requires_compiled_only:{input.moduleName}"
   let utilities : Array UtilityInput ← match utilityInput with
     | none => pure #[]
     | some path => do
@@ -646,8 +745,11 @@ unsafe def main (args : List String) : IO Unit := do
       | .error message => throw <| IO.userError s!"invalid utility input: {message}"
   let selectedUtilities := utilities.filter fun utility =>
     inputs.any (·.sourcePath == utility.modulePath)
-  -- Empty inventories also require current source/native coherence. The fixed
-  -- judge driver is loaded independently of the source's old native imports.
+  if compiledOnly then
+    produceCompiled reportOutput materialSpool statementOnly inputs selectedUtilities
+    return
+  -- Typed owners require current source/native coherence. The fixed driver
+  -- is loaded independently of the source's native imports.
   let moduleNames := sortedUnique (inputs.map (·.moduleName) ++
     selectedUtilities.map (·.claimModule) ++
     (if statementOnly then #[] else #["LeanInformationAudit.SealCommand"]))
@@ -663,47 +765,25 @@ unsafe def main (args : List String) : IO Unit := do
       (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE import_ns={(← IO.monoNanosNow) - importStart} imported_modules={env.header.moduleNames.size}"
     let cache ← IO.mkRef ({} : AxiomClosureState)
     let materialCounter ← IO.mkRef 0
-    -- Compiled executables can move between private build trees. Prefer the
-    -- current repository's writer; a standalone statement probe can instead
-    -- use the writer adjacent to its directly elaborated source.
-    let localWriter := System.FilePath.mk "tools/lean-inspector/materials.py"
-    let writerProgram := if (← localWriter.pathExists) || !statementOnly then
-      localWriter.toString else informationMaterialWriterProgram
-    let writer ← IO.Process.spawn {
-      cmd := "python3", args := #["-I", writerProgram, "stream",
-        materialSpool.toString], stdin := .piped, stdout := .piped, stderr := .inherit }
-    try
-      IO.FS.withFile reportOutput .write fun reportStream => do
-        let completed ← IO.mkRef (0 : Nat)
-        reportStream.putStr "{\"modules\": ["
-        let consume : Name → Json → Array Name → Environment → MetaM Unit :=
-          fun target binding generated environment => do
-            let index ← completed.get
-            let some input := inputs[index]? | throwError "dtr.report_partition"
-            unless input.moduleName.toName == target do throwError "dtr.report_partition"
-            let report ← inspectModule environment cache writer materialCounter utilities generated binding input
-            if index > 0 then reportStream.putStr ", "
-            reportStream.putStr (renderModule report)
-            reportStream.flush
-            completed.modify (· + 1)
-        if statementOnly then
-          for input in inputs do
-            discard <| runReportMeta env "statement-report" <|
-              consume input.moduleName.toName Json.null #[] env
-        else templateBindings env inputs consume
-        unless (← completed.get) == inputs.size do
-          throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_partition"
-        writer.stdin.putStr "done\n"
-        writer.stdin.flush
-        unless (← writer.stdout.getLine) == "done\n" && (← writer.wait) == 0 do
-          throw <| IO.userError "statement spool writer did not complete"
-        reportStream.putStr "], \"schema\": \"stratalint-lean-inspector-spool-v1\"}\n"
-        reportStream.flush
-    catch error =>
-      try writer.kill catch _ => pure ()
-      try discard <| writer.wait catch _ => pure ()
-      try IO.FS.removeFile reportOutput catch _ => pure ()
-      throw error
+    withReportWriter reportOutput materialSpool statementOnly fun writer reportStream => do
+      let completed ← IO.mkRef (0 : Nat)
+      let consume : Name → Json → Array Name → Environment → MetaM Unit :=
+        fun target binding generated environment => do
+          let index ← completed.get
+          let some input := inputs[index]? | throwError "dtr.report_partition"
+          unless input.moduleName.toName == target do throwError "dtr.report_partition"
+          let report ← inspectModule environment cache writer materialCounter utilities generated binding input
+          if index > 0 then reportStream.putStr ", "
+          reportStream.putStr (renderModule report)
+          reportStream.flush
+          completed.modify (· + 1)
+      if statementOnly then
+        for input in inputs do
+          discard <| runReportMeta env "statement-report" <|
+            consume input.moduleName.toName Json.null #[] env
+      else templateBindings env inputs consume
+      unless (← completed.get) == inputs.size do
+        throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_partition"
   produce
 
 end LeanInformationAudit.InspectorProducer
