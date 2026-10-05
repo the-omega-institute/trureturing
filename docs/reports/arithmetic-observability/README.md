@@ -6,7 +6,7 @@ observations are the ordered pair of squared norms before and after the same
 linear update. It uses exact rational or prime-field arithmetic, with no
 third-party dependencies. The general field criterion, real collision,
 operator comparison and noise boundary are developed in
-[Naming Relations and Stability, §§13–16](../../develop/theory/NAMING_RELATIONS_AND_STABILITY.md).
+[source-domain research analysis, §§13–16](analysis.md).
 
 Run from the repository root with Python 3.9 or newer:
 
@@ -79,3 +79,11 @@ The full iff, all-history recurrence and quotient inverse discontinuity remain
 ordinary mathematical derivations rather than newly frozen declarations.
 
 License: Apache-2.0, under the repository LICENSE.
+
+Independent verification reconstructed all default readouts and witnesses,
+checked 495 symmetric B matrices and 3,107 update A matrices over F3/F5/F7
+with zero mismatches, and independently expanded the eight Pell powers.
+The supplied six tests pass; default output matches the saved JSON byte for
+byte. The temporary Lean checks pass with only `propext`, `Classical.choice`
+and `Quot.sound` in the inspected axiom closures. Full statements beyond those
+scoped checks remain ordinary mathematical derivations.
