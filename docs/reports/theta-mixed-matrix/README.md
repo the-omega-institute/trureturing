@@ -341,6 +341,12 @@ the simple multiplier allowance infinite; this fixed-source obstruction
 does not decide the actual constrained inverse or a moving cofinal family.
 The existing unprojected common dual-source construction is reused, with
 its growing source budgets and the actual low signs still unpaid.
+The same note's [divided endpoint check](vanishing-exterior-reserve.md#the-divided-endpoint-expression-cannot-have-a-strict-weighted-high-floor)
+uses the theta derivative envelopes in a topology controlling that
+expression. Its conditional paper argument excludes a strictly positive
+$s^2$-weighted endpoint floor at any fixed finite band; it asserts no
+sharp-high density in the original minimal form norm, negative energy,
+moving-cofinal obstruction or RH conclusion.
 
 The [critical-zero source-range check](critical-prime-source-range.md)
 uses the full prime-power action to exclude a blanket exact factorization
