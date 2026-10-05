@@ -981,3 +981,20 @@ For the mixed and odd squarefree prime sections, the window-105 character
 twist, changing norm families and actual unit-one affine sources in FIB
 §§196–205, see
 [prime sections](prime_sections.md).
+
+For the actual Binet inverse, [the quarter-moment resolution report](binet-inverse-tail.md)
+reuses FIB §§384–387 and the classical weighted Banach-algebra inverse.
+It acquires a complete inverse-quarter-moment allowance below $500/7$
+and a finite-prefix tail certificate. At kernel cutoff $F_{18}=2584$,
+the square-root-space operator-tail allowance is below $0.138421$.
+The local finite-input certificate does not assume a global square-root
+bound for the actual FIB error. Actual centered cancellation, signed
+Robin tails, common cofinal signs, RH and new Lean certification remain
+unresolved.
+
+[The neutral-response probe](neutral-response.md) reads the published
+inverse prefix and tests the centered-response interface in FIB §390.
+Two exact moment constraints and bounded adjacent increments do not
+supply a uniform square-root transmission bound for the general input
+class. The probe inputs are not the actual FIB error; its arithmetic
+correlations and the signed Robin budget still require estimates.
