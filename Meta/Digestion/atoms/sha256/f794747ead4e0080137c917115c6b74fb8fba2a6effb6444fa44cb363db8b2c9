@@ -1,0 +1,52 @@
+### 38.12 命题：同步合并商的最大信息及连续障碍
+
+在完整 $\Omega$ 上，定义同层共同尾关系
+
+$$
+\omega\ E_{\rm merge}\ \nu
+\quad\Longleftrightarrow\quad
+\exists n\geq0, T^n\omega=T^n\nu,
+\qquad E_{\rm merge}=\bigcup_{n\geq0}\ker T^n.
+$$
+
+两侧使用同一个 $n$，不是允许任意时差的共同尾关系。它是等价关系，且
+
+$$
+\omega E_{\rm merge}\nu\quad\Longleftrightarrow\quad
+T\omega E_{\rm merge}T\nu.
+$$
+
+证明。$\ker T^n$ 递增，故其并具有传递性及其余等价关系性质。正向可将共同等式再删一窗，反向则把相同步数加一。$\square$
+
+因此商映射 $\pi:\Omega\to Q_{\rm merge}=\Omega/E_{\rm merge}$ 的更新
+
+$$
+\overline T[\omega]=[T\omega]
+$$
+
+良定义且单射。$T$ 满射使它满射，逆为 $[\omega]\mapsto[\mathrm{null}\,\omega]$。该商不是单点：$([3],\mathrm{null})^\infty$ 与 $(\mathrm{null},[3])^\infty$ 在任何相同删窗步数之后仍不同，所以类不同。
+
+若 $\eta:\Omega\to Y$ 自主且其实际像上的更新 $A$ 单射，则
+
+$$
+E_{\rm merge}\subseteq\ker\eta,\qquad
+\eta=\bar\eta\pi,\qquad
+\bar\eta\overline T=A\bar\eta.
+$$
+
+证明。共同删除等式给 $A^n\eta(\omega)=A^n\eta(\nu)$，单射性反推 $\eta(\omega)=\eta(\nu)$。故 $\bar\eta([\omega])=\eta(\omega)$ 良定义、唯一且满射到实际像，交换式直接代入。$\square$
+
+这就是主要的排序方向：$Q_{\rm merge}$ 的核最小，故它是集合论上最细、信息最多的单射自主因子，每个其他这样的因子都从它再取商。本卷定义3.3的最粗任务充分商则限制于指定输出任务，两者的量词与排序不同。
+
+每个 $E_{\rm merge}$ 类在 $\Omega$ 的前缀拓扑中稠密。证明。固定 $\omega$，取任意合法 $k$ 窗前缀 $w$，构造
+
+$$
+\nu=w\,\mathrm{null}\,T^{k+1}\omega.
+$$
+
+空窗可从任意接缝进入并输出零，故此拼接合法且落在柱 $[w]$ 中；同时 $T^{k+1}\nu=T^{k+1}\omega$。任意位柱可沿一个实际来源延长到整窗长度，所以窗口柱足以检验稠密性。$\square$
+
+因此，若 $Y$ Hausdorff、$\eta:\Omega\to Y$ 连续，且 $\eta T=A\eta$、$A$ 单射，则 $\eta$ 常值。证明。每个 $\eta$ 纤维包含一个稠密 $E_{\rm merge}$ 类，又因单点闭和连续性而闭，故等于 $\Omega$。证明不要求 $A$ 连续或满射。$\square$
+
+集合商的自然商拓扑只有空集和全体开：非空开饱和集与每个稠密类相交，饱和性迫其包含所有类。非平凡 $Q_{\rm merge}$ 因而不是 Hausdorff 边界。完整域上的非恒定连续 Hausdorff 自主边界必须在某处具有非单射更新；纯集合商的可逆性不能越过这项连续性障碍。
+

@@ -1,0 +1,35 @@
+**定理 71.50（有限精确求值）。** 令 $\Pi_m$ 为原图全部确定性驻定动作表。$P_f$ 的每行在所选后继处为一、其余为零，$\boldsymbol r(s)=r$，$\boldsymbol b_f(s)=b(f(s))$。定义
+
+$$
+\boldsymbol C^f=(I-P_f/2)^{-1}\boldsymbol r,\qquad
+\boldsymbol t^f=(I-P_f/2)^{-1}(\boldsymbol b_f/2).
+\tag{71.20}
+$$
+
+则正根锚的表集合非空，而且
+
+$$
+\boxed{\quad
+\alpha_m=
+\min_{\substack{f\in\Pi_m\\ \boldsymbol t^f(o)>0}}
+\frac{\boldsymbol C^f(o)}{\boldsymbol t^f(o)}
+\in\mathbb Q.
+\quad}
+\tag{71.21}
+$$
+
+下列使用全部合法动作的线性规划有有限、有理且达到的最优值 $\alpha_m$：
+
+$$
+\begin{aligned}
+\text{最大化}\quad &x,\\
+\text{约束}\quad&
+2v_s-v_{s'(s,a)}+xb(a)\le2r
+\quad(s\in S_m,\ a\in\mathcal A(s)),\\
+&v_o\ge0,\qquad x\in\mathbb R,\quad v\in\mathbb R^{S_m}.
+\end{aligned}
+\tag{71.22}
+$$
+
+其可行价格投影恰为 $(-\infty,\alpha_m]$。势 $v_s$ 是有符号变量，只约束根非负，不施加全局 $v_s\ge0$。
+

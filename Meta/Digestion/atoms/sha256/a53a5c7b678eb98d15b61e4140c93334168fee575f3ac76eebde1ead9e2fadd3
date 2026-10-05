@@ -1,0 +1,41 @@
+**证明。** 图有 $m^2$ 个状态，每个状态有非空有限动作。逐坐标最小值和后继取值给
+
+$$
+\|T_xv-T_xw\|_\infty\le\tfrac12\|v-w\|_\infty,\qquad
+v\le w\Longrightarrow T_xv\le T_xw.
+\tag{71.16}
+$$
+
+Banach 收缩给唯一固定点，有限动作给逐状态最小动作。即时量是 $r-xb/2$，可有符号但有界；负锚项必须在下一位的折扣内，不能移成 $-xb$。这正是有限折扣规划的收缩、保序与驻定最优供应，见 [RL Theory，*The Fundamental Theorem*，Bellman Operators、Contractions 及 Fundamental Theorem 的完整证明](https://rltheory.github.io/lecture-notes/planning-in-mdps/lec2/)。
+
+沿任意路径展开固定点的不等式，得到
+
+$$
+V_x(o)\le
+\sum_{d=0}^{D-1}r_d2^{-d}
+-x\sum_{d=1}^{D}b_d2^{-d}
++2^{-D}V_x(s_D).
+\tag{71.17}
+$$
+
+余项因有限状态而趋零；沿 $f_x$ 根路径逐步取等，故得到式（71.14）的路径最小值，而不是只给下确界。随机选择图动作也不能降低它，因为每条实现路径已受同一不等式约束。
+
+$x\le\alpha_m$ 时，正锚路径由式（71.12）给 $C_\gamma-xt_\gamma\ge0$，零锚路径由根正费用给至少一。$x>\alpha_m$ 时，下确界定义给某个正实律的 $L_m/t<x$，其规范路径使根值严格负。这证明符号等价。还需在未预先假设取得时证明阈值根值恰为零：给任意 $\varepsilon>0$，取 $L_m/t<\alpha_m+\varepsilon$ 的正实律，规范路径给
+
+$$
+0\le V_{\alpha_m}(o)\le L_m(p)-\alpha_m t(p)
+<\varepsilon t(p)\le\varepsilon/m.
+\tag{71.18}
+$$
+
+所以根值为零。
+
+现在才选择 $f_{\alpha_m}$。其根路径有 $C_\star-\alpha_m t_\star=0$；$C_\star\ge1$ 排除 $t_\star=0$，从而定理71.30供应正实输出律。依定义及正确松弛方向，
+
+$$
+\alpha_m t_\star\le L_m(p^\star)\le C_\star=\alpha_m t_\star.
+\tag{71.19}
+$$
+
+所有不等式遂为等号，真实树账单也由定理71.30取得。这一步把正锚从根零缺陷推出，没有把全支撑当作一般折扣定理的额外未证前提。进一步，$C_\star-L_m$ 是各层非负余量松弛之和；为零使每层、每标签的 $N_{i,d}\le\lfloor2^dp^\star_i\rfloor$ 均取等，故取得者的数字自动规范。证毕。
+

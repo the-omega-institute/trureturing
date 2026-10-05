@@ -1,0 +1,8 @@
+**前沿 25 的来源复用边界。** 在 $K\ge35,d=25,w=0$、前阶 frontier-25 仍活跃的来源合格行，$v=4K+6$，令 $R_h(i)=Q_h(4h-19+i)$、$W=Z_{K-1}$、$\ell=A-v+4$。来源的 $R_{K-1}(25)=8$、first-24 与 holes $27,28,32$ 给合格两周期 $\{\ell,\ell+4\}$。在实际末对后 $X=A-v+q$，[来源 reset 接口](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/recursive-descent.md#an-even-landing-determines-a-frontier-phase) 的解码是：$q=4$ 时 reset；$4<q<v-W$ 时 nonreset；top-cap $v-W\le q\le v$ 时读取 $c=Q_{K-1}(v-q)\in\{0,1,2,3\}$，额外响应为 $R_{K-1}(29-c)$，仅当该响应为 $4$ 才 reset。这些均为 SOURCE REUSE，仍须由原轨道实际取得分支，且奇深度的 reset 与偶深度的 nonreset 都保留在 erasure 判据中。
+
+短右轮廓与三十四阶种子还给 $K=35$ 的合法局部比较：$C(A+1)=B+1$、$Q_{34}(v+1)=8$，以及 $C(A+3)=B+3$、$Q_{34}(v+3)=4$。对应两步局部分别返回 $\ell+4$ 和 $\ell$；它们只显示 SOURCE REUSE 中的两种合法分支。来源未给原起点 $N-1$ 达到这两个正侧地址的证明，式 (35.3) 也不选择其中一支。因此本章不推出实际 erasure 或 phase table。
+
+**来源、边界与状态。** 本章的实际对象及首次通过对取自本卷定理 31.3，五行首对接口复用固定来源 $40d1$ 的 [G.5](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/recursive-descent.md#the-exterior-replay-reaches-an-unbounded-profile-after-two-steps)；cap 预算和实际子树守恒复用其 C.1--C.3，完整 cap-3 停止复用其 H.1。新增承重是把既有正帽预算从辅助阶数 19、20 接到阶数 21、22，再以零帽兄弟的 $L$ 费用完成强归纳，并在同一实际最后一对上作整数取整。没有新增有限种子、没有另造递归、没有替换规定深度、没有把 frontier-25 的合法地址当成达到地址。
+
+实际 G.5 共同网关、更宽数值轮廓、盆和着陆、同历史修正相位、实际无界周期、规范缺陷和终端占用的一致估计、联合块补偿与离散度、达到的优化策略、$C(n)/n\to\alpha$、全局收敛以及完整跨递归类型对应仍未解决。实际 erasure、线性定位、自动 evaluator、phase table、未改变的 higher word、有限新前提、世界新颖性和 kernel 结论均不由本章推出。以上条件纸面数学不结束完整研究目标。
+

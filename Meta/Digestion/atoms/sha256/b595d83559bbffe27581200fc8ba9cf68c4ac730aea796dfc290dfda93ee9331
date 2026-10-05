@@ -1,0 +1,43 @@
+**推论 35.3（G.5 同历史五行的实际末对）。** 在假设 35.1 下，对每一个整数 $K\ge28$、每一个整数 $16\le d\le43$ 和每一个 $w\in\{0,2,3,5,7\}$，置
+$$
+\begin{aligned}
+v&=4K-19+d-w,&
+N&=F_K-v,&
+A&=F_{K-1},&
+B&=F_{K-2},\\
+J&=F_{K-4},&
+P&=P_{K-1}.
+\end{aligned}
+$$
+五个 $w$ 分别给出同一基根 $F_K-(4K-19+d)$ 的五行；每行使用自己的规定起点 $x_0=N-1$、实际内步及深度 $d_N$。由定理 31.3，该行首次进入 $[A-v,A]$ 的时钟为 $\theta=2R$，$R\ge2$ 且 $\theta\le\mu_N\le d_N$。令 $a_R=x_{2R}-A\in[-v,0]$；对每个整数 $1\le r<R$，令
+$$
+a_r=x_{2r}-A>0,\qquad
+b_r=A-x_{2r+1},\qquad
+q_r=Q_{K-1}(b_r)=a_{r+1}+v.
+$$
+每一对的三个量来自该行同一实际历史；重复物理索引使用同一个 $C$ 值。则
+$$
+q_r\ge4,\qquad
+4b_r\le(P+234)(a_{r+1}+v),\qquad
+4\alpha a_r
+<(P+234)a_{r+1}+(P+230)v+4.
+\tag{35.2}
+$$
+
+特别地，在实际最后一个正缺口对 $r=R-1$，令 $a=a_{R-1}$、$b=b_{R-1}$、$q=q_{R-1}$，并定义
+$$
+B^\star=\left\lfloor\frac{(P+234)v}{4}\right\rfloor,\qquad
+A^\star=\min\left(J,
+\left\lceil\frac{B^\star-v+1}{\alpha}\right\rceil-1\right).
+$$
+则达到的实际末对满足
+$$
+1\le a\le A^\star,
+\qquad
+v+1\le b\le\min\{v+J,F_{K-3},B^\star\},
+\qquad
+4\le q\le v.
+\tag{35.3}
+$$
+此前 $1\le r<R-1$ 时 $q_r>v$；上界 $q\le v$ 只在末对使用。式 (35.3) 包含实际达到的末对，不声称域内每一个地址都会达到。
+

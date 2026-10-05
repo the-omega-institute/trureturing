@@ -1,0 +1,32 @@
+**定义 31.2（同一根的入口、右增量与自然帽域）。** 对整数 $k\ge23$ 及 $0\le v\le\lfloor F_{k-4}/2\rfloor$，记
+
+$$
+\begin{aligned}
+N&=F_k-v,&A&=F_{k-1},&B&=F_{k-2},&J&=F_{k-4},\\
+I&=[A-v,A]\cap\mathbb Z,&\sigma&=Q_k(v+1),&d_N&=A-\sigma,\\
+\theta(k,v)&=\min\{i\ge0:x_i\in I\},
+&\mu_N&=\min\{i\ge0:x_i\text{ 位于该轨道的最终周期}\},\\
+\iota_k(a)&=C(A+a)-B&&&&(1\le a\le J),\\
+P&=P_{k-1},&L&=L_{k-1},&q&=P/\alpha,
+&\gamma&=\frac{L+(P-1)v+1}{\alpha},\\
+\beta(k,v)&=\frac{\log\!\left(1+\dfrac{(P-\alpha)(J-v)}{L+(P-1)v+1}\right)}{\log(P/\alpha)}.
+\end{aligned}
+\tag{31.3}
+$$
+
+$\theta$ 是首次进入区间的时钟，$\mu_N$ 是最短周期前段长度，两者不预设相等；来源 C.5、C.10 的首次入口字段对应这里的 $\theta$。$\sigma$ 固定为同一实际前驱行的亏量，不是自由的深度修正。右增量 $\iota_k$ 与共同词长 $H$ 分别使用。
+
+对每个正整数 $y$，令 $j\ge2$ 为满足 $F_j\le y<F_{j+1}$ 的唯一自然阶数，定义自然帽亏量及其点值域
+
+$$
+\begin{aligned}
+\mathfrak c(y)&=F_j-C(y),\\
+S_h&=\{y\ge1:0\le\mathfrak c(y)\le h\},\\
+\mathcal A&=\{F_j:j\ge2\},\\
+R_h&=\{1,\ldots,55\}\cup S_h\cup\mathcal A\qquad(h\in\mathbb Z_{\ge0}).
+\end{aligned}
+\tag{31.4}
+$$
+
+这里 $\mathfrak c$ 对应来源 [Five-window closure，M.3](https://github.com/the-omega-institute/nested-recurrences/blob/d9dbad876c0d3c7b46b692241569fcdf36594344/cloitre-conway/five-window-closure.md#the-least-recursive-completion-adds-fibonacci-anchors) 的自然帽记号，区别于本卷规范黄金缺陷 $E_C(y)=C(y)-G(y)$，也不是规范缺陷离散度中的 $D$。非锚 $N=F_k-v$ 满足 $\mathfrak c(N)=Q_k(v)$；$v=0$ 的锚端点则按 $\mathcal A$ 纳入，不能把继承的 $Q_k(0)=0$ 当作其自然帽亏量。直接调用 M.3：每个固定非负整数 $h$ 的 $R_h$ 在实际所选两子操作下闭合。因此任一根属于 $R_h$ 时，其所有实际所选后裔也属于 $R_h$；这不包括从 $N-1$ 生成所选点时的全部内轨道自变量。
+

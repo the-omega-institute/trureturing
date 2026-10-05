@@ -2327,3 +2327,439 @@ $$
 正则化校准和闭区间 $C^1$ 约定与钉版 Mathlib 的 `Analysis.SpecialFunctions.Arcosh`、`Geometry.Manifold.Riemannian.PathELength` 中的标准解析及路径长度定义一致；这里给出的是实际商及实际张量上的书面论证，并未实例化或编译这些接口。既有上半空间模型的拓扑或完备性结论，亦不能代替本节从下降张量到同一原始块链的接口。
 
 本节结算第 21 节条件之上的书面长度校准、有限实际块链距离等式、原商度量拓扑及紧分量含边界完备性。它不申报 Lean kernel 核验、冻结、atom 覆盖或文献原创性；非紧端、退化块及另行预选图册的相容性仍在范围之外。
+
+## 24. 原始几何块与六长度 Gram 载体的带标记等距识别
+
+本节连接第 15 节的原始几何块与第 17 节的显式载体。原始对象仍是完全截断、非退化、四个顶点均超理想的四面体 $P\subset\mathbb H^3$；截断使用各超理想顶点的极平面，六条完整旧边的长度为 $l_{ij}>0$。顶点、主面、cap 和旧边均使用同一原始标签。这里不把任意具有四张指定平面的凸体当作原始四面体，也不包含理想顶点或零长度边。
+
+采用 $L(X,Y)=-X_0Y_0+X_{\rm sp}\cdot Y_{\rm sp}$。每个原始超理想顶点取单位 spacelike 代表 $U_i$，定向为原始截断块位于 $L(X,U_i)\le0$ 的一侧。记
+
+$$
+x_{ij}=\cosh l_{ij}>1,\qquad G_{ii}=1,\qquad G_{ij}=-x_{ij}\quad(i\ne j).
+$$
+
+令 $V_i$ 为第 17 节同一六参数的显式向量，且 $L(V_i,V_j)=G_{ij}$、$\sum_iV_i$ 为未来向量。以下结论只用该 Gram 实现；对来源于原始非退化块的长度，Gram 非奇异性由原始顶点的线性独立性直接得到。若从六参数开始，则应使用第 17 节的 $D(x)>0$ 构造，不能先假定存在原始块。
+
+**命题 24.1（完整带标记块的等距识别）。** 存在唯一线性 Lorentz 等距映射 $A$，满足 $AU_i=V_i$。它保持未来分支，并限制为保留全部面格和六条旧边标签的双曲等距同胚
+
+$$
+a:P\longrightarrow P_x=\nu_x(C_x).
+$$
+
+对一族原始块逐块使用此映射，规定的闭六边形等距映射 $I_{t,f}$ 被共轭为
+
+$$
+I^x_{t,f}=a_u\circ I_{t,f}\circ a_t^{-1}
+$$
+
+在对应的完整实际主面之间的等距同胚。它保留全部六个有序 cap 顶点，并满足原来的逆配对律。这个共轭诱导同一原始生成商及 cap 标记的同胚；它不把不同块的 $a_t$ 合并为一个环境等距映射，也不要求边角和为 $2\pi$。
+
+### 24.1 两张原始 cap 极平面决定 Gram 符号
+
+固定旧边 $ij$。在其原始双曲直线上，选择未来正交轴 $C,T$，满足 $L(C,C)=-1$、$L(T,T)=1$、$L(C,T)=0$。把两个 cap 端点写为
+
+$$
+C,\qquad D=\cosh l_{ij}\,C+\sinh l_{ij}\,T.
+$$
+
+cap 平面与旧边正交，所以它们的单位极向量位于这张 Lorentz 二维平面内。第一个 cap 的内侧包含沿 $T$ 方向的旧边，第二个 cap 的内侧包含反向旧边；因此定向唯一给出
+
+$$
+U_i=-T,\qquad U_j=\sinh l_{ij}\,C+\cosh l_{ij}\,T.
+$$
+
+于是 $L(U_i,U_j)=-\cosh l_{ij}$。这项负号来自两端相对的内侧方向；只有极平面间的无向距离不能单独指定这个符号。对六条原始旧边分别应用该计算，得到整张 $G$。援引 Frigerio–Petronio 的平面距离公式时，应取两端被删除的互不相交 cap 半空间；原块所处的两个内侧半空间彼此相交，不是该引理的输入。把两个法向同时反号不会改变其相互 Lorentz 配对。
+
+原始四个超理想顶点属于一个非退化 projective simplex，故其四个代表 $U_i$ 线性独立。若 $M$ 是以 $U_i$ 为列的矩阵、$J=\operatorname{diag}(-1,1,1,1)$，则
+
+$$
+G=M^{\mathsf T}JM,\qquad \det G=-(\det M)^2<0.
+$$
+
+因此 $G$ 的签名为 $(3,1)$，不存在额外的退化 Gram 分支。沿用原始槽序 $12,13,14,34,24,23$，第 17 节的判别式是[理论卷 CFMP_GEOMETRIC_REALIZATION.md 第 1 节](../../docs/develop/theory/CFMP_GEOMETRIC_REALIZATION.md#1-固定剖分真实边长与接缝曲率)三个原始多项式的 $D(x)=A(x)B(x)-P_1(x)^2$。行列式展开给出
+
+$$
+D(x)=\bigl(x_{12}^2-1\bigr)(-\det G)>0.
+$$
+
+所以原始几何长度直接落在显式向量的构造域内，未给原始块额外添加一个未验判别式前提。显式向量具有相同 Gram，故也线性独立。
+
+### 24.2 全部十二顶点及八张支撑面
+
+为明确整个块的识别，考虑与第 17 节完全相同的系数多面体
+
+$$
+C_x=\{\lambda\in\mathbb R^4:\lambda_i\ge0,\ \sum_i\lambda_i=1,
+\ (G\lambda)_i\le0\ \text{对所有 }i\}.
+$$
+
+均匀点 $\lambda_i=1/4$ 对全部 cut 严格满足不等式，故 $C_x$ 在系数仿射超平面中有三维内部。任何 cut 等式 $(G\lambda)_i=0$ 都给出
+
+$$
+\lambda_i=\sum_{j\ne i}x_{ij}\lambda_j>\sum_{j\ne i}\lambda_j=1-\lambda_i,
+$$
+
+因为等式不允许 $\lambda_i=1$。因此该等式迫使 $\lambda_i>1/2$，两个不同 cap 等式不能同时成立。
+
+在三维仿射超平面内，极点需要三个独立的活跃约束。如果没有 cut 活跃，只能剩一个正系数，即原始 simplex 顶点；它违反对应 cut。如果恰一个 cut $i$ 活跃，则至少两个系数为零，且 $\lambda_i>0$。全部极点因而恰为
+
+$$
+\lambda^{ij}=\frac{x_{ij}e_i+e_j}{x_{ij}+1}\qquad(i\ne j).
+$$
+
+反向代入可验：$i$-cut 为零，$j$-cut 为 $1-x_{ij}<0$，其余两个 cut 严格负；两个其余零系数及 $i$-cut 独立。因此这十二个点确实全部为极点。
+
+主面 $f$ 是 $\lambda_f=0$，它包含 $i,j\ne f$ 的六个有序顶点；cap $i$ 是 $(G\lambda)_i=0$，它包含三个 $\lambda^{ij}$。旧边 $ij$ 是另外两个系数均为零的线段，端点为 $\lambda^{ij}$ 和 $\lambda^{ji}$。cap 边由一个 cap 等式与一个主面等式给出。不同 cap 不相交，三个主面不相交；一个 cap 与两个不同主面相交时，交集是上述唯一有序顶点或空集。由这些活跃约束得到全部面格，未产生额外顶点或额外边。
+
+令 $S_U(\lambda)=\sum_i\lambda_iU_i$、$S_V(\lambda)=\sum_i\lambda_iV_i$。对 $\lambda\in C_x$，
+
+$$
+L(S_U,S_U)=L(S_V,S_V)=\lambda^{\mathsf T}G\lambda<0.
+$$
+
+严格性可以在系数上直接检查：可行点至少有两个正系数，而至多一个 cut 为零，所以 $\sum_i\lambda_i(G\lambda)_i$ 至少包含一项严格负数。故两个归一化映射均在整个闭 $C_x$ 上有定义。
+
+$W_U=\sum_iU_i$ 满足 $L(W_U,W_U)=4-2\sum_{i<j}x_{ij}<0$。原始块的内部点对四张 cap 均满足严格内侧条件，故它与 $W_U$ 的 Lorentz 配对为负；$W_U$ 因而为未来 timelike。对于全部可行 $\lambda$，
+
+$$
+L(S_U(\lambda),W_U)=\sum_i\lambda_i\Bigl(1-\sum_{j\ne i}x_{ij}\Bigr)<0,
+$$
+
+所以 $S_U(\lambda)$ 也为未来 timelike。$V$ 的同一计算使用已固定的未来 $W_V=\sum_iV_i$，得到相同结论。
+
+原始 hyperideal simplex 在 projective 模型中是四条原始顶点射线的凸包；完全极截断再加入四张极平面的内侧条件。以 $\sum_i\lambda_i=1$ 取 projective 截面，恰得到 $C_x$。因此
+
+$$
+P=\left\{\frac{S_U(\lambda)}{\sqrt{-\lambda^{\mathsf T}G\lambda}}:
+\lambda\in C_x\right\}.
+$$
+
+主面仍是缺失对应顶点的三射线张成平面，cap 仍是对应极平面；这个等式使用原始块的定义，没有把完整面格识别另列为假设。归一化映射在 $C_x$ 上单射：归一化像相同意味着两个系数向量正比例，系数和为一迫使比例为一。它连续，源紧、目标 Hausdorff，故为同胚。
+
+### 24.3 Gram 等距映射及规定闭面映射的共轭
+
+定义 $A$ 为在基 $U_i$ 上取值 $V_i$ 的唯一线性映射。相同 Gram 给出
+
+$$
+L(AX,AY)=L(X,Y)\qquad(X,Y\in\mathbb R^{3,1}).
+$$
+
+它把未来 timelike 的 $W_U$ 送到未来 timelike 的 $W_V$，因此保持整个未来分支。逐系数有
+
+$$
+A\frac{S_U(\lambda)}{\sqrt{-\lambda^{\mathsf T}G\lambda}}
+=\frac{S_V(\lambda)}{\sqrt{-\lambda^{\mathsf T}G\lambda}}.
+$$
+
+上一节的全部活跃约束在两边相同，故该限制保留整个带标记面格。对主面法向也能直接核对：令 $H=G^{-1}$、$W_f^U=\sum_iH_{if}U_i$、$W_f^V=\sum_iH_{if}V_i$，则 $AW_f^U=W_f^V$。同一个内侧定向给出 $n_f=-W_f/\sqrt{H_{ff}}$，所以主面和 cap 的外法向均按标签运输。环境空间的取向可能反转；命题只要求未来分支和原始标签，不从这些条件额外断言每个 $a_t$ 保持空间取向。
+
+原始 $I_{t,f}$ 在完整闭六边形上等距且保留规定的有序顶点。逐块 $a_t$ 保留这些顶点及其闭面，故 $I^x_{t,f}$ 具有相同性质，包括两个 cap 端点。共轭公式还直接给出
+
+$$
+I^x_{u,g}\circ I^x_{t,f}=\operatorname{id}
+$$
+
+在整张源闭面上成立。它因此满足第 18 节实际半径运输及第 20 节射线识别所需的同一 caller-face 输入。若使用第 18 节的整面坐标运输公式，应作用于这个共轭得到的规定映射；仅选择另一个匹配顶点的方便映射不能代替该步骤。
+
+在带标签不交并上使用 $\mathcal A(t,z)=(t,a_tz)$。每个原始实际面生成步按共轭公式对应一个显式载体的生成步，逆映射给出反方向。对反身、对称和传递逐项使用同一个 $\mathcal A$，得到完整等价闭包的对应。商拓扑的通用性质随后给出连续的商映射及连续逆；全部 cap 也逐块对应，故商同胚精确保留原始边界标记、自粘合和出现次数。
+
+### 24.4 同一环境映射的全局坐标、光滑性与实际切张量
+
+上一节的同一个 $A$ 在整个未来单位双曲面上给出 $a(X)=AX$，逆映射是 $A^{-1}$ 的限制。使用全局空间坐标
+
+$$
+\Phi(z)=\bigl(\sqrt{1+\|z\|^2},z\bigr),\qquad
+\Psi(X)=X_{\rm sp},\qquad z\in\mathbb R^3.
+$$
+
+它们互逆，且均实解析。把 $A$ 相对于时间坐标与空间坐标分块为
+
+$$
+A=\begin{pmatrix}\alpha&r^{\mathsf T}\\ b&M\end{pmatrix}.
+$$
+
+则同一个 $a$ 的空间表达及其导数为
+
+$$
+F(z)=\Psi\bigl(A\Phi(z)\bigr)=b\sqrt{1+\|z\|^2}+Mz,
+\qquad
+D F_z(u)=Mu+b\frac{z\cdot u}{\sqrt{1+\|z\|^2}}. \tag{24.1}
+$$
+
+分母在整个 $\mathbb R^3$ 上严格正。用 $A^{-1}$ 的分块得到同样实解析的 $F_{A^{-1}}(z)=\Psi(A^{-1}\Phi(z))$。因为 $A$ 和 $A^{-1}$ 均保持未来单位双曲面，有 $\Phi(F(z))=A\Phi(z)$ 和 $\Phi(F_{A^{-1}}(z))=A^{-1}\Phi(z)$；因此 $F_{A^{-1}}\circ F=\operatorname{id}$、$F\circ F_{A^{-1}}=\operatorname{id}$。故这是整个双曲面的同一个实解析微分同胚，特别地它双向光滑；没有另选一个仅在块上相同的坐标映射。
+
+实际切空间是 $T_X\mathbb H^3=X^\perp$，其正定内积是 $L$ 的限制。空间坐标的切向识别由
+
+$$
+d\Phi_z(u)=\left(\frac{z\cdot u}{\sqrt{1+\|z\|^2}},u\right)
+$$
+
+给出，故坐标张量为
+
+$$
+g_z(u,v)=L(d\Phi_z(u),d\Phi_z(v))
+=u\cdot v-\frac{(z\cdot u)(z\cdot v)}{1+\|z\|^2}. \tag{24.2}
+$$
+
+由 $\Phi\circ F=A\circ\Phi$ 微分得到精确的切向量运输关系
+
+$$
+A\,d\Phi_z(u)=d\Phi_{F(z)}(D F_z(u)). \tag{24.3}
+$$
+
+因此
+
+$$
+g_{F(z)}(D F_z(u),D F_z(v))=g_z(u,v). \tag{24.4}
+$$
+
+在实际切空间中，$da_X$ 就是 $A|_{X^\perp}$，目标为 $(AX)^\perp$；式 (24.3) 是它在源、目标纤维空间坐标中的同一表达。它保留实际 Riemannian 内积和由该内积定义的范数。逆向用同一个 $A^{-1}$ 得到相同结论。这里保留的范数是实际切张量的范数；空间坐标中的欧氏范数并不等于式 (24.2) 的范数。
+
+对任意闭区间上的有限分片 $C^1$ 路径，链式法则和 (24.4) 给出其在 $a$ 下的同长像。对路径长度取下确界，再对 $a^{-1}$ 作同一论证，得到整个双曲面的实际 Riemannian 距离等式
+
+$$
+d_{\mathbb H}(aX,aY)=d_{\mathbb H}(X,Y).
+$$
+
+该距离是第 23.1 节从实际切张量校准的路径距离；它也等于 $\operatorname{arcosh}(-L(X,Y))$。这些计算使用第 24.3 节原始 Gram 映射内部已经取得的 Lorentz 恒等式及未来分支保持性，没有给原始六长度几何再添加一个光滑性、导数或张量相容前提。
+
+### 24.5 原始射线的非负锥与同一闭截断块
+
+记四条原始射线生成的非负锥及其截断为
+
+$$
+K_U=\left\{\sum_i\mu_iU_i:\mu_i\ge0\right\},\qquad
+\widehat P_U=\{X\in\mathbb H^3:X\in K_U,\ L(X,U_i)\le0\ \text{对所有 }i\}.
+$$
+
+这是原始四条射线的锥包；生成系数允许为零，不要求每个点位于块内部。对 $X\in\widehat P_U$，写 $X=\sum_i\mu_iU_i$，令 $s=\sum_i\mu_i$。$L(X,X)=-1$ 排除全部系数为零，故 $s>0$。取 $\lambda_i=\mu_i/s$，则 $\lambda\in C_x$，因为
+
+$$
+(G\lambda)_i=L\left(U_i,\sum_j\lambda_jU_j\right)
+=\frac{L(U_i,X)}s\le0.
+$$
+
+同时 $S_U(\lambda)=X/s$，故 $\lambda^{\mathsf T}G\lambda=-1/s^2$，归一化恰恢复 $X$。反过来，第 24.2 节的每个归一化像都在 $K_U$ 中、属于未来单位双曲面且满足全部 cap 不等式。因此
+
+$$
+\widehat P_U=\nu_U(C_x)=P. \tag{24.5}
+$$
+
+对 $V$ 有同一等式 $\widehat P_V=\nu_V(C_x)=P_x$。由 $AU_i=V_i$、$A^{-1}V_i=U_i$ 及 Lorentz 恒等式，逐点得到
+
+$$
+X\in\widehat P_U\quad\Longleftrightarrow\quad aX\in\widehat P_V.
+$$
+
+所以完整闭块的限制同胚就是全局 $a$ 的限制，逆向就是同一个 $a^{-1}$ 的限制；包括十二个顶点、cap 边和全部闭主面的值都使用相同环境公式。其实际环境 Riemannian 距离等式也直接限制到这些点。
+
+块内路径距离另由凸性核对。若 $X,Y\in\widehat P_U$ 且 $X\ne Y$，第 23.1 节式 (23.5) 的两端测地段在每个时刻是 $X,Y$ 的非负线性组合，故仍在 $K_U$ 中，并保留全部 cap 半空间不等式。它属于未来单位双曲面，因而整段留在同一块中。同点使用常曲线。所以块内实际路径距离也等于 $d_{\mathbb H}$，并由同一个限制映射保持。这项结论不把闭块的角点宣称为无边界光滑流形；第 24.4 节的光滑性及切空间陈述属于环境双曲面，闭块限制的路径距离使用上述凸性。
+
+本节提供原始非退化完全截断块到显式六长度载体的书面等距桥梁，不申报 Lean kernel 核验、冻结或消化覆盖。极截断的 projective 定义沿用第 16.6 节所引 Frigerio–Petronio 的完全截断情形；[同一论文 Proposition 2.7、Lemma 4.6(1) 及第 6 节的 Proposition 2.7 证明](https://arxiv.org/abs/math/0109012v1)分别给出无理想顶点时的旧边长度刚性、有侧向条件的负 cosh 配对和 Lorentz 基映射路线。此处正长度情形满足这些条件，完整面格及规定映射的共轭另由上文逐项落实；不申报文献原创性。参数域、原始流形图册、解析张量及流收敛仍遵守各自条件，不由单块等距识别自动结算。
+
+## 25. 同一六长度标架的上半空间八支撑与完整闭块
+
+使用[理论卷 CFMP_GEOMETRIC_REALIZATION.md 第 66.2 节](../../docs/develop/theory/CFMP_GEOMETRIC_REALIZATION.md#66-六长度-gram-矩阵的共同截断域)的同一个六长度向量、标架与坐标映射。标签为 $I=\{0,1,2,3\}$，原始六槽序为 $01,02,03,23,13,12$，$l_{ij}>0$、$x_{ij}=\cosh l_{ij}>1$，且该节的严格源条件 $-1<\varphi_{01}<1$ 成立。记
+
+$$
+G_{ii}=1,\qquad G_{ij}=-x_{ij}\ (i\ne j),\qquad
+C_l=\{\lambda:\lambda_i\ge0,\ \sum_i\lambda_i=1,\ G\lambda\le0\}.
+$$
+
+取该节字面给出的四个 $m_i$，令 $M$ 以 $m_i$ 为行。环境形式和未来单位双曲面为
+
+$$
+B(Y,Z)=Y_0Z_0+Y_1Z_1+Y_2Z_2-Y_3Z_3,
+\qquad \mathbb H_B^3=\{Y:B(Y,Y)=-1,\ Y_3>0\}.
+$$
+
+因此 $MJM^{\mathsf T}=G$，$J=\operatorname{diag}(1,1,1,-1)$，$M$ 可逆，$\det G<0$。沿用同一个
+
+$$
+S_m(\lambda)=\sum_i\lambda_i m_i,\qquad
+Y(\lambda)=\frac{S_m(\lambda)}{\sqrt{-\lambda^{\mathsf T}G\lambda}},
+\qquad F_l(\lambda)=\Psi(Y(\lambda)),
+$$
+
+其中本节的 $\Psi$ 专指第 66.2 节的上半空间映射
+
+$$
+\Psi(Y)=\left(\frac{Y_0+iY_1}{Y_3-Y_2},\frac1{Y_3-Y_2}\right).
+$$
+
+它不是第 24.4 节取空间分量的坐标映射。本节证明这一字面 $F_l(C_l)$ 的八半空间刻画、三维内部与完整带标签面格，不另设像的表示前提。
+
+### 25.1 正主余子式比与原始外法向
+
+令 $H=G^{-1}$。对每个 $f$，删去第 $f$ 行列得到的三阶主子式，其三条边的 $x$ 值记为 $a,b,c>1$。直接展开为
+
+$$
+\det\begin{pmatrix}1&-a&-b\\-a&1&-c\\-b&-c&1\end{pmatrix}
+=1-a^2-b^2-c^2-2abc
+=-(2abc+a^2+b^2+c^2-1)<0.
+$$
+
+故由逆矩阵的余子式公式和 $\det G<0$，对全部标签有
+
+$$
+H_{ff}=\frac{\det G_{\widehat f,\widehat f}}{\det G}>0. \tag{25.1}
+$$
+
+定义主面对偶向量及单位外法向
+
+$$
+W_f=\sum_iH_{if}m_i,\qquad
+n_f=-\frac{W_f}{\sqrt{H_{ff}}},
+$$
+
+并取 cap 的单位外法向为 $m_i$。相同 Gram 给出
+
+$$
+B(m_j,W_f)=\delta_{jf},\qquad B(W_f,W_f)=H_{ff},\qquad B(n_f,n_f)=1.
+$$
+
+因此 $n_f$ 与 $m_i$ 都是真实单位 spacelike 法向。对任意唯一系数展开 $Z=\sum_i\mu_i m_i$，有
+
+$$
+B(Z,W_f)=\mu_f,\qquad
+B(Z,n_f)=-\frac{\mu_f}{\sqrt{H_{ff}}}. \tag{25.2}
+$$
+
+这同时固定了主面的内侧符号：$B(Z,n_f)\le0$ 恰为 $\mu_f\ge0$。在原归一化像上，cap 读数则为
+
+$$
+B(Y(\lambda),m_i)=\frac{(G\lambda)_i}{\sqrt{-\lambda^{\mathsf T}G\lambda}}. \tag{25.3}
+$$
+
+故主面和 cap 仍分别由原标签的 $\lambda_f=0$ 与 $(G\lambda)_i=0$ 给出。
+
+### 25.2 同一个上半空间映射及实际度量
+
+写上半空间点为 $(z,h)=(u+iv,h)$，$h>0$。$\Psi$ 在整个 $\mathbb H_B^3$ 上的逆映射是
+
+$$
+\Theta(u,v,h)=\Psi^{-1}(u+iv,h)
+=\left(\frac uh,\frac vh,
+\frac{u^2+v^2+h^2-1}{2h},
+\frac{u^2+v^2+h^2+1}{2h}\right). \tag{25.4}
+$$
+
+事实上 $\Theta_3-\Theta_2=1/h$、$\Theta_3+\Theta_2=(u^2+v^2+h^2)/h$，代入给出 $B(\Theta,\Theta)=-1$ 和 $\Theta_3>0$。反向，未来单位关系给出 $Y_3>|Y_2|$；由 $Y_3-Y_2$ 及 $Y_0,Y_1$ 恢复 $h,u,v$，再由单位关系恢复 $Y_3+Y_2$。故两映射互逆且实解析。
+
+这一 $\Psi$ 也是实际双曲度量等距映射。令 $R=u^2+v^2+h^2$、$q=Y_3-Y_2$、$p=Y_3+Y_2$，在 $Y=\Theta(u,v,h)$ 处有
+
+$$
+dY_0=\frac{du}{h}-\frac{u\,dh}{h^2},\qquad
+dY_1=\frac{dv}{h}-\frac{v\,dh}{h^2},\qquad
+dq=-\frac{dh}{h^2},\qquad
+dp=\frac{2u\,du+2v\,dv}{h}+\left(2-\frac R{h^2}\right)dh.
+$$
+
+因 $dY_2^2-dY_3^2=-dp\,dq$，展开后交叉项抵消，得到
+
+$$
+\Theta^*(B|_{T\mathbb H_B^3})
+=dY_0^2+dY_1^2-dp\,dq
+=\frac{du^2+dv^2+dh^2}{h^2}. \tag{25.5}
+$$
+
+这是标准上半空间的实际 Riemannian 张量。双向链式法则保持路径长度，因此同一 $\Psi$ 保持对应的实际路径距离。
+
+### 25.3 八个字面二次不等式与逆向系数恢复
+
+对上述任意一个单位法向 $n=(n_0,n_1,n_2,n_3)$，定义
+
+$$
+Q_n(u,v,h)=2n_0u+2n_1v+(n_2-n_3)(u^2+v^2+h^2)-(n_2+n_3).
+$$
+
+直接代入 (25.4) 得到
+
+$$
+B(\Theta(u,v,h),n)=\frac{Q_n(u,v,h)}{2h}. \tag{25.6}
+$$
+
+因高度严格正，该读数与 $Q_n$ 具有相同符号。于是精确的像等式为
+
+$$
+\boxed{F_l(C_l)=\{(u+iv,h):h>0,\ Q_{m_i}(u,v,h)\le0\ (i\in I),\ Q_{n_f}(u,v,h)\le0\ (f\in I)\}.} \tag{25.7}
+$$
+
+正向由 (25.2)–(25.3) 和 $C_l$ 的定义得到。逆向取八个不等式同时成立的上半空间点，令 $Z=\Theta(u,v,h)$。由于 $M$ 可逆，存在唯一 $\mu$ 使 $Z=\sum_i\mu_i m_i$；主面不等式及 (25.2) 强制全部 $\mu_f\ge0$。令 $s=\sum_i\mu_i$。若 $s=0$，非负性迫使全部系数为零，继而 $Z=0$，与 $B(Z,Z)=-1$ 矛盾。因此 $s>0$。
+
+取 $\lambda_i=\mu_i/s$，则坐标非负且总和为一。cap 不等式给出
+
+$$
+(G\lambda)_i=B\left(m_i,\frac Zs\right)=\frac{B(Z,m_i)}s\le0,
+$$
+
+故 $\lambda\in C_l$。同时
+
+$$
+S_m(\lambda)=Z/s,\qquad \lambda^{\mathsf T}G\lambda=-1/s^2,
+\qquad Y(\lambda)=Z.
+$$
+
+这里根分母是正数 $1/s$，所以归一化没有引入另一张时间分支。由 $F_l=\Psi\circ Y$ 恢复原上半空间点，证明 (25.7) 的反向包含。全部表示、符号和成员结论均从实际八支撑读取取得。
+
+### 25.4 实际垂直平面、半球与内侧定向
+
+令 $a_n=n_2-n_3$。当 $a_n\ne0$，单位 spacelike 方程 $n_0^2+n_1^2+n_2^2-n_3^2=1$ 给出
+
+$$
+Q_n=a_n\left[\left(u+\frac{n_0}{a_n}\right)^2+
+\left(v+\frac{n_1}{a_n}\right)^2+h^2-\frac1{a_n^2}\right]. \tag{25.8}
+$$
+
+因此 $Q_n=0$ 是中心在 $h=0$ 的欧氏球的上半球，中心水平坐标为 $(-n_0/a_n,-n_1/a_n)$，半径为 $1/|a_n|$。$a_n>0$ 时 $Q_n\le0$ 取球内一侧；$a_n<0$ 时取球外一侧，均包含实际支撑面本身。
+
+当 $a_n=0$，有 $n_2=n_3$ 和 $n_0^2+n_1^2=1$，故
+
+$$
+Q_n=2(n_0u+n_1v-n_2),
+$$
+
+$Q_n=0$ 是真实的垂直平面，内侧为 $n_0u+n_1v\le n_2$。该分支不可能退化为零多项式。
+
+这些支撑面是标准上半空间的全测地面。其双曲面原像为 $\mathbb H_B^3\cap n^\perp$：单位 spacelike 法向的正交补具有签名 $(2,1)$，该交集为双曲二维平面；两点间的双曲测地段由两端的非负线性组合给出，因而保持 $B(Z,n)=0$。等式 (25.5) 将这个真实全测地面运输为上述半球或垂直平面。取侧依赖 (25.8) 的符号，不把所有八个内侧统称为球内。
+
+### 25.5 三维内部、紧性与全部原标签面格
+
+令 $\bar\lambda=(1/4,1/4,1/4,1/4)$、$r=\sqrt{-\bar\lambda^{\mathsf T}G\bar\lambda}>0$。它满足全部八个严格支撑不等式，因为
+
+$$
+B(Y(\bar\lambda),n_f)=-\frac1{4r\sqrt{H_{ff}}}<0,\qquad
+B(Y(\bar\lambda),m_i)=\frac{1-\sum_{j\ne i}x_{ij}}{4r}<0.
+$$
+
+同一上半空间点 $F_l(\bar\lambda)$ 高度正，故由八个连续 $Q$ 的严格性存在一个三维欧氏开邻域仍在 (25.7) 内。这证明字面像的三维内部。$C_l$ 紧、$F_l$ 连续且单射，目标 Hausdorff，故 $F_l:C_l\to F_l(C_l)$ 为同胚且像紧；由 (25.5)，紧性也属于实际上半空间双曲度量拓扑。
+
+全部顶点及面格直接复用第 24.2 节的活跃约束分类以及[理论卷第 65 节](../../docs/develop/theory/CFMP_GEOMETRIC_REALIZATION.md#65-共同截断单纯形的全部顶点与凸包)的同一 $C_l$ 顶点分类：十二个不同有序顶点为
+
+$$
+p_{ij}=\frac{x_{ij}e_i+e_j}{1+x_{ij}},\qquad F_l(p_{ij})\quad(i\ne j).
+$$
+
+第 $i$ 张 cap 面是 $Q_{m_i}=0$，具有三个顶点 $F_l(p_{ij})$、$j\ne i$，为三角形；第 $f$ 张主面是 $Q_{n_f}=0$，具有 $i,j\ne f$ 的六个有序顶点，为六边形。原旧边 $ij$ 的另外两个系数为零，端点是 $F_l(p_{ij})$ 和 $F_l(p_{ji})$；cap 边仍由一张 cap 与一张主面的等式给出。无其他顶点、边或面，因为 (25.2)–(25.3) 将八张支撑的全部活跃等式精确回读为原来的八个系数约束。
+
+因此共有十八条边：六条旧边 $ij$，以及十二条 $\operatorname{cap}_i\cap\operatorname{main}_f$、$i\ne f$；后一条边的两个端点为 $F_l(p_{ij})$、$F_l(p_{ik})$，其中 $\{j,k\}=I\setminus\{i,f\}$，而 $\operatorname{cap}_i\cap\operatorname{main}_i=\varnothing$。此外 $B(m_i,n_f)=-\delta_{if}/\sqrt{H_{ff}}$，所以 $i\ne f$ 时两单位法向在相交边的每个点都属于实际切空间且内积为零，故每张截断面与其相邻主面正交。
+
+这里的边是真实双曲测地段，面是真实全测地凸多边形。两端的归一化像之间的双曲测地段是两端环境向量的非负线性组合；同一锥和八支撑在该段上保持，活跃等式也保持。将其系数重新除以总和，恰落在对应原系数面中，测地段的两端系数权重之比连续地从 $0$ 遍历到 $+\infty$，两端归一化的固定正尺度只改变这一比值的正比例因子；因此重取总和为一后遍历整条原系数线段。这证明两者具有相同的完整像，也证明面关联与测地实现的对应，而不把非线性 $F_l$ 当作欧氏仿射映射。
+
+### 25.6 与原始块的精确坐标对应及范围
+
+原始 projective 对象的依据是 [Frigerio–Petronio 第 3 节 “Projective model and truncated polyhedra”，正文第 23 页](https://arxiv.org/abs/math/0109012v1)：该段在 projective 模型中取顶点在球外或球边界上的四面体，并以超理想顶点的 Lorentz 正交极平面截断其与双曲球的交。这里使用第 24.2 节已经落实的原始完全极截断情形和四射线正系数表示。第 66.2 节固定标架的 $m_0$ 时间坐标为零；本节不声称四个 $m_i$ 都位于该固定坐标的时间等于一仿射截面，而始终使用这些已定向的 projective 射线及未来单位归一化。因此无需改变原 $M$ 或另选一个仿射标架来完成 (25.7)。
+
+当六长度来自第 24 节的原始完全截断非退化块，令 $R(X_0,X_1,X_2,X_3)=(X_1,X_2,X_3,X_0)$，则 $B(RX,RY)=L(X,Y)$。第 24.3 节将原 $U_i$ 送到 $V_i$ 的映射仍记为 $A$。相同 Gram 和基性质给出唯一 $B$-Lorentz 映射 $T$，满足 $T(RV_i)=m_i$。它把未来 timelike 的 $\sum_i RV_i$ 送到 $\sum_i m_i$；后者由第 66.2 节标架的非负时间坐标及负二次值而为未来 timelike，所以 $T$ 保持未来分支。
+
+因此同一原始带标签闭块的上半空间映射是
+
+$$
+\mathcal F=\Psi\circ T\circ R\circ A\bigm|_P,
+\qquad
+\mathcal F\left(\frac{S_U(\lambda)}{\sqrt{-\lambda^{\mathsf T}G\lambda}}\right)=F_l(\lambda).
+$$
+
+由第 24 节的原块系数等式和 (25.7)，其像恰为同一个八个 $Q\le0$ 的交，全部原始标签由第 25.5 节的等式读取保留。$A,R,T,\Psi$ 各保持实际双曲张量与距离，故该映射是原始闭块的实际等距同胚。这一坐标对应不增设 caller 的半空间表示假设，也不换掉理论卷的原 $M,Y,F_l$。
+
+本节为同一标架和坐标像给出书面八半空间实现、三维内部、紧性、完整十二顶点与四三角形四六边形的带标签识别；不申报 Lean kernel 核验、冻结或文献原创性。第 66.2 节的单个严格源条件足以承担这里的标架与半空间计算；原始完全截断块的适用范围仍由第 24 节固定，完整六长度实现的全部严格源条件、原始商图册、流和收敛结论仍遵守各自条件。
