@@ -26,7 +26,31 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.local_t
 
 For every k, every slot j in Fin(k), and every original Strategy pi, cost(pi,F(k,a_j))=8k+16 implies that some sibling b in Y, H, Z has cost(pi,F(k,b_j)) at least 8k+18.
 
-**Theorem 1.2 (Six Local Tail Costs).**
+**Theorem 1.2 (Readout at a comb slot).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.comb_slot_readout`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.comb_slot_readout` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The address consisting of j right steps, one left step, and u reads precisely u in slot j of an arbitrary right comb.
+
+**Theorem 1.3 (Readout in the compensation subtree).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.comb_tail_readout`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.comb_tail_readout` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+After k right steps the remaining address reads the compensation subtree of a k-slot right comb.
+
+**Theorem 1.4 (Six Local Tail Costs).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.local_tail_attainment`
 
@@ -42,6 +66,8 @@ This module supplies the local obstruction and the six local tails. FourExitScan
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.comb_slot_readout`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.comb_tail_readout`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.local_tail_attainment`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.local_two_excess`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation](ActualImageSevenLeafSeparation.md)
