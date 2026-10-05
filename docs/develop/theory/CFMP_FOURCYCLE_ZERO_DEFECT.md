@@ -37,8 +37,8 @@ is strictly positive (indeed `rad(u,v,w) ≥ 4` for `u,v,w ≥ 1`).  Zhao's
 length-domain criterion (Proposition 2.4) says that a positive six-length
 vector is a genuine hyper-ideal tetrahedron exactly when its six cosines lie
 in `(-1,1)`.  Thus every block lies strictly in the geometric domain
-throughout `Ω`; if `D_o>0` denotes the usual strict-domain predicate, this is
-precisely `D_o(x)>0`.  (The merged Lean API names the criterion by the six
+throughout `Ω`; if `D_t>0` denotes the usual strict-domain predicate, this is
+precisely `D_t(x)>0`.  (The merged Lean API names the criterion by the six
 strict cosine inequalities rather than by a symbol `D_o`.)  In particular,
 the argument never approaches a flat block or a square-root singularity.
 Concretely, for each of the six target edges one may record the scalar
@@ -139,7 +139,7 @@ Applying the preceding lemma gives one shared vector `x : E → ℝ` such that
 
 ```
 ∀ e, a_e < x_e < b_e,
-∀ o, D_o(x) > 0,
+∀ t, D_t(x) > 0,
 ∀ e, ∑ o ∈ star s e, angle s x o = 2π.
 ```
 
