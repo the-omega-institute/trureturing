@@ -819,3 +819,105 @@ remains reusable, while positivity on
 the complete critical quotient, the one-half bound, Robin and RH
 remain unresolved. No precise smaller optimal curvature constant is
 asserted.
+
+
+## Spatially weighted high inverse at every subcritical parameter
+
+The spatial comparison in (WF5) is reused before taking its scalar
+minimum. This is a conditional paper application of (WF1)–(WF6) on the
+same minimal even form, using the classical variational inverse comparison.
+It retains the complete prime row, Gamma term and original ground.
+It supplies an inverse-coupling allowance, not a low-block sign,
+cofinal positivity or Lean certification.
+
+Fix $0<\varepsilon\le1/2$, put
+$c=1/2-\varepsilon$, $\delta=\varepsilon/4$, and choose
+
+$$
+N\ge N_w(\varepsilon):=
+\max\left\{2e^{4\mu_\varepsilon+4},
+\sqrt{\frac{512}{3\pi\varepsilon}}\|s''\|_2,2\right\}.
+\tag{WH1}
+$$
+
+Here $\mu_\varepsilon$ is exactly (WF4), computed from the same
+complete $W$ and $s$. Let $P=\mathbf1_{|\mathsf D|<N}$, $Q=I-P$,
+$v_0=\sqrt\rho$, and
+$T_c=\widetilde A-cI+c|v_0\rangle\langle v_0|$.
+Denote its actual high closed form and associated operator by $C$.
+Set
+
+$$
+m_N=m(N/2),\qquad a_N=m_N-\mu_\varepsilon,\qquad
+V_{\varepsilon,N}(x)=\delta+a_Ns(x)^2.
+\tag{WH2}
+$$
+
+The existing symbol estimate gives $m_N\ge2\mu_\varepsilon+1$,
+so $a_N\ge\mu_\varepsilon+1>0$.
+The leakage estimate (WF5) and $m_N\le16N$ give
+$m_N\eta_N^2\le\varepsilon/4$ under (WH1).
+Definition (WF4) supplies the pointwise relation
+$W+\mu_\varepsilon s^2\ge1/2-\varepsilon/2$.
+Retain its unused spatial term in the same high-form calculation:
+for every $q$ in the actual high form domain,
+
+$$
+\begin{aligned}
+C[q]
+&\ge\int(m_Ns^2+W-c)|q|^2dx
+ -m_N\eta_N^2\|q\|_2^2+c|\langle v_0,q\rangle|^2\\
+&\ge\int V_{\varepsilon,N}(x)|q(x)|^2dx.
+\end{aligned}
+\tag{WH3}
+$$
+
+The nonnegative ground term is dropped only in the last lower bound.
+This uses the closed high restriction of the original form, rather
+than a new maximal domain. The sharp low projection maps $L^2$ into
+$H^1$ and the original operator domain as in the
+[complete-column interface](../../docs/reports/theta-mixed-matrix/sharp-center.md#operator-domain-and-complete-block).
+Consequently its complementary projection preserves the minimal form
+domain. The original core approximation and (WF1), (WF5) extend the
+same inequality to that high form domain.
+
+Since $V_{\varepsilon,N}\ge\delta>0$ and $s$ is bounded,
+$w_{\varepsilon,N}=V_{\varepsilon,N}^{-1}$ is bounded and positive.
+For every $r\in QL^2_{\rm even}(dx)$, variational inversion of (WH3)
+gives
+
+$$
+\langle r,C^{-1}r\rangle
+\le\int w_{\varepsilon,N}(x)|r(x)|^2dx.
+\tag{WH4}
+$$
+
+Indeed the left side is the supremum of
+$2\Re\langle r,q\rangle-C[q]$ over the high form domain.
+After (WH3), enlarging that supremum to all even $L^2$ and completing
+the pointwise square gives the right side. No commutation of $Q$ with
+the multiplier, or equality of inverse and compression, is asserted.
+
+The accepted original cap $\|s\|_\infty^2\le9/5$ used in (FF1)
+yields the explicit saving
+
+$$
+\begin{aligned}
+\delta^{-1}\|r\|_2^2-\int w_{\varepsilon,N}|r|^2
+&=\frac{a_N}{\delta}
+ \int\frac{s^2|r|^2}{\delta+a_Ns^2}dx\\
+&\ge b_{\varepsilon,N}\|sr\|_2^2,\qquad
+b_{\varepsilon,N}:=
+\frac{a_N}{\delta(\delta+9a_N/5)}>0.
+\end{aligned}
+\tag{WH5}
+$$
+
+For every nonzero $r$ this saving is strictly positive because $s>0$.
+There is no claimed uniform fractional saving for arbitrary sources:
+$s(x)\to0$ at spatial infinity. The
+[same-residual consumer](../../docs/reports/theta-mixed-matrix/sharp-center.md#retain-this-spatial-weight-in-the-complete-inverse-residual)
+uses (WH4)–(WH5) before any scalar residual norm is taken.
+The low Schur and complementary-low signs on the same bandwidth
+sequence remain unproved; no saved fixed-band matrix is transported to
+(WH1).
