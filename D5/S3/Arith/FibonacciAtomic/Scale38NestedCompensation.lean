@@ -29,7 +29,9 @@ local notation "H" => fun r : Nat => comb r (fun _ => A) C
 local notation "preComb" => fun r : Nat => comb r (fun _ => FreeMagma.of true) (FreeMagma.of false)
 
 local notation "certLeaves" => fun U : Source => List.mergeSort (leaves U)
-  (fun a b : Address => decide (List.Shortlex (InvImage (· < ·) Bool.toNat) a b ∨ a = b))
+  (fun a b : Address => decide (List.length a < List.length b ∨
+    (List.length a = List.length b ∧ List.Lex (fun x y : Bool => Bool.toNat x < Bool.toNat y) a b)
+      ∨ a = b))
 
 /-- The baseline, the single enlarged slot, and the contracted left comb. -/
 def family (k : Nat) : Index k → Source
@@ -64,8 +66,7 @@ noncomputable def scan (k : Nat) : List Nat → Controller
         | some i => verifyController (family k i) (certLeaves (family k i))
         | none => .fallback)
 
-/-- The complete input-independent scan, with true same-address billing. -/
-noncomputable def controller (k : Nat) : Controller := scan k (List.range (k+1))
+local notation "controller" => fun k : Nat => scan k (List.range (k+1))
 
 /-- The first exceptional report position; the baseline scans every address. -/
 def stop (k : Nat) : Index k → Nat
@@ -439,18 +440,19 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       controllerOutcome (controller k) (family k i) =
         ((route k i).map (fun q => ⟨q,readout q (family k i)⟩) ++
           (certLeaves (family k i)).map (fun q => ⟨q,readout q (family k i)⟩), true) := by
+    change controllerOutcome (scan k (List.range (k+1))) (family k i) = _
     cases i with
     | inl u =>
       cases u
       have hp := scan_prefix (List.range (k+1)) [] (family k (.inl ()))
         (fun t ht => raw_base t (by have := List.mem_range.mp ht; omega))
       simp only [List.append_nil] at hp
-      rw [controller, hp, scan, cert_matched]
+      rw [hp, scan, cert_matched]
       simp only [route,stop,List.map_map,Function.comp_def]
     | inr p =>
       cases p with
       | inl j =>
-        rw [controller, divide j.val (le_of_lt j.isLt),
+        rw [divide j.val (le_of_lt j.isLt),
           scan_prefix _ _ _ (fun t ht => (raw_X j).1 t (List.mem_range.mp ht))]
         simp [scan, controllerOutcome, (raw_X j).2,
           ↓reduceIte, choice, dif_pos j.isLt,
@@ -459,7 +461,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           List.singleton_append, List.map_map, Function.comp_def, List.append_assoc]
       | inr i =>
         have hi : 0 < i.val+1 ∧ i.val+1 ≤ k := ⟨by omega, by have := i.isLt; omega⟩
-        rw [controller, divide (i.val+1) hi.2,
+        rw [divide (i.val+1) hi.2,
           scan_prefix _ _ _ (fun t ht => (raw_Y i).1 t (by have := List.mem_range.mp ht; omega))]
         have he : (⟨i.val+1-1,by have := i.isLt; omega⟩ : Fin k) = i := Fin.ext (by simp only [Fin.val_mk]; omega)
         simp [scan, controllerOutcome, (raw_Y i).2,
@@ -584,7 +586,8 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
   have bill (i : Index k) : paid (terminal pi (family k i)).1 =
       leafAddresses (family k i) ∪ extra k i := by
     rw [terminal_outcome, outcomes]
-    simp only [paid, List.map_append, List.toFinset_append, List.map_map, Function.comp_def, List.map_id_fun',cert_set]
+    simp only [paid, List.map_append, List.toFinset_append, List.map_map,
+      Function.comp_def, List.map_id_fun', id_eq, cert_set]
     change (route k i).toFinset ∪ leafAddresses (family k i) = _
     apply Finset.Subset.antisymm
     · intro q hq
