@@ -57,7 +57,7 @@ internal sealed class CarryGraphFiniteSamplerDocument : IScribeDocumentDefinitio
                         All(d, Ty("N"), Equal(Run(next), Pair(
                             Call("step", m, f, Call("bit", t, d), Call("fst", prev)),
                             Add(Call("snd", prev), Call("indicator", V("isLeft"), Call("fst", prev)))))))))),
-                    "The invoice increments once at an active control and stays fixed after output. Only the control and the current bit enter step; the invoice is an external execution observation."),
+                    "At an output control, execution returns the previous control and invoice directly. Only the active branch takes the next tape bit and increments the invoice. Only the control and that bit enter step; the invoice is an external execution observation."),
                 Def("sample", "First output with its invoice", Parameters(All(c, control,
                     All(t, V("Tape"), Equal(Call("sample", m, f, c, t),
                         Call("firstOutput", Call("execute", m, f, c, t)))))),

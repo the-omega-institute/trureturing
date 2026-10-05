@@ -58,7 +58,9 @@ def execute (m : ℕ) (f : P m) (start : Sum (Active m) (Fin m)) (tape : Tape) :
   | 0 => (start, 0)
   | d + 1 =>
     let prev := execute m f start tape d
-    (step m f (tape d) prev.1, prev.2 + if prev.1.isLeft then 1 else 0)
+    match prev.1 with
+    | .inr _ => prev
+    | .inl x => (step m f (tape d) (.inl x), prev.2 + 1)
 
 /-- First output together with the invoice at that output, or no finite output. -/
 noncomputable def sample (m : ℕ) (f : P m) (start : Sum (Active m) (Fin m))
