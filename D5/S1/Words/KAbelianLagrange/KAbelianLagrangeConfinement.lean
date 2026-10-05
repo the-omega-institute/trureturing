@@ -1,5 +1,5 @@
 /- GID: D5/S1/Words/KAbelianLagrange/KAbelianLagrangeConfinement
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Words/KAbelianLagrange/KAbelianLagrangeConfinement
    mirror-E: none(waiver:necessary-rotation-class-span)
    anchors: [mathlib/module/Mathlib.Algebra.Order.Round]
@@ -9,6 +9,7 @@
 import D5.S1.Words.KAbelianLagrange.KAbelianLagrangeBoundary
 import D5.S1.Words.KAbelianLagrange.KAbelianLagrangePowerSpan
 import D5.S1.Words.Mechanical.FloorFractShift
+import D5.S1.Words.ReturnWords.GoldenWindowCounts
 import Mathlib.Algebra.Order.Round
 
 set_option autoImplicit false
@@ -90,7 +91,10 @@ theorem kabelian_power_cut_confinement {alpha : ℝ}
       ⌊((s i + r : ℕ) : ℝ) * alpha⌋ - ⌊(s i : ℝ) * alpha⌋ =
         ⌊((s 0 + r : ℕ) : ℝ) * alpha⌋ - ⌊(s 0 : ℝ) * alpha⌋ := by
     rcases hr with hr | hr
-    · have hh := window_counts_eq_of_factor_eq hr (hprefix i hi)
+    · have hh := D5.S1.Words.ReturnWords.GoldenWindowCounts.window_counts_eq_of_factor_eq
+        (lowerMechanicalWord alpha 0) hr (hprefix i hi)
+      change lowerMechanicalWindowTrueCount alpha 0 (s i) r =
+        lowerMechanicalWindowTrueCount alpha 0 (s 0) r at hh
       have hh' := congrArg (fun n : ℕ => (n : ℤ)) hh
       simpa only [lowerMechanicalWindowTrueCount_eq_floor (rho := 0) h0 h1, zero_add]
         using hh'
@@ -107,7 +111,10 @@ theorem kabelian_power_cut_confinement {alpha : ℝ}
           congr 1
           omega
       rw [ht, ht] at hd
-      have hh := window_counts_eq_of_factor_eq (le_refl l) hd
+      have hh := D5.S1.Words.ReturnWords.GoldenWindowCounts.window_counts_eq_of_factor_eq
+        (lowerMechanicalWord alpha 0) (le_refl l) hd
+      change lowerMechanicalWindowTrueCount alpha 0 (s i + r) l =
+        lowerMechanicalWindowTrueCount alpha 0 (s 0 + r) l at hh
       have hh' := congrArg (fun n : ℕ => (n : ℤ)) hh
       rw [lowerMechanicalWindowTrueCount_eq_floor (rho := 0) h0 h1,
         lowerMechanicalWindowTrueCount_eq_floor (rho := 0) h0 h1] at hh'

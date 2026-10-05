@@ -8,6 +8,7 @@
 
 import D5.S1.Words.KAbelianLagrange.KAbelianLagrangeClassification
 import D5.S1.Words.Mechanical.FloorFractShift
+import D5.S1.Words.Complexity.MechanicalSubshiftIntercept
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -45,9 +46,11 @@ theorem kabelian_power_in_cut_interval {alpha a b : ℝ}
     apply max_lt
     · exact lt_min hab (by linarith)
     · exact lt_min (by linarith) (by linarith)
-  obtain ⟨start, hx⟩ := exists_phase_mem_Ioo (rho := 0) hirr hlo hlh hhi
+  obtain ⟨start, hx⟩ :=
+    D5.S1.Words.Complexity.MechanicalSubshiftIntercept.exists_phase_mem_Ioo
+      (rho := 0) hirr hlo hlh hhi
   let x := Int.fract ((start : ℝ) * alpha)
-  have hx' : lo < x ∧ x < hi := by simpa only [phase, zero_add, Set.mem_Ioo] using hx
+  have hx' : lo < x ∧ x < hi := by simpa only [zero_add, Set.mem_Ioo] using hx
   have hstay (i : ℕ) (hi : i < e) : a < x + (i : ℝ) * d ∧
       x + (i : ℝ) * d < b := by
     have hiE : (i : ℝ) ≤ E := by exact_mod_cast (show i ≤ E by dsimp [E]; omega)
