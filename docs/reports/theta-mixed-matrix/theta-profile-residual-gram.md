@@ -197,6 +197,9 @@ polynomial definitions are loaded; older derivative, matrix and
 quadratic-input grid producers are not executed.
 
 The default columns and their full-space joint Gram do not certify a
-complete J4/A3 family. Nonzero shared primal/dual witnesses, convergence
-of the required growing family and signs on one common cofinal sequence
-remain unresolved. The original infinite principal synthesis is retained.
+complete J4/A3 family. The
+[shared correction report](theta-shared-witness-correction.md) supplies
+nonzero primal/dual witnesses for this two-column subblock with a
+matching zero control. Convergence of the required growing family and
+signs on one common cofinal sequence remain unresolved. The original
+infinite principal synthesis is retained.
