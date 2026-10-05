@@ -2832,6 +2832,170 @@ reported axiom closures use only `propext`, `Classical.choice` and
 `Quot.sound`; the complete check has no errors or `sorry`. These
 are exact applications of existing results, with no retained
 mathematical declaration, freeze or coverage record.
+### Multiple paired leaves exclude every square layer at q at least 29
+
+Fix one globally count-then-modulus-sum minimal finite distinct odd
+nonunit whole cover F. Assume its original ternary heights are at most
+two and that the numerical labels 3 and 9 occur in F. For a prime
+$q\ge29$, use the actual factorization
+$d_i=3^{a_i}q^{j_i}m_i$, with $m_i\mid W$, $W>0$ and $(W,3q)=1$.
+Then
+
+$$
+\boxed{j_i\le1\quad\text{for every actual original }i.}
+\tag{CD87}
+$$
+
+This includes 29 and 31 as well as the primes covered by CD68 and
+CD82. It does not remove height-one q-originals, and it retains the
+ternary-height and pure-guard hypotheses.
+
+Suppose an actual original has q-height at least two. CD47 excludes
+height three, numerical divisor closure supplies an actual pure
+$q^2$ original h, and CD65 gives
+
+$$
+\Lambda=\Lambda_h,\qquad s=|\Lambda|\in\{4,5\}.
+\tag{CD88}
+$$
+
+Let D consist of all actual height-two originals whose first q-digit
+is $c=\rho_h\bmod q$. Let U be the set of second q-digits of all
+unit-cofactor originals in D. There are at most three such originals:
+for each row $a_i\in\{0,1,2\}$, cofactor one determines the numerical
+label $3^{a_i}q^2$, and the original labels are distinct. Thus
+$|U|\le3$, and U includes the second digit of h.
+
+The rooted-component inventory CD56 supplies at least $q-14$ second
+digits with actual top-row owners in D. Removing U leaves at least
+$q-17$ of them. Choose disjoint digit pairs $(a_t,b_t)$ outside U,
+with an actual top owner at every $a_t$, using
+
+$$
+r=\begin{cases}4,&s=4,\\11,&s=5.\end{cases}
+\tag{CD89}
+$$
+
+There are enough choices because $r\le q-17$ and $2r\le q-3$.
+No positive top count is required at $b_t$.
+
+For any digit d, let $n(d)$ count all actual top owners in D at d,
+including owners whose old word lies outside $\Lambda$. Let
+$C(d,u)$ be their subfamily with old residue $u\pmod9$. Define
+
+$$
+g_t(u)=n(a_t)+n(b_t)-|C(a_t,u)|-2|C(b_t,u)|.
+\tag{CD90}
+$$
+
+Each pair has at most one word with $g_t(u)\le0$. Indeed, for distinct
+u and w the two a-cells are disjoint, as are the two b-cells. If both
+words had nonpositive gain, summing those inequalities would force
+$n(a_t)\le0$, contrary to its actual witness.
+
+### A matching chooses good leaves and one reserved word
+
+Choose a reserved word $v\in\Lambda$. Its three modulo-27 parents
+are $v,v+9,v+18$. The first two will receive the pure outputs 27
+and $27q$. The first two modulo-81 children of the third parent
+will receive 81 and $81q$, leaving only the child $v+72$ for the
+ordinary source map.
+
+For $s=4$, every pair has at least six good parents outside v,
+so four distinct good parents can be chosen. For $s=5$, there are
+twelve parents outside v, and each pair has at least nine good ones.
+A Hall obstruction among eleven pairs could only involve at least
+ten pairs sharing the same bad word outside v. At most one word
+can be bad for ten pairs, because every pair has at most one bad
+word. Choose that word as v if it exists, and otherwise choose any
+word of $\Lambda$. Every Hall inequality then holds.
+
+Thus the pairs receive distinct parents $z_t$ outside v with
+$u_t=z_t\bmod9\in\Lambda$ and $g_t(u_t)\ge1$. Collapse each parent
+$z_t$ to source digit $b_t$, and leave every $a_t$ unused. Also leave
+all digits of U unused. Apart from the reserved pure pieces, the
+number of active source pieces is
+
+$$
+9s-8-2r\le q-3-r.
+\tag{CD91}
+$$
+
+The right side is a lower bound for the available digit count after excluding U and
+all a-digits. The b-digits serve their prescribed collapsed parents;
+all other active pieces receive distinct unused digits. Equivalently,
+after also removing the b-digits there are $9s-8-3r$ ordinary fine
+pieces and at least $q-3-2r$ digits. CD91 follows from $q\ge29$ in
+both cases of CD89. Every changed unit original has an empty active
+inverse; no phase-specific placement of unit digits is required.
+
+### Original phases, complete coverage and the count saving
+
+Let $O_{\rm all}$ consist of all paired-digit top owners outside
+their pair's selected word. Set
+
+$$
+C=\bigcup_t C(b_t,u_t),\qquad
+|O_{\rm all}|-|C|=\sum_t g_t(u_t)\ge r.
+\tag{CD92}
+$$
+
+Choose three distinct members $h_1,h_2,h_3$ of $O_{\rm all}$ for the
+pure outputs $27q,81,81q$; h supplies 27. The three chosen owners
+may come from different pairs and from either side of a pair.
+Disjoint pair digits ensure that none belongs to any selected a-
+or b-cell. Omit the remaining set
+$O=O_{\rm all}\setminus\{h_1,h_2,h_3\}$.
+
+Keep every paired low-row output in its original cofactor phase,
+with its pair's tag $z_t\pmod{27}$. On that parent use the three
+child payments of CD85: the selected b-cell at $z_t$ via $81m_i$,
+the selected a-cell at $z_t+27$ via $81m_i$, and a duplicate of the
+b-cell at $z_t+54$ via $81qm_i$. Each owner belongs to at most one
+pair, so it receives only one auxiliary low-row promise and one
+fixed tag.
+
+For every point in the complete deletion hole, the exact source
+identity supplies a private y with the same full $9W$ coordinate.
+On a paired parent, a preserved low cofactor class pays the point
+if one is present. Otherwise inserting either paired second digit
+into that same y supplies the required actual top class in each
+selected cell. This proves payment for every residual point. Off
+all paired parents, the source uses neither side of a pair, so its
+ordinary owner is not omitted. The reserved pieces are paid by the
+four pure outputs. No common private point across different pairs
+or different target integers is assumed.
+
+All labels are distinct by the same coprime signatures as CD85:
+normal nonunit labels $27m,27qm,81m$, extra labels $81qm$, the four
+pure labels, and unit backups $243,243q$. Paired digits avoid U,
+so no extra has cofactor one. Equality between two extra cofactors
+would imply equality of their old labels $9q^2m$, hence equality of
+the old indices. Every output is odd, greater than one and divisible
+by 27; all retained originals have ternary height at most two.
+
+The unchanged originals together with the replacements therefore
+form a distinct odd nonunit whole cover, with class-count change
+
+$$
+-|O|+|C|=3-\sum_t g_t(u_t)\le3-r<0.
+\tag{CD93}
+$$
+
+This contradicts global count minimality. The construction uses
+neither a cell-size-two bound nor saturated digits. Its antecedent
+suppliers still use the full stated count-then-sum minimality.
+
+The complete scoped transient Lean application checks CD87 directly
+from the original family assumptions, including actual pair supply,
+Hall selection, the finite code, all cofactor phases, whole coverage,
+label injectivity and strict count decrease. All 108 axiom reports
+use only `propext`, `Classical.choice`, `Quot.sound`, or a subset of
+these; the command exits successfully with no errors or `sorryAx`.
+It reuses existing source and finite-set results, including Mathlib's
+finite Hall theorem. No new retained declaration, freeze or coverage
+record is introduced. The square layers at smaller primes and the
+unrestricted-height problem remain unresolved.
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
