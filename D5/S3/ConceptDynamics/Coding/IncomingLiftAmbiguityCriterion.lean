@@ -10,6 +10,9 @@ import D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound
 import D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.Topology.Instances.Int
+import Mathlib.Data.List.PeriodicityLemma
+import Mathlib.Data.List.Chain
+import Mathlib.Data.ZMod.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -756,7 +759,136 @@ theorem incoming_lift_ambiguity_criterion {n : ℕ} (hn : 0 < n)
       obtain ⟨r, hr⟩ := hex
       exact ⟨r, hr.trans hdword⟩
     have distinct_endpoints : e u.val ≠ e v.val := fun he => hdistinct (e.injective he)
-    fail "OPEN: repeat the two actual closed doubled words over all integer indices, including every seam"
+    obtain ⟨ru, hru⟩ := closed_u
+    obtain ⟨rv, hrv⟩ := closed_v
+    let identityLift : IncomingLift C (Fin (Fintype.card Q)) :=
+      { project := id
+        onto := Function.surjective_id
+        lift := fun a _ => ⟨a.source, rfl⟩ }
+    have base_length : (pathWord p).length = c :=
+      ((common_nilpotency_forgetting_bound L).2.2.2.2.2.2.1 p).1
+    have lifted_length : ∀ {d : ℕ} {i j : Fin (Fintype.card Q)}
+        (r : FinitePath C d i j), (pathWord r).length = d := by
+      intro d i j r
+      exact ((common_nilpotency_forgetting_bound identityLift).2.2.2.2.2.2.1 r).1
+    have word_interface : ∀ {d : ℕ} {i j : Fin (Fintype.card Q)}
+        (r : FinitePath C d i j),
+        (pathWord r).IsChain (fun a b => a.target = b.source) ∧
+        (∀ a ∈ (pathWord r).head?, a.source = i) ∧
+        (∀ a ∈ (pathWord r).getLast?, a.target = j) := by
+      intro d i j r
+      induction r with
+      | nil i => simp [pathWord]
+      | @cons d i j k a tail ih =>
+          refine ⟨ih.1.cons ?_, ?_, ?_⟩
+          · intro b hb
+            exact (ih.2.1 b hb).symm
+          · intro b hb
+            simp only [pathWord, List.head?_cons, Option.mem_some_iff] at hb
+            subst b
+            rfl
+          · intro b hb
+            cases tail with
+            | nil j =>
+                simp only [pathWord, List.getLast?_singleton, Option.mem_some_iff] at hb
+                subst b
+                rfl
+            | @cons d j m k a' rest =>
+                apply ih.2.2 b
+                simpa only [pathWord, List.getLast?_cons_cons] using hb
+    let d := c + c
+    have hd : 0 < d := by dsimp [d]; omega
+    have hd2 : 2 ≤ d := by dsimp [d]; omega
+    letI : NeZero c := ⟨by omega⟩
+    letI : NeZero d := ⟨by omega⟩
+    let history : (z : Fin (Fintype.card Q)) → FinitePath C d z z → Path C :=
+      fun z r => ⟨fun i => (pathWord r)[(i : ZMod d).val]'(by
+        rw [lifted_length r]; exact ZMod.val_lt _), fun i => by
+        let j := (i : ZMod d).val
+        have hj : j < d := ZMod.val_lt _
+        have successor : ((i + 1 : ℤ) : ZMod d).val = (j + 1) % d := by
+          rw [Int.cast_add, Int.cast_one, ZMod.val_add, ZMod.val_one_eq_one_mod,
+            Nat.mod_eq_of_lt hd2]
+        change ((pathWord r)[j]'_).target =
+          ((pathWord r)[((i + 1 : ℤ) : ZMod d).val]'_).source
+        simp only [successor]
+        by_cases hlast : j + 1 = d
+        · simp only [hlast, Nat.mod_self]
+          have htail : (pathWord r).getLast? = some ((pathWord r)[j]'(by
+              rw [lifted_length r]; exact hj)) := by
+            simp only [List.getLast?_eq_getElem?, lifted_length r,
+              show d - 1 = j by omega]
+            exact List.getElem?_eq_getElem (by rw [lifted_length r]; exact hj)
+          have hhead : (pathWord r).head? = some ((pathWord r)[0]'(by
+              rw [lifted_length r]; exact hd)) := by
+            rw [List.head?_eq_getElem?, List.getElem?_eq_getElem]
+          exact ((word_interface r).2.2 _ htail).trans
+            ((word_interface r).2.1 _ hhead).symm
+        · simp only [Nat.mod_eq_of_lt (by omega : j + 1 < d)]
+          exact (word_interface r).1.getElem j (by rw [lifted_length r]; omega)⟩
+    let x := history (e u.val) ru
+    let x' := history (e v.val) rv
+    have history_start (z : Fin (Fintype.card Q)) (r : FinitePath C d z z) :
+        ((history z r).val 0).source = z := by
+      apply (word_interface r).2.1
+      simp only [history, Int.cast_zero, ZMod.val_zero,
+        List.head?_eq_getElem?]
+      rw [List.getElem?_eq_getElem (by rw [lifted_length r]; exact hd)]
+      rfl
+    have history_period (z : Fin (Fintype.card Q)) (r : FinitePath C d z z)
+        (i : ℤ) : (history z r).val (i + d) = (history z r).val i := by
+      change (pathWord r)[((i + d : ℤ) : ZMod d).val]'_ =
+        (pathWord r)[(i : ZMod d).val]'_
+      simp only [Int.cast_add, Int.cast_natCast, ZMod.natCast_self, add_zero]
+    let w := pathWord p
+    have hw : w.length = c := base_length
+    have double_period : List.HasPeriod (w ++ w) c := by
+      have hh := List.HasPeriod.take_append c c w (dvd_refl c) (by rw [hw])
+        (List.hasPeriod_of_length_le w c (by rw [hw]))
+      simpa only [(List.take_eq_self_iff w).mpr (by rw [hw])] using hh
+    have dvd_double : c ∣ d := by dsimp [d]; exact dvd_add (dvd_refl c) (dvd_refl c)
+    let rho : ZMod d →+* ZMod c := ZMod.castHom dvd_double (ZMod c)
+    have rho_val (z : ZMod d) : (rho z).val = z.val % c := by
+      simp only [rho, ZMod.castHom_apply, ZMod.cast_eq_val, ZMod.val_natCast]
+    have rho_int (i : ℤ) : rho (i : ZMod d) = (i : ZMod c) := by
+      exact ZMod.cast_intCast dvd_double i
+    let base : ZMod c → Edge A := fun z => w[z.val]'(by rw [hw]; exact ZMod.val_lt _)
+    have read_history (z : Fin (Fintype.card Q)) (r : FinitePath C d z z)
+        (hr : (pathWord r).map read = w ++ w) (i : ℤ) :
+        read ((history z r).val i) = base (i : ZMod c) := by
+      let j := (i : ZMod d).val
+      have hj : j < (pathWord r).length := by rw [lifted_length r]; exact ZMod.val_lt _
+      have hjw : j < (w ++ w).length := by simp only [List.length_append, hw]; exact ZMod.val_lt _
+      have hm := List.HasPeriod.getElem?_mod c j (w ++ w) double_period hjw
+      have he := congrArg (fun t : List (Edge A) => t[j]?) hr
+      rw [List.getElem?_map, List.getElem?_eq_getElem hj] at he
+      rw [← hm, List.getElem?_append_left (by rw [hw]; exact Nat.mod_lt j hc),
+        List.getElem?_eq_getElem (by rw [hw]; exact Nat.mod_lt j hc)] at he
+      have index : (i : ZMod c).val = j % c := by
+        rw [← rho_int i, rho_val]
+      change read ((pathWord r)[j]'hj) = w[(i : ZMod c).val]'_
+      simpa only [index, Option.map_some, Option.some.injEq] using he
+    have hxread (i : ℤ) : (pi x).val i = base (i : ZMod c) :=
+      read_history _ ru hru i
+    have hx'read (i : ℤ) : (pi x').val i = base (i : ZMod c) :=
+      read_history _ rv hrv i
+    refine ⟨c, hc, hbound, x, x', ?_, ?_, ?_, ?_, ?_⟩
+    · intro he
+      have hv := congrArg (fun y : Path C => (y.val 0).source) he
+      exact distinct_endpoints ((history_start _ ru).symm.trans
+        (hv.trans (history_start _ rv)))
+    · apply Subtype.ext
+      funext i
+      exact (hxread i).trans (hx'read i).symm
+    · intro i
+      rw [hxread, hxread]
+      simp only [Int.cast_add, Int.cast_natCast, ZMod.natCast_self, add_zero]
+    · intro i
+      have hi := history_period _ ru i
+      simpa only [d, Int.natCast_add, two_mul] using hi
+    · intro i
+      have hi := history_period _ rv i
+      simpa only [d, Int.natCast_add, two_mul] using hi
 
   refine ⟨pair_card, ?_, zero_forgetting, ?_, pi, ?_, pi_continuous, pi_shift, ?_⟩
   · intro d
