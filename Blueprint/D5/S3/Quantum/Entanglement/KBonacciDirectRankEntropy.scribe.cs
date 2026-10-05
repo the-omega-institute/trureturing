@@ -15,7 +15,7 @@ internal sealed class KBonacciDirectRankEntropyDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/KBonacciDirectRankEntropy.complete_original_direct_rank_entropy"),
                 H("Two-page rank and entropy optimum"),
                 StatementSource.FromAuthor(Disp(new Formula.Aligned([
-                    Model(), Counts(), Contract(), Main(), Necessity(), UniformConstruction()]))),
+                    Model(), Counts(), Contract(), Main()]))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -38,7 +38,7 @@ internal sealed class KBonacciDirectRankEntropyDocument : IScribeDocumentDefinit
                         + "logical vector psi. sigma(b) in the formulas is the complex matrix underlying DensityState W(mX). "
                         + "S is native vonNeumannEntropy, with natural logarithms and zero-log-zero equal to zero. "
                         + "A pure page vector has norm one and vanishes outside that logical page; SchmidtRank is the rank "
-                        + "of its actual X-by-Y amplitude matrix. T is totalRowSpectralNecessity, expanded in the spectral row below.")),
+                         + "of its actual X-by-Y amplitude matrix. T is totalRowSpectralNecessity for the true page: it asserts the five true-page spectral reconstruction, support, span and threshold clauses defined in Lean. The separate two-page spectral result is supplied by KBonacciDirectSupportObstruction.actual_encoder_spectral_obstruction, not a literal expansion of T.")),
                     Paragraph(Text(
                         "The necessary bound uses the arbitrary positive spectrum and eigenvector basis of the given sigma. "
                         + "Its weighted computational rows q span the nonzero spectral coordinates. Removing a(s) low-state "
@@ -53,14 +53,28 @@ internal sealed class KBonacciDirectRankEntropyDocument : IScribeDocumentDefinit
                         + "its minimum state identifies the union neighborhood B(s), and the threshold inequality bounds "
                         + "its cardinality. Hall's theorem supplies one jointly injective assignment of actual Y words. "
                         + "Page zero uses arbitrary distinct legal X words and M(false)d0 distinct legal Y words.")),
-                    Paragraph(Text(
-                        "The uniform construction combines both pages in the same ambient J. Its matrix units have "
+                     Paragraph(Text(
+                         "The uniform construction combines both pages in the same ambient J. Its matrix units have "
                         + "partial trace delta(r,t)sigma(b) within a page and zero across pages, because the actual Y labels "
                         + "are globally distinct. Linear extension gives the identity for every matrix, and each chosen "
                         + "concatenation is legal, so all input amplitudes satisfy the support condition. The uniform "
-                        + "pointer mixtures have ranks d0,d1 and entropies log(d0),log(d1). The actual nonzero density "
-                        + "spectrum bounds every entropy by log(rank), proving both endpoints and the feasibility equivalence."))),
-                DescribeRole.Theorem))));
+                         + "pointer mixtures have ranks d0,d1 and entropies log(d0),log(d1). The actual nonzero density "
+                         + "spectrum bounds every entropy by log(rank), proving both endpoints and the feasibility equivalence.")),
+                     new DocumentBlock.DisplayFormula(Disp(TruePageT())),
+                     Paragraph(Text(
+                         "The stronger two-page spectral supplier is the existing theorem "
+                         + "D5.S3.Quantum.Entanglement.KBonacciDirectSupportObstruction.actual_encoder_spectral_obstruction. "
+                         + "The following display is explanatory supplier context with its own bound spectrum and page-dependent witness; it is not a literal unfolding of T and is not an additional authored assertion.")),
+                     new DocumentBlock.DisplayFormula(Disp(Necessity())),
+                     Paragraph(Text(
+                         "UniformConstruction is the selected common witness for one permitted positive pair d0,d1. "
+                         + "Its binders include the selected page-specific X words and one globally injective dependent-sum Y labeling; "
+                         + "the identities below describe that selected witness only, while the capacity threshold is used only for s<k. "
+                         + "complexDelta(u,v) is the complex Kronecker delta, invSqrt(d) is the complex scalar 1/sqrt(d), "
+                         + "inv(d) is the complex scalar 1/d, and projector(w) is the computational pointer projector. "
+                         + "The d1-a(s) subtraction is truncated natural subtraction.")),
+                     new DocumentBlock.DisplayFormula(Disp(UniformConstruction()))),
+                 DescribeRole.Theorem))));
 
     private static Formula Main()
     {
@@ -95,19 +109,85 @@ internal sealed class KBonacciDirectRankEntropyDocument : IScribeDocumentDefinit
                 Rel(D(1), Leq, Id("mX")), Rel(D(1), Leq, Id("mY"))), result));
     }
 
+    private static Formula TruePageT()
+    {
+        var n = Id("N"); var k = Id("k"); var mx = Id("mX"); var my = Id("mY");
+        var x = Id("x"); var y = Id("y"); var r = Id("r"); var j = Id("j"); var s = Id("s");
+        var q = Fn("q", x, j); var w = Fn("Wmat", y, Par(Seq(r, Comma, j)));
+        var threshold = Every("s", Nat, Imp(Rel(s, Lt, k),
+            Let("Arows", OpCall("Set", Fn("W", mx)),
+                SetOf(x, Fn("K", mx, Op("true")), Rel(s, Leq, Fn("t", x))),
+                Let("V", OpCall("Submodule", Cplx, new Formula.TypeArrow(Id("D"), Cplx)),
+                    OpCall("span", Cplx, OpCall("image", Id("q"), Id("Arows"))),
+                    And(
+                        Rel(OpCall("rank", Fn("sigma", Op("true"))), Leq,
+                            Seq(Fn("a", s), Plus, OpCall("dim", Id("V")))),
+                        Every("r", Fn("P", n, Op("true")), Every("v", new Formula.TypeArrow(Id("D"), Cplx),
+                            Imp(Rel(Id("v"), InMacro, Id("V")), Every("y", Fn("W", my),
+                                Imp(Seq(Neg, Par(Rel(y, InMacro, Fn("B", s)))),
+                                    Eqn(Seq(Sub(Sum, Seq(j, InMacro, Id("D"))),
+                                        Mul(w, Fn("v", j))), D(0))))))),
+                        Rel(Mul(Fn("M", Op("true")), OpCall("dim", Id("V"))), Leq, Fn("n", s)))))));
+        var clauses = And(
+            Eqn(Mul(Adj(Id("Wmat")), Id("Wmat")), Id("I")),
+            Every("r", Fn("P", n, Op("true")), Every("x", Fn("W", mx), Every("y", Fn("W", my),
+                Eqn(Fn("J", Par(Seq(x, Comma, y)), Par(Seq(Op("true"), Comma, r))),
+                    Seq(Sub(Sum, Seq(j, InMacro, Id("D"))), Mul(q, w)))))),
+            Every("r", Fn("P", n, Op("true")), Every("j", Id("D"), Every("y", Fn("W", my),
+                Imp(Seq(Neg, Par(Rel(y, InMacro, Fn("K", my, Op("true"))))), Eqn(w, D(0)))))),
+            Eqn(OpCall("span", Cplx, OpCall("image", Id("q"), Fn("K", mx, Op("true")))), Op("top")),
+            threshold);
+        var definition = SpectralData(Op("true"), mx,
+            Some("Wmat", OpCall("Matrix", Fn("W", my), Tensor(Fn("P", n, Op("true")), Id("D")), Cplx), clauses));
+        return Ambient(n, k, mx, my,
+            Every("J", EncoderType(n, mx, my), Every("sigma", PageStatesType(mx),
+                Rel(Fn("T", Id("J"), Id("sigma")), Iff, definition))));
+    }
+
     private static Formula UniformConstruction()
     {
-        return And(
-            Eqn(Fn("J", Par(Seq(Id("b"), Comma, Id("r")))),
-                Mul(OpCall("invSqrt", Fn("d", Id("b"))),
-                    Seq(Sub(Sum, Seq(D(0), Leq, Id("j"), Lt, Fn("d", Id("b")))),
-                        OpCall("ket", Fn("x", Id("b"), Id("j")), Fn("y", Id("b"), Id("r"), Id("j")))))),
-            Eqn(Fn("sigma", Id("b")), Mul(OpCall("inv", Fn("d", Id("b"))),
-                Seq(Sub(Sum, Seq(D(0), Leq, Id("j"), Lt, Fn("d", Id("b")))),
-                    OpCall("projector", Fn("x", Id("b"), Id("j")))))),
-            Eqn(Card(SetOf(Id("j"), OpCall("Fin", Id("d1")),
-                Rel(Id("s"), Leq, Fn("t", Fn("x", Op("true"), Id("j")))))),
-                OpCall("max", D(0), Seq(Id("d1"), Minus, Fn("a", Id("s"))))));
+        var n = Id("N"); var k = Id("k"); var mx = Id("mX"); var my = Id("mY");
+        var b = Id("b"); var r = Id("r"); var j = Id("j"); var s = Id("s");
+        var d0 = Id("d0"); var d1 = Id("d1"); var db = Fn("d", b);
+        var bounds = And(Rel(D(2), Leq, n), Rel(D(2), Leq, k), Rel(D(1), Leq, mx), Rel(D(1), Leq, my));
+        var positive = And(Rel(D(1), Leq, d0), Rel(d0, Leq, Id("D0")),
+            Rel(D(1), Leq, d1), Rel(d1, Leq, Id("dstar")));
+        var xType = Seq(Sub(Prod, Seq(b, Colon, Op("Bool"))),
+            new Formula.TypeArrow(OpCall("Fin", db), Fn("W", mx)));
+        var yIndex = Seq(Sub(Sigma, Seq(b, Colon, Op("Bool"))),
+            Tensor(Fn("P", n, b), OpCall("Fin", db)));
+        var y = Fn("Y", Par(Seq(b, Comma, r, Comma, j)));
+        var xCondition = Every("b", Op("Bool"), And(
+            OpCall("Injective", Fn("X", b)), Every("j", OpCall("Fin", db),
+                Rel(Fn("X", b, j), InMacro, Fn("K", mx, b)))));
+        var yCondition = And(OpCall("Injective", Id("Y")),
+            Every("b", Op("Bool"), Every("r", Fn("P", n, b), Every("j", OpCall("Fin", db), And(
+                Rel(y, InMacro, Fn("K", my, b)),
+                Imp(Eqn(b, Op("true")), Rel(y, InMacro, Fn("B", Fn("t", Fn("X", b, j))))),
+                Fn("DBonacciAdmissible", k, Seq(mx, Plus, my), OpCall("append", Fn("X", b, j), y)))))));
+        var jIdentity = Every("b", Op("Bool"), Every("r", Fn("P", n, b),
+            Every("x", Fn("W", mx), Every("y", Fn("W", my), Eqn(
+                Fn("J", Par(Seq(Id("x"), Comma, Id("y"))), Par(Seq(b, Comma, r))),
+                Mul(OpCall("invSqrt", db), Seq(Sub(Sum, Seq(j, Colon, OpCall("Fin", db))),
+                    Mul(OpCall("complexDelta", Id("x"), Fn("X", b, j)),
+                        OpCall("complexDelta", Id("y"), y)))))))));
+        var sigmaIdentity = Every("b", Op("Bool"), Eqn(Fn("sigma", b),
+            Mul(OpCall("inv", db), Seq(Sub(Sum, Seq(j, Colon, OpCall("Fin", db))),
+                OpCall("projector", Fn("X", b, j))))));
+        var selectedCount = Card(SetOf(j, OpCall("Fin", d1),
+            Rel(s, Leq, Fn("t", Fn("X", Op("true"), j)))));
+        var countIdentity = Every("s", Nat,
+            Eqn(selectedCount, OpCall("max", D(0), Seq(d1, Minus, Fn("a", s)))));
+        var thresholdUse = Every("s", Nat, Imp(Rel(s, Lt, k),
+            Rel(Mul(Fn("M", Op("true")), selectedCount), Leq, Fn("n", s))));
+        var witness = Let("d", new Formula.TypeArrow(Op("Bool"), Nat),
+            Lam("b", Op("Bool"), OpCall("if", b, d1, d0)),
+            Some("X", xType, Some("Y", new Formula.TypeArrow(yIndex, Fn("W", my)),
+                And(xCondition, yCondition, Some("J", EncoderType(n, mx, my),
+                    Some("sigma", PageStatesType(mx),
+                        And(Fn("C", Id("J"), Id("sigma")), jIdentity, sigmaIdentity, countIdentity, thresholdUse)))))));
+        return Ambient(n, k, mx, my, Imp(bounds,
+            Every("d0", Nat, Every("d1", Nat, Imp(positive, witness)))));
     }
 
     private static Formula Model()
@@ -164,45 +244,65 @@ internal sealed class KBonacciDirectRankEntropyDocument : IScribeDocumentDefinit
 
     private static Formula Necessity()
     {
-        var b = Id("b"); var r = Id("r"); var x = Id("x"); var y = Id("y"); var s = Id("s");
-        var q = Fn("q", x, Id("j")); var w = Fn("Wmat", y, Par(Seq(r, Comma, Id("j"))));
-        var rank = OpCall("rank", Fn("sigma", b)); var vs = Fn("V", s);
-        var spectral = And(
-            Eqn(Id("E"), OpCall("eigenvectorBasis", Fn("sigma", b))),
-            Eqn(Id("lambda"), OpCall("eigenvalues", Fn("sigma", b))),
-            Eqn(Id("D"), SetOf(Id("j"), Fn("W", Id("mX")), Rel(Fn("lambda", Id("j")), Neq, D(0)))),
-            All(x, Fn("W", Id("mX")), All(Id("j"), Id("D"),
-                Eqn(q, Mul(Seq(Sqrt, Grp(Fn("lambda", Id("j")))), Fn("E", Id("j"), x))))));
-        var threshold = All(s, Nat, Imp(Rel(s, Lt, Id("k")), And(
-            Eqn(Fn("Arows", s), SetOf(x, Fn("K", Id("mX"), Op("true")), Rel(s, Leq, Fn("t", x)))),
-            Eqn(vs, OpCall("span", Cplx, OpCall("image", Id("q"), Fn("Arows", s)))),
-            Rel(rank, Leq, Seq(Fn("a", s), Plus, OpCall("dim", vs))),
-            All(r, Fn("P", Id("N"), b), All(Id("v"), Seq(Id("D"), To, Cplx),
-                Imp(Rel(Id("v"), InMacro, vs), All(y, Fn("W", Id("mY")),
-                    Imp(Seq(Neg, Par(Rel(y, InMacro, Fn("B", s)))),
-                        Eqn(Seq(Sub(Sum, Seq(Id("j"), Sp, InMacro, Sp, Id("D"))), Mul(w, Fn("v", Id("j")))), D(0))))))),
-            Rel(Mul(Fn("M", b), OpCall("dim", vs)), Leq, Fn("n", s)))));
-        var result = And(
-            Eqn(Mul(Adj(Id("Wmat")), Id("Wmat")), Id("I")),
-            All(r, Fn("P", Id("N"), b), All(x, Fn("W", Id("mX")), All(y, Fn("W", Id("mY")),
+        var n = Id("N"); var k = Id("k"); var mx = Id("mX"); var my = Id("mY");
+        var b = Id("b"); var r = Id("r"); var x = Id("x"); var y = Id("y"); var j = Id("j"); var s = Id("s");
+        var q = Fn("q", x, j); var w = Fn("Wmat", y, Par(Seq(r, Comma, j)));
+        var rank = OpCall("rank", Fn("sigma", b));
+        var threshold = Every("s", Nat, Imp(Rel(s, Lt, k),
+            Let("Arows", OpCall("Set", Fn("W", mx)),
+                SetOf(x, Fn("K", mx, Op("true")), Rel(s, Leq, Fn("t", x))),
+                Let("V", OpCall("Submodule", Cplx, new Formula.TypeArrow(Id("D"), Cplx)),
+                    OpCall("span", Cplx, OpCall("image", Id("q"), Id("Arows"))),
+                    And(Rel(rank, Leq, Seq(Fn("a", s), Plus, OpCall("dim", Id("V")))),
+                        Every("r", Fn("P", n, b), Every("v", new Formula.TypeArrow(Id("D"), Cplx),
+                            Imp(Rel(Id("v"), InMacro, Id("V")), Every("y", Fn("W", my),
+                                Imp(Seq(Neg, Par(Rel(y, InMacro, Fn("B", s)))),
+                                    Eqn(Seq(Sub(Sum, Seq(j, InMacro, Id("D"))), Mul(w, Fn("v", j))), D(0))))))),
+                        Rel(Mul(Fn("M", b), OpCall("dim", Id("V"))), Leq, Fn("n", s)))))));
+        var result = And(Eqn(Mul(Adj(Id("Wmat")), Id("Wmat")), Id("I")),
+            Every("r", Fn("P", n, b), Every("x", Fn("W", mx), Every("y", Fn("W", my),
                 Eqn(Fn("J", Par(Seq(x, Comma, y)), Par(Seq(b, Comma, r))),
-                    Seq(Sub(Sum, Seq(Id("j"), Sp, InMacro, Sp, Id("D"))), Mul(q, w)))))),
-            All(r, Fn("P", Id("N"), b), All(Id("j"), Id("D"), All(y, Fn("W", Id("mY")),
-                Imp(Seq(Neg, Par(Rel(y, InMacro, Fn("K", Id("mY"), b)))), Eqn(w, D(0)))))),
-            Eqn(OpCall("span", Cplx, OpCall("image", Id("q"), Fn("K", Id("mX"), b))), Op("top")),
+                    Seq(Sub(Sum, Seq(j, InMacro, Id("D"))), Mul(q, w)))))),
+            Every("r", Fn("P", n, b), Every("j", Id("D"), Every("y", Fn("W", my),
+                Imp(Seq(Neg, Par(Rel(y, InMacro, Fn("K", my, b)))), Eqn(w, D(0)))))),
+            Eqn(OpCall("span", Cplx, OpCall("image", Id("q"), Fn("K", mx, b))), Op("top")),
             Imp(Eqn(b, Op("true")), threshold),
             Rel(rank, Leq, OpCall("if", b, Id("dstar"), Id("D0"))));
-        return All(Seq(Id("N"), Comma, Id("k"), Comma, Id("mX"), Comma, Id("mY")), Nat,
-            Imp(And(Rel(D(2), Leq, Id("N")), Rel(D(2), Leq, Id("k")),
-                Rel(D(1), Leq, Id("mX")), Rel(D(1), Leq, Id("mY"))),
-                All(Id("J"), OpCall("Matrix", Tensor(Fn("W", Id("mX")), Fn("W", Id("mY"))), Id("HL"), Cplx),
-                    All(Id("sigma"), Seq(Op("Bool"), To, OpCall("DensityState", Fn("W", Id("mX")))),
-                        Imp(Fn("C", Id("J"), Id("sigma")), All(b, Op("Bool"),
-                            OpCall("let", spectral,
-                                Seq(Exists, Sp, Open, Id("Wmat"), Colon,
-                                    OpCall("Matrix", Fn("W", Id("mY")), Tensor(Fn("P", Id("N"), b), Id("D")), Cplx),
-                                    Close, Comma, Sp, result))))))));
+        return Ambient(n, k, mx, my,
+            Imp(And(Rel(D(2), Leq, n), Rel(D(2), Leq, k), Rel(D(1), Leq, mx), Rel(D(1), Leq, my)),
+                Every("J", EncoderType(n, mx, my), Every("sigma", PageStatesType(mx),
+                    Imp(Fn("C", Id("J"), Id("sigma")), Every("b", Op("Bool"),
+                        SpectralData(b, mx, Some("Wmat", OpCall("Matrix", Fn("W", my),
+                            Tensor(Fn("P", n, b), Id("D")), Cplx), result))))))));
     }
+
+    private static Formula SpectralData(Formula page, Formula mx, Formula body) =>
+        Let("hPos", OpCall("PosSemidef", Fn("sigma", page)), OpCall("densityPositivity", Fn("sigma", page)),
+            Let("E", OpCall("OrthonormalBasis", Fn("W", mx), new Formula.TypeArrow(Fn("W", mx), Cplx)),
+                OpCall("eigenvectorBasis", OpCall("isHermitian", Id("hPos"))),
+                Let("lambda", new Formula.TypeArrow(Fn("W", mx), Seq(Mathbb, Grp(Id("R")))),
+                    OpCall("eigenvalues", OpCall("isHermitian", Id("hPos"))),
+                    Let("D", Op("Type"), SetOf(Id("j"), Fn("W", mx), Rel(Fn("lambda", Id("j")), Neq, D(0))),
+                        Let("q", new Formula.TypeArrow(Fn("W", mx), new Formula.TypeArrow(Id("D"), Cplx)),
+                            Lam("x", Fn("W", mx), Lam("j", Id("D"),
+                                Mul(OpCall("complexOfReal", Seq(Sqrt, Grp(Fn("lambda", OpCall("val", Id("j")))))),
+                                    Fn("E", OpCall("val", Id("j")), Id("x"))))), body)))));
+
+    private static Formula Ambient(Formula n, Formula k, Formula mx, Formula my, Formula body) =>
+        Every("N", Nat, Every("k", Nat, Every("mX", Nat, Every("mY", Nat, body))));
+    private static Formula EncoderType(Formula n, Formula mx, Formula my) =>
+        OpCall("Matrix", Tensor(Fn("W", mx), Fn("W", my)),
+            Seq(Sub(Sigma, Seq(Id("b"), Colon, Op("Bool"))), Fn("P", n, Id("b"))), Cplx);
+    private static Formula PageStatesType(Formula mx) =>
+        new Formula.TypeArrow(Op("Bool"), OpCall("DensityState", Fn("W", mx)));
+    private static Formula Every(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Some(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula Let(string name, Formula type, Formula value, Formula body) =>
+        OpCall("let", Eqn(Seq(Id(name), Colon, type), value), body);
+    private static Formula Lam(string name, Formula type, Formula body) =>
+        Seq(Open, Id(name), Colon, type, Close, Mapsto, body);
 
     private static Formula Seq(params Formula[] xs) => F.Seq([.. xs.SelectMany((x, i) => i == 0 ? new[] { x } : new[] { Sp, x })]);
     private static Formula Nat => Seq(Mathbb, Grp(Id("N")));

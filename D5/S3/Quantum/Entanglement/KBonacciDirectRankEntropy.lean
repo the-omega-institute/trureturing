@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/KBonacciDirectRankEntropy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Exact auxiliary ranks and simultaneous entropy maxima for legal direct two-page encoders. -/
 
 import D5.S3.Quantum.Entanglement.KBonacciDirectSupportObstruction

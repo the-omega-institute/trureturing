@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Entanglement/KBonacciDirectSupportObstruction
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/KBonacciDirectSupportObstruction
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: []
