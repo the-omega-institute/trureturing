@@ -6,6 +6,11 @@
    utility: none
    digest: Parity masses of uniform weak compositions and biased Bernoulli vectors. -/
 
+import D5.S3.TotalVariation.Metric
+import Mathlib.Analysis.Convex.Jensen
+import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+import Mathlib.Analysis.Calculus.MeanValue
+import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Algebra.Order.Antidiag.FinsuppEquiv
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Analysis.Calculus.Deriv.Pow
@@ -633,4 +638,310 @@ private theorem reference_moments (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) 
     nlinarith
   exact ⟨hQnorm, hp, hcm_bound, habs_bound⟩
 
+
+
+/-- The full parity kernels satisfy a finite total-variation estimate, and the
+one-coordinate kernels agree for every positive total. -/
+theorem result :
+    (∀ d M : ℕ, 2 ≤ d → 3 * d ≤ M →
+      (1 / 2 : ℝ) * (∑ ξ : Fin d → Bool, |R d M ξ - Q d M ξ|) ≤
+        min 1 (5 * (sqrt (d : ℝ) / M + (d : ℝ) * (d - 1) / (M : ℝ) ^ 2))) ∧
+    (∀ M : ℕ, 1 ≤ M → R 1 M = Q 1 M) := by
+  constructor
+  · intro d M hd hM
+    classical
+    let h : (Fin d → Bool) → ℕ := fun ξ => ∑ i, (ξ i).toNat
+    let ν : ℝ := M / (2 * M + d)
+    let m : ℝ := d * M / (2 * M + d)
+    let X : (Fin d → Bool) → ℝ := fun ξ => logProfile d M (h ξ) - logProfile d M m
+    let D : ℝ := sqrt (3 * (d : ℝ)) / (2 * ((M : ℝ) - d)) +
+      3 * d * (d - 1) / (4 * (((M : ℝ) - d / 2) * ((M : ℝ) - d)))
+    have hd0 : (0 : ℝ) < d := by exact_mod_cast (by omega : 0 < d)
+    have hd1 : 0 ≤ (d : ℝ) - 1 := by exact_mod_cast (by omega : 1 ≤ d)
+    have hMc : 3 * (d : ℝ) ≤ M := by exact_mod_cast hM
+    have hM0 : (0 : ℝ) < M := by linarith
+    have hT : 0 < (M : ℝ) - d := by linarith
+    have hL : 0 < (M : ℝ) - d / 2 := by linarith
+    have hν0 : 0 ≤ ν := by dsimp [ν]; positivity
+    have hν1 : ν ≤ 1 := by dsimp [ν]; rw [div_le_iff₀ (by positivity)]; linarith
+    have hmν : m = (d : ℝ) * ν := by dsimp [m, ν]; ring
+    have hq := reference_moments d M hd hM
+    have hqn : (∑ ξ, Q d M ξ) = 1 := hq.1
+    have hq0 (ξ : Fin d → Bool) : 0 ≤ Q d M ξ := by
+      have hp := hq.2.1
+      unfold Q
+      split
+      · exact div_nonneg (mul_nonneg (pow_nonneg hν0 _) (pow_nonneg (sub_nonneg.mpr hν1) _)) (by linarith)
+      · exact le_rfl
+    have hrn : (∑ ξ, R d M ξ) = 1 := actual_normalization d M (by omega)
+    have hr0 (ξ : Fin d → Bool) : 0 ≤ R d M ξ := by unfold R; split <;> positivity
+    have htilt₀ : ∃ K : ℝ, 0 < K ∧ ∀ ξ : Fin d → Bool,
+        R d M ξ = K * (Q d M ξ * exp (logProfile d M (h ξ))) := by
+      classical
+      let h : (Fin d → Bool) → ℕ := fun ξ => ∑ i, (ξ i).toNat
+      let ν : ℝ := M / (2 * M + d)
+      let τ : ℝ := M / (M + d)
+      let p : ℝ := (1 + (-1 : ℝ) ^ M * ((d : ℝ) / (2 * M + d)) ^ d) / 2
+      let F : ℝ := 2 ^ (d - 1) * ((d - 1).factorial : ℝ)
+      let N : ℝ := ((M + d - 1).choose (d - 1) : ℝ)
+      have hd0 : (0 : ℝ) < d := by exact_mod_cast (by omega : 0 < d)
+      have hMc : 3 * (d : ℝ) ≤ M := by exact_mod_cast hM
+      have hM0 : (0 : ℝ) < M := by linarith
+      have hν0 : 0 < ν := by dsimp [ν]; positivity
+      have hν1 : ν < 1 := by dsimp [ν]; rw [div_lt_one (by positivity)]; linarith
+      have hτ0 : 0 < τ := by dsimp [τ]; positivity
+      have hp : 0 < p := by
+        have hm := (reference_moments d M hd hM).2.1
+        change (1 / 3 : ℝ) ≤ p at hm
+        linarith
+      have hF : 0 < F := by dsimp [F]; positivity
+      have hN : 0 < N := by
+        dsimp [N]
+        exact_mod_cast Nat.choose_pos (by omega : d - 1 ≤ M + d - 1)
+      refine ⟨p / (F * N * (1 - ν) ^ d), by positivity, ?_⟩
+      intro ξ
+      have hh : h ξ ≤ d := by
+        dsimp [h]
+        calc
+          (∑ i : Fin d, (ξ i).toNat) ≤ ∑ _i : Fin d, 1 := by
+            apply sum_le_sum; intro i _; cases ξ i <;> simp
+          _ = d := by simp
+      by_cases he : h ξ % 2 = M % 2
+      · have hguard : h ξ ≤ M := by omega
+        let s : ℕ := (M - h ξ) / 2
+        have hs : 2 * s + h ξ = M := by dsimp [s]; omega
+        have hbin : (((M - h ξ) / 2 + d - 1).choose (d - 1) : ℝ) =
+            (∏ j ∈ range (d - 1), ((M : ℝ) - h ξ + 2 * (j + 1))) / F := by
+          have hc := Nat.ascFactorial_eq_factorial_mul_choose s (d - 1)
+          have hcR : ((s + 1).ascFactorial (d - 1) : ℝ) =
+              ((d - 1).factorial : ℝ) * ((s + (d - 1)).choose (d - 1) : ℝ) := by exact_mod_cast hc
+          have hsR : 2 * (s : ℝ) + h ξ = M := by exact_mod_cast hs
+          have hprod : (∏ j ∈ range (d - 1), ((M : ℝ) - h ξ + 2 * (j + 1))) =
+              2 ^ (d - 1) * ((s + 1).ascFactorial (d - 1) : ℝ) := by
+            calc
+              _ = ∏ j ∈ range (d - 1), 2 * ((s + 1 + j : ℕ) : ℝ) := by
+                apply prod_congr rfl
+                intro j _
+                push_cast
+                linarith
+              _ = _ := by simp [prod_mul_distrib, Nat.ascFactorial_eq_prod_range, Nat.cast_prod]
+          rw [hprod, hcR]
+          have heq : s + (d - 1) = (M - h ξ) / 2 + d - 1 := by dsimp [s]; omega
+          rw [heq]
+          dsimp [F]
+          field_simp
+        have hw : ν ^ h ξ * (1 - ν) ^ (d - h ξ) = (1 - ν) ^ d * τ ^ h ξ := by
+          have ht : ν = (1 - ν) * τ := by dsimp [ν, τ]; field_simp; ring
+          have hpow : (1 - ν) ^ d = (1 - ν) ^ h ξ * (1 - ν) ^ (d - h ξ) := by
+            rw [← pow_add, Nat.add_sub_of_le hh]
+          conv_lhs => arg 1; rw [ht, mul_pow]
+          rw [hpow]
+          ring
+        have hexp : exp (logProfile d M (h ξ)) =
+            (∏ j ∈ range (d - 1), ((M : ℝ) - h ξ + 2 * (j + 1))) / τ ^ h ξ := by
+          unfold logProfile
+          rw [exp_sub, exp_sum]
+          have hargs (j : ℕ) : 0 < (M : ℝ) - h ξ + 2 * (j + 1) := by
+            have hj : (0 : ℝ) ≤ j := Nat.cast_nonneg j
+            have hhr : (h ξ : ℝ) ≤ d := by exact_mod_cast hh
+            linarith
+          simp_rw [exp_log (hargs _)]
+          rw [show (h ξ : ℝ) * log ((M : ℝ) / (M + d)) = (h ξ : ℝ) * log τ by rfl,
+            exp_nat_mul, exp_log hτ0]
+        change _ = _ * (_ * exp (logProfile d M (h ξ)))
+        change (if h ξ % 2 = M % 2 ∧ h ξ ≤ M then _ / N else 0) = _ *
+          ((if h ξ % 2 = M % 2 then ν ^ h ξ * (1 - ν) ^ (d - h ξ) / p else 0) * _)
+        rw [if_pos ⟨he, hguard⟩, if_pos he, hbin, hw, hexp]
+        field_simp [hF.ne', hN.ne', hp.ne', (sub_pos.mpr hν1).ne', hτ0.ne']
+      · change (if h ξ % 2 = M % 2 ∧ h ξ ≤ M then _ else 0) = _ *
+          ((if h ξ % 2 = M % 2 then _ else 0) * _)
+        rw [if_neg (by tauto), if_neg he]
+        ring
+    obtain ⟨K₀, hK₀, ht₀⟩ := htilt₀
+    let K := K₀ * exp (logProfile d M m)
+    have hK : 0 < K := mul_pos hK₀ (exp_pos _)
+    have htilt (ξ : Fin d → Bool) : R d M ξ = K * (Q d M ξ * exp (X ξ)) := by
+      rw [ht₀]
+      dsimp [K, X]
+      rw [exp_sub]
+      field_simp
+    have hh (ξ : Fin d → Bool) : h ξ ≤ d := by
+      dsimp [h]
+      calc
+        _ ≤ ∑ _i : Fin d, 1 := sum_le_sum (fun i _ => by cases ξ i <;> simp)
+        _ = d := by simp
+    have hp := profile_estimate d M hd hM
+    have hx (ξ : Fin d → Bool) : (h ξ : ℝ) ∈ Icc (0 : ℝ) d :=
+      ⟨Nat.cast_nonneg _, by exact_mod_cast hh ξ⟩
+    have hX (ξ : Fin d → Bool) : X ξ ≤ 1 / 2 := (hp _ (hx ξ)).2
+    have hD : (∑ ξ, Q d M ξ * |X ξ|) ≤ D := by
+      have hb : (∑ ξ, Q d M ξ * |X ξ|) ≤ ∑ ξ, Q d M ξ *
+          (|(h ξ : ℝ) - m| / ((M : ℝ) - d) +
+            (d - 1 : ℝ) * ((h ξ : ℝ) - m) ^ 2 / (((M : ℝ) - d / 2) * ((M : ℝ) - d))) :=
+        sum_le_sum (fun ξ _ => mul_le_mul_of_nonneg_left (hp _ (hx ξ)).1 (hq0 ξ))
+      have he : (∑ ξ, Q d M ξ *
+          (|(h ξ : ℝ) - m| / ((M : ℝ) - d) +
+            (d - 1 : ℝ) * ((h ξ : ℝ) - m) ^ 2 / (((M : ℝ) - d / 2) * ((M : ℝ) - d)))) =
+          (1 / ((M : ℝ) - d)) * (∑ ξ, Q d M ξ * |(h ξ : ℝ) - m|) +
+          ((d - 1 : ℝ) / (((M : ℝ) - d / 2) * ((M : ℝ) - d))) *
+            (∑ ξ, Q d M ξ * ((h ξ : ℝ) - m) ^ 2) := by
+        rw [mul_sum, mul_sum, ← sum_add_distrib]
+        apply sum_congr rfl
+        intro ξ _
+        ring
+      rw [he] at hb
+      have hfirst : (∑ ξ, Q d M ξ * |(h ξ : ℝ) - m|) ≤ sqrt (3 * (d : ℝ)) / 2 := by
+        simpa only [hmν] using hq.2.2.2
+      have hsecond : (∑ ξ, Q d M ξ * ((h ξ : ℝ) - m) ^ 2) ≤ 3 * (d : ℝ) / 4 := by
+        simpa only [hmν] using hq.2.2.1
+      refine hb.trans ?_
+      calc
+        _ ≤ (1 / ((M : ℝ) - d)) * (sqrt (3 * (d : ℝ)) / 2) +
+            ((d - 1 : ℝ) / (((M : ℝ) - d / 2) * ((M : ℝ) - d))) * (3 * d / 4) :=
+          add_le_add (mul_le_mul_of_nonneg_left hfirst (by positivity))
+            (mul_le_mul_of_nonneg_left hsecond (by positivity))
+        _ = D := by dsimp [D]; ring
+    have hDbounds : D ≤ 1 / 2 ∧ 3 * D ≤
+        5 * (sqrt (d : ℝ) / M + (d : ℝ) * (d - 1) / (M : ℝ) ^ 2) := by
+      let d : ℝ := (d : ℝ)
+      let M : ℝ := (M : ℝ)
+      have hd : 2 ≤ d := by dsimp [d]; exact_mod_cast hd
+      have hM : 3 * d ≤ M := hMc
+      change _ ≤ 1 / 2 ∧ 3 * _ ≤ 5 * (sqrt d / M + d * (d - 1) / M ^ 2)
+      have hd1 : 0 ≤ d - 1 := by linarith
+      have hT : 0 < M - d := by linarith
+      have hL : 0 < M - d / 2 := by linarith
+      have hs3 := sq_sqrt (by positivity : 0 ≤ 3 * d)
+      have hs := sq_sqrt hd0.le
+      have hs30 := sqrt_nonneg (3 * d)
+      have hs0 := sqrt_nonneg d
+      have hsbound : sqrt (3 * d) ≤ 4 * d / 3 := by nlinarith only [hs3, hs30, hd0, mul_nonneg hd0.le (show 0 ≤ d - 2 by linarith)]
+      have hstwo : sqrt (3 * d) ≤ 2 * sqrt d := by nlinarith only [hs3, hs, hs30, hs0, hd0]
+      have hdenD : 5 * d ^ 2 ≤ (M - d / 2) * (M - d) := by
+        have hh := mul_le_mul (show 5 * d / 2 ≤ M - d / 2 by linarith)
+          (show 2 * d ≤ M - d by linarith) (by positivity : 0 ≤ 2 * d) hL.le
+        nlinarith only [hh]
+      have hdenM : 5 * M ^ 2 / 9 ≤ (M - d / 2) * (M - d) := by
+        have hh := mul_le_mul (show 5 * M / 6 ≤ M - d / 2 by linarith)
+          (show 2 * M / 3 ≤ M - d by linarith) (by positivity : 0 ≤ 2 * M / 3) hL.le
+        nlinarith only [hh]
+      have hfirst : sqrt (3 * d) / (2 * (M - d)) ≤ 1 / 3 := by
+        rw [div_le_iff₀ (by positivity : 0 < 2 * (M - d))]
+        linarith
+      have hsecond : 3 * d * (d - 1) / (4 * ((M - d / 2) * (M - d))) ≤ 3 / 20 := by
+        rw [div_le_iff₀ (by positivity : 0 < 4 * ((M - d / 2) * (M - d)))]
+        nlinarith only [hdenD, hd0]
+      have hfM : sqrt (3 * d) / (2 * (M - d)) ≤ (3 / 2) * (sqrt d / M) := by
+        calc
+          _ ≤ (2 * sqrt d) / (2 * (2 * M / 3)) :=
+            div_le_div₀ (by positivity : 0 ≤ 2 * sqrt d) (hstwo) (by positivity) (by linarith)
+          _ = _ := by ring
+      have hsM : 3 * d * (d - 1) / (4 * ((M - d / 2) * (M - d))) ≤
+          (27 / 20) * (d * (d - 1) / M ^ 2) := by
+        calc
+          _ ≤ (3 * d * (d - 1)) / (4 * (5 * M ^ 2 / 9)) :=
+            div_le_div_of_nonneg_left (by positivity) (by positivity) (by linarith)
+          _ = _ := by ring
+      constructor
+      · linarith
+      · have ha : 0 ≤ sqrt d / M := by positivity
+        have hb : 0 ≤ d * (d - 1) / M ^ 2 := by positivity
+        linarith
+
+    have hTV : (1 / 2 : ℝ) * (∑ ξ, |R d M ξ - Q d M ξ|) ≤ 3 * D := by
+      let r := R d M
+      let q := Q d M
+      have hDcap := hDbounds.1
+      let c := ∑ i, q i * exp (X i)
+      let E := ∑ i, q i * |exp (X i) - 1|
+      have hD0 : 0 ≤ D := (sum_nonneg (fun i _ => mul_nonneg (hq0 i) (abs_nonneg _))).trans hD
+      have hE0 : 0 ≤ E := sum_nonneg (fun i _ => mul_nonneg (hq0 i) (abs_nonneg _))
+      have hKc : K * c = 1 := by
+        dsimp only [c]
+        rw [mul_sum]
+        simpa only [← htilt] using hrn
+      have hmean : -D ≤ ∑ i, q i * X i := by
+        have ht := sum_le_sum (s := (univ : Finset (Fin d → Bool))) (fun i _ =>
+          mul_le_mul_of_nonneg_left (neg_abs_le (X i)) (hq0 i))
+        simp only [mul_neg, sum_neg_distrib] at ht
+        linarith
+      have hj := convexOn_exp.map_sum_le (t := (univ : Finset (Fin d → Bool))) (w := q) (p := X)
+        (fun i _ => hq0 i) hqn (fun i _ => mem_univ _)
+      simp only [smul_eq_mul] at hj
+      have hc : exp (-D) ≤ c := (exp_le_exp.mpr hmean).trans hj
+      have hKb : K ≤ exp D := by
+        have ht := mul_le_mul_of_nonneg_left hc hK.le
+        rw [hKc] at ht
+        have he : exp D * exp (-D) = 1 := by rw [← exp_add]; simp
+        exact (mul_le_mul_iff_right₀ (exp_pos (-D))).mp (by simpa only [mul_comm (exp (-D)) _, he] using ht)
+      have hEl : E ≤ exp (1 / 2) * D := by
+        have hpoint (i : (Fin d → Bool)) : |exp (X i) - 1| ≤ exp (1 / 2) * |X i| := by
+          have ht := Convex.norm_image_sub_le_of_norm_hasDerivWithin_le
+            (f := exp) (f' := exp) (s := Iic (1 / 2 : ℝ))
+            (fun x _ => (hasDerivAt_exp x).hasDerivWithinAt)
+            (fun x hx => by simpa only [Real.norm_eq_abs, abs_exp] using exp_le_exp.mpr hx)
+            (convex_Iic _) (x := 0) (by norm_num) (y := X i) (hX i)
+          simpa using ht
+        calc
+          E ≤ ∑ i, q i * (exp (1 / 2) * |X i|) :=
+            sum_le_sum (fun i _ => mul_le_mul_of_nonneg_left (hpoint i) (hq0 i))
+          _ = exp (1 / 2) * ∑ i, q i * |X i| := by rw [mul_sum]; apply sum_congr rfl; intro i _; ring
+          _ ≤ exp (1 / 2) * D := mul_le_mul_of_nonneg_left hD (exp_pos _).le
+      have hce : |c - 1| ≤ E := by
+        have he : c - 1 = ∑ i, q i * (exp (X i) - 1) := by
+          simp only [mul_sub, mul_one, sum_sub_distrib, hqn]; rfl
+        rw [he]
+        refine (abs_sum_le_sum_abs _ _).trans_eq ?_
+        simp only [abs_mul, abs_of_nonneg (hq0 _)]
+        rfl
+      have hsum : (∑ i, |r i - q i|) ≤ 2 * K * E := by
+        calc
+          _ = K * ∑ i, q i * |exp (X i) - c| := by
+            rw [mul_sum]
+            apply sum_congr rfl
+            intro i _
+            have he : r i - q i = K * q i * (exp (X i) - c) := by
+              rw [htilt]
+              calc
+                K * (q i * exp (X i)) - q i = K * (q i * exp (X i)) - (K * c) * q i := by rw [hKc]; ring
+                _ = _ := by ring
+            rw [he, abs_mul, abs_mul, abs_of_pos hK, abs_of_nonneg (hq0 i)]
+            ring
+          _ ≤ K * ∑ i, q i * (|exp (X i) - 1| + |c - 1|) := by
+            apply mul_le_mul_of_nonneg_left _ hK.le
+            apply sum_le_sum
+            intro i _
+            apply mul_le_mul_of_nonneg_left _ (hq0 i)
+            simpa only [sub_add_sub_cancel, abs_sub_comm c 1] using
+              abs_add_le (exp (X i) - 1) (1 - c)
+          _ = K * (E + |c - 1|) := by
+            simp only [mul_add, sum_add_distrib, ← sum_mul, hqn, one_mul]; rfl
+          _ ≤ 2 * K * E := by nlinarith only [mul_le_mul_of_nonneg_left hce hK.le]
+      have heD : K * E ≤ 3 * D := by
+        calc
+          K * E ≤ exp D * (exp (1 / 2) * D) := mul_le_mul hKb hEl hE0 (exp_pos _).le
+          _ = exp (D + 1 / 2) * D := by rw [exp_add]; ring
+          _ ≤ exp 1 * D := mul_le_mul_of_nonneg_right (exp_le_exp.mpr (by linarith)) hD0
+          _ ≤ 3 * D := mul_le_mul_of_nonneg_right exp_one_lt_three.le hD0
+      linarith
+    exact le_min (D5.S3.TotalVariation.Metric.total_variation_le_one
+      (R d M) (Q d M) ⟨hr0, hrn⟩ ⟨hq0, hqn⟩) (hTV.trans hDbounds.2)
+  · intro M hM
+    classical
+    funext ξ
+    have hM0 : (0 : ℝ) < M := by exact_mod_cast (by omega : 0 < M)
+    have hden : (0 : ℝ) < 2 * M + 1 := by positivity
+    have hs : (-1 : ℝ) ^ M = (-1 : ℝ) ^ (M % 2) := neg_one_pow_eq_pow_mod_two (R := ℝ) M
+    have hsum : (∑ i : Fin 1, (ξ i).toNat) = (ξ 0).toNat := by simp
+    cases hb : ξ 0
+    · by_cases he : M % 2 = 0
+      · simp [R, Q, hb, hs, he]
+        field_simp
+        ring
+      · simp [R, Q, hb, he, Ne.symm he]
+    · by_cases he : M % 2 = 1
+      · simp [R, Q, hb, hs, he, hM]
+        field_simp
+        ring
+      · simp [R, Q, hb, he, Ne.symm he]
 end D5.S3.TotalVariation.ParityCompositionKernel

@@ -56,6 +56,19 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
                 + "Restricting the nonnegative squared deviation to the parity event and dividing by p_e "
                 + "bounds its conditional expectation by 3d/4. Weighted Cauchy-Schwarz then gives "
                 + "the absolute deviation bound sqrt(3d)/2. Both moments are centered at m=d nu.",
+                DescribeRole.Theorem),
+            Node("result", "Finite total variation bound", "result", ResultFormula(),
+                "For all natural d >= 2 and M >= 3d, one half of the sum over every Boolean vector of "
+                + "the absolute mass difference is at most min(1,5(sqrt(d)/M+d(d-1)/M^2)). "
+                + "For d=1 and every M>=1 the two mass functions coincide. "
+                + "On the prescribed parity support, the binomial product expansion makes the density ratio "
+                + "proportional to exp(logProfile(h)). Centering at m gives X=logProfile(h)-logProfile(m). "
+                + "The interval estimate and the conditional moments bound its absolute expectation by "
+                + "D=sqrt(3d)/(2(M-d))+3d(d-1)/(4(M-d/2)(M-d)), with D<=1/2. "
+                + "Finite Jensen gives the normalization bound exp(-D), and the derivative bound for exp "
+                + "on (-infinity,1/2] bounds the mean absolute exponential error. The normalized "
+                + "total variation is at most exp(1/2+D)D<=3D, which is bounded by the displayed expression. "
+                + "The unit bound follows from normalization and nonnegativity of both finite mass functions.",
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
@@ -104,6 +117,17 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
         Formula first = Relation(Seq(Index(Sum, F.Xi), Sp, Multiply(q, Abs(delta))),
             Leq, Ratio(Call("sqrt", Multiply(D(3), Dv)), D(2)));
         return Quantified(And(mass, And(eventBound, And(second, first))));
+    }
+
+    private static Formula ResultFormula()
+    {
+        Formula tv = Multiply(Ratio(D(1), D(2)),
+            Seq(Index(Sum, F.Xi), Sp, Abs(Subtract(Call("R", Dv, Mv, F.Xi), Call("Q", Dv, Mv, F.Xi)))));
+        Formula bound = Multiply(D(5), Paren(Add(Ratio(Call("sqrt", Dv), Mv),
+            Ratio(Multiply(Dv, Subtract(Dv, D(1))), Power(Mv, D(2))))));
+        Formula one = Seq(Forall, Sp, Mv, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+            Relation(D(1), Leq, Mv), Sp, Rightarrow, Sp, Equal(Call("R", D(1), Mv), Call("Q", D(1), Mv)));
+        return And(Quantified(Relation(tv, Leq, Call("min", D(1), bound))), one);
     }
 
     private static Formula Quantified(Formula body) => Seq(Forall, Sp, Dv, Comma, Mv, Sp, InMacro, Sp,
