@@ -71,13 +71,13 @@ def claim : Prop := ∀ (d : ℕ) (ρ σ : Mat d) (ε : ℝ)
   Q (N (reg ε ρ)) (N (reg ε σ)) ≤ Q (reg ε ρ) (reg ε σ) ∧
     0 ≤ Q (N (reg ε ρ)) (N (reg ε σ))
 
-private def pauli (z x : ℝ) : Mat 2 := !![(z : ℂ), (x : ℂ); (x : ℂ), -(z : ℂ)]
+def pauli (z x : ℝ) : Mat 2 := !![(z : ℂ), (x : ℂ); (x : ℂ), -(z : ℂ)]
 
 private def t (n : ℕ) : ℝ := (4^n-1)/(4^n+1)
 
 private def state (n : ℕ) (H : Mat 2) : Mat 2 := (1/2 : ℝ) • 1 + (t n/2) • H
 
-private def Z : Mat 2 := pauli 1 0
+def Z : Mat 2 := pauli 1 0
 
 private def H : Mat 2 := pauli (11/14) (5*Real.sqrt 3/14)
 
