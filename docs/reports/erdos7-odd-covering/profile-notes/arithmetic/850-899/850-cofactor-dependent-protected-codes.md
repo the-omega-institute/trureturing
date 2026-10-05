@@ -3690,6 +3690,187 @@ steps reuse existing declarations. No new retained declaration,
 freeze or coverage record is introduced. The full squared-23
 exclusion and unrestricted Erdős #7 remain unresolved.
 
+### Moving lower companions gives a joint exchange obstruction
+
+Keep the original scope of CD125: one globally count-then-modulus-sum
+minimal distinct odd nonunit whole cover, actual pure moduli 3 and 9,
+all original ternary heights at most two, the common coprime
+factorization, q=23, and an actual original of q-height at least two.
+Take the resulting pure h, five-word private projection $\Lambda$,
+changed family D, and unit-digit set U. Write
+$d(i)=\lfloor\rho_i/q\rfloor\bmod q$ for an original's literal
+second q-digit and $C(d,u)$ for its actual top cell. The residue
+$\rho_i$ is separate data from the numerical label $3^{a_i}q^2m_i$.
+
+For a set F of four digits, which may intersect U, define the cell
+condition
+
+$$
+\begin{aligned}
+\operatorname{Comp}_F(d,u)\iff
+\forall i\in C(d,u),\quad
+&\bigl[\forall j\in D:\ a_j=0,\ m_j=m_i
+      \Longrightarrow d(j)\in F\bigr]\\
+&\quad\lor
+\bigl[\forall j\in D:\ a_j=1,\ m_j=m_i
+      \Longrightarrow d(j)\in F\bigr].
+\end{aligned}
+\tag{CD126}
+$$
+
+There is at most one original of each numerical row and cofactor
+in D. Thus CD126 says that every top owner has at least one lower
+numerical companion which is absent from D or whose digit belongs
+to F. It imposes no equality of the companions' cofactor phases.
+
+Six distinct safe digits outside F cannot be assigned six distinct
+private modulo-27 parents satisfying this condition:
+
+$$
+\boxed{
+\begin{gathered}
+|F|=4,\quad F\subseteq\mathbb F_q,\quad
+d_1,\ldots,d_6\in\mathbb F_q\setminus(U\cup F)\ \text{distinct},\\
+w_1,\ldots,w_6\in\mathbb Z/27\mathbb Z\ \text{distinct},\quad
+w_j\bmod9\in\Lambda\\
+\Longrightarrow\quad
+\neg\bigwedge_{j=1}^{6}\operatorname{Comp}_F(d_j,w_j\bmod9).
+\end{gathered}
+}
+\tag{CD127}
+$$
+
+To prove the obstruction, suppose all six cell conditions hold.
+For each nonunit cofactor assign its at most three original rows
+injectively to the output labels
+
+$$
+27m,\qquad27qm,\qquad81m.
+\tag{CD128}
+$$
+
+Require a short slot, one of the first two labels, for every low
+owner whose digit is outside F and for every top owner in a selected
+coarse cell. CD126 ensures that no cofactor group requires all three
+rows to be short. The existing grouped-slot assignment therefore
+applies. A low owner at a digit in F may use the 81m slot, freeing a
+short slot for its numerical top companion. Each ordinary grouped
+output, and each B duplicate, retains its own owner's residue modulo
+that owner's cofactor; companion phases need not agree. The three
+donor outputs are the separate pure outputs below. Slot injectivity
+and the distinct original numerical labels give distinct outputs.
+
+After removing the ten selected digits, at least ten safe digits
+remain, including at least six of the sixteen dense digits from
+CD107. Choose five disjoint pairs with dense A endpoints. Each pair
+has positive gain at every private word, by CD121. The fifteen
+private modulo-27 parents accommodate the six coarse parents,
+five pair parents, and three further distinct parents for pure
+outputs; one parent remains. The pure outputs cover two whole
+parents and two children of the third. Four ordinary modulo-81
+cells remain to be encoded.
+
+The existing arbitrary-parent code applies with five pairs and
+eleven collapsed parents. Its capacity check is
+
+$$
+9|\Lambda|+5=50
+\le q+5+2\cdot11=50.
+\tag{CD129}
+$$
+
+It avoids U, the five A symbols, and assigns the eleven distinct
+B/coarse symbols to their parents. Every other used symbol uniquely
+determines an active modulo-81 cell. These ordinary fine symbols
+need not equal F: a low owner outside F already has a short slot,
+and a fine-slot owner whose digit is unused has no source preimage.
+No extra symbol-allocation hypothesis is required.
+
+For each target in the complete deletion hole, the source preserves
+its entire modulo-9W coordinate and first q-digit. A used source
+owner assigned the fine slot cannot have a coarse digit: a low owner
+there requires a short slot, while a top owner belongs to its chosen
+cell and also requires a short slot. Hence its ordinary source digit
+determines one modulo-81 cell, which the 81m output covers. Paired
+parents use the existing two-digit payment, and the four pure outputs
+cover their designated pieces. This covers the whole deletion hole
+and leaves the original complement covered.
+
+Five positive pair gains exceed the three retained donor costs.
+The existing whole-family comparator gives a strict decrease in the
+number of classes, contradicting global minimality and proving CD127.
+
+A complete scoped transient Lean application checks CD127 from the
+original family hypotheses, including the grouped assignment,
+source decoding and whole-family comparison. Its axiom closures use
+only the standard axioms, with no errors or `sorryAx`. It reuses the
+existing finite-selection, code and replacement results; no retained
+binding declaration, freeze or coverage record is introduced.
+
+CD127 is a necessary constraint on a hypothetical cover. It does not
+show that six such cells must exist. CD125 supplies numerical
+companions; proving that their actual positions permit a common
+exchange remains a separate obligation.
+
+### Incidence counts do not force the joint exchange
+
+The numerical inventory must not be substituted for the remaining
+joint source condition. A finite incidence model exhibits the gap.
+It has twenty digit labels, five word labels, and eighty distinct
+group labels:
+
+$$
+D_0=\{0,\ldots,19\},\qquad
+V_0=\{0,\ldots,4\},\qquad
+M_0=D_0\times\{0,\ldots,3\}.
+\tag{CD130}
+$$
+
+For every group $(d,u)$ put one top record at cell $(d,u)$ and
+two lower records whose digits both equal d. Thus each digit has
+exactly four occupied words, every occupied top cell has one owner,
+and the eighty groups have all three row records. The fifth word
+has no top record at any digit. These are incidence data, not a
+family of arithmetic progressions.
+
+For any fine set F and coarse digit $d\notin F$, an occupied cell
+has both lower companions outside F. Consequently
+
+$$
+\operatorname{Comp}_F(d,u)\iff u=4
+\qquad(d\notin F).
+\tag{CD131}
+$$
+
+Represent each parent by a pair in $V_0\times\{0,1,2\}$. There
+are only three parents above word four. Any injective assignment
+to eligible parents therefore satisfies
+
+$$
+\boxed{\#\text{assigned coarse digits}\le3.}
+\tag{CD132}
+$$
+
+In particular, the model has neither four clean assignments nor
+the six coarse assignments required by CD127, despite its dense
+four-word inventory and eighty complete row groups. A separate
+scoped transient Lean check verifies the inventory, CD131 and
+the parent bound, using only standard axioms. It supplies no odd
+cover and no counterexample to a statement requiring whole coverage.
+
+The stronger arithmetic control in
+[Report 862](862-three-support-masked-rectangle-control.md)
+already illustrates why comparable-original disjointness and
+privacy alone do not repair this inference: its same-digit row
+companions use different cofactor phases. That control has different
+q and height parameters and is explicitly a noncover, so it is
+not an instance of the present q=23 hypotheses.
+
+The missing bridge must use the actual common private-source
+fibres and their service at every second digit, or another valid
+whole-family replacement. Counting more numerical companions
+does not by itself establish the required simultaneous allocation.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
