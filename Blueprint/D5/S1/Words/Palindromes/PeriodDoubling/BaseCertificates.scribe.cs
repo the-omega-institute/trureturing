@@ -9,6 +9,14 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S1/Words/Palindromes/PeriodDoubling/BaseCertificates.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The fully reconstructed finite graph has exact integer bounds on every accepted run.", H("Concrete Period-Doubling Transducer Potentials"), Blocks(
+        Describe.Lean(DescribeId.Create("pd-basecertificates-basesuccessors"),
+            DeclarationHandle.Create(Prefix + "baseSuccessors"), H("All literal arithmetic successors"),
+            StatementSource.FromAuthor(SuccessorsFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For each of the four pairs of binary input bits, the relation transition supplies every allowed next relation state. baseNext adds the rounded-half carries, emits signed digits, updates the first and latest nonzero signs, and rejects an opposite input digit two positions later. The remaining components record the output violation flag and the two edge charges."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("pd-basecertificates-initialstates"),
+            DeclarationHandle.Create(Prefix + "initialStates"), H("The seven arithmetic source states"),
+            StatementSource.FromAuthor(InitialFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The two lowest input bits give the fixed endpoint parities and initial rounded-half carries. Equal bits start the even-cut relation; different bits start A and B, with the flushed relation additionally available for the pair (1,0). All sign, previous-bit, addition-carry and violation components start at zero."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-basecertificates-basetable"),
             DeclarationHandle.Create(Prefix + "baseTable"), H("The complete concrete graph and two potentials"),
             StatementSource.FromAuthor(TableFormula()), AssessedProvenance.FromRepo(),
@@ -77,6 +85,28 @@ internal sealed class BaseCertificatesDocument : IScribeDocumentDefinition
     private static Formula State() => ListOf(Z());
     private static Formula Alphabet() => Product(Z(), Z(), Z(), Z());
     private static Formula Entry(Formula s, int k) => Call("getD", Call("getElemOption", s, new Formula.Number(k)), D(0));
+    private static Formula Bits() => Seq(OpenBracket, D(0), Comma, D(1), CloseBracket);
+    private static Formula IntList(params Formula[] xs) =>
+        Seq(OpenBracket, xs.Skip(1).Aggregate(xs[0], (a,b) => Seq(a,Comma,Sp,b)), CloseBracket);
+    private static Formula SuccessorsFormula()
+    {
+        var body = Call("filterMap", Call("baseNext", V("s"), V("n"), V("j")),
+            Call("relNext", Entry(V("s"),0), V("n"), V("j")));
+        body = Call("flatMap", Lam("j", Z(), body), Bits());
+        body = Call("flatMap", Lam("n", Z(), body), Bits());
+        return Disp(All("s", State(), Eqn(Call("baseSuccessors",V("s")),body)));
+    }
+    private static Formula InitialFormula()
+    {
+        var modes = Ite(Eqn(V("n"),V("j")),IntList(D(6)),
+            Ite(LtF(V("j"),V("n")),IntList(D(1),D(2),D(0)),IntList(D(1),D(2))));
+        var state = IntList(V("r"),D(1),V("n"),V("j"),V("n"),V("j"),
+            D(0),D(0),D(0),D(0),D(0),D(0),D(0),D(0),D(0),D(0),D(0),D(0),D(0));
+        var body = Call("map",Lam("r",Z(),state),modes);
+        body = Call("flatMap",Lam("j",Z(),body),Bits());
+        body = Call("flatMap",Lam("n",Z(),body),Bits());
+        return Disp(Eqn(V("initialStates"),body));
+    }
     private static Formula TableFormula() => Disp(All("i", N(), Seq(Call("baseTable", V("i")), Colon,
         Product(State(), ListOf(Product(N(), Z(), Z(), Z(), Z())), Call("Option", Z()), Call("Option", Z())))));
     private static Formula OffsetFormula()

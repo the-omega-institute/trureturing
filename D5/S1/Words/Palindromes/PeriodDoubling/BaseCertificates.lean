@@ -62,7 +62,7 @@ private def baseNext (s : List ℤ) (n j r : ℤ) : Option (List ℤ × ℤ × �
     (Bool.toNat (s[18]?.getD 0 != 0 || jd * s[13]?.getD 0 == -1) : ℤ)]
   some (ns, f, jq - nq, n, j)
 
-private def baseSuccessors (s : List ℤ) : List (List ℤ × ℤ × ℤ × ℤ × ℤ) :=
+def baseSuccessors (s : List ℤ) : List (List ℤ × ℤ × ℤ × ℤ × ℤ) :=
   ([0,1] : List ℤ).flatMap fun n => ([0,1] : List ℤ).flatMap fun j =>
     (relNext (s[0]?.getD 0) n j).filterMap (baseNext s n j)
 
@@ -74,7 +74,7 @@ def baseOffset (s : List ℤ) : ℤ :=
   (if s[15]?.getD 0 < 0 then 1 - s[3]?.getD 0 else s[3]?.getD 0) -
     (if s[14]?.getD 0 < 0 then 1 - s[2]?.getD 0 else s[2]?.getD 0)
 
-private def initialStates : List (List ℤ) :=
+def initialStates : List (List ℤ) :=
   ([0,1] : List ℤ).flatMap fun n => ([0,1] : List ℤ).flatMap fun j =>
     (if n = j then [6] else if n > j then [1,2,0] else [1,2]).map fun r =>
       [r,1,n,j,n,j,0,0,0,0,0,0,0,0,0,0,0,0,0]
