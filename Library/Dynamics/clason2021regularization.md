@@ -433,3 +433,92 @@ Then $G*(W_\Lambda p)=p$. The coefficient map need not preserve
 evenness, and its norm is not asserted uniformly bounded as
 $\Lambda$ grows. These are applications of the existing Gamma and
 Fourier tools, not a new Wiener theorem.
+
+## The actual low residual is Hilbert–Schmidt
+
+Let $J_+$ restrict the coefficient line to $(R_0,\infty)$. Define
+on the whole even sharp-low space
+
+$$
+\mathcal L_\Lambda p=\sqrt2\|G\|_2S_nJ_+W_\Lambda p,
+\qquad K_\Lambda p=p-\mathcal L_\Lambda p. \tag{NC4}
+$$
+
+The principal map is bounded and has range in the original $N_c$.
+For $h=W_\Lambda p$, compare its ideal version on $x>0$ with
+$p(x)=\int_{\mathbb R}G(x-R)h(R)dR$. The residual has a missing
+coefficient kernel $G(x-R)$ for $R<R_0$, and a reflected-tail kernel
+$G(-x-R)$ for $R>R_0$. Their full squared kernel integrals are
+
+$$
+\begin{aligned}
+\int_{x>0,\ R<R_0}|G(x-R)|^2dx\,dR
+ &=\int_{y>-R_0}(y+R_0)|G(y)|^2dy<\infty,\\
+\int_{x>0,\ R>R_0}|G(-x-R)|^2dx\,dR
+ &=\int_{y<-R_0}(-y-R_0)|G(y)|^2dy<\infty.
+\end{aligned}
+$$
+
+Evenness transports this residual to the negative half-line. The
+actual-minus-ideal synthesis is Hilbert–Schmidt by (NC2). Composing
+these maps with bounded $W_\Lambda$ proves that $K_\Lambda$ is
+Hilbert–Schmidt on the entire even sharp-low space. This supplies
+the original-theta interface; a generic compactness theorem alone
+does not supply these kernels or their range in $N_c$.
+
+For the actual centered class set
+$\mathcal E_\Lambda=P_\Lambda L^2_{\rm even}\cap v_0^\perp$.
+Each $\mathcal L_\Lambda p$ is exactly ground-orthogonal, since
+each $n_R$ is. For $p\in\mathcal E_\Lambda$, $K_\Lambda p$ is
+centered and lies in the original form domain: (SC1) admits $p$,
+and the accepted critical-domain premise admits
+$\mathcal L_\Lambda p\in N_c$ after transport by $U^{-1}$.
+
+## A corrected fit converges uniformly at each fixed band
+
+The actual correction $\mathcal R$ fixes $N_c$. Clason's normal
+equation accepts arbitrary Hilbert data; its $B$-metric contraction
+and the existing $cI\le B\le I/2$ on the centered space give
+$\sup_{\varepsilon>0}\|\mathcal R_\varepsilon\|\le(2c)^{-1/2}$.
+The known strong convergence consequently extends from the dense
+form domain to all centered ambient inputs. Reuse that convergence
+on the compact image of the $K_\Lambda$ unit ball, rather than
+on the entire original unit ball.
+
+Define the corrected common-source fit on $\mathcal E_\Lambda$ by
+
+$$
+\begin{aligned}
+\mathcal R_{\Lambda,\varepsilon}p
+ &=\mathcal L_\Lambda p+
+    \mathcal R_\varepsilon K_\Lambda p,\\
+\mathcal Rp-\mathcal R_{\Lambda,\varepsilon}p
+ &=(\mathcal R-\mathcal R_\varepsilon)K_\Lambda p.
+\end{aligned} \tag{NC5}
+$$
+
+For each fixed $\Lambda>0$, the right side tends to zero in
+operator norm as $\varepsilon\downarrow0$. It also tends to zero
+in Hilbert–Schmidt norm by the standard strong-times-Hilbert–Schmidt
+convergence fact. Both terms of the fit lie in the same $N_c$.
+The existing common critical-edge bound therefore gives
+
+$$
+\sup_{\substack{p\in\mathcal E_\Lambda\\\|p\|_2=1}}
+ \|C_\pm U^{-1}(\mathcal Rp-\mathcal R_{\Lambda,\varepsilon}p)\|
+\le\frac1{\sqrt2}
+ \|\mathcal R-\mathcal R_{\Lambda,\varepsilon}\|_{
+       \mathcal E_\Lambda\to L^2}
+\longrightarrow0. \tag{NC6}
+$$
+
+The principal map is noncompact, consistently with (E5). Replacing
+its synthesis by any fixed finite $R$ interval makes it compact
+and cannot preserve this full-sphere uniform conclusion. The
+construction is an infinite-source representation, without an
+all-input finite acquisition algorithm or an effective regularization
+rate. Constants depend on the band; no growing-band or common
+cofinal error estimate is supplied. The full residual comparison,
+original all-input half-bound, actual joint cofinal signs, full Robin
+and RH remain unresolved. This is conditional paper analysis with
+no new Lean certification or originality claim.
