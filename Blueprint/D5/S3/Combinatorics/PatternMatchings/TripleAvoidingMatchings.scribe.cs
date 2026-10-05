@@ -12,7 +12,7 @@ internal sealed class TripleAvoidingMatchingsDocument : IScribeDocumentDefinitio
         H("The generating function for matchings avoiding 123, 132 and 213"),
         Blocks(
             Node("bss-result", "The perfect-matching enumeration", "result",
-                "Let a_n count the perfect matchings on 2n ordered vertices avoiding P1 = {123, 132, 213}, with three-arc occurrences requiring all three left endpoints to precede all three right endpoints and with labels complementary to right-endpoint order. Put A(z) = sum a_n z^n and H(z) = sum Cat_k F_{k+3} z^k over nonnegative integers. Then (1-z-zH(z))A(z) = 1-zH(z), equivalently A(z) = (1-zH(z))/(1-z-zH(z)). This enumerates the P1 clause of Section 6, Question 1 of Biswas, Shankar and Sivasubramanian. The identity holds as a formal power series with integer coefficients and includes the empty matching.", DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("biswas-shankar-sivasubramanian-p1-matchings"), ResolutionKind.Proved))
+                "Let a_n count the perfect matchings on 2n ordered vertices avoiding P1 = {123, 132, 213}, with three-arc occurrences requiring all three left endpoints to precede all three right endpoints and with labels complementary to right-endpoint order. Put A(z) = sum a_n z^n and H(z) = sum Cat_k F_{k+3} z^k over nonnegative integers. Then (1-z-zH(z))A(z) = 1-zH(z), equivalently A(z) = (1-zH(z))/(1-z-zH(z)). This enumerates the P1 clause of Section 6, Question 1 of Biswas, Shankar and Sivasubramanian. The identity holds as a formal power series with integer coefficients and includes the empty matching.", DescribeRole.Theorem)
         ), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
