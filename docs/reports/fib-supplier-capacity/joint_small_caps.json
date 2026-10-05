@@ -1,0 +1,505 @@
+{
+  "caps": [
+    {
+      "H": 16,
+      "initial_read_image": 1,
+      "one_call_max_response_image": 2,
+      "representatives": [
+        {
+          "coordinate": [
+            2,
+            3
+          ],
+          "first_response": "A",
+          "initial_length": 8,
+          "response_word": "AA",
+          "rho_length": 12,
+          "second_context_length": 4,
+          "second_response": "A",
+          "target": [
+            1,
+            [
+              4,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            4
+          ],
+          "first_response": "A",
+          "initial_length": 12,
+          "response_word": "AR",
+          "rho_length": 16,
+          "second_context_length": 4,
+          "second_response": "R",
+          "target": [
+            1,
+            [
+              8,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 12,
+          "response_word": "RA",
+          "rho_length": 20,
+          "second_context_length": 4,
+          "second_response": "A",
+          "target": [
+            0,
+            1,
+            12
+          ]
+        },
+        {
+          "coordinate": [
+            4,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 16,
+          "response_word": "RR",
+          "rho_length": 20,
+          "second_context_length": 4,
+          "second_response": "R",
+          "target": [
+            0,
+            1,
+            16
+          ]
+        }
+      ],
+      "source_word_count": 920,
+      "target_count": 4,
+      "target_response_image": {
+        "(0, 1, 12)": [
+          "RA"
+        ],
+        "(0, 1, 16)": [
+          "RR"
+        ],
+        "(1, (4, 4), 1, 1)": [
+          "AA"
+        ],
+        "(1, (8, 4), 1, 1)": [
+          "AR"
+        ]
+      },
+      "two_call_policy": {
+        "continuation_action": "right_append_a^(H-12)",
+        "first_action": "rho",
+        "reachable_request_values": 3,
+        "response_codes": [
+          "AA",
+          "AR",
+          "RA",
+          "RR"
+        ],
+        "worst_case_modification_calls": 2,
+        "worst_case_total_source_calls": 2
+      }
+    },
+    {
+      "H": 17,
+      "initial_read_image": 1,
+      "one_call_max_response_image": 2,
+      "representatives": [
+        {
+          "coordinate": [
+            2,
+            3
+          ],
+          "first_response": "A",
+          "initial_length": 8,
+          "response_word": "AA",
+          "rho_length": 12,
+          "second_context_length": 5,
+          "second_response": "A",
+          "target": [
+            1,
+            [
+              4,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            4
+          ],
+          "first_response": "A",
+          "initial_length": 12,
+          "response_word": "AR",
+          "rho_length": 16,
+          "second_context_length": 5,
+          "second_response": "R",
+          "target": [
+            1,
+            [
+              8,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 12,
+          "response_word": "RA",
+          "rho_length": 20,
+          "second_context_length": 5,
+          "second_response": "A",
+          "target": [
+            0,
+            1,
+            12
+          ]
+        },
+        {
+          "coordinate": [
+            4,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 16,
+          "response_word": "RR",
+          "rho_length": 20,
+          "second_context_length": 5,
+          "second_response": "R",
+          "target": [
+            0,
+            1,
+            16
+          ]
+        }
+      ],
+      "source_word_count": 920,
+      "target_count": 4,
+      "target_response_image": {
+        "(0, 1, 12)": [
+          "RA"
+        ],
+        "(0, 1, 16)": [
+          "RR"
+        ],
+        "(1, (4, 4), 1, 1)": [
+          "AA"
+        ],
+        "(1, (8, 4), 1, 1)": [
+          "AR"
+        ]
+      },
+      "two_call_policy": {
+        "continuation_action": "right_append_a^(H-12)",
+        "first_action": "rho",
+        "reachable_request_values": 3,
+        "response_codes": [
+          "AA",
+          "AR",
+          "RA",
+          "RR"
+        ],
+        "worst_case_modification_calls": 2,
+        "worst_case_total_source_calls": 2
+      }
+    },
+    {
+      "H": 18,
+      "initial_read_image": 1,
+      "one_call_max_response_image": 2,
+      "representatives": [
+        {
+          "coordinate": [
+            2,
+            3
+          ],
+          "first_response": "A",
+          "initial_length": 8,
+          "response_word": "AA",
+          "rho_length": 12,
+          "second_context_length": 6,
+          "second_response": "A",
+          "target": [
+            1,
+            [
+              4,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            4
+          ],
+          "first_response": "A",
+          "initial_length": 12,
+          "response_word": "AR",
+          "rho_length": 16,
+          "second_context_length": 6,
+          "second_response": "R",
+          "target": [
+            1,
+            [
+              8,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 12,
+          "response_word": "RA",
+          "rho_length": 20,
+          "second_context_length": 6,
+          "second_response": "A",
+          "target": [
+            0,
+            1,
+            12
+          ]
+        },
+        {
+          "coordinate": [
+            4,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 16,
+          "response_word": "RR",
+          "rho_length": 20,
+          "second_context_length": 6,
+          "second_response": "R",
+          "target": [
+            0,
+            1,
+            16
+          ]
+        }
+      ],
+      "source_word_count": 920,
+      "target_count": 4,
+      "target_response_image": {
+        "(0, 1, 12)": [
+          "RA"
+        ],
+        "(0, 1, 16)": [
+          "RR"
+        ],
+        "(1, (4, 4), 1, 1)": [
+          "AA"
+        ],
+        "(1, (8, 4), 1, 1)": [
+          "AR"
+        ]
+      },
+      "two_call_policy": {
+        "continuation_action": "right_append_a^(H-12)",
+        "first_action": "rho",
+        "reachable_request_values": 3,
+        "response_codes": [
+          "AA",
+          "AR",
+          "RA",
+          "RR"
+        ],
+        "worst_case_modification_calls": 2,
+        "worst_case_total_source_calls": 2
+      }
+    },
+    {
+      "H": 19,
+      "initial_read_image": 1,
+      "one_call_max_response_image": 2,
+      "representatives": [
+        {
+          "coordinate": [
+            2,
+            3
+          ],
+          "first_response": "A",
+          "initial_length": 8,
+          "response_word": "AA",
+          "rho_length": 12,
+          "second_context_length": 7,
+          "second_response": "A",
+          "target": [
+            1,
+            [
+              4,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            4
+          ],
+          "first_response": "A",
+          "initial_length": 12,
+          "response_word": "AR",
+          "rho_length": 16,
+          "second_context_length": 7,
+          "second_response": "R",
+          "target": [
+            1,
+            [
+              8,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 12,
+          "response_word": "RA",
+          "rho_length": 20,
+          "second_context_length": 7,
+          "second_response": "A",
+          "target": [
+            0,
+            1,
+            12
+          ]
+        },
+        {
+          "coordinate": [
+            4,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 16,
+          "response_word": "RR",
+          "rho_length": 20,
+          "second_context_length": 7,
+          "second_response": "R",
+          "target": [
+            0,
+            1,
+            16
+          ]
+        }
+      ],
+      "source_word_count": 920,
+      "target_count": 4,
+      "target_response_image": {
+        "(0, 1, 12)": [
+          "RA"
+        ],
+        "(0, 1, 16)": [
+          "RR"
+        ],
+        "(1, (4, 4), 1, 1)": [
+          "AA"
+        ],
+        "(1, (8, 4), 1, 1)": [
+          "AR"
+        ]
+      },
+      "two_call_policy": {
+        "continuation_action": "right_append_a^(H-12)",
+        "first_action": "rho",
+        "reachable_request_values": 3,
+        "response_codes": [
+          "AA",
+          "AR",
+          "RA",
+          "RR"
+        ],
+        "worst_case_modification_calls": 2,
+        "worst_case_total_source_calls": 2
+      }
+    }
+  ],
+  "prefix_free_check": {
+    "binary_modification_alphabet": [
+      "A",
+      "R"
+    ],
+    "kraft_sum": 1.0,
+    "one_call_response_image_upper_bound": 2,
+    "target_count_per_authentic_symbol": 4,
+    "two_call_codewords": [
+      "AA",
+      "AR",
+      "RA",
+      "RR"
+    ]
+  },
+  "schema": "fib-tm63-joint-small-caps-v1",
+  "source_domain": {
+    "all_bracketings_lifted_by": "Atomic360/TM47 behavior congruence",
+    "caps": [
+      16,
+      17,
+      18,
+      19
+    ],
+    "compositions": [
+      [
+        4,
+        4
+      ],
+      [
+        4,
+        8
+      ],
+      [
+        4,
+        12
+      ],
+      [
+        8,
+        4
+      ],
+      [
+        8,
+        8
+      ],
+      [
+        12,
+        4
+      ]
+    ],
+    "h": 4,
+    "unit_leaf_words": 920
+  }
+}
