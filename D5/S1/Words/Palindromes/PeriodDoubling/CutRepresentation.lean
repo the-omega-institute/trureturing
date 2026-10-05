@@ -33,14 +33,15 @@ def classS (n : ℕ) : Prop := ∃ h : ℕ,
     ds[i.val]?.getD 0 ≠ ds[j.val]?.getD 0 → 3 ≤ j.val-i.val
 
 theorem cut_representation_completeness (n j : ℕ) (hS : classS n) (hj : j < n)
-    (hpal : List.Palindrome (List.ofFn (fun i : Fin (n-j) => u_pd (j+i)))) :
+    (hpal : List.Palindrome (List.ofFn (fun i : Fin (n-j) => u_pd (j+i))))
+    (minimumLength : ℕ := 0) :
     ∃ (charge : Bool) (s t : Fin 1492) (xs : List (ℤ × ℤ × ℤ × ℤ)),
       s ∈ (baseAutomaton charge).start ∧ t ∈ (baseAutomaton charge).accept ∧
       Nonempty ((baseAutomaton charge).Path s t xs) ∧
       (baseTable s.val).1[2]?.getD 0=((n%2 : ℕ) : ℤ) ∧
       (baseTable s.val).1[3]?.getD 0=((j%2 : ℕ) : ℤ) ∧
       xs.foldr (fun a x => a.2.2.1+2*x) 0=((n/2 : ℕ) : ℤ) ∧
-      xs.foldr (fun a x => a.2.2.2+2*x) 0=((j/2 : ℕ) : ℤ) := by
+      xs.foldr (fun a x => a.2.2.2+2*x) 0=((j/2 : ℕ) : ℤ) ∧ minimumLength≤xs.length := by
   have class_two_spacing (ds : List ℤ)
       (hsparse : ds.IsChain (fun a b => a=0 ∨ b=0))
       (hclass : ∀ (i j : Fin ds.length), i.val < j.val →
@@ -107,11 +108,11 @@ theorem cut_representation_completeness (n j : ℕ) (hS : classS n) (hj : j < n)
   obtain ⟨h,hbound,hS⟩:=hS
   obtain ⟨r,bits,hr,⟨p⟩,hN,hJ,hbits⟩:=cut_bit_relation_completeness n j hj hpal
   let L:=bits.length
-  let pad:=h+3
+  let pad:=h+3+minimumLength
   let bs:=bits++List.replicate pad (0,0)
   let ds:=tripleSignedDigits ((n+1)/2) h
-  let dns:=0::(ds++List.replicate (L+2) 0)
-  let ys:=tripleSignedDigits ((j+1)/2) (L+h+2)
+  let dns:=0::(ds++List.replicate (L+2+minimumLength) 0)
+  let ys:=tripleSignedDigits ((j+1)/2) (L+h+2+minimumLength)
   let djs:=0::ys
   have zero_value (k : ℕ) : (List.replicate k (0:ℤ)).foldr (fun z x => z+2*x) 0=0 := by
     induction k with
@@ -162,15 +163,15 @@ theorem cut_representation_completeness (n j : ℕ) (hS : classS n) (hj : j < n)
       simp only [List.foldr_cons,List.length_cons,pow_succ]
       omega
   have hnlt : n/2 < 2^L := by simpa only [hN,L] using bound bits hbits
-  have hybound : 3*((j+1)/2) < 2^((L+h+2)+1) := by
+  have hybound : 3*((j+1)/2) < 2^((L+h+2+minimumLength)+1) := by
     have hY : (j+1)/2 ≤ 2^L := by omega
-    have hpow : 2^(L+3) ≤ 2^((L+h+2)+1) := Nat.pow_le_pow_right (by decide) (by omega)
+    have hpow : 2^(L+3) ≤ 2^((L+h+2+minimumLength)+1) := Nat.pow_le_pow_right (by decide) (by omega)
     have he : 2^(L+3)=8*2^L := by ring
     have hz : 0 < 2^L := by positivity
     rw [he] at hpow
     omega
   obtain ⟨hv,hs,_⟩:=triple_digits_value_and_minimality ((n+1)/2) h hbound
-  obtain ⟨hyv,hys,_⟩:=triple_digits_value_and_minimality ((j+1)/2) (L+h+2) hybound
+  obtain ⟨hyv,hys,_⟩:=triple_digits_value_and_minimality ((j+1)/2) (L+h+2+minimumLength) hybound
   have coeff (X h : ℕ) : ∀ z ∈ tripleSignedDigits X h, z=-1 ∨ z=0 ∨ z=1 := by
     intro z hz
     obtain ⟨i,rfl⟩:=List.mem_ofFn.mp hz
@@ -188,8 +189,8 @@ theorem cut_representation_completeness (n j : ℕ) (hS : classS n) (hj : j < n)
     intro z hz
     rcases List.mem_cons.mp hz with rfl | hz
     · simp
-    · exact coeff ((j+1)/2) (L+h+2) z hz
-  have hpad : (ds++List.replicate (L+2) 0).IsChain (fun a b => a=0 ∨ b=0) := by
+    · exact coeff ((j+1)/2) (L+h+2+minimumLength) z hz
+  have hpad : (ds++List.replicate (L+2+minimumLength) 0).IsChain (fun a b => a=0 ∨ b=0) := by
     refine hs.append (List.isChain_replicate_of_rel _ (Or.inl rfl)) ?_
     intro a ha b hb
     exact Or.inr (List.mem_replicate.mp (List.mem_of_mem_head? hb)).2
@@ -207,17 +208,21 @@ theorem cut_representation_completeness (n j : ℕ) (hS : classS n) (hj : j < n)
       exact hS)
   have hclass : ((0::0::dns).zip (0::0::dns).tail).IsChain (fun a b => a.1*b.2 ≠ -1) :=
     spacing_chain _ (cons_zero_spacing _ (cons_zero_spacing _ (cons_zero_spacing _
-      (zero_padding_spacing ds hclass0 (L+2)))))
+      (zero_padding_spacing ds hclass0 (L+2+minimumLength)))))
   have hvn : dns.foldr (fun z x => z+2*x) 0=2*(((n+1)/2 : ℕ) : ℤ) := by
     simp only [dns,List.foldr_cons,zero_add,List.foldr_append,zero_value]
     exact congrArg (fun x : ℤ => 2*x) (show ds.foldr (fun z x => z+2*x) 0=(((n+1)/2 : ℕ) : ℤ) from hv)
   have hvj : djs.foldr (fun z x => z+2*x) 0=2*(((j+1)/2 : ℕ) : ℤ) := by
     simp only [djs,List.foldr_cons,zero_add]
     exact congrArg (fun x : ℤ => 2*x) (show ys.foldr (fun z x => z+2*x) 0=(((j+1)/2 : ℕ) : ℤ) from hyv)
-  exact base_bit_path_realization n j r bs hr ⟨pb⟩ hbbits hbN hbJ dns djs
+  obtain ⟨charge,s,t,xs,hs,ht,hp,hsn,hsj,hn,hjv,hlen⟩ :=
+    base_bit_path_realization n j r bs hr ⟨pb⟩ hbbits hbN hbJ dns djs
     (by simp [dns,ds,bs,tripleSignedDigits,L,pad];omega)
     (by simp [djs,ys,bs,tripleSignedDigits,L,pad];omega)
     hcn hcj hsn hsj hclass hvn hvj
+  refine ⟨charge,s,t,xs,hs,ht,hp,hsn,hsj,hn,hjv,?_⟩
+  simp only [hlen,bs,List.length_append,List.length_replicate,pad]
+  omega
 
 end D5.S1.Words.Palindromes.PeriodDoubling
 

@@ -29,6 +29,10 @@ internal sealed class MarkedPrefixCertificatesDocument : IScribeDocumentDefiniti
             DeclarationHandle.Create(Prefix + "prefixRealizationBlockCheck"), H("Bounded reconstruction windows"),
             StatementSource.FromAuthor(RealizationBlockFormula()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("Each window checks count consecutive rows starting at start. Separate kernel certificates cover all windows, and their union covers every marker state."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("pd-markedprefixcertificates-terminal"),
+            DeclarationHandle.Create(Prefix + "terminal"), H("Completed marker and terminal base state"),
+            StatementSource.FromAuthor(TerminalFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The terminal test requires marker phase four and a terminal underlying base state. The bad flag is tested separately by each automaton's acceptance predicate. Option lookups use default zero and toNat converts the stored integer index to a natural number."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-markedprefixcertificates-prefixoffset"),
             DeclarationHandle.Create(Prefix + "prefixOffset"), H("The terminal marked-prefix charge correction"),
             StatementSource.FromAuthor(OffsetFormula()), AssessedProvenance.FromRepo(),
@@ -149,6 +153,9 @@ internal sealed class MarkedPrefixCertificatesDocument : IScribeDocumentDefiniti
     private static Formula RealizationBlockFormula() => Disp(All("start",N(),All("count",N(),
         Eqn(Call("prefixRealizationBlockCheck",V("start"),V("count")),
             Call("all",Lam("k",N(),Call("prefixRealizationRowCheck",Add(V("start"),V("k")))),Call("range",V("count")))))));
+    private static Formula TerminalFormula() => Disp(All("full",ListOf(Z()),
+        Eqn(Call("terminal",V("full")),Call("andBool",Call("beq",Entry(V("full"),1),D(4)),
+            Call("baseTerminal",Call("fst",Call("baseTable",Call("toNat",Entry(V("full"),0)))))))));
     private static Formula OffsetFormula()
     {
         var full = V("full");

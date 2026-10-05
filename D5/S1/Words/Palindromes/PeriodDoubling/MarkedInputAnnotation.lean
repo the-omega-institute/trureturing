@@ -29,10 +29,15 @@ theorem marked_input_path_annotation {s t : Fin 1492} {xs : List (ℤ × ℤ × 
     (hf : full[0]?.getD 0=(s.val : ℤ)) (hm : full[1]?.getD 0=0)
     (ht : t ∈ (baseAutomaton true).accept) (lower : List ℤ)
     (m k : ℕ) (hpos : 0<m)
+    (hgap : ([(baseTable s.val).1[11]?.getD 0,(baseTable s.val).1[10]?.getD 0] ++ lower).reverse[0]?.getD 0=0 ∧
+      ([(baseTable s.val).1[11]?.getD 0,(baseTable s.val).1[10]?.getD 0] ++ lower).reverse[1]?.getD 0=0)
     (hshape : pathOutputs (fun _ _ (q : Fin 1492) => (baseTable q.val).1[10]?.getD 0) p =
-      lower ++ [0,0] ++ (List.replicate m [1,0,0]).flatten ++ List.replicate (k+1) 0) :
+      lower ++ (List.replicate m [1,0,0]).flatten ++ List.replicate (k+1) 0) :
     ∃ u : List ℤ, u[0]?.getD 0=(t.val : ℤ) ∧ u[1]?.getD 0=4 ∧
-      Nonempty (prefixRawAutomaton.Path full u xs) := by
+      ∃ pp : prefixRawAutomaton.Path full u xs,
+        (pathOutputs (fun _ _ (q : List ℤ) => q[1]?.getD 0) pp).take lower.length =
+          List.replicate lower.length 0 ∧
+        (pathOutputs (fun _ _ (q : List ℤ) => q[1]?.getD 0) pp)[lower.length]? = some 1 := by
   have checked (i : ℕ) (hi : i<1492) : classRowCheck i=true := by
     have blocks : ∀ b : Fin 24,
         ((List.range (min 64 (1492-64*b.val))).all (fun k => classRowCheck (64*b.val+k)))=true := by
@@ -178,7 +183,8 @@ theorem marked_input_path_annotation {s t : Fin 1492} {xs : List (ℤ × ℤ × 
         (∀ z ∈ pathOutputs (fun _ _ (q : Fin 1492) => (baseTable q.val).1[18]?.getD 0) p,z=0) →
         G mode (pathOutputs (fun _ _ (q : Fin 1492) => (baseTable q.val).1[10]?.getD 0) p) →
         ∃ u : List ℤ, u[0]?.getD 0=(t.val : ℤ) ∧ u[1]?.getD 0=4 ∧
-          Nonempty (prefixRawAutomaton.Path full u xs) := by
+          ∃ pp : prefixRawAutomaton.Path full u xs,
+            mode.val=0 → (pathOutputs (fun _ _ (q : List ℤ) => q[1]?.getD 0) pp).head?=some 1 := by
     intro full mode hf hm hp hgood hshape
     induction p generalizing full mode with
     | nil s =>
@@ -197,7 +203,7 @@ theorem marked_input_path_annotation {s t : Fin 1492} {xs : List (ℤ × ℤ × 
           have hl := congrArg List.length hs
           simp at hl
         · rfl
-      exact ⟨full,hf,by simpa only [hmode,Nat.cast_ofNat] using hm,⟨.nil full⟩⟩
+      exact ⟨full,hf,by simpa only [hmode,Nat.cast_ofNat] using hm,⟨.nil full,fun h => by omega⟩⟩
     | cons q s t a xs he p ih =>
       obtain ⟨hd,hg⟩ := grammar mode ((baseTable q.val).1[10]?.getD 0)
         (pathOutputs (fun _ _ (q : Fin 1492) => (baseTable q.val).1[10]?.getD 0) p) hshape
@@ -221,8 +227,11 @@ theorem marked_input_path_annotation {s t : Fin 1492} {xs : List (ℤ × ℤ × 
         split at h <;> try omega
         split at h <;> try omega
         split at h <;> omega
-      obtain ⟨u,hu0,hu1,⟨pu⟩⟩ := ih v (next mode ((baseTable q.val).1[10]?.getD 0)) hv0 hv1' hp' hgood' hg
-      exact ⟨u,hu0,hu1,⟨.cons v full u a xs hv pu⟩⟩
+      obtain ⟨u,hu0,hu1,pu,_⟩ := ih v (next mode ((baseTable q.val).1[10]?.getD 0)) hv0 hv1' hp' hgood' hg
+      refine ⟨u,hu0,hu1,.cons v full u a xs hv pu,?_⟩
+      intro hmode
+      simpa only [pathOutputs,List.head?_cons,hmode,ite_true,Nat.cast_one] using
+        congrArg some hv1
   have unmarked {s q : Fin 1492} {a : ℤ × ℤ × ℤ × ℤ}
       (he : q ∈ (baseAutomaton true).step s a) (full : List ℤ)
       (hf : full[0]?.getD 0=(s.val : ℤ)) (hm : full[1]?.getD 0=0)
@@ -242,34 +251,24 @@ theorem marked_input_path_annotation {s t : Fin 1492} {xs : List (ℤ × ℤ × 
       (p : (baseAutomaton true).Path s t xs) (full : List ℤ)
       (hf : full[0]?.getD 0=(s.val : ℤ)) (hm : full[1]?.getD 0=0)
       (hgood : ∀ z ∈ pathOutputs (fun _ _ (q : Fin 1492) => (baseTable q.val).1[18]?.getD 0) p,z=0)
+      (hgap : ([(baseTable s.val).1[11]?.getD 0,(baseTable s.val).1[10]?.getD 0] ++ lower).reverse[0]?.getD 0=0 ∧
+        ([(baseTable s.val).1[11]?.getD 0,(baseTable s.val).1[10]?.getD 0] ++ lower).reverse[1]?.getD 0=0)
       (hshape : pathOutputs (fun _ _ (q : Fin 1492) => (baseTable q.val).1[10]?.getD 0) p =
-        lower ++ [0,0] ++ (List.replicate m [1,0,0]).flatten ++ List.replicate (k+1) 0) :
+        lower ++ (List.replicate m [1,0,0]).flatten ++ List.replicate (k+1) 0) :
       ∃ u : List ℤ, u[0]?.getD 0=(t.val : ℤ) ∧ u[1]?.getD 0=4 ∧
-        Nonempty (prefixRawAutomaton.Path full u xs) := by
+        ∃ pp : prefixRawAutomaton.Path full u xs,
+          (pathOutputs (fun _ _ (q : List ℤ) => q[1]?.getD 0) pp).take lower.length =
+            List.replicate lower.length 0 ∧
+          (pathOutputs (fun _ _ (q : List ℤ) => q[1]?.getD 0) pp)[lower.length]? = some 1 := by
     induction lower generalizing s xs full with
     | nil =>
-      cases p with
-      | nil s => simp [pathOutputs] at hshape
-      | cons q s t a xs he p =>
-        have hq : (baseTable q.val).1[18]?.getD 0=0 := hgood _ (by simp [pathOutputs])
-        obtain ⟨v,hv,hv0,hv1⟩ := unmarked he full hf hm hq
-        have hg' : ∀ z ∈ pathOutputs (fun _ _ (q : Fin 1492) => (baseTable q.val).1[18]?.getD 0) p,z=0 := by
-          intro z hz;exact hgood z (by simp [pathOutputs,hz])
-        simp only [pathOutputs,List.nil_append,List.cons_append] at hshape
-        obtain ⟨hqd,hr⟩ := List.cons.inj hshape
-        cases p with
-        | nil q => simp [pathOutputs] at hr
-        | cons r q t b ys he' p =>
-          have hrf : (baseTable r.val).1[18]?.getD 0=0 := hg' _ (by simp [pathOutputs])
-          obtain ⟨w,hw,hw0,hw1⟩ := unmarked he' v hv0 hv1 hrf
-          simp only [pathOutputs] at hr
-          obtain ⟨hrd,hshape'⟩ := List.cons.inj hr
-          have hp : (baseTable r.val).1[10]?.getD 0=0 ∧ (baseTable r.val).1[11]?.getD 0=0 :=
-            ⟨hrd,(row q r b he').1.trans hqd⟩
-          have hg'' : ∀ z ∈ pathOutputs (fun _ _ (q : Fin 1492) => (baseTable q.val).1[18]?.getD 0) p,z=0 := by
-            intro z hz;exact hg' z (by simp [pathOutputs,hz])
-          obtain ⟨u,hu0,hu1,⟨pu⟩⟩ := go p w 0 hw0 hw1 (fun _ => hp) hg'' ⟨m,k,hpos,hshape'⟩
-          exact ⟨u,hu0,hu1,⟨.cons v full u a (b::ys) hv (.cons w v u b ys hw pu)⟩⟩
+      have hp : (baseTable s.val).1[10]?.getD 0=0 ∧ (baseTable s.val).1[11]?.getD 0=0 := by
+        simpa only [List.append_nil,List.reverse_cons,List.reverse_nil,List.nil_append,
+          List.singleton_append,List.getElem?_cons_zero,List.getElem?_cons_succ,Option.getD_some] using hgap
+      obtain ⟨u,hu0,hu1,pp,hfirst⟩ := go p full 0 hf hm (fun _ => hp) hgood
+        ⟨m,k,hpos,by simpa only [List.nil_append] using hshape⟩
+      refine ⟨u,hu0,hu1,pp,rfl,?_⟩
+      simpa only [List.length_nil,← List.head?_eq_getElem?] using hfirst rfl
     | cons d lower ih =>
       cases p with
       | nil s => simp [pathOutputs] at hshape
@@ -279,10 +278,30 @@ theorem marked_input_path_annotation {s t : Fin 1492} {xs : List (ℤ × ℤ × 
         have hg' : ∀ z ∈ pathOutputs (fun _ _ (q : Fin 1492) => (baseTable q.val).1[18]?.getD 0) p,z=0 := by
           intro z hz;exact hgood z (by simp [pathOutputs,hz])
         simp only [pathOutputs,List.cons_append] at hshape
-        have hshape' := (List.cons.inj hshape).2
-        obtain ⟨u,hu0,hu1,⟨pu⟩⟩ := ih p v hv0 hv1 hg' hshape'
-        exact ⟨u,hu0,hu1,⟨.cons v full u a xs hv pu⟩⟩
-  exact lowerGo lower p full hf hm hgood hshape
+        obtain ⟨hqd,hshape'⟩:=List.cons.inj hshape
+        have hp' : ([(baseTable q.val).1[11]?.getD 0,(baseTable q.val).1[10]?.getD 0] ++ lower).reverse[0]?.getD 0=0 ∧
+            ([(baseTable q.val).1[11]?.getD 0,(baseTable q.val).1[10]?.getD 0] ++ lower).reverse[1]?.getD 0=0 := by
+          rw [(row s q a he).1,hqd]
+          have truncate (l : List ℤ) (x y z : ℤ) (i : Fin 2) :
+              (l++[x,y])[i.val]?.getD 0=(l++[x,y,z])[i.val]?.getD 0 := by
+            cases l with
+            | nil => fin_cases i <;> rfl
+            | cons b bs =>
+              fin_cases i
+              · rfl
+              · cases bs <;> rfl
+          simp only [List.reverse_append,List.reverse_cons,List.reverse_nil,List.nil_append,
+            List.singleton_append,List.append_assoc] at hgap ⊢
+          exact ⟨(truncate lower.reverse d ((baseTable s.val).1[10]?.getD 0)
+            ((baseTable s.val).1[11]?.getD 0) 0).trans hgap.1,
+            (truncate lower.reverse d ((baseTable s.val).1[10]?.getD 0)
+            ((baseTable s.val).1[11]?.getD 0) 1).trans hgap.2⟩
+        obtain ⟨u,hu0,hu1,pu,hbefore,hselected⟩ := ih p v hv0 hv1 hg' hp' hshape'
+        refine ⟨u,hu0,hu1,.cons v full u a xs hv pu,?_,?_⟩
+        · simpa only [pathOutputs,List.length_cons,List.take_succ_cons,List.replicate_succ,hv1]
+            using congrArg (List.cons (0:ℤ)) hbefore
+        · simpa only [pathOutputs,List.length_cons,List.getElem?_cons_succ] using hselected
+  exact lowerGo lower p full hf hm hgood hgap hshape
 
 end D5.S1.Words.Palindromes.PeriodDoubling
 #print axioms D5.S1.Words.Palindromes.PeriodDoubling.marked_input_path_annotation

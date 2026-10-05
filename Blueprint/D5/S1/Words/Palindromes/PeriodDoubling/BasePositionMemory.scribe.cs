@@ -4,15 +4,15 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Palindromes.PeriodDoubling;
 
-internal sealed class MarkedInputAnnotationDocument : IScribeDocumentDefinition
+internal sealed class BasePositionMemoryDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S1/Words/Palindromes/PeriodDoubling/MarkedInputAnnotation.";
+    private const string Prefix = "D5/S1/Words/Palindromes/PeriodDoubling/BasePositionMemory.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A base path with a positive prefix spaced by three admits a completed marker annotation.", H("Marked Input Annotation"), Blocks(
-        Describe.Lean(DescribeId.Create("pd-markedinputannotation-marked-input-path-annotation"),
-            DeclarationHandle.Create(Prefix + "marked_input_path_annotation"), H("Complete annotation of a marked input pattern"),
-            StatementSource.FromAuthor(AnnotationFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("The base path ends at a valid charge-mode goal. Its input digit stream is a lower tail followed by a nonempty repetition of [1,0,0], and at least one final zero. The two preceding input digits vanish, with the two stored source digits included when the lower tail has fewer than two entries. The initial full marker state stores the base source index and mode zero. There exists a path of the literal marker relation with exactly the same arithmetic labels, ending in mode four at the same base endpoint. The persistent output class flag is zero throughout an accepted base path, so every required marker transition is available. The first marker is selected precisely after the lower tail; all preceding modes remain zero. This statement supplies path existence; interpretation of the retained or removed lowest digit and its terminal charge correction requires further arithmetic information."))), DescribeRole.Theorem))));
+        "Base states record the exact parity and recent signed digits of any path.", H("Base Position Memory"), Blocks(
+        Describe.Lean(DescribeId.Create("pd-basepositionmemory-base-path-position-memory"),
+            DeclarationHandle.Create(Prefix + "base_path_position_memory"), H("Exact position and digit memory"),
+            StatementSource.FromAuthor(MemoryFormula()), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For a path starting in an initial state, slot one is the parity of the next signed-digit position. The first emitted digit is the dummy digit at position minus one, so the parity is the path length plus one modulo two. Slots two and three retain the endpoint parities. For either stream the current and previous digit slots are entries zero and one of the reversed emitted list, with zero used when an entry is absent. The last-sign slot is the last nonzero emitted digit, also with default zero. These identities apply at intermediate states as well as accepting states."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
@@ -61,32 +61,25 @@ internal sealed class MarkedInputAnnotationDocument : IScribeDocumentDefinition
     private static Formula Alphabet() => Product(Z(),Z(),Z(),Z());
     private static Formula Entry(Formula f,int k) => Call("getD",Call("getElemOption",f,new Formula.Number(k)),D(0));
 
-    private static Formula AnnotationFormula()
+    private static Formula MemoryFormula()
     {
-        var list=ListOf(Z());var fin=Call("Fin",D(1,4,9,2));
-        var automaton=Call("baseAutomaton",Ty("true"));
-        var input=Call("pathOutputs",Seq(LambdaLower,Sp,OpenBracket,fin,CloseBracket,Sp,
-            OpenBracket,Alphabet(),CloseBracket,Sp,V("q"),Colon,fin,Sp,Mapsto,Sp,
-            Entry(Call("fst",Call("baseTable",Call("val",V("q")))),10)),V("p"));
-        var block=Seq(OpenBracket,D(1),Comma,Sp,D(0),Comma,Sp,D(0),CloseBracket);
-        var twoZeros=Seq(OpenBracket,D(0),Comma,Sp,D(0),CloseBracket);
-        var shape=Call("append",Call("append",V("lower"),
-            Call("flatten",Call("replicate",V("m"),block))),Call("replicate",Add(V("k"),D(1)),D(0)));
-        var state=Call("fst",Call("baseTable",Call("val",V("s"))));
-        var history=Call("reverse",Call("append",Seq(OpenBracket,Entry(state,11),Comma,Sp,Entry(state,10),CloseBracket),V("lower")));
-        var gap=And(Eqn(Entry(history,0),D(0)),Eqn(Entry(history,1),D(0)));
-        var start=And(Eqn(Entry(V("full"),0),Cast(Call("val",V("s")),Z())),Eqn(Entry(V("full"),1),D(0)),
-            Mem(V("t"),Call("accept",automaton)),LtF(D(0),V("m")),gap,Eqn(input,shape));
-        var modes=Call("pathOutputs",Seq(LambdaLower,Sp,OpenBracket,list,CloseBracket,Sp,
-            OpenBracket,Alphabet(),CloseBracket,Sp,V("q"),Colon,list,Sp,Mapsto,Sp,Entry(V("q"),1)),V("pp"));
-        var position=Call("length",V("lower"));
-        var chosen=Ex("pp",Call("Path",Ty("prefixRawAutomaton"),V("full"),V("u"),V("xs")),And(
-            Eqn(Call("take",position,modes),Call("replicate",position,D(0))),
-            Eqn(Call("getElemOption",modes,position),Call("some",D(1)))));
-        var conclusion=Ex("u",list,And(Eqn(Entry(V("u"),0),Cast(Call("val",V("t")),Z())),
-            Eqn(Entry(V("u"),1),D(4)),chosen));
-        return Disp(All("s",fin,All("t",fin,All("xs",ListOf(Alphabet()),
-            All("p",Call("Path",automaton,V("s"),V("t"),V("xs")),All("full",list,All("lower",list,
-                All("m",N(),All("k",N(),Imp(start,conclusion))))))))));
+        var fin=Call("Fin",D(1,4,9,2));
+        var automaton=Call("baseAutomaton",V("charge"));
+        var input=Ite(V("output"),D(1,2),D(1,0));
+        var previous=Ite(V("output"),D(1,3),D(1,1));
+        var last=Ite(V("output"),D(1,7),D(1,6));
+        Formula Slot(Formula q, Formula k) => Call("getD",Call("getElemOption",Call("fst",Call("baseTable",Call("val",q))),k),D(0));
+        var ds=Call("pathOutputs",Seq(LambdaLower,Sp,OpenBracket,fin,CloseBracket,Sp,
+            OpenBracket,Alphabet(),CloseBracket,Sp,V("q"),Colon,fin,Sp,Mapsto,Sp,Slot(V("q"),input)),V("p"));
+        Formula LastDigit(int k) => Call("getD",Call("getElemOption",Call("reverse",ds),new Formula.Number(k)),D(0));
+        var filtered=Call("filter",Lam("z",Z(),Ne(V("z"),D(0))),ds);
+        var stream=All("output",Ty("Bool"),And(Eqn(Slot(V("t"),input),LastDigit(0)),
+            Eqn(Slot(V("t"),previous),LastDigit(1)),
+            Eqn(Slot(V("t"),last),Call("getD",Call("getLastOption",filtered),D(0)))));
+        var result=And(Eqn(Slot(V("t"),D(1)),Cast(Call("mod",Add(Call("length",V("xs")),D(1)),D(2)),Z())),
+            Eqn(Slot(V("t"),D(2)),Slot(V("s"),D(2))),Eqn(Slot(V("t"),D(3)),Slot(V("s"),D(3))),stream);
+        return Disp(All("charge",Ty("Bool"),All("s",fin,All("t",fin,All("xs",ListOf(Alphabet()),
+            All("p",Call("Path",automaton,V("s"),V("t"),V("xs")),
+                Imp(Mem(V("s"),Call("start",automaton)),result)))))));
     }
 }

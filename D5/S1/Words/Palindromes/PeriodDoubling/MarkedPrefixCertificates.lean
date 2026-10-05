@@ -610,7 +610,7 @@ def prefixRealizationRowCheck (i : ℕ) : Bool :=
 def prefixRealizationBlockCheck (start count : ℕ) : Bool :=
   (List.range count).all fun k => prefixRealizationRowCheck (start+k)
 
-private def terminal (full : List ℤ) : Bool :=
+def terminal (full : List ℤ) : Bool :=
   full[1]?.getD 0 == 4 && baseTerminal (baseTable (full[0]?.getD 0).toNat).1
 
 /-- Charge correction for a retained or removed lowest marked digit. -/

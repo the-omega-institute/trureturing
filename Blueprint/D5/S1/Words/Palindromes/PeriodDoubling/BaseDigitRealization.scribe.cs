@@ -12,7 +12,7 @@ internal sealed class BaseDigitRealizationDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-basedigitrealization-base-bit-path-realization"),
             DeclarationHandle.Create(Prefix + "base_bit_path_realization"), H("Digit rigidity and carry realization"),
             StatementSource.FromAuthor(RealizationFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("Both supplied signed expansions have the length of the bit input and evaluate to twice the respective ceiling half-endpoint. Their coefficients are minus one, zero or one, and adjacent digits cannot both be nonzero. The input additionally forbids opposite signs at distance two, including the two initial zero memories. Modulo-four rigidity identifies the emitted digits at each step; bounded converter carries preserve the residual value and the input spacing prevents rejection. The terminal bit state and zero residual force all converter carries to flush. The finite graph then realizes this arithmetic run without a length bound. The charge-mode Boolean selects one of the two graph acceptance sets. div and mod are natural integer quotient and remainder."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("Both supplied signed expansions have the length of the bit input and evaluate to twice the respective ceiling half-endpoint. Their coefficients are minus one, zero or one, and adjacent digits cannot both be nonzero. The input additionally forbids opposite signs at distance two, including the two initial zero memories. Modulo-four rigidity identifies the emitted digits at each step; bounded converter carries preserve the residual value and the input spacing prevents rejection. The terminal bit state and zero residual force all converter carries to flush. The finite graph then realizes this arithmetic run with exactly one transition per supplied bit. The charge-mode Boolean selects one of the two graph acceptance sets. div and mod are natural integer quotient and remainder."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
@@ -92,7 +92,8 @@ internal sealed class BaseDigitRealizationDocument : IScribeDocumentDefinition
             Eqn(Entry(Call("fst",Call("baseTable",Call("val",V("s")))),2),Cast(pn,Z())),
             Eqn(Entry(Call("fst",Call("baseTable",Call("val",V("s")))),3),Cast(pj,Z())),
             Eqn(Fold(V("xs"),Alphabet(),Z(),Call("fst",Call("snd",Call("snd",V("a"))))),Cast(Call("div",V("n"),D(2)),Z())),
-            Eqn(Fold(V("xs"),Alphabet(),Z(),Call("snd",Call("snd",Call("snd",V("a"))))),Cast(Call("div",V("j"),D(2)),Z())))))));
+            Eqn(Fold(V("xs"),Alphabet(),Z(),Call("snd",Call("snd",Call("snd",V("a"))))),Cast(Call("div",V("j"),D(2)),Z())),
+            Eqn(Call("length",V("xs")),Call("length",V("bits"))))))));
         return Disp(All("n",N(),All("j",N(),All("r",Z(),All("bits",ListOf(Pair()),All("dns",ListOf(Z()),All("djs",ListOf(Z()),Imp(assumptions,conclusion))))))));
     }
 }

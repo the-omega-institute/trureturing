@@ -107,7 +107,7 @@ theorem tight_cut_class_and_Q (n j : ℕ) (hS : classS n) (hj : j < n)
       simp only [hjget] at hb hj hdiff
       simp only [Nat.add_assoc, Nat.reduceAdd] at hpair
       rcases ha with ha | ha | ha <;> rcases hb with hb | hb | hb <;> simp_all
-  obtain ⟨charge,s,t,xs,hs,ht,⟨p⟩,hsn,hsj,hn,hjv⟩:=cut_representation_completeness n j hS hj hpal
+  obtain ⟨charge,s,t,xs,hs,ht,⟨p⟩,hsn,hsj,hn,hjv,_⟩:=cut_representation_completeness n j hS hj hpal
   have hf:=base_path_signed_weight_difference charge hs ht p
   have hN : xs.foldr (fun a x => a.2.2.1+2*x) 0+(baseTable s.val).1[2]?.getD 0=(((n+1)/2 : ℕ) : ℤ) := by
     rw [hn,hsn];omega

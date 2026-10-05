@@ -46,7 +46,7 @@ theorem base_bit_path_realization (n j : ℕ) (r : ℤ) (bits : List (ℕ × ℕ
       (baseTable s.val).1[2]?.getD 0=((n%2 : ℕ) : ℤ) ∧
       (baseTable s.val).1[3]?.getD 0=((j%2 : ℕ) : ℤ) ∧
       xs.foldr (fun a x => a.2.2.1+2*x) 0=((n/2 : ℕ) : ℤ) ∧
-      xs.foldr (fun a x => a.2.2.2+2*x) 0=((j/2 : ℕ) : ℤ) := by
+      xs.foldr (fun a x => a.2.2.2+2*x) 0=((j/2 : ℕ) : ℤ) ∧ xs.length=bits.length := by
   obtain ⟨p⟩ := hp
   let RN (s : List ℤ) (bits : List (ℕ × ℕ)) : ℤ :=
     2*((bits.foldr (fun a x => a.1+2*x) 0 : ℕ)+(s[4]?.getD 0))+
@@ -84,7 +84,7 @@ theorem base_bit_path_realization (n j : ℕ) (r : ℤ) (bits : List (ℕ × ℕ
       ∃ (t : List ℤ) (xs : List (ℤ × ℤ × ℤ × ℤ)),
         Nonempty (baseRawAutomaton.Path s t xs) ∧ baseTerminal t=true ∧
         xs.foldr (fun a x => a.2.2.1+2*x) 0=((bits.foldr (fun a x => a.1+2*x) 0 : ℕ) : ℤ) ∧
-        xs.foldr (fun a x => a.2.2.2+2*x) 0=((bits.foldr (fun a x => a.2+2*x) 0 : ℕ) : ℤ) := by
+        xs.foldr (fun a x => a.2.2.2+2*x) 0=((bits.foldr (fun a x => a.2+2*x) 0 : ℕ) : ℤ) ∧ xs.length=bits.length := by
     induction p generalizing s dn dj with
     | nil r =>
       rw [hu] at hrel
@@ -101,7 +101,7 @@ theorem base_bit_path_realization (n j : ℕ) (r : ℤ) (bits : List (ℕ × ℕ
       dsimp [RN,RJ] at hvn hvj
       have zeros : s[4]?.getD 0=0 ∧ s[5]?.getD 0=0 ∧ s[6]?.getD 0=0 ∧
           s[7]?.getD 0=0 ∧ s[8]?.getD 0=0 ∧ s[9]?.getD 0=0 := by omega
-      refine ⟨s,[],⟨.nil s⟩,?_,rfl,rfl⟩
+      refine ⟨s,[],⟨.nil s⟩,?_,rfl,rfl,rfl⟩
       simp only [baseTerminal,hrel,beq_self_eq_true,Bool.true_and,List.all_eq_true]
       intro k hk
       simp only [List.mem_cons,List.not_mem_nil,or_false] at hk
@@ -201,11 +201,11 @@ theorem base_bit_path_realization (n j : ℕ) (r : ℤ) (bits : List (ℕ × ℕ
           have hclass' : (((ns[11]?.getD 0)::(ns[10]?.getD 0)::dn).zip
               ((ns[11]?.getD 0)::(ns[10]?.getD 0)::dn).tail).IsChain (fun a b => a.1*b.2 ≠ -1) := by
             simpa [ns,List.zip_cons_cons] using hclass.tail
-          obtain ⟨t,xs,⟨pr⟩,ht,hN,hJ⟩ := ih hu ns (by simp [ns])
+          obtain ⟨t,xs,⟨pr⟩,ht,hN,hJ,hlen⟩ := ih hu ns (by simp [ns])
             (fun z hz => hb z (by simp [hz])) hcarry dn dj (by simpa using hln) (by simpa using hlj)
             (fun z hz => hcn z (by simp [hz])) (fun z hz => hcj z (by simp [hz]))
             hsn.tail hsj.tail hclass' hvn' hvj'
-          refine ⟨t,label::xs,⟨.cons ns s t label xs hedge pr⟩,ht,?_,?_⟩
+          refine ⟨t,label::xs,⟨.cons ns s t label xs hedge pr⟩,ht,?_,?_,by simp [hlen]⟩
           · simp only [List.foldr_cons,hN,label]
             push_cast
             rfl
@@ -232,10 +232,10 @@ theorem base_bit_path_realization (n j : ℕ) (r : ℤ) (bits : List (ℕ × ℕ
   have hRJ : RJ s bits=2*(((j+1)/2 : ℕ) : ℤ) := by
     simp [RJ,s,hj]
     omega
-  obtain ⟨t,xs,⟨pr⟩,ht,hN,hJ⟩ := run p rfl s (by simp [s]) hbits hcarry dns djs hln hlj hcn hcj hsn hsj
+  obtain ⟨t,xs,⟨pr⟩,ht,hN,hJ,hlen⟩ := run p rfl s (by simp [s]) hbits hcarry dns djs hln hlj hcn hcj hsn hsj
     (by simpa [s] using hclass) (hvn.trans hRN.symm) (hvj.trans hRJ.symm)
   obtain ⟨charge,i,k,hi,hk,his,hkt,hp⟩ := base_path_realization hs ht pr
-  refine ⟨charge,i,k,xs,hi,hk,hp,?_,?_,?_,?_⟩
+  refine ⟨charge,i,k,xs,hi,hk,hp,?_,?_,?_,?_,hlen⟩
   · simp [his,s]
   · simp [his,s]
   · simpa only [hn] using hN

@@ -16,7 +16,7 @@ internal sealed class CutRepresentationDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("pd-cutrepresentation-cut-representation-completeness"),
             DeclarationHandle.Create(Prefix + "cut_representation_completeness"), H("Literal legal cuts give accepting paths"),
             StatementSource.FromAuthor(CutFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("For every nonempty palindromic suffix from j to n with n in class S, an accepting path records both endpoint parities and both shifted endpoint values. Either acceptance mode may occur: true has a valid output class, and false records an output class violation. The proof builds the bit-relation path from the actual dyadic palindrome radius, pads it by zero bits, supplies complete nonadjacent signed expansions, derives distance-two input spacing from the consecutive-sign condition, and performs the carry realization. All lengths are unrestricted. This theorem supplies complete legal-cut representation; tightness is used separately to exclude the class-violation mode."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("For every nonempty palindromic suffix from j to n with n in class S, an accepting path records both endpoint parities and both shifted endpoint values. Either acceptance mode may occur: true has a valid output class, and false records an output class violation. The proof builds the bit-relation path from the actual dyadic palindrome radius, pads it by zero bits, supplies complete nonadjacent signed expansions, derives distance-two input spacing from the consecutive-sign condition, and performs the carry realization. The accepting path has at least the requested minimum length. This theorem supplies complete legal-cut representation; tightness is used separately to exclude the class-violation mode."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
     private static Formula Ty(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
@@ -89,8 +89,9 @@ internal sealed class CutRepresentationDocument : IScribeDocumentDefinition
             Eqn(Entry(Call("fst",Call("baseTable",Call("val",V("s")))),2),Cast(pn,Z())),
             Eqn(Entry(Call("fst",Call("baseTable",Call("val",V("s")))),3),Cast(pj,Z())),
             Eqn(Fold(V("xs"),Alphabet(),Z(),Call("fst",Call("snd",Call("snd",V("a"))))),Cast(Call("div",V("n"),D(2)),Z())),
-            Eqn(Fold(V("xs"),Alphabet(),Z(),Call("snd",Call("snd",Call("snd",V("a"))))),Cast(Call("div",V("j"),D(2)),Z())))))));
+            Eqn(Fold(V("xs"),Alphabet(),Z(),Call("snd",Call("snd",Call("snd",V("a"))))),Cast(Call("div",V("j"),D(2)),Z())),
+            LeF(V("minimumLength"),Call("length",V("xs"))))))));
         var word=Call("ofFn",Lam("i",Call("Fin",Call("NatSub",V("n"),V("j"))),Call("upd",Add(V("j"),Call("val",V("i"))))));
-        return Disp(All("n",N(),All("j",N(),Imp(And(Call("classS",V("n")),LtF(V("j"),V("n")),Call("Palindrome",word)),conclusion))));
+        return Disp(All("n",N(),All("j",N(),All("minimumLength",N(),Imp(And(Call("classS",V("n")),LtF(V("j"),V("n")),Call("Palindrome",word)),conclusion)))));
     }
 }
