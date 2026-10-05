@@ -41,7 +41,7 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("At d=2, p=9/13 and chi=ket(0), the source polar columns are (3ket(00)-ket(11))/sqrt(10) and ket(10). The competitor columns are (24ket(00)-7ket(11))/25 and ket(10), with the same actual right partial trace decoder. The proof identifies the positive Gram square root and its inverse, gives the actual source noise 24 complete Kraus matrices, and uses the 48 decoder-noise-encoder composite matrices. It bridges canonical-purification fidelity to the Kraus trace sum and proves both witnesses feasible in the full all-amplification CP/TNI class, with input-first encoder Choi rank at most one. The source polar fidelity is 1537/4160 + 7sqrt(10)/80; the competitor fidelity is 336031/520000. Their difference is 7(10279-3250sqrt(10))/260000 > 0, using 10279 squared minus 10 times 3250 squared = 32841. This refutes exact finite-noise dominance. It determines no global rank-one optimum and does not refute the source's optimal quadratic asymptotic coefficient."))),
-                DescribeRole.Theorem)));
+                DescribeRole.Theorem))));
 
     private static DocumentBlock Def(string name, string title, Formula formula, string prose) =>
         Node(name, title, formula, prose, AssessedProvenance.FromLiterature(Source));
