@@ -1968,7 +1968,7 @@ $$
 \tag{CD58}
 $$
 
-At $q=43$, each component requires at least 29 distinct second
+At $q=41$, each component requires at least 27 distinct second
 digits in each row; at $q=17$ it requires at least three per row.
 These assertions do not place any particular numerical pure
 $q^2$, $3q^2$ or $9q^2$ original in every component, align their
@@ -1986,6 +1986,88 @@ The application reuses finite CRT, coprime decoding, finite
 images and complements, equivalence closure and the existing
 minimality comparison. No canonical binding declaration, freeze
 or coverage record is introduced.
+
+## An actual pure q-square reduces the second-digit threshold to 43
+
+Under the actual globally count-then-modulus-sum-minimal odd-cover
+hypotheses of CD52, with actual moduli 3 and 9, the necessary
+height restriction strengthens to
+
+$$
+q\ge43\quad\Longrightarrow\quad j_i\le1\quad\text{for every original }i.
+\tag{CD59}
+$$
+
+Suppose there is an actual $j_g\ge2$. CD47 first gives
+$j_i\le2$ for every original. The existing numerical divisor
+replacement supplies an actual pure $q^2$ original h. Coprimality
+in the original factorization forces $a_h=0$, $j_h=2$, $m_h=1$.
+Write its literal first and second q-digits as c and b. No phase
+of another pure original is identified with h.
+
+Delete exactly the originals with $j_i=2$ and first q-digit c.
+The retained actual 3 and 9 classes leave 15 safe residues modulo
+27 and 45 modulo 81. Choose one safe residue z modulo 27. Its
+three lifts modulo 81 are safe. Encode all three by the single
+q-digit b; encode the other 42 safe residues injectively into
+q-digits different from b. The required alphabet has size
+
+$$
+45-3+1=43.
+\tag{CD60}
+$$
+
+On the 45 safe residues, the compressed code has one three-element
+fiber, all within a single residue modulo 27; every other nonempty
+fiber consists of one residue modulo 81. This reuses the terminal pure-class
+coding principle of Report388 SC461--465, with the preserved
+first-q output signatures of CD42.
+
+For a safe target with first digit c, form the same second-digit
+CRT source, preserving its first q-digit and its coordinates
+modulo 9W. On the compressed fiber the source belongs to the
+actual pure $q^2$ class h, so explicitly select h. Its new
+modulus is 27, and its fixed residue z covers all three target
+lifts. No modulus-81 distinction is required for this selected
+owner.
+
+On every other code fiber, its q-digit uniquely determines the
+target modulo 81. Any actual source owner of height at most one
+is retained and also covers the target. A height-two owner has
+first digit c and therefore belongs to the deleted set. Its one
+fixed decoded residue provides the CD42 output: $27m_i$ in row
+zero, $27qm_i$ in row one, and $81m_i$ in row two, keeping the
+literal cofactor phase and, for the middle row, the first q-digit.
+Unused outputs may have arbitrary fixed residues.
+
+Outside first digit c, a target's original owner cannot be one
+of the deleted originals. Unsafe targets are covered by the
+retained actual guards. Every target is consequently covered by
+the retained family and these outputs. Emit one output for every
+deleted original, including h, even if a code digit is unused.
+The established numerical signatures make the new moduli distinct
+odd nonunits and fresh against the retained originals. Their
+ratios to the old moduli are $27/q^2$, $9/q$ and $9/q^2$, all
+strictly below one. The deleted set contains h, so the unchanged
+class count has a strictly smaller modulus sum, contradicting
+global minimality and proving CD59.
+
+In the prime profile, CD59 makes every support prime at least
+43 have height one. Together with CD47, primes 17 through 41
+have height at most two. These remain restrictions on the same
+hypothetical globally minimal cover, with actual 3 and 9 and
+ternary height at most two; they do not exclude that entire branch
+or prove unrestricted odd noncoverage.
+
+A scoped transient Lean application verifies CD59--60, including
+the actual numerical divisor and coordinate bridge, compressed
+finite code, fixed owner tags, full original-family coverage and
+the same-count strict sum contradiction. All twenty-nine
+axiom-closure reports use only `propext`, `Classical.choice` and
+`Quot.sound`, with no errors or `sorryAx`. The application reuses
+the existing minimality comparison, finite embeddings, coprime
+decoding and CRT; it introduces no canonical binding declaration,
+freeze or coverage record.
 
 ### Verification scope and remaining inequality
 
