@@ -24,6 +24,10 @@ $$\mathit{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/GaussianHighDegreeSharpness.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/negari-2610-01860-high-degree-constant-sharpness` (proved) by `D5/S3/Quantum/Fermionic/GaussianHighDegreeSharpness.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"negari-2610-01860-high-degree-constant-sharpness","declaration_gid":"D5/S3/Quantum/Fermionic/GaussianHighDegreeSharpness.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
