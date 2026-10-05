@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Parity masses of uniform weak compositions and biased Bernoulli vectors. -/
+   digest: Bound the total variation between composition parity and conditioned Bernoulli masses. -/
 
 import D5.S3.TotalVariation.Metric
 import Mathlib.Analysis.Convex.Jensen
@@ -638,8 +638,6 @@ private theorem reference_moments (d M : ℕ) (hd : 2 ≤ d) (hM : 3 * d ≤ M) 
     nlinarith
   exact ⟨hQnorm, hp, hcm_bound, habs_bound⟩
 
-
-
 /-- The full parity kernels satisfy a finite total-variation estimate, and the
 one-coordinate kernels agree for every positive total. -/
 theorem result :
@@ -657,7 +655,9 @@ theorem result :
     let D : ℝ := sqrt (3 * (d : ℝ)) / (2 * ((M : ℝ) - d)) +
       3 * d * (d - 1) / (4 * (((M : ℝ) - d / 2) * ((M : ℝ) - d)))
     have hd0 : (0 : ℝ) < d := by exact_mod_cast (by omega : 0 < d)
-    have hd1 : 0 ≤ (d : ℝ) - 1 := by exact_mod_cast (by omega : 1 ≤ d)
+    have hd1 : 0 ≤ (d : ℝ) - 1 := by
+      have ht : (1 : ℝ) ≤ d := by exact_mod_cast (by omega : 1 ≤ d)
+      linarith
     have hMc : 3 * (d : ℝ) ≤ M := by exact_mod_cast hM
     have hM0 : (0 : ℝ) < M := by linarith
     have hT : 0 < (M : ℝ) - d := by linarith
@@ -669,12 +669,14 @@ theorem result :
     have hqn : (∑ ξ, Q d M ξ) = 1 := hq.1
     have hq0 (ξ : Fin d → Bool) : 0 ≤ Q d M ξ := by
       have hp := hq.2.1
-      unfold Q
+      dsimp only [Q]
       split
-      · exact div_nonneg (mul_nonneg (pow_nonneg hν0 _) (pow_nonneg (sub_nonneg.mpr hν1) _)) (by linarith)
+      · exact div_nonneg
+          (mul_nonneg (pow_nonneg hν0 _) (pow_nonneg (sub_nonneg.mpr hν1) _))
+          (by linarith)
       · exact le_rfl
     have hrn : (∑ ξ, R d M ξ) = 1 := actual_normalization d M (by omega)
-    have hr0 (ξ : Fin d → Bool) : 0 ≤ R d M ξ := by unfold R; split <;> positivity
+    have hr0 (ξ : Fin d → Bool) : 0 ≤ R d M ξ := by dsimp only [R]; split <;> positivity
     have htilt₀ : ∃ K : ℝ, 0 < K ∧ ∀ ξ : Fin d → Bool,
         R d M ξ = K * (Q d M ξ * exp (logProfile d M (h ξ))) := by
       classical
@@ -800,7 +802,7 @@ theorem result :
             ((d - 1 : ℝ) / (((M : ℝ) - d / 2) * ((M : ℝ) - d))) * (3 * d / 4) :=
           add_le_add (mul_le_mul_of_nonneg_left hfirst (by positivity))
             (mul_le_mul_of_nonneg_left hsecond (by positivity))
-        _ = D := by dsimp [D]; ring
+        _ = D := by dsimp only [D]; field_simp [hT.ne', hL.ne']
     have hDbounds : D ≤ 1 / 2 ∧ 3 * D ≤
         5 * (sqrt (d : ℝ) / M + (d : ℝ) * (d - 1) / (M : ℝ) ^ 2) := by
       let d : ℝ := (d : ℝ)
@@ -815,7 +817,9 @@ theorem result :
       have hs := sq_sqrt hd0.le
       have hs30 := sqrt_nonneg (3 * d)
       have hs0 := sqrt_nonneg d
-      have hsbound : sqrt (3 * d) ≤ 4 * d / 3 := by nlinarith only [hs3, hs30, hd0, mul_nonneg hd0.le (show 0 ≤ d - 2 by linarith)]
+      have hsbound : sqrt (3 * d) ≤ 4 * d / 3 := by
+        nlinarith only [hs3, hs30, hd0,
+          mul_nonneg hd0.le (show 0 ≤ d - 2 by linarith)]
       have hstwo : sqrt (3 * d) ≤ 2 * sqrt d := by nlinarith only [hs3, hs, hs30, hs0, hd0]
       have hdenD : 5 * d ^ 2 ≤ (M - d / 2) * (M - d) := by
         have hh := mul_le_mul (show 5 * d / 2 ≤ M - d / 2 by linarith)
@@ -847,25 +851,23 @@ theorem result :
       · have ha : 0 ≤ sqrt d / M := by positivity
         have hb : 0 ≤ d * (d - 1) / M ^ 2 := by positivity
         linarith
-
     have hTV : (1 / 2 : ℝ) * (∑ ξ, |R d M ξ - Q d M ξ|) ≤ 3 * D := by
-      let r := R d M
-      let q := Q d M
       have hDcap := hDbounds.1
-      let c := ∑ i, q i * exp (X i)
-      let E := ∑ i, q i * |exp (X i) - 1|
+      let c := ∑ i, (Q d M) i * exp (X i)
+      let E := ∑ i, (Q d M) i * |exp (X i) - 1|
       have hD0 : 0 ≤ D := (sum_nonneg (fun i _ => mul_nonneg (hq0 i) (abs_nonneg _))).trans hD
       have hE0 : 0 ≤ E := sum_nonneg (fun i _ => mul_nonneg (hq0 i) (abs_nonneg _))
       have hKc : K * c = 1 := by
         dsimp only [c]
         rw [mul_sum]
         simpa only [← htilt] using hrn
-      have hmean : -D ≤ ∑ i, q i * X i := by
+      have hmean : -D ≤ ∑ i, (Q d M) i * X i := by
         have ht := sum_le_sum (s := (univ : Finset (Fin d → Bool))) (fun i _ =>
           mul_le_mul_of_nonneg_left (neg_abs_le (X i)) (hq0 i))
         simp only [mul_neg, sum_neg_distrib] at ht
         linarith
-      have hj := convexOn_exp.map_sum_le (t := (univ : Finset (Fin d → Bool))) (w := q) (p := X)
+      have hj := convexOn_exp.map_sum_le
+        (t := (univ : Finset (Fin d → Bool))) (w := Q d M) (p := X)
         (fun i _ => hq0 i) hqn (fun i _ => mem_univ _)
       simp only [smul_eq_mul] at hj
       have hc : exp (-D) ≤ c := (exp_le_exp.mpr hmean).trans hj
@@ -873,7 +875,8 @@ theorem result :
         have ht := mul_le_mul_of_nonneg_left hc hK.le
         rw [hKc] at ht
         have he : exp D * exp (-D) = 1 := by rw [← exp_add]; simp
-        exact (mul_le_mul_iff_right₀ (exp_pos (-D))).mp (by simpa only [mul_comm (exp (-D)) _, he] using ht)
+        exact (mul_le_mul_iff_right₀ (exp_pos (-D))).mp
+          (by simpa only [mul_comm (exp (-D)) _, he] using ht)
       have hEl : E ≤ exp (1 / 2) * D := by
         have hpoint (i : (Fin d → Bool)) : |exp (X i) - 1| ≤ exp (1 / 2) * |X i| := by
           have ht := Convex.norm_image_sub_le_of_norm_hasDerivWithin_le
@@ -883,31 +886,38 @@ theorem result :
             (convex_Iic _) (x := 0) (by norm_num) (y := X i) (hX i)
           simpa using ht
         calc
-          E ≤ ∑ i, q i * (exp (1 / 2) * |X i|) :=
+          E ≤ ∑ i, (Q d M) i * (exp (1 / 2) * |X i|) :=
             sum_le_sum (fun i _ => mul_le_mul_of_nonneg_left (hpoint i) (hq0 i))
-          _ = exp (1 / 2) * ∑ i, q i * |X i| := by rw [mul_sum]; apply sum_congr rfl; intro i _; ring
+          _ = exp (1 / 2) * ∑ i, Q d M i * |X i| := by
+            rw [mul_sum]
+            apply sum_congr rfl
+            intro i _
+            ring
           _ ≤ exp (1 / 2) * D := mul_le_mul_of_nonneg_left hD (exp_pos _).le
       have hce : |c - 1| ≤ E := by
-        have he : c - 1 = ∑ i, q i * (exp (X i) - 1) := by
+        have he : c - 1 = ∑ i, (Q d M) i * (exp (X i) - 1) := by
           simp only [mul_sub, mul_one, sum_sub_distrib, hqn]; rfl
         rw [he]
         refine (abs_sum_le_sum_abs _ _).trans_eq ?_
         simp only [abs_mul, abs_of_nonneg (hq0 _)]
         rfl
-      have hsum : (∑ i, |r i - q i|) ≤ 2 * K * E := by
+      have hsum : (∑ i, |(R d M) i - (Q d M) i|) ≤ 2 * K * E := by
         calc
-          _ = K * ∑ i, q i * |exp (X i) - c| := by
+          _ = K * ∑ i, (Q d M) i * |exp (X i) - c| := by
             rw [mul_sum]
             apply sum_congr rfl
             intro i _
-            have he : r i - q i = K * q i * (exp (X i) - c) := by
+            have he : (R d M) i - (Q d M) i = K * (Q d M) i * (exp (X i) - c) := by
               rw [htilt]
               calc
-                K * (q i * exp (X i)) - q i = K * (q i * exp (X i)) - (K * c) * q i := by rw [hKc]; ring
+                K * (Q d M i * exp (X i)) - Q d M i =
+                    K * (Q d M i * exp (X i)) - (K * c) * Q d M i := by
+                  rw [hKc]
+                  ring
                 _ = _ := by ring
             rw [he, abs_mul, abs_mul, abs_of_pos hK, abs_of_nonneg (hq0 i)]
             ring
-          _ ≤ K * ∑ i, q i * (|exp (X i) - 1| + |c - 1|) := by
+          _ ≤ K * ∑ i, (Q d M) i * (|exp (X i) - 1| + |c - 1|) := by
             apply mul_le_mul_of_nonneg_left _ hK.le
             apply sum_le_sum
             intro i _
@@ -920,7 +930,7 @@ theorem result :
       have heD : K * E ≤ 3 * D := by
         calc
           K * E ≤ exp D * (exp (1 / 2) * D) := mul_le_mul hKb hEl hE0 (exp_pos _).le
-          _ = exp (D + 1 / 2) * D := by rw [exp_add]; ring
+          _ = exp (D + 1 / 2) * D := by rw [exp_add D (1 / 2)]; ring
           _ ≤ exp 1 * D := mul_le_mul_of_nonneg_right (exp_le_exp.mpr (by linarith)) hD0
           _ ≤ 3 * D := mul_le_mul_of_nonneg_right exp_one_lt_three.le hD0
       linarith
@@ -932,16 +942,15 @@ theorem result :
     have hM0 : (0 : ℝ) < M := by exact_mod_cast (by omega : 0 < M)
     have hden : (0 : ℝ) < 2 * M + 1 := by positivity
     have hs : (-1 : ℝ) ^ M = (-1 : ℝ) ^ (M % 2) := neg_one_pow_eq_pow_mod_two (R := ℝ) M
-    have hsum : (∑ i : Fin 1, (ξ i).toNat) = (ξ 0).toNat := by simp
     cases hb : ξ 0
     · by_cases he : M % 2 = 0
       · simp [R, Q, hb, hs, he]
         field_simp
         ring
-      · simp [R, Q, hb, he, Ne.symm he]
+      · simp [R, Q, hb, Ne.symm he]
     · by_cases he : M % 2 = 1
       · simp [R, Q, hb, hs, he, hM]
         field_simp
         ring
-      · simp [R, Q, hb, he, Ne.symm he]
+      · simp [R, Q, hb, Ne.symm he]
 end D5.S3.TotalVariation.ParityCompositionKernel

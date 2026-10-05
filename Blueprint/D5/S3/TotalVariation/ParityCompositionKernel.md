@@ -88,6 +88,18 @@ $$\forall d,M \in \mathbb{N}, ((2 \leq d) \land (3 \cdot d \leq M)) \Rightarrow 
 
 The independent Bernoulli vector has generating function (1-nu+nu z)^d. Its value at z=-1 gives the parity event probability; differentiating twice at z=1 gives the centered second moment d nu (1-nu). For M >= 3d, eta <= 1/7 and p_e >= 1/3. Restricting the nonnegative squared deviation to the parity event and dividing by p_e bounds its conditional expectation by 3d/4. Weighted Cauchy-Schwarz then gives the absolute deviation bound sqrt(3d)/2. Both moments are centered at m=d nu.
 
+**Theorem 1.8 (Finite total variation bound).**
+
+$$(\forall d,M \in \mathbb{N}, ((2 \leq d) \land (3 \cdot d \leq M)) \Rightarrow \frac{1}{2} \cdot \sum_{\xi} |\operatorname{R}\left(d, M, \xi\right) - \operatorname{Q}\left(d, M, \xi\right)| \leq \operatorname{min}\left(1, 5 \cdot (\frac{\operatorname{sqrt}\left(d\right)}{M} + \frac{d \cdot \left(d - 1\right)}{M^{2}})\right)) \land (\forall M \in \mathbb{N}, 1 \leq M \Rightarrow \operatorname{R}\left(1, M\right) = \operatorname{Q}\left(1, M\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParityCompositionKernel.result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all natural d >= 2 and M >= 3d, one half of the sum over every Boolean vector of the absolute mass difference is at most min(1,5(sqrt(d)/M+d(d-1)/M^2)). For d=1 and every M>=1 the two mass functions coincide. On the prescribed parity support, the binomial product expansion makes the density ratio proportional to exp(logProfile(h)). Centering at m gives X=logProfile(h)-logProfile(m). The interval estimate and the conditional moments bound its absolute expectation by D=sqrt(3d)/(2(M-d))+3d(d-1)/(4(M-d/2)(M-d)), with D<=1/2. Finite Jensen gives the normalization bound exp(-D), and the derivative bound for exp on (-infinity,1/2] bounds the mean absolute exponential error. The normalized total variation is at most exp(1/2+D)D<=3D, which is bounded by the displayed expression. The unit bound follows from normalization and nonnegativity of both finite mass functions.
+
 ## References
 
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.Q`
@@ -97,3 +109,5 @@ The independent Bernoulli vector has generating function (1-nu+nu z)^d. Its valu
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.profile_endpoint`
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.profile_estimate`
 - Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.reference_moments`
+- Truth anchor: `D5/S3/TotalVariation/ParityCompositionKernel.result`
+- Dependency: [D5/S3/TotalVariation/Metric](Metric.md)
