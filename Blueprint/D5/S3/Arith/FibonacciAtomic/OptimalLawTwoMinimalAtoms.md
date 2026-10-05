@@ -18,11 +18,11 @@ Let p be a strictly positive normalized real law on at least two labels. Its dya
 
 Assume a unique minimum label k. The termination theorem places every larger atom on a dyadic grid. A common denominator gives positive integer numerators summing to a power of two; the least common denominator has positive depth, and the odd numerators form a nonempty even-cardinality set.
 
-If the minimum numerator is odd, any other odd numerator is at least two larger, so moving one deepest dyadic leaf from that atom to the minimum raises the minimum mass while preserving the dyadic grid. If the minimum numerator is even and an odd numerator is at least three larger, the same one-leaf transfer applies.
+If the minimum numerator is odd, any other odd numerator is at least two larger, so moving one deepest dyadic leaf from that atom to the minimum raises the minimum mass while preserving the dyadic grid. If the minimum numerator is even and an odd numerator is at least three larger, the same one-leaf transfer applies. The singleton receiver law has zero dyadic residual at every depth, so the redistribution inequality preserves total mass and cannot increase cost.
 
 In the remaining case there are two odd atoms with numerator exactly one above the even minimum. Moving one leaf from each to the minimum keeps the minimum mass fixed. All shallower floor counts weakly increase, with a strict increase at the preceding depth, while every deeper remainder is already zero. The resulting positive normalized law therefore has strictly smaller cost but the same optimal lower bound, a contradiction.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/OptimalLawTwoMinimalAtoms.result`
-- Dependency: [D5/S3/Arith/FibonacciAtomic/OptimalLawNearestStrictCeiling](OptimalLawNearestStrictCeiling.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/OptimalLawLargerAtomsTerminate](OptimalLawLargerAtomsTerminate.md)
