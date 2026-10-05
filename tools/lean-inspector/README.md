@@ -51,10 +51,10 @@ the original definitional correspondence; propositional equality, equality
 transport and computed tokens do not supply literal matching evidence. Unknown,
 absent and unsupported constructors keep arbitrary actual indices representable.
 
-The judge discovers typed declarations in compiler inventories. It decodes
+The production judge discovers typed declarations in compiler inventories. It decodes
 constructor trees and constant references, independently of source syntax,
 modifiers, suffixes, options, notation or metaprogramming commands. A value
-requiring computation fails by name as `contract.cannot_decode` or the
+requiring computation fails by name as `raw.contract.cannot_decode` or the
 field-specific `contract.literal` diagnostic. Missing compiled declarations and
 unknown constructor layouts fail without a fallback.
 
@@ -84,26 +84,26 @@ Typed expected occurrences come only from RootCatalog. An entry of type
 Its decoder and snapshot output are absent; there is no independent-expected
 fallback.
 
-The production report uses Contract.Discovery/Decoder as its sole input path.
-Typed discovery enforces the
-source command and reference rules above. Catalogs and seals from D5 mirrors
+The production report reads the compiler inventory and the compiled contract
+values directly. Typed discovery uses the contract type heads and compiler
+owner facts; source commands, declaration modifiers, suffixes, notation and
+other source spelling do not participate. Catalogs and seals from D5 mirrors
 use `Reg/Catalogs/D5/<D5 relative module path>/RootCatalog.lean` or
-`SealedCatalog.lean`. Mirrors retain their registrations at their original paths;
-catalogs import those leaves, and leaves do not import catalogs. Catalog root IDs
-use the catalog module; registrationModuleName retains the leaf owner.
-Catalogs and seals are optional analysis groups: registration assessment does
-not require catalog membership. Missing seals remain visible as absent report
-artifacts; migration correspondence is checked separately.
+`SealedCatalog.lean`; mirrors retain their registrations at their original
+paths, catalogs import those leaves, and leaves do not import catalogs. Catalog
+root IDs use the catalog module and `registrationModuleName` retains the leaf
+owner. Catalogs and seals are optional analysis groups: report evaluation does
+not require catalog membership, and missing seals remain named absent inputs.
 
 The compiled interface inventory admits only source types, kernel constructors,
 recorded projections and the pinned compiler's explicitly listed recursor,
 noConfusion, constructor and sizeOf companions. Unknown compiler products
 receive `contract.interface:compiled_non_type`.
 
-Reg sources use the fixed typed declaration grammar. Catalogs use RootCatalog
-entries and seals use Seal entries; local notation is not admitted.
-Mathematical attributes obey the finite attribute grammar above.
-Typed discovery has no evaluation fallback.
+Reg sources compile to the typed contract heads. Catalogs use RootCatalog
+entries and seals use Seal entries. The report accepts constructor trees and
+safe constant references from the compiled values; values requiring evaluation
+fail by name and have no fallback.
 
 [CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report`
 调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的
@@ -179,7 +179,7 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 兼容的生成器重构、性能优化保持版本不变：在报告输入、配置及版本均未变时，仅 producer 源码或可执行文件字节变化不会强制重提取有效模块报告；进入原生生产或选中 inspector 程序目标时，当前 inspector 仍须编译成功。改变报告含义或接受语义时须增加该版本，即使 JSON schema 完全相同。版本是明确的兼容承诺，不是机器自动判定源码编辑是否兼容。
 
 [原生依赖](lakefile.lean)按以下输入决定报告工作：
-逐模块工件 trace 只取模块及 utility claim 的编译闭包、utility 输入与仅 H 适用的语义版本；固定 judge 驱动和 inspector 程序仅等待构建成功，不额外混入其 trace 或源码绑定。
+逐模块工件 trace 只取模块及 utility claim 的编译闭包、utility 输入与仅 H 适用的语义版本；inspector 程序仅等待构建成功，不额外混入其 trace 或源码绑定。
 enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessment 消费编译信息，导入源码的纯注释编辑不改变它们。
 
 | 输入变化 | 失效范围 |
@@ -189,11 +189,11 @@ enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessm
 | 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
 | 登记的 `config_inputs` 文件字节变化 | 通过 Lake 影响实际编译依赖；整体配置身份只影响聚合。 |
 | 登记的模块成员集合变化 | 汇总按当前集合重建，新成员执行所需报告工作，保留仍有效的模块工件。 |
-| 固定 Registry 驱动及其传递编译工件变化，语义版本不变 | 仅自身或 utility claim 的编译闭包实际导入该模块的报告失效；其他报告复用，驱动仍须构建成功。 |
+| Inspector 编译工件变化，语义版本不变 | 仅实际依赖其报告输入的工作失效；其他报告复用，Inspector 仍须构建成功。 |
 
 `information_templates` 分区携带 occurrence inventory 和 BindingRecord，
 其闭合字段为 `schema_version`、`inventory`、`registered`、`records`，不写全局版本；复用验证检查结构，不重算当前源码摘要。
-C# 消费者另行检查完整证据语义、sidecar 归属及 debt 约束。固定驱动属于 judge，
+C# 消费者检查可解码证据的结构、sidecar 归属及 debt 约束；未决记录保留具名诊断。
 没有模板模块的隐式导入。独立编码测试使用显式 `--statements-only`，其结果不含
 binding evidence，不能通过声明模板的严格消费者。
 `LeanInformationAuditRegTests` 的生产证据检查要求实际导出的 wire 等于对应 `Compiled*Wire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；当前 wire 只在实际内容改变时同步更新。
@@ -257,28 +257,20 @@ Lean、audit、工具构建和发布失败也返回非零。阶段失败输出�
 `make lean-report` 入口重试。
 
 The interface consists of typed contract structures, inductives and sort-valued index families. Every Reg
-entry has a contract type and mathematical fields checked by the Reg compiler. The report reconstructs structural
-relations and E1–E8 assessments and consumes the compiled seal obligations. Runtime DTOs live in Impl; no recorder
-or registration command runs during Reg compilation. Implementation edits rebuild
-no Reg modules; report reuse depends on Lake inputs and the manual semantic
-version applied only to typed input owners. Interface edits atomically migrate every
-use, remove the old path and bump that version. Historical compatibility is not supported. Existing
-representation upgrades preserving mathematical evidence and registration
-semantics are outside the registration pause.
+entry has a contract type and mathematical fields checked by the Reg compiler. The report reads those compiled
+fields and emits structural input evidence; it does not construct or recheck proofs. Runtime DTOs live in Impl;
+no recorder or registration command runs during Reg compilation. Implementation edits rebuild no Reg modules;
+report reuse depends on Lake inputs and the single semantic version applied only to typed input owners. Interface
+edits atomically migrate every use, remove the old path and bump that version. Historical compatibility is not
+supported. Existing representation upgrades preserving mathematical evidence and registration semantics are
+outside the registration pause.
 
-The report driver calls the Inspector once per completed target. The consumer
-serializes that target before the driver releases its Environment and proof
-objects. Cross-target collision checks retain only names and digest strings;
-there is no array of target environments or constant bodies.
+The production reader uses `RawArtifacts.Store` for every target. It reads compiler module parts and imported
+constant tables without creating an Environment, initializing extensions, invoking elaboration, Meta, the type
+checker or the kernel. Contract inputs are decoded from constructor trees and safe constant references in those
+parts. A value that requires evaluation, a missing part, an unknown format or a read failure is a named
+`raw.contract.cannot_decode` or raw-artifact failure; there is no fallback reader. Utility relationships retain
+their bounded computation over compiled terms. Report reuse still comes only from the Lake trace and the single
+semantic version.
 
-The production reader is not yet environment-free. Targets without their own
-typed contract inputs use `RawArtifacts.Store`, which reads compiler module
-parts without initializing extensions. Its utility relationship check still
-performs term reduction and type conversion. Typed input owners use
-`importModules`, extension initialization and the MetaM report driver;
-companion publication still infers types and adds declarations. Seal consumption
-still reduces row functions and computes primitive statistics. These operations
-do not meet the compiled-only reporting boundary. Reuse of an existing report
-does not exercise or verify its regeneration path.
-
-`STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和固定驱动完成的逐目标 `assess`（包括空 assessment）；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。
+`STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和逐模块的编译输入处理；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。
