@@ -48,6 +48,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/CPFilterTransposeRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/marquez-gonzalez-2026-cp-filter-transpose-refutation` (refuted) by `D5/S3/Quantum/QuantumChannels/CPFilterTransposeRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"marquez-gonzalez-2026-cp-filter-transpose-refutation","declaration_gid":"D5/S3/Quantum/QuantumChannels/CPFilterTransposeRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Samuel A. Márquez González (2026). *Feasibility Ordering of Entanglement-Source Placement for Qubit Channels*. DOI: [10.48550/arXiv.2609.18803](https://doi.org/10.48550/arXiv.2609.18803). URL: <https://arxiv.org/abs/2609.18803v1>.
