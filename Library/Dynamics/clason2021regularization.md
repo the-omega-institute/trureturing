@@ -715,3 +715,100 @@ If finite coefficient-functional representations are required,
 reuse the repository's
 [finite Fourier-window supplier](../../Blueprint/D5/S3/Quantum/Analysis/FourierWindowFiniteRank.md).
 The infinite principal synthesis remains present.
+
+
+## Pay the finite remainder with the existing common-source certificate
+
+The new kernel columns in (J4) can be used by the existing
+[actual primal/dual residual certificate](../../docs/reports/theta-mixed-matrix/theta-common-residual-bounds.md),
+conditionally on acquiring their simultaneous residual Gram.
+This reuses (G4)'s metric inverse and the common coefficient estimate;
+it is not a new generic Gram or projection theorem.
+
+Write $\mathcal B=UBU^{-1}$ for the negative-edge metric on the
+centered physical space, with $b_0I\le\mathcal B\le I/2$.
+Retain the same $\mathcal R$ and $N_c$. Normalize the cells by
+
+$$
+e_i=\sqrt{\Delta_i}r_i,
+\qquad z_i(p)=\Delta_i^{-1/2}\int_{I_i}(W_\Lambda p)(R)dR,
+\qquad D_{\Lambda,T,\mathcal I}p=\sum_i e_i z_i(p).
+$$
+
+The normalized cell indicators are orthonormal in coefficient
+$L^2$, so $\|z(p)\|_{\ell^2}\le Q_\Lambda\|p\|_2$.
+There is no dimension factor or independent column optimization.
+For each of these same $e_i$, choose an actual critical
+$\eta_i\in N_c$ and an exact dual $\omega_i\in N_c^\perp$, and put
+
+$$
+b_i=\mathcal B(e_i-\eta_i)-\omega_i.
+$$
+
+A positive Hermitian upper Gram $G_b$ must certify
+$\|\sum_i z_i b_i\|_2^2\le z^*G_bz$ for all complex coefficients.
+Individual samples and the previously acquired quadratic-input rows
+do not certify this different family. Each dual needs a legitimate
+orthogonality witness; no completeness of a real-zero family or RH
+is assumed.
+
+The existing inverse $G_N=P_{N_c}\mathcal B|_{N_c}$ satisfies
+$G_N(\mathcal R e_i-\eta_i)=P_{N_c}b_i$ and
+$\|G_N^{-1}\|\le b_0^{-1}$. Retain the infinite principal map and set
+
+$$
+\begin{aligned}
+\mathcal F_{\Lambda,T,\mathcal I}p
+ &=\mathcal L_\Lambda p+\sum_i\eta_i z_i(p),\\
+\sup_{\substack{p\in\mathcal E_\Lambda\\\|p\|_2=1}}
+\|\mathcal Rp-\mathcal F_{\Lambda,T,\mathcal I}p\|_2
+ &\le (2b_0)^{-1/2}\delta_\Lambda
+       +\frac{Q_\Lambda}{b_0}\sqrt{\|G_b\|},
+\end{aligned} \tag{J5}
+$$
+
+Here $\delta_\Lambda$ is any valid (J4) upper allowance.
+Use the existing $\|\mathcal R\|\le(2b_0)^{-1/2}$ on
+$K_\Lambda-D_{\Lambda,T,\mathcal I}$, then the same metric inverse
+on its finite columns. The difference is critical, so both original
+edge errors are bounded by the (J5) right side divided by $\sqrt2$.
+They use one source family, coefficient map and simultaneous Gram.
+Only the compact residual is finitely acquired.
+
+For a growing band, sufficient conditions for the explicit (J5)
+upper allowance to vanish are that $\delta_\Lambda\to0$ and
+$Q_\Lambda\sqrt{\|G_b\|}\to0$ on the required common sequence.
+These are not asserted necessary conditions for actual approximation. No numerical $G_b$, selected $\eta_i,\omega_i$,
+effective regularization rate or finite all-input algorithm is
+supplied. Equation (J5) does not say that an arbitrary finite dual
+family can attain those residuals. The old quadratic-input experiment
+is not rerun, and its values are not reassigned to these columns.
+
+Under the inherited mixed-nullity premise,
+$p-K_\Lambda p=\mathcal L_\Lambda p$ is critical, so the exact
+original half-slack
+$\mathfrak q(v)=D(U^{-1}v)-\|Q_0v\|_2^2/2$ satisfies
+$\mathfrak q(p)=\mathfrak q(K_\Lambda p)$.
+The usual bounded-form estimate gives, for $p\in\mathcal E_\Lambda$,
+
+$$
+|\mathfrak q(p)-\mathfrak q(D_{\Lambda,T,\mathcal I}p)|
+\le\delta_\Lambda
+ (2\|K_\Lambda\|_{\mathcal E_\Lambda\to\mathcal F_c}
+   +\delta_\Lambda)\|p\|_2^2.
+$$
+
+This is an error bound, not positivity: a finite-rank approximation
+has an infinite-dimensional low kernel, and its absolute error alone
+cannot certify the entire low-space sign.
+
+Equations (J1)–(J5) supply original-form residual, tail, mesh and
+conditional acquisition interfaces. They give no small-eigenvalue
+mass bound for the actual $\mathcal B^{1/2}UFF^*U^{-1}
+\mathcal B^{1/2}$, hence no effective rate for the old
+$(\mathcal R-\mathcal R_\varepsilon)K_\Lambda$.
+Actual residual certification, source and archimedean costs,
+low and complementary-low signs on one common cofinal sequence,
+the full half-bound, Robin, RH and Lean certification remain
+unresolved. Unevaluated series constants and paper reviews do not
+supply numerical certificates or a runtime guarantee.
