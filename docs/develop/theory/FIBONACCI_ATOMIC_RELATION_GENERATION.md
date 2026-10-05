@@ -60064,3 +60064,180 @@ $$
 平方满子级数的快衰减与混合素子和的固定符号下界承担不同义务：（393.4）可以移去一个实际分量，而（393.12）要求其余完整分量与混合素分量在同一对象、同一 $k$ 上抵消。按原始 Báez-Duarte 判据及 §392 的稳定运输，剩余目标仍是全部实际有符号系数的临界幂估计；本节没有给出这个估计，也没有从五模式的几何长度守恒推出 Robin 的约数权重界。
 
 ## 追加锚（本行以下为增补区）
+
+## 394. 共因子素切面的共同渐近与实际黄金原子的有限非消去
+
+### 394.1. 互不重复的共因子—素数来源
+
+**定义 394.1（有限共因子面板与实际调和权重）。** 保留 §§385、392–393 的实际 $\varphi=(1+\sqrt5)/2$、$q=\varphi^{-2}$、$\beta_d=\log(1-(-q)^d)$、$e=\mu*\beta$、正整数原子 $\Psi_n$ 与完整 Newton 系数 $c_k^e$。对整数 $D\ge1$，定义
+
+$$
+g_e(D)=\sum_{m=1}^D\frac{e_m}{m},
+\qquad
+\mathcal J_D(k)=\sum_{m=1}^D
+\sum_{\substack{p>D\\p\text{ 为素数}}}
+\frac{e_{mp}}{m^2p^2}(1-(mp)^{-2})^k.
+\tag{394.1}
+$$
+
+这里 $D$ 固定的是实际整数共因子 $m$；$k\ge1$ 是 Newton 指标。令 $\mathcal R_D(k)=c_k^e-\mathcal J_D(k)$，其来源为完整级数中其余全部指标。
+
+**命题 394.2（共同来源的精确分解）。** （394.1）中的不同 $(m,p)$ 对应不同整数指标，且
+
+$$
+e_{mp}=-e_m+\eta_{m,p},
+\qquad
+\eta_{m,p}=\sum_{d\mid m}\mu(m/d)\beta_{dp},
+\qquad
+|\eta_{m,p}|\le\frac{\tau(m)}{1-q}q^p.
+\tag{394.2}
+$$
+
+这些式子保留 $m=1$ 的实际 $e_1=\log(1+q)$。
+
+**证明。** $p>D\ge m$ 给 $p\nmid m$，因而 $mp$ 的约数唯一分成 $d\mid m$ 与 $dp$（$d\mid m$）。对 $d\mid m$，$\mu(mp/d)=-\mu(m/d)$，包括两边同时为零的情形。将两个约数组合直接代入既有 $e=\mu*\beta$，得到（394.2）的身份；这是已有卷积公式的参数应用，不另立一般 Möbius 分解定理。由（385.9）、$d\ge1$、$|\mu|\le1$，得到其尾界。
+
+若 $mp=m'p'$ 且 $m,m'\le D<p,p'$，则 $p\mid m'p'$ 而 $p\nmid m'$，所以 $p=p'$，继而 $m=m'$。全级数由 $B\sum n^{-2}$ 绝对支配，因此可以按这些互不重复的实际指标分成 $\mathcal J_D+\mathcal R_D$。$\square$
+
+### 394.2. 每个实际有限面板的调和权重都不恰好为零
+
+**定理 394.3（实际黄金原子的有限调和非消去）。** 对每个整数 $D\ge1$，
+
+$$
+\boxed{g_e(D)\ne0,\qquad \lim_{D\to\infty}g_e(D)=0.}
+\tag{394.3}
+$$
+
+此外，对每个固定 $r>0$，有 $g_e(D)=O_r((\log D)^{-r})$。此结论不指定有限面板的统一符号，也不提供任何固定正数 $\delta$ 下的 $O(D^{-\delta})$ 估计。
+
+**证明。** 取共同分母 $\ell_D=\operatorname{lcm}(1,\ldots,D)\ge1$，并记正整数与非负整数
+
+$$
+P_D=\prod_{n=1}^D\Psi_n^{\ell_D/n},
+\qquad
+A_D=\sum_{n=1}^D\varphi(n)\frac{\ell_D}{n}.
+\tag{394.4}
+$$
+
+这里 $\varphi(n)$ 为欧拉函数，而无参数的 $\varphi$ 为黄金比。每个 $n\le D$ 都整除 $\ell_D$。实际原子式（385.1）在同一来源上给
+
+$$
+\ell_D g_e(D)
+=\log P_D+\ell_D\log\sqrt5-A_D\log\varphi.
+\tag{394.5}
+$$
+
+假设 $g_e(D)=0$，则正实数的指数化给
+
+$$
+P_D(\sqrt5)^{\ell_D}=\varphi^{A_D}.
+\tag{394.6}
+$$
+
+直接复用已有黄金整环、实嵌入的单射性与单位范数判据：在 $\mathbb Z[\theta]$ 中，$\theta^2=\theta+1$，$\theta$ 为单位，$2\theta-1$ 映为 $\sqrt5$，且其范数为 $-5$。因而（394.6）提升为
+
+$$
+P_D(2\theta-1)^{\ell_D}=\theta^{A_D}.
+\tag{394.7}
+$$
+
+右侧为单位；在交换环中单位的因子仍为单位，非零次幂为单位则基底也是单位。$\ell_D\ge1$ 于是迫使 $2\theta-1$ 为单位，与其整数范数 $-5$ 矛盾。等价地，取两嵌入之积会给 $P_D^2(-5)^{\ell_D}=(-1)^{A_D}$，其绝对值两边分别大于一与等于一。本证明只应用已有单位、共轭及嵌入关系，不重证这些经典代数事实。单位指标的 $\log\sqrt5$ 校正保留在（394.5）中，包括 $D=1$。
+
+趋零性直接使用 §390 的实际零矩与无条件增长界。有限部分求和给
+
+$$
+g_e(D)=\frac{H_D}{D}
++\sum_{m=1}^{D-1}H_m\left(\frac1m-\frac1{m+1}\right)
+=\frac{H_D}{D}
+-\sum_{m=D}^{\infty}H_m\left(\frac1m-\frac1{m+1}\right).
+\tag{394.8}
+$$
+
+最后一式只复用（390.3）的第一条矩；其 $H$ 加权尾绝对收敛。对任意 $r>0$，§390 已有的 $H_m=O_r(m/(\log m)^{r+2})$ 与积分比较给（394.8）为 $O_r((\log D)^{-r})$，从而趋零。$\sum e_m/m$ 本身不被宣称绝对收敛。
+
+作为文献对应，经典 $g_\mu(x)=\sum_{n\le x}\mu(n)/n$ 的增长尺度和卷积方法已见 [Báez-Duarte 原文 §2](../../../Library/Analytic/baezduarte2005mobiusconvolutions.md)。有限卷积直接给 $g_e(D)=\sum_{d\le D}(\beta_d/d)g_\mu(D/d)$；不重新推导经典 RH 判据，不把实际有限非消去归给该文。$\square$
+
+### 394.3. 固定共因子面板的整个素数主项
+
+**定理 394.4（固定面板的同源素数尺度）。** 对每个固定整数 $D\ge1$，
+
+$$
+\boxed{
+\lim_{k\to\infty}\sqrt k\log k\,\mathcal J_D(k)
+=-\sqrt\pi\,g_e(D)\ne0.}
+\tag{394.9}
+$$
+
+因此，对每个固定 $0<\varepsilon<1/4$，该面板的完整有符号子和不是 $O(k^{-3/4+\varepsilon})$。这不是完整 $c_k^e$ 的下界或反例；$\mathcal R_D$ 仍可与它抵消。
+
+**证明。** 在（394.2）中先剥离 $-e_m$。对固定 $m,D$，经典素数定理与部分求和给这个平滑素数核的渐近
+
+$$
+\sum_{\substack{p>D\\p\text{ 为素数}}}
+\frac1{m^2p^2}(1-(mp)^{-2})^k
+\sim\frac{\sqrt\pi}{m\sqrt k\log k}.
+\tag{394.10}
+$$
+
+这里只使用无条件素数定理，不要求 RH 误差。为明确规范化，置 $x=\sqrt k/m$、$p=xt$。在任意固定紧区间 $0<u\le t\le v<\infty$，经典 PNT 给规范化素数计数测度 $(\log x/x)\,d\pi(xt)$ 弱收敛到 $dt$，而 $k$ 倍 Newton 核一致趋于 $t^{-2}e^{-t^{-2}}$。因为 $\log x\sim(\log k)/2$，同一缩放给
+
+$$
+\frac{2}{m}\int_0^{\infty}t^{-2}e^{-t^{-2}}dt
+=\frac{\sqrt\pi}{m}.
+\tag{394.11}
+$$
+
+半高斯积分是经典积分，不作为新增理论。高尾 $p>vx$ 由已有显式素数计数上界和部分求和，在 $\sqrt k\log k$ 归一化后为 $O_m(v^{-1})$。低尾先将 $p\le\sqrt x$ 以核 $e^{-x}$ 支配；其余 $\sqrt x<p<ux$ 分成二倍区间，用 $\log p\ge(\log x)/2$ 的同一计数上界及 $(1-z)^k\le e^{-kz}$，得到归一化尾至多常数倍
+
+$$
+\sum_{j\ge0}\frac{2^j}{u}\exp\left(-\frac{4^j}{u^2}\right),
+\tag{394.12}
+$$
+
+它随 $u\downarrow0$ 趋零。固定低素数的删去也被 Newton 核支付。故紧区间极限可提升到（394.10）；上述 PNT 与显式计数的经典来源直接复用 [Rosser–Schoenfeld](../../../Library/Arith/rosser1962approximate.md) 的素数分布估计。
+
+实际 $\eta_{m,p}$ 误差按同一个 $mp$ 核满足
+
+$$
+\begin{aligned}
+\sum_{p>D}\frac{|\eta_{m,p}|}{m^2p^2}(1-(mp)^{-2})^k
+&\le\frac{\tau(m)}{(1-q)m^2}
+\sum_{p\ge2}\frac1{p^2}
+\exp\left[-ap-\frac{k}{m^2p^2}\right]\\
+&\le\frac{\tau(m)\zeta(2)}{(1-q)m^2}
+\exp\left[-3\left(\frac{a^2k}{4m^2}\right)^{1/3}\right],
+\end{aligned}
+\tag{394.13}
+$$
+
+其中 $a=\log(1/q)>0$，最后只应用经典加权 AM–GM，权重 $2/3,1/3$，变量为 $ap/2$ 与 $k/(m^2p^2)$。这份误差在每个固定 $m$ 下越过所有幂尺度。对有限个 $m\le D$ 使用（394.10）与（394.13），便得到 $-\sqrt\pi\sum_{m\le D}e_m/m$，再用（394.3）证明（394.9）。该推导没有对无界 $m$ 交换极限。$\square$
+
+### 394.4. 移动分辨率与尚未支付的完整贡献
+
+**命题 394.5（固定 Newton 指标下，移动面板趋零）。** 对每个固定 $k\ge1$，
+
+$$
+|\mathcal J_D(k)|\le B\sum_{n>D}\frac1{n^2}\le\frac BD,
+\qquad
+\lim_{D\to\infty}\mathcal J_D(k)=0,
+\qquad
+\lim_{D\to\infty}\mathcal R_D(k)=c_k^e.
+\tag{394.14}
+$$
+
+因而对每个 $0<\varepsilon<1/4$，
+
+$$
+\lim_{D\to\infty}\limsup_{k\to\infty}
+k^{3/4-\varepsilon}|\mathcal J_D(k)|=+\infty,
+\qquad
+\limsup_{k\to\infty}\lim_{D\to\infty}
+k^{3/4-\varepsilon}|\mathcal J_D(k)|=0.
+\tag{394.15}
+$$
+
+**证明。** 每个面板指标都有 $n=mp>D$，且互不重复，故 §392 的实际 $|e_n|\le B$ 和正 Newton 核给（394.14）。整数逆平方尾的积分比较给 $\sum_{n>D}n^{-2}\le1/D$。另一方面，对每个固定 $D$，（394.9）的极限非零，故 $k^{3/4-\varepsilon}|\mathcal J_D(k)|\to\infty$；先取 $D$ 极限时（394.14）给零。这证明两个不同量词顺序的（394.15）。$\square$
+
+固定共因子面板内部确实发生符号相加，但实际黄金原子阻止它恰好消去整个素数尺度的主项。无限调和权重趋零是已有整体矩的结果；它没有给移动 $D=D(k)$ 的统一素数核误差，也没有控制同一来源的 $\mathcal R_{D(k)}(k)$。要达到完整临界估计，仍需同时支付增长的共因子范围、素数尺度变化与其余来源，而不是仅令 $g_e(D)$ 趋零，或把（394.15）两个量词顺序交换。这里不把任何有限面板的符号障碍当作 RH、Robin 或完整有符号系数的反例。
+
+## 追加锚（本行以下为增补区）
