@@ -333,3 +333,18 @@ reuses the existing continuous projection on saved unprojected rows,
 then calls the same cardinal integration and exact-frame code. Its
 source/kernel errors remain joint; the smaller error allowance does not
 establish all-direction gain, a new global sign or cofinal positivity.
+
+The [vanishing exterior reserve](vanishing-exterior-reserve.md) applies
+classical Fourier analytic uniqueness to the original theta weight and
+a fixed nonzero sharp-high residual. Deleting the positive reserve makes
+the simple multiplier allowance infinite; this fixed-source obstruction
+does not decide the actual constrained inverse or a moving cofinal family.
+The existing unprojected common dual-source construction is reused, with
+its growing source budgets and the actual low signs still unpaid.
+
+The [critical-zero source-range check](critical-prime-source-range.md)
+uses the full prime-power action to exclude a blanket exact factorization
+of every discarded low source as $Q(sf+a v_0)$, $f\in L^2$, after any
+finite low removal. This conditional paper obstruction concerns that
+stronger source requirement; positive-reserve approximate estimates and
+the actual cofinal form signs remain unresolved.
