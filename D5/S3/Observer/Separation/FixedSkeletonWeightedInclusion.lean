@@ -6,12 +6,14 @@
    utility: nonnested common-suffix replay
    digest: Suffix replay across nonnested cuts. -/
 
+import Mathlib.Analysis.Convex.Extreme
 import Mathlib.Analysis.Convex.StdSimplex
 import Mathlib.Analysis.LocallyConvex.Separation
 import Mathlib.Logic.Function.Basic
 import Mathlib.Tactic
 
 set_option autoImplicit false
+set_option maxHeartbeats 1200000
 
 namespace D5.S3.Observer.Separation.FixedSkeletonWeightedInclusion
 
@@ -529,5 +531,64 @@ theorem row_image_real_duality {X Y Z : Type*} [Fintype X] [Fintype Z] [Nonempty
   intro v hv hvl
   rw [heq]
   exact hweak v hv hvl
+
+open Classical in
+/-- Every real direction annihilated by the original active normals at an extreme point vanishes. -/
+theorem active_constraint_kernel_zero {I J : Type*} [Fintype I] [Fintype J]
+    (a : J → (I → ℝ) →ₗ[ℝ] ℝ) (b : J → ℝ) (v : I → ℝ)
+    (hv : v ∈ Set.extremePoints ℝ {u : I → ℝ | ∀ j, a j u ≤ b j})
+    (d : I → ℝ) (hd : ∀ j, a j v = b j → a j d = 0) : d = 0 := by
+  classical
+  let δ : J → ℝ := fun j => if a j v = b j then 1 else
+    (b j - a j v) / (|a j d| + 1)
+  have hδ : ∀ j, 0 < δ j := by
+    intro j
+    dsimp [δ]
+    split_ifs with h
+    · exact zero_lt_one
+    · exact div_pos (sub_pos.mpr (lt_of_le_of_ne (hv.1 j) h)) (by positivity)
+  let S : Finset ℝ := insert 1 (Finset.univ.image δ)
+  have hS : S.Nonempty := Finset.insert_nonempty _ _
+  let ε := S.min' hS
+  have hε : 0 < ε := by
+    have ht : ε ∈ S := Finset.min'_mem S hS
+    rcases Finset.mem_insert.mp ht with ht | ht
+    · rw [ht]; exact zero_lt_one
+    · obtain ⟨j,_,hj⟩ := Finset.mem_image.mp ht
+      rw [← hj]; exact hδ j
+  have hεle : ∀ j, ε ≤ δ j := fun j => Finset.min'_le S _
+    (Finset.mem_insert_of_mem (Finset.mem_image.mpr ⟨j,Finset.mem_univ _,rfl⟩))
+  have hfeas : ∀ t : ℝ, |t| ≤ ε → ∀ j, a j (v + t • d) ≤ b j := by
+    intro t ht j
+    rw [map_add,map_smul]
+    change a j v + t * a j d ≤ b j
+    by_cases hj : a j v = b j
+    · rw [hd j hj, mul_zero, add_zero, hj]
+    · have hs : ε * (|a j d| + 1) ≤ b j - a j v := by
+        apply (le_div_iff₀ (by positivity : 0 < |a j d| + 1)).mp
+        simpa [δ,hj] using hεle j
+      have hab : |t * a j d| ≤ ε * |a j d| := by
+        rw [abs_mul]
+        exact mul_le_mul_of_nonneg_right ht (abs_nonneg _)
+      have hu := le_abs_self (t * a j d)
+      have ha := abs_nonneg (a j d)
+      nlinarith
+  have hp := hfeas ε (by rw [abs_of_pos hε])
+  have hm := hfeas (-ε) (by rw [abs_neg,abs_of_pos hε])
+  have hmid : v ∈ openSegment ℝ (v + ε • d) (v + (-ε) • d) := by
+    refine ⟨(1/2 : ℝ),(1/2 : ℝ),by norm_num,by norm_num,by norm_num,?_⟩
+    ext i
+    simp only [Pi.add_apply,Pi.smul_apply,smul_eq_mul]
+    ring
+  have he := hv.2 hp hm hmid
+  apply funext
+  intro i
+  have hi := congrFun he i
+  simp only [Pi.add_apply,Pi.smul_apply,smul_eq_mul] at hi
+  change d i = 0
+  have hz : ε * d i = 0 := by linarith
+  exact (mul_eq_zero.mp hz).resolve_left (ne_of_gt hε)
+
+
 
 end D5.S3.Observer.Separation.FixedSkeletonWeightedInclusion

@@ -136,6 +136,14 @@ internal sealed class FixedSkeletonWeightedInclusionDocument : IScribeDocumentDe
                         + "from one actual relation law remain unproved here. This statement alone "
                         + "does not settle the original weighted inclusion, its minimum of two bounds, "
                         + "its global layer accounting or its Boolean sharpness clauses."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("active-constraint-kernel-zero"),
+                DeclarationHandle.Create("D5/S3/Observer/Separation/FixedSkeletonWeightedInclusion.active_constraint_kernel_zero"),
+                H("Original active normals determine an extreme point"),
+                StatementSource.FromAuthor(ActiveStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For finite coordinate and constraint types I,J, let a_j be real linear functionals, b_j real constants, and K={u: forall j, a_j(u)<=b_j}. Let v be an extreme point of K. Active(v,j) means a_j(v)=b_j. A real direction d vanishes whenever every original active normal evaluates to zero on d. The identifier zero denotes the zero scalar or vector. Inactive slacks provide one positive finite perturbation radius. Both v plus and minus epsilon d remain feasible, and their midpoint is v; extremality forces d=0."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
@@ -180,5 +188,10 @@ internal sealed class FixedSkeletonWeightedInclusionDocument : IScribeDocumentDe
         Grp(Seq(App(V("Q"), V("v")), Implies, Sp,
             App(V("L"), App(Sub(V("S"), V("Z")), V("v")),
                 App(Sub(V("S"), V("Z")), V("w"))))), Dot));
+    private static Formula ActiveStatement() => Disp(Seq(
+        Forall, Sp, V("d"), InMacro, Sp, Seq(V("R"), Caret, Grp(V("I"))), Comma, Sp,
+        Grp(Seq(Forall, Sp, V("j"), Comma, Sp, App(V("Active"), V("v"), V("j")), Implies, Sp,
+            App(Sub(V("a"),V("j")),V("d")), Eq, V("zero"))), Implies, Sp, V("d"), Eq, V("zero"), Dot));
+
 
 }
