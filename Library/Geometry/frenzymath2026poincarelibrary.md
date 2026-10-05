@@ -5570,3 +5570,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 七个具名构造与目标的完整精确临时 Lean 第二轮真实编译通过，host `41330` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-unit-translation-discrete-module.lean` 为 192890 字节，SHA256 `caa349e0ac84eb8a6c62ffa1e485b50a0f22f4e570803a4534b716a77e6ccfc8`。首轮三项原坐标化简与未导入维数名称的错误源码日志完整保留排除；用实际坐标／高度评价与已导入原复数基修复，未弱化结论。仅新增热缓存钉版 `Mathlib.Algebra.Module.ZLattice.Basic`；前述成功分类源码在 45 字节 header 后完整保留，无新依赖构建或版本变更。协作实施与调用方只读复核完成，没有新增 SSHX 共识。
 
 该原平移、作用间隔、坐标连续性及已有离散整数模接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。下一步可把实际离散平移模接回未归一化分类，并处理原尖点和轴管商；一般原流形原度量覆盖、有限体积薄部分解及同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 和官方验收继续未完成。
+
+
+### 原 horoball 上的实际单位缩放等距作用与商投影覆盖性
+
+对同一个原单位缩放、稳定实际无穷远点的等距表示 `ρ` 及任意真实阈值 `T`，定义实际原子空间 `{p : H3 // T < height p.coordinates}`。其度量逐字继承原 H³ 度量；实际原坐标的连续性给出这个 horoball 开放，现有局部紧接口提供实际子空间的局部紧性。没有换用独立模型或供给另一高度函数。
+
+原正向及逆向高度律在单位缩放条件下内部证明原 `ρ(g)` 及其逆元均保持同一个 horoball。由此构造同一个原群的真实受限等距表示，逐元素保留其 subtype 值等于原 `ρ(g)(p)`，乘法和单位评价也内部验证。受限固定点通过实际 subtype 包含拉回原固定点，因此原自由性传递；实际 subtype 包含将紧集送为原 H³ 紧集，同一 `g` 的受限交点送为原交点，原 canonical proper 性质给出受限交点集合有限。最后复用 `orbitQuotientMk_isCoveringMap`，证明这个实际受限 horoball 的轨道商投影是拓扑覆盖映射。无需虚幂零、平移字符、满秩二、有限体积或预给尖点前提。
+
+七个具名构造与目标的完整精确临时 Lean 第二轮真实编译通过，host `33889` exit0，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-unit-horoball-action-covering.lean` 为 198787 字节，SHA256 `87105223e774ae161056af7e107f53f60a45cea669e6a3b39c331fc77233f022`；前述成功单位平移模源码为完整 offset0 字节前缀，无新增 import、依赖构建或版本变更。首轮虽 exit0 但含两项 noop tactic 警告，完整源码日志保留排除；仅删除两项无作用的 `change`，未关闭 linter。协作实施与调用方只读复核完成，没有新增 SSHX 共识。
+
+该实际原子空间、等距表示限制、紧像与 canonical 商覆盖接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据，远端 required CI 验证说明。这里覆盖性是上述实际 horoball 的轨道商投影的拓扑结论；尚未构造其商黎曼度量、体积、到原流形尖点的嵌入或完整 deck 群下的 horoball 分离。一般原流形的原度量覆盖、有限体积薄部分解及同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 和官方验收继续未完成。
