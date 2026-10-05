@@ -225,9 +225,10 @@ n_t\rightharpoonup0. \tag{E2}
 \end{gathered}
 $$
 
-At real $|t|\ge t_c$ the same leading ratio has an
-$e^{5x/2}$ prefactor and exponent $-(\pi/2)\eta_te^{2x}$ with
-$\eta_t\le0$, so $w_t\notin L^2(\nu)$. The bounded centering
+At real $|t|\ge t_c$, use $w_t=w_{|t|}$ and put
+$\eta_{|t|}=2e^{-2|t|}-1\le0$. The same leading ratio has an
+$e^{5x/2}$ prefactor and exponent $-(\pi/2)\eta_{|t|}e^{2x}$,
+so $w_t\notin L^2(\nu)$. The bounded centering
 subtraction cannot cancel it. This is a real translation-integrability
 boundary, not a zero ordinate or an eigenvalue.
 
