@@ -3,10 +3,13 @@
 Python 3.9+, standard library only.  The certificate checks the actual
 Clifford source words in the complete h=4 composition domain, the literal
 targets, the two-call policy, and the binary one-call obstruction.  It does
-not implement a supplier or a repository judge.
+not implement a supplier, controller search, or a repository judge.
+Mixed-history arithmetic and an exact three-valued Read witness check the
+source correspondence used by the paper; Read itself is not binary.
 """
 
 import argparse
+from fractions import Fraction
 import importlib.util
 import itertools
 import json
@@ -152,6 +155,177 @@ def check_all_source_rows(rows, cap):
     return target_responses
 
 
+def window(word):
+    values = []
+    for _ in range(3):
+        values.append(ARITH.leaf_product(word))
+        word = ARITH.rho(word)
+    return tuple(values)
+
+
+def transport_j(value):
+    """TM28's three-step J, in the existing exact Clifford matrices."""
+    a, b, c, d = value
+    coefficient_b = (b - Fraction(4, 5) * c) / 2
+    coefficient_ab = (b + Fraction(4, 5) * c) / 2
+    coefficient_i = (a + d - coefficient_ab) / 2
+    coefficient_a = (a - d - coefficient_b) / 2
+    ab = ARITH.multiply(ARITH.A, ARITH.B)
+    # J(1)=1, J(A)=A+B, J(B)=-B, J(AB)=1-AB.
+    return tuple((coefficient_i + coefficient_ab) * identity
+                 + coefficient_a * alpha
+                 + (coefficient_a - coefficient_b) * beta
+                 - coefficient_ab * alpha_beta
+                 for identity, alpha, beta, alpha_beta
+                 in zip(ARITH.IDENTITY, ARITH.A, ARITH.B, ab))
+
+
+def transport_f(values):
+    return (values[1], values[2], transport_j(values[0]))
+
+
+def window_product(left, right):
+    return tuple(ARITH.multiply(x, y) for x, y in zip(left, right))
+
+
+def mixed_history_evidence():
+    """Replay fixed original-action histories on all six compositions.
+
+    Each step also checks an actual Read.  The finite check supplements,
+    rather than enumerates, the paper's arbitrary-history induction.
+    """
+    coordinates = ((2, 3), (3, 4), (3, 5), (4, 5), (4, 6), (4, 7))
+    unit = (ARITH.IDENTITY,) * 3
+    require(transport_f(unit) == unit, "F does not fix the unit triple")
+    checked_steps = equality_acceptances = rejected_steps = 0
+    response_rows = []
+    for cap in CAPS:
+        histories = (
+            (("right", "a"), ("rho", ""), ("left", "b"),
+             ("rho", ""), ("right", "ba")),
+            (("left", "ba"), ("right", "a"), ("rho", ""),
+             ("left", "a" * cap)),
+            (("rho", ""), ("right", "a" * (cap - 12)),
+             ("left", "b"), ("rho", "")),
+        )
+        for coordinate in coordinates:
+            original = source_word(*coordinate)
+            require(window(original) == unit, "mixed-history source not unit")
+            for history_index, history in enumerate(histories):
+                current, left, right, j = original, unit, unit, 0
+                responses = []
+                for side, context in history:
+                    if side == "rho":
+                        candidate = ARITH.rho(current)
+                        require(window(candidate) == transport_f(window(current)),
+                                "single rho does not follow F")
+                    else:
+                        require(bool(context), "empty context in fixed history")
+                        candidate = (context + current if side == "left"
+                                     else current + context)
+                    accepted = len(candidate) <= cap
+                    responses.append("A" if accepted else "R")
+                    if accepted:
+                        equality_acceptances += len(candidate) == cap
+                        current = candidate
+                        if side == "rho":
+                            left, right, j = (transport_f(left),
+                                              transport_f(right), j + 1)
+                        elif side == "left":
+                            left = window_product(window(context), left)
+                        else:
+                            right = window_product(right, window(context))
+                    else:
+                        rejected_steps += 1
+                    unknown = unit
+                    for _ in range(j):
+                        unknown = transport_f(unknown)
+                    predicted = window_product(window_product(left, unknown), right)
+                    require(window(current) == predicted,
+                            "ordered mixed-history window invariant fails")
+                    require(ARITH.leaf_product(current) == predicted[0],
+                            "actual exact Read differs from window prediction")
+                    checked_steps += 1
+                response_rows.append({
+                    "H": cap, "coordinate": list(coordinate),
+                    "history": history_index, "responses": "".join(responses),
+                })
+    require(equality_acceptances > 0 and rejected_steps > 0,
+            "fixed histories omit equality or rejection")
+    return {
+        "source_compositions": len(coordinates), "caps": list(CAPS),
+        "histories_per_source_and_cap": 3,
+        "steps_and_exact_reads_checked": checked_steps,
+        "equality_acceptances": equality_acceptances,
+        "rejected_steps": rejected_steps,
+        "histories": [[list(action) for action in history]
+                      for history in (
+                          (("right", "a"), ("rho", ""), ("left", "b"),
+                           ("rho", ""), ("right", "ba")),
+                          (("left", "ba"), ("right", "a"), ("rho", ""),
+                           ("left", "a^H")),
+                          (("rho", ""), ("right", "a^(H-12)"),
+                           ("left", "b"), ("rho", "")))],
+        "response_rows": response_rows,
+    }
+
+
+def source_correspondence_witnesses():
+    """Reachable finite witnesses, not successful controller candidates."""
+    original = source_word(2, 3)
+    before = original + "a"
+    after = ARITH.rho(before)
+    require(len(before) <= 16 and len(after) <= 16,
+            "single-rho witness is not a legal accepted history")
+    require(ARITH.leaf_product(before) == ARITH.A
+            and ARITH.leaf_product(after) == ARITH.B,
+            "single-rho witness has wrong exact Read values")
+    require(transport_j(ARITH.A) != ARITH.B,
+            "three-step J was mistaken for single rho")
+
+    context_product = ARITH.leaf_product("ba")
+    merged_read_rows = []
+    read_image = set()
+    for z, w in ((2, 3), (3, 4), (3, 5), (4, 5), (4, 6), (4, 7)):
+        current = source_word(z, w)
+        repetitions = 0
+        expected = ARITH.IDENTITY
+        while len(current) + 2 <= 16:
+            current += "ba"
+            repetitions += 1
+            expected = ARITH.multiply(expected, context_product)
+        # Rejection keeps the actual source; one common Read state follows.
+        value = ARITH.leaf_product(current)
+        require(value == expected, "merged Read is not S^m")
+        read_image.add(value)
+        merged_read_rows.append({
+            "coordinate": [z, w], "target": literal_target_h4(z, w),
+            "accepted_context_repetitions": repetitions,
+            "last_accepted_length": len(current),
+            "first_rejected_candidate_length": len(current) + 2,
+            "exact_read": "S^" + str(repetitions),
+        })
+    require(len(read_image) == 3, "merged Read witness lacks three responses")
+    require([row["accepted_context_repetitions"] for row in merged_read_rows]
+            == [4, 2, 2, 0, 0, 0], "merged Read repetitions changed")
+    return {
+        "single_rho_after_context": {
+            "H": 16, "source_leaf_word": original,
+            "actions": ["right_append_a", "rho"], "responses": "AA",
+            "lengths": [len(original), len(before), len(after)],
+            "exact_reads_after_actions": ["A", "B"], "J_of_A": "A+B",
+        },
+        "merged_read_after_context_loop": {
+            "H": 16, "actual_right_context": "ba",
+            "accept_continuation": "same_context_request",
+            "reject_continuation": "one_common_exact_Read_request",
+            "distinct_reachable_read_responses": 3,
+            "rows": merged_read_rows,
+            "successful_four_target_solver": False,
+        },
+    }
+
+
 def recompute():
     words = all_unit_words()
     rows = source_rows(words)
@@ -213,6 +387,8 @@ def recompute():
             "one_call_response_image_upper_bound": 2,
         },
         "caps": cap_rows,
+        "mixed_history_evidence": mixed_history_evidence(),
+        "source_correspondence_witnesses": source_correspondence_witnesses(),
     }
 
 
