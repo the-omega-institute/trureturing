@@ -812,3 +812,217 @@ low and complementary-low signs on one common cofinal sequence,
 the full half-bound, Robin, RH and Lean certification remain
 unresolved. Unevaluated series constants and paper reviews do not
 supply numerical certificates or a runtime guarantee.
+
+
+## The actual normalized endpoint columns have a complex parameter strip
+
+Retain the original theta, small-window critical space, whole-critical-space
+minimal-domain and mixed-nullity premises, and negative-edge metric from
+(E1)–(E6), (NC1)–(NC6) and (J1)–(J5). The new interface is the actual
+normalized theta column in a complex endpoint parameter; ideal-profile
+analyticity alone does not supply it. This is conditional paper analysis,
+without a numerical constant, Lean certificate or originality claim.
+The theta series, derivative polynomials, analytic identity principle
+and global form comparison (WF2) are reused.
+
+Fix $0<\vartheta_0<\vartheta_1<\pi/4$ and take sufficiently large
+$R_*$ and $R_0$. On $\Re z>R_*$, $|\Im z|<\vartheta_1$, define
+
+$$
+\begin{gathered}
+t(z)=\tfrac12\operatorname{Log}\frac2{1+e^{-2z}},\qquad
+A(z)=\pi e^{-9t(z)/2}e^{5z/2},\\
+d_z=A(z)^{-1}Uw_{t(z)},\qquad
+p_z=G(\cdot-z)+G(-\cdot-z),\qquad
+a_0=\sqrt2\|G\|_2.
+\end{gathered}
+$$
+
+The principal logarithm is legitimate since
+$\Re(1+e^{-2z})>0$. For large $R_*$, $\Re t(z)>0$,
+$|\Im t(z)|<\pi/4$ and
+
+$$
+\Re(2e^{-2t(z)})-1=e^{-2\Re z}\cos(2\Im z)>0.
+$$
+
+Also $\Re(2e^{2t(z)})-1=\Re[4/(1+e^{-2z})]-1$ is uniformly
+positive. Thus $t(z)$ lies in the original domain $\mathcal D$ from
+(E1). No enlargement of that integrability domain or of $N_c$ is used.
+
+The normally convergent original theta series, its spatial derivative
+series and the positive real denominator $\Phi(x)$ make $d_z$
+$H^1$-valued holomorphic. Uniformly on $|\Im z|\le\vartheta_0$,
+
+$$
+\|d_z-p_z\|_{H^1}\le C_{\vartheta_0}e^{-\Re z}. \tag{A1}
+$$
+
+To pay this bound from the actual series, keep the positive-tail factor
+$b(x,t)$ used in (J1). The dominant term is exactly
+$G(x-z)b(x,t(z))$. The series at $x-t(z)$ has a uniformly positive
+exponential real part and gives the same
+$|\ell_\theta-1|+|\ell_\theta'|=O(e^{-2x})$ tail bound.
+The factor $\sqrt{1+e^{-x}}$ remains independent of $z$.
+After $y=x-\Re z$, the error majorants are $e^{-\Re z}$ times
+linear combinations of $e^{-y}G(y-i\Im z)$ and its first spatial
+derivative. Their $L^2$ bounds are uniform because
+$\cos(2\vartheta_0)>0$. The compact-region, centering, wrong-shift
+and wrong-half terms and their first spatial derivatives have order
+$O(e^{-5\Re z/2})$. Reflection pays the other spatial tail.
+These are differentiated original-series estimates, rather than a
+complex extension of a real asymptotic remainder. They hold on every
+fixed closed strip of width less than $\pi/4$, after increasing $R_*$.
+
+The ordinary complex $L^2$ norm is not a holomorphic normalization.
+Use the continuous complex bilinear scalar
+
+$$
+q(z)=\int_{\mathbb R}d_z(x)^2\,dx.
+$$
+
+It is holomorphic and agrees with $\|d_R\|_2^2$ for real $R$,
+because those actual columns are real. The single-profile integral
+$\int G(x-z)^2\,dx$ is holomorphic on $|\Im z|<\pi/4$ and
+constant there by its real translation identity and the identity
+theorem. The ideal cross integrand is
+
+$$
+G(x-z)G(-x-z)=e^{-5z}
+ \exp\{-\pi e^{-2z}\cosh(2x)\}.
+$$
+
+Its integral has modulus at most
+$C_{\vartheta_0}(1+\Re z)e^{-5\Re z}$: use
+$\cos(2\vartheta_0)>0$ and the two-half-line split from (NC1).
+Consequently $\int p_z^2=a_0^2+
+O((1+\Re z)e^{-5\Re z})$, and (A1) with the uniformly bounded
+profile norms gives
+
+$$
+|q(z)-a_0^2|\le C_{\vartheta_0}e^{-\Re z}.
+$$
+
+Apply the same estimate on a slightly larger closed strip still narrower
+than $\pi/4$, and increase $R_*$ so that
+$|q(z)-a_0^2|<a_0^2/2$ throughout the holomorphic domain.
+This disk avoids zero and the negative real axis. Its principal
+holomorphic square root $a(z)$ therefore exists and satisfies
+$a(R)=\|d_R\|_2$ on real $R$. Set
+
+$$
+n_z=d_z/a(z),\qquad E_z=p_z/a_0.
+$$
+
+These columns match the actual $n_R$ and $E_R$ from (J1) and obey
+
+$$
+\|n_z-E_z\|_{H^1}\le C_{\vartheta_0}e^{-\Re z},\qquad
+\sup_{\substack{\Re z>R_*\\|\Im z|\le\vartheta_0}}
+ \|n_z\|_{H^1}<\infty. \tag{A2}
+$$
+
+Membership in $N_c$ follows from the original (E1) domain and survives
+scalar normalization. The continuous embedding (WF2) transports this
+holomorphy and these bounds to the original minimal form
+$\mathcal F_c$; the whole-critical-domain premise is unchanged.
+This constructs an actual zero-free normalization bridge, not an
+assumption that the ordinary norm has an analytic extension.
+
+
+## Apply existing analytic approximation to the actual compact residual
+
+For $x>0$ extend the two separate (J2) kernel formulas by
+
+$$
+k_z^-(x)=G(x-z),\qquad
+k_z^+(x)=-G(-x-z)-a_0(n_z-E_z)(x).
+$$
+
+Even-reflect them and apply $Q_0$ to obtain the centered form columns
+$r_z^-$ and $r_z^+$. Choose a fixed $d>0$ with
+$d<\vartheta_0$ and $R_0-d>R_*$. Each formula is holomorphic
+on the radius-$d$ disks around all its real mesh centers, with a
+uniform $\mathcal F_c$ bound $M_\vartheta$. The left formula uses
+the strip bounds for translated $G$ at arbitrary real center;
+the right uses (A1)–(A2). Even reflection is bounded in $H^1$,
+and (WF2) and $Q_0$ preserve the form bound. The right formula
+extends slightly below $R_0$, and the left formula beyond it.
+The real coefficient integration still splits exactly at $R_0$.
+No analytic gluing at this jump or $H^2$ regularity is assumed.
+
+Partition $[-T,T]$, $T>R_0$, into cells $I_i$ split at $R_0$,
+with lengths at most $d$. On each cell use the Taylor polynomial
+$P_i$ of degrees $0,\ldots,m-1$, $m\ge1$, of the appropriate
+$r_z^\pm$ at its midpoint. Apply the standard Banach-valued
+Cauchy remainder on its radius-$d$ disk: the pointwise form error is
+at most $2M_\vartheta2^{-m}$. This is reuse of the analytic
+approximation theorem on the new actual columns, not a new
+generic interpolation result.
+
+Define
+
+$$
+D^{(m)}_{\Lambda,T,\mathcal I}p
+ =\sum_i\int_{I_i}P_i(R)(W_\Lambda p)(R)\,dR.
+$$
+
+The unchanged tail allowance $d(T)$ from (J3) and the
+Hilbert–Schmidt column estimate give
+
+$$
+\|K_\Lambda-D^{(m)}_{\Lambda,T,\mathcal I}\|_{
+       \mathcal E_\Lambda\to\mathcal F_c}
+\le Q_\Lambda[d(T)+2M_\vartheta\sqrt{2T}\,2^{-m}]. \tag{A3}
+$$
+
+The parameter polynomial approximates only the compact residual;
+the principal $\mathcal L_\Lambda$ retains its infinite synthesis.
+Every cell uses the same actual $W_\Lambda$, not separately
+optimized coefficients.
+
+Reuse the real orthonormal Legendre polynomials $\psi_{i,k}$ on
+each cell, extended by zero to the coefficient line. For $0\le k<m$
+put
+
+$$
+e_{i,k}=\int_{I_i}P_i(R)\psi_{i,k}(R)\,dR,\qquad
+z_{i,k}(p)=\int_{I_i}\psi_{i,k}(R)(W_\Lambda p)(R)\,dR.
+$$
+
+Then $D^{(m)}p=\sum_{i,k}e_{i,k}z_{i,k}(p)$ and Bessel gives
+$\|z(p)\|_{\ell^2}\le Q_\Lambda\|p\|_2$, with no dimension
+factor. All these columns lie in the original centered form domain.
+For this same family, (J5) applies with (A3) as
+$\delta_\Lambda$, provided an actual simultaneous complex residual
+Gram certifies its chosen primal and dual witnesses. Neither the
+old quadratic-input rows nor a separately optimal column choice
+certifies these new residuals.
+
+If $d(T)\le C_d e^{-T}$ above a fixed threshold $T_*>R_0$,
+sufficient parameters for the (A3) upper allowance to be at most
+$\tau>0$ are
+
+$$
+\begin{aligned}
+T&\ge\max\{T_*,\log(2C_dQ_\Lambda/\tau)\},\\
+m&\ge\max\{1,\lceil
+ \log_2(4M_\vartheta Q_\Lambda\sqrt{2T}/\tau)\rceil\}.
+\end{aligned} \tag{A4}
+$$
+
+There exists a partition split at $R_0$ with at most
+$2T/d+2$ cells, hence at most $m(2T/d+2)$ columns.
+The usual Gamma/Stirling growth for (NC3) makes this count polynomial
+in $\Lambda$ and $\log(1/\tau)$ when $0<\tau\le1$ and the
+original constants are fixed and certified. This sufficient
+column-count estimate is not an optimal acquisition-cost bound or
+a runtime guarantee; derivative evaluation, coefficient integrals
+and simultaneous Gram certification still require work.
+
+The constants $C_d,M_\vartheta$, normalization threshold $R_*$
+and Gram are unevaluated. No effective small-window regularization
+rate or finite all-input acquisition of the noncompact principal
+follows. Actual source and archimedean costs, low and complementary-low
+signs on one common original cofinal sequence, the full all-input
+half-bound, Robin, RH and Lean certification remain unresolved.
