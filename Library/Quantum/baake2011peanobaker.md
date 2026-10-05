@@ -36,6 +36,8 @@ to this paper, and does not claim mathematical priority for the series method.
 
 ## Verified locator
 
+Verified DOI: https://doi.org/10.1134/S0081543811080098
+
 The arXiv abstract identifies the title, both authors and journal reference.
 The readable author version contains equations (3)-(5), Lemma 1, Theorem 1,
 and the uniqueness discussion in Section 3. Crossref identifies the journal

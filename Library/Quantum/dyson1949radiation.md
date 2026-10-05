@@ -30,6 +30,8 @@ this citation.
 
 ## Verified locator
 
+Verified DOI: https://doi.org/10.1103/PhysRev.75.486
+
 Crossref's DOI record identifies the title, F. J. Dyson, and publication on
 1 February 1949. The Peano-Baker author version explicitly links the two
 series names. The historical primary paper has not been used as a substitute
