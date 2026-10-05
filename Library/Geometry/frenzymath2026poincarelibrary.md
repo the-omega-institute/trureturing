@@ -5772,3 +5772,15 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 对任意 `a ≤ b`，真实光滑曲线的长度给出 `g.edist (γ a) (γ b) ≤ ENNReal.ofReal (b-a)`。原对数高度沿同一竖直曲线精确等于参数 `t`；已核验的全局对数高度导数距离界给出反向不等式，因此实际所选度量的竖直内蕴距离精确为 `ENNReal.ofReal (b-a)`。不需要假设原 H3 距离与此内蕴距离已全局相等。
 
 上述实际光滑性、曲线微分、速度、长度与有序区间内蕴距离等式已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用实际图册求导、指数求导、原黎曼内积公式、路径长度积分及已核验的对数高度下界；本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。任意原两点的原距离与所选内蕴距离等式、实际曲率 −1、一般原流形覆盖及体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 原 H3 任意两点的黎曼距离兼容
+
+对同一原 H3 中任意两点 `p,q`，已核验
+`PoincareMT.RiemannianMetric.edist nativeRiemannianMetric p q = edist p q`，其 `toReal` 精确等于原 `dist p q`。这里保留原点、原空间距离、原拓扑、原欧氏三维图册与实际高度负二次幂黎曼度量，不额外提供两点齐性或距离兼容前提。
+
+原 Lorentz 嵌入中两个时间分量相等的点，其差向量具有零时间分量。不同点时，该向量的 Lorentz 自配对非零，由原双曲距离的 cosh 核内部证明；真实 Lorentz 反射将两点互换、固定原 `rayOrigin` 并保持所有未来向量的正时间分量，因此构成实际原 H3 等距映射。同一点由恒等映射处理。先应用原 `originTransport p` 的逆，再应用此原点固定反射，得到一个实际原等距映射，将 `p` 送到原起点、`q` 送到 `verticalAxisLine 0 (dist p q)`，包含 `p=q`。
+
+已核验的原等距内蕴保距与原竖直曲线内蕴距离公式，将任意原两点的实际所选度量距离识别为 `ENNReal.ofReal (dist p q)`，从而得到上述全局等式。局部显式安装同一实际 `nativeRiemannianMetric` 的 `Bundle.RiemannianBundle` 后，原 H3 满足实际 `IsRiemannianManifold (𝓡 3) H3`；没有将默认欧氏切向范数当作此黎曼范数。
+
+上述原点固定等距、原两点竖直规范化、全局距离等式及原黎曼流形兼容已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用原 Lorentz 反射／正时间重建、原距离核、已核验的实际内蕴保距和竖直长度接口；逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。实际曲率 −1、一般原流形覆盖及有限体积绑定、非紧尖点和完整给定 `h,d` 的 Mostow–Prasad 及官方验收仍未完成。
