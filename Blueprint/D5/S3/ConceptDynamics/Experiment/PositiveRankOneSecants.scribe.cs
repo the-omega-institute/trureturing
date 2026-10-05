@@ -71,6 +71,6 @@ internal sealed class PositiveRankOneSecantsDocument : IScribeDocumentDefinition
             Operatorname, Grp(F.Id("Source")), Comma, Sp,
             difference, Sp, Eq, Sp, second, Minus, first, Close,
             Sp, Iff, Sp, Open, a, Sp, Neq, Sp, D(0), Sp, Lor, Sp,
-            b, c, Sp, Lt, Sp, D(0), Close, Close)));
+            b, c, Sp, Lt, Sp, D(0), Close, Close));
     }
 }
