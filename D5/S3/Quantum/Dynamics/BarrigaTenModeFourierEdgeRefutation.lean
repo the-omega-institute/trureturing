@@ -215,17 +215,26 @@ private def realCertificate : PLift (K = Real.pi • κ ∧
     constructor
     · exact mul_nonneg ht_bounds.1 hs_nonneg
     · nlinarith [ht_bounds.1, ht_bounds.2, hs_bounds.1, hs_bounds.2]
+  have hκ_pos : ∀ j k : Fin 5, j ≠ k →
+      ((j = 0 ∧ k = 1) ∨ (j = 1 ∧ k = 0)) ∨ 0 < κ j k := by
+    intro j k hjk
+    fin_cases j <;> fin_cases k <;> simp [κ] at hjk ⊢ <;>
+      nlinarith only [hs_bounds.1, hs_bounds.2, ht_bounds.1, ht_bounds.2,
+        hts_bounds.1, hts_bounds.2]
   have hκ_zero : ∀ j k : Fin 5, j ≠ k →
       (κ j k = 0 ↔ (j = 0 ∧ k = 1) ∨ (j = 1 ∧ k = 0)) := by
     intro j k hjk
-    fin_cases j <;> fin_cases k <;> simp [κ] at hjk ⊢ <;>
-      nlinarith only [hs_bounds.1, hs_bounds.2, ht_bounds.1, ht_bounds.2,
-        hts_bounds.1, hts_bounds.2]
+    constructor
+    · intro he
+      rcases hκ_pos j k hjk with h | h
+      · exact h
+      · exact (h.ne' he).elim
+    · rintro (⟨rfl, rfl⟩ | ⟨rfl, rfl⟩) <;> rfl
   have hκ_nonneg : ∀ j k : Fin 5, j ≠ k → 0 ≤ κ j k := by
     intro j k hjk
-    fin_cases j <;> fin_cases k <;> simp [κ] at hjk ⊢ <;>
-      nlinarith only [hs_bounds.1, hs_bounds.2, ht_bounds.1, ht_bounds.2,
-        hts_bounds.1, hts_bounds.2]
+    rcases hκ_pos j k hjk with h | h
+    · rw [(hκ_zero j k hjk).mpr h]
+    · exact h.le
   have hs3 : s ^ 3 = 5 * s := by
     calc
       s ^ 3 = s ^ 2 * s := by ring
