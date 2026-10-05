@@ -333,3 +333,11 @@ reuses the existing continuous projection on saved unprojected rows,
 then calls the same cardinal integration and exact-frame code. Its
 source/kernel errors remain joint; the smaller error allowance does not
 establish all-direction gain, a new global sign or cofinal positivity.
+
+The [vanishing exterior reserve](vanishing-exterior-reserve.md) applies
+classical Fourier analytic uniqueness to the original theta weight and
+a fixed nonzero sharp-high residual. Deleting the positive reserve makes
+the simple multiplier allowance infinite; this fixed-source obstruction
+does not decide the actual constrained inverse or a moving cofinal family.
+The existing unprojected common dual-source construction is reused, with
+its growing source budgets and the actual low signs still unpaid.
