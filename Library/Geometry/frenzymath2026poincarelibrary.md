@@ -5748,3 +5748,27 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 `|mvfderiv (𝓡 3) nativeLogHeight p V| ≤ Real.sqrt (nativeRiemannianMetric.inner p V V)`。此处右端是所选实际黎曼度量的切向长度；欧氏模型范数仅在上述精确缩放等式内使用。
 
 原高度实际微分、对数高度光滑性、精确微分公式及其黎曼导数界已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用原坐标图、原正高度、欧氏线性投影界及光滑对数求导接口；本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。将此导数界接到固定上游的内蕴距离估计仍需实际导入和编译；原两点距离与所选度量内蕴距离的等式、曲率 −1、一般原流形覆盖及体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 固定上游距离接口的实际复用与原等距的内蕴保距
+
+固定上游版本 `432c38f2aa5a30efb13871292d17b4a3309a496a` 的 `PoincareLib.Geometry.Riemannian.Metric`、`Topology.MetricSpace.Completeness` 及 `Distance.Basic`、`Distance.DerivativeLipschitz`、`Distance.TangentBound` 五个模块，以原源码字节组成完整依赖闭包，已在本项目钉版 Lean／mathlib 环境中实际编译通过。这仅验证上述接口及其实际消费者，不等于复现上游完整庞加莱定理终点。所选实际 `nativeRiemannianMetric` 与上游 `RiemannianMetric 3 H3` 的类型定义一致，其 `edist` 正是安装该度量切向内积后取得的 `Manifold.riemannianEDist`。
+
+对任意原点 `p,q`，实际原对数高度满足
+`edist (nativeLogHeight p) (nativeLogHeight q) ≤ PoincareMT.RiemannianMetric.edist nativeRiemannianMetric p q`。这里直接应用固定上游 `edist_le_mul_edist_of_derivative_bound`，取常数 1，并用上述全局光滑性和真正的黎曼导数界逐项满足前提；不需要先假设原 H3 距离与内蕴距离相等。
+
+对任意同一个原 `e : H3 ≃ᵢ H3`，已有实际全局光滑性与 `mfderiv` 内积保持满足固定上游 `edist_le_mul_of_inner_mfderiv_le` 的常数 1 前提，得到内蕴距离不增。将同一结论应用于原 `e.symm` 和原像点，推出
+`PoincareMT.RiemannianMetric.edist nativeRiemannianMetric (e p) (e q) = PoincareMT.RiemannianMetric.edist nativeRiemannianMetric p q`，包含逆映射和反定向等距映射。此保距结论由真实微分和上游积分估计内部推出，无需提供内蕴保距前提。
+
+上述实际原对象消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`；上游五模块编译同样零错误、零警告，未修改其源码或项目钉版。复用的是固定上游距离估计与本项目已有实际光滑／微分界接口；本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。原两点距离等于该度量内蕴距离的结论、实际曲率 −1、一般原流形覆盖及体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 原竖直曲线的实际黎曼速度、长度与内蕴距离
+
+对于任意原水平坐标 `z : ℂ`，原曲线 `verticalAxisLine z t = coordinatePoint z (Real.exp t) (Real.exp_pos t)` 在同一原 H3 图册上全局 C∞。其实际 `HasMFDerivAt` 的方向是原坐标线性等距作用于 `(0, Real.exp t)` 后所得的切向量；真实坐标图求导与原开放嵌入给出该流形微分，并非仅列出一个候选方向。
+
+上述实际曲线微分代入原高度负二次幂的实际黎曼内积，得到 `g.inner (γ t) (mfderiv γ t 1) (mfderiv γ t 1) = 1`。原高度正好为 `Real.exp t`，其平方与方向高度分量的平方相消；不把默认欧氏切向范数当作所选黎曼范数。实际安装该 `g` 的局部 `RiemannianBundle` 后，曲线真实切向范数为 1，故 `g.pathELength γ a b = ENNReal.ofReal (b-a)`。
+
+对任意 `a ≤ b`，真实光滑曲线的长度给出 `g.edist (γ a) (γ b) ≤ ENNReal.ofReal (b-a)`。原对数高度沿同一竖直曲线精确等于参数 `t`；已核验的全局对数高度导数距离界给出反向不等式，因此实际所选度量的竖直内蕴距离精确为 `ENNReal.ofReal (b-a)`。不需要假设原 H3 距离与此内蕴距离已全局相等。
+
+上述实际光滑性、曲线微分、速度、长度与有序区间内蕴距离等式已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用实际图册求导、指数求导、原黎曼内积公式、路径长度积分及已核验的对数高度下界；本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。任意原两点的原距离与所选内蕴距离等式、实际曲率 −1、一般原流形覆盖及体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 和官方验收仍未完成。

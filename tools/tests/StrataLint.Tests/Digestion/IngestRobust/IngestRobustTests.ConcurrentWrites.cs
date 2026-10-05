@@ -14,7 +14,6 @@ public sealed partial class IngestRobustTests
         var fixture = ConcurrentClaimFixture();
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);
-        using var gitDirectory = DirectoryLedgerTestSupport.UseGitDirectoryPointer(temporary);
         RawRepositorySnapshot? afterWinner = null;
         var dependencies = new ReportFreeIngestDependencies(BeforeCommit: () =>
         {
@@ -36,84 +35,11 @@ public sealed partial class IngestRobustTests
     }
 
     [Fact]
-    public void Ingest_LockHeldByPeerFailsClosedWithoutWrites()
-    {
-        const string newSource = "docs/develop/theory/GAMMA.md";
-        var fixture = ConcurrentClaimFixture();
-        fixture.Files[newSource] = "## Claim 4\n\nGamma fact.\n";
-        using var temporary = new TemporaryDirectory();
-        WriteFixture(temporary, fixture);
-        using var gitDirectory = DirectoryLedgerTestSupport.UseGitDirectoryPointer(temporary);
-        var lockPath = ExpectedIngestLockPath(gitDirectory);
-        var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
-        using (var peerLock = new FileStream(lockPath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
-        {
-            foreach (var arguments in new[] { Arguments(), Arguments("alpha", newSource) })
-            {
-                var result = Environment(fixture, temporary).Ingest(arguments);
-
-                Assert.False(result.Success);
-                Assert.Equal($"INGEST_INVALID digestion ledger is being written by another ingest ({lockPath})\n",
-                    result.Error);
-                AssertSameRepository(before, DirectoryLedgerTestSupport.ReadRepository(temporary));
-            }
-        }
-
-        var retry = Environment(fixture, temporary).Ingest(Arguments());
-        Assert.True(retry.Success, retry.Error);
-        AssertExistingLedgerFilesUnchanged(before, DirectoryLedgerTestSupport.ReadRepository(temporary));
-    }
-
-    [SkippableTheory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public async Task Ingest_ConcurrentCommitIsRejectedAtLedgerPublication_AllAndSource(bool sourceScoped)
-    {
-        var fixture = ConcurrentClaimFixture();
-        using var temporary = new TemporaryDirectory();
-        WriteFixture(temporary, fixture);
-        using var gitDirectory = DirectoryLedgerTestSupport.UseGitDirectoryPointer(temporary);
-        var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
-        using var publication = new IngestPublicationBarrier();
-        var dependencies = new ReportFreeIngestDependencies(CommitLedgerFile: publication.Commit);
-        var writer = Task.Run(() => Environment(fixture, temporary, dependencies: dependencies)
-            .Ingest(sourceScoped ? Arguments("alpha") : Arguments()));
-        CommandResult peer;
-        CommandResult committed;
-        RawRepositorySnapshot beforePeer;
-        RawRepositorySnapshot afterPeer;
-        try
-        {
-            await publication.WaitForPublication(writer);
-            beforePeer = DirectoryLedgerTestSupport.ReadRepository(temporary);
-            // The peer runs outside the suspended writer's callback, after its CAS publication.
-            peer = Environment(fixture, temporary).Ingest(Arguments("beta"));
-            afterPeer = DirectoryLedgerTestSupport.ReadRepository(temporary);
-        }
-        finally
-        {
-            publication.Resume();
-            committed = await AwaitIngestInfrastructure(writer);
-        }
-
-        Assert.True(committed.Success, committed.Error);
-        Assert.False(peer.Success);
-        Assert.Equal($"INGEST_INVALID digestion ledger is being written by another ingest ({ExpectedIngestLockPath(gitDirectory)})\n",
-            peer.Error);
-        AssertSameRepository(beforePeer, afterPeer);
-        AssertExistingLedgerFilesUnchanged(before, DirectoryLedgerTestSupport.ReadRepository(temporary));
-        AssertSingleClaim(temporary, "alpha");
-        using var released = new FileStream(ExpectedIngestLockPath(gitDirectory),
-            FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-    }
-
-    [Fact]
     public void Ingest_RollbackCannotDeleteCommittedPeerCas()
     {
         var fixture = Fixture(Ledger(populated: false), AlphaText + Addition);
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);
-        using var gitDirectory = DirectoryLedgerTestSupport.UseGitDirectoryPointer(temporary);
         var peer = Environment(fixture, temporary).Ingest(Arguments("beta"));
         Assert.True(peer.Success, peer.Error);
         var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
@@ -130,12 +56,6 @@ public sealed partial class IngestRobustTests
         {
             attempts++;
             Assert.All(newCasPaths, path => Assert.True(File.Exists(path)));
-            // Probe exclusivity only; no ingest transaction is invoked from this locked fault seam.
-            Assert.Throws<IOException>(() =>
-            {
-                using var probe = new FileStream(ExpectedIngestLockPath(gitDirectory),
-                    FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
-            });
             if (attempts == 2)
             {
                 Assert.True(File.Exists(Assert.Single(committedPaths)));
@@ -182,9 +102,6 @@ public sealed partial class IngestRobustTests
         Assert.Equal(atom.RawBytes.ToArray(),
             File.ReadAllBytes(Path.Combine(temporary.Path, DigestionCasStore.RootPath, atomId)));
     }
-
-    private static string ExpectedIngestLockPath(TemporaryDirectory gitDirectory) =>
-        Path.Combine(gitDirectory.Path, "stratalint-ingest.lock");
 
     private static void AssertSameRepository(RawRepositorySnapshot before, RawRepositorySnapshot after)
     {

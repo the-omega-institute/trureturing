@@ -73,7 +73,7 @@ public sealed partial class IngestRobustTests
         var failure = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(document, snapshot, document));
 
         Assert.Equal($"ingest atom id collision at {occupiedId}", failure.Message);
-        var reportFree = ReportFreeDigestionIngestor.Plan(document, snapshot, document,
+        var reportFree = ReportFreeDigestionIngestor.Plan(document, snapshot,
             sourceIds: System.Collections.Immutable.ImmutableHashSet.Create("beta"));
         Assert.Empty(reportFree.AddedAtomIds);
         Assert.Equal(1, reportFree.SkippedExisting);
