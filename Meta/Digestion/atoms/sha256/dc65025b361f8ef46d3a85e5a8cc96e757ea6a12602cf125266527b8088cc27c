@@ -1,0 +1,38 @@
+**命题 69.12（全前沿与全叶响应）。** 用 $\mathcal A=\{(LL,\beta),(LR,\alpha),(R,\beta)\}$、$\mathcal Q=\{(L,\beta),(R,\alpha)\}$ 表示 $A,E$ 的完整带标签前沿，前缀作用保留标签。则
+
+$$
+\begin{aligned}
+\mathcal F(H_r)&=\bigsqcup_{t=1}^{r+1}R^{t-1}L\mathcal A
+                     \sqcup R^{r+1}\mathcal Q,\\
+\mathcal F(B)&=LL\mathcal A\sqcup LR\mathcal Q\sqcup R\mathcal A,\\
+\mathcal F(G_{k,j})&=\bigsqcup_{t=1}^k R^{t-1}L\mathcal F(S_t)
+                          \sqcup R^k\mathcal F(C),\quad
+S_j=B,\ S_t=A\ (t\ne j),\\
+\mathcal F(P_0)&=L\mathcal F(H_k)\sqcup R\mathcal F(B),\\
+\mathcal F(X_j)&=L\mathcal F(G_{k,j})\sqcup R\mathcal A,\\
+\mathcal F(Y_i)&=L\mathcal F(H_i)\sqcup RL\mathcal F(H_{k-i})\sqcup RR\mathcal A.
+\end{aligned}
+$$
+
+这些不交并指定每片叶及标签；族内 $0\le i<k$。所谓 $H_r$ 的第 $t$ 三叶组是 $R^{t-1}L\mathcal A$，末二叶是 $R^{r+1}\mathcal Q$。在 $H_s$ 中，前者当且仅当 $t\le s+1$ 是匹配叶，否则不存在；后者在 $s=r$ 匹配、$s>r$ 分支、$s<r$ 不存在。$A$ 的每片叶在 $B$ 中为分支，$B$ 的每片叶在 $A$ 中不存在。
+
+下表列出每种目标叶上的全部非匹配回复；“匹配”总指同地址、同标签的实际叶。所有未列竞争者均匹配；竞争者不含目标自身，空指标范围略去。表中的三叶／二叶组都包含组内每一个地址。
+
+| 目标及完整叶组 | 分支竞争者 | 不存在竞争者 |
+|---|---|---|
+| $P_0$ 左第 $t$ 三叶组，$1\le t\le k$ | $X_t$ | $Y_i$，$i\le t-2$ |
+| $P_0$ 左末块 $C$ 的五叶 | 无 | 全部 $Y_i$ |
+| $P_0$ 右 $B$ 的 $LL\mathcal A,R\mathcal A$ 六叶 | 无 | 全部 $X_j$ |
+| $P_0$ 右 $B$ 的 $LR\mathcal Q$ 二叶 | 全部 $Y_i$ | 全部 $X_j$ |
+| $X_j$ 左普通槽三叶，$t\ne j,1\le t\le k$ | $X_t$ | $Y_i$，$i\le t-2$ |
+| $X_j$ 左异常 $B$ 槽的八叶 | 无 | 全部竞争者 |
+| $X_j$ 左末块 $C$ 的五叶 | 无 | 全部 $Y_i$ |
+| $X_j$ 右 $A$ 的三叶 | $P_0$ 及全部 $Y_i$ | 无 |
+| $Y_i$ 左第 $t$ 三叶组，$1\le t\le i+1$ | $X_t$ | $Y_j$，$j\le t-2$ |
+| $Y_i$ 左末二叶 | $P_0$、全部 $X_j$、$Y_j$（$j>i$） | $Y_j$（$j<i$） |
+| $Y_i$ 右 $H_{k-i}$ 第 $h$ 三叶组，$1\le h\le k-i+1$ | 无 | 全部 $X_j$；$h\ge2$ 时另有 $P_0$；$Y_j$（$j\ge k-h+2$） |
+| $Y_i$ 右 $H_{k-i}$ 末二叶 | $Y_j$（$j<i$） | $P_0$、全部 $X_j$、$Y_j$（$j>i$） |
+| $Y_i$ 右 $RR\mathcal A$ 三叶 | 无 | 全部 $X_j$ |
+
+证明只需在上述不交前沿上逐块应用 $H_r/H_s$ 与 $A/B$ 的字面比较。例如右三叶组中 $Y_j$ 匹配恰当 $h\le k-j+1$，取反即表中的后缀。任何实际树的叶前沿严格前缀恰为全部分支地址，除叶地址及其严格前缀之外的地址均不存在。因此前沿等式也穷尽任意有限地址的响应，并非选取若干探针来代替全叶几何。$\square$
+

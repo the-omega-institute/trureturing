@@ -1,0 +1,15 @@
+**定义 71.10（全实选模斜率）。** 固定整数 $m\ge2$，标签为 $1,\ldots,m$。对全部正实概率律定义
+
+$$
+\begin{gathered}
+\mathcal P_m^+=\{p\in\mathbb R^m:p_i>0,\ \sum_{i=1}^m p_i=1\},\qquad
+t(p)=\min_i p_i,\\
+R_d(p)=2^d-\sum_{i=1}^m\lfloor2^dp_i\rfloor,\qquad
+L_m(p)=\sum_{d=0}^{\infty}2^{-d}R_d(p),\qquad
+\alpha_m=\inf_{p\in\mathcal P_m^+}\frac{L_m(p)}{t(p)}.
+\end{gathered}
+\tag{71.1}
+$$
+
+同一 $R_d,L_m$ 公式也用于非负归一律；$\alpha_m$ 的下确界只在 $\mathcal P_m^+$ 上取。二进有理数使用终止展开。付费采样器沿同一独立公平位流逐位读取，有限停止词发出一个固定标签，每个实际消费位均计入 $K$；要求几乎必然有限停止且 $\mathbb EK<\infty$。抽象数字树可以依赖任意实律的全部数字，有效程序须有有限描述的可执行规则，两者分别量化。本章将证明：扩大到全部实律的斜率，恰被某个有理正律的有限状态实际付费程序取得，而不是为每个任意实律提供有效程序。
+

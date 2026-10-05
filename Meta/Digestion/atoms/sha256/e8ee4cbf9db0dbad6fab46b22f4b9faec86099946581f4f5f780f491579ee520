@@ -1,0 +1,59 @@
+**定理 71.50（有限精确求值）。** 令 $\Pi_m$ 为原图全部确定性驻定动作表。$P_f$ 的每行在所选后继处为一、其余为零，$\boldsymbol r(s)=r$，$\boldsymbol b_f(s)=b(f(s))$。定义
+
+$$
+\boldsymbol C^f=(I-P_f/2)^{-1}\boldsymbol r,\qquad
+\boldsymbol t^f=(I-P_f/2)^{-1}(\boldsymbol b_f/2).
+\tag{71.20}
+$$
+
+则正根锚的表集合非空，而且
+
+$$
+\boxed{\quad
+\alpha_m=
+\min_{\substack{f\in\Pi_m\\ \boldsymbol t^f(o)>0}}
+\frac{\boldsymbol C^f(o)}{\boldsymbol t^f(o)}
+\in\mathbb Q.
+\quad}
+\tag{71.21}
+$$
+
+下列使用全部合法动作的线性规划有有限、有理且达到的最优值 $\alpha_m$：
+
+$$
+\begin{aligned}
+\text{最大化}\quad &x,\\
+\text{约束}\quad&
+2v_s-v_{s'(s,a)}+xb(a)\le2r
+\quad(s\in S_m,\ a\in\mathcal A(s)),\\
+&v_o\ge0,\qquad x\in\mathbb R,\quad v\in\mathbb R^{S_m}.
+\end{aligned}
+\tag{71.22}
+$$
+
+其可行价格投影恰为 $(-\infty,\alpha_m]$。势 $v_s$ 是有符号变量，只约束根非负，不施加全局 $v_s\ge0$。
+
+**证明。** $P_f$ 是确定性随机矩阵，$\|P_f/2\|_\infty=1/2$，所以逆矩阵存在；有理矩阵的可逆性使逆、$\boldsymbol C^f,\boldsymbol t^f$ 均有理。沿根轨道展开式（71.20），两根坐标恰为式（71.5）的 $C_\gamma,t_\gamma$。定理71.40给一张正锚表取得 $\alpha_m$，定理71.31给每张其他正锚表的比值不小于它，故有限最小式成立。固定标签规则（71.9）仅依赖状态和动作，根轨道最终周期使每个标签数字最终周期，因此取得律的全部坐标也是有理数。
+
+精确算法无需以 $\alpha_m$ 为输入：按整数 $m$ 枚举每个状态全部合法动作及全部表，计算式（71.20）的有理根坐标，丢弃零锚者，用整数交叉乘比较其余比值，返回最小表。也可直接取根轨道的前段长度 $a\ge0$、周期长度 $b\ge1$，其中 $a+b\le m^2$；对 $g=\boldsymbol r$ 或 $g=\boldsymbol b_f/2$，精确根坐标为
+
+$$
+\sum_{d=0}^{a-1}2^{-d}g(s_d)
++\frac{2^{-a}}{1-2^{-b}}\sum_{j=0}^{b-1}2^{-j}g(s_{a+j}).
+\tag{71.23}
+$$
+
+有限枚举和有理算术必终止；这一有效性不声称枚举、数值位长、存储或运行成本低廉。
+
+式（71.22）的全部动作约束恰等价于 $v\le T_xv$。保序迭代给 $v\le T_x^Dv$，收缩极限给 $v\le V_x$；故可行解的根非负强迫 $V_x(o)\ge0$，即 $x\le\alpha_m$。反向，$x\le\alpha_m$ 时取 $v=V_x$ 就满足全部约束及根条件。有限上界由式（71.12）给出。在有理价格 $\alpha_m$ 处，选一张全状态 Bellman 最优表，便有
+
+$$
+V_{\alpha_m}=(I-P_f/2)^{-1}
+(\boldsymbol r-\alpha_m\boldsymbol b_f/2)\in\mathbb Q^{S_m}.
+\tag{71.24}
+$$
+
+所以最优解也可有理取得。系统有 $m^2+1$ 个变量、$O(m^4)$ 个动作不等式。程序提取使用式（71.21）的精确表枚举，或在精确价格处求真正的 Bellman 固定点再逐状态取最小动作；任意 LP 可行势的松弛边、未经证明的紧边选择或浮点近似都不承担等号程序。
+
+分式目标转成参数零点及确定性折扣规划、图势约束的联系是成熟工具，见 [Dadush–Koh–Natura–Végh，arXiv:2004.08634v4，第1节](https://arxiv.org/html/2004.08634v4#S1)。这里另行证明了正分母的取得和零锚排除，没有移用该文的强多项式复杂度结论。证毕。
+

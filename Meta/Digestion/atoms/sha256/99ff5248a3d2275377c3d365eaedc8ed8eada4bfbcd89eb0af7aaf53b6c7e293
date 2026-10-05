@@ -1,0 +1,1 @@
+- [Kaufmann–Cappé–Garivier, *On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models*, 引理 1](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf)：自适应换测度和二元事件信息的成熟来源；本章给出整个合法输入／标签／停止核的具体分解，不把 bandit 的期望停止费用代入固定标签上限。

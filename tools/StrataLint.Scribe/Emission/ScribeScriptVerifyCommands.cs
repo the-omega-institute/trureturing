@@ -24,6 +24,19 @@ internal static class ScribeScriptVerifyCommands
                 error.WriteLine("EmptyScriptSelection: no definition paths were selected");
                 return 1;
             }
+            var selection = ScribeDefinitionSelector.Select(repositoryRoot, paths);
+            if (!selection.IsSuccess)
+            {
+                error.WriteLine(selection.Failure);
+                return 2;
+            }
+            var admission = ScribeSdkAdmission.Check(repositoryRoot, selection.Paths);
+            if (admission.ExitCode != 0)
+            {
+                admission.WriteFailure(error);
+                return admission.ExitCode;
+            }
+            paths = selection.Paths;
             var results = ScribeScriptHost.ExecuteBatch(repositoryRoot, paths);
             var resultCounts = results.GroupBy(static result => result.RelativePath, StringComparer.Ordinal)
                 .ToDictionary(static group => group.Key, static group => group.Count(), StringComparer.Ordinal);
