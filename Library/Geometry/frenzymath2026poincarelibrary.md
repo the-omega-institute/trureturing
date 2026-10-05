@@ -5480,3 +5480,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 四个具名目标的精确临时 Lean 已真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-unit-infinity-translation-kernel.lean` 为 151347 字节，SHA256 `ce1701e3e0a94e240276227372957deab8a9f8b50fa10acd40f2e7b978a667b8`。复用两个已有热缓存钉版 import：`Mathlib.Analysis.Normed.Affine.MazurUlam`、`Mathlib.Analysis.Complex.Isometry`；前述成功水平源码的完整 142264 字节连续块位于这两个 import 后的偏移 89，逐字保持。没有新增依赖闭包构建或版本变更。
 
 该现有原模型及钉版分类接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 为本地临时证据；远端 required CI 验证说明，尚无新增绑定 Lean 声明或完整官方验收。上述结果要求全部群元素单位缩放，未证明一般小位移群满足此条件。非单位共同中心与轴、离散平移群与实际尖点、有限体积薄部分解、原流形覆盖及同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 仍未完成。
+
+
+### 原非单位缩放的唯一中心与交换者共同测地轴
+
+对同一个原 `e : H3 ≃ᵢ H3`，假设它固定实际无穷远点且实际正缩放 `λ = infinityScale e ≠ 1`，内部构造唯一水平坐标 `z : ℂ` 满足同一个 `infinityHorizontalMap e z = z`。当 `λ < 1` 时，原水平距离等式构造实际压缩映射，消费钉版 Banach 不动点接口；当 `λ > 1` 时，先证明原逆等距变换稳定同一点及 `λ(e) λ(e⁻¹) = 1`，在实际原逆水平映射上构造中心，再由原水平复合与逆关系恢复同一个原 `e` 的存在唯一性。没有预设中心或可定向性。
+
+实际构造 `verticalAxisLine z t = coordinatePoint z (exp t)`，识别为原 `horizontalTranslation z` 作用于已有原 `geodesicLine`。原距离律证明它是整个实直线到原 `H3` 的等距映射；原正高度的对数与坐标重构证明其像恰为所有水平坐标等于 `z` 的原点，因此得到完整原测地轴。对任意原 `f : H3 ≃ᵢ H3`，若它也稳定同一个无穷远点且与原 `e` 交换，原水平复合律和中心唯一性推出 `infinityHorizontalMap f z = z`。对每个实际 `s > 0`，证明同一个原 `f(z,s) = (z, infinityScale f · s)`；再用实际原逆 `f⁻¹` 证明整个原轴的集合像等于自身，未把正向包含冒充集合相等。本批无需自由性、离散性或方向假设。
+
+四个具名目标的精确临时 Lean 已真实编译通过，零错误、零警告，无 `sorryAx`，公理闭包仅含 `propext, Classical.choice, Quot.sound`。源码 `.lake/mostow-h3-nonunit-common-axis.lean` 为 160707 字节，SHA256 `1d6a8fcd1359f057fd32df8b3e3729bb18b7dcb663950de79c7634e2798c0c38`。仅增加已有热缓存钉版 `Mathlib.Topology.MetricSpace.Contracting` import；成功平移核源码完整 151347 字节连续块在新 import 后偏移 48 逐字保留，无新增依赖闭包构建。
+
+该原模型与现有压缩映射、测地线及坐标接口消费者按 `proof_shape: bind-only`、`admission_basis: none` 保留本 Library 说明，精确 Lean 保持本地临时证据，远端 required CI 验证说明。尚未证明一般群所有元素与本批原 `e` 交换，亦未得到离散轴群循环性、原轴管商或有限体积薄部分解；同一个给定 `h`／完整 `d` 的完整 Mostow–Prasad 及官方验收继续未完成。
