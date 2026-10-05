@@ -23,14 +23,18 @@ internal sealed class EllipticSomborEnergyIntegerRefutationDocument : IScribeDoc
                 AssessedProvenance.FromLiterature(Source), DescribeRole.Definition),
             Node("result", "Two squares with a common vertex", Disp(new Formula.Not(F.Id("claim"))),
                 "Use the edges 0–1–2–3–0 and 0–4–5–6–0. Vertex zero has degree four and every other vertex has degree two. The four edges incident to zero have weight 12√5, and the other four have weight 8√2. An explicit invertible change of basis diagonalizes this real symmetric matrix with diagonal entries −56, −16, 0, 0, 0, 16, 56. Its characteristic polynomial is x³(x−56)(x+56)(x−16)(x+16). Mathlib's spectral theorem identifies the roots with the Hermitian eigenvalue multiset. The absolute values therefore sum to 144, an integer, so the conjecture is false.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem)),
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alikhani-ghanbari-dehghanizadeh-conjecture-3-9-elliptic-sombor"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role) => Describe.Lean(
+        AssessedProvenance provenance, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("esoint-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula formula) => Seq(Open, formula, Close);
     private static Formula Call(string name, params Formula[] args) =>

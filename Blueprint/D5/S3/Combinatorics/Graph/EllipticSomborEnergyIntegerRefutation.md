@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/EllipticSomborEnergyIntegerRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alikhani-ghanbari-dehghanizadeh-conjecture-3-9-elliptic-sombor` (refuted) by `D5/S3/Combinatorics/Graph/EllipticSomborEnergyIntegerRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alikhani-ghanbari-dehghanizadeh-conjecture-3-9-elliptic-sombor","declaration_gid":"D5/S3/Combinatorics/Graph/EllipticSomborEnergyIntegerRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Saeid Alikhani, Nima Ghanbari, Mohammad Ali Dehghanizadeh (2024). *Elliptic Sombor energy of a graph*. DOI: [10.48550/arXiv.2404.18622](https://doi.org/10.48550/arXiv.2404.18622). URL: <https://arxiv.org/abs/2404.18622v1>.
