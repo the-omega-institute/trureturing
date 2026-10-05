@@ -2430,6 +2430,174 @@ CRT and finite-combinatorial results, with no retained declaration,
 freeze or coverage record. The verified conclusion is the literal
 inventory CD69--70, not a common cofactor point or exclusion of 37.
 
+## Paired low rows force a source-contacting top outside their divisor cones
+
+Keep one actual globally count-then-modulus-sum-minimal distinct odd
+nonunit whole cover, actual pure moduli 3 and 9, ternary heights at
+most two, and the same coprime coordinate factorization with q=37.
+Assume an actual q-height at least two. The conclusions above give
+an actual pure q² original h, no q-height greater than two, and its
+five-word private projection Λ. Write c for its first q-digit, b0
+for its second digit, and D for all actual height-two originals
+with first digit c. These conditions concern the original family;
+comparison covers are not restricted to ternary height two.
+
+Choose the saturated set T of at least 29 digits so that it also
+avoids the second digits β and γ of any remaining unit-cofactor
+middle and top originals in D. Missing unit originals impose no
+condition, and β=γ is allowed. Both guards differ from b0. For a
+terminal digit a in T, use all actual paired low rows at that digit:
+
+$$
+R_a=\{r>1:\text{the actual }q^2r\text{ and }3q^2r
+\text{ originals both lie in }D\text{ and have second digit }a\}.
+\tag{CD73}
+$$
+
+The pair's old cofactor phases need not agree. Nor does membership
+in R_a require compatibility with a particular ternary word.
+For a digit b and word u, let C(b,u) be the set of actual top
+originals in D with second digit b and ternary phase u modulo 9.
+SNC14 gives |C(b,u)|≤2. Retain the actual source condition
+
+$$
+i\in C^*(b,u)
+\quad\Longleftrightarrow\quad
+i\in C(b,u),\quad
+\exists y\in P_h:\ y\equiv u\pmod9,\quad
+ y\equiv\rho_i\pmod{m_i}.
+\tag{CD74}
+$$
+
+Here P_h is the complete private region of the pure donor h.
+This condition says that the original top cofactor class meets
+that actual private section. It does not assert that y belongs
+to the top original itself: its q-coordinate still belongs to h.
+
+The following restriction is forced by the original whole cover:
+
+$$
+\forall a\in T,\quad
+\forall b\notin\{b_0,a,\beta,\gamma\},\quad
+\forall u\in\Lambda,\quad
+\exists i\in C^*(b,u):\quad
+\forall r\in R_a,\ r\nmid m_i.
+\tag{CD75}
+$$
+
+Thus even after ignoring top classes that never meet the private
+section, each allowed cell retains a top cofactor outside the
+entire divisibility cone of the terminal's paired low rows.
+This conclusion supplies a necessary arithmetic restriction;
+it does not exclude 37 or provide a replacement for every cell.
+
+### Four paid terminal pieces leave one short cell
+
+Fix a, b and u from CD75. Saturation at a supplies five actual
+nonunit top originals at distinct ternary words. Choose three
+of them, h1,h2,h3, and assign the four pure replacement labels
+
+$$
+h\mapsto27,\qquad h_1\mapsto27q,\qquad
+h_2\mapsto81,\qquad h_3\mapsto81q.
+\tag{CD76}
+$$
+
+Choose four distinct leaves modulo 27 above Λ and assign them
+b0,a,b,β; the leaf assigned b has parent u. Collapse each leaf's
+three modulo-81 children to its assigned digit. The remaining
+33 fine words receive distinct digits, giving 4+33=37 symbols.
+The first two leaves are paid directly by 27 and 27q. The first
+two fine children of the β leaf are paid by 81 and 81q. Only its
+third child remains in the continuing source, so that digit's
+remaining inverse is fine. The b leaf is the only continuing
+inverse that needs an entire short leaf.
+
+The code also makes the whole β fiber avoid the actual unit
+middle ternary phase, and the whole γ fiber avoid the actual
+unit top phase. When β=γ, choose the β leaf's parent outside
+both forbidden sets; at most four of the five words are
+forbidden. When the digits differ, assign γ a fine word outside
+the four collapsed leaves and outside its forbidden top word.
+Any remaining unit middle and top originals therefore have
+empty continuing inverses. Give them the unused labels 243 and
+243q, respectively, preserving the exact number of classes.
+Their strict prices are 243<3q² and 243q<9q² at q=37.
+
+Suppose CD75 fails. Every active top in C*(b,u) then has a
+cofactor divisor in R_a. There are at most two such tops. Assign
+them distinct members of their paired low-row donors, using
+row zero for one and row one for the other. Even if the same
+r pays both tops, its two physical donors have different labels
+27r and 27qr. Both donors' former continuing inverses are empty
+because their source digit a is already terminal-paid. Each
+selected donor can therefore take the one permanent cofactor
+phase required by its assigned top.
+
+Use the original row labels 27m,27qm,81m for all other nonunit
+outputs. The complete source preserves the same 9W coordinate
+and first q-digit as in CD63. A top source owner at the short
+b leaf has an actual witness y from that identity, so it belongs
+to C*(b,u); its entire inverse is paid by the assigned divisor
+output. Low-row inverses are already short-enclosed, and every
+other unpaid top inverse is fine-enclosed. This uses the full
+private section and all its points, not selected private witnesses
+or a product envelope Λ×W.
+
+Numerical labels remain injective: their coprime cofactor and
+ternary/q exponents distinguish the nonunit signatures and all
+six pure signatures. Every new label has ternary depth at least
+three and is fresh against the retained family. Each replaced
+original has a strictly smaller output label. Complete coverage
+with unchanged class count therefore contradicts global
+modulus-sum minimality, proving CD75.
+
+### The same alternate top works for every divisor ancestor
+
+Fix b in T and u in Λ. For a literal top i in C(b,u), define
+
+$$
+A(i)=\{a\in T\setminus\{b\}:\exists r\in R_a,
+\ r\mid m_i\}.
+\tag{CD77}
+$$
+
+If C(b,u) has one member, that member has no ancestors in A(i).
+If it has two members i,j, their ancestor sets are disjoint.
+Indeed, a common ancestor terminal would contradict CD75,
+since there is no third top available to escape it.
+
+More precisely, if A(i) is nonempty, there is one unique other
+literal top j in the cell, it belongs to C*(b,u), and
+
+$$
+\forall a\in A(i),\quad\forall r\in R_a,\quad r\nmid m_j.
+\tag{CD78}
+$$
+
+Choose an ancestor once. Its active escape witness differs from
+i, hence determines j by the two-owner cap. Every later ancestor
+must use that same j. Its private-section witness can also be
+chosen once and held fixed across these terminals. No premise
+requires i itself to meet the private section or j to belong to
+a repeated-digit triple.
+
+CD78 concerns numerical divisibility. The fixed private point
+need not avoid the low owners' cofactor residue classes, and it need not
+lie in i's cofactor class. A simultaneous payment using their
+actual phases remains a separate obligation. The unrestricted
+odd distinct covering problem and the entire ternary-height-two
+branch remain unresolved.
+
+A complete scoped transient Lean check verifies CD75 with all
+original-family assumptions, including unit guards, finite code,
+actual private-section contact, injective donor selection,
+permanent phases, numerical legality and whole-cover descent.
+It also derives CD78 from that same original telescope and the
+existing two-owner cap. These applications reuse existing results;
+no new mathematical declaration, freeze or coverage record is
+retained. All 78 reported axiom closures use only `propext`, `Classical.choice`
+and `Quot.sound`; the complete check has no errors or `sorry`.
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
