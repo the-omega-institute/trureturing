@@ -43,10 +43,7 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
                 + "and d/(M-d) <= 1/2 gives the final cap. Both bounds cover the whole interval, including both sides of m.",
                 DescribeRole.Theorem),
             Node("parity-count", "Prescribed parity composition count", "composition_parity_count",
-                Seq(Forall, Sp, F.Xi, Comma, Sp, Equal(Call("card", Call("parityFiber", Dv, Mv, F.Xi)),
-                    Call("ite", And(Parity(), Relation(Hv, Leq, Mv)),
-                        Call("choose", Subtract(Add(Ratio(Subtract(Mv, Hv), D(2)), Dv), D(1)),
-                            Subtract(Dv, D(1))), D(0)))),
+                ParityCountFormula(),
                 "In every positive dimension, a legal parity vector has choose((M-h)/2+d-1,d-1) weak compositions. "
                 + "The coordinatewise substitution r_i=2t_i+xi_i is bijective. An illegal parity vector has no preimage.",
                 DescribeRole.Theorem),
@@ -83,6 +80,14 @@ internal sealed class ParityCompositionKernelDocument : IScribeDocumentDefinitio
         string prose, DescribeRole role) => Describe.Lean(DescribeId.Create("parity-composition-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula ParityCountFormula() => Seq(Forall, Sp, Dv, Comma, Mv, Sp,
+        InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp, Relation(D(1), Leq, Dv),
+        Sp, Rightarrow, Sp, Forall, Sp, F.Xi, Comma, Sp,
+        Equal(Call("card", Call("parityFiber", Dv, Mv, F.Xi)),
+            Call("ite", And(Parity(), Relation(Hv, Leq, Mv)),
+                Call("choose", Subtract(Add(Ratio(Subtract(Mv, Hv), D(2)), Dv), D(1)),
+                    Subtract(Dv, D(1))), D(0))));
 
     private static Formula Parity() => Equal(Call("mod", Hv, D(2)), Call("mod", Mv, D(2)));
     private static Formula ActualFormula() => Equal(Call("R", Dv, Mv, F.Xi),

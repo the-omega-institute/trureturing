@@ -99,7 +99,6 @@ noncomputable def intervals (a b : ℕ) (hv : 1 ≤ a + b) :
             invFun := fun A => ⟨A.valᶜ, by simp [card_compl, A.property, n, hk]⟩
             left_inv := fun A => by simp
             right_inv := fun A => by simp }
-    let separator := fixedLengthCompositionEquiv (n + 1) (k + 1) (by omega) (by omega)
     have separator' : {c : Composition (n + 1) // c.length = k + 1} ≃
         {A : Finset (Fin n) // A.card = k} := by
       convert fixedLengthCompositionEquiv (n + 1) (k + 1) (by omega) (by omega) using 1 <;> simp
@@ -108,7 +107,7 @@ noncomputable def intervals (a b : ℕ) (hv : 1 ≤ a + b) :
     ((Equiv.sigmaCongrRight perShape).trans (Equiv.sigmaEquivProd _ _))
 
 /-- The parity of every majority-leaf gap, including both outside gaps. -/
-noncomputable def ξ (a b : ℕ) (hv : 1 ≤ a + b) (t : Fiber (a, b)) :
+noncomputable def gapParity (a b : ℕ) (hv : 1 ≤ a + b) (t : Fiber (a, b)) :
     Fin (min a b + 1) → Bool :=
   fun i => decide (((intervals a b hv t).2.val i) % 2 = 1)
 
@@ -117,8 +116,8 @@ noncomputable def referenceTreeMass (a b : ℕ) (hv : 1 ≤ a + b) : Fiber (a, b
   fun t =>
     let d := min a b + 1
     let M := max a b
-    let h := ∑ i, (ξ a b hv t i).toNat
-    Q d M (ξ a b hv t) /
+    let h := ∑ i, (gapParity a b hv t i).toNat
+    Q d M (gapParity a b hv t) /
       (catalan (a + b - 1) * (((M - h) / 2 + d - 1).choose (d - 1)) : ℕ)
 
 /-- Actual and reference tree laws have the same uniform conditional kernel given
@@ -129,11 +128,11 @@ theorem result :
       let d := min a b + 1
       let M := max a b
       d ≤ M →
-      D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward (ξ a b hv)
+      D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward (gapParity a b hv)
         (uniformMass (a, b)) = R d M ∧
       (∀ t, 0 ≤ referenceTreeMass a b hv t) ∧
       (∑ t, referenceTreeMass a b hv t) = 1 ∧
-      D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward (ξ a b hv)
+      D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward (gapParity a b hv)
         (referenceTreeMass a b hv) = Q d M ∧
       totalVariation (uniformMass (a, b)) (referenceTreeMass a b hv) =
         totalVariation (R d M) (Q d M) ∧
@@ -147,7 +146,7 @@ theorem result :
       (d = 1 → uniformMass (a, b) = referenceTreeMass a b hv) := by
   classical
   intro a b hv d M hM
-  let f := ξ a b hv
+  let f := gapParity a b hv
   let C := catalan (a + b - 1)
   let D := (M + d - 1).choose (d - 1)
   let h : (Fin d → Bool) → ℕ := fun z => ∑ i, (z i).toNat

@@ -9,7 +9,7 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/TotalVariation/TreeParityKernel.";
     private static readonly Formula Av = F.Id("a"), Bv = F.Id("b"), Dv = F.Id("d"), Mv = F.Id("M");
     private static readonly Formula Tv = F.Id("t"), Iv = F.Id("i"), Hv = F.Id("h"), Nv = F.Id("n");
-    private static readonly Formula Uv = F.Id("U"), Vv = F.Id("U_ref"), Ev = F.Id("epsilon");
+    private static readonly Formula Uv = F.Id("U"), Vv = F.Id("V"), Ev = F.Id("epsilon");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A complete gap parity record preserves the total variation between the actual and reference tree laws.",
@@ -25,13 +25,13 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
                 + "The leaf-position subset corresponds to a positive composition of n+1 into d blocks; "
                 + "subtracting one from every block gives the gap sizes. Adding one reverses this operation. "
                 + "All ordered shapes with n-1 internal nodes are retained.", DescribeRole.Definition),
-            Node("parity", "Complete gap parity record", "ξ",
+            Node("parity", "Complete gap parity record", "gapParity",
                 Equal(Call("xi", Tv, Iv), Call("decide", Equal(Call("mod", Index(F.Id("r"), Iv), D(2)), D(1)))),
                 "The Boolean vector has one coordinate for every gap, including both outside gaps. "
                 + "Its occupied-coordinate count h is the sum of the Boolean digits. Its terminal parity is M mod 2.",
                 DescribeRole.Definition),
             Node("reference", "Reference tree mass", "referenceTreeMass",
-                Equal(Call("U_ref", Tv), Ratio(Call("Q", Dv, Mv, Call("xi", Tv)),
+                Equal(Call("V", Tv), Ratio(Call("Q", Dv, Mv, Call("xi", Tv)),
                     Multiply(Call("catalan", Subtract(Nv, D(1))),
                         Call("choose", Subtract(Add(Ratio(Subtract(Mv, Hv), D(2)), Dv), D(1)), Subtract(Dv, D(1)))))),
                 "The actual tree law U is the uniform mass on Fiber(a,b). The reference mass uses the "
@@ -54,15 +54,15 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
     private static Formula ResultFormula()
     {
         Formula pushU = Equal(Call("pushforward", F.Id("xi"), Uv), Call("R", Dv, Mv));
-        Formula posV = Seq(Forall, Sp, Tv, Comma, Sp, Relation(D(0), Leq, Call("U_ref", Tv)));
-        Formula massV = Equal(Seq(Index(Sum, Tv), Sp, Call("U_ref", Tv)), D(1));
+        Formula posV = Seq(Forall, Sp, Tv, Comma, Sp, Relation(D(0), Leq, Call("V", Tv)));
+        Formula massV = Equal(Seq(Index(Sum, Tv), Sp, Call("V", Tv)), D(1));
         Formula pushV = Equal(Call("pushforward", F.Id("xi"), Vv), Call("Q", Dv, Mv));
         Formula tv = Equal(Call("totalVariation", Uv, Vv),
             Call("totalVariation", Call("R", Dv, Mv), Call("Q", Dv, Mv)));
         Formula events = Seq(Paren(And(Relation(D(2), Leq, Dv), Relation(Multiply(D(3), Dv), Leq, Mv))),
             Sp, Rightarrow, Sp, Forall, Sp, F.Id("A"), Comma, Sp,
-            And(Relation(Call("max", D(0), Subtract(Call("U_ref", F.Id("A")), Ev)), Leq, Call("U", F.Id("A"))),
-                Relation(Call("U", F.Id("A")), Leq, Call("min", D(1), Add(Call("U_ref", F.Id("A")), Ev)))));
+            And(Relation(Call("max", D(0), Subtract(Call("V", F.Id("A")), Ev)), Leq, Call("U", F.Id("A"))),
+                Relation(Call("U", F.Id("A")), Leq, Call("min", D(1), Add(Call("V", F.Id("A")), Ev)))));
         Formula one = Seq(Equal(Dv, D(1)), Sp, Rightarrow, Sp, Equal(Uv, Vv));
         return Seq(Forall, Sp, Av, Comma, Bv, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
             Paren(And(Relation(D(1), Leq, Add(Av, Bv)), Relation(Dv, Leq, Mv))), Sp, Rightarrow, Sp,
