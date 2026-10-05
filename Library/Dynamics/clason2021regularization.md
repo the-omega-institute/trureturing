@@ -928,3 +928,101 @@ holomorphy and these bounds to the original minimal form
 $\mathcal F_c$; the whole-critical-domain premise is unchanged.
 This constructs an actual zero-free normalization bridge, not an
 assumption that the ordinary norm has an analytic extension.
+
+
+## Apply existing analytic approximation to the actual compact residual
+
+For $x>0$ extend the two separate (J2) kernel formulas by
+
+$$
+k_z^-(x)=G(x-z),\qquad
+k_z^+(x)=-G(-x-z)-a_0(n_z-E_z)(x).
+$$
+
+Even-reflect them and apply $Q_0$ to obtain the centered form columns
+$r_z^-$ and $r_z^+$. Choose a fixed $d>0$ with
+$d<\vartheta_0$ and $R_0-d>R_*$. Each formula is holomorphic
+on the radius-$d$ disks around all its real mesh centers, with a
+uniform $\mathcal F_c$ bound $M_\vartheta$. The left formula uses
+the strip bounds for translated $G$ at arbitrary real center;
+the right uses (A1)–(A2). Even reflection is bounded in $H^1$,
+and (WF2) and $Q_0$ preserve the form bound. The right formula
+extends slightly below $R_0$, and the left formula beyond it.
+The real coefficient integration still splits exactly at $R_0$.
+No analytic gluing at this jump or $H^2$ regularity is assumed.
+
+Partition $[-T,T]$, $T>R_0$, into cells $I_i$ split at $R_0$,
+with lengths at most $d$. On each cell use the Taylor polynomial
+$P_i$ of degrees $0,\ldots,m-1$, $m\ge1$, of the appropriate
+$r_z^\pm$ at its midpoint. Apply the standard Banach-valued
+Cauchy remainder on its radius-$d$ disk: the pointwise form error is
+at most $2M_\vartheta2^{-m}$. This is reuse of the analytic
+approximation theorem on the new actual columns, not a new
+generic interpolation result.
+
+Define
+
+$$
+D^{(m)}_{\Lambda,T,\mathcal I}p
+ =\sum_i\int_{I_i}P_i(R)(W_\Lambda p)(R)\,dR.
+$$
+
+The unchanged tail allowance $d(T)$ from (J3) and the
+Hilbert–Schmidt column estimate give
+
+$$
+\|K_\Lambda-D^{(m)}_{\Lambda,T,\mathcal I}\|_{
+       \mathcal E_\Lambda\to\mathcal F_c}
+\le Q_\Lambda[d(T)+2M_\vartheta\sqrt{2T}\,2^{-m}]. \tag{A3}
+$$
+
+The parameter polynomial approximates only the compact residual;
+the principal $\mathcal L_\Lambda$ retains its infinite synthesis.
+Every cell uses the same actual $W_\Lambda$, not separately
+optimized coefficients.
+
+Reuse the real orthonormal Legendre polynomials $\psi_{i,k}$ on
+each cell, extended by zero to the coefficient line. For $0\le k<m$
+put
+
+$$
+e_{i,k}=\int_{I_i}P_i(R)\psi_{i,k}(R)\,dR,\qquad
+z_{i,k}(p)=\int_{I_i}\psi_{i,k}(R)(W_\Lambda p)(R)\,dR.
+$$
+
+Then $D^{(m)}p=\sum_{i,k}e_{i,k}z_{i,k}(p)$ and Bessel gives
+$\|z(p)\|_{\ell^2}\le Q_\Lambda\|p\|_2$, with no dimension
+factor. All these columns lie in the original centered form domain.
+For this same family, (J5) applies with (A3) as
+$\delta_\Lambda$, provided an actual simultaneous complex residual
+Gram certifies its chosen primal and dual witnesses. Neither the
+old quadratic-input rows nor a separately optimal column choice
+certifies these new residuals.
+
+If $d(T)\le C_d e^{-T}$ above a fixed threshold $T_*>R_0$,
+sufficient parameters for the (A3) upper allowance to be at most
+$\tau>0$ are
+
+$$
+\begin{aligned}
+T&\ge\max\{T_*,\log(2C_dQ_\Lambda/\tau)\},\\
+m&\ge\max\{1,\lceil
+ \log_2(4M_\vartheta Q_\Lambda\sqrt{2T}/\tau)\rceil\}.
+\end{aligned} \tag{A4}
+$$
+
+There exists a partition split at $R_0$ with at most
+$2T/d+2$ cells, hence at most $m(2T/d+2)$ columns.
+The usual Gamma/Stirling growth for (NC3) makes this count polynomial
+in $\Lambda$ and $\log(1/\tau)$ when $0<\tau\le1$ and the
+original constants are fixed and certified. This sufficient
+column-count estimate is not an optimal acquisition-cost bound or
+a runtime guarantee; derivative evaluation, coefficient integrals
+and simultaneous Gram certification still require work.
+
+The constants $C_d,M_\vartheta$, normalization threshold $R_*$
+and Gram are unevaluated. No effective small-window regularization
+rate or finite all-input acquisition of the noncompact principal
+follows. Actual source and archimedean costs, low and complementary-low
+signs on one common original cofinal sequence, the full all-input
+half-bound, Robin, RH and Lean certification remain unresolved.
