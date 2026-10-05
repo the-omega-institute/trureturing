@@ -141,7 +141,7 @@ def scanWeight (k : Nat) (s : Fin 3) : ℚ :=
     ([((k:ℚ)+1)/(3*((k:ℚ)-1)),((k:ℚ)-2)/(3*((k:ℚ)-1)),
       ((k:ℚ)-2)/(3*((k:ℚ)-1))] : List ℚ).getD s.val 0
 
-/-- A finite rational law: uniform retained slot and independent preselected choices. -/
+/-- A finite law: uniform retained slot and independent preselected choices. -/
 def seedWeight {K : Type*} [Field K] (k : Nat) (tail scan : Fin 3 → K) (seed : Seed k) : K :=
   (tail seed.2.1 / k) * ∏ l : Fin k, scan (seed.2.2 l)
 
