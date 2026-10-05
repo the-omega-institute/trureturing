@@ -29,7 +29,7 @@ local notation "C" => ActualImageSevenLeafSeparation.C
 local notation "B" => FourExitRawEndpointSpectrum.B
 local notation "Kₜ" => FourExitRawEndpointSpectrum.H
 local notation "T" => thirdImage FourExitRawEndpointSpectrum.t
-local notation "W₁" => Source.mul B C
+local notation "W₁" => (FreeMagma.mul B C : Source)
 
 /-- Original activity blocks, ordered U then V. -/
 def active (r : Fin 2) : Source := if r.val = 0 then T else W₁
