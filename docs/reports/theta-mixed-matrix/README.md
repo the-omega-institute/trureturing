@@ -361,3 +361,11 @@ unprojected source. It selects one cofinal parameter/band schedule for
 prescribed growing finite sources, retaining the exact ground.
 Band-dependent source norms, actual low/complementary-low signs and
 the full RH/Robin conclusion remain unresolved.
+
+
+The [centered complete-prime discrepancy budget](centered-prime-discrepancy-budget.md)
+cancels the continuous main term on the same exactly ground-centered
+even $H^2$ source, retaining the endpoint and every prime power. It pays
+the extra source derivative norm and improves the fixed-source regulator
+allowance in asymptotic order. Common changing-family Grams, actual
+inverse convergence and low/cofinal signs remain unresolved.
