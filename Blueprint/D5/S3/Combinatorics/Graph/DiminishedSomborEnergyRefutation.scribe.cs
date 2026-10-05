@@ -29,7 +29,10 @@ internal sealed class DiminishedSomborEnergyRefutationDocument : IScribeDocument
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Take the edgeless graph on Fin 1. Every matrix entry is zero by the non-edge branch. Mathlib's Hermitian spectral theorem identifies a zero matrix with an identically zero eigenvalue function, so the energy is zero. Choosing the integer zero contradicts the conjecture. This argument concerns the literal all-graphs statement; nonintegrality for graphs with at least one edge remains open."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("movahedi-2025-diminished-sombor-energy-integer"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,

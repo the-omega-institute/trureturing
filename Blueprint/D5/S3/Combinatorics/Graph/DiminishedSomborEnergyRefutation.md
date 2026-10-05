@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DiminishedSomborEnergyRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/movahedi-2025-diminished-sombor-energy-integer` (refuted) by `D5/S3/Combinatorics/Graph/DiminishedSomborEnergyRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"movahedi-2025-diminished-sombor-energy-integer","declaration_gid":"D5/S3/Combinatorics/Graph/DiminishedSomborEnergyRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* F. Movahedi (2025). *Diminished Sombor matrix, spectral radius, and energy of the graphs*. DOI: [10.48550/arXiv.2508.06531](https://doi.org/10.48550/arXiv.2508.06531). URL: <https://arxiv.org/abs/2508.06531v1>.
