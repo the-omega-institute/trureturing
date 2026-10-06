@@ -22,6 +22,19 @@ public sealed class DeclaredTemplateUnregisteredTests
         Empty(Build(source: RefutationHeader() + Source));
 
     [Fact]
+    public void utility_refutation_uses_the_same_selector_resolution_as_sl031() =>
+        Empty(Build(source: RefutationHeader() + Source.Replace("D5.S0.Carrier.Target", "Other", StringComparison.Ordinal),
+            declarations: [new("Other.target0", "theorem", "True", [])]));
+
+    [Fact]
+    public void utility_ambiguous_result_exempts_neither_theorem()
+    {
+        var source = RefutationHeader() + Source + "namespace Other\ntheorem target0 : True := by trivial\nend Other\n";
+        Assert.Equal(2, Findings(Build(source: source, declarations:
+            [new(Theorem, "theorem", "True", []), new("Other.target0", "theorem", "True", [])])).Length);
+    }
+
+    [Fact]
     public void utility_refutation_exempts_only_its_result()
     {
         var findings = Findings(Build(source: RefutationHeader() + TwoTheoremSource, declarations:

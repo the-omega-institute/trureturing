@@ -316,7 +316,7 @@ internal static class UtilityDeclarationValidator
         }
     }
 
-    private static bool TryResolveDeclaration(
+    internal static bool TryResolveDeclaration(
         Gid gid,
         LeanFileReport report,
         out LeanDeclaration? declaration)
