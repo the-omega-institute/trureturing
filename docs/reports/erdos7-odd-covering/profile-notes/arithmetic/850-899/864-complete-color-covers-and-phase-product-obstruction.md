@@ -1925,3 +1925,100 @@ prime envelope is insufficient, even when fresh pure labels are
 free. A successful actual-source argument must use further joint
 structure, a larger replacement interface, or different complete
 liabilities.
+
+## A third matching prime strengthens the mixed-owner budget
+
+Keep the same actual old word z and cofactor point w as in PC56.
+Let m be the number of indexed top owners having at least two
+matching primes, let h count those having at least three, and let
+r be the size of the prime pool. Thus h<=m. All choices below remain
+inside each owner's own matching set A_i(w).
+
+For an owner counted by m but not h, choose two distinct matching
+primes and put two indexed parallel edges between them. For an
+owner counted by h, choose three distinct matching primes and put
+one triangle on them. The resulting loopless multigraph has
+
+$$
+|E|=2(m-h)+3h=2m+h.
+\tag{PC76}
+$$
+
+Fix any vertex subset S and any cut L of S. An owner's triangle
+contributes at most two internal crossing edges, as does its pair
+of parallel edges. Every owner contributing an edge has one
+selected prime on each side of this cut. Choose one such crossing
+pair for each contributing owner and apply PC57--PC58 to this one
+packet. Its used primes all lie in S, so the number of contributing
+owners is at most |S|. Consequently every induced cut of the
+expanded graph contains at most 2|S| edges.
+
+This condition gives fewer than 4|S| edges on every nonempty
+induced vertex set: average over cuts, using that the empty cut
+has no crossing edges. The degree sum then supplies a vertex of
+degree at most seven, counting parallel edges. Deleting and
+restoring these vertices constructs an eight-coloring. Label its
+colors by three-bit vectors and use the seven cuts defined by the
+nonzero binary linear forms. Every edge crosses exactly four of
+these cuts. Each cut has at most 2r edges, so 4|E|<=14r. Substituting
+PC76 gives the strengthened owner inequality
+
+$$
+4m+2h\le7r.
+\tag{PC77}
+$$
+
+The construction uses only the existing two-sided whole-union
+repair. It does not assume independent phases, distinct colors,
+or a new three-sided repair. Larger supports are reduced to three
+actual matching primes; no additional matching prime is invented.
+At an actual point contained in an original, the matching set is
+its full distinct-prime support, as in PC61.
+
+## The strengthened inequality is sensitive to high-rank owners
+
+Combine PC77 with the existing 2m<=3r from PC64 and with h<=m.
+Then
+
+$$
+\begin{aligned}
+m&\le\min\!\left\{
+  \left\lfloor\frac{3r}{2}\right\rfloor,
+  \left\lfloor\frac{7r-2h}{4}\right\rfloor\right\},\\
+h&\le\left\lfloor\frac{7r}{6}\right\rfloor.
+\end{aligned}
+\tag{PC78}
+$$
+
+For r<=27, at most 31 incident mixed top owners can have three or
+more distinct support primes. This improves the corresponding 35
+bound in PC61. The unconditional mixed-owner ceiling remains 40:
+the present assumptions have not forced h to be positive. If h>=15,
+the mixed-owner ceiling decreases to 39; if h>=17, it decreases to
+38. These are conditional improvements, not asserted properties of
+the actual source.
+
+Using the same 110 complete colors and the pure-power ceiling 38
+from PC62, let ell be the number of colors with some active lower
+owner at the actual point. The two density inequalities give
+
+$$
+\ell\ge
+\max\!\left\{32,\left\lceil\frac{99+2h}{4}\right\rceil\right\}.
+\tag{PC79}
+$$
+
+For example, h>=15 would supply at least 33 lower colors at that
+point. This does not produce a fixed set of 33 complete lower
+color families, a permanent prefix assignment, or payment for
+newly deleted parent labels. The fixed lower-owner selection of
+PC66--PC68 remains valid with its stated source and privacy
+conditions; its unresolved payment obligation is unchanged.
+
+The multigraph implication and the complete indexed-owner lift
+are formalized in
+`D5/S3/Combinatorics/Graph/HyperedgeCutDensity.lean`.
+The proof reuses finite double counting and greedy coloring. It
+does not formalize the whole arithmetic supplier chain from a
+minimal odd covering system to PC57--PC58, or establish that the
+conditional high-rank thresholds occur.
