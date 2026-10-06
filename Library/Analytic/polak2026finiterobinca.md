@@ -322,6 +322,14 @@ the selected CA source or FIB addresses supplying that premise is
 established here. The selected-source condition
 $I_\psi(A)>-D^*(A)$ therefore remains unchanged and unproved.
 
+The cited Ford–Soundararajan–Zaharescu sequel and its original
+[fixed smooth-test supplier](../Weil/fordzaharescu2005zerophases.md)
+do identify $-J_q/(2\pi)$ in the ordinate-phase average for each fixed
+integer $q>1$. Their fixed-scale expansion does not bound the actual
+weighted buffer or the signed state-prime work above. The golden
+eigen-scale has no correction density in that theorem; this is a
+parameter application, not an FIB-to-Robin estimate.
+
 ## Boundary for FIB
 
 The finite certificate is organized by CA exponent profiles and
