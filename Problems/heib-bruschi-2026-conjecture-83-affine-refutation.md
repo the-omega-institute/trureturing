@@ -131,10 +131,11 @@ ideal-graph-property are carried along Lie isomorphisms (`admissible_map`,
 **Open.** Which corrected form the authors intend (for example, (ii) replaced by a
 condition on the radical) is not determined by the paper.
 
-**Effect on the paper.** Conjecture 83 is false as stated. Conjecture 80 (a nonzero center
-forces a proper subset with the ideal-graph-property that spans a solvable ideal) and
-Conjecture 82 are not affected: $\mathfrak{aff}(K)$ has trivial center, and its only proper
-subset with the ideal-graph-property spans a solvable ideal.
+**Effect on the paper.** Conjecture 83 is false as stated. The affine algebra is not a
+counterexample to Conjecture 80 (a nonzero center forces a proper subset with the
+ideal-graph-property that spans a solvable ideal), since its center is trivial, nor to
+Conjecture 82, since its only proper subset with the ideal-graph-property spans a solvable
+ideal. This settlement makes no claim about Conjecture 82 in general.
 
 ## ASSUMED-UNVERIFIED
 
