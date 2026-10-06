@@ -568,6 +568,148 @@ private theorem graph_fixed_line {N : ℕ} (Γ : Matrix (Fin N) (Fin N) (ZMod 2)
         simp [graphAmp, graphExponent, chi2, AddChar.zmodChar_apply, binary_self]
       rw [hg, mul_comm]
 
-/- Open target: stabilizer_graph_normal_form, as stated in #13575. -/
+private def symbolTransform {N : ℕ} (H : Finset (Fin N)) (d : V N) (v : E N) : E N :=
+  ((swapAt H v).1, (swapAt H v).2 + fun i => d i * (swapAt H v).1 i)
+
+private lemma tensor_clifford {N : ℕ} (H : Finset (Fin N)) (d : V N)
+    (v : E N) (f : V N → ℂ) :
+    ∃ r : ℂ, r ≠ 0 ∧
+      (show Matrix (V N) (V N) ℂ from tensorOp (fun i => gate (decide (i ∈ H)) (d i))) *ᵥ
+        weyl v f = r • weyl (symbolTransform H d v)
+          ((show Matrix (V N) (V N) ℂ from
+            tensorOp (fun i => gate (decide (i ∈ H)) (d i))) *ᵥ f) := by
+  classical
+  let A := fun i => gate (decide (i ∈ H)) (d i)
+  let v' := symbolTransform H d v
+  have localLaw (i : Fin N) : ∃ r : ℂ, r ≠ 0 ∧
+      A i * wmat (v.1 i) (v.2 i) = r • (wmat (v'.1 i) (v'.2 i) * A i) := by
+    have h := gate_wmat (decide (i ∈ H)) (d i) (v.1 i) (v.2 i)
+    by_cases hi : i ∈ H <;> simpa [A, v', symbolTransform, swapAt, hi] using h
+  choose r hr he using localLaw
+  have hm : tensorOp A * tensorOp (fun i => wmat (v.1 i) (v.2 i)) =
+      (∏ i, r i) • (tensorOp (fun i => wmat (v'.1 i) (v'.2 i)) * tensorOp A) := by
+    rw [tensor_mul, tensor_mul]
+    rw [show (fun i => A i * wmat (v.1 i) (v.2 i)) =
+      (fun i => r i • (wmat (v'.1 i) (v'.2 i) * A i)) from funext he, tensor_smul]
+  let G : Matrix (V N) (V N) ℂ := tensorOp A
+  let W : E N → Matrix (V N) (V N) ℂ :=
+    fun u => tensorOp (fun i => wmat (u.1 i) (u.2 i))
+  have hm' : G * W v = (∏ i, r i) • (W v' * G) := hm
+  have hv := congrArg (fun M : Matrix (V N) (V N) ℂ => M *ᵥ f) hm'
+  have hw (u : E N) (g : V N → ℂ) : W u *ᵥ g = weyl u g := tensor_weyl u g
+  rw [Matrix.smul_mulVec, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, hw, hw] at hv
+  exact ⟨∏ i, r i, Finset.prod_ne_zero_iff.mpr (fun i _ => hr i), hv⟩
+
+private lemma stabilizer_graph_eigen {N : ℕ} (ψ : V N → ℂ)
+    (hψ : StabilizedBy pauliSet ψ) :
+    ∃ (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ)
+      (Γ : Matrix (Fin N) (Fin N) (ZMod 2)),
+      (∀ i, A i ∈ Matrix.unitaryGroup (Fin 2) ℂ) ∧ Γ.IsSymm ∧ (∀ i, Γ i i = 0) ∧
+      ∀ i, ∃ a : ℂ, weyl (Pi.single i 1, Γ *ᵥ Pi.single i 1)
+        ((show Matrix (V N) (V N) ℂ from tensorOp A) *ᵥ ψ) =
+        a • ((show Matrix (V N) (V N) ℂ from tensorOp A) *ᵥ ψ) := by
+  classical
+  obtain ⟨k, v, c, hline⟩ := stabilizer_weyl ψ hψ
+  obtain ⟨_, hiso, hdim, heigen⟩ := unique_weyl_line_lagrangian v c ψ hψ.1 hline
+  let L := Submodule.span (ZMod 2) (Set.range v)
+  obtain ⟨H, d, Γ, hs, hd, hgraph⟩ := lagrangian_graph_form L hiso hdim
+  let A := fun i => gate (decide (i ∈ H)) (d i)
+  refine ⟨A, Γ, fun i => gate_unitary _ _, hs, hd, ?_⟩
+  intro i
+  let q : E N := (Pi.single i 1, Γ *ᵥ Pi.single i 1)
+  let w : E N := (q.1, q.2 + fun j => d j * q.1 j)
+  let u := swapAt H w
+  have hswap : swapAt H u = w := by
+    ext j <;> by_cases hj : j ∈ H <;> simp [u, swapAt, hj]
+  have htu : symbolTransform H d u = q := by
+    unfold symbolTransform
+    rw [hswap]
+    apply Prod.ext
+    · rfl
+    · funext j
+      change (q.2 j + d j * q.1 j) + d j * q.1 j = q.2 j
+      rw [add_assoc, CharTwo.add_self_eq_zero, add_zero]
+  have humem : u ∈ L := (hgraph u).mpr (by
+    change (symbolTransform H d u).2 = Γ *ᵥ (symbolTransform H d u).1
+    rw [htu])
+  obtain ⟨a, ha⟩ := (heigen u).mpr humem
+  obtain ⟨r, hr, hh⟩ := tensor_clifford H d u ψ
+  rw [htu, ha, Matrix.mulVec_smul] at hh
+  refine ⟨r⁻¹ * a, ?_⟩
+  rw [← smul_smul, eq_inv_smul_iff₀ hr]
+  exact hh.symm
+
+private lemma graph_sign_correction {N : ℕ}
+    (Γ : Matrix (Fin N) (Fin N) (ZMod 2)) (hs : Γ.IsSymm) (hd : ∀ i, Γ i i = 0)
+    (φ : V N → ℂ) (hne : φ ≠ 0)
+    (heigen : ∀ i, ∃ a : ℂ, weyl (Pi.single i 1, Γ *ᵥ Pi.single i 1) φ = a • φ) :
+    ∃ (b : V N) (c : ℂ), weyl (0, b) φ = c • graphAmp Γ := by
+  classical
+  choose a ha using heigen
+  have square (i : Fin N) : a i * a i = 1 := by
+    have h := weyl_square (Pi.single i 1, Γ *ᵥ Pi.single i 1) φ
+    have hz : (∑ j, (Pi.single i (1 : ZMod 2) : V N) j *
+        (Γ *ᵥ Pi.single i 1) j) = 0 := by
+      simp [Pi.single_apply, ite_mul, hd]
+    rw [ha i, (weyl_linear _).2.1, ha i, smul_smul, hz, chi2_laws.1] at h
+    exact smul_left_injective ℂ hne h
+  let b : V N := fun i => if a i = 1 then 0 else 1
+  have hb (i : Fin N) : chi2 (b i) = a i := by
+    rcases mul_self_eq_one_iff.mp (square i) with h | h <;> norm_num [b, h, chi2_eq]
+  refine ⟨b, (weyl (0, b) φ) 0, graph_fixed_line Γ hs hd _ ?_⟩
+  intro i
+  have hsp : sp (Pi.single i 1, Γ *ᵥ Pi.single i 1) (0, b) = b i := by
+    simp [sp, Pi.single_apply, ite_mul]
+  rw [weyl_commute, ha i, (weyl_linear (0, b)).2.1, smul_smul,
+    hsp, hb, square, one_smul]
+
+/-- Every nonzero Pauli stabilizer eigenline is a product of local unitaries applied to a
+binary graph amplitude, up to an arbitrary complex scalar. -/
+theorem stabilizer_graph_normal_form {N : ℕ} (ψ : (Fin N → Fin 2) → ℂ)
+    (hψ : StabilizedBy pauliSet ψ) :
+    ∃ (U : Fin N → Matrix (Fin 2) (Fin 2) ℂ) (Γ : Matrix (Fin N) (Fin N) (ZMod 2)) (c : ℂ),
+      (∀ i, U i ∈ Matrix.unitaryGroup (Fin 2) ℂ) ∧ Γ.IsSymm ∧ (∀ i, Γ i i = 0) ∧
+      ψ = c • (tensorOp U *ᵥ graphAmp Γ) := by
+  classical
+  obtain ⟨A, Γ, hA, hs, hd, heigen⟩ := stabilizer_graph_eigen ψ hψ
+  let G := tensorOp A
+  let φ : V N → ℂ := (show Matrix (V N) (V N) ℂ from G) *ᵥ ψ
+  have hG : G ∈ Matrix.unitaryGroup (Fin N → Fin 2) ℂ := tensor_unitary A hA
+  have hinv : Gᴴ * G = 1 := Matrix.mem_unitaryGroup_iff'.mp hG
+  have hne : φ ≠ 0 := by
+    intro hz
+    have hh : Gᴴ *ᵥ (G *ᵥ ψ) = ψ := by
+      rw [Matrix.mulVec_mulVec, hinv, Matrix.one_mulVec]
+    change (show Matrix (V N) (V N) ℂ from Gᴴ) *ᵥ φ = ψ at hh
+    rw [hz, Matrix.mulVec_zero] at hh
+    exact hψ.1 hh.symm
+  obtain ⟨b, c, hfixed⟩ := graph_sign_correction Γ hs hd φ hne heigen
+  let B := fun i => wmat 0 (b i)
+  let U := fun i => (A i)ᴴ * B i
+  have hU (i : Fin N) : U i ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+    apply (Matrix.unitaryGroup (Fin 2) ℂ).mul_mem
+    · exact Unitary.star_mem (hA i)
+    · exact wmat_unitary 0 (b i)
+  let T : Matrix (V N) (V N) ℂ := tensorOp B
+  let g : V N → ℂ := graphAmp Γ
+  have hwB : T *ᵥ g = weyl (0, b) g := tensor_weyl (0, b) g
+  have hfixed' : weyl (0, b) φ = c • g := hfixed
+  have hφ : φ = c • (T *ᵥ g) := by
+    calc
+      φ = weyl (0, b) (weyl (0, b) φ) := by
+        rw [weyl_square]
+        simp [chi2_laws.1]
+      _ = weyl (0, b) (c • g) := congrArg (weyl (0, b)) hfixed'
+      _ = c • weyl (0, b) g := (weyl_linear _).2.1 _ _
+      _ = c • (T *ᵥ g) := congrArg (c • ·) hwB.symm
+  have hφ' : G *ᵥ ψ = c • (tensorOp B *ᵥ graphAmp Γ) := hφ
+  refine ⟨U, Γ, c, hU, hs, hd, ?_⟩
+  calc
+    ψ = Gᴴ *ᵥ (G *ᵥ ψ) := by rw [Matrix.mulVec_mulVec, hinv, Matrix.one_mulVec]
+    _ = c • (tensorOp U *ᵥ graphAmp Γ) := by
+      rw [hφ', Matrix.mulVec_smul, Matrix.mulVec_mulVec]
+      change c • (((tensorOp A)ᴴ * tensorOp B) *ᵥ graphAmp Γ) = _
+      rw [tensor_adj, tensor_mul]
+
 
 end D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
