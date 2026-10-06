@@ -42,6 +42,18 @@ structure NodeCoverage where
   roots : List NodeCoordinate
   facts : List Name
 
+/-- A literal finite carrier inventory; completeness and uniqueness are kernel checked. -/
+structure FiniteEnumeration (T : Type u) where
+  values : List T
+  nodup : values.Nodup
+  complete : ∀ x, x ∈ values
+
+/-- A proposition and its Boolean observation retain their original scoped nodes. -/
+structure BoolReflection (source : Prop) (readout : Bool) where
+  sourceAt : NodeCoordinate
+  readoutAt : NodeCoordinate
+  reflects : source ↔ readout = true
+
 /-- A finite dependent function is published as literal rows. The report
  checks the positions are exactly 0,...,size-1; the kernel checks every value. -/
 structure TableEntry {size : Nat} {T : Fin size → Type u} (value : ∀ i, T i) where
