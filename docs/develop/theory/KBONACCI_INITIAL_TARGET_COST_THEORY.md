@@ -1144,3 +1144,413 @@ For external comparison, the primary versions in Mathematical Citation 7.2 remai
 **开放问题 18.2（All widths and arbitrary attainable INITIAL labels）。** Theorem 16.2 provides a higher-tour, repeated-label, multiple-tail symbolic family with an actual optimal common stream; Theorem 17.2 identifies one sharp unguarded boundary and its different exact fee. The general objective of Open Problem 9.1 remains unchanged: determine the exact minimum worst-branch number of actual emitted complete blocks for every arbitrary attainable immutable INITIAL target and all original $k\ge2,m\ge1$. Arbitrary unguarded tables, richer tail partitions beyond (15.5), competing feasible parents outside the proved families, and other narrow or wide calendars remain within that objective. Neither result replaces its quantifiers by a tail-only prior or by a generic decision-tree model. Offline code selection, controller memory, and all paid waits remain separate from one another and from the emitted-block fee.
 
 ## 追加锚（本行以下为增补区）
+
+## 19. Arbitrary low-phase labels at the first endpoint return
+
+**定义 19.1（Full INITIAL threshold table）。** Retain the reader, matched coefficient cycle, joint actual histories, two free-value fibres, independent absorbing rejection, literal alphabets, immutable INITIAL labels, and paid endpoint-only fee of Chapter 1. Fix
+
+$$
+Q\ge2,\qquad m\ge3,\qquad 2\le r<m,\qquad
+T=Qm+r,\qquad k=T-1,\qquad g=\gcd(m,r),
+$$
+$$
+P=g\mathbb Z/T\mathbb Z,\qquad b=k-m,\qquad N=Q+1.
+\tag{19.1}
+$$
+
+Let $Y$ be any set and $\lambda:P\to Y$ any table with
+
+$$
+\lambda(0)=D\ne E=\lambda(m).
+\tag{19.2}
+$$
+
+Choose arbitrary $R,L_\bot\in Y$, allowing every coincidence consistent with (19.2). The entire target, on both free-value fibres and every INITIAL tail, is
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R,&b\le s<k,\\
+\lambda(j),&0\le s<b,
+\end{cases}
+\qquad j\in P,\quad v\in\mathbb F_2,
+\qquad f(\bot)=L_\bot.
+\tag{19.3}
+$$
+
+The source at every displayed triple is the one whole history (1.3); no restriction to INITIAL tail zero is made. Independence of $v$ is a hypothesis of this family. Write
+
+$$
+H=\{0,m\},\qquad Z=P\setminus H.
+$$
+
+Block index zero is the paid root. The post-root indices are $1,\ldots,Q$ at total fee $N$. In representatives $0,\ldots,T-1$, their ordered windows are
+
+$$
+W_t=[tm,(t+1)m]\quad(1\le t<Q),
+\qquad
+W_Q=[Qm,Qm+1,\ldots,T-1,0,1,\ldots,m-r].
+\tag{19.4}
+$$
+
+Their outside phases decompose into the frozen set, single-opportunity slots, and adjacent-window boundaries:
+
+$$
+F=P\cap\{m-r+1,\ldots,m-1\},
+$$
+$$
+K_t=P\cap\{tm+1,\ldots,(t+1)m-1\}\quad(1\le t<Q),
+$$
+$$
+K_Q=P\cap\bigl(\{Qm+1,\ldots,T-1\}\cup\{1,\ldots,m-r\}\bigr),
+\qquad h_t=(t+1)m\quad(1\le t<Q).
+\tag{19.5}
+$$
+
+Thus $Z$ is the disjoint union of $F$, all $K_t$, and $h_1,\ldots,h_{Q-1}$. A phase in $F$ has no post-root opportunity by fee $N$; a phase in $K_t$ has exactly the opportunity $t$; $h_t$ has exactly the two opportunities $t,t+1$. In particular the terminal slot includes the right endpoint $m-r$ of the wrapped path. This endpoint is not an adjacent-window boundary within this deadline. The frozen set can be empty. For $g=1$, it contains $r-1\ge1$ phases.
+
+**定义 19.2（Explicit deadline arrays）。** A row $e_t$ prescribes charges on $P\cap W_t$, and is extended by zero on $P\setminus W_t$. Call the array $(e_1,\ldots,e_Q)$ literal-admissible when
+
+$$
+e_1(m)=0,
+\qquad
+\bigoplus_{j\in W_t}e_t(j)=0\quad(1\le t\le Q)\ \text{if }g=1.
+\tag{19.6}
+$$
+
+When $g>1$ there is no parity restriction on the actual vertices. Indeed $tm+1\pmod T$ is a nonactual vertex of each window: assign its charge to compensate the parity of the prescribed actual charges and assign zero to other nonactual vertices. Formula (1.5) then gives a whole literal word realizing each row. For $g=1$ the row already has even full-path parity and (1.5) applies directly. In either case (19.6) makes the first bit of block one zero. This is actual path inversion, not a linear span of unavailable blocks.
+
+For an admissible array define, using only its zero-difference continuation,
+
+$$
+U_1=Z,\qquad A_t=\{j\in U_t:e_t(j)=1\},\qquad
+U_{t+1}=U_t\setminus A_t,
+$$
+$$
+X_t=A_t\setminus\{h_t\}\quad(t<Q),\qquad X_Q=A_Q.
+\tag{19.7}
+$$
+
+Say that the array has the retirement property if
+
+$$
+|\lambda[X_t]|\le1\quad(1\le t\le Q),\qquad
+|\lambda[U_{Q+1}]|\le1.
+\tag{19.8}
+$$
+
+Empty sets satisfy these inequalities. If $t<Q$, $h_t\in A_t$, and $X_t$ is nonempty with its unique label $L_t$, call $t$ a repair obligation exactly when $\lambda(h_t)\ne L_t$. The common-stream condition is
+
+$$
+e_Q(0)=1,
+\qquad e_{t+1}(h_t)=1\quad\text{at every repair obligation }t<Q.
+\tag{19.9}
+$$
+
+Labels may repeat arbitrarily, including at the $h_t$. Neither (19.7) nor (19.8) chooses a baseline in advance or presupposes an actual frozen phase. These conditions are finite mathematical existence tests on the actual charge rows. With a supplied finite table and decidable equality of its labels, the finitely many binary rows can be enumerated and the displayed comparisons performed. Without table access and label-equality access, no effective algorithm on an arbitrary abstract $Y$ is asserted. Such offline enumeration is not an emitted-block fee.
+
+## 20. Complete adaptive and preset deadline classifications
+
+**定理 20.1（Every arbitrary-table first-return deadline）。** For every parameter and table in Definition 19.1, under either original literal alphabet,
+
+$$
+C_{\rm ad}(f)\ge N,\qquad C_{\rm pre}(f)\ge N,
+\tag{20.1}
+$$
+$$
+C_{\rm ad}(f)=N
+\quad\Longleftrightarrow\quad
+\text{some literal-admissible array satisfies (19.8)},
+\tag{20.2}
+$$
+$$
+C_{\rm pre}(f)=N
+\quad\Longleftrightarrow\quad
+\text{some literal-admissible array satisfies (19.8) and (19.9)}.
+\tag{20.3}
+$$
+
+These are separate existence statements: the preset array need not be the adaptive array first found. Failure of the respective test means only $C_{\rm ad}(f)>N$ or $C_{\rm pre}(f)>N$. It supplies no uniform next optimum and no unattainability conclusion.
+
+Proof. First reuse the global first-zero comparison and endpoint-return obstruction of [S1, Lemmas 4.2–4.3] and [S20, Theorem 3.1], integrated in Theorem 2.2. Their lower-bound argument does not use the constant outside table of that theorem. At least one of $D,E$ differs from $R$. At that endpoint and a fixed free value, the actual INITIAL tails $b-1,b$ have different labels. Every root with a zero after $a<m$ leading ones lets both reach that zero, since $b+a\le k-1$, and merges them with the same acquired archive. No continuation can recover their different INITIAL labels. A free stopping root is likewise impossible. Thus every correct root among all $2^m$ words is $1^m$, even with nonfresh $R$ or further adaptive actions.
+
+The root rejects exactly the high tails, which return $R$ at fee one. Every low tail survives; its root difference is one precisely at $H$. The two successful root archives are therefore the whole low-tail supports $H$ and $Z$, not marginal phase supports borrowed from another branch. On $H$, take the two actual low sources at INITIAL tail $b-1$. They have the same current value and current tail $k-1$. Every second block beginning one rejects both at its first bit, irreversibly merging distinct endpoint labels. Hence this block starts zero.
+
+Before absolute emitted position $T-1$, the phase-zero source's only active position is zero, and the phase-$m$ source's only active positions are $m-1,m$. The root gives each one unit of difference; the compulsory zero at position $m$ suppresses the second source's next opportunity. For total fee $d<N$, the last emitted position is $dm-1<T-1$. The two endpoint archives therefore stay identical, with the same actions, stopping decisions and later rejection if any. This proves (20.1) for every adaptive tree, and thus for every preset stream. In the deadline $N$, the only later window meeting $H$ is $W_Q$, which contains zero and not $m$. Consequently every successful preset stream of fee $N$ must satisfy $e_Q(0)=1$.
+
+On a nonconstant $Z$ archive, choose every phase at INITIAL tail $b-1$. All now have tail $k-1$ and the same root value. A second block beginning one would merge all of them in rejection, including two different labels. It must therefore start zero. If $\lambda[Z]$ is constant, stop this archive at the root; for a deadline array it may instead be extended formally by zero blocks. This covers the constant case without excluding any correct controller.
+
+The clearing bit at absolute position $m$ has a useful stronger consequence. Up to fee $N$, there are only
+
+$$
+(Nm-1)-m=Qm-1<k
+\tag{20.4}
+$$
+
+positions after it. Every later literal choice is safe, even if all those positions are ones. The clearing bit also makes the current tail common within each acquired archive, independently of the INITIAL tail. Thus there is no additional run or cross-block rejection shortcut after this point in the deadline. For $g>1$, compensation on a nonactual vertex affects the literal word but cannot introduce a nonexistent source. All words considered here are in both alphabets since $m<k$.
+
+For adaptive necessity take the actions on the $Z$ archive's chronological zero-difference continuation. If it stops early, its labels are constant, so extend that leaf by actual zero blocks to index $Q$. These words give a literal-admissible array. At the positive child of index $t<Q$, the actual phase support is exactly $A_t$. By (19.4)–(19.5), the phases in $X_t$ have no further window opportunity before the deadline. Only $h_t$ can appear again, and only at index $t+1$. Two sources in $X_t$ follow identical subsequent outputs under any actions on this child, since their current values and tails are common and every future charge is zero. They must have the same INITIAL label. The same reasoning at $t=Q$ makes $\lambda[A_Q]$ constant, and the all-zero terminal archive makes $\lambda[U_{Q+1}]$ constant. This proves (19.8). It is a collapse forced by this reader's one-tour geometry, not a generic belief-tree recursion.
+
+For adaptive sufficiency invert the array into literal words and issue them along the continuing zero-difference archive after the root. At a positive child $A_t$, if $X_t$ is empty, its sole possible phase is $h_t$, so return its label. If $X_t$ is nonempty with label $L_t$, and $h_t$ is absent or has that same label, return $L_t$ immediately. At a repair obligation issue, on this child alone, the next complete block
+
+$$
+10^{m-1}.
+\tag{20.5}
+$$
+
+Its full-path support at index $t+1$ is $\{h_t,h_t+1\}$; the latter phase was never in $A_t$. It gives difference one on $h_t$ and zero on $X_t$. Return $\lambda(h_t)$ or $L_t$ accordingly. This is exactly one paid repair block, finishing at total fee $t+2\le Q+1=N$. It is safe by (20.4), including a seam whose preceding word ends in ones. At index $Q$, return the unique label of $A_Q$ or $U_{Q+1}$ on the respective nonempty child. All decoding refers to the acquired original labels.
+
+The endpoint archive uses its own actual continuation: zero blocks at indices $1,\ldots,Q-1$, followed at index $Q$ by
+
+$$
+0^{r-1}1\,0^{m-r}.
+\tag{20.6}
+$$
+
+The pulse is at absolute position $T-1$ with support $\{T-1,0\}$. On $H$ it selects only zero, so difference one returns $D$ and difference zero returns $E$. All waits are emitted and charged. The first wait clears tail $k-1$; the pulse is isolated, so every INITIAL low tail succeeds. The initial rejection reading returns $L_\bot$ freely. Both free values use their own successive endpoint differences, not another fibre's outputs. This realizes (20.2) with actual worst fee $N$, attained on the endpoint sources.
+
+For preset necessity, the one stream supplies a single full array even on sources stopped early. It starts zero at index one because its $H$ archive still needs to continue. The safety bound (20.4) permits formal continuation of the whole low support through all $N$ blocks. The same retirement argument gives (19.8). At a repair obligation the sources in $X_t$ and $h_t$ share their acquired archive through index $t$ and have different labels. Only $h_t$ can have any further nonzero charge; its sole remaining opportunity is index $t+1$. Hence that same global row must have $e_{t+1}(h_t)=1$. Together with the endpoint constraint already proved, this is (19.9). Early stopping cannot remove an obligation at a nonconstant acquired archive.
+
+For preset sufficiency, invert these very same rows on their full physical paths and use $1^m$ followed by the resulting $Q$ words as one fixed literal stream. The $Z$ decoder follows the cases in the adaptive construction. At a repair obligation it reads the next block of this common stream: (19.9) selects $h_t$, and all of $X_t$ is outside that next window, so the same two labels are separated. No word is substituted from a different branch. On $H$, the index-one first zero suppresses the charge at $m$, all intermediate windows miss both phases, and the final row selects zero by (19.9). The endpoint decoder therefore returns $D,E$ at fee $N$. Bound (20.4) simultaneously proves every seam safe on all continuing low sources. The high and initial rejection leaves are the ones already specified. This proves (20.3), including empty $X_t$, an empty zero-continuation support, empty $F$, repeated adjacent-boundary labels, all allowed coincidences, and both alphabets. ∎
+
+The distinction between a deadline failure and unattainability is substantive. The supplied safe phase-recovery interface [S1, Theorem 3.1] applies after the paid parent and a paid zero-clearing block, since every successful same-phase merged fibre now has one INITIAL label. For example its safe pulse method can be used with blocks $0^{m-1}1$ for a complete $p=T/g$-step phase tour. On actual phases when $g>1$, the support $\{(t+1)m-1,(t+1)m\}$ restricts to the singleton $(t+1)m$, and these singletons traverse $P$. When $g=1$, the full $T$-step responses traverse a translated adjacent pair; two different phases cannot give identical full patterns, since an adjacent pair on a cycle of length $T\ge8$ has no nonzero translation stabilizer. Each block starts zero and has tail one, so its seams are strict. This is a reused finite-attainment construction with a total upper bound $p+2$, not a claimed optimum following a failed deadline test.
+
+## 21. Arbitrary paid batches and the exact global-stream fee
+
+**定义 21.1（Single-label batches with unrestricted coincidences）。** In Definition 19.1 choose a baseline $A\in Y$ and arbitrary subsets $O_t\subseteq K_t$ for $1\le t\le Q$, including empty and full sets. Each nonempty $O_t$ carries one label $B_t\ne A$. Different $B_t$ may coincide, and may equal $D,E,R,L_\bot$. Put
+
+$$
+\lambda(j)=B_t\quad(j\in O_t),\qquad
+\lambda(j)=A\quad(j\in Z\setminus\bigcup_{t=1}^QO_t),
+\qquad \lambda(0)=D\ne E=\lambda(m),
+$$
+$$
+B=\sum_{t=1}^Q|O_t|.
+\tag{21.1}
+$$
+
+The slots are disjoint; in particular every adjacent-window boundary $h_t$ has label $A$. This is a hypothesis about actual phases and INITIAL labels, not merely about the number of nonbaseline labels. The terminal slot $K_Q$ has both the high-end and wrapped low-end parts in (19.5).
+
+**定理 21.2（Sharp all-gcd batch law）。** For every target in Definition 21.1,
+
+$$
+C_{\rm ad}(f)=N,
+\qquad
+C_{\rm pre}(f)=N+
+\mathbf1_{\{g=1,\ O_t\ne\varnothing\ (1\le t\le Q),\ B\text{ even}\}}.
+\tag{21.2}
+$$
+
+Proof. The lower bound $N$ is (20.1); it applies regardless of label coincidences. We first construct adaptive attainment and then compare the common streams, because parity of a proposed row alone does not establish preset optimality.
+
+For $g=1$, take on the zero-continuation archive the following even supports:
+
+$$
+E_t=O_t\cup
+\begin{cases}
+\{h_t\},&|O_t|\text{ odd},\\
+\varnothing,&|O_t|\text{ even},
+\end{cases}
+\quad(1\le t<Q),
+$$
+$$
+E_Q=O_Q\cup
+\begin{cases}
+\{0\},&|O_Q|\text{ odd},\\
+\varnothing,&|O_Q|\text{ even}.
+\end{cases}
+\tag{21.3}
+$$
+
+All left-boundary charges are zero, including the compulsory charge at $m$. Every selected strict-slot source has label $B_t$. The only additional selected actual source at a nonterminal index is $h_t$, with label $A$. If present alongside a nonempty $O_t$, it is separated by (20.5) on that positive child at the next paid endpoint. If $O_t$ is empty there is no selected boundary in (21.3). A left boundary previously removed from the continuing zero archive can have zero charge in the following scan word: the repair of its other actual child is an adaptive word, not a constraint on this word. At the final index, only $O_Q$ is selected inside $Z$. The final zero archive consists solely of baseline sources. Thus (21.3) has the retirement property and Theorem 20.1 supplies a legal adaptive controller of fee $N$, including its separately acquired endpoint sibling. This construction also covers empty terminal or earlier batches, and repeated $B_t$.
+
+For $g>1$ prescribe actual charges exactly $O_t$ at indices $t<Q$, and $O_Q\cup\{0\}$ at index $Q$. Compensate an odd total on a nonactual vertex of that same window. This gives one literal common stream with first post-root bit zero. No actual adjacent boundary is selected. Each positive scan child returns $B_t$ immediately, the terminal zero child returns $A$, and the final row separates $D,E$ on the root-positive archive. Theorem 20.1 proves simultaneous literal validity and fee $N$. This argument does not require any frozen actual phase or a positive-size actual complement of a batch.
+
+Now suppose $g=1$, every $O_t$ is nonempty, and a preset controller had fee $N$. Since $F$ contains an actual phase with label $A$ and has no post-root opportunity, its zero-difference archive fixes the terminal zero label to be $A$. Every $j\in O_t$ has its only opportunity at $t$, so its charge must be one: leaving it on the zero archive would permanently merge $B_t\ne A$ with that frozen phase. Any baseline phase in $K_t$ must have charge zero, since otherwise it shares the positive child with the nonempty $B_t$ core and has no later opportunity to separate. These assertions apply equally when $B_t$ equals a different batch label or an endpoint label.
+
+Let $a_t=e_t(h_t)$ for $1\le t<Q$, and let $a_0=0$. At the next index the charge at the left boundary obeys
+
+$$
+e_{t+1}(h_t)=a_t.
+\tag{21.4}
+$$
+
+If $a_t=1$, the root-zero archive's positive child contains the nonempty $B_t$ core and the boundary labelled $A$. The common stream must repair them at the boundary's sole remaining opportunity, forcing the next charge one. If $a_t=0$, that boundary is still on the zero-continuation archive; selecting it at the next index would join the nonempty $B_{t+1}$ core as a permanently silent different label, so the next charge must be zero. This proves both directions of (21.4) from actual leaf obligations, rather than choosing favourable parity orientations independently on different branches.
+
+Full-path parity now gives
+
+$$
+a_{t-1}\oplus(|O_t|\bmod2)\oplus a_t=0
+\quad(1\le t<Q).
+\tag{21.5}
+$$
+
+On the terminal path, the charge at $Qm$ is $a_{Q-1}$ by the same argument, the actual terminal-slot charges are the indicator of $O_Q$, and the charge at zero is one for the unequal endpoint sibling. Hence
+
+$$
+a_{Q-1}\oplus(|O_Q|\bmod2)\oplus1=0.
+\tag{21.6}
+$$
+
+Adding (21.5)–(21.6) in $\mathbb F_2$ cancels all boundaries and yields $B\bmod2=1$. Thus $B$ even excludes every preset stream of fee $N$, not just (21.3). The forced parent comparison and endpoint lower bound already excluded every cheaper fee.
+
+To attain fee $N$ in all the remaining coprime cases, select sets $J_t$ as follows. If $B$ is odd, let $J_t=O_t$ for all $t$. If $B$ is even and some $O_h$ is empty, choose any $z\in K_h$ and put
+
+$$
+J_h=\{z\},\qquad J_t=O_t\quad(t\ne h).
+\tag{21.7}
+$$
+
+Such a vertex exists: for $g=1$ each $K_t$, including $K_Q$, has $m-1\ge2$ vertices. It has label $A$. In both cases the total $\sum|J_t|$ is odd. Define
+
+$$
+a_0=0,\qquad a_t=\bigoplus_{i=1}^t(|J_i|\bmod2)\quad(1\le t<Q),
+$$
+$$
+E_t=J_t\cup\{tm:a_{t-1}=1\}\cup\{(t+1)m:a_t=1\}
+\quad(1\le t<Q),
+$$
+$$
+E_Q=J_Q\cup\{Qm:a_{Q-1}=1\}\cup\{0\}.
+\tag{21.8}
+$$
+
+The conditional singleton notation means the empty set when its condition fails. These supports have even full-path parity; their first row omits $m$, so every word is the literal inverse (1.5) and the first post-root bit is zero.
+
+If the left charge at an index is one, that boundary was already selected by the previous right charge and is absent from this index's zero-continuation archive. If the previous right charge was zero, the boundary is still present and the present left charge is zero. Therefore the retired positive core is exactly $J_t$, whose label is $B_t$ for a nonempty original batch and $A$ for the compensation singleton. Every selected right boundary has label $A$. A positive core of label $B_t$ repairs that boundary using the next row's left charge one. A positive child containing only baseline sources returns $A$ immediately, with no repair obligation. The terminal positive core is again $J_Q$, and the terminal zero archive contains only baseline labels. The charge at zero is one on the very same final word, so the endpoint sibling returns $D,E$ correctly. Thus (21.8) satisfies the common-stream criterion (19.9) on all actual branches. Every paid scan, wait, and necessary repair is within fee $N$, with the strict safety bound (20.4). In particular an empty terminal batch can supply the compensation singleton just as an earlier empty batch can; it cannot be silently omitted from the criterion.
+
+Finally suppose $g=1$, every batch is nonempty, and $B$ is even. Take $J_t=O_t$ and the cumulative $a_t$ just defined. Keep the nonterminal rows of (21.8), and replace its last row by
+
+$$
+E_Q=O_Q\cup\{Qm:a_{Q-1}=1\}.
+\tag{21.9}
+$$
+
+Its full parity is even because the total $B$ is even. The same common-stream scan and repair decoder finishes every root-zero source by fee $N$. Only the root-positive endpoint sibling is unresolved: its final zero-phase charge is now zero. Append at index $Q+1$ the one literal block
+
+$$
+0^{r-1}1\,0^{m-r}.
+\tag{21.10}
+$$
+
+Its starting residue is $(Q+1)m\equiv m-r\pmod T$; its isolated pulse has support $\{m-1,m\}$. On the still-live $H$ archive this selects exactly $m$, returning $E$ on difference one and $D$ on difference zero. The leading $r-1\ge1$ zeros clear any current tail before the pulse; the trailing $m-r\ge1$ zeros leave tail zero. There is no additional cleanup fee. The whole prefix through fee $N$ was safe by (20.4), and (21.10) is safe on the same histories. The outside sources may stop by fee $N$; the endpoint sources actually pay $N+1$. This is one fixed global stream and one paid final repair. Together with the all-action exclusion of $N$, it proves the exact surcharge in (21.2). ∎
+
+The support of each word above is assigned on its own full physical path. A nonactual compensation vertex in the noncoprime case, an already removed boundary in (21.8), and a baseline-labelled compensation phase in an empty batch have different roles. Only the first is not a source. The latter two require the explicit acquired-archive and leaf arguments in the proof; they cannot be borrowed freely from another branch.
+
+## 22. Complete-target obstructions and scope counterexamples
+
+**命题 22.1（An empty terminal batch removes an even-total surcharge）。** Set $Q=2,m=3,r=2$, so $T=8,k=7,b=4,N=3$. On low tails let $\lambda(4)=\lambda(5)=B\ne A$, put $A$ at every other outside phase, and retain $\lambda(0)=D\ne E=\lambda(3)$. Give every high tail any label $R$ and initial rejection any label $L_\bot$. Then
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)=3.
+\tag{22.1}
+$$
+
+Proof. Here $K_1=\{4,5\}$, $K_2=\{7,1\}$, $O_1=K_1$, and $O_2=\varnothing$, with total batch size two. The empty terminal slot is the missing hypothesis in an unqualified even-total surcharge. More explicitly the common stream
+
+$$
+111\mid010\mid001
+\tag{22.2}
+$$
+
+has successive full charge supports $\{0,3\}$, $\{4,5\}$, $\{0,1\}$. Root rejection returns $R$. On the root-zero archive, the second difference selects exactly the $B$ phases; every other candidate there has label $A$, so both children stop by fee two. On the root-positive archive, the second word starts zero and gives no endpoint difference; the third selects zero and not three, returning $D,E$. The first bit of the second word clears every surviving INITIAL tail, and its isolated one and the final isolated one have strict seams. Initial $\bot$ is decoded separately for free. The endpoint lower bound (20.1) excludes every fee below three. This proves the full INITIAL target law, independently of the numerical parity observation. ∎
+
+**命题 22.2（A genuine adaptive-three, preset-four target）。** At the same parameters, put $\lambda(4)=B\ne A$ and $\lambda(7)=C\ne A$, with all other outside phases labelled $A$. The labels $B,C$ may coincide with each other or any endpoint, high, or initial rejection label. With $D\ne E$,
+
+$$
+C_{\rm ad}(f)=3,\qquad C_{\rm pre}(f)=4.
+\tag{22.3}
+$$
+
+Proof. The two nonempty batches are $O_1=\{4\}$ and $O_2=\{7\}$; Theorem 21.2 applies. An explicit adaptive controller starts with $111$. Its high-rejection archive returns $R$. On its endpoint archive issue $000\mid010$; the last support $\{7,0\}$ selects only zero among $\{0,3\}$ and returns $D,E$.
+
+On the root-zero archive issue $011$, with support $\{4,6\}$. The positive child is $\{4,6\}$ with labels $B,A$; there issue $100$ at index two, whose support $\{6,7\}$ restricts to $\{6\}$. Difference zero returns $B$ and difference one returns $A$. The zero child is $\{1,2,5,7\}$; there issue $010$ with support $\{7,0\}$, returning $C$ on difference one and $A$ on difference zero. Each source follows only its own chronological actions, with no mixed-branch output. All these branches clear at the second block's first bit and end by fee three, so (20.4) proves every seam safe on every low INITIAL tail.
+
+For a direct all-action preset exclusion at three, the frozen phase two has label $A$. The first post-root word must start zero; write its bits $0ab$. Since phase four's only opportunity is this word, it must have charge one, hence $a=1$. Phase five has label $A$ and no later opportunity; its charge must be zero, hence $a\oplus b=0$ and $b=1$. Thus phase six is selected with charge one. Its label $A$ differs from phase four's $B$, so the common final word must have charge one at six to repair that acquired positive child. On the zero child, phase seven must have charge one to separate $C$ from frozen $A$, and phase one must have charge zero because its baseline label cannot share the final positive child with $C$. The endpoint sibling requires charge one at zero. The last window is $[6,7,0,1]$; the four required charges are consequently $1,1,1,0$, of odd total, which no literal word realizes. This includes arbitrary common-stream early stopping: the cited nonconstant children cannot already stop. All fees below three are excluded by (20.1).
+
+A common stream of fee four is
+
+$$
+111\mid000\mid010\mid001,
+\tag{22.4}
+$$
+
+with post-root supports $\varnothing$, $\{7,0\}$, $\{3,4\}$. The third block distinguishes $C$ at seven from all other root-zero sources, and also distinguishes $D,E$ on the endpoint sibling. On the remaining root-zero archive the fourth block selects only phase four, returning $B$ versus $A$. Sources already identified stop at their own endpoints. The second word clears every low INITIAL tail, the last two pulses are isolated, and all intervening zeros are paid. Hence the upper bound four is actual and exact. ∎
+
+**命题 22.3（One colour per strict slot is insufficient without the clearing-boundary condition）。** At the same parameters let $A,B,C,F$ be pairwise distinct, and set
+
+$$
+\lambda(4)=\lambda(5)=B,\qquad \lambda(1)=C,\qquad
+\lambda(6)=F,\qquad \lambda(2)=\lambda(7)=A,
+\qquad \lambda(0)=D\ne E=\lambda(3).
+\tag{22.5}
+$$
+
+The endpoint labels and $R,L_\bot$ need satisfy no additional freshness conditions. Then
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)=4.
+\tag{22.6}
+$$
+
+Proof. Each strict slot has only one nonbaseline label: $K_1$ carries $B$ and $K_2$ carries $C$ outside its baseline positions. But the adjacent boundary six carries a third nonbaseline label $F$.
+
+To exclude adaptive fee three, use frozen phase two's label $A$. Both phases four and five have label $B\ne A$ and no opportunity after index one. They must both leave the zero archive at that index. Its word starts zero by the full-tail obstruction; in bits $0ab$ the charges at four, five, six are $a,a\oplus b,b$. Selecting both four and five therefore forces $a=1,b=0$, and charge zero at six. The positive child $\{4,5\}$ can stop with $B$, but the zero child contains the actual phases one, two, and six with respective labels $C,A,F$. There is only one complete endpoint left. It cannot distinguish these three labels: phase two has zero charge, while selecting both one and six puts the different labels $C,F$ in the same final positive child; failing to select either leaves that label with $A$. Later rejection cannot help, since after the compulsory clearing bit all choices up to fee three are safe by (20.4). Thus the adaptive deadline fails, excluding every adaptive or preset fee at most three.
+
+The necessity of the clearing bit is visible in a false relaxed construction. The formal charges one at all four vertices $3,4,5,6$ would be the literal word $101$. They would select the right boundary six along with four and five, allowing a later phase-six repair on that child. But its first bit one rejects every root-zero source at INITIAL tail three, merging the different original labels. Thus it is not an available full-target action. The retirement criterion (19.8) together with (19.6) detects exactly this obstruction.
+
+For attainment use the common stream
+
+$$
+111\mid001\mid101\mid100.
+\tag{22.7}
+$$
+
+Its post-root supports are $\{5,6\}$, $\{6,7,0,1\}$, $\{1,2\}$. At the second block the root-zero positive archive is $\{5,6\}$; at the third it separates phase five's $B$ from phase six's $F$ and stops. The root-zero zero archive is $\{1,2,4,7\}$. At the third block its positive child is $\{1,7\}$ with labels $C,A$, and its zero child is $\{2,4\}$ with labels $A,B$. The fourth block selects phase one in the former child and phase two in the latter, giving the correct two decoders. On the endpoint sibling, the third block selects zero and not three, so $D,E$ are identified by fee three. Root rejection and initial rejection have their independent prescribed labels.
+
+The second word begins zero, clearing even current tail six. It ends with one; the third word's leading one makes a run of length two before its zero. The third word again ends with one, and the fourth's leading one likewise makes a run of length two before clearing. These runs are strictly shorter than $k=7$, on every INITIAL low tail and both values. Thus the fourth block is a paid literal repair on the same sources, not an abstract extra binary query. The upper bound four and the adaptive lower bound four prove (22.6). ∎
+
+**命题 22.4（An odd outside count can still require a preset surcharge）。** At $Q=2,m=3,r=2$, put $\lambda(4)=B$, $\lambda(6)=\lambda(7)=S$, and $A$ at the other outside phases, with $A,B,S$ pairwise distinct and $D\ne E$. Choose arbitrary $R,L_\bot$. Then
+
+$$
+C_{\rm ad}(f)=3,\qquad C_{\rm pre}(f)=4.
+\tag{22.8}
+$$
+
+Proof. The following proof uses the actual complete target, independently of any assertion about this layout. The adaptive controller in Proposition 22.2 still works with these labels: root-zero word $011$ creates $\{4,6\}$ with labels $B,S$, repaired at index two by $100$; its zero child $\{1,2,5,7\}$ has labels $A,S$, separated by $010$. The endpoint archive uses $000\mid010$. All source and seam arguments are the same literal arguments already given, so the adaptive fee is at most three and (20.1) makes it exact.
+
+For preset impossibility at three, the first post-root word $0ab$ must select four and not five, since their labels are $B,A$ and both retire there against frozen baseline two. Hence $a=b=1$ and six is also selected. Its different label $S$ forces a next-row charge one at six. Phase seven stays on the zero archive and carries $S\ne A$, forcing its final charge one; phase one's label $A$ forces its final charge zero. The endpoint sibling forces final charge one at zero. Again the last window would have charges $1,1,1,0$, impossible for an even literal path. The argument is independent of whether an already constant child stops early, and every cheaper fee was excluded by the endpoint lower bound.
+
+One attaining common stream is
+
+$$
+111\mid000\mid100\mid001.
+\tag{22.9}
+$$
+
+Its post-root supports are $\varnothing$, $\{6,7\}$, $\{3,4\}$. The third block identifies both $S$ phases on the root-zero archive; the last separates $B$ at four from its remaining baseline phases, and separates endpoint three from endpoint zero on the root-positive archive. The paid zero block clears every low INITIAL tail; the later pulses have strict seams and no extra cleanup. This proves the exact preset fee four.
+
+There are three nonbaseline outside phases here, an odd number. This does not contradict Theorem 21.2: phase six is an adjacent-window boundary and that theorem requires its label to be $A$. Removing that hypothesis changes the simultaneous boundary-repair equations, even though the slot labels themselves are simple. ∎
+
+The distinctness of $B,S$ is necessary for the separation in (22.8). If instead $B=S\ne A$, the common stream $111\mid011\mid010$ costs exactly three. Its post-root supports are $\{4,6\}$ and $\{7,0\}$: the first positive outside child has the single label $S$ and stops, the last word separates $S$ at seven from the remaining baseline phases, and that same word separates zero from three on the endpoint sibling. The first post-root bit clears every INITIAL low tail, and (20.4) proves safety. Bound (20.1) proves optimality. Thus an unqualified preset-four assertion for this layout would fail under that label coincidence.
+
+## 23. Reuse contracts and the unchanged all-target objective
+
+**数学引文 23.1（Source-specific addition and mature background）。** Theorem 20.1 reuses the joint-source and first-zero interfaces of [S1, Convention 1.3, Lemmas 4.2–4.3, Theorems 3.1 and 5.2], the fixed original matched cycle of [S2, Theorem 14.1], and the ordered charge/inverse interfaces of [S10, Interface 2.1; S15, Sections 1–4]. All parameters, values, phases, tails and chronological observations refer to those same original suppliers through Chapter 1. It does not replace the recurrence by another source-encoding or transfer problem.
+
+The retired-colour scan, right-frontier repair, and first-zero safety arguments in [S13, Definition 1.3 and Theorems 2.3–3.2] are supplied overlap: they concern tail-independent phase tables, coprime pre-return deadlines and their prescribed baseline phase. [S13, Theorem 8.4] supplies the local actual-support terminal criterion; [S15, Theorem 3.3] supplies general whole-archive response/seam certificates. Those generic continuation certificates and scan mechanisms are reused, not offered again as new mathematics. The addition in (19.4)–(20.3) is the explicit all-gcd first-return classification of the full threshold INITIAL target: a forced mixed-tail parent, an unrestricted wrapped terminal table, possibly empty frozen set, arbitrary adjacent-boundary labels, and the exact one-stream compatibility constraints linking that same parent’s endpoint sibling. The classification collapses every off-spine live archive to one retired label and at most one returning boundary, with a complete single paid repair; it does not ask a generic Bellman recursion to stand in for these obligations.
+
+The supplied endpoint law [S20], integrated as Theorem 2.2, provides the earliest informative fee and the all-action root comparison for its constant-outside family; its lower-bound proof is reused with the same two endpoint sources. Its constant-outside upper bound cannot be transplanted to arbitrary $\lambda$. The arbitrary repeated-band spectrum in [S19], integrated in Chapter 3, uses $k=Qm$, its protected band spectrum and its stated freshness conditions. It does not assert the unrestricted table deadline or the batch law (21.2) on $T=Qm+r$. The supplied unified chapters through 14 ([S22]) and through 18 ([S23]) give near-critical injective tables, protected higher-tour spectra with multiple INITIAL tail bands, and their sharp guard-removal boundary. Their code-list, protected-support and guard hypotheses are preserved; the batches of Definition 21.1 spread across the actual first-tour slots without those guards. The leaf-forced recurrence (21.4), the empty-slot compensation, the terminal endpoint obligation and the one extra paid endpoint pulse are the new cost obligations behind (21.2), not a renamed protected-spectrum bound.
+
+The supplied `original_repeated_guardrail_cost` in [D12] (the local mathematical supplier also designated D14) requires $g\ge2$, $m=gu$, $T=g(hu+\rho)$, $\gcd(u,\rho)=1$, at least three phase labels, a guarded support, and a target independent of every INITIAL tail on its specified value fibre. It is not applied to (19.3), which gives a different high-tail label and preserves its INITIAL meaning after the paid parent. No preset cost or coprime assertion is borrowed from that tail-independent declaration.
+
+For adjacent mature theory, van den Bos and Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [arXiv:1907.11034v2](https://arxiv.org/pdf/1907.11034v2), Definitions 12, 14, 17, 20 and Figure 3, supply finite adaptive testing and irreversible-merge semantics. Here an input is an entire literal block and a reply is only its completed endpoint; their general distinguishing graphs supply none of the window charges or paid deadline laws. Chistopolskaya and Podolskii, *Parity Decision Tree Complexity is Greater Than Granularity*, [arXiv:1810.08668v1](https://arxiv.org/pdf/1810.08668v1), Section 2.2, allow arbitrary coordinate-subset parity queries and charge tree depth. The binary-leaf and label-separation principles are mature background, but the physical even path and compulsory clearing bit in (19.6) cannot be dropped in favour of such unrestricted queries. Türker, Hierons, Mousavi and El-Fakih, *Efficient State Identification for Finite State Machine-Based Testing*, [accepted manuscript](https://eprints.whiterose.ac.uk/id/eprint/230260/1/Ordered_Wset_Accepted.pdf), Definitions 11–15 and 18, treat state-identifying coverage, transfer-free paths, pairwise shortest separating prefixes and total transfer length. These objectives are different from one unknown INITIAL target's minimum worst-branch emitted-complete-block fee, even though transfer-free paths are allowed. None is used as a fee-preserving reduction. These precise source comparisons make no exhaustive absence, priority or worldwide originality claim.
+
+**开放问题 23.2（The original quantifiers remain）。** Theorem 20.1 determines exactly whether fee $N$ is attainable for every arbitrary low-phase table within (19.1)–(19.3); Theorem 21.2 gives actual optimal adaptive and preset protocols and symbolic fees for its arbitrary sparse/repeated batch subfamily. Propositions 22.1–22.4 show why its empty-slot and boundary-label hypotheses change the optimum. A failed arbitrary-table deadline retains its exact larger minimum as an open question here, except for an explicitly settled family or example. The reused phase-recovery bound establishes attainability separately and is not promoted to that larger minimum.
+
+Open Problems 9.1 and 18.2 retain their original goal: the exact minimum worst-branch number of actual emitted complete blocks for every arbitrary attainable immutable INITIAL record target and all original $k\ge2,m\ge1$, with the fixed $V_k\bmod2$, actual subgroup phases, full joint actual-history prior, independent absorbing rejection, both original control alphabets, and endpoint-only chronological archives. Arbitrary richer INITIAL tail partitions, genuinely competing feasible parents outside the forced family, later tours and repeated reactivation of general phase tables, value-dependent targets, and the remaining widths are not settled by these first-return or batch laws. Every wait, padding block and branch repair remains part of the emitted fee; offline table access, equality tests, search time and controller memory remain different resources.
+
+[S22]: https://raw.githubusercontent.com/the-omega-institute/trureturing/610262cfc623cded080f2343151926829a14112b/docs/develop/theory/KBONACCI_INITIAL_TARGET_COST_THEORY.md
+[S23]: https://raw.githubusercontent.com/the-omega-institute/trureturing/c8c3e97d072491eca90472d5fe3aa258415bdc5c/docs/develop/theory/KBONACCI_INITIAL_TARGET_COST_THEORY.md
+
+## 追加锚（本行以下为增补区）
