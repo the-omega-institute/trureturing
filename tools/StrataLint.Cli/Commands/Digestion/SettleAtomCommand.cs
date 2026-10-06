@@ -109,14 +109,14 @@ internal static partial class SettleAtomCommand
                 LeanValidationOutcome.InfrastructureFailure failure => throw Invalid("CHAIN_INCOMPLETE", failure.Message),
             };
             evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
-                document, snapshot, lean, baselineDocument: document, validateProjectedStatus: false);
+                document, snapshot, lean, validateProjectedStatus: false);
         }
         else
         {
             // This complete descendant closure has no coverage edges to validate. Keep
             // unrelated managed Lean inputs outside the report-free receipt evaluation.
             evaluation = DigestionStatusEvaluator.EvaluateUncovered(DigestionEvaluationScope.FullScan,
-                document, snapshot, baselineDocument: document);
+                document, snapshot);
         }
         var evaluated = evaluation.Entries.ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
         var streams = new Dictionary<string, DigestionAtomContextProjection.SourceStream>(StringComparer.Ordinal);
