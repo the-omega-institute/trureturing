@@ -29,3 +29,4 @@ This is a coefficient-series moment calculation using classical Gaussian facts. 
 ## References
 
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CountableGaussianQuadraticFourthMoment.result`
+- Dependency: [D5/S3/Fourier/Asymptotics/GaussianEvenMoment](GaussianEvenMoment.md)
