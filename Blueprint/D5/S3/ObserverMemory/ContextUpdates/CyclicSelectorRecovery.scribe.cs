@@ -25,6 +25,14 @@ internal sealed class CyclicSelectorRecoveryDocument : IScribeDocumentDefinition
                         + "tau_0=(1,0) and tau_1=(1,m/2). A sender replies with "
                         + "p_c(x)=x-chi(x)c, where chi is the binary first coordinate. "
                         + "The complete snapshot records a, t and every labelled reply.")),
+                    Paragraph(
+                        Text("The run geometry, labelled recovery, exact trace fibers and snapshot "
+                            + "realization are supplied by "),
+                        Ref("D5/S3/ObserverMemory/ContextUpdates/CyclicSelectorModel."
+                            + "cyclic_selector_source_geometry"),
+                        Text(". The cardinality argument constructs a surjective trace-class "
+                            + "label on the original sources and proves its exact kernel before "
+                            + "counting those classes.")),
                     Paragraph(Text(
                         "Every proposed snapshot (a,t,(u_i)) with replies u_i in H is realized "
                         + "by choosing binary bits with sum chi(t)-chi(a), setting "

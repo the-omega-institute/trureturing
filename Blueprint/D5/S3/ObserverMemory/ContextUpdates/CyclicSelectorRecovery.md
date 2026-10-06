@@ -16,6 +16,8 @@ Lean statement: `D5/S3/ObserverMemory/ContextUpdates/CyclicSelectorRecovery.cycl
 
 Let m be even and at least two, r at least three, and f a fixed function from ZMod m to ZMod 2. Put G = ZMod 2 times ZMod m. A source contains a receiver a, r-1 labelled sender coordinates x_i, and a kernel offset h=(0,h_z). Its clock is t=a+sum_i x_i+h. The two selectors are tau_0=(1,0) and tau_1=(1,m/2). A sender replies with p_c(x)=x-chi(x)c, where chi is the binary first coordinate. The complete snapshot records a, t and every labelled reply.
 
+The run geometry, labelled recovery, exact trace fibers and snapshot realization are supplied by `D5/S3/ObserverMemory/ContextUpdates/CyclicSelectorModel.cyclic_selector_source_geometry`. The cardinality argument constructs a surjective trace-class label on the original sources and proves its exact kernel before counting those classes.
+
 Every proposed snapshot (a,t,(u_i)) with replies u_i in H is realized by choosing binary bits with sum chi(t)-chi(a), setting x_i=u_i+epsilon_i c, and setting h=t-a-sum_i x_i. The parity equation puts h in H. Conversely every source producing that snapshot has exactly these bits and coordinates. This direct construction includes two senders. The statement describes every actual preimage without assuming source recovery from a single snapshot.
 
 At time j the receiver has translation (0,j), sender 2 has translation -(0,j), and the other senders and h are unchanged. The clock remains fixed. A trace of horizon n retains all snapshots at times zero through n. For two fixed sources with the same initial snapshot, their traces agree exactly when the sources are equal or f is constant on that entire phase window. A later return of the selector cannot remove an earlier trace difference.
@@ -32,6 +34,7 @@ At every phase, a source with zero senders and offset is distinct from the sourc
 
 ## References
 
+- Truth anchor: `D5/S3/ObserverMemory/ContextUpdates/CyclicSelectorModel.cyclic_selector_source_geometry`
 - Truth anchor: `D5/S3/ObserverMemory/ContextUpdates/CyclicSelectorRecovery.cyclic_selector_recovery`
 - Dependency: [D5/S3/ObserverMemory/ContextUpdates/CyclicSelectorModel](CyclicSelectorModel.md)
 - Dependency: [D5/S3/ObserverMemory/PredictionCertificates/LocalCertificateMinimality](../PredictionCertificates/LocalCertificateMinimality.md)
