@@ -544,14 +544,368 @@ internal sealed class FibonacciFactorCompletionDocument : IScribeDocumentDefinit
             And(criterion,nonempty)),B("T",Call("Set",I("Real"))),B("a",I("Real")),B("y",I("Real"))));
     }
 
+    private static Formula TailPath(Formula s, Formula a, Formula x, Formula q) => And(
+        Equal(Call("apply",q,D(0)),s),
+        All(Equal(Call("nextGuard",Call("apply",q,I("p")),Call("apply",a,I("p"))),
+            Call("some",Call("apply",q,Add(I("p"),D(1))))),B("p",I("Nat"))),
+        All(Call("InSupport",Call("apply",q,I("p")),Call("apply",x,I("p"))),B("p",I("Nat"))),
+        All(Equal(Call("apply",x,I("p")),Call("branch",Call("apply",a,I("p")),
+            Call("apply",x,Add(I("p"),D(1))))),B("p",I("Nat"))));
+    private static Formula TailPrefix(Formula w, Formula a) => All(Imp(Call("lt",I("p"),Call("length",w)),
+        Equal(Call("apply",a,I("p")),Call("getElem",w,I("p")))),B("p",I("Nat")));
+    private static Formula TailFuture(Formula w, Formula a, Formula tail) => All(
+        Equal(Call("apply",a,Add(Call("length",w),I("p"))),Call("apply",tail,I("p"))),B("p",I("Nat")));
+    private static Formula TailHullSupport => All(Imp(And(Call("le",I("lo"),I("z")),Call("le",I("z"),I("hi"))),
+        Call("InSupport",I("s"),I("z"))),B("z",I("Real")));
+    private static Formula TailLawful() => Disp(All(Imp(Call("InSupport",I("s"),I("z")),
+        Ex(And(TailPath(I("s"),I("a"),I("x"),I("path")),Equal(Call("apply",I("x"),D(0)),I("z"))),
+            B("a",Fn(I("Nat"),I("Label"))),B("x",Fn(I("Nat"),I("Real"))),B("path",Fn(I("Nat"),I("Guard"))))),
+        B("s",I("Guard")),B("z",I("Real"))));
+    private static Formula TailApproximation() => Disp(All(Imp(And(Call("InSupport",I("s"),I("z")),Call("lt",D(0),I("epsilon"))),
+        Ex(And(Call("LegalWord",I("s"),I("e"),I("w")),
+            Call("lt",Call("abs",Sub(I("z"),Call("coordinate",I("w"),D(0)))),I("epsilon"))),
+            B("e",I("Guard")),B("w",Call("List",I("Label"))))),
+        B("s",I("Guard")),B("z",I("Real")),B("epsilon",I("Real"))));
+    private static Formula TailInterior() => Disp(All(Imp(And(Call("lt",I("lo"),I("hi")),TailHullSupport),
+        Ex(And(Call("LegalWord",I("s"),I("e"),I("w")),
+            Call("lt",I("lo"),Call("coordinate",I("w"),D(0))),Call("lt",Call("coordinate",I("w"),D(0)),I("hi")),
+            Call("OperationFiniteSource",Call("address",I("w"))),
+            Ex(TailPath(I("s"),Call("address",I("w")),Call("coordinateSequence",I("w")),I("path")),
+                B("path",Fn(I("Nat"),I("Guard"))))),B("e",I("Guard")),B("w",Call("List",I("Label"))))),
+        B("s",I("Guard")),B("lo",I("Real")),B("hi",I("Real"))));
+    private static Formula TailPrepend() => Disp(All(Imp(And(Call("LegalWord",I("s"),I("e"),I("w")),
+        TailPath(I("e"),I("a"),I("x"),I("path"))),
+        Ex(And(TailPath(I("s"),I("beta"),I("X"),I("q")),
+            Equal(Call("apply",I("X"),D(0)),Call("compose",I("w"),Call("apply",I("x"),D(0)))),
+            TailPrefix(I("w"),I("beta")),TailFuture(I("w"),I("beta"),I("a")),TailFuture(I("w"),I("X"),I("x"))),
+            B("beta",Fn(I("Nat"),I("Label"))),B("X",Fn(I("Nat"),I("Real"))),B("q",Fn(I("Nat"),I("Guard"))))),
+        B("s",I("Guard")),B("e",I("Guard")),B("w",Call("List",I("Label"))),
+        B("a",Fn(I("Nat"),I("Label"))),B("x",Fn(I("Nat"),I("Real"))),B("path",Fn(I("Nat"),I("Guard")))));
+    private static Formula TailColor(string kind)
+    {
+        var o=I("o");var c=I("c");var z=I("z");var theta=I("theta");
+        var interval=Call("FlagInterval",Sub(Call("cut",Call("val",c)),theta),
+            Add(Call("cut",Add(Call("val",c),D(1))),theta),Call("lowerOwned",o,c),Call("upperOwned",o,c),z);
+        var owned=Call("OwnedColor",o,theta,c,z);var support=Call("InSupport",I("G0"),z);
+        Formula formula;
+        if(kind=="cell") formula=new Formula.Logic(Call("Cell",o,c,z),FormulaLogicOperator.Iff,
+            Call("FlagInterval",Call("cut",Call("val",c)),Call("cut",Add(Call("val",c),D(1))),
+                Call("lowerOwned",o,c),Call("upperOwned",o,c),z));
+        else if(kind=="interval") formula=Imp(Call("le",D(0),theta),new Formula.Logic(owned,FormulaLogicOperator.Iff,And(support,interval)));
+        else if(kind=="error") formula=Imp(support,new Formula.Logic(owned,FormulaLogicOperator.Iff,
+            Ex(And(Call("le",Call("abs",I("error")),theta),Equal(Call("observe",o,z,I("error")),c)),B("error",I("Real")))));
+        else formula=Imp(Call("le",D(0),theta),Call("OrdConnected",Call("setOfOwnedColor",o,theta,c)));
+        if(kind=="cell") return Disp(All(formula,B("o",I("Ownership")),B("c",I("Color")),B("z",I("Real"))));
+        if(kind=="connected") return Disp(All(formula,B("o",I("Ownership")),B("theta",I("Real")),B("c",I("Color"))));
+        return Disp(All(formula,B("o",I("Ownership")),B("theta",I("Real")),B("c",I("Color")),B("z",I("Real"))));
+    }
+    private static Formula TailT => Call("CompetingT",I("o"),I("theta"),I("s"),I("Q"),I("V"),I("h"),I("W"));
+    private static Formula TailCompeting(string kind)
+    {
+        Formula result=kind=="interval" ? Imp(Call("le",D(0),I("theta")),Call("OrdConnected",TailT)) :
+            Imp(And(Call("LegalWord",I("G0"),I("s"),I("Q")),Call("LegalWord",I("s"),I("s"),I("V"))),
+                new Formula.Logic(Call("member",I("z"),TailT),FormulaLogicOperator.Iff,
+                    And(Call("InSupport",I("s"),I("z")),Call("BlockSupply",I("o"),I("theta"),I("false"),I("Q"),I("h"),I("z")),
+                        All(Call("BlockSupply",I("o"),I("theta"),I("false"),I("V"),Call("apply",I("W"),I("i")),I("z")),B("i",I("Bool"))))));
+        return Disp(All(result,B("o",I("Ownership")),B("theta",I("Real")),B("s",I("Guard")),
+            B("Q",Call("List",I("Label"))),B("V",Call("List",I("Label"))),B("h",Call("List",I("Color"))),
+            B("W",Fn(I("Bool"),Call("List",I("Color")))),B("z",I("Real"))));
+    }
+    private static Formula TailCertificate() => Disp(All(Imp(And(Call("le",D(0),I("theta")),
+        Call("EndpointCertificate",I("theta"),I("lo"),I("hi"),I("w"),I("cs")),
+        Call("lt",I("lo"),I("x")),Call("lt",I("x"),I("hi"))),
+        Call("BlockSupply",I("o"),I("theta"),I("false"),I("w"),I("cs"),I("x"))),
+        B("o",I("Ownership")),B("theta",I("Real")),B("lo",I("Real")),B("hi",I("Real")),
+        B("w",Call("List",I("Label"))),B("cs",Call("List",I("Color"))),B("x",I("Real"))));
+    private static Formula TailHigh()
+    {
+        var choices=Call("choiceBlocks",I("R"),I("zs"));var colors=Call("choiceBlocks",I("W"),I("zs"));
+        var prefix=Call("append",I("P"),choices);var cs=Call("append",I("h"),colors);var alpha=Call("address",Call("append",prefix,I("w")));
+        var record=Call("recordWithTail",I("o"),cs,I("w"));
+        var data=And(Call("le",D(0),I("theta")),Call("LegalWord",I("G0"),I("s"),I("P")),Equal(Call("length",I("P")),Call("length",I("h"))),
+            All(And(Call("LegalWord",I("s"),I("s"),Call("apply",I("R"),I("i"))),
+                Equal(Call("length",Call("apply",I("R"),I("i"))),Call("length",Call("apply",I("W"),I("i"))))),B("i",I("Bool"))),
+            Call("lt",I("lo"),I("hi")),TailHullSupport,
+            All(Imp(And(Call("le",I("lo"),I("z")),Call("le",I("z"),I("hi"))),
+                And(Call("le",I("lo"),Call("compose",Call("apply",I("R"),I("i")),I("z"))),
+                    Call("le",Call("compose",Call("apply",I("R"),I("i")),I("z")),I("hi")))),B("i",I("Bool")),B("z",I("Real"))),
+            Call("EndpointCertificate",I("theta"),I("lo"),I("hi"),I("P"),I("h")),
+            All(Call("EndpointCertificate",I("theta"),I("lo"),I("hi"),Call("apply",I("R"),I("i")),Call("apply",I("W"),I("i"))),B("i",I("Bool"))));
+        var result=Ex(And(Call("LegalWord",I("s"),I("e"),I("w")),Call("lt",I("lo"),Call("coordinate",I("w"),D(0))),
+            Call("lt",Call("coordinate",I("w"),D(0)),I("hi")),
+            All(And(Call("OperationRecord",I("o"),I("theta"),I("closed"),alpha,record),Call("OperationFiniteSource",alpha),
+                All(Equal(Call("apply",record,Add(Call("length",cs),I("p"))),Call("observe",I("o"),Call("coordinate",I("w"),I("p")),D(0))),B("p",I("Nat")))),
+                B("zs",Call("List",I("Bool"))))),B("e",I("Guard")),B("w",Call("List",I("Label"))));
+        return Disp(All(Imp(data,result),B("o",I("Ownership")),B("theta",I("Real")),B("s",I("Guard")),B("P",Call("List",I("Label"))),
+            B("h",Call("List",I("Color"))),B("R",Fn(I("Bool"),Call("List",I("Label")))),B("W",Fn(I("Bool"),Call("List",I("Color")))),
+            B("lo",I("Real")),B("hi",I("Real"))));
+    }
+    private static Formula TailLow()
+    {
+        var fv=Call("composeMap",I("V"));var a=I("a");var y=I("y");
+        var feasible=Call("ifThenElse",Call("lt",D(0),a),And(Call("Nonempty",TailT),Call("member",y,Call("closure",TailT))),Call("member",y,TailT));
+        var data=And(Call("le",D(0),I("theta")),Call("LegalWord",I("G0"),I("s"),I("Q")),Call("LegalWord",I("s"),I("s"),I("V")),
+            Equal(Call("length",I("Q")),Call("length",I("h"))),
+            All(Equal(Call("length",I("V")),Call("length",Call("apply",I("W"),I("i")))),B("i",I("Bool"))),
+            Call("lt",Call("negate",D(1)),a),Call("lt",a,D(1)),Call("notEqual",a,D(0)),
+            Equal(a,Pow(Call("negate",I("g")),Call("length",I("V")))),Equal(Call("compose",I("V"),y),y),feasible);
+        var prefix=Call("append",I("Q"),Call("choiceBlocks",Call("constantWordFamily",I("V")),I("zs")));
+        var cs=Call("append",I("h"),Call("choiceBlocks",I("W"),I("zs")));
+        var result=Ex(And(TailPath(I("s"),I("tail"),I("x"),I("path")),
+            All(Call("member",Call("iterateApply",fv,I("n"),Call("apply",I("x"),D(0))),TailT),B("n",I("Nat"))),
+            All(Ex(And(Call("OperationOmega",I("beta"),I("X")),TailPrefix(prefix,I("beta")),
+                TailFuture(prefix,I("beta"),I("tail")),TailFuture(prefix,I("X"),I("x")),
+                Call("OperationRecord",I("o"),I("theta"),I("closed"),I("beta"),Call("recordWithOmegaTail",I("o"),cs,I("x")))),
+                B("beta",Fn(I("Nat"),I("Label"))),B("X",Fn(I("Nat"),I("Real")))),B("zs",Call("List",I("Bool"))))),
+            B("tail",Fn(I("Nat"),I("Label"))),B("x",Fn(I("Nat"),I("Real"))),B("path",Fn(I("Nat"),I("Guard"))));
+        return Disp(All(Imp(data,result),B("o",I("Ownership")),B("theta",I("Real")),B("s",I("Guard")),
+            B("Q",Call("List",I("Label"))),B("V",Call("List",I("Label"))),B("h",Call("List",I("Color"))),
+            B("W",Fn(I("Bool"),Call("List",I("Color")))),B("a",I("Real")),B("y",I("Real"))));
+    }
+    private static Formula TailSynchronous()
+    {
+        var action=I("action");var initial=I("initialConfiguration");var o=I("o");var theta=I("theta");var n=I("n");var z=I("z");
+        var choices=Fn(Call("Fin",n),I("Bool"));var horizon=Add(Call("length",I("P")),Mul(n,I("L")));
+        var high=Call("SynchronousHighSource",I("P"),I("U"),z,I("w"));
+        var highRecord=Call("recordWithTail",o,Call("synchronousPrefix",I("h"),I("W"),z),I("w"));
+        var lowRecord=Call("recordWithOmegaTail",o,Call("synchronousPrefix",I("h"),I("W"),z),I("x"));
+        var beta=Call("apply",I("beta"),z);var cut=Call("apply",I("cuts"),z);var stem=Call("take",I("P"),I("k"));
+        var data=And(Call("SynchronousSourceData",o,theta,I("s1"),I("s2"),I("P"),I("Q"),I("h"),I("U"),I("V"),I("W"),
+            I("L"),I("lo"),I("hi"),I("a"),I("y"),I("k")),
+            Call("ClosedOperationSafety",action,initial,o,theta),Call("ClosedOperationLiveness",action,initial,o,theta),
+            Call("ExecutedPostprocessing",action,initial,o,theta));
+        var family=And(
+            All(And(Call("OperationRecord",o,theta,I("closed"),high,highRecord),Call("OperationFiniteSource",high)),B("z",choices)),
+            All(Call("OperationRecord",o,theta,I("closed"),beta,lowRecord),B("z",choices)),
+            All(TailPrefix(Call("synchronousPrefix",I("Q"),Call("constantWordFamily",I("V")),z),beta),B("z",choices)),
+            All(Equal(Call("apply",beta,Add(horizon,I("p"))),Call("apply",I("eta"),I("p"))),B("z",choices),B("p",I("Nat"))),
+            All(Equal(Call("apply",highRecord,Add(horizon,I("p"))),Call("observe",o,Call("coordinate",I("w"),I("p")),D(0))),B("z",choices),B("p",I("Nat"))),
+            Call("Injective",Call("SynchronousHighFamily",I("P"),I("U"),n,I("w"))),
+            All(And(Call("Cut",action,initial,Call("front",highRecord,horizon),cut),Call("le",Call("length",Call("output",cut)),I("k")),
+                Equal(Call("output",cut),Call("take",stem,Call("length",Call("output",cut)))),Call("IsPrefix",Call("output",cut),stem)),B("z",choices)),
+            Call("Injective",Call("cutStateOutputMap",I("cuts"))),
+            All(new Formula.Logic(Call("member",I("c"),I("states")),FormulaLogicOperator.Iff,
+                Ex(Equal(Call("state",cut),I("c")),B("z",choices))),B("c",I("Configuration"))),
+            Call("le",Pow(D(2),n),Mul(Call("card",I("states")),Add(I("k"),D(1)))));
+        var result=Ex(And(Call("LegalWord",I("s1"),I("e"),I("w")),Call("lt",I("lo"),Call("coordinate",I("w"),D(0))),
+            Call("lt",Call("coordinate",I("w"),D(0)),I("hi")),
+            All(Ex(family,B("beta",Fn(choices,Fn(I("Nat"),I("Label")))),B("cuts",Fn(choices,Call("Frame",I("Configuration"),I("Label")))),
+                B("states",Call("Finset",I("Configuration")))),B("n",I("Nat")))),
+            B("e",I("Guard")),B("w",Call("List",I("Label"))),B("eta",Fn(I("Nat"),I("Label"))),B("x",Fn(I("Nat"),I("Real"))));
+        return Disp(All(Imp(data,result),B("Configuration",I("Type")),B("action",Fn(I("Configuration"),Call("Op",I("Configuration"),I("Color"),I("Label")))),
+            B("initialConfiguration",I("Configuration")),B("o",I("Ownership")),B("theta",I("Real")),B("s1",I("Guard")),B("s2",I("Guard")),
+            B("P",Call("List",I("Label"))),B("Q",Call("List",I("Label"))),B("h",Call("List",I("Color"))),
+            B("U",Fn(I("Bool"),Call("List",I("Label")))),B("V",Call("List",I("Label"))),B("W",Fn(I("Bool"),Call("List",I("Color")))),
+            B("L",I("Nat")),B("lo",I("Real")),B("hi",I("Real")),B("a",I("Real")),B("y",I("Real")),B("k",I("Nat"))));
+    }
+
+    private static Formula CanonicalLegalReturnHull()
+    {
+        var u=I("U");var length=I("L");var s=I("s");var i=I("i");var z=I("z");
+        var lo=Call("canonicalReturnLo",u,length);var hi=Call("canonicalReturnHi",u,length);
+        var word=Call("apply",u,i);var image=Call("compose",word,z);
+        Formula Invariant(Formula lower,Formula upper) =>
+            All(Imp(And(Call("le",lower,z),Call("le",z,upper)),
+                And(Call("le",lower,image),Call("le",image,upper))),B("i",I("Bool")),B("z",I("Real")));
+        var data=And(Call("lt",D(0),length),
+            All(Equal(Call("length",word),length),B("i",I("Bool"))),
+            All(Call("LegalWord",s,s,word),B("i",I("Bool"))));
+        var result=And(Call("le",lo,hi),
+            Imp(Call("notEqual",Call("apply",u,I("false")),Call("apply",u,I("true"))),Call("lt",lo,hi)),
+            All(Imp(And(Call("le",lo,z),Call("le",z,hi)),Call("InSupport",s,z)),B("z",I("Real"))),
+            Invariant(lo,hi),
+            All(Imp(And(Call("le",I("l"),I("upper")),Invariant(I("l"),I("upper"))),
+                And(Call("le",I("l"),lo),Call("le",hi,I("upper")))),B("l",I("Real")),B("upper",I("Real"))),
+            new Formula.Logic(Equal(lo,hi),FormulaLogicOperator.Iff,
+                Equal(Call("apply",u,I("false")),Call("apply",u,I("true")))),
+            And(Call("member",lo,I("coefficientField")),Call("member",hi,I("coefficientField"))));
+        return Disp(All(Imp(data,result),B("s",I("Guard")),
+            B("U",Fn(I("Bool"),Call("List",I("Label")))),B("L",I("Nat"))));
+    }
+
+    private static Formula CanonicalHighFixedFiniteTail()
+    {
+        var u=I("U");var v=I("V");var length=I("L");var lo=Call("canonicalReturnLo",u,length);var hi=Call("canonicalReturnHi",u,length);
+        var lowLo=Call("canonicalReturnLo",v,length);var lowHi=Call("canonicalReturnHi",v,length);
+        var theta=Call("familyEndpointBudget",I("P"),I("Q"),I("h"),u,v,I("W"),length);
+        var costs=Call("familyEndpointCosts",I("P"),I("Q"),I("h"),u,v,I("W"),length);
+        var choices=Call("choiceBlocks",u,I("zs"));var colors=Call("choiceBlocks",I("W"),I("zs"));
+        var prefix=Call("append",I("P"),choices);var cs=Call("append",I("h"),colors);
+        var alpha=Call("address",Call("append",prefix,I("w")));var record=Call("recordWithTail",I("o"),cs,I("w"));
+        var word=Call("apply",u,I("i"));var lowWord=Call("apply",v,I("i"));var colorWord=Call("apply",I("W"),I("i"));
+        var data=And(Call("LegalWord",I("G0"),I("s1"),I("P")),Call("LegalWord",I("G0"),I("s2"),I("Q")),
+            Equal(Call("length",I("P")),Call("length",I("h"))),Equal(Call("length",I("Q")),Call("length",I("h"))),
+            Call("lt",D(0),length),
+            All(And(Equal(Call("length",word),length),Equal(Call("length",lowWord),length),
+                Call("LegalWord",I("s1"),I("s1"),word),Call("LegalWord",I("s2"),I("s2"),lowWord),
+                Equal(Call("length",word),Call("length",colorWord))),B("i",I("Bool"))),
+            Call("notEqual",Call("apply",u,I("false")),Call("apply",u,I("true"))));
+        var tail=Ex(And(Call("LegalWord",I("s1"),I("e"),I("w")),Call("lt",lo,Call("coordinate",I("w"),D(0))),
+            Call("lt",Call("coordinate",I("w"),D(0)),hi),
+            All(And(Call("OperationRecord",I("o"),theta,I("closed"),alpha,record),Call("OperationFiniteSource",alpha),
+                All(Equal(Call("apply",record,Add(Call("length",cs),I("p"))),
+                    Call("observe",I("o"),Call("coordinate",I("w"),I("p")),D(0))),B("p",I("Nat")))),
+                B("zs",Call("List",I("Bool"))))),B("e",I("Guard")),B("w",Call("List",I("Label"))));
+        var result=And(Call("le",D(0),theta),Equal(Call("length",costs),Add(Mul(D(2),Call("length",I("h"))),Mul(D(4),length))),
+            Call("EndpointCertificate",theta,lowLo,lowHi,I("Q"),I("h")),
+            All(Call("EndpointCertificate",theta,lowLo,lowHi,lowWord,colorWord),B("i",I("Bool"))),tail);
+        return Disp(All(Imp(data,result),B("o",I("Ownership")),B("s1",I("Guard")),B("s2",I("Guard")),
+            B("P",Call("List",I("Label"))),B("Q",Call("List",I("Label"))),B("h",Call("List",I("Color"))),
+            B("U",Fn(I("Bool"),Call("List",I("Label")))),B("V",Fn(I("Bool"),Call("List",I("Label")))),
+            B("W",Fn(I("Bool"),Call("List",I("Color")))),B("L",I("Nat"))));
+    }
+
+    private static Formula CanonicalSynchronous()
+    {
+        var action=I("action");var initial=I("initialConfiguration");var o=I("o");var theta=I("theta");var n=I("n");var z=I("z");
+        var lo=Call("canonicalReturnLo",I("U"),I("L"));var hi=Call("canonicalReturnHi",I("U"),I("L"));
+        var lowLo=Call("canonicalReturnLo",I("V"),I("L"));var lowHi=Call("canonicalReturnHi",I("V"),I("L"));
+        var a=Pow(Call("negate",I("g")),I("L"));
+        var v0=Call("apply",I("V"),I("false"));
+        var competing=Call("CompetingT",o,theta,I("s2"),I("Q"),v0,I("h"),I("W"));
+        var feasible=Call("ifThenElse",Call("lt",D(0),a),
+            And(Call("Nonempty",competing),Call("member",lowLo,Call("closure",competing))),Call("member",lowLo,competing));
+        var choices=Fn(Call("Fin",n),I("Bool"));var horizon=Add(Call("length",I("P")),Mul(n,I("L")));
+        var high=Call("SynchronousHighSource",I("P"),I("U"),z,I("w"));
+        var highRecord=Call("recordWithTail",o,Call("synchronousPrefix",I("h"),I("W"),z),I("w"));
+        var lowRecord=Call("recordWithOmegaTail",o,Call("synchronousPrefix",I("h"),I("W"),z),I("x"));
+        var beta=Call("apply",I("beta"),z);var cut=Call("apply",I("cuts"),z);var stem=Call("take",I("P"),I("k"));
+        var ui=Call("apply",I("U"),I("i"));var vi=Call("apply",I("V"),I("i"));var wi=Call("apply",I("W"),I("i"));
+        var data=And(Call("LegalWord",I("G0"),I("s1"),I("P")),
+            Call("LegalWord",I("G0"),I("s2"),I("Q")),Equal(Call("length",I("P")),Call("length",I("h"))),
+            Equal(Call("length",I("Q")),Call("length",I("h"))),Call("lt",D(0),I("L")),
+            All(And(Call("LegalWord",I("s1"),I("s1"),ui),Call("LegalWord",I("s2"),I("s2"),vi),
+                Equal(Call("length",ui),I("L")),Equal(Call("length",vi),I("L")),
+                Equal(Call("length",ui),Call("length",wi))),B("i",I("Bool"))),
+            Call("notEqual",Call("apply",I("U"),I("false")),Call("apply",I("U"),I("true"))),
+            Call("le",Call("familyEndpointBudget",I("P"),I("Q"),I("h"),I("U"),I("V"),I("W"),I("L")),theta),
+            Equal(lowLo,lowHi),feasible,Call("lt",I("k"),Call("length",I("P"))),
+            All(Imp(Call("lt",I("p"),I("k")),Equal(Call("getElem",I("P"),I("p")),Call("getElem",I("Q"),I("p")))),B("p",I("Nat"))),
+            Call("notEqual",Call("getElem",I("P"),I("k")),Call("getElem",I("Q"),I("k"))),
+            Call("ClosedOperationSafety",action,initial,o,theta),Call("ClosedOperationLiveness",action,initial,o,theta),
+            Call("ExecutedPostprocessing",action,initial,o,theta));
+        var family=And(
+            All(And(Call("OperationRecord",o,theta,I("closed"),high,highRecord),Call("OperationFiniteSource",high)),B("z",choices)),
+            All(Call("OperationRecord",o,theta,I("closed"),beta,lowRecord),B("z",choices)),
+            All(TailPrefix(Call("synchronousPrefix",I("Q"),I("V"),z),beta),B("z",choices)),
+            All(Equal(Call("apply",beta,Add(horizon,I("p"))),Call("apply",I("eta"),I("p"))),B("z",choices),B("p",I("Nat"))),
+            All(Equal(Call("apply",highRecord,Add(horizon,I("p"))),Call("observe",o,Call("coordinate",I("w"),I("p")),D(0))),B("z",choices),B("p",I("Nat"))),
+            Call("Injective",Call("SynchronousHighFamily",I("P"),I("U"),n,I("w"))),
+            All(And(Call("Cut",action,initial,Call("front",highRecord,horizon),cut),Call("le",Call("length",Call("output",cut)),I("k")),
+                Equal(Call("output",cut),Call("take",stem,Call("length",Call("output",cut)))),Call("IsPrefix",Call("output",cut),stem)),B("z",choices)),
+            Call("Injective",Call("cutStateOutputMap",I("cuts"))),
+            All(new Formula.Logic(Call("member",I("c"),I("states")),FormulaLogicOperator.Iff,
+                Ex(Equal(Call("state",cut),I("c")),B("z",choices))),B("c",I("Configuration"))),
+            Call("le",Pow(D(2),n),Mul(Call("card",I("states")),Add(I("k"),D(1)))));
+        var result=Ex(And(Call("LegalWord",I("s1"),I("e"),I("w")),Call("lt",lo,Call("coordinate",I("w"),D(0))),
+            Call("lt",Call("coordinate",I("w"),D(0)),hi),
+            All(Ex(family,B("beta",Fn(choices,Fn(I("Nat"),I("Label")))),B("cuts",Fn(choices,Call("Frame",I("Configuration"),I("Label")))),
+                B("states",Call("Finset",I("Configuration")))),B("n",I("Nat")))),
+            B("e",I("Guard")),B("w",Call("List",I("Label"))),B("eta",Fn(I("Nat"),I("Label"))),B("x",Fn(I("Nat"),I("Real"))));
+        return Disp(All(Imp(data,result),B("Configuration",I("Type")),B("action",Fn(I("Configuration"),Call("Op",I("Configuration"),I("Color"),I("Label")))),
+            B("initialConfiguration",I("Configuration")),B("o",I("Ownership")),B("theta",I("Real")),B("s1",I("Guard")),B("s2",I("Guard")),
+            B("P",Call("List",I("Label"))),B("Q",Call("List",I("Label"))),B("h",Call("List",I("Color"))),
+            B("U",Fn(I("Bool"),Call("List",I("Label")))),B("V",Fn(I("Bool"),Call("List",I("Label")))),B("W",Fn(I("Bool"),Call("List",I("Color")))),
+            B("L",I("Nat")),B("k",I("Nat"))));
+    }
+
+
+    private static Formula CanonicalPeriodicEndpoints()
+    {
+        var u=I("U");var length=I("L");var word=Call("apply",u,I("i"));
+        var amin=Call("apply",u,I("imin"));var amax=Call("apply",u,I("imax"));
+        var positive=Call("lt",D(0),Pow(Call("negate",I("g")),length));
+        var lowWord=Call("ifThenElse",positive,amin,Call("append",amin,amax));
+        var highWord=Call("ifThenElse",positive,amax,Call("append",amax,amin));
+        var v0=Call("compose",Call("apply",u,I("false")),D(0));
+        var v1=Call("compose",Call("apply",u,I("true")),D(0));
+        var data=And(Call("lt",D(0),length),All(Equal(Call("length",word),length),B("i",I("Bool"))),
+            All(Call("LegalWord",I("s"),I("s"),word),B("i",I("Bool"))));
+        var result=Ex(And(Equal(Call("compose",amin,D(0)),Call("min",v0,v1)),
+            Equal(Call("compose",amax,D(0)),Call("max",v0,v1)),
+            Call("PeriodicTail",I("s"),lowWord,Call("canonicalReturnLo",u,length)),
+            Call("PeriodicTail",I("s"),highWord,Call("canonicalReturnHi",u,length))),
+            B("imin",I("Bool")),B("imax",I("Bool")));
+        return Disp(All(Imp(data,result),B("s",I("Guard")),
+            B("U",Fn(I("Bool"),Call("List",I("Label")))),B("L",I("Nat"))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Both actual Fibonacci starts retain the complete-boundary, closed and strict source laws and one finite actual reset map.",
         H("Actual boundaries for Fibonacci completion"),
         Blocks(
+            Describe.Lean(DescribeId.Create("fib-canonical-legal-return-hull"),
+                DeclarationHandle.Create(Prefix+"canonical_legal_return_hull"),
+                H("Actual legal returns determine their canonical hull"),
+                StatementSource.FromAuthor(CanonicalLegalReturnHull()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Write A(i)=compose(U(i),0), a=(-g)^L, Amin=min(A(false),A(true)), and Amax=max(A(false),A(true)). The common return length L is positive. canonicalReturnLo and canonicalReturnHi use (Amin/(1-a),Amax/(1-a)) when a>0, and ((Amin+a*Amax)/(1-a^2),(Amax+a*Amin)/(1-a^2)) when a<0. The literal slope has nonzero absolute value less than one. The width is respectively (Amax-Amin)/(1-a) or (Amax-Amin)/(1+a).")),
+                    Paragraph(Text("Both words return legally from s to s. The displayed interval is nonempty, lies in the actual guard support, is invariant under each full return, and is contained in every nonempty invariant closed interval [l,upper]. Distinct equal-length words have distinct zero-tail scalar values: all finite suffixes at zero lie strictly inside their actual guard supports, and root branch interiors from one guard are disjoint. Induction then recovers the labels and full words from equal scalars. Literal return difference therefore gives strict hull width. The notEqual predicate in the displayed statement denotes literal inequality.")),
+                    Paragraph(Text("The statement permits equal words and a singleton hull. It does not identify the interval with the attractor. The singleton-hull equivalence is literal word equality. coefficientField is the intersection of all real subfields containing t, hence the original Q(t). Both computed endpoints belong to this field. The specified periodic endpoint addresses are supplied separately by canonical_periodic_endpoints."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-canonical-high-fixed-finite-tail"),
+                DeclarationHandle.Create(Prefix+"canonical_high_fixed_finite_tail"),
+                H("The canonical high hull supplies one finite tail for all histories"),
+                StatementSource.FromAuthor(CanonicalHighFixedFiniteTail()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The two actual high return words differ literally and have the same positive length. The hull endpoints are exactly canonicalReturnLo(U,L) and canonicalReturnHi(U,L). Their width, support and invariance follow from those legal returns. familyEndpointCosts concatenates the indexed endpoint costs for P,h on the U hull, Q,h on the V hull, and each U(i),W(i) and V(i),W(i) pair. Each entry is the maximum of the two endpoint distances max(cut(c)-x,0,x-cut(c+1)) to the closed color interval. There are exactly 2*length(h)+4*L entries. familyEndpointBudget is their fold by max starting at zero. The legal supports and this one computed maximum derive every supported EndpointCertificate; no certificate is supplied as a premise.")),
+                    Paragraph(Text("A single finite legal word w is chosen before every finite Bool choice list zs. It lies strictly inside the canonical hull. The actual source is address((P++choiceBlocks(U,zs))++w), and its record is recordWithTail(o,h++choiceBlocks(W,zs),w). The original finite-tail theorem supplies the closed-budget actual record, eventual L0 source and literal zero-error future of this same fixed tail. Empty stems and the empty choice list are included. The finite endpoint maximum is computed and supplies the high actual family. Its necessity for arbitrary fixed tails, including tails outside the hull, remains unproved. The low certificates are closed constraints and do not by themselves settle actual low endpoint ownership. This statement does not settle the complete original theorem or a common positive margin over unbounded histories."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-canonical-synchronous-common-stem"),
+                DeclarationHandle.Create(Prefix+"canonical_synchronous_common_stem"),
+                H("Canonical legal families supply the arbitrary common-stem count"),
+                StatementSource.FromAuthor(CanonicalSynchronous()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("U and V are the two actual Bool-indexed legal return families of the same positive length L. U(false) differs from U(true). The high hull is computed from U. Equality of the two canonical V endpoints is equivalent to literal V(false)=V(true), so the common competing return and its fixed point are derived. The actual CompetingT tests every Q suffix and both W color words. Its signed feasibility test uses the canonical low endpoint and a=(-g)^L; positive slope retains a closure limit and negative slope requires actual membership.")),
+                    Paragraph(Text("The finite endpoint budget familyEndpointBudget(P,Q,h,U,V,W,L) is at most theta. Its exact indexed costs derive the observed high stem and return certificates. The nonnegative computed budget also derives theta nonnegativity. Minimum-budget necessity for arbitrary fixed tails remains unproved. SameStem compares P and Q at every position below k, and DifferentStem compares their labels at k<P.length. getElem denotes literal list extraction. ClosedOperationSafety, ClosedOperationLiveness and ExecutedPostprocessing retain their original actual-record contracts. SynchronousHighSource(P,U,z,w)=address(synchronousPrefix(P,U,z)++w); SynchronousHighFamily is this map on Fin(n)->Bool, and cutStateOutputMap(z)=((cuts(z)).state,(cuts(z)).output).")),
+                    Paragraph(Text("One finite high tail and one legal competing Omega tail are fixed before every n. The sources have the actual prescribed prefixes, all histories are acquired on those sources, the high future is the single literal zero-error tail, and literal block extraction gives source injection. Existing common-stem processing then supplies actual cuts and 2^n<=states.card*(k+1), including n=0 and arbitrary supported k. The construction computes the finite endpoint maximum and uses its sufficient bound. It does not derive minimum-budget necessity, the optional piece condition or the auxiliary SFT scope."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-canonical-periodic-endpoints"),
+                DeclarationHandle.Create(Prefix+"canonical_periodic_endpoints"),
+                H("Extremal literal return blocks encode the canonical endpoints"),
+                StatementSource.FromAuthor(CanonicalPeriodicEndpoints()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("imin and imax attain the minimum and maximum of the two actual zero-tail translations. For positive signed slope the lower endpoint repeats U(imin), and the upper endpoint repeats U(imax). For negative slope the respective repeating words are U(imin)++U(imax) and U(imax)++U(imin). Their lengths are L or 2L, so the block periods are one or at most two, including equal translations.")),
+                    Paragraph(Text("PeriodicTail(s,w,z) means there are label, scalar and guard sequences a,x,path with path(0)=s and x(0)=z, every literal edge legal, every coordinate in that guard's support, and x(p)=branch(a(p),x(p+1)). At each p<length(w), a(p)=w[p]. For every p the label, scalar and guard at p+length(w) equal their values at p. The proof splices one legal block onto a supported tail and repeats the actual finite block itinerary, using the fixed endpoint coordinate and return guard to verify the joining edge. It does not infer this periodicity from an arbitrary lawful_tail witness or claim a finite-D representative for either endpoint."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-lawful-tail"),DeclarationHandle.Create(Prefix+"lawful_tail"),
+                H("Every supported scalar has one legal itinerary"),StatementSource.FromAuthor(TailLawful()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The closed branch images cover [-1,phi] at G0 and [-1,t] at G1. The inverse branch (shift(label)-z)/g remains in its next guard support. Iterating supported guard-scalar pairs gives one label sequence, one coordinate sequence and one legal guard path with the requested scalar. Shared branch endpoints remain legal."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-finite-approximation"),DeclarationHandle.Create(Prefix+"finite_approximation"),
+                H("Finite legal zero tails approximate every supported scalar"),StatementSource.FromAuthor(TailApproximation()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Truncate the same itinerary after n labels. The exact remaining-coordinate error is (-g)^n*x(n), whose absolute value is at most phi*g^n. Geometric convergence gives every positive tolerance. This density concerns the full guard support; it does not identify that interval with a two-return attractor."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-finite-tail-interior"),DeclarationHandle.Create(Prefix+"finite_tail_interior"),
+                H("A finite tail in a supported interval interior"),StatementSource.FromAuthor(TailInterior()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A midpoint approximation within half the interval width yields a finite legal word whose zero-tail scalar lies strictly between lo and hi. coordinateSequence(w)(p)=coordinate(w,p). The full eventually-L0 address and its entire legal supported coordinate path are retained, for either initial guard."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-prepend-legal-tail"),DeclarationHandle.Create(Prefix+"prepend_legal_tail"),
+                H("Splicing one fixed legal coordinate tail"),StatementSource.FromAuthor(TailPrepend()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("TailPath(s,a,x,path) means that path starts at s, every label follows nextGuard, every scalar lies in its corresponding support, and every affine recurrence holds. A legal finite prefix prepends exactly its labels and composition value. Both shifted futures are exact, including the recurrence at the splice boundary."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-cell-flag-interval"),DeclarationHandle.Create(Prefix+"cell_flag_interval"),
+                H("Exact color cells and all five endpoint flags"),StatementSource.FromAuthor(TailColor("cell")),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("FlagInterval(lo,hi,left,right,z) is lo<=z<=hi with z=lo implying left and z=hi implying right. lowerOwned is true at color zero and otherwise uses the corresponding true flag; upperOwned is true at color five and otherwise uses the corresponding false flag. These are exactly the original Cell boundaries."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-owned-color-interval"),DeclarationHandle.Create(Prefix+"owned_color_interval"),
+                H("Closed error dilation with actual endpoint ownership"),StatementSource.FromAuthor(TailColor("interval")),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("OwnedColor(o,theta,c,z) requires z in G0 support and a target u in the actual Cell(o,c) with abs(z-u)<=theta. Dilation shifts the two cell endpoints by theta and retains their original ownership. Support is intersected separately, so clipping an expanded interval does not transfer an unrelated ownership flag to a new boundary. At theta zero the target is z itself."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-owned-color-error"),DeclarationHandle.Create(Prefix+"owned_color_error"),
+                H("Attainable colors are exact observe error outcomes"),StatementSource.FromAuthor(TailColor("error")),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For supported z, clipping z+error changes its distance from z by at most abs(error). Conversely a supported target u is fixed by clip and is obtained with error=u-z. This proves both directions of the actual observe relation, including every ownership flag."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-owned-color-connected"),DeclarationHandle.Create(Prefix+"owned_color_ordConnected"),
+                H("Actual attainable color sets are intervals"),StatementSource.FromAuthor(TailColor("connected")),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("setOfOwnedColor(o,theta,c) is the set of real z satisfying OwnedColor(o,theta,c,z). Its supported flagged interval is order-connected, including empty sets and excluded endpoints."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-competing-t-connected"),DeclarationHandle.Create(Prefix+"competingT_ordConnected"),
+                H("The actual competing-tail intersection is an interval"),StatementSource.FromAuthor(TailCompeting("interval")),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("CompetingT is the intersection of the terminal guard support, every actual Q-suffix color constraint for r<h.length, and every V-suffix constraint for each of the two W words. Affine preimages preserve order-connectedness for either slope sign. No terminal color test is added."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-competing-t-actual"),DeclarationHandle.Create(Prefix+"competingT_mem_actual"),
+                H("Concrete tail membership and actual slot errors"),StatementSource.FromAuthor(TailCompeting("actual")),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Legal Q and V words transport support through every suffix. Membership in CompetingT is exactly supported terminal membership and the closed BlockSupply conditions for the stem and both return-color choices."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-certificate-actual-slots"),DeclarationHandle.Create(Prefix+"certificate_actual_slots"),
+                H("Finite endpoint costs supply every interior slot"),StatementSource.FromAuthor(TailCertificate()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("EndpointCertificate gives supported images of lo and hi at each departure suffix and bounds max(cut(c)-z,0,z-cut(c+1)) by theta at each image. A nonzero literal suffix slope sends an interior scalar strictly between those two endpoint images. This yields actual ownership-sensitive error witnesses at theta, including theta zero."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-fixed-finite-all-histories"),DeclarationHandle.Create(Prefix+"fixed_finite_tail_all_histories"),
+                H("One finite tail supplies all high histories"),StatementSource.FromAuthor(TailHigh()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The numerical hull is nondegenerate, supported and invariant under both legal returns; its stem and return endpoint costs satisfy EndpointCertificate. One finite word w is selected before all Bool choice lists. Each source is address((P++choiceBlocks(R,zs))++w), with the prescribed h++choiceBlocks(W,zs) past followed by the literal zero-error coordinate future of w. Errors are chosen on this same source and are zero after the past. Empty stems and histories remain included. A common positive margin over unbounded histories is not asserted."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-fixed-omega-all-histories"),DeclarationHandle.Create(Prefix+"fixed_omega_tail_all_histories"),
+                H("One lawful Omega tail supplies all rival histories"),StatementSource.FromAuthor(TailLow()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("constantWordFamily(V)(i)=V and composeMap(V)(z)=compose(V,z). The actual fixed-point and slope equations identify the centered affine return. Positive-slope feasibility uses nonempty CompetingT and closure membership of its fixed point; negative-slope feasibility uses actual CompetingT membership. One supported scalar is lifted to one legal tail before all histories. Each finite choice sees only the remaining number of identical V returns, while both distinct W color choices remain in every orbit test. The full CompetingT orbit condition is equivalent to supported terminal coordinates and BlockSupply for every finite Q-prefixed history; the reverse direction extracts Q and both W blocks from those same histories. Every record uses its own actual finite errors and the unchanged zero-error tail future."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-synchronous-common-stem"),DeclarationHandle.Create(Prefix+"original_synchronous_common_stem"),
+                H("Literal source construction at every first stem disagreement"),StatementSource.FromAuthor(TailSynchronous()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("SynchronousSourceData expands as follows: theta>=0; P and Q are legal G0-to-s1/s2 stems with the same length as h; both U returns and the shared V return are legal and have common positive length L, equal to each W length; U(false) differs from U(true). The supported high hull [lo,hi] has positive width and is invariant under U, with the finite EndpointCertificate for P and each U/W pair. The actual V slope a=(-g)^length(V) is nonzero and lies between -1 and 1, compose(V,y)=y, and the sign-sensitive CompetingT feasibility holds. The stems agree before k<length(P) and differ at k. ClosedOperationSafety and ClosedOperationLiveness quantify all original closed OperationRecords and all primitive Runs; liveness is positionwise on eventual-L0 sources. ExecutedPostprocessing is a finite Drain only after actual executed acquisitions.")),Paragraph(Text("SynchronousHighSource(P,U,z,w)=address(synchronousPrefix(P,U,z)++w), and synchronousPrefix(P,U,z)=P++choiceBlocks(U,List.ofFn(z)); SynchronousHighFamily is this source map. The observation horizon is length(P)+nL. Literal block extraction proves its injection from U(false)!=U(true), without a history-injection premise. Independent lawful zero-error [L0] and [L3] records derive startup, preserving arbitrary k in the target family. cutStateOutputMap(cuts)(z) is the pair of readable state and output at that cut. The actual common-stem theorem gives exactly 2^n<=card(states)*(k+1), with n=0 included. Deriving the canonical hull and its nondegeneracy, the original singleton-return reduction and the necessity of the canonical theta maximum remains additional work; optional original return pieces retain their own selection and whole-prefix conditions."))),DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fib-competing-tail-orbit-criterion"),DeclarationHandle.Create(Prefix+"competing_tail_orbit_criterion"),
                 H("Endpoint-sensitive scalar competing-tail orbits"),StatementSource.FromAuthor(TailOrbit()),AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("CenteredAffine(y,a)(x)=y+a(x-y), and iterateApply(f,n,x)=f^[n](x). T is any order-connected real set, including empty and singleton intervals. For 0<a<1 the full orbit condition is x in T and y in closure(T); membership of y itself is unnecessary. For -1<a<0 it is x in T and f(x) in T; these two actual members also force y in T, and this is equivalent to a nonempty feasible orbit set. Positive iterates converge to y and lie strictly between the initial point and y; negative iterates remain in the closed segment between x and f(x). Actual open and closed endpoint membership is retained.")),
-                    Paragraph(Text("This is the scalar interval part of the original39.5 criterion. Constructing the original finite budget intersection, its owned endpoint flags and legal Omega tails remains source-side work; no tail is inferred from a scalar member here. An optional original-piece restriction requires a member of the feasible orbit set in that piece and is imposed only when present in the family. Original39.4 finite D-tail selection and the full arbitrary-k original39.7 construction remain open."))),DescribeRole.Theorem),
+                    Paragraph(Text("This is the scalar interval part of the original39.5 criterion. The concrete owned-color intersection and fixed-tail constructions connect this scalar condition to actual legal source records under their explicit hull and return-map data. An optional original-piece restriction requires a member of the feasible orbit set in that piece and is imposed only when present in the family. Canonical hull nondegeneracy, singleton-return reduction, canonical budget necessity and optional whole-prefix piece conditions remain separate original obligations."))),DescribeRole.Theorem),
 
             Describe.Lean(DescribeId.Create("fib-original-equal-weight-codebook"),DeclarationHandle.Create(Prefix+"original_equal_weight_codebook"),
                 H("Full finite weak codebooks with one reset at every seam"),StatementSource.FromAuthor(EqualWeightCodebook()),AssessedProvenance.FromRepo(),

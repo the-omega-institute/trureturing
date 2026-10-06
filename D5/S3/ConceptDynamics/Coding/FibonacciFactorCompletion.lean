@@ -3740,4 +3740,1883 @@ theorem competing_tail_orbit_criterion (T : Set ℝ) (hT : T.OrdConnected)
       refine ⟨y,(criterion y).mpr ⟨hy,?_⟩⟩
       simpa [F] using hy
 
+
+open scoped Topology
+set_option maxHeartbeats 1000000
+
+open D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open Filter Topology
+
+private theorem tail_arithmetic :
+    t ^ 2 = 1 - t ∧ 0 < t ∧ t < 1 ∧ 0 < g ∧ g < 1 ∧ 1 < phi := by
+  have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)
+  have hsn := Real.sqrt_nonneg (5 : ℝ)
+  have htq : t ^ 2 = 1 - t := by dsimp [t]; nlinarith
+  have htp : 0 < t := by dsimp [t]; nlinarith
+  have ht1 : t < 1 := by dsimp [t]; nlinarith
+  have hgp : 0 < g := by dsimp [g, t]; nlinarith
+  have hg1 : g < 1 := by dsimp [g]; linarith
+  exact ⟨htq, htp, ht1, hgp, hg1, by dsimp [phi]; linarith⟩
+
+/-- Closed branch images cover each literal guard support, including endpoints. -/
+private theorem inverse_branch (s : Guard) (z : ℝ) (hz : InSupport s z) :
+    ∃ (l : Label) (e : Guard) (z' : ℝ),
+      nextGuard s l = some e ∧ InSupport e z' ∧ z = branch l z' := by
+  rcases tail_arithmetic with ⟨htq, htp, ht1, hgp, hg1, hphi⟩
+  have inverse (l : Label) (e : Guard)
+      (hlo : shift l - g * supportUpper e ≤ z)
+      (hhi : z ≤ shift l + g) :
+      InSupport e ((shift l - z) / g) ∧
+        z = branch l ((shift l - z) / g) := by
+    refine ⟨⟨(le_div_iff₀ hgp).2 ?_, (div_le_iff₀ hgp).2 ?_⟩, ?_⟩
+    · linarith
+    · linarith
+    · dsimp [branch]
+      have hc : g * ((shift l - z) / g) = shift l - z := by
+        rw [mul_comm, div_mul_cancel₀ _ (ne_of_gt hgp)]
+      rw [hc]
+      ring
+  rcases hz with ⟨hzlo, hzhi⟩
+  cases s with
+  | G0 =>
+    change z ≤ 1 + t at hzhi
+    by_cases h3 : z ≤ t - 1
+    · refine ⟨.L3, .G0, (shift .L3 - z) / g, rfl, ?_⟩
+      apply inverse <;> dsimp [shift, supportUpper, g, phi] <;> nlinarith
+    have h3' : t - 1 < z := lt_of_not_ge h3
+    by_cases h0 : z ≤ 2 * t - 1
+    · refine ⟨.L0, .G0, (shift .L0 - z) / g, rfl, ?_⟩
+      apply inverse <;> dsimp [shift, supportUpper, g, phi] <;> nlinarith
+    have h0' : 2 * t - 1 < z := lt_of_not_ge h0
+    by_cases h5 : z ≤ t
+    · refine ⟨.L5, .G1, (shift .L5 - z) / g, rfl, ?_⟩
+      apply inverse <;> dsimp [shift, supportUpper, g, T2] <;> nlinarith
+    have h5' : t < z := lt_of_not_ge h5
+    by_cases h2 : z ≤ 2 * t
+    · refine ⟨.L2, .G0, (shift .L2 - z) / g, rfl, ?_⟩
+      apply inverse <;> dsimp [shift, supportUpper, g, phi] <;> nlinarith
+    have h2' : 2 * t < z := lt_of_not_ge h2
+    refine ⟨.L25, .G1, (shift .L25 - z) / g, rfl, ?_⟩
+    apply inverse <;> dsimp [shift, supportUpper, g] <;> nlinarith
+  | G1 =>
+    change z ≤ t at hzhi
+    by_cases h3 : z ≤ t - 1
+    · refine ⟨.L3, .G0, (shift .L3 - z) / g, rfl, ?_⟩
+      apply inverse <;> dsimp [shift, supportUpper, g, phi] <;> nlinarith
+    have h3' : t - 1 < z := lt_of_not_ge h3
+    by_cases h0 : z ≤ 2 * t - 1
+    · refine ⟨.L0, .G0, (shift .L0 - z) / g, rfl, ?_⟩
+      apply inverse <;> dsimp [shift, supportUpper, g, phi] <;> nlinarith
+    have h0' : 2 * t - 1 < z := lt_of_not_ge h0
+    refine ⟨.L5, .G1, (shift .L5 - z) / g, rfl, ?_⟩
+    apply inverse <;> dsimp [shift, supportUpper, g, T2] <;> nlinarith
+
+/-- One actual legal itinerary realizes every supported scalar, from either guard. -/
+theorem lawful_tail (s : Guard) (z : ℝ) (hz : InSupport s z) :
+    ∃ (a : ℕ → Label) (x : ℕ → ℝ) (path : ℕ → Guard),
+      path 0 = s ∧ x 0 = z ∧
+      (∀ p, nextGuard (path p) (a p) = some (path (p + 1))) ∧
+      (∀ p, InSupport (path p) (x p)) ∧
+      (∀ p, x p = branch (a p) (x (p + 1))) := by
+  classical
+  let State := {q : Guard × ℝ // InSupport q.1 q.2}
+  have progress (q : State) : ∃ (l : Label) (r : State),
+      nextGuard q.val.1 l = some r.val.1 ∧ q.val.2 = branch l r.val.2 := by
+    obtain ⟨l, e, z', hedge, hsupp, hrec⟩ := inverse_branch q.val.1 q.val.2 q.property
+    exact ⟨l, ⟨(e, z'), hsupp⟩, hedge, hrec⟩
+  choose label step hedge hrec using progress
+  let states : ℕ → State := Nat.rec ⟨(s, z), hz⟩ (fun _ q => step q)
+  refine ⟨fun n => label (states n), fun n => (states n).val.2,
+    fun n => (states n).val.1, rfl, rfl, ?_, ?_, ?_⟩
+  · intro n
+    change nextGuard (states n).val.1 (label (states n)) = some (step (states n)).val.1
+    exact hedge (states n)
+  · intro n
+    exact (states n).property
+  · intro n
+    change (states n).val.2 = branch (label (states n)) (step (states n)).val.2
+    exact hrec (states n)
+
+-- The labels are taken from one itinerary, not selected separately for each slot.
+private def finiteSegment (a : ℕ → Label) (i : ℕ) : ℕ → List Label
+  | 0 => []
+  | n + 1 => a i :: finiteSegment a (i + 1) n
+
+private theorem finite_segment_spec
+    (a : ℕ → Label) (x : ℕ → ℝ) (path : ℕ → Guard)
+    (hedges : ∀ p, nextGuard (path p) (a p) = some (path (p + 1)))
+    (hrec : ∀ p, x p = branch (a p) (x (p + 1))) (n i : ℕ) :
+    (finiteSegment a i n).length = n ∧
+      LegalWord (path i) (path (i + n)) (finiteSegment a i n) ∧
+      x i = compose (finiteSegment a i n) (x (i + n)) := by
+  induction n generalizing i with
+  | zero => simp [finiteSegment, LegalWord, walk, compose]
+  | succ n ih =>
+    obtain ⟨hlen, hlegal, hvalue⟩ := ih (i + 1)
+    have hi : i + 1 + n = i + (n + 1) := by omega
+    refine ⟨by simpa [finiteSegment] using congrArg Nat.succ hlen, ?_, ?_⟩
+    · simpa [finiteSegment, LegalWord, walk, hedges i, hi] using hlegal
+    · calc
+        x i = branch (a i) (x (i + 1)) := hrec i
+        _ = branch (a i) (compose (finiteSegment a (i + 1) n) (x (i + (n + 1)))) := by
+          rw [hvalue, hi]
+        _ = compose (finiteSegment a i (n + 1)) (x (i + (n + 1))) := rfl
+
+/-- Truncation at the actual nth coordinate gives arbitrarily close finite-D scalars. -/
+theorem finite_approximation (s : Guard) (z : ℝ) (hz : InSupport s z)
+    (ε : ℝ) (hε : 0 < ε) :
+    ∃ (e : Guard) (w : List Label),
+      LegalWord s e w ∧ |z - coordinate w 0| < ε := by
+  rcases tail_arithmetic with ⟨htq, htp, ht1, hgp, hg1, hphi⟩
+  obtain ⟨a, x, path, hpath0, hx0, hedges, hsupp, hrec⟩ := lawful_tail s z hz
+  have hlim : Tendsto (fun n : ℕ => phi * g ^ n) atTop (𝓝 0) := by
+    simpa only [mul_zero] using
+      (tendsto_pow_atTop_nhds_zero_of_lt_one hgp.le hg1).const_mul phi
+  obtain ⟨n, hn⟩ := (Filter.Tendsto.eventually_lt_const hε hlim).exists
+  have segment := finite_segment_spec a x path hedges hrec n 0
+  simp only [Nat.zero_add, hpath0, hx0] at segment
+  have affine := literal_source_geometry.2.2.2.1 (finiteSegment a 0 n) 0 (x n)
+  rw [zero_add, segment.1] at affine
+  have hd : z - compose (finiteSegment a 0 n) 0 = (-g) ^ n * x n := by
+    have hv := segment.2.2.trans affine
+    linarith
+  have hu : supportUpper (path n) ≤ phi := by
+    cases path n <;> dsimp [supportUpper, phi] <;> linarith
+  have hxbound : |x n| ≤ phi := abs_le.mpr
+    ⟨by linarith [(hsupp n).1], (hsupp n).2.trans hu⟩
+  refine ⟨path n, finiteSegment a 0 n, segment.2.1, ?_⟩
+  change |z - compose (finiteSegment a 0 n) 0| < ε
+  calc
+    |z - compose (finiteSegment a 0 n) 0| = |(-g) ^ n * x n| := congrArg abs hd
+    _ = g ^ n * |x n| := by rw [abs_mul, abs_pow, abs_neg, abs_of_pos hgp]
+    _ ≤ g ^ n * phi := mul_le_mul_of_nonneg_left hxbound (pow_nonneg hgp.le n)
+    _ = phi * g ^ n := mul_comm _ _
+    _ < ε := hn
+
+/-- One finite legal tail is chosen in the hull interior, with its entire literal path. -/
+theorem finite_tail_interior (s : Guard) (lo hi : ℝ) (hlt : lo < hi)
+    (hsupport : ∀ z ∈ Set.Icc lo hi, InSupport s z) :
+    ∃ (e : Guard) (w : List Label), LegalWord s e w ∧
+      lo < coordinate w 0 ∧ coordinate w 0 < hi ∧
+      OperationFiniteSource (address w) ∧
+      ∃ path : ℕ → Guard, path 0 = s ∧
+        (∀ p, nextGuard (path p) (address w p) = some (path (p + 1))) ∧
+        (∀ p, InSupport (path p) (coordinate w p)) ∧
+        (∀ p, coordinate w p = branch (address w p) (coordinate w (p + 1))) := by
+  have hm : InSupport s ((lo + hi) / 2) :=
+    hsupport _ ⟨by linarith, by linarith⟩
+  obtain ⟨e, w, hw, herror⟩ :=
+    finite_approximation s ((lo + hi) / 2) hm ((hi - lo) / 2) (by linarith)
+  have herr := abs_lt.mp herror
+  refine ⟨e, w, hw, by linarith [herr.2], by linarith [herr.1], ?_,
+    literal_address_path s e w hw⟩
+  refine ⟨w.length, ?_⟩
+  intro p hp
+  simp only [address, List.getElem?_eq_none hp, Option.getD_none]
+
+/-- A legal finite prefix splices the same guard/coordinate tail into an actual source.
+The last prefix recurrence and both exact shifted futures are part of the conclusion. -/
+theorem prepend_legal_tail
+    (s e : Guard) (w : List Label) (hw : LegalWord s e w)
+    (a : ℕ → Label) (x : ℕ → ℝ) (path : ℕ → Guard)
+    (hpath0 : path 0 = e)
+    (hedges : ∀ p, nextGuard (path p) (a p) = some (path (p + 1)))
+    (hsupp : ∀ p, InSupport (path p) (x p))
+    (hrec : ∀ p, x p = branch (a p) (x (p + 1))) :
+    ∃ (b : ℕ → Label) (y : ℕ → ℝ) (q : ℕ → Guard),
+      q 0 = s ∧ y 0 = compose w (x 0) ∧
+      (∀ p, nextGuard (q p) (b p) = some (q (p + 1))) ∧
+      (∀ p, InSupport (q p) (y p)) ∧
+      (∀ p, y p = branch (b p) (y (p + 1))) ∧
+      (∀ p (hp : p < w.length), b p = w[p]) ∧
+      (∀ p, b (w.length + p) = a p) ∧
+      (∀ p, y (w.length + p) = x p) := by
+  induction w generalizing s with
+  | nil =>
+    have he : s = e := by simpa [LegalWord, walk] using hw
+    refine ⟨a, x, path, hpath0.trans he.symm, rfl, hedges, hsupp, hrec, ?_, ?_, ?_⟩
+    · intro p hp
+      simp at hp
+    · intro p
+      simp only [List.length_nil, Nat.zero_add]
+    · intro p
+      simp only [List.length_nil, Nat.zero_add]
+  | cons l w ih =>
+    cases hn : nextGuard s l with
+    | none => simp [LegalWord, walk, hn] at hw
+    | some s' =>
+      have hw' : LegalWord s' e w := by simpa [LegalWord, walk, hn] using hw
+      obtain ⟨b, y, q, hq0, hy0, hbedges, hbSupp, hbRec, hbPrefix, hbFuture, hyFuture⟩ :=
+        ih s' hw'
+      refine ⟨(fun p => match p with | 0 => l | n + 1 => b n),
+        (fun p => match p with | 0 => compose (l :: w) (x 0) | n + 1 => y n),
+        (fun p => match p with | 0 => s | n + 1 => q n),
+        rfl, rfl, ?_, ?_, ?_, ?_, ?_, ?_⟩
+      · intro p
+        cases p with
+        | zero => simpa only [hq0] using hn
+        | succ p => exact hbedges p
+      · intro p
+        cases p with
+        | zero =>
+          exact literal_source_geometry.1 s e (l :: w) (x 0) hw
+            (by simpa only [hpath0] using hsupp 0)
+        | succ p => exact hbSupp p
+      · intro p
+        cases p with
+        | zero => simpa only [compose, hy0]
+        | succ p => exact hbRec p
+      · intro p hp
+        cases p with
+        | zero => rfl
+        | succ p =>
+          have hp' : p < w.length := by simpa only [List.length_cons, Nat.succ_lt_succ_iff] using hp
+          simpa only [List.getElem_cons_succ] using hbPrefix p hp'
+      · intro p
+        simpa only [List.length_cons, Nat.succ_add] using hbFuture p
+      · intro p
+        simpa only [List.length_cons, Nat.succ_add] using hyFuture p
+
+
+
+
+open D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open Filter Topology
+
+/-- Actual cell endpoint ownership, with both outside support endpoints included. -/
+def lowerOwned (o : Ownership) (c : Color) : Prop :=
+  match c.val with
+  | 0 => True | 1 => o 0 = true | 2 => o 1 = true
+  | 3 => o 2 = true | 4 => o 3 = true | _ => o 4 = true
+
+def upperOwned (o : Ownership) (c : Color) : Prop :=
+  match c.val with
+  | 0 => o 0 = false | 1 => o 1 = false | 2 => o 2 = false
+  | 3 => o 3 = false | 4 => o 4 = false | _ => True
+
+def FlagInterval (lo hi : ℝ) (left right : Prop) (z : ℝ) : Prop :=
+  lo ≤ z ∧ z ≤ hi ∧ (z = lo → left) ∧ (z = hi → right)
+
+private theorem cut_chain :
+    cut 0 < cut 1 ∧ cut 1 < cut 2 ∧ cut 2 < cut 3 ∧
+    cut 3 < cut 4 ∧ cut 4 < cut 5 ∧ cut 5 < cut 6 := by
+  have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)
+  have hsn := Real.sqrt_nonneg (5 : ℝ)
+  have htlo : (3 : ℝ) / 5 < t := by dsimp [t]; nlinarith
+  have hthi : t < (2 : ℝ) / 3 := by dsimp [t]; nlinarith
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;>
+    norm_num [cut, lam, T2, phi, g] <;> linarith
+
+private theorem cut_bounds (c : Color) :
+    -1 ≤ cut c.val ∧ cut c.val < cut (c.val + 1) ∧ cut (c.val + 1) ≤ phi := by
+  rcases cut_chain with ⟨h01, h12, h23, h34, h45, h56⟩
+  fin_cases c <;> norm_num [cut] at *
+  all_goals repeat' constructor
+  all_goals linarith
+
+/-- Exact cell membership retains the original endpoint ownership. -/
+theorem cell_flag_interval (o : Ownership) (c : Color) (u : ℝ) :
+    Cell o c u ↔ FlagInterval (cut c.val) (cut (c.val + 1))
+      (lowerOwned o c) (upperOwned o c) u := by
+  rcases cut_chain with ⟨h01, h12, h23, h34, h45, h56⟩
+  fin_cases c <;>
+    simp only [Cell, InSupport, supportUpper, FlagInterval, lowerOwned, upperOwned,
+      readout, ite_eq_iff]
+  all_goals norm_num [cut] at *
+  all_goals aesop
+  all_goals try linarith
+  all_goals try tauto
+  all_goals by_cases heq1 : u = -T2 - lam <;> try (simp_all <;> linarith)
+  all_goals by_cases heq2 : u = g - 3*lam <;> try (simp_all <;> linarith)
+  all_goals by_cases heq3 : u = t - 5*lam <;> try (simp_all <;> linarith)
+  all_goals by_cases heq4 : u = 2*t - 7*lam <;> try (simp_all <;> linarith)
+  all_goals by_cases heq5 : u = 2*t + lam <;> try (simp_all <;> linarith)
+  all_goals simp_all
+  all_goals first | (apply lt_of_le_of_ne <;> assumption) | linarith
+
+/-- Closed-budget dilation retains exactly the two original endpoint flags.
+The zero-budget branch chooses u=z and does not demand a strict error bound. -/
+private theorem flag_dilation (lo hi θ z : ℝ) (left right : Prop)
+    (hwidth : lo < hi) (hθ : 0 ≤ θ) :
+    (∃ u, FlagInterval lo hi left right u ∧ |z - u| ≤ θ) ↔
+      FlagInterval (lo - θ) (hi + θ) left right z := by
+  constructor
+  · rintro ⟨u, hu, he⟩
+    obtain ⟨hel, her⟩ := abs_le.mp he
+    refine ⟨by linarith [hu.1], by linarith [hu.2.1], ?_, ?_⟩
+    · intro hz
+      exact hu.2.2.1 (by linarith [hu.1])
+    · intro hz
+      exact hu.2.2.2 (by linarith [hu.2.1])
+  · intro hz
+    by_cases hzero : θ = 0
+    · subst θ
+      refine ⟨z, ?_, by simp⟩
+      simpa only [sub_zero, add_zero] using hz
+    have hθpos : 0 < θ := lt_of_le_of_ne hθ (Ne.symm hzero)
+    by_cases hleft : z = lo - θ
+    · refine ⟨lo, ⟨le_rfl, hwidth.le, fun _ => hz.2.2.1 hleft, ?_⟩, ?_⟩
+      · intro heq
+        linarith
+      · rw [hleft]
+        have : lo - θ - lo = -θ := by ring
+        rw [this, abs_neg, abs_of_nonneg hθ]
+    by_cases hright : z = hi + θ
+    · refine ⟨hi, ⟨hwidth.le, le_rfl, ?_, fun _ => hz.2.2.2 hright⟩, ?_⟩
+      · intro heq
+        linarith
+      · rw [hright]
+        have : hi + θ - hi = θ := by ring
+        rw [this, abs_of_nonneg hθ]
+    have hzlo : lo - θ < z := lt_of_le_of_ne hz.1 (Ne.symm hleft)
+    have hzhi : z < hi + θ := lt_of_le_of_ne hz.2.1 hright
+    have overlap : max lo (z - θ) < min hi (z + θ) := by
+      rw [max_lt_iff, lt_min_iff, lt_min_iff]
+      exact ⟨⟨hwidth, by linarith⟩, ⟨by linarith, by linarith⟩⟩
+    obtain ⟨u, hlu, huh⟩ := exists_between overlap
+    have ulo : lo < u := lt_of_le_of_lt (le_max_left _ _) hlu
+    have uhi : u < hi := lt_of_lt_of_le huh (min_le_left _ _)
+    have eu : z - θ < u := lt_of_le_of_lt (le_max_right _ _) hlu
+    have ue : u < z + θ := lt_of_lt_of_le huh (min_le_right _ _)
+    exact ⟨u, ⟨ulo.le, uhi.le, by intro heq; linarith, by intro heq; linarith⟩,
+      abs_le.mpr ⟨by linarith, by linarith⟩⟩
+
+/-- The actual, supported color-attainable set, not the closed relaxation. -/
+def OwnedColor (o : Ownership) (θ : ℝ) (c : Color) (z : ℝ) : Prop :=
+  InSupport .G0 z ∧ ∃ u, Cell o c u ∧ |z - u| ≤ θ
+
+theorem owned_color_interval (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
+    (c : Color) (z : ℝ) :
+    OwnedColor o θ c z ↔ InSupport .G0 z ∧
+      FlagInterval (cut c.val - θ) (cut (c.val + 1) + θ)
+        (lowerOwned o c) (upperOwned o c) z := by
+  unfold OwnedColor
+  simp_rw [cell_flag_interval]
+  rw [flag_dilation _ _ _ _ _ _ (cut_bounds c).2.1 hθ]
+
+private theorem clip_fixes (z : ℝ) (hz : InSupport .G0 z) : clip z = z := by
+  change -1 ≤ z ∧ z ≤ phi at hz
+  simp only [clip, min_eq_right hz.2, max_eq_right hz.1]
+
+private theorem clip_support (z : ℝ) : InSupport .G0 (clip z) := by
+  have hphi : (-1 : ℝ) ≤ phi := (cut_bounds 0).1.trans (cut_bounds 0).2.1.le |>.trans (cut_bounds 0).2.2
+  exact ⟨le_max_left _ _, max_le hphi (min_le_left _ _)⟩
+
+private theorem clip_error (z e : ℝ) (hz : InSupport .G0 z) :
+    |z - clip (z + e)| ≤ |e| := by
+  change -1 ≤ z ∧ z ≤ phi at hz
+  by_cases hlo : z + e ≤ -1
+  · have hhi : z + e ≤ phi := hlo.trans (hz.1.trans hz.2)
+    have he : e ≤ 0 := by linarith [hz.1]
+    have habs : 0 ≤ z - (-1) := by linarith [hz.1]
+    rw [clip, min_eq_right hhi, max_eq_left hlo, abs_of_nonneg habs, abs_of_nonpos he]
+    linarith
+  by_cases hhi : phi ≤ z + e
+  · have hs : (-1 : ℝ) ≤ phi := hz.1.trans hz.2
+    have he : 0 ≤ e := by linarith [hz.2]
+    have habs : z - phi ≤ 0 := by linarith [hz.2]
+    rw [clip, min_eq_left hhi, max_eq_right hs, abs_of_nonpos habs, abs_of_nonneg he]
+    linarith
+  have hlo' : -1 ≤ z + e := (lt_of_not_ge hlo).le
+  have hhi' : z + e ≤ phi := (lt_of_not_ge hhi).le
+  rw [clip, min_eq_right hhi', max_eq_right hlo']
+  have : z - (z + e) = -e := by ring
+  rw [this, abs_neg]
+
+theorem owned_color_error (o : Ownership) (θ : ℝ) (c : Color)
+    (z : ℝ) (hz : InSupport .G0 z) :
+    OwnedColor o θ c z ↔ ∃ e : ℝ, |e| ≤ θ ∧ observe o z e = c := by
+  constructor
+  · rintro ⟨_, u, hu, he⟩
+    refine ⟨u - z, by simpa only [abs_sub_comm] using he, ?_⟩
+    have hsum : z + (u - z) = u := by ring
+    simpa only [observe, hsum, clip_fixes u hu.1] using hu.2
+  · rintro ⟨e, he, hread⟩
+    exact ⟨hz, clip (z + e), ⟨clip_support _, hread⟩, (clip_error z e hz).trans he⟩
+
+private theorem flag_ordConnected (lo hi : ℝ) (left right : Prop) :
+    {z | FlagInterval lo hi left right z}.OrdConnected := by
+  refine ⟨?_⟩
+  intro x hx y hy z hz
+  refine ⟨hx.1.trans hz.1, hz.2.trans hy.2.1, ?_, ?_⟩
+  · intro hzl
+    exact hx.2.2.1 (by linarith [hx.1, hz.1])
+  · intro hzh
+    exact hy.2.2.2 (by linarith [hy.2.1, hz.2])
+
+theorem owned_color_ordConnected (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ) (c : Color) :
+    {z | OwnedColor o θ c z}.OrdConnected := by
+  refine ⟨?_⟩
+  intro x hx y hy z hz
+  obtain ⟨hxs, hxf⟩ := (owned_color_interval o θ hθ c x).mp hx
+  obtain ⟨hys, hyf⟩ := (owned_color_interval o θ hθ c y).mp hy
+  exact (owned_color_interval o θ hθ c z).mpr
+    ⟨⟨hxs.1.trans hz.1, hz.2.trans hys.2⟩,
+      (flag_ordConnected _ _ _ _).out hxf hyf hz⟩
+
+private theorem suffix_preimage_ordConnected (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
+    (c : Color) (w : List Label) : {z | OwnedColor o θ c (compose w z)}.OrdConnected := by
+  have affine (z : ℝ) : compose w z = compose w 0 + (-g) ^ w.length * z := by
+    simpa only [zero_add] using literal_source_geometry.2.2.2.1 w 0 z
+  by_cases hsign : 0 ≤ (-g) ^ w.length
+  · apply (owned_color_ordConnected o θ hθ c).preimage_mono
+    intro x y hxy
+    rw [affine x, affine y]
+    linarith [mul_le_mul_of_nonneg_left hxy hsign]
+  · apply (owned_color_ordConnected o θ hθ c).preimage_anti
+    intro x y hxy
+    rw [affine x, affine y]
+    linarith [mul_le_mul_of_nonpos_left hxy (le_of_not_ge hsign)]
+
+/-- The finite competing-tail set: every stem suffix and both return-color choices.
+Only departures r<length are tested. There is no extra terminal color condition. -/
+def CompetingT (o : Ownership) (θ : ℝ) (s : Guard)
+    (Q V : List Label) (h : List Color) (W : Bool → List Color) : Set ℝ :=
+  {z | InSupport s z ∧
+    (∀ r (hr : r < h.length), OwnedColor o θ h[r] (compose (Q.drop r) z)) ∧
+    (∀ i r (hr : r < (W i).length), OwnedColor o θ (W i)[r] (compose (V.drop r) z))}
+
+theorem competingT_ordConnected (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
+    (s : Guard) (Q V : List Label) (h : List Color) (W : Bool → List Color) :
+    (CompetingT o θ s Q V h W).OrdConnected := by
+  refine ⟨?_⟩
+  intro x hx y hy z hz
+  refine ⟨⟨hx.1.1.trans hz.1, hz.2.trans hy.1.2⟩, ?_, ?_⟩
+  · intro r hr
+    exact (suffix_preimage_ordConnected o θ hθ h[r] (Q.drop r)).out
+      (hx.2.1 r hr) (hy.2.1 r hr) hz
+  · intro i r hr
+    exact (suffix_preimage_ordConnected o θ hθ (W i)[r] (V.drop r)).out
+      (hx.2.2 i r hr) (hy.2.2 i r hr) hz
+
+private theorem support_embed (s : Guard) (z : ℝ) (hz : InSupport s z) :
+    InSupport .G0 z := by
+  have hu : supportUpper s ≤ phi := by cases s <;> dsimp [supportUpper, phi] <;> linarith
+  exact ⟨hz.1, hz.2.trans hu⟩
+
+private theorem suffix_supported (s e : Guard) (w : List Label)
+    (hw : LegalWord s e w) (z : ℝ) (hz : InSupport e z) (p : ℕ) :
+    InSupport .G0 (compose (w.drop p) z) := by
+  induction w generalizing s p with
+  | nil => simpa [compose] using support_embed e z hz
+  | cons l w ih =>
+    cases p with
+    | zero => exact support_embed s _ (literal_source_geometry.1 s e (l :: w) z hw hz)
+    | succ p =>
+      cases hn : nextGuard s l with
+      | none => simp [LegalWord, walk, hn] at hw
+      | some s' =>
+        have hw' : LegalWord s' e w := by simpa [LegalWord, walk, hn] using hw
+        simpa only [List.drop_succ_cons] using ih s' hw' p
+
+/-- Concrete T is exactly the supported scalar with all actual Q and both W slot tests. -/
+theorem competingT_mem_actual (o : Ownership) (θ : ℝ) (s : Guard)
+    (Q V : List Label) (h : List Color) (W : Bool → List Color)
+    (hQ : LegalWord .G0 s Q) (hV : LegalWord s s V) (z : ℝ) :
+    z ∈ CompetingT o θ s Q V h W ↔ InSupport s z ∧
+      BlockSupply o θ false Q h z ∧ ∀ i, BlockSupply o θ false V (W i) z := by
+  constructor
+  · intro hz
+    refine ⟨hz.1, ?_, ?_⟩
+    · intro r hr
+      have hc := hz.2.1 r hr
+      simpa only [Bool.false_eq_true, if_false] using (owned_color_error o θ h[r] _ hc.1).mp hc
+    · intro i r hr
+      have hc := hz.2.2 i r hr
+      simpa only [Bool.false_eq_true, if_false] using (owned_color_error o θ (W i)[r] _ hc.1).mp hc
+  · rintro ⟨hz, stem, returns⟩
+    refine ⟨hz, ?_, ?_⟩
+    · intro r hr
+      apply (owned_color_error o θ h[r] _ (suffix_supported .G0 s Q hQ z hz r)).mpr
+      simpa only [Bool.false_eq_true, if_false] using stem r hr
+    · intro i r hr
+      apply (owned_color_error o θ (W i)[r] _ (suffix_supported s s V hV z hz r)).mpr
+      simpa only [Bool.false_eq_true, if_false] using returns i r hr
+
+
+
+
+open D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+
+/-- The closed relaxation intersects the actual coordinate support. -/
+def ClosedExpanded (θ : ℝ) (c : Color) (z : ℝ) : Prop :=
+  InSupport .G0 z ∧ cut c.val - θ ≤ z ∧ z ≤ cut (c.val + 1) + θ
+
+private theorem expanded_distance_formula (θ : ℝ) (hθ : 0 ≤ θ) (c : Color) (z : ℝ) :
+    ClosedExpanded θ c z ↔ InSupport .G0 z ∧
+      max (cut c.val-z) (max 0 (z-cut (c.val+1))) ≤ θ := by
+  simp only [ClosedExpanded,max_le_iff]
+  constructor
+  · rintro ⟨hs,hlo,hhi⟩
+    exact ⟨hs,by linarith,hθ,by linarith⟩
+  · rintro ⟨hs,hlo,_,hhi⟩
+    exact ⟨hs,by linarith,by linarith⟩
+
+/-- Two actual numeric endpoint costs at every observed departure suffix. -/
+def EndpointCertificate (θ : ℝ) (lo hi : ℝ) (w : List Label) (cs : List Color) : Prop :=
+  ∀ r (hr : r < cs.length),
+    (InSupport .G0 (compose (w.drop r) lo) ∧
+      max (cut cs[r].val-compose (w.drop r) lo)
+        (max 0 (compose (w.drop r) lo-cut (cs[r].val+1))) ≤ θ) ∧
+    (InSupport .G0 (compose (w.drop r) hi) ∧
+      max (cut cs[r].val-compose (w.drop r) hi)
+        (max 0 (compose (w.drop r) hi-cut (cs[r].val+1))) ≤ θ)
+
+private theorem literal_slope_ne_zero (w : List Label) : (-g) ^ w.length ≠ 0 := by
+  have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)
+  have hsn := Real.sqrt_nonneg (5 : ℝ)
+  have hgp : 0 < g := by dsimp [g, t]; nlinarith
+  exact pow_ne_zero _ (neg_ne_zero.mpr (ne_of_gt hgp))
+
+private theorem compose_strict_inside (w : List Label) (lo hi x left right : ℝ)
+    (hxlo : lo < x) (hxhi : x < hi)
+    (hlo : left ≤ compose w lo ∧ compose w lo ≤ right)
+    (hhi : left ≤ compose w hi ∧ compose w hi ≤ right) :
+    left < compose w x ∧ compose w x < right := by
+  have affine (z : ℝ) : compose w z = compose w 0 + (-g) ^ w.length * z := by
+    simpa only [zero_add] using literal_source_geometry.2.2.2.1 w 0 z
+  have hne := literal_slope_ne_zero w
+  by_cases hpos : 0 < (-g) ^ w.length
+  · have hxl : compose w lo < compose w x := by
+      rw [affine lo, affine x]
+      nlinarith [mul_pos hpos (sub_pos.mpr hxlo)]
+    have hxh : compose w x < compose w hi := by
+      rw [affine x, affine hi]
+      nlinarith [mul_pos hpos (sub_pos.mpr hxhi)]
+    exact ⟨lt_of_le_of_lt hlo.1 hxl, lt_of_lt_of_le hxh hhi.2⟩
+  · have hneg : (-g) ^ w.length < 0 := lt_of_le_of_ne (le_of_not_gt hpos) hne
+    have hxl : compose w hi < compose w x := by
+      rw [affine hi, affine x]
+      nlinarith [mul_neg_of_neg_of_pos hneg (sub_pos.mpr hxhi)]
+    have hxh : compose w x < compose w lo := by
+      rw [affine x, affine lo]
+      nlinarith [mul_neg_of_neg_of_pos hneg (sub_pos.mpr hxlo)]
+    exact ⟨lt_of_le_of_lt hhi.1 hxl, lt_of_lt_of_le hxh hlo.2⟩
+
+/-- Finite endpoint data gives actual readout witnesses at every departure, at theta itself. -/
+theorem certificate_actual_slots (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
+    (lo hi : ℝ) (w : List Label) (cs : List Color)
+    (cert : EndpointCertificate θ lo hi w cs)
+    (x : ℝ) (hxlo : lo < x) (hxhi : x < hi) :
+    BlockSupply o θ false w cs x := by
+  intro r hr
+  obtain ⟨hleft, hright⟩ := cert r hr
+  have hl := (expanded_distance_formula θ hθ cs[r] _).mpr hleft
+  have hh := (expanded_distance_formula θ hθ cs[r] _).mpr hright
+  have supported := compose_strict_inside (w.drop r) lo hi x (-1) phi hxlo hxhi hl.1 hh.1
+  have expanded := compose_strict_inside (w.drop r) lo hi x
+    (cut cs[r].val - θ) (cut (cs[r].val + 1) + θ) hxlo hxhi hl.2 hh.2
+  have hs : InSupport .G0 (compose (w.drop r) x) := ⟨supported.1.le, supported.2.le⟩
+  have actual : OwnedColor o θ cs[r] (compose (w.drop r) x) :=
+    (owned_color_interval o θ hθ cs[r] _).mpr
+      ⟨hs, expanded.1.le, expanded.2.le,
+        by intro heq; linarith [expanded.1], by intro heq; linarith [expanded.2]⟩
+  simpa only [Bool.false_eq_true, if_false] using
+    (owned_color_error o θ cs[r] _ hs).mp actual
+
+private theorem block_supply_append (o : Ownership) (θ : ℝ)
+    (u v : List Label) (cu cv : List Color) (hlen : u.length = cu.length) (z : ℝ)
+    (hu : BlockSupply o θ false u cu (compose v z))
+    (hv : BlockSupply o θ false v cv z) :
+    BlockSupply o θ false (u ++ v) (cu ++ cv) z := by
+  intro r hr
+  by_cases hp : r < cu.length
+  · have hp' : r ≤ u.length := by omega
+    simpa only [List.getElem_append_left hp, List.drop_append_of_le_length hp',
+      literal_source_geometry.2.2.2.2] using hu r hp
+  · have hle : u.length ≤ r := by omega
+    have hr' : r - cu.length < cv.length := by
+      simp only [List.length_append] at hr
+      omega
+    have value := hv (r - cu.length) hr'
+    simpa only [List.getElem_append_right (le_of_not_gt hp), List.drop_append,
+      List.drop_eq_nil_of_le hle, List.nil_append, hlen] using value
+
+def choiceBlocks {α : Type} (words : Bool → List α) : List Bool → List α
+  | [] => []
+  | i :: zs => words i ++ choiceBlocks words zs
+
+private theorem choice_lengths (R : Bool → List Label) (W : Bool → List Color)
+    (hlen : ∀ i, (R i).length = (W i).length) (zs : List Bool) :
+    (choiceBlocks R zs).length = (choiceBlocks W zs).length := by
+  induction zs with
+  | nil => rfl
+  | cons i zs ih => simp only [choiceBlocks, List.length_append, hlen, ih]
+
+private theorem legal_append (s e q : Guard) (u v : List Label)
+    (hu : LegalWord s e u) (hv : LegalWord e q v) : LegalWord s q (u ++ v) := by
+  induction u generalizing s with
+  | nil =>
+    have hse : s = e := by simpa [LegalWord, walk] using hu
+    simpa [hse] using hv
+  | cons l u ih =>
+    cases hn : nextGuard s l with
+    | none => simp [LegalWord, walk, hn] at hu
+    | some s' =>
+      have hu' : LegalWord s' e u := by simpa [LegalWord, walk, hn] using hu
+      simpa [LegalWord, walk, hn] using ih s' hu'
+
+private theorem choices_legal (s : Guard) (R : Bool → List Label)
+    (hR : ∀ i, LegalWord s s (R i)) (zs : List Bool) :
+    LegalWord s s (choiceBlocks R zs) := by
+  induction zs with
+  | nil => rfl
+  | cons i zs ih => exact legal_append s s s (R i) _ (hR i) ih
+
+private theorem choices_interior (R : Bool → List Label) (lo hi : ℝ)
+    (invariant : ∀ i z, lo ≤ z → z ≤ hi → lo ≤ compose (R i) z ∧ compose (R i) z ≤ hi)
+    (x : ℝ) (hxlo : lo < x) (hxhi : x < hi) (zs : List Bool) :
+    lo < compose (choiceBlocks R zs) x ∧ compose (choiceBlocks R zs) x < hi := by
+  induction zs with
+  | nil => exact ⟨hxlo, hxhi⟩
+  | cons i zs ih =>
+    have width : lo ≤ hi := (hxlo.trans hxhi).le
+    have h := compose_strict_inside (R i) lo hi (compose (choiceBlocks R zs) x) lo hi
+      ih.1 ih.2 (invariant i lo le_rfl width) (invariant i hi width le_rfl)
+    simpa only [choiceBlocks, literal_source_geometry.2.2.2.2] using h
+
+private theorem choices_actual_slots (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
+    (lo hi : ℝ) (R : Bool → List Label) (W : Bool → List Color)
+    (hlen : ∀ i, (R i).length = (W i).length)
+    (invariant : ∀ i z, lo ≤ z → z ≤ hi → lo ≤ compose (R i) z ∧ compose (R i) z ≤ hi)
+    (cert : ∀ i, EndpointCertificate θ lo hi (R i) (W i))
+    (x : ℝ) (hxlo : lo < x) (hxhi : x < hi) (zs : List Bool) :
+    BlockSupply o θ false (choiceBlocks R zs) (choiceBlocks W zs) x := by
+  induction zs with
+  | nil => intro r hr; simp [choiceBlocks] at hr
+  | cons i zs ih =>
+    have hinside := choices_interior R lo hi invariant x hxlo hxhi zs
+    exact block_supply_append o θ (R i) _ (W i) _ (hlen i) x
+      (certificate_actual_slots o θ hθ lo hi (R i) (W i) (cert i) _ hinside.1 hinside.2) ih
+
+/-- One finite history followed by the literal zero-error future of the same fixed tail. -/
+noncomputable def recordWithTail (o : Ownership) (cs : List Color) (w : List Label)
+    (p : ℕ) : Color :=
+  if hp : p < cs.length then cs[p] else observe o (coordinate w (p - cs.length)) 0
+
+private theorem actual_prefix_record (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
+    (s e : Guard) (A : List Label) (cs : List Color) (hlen : A.length = cs.length)
+    (hA : LegalWord .G0 s A) (w : List Label) (hw : LegalWord s e w)
+    (supply : BlockSupply o θ false A cs (coordinate w 0)) :
+    OperationRecord o θ .closed (address (A ++ w)) (recordWithTail o cs w) ∧
+      OperationFiniteSource (address (A ++ w)) := by
+  classical
+  have legal := legal_append .G0 s e A w hA hw
+  obtain ⟨path, hp0, hedge, hsupp, hrec⟩ := literal_address_path .G0 e (A ++ w) legal
+  have supplied (j : Fin cs.length) : ∃ error : ℝ,
+      |error| ≤ θ ∧ observe o (compose (A.drop j.val) (coordinate w 0)) error = cs[j.val] := by
+    simpa only [Bool.false_eq_true, if_false] using supply j.val j.isLt
+  choose error hbound hcolor using supplied
+  let errors : ℕ → ℝ := fun p => if hp : p < cs.length then error ⟨p, hp⟩ else 0
+  have past (p : ℕ) (hp : p < cs.length) :
+      coordinate (A ++ w) p = compose (A.drop p) (coordinate w 0) := by
+    have hp' : p ≤ A.length := by omega
+    simp only [coordinate, List.drop_append_of_le_length hp',
+      literal_source_geometry.2.2.2.2, List.drop_zero]
+  have future (p : ℕ) (hp : cs.length ≤ p) :
+      coordinate (A ++ w) p = coordinate w (p - cs.length) := by
+    have hp' : A.length ≤ p := by omega
+    simp only [coordinate, List.drop_append, List.drop_eq_nil_of_le hp', List.nil_append, hlen]
+  refine ⟨⟨coordinate (A ++ w), ⟨path, hp0, hedge, hsupp, hrec⟩, errors, ?_, ?_⟩, ?_⟩
+  · intro p
+    by_cases hp : p < cs.length
+    · simpa only [errors, dif_pos hp] using hbound ⟨p, hp⟩
+    · simpa only [errors, dif_neg hp, abs_zero] using hθ
+  · intro p
+    by_cases hp : p < cs.length
+    · simpa only [recordWithTail, dif_pos hp, errors, past p hp] using hcolor ⟨p, hp⟩
+    · simp only [recordWithTail, dif_neg hp, errors, future p (le_of_not_gt hp)]
+  · refine ⟨(A ++ w).length, ?_⟩
+    intro p hp
+    simp only [address, List.getElem?_eq_none hp, Option.getD_none]
+
+/-- The finite endpoint certificate constructs one fixed finite actual tail
+serving every finite choice history. It does not assume any record family. -/
+theorem fixed_finite_tail_all_histories
+    (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
+    (s : Guard) (P : List Label) (h : List Color) (hP : LegalWord .G0 s P)
+    (hPlen : P.length = h.length)
+    (R : Bool → List Label) (W : Bool → List Color)
+    (hR : ∀ i, LegalWord s s (R i)) (hlen : ∀ i, (R i).length = (W i).length)
+    (lo hi : ℝ) (hwidth : lo < hi)
+    (hsupport : ∀ z ∈ Set.Icc lo hi, InSupport s z)
+    (invariant : ∀ i z, lo ≤ z → z ≤ hi → lo ≤ compose (R i) z ∧ compose (R i) z ≤ hi)
+    (stemCert : EndpointCertificate θ lo hi P h)
+    (returnCert : ∀ i, EndpointCertificate θ lo hi (R i) (W i)) :
+    ∃ (e : Guard) (w : List Label), LegalWord s e w ∧
+      lo < coordinate w 0 ∧ coordinate w 0 < hi ∧
+      ∀ zs : List Bool,
+        OperationRecord o θ .closed (address ((P ++ choiceBlocks R zs) ++ w))
+          (recordWithTail o (h ++ choiceBlocks W zs) w) ∧
+        OperationFiniteSource (address ((P ++ choiceBlocks R zs) ++ w)) ∧
+        ∀ p, recordWithTail o (h ++ choiceBlocks W zs) w
+          ((h ++ choiceBlocks W zs).length + p) = observe o (coordinate w p) 0 := by
+  obtain ⟨e, w, hw, hxlo, hxhi, hfinite, hpath⟩ :=
+    finite_tail_interior s lo hi hwidth hsupport
+  refine ⟨e, w, hw, hxlo, hxhi, ?_⟩
+  intro zs
+  have inside := choices_interior R lo hi invariant (coordinate w 0) hxlo hxhi zs
+  have stemSupply := certificate_actual_slots o θ hθ lo hi P h stemCert _ inside.1 inside.2
+  have returnSupply := choices_actual_slots o θ hθ lo hi R W hlen invariant returnCert
+    (coordinate w 0) hxlo hxhi zs
+  have allSupply := block_supply_append o θ P (choiceBlocks R zs) h (choiceBlocks W zs)
+    hPlen (coordinate w 0) stemSupply returnSupply
+  have allLegal := legal_append .G0 s s P (choiceBlocks R zs) hP (choices_legal s R hR zs)
+  have allLength : (P ++ choiceBlocks R zs).length = (h ++ choiceBlocks W zs).length := by
+    simp only [List.length_append, hPlen, choice_lengths R W hlen zs]
+  obtain ⟨actual, finite⟩ := actual_prefix_record o θ hθ s e (P ++ choiceBlocks R zs)
+    (h ++ choiceBlocks W zs) allLength allLegal w hw allSupply
+  refine ⟨actual, finite, ?_⟩
+  intro p
+  have hp : ¬ (h ++ choiceBlocks W zs).length + p < (h ++ choiceBlocks W zs).length := by omega
+  simp only [recordWithTail, dif_neg hp, Nat.add_sub_cancel_left]
+
+
+
+
+private theorem prefix_coordinates (A : List Label) (beta : ℕ → Label) (X : ℕ → ℝ)
+    (z : ℝ) (prefixLabels : ∀ p (hp : p < A.length), beta p = A[p])
+    (recurrence : ∀ p, X p = branch (beta p) (X (p+1)))
+    (terminal : X A.length = z) :
+    ∀ p, p ≤ A.length → X p = compose (A.drop p) z := by
+  induction A generalizing beta X with
+  | nil =>
+    intro p hp
+    have hp0 : p = 0 := by simpa using hp
+    subst p
+    simpa only [List.length_nil, List.drop_nil, compose] using terminal
+  | cons l A ih =>
+    have hpre : ∀ p (hp : p < A.length), beta (p+1) = A[p] := by
+      intro p hp
+      have hh := prefixLabels (p+1) (by simp; omega)
+      change beta (p+1) = A[p] at hh
+      exact hh
+    have hend : X (A.length+1) = z := by simpa only [List.length_cons] using terminal
+    have ht := ih (fun p => beta (p+1)) (fun p => X (p+1)) hpre
+      (fun p => by simpa only [Nat.add_assoc] using recurrence (p+1)) hend
+    intro p hp
+    cases p with
+    | zero =>
+      rw [recurrence 0, prefixLabels 0 (by simp), ht 0 (Nat.zero_le _)]
+      rfl
+    | succ p =>
+      simpa only [List.drop_succ_cons, Nat.succ_eq_add_one] using ht p (by simp at hp; omega)
+
+noncomputable def recordWithOmegaTail (o : Ownership) (cs : List Color)
+    (x : ℕ → ℝ) (p : ℕ) : Color :=
+  if hp : p < cs.length then cs[p] else observe o (x (p-cs.length)) 0
+
+private theorem actual_omega_prefix_record (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
+    (s : Guard) (A : List Label) (cs : List Color) (hlen : A.length = cs.length)
+    (hA : LegalWord .G0 s A)
+    (tail : ℕ → Label) (x : ℕ → ℝ) (path : ℕ → Guard)
+    (hp0 : path 0 = s)
+    (hedge : ∀ p, nextGuard (path p) (tail p) = some (path (p+1)))
+    (hsupp : ∀ p, InSupport (path p) (x p))
+    (hrec : ∀ p, x p = branch (tail p) (x (p+1)))
+    (supply : BlockSupply o θ false A cs (x 0)) :
+    ∃ beta X, OperationOmega beta X ∧
+      (∀ p (hp : p < A.length), beta p = A[p]) ∧
+      (∀ p, beta (A.length+p) = tail p) ∧
+      (∀ p, X (A.length+p) = x p) ∧
+      OperationRecord o θ .closed beta (recordWithOmegaTail o cs x) := by
+  classical
+  obtain ⟨beta,X,q,hq0,hX0,he,hs,hr,pre,future,coords⟩ :=
+    prepend_legal_tail .G0 s A hA tail x path hp0 hedge hsupp hrec
+  have legal : OperationOmega beta X := ⟨q,hq0,he,hs,hr⟩
+  have terminal : X A.length = x 0 := by simpa only [Nat.add_zero] using coords 0
+  have past := prefix_coordinates A beta X (x 0) pre hr terminal
+  have supplied (j : Fin cs.length) : ∃ e : ℝ,
+      |e| ≤ θ ∧ observe o (X j.val) e = cs[j.val] := by
+    rw [past j.val (by omega)]
+    simpa only [Bool.false_eq_true, if_false] using supply j.val j.isLt
+  choose error bound color using supplied
+  let errors : ℕ → ℝ := fun p => if hp : p < cs.length then error ⟨p,hp⟩ else 0
+  refine ⟨beta,X,legal,pre,future,coords,X,legal,errors,?_,?_⟩
+  · intro p
+    by_cases hp : p < cs.length
+    · simpa only [errors,dif_pos hp] using bound ⟨p,hp⟩
+    · simpa only [errors,dif_neg hp,abs_zero] using hθ
+  · intro p
+    by_cases hp : p < cs.length
+    · simpa only [recordWithOmegaTail,errors,dif_pos hp] using color ⟨p,hp⟩
+    · have hle : A.length ≤ p := by omega
+      have hx : X p = x (p-cs.length) := by
+        have hh := coords (p-A.length)
+        rw [Nat.add_sub_of_le hle] at hh
+        simpa only [hlen] using hh
+      simp only [recordWithOmegaTail,errors,dif_neg hp,hx]
+
+private theorem compose_identical_choices (V : List Label) (zs : List Bool) (z : ℝ) :
+    compose (choiceBlocks (fun _ => V) zs) z = (compose V)^[zs.length] z := by
+  induction zs with
+  | nil => rfl
+  | cons i zs ih =>
+    simp only [choiceBlocks,literal_source_geometry.2.2.2.2,List.length_cons,
+      Function.iterate_succ_apply',ih]
+
+private theorem identical_choices_slots (o : Ownership) (θ : ℝ) (s : Guard)
+    (Q V : List Label) (h : List Color) (W : Bool → List Color)
+    (hQ : LegalWord .G0 s Q) (hV : LegalWord s s V)
+    (hlen : ∀ i, V.length = (W i).length) (z : ℝ)
+    (orbit : ∀ n, (compose V)^[n] z ∈ CompetingT o θ s Q V h W)
+    (zs : List Bool) :
+    BlockSupply o θ false (choiceBlocks (fun _ => V) zs) (choiceBlocks W zs) z := by
+  induction zs with
+  | nil => intro r hr; simp [choiceBlocks] at hr
+  | cons i zs ih =>
+    have ht := (competingT_mem_actual o θ s Q V h W hQ hV _).mp (orbit zs.length)
+    have hv : BlockSupply o θ false V (W i)
+        (compose (choiceBlocks (fun _ => V) zs) z) := by
+      simpa only [compose_identical_choices] using ht.2.2 i
+    exact block_supply_append o θ V _ (W i) _ (hlen i) z hv ih
+
+private theorem block_supply_split (o : Ownership) (θ : ℝ)
+    (A B : List Label) (h d : List Color) (hlen : A.length = h.length) (z : ℝ)
+    (supply : BlockSupply o θ false (A++B) (h++d) z) :
+    BlockSupply o θ false A h (compose B z) ∧ BlockSupply o θ false B d z := by
+  constructor
+  · intro r hr
+    have hrall : r < (h++d).length := by simp; omega
+    have hs := supply r hrall
+    have hrA : r ≤ A.length := by omega
+    simpa only [List.getElem_append_left hr,List.drop_append_of_le_length hrA,
+      literal_source_geometry.2.2.2.2] using hs
+  · intro r hr
+    have hrall : h.length+r < (h++d).length := by simp; omega
+    have hs := supply (h.length+r) hrall
+    have hrge : A.length ≤ h.length+r := by omega
+    have hcolor : (h++d)[h.length+r] = d[r] := by
+      simpa only [Nat.add_sub_cancel_left] using List.getElem_append_right (by omega : h.length ≤ h.length+r)
+    rw [hcolor] at hs
+    rw [List.drop_append,List.drop_eq_nil_of_le hrge,List.nil_append] at hs
+    simpa only [← hlen,Nat.add_sub_cancel_left] using hs
+
+private theorem competingT_orbit_iff_all_histories (o : Ownership) (θ : ℝ) (s : Guard)
+    (Q V : List Label) (h : List Color) (W : Bool → List Color)
+    (hQ : LegalWord .G0 s Q) (hV : LegalWord s s V)
+    (hQlen : Q.length = h.length) (hlen : ∀ i, V.length = (W i).length) (z : ℝ) :
+    (∀ n, (compose V)^[n] z ∈ CompetingT o θ s Q V h W) ↔
+      InSupport s z ∧ ∀ zs : List Bool,
+        BlockSupply o θ false (Q++choiceBlocks (fun _ => V) zs) (h++choiceBlocks W zs) z := by
+  constructor
+  · intro orbit
+    have hz : z ∈ CompetingT o θ s Q V h W := by simpa using orbit 0
+    refine ⟨hz.1,?_⟩
+    intro zs
+    have stem := ((competingT_mem_actual o θ s Q V h W hQ hV _).mp (orbit zs.length)).2.1
+    have stem' : BlockSupply o θ false Q h (compose (choiceBlocks (fun _ => V) zs) z) := by
+      simpa only [compose_identical_choices] using stem
+    exact block_supply_append o θ Q _ h _ hQlen z stem'
+      (identical_choices_slots o θ s Q V h W hQ hV hlen z orbit zs)
+  · rintro ⟨hz,supplies⟩
+    have supported (n : ℕ) : InSupport s ((compose V)^[n] z) := by
+      induction n with
+      | zero => exact hz
+      | succ n ih =>
+        rw [Function.iterate_succ_apply']
+        exact literal_source_geometry.1 s s V _ hV ih
+    intro n
+    let zs : List Bool := List.replicate n false
+    have hzs : zs.length = n := by simp [zs]
+    have hs := (block_supply_split o θ Q _ h _ hQlen z (supplies zs)).1
+    have hs' : BlockSupply o θ false Q h ((compose V)^[n] z) := by
+      simpa only [compose_identical_choices,hzs] using hs
+    apply (competingT_mem_actual o θ s Q V h W hQ hV _).mpr
+    refine ⟨supported n,hs',?_⟩
+    intro i
+    have hs := (block_supply_split o θ Q _ h _ hQlen z (supplies (i::zs))).2
+    change BlockSupply o θ false (V++choiceBlocks (fun _ => V) zs) (W i++choiceBlocks W zs) z at hs
+    have hv := (block_supply_split o θ V _ (W i) _ (hlen i) z hs).1
+    simpa only [compose_identical_choices,hzs] using hv
+
+/-- One lawful competing tail supplies every finite synchronized color history. -/
+theorem fixed_omega_tail_all_histories
+    (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ) (s : Guard)
+    (Q V : List Label) (h : List Color) (W : Bool → List Color)
+    (hQ : LegalWord .G0 s Q) (hV : LegalWord s s V)
+    (hQlen : Q.length = h.length) (hlen : ∀ i, V.length = (W i).length)
+    (a y : ℝ) (ha : -1 < a) (ha1 : a < 1) (hane : a ≠ 0)
+    (hslope : a = (-g)^V.length) (hfixed : compose V y = y)
+    (hfeasible : if 0 < a then
+      (CompetingT o θ s Q V h W).Nonempty ∧ y ∈ closure (CompetingT o θ s Q V h W)
+      else y ∈ CompetingT o θ s Q V h W) :
+    ∃ (tail : ℕ → Label) (x : ℕ → ℝ) (path : ℕ → Guard),
+      path 0 = s ∧
+      (∀ p, nextGuard (path p) (tail p) = some (path (p+1))) ∧
+      (∀ p, InSupport (path p) (x p)) ∧
+      (∀ p, x p = branch (tail p) (x (p+1))) ∧
+      (∀ n, (compose V)^[n] (x 0) ∈ CompetingT o θ s Q V h W) ∧
+      ∀ zs : List Bool, ∃ beta X, OperationOmega beta X ∧
+        (∀ p (hp : p < (Q ++ choiceBlocks (fun _ => V) zs).length),
+          beta p = (Q ++ choiceBlocks (fun _ => V) zs)[p]) ∧
+        (∀ p, beta ((Q ++ choiceBlocks (fun _ => V) zs).length+p) = tail p) ∧
+        (∀ p, X ((Q ++ choiceBlocks (fun _ => V) zs).length+p) = x p) ∧
+        OperationRecord o θ .closed beta (recordWithOmegaTail o (h ++ choiceBlocks W zs) x) := by
+  have hF : compose V = (fun z : ℝ => y+a*(z-y)) := by
+    funext z
+    have affine := literal_source_geometry.2.2.2.1 V y (z-y)
+    have hsum : y+(z-y) = z := by ring
+    simpa only [hsum,hfixed,← hslope] using affine
+  obtain ⟨z,hzOrbit⟩ := (competing_tail_orbit_criterion _
+    (competingT_ordConnected o θ hθ s Q V h W) a y ha ha1 hane).2.mpr hfeasible
+  have orbit : ∀ n, (compose V)^[n] z ∈ CompetingT o θ s Q V h W := by
+    intro n
+    rw [hF]
+    exact hzOrbit n
+  have hzT : z ∈ CompetingT o θ s Q V h W := by simpa using orbit 0
+  obtain ⟨tail,x,path,hp0,hx0,he,hs,hr⟩ := lawful_tail s z hzT.1
+  refine ⟨tail,x,path,hp0,he,hs,hr,by simpa only [hx0] using orbit,?_⟩
+  intro zs
+  have supply := ((competingT_orbit_iff_all_histories o θ s Q V h W hQ hV hQlen hlen z).mp orbit).2 zs
+  have supply' : BlockSupply o θ false (Q++choiceBlocks (fun _ => V) zs) (h++choiceBlocks W zs) (x 0) := by
+    simpa only [hx0] using supply
+  have hA := legal_append .G0 s s Q _ hQ (choices_legal s (fun _ => V) (fun _ => hV) zs)
+  have hAlen : (Q ++ choiceBlocks (fun _ => V) zs).length = (h ++ choiceBlocks W zs).length := by
+    simp only [List.length_append,hQlen,choice_lengths (fun _ => V) W hlen zs]
+  exact actual_omega_prefix_record o θ hθ s _ _ hAlen hA tail x path hp0 he hs hr supply'
+
+
+
+open D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
+
+private theorem uniform_choice_length {A : Type} (R : Bool → List A)
+    (L : ℕ) (hlen : ∀ i, (R i).length = L) (zs : List Bool) :
+    (choiceBlocks R zs).length = zs.length * L := by
+  induction zs with
+  | nil => simp only [choiceBlocks,List.length_nil,Nat.zero_mul]
+  | cons i zs ih => simp only [choiceBlocks,List.length_append,hlen,ih,List.length_cons,Nat.succ_mul]; omega
+
+private theorem uniform_choice_injective (R : Bool → List Label) (L : ℕ)
+    (hlen : ∀ i, (R i).length = L) (hne : R false ≠ R true)
+    (zs ys : List Bool) (hsize : zs.length = ys.length)
+    (heq : choiceBlocks R zs = choiceBlocks R ys) : zs = ys := by
+  induction zs generalizing ys with
+  | nil =>
+    cases ys with
+    | nil => rfl
+    | cons j ys => simp at hsize
+  | cons i zs ih =>
+    cases ys with
+    | nil => simp at hsize
+    | cons j ys =>
+      have head (i : Bool) (rs : List Bool) :
+          (choiceBlocks R (i :: rs)).take L = R i := by
+        change (R i ++ choiceBlocks R rs).take L = R i
+        rw [← hlen i]
+        exact List.take_left
+      have hij : R i = R j := by
+        calc R i = (choiceBlocks R (i :: zs)).take L := (head i zs).symm
+             _ = (choiceBlocks R (j :: ys)).take L := congrArg (List.take L) heq
+             _ = R j := head j ys
+      have hchoice : i = j := by
+        cases i <;> cases j
+        · rfl
+        · exact False.elim (hne hij)
+        · exact False.elim (hne hij.symm)
+        · rfl
+      subst j
+      have tail : choiceBlocks R zs = choiceBlocks R ys :=
+        List.append_cancel_left (by simpa only [choiceBlocks] using heq)
+      exact congrArg (List.cons i) (ih ys (by simpa only [List.length_cons,Nat.succ_inj] using hsize) tail)
+
+def synchronousPrefix {A : Type} (P : List A) (R : Bool → List A)
+    {n : ℕ} (z : Fin n → Bool) : List A := P ++ choiceBlocks R (List.ofFn z)
+
+private theorem synchronous_length {A : Type} (P : List A) (R : Bool → List A)
+    (L : ℕ) (hlen : ∀ i, (R i).length = L) (n : ℕ) (z : Fin n → Bool) :
+    (synchronousPrefix P R z).length = P.length + n*L := by
+  simp only [synchronousPrefix,List.length_append,uniform_choice_length R L hlen,List.length_ofFn]
+
+private theorem address_prefix (A w : List Label) (p : ℕ) (hp : p < A.length) :
+    address (A ++ w) p = A[p] := by
+  have htotal : p < (A ++ w).length := by simp; omega
+  simp only [address,List.getElem?_eq_getElem htotal,Option.getD_some,List.getElem_append_left hp]
+
+private theorem synchronous_address_injective (P : List Label) (R : Bool → List Label)
+    (L : ℕ) (hlen : ∀ i, (R i).length = L) (hne : R false ≠ R true)
+    (w : List Label) (n : ℕ) :
+    Function.Injective (fun z : Fin n → Bool => address (synchronousPrefix P R z ++ w)) := by
+  intro z z' heq
+  have hsize : (synchronousPrefix P R z).length = (synchronousPrefix P R z').length := by
+    rw [synchronous_length P R L hlen n z,synchronous_length P R L hlen n z']
+  have hpref : synchronousPrefix P R z = synchronousPrefix P R z' := by
+    apply List.ext_getElem hsize
+    intro p hp hp'
+    calc (synchronousPrefix P R z)[p] = address (synchronousPrefix P R z ++ w) p :=
+           (address_prefix _ w p hp).symm
+         _ = address (synchronousPrefix P R z' ++ w) p := congrFun heq p
+         _ = (synchronousPrefix P R z')[p] := address_prefix _ w p hp'
+  have blocks : choiceBlocks R (List.ofFn z) = choiceBlocks R (List.ofFn z') :=
+    List.append_cancel_left hpref
+  apply List.ofFn_injective
+  exact uniform_choice_injective R L hlen hne _ _ (by simp) blocks
+
+private theorem zero_record (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
+    (e : Guard) (w : List Label) (hw : LegalWord .G0 e w) :
+    OperationRecord o θ .closed (address w) (fun p => observe o (coordinate w p) 0) ∧
+      OperationFiniteSource (address w) := by
+  obtain ⟨path,hp0,he,hs,hr⟩ := literal_address_path .G0 e w hw
+  refine ⟨⟨coordinate w,⟨path,hp0,he,hs,hr⟩,(fun _ => 0),?_,?_⟩,w.length,?_⟩
+  · intro p
+    simpa only [abs_zero] using hθ
+  · intro p
+    rfl
+  · intro p hp
+    simp only [address,List.getElem?_eq_none hp,Option.getD_none]
+
+/-- Actual synchronized sources give the original arbitrary common-stem factor.
+The finite hull and endpoint data are numerical inputs, not record or injection inputs. -/
+theorem original_synchronous_common_stem {Configuration : Type*}
+    (action : Configuration → Op Configuration Color Label) (initialConfiguration : Configuration)
+    (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
+    (s1 s2 : Guard) (P Q : List Label) (h : List Color)
+    (hP : LegalWord .G0 s1 P) (hQ : LegalWord .G0 s2 Q)
+    (hPlen : P.length = h.length) (hQlen : Q.length = h.length)
+    (U : Bool → List Label) (V : List Label) (W : Bool → List Color)
+    (L : ℕ) (hL : 0 < L) (hU : ∀ i, LegalWord s1 s1 (U i))
+    (hV : LegalWord s2 s2 V) (hUlen : ∀ i, (U i).length = L)
+    (hVlen : V.length = L) (hUWlen : ∀ i, (U i).length = (W i).length)
+    (differentReturns : U false ≠ U true)
+    (lo hi : ℝ) (hwidth : lo < hi)
+    (hsupport : ∀ z ∈ Set.Icc lo hi, InSupport s1 z)
+    (invariant : ∀ i z, lo ≤ z → z ≤ hi → lo ≤ compose (U i) z ∧ compose (U i) z ≤ hi)
+    (stemCert : EndpointCertificate θ lo hi P h)
+    (returnCert : ∀ i, EndpointCertificate θ lo hi (U i) (W i))
+    (a y : ℝ) (ha : -1 < a) (ha1 : a < 1) (hane : a ≠ 0)
+    (hslope : a = (-g)^V.length) (hfixed : compose V y = y)
+    (hfeasible : if 0 < a then
+      (CompetingT o θ s2 Q V h W).Nonempty ∧ y ∈ closure (CompetingT o θ s2 Q V h W)
+      else y ∈ CompetingT o θ s2 Q V h W)
+    (k : ℕ) (hk : k < P.length)
+    (sameStem : ∀ p (hp : p < k), P[p] = Q[p]'(by omega))
+    (differentStem : P[k] ≠ Q[k]'(by omega))
+    (safety : ∀ alpha r, OperationRecord o θ .closed alpha r → ∀ t,
+      Run action (full r) ⟨initialConfiguration,0,[]⟩ t →
+      ∀ p (hp : p < t.output.length), t.output[p] = alpha p)
+    (liveness : ∀ alpha r, OperationRecord o θ .closed alpha r → OperationFiniteSource alpha → ∀ p,
+      ∃ t, Run action (full r) ⟨initialConfiguration,0,[]⟩ t ∧ p < t.output.length)
+    (postprocessing : ∀ alpha r, OperationRecord o θ .closed alpha r →
+      ∀ (c d : Configuration) (q : ℕ) (out batch : List Label)
+      (f : Color → Option (Configuration × List Label)),
+      Run action (full r) ⟨initialConfiguration,0,[]⟩ ⟨c,q,out⟩ →
+      action c = .acquire f → f (r q) = some (d,batch) →
+      ∃ t, Drain action ⟨d,q+1,out++batch⟩ t) :
+    ∃ (e : Guard) (w : List Label) (eta : ℕ → Label) (x : ℕ → ℝ),
+      LegalWord s1 e w ∧ lo < coordinate w 0 ∧ coordinate w 0 < hi ∧
+      ∀ n : ℕ, ∃ (beta : (Fin n → Bool) → ℕ → Label)
+        (cuts : (Fin n → Bool) → Frame Configuration Label) (states : Finset Configuration),
+        (∀ (z : Fin n → Bool), OperationRecord o θ .closed
+          (address (synchronousPrefix P U z ++ w))
+          (recordWithTail o (synchronousPrefix h W z) w) ∧
+          OperationFiniteSource (address (synchronousPrefix P U z ++ w))) ∧
+        (∀ (z : Fin n → Bool), OperationRecord o θ .closed (beta z)
+          (recordWithOmegaTail o (synchronousPrefix h W z) x)) ∧
+        (∀ (z : Fin n → Bool) p (hp : p < (synchronousPrefix Q (fun _ => V) z).length),
+          beta z p = (synchronousPrefix Q (fun _ => V) z)[p]) ∧
+        (∀ (z : Fin n → Bool) p, beta z (P.length+n*L+p) = eta p) ∧
+        (∀ (z : Fin n → Bool) p, recordWithTail o (synchronousPrefix h W z) w (P.length+n*L+p) =
+          observe o (coordinate w p) 0) ∧
+        Function.Injective (fun z : Fin n → Bool => address (synchronousPrefix P U z ++ w)) ∧
+        (∀ (z : Fin n → Bool), Cut action initialConfiguration
+          (front (recordWithTail o (synchronousPrefix h W z) w) (P.length+n*L)) (cuts z) ∧
+          (cuts z).output.length ≤ k ∧
+          (cuts z).output = (P.take k).take (cuts z).output.length ∧
+          (cuts z).output <+: P.take k) ∧
+        Function.Injective (fun z => ((cuts z).state,(cuts z).output)) ∧
+        (∀ c, c ∈ states ↔ ∃ z, (cuts z).state = c) ∧
+        2^n ≤ states.card*(k+1) := by
+  classical
+  have vWlen : ∀ i, V.length = (W i).length := fun i =>
+    hVlen.trans ((hUlen i).symm.trans (hUWlen i))
+  have wLen : ∀ i, (W i).length = L := fun i => (hUWlen i).symm.trans (hUlen i)
+  obtain ⟨e,w,hw,hxlo,hxhi,highAll⟩ := fixed_finite_tail_all_histories o θ hθ
+    s1 P h hP hPlen U W hU hUWlen lo hi hwidth hsupport invariant stemCert returnCert
+  obtain ⟨eta,x,path,hp0,he,hs,hr,orbit,lowAll⟩ := fixed_omega_tail_all_histories
+    o θ hθ s2 Q V h W hQ hV hQlen vWlen a y ha ha1 hane hslope hfixed hfeasible
+  have z0 := zero_record o θ hθ .G0 [.L0] (by rfl)
+  have z3 := zero_record o θ hθ .G0 [.L3] (by rfl)
+  have processing := processing_of_safe_live_pair action initialConfiguration
+    (OperationRecord o θ .closed) OperationFiniteSource safety liveness
+    (address [.L0]) (address [.L3])
+    (fun p => observe o (coordinate [.L0] p) 0) (fun p => observe o (coordinate [.L3] p) 0)
+    z0.1 z3.1 z0.2 (by simp [address]) postprocessing
+  refine ⟨e,w,eta,x,hw,hxlo,hxhi,?_⟩
+  intro n
+  choose beta X lowOmega lowPrefix lowFuture lowCoordinates lowRecord using lowAll
+  let alpha : (Fin n → Bool) → ℕ → Label := fun z => address (synchronousPrefix P U z ++ w)
+  let hRecord : (Fin n → Bool) → ℕ → Color := fun z => recordWithTail o (synchronousPrefix h W z) w
+  let lRecord : (Fin n → Bool) → ℕ → Color := fun z => recordWithOmegaTail o (synchronousPrefix h W z) x
+  have colorLength (z : Fin n → Bool) : (synchronousPrefix h W z).length = P.length+n*L := by
+    rw [synchronous_length h W L wLen n z,← hPlen]
+  have lowLength (z : Fin n → Bool) : (synchronousPrefix Q (fun _ => V) z).length = P.length+n*L := by
+    rw [synchronous_length Q (fun _ => V) L (fun _ => hVlen) n z]
+    omega
+  have actualHigh (z : Fin n → Bool) : OperationRecord o θ .closed (alpha z) (hRecord z) ∧
+      OperationFiniteSource (alpha z) := (highAll (List.ofFn z)).1 |> fun hrec =>
+        ⟨hrec,(highAll (List.ofFn z)).2.1⟩
+  have actualLow (z : Fin n → Bool) : OperationRecord o θ .closed (beta (List.ofFn z)) (lRecord z) :=
+    lowRecord (List.ofFn z)
+  have past (z : Fin n → Bool) (p : ℕ) (hp : p < P.length+n*L) : hRecord z p = lRecord z p := by
+    have hpcs : p < (synchronousPrefix h W z).length := by rw [colorLength]; exact hp
+    simp only [hRecord,lRecord,recordWithTail,recordWithOmegaTail,dif_pos hpcs]
+  have futureLiteral (z : Fin n → Bool) (p : ℕ) : hRecord z (P.length+n*L+p) = observe o (coordinate w p) 0 := by
+    have hh := (highAll (List.ofFn z)).2.2 p
+    change recordWithTail o (synchronousPrefix h W z) w (P.length+n*L+p) = _
+    rw [← colorLength z]
+    exact hh
+  have future (z z' : Fin n → Bool) (p : ℕ) : hRecord z (P.length+n*L+p) = hRecord z' (P.length+n*L+p) :=
+    (futureLiteral z p).trans (futureLiteral z' p).symm
+  have alphaAt (z : Fin n → Bool) (p : ℕ) (hp : p < P.length) : alpha z p = P[p] := by
+    have hpa : p < (synchronousPrefix P U z).length := by simp only [synchronousPrefix,List.length_append]; omega
+    simpa only [alpha,synchronousPrefix,List.getElem_append_left hp] using address_prefix _ w p hpa
+  have betaAt (z : Fin n → Bool) (p : ℕ) (hp : p < Q.length) : beta (List.ofFn z) p = Q[p] := by
+    have hpb : p < (synchronousPrefix Q (fun _ => V) z).length := by simp only [synchronousPrefix,List.length_append]; omega
+    have hh := lowPrefix (List.ofFn z) p hpb
+    change beta (List.ofFn z) p = (Q ++ choiceBlocks (fun _ => V) (List.ofFn z))[p] at hh
+    exact hh.trans (List.getElem_append_left hp)
+  have takeLength : (P.take k).length = k := by simp only [List.length_take,Nat.min_eq_left hk.le]
+  have stemHigh (z : Fin n → Bool) (p : ℕ) (hp : p < (P.take k).length) : alpha z p = (P.take k)[p] := by
+    have hpP : p < P.length := by rw [takeLength] at hp; omega
+    simpa only [List.getElem_take] using alphaAt z p hpP
+  have stemLow (z : Fin n → Bool) (p : ℕ) (hp : p < (P.take k).length) : beta (List.ofFn z) p = (P.take k)[p] := by
+    have hpk : p < k := by rw [takeLength] at hp; exact hp
+    have hpQ : p < Q.length := by omega
+    calc beta (List.ofFn z) p = Q[p] := betaAt z p hpQ
+         _ = P[p] := (sameStem p hpk).symm
+         _ = (P.take k)[p] := by simp only [List.getElem_take]
+  have different (z : Fin n → Bool) : alpha z (P.take k).length ≠ beta (List.ofFn z) (P.take k).length := by
+    rw [takeLength,alphaAt z k hk,betaAt z k (by omega)]
+    exact differentStem
+  have inj := synchronous_address_injective P U L hUlen differentReturns w n
+  obtain ⟨cuts,states,hcuts,joint,membership,count⟩ := original_operation_common_stem
+    action initialConfiguration o θ .closed processing safety liveness alpha
+    (fun z => beta (List.ofFn z)) hRecord lRecord (P.length+n*L) (P.take k)
+    actualHigh actualLow past future stemHigh stemLow different inj
+  refine ⟨fun z => beta (List.ofFn z),cuts,states,actualHigh,actualLow,?_,?_,futureLiteral,inj,?_,joint,membership,?_⟩
+  · intro z p hp
+    exact lowPrefix (List.ofFn z) p hp
+  · intro z p
+    have hh := lowFuture (List.ofFn z) p
+    change beta (List.ofFn z) ((synchronousPrefix Q (fun _ => V) z).length+p) = eta p at hh
+    rw [lowLength z] at hh
+    exact hh
+  · intro z
+    simpa only [takeLength] using hcuts z
+  · simpa only [Nat.card_eq_fintype_card,Fintype.card_fun,Fintype.card_fin,Fintype.card_bool,takeLength] using count
+
+
+private theorem zero_inside_guard (s : Guard) : -1 < (0 : ℝ) ∧ 0 < supportUpper s := by
+  rcases tail_arithmetic with ⟨_,ht,_,_,_,hphi⟩
+  constructor
+  · norm_num
+  · cases s <;> simp only [supportUpper] <;> linarith
+
+/-- Existing closed support and nonzero affine slope give strict support. -/
+private theorem legal_compose_inside (s e : Guard) (w : List Label)
+    (hw : LegalWord s e w) (x : ℝ) (hx : -1 < x ∧ x < supportUpper e) :
+    -1 < compose w x ∧ compose w x < supportUpper s := by
+  have hends : (-1 : ℝ) ≤ supportUpper e := by
+    have h := zero_inside_guard e
+    linarith
+  exact compose_strict_inside w (-1) (supportUpper e) x (-1) (supportUpper s)
+    hx.1 hx.2
+    (literal_source_geometry.1 s e w (-1) hw ⟨le_rfl,hends⟩)
+    (literal_source_geometry.1 s e w (supportUpper e) hw ⟨hends,le_rfl⟩)
+
+/-- Actual root branches from one guard have disjoint interior images.
+Closed branch endpoints are allowed to touch; strict tail inputs cannot hit them. -/
+private theorem interior_branch_label_unique
+    (s e f : Guard) (l m : Label) (x y : ℝ)
+    (hl : nextGuard s l = some e) (hm : nextGuard s m = some f)
+    (hx : -1 < x ∧ x < supportUpper e)
+    (hy : -1 < y ∧ y < supportUpper f)
+    (hvalue : branch l x = branch m y) : l = m := by
+  rcases tail_arithmetic with ⟨htq,htp,ht1,hgp,hg1,hphi⟩
+  have hxlo : 0 < g*(x+1) := mul_pos hgp (by linarith [hx.1])
+  have hxhi : 0 < g*(supportUpper e-x) := mul_pos hgp (by linarith [hx.2])
+  have hylo : 0 < g*(y+1) := mul_pos hgp (by linarith [hy.1])
+  have hyhi : 0 < g*(supportUpper f-y) := mul_pos hgp (by linarith [hy.2])
+  cases s <;> cases e <;> cases f <;> cases l <;> cases m <;>
+    simp_all [nextGuard,supportUpper,branch,shift,phi,T2,g] <;> nlinarith
+
+/-- Finite zero tails provide the actual equal-length legal-word injection needed
+by original 39.2.2. No distinct-affine-map hypothesis is inserted. -/
+private theorem legal_equal_length_zero_injective
+    (s e f : Guard) (u v : List Label) (hlen : u.length = v.length)
+    (hu : LegalWord s e u) (hv : LegalWord s f v)
+    (hvalue : compose u 0 = compose v 0) : u = v := by
+  induction u generalizing s e f v with
+  | nil =>
+    cases v with
+    | nil => rfl
+    | cons m v => simp at hlen
+  | cons l u ih =>
+    cases v with
+    | nil => simp at hlen
+    | cons m v =>
+      have hlen' : u.length = v.length := by simpa using hlen
+      cases hl : nextGuard s l with
+      | none => simp [LegalWord,walk,hl] at hu
+      | some q =>
+        have hu' : LegalWord q e u := by simpa [LegalWord,walk,hl] using hu
+        cases hm : nextGuard s m with
+        | none => simp [LegalWord,walk,hm] at hv
+        | some r =>
+          have hv' : LegalWord r f v := by simpa [LegalWord,walk,hm] using hv
+          have hlabels : l = m := interior_branch_label_unique s q r l m
+            (compose u 0) (compose v 0) hl hm
+            (legal_compose_inside q e u hu' 0 (zero_inside_guard e))
+            (legal_compose_inside r f v hv' 0 (zero_inside_guard f)) hvalue
+          subst m
+          have hqr : q = r := Option.some.inj (hl.symm.trans hm)
+          subst r
+          have hgp : 0 < g := tail_arithmetic.2.2.2.1
+          have htail : compose u 0 = compose v 0 := by
+            change shift l-g*compose u 0 = shift l-g*compose v 0 at hvalue
+            apply mul_left_cancel₀ (ne_of_gt hgp)
+            linarith
+          exact congrArg (List.cons l) (ih q e f v hlen' hu' hv' htail)
+
+/-- The literal signed slope, retaining odd as well as even return lengths. -/
+private theorem return_slope_control (L : ℕ) (hL : 0 < L) :
+    -1 < (-g)^L ∧ (-g)^L < 1 ∧ (-g)^L ≠ 0 := by
+  have hgp : 0 < g := tail_arithmetic.2.2.2.1
+  have hg1 : g < 1 := tail_arithmetic.2.2.2.2.1
+  have hsmall : |(-g)^L| < 1 := by
+    rw [abs_pow,abs_neg,abs_of_pos hgp]
+    exact pow_lt_one₀ hgp.le hg1 (by omega)
+  exact ⟨(abs_lt.mp hsmall).1,(abs_lt.mp hsmall).2,
+    pow_ne_zero _ (neg_ne_zero.mpr (ne_of_gt hgp))⟩
+
+/-- Exact source formulas for both signs; A is the actual pair of translations. -/
+noncomputable def canonicalAffineLo (A : Bool → ℝ) (a : ℝ) : ℝ :=
+  if 0 < a then min (A false) (A true)/(1-a)
+  else (min (A false) (A true)+a*max (A false) (A true))/(1-a^2)
+
+noncomputable def canonicalAffineHi (A : Bool → ℝ) (a : ℝ) : ℝ :=
+  if 0 < a then max (A false) (A true)/(1-a)
+  else (max (A false) (A true)+a*min (A false) (A true))/(1-a^2)
+
+/-- Endpoint contacts, signed width, invariance and minimality are all computed.
+Minimality uses endpoint inequalities of the same invariant interval. -/
+private theorem canonical_affine_hull (A : Bool → ℝ) (a : ℝ)
+    (ha : -1 < a) (ha1 : a < 1) :
+    let lo := canonicalAffineLo A a
+    let hi := canonicalAffineHi A a
+    lo ≤ hi ∧
+    (A false ≠ A true → lo < hi) ∧
+    (hi-lo = (max (A false) (A true)-min (A false) (A true)) /
+      (if 0 < a then 1-a else 1+a)) ∧
+    (if 0 < a then
+      lo = min (A false) (A true)+a*lo ∧ hi = max (A false) (A true)+a*hi
+     else
+      lo = min (A false) (A true)+a*hi ∧ hi = max (A false) (A true)+a*lo) ∧
+    (∀ i z, lo ≤ z → z ≤ hi → lo ≤ A i+a*z ∧ A i+a*z ≤ hi) ∧
+    (∀ l u : ℝ, l ≤ u →
+      (∀ i z, l ≤ z → z ≤ u → l ≤ A i+a*z ∧ A i+a*z ≤ u) →
+      l ≤ lo ∧ hi ≤ u) := by
+  let amin := min (A false) (A true)
+  let amax := max (A false) (A true)
+  let lo := canonicalAffineLo A a
+  let hi := canonicalAffineHi A a
+  have minuspos : 0 < 1-a := by linarith
+  have pluspos : 0 < 1+a := by linarith
+  have squarepos : 0 < 1-a^2 := by nlinarith [mul_pos minuspos pluspos]
+  have delta : 0 ≤ amax-amin := sub_nonneg.mpr min_le_max
+  have bounds : ∀ i, amin ≤ A i ∧ A i ≤ amax := by
+    intro i
+    cases i
+    · exact ⟨min_le_left _ _,le_max_left _ _⟩
+    · exact ⟨min_le_right _ _,le_max_right _ _⟩
+  obtain ⟨imin,imax,hmin,hmax⟩ :
+      ∃ imin imax : Bool, A imin = amin ∧ A imax = amax := by
+    by_cases h : A false ≤ A true
+    · exact ⟨false,true,(min_eq_left h).symm,(max_eq_right h).symm⟩
+    · exact ⟨true,false,(min_eq_right (le_of_not_ge h)).symm,
+        (max_eq_left (le_of_not_ge h)).symm⟩
+  have width : hi-lo = (amax-amin)/(if 0 < a then 1-a else 1+a) := by
+    by_cases apos : 0 < a
+    · simp only [lo,hi,canonicalAffineLo,canonicalAffineHi,if_pos apos]
+      dsimp [amin,amax]
+      ring
+    · simp only [lo,hi,canonicalAffineLo,canonicalAffineHi,if_neg apos]
+      dsimp [amin,amax]
+      field_simp [ne_of_gt squarepos,ne_of_gt pluspos]
+      ring
+  have denompos : 0 < (if 0 < a then 1-a else 1+a) := by
+    split_ifs <;> assumption
+  have ordered : lo ≤ hi := by
+    have hd : 0 ≤ hi-lo := by rw [width]; exact div_nonneg delta denompos.le
+    linarith
+  have strict : A false ≠ A true → lo < hi := by
+    intro hne
+    have dp : 0 < amax-amin := by
+      rcases lt_or_gt_of_ne hne with h | h
+      · dsimp [amin,amax]
+        rw [min_eq_left h.le,max_eq_right h.le]
+        linarith
+      · dsimp [amin,amax]
+        rw [min_eq_right h.le,max_eq_left h.le]
+        linarith
+    have hd : 0 < hi-lo := by rw [width]; exact div_pos dp denompos
+    linarith
+  have contact : if 0 < a then lo=amin+a*lo ∧ hi=amax+a*hi
+      else lo=amin+a*hi ∧ hi=amax+a*lo := by
+    by_cases apos : 0 < a
+    · simp only [lo,hi,canonicalAffineLo,canonicalAffineHi,if_pos apos]
+      dsimp [amin,amax]
+      constructor <;> field_simp [ne_of_gt minuspos] <;> ring
+    · simp only [lo,hi,canonicalAffineLo,canonicalAffineHi,if_neg apos]
+      dsimp [amin,amax]
+      constructor <;> field_simp [ne_of_gt squarepos] <;> ring
+  have invariant : ∀ i z, lo ≤ z → z ≤ hi → lo ≤ A i+a*z ∧ A i+a*z ≤ hi := by
+    intro i z hzlo hzhi
+    by_cases apos : 0 < a
+    · have heq := contact
+      rw [if_pos apos] at heq
+      constructor
+      · calc lo = amin+a*lo := heq.1
+             _ ≤ A i+a*z := add_le_add (bounds i).1 (mul_le_mul_of_nonneg_left hzlo apos.le)
+      · calc A i+a*z ≤ amax+a*hi := add_le_add (bounds i).2 (mul_le_mul_of_nonneg_left hzhi apos.le)
+             _ = hi := heq.2.symm
+    · have ale : a ≤ 0 := le_of_not_gt apos
+      have heq := contact
+      rw [if_neg apos] at heq
+      constructor
+      · calc lo = amin+a*hi := heq.1
+             _ ≤ A i+a*z := add_le_add (bounds i).1 (mul_le_mul_of_nonpos_left hzhi ale)
+      · calc A i+a*z ≤ amax+a*lo := add_le_add (bounds i).2 (mul_le_mul_of_nonpos_left hzlo ale)
+             _ = hi := heq.2.symm
+  have minimal : ∀ l u : ℝ, l ≤ u →
+      (∀ i z, l ≤ z → z ≤ u → l ≤ A i+a*z ∧ A i+a*z ≤ u) →
+      l ≤ lo ∧ hi ≤ u := by
+    intro l u hlu hinv
+    by_cases apos : 0 < a
+    · have low := (hinv imin l le_rfl hlu).1
+      have high := (hinv imax u hlu le_rfl).2
+      rw [hmin] at low
+      rw [hmax] at high
+      change l ≤ canonicalAffineLo A a ∧ canonicalAffineHi A a ≤ u
+      simp only [canonicalAffineLo,canonicalAffineHi,if_pos apos]
+      constructor
+      · apply (le_div_iff₀ minuspos).mpr
+        change l*(1-a) ≤ amin
+        nlinarith [low]
+      · apply (div_le_iff₀ minuspos).mpr
+        change amax ≤ u*(1-a)
+        nlinarith [high]
+    · have ale : a ≤ 0 := le_of_not_gt apos
+      have low := (hinv imin u hlu le_rfl).1
+      have high := (hinv imax l le_rfl hlu).2
+      rw [hmin] at low
+      rw [hmax] at high
+      have lowerTwo : l ≤ amin+a*(amax+a*l) :=
+        low.trans (add_le_add le_rfl (mul_le_mul_of_nonpos_left high ale))
+      have upperTwo : amax+a*(amin+a*u) ≤ u :=
+        (add_le_add le_rfl (mul_le_mul_of_nonpos_left low ale)).trans high
+      change l ≤ canonicalAffineLo A a ∧ canonicalAffineHi A a ≤ u
+      simp only [canonicalAffineLo,canonicalAffineHi,if_neg apos]
+      constructor
+      · apply (le_div_iff₀ squarepos).mpr
+        change l*(1-a^2) ≤ amin+a*amax
+        nlinarith [lowerTwo]
+      · apply (div_le_iff₀ squarepos).mpr
+        change amax+a*amin ≤ u*(1-a^2)
+        nlinarith [upperTwo]
+  exact ⟨ordered,strict,width,contact,invariant,minimal⟩
+
+noncomputable def canonicalReturnLo (U : Bool → List Label) (L : ℕ) : ℝ :=
+  canonicalAffineLo (fun i => compose (U i) 0) ((-g)^L)
+
+noncomputable def canonicalReturnHi (U : Bool → List Label) (L : ℕ) : ℝ :=
+  canonicalAffineHi (fun i => compose (U i) 0) ((-g)^L)
+
+/-- The coefficient field Q(t), defined as the intersection of all real
+subfields containing the literal Fibonacci coefficient t. -/
+def coefficientField : Subfield ℝ where
+  carrier := {x | ∀ F : Subfield ℝ, t ∈ F → x ∈ F}
+  zero_mem' := fun F _ => F.zero_mem
+  one_mem' := fun F _ => F.one_mem
+  add_mem' := fun hx hy F ht => F.add_mem (hx F ht) (hy F ht)
+  neg_mem' := fun hx F ht => F.neg_mem (hx F ht)
+  mul_mem' := fun hx hy F ht => F.mul_mem (hx F ht) (hy F ht)
+  inv_mem' := fun x hx F ht => F.inv_mem (hx F ht)
+
+private theorem literal_coefficient_mem (w : List Label) : compose w 0 ∈ coefficientField := by
+  have tmem : t ∈ coefficientField := fun F ht => ht
+  have gmem : g ∈ coefficientField := by
+    dsimp only [g]
+    exact coefficientField.sub_mem
+      (coefficientField.mul_mem (by simpa using coefficientField.intCast_mem (2 : ℤ)) tmem)
+      coefficientField.one_mem
+  have labelmem (l : Label) : shift l ∈ coefficientField := by
+    cases l
+    · exact coefficientField.neg_mem tmem
+    · exact coefficientField.zero_mem
+    · exact coefficientField.sub_mem coefficientField.one_mem tmem
+    · exact coefficientField.one_mem
+    · exact coefficientField.sub_mem
+        (by simpa using coefficientField.intCast_mem (2 : ℤ)) tmem
+  induction w with
+  | nil => exact coefficientField.zero_mem
+  | cons l w ih => exact coefficientField.sub_mem (labelmem l) (coefficientField.mul_mem gmem ih)
+
+private theorem canonical_return_coefficient_mem (U : Bool → List Label) (L : ℕ) :
+    canonicalReturnLo U L ∈ coefficientField ∧ canonicalReturnHi U L ∈ coefficientField := by
+  have tmem : t ∈ coefficientField := fun F ht => ht
+  have gmem : g ∈ coefficientField := by
+    dsimp only [g]
+    exact coefficientField.sub_mem
+      (coefficientField.mul_mem (by simpa using coefficientField.intCast_mem (2 : ℤ)) tmem)
+      coefficientField.one_mem
+  have amem := coefficientField.pow_mem (coefficientField.neg_mem gmem) L
+  have minmem : min (compose (U false) 0) (compose (U true) 0) ∈ coefficientField := by
+    rcases le_total (compose (U false) 0) (compose (U true) 0) with h | h
+    · rw [min_eq_left h]; exact literal_coefficient_mem _
+    · rw [min_eq_right h]; exact literal_coefficient_mem _
+  have maxmem : max (compose (U false) 0) (compose (U true) 0) ∈ coefficientField := by
+    rcases le_total (compose (U false) 0) (compose (U true) 0) with h | h
+    · rw [max_eq_right h]; exact literal_coefficient_mem _
+    · rw [max_eq_left h]; exact literal_coefficient_mem _
+  dsimp only [canonicalReturnLo, canonicalReturnHi, canonicalAffineLo, canonicalAffineHi]
+  split_ifs
+  · exact ⟨coefficientField.div_mem minmem (coefficientField.sub_mem coefficientField.one_mem amem),
+      coefficientField.div_mem maxmem (coefficientField.sub_mem coefficientField.one_mem amem)⟩
+  · exact ⟨coefficientField.div_mem (coefficientField.add_mem minmem (coefficientField.mul_mem amem maxmem))
+        (coefficientField.sub_mem coefficientField.one_mem (coefficientField.pow_mem amem 2)),
+      coefficientField.div_mem (coefficientField.add_mem maxmem (coefficientField.mul_mem amem minmem))
+        (coefficientField.sub_mem coefficientField.one_mem (coefficientField.pow_mem amem 2))⟩
+
+/-- Canonical support and minimality come from actual legal returns; strict width
+comes from their literal difference, not a separately supplied geometric premise. -/
+theorem canonical_legal_return_hull (s : Guard) (U : Bool → List Label)
+    (L : ℕ) (hL : 0 < L) (hlen : ∀ i, (U i).length=L)
+    (hlegal : ∀ i, LegalWord s s (U i)) :
+    let lo := canonicalReturnLo U L
+    let hi := canonicalReturnHi U L
+    lo ≤ hi ∧
+    (U false ≠ U true → lo < hi) ∧
+    (∀ z ∈ Set.Icc lo hi, InSupport s z) ∧
+    (∀ i z, lo ≤ z → z ≤ hi → lo ≤ compose (U i) z ∧ compose (U i) z ≤ hi) ∧
+    (∀ l u : ℝ, l ≤ u →
+      (∀ i z, l ≤ z → z ≤ u → l ≤ compose (U i) z ∧ compose (U i) z ≤ u) →
+      l ≤ lo ∧ hi ≤ u) ∧
+    (lo = hi ↔ U false = U true) ∧
+    (lo ∈ coefficientField ∧ hi ∈ coefficientField) := by
+  let A : Bool → ℝ := fun i => compose (U i) 0
+  let a : ℝ := (-g)^L
+  have slope := return_slope_control L hL
+  have affine (i : Bool) (z : ℝ) : compose (U i) z = A i+a*z := by
+    simpa only [zero_add,hlen] using literal_source_geometry.2.2.2.1 (U i) 0 z
+  obtain ⟨ordered,strict,width,contact,invariant,minimal⟩ :=
+    canonical_affine_hull A a slope.1 slope.2.1
+  have realInvariant : ∀ i z, canonicalReturnLo U L ≤ z → z ≤ canonicalReturnHi U L →
+      canonicalReturnLo U L ≤ compose (U i) z ∧ compose (U i) z ≤ canonicalReturnHi U L := by
+    intro i z hzlo hzhi
+    rw [affine]
+    exact invariant i z hzlo hzhi
+  have realMinimal : ∀ l u : ℝ, l ≤ u →
+      (∀ i z, l ≤ z → z ≤ u → l ≤ compose (U i) z ∧ compose (U i) z ≤ u) →
+      l ≤ canonicalReturnLo U L ∧ canonicalReturnHi U L ≤ u := by
+    intro l u hlu h
+    apply minimal l u hlu
+    intro i z hzlo hzhi
+    simpa only [affine] using h i z hzlo hzhi
+  have guardOrdered : (-1 : ℝ) ≤ supportUpper s := by
+    have h := zero_inside_guard s
+    linarith
+  have endpoints := realMinimal (-1) (supportUpper s) guardOrdered
+    (fun i z hzlo hzhi => literal_source_geometry.1 s s (U i) z (hlegal i) ⟨hzlo,hzhi⟩)
+  have singleton : canonicalReturnLo U L = canonicalReturnHi U L ↔ U false = U true := by
+    constructor
+    · intro heq
+      by_contra hne
+      have hs : canonicalReturnLo U L < canonicalReturnHi U L := strict (fun hz =>
+        hne (legal_equal_length_zero_injective s s s (U false) (U true)
+          ((hlen false).trans (hlen true).symm) (hlegal false) (hlegal true) hz))
+      rw [heq] at hs
+      exact (lt_irrefl _ hs)
+    · intro heq
+      simp only [canonicalReturnLo, canonicalReturnHi, canonicalAffineLo, canonicalAffineHi,
+        heq, min_self, max_self]
+  refine ⟨ordered,?_,?_,realInvariant,realMinimal,singleton,canonical_return_coefficient_mem U L⟩
+  · intro hne
+    apply strict
+    intro heq
+    exact hne (legal_equal_length_zero_injective s s s (U false) (U true)
+      ((hlen false).trans (hlen true).symm) (hlegal false) (hlegal true) heq)
+  · intro z hz
+    exact ⟨endpoints.1.trans hz.1,hz.2.trans endpoints.2⟩
+
+noncomputable def endpointCosts (lo hi : ℝ) (w : List Label) (cs : List Color) : List ℝ :=
+  List.ofFn (fun r : Fin cs.length =>
+    max (max (cut cs[r].val-compose (w.drop r.val) lo)
+      (max 0 (compose (w.drop r.val) lo-cut (cs[r].val+1))))
+      (max (cut cs[r].val-compose (w.drop r.val) hi)
+        (max 0 (compose (w.drop r.val) hi-cut (cs[r].val+1)))))
+
+/-- Every observed stem and return suffix is retained, on both actual sources. -/
+noncomputable def familyEndpointCosts (P Q : List Label) (h : List Color)
+    (U V : Bool → List Label) (W : Bool → List Color) (L : ℕ) : List ℝ :=
+  endpointCosts (canonicalReturnLo U L) (canonicalReturnHi U L) P h ++
+  endpointCosts (canonicalReturnLo V L) (canonicalReturnHi V L) Q h ++
+  endpointCosts (canonicalReturnLo U L) (canonicalReturnHi U L) (U false) (W false) ++
+  endpointCosts (canonicalReturnLo U L) (canonicalReturnHi U L) (U true) (W true) ++
+  endpointCosts (canonicalReturnLo V L) (canonicalReturnHi V L) (V false) (W false) ++
+  endpointCosts (canonicalReturnLo V L) (canonicalReturnHi V L) (V true) (W true)
+
+noncomputable def familyEndpointBudget (P Q : List Label) (h : List Color)
+    (U V : Bool → List Label) (W : Bool → List Color) (L : ℕ) : ℝ :=
+  (familyEndpointCosts P Q h U V W L).foldr max 0
+
+private theorem max_fold_nonnegative (xs : List ℝ) : 0 ≤ xs.foldr max 0 := by
+  induction xs with
+  | nil => exact le_rfl
+  | cons x xs ih => exact ih.trans (le_max_right _ _)
+
+private theorem endpoint_certificate_of_budget (s e : Guard) (w : List Label)
+    (cs : List Color) (lo hi : ℝ) (hw : LegalWord s e w)
+    (hlo : InSupport e lo) (hhi : InSupport e hi) (costs : List ℝ)
+    (part : ∀ c ∈ endpointCosts lo hi w cs, c ∈ costs) :
+    EndpointCertificate (costs.foldr max 0) lo hi w cs := by
+  intro r hr
+  have hm : max (max (cut cs[r].val-compose (w.drop r) lo)
+      (max 0 (compose (w.drop r) lo-cut (cs[r].val+1))))
+      (max (cut cs[r].val-compose (w.drop r) hi)
+        (max 0 (compose (w.drop r) hi-cut (cs[r].val+1)))) ∈ endpointCosts lo hi w cs :=
+    List.mem_ofFn.mpr ⟨⟨r,hr⟩,rfl⟩
+  have bound := List.le_max_of_le' 0 (part _ hm) le_rfl
+  exact ⟨⟨suffix_supported s e w hw lo hlo r,(le_max_left _ _).trans bound⟩,
+    ⟨suffix_supported s e w hw hi hhi r,(le_max_right _ _).trans bound⟩⟩
+
+/-- The original finite endpoint maximum supplies the canonical high tail.
+Certificates for all six indexed groups are derived from that same maximum. -/
+private theorem endpoint_certificate_mono (a b lo hi : ℝ) (w : List Label) (cs : List Color)
+    (hab : a ≤ b) (cert : EndpointCertificate a lo hi w cs) :
+    EndpointCertificate b lo hi w cs := by
+  intro r hr
+  obtain ⟨⟨hslo,hblo⟩,⟨hshi,hbhi⟩⟩ := cert r hr
+  exact ⟨⟨hslo,hblo.trans hab⟩,⟨hshi,hbhi.trans hab⟩⟩
+
+private theorem family_endpoint_certificates
+    (o : Ownership) (s1 s2 : Guard) (P Q : List Label) (h : List Color)
+    (hP : LegalWord .G0 s1 P) (hQ : LegalWord .G0 s2 Q)
+    (hPlen : P.length = h.length) (hQlen : Q.length = h.length)
+    (U V : Bool → List Label) (W : Bool → List Color)
+    (L : ℕ) (hL : 0 < L) (hlen : ∀ i, (U i).length = L)
+    (hVlen : ∀ i, (V i).length = L)
+    (hlegal : ∀ i, LegalWord s1 s1 (U i)) (hV : ∀ i, LegalWord s2 s2 (V i))
+    (hcolors : ∀ i, (U i).length = (W i).length) :
+    let θ := familyEndpointBudget P Q h U V W L
+    0 ≤ θ ∧ (familyEndpointCosts P Q h U V W L).length = 2*h.length+4*L ∧
+    EndpointCertificate θ (canonicalReturnLo U L) (canonicalReturnHi U L) P h ∧
+    (∀ i, EndpointCertificate θ (canonicalReturnLo U L) (canonicalReturnHi U L) (U i) (W i)) ∧
+    EndpointCertificate θ (canonicalReturnLo V L) (canonicalReturnHi V L) Q h ∧
+    (∀ i, EndpointCertificate θ (canonicalReturnLo V L) (canonicalReturnHi V L) (V i) (W i)) := by
+  let costs := familyEndpointCosts P Q h U V W L
+  let θ := familyEndpointBudget P Q h U V W L
+  have highHull := canonical_legal_return_hull s1 U L hL hlen hlegal
+  have lowHull := canonical_legal_return_hull s2 V L hL hVlen hV
+  have highLo := highHull.2.2.1 (canonicalReturnLo U L) ⟨le_rfl,highHull.1⟩
+  have highHi := highHull.2.2.1 (canonicalReturnHi U L) ⟨highHull.1,le_rfl⟩
+  have lowLo := lowHull.2.2.1 (canonicalReturnLo V L) ⟨le_rfl,lowHull.1⟩
+  have lowHi := lowHull.2.2.1 (canonicalReturnHi V L) ⟨lowHull.1,le_rfl⟩
+  have highStem : EndpointCertificate θ (canonicalReturnLo U L) (canonicalReturnHi U L) P h := by
+    apply endpoint_certificate_of_budget .G0 s1 P h _ _ hP highLo highHi costs
+    intro c hc
+    simp only [costs,familyEndpointCosts,List.mem_append]
+    exact Or.inl (Or.inl (Or.inl (Or.inl (Or.inl hc))))
+  have lowStem : EndpointCertificate θ (canonicalReturnLo V L) (canonicalReturnHi V L) Q h := by
+    apply endpoint_certificate_of_budget .G0 s2 Q h _ _ hQ lowLo lowHi costs
+    intro c hc
+    simp only [costs,familyEndpointCosts,List.mem_append]
+    exact Or.inl (Or.inl (Or.inl (Or.inl (Or.inr hc))))
+  have highReturns : ∀ i, EndpointCertificate θ (canonicalReturnLo U L) (canonicalReturnHi U L)
+      (U i) (W i) := by
+    intro i
+    apply endpoint_certificate_of_budget s1 s1 (U i) (W i) _ _ (hlegal i) highLo highHi costs
+    intro c hc
+    simp only [costs,familyEndpointCosts,List.mem_append]
+    cases i
+    · exact Or.inl (Or.inl (Or.inl (Or.inr hc)))
+    · exact Or.inl (Or.inl (Or.inr hc))
+  have lowReturns : ∀ i, EndpointCertificate θ (canonicalReturnLo V L) (canonicalReturnHi V L)
+      (V i) (W i) := by
+    intro i
+    apply endpoint_certificate_of_budget s2 s2 (V i) (W i) _ _ (hV i) lowLo lowHi costs
+    intro c hc
+    simp only [costs,familyEndpointCosts,List.mem_append]
+    cases i
+    · exact Or.inl (Or.inr hc)
+    · exact Or.inr hc
+  have hθ : 0 ≤ θ := max_fold_nonnegative costs
+  have wlen : ∀ i, (W i).length = L := fun i => (hcolors i).symm.trans (hlen i)
+  have count : costs.length = 2*h.length+4*L := by
+    simp only [costs,familyEndpointCosts,endpointCosts,List.length_append,List.length_ofFn,wlen]
+    omega
+  exact ⟨hθ,count,highStem,highReturns,lowStem,lowReturns⟩
+
+theorem canonical_high_fixed_finite_tail
+    (o : Ownership) (s1 s2 : Guard) (P Q : List Label) (h : List Color)
+    (hP : LegalWord .G0 s1 P) (hQ : LegalWord .G0 s2 Q)
+    (hPlen : P.length = h.length) (hQlen : Q.length = h.length)
+    (U V : Bool → List Label) (W : Bool → List Color)
+    (L : ℕ) (hL : 0 < L) (hlen : ∀ i, (U i).length = L)
+    (hVlen : ∀ i, (V i).length = L)
+    (hlegal : ∀ i, LegalWord s1 s1 (U i)) (hV : ∀ i, LegalWord s2 s2 (V i))
+    (hdifferent : U false ≠ U true) (hcolors : ∀ i, (U i).length = (W i).length) :
+    let θ := familyEndpointBudget P Q h U V W L
+    0 ≤ θ ∧ (familyEndpointCosts P Q h U V W L).length = 2*h.length+4*L ∧
+    EndpointCertificate θ (canonicalReturnLo V L) (canonicalReturnHi V L) Q h ∧
+    (∀ i, EndpointCertificate θ (canonicalReturnLo V L) (canonicalReturnHi V L) (V i) (W i)) ∧
+    ∃ (e : Guard) (w : List Label), LegalWord s1 e w ∧
+      canonicalReturnLo U L < coordinate w 0 ∧ coordinate w 0 < canonicalReturnHi U L ∧
+      ∀ zs : List Bool,
+        OperationRecord o θ .closed (address ((P ++ choiceBlocks U zs) ++ w))
+          (recordWithTail o (h ++ choiceBlocks W zs) w) ∧
+        OperationFiniteSource (address ((P ++ choiceBlocks U zs) ++ w)) ∧
+        ∀ p, recordWithTail o (h ++ choiceBlocks W zs) w
+          ((h ++ choiceBlocks W zs).length+p) = observe o (coordinate w p) 0 := by
+  let θ := familyEndpointBudget P Q h U V W L
+  obtain ⟨hθ,count,highStem,highReturns,lowStem,lowReturns⟩ :=
+    family_endpoint_certificates o s1 s2 P Q h hP hQ hPlen hQlen U V W L hL
+      hlen hVlen hlegal hV hcolors
+  have highHull := canonical_legal_return_hull s1 U L hL hlen hlegal
+  refine ⟨hθ,count,lowStem,lowReturns,?_⟩
+  exact fixed_finite_tail_all_histories o θ hθ s1 P h hP hPlen U W hlegal hcolors
+    (canonicalReturnLo U L) (canonicalReturnHi U L) (highHull.2.1 hdifferent)
+    highHull.2.2.1 highHull.2.2.2.1 highStem highReturns
+
+/-- The actual canonical high hull and a canonical competing singleton supply
+all synchronized sources and the arbitrary common-stem count. Geometry and the
+identical competing word are derived from the legal families. The finite endpoint
+budget derives the high certificates; the exact owned-endpoint orbit criterion
+remains an explicit original feasibility condition. -/
+theorem canonical_synchronous_common_stem {Configuration : Type*}
+    (action : Configuration → Op Configuration Color Label) (initialConfiguration : Configuration)
+    (o : Ownership) (θ : ℝ)
+    (s1 s2 : Guard) (P Q : List Label) (h : List Color)
+    (hP : LegalWord .G0 s1 P) (hQ : LegalWord .G0 s2 Q)
+    (hPlen : P.length = h.length) (hQlen : Q.length = h.length)
+    (U V : Bool → List Label) (W : Bool → List Color)
+    (L : ℕ) (hL : 0 < L) (hU : ∀ i, LegalWord s1 s1 (U i))
+    (hV : ∀ i, LegalWord s2 s2 (V i)) (hUlen : ∀ i, (U i).length = L)
+    (hVlen : ∀ i, (V i).length = L) (hUWlen : ∀ i, (U i).length = (W i).length)
+    (differentReturns : U false ≠ U true)
+    (hbudget : familyEndpointBudget P Q h U V W L ≤ θ)
+    (competingSingleton : canonicalReturnLo V L = canonicalReturnHi V L)
+    (hfeasible : if 0 < (-g)^L then
+      (CompetingT o θ s2 Q (V false) h W).Nonempty ∧
+        canonicalReturnLo V L ∈ closure (CompetingT o θ s2 Q (V false) h W)
+      else canonicalReturnLo V L ∈ CompetingT o θ s2 Q (V false) h W)
+    (k : ℕ) (hk : k < P.length)
+    (sameStem : ∀ p (hp : p < k), P[p] = Q[p]'(by omega))
+    (differentStem : P[k] ≠ Q[k]'(by omega))
+    (safety : ∀ alpha r, OperationRecord o θ .closed alpha r → ∀ t,
+      Run action (full r) ⟨initialConfiguration,0,[]⟩ t →
+      ∀ p (hp : p < t.output.length), t.output[p] = alpha p)
+    (liveness : ∀ alpha r, OperationRecord o θ .closed alpha r → OperationFiniteSource alpha → ∀ p,
+      ∃ t, Run action (full r) ⟨initialConfiguration,0,[]⟩ t ∧ p < t.output.length)
+    (postprocessing : ∀ alpha r, OperationRecord o θ .closed alpha r →
+      ∀ (c d : Configuration) (q : ℕ) (out batch : List Label)
+      (f : Color → Option (Configuration × List Label)),
+      Run action (full r) ⟨initialConfiguration,0,[]⟩ ⟨c,q,out⟩ →
+      action c = .acquire f → f (r q) = some (d,batch) →
+      ∃ t, Drain action ⟨d,q+1,out++batch⟩ t) :
+    ∃ (e : Guard) (w : List Label) (eta : ℕ → Label) (x : ℕ → ℝ),
+      LegalWord s1 e w ∧ (canonicalReturnLo U L) < coordinate w 0 ∧ coordinate w 0 < (canonicalReturnHi U L) ∧
+      ∀ n : ℕ, ∃ (beta : (Fin n → Bool) → ℕ → Label)
+        (cuts : (Fin n → Bool) → Frame Configuration Label) (states : Finset Configuration),
+        (∀ (z : Fin n → Bool), OperationRecord o θ .closed
+          (address (synchronousPrefix P U z ++ w))
+          (recordWithTail o (synchronousPrefix h W z) w) ∧
+          OperationFiniteSource (address (synchronousPrefix P U z ++ w))) ∧
+        (∀ (z : Fin n → Bool), OperationRecord o θ .closed (beta z)
+          (recordWithOmegaTail o (synchronousPrefix h W z) x)) ∧
+        (∀ (z : Fin n → Bool) p (hp : p < (synchronousPrefix Q V z).length),
+          beta z p = (synchronousPrefix Q V z)[p]) ∧
+        (∀ (z : Fin n → Bool) p, beta z (P.length+n*L+p) = eta p) ∧
+        (∀ (z : Fin n → Bool) p, recordWithTail o (synchronousPrefix h W z) w (P.length+n*L+p) =
+          observe o (coordinate w p) 0) ∧
+        Function.Injective (fun z : Fin n → Bool => address (synchronousPrefix P U z ++ w)) ∧
+        (∀ (z : Fin n → Bool), Cut action initialConfiguration
+          (front (recordWithTail o (synchronousPrefix h W z) w) (P.length+n*L)) (cuts z) ∧
+          (cuts z).output.length ≤ k ∧
+          (cuts z).output = (P.take k).take (cuts z).output.length ∧
+          (cuts z).output <+: P.take k) ∧
+        Function.Injective (fun z => ((cuts z).state,(cuts z).output)) ∧
+        (∀ c, c ∈ states ↔ ∃ z, (cuts z).state = c) ∧
+        2^n ≤ states.card*(k+1) := by
+  obtain ⟨budgetNonnegative,entryCount,stemBase,returnsBase,lowStemBase,lowReturnsBase⟩ :=
+    family_endpoint_certificates o s1 s2 P Q h hP hQ hPlen hQlen U V W L hL
+      hUlen hVlen hU hV hUWlen
+  have hθ : 0 ≤ θ := budgetNonnegative.trans hbudget
+  have stemCert := endpoint_certificate_mono _ θ _ _ P h hbudget stemBase
+  have returnCert := fun i => endpoint_certificate_mono _ θ _ _ (U i) (W i) hbudget (returnsBase i)
+
+  have highHull := canonical_legal_return_hull s1 U L hL hUlen hU
+  have lowHull := canonical_legal_return_hull s2 V L hL hVlen hV
+  have wordsEqual : V false = V true := lowHull.2.2.2.2.2.1.mp competingSingleton
+  have familyEqual : V = fun _ => V false := by
+    funext i
+    cases i
+    · rfl
+    · exact wordsEqual.symm
+  have slope := return_slope_control L hL
+  have fixed : compose (V false) (canonicalReturnLo V L) = canonicalReturnLo V L := by
+    have atLo := lowHull.2.2.2.1 false (canonicalReturnLo V L) le_rfl
+      (le_of_eq competingSingleton)
+    rw [← competingSingleton] at atLo
+    exact le_antisymm atLo.2 atLo.1
+  have result := original_synchronous_common_stem action initialConfiguration o θ hθ
+    s1 s2 P Q h hP hQ hPlen hQlen U (V false) W L hL hU (hV false)
+    hUlen (hVlen false) hUWlen differentReturns
+    (canonicalReturnLo U L) (canonicalReturnHi U L) (highHull.2.1 differentReturns)
+    highHull.2.2.1 highHull.2.2.2.1 stemCert returnCert
+    ((-g)^L) (canonicalReturnLo V L) slope.1 slope.2.1 slope.2.2
+    (by rw [hVlen false]) fixed hfeasible k hk sameStem differentStem safety liveness postprocessing
+  simpa only [← familyEqual] using result
+
+/-- A block-periodic actual source, with the guard and scalar future also periodic. -/
+def PeriodicTail (s : Guard) (w : List Label) (z : ℝ) : Prop :=
+  ∃ (a : ℕ → Label) (x : ℕ → ℝ) (path : ℕ → Guard),
+    path 0 = s ∧ x 0 = z ∧
+    (∀ p, nextGuard (path p) (a p) = some (path (p+1))) ∧
+    (∀ p, InSupport (path p) (x p)) ∧
+    (∀ p, x p = branch (a p) (x (p+1))) ∧
+    (∀ p (hp : p < w.length), a p = w[p]) ∧
+    (∀ p, a (p+w.length) = a p ∧ x (p+w.length) = x p ∧ path (p+w.length) = path p)
+
+private theorem prefix_path_endpoint (s e : Guard) (w : List Label)
+    (hw : LegalWord s e w) (a : ℕ → Label) (path : ℕ → Guard)
+    (h0 : path 0 = s)
+    (hedges : ∀ p, nextGuard (path p) (a p) = some (path (p+1)))
+    (hprefix : ∀ p (hp : p < w.length), a p = w[p]) : path w.length = e := by
+  induction w generalizing s a path with
+  | nil =>
+    have hse : s = e := by simpa [LegalWord,walk] using hw
+    exact h0.trans hse
+  | cons l w ih =>
+    cases hn : nextGuard s l with
+    | none => simp [LegalWord,walk,hn] at hw
+    | some q =>
+      have hw' : LegalWord q e w := by simpa [LegalWord,walk,hn] using hw
+      have hq : path 1 = q := by
+        have he := hedges 0
+        rw [h0,hprefix 0 (by simp)] at he
+        exact Option.some.inj (he.symm.trans hn)
+      have htailPrefix : ∀ p (hp : p < w.length), a (p+1) = w[p] := by
+        intro p hp
+        exact hprefix (p+1) (by simp; omega)
+      have htailEdges : ∀ p, nextGuard (path (p+1)) (a (p+1)) = some (path (p+1+1)) :=
+        fun p => hedges (p+1)
+      simpa only [List.length_cons,Nat.succ_eq_add_one] using
+        ih q hw' (fun p => a (p+1)) (fun p => path (p+1)) hq
+          (fun p => by simpa only [Nat.add_assoc] using htailEdges p) htailPrefix
+
+private theorem periodic_tail_of_fixed_return (s : Guard) (w : List Label)
+    (hw : LegalWord s s w) (hlen : 0 < w.length) (z : ℝ)
+    (hz : InSupport s z) (hfixed : compose w z = z) : PeriodicTail s w z := by
+  obtain ⟨a,x,path,h0,hx0,hedges,hsupp,hrec⟩ := lawful_tail s z hz
+  obtain ⟨b,y,q,hq0,hy0,hbedges,hbsupp,hbrec,hprefix,hfuture,hyfuture⟩ :=
+    prepend_legal_tail s s w hw a x path h0 hedges hsupp hrec
+  have hyzero : y 0 = z := by rw [hy0,hx0,hfixed]
+  have hyend : y w.length = y 0 := by
+    have h := hyfuture 0
+    simpa only [Nat.add_zero,hx0,hyzero] using h
+  have hqend : q w.length = q 0 :=
+    (prefix_path_endpoint s s w hw b q hq0 hbedges hprefix).trans hq0.symm
+  have modstep (p : ℕ) : (p+1)%w.length = (p%w.length+1)%w.length := by
+    rw [Nat.add_mod p 1 w.length]
+    simpa only [Nat.mod_mod] using (Nat.add_mod (p%w.length) 1 w.length).symm
+  refine ⟨fun p => b (p%w.length),fun p => y (p%w.length),fun p => q (p%w.length),
+    by simpa using hq0,by simpa using hyzero,?_,?_,?_,?_,?_⟩
+  · intro p
+    change nextGuard (q (p%w.length)) (b (p%w.length)) = some (q ((p+1)%w.length))
+    rw [modstep]
+    by_cases h : p%w.length+1 < w.length
+    · rw [Nat.mod_eq_of_lt h]
+      exact hbedges (p%w.length)
+    · have hend : p%w.length+1 = w.length := by have hb := Nat.mod_lt p hlen; omega
+      rw [hend,Nat.mod_self]
+      have he := hbedges (p%w.length)
+      rw [hend,hqend] at he
+      exact he
+  · intro p
+    exact hbsupp (p%w.length)
+  · intro p
+    change y (p%w.length) = branch (b (p%w.length)) (y ((p+1)%w.length))
+    rw [modstep]
+    by_cases h : p%w.length+1 < w.length
+    · rw [Nat.mod_eq_of_lt h]
+      exact hbrec (p%w.length)
+    · have hend : p%w.length+1 = w.length := by have hb := Nat.mod_lt p hlen; omega
+      rw [hend,Nat.mod_self]
+      have he := hbrec (p%w.length)
+      rw [hend,hyend] at he
+      exact he
+  · intro p hp
+    change b (p%w.length) = w[p]
+    rw [Nat.mod_eq_of_lt hp]
+    exact hprefix p hp
+  · intro p
+    simp [Nat.add_mod]
+
+/-- The actual extremal return blocks encode the canonical endpoints. Positive
+slope repeats one block; negative slope alternates the two extremal blocks. -/
+theorem canonical_periodic_endpoints (s : Guard) (U : Bool → List Label)
+    (L : ℕ) (hL : 0 < L) (hlen : ∀ i, (U i).length = L)
+    (hlegal : ∀ i, LegalWord s s (U i)) :
+    ∃ imin imax : Bool,
+      compose (U imin) 0 = min (compose (U false) 0) (compose (U true) 0) ∧
+      compose (U imax) 0 = max (compose (U false) 0) (compose (U true) 0) ∧
+      PeriodicTail s (if 0 < (-g)^L then U imin else U imin ++ U imax)
+        (canonicalReturnLo U L) ∧
+      PeriodicTail s (if 0 < (-g)^L then U imax else U imax ++ U imin)
+        (canonicalReturnHi U L) := by
+  let A : Bool → ℝ := fun i => compose (U i) 0
+  let a : ℝ := (-g)^L
+  let lo := canonicalReturnLo U L
+  let hi := canonicalReturnHi U L
+  have slope := return_slope_control L hL
+  obtain ⟨ordered,strict,width,contact,invariant,minimal⟩ :=
+    canonical_affine_hull A a slope.1 slope.2.1
+  change (if 0 < a then
+    lo = min (A false) (A true)+a*lo ∧ hi = max (A false) (A true)+a*hi
+    else lo = min (A false) (A true)+a*hi ∧ hi = max (A false) (A true)+a*lo) at contact
+  have hull := canonical_legal_return_hull s U L hL hlen hlegal
+  have hslo : InSupport s lo := hull.2.2.1 lo ⟨le_rfl,hull.1⟩
+  have hshi : InSupport s hi := hull.2.2.1 hi ⟨hull.1,le_rfl⟩
+  obtain ⟨imin,imax,hmin,hmax⟩ : ∃ imin imax : Bool,
+      A imin = min (A false) (A true) ∧ A imax = max (A false) (A true) := by
+    rcases le_total (A false) (A true) with h | h
+    · exact ⟨false,true,(min_eq_left h).symm,(max_eq_right h).symm⟩
+    · exact ⟨true,false,(min_eq_right h).symm,(max_eq_left h).symm⟩
+  have affine (i : Bool) (z : ℝ) : compose (U i) z = A i+a*z := by
+    simpa only [zero_add,hlen] using literal_source_geometry.2.2.2.1 (U i) 0 z
+  refine ⟨imin,imax,hmin,hmax,?_,?_⟩
+  · by_cases hpos : 0 < a
+    · rw [if_pos hpos]
+      apply periodic_tail_of_fixed_return s (U imin) (hlegal imin) (by rw [hlen]; exact hL) lo hslo
+      rw [if_pos hpos] at contact
+      simpa only [affine,hmin] using contact.1.symm
+    · rw [if_neg hpos]
+      apply periodic_tail_of_fixed_return s (U imin ++ U imax)
+        (legal_append s s s _ _ (hlegal imin) (hlegal imax))
+        (by simp only [List.length_append,hlen]; omega) lo hslo
+      rw [if_neg hpos] at contact
+      rw [literal_source_geometry.2.2.2.2,affine,affine,hmin,hmax,← contact.2,← contact.1]
+  · by_cases hpos : 0 < a
+    · rw [if_pos hpos]
+      apply periodic_tail_of_fixed_return s (U imax) (hlegal imax) (by rw [hlen]; exact hL) hi hshi
+      rw [if_pos hpos] at contact
+      simpa only [affine,hmax] using contact.2.symm
+    · rw [if_neg hpos]
+      apply periodic_tail_of_fixed_return s (U imax ++ U imin)
+        (legal_append s s s _ _ (hlegal imax) (hlegal imin))
+        (by simp only [List.length_append,hlen]; omega) hi hshi
+      rw [if_neg hpos] at contact
+      rw [literal_source_geometry.2.2.2.2,affine,affine,hmax,hmin,← contact.1,← contact.2]
+
 end D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
