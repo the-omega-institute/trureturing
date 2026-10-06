@@ -5806,3 +5806,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 原对数高度的真正 Hessian 现无条件满足 `D.hessian nativeLogHeight p V W = -nativeEuclideanHeightCLM V * nativeEuclideanHeightCLM W / height p.coordinates ^ 2`。先前辅助定理的联络为零前提由上述原对象证明内部闭合；保留相同原度量、实际 `D`、原函数、原点和切向量。
 
 上述原联络、平坦曲率和无条件 Hessian 已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。原高度缩放度量的实际曲率 −1、一般原流形覆盖与有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 及官方验收仍未完成。
+
+
+### 原高度缩放度量的实际共形曲率 −1
+
+在同一原 H3 切丛上，实际 `positiveScaling nativeFlatRiemannianMetric (exp(-2*nativeLogHeight))` 与原 `nativeRiemannianMetric` 是同一度量结构。原内积等式、原正高度及 `exp(-2*logheight)=height⁻²` 内部给出该结构等式，随后沿其搬运给定原度量的同一个实际 Levi–Civita 数据 `Dprime`；等式消去保证搬运前后的实际截面曲率相等。
+
+固定上游一般 Levi–Civita 存在定理内部选择平坦数据 `Dflat`，公开共形截面曲率公式消费已经核验的实际平坦零曲率、无条件原对数高度 Hessian、梯度范数平方及指数高度恒等式。Hessian 与方向微分平方逐项抵消，剩下原高度平方乘以其负倒数，精确得到 `Dprime.sectionalCurvature p V W = -1`。本项向量对前提是原平坦度量下正交且分别单位长度；保留同一原 `p,V,W,Dprime`，没有提供曲率值或联络为零的额外前提。
+
+所需固定上游共形闭包含 33 个模块，原源码均保留并核验固定 Git blob。实际洁净编译使用先前梯度未使用参数的重命名，以及三个明确的兼容模块：两个证明局部类绑定 `letI` 改为 `let`，两个分别属于不同模块的辅助引理显式省去未使用的自动节假设；后两项保留原结论和证明正文，去掉冗余前提。没有关闭检查或添加公理。
+
+上述实际度量等式、依赖数据搬运及原曲率消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。任意原线性无关向量对的曲率接口、一般原流形覆盖与有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 及官方验收仍未完成。
