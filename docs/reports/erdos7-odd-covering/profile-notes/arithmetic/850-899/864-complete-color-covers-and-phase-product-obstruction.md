@@ -818,3 +818,217 @@ inverses and other deletion liabilities must retain the existing
 payment from Report853. These existing interfaces, rather than a
 new general selection statement, determine whether a proposed
 mixed subcover can actually improve the original cover.
+
+## The two-encloser repair applies to each deleted group of top traces
+
+PC22 does not require enclosing all of X_z. For every actual top
+original i of old word z, write its cofactor trace as
+
+$$
+T_i=X_z\cap[\rho_i]_{m_i},\qquad d_i=9qm_i.
+$$
+
+Fix two different nonunit divisors s_1,s_2 of W and two literal
+phases r_1,r_2. Then global count minimality forces
+
+$$
+\#\{i:\ i\text{ is top at }z,\quad
+ T_i\subseteq[r_1]_{s_1}\cap[r_2]_{s_2}\}\le3.
+\tag{PC29}
+$$
+
+Otherwise delete any four such originals and retain every other
+original. A point in the complete simultaneous deletion hole has
+old word z, avoids all q-free originals and belongs to a deleted
+original, so its cofactor lies in one of those four T_i. The same
+three fresh labels 27,27s_1,27s_2 from PC22 cover every integer
+lift of the hole. Four deletions and three insertions contradict
+count minimality.
+
+No connected-component condition or enclosure of the other top
+traces is needed. The actual trace can be smaller than its full
+cofactor coset, so PC29 also detects enclosures forced by the
+retained-family residual. It is a local application of the existing
+complete-hole three-child repair, not a new generic exchange.
+
+A transient Lean consumer checks this precise locality: its
+enclosure hypothesis applies only to each deleted original's class
+after excluding all q-free originals. It constructs the smaller
+whole odd distinct covering system using the previously checked
+repair. The four checked axiom closures are standard-three only.
+
+## Prime rank alone does not enforce a two-owner cofactor capacity
+
+The following control reuses the sibling/path mechanism of
+Pach--Tardos--Toth,
+[*Indecomposable Coverings*](https://doi.org/10.4153/CMB-2009-048-x),
+Canadian Mathematical Bulletin 52(3) (2009), 451--463,
+Definition 2.3 and its following argument on pages 454--455.
+An omitted child at every ternary node determines an entirely
+omitted root-to-leaf path. The congruence realization below uses
+that existing mechanism; it is not a new cover-decomposition result.
+
+It has 110 complete colors, 27 cofactor primes, at most three
+owners per numerical cofactor, a connected source-incidence graph
+and cofactor hull one, yet admits no cover using at most two owners
+per cofactor. Its exponent profile satisfies only the older GHA11
+bound, not the stronger current CD51/CD87 profile. Its source is a
+prescribed mask, not an actual retained-family residual. These
+limitations are part of the control.
+
+### Literal congruence construction
+
+Fix the old word z=2 modulo nine. List the 25 primes from 11 through
+109 as p_i. Set k_i=5 on the
+first ten axes and k_i=4 on the other fifteen, and put
+
+$$
+\sum_i k_i=110,\qquad
+W=5^{15}7^{10}\prod_i p_i^{k_i}.
+\tag{PC30}
+$$
+
+For epsilon=0,1, let X_epsilon consist of the CRT points with
+coordinates epsilon modulo both 5^15 and 7^10 and, independently,
+
+$$
+x\equiv3\epsilon+\sum_{h=1}^{k_i}j_{i,h}p_i^{h-1}
+        \pmod{p_i^{k_i}},\qquad j_{i,h}\in\{0,1,2\}.
+$$
+
+The component shift affects only the first digit. For a level
+1<=a<=k_i and prefix v in {0,1,2}^{a-1}, define
+
+$$
+C(v)=\sum_{h=1}^{a-1}v_h3^{h-1},\quad D=2C(v)+\epsilon,
+\quad t=p_i^a5^{D\bmod16}7^{\lfloor D/16\rfloor}.
+\tag{PC31}
+$$
+
+Here D<=161, so the two tag exponents are at most 15 and 10.
+The dynamic prime, its exponent and the tag pair recover i,a,v
+and epsilon. Thus every block has a different nonunit cofactor
+t dividing W. Its three owners j=0,1,2 have the fixed CRT phases
+
+$$
+\rho\equiv3\epsilon+\sum_{h=1}^{a-1}v_hp_i^{h-1}
+                           +jp_i^{a-1}\pmod{p_i^a},\qquad
+\rho\equiv\epsilon\pmod{t/p_i^a}.
+\tag{PC32}
+$$
+
+Give the whole block color
+\(c(i,a)=2+\sum_{h<i}k_h+a\), ranging from 3 to 112.
+The original label of owner j is 3^j*113*t, with this q-color,
+old ternary phase 2 modulo 3^j, and cofactor phase rho. All labels
+are distinct odd nonunits. Original classes of different colors
+are disjoint modulo 113; within one color their dynamic prefixes
+differ. Hence the original APs are pairwise disjoint and have
+private integers.
+
+On X_epsilon, the trace of an owner is exactly the set of points
+with its specified first a dynamic digits and component. All tag
+conditions hold automatically there; the first dynamic digit
+separates the two components even when the tag is one. Therefore
+each of the 110 colors partitions X_0 union X_1.
+
+Add one bridge point b: its two tag coordinates are one, one
+dynamic axis is 3 modulo its full prime-power coordinate, and
+every other dynamic axis is zero. At each zero axis and every
+level its prefix has C=0, epsilon=0 and tag one, so its child-zero
+owner contains b. At the distinguished axis the epsilon=1,
+C=0 child-zero owner has tag 5 and contains b. Each color still
+has exactly one owner at b. Define
+
+$$
+X=X_0\cup X_1\cup\{b\},\qquad |X|=2\cdot3^{110}+1.
+\tag{PC33}
+$$
+
+Within either component, supports on different dynamic axes
+intersect by independent coordinate choices, connecting its
+owner-incidence graph. The bridge belongs to owners from both
+components, so the graph on X is connected. Also zero belongs
+to X_0, while X_1 contains a point equal to one modulo 5 and 7
+and three modulo every dynamic prime. Its difference from zero
+is coprime to W. Thus the cofactor hull of X is one.
+
+### Every block-capacity selection misses one common point
+
+Any selection of at most two owners per cofactor omits a child
+at every node. In each dynamic axis, follow those omitted children
+from its root to depth k_i, fixing epsilon=0. CRT combines all
+25 paths with the zero tag coordinates into one point of X_0.
+At each color, its unique owner is the omitted child of the visited
+node. Every other owner misses that same point. Thus the selected
+union fails to cover X. The argument uses a single simultaneous
+source point, not independently chosen witnesses for the blocks.
+
+The construction has
+
+$$
+2\left(10\frac{3^5-1}{2}+15\frac{3^4-1}{2}\right)=3620
+\quad\text{blocks},\qquad10860\quad\text{owners}.
+$$
+
+It shows why one omission per complete color cannot be replaced
+by one omission per numerical cofactor block on the basis of
+prime rank, private points, connectedness and global hull alone.
+The original family is a noncover: setting every dynamic first
+digit to six misses every original. No q-free bank, numerical
+divisor closure or equality of X with the exact residual is
+asserted.
+
+### Existing stronger hypotheses exclude this control
+
+The current CD87 bound has exponent at most one at every p>=29;
+PC30 uses exponents four or five there. Moreover the bridge uses
+child zero at every axis, so it belongs to no top trace, whose
+row is j=2. In particular the epsilon-zero level-one top owners
+on axes 11,13,17,19 all have traces contained in X_0 and hence in
+\([0]_5\cap[0]_7\). If X were the actual X_2, these four traces
+would contradict PC29 via the fresh labels 27,135,189. This second
+obstruction uses only level-one owners and is independent of the
+height violation. Connectedness and hull one do not evade it.
+
+A scoped transient Lean check uses two levels on the dynamic
+prime 11 and two components, with a single tag prime 5. Its eight
+block moduli are 11,55,121,605,3025,15125,75625,378125. It checks
+the exact congruence incidences of all 18 source points, both
+complete colors, injective odd original labels, hull one and a
+common missed point for every omission function. Compilation uses
+default budgets, and all five axiom closures are standard-three
+only. This is a check of the finite instance; the general 110-color
+construction, its bridge and its failure proof above remain
+ordinary mathematical deductions, not a full Lean replay.
+
+## The current exponent budget must enter any stronger selection claim
+
+For the actual H_3=2, q=113 branch, the existing support bound,
+Report850 CD51/CD87 and the older small-prime bounds together give
+
+$$
+\begin{array}{c|cccc|c|c}
+p&5&7&11&13&17,19,23&29\le p\le109\\\hline
+v_p(W)\text{ upper bound}&15&13&12&11&2&1
+\end{array}
+$$
+
+There are twenty primes in the last column. Therefore
+
+$$
+\Omega(W)\le77,\qquad
+\tau(W)\le16\cdot14\cdot13\cdot12\cdot3^3\cdot2^{20}
+          =989318873088.
+\tag{PC34}
+$$
+
+Here Omega counts prime factors with multiplicity, unlike omega
+in PC19. PC30 has Omega(W)=135 and does not meet PC34. The upper
+bound on W itself has 300 bits and exceeds 3^110, so the elementary
+random-omission criterion |X|<3^110 is not supplied by this
+exponent envelope alone. Whether n>Omega(W), or the additional
+actual-source restriction PC29, supplies a useful cofactor-capacity
+selection remains unresolved. Even such a selection would still
+need the permanent prefix service in PC28 before yielding an
+original whole-cover contradiction.
