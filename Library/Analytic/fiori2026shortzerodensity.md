@@ -60,6 +60,91 @@ $1-2N(t-h,t+h,\alpha)/[N(t+h)-N(t-h)]$ comparison.
 This application consumes the published table value; it does not
 recompute or independently certify its optimization.
 
+## A count allowance for the actual Robin kernel
+
+Reuse the [published signed formula](../ArithSums/nicolas2025comparison.md)
+from Broadbent–Fiori–Kadiri–Ng–Wilk, Proposition 13(i), rather than
+replacing the original tail by a cosine sum. For a real cutoff $A\ge2$
+and an actual zero $\rho=\beta+i\gamma$, its individual response is
+
+$$
+K_A(\rho)=-\frac1\rho\int_A^\infty
+u^{\rho-2}\frac{1+\log u}{\log^2u}\,du.
+\tag{2}
+$$
+
+Keep $L=\log A$ and $g(v)=(1+v)/v^2$ for $v>0$.
+The same integration-by-parts kernel estimate used in that published
+formula gives the elementary allowance
+
+$$
+|K_A(\rho)|\le
+\frac{2A^{\beta-1}g(L)}{|\rho|\,|1-\rho|}.
+\tag{3}
+$$
+
+Indeed, substitution $u=e^v$ gives the integral of
+$e^{-(1-\rho)v}g(v)$ over $[L,\infty)$.
+Integration by parts gives a boundary term and a term with $g'$,
+both divided by $1-\rho$. Since $g$ decreases to zero and
+$\int_L^\infty|g'(v)|dv=g(L)$, their absolute values sum to at most
+$2A^{\beta-1}g(L)/|1-\rho|$. This is an application of the existing
+kernel formula and elementary absolute estimates, not a new signed
+estimate or prime-distribution theorem.
+
+Let $\mathcal R(t,h)$ be the actual positive-height zero multiset in
+$[t-h,t+h]$, including multiplicity. Assign each occurrence weight
+$w_\rho=1$ in the open interval and $1/2$ at either ordinate endpoint.
+Then
+
+$$
+Z(t,h)=\sum_{\rho\in\mathcal R(t,h)}w_\rho
+=N(t+h)-N(t-h).
+$$
+
+For the parameters in (1), the weighted count with $\beta>15/16$ is
+at most $\kappa Z(t,h)$, where $\kappa=0.4313$. Any additional
+half-weight on the real boundary in the source's rectangular count
+only increases that upper count. For every other zero,
+$A^{\beta-1}\le A^{-1/16}$. Hence the count and the response refer
+to the same actual multiset, and
+
+$$
+\sum_{\rho\in\mathcal R(t,h)}w_\rho A^{\beta-1}
+\le Z(t,h)\left[\kappa+(1-\kappa)A^{-1/16}\right].
+\tag{4}
+$$
+
+The conjugate-paired contribution of this block to (2) is
+$\mathcal C_A(t,h)=2\Re\sum_{\rho\in\mathcal R(t,h)}w_\rho K_A(\rho)$.
+Both $|\rho|$ and $|1-\rho|$ are at least $t-h>0$.
+Combining (3)–(4), with the conjugate factor retained, gives
+
+$$
+|\mathcal C_A(t,h)|\le
+\frac{4g(L)Z(t,h)}{(t-h)^2}
+\left[\kappa+(1-\kappa)A^{-1/16}\right].
+\tag{5}
+$$
+
+On the original Robin normalization the corresponding allowance is
+
+$$
+\sqrt A\log A\,|\mathcal C_A(t,h)|\le
+\frac{4\sqrt A(1+1/L)Z(t,h)}{(t-h)^2}
+\left[\kappa+(1-\kappa)A^{-1/16}\right].
+\tag{6}
+$$
+
+The bracket improves the allowance obtained from (3) by only using
+$\beta<1$ and the same block count. This is a count-based refinement
+of that particular absolute estimate; no improvement over every other
+density estimate or over the previously indexed cumulative-response
+bounds is asserted. It holds for every real $A\ge2$ with the stated
+ordinate-window premises, including $A=\log N$ at an authenticated
+critical source. The source's large ordinate threshold is retained;
+it is not a threshold on $N$, $A$ or the prime-input clock.
+
 ## What the source does not identify
 
 The central region in this example is $[1/16,15/16]$, not the critical
@@ -74,3 +159,14 @@ No theorem here identifies the FIB five-pattern count with a zero count,
 places that source on an ordinate interval, or gives a lower bound for
 its full signed integral. The local ratio can instead be used as a
 counting input for a specified part of the actual explicit formula.
+
+Equations (5)–(6) keep both signs possible and bound only one frequency
+block. To cover several blocks, their weights must form a partition
+without duplicate zeros; the remaining zeros and the elementary terms
+of the signed formula are still required. Every fixed off-line zero
+eventually lies below a moving high-frequency cutoff, and its response
+is not removed by controlling the blocks above that cutoff.
+The allowance therefore supplies no finite global lower budget for
+$\sqrt A\log A\,I_\psi(A)$ and does not pay the selected source's
+condition $I_\psi(A)>-D^*(A)$. No new Robin verification range,
+bound for the full normalized signed tail, or proof of RH is established.
