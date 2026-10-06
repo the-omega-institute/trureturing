@@ -1,4 +1,5 @@
 import LeanInformationAudit.Contract.SourceAudit
+import LeanInformationAudit.CompiledMetadata
 import Lean.Environment
 import Lean.CoreM
 import Lean.Util.InstantiateLevelParams
@@ -12,6 +13,9 @@ extension state. Regions remain live for the lifetime of the reader process. -/
 structure Store where
   modules : NameMap ModuleData := {}
   constants : Std.HashMap Name ConstantInfo := {}
+  owners : Std.HashMap Name Name := {}
+  moduleOrder : Array Name := #[]
+  metadata : CompiledMetadata.Store := {}
   active : NameSet := {}
   regions : Array CompactedRegion := #[]
 
@@ -100,7 +104,10 @@ unsafe def loadModule (name : Name) (store : IO.Ref Store) : IO Unit := do
     else constants := constants.insert info.name info
   store.modify fun s => { s with
     constants := constants
+    owners := data.constNames.foldl (fun owners constant => owners.insertIfNew constant name) s.owners
     modules := s.modules.insert name data
+    moduleOrder := s.moduleOrder.push name
+    metadata := CompiledMetadata.readModule s.metadata data
     active := s.active.erase name }
 
 def Store.getModule (store : Store) (name : Name) : IO ModuleData := do

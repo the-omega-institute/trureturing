@@ -19,6 +19,28 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
     let reader ← IO.mkRef ({} : RawArtifacts.Store)
     for owner in owners do RawArtifacts.loadModule owner reader
     let store ← reader.get
+    unless store.owners[owners[0]!.str "source0"]? == some owners[0]! do
+      throw <| IO.userError "compiled.metadata:declaration_owner"
+    let positions := store.moduleOrder.foldl (init := ({} : NameMap Nat)) fun indices name =>
+      indices.insert name indices.size
+    for owner in store.moduleOrder do
+      for item in (← store.getModule owner).imports do
+        unless (positions.find? item.module).getD store.moduleOrder.size <
+            (positions.find? owner).getD 0 do
+          throw <| IO.userError s!"compiled.metadata:import_order:{owner}:{item.module}"
+    let some projection := store.metadata.projections.find? `Fintype.elems
+      | throw <| IO.userError "compiled.metadata:projection_missing"
+    unless projection.ctorName == `Fintype.mk && projection.numParams == 1 &&
+        projection.i == 0 && projection.fromClass &&
+        store.metadata.classes.contains `Fintype &&
+        store.metadata.instances.contains `Unit.fintype &&
+        store.metadata.implementedBy.find? `Array.modifyM == some `Array.modifyMUnsafe &&
+        store.metadata.externs.contains `Array.usize &&
+        store.metadata.reducibility.find? `Array.uget == some .implicitReducible do
+      throw <| IO.userError "compiled.metadata:declaration_semantics"
+    IO.println s!"[PASS] compiled metadata owners={store.owners.size} \
+      modules={store.moduleOrder.size} projections={store.metadata.projections.size} \
+      classes={store.metadata.classes.toArray.size} instances={store.metadata.instances.toArray.size}"
     let context : Contract.CompiledExpressions.Context := {
       find := (store.constants[·]?)
       heartbeatStart := start
