@@ -205,9 +205,6 @@ private theorem shifted_source_tail (b : Bool) (j : ℕ) :
   funext i
   simp [originalT, bitShift, Nat.mul_add, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
 
-private theorem source_tail_seven (b : Bool) : bitShift (source b) (3 * 7) = source b :=
-  source_period b
-
 private theorem actual_entry (b : Bool) :
     kappa (source b) = if b then firstEntry else rivalEntry := by
   let v (j : ℕ) := kappa (bitShift (source b) (3 * j))

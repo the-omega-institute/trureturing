@@ -32,7 +32,7 @@ private theorem cell_geometry (c : Fin 6) :
     -1 ≤ cellLower c ∧ cellLower c < cellUpper c ∧ cellUpper c ≤ 1 + t := by
   obtain ⟨ht2, hg, hg2, hglo, hghi⟩ := golden_data
   fin_cases c <;> norm_num [cellLower, cellUpper, cuts, lambda] <;>
-    (repeat' apply And.intro) <;> nlinarith
+    (repeat' apply And.intro) <;> linarith only [ht2, hg, hglo, hghi]
 
 private theorem interior_target (a b x r : ℝ) (hab : a < b) (hr : 0 < r)
     (hx : x ∈ Set.Ioo (a - r) (b + r)) :
@@ -98,7 +98,8 @@ private theorem interior_owned (Q : ℝ → Fin 6) (hQ : instrument Q)
   have h := hQ p hs
   generalize hd : Q p = d at h ⊢
   fin_cases c <;> fin_cases d <;>
-    norm_num [cellLower, cellUpper, cuts, lambda] at hp h ⊢ <;> nlinarith
+    norm_num [cellLower, cellUpper, cuts, lambda] at hp h ⊢ <;>
+      linarith only [hp.1, hp.2, h.1, h.2, ht2, hg, hglo, hghi]
 
 private theorem periodic_actual_records (Q : ℝ → Fin 6) (hQ : instrument Q) :
     ∃ e : Bool → ℕ → ℝ, ∃ epsilon : ℝ,

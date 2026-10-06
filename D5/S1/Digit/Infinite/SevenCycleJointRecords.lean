@@ -40,7 +40,9 @@ private theorem joint_actual_records (Q : ℝ → Fin 6) (hQ : instrument Q) :
       strictRecord Q budget (source false)
         (fun j => if j = 0 then 2 else phaseColor ⟨j % 7, Nat.mod_lt _ (by decide)⟩)
         er epsilon ∧
-      ef 0 = 0 ∧ er 0 = 0 ∧ ∀ j, 0 < j → ef j = e true j ∧ er j = e false j := by
+      ef 0 = 0 ∧ er 0 = 0 ∧
+      (∀ j, 0 < j → ef j = e true j ∧ er j = e false j) ∧
+      e false 0 ≠ 0 ∧ (∀ b, ¬ finiteTail (source b)) ∧ ¬ finiteTail f := by
   have hguard : stateAddress false (originalT (source true)) := by
     change stateAddress false (bitShift (source true) 3)
     convert actual_phase_guard true 1 using 1 <;> norm_num [phaseGuard]
@@ -107,9 +109,31 @@ private theorem joint_actual_records (Q : ℝ → Fin 6) (hQ : instrument Q) :
     · rw [actual_entry]
       exact entry_bounds.2.2.2.2.1
     · exact fun j _ => hv.2 j
+  have hn (b : Bool) : ¬ finiteTail (source b) := by
+    rintro ⟨N, hN⟩
+    have h := hN (21 * (N + 1) + 4) (by omega)
+    norm_num [source, Nat.add_mod, Nat.mul_mod] at h
   refine ⟨f, e, ef, er, epsilon', hf.1, hf.2.1, hf.2.2, hscalar,
-    weaken _ _ _ hu, weaken _ _ _ hv, hfr, hvr, rfl, rfl, ?_⟩
-  intro j hj
-  simp [ef, er, show j ≠ 0 by omega]
+    weaken _ _ _ hu, weaken _ _ _ hv, hfr, hvr, rfl, rfl, ?_, ?_, hn, ?_⟩
+  · intro j hj
+    simp [ef, er, show j ≠ 0 by omega]
+  · intro he
+    have h := (hv.2 0).2.2
+    have h2 : Q (kappa (source false)) = 2 := by
+      apply interior_owned Q hQ 2
+      rw [actual_entry]
+      exact entry_bounds.2.2.2.2.1
+    simp only [Nat.mul_zero, bitShift, Nat.add_zero, he, add_zero] at h
+    rw [h2] at h
+    norm_num [phaseColor] at h
+    have hc := congrArg Fin.val h
+    norm_num at hc
+  · rintro ⟨N, hN⟩
+    apply hn true
+    refine ⟨N + 3, ?_⟩
+    intro i hi
+    have h := congrArg (fun z : LegalDigits => z.val (i - 3)) hf.2.2
+    simp only [originalT, bitShift, Nat.sub_add_cancel (by omega : 3 ≤ i)] at h
+    exact h.symm.trans (hN i (by omega))
 
 end D5.S1.Digit.Infinite.SevenCycleJointRecords
