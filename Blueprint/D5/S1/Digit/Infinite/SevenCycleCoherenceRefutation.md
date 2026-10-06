@@ -4,6 +4,8 @@
 
 Separation as a claimed necessity for coherence.
 
+The original endpoint parameters place the actual seven-cycle singletons and their full containment edges in the complete graph. Their unique addresses force each outgoing source label and successor. Every reachable orbit pair stays on that orbit, so the returning component synchronizes both source projections and their ordered label pairs. The zero-label feeding head cannot be reached from this component.
+
 **Definition 1.1 (Necessary finite separation assertion).**
 
 Lean statement: `D5/S1/Digit/Infinite/SevenCycleCoherenceRefutation.claim`

@@ -7,7 +7,7 @@ internal sealed class SevenCycleCoherenceRefutationDocument : IScribeDocumentDef
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Separation as a claimed necessity for coherence.",
         H("Separation as a claimed necessity for coherence"),
-        Blocks(Describe.Lean(
+        Blocks(Paragraph(Text("The original endpoint parameters place the actual seven-cycle singletons and their full containment edges in the complete graph. Their unique addresses force each outgoing source label and successor. Every reachable orbit pair stays on that orbit, so the returning component synchronizes both source projections and their ordered label pairs. The zero-label feeding head cannot be reached from this component.")), Describe.Lean(
             DescribeId.Create("sevencyclecoherencerefutation-claim"),
             DeclarationHandle.Create("D5/S1/Digit/Infinite/SevenCycleCoherenceRefutation.claim"),
             H("Necessary finite separation assertion"),

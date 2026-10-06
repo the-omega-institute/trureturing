@@ -19,5 +19,4 @@ A positive observation budget strictly below the critical radius admits an actua
 ## References
 
 - Truth anchor: `D5/S1/Digit/Infinite/SevenCycleCollisionResult.result`
-- Dependency: [D5/S1/Digit/Infinite/SevenCycleActualCollision](SevenCycleActualCollision.md)
-- Dependency: [D5/S1/Digit/Infinite/SevenCycleOriginalGraph](SevenCycleOriginalGraph.md)
+- Dependency: [D5/S1/Digit/Infinite/SevenCycleCoherenceRefutation](SevenCycleCoherenceRefutation.md)

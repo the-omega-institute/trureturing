@@ -6,8 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S1/Digit/Infinite/SevenCycleSeparationRefutation.claim; result=D5/S1/Digit/Infinite/SevenCycleCollisionResult.result; claim=D5/S1/Digit/Infinite/SevenCycleSeparationRefutation.claim
    digest: A seven-cycle actual singleton rival refutes unconditional finite-future separation. -/
 
-import D5.S1.Digit.Infinite.SevenCycleOriginalGraph
-import D5.S1.Digit.Infinite.SevenCycleActualCollision
+
+import D5.S1.Digit.Infinite.SevenCycleCoherenceRefutation
 
 set_option autoImplicit false
 
@@ -16,12 +16,16 @@ namespace D5.S1.Digit.Infinite.SevenCycleCollisionResult
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry
   referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase
-  from D5.S1.Digit.Infinite.SevenCycleCollisionData
+  from D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
 open D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
-open private denominator orbitVertex from D5.S1.Digit.Infinite.SevenCycleOriginalGraph
-open private budget_bounds from D5.S1.Digit.Infinite.SevenCycleCollisionData
-open private original_parameters rival_qualified from D5.S1.Digit.Infinite.SevenCycleOriginalGraph
-open private actual_collision from D5.S1.Digit.Infinite.SevenCycleActualCollision
+open private denominator orbitVertex
+  from D5.S1.Digit.Infinite.SevenCycleCoherenceRefutation
+open private budget_bounds
+  from D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
+open private original_parameters rival_qualified
+  from D5.S1.Digit.Infinite.SevenCycleCoherenceRefutation
+open private actual_collision
+  from D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
 
 private theorem counterexample : ¬ separates budget (source false) := by
   rintro ⟨n, hn⟩

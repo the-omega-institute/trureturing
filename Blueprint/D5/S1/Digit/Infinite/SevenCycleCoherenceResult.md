@@ -19,5 +19,5 @@ The same primitive seven-period rival has a cyclic component in the complete ori
 ## References
 
 - Truth anchor: `D5/S1/Digit/Infinite/SevenCycleCoherenceResult.result`
+- Dependency: [D5/S1/Digit/Infinite/SevenCycleCoherenceRefutation](SevenCycleCoherenceRefutation.md)
 - Dependency: [D5/S1/Digit/Infinite/SevenCycleCollisionResult](SevenCycleCollisionResult.md)
-- Dependency: [D5/S1/Digit/Infinite/SevenCyclePairedGraph](SevenCyclePairedGraph.md)
