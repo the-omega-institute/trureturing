@@ -51,5 +51,50 @@ internal sealed class JointCompletionDocument : IScribeDocumentDefinition
             Definition("sourceUniformity", "Finite-observation uniform structure",
                 "The source uniform structure is the infimum of the pullbacks of the finite "
                 + "joint observation spaces. Thus agreement means simultaneous equality of a "
-                + "finite low prefix and the two modular Fibonacci-composition coordinates."))));
+                + "finite low prefix and the two modular Fibonacci-composition coordinates."),
+            Describe.Lean(DescribeId.Create("joint-completion-result"),
+                DeclarationHandle.Create(Prefix + "result"), H("Joint compact completion"),
+                StatementSource.FromAuthor(And(
+                    Seq(Forall, Sp, V("i"), Sp, InMacro, Sp, V("N"), Caret, Grp(Num(2)),
+                        Comma, Sp, Call("Surjective", Call("Qgamma", V("i")))),
+                    And(Call("UniformEmbedding", V("Q")),
+                        Seq(Forall, Sp, V("q"), Comma, Sp, Call("Compatible", V("q")),
+                            Sp, Iff, Sp, Exists, Bang, Sp, V("k"), Sp, InMacro, Sp, V("K"),
+                            Comma, Sp, Call("Q", V("k")), Sp, Eq, Sp, V("q"))),
+                    And(Call("DenseRange", V("gamma")),
+                        Seq(Forall, Sp, V("k"), Sp, InMacro, Sp, V("K"), Comma, Sp,
+                            Exists, Sp, V("s"), Colon, Sp, V("N"), Sp, To, Sp, V("D"), Comma, Sp,
+                            And(Seq(Forall, Sp, V("n"), Comma, Sp,
+                                Call("Q", Call("gamma", Call("s", V("n"))), Call("i", V("n"))),
+                                Sp, Eq, Sp, Call("Q", V("k"), Call("i", V("n")))),
+                                Seq(Call("gamma", Call("s", V("n"))), Sp, To, Sp, V("k"))))),
+                    And(Call("Compact", V("K")), Call("UniformEmbedding", V("gamma")),
+                        Call("AbstractCompletionOn", V("K"), V("D"), V("UD"), V("gamma"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Q_gamma(i) sends a source b to Q(gamma(b))(i). The pair "
+                        + "i(n) is (n,(n+1)!-1), whose second index represents the modulus (n+1)!. "
+                        + "The convergence arrow is convergence as n tends to infinity. All "
+                        + "uniform embeddings use the product and subspace uniform structures, "
+                        + "with each finite residue space discrete and the source structure U_D "
+                        + "given by sourceUniformity. AbstractCompletionOn denotes the existence "
+                        + "of a mathlib AbstractCompletion of (D,U_D) with underlying space K, "
+                        + "the stated product uniform structure, and inclusion gamma.")),
+                    Paragraph(Text("The joint observation map is a uniform embedding into the "
+                        + "product of finite reading spaces. Its image is exactly the compatible "
+                        + "reading families: the j-th bit is recovered from a prefix of length "
+                        + "j+1, and each residue is recovered from the empty-prefix reading. "
+                        + "Compatibility makes these recovered bits legal and makes both "
+                        + "residue families profinite integers. This identifies K with the "
+                        + "inverse limit in the product subspace topology.")),
+                    Paragraph(Text("For every k, remote vector compensation supplies one finite "
+                        + "source at each stage with its first n bits and both residues modulo "
+                        + "(n+1)!. Every fixed positive modulus divides all sufficiently large "
+                        + "stage moduli, so each fixed residue coordinate is eventually correct. "
+                        + "Each fixed bit is also eventually correct. The resulting sources "
+                        + "converge to k and prove that the actual graph is dense. Legality and "
+                        + "modular compatibility are closed conditions in products of finite "
+                        + "discrete spaces. Hence K is compact Hausdorff and complete, and the "
+                        + "dense uniform embedding gives its abstract completion structure."))),
+                DescribeRole.Theorem))));
 }
