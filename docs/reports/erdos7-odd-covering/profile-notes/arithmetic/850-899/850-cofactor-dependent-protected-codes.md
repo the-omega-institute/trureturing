@@ -8310,15 +8310,341 @@ pattern data, in a configuration not already excluded by CD255 and the
 common-axis budget. No such uniformly strict reverse inequality is
 established above.
 
+### The actual45 word restricts the old axis envelope
+
+Keep the same actual45 branch and original unit and ordinary-axis
+ownership as CD297–315. Write
+`P_u=product_p(1-x_(p,u))=product_p kappa_p` and
+`P_v=product_p(1-x_(p,v))`. These are the same ordinary high-axis
+complements used by the source mask, not independently selected
+products. Let gamma be the actual45 cylinder mass in the guarded
+five-coordinate law, and retain CD189's
+`s=1/(5rho)-gamma`, `g=5rho*s`.
+
+The full high-five tower union at v contains that actual45 cylinder,
+so `x_(5,v)>=gamma`, even if other unit cylinders also occur. CD199
+adds s to this same v-coordinate. Consequently its boosted vector
+satisfies
+
+\[
+z_{5,v}=x_{5,v}+s\ge\gamma+s
+     =a_{45}:=\frac1{5\rho},\qquad
+z_{5,u}+z_{5,v}\le r,\qquad a_{45}\le r.
+\tag{CD316}
+\]
+
+The sum cap is the same original shared-axis cap; the added s is the
+actual45 raw-slot correction already used in CD199. The mandatory
+coordinate is v because this original45 is at v. It cannot be moved
+to u when optimizing the remaining ordinary-axis data.
+
+Keep the actual ordinary Pu,Pv and actual low mass ell. Since
+`ell<=Lbar<=P<=P_u,P_v`, both coefficients in
+
+\[
+G_\ell(z)
+ =2-P_u-P_v+z_{5,u}(P_u-\ell)+z_{5,v}(P_v-\ell)
+\]
+
+are nonnegative. After reserving a45 at v, place at most r-a45 in
+the larger coefficient. This gives
+
+\[
+\begin{aligned}
+G_\ell(z)&\le2-M_{45}-r\ell,\\
+M_{45}&:=P_u+P_v-a_{45}P_v
+                      -(r-a_{45})\max(P_u,P_v),\\
+M_{\rm pair}&:=P_u+P_v-r\max(P_u,P_v),\\
+M_{45}&=M_{\rm pair}+a_{45}[P_u-P_v]_+.
+\end{aligned}
+\tag{CD317}
+\]
+
+The unconstrained ordinary/shared simplex envelope in CD176 already
+gives `M_pair>=M_2(r)`. Thus the nonnegative remaining envelope slack
+is
+
+\[
+\begin{aligned}
+\Delta_{45}&:=M_{45}-M_2(r)\ge0,\\
+5\rho\Delta_{45}
+ &=5\rho\bigl(M_{\rm pair}-M_2(r)\bigr)+[P_u-P_v]_+.
+\end{aligned}
+\tag{CD318}
+\]
+
+This slack is determined by the same actual ordinary-axis allocation
+as kappa in CD297 and CD307. It may not be minimized at one axis
+allocation while the service mask is evaluated at another.
+
+### The original decomposition retains the new envelope slack once
+
+In CD199, adding s to the actual v-coordinate gave the exact left side
+`Bmajorant-1+s*c_v/2`, before the shared/ordinary upper envelope was
+used. Replacing only that upper-envelope step by CD317 yields
+
+\[
+\mathcal B-1+\frac{s c_v}{2}
+       \le\frac{S-\Delta_{45}}2.
+\tag{CD319}
+\]
+
+The original raw-slot loss and overcount decomposition is unchanged.
+Therefore CD247, CD251 and their common-budget consumers may use
+`S-Delta45` in place of S. For example CD300 becomes
+
+\[
+\boxed{
+\begin{aligned}
+5\rho S\ge{}&gc_v+\mathbb E t_h+dq
+        -2\mathcal U_q^{\rm ax}(C_h)-\min(dq,3/350)\\
+ &+5\rho\bigl(M_{\rm pair}-M_2(r)\bigr)+[P_u-P_v]_+.
+\end{aligned}}
+\tag{CD320}
+\]
+
+The term g*c_v remains the one actual45 boost payment. The added
+quantity is the slack in the upper envelope of that **same boosted
+axis vector**; it is not a second boost or another `r->r-s` deduction.
+The original excess and exceptional allowance are still consumed once.
+The same substitution applies to CD308 or CD313, retaining the actual
+axis allocation in all the terms used together.
+
+### Little exclusion at u has an explicit envelope cost
+
+The actual two-word axis allocation obeys, for every p,
+
+\[
+x_{p,u}+x_{p,v}\le g_p,\qquad
+\kappa_p=1-x_{p,u},\qquad\eta_p=1-x_{p,v},\qquad
+\eta_p\ge2-g_p-\kappa_p.
+\tag{CD321}
+\]
+
+In particular `P_v>=product_p(2-g_p-kappa_p)`. Source constraints
+retain these same products:
+`q<=P_u`, `c_v<=P_v`,
+`q>=[P_u-Lbar-D]_+` and `c_v>=[P_v-Lbar]_+`.
+The common-axis lower bound for `c_v+q` also remains available.
+These are restrictions on one actual allocation, not certificates
+that their bounds are simultaneously attainable.
+
+A simple consequence already prevents the zero-mask endpoint from
+using the old unconstrained envelope freely. Since the partition
+placing all ordinary axes at v is admissible for the old M2 minimum,
+`M_2(r)<=1-r+P`. Also `0<=a45<=r<=1/2` and `P_u,P_v>=P`.
+For fixed P_u the function M45 is increasing in P_v: its two slopes
+are `1-a45` and `1-r`. Thus
+`M45>=(1-r+a45)P_u+(1-a45)P`, which gives
+
+\[
+\begin{aligned}
+\Delta_{45}
+ &\ge\bigl[a_{45}(1-P)
+              -(1-r+a_{45})(1-P_u)\bigr]_+,\\
+5\rho\Delta_{45}
+ &\ge\bigl[(1-P)
+              -(1+5\rho(1-r))(1-P_u)\bigr]_+.
+\end{aligned}
+\tag{CD322}
+\]
+
+When the u-axis mask excludes no mass, `P_u=1`, this forces
+`5rho*Delta45>=1-P`. For a nonempty ordinary palette, P<1 and
+this is a strictly positive envelope cost. It holds even though the
+source-mask restriction itself adds nothing at that endpoint.
+More generally, CD322 trades small excluded u-axis mass against
+remaining envelope slack.
+
+CD316 is the actual-unit bridge; CD317–322 reuse finite simplex
+maximization and the existing exact budget decomposition. No new
+search over palettes is required for these relations, and no new
+palette exclusion is asserted. A strict whole-cover contradiction
+still needs the unit residuals, actual axis allocation, source data
+and colored supplier bound to satisfy one jointly evaluated inequality.
+The finite-algebra exact checks are separate from the ordinary
+original-family bridge and do not by themselves verify that whole chain.
+
+### One scalar axis parameter gives a necessary relaxation
+
+Keep the actual unit/source parameters `rho,b,r,g,d,delta_max`, the
+same finite ordinary palette A and the same fixed exception set from
+the d<=g branch. None is independently reselected while optimizing
+ordinary axes. Put `t=P_u=product_p kappa_p`, so `P<=t<=1`, and for
+nonempty ordinary support S put `P_S=product_(p in S)(1-g_p)>0`.
+Because every `kappa_p>=1-g_p`,
+
+\[
+\kappa_{\rm out}(S)
+  =\frac{t}{\prod_{p\in S}\kappa_p}
+  \le\min(1,t/P_S).
+\tag{CD323}
+\]
+
+Therefore CD307's same-support inventory is bounded above by
+
+\[
+\overline T_{\rm ax}(t)=
+ \sum_{e=2}^{G}5^{1-e}
+ \sum_{\varnothing\ne S\subseteq A}
+  [2r_e\min(1,t/P_S)-1]_+\prod_{p\in S}g_p.
+\tag{CD324}
+\]
+
+Every summand is increasing in the substituted outside-axis survival
+bound. The inventory term is piecewise affine in t. When r_e<=1/2,
+its layer is zero; otherwise its possible breakpoints are
+`P_S/(2r_e)` and `P_S`, restricted to `[P,1]`.
+
+The actual coordinate cap also gives
+`kappa_p*eta_p=1-x_(p,u)-x_(p,v)+x_(p,u)*x_(p,v)>=1-g_p`.
+Multiplying shows `P_u*P_v>=P`, hence `P_v>=P/t`.
+Since M45 is increasing in P_v, define
+
+\[
+\begin{aligned}
+m_{45}(t)&=t+(1-a_{45})P/t
+                  -(r-a_{45})\max(t,P/t),\\
+\Delta_{45}&\ge[m_{45}(t)-M_2(r)]_+,\\
+c_v&\ge[P/t-\bar L]_+,\qquad
+q\ge[t-\bar L-D]_+.
+\end{aligned}
+\tag{CD325}
+\]
+
+The last line uses CD188's complete identity
+`R=L0^c intersect A_u^c intersect (B_u^0)^c`, the actual low bound
+`lambda(L0)<=Lbar`, and CD191's same-root nonaxial bound
+`lambda(B_u^0)<=D`. No five-free event is omitted from R.
+The positive part in the Delta45 bound retains its independently
+proved nonnegativity: `(t,P/t)` is a relaxation of the product
+constraints and need not be attained by actual axis prefixes.
+
+Use `d*q-min(d*q,epsilon)=[d*q-epsilon]_+`, which is increasing in
+q, with `epsilon=3/350`. Substituting CD324–325 into the same CD308
+consumer with CD319's envelope slack yields, at the actual t,
+
+\[
+\boxed{
+\begin{aligned}
+5\rho S\ge F(t):={}&5\rho[m_{45}(t)-M_2(r)]_+
+                 +g[P/t-\bar L]_+\\
+ &+[d[t-\bar L-D]_+-3/350]_+
+                 -\overline T_{\rm ax}(t),\qquad P\le t\le1.
+\end{aligned}}
+\tag{CD326}
+\]
+
+Thus every actual configuration in the displayed branch satisfies
+`5rho*S>=inf_(P<=t<=1) F(t)` for its same unit parameters. This maps
+actual configurations into a necessary scalar constraint; it does
+not construct a cover or assert an attainable scalar minimizer.
+The common-axis lower bound on `c_v+q` was not consumed in CD326
+and can further restrict their joint minimization at the same t.
+
+Only the inventory term has the breakpoints listed after CD324.
+The complete F also contains P/t, the switch `t=sqrt(P)`, the
+roots of `m45(t)=M2(r)` and the source positive-part switch.
+Within a fixed branch its form is `A*t+B/t+C`, so possible interior
+stationary points must also be checked when minimizing it. No grid,
+palette scan or new branch exclusion is asserted by this reduction.
+It combines existing coordinate capacities, the complete source
+union bound and the mandatory45 envelope; it does not supply the
+remaining uniformly strict inequality for all admissible unit data.
+
+### The common-axis relation eliminates the source mass exactly
+
+Keep CD326's same actual unit data, ordinary palette, axis parameter
+`t=P_u`, and fixed exception price `epsilon=3/350`. The complete
+source also satisfies `q<=t`. Its common-axis relation is
+`c_v+q>=M_2(0)-2Lbar-D`. Put
+
+\[
+\begin{aligned}
+k(t)&=[t-\bar L-D]_+,&
+l(t)&=[P/t-\bar L]_+,\\
+C&=M_2(0)-2\bar L-D,&
+q_*(t)&=\max\{k(t),\min(t,C-l(t))\}.
+\end{aligned}
+\tag{CD327}
+\]
+
+Here `0<=k(t)<=q<=t` and `c_v>=max(l(t),C-q)`. All quantities
+refer to the same actual source and the same ordinary axis
+allocation. The condition `0<=d<=g` gives the exact interval minimum
+
+\[
+\boxed{
+\begin{aligned}
+&\min_{k(t)\le q\le t}
+ \{g\max(l(t),C-q)+[dq-\epsilon]_+\}\\
+&\qquad=g\max(l(t),C-t)+[d q_*(t)-\epsilon]_+.
+\end{aligned}}
+\tag{CD328}
+\]
+
+To verify it, write `z=C-l(t)`. For `x<=y<=z`, the first term
+decreases by `g(y-x)`, while the positive-part term increases by
+at most `d(y-x)<=g(y-x)`. Thus the objective is nonincreasing
+to z. For `z<=x<=y`, its first term is constant and its second
+term is nondecreasing. Clamping z to `[k(t),t]` therefore gives
+a minimizer, including the case `k(t)>z`. At that clamped point,
+`max(l(t),C-q_*(t))=max(l(t),C-t)`, which gives the displayed value.
+Neither uniqueness nor a source realization of this minimizing q
+is asserted.
+
+Replace CD326's two source terms by this one joint minimum. The
+same actual configuration must satisfy
+
+\[
+\boxed{
+\begin{aligned}
+5\rho S\ge F_{\rm joint}(t):={}&
+ 5\rho[m_{45}(t)-M_2(r)]_+
+ +g\max(l(t),C-t)\\
+ &+[d q_*(t)-3/350]_+
+ -\overline T_{\rm ax}(t),\qquad P\le t\le1.
+\end{aligned}}
+\tag{CD329}
+\]
+
+This is a replacement within the same debit. The common-axis
+relation is not an additional amount to add to CD326, and the
+exception allowance is still used once. Since `q_*(t)>=k(t)` and
+`max(l(t),C-t)>=l(t)`, one has `F_joint(t)>=F(t)` pointwise.
+Eliminating t gives the necessary condition
+`5rho*S>=inf_(P<=t<=1)F_joint(t)` for the same fixed admissible unit
+parameters.
+
+The upper bound `c_v<=1` was omitted from this interval relaxation.
+Retaining it would further require `q>=C-1`; omitting it only weakens
+the bound. The exact minimum in CD328 is attained in its displayed
+real interval, and need not be attained by a five-free survivor or
+by any congruence family. No new arithmetic branch exclusion is
+asserted here.
+
 ### Verification scope and remaining inequality
 
 The unit-coupling, colored-mismatch, masked-capacity and joint-inventory
-consumers in CD288–315 are ordinary mathematical deductions. Their
+consumers in CD288–329 are ordinary mathematical deductions. Their
 finite controls were checked by exact rational calculation and
-independent enumeration. They do not claim a completed Lean check of
-that chain, an original whole-cover realization of the controls, or a
-new arithmetic branch exclusion. The finite upper-knapsack and
-separate-affinity arguments are reused results, not new duality claims.
+independent enumeration. Five scoped transient Lean checks verify
+nineteen statements: the finite color comparison and clipped exception
+loss; masked fractional-knapsack inequalities and the explicit positive
+gap; the mandatory45 finite axis algebra; the coordinate-product and
+scalar substitutions into CD326; and CD328's exact interval minimum.
+Their complete types and axiom closures use only `propext`,
+`Classical.choice` and `Quot.sound`. These reuse checks add no retained
+mathematical declaration.
+
+The finite statements retain their displayed nonnegativity, capacity,
+common-budget and interval hypotheses. They do not construct the actual
+integer family, identify its complete tower/source events, or prove
+the complete arithmetic bridge into those hypotheses. The full
+CD288–329 chain is therefore not claimed as Lean-verified. The controls
+are not whole covers, and no new arithmetic branch exclusion is
+asserted. The finite upper-knapsack and separate-affinity arguments
+are reused results, not new duality claims.
 
 
 The pointwise finite-law check for CD263–273 retains every color,
