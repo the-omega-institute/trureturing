@@ -7,6 +7,8 @@
    digest: Complete anchored Circle phase classification and independent realization. -/
 
 import D5.S3.Observer.AgencyHolonomy.NamedTreePhaseTransport
+import D5.S3.Factorization.Galois.SparseCharacterSynchronization
+import Mathlib.Algebra.Group.TypeTags.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Data.Fintype.EquivFin
@@ -160,16 +162,45 @@ theorem anchored_phase_classification [Fintype V] [Fintype E]
         _ = w e := by rw [hn]; simp [mul_comm, mul_left_comm, mul_assoc]
     · rintro ⟨g,rfl⟩; exact (invariant g u).symm
   have realization (z : Coordinates T R r) : chi (sigma z) = z := by
-    have hz {a b : V} (p : (treeSupport s t T).Walk a b) :
-        transport (sectionLoops T R r z) p = 1 := by
-      induction p with
-      | nil => rfl
-      | cons h p ih =>
-        simp [transport, stepPhase, sectionLoops, (namedEdge h).property, ih]
+    have hbase (v : V) : rootPhase ht r (sectionLoops T R r z) v = 1 := by
+      letI : Nontrivial Circle := ⟨⟨-(1 : Circle), 1, Circle.neg_ne_self 1⟩⟩
+      let x : V → Additive Circle :=
+        fun a => Additive.ofMul (rootPhase ht r (sectionLoops T R r z) a)
+      have hx : x ∈
+          (D5.S3.Factorization.Galois.SparseCharacterSynchronization.edgeDifference
+            (treeSupport s t T) (Additive Circle)).ker := by
+        rw [AddMonoidHom.mem_ker]
+        funext p
+        change x p.val.1 - x p.val.2 = 0
+        apply sub_eq_zero.mpr
+        have he : s(s (namedEdge p.property), t (namedEdge p.property)) =
+            s(p.val.1, p.val.2) :=
+          Classical.choose_spec (((SimpleGraph.fromEdgeSet_adj _).mp p.property).1)
+        have hp : rootPhase ht r (sectionLoops T R r z) (t (namedEdge p.property)) =
+            rootPhase ht r (sectionLoops T R r z) (s (namedEdge p.property)) := by
+          simpa [sectionLoops, (namedEdge p.property).property] using
+            hedge (namedEdge p.property) (namedEdge p.property).property
+              (sectionLoops T R r z)
+        change Additive.ofMul (rootPhase ht r (sectionLoops T R r z) p.val.1) =
+          Additive.ofMul (rootPhase ht r (sectionLoops T R r z) p.val.2)
+        apply congrArg Additive.ofMul
+        rcases Sym2.eq_iff.mp he with ⟨hs, ht'⟩ | ⟨hs, ht'⟩
+        · simpa only [hs, ht'] using hp.symm
+        · simpa only [hs, ht'] using hp
+      have hkernel :=
+        (D5.S3.Factorization.Galois.SparseCharacterSynchronization.edge_difference_kernel_eq_constants_iff
+          (treeSupport s t T) (Additive Circle)).mpr ht.isTree.connected.preconnected
+      rw [hkernel] at hx
+      obtain ⟨c, hc⟩ := hx
+      have hv := congrArg (fun a : Additive Circle => a.toMul)
+        ((congrFun hc v).symm.trans (congrFun hc r))
+      change rootPhase ht r (sectionLoops T R r z) v =
+        rootPhase ht r (sectionLoops T R r z) r at hv
+      exact hv.trans (hroot (sectionLoops T R r z))
     have hs (v : V) : rootPhase ht r (sigma z) v = sectionPotential R r z v := by
       change rootPhase ht r (gauge s t (sectionPotential R r z) (sectionLoops T R r z)) v = _
-      rw [hcov]
-      simp [rootPhase, hz, sectionPotential]
+      rw [hcov, hbase]
+      simp [sectionPotential]
     change coordinates ht R r (sigma z) = z
     apply Prod.ext
     · funext e
