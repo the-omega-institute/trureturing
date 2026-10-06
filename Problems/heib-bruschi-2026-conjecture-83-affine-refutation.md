@@ -113,10 +113,11 @@ ideal-graph-property are carried along Lie isomorphisms (`admissible_map`,
 - A vertex subset $W$ with the ideal-graph-property spans an ideal: for $w\in W$ and a basis
   vector $x_k$, $[w,x_k]$ is zero or a nonzero multiple of some $x_\ell$, and then there is an
   edge from $w$ to $x_\ell$, so $x_\ell\in W$. The conjecture therefore fails whenever a
-  centerless admissible algebra has a proper ideal spanned by basis vectors and cannot be
-  split into components without such ideals; a solvable radical attached to a centerless
-  quotient without a complement, as $\mathrm{span}\{Y\}$ in $\mathfrak{aff}(K)$, is the
-  mechanism.
+  centerless admissible algebra has a proper ideal spanned by basis vectors that no
+  decomposition into ideals separates off. In $\mathfrak{aff}(K)$ this is the abelian ideal
+  $\mathrm{span}\{Y\}=[A,A]$: it has the subalgebra complement $\mathrm{span}\{X\}$, so
+  $A=\mathrm{span}\{X\}\ltimes\mathrm{span}\{Y\}$, but no complementary ideal, because every
+  nonzero ideal contains $Y$.
 - The two natural repairs of (i) also fail: restricting it to subsets that span a solvable
   ideal is still refuted by $\mathfrak{aff}(K)$, since $\mathrm{span}\{Y\}$ is abelian;
   restricting it to subsets that span a non-solvable ideal is refuted in characteristic $0$
