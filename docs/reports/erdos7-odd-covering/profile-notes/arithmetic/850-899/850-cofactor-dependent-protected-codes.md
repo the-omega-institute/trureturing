@@ -9226,6 +9226,21 @@ choose one \(v_u\in R_u\) for each \(u\). The points \(x_u=(u,v_u)\) are distinc
 \]
 If the bound holds only on a set \(U\) of ternary words, the right side is \(|U|(q-k)/(3^hM)\). Thus the bridge is useful only after separately proving the full-depth-one condition (or an equivalent exclusion of the lower-height incidences) and controlling \(M\) or an aggregate reciprocal-carrier quantity. RLC3 supplies neither by itself. Under the strengthened hypothesis CD357 can be inserted into CD356; without it CD353 remains bookkeeping.
 
+### A reusable common-source check on running-intersection subfamilies
+
+The current dev tree contains the compiled theorem
+D5.S3.ConceptDynamics.Gluing.RunningIntersectionMessages.raw_join_nonempty_iff_root.
+For a finite tree of local relation rows whose variable scopes satisfy the running-intersection condition, its inward separator messages are exact:
+\[
+\operatorname{rawJoin}(\Gamma)\ne\varnothing
+\quad\Longleftrightarrow\quad
+\text{some root row passes every adjacent separator message}.
+\tag{CD358}
+\]
+Applied to an Erdős source, the variables can be the ternary prefix, the \(q\)-digits and the cofactor prime-power coordinates, while each original congruence is a local relation on its support. A message-accepted root row then certifies one **common actual source** for all rows in that running-intersection subfamily. This is a direct way to prevent separately optimized local phases from being combined as if they were jointly realizable.
+
+CD358 is only a nonemptiness theorem. It does not give a positive Haar mass, a bound on \(N_1^{\\mathrm{all}}\), or a weighted tuple inventory. The unrestricted odd-covering family need not have a running-intersection tree: crossing cofactor supports create cycles, and the current extremality results do not remove them. Thus the usable next branch is either to find a genuine running-intersection decomposition for a forced subfamily and then add a weighted message invariant, or to exhibit the cycle obstruction explicitly; CD358 alone does not close the whole problem.
+
 ## A sharp source-only boundary from an all-height partial family
 
 Fix a prime \(q\ge5\) and \(h\ge1\). Consider the distinct odd labels
