@@ -1501,3 +1501,289 @@ R_d, complete color covers, selector or paid replacement. In
 particular it does not satisfy or refute PC50 with its actual-source
 residual. Further progress must retain more of that joint source
 than its coarse stock ceilings.
+
+## A prime bipartition repairs the entire deleted union
+
+Continue under the global count-then-modulus-sum minimality of EB1,
+with H_3=2 and q=113. Fix an old word z modulo nine and one cofactor
+phase vector w. Let P be the actual cofactor-prime pool and r=|P|.
+For each actual q-bearing top original i at z, put
+
+$$
+A_i(w)=\{p\in P:p\mid m_i,\ \rho_i\equiv w\pmod p\}.
+\tag{PC56}
+$$
+
+These are first-prime phase tests; membership does not assert that
+the whole original contains w. In particular an original may match
+several coordinates while missing another coordinate or a deeper
+prime digit.
+
+Split P into disjoint sides L and R. Select any K actual top
+originals whose A_i(w) meet both sides, and choose a pair
+p_i in A_i(w) intersect L, t_i in A_i(w) intersect R for each.
+Let L' and R' be the sets of used primes and V=|L'|+|R'|.
+The following fresh classes cover the entire union of these K
+original APs:
+
+$$
+\begin{array}{c|c|c}
+\text{ternary phase modulo }27&\text{cofactor condition}&\text{label}\\\hline
+z&\text{none}&27\\
+z+9&x\equiv w\pmod p,\ p\in L'&27p\\
+z+18&x\equiv w\pmod p,\ p\in R'&27p.
+\end{array}
+\tag{PC57}
+$$
+
+CRT defines each displayed class because all tags are prime to
+three. Every integer in any deleted original has old word z and
+satisfies both selected prime congruences. Its next ternary digit
+therefore places it in the pure row, its selected left row, or its
+selected right row. This proves coverage at every integer lift,
+without requiring a common q-color or identifying the deletion
+hole with a union of separately chosen private witnesses. The
+complete simultaneous hole is contained in the deleted union.
+
+There are 1+V new labels. They are distinct because the sides are
+disjoint and all tags exceed one, and fresh because every original
+has ternary height at most two. Let M=sum_i m_i. Distinct selected
+primes divide each m_i, so p_i t_i divides m_i. Since both primes
+are at least five,
+
+$$
+\sum_{p\in L'\cup R'}p
+\le\sum_i(p_i+t_i)
+\le\sum_i p_i t_i
+\le M,
+\qquad
+27(1+M)<9\cdot113M\quad(M\ge1).
+\tag{PC58}
+$$
+
+If K>V, the repair has at most K classes and costs strictly less
+than the deleted classes. Strictly fewer classes contradict count
+minimality; equal count contradicts the secondary minimum. Hence
+every such selection satisfies K<=V. In particular,
+
+$$
+\#\{i:A_i(w)\cap L\ne\varnothing,
+          \ A_i(w)\cap R\ne\varnothing\}\le r.
+\tag{PC59}
+$$
+
+The empty-side cuts have zero owners. The comparison class in EB1
+allows higher ternary heights; restricting the minimum to H_3=2
+covers would not justify this exchange.
+
+## Averaging all cuts gives a pointwise support budget
+
+For a fixed nonempty matching set A of cardinality a, exactly
+2^r-2^(r-a+1) of the 2^r subsets L split A between L and its
+complement. The two excluded kinds put all of A on one side or
+the other; they are disjoint because A is nonempty. An empty A
+is split by no cut. Define f(0)=f(1)=0 and f(a)=1-2^(1-a) for
+a>=2. Summing PC59 over all cuts and using the two empty-side
+cuts gives, for r>=1,
+
+$$
+\sum_i f(|A_i(w)|)
+\le r(1-2^{1-r})<r.
+\tag{PC60}
+$$
+
+This is a finite double count, not an independence assumption on
+the original phases. The averaging is over auxiliary cuts of one
+fixed prime pool and keeps all original phases and the same w.
+When r<=27, the resulting upper bounds for owners whose matching
+sets have at least the indicated size are
+
+$$
+\begin{array}{c|rrrrr}
+\text{matching primes at least}&2&3&4&5&6\\\hline
+\text{number of q-bearing top owners at most}&53&35&30&28&27.
+\end{array}
+\tag{PC61}
+$$
+
+At an actual point w contained in an original, its matching set
+is its entire distinct-prime support. Thus PC61 also bounds the
+incident top owners of each support size. Unlike Report861 CP18,
+this count includes only q-bearing tops: PC58 uses their q price
+factor. The two estimates have different scopes and neither
+licenses dropping retained q-free originals from CP18.
+
+## Every actual point needs service from lower rows
+
+In the height-one branch of PC34, restrict to the at least 110
+complete colors outside the unit-cofactor labels q,3q,9q. Every
+moving cofactor is then nonunit. At a fixed actual point (z,w),
+the incident top originals with cofactor p^k are bounded as follows.
+For each p there is at most one k=1 owner, since its numerical
+label is 9qp. All owners with k>=2 are proper descendants of the
+same actual composite parent 9p^2. Their phases agree modulo
+9p^2 at this one point, so DR8 bounds their number by two.
+The exponent caps further restrict axes of height two or one.
+Consequently,
+
+$$
+\begin{array}{c|c|c}
+\text{prime axes}&\text{owners per axis at most}&\text{total at most}\\\hline
+5,7,11,13&3&12\\
+17,19,23&2&6\\
+29,31,\ldots,109&1&20
+\end{array}
+\qquad N_{\rm prime\ power}\le38.
+\tag{PC62}
+$$
+
+If an axis or its square is absent, its relevant contribution is
+zero. Divisor closure supplies 9p^2 only when such a descendant
+exists; no least-common-multiple label is substituted for an
+actual original. Matching only modulo p would not suffice for
+the DR8 step: the owners counted here contain the actual w and
+therefore agree at p^2 as well.
+
+PC61 and PC62 give at most 53+38=91 incident moving top owners,
+hence at most 91 colors with an active top owner. Every one of
+the 110 complete color families covers the same actual X_z.
+Thus at every point of X_z,
+
+$$
+\#\{c:\text{some lower-row original of color }c
+                  \text{ is active at }(z,w)\}\ge19.
+\tag{PC63}
+$$
+
+This is a pointwise lower-row multiplicity on the original common
+source. The nineteen colors may depend on w. It does not give
+nineteen fixed complete lower-row color covers or positive density
+for one row. A fixed union of lower owners is nevertheless available,
+as the following selector construction shows. Permanent prefix
+payment and an odd-cover contradiction do not follow from PC63.
+
+## Hereditary cut capacity sharpens the mixed-top bound
+
+For every top owner with at least two matching primes at w, choose
+two of them. Regard the owner as one edge joining these primes,
+retaining parallel edges for different original owners. There are
+no loops. For any vertex subset S and any cut of S, the selected
+crossing edges form a packet to which PC57--PC58 applies, with all
+used tags inside S. Hence its edge count is at most |S|.
+
+Here is a general finite graph consequence of exactly that
+hereditary cut condition. Every nonempty induced vertex set S has
+strictly fewer than 2|S| edges: each edge crosses half the cuts,
+whereas the empty cut has zero edges and every cut has at most
+|S|. The degree sum is twice the edge count, including parallel
+edges, so S has a vertex of degree at most three. Delete such a
+vertex, color the remaining vertices with four colors inductively,
+and restore the vertex using a color not present on its at most
+three neighbors. This constructs a proper four-coloring.
+
+Take the three balanced partitions of the four color classes into
+two pairs. Every edge crosses exactly two of these cuts. Each
+cut has at most r edges, and therefore
+
+$$
+2N_{\rm mixed}\le3r,
+\qquad N_{\rm mixed}\le40\quad(r\le27).
+\tag{PC64}
+$$
+
+The argument uses the cut bound on every induced vertex set, not
+just on the original full pool. It handles parallel edges directly
+and does not assume a coloring or a bound on maximum degree.
+It reuses finite double counting and the elementary greedy-coloring
+construction; no extremal-graph novelty is claimed.
+
+Combining PC64 with PC62 improves the pointwise conclusion to
+
+$$
+N_{\rm top}\le78,
+\qquad N_{\rm lower\ colors}\ge32.
+\tag{PC65}
+$$
+
+## A fixed two-owner cofactor selector on the entire actual source
+
+Let E_0 be the complete q-free residual on the full 9W carrier,
+as in PC25. Take the fixed set of all moving originals of colors
+in U whose ternary row is zero or one, and strip their q-factor
+while preserving their literal old ternary and cofactor phases.
+At every point of E_0, PC63 already supplies a member of this
+set; PC65 supplies at least 32 distinct serving colors. This
+holds on every safe old word, not just on a selected private point.
+Thus the same fixed union covers all of E_0.
+
+For any numerical cofactor m the selected originals can have only
+the labels qm and 3qm. Distinct original moduli imply
+
+$$
+E_0\subseteq\bigcup_{i\in S_{<2}}\widetilde R_i,
+\qquad
+\#\{i\in S_{<2}:m_i=m\}\le2.
+\tag{PC66}
+$$
+
+There is no need to choose the same 32 serving colors at every
+point: the owner set S_<2 itself is fixed before evaluating any
+point. Even the weaker PC63 bound suffices for PC66.
+
+One can also require every selected color to be individually
+incomplete. Fix one safe word z_* and let C_* be precisely the
+colors in U having a top original at z_*. PC21 excludes at most
+five colors from C_*. Restrict the fixed lower-owner selection
+to these colors. At every point of E_0 at least
+
+$$
+32-5=27
+\tag{PC67}
+$$
+
+serving colors remain; using PC63 instead gives 19-5=14, also
+enough. For each c in C_*, an actual top original at z_* has a
+global private integer. Its projection belongs to E_0 and is
+missed by all lower originals of c: since G=1, a same-color
+stripped lower owner at that projection would also cover the
+original private integer. Consequently this one fixed selection
+simultaneously has
+
+$$
+E_0\subseteq\bigcup_{c\in C_*}\bigcup\mathcal L_c,
+\qquad E_0\nsubseteq\bigcup\mathcal L_c\ (c\in C_*),
+\qquad\#\{i\in\bigcup_c\mathcal L_c:m_i=m\}\le2.
+\tag{PC68}
+$$
+
+Here each L_c consists of the actual stripped lower owners of c;
+no phase is selected independently of its original. The all-lower
+choice also respects any fixed actual masked component: an owner
+active on that component intersects it and belongs to the same
+component. This assertion concerns stripped-source coverage, not
+preservation of each original q-color's service separately.
+
+PC66--PC68 close the projected two-owner selection gap in the
+stated H_3=2, G=1, q=113 branch using the actual source, exponent
+caps and extremal exchanges. They do not follow from prime rank
+alone, and do not contradict the prescribed-mask control PC30--PC33.
+The remaining obligation is PC28: assign permanent fresh prefixes
+with distinct numerical labels while covering the complete joint
+deletion hole, including any additionally deleted parents. Keeping
+all lower owners in a projected cover does not yet supply that
+assignment or its count and modulus-sum payment.
+
+
+The graph bound PC64 is formalized in
+`D5/S3/Combinatorics/Graph/BipartiteSubgraphDensity.lean` with a
+constructed four-coloring; its finite applications include a complete
+four-vertex graph, a parallel-edge equality case, and the r<=27
+bound. Scoped Lean checks also cover the whole-integer bipartition
+repair, its fresh-label and strict-cost conditions, the pure-power
+finite-fiber count 38, and the fixed lower-selector and excluded-color
+counting steps. These checks use only the standard three axioms.
+The suppliers from the original minimal cover to the exponent caps,
+common residual, and private-point hypotheses remain the explicit
+arithmetic deductions above; this is not one end-to-end formal proof
+of those suppliers or of Erdős #7. Permanent prefix assignment and
+complete deletion payment remain unproved.
