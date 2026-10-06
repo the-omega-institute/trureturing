@@ -151,7 +151,7 @@ def resultRow {r : I → ℝ} (p : Flow (X := X) r)
   if p.select k h i = 0 then 1 / Fintype.card (X i.val)
     else p.result k h i x / p.select k h i
 
-private theorem scheduler_law {r : I → ℝ} (p : Flow (X := X) r)
+theorem scheduler_law {r : I → ℝ} (p : Flow (X := X) r)
     {k : ℕ} (hk : k < Fintype.card I) (h : History X k) :
     (∀ i, 0 ≤ schedulerRow p h i) ∧ ∑ i, schedulerRow p h i = 1 := by
   classical
@@ -267,7 +267,7 @@ theorem interpret_snoc_fiber (k : ℕ)
   rw [ha, hb] at he
   simpa only [v, interpret, Fin.snoc_last] using he
 
-private theorem product_row_marginal {C : Type*} {Y : C → Type*}
+theorem product_row_marginal {C : Type*} {Y : C → Type*}
     [Fintype C] [DecidableEq C] [∀ c, Fintype (Y c)]
     (row : (c : C) → Y c → ℝ) (hn : ∀ c, ∑ y, row c y = 1)
     (c : C) (f : Y c → ℝ) :
