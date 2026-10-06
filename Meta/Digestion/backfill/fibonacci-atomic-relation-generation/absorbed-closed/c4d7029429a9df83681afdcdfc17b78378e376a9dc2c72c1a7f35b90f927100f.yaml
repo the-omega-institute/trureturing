@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:c4d7029429a9df83681afdcdfc17b78378e376a9dc2c72c1a7f35b90f927100f
   normalized_sha256: sha256:c4d7029429a9df83681afdcdfc17b78378e376a9dc2c72c1a7f35b90f927100f
 cas_ref: sha256:c4d7029429a9df83681afdcdfc17b78378e376a9dc2c72c1a7f35b90f927100f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/AffineLcmRobinMargins.result
+    target_statement_id: sha256:306edb89387989ba710f90d7023628ba551af8bcf299838167a9c41946f55316
 receipts:
   unresolved_subitems: []
   chain_atoms:
