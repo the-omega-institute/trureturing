@@ -5,11 +5,13 @@ year: 2025
 title: Monochromatic arithmetic progressions in the Fibonacci, Thue-Morse, and Rudin-Shapiro words
 doi: 10.1016/j.tcs.2025.115391
 url: https://arxiv.org/html/2501.05830v2
-claim: Conjecture 4.24 gives (A(d)-1)/d < sqrt(5)/tau for every positive d; Conjecture 3.19 gives i(F_(2n+1))=F_(2n+3)-2 and i(F_(2n))=F_(4n)-1 for every n>=1; Conjecture 3.8 gives the first longest Thue-Morse progression starts at differences 2^e+1 and 2^e-1, contextually for every e>=2.
+claim: Conjecture 4.24 gives (A(d)-1)/d < sqrt(5)/tau for every positive d; Conjecture 3.19 gives i(F_(2n+1))=F_(2n+3)-2 and i(F_(2n))=F_(4n)-1 for every n>=1; Conjecture 3.8 gives the first longest Thue-Morse progression starts at differences 2^e+1 and 2^e-1, contextually for every e>=2; Question 3.7 second clause asks whether infinitely many lengths have infinitely many positive odd differences with that exact global maximum.
 strata_touched:
   - D5/S1/Words/FibonacciMapBound
   - D5/S1/Words/FibonacciMapFirstStart
   - D5/S1/Words/ThueMorseMapFirstStart
+  - D5/S1/Words/ThueMorseDyadic
+  - D5/S1/Words/ThueMorseMapInfiniteFibers
 license: citation-only
 triage: anchor
 ---
@@ -90,6 +92,32 @@ ownership checks. The unavailable thesis and unreadable search/index
 results supplied no negative evidence. This is not an exhaustive worldwide
 priority claim. The exact conjecture is at
 https://arxiv.org/html/2501.05830v2#S3.Thmtheorem8.
+
+## Infinite odd fibers of Thue-Morse maxima
+
+Section 3.2.1, Question 3.7, second clause asks:
+“Are there infinitely many values of n for which O_max(n)=∞?”
+Here O_max(n) is the supremum of the positive odd differences d whose
+actual global maximum monochromatic progression length A(d) equals n.
+A set of natural differences is unbounded exactly when it is infinite.
+The maximum A(d) ranges over every nonnegative start and both letters;
+it includes attainment, rather than only an upper bound.
+
+The declaration `D5/S1/Words/ThueMorseMapInfiniteFibers.result` establishes
+this exact second clause. Its `ExactMax` uses the existing actual-word
+`MAP`, requires an attaining start, and bounds all lengths at every start.
+The construction uses odd m>=3, M=2^m, c=M^2+M+1, B=2^(4m+1) and U=2B+2.
+A true triple inside one dyadic block, coprime residue transport and a
+single-carry split give uniform all-start bounds for d=c2^k+1 with large k.
+Start zero attains length M. Finite maximum attainment and infinite
+pigeonhole produce an infinite exact-max fiber at a length n>=M;
+unbounded odd exponents give infinitely many such lengths.
+
+The argument is repository-derived. The shared `ThueMorseDyadic` block
+and top-parity proofs are extracted from the existing first-start result
+and consumed by both results. No explicit formula for the selected maxima,
+resolution of the first or third Question 3.7 clauses, worldwide priority,
+or external acceptance is asserted.
 
 ## Verified locator
 
