@@ -6055,3 +6055,494 @@ Local Euclidean direction dimension in Process44 is three; the source tree size 
 Finally, all original $\mathcal D_2$ initial-state, destructive $\Gamma_d$, exact/hidden-gain and chronological laws in §§37–50 retain their stated sources and permissions. The ordered-tree construction is an explicit additional model on original native source occurrences; it is not a substituted $\mathcal D_2$ source or a refutation of those laws. The four native/physical bridges in hypothesis 15.1, an operation/metric/task-preserving map from the local cross-product interface to this propagation geometry, a finite-cost field/sensor implementation, an attained infinite binding state under stronger hypotheses, and uniform extensive many-body stability are all unproved here. The outcome is a precise discriminator for the proposed propagation–stability–elimination–continuation chain, not a derivation of why physical space has three dimensions.
 
 ## 追加锚（本行以下为增补区）
+
+## 53. 隐藏增益的两次调用歧义与联合Read初态前沿
+
+**定义 53.1（完整命令合同与两组有限界）。** 全部来源、执行、记录、估计与费用条件采用定义47.1。特别地，
+
+$$
+\begin{aligned}
+W&=E\oplus\mathbb H,\qquad E=\operatorname{Im}\mathbb H,\qquad C=P_E,\qquad d=e_4,\\
+\mathcal D_2&=E\times\{b:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\},\\
+A_{\gamma c}(a',b')&=(\gamma(c\times a'),\gamma b'c),\quad
+ c\in E,\quad |c|\le1,\quad \gamma\in[1-\eta,1],\\
+A_d(a',b')&=(\operatorname{Im}b',-a'),\qquad
+\operatorname{Read}(z)=Cz+e,\quad |e|\le\delta.
+\end{aligned}
+\tag{53.1}
+$$
+
+初始 $a$ 独立、任意且无界，包括零；两个初始半径未标记，每次运行始终保持自己的同一个来源。来源制备、公共参数、共同定向标架、命令方向、单位锚及其执行精确供应。内部调用各有自己的隐藏增益，同一次增益作用于两个槽；不同调用不要求恒定或独立。增益与各实际Read误差可联合对抗、相关且依赖历史。Read不改状态，重复Read不缩小误差界。
+
+可访问的 $M^{\rm cmd}$ 完整保留全部实际Read、有序命令、操作种类、每次公共区间证书及Stop；已实现增益和数值执行参数不在记录中。控制器共同初始化、源无关、确定且因果，下一事件只依赖实际已见的有限前缀。唯一当前寄存器被更新覆盖，不供应标签、初态副本、复位、混合控制、独立重抽样、反事实端口、增益遥测或极限Read。有限或自然数索引的可数完整记录都须输出一个 $W$ 值；输出不必在来源中，可数前缀以后没有额外事件。目标始终为 INITIAL $(a,b)$，损失为 $W$ 中欧氏距离。预算 $N$ 只计破坏性更新，包括锚，不另限制Read数量；$\mathcal E_\pi,R_N^{\rm cmd},R_\infty^{\rm cmd}$ 原样取（47.3）。
+
+记
+
+$$
+\begin{aligned}
+m&=(1-\eta)^2,\qquad \zeta=1-m=2\eta-\eta^2,\qquad D=\delta+25\zeta,\\
+L_0&=25\sqrt{\zeta/2}=25\sqrt{\eta-\eta^2/2}.
+\end{aligned}
+\tag{53.2}
+$$
+
+精确Read轴取 $\delta=0$、$0<\eta\le1/100$。联合域取 $\delta>0$、$0<\eta<1$、$D\le1$，并在该域定义
+
+$$
+\begin{aligned}
+H^2&=25\delta+625\zeta/2,\qquad H=\sqrt{25\delta+625\zeta/2},\\
+L&=\sqrt{\delta^2+H^2},\qquad \rho=D/10,\\
+J&=\frac{25\rho+\sqrt{(25\rho)^2+4H^2}}2,\qquad
+U=\sqrt{\delta^2+D^2+J^2}.
+\end{aligned}
+\tag{53.3}
+$$
+
+$H,J,L,U$ 是风险界的公共计算量，不是新增证书、观测或已实现增益。
+
+**定理 53.2（精确Read轴的全控制器两次调用下界）。** 对 $0<\eta\le1/100$ 和每个 $\pi\in\mathcal P_\infty^{\rm cmd}$，
+
+$$
+\mathcal E_\pi(0,\eta)\ge L_0.
+\tag{53.4}
+$$
+
+这个下界覆盖所有合法因果控制器及其有限或可数完整记录。
+
+证明。固定 $\pi$，在 $a=0$ 的分支上，首锚以前每次实际Read报告零。内部状态律使真实可见槽保持零，与隐藏来源及增益无关；于是全部命令、Read选择、证书和停止选择由共同零报告前缀决定。若没有首锚，包括无限内部前缀，或首锚前已有零命令，取 $b_\pm=20\pm15i$、相同增益。两者都是半径25帽来源，完整记录相同，INITIAL半距15大于 $L_0\le25\sqrt\eta\le5/2$。零命令将两个当前状态都消去。没有在无限内部前缀后补一个锚。
+
+其余情形首锚在有限事件处发生，之前有 $k$ 个非零内部命令。令其公共有序积
+
+$$
+p=c_1\cdots c_k=\sigma\lambda q,\qquad
+0<\lambda\le1,\quad \sigma\in\{1,-1\},\quad
+q=\alpha+\nu u,\quad \alpha\ge0,\quad \nu=\sqrt{1-\alpha^2}.
+\tag{53.5}
+$$
+
+$u\in E$ 为单位元，$\nu=0$ 时任取；符号 $\sigma$ 保留在实际锚响应中，空积为1。这是命令积，尚未乘隐藏增益。若 $\alpha\ge3/5$，直接复用引理45.2(ii)的两层合法同投影点，全部增益取1。两INITIAL距离至少18，首锚后状态相同，以后的同增益给相同完整记录，半距至少9大于 $L_0$。空积属于此分支。若 $k=1$，$q$ 为纯虚元；引理45.2(i)给同半径25同投影点，$\rho_q=3/5$、$K_q=4/5$，半距15，同样足够。
+
+因此只剩 $k\ge2$、$0\le\alpha<3/5$。置 $\chi=\sqrt{1-m^2}$，事先固定两个原初态隐藏来源
+
+$$
+b_0=(25u)q^{-1},\qquad b_1=25(\chi+mu)q^{-1}.
+\tag{53.6}
+$$
+
+两范数均为25。第一点的实部为 $25\nu\ge20$。第二点的归一化实部为
+$f(\alpha)=\alpha\chi+m\sqrt{1-\alpha^2}$。该函数在 $[0,3/5]$ 上凹，故不小于两个端点值的最小值。$m\ge9801/10000>4/5$ 给 $f(0)\ge4/5$；另一端点满足
+
+$$
+\frac35\sqrt{1-m^2}+\frac45m\ge\frac45,
+\quad\text{因为}\quad
+9(1-m^2)-16(1-m)^2=(1-m)(25m-7)\ge0.
+\tag{53.7}
+$$
+
+平方前的两边都非负。因此 $b_1$ 也在原帽中，并未扩大来源。
+
+在 $b_0$ 的运行中，首两个内部调用的增益各取 $1-\eta$，其余首锚前增益取1；在 $b_1$ 的运行中，首锚前增益全部取1。$k\ge2$ 保证两次调用实际存在；这只是两个合法见证历史的选择，不是假设模型恒定增益。实标量与右乘交换，实际内部积分别为 $mp$ 和 $p$。首锚前仍是共同精确零Read，命令不改变；首锚后两当前状态完全相同，恰为
+
+$$
+(\sigma\lambda25mu,0).
+\tag{53.8}
+$$
+
+此后选择相同增益及零读误差。相同前缀迫使同一下一事件，相同状态给同一Read，故有限停止及可数历史的每个有限前缀都相同，包括全部证书与Stop。来源固定于运行前，未按后续Read换源。右乘单位元等距，故
+
+$$
+|b_1-b_0|^2=625\bigl(1-m^2+(1-m)^2\bigr)=1250\zeta=4L_0^2.
+\tag{53.9}
+$$
+
+对共同完整记录的同一个 $W$ 值输出，三角不等式给至少一个INITIAL的误差不小于半距 $L_0$。各分支穷尽所有 $\pi$，得到结论。证毕。
+
+**定义 53.3（同一寄存器的实际有限取得族）。** 对公共 $0<\rho\le1/10$，取
+
+$$
+\begin{aligned}
+K&=\sqrt{1-\rho^2},\qquad
+\alpha=\frac35K-\frac45\rho,\qquad
+\nu=\frac45K+\frac35\rho,\qquad q=\alpha+\nu i,\\
+c_1&=j,\qquad c_2=-\alpha j+\nu k,\qquad c_1c_2=q,\\
+h&=\frac45\nu-\frac35\alpha=\frac{7K+24\rho}{25}.
+\end{aligned}
+\tag{53.10}
+$$
+
+两个命令为单位纯虚元。实际事件严格为
+
+$$
+\operatorname{Read}(y_0);\quad A_{\gamma_1c_1};\quad
+\operatorname{Read}(y_1);\quad A_{\gamma_2c_2};\quad
+\operatorname{Read}(y_2);\quad A_d;\quad
+\operatorname{Read}(y_3);\quad\operatorname{Stop}.
+\tag{53.11}
+$$
+
+记录中的命令仍是 $c_1,c_2$，不记录潜在 $\gamma_jc_j$。保留全部四个实际报告及有序命令、调用种类、公共区间证书和Stop。对同一真实来源写 $bq=s+w$、$w\in E$、$R=|b|$、$\mu=\gamma_1\gamma_2\in[m,1]$。逐次状态律给
+
+$$
+\begin{aligned}
+y_0&=a+e_0,\\
+y_1&=\gamma_1(c_1\times a)+e_1,\\
+y_2&=\mu\,c_2\times(c_1\times a)+e_2,\\
+y_3&=\mu w+e_3,\qquad |e_j|\le\delta.
+\end{aligned}
+\tag{53.12}
+$$
+
+最后锚把同一演化中的可见量放入隐藏槽，故任意无界 $a$ 不进入 $y_3$，INITIAL的 $a$ 仍由已保存初读估计。采用§45的原帽几何，
+
+$$
+s\ge-R\rho,\qquad Rh\le|w|\le R.
+\tag{53.13}
+$$
+
+具体地，帽条件是 $\alpha s+\nu\langle w,i\rangle\ge(4/5)R$；若 $s=-t<0$，则
+$\nu\sqrt{1-(t/R)^2}-\alpha(t/R)\ge4/5$，其左端严格递减且在 $t/R=\rho$ 取等，给负分支界。正实部最大值为 $R((4/5)\alpha+(3/5)\nu)$，其平方与 $(Rh)^2$ 相加为 $R^2$；这一正端点至少为 $R\rho$。因此同一帽上的全部实部分支都给所列投影下界。这里重复写出供应关系，以明确使用的是原完整帽；未把球面换成一个填充区间。两条上界证明只改变有限族中的公共 $\rho$ 和末读解码器，不改变（53.11）的动作与实际Read。
+
+**定理 53.4（精确Read轴的完整有限上界）。** 在 $\delta=0$、$0<\eta\le1/100$ 下，定义53.3取 $\rho=\eta$，存在全定义的报告解码器 $E^4\to W$，使（53.11）的三更新四实际Read控制器逐合法联合历史满足
+
+$$
+\mathcal E_\pi(0,\eta)\le L_0+25\eta.
+\tag{53.14}
+$$
+
+证明。$y_0=a$，$y_3=\mu w$，$\mu\in[m,1]$。内层给 $|y_3|\le7$，外层给 $|y_3|\ge25mh$。两层严格分离，因为 $K\ge1-\eta^2$、$m\ge1-2\eta$，且
+
+$$
+25mh=m(7K+24\eta)
+\ge7+10\eta-55\eta^2+14\eta^3>7.
+\tag{53.15}
+$$
+
+最后的不等式由 $0<\eta\le1/100$ 得到。故以公共 $T_0=(7+25mh)/2$ 定义
+$\widehat R=7$ 当 $|y_3|\le T_0$，否则 $\widehat R=25$，合法报告总有 $\widehat R=R$，无需半径标签。
+
+以下定义用于全部四报告空间。令 $r=|y_3|$，$n=y_3/r$ 当 $r>0$、$n=0$ 当 $r=0$，并置
+
+$$
+\begin{aligned}
+\ell_-&=\min\{R,r\},\qquad \ell_+=\min\{R,\ell_-/m\},\\
+A&=\sqrt{R^2-\ell_+^2},\qquad B=\sqrt{R^2-\ell_-^2},\\
+\widehat s&=(A+B)/2-R\eta,\qquad
+\widehat w=((\ell_-+\ell_+)/2)n,\\
+\widehat x&=\left(y_0,(\widehat s+\widehat w)q^{-1}\right),\qquad R=\widehat R.
+\end{aligned}
+\tag{53.16}
+$$
+
+$0\le\ell_-\le\ell_+\le R$、$m>0$，根号与输出在所有报告上有定义，零报告不除零。输出不必在来源中。$y_1,y_2$ 仍保留为实际记录。
+
+对合法报告 $r=\mu|w|\le R$，正增益保证 $w$ 与 $y_3$ 同方向，且
+$|w|\in[\ell_-,\ell_+]$。由球面身份，$A\le|s|\le B$。若 $s\ge0$，$s\in[A,B]$；若 $s<0$，（53.13）给 $|s|\le R\eta$，又 $A\le|s|$，所以 $s\ge A-2R\eta$。两种符号均给
+
+$$
+|\widehat s-s|\le(B-A)/2+R\eta,\qquad
+|\widehat w-w|\le(\ell_+-\ell_-)/2.
+\tag{53.17}
+$$
+
+径向端点的两种情况 $r\le mR$ 与 $r\ge mR$ 分别给
+
+$$
+\ell_+-\ell_-\le R(1-m),\qquad
+(B-A)^2\le B^2-A^2=\ell_+^2-\ell_-^2\le R^2(1-m^2).
+\tag{53.18}
+$$
+
+第一情况中端点为 $r,r/m$，第二情况中端点为 $r,R$；两界的最大值均在 $r=mR$，故不需要任何增益分布假设。将（53.17）按实部、虚部正交相加，再在二维误差向量上应用三角不等式，得到
+
+$$
+\begin{aligned}
+|\widehat b-b|
+&\le\sqrt{\bigl((B-A)/2+R\eta\bigr)^2+
+                 \bigl((\ell_+-\ell_-)/2\bigr)^2}\\
+&\le\frac R2\sqrt{(1-m^2)+(1-m)^2}+R\eta\\
+&=R\sqrt{\zeta/2}+R\eta\le L_0+25\eta.
+\end{aligned}
+\tag{53.19}
+$$
+
+右乘 $q^{-1}$ 等距，初始可见槽误差为零，所以这是完整INITIAL欧氏误差。结论逐合法历史成立，包含任意无界 $a$、任意相关的两个增益；未取得隐藏增益数值。证毕。
+
+**定理 53.5（联合正误差的全控制器有限下界）。** 在定义53.1的联合域，对每个 $\pi\in\mathcal P_\infty^{\rm cmd}$，
+
+$$
+\mathcal E_\pi(\delta,\eta)\ge L=\sqrt{\delta^2+H^2}.
+\tag{53.20}
+$$
+
+证明。固定控制器及任一单位 $v\in E$，选两个初始可见量 $a_0=\delta v$、$a_1=-\delta v$，首锚以前每次Read共同报告零。每个内部操作都收缩可见槽，因此两次运行的真实可见值各不超过 $\delta$；误差取各自真实可见值的相反数，零报告合法。这样共同前缀中的命令、Read、证书和停止由 $\pi$ 决定，与 $b$ 和见证增益无关。
+
+若没有首锚，或首锚前已有零命令，取 $b_0=20-15i$、$b_1=20+15i$、相同增益。完整共同记录的INITIAL半距为 $\sqrt{\delta^2+225}$。若有首锚，其有限非零命令积按（53.5）写为 $\sigma\lambda q$。当 $\alpha\ge3/5$，取引理45.2(ii)的合法两层同投影来源及全1增益，其INITIAL半距至少 $\sqrt{\delta^2+81}$。首锚后两个可见槽相同，隐藏槽差至多 $2\delta$；下面的续接不变量适用。
+
+余下 $0\le\alpha<3/5$，置
+$\rho_q=(3/5)\nu-(4/5)\alpha>0$、$K_q=(3/5)\alpha+(4/5)\nu=\sqrt{1-\rho_q^2}$。若 $25\rho_q\ge H$，使用引理45.2(i)的半径25两点
+
+$$
+b_\pm=(\pm25\rho_q+25K_qu)q^{-1}.
+\tag{53.21}
+$$
+
+全1增益下首锚后可见槽相同，隐藏槽差至多 $2\delta$；INITIAL半距
+$\sqrt{\delta^2+(25\rho_q)^2}\ge L$。
+
+只剩 $0<\rho_q<H/25$。联合域给 $H^2\le25D\le25$，所以 $\rho_q<1/5$、$K_q>24/25$，从而
+
+$$
+\alpha=\frac35K_q-\frac45\rho_q>\frac{52}{125}>\frac25,
+\qquad \nu>\frac45.
+\tag{53.22}
+$$
+
+这也证明首锚前实际有至少两次非零内部调用：空积的 $\alpha=1$，单个纯虚命令的 $\alpha=0$，均不在这个剩余分支。令
+
+$$
+\varepsilon_h=25\zeta+2\delta,\qquad
+S=\sqrt{50\varepsilon_h-\varepsilon_h^2},\qquad
+b_0=(25u)q^{-1},\qquad
+b_1=(S+(25-\varepsilon_h)u)q^{-1}.
+\tag{53.23}
+$$
+
+$0<\varepsilon_h\le2D\le2$。两范数恰为25，且 $S\ge\sqrt{48\varepsilon_h}$。帽条件不是附加假设：
+
+$$
+\operatorname{Re}b_0=25\nu\ge20,\qquad
+\operatorname{Re}b_1=\alpha S+\nu(25-\varepsilon_h)\ge25\nu\ge20,
+\tag{53.24}
+$$
+
+因为 $(2/5)\sqrt{48\varepsilon_h}\ge\varepsilon_h\ge\nu\varepsilon_h$。来源在运行前固定，初始帽与半径从未更换。
+
+第0次运行的首两个内部增益各取 $1-\eta$，其余首锚前增益取1；第1次运行的首锚前增益全部取1。零报告仍逐事件合法，公共命令前缀保持。首锚后两真实可见值分别为
+$\sigma\lambda25mu$ 和 $\sigma\lambda(25-\varepsilon_h)u$。由
+$25-\varepsilon_h=25m-2\delta$，可见槽差为 $2\sigma\lambda\delta u$，范数至多 $2\delta$。两隐藏槽是各自收缩后可见槽的负值，各自范数至多 $\delta$，故其差也至多 $2\delta$。这里不声称两个当前状态相同。
+
+对所有有锚分支，此后内部调用取相同合法增益，例如1。若两当前差槽满足
+
+$$
+|\Delta a'|\le2\delta,\qquad |\Delta b'|\le2\delta,
+\tag{53.25}
+$$
+
+相同内部命令分别收缩它们；精确锚送到 $(\operatorname{Im}\Delta b',-\Delta a')$，仍满足同界。每次实际Read共同报告两真实可见值的中点，各自误差为相反半差，范数至多 $\delta$。该递推只使用固定初态、当前两个状态和共同有限前缀，不用未来事件；相同报告迫使同一动作、Read选择、证书和Stop。重复Read、更新后立即Stop、任意有限续接及可数记录的每个有限前缀均覆盖。对无锚分支，已经合法的零报告覆盖整个记录；没有无限前缀后的事件。这个数学比较不是向控制器提供一个源副本。
+
+最后一对的完整INITIAL半距平方为
+
+$$
+\frac{|a_1-a_0|^2+|b_1-b_0|^2}{4}
+=\delta^2+\frac{S^2+\varepsilon_h^2}{4}
+=\delta^2+\frac{25}{2}\varepsilon_h
+=\delta^2+H^2=L^2.
+\tag{53.26}
+$$
+
+其余分支也足够，因为 $H\le5<9<15$。同一个完整命令记录须产生同一个 $W$ 值估计，三角不等式给至少一端误差不小于INITIAL半距。由共同零前缀确定命令积后即可事先选定两个来源和首两次增益；续接中点规则因果合法。Read和增益障碍属于同两条实际历史，不是两个分别可达轴界的拼接。这证明对全部控制器的结论。证毕。
+
+**定理 53.6（联合正误差的三更新四Read有限上界）。** 在定义53.1的联合域，定义53.3取 $\rho=D/10$，存在全定义解码器 $E^4\to W$，使（53.11）在原完整来源及全部合法联合历史上满足
+
+$$
+\mathcal E_\pi(\delta,\eta)\le U.
+\tag{53.27}
+$$
+
+证明。由同一历史的（53.12）及 $|w|\le R\le25$，
+
+$$
+|y_3-w|\le\delta+R\zeta\le D.
+\tag{53.28}
+$$
+
+内层给 $|y_3|\le7+D$，外层给 $|y_3|\ge25h-D$。公共层间隙沿用（47.16）：
+
+$$
+25h-7=24\rho-7(1-K)
+\ge\frac{12}{5}D-\frac7{100}D^2
+\ge\frac{233}{100}D>2D.
+\tag{53.29}
+$$
+
+因此 $T=(7+25h)/2$ 严格位于两个合法报告范围之间，以 $|y_3|\le T$ 判为半径7、否则半径25，总得到真实未标记半径。
+
+对任意报告四元组先按这个规则选 $R$，再令 $r=|y_3|$、$[z]_0^R=\min\{R,\max\{0,z\}\}$，定义
+
+$$
+\begin{aligned}
+r_-&=[r-\delta]_0^R,\qquad r_+=[(r+\delta)/m]_0^R,\\
+A&=\sqrt{R^2-r_+^2},\qquad B=\sqrt{R^2-r_-^2},\\
+\widehat s&=\begin{cases}
+(A+B)/2,&A>R\rho,\\
+(B-R\rho)/2,&A\le R\rho,
+\end{cases}\\
+\widehat x&=\left(y_0,(\widehat s+y_3)q^{-1}\right).
+\end{aligned}
+\tag{53.30}
+$$
+
+$r_-\le r_+$，根号非负，$m>0$，输出在整个 $E^4$ 上有定义；零报告不需除法。分支只是一项真实报告的计算，不是新控制或符号标签；全定义性不包含连续性或有限位实现保证。两个中间Read及全部元数据仍完整取得和保留。
+
+令 $\ell=|w|$。同一次真实 $\mu,e_3$ 给 $r\le\ell+\delta$、$r\ge m\ell-\delta$，从而
+$r_-\le\ell\le r_+$、$A\le|s|\le B$。径向宽度满足
+
+$$
+r_+-r_-\le R\zeta+2\delta.
+\tag{53.31}
+$$
+
+若 $r_-=R$，两端均为 $R$，宽度零；否则 $r_-\ge r-\delta$，而截断定义总给 $mr_+\le r+\delta$，故 $r_-\ge mr_+-2\delta$，得到（53.31）。于是置 $H_R^2=R\delta+R^2\zeta/2$，有
+
+$$
+B^2-A^2=(r_+-r_-)(r_++r_-)
+\le2R(R\zeta+2\delta)=4H_R^2.
+\tag{53.32}
+$$
+
+若 $A>R\rho$，原帽负分支界 $s\ge-R\rho$ 排除了 $s<0$，故 $s\in[A,B]$，第一中点的误差至多
+$(B-A)/2\le H_R$。若 $A\le R\rho$，全部合法 $s$ 都在 $[-R\rho,B]$ 中，且
+$B^2\le(R\rho)^2+4H_R^2$；第二中点的误差至多
+
+$$
+J_R=\frac{R\rho+\sqrt{(R\rho)^2+4H_R^2}}2.
+\tag{53.33}
+$$
+
+第一分支也有误差至多 $J_R$，因为 $J_R\ge H_R$。$R\le25$、各量非负，故 $J_R\le J$。这些区间只包围真实标量，不声称区间内每点都是合法来源，亦未假设真实 $s$ 非负。
+
+初读误差至多 $\delta$、虚部误差由（53.28）至多 $D$。右乘 $q^{-1}$ 等距，三个误差槽正交，所以
+
+$$
+|\widehat x-(a,b)|^2
+=|e_0|^2+|\widehat s-s|^2+|y_3-w|^2
+\le\delta^2+J^2+D^2=U^2.
+\tag{53.34}
+$$
+
+无界 $a$ 只使用实际初读误差；没有将增益误差乘无界INITIAL范数，没有额外校准、重复采样或独立性前提。全部动作均在原菜单，恰三更新、四实际Read、有限停止，证明所述逐历史上界。证毕。
+
+**推论 53.7（保留有限界的全预算统一首项）。** 对每个整数 $N\ge3$，精确Read轴满足
+
+$$
+L_0\le R_\infty^{\rm cmd}(0,\eta)
+\le R_N^{\rm cmd}(0,\eta)\le L_0+25\eta,
+\qquad 0<\eta\le1/100.
+\tag{53.35}
+$$
+
+联合域满足
+
+$$
+L\le R_\infty^{\rm cmd}(\delta,\eta)
+\le R_N^{\rm cmd}(\delta,\eta)\le U.
+\tag{53.36}
+$$
+
+同样的上、下界适用于 $N=\infty$ 本身。精确Read轴的首项为
+
+$$
+R_N^{\rm cmd}(0,\eta)=25\sqrt\eta+O(\eta),\qquad
+\lim_{\eta\downarrow0}\sup_{N\in\{3,4,\ldots,\infty\}}
+\left|\frac{R_N^{\rm cmd}(0,\eta)}{\sqrt\eta}-25\right|=0.
+\tag{53.37}
+$$
+
+对任意固定 $\alpha,\beta>0$，沿 $\delta=t\alpha$、$\eta=t\beta$，
+
+$$
+R_N^{\rm cmd}(t\alpha,t\beta)
+=\sqrt t\sqrt{25\alpha+625\beta}+O_{\alpha,\beta}(t)
+\tag{53.38}
+$$
+
+对全部 $N\in\{3,4,\ldots,\infty\}$ 统一成立。因此任何变量预算 $N(\eta)\ge3$ 或 $N(t)\ge3$，包括无预设上限预算，都有相同首项。
+
+证明。两项全控制器下界由定理53.2、53.5给出，两个三更新上界由定理53.4、53.6给出。类包含
+$\mathcal P_3^{\rm cmd}\subseteq\mathcal P_N^{\rm cmd}\subseteq\mathcal P_\infty^{\rm cmd}$ 给全部有限不等式，不需预算极限与下确界交换。轴界除以 $\sqrt\eta$ 后夹在
+$25\sqrt{1-\eta/2}$ 与 $25\sqrt{1-\eta/2}+25\sqrt\eta$ 之间；例如全部这些预算同时满足归一化误差至多 $25\sqrt\eta$。这给（53.37）。
+
+联合界中 $J\le H+25\rho$，故
+
+$$
+0\le U-L\le U-H
+\le25\rho+\sqrt{\delta^2+D^2}
+\le\left(\frac52+\sqrt2\right)D.
+\tag{53.39}
+$$
+
+沿正射线，
+
+$$
+\begin{aligned}
+H^2&=t(25\alpha+625\beta)-(625/2)t^2\beta^2,\\
+L^2&=t(25\alpha+625\beta)+t^2(\alpha^2-(625/2)\beta^2),\\
+D&=t(\alpha+50\beta)-25t^2\beta^2.
+\end{aligned}
+\tag{53.40}
+$$
+
+例如 $0<t\le1/(\alpha+50\beta)$ 保证 $0<\eta<1$、$D\le1$。对固定正 $\alpha,\beta$，$L=\sqrt t\sqrt{25\alpha+625\beta}+O_{\alpha,\beta}(t^{3/2})$；（53.39）则给与预算无关的 $O_{\alpha,\beta}(t)$ 差。这证明（53.38）。参数极限比较的是各自合法有限实验的风险族，没有给任何一条可数历史添加极限Read或无限之后的事件。证毕。
+
+**命题 53.8（两次隐藏调用与联合噪声的实际有限区分）。** 固定公共命令
+$c_1=j$、$c_2=-(3/5)j+(4/5)k$，其积 $q=3/5+(4/5)i$，接精确锚并保留四实际Read及Stop。
+
+精确Read取 $\eta=1/100$、$m=9801/10000$、$S_0=\sqrt{3940399}/400$。两个合法初态及潜在增益为
+
+$$
+\begin{aligned}
+x_0&=(0,20+15i),& (\gamma_1,\gamma_2)&=(99/100,99/100),\\
+x_1&=(0,(S_0+25mi)q^{-1}),& (\gamma'_1,\gamma'_2)&=(1,1).
+\end{aligned}
+\tag{53.41}
+$$
+
+全部四Read报告共同为 $(0,0,0,(9801/400)i)$，INITIAL半距平方为 $199/32=L_0^2$。若在第0次运行只衰减一次调用，末真实Read会改为 $(99/4)i$，不再给这个共同记录。
+
+联合有理实例取
+
+$$
+\eta=2/401,\qquad m=159201/160801,\qquad
+\delta=2000025/16240901,\qquad
+D=6040025/16240901<1.
+\tag{53.42}
+$$
+
+两个原INITIAL与增益为
+
+$$
+\begin{aligned}
+x_0&=(\delta j,20+15i),& (\gamma_1,\gamma_2)&=(399/401,399/401),\\
+x_1&=(-\delta j,(2280+1085i)/101),&
+ (\gamma'_1,\gamma'_2)&=(1,1).
+\end{aligned}
+\tag{53.43}
+$$
+
+完整共同四Read为 $(0,0,0,(399982500/16240901)i)$。所有有序命令、调用种类、公共区间证书及Stop相同，INITIAL半距平方为 $\delta^2+625/101=L^2$。该共同记录还可用（53.25）的中点规则接任意共同原菜单续接。
+
+证明。对（53.41），$b_0q=25i$，$S_0^2+625m^2=625$；（53.7）在 $\alpha=3/5$ 给第二点实部至少20，第一点在帽边缘。两个实际积分别为 $mq$ 与 $q$，初始可见槽零，锚消去实部，所以四读及锚后状态相同。INITIAL隐藏距离平方为 $1250(1-m)$，其四分之一为 $199/32$。只衰减一个增益的产品为99/100，与 $m$ 不同，故所列末读不同；这检验两次各自合法调用的实质用途，不假设所有实际增益必须重复。
+
+对（53.43），
+
+$$
+b_0q=25i,\qquad b_1q=500/101+(2475/101)i,\qquad
+500^2+2475^2=625\cdot101^2.
+\tag{53.44}
+$$
+
+两隐藏范数均为25，实部分别20与 $2280/101\ge20$。$25\zeta+2\delta=50/101$，所以该对恰实例化（53.23），$S=500/101$。初读零报告的两个误差分别为 $-\delta j$、$\delta j$；第一个 $j$ 命令消去两个可见槽，两个实际中间读都为零、误差零。锚后的真实可见值为 $25mi$ 与 $(2475/101)i$，隐藏槽均零。其差为 $2\delta i$，所列共同末读是中点，两个误差为 $-\delta i$、$\delta i$，各自范数恰 $\delta$。隐藏INITIAL距离平方为 $2500/101$，加上初始可见距离平方 $4\delta^2$，得到所列半距。这个有限词实例验证同一来源／增益／Read实现的合法性；任意控制器及可数记录结论由定理53.2、53.5的完整分支证明承担。证毕。
+
+**约定 53.9（复用关系、文献与数学边界）。** （53.4）、（53.14）、（53.20）、（53.27）及其完整有限夹界和统一首项是原声明来源上的 `repo-derived` 综合推导。首锚状态律与因果事件合同复用§40，帽投影、未标记层与负实部分支复用§45，逐槽中点续接复用§46，逐次隐藏执行和命令记录复用§47；§50的实际累计增益证书保留其观测激励条件，本节不把无界独立 $a$ 改为非零来源。§51在精确致动合同中给常数5，未直接提供（53.32）的一侧乘性径向界或本节的两次调用合并。§48–49的小预算与全噪声结论仍依其精确致动条件解释。
+
+共同输出的两点半距与区间中点是成熟中间工具，使用
+[Recovery Geometry §3](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md#31-候选纤维半径与恢复的最小最坏误差)。文献背景见 Foucart–Liao，
+[*Optimal Recovery from Inaccurate Data in Hilbert Spaces: Regularize, but what of the Parameter?*, arXiv:2111.02601v1](https://arxiv.org/html/2111.02601v1)，§1.1及Lemma11；该半距论证的三角不等式是已知工具。其Theorem4要求复Hilbert空间中的两个仿射范数球约束，Theorem10使用固定线性观察、子空间逼近来源和加性误差；这些条件不等于这里的两帽并、破坏性因果控制和逐次隐藏乘性执行。
+其 [*S-Procedure Relaxation: a Case of Exactness Involving Chebyshev Centers*, arXiv:2310.09677v1](https://arxiv.org/html/2310.09677v1) §1–2给局部最坏误差和候选中心的经典背景，
+[*Radius of Information for Two Intersected Centered Hyperellipsoids and Implications in Optimal Recovery from Inaccurate Data*, arXiv:2401.11112v1](https://arxiv.org/html/2401.11112v1) Theorem1的来源是两个中心化超椭球的交及预定线性观察，不能替换本节原来源。一般最优恢复或中心定理不单列为新增成果，也不提供本节固定正参数下的优化器；没有全球新颖性声明。
+
+§52的实际有序发生、额外场、谱目标与本节 $\mathcal D_2$ 没有已证的来源／动作／Read／INITIAL／距离对应；Auric二阶卷的组成、矩、相位合同也不提供这个对应。Atomic §439的固定尺度有限素数核、补偿积分及阻尼转折比较的是实际Euler因子插入，未提供隐藏执行历史或INITIAL估计。它们各自保留完整共同来源关系，不能以名称、相同维数或同一平方根记号移植到（53.35）–（53.38）。
+
+有限夹界没有确定固定正 $\eta$ 或固定正 $(\delta,\eta)$ 的精确minimax值、下一阶最优系数或下确界达到性；也没有结算 $N<3$。方向偏差、两槽独立增益、不精确锚、混合控制或遥测是不同合同。本节有限取得仅表示三次原更新、四个三维实际实数报告及完整元数据，准确实数计算、方向准备、制备、标架、存储、Read精度及物理成本仍分别供应或计价，未推出有限位、费用或物理节约。来源维数、Read方向维数、执行不确定性与实际资源不是同一量。假设15.1的原生完整旋转、忠实位移、实际资源成本和共同环境贯通／任务容量四桥仍须独立证明；上述界是普通数学证明，不作Lean或kernel认证声明。
+
+## 追加锚（本行以下为增补区）
