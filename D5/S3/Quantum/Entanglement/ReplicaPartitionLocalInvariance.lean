@@ -46,6 +46,40 @@ private lemma replica_expand {R : Type*} [Fintype R] [DecidableEq R] {N : ℕ}
   intro y _
   exact Finset.prod_mul_distrib
 
+private lemma replica_unitary {R : Type*} [Fintype R] [DecidableEq R] {N : ℕ}
+    (U : Fin N → Matrix (Fin 2) (Fin 2) ℂ)
+    (hU : ∀ u, U u ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
+    star (replicaOp (R := R) U) * replicaOp U = 1 := by
+  classical
+  have hcol (u : Fin N) (b c : Fin 2) :
+      (∑ a, star (U u a b) * U u a c) = if b = c then 1 else 0 := by
+    simpa only [Matrix.mul_apply, Matrix.star_apply, Matrix.one_apply] using
+      congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M b c)
+        (Matrix.mem_unitaryGroup_iff'.mp (hU u))
+  ext y t
+  change (∑ x : R → Fin N → Fin 2,
+    star (∏ r, ∏ u, U u (x r u) (y r u)) *
+      (∏ r, ∏ u, U u (x r u) (t r u))) = if y = t then 1 else 0
+  simp_rw [star_prod, ← Finset.prod_mul_distrib]
+  rw [← Fintype.prod_sum (fun r (v : Fin N → Fin 2) =>
+    ∏ u, star (U u (v u) (y r u)) * U u (v u) (t r u))]
+  have hrow (r : R) :
+      (∑ v : Fin N → Fin 2, ∏ u, star (U u (v u) (y r u)) * U u (v u) (t r u)) =
+        ∏ u, if y r u = t r u then (1 : ℂ) else 0 := by
+    rw [← Fintype.prod_sum (fun u (a : Fin 2) =>
+      star (U u a (y r u)) * U u a (t r u))]
+    simp_rw [hcol]
+  simp_rw [hrow]
+  by_cases h : y = t
+  · subst t; simp
+  · rw [if_neg h]
+    obtain ⟨r, u, hu⟩ : ∃ r u, y r u ≠ t r u := by
+      by_contra hn
+      apply h
+      exact funext fun r => funext fun u => not_not.mp (fun hh => hn ⟨r, u, hh⟩)
+    exact Finset.prod_eq_zero (Finset.mem_univ r)
+      (Finset.prod_eq_zero (Finset.mem_univ u) (by simp [hu]))
+
 /-- Applying the same local unitaries to all replicas preserves the contraction. -/
 theorem Z_local_unitary_phase : ∀ (n q : ℕ) [NeZero n] {N : ℕ}
     (col : Fin N → Fin q) (ψ : (Fin N → Fin 2) → ℂ)
