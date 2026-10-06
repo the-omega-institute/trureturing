@@ -44,6 +44,20 @@ internal sealed class GaussianFrequencyKernelDocument : IScribeDocumentDefinitio
     private static Formula Z(Formula v) => A("quadraticFrequency", I("c"), I("kappa"), I("hc"), I("hkappa"), I("P"), I("W"), I("hW"), v);
     private static Formula I2 => A("secondIntegral", Mu, I("P"), I("W"), I("hW"));
     private static Formula ScalarBound => Div(Multiply(Multiply(A("sqrt", F.D(3)), Pow(Omega, 2)), Mass), I("kappa"));
+    private static Formula BStar => Add(Add(F.D(1), Multiply(F.D(2), A("eulerMascheroniConstant"))), Multiply(F.D(2), I("D")));
+    private static Formula HS => A("regularKernel", I("c"), I("kappa"), I("hc"), I("hkappa"), I("D"), I("s"));
+    private static Formula SpatialPrimitive => A("intervalIntegral", Lam("v", R, Div(Sub(
+        A("cos", Multiply(Multiply(Omega, I("v")), Diff)), F.D(1)), I("v"))), F.D(0), A("exp", I("s")), I("volume"));
+    private static Formula CiRemainder => Lam("z", Pair, Multiply(F.D(2), A("cosineIntegral",
+        Multiply(Multiply(Omega, A("exp", I("s"))), A("abs", Diff)))));
+    private static Formula DifferenceFormula => A("AEEq", A("coeFn", A("val", Sub(HS, I("H")))), CiRemainder, Prod);
+    private static Formula SingularFormula => A("AEEq", A("coeFn", A("val", I("H"))),
+        Lam("z", Pair, Sub(Add(F.D(1), Multiply(F.D(2), I("D"))), Multiply(F.D(2), A("log", Multiply(Omega, A("abs", Diff)))))), Prod);
+    private static Formula QuadraticIntegral => SetIntegral(Lam("v", R, Smul(A("inv", I("v")), Z(I("v")))));
+    private static Formula RemainderNoiseFormula => All("D", R, All("H", A("symmetricKernel", Mu),
+        Eq(App(I2, Sub(HS, I("H"))), Sub(Add(
+            Smul(Add(BStar, Multiply(F.D(2), I("s"))), A("centeredSquare", Mu, I("P"), I("W"), I("hW"), A("oneVector", Mu))),
+            Smul(F.D(2), QuadraticIntegral)), App(I2, I("H"))))));
     private static Formula Window => A("Icc", F.D(0), A("exp", I("s")));
     private static Formula SetIntegral(Formula f) => A("setIntegral", f, Window, I("volume"));
     private static Formula Params(Formula body, bool positive = true) => F.Disp(All("c", R,
@@ -65,7 +79,7 @@ internal sealed class GaussianFrequencyKernelDocument : IScribeDocumentDefinitio
         DescribeId.Create("gf-" + name.ToLowerInvariant().Replace('_', '-')),
         DeclarationHandle.Create(Module + name), H(title), StatementSource.FromAuthor(statement),
         AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/nualart2005multiple")),
-        Blocks(Paragraph(Text(prose))), name is "spatialMeasure" or "spatialMass" or "squareDifference" or "gaussianFrequency" or "quotientFrequency" or "quadraticFrequency" ? DescribeRole.Definition : DescribeRole.Theorem);
+        Blocks(Paragraph(Text(prose))), name is "regularKernel" or "spatialMeasure" or "spatialMass" or "squareDifference" or "gaussianFrequency" or "quotientFrequency" or "quadraticFrequency" ? DescribeRole.Definition : DescribeRole.Theorem);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The original Gaussian density controls the zero-frequency quotient and the logarithmic singular H in actual symmetric product L2.",
@@ -122,16 +136,26 @@ internal sealed class GaussianFrequencyKernelDocument : IScribeDocumentDefinitio
             "Away from zero, continuity follows from inverse and scalar multiplication. At zero, the linear norm bound squeezes J_v to J_0=0."),
         Entry("quotientFrequency_integrable", "Every original finite window", Params(All("s", R, A("IntegrableOn", Lam("v", R, J(I("v"))), Window, I("volume")))),
             "Continuity on the compact closed interval [0,exp(s)] supplies Bochner integrability for every real s. The boundary is included."),
+        Entry("frequency_integral_coe", "Actual spatial integral representative", Params(All("s", R,
+            A("AEEq", A("coeFn", A("val", SetIntegral(Lam("v", R, J(I("v")))))), Lam("z", Pair, SpatialPrimitive), Prod))),
+            "For each real s, the symmetric L2 Bochner integral on [0,exp(s)] has the almost-everywhere representative obtained by integrating the actual cosine quotient in frequency. The continuous L2 primitive and its jointly measurable spatial quotient supply product integrability and Fubini."),
+        Entry("regularKernel", "Original finite-frequency kernel", Params(All("D", R, All("s", R, Eq(HS,
+            Add(Smul(Add(BStar, Multiply(F.D(2), I("s"))), A("diagonalKernel", Mu, A("oneVector", Mu))),
+                Smul(F.D(2), SetIntegral(Lam("v", R, J(I("v")))))))))),
+            "The original H_s is constructed in the actual symmetric product L2 space. Its constant coefficient is b_*+2s, where b_*=1+2 Euler+2D, and its frequency integral includes the zero endpoint."),
+        Entry("regularKernel_difference", "Off-diagonal Ci identity", Params(All("D", R, All("s", R,
+            All("H", A("symmetricKernel", Mu), All("hH", SingularFormula, DifferenceFormula))))),
+            "For any H with the original logarithmic representative, H_s-H has representative 2Ci((pi/2)exp(s)|x-y|). The actual Gaussian density gives a null spatial diagonal, including c=0. Cosine evenness, positive scaling and the positive Ci/Euler normalization identify the spatial primitive; the desired kernel identity is a conclusion."),
         Entry("quadraticFrequency", "Actual same-W quadratic frequency", Noise(All("v", R, Eq(Z(I("v")), Sub(
             Add(Center("cosineVector", I("v")), Center("sineVector", I("v"))), A("centeredSquare", Mu, I("P"), I("W"), I("hW"), A("oneVector", Mu)))))),
             "For one fixed original isometry W and its centered Gaussian marginal laws on P, the quadratic class is the sum of the centered cosine and sine squares minus the centered constant square."),
         Entry("quadraticFrequency_representation", "Exact same-noise identification", Noise(All("v", R, And(
             Eq(App(I2, D(I("v"))), Z(I("v"))), A("AEEq", A("coeFn", Z(I("v"))), RawNoise(I("v")), I("P"))))),
             "The continuous second integral agrees with the finite construction. Trigonometric energy cancels the centering terms, so the displayed representative is |F(v)|^2-Y^2 for the same W and P."),
-        Entry("frequency_integral_sameNoise", "Bochner commutation on the original law", Noise(All("s", R, And(
+        Entry("frequency_integral_sameNoise", "Bochner commutation and centered remainder", Noise(All("s", R, And(
             A("IntegrableOn", Lam("v", R, Smul(A("inv", I("v")), Z(I("v")))), Window, I("volume")),
-            Eq(App(I2, SetIntegral(Lam("v", R, J(I("v"))))), SetIntegral(Lam("v", R, Smul(A("inv", I("v")), Z(I("v"))))))))),
-            "The pinned continuous-linear Bochner commutation theorem applies after the actual kernel quotient has been proved integrable. Its image is the explicit same-W quadratic quotient. For the spatial representative, the existing L2ContinuousPrimitive theorem applies to the jointly measurable cosine quotient and the continuous L2 derivative. It proves equality almost everywhere at each fixed endpoint and common continuous spatial primitives by product integrability and Fubini. This does not identify an uncountable common pointwise linear version of W, the Ci normalization or process convergence."),
+            And(Eq(App(I2, SetIntegral(Lam("v", R, J(I("v"))))), QuadraticIntegral), RemainderNoiseFormula)))),
+            "The original second integral commutes with the integrable frequency quotient on every finite window. For every D and symmetric H, its image of H_s-H is (b_*+2s) times the centered original Y square, plus twice the same-W quadratic quotient integral, minus I2(H). This is an equality of actual L2(P) classes. Identifying the selected original R and E processes and their common paths requires the corresponding process version identification."),
         Entry("log_square_bound", "Two-sided logarithmic control", F.Disp(All("x", R, All("hx", Lt(F.D(0), I("x")),
             Le(Pow(A("log", I("x")), 2), Add(Multiply(F.Seq(F.D(1), F.D(6)), A("rpow", I("x"), Div(F.Seq(F.Minus, F.D(1)), F.D(2)))), Pow(I("x"), 2)))))),
             "For every positive x, log(x)^2 <= 16 x^(-1/2)+x^2. Below one, the reciprocal power bound controls the logarithmic singularity; above one, log(x) <= x controls the tail. This estimate is consumed by Gaussian logarithmic integrability."),
@@ -141,8 +165,7 @@ internal sealed class GaussianFrequencyKernelDocument : IScribeDocumentDefinitio
         Entry("gaussian_log_square_integrable", "Logarithmic moment of the actual Gaussian law", F.Disp(All("v", I("NNReal"), All("hv", A("Not", Eq(I("v"), F.D(0))),
             A("Integrable", Lam("x", R, Pow(A("log", A("abs", I("x"))), 2)), A("gaussianReal", F.D(0), I("v")))))),
             "For every nonzero nonnegative variance v, log(|x|)^2 is integrable under gaussianReal(0,v). The Gaussian density identity directly consumes the proved weighted Lebesgue integrability. No logarithmic moment premise is supplied."),
-        Entry("singularKernel_exists", "Original singular H in symmetric L2", Params(All("D", R,
-            Exists("H", A("symmetricKernel", Mu), A("AEEq", A("coeFn", A("val", I("H"))),
-                Lam("z", Pair, Sub(Add(F.D(1), Multiply(F.D(2), I("D"))), Multiply(F.D(2), A("log", Multiply(Omega, A("abs", Diff)))))), Prod)))),
-            "For every real D and the actual nonnegative Gaussian coefficient c with positive kappa, there exists H in the actual symmetric product L2 space with representative 1+2D-2 log((pi/2)|x-y|). Apply D=D_w for the original H. The log-square moment is transported through the actual Gaussian coordinate-difference law and unnormalized mass, including c=0. Gaussian nullity of the scalar zero set justifies logarithmic multiplication; the spatial diagonal remains an arbitrary null-set representative. Symmetry follows from coordinate swap and absolute difference. This proves membership, not Ci/Euler normalization, H_s-H=K_s or any process limit."))));
+        Entry("singularKernel_exists", "Singular H and its actual Ci remainder", Params(All("D", R,
+            Exists("H", A("symmetricKernel", Mu), And(SingularFormula, All("s", R, DifferenceFormula))))),
+            "For every real D, nonnegative c and positive kappa, one H in the actual symmetric product L2 space has representative 1+2D-2 log((pi/2)|x-y|), and for every real s its difference from the constructed H_s has the Ci representative. Apply D=D_w for the original kernel. The Gaussian logarithmic moment and unnormalized mass include c=0; the spatial diagonal is null. This assertion gives the spatial kernel and all its fixed-time differences. It does not assert a common pointwise W version or a process limit."))));
 }

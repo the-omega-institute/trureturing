@@ -12,6 +12,25 @@ internal sealed class SameNoiseSecondChaosDocument : IScribeDocumentDefinition
         H("Same-noise second integral"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("same-noise-diagonal-image"),
+                DeclarationHandle.Create(Module + "secondIntegral_diagonal"),
+                H("Original diagonal image"),
+                StatementSource.FromAuthor(Hypotheses(All("f", HSpace,
+                    Eq(At("apply", At("secondIntegral", F.Id("mu"), F.Id("P"), F.Id("W"), F.Id("hW")), At("diagonalKernel", F.Id("mu"), F.Id("f"))),
+                        At("centeredSquare", F.Id("mu"), F.Id("P"), F.Id("W"), F.Id("hW"), F.Id("f")))), false)),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/nualart2005multiple")),
+                Blocks(Paragraph(Text("The continuous second integral sends each actual diagonal kernel to the centered square of the same original W. The constant vector supplies the centered Y square in the finite-frequency remainder."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("same-noise-constant-representative"),
+                DeclarationHandle.Create(Module + "oneVector_coe"),
+                H("Constant vector representative"),
+                StatementSource.FromAuthor(F.Disp(All("mu", At("Measure", F.Id("Real")), All("hfinite", At("IsFiniteMeasure", F.Id("mu")),
+                    At("AEEq", At("coeFn", At("oneVector", F.Id("mu"))), Lambda("x", F.Id("Real"), F.D(1)), F.Id("mu")))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/nualart2005multiple")),
+                Blocks(Paragraph(Text("For every finite measure on the real line, the constant L2 vector has representative one almost everywhere. Its diagonal product therefore represents the constant spatial kernel."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("same-noise-symmetric-density"),
                 DeclarationHandle.Create(Module + "finiteKernelMap_dense"),
                 H("Density in the actual symmetric space"),

@@ -1,5 +1,5 @@
 /- GID: D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Fourier/Asymptotics/GaussianFrequencyKernel
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -7,6 +7,8 @@
    digest: Gaussian cosine quotients are Bochner integrable and the logarithmic singular kernel belongs to symmetric L2. -/
 
 import D5.S3.Fourier.Asymptotics.SameNoiseSecondChaos
+import D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder
+import D5.S3.Fourier.Asymptotics.L2ContinuousPrimitive
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.MeasureTheory.Measure.WithDensityFinite
@@ -269,6 +271,55 @@ theorem quotientFrequency_integrable (s : ℝ) :
     IntegrableOn (quotientFrequency c κ hc hκ) (Set.Icc 0 (Real.exp s)) volume :=
   (quotientFrequency_continuous c κ hc hκ).integrableOn_Icc
 
+theorem frequency_integral_coe (s : ℝ) :
+    letI := spatialMeasure_finite c κ hc hκ
+    (∫ v in Set.Icc 0 (Real.exp s), quotientFrequency c κ hc hκ v).val
+      =ᵐ[(spatialMeasure c κ).prod (spatialMeasure c κ)]
+        (fun z : ℝ × ℝ => ∫ v in (0 : ℝ)..Real.exp s,
+          (Real.cos ((Real.pi/2)*v*(z.1-z.2))-1)/v) := by
+  letI := spatialMeasure_finite c κ hc hκ
+  let μ := (spatialMeasure c κ).prod (spatialMeasure c κ)
+  let u : ℝ → Lp ℝ 2 μ := fun v => (quotientFrequency c κ hc hκ v).val
+  let f : ℝ → Lp ℝ 2 μ := fun t => ∫ v in (0 : ℝ)..t, u v
+  let g : ℝ → (ℝ × ℝ) → ℝ := fun v z =>
+    (Real.cos ((Real.pi/2)*v*(z.1-z.2))-1)/v
+  have hu : Continuous u := (symmetricKernel (spatialMeasure c κ)).subtypeL.continuous.comp
+    (quotientFrequency_continuous c κ hc hκ)
+  have hg : Measurable (Function.uncurry g) := by
+    dsimp [g, Function.uncurry]
+    fun_prop
+  have heq (v : ℝ) : g v =ᵐ[μ] (fun z => u v z) := by
+    filter_upwards [Lp.coeFn_smul (v⁻¹) (gaussianFrequency c κ hc hκ v).val,
+      gaussianFrequency_coe c κ hc hκ v] with z hs hf
+    change _ = (v⁻¹ • (gaussianFrequency c κ hc hκ v).val) z
+    rw [hs]
+    change (Real.cos ((Real.pi/2)*v*(z.1-z.2))-1)/v =
+      v⁻¹ * (gaussianFrequency c κ hc hκ v).val z
+    rw [hf]
+    ring
+  have hf (t : ℝ) : f t = f 0 + ∫ v in (0 : ℝ)..t, u v := by simp [f]
+  have h := (L2ContinuousPrimitive.result μ f u g hu hg heq hf).2.2 (Real.exp s)
+  have hmap : (∫ v in (0 : ℝ)..Real.exp s, u v) =
+      (∫ v in Set.Icc 0 (Real.exp s), quotientFrequency c κ hc hκ v).val := by
+    rw [intervalIntegral.integral_of_le (Real.exp_pos s).le,
+      ← integral_Icc_eq_integral_Ioc]
+    exact (symmetricKernel (spatialMeasure c κ)).subtypeL.integral_comp_comm
+      (quotientFrequency_integrable c κ hc hκ s)
+  filter_upwards [h, Lp.coeFn_zero (E := ℝ) (p := 2) (μ := μ)] with z hz hzero
+  change f 0 z + (∫ v in (0 : ℝ)..Real.exp s, g v z) = f (Real.exp s) z at hz
+  have hf0 : f 0 = 0 := by simp [f]
+  rw [hf0, hzero] at hz
+  simp only [Pi.zero_apply, zero_add] at hz
+  rw [← hmap]
+  exact hz.symm
+
+def regularKernel (D s : ℝ) :
+    (letI := spatialMeasure_finite c κ hc hκ; symmetricKernel (spatialMeasure c κ)) :=
+  letI := spatialMeasure_finite c κ hc hκ
+  (1+2*Real.eulerMascheroniConstant+2*D+2*s) •
+    diagonalKernel (spatialMeasure c κ) (oneVector (spatialMeasure c κ)) +
+    (2 : ℝ) • ∫ v in Set.Icc 0 (Real.exp s), quotientFrequency c κ hc hκ v
+
 variable {Ω : Type*} [MeasurableSpace Ω]
 variable (P : Measure Ω) [IsProbabilityMeasure P]
 variable (W : Lp ℝ 2 (spatialMeasure c κ) →ₗᵢ[ℝ] Lp ℝ 2 P)
@@ -318,7 +369,15 @@ theorem frequency_integral_sameNoise (s : ℝ) :
       (Set.Icc 0 (Real.exp s)) volume ∧
     secondIntegral (spatialMeasure c κ) P W hW
       (∫ v in Set.Icc 0 (Real.exp s), quotientFrequency c κ hc hκ v) =
-      ∫ v in Set.Icc 0 (Real.exp s), v⁻¹ • quadraticFrequency c κ hc hκ P W hW v := by
+      ∫ v in Set.Icc 0 (Real.exp s), v⁻¹ • quadraticFrequency c κ hc hκ P W hW v ∧
+    ∀ (D : ℝ) (H : symmetricKernel (spatialMeasure c κ)),
+      secondIntegral (spatialMeasure c κ) P W hW
+        (regularKernel c κ hc hκ D s - H) =
+        (1+2*Real.eulerMascheroniConstant+2*D+2*s) •
+          centeredSquare (spatialMeasure c κ) P W hW (oneVector (spatialMeasure c κ)) +
+          (2 : ℝ) • (∫ v in Set.Icc 0 (Real.exp s),
+            v⁻¹ • quadraticFrequency c κ hc hκ P W hW v) -
+          secondIntegral (spatialMeasure c κ) P W hW H := by
   let := spatialMeasure_finite c κ hc hκ
   have he (v : ℝ) : secondIntegral (spatialMeasure c κ) P W hW
       (quotientFrequency c κ hc hκ v) =
@@ -328,10 +387,93 @@ theorem frequency_integral_sameNoise (s : ℝ) :
   · have h := (secondIntegral (spatialMeasure c κ) P W hW).integrable_comp
       (quotientFrequency_integrable c κ hc hκ s)
     simpa only [IntegrableOn, Function.comp_def, he] using h
-  · rw [← (secondIntegral (spatialMeasure c κ) P W hW).integral_comp_comm
-      (quotientFrequency_integrable c κ hc hκ s)]
-    apply integral_congr_ae
-    exact ae_of_all _ he
+  · have hcomm : secondIntegral (spatialMeasure c κ) P W hW
+        (∫ v in Set.Icc 0 (Real.exp s), quotientFrequency c κ hc hκ v) =
+        ∫ v in Set.Icc 0 (Real.exp s), v⁻¹ • quadraticFrequency c κ hc hκ P W hW v := by
+      rw [← (secondIntegral (spatialMeasure c κ) P W hW).integral_comp_comm
+        (quotientFrequency_integrable c κ hc hκ s)]
+      apply integral_congr_ae
+      exact ae_of_all _ he
+    refine ⟨hcomm, ?_⟩
+    intro D H
+    rw [map_sub, regularKernel, map_add, map_smul, map_smul,
+      secondIntegral_diagonal, hcomm]
+
+
+theorem regularKernel_difference (D s : ℝ)
+    (H : (letI := spatialMeasure_finite c κ hc hκ; symmetricKernel (spatialMeasure c κ)))
+    (hH : H.val =ᵐ[(spatialMeasure c κ).prod (spatialMeasure c κ)]
+      (fun z : ℝ × ℝ => 1+2*D-2*Real.log ((Real.pi/2)*|z.1-z.2|))) :
+    letI := spatialMeasure_finite c κ hc hκ
+    (regularKernel c κ hc hκ D s - H).val
+      =ᵐ[(spatialMeasure c κ).prod (spatialMeasure c κ)]
+        (fun z : ℝ × ℝ => 2 * CosineIntegralLattice.cosineIntegral
+          ((Real.pi/2)*Real.exp s*|z.1-z.2|)) := by
+  letI := spatialMeasure_finite c κ hc hκ
+  let μ := spatialMeasure c κ
+  let J := ∫ v in Set.Icc 0 (Real.exp s), quotientFrequency c κ hc hκ v
+  let A := diagonalKernel μ (oneVector μ)
+  let b := 1+2*Real.eulerMascheroniConstant+2*D+2*s
+  letI : NullSingletonClass μ := by dsimp [μ, spatialMeasure]; infer_instance
+  have hdiag : ∀ᵐ z ∂μ.prod μ, z.1-z.2 ≠ 0 := by
+    apply (ae_prod_iff_ae_ae ((measurableSet_eq_fun (measurable_fst.sub measurable_snd) measurable_const).compl : MeasurableSet {z : ℝ × ℝ | z.1-z.2 ≠ 0})).mpr
+    exact ae_of_all _ fun x => (Measure.ae_ne μ x).mono fun y hy => sub_ne_zero.mpr hy.symm
+  have hA : A.val =ᵐ[μ.prod μ] (fun _ => (1 : ℝ)) := by
+    have hf := (quasiMeasurePreserving_fst (μ := μ) (ν := μ)).ae_eq (oneVector_coe μ)
+    have hs := (quasiMeasurePreserving_snd (μ := μ) (ν := μ)).ae_eq (oneVector_coe μ)
+    filter_upwards [rankOne_coe μ (oneVector μ) (oneVector μ), hf, hs] with z hz hf hs
+    change rankOne μ (oneVector μ) (oneVector μ) z = 1
+    change oneVector μ z.1 = 1 at hf
+    change oneVector μ z.2 = 1 at hs
+    rw [hz, hf, hs, one_mul]
+  have he : (regularKernel c κ hc hκ D s - H).val =ᵐ[μ.prod μ]
+      (fun z : ℝ × ℝ => b+2*(∫ v in (0 : ℝ)..Real.exp s,
+        (Real.cos ((Real.pi/2)*v*(z.1-z.2))-1)/v)-H.val z) := by
+    filter_upwards [Lp.coeFn_sub (regularKernel c κ hc hκ D s).val H.val,
+      Lp.coeFn_add (b • A.val) ((2 : ℝ) • J.val),
+      Lp.coeFn_smul b A.val, Lp.coeFn_smul (2 : ℝ) J.val,
+      hA, frequency_integral_coe c κ hc hκ s] with z hsub hadd hb htwo hA hJ
+    change ((regularKernel c κ hc hκ D s).val-H.val) z = _
+    rw [hsub]
+    change (b • A.val + (2 : ℝ) • J.val) z - H.val z = _
+    rw [hadd]
+    change J.val z = _ at hJ
+    simp only [Pi.add_apply, hb, htwo, Pi.smul_apply, smul_eq_mul, hA, hJ, mul_one]
+  filter_upwards [he, hH, hdiag] with z hz hH hz0
+  rw [hz, hH]
+  let k := (Real.pi/2)*|z.1-z.2|
+  have hk : 0 < k := mul_pos (by positivity) (abs_pos.mpr hz0)
+  have hcos (v : ℝ) : Real.cos ((Real.pi/2)*v*(z.1-z.2)) = Real.cos (k*v) := by
+    by_cases hd : 0 ≤ z.1-z.2
+    · dsimp [k]; rw [abs_of_nonneg hd]; congr 1; ring
+    · have hd' : z.1-z.2 ≤ 0 := le_of_not_ge hd
+      dsimp [k]; rw [abs_of_nonpos hd']
+      rw [show (Real.pi/2)*(-(z.1-z.2))*v = -((Real.pi/2)*v*(z.1-z.2)) by ring, Real.cos_neg]
+  have hscale : (∫ v in (0 : ℝ)..Real.exp s,
+      (Real.cos ((Real.pi/2)*v*(z.1-z.2))-1)/v) =
+      ∫ t in (0 : ℝ)..(k*Real.exp s), (Real.cos t-1)/t := by
+    calc
+      _ = k * ∫ v in (0 : ℝ)..Real.exp s, (Real.cos (k*v)-1)/(k*v) := by
+        rw [← intervalIntegral.integral_const_mul]
+        apply intervalIntegral.integral_congr
+        intro v _
+        change (Real.cos ((Real.pi/2)*v*(z.1-z.2))-1)/v =
+          k*((Real.cos (k*v)-1)/(k*v))
+        rw [hcos]
+        by_cases hv : v = 0
+        · simp [hv]
+        · field_simp [hk.ne', hv]
+      _ = _ := by
+        simpa only [smul_eq_mul, mul_zero] using
+          (intervalIntegral.smul_integral_comp_mul_left
+            (fun t : ℝ => (Real.cos t-1)/t) k (a := 0) (b := Real.exp s))
+  have hCi := CosineNormalizedRemainder.positive_normalization (k*Real.exp s)
+    (mul_pos hk (Real.exp_pos s))
+  rw [Real.log_mul hk.ne' (Real.exp_pos s).ne', Real.log_exp] at hCi
+  rw [hscale]
+  rw [show (Real.pi/2)*Real.exp s*|z.1-z.2| = k*Real.exp s by dsimp [k]; ring, hCi]
+  dsimp [b, k]
+  ring
 
 end Frequency
 theorem log_square_bound (x : ℝ) (hx : 0 < x) :
@@ -394,7 +536,11 @@ theorem singularKernel_exists (c κ : ℝ) (hc : 0 ≤ c) (hκ : 0 < κ) (D : �
     letI := spatialMeasure_finite c κ hc hκ
     ∃ H : symmetricKernel (spatialMeasure c κ),
       H.val =ᵐ[(spatialMeasure c κ).prod (spatialMeasure c κ)]
-        (fun z : ℝ × ℝ => 1+2*D-2*Real.log ((Real.pi/2)*|z.1-z.2|)) := by
+        (fun z : ℝ × ℝ => 1+2*D-2*Real.log ((Real.pi/2)*|z.1-z.2|)) ∧
+      ∀ s : ℝ, (regularKernel c κ hc hκ D s - H).val
+        =ᵐ[(spatialMeasure c κ).prod (spatialMeasure c κ)]
+          (fun z : ℝ × ℝ => 2 * CosineIntegralLattice.cosineIntegral
+            ((Real.pi/2)*Real.exp s*|z.1-z.2|)) := by
   letI := spatialMeasure_finite c κ hc hκ
   let v : ℝ≥0 := (1/κ).toNNReal
   have hv : v+v ≠ 0 := by
@@ -436,6 +582,10 @@ theorem singularKernel_exists (c κ : ℝ) (hc : 0 ≤ c) (hκ : 0 < κ) (D : �
     filter_upwards [hf, hs, he] with z hz hswap hrep
     change h (Prod.swap z) = 1+2*D-2*Real.log ((Real.pi/2)*|z.2-z.1|) at hswap
     exact hz.trans (hswap.trans (by rw [abs_sub_comm]; exact hrep.symm))
-  exact ⟨⟨h, hsym⟩, he⟩
+  exact ⟨⟨h, hsym⟩, he, fun s => regularKernel_difference c κ hc hκ D s ⟨h, hsym⟩ he⟩
 
+#print axioms frequency_integral_coe
+#print axioms regularKernel_difference
+#print axioms frequency_integral_sameNoise
+#print axioms singularKernel_exists
 end D5.S3.Fourier.Asymptotics.GaussianFrequencyKernel

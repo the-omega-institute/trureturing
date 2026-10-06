@@ -481,7 +481,7 @@ private theorem secondIntegral_apply (c : Lp ℝ 2 μ →₀ ℝ) :
   LinearMap.extendOfNorm_eq (finiteKernelMap_dense μ)
     ⟨Real.sqrt 2, finiteBound μ P W hW⟩ c
 
-private theorem secondIntegral_diagonal (f : Lp ℝ 2 μ) :
+theorem secondIntegral_diagonal (f : Lp ℝ 2 μ) :
     secondIntegral μ P W hW (diagonalKernel μ f) = centeredSquare μ P W hW f := by
   simpa [finiteKernelMap, finiteNoiseMap] using
     secondIntegral_apply μ P W hW (Finsupp.single f 1)
@@ -642,7 +642,7 @@ private theorem cosineVector_coe (v : ℝ) : cosineVector μ v =ᵐ[μ]
 private theorem sineVector_coe (v : ℝ) : sineVector μ v =ᵐ[μ]
     (fun x => Real.sin ((Real.pi / 2) * v * x)) := (sin_memLp μ v).coeFn_toLp
 
-private theorem oneVector_coe : oneVector μ =ᵐ[μ] (fun _ => (1 : ℝ)) :=
+theorem oneVector_coe : oneVector μ =ᵐ[μ] (fun _ => (1 : ℝ)) :=
   (memLp_const (1 : ℝ)).coeFn_toLp
 
 private theorem norm_sq_integral (f : Lp ℝ 2 μ) : ‖f‖^2 = ∫ x, (f x)^2 ∂μ := by
