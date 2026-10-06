@@ -95,6 +95,14 @@ internal sealed class SameNoiseSecondChaosDocument : IScribeDocumentDefinition
                     Paragraph(Text("The identity implies ||j(c)||=sqrt(2)||e(c)|| and e(c)=0 implies j(c)=0. Quotienting by the kernel of e therefore defines a bounded real linear map on the actual finite-kernel range. This map uses the given W and P throughout."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("same-noise-finite-bound"),
+                DeclarationHandle.Create(Module + "finiteBound"),
+                H("Consumed finite norm bound"),
+                StatementSource.FromAuthor(BoundFormula()),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/nualart2005multiple")),
+                Blocks(Paragraph(Text("For each finite coefficient vector c, the same-noise map satisfies ||j(c)|| <= sqrt(2)||e(c)||. This consequence of finiteGram is consumed by finiteSecondIntegral_apply, secondIntegral_apply and GaussianFrequencyKernel.quadraticFrequency_representation. It supplies the boundedness premise for the actual extension and adds no mathematical content credit."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("same-noise-finite-frequency"),
                 DeclarationHandle.Create(Module + "finiteFrequency_sameNoise"),
                 H("Actual trigonometric frequency"),
@@ -202,6 +210,12 @@ internal sealed class SameNoiseSecondChaosDocument : IScribeDocumentDefinition
         return Hypotheses(All("c", At("Finsupp", h, F.Id("Real")),
             All("b", At("Finsupp", h, F.Id("Real")), Eq(lhs, rhs))), false);
     }
+
+    private static Formula BoundFormula() => Hypotheses(All("c", At("Finsupp", HSpace, F.Id("Real")),
+        new Formula.Relation(
+            At("norm", At("finiteNoiseMap", F.Id("mu"), F.Id("P"), F.Id("W"), F.Id("hW"), F.Id("c"))),
+            FormulaRelationOperator.LessThanOrEqual,
+            Multiply(At("sqrt", F.D(2)), At("norm", At("finiteKernelMap", F.Id("mu"), F.Id("c")))))), false);
 
     private static Formula FrequencyFormula()
     {

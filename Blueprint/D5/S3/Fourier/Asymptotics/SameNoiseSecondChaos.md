@@ -138,7 +138,21 @@ For finite real coefficients c on H, let e(c) be the sum of c(h)r(h,h) and j(c) 
 
 The identity implies ||j(c)||=sqrt(2)||e(c)|| and e(c)=0 implies j(c)=0. Quotienting by the kernel of e therefore defines a bounded real linear map on the actual finite-kernel range. This map uses the given W and P throughout.
 
-**Theorem 1.10 (Actual trigonometric frequency).**
+**Theorem 1.10 (Consumed finite norm bound).**
+
+$$\forall X \in Type, SigmaX \in \operatorname{MeasurableSpace}\left(X\right), mu \in \operatorname{Measure}\left(X\right), hfinite \in \operatorname{IsFiniteMeasure}\left(mu\right), Omega \in Type, SigmaOmega \in \operatorname{MeasurableSpace}\left(Omega\right), P \in \operatorname{Measure}\left(Omega\right), hprob \in \operatorname{IsProbabilityMeasure}\left(P\right), W \in \operatorname{LinearIsometry}\left(Real, \operatorname{Lp}\left(Real, 2, mu\right), \operatorname{Lp}\left(Real, 2, P\right)\right), hW \in \left(\forall f \in \operatorname{Lp}\left(Real, 2, mu\right),\; \operatorname{HasLaw}\left(\operatorname{representative}\left(\operatorname{apply}\left(W, f\right)\right), \operatorname{gaussianReal}\left(0, \operatorname{toNNReal}\left(\operatorname{norm}\left(f\right)^{2}\right)\right), P\right)\right),\; \forall c \in \operatorname{Finsupp}\left(\operatorname{Lp}\left(Real, 2, mu\right), Real\right),\; \operatorname{norm}\left(\operatorname{finiteNoiseMap}\left(mu, P, W, hW, c\right)\right) \le \operatorname{sqrt}\left(2\right) \cdot \operatorname{norm}\left(\operatorname{finiteKernelMap}\left(mu, c\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.finiteBound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* David Nualart and Giovanni Peccati (2005). *Central limit theorems for sequences of multiple stochastic integrals*. DOI: [10.1214/009117904000000621](https://doi.org/10.1214/009117904000000621). URL: <https://arxiv.org/pdf/math/0503598v1>.
+
+*Commentary.*
+
+For each finite coefficient vector c, the same-noise map satisfies ||j(c)|| <= sqrt(2)||e(c)||. This consequence of finiteGram is consumed by finiteSecondIntegral_apply, secondIntegral_apply and GaussianFrequencyKernel.quadraticFrequency_representation. It supplies the boundedness premise for the actual extension and adds no mathematical content credit.
+
+**Theorem 1.11 (Actual trigonometric frequency).**
 
 $$\forall mu \in \operatorname{Measure}\left(Real\right), hfinite \in \operatorname{IsFiniteMeasure}\left(mu\right), Omega \in Type, SigmaOmega \in \operatorname{MeasurableSpace}\left(Omega\right), P \in \operatorname{Measure}\left(Omega\right), hprob \in \operatorname{IsProbabilityMeasure}\left(P\right), W \in \operatorname{LinearIsometry}\left(Real, \operatorname{Lp}\left(Real, 2, mu\right), \operatorname{Lp}\left(Real, 2, P\right)\right), hW \in \left(\forall f \in \operatorname{Lp}\left(Real, 2, mu\right),\; \operatorname{HasLaw}\left(\operatorname{representative}\left(\operatorname{apply}\left(W, f\right)\right), \operatorname{gaussianReal}\left(0, \operatorname{toNNReal}\left(\operatorname{norm}\left(f\right)^{2}\right)\right), P\right)\right),\; \forall v \in Real,\; \operatorname{AlmostEverywhere}\left(P, (omega:Omega\mapsto \operatorname{evaluation}\left(\operatorname{finiteSecondIntegral}\left(mu, P, W, hW\right), \operatorname{frequencyKernel}\left(mu, v\right), omega\right) = \operatorname{evaluation}\left(W, \operatorname{cosineVector}\left(mu, v\right), omega\right)^{2}+\operatorname{evaluation}\left(W, \operatorname{sineVector}\left(mu, v\right), omega\right)^{2}-\operatorname{evaluation}\left(W, \operatorname{oneVector}\left(mu\right), omega\right)^{2})\right)$$
 
@@ -159,6 +173,7 @@ The finite frequency identity agrees with the continuous extension on its actual
 ## References
 
 - Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.cosineVector_coe`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.finiteBound`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.finiteFrequency_sameNoise`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.finiteGram`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.finiteKernelMap_dense`

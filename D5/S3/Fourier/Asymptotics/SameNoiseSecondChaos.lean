@@ -446,14 +446,8 @@ theorem finiteGram (c b : Lp ℝ 2 μ →₀ ℝ) :
   intro g hg
   ring
 
-/-- Zero-kernel relations vanish on the original probability space. -/
-theorem zeroKernel (c : Lp ℝ 2 μ →₀ ℝ) (hc : finiteKernelMap μ c = 0) :
-    finiteNoiseMap μ P W hW c = 0 := by
-  have h := finiteGram μ P W hW c c
-  rw [hc, inner_zero_right, mul_zero, real_inner_self_eq_norm_sq] at h
-  exact norm_eq_zero.mp (by nlinarith [norm_nonneg (finiteNoiseMap μ P W hW c)])
-
-private theorem finiteBound (c : Lp ℝ 2 μ →₀ ℝ) :
+/-- The finite same-noise map is bounded by its actual finite-kernel norm. -/
+theorem finiteBound (c : Lp ℝ 2 μ →₀ ℝ) :
     ‖finiteNoiseMap μ P W hW c‖ ≤ Real.sqrt 2 * ‖finiteKernelMap μ c‖ := by
   have h := finiteGram μ P W hW c c
   rw [real_inner_self_eq_norm_sq, real_inner_self_eq_norm_sq] at h

@@ -36,7 +36,7 @@ internal sealed class GaussianFrequencyKernelDocument : IScribeDocumentDefinitio
     private static Formula Omega => Div(A("pi"), F.D(2));
     private static Formula Rho(Formula x) => Multiply(I("c"), A("exp", Div(
         F.Seq(F.Minus, Multiply(I("kappa"), Pow(x, 2))), F.D(2))));
-    private static Formula Diff => Sub(A("fst", I("z")), A("snd", I("z")));
+    private static Formula Diff => F.Seq(F.Open, Sub(A("fst", I("z")), A("snd", I("z"))), F.Close);
     private static Formula Gamma => Integral(Lam("x", R, Rho(I("x"))), I("volume"));
     private static Formula Q => A("squareDifference", I("c"), I("kappa"), I("hc"), I("hkappa"));
     private static Formula D(Formula v) => A("gaussianFrequency", I("c"), I("kappa"), I("hc"), I("hkappa"), v);

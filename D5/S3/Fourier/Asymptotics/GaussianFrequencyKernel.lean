@@ -342,20 +342,12 @@ theorem quadraticFrequency_representation (v : ℝ) :
         (W (oneVector (spatialMeasure c κ)) ω)^2) := by
   let := spatialMeasure_finite c κ hc hκ
   let μ := spatialMeasure c κ
-  have hb (a : Lp ℝ 2 μ →₀ ℝ) :
-      ‖finiteNoiseMap μ P W hW a‖ ≤ Real.sqrt 2 * ‖finiteKernelMap μ a‖ := by
-    have h := finiteGram μ P W hW a a
-    rw [real_inner_self_eq_norm_sq, real_inner_self_eq_norm_sq] at h
-    have hs : (Real.sqrt 2)^2 = 2 := Real.sq_sqrt (by norm_num)
-    have he : (Real.sqrt 2 * ‖finiteKernelMap μ a‖)^2 = 2 * ‖finiteKernelMap μ a‖^2 :=
-      by rw [mul_pow, hs]
-    have hn : 0 ≤ Real.sqrt 2 * ‖finiteKernelMap μ a‖ := by positivity
-    nlinarith [norm_nonneg (finiteNoiseMap μ P W hW a)]
   have he : secondIntegral μ P W hW (gaussianFrequency c κ hc hκ v) =
       finiteSecondIntegral μ P W hW (frequencyKernel μ v) := by
     change (finiteNoiseMap μ P W hW).extendOfNorm (finiteKernelMap μ)
       (finiteKernelMap μ (frequencyCoefficients μ v)) = _
-    rw [LinearMap.extendOfNorm_eq (finiteKernelMap_dense μ) ⟨Real.sqrt 2, hb⟩]
+    rw [LinearMap.extendOfNorm_eq (finiteKernelMap_dense μ)
+      ⟨Real.sqrt 2, finiteBound μ P W hW⟩]
     exact (finiteSecondIntegral_apply μ P W hW (frequencyCoefficients μ v)).symm
   have hq : finiteSecondIntegral μ P W hW (frequencyKernel μ v) =
       quadraticFrequency c κ hc hκ P W hW v := by
