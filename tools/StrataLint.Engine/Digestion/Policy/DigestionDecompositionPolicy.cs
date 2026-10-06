@@ -2,14 +2,12 @@ namespace StrataLint.Engine;
 
 internal static class DigestionDecompositionPolicy
 {
-    internal static bool RejectsNewAbsorption(
+    internal static bool RejectsUndecomposedAbsorption(
         DigestionAtom atom,
         DigestionMigrationState candidate,
         int unresolvedSubitemCount,
-        bool hasVerifiedChainAtoms,
-        DigestionMigrationState? baseline) =>
+        bool hasVerifiedChainAtoms) =>
         candidate == DigestionMigrationState.Absorbed
-        && baseline != DigestionMigrationState.Absorbed
         && unresolvedSubitemCount == 0
         && !hasVerifiedChainAtoms
         && IsMultiClause(atom);
