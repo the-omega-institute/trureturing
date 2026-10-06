@@ -991,7 +991,7 @@ jobs:
           make lean-report
       - name: Verify production source binding artifacts
         env:
-          FOURIER_BRIDGE_SOURCE_ARTIFACTS: .lake/build/lean-inspector/modules
+          FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules
         run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName~FourierBridgeSourceEvidenceTests"
       - id: project_snapshot_push
         name: Prepare the project seed
