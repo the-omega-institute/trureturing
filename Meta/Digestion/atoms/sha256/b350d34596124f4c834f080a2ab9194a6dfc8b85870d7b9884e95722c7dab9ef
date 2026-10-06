@@ -1,0 +1,102 @@
+### 定理 8.2（同一等距的互补通道与递归面积谱）
+
+对定义 8.1 的同一个 $J$，每个 $\ell$ 都存在与输入无关的支撑等距
+
+$$
+W_\ell:\bigoplus_b\left(\mathbb C^{M_b}\otimes\mathbb C^{U_{b,\ell}}\right)
+\longrightarrow\mathcal H_{B_\ell}
+$$
+
+使对全部逻辑矩阵 $A$ 有
+
+$$
+\begin{aligned}
+\operatorname{Tr}_{B_\ell}(JAJ^\dagger)
+&=\bigoplus_b\operatorname{Tr}(A_{bb})\tau_{b,\ell},\\
+\operatorname{Tr}_{A_\ell}(JAJ^\dagger)
+&=W_\ell\left[\bigoplus_b A_{bb}\otimes
+\operatorname{diag}((q_{b,u})_{u\in U_{b,\ell}})\right]W_\ell^\dagger.
+\end{aligned}
+\tag{8.3}
+$$
+
+最大恢复代数在每个划分上分别仍为 $\mathcal Z$ 和 $\mathcal Z'$。对每个密度矩阵 $\rho$，按定理 6.4 的正权约定，
+
+$$
+\begin{aligned}
+S(\rho_{A_\ell})&=H(p)+\sum_b p_ba_b(\ell),\\
+S(\rho_{B_\ell})&=H(p)+\sum_b p_bS(\rho_b)+\sum_b p_ba_b(\ell),\\
+\mathcal L_\ell&=\bigoplus_ba_b(\ell)I_{M_b}.
+\end{aligned}
+\tag{8.4}
+$$
+
+端点与相邻增量满足
+
+$$
+a_b(1)=0,\qquad a_b(m_X)=\log d_b,
+\tag{8.5}
+$$
+
+$$
+a_b(\ell+1)-a_b(\ell)
+=\sum_{u\in U_{b,\ell}}\frac{n_{b,u}}{d_b}
+h_2\left(\frac{n_{b,u1}}{n_{b,u}}\right)
+\in[0,\log2],
+\qquad 1\le\ell<m_X,
+\tag{8.6}
+$$
+
+其中 $h_2(t)=-t\log t-(1-t)\log(1-t)$，缺少的孩子计数为零。
+
+**证明。** 对 $u\in U_{b,\ell}$，定义实际的互补向量
+
+$$
+|v_{b,r,u}^{(\ell)}\rangle=
+\frac1{\sqrt{n_{b,u}}}
+\sum_{j:\,\operatorname{prefix}_\ell(x_{b,j})=u}
+|\operatorname{suffix}_\ell(x_{b,j})\rangle|y_{b,r,j}\rangle.
+\tag{8.7}
+$$
+
+这里 $\operatorname{prefix}_\ell$ 取前 $\ell$ 位，$\operatorname{suffix}_\ell$ 删除前 $\ell$ 位。同一向量内的项因 $Y$ 标签互异而正交。不同 $(b,r)$ 的项也因 $Y$ 标签不同而正交；固定 $(b,r)$ 而 $u\ne u'$ 时，两组 $j$ 不交。因此这些向量在全部 $(b,r,u)$ 上正交归一，可以取 $W_\ell|b,r,u\rangle=|v_{b,r,u}^{(\ell)}\rangle$。
+
+按前缀重新分组式（8.1），恰得
+
+$$
+J|b,r\rangle=\sum_{u\in U_{b,\ell}}\sqrt{q_{b,u}}
+|u\rangle|v_{b,r,u}^{(\ell)}\rangle.
+\tag{8.8}
+$$
+
+$\ell\ge1$ 保证不同页的前缀基也互不相同。对所有矩阵单位偏迹即得式（8.3），同一固定 $W_\ell$ 适用于全部输入。其谱与式（6.8）相同结构，逐块展开熵即得式（8.4）。
+
+确切的区域代表也可直接写出。对 $z=\bigoplus_bz_bI_{M_b}$ 和 $T=\bigoplus_bT_b$，取
+
+$$
+z_{A_\ell}=\sum_bz_b\sum_{u\in U_{b,\ell}}|u\rangle\langle u|,
+\qquad
+T_{B_\ell}=W_\ell\left[\bigoplus_bT_b\otimes I_{U_{b,\ell}}\right]W_\ell^\dagger.
+$$
+
+式（8.8）给出两个交织恒等式及其伴随版本。由式（8.3），两个通道伴随的像分别恰为 $\mathcal Z$、$\mathcal Z'$，故按定理 6.4 的压缩论证，它们就是最大恢复代数，而不是只列出的一组可恢复观测。
+
+在 $\ell=1$ 时每页只有前缀 $b$，概率为一；在 $\ell=m_X$ 时所选 $X$ 标签互异，每个前缀概率为 $1/d_b$，故式（8.5）成立。每个父计数满足
+
+$$
+n_{b,u}=n_{b,u0}+n_{b,u1}.
+\tag{8.9}
+$$
+
+将两个孩子的熵项减去父项，得到
+
+$$
+-\sum_{v\in\{u0,u1\}}\frac{n_{b,v}}{d_b}\log\frac{n_{b,v}}{d_b}
++\frac{n_{b,u}}{d_b}\log\frac{n_{b,u}}{d_b}
+=\frac{n_{b,u}}{d_b}h_2\left(\frac{n_{b,u1}}{n_{b,u}}\right).
+$$
+
+求和即得式（8.6）；$0\le h_2\le\log2$ 且父权之和为一，给出增量界。所有计算只是对同一式（8.1）重新分组：$A_{\ell+1}$ 偏迹最后一位得到 $A_\ell$，$B_\ell$ 偏迹移出的那一位得到 $B_{\ell+1}$。所以这些通道与面积来自相容的嵌套划分，没有在不同划分处更换编码。证毕。
+
+式（8.6）给出固定编码的递归信息面积剖面；它既未将面积定义为某个割的最小值，也未断言这个 $J$ 在全部划分上同时优于所有其他编码。
+
