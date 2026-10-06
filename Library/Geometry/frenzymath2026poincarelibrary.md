@@ -5835,3 +5835,12 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 任意原实内积空间 `E` 上的 `HyperbolicSpace E`，通过原 `coordinatesHomeomorph` 与原欧氏环境中的正高度半空间同胚。公开半空间凸性接口给出该真实正高度子集的凸性，原水平零向量及高度 1 给出内部非空见证；`Convex.contractibleSpace` 再沿原坐标同胚搬回真正原双曲空间，得到实际 `ContractibleSpace` 实例。没有把正高度子集替换成整个环境空间，也没有提供外部收缩同伦或可缩性前提。
 
 同一实例实际应用于原 `HyperbolicThreeSpace`，并由已有 Mathlib 可缩空间单连通接口得到实际 `SimplyConnectedSpace`。这些原实例检查及完整累计 Lean 编译均零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。一般原流形的万能度量覆盖和 H3 分类、有限体积尖点及完整给定 `h,d` 的 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 原光滑标准覆盖的完备拉回度量与第二可数性
+
+同一原完备、道路连通的三维流形 M 和指定原黎曼度量 g，在 g 的真实内蕴距离与原扩展距离相等时，原路径类标准覆盖获得实际提升光滑图册、局部微分同胚投影和 g 的实际完整微分拉回度量。欧氏图册在内部给出局部道路连通及半局部单连通，覆盖的分离性质给出真实 T3 结构；恒等等距映射显式绑定原扩展度量与指定 g 的内蕴扩展度量，内部传递完备性。
+
+消费固定上游真实 MetricComplete 与闭球紧致公开接口，实际内蕴有限距离使可数闭球覆盖同一连通覆盖空间，再由 sigma-compact 与欧氏图册得到该原标准覆盖的 SecondCountableTopology。无需底空间紧致、有限基本群、外供覆盖第二可数性或有限覆盖度。对同一原 H3/native g，已验的真正 native 内蕴距离等于原距离在内部履行兼容性，得到实际 native g 完备性及原 H3 标准覆盖第二可数性。
+
+固定来源为 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a。真实 MetricComplete 与 CompleteBalls 使用完整最小导入闭包，其余覆盖提升与完备拉回证明保留具名上游 source-slice 来源；不冒领未导入的完整 NeckCap/Harnack 扩展模块验收。完整累计临时 Lean 真实 exit 0，零错误、零警告，298 项公理报告仅含 propext、Classical.choice、Quot.sound，18 个新增目标实际接受。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证说明。实际全局负曲率指数映射与 H3 分类、完整 deck 与体积/Haar 绑定、有限体积尖点及完整给定 h,d 的 Mostow–Prasad 与官方验收仍未完成。
