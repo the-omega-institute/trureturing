@@ -64,7 +64,7 @@ private theorem literal_tail_alignment (s e : Guard) (A w : List Label)
   simp only [coordinate,List.drop_append,List.drop_eq_nil_of_le (by omega : A.length ≤ A.length+p),
     List.nil_append,Nat.add_sub_cancel_left]
 
-private theorem common_stem_code_capacity {Configuration : Type*} {n k H : ℕ}
+theorem common_stem_code_capacity {Configuration : Type*} {n k H : ℕ}
     (action : Configuration → Op Configuration Color Label) (initialConfiguration : Configuration)
     (o : Ownership) (b : ℝ) (encoding : Configuration → List Bool)
     (faithful : Set.InjOn encoding {c | ∃ M,

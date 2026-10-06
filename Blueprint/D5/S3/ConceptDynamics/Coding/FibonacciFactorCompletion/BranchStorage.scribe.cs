@@ -167,6 +167,28 @@ internal sealed class BranchStorageDocument : IScribeDocumentDefinition
         Splice(I("A"),I("w"),I("path"),I("tailPath"))),B("A",Labels),B("w",Labels),
         B("path",Fn(Nat,I("Guard"))),B("tailPath",Fn(Nat,I("Guard")))));
 
+    private static Formula CommonStemCapacityStatement()
+    {
+        var other=Ap(I("cuts"),I("zprime"));
+        var faithful=All(Imp(And(Ex(Reach(I("M"),I("c")),B("M",Nat)),
+            Ex(Reach(I("M"),I("d")),B("M",Nat)),
+            Equal(Ap(I("encoding"),I("c")),Ap(I("encoding"),I("d")))),Equal(I("c"),I("d"))),
+            B("c",I("Configuration")),B("d",I("Configuration")));
+        var joint=All(Imp(Equal(Call("pair",State,Output),Call("pair",Call("state",other),Call("output",other))),
+            Equal(I("z"),I("zprime"))),B("z",ZType),B("zprime",ZType));
+        var cuts=All(And(Call("le",Len(Output),I("k")),
+            Equal(Output,Call("take",I("stem"),Len(Output))),Reach(I("H"),State)),B("z",ZType));
+        var bounded=Call("le",Peak(I("H")),Call("toWithTop",I("B")));
+        var result=Call("le",Pow(D(2),I("n")),
+            Mul(Sub(Pow(D(2),Add(I("B"),D(1))),D(1)),Add(I("k"),D(1))));
+        return Disp(All(Imp(And(faithful,joint,cuts,bounded),result),
+            B("Configuration",I("Type")),B("n",Nat),B("k",Nat),B("H",Nat),
+            B("action",Fn(I("Configuration"),Call("Op",I("Configuration"),I("Color"),I("Label")))),
+            B("initialConfiguration",I("Configuration")),B("o",I("Ownership")),B("b",I("Real")),
+            B("encoding",Fn(I("Configuration"),List(I("Bool")))),B("cuts",Fn(ZType,CutType)),
+            B("stem",Labels),B("B",Nat)));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Two nondegenerate return hulls give fixed actual tails and complete storage lower bounds.",
         H("Nondegenerate competing branches and complete storage"),
@@ -176,6 +198,10 @@ internal sealed class BranchStorageDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("fib-literal-tail-splice"),DeclarationHandle.Create(Prefix+"LiteralTailSplice"),
             H("The same literal scalar and guard future after a prefix"),StatementSource.FromAuthor(SpliceDefinition()),AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("The prefix length shifts all three components of the fixed tail. The guard and scalar laws hold at every natural position, including the unobserved departure seam."))),DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("fib-common-stem-code-capacity"),
+            DeclarationHandle.Create(Prefix+"common_stem_code_capacity"),H("Complete binary capacity with a common stem"),
+            StatementSource.FromAuthor(CommonStemCapacityStatement()),AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Each of the 2^n cuts is reachable by horizon H on an actual closed-budget record. Their state-output pairs are distinct, and each output is the prefix of one fixed stem determined by its length, at most k. The encoding separates all configurations reachable on any actual record. A finite peak bound B permits at most 2^(B+1)-1 binary strings of length at most B; pairing each such string with one of k+1 output lengths bounds the entire cut family. The argument uses only the cuts and their actual reachability, so finite or infinite competing tails satisfy the same capacity statement."))),DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fib-nondegenerate-branch-storage"),
             DeclarationHandle.Create(Prefix+"nondegenerate_branch_storage"),H("Actual paired tails at every first disagreement"),
             StatementSource.FromAuthor(Statement()),AssessedProvenance.FromRepo(),

@@ -208,7 +208,7 @@ noncomputable def recordWithOmegaTail (o : Ownership) (cs : List Color)
     (x : ℕ → ℝ) (p : ℕ) : Color :=
   if hp : p < cs.length then cs[p] else observe o (x (p-cs.length)) 0
 
-private theorem actual_omega_prefix_record (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
+theorem actual_omega_prefix_record (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
     (s : Guard) (A : List Label) (cs : List Color) (hlen : A.length = cs.length)
     (hA : LegalWord .G0 s A)
     (tail : ℕ → Label) (x : ℕ → ℝ) (path : ℕ → Guard)
@@ -294,7 +294,7 @@ private theorem block_supply_split (o : Ownership) (θ : ℝ)
     rw [List.drop_append,List.drop_eq_nil_of_le hrge,List.nil_append] at hs
     simpa only [← hlen,Nat.add_sub_cancel_left] using hs
 
-private theorem competingT_orbit_iff_all_histories (o : Ownership) (θ : ℝ) (s : Guard)
+theorem competingT_orbit_iff_all_histories (o : Ownership) (θ : ℝ) (s : Guard)
     (Q V : List Label) (h : List Color) (W : Bool → List Color)
     (hQ : LegalWord .G0 s Q) (hV : LegalWord s s V)
     (hQlen : Q.length = h.length) (hlen : ∀ i, V.length = (W i).length) (z : ℝ) :
