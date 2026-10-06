@@ -34,6 +34,18 @@ def reverseEvent : Bool → Bool → Bool → Prop := fun h₁ h₂ l₃ =>
 def forwardEvent : Bool → Bool → Bool → Prop := fun h₁ h₂ l₃ =>
   h₁ = true ∧ h₂ = false ∧ l₃ = true
 
+def forwardPositiveMass (α ρ : ℝ) : ℝ :=
+  ∑ h₃ : Bool, ∑ l₄ : Bool, ∑ y : Fin 3,
+    bernoulliMass (hTwo ρ) h₃ * bernoulliMass (hTwo ρ) l₄ *
+      channelMass α (candidateClass true true h₃ l₄) y *
+      (if zScore y * rawDifference true false h₃ true l₄ = 1 then 1 else 0)
+
+def forwardNegativeMass (α ρ : ℝ) : ℝ :=
+  ∑ h₃ : Bool, ∑ l₄ : Bool, ∑ y : Fin 3,
+    bernoulliMass (hTwo ρ) h₃ * bernoulliMass (hTwo ρ) l₄ *
+      channelMass α (candidateClass true true h₃ l₄) y *
+      (if zScore y * rawDifference true false h₃ true l₄ = -1 then 1 else 0)
+
 /- The reverse and forward first-gate events in the heterogeneous example
    have masses 12 rho^3 and 2 rho (1-3 rho) (1-2 rho), respectively. -/
 theorem result (ρ : ℝ) (hρ : 0 < ρ) (hρ8 : ρ ≤ 1 / 8) :
@@ -44,5 +56,13 @@ theorem result (ρ : ℝ) (hρ : 0 < ρ) (hρ8 : ρ ≤ 1 / 8) :
   simp [eventMass, reverseEvent, forwardEvent, tripleMass,
     bernoulliMass, hOne, hTwo, Fin.sum_univ_three]
   constructor <;> ring
+
+theorem forward_sign_symmetry (α ρ : ℝ) :
+    forwardPositiveMass α ρ = forwardNegativeMass α ρ := by
+  classical
+  simp [forwardPositiveMass, forwardNegativeMass, channelMass, channelBase,
+    candidateClass, zScore, classOffset, rawDifference, bernoulliMass,
+    hOne, hTwo, Fin.sum_univ_three]
+  ring
 
 end D5.S3.Arith.FibonacciAtomic.RawCorrelationConfidenceFailure

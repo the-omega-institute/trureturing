@@ -27,6 +27,17 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
                     "The theorem evaluates both event masses by the finite product sum. "
                     + "The reverse mass is 12 rho cubed. The forward mass is "
                     + "2 rho (1-3rho) (1-2rho)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("raw-correlation-forward-sign-symmetry"),
+                DeclarationHandle.Create(Prefix + "forward_sign_symmetry"),
+                H("Forward event sign symmetry"),
+                StatementSource.FromAuthor(SignFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "On the forward first-gate event, the two nonzero signed contributions "
+                    + "have equal finite product mass. The equality follows by expanding the "
+                    + "two remaining Boolean coordinates and the three channel labels."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
@@ -50,5 +61,13 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
                 Par(Seq(D(1), Minus, D(2), rho))));
         return Seq(Forall, Sp, rho, Sp, InMacro, Sp,
             Seq(Mathbb, Grp(V("R"))), Sp, Par(range), Comma, Sp, body);
+    }
+
+    private static Formula SignFormula()
+    {
+        var alpha = V("alpha");
+        var rho = V("rho");
+        return Seq(Call("Mplus", alpha, rho), Sp, Eq, Sp,
+            Call("Mminus", alpha, rho));
     }
 }
