@@ -126,14 +126,24 @@ internal static class UtilityDeclarationValidator
             }
         }
 
-        BackfillInventoryDocument? backfill = null;
         DigestionLedgerEntry? atomTarget = null;
         var softTarget = declaration.BasisTarget;
         if (softTarget is { Kind: UtilityTargetKind.Atom or UtilityTargetKind.Task })
         {
+            if (softTarget.Kind is UtilityTargetKind.Atom && !snapshot.Files.Keys.Any(path =>
+                    BackfillInventoryLoader.IsCanonicalPath(path.Value)
+                    && path.Value.EndsWith("/" + softTarget.Value + ".yaml", StringComparison.Ordinal)))
+                return Failure(declaration, UtilityValidationFailure.TargetDangling,
+                    $"target={TargetDisplay(softTarget)}");
+            BackfillInventoryDocument? backfill = null;
             try
             {
-                backfill = BackfillInventoryLoader.Load(snapshot);
+                if (softTarget.Kind is UtilityTargetKind.Atom)
+                    backfill = BackfillInventoryLoader.LoadForDigestion(snapshot);
+                else if (!BackfillInventoryLoader.DeriveTickets(snapshot).Any(ticket =>
+                             string.Equals(ticket.CaseId, softTarget.Value, StringComparison.Ordinal)))
+                    return Failure(declaration, UtilityValidationFailure.TargetDangling,
+                        $"target={TargetDisplay(softTarget)}");
             }
             catch (FormatException)
             {
@@ -145,7 +155,7 @@ internal static class UtilityDeclarationValidator
 
             if (softTarget.Kind is UtilityTargetKind.Atom)
             {
-                var matches = backfill.RequireDigestionEntries()
+                var matches = backfill!.RequireDigestionEntries()
                     .Where(entry => string.Equals(
                         entry.AtomId,
                         softTarget.Value,
@@ -167,16 +177,6 @@ internal static class UtilityDeclarationValidator
                             UtilityValidationFailure.InputUnknown,
                             $"reason=ambiguous-atom-target:{softTarget.Value}");
                 }
-            }
-            else if (!backfill.RequireTickets().Any(ticket => string.Equals(
-                         ticket.CaseId,
-                         softTarget.Value,
-                         StringComparison.Ordinal)))
-            {
-                return Failure(
-                    declaration,
-                    UtilityValidationFailure.TargetDangling,
-                    $"target={TargetDisplay(softTarget)}");
             }
         }
 
