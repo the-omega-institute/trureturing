@@ -29,6 +29,9 @@ internal interface IRepositoryGateway
     /// the whole-tree reader is applied.
     RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths);
 
+    /// Searches current paths without reading their file bodies.
+    IReadOnlyList<string> SearchCurrentPaths(IReadOnlyList<string> paths);
+
     RawRepositorySnapshot ReadRevision(string revision);
 
     RawChangeSet ReadCurrentChanges();

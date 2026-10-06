@@ -80,14 +80,55 @@ U is an onto real linear isometry between the two displayed measures; its invers
 
 This finite-cutoff statement does not pass to the positive-Ci limit or assert any Gaussian quadratic-series or path-limit conclusion.
 
+**Theorem 1.5 (The real finite convolution supplier).**
+
+$$\forall c \in \mathbb{R},\; \forall N \in \mathbb{R},\; 0 < c \Rightarrow \left(c \le N \Rightarrow \left(\operatorname{Measurable}\left(\operatorname{kernel}\left(c, N\right)\right) \land \left(\operatorname{MemLp}\left(\operatorname{kernel}\left(c, N\right), 2, volume\right) \land \left(\exists C \in \operatorname{ContinuousLinearMap}\left(\mathbb{R}, \operatorname{Lp}\left(\mathbb{R}, 2, volume\right), \operatorname{Lp}\left(\mathbb{R}, 2, volume\right)\right),\; \left(\forall f \in \operatorname{Lp}\left(\mathbb{R}, 2, volume\right),\; \operatorname{AEEq}\left(\operatorname{coeFn}\left(\operatorname{C}\left(f\right)\right), (x: \mathbb{R} \mapsto \operatorname{integral}\left((y: \mathbb{R} \mapsto \operatorname{kernel}\left(c, N, x - y\right) \cdot \operatorname{f}\left(y\right)), volume\right)), volume\right)\right) \land \operatorname{norm}\left(C\right) \le \frac{2 \cdot \pi}{c}\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.actual_cutoff_real` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive c and every N>=c the actual real cutoff kernel is measurable and in real L2. Its ordinary real convolution is represented by a continuous linear map of norm at most 2*pi/c. This original-owner supplier is consumed by the actual positive-Ci high-pass L2 limit and operator construction.`D5/S3/Fourier/Asymptotics/CosineCutoffKernel/Highpass.actual_highpass_convolution`
+
+**Theorem 1.6 (The actual bilinear L2 pairing).**
+
+$$\forall f \in \operatorname{Lp}\left(\mathbb{C}, 2, volume\right),\; \forall g \in \operatorname{Lp}\left(\mathbb{C}, 2, volume\right),\; \operatorname{pair}\left(f, g\right) = \operatorname{integral}\left((x: \mathbb{R} \mapsto \operatorname{f}\left(x\right) \cdot \operatorname{g}\left(x\right)), volume\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.pair_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every two complex L2 elements f and g, the original bilinear map pair evaluates to the integral of f(x)g(x), without complex conjugation. pair is the L2 pairing induced by complex multiplication. This supplier identifies the high-pass convolution integral under translation-reflection.`D5/S3/Fourier/Asymptotics/CosineCutoffKernel.pair``D5/S3/Fourier/Asymptotics/CosineCutoffKernel/Highpass.actual_highpass_convolution`
+
+**Theorem 1.7 (Integrability of complex L2 products).**
+
+$$\forall a \in {\mathbb{R}\to \mathbb{C}},\; \forall b \in {\mathbb{R}\to \mathbb{C}},\; \operatorname{MemLp}\left(a, 2, volume\right) \Rightarrow \left(\operatorname{MemLp}\left(b, 2, volume\right) \Rightarrow \operatorname{Integrable}\left((x: \mathbb{R} \mapsto \operatorname{a}\left(x\right) \cdot \operatorname{b}\left(x\right)), volume\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.product_integrable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary complex functions a and b in Lebesgue L2, their pointwise product is Lebesgue integrable. The actual high-pass convolution uses this fact for each translated-reflected kernel row and every input.`D5/S3/Fourier/Asymptotics/CosineCutoffKernel/Highpass.actual_highpass_convolution`
+
 ## References
 
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.actual_cutoff_convolution`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.actual_cutoff_inverse`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.actual_cutoff_inverse`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.actual_cutoff_real`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.actual_weighted_cutoff`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.kernel`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.pair`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.pair_eq`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.product_integrable`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.result`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CosineCutoffKernel.symbol`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/CosineCutoffKernel/Highpass.actual_highpass_convolution`
 - Dependency: [D5/S3/Fourier/Asymptotics/CosineCutoffKernel/GaussianWeight](CosineCutoffKernel/GaussianWeight.md)
 - Dependency: [D5/S3/Quantum/Analysis/FourierWindowFiniteRank](../../Quantum/Analysis/FourierWindowFiniteRank.md)
