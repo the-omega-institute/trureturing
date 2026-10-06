@@ -27,7 +27,7 @@ internal static partial class CoverAtomCommand
             DateTimeOffset recordedAtUtc, string firstGid)
         {
             this.root = root;
-            (CurrentRaw, current, document) = DigestionWorkingTree.Read(repository, Decode, LoadDocument);
+            (CurrentRaw, current, document) = DigestionWorkingTree.ReadEvaluation(repository, Decode, LoadDocument);
             Baseline = current;
             Report = reportSource.Load(Current);
             Lean = ValidateLean(Current, Report);

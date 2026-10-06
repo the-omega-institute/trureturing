@@ -24,8 +24,9 @@ internal interface IRepositoryGateway
 
     RawRepositorySnapshot ReadCurrent();
 
-    /// Reads the files at the given paths straight from the working directory, without
-    /// git; a directory selects everything under it.
+    /// Reads the files at the given paths from the current repository snapshot. A
+    /// directory selects everything under it, and the same FILEMAP/symlink policy as
+    /// the whole-tree reader is applied.
     RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths);
 
     RawRepositorySnapshot ReadRevision(string revision);
