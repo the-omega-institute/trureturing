@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 using StrataLint.Scribe;
 using Trureturing.Truth;
@@ -37,7 +38,11 @@ public sealed partial class TruthReleaseCommandTests
         var manifest = File.ReadAllText(Path.Combine(output.Path, TruthReleaseBundleWriter.ManifestFileName));
         Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(
             manifest.Replace("truth-release.v2", "truth-release.v1", StringComparison.Ordinal)));
-        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(
-            manifest.Replace("\"artifacts\":{", "\"artifacts\":{\"residual_frontier\":{},", StringComparison.Ordinal)));
+        var withResidual = JsonNode.Parse(manifest)!;
+        withResidual["artifacts"]!.AsObject()["residual_frontier"] = new JsonObject();
+        var alteredManifest = withResidual.ToJsonString();
+        Assert.NotEqual(manifest, alteredManifest);
+        Assert.True(withResidual["artifacts"]!.AsObject().ContainsKey("residual_frontier"));
+        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(alteredManifest));
     }
 }
