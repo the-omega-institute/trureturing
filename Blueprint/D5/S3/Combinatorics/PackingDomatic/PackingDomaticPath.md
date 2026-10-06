@@ -10,6 +10,10 @@ $$\neg (claim)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PackingDomatic/PackingDomaticPath.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bresar-ferme-hu-packing-domatic-paths` (refuted) by `D5/S3/Combinatorics/PackingDomatic/PackingDomaticPath.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bresar-ferme-hu-packing-domatic-paths","declaration_gid":"D5/S3/Combinatorics/PackingDomatic/PackingDomaticPath.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Boštjan Brešar, Jasmina Ferme, Wenjie Hu (2026). *Partitioning an S-packing coloring into broadcast dominating sets*. DOI: [10.48550/arXiv.2610.03477](https://doi.org/10.48550/arXiv.2610.03477). URL: <https://arxiv.org/abs/2610.03477v1>.

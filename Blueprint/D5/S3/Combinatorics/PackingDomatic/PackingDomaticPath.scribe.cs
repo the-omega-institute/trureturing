@@ -20,7 +20,8 @@ internal sealed class PackingDomaticPathDocument : IScribeDocumentDefinition
                     + "satisfy the counting bound, since 30 is at most 56. That bound would require "
                     + "448 to be at most 447, a contradiction. Thus P_56 has no such colouring, and "
                     + "the proposed bound fails despite k being at least 3 and n being at least 2k.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("bresar-ferme-hu-packing-domatic-paths"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
