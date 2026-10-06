@@ -123,3 +123,120 @@ they do not supply this fixed-ratio constant comparison or its unbounded-ratio
 uniform conclusion. This bounded source comparison does not certify an
 exhaustive literature search. Shrinking width alone still does not force
 successful actual moments, the full Robin sign, or RH.
+
+The [project's §418](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+adds a quantitative condition on the same actual packet. For $a\ge e$ and
+$L=b-a\le a$, let $M=\sup_{[a,b]}|A^+(t)-t|$. A successful two-moment
+certificate requires $L^3\le6400a^2M$. The uniform-reference Hermite loss
+and the moment formula are reused from Theorem 7.7 and Proposition 7.6;
+the additional application controls the change in that expression by the
+same packet's workload error. Theorem 8.5 (`thm:psi-normal-form`), combined
+with an existing unconditional PNT error supplier, then yields a shrinking
+necessary relative-width rate. These are restrictions on this sufficient
+certificate, not a successful actual packet, an endpoint sign theorem,
+an effective starting threshold, or a solution of §12's `prob:low-moment`.
+
+## The remaining signed supplier and its sampling conditions
+
+The [existing Guth–Maynard note](guthmaynard2024largevalues.md) already
+supplies the uniform short-interval input and its project applications.
+Within its stated range it applies to actual starting points without an
+exceptional-center selection step. It still gives an absolute increment
+allowance, not the signed workload surplus required by the packet
+certificate. An almost-all estimate has an additional sampling obligation:
+regular roots are locally finite, so an exceptional set of real measure
+zero can contain all of them. Their use as noninteger endogenous endpoints
+also requires the same estimate up to the chosen return, with the actual
+layer correction retained.
+
+The [Caveney–Nicolas–Sondow primary](../Arith/caveney2012sacaga.md),
+Theorems 6–7, already gives infinite CA subclasses with and without GA1.
+Its CA parameters and prime-deletion conclusions do not supply actual
+regular tangent endpoints or forward signed moments. In particular,
+Lemma 7's sufficient price inequality cannot be satisfied by directly
+substituting the tangent price; another admissible price of the same
+integer must be checked. The known $720720$ example is already covered
+by that primary and the project's §98.5, so it is not a new counterexample.
+
+For a precise arithmetic supplier target, keep the same actual packet and
+put $E(t)=A^+(t)-t$, $L=b-a$, $K=-g'$, and $B=g''$. Set
+
+$$
+Q_0=\int_a^bE(t)dt,\qquad
+Q_1=\int_a^b(t-a)E(t)dt,\qquad
+W=Q_0-\frac{B(a)}{K(a)}Q_1.
+$$
+
+In the near-uniform regime $a\to\infty$, $L=o(a)$, $Q_0=o(L^2)$ and
+$Q_1=o(L^3)$, the existing moment identities and two-node expression,
+expanded by ordinary Taylor calculus, give
+
+$$
+H_g-\overline g
+=\frac{K(a)}{L}
+\left[W-\left(\frac1{36}+o(1)\right)\frac{L^4}{a^2}\right].
+$$
+
+The first two Taylor terms are exactly $K(a)Q_0/L-B(a)Q_1/L$.
+The limiting two-node law has weights $3/4,1/4$ at normalized locations
+$1/3,1$, so its third moment is $5/18$, whereas the uniform third moment
+is $1/4$. Their difference is $1/36$; using
+$g'''(a)/K(a)=-(6+o(1))/a^2$ and the Taylor factor $1/6$ gives the term
+displayed. The fourth-order remainder is smaller by $O(L/a)$.
+This is an application of existing moment and calculus interfaces, not
+a new general moment theorem or an assertion made by the archived paper.
+
+Consequently a fixed positive surplus
+$W\ge(1/36+\epsilon_0)L^4/a^2$ on an unbounded actual family satisfying
+those regime conditions would pay this intermediate two-moment target.
+It is not established by the cited sources. Even a transferred absolute
+bound $\sup|E|\le\epsilon(a)L$ only gives
+$|W|\le\epsilon(a)L^2(1+O(L/a))$. For $L=a^\beta$, $\beta<1$, the
+short-PNT-type allowance $\epsilon(a)L^2$, with
+$\epsilon(a)=\exp[-(\log a)^{1/4}]$, remains asymptotically larger than
+$L^4/a^2$. This compares guaranteed allowances;
+it neither supplies the actual sign nor proves the packet fails.
+
+An arbitrary unbounded winning family would address the archived
+intermediate problem. Applying that family to full Robin still requires
+a selection theorem covering the relevant potentially nonpositive
+self-matching minima, without assuming those sources are safe.
+
+## Source-local multipliers use the existing finite-size and cone results
+
+Section 4's `lem:neutral-point` and `thm:neutral-mean` already give the
+finite layer's insertion/deletion thresholds. A successful untied singleton
+packet has $C_b=pC_a$, so its source is improved by one prime insertion.
+It therefore cannot start at a proper prime-local well, where every such
+insertion is non-improving. This is a direct application of the cited source,
+not a new obstruction theorem. Arbitrary winning singleton families do
+not pay the source-selection obligation at these wells.
+
+The existing `thm:cone-envelope` gives a less restrictive constructive
+target: any actual multiple $m$ with $G(m)>G(C_a)$ guarantees an improving
+later regular return. A joint multiplier need not itself be a CA prefix or
+end at a prescribed return. Endpoint isolation and a fixed packet length
+are optional stronger conditions for a particular construction.
+
+The [source-local multiplier experiment](../../docs/reports/fib-source-local-multipliers/README.md)
+reuses catalog factorizations and the author's original rational log
+enclosure implementation for 109 additional comparisons. At
+$N=2021649740510400$, all single-prime insertions and deletions decrease
+$G$. The archive's existing `verification/packet_identity_checks.json`
+already verifies the ascent to return 7, precisely the joint insertion
+$3\cdot37$; that positive comparison is directly reused, not recomputed
+as a new result. At
+$N=160626866400$, all one- and two-prime insertions decrease it, including
+repeated primes. Its $2\cdot29$ descent is also directly reused from the
+archive's existing return 4-to-5 check, leaving 65 additional pair
+comparisons at that source. Universal prime coverage here uses the elementary
+absent-prime replacement argument stated in the report; the computed
+intervals themselves cover its finite pool. Neither the integers nor
+the log-enclosure method are claimed as new discoveries.
+
+These finite applications distinguish actual joint improvement from
+single-layer improvement, and disallow a universal two-prime shortcut at
+all proper local wells. They give neither an unbounded family nor a
+result restricted to potentially persistent Robin-level sources. The
+full signed source-coverage obligation remains open; these additions have
+no Lean verification or literature originality certification.

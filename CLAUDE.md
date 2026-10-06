@@ -372,7 +372,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 - **cover**:同一 `atom_id` 的账目条目写入 coverage 边,并由 residual-open 迁入机器派生的目标状态。
 - **ingest**:`docs/develop/theory/**` + `atoms/sha256/*` + `backfill/**/residual-open/*`。
 **停用机制边界**:两 PR 律、预登记 formalization 收据及其机器均已退役;「边即数据,不记动作」,不得据此重建动作收据或要求 deposit/cover 分两 PR。
-**coverage 边当前 contract**:持久化键名为 `coverage_gids`,每个元素的键集恰为 `{gid,target_statement_id}`,其中 `target_statement_id` 可为 `null`;candidate 与 protected-base loader 均只接受这一形态。字符串元素、`receipts.coverage`、`source_sha256`、`statement_id_history` 与 `recorded_at_utc` 一律 fail-closed;writer 只写对象形。`align-digestion-status` 从当前 report 与冻结账本直接刷新 target,不保留旧值;任一 coverage target 未解析即令 truth 状态为 `Open`。L2 三步迁移只属已完成的 contract 判例,不构成现役迁移流程或兼容机制;当前没有 alias、双读或第二 canonical 格式。
+**coverage 边当前 contract**:持久化键名为 `coverage_gids`,每个元素的键集恰为 `{gid,target_statement_id}`,其中 `target_statement_id` 可为 `null`;账本 loader 只接受这一形态。字符串元素、`receipts.coverage`、`source_sha256`、`statement_id_history` 与 `recorded_at_utc` 一律 fail-closed;writer 只写对象形。`align-digestion-status` 从当前 report 与冻结账本直接刷新 target,不保留旧值;任一 coverage target 未解析即令 truth 状态为 `Open`。L2 三步迁移只属已完成的 contract 判例,不构成现役迁移流程或兼容机制;当前没有 alias、双读或第二 canonical 格式。
 **冻结态与消化态是两个正交状态机,禁互相冒充**:
 
 - **冻结态(真值侧,二值)**:`Golden/Frozen/state/<module>.lean.json` 存在 ⟺ 已冻结,这是当前成员身份的唯一判据;**永不解冻**是第 1.3 条冻结律的数学规范。SL-008 判当前态 C1–C5 与当前树一致,pin 改变以 `FROZEN_PIN_CHANGE` Observe 点名;历史由 git 记录,无历史只增判官。
