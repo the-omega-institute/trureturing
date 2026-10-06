@@ -19,12 +19,13 @@ def specification(label, original):
         description='Erase explicit universe instantiations only for definition constants before inference. Retain kernel constructor occurrences, isolating the nominal-return diagnostic boundary.'
     elif kind in ['reconstruct-constructor-type','generic-inferred-telescope']:
         needle='  let mut branches := #[]\n  for ctor in family.ctors do'
-        ty='declaration.type' if kind=='reconstruct-constructor-type' else '(← compiledQuery (typeShape (mkConst ctorName levels)))'
+        telescope=('let telescope := declaration.type' if kind=='reconstruct-constructor-type'
+                   else 'let some telescope ← occurrenceType (mkConst ctorName levels) | return none')
         replacement='''  if family.numParams == 0 && family.numIndices > 0 then
     let mut contexts := #[]
     for ctorName in family.ctors do
       let declaration ← queryConstant ctorName
-      let telescope := '''+ty+'''
+      '''+telescope+'''
       let bind : Expr → Array Expr → WalkM (LocalContext × Array Expr) := fun type fields =>
         let rec loop (type : Expr) (fields : Array Expr) (remaining : Nat) :
             WalkM (LocalContext × Array Expr) := do
