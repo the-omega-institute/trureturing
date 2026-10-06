@@ -524,6 +524,79 @@ $I_\psi$ formula, with the source's ordinate thresholds and multiplicities
 retained. It supplies no sign for the complete response, does not control
 the remaining zeros, and leaves the same critical-source estimate unpaid.
 
+## Earlier support-harmonic route: the envelope is still a target
+
+The author's *Derived Prime-Harmonic Envelope on CA Support*, dated
+4 June 2026, is a ten-page
+[primary supplement](https://github.com/robopol/Riemann-hypothesis/blob/e61ed0c0707e499f6748efb916bd4bdfbccaa445/papers/Derived_Prime_Harmonic_Envelope_on_CA_Support_en.pdf),
+with PDF SHA-256
+`6a65507bde32150569791b632866485fe99d86533ffe77104ab1c823408d2a21`.
+Its abstract, §§2–8 and Analytic Target 1 on p.9 were inspected.
+The [author's scope statement](https://github.com/robopol/Riemann-hypothesis/blob/e61ed0c0707e499f6748efb916bd4bdfbccaa445/README.md)
+identifies it as an earlier corrected-status paper, rather than a later
+completion of the finite-verification manuscript. It explicitly derives
+a required prime-harmonic envelope without proving its infinite-range
+validity. Its cited estimates and numerical tables are not independently
+audited or rerun here; no Lean verification is claimed.
+
+To keep the support variable distinct from the current $A=\log N$, write
+
+$$
+\mathcal A_p(x)=\sum_{p\le x}\frac1p-\log\log x,
+$$
+
+and let $B_1$ be the Meissel–Mertens prime constant. On one actual sampled
+CA-support block $1<Y<x$, with $\nu=\pi(x)-\pi(Y)>0$, put
+
+$$
+\begin{aligned}
+H&=\log\frac{\log x}{\log Y},\qquad \mu=H/\nu,\\
+C_2(Y,x)&=\sum_{Y<p\le x}\frac1{p(p-1)},\\
+D_{\rm br}(Y,x)&=\nu[1-(1+\mu)e^{-\mu}].
+\end{aligned}
+$$
+
+The source uses a certified lower divisor-deficit envelope to form the
+reserve $R^\Theta(x)$, and retains the incoming certified upper ledger
+$U(Y)$. Its equations (11)–(16), pp.6–7, already show that the sufficient
+first-moment block gate $M_1(Y,x)\le R^\Theta(x)-U(Y)$ is equivalent to
+
+$$
+\mathcal A_p(x)\le\mathcal A^\Theta_{\rm req}(Y,x)
+:=\mathcal A_p(Y)-C_2(Y,x)
+  +e^\mu[R^\Theta(x)-U(Y)+D_{\rm br}(Y,x)].
+$$
+
+Equations (19)–(22) therefore express the required upper envelope as
+
+$$
+\mathcal A_p(x)-B_1\le
+\frac{C^\Theta_{\rm req}(x)}{\sqrt x\log x},\qquad
+C^\Theta_{\rm req}(x)
+=[\mathcal A^\Theta_{\rm req}(Y,x)-B_1]\sqrt x\log x.
+$$
+
+This is the author's existing gate and target, not an unconditional
+prime estimate or a newly derived Robin criterion. The required constant
+depends on the same block's incoming ledger, prime count, harmonic
+remainder and reserve. No fixed lower bound for that constant or
+infinite-range certification of the gate is supplied. Replacing the
+actual deficit by its smaller analytic lower envelope reduces the
+admissible budget, as source equation (20) records. The sampled table
+does not establish coverage of all critical sources. Closing a
+non-strict block gate also does not by itself certify the final strict
+Robin margin; the ledger's transfer and strictness obligations remain.
+
+At the currently selected integer, the support endpoint is
+$x=P^+(N)$, whereas the retained signed-tail estimate uses $A=\log N$.
+The already-paid condition $P^+(N)<A<P^+_{\rm next}(N)$ does not identify
+these cutoffs. Applying this earlier route would require a certified
+incoming ledger and block coverage at that same source, together with
+the still-missing upper envelope. It does not supply
+$I_\psi(A)>-D^*(A)$ by renaming the cutoff. The supplement's $\beta(x)$
+is the Euler product $\prod_{p\le x}p/(p-1)$, not the FIB atom
+$\beta=\rho(\alpha)$; equality of the symbol supplies no bridge.
+
 ## Boundary for FIB
 
 The finite certificate is organized by CA exponent profiles and
