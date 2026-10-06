@@ -6546,3 +6546,434 @@ $$
 有限夹界没有确定固定正 $\eta$ 或固定正 $(\delta,\eta)$ 的精确minimax值、下一阶最优系数或下确界达到性；也没有结算 $N<3$。方向偏差、两槽独立增益、不精确锚、混合控制或遥测是不同合同。本节有限取得仅表示三次原更新、四个三维实际实数报告及完整元数据，准确实数计算、方向准备、制备、标架、存储、Read精度及物理成本仍分别供应或计价，未推出有限位、费用或物理节约。来源维数、Read方向维数、执行不确定性与实际资源不是同一量。假设15.1的原生完整旋转、忠实位移、实际资源成本和共同环境贯通／任务容量四桥仍须独立证明；上述界是普通数学证明，不作Lean或kernel认证声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 54. 精确致动临界两层的小Read误差：有限包络与统一修正项
+
+**定义 54.1（原INITIAL合同与公共包络）。** 原样采用定义45.1、46.1、51.1的来源、菜单、记录、损失和费用合同：
+
+$$
+\begin{aligned}
+E&=\operatorname{Im}\mathbb H,\qquad W=E\oplus\mathbb H,\\
+\mathcal D_2&=E\times\{b:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\},\\
+A_c(a',b')&=(c\times a',b'c),\quad c\in E,\quad |c|\le1,\\
+A_d(a',b')&=(\operatorname{Im}b',-a'),\qquad
+\operatorname{Read}(z)=P_Ez+e,\quad |e|\le\delta.
+\end{aligned}
+\tag{54.1}
+$$
+
+初始 $a$ 独立、任意且无界，包括零；两层未标记，每次运行的完整初始来源固定。
+致动、来源参数、定向标架、单位锚和实际动作身份精确供应。误差可联合对抗、相关及依赖历史；Read不改状态，重复Read不缩小误差。
+控制器共同初始化、源无关、确定且按已见有限前缀因果，保留每个实际Read、全部有序动作及Stop。每条有限或自然数索引的可数完整记录都输出一个 $W$ 值估计，没有可数前缀以后的事件。目标仍是完整INITIAL $(a,b)$，损失仍是欧氏距离，估计不必属于来源；预算只计破坏性更新。$\mathcal E_\pi(\delta)$、$\mathcal P_N$、$R_N(\delta)$、$\mathcal P_\infty$、$R_\infty(\delta)$ 均保持（46.3）的原定义。
+只有一个被覆盖的当前寄存器，不供应标签、复位、复制、混合控制、额外存档端口、反事实观察、独立重抽样、精度端口或极限Read。
+
+本节固定 $0<\delta\le1/100$。对公共计算参数 $0\le\rho\le1/10$ 及 $R\in\{7,25\}$，定义
+
+$$
+\begin{aligned}
+K(\rho)&=\sqrt{1-\rho^2},\\
+t_R(\rho,\delta)&=\sqrt{R^2-(RK(\rho)-2\delta)^2}
+ =\sqrt{R^2\rho^2+4RK(\rho)\delta-4\delta^2},\\
+S_R(\rho,\delta)&=\frac{R\rho+t_R(\rho,\delta)}2,\\
+B(\rho,\delta)&=\sqrt{2\delta^2+S_{25}(\rho,\delta)^2},\\
+\rho_-&=\delta/12,\qquad \rho_+=\delta/12+\delta^2/100.
+\end{aligned}
+\tag{54.2}
+$$
+
+$K\ge99/100$，$RK>2\delta$，且 $0<RK-2\delta<R$，故这些根号均为正实数。
+$B$ 是公共风险包络，不是额外观测、半径标签或最优值的定义。
+
+**定理 54.2（所有原合同因果历史的选定有限下界）。** 对每个定义54.1中的 $\delta$ 和每个 $\pi\in\mathcal P_\infty$，
+
+$$
+\mathcal E_\pi(\delta)\ge B(\rho_-,\delta).
+\tag{54.3}
+$$
+
+证明。先记 $B(\rho_-,\delta)<1$。事实上 $25\rho_-\le1/48$，且
+$t_{25}(\rho_-,\delta)^2\le100\delta+625\delta^2/144<121/100$，所以
+
+$$
+B(\rho_-,\delta)^2
+\le\frac1{5000}+\left(\frac{269}{480}\right)^2<1.
+\tag{54.4}
+$$
+
+固定控制器及一个公共单位 $v\in E$，令两运行的初始可见量为 $a_0=\delta v$、$a_1=-\delta v$。
+在首锚以前，每次实际Read共同报告零。内部叉积收缩可见槽，故每个真实可见值的范数至多 $\delta$；取其相反数为误差即可合法报告零。
+共同有限前缀逐事件确定内部动作、Read选择和停止，与隐藏来源无关。
+若没有首锚，包括无限内部事件而无锚的可数记录，或首锚前已有 $A_0$，取 $b_0=20-15i$、$b_1=20+15i$。
+无锚时可继续报告零；零内部动作则把整个当前状态消去。两合法INITIAL的半距至少15，已足够。
+
+其余情形首锚发生在一个有限事件处。把此前非零内部动作的实际有序积写为
+
+$$
+p=c_1\cdots c_k=\sigma\lambda q,\qquad
+0<\lambda\le1,\quad \sigma\in\{1,-1\},\qquad
+q=\alpha+\nu u,\quad \alpha\ge0,\quad \nu=\sqrt{1-\alpha^2},\quad |u|=1.
+\tag{54.5}
+$$
+
+空积为1，$\nu=0$ 时任取 $u\in E$；符号 $\sigma$ 始终保留在实际首锚响应中。
+若 $\alpha\ge3/5$，引理45.2(ii)的两层同投影来源距离至少18。
+首锚后可见槽相同，隐藏槽差至多 $2\delta$；下述共同中点续接给完整相同记录和至少9的INITIAL半距，仍足够。
+
+设 $0\le\alpha<3/5$，沿用（45.4）写
+
+$$
+\rho=\frac35\nu-\frac45\alpha>0,\qquad
+K=\frac35\alpha+\frac45\nu=\sqrt{1-\rho^2},\qquad
+\alpha=\frac35K-\frac45\rho,\quad \nu=\frac45K+\frac35\rho.
+\tag{54.6}
+$$
+
+这里实际方向的 $\rho$ 可以超过定义54.1中包络的参数区间；分支如下穷尽其范围。
+若 $\rho>1/10$，引理45.2(i)的半径25同投影点
+$(\pm25\rho+25Ku)q^{-1}$ 给INITIAL半距至少 $25\rho>5/2$，也足够。
+
+若 $0<\rho<\rho_-$，置
+
+$$
+\begin{aligned}
+h&=\frac45\nu-\frac35\alpha=\frac{7K+24\rho}{25},\qquad
+l=\frac45\alpha+\frac35\nu,\\
+b_0&=(7u)q^{-1},\qquad b_1=(25l+25hu)q^{-1},\qquad
+ g=25h-7=24\rho-7(1-K).
+\end{aligned}
+\tag{54.7}
+$$
+
+$l^2+h^2=1$、$\alpha l+\nu h=4/5$，故 $b_1$ 是半径25帽边缘点；
+$|b_0|=7$ 且 $\operatorname{Re}b_0=7\nu\ge28/5$。
+又 $1-K=\rho^2/(1+K)$，所以在此范围
+$0<g<24\rho<2\delta$。
+两真实首锚可见值相差 $\sigma\lambda gu$，范数至多 $2\delta$；隐藏槽差至多 $2\delta$。
+隐藏INITIAL的距离至少 $25-7=18$，故共同记录的INITIAL半距至少9。
+
+只剩 $\rho_-\le\rho\le1/10$。在运行前固定以下两个半径25来源：
+
+$$
+\begin{aligned}
+t&=t_{25}(\rho,\delta),\\
+b_0&=(-25\rho+25Ku)q^{-1},\\
+b_1&=(t+(25K-2\delta)u)q^{-1}.
+\end{aligned}
+\tag{54.8}
+$$
+
+两范数均为25。由 $\nu K-\alpha\rho=4/5$，第一点实部恰为20。
+第二点的帽条件等价于
+$\alpha(t+25\rho)\ge2\nu\delta$。
+在这个区间 $K\ge99/100$、$\alpha\ge257/500>1/2$，且
+
+$$
+t^2\ge100K\delta-4\delta^2\ge81\delta,
+\qquad \alpha(t+25\rho)\ge\frac92\sqrt\delta\ge2\delta\ge2\nu\delta.
+\tag{54.9}
+$$
+
+所以第二点也属于原帽，没有增厚来源。
+首锚后两可见槽相差 $2\sigma\lambda\delta u$，隐藏槽差至多 $2\delta$。
+完整INITIAL半距恰为
+
+$$
+\frac{|a_1-a_0|^2+|b_1-b_0|^2}{4}
+=\delta^2+\delta^2+\left(\frac{25\rho+t}2\right)^2
+=B(\rho,\delta)^2.
+\tag{54.10}
+$$
+
+对固定 $\delta$，$B$ 在 $[0,1/10]$ 递增，因为
+
+$$
+\partial_\rho t_{25}
+=\frac{625\rho-50\delta\rho/K}{t_{25}}\ge0,
+\qquad \partial_\rho S_{25}=\frac{25+\partial_\rho t_{25}}2>0.
+\tag{54.11}
+$$
+
+故本分支半距至少 $B(\rho_-,\delta)$。
+
+补全所有有锚分支的实际共同记录：首锚后的两个当前差槽满足
+$|\Delta a'|\le2\delta$、$|\Delta b'|\le2\delta$。
+任何共同内部动作分别收缩两个差槽；锚把它们变为
+$(\operatorname{Im}\Delta b',-\Delta a')$，仍保持同界。
+每次实际Read报告两个真实可见值的中点，两个误差为相反半差，范数各至多 $\delta$。
+相同报告前缀迫使同一下一动作、Read选择和Stop；首锚以后先更新、重复Read或直接停止均在此归纳内。
+任意可数记录的每个有限前缀也相同，不需或允许一个终端极限事件。
+首锚方向由共同零报告分支先确定，两INITIAL即可在整个运行前固定；以后不换来源。
+这个两运行比较没有向控制器供应第二个寄存器或副本。
+任一完整共同记录只给一个 $W$ 值估计，三角不等式使其对至少一个INITIAL的误差不小于半距。
+上述所有分支因此证明（54.3）。证毕。
+
+**定义 54.3（恰三更新四Read的全报告输出）。** 对定义54.1的 $\delta$，只按公开参数取 $\rho=\rho_+$，并置
+
+$$
+\begin{aligned}
+K&=K(\rho),\quad \alpha=\frac35K-\frac45\rho,\quad
+\nu=\frac45K+\frac35\rho,\quad q=\alpha+\nu i,\\
+c_1&=j,\quad c_2=-\alpha j+\nu k,\quad c_1c_2=q,\quad
+h=\frac{7K+24\rho}{25},\quad T=\frac{7+25h}{2}.
+\end{aligned}
+\tag{54.12}
+$$
+
+两个内部控制均为单位纯虚元，实际事件恰为
+
+$$
+\operatorname{Read}(y_0);\ A_{c_1};\ \operatorname{Read}(y_1);\
+ A_{c_2};\ \operatorname{Read}(y_2);\ A_d;\
+ \operatorname{Read}(y_3);\ \operatorname{Stop}.
+\tag{54.13}
+$$
+
+全部四个实际报告、有序精确动作和Stop完整保留。
+对任意 $(y_0,y_1,y_2,y_3)\in E^4$，令 $r=|y_3|$，取
+$R=7$ 当 $r\le T$，否则取 $R=25$，并定义
+
+$$
+\begin{aligned}
+d_R^-&=\min\{R,\max(0,r-\delta)\},&
+d_R^+&=\min\{R,r+\delta\},\\
+\ell_R&=\sqrt{R^2-(d_R^+)^2},&
+u_R&=\sqrt{R^2-(d_R^-)^2},\\
+\widehat s&=
+\begin{cases}
+(\ell_R+u_R)/2,&\ell_R>R\rho,\\
+(u_R-R\rho)/2,&\ell_R\le R\rho,
+\end{cases}&
+\widehat w&=P_R(y_3),\\
+\widehat x&=\left(y_0,(\widehat s+\widehat w)q^{-1}\right).&&
+\end{aligned}
+\tag{54.14}
+$$
+
+$P_R$ 是（46.17）的闭球投影，零报告用第一分支。
+两个径向端点均在 $[0,R]$ 且有序，所以平方根、分支及输出在整个 $E^4$ 上有定义。
+这里 $u_R$ 是径向实部上端点，与（54.12）的公共方向参数 $\nu$ 不同。
+输出使用已得报告和公开常数；不增设符号标签。它不声称在全报告空间连续。
+两个中间Read的数值不参与输出计算，但仍实际执行并保留。
+
+**定理 54.4（原完整来源上的有限上界）。** 定义54.3的控制器 $\pi_+$ 在全部原来源及全部合法联合Read误差上满足
+
+$$
+\mathcal E_{\pi_+}(\delta)\le B(\rho_+,\delta).
+\tag{54.15}
+$$
+
+证明。先核对未标记层的实际判别。$0<\rho_+\le\delta/11<1/10$，而
+
+$$
+\begin{aligned}
+g-2\delta&=25h-7-2\delta
+=\frac6{25}\delta^2-7(1-K)\\
+&\ge\left(\frac6{25}-\frac7{121}\right)\delta^2
+=\frac{551}{3025}\delta^2>0.
+\end{aligned}
+\tag{54.16}
+$$
+
+用的只是 $1-K\le\rho^2$ 和 $\rho\le\delta/11$。
+真实 $bq=s+w$、$R_0=|b|$ 仍满足§45的原帽关系
+$s\ge-R_0\rho$、$R_0h\le|w|\le R_0$。
+末读为 $y_3=w+e_3$，因此内层 $r\le7+\delta<T$，外层
+$r\ge25h-\delta>T$；（54.14）逐合法记录判出 $R=R_0$。
+
+径向Read条件给 $d_R^-\le|w|\le d_R^+$，故
+$\ell_R\le|s|\le u_R$。
+若 $\ell_R>R\rho$，负实部分支由 $s\ge-R\rho$ 排除，真实 $s\in[\ell_R,u_R]$。
+函数 $f(x)=\sqrt{R^2-x^2}$ 的负导数模 $x/\sqrt{R^2-x^2}$ 在 $[0,R)$ 递增。
+截断不扩张给 $d_R^+-d_R^-\le2\delta$。因此在 $[0,R]$ 上，该径向区间的 $f$ 值之差至多最右端长度 $2\delta$ 的区间的差：
+
+$$
+u_R-\ell_R\le f(R-2\delta)-f(R)
+=\sqrt{4R\delta-4\delta^2}.
+\tag{54.17}
+$$
+
+此处 $2\delta<R$；端点 $R$ 的等式按连续性取极限。
+又
+
+$$
+t_R^2-(4R\delta-4\delta^2)
+=R\rho^2\left(R-\frac{4\delta}{1+K}\right)\ge0,
+\tag{54.18}
+$$
+
+因此第一输出分支的实部误差至多 $(u_R-\ell_R)/2\le S_R$。
+
+若 $\ell_R\le R\rho$，则 $d_R^+\ge RK$，从截断定义得
+$r+\delta\ge RK$。于是
+
+$$
+r\ge RK-\delta,\qquad d_R^-\ge RK-2\delta>0,
+\qquad u_R\le t_R(\rho,\delta).
+\tag{54.19}
+$$
+
+真实 $s$ 属于 $[-R\rho,u_R]$，其第二输出分支是这个包围区间的中点，故
+$|\widehat s-s|\le(R\rho+u_R)/2\le S_R$。
+这里区间只包围原帽上的实际标量，没有把区间内每一点当作合法来源。
+（54.19）是对容许负分支的同一实际报告施加的条件，不把两种分别可达的径向端点任意拼合。
+
+$t_R^2=R^2\rho^2+4RK\delta-4\delta^2$ 随正 $R$ 递增，因此 $S_7\le S_{25}$。
+球投影不增大到真实 $w$ 的距离，所以 $|\widehat w-w|\le\delta$；初读给
+$|y_0-a|\le\delta$。右乘 $q^{-1}$ 等距，初始可见槽、隐藏实部及隐藏虚部正交，得到
+
+$$
+|\widehat x-(a,b)|^2
+=|y_0-a|^2+|\widehat s-s|^2+|\widehat w-w|^2
+\le2\delta^2+S_{25}(\rho,\delta)^2.
+\tag{54.20}
+$$
+
+无界的 $a$ 在两次内部动作中虽被改变，末锚把它的演化量放入隐藏槽，末读仍恰为 $w+e_3$；INITIAL的 $a$ 由实际初读估计。
+证明只逐项使用各实际误差的范数界，覆盖所有联合、相关、历史依赖误差。
+所有动作和停止预先固定，恰三更新四Read，证明（54.15）。证毕。
+
+**命题 54.5（所选控制器的达到性与较小倾斜的合法反例）。** 定义54.3的同一个控制器有
+
+$$
+\mathcal E_{\pi_+}(\delta)=B(\rho_+,\delta).
+\tag{54.21}
+$$
+
+然而把该词的倾斜直接改成 $\rho_-$，任意报告后处理都不能保证趋零风险：这个较小倾斜词的最坏INITIAL误差至少9。
+
+证明。对（54.21），以 $\rho=\rho_+$、$K=K(\rho)$、$t=t_{25}(\rho,\delta)$，取固定INITIAL
+
+$$
+x_0=(\delta j,(-25\rho+25Ki)q^{-1}),\qquad
+x_1=(-\delta j,(t+(25K-2\delta)i)q^{-1}).
+\tag{54.22}
+$$
+
+来源合法性由（54.8）–（54.9）给出；$a$ 与 $b$ 的独立来源合同允许这两点。
+在第0次运行，四个实际误差取 $(-\delta j,0,0,-\delta i)$；第1次取
+$(\delta j,0,0,\delta i)$。第一个 $j$ 动作把两个可见初态都消去，第二内部动作保持零，故完整四Read共同为
+
+$$
+(y_0,y_1,y_2,y_3)=(0,0,0,(25K-\delta)i).
+\tag{54.23}
+$$
+
+两个末读真实值分别为 $25Ki$ 与 $(25K-2\delta)i$，所列误差均合法；三有序动作及Stop完全相同。
+此报告被正确判为半径25，$d_{25}^-=25K-2\delta$、$d_{25}^+=25K$，所以
+$\ell_{25}=25\rho$、$u_{25}=t$。
+输出恰为这两个INITIAL的欧氏中点：$\widehat a=0$，
+$\widehat s=(t-25\rho)/2$、$\widehat w=(25K-\delta)i$。
+两端误差均为 $B(\rho_+,\delta)$，与定理54.4合并给（54.21）。
+
+对较小倾斜词，令 $\rho=\rho_-$，其 $0<g=24\rho-7(1-K)<2\delta$。
+原样取（54.7）的两个隐藏来源，令共同 $a=0$。
+前三Read全为零，末读共同为 $((7+25h)/2)i$，两个末读误差为
+$\pm(g/2)i$；它们各至多 $\delta$。
+全部有序动作和Stop共同，INITIAL隐藏距离至少18，任意共同输出的误差至少9。
+故 $B(\rho_-,\delta)$ 是全控制器下界用的公共比较值，不是这个较小倾斜词的上界。
+这两组都是原完整来源与原事件词的实际反例／达到实例。
+（54.21）仅证明指定控制器的风险达到其上界，不证明固定正 $\delta$ 的minimax下确界由它或其他控制器达到。证毕。
+
+**定理 54.6（有限包络宽度与全部高预算夹界）。** 对每个 $0<\delta\le1/100$ 和每个整数 $N\ge3$，
+
+$$
+B(\rho_-,\delta)\le R_\infty(\delta)\le R_N(\delta)
+\le B(\rho_+,\delta),
+\tag{54.24}
+$$
+
+并且
+
+$$
+0\le B(\rho_+,\delta)-B(\rho_-,\delta)
+\le\frac{13}{100}\delta^2.
+\tag{54.25}
+$$
+
+证明。定理54.2、54.4和
+$\mathcal P_3\subseteq\mathcal P_N\subseteq\mathcal P_\infty$ 直接给（54.24），不需要预算极限与下确界交换。
+宽度的非负性由（54.11）给出。
+在 $\rho_-\le\rho\le\rho_+$ 上，$\rho\le\delta/11$，$t_{25}\ge9\sqrt\delta$，故
+
+$$
+0\le\partial_\rho t_{25}
+\le\frac{625\rho}{t_{25}}
+\le\frac{625}{99}\sqrt\delta\le\frac{125}{198},
+\qquad
+0\le\partial_\rho B
+=\frac{S_{25}}B\,\partial_\rho S_{25}
+\le\frac{25}2+\frac{125}{396}<13.
+\tag{54.26}
+$$
+
+在长度 $\rho_+-\rho_-=\delta^2/100$ 的区间上积分即得（54.25）。证毕。
+
+**推论 54.7（统一的两个修正系数）。** 对所有 $N\in\{3,4,\ldots,\infty\}$，当 $\delta\downarrow0$，统一有
+
+$$
+R_N(\delta)=5\sqrt\delta+\frac{25}{24}\delta
+ +\frac{1201}{5760}\delta^{3/2}+O(\delta^2).
+\tag{54.27}
+$$
+
+$O$ 的常数和正参数邻域均不依赖预算；任意变量整数预算 $N(\delta)\ge3$ 也有同一展开。特别地，
+
+$$
+\lim_{\delta\downarrow0}\ \sup_{N\in\{3,4,\ldots,\infty\}}
+\left|\frac{R_N(\delta)-5\sqrt\delta}{\delta}-\frac{25}{24}\right|=0.
+\tag{54.28}
+$$
+
+证明。置 $z=\sqrt\delta$，取 $\rho_- =z^2/12$。精确代数给
+
+$$
+\frac{B(\rho_-,z^2)}z
+=F(z):=\sqrt{2z^2+
+ \left(\frac{25}{24}z+
+ \frac12\sqrt{100\sqrt{1-z^4/144}+\frac{49}{144}z^2}\right)^2}
+\quad(z>0).
+\tag{54.29}
+$$
+
+右端在包含 $[-1/10,1/10]$ 的开邻域实解析：内层根号的被开方数严格为正，外层括号至少为 $9/2-5/48>0$，且 $F(0)=5$。
+Taylor定理的有界三阶导数给一个不依赖预算的 $O(z^3)$ 余项。
+具体系数由
+
+$$
+\begin{aligned}
+\frac12\sqrt{100\sqrt{1-z^4/144}+\frac{49}{144}z^2}
+ &=5+\frac{49}{5760}z^2+O(z^4),\\
+F(z)&=5+\frac{25}{24}z+
+ \left(\frac{49}{5760}+\frac15\right)z^2+O(z^3)
+ =5+\frac{25}{24}z+\frac{1201}{5760}z^2+O(z^3)
+\end{aligned}
+\tag{54.30}
+$$
+
+给出。乘 $z$ 得到 $B(\rho_-,\delta)$ 的（54.27）展开。
+定理54.6使全部 $R_N$ 与该下端的差同在 $[0,13\delta^2/100]$ 中，故一个共同余项界适用于所有预算及变量预算。
+（54.27）减去 $5\sqrt\delta$ 后除以 $\delta$，其余项统一为
+$(1201/5760)\sqrt\delta+O(\delta)$，给（54.28）。
+这只比较各自合法控制器类的风险下确界，不给任何一条可数历史添加终端事件。证毕。
+
+**约定 54.8（承重关系、文献与未决边界）。** （54.8）的负端点／内移径向同层对、（54.19）的容许负分支条件、（54.24）–（54.30）的有限包络及统一修正项是原声明来源上的 `repo-derived` 推导。
+首锚状态律和完整因果记录复用§40，临界两层帽几何复用§45，联合Read与逐槽中点续接复用§46；§51已给尖锐首项5，但它的区间宽度界未给这里两个修正系数。
+§53的分支区间为参考：其隐藏增益合同中的径向不确定性含 $\zeta$，本节重新在精确致动、$\zeta=0$ 的原合同内证明（54.17）–（54.19），不把命令身份冒充潜在执行参数。
+§47、§50、§53各自的隐藏增益、观测激励与证书条件保持原范围；§49的全噪声小预算及大噪声结论也保持原范围。
+
+共同输出的两点半距、区间中点及欧氏球投影是成熟中间工具，直接复用
+[Recovery Geometry §3](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md#31-候选纤维半径与恢复的最小最坏误差)。
+Foucart–Liao，[*Optimal Recovery from Inaccurate Data in Hilbert Spaces: Regularize, but what of the Parameter?*, arXiv:2111.02601v1](https://arxiv.org/html/2111.02601v1)，§1.1及Lemma11中的同数据半距论证提供经典背景；其Theorem4要求复Hilbert空间中的两个仿射范数球约束，Theorem10采用固定线性观察与子空间逼近来源。
+其 [*S-Procedure Relaxation: a Case of Exactness Involving Chebyshev Centers*, arXiv:2310.09677v1](https://arxiv.org/html/2310.09677v1) §1–2讨论经典局部恢复和Chebyshev中心，
+[*Radius of Information for Two Intersected Centered Hyperellipsoids and Implications in Optimal Recovery from Inaccurate Data*, arXiv:2401.11112v1](https://arxiv.org/html/2401.11112v1) Theorem1采用两个中心化超椭球的交及预定线性观察。
+这些条件不能替代本节的两球帽并、破坏性适应控制、完整共同记录和INITIAL目标；一般中心或Taylor理论不另列为新增定理，没有全球新颖性声明。
+
+§52的实际发生树、附加场和谱目标，Parity §120的有限路径联合概率与标记生成函数，以及Atomic §439的固定尺度有限素数核和补偿积分，各保留自己的共同来源关系；它们未给到（54.1）的来源、动作、Read、INITIAL和欧氏距离对应，因而不供应本节的有限包络或修正系数。
+
+本节只处理 $0<\delta\le1/100$、精确实数和原精确致动合同。
+（54.24）–（54.27）没有确定固定正 $\delta$ 的精确minimax值、最优倾斜、全局达到策略、不同预算在固定正误差下的风险相等性或再下一阶最优系数；不增加中等噪声、$N\le2$ 或 $\delta\ge15$ 的结论。
+（54.21）的达到性只属于所指定控制器。
+来源制备、两个未标记初始半径与帽、无界独立 $a$、校准、精确方向和动作身份、Read精度、完整记录保存、实数计算、存储和物理费用仍分别供应或计价。
+三更新四Read及纸面渐近不等于有限位实现、价格或物理节约；§15的完整旋转、忠实位移、实际资源成本及共同环境贯通／任务容量四项原生／物理桥仍各须独立证明。本节是普通数学证明，不作Lean或kernel认证声明。
+
+## 追加锚（本行以下为增补区）
