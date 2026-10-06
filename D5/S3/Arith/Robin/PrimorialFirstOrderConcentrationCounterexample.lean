@@ -143,7 +143,7 @@ private theorem hasDerivAt_rate (v : ℝ) :
     (-∫ b in (0 : ℝ)..1, b * Real.exp (-v * b)) v
   simpa only [F, F', neg_mul, intervalIntegral.integral_neg] using h.2
 
-private theorem exact_zero_quadratic_bound
+theorem exact_zero_quadratic_bound
     (f g h : ℝ → ℝ) {v C : ℝ} (hv : 0 ≤ v)
     (hf0 : f 0 = 0) (hg0 : g 0 = 0)
     (hfg : ∀ w ∈ Icc (0 : ℝ) v, HasDerivAt f (g w) w)
@@ -562,7 +562,7 @@ private theorem original_quadratic_global {v : ℝ} (hv : 0 ≤ v) :
     _ ≤ (Real.exp 1 * (1 + v)) * (3 / 2) := hb
     _ = _ := by ring
 
-private theorem signed_integrable_of_quadratic (f : ℝ → ℝ) {σ C : ℝ}
+theorem signed_integrable_of_quadratic (f : ℝ → ℝ) {σ C : ℝ}
     (hσ : 0 < σ) (hf : ContinuousOn f (Ioi 0))
     (hbound : ∀ v : ℝ, 0 ≤ v → |f v| ≤ C * (1 + v) * v ^ 2 / 2) :
     IntegrableOn (fun v : ℝ => Real.exp (-σ * v) * f v / v ^ 2) (Ioi 0) := by
