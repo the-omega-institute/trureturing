@@ -109,7 +109,7 @@ source. This is a same-source extremal reduction, not a sign theorem.
 
 ## Scope of the project's additional packet analysis
 
-The [project's §416](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+The [project's §417](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
 uses the already established $A(t)=t+o(t)$ on the actual event packets.
 It evaluates the existing two-moment expression on fixed and unbounded
 endpoint ratios and excludes its sufficient certificate uniformly when
