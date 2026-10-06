@@ -417,7 +417,9 @@ The exact rows partition remains registered when empty, both before seeding and 
 
 全批解析成功后,在主检出目录逐项执行 `git worktree remove --force -- <注册绝对路径>`,恰好一个 `--force`,使调用者当前所在的 linked worktree 也可删除。点名删除越过未合并、脏、年龄、开放 PR、进程占用五项自动回收判据,不查询 `status` / `merge-base` / `rev-list` / `log` / `gh` / `lsof`。不删除分支 ref、不调用 `update-ref` / `branch -D`,不 rm、不 prune、不 kill、不碰 PR、不清别的树的缓存或 `.lake` donor,不碰未注册目录;目标自己的 `.lake` 随 Git 删除目录自然消失。执行期某项 Git 失败则记录原始错误,继续其余已解析对象,最终 exit 74;不承诺跨树事务或回滚。A20 自动回收语义不变。
 
-每项输出 JSONL 的 `name` / `path` / `outcome` / `error`;未匹配或歧义时 `path=null`,歧义的全部候选路径在 error 中列出。最终 stdout 末行固定为 `WORKTREE_REMOVE_RESULT exit=<码> removed=<n> failed=<n> refused=<n>`:removed 是成功删除数,failed 是执行失败数,refused 是预解析阻止的去重名称数(含 `batch_refused`);用法错误没有待解析项,三计数为 0。CLI 分类码为 0 全部成功、64 用法错误(缺 --names / 空串 / 全空白)、65 不存在、66 歧义、67 主检出、68 locked、69 清单不可读或为空、74 执行失败。65–69 时删除调用次数恰为 0。**GNU make 对任何配方失败返回自身的 2**,分类码只在直调 canonical CLI 时可辨;经 make 只有 0/2,须读末行 exit 字段分辨原因,不得声称 make 透传分类码。
+每次 Git 删除默认使用 300 秒挂起保护;超时终止该删除并报执行失败,目录可能已经部分删除。显式传 `make worktree-remove NAMES="trureturing-foo trureturing-bar" FORCE=1` 或 CLI `--force` 时,只取消实际删除的限时,等待 Git 返回;清单读取保持原有 120 秒限时。Make 仅接受命令行显式 `FORCE=1` 启用此行为,继承的环境变量不启用。CLI `--force` 可位于 `--names` 参数之前或之后,只能出现一次;`--names` 紧随的值始终按名称解析。强制模式仍执行完整预解析,仍拒绝主检出与 locked,不增加 Git 的 `--force` 数量。
+
+每项输出 JSONL 的 `name` / `path` / `outcome` / `error`;未匹配或歧义时 `path=null`,歧义的全部候选路径在 error 中列出。最终 stdout 末行固定为 `WORKTREE_REMOVE_RESULT exit=<码> removed=<n> failed=<n> refused=<n>`:removed 是成功删除数,failed 是执行失败数,refused 是预解析阻止的去重名称数(含 `batch_refused`);用法错误没有待解析项,三计数为 0。CLI 分类码为 0 全部成功、64 用法错误(缺 --names / 空串 / 全空白 / 重复或未知选项)、65 不存在、66 歧义、67 主检出、68 locked、69 清单不可读或为空、74 执行失败。65–69 时删除调用次数恰为 0。**GNU make 对任何配方失败返回自身的 2**,分类码只在直调 canonical CLI 时可辨;经 make 只有 0/2,须读末行 exit 字段分辨原因,不得声称 make 透传分类码。
 
 CI 的独立入口、固定候选、报告、退出及缓存由 A22 定义。`make test` 检查当前树；`make gate BASE=<sha>` 依次调用独立程序并验证显式基线的跨树约束。
 
