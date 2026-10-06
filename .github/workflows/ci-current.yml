@@ -1004,6 +1004,89 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
+      - name: Measure candidate digestion algorithms
+        run: |
+          cat > "$RUNNER_TEMP/digestion-cost-probe.py" <<'PY'
+          import json, os, pathlib, subprocess, tempfile, time, hashlib
+          root = pathlib.Path.cwd()
+          scratch = pathlib.Path(tempfile.mkdtemp(prefix='digestion-cost-', dir=os.environ.get('RUNNER_TEMP')))
+          cli = root/'tools/StrataLint.Cli/bin/Release/net10.0'
+          code = r'''
+          using System.Reflection;
+          using System.Security.Cryptography;
+          using System.Text;
+          using System.Text.Json;
+          using StrataLint.Engine;
+          var mode=args[0]; var root=args[1]; var variant=args[2];
+          if(mode=="enumeration") {
+           var index=File.ReadAllBytes(args[3]); var others=File.ReadAllBytes(args[4]);
+           var parse=(Func<byte[],Dictionary<string,string>>)typeof(GitRepositorySnapshotReader)
+           .GetMethod("ParseIndex", BindingFlags.Static|BindingFlags.NonPublic)!.CreateDelegate(typeof(Func<byte[],Dictionary<string,string>>));
+           var nul=(Func<byte[],IEnumerable<string>>)typeof(GitRepositorySnapshotReader)
+           .GetMethod("ParseNulStrings",BindingFlags.Static|BindingFlags.NonPublic)!.CreateDelegate(typeof(Func<byte[],IEnumerable<string>>));
+           string? digest=null; long allocated=0;
+           Console.WriteLine("BEGIN"); Console.Out.Flush();
+           for(var i=0;i<5;i++) {
+            var before=GC.GetAllocatedBytesForCurrentThread();
+            var tracked=parse(index); IEnumerable<string> untracked=nul(others);
+            if(variant=="aggregate") {
+             var merged=new Dictionary<string,string>(StringComparer.Ordinal);
+             foreach(var pair in tracked) merged[pair.Key]=pair.Value;
+             tracked=merged; untracked=new HashSet<string>(untracked,StringComparer.Ordinal);
+            }
+            var paths=tracked.Keys.Concat(untracked).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
+            digest=Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('\n',paths))));
+            allocated+=GC.GetAllocatedBytesForCurrentThread()-before;
+           }
+           Console.WriteLine(JsonSerializer.Serialize(new{mode,variant,digest,allocated,iterations=5}));
+          } else {
+           var raw=GitRepositorySnapshotReader.ReadCurrent(root, include:p=>p.StartsWith("Meta/Digestion/backfill/",StringComparison.Ordinal)||p.StartsWith("D5/",StringComparison.Ordinal));
+           var decoded=SnapshotDecoder.Decode(raw);
+           if(decoded is not SnapshotDecodeOutcome.Decoded ok) throw new Exception("snapshot decode failed");
+           var snapshot=ok.Snapshot;
+           var changes=RawChangeSet.Create(["Meta/Digestion/backfill/directed-all-minors-matrix-tree/residual-open/c8bb1f27e1e14656af23b8b70abe8cdca8ff0da5d612c28989595710fc2d3be3.yaml"]);
+           var session=new BackfillCandidateDeltaSession(snapshot,snapshot,changes);
+           string? digest=null; long allocated=0;
+           Console.WriteLine("BEGIN"); Console.Out.Flush();
+           for(var i=0;i<3;i++) {
+            var before=GC.GetAllocatedBytesForCurrentThread();
+            var document=variant=="reuse"?session.GetDocument(changes):BackfillInventoryLoader.LoadCandidateDelta(snapshot,snapshot,changes);
+            var ids=document.RequireDigestionSources().SelectMany(s=>s.Entries).Select(e=>e.AtomId).Order(StringComparer.Ordinal);
+            digest=Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('\n',ids))));
+            allocated+=GC.GetAllocatedBytesForCurrentThread()-before;
+           }
+           Console.WriteLine(JsonSerializer.Serialize(new{mode,variant,digest,allocated,iterations=3,sessionLoads=session.LoadCount}));
+          }
+          '''
+          (scratch/'Program.cs').write_text(code)
+          refs=''.join(f'<Reference Include="{p.stem}"><HintPath>{p}</HintPath></Reference>' for p in cli.glob('*.dll') if p.name!='StrataLint.dll')
+          (scratch/'Probe.csproj').write_text('<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType><AssemblyName>StrataLint.Tests</AssemblyName><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup><ItemGroup>'+refs+'</ItemGroup></Project>')
+          subprocess.run(['dotnet','build',str(scratch/'Probe.csproj'),'-c','Release','-nologo'],check=True)
+          program=scratch/'bin/Release/net10.0/StrataLint.Tests.dll'
+          all_results=[]
+          for profile,specs in [('repository',[]),('utility',['D5/**/*.lean','Golden/Frozen/state/**/*.json','Meta/FILEMAP.toml'])]:
+           index=subprocess.check_output(['git','ls-files','--stage','-z','--',*specs])
+           others=subprocess.check_output(['git','ls-files','--others','--exclude-standard','-z','--',*specs])
+           (scratch/'index').write_bytes(index); (scratch/'others').write_bytes(others)
+           for variant in ['direct','aggregate','aggregate','direct']:
+            p=subprocess.Popen(['dotnet',str(program),'enumeration',str(root),variant,str(scratch/'index'),str(scratch/'others')],stdout=subprocess.PIPE,text=True)
+            assert p.stdout.readline().strip()=='BEGIN'
+            started=time.perf_counter(); result=json.loads(p.stdout.readline()); seconds=time.perf_counter()-started
+            assert p.wait()==0
+            result.update(profile=profile,seconds=seconds,input_sha256=hashlib.sha256(index+others).hexdigest())
+            print('DIGESTION_COST '+json.dumps(result),flush=True); all_results.append(result)
+          for variant in ['reload','reuse','reuse','reload']:
+           p=subprocess.Popen(['dotnet',str(program),'ledger',str(root),variant],stdout=subprocess.PIPE,text=True)
+           assert p.stdout.readline().strip()=='BEGIN'
+           started=time.perf_counter(); result=json.loads(p.stdout.readline()); seconds=time.perf_counter()-started
+           assert p.wait()==0
+           result.update(profile='selected-ledger',seconds=seconds)
+           print('DIGESTION_COST '+json.dumps(result),flush=True); all_results.append(result)
+          for profile in {r['profile'] for r in all_results}:
+           assert len({r['digest'] for r in all_results if r['profile']==profile})==1
+          print('DIGESTION_COST_EQUIVALENCE passed=true profiles=3 timing_is_not_a_verdict=true')
+          PY
+          python3 "$RUNNER_TEMP/digestion-cost-probe.py"
       - name: Prepare the Scribe scope
         run: tools/scripts/workflow/scribe-scope-paths.sh "$RUNNER_TEMP/changed-paths" > "$RUNNER_TEMP/scribe-paths"
       - name: Current-tree rules
