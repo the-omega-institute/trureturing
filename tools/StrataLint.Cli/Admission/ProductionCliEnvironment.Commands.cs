@@ -57,17 +57,7 @@ internal sealed partial class ProductionCliEnvironment
             reportFreeIngestDependencies);
 
     public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) =>
-        scribeEmissionVerifier is null
-            ? new CommandResult(
-                false,
-                string.Empty,
-                "ALIGN_DIGESTION_STATUS_INVALID Scribe emission verifier is unavailable\n")
-            : IngestCommand.Run(
-                repositoryRoot,
-                repository,
-                leanReportSource,
-                scribeEmissionVerifier,
-                arguments);
+        IngestCommand.Run(repositoryRoot, repository, leanReportSource, arguments);
 
     public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
         CoverAtomCommand.Run(

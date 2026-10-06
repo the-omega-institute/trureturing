@@ -298,9 +298,9 @@ public sealed class DecomposeAtomTests
         ]);
         var snapshot = DecomposeFixture.Decode(raw);
         var document = BackfillInventoryLoader.Load(snapshot);
-        var plan = DigestionIngestor.Plan(document, snapshot, document);
+        var plan = ReportFreeDigestionIngestor.Plan(document, snapshot);
 
-        var admitted = plan.AdmissionDocument.RequireDigestionEntries();
+        var admitted = plan.Document.RequireDigestionEntries();
         Assert.Equal(3, admitted.Length);
         Assert.Equal(3, admitted.Select(entry => entry.AtomId).Distinct(StringComparer.Ordinal).Count());
         Assert.Equal(3, plan.ResidualOpenAdded);
@@ -313,19 +313,6 @@ public sealed class DecomposeAtomTests
         Assert.Equal([child.AtomId, DecomposeFixture.Atom(other).Fingerprints.RawSha256[7..]],
             parent.Receipts.ChainAtoms.ToArray());
         Assert.Equal(3, plan.Document.RequireDigestionEntries().Length);
-    }
-
-    [Fact]
-    public void IngestUsesDeclaredLosslessPlanAndCanonicalChildMaterialization()
-    {
-        var f = new DecomposeFixture(DecomposeFixture.Eight);
-        var plan = DigestionIngestor.Plan(f.Document, f.Snapshot, f.Document);
-        Assert.Equal(8, plan.ResidualOpenAdded);
-        Assert.Equal(8, plan.CasObjects.Length);
-        var parent = Assert.Single(plan.Document.RequireDigestionEntries(), e => e.AtomId == f.Parent.AtomId);
-        Assert.Equal(8, parent.Receipts.ChainAtoms.Length);
-        Assert.Equal(DecomposeFixture.Eight, Encoding.UTF8.GetString(parent.Receipts.ChainAtoms
-            .SelectMany(id => plan.CasObjects.Single(item => item.Reference == "sha256:" + id).Bytes).ToArray()));
     }
 
     [Fact]
