@@ -28,7 +28,7 @@ There exists one finite set V satisfying all three displayed conclusions simulta
 
 The finite-simplex source argument supplies a finite set of coordinate generators. The inverse correspondence reconstructs an actual probability law from each generator. The resulting finite set V lies in F, its mass-coordinate convex hull is exactly the image of F, and a native law belongs to F if and only if it is a nonnegative normalized finite measure sum over that same V.
 
-An empty feasible class is allowed and has an empty generator set. For the inverse-limit application, rho at level l is the actual projection of the one completed source law. This theorem adds no topological homeomorphism assertion; its conclusion concerns finite probability laws and their affine coordinate representation.
+An empty feasible class is allowed and has an empty generator set. For the inverse-limit application, rho at level l is the actual projection of the one completed world law rho, whose source pushforward is nu. This theorem adds no topological homeomorphism assertion; its conclusion concerns finite probability laws and their affine coordinate representation.
 
 ## References
 

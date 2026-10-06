@@ -172,7 +172,6 @@ lemma finite_feasible_pushforward {W Z U : ℕ → Type u}
   · rw [Measure.map_apply (measurable_of_countable _) (Set.toFinite (A l)).measurableSet]
     exact le_antisymm prob_le_one (by rw [← ht.2.2]; exact measure_mono (hA l))
 
-
 lemma finite_feasible_minimum {W : Type u} {Z : Type u} {U : Type u}
     [Finite W] [TopologicalSpace W] [DiscreteTopology W] [MeasurableSpace W] [BorelSpace W]
     [Finite Z] [TopologicalSpace Z] [DiscreteTopology Z] [MeasurableSpace Z] [BorelSpace Z]
@@ -401,8 +400,6 @@ lemma feasible_mixture {W : Type u} {Z : Type u} {U : Type u}
   · rw [Measure.map_add _ _ hs, Measure.map_smul, Measure.map_smul, hθ.2.1, hη.2.1,
       ← add_smul, hsum, one_smul]
   · simp only [Measure.add_apply, Measure.smul_apply, hθ.2.2, hη.2.2, smul_eq_mul, mul_one, hsum]
-
-
 set_option maxHeartbeats 8000000 in
 /-- Source-constrained minima on actual inverse limits, with exact normalized costs. -/
 theorem exists_minimum_eq_iSup {W Z U : ℕ → Type u}
@@ -495,7 +492,6 @@ theorem exists_minimum_eq_iSup {W Z U : ℕ → Type u}
           (∀ η ∈ L, completedEventCost θ ≤ completedEventCost η) := by
   classical
   letI : ∀ l, Fintype (W l) := fun l => Fintype.ofFinite (W l)
-
   have hCompletedCompact {W Z U : ℕ → Type u}
       [∀ l, Finite (W l)] [∀ l, TopologicalSpace (W l)] [∀ l, DiscreteTopology (W l)]
       [∀ l, MeasurableSpace (W l)] [∀ l, BorelSpace (W l)]

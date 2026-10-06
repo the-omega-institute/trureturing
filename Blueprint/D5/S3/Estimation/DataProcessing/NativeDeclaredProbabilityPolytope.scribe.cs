@@ -74,7 +74,7 @@ internal sealed class NativeDeclaredProbabilityPolytopeDocument : IScribeDocumen
                 Paragraph(Text(
                     "An empty feasible class is allowed and has an empty generator set. "
                         + "For the inverse-limit application, rho at level l is the actual "
-                        + "projection of the one completed source law. This theorem adds no "
+                        + "projection of the one completed world law rho, whose source pushforward is nu. This theorem adds no "
                         + "topological homeomorphism assertion; its conclusion concerns finite "
                         + "probability laws and their affine coordinate representation."))),
             DescribeRole.Theorem))));
