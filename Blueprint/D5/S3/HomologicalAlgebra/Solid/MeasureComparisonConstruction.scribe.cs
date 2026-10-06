@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.HomologicalAlgebra.Solid;
 internal sealed class MeasureComparisonConstructionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Concrete bounded inverse, dyadic integer-quotient cancellation and canonical P-measure comparison. This is a single compilation unit for the substantive construction, assembled from the saved owned drafts to share one import pass. All new proofs are Apache-2.0. Research construction: Juan Esteban Rodriguez Camargo, Notes on Solid Geometry, Lemmas 3.3.3--3.3.4. Immutable formal suppliers retain their source/commit/license identities. No DSolid realization or original HasLeftDerivedFunctor/derived adjunction is assumed.",
+        "Concrete bounded inverse, dyadic integer-quotient cancellation and canonical P-measure comparison. The bounded inverse and integer-quotient continuation are separate compilation units at their existing component boundary. All new proofs are Apache-2.0. Research construction: Juan Esteban Rodriguez Camargo, Notes on Solid Geometry, Lemmas 3.3.3--3.3.4. Immutable formal suppliers retain their source/commit/license identities. No DSolid realization or original HasLeftDerivedFunctor/derived adjunction is assumed.",
         H("Measure Comparison Construction"),
         Blocks(
             Describe.Lean(
@@ -22,6 +22,6 @@ internal sealed class MeasureComparisonConstructionDocument : IScribeDocumentDef
                 H("local Integer Measure Iso"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The exact declaration is supplied by the compiled Lean source. Concrete bounded inverse, dyadic integer-quotient cancellation and canonical P-measure comparison. This is a single compilation unit for the substantive construction, assembled from the saved owned drafts to share one import pass. All new proofs are Apache-2.0. Research construction: Juan Esteban Rodriguez Camargo, Notes on Solid Geometry, Lemmas 3.3.3--3.3.4. Immutable formal suppliers retain their source/commit/license identities. No DSolid realization or original HasLeftDerivedFunctor/derived adjunction is assumed."))),
+                Blocks(Paragraph(Text("The exact declaration is supplied by the compiled Lean source. Concrete bounded inverse, dyadic integer-quotient cancellation and canonical P-measure comparison. The bounded inverse and integer-quotient continuation are separate compilation units at their existing component boundary. All new proofs are Apache-2.0. Research construction: Juan Esteban Rodriguez Camargo, Notes on Solid Geometry, Lemmas 3.3.3--3.3.4. Immutable formal suppliers retain their source/commit/license identities. No DSolid realization or original HasLeftDerivedFunctor/derived adjunction is assumed."))),
                 DescribeRole.Definition))));
 }
