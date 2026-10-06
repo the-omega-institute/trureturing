@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.Finset.Powerset, mathlib/module/Mathlib.Data.Finset.Max]
    utility: none
-   digest: Pair selections in hereditarily sparse indexed graphs have only rigid four-cliques. -/
+   digest: If all legal selections are sparse, clique minimizers have rigid four-clique owners. -/
 
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Finset.Max
