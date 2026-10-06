@@ -28,11 +28,11 @@
 
 不将 `∀ i, δᵢ > 0` 改成“只有某个挑选后的子集需要正增益”；不把同一 arena 拆成几个互不比较的组；不排除导致零增益的定理；不删除 primitive 来加速；不加人工权重、评分或新的测试域；不将 `axiom`、哈希收据或 `native_decide` 当成大证明的替代品。
 
-上一轮讨论的“把不可约性仅施加于精简视图”属于语义政策调整，不纳入本工程方案。物理归档可以保留旧快照；当前注册族的判定仍然完全按现行规则执行。
+当前注册族的判定按完整目录的现行规则执行。
 
 ### 0.2 一次编译的准确合同
 
-冷工作树仍从现有 `make lean` / cache-writer 入口进入，不能先裸跑 Lake 破坏 donor 初始化条件。一个顶层构建调用中，Lake 可以按 DAG 编译多个文件、复用已有产物，`#seal_information_theory` 在 elaboration 内生成并检查伴随声明。禁止“先外部生成证明源码，再启动第二轮编译完成证明”的新链条。
+冷工作树仍从现有 `make lean` / cache-writer 入口进入，不能先裸跑 Lake 破坏 donor 初始化条件。一个顶层构建调用中，Lake 可以按 DAG 编译多个文件、复用已有产物，Reg 的 `Contract.Seal` 在编译期检查目录计数与结论的数学义务，报告仅消费编译字段。禁止“先外部生成证明源码，再启动第二轮编译完成证明”的新链条。
 
 缓存依赖过往计算，不等于把历史版本引入信息增益的数学定义。性能对照版本与 Git 治理 protected-base 也不等于数学 baseline，三者必须分别命名。
 
@@ -42,16 +42,16 @@
 
 | 已核对路径 | 当前行为 | 结论 |
 |---|---|---|
-| `lakefile.toml` | 默认目标包含 `Trureturing`、`LeanInformationAudit`，管理 `D5.+` | 优化不能简单删默认覆盖；先保持全覆盖、做增量复用 |
+| `lakefile.toml` | 根包管理数学内容；Interface、Impl、Reg 与测试宿主独立分包 | 优化不能简单删默认覆盖；先保持全覆盖、做增量复用 |
 | `Makefile` | 已有 `make lean`、`lean-report`、`gate`、发布与取回缓存入口 | 扩展现有入口，不叠加第二套命令体系 |
-| `tools/lean-inspector/Inspector.lean` | 一次 `importModules` 导入输入模块；积累 `reports` 后拼接 JSON | 需要批处理与流式编码，当前选择可能仍有很大的导入闭包 |
+| `tools/lean-inspector/Inspector.lean` | 用 `RawArtifacts.Store` 读取编译部件，按模块流式输出报告 | 按实际输入闭包和批次边界测量读取成本 |
 | 同上 | 公理闭包已有 Tarjan SCC 与运行级共享缓存 | 保留；不能将“新增 memoization”当作本轮主要收益 |
-| `inspect.sh` / `delta.py` | 已有内容寻址、增量选择与未变记录复用 | 补全依赖证明和失败回退，不重写一个替代系统 |
-| `delta.py` | `read_bytes` / `read_text` / `json.loads` 可形成多份报告内存表示 | 流式解析、按模块对象索引，逐步避免全报告驻留 |
-| `CatalogBuilder.lean` | 按 `arenaName` 分组、确定顺序、构造当前目录 | arena 是语义边界，不是可以任意改的小批次 |
-| `ProofBuilder.lean` | 逐定理计算 unique / without / 角色直方图，再构造全体正性证明 | 优先合并计数并消除重复证明求值 |
+| `lakefile.lean` / `native.py` | Lake trace 决定编译产物和整份报告复用 | 实现字节不进入报告复用条件 |
+| `materials.py` / `publication.py` | 校验并发布 canonical 报告与材料 | 按实际分配量测量内存 |
+| `CompiledSeal.lean` | 按 `arenaName` 分组、确定顺序、构造当前目录 | arena 是语义边界，不是可以任意改的小批次 |
+| `Contract/Catalog.lean` | SealRow 与 SealCatalog 将计数和结论绑定同一目录 | 数学证据在 Reg 编译期检查 |
 | `ExactRate.lean` | 已证明 `escapeNumerator_without_eq` 等式及正增益刻画 | 可直接复用，避免重新枚举每个留一族 |
-| `SealCommand.lean` | 先在局部环境 kernel-check，再一次发布环境；JSON 为输出 | 保留原子性，增强文件发布与编译产物绑定 |
+| `CompiledSeal.lean` | 编译期检查契约数学义务，报告期核对结构；JSON 为输出 | 保留原子性，增强文件发布与编译产物绑定 |
 | `README.md`、缓存归属文档 | 私有工作树、禁止 symlink 共享 `.lake`、已有 clonefile/donor | 不以移除互斥锁或共享可写目录换性能 |
 | `.github/workflows/ci-current.yml` 与 `ci-unit.yml` | `detect` 作业按 workflow 内的单元白名单决定各单元作业是否命中；current 构建一次报告并随项目 buildDir 缓存运输 | 单独处理可选缓存传输失败；真正检查失败仍阻断 |
 
@@ -72,8 +72,8 @@ Source snapshot + exact toolchain + dependency lock
              \        |        /
           typed counts + proof certificates
                     |
-          #seal_information_theory
-          kernel-checked declarations
+          Contract.Seal 数据
+          kernel-checked obligations
                     |
              checked build products
                     |
@@ -302,9 +302,9 @@ D5/S3/ConceptDynamics/InformationEscape/Counting/
 
 ---
 
-## 8. ProofBuilder：共享已检查结果，不重复展开同一大计算
+## 8. 契约证据：共享已检查结果，不重复展开同一大计算
 
-保留原定义作为 reference semantics。新加的辅助计数证明不自动注册为新的 theorem unit；否则会改变待评估目录，已经不属于同输入优化。在 elaboration 中准备一个类型化 Counts 对象，并构造其等于 reference counts 的正确性证明。
+保留原定义作为 reference semantics。新加的辅助计数证明不自动注册为新的 theorem unit；否则会改变待评估目录，已经不属于同输入优化。在 Reg 编译期准备类型化计数对象，并证明其等于 reference counts。报告期只投影已编译的计数与结论。
 
 建议内部结构语义如下（不是已编译 API）：
 
@@ -334,22 +334,19 @@ JSON 中方法名必须真实反映执行路线。若 provenance 字段变化，
 
 ## 9. 封印、快照覆盖与发布原子性
 
-现有 `SealCommand.lean` 先准备、预检名字，再 `addDeclCore` 检查，最后一次 `setEnv`。保留这种事务式环境发布。
+`Contract.Seal` 在 Reg 编译期承载完整目录的类型化数学证据；`CompiledSeal.lean` 在报告期核对编译字段，不安装声明或构建环境。报告通过现有 producer 的原子发布边界输出。
 
 增加三个检查：
 
-1. 当前 seal 预期处理的 registry entries 与实际条目完全一致。
-2. 每个目录证书绑定成员集合、确定顺序、arena、primitive 与依赖环境。
+1. 当前 seal 预期处理的 类型化登记 与实际条目完全一致。
+2. 每个目录证书绑定成员集合、确定顺序、arena、primitive 与编译依赖闭包。
 3. 旧快照证书不因原始数学命题未变而被错误复用到新目录。
 
-一个源文件只看见所导入的 registry entries，不能仅靠局部环境就声称“已经看见仓库全部注册项”。项目级覆盖清单必须来自确定的源快照与已有枚举器，并验证完整集合。该清单证明工程覆盖，不冒充“枚举了数学世界所有定理”。
+编译部件只覆盖自身 import 闭包，不能仅凭局部闭包就声称“已经看见仓库全部注册项”。项目级覆盖清单必须来自确定的源快照与已有枚举器，并验证完整集合。该清单证明工程覆盖，不冒充“枚举了数学世界所有定理”。
 
-区分两种原子域：
+Reg 契约先通过 Lean 编译，文件发行再验证 `.olean` 等构建产物、JSON/材料及 checksum。最终发布服从现有 producer 的原子文件边界；报告期不操作 Lean 环境。
 
-- Lean 环境：全部新声明检查成功后才替换环境。
-- 文件发行：`.olean` 等构建产物生成完成、JSON/材料及 checksum 校验完成后，才发布最终 manifest/COMMITTED 标记。
-
-输出先写唯一 staging 目录；原子 rename 发布。不能只因为 `#seal` 写出了 JSON 就认定整个 Lean 编译已经成功，因为后续编译可能失败。最终发布目标依赖已完成的构建 facets，读者只认完成标记。崩溃留下的 pending 文件永不准入。
+输出先写唯一 staging 目录；原子 rename 发布。JSON 输出本身不证明 Lean 编译成功。最终发布目标依赖已完成的构建 facets，读者只认完成标记。崩溃留下的 pending 文件永不准入。
 
 ---
 
@@ -475,11 +472,9 @@ C、object、`.olean`、私有模块数据、语言服务器数据不能一概�
 
 为可选 cache restore 网络/服务错误设置受控回退，但必须：捕获具体错误、隔离不完整目录、重新验证或重建、保持最终 Lean 和治理检查必需。不得对整项 Lean job 或 admission 使用忽略错误。
 
-`inspect.sh` 当前负责一次 `lake build` 后再执行报告程序。第一阶段保留这个入口，只拆检查批次，不额外从 worker 反复调用 `lake build`。数学封印仍在该构建中完成；报告程序只是读取已编译结果。
+`make lean-report` 通过缓存守门入口调用 Lake 的报告 facets。Reg 编译期检查契约数学义务，生产报告读取编译部件并评定结构，发布程序验证报告与材料。Lake trace 决定增量复用；只有含类型化判官输入的模块使用唯一 `report_cache_release_semantic_version`，实现程序字节不进入复用条件。
 
-若需要让一条 Lake target 统一管理封印与投影产物，在成熟阶段通过自定义 facet 配置；TOML 迁移到 `lakefile.lean` 必须单独提交，证明依赖、默认覆盖和目标行为一致，不能并存两个配置真源。元程序创建声明留在同次 elaboration 内，禁止外部先生成证明 Lean 源码再重编。
-
-发行按构建、数学检查、治理检查、Scribe、来源验证、原子 manifest 发布的依赖顺序执行。任何阶段失败，不生成当前快照的正式发布记录。
+接口升级须同一交付迁移全部用法并 bump 该版本。实现改动不重编 Reg；未 bump 时整份报告复用，输入闭包变化的目标使用当前实现。不得生成第二份证明源码、在报告期创建声明或保留旧路径回退。
 
 ---
 
@@ -495,7 +490,7 @@ C、object、`.olean`、私有模块数据、语言服务器数据不能一概�
 
 增量扫描必须包括删除与重命名：旧图定位反向依赖，新源码提取新边。删除的模块不再是检查输入，但仍导入它的存活模块必须失败或修复。
 
-registry 的持久化扩展与公开/私有模块迁移也要测试。不能因为某个 extension 没被导入而少看几条定理，使原本失败的目录通过。
+类型化输入发现与公开/私有编译部件读取也要测试。不能因为某个 extension 没被导入而少看几条定理，使原本失败的目录通过。
 
 ---
 
@@ -585,9 +580,9 @@ registry 的持久化扩展与公开/私有模块迁移也要测试。不能因�
 | `tools/lean-inspector/inspect.sh` | 一次 build 后批次执行；增加只读检查边界；不循环启动 build |
 | `tools/lean-inspector/delta.py` | 保留旧记录复用语义；流式解析与完整失效测试 |
 | `tools/lean-inspector/materials.py` | bounded-memory 编码/归档，不改 statement bytes |
-| `tools/lean-inspector/LeanInformationAudit/ProofBuilder.lean` | 调用经证明 fused/partition 结果；共享 proof |
-| `.../CatalogBuilder.lean` | 完整 registry 与 arena 顺序不变；新增快照/目录绑定 |
-| `.../SealCommand.lean` | 现有环境事务不变；候选产物与最终发布分离 |
+| `tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Catalog.lean` | 定义 Seal 的计数与结论数学义务 |
+| `.../CompiledSeal.lean` | 完整 registry 与 arena 顺序不变；新增快照/目录绑定 |
+| `tools/lean-inspector/native.py` | 候选产物与最终发布分离，失败不发布 |
 | `D5/.../InformationEscape/Counting/` | 新算法、等价、块合成定理；按现有流程配置镜像与 Scribe |
 | `tools/StrataLint.Cli/Commands/Worktrees/` | 租约、缓存 envelope、恢复；不取消私有目录策略 |
 | `tools/StrataLint.Engine/` | 消费确定报告、保持治理规则；不重算数学分数 |
@@ -626,17 +621,17 @@ registry 的持久化扩展与公开/私有模块迁移也要测试。不能因�
 
 下列仓库路径均读取自本方案顶部固定提交；路径足以在该快照复核。网络说明使用官方文档，具体特性落地前仍以项目 pin 的真实编译结果为准。
 
-[S1] `README.md`、`Makefile`、`lakefile.toml`。  
-[S2] `tools/lean-inspector/Inspector.lean`。  
-[S3] `tools/lean-inspector/inspect.sh`、`delta.py`。  
-[S4] `tools/lean-inspector/LeanInformationAudit/CatalogBuilder.lean`。  
-[S5] `tools/lean-inspector/LeanInformationAudit/ProofBuilder.lean`。  
-[S6] `tools/lean-inspector/LeanInformationAudit/SealCommand.lean`。  
-[S7] `D5/S3/ConceptDynamics/InformationEscape/ExactRate.lean`。  
-[S8] `docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md`。  
-[S10] `.github/workflows/ci.yml`。  
-[S11] Lean 官方《Source Files and Modules》：`https://lean-lang.org/doc/reference/latest/Source-Files-and-Modules/`。  
-[S12] Lean 官方《Lake》：`https://lean-lang.org/doc/reference/latest/Build-Tools-and-Distribution/Lake/`。  
+[S1] `README.md`、`Makefile`、`lakefile.toml`。
+[S2] `tools/lean-inspector/Inspector.lean`。
+[S3] `tools/lean-inspector/inspect.sh`、`delta.py`。
+[S4] `tools/lean-inspector/LeanInformationAudit/CompiledSeal.lean`。
+[S5] `tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Catalog.lean`。
+[S6] `tools/lean-inspector/LeanInformationAudit/CompiledSeal.lean`。
+[S7] `D5/S3/ConceptDynamics/InformationEscape/ExactRate.lean`。
+[S8] `docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md`。
+[S10] `.github/workflows/ci.yml`。
+[S11] Lean 官方《Source Files and Modules》：`https://lean-lang.org/doc/reference/latest/Source-Files-and-Modules/`。
+[S12] Lean 官方《Lake》：`https://lean-lang.org/doc/reference/latest/Build-Tools-and-Distribution/Lake/`。
 [S13] Lean 官方《Validating a Lean Proof》：`https://lean-lang.org/doc/reference/latest/ValidatingProofs/`。
 
 仓库快照入口：`https://github.com/the-omega-institute/trureturing/tree/d0e63dda80290fc39bfc46fe8310b4b47a661e28`。

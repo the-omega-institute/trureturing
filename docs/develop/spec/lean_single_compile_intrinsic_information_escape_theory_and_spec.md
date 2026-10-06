@@ -2108,9 +2108,9 @@ peer grouping；一个 theorem 只有在不同 canonical arenas 上经独立、k
 realizations 才可有多个 designated occurrences，并必须在每个 occurrence 所在的 maximal
 catalog 中分别为正。
 
-### 15.3 最终编译命令不是数学 theorem
+### 15.3 封印数据不是数学 theorem
 
-`#seal_information_theory` 是不接收目标路径的 elaborator command。它执行枚举、构造证明项并发布封印结果，但不作为被分析 concept 加入 catalog。
+`Contract.Seal` 是带类型的契约数据声明，不作为被分析 concept 加入 catalog。Lean 编译期核对其计数等式、逐行结论与目录结论的数学义务；报告期只读取编译产物并核对登记、目录及证据的结构对应。
 
 其数学正确性由普通 Lean theorem 证明，而这些 soundness theorem 本身可以进入 catalog 接受自应用。
 
@@ -5240,9 +5240,9 @@ InformationEscape finite engine
 
 ---
 
-## CIRPT-40　单次 seal 命令新增义务
+## CIRPT-40　封印契约义务
 
-`#seal_information_theory` 在同一次编译中必须额外检查：
+`Contract.Seal` 与其 `SealCatalog`、`SealRow` 数据在 Reg 编译期承载数学义务；报告期由 `CompiledSeal` 消费编译字段并核对结构：
 
 1. 每个 theorem unit 具有非空、typed primitive bundle；
 2. bundle 中每个 atom 由合法 primitive constructor 或等价 kernel theorem 建立；
@@ -5261,9 +5261,9 @@ InformationEscape finite engine
 15. refinement matrix 的 true cell 有 inclusion proof，false cell 有确定性 witness pair；
 16. 在输出逐成员 IE-C007 前计算并验证完整 `redundantIndices`，不得 first-zero 短路；
 17. canonical maximal catalog 与 `analysis_view` 均在全部 exact positive/trivial/negative certificates staged 且 kernel-checked 后发布；实际校验失败仍原子回滚且不写 artifact；
-18. seal 消费命令所在 root 的 import closure 中全部持久可见 registrations，不得过滤 imported entries；
+18. seal 消费所在 root 的 import closure 中全部类型化 registrations，不得过滤 imported entries；
 19. 当前 seal 的 expected entries 与 actual entries 完全相等；designated root 的 expected set 来自固定源快照与既有枚举器；
-20. 每个 certificate 绑定完整成员集合、确定顺序、arena、primitives 与 elaborated environment，旧快照 certificate 不得复用到新目录；
+20. 每个 certificate 绑定完整成员集合、确定顺序、arena、primitives 与当前编译声明，旧快照 certificate 不得复用到新目录；
 21. designated root 的 `SystemCatalogIrredundant` 仍是其全部仓库尺度 maximal catalogs 的 conjunction；IE-039 的 `Iff.rfl` 不变，仅报告其真/假，不以假拒绝 seal；
 22. kernel-address coincidence 只进入 diagnostic projection，绝不进入证明、grouping 或 verdict；
 23. 超过第 33 节 ordered-pair budget 的 catalog 必须使用 refl lane 提供的 reflected seal，否则 fail closed。
@@ -5280,10 +5280,10 @@ InformationEscape finite engine
 缺失、stale identity 与 constructor payload；命令见
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`。
 
-第 27、29 项是 census 自身的报告校验义务，不是 `#seal_information_theory` 的输入或成功前提；
+第 27、29 项是 census 自身的报告校验义务，不是 `Contract.Seal` 的输入或成功前提；
 记账完备、认证完备及 census artifact 均不得接为 required gate。其余 seal 证书义务保持有效。
-census 与 seal 命令分别见 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`、
-`tools/lean-inspector/LeanInformationAudit/SealCommand.lean`。
+census 与 seal 报告评定分别见 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`、
+`tools/lean-inspector/LeanInformationAudit/CompiledSeal.lean`。
 
 ---
 
@@ -6185,19 +6185,15 @@ D5/S3/ConceptDynamics/InformationEscapeCounting/
   BlockComposition.lean
 
 tools/lean-inspector/LeanInformationAudit/
-  Registry.lean
+  RawArtifacts.lean
+  Contract/Discovery.lean
+  Contract/Decoder.lean
+  ArtifactAssessment.lean
+  ArtifactRegistration.lean
+  CompiledSnapshots.lean
+  CompiledSeal.lean
   AnalysisDisposition.lean
   DispositionCensus.lean
-  Syntax.lean
-  Reify.lean
-  PrimitiveNormalizer.lean
-  CatalogBuilder.lean
-  ProofBuilder.lean
-  SealCommand.lean
-  KernelProjection.lean
-  AsciiHierarchy.lean
-  Emit.lean
-  Main.lean
 
 D5/S3/ConceptDynamics/InformationEscape/SharedInformationRoot.lean
 ```
@@ -6209,13 +6205,9 @@ D5/S3/ConceptDynamics/InformationEscape/SharedInformationRoot.lean
 `tools/StrataLint.Engine/Coordinates/Gid.cs` 的 `ParseFormalCoordinates` 要求 ordinary formal
 coordinates 至少三段；上述 sibling placement 是布局约束，不由文法深度推出。
 
-`D5/S3/ConceptDynamics/InformationEscape/SharedInformationRoot.lean` 是新的 designated
-v4.2 root；它必须导入固定仓库快照的完整 registration closure，使其 import closure 与
-既有枚举器产生的项目级 coverage manifest 完全相等，并以唯一终局命令结束：
-
-```lean
-#seal_information_theory
-```
+`Reg/Catalogs/<目录>/SealedCatalog.lean` 导入所需登记闭包，以一个
+`Contract.RootCatalog` 声明完整 expected 集，以一个 `Contract.Seal` 声明该根的
+目录与已编译数学证据。根身份取所在 Reg 模块，声明源码只依赖内容和接口。
 
 ---
 
@@ -7553,55 +7545,31 @@ structure InformationRegistryEntry where
   realizationName : Name
 ```
 
-`rootId` 由执行 `#seal_information_theory` 的当前 module `Name` 给出，不由 entry 自报。
-`registrationModuleName` 由 elaborator 记录，只用于 import-closure provenance、artifact 与
-snapshot coverage check，绝不用于过滤 seal membership。grouping key 只取
-`objectArenaName`；`lawArenaName` 是 `PrimitiveLawArena` presentation，不能充当 object identity。
+`rootId` 是 RootCatalog 或 Seal 所在模块的 `Name`，由编译产物的模块归属核对。
+`registrationModuleName` 取登记常量的编译模块归属，只用于 import-closure provenance、
+artifact 与 coverage 核对，不能过滤 seal membership。grouping key 只取
+`objectArenaName`；`lawArenaName` 是 presentation，不能充当 object identity。
 
-### 25.2 持久性
+### 25.2 编译声明的可见性
 
-`Registry.lean` 使用 `SimplePersistentEnvExtension`，其
-`addImportedFn` 拼接 imported registrations；`CatalogBuilder.lean` 当前消费全部
-`InformationRegistry.entries`。因此 imported entries 对 consumers 可见且会进入 v4.1 seal。
+判官使用 `RawArtifacts.Store` 读取编译部件，`Contract.Discovery` 按精确契约类型发现
+`Registration`、`TemplateEnrollment`、`RootCatalog` 与 `Seal`。输入是构造器树或常量引用；
+需要执行输入代码才能取得的值按模块、声明名与原因具名失败。
 
-该行为构成 **import-closure seal membership** contract：
+- 每个 seal 消费其 root import closure 中全部类型化登记，不过滤 imported entries；
+- imported 编译模块中的登记通过同一发现路径进入 consumer/seal；
+- 按 canonical `objectArenaName` 将全部可见 peers 合为一个 maximal catalog；
+- 同一 `(objectArenaName,theoremName)` 第二次登记触发 IE-C002；
+- 同一 theorem 在不同 canonical arena 的独立 kernel-checked realization 是合法 occurrence；
+- catalog-qualified companion names 不得碰撞，碰撞触发 IE-C025。
 
-- 每个 seal 消费其 root import closure 中全部 `InformationRegistry.entries`，不得过滤 imported entries；
-- import 某个已经 sealed 的 `.olean` 会使其 entries 成为当前 seal members；
-- `CatalogBuilder` 按 canonical `objectArenaName` 把全部可见 peers 合为一个 maximal catalog；
-- 同一 `(objectArenaName,theoremName)` 在 import closure 任意位置第二次登记均触发 IE-C002；
-- 同一 theorem 通过独立、kernel-checked realization 登记到不同 canonical arena 是合法的新 occurrence；
-- generated unit、realization 与 companion names 必须 catalog-qualified，qualified-name collision 触发 IE-C025；
-- 无需扫描源文本；
-- 无需从 Git 文件列表推测 Lean 环境成员。
+### 25.3 编译产物真源
 
-`RegistrationPersistence`、`RegistryConsumer` 与 `SealCollision` 保持其 landed semantics：
-imported registrations 持久可见并进入 consumer/seal，重复 occurrence collision 继续
-fail-closed；不得将这些 fixtures 改写成 imported-entry filtering 的证明。
-
-### 25.3 环境真源
-
-最终 catalog 只由：
-
-```lean
-Environment
-```
-
-中的已 elaborated declaration 和 registry 构造。
-
-上述环境真源足以决定某个 root 的 import-closure seal，却不足以仅凭局部环境宣称已经覆盖
-仓库全部注册项。designated system root 必须以确定的仓库源快照与既有枚举器生成项目级
-coverage manifest，并验证 expected entries 与实际 sealed entries 完全相等（工程优化规范
-v1 §9）；辅助 root 只声明其 import-closure scoped analysis。
-
-不得从以下内容决定 theorem 集：
-
-- Markdown；
-- Blueprint；
-- YAML；
-- 文件头注释；
-- 正则表达式；
-- Git diff。
+catalog 只由编译后的类型化登记、声明与实际 import 闭包构造。RootCatalog 的 expected
+字段给出预期集合；报告期将其与实际登记逐项核对。根清单由 Reg 的路径和 import 闭包
+确定，辅助 root 只表示该闭包内的分析范围。Markdown、Blueprint、YAML、文件头、正则
+或 Git diff 均不决定 catalog theorem 集。报告期不建 Environment、不初始化扩展，
+不调用 elaborator、Meta、类型检查器或 Lean kernel。
 
 ### 25.4 registry 完整性
 
@@ -7625,102 +7593,35 @@ elaborated environment，且不得复用旧快照 certificate。
 
 ---
 
-## 26. 单次终局命令
+## 26. 封印契约与报告评定
 
-### 26.1 命令形式
+### 26.1 声明形式
 
-```lean
-#seal_information_theory
-```
+`Reg/Catalogs/<目录>/RootCatalog.lean` 恰含一个 `Contract.RootCatalog`、不含 Seal。
+同树的 `SealedCatalog.lean` 恰含一个 RootCatalog 和一个 `Contract.Seal`；其它模块
+不得包含这两类结构输入。RootCatalog.data.expected 是完整预期成员集合。
 
-封印命令不接收输出路径；在已封印的 root 上先暂存 analysis records 与 certificates，再只读导出：
+Seal 的 catalogs 字段含 `SealCatalog`。各 catalog 的 arena、units 与 size 指定同一
+向量目录；nondegenerate、bundleNonempty、stateCardEq、fullEq、rows、collisions 与
+conclusion 是该目录上的类型化证据。每行 `SealRow` 的 uniqueEq、withoutEq、roleEq、
+roleTotal 与 positive/zero conclusion 由 Lean 内核在 Reg 编译期检查。
 
-```lean
-#stage_information_analysis root D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
-#export_information_analysis root D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
-  analysis_output "build/information-theory.analysis.json"
-```
+### 26.2 报告执行边界
 
-导出命令只读取已暂存的 records 与 certificates；可选 `output "..."` 位于 `analysis_output "..."` 前，可选 `ascii_output "..."` 位于其后。
-命令文法中三个输出子句均可省略，按上述顺序选择要写出的产物；路径只控制 artifact 写出位置，不影响任何数学判词。
+`ArtifactAssessment` 发现 root import 闭包内的全部类型化输入，核对 occurrence key、
+模板、源绑定和 realization 证据，并由 `CompiledSnapshots` 核对 expected 与 actual。
+`CompiledSeal` 按 canonical arena 分组，核对编译后的目录向量、成员顺序、arena、计数
+与结论字段，然后投影报告。数学证据不在报告期生成或重新检查。
 
-封印命令的 root identity 是当前 module `Name`，scope 固定为 `import-closure`。仓库 build
-manifest 必须 designation 恰好一个 v4.2 canonical system root；其 import closure 包含固定
-仓库快照的完整 registration closure，因此 catalogs 在仓库尺度 maximal。辅助 roots 也可
-seal，但 artifact 必须标为 scoped analysis，写 `seal_scope: import-closure` 与 imported
-registration modules 列表，且不能代替 designated root 的 `SystemCatalogIrredundant`。
+完整零集合得到逐成员 disposition；零成员本身不使合法 catalog 失败，也不取得首次
+冻结的正性资格。kernel 地址、hash、布局、timing 与 schedule 只用于输出，不作为
+grouping 或准入依据。输入缺失、不支持或不一致须具名失败，不输出伪造成功。
 
-### 26.2 命令执行顺序
+### 26.3 单次编译与唯一读取路径
 
-命令必须在一次 elaboration 中执行以下步骤：
-
-1. 读取 registry；
-2. 校验 entry；
-3. 枚举 root import closure 中全部持久可见 entries，禁止 imported-entry filtering；
-4. 从固定源快照与既有枚举器取得 designated-root expected entries（辅助 root 则绑定其 imported registration modules），并验证 expected entries = actual entries；
-5. 校验 `(objectArenaName,theoremName)` occurrence keys；
-6. 按 canonical `objectArenaName` 确定性分组，构造覆盖全部同 arena members 的唯一 maximal catalog；
-7. 按 `catalogId`，再按 theorem canonical `Name` encoding 排序；
-8. 为每个 maximal catalog 与 declared analysis view 构造有限 index type；
-9. 验证 catalog-qualified generated names 无碰撞；
-10. 构造完整 `Finset.univ`；
-11. 枚举或反射 `offDiagonalPairs`；
-12. 计算完整族 `escapePairs`；
-13. 对每个 index 计算 `without` 与 `uniqueCapturePairs`；
-14. 计算 exclusive vector、overlap/refinement matrices、spectrum 与 role totals；
-15. 对每条 registered `LayerChain` 校验 inclusions 并计算 increments/unresolved；
-16. 计算完整 `redundantIndices` 与 catalog verdict，不得遇首零即停止；
-17. 计算 exact Nat／Rat 数值；
-18. 构造所有 reflected equality、matrix/spectrum/layer identity 与 verdict proofs；每个 certificate 绑定 member set/order/arena/primitives/environment；
-19. 拒绝把任何旧 snapshot certificate 复用于当前 catalog；
-20. 为正成员从 `0 < uniqueCaptureCount` 构造 proof；为零成员由 `decide` 或 reflected zero-count equality 得到 `uniqueCapturePairs = ∅` 的 `Catalog.TrivialInCatalog` proof；
-21. 仅为正成员经 `lowersEscape_iff_uniqueCaptureCount_pos` 得到 `LowersEscape` proof；
-22. 添加 catalog-qualified private 或 namespaced companion theorem；
-23. catalog 全正时生成 `__catalog_irredundant`，否则生成 `__catalog_redundant : Catalog.CatalogRedundant C`；analysis stage 组装完整 suite 的 `__system_catalog_irredundant` 或 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant`；
-24. 完整认证后每个 zero member 输出一个 IE-C007 disposition record；zero 本身不抛错；seal/stage/export 仍分离，JSON 仅由已 staged 的 typed certificates 投影；
-25. 全部 theorem proof 加入 environment 后，写出 schema-v3 只读 artifact；
-26. 命令成功结束。
-
-原 v4.1 的步骤编号只描述 singleton baseline 实现；v4.2 以上述原子顺序为准。尤其
-positive/negative certificates 必须在任何 artifact write 之前完成。
-
-### 26.3 不得启动第二次 Lean
-
-实现不得：
-
-```text
-write Generated.lean
-lake env lean Generated.lean
-```
-
-所有 generated declaration 必须通过当前 elaborator process 的 `addDecl`／等价受支持接口加入当前 environment。
-
-### 26.4 fail-closed
-
-以下 malformed、incomplete 或 degenerate catalog 的实际 validation failure 使命令报错并使编译失败；零成员本身不属于这些失败：
-
-- arena 无法实例化；
-- state cardinal 小于 2；
-- primitive bundle 缺失或为空；
-- 某个 primitive kernel 无可执行 `DecidableRel`；
-- primitive Bool reflection 与结构 kernel 不一致；
-- theorem unit 非闭合；
-- theorem-to-bundle realization 缺失；
-- `(objectArenaName,theoremName)` occurrence 登记重复；
-- proof/certificate identity 泄漏进 object primitive bundle；
-- 任一 zero member 缺失或无法验证 `TrivialInCatalog`；zero 本身不使分类 seal 失败；
-- role-signature partition 与 unique count 不一致；
-- proof builder 无法构造 kernel 可接受证明；
-- artifact 在数学检查之前被写出；
-- registry 与 environment 不一致。
-- qualified generated name 碰撞或同 arena maximal catalog 缺失；
-- canonical arena 被 namespace/root/catalog/wrapper 拆分；
-- refinement、spectrum、role、verdict 或 layer certificate 不完整；
-- `redundantIndices` 不是完整零集合；
-- kernel address 被用作语义或准入证据；
-- 超预算 catalog 没有 refl lane reflected seal。
-
-canonical maximal catalog 的实际 validation failure 不得写任何 artifact；完整、非退化且合法的 canonical catalog 与 `analysis_view` 均可 seal，并在完整 positive 或 negative verdict certificates 已 staged 且由 kernel 接受后输出 projection；零成员认证为 `trivial_in_catalog` 并逐成员记录 IE-C007，不使 catalog 失败，也不授予待首次冻结零对象 positive admission。
+Reg 编译直接检查契约数学义务，不生成第二份 Lean 源码或启动第二次证明编译。
+报告读取编译部件并进行有界结构计算，不安装声明、不执行输入代码、不构建 Lean
+Environment，不回退到环境扩展或登记命令路径。伴随名仅是报告数据视图。
 
 ---
 
@@ -7839,36 +7740,24 @@ Meta／IO 层只负责：
 ## 29. 单次编译数据流
 
 ```text
-Lean source theorem units
-          │
-          ▼
-root import closure + persistent registry occurrences
-          │
-          ▼
-root identity + canonical object-Arena grouping
-          │
-          ▼
-#seal_information_theory
-          │
-          ├── build every canonical maximal catalog
-          ├── retain declared sub-catalogs as analysis views only
-          ├── construct leave-one-out families
-          ├── compute exact escape pairs
-          ├── compute overlap/refinement/spectrum/role/layer analyses
-          ├── stage all positive or negative certificates
-          ├── add catalog-qualified companion theorems
-          ├── assemble designated-root universal verdict
-          └── classify the complete zero set; first-freeze positivity remains a separate gate
-          │
-          ▼
-Lean kernel accepts final environment
-          │
-          ▼
-read-only JSON / CSV / DOT artifacts
+D5 数学定义与证明 + Interface 契约类型
+                    │
+                    ▼
+Reg 类型化登记、RootCatalog 与 Seal
+                    │ Lean 编译期检查数学义务
+                    ▼
+编译部件、声明类型、构造器字段与 import 闭包
+                    │ RawArtifacts / Discovery / Decoder
+                    ▼
+ArtifactAssessment / CompiledSnapshots / CompiledSeal
+                    │ 有界结构评定，不构建环境或证明
+                    ▼
+生产报告与只读数据视图
 ```
 
-没有环节读取旧状态。kernel-address coincidence 在最后的 projection-only 阶段分组；它
-没有回边进入 canonical arena grouping、proof construction 或 verdict。
+接口与实现分包；Reg 不依赖实现。实现变化不重编 Reg；未 bump 唯一报告语义版本时
+整份报告复用。输入闭包变化的目标使用当前实现评定。接口升级须同次迁移全部用法并
+bump 版本，不保留兼容读取路径。kernel-address coincidence 无回边进入分组或判词。
 
 ---
 
@@ -9265,15 +9154,11 @@ Catalog
 模板 enrollment 使用 `def x : Contract.TemplateEnrollment … := {…}`。
 判官实现从编译后的带类型声明发现输入并重建评定；登记不含也不调用判官代码。
 
-### Phase 5　单次 seal
+### Phase 5　封印契约
 
-实现：
-
-```lean
-#seal_information_theory
-```
-
-禁止任何 generated source second pass。
+在 Reg 声明 `Contract.RootCatalog` 与 `Contract.Seal`，编译期核对类型化数学义务。
+报告使用 `CompiledSnapshots` 与 `CompiledSeal` 核对编译字段及完整登记闭包。
+禁止生成第二份证明源码、执行输入代码或在报告期新造证明。
 
 ### Phase 6　伴随 theorem
 
