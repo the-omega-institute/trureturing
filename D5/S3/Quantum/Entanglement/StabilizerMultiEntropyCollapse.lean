@@ -7,6 +7,7 @@
    digest: The n = 3 genuine four-party multi-entropy collapse for pure qubit stabilizer states. -/
 
 import D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence
+import D5.S3.Quantum.Entanglement.ReplicaPartitionLocalInvariance
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -16,18 +17,7 @@ noncomputable section
 namespace D5.S3.Quantum.Entanglement.StabilizerMultiEntropyCollapse
 
 open D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence
-
-/-- Translation in the coordinate assigned to `c`; the last party acts as the identity. -/
-def shift (n q : ℕ) (c : Fin q) (r : Fin (q - 1) → ZMod n) :
-    Fin (q - 1) → ZMod n :=
-  fun i => if (i : ℕ) = (c : ℕ) then r i + 1 else r i
-
-/-- The replica contraction on `(ℤ/n)^(q-1)`, with the last party unshifted. -/
-def Z (n q : ℕ) [NeZero n] {N : ℕ} (col : Fin N → Fin q)
-    (ψ : (Fin N → Fin 2) → ℂ) : ℂ :=
-  ∑ x : (Fin (q - 1) → ZMod n) → Fin N → Fin 2,
-    ∏ r : Fin (q - 1) → ZMod n,
-      star (ψ (x r)) * ψ (fun u => x (shift n q (col u) r) u)
+open D5.S3.Quantum.Entanglement.ReplicaPartitionLocalInvariance
 
 /-- The normalized replica multi-entropy, using the real part of the complex quotient. -/
 def S (n q : ℕ) [NeZero n] {N : ℕ} (col : Fin N → Fin q)
