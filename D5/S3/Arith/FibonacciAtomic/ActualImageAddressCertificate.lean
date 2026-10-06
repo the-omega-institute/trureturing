@@ -63,7 +63,7 @@ private theorem image_positive {d : ℕ} (hd : 3 ≤ d) (U : Source)
   rw [← Function.iterate_add_apply, show 3 + (d - 3) = d by omega]
   exact hT
 
-private theorem alpha_mul (s t : Source) : alphaLeaves (.mul s t) =
+private theorem alpha_mul (s t : Source) : alphaLeaves (s * t) =
     (alphaLeaves s).image (List.cons false) ∪ (alphaLeaves t).image (List.cons true) := by
   classical
   ext u
@@ -106,7 +106,7 @@ private theorem alpha_card (t : Source) : (alphaLeaves t).card = (composition t)
     toFun := fun t => Multiplicative.ofAdd (alphaLeaves t).card
     map_mul' := by
       intro s t
-      change (alphaLeaves (.mul s t)).card = (alphaLeaves s).card + (alphaLeaves t).card
+      change (alphaLeaves (s * t)).card = (alphaLeaves s).card + (alphaLeaves t).card
       simp only [alpha_mul, Finset.card_union_of_disjoint (disj _ _),
         Finset.card_image_of_injective _ List.cons_injective] }
   let G : Source →ₙ* Multiplicative ℕ :=
@@ -123,8 +123,10 @@ private theorem leaf_data (t : Source) :
   have addresses_mul (s t : Source) : leafAddresses (s * t) =
       (leafAddresses s).image (List.cons false) ∪
         (leafAddresses t).image (List.cons true) := by
-    ext u
-    simp [leafAddresses, leaves, Finset.mem_image]
+    simp only [leafAddresses, leaves, List.toFinset_append]
+    exact congrArg₂ (fun A B : Finset Address => A ∪ B)
+      (Multiset.toFinset_map (List.cons false) (leaves s))
+      (Multiset.toFinset_map (List.cons true) (leaves t))
   have prefix_disjoint (A B : Finset Address) :
       Disjoint (A.image (List.cons false)) (B.image (List.cons true)) := by
     apply Finset.disjoint_left.mpr
@@ -205,10 +207,10 @@ private theorem structural (t : Source) :
     obtain ⟨hsc, hst, us, hus, hds⟩ := hs
     obtain ⟨htc, htt, ut, hut, hdt⟩ := ht
     refine ⟨⟨hsc, htc, ⟨false :: us, ?_⟩⟩, ?_, ?_⟩
-    · rw [alpha_mul]
+    · rw [FreeMagma.mul_eq, alpha_mul]
       exact Finset.mem_union_left _ (Finset.mem_image.mpr ⟨us, hus, rfl⟩)
     · intro u hu
-      rw [alpha_mul] at hu
+      rw [FreeMagma.mul_eq, alpha_mul] at hu
       rcases Finset.mem_union.mp hu with hu | hu
       · rcases Finset.mem_image.mp hu with ⟨v, hv, rfl⟩
         obtain ⟨r, hr, hs⟩ := hst v hv
@@ -216,7 +218,7 @@ private theorem structural (t : Source) :
       · rcases Finset.mem_image.mp hu with ⟨v, hv, rfl⟩
         obtain ⟨r, hr, ht⟩ := htt v hv
         exact ⟨true :: r, by simp [hr], by simpa [ActualLeafHistoryRigidity.subtree] using ht⟩
-    · rw [alpha_mul]
+    · rw [FreeMagma.mul_eq, alpha_mul]
       rcases le_total (height S) (height T) with hle | hle
       · refine ⟨true :: ut, Finset.mem_union_right _
           (Finset.mem_image.mpr ⟨ut, hut, rfl⟩), ?_⟩
@@ -339,10 +341,10 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
       | mul x y =>
         have hms : ∀ u ∈ alphaLeaves s, readout u x = .alpha := by
           intro u hu
-          exact hm (false :: u) (by rw [alpha_mul]; exact Finset.mem_union_left _ (Finset.mem_image.mpr ⟨u, hu, rfl⟩))
+          exact hm (false :: u) (by rw [FreeMagma.mul_eq, alpha_mul]; exact Finset.mem_union_left _ (Finset.mem_image.mpr ⟨u, hu, rfl⟩))
         have hmt : ∀ u ∈ alphaLeaves t, readout u y = .alpha := by
           intro u hu
-          exact hm (true :: u) (by rw [alpha_mul]; exact Finset.mem_union_right _ (Finset.mem_image.mpr ⟨u, hu, rfl⟩))
+          exact hm (true :: u) (by rw [FreeMagma.mul_eq, alpha_mul]; exact Finset.mem_union_right _ (Finset.mem_image.mpr ⟨u, hu, rfl⟩))
         obtain ⟨hls, has, hes⟩ := hs x hcs hms
         obtain ⟨hlt, hat, het⟩ := ht y hct hmt
         refine ⟨?_, ?_, ?_⟩
@@ -380,7 +382,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
       (hr : subtree r V = some (.mul (.of false) (.of true))) :
       replace V r (.mul (.of true) (.of false)) ∉ ActualImage (3 * k) := by
     intro hW
-    exact no_left_alpha _ (image_positive (by omega) _ hW) r (swap_local V r hr).2.1
+    exact no_left_alpha _ (image_positive (d := 3 * k) (by omega) _ hW) r (swap_local V r hr).2.1
   have hits (Q : Finset Address) (hQ : Sound (3 * k) V h Q)
       (u : Address) (hu : u ∈ alphaLeaves V) :
       ∃ r : Address, u = r ++ [true] ∧ (r ++ [false] ∈ Q ∨ r ++ [true] ∈ Q) := by
@@ -586,25 +588,25 @@ theorem rigidity (k : ℕ) (hk : 1 ≤ k) (V : Source)
         exact (ho₂ u (fun he => htQ (he ▸ hu))).trans
           (ho₁ u (fun he => hsQ (he ▸ hu))))
       by_cases htl : t = r ++ [false]
-      · exact no_left_alpha W (image_positive (by omega) W hW) r (htl ▸ h₂t)
+      · exact no_left_alpha W (image_positive (d := 3 * k) (by omega) W hW) r (htl ▸ h₂t)
       · have hl : readout (r ++ [false]) W = .beta := by
           exact (ho₂ _ (fun he => htl he.symm)).trans ((ho₁ _ (by rw [hsr]; exact distinct r)).trans
             (subtree_readout V _ r [false] hr))
         have hsW₁ : readout s W₁ = .beta := by
           simpa only [List.append_nil, readout] using subtree_readout W₁ (.of false) s [] h₁s
         have hsW : readout s W = .beta := (ho₂ s hst).trans hsW₁
-        exact no_beta_cherry W (image_positive (by omega) W hW) r hl (hsr ▸ hsW)
+        exact no_beta_cherry W (image_positive (d := 3 * k) (by omega) W hW) r hl (hsr ▸ hsW)
     exact (Finset.eq_of_subset_of_card_le hsub (by rw [alpha_card V, hcard])).symm
   have leaf_iff (Q : Finset Address) : UnSound (3 * k) V Q ↔ leafAddresses V ⊆ Q := by
     constructor
     · intro hQ s hs
       by_contra hsQ
       have hsL : s ∈ leaves V := List.mem_toFinset.mp hs
-      obtain ⟨T, hT⟩ := image_positive (by omega) V hV
+      obtain ⟨T, hT⟩ := image_positive (d := 3 * k) (by omega) V hV
       have hn := ActualTreeReadoutAcquisition.source_foundation.2.1 T s (hT ▸ hsL)
       apply hn
       rw [hT]
-      apply image_positive (by omega)
+      apply image_positive (d := 3 * k) (by omega)
       apply hQ (flip V s)
       intro u hu
       exact ActualTreeReadoutAcquisition.source_foundation.2.2.2.1 V s hsL u
@@ -815,7 +817,7 @@ theorem heightFrontier (k : ℕ) (hk : 1 ≤ k) (h : ℕ) :
   obtain ⟨hcomp, hleft, hobs⟩ := swap_local V r hcherry
   have hW : W ∉ ActualImage d := by
     intro hW
-    exact no_left_alpha W (image_positive hd W hW) r hleft
+    exact no_left_alpha W (image_positive (d := d) hd W hW) r hleft
   refine ⟨hAheight, hBheight, hAc, hBc, (leaf_card A).trans hNa,
     (leaf_card B).trans hNb, hba, hgap, lower, hV, hh, hcherry, hW, hcomp, ?_,
     (leaf_card V).trans hNV, ?_⟩
