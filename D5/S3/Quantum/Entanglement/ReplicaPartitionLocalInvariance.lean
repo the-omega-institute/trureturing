@@ -80,6 +80,39 @@ private lemma replica_unitary {R : Type*} [Fintype R] [DecidableEq R] {N : ℕ}
     exact Finset.prod_eq_zero (Finset.mem_univ r)
       (Finset.prod_eq_zero (Finset.mem_univ u) (by simp [hu]))
 
+private def shiftEquiv (n q : ℕ) (c : Fin q) :
+    Equiv.Perm (Fin (q - 1) → ZMod n) where
+  toFun := shift n q c
+  invFun r i := if (i : ℕ) = (c : ℕ) then r i - 1 else r i
+  left_inv r := by
+    funext i
+    dsimp [shift]
+    split <;> simp_all
+  right_inv r := by
+    funext i
+    dsimp [shift]
+    split <;> simp_all
+
+private def replicaPermutation {R : Type*} {N : ℕ}
+    (σ : Fin N → Equiv.Perm R) : Equiv.Perm (R → Fin N → Fin 2) where
+  toFun x r u := x (σ u r) u
+  invFun x r u := x ((σ u).symm r) u
+  left_inv x := by funext r u; simp
+  right_inv x := by funext r u; simp
+
+private lemma replicaOp_permutation {R : Type*} [Fintype R] [DecidableEq R] {N : ℕ}
+    (U : Fin N → Matrix (Fin 2) (Fin 2) ℂ) (σ : Fin N → Equiv.Perm R)
+    (x y : R → Fin N → Fin 2) :
+    replicaOp U (replicaPermutation σ x) (replicaPermutation σ y) = replicaOp U x y := by
+  classical
+  change (∏ r, ∏ u, U u (x (σ u r) u) (y (σ u r) u)) =
+    ∏ r, ∏ u, U u (x r u) (y r u)
+  rw [Finset.prod_comm]
+  conv_rhs => rw [Finset.prod_comm]
+  apply Finset.prod_congr rfl
+  intro u _
+  exact Equiv.prod_comp (σ u) (fun r => U u (x r u) (y r u))
+
 /-- Applying the same local unitaries to all replicas preserves the contraction. -/
 theorem Z_local_unitary_phase : ∀ (n q : ℕ) [NeZero n] {N : ℕ}
     (col : Fin N → Fin q) (ψ : (Fin N → Fin 2) → ℂ)
