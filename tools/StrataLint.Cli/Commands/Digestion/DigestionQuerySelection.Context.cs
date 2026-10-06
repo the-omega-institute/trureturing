@@ -50,8 +50,12 @@ internal static partial class DigestionQuerySelection
         }
         if (neighborIds.Count > 0)
         {
-            var neighbors = ReadAtoms(repository, neighborIds.ToArray());
+            var neighbors = ReadAtoms(repository, neighborIds.ToArray(), [target.SourceId]);
             raw = Merge(raw, neighbors.Raw);
+            var localIds = neighbors.Document.RequireDigestionEntries().Select(static entry => entry.AtomId)
+                .ToHashSet(StringComparer.Ordinal);
+            var missing = neighborIds.Where(id => !localIds.Contains(id)).ToArray();
+            if (missing.Length > 0) raw = Merge(raw, ReadAtoms(repository, missing).Raw);
         }
         var local = Load(raw);
         return ReadChains(repository, local, allowMissing: allowMissing);
