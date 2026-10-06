@@ -277,6 +277,8 @@ Report reuse comes only from the Lake trace and the single semantic version.
 
 The implementation library contains the production artifact evaluator and its pure
 support modules. Tests and independent analyses live in the downstream Reg host.
+The production report builds no test library. CI explicitly builds the full
+downstream test library and runs the native compiled judge tests.
 `make compiled-judge-test` builds and runs the native tests against the same
 artifact evaluator used by production, including constructor discovery, source
 reconstruction, negative dependencies and catalog/seal checks. Fixed work and

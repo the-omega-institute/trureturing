@@ -66,6 +66,4 @@ unsafe def check : IO Unit := do
     IO.println "[PASS] compiled shared seal: 12 catalogs and 13 rows with reused conclusion proofs"
   finally searchPathRef.set saved
 
-run_meta check
-
 end LeanInformationAuditRegTests.CompiledSeal

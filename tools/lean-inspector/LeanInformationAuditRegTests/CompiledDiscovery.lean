@@ -4,6 +4,7 @@ import LeanInformationAuditRegTests.ContractTypeCarrier
 import LeanInformationAuditRegTests.ContractFixtures
 import LeanInformationAuditRegTests.ContractWitnessFixture
 import LeanInformationAuditRegTests.CompiledCalculations
+import LeanInformationAuditRegTests.CompiledSeal
 import LeanInformationAudit.Contract.Discovery
 import LeanInformationAudit.RawArtifacts
 import LeanInformationAudit.CompiledAxioms
@@ -288,6 +289,7 @@ unsafe def main : IO Unit := do
   LeanInformationAuditRegTests.CompiledDiscovery.readFixtures
     (← IO.getNumHeartbeats) (Lean.Core.getMaxHeartbeats ({} : Lean.Options))
   LeanInformationAuditRegTests.CompiledCalculations.check
+  LeanInformationAuditRegTests.CompiledSeal.check
   LeanInformationAuditRegTests.ContractRoots.check
   LeanInformationAuditRegTests.ContractPaths.check
   LeanInformationAuditRegTests.ContractTypeCarrier.check

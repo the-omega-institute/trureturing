@@ -10,8 +10,7 @@ class NativeReportConsumerTests:
         # mathematical inputs are tiny.
         implementations = ('CompiledAssessment', 'ArtifactAssessment')
         targets = ['leanInspector/LeanInformationAudit', 'leanInspector/reportInspector',
-                   'leanInspectorInterface/LeanInformationAuditInterface', 'reg/Reg',
-                   'regInspector/LeanInformationAuditRegTests']
+                   'leanInspectorInterface/LeanInformationAuditInterface', 'reg/Reg']
         self.reg_package()
         self.build()  # Restore the native fixture's private compiler stage.
         root_config = self.root / 'lakefile.toml'

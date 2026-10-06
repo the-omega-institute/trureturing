@@ -987,6 +987,8 @@ jobs:
           else
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
+          make lean LEAN_TARGETS="regInspector/LeanInformationAuditRegTests"
+          make compiled-judge-test
           make lean-report
       - id: project_snapshot_push
         name: Prepare the project seed
