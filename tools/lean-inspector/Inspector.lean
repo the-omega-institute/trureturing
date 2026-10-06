@@ -262,7 +262,8 @@ def inspectData (moduleData : ModuleData) (find : Name → Option ConstantInfo)
     (input : ModuleInput) : IO ModuleReport := do
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   let enumerationStart ← if profiling then IO.monoNanosNow else pure 0
-  let allNames := moduleData.constNames ++ generatedNames
+  let allNames := moduleData.constNames ++
+    generatedNames.filter (!moduleData.constNames.contains ·)
   let metadata := allNames.filter fun name =>
     match name with
     | .str _ suffix => suffix == "__information_registration_diagnostic"
