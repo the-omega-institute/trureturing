@@ -1,3 +1,4 @@
+using StrataLint.Engine;
 using StrataLint.Scribe;
 using Trureturing.Truth;
 using Xunit;
