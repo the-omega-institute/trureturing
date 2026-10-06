@@ -95,6 +95,73 @@ premise; its original proof was not independently audited here.
 The finite support sweep and the analytic continuation are reused,
 not repeated computations or new reserve estimates.
 
+## Application at the same critical source and clock
+
+Under a Robin counterexample, select the least global maximizer $N>5040$
+by the [Caveney–Nicolas–Sondow reduction](../Arith/caveney2012sacaga.md).
+Write $A=\log N$, $P=P^+(N)=p_k$, and let $P^+$ be the next prime.
+This source is CA with initial prime support and belongs to $U_1$.
+The existing [seven-smooth exclusion](../../Blueprint/D5/S3/Arith/Robin/SevenSmooth.md)
+rules out $k\le4$. Hence the
+[Kalyabin endpoint conditions](kalyabin2026maximalgronwall.md) apply
+and give $P<A<P^+$ at this same integer.
+
+There is no prime between $P$ and $A$, so the full-support products and
+sums above contain exactly the actual primes of $N$ when **$x=A$**.
+No change of integer, factorization, or exponents is involved. Moreover
+$z(N,A)=0$ and $B_2(N,A)=0$ exactly. Consequently Proposition 6 and
+Corollary 8 give the paper application
+
+$$
+\Delta(N)=I_\psi(A)+R_{\rm core}(N,A)-C_{\rm pp}(A)
+          \ge I_\psi(A)+D^*(A).
+$$
+
+The numerical threshold also has an existing supplier.
+[Axler's finite stop](../notes/axler2023robin.md), author version
+[2110.13478v3](https://arxiv.org/pdf/2110.13478v3), Lemma 2.3, p.3,
+cites strict Robin for $5041\le n\le N_K$, where
+$K=999\,999\,476\,056$ and $N_K$ is the $K$th primorial.
+Therefore the counterexample-level source has $N>N_K$, and simply
+
+$$
+A>\log N_K\ge K\log2>\frac K2>56\,048\,351.
+$$
+
+This consumes the cited finite verification; it neither reruns nor extends
+it, and uses no theta estimate to compare these thresholds.
+Proposition 10 thus gives at this fixed source
+
+$$
+\boxed{\displaystyle
+\Delta(N)>I_\psi(A)+\frac{1}{2\sqrt A\log A}.}
+$$
+
+In particular a hypothetical selected counterexample must satisfy
+$\sqrt A\log A\,I_\psi(A)<-1/2$. A source-specific lower bound
+$\sqrt A\log A\,I_\psi(A)\ge-1/2$ would suffice to exclude it.
+That signed bound remains unproved. The available half-unit reserve
+has an explicit cutoff paid at one finite source; it needs neither an
+unbounded critical-source sequence nor Kalyabin's existential
+$K_\varepsilon$ for this application. It does not make that separate
+asymptotic cutoff effective.
+
+This is reuse of Polak's core estimate on the endpoint-restricted source,
+not a new reserve theorem or signed Robin estimate. Positivity of $D^*$
+does not assert positivity of $\Delta$; the unknown signed $I_\psi(A)$
+has been retained. Neither the complete divisor-deletion comparisons
+nor the all-multiplier GA2 comparisons have yet supplied its needed bound.
+The application adds no Lean declaration or formal certification of the
+external analytic or finite-verification premises.
+
 ## Boundary for FIB
 
-This is a larger finite verification range, not a replacement for the FIB source bridge. The certificate is organized by CA exponent profiles and consecutive-CA interpolation, whereas the FIB family is specified by additive Zeckendorf windows or congruence classes. No result in the source maps those addresses to the certified CA profiles or supplies the same-integer signed residual estimate required by §250. The finite range can be cited as an external boundary check, but repeating its computation would be duplicate work and would not advance RH.
+The finite certificate is organized by CA exponent profiles and
+consecutive-CA interpolation, whereas a FIB family is specified by additive
+Zeckendorf windows or congruence classes. A FIB address alone does not
+certify the initial prime support or the endpoints used above. Those
+conditions are supplied here for the selected critical source by the cited
+arithmetic results. The source supplies no estimate for its remaining
+signed residual, or for the pointwise signed term in FIB §250. Its finite
+verification range remains an external boundary check; repeating that
+computation would not advance RH.
