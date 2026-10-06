@@ -1,4 +1,5 @@
 import LeanInformationAudit.RegistrationGates
+import LeanInformationAudit.RegistrationRelations
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import LeanInformationAudit.Sha256
 import Lean
@@ -273,10 +274,7 @@ def exactUse (theoremName : Name) (arena descriptor : Expr) : MetaM (Expr × Exp
   closed (← instantiateMVars expected)
   return (info.type, realization)
 
-def occurrenceBinding (e : InformationRegistryEntry) : Array Name := #[
-  e.theoremName, e.unitName, e.arenaName, e.realizationName, e.variationWitness,
-  e.sensitivityWitness, e.catalogId, e.registrationModuleName, e.objectArenaName,
-  e.resolvedArenaName, e.canonicalObjectArenaName, e.effectiveCatalogId]
+
 
 private def declaration (owner name : Name) (type value : Expr) (proof := true) : MetaM Unit := do
   let type ← instantiateMVars type

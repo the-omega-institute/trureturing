@@ -190,20 +190,6 @@ private def distinctNames (names : Array Name) : Array Name :=
   names.foldl (init := #[]) fun result name =>
     if result.contains name then result else result.push name
 
-def validateMaximalCatalog (rootId arenaName : Name)
-    (entries : Array InformationRegistryEntry) : Except String CatalogId := do
-  let maximal := entries.filter fun entry => entry.catalogKind == .canonicalMaximal
-  if maximal.isEmpty then
-    let occurrences := entries.map (·.theoremName) |>.qsort nameLess
-    throw s!"IE-C026 MissingMaximalCatalog root={rootId} arena={arenaName} \
-occurrences={nameArrayJson occurrences}"
-  let catalogIds := distinctNames (entries.map (·.effectiveCatalogId))
-    |>.qsort nameLess
-  if catalogIds.size != 1 then
-    throw s!"IE-C024 SplitCanonicalArenaCatalog root={rootId} arena={arenaName} \
-catalogs={nameArrayJson catalogIds}"
-  pure catalogIds[0]!
-
 private def prepareCatalog (rootId arenaName : Name) (localSealNames : Bool)
     (entries : Array InformationRegistryEntry) :
     Lean.Elab.Term.TermElabM PreparedCatalog := do
