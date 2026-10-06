@@ -471,11 +471,11 @@ private abbrev H := Lp ℂ 2 (volume : Measure ℝ)
 private abbrev RealH := Lp ℝ 2 (volume : Measure ℝ)
 
 private def mulB : ℂ →L[ℂ] ℂ →L[ℂ] ℂ := ContinuousLinearMap.lsmul ℂ ℂ
-private def pair : H →L[ℂ] H →L[ℂ] ℂ := mulB.lpPairing volume 2 2
+def pair : H →L[ℂ] H →L[ℂ] ℂ := mulB.lpPairing volume 2 2
 private def FL : H →L[ℂ] H := (Lp.fourierTransformₗᵢ ℝ ℂ).toContinuousLinearEquiv.toContinuousLinearMap
 private def IL : H →L[ℂ] H := (Lp.fourierTransformₗᵢ ℝ ℂ).symm.toContinuousLinearEquiv.toContinuousLinearMap
 
-private theorem pair_eq (f g : H) : pair f g = ∫ x, f x * g x := by
+theorem pair_eq (f g : H) : pair f g = ∫ x, f x * g x := by
   simpa only [pair, mulB, ContinuousLinearMap.lsmul_apply, smul_eq_mul] using
     (mulB.lpPairing_eq_integral (μ := volume) (p := 2) (q := 2) f g)
 
@@ -507,7 +507,7 @@ private theorem pair_fourier (a b : H) : pair (𝓕 a) b = pair a (𝓕 b) := by
       filter_upwards [ψ.coeFn_toLp 2 volume] with x hx
       rw [hx]
 
-private theorem product_integrable {a b : ℝ → ℂ}
+theorem product_integrable {a b : ℝ → ℂ}
     (ha : MemLp a 2 volume) (hb : MemLp b 2 volume) :
     Integrable (fun x => a x * b x) volume := by
   exact memLp_one_iff_integrable.mp
@@ -730,7 +730,7 @@ theorem actual_cutoff_convolution (c N : ℝ) (hc : 0 < c) (hN : c ≤ N) :
         (by positivity) (htail M hNM)
 
 /-- Restriction of the actual complex convolution to real L2. -/
-private theorem actual_cutoff_real (c N : ℝ) (hc : 0 < c) (hN : c ≤ N) :
+theorem actual_cutoff_real (c N : ℝ) (hc : 0 < c) (hN : c ≤ N) :
     Measurable (kernel c N) ∧ MemLp (kernel c N) 2 volume ∧
     ∃ C : RealH →L[ℝ] RealH,
       (∀ f : RealH, (C f : ℝ → ℝ) =ᵐ[volume]
