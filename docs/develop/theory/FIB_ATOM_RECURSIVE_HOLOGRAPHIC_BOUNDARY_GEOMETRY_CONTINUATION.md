@@ -144,8 +144,7 @@ I_D\phi_D^0\longrightarrow\phi\text{ in }\ell^2,
 $$
 
 along the actual exhaustion. To verify that convergence without a pointwise-to-norm inference, let $w_D$ solve the compressed equation and $w=L^{-1}\mathbf1_o$. The $L$-energy orthogonality to every vector supported in $D$ implies
-$\|w-w_D\|_L\le\inf_{v\ {
-m supported\ in}\ D}\|w-v\|_L$; boundedness and the lower gap convert this to norm convergence. The common field (55.5) is this $w$. For any actual $D\supset B_R$, the same estimate gives the uniform source-family bound
+$\|w-w_D\|_L\le\inf_{\operatorname{supp}(v)\subseteq D}\|w-v\|_L$; boundedness and the lower gap convert this to norm convergence. The common field (55.5) is this $w$. For any actual $D\supset B_R$, the same estimate gives the uniform source-family bound
 
 $$
 \|I_D\phi_D^0-\phi\|_2
@@ -360,7 +359,7 @@ S_o(z)=r-\frac y{B_z}-\frac1x,
 \tag{55.26}
 $$
 
-Expanding gives (55.24). The internal exceptional energies are $-1,-5,-3-\sqrt6,-3+\sqrt6$. At $-1$ the two left leaves support their opposite-sign kernel vector and cancel at their parent; $D_o$ has a simple zero because the quartic equals $102$ there, while $G_o$ cancels the $z+1$ factor. At $-5$, compatibility forces the retained root amplitude zero and the sole right internal kernel coefficient then zero, so no full eigenvector remains; indeed $D_o(-5)=8$. At the two left-block eigenvalues $B_z=0$, their left-root coefficient is nonzero and cannot cancel through the invertible right block when the retained root is zero; again there is no full eigenstate at that exceptional energy. Algebraically $D_o=-xy^2\ne0$ there. The exceptions have thus been checked with full block equations, not assigned spurious inverse values.
+Expanding gives (55.24). The internal exceptional energies are $-1,-5,-3-\sqrt6,-3+\sqrt6$. At $-1$ the two left leaves support their opposite-sign kernel vector and cancel at their parent; $D_o$ has a simple zero because the quartic equals $-102$ there, while $G_o$ cancels the $z+1$ factor. At $-5$, compatibility forces the retained root amplitude zero and the sole right internal kernel coefficient then zero, so no full eigenvector remains; indeed $D_o(-5)=8$. At the two left-block eigenvalues $B_z=0$, their left-root coefficient is nonzero and cannot cancel through the invertible right block when the retained root is zero; again there is no full eigenstate at that exceptional energy. Algebraically $D_o=-xy^2\ne0$ there. The exceptions have thus been checked with full block equations, not assigned spurious inverse values.
 
 At each quartic root $z$, all inverses in (55.26) exist and the full root-amplitude-one eigenvector and its norm are
 
