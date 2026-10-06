@@ -28898,13 +28898,15 @@ the unrestricted whole-cover bridge.
 
 ## 248. Occupied-\(R\) contraction can fail under complete whole-cover minimality
 
-Dalton--Trifonov, [*Extreme Covering Systems*, arXiv:1905.07386v2](https://arxiv.org/abs/1905.07386v2), Lemma 6 and Corollary 9, contract an exhaustive \(p^a\)-stratum: when exactly \(p\) classes have moduli \(p^am_1,\ldots,p^am_p\), their union can be replaced by one class of modulus
+Dalton--Trifonov, [*Extreme Covering Systems*, arXiv:1905.07386v2](https://arxiv.org/abs/1905.07386v2), Lemma 6 and Corollary 9, contract an exhaustive maximal \(p^a\)-stratum: when exactly \(p\) classes have moduli \(p^am_1,\ldots,p^am_p\), deleting those classes and inserting one class of modulus
 
 \[
-R=p^{a-1}\operatorname{lcm}(m_1,\ldots,m_p).
+R=p^{a-1}\operatorname{lcm}(m_1,\ldots,m_p)
 \]
 
-The operation preserves coverage, but it does not ensure that \(R\) is an
+preserves whole coverage. The inserted class covers the holes of the
+retained family; containment of the entire deleted union is not required.
+The operation does not ensure that \(R\) is an
 unused numerical label or that its phase agrees with an occupied \(R\)-class.
 The following complete example shows that whole coverage and size-then-sum
 minimality do not repair this defect.
@@ -29311,7 +29313,9 @@ witnesses inside \(S\) are
 36,\quad5,\quad7,\quad1,\quad71,\quad2.
 \]
 Integer four is not covered. This is neither an odd whole cover nor
-a counterexample to a theorem assuming whole-cover extremality.
+a counterexample to a theorem assuming whole-cover extremality. The
+packet has \(B=1\) and ternary height one; it does not refute a repair
+theorem additionally restricted to \(B\ge3\).
 
 ### A periodic-demand form of the top-layer argument
 
@@ -29409,10 +29413,11 @@ primes and heights were derived from the candidate's count and cost,
 not imposed on its comparison class.
 
 The infinite-modulus extremality argument here is an ordinary proof.
-The finite hull cases, all demanded residues in period \(105\), the
-private witnesses and the uncovered residue have scoped Lean checks;
-these checks alone are not a formalization of the full extremality
-statement.
+The maximal-layer fibre cardinality and its exact-period arithmetic
+adapter have scoped Lean checks, as do the finite hull cases, all
+demanded residues in period \(105\), the private witnesses and the
+uncovered residue. These checks are not a formalization of the full
+extremality statement.
 
 ### Whole-cover redivision supplies an additional condition
 
