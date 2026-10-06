@@ -67463,9 +67463,375 @@ a_n=\frac{\log n}{\log z}-\sigma,
 
 （ST.12）仍是完整核极限的符号分类。它不控制与 \(M_z(n)\) 相乘后全部整数纤维的总和，也不去掉 §435 已证的主项反向补偿；抵消后更小尺度的 Robin 有符号残量仍须另行估计。
 
-## 438. 三与十七相位的共同正时间联合费用
 
-**定义 438.1（受限实际来源与查询合同）。** 令 $F_0=0,F_1=1$、$F_{j+2}=F_{j+1}+F_j$，自然数包括零。取整数 $e,f\ge2$，置
+## 438. 实际 primorial 支持曲率、零端集中与补偿轮廓的定量误差
+
+沿用 §§433–434 的同一连续 primorial 及原始积分轮廓
+
+\[
+L=\log z,\qquad E_z(s)=\prod_{p\le z}(1-p^{-s}),\qquad
+F_z(v)=\frac{E_z(1+v/L)}{E_z(1)},\qquad z\ge2,
+\]
+
+\[
+\varphi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vb}}b\,db\right),\qquad
+r(v)=\int_0^1e^{-vb}\,db,\qquad
+j(v)=\int_0^1b e^{-vb}\,db.
+\]
+
+这里以自变量 \(v\) 记归一化后的实际有限和
+
+\[
+S_z(v)=\frac1L\sum_{p\le z}\frac{\log p}{p^{1+v/L}-1},\qquad
+T_z(v)=\frac1{L^2}\sum_{p\le z}
+\frac{p^{1+v/L}(\log p)^2}{(p^{1+v/L}-1)^2},\qquad s_z=S_z(0).
+\tag{SC.1}
+\]
+
+已有有限乘积微分及紧区间参数积分给
+
+\[
+F_z'=F_zS_z,\quad S_z'=-T_z,\quad
+\varphi'=\varphi r,\quad r'=-j,
+\quad F_z(0)=\varphi(0)=r(0)=1,
+\]
+
+\[
+0\le r(v)\le1,\qquad0\le j(v)\le\tfrac12\qquad(v\ge0).
+\tag{SC.2}
+\]
+
+保持既有第一 Mertens 供应
+
+\[
+A(t)=\sum_{p\le t}\frac{\log p}{p},\qquad
+|A(t)-\log t|\le K\quad(t\ge1),\qquad K=\log4+4.
+\]
+
+记已知收敛的素数纠正预算为
+
+\[
+C=\sum_p\frac{\log p}{p(p-1)},\qquad D=K+C.
+\tag{SC.3}
+\]
+
+\(C\) 是素数和，区别于 §434 中对全部整数求和的 \(R_1\)。经典第一 Mertens、Abel 求和及原始轮廓表示在这里均为已有供应。特别地，§434 的全参数误差证明以素数纠正预算 \(C\) 替代其较大的 \(R_1\) 后给
+
+\[
+|S_z(v)-r(v)|\le D/L,\qquad
+|\log F_z(v)-\log\varphi(v)|\le Dv/L,
+\]
+
+\[
+F_z(v)\le e^{Dv/L}\varphi(v),\qquad
+\varphi(v)\le e(1+v),\qquad v\ge0.
+\tag{SC.4}
+\]
+
+以下新增结论保留每个有限筛的实际初始斜率 \(s_z\)，不以极限值一替换其零端补偿。
+
+### 定理：实际有限支持的曲率约束
+
+对全部 \(z\ge2\)、\(v\ge0\)，有
+
+\[
+\boxed{0\le T_z(v)\le2S_z(v)\le2s_z.}
+\tag{SC.5}
+\]
+
+其中常数二在完整的 \(z\ge2,v\ge0\) 范围不可减小。
+
+**证明。** 对每个实际素数 \(p\le z\)，令 \(q=p^{1+v/L}\)。则 \(q\ge p\ge2\) 且 \(0<\log p\le L\)，所以
+
+\[
+0\le\frac{\log p}{L}\frac q{q-1}\le2.
+\]
+
+\(T_z(v)\) 的该素数项恰是 \(S_z(v)\) 的相应非负项乘以上式，有限求和给第一部分。每个 \(q-1\) 随 \(v\) 增长不减，故 \(S_z(v)\le S_z(0)\)。当 \(z=2,v=0\) 时，实际支持恰为 \(\{2\}\)，且 \(S_2(0)=1,T_2(0)=2\)，故二不能减小。证毕。
+
+### 定理：全参数曲率逼近与中心化二阶误差
+
+令
+
+\[
+C_2=2K+3C,\qquad
+g_z(v)=\log F_z(v)-\log\varphi(v),\qquad
+\delta_z=s_z-1.
+\]
+
+则全部 \(z\ge2,v\ge0\) 满足
+
+\[
+\boxed{|T_z(v)-j(v)|\le C_2/L,}
+\tag{SC.6}
+\]
+
+\[
+\boxed{|g_z(v)-\delta_zv|\le C_2v^2/(2L).}
+\tag{SC.7}
+\]
+
+特别地，\(|T_z(0)-1/2|\le C_2/L\)，不需另以二阶素数矩渐近作为输入。
+
+**证明。** 在 \([0,1]\) 上取有限正测度
+
+\[
+\mu_z=\frac1L\sum_{p\le z}\frac{\log p}{p}\,
+\delta_{\log p/L},\qquad
+\mathscr E_z(b)=\mu_z([0,b])-b=\frac{A(e^{Lb})}{L}-b.
+\]
+
+第一 Mertens 界给 \(\mathscr E_z(0)=0\)、\(|\mathscr E_z(b)|\le K/L\)。对 \(f_v(b)=be^{-vb}\) 作保留端点的 Abel 求和，得
+
+\[
+\int_{[0,1]}f_v\,d\mu_z-\int_0^1f_v(b)\,db
+=f_v(1)\mathscr E_z(1)-\int_0^1f_v'(b)\mathscr E_z(b)\,db.
+\tag{SC.8}
+\]
+
+\(f_v(0)=0\) 支付左端；右端使用 \(\mu_z([0,1])\)，因此当 \(z\) 本身为素数时，\(b=1\) 的原子也保留。由于 \(f_v\) 从零开始，非负且先增后减，其全部变差给
+
+\[
+f_v(1)+\int_0^1|f_v'(b)|\,db
+=2\max_{0\le b\le1}f_v(b)
+=\begin{cases}2e^{-v},&0\le v\le1,\\2/(ev),&v\ge1,
+\end{cases}
+\le2.
+\tag{SC.9}
+\]
+
+在 \(v=1\) 两式一致，\(v=0\) 的预算为二。于是，令
+
+\[
+H_z(v)=\frac1{L^2}\sum_{p\le z}\frac{(\log p)^2}{p}
+e^{-v\log p/L},
+\]
+
+可得共同于全部 \(v\ge0\) 的
+
+\[
+|H_z(v)-j(v)|\le2K/L.
+\tag{SC.10}
+\]
+
+再对同一个实际素数与 \(q=p^{1+v/L}\) 使用精确纠正
+
+\[
+\frac q{(q-1)^2}-\frac1q
+=\frac{2+1/(q-1)}{q(q-1)},\qquad
+0\le\frac q{(q-1)^2}-\frac1q\le\frac3{p(p-1)}.
+\]
+
+实际支持 \(\log p\le L\) 支付第二个对数因子，故
+
+\[
+0\le T_z(v)-H_z(v)
+\le\frac3L\sum_{p\le z}\frac{\log p}{p(p-1)}\le3C/L.
+\tag{SC.11}
+\]
+
+结合（SC.10）得（SC.6），没有新增无穷平方对数和。又因
+\(g_z'=S_z-r\)、\((S_z-r)'=j-T_z\)、\(g_z(0)=0\)，两次从零积分得
+
+\[
+g_z(v)-\delta_zv=\int_0^v(v-w)[j(w)-T_z(w)]\,dw,
+\]
+
+即（SC.7）。该二次界只控制中心化误差；全尾指数仍由（SC.4）的一次界支付。证毕。
+
+### 定理：实际補偿积分的显式一致速率
+
+对 \(a\ge0\)，保持 §434 的完整补偿分子
+
+\[
+B_{z,a}(v)=e^{-av}F_z(v)-1+(a-s_z)v,\qquad
+B_a(v)=e^{-av}\varphi(v)-1+(a-1)v,
+\]
+
+并定义
+
+\[
+\mathcal I_z(\sigma,a)=\int_0^\infty
+e^{-\sigma v}\frac{B_{z,a}(v)}{v^2}\,dv,
+\qquad
+\mathcal I(\sigma,a)=\int_0^\infty
+e^{-\sigma v}\frac{B_a(v)}{v^2}\,dv.
+\tag{SC.12}
+\]
+
+这些完整积分对每个 \(z\ge2,\sigma>0,a\ge0\) 绝对收敛。任取先固定的 \(V\ge0\)、\(\sigma_0>0\)，记
+
+\[
+q_0=\sigma_0/2,\qquad
+P_V=(V+1)^2+\tfrac12,\quad
+A_V=D(3+2V)+C_2,\quad B_V=DP_V.
+\]
+
+对全部满足 \(D/L\le\min\{1,\sigma_0/2\}\) 的 \(z\ge2\)、全部 \(\sigma\ge\sigma_0\) 和 \(0\le a\le V\)，有
+
+\[
+\boxed{\displaystyle
+|\mathcal I_z(\sigma,a)-\mathcal I(\sigma,a)|
+\le\frac e{2L}\left[
+A_V\left(\frac1{q_0}+\frac1{q_0^2}\right)
++B_V\left(\frac1{q_0^2}+\frac2{q_0^3}\right)
+\right].}
+\tag{SC.13}
+\]
+
+这里 \(\sigma\) 无有限上界要求。
+
+**证明。** 先支付每个固定有限筛的两个端点。令 \(Q_{z,a}=e^{-av}F_z\)，由实际有限乘积给
+
+\[
+Q_{z,a}''=Q_{z,a}[(S_z-a)^2-T_z],\qquad
+B_{z,a}(0)=B_{z,a}'(0)=0.
+\]
+
+因此
+
+\[
+B_{z,a}(v)=\int_0^v(v-w)Q_{z,a}''(w)\,dw.
+\tag{SC.14}
+\]
+
+对固定 \(z\)，（SC.5）及 \(F_z(v)\le e^{s_zv}\) 使二阶导数在 \([0,1]\) 有界，故零端为 \(O_{z,a}(v^2)\)。无穷端由字面有限乘积给
+
+\[
+0<F_z(v)\le\frac1{E_z(1)}\qquad(v\ge0),
+\]
+
+所以 \(B_{z,a}(v)=O_{z,a}(1+v)\)，任意 \(\sigma>0\) 支付其尾端。极限分子同样零值、零导数，并由 \(\varphi\le e(1+v)\) 支付尾端。§434 的共同近零界在这里复用为既有结论，不另列为新定性极限。
+
+为取得速率，令 \(\eta=D/L\le1\)、\(Q=e^{-av}\varphi\)、\(Q_z=e^{-av}F_z\)。由（SC.4）与 \(|e^x-1|\le |x|e^{|x|}\)，
+
+\[
+|Q_z-Q|\le e(1+v)e^{\eta v}\eta v,\qquad
+Q_z\le e(1+v)e^{\eta v}.
+\]
+
+又有 \(0\le S_z\le1+\eta\)，以及
+
+\[
+|(r-a)^2-j|\le P_V,\qquad
+|(S_z-a)^2-(r-a)^2|\le\eta(3+2V).
+\]
+
+利用（SC.6）将二阶导数差完整拆为
+
+\[
+(Q_z-Q)[(r-a)^2-j]
++Q_z[(S_z-a)^2-(r-a)^2-(T_z-j)],
+\]
+
+得共同于全部 \(v\ge0\) 的
+
+\[
+|Q_z''(v)-Q''(v)|
+\le\frac eL(1+v)e^{\eta v}(A_V+B_Vv).
+\]
+
+\(B_{z,a}-B_a\) 的零值和零导数恰为零；特别地，一次项 \((s_z-1)v\) 已在有限筛的实际补偿中抵消。两次 FTC 与右侧非减性给
+
+\[
+\boxed{\displaystyle
+|B_{z,a}(v)-B_a(v)|
+\le\frac e{2L}v^2(1+v)e^{\eta v}(A_V+B_Vv),\quad v\ge0.}
+\tag{SC.15}
+\]
+
+该全参数二阶误差可直接除以 \(v^2\)，不留下零端 \(1/v\) 项。若 \(\sigma\ge\sigma_0\)、\(\eta\le\sigma_0/2\)，则
+\(e^{-(\sigma-\eta)v}\le e^{-q_0v}\)。将（SC.15）乘上 \(e^{-\sigma v}/v^2\) 并积分，使用
+\(\int_0^\infty v^ke^{-q_0v}dv=k!/q_0^{k+1}\) 对 \(k=0,1,2\)，即得（SC.13）。证毕。
+
+（SC.13）是未乘前因子的完整补偿轮廓积分速率。原始核主项还含 \(LE_z(1)\)，完整阶乘密度还含 §434（GE.8）的另两项，相邻整数块还需纤维运输；本定理不为这些额外步骤另行断言 \(O(1/L)\) 误差，也不决定与粗糙前缀配对后的 Robin 残量符号。
+
+### 定理：一阶全参数信息不能排除零端曲率集中
+
+即使一族正函数满足正确原始轮廓、全参数一阶导数误差趋于零、相应全局指数包络、非负递减斜率，并使用精确初始斜率补偿，仍不能仅凭这些条件推出（SC.12）型补偿积分收敛。
+
+**证明。** 取 \(\varepsilon\downarrow0\)、\(\delta=\exp(-1/\varepsilon^2)\)，令
+
+\[
+h_\varepsilon(v)=\varepsilon\delta(1-e^{-v/\delta}),\qquad
+\widetilde F_\varepsilon(v)=\varphi(v)e^{h_\varepsilon(v)}.
+\]
+
+全部 \(v\ge0\) 满足 \(0\le h_\varepsilon(v)\le\varepsilon v\)，故
+
+\[
+\widetilde F_\varepsilon(0)=1,\qquad
+e^{-\varepsilon v}\varphi(v)\le\widetilde F_\varepsilon(v)
+\le e^{\varepsilon v}\varphi(v).
+\]
+
+其实际斜率为
+
+\[
+\widetilde S_\varepsilon(v)=r(v)+\varepsilon e^{-v/\delta},\qquad
+|\widetilde S_\varepsilon-r|\le\varepsilon,\qquad
+\widetilde S_\varepsilon\ge0,
+\]
+
+\[
+\widetilde S_\varepsilon'(v)
+=-j(v)-\frac\varepsilon\delta e^{-v/\delta}\le0.
+\]
+
+但零端曲率为 \(-\widetilde S_\varepsilon'(0)=1/2+\varepsilon/\delta\)，无界且违反（SC.5）的实际支持约束。
+
+使用精确初始斜率 \(\widetilde S_\varepsilon(0)=1+\varepsilon\)，在 \(a=0\) 处与原始轮廓的完整补偿分子相减，误差为
+
+\[
+\Delta_\varepsilon(v)=\varphi(v)(e^{h_\varepsilon(v)}-1)-\varepsilon v.
+\]
+
+对每个固定 \(\varepsilon>0\)，\(\Delta_\varepsilon(0)=\Delta_\varepsilon'(0)=0\)，其函数光滑；且 \(h_\varepsilon\le\varepsilon\delta\) 使尾端 \(\Delta_\varepsilon=O_\varepsilon(1+v)\)。因此对任意固定 \(\sigma>0\)，完整误差积分
+
+\[
+J_\varepsilon(\sigma)=\int_0^\infty e^{-\sigma v}
+\frac{\Delta_\varepsilon(v)}{v^2}\,dv
+\]
+
+绝对收敛。以下只对这个已补偿分子积分，不分别积分其两个可能在零端发散的一次项。
+
+令 \(m=8e\)。取 \(0<\varepsilon\le1\) 足够小，使
+\(\delta\le1/(8e)\)、\(e^{\varepsilon\delta}\le2\)、\(m\delta\le1\)。当 \(v\ge m\delta\) 时，
+
+\[
+\Delta_\varepsilon(v)
+\le2e\varepsilon\delta(1+v)-\varepsilon v
+\le-\tfrac12\varepsilon v,
+\]
+
+因为 \(2e\delta(1+v)/v\le2e\delta+2e/m\le1/2\)。当 \(0<v<m\delta\) 时，\(\varphi\le e\)、\(\varphi-1\le ev\)，并有
+
+\[
+\begin{aligned}
+\Delta_\varepsilon
+&=\varphi(e^{h_\varepsilon}-1-h_\varepsilon)
++(\varphi-1)h_\varepsilon+(h_\varepsilon-\varepsilon v)\\
+&\le e(\varepsilon^2+\varepsilon)v^2
+\le2e\varepsilon v^2.
+\end{aligned}
+\]
+
+零端和整个负尾分别由上述两式支付，故
+
+\[
+J_\varepsilon(\sigma)
+\le2em\varepsilon\delta
+-\frac{\varepsilon e^{-\sigma}}2\log\frac1{m\delta}
+=-\frac{e^{-\sigma}}{2\varepsilon}+O_\sigma(\varepsilon)
+\longrightarrow-\infty.
+\tag{SC.16}
+\]
+
+该反例是关于输入信息强度的断言，未改变实际素数乘积。它显示（SC.5）的支持结构及（SC.6）的曲率付款不能由单独的一阶包络替代。证毕。
+
+## 439. 三与十七相位的共同正时间联合费用
+
+**定义 439.1（受限实际来源与查询合同）。** 令 $F_0=0,F_1=1$、$F_{j+2}=F_{j+1}+F_j$，自然数包括零。取整数 $e,f\ge2$，置
 
 $$
  m=e-1,\qquad n=f-1,\qquad H=3^e17^f.
@@ -67493,7 +67859,7 @@ $$
 
 每问费用为 $1$，重复时间也收费，查询时间没有上界。策略为确定性策略，只能依赖已经付费的完整历史选择下一正时间或停止，并须对每个 $v_{t,u}$ 终止；相同终端完整历史必须蕴含全部正时间的完整 gcd 未来相同。没有免费初始读数、数量、共同含量或中间回复。策略知道这个受限来源族，但不知道实际的 $(t,u)$。以各源的付费历史长度的最大值为策略费用，再对所有正确策略取最小值，记为 $D_{\mathrm{res}}(e,f)$。这里只数查询次数，不数时间指标大小或执行替换的工作量。
 
-**定理 438.2（主定理）。** 对全部整数 $e,f\ge2$，上述受限合同的精确最坏费用为
+**定理 439.2（主定理）。** 对全部整数 $e,f\ge2$，上述受限合同的精确最坏费用为
 
 $$
 \boxed{D_{\mathrm{res}}(e,f)=2m+16n-1=2e+16f-19}.
