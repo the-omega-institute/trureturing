@@ -3132,3 +3132,322 @@ Even-order width two has $g=1$ and retains its different physical-path parity an
 
 ## 追加锚（本行以下为增补区）
 
+## 46. Actual first parents at odd critical and strictly wide widths
+
+**定义 46.1（Full INITIAL domain and the common cut）。** Fix $k\ge2$ and assume either
+
+$$
+m>k,\qquad\text{or}\qquad m=k\ge3\text{ with }k\text{ odd}.
+\tag{46.1}
+$$
+
+Use the original integer weights, matched mod-two output, literal updates (1.1)–(1.2), endpoint-only observations and actual emitted complete-block fee of Definition 1.3. Set $T=k+1$, $g=\gcd(m,T)$ and $P=g\mathbb Z/T\mathbb Z$. The two control alphabets remain all literal $m$-bit words and the internally legal literal $m$-bit words; legality across their seams is still required. The prior is every actual finite complete-block history, and the target is any $f:Q\to Y$ on its entire INITIAL record set, for any set $Y$. A history target retains the necessary factorization $F=f\circ q$ through its INITIAL record, supplied by [S1, Proposition 2.2]; different labels within one record fibre cannot be acquired by these operations. Initial $\bot$ is independently observed and has its own arbitrary label, returned at fee zero. A preset controller issues prefixes of one fixed literal stream; its stopping and decoding use only its own chronological issued-block/output archive. It has no reset, source copy, hidden initial clock, intermediate observation or borrowed branch observation. Every reached complete block is paid, including waiting, padding, clearing and repair blocks.
+
+The all-width joint realization is the one in Definition 36.1: for every $v\in\mathbb F_2$, $j\in P$ and $0\le s<k$, take the single history (1.3) with $\ell\equiv0\pmod m$, $\ell\equiv-j\pmod T$ and $\ell\ge s+2$. Its value, phase and tail are simultaneously $(v,-j,s)$. The entire history avoids $1^k$, so every constituent block belongs to both alphabets. An endpoint with tail $k-1$, followed by $10^{m-1}$, realizes absorbing rejection under the internally legal alphabet. No common hidden initial length is assumed or observed.
+
+Use the ordered value join already proved in Theorem 29.2:
+
+$$
+\Gamma(j,s)=\bigl(f(0,-j,s),f(1,-j,s)\bigr),\qquad
+\Lambda(j)=\Gamma(j,0).
+\tag{46.2}
+$$
+
+Pair equality means equality of the two corresponding components; labels within or across components may coincide arbitrarily. A common eligible cut is an $a\in\{0,\ldots,k-1\}$ satisfying (36.2). Write $\mathcal A(\Gamma)$ for these cuts. This is the supplied all-width first-zero criterion of Theorem 24.2, with no preceding all-one complete block since $m\ge k$. The high band is empty at $a=0$; otherwise its joined label $\rho_a$ need not be fresh. Every target remains a label of the immutable INITIAL source.
+
+**定义 46.2（The same-word parent response family）。** At a cut $a$, retain the actual literal parent set
+
+$$
+\mathcal B_a=\{B\in\{0,1\}^m:B\text{ avoids }1^k,\
+ B_i=1\ (i<a),\ B_a=0\}.
+\tag{46.3}
+$$
+
+Let $\tau(B)$ be its actual terminal run of ones. Its arithmetic root response and actual image are
+
+$$
+e_B(j)=\bigoplus_{i=0}^{m-1}B_i c_{i-j},\qquad
+E_B=\{j\in P:e_B(j)=1\},\qquad
+\mathcal R_a=\{E_B:B\in\mathcal B_a\}.
+\tag{46.4}
+$$
+
+A successful source observes $e_B(j)$ as its first endpoint difference. Formula (46.4) does not turn a rejecting source's output into a binary difference. Both $E_B$ and $\tau(B)$ belong to this same parent, with its same first zero.
+
+For use in the minimum below, the supplied literal image mechanisms [S10, Interface 2.1] and [CR46, Theorem 2.2] give the following descriptions. They are consumed parent interfaces, rather than separate cost results. At odd critical width $m=k$,
+
+$$
+\begin{aligned}
+\mathcal R_0&=\{E\subseteq P:|E|\text{ even},\ 0\notin E\},\\
+\mathcal R_a&=\{E\subseteq P:|E|\text{ even},\ \{0,a\}\subseteq E,\
+ E\cap\{1,\ldots,a-1\}=\varnothing\}\quad(a>0).
+\end{aligned}
+\tag{46.5}
+$$
+
+Its actual unique word is $B_i=\bigoplus_{j=0}^i\mathbf1_E(j)$, $0\le i<k$. Empty and full masks are retained whenever (46.5) permits them.
+
+For $m>k$ and $g=1$, put $L=m-a-1$, let $H_0=\varnothing$, $H_a=\{0,a\}$ for $a>0$, and let $V_a$ be the ordered consecutive vertices $[a+1,m]\pmod T$. Then
+
+$$
+\mathcal R_a=
+\begin{cases}
+\{H_a\mathbin\triangle F:F\subseteq V_a,\ |F|\text{ even}\},&L<k,\\
+\{H_a\mathbin\triangle F:F\subseteq P,\ |F|\text{ even},\
+ F\ne\{a+1,m\}\pmod T\},&L=k,\\
+\{E\subseteq P:|E|\text{ even}\},&L\ge k+1.
+\end{cases}
+\tag{46.6}
+$$
+
+In the first line the path vertices are distinct. In the second line the excluded mask has the unique free inverse $1^k$. In the last line a full physical cycle fits in the free suffix. Since $g=1$, $m>k$ necessarily implies $m\ge k+2$.
+
+For $m>k$ and $g\ge2$, define disjoint actual coordinate-position sets
+
+$$
+A_j=\{i:0\le i<m,\ i\equiv j\text{ or }j-1\pmod T\},\qquad j\in P.
+\tag{46.7}
+$$
+
+A mask $E$ lies in $\mathcal R_a$ precisely when
+
+$$
+\mathbf1_E(j)=|A_j\cap[0,a-1]|\pmod2
+\quad\text{at each }j\text{ with }A_j\cap[a+1,m-1]=\varnothing.
+\tag{46.8}
+$$
+
+All other actual coordinates are independently free. These formulas retain repeated physical residue positions and the forced bit $B_a=0$. They grant no additional space to the first parent.
+
+## 47. The exact continuation shared by both actual parent children
+
+**定义 47.1（Actual multiplicities and aggregate types）。** Fix one $B\in\mathcal B_a$ with $a\in\mathcal A(\Gamma)$, already emitted as one paid block. Its successful phase children are $S_1=E_B$ and $S_0=P\setminus E_B$. On each child use its immutable joined labels $\Lambda$. For any $S\subseteq P$ put
+
+$$
+N(S)=|S|,\qquad n(S)=|\Lambda[S]|,\qquad
+r(S)=|\{L\in\Lambda[S]:|S\cap\Lambda^{-1}(L)|\text{ odd}\}|.
+\tag{47.1}
+$$
+
+These multiplicities count actual phases, not INITIAL tails, histories or label names. Define $\ell(0)=\ell(1)=0$ and $\ell(n)=\lceil\log_2 n\rceil$ for $n\ge2$, and put $h=\max\{\ell(n(S_0)),\ell(n(S_1))\}$.
+
+For $d\ge0$ let $\Sigma_d(S)$ consist of the vectors
+
+$$
+\bigoplus_{j\in S}z_j,\qquad z_j\in\mathbb F_2^d,\qquad
+\Lambda(j)\ne\Lambda(j')\Longrightarrow z_j\ne z_{j'}\quad(j,j'\in S).
+\tag{47.2}
+$$
+
+A label may occupy several codes. Codes used by different labels in this same child must be disjoint; codes on different children may coincide. The aggregate is over one code per actual phase, with repetitions included. Write $V=\mathbb F_2^d$ and $V^\times=V\setminus\{0\}$.
+
+**定理 47.2（Matching signatures, an exact suffix fee and one safe literal stream）。** After the actual parent of Definition 47.1, let $K(B,\Lambda)$ be the least worst additional emitted complete-block fee of a continuation common to both successful children, with stopping based on each source's own acquired archive. Both original alphabets have
+
+$$
+K(B,\Lambda)=
+\begin{cases}
+h,&g\ge2\text{ or }(g=1\text{ and }T\text{ odd}),\\
+h+\chi,&g=1\text{ and }T\text{ even},
+\end{cases}
+\qquad
+\chi=\mathbf1_{\{\Sigma_h(S_0)\cap\Sigma_h(S_1)=\varnothing\}}.
+\tag{47.3}
+$$
+
+In particular $\chi=0$ when $h=0$. Its value is determined by the following closed aggregate table, which is used inside (47.3). Capacity failure $n(S)>2^d$ gives $\Sigma_d(S)=\varnothing$. An empty $S$ gives $\{0\}$, and at $d=0$ every capacity-admissible child gives $\{0\}$. If $N(S)$ is odd and capacity holds, $\Sigma_d(S)=V$. For nonempty even $N(S)$ at $d=1$,
+
+$$
+\Sigma_1(S)=
+\begin{cases}
+\mathbb F_2,&n(S)=1,\\
+\{0\},&n(S)=2,\ r(S)=0,\\
+\{1\},&n(S)=2,\ r(S)=2.
+\end{cases}
+\tag{47.4}
+$$
+
+For nonempty even $N(S)$, $d\ge2$, $M=2^d$ and $n(S)\le M$,
+
+$$
+\Sigma_d(S)=
+\begin{cases}
+\{0\},&n(S)=M,\ r(S)\in\{0,M\},\\
+V^\times,&n(S)=M,\ r(S)\in\{2,M-2\},\\
+V^\times,&n(S)<M,\ N(S)=n(S)\in\{2,M-2\},\\
+V,&\text{otherwise}.
+\end{cases}
+\tag{47.5}
+$$
+
+Thus the even-cycle surcharge occurs exactly when one child's capacity-dimension spectrum is zero-only and the other's is nonzero-only. Every finite value in (47.3) is attained by one literal suffix at its actual chronological indices, from the actual incoming tail $\tau(B)$, with no separate clearing or repair block. This is an additional fee after an already paid parent; its acquisition is not free.
+
+Proof. All successful INITIAL tails at a fixed phase merge at the parent's first zero. Their label is $\Lambda(j)$ by eligibility, and their terminal tail is $\tau(B)$. For every $j\in P$ an actual INITIAL tail-zero representative survives this parent. For a fixed free value, its root difference chooses $S_0$ or $S_1$, and each child's current value is common. Across both children the raw tails are common. This is a statement about the same issued parent applied to the joint sources of Definition 46.1.
+
+First extract a necessary condition from an arbitrary correct common suffix of additional bound $d$. Apply the value join already supplied by Theorem 29.2. Continue the actual tail-zero phase representatives only as a raw set calculation when they have stopped. Their first later rejecting block, if one exists, is simultaneous across all phases, since legality depends only on this common tail and the common literal bits. Any live archive entering that block must already have a constant joined label: its members would all receive the same absorbing output, and no later output could recover a distinction. It can therefore stop before that block. An archive stopped earlier was already constant as well.
+
+Retain each whole successful response row before that first raw rejection, and complete to $d$ rows by whole zero rows if necessary. For a written successful row its entries on phases that stopped earlier are evaluations of (36.3), not further observations or emitted actions. In particular this operation does not pad individual stopped columns independently. Within either fixed parent child, equal full suffix columns imply identical observed prefixes through the earlier stopping time, on one free-value fibre. The deterministic stopping rule then returns the same joined label. Unequal $\Lambda$ labels in that child therefore have unequal suffix codes. Binary capacity gives $d\ge h$.
+
+When $g=1$, every retained literal row has full-phase XOR zero by (36.4). Hence its column vectors satisfy
+
+$$
+\bigoplus_{j\in S_0}z_j=\bigoplus_{j\in S_1}z_j.
+\tag{47.6}
+$$
+
+The same equality holds for the added whole zero rows. Consequently a correct suffix of bound $d$ requires $\Sigma_d(S_0)\cap\Sigma_d(S_1)\ne\varnothing$. Attempted rejection and early stopping do not evade this necessary condition. For $g\ge2$ only the binary-capacity condition is needed.
+
+We now evaluate the aggregates that this necessary condition actually uses. Capacity, the empty child and $d=0$ follow directly from (47.2). If $N(S)$ is odd, translating every assigned vector by $w\in V$ preserves separation and changes its aggregate by $w$. Any capacity-admissible assignment thus yields every element of $V$. For even $N(S)$ and $d=1$, a single label can contribute zero by repeating zero and one by using one at one phase and zero at every other phase. With two labels each must own one of the two vectors, so their even or odd multiplicities give exactly (47.4).
+
+For $d\ge2$, use the credited Bajnok–Edwards subset spectrum [S27, Corollary 18], with precisely the hypotheses instantiated in Mathematical citation 37.2: distinct subsets of the full additive group $\mathbb F_2^d$, with zero allowed, have aggregate zero at every cardinality except $2,M-2$. The empty subset is direct. This existing spectrum is a step of the present continuation proof.
+
+At saturation $n(S)=M$, each label must own exactly one vector and every vector is used. A second vector for one label would leave fewer than $M-1$ vectors for the other labels. The aggregate is therefore the sum of the $r(S)$ distinct odd-cell vectors. It is forced to zero at $r=0,M$; it cannot be zero at $r=2,M-2$. At every other $r$ the credited spectrum provides zero. For $0<r<M$ a nonzero sum also exists: if a selected $r$-subset sums to zero, exchange one selected vector with an unselected vector, changing its sum to their nonzero XOR. Invertible linear maps of $V$ preserve separation and act transitively on nonzero vectors. Whenever one nonzero aggregate occurs, every nonzero aggregate occurs. This proves the saturated lines of (47.5).
+
+Below saturation, a nonzero aggregate always exists. If $r>0$, then $r<M$; choose one distinct vector per label, choosing an $r$-subset with nonzero sum for the odd cells by the same exchange argument. If $r=0$, choose one distinct vector per label, then change one phase of an even cell to one unused vector. That cell has at least two phases. Its contribution changes from zero to the nonzero XOR of the old and new vectors, while different labels still use disjoint codes. Again every nonzero aggregate follows by an invertible linear map.
+
+For a zero aggregate below saturation, the one-vector-per-cell assignment works whenever $r\notin\{2,M-2\}$: give the odd cells a zero-sum $r$-subset and the even cells distinct unused vectors. The exceptional cardinalities are repaired by the actual multiplicities, as in the consumed constructions of Theorem 37.1, with the small-label case included here. If $r=2$ and an even cell exists, split that cell between two vectors with odd counts $1,t_L-1$. Choose those two vectors and the two odd-cell vectors to be four distinct elements of an affine two-dimensional plane, whose aggregate is zero. All other cells are even and receive distinct unused vectors. The total number used is $n+1\le M$. If no even cell exists, there are just two odd cells. Unless both are singletons, one has size at least three; split it between three vectors with odd counts $1,1,t_L-2$ and give the other cell the fourth plane vector. Their aggregate is zero. Two differently labelled singleton phases cannot have aggregate zero at any dimension.
+
+If $r=M-2$ and $n<M$, then $n=M-2$ or $M-1$. In the latter case split its unique even cell between two unused vectors with odd counts; the odd-use vectors become the entire cube. In the former case all cells are odd. If $N>n$, a cell has size at least three; split it between three vectors with odd counts $1,1,t_L-2$, and give each other cell one distinct vector. Again the entire cube has odd multiplicity, with zero aggregate. If instead $N=n=M-2$, all phase codes are distinct; their sum is the sum of the two omitted vectors, which is nonzero. At $M=4$ the two exceptional cardinalities coincide, and the two-odd-cell construction already handles them. These cases exhaust all unsaturated zero failures and prove (47.5). Splitting a label uses its actual phases and never shares one code across different labels.
+
+If $g=1$ and $T$ is odd, exactly one parent child has odd phase count. At dimension $h$ it can translate its codes to match the aggregate of the other child. Thus (47.6) can always be met at the capacity bound. If $T$ is even, both child sizes are even because $E_B$ has even cardinality. Their table gives an intersection at $h$ unless one spectrum is $\{0\}$ and the other $V^\times$. In that mismatch $h\ge1$.
+
+One additional coordinate always repairs a mismatch. Put $M=2^h$ and evaluate at dimension $h+1$. Every nonempty child is now unsaturated, with at most $M$ labels in a cube of size $2M$. By (47.5), or its small cases, its spectrum contains every nonzero vector; the permanent two-singleton obstruction merely excludes zero. The other singleton obstruction would require $n=2M-2>M$, except at $M=2$, when it is the same two-singleton obstruction. Two nonempty children can thus match a nonzero aggregate. If one child is empty, the other has all $T\ge4$ actual phases. It is neither a two-singleton child nor a capacity-admissible $2M-2$-singleton child, so it admits zero in the larger cube. At $h=0$ both spectra were already $\{0\}$. This proves that the least algebraically possible suffix length is exactly (47.3).
+
+It remains to realize these codes on one actual stream. When $g\ge2$, take arbitrary separated $h$-bit codes on each child. When $g=1$, choose codes with matching aggregates at the least length just proved. Matching two nonzero aggregates is possible by an invertible linear map on one child's codes. In either case denote the combined coordinate rows by $q_t:P\to\mathbb F_2$, at absolute paid indices $t=1,\ldots,K$. When $g=1$ every such row has even full-phase XOR. The same-label splitting allowed above is retained.
+
+For strictly wide $m>k$, first consider $g\ge2$. At index $t$ let $u_t=tm\pmod T$. For each actual $j$, represent $j-u_t$ by $r\in\{0,g,\ldots,T-g\}$. Put an optional one at position $r-1$ if $r>0$, and at position $T-1$ if $r=0$, exactly when $q_t(j)=1$. Put zero at every other position. Since $m\ge T$, all these positions fit in the block. Each pulse selects only $j$ among actual phases: its other ambient vertex is outside $P$. The positions are at least one and are spaced by $g\ge2$, so the block starts zero and all its ones are isolated. This consumes the supplied sparse-row mechanism, including the singleton-phase case $m=T$.
+
+For strictly wide $g=1$, one has $m\ge T+1$. Consume the zero-prefix case $a=0$ of [S26, proof of Theorem 3.1], retaining its room requirement $T+1\le m$. Put bit zero at position zero. In positions $1,\ldots,T$ realize $q_t$ by solving
+
+$$
+x_r\oplus x_{r-1}=q_t(u_t+r),\qquad r\in\mathbb Z/T\mathbb Z.
+\tag{47.7}
+$$
+
+Even total charge makes this cyclic system consistent. Its two solutions complement one another; choose one with at most $\lfloor T/2\rfloor<k$ ones and place its residue bits in those $T$ actual positions. All remaining padding positions are zeros. Formula (36.3) gives exactly $q_t$. The free segment has fewer than $k$ ones in total, so it has no forbidden run. Its preceding zero separates it from every actual incoming tail. This reuse concerns subsequent rows only; it does not replace the already emitted first parent or enlarge that parent's free segment.
+
+At odd critical $m=k$, use $T$ even and $u_t=tk\pmod T$. Replace each combined row by
+
+$$
+\widetilde q_t(j)=q_t(j)\oplus q_t(u_t)\quad(j\in P).
+\tag{47.8}
+$$
+
+This complements the entire coordinate when necessary. Its full XOR stays zero because $T$ is even, and its value at the moving anchor $u_t$ is zero. It changes every code by the same coordinate translation, preserving all within-child equalities and inequalities. Both even-sized children's aggregates are unchanged. The actual critical inverse supplied by [CR46, Theorem 2.2] is
+
+$$
+B^{(t)}_i=\bigoplus_{r=0}^i\widetilde q_t(u_t+r),\qquad 0\le i<k.
+\tag{47.9}
+$$
+
+It starts zero. Its remaining $k-1$ positions cannot contain $1^k$, and its first zero clears any incoming tail before a one is read. The omitted cyclic edge is exactly the zero boundary bit in the supplied critical inverse; even full-phase charge verifies its last response coordinate. Hence (47.9) realizes the transformed row at this actual chronological displacement.
+
+Every construction gives the same word to every running source at a given index. Every word starts zero and is internally legal, so every seam from the actual parent's tail and every later tail is safe. No additional clearing action is inserted. At each reached endpoint a source records its own successive difference, selects its already acquired parent child and decodes its joined label from the separated suffix code. A homogeneous archive may stop earlier. No formal row entry on a stopped phase is used as an observation by another source. All padding, compensation and clearing bits are inside the counted complete blocks; each reached zero row is still paid. The suffix fee is at most the stated $K$, while the preceding necessity and capacity arguments rule out every smaller bound. Thus the upper and lower actual fees match. ∎
+
+## 48. The full INITIAL first-parent minimum
+
+**定理 48.1（Exact arbitrary-target GLOBAL preset envelope）。** For every $f$ in Definition 46.1, with all its actual INITIAL phases, values, tails and independent bottom, and either original alphabet,
+
+$$
+C_{\rm pre}(f)=
+\begin{cases}
+0,&\Gamma\text{ constant on successful INITIAL records},\\
++\infty,&\Gamma\text{ nonconstant and }\mathcal A(\Gamma)=\varnothing,\\
+1+\displaystyle\min_{\substack{a\in\mathcal A(\Gamma)\\E\in\mathcal R_a}}
+\bigl(h(E)+\chi(E)\bigr),&\text{otherwise}.
+\end{cases}
+\tag{48.1}
+$$
+
+Here $h(E)$ is the child-capacity quantity of Definition 47.1, and $\chi(E)=0$ when $g\ge2$ or $T$ is odd. When $g=1$ and $T$ is even, $\chi(E)$ is exactly the spectrum-intersection indicator in (47.3), evaluated by (47.4)–(47.5). The minimum retains the actual parent images (46.5)–(46.8), including empty/full masks, and evaluates the entire common continuation. Equivalently it is a minimum over the actual words $B\in\mathcal B_a$ of $1+K(B,\Lambda)$. Every finite value has an optimal one-global-stream literal protocol with archive-dependent stopping.
+
+Proof. By Theorem 29.2 it suffices to acquire the joined target; this equality includes infinity and uses one stream on both free values. A constant joined target stops free. Conversely at fee zero the free scalar value cannot distinguish two different joined labels in the full joint successful prior. Thus the first case is exact.
+
+Suppose $\Gamma$ is nonconstant. Every free-value archive for this joined target is initially unresolved. A first block containing $1^k$ internally rejects every successful source and cannot return two different joined labels; neither can the all-one word, since $m\ge k$. A correct first block therefore lies in $\mathcal B_a$ for some $0\le a<k$.
+
+Its leading $a$ ones reject exactly the INITIAL tails $s\ge k-a$. Their entire first endpoint archive on a fixed free-value fibre is the same absorbing output; they must have one joined label $\rho_a$. Its zero merges all lower tails at each fixed phase. Those sources had the same free value and the same pre-zero increments, so their complete acquired archives and their records after the zero coincide. Different immutable labels could not subsequently be distinguished. As tail zero is among them, their label must be $\Lambda(j)$. These are exactly the eligible-cut conditions (36.2), with no additional freshness condition. This necessity uses actual same-history witnesses at each phase and each compared INITIAL tail. Hence no eligible cut implies infinite fee.
+
+For an eligible parent, all lower tails at phase $j$ survive its remaining internally legal suffix and acquire the arithmetic response $e_B(j)$. Their common terminal tail is the same actual $\tau(B)$. The successful archives are precisely its actual children $E_B$ and $P\setminus E_B$, with their original $\Lambda$ labels. Every phase has a surviving tail-zero witness. Theorem 47.2 therefore supplies a lower bound of $1+K(B,\Lambda)$ on the total worst actual fee of every controller using this parent. High-tail rejection can stop at fee one, and the other children's early stopping was included in that theorem. Taking the minimum gives the lower inequality in (48.1).
+
+For completeness, the displayed parent descriptions preserve literal attainability. At critical width this is exactly [CR46, Theorem 2.2]: its unique inverse, prescribed first-zero coordinates and actual terminal tail occur together. At strictly wide coprime width, the forced prefix $1^a0$ contributes $H_a$. The free $L$ bits occupy consecutive physical edges $a+1,\ldots,m-1$, with vertices $V_a$. The consumed [S10] path inverse realizes precisely every even charge on that path when $L<k$. At $L=k$ the same inverse is unique and the one excluded charge has inverse $1^k$; it would reject every surviving source. At $L\ge k+1$ use the first full $T$-edge cycle of the free suffix, choose a complementary solution with fewer than $k$ ones, and set every other free bit zero. The separator at position $a$ makes the prefix safe independently of that free segment. These are exactly (46.6), including the omitted literal representative.
+
+At strictly wide noncoprime width, the sets $A_j$ are disjoint because actual phases are separated by $g\ge2$. The fixed prefix contributes the right side of (46.8). If no free position lies in $A_j$, that contribution is forced. Otherwise choose at most one free one in that set to achieve either desired parity, leaving its other free positions zero. These choices are independent across actual phases. They use at most $p=T/g<k$ suffix ones in total, so their free suffix contains no $1^k$; the prescribed first zero separates it from the leading run $a<k$. This realizes every mask in (46.8) and establishes its necessity as well. For each mask the chosen word is a member of $\mathcal B_a$, with its terminal tail read from that word. No response, rejection threshold or tail was borrowed from another representative.
+
+Choose a minimizing eligible cut and actual parent word. On its first rejecting endpoint return the component of $\rho_a$ selected by the remembered INITIAL value. Otherwise use exactly the safe common suffix of Theorem 47.2, decoding the same component of $\Lambda(j)$ from the parent difference and the source's own subsequent differences. Initial bottom returns its independent $f(\bot)$ freely. This stream has at most $1+K$ actually emitted blocks on every source, all original labels preserved. The preceding lower bound makes its worst fee exact. The parent sets are finite and nonempty, since $1^a0^{m-a}$ is always a member, so every asserted finite minimum is attained.
+
+In particular, a constrained first parent is never replaced by an unrestricted phase-code row. At the supplied $k=2,m=4$ example of [S26, Theorem 6.1], its only eligible cut is $a=1$. In INITIAL $j$ coordinates the low labels are $(A,B,A)$ and the common high label is fresh. Its actual parents $1000,1001,1010$ have masks $\{0,1\},\varnothing,\{1,2\}$ respectively. None gives a homogeneous one-block partition; the actual parent minimum has fee two, as that supplied theorem states. This instance is credited overlap, and the same parent restriction remains in (48.1) throughout the moderate-wide insufficient-room region. ∎
+
+## 49. Sharp complete-source surcharges at odd critical width
+
+**定理 49.1（A binary forced-parent surcharge at every odd order at least five）。** Let $k=m\ge5$ be odd and $1\le u\le(k-3)/2$. Choose $A\ne B$, any label $R$ and any independent bottom label. On both free-value fibres define the full INITIAL target by
+
+$$
+f(v,-j,s)=
+\begin{cases}
+A,&s=0,\ 0\le j\le2u,\\
+B,&s=0,\ 2u<j\le k,\\
+R,&1\le s<k.
+\end{cases}
+\tag{49.1}
+$$
+
+Allow $R=A$ or $R=B$. Then the supplied critical adaptive benchmark and the new GLOBAL preset fee satisfy
+
+$$
+C_{\rm ad}(f)=2,\qquad C_{\rm pre}(f)=3.
+\tag{49.2}
+$$
+
+One optimal preset stream is the literal three-block word
+
+$$
+1^{k-1}0\ \bigm|\ 01\,0^{k-2}\ \bigm|\
+000(10)^u0^{k-3-2u}.
+\tag{49.3}
+$$
+
+Proof. Since both low labels occur, at some actual phase the label at INITIAL tail zero differs from $R$. Any $a<k-1$ leaves tails zero and one surviving together at that phase, so it is ineligible. The unique eligible cut is $a=k-1$, and its unique critical parent is $1^{k-1}0$, with actual mask $E=\{0,k-1\}$. Its endpoint child has two different singleton labels, with $\Sigma_1(E)=\{1\}$. The complementary child has $2u$ phases labelled $A$ and $k-1-2u$ labelled $B$, both positive even numbers, so its one-dimensional spectrum is $\{0\}$. Theorem 48.1 gives preset fee three and rules out every two-block common stream, including attempted rejection and early stopping.
+
+The root rejects exactly positive INITIAL tails, returning their original $R$ at fee one. At paid index one, the isolated pulse at position one in the second word has actual mask $\{0,1\}$ because $u_1=k\equiv-1\pmod T$. It separates the two endpoint phases, and also identifies phase one as $A$ on the complementary child. These archives may stop at fee two. At index two, the pulses at positions $3,5,\ldots,2u+1$ in the third word give the disjoint pairs $\{1,2\},\{3,4\},\ldots,\{2u-1,2u\}$, hence mask $\{1,\ldots,2u\}$. On the remaining complementary archive this separates the remaining $A$ phases from every $B$ phase. Both suffix words begin zero and have isolated ones; all seams are safe. Their lengths are exactly $k$, and all zeros are paid within those blocks. This proves literal attainment with worst fee three.
+
+For adaptive control, [CR46, Theorems 3.2 and 4.1] already give one additional block on each of these actual two-label children, from this same parent's tail zero. They give total fee two. The unique root leaves each child unresolved, so fee one is impossible. This is a comparison with the existing adaptive law, not a new arbitrary adaptive solver. The independent high and bottom labels, including their allowed coincidences, do not change either lower bound. ∎
+
+**定理 49.2（Sharp odd-critical finite ceiling and an unbounded surcharge family）。** For every odd $k=m\ge3$, let
+
+$$
+b=k-1,\qquad h=\lceil\log_2 b\rceil,\qquad
+H(k)=1+h+\mathbf1_{\{b\text{ a power of two and }b\ge4\}}.
+\tag{49.4}
+$$
+
+Across arbitrary label sets and all full INITIAL targets with finite GLOBAL preset fee, the exact supremum of that fee is $H(k)$. It is attained by assigning a different label $y_j$ to each phase at INITIAL tail zero, the same on both free-value fibres, and one arbitrary common label $R$ to every positive INITIAL tail. Initial bottom retains any independent label. On this complete target,
+
+$$
+C_{\rm pre}(f)=H(k),\qquad C_{\rm ad}(f)=1+h,
+\tag{49.5}
+$$
+
+where the adaptive value is the supplied [CR46, Theorem 4.1]. In particular $k=m=2^h+1$, $h\ge2$, has exact adaptive fee $h+1$ and exact preset fee $h+2$.
+
+Proof. For any finite nonconstant target select one eligible cut. If $a>0$, the actual critical mask $E=\{0,a\}$ is permitted; if $a=0$, choose $E=\{1,2\}$. Thus one can always use an actual two-phase parent child and a complementary child of $b=k-1$ phases. Evaluate their spectra at dimension $h$, even if their actual label counts require fewer coordinates. A nonempty two-phase child always admits a nonzero aggregate at this dimension, whether its labels agree or differ.
+
+If $k=3$, both children have two phases and their one-dimensional spectra meet at one. If $k>3$ and $b<2^h$, the larger child is unsaturated; (47.5) says that it admits every nonzero aggregate, even in its singleton exceptions. It can therefore match the two-phase child at length $h$. If $b=2^h\ge4$, length $h+1$ always matches by Theorem 47.2. This proves $C_{\rm pre}(f)\le H(k)$ for every finite target. Constant targets have fee zero and also obey this bound.
+
+For the stated target, $\Lambda$ is injective, and at least one $y_j$ differs from $R$. As in Theorem 49.1, its only eligible cut is $a=k-1$, with unique parent mask $\{0,k-1\}$. Its two children have two and $b$ distinct singleton labels. Binary capacity forces at least $h$ further coordinates. At $k=3$ both aggregate spectra are nonzero-only at dimension one, so that length is possible. At $h\ge2$ the two-phase child is nonzero-only. When $b=2^h$, the complementary singleton child fills the whole cube and is zero-only; this forces the additional coordinate. When $b<2^h$, it admits a nonzero aggregate and there is no surcharge. Theorem 48.1 therefore gives exactly $H(k)$.
+
+Here is an explicit code construction for one attaining literal stream. Let $d=H(k)-1$ and list the $b$ complementary phases in their ordinary increasing order. If $b=2^h\ge4$, assign them all vectors of an $h$-dimensional subspace of $\mathbb F_2^{h+1}$, replacing its zero vector by one vector $w$ outside that subspace. Their aggregate is the nonzero $w$. Otherwise choose $b$ distinct vectors in $\mathbb F_2^h$ with nonzero aggregate $w$. Such a subset exists for $b<2^h$: if a chosen subset has zero aggregate, exchange one of its vectors with an unused vector. For the remaining case $b=2,h=1$, use the entire one-dimensional cube, whose aggregate is one. Give the two endpoint phases the codes $0,w$. All labels are separated within their actual parent children, and the combined full-phase aggregate is zero. Apply the common coordinate normalization (47.8) at each actual paid index, then the literal inverse (47.9). Together with the unchanged root $1^{k-1}0$, these are exactly $H(k)$ safe complete blocks. The lower bound ensures that some source actually requires that worst fee; archives identified earlier can stop.
+
+Finally, the existing critical adaptive law [CR46, Theorem 4.1] applies to the same unique parent and its actual terminal tail, with independently optimized children of two and $b$ distinct labels. It gives $1+h$. Its fresh-label special case is already [CR46, Theorem 6.1]; the use of Theorem 4.1 also permits $R=y_j$. This comparison changes neither the adaptive benchmark's source nor the preset controller's one-stream requirement. ∎
+
+## 50. Remaining original quantifiers and consumed supplier boundaries
+
+**定义 50.1（The residual complete-block cost problem）。** The original problem is still the exact minimum worst-branch number of ACTUAL EMITTED COMPLETE BLOCKS for every arbitrary attainable immutable INITIAL target at all $k\ge2,m\ge1$, separately adaptive and one-global-stream preset, under both original alphabets and the entire actual joint-history prior. The fixed matched reader, free initial value or independent absorbing rejection, endpoint-only observations, original label coincidences, stopping rules and payment for every wait, padding and repair block are unchanged.
+
+Theorem 48.1 resolves the arbitrary-target GLOBAL preset part on every strictly wide width $m>k$ and every odd critical width $m=k\ge3$. Within that statement the room-qualified and $m\ge2k+1$ costs of Theorem 38.1 and Corollary 38.2 are credited existing numerical slices. The singleton-phase width $m=k+1$ is also credited reuse: Corollary 24.3 already bounds an eligible nonconstant target by one block, and the positive-fee necessity gives its exact fee one. The new first-parent minimum retains all insufficient-room roots, and Theorem 47.2 evaluates their genuinely shared continuation. The root images of [S10, Interface 2.1] and [CR46, Theorem 2.2], the zero-prefix wide rows of [S26, proof of Theorem 3.1], common-cut eligibility and value joining are used only with their stated source and literal-operation hypotheses. The classical finite-vector subset spectrum [S27, Corollary 18] is consumed inside the aggregate proof, as in Mathematical citation 37.2.
+
+The odd-critical literal normalization uses even $T$. At even critical $k$, $T$ is odd and whole-phase complementation changes row parity, so (47.8) is not that missing literal bridge. At coprime proper-narrow widths a whole-phase complement generally creates charge outside the physical window. Those arbitrary preset scopes, including even-order width two and general coprime proper-narrow widths not already supplied, remain unresolved by (48.1). Arbitrary INITIAL adaptive costs outside existing supplier laws also remain part of the original problem. The comparisons (49.2) and (49.5) retain their stated full-source families and use the existing critical adaptive theorem; they assert no universal adaptive-to-preset equality.
+
+The arbitrary unit-width laws of Theorems 25.3–25.4, the noncoprime proper-narrow preset law of Theorem 33.2 and the odd-order width-two preset law of Theorem 44.2 remain credited with their original scopes. An acquired-support fee is additional to its actual acquisition, and no source representation or calibration result supplies a reader fee without a proved source, operation, observation and resource correspondence. Formula (48.1) is a finite set-theoretic minimum for arbitrary $Y$; effective evaluation may use the finite target partition or a finite table with decidable label equality. It asserts no bound on offline search or memory.
+
+[CR46]: https://raw.githubusercontent.com/the-omega-institute/trureturing/0e51d0ec80c86e888fcdde78982665a7c5c17c79/docs/develop/theory/KBONACCI_CRITICAL_WIDTH_TARGET_COST.md
+
+## 追加锚（本行以下为增补区）
