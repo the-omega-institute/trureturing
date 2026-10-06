@@ -1,3 +1,4 @@
+import Reg.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit
 import LeanInformationAuditRegTests.ContractRoots
 import LeanInformationAuditRegTests.ContractPaths
 import LeanInformationAuditRegTests.ContractTypeCarrier
@@ -228,7 +229,7 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
         (fun owner => return (← store.getModule owner).constants)
         (CompiledAxioms.collectAxiomsShared context.find closures)
       let some (_, sourceRow) := sourceSnapshot.registrations[0]?
-        | throw <| IO.userError "compiled.source:registration_missing"
+        | throw <| IO.userError s!"compiled.source:registration_missing:{sourceOwner}"
       let entry := sourceRow.input.entry
       let some declaration := sourceRow.input.declaration
         | throw <| IO.userError "compiled.source:declaration_missing"
@@ -280,12 +281,48 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
   finally searchPathRef.set saved
 
 
+/-- The actual report executable must discover, assess and emit the typed input.
+Direct assessment tests cannot detect a disconnected production dispatcher. -/
+unsafe def checkProductionReport : IO Unit := do
+  let executable ← Repository.source ".lake/build/lean-inspector/producer/bin/reportInspector"
+  let temporary := (← IO.getEnv "TMPDIR").getD "/tmp"
+  let directory : System.FilePath := s!"{temporary}/compiled-production-{← IO.monoNanosNow}"
+  IO.FS.createDirAll directory
+  try
+    let report := directory / "report.json"
+    let result ← IO.Process.output {
+      cmd := executable.toString
+      args := #["--output", report.toString, "--material-spool", (directory / "materials").toString,
+        "Reg.D5.S0.Tower.GoldenGapZeckendorf", "Reg/D5/S0/Tower/GoldenGapZeckendorf.lean",
+        "sha256:0000000000000000000000000000000000000000000000000000000000000000"] }
+    unless result.exitCode == 0 do
+      throw <| IO.userError s!"[FAIL] ProductionReportAssessesTypedRegistration: {result.stderr}"
+    let json ← IO.ofExcept <| Json.parse (← IO.FS.readFile report)
+    let modules ← IO.ofExcept <| json.getObjValAs? (Array Json) "modules"
+    let valid : Except String Unit := do
+      let some row := modules[0]? | throw "missing module"
+      let binding ← row.getObjVal? "information_templates"
+      let records ← binding.getObjValAs? (Array Json) "records"
+      unless records.size == 1 do throw s!"expected 1 registration, got {records.size}"
+      let record := records[0]!
+      unless (← record.getObjValAs? String "state") == "declared_validated" do
+        throw s!"unvalidated registration: {record.compress}"
+      let key ← record.getObjVal? "key"
+      unless (← key.getObjValAs? String "theorem") ==
+          "D5.S0.Tower.GoldenGapZeckendorf.wdigits_fib_add" do throw "wrong target"
+      pure ()
+    if let .error reason := valid then
+      throw <| IO.userError s!"[FAIL] ProductionReportAssessesTypedRegistration: {reason}"
+    IO.println "[PASS] ProductionReportAssessesTypedRegistration"
+  finally IO.FS.removeDirAll directory
+
 end LeanInformationAuditRegTests.CompiledDiscovery
 
 unsafe def main : IO Unit := do
   Lean.initSearchPath (← Lean.findSysroot)
   let fixturePath ← LeanInformationAudit.Repository.source ".lake/build/lean-inspector/reg/lib/lean"
   Lean.searchPathRef.modify (fixturePath :: ·)
+  LeanInformationAuditRegTests.CompiledDiscovery.checkProductionReport
   LeanInformationAuditRegTests.CompiledDiscovery.readFixtures
     (← IO.getNumHeartbeats) (Lean.Core.getMaxHeartbeats ({} : Lean.Options))
   LeanInformationAuditRegTests.CompiledCalculations.check

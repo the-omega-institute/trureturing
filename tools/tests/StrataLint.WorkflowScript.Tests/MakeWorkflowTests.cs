@@ -82,6 +82,7 @@ public sealed partial class MakeWorkflowTests
         "gate",
         "census",
         "census-derivational",
+        "compiled-judge-test",
     ];
 
     private static readonly string[] ToolsTargets =

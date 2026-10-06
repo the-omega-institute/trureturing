@@ -119,6 +119,5 @@ unsafe def check : IO Unit := do
   IO.println s!"[PASS] compiled calculations: closed context work={work}; \
     complete identities, binder annotations, depth and dictionary owners"
 
-run_meta check
 
 end LeanInformationAuditRegTests.CompiledCalculations
