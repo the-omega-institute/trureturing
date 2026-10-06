@@ -62882,3 +62882,146 @@ $$
 这里的有理主部与 Mellin 支撑关系直接复用 [Burnol 的原始文献接口](../../../Library/Analytic/burnol2003analyticestimate.md)，经典 Fourier 和 Abel 极限规则也直接复用。新增组合仅是当前实际 FIB 来源的完整边界接口；不重复已知 Chebyshev 平滑尾项或显式公式的证明，不作原创性认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 414. 可增长有理扣除项的共同相位探测与绝对预算下界
+
+本节只补 §412 未覆盖的参数范围：项数、极点位置和系数都可以随 $x$ 变化。经典单侧 Laplace/Fourier 支撑、有效 PNT、Laurent 展开和 §413 的实际来源接口直接复用；不重复证明一般 Hardy 距离定理或 Chebyshev 判据，不作原创性认证。以下是纸面组合推导，未完成 Lean 核验。
+
+**定义 414.1（逐尺度有理扣除合同）。** 令 $\ell=\log x$、$\varepsilon_x>0$，满足（411.1），并置 $\alpha_x=\varepsilon_x/2$、$\sigma_x=1-\alpha_x$。每个充分大的 $x$ 可独立选择一个有限有理函数 $T_x$，要求：
+
+1. $T_x(z)=O(1/z)$（$z\to\infty$），常数不要求对 $x$ 一致；
+2. 全部极点严格位于实际直线的右侧：$\Re p>\sigma_x$。
+
+记全部这些有理函数为 $\mathcal R_x$；它非空，因为 $Q_{\varepsilon_x}\in\mathcal R_x$。不要求在 $1$ 作局部匹配，因此该类也包含 §412 的中心化家族。令 $U_x=T_x-Q_{\varepsilon_x}$；$Q_{\varepsilon_x}$ 的极点 $1,2$ 同样在实际直线右侧。$U_x(z)/(1-z)$ 在无穷远为 $O(z^{-2})$，其全部极点仍在 $\Re z>\sigma_x$；分母可能增加的极点 $1$ 也在这一侧。
+
+直接消费 [DLMF 表1.14.4](https://dlmf.nist.gov/1.14#T4)的单侧 Laplace 变换对与 [§1.14 的既有反演](https://dlmf.nist.gov/1.14#iii)。对部分分式 $(p-z)^{-m}$，参数为 $a=p-\sigma_x$、Laplace 参数 $s=-i\tau$、$n=m-1$；$\Re a>0$。采用本卷的正号逆 Fourier 约定，这一表对给非正时间支撑。因此对每个 $u>0$，
+
+$$
+\frac1{2\pi}\int_{\mathbb R}
+\frac{U_x(\sigma_x+i\tau)}{1-\sigma_x-i\tau}
+e^{i\tau u}d\tau=0.
+\tag{414.1}
+$$
+
+这里先将有限部分分式相加；整体的 $O(z^{-2})$ 保证积分绝对收敛，即使单独的简单极点项不属于 $L^1$。极点在竖线右侧，对应非正时间支撑；不是把一次零加权积分提升成所有正时间都为零。每个 $x$ 先单独使用该精确身份，之后才取 $x\to\infty$，故没有使用共同次数、极点距离或系数界。
+
+**定义 414.2（同源原函数与经典尾项的对应）。** 复用 §413 的 $k,h$，并令
+
+$$
+K_\varepsilon(\tau)=
+\frac{\mathscr G_\varepsilon^\circ(1-\varepsilon/2+i\tau)}
+{\varepsilon/2-i\tau},\qquad
+P_\varepsilon(u)=e^{-\varepsilon u/2}
+\frac1{2\pi}\int_{\mathbb R}K_\varepsilon(\tau)e^{i\tau u}d\tau.
+\tag{414.2}
+$$
+
+§411 已支付的共同局部界、紧环带界及原始高频供应器，直接给 $K_\varepsilon\to k$ 于 $L^1(\mathbb R)$。局部的 $|z-1|$ 精确抵消 $|1-z|$；高频仍由（411.12）同型的可积包络控制。标准 Fourier 范数估计遂给未乘指数的逆变换在整个实轴一致收敛。由于 $h\in C_0(\mathbb R)$，对每个固定 $u_0>0$，
+
+$$
+\sup_{u\ge u_0}|P_\varepsilon(u)-h(u)|\longrightarrow0.
+\tag{414.3}
+$$
+
+乘指数后的统一性不由点态极限单独取得：在有限 $[u_0,R]$ 上用指数的一致极限，在 $[R,\infty)$ 上用 $h$ 的小尾及 $0<e^{-\varepsilon u/2}\le1$。
+
+§92.3 已使用经典 Chebyshev 平滑尾项
+
+$$
+H(u)=J(e^u)=\int_{e^u}^\infty\frac{\psi(t)-t}{t^2}dt,
+\qquad u\ge0.
+\tag{414.4}
+$$
+
+这里 $\psi$ 是累计全部素数幂的 Chebyshev 函数。直接复用 [既有有效 PNT 来源](../../../Library/Weil/primenumbertheoremand2026medium.md)，$E(u)=e^{-u}\psi(e^u)-1$ 和 $H$ 可积，且 $H\in C_0([0,\infty))$。本节只核对它与 §413 的实际 Fourier 读数是否相同。
+
+对同一 $I_\psi(e^\ell)=\int_\ell^\infty E(u)v(u)du$ 使用经典分部积分，有
+
+$$
+I_\psi(e^\ell)=v(\ell)H(\ell)
++\int_\ell^\infty v'(u)H(u)du,
+\qquad v(u)=\frac1u+\frac1{u^2}.
+\tag{414.5}
+$$
+
+与（413.3）相比，$d=h-H$ 满足 $v(\ell)d(\ell)+\int_\ell^\infty v'd=0$。积分项可微，故此式先使连续的 $d$ 可微，再给 $v d'=0$。两者在无穷远都趋零，常数 $d$ 因而为零。因此经典尾项直接识别当前来源：
+
+$$
+\boxed{h(u)=H(u)\quad(u>0).}
+\tag{414.6}
+$$
+
+这不是新的 Chebyshev 显式公式或 RH 判据。数值归一化直接复用 [Lay，arXiv:1505.03589v1，Lemma 4 证明中的未编号身份和常数计算，printed p.6](../../../Library/Analytic/lay2015mertenssignchanges.md)：令 $\psi_r(x)=\sum_{n\le x}\Lambda(n)/n$，采用与 $\psi$ 相同的端点约定，则
+
+$$
+H(u)=u-(1+\gamma)+e^{-u}\psi(e^u)-\psi_r(e^u),
+\qquad H(0)=-(1+\gamma).
+\tag{414.7}
+$$
+
+这是原文已给出的无条件原函数身份，不以含误差项的原文式（9）替代精确公式，也不重复推导其 Laurent 常数。在 $0<u<\log2$ 上两个计数都为零；结合（414.6）和既有 Fourier 连续性，得到
+
+$$
+\boxed{h(u)=u-(1+\gamma)\quad(0<u<\log2),
+\qquad h(0)=-(1+\gamma).}
+\tag{414.8}
+$$
+
+**定理 414.3（全部上述可增长家族共享绝对预算下界）。** 对定义414.1中的每个逐尺度 $T\in\mathcal R_x$，定义完整实际绝对账
+
+$$
+\mathcal A_T(x)=\frac1{2\pi}\int_{\mathbb R}
+\left|[\mathscr G_{\varepsilon_x}-T](\sigma_x+i\tau)
+\widetilde w_x(\sigma_x+i\tau)\right|d\tau.
+\tag{414.9}
+$$
+
+每个积分有限，而且
+
+$$
+\boxed{\liminf_{x\to\infty}(\log x)\inf_{T\in\mathcal R_x}\mathcal A_T(x)
+\ge\sup_{u>0}|h(u)|\ge1+\gamma.}
+\tag{414.10}
+$$
+
+因此，特别地，对每个 $\eta>0$，全部充分大的 $x$ 与全部 $T\in\mathcal R_x$ 同时满足 $\mathcal A_T(x)\ge(1+\gamma-\eta)/\log x$。截止可以依赖所选阻尼日程，不依赖 $T$；不声称对所有日程共享一个截止或常数 $1+\gamma$ 最优。特别地，不存在这一合同内的选择使 $\mathcal A_T(x)=O(1/(\sqrt x\log x))$。结论允许次数增长、极点移动及系数发散。
+
+证明。每个固定 $x$ 和 $T\in\mathcal R_x$ 的有理项在实际竖线上没有极点且为 $O(|\tau|^{-1})$；结合实际来源和权重的既有高频界，取得（414.9）的有限性，不要求该范数对 $x$ 一致有界。
+
+固定任意 $u_0>0$，任选 $T_x\in\mathcal R_x$，令 $s_x=u_0-\ell$，用模为一的相位探测同一个完整乘积：
+
+$$
+\mathcal J_x(s_x)=\frac1{2\pi}\int_{\mathbb R}
+[\mathscr G_{\varepsilon_x}-T_x](\sigma_x+i\tau)
+\widetilde w_x(\sigma_x+i\tau)e^{i\tau s_x}d\tau.
+\tag{414.11}
+$$
+
+三角不等式给 $|\mathcal J_x(s_x)|\le\mathcal A_T(x)$。只做（413.4）中已经支付的一次分部积分，并用绝对 Fubini：所有原函数参数都为 $\ell+s_x+r=u_0+r>0$，故（414.1）将 $U_x$ 的全部贡献精确消去，得到
+
+$$
+\boxed{
+\mathcal J_x(s_x)=e^{\alpha_xs_x}
+\left[v(\ell)P_{\varepsilon_x}(u_0)
++\int_0^\infty v'(\ell+r)P_{\varepsilon_x}(u_0+r)dr\right].}
+\tag{414.12}
+$$
+
+Fubini 在每个固定 $x$ 合法：$[\mathscr G_{\varepsilon_x}-T_x]/(1-z)$ 在竖线上属于 $L^1$，而 $\int_\ell^\infty e^{-\alpha_xu}|v'(u)|du<\infty$。指数的符号来自 $e^{-\alpha_xu}e^{\alpha_x(u+s_x)}=e^{\alpha_xs_x}$，没有丢弃共同相位。
+
+由日程条件，$e^{\alpha_xs_x}\to1$；由（414.3），$P_{\varepsilon_x}(u_0)\to h(u_0)$，而 $\ell v(\ell)\to1$。余项乘 $\ell$ 趋零：先用（414.3）替换成 $h$，误差至多为 $\ell v(\ell)\|P_{\varepsilon_x}-h\|_{[u_0,\infty)}$；再将 $r$ 分成 $[0,R]$ 和 $[R,\infty)$，前者用 $\ell|v'(\ell+r)|=O(1/\ell)$，后者用 $h\in C_0$ 的任意小尾及 $\ell\int_0^\infty|v'(\ell+r)|dr=\ell v(\ell)$。因此
+
+$$
+\ell\mathcal J_x(s_x)\longrightarrow h(u_0).
+\tag{414.13}
+$$
+
+同一个（414.12）右侧对每个 $T\in\mathcal R_x$ 都成立，故先取 $\inf_T\mathcal A_T\ge|\mathcal J_x|$，再用（414.13），得到每个固定 $u_0>0$ 的下界 $|h(u_0)|$。取正时间上的上确界，给（414.10）第一项。最后由（414.8）令 $u_0\downarrow0$，得到共同常数 $1+\gamma$。$\square$
+
+**边界 414.4（对后续估计路线的含义）。** 取 $s_x=0$ 时，（414.1）与（414.12）也保证全部这些扣除项保留原来的完整 $I_{\varepsilon_x}(x)$。然而定理414.3使用的是另外的平移相位，故它给绝对账下界，不给原来未平移的 $I_\psi(x)$ 或 $I_{\varepsilon_x}(x)$ 下界。
+
+[Bhattacharya–Martin–Simpson 的已发表来源](../../../Library/Analytic/bhattacharyamartinsimpson2026weightedprimeerrors.md)，Theorem 1.4(b)、式（1.1），对这同一个原函数精确给出：假设 RH 时，$\limsup_{u\to\infty}e^{u/2}|h(u)|\le2+\gamma-\log(4\pi)$。这是原文定理在 $\psi,\psi_r$ 对上的直接应用，不重证；它不需要 LI，但其 RH 前提和非显式的渐近截止都不能略去，因此没有支付当前无条件目标。
+
+式（414.10）不覆盖只满足一次零加权积分、却没有（414.1）单侧支撑身份的任意修正项；也不覆盖改换实际来源或权重后未经支付的运输。它说明在当前合同内增加有理扣除的复杂度仍不能支付临界绝对预算，继续研究必须保留原积分的有符号联合相位，或提供合同之外且确实适用的近似结构。§413 所需的定量有符号估计、完整 Robin 与 RH 仍未得到证明。
+
+## 追加锚（本行以下为增补区）
