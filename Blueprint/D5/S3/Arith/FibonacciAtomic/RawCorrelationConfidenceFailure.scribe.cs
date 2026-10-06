@@ -59,15 +59,19 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
             forward, Sp, Eq, Sp,
             Seq(D(2), rho, Par(Seq(D(1), Minus, D(3), rho)),
                 Par(Seq(D(1), Minus, D(2), rho))));
-        return Seq(Forall, Sp, rho, Sp, InMacro, Sp,
-            Seq(Mathbb, Grp(V("R"))), Sp, Par(range), Comma, Sp, body);
+        return Disp(Seq(Forall, Sp, rho, Sp, InMacro, Sp,
+            Seq(Mathbb, Grp(V("R"))), Sp, Par(range), Comma, Sp, body));
     }
 
     private static Formula SignFormula()
     {
         var alpha = V("alpha");
         var rho = V("rho");
-        return Seq(Call("Mplus", alpha, rho), Sp, Eq, Sp,
-            Call("Mminus", alpha, rho));
+        return Disp(Seq(Forall, Sp, alpha, Sp, InMacro, Sp,
+            Seq(Mathbb, Grp(V("R"))), Comma, Sp,
+            Forall, Sp, rho, Sp, InMacro, Sp,
+            Seq(Mathbb, Grp(V("R"))), Comma, Sp,
+            Call("Mplus", alpha, rho), Sp, Eq, Sp,
+            Call("Mminus", alpha, rho)));
     }
 }
