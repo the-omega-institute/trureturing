@@ -13,7 +13,7 @@ H_1(G;\mathbf F_2):=\ker(\partial_G)
 \dim_{\mathbf F_2}H_1(G;\mathbf F_2)=|E|+c-|V|.
 $$
 
-*Proof.* Machine-checked in Lean as D5/S3/Combinatorics/Graph/CycleSpaceEulerRank.graphFirstHomology_eq_simpleCycleSpace and graphBettiOne_eq_eulerCycleRank (✓ std3). The boundary map is the endpoint-character linear combination from the existing binary differential. The first equality projects the existing finite_graph_cycle_space relation-space theorem; a spanning forest then gives the chord-indexed basis and Euler cardinality. ∎
+*Verification status.* The draft Lean statements have not been compiled locally. No kernel-checked result is claimed. The current kernel/rank statements are definitional projections of existing results and are scaffolding, not new mathematical content.
 
 *Source.* Repository-derived; the cycle-space/H1 interpretation is standard graph homology over F2.
 
