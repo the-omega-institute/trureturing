@@ -119,6 +119,53 @@ theorem Z_local_unitary_phase : ∀ (n q : ℕ) [NeZero n] {N : ℕ}
     (U : Fin N → Matrix (Fin 2) (Fin 2) ℂ) (z : ℂ),
     (∀ u, U u ∈ Matrix.unitaryGroup (Fin 2) ℂ) → ‖z‖ = 1 →
     Z n q col (z • (tensorOp U *ᵥ ψ)) = Z n q col ψ := by
-  sorry
+  classical
+  intro n q _ N col ψ U z hU hz
+  have hz' : star z * z = 1 := by
+    simpa only [Complex.star_def, hz, one_pow, Complex.ofReal_one] using Complex.conj_mul' z
+  have phase (φ : (Fin N → Fin 2) → ℂ) : Z n q col (z • φ) = Z n q col φ := by
+    unfold Z
+    apply Finset.sum_congr rfl
+    intro x _
+    apply Finset.prod_congr rfl
+    intro r _
+    simp only [Pi.smul_apply, smul_eq_mul, star_mul]
+    calc
+      star (φ (x r)) * star z * (z * φ (fun u => x (shift n q (col u) r) u)) =
+          (star z * z) * (star (φ (x r)) * φ (fun u => x (shift n q (col u) r) u)) := by
+        ring
+      _ = star (φ (x r)) * φ (fun u => x (shift n q (col u) r) u) := by rw [hz', one_mul]
+  rw [phase]
+  let R := Fin (q - 1) → ZMod n
+  let σ : Fin N → Equiv.Perm R := fun u => shiftEquiv n q (col u)
+  let P := replicaPermutation σ
+  let A := replicaOp (R := R) U
+  let v : (R → Fin N → Fin 2) → ℂ := fun x => ∏ r, ψ (x r)
+  have hexpand : (fun x : R → Fin N → Fin 2 => ∏ r, (tensorOp U *ᵥ ψ) (x r)) =
+      A *ᵥ v := by
+    funext x
+    exact replica_expand U ψ x
+  have hcomm : (A *ᵥ v) ∘ P = A *ᵥ (v ∘ P) := by
+    funext x
+    change (∑ y, replicaOp U (P x) y * v y) =
+      ∑ y, replicaOp U x y * v (P y)
+    symm
+    apply Fintype.sum_equiv P
+    intro y
+    rw [replicaOp_permutation]
+  have hZ (φ : (Fin N → Fin 2) → ℂ) :
+      Z n q col φ = star (fun x : R → Fin N → Fin 2 => ∏ r, φ (x r)) ⬝ᵥ
+        ((fun x : R → Fin N → Fin 2 => ∏ r, φ (x r)) ∘ P) := by
+    simp only [Z, dotProduct, Pi.star_apply, Function.comp_apply, star_prod,
+      Finset.prod_mul_distrib]
+    rfl
+  calc
+    Z n q col (tensorOp U *ᵥ ψ) = star (A *ᵥ v) ⬝ᵥ ((A *ᵥ v) ∘ P) := by
+      rw [hZ, hexpand]
+    _ = star (A *ᵥ v) ⬝ᵥ (A *ᵥ (v ∘ P)) := by rw [hcomm]
+    _ = star v ⬝ᵥ (v ∘ P) := by
+      rw [Matrix.star_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_vecMul,
+        ← Matrix.star_eq_conjTranspose, replica_unitary U hU, Matrix.vecMul_one]
+    _ = Z n q col ψ := (hZ ψ).symm
 
 end D5.S3.Quantum.Entanglement.ReplicaPartitionLocalInvariance
