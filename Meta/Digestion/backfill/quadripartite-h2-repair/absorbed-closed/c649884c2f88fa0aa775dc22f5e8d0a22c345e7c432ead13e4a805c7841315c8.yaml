@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:c649884c2f88fa0aa775dc22f5e8d0a22c345e7c432ead13e4a805c7841315c8
   normalized_sha256: sha256:c649884c2f88fa0aa775dc22f5e8d0a22c345e7c432ead13e4a805c7841315c8
 cas_ref: sha256:c649884c2f88fa0aa775dc22f5e8d0a22c345e7c432ead13e4a805c7841315c8
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/QuadripartiteH2ExactBudget.fourcube_exact_budget
+    target_statement_id: sha256:b4dbea8ef38b4131e7caa124592f3f14fa96c839a6d7c538d9b080a17735057c
 receipts:
   unresolved_subitems: []
