@@ -65215,3 +65215,231 @@ J_x^{\eta_z}(n)>\frac{a\log z}{8n^2\log x}>0.
 $$
 
 这里 $X_z(1)$ 仍依赖每份固定过滤器。§427 在固定 $P$ 上添加高素数带所得的固定比例负窗，与（CP.17）的连续前缀固定比例正窗，使用不同的过滤族；两者均保留同一完整 $I_\psi$ 的实际符号配对与补集。$\square$
+## 429. 同时增长高素数带的真实核极限与同筛有符号窗口
+
+沿用 §§398、424–427 的实际阶乘余核 $\eta$、固定平方自由过滤器 $P$、互素前缀 $M_P$、真实核 $J_x^{\eta_P}$ 和完整积分 $I_\psi$。经典素数定理、固定有限过滤器的 Mertens 供应与完整身份直接复用。这里让高素数带和源规模同时增长，保留同一过滤器下的真实前缀、全部高带子集和首块。
+
+**定义 429.1（同一源规模的高带）。** 记
+
+$$
+\ell=\log x,\qquad L=\log2,\qquad
+F(a)=(1+a)\log(1+a)-a,\qquad a>0.
+$$
+
+固定正平方自由整数 $P$，并置
+
+$$
+z=x^a,\qquad Q_z=\prod_{z<p\le2z}p,\qquad
+H_x=P Q_z,\qquad E_P=\prod_{p\mid P}(1-1/p)>0.
+\tag{429.1}
+$$
+
+当 $z>P$ 时 $(P,Q_z)=1$，故 $H_x$ 平方自由。所有整数指标均为正。$P,a$ 固定；$Q_z,H_x$ 随 $x$ 改变，但在每个 $x$ 的全部行中使用同一 $H_x$。高素数带过滤不同于排除全部 $p\le z$ 的最小素因子筛。
+
+**复用公式（阶乘核的全高商包络）。** 对 $y\ge1$，经典对数阶乘积分夹逼给 $|\eta(y)|\le1+\log y$。令
+
+$$
+Z_\eta(r)=\int_1^\infty\frac{\eta(y)}{y^2}h(r+\log y)\,dy,
+\qquad h(r)=r^{-1}+2r^{-2}+2r^{-3}.
+$$
+
+在 §398 的精确低商—高商分解中取低商参数 $A=D=1$。对 $s\ge x\ge e$、$r=\log s=\ell+v$、$v\ge0$，得到
+
+$$
+\begin{aligned}
+-\frac{d}{ds}P_x^\eta(s)&=\frac{G_{\eta,x}(\log s)}{s^2},\\
+G_{\eta,x}(\ell+v)
+&=\ell F(v/\ell)+\frac v\ell-\log(1+v/\ell)
+-\frac1{\ell+v}-\frac1{(\ell+v)^2}+Z_\eta(\ell+v),\\
+|Z_\eta(r)|&\le2h(r).
+\end{aligned}
+\tag{429.2}
+$$
+
+导数在 $s>x$ 上使用；$s=x$ 按 §398 的右侧连续延拓。因 $0\le F(t)\le t^2/2$、$0\le t-\log(1+t)\le t$，全部高商满足
+
+$$
+|\ell G_{\eta,x}(\ell+v)|\le v^2/2+v+12.
+\tag{429.3}
+$$
+
+对于任意固定 $a>0$ 和有限 $B\ge0$，还满足
+
+$$
+G_{\eta,x}(\ell+a\ell+b)=\ell F(a)+O_{a,B}(1)
+\qquad(0\le b\le B).
+\tag{429.4}
+$$
+
+证明。设 $m=\lfloor y\rfloor\ge1$。经典夹逼
+$m\log m-m+1\le\log(m!)\le m\log m-m+1+\log m$，
+以及 $0\le\int_m^y\log t\,dt\le\log y$，给
+$1-\log y\le\eta(y)\le1+\log y$。
+因此 $\int_1^\infty|\eta(y)|y^{-2}dy\le2$，而 $h$ 递减，支付（429.2）的高商预算。低商 $\eta(y)=y(1-\log y)$ 正好符合 §398 的精确公式；代入并整理得到（429.2），没有使用固定比例的 Taylor 余项。（429.3）中 $\ell/ r+\ell/r^2\le2$，且 $2\ell h(r)\le10$。最后 $F'=\log(1+a)$ 在固定紧邻域有界，故 $\ell[F(a+b/\ell)-F(a)]=O_{a,B}(1)$，其余项共同有界，得到（429.4）。$\square$
+
+**定理 429.3（任意固定幂高带的同时极限）。** 对每个固定 $P$、$a>0$、$U\ge0$，当 $x\to\infty$ 时，在全部正整数 $x\le n\le e^Ux$ 上共同成立
+
+$$
+\boxed{
+n^2J_x^{\eta_{H_x}}(n)
+=-\frac{E_P L F(a)}a+o_{P,a,U}(1).
+}
+\tag{429.5}
+$$
+
+等价地，$n^2\ell J_x^{\eta_{H_x}}(n)/\log z$
+共同趋于 $-E_P L F(a)/a^2$。共同误差的含义是：对每个 $\varepsilon>0$ 存在 $X$，使所有 $x\ge X$ 与上述窗口内全部 n 的误差绝对值小于 $\varepsilon$；不要求每个实 x 的退化窗口都含整数。$F(a)>0$，故全部这些真实核最终为负。
+
+证明。§427 的完整有限 Euler 纤维身份给
+
+$$
+J_x^{\eta_{H_x}}(n)
+=\sum_{d_0\mid P}\mu(d_0)
+\sum_{q\mid Q_z}\mu(q)
+\int_{d_0qn}^{d_0q(n+1)}
+\frac{G_{\eta,x}(\log s)}{s^2}\,ds.
+\tag{429.6}
+$$
+
+每份过滤器都是有限的；这里不交换一个随 x 改变的无穷素数积。对 d 的完整纤维记
+$T_{x,d}(n)=n^2\ell\int_{dn}^{d(n+1)}G_{\eta,x}(\log s)s^{-2}ds$。
+由（429.3）和 $n^2\int_{dn}^{d(n+1)}s^{-2}ds=n/[d(n+1)]$，有
+
+$$
+|T_{x,d}(n)|\le\frac1d
+\left[\frac{(U+\log d+L)^2}{2}+U+\log d+L+12\right].
+\tag{429.7}
+$$
+
+按 $k=\omega(q)$ 分组。$k=0$ 的全部固定 $d_0$ 由（429.7）给 $O_{P,U}(1)$。
+若 $k=1$，则 $q=p$ 且 $\log p=a\ell+b_p$、$0<b_p\le L$。
+整个 $d_0p$ 纤维的 $\log(s/x)$ 都等于 $a\ell$ 加一个位于固定区间 $[0,U+\log P+2L]$ 的数。
+（429.4）因此给
+
+$$
+T_{x,d_0p}(n)
+=\frac{\ell^2F(a)}{d_0p}
++O_{P,a,U}\!\left(\frac{\ell+\ell^2/n}{d_0p}\right).
+\tag{429.8}
+$$
+
+这里主项的原端点因子为 $n/[d_0p(n+1)]$；将它换成 $1/(d_0p)$ 的误差仍在上式中。
+
+§427（GP.9）–（GP.11）的实际带 PNT 求和给
+
+$$
+W_z:=\sum_{z<p\le2z}\frac1p
+\sim\frac L{\log z}=\frac L{a\ell}.
+\tag{429.9}
+$$
+
+具体地，$\log z/\log p$ 在
+$[\log z/(\log z+L),1]$ 内，故（GP.9）的
+$\sum_{z<p\le2z}\log p/p\to L$ 直接夹出（429.9）。
+将（429.8）对全部 $d_0,p$ 求和，使用 $\mu(d_0p)=-\mu(d_0)$，得到单素子集的完整贡献
+
+$$
+-E_P\ell^2F(a)W_z+O_{P,a,U}(\ell W_z)
+=-\frac{E_P L F(a)}a\ell+o_{P,a,U}(\ell).
+\tag{429.10}
+$$
+
+必须同时支付全部 $k\ge2$，不能只取逐个固定 k 的极限。普通有限乘积计数给
+
+$$
+\begin{aligned}
+\sum_{\substack{q\mid Q_z\\\omega(q)\ge2}}
+\frac{\omega(q)^2}{q}
+&\le2\sum_{q\mid Q_z}\frac{\omega(q)(\omega(q)-1)}q\\
+&\le2e^{W_z}W_z^2.
+\end{aligned}
+\tag{429.11}
+$$
+
+第二步逐个指定两个不同素数，再将剩余子集的质量包在
+$\prod_{z<p\le2z}(1+1/p)\le e^{W_z}$ 内。它是经典有限 Euler 乘积的二阶阶乘矩上界。
+当 $k\ge2$ 时 $\log q\le k(a\ell+L)$，故（429.7）右侧至多为
+$C_{P,a,U}\ell^2k^2/(d_0q)$。
+（429.9）–（429.11）于是把全部高阶子集的绝对贡献共同包在
+$O_{P,a,U}(\ell^2W_z^2)=O_{P,a,U}(1)$ 内。
+将它与 $k=0$ 和（429.10）合并，再除以 $\ell$，得到（429.5）。$\square$
+
+**定理 429.4（同筛真实前缀与负核的联合窗口）。** 在（429.1）中取 $a=1$，固定 $1<c_1<c_2<2$，并记
+
+$$
+\begin{aligned}
+\mathcal W_x&=\{n\in\mathbb N_{>0}:c_1x\le n\le c_2x\},\\
+A(c_1,c_2)&=\log(c_2/c_1)+1/c_2-1/c_1>0,\\
+b_P&=E_P L(2L-1)>0.
+\end{aligned}
+\tag{429.12}
+$$
+
+当 $x>P$ 且 $x\ge2$ 时，对全部 $n\in\mathcal W_x$，有精确身份
+
+$$
+\boxed{M_{H_x}(n)=M_P(n)+\pi(n)-\pi(x).}
+\tag{429.13}
+$$
+
+进一步，窗口内全部 n 共同满足
+
+$$
+M_{H_x}(n)=\frac{x}{\ell}(n/x-1)+o_P(x/\ell)>0,
+\qquad n^2J_x^{\eta_{H_x}}(n)=-b_P+o_{P,c_2}(1)<0,
+\tag{429.14}
+$$
+
+两个严格符号均指充分大的 x。完整实际窗口满足
+
+$$
+\boxed{
+\ell\sum_{n\in\mathcal W_x}M_{H_x}(n)J_x^{\eta_{H_x}}(n)
+\longrightarrow-b_PA(c_1,c_2)<0.
+}
+\tag{429.15}
+$$
+
+证明。每个被高带排除的 $p>x$ 在 $n<2x$ 以内只可能以单位余因子出现，因 $2p>2x>n$。又 $x>P$ 保证所有这些 p 与 P 互素。删除的贡献正是 $\mu(p)=-1$，给（429.13），包括非整数 x 的严格素数带端点。
+
+§427 的固定 P Mertens 供应给 $M_P(n)=O_P(n/(1+\log n)^4)$。
+经典 $\pi(t)\sim t/\log t$ 在 $n/x\in[c_1,c_2]$ 上共同给
+$\pi(n)-\pi(x)=(n/x-1)x/\ell+o(x/\ell)$。
+这证明第一份（429.14）；第二份取（429.5）的 $a=1,U=\log c_2$，并使用 $F(1)=2L-1>0$。
+令 $t=n/x$，两个共同误差相乘后，
+每个乘积乘 $\ell$ 等于 $-b_P(t-1)/(xt^2)+o(1/x)$。
+窗口共有 $O(x)$ 行，故共同余项的总和为 $o(1)$。
+保留两端取整的普通 Riemann 和给
+$\int_{c_1}^{c_2}(t-1)t^{-2}dt=A(c_1,c_2)>0$，得到（429.15）。$\square$
+
+**推论 429.5（完整补集的必需反向主项）。** 对（429.12）的同一来源和同一过滤器，定义
+
+$$
+\mathcal C_x=\sum_{n\in\mathbb N_{>0}\setminus\mathcal W_x}
+M_{H_x}(n)J_x^{\eta_{H_x}}(n).
+$$
+
+每个固定 x 的级数绝对收敛，并有
+
+$$
+\boxed{\ell\mathcal C_x\longrightarrow b_PA(c_1,c_2)>0.}
+\tag{429.16}
+$$
+
+证明。每个 x 的 $H_x$ 有限，故直接复用（GP.2）–（GP.3）的完整身份与绝对预算；不要求其常数随 x 统一。上述补集包含 n=1。已核对的[Johnston–Yang 定量 PNT](../../../Library/Weil/johnstonyang2022pnt.md)给 $|\psi(t)-t|=O(t/(\log t)^2)$，所以
+
+$$
+|I_\psi(x)|
+\ll\int_x^\infty\frac{1+\log t}{t\log^4t}\,dt
+=\frac1{2\ell^2}+\frac1{3\ell^3}=o(1/\ell).
+$$
+
+从同一个精确身份
+$I_\psi(x)=\sum_{n\in\mathcal W_x}M_{H_x}(n)J_x^{\eta_{H_x}}(n)+\mathcal C_x$
+减去（429.15），得到（429.16）。没有对补集逐项取极限，也没有删除原首块或其运输补偿。$\square$
+
+这份同时增长估计把 §427 的先固定高带、再取源规模阈值，推进到明确的 $z=x^a$ 实际族。§428 的连续 primorial 前缀仍按每份过滤器的 $X_z(V)$ 取阈值；本处的高带没有删除全部较小素数，也不将两份过滤族认作相同。单素子集的完整尺度响应与全高阶子集的绝对预算共同给核极限；$a=1$ 时，实际互素前缀也在同一窗口取得已确定符号。经典阶乘夹逼、PNT、Mertens、有限乘积矩和 Riemann 和均作为既有供应；新增接口是它们在同一 FIB 配对核、同一增长过滤器上的联合应用，不作全球原创性断言。
+
+（429.16）仍只给补集的主项补偿，没有给较小剩余量的 Robin 临界上界。该补集的符号不是可另选来源的最优值；它由同一个完整 $I_\psi$ 强制确定。整份结果没有决定 $I_\psi$ 的最终符号、全部危险来源的覆盖或 Robin/RH。
+
+## 追加锚（本行以下为增补区）
