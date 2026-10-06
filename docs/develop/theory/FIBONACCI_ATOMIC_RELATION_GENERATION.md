@@ -62527,3 +62527,104 @@ $$
 在（410.2）已支付时，同一个实际完整 $I_{\varepsilon_x}$ 不随所选表示改变，而（410.4）说明各固定有限表示的绝对账都远大于临界尺度。继续推进需要同一实际来源的联合相位估计，或在合同之外另行构造并支付更强的全域近似；仅增加预固定阶数的局部扣除不能补足该缺口。完整 Robin 与 RH 仍未由这些接口得到证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 411. 完整实际积分的零阻尼边界与固定相位核
+
+**定义 411.1（同源边界权重与固定频率函数）。** 沿用 §§403–409 的实际来源、中心化和 $g_0$。对每个固定 $x>1$，置 $\ell=\log x$、$v(u)=(u+1)/u^2$。对 $\tau\ne0$ 定义单侧振荡权重
+
+$$
+\begin{aligned}
+W_x^\partial(\tau)
+&=\lim_{T\to\infty}\int_\ell^T e^{i\tau u}v(u)du\\
+&=\frac{e^{i\tau\ell}v(\ell)}{-i\tau}
++\frac1{-i\tau}\int_\ell^\infty e^{i\tau u}v'(u)du.
+\end{aligned}
+\tag{411.1}
+$$
+
+第二行采用经典分部积分；$v(T)\to0$ 且 $v'\in L^1([\ell,\infty))$，所以该定义存在。它不是把零频处发散的权重单独视为可积函数。定义
+
+$$
+k(\tau)=\frac{g_0(1+i\tau)}{-i\tau}\quad(\tau\ne0),
+\qquad k(0)=-g_0'(1),
+\qquad
+h(u)=\frac1{2\pi}\int_{\mathbb R}k(\tau)e^{i\tau u}d\tau.
+\tag{411.2}
+$$
+
+这里 $k\in L^1(\mathbb R)$ 直接由（409.4）的可积性取得；零点值是既有可去延拓，不影响积分。经典 Fourier 连续性、Riemann–Lebesgue 引理及共轭对称性给 $h$ 实值连续、两端趋零。这些是已有 Fourier 结论的直接应用，不另列为新的衰减定理。
+
+**定理 411.2（固定尺度的完整去阻尼与相位保留身份）。** 对每个 $x>1$，不跨越任何算术零点，有绝对收敛的完整乘积积分
+
+$$
+\boxed{
+I_\psi(x)=\frac1{2\pi}\int_{\mathbb R}
+g_0(1+i\tau)W_x^\partial(\tau)d\tau
+=v(\ell)h(\ell)+\int_\ell^\infty v'(u)h(u)du.}
+\tag{411.3}
+$$
+
+第一份积分在 $\tau=0$ 的值可任意指定。其绝对收敛指乘积，而不指单独的 $W_x^\partial$ 在零频附近有界。$h$ 是同一实际中心化来源的固定核，与 $x$ 和所选阻尼日程无关。
+
+证明。固定 $x$ 后，让正 $\varepsilon\downarrow0$，仍使用（406.3）的完整积分及 $\sigma_\varepsilon=1-\varepsilon/2$。对每个 $\tau\ne0$，令 $a=\varepsilon/2-i\tau$。一次分部积分给
+
+$$
+\widetilde w_x(\sigma_\varepsilon+i\tau)
+=\frac{e^{-a\ell}v(\ell)}a
++\frac1a\int_\ell^\infty e^{-au}v'(u)du.
+\tag{411.4}
+$$
+
+$|v'|$ 可积，故经典支配收敛使（411.4）趋于（411.1）。同时共同解析性、（406.7）及 $\zeta(1+i\tau)\ne0$ 给 $\mathscr G_\varepsilon^\circ(\sigma_\varepsilon+i\tau)\to g_0(1+i\tau)$。
+
+必须对整个频率轴支付共同包络。固定充分小的中心弧，复用（406.4）与（406.8）：
+
+$$
+|\mathscr G_\varepsilon^\circ(z)\widetilde w_x(z)|
+\le2Cv(\ell)e^{-\varepsilon\ell/2}.
+\tag{411.5}
+$$
+
+紧环带的界复用 §409 的无零性和实际 $\mathcal B$ 预算。高频使用同一个 Lee–Leong 原始供应器及统一 Euler 导数估计；（409.12）的证明在固定 $\ell>0$ 上给
+
+$$
+|\mathscr G_\varepsilon^\circ(z)\widetilde w_x(z)|
+\le C_x\left(t^{-7/4}(\log t)^{35/12}+t^{-2}\right),
+\quad t=|\tau|\ge\mathcal H,\quad 0<\varepsilon\le1/2.
+\tag{411.6}
+$$
+
+$C_x$ 可以依赖当前固定的 $x$，但不依赖趋零的 $\varepsilon$。这与（411.5）和紧环带界共同构成可积包络。经典支配收敛遂将（406.3）送到（411.3）的第一份积分。另一方面，（403.4）已给同一实际 $I_\varepsilon(x)\to I_\psi(x)$；没有用绝对 Dirichlet 和在 $\varepsilon=0$ 的错误交换替代这一接口。
+
+将（411.1）代入所得身份，内外积分的共同绝对账为
+
+$$
+\frac1{2\pi}\int_{\mathbb R}|k(\tau)|d\tau
+\int_\ell^\infty|v'(u)|du
+=\frac{\|k\|_1}{2\pi}v(\ell)<\infty.
+\tag{411.7}
+$$
+
+经典绝对 Fubini 于是给（411.3）的第二式。全部频率先共同配对再积分，没有删掉补集或分别优化不同来源。$\square$
+
+**定义 411.3（定量相位义务）。** 式（411.3）将（404.17）尚未支付的固定尺度极限交换接到了同一实际来源；它把反演线接到 $\Re z=1$，没有将其移到 $\Re z=1/2$。既有 Fourier 定理只供应 $h(u)\to0$，不给指数速率。由 $\int_\ell^\infty|v'|=v(\ell)$，有直接估计
+
+$$
+|I_\psi(x)|\le2v(\ell)\sup_{u\ge\ell}|h(u)|.
+\tag{411.8}
+$$
+
+例如，若另行取得同一 $h$ 的 $|h(u)|\le K e^{-u/2}$（全部 $u\ge u_0$，$K$ 与 $u_0$ 固定），则对 $\ell\ge u_0$，（411.3）给
+
+$$
+|I_\psi(x)|
+\le K e^{-\ell/2}\bigl[v(\ell)+2|v'(\ell)|\bigr]
+=\frac{K}{\sqrt x\log x}\left(1+O\!\left(\frac1{\log x}\right)\right).
+\tag{411.9}
+$$
+
+这只是足够的待证条件；最终单边符号和常数预算仍须按 Robin 的原目标支付。它不把 $h\in C_0$ 当成指数衰减，也不把该足够条件宣告为新的 RH 判据。尚未取得的是（411.9）的前提或能够直接控制（411.3）共同配对的更弱估计。
+
+这里的有理主部与 Mellin 支撑关系直接复用 [Burnol 的原始文献接口](../../../Library/Analytic/burnol2003analyticestimate.md)，经典 Fourier 和 Abel 极限规则也直接复用。新增组合仅是当前实际 FIB 来源的完整边界接口；不重复已知 Chebyshev 平滑尾项或显式公式的证明，不作原创性认证。
+
+## 追加锚（本行以下为增补区）
