@@ -78,6 +78,37 @@ def matrixModulus (upper : Bool) (x ζ : ℝ) (B : Matrix (Fin 2) (Fin 2) ℝ)
 def geometry (x ζ w : ℝ) : ℝ :=
   max w (min w (x / 2) * (x - min w (x / 2)) / ζ)
 
+/-- The upper shear power in source coordinates. -/
+theorem upper_shear_power (k : ℕ) : (actionMatrix .exchange * actionMatrix .advance) ^ k =
+    (!![1, (k : ℝ); 0, 1] : Matrix (Fin 2) (Fin 2) ℝ) := by
+  have h := congrArg (fun Q : Matrix (Fin 2) (Fin 2) ℤ =>
+    Q.map (Int.castRingHom ℝ)) (ModularGroup.coe_T_zpow (k : ℤ))
+  simp only [zpow_natCast, Matrix.SpecialLinearGroup.coe_pow, Matrix.map_pow,
+    ModularGroup.coe_T] at h
+  have hstep : actionMatrix .exchange * actionMatrix .advance =
+      (!![1, 1; 0, 1] : Matrix (Fin 2) (Fin 2) ℤ).map (Int.castRingHom ℝ) := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [actionMatrix, GoldenCoding.GoldenModularStandardPair.goldenModularStep,
+        HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
+        Matrix.mul_apply, Fin.sum_univ_two, Matrix.map_apply]
+  rw [hstep]
+  convert h using 1 <;> ext i j <;> fin_cases i <;> fin_cases j <;> simp
+
+/-- The lower shear power in source coordinates. -/
+theorem lower_shear_power (k : ℕ) : (actionMatrix .advance * actionMatrix .exchange) ^ k =
+    (!![1, 0; (k : ℝ), 1] : Matrix (Fin 2) (Fin 2) ℝ) := by
+  have hs : actionMatrix .advance * actionMatrix .exchange =
+      (actionMatrix .exchange * actionMatrix .advance).transpose := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [actionMatrix, GoldenCoding.GoldenModularStandardPair.goldenModularStep,
+        HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
+        Matrix.mul_apply, Fin.sum_univ_two, Matrix.transpose_apply]
+  rw [hs, ← Matrix.transpose_pow, upper_shear_power k]
+  ext i j
+  fin_cases i <;> fin_cases j <;> rfl
+
 /-- Exact scalar and maximum-entry suprema on the positive rank-one fiber of a
 fixed executed shear history. The initial read and the literal sunk action cost
 are retained, and one continuation is fixed before candidate sources are quantified. -/
@@ -144,37 +175,10 @@ theorem result (upper : Bool) (executed continuation : List Action) (k : ℕ)
   have hμ0 : 0 ≤ μ := hμ
   have hword : wordMatrix (executed ++ continuation) = B := by
     simp [wordMatrix, List.map_append, List.reverse_append, List.prod_append, B]
-  have hupper : (actionMatrix .exchange * actionMatrix .advance) ^ k =
-      (!![1, (k : ℝ); 0, 1] : Matrix (Fin 2) (Fin 2) ℝ) := by
-    have h := congrArg (fun Q : Matrix (Fin 2) (Fin 2) ℤ =>
-      Q.map (Int.castRingHom ℝ)) (ModularGroup.coe_T_zpow (k : ℤ))
-    simp only [zpow_natCast, Matrix.SpecialLinearGroup.coe_pow, Matrix.map_pow,
-      ModularGroup.coe_T] at h
-    have hstep : actionMatrix .exchange * actionMatrix .advance =
-        (!![1, 1; 0, 1] : Matrix (Fin 2) (Fin 2) ℤ).map (Int.castRingHom ℝ) := by
-      ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [actionMatrix, GoldenCoding.GoldenModularStandardPair.goldenModularStep,
-          HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
-          Matrix.mul_apply, Fin.sum_univ_two, Matrix.map_apply]
-    rw [hstep]
-    convert h using 1 <;> ext i j <;> fin_cases i <;> fin_cases j <;> simp
-  have hlower : (actionMatrix .advance * actionMatrix .exchange) ^ k =
-      (!![1, 0; (k : ℝ), 1] : Matrix (Fin 2) (Fin 2) ℝ) := by
-    have hs : actionMatrix .advance * actionMatrix .exchange =
-        (actionMatrix .exchange * actionMatrix .advance).transpose := by
-      ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [actionMatrix, GoldenCoding.GoldenModularStandardPair.goldenModularStep,
-          HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
-          Matrix.mul_apply, Fin.sum_univ_two, Matrix.transpose_apply]
-    rw [hs, ← Matrix.transpose_pow, hupper]
-    ext i j
-    fin_cases i <;> fin_cases j <;> rfl
   have hsecond : wordMatrix executed =
       if upper then !![1, (k : ℝ); 0, 1] else !![1, 0; (k : ℝ), 1] := by
     rw [hexecuted]
-    cases upper <;> simp [secondMatrix, hupper, hlower]
+    cases upper <;> simp [secondMatrix, upper_shear_power, lower_shear_power]
   have hk0 : (k : ℝ) ≠ 0 := by exact_mod_cast (by omega : k ≠ 0)
   have hfiber : ∀ R, (positiveSource R ∧ Matrix.trace R = x ∧
       Matrix.trace (wordMatrix executed * R) = x + (k : ℝ) * ζ) ↔
@@ -516,7 +520,5 @@ theorem result (upper : Bool) (executed continuation : List Action) (k : ℕ)
     exact ⟨hscalar.trans hw, hmatrix.trans hSz, hequal, by simp, hequalnorm⟩
   exact ⟨hword, List.length_append, fun _ => rfl, hfactor, hreads, hfiber, hα, hr0, hφr,
     hw0, hwx, hφw, hwpos, htrace, hnorm, hpair, hscalar, hmatrix, hpositive, hzero⟩
-
-#print axioms result
 
 end D5.S3.Observer.TraceFibers.FixedFiberPairModulus

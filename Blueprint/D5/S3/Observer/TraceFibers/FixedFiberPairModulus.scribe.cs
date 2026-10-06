@@ -10,7 +10,26 @@ internal sealed class FixedFiberPairModulusDocument : IScribeDocumentDefinition
         "One selected continuation has exact scalar and matrix moduli on the entire "
             + "positive rank-one source fiber of its fixed executed history.",
         H("Fixed Fiber Pair Modulus"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("upper-shear-power"),
+                DeclarationHandle.Create("D5/S3/Observer/TraceFibers/FixedFiberPairModulus.upper_shear_power"),
+                H("Upper shear powers"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The kth power of JM has rows (1,k) and (0,1), including the identity at k=0."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("lower-shear-power"),
+                DeclarationHandle.Create("D5/S3/Observer/TraceFibers/FixedFiberPairModulus.lower_shear_power"),
+                H("Lower shear powers"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The kth power of MJ has rows (1,0) and (k,1), the transpose of the upper shear power."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("fixed-fiber-pair-modulus"),
             DeclarationHandle.Create("D5/S3/Observer/TraceFibers/FixedFiberPairModulus.result"),
             H("Exact moduli from a common source pair"),
