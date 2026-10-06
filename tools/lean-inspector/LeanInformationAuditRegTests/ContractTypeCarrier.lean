@@ -1,19 +1,21 @@
+import LeanInformationAuditRegTests.CompiledFixtureReader
 import LeanInformationAuditRegTests.ContractGuards
 import LeanInformationAuditRegTests.ContractTypeCarrierFixture
 
 namespace LeanInformationAuditRegTests.ContractTypeCarrier
 open Lean Meta Elab Command LeanInformationAudit.Contract
-open LeanInformationAuditRegTests.ContractGuards
+private def checkTest (label : String) (ok : Bool) : IO Unit :=
+  unless ok do throw <| IO.userError s!"compiled.fixture:{label}"
 
-run_meta do
+unsafe def check : IO Unit := do
+  let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
+  let discover := CompiledFixtureReader.discover reader
   let mut error := "accepted"
   try
-    discard <| Discovery.discoverWithStructure #[] #[`LeanInformationAuditRegTests.ContractTypeCarrierFixture]
-      fun moduleName => LeanInformationAudit.Repository.source
-        ("tools/lean-inspector/" ++ moduleName.toString.replace "." "/" ++ ".lean")
-  catch ex => error := ← ex.toMessageData.toString
-  assertTest "discovery.alias_through_type_carrier"
-    (error.startsWith "contract.cannot_decode:")
-  logInfo m!"CONTRACT_DIAGNOSTIC discovery.alias_through_type_carrier {error}"
+    discard <| discover #[] #[`LeanInformationAuditRegTests.ContractTypeCarrierFixture]
+  catch ex => error := ← pure ex.toString
+  checkTest s!"discovery.alias_through_type_carrier:{error}"
+    (error.contains "contract.cannot_decode:")
+  IO.println s!"CONTRACT_DIAGNOSTIC discovery.alias_through_type_carrier {error}"
 
 end LeanInformationAuditRegTests.ContractTypeCarrier

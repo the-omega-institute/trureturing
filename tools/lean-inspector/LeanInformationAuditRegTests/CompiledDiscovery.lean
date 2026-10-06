@@ -1,9 +1,12 @@
+import LeanInformationAuditRegTests.ContractRoots
+import LeanInformationAuditRegTests.ContractPaths
+import LeanInformationAuditRegTests.ContractTypeCarrier
 import LeanInformationAuditRegTests.ContractFixtures
 import LeanInformationAuditRegTests.ContractWitnessFixture
 import LeanInformationAudit.Contract.Discovery
 import LeanInformationAudit.RawArtifacts
 import LeanInformationAudit.CompiledAxioms
-import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
+import LeanInformationAuditRegTests.Fixtures.TemplateBodies
 import LeanInformationAudit.CompiledSourceOperands
 import LeanInformationAudit.CompiledEvidence
 import LeanInformationAudit.ArtifactRegistration
@@ -22,8 +25,8 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
       `LeanInformationAuditRegTests.ContractWitnessFixture]
     let reader ← IO.mkRef ({} : RawArtifacts.Store)
     for owner in owners do RawArtifacts.loadModule owner reader
-    RawArtifacts.loadModule `LeanInformationAudit.Registry reader
-    RawArtifacts.loadModule `LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates reader
+    RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
+    RawArtifacts.loadModule `LeanInformationAuditRegTests.Fixtures.TemplateBodies reader
     RawArtifacts.loadModule `Reg.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit reader
     let store ← reader.get
     unless store.owners[owners[0]!.str "source0"]? == some owners[0]! do
@@ -117,7 +120,7 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
         throw <| IO.userError s!"compiled.discovery:rigid_levels:{name}"
     IO.println "[PASS] compiled discovery reads 20 registrations, 1 enrollment, 1 root and 1 seal"
     let enrollmentContext ← TemplateAudit.CompiledEnrollment.Context.fromArtifacts store
-      `LeanInformationAudit.Tests.DeclaredTemplates {} {}
+      `LeanInformationAuditRegTests.Fixtures.TemplateBodies {} {}
     unless enrollmentContext.recursive `List.map && !enrollmentContext.recursive `Unit.fintype do
       throw <| IO.userError "compiled.enrollment:recursion_metadata"
     for (owner, enrollment) in snapshot.enrollments do
@@ -255,7 +258,16 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
       IO.println "[PASS] compiled source reconstruction, full observations and theorem identity rejection"
   finally searchPathRef.set saved
 
-run_meta do
-  readFixtures (← Lean.getInitHeartbeats) (← Lean.getMaxHeartbeats)
 
 end LeanInformationAuditRegTests.CompiledDiscovery
+
+unsafe def main : IO Unit := do
+  Lean.initSearchPath (← Lean.findSysroot)
+  let fixturePath ← LeanInformationAudit.Repository.source ".lake/build/lean-inspector/reg/lib/lean"
+  Lean.searchPathRef.modify (fixturePath :: ·)
+  LeanInformationAuditRegTests.CompiledDiscovery.readFixtures
+    (← IO.getNumHeartbeats) (Lean.Core.getMaxHeartbeats ({} : Lean.Options))
+  LeanInformationAuditRegTests.ContractRoots.check
+  LeanInformationAuditRegTests.ContractPaths.check
+  LeanInformationAuditRegTests.ContractTypeCarrier.check
+  LeanInformationAuditRegTests.ContractPaths.checkMirror

@@ -115,7 +115,7 @@ def root_definitions(modules, keys, evidence):
     for number, (_, members) in enumerate(roots):
         root = f"CensusQueryRun.Group{number // 20:04d}.Part{number:05d}"
         definitions.append([root, sorted(set(members) | set(evidence)
-                                         | {"LeanInformationAudit.Census.Command"})])
+                                         | {"LeanInformationAuditRegAnalysis.Census.Stream"})])
         assignment.update((module, root) for module in members)
     return definitions, assignment
 

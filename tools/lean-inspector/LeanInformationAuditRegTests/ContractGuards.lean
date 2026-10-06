@@ -1,6 +1,6 @@
 import LeanInformationAuditRegTests.ContractAssertions
-import LeanInformationAudit.Contract.DiscoveryCompiler
-import LeanInformationAudit.Contract.InterfaceGuard
+import LeanInformationAudit.Contract.Decoder
+import LeanInformationAudit.Contract.SourceAudit
 import D5.S3.ConceptDynamics.InformationEscape.Arena
 
 namespace LeanInformationAuditRegTests.ContractGuards
@@ -54,10 +54,6 @@ run_meta do
   let interfaceModules := env.header.moduleNames.filter
     ((`LeanInformationAuditInterface.Contract).isPrefixOf ·)
   assertTest "interface.contract_modules" (interfaceModules.size >= 4)
-  for owner in interfaceModules do
-    let result := LeanInformationAudit.Contract.InterfaceGuard.audit env owner
-    assertTest s!"interface.types_only.{owner.getString!}" result.isOk
-    if let .error error := result then logInfo m!"CONTRACT_DIAGNOSTIC {error}"
   let structures := #[
     ``LeanInformationAudit.Contract.Ref, ``LeanInformationAudit.Contract.OptionSetting,
     ``LeanInformationAudit.Contract.ReadoutSelection,

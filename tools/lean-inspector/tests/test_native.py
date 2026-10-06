@@ -13,7 +13,6 @@ from test_native_reuse import *
 from test_native_interface import *
 from test_native_records import *
 from packages.reg import NativeRegTests, NativeRegConsumerTests, NativeRegSupport
-from Census.tests.relocation_fixture import NativeRelocationTests
 
 class NativeTests(NativeTestSupport, NativeInvalidationTests, NativeColdPublicationTests,
                   NativePackagingTests, NativeInterfaceTests,

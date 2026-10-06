@@ -17,9 +17,6 @@ require leanInspectorInterface from "../lean-inspector-interface"
 lean_lib LeanInformationAudit where
   globs := #[.submodules `LeanInformationAudit]
 
-lean_lib LeanInformationAuditAnalysis where
-  globs := #[.submodules `LeanInformationAuditAnalysis]
-
 lean_lib InformationSourceFixture
 
 target nativeImage pkg : FilePath := do
@@ -227,7 +224,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     unless ownInputs.isEmpty do
       -- Typed owners require compiled primitive-pin data. Await its compilation
       -- without mixing implementation bytes into the report trace.
-      let some registry := workspace.findModule? `LeanInformationAudit.Registry
+      let some registry := workspace.findModule? `LeanInformationAudit.TemplateEnrollment
         | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
       discard <| (← JobM.runFetchM registry.exportInfo.fetch).await
       let version ← inputBinFile (root / ".lake/build/lean-inspector" / "registration-version")

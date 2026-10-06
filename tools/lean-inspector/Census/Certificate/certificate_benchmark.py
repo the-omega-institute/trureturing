@@ -18,7 +18,7 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
 from Certificate.emission import write_manifest, string, write_module
-from pipeline import frozen_keys
+from Certificate.keys import frozen_keys
 from resources import run
 
 
@@ -33,7 +33,7 @@ def benchmark(repository, report, directory):
     directory.mkdir(parents=True, exist_ok=True)
     head = json.loads(report.read_text())["source_commit"]
     digest = "sha256:" + hashlib.sha256(report.read_bytes()).hexdigest()
-    module = "LeanInformationAudit.Tests.Census.Manifest.Benchmark"
+    module = "LeanInformationAuditRegTests.Research.Census.Manifest.Benchmark"
     driver = write_module(directory, "BenchmarkDriver", f"import {module}\n"
         f"#census_certificate_benchmark report {string(str(report))} head {string(head)} "
         f"digest {string(digest)} directory {string(str(directory))}\n")

@@ -175,17 +175,17 @@ defaultFacets = ["static"]
         self.write('External.lean', 'import ClaimSupport\ndef claim : Prop := claimSupport\n')
         self.write('ClaimSupport.lean', 'def claimSupport : Prop := False\n')
         self.write('Audit.lean', 'def audit : Nat := 1\n')
-        self.write('LeanInformationAudit/SealCommand.lean', 'def fixtureDriver : Nat := 1\n')
-        self.write('LeanInformationAudit/Registry.lean', 'def fixturePins : Nat := 1\n')
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', 'def fixtureDriver : Nat := 1\n')
+        self.write('LeanInformationAudit/FixturePins.lean', 'def fixturePins : Nat := 1\n')
         for name in ['SourceAudit', 'Literal', 'InputDiscovery']:
             self.write('tools/lean-inspector/LeanInformationAudit/Contract/' + name + '.lean',
                        (ROOT / ('tools/lean-inspector/LeanInformationAudit/Contract/' + name + '.lean')).read_text())
         with (self.root / 'lakefile.toml').open('a') as target:
             target.write('[[lean_lib]]\nname = "External"\n[[lean_lib]]\nname = "ClaimSupport"\n')
             target.write('[[lean_lib]]\nname = "LeanInformationAudit"\n'
-                'roots = ["LeanInformationAudit.SealCommand", "LeanInformationAudit.Registry", "LeanInformationAudit.RegistryTypes", '
+                'roots = ["LeanInformationAudit.TemplateEnrollment", "LeanInformationAudit.FixturePins", "LeanInformationAudit.RegistryTypes", '
                 '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n'
-                'globs = ["LeanInformationAudit.SealCommand", "LeanInformationAudit.Registry", "LeanInformationAudit.RegistryTypes", '
+                'globs = ["LeanInformationAudit.TemplateEnrollment", "LeanInformationAudit.FixturePins", "LeanInformationAudit.RegistryTypes", '
                 '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n')
         for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh', 'build_work.py']:
             self.copy('tools/lean-inspector/' + name)
@@ -243,7 +243,7 @@ defaultFacets = ["static"]
         policy = dict(schema_version=1, report_cache_release_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
             inspector_sources=paths('tools/lean-inspector/Inspector.lean',
                 'tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean', 'tools/lean-inspector/lakefile.lean'),
-            dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/SealCommand.lean'),
+            dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/TemplateEnrollment.lean'),
             config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json',
                 'Reg/lakefile.toml', 'Reg/lake-manifest.json',
                 'tools/lean-inspector-reg/lakefile.toml', 'tools/lean-inspector-reg/lake-manifest.json'),

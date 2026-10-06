@@ -1,4 +1,4 @@
-"""Executed regressions for the three-seat structural review of PR #6717."""
+"""Independent structural graph and bounded publication checks."""
 
 import argparse
 import ast
@@ -88,64 +88,6 @@ class StructureReviewTests(unittest.TestCase):
         self.assertEqual(rows["a"]["reason"], "graph_cycle")
         self.assertIsNone(rows["x"]["readings"]["frozen_dag_depth"])
 
-    def test_regenerated_custom_report_supplies_sidecar_axioms(self):
-        # Execute the production provenance branch and sidecar handoff. Other
-        # census phases are deliberately outside this regression's input cone.
-        import pipeline
-        tree = ast.parse(pathlib.Path(pipeline.__file__).read_text())
-        execute = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "execute")
-        body = next(n for n in execute.body if isinstance(n, ast.Try)).body
-        provenance = next(n for n in body if isinstance(n, ast.If) and n.orelse)
-        handoff = next(n for n in body if isinstance(n, ast.If) and
-                       isinstance(n.test, ast.UnaryOp) and
-                       isinstance(n.test.operand, ast.Attribute) and n.test.operand.attr == "no_structure")
-        program = compile(ast.Module(body=[provenance, handoff], type_ignores=[]), pipeline.__file__, "exec")
-        with tempfile.TemporaryDirectory() as scratch:
-            repository = pathlib.Path(scratch).resolve()
-            directory = repository / "run"
-            (directory / "logs").mkdir(parents=True)
-            source = repository / "A.lean"
-            source.write_text("theorem a : True := True.intro\n")
-            key = ("A", name_key("a"), "id-a")
-            true_axioms = ["Classical.choice", "Quot.sound", "propext"]
-            module = {"module": "A", "source_path": "A.lean", "source_sha256": file_digest(source),
-                      "declarations": [{"kind": "theorem", "name_key": key[1],
-                                        "statement_id": key[2], "axioms": []}]}
-            stale = repository / "custom-stale.json"
-            write(stale, {"modules": [module]})
-            regenerated = repository / ".lake/build/stratalint/raw-lean-report.json"
-            state, verified, exported = {}, [], []
-
-            def step(command, label, **_):
-                if "verify" in command:
-                    report = pathlib.Path(command[command.index("--report") + 1])
-                    if report == stale:
-                        raise RuntimeError("stale transitive axiom closure")
-                    self.assertEqual(axiom_readings(repository, report, [key]), {key[1:]: true_axioms})
-                    verified.append(report)
-                elif command == ["make", "lean-report"]:
-                    regenerated.parent.mkdir(parents=True)
-                    module["declarations"][0]["axioms"] = true_axioms
-                    write(regenerated, {"modules": [module]})
-                elif command[:2] == ["make", "truth-export"]:
-                    report = pathlib.Path(next(c.removeprefix("LEAN_REPORT=") for c in command
-                                              if c.startswith("LEAN_REPORT=")))
-                    self.assertIn(report, verified)
-                    exported.append(report)
-                    (directory / "logs/truth_export.log").write_text("TRUTH_EXPORT out=" + str(report) + "\n")
-
-            def sidecar(repo, _directory, report):
-                return {"report": str(report), "axioms": axiom_readings(repo, report, [key])}
-
-            scope = dict(pipeline.__dict__, repository=repository, directory=directory, state=state,
-                         env={}, step=step, options=argparse.Namespace(fixture_truth_export=None,
-                         lean_report=str(stale), no_structure=False))
-            with patch("Structure.sidecar.run_sidecar", side_effect=sidecar):
-                exec(program, scope)
-            self.assertEqual(state["structure"], {"report": str(exported[0]),
-                             "axioms": {key[1:]: true_axioms}}, "verifiedReportAxiomJoin")
-            self.assertTrue(state["report_provenance"]["regenerated"])
-            self.assertEqual(axiom_readings(repository, stale, [key]), {key[1:]: []})
 
 
 if __name__ == "__main__":

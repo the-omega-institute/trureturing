@@ -1,4 +1,4 @@
-import LeanInformationAudit.Census.StructureReader
+import LeanInformationAuditRegAnalysis.Census.StructureReader
 
 unsafe def main (args : List String) : IO Unit := do
   let [manifest, destination, mode] := args

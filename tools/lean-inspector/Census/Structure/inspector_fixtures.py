@@ -21,8 +21,8 @@ class StructureInspectorTests(unittest.TestCase):
         self.addCleanup(self.scratch.cleanup)
         self.folder = pathlib.Path(self.scratch.name)
         self.manifest, self.raw = self.folder / "manifest.json", self.folder / "raw.jsonl"
-        module = "LeanInformationAudit.Tests.Census.Structure.Terms"
-        olean = self.repository / ".lake/build/lib/lean" / (module.replace(".", "/") + ".olean")
+        module = "LeanInformationAuditRegTests.Research.Census.Structure.Terms"
+        olean = self.repository / ".lake/build/lean-inspector/reg/lib/lean" / (module.replace(".", "/") + ".olean")
         write(self.manifest, [[module, [str(olean)]]])
 
     def test_standalone_inspector_owns_value_and_type_dependencies(self):

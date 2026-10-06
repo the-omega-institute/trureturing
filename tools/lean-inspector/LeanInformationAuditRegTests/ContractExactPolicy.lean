@@ -1,7 +1,5 @@
 import LeanInformationAuditRegTests.ContractAssertions
-import LeanInformationAudit.Contract.DiscoveryCompiler
-import LeanInformationAudit.Contract.InterfaceGuard
-import LeanInformationAudit.RuntimeInputs
+import LeanInformationAudit.Contract.Decoder
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 namespace LeanInformationAuditRegTests.ContractExactPolicy

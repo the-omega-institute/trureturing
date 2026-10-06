@@ -21,17 +21,32 @@ structure Context where
   heartbeatStart : Nat
   heartbeatLimit : Nat
 
-private structure WorkState where
+/-- Completed closed calculations scoped to one immutable compiler table.
+Each result retains its checked calculation height; lexical expressions stay query-local. -/
+structure Result (α : Type) where
+  value : α
+  height : Nat
+  deriving Inhabited
+
+structure Memo where
+  heads : Std.HashMap (ExprStructEq × Bool × Bool) (Result Expr) := {}
+  types : Std.HashMap (ExprStructEq × Array ExprStructEq) (Result Expr) := {}
+  propositions : Std.HashMap (ExprStructEq × Array ExprStructEq) (Result Bool) := {}
+  erased : Std.HashMap (ExprStructEq × Array ExprStructEq) (Result Expr) := {}
+  comparisons : Std.HashMap (ExprStructEq × ExprStructEq × Array ExprStructEq) (Result Bool) := {}
+
+  deriving Inhabited
+
+private structure WorkState extends Memo where
   remaining : Nat
-  heads : Std.HashMap (ExprStructEq × Bool × Bool) Expr := {}
-  types : Std.HashMap (ExprStructEq × Array ExprStructEq) Expr := {}
-  erased : Std.HashMap (ExprStructEq × Array ExprStructEq) Expr := {}
-  comparisons : Std.HashMap (ExprStructEq × ExprStructEq × Array ExprStructEq) Bool := {}
+  shared : Memo := {}
+  maxDepth : Nat := 0
 
 abbrev M := ReaderT Context (StateT WorkState IO)
 
-private def step (depth : Nat) : M Unit := do
+def step (depth : Nat) : M Unit := do
   if depth > 256 then throw <| IO.userError "incomplete_closure:E8.compiled_expression_depth"
+  modify fun state => { state with maxDepth := max state.maxDepth depth }
   let remaining := (← get).remaining
   if remaining == 0 then throw <| IO.userError "incomplete_closure:E8.erasure_work"
   modify fun state => { state with remaining := remaining - 1 }
@@ -39,6 +54,12 @@ private def step (depth : Nat) : M Unit := do
   if context.heartbeatLimit != 0 &&
       (← IO.getNumHeartbeats) - context.heartbeatStart > context.heartbeatLimit then
     throw <| IO.userError "incomplete_closure:E8.compiled_expression_heartbeats"
+
+private def reuse (result : Result α) (depth : Nat) : M α := do
+  if depth + result.height > 256 then
+    throw <| IO.userError "incomplete_closure:E8.compiled_expression_depth"
+  modify fun state => { state with maxDepth := max state.maxDepth (depth + result.height) }
+  return result.value
 
 private def constant (name : Name) : M ConstantInfo := do
   let some info := (← read).find name
@@ -52,9 +73,19 @@ partial def head (e : Expr) (depth : Nat := 0) (zeta : Bool := true)
     (preserveDecisions : Bool := false) : M Expr := do
   step depth
   let key := (ExprStructEq.mk e, zeta, preserveDecisions)
-  if let some value := (← get).heads[key]? then return value
+  if let some value := (← get).heads[key]? then return ← reuse value depth
+  let closed := !e.hasFVar
+  if closed then
+    if let some value := (← get).shared.heads[key]? then return ← reuse value depth
+  let enclosingDepth := (← get).maxDepth
+  modify fun state => { state with maxDepth := depth }
   let value ← headCore e depth zeta preserveDecisions
-  modify fun state => { state with heads := state.heads.insert key value }
+  let result := { value, height := (← get).maxDepth - depth : Result _ }
+  modify fun state => { state with
+    heads := state.heads.insert key result
+    maxDepth := max enclosingDepth state.maxDepth
+    shared := if closed then { state.shared with heads := state.shared.heads.insert key result }
+      else state.shared }
   return value
 
 private partial def headCore (e : Expr) (depth : Nat := 0) (zeta : Bool := true)
@@ -150,10 +181,21 @@ No argument is compared with a domain, and no proof body is inferred or checked.
 partial def typeShape (e : Expr) (binders : Array Expr := #[])
     (depth : Nat := 0) : M Expr := do
   step depth
+  let binders := if e.hasLooseBVars then binders else #[]
   let key := (ExprStructEq.mk e, binders.map ExprStructEq.mk)
-  if let some value := (← get).types[key]? then return value
+  if let some value := (← get).types[key]? then return ← reuse value depth
+  let closed := !e.hasFVar && !binders.any (·.hasFVar)
+  if closed then
+    if let some value := (← get).shared.types[key]? then return ← reuse value depth
+  let enclosingDepth := (← get).maxDepth
+  modify fun state => { state with maxDepth := depth }
   let value ← typeShapeCore e binders depth
-  modify fun state => { state with types := state.types.insert key value }
+  let result := { value, height := (← get).maxDepth - depth : Result _ }
+  modify fun state => { state with
+    types := state.types.insert key result
+    maxDepth := max enclosingDepth state.maxDepth
+    shared := if closed then { state.shared with types := state.shared.types.insert key result }
+      else state.shared }
   return value
 
 where typeShapeCore (e : Expr) (binders : Array Expr) (depth : Nat) : M Expr := do
@@ -175,14 +217,10 @@ where typeShapeCore (e : Expr) (binders : Array Expr) (depth : Nat) : M Expr := 
   | .sort level => return .sort (.succ level)
   | .lit (.natVal _) => return mkConst ``Nat
   | .lit (.strVal _) => return mkConst ``String
-  | .app .. =>
-    let mut type ← child e.getAppFn
-    for argument in e.getAppArgs do
-      step depth
-      let .forallE _ _ body _ ← head type (depth + 1)
-        | throw <| IO.userError s!"incomplete_closure:E7.compiled_application_type:{repr e}; type={repr type}"
-      type := body.instantiate1 argument
-    return type
+  | .app function argument =>
+    let .forallE _ _ body _ ← head (← child function) (depth + 1)
+      | throw <| IO.userError s!"incomplete_closure:E7.compiled_application_type:{repr e}"
+    return (body.instantiate1 argument).headBeta
   | .lam name domain body info =>
     let result ← typeShape body (binders.push domain) (depth + 1)
     return .forallE name domain result info
@@ -232,11 +270,33 @@ classification. Domain syntax remains an independent provenance input. -/
 partial def propositionShape (type : Expr) (binders : Array Expr := #[])
     (depth : Nat := 0) : M Bool := do
   step depth
-  match type with
-  | .forallE _ domain body _ => propositionShape body (binders.push domain) (depth + 1)
-  | .letE _ _ value body _ => propositionShape (body.instantiate1 value) binders (depth + 1)
-  | .mdata _ body => propositionShape body binders (depth + 1)
-  | _ => return (← head (← typeShape type binders (depth + 1)) (depth + 1)).isProp
+  let binders := if type.hasLooseBVars then binders else #[]
+  let key := (ExprStructEq.mk type, binders.map ExprStructEq.mk)
+  if let some value := (← get).propositions[key]? then return ← reuse value depth
+  let closed := !type.hasFVar && !binders.any (·.hasFVar)
+  if closed then
+    if let some value := (← get).shared.propositions[key]? then return ← reuse value depth
+  let enclosingDepth := (← get).maxDepth
+  modify fun state => { state with maxDepth := depth }
+  let value ← match type with
+    | .forallE _ domain body _ => propositionShape body (binders.push domain) (depth + 1)
+    | .letE _ _ value body _ => propositionShape (body.instantiate1 value) binders (depth + 1)
+    | .mdata _ body => propositionShape body binders (depth + 1)
+    | _ => pure (← head (← typeShape type binders (depth + 1)) (depth + 1)).isProp
+  let result := { value, height := (← get).maxDepth - depth : Result _ }
+  modify fun state => { state with
+    propositions := state.propositions.insert key result
+    maxDepth := max enclosingDepth state.maxDepth
+    shared := if closed then
+      { state.shared with propositions := state.shared.propositions.insert key result }
+      else state.shared }
+  return value
+
+private partial def neutralLocal (e : Expr) : M Bool := do
+  match e with
+  | .fvar id => return ((← read).local? id).any (·.value?.isNone)
+  | .app function _ | .proj _ _ function => neutralLocal function
+  | _ => return false
 
 /-- Compare compiled data terms after bounded administrative computation.
 The comparison consumes declaration syntax and never invokes a type checker.
@@ -245,10 +305,21 @@ partial def sameShape (left right : Expr) (depth : Nat := 0)
     (binders : Array Expr := #[]) : M Bool := do
   step depth
   if left == right then return true
+  let binders := if left.hasLooseBVars || right.hasLooseBVars then binders else #[]
   let key := (ExprStructEq.mk left, ExprStructEq.mk right, binders.map ExprStructEq.mk)
-  if let some value := (← get).comparisons[key]? then return value
+  if let some value := (← get).comparisons[key]? then return ← reuse value depth
+  let closed := !left.hasFVar && !right.hasFVar && !binders.any (·.hasFVar)
+  if closed then
+    if let some value := (← get).shared.comparisons[key]? then return ← reuse value depth
+  let enclosingDepth := (← get).maxDepth
+  modify fun state => { state with maxDepth := depth }
   let value ← sameShapeCore left right depth binders
-  modify fun state => { state with comparisons := state.comparisons.insert key value }
+  let result := { value, height := (← get).maxDepth - depth : Result _ }
+  modify fun state => { state with
+    comparisons := state.comparisons.insert key result
+    maxDepth := max enclosingDepth state.maxDepth
+    shared := if closed then { state.shared with comparisons := state.shared.comparisons.insert key result }
+      else state.shared }
   return value
 
 private partial def sameShapeCore (left right : Expr) (depth : Nat := 0)
@@ -261,7 +332,7 @@ private partial def sameShapeCore (left right : Expr) (depth : Nat := 0)
     | .app .., .app .. => do
       unless left.getAppFn.equal right.getAppFn &&
           left.getAppNumArgs == right.getAppNumArgs do return false
-      for (a, b) in left.getAppArgs.zip right.getAppArgs do
+      for (a, b) in (left.getAppArgs.zip right.getAppArgs).reverse do
         unless ← child a b do return false
       return true
     | .lam _ t b _, .lam _ u c _ | .forallE _ t b _, .forallE _ u c _ =>
@@ -283,7 +354,11 @@ private partial def sameShapeCore (left right : Expr) (depth : Nat := 0)
     if ← propositionShape rightType binders (depth + 1) then
       return ← sameShape leftType rightType (depth + 1) binders
   let left ← head left depth (preserveDecisions := true)
+  -- A neutral free local cannot be introduced by reducing a closed term.
+  -- Proof terms were compared through their propositions above.
+  if left.hasFVar && !right.hasFVar && (← neutralLocal left) then return false
   let right ← head right depth (preserveDecisions := true)
+  if right.hasFVar && !left.hasFVar && (← neutralLocal right) then return false
   if left == right then return true
   -- Decidable dictionaries for the same proposition determine the same Bool.
   -- Reification compares that proposition without running or synthesizing a dictionary.
@@ -295,8 +370,8 @@ private partial def sameShapeCore (left right : Expr) (depth : Nat := 0)
   | .const a us, .const b vs =>
     return a == b && us.map Level.normalize == vs.map Level.normalize
   | .app f a, .app g b =>
-    unless ← compare f g do return false
-    compare a b
+    unless ← compare a b do return false
+    compare f g
   | .lam _ t b _, .lam _ u c _ | .forallE _ t b _, .forallE _ u c _ =>
     unless ← compare t u do return false
     sameShape b c (depth + 1) (binders.push t)
@@ -325,13 +400,24 @@ private partial def sameShapeCore (left right : Expr) (depth : Nat := 0)
 
 end
 
-private partial def erase (e : Expr) (binders : Array Expr := #[])
+partial def erase (e : Expr) (binders : Array Expr := #[])
     (depth : Nat := 0) : M Expr := do
   step depth
+  let binders := if e.hasLooseBVars then binders else #[]
   let key := (ExprStructEq.mk e, binders.map ExprStructEq.mk)
-  if let some value := (← get).erased[key]? then return value
+  if let some value := (← get).erased[key]? then return ← reuse value depth
+  let closed := !e.hasFVar && !binders.any (·.hasFVar)
+  if closed then
+    if let some value := (← get).shared.erased[key]? then return ← reuse value depth
+  let enclosingDepth := (← get).maxDepth
+  modify fun state => { state with maxDepth := depth }
   let value ← eraseCore e binders depth
-  modify fun state => { state with erased := state.erased.insert key value }
+  let result := { value, height := (← get).maxDepth - depth : Result _ }
+  modify fun state => { state with
+    erased := state.erased.insert key result
+    maxDepth := max enclosingDepth state.maxDepth
+    shared := if closed then { state.shared with erased := state.shared.erased.insert key result }
+      else state.shared }
   return value
 
 where eraseCore (e : Expr) (binders : Array Expr) (depth : Nat) : M Expr := do
@@ -352,6 +438,46 @@ where eraseCore (e : Expr) (binders : Array Expr) (depth : Nat) : M Expr := do
   | .proj name index value => return .proj name index (← child value)
   | .mvar _ => throw <| IO.userError "incomplete_closure:E7.metavariable"
   | _ => return e
+
+/-- Distinct rigid type heads cannot become the same type by computing their
+indices. Telescope domains and bodies are types; data arguments and proof
+implementations are not inspected by this negative type comparison. -/
+partial def apartTypes (left right : Expr) (depth : Nat := 0) : M Bool := do
+  step depth
+  if left == right then return false
+  let left ← head left depth
+  let right ← head right depth
+  match left, right with
+  | .forallE _ a b _, .forallE _ c d _ =>
+    if ← apartTypes a c (depth + 1) then return true
+    apartTypes b d (depth + 1)
+  | .sort a, .sort b => return a.normalize != b.normalize
+  | _, _ =>
+    let rigid := fun expression => do
+      let some name := expression.getAppFn.constName? | return false
+      return (← constant name) matches .inductInfo _
+    let leftRigid ← rigid left
+    let rightRigid ← rigid right
+    if leftRigid && rightRigid then
+      return left.getAppFn.constName! != right.getAppFn.constName!
+    return (leftRigid && (right.isForall || right.isSort)) ||
+      (rightRigid && (left.isForall || left.isSort))
+
+/-- Scoped results require the exact same immutable declaration table and
+lexical context. Closed results can also be shared across lexical scopes. -/
+def runScoped (context : Context) (action : M α) (closed localMemo : Memo)
+    (fuel : Nat := 524288) : IO (α × Nat × Memo × Memo) := do
+  let limit := min fuel 524288
+  let (result, state) ← action.run context |>.run {
+    toMemo := localMemo, remaining := limit, shared := closed }
+  return (result, limit - state.remaining, state.shared, state.toMemo)
+
+/-- Reuse closed results only within the caller's immutable compiler table.
+Every hit consumes work and checks the current heartbeat and calculation height. -/
+def runCached (context : Context) (action : M α) (memo : Memo)
+    (fuel : Nat := 524288) : IO (α × Nat × Memo) := do
+  let (value, work, memo, _) ← runScoped context action memo {} fuel
+  return (value, work, memo)
 
 /-- Run one bounded compiled-data calculation. All shape queries and reductions
 share its original work quota and heartbeat boundary. -/

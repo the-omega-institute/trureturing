@@ -1,4 +1,4 @@
-import LeanInformationAudit.Census.Stream
+import LeanInformationAuditRegAnalysis.Census.Stream
 
 unsafe def main (args : List String) : IO Unit := do
   let [manifest, request, destination] := args

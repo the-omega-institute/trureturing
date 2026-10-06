@@ -46,6 +46,13 @@ structure PrimitivePin where
 
 namespace CompiledEnrollment
 
+def standardDictionaryNames : Array Name := #[
+  `Unit.fintype, `PUnit.fintype, `Bool.fintype, `Fin.fintype, `instFintypeProd,
+  `Sum.instFintype, `Option.instFintype, `Subtype.fintype,
+  `instDecidableEqUnit, `instDecidableEqPUnit, `instDecidableEqBool,
+  `instDecidableEqFin, `Prod.instDecidableEq, `Sum.instDecidableEq,
+  `Option.instDecidableEq, `Subtype.instDecidableEq, `Classical.decEq]
+
 structure Context where
   provenance : RegistrationGates.QueryContext
   moduleIndex? : Name → Option Nat
@@ -57,15 +64,28 @@ structure Context where
   extern : Name → Bool
   collectAxioms : Name → IO (Array Name)
 
-/-- Read the judge's compiled dictionary references. A missing payload cannot
-be substituted by initialization of an imported extension. -/
+/-- The judge and the input share the pinned compiler's immutable declaration
+table. RawArtifacts rejects conflicting duplicate constants before these
+dictionary references are calculated; no environment extension is replayed. -/
 unsafe def Context.fromArtifacts (store : RawArtifacts.Store) (mainModule : Name)
     (options : Options) (registeredTheorems : NameSet) : IO Context := do
-  let policy ← store.getModule `LeanInformationAudit.Registry
-  let some (_, entries) := policy.entries.find? (fun item =>
-      item.1 == `LeanInformationAudit.TemplateAudit.primitivePins)
-    | throw <| IO.userError "raw.missing_metadata:LeanInformationAudit.Registry:primitivePins"
-  let pins : Array PrimitivePin := entries.map fun entry => unsafeCast entry
+  discard <| store.getModule `LeanInformationAudit.TemplateEnrollment
+  let expressionContext : Contract.CompiledExpressions.Context := {
+    find := (store.constants[·]?), heartbeatStart := (← IO.getNumHeartbeats)
+    heartbeatLimit := 100000 * 1000 }
+  let fingerprint := fun (info : ConstantInfo) (value : Expr) => do
+    let (erased, work) ← Contract.CompiledExpressions.eraseProofs expressionContext value
+    return (← IO.ofExcept <| compactRawIdentity info.levelParams erased (524288 - work)).1
+  let mut pins := #[]
+  for name in standardDictionaryNames do
+    if let some info := store.constants[name]? then
+      let some owner := store.owners[name]?
+        | throw <| IO.userError s!"raw.missing_dictionary_owner:{name}"
+      let typeIdentity ← fingerprint info info.type
+      let bodyIdentity ← fingerprint info (info.value?.getD info.type)
+      pins := pins.push {
+        identity := { name, owner, typeIdentity, bodyIdentity }
+        levelCount := info.levelParams.length : PrimitivePin }
   let mut moduleIndices : Std.HashMap Name Nat := {}
   for index in [:store.moduleOrder.size] do
     moduleIndices := moduleIndices.insert store.moduleOrder[index]! index
@@ -73,10 +93,13 @@ unsafe def Context.fromArtifacts (store : RawArtifacts.Store) (mainModule : Name
   let axioms ← IO.mkRef ({ closure := store.metadata.axioms } : CompiledAxioms.AxiomClosureState)
   let configured := maxHeartbeats.get options
   let capped := if configured == 0 then 100000 else min 100000 configured
+  let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   return {
     provenance := {
       view := RegistrationGates.CompiledView.fromArtifacts store mainModule
-      session, options, heartbeatStart := (← IO.getNumHeartbeats), heartbeatLimit := capped * 1000 }
+      session, options, heartbeatStart := (← IO.getNumHeartbeats), heartbeatLimit := capped * 1000
+      trace := fun message => do
+        if profiling then (← IO.getStderr).putStrLn message }
     moduleIndex? := (moduleIndices[·]?)
     moduleImports? := fun name => (store.modules.find? name).map (·.imports.map (·.module))
     pins
@@ -118,11 +141,8 @@ private def recursive (name : Name) : CompileM Bool :=
   return (← read).recursive name
 
 private def query (action : Contract.CompiledExpressions.M α) : CompileM α := do
-  let context := (← read).provenance
-  let (value, work) ← Contract.CompiledExpressions.run {
-    find := context.view.find?, local? := context.locals.find?,
-    heartbeatStart := context.heartbeatStart, heartbeatLimit := context.heartbeatLimit
-  } action (← get).remaining
+  let (value, work) ← (RegistrationGates.compiledQueryWork action (← get).remaining).run
+    (← read).provenance
   charge work
   return value
 
@@ -138,15 +158,13 @@ private def getConstInfo (name : Name) : CompileM ConstantInfo := do
   return info
 
 private def erase (e : Expr) (fuel : Nat) : CompileM (Expr × Nat) := do
-  let context := (← read).provenance
-  Contract.CompiledExpressions.eraseProofs {
-    find := context.view.find?, local? := context.locals.find?,
-    heartbeatStart := context.heartbeatStart, heartbeatLimit := context.heartbeatLimit } e fuel
+  (RegistrationGates.compiledQueryWork (Contract.CompiledExpressions.erase e) fuel).run
+    (← read).provenance
 
 private def identity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
     CompileM (Except String (String × Nat)) := do
   let (erased, work) ← erase e fuel
-  return (erasedSyntaxIdentity params erased (fuel - work)).map fun (hash, bytes) =>
+  return (compactRawIdentity params erased (fuel - work)).map fun (hash, bytes) =>
     (hash, work + bytes)
 
 /-- Pure construction shares the caller's remaining quota. The transformer
@@ -397,13 +415,6 @@ private def interfaceProjection (env : RegistrationGates.CompiledView) (name : N
         "outputDecidableEq", "anchorFintype", "anchorDecidableEq", "axis", "readout", "anchor"].contains
           name.getString!
   | none => false
-
-def standardDictionaryNames : Array Name := #[
-  `Unit.fintype, `PUnit.fintype, `Bool.fintype, `Fin.fintype, `instFintypeProd,
-  `Sum.instFintype, `Option.instFintype, `Subtype.fintype,
-  `instDecidableEqUnit, `instDecidableEqPUnit, `instDecidableEqBool,
-  `instDecidableEqFin, `Prod.instDecidableEq, `Sum.instDecidableEq,
-  `Option.instDecidableEq, `Subtype.instDecidableEq, `Classical.decEq]
 
 private def checkedDictionary (info : ConstantInfo) (typePosition : Bool) : CompileM Bool := do
   unless standardDictionaryNames.contains info.name do return false

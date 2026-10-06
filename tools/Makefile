@@ -92,7 +92,7 @@ test:
 test: export DOTNET_ROOT := $(RESOLVED_DOTNET_ROOT)
 
 census-test:
-	@python3 $(HERE)/lean-inspector/Census/tests/fixtures.py $(if $(CENSUS_TEST_OUT),--output "$(CENSUS_TEST_OUT)",)
+	@python3 $(HERE)/lean-inspector/Census/tests/fixtures.py
 
 census-frontier-performance:
 	@cd "$(HERE)/lean-inspector/Census" && python3 -B -m tests.structure_frontier_probe --experiment

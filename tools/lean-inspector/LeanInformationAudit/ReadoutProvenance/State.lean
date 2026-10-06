@@ -276,6 +276,8 @@ structure ProvenanceSession where
   counters : ProvenanceCounters := {}
   aliasMemo : Bool × Option StatementAliasMemo := (false, none)
   wholeReadoutCalls : Nat := 0
+  expressions : Option (CompiledView × Contract.CompiledExpressions.Memo ×
+    Std.HashMap USize (LocalContext × Contract.CompiledExpressions.Memo)) := none
   deriving Inhabited
 
 structure QueryContext where
@@ -619,14 +621,30 @@ def listedTypeClasses : Array Name := #[
   `GroupWithZero, `CommGroupWithZero, `CommMonoidWithZero, `Nontrivial,
   `Fact, `CharP]
 
-/-- Project compiler-owned type shapes through the current lexical table. -/
-def compiledQuery (action : Contract.CompiledExpressions.M α) : QueryM α := do
+/-- Share completed closed calculations in this immutable-table session.
+Local expressions retain their own query memo and current lexical table. -/
+def compiledQueryWork (action : Contract.CompiledExpressions.M α)
+    (fuel : Nat := 524288) : QueryM (α × Nat) := do
   let context ← read
-  return (← Contract.CompiledExpressions.run {
+  let (closed, scopes) := match (← context.session.get).expressions with
+    | some (view, closed, scopes) =>
+      if view.constantsIdentity == context.view.constantsIdentity then (closed, scopes)
+      else (default, {})
+    | none => (default, {})
+  let address := unsafe ptrAddrUnsafe context.locals
+  let localMemo := (scopes[address]?).map (·.2) |>.getD default
+  let (value, work, closed, localMemo) ← Contract.CompiledExpressions.runScoped {
     find := context.view.find?
     local? := context.locals.find?
     heartbeatStart := context.heartbeatStart
-    heartbeatLimit := context.heartbeatLimit } action).1
+    heartbeatLimit := context.heartbeatLimit } action closed localMemo fuel
+  context.session.modify fun session => { session with
+    expressions := some (context.view, closed, scopes.insert address (context.locals, localMemo)) }
+  return (value, work)
+
+/-- Project compiler-owned type shapes through the current lexical table. -/
+def compiledQuery (action : Contract.CompiledExpressions.M α) : QueryM α := do
+  return (← compiledQueryWork action).1
 
 def boundedQuery (action : QueryM α) (site : Name := `type_classification)
     (operations : Nat := 1) : WalkM (Option α) := do
@@ -648,7 +666,7 @@ def boundedQuery (action : QueryM α) (site : Name := `type_classification)
   match result with
   | .ok value => return some value
   | .error error =>
-    auditTrace s!"query_failure operation={site}: {error}"
+    (← read).trace s!"query_failure operation={site}: {error}"
     let heartbeat := error.toString.contains "compiled_expression_heartbeats"
     modify fun s => { s with incomplete := true }
     auditTrace s!"incomplete cause={if heartbeat then "heartbeat_exhaustion" else "query_runtime_exception"} operation={site} first={(← get).currentFirst} site={(← get).currentOrigin}"

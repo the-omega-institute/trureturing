@@ -38,7 +38,7 @@ class NativeInvalidationTests:
 namespace LeanInformationAudit
 abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
 ''')
-        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 open Lean
 initialize judgeTripwire : Unit ← do
@@ -60,7 +60,7 @@ theorem hidden_self : hidden = hidden := rfl
         self.write('D5/A.lean', 'import D5.B\nnoncomputable def value : Nat := D5.hidden\n')
         self.ensure()
         result = self.guarded_command(['make', 'lean',
-            'LEAN_TARGETS=@trureturing/LeanInformationAudit.SealCommand :report'],
+            'LEAN_TARGETS=@trureturing/LeanInformationAudit.TemplateEnrollment :report'],
             cwd=self.root, env=self.env, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('raw_read_ns=', result.stdout + result.stderr)
@@ -102,7 +102,7 @@ theorem hidden_self : hidden = hidden := rfl
             return result.stdout + result.stderr
 
         inspect([])
-        driver = self.root / '.lake/build/lib/lean/LeanInformationAudit/SealCommand.olean'
+        driver = self.root / '.lake/build/lib/lean/LeanInformationAudit/TemplateEnrollment.olean'
         driver_bytes = driver.read_bytes()
         try:
             driver.unlink()
@@ -176,7 +176,7 @@ def main (args : List String) : IO Unit := do
 namespace LeanInformationAudit
 abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
 ''')
-        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 open Lean
 def producerValue : Nat := 1
@@ -216,7 +216,7 @@ structure Seal where
         def run():
             self.write('activity.jsonl', '')
             result = self.guarded_command(['make', 'lean',
-                'LEAN_TARGETS=@trureturing/LeanInformationAudit.SealCommand :report'],
+                'LEAN_TARGETS=@trureturing/LeanInformationAudit.TemplateEnrollment :report'],
                 cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
             self.assertEqual(result.returncode, 0, '[FAIL] native_typed_owner_production\n' + result.stdout + result.stderr)
             return result.stdout + result.stderr
@@ -248,7 +248,7 @@ structure Seal where
         self.publish()
 
         before = self.stamps()
-        driver = self.root / 'LeanInformationAudit/SealCommand.lean'
+        driver = self.root / 'LeanInformationAudit/TemplateEnrollment.lean'
         driver.write_text(driver.read_text().replace(':= 1', ':= 1 + 0'))
         run()
         self.assertEqual(self.stamps(), before, '[FAIL] compatible_program_edit_keeps_reports')
@@ -332,7 +332,7 @@ structure Seal where
 namespace LeanInformationAudit
 abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
 ''')
-        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 open Lean
 def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names consume => do
@@ -348,7 +348,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         def build():
             self.write('activity.jsonl', '')
             result = self.guarded_command(['make', 'lean',
-                'LEAN_TARGETS=@trureturing/LeanInformationAudit.SealCommand :report'], cwd=self.root,
+                'LEAN_TARGETS=@trureturing/LeanInformationAudit.TemplateEnrollment :report'], cwd=self.root,
                 env=self.env, capture_output=True, text=True, timeout=120)
             self.assertEqual(result.returncode, 0, '[FAIL] module_binding_scope\n' + result.stdout + result.stderr)
             return result.stdout + result.stderr
@@ -515,14 +515,14 @@ class NativeSemanticConsumerTests:
         self.write('Audit.lean', 'def audit : Nat := 2\n')
         changed([])
         # The fixed judge is version-gated outside a module's compiler closure.
-        self.write('LeanInformationAudit/SealCommand.lean', 'def fixtureDriver : Nat := 2\n')
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', 'def fixtureDriver : Nat := 2\n')
         changed([])
 
     def test_native_judge_semantic_version_gate(self):
         self.write('LeanInformationAudit/Support.lean', 'def judgeSupport : Nat := 1\n')
         driver = 'import LeanInformationAudit.Support\ndef fixtureDriver : Nat := judgeSupport\n'
-        self.write('LeanInformationAudit/SealCommand.lean', driver)
-        self.write('D5/A.lean', 'import LeanInformationAudit.SealCommand\n' +
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', driver)
+        self.write('D5/A.lean', 'import LeanInformationAudit.TemplateEnrollment\n' +
                    (self.root / 'D5/A.lean').read_text())
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['dependency_sources']['include'].append(
@@ -556,7 +556,7 @@ class NativeSemanticConsumerTests:
         for name in ['D5.B', 'D5.Alone']:
             self.assertEqual(self.origins()[name], origins[name])
         changed(set())
-        self.write('LeanInformationAudit/SealCommand.lean', driver.replace(':= judgeSupport', ':= judgeSupport + 0'))
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', driver.replace(':= judgeSupport', ':= judgeSupport + 0'))
         changed({'D5.A', 'Fixture'})
         self.assertEqual(self.report()[1:], original)
 
@@ -570,7 +570,7 @@ class NativeSemanticConsumerTests:
         changed({'D5.B', 'D5.A', 'Fixture'})
 
         # An unrelated judge is not demanded by a module without own inputs.
-        self.write('LeanInformationAudit/SealCommand.lean', driver + 'unknown_command\n')
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', driver + 'unknown_command\n')
         self.run_lake('build', 'D5.Alone:report')
         self.assertEqual(before, self.stamps())
 

@@ -8,7 +8,7 @@ class NativeReportConsumerTests:
         # Use the default program targets of a direct report call, the package
         # target declarations, report entry and Lake compiler. Only the
         # mathematical inputs are tiny.
-        implementations = ('RegistrationGates', 'Registry', 'ProofBuilder')
+        implementations = ('CompiledAssessment', 'ArtifactAssessment')
         targets = ['leanInspector/LeanInformationAudit', 'leanInspector/reportInspector',
                    'leanInspectorInterface/LeanInformationAuditInterface', 'reg/Reg',
                    'regInspector/LeanInformationAuditRegTests']
@@ -19,7 +19,7 @@ class NativeReportConsumerTests:
         start = source.index('[[lean_lib]]\nname = "LeanInformationAudit"\n')
         stop = source.find('[[', start + 2)
         root_config.write_text(source[:start] + (source[stop:] if stop != -1 else ''))
-        registry = 'LeanInformationAudit/SealCommand.lean'
+        registry = 'LeanInformationAudit/TemplateEnrollment.lean'
         registry_owner = 'tools/lean-inspector/' + registry
         for module in [registry]:
             owner = self.root / 'tools/lean-inspector' / module
@@ -38,11 +38,11 @@ class NativeReportConsumerTests:
         for name in implementations:
             self.write(f'tools/lean-inspector/LeanInformationAudit/{name}.lean',
                        implementation(name, 'input + 1'))
-        # ProofBuilder is an actual import of the fixture's report driver, so
-        # its body edit exercises the SealCommand closure as well as defaults.
+        # CompiledAssessment is an actual import of the fixture's report driver, so
+        # its body edit exercises the TemplateEnrollment closure as well as defaults.
         driver = self.root / registry_owner
-        driver.write_text('import LeanInformationAudit.Registry\n'
-                          'import LeanInformationAudit.ProofBuilder\n' + driver.read_text())
+        driver.write_text('import LeanInformationAudit.ArtifactAssessment\n'
+                          'import LeanInformationAudit.CompiledAssessment\n' + driver.read_text())
         self.write('Reg/ProductionOnly.lean', 'import LeanInformationAuditInterface.Contract.Core\n'
                    'import D5.A\ndef productionValue : Nat := value\n')
         # Required.lean deliberately imports no production Reg module.
@@ -102,13 +102,13 @@ class NativeReportConsumerTests:
 
         # A malformed registered implementation still blocks the program build;
         # cached report data cannot conceal that failed obligation.
-        self.write('tools/lean-inspector/LeanInformationAudit/RegistrationGates.lean',
-                   implementation('RegistrationGates', 'true'))
+        self.write('tools/lean-inspector/LeanInformationAudit/ArtifactAssessment.lean',
+                   implementation('ArtifactAssessment', 'true'))
         self.assertFalse(reuse.probe(self.root, output)['needs_lake'])
         failed = entry('production-consumer-failure')
         self.assertNotEqual(failed.returncode, 0, '[FAIL] production_consumer_failure_must_block_reuse')
         errors = (logs / 'programs.stdout.log').read_text() + (logs / 'programs.stderr.log').read_text()
-        self.assertIn('LeanInformationAudit/RegistrationGates.lean', errors)
+        self.assertIn('LeanInformationAudit/ArtifactAssessment.lean', errors)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stdout + failed.stderr)
         self.assertFalse(publication.member(output, '.reuse.json').exists())
         self.assertEqual(expected, output.read_bytes())

@@ -9,6 +9,7 @@ private structure WireState where
   remaining : Nat := 524288
   tokens : Option (Std.HashMap String Nat) := none
   expressions : Option (Std.HashMap ExprStructEq Nat) := none
+  names : Option (Std.HashMap Name (Nat × Nat)) := none
 
 private abbrev WireM := StateT WireState (Except String)
 
@@ -38,6 +39,14 @@ private def emit (text : String) : WireM Unit := do
 
 private def wireName (name : Name) (depth : Nat := 0) : WireM Unit := do
   if depth > 256 then throw "incomplete_closure:E8.name_depth"
+  if let some names := (← get).names then
+    if let some (index, height) := names[name]? then
+      if depth + height > 256 then throw "incomplete_closure:E8.name_depth"
+      emit "name-ref"
+      emit (toString index)
+      return
+    emit "name-node"
+    modify fun state => { state with names := some (names.insert name (names.size, name.getNumParts)) }
   match name with
   | .anonymous => emit "anonymous"
   | .str parent value => emit "str"; wireName parent (depth + 1); emit value
@@ -145,42 +154,63 @@ def rawStatementIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) 
 -- Expr.eqv ignores BinderInfo; even Expr.equal compares metadata Syntax modulo
 -- source information. Build structural keys with anonymous binder names and
 -- exact metadata wire bytes. The emitted expression itself is never rewritten.
--- This bounded independent walk also checks every occurrence's actual depth,
+-- The canonical DAG walk retains subtree heights and checks every occurrence,
 -- including repeated subtrees that the subsequent wire pass will reference.
+private structure SourceKeyState where
+  remaining : Nat
+  nodes : Std.HashMap USize (Expr × Nat) := {}
+  maxDepth : Nat := 0
+
 private partial def sourceKey (e : Expr) (depth : Nat := 0) :
-    StateT Nat (Except String) Expr := do
+    StateT SourceKeyState (Except String) Expr := do
   if depth > 256 then throw "incomplete_closure:E8.expression_depth"
-  let remaining ← get
+  modify fun state => { state with maxDepth := max state.maxDepth depth }
+  let remaining := (← get).remaining
   if remaining == 0 then throw "incomplete_closure:E8.source_identity_work"
-  set (remaining - 1)
+  modify fun state => { state with remaining := remaining - 1 }
+  -- Pointer equality is exact syntax equality while the input DAG is live.
+  -- A reused subtree still checks its deepest occurrence against the same limit.
+  let address := unsafe ptrAddrUnsafe e
+  if let some (key, height) := (← get).nodes[address]? then
+    if depth + height > 256 then throw "incomplete_closure:E8.expression_depth"
+    modify fun state => { state with maxDepth := max state.maxDepth (depth + height) }
+    return key
+  let enclosingDepth := (← get).maxDepth
+  modify fun state => { state with maxDepth := depth }
   let child := fun x => sourceKey x (depth + 1)
-  match e with
-  | .app f a => return .app (← child f) (← child a)
-  | .lam _ t b bi => return .lam .anonymous (← child t) (← child b) bi
-  | .forallE _ t b bi => return .forallE .anonymous (← child t) (← child b) bi
-  | .letE _ t v b nd => return .letE .anonymous (← child t) (← child v) (← child b) nd
-  | .mdata data b =>
-    let action : WireM Unit := do
-      emit (toString data.entries.length)
-      for (name, value) in data.entries do wireName name; wireData (depth + 1) value
-    let (_, state) ← action.run { remaining := ← get }
-    set state.remaining
-    return .mdata ⟨[(.anonymous, .ofString (String.fromUTF8! state.bytes))]⟩ (← child b)
-  | .proj n i b => return .proj n i (← child b)
-  | _ => return e
+  let key ← match e with
+    | .app f a => pure <| .app (← child f) (← child a)
+    | .lam _ t b bi => pure <| .lam .anonymous (← child t) (← child b) bi
+    | .forallE _ t b bi => pure <| .forallE .anonymous (← child t) (← child b) bi
+    | .letE _ t v b nd => pure <| .letE .anonymous (← child t) (← child v) (← child b) nd
+    | .mdata data b => do
+      let action : WireM Unit := do
+        emit (toString data.entries.length)
+        for (name, value) in data.entries do wireName name; wireData (depth + 1) value
+      let (_, state) ← action.run { remaining := (← get).remaining }
+      modify fun current => { current with remaining := state.remaining }
+      pure <| .mdata ⟨[(.anonymous, .ofString (String.fromUTF8! state.bytes))]⟩ (← child b)
+    | .proj n i b => pure <| .proj n i (← child b)
+    | _ => pure e
+  let height := (← get).maxDepth - depth
+  modify fun state => { state with
+    nodes := state.nodes.insert address (key, height)
+    maxDepth := max enclosingDepth state.maxDepth }
+  return key
 
 /-- Canonical shared raw Expr references for source-bound contracts. This does
 not change the mathematical statement_id or the existing raw identity dialect.
-The independent key pass prevents a repeated deep subtree from hiding depth.
+The key pass checks stored subtree heights at every repeated occurrence.
 Raw proof subterms, levels, metadata, lets and BinderInfo remain in the encoding. -/
 def compactRawEncoding (params : List Name) (e : Expr) (fuel : Nat := 524288) :
     Except String (ByteArray × Nat) := do
   let limit := min 524288 fuel
-  let (key, remaining) ← sourceKey e |>.run limit
+  let (key, keys) ← sourceKey e |>.run { remaining := limit }
   let action : WireM Unit := do
-    emit "DTR-source-expr-dag-v1"
+    emit "DTR-source-expr-dag-v2"
     wireExpr params 0 e key
-  let (_, state) ← action.run { remaining, tokens := some {}, expressions := some {} }
+  let (_, state) ← action.run {
+    remaining := keys.remaining, tokens := some {}, expressions := some {}, names := some {} }
   if state.bytes.size > 65536 then throw "incomplete_closure:E8.source_identity_bytes"
   return (state.bytes, limit - state.remaining)
 
@@ -188,13 +218,13 @@ def compactRawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
     Except String (String × Nat) :=
   (compactRawEncoding params e fuel).map fun (bytes, work) => (Sha256.hex bytes, work)
 
-/-- Complete binding evidence uses the unshared raw-identity wire format.
+/-- Complete binding evidence uses canonical token and name references.
 Dependency arrays are separate length-delimited inputs, not annotations
 outside the evidence identity. The evidence reference itself is not encoded. -/
 def bindingIdentity (statementIdentity : String) (certificate : TemplateBindingCertificate)
     (fuel : Nat) : Except String (String × Nat) := do
   let action : WireM Unit := do
-    emit "DTR-binding-evidence-v2"
+    emit "DTR-binding-evidence-v3"
     for name in #[certificate.key.root, certificate.key.registrationModule,
         certificate.key.theoremName, certificate.key.objectArena, certificate.key.catalog] do
       wireName name
@@ -222,13 +252,22 @@ def bindingIdentity (statementIdentity : String) (certificate : TemplateBindingC
       for input in inputs do
         wireName input.name; wireName input.owner
         emit input.typeIdentity; emit input.bodyIdentity
-  let (_, state) ← action.run { remaining := min fuel 524288 }
-  return (Sha256.hex state.bytes, state.bytes.size)
+  let limit := min fuel 524288
+  let (_, state) ← action.run { remaining := limit, tokens := some {}, names := some {} }
+  return (Sha256.hex state.bytes, limit - state.remaining)
+
+/-- Share canonical expression subgraphs in a plan while separately checking
+all raw depths and metadata before a wire reference can replace a subtree. -/
+private def canonicalExpr (params : List Name) (depth : Nat) (e : Expr) : WireM Unit := do
+  let available := (← get).remaining
+  let (key, keys) ← sourceKey e depth |>.run { remaining := available }
+  wireCharge (available - keys.remaining)
+  wireExpr params depth e key
 
 private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode) : WireM Unit := do
   if depth > 256 then throw "incomplete_closure:E8.plan_depth"
   let child := wirePlan params (depth + 1)
-  let raw := wireExpr params (depth + 1)
+  let raw := canonicalExpr params (depth + 1)
   match plan with
   | .atom e => emit "body"; raw e
   | .supplied _ => throw "incomplete_closure:E7.supplied_in_static_plan"
@@ -249,7 +288,7 @@ outputs of this encoding and are not recursively encoded inside themselves. -/
 def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     Except String (ByteArray × Nat) := do
   let action : WireM Unit := do
-    emit "DTR-checked-plan-v7"
+    emit "DTR-checked-plan-v8"
     for version in #[plan.schemaVersion, plan.grammarVersion, plan.constructorRecursionVersion,
         plan.compatibilityVersion] do emit (toString version)
     emit plan.compiler; emit plan.toolchain
@@ -259,7 +298,7 @@ def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     emit (toString plan.slots.size)
     for slot in plan.slots do
       emit (reprStr slot.kind); emit (reprStr slot.binderInfo)
-      wireExpr plan.levelParams 0 slot.type
+      canonicalExpr plan.levelParams 0 slot.type
     emit (toString plan.dependencies.size)
     for dep in plan.dependencies do
       wireName dep.name; wireName dep.owner; emit dep.typeIdentity; emit dep.bodyIdentity
@@ -274,7 +313,7 @@ def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     wirePlan plan.levelParams 0 plan.typePlan
     wirePlan plan.levelParams 0 plan.plan
   let limit := min fuel 524288
-  let (_, state) ← action.run { remaining := limit, tokens := some {} }
+  let (_, state) ← action.run { remaining := limit, tokens := some {}, expressions := some {}, names := some {} }
   if state.bytes.size > 65536 then throw s!"incomplete_closure:E8.plan_bytes:{state.bytes.size}"
   return (state.bytes, limit - state.remaining)
 def planEncoding (plan : TemplatePlanData) (fuel : Nat := 524288) : Except String ByteArray :=

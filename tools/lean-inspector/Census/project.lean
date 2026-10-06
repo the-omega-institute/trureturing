@@ -1,4 +1,4 @@
-import LeanInformationAudit.Census.Report
+import LeanInformationAuditRegAnalysis.Census.Report
 
 open Lean LeanInformationAudit LeanInformationAudit.DispositionCensus
 

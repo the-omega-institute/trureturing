@@ -12,19 +12,6 @@ private def getConstInfo (name : Name) : ReaderT Context IO ConstantInfo := do
     | fail s!"incomplete_closure:E7.compiled_constant:{name}"
   return info
 
-private def expressionContext : ReaderT Context IO Contract.CompiledExpressions.Context := do
-  let context := (← read).provenance
-  return {
-    find := context.view.find?, local? := context.locals.find?,
-    heartbeatStart := context.heartbeatStart, heartbeatLimit := context.heartbeatLimit }
-
-private def eraseProofs (e : Expr) (fuel : Nat) : ReaderT Context IO (Expr × Nat) := do
-  Contract.CompiledExpressions.eraseProofs (← expressionContext) e fuel
-
-private def isProp (e : Expr) (fuel : Nat) : ReaderT Context IO (Bool × Nat) := do
-  Contract.CompiledExpressions.run (← expressionContext)
-    (Contract.CompiledExpressions.propositionShape e) fuel
-
 private structure State where
   identity : WalkState
   visited : Std.HashSet Expr := {}
@@ -41,8 +28,11 @@ private def debit : M Unit := do
   unless (← get).remaining > 0 do fail "incomplete_closure:E8.source_operands"
   modify fun s => { s with remaining := s.remaining - 1 }
 
-private def typeQuery (action : Contract.CompiledExpressions.M α) : M α := do
-  let (value, work) ← Contract.CompiledExpressions.run (← expressionContext) action (← get).remaining
+private def typeQuery (action : Contract.CompiledExpressions.M α)
+    (operation : String := "type_shape") : M α := do
+  let (value, work) ← try
+    (RegistrationGates.compiledQueryWork action (← get).remaining).run (← read).provenance
+  catch error => fail s!"{error}; source_query={operation}; remaining={(← get).remaining}"
   modify fun state => { state with remaining := state.remaining - work }
   return value
 
@@ -62,32 +52,31 @@ private def withLocal (name : Name) (bi : BinderInfo) (type : Expr)
 /-- Source operands are compiler declarations reached from the raw statement and
 their types. Only repository data bodies are unfolded for this inventory. -/
 private def sourceNames (statement : Expr) (fuel : Nat) : ReaderT Context IO (NameSet × Nat) := do
-  let mut pending := statement.getUsedConstants.toList
-  let mut found : NameSet := {}
-  let mut remaining := fuel
-  while let n :: rest := pending do
-    pending := rest
-    if found.contains n then continue
-    if remaining == 0 then fail "incomplete_closure:E8.source_dependencies"
-    remaining := remaining - 1
-    found := found.insert n
-    let info ← getConstInfo n
-    let some owner := (← read).provenance.view.ownerOf n
-      | fail s!"incomplete_closure:E7.compiled_owner:{n}"
-    let (type, work) ← try eraseProofs info.type remaining
-      catch error => fail s!"{error}; source_declaration_type={n}"
-    remaining := remaining - work
-    pending := type.getUsedConstants.toList ++ pending
-    if (`D5).isPrefixOf owner then
-      let (proof, work) ← isProp info.type remaining
-      remaining := remaining - work
-      if !proof then
-        if let some value := info.value? then
-          let (value, work) ← try eraseProofs value remaining
-            catch error => fail s!"{error}; source_declaration_value={n}"
-          remaining := remaining - work
-          pending := value.getUsedConstants.toList ++ pending
-  return (found, remaining)
+  let view := (← read).provenance.view
+  let action : Contract.CompiledExpressions.M NameSet := do
+    let mut pending := statement.getUsedConstants.toList
+    let mut found : NameSet := {}
+    while let n :: rest := pending do
+      pending := rest
+      if found.contains n then continue
+      Contract.CompiledExpressions.step 0
+      found := found.insert n
+      let some info := view.find? n
+        | fail s!"incomplete_closure:E7.compiled_constant:{n}"
+      let some owner := view.ownerOf n
+        | fail s!"incomplete_closure:E7.compiled_owner:{n}"
+      let type ← try Contract.CompiledExpressions.erase info.type
+        catch error => fail s!"{error}; source_declaration_type={n}"
+      pending := type.getUsedConstants.toList ++ pending
+      if (`D5).isPrefixOf owner then
+        if !(← Contract.CompiledExpressions.propositionShape info.type) then
+          if let some value := info.value? then
+            let value ← try Contract.CompiledExpressions.erase value
+              catch error => fail s!"{error}; source_declaration_value={n}"
+            pending := value.getUsedConstants.toList ++ pending
+    return found
+  let (found, work) ← (RegistrationGates.compiledQueryWork action fuel).run (← read).provenance
+  return (found, fuel - work)
 
 private partial def visit (e : Expr) (depth : Nat := 0) : M Unit := do
   try visitCore e depth
@@ -108,24 +97,33 @@ where visitCore (e : Expr) (depth : Nat) : M Unit := do
   let (_, identity) ← ((RegistrationGates.Compiled.argumentIdentityNode env e
     (deferStatementApart := true)).run state.identity).run (← read).provenance
   if identity.forbidden then fail "forbidden_dependency:source.operand_identity"
-  if identity.incomplete then fail "incomplete_closure:source.operand_identity"
+  if identity.incomplete then
+    (← read).provenance.trace s!"source operand incomplete remaining={(← get).remaining}; \
+      identity_remaining={identity.exprFuel}; expression={repr e}"
+    fail "incomplete_closure:source.operand_identity"
   let identity ← if identity.unclassified.isSome then do
       -- The finite grammar can leave an opaque source proposition undecided.
       -- Compiled shape comparison settles only statement identity; it grants no
       -- readout/source correspondence (checked independently by SourceScope).
       let type ← typeQuery (Contract.CompiledExpressions.typeShape e)
       let candidate ← if type == mkSort .zero then pure e
-        else if ← typeQuery (Contract.CompiledExpressions.propositionShape type) then pure type
+        else if ← typeQuery (Contract.CompiledExpressions.propositionShape type) "proposition" then pure type
         else fail s!"incomplete_closure:source.operand_identity:{repr e}; type={repr type}"
       if candidate.hasMVar || candidate.hasLevelMVar then
         fail "incomplete_closure:source.identity_metavariable"
-      if ← typeQuery (Contract.CompiledExpressions.sameShape candidate identity.statement) then
-        fail "forbidden_dependency:source.operand_identity"
+      let same ← try
+        if ← typeQuery (Contract.CompiledExpressions.apartTypes candidate identity.statement)
+            "rigid_type_heads" then pure false
+        else typeQuery (Contract.CompiledExpressions.sameShape candidate identity.statement) "statement_identity"
+      catch error =>
+        (← read).provenance.trace s!"statement identity failed candidate={repr candidate}; statement={repr identity.statement}"
+        throw error
+      if same then fail "forbidden_dependency:source.operand_identity"
       pure { identity with unclassified := none }
     else pure identity
   modify fun s => { s with identity }
   -- Proof propositions remain raw dependencies, proof bodies are opaque.
-  if ← typeQuery (do Contract.CompiledExpressions.propositionShape (← Contract.CompiledExpressions.typeShape e)) then
+  if ← typeQuery (do Contract.CompiledExpressions.propositionShape (← Contract.CompiledExpressions.typeShape e)) "proof_classification" then
     visit (← typeQuery (Contract.CompiledExpressions.typeShape e)) (depth + 1)
     return
   let child := fun e => visit e (depth + 1)
@@ -191,6 +189,8 @@ def check (theoremName : Name) (expressions : Array Expr) (fuel : Nat)
     | some arena => do
       let (arenaSource, remaining) ← sourceNames arena remaining
       pure (arenaSource.toArray.foldl (init := source) (fun acc name => acc.insert name), remaining)
+  (← read).provenance.trace s!"source operand inventory names={source.size}; \
+    remaining={remaining}; initial={limit}; identity_remaining={identity.exprFuel}"
   let action : M Unit := do
     for e in expressions do visit e
     if let some law := law then visit law

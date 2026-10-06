@@ -194,7 +194,7 @@ class NativeCompilerConsumerTests:
 namespace LeanInformationAudit
 abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
 ''')
-        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 open Lean
 private structure RegionLayout where
@@ -232,7 +232,7 @@ unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriv
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
         built = subprocess.run(['make', 'lean',
-            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.SealCommand'],
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.TemplateEnrollment'],
             cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         output = self.root / 'mapped.spool.json'
@@ -266,7 +266,7 @@ initialize fixtureExtension : Lean.SimplePersistentEnvExtension Lean.Name (Array
     addEntryFn := fun entries entry => entries.push entry
     addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
 ''')
-        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names consume => do
   let env ← Lean.getEnv
@@ -280,7 +280,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
         built = subprocess.run(['make', 'lean',
-            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.SealCommand'],
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.TemplateEnrollment'],
             cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         output = self.root / 'driver.spool.json'
@@ -311,7 +311,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
 namespace LeanInformationAudit
 abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
 ''')
-        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 open Lean Meta
 def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names consume => do
@@ -330,7 +330,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
         built = subprocess.run(['make', 'lean',
-            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.SealCommand'],
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.TemplateEnrollment'],
             cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         executable = self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'

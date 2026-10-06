@@ -1,3 +1,4 @@
+import LeanInformationAuditRegTests.CompiledFixtureReader
 import LeanInformationAuditRegTests.ContractGuards
 import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.MissingCatalog.SealedCatalog
 import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.MissingSeal.SealedCatalog
@@ -17,9 +18,12 @@ import LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCat
 
 namespace LeanInformationAuditRegTests.ContractPaths
 open Lean Meta Elab Command LeanInformationAudit.Contract
-open LeanInformationAuditRegTests.ContractGuards
+private def checkTest (label : String) (ok : Bool) : IO Unit :=
+  unless ok do throw <| IO.userError s!"compiled.fixture:{label}"
 
-run_meta do
+unsafe def check : IO Unit := do
+  let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
+  let discover := CompiledFixtureReader.discover reader
   for (fixture, diagnostic) in #[
       ("Spelling.Rootcatalog", "contract.root_structure:root_catalog_count:"),
       ("Spelling.RootCatalogs", "contract.root_structure:root_catalog_count:"),
@@ -33,32 +37,34 @@ run_meta do
     let owner := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs ++ fixture.toName
     let requirements ← RootStructure.requiredFor #[owner] Discovery.moduleSource
     let error ← try
-      discard <| Discovery.discoverWithStructure requirements #[owner]
+      discard <| discover requirements #[owner]
       pure "accepted"
-    catch ex => ex.toMessageData.toString
-    assertTest s!"root.path.negative.{fixture}" (error.startsWith diagnostic)
-    logInfo m!"CONTRACT_DIAGNOSTIC root.path.{fixture} {error}"
+    catch ex => pure ex.toString
+    checkTest s!"root.path.negative.{fixture}:{error}" (error.contains diagnostic)
+    IO.println s!"CONTRACT_DIAGNOSTIC root.path.{fixture} {error}"
   for (fixture, catalogs, seals) in #[
       ("Complete.SealedCatalog", 1, 1), ("Complete.RootCatalog", 1, 0),
       ("Ordinary.Entry", 0, 0)] do
     let owner := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs ++ fixture.toName
     let requirements ← RootStructure.requiredFor #[owner] Discovery.moduleSource
-    let snapshot ← Discovery.discoverWithStructure requirements #[owner]
-    assertTest s!"root.path.positive.{fixture}"
+    let snapshot ← discover requirements #[owner]
+    checkTest s!"root.path.positive.{fixture}"
       (snapshot.roots.size == catalogs && snapshot.seals.size == seals)
     let error ← try
-      discard <| Discovery.discoverWithStructure requirements #[]
+      discard <| discover requirements #[]
       pure "accepted"
-    catch ex => ex.toMessageData.toString
-    assertTest s!"root.path.filtered.{fixture}"
+    catch ex => pure ex.toString
+    checkTest s!"root.path.filtered.{fixture}"
       (error.startsWith "contract.root_structure:required_module_missing:")
-run_meta do
+unsafe def checkMirror : IO Unit := do
+  let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
+  let discover := CompiledFixtureReader.discover reader
   for leaf in #["RootCatalog", "SealedCatalog"] do
     let owner := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror ++ leaf.toName
     let requirements ← RootStructure.requiredFor #[owner] Discovery.moduleSource
     let accepted ← try
-      let snapshot ← Discovery.discoverWithStructure requirements #[owner]
+      let snapshot ← discover requirements #[owner]
       pure (snapshot.registrations.size == 1 && snapshot.roots.isEmpty && snapshot.seals.isEmpty)
     catch _ => pure false
-    assertTest s!"root.mirror.positive.{leaf}" accepted
+    checkTest s!"root.mirror.positive.{leaf}" accepted
 end LeanInformationAuditRegTests.ContractPaths

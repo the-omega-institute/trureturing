@@ -114,22 +114,18 @@ jobs:
             sudo apt-get install --yes libdigest-sha-perl
           fi
 
-      - name: Build and hash the analysis fixtures
+      - name: Run the native compiled judge tests
         id: fixtures
         shell: bash
         env:
           OUTPUT_ROOT: ${{ runner.temp }}/lean-analysis-fixtures
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # The runner scopes the five-minute cache override to preparation;
-          # analysis production retains this job's budget.
         run: |
           set -euo pipefail
-          fixture_runner="$GITHUB_WORKSPACE/tools/lean-inspector/LeanInformationAuditAnalysis/run-analysis-fixtures.sh"
-          test -x "${fixture_runner}"
           mkdir -p "${OUTPUT_ROOT}"
-          "${fixture_runner}" "${OUTPUT_ROOT}/artifacts" 2>&1 | tee "${OUTPUT_ROOT}/run.log"
+          make compiled-judge-test 2>&1 | tee "${OUTPUT_ROOT}/run.log"
 
-      - name: Upload the analysis artifacts and hash log
+      - name: Upload the compiled judge test log
         if: always() && steps.fixtures.outcome != 'skipped'
         uses: actions/upload-artifact@v6
         with:

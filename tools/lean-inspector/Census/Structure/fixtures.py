@@ -21,8 +21,8 @@ def check_structure(repository, directory):
     folder = directory / "structure"
     folder.mkdir(parents=True, exist_ok=True)
     env = lean_env(repository)
-    module = "LeanInformationAudit.Tests.Census.Structure.Terms"
-    path = repository / ".lake/build/lib/lean" / (module.replace(".", "/") + ".olean")
+    module = "LeanInformationAuditRegTests.Research.Census.Structure.Terms"
+    path = repository / ".lake/build/lean-inspector/reg/lib/lean" / (module.replace(".", "/") + ".olean")
     manifest, raw = folder / "manifest.json", folder / "raw.jsonl"
     write(manifest, [[module, [str(path)]]])
     binary = build(repository, "structure.lean", env)

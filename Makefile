@@ -167,3 +167,8 @@ gate:
 	bash tools/scripts/workflow/scribe-content-checks.sh "$(LEAN_REPORT)" tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll "$$paths"; \
 	dotnet "$$cli" filemap-conform; \
 	dotnet "$$cli" check-delta --protected-base "$$(git rev-parse --verify '$(BASE)^{commit}')" --candidate-lean-report "$(LEAN_REPORT)"
+
+.PHONY: compiled-judge-test
+compiled-judge-test:
+	@$(MAKE) lean LEAN_TARGETS="regInspector/compiledJudgeTests"
+	@lake -d tools/lean-inspector-reg env .lake/build/lean-inspector/reg/bin/compiledJudgeTests

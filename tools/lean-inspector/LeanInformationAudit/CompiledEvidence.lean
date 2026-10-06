@@ -107,10 +107,7 @@ private def witnessStatement (arena statement : Expr) (theoremName : Name) : Q N
 /-- Proof-opaque syntax comes from compiled declaration types and the current
 lexical binder table. The calculator has no Environment or Meta operations. -/
 def eraseProofs (e : Expr) (fuel : Nat := 524288) : Q (Expr × Nat) := do
-  let context ← read
-  Contract.CompiledExpressions.eraseProofs {
-    find := context.view.find?, local? := context.locals.find?,
-    heartbeatStart := context.heartbeatStart, heartbeatLimit := context.heartbeatLimit } e fuel
+  RegistrationGates.compiledQueryWork (Contract.CompiledExpressions.erase e) fuel
 
 /-- Proof-opaque source data fingerprint, sharing repeated raw type subtrees. -/
 def compactIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
@@ -296,7 +293,7 @@ The pure wire encoder is exposed separately for synthetic encoding tests. -/
 def rawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
     Q (Except String (String × Nat)) := do
   let (erased, work) ← eraseProofs e fuel
-  return (erasedSyntaxIdentity params erased (fuel - work)).map fun (identity, bytes) =>
+  return (compactRawIdentity params erased (fuel - work)).map fun (identity, bytes) =>
     (identity, work + bytes)
 
 end LeanInformationAudit.CompiledEvidence

@@ -1,4 +1,4 @@
-import Lean.Environment
+import Lean.Expr
 
 namespace LeanInformationAudit
 open Lean
@@ -33,9 +33,5 @@ structure RootCatalogContract where
   baseline : Array SnapshotOccurrence := #[]
   companionPrefix : Option Name := none
   deriving Inhabited
-
-/-- Capture the original compiler type for report assessment. -/
-def captureStatement (env : Environment) (name : Name) : Option Expr :=
-  (env.find? name).map (·.type)
 
 end LeanInformationAudit

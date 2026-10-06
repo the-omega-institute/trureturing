@@ -113,7 +113,7 @@ def range_source(node, scope=None):
     lo, hi = k << (256 - b), (k + 1) << (256 - b)
     children = node["children"]
     header = "module\n" + ("".join(f"public import {child}\n" for child in children)
-        if children else "public import LeanInformationAudit.Census.Certificate\n")
+        if children else "public import LeanInformationAuditRegAnalysis.Census.Certificate\n")
     body = header + "open LeanInformationAudit\n"
     body += f"@[expose] public def {scope}.n : Nat := {node['count']}\n"
     body += f"@[expose] public def {scope}.k : Nat := {k}\n"

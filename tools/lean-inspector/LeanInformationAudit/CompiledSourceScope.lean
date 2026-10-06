@@ -20,11 +20,8 @@ def debit (n : Nat := 1) : M Unit := do
   modify (· - n)
 
 def query (action : Contract.CompiledExpressions.M α) : M α := do
-  let context := (← read).provenance
-  let (value, work) ← Contract.CompiledExpressions.run {
-    find := context.view.find?, local? := context.locals.find?,
-    heartbeatStart := context.heartbeatStart, heartbeatLimit := context.heartbeatLimit
-  } action (← get)
+  let (value, work) ← (RegistrationGates.compiledQueryWork action (← get)).run
+    (← read).provenance
   debit work
   return value
 
@@ -120,7 +117,7 @@ partial def project (slots : Array Nat) (scope : Nat) (e : Expr)
     unless i < scope do fail "unclassified_form:source.open_coordinate"
     let ordinal := scope - 1 - i
     let some index := slots.idxOf? ordinal
-      | fail "unclassified_form:source.coordinate_dependency"
+      | fail s!"unclassified_form:source.coordinate_dependency:missing={ordinal};selected={slots};scope={scope}"
     return .bvar (localDepth + slots.size - 1 - index)
   | .app f a => return .app (← child f) (← child a)
   | .lam n t b bi => return .lam n (← child t) (← bound b) bi
@@ -165,7 +162,10 @@ partial def expandLets (context : Array SourceBinder) (scope : Nat) (e : Expr)
 local-let transport. Apply to domains and outputs as well as observations. -/
 def transport (context : Array SourceBinder) (slots : Array Nat) (e : Expr) : M Expr := do
   let expanded ← expandLets context context.size e
-  let projected ← project slots context.size expanded
+  let projected ← try project slots context.size expanded catch error =>
+    (← read).provenance.trace s!"coordinate dependency expression={repr expanded}; \
+      binders={repr (context.map fun b => (b.name, b.domain, b.value))}"
+    throw error
   unless (← project slots context.size projected true).equal expanded do
     fail "unclassified_form:source.inverse_mapping"
   return projected

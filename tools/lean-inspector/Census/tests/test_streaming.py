@@ -75,7 +75,7 @@ class StreamingTests(unittest.TestCase):
         from streaming import closure, root_scopes
         graph = {"D5.S0.Area.A": ["Init"], "D5.S0.Area.B": ["Init"],
                  "Evidence": ["D5.S0.Area.A"], "Init": [],
-                 "LeanInformationAudit.Census.Command": ["Init"]}
+                 "LeanInformationAuditRegAnalysis.Census.Stream": ["Init"]}
         keys = [("D5.S0.Area.A", "a", "id-a"), ("D5.S0.Area.B", "b", "id-b")]
         roots, assignment = root_scopes([key[0] for key in keys], keys, ["Evidence"], graph)
         scope = set(roots[assignment["D5.S0.Area.A"]])

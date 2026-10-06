@@ -516,7 +516,7 @@ private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath
   let initial ← state.get
   if !statementOnly && inputs.any (fun input =>
       (initial.modules.find? input.moduleName.toName).any RawArtifacts.hasTypedInputs) then
-    RawArtifacts.loadModule `LeanInformationAudit.Registry state
+    RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment state
   let store ← state.get
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   if profiling then

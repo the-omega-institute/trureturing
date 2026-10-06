@@ -12,7 +12,7 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
 from Certificate.emission import write_manifest, string, write_module
-from pipeline import frozen_keys
+from Certificate.keys import frozen_keys
 from Certificate.handoff import read as read_handoff
 from streaming import canonical
 
@@ -20,7 +20,7 @@ from streaming import canonical
 def driver(directory, report_path, rows_path, receipt_path, prefix, head, report_sha,
            receipt_digest, generate):
     path = directory / "CensusRun/Root.lean"
-    text = ("import LeanInformationAudit.Census.Publish\n"
+    text = ("import LeanInformationAuditRegAnalysis.Census.Publish\n"
             f"#disposition_census projection root CensusRun.Root source {string(str(path))} "
             f"report {string(str(report_path))}\n"
             f"  head {string(head)} report_sha256 {string(report_sha)}\n"

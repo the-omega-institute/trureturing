@@ -1,7 +1,6 @@
 import Reg.Catalogs.PointwiseDisequalityRegistrations.SealedCatalog
 import Reg.Catalogs.SharedInformationRoot.SealedCatalog
 import LeanInformationAudit.ArtifactAssessment
-import LeanInformationAudit.Registry
 
 namespace LeanInformationAuditRegTests.CompiledSeal
 open Lean LeanInformationAudit
@@ -14,7 +13,7 @@ unsafe def check : IO Unit := do
     let root := `Reg.Catalogs.PointwiseDisequalityRegistrations.SealedCatalog
     let reader ← IO.mkRef ({} : RawArtifacts.Store)
     RawArtifacts.loadModule root reader
-    RawArtifacts.loadModule `LeanInformationAudit.Registry reader
+    RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
     let store ← reader.get
     let context := CompiledRegistration.expressionContext (store.constants[·]?) (← IO.getNumHeartbeats) {}
     let transport (left right : Expr) : Expr := mkAppN (mkConst ``Eq.rec [1, 1]) #[

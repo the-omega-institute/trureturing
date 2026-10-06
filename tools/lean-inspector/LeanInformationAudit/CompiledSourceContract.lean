@@ -98,10 +98,8 @@ private def fail [Monad m] [MonadLiftT IO m] (reason : String) : m α :=
 
 private def fingerprintInput (params : List Name) (e : Expr) (fuel : Nat) :
     M (Except String (String × Nat)) := do
-  let context := (← read).provenance
-  let (erased, work) ← Contract.CompiledExpressions.eraseProofs {
-    find := context.view.find?, local? := context.locals.find?,
-    heartbeatStart := context.heartbeatStart, heartbeatLimit := context.heartbeatLimit } e fuel
+  let (erased, work) ← (RegistrationGates.compiledQueryWork
+    (Contract.CompiledExpressions.erase e) fuel).run (← read).provenance
   return (compactRawIdentity params erased (fuel - work)).map fun (identity, cost) =>
     (identity, cost + work)
 
@@ -129,8 +127,9 @@ private def safe (name : Name) : M Unit := do
     fail "forbidden_dependency:source.axiom_closure"
 
 private def fingerprint (levels : List Name) (e : Expr) : M String := do
-  let .ok (identity, work) ← fingerprintInput levels e (← get)
-    | fail "incomplete_closure:E8.source_fingerprint"
+  let (identity, work) ← match ← fingerprintInput levels e (← get) with
+    | .ok result => pure result
+    | .error reason => fail s!"{reason}:source_fingerprint={e.getAppFn.constName?.getD .anonymous}"
   debit work
   emit s!"source fingerprint identity={identity} work={work}"
   return identity

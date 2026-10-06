@@ -1,5 +1,6 @@
-import LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries
+import LeanInformationAuditRegTests.Fixtures.Provenance
 import LeanInformationAudit.ReadoutProvenance
+import LeanInformationAudit.Registry.Repository
 
 namespace LeanInformationAuditRegTests.CompiledProvenance
 open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
@@ -8,7 +9,10 @@ open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
 The assertions cover positive readouts, retained target identity, payload
 rejection and the existing zero-work incomplete route. -/
 unsafe def readFixture : IO Unit := do
-  let moduleName := `LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries
+  let fixturePath ← Repository.source ".lake/build/lean-inspector/reg/lib/lean"
+  let saved ← searchPathRef.get
+  searchPathRef.set (fixturePath :: saved)
+  let moduleName := `LeanInformationAuditRegTests.Fixtures.Provenance
   let reader ← IO.mkRef ({} : RawArtifacts.Store)
   RawArtifacts.loadModule moduleName reader
   let store ← reader.get
@@ -32,6 +36,7 @@ unsafe def readFixture : IO Unit := do
       { context with options := ({} : Options).set `provenanceExpressionLimit (0 : Nat) }
   unless !rejected && closure.isNone do
     throw <| IO.userError "compiled.provenance:zero_work"
+  searchPathRef.set saved
   IO.println "[PASS] compiled provenance zero work is incomplete"
 
 run_meta readFixture

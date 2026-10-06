@@ -53,7 +53,7 @@ class ManifestTests(unittest.TestCase):
         source = emission.bucket_sources(rows, keys)["CensusRun.Range8_0"]
         self.assertEqual(source.count("noncomputable def"), 6)
         self.assertEqual(source.count("List.flatten"), 2)
-        self.assertIn("import LeanInformationAudit.Census.Certificate\n", source)
+        self.assertIn("import LeanInformationAuditRegAnalysis.Census.Certificate\n", source)
         self.assertNotIn("Census.Publish", source)
         for side in ("manifestKeys", "reportKeys"):
             for number, expected in enumerate((100, 25)):

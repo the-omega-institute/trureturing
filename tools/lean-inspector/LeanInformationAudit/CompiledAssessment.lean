@@ -63,6 +63,8 @@ private structure CompareState where
   extractionNames : NameSet := {}
   constructorTypes : Array Name := #[]
   nextLocal : Nat := 0
+  inputIdentities : NameMap DependencyIdentity := {}
+  syntaxIdentities : Std.HashMap (List Name × USize) (Expr × String) := {}
 
 private abbrev CompareM := StateT CompareState M
 private def debit (n : Nat := 1) : CompareM Unit := do
@@ -461,24 +463,41 @@ private def closed (e : Expr) : M Unit := do
   if e.hasMVar || e.hasFVar || e.hasLooseBVars then
     fail "incomplete_closure:dtr.descriptor_open"
 
+private def syntaxIdentity (params : List Name) (e : Expr) :
+    CompareM (Except String (String × Nat)) := do
+  let key := (params, unsafe ptrAddrUnsafe e)
+  if let some (_, identity) := (← get).syntaxIdentities[key]? then return .ok (identity, 1)
+  let result ← rawIdentity params e (← get).remaining
+  if let .ok (identity, _) := result then
+    modify fun state => { state with
+      syntaxIdentities := state.syntaxIdentities.insert key (e, identity) }
+  return result
+
 private def inputIdentity (name : Name) : CompareM DependencyIdentity := do
   debit
+  if let some identity := (← get).inputIdentities.find? name then return identity
   let info ← getConstInfo name
   let some owner := (← view).ownerOf name
     | fail s!"incomplete_closure:dtr.input_owner:{name}"
-  let .ok (typeIdentity, typeWork) ← rawIdentity info.levelParams info.type (← get).remaining
-    | fail "incomplete_closure:dtr.input_identity"
+  let before := (← get).remaining
+  let (typeIdentity, typeWork) ← match ← syntaxIdentity info.levelParams info.type with
+    | .ok result => pure result
+    | .error reason => fail s!"{reason}:input_type={name}"
   debit typeWork
   -- Proof implementations contribute no body identity; nested proof arguments
   -- in data inputs are erased by rawIdentity as well.
-  let bodyIdentity ← if ← isProp info.type then pure "" else match info.value? with
+  let bodyIdentity ← if (← isProp info.type) || !Repository.isModule owner then pure "" else match info.value? with
     | none => pure ""
     | some value =>
-      let .ok (identity, bodyWork) ← rawIdentity info.levelParams value (← get).remaining
-        | fail "incomplete_closure:dtr.input_identity"
+      let (identity, bodyWork) ← match ← syntaxIdentity info.levelParams value with
+        | .ok result => pure result
+        | .error reason => fail s!"{reason}:input_body={name}"
       debit bodyWork
       pure identity
-  return { name, owner, typeIdentity, bodyIdentity }
+  (← read).enrollment.provenance.trace s!"input identity name={name}; work={before - (← get).remaining}; remaining={(← get).remaining}"
+  let identity := { name, owner, typeIdentity, bodyIdentity : DependencyIdentity }
+  modify fun state => { state with inputIdentities := state.inputIdentities.insert name identity }
+  return identity
 
 def dependencyJson (input : TemplateAudit.DependencyIdentity) : Json := Json.mkObj [
   ("name", toJson input.name.toString), ("owner", toJson input.owner.toString),

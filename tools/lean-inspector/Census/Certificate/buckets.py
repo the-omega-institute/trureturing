@@ -38,7 +38,7 @@ def build(source, root, inputs, certificate_directory, data_only=False):
         directory = directory.parent
     cache = pathlib.Path(os.environ.get("CENSUS_BUCKET_CACHE",
                                        repository / ".lake/build/census/buckets"))
-    cert = repository / "tools/lean-inspector/LeanInformationAudit/Census/Certificate.lean"
+    cert = repository / "tools/lean-inspector/LeanInformationAuditRegAnalysis/Census/Certificate.lean"
     certificate_digest = hashlib.sha256(cert.read_bytes()).hexdigest()
     toolchain = (repository / "lean-toolchain").read_text().strip()
     library = pathlib.Path(subprocess.check_output(["lean", "--print-prefix"], text=True).strip()) / "lib/lean"

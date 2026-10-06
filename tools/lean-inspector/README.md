@@ -58,9 +58,9 @@ requiring computation fails by name as `contract.decode_failed:<owner>:<declarat
 including the field-specific `contract.literal` diagnostic. Missing compiled declarations and
 unknown constructor layouts fail without a fallback.
 
-The interface inventory checks compiled contract types and compiler-generated
-products. Reg's transitive dependency closure excludes the judge implementation
-through `REG-IMPLEMENTATION`. Source text does not supply a second writing gate.
+Reg's transitive dependency closure excludes the judge implementation through
+`REG-IMPLEMENTATION`. Its entries and mathematical fields are checked by the
+compiler. Source text does not supply a second writing gate.
 
 Reg module kinds come from the `Reg/Catalogs/**` subtree: its exact
 `RootCatalog.lean` leaf is a catalog and `SealedCatalog.lean` is a sealed catalog.
@@ -94,11 +94,6 @@ paths, catalogs import those leaves, and leaves do not import catalogs. Catalog
 root IDs use the catalog module and `registrationModuleName` retains the leaf
 owner. Catalogs and seals are optional analysis groups: report evaluation does
 not require catalog membership, and missing seals remain named absent inputs.
-
-The compiled interface inventory admits only source types, kernel constructors,
-recorded projections and the pinned compiler's explicitly listed recursor,
-noConfusion, constructor and sizeOf companions. Unknown compiler products
-receive `contract.interface:compiled_non_type`.
 
 Reg sources compile to the typed contract heads. Catalogs use RootCatalog
 entries and seals use Seal entries. The report accepts constructor trees and
@@ -279,3 +274,18 @@ an otherwise computed top-level contract input. Raw terms never execute code or 
 Report reuse comes only from the Lake trace and the single semantic version.
 
 `STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和 `assess` 的实际模块工作；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。
+
+The implementation library contains the production artifact evaluator and its pure
+support modules. Tests and independent analyses live in the downstream Reg host.
+`make compiled-judge-test` builds and runs the native tests against the same
+artifact evaluator used by production, including constructor discovery, source
+reconstruction, negative dependencies and catalog/seal checks. Fixed work and
+depth limits remain effective on shared expression calculations. Calculation
+memos retain the immutable compiled table and lexical context; cached results
+retain their checked depth.
+
+`make census` projects production registration records without reassessment.
+Independent structural graph and certificate tools do not issue registration
+verdicts. Utility refutations compare compiled types by bounded structural
+computation; Lean checks theorem proof terms during compilation. Unsupported
+comparisons fail by name.

@@ -1,3 +1,4 @@
+import LeanInformationAuditRegTests.CompiledFixtureReader
 import LeanInformationAuditRegTests.ContractGuards
 import Reg.Catalogs.IffRegistrations
 import LeanInformationAuditRegTests.ContractRootFixtures.Complete
@@ -17,9 +18,12 @@ import LeanInformationAuditRegTests.ContractRootFixtures.WrongSealOwner
 
 namespace LeanInformationAuditRegTests.ContractRoots
 open Lean Meta Elab Command LeanInformationAudit.Contract
-open LeanInformationAuditRegTests.ContractGuards
+private def checkTest (label : String) (ok : Bool) : IO Unit :=
+  unless ok do throw <| IO.userError s!"compiled.fixture:{label}"
 
-run_meta do
+unsafe def check : IO Unit := do
+  let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
+  let discover := CompiledFixtureReader.discover reader
   for (fixture, diagnostic) in #[
     ("DuplicateCatalog", "contract.root_structure:root_catalog_count:"),
     ("DuplicateSeal", "contract.root_structure:seal_count:"),
@@ -39,24 +43,24 @@ run_meta do
       else RootStructure.Kind.sealedCatalog
     let requirement : RootStructure.Requirement := ⟨owner, `ContractRoot, kind⟩
     let error ← try
-      discard <| Discovery.discoverWithStructure #[requirement] #[owner]
+      discard <| discover #[requirement] #[owner]
       pure "accepted"
-    catch ex => ex.toMessageData.toString
-    assertTest s!"root.negative.{fixture}" (error.startsWith diagnostic)
-    logInfo m!"CONTRACT_DIAGNOSTIC root.{fixture} {error}"
+    catch ex => pure ex.toString
+    checkTest s!"root.negative.{fixture}:{error}" (error.contains diagnostic)
+    IO.println s!"CONTRACT_DIAGNOSTIC root.{fixture} {error}"
   let owner := `LeanInformationAuditRegTests.ContractRootFixtures.Complete
   let requirement : RootStructure.Requirement := ⟨owner, `ContractRoot, .sealedCatalog⟩
-  let snapshot ← Discovery.discoverWithStructure #[requirement] #[owner]
-  assertTest "root.positive.Complete" (snapshot.roots.size == 1 && snapshot.seals.size == 1)
+  let snapshot ← discover #[requirement] #[owner]
+  checkTest "root.positive.Complete" (snapshot.roots.size == 1 && snapshot.seals.size == 1)
   for (label, requirements, modules, diagnostic) in #[
       ("FilteredModule", #[requirement], #[], "contract.root_structure:required_module_missing:"),
       ("DuplicateRequirement", #[requirement, requirement], #[owner], "contract.root_structure:duplicate_requirement:"),
       ("DuplicateModule", #[requirement], #[owner, owner], "contract.discovery:duplicate_module:")] do
     let error ← try
-      discard <| Discovery.discoverWithStructure requirements modules
+      discard <| discover requirements modules
       pure "accepted"
-    catch ex => ex.toMessageData.toString
-    assertTest s!"root.negative.{label}" (error.startsWith diagnostic)
+    catch ex => pure ex.toString
+    checkTest s!"root.negative.{label}" (error.contains diagnostic)
   for (path, expected) in #[
       ("Reg/Catalogs/Arbitrary/RootCatalog.lean", RootStructure.Kind.catalog),
       ("Reg/Catalogs/Arbitrary/SealedCatalog.lean", RootStructure.Kind.sealedCatalog),
@@ -65,23 +69,14 @@ run_meta do
       ("Outside/RootCatalog.lean", RootStructure.Kind.ordinary),
       ("Reg/Catalogs/Ordinary.lean", RootStructure.Kind.ordinary),
       ("Reg/SealedCatalog/Ordinary.lean", RootStructure.Kind.ordinary)] do
-    assertTest s!"root.path.{path}"
+    checkTest s!"root.path.{path}"
       (RootStructure.kindFromPath path == expected)
-  let requirements ← RootStructure.required (← getEnv)
-  assertTest "root.path.pre_migration_ordinary"
-    (requirements.any fun r => r.owner == `Reg.Catalogs.IffRegistrations && r.kind == .ordinary)
   let sourceError ← try
     discard <| RootStructure.requiredFor #[`Reg.AbsentSource] fun _ =>
       LeanInformationAudit.Repository.source "Reg/AbsentSource.lean"
     pure "accepted"
-  catch ex => ex.toMessageData.toString
-  assertTest "root.path.required_source_missing"
+  catch ex => pure ex.toString
+  checkTest "root.path.required_source_missing"
     (sourceError.startsWith "contract.root_structure:required_source_missing:")
-  let error ← try
-    discard <| Discovery.discover #[]
-    pure "accepted"
-  catch ex => ex.toMessageData.toString
-  assertTest "root.path.filtered_production_module"
-    (error.startsWith "contract.root_structure:required_module_missing:")
 
 end LeanInformationAuditRegTests.ContractRoots

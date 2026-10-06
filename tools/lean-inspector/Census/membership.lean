@@ -1,4 +1,4 @@
-import LeanInformationAudit.Census.Membership
+import LeanInformationAuditRegAnalysis.Census.Membership
 
 def main (args : List String) : IO Unit := do
   let [stream, request, destination] := args

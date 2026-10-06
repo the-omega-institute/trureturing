@@ -21,7 +21,7 @@ def check_chunks(repository, directory):
     for module, contents in bucket_sources(rows, keys, b=1).items():
         write_module(root, module, contents)
     bucket = root / "CensusRun/Range1_0.lean"
-    driver = write_module(root, "ChunkBinding", "import LeanInformationAudit.Census.Publish\n"
+    driver = write_module(root, "ChunkBinding", "import LeanInformationAuditRegAnalysis.Census.Publish\n"
         "open Lean Elab Command LeanInformationAudit\n"
         f"def expectedRows : Array StatementKey := {wire}\n"
         "run_cmd do\n"

@@ -63,7 +63,7 @@ end {namespace}
                                        ('clean', None)]:
                 stem = f'probe{index}_{action}'
                 declarations.append(f'''def {stem}Publication (_ : ValidatedSourceSnapshot) (_ : SealInput) : CommandElabM Unit := {namespace}.{action}
-def {stem}Seal : ValidatedSourceSnapshot → SealInput → CommandElab := terminalSealCommand {stem}Publication
+def {stem}Seal : ValidatedSourceSnapshot → SealInput → CommandElab := terminalTemplateEnrollment {stem}Publication
 def {stem}StageBody (_ : Name) : CommandElabM Unit := {namespace}.{action}
 def {stem}Stage : CommandElab := terminalInformationAnalysisStageCommand {stem}StageBody
 def {stem}ExportBody (_ : Name) (_ : List ArtifactKind) : CommandElabM AnalysisExportPlan := do
