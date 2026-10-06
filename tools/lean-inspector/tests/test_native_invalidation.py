@@ -34,17 +34,11 @@ class NativeInvalidationTests:
         self.compiler_seed = None
         self.env['STRATALINT_ACCEPT_COLD_BUILD'] = '1'
         self.env['STRATALINT_INSPECTOR_PROFILE'] = '1'
-        self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
-''')
-        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import LeanInformationAudit.RegistryTypes
-namespace LeanInformationAudit
-open Lean
 initialize judgeTripwire : Unit ← do
   if let some path ← IO.getEnv "RAW_JUDGE_TRIPWIRE" then IO.FS.writeFile path "executed"
-def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun _ _ =>
-  throwError "raw_judge_driver_executed"
+def producerValue : Nat := 1
 ''')
         # Acceptance 2: private facts and an inductive/constructor SCC must not
         # acquire the exported theorem-as-axiom view or lose an axiom on a cycle.
@@ -172,20 +166,9 @@ def main (args : List String) : IO Unit := do
         self.copy('tools/lean-inspector/Inspector.lean')
         self.compiler_seed = None
         self.env['STRATALINT_ACCEPT_COLD_BUILD'] = '1'
-        self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
-''')
-        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import LeanInformationAudit.RegistryTypes
-namespace LeanInformationAudit
-open Lean
 def producerValue : Nat := 1
-def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names consume => do
-  let env ← getEnv
-  for name in names do
-    consume name (Json.mkObj [("schema_version", toJson (1 : Nat)),
-      ("inventory", Json.arr #[]), ("registered", Json.arr #[]),
-      ("records", Json.arr #[])]) #[] env
 ''')
         self.write('LeanInformationAudit/ContractInputs.lean', '''namespace LeanInformationAudit.Contract
 structure Registration where
@@ -322,27 +305,15 @@ structure Seal where
             materials.read_manifest_versions(manifest)
 
     def test_native_module_binding_scope(self):
-        # This synthetic driver supplies empty registration rows;
-        # DeclaredExport separately checks the production Lean emitter.
+        # Native transport fixtures supply empty rows; production assessment
+        # is checked by the downstream native judge tests.
         self.copy('tools/lean-inspector/Inspector.lean')
         self.compiler_seed = None
         # The four-module synthetic package deliberately starts without oleans.
         self.env['STRATALINT_ACCEPT_COLD_BUILD'] = '1'
-        self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
-''')
-        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import LeanInformationAudit.RegistryTypes
-namespace LeanInformationAudit
-open Lean
-def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names consume => do
-  let rows ← names.mapM fun _ => do
-    let result ← IO.Process.output { cmd := "python3", args := #["-c",
-      "import json,pathlib; print(json.dumps(dict(schema_version=1," ++
-      "inventory=[],registered=[],records=[])))"] }
-    IO.ofExcept (Json.parse result.stdout)
-  let env ← getEnv
-  for (name, row) in names.zip rows do consume name row #[] env
+def producerValue : Nat := 1
 ''')
 
         def build():

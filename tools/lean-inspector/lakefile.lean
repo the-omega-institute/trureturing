@@ -19,14 +19,9 @@ lean_lib LeanInformationAudit where
 
 lean_lib InformationSourceFixture
 
-target nativeImage pkg : FilePath := do
-  buildLeanO (pkg.buildDir / "c" / "native_image.o")
-    (← inputFile (pkg.dir / "native_image.c") true) #[] #["-O3", "-DLEAN_EXPORTING"]
-
 lean_exe reportInspector where
   root := `Inspector
   supportInterpreter := true
-  moreLinkObjs := #[{key := .mk (.packageTarget .anonymous `nativeImage)}]
 
 lean_exe inputDiscovery where
   root := `LeanInformationAudit.Contract.InputDiscovery

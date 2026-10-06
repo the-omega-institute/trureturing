@@ -28,7 +28,7 @@ class NativeReportConsumerTests:
         inspector_config = self.root / 'tools/lean-inspector/lakefile.lean'
         source = inspector_config.read_text()
         start = source.index('lean_lib LeanInformationAudit where\n')
-        stop = source.index('target nativeImage', start)
+        stop = source.index('lean_exe reportInspector where', start)
         inspector_config.write_text(source[:start] + 'lean_lib LeanInformationAudit where\n'
             '  globs := #[.submodules `LeanInformationAudit]\n\n' + source[stop:])
         def implementation(name, body):

@@ -106,7 +106,6 @@ jobs:
             tools/lean-inspector/lakefile.lean
             tools/lean-inspector/materials.py
             tools/lean-inspector/native.py
-            tools/lean-inspector/native_image.c
             tools/lean-inspector/publication.py
             tools/lean-inspector/reuse.py
             tools/scripts/*.c

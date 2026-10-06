@@ -33,9 +33,7 @@ internal static class InspectorNativeTestRunner
         var clock = TimeProvider.System;
         Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "start", suite, utc = clock.GetUtcNow() }));
         var prepared = clock.GetTimestamp();
-        // Census prepares its mathematical dependencies through its own make owner.
-        var needsCompiler = suite.StartsWith("test_native.", StringComparison.Ordinal)
-            && !suite.StartsWith("test_native.NativeRelocationTests.", StringComparison.Ordinal);
+        var needsCompiler = suite.StartsWith("test_native.", StringComparison.Ordinal);
         string[] environment = needsCompiler
             ? [$"STRATALINT_NATIVE_COMPILER_SEED={compiler.Path}"] : [];
         Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "compiler-ready", suite,

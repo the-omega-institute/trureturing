@@ -9,7 +9,6 @@ public sealed class InspectorNativeInterfaceTests(InspectorCompilerFixture compi
     [InlineData("test_native.NativeTests.test_interface_registered_build_inputs")]
     [InlineData("test_native.NativeTests.test_output_audit_follows_compiler_package_owners")]
     [InlineData("test_native.NativeTests.test_reg_manifest_rejected_before_materialization")]
-    [InlineData("test_native.NativeRelocationTests.test_census_callers_in_relocated_package_with_spaces")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
 
     [Fact]

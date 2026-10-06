@@ -183,11 +183,11 @@ defaultFacets = ["static"]
         with (self.root / 'lakefile.toml').open('a') as target:
             target.write('[[lean_lib]]\nname = "External"\n[[lean_lib]]\nname = "ClaimSupport"\n')
             target.write('[[lean_lib]]\nname = "LeanInformationAudit"\n'
-                'roots = ["LeanInformationAudit.TemplateEnrollment", "LeanInformationAudit.FixturePins", "LeanInformationAudit.RegistryTypes", '
+                'roots = ["LeanInformationAudit.TemplateEnrollment", "LeanInformationAudit.FixturePins", '
                 '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n'
-                'globs = ["LeanInformationAudit.TemplateEnrollment", "LeanInformationAudit.FixturePins", "LeanInformationAudit.RegistryTypes", '
+                'globs = ["LeanInformationAudit.TemplateEnrollment", "LeanInformationAudit.FixturePins", '
                 '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n')
-        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh', 'build_work.py']:
+        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh', 'build_work.py']:
             self.copy('tools/lean-inspector/' + name)
         for name in ['RawArtifacts', 'CompiledMetadata', 'CompiledAxioms']:
             self.copy('tools/lean-inspector/LeanInformationAudit/' + name + '.lean')
@@ -205,7 +205,7 @@ defaultFacets = ["static"]
             + '`LeanInformationAudit.Contract.Literal, `LeanInformationAudit.Contract.InputDiscovery]\n'
             + '  globs := #[.one `LeanInformationAudit.RawArtifacts, .one `LeanInformationAudit.CompiledMetadata, .one `LeanInformationAudit.CompiledAxioms, .one `LeanInformationAudit.Contract.SourceAudit, '
             + '.one `LeanInformationAudit.Contract.Literal, .one `LeanInformationAudit.Contract.InputDiscovery]\n\n'
-            + source[source.index('target nativeImage'):].replace(
+            + source[source.index('lean_exe reportInspector where'):].replace(
                 'lean_exe reportInspector where', '@[default_target]\nlean_exe reportInspector where'))
         self.write('tools/lean-inspector/lake-manifest.json', json.dumps(dict(
             version='1.2.0', packagesDir='.lake/packages', packages=[],
@@ -250,7 +250,7 @@ defaultFacets = ["static"]
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
                 'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean',
                 'tools/lean-inspector/lakefile.lean',
-                'tools/lean-inspector/native.py', 'tools/lean-inspector/native_image.c', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
+                'tools/lean-inspector/native.py', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
                 'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))
