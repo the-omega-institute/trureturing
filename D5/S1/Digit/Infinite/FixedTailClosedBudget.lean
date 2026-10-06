@@ -11,6 +11,7 @@ import D5.S1.Words.Powers.WordPower
 import Mathlib.Topology.MetricSpace.Contracting
 import Mathlib.Order.ConditionallyCompleteLattice.Finset
 import Mathlib.Analysis.Convex.Function
+import Mathlib.Analysis.Normed.MulAction
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
@@ -70,14 +71,14 @@ private theorem affine_iterate_limit (b a e x : ℝ) (ha : |a| < 1)
     (he : b + a * e = e) :
     Filter.Tendsto (fun n => (fun y : ℝ => b + a * y)^[n] x)
       Filter.atTop (nhds e) := by
-  let K : NNReal := ⟨|a|, abs_nonneg a⟩
+  let K : NNReal := ‖a‖₊
   have hK : ContractingWith K (fun y : ℝ => b + a * y) := by
     constructor
-    · exact ha
-    · apply LipschitzWith.of_dist_le_mul
-      intro u v
-      change |(b + a * u) - (b + a * v)| ≤ |a| * |u - v|
-      rw [show (b + a * u) - (b + a * v) = a * (u - v) by ring, abs_mul]
+    · change ‖a‖ < 1
+      simpa only [Real.norm_eq_abs] using ha
+    · simpa only [K, Function.comp_def, one_mul, smul_eq_mul] using
+        (isometry_add_left b).lipschitz.comp
+          (lipschitzWith_smul a : LipschitzWith ‖a‖₊ (fun y : ℝ => a • y))
   have hfix : e = hK.fixedPoint (fun y : ℝ => b + a * y) :=
     hK.fixedPoint_unique he
   rw [hfix]
@@ -374,10 +375,9 @@ private theorem return_scalar (d : FixedTailData) (j : Fin 2) (z : List (Fin 2))
     rfl
 
 private theorem state_subset (s : Bool) : stateInterval s ⊆ stateInterval false := by
-  have ht : 0 < t := inv_pos.mpr Real.goldenRatio_pos
   cases s
   · exact Set.Subset.rfl
-  · intro x hx; exact ⟨hx.1, hx.2.trans (by change t ≤ 1 + t; linarith)⟩
+  · exact Set.Icc_subset_Icc le_rfl (le_add_of_nonneg_left zero_le_one)
 
 private theorem distance_observation (c x : ℝ) (i : Fin 6)
     (hx : x ∈ stateInterval false) (hc : 0 ≤ c) :
