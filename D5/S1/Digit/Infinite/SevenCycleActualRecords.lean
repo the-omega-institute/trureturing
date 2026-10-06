@@ -15,13 +15,13 @@ namespace D5.S1.Digit.Infinite.SevenCycleActualRecords
 
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
-open D5.S1.Digit.Infinite.SevenCycleCollisionData
+open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private golden_data budget_bounds from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private actual_phase_mod from D5.S1.Digit.Infinite.SevenCycleCollisionRecords
 open private entry_bounds uniform_colors from D5.S1.Digit.Infinite.SevenCycleCollisionColors
 
 /-- A record uses one error sequence and a uniform strict margin for every observation. -/
-def strictRecord (Q : ℝ → Fin 6) (b : ℝ) (x : LegalDigits) (r : ℕ → Fin 6)
+private def strictRecord (Q : ℝ → Fin 6) (b : ℝ) (x : LegalDigits) (r : ℕ → Fin 6)
     (e : ℕ → ℝ) (epsilon : ℝ) : Prop :=
   0 < epsilon ∧ ∀ j,
     |e j| ≤ b - epsilon ∧

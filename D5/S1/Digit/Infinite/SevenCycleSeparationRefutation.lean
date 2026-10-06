@@ -14,7 +14,7 @@ namespace D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
 
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
-open D5.S1.Digit.Infinite.SevenCycleCollisionData
+open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase from D5.S1.Digit.Infinite.SevenCycleCollisionData
 
 /-- The finite future test uses the same rival address, all original guards and all branches. -/
 noncomputable def horizon (b : ℝ) (eta : LegalDigits) (r : ℕ) (s : Bool) : ℕ → Set ℝ

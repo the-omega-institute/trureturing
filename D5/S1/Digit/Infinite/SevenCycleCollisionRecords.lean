@@ -16,7 +16,7 @@ namespace D5.S1.Digit.Infinite.SevenCycleCollisionRecords
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.ClosedObservationGraphRealization
-open D5.S1.Digit.Infinite.SevenCycleCollisionData
+open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
 open private source_period source_windows shifted_source_windows shifted_source_tail
   actual_entry golden_data budget_bounds entry_fixed suffix_identity

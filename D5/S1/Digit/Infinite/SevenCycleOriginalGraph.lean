@@ -17,7 +17,7 @@ open D5.S1.Scale (embedding)
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.ClosedObservationGraphRealization
-open D5.S1.Digit.Infinite.SevenCycleCollisionData
+open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private golden_data budget_bounds actual_entry source_windows shifted_source_windows shifted_source_tail
   from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private entry_algebra entry_bounds from D5.S1.Digit.Infinite.SevenCycleCollisionColors
@@ -26,7 +26,7 @@ open private actual_phase actual_phase_mod actual_phase_guard actual_guard phase
   from D5.S1.Digit.Infinite.SevenCycleCollisionRecords
 
 /-- The original construction uses twenty times a denominator of the budget coefficients. -/
-def denominator : ℕ := 20 * 244760
+private def denominator : ℕ := 20 * 244760
 
 private theorem budget_formula : budget = (99504 - 145874 * t) / 244760 := by
   obtain ⟨ht2, hg, hg2, hglo, _⟩ := golden_data
@@ -333,7 +333,7 @@ private theorem orbit_lattice (b : Bool) (j : ℕ) :
     exact hinv _ _ ih (by rwa [he])
 
 /-- All original endpoint singletons are retained, with their incoming guards. -/
-noncomputable def orbitVertex (b : Bool) (j : ℕ) : Vertex denominator 100 :=
+private noncomputable def orbitVertex (b : Bool) (j : ℕ) : Vertex denominator 100 :=
   ⟨(phaseGuard ⟨j % 7, Nat.mod_lt _ (by decide)⟩,
       kappa (bitShift (source b) (3 * j)), kappa (bitShift (source b) (3 * j))),
     orbit_lattice b j, orbit_lattice b j,

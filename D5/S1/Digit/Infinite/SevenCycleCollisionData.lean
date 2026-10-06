@@ -19,7 +19,7 @@ open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.ClosedObservationGraphRealization
 
 /-- The two actual addresses repeat the windows 3,3,5,5,3,2,2 and 0,3,5,5,3,2,2. -/
-def source (firstThree : Bool) : LegalDigits :=
+private def source (firstThree : Bool) : LegalDigits :=
   ⟨fun j => decide ((j % 21 = 1 ∧ firstThree = true) ∨ j % 21 = 4 ∨
     j % 21 = 8 ∨ j % 21 = 11 ∨ j % 21 = 13 ∨ j % 21 = 15 ∨ j % 21 = 18), by
     intro j
@@ -27,21 +27,21 @@ def source (firstThree : Bool) : LegalDigits :=
     omega⟩
 
 /-- The seven guard states along either source. -/
-def phaseGuard (j : Fin 7) : Bool := decide (j.val = 3 ∨ j.val = 4)
+private def phaseGuard (j : Fin 7) : Bool := decide (j.val = 3 ∨ j.val = 4)
 
 /-- The first source's return labels. -/
-def firstLabel (j : Fin 7) : Label :=
+private def firstLabel (j : Fin 7) : Label :=
   match j.val with
   | 0 | 1 | 4 => threeLabel
   | 2 | 3 => fiveLabel
   | _ => twoLabel
 
 /-- The rival differs only at the first window. -/
-def rivalLabel (j : Fin 7) : Label :=
+private def rivalLabel (j : Fin 7) : Label :=
   if j.val = 0 then nullLabel else firstLabel j
 
 /-- The seven shared colors, including the first color one. -/
-def phaseColor (j : Fin 7) : Fin 6 :=
+private def phaseColor (j : Fin 7) : Fin 6 :=
   match j.val with
   | 0 => 1
   | 1 | 4 => 0
@@ -50,28 +50,28 @@ def phaseColor (j : Fin 7) : Fin 6 :=
   | _ => 4
 
 /-- The lower critical first-entry coordinate. -/
-noncomputable def lowerEntry : ℝ := 3 * (g - 1) / 5
+private noncomputable def lowerEntry : ℝ := 3 * (g - 1) / 5
 /-- The upper critical first-entry coordinate. -/
-noncomputable def upperEntry : ℝ := (11 * g - 1) / 10
+private noncomputable def upperEntry : ℝ := (11 * g - 1) / 10
 /-- The center used by the common six-window suffix. -/
-noncomputable def referenceTail : ℝ := (-4 + t) / 5
+private noncomputable def referenceTail : ℝ := (-4 + t) / 5
 /-- The suffix's terminal reference coordinate. -/
-noncomputable def referenceEnd : ℝ := t / 5
+private noncomputable def referenceEnd : ℝ := t / 5
 /-- The strict budget reduction. -/
-noncomputable def reduction : ℝ := g ^ 7 * (g - 1 / 5) / (4 * (1 + g ^ 7))
+private noncomputable def reduction : ℝ := g ^ 7 * (g - 1 / 5) / (4 * (1 + g ^ 7))
 /-- A positive budget strictly smaller than the critical radius. -/
-noncomputable def budget : ℝ := lambda - reduction
+private noncomputable def budget : ℝ := lambda - reduction
 /-- The first phase's coordinate for the first source. -/
-noncomputable def firstEntry : ℝ :=
+private noncomputable def firstEntry : ℝ :=
   lowerEntry + g ^ 7 * (referenceEnd - lowerEntry) / (1 + g ^ 7)
 /-- The first phase's coordinate for the rival. -/
-noncomputable def rivalEntry : ℝ := upperEntry - 4 * reduction
+private noncomputable def rivalEntry : ℝ := upperEntry - 4 * reduction
 /-- The zero-label feeding head sharing the first source's literal tail. -/
-noncomputable def feedingEntry : ℝ :=
+private noncomputable def feedingEntry : ℝ :=
   upperEntry + g ^ 7 * (referenceEnd - lowerEntry) / (1 + g ^ 7)
 
 /-- Suffix coordinates, built with the original branch maps. -/
-noncomputable def phase (z : ℝ) (j : Fin 7) : ℝ :=
+private noncomputable def phase (z : ℝ) (j : Fin 7) : ℝ :=
   match j.val with
   | 0 => z
   | 1 => branch threeLabel (branch fiveLabel (branch fiveLabel
