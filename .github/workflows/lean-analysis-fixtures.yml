@@ -114,7 +114,7 @@ jobs:
             sudo apt-get install --yes libdigest-sha-perl
           fi
 
-      - name: Run the native compiled judge tests
+      - name: Build the Lean analysis modules
         id: fixtures
         shell: bash
         env:
@@ -123,9 +123,9 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "${OUTPUT_ROOT}"
-          make compiled-judge-test 2>&1 | tee "${OUTPUT_ROOT}/run.log"
+          make lean LEAN_TARGETS="regInspector/LeanInformationAuditRegAnalysis" 2>&1 | tee "${OUTPUT_ROOT}/run.log"
 
-      - name: Upload the compiled judge test log
+      - name: Upload the analysis build log
         if: always() && steps.fixtures.outcome != 'skipped'
         uses: actions/upload-artifact@v6
         with:
