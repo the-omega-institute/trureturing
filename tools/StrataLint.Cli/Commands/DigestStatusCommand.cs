@@ -58,7 +58,7 @@ internal static class DigestStatusCommand
                         $"formalize atom {options.FormalizeAtomId} is absent from the ledger");
                 }
 
-                var formalizeEvaluation = options.FormalizeAtomId is null
+                var formalizeEvaluation = reportFreeCandidates
                     ? DigestionStatusEvaluator.EvaluateUncovered(
                         DigestionEvaluationScope.FullScan,
                         document,
