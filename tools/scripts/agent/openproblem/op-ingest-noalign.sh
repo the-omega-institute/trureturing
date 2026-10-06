@@ -2,7 +2,7 @@
 # op-ingest-noalign.sh — finish an addendum ingest on an EXISTING lane branch that already carries the volume-append
 # commit, WITHOUT running `make align-digestion-status` (a foreign entry's reordered coverage_gids made the former
 # report-free alignment pass fail closed three times on 2026-09-05, batch9).
-# Steps: optionally revert the align commit → merge origin/dev → make lean-report → make ingest BASE=<origin/dev sha>
+# Steps: optionally revert the align commit → merge origin/dev → make lean-report → make ingest
 #        → verify atoms match PATTERN → push → make pr-open AUTO_MERGE=1.
 # usage: op-ingest-noalign.sh WORKTREE BRANCH PRMSG_FILE PATTERN [ALIGN_COMMIT_TO_REVERT]
 # sentinel: NOALIGN_INGEST_OK pr=<n> / NOALIGN_FAIL <reason>
@@ -21,7 +21,7 @@ git merge -q --no-edit origin/dev || { echo "NOALIGN_FAIL merge-conflict"; git m
 DEVSHA=$(git rev-parse origin/dev); echo "PINNED_BASE $DEVSHA"
 THEORY_BEFORE=$(git rev-parse HEAD)
 make lean-report; rc=$?; [ "$rc" -eq 0 ] || { echo "NOALIGN_FAIL lean-report rc=$rc"; exit 4; }
-make ingest BASE="$DEVSHA"; rc=$?
+make ingest; rc=$?
 if [ "$rc" -ne 0 ]; then echo "INGEST_RC $rc"; echo "NOALIGN_FAIL ingest rc=$rc"; exit 4; fi
 git add -A Meta/Digestion docs/develop/theory && git commit -q -m "digestion: ingest addendum atoms (no-align path)" || echo "NOTE nothing to commit after ingest"
 hits=0

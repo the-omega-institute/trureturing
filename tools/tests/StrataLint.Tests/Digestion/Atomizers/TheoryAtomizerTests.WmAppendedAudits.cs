@@ -91,7 +91,7 @@ public sealed partial class TheoryAtomizerTests
             snapshot,
             ledger,
             DigestionAlignmentMode.Ingest);
-        var plan = DigestionIngestor.Plan(ledger, snapshot, ledger);
+        var plan = ReportFreeDigestionIngestor.Plan(ledger, snapshot);
 
         Assert.Empty(alignment.Findings);
         Assert.All(ledger.RequireDigestionEntries(), entry => Assert.Equal(
