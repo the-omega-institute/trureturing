@@ -200,7 +200,7 @@ public sealed partial class ProductionEnvironmentTests(Xunit.Abstractions.ITestO
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
-        var before = environment.DigestStatus(["--base", "baseline"]);
+        var before = environment.DigestStatus([]);
         Assert.True(before.Success, before.Error);
         output.WriteLine("BEFORE\n" + before.Output);
         Assert.Contains("deletable_now=0", before.Output, StringComparison.Ordinal);
@@ -235,7 +235,7 @@ public sealed partial class ProductionEnvironmentTests(Xunit.Abstractions.ITestO
         output.WriteLine("PERSISTED\n" + persisted);
         var afterFiles = FilesWithLedgerFromRoot(inputs.Files, temporary.Path);
         var after = BuildCoverEnvironment(temporary.Path, inputs, afterFiles)
-            .DigestStatus(["--base", "baseline"]);
+            .DigestStatus([]);
         Assert.True(after.Success, after.Error);
         output.WriteLine("AFTER\n" + after.Output);
         Assert.Contains("deletable_now=1", after.Output, StringComparison.Ordinal);

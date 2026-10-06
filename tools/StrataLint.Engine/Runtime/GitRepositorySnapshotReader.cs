@@ -165,8 +165,7 @@ internal static class GitRepositorySnapshotReader
         return (entries, inventory, links, paths, inspectedDirectories);
     }
 
-    internal static RawRepositorySnapshot ReadRevision(string repositoryRoot, string revision,
-        IReadOnlyList<string>? paths = null)
+    internal static RawRepositorySnapshot ReadRevision(string repositoryRoot, string revision)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
@@ -177,22 +176,17 @@ internal static class GitRepositorySnapshotReader
                 root,
                 arguments,
                 maximumOutputBytes,
-                standardInput),
-            paths);
+                standardInput));
     }
 
-    // paths bounds the tree listing, so the read costs what the paths hold rather
-    // than what the revision holds; a directory selects everything under it.
     internal static RawRepositorySnapshot ReadRevision(
         string revision,
-        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
-        IReadOnlyList<string>? paths = null)
+        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
         ArgumentNullException.ThrowIfNull(runGit);
-        string[] scope = paths is null ? [] : ["--", .. paths];
         var treeResult = runGit(
-            ["ls-tree", "-r", "-l", "-z", revision, .. scope],
+            ["ls-tree", "-r", "-l", "-z", revision],
             MaximumGitOutputBytes,
             default);
         EnsureSuccess(treeResult);

@@ -135,7 +135,7 @@ public sealed partial class MakeWorkflowTests
             Path.Combine(binDirectory, "dotnet"),
             """
             #!/usr/bin/env bash
-            [[ "$*" == *"echo-verify --emit --base synthetic-base"* ]] || exit 19
+            [[ "$*" == *"echo-verify --emit" ]] || exit 19
             printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
             """);
         File.SetUnixFileMode(
@@ -147,7 +147,7 @@ public sealed partial class MakeWorkflowTests
 
         var result = TestProcessRunner.Run(
             "/bin/bash",
-            ["-c", "PATH=\"$1:$PATH\" exec make --no-print-directory echo-residual-summary BASE=synthetic-base", "echo-make", binDirectory],
+            ["-c", "PATH=\"$1:$PATH\" exec make --no-print-directory echo-residual-summary", "echo-make", binDirectory],
             fixture.Path,
             BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
@@ -197,7 +197,7 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain(" address --repository ", script, StringComparison.Ordinal);
         Assert.DoesNotContain("git -C \"$ROOT\" archive", script, StringComparison.Ordinal);
         Assert.DoesNotContain("report_input_state", script, StringComparison.Ordinal);
-        Assert.Contains("ingest_args=(ingest --base \"$BASE\")", script, StringComparison.Ordinal);
+        Assert.Contains("ingest_args=(ingest)", script, StringComparison.Ordinal);
         Assert.Contains("align-digestion-status)", script, StringComparison.Ordinal);
         Assert.Contains(
             "--role digestion-alignment-consumer --report \"$REPORT\"",
@@ -205,14 +205,13 @@ public sealed partial class MakeWorkflowTests
             StringComparison.Ordinal);
         Assert.Contains("mathlib-reanchor)", script, StringComparison.Ordinal);
         Assert.Contains("make -C \"$ROOT\" lean-report", script, StringComparison.Ordinal);
-        Assert.Contains("git -C \"$ROOT\" merge-base HEAD \"$BASE\"", script, StringComparison.Ordinal);
+        Assert.Contains("git -C \"$ROOT\" merge-base HEAD \"$2\"", script, StringComparison.Ordinal);
         Assert.Contains(
             "ledger-reanchor-mathlib --base \"$base_sha\"",
             script,
             StringComparison.Ordinal);
-        Assert.Equal(
-            2,
-            Regex.Matches(script, Regex.Escape("exec \"$CONSUMER\"")).Count);
+        Assert.Single(Regex.Matches(script, Regex.Escape("exec \"$CONSUMER\"")));
+        Assert.DoesNotContain("--base \"$BASE\"", script, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -223,10 +222,10 @@ public sealed partial class MakeWorkflowTests
         var root = TestRepositoryLayout.FindRoot();
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
         Assert.Equal(
-            $"\t@/bin/bash {IngestScriptPath} quarantine \"$(BASE)\" \"$(REQUEST)\"",
+            $"\t@/bin/bash {IngestScriptPath} quarantine \"$(REQUEST)\"",
             Recipe(makefile, "quarantine"));
         Assert.Equal(
-            $"\t@/bin/bash {IngestScriptPath} quarantine-clear \"$(BASE)\" \"$(ATOM_ID)\"",
+            $"\t@/bin/bash {IngestScriptPath} quarantine-clear \"$(ATOM_ID)\"",
             Recipe(makefile, "quarantine-clear"));
         using var fixture = new TemporaryDirectory();
         var scriptPath = Path.Combine(fixture.Path, IngestScriptPath);
@@ -260,32 +259,32 @@ public sealed partial class MakeWorkflowTests
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
 
-        var set = Run(0, "quarantine", "baseline", "request.toml");
+        var set = Run(0, "quarantine", "request.toml");
         Assert.Equal(0, set.ExitCode);
         Assert.Contains(
             "quarantine-atom --request request.toml",
             Encoding.UTF8.GetString(set.StandardOutput),
             StringComparison.Ordinal);
 
-        var clear = Run(0, "quarantine-clear", "baseline", "atom-id");
+        var clear = Run(0, "quarantine-clear", "atom-id");
         Assert.Equal(0, clear.ExitCode);
         Assert.Contains(
             "quarantine-atom --clear atom-id",
             Encoding.UTF8.GetString(clear.StandardOutput),
             StringComparison.Ordinal);
 
-        Assert.Equal(23, Run(23, "quarantine", "baseline", "request.toml").ExitCode);
-        Assert.Equal(23, Run(23, "quarantine-clear", "baseline", "atom-id").ExitCode);
+        Assert.Equal(23, Run(23, "quarantine", "request.toml").ExitCode);
+        Assert.Equal(23, Run(23, "quarantine-clear", "atom-id").ExitCode);
 
         Assert.Equal(2, Run(0, "quarantine").ExitCode);
-        Assert.Equal(2, Run(0, "quarantine", "baseline").ExitCode);
-        Assert.Equal(2, Run(0, "quarantine-clear", "baseline").ExitCode);
+        Assert.Equal(2, Run(0, "quarantine", "request.toml", "extra").ExitCode);
+        Assert.Equal(2, Run(0, "quarantine-clear").ExitCode);
     }
 
     [Theory]
-    [InlineData("", "ingest --base HEAD")]
-    [InlineData("alpha beta", "ingest --base HEAD --source alpha --source beta")]
-    public void IngestWrapperForwardsBaseAndSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
+    [InlineData("", "ingest")]
+    [InlineData("alpha beta", "ingest --source alpha --source beta")]
+    public void IngestWrapperForwardsSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -361,7 +360,7 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" XDG_CACHE_HOME=\"$2\" exec \"$3\" ingest HEAD \"$4\"",
+                "PATH=\"$1:$PATH\" XDG_CACHE_HOME=\"$2\" exec \"$3\" ingest \"$4\"",
                 "ingest-wrapper",
                 binDirectory,
                 Path.Combine(fixture.Path, "cache"),

@@ -24,11 +24,11 @@ for try in $(seq 1 "$MAXTRY"); do
   DEVSHA=$(git rev-parse origin/dev); echo "PINNED_BASE $DEVSHA"
   set +e
   make lean-report; rc=$?; [ "$rc" -eq 0 ] || { echo "ADDENDUM_FAIL lean-report rc=$rc"; exit 4; }
-  make align-digestion-status BASE="$DEVSHA"; rc=$?
+  make align-digestion-status; rc=$?
   set -e
   if [ "$rc" -eq 0 ]; then git add -A Meta/Digestion; git commit -q -m "digestion: align truth status before addendum ingest (try $try)" || true; else echo "ALIGN_RC $rc (continuing to ingest)"; fi
   set +e
-  make ingest BASE="$DEVSHA"; rc=$?
+  make ingest; rc=$?
   set -e
   if [ "$rc" -eq 0 ]; then ok=1; break; fi
   echo "INGEST_RC $rc on try $try"
