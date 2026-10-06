@@ -27,6 +27,6 @@ These identities are unconditional. Both counting functions vanish for $1<x<2$, 
 
 ## Parameter correspondence
 
-In the [actual FIB contour interface](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), §414 identifies the existing boundary inverse $h(u)$ with $J(e^u)$ for $u>0$ through two representations of the same $I_\psi$. The source's $x$ is $e^u$, and its $C_0$ is the project's $\gamma$. This interface is a paper application, not a statement printed in Lay's article and not Lean verified.
+In the [actual FIB contour interface](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), §415 identifies the existing boundary inverse $h(u)$ with $J(e^u)$ for $u>0$ through two representations of the same $I_\psi$. The source's $x$ is $e^u$, and its $C_0$ is the project's $\gamma$. This interface is a paper application, not a statement printed in Lay's article and not Lean verified.
 
 The source therefore directly supplies the actual normalization $h(0)=-(1+\gamma)$ and $h(u)=u-(1+\gamma)$ for $0<u<\log2$, after the separate interface and continuity are established. It does not supply an unconditional square-root decay estimate, a Robin comparison or an RH proof. The [published weighted-error supplier](bhattacharyamartinsimpson2026weightedprimeerrors.md) gives an exact quantitative match with an explicit RH premise.

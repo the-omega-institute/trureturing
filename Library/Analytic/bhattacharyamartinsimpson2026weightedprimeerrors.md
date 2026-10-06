@@ -46,7 +46,7 @@ $$
 
 LI is not needed for these bounds. Remark 1.5 invokes LI additionally for equality of the limiting extrema; that stronger statement is not used here. The theorem's proof on printed p.15 also displays the $\psi,\psi_r$ comparison directly.
 
-The [classical primitive identity](lay2015mertenssignchanges.md) and the [FIB source correspondence](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), §414, give exactly
+The [classical primitive identity](lay2015mertenssignchanges.md) and the [FIB source correspondence](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), §415, give exactly
 
 $$
 \sqrt x\,h(\log x)=E^\psi(x)-E^{\psi_r}(x).
