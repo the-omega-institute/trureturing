@@ -798,6 +798,64 @@ private points, DA9 and finite counting; this is not a new
 finite-fiber theorem. The pointwise lower-color count still does
 not force a common divisor and a joint inventory violating DA27.
 
+## Ancestor residuals do not supply unrestricted continuation
+
+The phases counted in DA27 and points in the all-q deletion residual
+have different roles. Every actual q*d*u label has its own phase in
+E_d by its private witness. An arbitrary point x in E_q also reduces
+to E_d when q does not divide d: every actual ancestor n_j dividing d
+is then q-free. No primality of q is needed. DA28 imposes no such
+condition on d, so this second projection cannot be inferred there
+without the extra hypothesis.
+
+For positive d and D with d dividing D, the source-preserving transport is given by
+[Report385, Section232](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#232-lifting-an-interface-turns-a-small-quotient-payment-into-a-new-hole-set).
+With reduction pi modulo d and each A_j taken modulo D, it reads
+
+$$
+E_D=\pi^{-1}(E_d)\setminus
+       \bigcup_{n_j\mid D,\ n_j\nmid d}A_j.
+$$
+
+In particular, the reduction from E_D to E_d need not be onto.
+The existing complete nonunit-divisor family of 735 in
+[Section235](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#235-a-finite-nine-support-control-beats-the-internal-hole-mass)
+has distinct odd labels and a private point for every class.
+Its E_49 has 41 elements and contains 0, but all fifteen lifts of 0
+modulo 735 are covered. In this eleven-class family, 13 remains a hole.
+A scoped exact Lean check verifies these finite claims and the
+projection condition above with standard axioms and default budgets.
+This reuses the existing control; it is not a counterexample to a
+minimal whole cover or a new density theorem.
+
+Thus numerical divisor closure, private witnesses and the separate
+ancestor inventories do not justify an induction preserving every
+residual phase. A closing argument must control the actual joint
+removal set under these transports, or supply a legal replacement
+for it. DA27 alone bounds the labels divisible by q*d; no bound has
+been obtained here for all the newly internal classes, including
+those whose gcd with d is a proper divisor of d.
+
+## External covering theorems retain their stated hypotheses
+
+The official comments for Nagy--Pach--Tomon,
+[*Irredundant hyperplane covers*, arXiv:2205.03389v2](https://arxiv.org/abs/2205.03389v2),
+state: "There is a mistake in the proof of the main result, more
+specifically in the proof of Claim 4.5, Section 4.2. This invalidates
+most of the paper". The advertised index bound
+$|G:\bigcap_i H_i|=2^{O(k)}$ is therefore not an established supplier
+for the present argument. This notice does not say that every statement
+in the paper is false.
+
+The earlier paper by the same authors,
+[*Additive bases, coset covers, and non-vanishing linear maps*,
+arXiv:2111.13658v1](https://arxiv.org/abs/2111.13658v1), Theorem 1.2,
+is a different result. Its $\exp(O(k\log\log k))$ index bound concerns
+an irredundant coset cover of a whole abelian group. It does not provide the
+nineteen-cylinder extraction on the nonproduct residual required
+by DA25. BBMST's bounded-reuse mechanism likewise retains the
+one-exploration-tree adapter described in Report385, Section247.
+
 ## Verification and the remaining global obligation
 
 Scoped exact Lean checks cover the actual two-prime incidence
