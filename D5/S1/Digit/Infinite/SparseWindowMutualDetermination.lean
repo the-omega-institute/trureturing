@@ -133,12 +133,12 @@ theorem natural_window_arc (L : ℕ) (hL : 1 ≤ L) (n : ℕ) (p : X L) :
         exact False.elim (hRowAvoid n j hj (congrArg phase he |>.trans (hEndpoint j hj).1))
   · exact Or.inl
 local notation "gamma" => (fun t : ℕ => (((t : ℝ) * Real.goldenRatio : ℝ) : AddCircle (1 : ℝ)))
-theorem cut_injective : Function.Injective E := by
+private theorem cut_injective : Function.Injective E := by
   intro i j hij
   have he : D5.S1.Phase.goldenPhase (-(i : ℤ)) = D5.S1.Phase.goldenPhase (-(j : ℤ)) := by
     simpa only [E, D5.S1.Phase.goldenPhase, Int.cast_neg, Int.cast_natCast, neg_mul] using hij
   exact_mod_cast neg_injective (D5.S1.Phase.goldenPhase_injective he)
-theorem natural_phase_visit (U : Set (AddCircle (1 : ℝ))) (hU : IsOpen U) (hne : U.Nonempty) (B : ℕ) :
+private theorem natural_phase_visit (U : Set (AddCircle (1 : ℝ))) (hU : IsOpen U) (hne : U.Nonempty) (B : ℕ) :
     ∃ n : ℕ, B < n ∧ (((n : ℝ) * Real.goldenRatio : ℝ) : AddCircle (1 : ℝ)) ∈ U := by
   classical
   have hz : DenseRange (fun k : ℤ => k • (Real.goldenRatio : AddCircle (1 : ℝ))) :=
@@ -158,16 +158,16 @@ theorem natural_phase_visit (U : Set (AddCircle (1 : ℝ))) (hU : IsOpen U) (hne
     ← AddCircle.coe_add]
   congr 1
   ring
-theorem natural_phase_translate (n t : ℕ) : phase (zRow (n + t)) = phase (zRow n) +
+private theorem natural_phase_translate (n t : ℕ) : phase (zRow (n + t)) = phase (zRow n) +
     (((t : ℝ) * Real.goldenRatio : ℝ) : AddCircle (1 : ℝ)) := by
   simp only [natural_row_phase, Nat.cast_add, ← AddCircle.coe_add]
   congr 1
   ring
-theorem endpoint_phase (k : ℕ) (hk : 1 ≤ k) :
+private theorem endpoint_phase (k : ℕ) (hk : 1 ≤ k) :
     phase (eMinus k) = E k ∧ phase (ePlus k) = E k :=
   ⟨((window_cylinder_partition.2.1 k hk).2 _).mpr (by exact Or.inl rfl),
     ((window_cylinder_partition.2.1 k hk).2 _).mpr (by exact Or.inr rfl)⟩
-theorem window_arc_avoids_cut (L : ℕ) (hL : 1 ≤ L) (p : X L) (k : ℕ)
+private theorem window_arc_avoids_cut (L : ℕ) (hL : 1 ≤ L) (p : X L) (k : ℕ)
     (hk : 1 ≤ k) (hkL : k ≤ G L) : E k ∉ A p := by
   classical
   intro ha
@@ -181,16 +181,16 @@ theorem window_arc_avoids_cut (L : ℕ) (hL : 1 ≤ L) (p : X L) (k : ℕ)
     rw [hC]
     exact Or.inl (by change phase (ePlus k) ∈ A p; rwa [(endpoint_phase k hk).2])
   exact ((window_cylinder_partition.2.2 L hL).2.2.2.2.2.2 k hk).mpr hkL (hminus.trans hplus.symm)
-theorem window_arc_isOpen (L : ℕ) (p : X L) : IsOpen (A p) :=
+private theorem window_arc_isOpen (L : ℕ) (p : X L) : IsOpen (A p) :=
   QuotientAddGroup.isOpenMap_coe _ isOpen_Ioo
-theorem golden_inverse_data : 0 < alpha ∧ alpha < 1 ∧ alpha ^ 2 + alpha = 1 := by
+private theorem golden_inverse_data : 0 < alpha ∧ alpha < 1 ∧ alpha ^ 2 + alpha = 1 := by
   refine ⟨inv_pos.mpr Real.goldenRatio_pos,
     inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio, ?_⟩
   unfold alpha
   rw [Real.inv_goldenRatio]
   nlinarith [Real.goldenConj_sq]
-theorem signed_interval_length : b = a + 1 := by dsimp [a, b]; linarith [golden_inverse_data.2.2]
-theorem window_arc_cover (L : ℕ) (hL : 1 ≤ L) (z : AddCircle (1 : ℝ))
+private theorem signed_interval_length : b = a + 1 := by dsimp [a, b]; linarith [golden_inverse_data.2.2]
+private theorem window_arc_cover (L : ℕ) (hL : 1 ≤ L) (z : AddCircle (1 : ℝ))
     (hz : z ∉ B L) : ∃ p : X L, z ∈ A p := by
   classical
   have hc : z ∈ ((fun x : ℝ => (x : AddCircle (1 : ℝ))) '' Set.Icc a b) := by
@@ -212,7 +212,7 @@ theorem window_arc_cover (L : ℕ) (hL : 1 ≤ L) (z : AddCircle (1 : ℝ))
     intro he
     apply hz
     exact ⟨j, ⟨hj, hjL⟩, hej.symm.trans (congrArg (fun r : ℝ => (r : AddCircle (1 : ℝ))) he.symm)⟩
-theorem window_cut_orientation (L : ℕ) (hL : 1 ≤ L) (k : ℕ) (hk : 1 ≤ k) (hkL : k ≤ G L) :
+private theorem window_cut_orientation (L : ℕ) (hL : 1 ≤ L) (k : ℕ) (hk : 1 ≤ k) (hkL : k ≤ G L) :
     ((upper (P L (eMinus k)) : ℝ) : AddCircle (1 : ℝ)) = E k ∧
     ((ell (P L (ePlus k)) : ℝ) : AddCircle (1 : ℝ)) = E k := by
   classical
@@ -249,15 +249,15 @@ theorem window_cut_orientation (L : ℕ) (hL : 1 ≤ L) (k : ℕ) (hk : 1 ≤ k)
           ((congrArg phase heq).trans (endpoint_phase j hj).1))
         subst j
         exact False.elim ((window_cylinder_partition.2.1 k hk).1 heq.symm)
-theorem circle_integer_offset (x y : ℝ) (h : (x : AddCircle (1 : ℝ)) = y) :
+private theorem circle_integer_offset (x y : ℝ) (h : (x : AddCircle (1 : ℝ)) = y) :
     ∃ k : ℤ, (k : ℝ) = x - y := by
   have hz : ((x - y : ℝ) : AddCircle (1 : ℝ)) = 0 := by
     rw [AddCircle.coe_sub, h, sub_self]
   simpa only [zsmul_eq_mul, mul_one] using (AddCircle.coe_eq_zero_iff (1 : ℝ)).mp hz
-theorem circle_integer_zero (k : ℤ) : ((k : ℝ) : AddCircle (1 : ℝ)) = 0 := by
+private theorem circle_integer_zero (k : ℤ) : ((k : ℝ) : AddCircle (1 : ℝ)) = 0 := by
   apply (AddCircle.coe_eq_zero_iff (1 : ℝ)).mpr
   exact ⟨k, by simp⟩
-theorem window_cut_collar (L : ℕ) (hL : 1 ≤ L) (k : ℕ) (hk : 1 ≤ k) (hkL : k ≤ G L) :
+private theorem window_cut_collar (L : ℕ) (hL : 1 ≤ L) (k : ℕ) (hk : 1 ≤ k) (hkL : k ≤ G L) :
     ∃ c δ : ℝ, 0 < δ ∧ δ < 1 / 2 ∧
       (c : AddCircle (1 : ℝ)) = E k ∧
       (∀ x ∈ Set.Ioo (c - δ) c,
@@ -296,7 +296,7 @@ theorem window_cut_collar (L : ℕ) (hL : 1 ≤ L) (k : ℕ) (hk : 1 ≤ k) (hkL
   · intro x hx
     refine ⟨x - z, ⟨by linarith [hx.1], by linarith [hx.2]⟩, ?_⟩
     simp only [AddCircle.coe_sub, circle_integer_zero, sub_zero]
-theorem natural_phase_visit_sides (c δ : ℝ) (hd : 0 < δ) (hdhalf : δ < 1 / 2) (U : Set (AddCircle (1 : ℝ)))
+private theorem natural_phase_visit_sides (c δ : ℝ) (hd : 0 < δ) (hdhalf : δ < 1 / 2) (U : Set (AddCircle (1 : ℝ)))
     (hU : IsOpen U) (hcU : (c : AddCircle (1 : ℝ)) ∈ U) (B0 : ℕ) :
     ∃ a b : ℕ, B0 < a ∧ B0 < b ∧
       (∃ x ∈ Set.Ioo (c - δ) c, phase (zRow a) = (x : AddCircle (1 : ℝ))) ∧
@@ -344,13 +344,13 @@ theorem natural_phase_visit_sides (c δ : ℝ) (hd : 0 < δ) (hdhalf : δ < 1 / 
     exact hsub ⟨by linarith [hxa.1], by linarith [hxa.2]⟩
   · rw [natural_row_phase b, ← heb]
     exact hsub ⟨by linarith [hxb.1], by linarith [hxb.2]⟩
-theorem translated_cut (t j : ℕ) : E (t + j) + gamma t = E j := by
+private theorem translated_cut (t j : ℕ) : E (t + j) + gamma t = E j := by
   dsimp [E]
   rw [← AddCircle.coe_add]
   congr 1
   push_cast
   ring
-theorem translated_cut_mem (L t k : ℕ) : E k + gamma t ∈ B L ↔
+private theorem translated_cut_mem (L t k : ℕ) : E k + gamma t ∈ B L ↔
     k ∈ Finset.Icc (t + 1) (t + G L) := by
   classical
   constructor

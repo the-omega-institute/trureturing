@@ -20,7 +20,7 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_ro
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_raw_data` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Mathlib contributors (2026). *Zeckendorf representations and golden rotation phases in Mathlib*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Fib/Zeckendorf.lean>.
 
 *Commentary.*
 
@@ -32,7 +32,7 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_ro
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_phase` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Mathlib contributors (2026). *Zeckendorf representations and golden rotation phases in Mathlib*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Fib/Zeckendorf.lean>.
 
 *Commentary.*
 
@@ -44,7 +44,7 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_ph
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_avoids_cut` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Mathlib contributors (2026). *Zeckendorf representations and golden rotation phases in Mathlib*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Fib/Zeckendorf.lean>.
 
 *Commentary.*
 
@@ -62,199 +62,7 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_wi
 
 For every positive width L, natural n, and legal word p of width L, q(L,n)=p if and only if the phase of zRow(n) belongs to the open cylinder arc A(p). Natural rows avoid the endpoint alternatives of the closed cylinder.
 
-**Theorem 1.5 (Distinct indexed cuts).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.cut_injective`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.cut_injective` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The map E from natural cut indices to the circle is injective.
-
-**Theorem 1.6 (Late visits to open sets).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_visit`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_visit` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every nonempty open circle set U and natural bound B, some natural n greater than B has golden phase in U.
-
-**Theorem 1.7 (Translation of natural phases).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_translate`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_translate` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For all natural n and t, the phase of zRow(n+t) is the phase of zRow(n) plus t times the golden ratio modulo one.
-
-**Theorem 1.8 (The phases of the two endpoint rows).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.endpoint_phase`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.endpoint_phase` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every positive cut index k, both endpoint rows eMinus(k) and ePlus(k) have phase E(k).
-
-**Theorem 1.9 (Open arcs avoid their native cuts).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_avoids_cut`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_avoids_cut` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For positive width L, each open window arc avoids E(k) whenever 1 is at most k and k is at most G(L).
-
-**Theorem 1.10 (Window arcs are open).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_isOpen`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_isOpen` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every width L and legal word p, its cylinder arc A(p) is open on the circle.
-
-**Theorem 1.11 (The inverse golden ratio).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.golden_inverse_data`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.golden_inverse_data` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The inverse golden ratio alpha is strictly between zero and one and satisfies alpha squared plus alpha equals one.
-
-**Theorem 1.12 (Length of the signed interval).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.signed_interval_length`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.signed_interval_length` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The right endpoint b of the signed series range is a+1, where a is its left endpoint.
-
-**Theorem 1.13 (Open arcs cover every regular point).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_cover`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_cover` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For each positive width L and circle point outside B(L), some legal L-word has an open cylinder arc containing that point.
-
-**Theorem 1.14 (Labels on the two sides of a cut).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_cut_orientation`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_cut_orientation` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For positive L and 1 at most k at most G(L), the upper endpoint of the eMinus(k) label and the lower endpoint of the ePlus(k) label both project to E(k).
-
-**Theorem 1.15 (Integer differences of equal circle points).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.circle_integer_offset`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.circle_integer_offset` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-If two real numbers have equal images modulo one, their difference is an integer.
-
-**Theorem 1.16 (Integers have zero circle phase).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.circle_integer_zero`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.circle_integer_zero` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every integer, regarded as a real number, projects to zero modulo one.
-
-**Theorem 1.17 (Open collars at a window cut).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_cut_collar`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_cut_collar` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For positive L and 1 at most k at most G(L), there are a real lift c of E(k) and a radius delta strictly between zero and one half. The real interval (c-delta,c) projects into the eMinus(k) window arc, and (c,c+delta) projects into the ePlus(k) window arc.
-
-**Theorem 1.18 (Late natural sources on both sides).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_visit_sides`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_visit_sides` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For a real c, a radius strictly between zero and one half, an open circle neighborhood U of c, and any natural bound B, two natural sources greater than B have phases in U with real lifts in the respective open left and right intervals.
-
-**Theorem 1.19 (Translation of cut indices).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.translated_cut`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.translated_cut` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For natural t and j, E(t+j) plus the golden phase of t equals E(j).
-
-**Theorem 1.20 (Translated cuts and index intervals).**
-
-Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.translated_cut_mem`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.translated_cut_mem` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For natural L, t and k, E(k) plus the golden phase of t belongs to B(L) exactly when k is in the inclusive interval from t+1 to t+G(L).
-
-**Theorem 1.21 (Missing target cuts).**
+**Theorem 1.5 (Missing target cuts).**
 
 Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cut_witness`
 
@@ -266,7 +74,7 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cu
 
 For 1 at most m at most M, a finite S, 1 at most k at most G(M) with k outside K(m,S), and every natural bound B, two sources greater than B have the same sparse tuple and different M-windows.
 
-**Theorem 1.22 (Extra observation cuts).**
+**Theorem 1.6 (Extra observation cuts).**
 
 Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_witness`
 
@@ -278,7 +86,7 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_
 
 For 1 at most m at most M, a finite S, an index k in K(m,S) outside the target cut interval, and every natural bound B, two sources greater than B have the same M-window and different sparse tuples.
 
-**Theorem 1.23 (Equal cut sets, equal natural fibres, and the canonical actual-image bijection).**
+**Theorem 1.7 (Equal cut sets, equal natural fibres, and the canonical actual-image bijection).**
 
 $$\forall m,M \in \mathbb{N}, \forall S \in \operatorname{Finset}\left(\mathbb{N}\right), (1 \le m \land m \le M) \Rightarrow (((\forall a,b \in \mathbb{N}, (q_{M}(a) = q_{M}(b) \iff \sigma_{m,S}(a) = \sigma_{m,S}(b))) \iff \operatorname{K}\left(m, S\right) = \operatorname{Icc}\left(1, \operatorname{G}\left(M\right)\right)) \land (\operatorname{K}\left(m, S\right) = \operatorname{Icc}\left(1, \operatorname{G}\left(M\right)\right) \Rightarrow (\operatorname{card}\left(\operatorname{range}\left(q_{M}\right)\right) = \operatorname{G}\left(M\right) \land \operatorname{card}\left(\operatorname{range}\left(\sigma_{m,S}\right)\right) = \operatorname{G}\left(M\right) \land (\exists e \in \operatorname{Equiv}\left(\operatorname{X}\left(M\right), \operatorname{range}\left(\sigma_{m,S}\right)\right), (\forall p \in \operatorname{X}\left(M\right), \operatorname{val}\left(e\left(p\right)\right) = \sigma_{m,S}(\operatorname{V}\left(p\right))) \land (\forall n \in \mathbb{N}, \operatorname{val}\left(e\left(q_{M}(n)\right)\right) = \sigma_{m,S}(n)) \land (\forall n \in \mathbb{N}, e^{-1}(\operatorname{actual}\left(n\right)) = q_{M}(n)))))).$$
 
@@ -300,28 +108,12 @@ Each target label occupies one connected open real interval. When the query cuts
 
 ## References
 
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.circle_integer_offset`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.circle_integer_zero`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.cut_injective`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.endpoint_phase`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_witness`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.golden_inverse_data`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cut_witness`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_avoids_cut`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_translate`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_visit`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_visit_sides`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_phase`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_raw_data`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_window_arc`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.signed_interval_length`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.sparse_window_mutual_determination`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.translated_cut`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.translated_cut_mem`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_avoids_cut`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_cover`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_isOpen`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_cut_collar`
-- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_cut_orientation`
 - Dependency: [D5/S1/Digit/Infinite/WindowCylinderPartition](WindowCylinderPartition.md)
 - Dependency: [D5/S1/Phase/Basic](../../Phase/Basic.md)
