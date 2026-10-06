@@ -43,27 +43,5 @@ internal sealed class PrimorialGlobalLaplaceEnvelopeDocument : IScribeDocumentDe
                         "This theorem supplies the finite Euler factor and its full parameter tail for the Robin kernel route. "
                         + "It does not prove the complete actual kernel asymptotic, the sign of the compensated Robin residual, "
                         + "or the Riemann hypothesis."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("actual-finite-support-curvature"),
-                DeclarationHandle.Create(Prefix + "actualCurvature_bounds"),
-                H("Actual prime support bounds the curvature by twice the same slope"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "For the same literal primes p<=z, put S_z(v)=(1/L)*sum log(p)/(p^(1+v/L)-1) "
-                        + "and T_z(v)=(1/L^2)*sum p^(1+v/L)*log(p)^2/(p^(1+v/L)-1)^2. "
-                        + "For every z>=2 and v>=0, 0<=T_z(v)<=2*S_z(v). "
-                        + "The actual slope derivative is minus this actual curvature.")),
-                    Paragraph(Text(
-                        "The proof uses the actual finite support: log(p)<=L and q=p^(1+v/L)>=p>=2. "
-                        + "Each curvature summand is its nonnegative slope summand multiplied by "
-                        + "(log(p)/L)*q/(q-1)<=2. Finite summation gives the stated bound; "
-                        + "no second prime moment asymptotic is assumed.")),
-                    Paragraph(Text(
-                        "PrimorialCompensatedNumerator directly consumes this bound together with the original "
-                        + "ratio and slope derivatives. Its exact initial-slope compensation gives a uniform "
-                        + "quadratic zero-end budget. The complete signed-kernel integral limit remains a separate consumer."))),
                 DescribeRole.Theorem))));
 }
