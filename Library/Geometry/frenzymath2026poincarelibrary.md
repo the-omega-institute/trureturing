@@ -5860,3 +5860,12 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 同一原投影确实是覆盖且满射，并具有基点指定的连续映射唯一提升。提升试验域 A 与原流形 M 的 universes 独立；A 的单连通性属于真正通用提升定理的上下文，该原覆盖本身的单连通性由前述真实定理取得。无需外供原覆盖单连通性、额外度量相容性、全局紧致、有限基本群或有限覆盖度。
 
 没有新增上游导入或重复编译已接受的 canonical24。独立小消费者与完整累计临时 Lean 均真实 exit 0、零错误、零警告；307 项公理报告仅含 propext、Classical.choice、Quot.sound，6 个新增消费者及3个真实公共目标接受。proof_shape: bind-only，admission_basis: none。本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证说明。实际原 H3 分类与负曲率全局指数、完整 deck/体积/Haar、有限体积尖点及给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 原边界交比的正缩放与全部零锥配对保持
+
+对同一原 NullSphere 上的指定单射 F，真正四个互异原点的核交比保持，在内部给出由三个原锚点构造的正缩放因子。实际非对角核比例满足该缩放的双因子分解；对原零锥上的全部点对，缩放后的 F 原向量保持原 Lorentz 配对。对角比例仍为 0；对角配对保持由原零向量条件证明，没有把非对角比例的正性或分解错误推广到对角。
+
+无需外供比例分解、正缩放存在性或原 Lorentz 线性等距。独立新模块实际导入已接受的原 native 基底，完整新证明正文通过 Lean 编译，真实 exit 0、零错误、零警告；新目标 nativeBoundaryKernelScale_reconstruction 的公理闭包仅含 propext、Classical.choice、Quot.sound。导入的基底已有 301 项标准公理报告，其源码、实际导入 olean 及依赖哈希再次核对一致；新正文与累计源的追加部分逐字相同。本项验收范围为完整新模块及其目标。
+
+固定上游来源沿用 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a，以及此前已核验的原 Lorentz／边界构造。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证说明。缩放零锥到原等距的重构、有限体积推出同一真正 F 及交比性质、给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成；这些中间输入不升为最终新前提。
