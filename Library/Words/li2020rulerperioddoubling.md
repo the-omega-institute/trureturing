@@ -30,3 +30,9 @@ sequence has infinitely many binary-kernel elements.
 The printed palindrome cases require independent checking before use as an
 exact legal-cut classification: the parity restrictions and the even factor
 00 must be retained.
+
+## Verified locator
+
+URL: https://arxiv.org/abs/2007.08317v1
+
+The sequence coding is on printed page 2; Theorem 2 is on printed page 7 of arXiv:2007.08317v1.

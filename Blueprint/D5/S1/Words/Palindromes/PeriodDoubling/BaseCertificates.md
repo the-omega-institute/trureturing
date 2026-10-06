@@ -62,7 +62,7 @@ $$\forall i \in \mathbb{N},\; \operatorname{baseTable}\left(i\right):\operatorna
 
 *Commentary.*
 
-For indices 0 through 1491 the function contains 1492 literal rows. Each row consists of its 19 integer state components, a complete list of edges (target, f, q, input bit, output bit), and the optional class and charge potentials. Lookup outside that range returns the final row; the automaton uses Fin 1492, so its runs never use that fallback.
+For indices 0 through 1491, baseTable selects one of 1492 literal rows through a balanced tree of index comparisons. The initial subtree remains inline; the other 63 subtrees are private baseTableChunk functions taking the original natural index. Each row consists of its 19 integer state components, a complete list of edges (target, f, q, input bit, output bit), and the optional class and charge potentials. Lookup outside that range returns the final row; the automaton uses Fin 1492, so its runs never use that fallback.
 
 **Definition 1.6 (The final parity and lowest-sign correction).**
 

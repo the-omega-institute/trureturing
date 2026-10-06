@@ -14,7 +14,7 @@ $$\forall i \in \mathbb{N},\; \operatorname{prefixTable}\left(i\right):\operator
 
 *Commentary.*
 
-Indices zero through 4261 list the eight-component marker state, every labelled product edge, and the two optional potentials. The components are the base-state index, marker phase, flip flag, marker parity, retained flag, input phase, output phase and bad flag. Outside this range the final row is returned; all paths use Fin 4262.
+For indices zero through 4261, prefixTable selects one of 4262 literal rows through a balanced tree of index comparisons. The initial subtree remains inline; the other 255 subtrees are private prefixTableChunk functions taking the original natural index. Each row lists the eight-component marker state, every labelled product edge, and the two optional potentials. The components are the base-state index, marker phase, flip flag, marker parity, retained flag, input phase, output phase and bad flag. Outside this range the final row is returned; all paths use Fin 4262.
 
 **Definition 1.2 (The literal marker-state update).**
 

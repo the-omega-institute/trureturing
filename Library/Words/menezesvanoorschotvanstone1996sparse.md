@@ -22,3 +22,9 @@ Fact 14.124(i), page 628: "Every integer e has a unique sparse signed-digit repr
 Fact 14.124(ii), page 628: "A sparse signed-digit representation for e has the smallest number of non-zero entries among all signed-digit representations for e."
 
 The Lean digits are integers in {−1, 0, 1}, ordered from the least significant position upward and evaluated by a fold with radix two. The uniqueness statement compares lists of the same length; this retains zero padding explicitly. The minimum-weight statement counts the nonzero digits. These are literature results, used to identify the arithmetic streams and their signed weights.
+
+## Verified locator
+
+URL: https://cacr.uwaterloo.ca/hac/about/chap14.pdf
+
+Chapter 14, printed page 628, Definition 14.123 and Fact 14.124(i)–(ii).

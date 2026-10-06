@@ -19,5 +19,5 @@ For epsilon zero or one, two odd palindromic suffix cuts remove two alternating 
 ## References
 
 - Truth anchor: `D5/S1/Words/Palindromes/PeriodDoubling/AlternatingTailUpper.alternating_tail_upper`
+- Dependency: [D5/S1/Words/Palindromes/FridPrefix/PalindromicLength](../FridPrefix/PalindromicLength.md)
 - Dependency: [D5/S1/Words/Palindromes/PeriodDoubling/OddPalindromeRadius](OddPalindromeRadius.md)
-- Dependency: [D5/S1/Words/Palindromes/PeriodDoubling/PalindromicLength](PalindromicLength.md)

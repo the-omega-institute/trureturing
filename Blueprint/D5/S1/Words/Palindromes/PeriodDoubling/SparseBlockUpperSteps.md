@@ -19,5 +19,5 @@ The displayed sums are the literal integers with binary blocks (100) repeated p 
 ## References
 
 - Truth anchor: `D5/S1/Words/Palindromes/PeriodDoubling/SparseBlockUpperSteps.sparse_block_upper_steps`
+- Dependency: [D5/S1/Words/Palindromes/FridPrefix/PalindromicLength](../FridPrefix/PalindromicLength.md)
 - Dependency: [D5/S1/Words/Palindromes/PeriodDoubling/OddPalindromeRadius](OddPalindromeRadius.md)
-- Dependency: [D5/S1/Words/Palindromes/PeriodDoubling/PalindromicLength](PalindromicLength.md)

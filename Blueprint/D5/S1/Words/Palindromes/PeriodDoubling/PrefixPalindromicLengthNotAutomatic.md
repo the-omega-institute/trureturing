@@ -24,6 +24,10 @@ $$\neg \operatorname{Finite}\left(\operatorname{twoKernel}\left(\lambda n:\mathb
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Palindromes/PeriodDoubling/PrefixPalindromicLengthNotAutomatic.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/frid-laborde-peltomaki-2021-period-doubling-c17` (proved) by `D5/S1/Words/Palindromes/PeriodDoubling/PrefixPalindromicLengthNotAutomatic.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"frid-laborde-peltomaki-2021-period-doubling-c17","declaration_gid":"D5/S1/Words/Palindromes/PeriodDoubling/PrefixPalindromicLengthNotAutomatic.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

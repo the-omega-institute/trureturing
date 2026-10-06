@@ -12,7 +12,7 @@ internal sealed class MinimumPositionCertificateDocument : IScribeDocumentDefini
         Describe.Lean(DescribeId.Create("pd-minimumpositioncertificate-minimumtable"),
             DeclarationHandle.Create(Prefix + "minimumTable"), H("The complete lifted lowest-position graph"),
             StatementSource.FromAuthor(TableFormula()), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("Indices zero through 1709 list the base-state index, the persistent lowest-position escape flag, every lifted edge, and the optional integer potential. Base states are the 1492 states of baseTable. Outside this range lookup returns the final row; all runs use Fin 1710."))), DescribeRole.Definition),
+            Blocks(Paragraph(Text("For indices zero through 1709, minimumTable selects one of 1710 literal rows through a balanced tree of index comparisons and 64 private minimumTableChunk functions taking the original natural index. Each row lists the base-state index, the persistent lowest-position escape flag, every lifted edge, and the optional integer potential. Base states are the 1492 states of baseTable. Outside this range lookup returns the final row; all runs use Fin 1710."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("pd-minimumpositioncertificate-successors"),
             DeclarationHandle.Create(Prefix + "successors"), H("The literal lowest-position flag update"),
             StatementSource.FromAuthor(SuccessorsFormula()), AssessedProvenance.FromRepo(),

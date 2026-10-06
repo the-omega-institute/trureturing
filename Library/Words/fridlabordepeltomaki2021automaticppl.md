@@ -43,3 +43,11 @@ Conjecture 17, page 13, verbatim:
 
 The source conjectures this statement. A finite prefix computation, or merely
 infinitely many distinct kernel elements of PPL itself, does not establish it.
+
+## Verified locator
+
+DOI: https://doi.org/10.1016/j.tcs.2021.08.016
+
+URL: https://arxiv.org/abs/2009.02934v2
+
+Definition 3 is on printed page 2; Section 5.1 and Conjecture 17 are on printed pages 12–13 of arXiv:2009.02934v2.

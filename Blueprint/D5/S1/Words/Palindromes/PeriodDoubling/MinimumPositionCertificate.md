@@ -14,7 +14,7 @@ $$\forall i \in \mathbb{N},\; \operatorname{minimumTable}\left(i\right):\mathbb{
 
 *Commentary.*
 
-Indices zero through 1709 list the base-state index, the persistent lowest-position escape flag, every lifted edge, and the optional integer potential. Base states are the 1492 states of baseTable. Outside this range lookup returns the final row; all runs use Fin 1710.
+For indices zero through 1709, minimumTable selects one of 1710 literal rows through a balanced tree of index comparisons and 64 private minimumTableChunk functions taking the original natural index. Each row lists the base-state index, the persistent lowest-position escape flag, every lifted edge, and the optional integer potential. Base states are the 1492 states of baseTable. Outside this range lookup returns the final row; all runs use Fin 1710.
 
 **Definition 1.2 (The literal lowest-position flag update).**
 
