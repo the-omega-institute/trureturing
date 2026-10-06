@@ -43,6 +43,9 @@ internal sealed class ActualDyadicDeadlineRepairMinimumDocument : IScribeDocumen
                 + "and distinct supported raw types in both directions. Unsupported pairs "
                 + "are given an existing supported color when extending to a total function. "
                 + "Different raw parities at the same prefix remain distinct adjacent types."),
+            Claim("original-window-size", "original_window_size", "Original prefix-window size",
+                "For j>=2 and m>=2, the original logarithmic size condition "
+                + "3+floor(log2(m))<=j implies 2m<2^(j-1)."),
             Claim("original-operational-minimum", "original_operational_minimum", "Exact original shared-decoder minimum",
                 "For j>=2, h>=0, known b, P=2^j, n=2^(j-1), and D=(j-1)P+1+h, "
                 + "assume m>=2, m-1<=eps<m, j>=3+floor(log2(m)), n=ma+rho, rho<m, "
@@ -156,6 +159,13 @@ internal sealed class ActualDyadicDeadlineRepairMinimumDocument : IScribeDocumen
         {
                 result = Q("Z", V("Type"), Q("d", N, Q("b", Fin(D(2)), Q("D m", N, Q("eps", R,
                     Imp(shell, IffF(colors, rankedColors)))))));
+        }
+        else if (declaration == "original_window_size")
+        {
+                var j = V("j");
+                result = Q("j m", N, Imp(And(Leq(D(2), j), Leq(D(2), m),
+                    Leq(Add(D(3), Call("log2", m)), j)),
+                    Less(Mul(D(2), m), Pow(D(2), Sub(j, D(1))))));
         }
         else if (declaration == "original_operational_minimum")
         {

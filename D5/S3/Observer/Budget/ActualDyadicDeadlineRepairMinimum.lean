@@ -137,6 +137,17 @@ theorem actual_supported_coloring_iff {Z : Type*} (d : Nat) (b : Fin 2)
         (actual_phase_overlap_near d b D m eps deadline hm lower upper x.1 y.1).mp overlap
       simpa only [prefixPreserved'] using near
 
+/-- The original logarithmic size condition gives a strict double-window bound. -/
+theorem original_window_size (j m : Nat) (hj : 2 ≤ j) (hm : 2 ≤ m)
+    (shell : 3 + Nat.log2 m ≤ j) : 2 * m < 2 ^ (j - 1) := by
+  let f := Nat.log2 m
+  have upper : m < 2 ^ (f + 1) := by
+    simpa [f, Nat.log2_eq_log_two] using Nat.lt_pow_succ_log_self (by decide : 1 < (2 : Nat)) m
+  have expBound : f + 2 ≤ j - 1 := by dsimp [f]; omega
+  have powerBound : 2 ^ (f + 2) ≤ 2 ^ (j - 1) := Nat.pow_le_pow_right (by decide) expBound
+  have twice : 2 ^ (f + 2) = 2 * 2 ^ (f + 1) := by rw [pow_succ]; omega
+  omega
+
 private theorem original_graph_minimum (j h m a rho : Nat) (b : Fin 2) (hj : 2 ≤ j) (hm : 2 ≤ m)
     (shell : 3 + Nat.log2 m ≤ j) (decomposition : 2 ^ (j - 1) = m * a + rho)
     (remainder : rho < m) (slack : 2 * rho ≤ a) :
@@ -192,10 +203,7 @@ private theorem original_graph_minimum (j h m a rho : Nat) (b : Fin 2) (hj : 2 �
     have low : 2 ^ f ≤ m := by
       simpa [f, Nat.log2_eq_log_two] using Nat.pow_log_le_self 2 (by omega : m ≠ 0)
     have depth : j - 1 + 1 = j := by omega
-    have expBound : f + 2 ≤ j - 1 := by dsimp [f]; omega
-    have powerBound : 2 ^ (f + 2) ≤ 2 ^ (j - 1) := Nat.pow_le_pow_right (by decide) expBound
-    have twice : 2 ^ (f + 2) = 2 * 2 ^ (f + 1) := by rw [pow_succ]; omega
-    have large : 2 * m < 2 ^ (j - 1) := by omega
+    have large : 2 * m < 2 ^ (j - 1) := original_window_size j m hj hm shell
     have wait : sharpWait j = (j - 1) * 2 ^ j + 1 := by
       simp [sharpWait, show j ≠ 0 by omega]
     refine ⟨large, ?_⟩
