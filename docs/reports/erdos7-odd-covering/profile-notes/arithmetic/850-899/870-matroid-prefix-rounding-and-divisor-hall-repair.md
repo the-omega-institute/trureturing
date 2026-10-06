@@ -244,6 +244,88 @@ particular downset inequality. Blocking every color requires at least
 five distinct downset obstructions. There is no proved upper bound
 of four on the actual necessary obstructions.
 
+## Semiprime repair packets have small Hall obstructions
+
+Consider the restricted repair interface in which each active parent has a
+distinct squarefree semiprime cofactor m=pq. Associate one graph edge pq to
+each parent. For every nonempty edge subfamily F, the available divisor
+labels are the unit, the incident prime vertices, and the distinct edge
+labels. These categories are disjoint, so
+
+$$
+\left|\bigcup_{m\in F}\operatorname{Div}(m)\right|
+=1+|V(F)|+|F|.
+$$
+
+Each parent contributes three children. Hence the entire family satisfies
+Hall exactly when every nonempty subfamily satisfies
+
+$$
+2|F|\le |V(F)|+1.
+\tag{MH11}
+$$
+
+This is equivalent to the graph being a matching together with at most
+one component that is a path of two edges. For necessity, two distinct
+adjacent-edge pairs sharing an edge give three edges on at most four
+vertices, violating MH11. Two adjacent-edge pairs with disjoint edge sets
+give four edges on at most six vertices, also violating it. Thus there is
+at most one adjacent-edge pair. For sufficiency, each subfamily has either
+2|F| or 2|F|-1 incident vertices.
+
+The matching can also be written explicitly. Give an isolated edge pq
+the labels p,q,pq. For the exceptional path p-q-r, give pq the labels
+p,q,pq and qr the labels 1,r,qr. Assign these three distinct divisors to
+the three children of each parent, using its literal projected phase.
+
+Consequently every obstruction in this distinct-semiprime subinterface
+has a witness of at most four parents. Two parents with the same
+semiprime anchor already give a two-parent obstruction: four divisor
+labels cannot serve six children. With at most 27 prime axes, MH11 bounds
+a feasible distinct-semiprime family by 14 parents and 42 repairs. This
+does not bound the higher-support or prime-power families.
+
+Whole-parent feasibility is not a matroid, even in this subinterface.
+Take
+
+$$
+A=\{35,77\},\qquad B=\{65,119,209\}.
+$$
+
+All subsets of A and of B satisfy the three-child Hall inequalities.
+Their full divisor stocks have sizes six and ten, respectively. But for
+each b in B, the three parents in A union {b} have only eight divisor
+labels for nine children. Thus |A|<|B| and no element of B augments A.
+All anchors are products of two distinct primes from
+{5,7,11,13,17,19}. The exact divisor sets, all-subset Hall predicates,
+stock sizes and failure of augmentation have been compiled in a scoped
+Lean check using only the standard axioms. The general graph
+characterization is the ordinary argument above.
+
+This rules out applying the matroid sampler directly to whole repair
+parents. The first-stage partition-matroid sampler remains applicable.
+For semiprime parents one can instead test the bad two-, three-, and
+four-parent witnesses. For such a witness F, the probability of their
+joint activation is at most
+
+$$
+\sum_{(\sigma_p)\in\prod_{p\in F}\Sigma_p}
+\left(\frac{26}{27}\right)^{|\bigcup_{p\in F}C(\sigma_p)|}.
+\tag{MH12}
+$$
+
+This uses CVZ's all-zero bound for the union of candidate sets in one
+common sample, followed by a union bound over realized signatures. It
+does not multiply separate activation probabilities. No adequate bound
+on this signature sum has been proved for an actual minimal cover.
+
+Original private points do not automatically witness residual packet
+activation. For example, packets {a,c} and {b,c} have private points a
+and b before a first-stage cover removes {a,b}; both packets then activate
+only at c. Any use of original-private-point bounds needs a separate
+supplier. Shared-output repairs and other depths are outside MH11's
+one-distinct-divisor-per-child contract.
+
 ## Arbitrary finite heights have a budget-dependent normalization
 
 Suppose a finite legal replacement of the full residual uses M APs
