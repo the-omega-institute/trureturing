@@ -199,7 +199,7 @@ ingest 判 `INGEST_TRUTH_ALIGNMENT_REQUIRED planned rewrite of existing entry <i
 1  make worktree KIND=theory NAME=<lane> BASE=origin/dev
 2  写卷/写追加块(照 TEMPLATE.md / APPEND.md;编号只增,不动既有字节)
 3  git commit 文档 → push(推与本地验证并行,别串行等)
-4  make ingest BASE=origin/dev > log 2>&1; echo "EXIT=$?"    # 不需要 lean-report
+4  make ingest > log 2>&1; echo "EXIT=$?"                    # 不需要 lean-report,也不读 git
 5  grep -E '^INGEST |EXIT=' log —— 判据见下
 6  git commit 账目(Meta/Digestion/**) → push
 7  git merge origin/dev → 重跑 ingest → 四零齐 ∧ 工作树零改动

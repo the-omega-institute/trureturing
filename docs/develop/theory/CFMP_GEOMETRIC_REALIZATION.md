@@ -2588,3 +2588,131 @@ $$
 对第 1 节的原始面商使用本判据时，必须先在同一带标签载体中核对实际面生成识别确为上述零坐标触发的固定置换，并保持原始面配对及其完整等价闭包。该接口不替代共同边长、实际闭面等距、边不反转、精确出现角和或同一流形上的双曲度量实现。
 
 ## 追加锚（本行以下为增补区）
+
+## 68. 延拓角在平坦接缝处的正则性边界
+
+**定义 68.1（标量延拓角与正长度路径）。** 沿用第 1 节的实际六边顺序
+
+$$
+(e_1,e_2,e_3,e_4,e_5,e_6)=(12,13,14,34,24,23),
+$$
+
+其中第一槽与第四槽互为对边。对局部正长度向量 $l\in\mathbb R_{>0}^6$，令 $x_i=\cosh l_i$，并按原余弦公式定义第一槽的标量延拓角
+
+$$
+\widetilde\alpha_1(l)
+=\arccos\!\left(\max\{-1,\min\{\varphi_1(x),1\}\}\right).
+$$
+
+这里的截断延拓是 Feng–Ge–Hua，arXiv:2009.03731，Definition 2.4 的定义。取 $0\le\varepsilon<1$，设
+
+$$
+\begin{aligned}
+x^\varepsilon&=(2,2,2,17-\varepsilon,2,2),\\
+l^\varepsilon&=(\operatorname{arccosh}2,\operatorname{arccosh}2,
+\operatorname{arccosh}2,\operatorname{arccosh}(17-\varepsilon),
+\operatorname{arccosh}2,\operatorname{arccosh}2).
+\end{aligned}
+$$
+
+全部六个长度严格为正，并且 $\cosh l_i^\varepsilon=x_i^\varepsilon$。特别地，接缝点 $l^0$ 位于正长度空间的内部；它不是零长度边界点。
+
+**命题 68.2（实际标量延拓角没有局部 Lipschitz 界）。** 对 $l^0$ 的任意邻域 $U\subseteq\mathbb R_{>0}^6$ 和任意有限常数 $K\ge0$，存在 $0<\varepsilon<1$，使 $l^\varepsilon\in U$ 且
+
+$$
+\left|\widetilde\alpha_1(l^\varepsilon)-\widetilde\alpha_1(l^0)\right|
+>K\,\|l^\varepsilon-l^0\|_2.
+$$
+
+因此第 1 节原六变量公式的这一标量延拓角在正长度点 $l^0$ 不局部 Lipschitz。结论只需第一槽的角和第四槽的实际长度变化。
+
+证明。直接代入第 1 节的两个被开方数和分子，得到
+
+$$
+\begin{aligned}
+A(x^\varepsilon)=B(x^\varepsilon)
+&=2\cdot2\cdot2\cdot2+2^2+2^2+2^2-1=27,\\
+P_1(x^\varepsilon)
+&=2\cdot2+2\cdot2+2\cdot2\cdot2+2\cdot2\cdot2
+-(2^2-1)(17-\varepsilon)\\
+&=24-3(17-\varepsilon)=-27+3\varepsilon,\\
+\varphi_1(x^\varepsilon)
+&=\frac{-27+3\varepsilon}{\sqrt{27\cdot27}}
+=-1+\frac{\varepsilon}{9}.
+\end{aligned}
+$$
+
+分母恰为 $27>0$。当 $0<\varepsilon<1$ 时，这个原始余弦值严格位于 $(-1,1)$；当 $\varepsilon=0$ 时恰为 $-1$。因此在整个所用路径上，第一槽的截断不改变余弦值。反余弦恒等式给出
+
+$$
+\widetilde\alpha_1(l^\varepsilon)
+=\arccos\!\left(-1+\frac{\varepsilon}{9}\right)
+=\pi-\arccos\!\left(1-\frac{\varepsilon}{9}\right),
+\qquad
+\widetilde\alpha_1(l^0)=\pi.
+$$
+
+令 $\theta_\varepsilon=\arccos(1-\varepsilon/9)$。因为 $1-\varepsilon/9\in[-1,1]$，反余弦的值域与余弦、反余弦的标准恒等式（$\operatorname{Real.cos\_arccos}$）给出
+
+$$
+\theta_\varepsilon\ge0,
+\qquad
+\cos\theta_\varepsilon=1-\frac{\varepsilon}{9}.
+$$
+
+由标准余弦界 $1-\cos t\le t^2/2$，得到
+
+$$
+\frac{\varepsilon}{9}
+=1-\cos\theta_\varepsilon
+\le\frac{\theta_\varepsilon^2}{2},
+\qquad
+\left|\widetilde\alpha_1(l^\varepsilon)-\widetilde\alpha_1(l^0)\right|
+=\theta_\varepsilon
+\ge\sqrt{\frac{2\varepsilon}{9}}.
+$$
+
+另一方面，$\operatorname{arccosh}$ 在 $[16,17]$ 上可微，导数满足
+
+$$
+0<\frac{d}{ds}\operatorname{arccosh}s
+=\frac{1}{\sqrt{s^2-1}}
+\le\frac{1}{\sqrt{255}}.
+$$
+
+由于 $17-\varepsilon\in(16,17)$，中值定理给出实际长度差
+
+$$
+0<d_\varepsilon
+:=\operatorname{arccosh}17-\operatorname{arccosh}(17-\varepsilon)
+\le\frac{\varepsilon}{\sqrt{255}}.
+$$
+
+其余五个长度完全相同，故 $\|l^\varepsilon-l^0\|_2=d_\varepsilon$，并有
+
+$$
+\frac{\left|\widetilde\alpha_1(l^\varepsilon)-\widetilde\alpha_1(l^0)\right|}
+{\|l^\varepsilon-l^0\|_2}
+\ge
+\frac{\sqrt{2\varepsilon/9}}{\varepsilon/\sqrt{255}}
+=\frac{\sqrt{510}}{3\sqrt\varepsilon}.
+$$
+
+这一下界在 $\varepsilon\downarrow0$ 时趋于无穷。为明确邻域和常数的量词，给定上述 $U$ 和 $K$，取 $\rho>0$，使正长度空间内以 $l^0$ 为中心、半径 $\rho$ 的欧氏球包含于 $U$。选择
+
+$$
+0<\varepsilon<
+\min\left\{1,\rho\sqrt{255},\frac{510}{9(K+1)^2}\right\}.
+$$
+
+长度上界保证 $l^\varepsilon\in U$，角长比下界严格大于 $K+1$，从而严格大于 $K$。这给出每个邻域和每个有限常数的违例，包括 $K=0$。角值本身仍趋于 $\pi$，所以连续性与这里的局部 Lipschitz 失败相容。
+
+**命题 68.3（标量正则性推理与流结论的范围）。** Feng–Ge–Hua，arXiv:2009.03731，Proposition 4.3 证明中的“余弦局部 Lipschitz，所以延拓角局部 Lipschitz”不能作为一般的标量正则性推理；命题 68.2 不反驳该文的完整流结论，不证明流的不唯一性，也不影响第 3 节紧致真实度量盒上的光滑流论证。
+
+证明。在所用长度切片上，原始余弦恰为 $(8-\cosh l_4)/9$，它在 $l_4=\operatorname{arccosh}17$ 附近光滑。命题 68.2 却排除了该处延拓角的每个局部 Lipschitz 界。失败发生在反余弦的端点 $-1$，而非原余弦分母消失。
+
+本反例只涉及同一个局部四面体公式中的一个标量角。它没有把该六长度路径实现为某个固定剖分的共同全局长度路径，也没有验证实际出现映射 $P$ 的兼容性或组装角和中的抵消。因此它不能单独推出某个指定全局曲率和或乘法流场的局部 Lipschitz 失败。它也不以六个角同时处于真实四面体域为前提；所需的截断一致性仅针对已计算的第一槽。
+
+第 3 节的盒 $\Omega$ 紧包含于真实非退化度量域，各局部余弦连续且严格位于 $(-1,1)$，故在这个紧盒上与反余弦端点保持正距离。该处的光滑复合、向内流场和紧致延拓论证不受本反例影响。对于任意正长度初态的完整延拓流，解的存在性、唯一性、全局延拓和收敛须由各自独立的论证建立，不能以已失败的标量正则性推理替代；本节不增加这些结论的前提，也不在这里证明或反驳这些完整流命题。本节的结论是原公式的直接计算和标准分析不等式的应用，不作新颖性主张。
+
+## 追加锚（本行以下为增补区）

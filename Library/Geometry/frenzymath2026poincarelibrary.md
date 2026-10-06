@@ -5728,3 +5728,92 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 原水平坐标的实部、虚部和原高度全局光滑，因此原 Lorentz 嵌入 `v` 的四个实际有理分量全局光滑。已有原作用公式 `v (e p) = actionMatrix e *ᵥ v p` 将同一 `v ∘ e` 识别为一个实际连续线性映射与 `v` 的复合。实际分母 `v (e p) 0 - v (e p) 3` 等于原高度倒数，由原正高度内部保证处处非零；其三个有理恢复公式给出原 `e` 的高度、水平实部和虚部的光滑性。最后由原坐标开放嵌入的实际单图册接口得到 `e` 的全局 C∞，没有把曲线方向导数直接当作全局微分。
 
 该精确原映射结论及所有所用坐标光滑接口已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用既有原线性作用、实际逆坐标恢复和光滑复合／除法／开放嵌入接口；本项交付为 Library 复用说明。实际 `mfderiv` 的方向识别及对上述黎曼度量的保持、原内蕴距离等式、曲率 −1、一般原流形覆盖和体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 及官方验收仍未完成。
+
+
+### 原等距映射的实际流形微分与黎曼内积保持
+
+对于任意原 `e : H3 ≃ᵢ H3`、原点 `p` 及两个实际切向量 `V,W : TangentSpace (𝓡 3) p`，已核验
+`nativeRiemannianMetric.inner (e p) (mfderiv (𝓡 3) (𝓡 3) e p V) (mfderiv (𝓡 3) (𝓡 3) e p W) = nativeRiemannianMetric.inner p V W`。这里使用同一原等距映射、同一原拓扑上的实际光滑图册，以及上述由原高度负二次幂构造的实际黎曼度量；结论适用于任意两向量，也包括逆映射和反定向等距映射。
+
+原欧氏坐标映射就是实际 `extChartAt`，其实际 `mfderiv` 为恒等连续线性映射。原正高度邻域中的坐标扰动曲线具有实际 `HasMFDerivAt`；连续性由原坐标开放嵌入恢复。将已核验的原等距全局光滑性与该曲线、原坐标图复合，微分链式法则和真实曲线导数的唯一性识别出 `mfderiv e p` 对每个原坐标方向的作用，恰为原 Lorentz 作用后的切向恢复方向。原双线性配对保持和原坐标线性等距的内积保持随即给出上述黎曼内积等式；由线性等距的满射性推广至任意实际 `V,W`，无需额外提供微分或内积保持前提。
+
+该精确微分及内积保持结论已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用的是实际图册微分、曲线导数、既有原 Lorentz 作用和双线性配对接口；本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。原 H3 距离与此度量内蕴距离的等式、实际曲率 −1、一般原流形覆盖及体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 原高度的实际微分与对数高度的黎曼导数界
+
+在同一原 H3 光滑图册及上述实际黎曼度量上，`nativeLogHeight p = Real.log (height p.coordinates)` 全局 C∞。原高度的实际流形微分是 `nativeEuclideanHeightCLM`；对任意实际切向量 `V : TangentSpace (𝓡 3) p`，原对数高度的实际 `mfderiv` 与实值 `mvfderiv` 均精确等于 `nativeEuclideanHeightCLM V / height p.coordinates`。这些结论通过真实坐标图微分、线性高度投影和对数求导得到，分母非零由原正高度内部保证，无需额外提供高度或对数高度的光滑性及导数前提。
+
+实际黎曼切向长度满足 `Real.sqrt (nativeRiemannianMetric.inner p V V) = EuclideanNorm(V) / height p.coordinates`，其中 `EuclideanNorm` 明确指原坐标线性等距所取的三维欧氏模型范数。原高度线性投影的绝对值不超过该欧氏模型范数，因此得到真正的导数界
+`|mvfderiv (𝓡 3) nativeLogHeight p V| ≤ Real.sqrt (nativeRiemannianMetric.inner p V V)`。此处右端是所选实际黎曼度量的切向长度；欧氏模型范数仅在上述精确缩放等式内使用。
+
+原高度实际微分、对数高度光滑性、精确微分公式及其黎曼导数界已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用原坐标图、原正高度、欧氏线性投影界及光滑对数求导接口；本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。将此导数界接到固定上游的内蕴距离估计仍需实际导入和编译；原两点距离与所选度量内蕴距离的等式、曲率 −1、一般原流形覆盖及体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 固定上游距离接口的实际复用与原等距的内蕴保距
+
+固定上游版本 `432c38f2aa5a30efb13871292d17b4a3309a496a` 的 `PoincareLib.Geometry.Riemannian.Metric`、`Topology.MetricSpace.Completeness` 及 `Distance.Basic`、`Distance.DerivativeLipschitz`、`Distance.TangentBound` 五个模块，以原源码字节组成完整依赖闭包，已在本项目钉版 Lean／mathlib 环境中实际编译通过。这仅验证上述接口及其实际消费者，不等于复现上游完整庞加莱定理终点。所选实际 `nativeRiemannianMetric` 与上游 `RiemannianMetric 3 H3` 的类型定义一致，其 `edist` 正是安装该度量切向内积后取得的 `Manifold.riemannianEDist`。
+
+对任意原点 `p,q`，实际原对数高度满足
+`edist (nativeLogHeight p) (nativeLogHeight q) ≤ PoincareMT.RiemannianMetric.edist nativeRiemannianMetric p q`。这里直接应用固定上游 `edist_le_mul_edist_of_derivative_bound`，取常数 1，并用上述全局光滑性和真正的黎曼导数界逐项满足前提；不需要先假设原 H3 距离与内蕴距离相等。
+
+对任意同一个原 `e : H3 ≃ᵢ H3`，已有实际全局光滑性与 `mfderiv` 内积保持满足固定上游 `edist_le_mul_of_inner_mfderiv_le` 的常数 1 前提，得到内蕴距离不增。将同一结论应用于原 `e.symm` 和原像点，推出
+`PoincareMT.RiemannianMetric.edist nativeRiemannianMetric (e p) (e q) = PoincareMT.RiemannianMetric.edist nativeRiemannianMetric p q`，包含逆映射和反定向等距映射。此保距结论由真实微分和上游积分估计内部推出，无需提供内蕴保距前提。
+
+上述实际原对象消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`；上游五模块编译同样零错误、零警告，未修改其源码或项目钉版。复用的是固定上游距离估计与本项目已有实际光滑／微分界接口；本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。原两点距离等于该度量内蕴距离的结论、实际曲率 −1、一般原流形覆盖及体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 原竖直曲线的实际黎曼速度、长度与内蕴距离
+
+对于任意原水平坐标 `z : ℂ`，原曲线 `verticalAxisLine z t = coordinatePoint z (Real.exp t) (Real.exp_pos t)` 在同一原 H3 图册上全局 C∞。其实际 `HasMFDerivAt` 的方向是原坐标线性等距作用于 `(0, Real.exp t)` 后所得的切向量；真实坐标图求导与原开放嵌入给出该流形微分，并非仅列出一个候选方向。
+
+上述实际曲线微分代入原高度负二次幂的实际黎曼内积，得到 `g.inner (γ t) (mfderiv γ t 1) (mfderiv γ t 1) = 1`。原高度正好为 `Real.exp t`，其平方与方向高度分量的平方相消；不把默认欧氏切向范数当作所选黎曼范数。实际安装该 `g` 的局部 `RiemannianBundle` 后，曲线真实切向范数为 1，故 `g.pathELength γ a b = ENNReal.ofReal (b-a)`。
+
+对任意 `a ≤ b`，真实光滑曲线的长度给出 `g.edist (γ a) (γ b) ≤ ENNReal.ofReal (b-a)`。原对数高度沿同一竖直曲线精确等于参数 `t`；已核验的全局对数高度导数距离界给出反向不等式，因此实际所选度量的竖直内蕴距离精确为 `ENNReal.ofReal (b-a)`。不需要假设原 H3 距离与此内蕴距离已全局相等。
+
+上述实际光滑性、曲线微分、速度、长度与有序区间内蕴距离等式已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用实际图册求导、指数求导、原黎曼内积公式、路径长度积分及已核验的对数高度下界；本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。任意原两点的原距离与所选内蕴距离等式、实际曲率 −1、一般原流形覆盖及体积绑定、同一规定 `h,d` 的完整 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 原 H3 任意两点的黎曼距离兼容
+
+对同一原 H3 中任意两点 `p,q`，已核验
+`PoincareMT.RiemannianMetric.edist nativeRiemannianMetric p q = edist p q`，其 `toReal` 精确等于原 `dist p q`。这里保留原点、原空间距离、原拓扑、原欧氏三维图册与实际高度负二次幂黎曼度量，不额外提供两点齐性或距离兼容前提。
+
+原 Lorentz 嵌入中两个时间分量相等的点，其差向量具有零时间分量。不同点时，该向量的 Lorentz 自配对非零，由原双曲距离的 cosh 核内部证明；真实 Lorentz 反射将两点互换、固定原 `rayOrigin` 并保持所有未来向量的正时间分量，因此构成实际原 H3 等距映射。同一点由恒等映射处理。先应用原 `originTransport p` 的逆，再应用此原点固定反射，得到一个实际原等距映射，将 `p` 送到原起点、`q` 送到 `verticalAxisLine 0 (dist p q)`，包含 `p=q`。
+
+已核验的原等距内蕴保距与原竖直曲线内蕴距离公式，将任意原两点的实际所选度量距离识别为 `ENNReal.ofReal (dist p q)`，从而得到上述全局等式。局部显式安装同一实际 `nativeRiemannianMetric` 的 `Bundle.RiemannianBundle` 后，原 H3 满足实际 `IsRiemannianManifold (𝓡 3) H3`；没有将默认欧氏切向范数当作此黎曼范数。
+
+上述原点固定等距、原两点竖直规范化、全局距离等式及原黎曼流形兼容已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。复用原 Lorentz 反射／正时间重建、原距离核、已核验的实际内蕴保距和竖直长度接口；逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。实际曲率 −1、一般原流形覆盖及有限体积绑定、非紧尖点和完整给定 `h,d` 的 Mostow–Prasad 及官方验收仍未完成。
+
+
+### 原 H3 的平坦切丛度量、实际联络存在性与对数高度梯度
+
+在同一原 H3 拓扑及实际欧氏三维单图册上，`nativeFlatRiemannianMetric` 是实际全局 C∞ 黎曼度量，其两切向量内积为原图册模型的欧氏内积。正定性、切向单位球有界性及切丛截面的光滑性均已内部证明。原 `FiberBundle.extend` 在此实际单图册上恰为常值切向场；其真实总空间截面可微性由公开扩张接口给出。
+
+固定上游版本 `432c38f2aa5a30efb13871292d17b4a3309a496a` 的一般 Levi–Civita 存在定理，实际应用于同一原 H3 的上述平坦度量及原高度负二次幂度量，分别给出真正兼容、无挠联络数据的存在性。所需原流形图册、全局光滑度量、Hausdorff 性与第二可数性来自已有原对象构造，未提供额外联络存在前提。LC／梯度依赖闭包含 13 个原源码模块及一个只将未使用参数 `D` 重命名为 `_D` 的梯度兼容模块；该兼容改动保留声明、类型和数学定义，不关闭检查。
+
+对于任意上述实际平坦 Levi–Civita 数据 `D`，原 `nativeLogHeight` 的实际 `D.gradient` 等于原高度倒数乘以高度投影的欧氏对偶单位向量。该向量的实际自内积为 1，故平坦度量下真实梯度范数平方精确为原高度平方的倒数；梯度识别直接由公开 `inner_gradient`、已核验的原对数高度实际微分及对偶向量内积公式推出。原高度倒数的实际微分以及 `exp(±2*logheight)` 的精确原高度公式也已核验。
+
+上述原对象构造与消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。常值切向场的实际协变导数为零、平坦曲率与真正 Hessian、原高度缩放度量的曲率 −1 仍待闭合；一般原流形的通用度量覆盖及有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 原 H3 的实际平坦联络、零曲率与无条件对数高度 Hessian
+
+对同一原 H3 的实际平坦度量及任意实际 Levi–Civita 数据 `D`，原常值切向场的 Lie 括号和协变导数均为零。原欧氏坐标图的真实 `mfderiv` 为恒等映射；公开 `mpullback_mlieBracket` 将目标欧氏空间常值场的零括号搬回原切丛。真实常值切丛截面的可微性、常数内积的零微分及原零括号代入公开 Koszul 恒等式，再由正定内积，内部推出 `D.connection (fun _ => Y) p = 0`，没有额外提供联络为零的前提。
+
+上游实际点态曲率使用的 `FiberBundle.extend` 在原单图册上恰为同一常值场，因此其一阶、二阶协变导数及括号项均为零；得到原平坦度量实际 `D.curvature p U V W = 0` 和实际总化截面曲率为零。此处零曲率包含退化向量对；后续高度缩放度量的曲率 −1 仍须保留向量对线性无关或 Gram 非零条件。
+
+原对数高度的真正 Hessian 现无条件满足 `D.hessian nativeLogHeight p V W = -nativeEuclideanHeightCLM V * nativeEuclideanHeightCLM W / height p.coordinates ^ 2`。先前辅助定理的联络为零前提由上述原对象证明内部闭合；保留相同原度量、实际 `D`、原函数、原点和切向量。
+
+上述原联络、平坦曲率和无条件 Hessian 已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。原高度缩放度量的实际曲率 −1、一般原流形覆盖与有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 及官方验收仍未完成。
+
+
+### 原高度缩放度量的实际共形曲率 −1
+
+在同一原 H3 切丛上，实际 `positiveScaling nativeFlatRiemannianMetric (exp(-2*nativeLogHeight))` 与原 `nativeRiemannianMetric` 是同一度量结构。原内积等式、原正高度及 `exp(-2*logheight)=height⁻²` 内部给出该结构等式，随后沿其搬运给定原度量的同一个实际 Levi–Civita 数据 `Dprime`；等式消去保证搬运前后的实际截面曲率相等。
+
+固定上游一般 Levi–Civita 存在定理内部选择平坦数据 `Dflat`，公开共形截面曲率公式消费已经核验的实际平坦零曲率、无条件原对数高度 Hessian、梯度范数平方及指数高度恒等式。Hessian 与方向微分平方逐项抵消，剩下原高度平方乘以其负倒数，精确得到 `Dprime.sectionalCurvature p V W = -1`。本项向量对前提是原平坦度量下正交且分别单位长度；保留同一原 `p,V,W,Dprime`，没有提供曲率值或联络为零的额外前提。
+
+所需固定上游共形闭包含 33 个模块，原源码均保留并核验固定 Git blob。实际洁净编译使用先前梯度未使用参数的重命名，以及三个明确的兼容模块：两个证明局部类绑定 `letI` 改为 `let`，两个分别属于不同模块的辅助引理显式省去未使用的自动节假设；后两项保留原结论和证明正文，去掉冗余前提。没有关闭检查或添加公理。
+
+上述实际度量等式、依赖数据搬运及原曲率消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。任意原线性无关向量对的曲率接口、一般原流形覆盖与有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 及官方验收仍未完成。
