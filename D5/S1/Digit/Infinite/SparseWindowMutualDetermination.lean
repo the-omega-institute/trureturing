@@ -5,15 +5,11 @@
    anchors: []
    utility: none
    digest: Sparse Fibonacci windows have equal fibres precisely when their cuts agree. -/
-
 import D5.S1.Digit.Infinite.WindowCylinderPartition
 import Mathlib.Logic.Function.Basic
 import Mathlib.Topology.OpenPartialHomeomorph.Basic
-
 set_option autoImplicit false
-
 namespace D5.S1.Digit.Infinite.SparseWindowMutualDetermination
-
 open D5.S1.Digit.Infinite.SuccessorContinuity
 open D5.S1.Digit.Infinite.SignedSeriesRange
 open D5.S1.Digit.Infinite.MultiplierObstruction
@@ -21,18 +17,14 @@ open D5.S1.Digit.Infinite.WindowSuccessorGraph
 open D5.S1.Digit.Infinite.WindowCylinderPartition
 open D5.S1.Digit
 open scoped Topology
-
 /-- The length-L window of the canonical natural Fibonacci row. -/
 def q (L n : ℕ) : X L := P L (zRow n)
-
 /-- Observations at the retained times of one natural source. -/
 def sigma (m : ℕ) (S : Finset ℕ) (n : ℕ) : (t : S) → X m :=
   fun t => q m (n + t.val)
-
 /-- The inclusive natural indices of all translated query cuts. -/
 def cuts (m : ℕ) (S : Finset ℕ) : Finset ℕ :=
   S.biUnion (fun t => Finset.Icc (t + 1) (t + G m))
-
 /-- The raw canonical digits of a natural source have its value and Boolean row. -/
 theorem natural_row_raw_data (n : ℕ) : rawValue (rawOfZeckendorf (Nat.zeckendorf n)) = n ∧
     ∀ j : ℕ, (if (zRow n).val j then (1 : ℝ) else 0) =
@@ -62,7 +54,6 @@ theorem natural_row_raw_data (n : ℕ) : rawValue (rawOfZeckendorf (Nat.zeckendo
     · have hn : r j = 1 := by have := hm.mp h; omega
       simp [hn]
   exact ⟨hv, hd⟩
-
 /-- The phase of the canonical natural row is its golden rotation phase. -/
 theorem natural_row_phase (n : ℕ) : phase (zRow n) =
     (((n : ℝ) * Real.goldenRatio : ℝ) : AddCircle (1 : ℝ)) := by
@@ -105,7 +96,6 @@ theorem natural_row_phase (n : ℕ) : phase (zRow n) =
     apply (AddCircle.coe_eq_zero_iff (1 : ℝ)).mpr
     exact ⟨(∑ j ∈ r.support, r j * Nat.fib (j + 3) : ℕ), by simp⟩
   exact sub_eq_self.mpr hz
-
 /-- Natural golden phases avoid all positive negative-index cuts. -/
 theorem natural_phase_avoids_cut (n k : ℕ) (hk : 1 ≤ k) :
     (((n : ℝ) * Real.goldenRatio : ℝ) : AddCircle (1 : ℝ)) ≠ E k := by
@@ -118,7 +108,6 @@ theorem natural_phase_avoids_cut (n k : ℕ) (hk : 1 ≤ k) :
   obtain ⟨i, hi⟩ := (AddCircle.coe_eq_zero_iff (1 : ℝ)).mp hz
   apply (Real.goldenRatio_irrational.natCast_mul (m := n + k) (by omega)).ne_int i
   simpa only [zsmul_eq_mul, mul_one] using hi.symm
-
 /-- A natural window label is equivalent to membership in its open cylinder arc. -/
 theorem natural_window_arc (L : ℕ) (hL : 1 ≤ L) (n : ℕ) (p : X L) :
     q L n = p ↔ phase (zRow n) ∈ A p := by
@@ -142,7 +131,6 @@ theorem natural_window_arc (L : ℕ) (hL : 1 ≤ L) (n : ℕ) (p : X L) :
       · have he : zRow n = eMinus j := by simpa only [Set.mem_singleton_iff] using hn
         exact False.elim (hRowAvoid n j hj (congrArg phase he |>.trans (hEndpoint j hj).1))
   · exact Or.inl
-
 set_option maxHeartbeats 1600000 in
 -- The collar, common-lift, and binary-anchor arguments form one joint geometry proof.
 /-- Equal translated cut sets characterize equal natural fibres. The actual-image
@@ -159,6 +147,7 @@ theorem sparse_window_mutual_determination (m M : ℕ) (hm : 1 ≤ m)
         (∀ n, (e (q M n)).val = sigma m S n) ∧
         ∀ n, e.symm ⟨sigma m S n, ⟨n, rfl⟩⟩ = q M n) := by
   classical
+  have hRawRow := natural_row_raw_data
   have hPhase := natural_row_phase
   -- Irrationality separates indexed cuts.
   have hE : Function.Injective E := by
@@ -1007,7 +996,5 @@ theorem sparse_window_mutual_determination (m M : ℕ) (hm : 1 ≤ m)
     · exact hActual
     · exact hdec
 
-
 #print axioms sparse_window_mutual_determination
-
 end D5.S1.Digit.Infinite.SparseWindowMutualDetermination

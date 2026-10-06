@@ -29,6 +29,34 @@ internal sealed class SparseWindowMutualDeterminationDocument : IScribeDocumentD
                     + "with witness n, and val for the underlying value of a range element. "
                     + "Equiv denotes a bijection with a specified inverse.")),
             Describe.Lean(
+                DescribeId.Create("sparse-window-natural-row-raw-data"),
+                DeclarationHandle.Create(
+                    "D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_raw_data"),
+                H("Canonical natural digits"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, the raw digits of its Zeckendorf expansion have value n. At every position their real coefficient equals the Boolean digit of zRow(n)."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-natural-row-phase"),
+                DeclarationHandle.Create(
+                    "D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_phase"),
+                H("Natural row phase"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, the phase of zRow(n) is n times the golden ratio modulo one. The equality identifies natural digit observations with circle rotation."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-natural-phase-avoids-cut"),
+                DeclarationHandle.Create(
+                    "D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_avoids_cut"),
+                H("Natural phases avoid positive cuts"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n and every positive cut index k, the phase n times the golden ratio modulo one differs from E(k). Irrationality excludes equality."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-natural-window-arc"),
+                DeclarationHandle.Create(
+                    "D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_window_arc"),
+                H("Natural labels and cylinder arcs"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every positive width L, natural n, and legal word p of width L, q(L,n)=p if and only if the phase of zRow(n) belongs to the open cylinder arc A(p). Natural rows avoid the endpoint alternatives of the closed cylinder."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("sparse-window-mutual-determination"),
                 DeclarationHandle.Create(
                     "D5/S1/Digit/Infinite/SparseWindowMutualDetermination."

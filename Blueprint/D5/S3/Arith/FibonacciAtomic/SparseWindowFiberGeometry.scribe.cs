@@ -26,6 +26,10 @@ internal sealed class SparseWindowFiberGeometryDocument : IScribeDocumentDefinit
                     + "A component determines its tuple uniquely, and each regular point has one tuple. "
                     + "The number of distinct circle cuts equals the number of their natural indices. "
                     + "Every nonempty fibre contains a golden phase with natural index above any given bound. "
-                    + "The phase visits refer to circle rotation; identification with canonical natural "
-                    + "digit rows is an additional relation."))), DescribeRole.Theorem))));
+                    + "The regular domain has exactly as many connected components as cut indices. "
+                    + "The actual natural tuple labels have this same cardinality. Natural digit rows "
+                    + "and rotation phases agree through the canonical natural row phase and cylinder arc identities. "
+                    + "Sorting real lifts of the finite cut set gives one nonempty open interval after "
+                    + "each cut, including the last interval ending at the chart seam. These disjoint "
+                    + "intervals cover the regular domain and count its connected components."))), DescribeRole.Theorem))));
 }

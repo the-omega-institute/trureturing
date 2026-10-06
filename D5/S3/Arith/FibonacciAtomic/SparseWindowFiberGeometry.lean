@@ -8,6 +8,8 @@
 
 import D5.S1.Digit.Infinite.SparseWindowMutualDetermination
 import D5.S1.Phase.Basic
+import Mathlib.Topology.Connected.Clopen
+import Mathlib.Data.Finset.Max
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Topology.Instances.AddCircle.DenseSubgroup
 import Mathlib.Topology.Algebra.Group.SubmonoidClosure
@@ -22,7 +24,7 @@ open D5.S1.Digit.Infinite.WindowCylinderPartition
 open D5.S1.Digit.Infinite.WindowSuccessorGraph
 open D5.S1.Digit.Infinite.SparseWindowMutualDetermination
 open D5.S1.Phase
-open Set
+open Set Function Topology
 
 local notation "Circle" => AddCircle (1 : ℝ)
 
@@ -250,6 +252,129 @@ private theorem phase_tail_dense (bound : ℕ) :
   push_cast
   ring
 
+private theorem circle_complement_components_card (T : Finset Circle) (hT : T.Nonempty) :
+    Nat.card (ConnectedComponents ↥((↑T : Set Circle)ᶜ)) = T.card := by
+  classical
+  haveI : Fact (0 < (1 : ℝ)) := ⟨by norm_num⟩
+  obtain ⟨p, hp⟩ := hT
+  let a : ℝ := (AddCircle.equivIco (1 : ℝ) 0 p).val
+  have hap : (a : Circle) = p := AddCircle.coe_equivIco
+  let repr : Circle → ℝ := fun z => (AddCircle.equivIco (1 : ℝ) a z).val
+  have hre (z : Circle) : ((repr z : ℝ) : Circle) = z := AddCircle.coe_equivIco
+  have hrb (z : Circle) : a ≤ repr z ∧ repr z < a + 1 :=
+    (AddCircle.equivIco (1 : ℝ) a z).property
+  have hrepr : Function.Injective repr := by
+    intro z w h
+    exact (hre z).symm.trans ((congrArg (fun x : ℝ => (x : Circle)) h).trans (hre w))
+  let R : Finset ℝ := T.image repr
+  have haR : a ∈ R := by
+    refine Finset.mem_image.mpr ⟨p, hp, ?_⟩
+    rw [← hap]
+    exact AddCircle.equivIco_coe_of_mem ⟨le_rfl, by linarith⟩
+  have hRb (r : ℝ) (hr : r ∈ R) : a ≤ r ∧ r < a + 1 := by
+    obtain ⟨z, hz, rfl⟩ := Finset.mem_image.mp hr
+    exact hrb z
+  let upperGap (r : R) : ℝ :=
+    (insert (a + 1) (R.filter (fun s => r.val < s))).min' (Finset.insert_nonempty _ _)
+  have hupper (r : R) : r.val < upperGap r ∧ upperGap r ≤ a + 1 ∧
+      ∀ s ∈ R, r.val < s → upperGap r ≤ s := by
+    refine ⟨?_, ?_, ?_⟩
+    · have hm := Finset.min'_mem (insert (a + 1) (R.filter (fun s => r.val < s)))
+        (Finset.insert_nonempty _ _)
+      rcases Finset.mem_insert.mp hm with he | he
+      · simpa only [upperGap, he] using (hRb r.val r.property).2
+      · exact (Finset.mem_filter.mp he).2
+    · exact Finset.min'_le _ _ (Finset.mem_insert_self _ _)
+    · intro s hs hrs
+      exact Finset.min'_le _ _ (Finset.mem_insert_of_mem (Finset.mem_filter.mpr ⟨hs, hrs⟩))
+  let gap (r : R) : Set Circle := (fun x : ℝ => (x : Circle)) '' Ioo r.val (upperGap r)
+  have hsub (r : R) : gap r ⊆ (↑T : Set Circle)ᶜ := by
+    rintro z ⟨x, hx, rfl⟩ hz
+    have hxI : x ∈ Ico a (a + 1) :=
+      ⟨(hRb r.val r.property).1.trans hx.1.le, hx.2.trans_le (hupper r).2.1⟩
+    have hxR : x ∈ R := by
+      refine Finset.mem_image.mpr ⟨(x : Circle), hz, ?_⟩
+      exact AddCircle.equivIco_coe_of_mem hxI
+    exact (not_lt_of_ge ((hupper r).2.2 x hxR hx.1)) hx.2
+  have hopen (r : R) : IsOpen (gap r) := QuotientAddGroup.isOpenMap_coe _ isOpen_Ioo
+  have hconn (r : R) : IsConnected (gap r) :=
+    (isConnected_Ioo (hupper r).1).image _ (AddCircle.continuous_mk' (1 : ℝ)).continuousOn
+  have hdisj : Pairwise (Disjoint on gap) := by
+    intro r s hrs
+    apply Set.disjoint_left.mpr
+    rintro z ⟨x, hx, hxe⟩ ⟨y, hy, hye⟩
+    have hxy : x = y := (AddCircle.coe_eq_coe_iff_of_mem_Ico
+      ⟨(hRb r.val r.property).1.trans hx.1.le, hx.2.trans_le (hupper r).2.1⟩
+      ⟨(hRb s.val s.property).1.trans hy.1.le, hy.2.trans_le (hupper s).2.1⟩).mp
+      (hxe.trans hye.symm)
+    subst y
+    rcases lt_or_gt_of_ne (Subtype.val_injective.ne hrs) with h | h
+    · exact (not_lt_of_ge (((hupper r).2.2 s.val s.property h).trans hy.1.le)) hx.2
+    · exact (not_lt_of_ge (((hupper s).2.2 r.val r.property h).trans hx.1.le)) hy.2
+  have hcover : ∀ z ∈ (↑T : Set Circle)ᶜ, ∃ r : R, z ∈ gap r := by
+    intro z hz
+    let x := repr z
+    have hxR : x ∉ R := by
+      intro hx
+      obtain ⟨w, hw, hwx⟩ := Finset.mem_image.mp hx
+      exact hz (hrepr hwx ▸ hw)
+    have hne : (R.filter (fun r => r ≤ x)).Nonempty :=
+      ⟨a, Finset.mem_filter.mpr ⟨haR, (hrb z).1⟩⟩
+    let r := (R.filter (fun r => r ≤ x)).max' hne
+    have hr := Finset.mem_filter.mp (Finset.max'_mem _ hne)
+    refine ⟨⟨r, hr.1⟩, x, ⟨lt_of_le_of_ne hr.2 (by intro h; exact hxR (h ▸ hr.1)), ?_⟩,
+      hre z⟩
+    have hu := Finset.min'_mem (insert (a + 1) (R.filter (fun s => r < s)))
+      (Finset.insert_nonempty _ _)
+    rcases Finset.mem_insert.mp hu with he | he
+    · change x < upperGap ⟨r, hr.1⟩
+      dsimp [upperGap]
+      rw [he]
+      exact (hrb z).2
+    · have hs := Finset.mem_filter.mp he
+      by_contra h
+      have hsx : (upperGap ⟨r, hr.1⟩) ≤ x := le_of_not_gt h
+      have hle : (upperGap ⟨r, hr.1⟩) ≤ r :=
+        Finset.le_max' _ _ (Finset.mem_filter.mpr ⟨hs.1, hsx⟩)
+      exact (not_lt_of_ge hle) hs.2
+  let D : Set Circle := (↑T : Set Circle)ᶜ
+  let U (r : R) : Set D := Subtype.val ⁻¹' gap r
+  have hUopen (r : R) : IsOpen (U r) := (hopen r).preimage continuous_subtype_val
+  have hUdisj : Pairwise (Disjoint on U) := by
+    intro r s h
+    exact (hdisj h).preimage Subtype.val
+  have hUcover : ⋃ r : R, U r = univ := by
+    apply Set.eq_univ_of_forall
+    intro z
+    obtain ⟨r, hr⟩ := hcover z.val z.property
+    exact Set.mem_iUnion.mpr ⟨r, hr⟩
+  have hUclopen (r : R) : IsClopen (U r) := by
+    refine ⟨?_, hUopen r⟩
+    rw [← isOpen_compl_iff]
+    have he : (U r)ᶜ = ⋃ s : {s : R // s ≠ r}, U s.val := by
+      ext z
+      constructor
+      · intro hz
+        obtain ⟨s, hs⟩ := hcover z.val z.property
+        exact Set.mem_iUnion.mpr ⟨⟨s, by intro he; exact hz (he ▸ hs)⟩, hs⟩
+      · intro hz hr
+        obtain ⟨s, hs⟩ := Set.mem_iUnion.mp hz
+        exact Set.disjoint_left.mp (hUdisj s.property) hs hr
+    rw [he]
+    exact isOpen_iUnion (fun s => hUopen s.val)
+  have hUconn (r : R) : IsConnected (U r) := by
+    have he : Subtype.val '' U r = gap r :=
+      Set.image_preimage_eq_of_subset (by simpa only [Subtype.range_coe] using hsub r)
+    refine ⟨?_, IsInducing.subtypeVal.isPreconnected_image.mp (by rw [he]; exact (hconn r).2)⟩
+    obtain ⟨z, hz⟩ := (hconn r).1
+    exact ⟨⟨z, hsub r hz⟩, hz⟩
+  calc
+    Nat.card (ConnectedComponents D) = Nat.card R :=
+      Nat.card_congr (ConnectedComponents.equivOfIsClopenOfIsConnected
+        hUclopen hUdisj hUcover hUconn)
+    _ = R.card := by rw [Nat.card_eq_fintype_card, Fintype.card_coe]
+    _ = T.card := Finset.card_image_of_injective _ hrepr
+
 /-- For width at least two, every nonempty time tuple fibre is precisely one
 connected component of the regular circle domain, and that component determines
 the tuple uniquely. Every regular point has a label, the translated cuts have
@@ -266,7 +391,9 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
     (∀ z ∈ regularDomain m S, ∃! p : (t : S) → X m, z ∈ fiber m S p) ∧
     (E '' (↑(cuts m S) : Set ℕ)).ncard = (cuts m S).card ∧
     (∀ p : (t : S) → X m, (fiber m S p).Nonempty → ∀ bound : ℕ,
-      ∃ n : ℕ, bound < n ∧ goldenPhase (n : ℤ) ∈ fiber m S p) := by
+      ∃ n : ℕ, bound < n ∧ goldenPhase (n : ℤ) ∈ fiber m S p) ∧
+    Nat.card (ConnectedComponents (regularDomain m S)) = (cuts m S).card ∧
+    Nat.card (Set.range (sigma m S)) = (cuts m S).card := by
   classical
   have hpos : 0 < alpha := inv_pos.mpr Real.goldenRatio_pos
   have hlt : alpha < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
@@ -329,7 +456,43 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
       exact IsPreconnected.subset_left_of_subset_union hU hV hdisjoint hcover
         ⟨z, mem_connectedComponentIn (hsubset p hz), hz t⟩
         isPreconnected_connectedComponentIn hw
-  refine ⟨heq, ?_, ?_, ?_, ?_⟩
+  have hE : Function.Injective E := by
+    intro i j hij
+    have he : goldenPhase (-(i : ℤ)) = goldenPhase (-(j : ℤ)) := by
+      simpa only [E, goldenPhase, Int.cast_neg, Int.cast_natCast] using hij
+    exact_mod_cast neg_injective (goldenPhase_injective he)
+  have hcuts : (cuts m S).Nonempty := by
+    refine ⟨t0 + 1, Finset.mem_biUnion.mpr ⟨t0, ht0, Finset.mem_Icc.mpr ⟨le_rfl, ?_⟩⟩⟩
+    have hg : 0 < G m := by
+      unfold G
+      exact Nat.fib_pos.mpr (by omega)
+    omega
+  have hcomponents : Nat.card (ConnectedComponents (regularDomain m S)) =
+      (cuts m S).card := by
+    have h := circle_complement_components_card ((cuts m S).image E) (hcuts.image E)
+    rw [Finset.coe_image] at h
+    exact h.trans (Finset.card_image_of_injective _ hE)
+  have hnatural (n : ℕ) (p : (t : S) → X m) :
+      sigma m S n = p ↔ goldenPhase (n : ℤ) ∈ fiber m S p := by
+    have hcoord (t : S) : q m (n + t.val) = p t ↔
+        goldenPhase (n : ℤ) + goldenPhase (t.val : ℤ) ∈ A (p t) := by
+      rw [natural_window_arc m (by omega), natural_row_phase]
+      simp only [goldenPhase, Nat.cast_add, Int.cast_natCast, add_mul, AddCircle.coe_add]
+    constructor
+    · intro h t
+      exact (hcoord t).mp (congrFun h t)
+    · intro h
+      funext t
+      exact (hcoord t).mpr (h t)
+  have hactual (p : (t : S) → X m) : p ∈ Set.range (sigma m S) ↔
+      (fiber m S p).Nonempty := by
+    constructor
+    · rintro ⟨n, rfl⟩
+      exact ⟨goldenPhase (n : ℤ), (hnatural n _).mp rfl⟩
+    · intro hp
+      obtain ⟨n, hn⟩ := (phase_tail_dense 0).exists_mem_open (isOpen_fiber m S p) hp
+      exact ⟨n + 0 + 1, (hnatural _ p).mpr hn⟩
+  refine ⟨heq, ?_, ?_, ?_, ?_, hcomponents, ?_⟩
   · intro p q z w hz hw
     constructor
     · intro hsame
@@ -350,14 +513,52 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
     funext t
     exact arc_unique m (by omega) (q t) (Classical.choose (hc t))
       (z + goldenPhase (t.val : ℤ)) (hq t) (Classical.choose_spec (hc t))
-  · have hE : Function.Injective E := by
-      intro i j hij
-      have he : goldenPhase (-(i : ℤ)) = goldenPhase (-(j : ℤ)) := by
-        simpa only [E, goldenPhase, Int.cast_neg, Int.cast_natCast] using hij
-      exact_mod_cast neg_injective (goldenPhase_injective he)
-    rw [Set.ncard_image_of_injective _ hE, Set.ncard_coe_finset]
+  · rw [Set.ncard_image_of_injective _ hE, Set.ncard_coe_finset]
   · intro p hp bound
     obtain ⟨n, hn⟩ := (phase_tail_dense bound).exists_mem_open (isOpen_fiber m S p) hp
     exact ⟨n + bound + 1, by omega, hn⟩
+  · let U (p : Set.range (sigma m S)) : Set (regularDomain m S) :=
+      Subtype.val ⁻¹' fiber m S p.val
+    have hUopen (p : Set.range (sigma m S)) : IsOpen (U p) :=
+      (isOpen_fiber m S p.val).preimage continuous_subtype_val
+    have hUdisj : Pairwise (Disjoint on U) := by
+      intro p q hpq
+      apply Set.disjoint_left.mpr
+      intro z hp hq
+      apply hpq
+      apply Subtype.ext
+      funext t
+      exact arc_unique m (by omega) (p.val t) (q.val t)
+        (z.val + goldenPhase (t.val : ℤ)) (hp t) (hq t)
+    have hUcover : ⋃ p : Set.range (sigma m S), U p = univ := by
+      apply Set.eq_univ_of_forall
+      intro z
+      have hc (t : S) : ∃ p : X m, z.val + goldenPhase (t.val : ℤ) ∈ A p :=
+        arc_cover m (by omega) _ ((regular_domain_iff m S z.val).mp z.property t)
+      let p : (t : S) → X m := fun t => Classical.choose (hc t)
+      have hp : z.val ∈ fiber m S p := fun t => Classical.choose_spec (hc t)
+      exact Set.mem_iUnion.mpr ⟨⟨p, (hactual p).mpr ⟨z.val, hp⟩⟩, hp⟩
+    have hUclopen (p : Set.range (sigma m S)) : IsClopen (U p) := by
+      refine ⟨?_, hUopen p⟩
+      rw [← isOpen_compl_iff]
+      have he : (U p)ᶜ = ⋃ q : {q : Set.range (sigma m S) // q ≠ p}, U q.val := by
+        ext z
+        constructor
+        · intro hz
+          obtain ⟨q, hq⟩ := Set.mem_iUnion.mp (hUcover.symm ▸ Set.mem_univ z)
+          exact Set.mem_iUnion.mpr ⟨⟨q, by intro he; exact hz (he ▸ hq)⟩, hq⟩
+        · intro hz hp
+          obtain ⟨q, hq⟩ := Set.mem_iUnion.mp hz
+          exact Set.disjoint_left.mp (hUdisj q.property) hq hp
+      rw [he]
+      exact isOpen_iUnion (fun q => hUopen q.val)
+    have hUconn (p : Set.range (sigma m S)) : IsConnected (U p) := by
+      have he : Subtype.val '' U p = fiber m S p.val :=
+        Set.image_preimage_eq_of_subset (by simpa only [Subtype.range_coe] using hsubset p.val)
+      refine ⟨?_, IsInducing.subtypeVal.isPreconnected_image.mp (by rw [he]; exact hconnected p.val)⟩
+      obtain ⟨z, hz⟩ := (hactual p.val).mp p.property
+      exact ⟨⟨z, hsubset p.val hz⟩, hz⟩
+    exact (Nat.card_congr (ConnectedComponents.equivOfIsClopenOfIsConnected
+      hUclopen hUdisj hUcover hUconn)).symm.trans hcomponents
 
 end D5.S3.Arith.FibonacciAtomic.SparseWindowFiberGeometry
