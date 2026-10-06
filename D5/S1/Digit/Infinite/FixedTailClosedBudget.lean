@@ -7,8 +7,10 @@
    digest: Fixed legal tails attain the endpoint budget for every finite return word. -/
 
 import D5.S1.Digit.Infinite.ClosedObservationGraphRealization
+import D5.S1.Words.Powers.WordPower
 import Mathlib.Topology.MetricSpace.Contracting
 import Mathlib.Order.ConditionallyCompleteLattice.Finset
+import Mathlib.Analysis.Convex.Function
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
@@ -20,53 +22,30 @@ open scoped Topology
 
 namespace D5.S1.Digit.Infinite.FixedTailClosedBudget
 
+open D5.S1.Words.Powers (wordPower)
+
 private def intervalDistance (x l u : ℝ) : ℝ := max (l - x) (max 0 (x - u))
 
 private theorem intervalDistance_nonneg (x l u : ℝ) : 0 ≤ intervalDistance x l u := by
   unfold intervalDistance
   exact (le_max_left _ _).trans (le_max_right _ _)
 
-private theorem intervalDistance_bounds (x l u D : ℝ)
-    (h : intervalDistance x l u ≤ D) :
-    l - D ≤ x ∧ x ≤ u + D := by
-  unfold intervalDistance at h
-  have h₁ := (max_le_iff.mp h).1
-  have h₂ := (max_le_iff.mp h).2
-  have h₃ := (max_le_iff.mp h₂).2
-  constructor <;> linarith
-
 private theorem affine_endpoint_bound (a b lo hi l u x : ℝ) (hx : x ∈ Set.Icc lo hi) :
     intervalDistance (a * x + b) l u ≤
       max (intervalDistance (a * lo + b) l u)
         (intervalDistance (a * hi + b) l u) := by
-  let D : ℝ := max (intervalDistance (a * lo + b) l u)
-    (intervalDistance (a * hi + b) l u)
-  have hD : 0 ≤ D := by
-    dsimp [D]
-    exact (intervalDistance_nonneg _ _ _).trans (le_max_left _ _)
-  have hleft : l - D ≤ a * lo + b ∧ a * lo + b ≤ u + D := by
-    exact intervalDistance_bounds _ _ _ _ (le_max_left _ _)
-  have hright : l - D ≤ a * hi + b ∧ a * hi + b ≤ u + D := by
-    exact intervalDistance_bounds _ _ _ _ (le_max_right _ _)
-  have hbetween : l - D ≤ a * x + b ∧ a * x + b ≤ u + D := by
-    rcases hx with ⟨hxlo, hxhi⟩
-    by_cases ha : 0 ≤ a
-    · constructor <;> nlinarith
-    · have ha' : a ≤ 0 := le_of_not_ge ha
-      constructor <;> nlinarith
-  change intervalDistance (a * x + b) l u ≤ D
-  unfold intervalDistance
-  apply max_le
-  · linarith [hbetween.1]
-  · apply max_le
-    · exact hD
-    · linarith [hbetween.2]
+  let F : ℝ →ₗ[ℝ] ℝ := LinearMap.mulLeft ℝ a
+  have hf : ConvexOn ℝ Set.univ (fun y : ℝ => a * y + b) :=
+    (F.convexOn convex_univ).add_const b
+  have hfc : ConcaveOn ℝ Set.univ (fun y : ℝ => a * y + b) :=
+    (F.concaveOn convex_univ).add_const b
+  have hd : ConvexOn ℝ Set.univ (fun y => intervalDistance (a * y + b) l u) :=
+    ((convexOn_const l convex_univ).sub hfc).sup
+      ((convexOn_const 0 convex_univ).sup (hf.sub (concaveOn_const u convex_univ)))
+  exact hd.le_on_segment (Set.mem_univ lo) (Set.mem_univ hi) (Icc_subset_segment hx)
 
 private def returnEval (A : Fin 2 → ℝ) (a : ℝ) (z : List (Fin 2)) (x : ℝ) : ℝ :=
   z.foldr (fun i y => A i + a * y) x
-
-private def repeatWord (w : List (Fin 2)) (n : ℕ) : List (Fin 2) :=
-  (List.replicate n w).flatten
 
 private noncomputable def hullLower (A : Fin 2 → ℝ) (a : ℝ) : ℝ :=
   if 0 ≤ a then min (A 0) (A 1) / (1 - a)
@@ -78,8 +57,8 @@ private noncomputable def hullUpper (A : Fin 2 → ℝ) (a : ℝ) : ℝ :=
 
 private theorem returnEval_repeat (A : Fin 2 → ℝ) (a : ℝ)
     (w : List (Fin 2)) (n : ℕ) (x : ℝ) :
-    returnEval A a (repeatWord w n) x = (returnEval A a w)^[n] x := by
-  unfold returnEval repeatWord
+    returnEval A a (wordPower n w) x = (returnEval A a w)^[n] x := by
+  unfold returnEval wordPower
   rw [List.foldr_flatten]
   have hrepl : List.replicate n w = (List.replicate n ()).map (fun _ => w) := by
     simp only [List.map_replicate]
@@ -156,9 +135,9 @@ private theorem returnEval_mem_hull (A : Fin 2 → ℝ) (a : ℝ) (ha : |a| < 1)
 
 private theorem extremal_words (A : Fin 2 → ℝ) (a : ℝ) (ha : |a| < 1) :
     ∃ wlo whi : List (Fin 2), ∀ x : ℝ,
-      Filter.Tendsto (fun n => returnEval A a (repeatWord wlo n) x)
+      Filter.Tendsto (fun n => returnEval A a (wordPower n wlo) x)
         Filter.atTop (nhds (hullLower A a)) ∧
-      Filter.Tendsto (fun n => returnEval A a (repeatWord whi n) x)
+      Filter.Tendsto (fun n => returnEval A a (wordPower n whi) x)
         Filter.atTop (nhds (hullUpper A a)) := by
   let ilo : Fin 2 := if A 0 ≤ A 1 then 0 else 1
   let ihi : Fin 2 := if A 0 ≤ A 1 then 1 else 0
@@ -617,9 +596,9 @@ private theorem necessary_endpoint (d : FixedTailData) (c : ℝ)
       | none => exact cost_continuous _ _
       | some i => exact cost_continuous _ _
     exact ⟨isClosed_Iic.mem_of_tendsto (hcont.tendsto _ |>.comp (hw (x j)).1)
-        (Filter.Eventually.of_forall (fun n => hentry j i (repeatWord wl n))),
+        (Filter.Eventually.of_forall (fun n => hentry j i (wordPower n wl))),
       isClosed_Iic.mem_of_tendsto (hcont.tendsto _ |>.comp (hw (x j)).2)
-        (Filter.Eventually.of_forall (fun n => hentry j i (repeatWord wu n)))⟩
+        (Filter.Eventually.of_forall (fun n => hentry j i (wordPower n wu)))⟩
   apply Finset.sup'_le
   intro e _
   exact max_le (hends e.1 e.2).1 (hends e.1 e.2).2
@@ -783,7 +762,9 @@ private theorem hull_field (A : Fin 2 → ℝ) (a : ℝ)
   have hlo := coefficient_min _ _ (hA 0) (hA 1)
   have hhi := coefficient_max _ _ (hA 0) (hA 1)
   have hdiv (x y : ℝ) (hx : inCoefficientField x) (hy : inCoefficientField y) :
-      inCoefficientField (x / y) := by rw [div_eq_mul_inv]; exact coefficient_mul _ _ hx (coefficient_inv _ hy)
+      inCoefficientField (x / y) := by
+    rw [div_eq_mul_inv]
+    exact coefficient_mul _ _ hx (coefficient_inv _ hy)
   have hd := coefficient_add _ _ coefficient_constants.2.1 (coefficient_neg _ ha)
   have hd2 := coefficient_add _ _ coefficient_constants.2.1
     (coefficient_neg _ (coefficient_pow _ ha 2))
@@ -800,10 +781,13 @@ private theorem cell_field (i : Fin 6) :
     have hl := coefficient_mul _ _ (show inCoefficientField ((10 : ℝ)⁻¹) from
       coefficient_inv _ ⟨10, 0, by norm_num⟩) (coefficient_pow _ coefficient_constants.2.2 2)
     have hsub (x y : ℝ) (hx : inCoefficientField x) (hy : inCoefficientField y) :
-        inCoefficientField (x - y) := by rw [sub_eq_add_neg]; exact coefficient_add _ _ hx (coefficient_neg _ hy)
+        inCoefficientField (x - y) := by
+      rw [sub_eq_add_neg]
+      exact coefficient_add _ _ hx (coefficient_neg _ hy)
     have hnat (n : ℕ) : inCoefficientField (n : ℝ) := ⟨n, 0, by norm_num⟩
     fin_cases i <;> dsimp only [cuts]
-    · exact hsub _ _ (coefficient_neg _ (coefficient_pow _ coefficient_constants.2.2 2)) (by simpa [lambda, div_eq_mul_inv, mul_comm] using hl)
+    · exact hsub _ _ (coefficient_neg _ (coefficient_pow _ coefficient_constants.2.2 2))
+        (by simpa [lambda, div_eq_mul_inv, mul_comm] using hl)
     · exact hsub _ _ (coefficient_pow _ coefficient_constants.2.2 3)
         (coefficient_mul _ _ (hnat 3) (by simpa [lambda, div_eq_mul_inv, mul_comm] using hl))
     · exact hsub _ _ coefficient_constants.2.2
