@@ -31,9 +31,16 @@ For \(n=5,i=3\), put \((1,2,3,4,5)=(y,z,x,u,v)\). The six clauses are
 (\neg x\lor u),\quad(\neg u\lor v),\quad(\neg v\lor\neg x).
 \]
 
-In the semiprime repair model, the five Boolean variables assert that the
-respective prime phases modulo \(5,7,11,13,17\) equal one. A phase equal
-to zero implies the corresponding Boolean negation. Other residues remain
+For the semiprime repair phase function \(\beta\), the Boolean variables are
+explicitly
+
+\[
+(x,y,z,u,v)=
+(\beta(5)\bmod5=1,\ \beta(7)\bmod7=1,\ \beta(11)\bmod11=1,
+\ \beta(13)\bmod13=1,\ \beta(17)\bmod17=1).
+\]
+
+A phase equal to zero implies the corresponding Boolean negation. Other residues remain
 allowed, so the arithmetic endpoint constraints imply these Boolean clauses;
 they are not claimed equivalent to them for arbitrary phase assignments.
 
