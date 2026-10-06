@@ -105,7 +105,7 @@ unsafe def registryRecords (moduleName : String) (data : ModuleData) : Except St
       let typeArgs := info.type.getAppArgs
       unless typeArgs.size == 5 do throw "contract.registration:target_arity"
       let all ← Contract.Literal.constructor `LeanInformationAudit.Contract.Registration.mk
-        (typeArgs.size + 20) "registration" info.value
+        (typeArgs.size + 25) "registration" info.value
       let fields := all.extract typeArgs.size all.size
       let some theoremName := typeArgs[1]!.consumeMData.constName?
         | throw "unclassified_form:contract.target_identity"
