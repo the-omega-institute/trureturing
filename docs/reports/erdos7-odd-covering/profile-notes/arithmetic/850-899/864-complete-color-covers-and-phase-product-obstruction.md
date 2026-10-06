@@ -444,3 +444,200 @@ cardinality formula PC18 remains an ordinary CRT deduction. Neither
 check proves the small comatching bound for the actual component,
 supplies its simultaneous parent repair, or resolves the unrestricted
 odd covering problem.
+
+## A prime-coordinate bound allows one omission from every color
+
+The PC6 product obstruction has a limitation when all supports are
+literal congruences on a carrier with few distinct prime factors.
+Let N>0, let X be any subset of the integers, and let n finite indexed
+families of congruence classes each cover all of this same X. Every
+modulus is positive and divides N. In each color choose two distinct
+indices that are allowed to be omitted. If
+
+$$
+n>\omega(N),
+\tag{PC19}
+$$
+
+one can omit one of those two indices from every color while keeping
+the union of all remaining classes a cover of X. This does not mean
+retaining only one class per color. The sets and their phases stay
+fixed, and X need not be a product or have positive prescribed density.
+
+Here is an explicit one-switch proof. Start by omitting the first
+chosen class A_c in every color. If the remaining union covers X,
+there is nothing to change. Otherwise choose a missed point x_0.
+Since each color is a complete cover, its omitted class is its only
+class containing x_0. In particular
+
+$$
+A_c=[x_0]_{m_c}.
+$$
+
+Some m_c divides the lcm of all the other selected moduli. Indeed,
+otherwise every color would have a prime at which its modulus has
+strictly larger valuation than every other selected modulus. Such
+primes are distinct and all divide N, contradicting PC19. This is
+the usual breadth bound for the divisor lattice, whose coordinates
+are the prime-exponent chains.
+
+For this c restore A_c and omit the second permitted indexed class
+instead. Any point y missed by the new union would belong to A_d
+for every d different from c, by completeness of those colors. It
+would therefore be congruent to x_0 modulo their lcm, hence modulo
+m_c. But A_c has been restored, a contradiction. Thus from any
+initial omission selection, either it already works or changing
+the omission in just one color makes it work.
+
+Repeated supports, empty traces on X and the modulus one cause no
+failure of the argument. N>0 and two distinct available indices per
+color are essential to this formulation. The bound counts distinct
+prime factors, not their multiplicities. It is sharp at n=omega(N):
+for a squarefree N and X equal to the entire integer source, give
+one color all residue classes modulo each
+prime divisor. Every omission selection then has a common missed
+point by CRT.
+
+If each color family has first been reduced to an inclusion-minimal
+cover and has at least two members, every omitted member has a
+private point within that family. Consequently the remaining part
+of each individual color fails to cover X, although their union
+covers X. This is an actual mixed subcover, in the precise sense
+
+$$
+X\subseteq\bigcup_c\bigcup\mathcal R_c,
+\qquad
+X\nsubseteq\bigcup\mathcal R_c\quad\text{for each }c,
+\tag{PC20}
+$$
+
+where R_c is its fixed minimal cover with one member removed.
+Passing to minimal covers is needed for the second assertion:
+merely deleting a nonempty but redundant support would not prove it.
+
+The lattice-breadth ingredient is classical. Baker--Stralka,
+[*Compact, distributive lattices of finite breadth*](https://doi.org/10.2140/pjm.1970.34.311),
+Pacific Journal of Mathematics 34 (1970), Section 2, recalls the
+meet-irredundancy definition and its product-of-chains setting.
+The concrete divisor-lattice bound here follows directly from
+prime valuations. The original-AP common-point and single-coordinate
+exclusion pattern also fits the comatching language of the cited
+Pohoata--Yang--Zhang source, but its complement-form colorful theorem
+is not being invoked as a proof of PC19. An omitted class's private
+trace need not itself be a congruence class. The one-switch argument
+supplies the stronger AP incidences required by the valuation bound.
+This is a reuse-based arithmetic deduction, with no originality claim.
+
+## The exact old-word source has enough genuinely mixed colors
+
+Return to one actual EB1-minimal distinct odd whole cover with H_3=2
+and q=113. Reuse Report850 CD87 to obtain G=1. Report388 SC439--SC440
+gives P^+(Q)<=113, so with Q=9qW and (W,3q)=1,
+
+$$
+\omega(W)\le27.
+\tag{PC21}
+$$
+
+The 27 possible cofactor primes are the odd primes at most 113 other
+than 3 and 113. Higher powers do not increase this count. Let U
+exclude all the actual q,3q,9q digits; |U|>=110. Fix any actual safe
+old word z modulo nine, and let X_z be the exact q-free residual
+on that word's full W carrier. For every c in U, all the actual
+q-stripped originals of color c cover this same entire X_z. This
+uses G=1 and actual whole coverage; all cofactor phases are literal.
+
+SC468 with the constant assignment f=z implies that at most five
+colors in U lack a top original whose old word is z. Otherwise
+six such colors would contradict its required divisor triple.
+Thus at least 105 distinct top originals have this word. Each has
+a private original point; its cofactor lies in X_z, making X_z
+nonempty. These facts concern the exact retained-family residual,
+not the prescribed product mask of PC4.
+
+### Two different enclosing cofactors would pay a complete deletion
+
+Suppose X_z were contained in both [r_1]_{s_1} and [r_2]_{s_2},
+where s_1,s_2 are different nonunit divisors of W. Delete every
+q-bearing top original with old word z, retaining all other originals.
+At least 105 originals are deleted. A point in the complete joint
+deletion hole must have old word z: original coverage supplies a
+deleted owner. It also avoids every q-free original, all of which
+were retained, so its cofactor belongs to X_z. No union of separate
+private regions has replaced this joint hole.
+
+Take the three fresh numerical labels
+
+$$
+27,\qquad 27s_1,\qquad 27s_2.
+\tag{PC22}
+$$
+
+Their ternary residues are z,z+9,z+18 modulo 27 respectively, using
+0<=z<9. The last two retain r_1 modulo s_1 and r_2 modulo s_2;
+CRT supplies their complete AP phases. Every point of the hole
+satisfies both cofactor tests, and its next ternary digit selects
+one of the three repairs. All integer lifts are covered.
+The labels are distinct odd nonunits, and their ternary height
+three makes them fresh against all retained originals. Replacing
+at least 105 classes by three contradicts class-count minimality.
+
+This is precisely the existing Report385 DR7/NF4 three-child hull
+repair applied to a complete simultaneous deletion. It is not a new
+generic exchange theorem. In particular the full cofactor hull of
+X_z can only be one or a single prime: any composite hull divisor
+would supply two different nonunit divisors for PC22.
+
+### Minimal color covers have at least two members in almost every color
+
+If one actual stripped owner of a color in U covers all X_z, its
+cofactor is nonunit because all unit-cofactor digits were excluded.
+By the preceding argument all such whole-source owners, across all
+colors and all three rows, must have the same cofactor s. There
+are at most three of them, since the only possible original labels
+are qs,3qs,9qs and numerical labels are distinct. Therefore at
+least |U|-3>=107 colors admit no single-owner cover of X_z.
+
+Choose any 28 of these colors. In each, fix an inclusion-minimal
+subcover of X_z. Each has at least two members; all its retained
+supports are nonempty and have private points relative to that
+color's subcover. On the fixed word z their supports are congruence
+classes modulo divisors of W, restricted to the same X_z. Apply
+PC19 with N=W and n=28. It yields PC20 on this very same word,
+with every remaining single-color family incomplete. Thus the
+universal no-mixed-subcover property of the PC6 phase product cannot
+hold for these actual selected colors on the exact EB1 residual.
+
+This excludes that particular product obstruction under the stated
+whole-source and support assumptions. It does not assign new ternary
+prefixes to the mixed classes, give them fresh distinct numerical
+labels, or install one permanent owner per cofactor. The mixed union
+can still include all three owners of some cofactor, which is exactly
+where the shallow payment conflict remains. Nor does its existence
+give a useful lower bound on the mass of X_z or a Cross-free point
+in a specified top original's private projection.
+
+### Exact formal checks and remaining bridge
+
+A transient Lean application proves PC19's one-switch conclusion
+from the full integer congruence families, the common arbitrary X,
+positive common period and chosen omission pairs. It also proves
+PC20 when the individual families' private-witness condition is
+supplied. Its prime-coordinate injection reuses pinned Mathlib
+factorization and finite-cardinality results. It does not assume
+that X is a product or substitute different sources for different
+colors. All five axiom reports use only the standard three axioms.
+
+A separate transient check constructs the PC22 CRT repair, proves
+coverage of all integers, and produces an odd distinct covering system
+with strictly fewer classes. Its consumer derives the complete-hole
+enclosure from actual whole coverage, a deleted family of more than
+three q-bearing old-word-z originals, and the two enclosures of the
+exact q-free residual on that word. The consumer does not assume the
+deletion hole equals a union of individual private regions. All three
+axiom reports use only the standard three axioms. The SC468 color
+counts, their combination with the exact X_z inputs, and the
+minimal-subcover selection in the complete application remain the
+ordinary reuse argument above; this is not a kernel replay of the
+full EB1-to-PC20 chain. No new D5 wrapper, freeze, source-density
+estimate or payment certificate is claimed.
