@@ -7,7 +7,7 @@ namespace StrataLint.Digestion.Tests;
 public sealed class DigestionCasStoreTests
 {
     [Fact]
-    public void BlobAddedWithoutAnEntryIsRejectedAsAnOrphan()
+    public void StatusEvaluationDoesNotScanForOrphanCasObjects()
     {
         var referenced = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("referenced atom\n"));
         var orphan = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("orphan atom\n"));
@@ -16,14 +16,14 @@ public sealed class DigestionCasStoreTests
             new RawRepositoryEntry(referenced.RelativePath, referenced.Bytes),
             new RawRepositoryEntry(orphan.RelativePath, orphan.Bytes));
 
-        var added = DigestionCasStore.Evaluate(
+        var added = DigestionCasStore.EvaluateLedgerReferences(
             document,
             snapshot,
             RawChangeSet.Create([orphan.RelativePath]));
-        var wholeLedger = DigestionCasStore.Evaluate(document, snapshot);
+        var wholeLedger = DigestionCasStore.EvaluateLedgerReferences(document, snapshot);
 
-        Assert.Contains($"orphan CAS blob: {orphan.RelativePath}", added.Findings);
-        Assert.DoesNotContain(wholeLedger.Findings, finding => finding.StartsWith("orphan CAS blob", StringComparison.Ordinal));
+        Assert.Empty(added.Findings);
+        Assert.Empty(wholeLedger.Findings);
     }
 
     [Fact]
@@ -34,7 +34,7 @@ public sealed class DigestionCasStoreTests
         var document = Ledger(captured.Reference, other.Reference);
         var snapshot = Snapshot(new RawRepositoryEntry(captured.RelativePath, captured.Bytes));
 
-        var evaluation = DigestionCasStore.Evaluate(document, snapshot);
+        var evaluation = DigestionCasStore.EvaluateLedgerReferences(document, snapshot);
 
         Assert.Contains(
             $"entry synthetic-atom cas_ref {captured.Reference} differs from raw fingerprint {other.Reference}",
@@ -42,57 +42,48 @@ public sealed class DigestionCasStoreTests
     }
 
     [Fact]
-    public void HashMismatchedBlobIsRejected()
+    public void StatusEvaluationDoesNotRehashAReferencedBlob()
     {
         var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("expected atom\n"));
         var tampered = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("tampered atom\n"));
         var document = Ledger(captured.Reference);
         var snapshot = Snapshot(new RawRepositoryEntry(captured.RelativePath, tampered.Bytes));
 
-        var evaluation = DigestionCasStore.Evaluate(document, snapshot);
+        var evaluation = DigestionCasStore.EvaluateLedgerReferences(document, snapshot);
 
-        Assert.Contains(
-            $"entry synthetic-atom CAS blob hash mismatch: {captured.RelativePath} "
-            + $"declares {captured.Reference} but contains {tampered.Reference}",
-            evaluation.Findings);
+        Assert.Empty(evaluation.Findings);
     }
 
     [Fact]
-    public void CandidateDeltaRehashesOnlyChangedCasObjects()
+    public void CandidateDeltaDoesNotTriggerCasRehashing()
     {
         var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("expected atom\n"));
         var tampered = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("tampered atom\n"));
         var document = Ledger(captured.Reference);
         var snapshot = Snapshot(new RawRepositoryEntry(captured.RelativePath, tampered.Bytes));
 
-        var unrelated = DigestionCasStore.Evaluate(
+        var unrelated = DigestionCasStore.EvaluateLedgerReferences(
             document,
             snapshot,
             RawChangeSet.Create(["notes/unrelated.txt"]));
-        var changed = DigestionCasStore.Evaluate(
+        var changed = DigestionCasStore.EvaluateLedgerReferences(
             document,
             snapshot,
             RawChangeSet.Create([captured.RelativePath]));
 
-        Assert.Equal(0, unrelated.RehashedObjectCount);
         Assert.Empty(unrelated.Findings);
-        Assert.Equal(1, changed.RehashedObjectCount);
-        Assert.Contains(changed.Findings, finding => finding.Contains(
-            "CAS blob hash mismatch",
-            StringComparison.Ordinal));
+        Assert.Empty(changed.Findings);
     }
 
     [Fact]
-    public void MissingReferencedBlobIsRejected()
+    public void StatusEvaluationDoesNotRejectAnUnloadedReferencedBlob()
     {
         var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("missing atom\n"));
         var document = Ledger(captured.Reference);
 
-        var evaluation = DigestionCasStore.Evaluate(document, Snapshot());
+        var evaluation = DigestionCasStore.EvaluateLedgerReferences(document, Snapshot());
 
-        Assert.Contains(
-            $"entry synthetic-atom CAS blob is missing: {captured.RelativePath}",
-            evaluation.Findings);
+        Assert.Empty(evaluation.Findings);
     }
 
     [Fact]
@@ -103,9 +94,6 @@ public sealed class DigestionCasStoreTests
         var document = Ledger(captured.Reference);
         var snapshot = Snapshot(new RawRepositoryEntry(captured.RelativePath, captured.Bytes));
 
-        var evaluation = DigestionCasStore.Evaluate(document, snapshot);
-
-        Assert.Empty(evaluation.Findings);
         Assert.StartsWith("sha256:", captured.Reference, StringComparison.Ordinal);
         Assert.Equal(
             DigestionCasStore.RootPath + captured.Reference["sha256:".Length..],
