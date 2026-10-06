@@ -290,6 +290,119 @@ private theorem unique_weyl_line_lagrangian {N k : ℕ}
     rw [← heq]
     exact eigen_orthogonal_iff v c ψ hne hline u
 
+private def wmat (a b : ZMod 2) : Matrix (Fin 2) (Fin 2) ℂ :=
+  Matrix.of fun t s =>
+    let t' : ZMod 2 := t.val
+    let s' : ZMod 2 := s.val
+    if s' = t' + a then chi2 (b * s') else 0
+
+private lemma tensor_mul {N : ℕ} (A B : Fin N → Matrix (Fin 2) (Fin 2) ℂ) :
+    tensorOp A * tensorOp B = tensorOp (fun i => A i * B i) := by
+  ext x z
+  simp only [tensorOp, Matrix.mul_apply, Matrix.of_apply]
+  simp_rw [← Finset.prod_mul_distrib]
+  rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
+
+private lemma tensor_one {N : ℕ} :
+    tensorOp (fun _ : Fin N => (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1 := by
+  classical
+  ext x y
+  simp only [tensorOp, Matrix.of_apply, Matrix.one_apply]
+  by_cases h : x = y
+  · subst y; simp
+  · obtain ⟨i, hi⟩ := Function.ne_iff.mp h
+    rw [if_neg h]
+    exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp [hi])
+
+private lemma tensor_adj {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ) :
+    (tensorOp A)ᴴ = tensorOp (fun i => (A i)ᴴ) := by
+  ext x y
+  simp [tensorOp, Matrix.conjTranspose_apply]
+
+private lemma tensor_unitary {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ)
+    (hA : ∀ i, A i ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
+    tensorOp A ∈ Matrix.unitaryGroup (Fin N → Fin 2) ℂ := by
+  apply Matrix.mem_unitaryGroup_iff'.mpr
+  change (tensorOp A)ᴴ * tensorOp A = 1
+  rw [tensor_adj, tensor_mul]
+  have he : (fun i => (A i)ᴴ * A i) = fun _ => 1 :=
+    funext fun i => Matrix.mem_unitaryGroup_iff'.mp (hA i)
+  rw [he]
+  exact tensor_one
+
+private lemma tensor_smul {N : ℕ} (r : Fin N → ℂ)
+    (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ) :
+    tensorOp (fun i => r i • A i) = (∏ i, r i) • tensorOp A := by
+  ext x y
+  simp [tensorOp, Finset.prod_mul_distrib]
+
+private lemma tensor_weyl {N : ℕ} (v : E N) (f : V N → ℂ) :
+    tensorOp (fun i => wmat (v.1 i) (v.2 i)) *ᵥ f = weyl v f := by
+  classical
+  let T : Matrix (V N) (V N) ℂ := tensorOp (fun i => wmat (v.1 i) (v.2 i))
+  have entries (x y : V N) : T x y =
+      if y = x + v.1 then chi2 (∑ i, v.2 i * y i) else 0 := by
+    change (∏ i, if ((y i).val : ZMod 2) = (x i).val + v.1 i then
+      chi2 (v.2 i * (y i).val) else 0) = _
+    simp only [ZMod.natCast_zmod_val]
+    by_cases h : y = x + v.1
+    · subst y
+      simp only [Pi.add_apply, ite_true]
+      exact (chi2_sum Finset.univ _).symm
+    · rw [if_neg h]
+      obtain ⟨i, hi⟩ := Function.ne_iff.mp h
+      exact Finset.prod_eq_zero (Finset.mem_univ i) (if_neg hi)
+  change T *ᵥ f = weyl v f
+  funext t
+  simp only [Matrix.mulVec, dotProduct, entries, ite_mul, zero_mul]
+  rw [Finset.sum_eq_single (t + v.1)]
+  · simp [weyl]
+  · intro b _ hb; simp [hb]
+  · simp
+
+private lemma pauli_wmat (p : Pauli) :
+    ∃ a b : ZMod 2, ∃ r : ℂ, r ≠ 0 ∧ pauliMatrix p = r • wmat a b := by
+  cases p
+  · refine ⟨0, 0, 1, one_ne_zero, ?_⟩
+    ext t s; fin_cases t <;> fin_cases s <;> norm_num [pauliMatrix, wmat, chi2_eq]
+  · refine ⟨1, 0, 1, one_ne_zero, ?_⟩
+    ext t s; fin_cases t <;> fin_cases s <;>
+      norm_num [pauliMatrix, wmat, chi2_eq, D5.S3.Quantum.FiniteDimensional.qubitX] <;> decide
+  · refine ⟨1, 1, Complex.I, Complex.I_ne_zero, ?_⟩
+    ext t s; fin_cases t <;> fin_cases s <;>
+      norm_num [pauliMatrix, wmat, chi2_eq, D5.S3.Quantum.FiniteDimensional.qubitX,
+        D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply, Fin.sum_univ_two] <;> decide
+  · refine ⟨0, 1, 1, one_ne_zero, ?_⟩
+    ext t s; fin_cases t <;> fin_cases s <;>
+      norm_num [pauliMatrix, wmat, chi2_eq, D5.S3.Quantum.FiniteDimensional.qubitZ]
+
+private lemma stabilizer_weyl {N : ℕ} (ψ : V N → ℂ)
+    (hψ : StabilizedBy pauliSet ψ) :
+    ∃ k : ℕ, ∃ v : Fin k → E N, ∃ c : Fin k → ℂ,
+      ∀ w : V N → ℂ, (∀ j, c j • weyl (v j) w = w) ↔ ∃ a : ℂ, w = a • ψ := by
+  classical
+  obtain ⟨_, k, O, hO, hline⟩ := hψ
+  choose r hr p hp using hO
+  choose a b s hs hps using fun j i => pauli_wmat (p j i)
+  let v : Fin k → E N := fun j => (a j, b j)
+  let c : Fin k → ℂ := fun j => ∏ i, r j i * s j i
+  have hop (j : Fin k) (w : V N → ℂ) :
+      (show Matrix (V N) (V N) ℂ from tensorOp (O j)) *ᵥ w = c j • weyl (v j) w := by
+    have he : O j = fun i => (r j i * s j i) • wmat (a j i) (b j i) := by
+      funext i
+      rw [hp j i, hps j i, smul_smul]
+    rw [he, tensor_smul]
+    change ((∏ i, r j i * s j i) •
+      (show Matrix (V N) (V N) ℂ from tensorOp (fun i => wmat (a j i) (b j i)))) *ᵥ w = _
+    rw [Matrix.smul_mulVec]
+    exact congrArg ((∏ i, r j i * s j i) • ·) (tensor_weyl (v j) w)
+  refine ⟨k, v, c, ?_⟩
+  intro w
+  have hline' : (∀ j, (show Matrix (V N) (V N) ℂ from tensorOp (O j)) *ᵥ w = w) ↔
+      ∃ a : ℂ, w = a • ψ := hline w
+  simpa only [hop] using hline' 
+
+
 /- Open target: stabilizer_graph_normal_form, as stated in #13575. -/
 
 end D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
