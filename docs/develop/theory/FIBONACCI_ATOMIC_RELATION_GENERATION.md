@@ -64425,4 +64425,256 @@ $$
 
 §424 的完整身份仍为 $I_\psi(x)=\sum_{n\ge1}M(n)J_x^\eta(n)$，包括 n=1 和原首块补偿。（425.11）的窗口没有穷尽该级数，且普通 M(n) 的符号未知；将其乘入 $F_x(n)+O_x(n)-E_x(n)$ 不保持独立的正性结论。所需临界增益仍必须来自同一实际 M 前缀与全部纤维、窗外补集的联合有符号关系。本文复用单核转折、经典 Stieltjes 数据和可逆卷积，补足的是完整 β 纤维的共同三矩读出与必需的偶尺度补偿，不宣称 Robin 或 RH 已解决，也不作全局原创性断言。
 
+## 426. 实际 5040 素核的完整互素前缀运输与比例移心
+
+沿用主卷 §§384、397–399、424–425 的同一实际 $\beta,e,H_{\rm raw},R,P_x,J_x,Q_x,\eta,P_x^\eta,J_x^\eta$，以及普通 Möbius 函数与 $I_\psi$。本节只把 $5040$ 已有的四个素数方向完整消元，保留全部余下互素前缀。经典有限 Euler 分解、§424 的阶乘反向配对和 §425 的共同三矩估计均作为既有供应；新增的是这份完整重组的精确移心和两个同源符号翻转窗口。所得身份保留实际互素前缀，不提供 Robin 或 RH 的全局有符号界。
+
+**定义与恒等式 426.1（同一实际数组的完整分解）。**
+
+置 $P=\operatorname{rad}(5040)=210$，并定义
+
+$$
+\begin{aligned}
+\kappa(d)&=\mu(d)\mathbf1_{d\mid P},\qquad
+a_P(r)=\mu(r)\mathbf1_{(r,P)=1},\\
+M_P(y)&=\sum_{1\le r\le y}a_P(r),\qquad
+\theta=\kappa*\beta,\\
+E(s)&=\sum_{d\mid P}\mu(d)d^{-s}
+=\prod_{p\in\{2,3,5,7\}}(1-p^{-s}),\\
+\eta_P(y)&=\sum_{d\mid P}\mu(d)\eta(y/d),\\
+P_x^{\eta_P}(s)&=\int_x^\infty\eta_P(t/s)w(t)\,dt,\qquad
+J_x^{\eta_P}(n)=P_x^{\eta_P}(n)-P_x^{\eta_P}(n+1).
+\end{aligned}
+\tag{426.1}
+$$
+
+所有整数索引均为正；$M_P(y)=0$ 当 $0\le y<1$，这是这份明确有限和的空和定义，不使用 $H_{\rm raw}(0)$。普通 Möbius 的平方自由分解给 $\kappa*a_P=\mu$，所以
+
+$$
+\theta*a_P=e,\qquad
+H_{\rm raw}(m)=\sum_{j\le m}\theta_jM_P(\lfloor m/j\rfloor),
+\qquad M_P(1)=1,\quad\theta_1=\beta_1.
+\tag{426.2}
+$$
+
+对平方自由整数，这是唯一分解 $n=dr$、$d\mid P$、$(r,P)=1$；非平方自由整数两侧都为零。因此没有重复计数，也没有只保留 $7r\leftrightarrow10r$ 后遗漏其他来源。既有 §66 的 $70$ 分解是同类经典操作；本处保留 $P$ 的全部十六个约数及整个互素补集。
+
+§424 的全尺度恒等式在这里给
+
+$$
+\eta_P(y)=\sum_{j\ge1}\theta_jR(y/j),\qquad
+P_x^{\eta_P}(s)=\sum_{d\mid P}\mu(d)P_x^\eta(ds),
+\tag{426.3}
+$$
+
+$$
+\begin{aligned}
+J_x^{\eta_P}(n)
+&=\sum_{d\mid P}\mu(d)
+\sum_{m=dn}^{d(n+1)-1}J_x^\eta(m)\\
+&=\sum_{j\ge1}\theta_j
+\sum_{m=jn}^{j(n+1)-1}J_x(m).
+\end{aligned}
+\tag{426.4}
+$$
+
+这也保持真实非负响应：记 $h_P=\kappa*\log$，则直接对实际 $n$ 的小素数支撑求和，得到
+
+$$
+h_P(n)=
+\begin{cases}
+\log n,&(n,P)=1,\\
+\log p,&\{p\in\{2,3,5,7\}:p\mid n\}=\{p\},\\
+0,&\#\{p\in\{2,3,5,7\}:p\mid n\}\ge2.
+\end{cases}
+\tag{426.5}
+$$
+
+故 $h_P(1)=0$、$0\le h_P(n)\le\log n$。若 $K_P(y)=\sum_{n\le y}h_P(n)$，则全部 $y>0$ 上
+
+$$
+\eta_P(y)=K_P(y)-E(1)y\log y+[E(1)-E'(1)]y.
+\tag{426.6}
+$$
+
+这里 $E'(1)$ 是对 $s$ 的导数，明确满足 $E'(1)=-\sum_{d\mid P}\mu(d)\log d/d>0$；连续项的符号不能反写。
+
+**命题 426.2（无穷运输的绝对预算及原首块）。**
+
+§424 的普通无条件 Mertens 供应与 §66 的有限素数半群卷积给某个有限 $C_P$，使
+
+$$
+|M_P(n)|\le C_P n/\lambda(n)^4,\qquad \lambda(n)=1+\log n.
+\tag{426.7}
+$$
+
+具体地，$M_P(y)=\sum_{q\in\langle2,3,5,7\rangle,\ q\le y}M(y/q)$。先扩大普通供应常数以覆盖实参数的取整，得到 $|M(t)|\ll t/\lambda(t)^4$（$t\ge1$）。在 $q\le\sqrt y$ 上使用 $\lambda(y/q)\ge\lambda(y)/2$；在 $q>\sqrt y$ 上使用 $|M(y/q)|\le y/q$ 及 $\sum_{q>\sqrt y}q^{-1}\le y^{-1/4}\sum_qq^{-1/2}$。两份半群和都是有限 Euler 乘积，而 $y^{-1/4}\lambda(y)^4$ 有界。这完整支付（426.7），没有把增长的有限素数集合代入固定集合结论。
+
+由 $\theta_j=\sum_{d\mid P,d\mid j}\mu(d)\beta_{j/d}$ 及 §385 的 β 指数尾，有
+
+$$
+A_{\theta,2}:=\sum_{j\ge1}\frac{|\theta_j|\lambda(j)^2}{j}
+\le A_{\beta,2}\sum_{d\mid P}\frac{\lambda(d)^2}{d}<\infty.
+\tag{426.8}
+$$
+
+使用 §424 的同一 $C_x,c_0=1+\log2$，对每个固定 $x>1$，真正的积分前三重预算为
+
+$$
+\begin{aligned}
+\mathcal T_{P,x}
+&:=\sum_{n,j\ge1}|M_P(n)||\theta_j|
+\sum_{m=jn}^{j(n+1)-1}Q_x(m)\\
+&\le C_PC_xc_0^2A_{\theta,2}
+\sum_{n\ge1}\frac1{n\lambda(n)^2}<\infty.
+\end{aligned}
+\tag{426.9}
+$$
+
+其证明逐个使用 $jn\le m<j(n+1)\le2jn$、$\lambda(m)\le c_0\lambda(j)\lambda(n)$ 和 §424.3；每个纤维的全部 $j$ 个差分均保留。$Q_x^{\eta_P}(n):=\int_x^\infty|\eta_P(t/n)-\eta_P(t/(n+1))|w(t)dt$ 满足 $\sum_n|M_P(n)|Q_x^{\eta_P}(n)\le\mathcal T_{P,x}$。
+
+（426.3）的逐尺度积分交换也有独立付款：§424.10 的右侧将 $|\beta_j|$ 换成 $|\theta_j|$ 后仍有限，因为 $\sum_j|\theta_j|(1+\log j)<\infty$。所以（426.3）–（426.4）是已支付的恒等式。再对（426.2）使用（426.9）和 §397.17，得到绝对收敛的完整身份
+
+$$
+\boxed{I_\psi(x)=\sum_{n\ge1}M_P(n)J_x^{\eta_P}(n)}.
+\tag{426.10}
+$$
+
+特别地原首块恰为
+
+$$
+\begin{aligned}
+\sum_{m\ge2}H_{\rm raw}(m)J_x(m)
+&=\sum_{n\ge2}M_P(n)J_x^{\eta_P}(n)
+ +J_x^{\eta_P}(1)-\beta_1J_x(1),\\
+J_x^{\eta_P}(1)-\beta_1J_x(1)
+&=\sum_{j\ge2}\theta_j\sum_{m=j}^{2j-1}J_x(m).
+\end{aligned}
+\tag{426.11}
+$$
+
+这里 $n=1$、$j=1$、全部端点和原首项补偿都未删除。有限四轴消元在前缀层仍可逆：$M(y)=\sum_{d\mid P}\mu(d)M_P(y/d)$，其逆正是上述半群卷积；因此它没有独自降低实际前缀的幂增长难度。
+
+**命题 426.3（完整三矩的移心与共同误差）。**
+
+保持 §425 的原 $p_B(v)$、$C(V)$ 和 $c_{\rm diag}$，另置
+
+$$
+\begin{aligned}
+E_0&=E(1)=\frac8{35},\\
+S&=\frac{E'(1)}{E_0}=\sum_{p\in\{2,3,5,7\}}\frac{\log p}{p-1},\\
+T&=\sum_{p\in\{2,3,5,7\}}\frac{p(\log p)^2}{(p-1)^2},\qquad
+\frac{E''(1)}{E_0}=S^2-T,\\
+p_P(u)&=E_0\left(\frac{u^2}{2}+\gamma_1\right)-E'(1)u+\frac{E''(1)}2\\
+&=E_0\left[\frac{(u-S)^2}{2}+\gamma_1-\frac T2\right].
+\end{aligned}
+\tag{426.12}
+$$
+
+符号 $\gamma_1$ 沿用 §425 的 Stieltjes 约定。全部 β 源及全部四轴约数的绝对三矩给
+
+$$
+\begin{aligned}
+\sum_{j\ge1}\frac{\theta_j}{j}p_B(u+\log j)
+&=\sum_{d\mid P}\frac{\mu(d)}d
+\sum_{k\ge1}\frac{\beta_k}k p_B(u+\log d+\log k)\\
+&=\sum_{d\mid P}\frac{\mu(d)}d
+\left[\frac{(u+\log d)^2}2+\gamma_1\right]=p_P(u).
+\end{aligned}
+\tag{426.13}
+$$
+
+第一步使用 $\theta=\kappa*\beta$，第二步只消费 §425.4；最后一步使用 $\sum\mu(d)\log d/d=-E'(1)$ 与 $\sum\mu(d)(\log d)^2/d=E''(1)$。因此它是同一来源的完整三矩，而非只取若干配对的近似。
+
+这份操作在二次多项式空间上就是 $T_df(u)=f(u+\log d)/d$ 的有限过滤 $\prod_{p\mid P}(I-T_p)=E_0I-E'(1)\partial_u+E''(1)\partial_u^2/2$。沿用仓内 `QUANTUM-RH.md` “二十、离散绕行”式（53）的经典有限多项式平移表示，在基 $(1,u,u^2)$ 上，该过滤矩阵为
+
+$$
+\begin{pmatrix}E_0&-E'(1)&E''(1)\\0&E_0&-2E'(1)\\0&0&E_0\end{pmatrix},
+\qquad \det=E_0^3>0.
+$$
+
+因此它在这个有限维空间可逆，却不保持 $[0,\infty)$ 上的非负多项式锥：非负输入 $u^2$ 的像在 $u=S$ 等于 $-E_0T<0$。这个经典算子表示只解释上述实际 profile 的移心，不新增一次对真实 Möbius 符号的估计。
+
+固定 $U\ge0$，记 $a_j=U+\log j$，定义有限常数
+
+$$
+\begin{aligned}
+\mathsf C_\theta(U)&=\sum_{j\ge1}\frac{|\theta_j|}{j}C(a_j+\log2),\\
+\mathsf L_\theta(U)&=\sum_{j\ge1}\frac{|\theta_j|}{j}
+\left[\frac A2a_j^2+(D-A)a_j+|c_{\rm diag}|+A(a_j+\log2)+D-A\right].
+\end{aligned}
+\tag{426.14}
+$$
+
+有限性由有限四轴卷积后的 β 指数尾支付。对 $x\ge e$、正整数 $n\ge x$、$u=\log(n/x)\le U$，有
+
+$$
+\boxed{\left|n^2\log x\,J_x^{\eta_P}(n)-p_P(u)\right|
+\le\frac{\mathsf C_\theta(U)}{\log x}+\frac{\mathsf L_\theta(U)}n.}
+\tag{426.15}
+$$
+
+证明是 §425.7–8 的完整纤维估计乘以 $|\theta_j|$ 后求和：第 $j$ 项必须使用 $V=U+\log j+\log2$，不能使用与 $j$ 无关的固定范围；其误差恰为（426.14）的第 $j$ 项。原 $n/[j(n+1)]$ 与 $1/j$ 的端点差也由 $\mathsf L_\theta$ 保留。随后（426.4）和（426.13）给结论。没有未支付的无界 $j$ 逐项极限。特别地，若 $x_k\to\infty$、$n_k/x_k\to e^u$、$n_k\ge x_k$，则 $n_k^2\log x_k J_{x_k}^{\eta_P}(n_k)\to p_P(u)$。
+
+**命题 426.4（严格有理符号与实际补偿窗口）。**
+
+读取 §425 使用的既有[对角源区间](../../reports/fib-robin-boundary/robin-kernel-diagonal.json)向外 dyadic 端点，得到 $-73/1000<\gamma_1<-9/125$。使用下表及正项对数级数的有理尾界，得到
+
+$$
+\frac{1969}{1000}<S<\frac{197}{100},\qquad
+\frac{159}{1000}<c_P:=\frac{S^2-T}{2}+\gamma_1<\frac{161}{1000}.
+\tag{426.16}
+$$
+
+| $p$ | $100000\log p$ 的严格下界 | 严格上界 |
+|---|---:|---:|
+| 2 | 69314 | 69315 |
+| 3 | 109861 | 109862 |
+| 5 | 160943 | 160944 |
+| 7 | 194591 | 194592 |
+
+对每个 $p$，置 $z=(p-1)/(p+1)$，取 $L_p=2\sum_{j=0}^{63}z^{2j+1}/(2j+1)$；则 $L_p<\log p<L_p+2z^{129}/[129(1-z^2)]$。逐个分数比较即证上表。由此得到的 $S$ 端点是 $472589/240000,98457/50000$，$T$ 端点是 $4913033078389/1440000000000,34118903581/10000000000$；连同上述粗 $\gamma_1$ 端点，给 $460146957361/2880000000000<c_P<92644938127/576000000000$，从而证明（426.16）。上述符号比较只使用保存区间、正项级数尾界与有限有理运算。
+
+多项式 $p_P/E_0=u^2/2-Su+c_P$ 恰有两个正根
+
+$$
+u_\pm=S\pm\sqrt{T-2\gamma_1},\qquad
+\frac3{100}<u_-<\frac1{10},\quad 3<u_+<4.
+\tag{426.17}
+$$
+
+因为 $S>0$、$c_P>0$、$\gamma_1-T/2<0$，两根均为正且不同；区间由（426.16）在 $3/100,1/10,3,4$ 的严格符号直接给出。对 $0\le u\le3/100$，有 $p_P(u)>E_0/10$，而 $u^2/2+\gamma_1<-7/100$。对 $1\le u\le3$，二次式的凸性与两端值给 $p_P(u)<-6E_0/5$，而 $u^2/2+\gamma_1>2/5$。
+
+用（426.15）与 §425.5 的共同误差，可取一个有限 $X_0$，使所有 $x\ge X_0$ 和各窗口的全部正整数 $n$ 同时满足
+
+$$
+\begin{aligned}
+x\le n\le e^{3/100}x
+&\Longrightarrow
+J_x^{\eta_P}(n)>\frac{E_0}{20n^2\log x},\quad
+J_x^\eta(n)<-\frac1{20n^2\log x},\\
+ex\le n\le e^3x
+&\Longrightarrow
+J_x^{\eta_P}(n)<-\frac{E_0}{n^2\log x},\quad
+J_x^\eta(n)>\frac3{10n^2\log x}.
+\end{aligned}
+\tag{426.18}
+$$
+
+例如第一窗分别将误差压到 $E_0/20$ 与 $1/50$ 以下，第二窗压到 $E_0/5$ 与 $1/10$ 以下。阈值仅需固定紧比例范围，不将多项式的两根断言为有限 $x$ 下真实核恰有两根。
+
+第二窗还使十六个真实纤维 $\mathcal B_{x,d}^\eta(n):=\sum_{m=dn}^{d(n+1)-1}J_x^\eta(m)$ 全部为正：对所有 $d\mid P$ 及纤维内 $m$，$1\le\log(m/x)\le3+\log P+\log2$，故 §425.5 在这一个固定范围上的共同误差证明其正性。令 $F_\pm(n)=\sum_{d\mid P,\ \mu(d)=\pm1}\mathcal B_{x,d}^\eta(n)$，则 $F_+,F_->0$，而
+
+$$
+\boxed{F_-(n)-F_+(n)>\frac{E_0}{n^2\log x}
+\quad(ex\le n\le e^3x, x\ge X_0).}
+\tag{426.19}
+$$
+
+必要时扩大同一个 $X_0$ 以包含这份纤维正性付款。原 $d=1$ 头属于 $F_+$，其他十五个约数均保留；$7,10$ 只是其中两项。
+
+**注 426.5（实际尾项与素数支撑的边界）。**
+
+（426.10）是同一个真实 $I_\psi$，不是可调输入模型。四个有限 Euler 因子（展开后的十六个约数项）将阶乘轮廓移到 $u=S$，并改变同源正负窗口；第二窗的负向轴贡献必须补偿全部正向轴贡献。将该身份乘入实际 $M_P(n)$ 后，$M_P(n)$ 的符号仍需控制；窗口外的完整互素补集和（426.11）的首块也必须保留。因此这些新闭合的移心、翻转和补偿关系没有达到 Robin 的临界有符号尺度。$5040$ 在本操作中只通过 $\operatorname{rad}(5040)=210$ 进入；任何具有相同四素数支撑的整数都会给同一过滤器，这不解释 Robin 最后例外边界为何恰为 $5040$。
+
 ## 追加锚（本行以下为增补区）
