@@ -21,11 +21,6 @@ internal sealed class FiniteTowerProbabilityExtensionDocument : IScribeDocumentD
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "The statement display is an authored summary under the hypotheses below. "
-                        + "Automatic Lean statement projection is unavailable for this declaration "
-                        + "in the current projector. The complete constraints, costs and conclusions "
-                        + "are specified in the following narrative.")),
-                Paragraph(Text(
                     "For every natural level l, B_l is finite and nonempty, with the discrete topology "
                         + "and its Borel measurable structure. The bonding function q_l maps B_(l+1) "
                         + "to B_l and is defined everywhere. It need not be surjective.")),

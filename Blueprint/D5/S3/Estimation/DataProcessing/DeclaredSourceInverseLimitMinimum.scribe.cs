@@ -17,16 +17,12 @@ internal sealed class DeclaredSourceInverseLimitMinimumDocument : IScribeDocumen
                 Equal(Call("TV", Id("rho"), Id("theta")), Call("sup", Id("d"))),
                 Equal(Call("min", Id("L"), Call("TV", Id("rho"), Id("eta"))),
                     Call("sup", Id("d"))),
-                new Formula.Relation(Id("L"), FormulaRelationOperator.Equivalent, Id("H")),
+                FormulaDsl.Seq(FormulaDsl.Exists, FormulaDsl.Sp, Id("E"), FormulaDsl.InMacro,
+                    Call("Homeomorph", Id("L"), Id("H"))),
                 new Formula.Logic(Call("completedRadius", Id("c")), FormulaLogicOperator.Iff,
                     Call("everyFiniteRadius", Id("c")))])),
             AssessedProvenance.FromRepo(),
             Blocks(
-                Paragraph(Text(
-                    "The statement display is an authored summary under the hypotheses below. "
-                        + "Automatic Lean statement projection is unavailable for this declaration "
-                        + "in the current projector. The complete constraints, costs and conclusions "
-                        + "are specified in the following narrative.")),
                 Paragraph(Text(
                     "W_l, Z_l and U_l are finite nonempty discrete Borel spaces at every natural "
                         + "level. Their total bonding maps alpha_l, beta_l and gamma_l need not be "
@@ -39,7 +35,9 @@ internal sealed class DeclaredSourceInverseLimitMinimumDocument : IScribeDocumen
                         + "world threads determines every actual finite world law and every finite "
                         + "or completed source law by pushforward.")),
                 Paragraph(Text(
-                    "The target laws Q_l on Z_l are given with exact beta compatibility. The "
+                    "For every choice of the stated carriers, maps, laws and sets satisfying "
+                        + "these hypotheses, there exists Qinf for which all the conclusions below "
+                        + "hold together. The target laws Q_l on Z_l are given with exact beta compatibility. The "
                         + "completed target Qinf is constructed on the actual label threads and has "
                         + "exactly those projections. The construction uses probability extension "
                         + "without surjectivity of the original bonds."),

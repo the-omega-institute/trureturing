@@ -13,17 +13,20 @@ internal sealed class NativeDeclaredProbabilityPolytopeDocument : IScribeDocumen
             DeclarationHandle.Create(
                 "D5/S3/Estimation/DataProcessing/NativeDeclaredProbabilityPolytope.exists_native_finite_hull"),
             H("Actual probability laws generate the entire feasible class"),
-            StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Seq(
-                FormulaDsl.Exists, Id("V"), FormulaDsl.InMacro,
-                Call("Finset", Call("ProbabilityMeasure", Id("W"))), FormulaDsl.Comma,
+            StatementSource.FromAuthor(new Formula.Aligned([
+                FormulaDsl.Seq(FormulaDsl.Exists, FormulaDsl.Sp, Id("V"), FormulaDsl.InMacro,
+                    Call("Finset", Call("ProbabilityMeasure", Id("W"))), FormulaDsl.Comma,
+                    new Formula.Relation(Id("V"), FormulaRelationOperator.SubsetOf, Id("F"))),
                 Equal(Call("convexHull", Call("massVectorImage", Id("V"))),
-                    Call("massVectorImage", Id("F")))))),
+                    Call("massVectorImage", Id("F"))),
+                FormulaDsl.Seq(FormulaDsl.Forall, FormulaDsl.Sp, FormulaDsl.Theta,
+                    FormulaDsl.InMacro, Call("ProbabilityMeasure", Id("W")), FormulaDsl.Comma,
+                    new Formula.Logic(
+                        new Formula.Relation(FormulaDsl.Theta, FormulaRelationOperator.MemberOf, Id("F")),
+                        FormulaLogicOperator.Iff,
+                        Call("normalizedFiniteMixture", FormulaDsl.Theta, Id("V"))))])),
             AssessedProvenance.FromRepo(),
             Blocks(
-                Paragraph(Text(
-                    "This authored display abbreviates the coordinate convex-hull equality "
-                        + "within the full native theorem. It is not a generated theorem type "
-                        + "or a checked equivalence with that type.")),
                 Paragraph(Text(
                     "W, Z and U are finite measurable types with measurable singletons. "
                         + "label maps W to Z and source maps W to U. A is any subset of W. "
@@ -54,6 +57,13 @@ internal sealed class NativeDeclaredProbabilityPolytopeDocument : IScribeDocumen
                         + "every original symbol outside A. The image of F is exactly the "
                         + "standard simplex sliced by the label, source and outside-support "
                         + "linear equations; both directions of this image equality are supplied.")),
+                Paragraph(Text(
+                    "There exists one finite set V satisfying all three displayed conclusions "
+                        + "simultaneously. normalizedFiniteMixture(theta,V) means that there exists "
+                        + "a real function a on the entire ProbabilityMeasure W type, nonnegative "
+                        + "on V, with sum over V equal to one, such that the underlying measure of "
+                        + "theta equals the sum over V of ENNReal.ofReal(a(eta)) times the underlying "
+                        + "measure of eta. Coefficients outside V are unrestricted.")),
                 Paragraph(Text(
                     "The finite-simplex source argument supplies a finite set of coordinate "
                         + "generators. The inverse correspondence reconstructs an actual "

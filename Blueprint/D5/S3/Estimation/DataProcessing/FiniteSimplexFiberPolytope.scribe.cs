@@ -14,22 +14,19 @@ internal sealed class FiniteSimplexFiberPolytopeDocument : IScribeDocumentDefini
                 "D5/S3/Estimation/DataProcessing/FiniteSimplexFiberPolytope.declaredCoordinateClass_isPolytope"),
             H("The exact coordinate class is a polytope"),
             StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Seq(
-                FormulaDsl.Exists, Id("V"), FormulaDsl.InMacro,
+                FormulaDsl.Exists, FormulaDsl.Sp, Id("V"), FormulaDsl.InMacro,
                 Call("Finset", Call("MassVector", Id("W"))), FormulaDsl.Comma,
                 Equal(Call("convexHull", Id("V")), Id("F"))))),
             AssessedProvenance.FromRepo(),
             Blocks(
-                Paragraph(Text(
-                    "This authored display abbreviates the finite-convex-hull conclusion. "
-                        + "It is not an automatic projection or a checked equivalence with the "
-                        + "complete Lean theorem type.")),
                 Paragraph(Text(
                     "W, Z and U are finite types. The label and source maps have domains W "
                         + "and codomains Z and U. A is any subset of W. Q and nu are arbitrary "
                         + "real coordinate vectors; they need not themselves satisfy probability "
                         + "constraints, and the resulting feasible class may be empty.")),
                 Paragraph(Text(
-                    "F contains exactly the nonnegative vectors x on W with total sum one, "
+                    "For every choice of these types, maps, set and vectors, define F to contain "
+                        + "exactly the nonnegative vectors x on W with total sum one, "
                         + "label pushforward equal to Q, source pushforward equal to nu, and "
                         + "every coordinate outside A equal to zero. A pushforward coordinate "
                         + "is the sum over the full inverse image of that label or source value. "
