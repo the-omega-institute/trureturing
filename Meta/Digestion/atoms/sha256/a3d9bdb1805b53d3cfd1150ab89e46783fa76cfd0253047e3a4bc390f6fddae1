@@ -1,0 +1,21 @@
+**定义 73.11（带首次长度的响应等价）。** 对状态 $s$ 和有限位词 $w$，从 $s$ 起按原规则消费，定义
+
+$$
+\mathcal R_s(w)=
+\begin{cases}
+(i,\ell),&\text{首次抵达 }T_i\text{ 时已消费 }\ell\le|w|\text{ 位},\\
+\bot,&\text{消费完整个 }w\text{ 后仍未停止}.
+\end{cases}
+\tag{73.4}
+$$
+
+从终端开始时 $\mathcal R_{T_i}(w)=(i,0)$，包括空词 $\varepsilon$。从活动槽开始，空词响应是 $\bot$。规定
+
+$$
+s\sim t\quad\Longleftrightarrow\quad
+\forall w\in\{0,1\}^{\ast},\quad \mathcal R_s(w)=\mathcal R_t(w).
+\tag{73.5}
+$$
+
+比较的是所有有限续接词上的完整首次停止响应，包含初始活动／终端区别、标签身份和消费长度。只比较输出质量、平均位费或有限个测试词，都不等于式（73.5）。
+

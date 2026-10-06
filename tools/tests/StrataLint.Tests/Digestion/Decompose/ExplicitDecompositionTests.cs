@@ -113,8 +113,7 @@ public sealed class ExplicitDecompositionTests
         var f = Persist(First.Replace("\n", newline, StringComparison.Ordinal),
             Second.Replace("\n", newline, StringComparison.Ordinal),
             Third.Replace("\n", newline, StringComparison.Ordinal));
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot,
-            BackfillInventoryLoader.Load(DecomposeFixture.Decode(f.Baseline)), DigestionAlignmentMode.Ingest);
+        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest);
         Assert.Empty(alignment.Findings);
         Assert.Contains(f.Parent.AtomId, alignment.VerifiedClausePlanParents);
         Assert.All(f.Document.RequireDigestionEntries(), entry =>
@@ -153,8 +152,7 @@ public sealed class ExplicitDecompositionTests
         var inner = DecomposeAtomCommand.Run("synthetic", f.Gateway,
             [.. f.Args(nestedId), "--split-at", Encoding.UTF8.GetByteCount(Second).ToString(System.Globalization.CultureInfo.InvariantCulture)], f.Apply);
         Assert.True(inner.Success, inner.Error);
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot,
-            f.Document, DigestionAlignmentMode.Ingest);
+        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest);
         Assert.Empty(alignment.Findings);
         Assert.Contains(f.Parent.AtomId, alignment.VerifiedClausePlanParents);
         Assert.Contains(nestedId, alignment.VerifiedClausePlanParents);
@@ -164,7 +162,7 @@ public sealed class ExplicitDecompositionTests
         Assert.Equal(3, context.Count);
         Assert.Null(context.Next);
         Assert.Equal("theorem", DigestionContentKindResolver.Resolve(f.Snapshot, f.Document)[thirdId]);
-        var ingest = DigestionIngestor.Plan(f.Document, f.Snapshot, f.Document);
+        var ingest = ReportFreeDigestionIngestor.Plan(f.Document, f.Snapshot);
         Assert.Equal(0, ingest.ResidualOpenAdded);
         Assert.Empty(ingest.CasObjects);
         Assert.Equal(DirectoryLedgerTestSupport.Image(f.Document), DirectoryLedgerTestSupport.Image(ingest.Document));
@@ -177,13 +175,11 @@ public sealed class ExplicitDecompositionTests
         var baseline = f.Snapshot;
         var ledger = f.Document;
         var childPath = DigestionCasStore.RootPath + DecomposeFixture.Entry(Second).AtomId;
-        Assert.Empty(DigestionLedgerAligner.Evaluate(ledger, baseline,
-            ledger, DigestionAlignmentMode.Admission, baselineSnapshot: baseline,
+        Assert.Empty(DigestionLedgerAligner.Evaluate(ledger, baseline, DigestionAlignmentMode.Admission,
             changes: RawChangeSet.Create([childPath])).Findings);
         f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(e => e.Path != childPath)
             .Append(RawRepositoryEntry.FromText(childPath, "different bytes\n")));
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot,
-            ledger, DigestionAlignmentMode.Admission, baselineSnapshot: baseline,
+        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Admission,
             changes: RawChangeSet.Create([childPath]));
         Assert.Contains(alignment.Findings, finding => finding.Contains(
             $"CAS blob hash mismatch: {childPath}", StringComparison.Ordinal));
@@ -197,13 +193,11 @@ public sealed class ExplicitDecompositionTests
         var baseline = f.Snapshot;
         var ledger = f.Document;
         var childPath = DigestionCasStore.RootPath + DecomposeFixture.Entry(Second).AtomId;
-        Assert.Empty(DigestionLedgerAligner.Evaluate(ledger, baseline,
-            ledger, DigestionAlignmentMode.Admission, baselineSnapshot: baseline,
+        Assert.Empty(DigestionLedgerAligner.Evaluate(ledger, baseline, DigestionAlignmentMode.Admission,
             changes: RawChangeSet.Create([childPath])).Findings);
         f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(e => e.Path != childPath)
             .Append(new RawRepositoryEntry(childPath, [0xff])));
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot,
-            ledger, DigestionAlignmentMode.Admission, baselineSnapshot: baseline,
+        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Admission,
             changes: RawChangeSet.Create([childPath]));
         Assert.Contains(alignment.Findings, finding => finding.Contains(
             $"CAS blob hash mismatch: {childPath}", StringComparison.Ordinal));
@@ -293,8 +287,7 @@ public sealed class ExplicitDecompositionTests
                 e.Path != DigestionCasStore.RootPath + DecomposeFixture.Entry(Second).AtomId));
         if (defect == "self")
             f.Replace(f.Parent with { Receipts = f.Parent.Receipts with { ChainAtoms = [f.Parent.AtomId] } });
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot,
-            f.Document, DigestionAlignmentMode.Ingest);
+        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest);
         Assert.DoesNotContain(f.Parent.AtomId, alignment.VerifiedClausePlanParents);
         Assert.NotEmpty(alignment.Findings);
         Assert.Throws<DigestionAtomContextException>(() => DigestionAtomContextProjection.Resolve(

@@ -112,3 +112,11 @@ cell arithmetic, aggregate minima and scalar supplier endpoints without
 repeating the complete grid. This project-authored program reuses the
 canonical theta setup and FLINT arithmetic; dependency licensing is
 supplied by python-flint/FLINT.
+
+
+The [saved joint-field weight](joint-weighted-input.md) retains these
+pointwise cell floors before taking their scalar minimum. Its directed
+output cap pays a smaller common weighted action-tail input for the same
+actual $N=64,c=3/8$ correction map and old action cutoffs. No theta or
+joint-floor grid is rerun; retained weighted Grams and matrix signs
+remain unpaid.

@@ -47,7 +47,7 @@ public sealed partial class DigestionLedgerTests
             fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         }
         var evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
-            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()), baselineDocument: fixture.Document);
+            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()));
         Assert.Empty(evaluation.Findings);
         var evaluatedParent = evaluation.Entries.Single(item => item.Entry.AtomId == parent.AtomId);
         Assert.Equal("residual-open", StateName(evaluatedParent.DerivedStatus));
@@ -69,12 +69,12 @@ public sealed partial class DigestionLedgerTests
         Assert.True(result.Success, result.Error);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
-            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()), baselineDocument: fixture.Document);
+            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()));
         Assert.Empty(evaluation.Findings);
         Assert.Equal(State, StateName(evaluation.Entries.Single(item => item.Entry.AtomId == parent.AtomId).DerivedStatus));
 
         var clearParent = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "",
-            ["--clear", parent.AtomId, "--base", "baseline"]);
+            ["--clear", parent.AtomId]);
         Assert.True(clearParent.Success, clearParent.Error);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         Assert.Equal(parentBytes, fixture.Current.Entries.Single(entry => entry.Path == PathFor(parent)).Bytes.ToArray());
@@ -85,7 +85,7 @@ public sealed partial class DigestionLedgerTests
         // A cleared child must restore its own obligation without changing its parent or sibling.
         var closedSnapshot = fixture.Current;
         var clear = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "",
-            ["--clear", children[0], "--base", "baseline"]);
+            ["--clear", children[0]]);
         Assert.True(clear.Success, clear.Error);
         Assert.Contains("SETTLE_ALIGN_REQUIRED ancestors=" + parent.AtomId, clear.Output, StringComparison.Ordinal);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
@@ -96,7 +96,7 @@ public sealed partial class DigestionLedgerTests
         Assert.Null(clearedChild.Receipts.Nonpropositional);
         Assert.Equal("residual-open", StateName(clearedChild.ProjectedStatus));
         evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
-            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()), baselineDocument: fixture.Document);
+            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()));
         Assert.Contains(evaluation.Findings, finding => finding.Contains("entry " + parent.AtomId + " handwritten status", StringComparison.Ordinal));
         evaluatedParent = evaluation.Entries.Single(item => item.Entry.AtomId == parent.AtomId);
         Assert.Equal("partial-open", StateName(evaluatedParent.DerivedStatus));

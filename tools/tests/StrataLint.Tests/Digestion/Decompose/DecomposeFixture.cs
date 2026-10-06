@@ -53,12 +53,14 @@ internal sealed class DecomposeFixture
     internal BackfillInventoryDocument Document => BackfillInventoryLoader.Load(Snapshot);
     internal TheoryAtomizerRules Rules => TheoryAtomizerDataLoader.Load(Snapshot);
     internal string[] Args(string? atomId = null, bool dryRun = false) =>
-        ["--atom", atomId ?? Parent.AtomId, "--base", "baseline", .. dryRun ? new[] { "--dry-run" } : []];
+        ["--atom", atomId ?? Parent.AtomId, .. dryRun ? new[] { "--dry-run" } : []];
 
     internal void Apply(string _, RawRepositorySnapshot expected,
         ImmutableArray<DigestionCasObject> cas, ImmutableArray<IngestCommand.LedgerUpdate> updates)
     {
-        Assert.Same(Current, expected);
+        Assert.Equal(
+            Current.Entries.OrderBy(static entry => entry.Path, StringComparer.Ordinal),
+            expected.Entries.OrderBy(static entry => entry.Path, StringComparer.Ordinal));
         Writes++;
         CasWrites = cas;
         LedgerWrites = updates;

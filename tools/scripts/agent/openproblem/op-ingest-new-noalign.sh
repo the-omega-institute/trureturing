@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # op-ingest-new-noalign.sh — fresh branch from origin/dev + pure append of ADDENDUM to VOLUME + commit, then the
-# no-align ingest path (op-ingest-noalign.sh: lean-report → make ingest BASE=<dev sha> → verify atoms → push → PR).
+# no-align ingest path (op-ingest-noalign.sh: lean-report → make ingest → verify atoms → push → PR).
 # Reason: `make align-digestion-status` reorders a foreign entry's coverage_gids and makes `make ingest` fail-closed
 # (issue #5606); the append + ingest alone succeeded (PR #5607).
 # usage: op-ingest-new-noalign.sh WORKTREE NEW_BRANCH ADDENDUM_MD SUBJ_FILE PRMSG_FILE PATTERN [VOLUME_RELPATH]

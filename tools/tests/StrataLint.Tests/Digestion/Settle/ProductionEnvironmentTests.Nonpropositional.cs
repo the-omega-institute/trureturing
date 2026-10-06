@@ -28,8 +28,7 @@ public sealed partial class ProductionEnvironmentTests
         var raw = Snapshot(fixture.Files);
         var repository = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, raw);
         var aligned = IngestCommand.Run(temporary.Path, repository,
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty), ["--base", "baseline"]);
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)), []);
         Assert.True(aligned.Success, aligned.Error);
         var reportSource = new FakeLeanReportSource(null);
         var ingested = new ProductionCliEnvironment(temporary.Path, repository, reportSource,

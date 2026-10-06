@@ -4079,3 +4079,106 @@ supply the coordinate, independence and height relations used
 in Theorems 56.2 and 56.3.
 
 ## 追加锚（本行以下为增补区）
+
+## 73. Exact ternary valuation and signed native Lucas quotient
+
+**Theorem 73.1 (native scaled ternary unit).**
+Let $K=\mathbb Q(\sqrt5)$ and let $\phi=(1+\sqrt5)/2$ be the golden
+unit in $R=\mathbb Z[\phi]$. Conjugation sends $\phi$ to
+$\bar\phi=1-\phi$, and $\phi^2=\phi+1$,
+$\phi\bar\phi=-1$, and $\phi^{-1}=\phi-1$.
+For $z\in R$ write $\operatorname{Tr}(z)=z+\bar z$ and
+$N(z)=z\bar z$. Every $z=a+b\phi$ with $a,b\in\mathbb Z$ has
+$\operatorname{Tr}(z)=2a+b\in\mathbb Z$. Define the actual Lucas
+sequence and its ternary layers by
+
+$$
+L_n=\operatorname{Tr}(\phi^n)\quad(n\in\mathbb N),\qquad
+A_j=L_{3^j}^2+2\quad(j\in\mathbb N).
+$$
+
+For a nonzero integer $a$, let $v_3(a)$ be the largest
+$e\in\mathbb N$ for which $3^e\mid a$. Then for every natural
+number $j\geq1$,
+
+$$
+\begin{aligned}
+v_3(A_j)&=j+1,\\
+\frac{A_j}{3^{j+1}}&\equiv(-1)^j\pmod3.
+\end{aligned}
+$$
+
+The quotient in the second assertion is exact integer division.
+
+Proof. Taking traces of $\phi^0=1$ and $\phi$ gives $L_0=2$ and
+$L_1=1$. Taking traces of
+$\phi^{n+2}=\phi^{n+1}+\phi^n$ also gives the Lucas recurrence,
+so the trace definition agrees with the sequence used in the
+preceding sections.
+
+For every positive odd $n$, put $a=\phi^n$ and $b=\bar\phi^n$.
+Then $a+b=L_n$ and $ab=N(\phi^n)=(-1)^n=-1$. Consequently
+
+$$
+L_{3n}=a^3+b^3=(a+b)^3-3ab(a+b)=L_n^3+3L_n.
+$$
+
+For $k\in\mathbb N$, the index $3^k$ is positive and odd. Thus
+$x_k=L_{3^k}$ satisfies $x_{k+1}=x_k(x_k^2+3)$, and the native
+values $A_k=x_k^2+2$ satisfy
+
+$$
+\begin{aligned}
+A_{k+1}
+&=x_k^2(x_k^2+3)^2+2\\
+&=(x_k^2+2)\bigl((x_k^2+2)^2-3\bigr)\\
+&=A_k(A_k^2-3).
+\end{aligned}
+$$
+
+Since $3^0=1$ and $L_1=1$, the initial value is $A_0=3$.
+We prove by induction on every $k\in\mathbb N$ that there is an
+integer $u_k$ such that
+
+$$
+A_k=3^{k+1}u_k,\qquad u_k\equiv(-1)^k\pmod3.
+$$
+
+At $k=0$, take $u_0=1$. Given such an integer $u_k$, define
+
+$$
+u_{k+1}=u_k\bigl(3(3^k)^2u_k^2-1\bigr)\in\mathbb Z.
+$$
+
+Using the derived recurrence and the induction hypothesis gives
+
+$$
+\begin{aligned}
+A_{k+1}
+&=3^{k+1}u_k\bigl(3^{2k+2}u_k^2-3\bigr)\\
+&=3^{k+2}u_k\bigl(3(3^k)^2u_k^2-1\bigr)\\
+&=3^{k+2}u_{k+1}.
+\end{aligned}
+$$
+
+Modulo three, the factor in parentheses is $-1$, so
+
+$$
+u_{k+1}\equiv-u_k\equiv-(-1)^k=(-1)^{k+1}\pmod3.
+$$
+
+This completes the induction. Its first successor gives
+$L_3=4$, $A_1=18$, and $u_1=2$.
+
+For each $k$, the equality $A_k=3^{k+1}u_k$ proves
+$3^{k+1}\mid A_k$ and justifies the integrality of the quotient.
+Since $3^{k+1}>0$, exact integer division recovers the same integer
+$A_k/3^{k+1}=u_k$, giving the signed congruence. The residue
+$u_k\equiv(-1)^k\pmod3$ is nonzero, so $3\nmid u_k$.
+If $3^{k+2}$ divided $A_k=3^{k+1}u_k$, cancellation of the
+nonzero factor $3^{k+1}$ would force $3\mid u_k$.
+As $A_k=L_{3^k}^2+2>0$, its valuation is defined and therefore
+$v_3(A_k)=k+1$. Restricting these two conclusions to $j\geq1$
+proves the assertions.
+
+## 追加锚（本行以下为增补区）

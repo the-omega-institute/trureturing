@@ -1010,6 +1010,229 @@ $$
 上述紧完全截断情形对应 [Roberto Frigerio、Carlo Petronio, *Construction and Recognition of Hyperbolic 3-Manifolds with Geodesic Boundary*, arXiv:math/0109012v1](https://arxiv.org/abs/math/0109012v1) 的 Definitions 1.6–1.8（正文第 6–7 页）中 $I=Z=\varnothing$ 的几何实现：没有 ideal vertices 或 length-zero edges，截断面与侧面正交。Definition 1.10（正文第 8 页）在紧可定向流形去除规定的 tori 和 annuli 后，把 partially truncated triangulation 定义为各个 $\Delta^*$ 按指定侧面配对实现原流形；这里沿用其实际剖分语义，由已固定的 $r$ 和第 15 节的 $\overline h$ 保持同一个 marked 对应。Theorem 2.13 及 Remark 2.14（正文第 20 页）区分侧面一致性、实际内边角和 $2\pi$ 与两端 ideal 时的额外返回方程；Remark 2.14 的无 toric end 情形说明内边长度匹配和角和条件已足够处理相应匹配。该定理原文的全局陈述另有可定向、规定剖分及边界负 Euler 特征等前提；这里没有把那些前提从裸面配对中推断出来，而是在既有带标记截断实现上给出上述紧块的直接局部拼接证明。原文随后的 completeness discussion 也明确把有边界流形的完备性与双倍的完备性对应起来，并单独处理非紧端的方程。
 
 本节是标准双曲块拼接结论在原始出现、实际面映射和同一标记上的书面落实，不申报数学原创性或 Lean kernel 核验。它以真正紧块、实际兼容等距配对、边不反转、精确出现角和以及已有带标记实现为条件；不从较弱组合条件制造共同真长度或零缺陷，不将拓扑实现代替光滑度量证明，也不结算独立的实际体积、Schläfli、全局流收敛或预先指定 atlas 的相容性义务。
+
+### 16.7 字面源截断实现与固定模型商的比较
+
+固定指定流形 $N$ 的原始理想剖分 $(T,p)$，在每个源四面体 $\Delta_t$ 中取该剖分实现所用的、与实际单纯面配对相容的充分小开顶点星 $S_{t,v}$，记
+$$
+C_t=\Delta_t\setminus\bigcup_v S_{t,v},\qquad
+F^C_{t,f}=C_t\cap\{z_f=0\},\qquad U^C_{t,v}=C_t\cap\operatorname{Fr}_{\Delta_t}S_{t,v}.
+$$
+这里 $C_t$ 是字面源截断块，$U^C_{t,v}$ 是诱导 cap；它们不按定义等于第 5 节取 $z_v\le3/4$ 的固定模型 $K$ 及其 cap。
+[CFMP, arXiv:math/0402339v2, 正文第 3 页、Theorem 0.2 前的 triangulation 定义](https://arxiv.org/abs/math/0402339v2) 把从 $|T|$ 删除开顶点星所得空间同胚于指定 $N$ 作为剖分语义；删除全部顶点星即 ideal triangulation。
+同文正文第 6 页 “Triangulations” 的 $\Delta^*$、$M(T)$ 定义把实际单纯面配对限制到侧六边形，截断三角形诱导边界剖分，并明确允许 multiple adjacencies 和 self-adjacencies。
+令 $p^C_{t,f}:F^C_{t,f}\to F^C_{u,g}$ 为这些实际限制，$R_C$ 为其生成等价关系，定义
+$$
+X_C=\coprod_{t\in T}C_t,\qquad Q_C=X_C/R_C,\qquad
+q_C:X_C\to Q_C,\qquad B_C=q_C\Bigl(\coprod_{t,v}U^C_{t,v}\Bigr).
+$$
+原始理想剖分的上述源实现给出 $r_C:(Q_C,B_C)\xrightarrow{\cong}(N,\partial N)$，保留实际块、面、边及 cap 出现的诱导标记。
+逐块映射 $\chi_t(x)=r_C(q_C(t,x))$ 是特征映射；有自粘合时不要求它在整个闭 $C_t$ 上单射，不能把源实现读成互不重叠的全局嵌入闭块。
+$r_C$ 所带的是源截断诱导的 cap 参数；它足以运输本节的边界标记。要求它吻合一个独立预先指定的 $\partial N$ 参数化，是额外的比较条件。
+
+有限几何单纯细分中的真正闭顶点星有 $\operatorname{St}(v)=v*\operatorname{Lk}(v)=\bigcup_{\lambda\in\operatorname{Lk}(v)}v*\lambda$ 的锥形表示，开星取其相应开部分。
+该并集可非凸；任意顶点邻域或任意截断 profile 不因此成为这样的字面单纯星。不同开星不交也不推出其闭包不交。
+源星的实际细分、大小、诱导 cap 和边、共同面上的一致性都必须明确；若比较需要闭星分离，应另行检查或选择，不能从开集不交中补出。
+
+要把这个源见证用于第 16 节，还须独立构造带标签块同胚 $a_t:C_t\xrightarrow{\cong}K$，将每个 $F^C_{t,f}$、$U^C_{t,v}$ 和诱导旧边、cap 边及端点分别送到同标签模型层，并对每个实际生成配对满足
+$$
+a_u\bigl(p^C_{t,f}(x)\bigr)=P_{\sigma_{t,f}}a_t(x)
+\qquad(x\in F^C_{t,f}),\qquad
+ a_u(F^C_{u,g})=K\cap\{z_g=0\}.
+$$
+该等式要求整个受限面上的相容，不只要求顶点对应、边长相等或两块各自同胚；源星与固定模型星的比较仍是显式条件。
+令 $A(t,x)=(t,a_t(x))$。上述等式将每个 $R_C$ 生成识别送到第 5 节的 $R$ 生成识别；在对应模型面上代入 $x=a_t^{-1}(z)$ 得到
+$$
+a_u^{-1}(P_{\sigma_{t,f}}z)=p^C_{t,f}(a_t^{-1}(z))
+\qquad(z\in K,\ z_f=0).
+$$
+故 $A^{-1}$ 也将每个实际生成识别送回源生成识别；对反身、对称及有限传递逐步应用两式，得到 $R_C(\xi,\eta)\iff R(A\xi,A\eta)$。
+商拓扑的通用性质于是给出连续互逆映射
+$$
+a:(Q_C,B_C)\xrightarrow{\cong}(Q,B),\qquad
+ a(q_C(t,x))=q(t,a_t(x)),\qquad
+ a^{-1}(q(t,z))=q_C(t,a_t^{-1}(z)).
+$$
+cap 的逐标签对应给出 $a(B_C)=B$。因而第 16 节所需的实现及运输映射可取为
+$$
+r=r_C\circ a^{-1},\qquad j=\overline h\circ a\circ r_C^{-1},\qquad
+r\circ a=r_C,\qquad j\circ r_C=\overline h\circ a.
+$$
+结合第 15 节的整个面等式，这还给出 $H_t=h_t\circ a_t:C_t\to P_t$ 及 $H_u\circ p^C_{t,f}=I_{t,f}\circ H_t$，所有自配对与重复出现仍逐生成元保留。
+
+[FP, arXiv:math/0109012v1, Definitions 1.7、1.8（正文第 7 页）与 1.10（第 8 页）](https://arxiv.org/abs/math/0109012v1) 分别规定源 $\Delta^*$、其到 $\mathbb H^3$ 的几何嵌入及实现指定流形的实际剖分。
+在此紧完全截断情形，FP 的 $I=Z=\varnothing$ 表示没有 FP 意义的双曲 ideal vertices 或 length-0 edges，四个顶点均按非 ideal 顶点取星截断；CFMP 的 topological ideal vertices 则通过删除顶点星对应 $N$ 的边界分量，两种术语不相互否定。
+当 $C_t$ 正是该源 $\Delta_t^*$ 且上述比较已构造时，$H_t$ 嵌入实际源块，具有规定的全测地 cap、侧面及正交关系，而不是以任意模型商代替源剖分。
+在 FP Theorem 2.13 的可定向、边界负 Euler 特征、指定剖分及四面体定向使粘合反转诱导面定向的前提下，Remark 2.14 的无 toric end 分支（正文第 20 页）把条件约化为匹配内部边长度和各实际内边总角 $2\pi$；所得结构位于该剖分实现的同一个 $N$ 上。
+这项文献应用不提供缺失的 $a_t$：在完整实际小星呈示及面相容比较取得前，$r_C$ 只实现源商 $Q_C$，不能据它直接假定模型商 $Q\cong N$。
+
+### 16.8 有限几何顶点星的实际径向边界
+
+令 $\Delta=\{z\in\mathbb R^4:z_i\ge0,\ \sum_i z_i=1\}$，取原顶点 $v=e_j$。设 $\mathcal K$ 是支撑空间恰为 $\Delta$ 的有限几何单纯复形，$v$ 是其顶点。每个面由有限个仿射独立顶点给出；任意两面的凸包交集是公共顶点集的凸包。定义实际闭星、链接及不含 $v$ 的面并集为
+$$
+\operatorname{St}_{\mathcal K}(v)=\bigcup_{s\in\mathcal K,\ v\in s}\operatorname{conv}(s),\qquad
+L_{\mathcal K}(v)=\bigcup_{s\in\mathcal K,\ v\in s}\operatorname{conv}(s\setminus\{v\}),\qquad
+B_v=\bigcup_{s\in\mathcal K,\ v\notin s}\operatorname{conv}(s).
+$$
+空凸包贡献为空。这里允许闭星非凸。记相对开星为 $O_v=\Delta\setminus B_v$，并取实际小星条件
+$$
+\operatorname{St}_{\mathcal K}(v)\subset\{z\in\Delta:1-z_j\le b\},\qquad b<1.
+$$
+这条件针对字面闭星；不同开星不交不能供应它。
+
+令 $D_j=\{u\in\Delta:u_j=0\}$，$r_j(z)=1-z_j$。在 $\Delta\setminus\{v\}$ 上定义
+$$
+p_j(z)_j=0,\qquad p_j(z)_k=\frac{z_k}{r_j(z)}\quad(k\ne j).
+$$
+则 $p_j:L_{\mathcal K}(v)\to D_j$ 是同胚。特别地，
+$$
+h_j(u)=r_j\bigl((p_j|_{L_{\mathcal K}(v)})^{-1}(u)\bigr)
+$$
+是连续函数，且 $0<h_j(u)\le b<1$。实际星与 cap 具有精确表示
+$$
+\begin{aligned}
+L_{\mathcal K}(v)&=\{(1-h_j(u))v+h_j(u)u:u\in D_j\},\\
+\operatorname{St}_{\mathcal K}(v)&=\{v\}\cup\{(1-r)v+ru:u\in D_j,\ 0<r\le h_j(u)\},\\
+O_v&=\{v\}\cup\{(1-r)v+ru:u\in D_j,\ 0<r<h_j(u)\},\\
+\operatorname{Fr}_{\Delta}O_v&=L_{\mathcal K}(v).
+\end{aligned}
+$$
+
+**射线唯一性。** 每个非空 $s\setminus\{v\}$ 都是 $\mathcal K$ 的面，仿射独立性保证 $v$ 不在其仿射包内。若 $x,y\in L_{\mathcal K}(v)$ 位于同一正射线，选含 $v$ 的面 $s,t$，使 $x\in\operatorname{conv}(s\setminus\{v\})$、$y\in\operatorname{conv}(t\setminus\{v\})$，并交换两者以写成
+$$
+x-v=c(y-v),\qquad 0<c\le1.
+$$
+凸性给出 $x\in\operatorname{conv}(t)$；对 $s\setminus\{v\}$ 与 $t$ 使用实际凸包交集律，得到 $x\in\operatorname{conv}(t\setminus\{v\})$。若 $c\ne1$，两点 $x,y$ 的仿射包包含
+$$
+v=-\frac1{c-1}(x-y)+y,
+$$
+与 $v\notin\operatorname{aff}(t\setminus\{v\})$ 矛盾。所以 $c=1$，$x=y$。此论证使用实际公共面及仿射独立性，没有把所需射线纤维定义成新的等价关系。
+
+**方向覆盖与连续性。** 不含 $v$ 的每个面凸包都紧且避开 $v$；有限并 $B_v$ 因而紧且避开 $v$。所以 $\Delta$ 中存在 $v$ 的相对邻域与 $B_v$ 不交。对任意 $u\in D_j$，在该邻域取 $z=(1-\varepsilon)v+\varepsilon u$，$0<\varepsilon<1$。由于 $\mathcal K$ 覆盖 $\Delta$，$z$ 属于某个面的凸包；该面必须含 $v$。将 $z$ 的重心组合中非 $v$ 的权重归一化，得到 $y\in L_{\mathcal K}(v)$ 与 $z-v=\lambda(y-v)$，$0<\lambda\le1$。于是 $p_j(y)=u$。链接自身紧，且不含 $v$，故其上 $r_j>0$、$p_j$ 连续。刚证明的覆盖和射线唯一性给出连续双射；紧源到 Hausdorff 目标的判据给出同胚与连续正函数 $h_j$。
+
+**实际开星与 frontier。** 公共面交集律给出
+$$
+B_v\cap\operatorname{St}_{\mathcal K}(v)=L_{\mathcal K}(v),\qquad
+O_v=\operatorname{St}_{\mathcal K}(v)\setminus L_{\mathcal K}(v).
+$$
+第二式也表明 $O_v$ 就是所有含 $v$ 的面的相对内部之并：每点的重心支撑给出其唯一最小面；该最小面含 $v$ 当且仅当该点不属于 $B_v$。对闭星中的一点，将含 $v$ 的面的重心组合分解为 $v$ 与某个链接点的凸组合，得到 $0\le r\le h_j(u)$；反向包含来自同一面的凸性。除去链接即得严格不等式。沿同一射线从内侧趋向每个链接点，说明 $\overline{O_v}^{\Delta}=\operatorname{St}_{\mathcal K}(v)$。$B_v$ 闭，故 $O_v$ 相对开；于是其相对 frontier 恰为链接。条件 $h_j<1$ 还保证每个 cap 点的同一射线在 $\Delta$ 内有外侧部分。
+
+**原面限制。** 对一个包含 $v$ 的原面 $F_f=\{z_f=0\}$，$f\ne j$，非负重心坐标保证
+$$
+\operatorname{conv}(s)\cap F_f=\operatorname{conv}(s\cap F_f).
+$$
+所以实际限制复形 $\mathcal K|_{F_f}$ 覆盖 $F_f$，其闭星、链接分别是 $\operatorname{St}_{\mathcal K}(v)\cap F_f$、$L_{\mathcal K}(v)\cap F_f$。设原配对 $P_\sigma:F_f\to F_g$ 将该限制复形映为目标限制复形，并将 $v$ 映为 $e_{\sigma(j)}$。它将两侧的实际链接对应；径向归一化满足 $p_{\sigma(j)}P_\sigma=P_\sigma p_j$，半径也被保留。由链接射线唯一性，得到整个受限方向面上的等式
+$$
+h_{\sigma(j)}(P_\sigma u)=h_j(u)\qquad(u\in D_j\cap F_f).
+$$
+无需要求不同块的完整细分相同，只需核对原配对在共享面上的实际细分及顶点星。
+
+应用到第 16.7 节时，须将这里的 $O_v$ 与该源实现实际删除的 $S_{t,v}$、这里的链接与其 cap 逐一识别，并核对各原面配对上的限制复形对应。实际源未给出这样的有限几何表示时，这个识别仍是待完成的输入桥梁。得到上述实际 profiles 之后，才能把它们代入带标签的相容径向比较并运输原实现 $r_C$；该结论自身不把固定模型商指定为 $N$，也不供应独立预先固定的边界参数化。
+
+
+### 16.9 固定原剖分的有限星见证与相容标准截断
+
+固定原第 1 节的紧致、连通、可定向三维流形 $N$，其边界分量均为亏格至少二的闭曲面；固定其有限带标签理想剖分 $(T,p)$，保留全部自配对、重复邻接及局部出现。令
+$$
+X=\Bigl(\coprod_{t\in T}\Delta_t\Bigr)/\langle p\rangle,\qquad
+V=\{\text{原顶点在 }X\text{ 中的等价类}\}.
+$$
+局部顶点出现 $(t,j)$ 与商顶点不可混同。每个原面配对 $p_{t,f}:F_f\to F_g$ 是字面的仿射单纯映射，写成四坐标置换 $P_\sigma$ 在 $F_f=\{z_f=0\}$ 上的限制，其中 $\sigma(f)=g$。
+
+[CFMP, arXiv:math/0402339v2，第 3、6 页](https://arxiv.org/pdf/math/0402339v2) 的拓扑约定是：从原 $X$ 删除全部顶点的小开星，所得带边界空间实现指定 $N$；截断三角形诱导其边界剖分，面配对限制到原侧六边形。这里实现同胚和小星是存在量词，没有独立固定的边界逐点参数化。
+[FP, arXiv:math/0109012v1，Definitions 1.7、1.10，第 7–8 页](https://arxiv.org/pdf/math/0109012v1) 的紧完全截断情形取 $I=Z=\varnothing$，四个顶点均删去小开星，没有删去环带或环面边界。FP 的双曲 ideal vertices 是集合 $I$ 中保留为无穷端的顶点；CFMP 的 topological ideal vertices 则由删星对应紧流形边界，二者不是同一约定。
+
+**相容细分及闭星界。** 在每个原仿射四面体取同一个 $k$ 次重心细分 $\mathcal K_t^{(k)}$。仿射面映射将每个非空面的重心送到像面的重心，将严格嵌套面链送到像链。归纳于细分次数可得
+$$
+P_\sigma\bigl(\mathcal K_t^{(k)}|_{F_f}\bigr)=\mathcal K_u^{(k)}|_{F_g}.
+$$
+这是整个原面的单纯复形等式，逐原生成配对成立。细分支撑仍为原 $\Delta_t$，每个小单纯形仿射独立，交集为公共面。
+
+一次细分的单纯形由原非空面链给出，故不能同时含两个原顶点：两个不同 singleton 面不可比较。二次细分中，含原顶点 $v$ 的单纯形的每个顶点都是某个含 $v$ 的一次细分单纯形的重心。如果 $v,w$ 的闭二次星相交，公共面交集律给出一个公共细分顶点；它对应的一次单纯形将同时含 $v,w$，矛盾。
+对这样的顶点，$z_v$ 是某条含 $\{v\}$ 的原面链上的 $1/|S|$ 的算术平均。面大小是 $\{1,2,3,4\}$ 的含 $1$ 子集，其平均最小值为
+$$
+\min_{1\in A\subset\{1,2,3,4\}}\frac1{|A|}\sum_{m\in A}\frac1m
+=\frac{1+1/2+1/3+1/4}{4}=\frac{25}{48}.
+$$
+确实，固定项数时选其余最小的倒数，四种最小平均依次为 $1,5/8,19/36,25/48$。凸性于是给出整个闭二次星上的 $z_v\ge25/48$，即 $r_v=1-z_v\le23/48<1/2$。再次细分的闭旧顶点星包含于前一级闭星，因此分离和此界对全部 $k\ge2$ 保持。
+
+还可使这些字面星充分小。若 $A\subset B$ 是一个 $m$ 维单纯形的非空顶点集，则
+$$
+\beta(B)=\frac{|A|}{|B|}\beta(A)+\frac{|B|-|A|}{|B|}\beta(B\setminus A),\qquad
+\|\beta(B)-\beta(A)\|\le\frac m{m+1}\operatorname{diam}(\Delta).
+$$
+对 $m\le3$，每次细分的 mesh 至多乘 $3/4$；旧顶点星的每点与顶点的距离至多为该 mesh。有限多个原出现因而允许选择同一个充分大的 $k\ge3$，使星落在所需的标准源顶点邻域内。这是共同有限几何细分的选择，并非任意拓扑邻域的替换。
+
+**同一个 $X$ 内的正则邻域。** 先核对原商的细分适用条件。原四面体内部没有识别；不同面内部只作规定的两两配对。唯一可能使一个旧边内部发生非平凡自身识别的仿射自同构是端点交换。沿该边的四面体扇形绕行若产生这种交换，在中点链接上把边圈展开两遍，得到以两个轴端为极点的球面；一次绕行交换两极及两份扇形，给出无固定点的二重覆盖变换。商链接因而是 $\mathbb{RP}^2$（其球面二重覆盖给出 Euler 示性数 $1$），即其锥的非流形中点模型；这正是 CFMP 第 6 页列出的边中点障碍。中点未被小顶点星删除，故与源保留空间确实为三维流形矛盾。于是不存在反向旧边识别。面内部与四面体内部也无反转稳定子，原呈示给出有效的 unordered $\Delta$-complex，而非带单纯形内部反转的商。
+[Hatcher, Algebraic Topology，Appendix “Simplicial CW Structures”，第 534–535 页](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf#page=543) 适用于这个 unordered $\Delta$-complex：一次重心细分为 regular $\Delta$-complex，两次为真正单纯复形。因此 $X$ 是有限 PL 多面体，虽在 $V$ 处未必为流形；原闭四面体无需嵌入 $X$。
+
+取前一级商复形 $\mathcal J=\mathcal K^{(k-1)}$，它已是真正单纯复形。$V$ 在 $\mathcal J$ 中为 full 的零维子复形：没有单纯形含两个不同旧顶点，故顶点全在 $V$ 的非空单纯形只能是一个点。令 $D=C(V,\mathcal J)$ 为与 $V$ 不相交的单纯形组成的单纯补复形。
+[Bryant, Piecewise Linear Topology，§3，第 9–10 页](https://www.maths.ed.ac.uk/~v1ranick/papers/pltop.pdf#page=9) 用 mod $V\cup D$ 的 derived subdivision 定义 derived neighborhood。这里可在其余单纯形内选重心。完整重心细分还细分了 $D$，但不改变含旧顶点的链：这些链从 $\{v\}$ 开始，每项都含 $v$，没有项属于 $D$。故完整细分与上述相对 derived subdivision 的旧顶点星支撑完全相同，连同其所有面也相同。
+于是第 $k$ 级商闭旧顶点星之并 $A_k$ 是 Bryant 定义中的正则邻域，而不只是同胚于若干锥。记其开星之并为 $O_k$，frontier 为 $\partial_X A_k$；每个商顶点的分量是该点与其实际链接的 PL 锥。
+
+原标准源删除闭包 $A_0$ 也必须在这个 $X$ 内识别为正则邻域。选择原存在见证的充分小、互不相交的标准 PL 星，记保留空间 $M_0=X\setminus\operatorname{Int}_X A_0$，源实现为 $r_0:(M_0,\partial M_0)\cong(N,\partial N)$。每个删除闭包 $A_{0,v}$ 是实际局部星给出的 PL 锥 $v*L_v$，其底 $L_v$ 为 $M_0$ 的对应边界分量。
+源有限截断分解给出 PL 三维流形：侧面内部为两个半空间拼合，非反向旧边的扇形给出圆盘法向，cap 处为边界半球模型；顶点链接是实际边界曲面的圆盘模型。这也可由三维三角化流形的二维球面、圆盘链接判据验证，未使用高维流形的任意三角化断言。因此 [Bryant Corollary 2.5，第 7 页](https://www.maths.ed.ac.uk/~v1ranick/papers/pltop.pdf#page=7) 给出 $L_v$ 在 $M_0$ 中的 PL collar。
+
+把一段该 collar 接到 $A_{0,v}$ 外侧，得到较大的锥邻域 $E_v$。这一 PL 锥结构可逐 $L_v$ 的单纯形作截锥与 collar 棱柱的共同细分、再按公共面拼合得到；不将任意锥线投影直接宣称为单纯形上线性映射。选择锥的 join 坐标，使原 $L_v$ 为同一 $0<\varepsilon<1$ 截面，$A_{0,v}$ 为该坐标的 $[0,\varepsilon]$ 部分。
+将 $E_v$ 和外部有限多面体相容三角化，取 $V$ 为 full 子复形；在每个与 $v$ 相交的锥单纯形内，把 derived 点选在这个 $\varepsilon$ 截面上。该选择合法，因为截面穿过每个锥单纯形内部。其相对 derived 星恰为截面内侧：边界面的归纳细分与内部 starring 将该内侧分割为含 $v$ 的单纯形，外侧单纯形均避开 $v$。
+这就是 Bryant 第 10 页的 $\varepsilon$-neighborhood 构造，给出 $A_0$ 在原 $X$ 内的正则邻域识别。有限 collar 可选得互不相交并向外剩余空间作相对细分延拓；所有识别都在同一 $X$ 中完成。
+
+Bryant Theorem 3.2 及其证明现在给出环境 PL 同胚 $\Psi:X\to X$，满足 $\Psi|_V=\mathrm{id}$、$\Psi(A_k)=A_0$。由内部、frontier 的拓扑不变性，$\Psi(O_k)=\operatorname{Int}_X A_0$，并将各商顶点的 frontier 分量送到同一商顶点的源边界分量。这里使用的是将第一邻域送到第二邻域的性质。
+
+**实际保留商与指定 $N$。** 在每个原块定义第 $k$ 级字面开星 $O_{t,j}$、闭星 $A_{t,j}$、链接 $L_{t,j}$，并置
+$$
+C_t=\Delta_t\setminus\bigcup_jO_{t,j},\quad U^C_{t,j}=L_{t,j},\quad
+F^C_{t,f}=C_t\cap F_f,\quad Q_C=\Bigl(\coprod_t C_t\Bigr)/\langle p|_{F^C}\rangle.
+$$
+细分在整个配对面上的自然性使删除并集饱和，其像正是 $O_k$。因此原等价关系的一条有限生成链若从保留点出发，其每一步仍在保留部分；受限生成关系恰为原关系在保留点上的限制。自然映射 $\iota:Q_C\to X\setminus O_k$ 是连续双射。
+每个 $C_t$ 是紧有限子多面体，有限不交并及其商 $Q_C$ 紧；$X\setminus O_k$ 是有限多面体 $X$ 的闭子多面体，因而 Hausdorff。紧源到 Hausdorff 目标判据证明 $\iota$ 为同胚，包含完整边界拓扑。令 $B_C=q_C(\coprod_{t,j}L_{t,j})$，便有
+$$
+r_C=r_0\circ\Psi\circ\iota:(Q_C,B_C)\xrightarrow{\cong}(N,\partial N).
+$$
+这使用原指定 $N$ 的源实现；链接亏格或另一个无标签商的同胚类型不承担此识别。$\Psi$ 无需逐块保留原面：原 $r_C$ 是存在见证，实际原标签沿特征映射 $\chi_t=r_C\circ q_C|_{C_t}$ 运输。
+cap、原面、旧边及每个有序端出现均保留其 $(t,j,f,\ldots)$ 标签；几个出现可以有同一个商像。自粘合时 $\chi_t$ 可在闭块边界识别点，不声称闭块全局嵌入。$\Psi$ 固定 $V$ 保留商顶点与边界分量的对应，未引入独立固定的边界逐点映射。
+
+**实际 profiles 与直接径向比较。** 第 16.8 节应用于刚构造的 $\mathcal K_t^{(k)}$ 和字面星，给出连续正函数及整个配对方向面上的自然性
+$$
+0<h_{t,j}(u)\le b=23/48,\qquad
+h_{u,\sigma(j)}(P_\sigma w)=h_{t,j}(w)\quad(w\in D_j\cap F_f,\ j\ne f).
+$$
+其中 $D_j=\{z_j=0\}$，$R_j(w,r)=(1-r)e_j+rw$；在 $r>0$ 时，实际开星为 $r<h_{t,j}(w)$，链接为等号，闭星为弱不等号；开、闭星另含顶点，链接不含顶点。取 $c=1/4$，固定共同的 $23/48<a<1/2$。定义
+$$
+\phi_h(r)=\begin{cases}
+cr/h,&0\le r\le h,\\
+c+(a-c)(r-h)/(a-h),&h\le r\le a,\\
+r,&a\le r\le1,
+\end{cases}\qquad
+\phi_h^{-1}(s)=\begin{cases}
+hs/c,&0\le s\le c,\\
+h+(a-h)(s-c)/(a-c),&c\le s\le a,\\
+s,&a\le s\le1.
+\end{cases}
+$$
+各段斜率正，接口吻合，端点为零、一，所以两式为连续互逆区间同胚。邻域 $W_j=\{r_j<a\}$ 两两不交，因为其中 $z_j>1-a>1/2$。在 $W_j\setminus\{e_j\}$ 上定义
+$$
+H_t(R_j(w,r))=R_j\bigl(w,\phi_{h_{t,j}(w)}(r)\bigr),\qquad H_t(e_j)=e_j,
+$$
+其余部分取恒等。各 $W_j$ 被保持，逆由同一邻域中的逆公式给出。在 $r=a$ 处与恒等吻合；方向和半径在非顶点处连续，移动接口处也吻合。
+紧 $D_j$ 上有 $m_{t,j}=\min h_{t,j}>0$。当 $r<m_{t,j}$ 时，像半径至多 $cr/m_{t,j}$；当 $s<c$ 时，逆像半径至多 $bs/c$。$R_j$ 到顶点的距离至多为四面体直径乘半径，故正逆映射在顶点连续。因此 $H_t$ 是整个闭原四面体的同胚。
+
+严格单调性精确给出 $H_t(O_{t,j})=\{r_j<c\}$、$H_t(L_{t,j})=\{r_j=c\}$ 及闭星的弱不等式对应。实际闭星已包含于 $W_j$。置
+$$
+K=\{z\in\Delta:z_j\le3/4\ \text{对全部 }j\},\qquad a_t=H_t|_{C_t}:C_t\xrightarrow{\cong}K.
+$$
+每个闭零坐标原面 $F_f$ 被双侧保持：$W_f$ 不碰 $F_f$，而 $j\ne f$ 时 $F_f\cap W_j$ 的方向满足 $w_f=0$，径向变换保持此零坐标；逆公式同理。故旧边、cap 与原面的交边及有序端点由这些集合的交集精确送到同标签模型层。
+
+对每个原配对，$P_\sigma$ 保留半径，将 $W_j\cap F_f$ 送到 $W_{\sigma(j)}\cap F_g$；上述实际 profile 自然性使两侧使用同一 $\phi_h$。其余部分两侧均恒等，于是在整个原面上有
+$$
+H_uP_\sigma=P_\sigma H_t,\qquad
+ a_u\circ p^C_{t,f}=P_\sigma\circ a_t.
+$$
+逆式亦成立。第 16.7 节的逐生成元商比较遂给出 $a:(Q_C,B_C)\cong(Q,B)$；自配对、重复邻接和全部出现标签均按原生成关系保留。最终
+$$
+r=r_C\circ a^{-1}:(Q,B)\xrightarrow{\cong}(N,\partial N),\qquad r\circ a=r_C.
+$$
+固定 quarter 模型实现的是原来同一个指定 $N$，其块与边界标签来自实际源特征映射的运输。此结论是使用所引 PL 理论的经典存在证明；不主张这个源桥梁已有经过验证的 Lean 应用，也不由此建立双曲度量或原各节的全部结论。
 ## 17. 原始六参数块上的实际旧边领圈与参数恢复
 
 本节把第 16.2 节的标准 Fermi 领圈接回原始六参数的极面截断块，给出支撑不等式、逆参数及相对开集的具体公式。所有六个参数独立变化，不假设等边。沿用原始槽序 $12,13,14,34,24,23$，令 $x_{ij}>1$，并要求原始判别式 $D(x)>0$。在原始 Lorentz 模型中，记实际向量为 $V_1,\ldots,V_4$，其 Gram 矩阵为
@@ -2005,3 +2228,1152 @@ $$
 本节沿用标准双曲几何和全测地边界加倍方法。部分截断剖分、面一致性及非紧端完备方程的文献范围仍按第 16.6 节的 [Frigerio–Petronio](https://arxiv.org/abs/math/0109012v1) 对应；本节只用已经建立的紧、完全截断实际图册。Hopf–Rinow 使用其无边界连通 Riemannian 流形版本；本节已经逐项给出这些条件，测地完备性另由上面的紧单位切丛论证直接给出。
 
 本节完成的是在第 21 节条件之上的书面曲率、全测地性、实际反射双倍及紧双倍测地完备证明。有限块链距离的精确校准、预选图册相容性、非紧端和退化块仍不由本节结算；本节不申报文献原创性、Lean kernel 核验、冻结或 atom 覆盖。
+
+## 23. 实际下降张量与有限原始块链的长度校准
+
+沿用第 21 节的同一个有限原始配对、真正非退化紧截断块、实际相容面等距映射、旧边不反转及全部实际出现角和 $2\pi$。记实际带标签不交并、生成商和 cap 标记为
+
+$$
+X_{\rm geom}=\coprod_{t\in T}P_t,
+\qquad \pi:X_{\rm geom}\to M=Q_{\rm geom},
+\qquad C=B_{\rm geom}.
+$$
+
+本节使用第 14–21 节已经建立的紧 Hausdorff 原始商、有限实际纤维、实际解析图册及下降张量 $g$。每张图卡在每个实际代表的块邻域上是一个固定未来 Lorentz 矩阵的限制，任意交叠在每点附近使用一个固定 Lorentz 转移；所有边界点已有实际半空间图卡，边界恰为 $C$。不以曲率、全测地性、双倍或测地完备性作为本节前提。
+
+第 16.4–16.5 节给出距离相等及紧分量完备的概要。本节补全实际张量长度的模型校准、有限分支平面分割、路径替换和原商拓扑识别。原来的路径可在有限时间内无限次跨面；有限块链来自替换后的有限模型弧段，不来自对原路径面交点数的假设。
+
+**命题 23.1（同一原商上的精确长度距离）。** 在上述条件下，实际张量 $g$ 的闭区间 $C^1$ 路径长度距离与有限实际块路径链距离逐点相等。它们在每个连通分量上是有限的真正度量，诱导字面原商拓扑；每个分量连同其边界是紧且完备的度量空间。在不同连通分量间取 $+\infty$。这些结论通过第 21 节的同一个 $\overline H$ 和固定标记 $r$ 运输到同一个 $(Q,B)$ 和同一个带标记 $N$，使用的是运输图册。
+
+### 23.1 未来双曲面的实际张量长度
+
+使用 $L=-dX_0^2+dX_1^2+dX_2^2+dX_3^2$ 和未来单位双曲面 $\mathbb H^3$，切张量为 $L|_{X^\perp}$。先只定义数值函数
+
+$$
+\delta(P,Q)=\operatorname{arcosh}(-L(P,Q)).
+$$
+
+这里尚未把 $\delta$ 认作张量的路径距离。若 $P,X\in\mathbb H^3$，令 $A=-L(P,X)$。未来条件及欧氏 Cauchy–Schwarz 给出
+
+$$
+A=P_0X_0-P_{\rm sp}\cdot X_{\rm sp}>0,
+$$
+
+因为 $P_0>\|P_{\rm sp}\|$、$X_0>\|X_{\rm sp}\|$。令
+
+$$
+W=P-AX\in X^\perp.
+$$
+
+直接计算 $L(W,W)=A^2-1$。切张量正定，故 $A\ge1$；等号迫使 $W=0$，继而 $P=X$。因此 $\delta$ 良定义、非负，且 $\delta(P,Q)=0$ 当且仅当 $P=Q$。
+
+固定起点 $P$，对切向量 $V\in X^\perp$ 有
+
+$$
+dA_X(V)=-L(P,V)=-L(W,V),
+\qquad
+|dA_X(V)|\le\sqrt{A^2-1}\,\|V\|_L. \tag{23.1}
+$$
+
+为处理起点、重返起点及其他 $A=1$ 的时刻，取 $\varepsilon>0$，使用
+
+$$
+f_\varepsilon(X)=
+\operatorname{arcosh}(A(X)+\varepsilon)
+-\operatorname{arcosh}(1+\varepsilon).
+$$
+
+其自变量处处严格大于 $1$，所以它在整个双曲面上 $C^1$，并由 (23.1) 满足
+
+$$
+|df_\varepsilon{}_X(V)|
+\le
+\frac{\sqrt{A^2-1}}{\sqrt{(A+\varepsilon)^2-1}}\,\|V\|_L
+\le\|V\|_L. \tag{23.2}
+$$
+
+设 $c:[a,b]\to\mathbb H^3$，$a\le b$，$c(a)=P$、$c(b)=Q$，且 $c$ 在这个闭区间上 $C^1$。这里只要求闭区间上的 $C^1$，端点使用单侧导数或坐标中的 $C^1$ 延拓；不要求 $c$ 在整条实线上 $C^1$。当 $a<b$，对 $f_\varepsilon\circ c$ 在闭区间应用微积分基本定理和 (23.2)，得到
+
+$$
+\operatorname{arcosh}(-L(P,Q)+\varepsilon)
+-\operatorname{arcosh}(1+\varepsilon)
+\le\int_a^b\|\dot c(t)\|_L\,dt. \tag{23.3}
+$$
+
+端点不需要把 $\operatorname{arcosh}$ 在 $1$ 处求导。有限分片 $C^1$ 时，在每个闭子区间应用相同正则化，再望远镜相加，得到同一不等式。$a=b$ 时 $P=Q$，长度和左侧均为零。
+
+现在令 $\varepsilon\downarrow0$。$\operatorname{arcosh}$ 在 $[1,\infty)$ 连续，包括 $1$，且 $\operatorname{arcosh}(1)=0$，故
+
+$$
+\delta(P,Q)\le L_L(c). \tag{23.4}
+$$
+
+这一论证也覆盖 $P=Q$、路径多次经过 $P$ 和闭端点；没有把这些时刻删掉后再隐含使用奇异径向导数。
+
+反向若 $P\ne Q$，令 $A=-L(P,Q)>1$、$a=\operatorname{arcosh}A>0$，并取
+
+$$
+U=\frac{Q-AP}{\sqrt{A^2-1}},\qquad
+\sigma(t)=\cosh(t)P+\sinh(t)U\quad(0\le t\le a).
+$$
+
+$L(P,U)=0$、$L(U,U)=1$，所以 $L(\sigma,\sigma)=-1$、$L(\dot\sigma,\dot\sigma)=1$。端点为 $P,Q$，且整段属于未来分支。更明确地，
+
+$$
+\sigma(t)=\frac{\sinh(a-t)}{\sinh a}P+
+\frac{\sinh t}{\sinh a}Q. \tag{23.5}
+$$
+
+系数非负且不同时为零，因而时间坐标严格正。该弧段长度为 $a=\delta(P,Q)$。$P=Q$ 时用任意非退化参数区间上的常曲线，长度为零。结合 (23.4)，$\delta$ 正好是实际切张量在双曲面上的路径长度下确界；此后记作 $d_{\mathbb H}$。对称性来自 $L$，三角不等式来自两条上述弧段拼接后应用 (23.4)。整个校准没有先假定已安装的模型度量等于切张量距离。
+
+这个度量诱导双曲面的原拓扑，闭球紧。取一个未来 Lorentz 正交标架把球心 $Z$ 送到 $(1,0,0,0)$，则
+
+$$
+d_{\mathbb H}(Z,Y)=\operatorname{arcosh}(Y_0),
+\qquad \|Y_{\rm sp}\|=\sinh d_{\mathbb H}(Z,Y).
+$$
+
+空间坐标是双曲面的全局同胚，球和闭球分别对应欧氏球和闭球，故得到这两个结论。
+
+式 (23.5) 还说明实际支撑半空间和模型球都是弧段凸的。半空间的不等式在非负线性组合下保持；对球，若两端到 $Z$ 的距离都小于 $R$，则
+
+$$
+-L(Z,\sigma(t))
+<\cosh R\,
+\frac{\sinh(a-t)+\sinh t}{\sinh a}
+\le\cosh R,
+$$
+
+因为系数之和为 $\cosh(t-a/2)/\cosh(a/2)\le1$。闭球用非严格不等式，同点弧段用常曲线。因此球、闭球和与实际 cap 内侧相交的半球均有相同凸性。每个实际块是第 21.1 节的八支撑交，所以任意两点的上述弧段留在该块中；该块内的张量路径长度下确界也正好为两点的 $d_{\mathbb H}$。
+
+### 23.2 两个距离的字面定义和闭区间正则性
+
+对 $M$ 中有限分片 $C^1$ 曲线 $c:[a,b]\to M$，定义
+
+$$
+L_g(c)=\sum_j\int_{t_{j-1}}^{t_j}
+\sqrt{g_{c(t)}(\dot c(t),\dot c(t))}\,dt.
+$$
+
+曲线在整个闭区间连续，每一片在闭子区间上 $C^1$；所有端点保留，边界也包含在 $M$ 中。速度在有限各片上连续且有界，故长度有限。定义
+
+$$
+d_g(p,q)=\inf\{L_g(c):c\text{ 是从 }p\text{ 到 }q
+\text{ 的有限分片 }C^1\text{ 曲线}\},
+$$
+
+没有候选曲线时取 $+\infty$。
+
+此定义与只取闭区间 $C^1$ 路径的下确界相同。对每一非退化参数片先仿射改为 $[0,1]$，再用单调重参数化 $h(s)=3s^2-2s^3$。它满射 $[0,1]$、在内部严格递增，且 $h'(0)=h'(1)=0$。重参数化的速度在每片两端为零；有限拼接后，各交点的左右速度同为零，所以整条路径在坐标中是闭区间 $C^1$。单调变量代换保持每片长度，有限相加保持总长度。退化参数片可省略；整区间退化时两端同点，用非退化区间上的常曲线。因而任何有限分片候选都有同长的闭区间 $C^1$ 候选，反向包含显然。这个桥只使用区间上的正则性，不增添原曲线全局 $C^1$ 的假设。
+
+有限实际点链的数据为 $m\ge1$、块标签 $t_k$ 和实际闭块端点 $a_k,b_k\in P_{t_k}$，要求
+
+$$
+\pi(t_1,a_1)=p,\qquad \pi(t_m,b_m)=q,
+\qquad
+(t_k,b_k)\ R_{\rm geom}\ (t_{k+1},a_{k+1})
+\quad(1\le k<m).
+$$
+
+其中 $R_{\rm geom}$ 是原实际面生成步及逆步的等价闭包。定义
+
+$$
+d_{\rm poly}(p,q)=
+\inf\left\{\sum_{k=1}^m d_{\mathbb H}(a_k,b_k):
+\text{满足以上原关系的有限链}\right\}. \tag{23.6}
+$$
+
+没有链时同样取 $+\infty$；$p=q$ 时取一个实际代表及一条零长常段。这与第 16 节的有限实际块路径链定义相同：每条块路径的长度至少是其端点 $d_{\mathbb H}$；反向由 (23.5) 在相同实际块中实现该端点距离。所以路径链和点链的两个下确界相等，没有替换原关系或另选块间距离。
+
+如果链的语法要求每次跳转必须是单个原面生成或逆生成步，(23.6) 仍不变。任何 $R_{\rm geom}$ 跳转都有有限的原步见证；在其中每个中间带标签代表处插入该块内的零长度常段，就把多步跳转改为逐步跳转，总代价不变。反向每个原步当然属于等价闭包。同块自配对、重复局部出现及闭面端点均保留其实际代表。
+
+### 23.3 块链给出同长的实际张量路径
+
+对 (23.6) 的每一段，用同一实际块中的弧段 (23.5) 实现 $d_{\mathbb H}(a_k,b_k)$。在该段任意参数点处，为它的带标签代表选择第 21 节的固定分支邻域；在某个实际商图卡中，曲线坐标就是一个固定 Lorentz 矩阵作用于这条块弧段，再接空间坐标。故该商曲线在闭参数片上 $C^1$，包括落在实际侧面或 cap 上的片和闭端点，并且下降张量给出的速度范数等于原块的切速度范数。
+
+由参数区间紧性，可以取有限图卡细分来计算长度，因此每段的商长度正好是其块长。这里不要求整块包含为一个全局光滑单射；使用的是每个实际代表附近已经建立的固定分支公式。连续段的商端点因原关系相同，故有限拼接得到从 $p$ 到 $q$ 的有限分片 $C^1$ 路径，其总长度为链代价。第 23.2 节也可把它改为同长的闭区间 $C^1$ 路径。对全部有限链取下确界，得到
+
+$$
+d_g(p,q)\le d_{\rm poly}(p,q). \tag{23.7}
+$$
+
+### 23.4 每点附近的有限实际分支及支撑平面
+
+固定 $x\in M$，选第 21 节的一张实际展开 $\mathcal D:W_0\to O_0$，$Z=\mathcal D(x)$。第 19.1 节给出有限实际纤维
+
+$$
+F_x=\{(t_i,z_i):1\le i\le s\},\qquad s\le24|T|.
+$$
+
+对每个代表选一个相对开邻域 $N_i\subset P_{t_i}$，使其商像在 $W_0$ 中，且
+
+$$
+\mathcal D(\pi(t_i,z))=A_i z\quad(z\in N_i),
+\qquad A_i\in G\text{ 固定},\qquad A_i z_i=Z.
+$$
+
+同块不同中心的这些邻域可选得互不交。把 $N_i$ 视为带标签源中的开集。$X_{\rm geom}$ 紧，$M$ Hausdorff，所以商映射 $\pi$ 是闭映射。令
+
+$$
+W_1=W_0\setminus\pi\left(X_{\rm geom}\setminus\bigcup_i N_i\right).
+$$
+
+这是包含 $x$ 的原商开邻域，并满足 $\pi^{-1}(W_1)\subset\bigcup_iN_i$。它把所有额外代表排除在小邻域之外；不假定全局块标签就是局部代表集。
+
+由相对开性和有限性，存在共同 $r>0$，使
+
+$$
+P_{t_i}\cap B_{\mathbb H}(z_i,r)\subset N_i
+$$
+
+对全部 $i$ 成立，并使以下模型球或半球 $D_r$ 包含在 $\mathcal D(W_1)$ 中：内部点取 $D_r=B_{\mathbb H}(Z,r)$；边界点取
+
+$$
+D_r=B_{\mathbb H}(Z,r)\cap H_n^-,\qquad Z\in H_n,
+$$
+
+其中 $H_n^-$ 是这张实际边界展开的 cap 内侧。令 $W_r=\mathcal D^{-1}(D_r)$。固定分支和 Lorentz 距离保持给出精确等式
+
+$$
+\pi^{-1}(W_r)=\bigcup_i
+\{t_i\}\times\bigl(P_{t_i}\cap B_{\mathbb H}(z_i,r)\bigr). \tag{23.8}
+$$
+
+正向由 $W_r\subset W_1$ 把代表放入某个 $N_i$，再用 $A_i z_i=Z$ 恢复半径；反向球截面已经在 $N_i$ 中，固定分支的像在 $O_0$ 的正确一侧并在半径 $r$ 内，所以商像在 $W_r$。右侧是原带标签源中的集合并；同块不同中心的球截面互不交，仍以不同实际出现索引定位，不额外新增块标签。
+
+定义实际展开分支扇区
+
+$$
+C_i=D_r\cap A_iP_{t_i}.
+$$
+
+式 (23.8) 说明这些扇区覆盖整个 $D_r$，且 $A_i^{-1}|_{C_i}$ 恰给出相应实际块代表。第 21.1 节的字面八支撑刻画使每个 $C_i$ 正好由 $D_r$ 与八个运输半空间相交：侧法向变为 $A_i n_{i,f}$，cap 法向变为 $A_i V_{i,a}$。它们在 $D_r$ 中相对闭，并由第 23.1 节的凸性为弧段凸集。还可把 $r$ 缩小，使不含中心的支撑在整个球上严格成立，所以有效分割平面都来自真实 incident 面。
+
+所有分支共至多 $8s$ 张支撑平面，重复平面可以保留或去重。每个平面符号固定的相对开胞腔中，八支撑不等式决定其属于哪些 $C_i$。扇区的三维内部不相互重复：若一点在某分支的全部实际侧面严格内侧，其原生成纤维只有该代表；不同分支内部映到同一点会与实际商的精确纤维相矛盾。低维重合则保持实际原关系。由此得到有限的实际平面分割，而不是只指定一个抽象扇区覆盖。
+
+### 23.5 路径替换后才作有限面分割
+
+给定一条从 $p$ 到 $q$ 的有限分片 $C^1$ 路径 $c:[a,b]\to M$。其像紧。用第 23.4 节的模型凸球或半球图卡覆盖该像，取有限子覆盖。对闭参数区间的逆像开覆盖使用 Lebesgue 数，并加入原 $C^1$ 分片的端点，得到有限细分，使每个闭子弧（连同两端）包含在同一选定图卡中。
+
+在该图卡中把子弧展开到 $D_r$。下降张量使其长度等于模型切张量长度；第 23.1 节的校准给出端点 $P,Q$ 满足
+
+$$
+d_{\mathbb H}(P,Q)\le L_g(\text{该子弧}).
+$$
+
+用 (23.5) 的弧段替换它；凸性保证整段仍在这个 $D_r$ 中，且长度不增加。同点端点使用常段。这里到目前为止没有计算原曲线的跨面次数。
+
+对非恒定替换段，以单位速度参数 $0\le t\le a$ 表示 $\sigma(t)=\cosh(t)P+\sinh(t)U$。任一实际运输支撑平面 $L(Y,m)=0$ 沿它的读数为
+
+$$
+L(\sigma(t),m)=u\cosh t+v\sinh t,
+\qquad u=L(P,m),\quad v=L(U,m).
+$$
+
+除去正因子 $\cosh t$，零点方程是 $u+v\tanh t=0$。如果 $u=v=0$，整段位于该平面；否则在闭参数区间上至多有一个零点，因为 $\tanh$ 严格递增，$v=0$ 的非零常数情形没有零点。将有限支撑平面的全部孤立零点与 $0,a$ 排序，就得到有限子段。
+
+在每个剩余非退化开参数区间上，所有支撑读数的符号固定，或恒等为零。取其中任意一点并选择覆盖它的某个 $C_i$；该分支的全部八项不等式在整个开区间上保持，因此整个开弧属于同一个 $C_i$。$C_i$ 在 $D_r$ 中相对闭，且两个端点仍在 $D_r$，所以闭子段也属于 $C_i$。这同样处理整段位于一张或多张支撑平面的情形；不能仅从“没有横穿”忽略这些段。恒定替换段则选择覆盖其一点的任一分支，得到实际零长常段。
+
+对每个这样的闭子段应用 $A_i^{-1}$，得到同一个真实块中的闭端点弧段。Lorentz 等距性保留长度。相邻子段在公共模型端点的商像相同，所以其两份实际端点恰按 $R_{\rm geom}$ 相联；第 23.2 节把必要的多步原跳转展开为零长中间段。因此每条替换子弧成为有限实际块链，总代价等于该替换弧长。把全部有限子弧的链拼起来，得到
+
+$$
+d_{\rm poly}(p,q)\le L_g(c).
+$$
+
+对全部路径取下确界，得到 $d_{\rm poly}\le d_g$，与 (23.7) 合并为
+
+$$
+\boxed{d_{\rm poly}(p,q)=d_g(p,q)}. \tag{23.9}
+$$
+
+两边都是扩展非负数的下确界，不假定全局最短路径已经存在。在距离有限时，也可对每个 $\eta>0$ 选择长度小于 $d_g+\eta$ 的路径，构造代价不超过该长度的有限块链，再令 $\eta\downarrow0$。同点常路径及常链给出零值；没有候选时的下确界约定保持 $+\infty$。以下另外证明分量内有限性、点分离及拓扑，避免把两个可能退化的下确界相等当作这些结论。
+
+### 23.6 原商拓扑及短路径的退出界
+
+对每个 $p\in M$，取一张实际展开 $\mathcal D:W\to O$，$Z=\mathcal D(p)$。选 $R>0$，使模型闭球或闭半球
+
+$$
+K_R^{\rm mod}=\overline B_{\mathbb H}(Z,R)
+\quad\text{或}\quad
+\overline B_{\mathbb H}(Z,R)\cap H_n^-
+$$
+
+包含在 $O$ 中。第 23.1 节给出它紧，故 $K_R=\mathcal D^{-1}(K_R^{\rm mod})$ 在 Hausdorff 原商中紧且闭。令 $W_s$ 为半径 $s\le R$ 的模型开球或开半球的原像。径向弧段向中心收缩说明 $\overline{W_s}=K_s$，这里的闭包取原商拓扑，cap 边界也在其中。
+
+若一条路径从 $x\in W_r$ 出发并离开 $W_R$，$0<r<R$，取其第一次退出时刻。连续性及闭集 $K_R$ 使该时刻仍在图卡内，展开点到 $Z$ 的距离正好为 $R$；退出之前的闭子弧在 $K_R$ 内。对它应用模型校准及三角不等式，得到
+
+$$
+L_g(c)\ge R-d_{\mathbb H}(Z,\mathcal D(x))>R-r. \tag{23.10}
+$$
+
+这是真实商中的退出界，允许路径退出后走过任意多块再返回。它不需要全球注入半径或某个预先赋予的商度量。
+
+现取 $0<r<R/3$ 和 $x,y\in W_r$。模型凸弧段留在 $W_r$，给出长度
+
+$$
+d_{\mathbb H}(\mathcal D(x),\mathcal D(y))<2r<R-r.
+$$
+
+任何留在 $W_R$ 的路径由校准具有不小于这个端点距离的长度；任何离开 $W_R$ 的路径由 (23.10) 长度更大。故
+
+$$
+d_g(x,y)=d_{\mathbb H}(\mathcal D(x),\mathcal D(y))
+\qquad(x,y\in W_r). \tag{23.11}
+$$
+
+特别地，路径从中心 $p$ 到 $W_r$ 外任意点时，首次退出 $W_r$ 的同一论证给出长度至少 $r$。因此 $0<\epsilon<r$ 时有精确球等式
+
+$$
+\{q:d_g(p,q)<\epsilon\}=W_\epsilon. \tag{23.12}
+$$
+
+常路径、反向路径及有限拼接分别给出 $d_g(p,p)=0$、对称性及扩展三角不等式。若 $q\ne p$，在 $W_r$ 中由 (23.11) 距离严格正，在 $W_r$ 外由退出界距离至少 $r$；没有路径时为 $+\infty$。所以 $d_g$ 分离不同点。模型球在实际图卡中形成原拓扑邻域基，式 (23.12) 证明它的度量拓扑就是原商拓扑。由 (23.9)，$d_{\rm poly}$ 具有同一性质。
+
+### 23.7 边界包含、连通分量及紧度量完备性
+
+每个模型球或半球由上述弧段连接，所以每点有一个局部有限分片 $C^1$ 可达邻域。从一个固定点经有限这类弧段可达的集合和其补集都开；在一个连通分量内，连通性迫使该可达集合等于整个分量。因此分量内任意两点之间存在有限长度路径，$d_g=d_{\rm poly}<\infty$。
+
+任何连续路径的像连通，不能连接不同连通分量；有限实际链由第 23.3 节给出连续路径，也不能连接不同分量。因此两种距离在不同分量间都为 $+\infty$，不另指定任意有限跨分量距离。
+
+原商局部连通，故其连通分量开；分量也闭。紧性使开放分量的覆盖有有限子覆盖，所以分量数有限，每个分量是原紧商的闭子集。第 23.6 节已经证明张量距离诱导该分量的原拓扑，因此每个分量是紧的真正度量空间。
+
+紧度量空间的完备性可直接核对：任意 Cauchy 序列有收敛子序列；原拓扑与度量拓扑相同，使该子序列在本距离下收敛。对任何 $\epsilon>0$，用 Cauchy 性和一个足够晚的子序列项，三角不等式把全序列的尾部放进极限点的 $\epsilon$ 球中，所以全序列收敛。故每个实际分量连同 cap 边界在 $d_g=d_{\rm poly}$ 下完备。
+
+此处没有删除边界：曲线可沿 cap 行走，闭端点可位于 cap 面、侧边或顶点，Cauchy 序列也可在边界收敛。度量完备不声称原空间中的测地线能留在原空间无限延伸；它也不以反射双倍的完备性代替本节的长度及拓扑证明。
+
+### 23.8 同一标记的距离运输及书面边界
+
+沿第 21 节的同一个 $\overline H:(Q,B)\to(M,C)$ 运输图册和张量。该映射及其逆在运输图册中光滑且保留速度范数，故对应闭区间 $C^1$ 路径、有限分片路径及其长度，张量距离逐点拉回。实际块链仍是原来的带标签块和原面关系，经同一个 $H$ 与 $\overline H$ 对应；每段的块长取已经校准的同一双曲切张量。所以 (23.9) 在字面原始 $(Q,B)$ 上成立，其度量拓扑是原始生成商拓扑。
+
+对固定 $r:(Q,B)\to(N,\partial N)$，令 $j=\overline H\circ r^{-1}$，在同一个带标记 $N$ 上使用第 21 节的运输图册和 $g_N=j^*g$。路径长度、块链距离、分量拓扑和含边界的紧度量完备性随之运输；没有把 $N$ 换成另一个拓扑实现。若 $N$ 已另外指定一个图册，则该图册与运输图册的相容性仍是独立义务，本节的长度公式不自动证明它。
+
+正则化校准和闭区间 $C^1$ 约定与钉版 Mathlib 的 `Analysis.SpecialFunctions.Arcosh`、`Geometry.Manifold.Riemannian.PathELength` 中的标准解析及路径长度定义一致；这里给出的是实际商及实际张量上的书面论证，并未实例化或编译这些接口。既有上半空间模型的拓扑或完备性结论，亦不能代替本节从下降张量到同一原始块链的接口。
+
+本节结算第 21 节条件之上的书面长度校准、有限实际块链距离等式、原商度量拓扑及紧分量含边界完备性。它不申报 Lean kernel 核验、冻结、atom 覆盖或文献原创性；非紧端、退化块及另行预选图册的相容性仍在范围之外。
+
+## 24. 原始几何块与六长度 Gram 载体的带标记等距识别
+
+本节连接第 15 节的原始几何块与第 17 节的显式载体。原始对象仍是完全截断、非退化、四个顶点均超理想的四面体 $P\subset\mathbb H^3$；截断使用各超理想顶点的极平面，六条完整旧边的长度为 $l_{ij}>0$。顶点、主面、cap 和旧边均使用同一原始标签。这里不把任意具有四张指定平面的凸体当作原始四面体，也不包含理想顶点或零长度边。
+
+采用 $L(X,Y)=-X_0Y_0+X_{\rm sp}\cdot Y_{\rm sp}$。每个原始超理想顶点取单位 spacelike 代表 $U_i$，定向为原始截断块位于 $L(X,U_i)\le0$ 的一侧。记
+
+$$
+x_{ij}=\cosh l_{ij}>1,\qquad G_{ii}=1,\qquad G_{ij}=-x_{ij}\quad(i\ne j).
+$$
+
+令 $V_i$ 为第 17 节同一六参数的显式向量，且 $L(V_i,V_j)=G_{ij}$、$\sum_iV_i$ 为未来向量。以下结论只用该 Gram 实现；对来源于原始非退化块的长度，Gram 非奇异性由原始顶点的线性独立性直接得到。若从六参数开始，则应使用第 17 节的 $D(x)>0$ 构造，不能先假定存在原始块。
+
+**命题 24.1（完整带标记块的等距识别）。** 存在唯一线性 Lorentz 等距映射 $A$，满足 $AU_i=V_i$。它保持未来分支，并限制为保留全部面格和六条旧边标签的双曲等距同胚
+
+$$
+a:P\longrightarrow P_x=\nu_x(C_x).
+$$
+
+对一族原始块逐块使用此映射，规定的闭六边形等距映射 $I_{t,f}$ 被共轭为
+
+$$
+I^x_{t,f}=a_u\circ I_{t,f}\circ a_t^{-1}
+$$
+
+在对应的完整实际主面之间的等距同胚。它保留全部六个有序 cap 顶点，并满足原来的逆配对律。这个共轭诱导同一原始生成商及 cap 标记的同胚；它不把不同块的 $a_t$ 合并为一个环境等距映射，也不要求边角和为 $2\pi$。
+
+### 24.1 两张原始 cap 极平面决定 Gram 符号
+
+固定旧边 $ij$。在其原始双曲直线上，选择未来正交轴 $C,T$，满足 $L(C,C)=-1$、$L(T,T)=1$、$L(C,T)=0$。把两个 cap 端点写为
+
+$$
+C,\qquad D=\cosh l_{ij}\,C+\sinh l_{ij}\,T.
+$$
+
+cap 平面与旧边正交，所以它们的单位极向量位于这张 Lorentz 二维平面内。第一个 cap 的内侧包含沿 $T$ 方向的旧边，第二个 cap 的内侧包含反向旧边；因此定向唯一给出
+
+$$
+U_i=-T,\qquad U_j=\sinh l_{ij}\,C+\cosh l_{ij}\,T.
+$$
+
+于是 $L(U_i,U_j)=-\cosh l_{ij}$。这项负号来自两端相对的内侧方向；只有极平面间的无向距离不能单独指定这个符号。对六条原始旧边分别应用该计算，得到整张 $G$。援引 Frigerio–Petronio 的平面距离公式时，应取两端被删除的互不相交 cap 半空间；原块所处的两个内侧半空间彼此相交，不是该引理的输入。把两个法向同时反号不会改变其相互 Lorentz 配对。
+
+原始四个超理想顶点属于一个非退化 projective simplex，故其四个代表 $U_i$ 线性独立。若 $M$ 是以 $U_i$ 为列的矩阵、$J=\operatorname{diag}(-1,1,1,1)$，则
+
+$$
+G=M^{\mathsf T}JM,\qquad \det G=-(\det M)^2<0.
+$$
+
+因此 $G$ 的签名为 $(3,1)$，不存在额外的退化 Gram 分支。沿用原始槽序 $12,13,14,34,24,23$，第 17 节的判别式是[理论卷 CFMP_GEOMETRIC_REALIZATION.md 第 1 节](../../docs/develop/theory/CFMP_GEOMETRIC_REALIZATION.md#1-固定剖分真实边长与接缝曲率)三个原始多项式的 $D(x)=A(x)B(x)-P_1(x)^2$。行列式展开给出
+
+$$
+D(x)=\bigl(x_{12}^2-1\bigr)(-\det G)>0.
+$$
+
+所以原始几何长度直接落在显式向量的构造域内，未给原始块额外添加一个未验判别式前提。显式向量具有相同 Gram，故也线性独立。
+
+### 24.2 全部十二顶点及八张支撑面
+
+为明确整个块的识别，考虑与第 17 节完全相同的系数多面体
+
+$$
+C_x=\{\lambda\in\mathbb R^4:\lambda_i\ge0,\ \sum_i\lambda_i=1,
+\ (G\lambda)_i\le0\ \text{对所有 }i\}.
+$$
+
+均匀点 $\lambda_i=1/4$ 对全部 cut 严格满足不等式，故 $C_x$ 在系数仿射超平面中有三维内部。任何 cut 等式 $(G\lambda)_i=0$ 都给出
+
+$$
+\lambda_i=\sum_{j\ne i}x_{ij}\lambda_j>\sum_{j\ne i}\lambda_j=1-\lambda_i,
+$$
+
+因为等式不允许 $\lambda_i=1$。因此该等式迫使 $\lambda_i>1/2$，两个不同 cap 等式不能同时成立。
+
+在三维仿射超平面内，极点需要三个独立的活跃约束。如果没有 cut 活跃，只能剩一个正系数，即原始 simplex 顶点；它违反对应 cut。如果恰一个 cut $i$ 活跃，则至少两个系数为零，且 $\lambda_i>0$。全部极点因而恰为
+
+$$
+\lambda^{ij}=\frac{x_{ij}e_i+e_j}{x_{ij}+1}\qquad(i\ne j).
+$$
+
+反向代入可验：$i$-cut 为零，$j$-cut 为 $1-x_{ij}<0$，其余两个 cut 严格负；两个其余零系数及 $i$-cut 独立。因此这十二个点确实全部为极点。
+
+主面 $f$ 是 $\lambda_f=0$，它包含 $i,j\ne f$ 的六个有序顶点；cap $i$ 是 $(G\lambda)_i=0$，它包含三个 $\lambda^{ij}$。旧边 $ij$ 是另外两个系数均为零的线段，端点为 $\lambda^{ij}$ 和 $\lambda^{ji}$。cap 边由一个 cap 等式与一个主面等式给出。不同 cap 不相交，三个主面不相交；一个 cap 与两个不同主面相交时，交集是上述唯一有序顶点或空集。由这些活跃约束得到全部面格，未产生额外顶点或额外边。
+
+令 $S_U(\lambda)=\sum_i\lambda_iU_i$、$S_V(\lambda)=\sum_i\lambda_iV_i$。对 $\lambda\in C_x$，
+
+$$
+L(S_U,S_U)=L(S_V,S_V)=\lambda^{\mathsf T}G\lambda<0.
+$$
+
+严格性可以在系数上直接检查：可行点至少有两个正系数，而至多一个 cut 为零，所以 $\sum_i\lambda_i(G\lambda)_i$ 至少包含一项严格负数。故两个归一化映射均在整个闭 $C_x$ 上有定义。
+
+$W_U=\sum_iU_i$ 满足 $L(W_U,W_U)=4-2\sum_{i<j}x_{ij}<0$。原始块的内部点对四张 cap 均满足严格内侧条件，故它与 $W_U$ 的 Lorentz 配对为负；$W_U$ 因而为未来 timelike。对于全部可行 $\lambda$，
+
+$$
+L(S_U(\lambda),W_U)=\sum_i\lambda_i\Bigl(1-\sum_{j\ne i}x_{ij}\Bigr)<0,
+$$
+
+所以 $S_U(\lambda)$ 也为未来 timelike。$V$ 的同一计算使用已固定的未来 $W_V=\sum_iV_i$，得到相同结论。
+
+原始 hyperideal simplex 在 projective 模型中是四条原始顶点射线的凸包；完全极截断再加入四张极平面的内侧条件。以 $\sum_i\lambda_i=1$ 取 projective 截面，恰得到 $C_x$。因此
+
+$$
+P=\left\{\frac{S_U(\lambda)}{\sqrt{-\lambda^{\mathsf T}G\lambda}}:
+\lambda\in C_x\right\}.
+$$
+
+主面仍是缺失对应顶点的三射线张成平面，cap 仍是对应极平面；这个等式使用原始块的定义，没有把完整面格识别另列为假设。归一化映射在 $C_x$ 上单射：归一化像相同意味着两个系数向量正比例，系数和为一迫使比例为一。它连续，源紧、目标 Hausdorff，故为同胚。
+
+### 24.3 Gram 等距映射及规定闭面映射的共轭
+
+定义 $A$ 为在基 $U_i$ 上取值 $V_i$ 的唯一线性映射。相同 Gram 给出
+
+$$
+L(AX,AY)=L(X,Y)\qquad(X,Y\in\mathbb R^{3,1}).
+$$
+
+它把未来 timelike 的 $W_U$ 送到未来 timelike 的 $W_V$，因此保持整个未来分支。逐系数有
+
+$$
+A\frac{S_U(\lambda)}{\sqrt{-\lambda^{\mathsf T}G\lambda}}
+=\frac{S_V(\lambda)}{\sqrt{-\lambda^{\mathsf T}G\lambda}}.
+$$
+
+上一节的全部活跃约束在两边相同，故该限制保留整个带标记面格。对主面法向也能直接核对：令 $H=G^{-1}$、$W_f^U=\sum_iH_{if}U_i$、$W_f^V=\sum_iH_{if}V_i$，则 $AW_f^U=W_f^V$。同一个内侧定向给出 $n_f=-W_f/\sqrt{H_{ff}}$，所以主面和 cap 的外法向均按标签运输。环境空间的取向可能反转；命题只要求未来分支和原始标签，不从这些条件额外断言每个 $a_t$ 保持空间取向。
+
+原始 $I_{t,f}$ 在完整闭六边形上等距且保留规定的有序顶点。逐块 $a_t$ 保留这些顶点及其闭面，故 $I^x_{t,f}$ 具有相同性质，包括两个 cap 端点。共轭公式还直接给出
+
+$$
+I^x_{u,g}\circ I^x_{t,f}=\operatorname{id}
+$$
+
+在整张源闭面上成立。它因此满足第 18 节实际半径运输及第 20 节射线识别所需的同一 caller-face 输入。若使用第 18 节的整面坐标运输公式，应作用于这个共轭得到的规定映射；仅选择另一个匹配顶点的方便映射不能代替该步骤。
+
+在带标签不交并上使用 $\mathcal A(t,z)=(t,a_tz)$。每个原始实际面生成步按共轭公式对应一个显式载体的生成步，逆映射给出反方向。对反身、对称和传递逐项使用同一个 $\mathcal A$，得到完整等价闭包的对应。商拓扑的通用性质随后给出连续的商映射及连续逆；全部 cap 也逐块对应，故商同胚精确保留原始边界标记、自粘合和出现次数。
+
+### 24.4 同一环境映射的全局坐标、光滑性与实际切张量
+
+上一节的同一个 $A$ 在整个未来单位双曲面上给出 $a(X)=AX$，逆映射是 $A^{-1}$ 的限制。使用全局空间坐标
+
+$$
+\Phi(z)=\bigl(\sqrt{1+\|z\|^2},z\bigr),\qquad
+\Psi(X)=X_{\rm sp},\qquad z\in\mathbb R^3.
+$$
+
+它们互逆，且均实解析。把 $A$ 相对于时间坐标与空间坐标分块为
+
+$$
+A=\begin{pmatrix}\alpha&r^{\mathsf T}\\ b&M\end{pmatrix}.
+$$
+
+则同一个 $a$ 的空间表达及其导数为
+
+$$
+F(z)=\Psi\bigl(A\Phi(z)\bigr)=b\sqrt{1+\|z\|^2}+Mz,
+\qquad
+D F_z(u)=Mu+b\frac{z\cdot u}{\sqrt{1+\|z\|^2}}. \tag{24.1}
+$$
+
+分母在整个 $\mathbb R^3$ 上严格正。用 $A^{-1}$ 的分块得到同样实解析的 $F_{A^{-1}}(z)=\Psi(A^{-1}\Phi(z))$。因为 $A$ 和 $A^{-1}$ 均保持未来单位双曲面，有 $\Phi(F(z))=A\Phi(z)$ 和 $\Phi(F_{A^{-1}}(z))=A^{-1}\Phi(z)$；因此 $F_{A^{-1}}\circ F=\operatorname{id}$、$F\circ F_{A^{-1}}=\operatorname{id}$。故这是整个双曲面的同一个实解析微分同胚，特别地它双向光滑；没有另选一个仅在块上相同的坐标映射。
+
+实际切空间是 $T_X\mathbb H^3=X^\perp$，其正定内积是 $L$ 的限制。空间坐标的切向识别由
+
+$$
+d\Phi_z(u)=\left(\frac{z\cdot u}{\sqrt{1+\|z\|^2}},u\right)
+$$
+
+给出，故坐标张量为
+
+$$
+g_z(u,v)=L(d\Phi_z(u),d\Phi_z(v))
+=u\cdot v-\frac{(z\cdot u)(z\cdot v)}{1+\|z\|^2}. \tag{24.2}
+$$
+
+由 $\Phi\circ F=A\circ\Phi$ 微分得到精确的切向量运输关系
+
+$$
+A\,d\Phi_z(u)=d\Phi_{F(z)}(D F_z(u)). \tag{24.3}
+$$
+
+因此
+
+$$
+g_{F(z)}(D F_z(u),D F_z(v))=g_z(u,v). \tag{24.4}
+$$
+
+在实际切空间中，$da_X$ 就是 $A|_{X^\perp}$，目标为 $(AX)^\perp$；式 (24.3) 是它在源、目标纤维空间坐标中的同一表达。它保留实际 Riemannian 内积和由该内积定义的范数。逆向用同一个 $A^{-1}$ 得到相同结论。这里保留的范数是实际切张量的范数；空间坐标中的欧氏范数并不等于式 (24.2) 的范数。
+
+对任意闭区间上的有限分片 $C^1$ 路径，链式法则和 (24.4) 给出其在 $a$ 下的同长像。对路径长度取下确界，再对 $a^{-1}$ 作同一论证，得到整个双曲面的实际 Riemannian 距离等式
+
+$$
+d_{\mathbb H}(aX,aY)=d_{\mathbb H}(X,Y).
+$$
+
+该距离是第 23.1 节从实际切张量校准的路径距离；它也等于 $\operatorname{arcosh}(-L(X,Y))$。这些计算使用第 24.3 节原始 Gram 映射内部已经取得的 Lorentz 恒等式及未来分支保持性，没有给原始六长度几何再添加一个光滑性、导数或张量相容前提。
+
+### 24.5 原始射线的非负锥与同一闭截断块
+
+记四条原始射线生成的非负锥及其截断为
+
+$$
+K_U=\left\{\sum_i\mu_iU_i:\mu_i\ge0\right\},\qquad
+\widehat P_U=\{X\in\mathbb H^3:X\in K_U,\ L(X,U_i)\le0\ \text{对所有 }i\}.
+$$
+
+这是原始四条射线的锥包；生成系数允许为零，不要求每个点位于块内部。对 $X\in\widehat P_U$，写 $X=\sum_i\mu_iU_i$，令 $s=\sum_i\mu_i$。$L(X,X)=-1$ 排除全部系数为零，故 $s>0$。取 $\lambda_i=\mu_i/s$，则 $\lambda\in C_x$，因为
+
+$$
+(G\lambda)_i=L\left(U_i,\sum_j\lambda_jU_j\right)
+=\frac{L(U_i,X)}s\le0.
+$$
+
+同时 $S_U(\lambda)=X/s$，故 $\lambda^{\mathsf T}G\lambda=-1/s^2$，归一化恰恢复 $X$。反过来，第 24.2 节的每个归一化像都在 $K_U$ 中、属于未来单位双曲面且满足全部 cap 不等式。因此
+
+$$
+\widehat P_U=\nu_U(C_x)=P. \tag{24.5}
+$$
+
+对 $V$ 有同一等式 $\widehat P_V=\nu_V(C_x)=P_x$。由 $AU_i=V_i$、$A^{-1}V_i=U_i$ 及 Lorentz 恒等式，逐点得到
+
+$$
+X\in\widehat P_U\quad\Longleftrightarrow\quad aX\in\widehat P_V.
+$$
+
+所以完整闭块的限制同胚就是全局 $a$ 的限制，逆向就是同一个 $a^{-1}$ 的限制；包括十二个顶点、cap 边和全部闭主面的值都使用相同环境公式。其实际环境 Riemannian 距离等式也直接限制到这些点。
+
+块内路径距离另由凸性核对。若 $X,Y\in\widehat P_U$ 且 $X\ne Y$，第 23.1 节式 (23.5) 的两端测地段在每个时刻是 $X,Y$ 的非负线性组合，故仍在 $K_U$ 中，并保留全部 cap 半空间不等式。它属于未来单位双曲面，因而整段留在同一块中。同点使用常曲线。所以块内实际路径距离也等于 $d_{\mathbb H}$，并由同一个限制映射保持。这项结论不把闭块的角点宣称为无边界光滑流形；第 24.4 节的光滑性及切空间陈述属于环境双曲面，闭块限制的路径距离使用上述凸性。
+
+本节提供原始非退化完全截断块到显式六长度载体的书面等距桥梁，不申报 Lean kernel 核验、冻结或消化覆盖。极截断的 projective 定义沿用第 16.6 节所引 Frigerio–Petronio 的完全截断情形；[同一论文 Proposition 2.7、Lemma 4.6(1) 及第 6 节的 Proposition 2.7 证明](https://arxiv.org/abs/math/0109012v1)分别给出无理想顶点时的旧边长度刚性、有侧向条件的负 cosh 配对和 Lorentz 基映射路线。此处正长度情形满足这些条件，完整面格及规定映射的共轭另由上文逐项落实；不申报文献原创性。参数域、原始流形图册、解析张量及流收敛仍遵守各自条件，不由单块等距识别自动结算。
+
+## 25. 同一六长度标架的上半空间八支撑与完整闭块
+
+使用[理论卷 CFMP_GEOMETRIC_REALIZATION.md 第 66.2 节](../../docs/develop/theory/CFMP_GEOMETRIC_REALIZATION.md#66-六长度-gram-矩阵的共同截断域)的同一个六长度向量、标架与坐标映射。标签为 $I=\{0,1,2,3\}$，原始六槽序为 $01,02,03,23,13,12$，$l_{ij}>0$、$x_{ij}=\cosh l_{ij}>1$，且该节的严格源条件 $-1<\varphi_{01}<1$ 成立。记
+
+$$
+G_{ii}=1,\qquad G_{ij}=-x_{ij}\ (i\ne j),\qquad
+C_l=\{\lambda:\lambda_i\ge0,\ \sum_i\lambda_i=1,\ G\lambda\le0\}.
+$$
+
+取该节字面给出的四个 $m_i$，令 $M$ 以 $m_i$ 为行。环境形式和未来单位双曲面为
+
+$$
+B(Y,Z)=Y_0Z_0+Y_1Z_1+Y_2Z_2-Y_3Z_3,
+\qquad \mathbb H_B^3=\{Y:B(Y,Y)=-1,\ Y_3>0\}.
+$$
+
+因此 $MJM^{\mathsf T}=G$，$J=\operatorname{diag}(1,1,1,-1)$，$M$ 可逆，$\det G<0$。沿用同一个
+
+$$
+S_m(\lambda)=\sum_i\lambda_i m_i,\qquad
+Y(\lambda)=\frac{S_m(\lambda)}{\sqrt{-\lambda^{\mathsf T}G\lambda}},
+\qquad F_l(\lambda)=\Psi(Y(\lambda)),
+$$
+
+其中本节的 $\Psi$ 专指第 66.2 节的上半空间映射
+
+$$
+\Psi(Y)=\left(\frac{Y_0+iY_1}{Y_3-Y_2},\frac1{Y_3-Y_2}\right).
+$$
+
+它不是第 24.4 节取空间分量的坐标映射。本节证明这一字面 $F_l(C_l)$ 的八半空间刻画、三维内部与完整带标签面格，不另设像的表示前提。
+
+### 25.1 正主余子式比与原始外法向
+
+令 $H=G^{-1}$。对每个 $f$，删去第 $f$ 行列得到的三阶主子式，其三条边的 $x$ 值记为 $a,b,c>1$。直接展开为
+
+$$
+\det\begin{pmatrix}1&-a&-b\\-a&1&-c\\-b&-c&1\end{pmatrix}
+=1-a^2-b^2-c^2-2abc
+=-(2abc+a^2+b^2+c^2-1)<0.
+$$
+
+故由逆矩阵的余子式公式和 $\det G<0$，对全部标签有
+
+$$
+H_{ff}=\frac{\det G_{\widehat f,\widehat f}}{\det G}>0. \tag{25.1}
+$$
+
+定义主面对偶向量及单位外法向
+
+$$
+W_f=\sum_iH_{if}m_i,\qquad
+n_f=-\frac{W_f}{\sqrt{H_{ff}}},
+$$
+
+并取 cap 的单位外法向为 $m_i$。相同 Gram 给出
+
+$$
+B(m_j,W_f)=\delta_{jf},\qquad B(W_f,W_f)=H_{ff},\qquad B(n_f,n_f)=1.
+$$
+
+因此 $n_f$ 与 $m_i$ 都是真实单位 spacelike 法向。对任意唯一系数展开 $Z=\sum_i\mu_i m_i$，有
+
+$$
+B(Z,W_f)=\mu_f,\qquad
+B(Z,n_f)=-\frac{\mu_f}{\sqrt{H_{ff}}}. \tag{25.2}
+$$
+
+这同时固定了主面的内侧符号：$B(Z,n_f)\le0$ 恰为 $\mu_f\ge0$。在原归一化像上，cap 读数则为
+
+$$
+B(Y(\lambda),m_i)=\frac{(G\lambda)_i}{\sqrt{-\lambda^{\mathsf T}G\lambda}}. \tag{25.3}
+$$
+
+故主面和 cap 仍分别由原标签的 $\lambda_f=0$ 与 $(G\lambda)_i=0$ 给出。
+
+### 25.2 同一个上半空间映射及实际度量
+
+写上半空间点为 $(z,h)=(u+iv,h)$，$h>0$。$\Psi$ 在整个 $\mathbb H_B^3$ 上的逆映射是
+
+$$
+\Theta(u,v,h)=\Psi^{-1}(u+iv,h)
+=\left(\frac uh,\frac vh,
+\frac{u^2+v^2+h^2-1}{2h},
+\frac{u^2+v^2+h^2+1}{2h}\right). \tag{25.4}
+$$
+
+事实上 $\Theta_3-\Theta_2=1/h$、$\Theta_3+\Theta_2=(u^2+v^2+h^2)/h$，代入给出 $B(\Theta,\Theta)=-1$ 和 $\Theta_3>0$。反向，未来单位关系给出 $Y_3>|Y_2|$；由 $Y_3-Y_2$ 及 $Y_0,Y_1$ 恢复 $h,u,v$，再由单位关系恢复 $Y_3+Y_2$。故两映射互逆且实解析。
+
+这一 $\Psi$ 也是实际双曲度量等距映射。令 $R=u^2+v^2+h^2$、$q=Y_3-Y_2$、$p=Y_3+Y_2$，在 $Y=\Theta(u,v,h)$ 处有
+
+$$
+dY_0=\frac{du}{h}-\frac{u\,dh}{h^2},\qquad
+dY_1=\frac{dv}{h}-\frac{v\,dh}{h^2},\qquad
+dq=-\frac{dh}{h^2},\qquad
+dp=\frac{2u\,du+2v\,dv}{h}+\left(2-\frac R{h^2}\right)dh.
+$$
+
+因 $dY_2^2-dY_3^2=-dp\,dq$，展开后交叉项抵消，得到
+
+$$
+\Theta^*(B|_{T\mathbb H_B^3})
+=dY_0^2+dY_1^2-dp\,dq
+=\frac{du^2+dv^2+dh^2}{h^2}. \tag{25.5}
+$$
+
+这是标准上半空间的实际 Riemannian 张量。双向链式法则保持路径长度，因此同一 $\Psi$ 保持对应的实际路径距离。
+
+### 25.3 八个字面二次不等式与逆向系数恢复
+
+对上述任意一个单位法向 $n=(n_0,n_1,n_2,n_3)$，定义
+
+$$
+Q_n(u,v,h)=2n_0u+2n_1v+(n_2-n_3)(u^2+v^2+h^2)-(n_2+n_3).
+$$
+
+直接代入 (25.4) 得到
+
+$$
+B(\Theta(u,v,h),n)=\frac{Q_n(u,v,h)}{2h}. \tag{25.6}
+$$
+
+因高度严格正，该读数与 $Q_n$ 具有相同符号。于是精确的像等式为
+
+$$
+\boxed{F_l(C_l)=\{(u+iv,h):h>0,\ Q_{m_i}(u,v,h)\le0\ (i\in I),\ Q_{n_f}(u,v,h)\le0\ (f\in I)\}.} \tag{25.7}
+$$
+
+正向由 (25.2)–(25.3) 和 $C_l$ 的定义得到。逆向取八个不等式同时成立的上半空间点，令 $Z=\Theta(u,v,h)$。由于 $M$ 可逆，存在唯一 $\mu$ 使 $Z=\sum_i\mu_i m_i$；主面不等式及 (25.2) 强制全部 $\mu_f\ge0$。令 $s=\sum_i\mu_i$。若 $s=0$，非负性迫使全部系数为零，继而 $Z=0$，与 $B(Z,Z)=-1$ 矛盾。因此 $s>0$。
+
+取 $\lambda_i=\mu_i/s$，则坐标非负且总和为一。cap 不等式给出
+
+$$
+(G\lambda)_i=B\left(m_i,\frac Zs\right)=\frac{B(Z,m_i)}s\le0,
+$$
+
+故 $\lambda\in C_l$。同时
+
+$$
+S_m(\lambda)=Z/s,\qquad \lambda^{\mathsf T}G\lambda=-1/s^2,
+\qquad Y(\lambda)=Z.
+$$
+
+这里根分母是正数 $1/s$，所以归一化没有引入另一张时间分支。由 $F_l=\Psi\circ Y$ 恢复原上半空间点，证明 (25.7) 的反向包含。全部表示、符号和成员结论均从实际八支撑读取取得。
+
+### 25.4 实际垂直平面、半球与内侧定向
+
+令 $a_n=n_2-n_3$。当 $a_n\ne0$，单位 spacelike 方程 $n_0^2+n_1^2+n_2^2-n_3^2=1$ 给出
+
+$$
+Q_n=a_n\left[\left(u+\frac{n_0}{a_n}\right)^2+
+\left(v+\frac{n_1}{a_n}\right)^2+h^2-\frac1{a_n^2}\right]. \tag{25.8}
+$$
+
+因此 $Q_n=0$ 是中心在 $h=0$ 的欧氏球的上半球，中心水平坐标为 $(-n_0/a_n,-n_1/a_n)$，半径为 $1/|a_n|$。$a_n>0$ 时 $Q_n\le0$ 取球内一侧；$a_n<0$ 时取球外一侧，均包含实际支撑面本身。
+
+当 $a_n=0$，有 $n_2=n_3$ 和 $n_0^2+n_1^2=1$，故
+
+$$
+Q_n=2(n_0u+n_1v-n_2),
+$$
+
+$Q_n=0$ 是真实的垂直平面，内侧为 $n_0u+n_1v\le n_2$。该分支不可能退化为零多项式。
+
+这些支撑面是标准上半空间的全测地面。其双曲面原像为 $\mathbb H_B^3\cap n^\perp$：单位 spacelike 法向的正交补具有签名 $(2,1)$，该交集为双曲二维平面；两点间的双曲测地段由两端的非负线性组合给出，因而保持 $B(Z,n)=0$。等式 (25.5) 将这个真实全测地面运输为上述半球或垂直平面。取侧依赖 (25.8) 的符号，不把所有八个内侧统称为球内。
+
+### 25.5 三维内部、紧性与全部原标签面格
+
+令 $\bar\lambda=(1/4,1/4,1/4,1/4)$、$r=\sqrt{-\bar\lambda^{\mathsf T}G\bar\lambda}>0$。它满足全部八个严格支撑不等式，因为
+
+$$
+B(Y(\bar\lambda),n_f)=-\frac1{4r\sqrt{H_{ff}}}<0,\qquad
+B(Y(\bar\lambda),m_i)=\frac{1-\sum_{j\ne i}x_{ij}}{4r}<0.
+$$
+
+同一上半空间点 $F_l(\bar\lambda)$ 高度正，故由八个连续 $Q$ 的严格性存在一个三维欧氏开邻域仍在 (25.7) 内。这证明字面像的三维内部。$C_l$ 紧、$F_l$ 连续且单射，目标 Hausdorff，故 $F_l:C_l\to F_l(C_l)$ 为同胚且像紧；由 (25.5)，紧性也属于实际上半空间双曲度量拓扑。
+
+全部顶点及面格直接复用第 24.2 节的活跃约束分类以及[理论卷第 65 节](../../docs/develop/theory/CFMP_GEOMETRIC_REALIZATION.md#65-共同截断单纯形的全部顶点与凸包)的同一 $C_l$ 顶点分类：十二个不同有序顶点为
+
+$$
+p_{ij}=\frac{x_{ij}e_i+e_j}{1+x_{ij}},\qquad F_l(p_{ij})\quad(i\ne j).
+$$
+
+第 $i$ 张 cap 面是 $Q_{m_i}=0$，具有三个顶点 $F_l(p_{ij})$、$j\ne i$，为三角形；第 $f$ 张主面是 $Q_{n_f}=0$，具有 $i,j\ne f$ 的六个有序顶点，为六边形。原旧边 $ij$ 的另外两个系数为零，端点是 $F_l(p_{ij})$ 和 $F_l(p_{ji})$；cap 边仍由一张 cap 与一张主面的等式给出。无其他顶点、边或面，因为 (25.2)–(25.3) 将八张支撑的全部活跃等式精确回读为原来的八个系数约束。
+
+因此共有十八条边：六条旧边 $ij$，以及十二条 $\operatorname{cap}_i\cap\operatorname{main}_f$、$i\ne f$；后一条边的两个端点为 $F_l(p_{ij})$、$F_l(p_{ik})$，其中 $\{j,k\}=I\setminus\{i,f\}$，而 $\operatorname{cap}_i\cap\operatorname{main}_i=\varnothing$。此外 $B(m_i,n_f)=-\delta_{if}/\sqrt{H_{ff}}$，所以 $i\ne f$ 时两单位法向在相交边的每个点都属于实际切空间且内积为零，故每张截断面与其相邻主面正交。
+
+这里的边是真实双曲测地段，面是真实全测地凸多边形。两端的归一化像之间的双曲测地段是两端环境向量的非负线性组合；同一锥和八支撑在该段上保持，活跃等式也保持。将其系数重新除以总和，恰落在对应原系数面中，测地段的两端系数权重之比连续地从 $0$ 遍历到 $+\infty$，两端归一化的固定正尺度只改变这一比值的正比例因子；因此重取总和为一后遍历整条原系数线段。这证明两者具有相同的完整像，也证明面关联与测地实现的对应，而不把非线性 $F_l$ 当作欧氏仿射映射。
+
+### 25.6 与原始块的精确坐标对应及范围
+
+原始 projective 对象的依据是 [Frigerio–Petronio 第 3 节 “Projective model and truncated polyhedra”，正文第 23 页](https://arxiv.org/abs/math/0109012v1)：该段在 projective 模型中取顶点在球外或球边界上的四面体，并以超理想顶点的 Lorentz 正交极平面截断其与双曲球的交。这里使用第 24.2 节已经落实的原始完全极截断情形和四射线正系数表示。第 66.2 节固定标架的 $m_0$ 时间坐标为零；本节不声称四个 $m_i$ 都位于该固定坐标的时间等于一仿射截面，而始终使用这些已定向的 projective 射线及未来单位归一化。因此无需改变原 $M$ 或另选一个仿射标架来完成 (25.7)。
+
+当六长度来自第 24 节的原始完全截断非退化块，令 $R(X_0,X_1,X_2,X_3)=(X_1,X_2,X_3,X_0)$，则 $B(RX,RY)=L(X,Y)$。第 24.3 节将原 $U_i$ 送到 $V_i$ 的映射仍记为 $A$。相同 Gram 和基性质给出唯一 $B$-Lorentz 映射 $T$，满足 $T(RV_i)=m_i$。它把未来 timelike 的 $\sum_i RV_i$ 送到 $\sum_i m_i$；后者由第 66.2 节标架的非负时间坐标及负二次值而为未来 timelike，所以 $T$ 保持未来分支。
+
+因此同一原始带标签闭块的上半空间映射是
+
+$$
+\mathcal F=\Psi\circ T\circ R\circ A\bigm|_P,
+\qquad
+\mathcal F\left(\frac{S_U(\lambda)}{\sqrt{-\lambda^{\mathsf T}G\lambda}}\right)=F_l(\lambda).
+$$
+
+由第 24 节的原块系数等式和 (25.7)，其像恰为同一个八个 $Q\le0$ 的交，全部原始标签由第 25.5 节的等式读取保留。$A,R,T,\Psi$ 各保持实际双曲张量与距离，故该映射是原始闭块的实际等距同胚。这一坐标对应不增设 caller 的半空间表示假设，也不换掉理论卷的原 $M,Y,F_l$。
+
+本节为同一标架和坐标像给出书面八半空间实现、三维内部、紧性、完整十二顶点与四三角形四六边形的带标签识别；不申报 Lean kernel 核验、冻结或文献原创性。第 66.2 节的单个严格源条件足以承担这里的标架与半空间计算；原始完全截断块的适用范围仍由第 24 节固定，完整六长度实现的全部严格源条件、原始商图册、流和收敛结论仍遵守各自条件。
+
+
+## 26. 不同块的单位系数域与原始面关系的闭性
+
+第 24 节把每个原始完全截断块写成其四条已定向射线的非负锥与 cap 半空间的交。对有限标签集 $T$，各块的六长度可以不同；这里只要求每一对实际配对面的三条旧边长度按原始顶点排列一致。下面用单位系数取代总和为一的系数，使不同块的规定面映射成为同一非负锥中的字面坐标置换，再应用[理论卷第 67.1 节](../../docs/develop/theory/CFMP_GEOMETRIC_REALIZATION.md#67-零坐标触发识别的有限约束与闭关系)。
+
+### 26.1 单位系数同胚
+
+令 $U_{t,i}$ 为第 24 节原始块 $P_t$ 的四个单位 spacelike 向量，$i\in I=\{0,1,2,3\}$，并写
+
+$$
+G^t_{ii}=1,\qquad G^t_{ij}=-x^t_{ij},\qquad x^t_{ij}=\cosh l^t_{ij}>1\quad(i\ne j),
+\qquad S_t(a)=\sum_i a_iU_{t,i}.
+$$
+
+沿用该节的非退化、完全截断及未来分支条件。四个 $U_{t,i}$ 构成环境 Lorentz 空间的基；$W_t=\sum_iU_{t,i}$ 为未来 timelike 向量。定义
+
+$$
+Y_t=\{a\in\mathbb R_{\ge0}^4:a^{\mathsf T}G^ta=-1,\ G^ta\le0\}.
+\tag{26.1}
+$$
+
+向量不等式逐坐标解释；不加 $\sum_i a_i=1$。若 $a\in Y_t$，则 $s=\sum_i a_i>0$，否则非负性给出 $a=0$，与单位方程矛盾。又
+
+$$
+L(S_t(a),W_t)=\sum_i a_i\left(1-\sum_{j\ne i}x^t_{ij}\right)<0.
+$$
+
+所以单位 timelike 向量 $S_t(a)$ 属于同一未来分支。令 $\lambda=a/s$，则 $\lambda\ge0$、$\sum_i\lambda_i=1$、$G^t\lambda\le0$，且
+
+$$
+\lambda^{\mathsf T}G^t\lambda=-s^{-2},\qquad
+\frac{S_t(\lambda)}{\sqrt{-\lambda^{\mathsf T}G^t\lambda}}=S_t(a).
+$$
+
+第 24.5 节由此给出 $S_t(a)\in P_t$。反向，对 $X\in P_t$ 取其唯一系数 $a$，即 $X=S_t(a)$；同一非负锥与 cap 描述给出 $a\in Y_t$。因而
+
+$$
+C_t:P_t\longrightarrow Y_t,\qquad C_t(X)=S_t^{-1}(X)
+\tag{26.2}
+$$
+
+是同胚，逆映射为 $S_t|_{Y_t}$。两方向的连续性直接来自固定可逆线性映射和子空间拓扑。各 $Y_t$ 可以不同，也不必各自对所有坐标置换不变。
+
+### 26.2 同一规定面映射的精确置换公式
+
+设原始面配对把 $(t,f)$ 接到 $(u,g)$，其顶点排列为 $\sigma$，$g=\sigma(f)$。共同面长度给出
+
+$$
+x^t_{ij}=x^u_{\sigma(i)\sigma(j)}\qquad(i\ne j,\ i,j\ne f).
+\tag{26.3}
+$$
+
+记 $(\sigma\cdot a)_k=a_{\sigma^{-1}(k)}$。对非负 $a$ 且 $a_f=0$，单位二次型只使用面内的 Gram 项，故
+
+$$
+(\sigma\cdot a)^{\mathsf T}G^u(\sigma\cdot a)=a^{\mathsf T}G^ta.
+$$
+
+对 $i\ne f$，同理有 $(G^u(\sigma\cdot a))_{\sigma(i)}=(G^ta)_i$。唯一未匹配的目标 cut 为
+
+$$
+(G^u(\sigma\cdot a))_g=-\sum_{j\ne f}x^u_{g\sigma(j)}a_j\le0.
+$$
+
+它只需目标长度为正，不需要匹配涉及被省略顶点的其余三条长度。把同一计算用于反向排列 $\sigma^{-1}$，得到全部非负零面点上的等价
+
+$$
+a\in Y_t\quad\Longleftrightarrow\quad\sigma\cdot a\in Y_u
+\qquad(a\ge0,\ a_f=0).
+\tag{26.4}
+$$
+
+还须核对实际规定的 $I_{t,f}$，不能以一个方便的面映射替代。第 15.1 节将这个整面等距映射延拓为支撑子空间的 Lorentz 线性等距映射 $A$。它保留六个规定有序 cap 顶点。对不同的面内标签 $i,j$，这两个顶点的环境值为
+
+$$
+p^t_{ij}=\frac{x^t_{ij}U_{t,i}+U_{t,j}}{\sqrt{(x^t_{ij})^2-1}},\qquad
+p^t_{ji}=\frac{U_{t,i}+x^t_{ij}U_{t,j}}{\sqrt{(x^t_{ij})^2-1}}.
+$$
+
+由 $Ap^t_{ij}=p^u_{\sigma(i)\sigma(j)}$、$Ap^t_{ji}=p^u_{\sigma(j)\sigma(i)}$ 及 (26.3)，得到关于 $AU_{t,i},AU_{t,j}$ 的两个线性方程；系数矩阵行列式为 $(x^t_{ij})^2-1>0$，所以 $AU_{t,i}=U_{u,\sigma(i)}$、$AU_{t,j}=U_{u,\sigma(j)}$。遍历面内标签即得三个基向量的精确像。因此在整张闭主面，包括全部边与顶点，
+
+$$
+C_u\bigl(I_{t,f}(C_t^{-1}(a))\bigr)=\sigma\cdot a
+\qquad(a\in Y_t,\ a_f=0).
+\tag{26.5}
+$$
+
+反方向使用原始规定的逆面映射及逆排列。这里没有使用整块四阶 Gram 矩阵匹配，也没有为三个射线像保留自由符号或缩放。
+
+### 26.3 从共同环境关系限制到不同的实际载体
+
+取共同环境 $X_+=T\times\mathbb R_{\ge0}^4$，在 $a_f=0$ 时规定生成步
+
+$$
+(t,a)\sim_+(u,\sigma\cdot a),
+$$
+
+其中 $u,\sigma$ 来自同一原始 $(t,f)$ 面配对。令 $R_+$ 为它的完整等价闭包，并令
+
+$$
+Z=\{(t,a)\in X_+:a\in Y_t\}.
+$$
+
+(26.4) 说明每一个环境生成步的两个端点同时属于或同时不属于 $Z$。按生成、反身、对称及传递归纳，$R_+$ 的每条路径只要起点在 $Z$，全部中间代表都在 $Z$。同一归纳把这条路径提升为 $Z$ 内生成关系的路径，因而
+
+$$
+R_Z=R_+\cap(Z\times Z).
+\tag{26.6}
+$$
+
+这是等价闭包的精确限制，排除了离开实际单位系数域再返回的环境捷径。只证明从实际源面出发的正向保持不足以得到该等式；逆向由 (26.4) 的完整等价保证。
+
+非负锥对全部坐标置换不变，且为 Hausdorff 空间。第 67.1 节适用于这个共同环境，给出 $R_+$ 闭；包含映射 $Z^2\to X_+^2$ 的连续原像遂给出 $R_Z$ 在 $Z^2$ 中闭。此限制步骤不要求 $Z$ 在环境中闭。有限离散标签使各个 (26.2) 组成同胚
+
+$$
+\mathcal C:\coprod_{t\in T}P_t\longrightarrow Z,\qquad
+\mathcal C(t,X)=(t,C_t(X)).
+$$
+
+(26.5) 及其逆向把每一个原始实际面生成步与 $Z$ 内生成步精确对应，再按等价闭包归纳，得到原始 $R_{\rm geom}$ 正是 $R_Z$ 的同胚拉回。因此 $R_{\rm geom}$ 闭；从一个固定起点出发，每个目标系数向量均为它的某个坐标置换，故每条纤维至多含 $24|T|$ 个带标签点。每个 $P_t$ 紧，有限不交并紧且 Hausdorff，闭关系商 $Q_{\rm geom}$ 因而紧且 Hausdorff，商映射为闭映射。第 15.3 节由同一个 $h_t$ 构成的带标记商同胚 $\overline h:(Q,B)\to(Q_{\rm geom},B_{\rm geom})$，将这些结论运输到第 5 节的原始 $(Q,B)$。
+
+本节是规定面映射、变化的单位系数域与有限零约束闭关系之间的书面组合证明，不申报 Lean kernel 核验、冻结或 atom 覆盖。它保持原始面配对、六个有序标记及完整生成等价闭包；实际展开图卡、角和、张量下降及同一带标记流形上的双曲实现仍由第 19–23 节各自的条件与证明承担。
+
+
+## 27. 原始仿射块与单位 Gram 字典
+
+固定同一个原始仿射块，其四个顶点为 $v_i\in\mathbb R\times\mathbb R^3$，使用同一个 $L((t,z),(s,w))=-ts+z\cdot w$。原输入是
+$$
+(v_i)_0=1,\qquad \{v_i\}_{i=0}^3\text{ 线性独立},\qquad L(v_i,v_i)>0,
+$$
+以及对每个 $i\ne j$，存在 $s\in(0,1)$ 使 $L((1-s)v_i+sv_j,(1-s)v_i+sv_j)<0$。以下从这些仿射顶点条件导出 §24 所需的单位 Gram 输入和完整带标签集合识别。
+
+仍记 $\mathbb H^3=\{X:L(X,X)=-1,\ X_0>0\}$，$\pi(X)=X/X_0$。以原始凸包和极平面定义完整截断块及其带标签闭面：
+$$
+\begin{aligned}
+P&=\{X\in\mathbb H^3:\pi(X)\in\operatorname{conv}\{v_i\},\ L(X,v_i)\le0\ (\forall i)\},\\
+M_f&=\{X\in P:\pi(X)\in\operatorname{conv}\{v_i:i\ne f\}\},\\
+K_i&=\{X\in P:L(X,v_i)=0\},\\
+Z_{ij}&=\{X\in K_i:\pi(X)\in[v_i,v_j]\}\quad(i\ne j).
+\end{aligned}
+$$
+其中所有凸包、线段和 cut 均包含边界。
+
+设 $r_i=\sqrt{L(v_i,v_i)}>0$，$U_i=v_i/r_i$。这是同一原始顶点射线上的正单位代表，$L(U_i,U_i)=1$、$(U_i)_0=1/r_i>0$，四个 $U_i$ 线性独立。对 $i\ne j$，定义 $x_{ij}=-L(U_i,U_j)$。
+
+**原输入确定负号。** 取开边条件中的 $s$，记 $a=L(v_i,v_i)$、$b=L(v_j,v_j)$、$c=L(v_i,v_j)$、$\alpha=1-s$、$\beta=s$。有
+$$
+\begin{aligned}
+0&>L(\alpha v_i+\beta v_j,\alpha v_i+\beta v_j)\\
+&=(\alpha\sqrt a-\beta\sqrt b)^2+2\alpha\beta(c+\sqrt a\sqrt b).
+\end{aligned}
+$$
+平方项非负，且 $\alpha,\beta>0$，所以 $c<-\sqrt a\sqrt b$，即 $x_{ij}>1$。对称性给出 $x_{ij}=x_{ji}$。这从原始开边输入导出 §24 所需的有符号 Gram，未用无向 cap 距离代替符号。
+
+为把本节的零基标签接入 §17、§24 的一基公式，固定顺序保持字典
+$$
+\alpha:\{0,1,2,3\}\longrightarrow\{1,2,3,4\},\qquad \alpha(i)=i+1.
+$$
+§27 中凡调用 §17、§24 的向量和系数，均按
+$$
+V_i:=V^{17}_{\alpha(i)},\qquad \lambda^{17}_{\alpha(i)}:=\lambda_i;
+$$
+缺顶点（缺面）索引按 $f\mapsto\alpha(f)$，有序端点索引按 $(i,j)\mapsto(\alpha(i),\alpha(j))$ 运输。于是 §17 原槽序 $12,13,14,34,24,23$ 的六个输入在本节坐标中明确为
+$$
+(x^{17}_{12},x^{17}_{13},x^{17}_{14},x^{17}_{34},x^{17}_{24},x^{17}_{23})
+=(x_{01},x_{02},x_{03},x_{23},x_{13},x_{12}).
+$$
+按本节零基标签令 $G_{ii}=1$、$G_{ij}=-x_{ij}$。于是 $L(U_i,U_j)=G_{ij}$；§24.1 的原始线性独立性论证给出 $\det G<0$，且导入的判别式恒等式在本节坐标中是
+$$
+D(x)=(x_{01}^2-1)(-\det G)>0.
+$$
+§24.2 给出的同一个闭系数体是
+$$
+C_x=\{\lambda:\lambda_i\ge0,\ \sum_i\lambda_i=1,\ G\lambda\le0\}.
+$$
+记 $S_U(\lambda)=\sum_i\lambda_iU_i$、$q(\lambda)=\lambda^{\mathsf T}G\lambda$。§24.2 的 cut 论证适用于整张 $C_x$，给出 $q(\lambda)<0$；此处 $S_U(\lambda)_0=\sum_i\lambda_i/r_i>0$，所以
+$$
+N_U(\lambda)=\frac{S_U(\lambda)}{\sqrt{-q(\lambda)}}\in\mathbb H^3
+$$
+在整个闭系数体上有定义。
+
+**两种系数的双向正尺度。** 原始仿射系数 $\theta_i\ge0$、$\sum_i\theta_i=1$ 与单位射线系数 $\lambda_i\ge0$、$\sum_i\lambda_i=1$ 的转换是
+$$
+R(\theta)=\sum_i\theta_ir_i>0,\qquad \lambda_i=\frac{\theta_ir_i}{R(\theta)}, \tag{27.1}
+$$
+以及
+$$
+d(\lambda)=\sum_i\frac{\lambda_i}{r_i}>0,\qquad \theta_i=\frac{\lambda_i/r_i}{d(\lambda)}. \tag{27.2}
+$$
+两式互逆，$d(\lambda)=R(\theta)^{-1}$，逐坐标保留零与正，并且
+$$
+S_U(\lambda)=\frac{\sum_i\theta_iv_i}{R(\theta)},\qquad \sum_i\theta_iv_i=\frac{S_U(\lambda)}{d(\lambda)}. \tag{27.3}
+$$
+因而 $\pi(N_U(\lambda))=\sum_i\theta_iv_i$。这一步使用原始顶点的各自尺度；两个凸包中的系数不能直接同名识别。
+
+**同一个完整原始块。** 若 $\lambda\in C_x$，则 (27.2)–(27.3) 给出原始凸包条件，而
+$$
+L(N_U(\lambda),v_k)=\frac{r_k}{\sqrt{-q(\lambda)}}(G\lambda)_k \tag{27.4}
+$$
+给出四个原始 cut。因此 $N_U(\lambda)\in P$。反过来，若 $X\in P$，有限凸包给出 $\pi(X)=\sum_i\theta_iv_i$。用 (27.1) 取 $\lambda$，则 $X=X_0R(\theta)S_U(\lambda)$，其中 $X_0R(\theta)>0$。原始四个 cut 给出 $G\lambda\le0$，故 $\lambda\in C_x$；单位 Lorentz 方程又给出 $X_0R(\theta)=1/\sqrt{-q(\lambda)}$。所以
+$$
+P=N_U(C_x). \tag{27.5}
+$$
+若两个归一化像相等，$U_i$ 的线性独立性给出两个系数向量正比例；系数和均为一使比例为一。$N_U$ 连续、$C_x$ 紧、$P$ Hausdorff，故它是同胚。这证明原始块的完整集合等式，包含所有边界。
+
+**每张主面与全部 polar cut。** 线性独立性使原始凸包系数唯一。缺顶点 $f$ 的凸包系数补零后仍是同一个全凸包系数，所以它恰要求 $\theta_f=0$；(27.1)–(27.2) 又使它恰等价于 $\lambda_f=0$。式 (27.4) 的因子严格正，逐 cap 保留不等式、等式和严格不等式。因此
+$$
+M_f=N_U(C_x\cap\{\lambda_f=0\}),\qquad K_i=N_U(C_x\cap\{(G\lambda)_i=0\}). \tag{27.6}
+$$
+这给出同一个原始块的全部四张主面和四个 cap，不只识别它们的内部。
+
+**有序端点的存在与唯一性。** 由唯一系数和正尺度转换，$\pi(X)\in[v_i,v_j]$ 恰要求其 $\lambda$ 的支持包含于 $\{i,j\}$。再加 $i$-cap 等式，就得到 $\lambda_i-x_{ij}\lambda_j=0$ 和 $\lambda_i+\lambda_j=1$。唯一解是 §24.2 的同一个 $\lambda^{ij}=(x_{ij}e_i+e_j)/(x_{ij}+1)$；该节已经验证其在整个 $C_x$ 中，恰一个 cap cut 活跃，其他三个严格负。所以
+$$
+Z_{ij}=\{N_U(\lambda^{ij})\},\qquad N_U(\lambda^{ij})=\frac{x_{ij}U_i+U_j}{\sqrt{x_{ij}^2-1}}. \tag{27.7}
+$$
+这里等式同时给出存在和唯一性。$Z_{ij}$ 的点恰属于 $f\ne i,j$ 的主面，$Z_{ji}$ 的点恰在另一 cap 上，两个有序端点不同。每个 $f$ 上的全部六个有序 marks 均保留。
+
+**与 §17、§24 的同一个实现对应。** 对上述同一 $x$、$U_i$ 使用 §24.3 的唯一未来 Lorentz 标架 $A$，其按字典对应的 $V_i=V^{17}_{\alpha(i)}$ 是 §17 的显式向量。同一 $a(X)=AX$ 满足 $a(N_U(\lambda))=\nu_x(\lambda)$，故 (27.5)–(27.7) 给出
+$$
+\begin{aligned}
+a(P)&=P_x=\nu_x(C_x),\\
+a(M_f)&=\nu_x(C_x\cap\{\lambda_f=0\}),\\
+a(Z_{ij})&=\{\nu_x(\lambda^{ij})\}.
+\end{aligned}
+$$
+cap 及其全部边界同样由 (27.6) 运输。实际光滑性与切张量运输使用 §24.4–24.5 的同一个 $A$。
+
+对同一个原始块族与原始面配对逐块使用此字典。若 $(t,f)$ 配对至 $(u,g)$，规定闭面映射仍是 §24、§26 的同一个 $I_{t,f}$，其运输只取 $I^x_{t,f}=a_u\circ I_{t,f}\circ a_t^{-1}$。原始有序端点的成员条件结合 (27.7)，成为实际面上的六个端点等式。原来的逆配对律、整张闭面的等距性和实际切张量距离由 §24 的同一共轭及张量论证保持。这把原始仿射块的完整闭面、cap 与全部有序标记接到既有单位 Gram 实现，没有另选规定面映射。
+
+
+## 28. 原始六块剖分的显式普通循环覆盖
+
+本节使用原总卷 §17 的十二行面配对及其原始截断商。四面体标签为 $0,\ldots,5$，局部边顺序保持 $(01,02,03,12,13,23)$；编号 $6t+s$ 表示一次实际边出现。保留每个抽象截断四面体的四张主侧面和四张 cap，不把边界分量压缩成理想锥顶。原始商 $N_0$ 是原 §17.1 的紧致、连通、可定向三维流形，边界为亏格三的闭曲面。
+
+本节每个 $I_a$ 都是原仿射顶点排列在相容截断主面上的逐点限制，反向使用该点映射的实际逆。仅指定顶点像的任意面同胚不在本节范围内。
+
+下面的覆盖构造只依赖这组原始拓扑块、其实际面映射和原商的流形性质，不依赖零曲率度量、体积极大点或一个预先给出的基本群满射。原 §17.1 的基剖分识别和真正几何存在性仍分别使用它们已有的证明。本节不声称经 Lean kernel 核验或冻结。
+
+### 28.1 字面面配对及整电压
+
+把原表按出现顺序编号为 $a_1,\ldots,a_{12}$。每行列出的方向叫正向；反向使用原顶点排列的逆和相反电压。
+
+| 行 | 源面 | 目标面 | 原顶点排列 | 电压 $v_a$ |
+|---:|---|---|---|---:|
+| 1 | $(0,2)$ | $(3,0)$ | $3201$ | 0 |
+| 2 | $(1,0)$ | $(5,2)$ | $2310$ | 0 |
+| 3 | $(3,2)$ | $(4,0)$ | $3201$ | 0 |
+| 4 | $(2,3)$ | $(0,3)$ | $1023$ | 0 |
+| 5 | $(0,0)$ | $(4,3)$ | $3201$ | 0 |
+| 6 | $(3,1)$ | $(5,3)$ | $2310$ | 0 |
+| 7 | $(4,1)$ | $(1,1)$ | $0132$ | 1 |
+| 8 | $(4,2)$ | $(3,3)$ | $0132$ | 0 |
+| 9 | $(5,0)$ | $(1,2)$ | $2310$ | 1 |
+| 10 | $(1,3)$ | $(2,0)$ | $2310$ | 0 |
+| 11 | $(5,1)$ | $(0,1)$ | $0132$ | 0 |
+| 12 | $(2,1)$ | $(2,2)$ | $3201$ | 0 |
+
+给定任意整数 $n\ge1$，令 $C_n=\mathbb Z/n\mathbb Z$，提升块为 $(t,k)$，$k\in C_n$。若原行 $a$ 的实际闭面映射为 $I_a:P_{t,f}\to P_{u,g}$，定义提升识别
+
+$$
+((t,k),x)\longmapsto((u,k+v_a),I_a(x)). \tag{28.1}
+$$
+
+反向是 $((u,k+v_a),y)\mapsto((t,k),I_a^{-1}(y))$。因此整个提升面映射确实互逆；面配对没有固定旗，因为原表没有固定旗；同块自配对的第十二行仍配对两个不同面。全部顶点与三个面内槽的映射都保留原排列。设 $N_n$ 为 $6n$ 个原截断块按 (28.1) 的点生成关系取等价闭包后所得的商，赋商拓扑。忘记 $k$ 诱导连续满射
+
+$$
+p_n:N_n\longrightarrow N_0. \tag{28.2}
+$$
+
+### 28.2 全部原边圈及同一出现势
+
+从一次局部边和它的一个相邻主侧面出发，跨过该面后，在目标局部边处转向另一张相邻主侧面。重复该操作给出原边的一圈。下面的有符号行字列出全部四圈；负号表示反向面配对。每一次重复块或重复面行都保留，不能在字中去重。
+
+| 起始局部边 | 有符号行字 | 出现数 |
+|---|---|---:|
+| $(0,01)$ | $1,6,-2,-7,-3,-8,-5,-11,9,10,12,4$ | 12 |
+| $(0,02)$ | $-11,-2,-9,-6,-8,7,10,4$ | 8 |
+| $(0,03)$ | $-11,-6,3,8,-1,5,-3,-1$ | 8 |
+| $(0,12)$ | $5,7,-9,-2,10,-12,-12,4$ | 8 |
+
+它们逐次经过的出现分别为
+
+$$\begin{aligned}
+E_0 &: (0,0),(3,5),(5,0),(1,5),(4,5),(3,0),
+       (4,0),(0,5),(5,5),(1,0),(2,5),(2,0),\\
+E_1 &: (0,1),(5,2),(1,4),(5,3),(3,1),(4,2),(1,1),(2,3),\\
+E_2 &: (0,2),(5,1),(3,2),(4,4),(3,3),(0,4),(4,3),(3,4),\\
+E_3 &: (0,3),(4,1),(1,2),(5,4),(1,3),(2,4),(2,2),(2,1).
+\end{aligned}$$
+
+这是原 §17.1 四个边类的同一出现集合，合计恰为全部三十六次出现。每圈的原顶点排列复合在起始边的两个有序端点上均为恒等。四个有符号行字的整电压和都是零：第一圈中的 $-7,9$ 抵消，第二圈中的 $-9,7$ 抵消，第三圈没有非零电压，第四圈中的 $7,-9$ 抵消。故零电压在整系数上已成立，对每一个 $n$ 都成立。
+
+更直接地，给每次出现 $o=(t,s)$ 指定整势 $h(o)$。下表每格写作 $(E,h)$；同一行的六格对应原六个局部槽。
+
+| 块 $t$ | 01 | 02 | 03 | 12 | 13 | 23 |
+|---:|---|---|---|---|---|---|
+| 0 | $(E_0,0)$ | $(E_1,0)$ | $(E_2,0)$ | $(E_3,0)$ | $(E_2,0)$ | $(E_0,-1)$ |
+| 1 | $(E_0,0)$ | $(E_1,0)$ | $(E_3,1)$ | $(E_3,0)$ | $(E_1,0)$ | $(E_0,0)$ |
+| 2 | $(E_0,0)$ | $(E_3,0)$ | $(E_3,0)$ | $(E_1,0)$ | $(E_3,0)$ | $(E_0,0)$ |
+| 3 | $(E_0,-1)$ | $(E_1,-1)$ | $(E_2,0)$ | $(E_2,0)$ | $(E_2,0)$ | $(E_0,0)$ |
+| 4 | $(E_0,-1)$ | $(E_3,0)$ | $(E_1,-1)$ | $(E_2,0)$ | $(E_2,0)$ | $(E_0,-1)$ |
+| 5 | $(E_0,0)$ | $(E_2,0)$ | $(E_1,0)$ | $(E_1,-1)$ | $(E_3,0)$ | $(E_0,-1)$ |
+
+对原表每个有向面及该面的三条边，一共有七十二个有向面边生成步。逐项代入上表得到
+
+$$
+E(o')=E(o),\qquad h(o')-h(o)=v_a. \tag{28.3}
+$$
+
+于是提升出现 $((t,k),s)$ 的标记
+
+$$
+\bigl(E(t,s),\ k-h(t,s)\bigr)\in\{E_0,E_1,E_2,E_3\}\times C_n \tag{28.4}
+$$
+
+在每个提升边生成步上不变。反过来，若两个提升出现有同一标记，取其基边圈中的一条实际面边路径；(28.3) 使这条路径逐步提升，并把起始层送到指定终层。因此 (28.4) 的相等恰为提升边的完整面生成等价关系，包含对称步、传递步及同块不同槽。
+
+每条提升边遂由 $(E_i,j)$ 唯一标记。它的出现星到原边出现星的映射是
+
+$$\Phi_{i,j}:((t,k),s)\longmapsto(t,s),\qquad
+\Phi_{i,j}^{-1}(t,s)=((t,j+h(t,s)),s). \tag{28.5}$$
+
+此处六槽保持组合顺序 $(01,02,03,12,13,23)$；回接原分析顺序 $(01,02,03,23,13,12)$ 时，分析槽到组合槽的指标置换为 $(0,1,2,5,4,3)$。这保留了所要求的字面六槽，故有 $4n$ 条提升全局边；其中 $n$ 条度十二、$3n$ 条度八。势值是出现相关的；同一块的两条局部边代表同一基边时，不能把势合成一个块势，也不能先把其两个出现合并。
+
+### 28.3 六种实际点型上的换层及普通覆盖
+
+**命题。** 对每一个 $n\ge1$，(28.2) 是紧致截断流形之间的普通 $n$ 重覆盖，且
+
+$$
+p_n^{-1}(\partial N_0)=\partial N_n. \tag{28.6}
+$$
+
+**证明。** 先在原截断商中选一点 $x$。原始有限面配对的实际局部星给出一个相对开邻域 $U$，是三维球或半球中的开集；其全部原块代表位于有限个互不交的局部块片 $V_o$ 中。一个块贡献多个代表时，按代表而非块编号选这些片。可把 $U$ 缩小，使每个 $V_o$ 只遇到 $x$ 的局部星中的主侧面：在有限块中先排除其余闭面和其余代表，再在原 PL 局部星中缩小。等价地，有限紧块的补片像闭，可从原星内删去这个闭像。于是 $U$ 的全部原生成路径都留在这些片中，其相邻片恰由该局部星的实际主侧面相接。
+
+在局部片的邻接图上选整势 $H_o$，使沿任一面步有 $H_{o'}-H_o=v_a$。六种点型分别给出它：
+
+1. 块内部只有一个片，取 $H_o=0$。
+2. 主侧面内部有两个片，分别取 $0,v_a$；反向律保证兼容。
+3. 旧边内部的片由原边的一圈索引，用 §28.2 的 $h(o)$，加一个共同常数也无妨；零整电压使首尾闭合。
+4. cap 内部只有一个片，取零。cap 本身从不作为配对面。
+5. cap 侧边内部有两个片，取 $0,v_a$；它们沿唯一主侧面相接，cap 内侧保持为边界。
+6. cap 顶点的片由相应旧边的一端的一圈索引，仍使用同一 $h(o)$。有序端点返回是恒等，因此该圈不会把另一端卷入；它的整电压仍为零。其原局部星为半球，cap 赤道部分保留。
+
+这些是原截断商的全部点型。特别地，第六项使用填满的半球星，并非只使用删去顶点的边界圈；第三项使用填满的法向圆盘，并非穿孔邻域。无反向边识别使同一旧边的两个端类即使属于同一理想顶点，也仍是不同的实际 cap 顶点。
+
+在提升局部片 $V_o\times C_n$ 上定义归一化层
+
+$$
+j=k-H_o\pmod n. \tag{28.7}
+$$
+
+实际面步同时把 $k$ 增加 $v_a$、把 $H_o$ 增加 $v_a$，所以 $j$ 沿每个生成步不变，也沿完整等价闭包不变。固定 $j$ 的全部片按原来的同一面映射粘合；原局部商中的代表 $z\in V_o$ 对应提升代表 $(z,j+H_o)$。相邻代表给出同一提升点。反过来，所有位于 $p_n^{-1}(U)$ 的提升代表均有唯一的 (28.7)，并被此规则恢复。
+
+这给出双射
+
+$$\Theta:U\times C_n\longrightarrow p_n^{-1}(U),\qquad
+\Theta([z],j)=[z,j+H_o]. \tag{28.8}$$
+
+原商映射限制到相对开 $U$ 的饱和原像后仍是商映射。在每个原片上，$z\mapsto[z,j+H_o]$ 连续，且沿所有实际面关系相等；故商拓扑给出每个 $j$ 分支的连续性。$C_n$ 离散，遂给出 $\Theta$ 连续。其逆的第一分量是 $p_n$；第二分量在各提升片上为常数 (28.7)，沿关系相等，由提升商映射限制的同一商性质连续。因而 (28.8) 为同胚，且 $p_n\Theta$ 是第一投影。
+
+所以 $U$ 被恰好 $n$ 个互不交的开片均匀覆盖。全部点均有这种邻域，证明普通覆盖。球片和半球片被逐片保留，故 $N_n$ 为三维带边界流形并满足 (28.6)。覆盖局部片也给出 Hausdorff 性：投影不同的两点由基空间分离；投影相同的不同点由同一个均匀覆盖邻域内的不同开片分离。$6n$ 个紧块的商紧。原奇排列仍为奇排列，原定向逐块提升，故 $N_n$ 可定向。证毕。
+
+上述证明同样适用于使用这种仿射顶点排列逐点限制的任意有限、有效截断四面体面商：给定反向取负的整面电压，只要每一实际有向旧边圈的整电压为零、原边不反转且原截断商是流形，便得到普通循环覆盖。实质接口是用这些条件构造 (28.7)–(28.8)，而不是把“已经是普通覆盖”或“出现星等价”列为输入。
+
+### 28.4 实际闭路径给出的连通性
+
+原对偶图的第 $1,2,3,4,6$ 行为零电压生成树，连接全部六个标签。故在每个层 $k$ 中，所有 $(t,k)$ 由实际主侧面相连。
+
+还有一个实际闭路径：先沿第九行由 $(5,k)$ 到 $(1,k+1)$，再沿第二行由 $(1,k+1)$ 到 $(5,k+1)$。在块 $1$ 内用一条避开边的内部路径连接这两个主侧面的相对内部点，在块 $5$ 内同样闭合；这是原流形中的真实闭路径，电压为 $1$。它把层 $k$ 连到层 $k+1$。模 $n$ 的 $1$ 生成整个 $C_n$，故提升对偶图连通；各块及配对面路径连通，故 $N_n$ 连通。
+
+连通性消费的是这个闭路径的电压。零边圈电压证明局部无分歧，但本身不能推出覆盖连通。
+
+### 28.5 原条款、分析域与计数的回接
+
+原总卷 §17.2 所需的无界族可以取上述全部 $N_n$。它们有 $6n$ 块、$4n$ 条旧边，保留原槽 $01,23$ 的十二度颜色及其余四槽的八度颜色。因为 (28.8) 在填满的实际星上是同胚，法向圆盘及两个 cap 端点半球也分别提升，(28.5) 确为同一普通覆盖的实际出现星接口。
+
+每个边界分量通过 (28.6) 普通覆盖原亏格三曲面。若该分量的覆盖次数为 $m\ge1$，它的亏格为 $1+2m\ge3$。边界可以有多个分量，未假定各个 $N_n$ 的边界连通。
+
+边界 cap 三角形、边和顶点总数分别为 $24n,36n,8n$；最后一项也由无反向识别的 $4n$ 条旧边的两个实际端类得到。故
+
+$$\chi(\partial N_n)=8n-36n+24n=-4n,\qquad
+\chi(N_n)=-2n. \tag{28.9}$$
+
+第二式使用紧可定向奇维流形的双倍和 Euler 示性数恒等式。不同 $n$ 给出不同 Euler 示性数，因此两两不同胚。这个拓扑构造不重新证明原 §16 的局部余弦界或真正几何存在性；原 §16 的实现判据直接应用于保留后的同一颜色与实际度数。
+
+本节显式构造的是一族连通循环覆盖；原 §18 对基流形全部有限普通覆盖的量词仍须由其已有的任意覆盖附件接口另外完成，不能把这族循环覆盖代替那个全称量词。原 §18 的固定局部紧集及 Hessian 常数须在基剖分上选好。覆盖上允许全部提升边长独立变化，不能把长度限制为 $l'=l\circ r$。正确的六变量紧集包含按颜色给定区间的完整乘积，(28.5) 只重排出现和固定界常数，不把独立局部角值认作基空间角值。既有固定基盒、逐出现角包络及完整耦合 Hessian 计算可直接消费这个实际星等价。
+
+原 §19 的平均残差构造因此有真实的普通覆盖族和精确的 $|E_n|=4n$ 输入。在已证明的基盒内部零曲率解及统一正 Hessian 常数条件下，提升该解并扰动一条八度提升边，仍使用已有 §19 的单坐标估计与至多四十八条受影响边的证明；本节不另包装这些分析推论为新 Lean 声明，也不将这些静态长度向量称为流轨道。
+
+原 §124 的中心提升改变边圈周期：六度变十二度，对应原角的 $4\pi$ 累积。本节四条整边圈电压均为零，局部星逐片覆盖，恰是排除该分歧缺陷所需的条件。对偶图的覆盖或边界圈的覆盖都不能替代 (28.8)。

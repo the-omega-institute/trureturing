@@ -1,23 +1,21 @@
 实施席 brief 的常设纪律段。派实施席时把本段接在题目之后。
 本 note **不含题目信息**;题目只由 brief 头部指定,正文以 atom / 源文件为唯一真源。
 
-以下每条都对应一次实测事故,不是预防性设想(第 7.10 条:防的必须是发生过的事)。
-
 ## 构建:走 serial-lean,禁裸 make lean
 
     bash tools/scripts/agent/serial-lean.sh <本树绝对路径>
 
-2026-09-11 实测:lake 5.0.0 **没有 job 数旋钮**(`-j` 已被 `--json` 占用,
+Lake 5.0.0 **没有 job 数旋钮**(`-j` 表示 `--json`,
 `lake build --help` 无 job/parallel 选项),`LEAN_NUM_THREADS` 只限单进程内线程、
-**不限 lake 拉起几个 lean 进程**。八核宿主上裸 `make lean` 会同时拉起约 7 个 lean、
-各占 0.8–3.4 GB,16 GB 机器必被低内存守卫杀掉。同日实测:裸 make lean 一席即被杀
-(空闲跌至 25%);改走 serial-lean 后**三席并发**跑完完整门链,40 个采样点
-最低空闲 55%、零 kill。
+**不限 lake 拉起几个 lean 进程**。串行入口限制构建进程并发,以控制内存占用。
+
+资源读数(采集时点:2026-09-11;八核、16 GB 宿主):裸 `make lean` 单席配置同时运行
+约 7 个 lean 进程、各占 0.8–3.4 GB,内存空闲比例 25%。`serial-lean` 三席并发配置
+完成完整门链,40 个采样点的最低内存空闲比例 55%、低内存守卫终止次数 0。
 
 ## 构建被杀之后:先清孤儿,再重跑
 
-被杀的是 harness 跟踪的作业,它派生的 lake/lean **成为孤儿继续跑**。不清就变成同树两个
-lake 叠加(2026-09-11 实测:同树两个不同 ppid,两个进程在编同一个文件)。
+重跑前须检查被终止作业派生的 lake/lean,清理本树的孤儿进程,避免同树重复编译。
 清理**按本树 cwd 定范围**,不要用「非本引擎后代」——这台机器上有多个驱动者,
 那个判据会杀掉别人的 worker:
 
@@ -27,13 +25,14 @@ lake 叠加(2026-09-11 实测:同树两个不同 ppid,两个进程在编同一�
     done
 
 清完用 `memory_pressure` 的 `free percentage` 确认真的降下来了再重跑。
-**不要用 `ps -eo rss=` 求和判内存**:macOS 上它系统性低估(实测 5.03 GB RSS 对应只剩 25% 空闲,
-差额在 compressor / wired / 文件缓存里)。
+**不要用 `ps -eo rss=` 求和判内存**:该读数不含完整的 compressor / wired / 文件缓存占用。
+macOS 内存读数中,5.03 GB RSS 总量对应 25% 内存空闲比例;二者不能互相替代。
 
 ## 判绿:`grep -c sorry` 为 0 不等于证明成立
 
-elaborate 失败时 Lean 自插 `sorryAx`。2026-09-11 实测:一份 125 行、`sorry` 计数 0 的模块,
-`make lean` EXIT=2,而该定理的 axiom 闭包里带 `sorryAx`。
+elaborate 失败时 Lean 可插入 `sorryAx`,因此源码中 `sorry` 计数为 0 不能证明构建成功。
+编译读数(采集时点:2026-09-11):模块 125 行、`sorry` 计数 0,`make lean` EXIT=2,
+定理的 axiom 闭包含 `sorryAx`。
 判绿只认构建退出码;`make lean-report` 会打印 axiom 闭包,出现 `sorryAx` 即未证完。
 
 ## 开 PR 前核验变更范围的 Scribe 内容

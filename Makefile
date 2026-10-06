@@ -73,19 +73,19 @@ scribe-release-publish: export TARGET ?=
 scribe-release-fetch: export DIGEST ?=
 
 ingest:
-	@/bin/bash tools/scripts/ingest.sh ingest "$(BASE)" "$(SOURCE)"
+	@/bin/bash tools/scripts/ingest.sh ingest "$(SOURCE)"
 
 align-digestion-status:
-	@/bin/bash tools/scripts/ingest.sh align-digestion-status "$(BASE)" "$(PLAN)"
+	@/bin/bash tools/scripts/ingest.sh align-digestion-status "$(PLAN)"
 
 refresh-source-registry:
-	@/bin/bash tools/scripts/ingest.sh refresh-source-registry "$(BASE)" "$(SOURCE)" "$(PLAN_HASH)"
+	@/bin/bash tools/scripts/ingest.sh refresh-source-registry "$(SOURCE)" "$(PLAN)"
 
 mathlib-reanchor:
 	@/bin/bash tools/scripts/ingest.sh mathlib-reanchor "$(BASE)"
 
 echo-residual-summary:
-	@/bin/bash tools/scripts/report/echo-residual-summary.sh "$(BASE)"
+	@/bin/bash tools/scripts/report/echo-residual-summary.sh
 
 digestion-readiness:
 	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- digest-status --readiness
@@ -116,25 +116,25 @@ deposit-uncovered:
 	@/bin/bash tools/scripts/workflow/playbook-workflows.sh deposit-uncovered "$(BASE)" "$(GID)"
 
 cover:
-	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover "$(BASE)" "$(ATOM_ID)" "$(GID)"
+	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover "$(ATOM_ID)" "$(GID)"
 
 cover-batch:
-	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover-batch "$(BASE)" "$(ATOMS)"
+	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover-batch "$(ATOMS)"
 
 decompose:
-	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- decompose-atom --atom "$(ATOM_ID)" --base "$(BASE)" $(foreach offset,$(SPLIT_AT),--split-at "$(offset)") $(if $(filter 1,$(DRY_RUN)),--dry-run,)
+	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- decompose-atom --atom "$(ATOM_ID)" $(foreach offset,$(SPLIT_AT),--split-at "$(offset)") $(if $(filter 1,$(DRY_RUN)),--dry-run,)
 
 quarantine:
-	@/bin/bash tools/scripts/ingest.sh quarantine "$(BASE)" "$(REQUEST)"
+	@/bin/bash tools/scripts/ingest.sh quarantine "$(REQUEST)"
 
 quarantine-clear:
-	@/bin/bash tools/scripts/ingest.sh quarantine-clear "$(BASE)" "$(ATOM_ID)"
+	@/bin/bash tools/scripts/ingest.sh quarantine-clear "$(ATOM_ID)"
 
 settle:
-	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --request "$(REQUEST)" --base "$(BASE)"
+	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --request "$(REQUEST)"
 
 settle-clear:
-	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --clear "$(ATOM_ID)" --base "$(BASE)"
+	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --clear "$(ATOM_ID)"
 
 worktree:
 	@/bin/bash tools/scripts/worktree-init.sh "$(KIND)" "$(NAME)" "$(WORKTREE_DEST)" "$(BASE)" "$${WORKTREE_ALLOW_LOW_DISK}"

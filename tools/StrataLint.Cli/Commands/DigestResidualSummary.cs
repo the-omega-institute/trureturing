@@ -6,9 +6,6 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-// 由 DigestStatusCommand.cs 拆出(2026-08-30,#4125):该文件加入 quarantine 投影后 832 行,越过 SL-003 的 800 硬线。
-// 同目录下的 .cs 仍在 DigestionEvaluationScopes.ForChanges 的 caller-implementation 匹配范围内
-// (IsCallerImplementationPath 按目录匹配),故拆分不改变全量重算的触发面。
 internal static class DigestResidualSummary
 {
     private const string ResidualGapCode = "unresolved-subitem";

@@ -56,7 +56,7 @@ public sealed class MarkdownCurrentCommandTests
 
     private static TemporaryRoot Prepare()
     {
-        var temporary = new TemporaryRoot();
+        var temporary = new TemporaryRoot(sdkConfiguration: true);
         SyntheticScribeRepository.WriteInputs(temporary.Path, Definition());
         TemporaryFileSystem.File.WriteAllText(temporary.Resolve("global.json"), "{}\n");
         TemporaryFileSystem.File.WriteAllText(temporary.Resolve(Definition().SourcePath), $$"""
