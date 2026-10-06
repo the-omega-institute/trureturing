@@ -7,6 +7,7 @@
     <AssemblyName>StrataLint.Rules.Tests</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../../StrataLint.Engineering/StrataLint.Engineering.csproj" />
     <ProjectReference Include="../../Trureturing.Truth/Trureturing.Truth.csproj" />
     <ProjectReference Include="../../StrataLint.Configuration/StrataLint.Configuration.csproj" />
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />

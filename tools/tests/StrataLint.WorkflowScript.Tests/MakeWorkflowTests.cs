@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Text;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;

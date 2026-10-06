@@ -35,8 +35,11 @@ test is run with `make -C tools test TEST_PROJECT=...`; local success is early
 feedback and does not replace remote required checks.
 
 `StrataLint.TestEvidence` owns `list-test-owner-assemblies`, `verify-trx`, and
-`compile-proof`. It references only Engine; its project closure does not include
-Scribe. `dotnet-test.sh` and the compile-proof make target
+`compile-proof`. It references only `StrataLint.Engineering` (registered identity/schema) and
+`StrataLint.Runtime` (bounded execution and the hang protocol). Single-project
+selection reads only `Meta/engineering-projects.json`; Engine retains complete
+repository source, glob, namespace and topology admission. Solution runs retain
+the registered owned-test assembly floor, waived only for filtered solution runs. `dotnet-test.sh` and the compile-proof make target
 build and invoke this executable. CLI forwards the same commands through a project
 reference. TRX validation requires successful executed tests, the selected owner
 assemblies, and no infrastructure hang guard skips. Its owned tests run as their
