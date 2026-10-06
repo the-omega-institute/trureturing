@@ -43,7 +43,7 @@ internal sealed class LateLabelStateBoundDocument : IScribeDocumentDefinition
                         "Equal tails at two distinct positions are periodic from the earlier position onward. An eventually-zero tail with a positive period is entirely zero. A nonnull window at j therefore forces the first j+2 signed vertices to be distinct. Each signed vertex consists of one surviving vertex and a parity, so there are only 2s available states."))),
                 DescribeRole.Theorem))));
 
-    private static ScribeBlock Node(string selector, string title, string text) =>
+    private static DocumentBlock Node(string selector, string title, string text) =>
         Describe.Lean(
             DescribeId.Create("latelabelstatebound-" + selector.Replace(".", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + selector),
