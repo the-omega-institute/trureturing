@@ -476,13 +476,63 @@ $(m+n-1)+(m+2n-1)+(2m+3n-1)=4m+6n-3$ cross products, in addition to syntax and s
 
 **命题 8.4（stronger initial data and the older loss receipt）。** A truthful gap or size certificate supplied before the original Reads can schedule sufficient finite precision for all three replies, after which the same finite compression is lawful. Its represented fields, truth and issuance are paid. Neither that certificate nor the finer relative seed contract of §3 follows from recognition of PCR §76's older thirteen-field sum-loss receipt.
 
-That older receipt retains its genuine alternative scope: it represents the two losses on a common $\eta\sigma$ grid, $\eta=2^{-(K+10)}$, and three unnormalized first-phase anchors, with the whole-future perturbation bound $12\eta$ of PCR §78. Its rounded-power indexed evaluator in PCR §80 has counted $O(h+K+\log(K+2))$ installation/work widths. It can be made autonomous by an internal saturated position and phase, with identical NEXT requests and the same whole-tail argument; the resulting conservative space retains that order. A separate moderate/tiny-scale implementation can attain $O(K+\log(h+K+2))$ space from this older contract, at the price of recomputing rounded Fibonacci coefficients, rather than refining its stored seeds.
+That older receipt retains its genuine alternative scope: it represents the two losses on a common $\eta\sigma$ grid, $\eta=2^{-(K+10)}$, and three unnormalized first-phase anchors, with the whole-future perturbation bound $12\eta$ of PCR §78. The inherited cached rounded-power evaluator of PCR Definition 76.7 and §80 retains its materialized Fibonacci list. Put
+
+$$
+A_c=1+h+\left\lceil\log_2(K+8)\right\rceil,\qquad
+W_c=1+h+K+\left\lceil\log_2(K+8)\right\rceil.
+$$
+
+Its complete numerical installation/running peak, including that list, arithmetic scratch, an internal saturated position and phase, and the current full output, is
+
+$$
+O(A_c^2+W_c)
+=O\!\left((h+\log(K+8)+1)^2+h+K+\log(K+2)+1\right).
+$$
+
+The quadratic term is the list-storage coordinate of PCR §85; $O(W_c)$ is the simultaneous arithmetic-workspace coordinate. At fixed $K$, the actual histories of Lemma 6.2 realize $\Theta(h^2)$ list storage as $h\to\infty$. A separate moderate/tiny-scale implementation can attain $O(K+\log(h+K+2))$ space from this older contract, at the price of recomputing rounded Fibonacci coefficients, rather than refining its stored seeds. Its arithmetic and time account are separate from the cached evaluator's account.
 
 **证明。** A certificate establishes only its stated actual-source bounds, so it may choose a sufficient precision before receipt; it does not add a later refinement port. For the information distinction, the older grid rounding leaves intervals of true losses of width proportional to $\eta\sigma$. When a seed is of order $\sigma$, their possible relative widths are of order $\eta$, larger than $\alpha$ for arbitrarily large $K$ or $h$. Compatible old fields do not imply the new seed bound. The selected §7 construction acquires that extra precision before closure.
 
-For the alternative's scope, in each phase PCR §78 gives
+For the old receipt's semantic scope, in each phase PCR §78 gives
 $x_j=A_r U^R V^S$ with $U=1-\delta_1,V=1-\delta_2$ and nonnegative integer exponents satisfying $1\le R\le S\le2R$ after the first phase head. Along the true-to-encoded segment the loss sum stays at least $D/2$, so
-$|\partial_U(U^RV^S)|+|\partial_V(U^RV^S)|\le12/D$, which proves its stated $12\eta$ error. The indexed finite head and tail can therefore be selected by a counted internal position without changing the input contract.
+$|\partial_U(U^RV^S)|+|\partial_V(U^RV^S)|\le12/D$, which proves its stated $12\eta$ error.
+
+For the cached evaluator, retain the installation of PCR Definition 76.7 exactly: construct
+
+$$
+T_c=2^{h+2}(K+4),\qquad
+J_c=\min\{J\ge6:F_{J-2}\ge2T_c+2\},
+$$
+
+and its Fibonacci list through $J_c$. For $i\ge2$, two-step growth and induction give
+
+$$
+2^{(i-2)/2}\le F_i\le2^i.
+$$
+
+Minimality gives $2T_c+2\le F_{J_c-2}<4T_c+4$, so
+$J_c=\Theta(\log(T_c+1))=\Theta(A_c)$ for all declared $h\ge0,K\ge1$. Define $\ell(n)=\max(1,\operatorname{bitlength}(n))$. The materialized list's integer payload is
+
+$$
+\sum_{i=0}^{J_c}\ell(F_i)=\Theta(J_c^2)=\Theta(A_c^2).
+$$
+
+Indeed the upper bound follows by summing $i+1$; the lower already follows by summing $\ell(F_i)\ge(i-2)/2$ for $2\le i\le J_c-2$. Length framing and list-position metadata require at most $O(J_c\log(J_c+2))$ further bits, absorbed by $O(A_c^2)$. Sequential construction appends one Fibonacci integer at a time with a constant number of $O(J_c)$-bit scratch integers; it never retains a second growing list. This charges the simultaneous installation peak, including the input word.
+
+The same cached head uses grid width
+$w_c=h+(K+10)+\operatorname{bitlength}(K+8)+16=O(W_c)$. Exact grid bases, bounded-width products, rounded-power accumulators and their schoolbook scratch form a constant number of $O(W_c)$-bit registers, in addition to the retained list. The old thirteen-field word has $O(K+\log(h+1)+1)$ bits, and its stored anchors and complete current output have $O(K+1)$ bits. Keep an internal position $i_c$, initially three, incremented only after a successful NEXT and saturated at $J_c$, and a three-valued phase. These use $O(\log(J_c+1))$ bits. Lengths, list addresses, arithmetic loop counters, parsing state and the fixed finite interpreter are also charged; their widths fit $O(A_c^2+W_c)$. Thus list, input, retained fields, active arithmetic and full output coexist within the claimed aggregate peak. Even if the list is erased upon saturation, its installation and head peaks remain part of this bound.
+
+For $i_c<J_c$, the inherited evaluator emits the same rounded indexed value, using $i_c$ instead of an external index. For $i_c=J_c$ it emits the same finite zero frame at recorded precision $K+10$. PCR §80's true-tail argument applies to every later target: its exponent $R\ge T_c$ and $D\ge2^{-h}$ give a norm at most $\exp(-2(K+4))\le2^{-(K+4)}$. The original head error is below $\epsilon/16$. No source observation or extra precision is involved in this conversion. Under schoolbook arithmetic, installation and each active request have the conservative bit-time bound $O(A_cW_c^2+\ell_{\rm old})$, where $\ell_{\rm old}$ is the old word's actual length: there are $O(A_c)$ rounded multiplications of $O(W_c)$-bit integers, and even sequential scans of the stored list fit this bound. The internal position and fixed NEXT parsing add only counted finite work.
+
+The list cost occurs on the original source. Fix $K$ and any strict-law parameters of Theorem 6.3. For the sufficiently late multiples of six in Lemma 6.2,
+
+$$
+D=1-\exp(-2z/F_k)=\Theta(1/F_k),\qquad
+h=\log_2 F_k+O(1)\longrightarrow\infty
+$$
+
+for every tolerant bin $2^{-h}\le D\le4\cdot2^{-h}$. PCR §78 supplies old receipts at this fixed $K$ with those bins, for the same actual trees and common preparations. Their cached installations therefore have $\Theta(h^2)$ list payload and complete peak $\Theta(h^2)$, since $W_c=O(h+1)$ at fixed $K$. This is the resource cost of the materialized-list algorithm, not a lower bound against every implementation accepting an old receipt.
 
 For clarity about the smaller-space alternative, use an internal cutoff
 $J=2(h+K+20)+8$. If $h\le K+20$, all head Fibonacci exponents and a grid of width $J+(K+10)+24$ have $O(K)$ bits; rounded powering has degree-times-grid error below $2^{-(K+10)-23}$. If $h>K+20$, the encoded losses satisfy $d_{\max}<8\sigma<\epsilon2^{-18}$. With $z'=Rd_1+Sd_2$, integration of $1/(1-d)$ gives
