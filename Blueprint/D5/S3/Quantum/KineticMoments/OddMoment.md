@@ -200,6 +200,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/KineticMoments/OddMoment.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/tolias-dornheim-vorberger-2025-kinetic-odd-moments` (proved) by `D5/S3/Quantum/KineticMoments/OddMoment.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"tolias-dornheim-vorberger-2025-kinetic-odd-moments","declaration_gid":"D5/S3/Quantum/KineticMoments/OddMoment.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. Tolias; T. Dornheim; J. Vorberger (2025). *Kinetic contribution to the arbitrary order odd frequency moments of the dynamic structure factor*. DOI: [10.1002/ctpp.70090](https://doi.org/10.1002/ctpp.70090). URL: <https://arxiv.org/abs/2508.17810v1>.

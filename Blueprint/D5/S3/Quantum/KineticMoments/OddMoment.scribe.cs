@@ -41,14 +41,16 @@ internal sealed class OddMomentDocument : IScribeDocumentDefinition
             Node("claim", "The Tolias-Dornheim-Vorberger conjecture", Disp(Iff(F.Id("claim"),ClaimBody())),
                 "Sec. 2.3, p. 5: \"Therefore, our conjecture states that the following result holds for the interacting uniform electron gas\" (Eq. (16)), followed by \"where k is an arbitrary non-negative integer.\" Encoding: N ≥ 1; hbar>0; m>0; q ≠ 0; every k and every ell ≤ 2k+1; the exact operator multiplier identity; every simultaneous-SO(3)-invariant probability measure with finite highest required per-particle moment. The average of the multiplication operator is the integral of its multiplier. The kinetic prescription H ≡ K is the source sentence in Sec. 2.2, p. 3. The statement constructs no thermodynamic-limit state, assumes moment finiteness and makes no assertion about the full non-kinetic moment.", true),
             Node("result", "All odd kinetic moments satisfy the conjecture", Disp(F.Id("claim")),
-                "The operator identity reduces the kinetic average to an odd binomial difference. Isotropic averaging produces 1/(2i+1); Nat.add_one_mul_choose_eq transfers this factor to the denominator 2k+2. Kinematic powers and the complex sum-rule prefactor then give Eq. (16) for every split. The proof imposes no particle-statistics condition: it applies whenever the stated momentum measure exists and is isotropic with finite moments.", false, DescribeRole.Theorem))));
+                "The operator identity reduces the kinetic average to an odd binomial difference. Isotropic averaging produces 1/(2i+1); Nat.add_one_mul_choose_eq transfers this factor to the denominator 2k+2. Kinematic powers and the complex sum-rule prefactor then give Eq. (16) for every split. The proof imposes no particle-statistics condition: it applies whenever the stated momentum measure exists and is isotropic with finite moments.", false, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("tolias-dornheim-vorberger-2025-kinetic-odd-moments"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        bool literature, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        bool literature, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("kinmom-oddmoment-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
         StatementSource.FromAuthor(formula),
         literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula N => F.Id("N");
     private static Formula Hbar => F.Id("hbar");
