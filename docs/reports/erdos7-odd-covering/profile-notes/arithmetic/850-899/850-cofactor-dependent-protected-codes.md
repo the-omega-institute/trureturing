@@ -9204,27 +9204,27 @@ The identity is bookkeeping rather than a density theorem. Report385 RE7–RE11 
 
 ### A conditional all-word mass bound and its exact extra hypothesis
 
-RLC3 by itself does not control the full \(n_1\) in CD353: its \(B_1\) contains the full-height labels at the fixed ternary word, whereas \(E_\omega\) may also contain lower ternary-height depth-one labels whose cylinders contain that word. A valid quantitative bridge therefore needs the strengthened condition
+RLC3 by itself does not control the full \(n_1\) in CD353: its \(B_1\) contains the full-height labels at the fixed ternary word, whereas \(E_\omega\) may also contain lower ternary-height depth-one labels whose cylinders contain that word. Write \(N_1^{\mathrm{all}}(u,v)\) for the number of first-\(q\)-digit unions \(E_\omega\) containing \((u,v)\). A valid quantitative bridge therefore needs the strengthened condition
 \[
- n_1(u,v_u)\le2
+ N_1^{\mathrm{all}}(u,v_u)\le k
 \quad\text{for every }u\bmod3^h,
 \tag{CD357-hyp}
 \]
-where \(n_1\) counts **all** actual depth-one labels in the definition of \(E_\omega\), not only the labels in the RLC3 batch.
+where the count includes **all** actual depth-one labels in the definition of \(E_\omega\), not only the labels in the RLC3 batch.
 
 Under this condition, and with the same complete source law on
 \[
 X=(\mathbf Z/3^h)\times(\mathbf Z/M),
 \]
-choose one \(v_u\in R_u\) for each \(u\). The points \(x_u=(u,v_u)\) are distinct, and each belongs to at least \(q-2\) of the sets \(Y_\omega\). Since every atom has mass \((3^hM)^{-1}\), CD353 gives
+choose one \(v_u\in R_u\) for each \(u\). The points \(x_u=(u,v_u)\) are distinct, and each belongs to at least \(q-k\) of the sets \(Y_\omega\). Since every atom has mass \((3^hM)^{-1}\), CD353 gives
 \[
 \boxed{\displaystyle
 \sum_{\omega\bmod q}\nu(Y_\omega)
-\ge \frac1{3^hM}\sum_{u\bmod3^h}\bigl(q-n_1(u,v_u)\bigr)
-\ge \frac{q-2}{M}.}
+\ge \frac1{3^hM}\sum_{u\bmod3^h}\bigl(q-N_1^{\mathrm{all}}(u,v_u)\bigr)
+\ge \frac{q-k}{M}.}
 \tag{CD357}
 \]
-For one fixed word only, the corresponding bound is \((q-2)/(3^hM)\). Thus the bridge is useful only after separately proving the full-depth-one condition (or an equivalent exclusion of the lower-height incidences) and controlling \(M\) or an aggregate reciprocal-carrier quantity. RLC3 supplies neither by itself. Under the strengthened hypothesis CD357 can be inserted into CD356; without it CD353 remains bookkeeping.
+If the bound holds only on a set \(U\) of ternary words, the right side is \(|U|(q-k)/(3^hM)\). Thus the bridge is useful only after separately proving the full-depth-one condition (or an equivalent exclusion of the lower-height incidences) and controlling \(M\) or an aggregate reciprocal-carrier quantity. RLC3 supplies neither by itself. Under the strengthened hypothesis CD357 can be inserted into CD356; without it CD353 remains bookkeeping.
 
 ## A sharp source-only boundary from an all-height partial family
 
