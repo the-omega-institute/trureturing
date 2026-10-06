@@ -8,6 +8,8 @@ open Lean Meta Elab Command
 private initialize templateIndexExt : EnvExtension TemplateIndex ←
   registerEnvExtension (pure {})
 
+def currentTemplateIndex (env : Environment) : TemplateIndex := templateIndexExt.getState env
+
 def resetTemplatePlans (env : Environment) : Environment := templateIndexExt.setState env {}
 
 /-- Read-only observation of actual query operations in the environment's

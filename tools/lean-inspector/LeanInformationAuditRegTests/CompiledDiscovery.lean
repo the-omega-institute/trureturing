@@ -5,6 +5,7 @@ import LeanInformationAudit.RawArtifacts
 import LeanInformationAudit.CompiledAxioms
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
 import LeanInformationAudit.CompiledSourceOperands
+import LeanInformationAudit.CompiledEvidence
 
 namespace LeanInformationAuditRegTests.CompiledDiscovery
 open Lean LeanInformationAudit
@@ -109,6 +110,38 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
         enrollment.constructors).run enrollmentContext
       unless plan.data.sourceBound && plan.data.slots.size == 3 do
         throw <| IO.userError "compiled.enrollment:source_plan"
+    let some (_, witnessRow) := snapshot.registrations.find?
+        (·.2.input.entry.unitName == `ContractTests.witness.unit)
+      | throw <| IO.userError "compiled.evidence:witness_input"
+    let entry := witnessRow.input.entry
+    let some claim := witnessRow.input.declaration
+      | throw <| IO.userError "compiled.evidence:witness_claim"
+    let some theoremInfo := context.find entry.theoremName
+      | throw <| IO.userError "compiled.evidence:witness_statement"
+    let event : TemplateOccurrenceEvent := {
+      key := {
+        root := entry.registrationModuleName,
+        registrationModule := entry.registrationModuleName,
+        theoremName := entry.theoremName, objectArena := entry.objectArenaName,
+        catalog := entry.catalogId }
+      unitName := entry.unitName, realizationName := entry.realizationName,
+      statement := theoremInfo.type, levelParams := theoremInfo.levelParams,
+      statementIdentity := "", arena := mkConst claim.arena,
+      registrationSource := "", registrationSourceIdentity := "",
+      compiledMathematics := entry.compiledMathematics }
+    let evidence ← (CompiledEvidence.checkEscapeRecord event claim.escapeInput).run
+      enrollmentContext.provenance
+    unless evidence.bridgeKind == "witness" && evidence.fromObject.any
+        (·.name == ``Nat) && evidence.continuation.any (·.kind == "open") do
+      throw <| IO.userError "compiled.evidence:witness_origin_and_residual"
+    let absent ← try
+      discard <| (CompiledEvidence.checkEscapeRecord event
+        { claim.escapeInput with fromObject := some (mkConst ``Bool) }).run
+          enrollmentContext.provenance
+      pure false
+    catch error => pure (error.toString == "unclassified_form:dtr.escape_from_absent")
+    unless absent do throw <| IO.userError "compiled.evidence:absent_origin_accepted"
+    IO.println "[PASS] compiled evidence: witness origin, unknown residual and absent-origin rejection"
     let cases : Array (Name × Option String) := #[
       (`LeanInformationAudit.Tests.DeclaredTemplates.symbolicPointwise, none),
       (`LeanInformationAudit.Tests.DeclaredTemplates.boolCases, none),

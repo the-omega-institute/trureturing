@@ -1,212 +1,49 @@
 import LeanInformationAudit.Registry.Entries
 import LeanInformationAudit.TemplateWire
 import LeanInformationAudit.Registry.Repository
-import LeanInformationAudit.Contract.CompiledExpressions
+import LeanInformationAudit.CompiledEvidence
 import Lean.Util.Heartbeats
 
 namespace LeanInformationAudit.TemplateAudit
 open Lean Meta
 
-/-- Proof-opaque syntax comes from compiled declaration types and the current
-lexical binder table. The calculator has no Environment or Meta operations. -/
-def eraseProofs (e : Expr) (fuel : Nat := 524288) : MetaM (Expr × Nat) := do
-  let env := (← getEnv).setExporting false
-  let locals ← getLCtx
-  let context : Contract.CompiledExpressions.Context := {
-    find := env.find?
-    local? := locals.find?
-    heartbeatStart := ← getInitHeartbeats
-    heartbeatLimit := ← getMaxHeartbeats }
-  let computation : IO (Except String (Expr × Nat)) := do
-    try return .ok (← Contract.CompiledExpressions.eraseProofs context e fuel)
-    catch error => return .error error.toString
-  ofExcept (← computation)
+private def evidenceQuery (action : CompiledEvidence.Q α) : MetaM α := do
+  let options ← getOptions
+  let heartbeatStart ← getInitHeartbeats
+  let heartbeatLimit ← getMaxHeartbeats
+  RegistrationGates.Compiler.runQuery (fun context =>
+    action.run { context with options, heartbeatStart, heartbeatLimit }) (← getLCtx)
 
-/-- Proof-opaque source data fingerprint, sharing repeated raw type subtrees. -/
-def compactIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
-    MetaM (Except String (String × Nat)) := do
-  let (erased, work) ← eraseProofs e fuel
-  return (compactRawIdentity params erased (fuel - work)).map fun (identity, cost) =>
-    (identity, cost + work)
+def eraseProofs (e : Expr) (fuel : Nat := 524288) : MetaM (Expr × Nat) :=
+  evidenceQuery (CompiledEvidence.eraseProofs e fuel)
 
-/-- The forward bridge is recognized by its type name, without importing content
-into the finite seal closure. Both bridges retain the exact statement check. -/
-def escapeForwardBridge : Name :=
-  `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization
+def compactIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) : MetaM (Except String (String × Nat)) :=
+  evidenceQuery (CompiledEvidence.compactIdentity params e fuel)
 
-def escapeWitnessBridge : Name := RegistrationElaboration.witnessBridgeName
+def statementDefinitions (statement : Expr) : MetaM (Array Name) :=
+  evidenceQuery (CompiledEvidence.statementDefinitions statement)
 
-def bridgeKind (event : TemplateOccurrenceEvent) : MetaM String := do
-  let type := (← getConstInfo event.realizationName).type
-  return if type.isAppOfArity
-      `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration 2 then "source-equivalence"
-    else if type.isAppOfArity escapeWitnessBridge 3 then "witness"
-    else if type.isAppOfArity escapeForwardBridge 3 then "forward" else "legacy"
+def statementContainsOrigin (statement origin : Expr) : MetaM (Bool) :=
+  evidenceQuery (CompiledEvidence.statementContainsOrigin statement origin)
 
-/-- Only closed, zero-parameter Prop definitions occurring in the original
-statement qualify. A definition discovered in one of their bodies is not visited. -/
-def statementDefinitions (statement : Expr) : MetaM (Array Name) := do
-  let originalNames := statement.getUsedConstants
-  let (statement, _) ← eraseProofs statement
-  let mut names := #[]
-  for name in statement.getUsedConstants do
-    unless originalNames.contains name do continue
-    if let .defnInfo info ← getConstInfo name then
-      if info.levelParams.isEmpty && (← RegistrationGates.bounded (isDefEq info.type (mkSort .zero))) &&
-          !info.value.hasFVar && !info.value.hasMVar && !info.value.hasLooseBVars then
-        names := names.push name
-  return names
+def inspectionRoots (event : TemplateOccurrenceEvent) : MetaM (Array Name) :=
+  evidenceQuery (CompiledEvidence.inspectionRoots event)
 
-private partial def bodyContainsOrigin (body origin : Expr) (depth : Nat := 0) : MetaM Bool := do
-  if depth > 256 then throwError "incomplete_closure:dtr.statement_depth"
-  if ← isProof body then return false
-  if body.equal origin then return true
-  let child := fun e => bodyContainsOrigin e origin (depth + 1)
-  match body with
-  | .app f a => return (← child f) || (← child a)
-  | .lam name type body bi | .forallE name type body bi =>
-    if ← child type then return true
-    withLocalDecl name bi type fun x => child (body.instantiate1 x)
-  | .letE name type value body _ =>
-    if (← child type) || (← child value) then return true
-    withLetDecl name type value fun x => child (body.instantiate1 x)
-  | .mdata _ body | .proj _ _ body => child body
-  | _ => return false
+def inspectionDependencies (event : TemplateOccurrenceEvent) : MetaM (Array Name) :=
+  evidenceQuery (CompiledEvidence.inspectionDependencies event)
 
-def statementContainsOrigin (statement origin : Expr) : MetaM Bool := do
-  if (statement.find? (·.equal origin)).isSome then return true
-  for name in ← statementDefinitions statement do
-    let .defnInfo info ← getConstInfo name | continue
-    if ← RegistrationGates.budget (bodyContainsOrigin info.value origin) then return true
-  return false
+def bridgeKind (event : TemplateOccurrenceEvent) : MetaM (String) :=
+  evidenceQuery (CompiledEvidence.bridgeKind event)
 
-/-- Semantic inputs used outside template extraction must also bind evidence
-and its cache. These are names only; the content module is never imported here. -/
-def inspectionRoots (event : TemplateOccurrenceEvent) : MetaM (Array Name) := do
-  let mut roots ← statementDefinitions event.statement
-  if (← bridgeKind event) == "witness" then
-    roots := roots ++ event.arena.getUsedConstants
-    let type := (← getConstInfo event.realizationName).type
-    roots := roots ++ (← statementDefinitions type.getAppArgs[1]!)
-    let arena := RegistrationElaboration.witnessArenaName
-    roots := roots ++ (#["Domain", "predicate", "embed", "decision", "check", "signature",
-      "Law", "realization", "constantTrue", "toPrimitiveLawArena", "toArena"].map arena.str)
-    roots := roots ++ #[escapeWitnessBridge, escapeWitnessBridge.str "toTheoremUnit"]
-  return roots
+def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInput) : MetaM (EscapeRecordEvidence) :=
+  evidenceQuery (CompiledEvidence.checkEscapeRecord event input)
 
-/-- Retain the inspected definitions and their repository data/type closure,
-including Interface records and Reg support at their compiler source owners.
-Proof leaves contribute their types only; upstream data bodies remain pinned
-by the existing native/source checks. -/
-def inspectionDependencies (event : TemplateOccurrenceEvent) : MetaM (Array Name) := do
-  let mut pending := (← inspectionRoots event).toList
-  let mut seen : NameSet := {}
-  let mut remaining := 524288
-  while let name :: rest := pending do
-    pending := rest
-    if name == ``lcProof || seen.contains name then continue
-    if remaining == 0 then throwError "incomplete_closure:dtr.inspection_inputs"
-    remaining := remaining - 1
-    seen := seen.insert name
-    let info ← getConstInfo name
-    let owner := (RegistrationReifier.declaringModuleOf (← getEnv) name).getD (← getEnv).header.mainModule
-    let (type, work) ← eraseProofs info.type remaining
-    remaining := remaining - work
-    pending := type.getUsedConstants.toList ++ pending
-    if Repository.isModule owner && !(← isProp info.type) then
-      if let some value := info.value? then
-        let (value, work) ← eraseProofs value remaining
-        remaining := remaining - work
-        pending := value.getUsedConstants.toList ++ pending
-  return seen.toArray
+def rawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) : MetaM (Except String (String × Nat)) :=
+  evidenceQuery (CompiledEvidence.rawIdentity params e fuel)
 
-private def escapeIdentity (params : List Name) (value : Expr) : MetaM String := do
-  let .ok (identity, _) := rawStatementIdentity params value
-    | throwError "incomplete_closure:dtr.escape_identity"
-  return identity
+def escapeForwardBridge : Name := CompiledEvidence.escapeForwardBridge
 
-/-- This check consumes only names, expression occurrence, and kernel types.
-No state, chain, certificate body, or residual count is evaluated. -/
-def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInput) :
-    MetaM EscapeRecordEvidence := do
-  let kind ← bridgeKind event
-  if kind == "source-equivalence" then
-    let continuation : Option EscapeContinuationIdentity :=
-      if input.openContinuation then some { kind := "open" } else none
-    return { bridgeKind := kind, continuation }
-  if kind == "witness" && event.compiledMathematics.isNone then
-    let type := (← getConstInfo event.realizationName).type
-    discard <| RegistrationGates.witnessStatement event.arena type.getAppArgs[1]! event.key.theoremName
-  -- Structural registrations without escape slots do not consume a finite arena.
-  if input.fromObject.isNone && input.continuation.isNone then
-    let continuation := if input.openContinuation then
-      some ({ kind := "open" } : EscapeContinuationIdentity) else none
-    return { bridgeKind := kind, continuation }
-  let normalized ← RegistrationElaboration.normalizeArena event.arena
-  let arena := normalized.finite
-  let fromObject ← input.fromObject.mapM fun origin => do
-    unless ← statementContainsOrigin event.statement origin do
-      throwError "unclassified_form:dtr.escape_from_absent"
-    let some name := origin.getAppFn.constName?
-      | throwError "unclassified_form:dtr.escape_from_identity"
-    if origin.hasFVar || origin.hasMVar || origin.hasLooseBVars then
-      throwError "unclassified_form:dtr.escape_from_identity"
-    let type ← inferType origin
-    let state ← if normalized.witness then
-        mkAppM (RegistrationElaboration.witnessArenaName.str "Domain") #[normalized.original]
-      else match normalized.domain with
-        | some domain => pure domain
-        | none => mkAppM `D5.S3.ConceptDynamics.InformationEscape.Arena.State #[arena]
-    let represented := if ← isType origin then origin else type
-    unless ← isDefEq represented state do
-      throwError "unclassified_form:dtr.escape_from_state"
-    let typeIdentity ← escapeIdentity event.levelParams type
-    let objectIdentity ← escapeIdentity event.levelParams origin
-    return (⟨name, typeIdentity, objectIdentity⟩ : EscapeFromIdentity)
-  let continuation ← if input.openContinuation then
-      if input.continuation.isSome then throwError "unclassified_form:dtr.escape_continues_kind"
-      pure <| some { kind := "open" : EscapeContinuationIdentity }
-    else input.continuation.mapM fun value => do
-      let .const declarationName levels := value
-        | throwError "unclassified_form:dtr.escape_continues_named_certificate"
-      let info ← getConstInfo declarationName
-      unless levels.length == info.levelParams.length do
-        throwError "unclassified_form:dtr.escape_continues_named_certificate"
-      let type ← inferType value
-      let kind ← if type.isAppOfArity
-          `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapeResidualWitness 2 then
-          pure "witness"
-        else if type.isAppOfArity
-          `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapeResidualEmpty 2 then
-          pure "empty"
-        else throwError "unclassified_form:dtr.escape_continues_kind"
-      let args := type.getAppArgs
-      let chain := args[1]!
-      let .const chainName _ := chain
-        | throwError "unclassified_form:dtr.escape_continues_named_chain"
-      let chainType ← inferType chain
-      unless chainType.isAppOfArity `D5.S3.ConceptDynamics.InformationEscape.LayerChain 1 &&
-          (← isDefEq args[0]! arena) && (← isDefEq chainType.appArg! arena) do
-        throwError "unclassified_form:dtr.escape_continues_arena"
-      if kind == "witness" then
-        let membership ← mkAppM
-          `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapeResidualWitness.unresolved #[value]
-        unless ← isProof membership do throwError "unclassified_form:dtr.escape_continues_membership"
-        unless (← inferType membership).isAppOf ``Membership.mem do
-          throwError "unclassified_form:dtr.escape_continues_membership"
-      else unless ← isProof value do throwError "unclassified_form:dtr.escape_continues_kind"
-      let statementIdentity ← escapeIdentity info.levelParams info.type
-      return (⟨kind, some declarationName, some statementIdentity, some chainName⟩ :
-        EscapeContinuationIdentity)
-  return { fromObject, continuation, bridgeKind := (← bridgeKind event) }
-
-/-- Typed identity stops at each proof and serializes its proposition instead.
-The pure wire encoder is exposed separately for synthetic encoding tests. -/
-def rawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
-    MetaM (Except String (String × Nat)) := do
-  let (erased, work) ← eraseProofs e fuel
-  return (erasedSyntaxIdentity params erased (fuel - work)).map fun (identity, bytes) =>
-    (identity, work + bytes)
+def escapeWitnessBridge : Name := CompiledEvidence.escapeWitnessBridge
 
 private abbrev HashWorker := IO.Process.Child {
   stdin := .piped, stdout := .piped, stderr := .null }
