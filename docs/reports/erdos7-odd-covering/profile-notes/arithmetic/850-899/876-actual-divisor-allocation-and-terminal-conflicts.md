@@ -642,6 +642,74 @@ old-bank version supplies the same witness x outside every old
 output, and at least one actual q-bearing original covers x before
 stripping q.
 
+## A small family of incompatible cofactor classes can be kept in the old bank
+
+Retain the actual minimal-cover, no27, nine-bearing and q-bearing
+hypotheses of DA22, with q at least 28. Select at most nineteen
+actual q-bearing originals. For each selected original choose a
+positive cofactor m_i with q*m_i dividing its original numerical
+modulus, and keep that original's literal residue a_i. Assume m_i
+has at least twelve distinct prime factors other than three.
+The selected phases need not agree with each other. These twelve
+prime factors need not lie in the palette's pool P; that pool
+restricts only the later palette-match count.
+
+Choose twelve such primes S_i. Products of zero, one, two or three
+members of S_i give a numerical donor bank of size
+
+$$
+1+\binom{12}{1}+\binom{12}{2}+\binom{12}{3}=299.
+\tag{DA23}
+$$
+
+Unique prime factorization makes these products distinct, including
+the empty product one. There are at most 19*15=285 demands, one for
+each selected original and each safe root modulo 27. Each demand
+has 299 available donors. The existing finite matching theorem
+therefore chooses a distinct numerical donor for every demand:
+for any nonempty demand subset, its union contains one whole
+299-element list, more than the total number of demands.
+
+For demand (i,v), give its chosen donor d the CRT output
+
+$$
+x\equiv v\pmod{27},\qquad x\equiv a_i\pmod d.
+\tag{DA24}
+$$
+
+Because d divides m_i, this covers every point of the entire
+cofactor class [a_i] modulo m_i at that safe root. Donors are
+coprime to three, and numerical labels 27d are distinct. Every
+q*d divides an actual original and is a nonunit, so actual divisor
+closure supplies the corresponding original label. These outputs
+form an admissible old bank for DA22, with zero cofactors having
+four or more distinct prime factors. Full all-q deletion pays for
+that bank by DA16. Unused donors may receive arbitrary residues;
+the same full-bank payment includes them.
+
+Consequently, for any one fixed binary palette on the stated prime
+pool, DA22 supplies one actual residual point x which simultaneously
+lies outside all nineteen selected cofactor classes and has at most
+eleven palette matches in every serving q-stripped original. The
+point is safe because it avoids the actual pure 3 and 9 originals.
+If it belonged to one selected cofactor class, DA24 would put it in
+an old output, contradicting the same witness's avoidance of the
+old bank.
+
+This applies to incompatible literal phases and does not identify
+cofactor projection with the original stripped trace. When the
+original modulus is 3^r*q*m_i, the whole cofactor cylinder can be
+larger than that trace; the construction covers this larger cylinder
+at all safe roots. In particular, a family of at most nineteen such
+cylinders cannot cover the exact residual E_q. No existence of a
+nineteen-cylinder subcover of E_q has been proved.
+
+The argument is an application of the existing finite matching,
+prime-product, CRT and actual old-bank results. It supplies a
+stronger interface consequence, not a new matching theorem.
+The shared construction and the actual same-point specialization
+compile with standard axioms and default proof budgets.
+
 ## Verification and the remaining global obligation
 
 Scoped exact Lean checks cover the actual two-prime incidence
