@@ -239,6 +239,157 @@ right has an output whose old word, next digit or cofactor phase
 fails at x. Changing that output to serve x can uncover points
 previously served by it. DA8 provides no such reassignment.
 
+## A common literal phase bounds incidence across every row
+
+There is an actual-source capacity bound that does not fix an old
+word or ternary row. Let F be count-then-sum minimal, let q be at
+least 28, and assume no original modulus is divisible by 27.
+Retain actual originals of moduli 3 and 9 whose residue classes
+are disjoint. Let d be positive, odd and coprime to three, with
+at least fifteen distinct divisors. Select distinct originals with
+q*d dividing each modulus and one common literal residue beta
+modulo d. Then
+
+$$
+\#\{\text{selected originals}\}\le14.
+\tag{DA9}
+$$
+
+Indeed, if fifteen such originals existed, delete exactly those
+fifteen and retain every other original. The retained 3/9 guards
+leave five safe words modulo nine, hence fifteen safe roots modulo
+27. Assign a different divisor t of d to each safe root v, using
+the CRT output x congruent to v modulo 27 and to beta modulo t.
+Every point in the simultaneous deletion hole avoids the retained
+guards and is congruent to beta modulo d, so one of these fifteen
+outputs contains it. Their moduli 27t are distinct, odd nonunits
+and fresh. Their sum is at most 405d, whereas the deleted sum is
+at least 15qd, strictly larger for q at least 28. This contradicts
+sum minimality at the same class count.
+
+The selected originals cannot be the retained guards: q*d at least
+28 divides their moduli. The proof needs neither a q-height-one
+condition nor divisor closure of an inventory. Divisor closure is
+still needed when these divisors are later claimed to belong to
+the paid bank P0. The pure label 27 is legal in this proof-only
+replacement; this argument reserves no label for a later repair.
+
+In particular, fix four distinct primes different from three and
+one phase at each. Among actual originals labelled
+3^(a_i)*q*m_i, at most fourteen can have all four primes dividing
+m_i and matching all four phases. Their product d has sixteen
+distinct subset-product divisors. The common phase modulo d is
+derived by CRT from one actual owner's residue; it is not a
+separately chosen joint realization. Choose fifteen of those
+divisors and apply DA9. Both DA9 and this four-prime supplier have
+exact Lean checks with standard axioms. They count every row,
+old word and q-color together.
+
+For comparison, a one-word lower-row exchange has a smaller bound.
+If the selected moduli are divisible by 3*q*d, share one word
+modulo three and one phase modulo d, and d has eight distinct
+divisors, then their number is at most ten for q at least fourteen.
+Eight outputs of the form 27t cover eight of the nine extensions
+of that word; three outputs 81t cover the last extension. Numerical
+labels are distinct within and across heights, and all are fresh
+under no27. Their sum is at most 459d, below the sum of eleven
+deleted originals, at least 33qd. This bound also has an exact
+actual-source Lean check. It does not replace the across-all-rows
+bound DA9.
+
+## Ten matching primes supply fifteen globally distinct donors
+
+Under DA9's actual-cover and guard assumptions, suppose every
+selected owner has at least ten distinct primes different from
+three matching one fixed phase table. Choose ten such primes per
+owner and take all products of four of them. Unique factorization
+gives exactly 210 different numerical donors in each bank. Each
+donor belongs to at most fourteen owner banks by the checked
+four-prime incidence bound.
+
+Replace each owner by fifteen copies. Every copy still has 210
+candidates, and each donor is incident with at most 14*15=210
+copies. Applying `NikolovSegal.finite_degree_matching` gives one
+injection from I times Fin15 into the numerical donors, with each
+chosen donor dividing its owner's cofactor and retaining four
+matching prime factors. This entire actual-source application has
+a scoped Lean check with standard axioms, including its stock
+and global incidence suppliers. It needs no common old word,
+q-color, q-height-one or bound on the total prime pool.
+
+Fifteen donors suffice for the five-word, three-child signature
+slots of a lower owner. The injection proves the simultaneous
+allocation step; full CRT trace coverage, membership in P0 and a
+selected family covering all E0 remain further obligations. Neither
+the fifteen-donor count nor the matching theorem alone proves
+those source conditions.
+
+## Published polychromatic coloring supplies a conditional route
+
+Theorem 3 of Erdos and Lovasz, *Problems and results on 3-chromatic
+hypergraphs and some related questions*, Infinite and Finite Sets II,
+609--627, states that an r-uniform hypergraph admits a k-coloring
+with every color on every edge when each edge meets at most
+k^(r-1)/(4*(k-1)^r) other edges. Neither linearity nor a simple
+intersection condition is required. Its proof applies the local
+lemma to the event that an edge misses some color. The original
+statement and proof are available in the
+[author's paper archive](https://users.renyi.hu/~p_erdos/1975-34.pdf).
+
+Under the same actual-cover and guard assumptions, fix one root
+table and choose eight matching primes per actual owner. Use as
+its candidate numerical donors all products of four
+through seven of these primes. Each bank has
+
+$$
+\binom84+\binom85+\binom86+\binom87=162
+\tag{DA10}
+$$
+
+members. If another bank meets it, the shared product contains a
+four-prime subset of the first owner's eight primes. For each of
+the seventy such subsets, the actual four-prime bound allows at
+most thirteen other owners. Thus the edge-intersection degree is
+at most 910. The exact integer inequality
+
+$$
+4\cdot15\cdot910\cdot14^{162}<15^{162}
+\tag{DA11}
+$$
+
+meets the published criterion for fifteen colors. Interpret a color
+as one of five safe old words and three child digits. Each numerical
+donor receives one color and the cofactor phase prescribed by the
+same root table. Each owner's entire safe stripped trace then has
+a containing output at every required word and child. Selecting
+one witness per required color per owner and coalescing shared
+outputs uses at most fifteen times the number of owners. A proper
+subset product omits a prime of size at least five, so the output
+sum is at most 81*sum_i m_i. The global all-q deletion budget applies
+when the used donors lie in P0; deleting just the selected owners
+does not in general pay that output count.
+
+The actual incidence supplier and the finite uniform-coloring
+application have exact Lean checks. The latter constructs the
+uniform law on colorings, proves independence from every collection
+of nonneighbor events by splitting disjoint coordinate sets, and
+bounds the missing-color probability by a union bound. It directly
+applies an existing finite symmetric local-lemma formalization in the pinned
+[atlas-lean source](https://github.com/facebookresearch/atlas-lean/blob/0b121a198307b6153181f5a1d9145dcda2f7bfee/MathlibExt/Probability/Combinatorics/LovaszLocalLemma.lean),
+using its exp(1)*p*(D+1) criterion. The exact fifteen-color,
+162-candidate, degree-910 instance also compiles, using exp(1)<3
+and rational arithmetic. The general adapter allows indexed finite
+banks of size at least the threshold; equal bank sizes and linearity
+are not required. The combined arithmetic-bank-to-CRT repair chain
+is not yet presented as one completed Lean proof. No new proof of
+the local lemma is claimed.
+
+Even a complete eight-match sector repair would not prove that
+its selected source traces cover E0. That source-wide implication
+remains missing. One cannot replace a fixed root table by a new
+table at each uncovered point and then unite the incompatible
+assignments of shared numerical donors.
+
 ## Verification and the remaining global obligation
 
 Scoped exact Lean checks cover the actual two-prime incidence

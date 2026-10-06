@@ -352,6 +352,82 @@ repair exists: even one composite packet with exactly three divisors
 has the explicit three-child assignment above while its uniform
 symmetric local-lemma test fails.
 
+## A finite semiprime family has no shared repair in its divisor bank
+
+Consider six packets, all with old word zero modulo nine. Their
+cofactors and literal residues are, in corresponding order,
+
+$$
+(m_i)=(35,77,55,65,221,85),\qquad
+(a_i)=(36,441,396,495,936,0).
+\tag{CC14}
+$$
+
+The packet for i consists of every integer x congruent to zero
+modulo nine and to a_i modulo m_i. All cofactors are products of
+two distinct primes from {5,7,11,13,17}. Their full divisor union is
+
+$$
+B=\{1,5,7,11,13,17,35,77,55,65,221,85\}.
+\tag{CC15}
+$$
+
+There is no assignment of one arbitrary residue to each modulus
+27d, d in B, covering the entire union of these six packets.
+This includes assignments using a smaller subbank, since arbitrary
+additional outputs could extend any such assignment to all of B.
+
+First consider a whole-child assignment. For each semiprime packet,
+the unit and its own composite divisor can serve at most two of the
+three children. At least one prime endpoint must therefore have
+the packet's literal phase. The first three packets force the phase
+at prime five to be one modulo five: otherwise their successive endpoint
+requirements force incompatible phases at seven and eleven. The
+last three similarly force the phase at five to be zero modulo five. This is
+impossible even when the phase functions range over all natural
+numbers, rather than just binary phases.
+
+Partial intersections do not evade this obstruction for this bank.
+For each packet, the relative upper density contributed by the
+nondivisor donors is
+
+$$
+\sum_{d\in B,\ d\nmid m_i}\frac{\gcd(m_i,d)}d
+\in
+\left\{
+\frac{1334}{2431},\frac{848}{1105},\frac{1090}{1547},
+\frac{860}{1309},\frac{344}{385},\frac{712}{1001}
+\right\},
+\tag{CC16}
+$$
+
+in the order of CC14, and each value is less than one. Parameterize
+one packet-child progression by x=a+27m_i*t. A donor with d not
+dividing m_i intersects it in either the empty set or one congruence
+class of t modulo d/gcd(m_i,d). If no divisor donor contains this
+entire child, the public covering-system reciprocal-sum bound and
+CC16 prohibit the remaining intersections from covering every t.
+Thus a full union cover would supply the impossible whole-child
+assignment. Exact Lean checks reuse
+`CoveringSystem.sum_reciprocal_moduli_ge_one` and integer congruence
+cancellation; the density theorem is not reproved.
+
+The prime-pair graph of these actual numerical products consists of
+two triangles sharing the vertex five. It is four-clique-free,
+every induced subgraph satisfies 2E at most 3V, and an explicit
+three-coloring exists. Every composite donor in B serves at most
+one packet. These properties also have finite Lean checks. Hence
+those graph and composite-incidence conditions alone do not imply
+a compatible literal repair.
+
+This is a packet-interface obstruction with the fixed bank CC15
+and fixed output height three. It is not an actual whole odd
+covering system, not a counterexample for the unchanged source E0,
+and not an obstruction to using extra donors or other heights.
+The packets have only two prime factors each and incompatible
+root phases, so the result does not contradict Report875's
+common-root, three-matching-prime construction.
+
 ## Verification and remaining obligation
 
 The 84/29 source-slot count and the three-packet bound under five

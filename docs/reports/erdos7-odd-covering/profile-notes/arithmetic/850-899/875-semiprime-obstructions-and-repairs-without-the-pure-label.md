@@ -429,10 +429,31 @@ standard axioms. This finite check alone does not supply the actual
 
 The scalar implication from 6k at most 7*27, v at most 27,
 B=k+v and capture less than B to k at most 31, B at most 58 and
-capture at most 57 also compiles. This does not verify
-the complete supplier chain for KR5--KR8. In particular the published
-three-colorability input, the nine-color refinement, the full fixed
-CRT repair and simultaneous composition are not presented as one
-end-to-end Lean proof. Neither the checked density-to-selection
-bridge nor the finite counts supply a source-covering global phase
-assignment.
+capture at most 57 also compiles. The three-matching-prime case has
+a full actual-source Lean check through the fixed CRT repair. It
+uses the canonical hereditary-sparse, four-clique-free three-coloring
+theorem, which reuses the published subcubic Brooks formalization.
+Hereditary average degree is not substituted for maximum degree:
+low-degree vertices are removed inductively, and the degree sum
+forces the remaining minimum-degree-three graph to be cubic.
+
+For arbitrary h and q at least seven, this application starts with
+the actual minimal cover, injective selected original slots with
+labels 3^h*q*m_i, one common old word, no original divisible by
+3^(h+1), and at least three matching primes per owner for one fixed root
+table. It returns one family indexed by the used primes and the
+selected owners, with distinct fresh odd nonunit labels and full
+coverage of the selected q-stripped union. Its count is k+v, with
+v at most both the prime-pool cardinality and 2k, and its sum is
+at most 6*3^h*sum_i m_i. The sum is strictly below the selected
+old sum when k is positive. Empty selected families are allowed;
+unused primes in the pool impose no extra oddness or coprimality
+premises. All arithmetic properties of used labels come from their
+actual owner divisibility. The check uses only standard axioms.
+
+The exceptional two-matching-prime repair, the nine-color refinement
+and simultaneous composition are not presented as one end-to-end
+Lean proof. The checked three-hit repair also does not pay k+v
+outputs against only k deletions or supply a source-covering global
+phase assignment. Full E0 coverage and its global count payment
+remain separate obligations.
