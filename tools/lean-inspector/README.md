@@ -54,8 +54,8 @@ absent and unsupported constructors keep arbitrary actual indices representable.
 The production judge discovers typed declarations in compiler inventories. It decodes
 constructor trees and constant references, independently of source syntax,
 modifiers, suffixes, options, notation or metaprogramming commands. A value
-requiring computation fails by name as `raw.contract.cannot_decode` or the
-field-specific `contract.literal` diagnostic. Missing compiled declarations and
+requiring computation fails by name as `contract.decode_failed:<owner>:<declaration>:<reason>`,
+including the field-specific `contract.literal` diagnostic. Missing compiled declarations and
 unknown constructor layouts fail without a fallback.
 
 The interface inventory checks compiled contract types and compiler-generated
@@ -278,4 +278,4 @@ views, never installed declarations. Computing compiled expression shapes and fi
 an otherwise computed top-level contract input. Raw terms never execute code or acquire kernel authority.
 Report reuse comes only from the Lake trace and the single semantic version.
 
-`STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和逐模块的编译输入处理；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。
+`STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和 `assess` 的实际模块工作；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。
