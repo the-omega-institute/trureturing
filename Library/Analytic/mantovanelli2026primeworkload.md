@@ -135,3 +135,69 @@ with an existing unconditional PNT error supplier, then yields a shrinking
 necessary relative-width rate. These are restrictions on this sufficient
 certificate, not a successful actual packet, an endpoint sign theorem,
 an effective starting threshold, or a solution of §12's `prob:low-moment`.
+
+## The remaining signed supplier and its sampling conditions
+
+The [existing Guth–Maynard note](guthmaynard2024largevalues.md) already
+supplies the uniform short-interval input and its project applications.
+Within its stated range it applies to actual starting points without an
+exceptional-center selection step. It still gives an absolute increment
+allowance, not the signed workload surplus required by the packet
+certificate. An almost-all estimate has an additional sampling obligation:
+regular roots are locally finite, so an exceptional set of real measure
+zero can contain all of them. Their use as noninteger endogenous endpoints
+also requires the same estimate up to the chosen return, with the actual
+layer correction retained.
+
+The [Caveney–Nicolas–Sondow primary](../Arith/caveney2012sacaga.md),
+Theorems 6–7, already gives infinite CA subclasses with and without GA1.
+Its CA parameters and prime-deletion conclusions do not supply actual
+regular tangent endpoints or forward signed moments. In particular,
+Lemma 7's sufficient price inequality cannot be satisfied by directly
+substituting the tangent price; another admissible price of the same
+integer must be checked. The known $720720$ example is already covered
+by that primary and the project's §98.5, so it is not a new counterexample.
+
+For a precise arithmetic supplier target, keep the same actual packet and
+put $E(t)=A^+(t)-t$, $L=b-a$, $K=-g'$, and $B=g''$. Set
+
+$$
+Q_0=\int_a^bE(t)dt,\qquad
+Q_1=\int_a^b(t-a)E(t)dt,\qquad
+W=Q_0-\frac{B(a)}{K(a)}Q_1.
+$$
+
+In the near-uniform regime $a\to\infty$, $L=o(a)$, $Q_0=o(L^2)$ and
+$Q_1=o(L^3)$, the existing moment identities and two-node expression,
+expanded by ordinary Taylor calculus, give
+
+$$
+H_g-\overline g
+=\frac{K(a)}{L}
+\left[W-\left(\frac1{36}+o(1)\right)\frac{L^4}{a^2}\right].
+$$
+
+The first two Taylor terms are exactly $K(a)Q_0/L-B(a)Q_1/L$.
+The limiting two-node law has weights $3/4,1/4$ at normalized locations
+$1/3,1$, so its third moment is $5/18$, whereas the uniform third moment
+is $1/4$. Their difference is $1/36$; using
+$g'''(a)/K(a)=-(6+o(1))/a^2$ and the Taylor factor $1/6$ gives the term
+displayed. The fourth-order remainder is smaller by $O(L/a)$.
+This is an application of existing moment and calculus interfaces, not
+a new general moment theorem or an assertion made by the archived paper.
+
+Consequently a fixed positive surplus
+$W\ge(1/36+\epsilon_0)L^4/a^2$ on an unbounded actual family satisfying
+those regime conditions would pay this intermediate two-moment target.
+It is not established by the cited sources. Even a transferred absolute
+bound $\sup|E|\le\epsilon(a)L$ only gives
+$|W|\le\epsilon(a)L^2(1+O(L/a))$. For $L=a^\beta$, $\beta<1$, the
+short-PNT-type allowance $\epsilon(a)L^2$, with
+$\epsilon(a)=\exp[-(\log a)^{1/4}]$, remains asymptotically larger than
+$L^4/a^2$. This compares guaranteed allowances;
+it neither supplies the actual sign nor proves the packet fails.
+
+An arbitrary unbounded winning family would address the archived
+intermediate problem. Applying that family to full Robin still requires
+a selection theorem covering the relevant potentially nonpositive
+self-matching minima, without assuming those sources are safe.
