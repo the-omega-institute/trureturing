@@ -6,7 +6,14 @@
    utility: none
    digest: Signed Fibonacci transport and the common CRT label at five-power moduli. -/
 
-import Mathlib
+import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+import Mathlib.LinearAlgebra.Eigenspace.Basic
+import Mathlib.Algebra.GCDMonoid.Nat
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.LinearCombination
+import D5.S0.Carrier.Units
 import D5.S3.Arith.GoldenPrimePowerOrder
 import D5.S3.Arith.GoldenFibonacciModulusPeriod
 
@@ -56,7 +63,9 @@ def vectorOrbit (n : ℕ) (v : Vec n) : Set (Vec n) :=
   {w | ∃ A : transportGroup n, (A.val : Mat n) *ᵥ v = w}
 
 private theorem reflection_square (n : ℕ) : transportJ n ^ 2 = 1 := by
+  rw [pow_two]
   apply Units.ext
+  change (transportJ n).val * (transportJ n).val = 1
   exact (transportJ n).val_inv
 
 private theorem reflection_transport (n : ℕ) :
@@ -70,19 +79,19 @@ private theorem reflection_axis :
     (transportJ 59 : Mat 59) *ᵥ ![1, 26] = ![1, 34] := by
   ext i
   fin_cases i <;>
-    norm_num [transportJ, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+    norm_num [transportJ, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> decide
 
 private theorem first_axis :
     (transportG 59 : Mat 59) *ᵥ ![1, 26] = (25 : ZMod 59) • ![1, 26] := by
   ext i
   fin_cases i <;>
-    norm_num [transportG, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+    norm_num [transportG, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> decide
 
 private theorem second_axis :
     (transportG 59 : Mat 59) *ᵥ ![1, 34] = (33 : ZMod 59) • ![1, 34] := by
   ext i
   fin_cases i <;>
-    norm_num [transportG, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+    norm_num [transportG, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> decide
 
 private theorem coprime_five_power_twenty_nine (a : ℕ) :
     Nat.Coprime (5 ^ a) 29 := by
@@ -119,6 +128,270 @@ private theorem fibonacci_transport_five_power_crt_lcm (a : ℕ) :
   simp only [normalize_eq, lcm_eq_nat_lcm]
   rw [coprime_six_five_power_twenty_nine a |>.lcm_eq_mul]
   ring
+
+
+private theorem axis_power (k : ℕ) :
+    ((transportG 59 : Mat 59) ^ k) *ᵥ ![1, 26] =
+      (25 : ZMod 59) ^ k • ![1, 26] := by
+  have hv : Module.End.HasEigenvector (Matrix.toLin' (transportG 59 : Mat 59))
+      (25 : ZMod 59) ![1, 26] := by
+    refine ⟨?_, ?_⟩
+    · rw [Module.End.mem_eigenspace_iff]
+      exact first_axis
+    · intro hz
+      have h := congrFun hz 0
+      exact (by decide : (1 : ZMod 59) ≠ 0) (by simpa using h)
+  simpa only [← Matrix.toLin'_pow, Matrix.toLin'_apply, Matrix.mulVecLin_apply]
+    using hv.pow_apply k
+
+private theorem second_axis_power (k : ℕ) :
+    ((transportG 59 : Mat 59) ^ k) *ᵥ ![1, 34] =
+      (33 : ZMod 59) ^ k • ![1, 34] := by
+  have hv : Module.End.HasEigenvector (Matrix.toLin' (transportG 59 : Mat 59))
+      (33 : ZMod 59) ![1, 34] := by
+    refine ⟨?_, ?_⟩
+    · rw [Module.End.mem_eigenspace_iff]
+      exact second_axis
+    · intro hz
+      have h := congrFun hz 0
+      exact (by decide : (1 : ZMod 59) ≠ 0) (by simpa using h)
+  simpa only [← Matrix.toLin'_pow, Matrix.toLin'_apply, Matrix.mulVecLin_apply]
+    using hv.pow_apply k
+
+private theorem scalar_order_twenty_five : orderOf (25 : ZMod 59) = 29 := by
+  haveI : Fact (Nat.Prime 29) := ⟨by decide⟩
+  apply orderOf_eq_prime
+  · decide
+  · decide
+
+private theorem scalar_power_ne_negative_one (k : ℕ) :
+    (25 : ZMod 59) ^ k ≠ -1 := by
+  intro h
+  have ht : (25 : ZMod 59) ^ 29 = 1 := by
+    rw [← scalar_order_twenty_five]
+    exact pow_orderOf_eq_one _
+  have hp : ((25 : ZMod 59) ^ k) ^ 29 = 1 := by
+    rw [← pow_mul, Nat.mul_comm, pow_mul, ht, one_pow]
+  rw [h] at hp
+  norm_num at hp
+  exact (by decide : (-1 : ZMod 59) ≠ 1) hp
+
+private theorem signed_axis_stabilizer (ε : ZMod 59) (k : ℕ)
+    (hε : ε = 1 ∨ ε = -1)
+    (hfix : ε • (((transportG 59 : Mat 59) ^ k) *ᵥ ![1, 26]) = ![1, 26]) :
+    ε = 1 ∧ 29 ∣ k := by
+  rw [axis_power] at hfix
+  have hc : ε * (25 : ZMod 59) ^ k = 1 := by
+    simpa using congrFun hfix 0
+  rcases hε with hε | hε
+  · refine ⟨hε, ?_⟩
+    rw [hε, one_mul] at hc
+    rw [← scalar_order_twenty_five]
+    exact orderOf_dvd_of_pow_eq_one hc
+  · exfalso
+    rw [hε, neg_one_mul] at hc
+    apply scalar_power_ne_negative_one k
+    exact neg_eq_iff_eq_neg.mp hc
+
+private theorem reflection_outside_signed_axis (ε : ZMod 59) (k : ℕ) :
+    (transportJ 59 : Mat 59) *ᵥ ![1, 26] ≠
+      ε • (((transportG 59 : Mat 59) ^ k) *ᵥ ![1, 26]) := by
+  rw [reflection_axis, axis_power]
+  intro h
+  have h0 : (1 : ZMod 59) = ε * 25 ^ k := by
+    simpa using congrFun h 0
+  have h1 : (34 : ZMod 59) = ε * (25 ^ k * 26) := by
+    simpa using congrFun h 1
+  rw [← mul_assoc, ← h0, one_mul] at h1
+  exact (by decide : (34 : ZMod 59) ≠ 26) h1
+
+/-- A matrix commuting with transport and fixing its cyclic basis vector is identity. -/
+private theorem fixed_cyclic_vector (n : ℕ) (A : Mat n)
+    (hc : A * (transportG n : Mat n) = (transportG n : Mat n) * A)
+    (hv : A *ᵥ ![1, 0] = ![1, 0]) : A = 1 := by
+  have h0 : A 0 0 = 1 := by
+    simpa [Matrix.mulVec, dotProduct, Fin.sum_univ_two] using congrFun hv 0
+  have h1 : A 1 0 = 0 := by
+    simpa [Matrix.mulVec, dotProduct, Fin.sum_univ_two] using congrFun hv 1
+  have h01 := congrArg (fun M : Mat n => M 0 0) hc
+  have h11 := congrArg (fun M : Mat n => M 1 0) hc
+  simp [transportG, Matrix.mul_apply, Fin.sum_univ_two, h0, h1] at h01 h11
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [h0, h1, h01, h11]
+
+
+open D5.S3.Arith.GoldenApparition
+open D5.S3.Arith.GoldenFibonacciModulusPeriod
+
+private theorem transport_order_eq_golden (n : ℕ) :
+    orderOf (transportG n) = orderOf (GoldenMod.phi : GoldenMod n) := by
+  let u := Units.map (GoldenMod.reduce n).toMonoidHom D5.S0.Carrier.phiUnit
+  let r := Matrix.reindexRingEquiv (ZMod n) (Equiv.swap (0 : Fin 2) 1)
+  let f := r.toMonoidHom.comp (goldenMatrixHom n).toMonoidHom
+  have hi : Function.Injective (goldenMatrixHom n) := by
+    intro x y h
+    apply GoldenMod.ext
+    · simpa [goldenMatrixHom, multiplicationMatrix] using
+        congrArg (fun M : Mat n => M 1 1) h
+    · simpa [goldenMatrixHom, multiplicationMatrix] using
+        congrArg (fun M : Mat n => M 0 1) h
+  have hfi : Function.Injective f := r.injective.comp hi
+  have hg : f (u⁻¹ : (GoldenMod n)ˣ) = (transportG n : Mat n) := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [f, r, u, transportG, Matrix.reindexRingEquiv, Matrix.reindex,
+        goldenMatrixHom, multiplicationMatrix, GoldenMod.reduce,
+        D5.S0.Carrier.phiUnit, D5.S0.Carrier.conj, D5.S0.Carrier.phi]
+  calc
+    orderOf (transportG n) = orderOf (transportG n : Mat n) := orderOf_units.symm
+    _ = orderOf (u⁻¹ : (GoldenMod n)ˣ) := by
+      rw [← hg, orderOf_injective f hfi, orderOf_units]
+    _ = orderOf u := orderOf_inv u
+    _ = orderOf (GoldenMod.phi : GoldenMod n) := by
+      rw [← orderOf_units]
+      congr 1
+      apply GoldenMod.ext <;>
+        simp [u, GoldenMod.reduce, D5.S0.Carrier.phi, GoldenMod.phi]
+
+private theorem golden_twentieth (n : ℕ) :
+    (GoldenMod.phi : GoldenMod n) ^ 20 =
+      1 + ((5 : ℕ) : GoldenMod n) *
+        (⟨((836 : ℤ) : ZMod n), ((1353 : ℤ) : ZMod n)⟩ : GoldenMod n) := by
+  have h := congrArg (GoldenMod.reduce n)
+    (D5.S1.Scale.golden_phi_pow_eq_fib_pair 19)
+  have hp : GoldenMod.reduce n D5.S0.Carrier.phi = GoldenMod.phi := by
+    apply GoldenMod.ext <;>
+      simp [GoldenMod.reduce, D5.S0.Carrier.phi, GoldenMod.phi]
+  rw [map_pow, hp] at h
+  apply GoldenMod.ext
+  · have hh := congrArg GoldenMod.a h
+    norm_num [GoldenMod.reduce, Nat.fib] at hh
+    simp only [GoldenMod.a_add, GoldenMod.a_one, GoldenMod.a_mul,
+      GoldenMod.a_natCast, GoldenMod.b_natCast]
+    norm_num
+    exact hh
+  · have hh := congrArg GoldenMod.b h
+    norm_num [GoldenMod.reduce, Nat.fib] at hh
+    simp only [GoldenMod.b_add, GoldenMod.b_one, GoldenMod.b_mul,
+      GoldenMod.a_natCast, GoldenMod.b_natCast]
+    norm_num
+    exact hh
+
+private theorem golden_order_mod_five : orderOf (GoldenMod.phi : GoldenMod 5) = 20 := by
+  apply orderOf_eq_of_pow_and_pow_div_prime (by decide : 0 < 20)
+  · decide
+  · intro p hp hd
+    have hcases : p = 2 ∨ p = 5 := by
+      have : p ∣ 4 * 5 := hd
+      rcases hp.dvd_mul.mp this with h4 | h5
+      · left
+        exact (Nat.prime_dvd_prime_iff_eq hp Nat.prime_two).mp
+          (hp.dvd_of_dvd_pow (by simpa using h4 : p ∣ 2 ^ 2))
+      · right
+        exact (Nat.prime_dvd_prime_iff_eq hp Nat.prime_five).mp h5
+    rcases hcases with rfl | rfl <;> decide
+
+private theorem golden_order_five_power (a : ℕ) (ha : 1 ≤ a) :
+    orderOf (GoldenMod.phi : GoldenMod (5 ^ a)) = 4 * 5 ^ a := by
+  have hidx : a - 1 + 1 = a := by omega
+  have hpoworder : orderOf ((GoldenMod.phi : GoldenMod (5 ^ a)) ^ 20) =
+      5 ^ (a - 1) := by
+    rw [golden_twentieth]
+    have h := D5.S3.Arith.GoldenPrimePowerOrder.golden_prime_power_order
+      (p := 5) (m := 1) (n := a - 1) Nat.prime_five (by decide) (by decide)
+      836 1353 (Or.inl (by decide))
+    rw [hidx] at h
+    simpa only [pow_one] using h
+  let c : ZMod (5 ^ a) →+* ZMod 5 :=
+    ZMod.castHom (dvd_pow_self 5 (by omega : a ≠ 0)) (ZMod 5)
+  let f : GoldenMod (5 ^ a) →+* GoldenMod 5 :=
+    { toFun := fun x => ⟨c x.a, c x.b⟩
+      map_zero' := by apply GoldenMod.ext <;> simp
+      map_one' := by apply GoldenMod.ext <;> simp
+      map_add' := by intro x y; apply GoldenMod.ext <;> simp
+      map_mul' := by intro x y; apply GoldenMod.ext <;> simp }
+  have hf : f GoldenMod.phi = GoldenMod.phi := by
+    apply GoldenMod.ext <;> simp [f, GoldenMod.phi]
+  have hd : 20 ∣ orderOf (GoldenMod.phi : GoldenMod (5 ^ a)) := by
+    rw [← golden_order_mod_five, ← hf]
+    exact orderOf_map_dvd f.toMonoidHom _
+  have hquot := orderOf_pow_of_dvd (by decide : (20 : ℕ) ≠ 0) hd
+  rw [hpoworder] at hquot
+  have hmul := Nat.div_mul_cancel hd
+  rw [← hquot] at hmul
+  calc
+    orderOf (GoldenMod.phi : GoldenMod (5 ^ a)) = 5 ^ (a - 1) * 20 := hmul.symm
+    _ = 4 * 5 ^ a := by
+      have hpowa : 5 ^ a = 5 ^ (a - 1) * 5 := by
+        calc
+          5 ^ a = 5 ^ (a - 1 + 1) := congrArg (5 ^ ·) hidx.symm
+          _ = _ := pow_succ _ _
+      rw [hpowa]
+      ring
+
+
+private theorem matrix_eq_one_of_axes (A : Mat 59)
+    (hfirst : A *ᵥ ![1, 26] = ![1, 26])
+    (hsecond : A *ᵥ ![1, 34] = ![1, 34]) : A = 1 := by
+  haveI : Fact (Nat.Prime 59) := ⟨by decide⟩
+  have h00 := congrFun hfirst 0
+  have h10 := congrFun hfirst 1
+  have h01 := congrFun hsecond 0
+  have h11 := congrFun hsecond 1
+  simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_two, Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.head_cons, mul_one] at h00 h10 h01 h11
+  have hb : (8 : ZMod 59) * A 0 1 = 0 := by linear_combination h01 - h00
+  have hd : (8 : ZMod 59) * (A 1 1 - 1) = 0 := by linear_combination h11 - h10
+  have h8 : (8 : ZMod 59) ≠ 0 := by
+    intro h
+    have hdvd := (ZMod.natCast_eq_zero_iff 8 59).mp h
+    norm_num at hdvd
+  have hb0 : A 0 1 = 0 := (mul_eq_zero.mp hb).resolve_left h8
+  have hd1 : A 1 1 = 1 := sub_eq_zero.mp ((mul_eq_zero.mp hd).resolve_left h8)
+  have ha1 : A 0 0 = 1 := by simpa [hb0] using h00
+  have hc0 : A 1 0 = 0 := by simpa [hd1] using h10
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [hb0, hd1, ha1, hc0]
+
+private theorem scalar_order_thirty_three : orderOf (33 : ZMod 59) = 58 := by
+  apply orderOf_eq_of_pow_and_pow_div_prime (by decide : 0 < 58)
+  · decide
+  · intro p hp hd
+    have hcases : p = 2 ∨ p = 29 := by
+      have : p ∣ 2 * 29 := hd
+      rcases hp.dvd_mul.mp this with h2 | h29
+      · exact Or.inl ((Nat.prime_dvd_prime_iff_eq hp Nat.prime_two).mp h2)
+      · exact Or.inr ((Nat.prime_dvd_prime_iff_eq hp (by decide)).mp h29)
+    rcases hcases with rfl | rfl <;> decide
+
+private theorem transport_order_mod_fifty_nine : orderOf (transportG 59) = 58 := by
+  rw [← orderOf_units]
+  apply Nat.dvd_antisymm
+  · apply orderOf_dvd_of_pow_eq_one
+    apply matrix_eq_one_of_axes
+    · rw [axis_power]
+      have h : (25 : ZMod 59) ^ 58 = 1 := by decide
+      rw [h, one_smul]
+    · rw [second_axis_power]
+      have h : (33 : ZMod 59) ^ 58 = 1 := by decide
+      rw [h, one_smul]
+  · have hp := pow_orderOf_eq_one (transportG 59 : Mat 59)
+    have hv := congrArg (fun A : Mat 59 => A *ᵥ ![1, 34]) hp
+    rw [second_axis_power, Matrix.one_mulVec] at hv
+    have hs : (33 : ZMod 59) ^ orderOf (transportG 59 : Mat 59) = 1 := by
+      simpa using congrFun hv 0
+    rw [← scalar_order_thirty_three]
+    exact orderOf_dvd_of_pow_eq_one hs
+
+private theorem transport_order_mod_two : orderOf (transportG 2) = 3 := by
+  rw [← orderOf_units]
+  haveI : Fact (Nat.Prime 3) := ⟨Nat.prime_three⟩
+  apply orderOf_eq_prime
+  · ext i j
+    fin_cases i <;> fin_cases j <;> decide
+  · intro h
+    have hb := congrArg (fun A : Mat 2 => A 0 1) h
+    exact (by decide : (1 : ZMod 2) ≠ 0) hb
 
 
 end D5.S3.Arith.FibonacciTransportFivePowerOrbit
