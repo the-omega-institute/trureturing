@@ -40,6 +40,7 @@ internal static partial class DigestionQuerySelection
     internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadAtoms(
         IRepositoryGateway repository, IReadOnlyList<string> atomIds, IReadOnlyList<string>? selectors = null)
     {
+        if (atomIds.Count == 0) return Load(RawRepositorySnapshot.Create([]));
         var ids = atomIds.ToHashSet(StringComparer.Ordinal);
         var scope = selectors is { Count: > 0 }
             ? ResolveSources(repository, selectors).Select(source => Literal(BackfillInventoryLoader.RootPath + source)).ToArray()
@@ -54,7 +55,7 @@ internal static partial class DigestionQuerySelection
     internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadChains(
         IRepositoryGateway repository,
         (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) current,
-        IEnumerable<string>? roots = null)
+        IEnumerable<string>? roots = null, bool allowMissing = false)
     {
         var pending = (roots ?? current.Document.RequireDigestionEntries()
             .SelectMany(static entry => entry.Receipts.ChainAtoms)).ToArray();
@@ -81,6 +82,11 @@ internal static partial class DigestionQuerySelection
             foreach (var id in frontier)
             {
                 var entries = byId[id].ToArray();
+                if (entries.Length != 1 && allowMissing)
+                {
+                    casPaths.Add(DigestionCasStore.RootPath + id);
+                    continue;
+                }
                 if (entries.Length != 1) throw new FormatException($"chain atom_id={id} count={entries.Length}");
                 casPaths.Add(CasPath(entries[0]));
                 next.AddRange(entries[0].Receipts.ChainAtoms);
@@ -114,7 +120,7 @@ internal static partial class DigestionQuerySelection
         return result.Order(StringComparer.Ordinal).ToArray();
     }
 
-    private static bool MatchesSourcePath(RawRepositoryEntry entry, string path)
+    internal static bool MatchesSourcePath(RawRepositoryEntry entry, string path)
     {
         try
         {

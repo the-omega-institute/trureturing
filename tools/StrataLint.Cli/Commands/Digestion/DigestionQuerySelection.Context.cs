@@ -5,11 +5,12 @@ namespace StrataLint.Cli;
 internal static partial class DigestionQuerySelection
 {
     internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadContext(
-        IRepositoryGateway repository, string atomId, IReadOnlyList<string>? selectors = null)
-        => ReadContext(repository, atomId, selectors, out _);
+        IRepositoryGateway repository, string atomId, IReadOnlyList<string>? selectors = null, bool allowMissing = false)
+        => ReadContext(repository, atomId, selectors, out _, allowMissing);
 
     internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadContext(
-        IRepositoryGateway repository, string atomId, IReadOnlyList<string>? selectors, out AtomizedTheoryDocument? sourceDocument)
+        IRepositoryGateway repository, string atomId, IReadOnlyList<string>? selectors, out AtomizedTheoryDocument? sourceDocument,
+        bool allowMissing = false)
     {
         sourceDocument = null;
         var loaded = ReadAtom(repository, atomId, selectors);
@@ -25,7 +26,6 @@ internal static partial class DigestionQuerySelection
         var atomized = AtomizerRegistry.Require(target.Atomizer).Atomize(sourceFile.RawBytes.AsSpan(),
             TheoryAtomizerDataLoader.Load(loaded.Snapshot));
         sourceDocument = atomized;
-        var sourceRoot = BackfillInventoryLoader.RootPath + target.SourceId + "/";
         var raw = loaded.Raw;
         var targetSpan = atomized.Claims.Concat(atomized.ClausePlans.SelectMany(static plan => plan.Children))
             .FirstOrDefault(atom => atom.Fingerprints.RawSha256 == target.Fingerprints.RawSha256);
@@ -35,8 +35,9 @@ internal static partial class DigestionQuerySelection
             var casPath = CasPath(target);
             var cas = repository.ReadCurrent([casPath]);
             raw = Merge(raw, cas);
-            var blob = cas.Entries.SingleOrDefault(entry => entry.Path == casPath)
-                ?? throw new FormatException($"CAS_MISSING atom_id={atomId}");
+            var blob = cas.Entries.SingleOrDefault(entry => entry.Path == casPath);
+            if (blob is null && allowMissing) return Load(raw);
+            if (blob is null) throw new FormatException($"CAS_MISSING atom_id={atomId}");
             targetBytes = blob.Bytes;
         }
 
@@ -49,13 +50,10 @@ internal static partial class DigestionQuerySelection
         }
         if (neighborIds.Count > 0)
         {
-            var paths = repository.SearchCurrentPaths([Literal(sourceRoot.TrimEnd('/'))])
-                .Where(IsAtomPath).Where(path => neighborIds.Contains(Path.GetFileNameWithoutExtension(path)))
-                .Select(Literal).ToArray();
-            var records = paths.Length > 0 ? repository.ReadCurrent(paths) : RawRepositorySnapshot.Create([]);
-            raw = Merge(raw, records);
+            var neighbors = ReadAtoms(repository, neighborIds.ToArray());
+            raw = Merge(raw, neighbors.Raw);
         }
         var local = Load(raw);
-        return ReadChains(repository, local);
+        return ReadChains(repository, local, allowMissing: allowMissing);
     }
 }

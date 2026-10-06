@@ -154,7 +154,7 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
-    [InlineData("", "ingest")]
+    [InlineData("", "")]
     [InlineData("alpha beta", "ingest --source alpha --source beta")]
     public void IngestWrapperForwardsSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
     {
@@ -243,6 +243,14 @@ public sealed partial class MakeWorkflowTests
             BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
+        if (sourcePayload.Length == 0)
+        {
+            var missingSource = RunWrapper();
+            Assert.Equal(2, missingSource.ExitCode);
+            Assert.Empty(missingSource.StandardOutput);
+            Assert.Contains("USAGE:", Encoding.UTF8.GetString(missingSource.StandardError), StringComparison.Ordinal);
+            return;
+        }
         File.AppendAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), "-- closure delta\n");
         var changed = RunWrapper();
         Assert.Equal(0, changed.ExitCode);

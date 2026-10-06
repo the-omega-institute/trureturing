@@ -47,7 +47,7 @@ public sealed partial class IngestScopeTests
         var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
 
         var result = Environment(fixture, temporary).Ingest(
-            selector == "all" ? Arguments() : Arguments(selector));
+            selector == "all" ? Arguments("alpha", "beta") : Arguments(selector));
 
         var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
         if (selector == "beta")

@@ -857,6 +857,8 @@ Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `fron
 
 **邻居上下文查询。**`atom-context` 按目标源的 atomizer 切分正文，从原始字节定位包含目标的根片段，只加载这些根片段、相邻根片段和实际引用的子链。跨源复用的 child 按 ID 读取。CURRENT 为目标的完整原始跨度，PREVIOUS / NEXT 是其整个子树前后的最近叶项，不含自己的后代。输出 atom_id、账本目录状态(未登记者为 `unregistered`)与全文；重复出现按源顺序输出 occurrence ordinal。查询不输出全流位置或总数，不为计数展开远处链条，不持久化位置。`Resolve` 单出现接口仍对重复报 `OCCURRENCE_AMBIGUOUS`，结算按上款明确选择。`show-atom` 只读目标 CAS，不重放源或重算历史指纹。
 
+**局部写入。**拆分只加载目标、生成子项的既有命中及实际子链；结算只加载目标与所需的真实邻居、后代收据及其覆盖依据；cover 与 cover-batch 只加载请求目标和实际后代账目，同时保留当前 Lean 报告、冻结成员与声明绑定校验。无关账目不参与当前操作，也不因无关记录的格式或覆盖偏差阻断它。批量命令保留自己的成功写入供后续项使用；实际引用的缺失、冲突或坏 CAS 仍须拒绝，原子写入和失败回滚继续适用。
+
 历史治理字段按既有 schema 读取，不新增 quarantine 管理命令。
 
 **范围搜索。**`search-atoms --source SOURCE_ID_OR_PATH` 接受重复的 `--source`，可用 `--state STATE`、`--text LITERAL` 和 `--limit N` 限制结果。必须明确源范围，默认查迁移轴为 residual 或 partial 的目录，默认最多返回 100 项。无关键词时只搜索当前标准账本路径，不读取或解析 YAML、不加载 Lean/CAS、不核验状态，不输出总数或账本摘要。关键词按大小写不敏感的原文子串匹配：沿所选标准账本路径的 ID 逐条读取 CAS 文本，匹配与输出达到上限即停止；不读取 YAML、源正文或 atomizer，不核验 CAS 指纹。命中不等于证明、就绪或一致性核验；AI 读取目标及上下文后决定处理方式。make 入口为 `make search-atoms SOURCE=… [TEXT=…] [STATE=…] [LIMIT=…]`。cover 失败由调用方修正 ATOM 后再次调用 cover。
@@ -881,7 +883,7 @@ Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `fron
 **cover 失败处理**：cover 只写入成功的 coverage 边与派生目录；失败零写入并把诊断返回给 AI。AI 修正 ATOM 或证明输入后再次调用 cover。历史 `receipts.cover_disposition` 仅按既有 schema 读取，不提供独立管理或重试命令。
 **atom 与理论卷不删、勘误以追加表达,是建设者纪律。**历史与任何删除均由 git 记录可查;不设对应的机器判官(2026-09-02 owner 裁决:「只增不减的账本就是 git 本身,只保证数据当下正确」)。SL-016 仍守派生状态以及当前账目引用的一致性。
 
-理论切分的现役 adapter 平台由 `generic-v1`、内建 `cone-v1`/`gict-v1`/`observer-v1`/`periodic-tree-v1`/`pzg-v1`/`wm-v1`,以及 `Meta/Digestion/atomizers.toml` 声明的 dialect 组成。带 genre registry 的 adapter 对每个可识别 claim 作全函数分类 `Known(kind) | Open(token)`;该分类只决定 atom 是否为可识别 claim 以及 source 的 `unregistered_genres` 投影,不参与 atom identity。每个 source 的 `source.toml` 必填 `genre_registry_check ∈ {collected,no-registry}` 与排序去重的 `unregistered_genres`;admission 每次重算并逐字比对,伪空、漏报、多报与二态错均 fail-closed。所有 adapter 均以确定性 Markdown AST 产生 claim atom + heading context scaffold,分片可 byte-exact 重组;字节缺口、非法 UTF-8 等结构错误直接失败。同一 raw 内容无论由何方言、kind、source 或重复出现位置产出,其 `atom_id` 都是同一个裸 SHA-256,账目全局合并且 coverage 边按 GID 取并集。摄入协议固定为 **extract → identify → subtract digested → admit residual**:按 raw 内容哈希识别既有 atom,纯追加不会改变任何既有 ID;新内容以其完整 raw SHA-256 入 `residual-open`,全量重跑不使用增量水位线。
+理论切分的现役 adapter 平台由 `generic-v1`、内建 `cone-v1`/`gict-v1`/`observer-v1`/`periodic-tree-v1`/`pzg-v1`/`wm-v1`,以及 `Meta/Digestion/atomizers.toml` 声明的 dialect 组成。带 genre registry 的 adapter 对每个可识别 claim 作全函数分类 `Known(kind) | Open(token)`;该分类只决定 atom 是否为可识别 claim 以及 source 的 `unregistered_genres` 投影,不参与 atom identity。每个 source 的 `source.toml` 必填 `genre_registry_check ∈ {collected,no-registry}` 与排序去重的 `unregistered_genres`;admission 每次重算并逐字比对,伪空、漏报、多报与二态错均 fail-closed。所有 adapter 均以确定性 Markdown AST 产生 claim atom + heading context scaffold,分片可 byte-exact 重组;字节缺口、非法 UTF-8 等结构错误直接失败。同一 raw 内容无论由何方言、kind、source 或重复出现位置产出,其 `atom_id` 都是同一个裸 SHA-256,账目全局合并且 coverage 边按 GID 取并集。摄入协议固定为 **extract → identify → subtract digested → admit residual**:按 raw 内容哈希识别既有 atom,纯追加不会改变任何既有 ID;新内容以其完整 raw SHA-256 入 `residual-open`,摄入必须显式指定一个或多个 source；仅切分所选正文，按生成的内容身份搜索既有记录并复用，不加载全账本。新写集仍须通过 append-only、CAS 内容身份与原子回滚校验。
 
 
 ## 11.22 编排文件与一致性自检(deferred)
