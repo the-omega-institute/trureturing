@@ -62329,3 +62329,137 @@ $$
 式（408.8）是一种充分选择，不代替（403.5）的原有选择，也不宣称取得更低的计算成本。式（408.9）仅支付完整去阻尼误差；同一实际 $I_{\varepsilon_x^{\mathrm{cert}}}$ 的剩余频率有符号估计仍须另行给出。较小的正阻尼不会消去（404.16）的实际移位零点极点，也不许可未支付的移线。完整 Robin 与 RH 没有由上述常数界得到证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 409. 完整中心化频率绝对账的严格对数量级
+
+**定义 409.1（同源频率账与正阻尼日程）。** 保留 §§403–406 的同一实际 $\mathcal B$、$\mathscr G_\varepsilon$、$Q_\varepsilon$、$\mathscr G_\varepsilon^\circ$ 与 $\widetilde w_x$。令 $x\to\infty$、$\ell=\log x$，取任意正日程满足
+
+$$
+\varepsilon_x\longrightarrow0,\qquad
+\varepsilon_x\ell\longrightarrow0,
+\qquad \sigma_x=1-\varepsilon_x/2.
+\tag{409.1}
+$$
+
+因此 $0<\sigma_x<1$ 对全部充分大的 $x$ 成立，原来的完整反演合法；（403.5）与（408.8）都属于这一类。定义完整实际绝对账
+
+$$
+\mathcal A(x)=\frac1{2\pi}\int_{\mathbb R}
+\left|\mathscr G_{\varepsilon_x}^\circ(\sigma_x+i\tau)
+\widetilde w_x(\sigma_x+i\tau)\right|d\tau.
+\tag{409.2}
+$$
+
+使用（406.7）的已有系数极限，记
+
+$$
+\begin{aligned}
+Q_0(z)&=\frac1{z-1}-\frac{1+\gamma}{(z-2)^2},\\
+g_0(z)&=-\frac{\zeta'(z)}{z\zeta(z)}-Q_0(z).
+\end{aligned}
+\tag{409.3}
+$$
+
+$g_0$ 在 $z=1$ 采用（406.4）的可去延拓，满足 $g_0(z)=O(|z-1|)$。在其他 $1+i\tau$ 上，经典 $\zeta(1+i\tau)\ne0$ 保证定义合法，见 [DLMF §25.10](https://dlmf.nist.gov/25.10)。$g_0$ 是实际中心化来源的零阻尼极限，不是另外选择的谱模型。
+
+**定理 409.2（完整绝对预算的精确首阶）。** 在（409.1）的任意日程下，有
+
+$$
+\boxed{
+\ell\mathcal A(x)\longrightarrow
+C_{\mathrm{abs}}:=\frac1{2\pi}\int_{\mathbb R}
+\frac{|g_0(1+i\tau)|}{|\tau|}d\tau,
+\qquad0<C_{\mathrm{abs}}<\infty.}
+\tag{409.4}
+$$
+
+积分在 $\tau=0$ 的值可任意指定；该单点不影响积分。因此完整绝对账恰为 $\Theta(1/\log x)$，并且
+
+$$
+\boxed{
+\frac{\mathcal A(x)}{1/(\sqrt x\log x)}
+\sim C_{\mathrm{abs}}\sqrt x\longrightarrow\infty.}
+\tag{409.5}
+$$
+
+证明。先保留相位而计算权重。置 $v(u)=(u+1)/u^2$、$a=1-z$，有 $\Re a>0$。对（404.2）的对数坐标表示作两次分部积分：
+
+$$
+\widetilde w_x(z)
+=e^{-a\ell}\left(\frac{v(\ell)}a+\frac{v'(\ell)}{a^2}\right)
++\frac1{a^2}\int_\ell^\infty e^{-au}v''(u)du.
+\tag{409.6}
+$$
+
+这里 $v'=-u^{-2}-2u^{-3}<0$、$v''=2u^{-3}+6u^{-4}>0$，且 $\int_\ell^\infty v''=-v'(\ell)$。所以
+
+$$
+\left|\widetilde w_x(z)-\frac{e^{-a\ell}v(\ell)}a\right|
+\le\frac{2e^{-\Re a\ell}|v'(\ell)|}{|a|^2}.
+\tag{409.7}
+$$
+
+对固定 $\tau\ne0$，取 $z=\sigma_x+i\tau$、$a=\varepsilon_x/2-i\tau$。由（409.1）、$\ell v(\ell)=1+1/\ell$ 和 $\ell|v'(\ell)|\to0$，得到保持原相位的极限
+
+$$
+\boxed{
+\ell e^{-i\tau\ell}\widetilde w_x(\sigma_x+i\tau)
+\longrightarrow\frac1{-i\tau}.}
+\tag{409.8}
+$$
+
+收敛在避开零的紧频率区间上一致。另一方面，$\mathcal B(z+\varepsilon)/\mathcal B(z)\to1$ 以及（406.7）在这些区间给 $\mathscr G_{\varepsilon_x}^\circ(\sigma_x+i\tau)\to g_0(1+i\tau)$。因此（409.4）的被积函数逐点极限正确；取绝对值只在这一共同相位身份之后发生。
+
+现在支付整个实轴的支配预算。对固定充分小的 $r>0$，$|\tau|\le r$ 时复用（406.4）和（406.8）：
+
+$$
+\begin{aligned}
+\ell\left|\mathscr G_{\varepsilon_x}^\circ(z)
+\widetilde w_x(z)\right|
+&\le 2C\ell v(\ell)e^{-\varepsilon_x\ell/2}
+\le4C\qquad(\ell\ge1).
+\end{aligned}
+\tag{409.9}
+$$
+
+这里 $|z-1|=|1-z|$ 精确抵消；没有在 $\tau=0$ 先使用无效的 $1/|\tau|$ 上界。任意固定的剩余紧频率环带上，经典无零性、实际 $\mathcal B$ 的正下界及（406.7）给一致有界的中心化因子，（406.8）给有界的归一化权重。
+
+无穷高频直接消费原始显式供应器。[Lee–Leong，arXiv:2208.06141v5，定理 1.1、式（7）](https://arxiv.org/html/2208.06141v5#S1.Thmtheorem1) 对 $t\ge\mathcal H=3000175332800$、$\sigma\ge1-1/(5.56\log t)$ 给
+
+$$
+|\zeta(\sigma+it)|^{-1}\le1237(\log t)^{11/12}.
+\tag{409.10}
+$$
+
+实际分母的实部为 $1+\varepsilon_x/2$，属于该实参数域；负频率由共轭处理。该输入采用预印本 v5，不假设全域 RH。对实际分子的 $3/4\le\sigma_x\le1$，直接复用 [DLMF §25.2.8](https://dlmf.nist.gov/25.2.E8) 的 Euler 求和。先固定整数 $N\asymp t$ 再对 $z$ 微分；有限和用
+
+$$
+\sum_{n\le N}\frac{\log n}{n^{\sigma_x}}
+\le N^{1-\sigma_x}\sum_{n\le N}\frac{\log n}{n}
+=O\!\left(N^{1-\sigma_x}(\log N)^2\right),
+$$
+
+而有界小数部分的积分及其对数矩在 $\sigma_x\ge3/4$ 上有一致常数。因此这份既有公式的统一应用给
+
+$$
+|\zeta'(\sigma_x+it)|
+=O\!\left(t^{\varepsilon_x/2}(\log t)^2\right).
+\tag{409.11}
+$$
+
+实际 $\mathcal B$ 比值在右半平面一致有界，三个 $Q_{\varepsilon_x}$ 系数由（406.7）有界，且 $Q_{\varepsilon_x}(\sigma_x+i\tau)=O(t^{-1})$。将这些界与（406.8）共同使用，在 $t=|\tau|\ge\mathcal H$、$\varepsilon_x\le1/2$ 时得到独立于 $x$ 的可积包络
+
+$$
+\ell\left|\mathscr G_{\varepsilon_x}^\circ(z)
+\widetilde w_x(z)\right|
+=O\!\left(t^{-7/4}(\log t)^{35/12}+t^{-2}\right).
+\tag{409.12}
+$$
+
+（409.9）、紧环带界和（409.12）合在同一实际积分中，经典支配收敛定理给（409.4），也给 $C_{\mathrm{abs}}<\infty$。
+
+最后证明常数严格为正。若为零，连续的 $g_0(1+i\tau)$ 在任意不含零的开区间上恒为零。亚纯恒等定理则使 $-\zeta'(z)/(z\zeta(z))=Q_0(z)$ 成为全局亚纯身份。但经典平凡零点 $z=-2$，见 DLMF 上引零点表述，使左侧有非零留数的极点，右侧在该点全纯，矛盾。无需假设非平凡零点的位置或单纯性。因此 $C_{\mathrm{abs}}>0$，其余结论直接由（409.4）得到。$\square$
+
+式（409.4）是经典积分、Euler 求和与零点事实在完整实际账上的应用，不是新的零点判据或 $\zeta$ 点态界。它表明（406.11）的低频成功不能推广为同量级的全域绝对预算：实际有符号积分仍可通过相位抵消更小，绝对账却不能。式（409.5）反驳的是使用这一绝对账和三角不等式支付临界尺度的策略，不是 Robin 或 RH。
+
+## 追加锚（本行以下为增补区）
