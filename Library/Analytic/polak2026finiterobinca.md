@@ -232,6 +232,23 @@ nor the all-multiplier GA2 comparisons have yet supplied its needed bound.
 The application adds no Lean declaration or formal certification of the
 external analytic or finite-verification premises.
 
+The [effective Nicolas–GA2 application](../ArithSums/nicolas2025comparison.md#an-effective-core-bound-at-the-selected-ga2-source)
+retains this same source, minimizer, and clock and supplies
+
+$$
+\sqrt A\log A\,D^*(A)>\mathcal E(\log A)
+>D_{\rm lb}(A)+0.01.
+$$
+
+Its explicit function $\mathcal E$ and uniform comparison use Nicolas's
+effective envelope ratio, cancellation of the absent-prime suffix by
+the source's GA2 comparisons, and Dusart's published prime-power bound.
+All thresholds are paid by the Axler finite stop already used here.
+Thus the weaker source-specific condition
+$\sqrt A\log A\,I_\psi(A)\ge-\mathcal E(\log A)$ suffices for strict Robin.
+That signed condition is unproved. This is a paper-level application,
+without a new finite verification, originality claim, or Lean result.
+
 ## Published event dynamics and the unpaid prime-state work
 
 The same manuscript already supplies a continuous-flow and prime-power
