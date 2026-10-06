@@ -6,8 +6,7 @@
    utility: none
    digest: A finite affine endpoint certificate gives the least closed budget for all terminal values in two fixed interval hulls. -/
 
-import D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
-import Mathlib.Data.Fintype.Lattice
+import Mathlib
 
 set_option autoImplicit false
 

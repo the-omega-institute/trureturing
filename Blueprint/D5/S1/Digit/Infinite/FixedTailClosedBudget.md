@@ -23,4 +23,3 @@ The maximum of the finitely many endpoint excesses is nonnegative. A nonnegative
 ## References
 
 - Truth anchor: `D5/S1/Digit/Infinite/FixedTailClosedBudget.fixed_tail_closed_budget`
-- Dependency: [D5/S1/Digit/Infinite/ClosedObservationCommonTailWidthModel](ClosedObservationCommonTailWidthModel.md)
