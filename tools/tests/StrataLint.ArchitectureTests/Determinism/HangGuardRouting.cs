@@ -1,4 +1,4 @@
-namespace StrataLint.TestSupport;
+namespace StrataLint.ArchitectureTests;
 
 internal static class HangGuardRouting
 {
@@ -23,7 +23,7 @@ internal static class HangGuardRouting
 
     private static IEnumerable<string> UnroutedHangGuardCalls(string path, string source)
     {
-        const string Call = "BoundedProcessRunner.Run(";
+        const string Call = "BoundedProcessRunner." + "Run(";
         for (var index = source.IndexOf(Call, StringComparison.Ordinal);
              index >= 0;
              index = source.IndexOf(Call, index + Call.Length, StringComparison.Ordinal))
@@ -34,8 +34,7 @@ internal static class HangGuardRouting
                 continue;
             }
 
-            // 取**该调用自己的实参列表**(括号平衡)。固定窗口会跨进相邻调用:
-            // 第一版正因此把一处**故意**用 `ZeroDuration` 的调用误报为违规。
+            // Inspect this call's balanced argument list; adjacent calls have independent budgets.
             var arguments = BalancedArguments(source, index + Call.Length);
             if (arguments.Contains("HangGuard", StringComparison.Ordinal)
                 || arguments.Contains("HangDetectionBudget", StringComparison.Ordinal))

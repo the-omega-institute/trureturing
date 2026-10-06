@@ -52,3 +52,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.WorktreeContract.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.TruthRelease.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.RepositoryFileMap.Tests")]
+
+[assembly: InternalsVisibleTo("StrataLint.Runtime.Tests")]
+
+[assembly: InternalsVisibleTo("StrataLint.Engineering.Tests")]

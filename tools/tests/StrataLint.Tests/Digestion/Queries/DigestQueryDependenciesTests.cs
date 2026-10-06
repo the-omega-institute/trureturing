@@ -1,3 +1,4 @@
+using StrataLint.Engineering;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -172,7 +173,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains(TheoryAtomizerDataLoader.DataPath, paths);
         Assert.Contains("D5", paths);
         Assert.DoesNotContain(DigestionCasStore.RootPath.TrimEnd('/'), paths);
-        Assert.DoesNotContain(EngineeringProjectRegistry.ManifestPath, paths);
+        Assert.DoesNotContain(EngineeringProjectSchema.ManifestPath, paths);
     }
 
     [Fact]

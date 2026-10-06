@@ -1,4 +1,4 @@
-using StrataLint.Engine;
+using StrataLint.Engineering;
 
 namespace StrataLint.TestEvidence;
 
@@ -49,17 +49,8 @@ internal static class TestEvidenceCommands
         var relative = Path.GetRelativePath(root, target).Replace('\\', '/');
         if (relative == ".." || relative.StartsWith("../", StringComparison.Ordinal) || Path.IsPathRooted(relative))
             throw new InvalidDataException("test target is outside repository: " + target);
-        var projects = RepositoryRules.ReadTrackedProjects(root);
-        if (relative == "tools/StrataLint.sln")
-        {
-            var owners = RepositoryRules.CalculateOwnerAssemblies(projects);
-            if (owners.Length == 0) throw new InvalidDataException("list-test-owner-assemblies derived zero owner assemblies");
-            return filtered.Value ? [] : owners;
-        }
-        var selected = projects.Projects.SingleOrDefault(project => project.Path == relative)?.Registration;
-        if (selected is null || !selected.IsTest)
-            throw new InvalidDataException("test target is not a registered test project: " + relative);
-        return [selected.Assembly];
+        var projects = EngineeringProjectSchema.Parse(File.ReadAllText(Path.Combine(root, EngineeringProjectSchema.ManifestPath))).Projects;
+        return EngineeringTestIdentity.RequiredAssemblies(projects, relative, filtered.Value);
     }
 
     internal static int VerifyTrx(IReadOnlyList<string> arguments, Func<string, TestResultEvidence> load, TextWriter output)

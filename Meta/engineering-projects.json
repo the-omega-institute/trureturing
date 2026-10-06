@@ -14,6 +14,7 @@
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
         "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
         "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
         "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj"
       ],
@@ -36,7 +37,8 @@
       ],
       "exclude": [],
       "references": [
-        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+        "tools/StrataLint.Engineering/StrataLint.Engineering.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj"
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.TestEvidence.Tests",
@@ -56,6 +58,8 @@
       ],
       "exclude": [],
       "references": [
+        "tools/StrataLint.Engineering/StrataLint.Engineering.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/Trureturing.Truth/Trureturing.Truth.csproj"
       ],
       "owner": null,
@@ -76,7 +80,8 @@
       ],
       "exclude": [],
       "references": [
-        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj"
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Lean.Tests",
@@ -342,14 +347,14 @@
         "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
         "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.CoverTestSupport/StrataLint.CoverTestSupport.csproj",
         "tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/StrataLint.DeclaredTemplateTestSupport.csproj",
         "tools/TestSupport/StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj",
         "tools/TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
         "tools/TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj",
-        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
-        "tools/TestSupport/StrataLint.CoverTestSupport/StrataLint.CoverTestSupport.csproj"
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
       "owner": {
         "path": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
@@ -414,7 +419,7 @@
       ],
       "exclude": [],
       "references": [
-        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj"
       ],
       "owner": null,
       "owned_test_assembly": null,
@@ -523,6 +528,7 @@
         "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
         "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
         "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
         "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
@@ -769,6 +775,7 @@
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
@@ -792,6 +799,7 @@
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
@@ -841,6 +849,7 @@
       "references": [
         "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Engineering/StrataLint.Engineering.csproj",
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
         "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
         "tools/TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj",
@@ -867,6 +876,7 @@
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
@@ -892,6 +902,7 @@
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
@@ -915,6 +926,7 @@
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
@@ -989,6 +1001,8 @@
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Engineering/StrataLint.Engineering.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/StrataLint.DeclaredTemplateTestSupport.csproj",
         "tools/TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
@@ -1062,6 +1076,7 @@
         "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
         "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj",
         "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
@@ -1087,7 +1102,9 @@
       "references": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj",
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Engineering/StrataLint.Engineering.csproj",
         "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
@@ -1113,6 +1130,7 @@
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
         "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
@@ -1184,6 +1202,7 @@
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
@@ -1266,6 +1285,7 @@
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
@@ -1329,6 +1349,89 @@
       "root_namespace": "StrataLint.TestEvidence.Tests",
       "namespace_exclude": [],
       "global_namespace_exceptions": []
+    },
+    {
+      "path": "tools/StrataLint.Engineering/StrataLint.Engineering.csproj",
+      "assembly": "StrataLint.Engineering",
+      "role": "production",
+      "include": [
+        "tools/StrataLint.Engineering/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.Engineering.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.Engineering",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Engineering/AssemblyInfo.cs"
+      ]
+    },
+    {
+      "path": "tools/tests/StrataLint.Engineering.Tests/StrataLint.Engineering.Tests.csproj",
+      "assembly": "StrataLint.Engineering.Tests",
+      "role": "owned-test",
+      "include": [
+        "tools/tests/StrataLint.Engineering.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engineering/StrataLint.Engineering.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.Engineering/StrataLint.Engineering.csproj",
+        "assembly": "StrataLint.Engineering"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Engineering.Tests",
+      "root_namespace": "StrataLint.Engineering.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": []
+    },
+    {
+      "path": "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
+      "assembly": "StrataLint.Runtime",
+      "role": "production",
+      "include": [
+        "tools/StrataLint.Runtime/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.Runtime.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.Runtime",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Runtime/AssemblyInfo.cs"
+      ]
+    },
+    {
+      "path": "tools/tests/StrataLint.Runtime.Tests/StrataLint.Runtime.Tests.csproj",
+      "assembly": "StrataLint.Runtime.Tests",
+      "role": "owned-test",
+      "include": [
+        "tools/tests/StrataLint.Runtime.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.Runtime/StrataLint.Runtime.csproj",
+        "assembly": "StrataLint.Runtime"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Runtime.Tests",
+      "root_namespace": "StrataLint.Runtime.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Runtime.Tests/Usings.cs"
+      ]
     }
   ],
   "historical_projects": [],
