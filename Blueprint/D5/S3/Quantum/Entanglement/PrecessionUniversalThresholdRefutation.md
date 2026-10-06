@@ -94,6 +94,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/PrecessionUniversalThresholdRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/huynh-vu-zaw-scarani-2023-universal-gme-threshold-refutation` (refuted) by `D5/S3/Quantum/Entanglement/PrecessionUniversalThresholdRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"huynh-vu-zaw-scarani-2023-universal-gme-threshold-refutation","declaration_gid":"D5/S3/Quantum/Entanglement/PrecessionUniversalThresholdRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Khoi-Nguyen Huynh-Vu; Lin Htoo Zaw; Valerio Scarani (2024). *Certification of genuine multipartite entanglement in spin ensembles with measurements of total angular momentum*. DOI: [10.1103/PhysRevA.109.042402](https://doi.org/10.1103/PhysRevA.109.042402). URL: <https://arxiv.org/abs/2311.00806v2>.

@@ -33,7 +33,10 @@ internal sealed class PrecessionUniversalThresholdRefutationDocument : IScribeDo
                 DescribeRole.Definition),
             Node("result", "Refutation", Disp(Not(F.Id("claim"))),
                 "The ensemble has spins {1/2,1/2,3/2}. The normalized two-spin singlet projector is tensored with the normalized projector onto the difference of the two extreme spin-3/2 basis vectors. For every remaining spin list, every matrix on its configuration space and every K, prepending two spin-1/2 particles in their normalized singlet preserves the literal precession score. Splitting the sum of site operators gives the pair observable tensored with the rest identity plus the pair identity tensored with the rest observable. The pair's angular momentum annihilates the singlet, so finite spectral calculus preserves its embedding of the remaining system. The score is 3/4 > 23/32. A one-term convex decomposition across the pair–rest cut establishes that the state is not GME.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("huynh-vu-zaw-scarani-2023-universal-gme-threshold-refutation"),
+                    ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance? provenance = null,
