@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d0a0b2d217e7cf46e1ea777a478a56f66a6f4cffaf9727587926769ec1f98c92
   normalized_sha256: sha256:d0a0b2d217e7cf46e1ea777a478a56f66a6f4cffaf9727587926769ec1f98c92
 cas_ref: sha256:d0a0b2d217e7cf46e1ea777a478a56f66a6f4cffaf9727587926769ec1f98c92
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/AnchoredPhaseClassification.anchored_phase_classification
+    target_statement_id: sha256:33b6ca30725d2707a3b98b9abf1f9370edc2e17f2c808a7b51e249e853a5db9d
 receipts:
   unresolved_subitems: []
