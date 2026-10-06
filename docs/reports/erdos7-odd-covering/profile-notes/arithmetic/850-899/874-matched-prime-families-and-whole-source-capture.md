@@ -257,6 +257,57 @@ outputs and, by MF4, capture of at most 30 actual top traces. Choosing
 distinct prime representatives is unnecessary for these conclusions:
 duplicate chosen primes produce shared outputs.
 
+## Complete source colors survive a common-color capture
+
+Keep the common-color hypothesis on A and put
+
+$$
+C_A=\{a_j\bmod q:j\in D_A^{\rm all}\}.
+$$
+
+The selected originals A contribute only their one color c. Every
+other captured color has a representative in D_A^{all} minus A.
+Consequently MF4b gives
+
+$$
+|C_A|\le1+|D_A^{\rm all}\setminus A|\le s+1.
+\tag{MF11}
+$$
+
+The fixed complement of C_A therefore contains at least 112-s of
+the 113 original colors. Each such color retains its complete
+q-stripped cover of the same E0, and none of its originals was
+deleted in this capture. In particular, at least 85 complete colors
+remain when s is at most 27; at least 97 remain in the two-matching-prime
+case, where s is at most k and k is at most 15.
+
+There is also a fixed lower-row source family after this exclusion.
+Use the fixed set U of at least 110 colors excluding the actual
+colors of q, 3q and 9q. Report864 PC65--PC66 supplies, at every
+x in E0, at least 32 distinct colors in U with an actual lower-row
+owner at x after stripping q. Excluding all colors in C_A removes
+at most s+1 of those serving colors, so at least
+
+$$
+31-s\ge4
+\tag{MF12}
+$$
+
+remain at every x. In the two-matching-prime case the lower bound
+is 16. Thus the family consisting of **all** lower-row originals
+with color in U minus C_A is fixed independently of x, is retained
+after the capture, and its q-stripped union covers the entire E0.
+For each cofactor m it contains at most the two original numerical
+labels qm and 3qm.
+
+The serving colors at different points may differ. MF12 does not
+assert that any one of these colors has a complete lower-row cover.
+The complete colors counted by MF11 may still need their top rows.
+Nor does the retained q-stripped family constitute a fresh output
+plan: its new numerical labels, phases and payment have not been
+assigned. This gives actual source supply surviving the exclusion,
+not an already paid augmentation.
+
 ## Reuse and remaining scope
 
 The ingredients are the existing actual prime-cut exchange, CRT,
@@ -281,6 +332,15 @@ inequalities and the 15-owner bound. These scoped compilations pass
 with default proof budgets and only the standard axioms. The actual
 minimal cover remains hypothetical; the checks prove conditional
 implications, not existence of such a cover or its impossibility.
+
+The MF11--MF12 counting application starts with that actual all-row
+capture construction. Its source interface retains as explicit
+premises the complete original color covers and PC65's pointwise
+32-color lower-row supply on the same E0. It does not replace those
+premises with a bound on raw owner counts or supply a new end-to-end
+proof of PC65. The argument is finite image and set-difference
+counting applied to the existing capture result; it requires no
+new canonical declaration.
 
 The next missing implication is global: construct one paid assignment
 covering E0 while respecting conflicting roots, all old words and

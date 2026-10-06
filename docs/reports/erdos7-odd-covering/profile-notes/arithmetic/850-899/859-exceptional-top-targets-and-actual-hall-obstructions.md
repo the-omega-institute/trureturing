@@ -339,4 +339,23 @@ use only standard axioms. ET11's scalar consequence of the truncated
 covering and raw-capacity inequalities also compiles separately; its
 arithmetic source premises retain Report858's verification boundary.
 No retained wrapper declaration is introduced.
+
+The collision-exception step also has an exact transient arithmetic
+application in the narrower q-height-one branch. Its inputs are an
+actual count-then-modulus-sum minimal cover, absence of original labels
+divisible by 27, and selected originals 9*113*m_i with one common
+old word modulo nine and one common root modulo 113, where 113 does
+not divide any m_i. It excludes two vertex-disjoint literal prime-root
+collision edges and supplies one fixed set of at most two original
+owners meeting every edge. No common cofactor point is assumed.
+
+For two edges with the same prime p, the existing four-slot descent
+uses the distinct fresh labels 27, 3051, 27p and 3051p, retaining the
+two actual p-roots; this part alone permits arbitrary q-depth. For
+different primes, the existing actual one-hit cut bound would require
+four owners to fit into three tags. The complete q-height-one chain
+compiles with only the standard three axioms. It does not formalize
+the broader arbitrary-q-depth conclusion used in section 3, the
+divisor-closure supplier of ET3, or the whole six-parent arithmetic
+construction. Those retain the verification boundary above.
 No new frozen declaration or unrestricted resolution is claimed.
