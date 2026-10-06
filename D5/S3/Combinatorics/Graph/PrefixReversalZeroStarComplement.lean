@@ -5,7 +5,6 @@
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Hamiltonian]
    utility: none
    digest: Native zero-star complements exhaust the independently defined insertion domain. -/
-
 import D5.S0.CayleyGrowth.PrefixReversalTripleOddNonGeneration
 import D5.S3.Combinatorics.CircularWords.CircularDeletionTransport
 import Mathlib.Combinatorics.SimpleGraph.Cayley
@@ -14,11 +13,9 @@ import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Data.List.FinRange
 import Mathlib.Data.List.ChainOfFn
 import Mathlib.Tactic
-
 set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
-
 open PrefixReversalTripleOddNonGeneration
 open D5.S3.Combinatorics.CircularWords.CircularDeletionTransport
 open Fin.NatCast
@@ -42,21 +39,14 @@ def a (m : ℕ) : Configuration m := prefixReversal (m + 1) le_rfl
 def b (m : ℕ) : Configuration m := prefixReversal m (by omega)
 
 def c (m : ℕ) : Configuration m := prefixReversal (m - 1) (by omega)
-
-private theorem a_apply {m : ℕ} (i : Fin (m + 1)) :
-    a m i = i.rev := by
+private theorem a_apply {m : ℕ} (i : Fin (m + 1)) : a m i = i.rev := by
   apply Fin.ext
   simp [a, prefixReversal, reverseIndex, i.isLt, Fin.rev]
-
-private theorem b_apply {m : ℕ} (i : Fin (m + 1)) :
-    (b m i).val = if i.val < m then m - 1 - i.val else i.val := by
+private theorem b_apply {m : ℕ} (i : Fin (m + 1)) : (b m i).val = if i.val < m then m - 1 - i.val else i.val := by
   by_cases hi : i.val < m <;> simp [b, prefixReversal, reverseIndex, hi]
-
-private theorem c_apply {m : ℕ} (i : Fin (m + 1)) :
-    (c m i).val = if i.val < m - 1 then m - 2 - i.val else i.val := by
+private theorem c_apply {m : ℕ} (i : Fin (m + 1)) : (c m i).val = if i.val < m - 1 then m - 2 - i.val else i.val := by
   by_cases hi : i.val < m - 1 <;>
     simp [c, prefixReversal, reverseIndex, hi] <;> omega
-
 private theorem ab_eq_rotate (m : ℕ) : a m * b m = finRotate (m + 1) := by
   apply Equiv.ext
   intro i
@@ -71,9 +61,7 @@ private theorem ab_eq_rotate (m : ℕ) : a m * b m = finRotate (m + 1) := by
   · have he : i = Fin.last m := Fin.ext (by simpa using (show i.val = m by omega))
     subst i
     simp
-
-private theorem bc_apply {m : ℕ} (hm : 2 ≤ m) (i : Fin (m + 1)) :
-    (b m * c m) i =
+private theorem bc_apply {m : ℕ} (hm : 2 ≤ m) (i : Fin (m + 1)) : (b m * c m) i =
       if hi : i.val < m then
         (⟨(i.val + 1) % m, (Nat.mod_lt _ (by omega)).trans_le (by omega)⟩ :
           Fin (m + 1))
@@ -91,9 +79,7 @@ private theorem bc_apply {m : ℕ} (hm : 2 ≤ m) (i : Fin (m + 1)) :
       simp [hsmall, hmid, he, show 0 < m by omega,
         Nat.sub_add_cancel (show 1 ≤ m by omega)]
     · simp [hsmall, hmid]
-
-private theorem full_reverse_list {m : ℕ} (v : Configuration m) :
-    List.ofFn (v * a m) = (List.ofFn v).reverse := by
+private theorem full_reverse_list {m : ℕ} (v : Configuration m) : List.ofFn (v * a m) = (List.ofFn v).reverse := by
   apply List.ext_getElem
   · simp
   · intro i hi hj
@@ -102,9 +88,7 @@ private theorem full_reverse_list {m : ℕ} (v : Configuration m) :
     congr 1
     apply Fin.ext
     simp [Fin.val_rev]
-
-private theorem rotate_list {m : ℕ} (v : Configuration m) :
-    List.ofFn (v * finRotate (m + 1)) = (List.ofFn v).rotate 1 := by
+private theorem rotate_list {m : ℕ} (v : Configuration m) : List.ofFn (v * finRotate (m + 1)) = (List.ofFn v).rotate 1 := by
   apply List.ext_getElem
   · simp
   · intro i hi hj
@@ -113,9 +97,7 @@ private theorem rotate_list {m : ℕ} (v : Configuration m) :
     congr 1
     apply Fin.ext
     simp [finRotate_apply, Fin.add_def]
-
-private theorem rotate_pow_list {m : ℕ} (v : Configuration m) (k : ℕ) :
-    List.ofFn (v * finRotate (m + 1) ^ k) = (List.ofFn v).rotate k := by
+private theorem rotate_pow_list {m : ℕ} (v : Configuration m) (k : ℕ) : List.ofFn (v * finRotate (m + 1) ^ k) = (List.ofFn v).rotate k := by
   induction k with
   | zero => simp
   | succ k ih =>
@@ -124,15 +106,11 @@ private theorem rotate_pow_list {m : ℕ} (v : Configuration m) (k : ℕ) :
 /-- The residual linear tuple at a configuration with the marked label last. -/
 def residualList {m : ℕ} (z : Configuration m) : List (Fin (m + 1)) :=
   List.ofFn (fun i : Fin m => z i.castSucc)
-
-private theorem residual_nodup {m : ℕ} (z : Configuration m) :
-    (residualList z).Nodup := by
+private theorem residual_nodup {m : ℕ} (z : Configuration m) : (residualList z).Nodup := by
   apply List.nodup_ofFn.mpr
   intro i j h
   exact (Fin.castSucc_injective m) (z.injective h)
-
-private theorem residual_delete {m : ℕ} (z : Configuration m) :
-    delete (z (Fin.last m)) (configurationCycle z) =
+private theorem residual_delete {m : ℕ} (z : Configuration m) : delete (z (Fin.last m)) (configurationCycle z) =
       (residualList z : Cycle (Fin (m + 1))) := by
   change ((List.ofFn z).filter (fun y => decide (y ≠ z (Fin.last m))) :
     Cycle (Fin (m + 1))) = _
@@ -146,26 +124,20 @@ private theorem residual_delete {m : ℕ} (z : Configuration m) :
     exact Fin.castSucc_ne_last i
   simpa [residualList] using congrArg
     (fun l : List (Fin (m + 1)) => (l : Cycle (Fin (m + 1)))) hf
-
-private theorem delete_rotate {m : ℕ} (v : Configuration m) (t : Fin (m + 1))
-    (k : ℕ) :
+private theorem delete_rotate {m : ℕ} (v : Configuration m) (t : Fin (m + 1)) (k : ℕ) :
     delete t (configurationCycle (v * finRotate (m + 1) ^ k)) =
       delete t (configurationCycle v) := by
   apply congrArg (delete t)
   apply Cycle.coe_eq_coe.mpr
   rw [rotate_pow_list]
   exact List.IsRotated.symm ⟨k, rfl⟩
-
-private theorem delete_reverse {m : ℕ} (v : Configuration m) (t : Fin (m + 1)) :
-    delete t (configurationCycle (v * a m)) =
+private theorem delete_reverse {m : ℕ} (v : Configuration m) (t : Fin (m + 1)) : delete t (configurationCycle (v * a m)) =
       (delete t (configurationCycle v)).reverse := by
   change ((List.ofFn (v * a m)).filter (fun y => decide (y ≠ t)) :
     Cycle (Fin (m + 1))) = _
   rw [full_reverse_list, List.filter_reverse]
   rfl
-
-private theorem residual_not_reverse {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) :
-    (residualList z : Cycle (Fin (m + 1))) ≠
+private theorem residual_not_reverse {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) : (residualList z : Cycle (Fin (m + 1))) ≠
       (residualList z : Cycle (Fin (m + 1))).reverse := by
   intro he
   have hn : (residualList z : Cycle (Fin (m + 1))).Nodup :=
@@ -179,14 +151,10 @@ private theorem residual_not_reverse {m : ℕ} (hm : 3 ≤ m) (z : Configuration
   rw [List.toFinset_card_of_nodup (residual_nodup z)] at hb
   simp only [residualList, List.length_ofFn] at hb
   omega
-
-private theorem bc_last {m : ℕ} (hm : 2 ≤ m) :
-    (b m * c m) (Fin.last m) = Fin.last m := by
+private theorem bc_last {m : ℕ} (hm : 2 ≤ m) : (b m * c m) (Fin.last m) = Fin.last m := by
   rw [bc_apply hm]
   simp
-
-private theorem prefix_bc_list {m : ℕ} (hm : 2 ≤ m) (v : Configuration m) :
-    residualList (v * (b m * c m)) = (residualList v).rotate 1 := by
+private theorem prefix_bc_list {m : ℕ} (hm : 2 ≤ m) (v : Configuration m) : residualList (v * (b m * c m)) = (residualList v).rotate 1 := by
   apply List.ext_getElem
   · simp [residualList]
   · intro i hi hj
@@ -200,17 +168,13 @@ private theorem prefix_bc_list {m : ℕ} (hm : 2 ≤ m) (v : Configuration m) :
 /-- Consecutive marked-label insertion gaps, based at an actual tuple. -/
 def gapAnchor {m : ℕ} (z : Configuration m) (k : Fin m) : Configuration m :=
   z * (b m * c m) ^ k.val
-
-private theorem anchor_last {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) (k : Fin m) :
-    gapAnchor z k (Fin.last m) = z (Fin.last m) := by
+private theorem anchor_last {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) (k : Fin m) : gapAnchor z k (Fin.last m) = z (Fin.last m) := by
   have hp (r : ℕ) : ((b m * c m) ^ r) (Fin.last m) = Fin.last m := by
     induction r with
     | zero => simp
     | succ r ih => simp [pow_succ, Equiv.Perm.mul_apply, bc_last hm, ih]
   simp [gapAnchor, Equiv.Perm.mul_apply, hp]
-
-private theorem anchor_residual {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) (k : Fin m) :
-    residualList (gapAnchor z k) = (residualList z).rotate k.val := by
+private theorem anchor_residual {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) (k : Fin m) : residualList (gapAnchor z k) = (residualList z).rotate k.val := by
   have hp (r : ℕ) : residualList (z * (b m * c m) ^ r) =
       (residualList z).rotate r := by
     induction r with
@@ -218,9 +182,7 @@ private theorem anchor_residual {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) (
     | succ r ih =>
       rw [pow_succ, ← mul_assoc, prefix_bc_list hm, ih, List.rotate_rotate]
   exact hp k.val
-
-private theorem anchor_delete {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) (k : Fin m) :
-    delete (z (Fin.last m)) (configurationCycle (gapAnchor z k)) =
+private theorem anchor_delete {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) (k : Fin m) : delete (z (Fin.last m)) (configurationCycle (gapAnchor z k)) =
       (residualList z : Cycle (Fin (m + 1))) := by
   rw [← anchor_last hm z k, residual_delete, anchor_residual hm]
   exact Cycle.coe_eq_coe.mpr (List.IsRotated.symm ⟨k.val, rfl⟩)
@@ -230,9 +192,7 @@ def coordinate {m : ℕ} (z : Configuration m)
     (p : Fin m × Fin (m + 1) × Bool) : Configuration m :=
   gapAnchor z p.1 * finCycle p.2.1 *
     (if p.2.2 then a m else 1)
-
-private theorem rotate_pow_eq_cycle {m : ℕ} (k : ℕ) :
-    finRotate (m + 1) ^ k = finCycle (k : Fin (m + 1)) := by
+private theorem rotate_pow_eq_cycle {m : ℕ} (k : ℕ) : finRotate (m + 1) ^ k = finCycle (k : Fin (m + 1)) := by
   induction k with
   | zero =>
     apply Equiv.ext
@@ -243,16 +203,12 @@ private theorem rotate_pow_eq_cycle {m : ℕ} (k : ℕ) :
     intro i
     simp [pow_succ, Equiv.Perm.mul_apply, ih, finRotate_apply]
     abel
-
-private theorem delete_finCycle {m : ℕ} (v : Configuration m) (t : Fin (m + 1))
-    (r : Fin (m + 1)) :
+private theorem delete_finCycle {m : ℕ} (v : Configuration m) (t : Fin (m + 1)) (r : Fin (m + 1)) :
     delete t (configurationCycle (v * finCycle r)) = delete t (configurationCycle v) := by
   have he : finRotate (m + 1) ^ r.val = finCycle r := by
     simpa using rotate_pow_eq_cycle (m := m) r.val
   rw [← he, delete_rotate]
-
-private theorem coordinate_star {m : ℕ} (hm : 2 ≤ m) (z : Configuration m)
-    (p : Fin m × Fin (m + 1) × Bool) :
+private theorem coordinate_star {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) (p : Fin m × Fin (m + 1) × Bool) :
     Star (z (Fin.last m)) (residualList z : Cycle (Fin (m + 1))) (coordinate z p) := by
   rcases p with ⟨k, r, s⟩
   cases s
@@ -262,9 +218,7 @@ private theorem coordinate_star {m : ℕ} (hm : 2 ≤ m) (z : Configuration m)
   · right
     simp only [coordinate, ↓reduceIte]
     rw [delete_reverse, delete_finCycle, anchor_delete hm]
-
-private theorem coordinate_residual {m : ℕ} (hm : 2 ≤ m) (z : Configuration m)
-    (p : Fin m × Fin (m + 1) × Bool) :
+private theorem coordinate_residual {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) (p : Fin m × Fin (m + 1) × Bool) :
     delete (z (Fin.last m)) (configurationCycle (coordinate z p)) =
       if p.2.2 then (residualList z : Cycle (Fin (m + 1))).reverse else
         (residualList z : Cycle (Fin (m + 1))) := by
@@ -272,9 +226,7 @@ private theorem coordinate_residual {m : ℕ} (hm : 2 ≤ m) (z : Configuration 
   cases s <;> simp only [coordinate, Bool.false_eq_true, ↓reduceIte, mul_one]
   · rw [delete_finCycle, anchor_delete hm]
   · rw [delete_reverse, delete_finCycle, anchor_delete hm]
-
-private theorem anchor_injective {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) :
-    Function.Injective (gapAnchor z) := by
+private theorem anchor_injective {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) : Function.Injective (gapAnchor z) := by
   intro k l he
   have hr := congrArg residualList he
   rw [anchor_residual hm, anchor_residual hm] at hr
@@ -287,9 +239,7 @@ private theorem anchor_injective {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) 
   simp only [residualList, List.length_ofFn, Nat.mod_eq_of_lt k.isLt,
     Nat.mod_eq_of_lt l.isLt] at hv
   exact Fin.ext hv
-
-private theorem coordinate_injective {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) :
-    Function.Injective (coordinate z) := by
+private theorem coordinate_injective {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) : Function.Injective (coordinate z) := by
   rintro ⟨k, r, s⟩ ⟨l, u, q⟩ he
   have hres := congrArg (fun v => delete (z (Fin.last m)) (configurationCycle v)) he
   rw [coordinate_residual (by omega), coordinate_residual (by omega)] at hres
@@ -314,50 +264,38 @@ private theorem coordinate_injective {m : ℕ} (hm : 3 ≤ m) (z : Configuration
   have hk := anchor_injective (by omega) z (mul_right_cancel he')
   subst l
   rfl
-
-private theorem cycle_mul {m : ℕ} (r s : Fin (m + 1)) :
-    finCycle r * finCycle s = finCycle (r + s) := by
+private theorem cycle_mul {m : ℕ} (r s : Fin (m + 1)) : finCycle r * finCycle s = finCycle (r + s) := by
   apply Equiv.ext
   intro i
   simp only [Equiv.Perm.mul_apply, finCycle_apply]
   abel
-
 private theorem cycle_zero (m : ℕ) : finCycle (0 : Fin (m + 1)) = 1 := by
   apply Equiv.ext
   intro i
   simp
-
 private theorem a_sq (m : ℕ) : a m * a m = 1 := by
   apply Equiv.ext
   intro i
   simp [Equiv.Perm.mul_apply, a_apply]
-
 private theorem b_sq (m : ℕ) : b m * b m = 1 := by
   apply Equiv.ext
   intro i
   exact reverseIndex_involutive (L := m) (by omega) i
-
-private theorem a_cycle {m : ℕ} (r : Fin (m + 1)) :
-    a m * finCycle r = finCycle (-r) * a m := by
+private theorem a_cycle {m : ℕ} (r : Fin (m + 1)) : a m * finCycle r = finCycle (-r) * a m := by
   apply Equiv.ext
   intro i
   simp [Equiv.Perm.mul_apply, a_apply, Fin.rev_add, sub_eq_add_neg]
-
-private theorem b_eq_cycle_a (m : ℕ) :
-    b m = finCycle (-1 : Fin (m + 1)) * a m := by
+private theorem b_eq_cycle_a (m : ℕ) : b m = finCycle (-1 : Fin (m + 1)) * a m := by
   have hr : finRotate (m + 1) = finCycle (1 : Fin (m + 1)) := by
     simpa using rotate_pow_eq_cycle (m := m) 1
   calc
     b m = a m * (a m * b m) := by rw [← mul_assoc, a_sq, one_mul]
     _ = a m * finCycle (1 : Fin (m + 1)) := by rw [ab_eq_rotate, hr]
     _ = finCycle (-1 : Fin (m + 1)) * a m := a_cycle _
-
 private theorem b_last (m : ℕ) : b m (Fin.last m) = Fin.last m := by
   apply Fin.ext
   simp [b_apply]
-
-private theorem residual_b {m : ℕ} (v : Configuration m) :
-    residualList (v * b m) = (residualList v).reverse := by
+private theorem residual_b {m : ℕ} (v : Configuration m) : residualList (v * b m) = (residualList v).reverse := by
   apply List.ext_getElem
   · simp [residualList]
   · intro i hi hj
@@ -367,18 +305,14 @@ private theorem residual_b {m : ℕ} (v : Configuration m) :
     apply Fin.ext
     rw [b_apply]
     simp only [Fin.val_castSucc, if_pos (show i < m by simpa [residualList] using hi)]
-
-private theorem configuration_eq_of_residual_last {m : ℕ} {u v : Configuration m}
-    (hr : residualList u = residualList v) (hl : u (Fin.last m) = v (Fin.last m)) :
+private theorem configuration_eq_of_residual_last {m : ℕ} {u v : Configuration m} (hr : residualList u = residualList v) (hl : u (Fin.last m) = v (Fin.last m)) :
     u = v := by
   have hf : (fun i : Fin m => u i.castSucc) = (fun i : Fin m => v i.castSucc) :=
     List.ofFn_injective hr
   apply Equiv.ext
   intro i
   exact Fin.lastCases hl (fun j => congrFun hf j) i
-
-private theorem positive_last_anchor {m : ℕ} (hm : 2 ≤ m) (z w : Configuration m)
-    (hl : w (Fin.last m) = z (Fin.last m))
+private theorem positive_last_anchor {m : ℕ} (hm : 2 ≤ m) (z w : Configuration m) (hl : w (Fin.last m) = z (Fin.last m))
     (hd : delete (z (Fin.last m)) (configurationCycle w) =
       (residualList z : Cycle (Fin (m + 1)))) :
     ∃ k : Fin m, w = gapAnchor z k := by
@@ -391,9 +325,7 @@ private theorem positive_last_anchor {m : ℕ} (hm : 2 ≤ m) (z w : Configurati
     simpa only [residualList, List.length_ofFn, j] using he.symm
   · rw [anchor_last hm]
     exact hl
-
-private theorem coordinate_surjective {m : ℕ} (hm : 3 ≤ m) (z v : Configuration m)
-    (hv : Star (z (Fin.last m)) (residualList z : Cycle (Fin (m + 1))) v) :
+private theorem coordinate_surjective {m : ℕ} (hm : 3 ≤ m) (z v : Configuration m) (hv : Star (z (Fin.last m)) (residualList z : Cycle (Fin (m + 1))) v) :
     ∃ p : Fin m × Fin (m + 1) × Bool, coordinate z p = v := by
   let d : Fin (m + 1) := v.symm (z (Fin.last m)) + 1
   let w : Configuration m := v * finCycle d
@@ -475,29 +407,23 @@ def uWord (m : ℕ) : ℕ → List (Configuration m)
 def zWord (m j : ℕ) : List (Configuration m) :=
   uWord m j ++ (List.replicate (m - 1) (c m :: uWord m m)).flatten ++
     c m :: uWord m (m - j - 1)
-
 private theorem uWord_length (m k : ℕ) : (uWord m k).length = 2 * k + 1 := by
   induction k with
   | zero => simp [uWord]
   | succ k ih => simp [uWord, ih]; omega
-
-private theorem uWord_product (m k : ℕ) :
-    (uWord m k).prod = finRotate (m + 1) ^ k * a m := by
+private theorem uWord_product (m k : ℕ) : (uWord m k).prod = finRotate (m + 1) ^ k * a m := by
   induction k with
   | zero => simp [uWord]
   | succ k ih =>
     simp only [uWord, List.prod_cons, ih]
     rw [← mul_assoc, ab_eq_rotate, ← mul_assoc, ← pow_succ']
-
-private theorem uWord_snoc (m k : ℕ) :
-    uWord m (k + 1) = uWord m k ++ [b m, a m] := by
+private theorem uWord_snoc (m k : ℕ) : uWord m (k + 1) = uWord m k ++ [b m, a m] := by
   induction k with
   | zero => rfl
   | succ k ih =>
     change a m :: b m :: uWord m (k + 1) =
       a m :: b m :: (uWord m k ++ [b m, a m])
     rw [ih]
-
 private theorem uWord_reverse (m k : ℕ) : (uWord m k).reverse = uWord m k := by
   induction k with
   | zero => simp [uWord]
@@ -505,17 +431,13 @@ private theorem uWord_reverse (m k : ℕ) : (uWord m k).reverse = uWord m k := b
     simp only [uWord, List.reverse_cons, List.reverse_cons, ih]
     rw [List.append_assoc]
     exact (uWord_snoc m k).symm
-
-private theorem uWord_split (m p q : ℕ) :
-    uWord m (p + q + 1) = uWord m p ++ b m :: uWord m q := by
+private theorem uWord_split (m p q : ℕ) : uWord m (p + q + 1) = uWord m p ++ b m :: uWord m q := by
   induction p with
   | zero => simp [uWord]
   | succ p ih =>
     rw [show p + 1 + q + 1 = (p + q + 1) + 1 by omega, uWord, ih]
     simp only [uWord, List.cons_append]
-
-private theorem uWord_ofFn (m k : ℕ) : uWord m k =
-    List.ofFn (fun i : Fin (2 * k + 1) => if i.val % 2 = 0 then a m else b m) := by
+private theorem uWord_ofFn (m k : ℕ) : uWord m k = List.ofFn (fun i : Fin (2 * k + 1) => if i.val % 2 = 0 then a m else b m) := by
   induction k with
   | zero => simp [uWord, List.ofFn_succ]
   | succ k ih =>
@@ -540,19 +462,13 @@ def rankEquiv (m : ℕ) : Fin (m * ((m + 1) * 2)) ≃
 /-- The actual configuration at a native rank of the (Hc)^m circle. -/
 def nativeVertex {m : ℕ} (z : Configuration m) (i : Fin (m * ((m + 1) * 2))) :
     Configuration m := coordinate z (rankEquiv m i)
-
-private theorem nativeVertex_injective {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) :
-    Function.Injective (nativeVertex z) :=
+private theorem nativeVertex_injective {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) : Function.Injective (nativeVertex z) :=
   (coordinate_injective hm z).comp (rankEquiv m).injective
-
-private theorem nativeVertex_surjective {m : ℕ} (hm : 3 ≤ m) (z v : Configuration m)
-    (hv : Star (z (Fin.last m)) (residualList z : Cycle (Fin (m + 1))) v) :
+private theorem nativeVertex_surjective {m : ℕ} (hm : 3 ≤ m) (z v : Configuration m) (hv : Star (z (Fin.last m)) (residualList z : Cycle (Fin (m + 1))) v) :
     ∃ i : Fin (m * ((m + 1) * 2)), nativeVertex z i = v := by
   obtain ⟨p, hp⟩ := coordinate_surjective hm z v hv
   exact ⟨(rankEquiv m).symm p, by simpa [nativeVertex] using hp⟩
-
-private theorem anchor_next {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (k : Fin m) :
-    gapAnchor z ⟨(k.val + 1) % m, Nat.mod_lt _ (by omega)⟩ =
+private theorem anchor_next {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (k : Fin m) : gapAnchor z ⟨(k.val + 1) % m, Nat.mod_lt _ (by omega)⟩ =
       gapAnchor z k * (b m * c m) := by
   apply configuration_eq_of_residual_last
   · rw [anchor_residual (by omega), prefix_bc_list (by omega),
@@ -563,47 +479,33 @@ private theorem anchor_next {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (k : 
       gapAnchor z k ((b m * c m) (Fin.last m))
     rw [bc_last (show 2 ≤ m by omega), anchor_last (show 2 ≤ m by omega),
       anchor_last (show 2 ≤ m by omega)]
-
-private theorem coordinate_a {m : ℕ} (z : Configuration m) (k : Fin m)
-    (r : Fin (m + 1)) :
+private theorem coordinate_a {m : ℕ} (z : Configuration m) (k : Fin m) (r : Fin (m + 1)) :
     coordinate z (k, r, false) * a m = coordinate z (k, r, true) := by
   simp [coordinate]
-
-private theorem coordinate_b {m : ℕ} (z : Configuration m) (k : Fin m)
-    (r : Fin (m + 1)) :
+private theorem coordinate_b {m : ℕ} (z : Configuration m) (k : Fin m) (r : Fin (m + 1)) :
     coordinate z (k, r, true) * b m = coordinate z (k, r + 1, false) := by
   have hr : a m * b m = finCycle (1 : Fin (m + 1)) := by
     rw [ab_eq_rotate]
     simpa using rotate_pow_eq_cycle (m := m) 1
   simp only [coordinate, Bool.false_eq_true, ↓reduceIte, mul_one]
   rw [mul_assoc, hr, mul_assoc, cycle_mul]
-
-private theorem coordinate_c {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (k : Fin m) :
-    coordinate z (k, Fin.last m, true) * c m =
+private theorem coordinate_c {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (k : Fin m) : coordinate z (k, Fin.last m, true) * c m =
       coordinate z (⟨(k.val + 1) % m, Nat.mod_lt _ (by omega)⟩, 0, false) := by
   have he : (-1 : Fin (m + 1)) = Fin.last m := by
     rw [← Fin.neg_last m, neg_neg]
   simp only [coordinate, Bool.false_eq_true, ↓reduceIte, mul_one, cycle_zero]
   rw [anchor_next hm z k, b_eq_cycle_a, he]
   simp only [mul_assoc]
-
-private theorem coordinate_true_last {m : ℕ} (hm : 3 ≤ m) (z : Configuration m)
-    (k : Fin m) (r : Fin (m + 1)) :
+private theorem coordinate_true_last {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (k : Fin m) (r : Fin (m + 1)) :
     coordinate z (k, r, true) (Fin.last m) = z (Fin.last m) ↔ r = Fin.last m := by
   simp only [coordinate, ↓reduceIte, Equiv.Perm.mul_apply, a_apply,
     Fin.rev_last, finCycle_apply, zero_add]
   rw [← anchor_last (by omega) z k, (gapAnchor z k).injective.eq_iff]
-
-private theorem native_size_three {m : ℕ} (hm : 3 ≤ m) :
-    3 ≤ m * ((m + 1) * 2) := by nlinarith
-
-private theorem rank_val {m : ℕ} (k : Fin m) (r : Fin (m + 1)) (s : Bool) :
-    ((rankEquiv m).symm (k, r, s)).val =
+private theorem native_size_three {m : ℕ} (hm : 3 ≤ m) : 3 ≤ m * ((m + 1) * 2) := by nlinarith
+private theorem rank_val {m : ℕ} (k : Fin m) (r : Fin (m + 1)) (s : Bool) : ((rankEquiv m).symm (k, r, s)).val =
       (if s then 1 else 0) + 2 * r.val + ((m + 1) * 2) * k.val := by
   cases s <;> simp [rankEquiv, finProdFinEquiv, finTwoEquiv, Nat.mul_comm]
-
-private theorem rank_next_false {m : ℕ} [NeZero (m * ((m + 1) * 2))]
-    (hm : 3 ≤ m) (k : Fin m)
+private theorem rank_next_false {m : ℕ} [NeZero (m * ((m + 1) * 2))] (hm : 3 ≤ m) (k : Fin m)
     (r : Fin (m + 1)) :
     (rankEquiv m).symm (k, r, false) + 1 = (rankEquiv m).symm (k, r, true) := by
   have hN := native_size_three hm
@@ -616,9 +518,7 @@ private theorem rank_next_false {m : ℕ} [NeZero (m * ((m + 1) * 2))]
     1 % (m * ((m + 1) * 2))) % (m * ((m + 1) * 2)) = _
   rw [Nat.mod_eq_of_lt (show 1 < m * ((m + 1) * 2) by omega), he,
     Nat.mod_eq_of_lt ((rankEquiv m).symm (k, r, true)).isLt]
-
-private theorem rank_next_true {m : ℕ} [NeZero (m * ((m + 1) * 2))]
-    (hm : 3 ≤ m) (k : Fin m)
+private theorem rank_next_true {m : ℕ} [NeZero (m * ((m + 1) * 2))] (hm : 3 ≤ m) (k : Fin m)
     (r : Fin (m + 1)) (hr : r.val < m) :
     (rankEquiv m).symm (k, r, true) + 1 = (rankEquiv m).symm (k, r + 1, false) := by
   have hN := native_size_three hm
@@ -632,9 +532,7 @@ private theorem rank_next_true {m : ℕ} [NeZero (m * ((m + 1) * 2))]
     1 % (m * ((m + 1) * 2))) % (m * ((m + 1) * 2)) = _
   rw [Nat.mod_eq_of_lt (show 1 < m * ((m + 1) * 2) by omega), he,
     Nat.mod_eq_of_lt ((rankEquiv m).symm (k, r + 1, false)).isLt]
-
-private theorem rank_next_last {m : ℕ} [NeZero (m * ((m + 1) * 2))]
-    (hm : 3 ≤ m) (k : Fin m) :
+private theorem rank_next_last {m : ℕ} [NeZero (m * ((m + 1) * 2))] (hm : 3 ≤ m) (k : Fin m) :
     (rankEquiv m).symm (k, Fin.last m, true) + 1 =
       (rankEquiv m).symm
         (⟨(k.val + 1) % m, Nat.mod_lt _ (by omega)⟩, 0, false) := by
@@ -654,9 +552,7 @@ private theorem rank_next_last {m : ℕ} [NeZero (m * ((m + 1) * 2))]
 def nativeGenerator {m : ℕ} (i : Fin (m * ((m + 1) * 2))) : Configuration m :=
   let p := rankEquiv m i
   if p.2.2 then (if p.2.1 = Fin.last m then c m else b m) else a m
-
-private theorem native_step {m : ℕ} [NeZero (m * ((m + 1) * 2))]
-    (hm : 3 ≤ m) (z : Configuration m)
+private theorem native_step {m : ℕ} [NeZero (m * ((m + 1) * 2))] (hm : 3 ≤ m) (z : Configuration m)
     (i : Fin (m * ((m + 1) * 2))) :
     nativeVertex z i * nativeGenerator i = nativeVertex z (i + 1) := by
   let p := rankEquiv m i
@@ -675,23 +571,18 @@ private theorem native_step {m : ℕ} [NeZero (m * ((m + 1) * 2))]
         omega
       rw [rank_next_true hm k r hv]
       simpa [nativeVertex, nativeGenerator, hr] using coordinate_b z k r
-
 private theorem c_sq (m : ℕ) : c m * c m = 1 := by
   apply Equiv.ext
   intro i
   exact reverseIndex_involutive (L := m - 1) (by omega) i
-
-private theorem nativeGenerator_sq {m : ℕ} (i : Fin (m * ((m + 1) * 2))) :
-    nativeGenerator i * nativeGenerator i = 1 := by
+private theorem nativeGenerator_sq {m : ℕ} (i : Fin (m * ((m + 1) * 2))) : nativeGenerator i * nativeGenerator i = 1 := by
   dsimp [nativeGenerator]
   split
   · split
     · exact c_sq m
     · exact b_sq m
   · exact a_sq m
-
-private theorem factor_direction {m : ℕ} {t : Fin (m + 1)} {u v : Configuration m}
-    (hn : u ≠ v)
+private theorem factor_direction {m : ℕ} {t : Fin (m + 1)} {u v : Configuration m} (hn : u ≠ v)
     (he : v = u * a m ∨ (u (Fin.last m) ≠ t ∧ v = u * b m) ∨
       (u (Fin.last m) = t ∧ v = u * c m)) : (factor m t).Adj u v := by
   constructor
@@ -702,9 +593,7 @@ private theorem factor_direction {m : ℕ} {t : Fin (m + 1)} {u v : Configuratio
     · exact ⟨b m, by simp, Or.inl hb.2.symm⟩
     · exact ⟨c m, by simp, Or.inl hc.2.symm⟩
   · exact ⟨hn, Or.inl he⟩
-
-private theorem native_adj {m : ℕ} [NeZero (m * ((m + 1) * 2))]
-    (hm : 3 ≤ m) (z : Configuration m)
+private theorem native_adj {m : ℕ} [NeZero (m * ((m + 1) * 2))] (hm : 3 ≤ m) (z : Configuration m)
     (i : Fin (m * ((m + 1) * 2))) :
     (factor m (z (Fin.last m))).Adj (nativeVertex z i) (nativeVertex z (i + 1)) := by
   have hN := native_size_three hm
@@ -735,11 +624,9 @@ private theorem native_adj {m : ℕ} [NeZero (m * ((m + 1) * 2))]
 /-- The literal word (Hc)^m, before cutting an internal b-edge. -/
 def cycleWord (m : ℕ) : List (Configuration m) :=
   (List.replicate m (uWord m m ++ [c m])).flatten
-
 private def blockWord (m : ℕ) : List (Configuration m) :=
   List.ofFn (fun q : Fin ((m + 1) * 2) =>
     if q.val = 2 * m + 1 then c m else if q.val % 2 = 0 then a m else b m)
-
 private theorem blockWord_eq (m : ℕ) : blockWord m = uWord m m ++ [c m] := by
   unfold blockWord
   rw [show (m + 1) * 2 = (2 * m + 1) + 1 by omega, List.ofFn_succ']
@@ -751,9 +638,7 @@ private theorem blockWord_eq (m : ℕ) : blockWord m = uWord m m ++ [c m] := by
     simp only [Fin.val_castSucc, if_neg (show i.val ≠ 2 * m + 1 by omega)]
   simp only [hf, Fin.val_last, ↓reduceIte, List.concat_eq_append]
   rw [← uWord_ofFn]
-
-private theorem generator_finProd {m : ℕ} (k : Fin m) (q : Fin ((m + 1) * 2)) :
-    nativeGenerator (finProdFinEquiv (k, q)) =
+private theorem generator_finProd {m : ℕ} (k : Fin m) (q : Fin ((m + 1) * 2)) : nativeGenerator (finProdFinEquiv (k, q)) =
       if q.val = 2 * m + 1 then c m else if q.val % 2 = 0 then a m else b m := by
   simp only [nativeGenerator, rankEquiv, Equiv.trans_apply, Equiv.symm_apply_apply]
   change (if finTwoEquiv q.modNat then
@@ -774,16 +659,12 @@ private theorem generator_finProd {m : ℕ} (k : Fin m) (q : Fin ((m + 1) * 2)) 
     have hn : q.val % 2 = 0 := by omega
     have he : q.val ≠ 2 * m + 1 := by omega
     rw [if_neg he, if_pos hn]
-
-private theorem rank_bound {m : ℕ} (k : Fin m) (q : Fin ((m + 1) * 2)) :
-    k.val * ((m + 1) * 2) + q.val < m * ((m + 1) * 2) := by
+private theorem rank_bound {m : ℕ} (k : Fin m) (q : Fin ((m + 1) * 2)) : k.val * ((m + 1) * 2) + q.val < m * ((m + 1) * 2) := by
   calc
     _ < k.val * ((m + 1) * 2) + ((m + 1) * 2) := Nat.add_lt_add_left q.isLt _
     _ = (k.val + 1) * ((m + 1) * 2) := by ring
     _ ≤ m * ((m + 1) * 2) := Nat.mul_le_mul_right _ k.isLt
-
-private theorem cycleWord_ofFn (m : ℕ) : cycleWord m =
-    List.ofFn (fun i : Fin (m * ((m + 1) * 2)) => nativeGenerator i) := by
+private theorem cycleWord_ofFn (m : ℕ) : cycleWord m = List.ofFn (fun i : Fin (m * ((m + 1) * 2)) => nativeGenerator i) := by
   rw [List.ofFn_mul]
   have hf : (fun k : Fin m =>
       List.ofFn (fun q : Fin ((m + 1) * 2) =>
@@ -799,13 +680,10 @@ private theorem cycleWord_ofFn (m : ℕ) : cycleWord m =
     rw [he, generator_finProd]
   rw [hf, List.ofFn_const]
   simp only [cycleWord, blockWord_eq]
-
 private theorem cycleWord_length (m : ℕ) : (cycleWord m).length = m * ((m + 1) * 2) := by
   rw [cycleWord_ofFn]
   simp
-
-private theorem complement_word (m : ℕ) (hm : 3 ≤ m) (j : Fin m) :
-    ((cycleWord m).rotate (2 * j.val + 1)).tail.reverse = zWord m j.val := by
+private theorem complement_word (m : ℕ) (hm : 3 ≤ m) (j : Fin m) : ((cycleWord m).rotate (2 * j.val + 1)).tail.reverse = zWord m j.val := by
   have hsplit : uWord m m = uWord m j.val ++ b m :: uWord m (m - j.val - 1) := by
     have hn : j.val + (m - j.val - 1) + 1 = m := by omega
     simpa only [hn] using uWord_split m j.val (m - j.val - 1)
@@ -825,14 +703,10 @@ private theorem complement_word (m : ℕ) (hm : 3 ≤ m) (j : Fin m) :
     List.map_replicate, List.reverse_replicate, uWord_reverse, List.nil_append,
     List.append_nil]
   simp only [zWord, List.cons_append, List.append_assoc]
-
-private theorem zWord_length {m : ℕ} (hm : 3 ≤ m) (j : Fin m) :
-    (zWord m j.val).length = m * ((m + 1) * 2) - 1 := by
+private theorem zWord_length {m : ℕ} (hm : 3 ≤ m) (j : Fin m) : (zWord m j.val).length = m * ((m + 1) * 2) - 1 := by
   rw [← complement_word m hm j, List.length_reverse, List.length_tail,
     List.length_rotate, cycleWord_length]
-
-private theorem star_base_iff {m : ℕ} (z : Configuration m) (t : Fin (m + 1))
-    (W : Cycle (Fin (m + 1))) (hzt : z (Fin.last m) = t)
+private theorem star_base_iff {m : ℕ} (z : Configuration m) (t : Fin (m + 1)) (W : Cycle (Fin (m + 1))) (hzt : z (Fin.last m) = t)
     (hW : (residualList z : Cycle (Fin (m + 1))) = W ∨
       (residualList z : Cycle (Fin (m + 1))) = W.reverse) (v : Configuration m) :
     Star t W v ↔ Star (z (Fin.last m)) (residualList z : Cycle (Fin (m + 1))) v := by
@@ -840,7 +714,6 @@ private theorem star_base_iff {m : ℕ} (z : Configuration m) (t : Fin (m + 1))
   · rw [hzt, hW]
   · rw [hzt, hW]
     simp only [Star, Cycle.reverse_reverse, or_comm]
-
 private def nativeStarVertex {m : ℕ} (hm : 3 ≤ m) (z : Configuration m)
     (t : Fin (m + 1)) (W : Cycle (Fin (m + 1))) (hzt : z (Fin.last m) = t)
     (hW : (residualList z : Cycle (Fin (m + 1))) = W ∨
@@ -848,9 +721,7 @@ private def nativeStarVertex {m : ℕ} (hm : 3 ≤ m) (z : Configuration m)
     (i : Fin (m * ((m + 1) * 2))) : {v : Configuration m // Star t W v} :=
   ⟨nativeVertex z i, (star_base_iff z t W hzt hW _).mpr
     (coordinate_star (by omega) z (rankEquiv m i))⟩
-
-private theorem nativeStarVertex_bijective {m : ℕ} (hm : 3 ≤ m) (z : Configuration m)
-    (t : Fin (m + 1)) (W : Cycle (Fin (m + 1))) (hzt : z (Fin.last m) = t)
+private theorem nativeStarVertex_bijective {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (t : Fin (m + 1)) (W : Cycle (Fin (m + 1))) (hzt : z (Fin.last m) = t)
     (hW : (residualList z : Cycle (Fin (m + 1))) = W ∨
       (residualList z : Cycle (Fin (m + 1))) = W.reverse) :
     Function.Bijective (nativeStarVertex hm z t W hzt hW) := by
@@ -865,13 +736,10 @@ private theorem nativeStarVertex_bijective {m : ℕ} (hm : 3 ≤ m) (z : Configu
 /-- The odd native rank of the retained b-edge with marked-label position j. -/
 def cutStart {m : ℕ} (j : Fin m) : Fin (m * ((m + 1) * 2)) :=
   (rankEquiv m).symm ((⟨0, j.pos⟩ : Fin m), j.castSucc, true)
-
 private theorem cutStart_val {m : ℕ} (j : Fin m) : (cutStart j).val = 2 * j.val + 1 := by
   simp only [cutStart, rank_val, ↓reduceIte, Fin.val_castSucc, mul_zero, add_zero]
   omega
-
-private theorem zWord_letter {m : ℕ} (hm : 3 ≤ m) (j : Fin m) (i : ℕ)
-    (hi : i < m * ((m + 1) * 2) - 1) :
+private theorem zWord_letter {m : ℕ} (hm : 3 ≤ m) (j : Fin m) (i : ℕ) (hi : i < m * ((m + 1) * 2) - 1) :
     (zWord m j.val)[i]'(by rwa [zWord_length hm]) =
       nativeGenerator (cutStart j -
         (⟨i + 1, by omega⟩ : Fin (m * ((m + 1) * 2)))) := by
@@ -886,9 +754,7 @@ private theorem zWord_letter {m : ℕ} (hm : 3 ≤ m) (j : Fin m) (i : ℕ)
   simp only [Fin.val_sub, cutStart_val]
   congr 1
   omega
-
-private theorem backwards_trace {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (j : Fin m) :
-    List.ofFn (fun i : Fin (m * ((m + 1) * 2)) =>
+private theorem backwards_trace {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (j : Fin m) : List.ofFn (fun i : Fin (m * ((m + 1) * 2)) =>
       nativeVertex z (cutStart j - i)) =
       List.scanl (fun v g => v * g) (nativeVertex z (cutStart j)) (zWord m j.val) := by
   have hN := native_size_three hm
@@ -939,9 +805,7 @@ private theorem backwards_trace {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (
       rw [he] at hs
       rw [← hs, mul_assoc, nativeGenerator_sq, mul_one]
   exact List.ext_getElem hlen hget
-
-private theorem native_complement {m : ℕ} (hm : 3 ≤ m) (z : Configuration m)
-    (t : Fin (m + 1)) (W : Cycle (Fin (m + 1))) (hzt : z (Fin.last m) = t)
+private theorem native_complement {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (t : Fin (m + 1)) (W : Cycle (Fin (m + 1))) (hzt : z (Fin.last m) = t)
     (hW : (residualList z : Cycle (Fin (m + 1))) = W ∨
       (residualList z : Cycle (Fin (m + 1))) = W.reverse) (j : Fin m) :
     let u := nativeStarVertex hm z t W hzt hW (cutStart j)
@@ -1041,7 +905,6 @@ private theorem native_complement {m : ℕ} (hm : 3 ≤ m) (z : Configuration m)
       xs, List.length_ofFn]
   · rw [hs, List.map_ofFn]
     exact backwards_trace hm z j
-
 private theorem uWord_sq (m k : ℕ) : (uWord m k).prod * (uWord m k).prod = 1 := by
   rw [uWord_product, rotate_pow_eq_cycle]
   calc
@@ -1052,20 +915,15 @@ private theorem uWord_sq (m k : ℕ) : (uWord m k).prod * (uWord m k).prod = 1 :
       rw [a_cycle]
     _ = 1 := by
       rw [← mul_assoc, cycle_mul, add_neg_cancel, cycle_zero, one_mul, a_sq]
-
 private theorem cast_j {m : ℕ} (j : Fin m) : (j.val : Fin (m + 1)) = j.castSucc := by
   apply Fin.ext
   simp only [Fin.val_natCast, Fin.val_castSucc]
   exact Nat.mod_eq_of_lt (by omega)
-
-private theorem native_start {m : ℕ} (z : Configuration m) (j : Fin m) :
-    nativeVertex z (cutStart j) = z * (uWord m j.val).prod := by
+private theorem native_start {m : ℕ} (z : Configuration m) (j : Fin m) : nativeVertex z (cutStart j) = z * (uWord m j.val).prod := by
   simp only [nativeVertex, cutStart, Equiv.apply_symm_apply, coordinate, gapAnchor,
     Fin.val_zero, pow_zero, mul_one, ↓reduceIte, uWord_product, rotate_pow_eq_cycle, cast_j,
     mul_assoc]
-
-private theorem native_end {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (j : Fin m) :
-    nativeVertex z (finRotate (m * ((m + 1) * 2)) (cutStart j)) =
+private theorem native_end {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (j : Fin m) : nativeVertex z (finRotate (m * ((m + 1) * 2)) (cutStart j)) =
       nativeVertex z (cutStart j) * b m := by
   have hN := native_size_three hm
   letI : NeZero (m * ((m + 1) * 2)) := ⟨by omega⟩
