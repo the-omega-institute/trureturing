@@ -29280,3 +29280,165 @@ that parent's capacity has separately been established. The remaining
 task is still to exclude the actual phases and complete covering
 service in the allowed branch, or to prove a further complete-liability
 descent.
+
+## 251. An odd periodic demand has a globally optimal occupied-label packet
+
+There is an all-odd counterpart to Section 248's local obstruction, with
+an essential scope difference: its demand is a proper periodic subset of
+the integers. Put
+\[
+S=[0]_5\cup[0]_7\cup[1]_{35}\cup[2]_{35},
+\qquad [a]_d=a+d\mathbb Z,
+\tag{OD1}
+\]
+and consider
+\[
+\mathcal F_0=\{[0]_3,[0]_5,[0]_7,[1]_{15},[8]_{21},[2]_{35}\}.
+\tag{OD2}
+\]
+Among all finite families of distinct odd moduli greater than one
+covering \(S\), with arbitrary phases, primes and heights, the minimum
+class count is six. Among six-class families, the minimum modulus sum
+is \(86\). Family (OD2) attains both minima.
+
+Its ternary triple covers all of \([1]_{35}\): in that progression
+the classes of moduli \(3,15,21\) supply the three ternary digits.
+Their reduced intersection is \([1]_{35}\), but modulus \(35\) is
+already occupied at phase two. The labels are divisor-closed and all
+comparable original classes are disjoint. In displayed order, private
+witnesses inside \(S\) are
+\[
+36,\quad5,\quad7,\quad1,\quad71,\quad2.
+\]
+Integer four is not covered. This is neither an odd whole cover nor
+a counterexample to a theorem assuming whole-cover extremality.
+
+### A periodic-demand form of the top-layer argument
+
+For a family covering a set of period \(N\), take precisely
+\[
+Q=\operatorname{lcm}(N,\text{all candidate moduli}).
+\]
+Suppose its maximum \(p\)-height \(a\) exceeds \(v_p(N)\).
+On every \(p\)-point orbit under translation by \(Q/p\), the
+demand and every lower-height class are constant, while each maximal
+class meets at most one point. If there are fewer than \(p\) maximal
+classes, they can all be deleted without losing demanded coverage.
+Thus an inclusion-minimal candidate has at least \(p\) such classes.
+If the entire family consists of exactly \(p\) maximal classes, every
+demanded orbit must meet each of them. The demand is then contained in
+each corresponding congruence reduced from modulus \(d\) to \(d/p\).
+
+This is the orbit argument underlying the maximal-layer compression
+used in Section 192, applied only to the specified demand. An arbitrary
+larger common period cannot replace the displayed lcm: an extra factor
+of \(p\) would make \(Q/p\) a period of the maximal classes too.
+
+### Five distinct odd classes cannot cover the demand
+
+Suppose an inclusion-minimal family of at most five classes covers
+\(S\). Its demand period is \(35\). The orbit argument excludes
+every prime at least eleven from its moduli, and excludes every
+\(7\)-height at least two. A \(5\)-height at least two would require
+exactly five maximal classes constituting the whole family. Their
+reductions would put \(S\) in one residue modulo five, contrary to
+\([0]_7\subseteq S\). Consequently every ternary-free modulus is
+one of \(5,7,35\). No ternary-height cutoff has been imposed.
+
+Let \(t\) be the number of ternary-free classes and let \(E\) be
+their uncovered part of \(S\). For any deletion of at most two
+classes of distinct moduli from \(\{5,7,35\}\),
+\[
+E\ne\varnothing,\qquad \gamma_{35}(E)=1.
+\tag{OD3}
+\]
+To see this in the \(5\)-by-\(7\) CRT grid, \(S\) consists of
+the zero column, the zero row and the two extra cells \((1,1),(2,2)\).
+Deleting the zero row and zero column leaves the two consecutive
+extra cells. If exactly one zero line is deleted, at least two points
+of the other zero line and one extra cell remain; their differences
+have common gcd one with \(35\). If neither zero line is deleted,
+surviving portions of both lines give the same conclusion. A deletion
+of modulus \(35\) removes only one cell, so pairing it with one row
+or column also leaves an opposite line segment and a point off that
+line. Fewer deletions leave supersets of these residuals. Equivalently,
+each of the \(35+175+245=455\) two-deletion cases has two surviving
+residues whose difference is coprime to \(35\).
+
+For \(t\le2\), restrict the remaining classes to each full ternary
+fibre \(x=j+3y\). The induced demand \(E_j\) is nonempty and has
+hull one: multiplication by three permutes residues modulo \(35\).
+A single class covering \(E_j\) must have reduced modulus one, hence
+original modulus three. At \(t=2\), at most three classes remain for
+the three fibres; at \(t=1\), at most four remain. These cases force
+at least two singleton fibres and hence repeat modulus three.
+
+At \(t=3\), the three ternary-free classes cover at most
+\(7+5-1+1=12\) of the \(13\) residues of \(S\) modulo \(35\).
+Thus \(E\ne\varnothing\), but at most two remaining classes cannot
+serve its three ternary fibres.
+
+At \(t=0\), the only allocation of at most five classes that avoids
+two singleton fibres is \((1,2,2)\). The singleton uses modulus three;
+the two reduced moduli in either other fibre are odd and greater than
+one. Two such classes cannot cover an affine image of \(S\). Indeed,
+unless a class contains the entire demanded \(5\)-progression, its
+intersection occupies at most one third of that progression. Two
+proper intersections cannot cover it, so one class must have modulus
+five and the required phase. The \(7\)-progression similarly forces
+the other class to have modulus seven. Those classes miss the two
+extra cells. This excludes the last case and proves the six-class floor.
+
+### The unrestricted modulus-sum minimum
+
+Take any six-class covering of \(S\) with modulus sum at most
+\(86\). It is inclusion-minimal by the class-count floor. The orbit
+argument again excludes every prime at least eleven and every
+\(7\)-height above one. A \(5\)-height at least two needs at least
+five moduli of size at least \(25\), already costing \(125\).
+A maximal ternary height \(a\ge2\) needs at least three distinct
+top moduli. Their odd cofactors prime to three are at least
+\(1,5,7\), so they alone cost at least
+\[
+3^a(1+5+7)\ge117>86.
+\]
+Every candidate modulus is therefore a squarefree divisor of \(105\).
+The budget excludes \(105\) itself; the six distinct labels must be
+exactly \(3,5,7,15,21,35\), with sum \(86\). The restrictions on
+primes and heights were derived from the candidate's count and cost,
+not imposed on its comparison class.
+
+The infinite-modulus extremality argument here is an ordinary proof.
+The finite hull cases, all demanded residues in period \(105\), the
+private witnesses and the uncovered residue have scoped Lean checks;
+these checks alone are not a formalization of the full extremality
+statement.
+
+### Whole-cover redivision supplies an additional condition
+
+Report 350 (EB5--EB8) already supplies the relevant global constraint.
+For one EB1 whole cover, let \(B=3^h\) and suppose its maximal
+ternary layer consists exactly of the labels \(3B,15B,21B\).
+Assume \(35B\) is occupied, write \(c\) for the compressed phase,
+\(d\) for that occupied phase, and \(\mathcal R\) for the originals
+outside these four labels. For
+\(p\in\{5,7\}\) and \(r\notin\{a_p,c,d\}\pmod p\), its
+existing redivision theorem forces actual labels
+\[
+m,pm\in\mathcal R,\qquad p\nmid m,\quad m>1,\qquad
+a_{pm}\equiv r\pmod p,\quad a_{pm}\not\equiv a_m\pmod m.
+\tag{OD4}
+\]
+The top pair's child has phase \(c\) and the occupied label has
+phase \(d\), so neither can be this witness. This is a direct
+application of the existing theorem, not a further collision-resolution
+result. It uses the actual pure \(p\)-class supplied by EB1's divisor
+closure; count-minimality alone does not supply that closure.
+
+For (OD2), these available digits are \(3,4\) at five and
+\(3,4,5,6\) at seven, but no such outside pairs exist. This does not
+contradict its local extremality: its restricted demand is one proper
+progression on those fibres, not all integers. Thus even unrestricted
+local count-and-sum optimality leaves a genuine gap to whole-cover
+extremality. Resolving (OD4) simultaneously, or paying the entire joint
+deletion liability by another construction, remains necessary.
