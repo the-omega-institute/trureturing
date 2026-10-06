@@ -8,7 +8,6 @@
 
 import D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Data.List.Chain
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -16,9 +15,8 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.FibonacciAtomic.LegalResamplingSupportSignal
 
-open LiteralWindowEnd (Window first last nonzero bits flatten)
-open LegalPriorityTeacher (Input Roles Legal gate teacher)
-open D5.S3.Arith.ZeckendorfFutureKernel (legal)
+open LiteralWindowEnd (Window first last nonzero)
+open LegalPriorityTeacher (Input Roles Legal gate teacher legal_iff)
 open scoped BigOperators
 
 /-- The source keeps all positions and requires a nonzero terminal window. -/
@@ -55,42 +53,6 @@ theorem result {n : ℕ} (_hn : 4 ≤ n) (t : Roles n) (I : Finset (Fin n)) :
     (I ∩ support t = ∅ → signal t I = 0) ∧
     ((I ∩ support t).Nonempty → (2 / 3125 : ℚ) ≤ signal t I) := by
   classical
-  have legal_iff (x : Input n) :
-      Legal x ↔ ∀ i j : Fin n, i.val + 1 = j.val →
-        ¬ (last (x i) = true ∧ first (x j) = true) := by
-    let R : Bool → Bool → Prop := fun a b => ¬ (a = true ∧ b = true)
-    have hc (s : Bool) (bs : List Bool) : legal s bs ↔ (s :: bs).IsChain R := by
-      induction bs generalizing s with
-      | nil => simp [legal]
-      | cons b bs ih => simp only [legal, List.isChain_cons_cons, ih, R]
-    have hn : ([] : List Bool) ∉ (List.ofFn x).map bits := by
-      simp only [List.mem_map]
-      rintro ⟨b, _, h⟩
-      cases b <;> simp [bits] at h
-    have hi : ∀ b : Window, (bits b).IsChain R := by
-      intro b
-      cases b <;> simp [bits, List.isChain_cons_cons, R]
-    have hb (a b : Window) :
-        (∀ᵉ (u ∈ (bits a).getLast?) (v ∈ (bits b).head?), R u v) ↔
-        ¬ (last a = true ∧ first b = true) := by
-      cases a <;> cases b <;> simp [bits, first, last, R]
-    rw [Legal, hc]
-    rw [List.isChain_cons]
-    simp only [R, Bool.false_eq_true, false_and, not_false_eq_true, implies_true,
-      true_and]
-    change ((List.ofFn x).map bits).flatten.IsChain R ↔ _
-    have hall : ∀ l ∈ (List.ofFn x).map bits, l.IsChain R := by
-      intro l hl
-      obtain ⟨b, _, rfl⟩ := List.mem_map.mp hl
-      exact hi b
-    rw [List.isChain_flatten hn, and_iff_right hall, List.isChain_map]
-    simp only [hb, List.isChain_ofFn]
-    constructor
-    · intro h i j hij
-      have hj : i.val + 1 < n := hij ▸ j.isLt
-      simpa only [Fin.eta, Fin.ext_iff, hij] using h i.val hj
-    · intro h i hi
-      exact h ⟨i, by omega⟩ ⟨i + 1, hi⟩ rfl
   have mem_source (x : Input n) : x ∈ source n ↔ Positive x := by simp [source]
   have mem_fiber (J : Finset (Fin n)) (x y : Input n) :
       y ∈ fiber J x ↔ Positive y ∧ ∀ j, j ∉ J → y j = x j := by
@@ -499,7 +461,5 @@ theorem result {n : ℕ} (_hn : 4 ≤ n) (t : Roles n) (I : Finset (Fin n)) :
       apply (le_div_iff₀ hnpos).2
       nlinarith only [hsum, hc]
     exact singleton_bound.trans (signal_mono {i} I (by simpa))
-
-#print axioms result
 
 end D5.S3.Arith.FibonacciAtomic.LegalResamplingSupportSignal
