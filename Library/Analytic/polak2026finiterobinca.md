@@ -613,3 +613,63 @@ arithmetic results. The source supplies no estimate for its remaining
 signed residual, or for the pointwise signed term in FIB §250. Its finite
 verification range remains an external boundary check; repeating that
 computation would not advance RH.
+
+## For sufficiently large supports, the native clock is outside the negative critical-damping regime
+
+The repository's [prime-prefix continuation](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_PRIME_PREFIX.md)
+§§441–445 studies a complete normalized first integral, rather than the
+complete Robin response. Its existing unique-zero and sign results can be
+applied to the clock supplied above; this application is not a new
+prime-error estimate or a Lean verification.
+
+Put $z=P$, let $p=P^+$ be the next prime, and use the insertion clock
+$L=\log p$. With the notation of §441,
+
+$$
+E_P(s)=\prod_{q\le P}(1-q^{-s}),\qquad
+C_P=E_P(1)^{-1},\qquad F_P(v)=C_PE_P(1+v/L),
+$$
+
+$$
+H_P(v)=F_P(v)(1-e^{-v})-v,\qquad
+J_P(\sigma)=\int_0^\infty e^{-\sigma v}\frac{H_P(v)}{v^2}\,dv.
+$$
+
+The zero-displacement first integral at the actual clock $x=A$ uses
+$\sigma_A=\log A/L$: the Laplace change of variable $v=L u$ sends
+$e^{-u\log A}$ to $e^{-\sigma_Av}$. Both prefixes in the insertion
+comparison retain this same $L$, $A$, and zero displacement.
+The already supplied $P<A<p$ and Bertrand's theorem give
+
+$$
+1-\frac{\log2}{L}\le\frac{\log P}{\log p}
+<\sigma_A<1.
+$$
+
+Thus $\sigma_A\to1$ uniformly over $A\in(P,p)$ as $P\to\infty$.
+In contrast, §§441 and 445 locate the eventual unique damping zero at
+$\sigma_P\sim t_*L^{-C}$, where $C=e^{\gamma_E}>1$ and $t_*>0$.
+The existing sign on the upper side of this zero therefore yields,
+for all sufficiently large prime supports and every such $A$,
+
+$$
+J_P(\sigma_A)>0,\qquad
+I_p(\sigma_A)-I_P(\sigma_A)=\frac{J_P(\sigma_A)}{p-1}>0.
+$$
+
+This is an eventual statement over eligible parameters. No effective
+threshold for the one selected critical integer is supplied here, and
+no unbounded sequence of critical maximizers is assumed.
+
+The negative correction in §445 is evaluated at
+$\sigma=t_*L^{-C}$. In the same native-clock substitution this corresponds
+to $x=\exp(t_*L^{1-C})\to1$, rather than $x=A\in(P,p)\to\infty$.
+It therefore cannot be inserted at the actual source by identifying the
+two damping parameters.
+
+The normalized $J_P(\sigma)$ here is not the integer-row kernel
+$J_A^{\eta_P}(n)$ in the original volume. Insertion changes the Euler
+normalization; the other density terms, actual rough Möbius weights,
+all integer rows and the complete complement are still required.
+Neither insertion sign supplies the sign of
+$I_\psi(A)+D^*(A)$ or the missing same-source signed-tail bound.
