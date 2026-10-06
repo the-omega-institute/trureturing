@@ -5228,7 +5228,7 @@ D5/S3/ConceptDynamics/InformationEscape/
 - exact rational rate；
 - catalog leave-one-out；
 - theorem augmentation；
-- seal command。
+- 封印契约使用的目录数学定义与证明。
 
 两层关系是：
 
@@ -5309,7 +5309,7 @@ analysis artifact 的规范形状为：
 ```
 
 下表是 analysis artifact 的 exhaustive inventory；未列字段不得写入。certification level 的封闭词表为：
-`S` = schema/canonical-encoding check，`E` = elaborated environment/registry identity check，
+`S` = schema/canonical-encoding check，`E` = compiled declaration/registry identity check，
 `K` = Lean proposition proof，`R` = reflected numeral/finite equality tied to a Lean theorem，
 `D` = verdict 后生成、不得回流的 diagnostic-only projection，`P` = report-only presentation，
 没有数学或 admission 权力。容器字段的 level 同时约束其
@@ -7424,44 +7424,19 @@ unavailable reasons 的闭合集合为 `missing_olean_part`、`constant_missing`
 
 ### 24.1 新 theorem 原生语法
 
-建议命令：
+新 theorem 使用普通 Lean theorem 声明与证明。登记使用独立的
+`def x : Contract.Registration theoremName Readout From Residual := {…}`，
+完整字段与契约参数遵守 spec A5.5／A5.6。`realization` 使用适合该对象的
+`Implementation` 构造器；`correspondence`、`bundleNonempty`、`variation` 与
+`sensitivity` 携带对应的类型化数学义务，`readout`、`sourceSelection`、`escapeFrom`
+与 `continuation` 保留四槽输入及源选择。
 
-```lean
-information_theorem theoremName
-  in PrimitiveLawArenaName
-  object_arena CanonicalArenaName
-  catalog CatalogId
-  primitives primitiveBundleExpression
-  : PrimitiveLawArenaName.Law primitiveBundleExpression := by
-  proof
-```
-
-展开语义：
-
-```lean
-theorem theoremName :
-    PrimitiveLawArenaName.Law primitiveBundleExpression := by
-  proof
-
-private def catalogQualifiedUnitName :
-    TheoremUnit CanonicalArenaName :=
-  {
-    primitives := primitiveBundleExpression
-    Statement := ArenaName.Law primitiveBundleExpression
-    proof := theoremName
-  }
-```
-
-并把：
-
-```text
-(CatalogId, theoremName, catalogQualifiedUnitName,
- PrimitiveLawArenaName, CanonicalArenaName, realizationName)
-```
-
-登记进 environment extension。`PrimitiveLawArenaName.toArena` 必须 definitionally 等于
-`CanonicalArenaName`；否则登记语法还必须引用 CIRPT-IE-022 transport declaration。
-注册契约要求按各自触发条件发出 IE-C048／IE-C049／IE-C050 及含别名归一的 IE-C024；这些新增消费义务定义完成，当前无机器消费者，消费者随判官层落地。
+`arena`、`objectArena`、`catalog`、`unitName` 与 `realizationName` 明确对象舞台、
+目录与具名证据。原舞台与 canonical object arena 的对应由契约的 `correspondence`
+在 Reg 编译期检查；跨舞台对应必须提供适用的 transport 证据。
+登记声明只包含契约数据和数学证明，不调用判官。报告期通过编译常量的精确契约类型
+发现登记。IE-C048／IE-C049 由 `CompiledRegistration`、IE-C050 由
+`CompiledAssessment`、含别名归一的 IE-C024 由 `RegistrationRelations` 按触发条件消费。
 
 ### 24.2 legacy theorem 登记
 
@@ -7479,7 +7454,8 @@ existingTheoremStatement ↔
 不得是字符串说明。跨原 arena 的 legacy realization 必须给出 faithful injection/restriction
 equations，并在 `equivalence` 两个方向实际消费输入 hypothesis；用两个已知 existential
 proof 构造与输入无关的 `Iff` 触发 IE-C029。
-legacy 注册契约同样要求按各自触发条件发出 IE-C048／IE-C049／IE-C050 及含别名归一的 IE-C024；这些新增消费义务定义完成，当前无机器消费者，消费者随判官层落地。
+legacy realization 使用同一类型化发现与编译评定路径；IE-C048／IE-C049／IE-C050
+及含别名归一的 IE-C024 的消费者与 §24.1 相同。
 
 ### 24.3 禁止字段
 
@@ -7529,26 +7505,19 @@ designated root 中的 peers 触发 IE-C024。
 
 ---
 
-## 25. Persistent Environment Extension
+## 25. 编译契约与登记投影
 
 ### 25.1 registry entry
 
-```lean
-structure InformationRegistryEntry where
-  catalogId : CatalogId
-  catalogKind : CatalogKind
-  registrationModuleName : Name
-  theoremName : Name
-  unitName : Name
-  lawArenaName : Name
-  objectArenaName : Name
-  realizationName : Name
-```
+`InformationRegistryEntry` 是判官内部对编译契约的投影，不是 Reg 声明的接口类型。
+其 `theoremName`、`unitName`、`arenaName`、`objectArenaName`、`realizationName`、
+`catalogId`、`catalogKind` 与 `registrationModuleName` 来自类型化输入及编译模块归属。
+Reg 只声明 `Contract.Registration`，不构造或调用该内部投影。
 
 `rootId` 是 RootCatalog 或 Seal 所在模块的 `Name`，由编译产物的模块归属核对。
 `registrationModuleName` 取登记常量的编译模块归属，只用于 import-closure provenance、
 artifact 与 coverage 核对，不能过滤 seal membership。grouping key 只取
-`objectArenaName`；`lawArenaName` 是 presentation，不能充当 object identity。
+`objectArenaName`；`arenaName` 是 presentation，不能充当 object identity。
 
 ### 25.2 编译声明的可见性
 
@@ -7577,19 +7546,19 @@ catalog 只由编译后的类型化登记、声明与实际 import 闭包构造�
 
 - theoremName 存在；
 - theoremName 的 kind 是 theorem；
-- registrationModuleName 是 entry 的实际 elaboration module，且位于当前 root import closure；
+- registrationModuleName 是登记常量的实际编译模块，且位于当前 root import closure；
 - unitName 存在；
 - unitName 的类型是期望的 `TheoremUnit arena`；
-- unit.proof 的类型与 theoremName 的 type 定义相同或可由 kernel 证明相等；
-- lawArenaName 与 objectArenaName 存在且可关闭实例；
-- `lawArenaName.toArena` definitionally 等于 object arena，或有显式 transport proof；
+- unit 与目标 theorem 的类型化对应义务已在 Reg 编译期检查，报告期核对其编译证据与引用；
+- arenaName 与 objectArenaName 存在且可从编译数据解析；
+- 舞台对应的契约证据与登记的 realization、arena、objectArena 一致；
 - 没有重复 `(objectArenaName,theoremName)` occurrence key；
 - 没有重复 unitName。
 
 还必须检查 `catalogKind`、catalog membership、maximal grouping 与所有 catalog-qualified
 generated names。一个 theoremName 在不同 canonical arenas 中合法，但 unit/realization/
 certificate name 仍不得碰撞；certificate 还必须绑定成员集合、顺序、arena、primitives 与
-elaborated environment，且不得复用旧快照 certificate。
+编译输入身份，且不得复用输入身份不匹配的 certificate。
 
 ---
 
@@ -8111,9 +8080,9 @@ minimum_threshold
 
 ---
 
-## 31. 编译错误规范
+## 31. 契约与评定诊断
 
-建议错误码：
+诊断码：
 
 ### IE-C001　UnregisteredTheoremUnit
 
@@ -8121,16 +8090,14 @@ minimum_threshold
 
 ### IE-C002　DuplicateRegistration
 
-冻结 v2 compatibility path 中同一 legacy theorem 被重复登记。v4.2 occurrence-aware path
 以 `(canonical object arena declaration,theoremName)` 为键；该键在 sealing root 的 import
 closure 中出现至少两次时统一发 IE-C002，与 registration module、root 或 catalog spelling
 无关。同一 theorem 通过分别命名、kernel-checked realization 登记到不同 canonical arena
 是不同 occurrence；其 generated qualified names 若碰撞则发 IE-C025。
 IE-C002 diagnostic 必须列出 `object_arena`、`theorem_name`、完整 canonical-sorted
 `registration_modules` 与 `count`，不得只报告最先遇到的一项。
-IE-C002 由报告期评定对既有 theorem 的重复登记发出。原生 `information_theorem` 形式在记录时
-自行声明其 theorem 与 unit；以该形式重新声明已存在的 theorem 名，由 Lean 自身的声明检查在
-记录时拒绝（`… has already been declared`），不产生 IE-C002。
+IE-C002 由报告期评定对重复登记发出。普通 Lean 声明重用已存在的声明名时，由 Lean
+自身的声明检查拒绝（`… has already been declared`），不产生 IE-C002。
 
 ### IE-C003　ArenaResolutionFailed
 
@@ -10390,8 +10357,7 @@ v4.2 不推翻第 48 节；它在 v4.1 kernel-residual 内核上作 additive 扩
    经独立 kernel-checked realization 登记时是合法的新 occurrence；
 2. 分组键是 canonical object `Arena` declaration，不是 carrier coincidence、namespace 或 `PrimitiveLawArena`；
 3. 同一 root import closure、同 arena 的全部 occurrences 构成唯一 maximal catalog，sub-catalog 只作 analysis view；
-4. v4.1（landed）imports persistent registrations；这就是 v4.2 contract：sealing root 消费其
-   import closure 中全部可见 entries，绝不因 extension 未导入或 imported-entry filtering 少看
+4. sealing root 从编译产物发现其 import closure 中全部类型化登记，不按登记模块过滤
    同 arena peers（工程优化规范 v1 §16）；
 5. 恰有一个 designated v4.2 system root，其 import closure 包含固定仓库快照的完整
    registration closure；项目级 coverage manifest 来自既有枚举器并与实际 sealed set 相等，
