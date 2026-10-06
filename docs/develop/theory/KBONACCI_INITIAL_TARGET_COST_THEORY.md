@@ -1554,3 +1554,633 @@ Open Problems 9.1 and 18.2 retain their original goal: the exact minimum worst-b
 [S23]: https://raw.githubusercontent.com/the-omega-institute/trureturing/c8c3e97d072491eca90472d5fe3aa258415bdc5c/docs/develop/theory/KBONACCI_INITIAL_TARGET_COST_THEORY.md
 
 ## 追加锚（本行以下为增补区）
+## 24. A common-stream cut criterion for arbitrary INITIAL targets
+
+This chapter uses every $k\ge2,m\ge1$ in the original reader (1.1)–(1.2). Initial value or rejection is free, later readings are complete-block endpoints, and every block actually issued before stopping is charged. The target is an arbitrary map on the full INITIAL record set. The statements include both original alphabets.
+
+**定义 24.1（All-one response fibres）。** Put $T=k+1$, $g=\gcd(m,T)$, and $P=g\mathbb Z/T\mathbb Z$. For $\theta\in P$, define
+
+$$
+I_t(\theta)=\bigoplus_{i=tm}^{(t+1)m-1}c_{\theta+i}.
+\tag{24.1}
+$$
+
+$$
+S_t(\beta)=\{\theta\in P:(I_0(\theta),\ldots,I_{t-1}(\theta))=\beta\}.
+\tag{24.2}
+$$
+
+where $t\ge0$, $\beta\in\mathbb F_2^t$, and $S_0(\varnothing)=P$. For sources still successful after $t$ all-one blocks, these are precisely the phase fibres of their chronological endpoint archive. The INITIAL tail range is $0\le s<k-tm$; neither the current tail nor current value replaces the INITIAL arguments of $f$. Write $\operatorname{Const}$ for image size at most one, including an empty set.
+
+The full joint sources in [S1, Convention 1.3] apply also when $m\ge k$: the history (1.3) contains a separating zero and a terminal run $s<k$, has length divisible by $m$, and realizes value, phase and tail simultaneously. Every one of its complete blocks is internally legal. To realize absorption in that alphabet, follow an actual endpoint of tail $k-1$ by $10^{m-1}$; its first bit rejects across the seam. Thus wide blocks do not restrict the source quantifiers. History lengths remain unobserved.
+
+**定理 24.2（Exact common-cut criterion）。** For arbitrary $f:Q\to Y$ on the full INITIAL record set, $C_{\rm pre}(f)<\infty$ if and only if there exists one integer $a\in\{0,\ldots,k-1\}$, written
+
+$$
+a=qm+r,\qquad q\ge0,\quad 0\le r<m,
+\tag{24.3}
+$$
+
+such that all the following conditions hold for each $v\in\mathbb F_2$. For every $t<q$ and every $\beta\in\mathbb F_2^t$,
+
+$$
+\operatorname{Const}\{f(v,\theta,s):\theta\in S_t(\beta),\ k-(t+1)m\le s<k-tm\}.
+\tag{24.4}
+$$
+
+With $h=k-qm$, for every $\beta\in\mathbb F_2^q$,
+
+$$
+\operatorname{Const}\{f(v,\theta,s):\theta\in S_q(\beta),\ h-r\le s<h\},
+\tag{24.5}
+$$
+
+and, separately for every $\theta\in S_q(\beta)$,
+
+$$
+\operatorname{Const}\{f(v,\theta,s):0\le s<h-r\}.
+\tag{24.6}
+$$
+
+The quantifier over $a$ precedes the value and archive quantifiers. The $r=0$ rejection band in (24.5) is empty. The independent label $f(\bot)$ is returned free. This criterion concerns existence of a finite preset stream, without asserting its optimal fee.
+
+**证明。** Until its first zero, a literal stream consists of ones. A source survives $u$ such bits precisely when $s+u<k$. Before absorption, its endpoint value changes are the $I_t(\theta)$, independent of its old tail. Consequently a raw successful archive at depth $t$ has exactly the product in Definition 24.1. If this archive stopped earlier, its entire earlier candidate set had one target label; every raw subgroup obtained by hypothetically continuing that archive is a subset of that set and also has one label. Such hypothetical continuation is used only to inspect sets, never as an emitted action or a charge.
+
+First suppose the common stream has its first zero after $a<k$ ones. In each preceding all-one block, the rejected INITIAL tails are $k-(t+1)m\le s<k-tm$. At its endpoint, rejection discards the phase and intermediate value, retaining only the previous successful archive. If the archive is live, correctness forces that whole rejected band to have one label; if it already stopped, the subset argument gives the same condition. This proves (24.4).
+
+In the block containing the zero, the $r$ leading ones reject precisely $h-r\le s<h$, with previous phase archive $S_q(\beta)$. The same argument proves (24.5). All lower tails at any one fixed phase survive those leading ones and have identical intermediate values. The first zero merges their tails, hence their complete current records. Every remaining bit and later endpoint is common. Correctness therefore forces (24.6), whether this archive is live or previously stopped. This is the actual first-zero loss of [S1, Lemmas 4.2–4.3]; no tail marginals from different histories have been combined.
+
+A finite correct stream need not emit a zero at all. If its first zero is at or beyond $k$, or if all sources stop before any zero, normalize the existence argument to $a=k-1$. Extend an already unused all-one prefix only as a set calculation. Conditions (24.4) hold as above. In the block crossing the $k$th one, every still-live candidate in $S_q(\beta)\times\{0,\ldots,h-1\}$ would reject to one endpoint archive, so that whole set must have one label. If it had already stopped, the same constancy follows from its stopping leaf. This stronger condition implies (24.5)–(24.6) at $a=k-1$. It establishes an eligible normalized cut, without asserting that a stopped source actually executes the inserted zero.
+
+Conversely, given an eligible cut, issue the one common literal prefix
+
+$$
+(1^m)^q\mid1^r0^{m-r}.
+\tag{24.7}
+$$
+
+Every rejection archive returns the common label in (24.4) or (24.5). Surviving sources finish with tail zero; (24.6) makes the target constant on each fixed INITIAL phase among those sources. Apply the safe preset phase-recovery protocol [S1, Theorem 3.1], using the newly observed value as its increment baseline. Its current phase lies in $P$; subtract the known issued displacement $(q+1)m$ to recover the INITIAL phase and return its label. The all-one blocks have $m<k$ whenever $q>0$, and the mixed block has $r<k$, so they are internally legal. The mixed block ends zero and all phase probes have the supplied safe seams. Stop any constant archive earlier. Each remaining source follows this same stream; all emitted prefix and recovery blocks are paid. This proves sufficiency for both alphabets. ∎
+
+**推论 24.3（Charged constructive bound）。** Any cut satisfying Theorem 24.2 gives
+
+$$
+C_{\rm pre}(f)\le q+1+L(k,m),
+\tag{24.8}
+$$
+
+where the supplied safe phase protocol [S1, Theorem 3.1] has
+
+$$
+L(k,m)=
+\begin{cases}
+0,&p=1,\\
+p-1,&m\ge2,\ p>1,\\
+2T,&m=1,\ T\text{ odd},\\
+2T+1,&m=1,\ T\text{ even},
+\end{cases}
+\qquad p=T/g.
+\tag{24.9}
+$$
+
+Proof. The construction (24.7) pays $q+1$ blocks and the stated recovery stream pays at most $L(k,m)$. Early stopping can reduce this fee. No optimality of the recovery bound or of the chosen cut is asserted. ∎
+
+**定理 24.4（Sharp complete-threshold family）。** For any $k\ge2,m\ge1$, choose $1\le a_v\le k-1$ and $L_v\ne H_v$ for each $v\in\mathbb F_2$. Cross-value coincidences are unrestricted. On every actual phase set
+
+$$
+f(v,\theta,s)=
+\begin{cases}
+L_v,&s<k-a_v,\\
+H_v,&s\ge k-a_v,
+\end{cases}
+\qquad f(\bot)\text{ arbitrary}.
+\tag{24.10}
+$$
+
+Then
+
+$$
+C_{\rm ad}(f)=\max_v\left\lceil\frac{a_v}{m}\right\rceil.
+\tag{24.11}
+$$
+
+Writing $a_{\min}=\min(a_0,a_1)$ and $a_{\max}=\max(a_0,a_1)$,
+
+$$
+C_{\rm pre}(f)=
+\begin{cases}
+\lceil a_{\max}/m\rceil,&a_0=a_1\text{ or }m\mid a_{\min},\\
++\infty,&\text{otherwise}.
+\end{cases}
+\tag{24.12}
+$$
+
+**证明。** Fix one free-value fibre and one actual phase. The two INITIAL tails $k-a_v-1$ and $k-a_v$ have different labels. Before $a_v$ leading ones they both survive with equal outputs; an earlier zero merges them alive. Thus fewer than $\lceil a_v/m\rceil$ blocks cannot distinguish them. The literal prefix of $a_v$ ones followed, if necessary, by zero padding to its complete-block boundary rejects exactly the high band and preserves exactly the low band. Every rejection leaf is $H_v$ and every successful leaf is $L_v$. This attains the bound, with the free initial value choosing the fibre and its own protocol.
+
+If $m\nmid a_v$, that pair cannot stop before the block containing position $a_v$. A first zero before $a_v$ merges it alive; a first zero after $a_v$, including an all-one containing block, rejects both members within that block, since there is no endpoint between their consecutive rejection times $a_v$ and $a_v+1$. Therefore any finite correct stream on this unresolved fibre has its first zero exactly after $a_v$ ones. If $m\mid a_v$, the endpoint after $a_v$ ones already separates rejection from success and returns both labels, so this fibre stops there and places no constraint on later bits.
+
+For unequal thresholds with non-boundary $a_{\min}$, its forced first zero at $a_{\min}$ clears both differently labelled sources of the larger-threshold pair before either rejects. Both had survived all previous endpoints with one common archive, so this loss is irreversible. Preset fee is infinite. When the thresholds agree, their common threshold word works. When $m\mid a_{\min}$, issue ones through $a_{\max}$, padding its containing block with zeros if needed. The smaller fibre stops at its earlier all-one endpoint; the larger fibre attains its own threshold fee. No continuation is charged to the stopped fibre. The larger pair gives the matching lower bound, proving (24.12). This includes wide blocks, $g=1$, $p=1$, and every other gcd. ∎
+
+**命题 24.5（Unequal-offset obstruction and stopped-boundary case）。** At $k=9,m=4$, thresholds $a_0=1,a_1=2$ and the same $L\ne H$ on both fibres give $C_{\rm ad}=1$ and $C_{\rm pre}=+\infty$. At $k=4,m=2,a_0=a_1=2$, both fees are one and the complete word $11$ attains them without emitting a zero.
+
+Proof. In the first case $1000$ and $1100$ are the adaptive threshold words, and the respective same-phase pairs of INITIAL tails $(7,8)$ and $(6,7)$ force incompatible first-zero positions in any common stream. In the second case $11$ rejects exactly INITIAL tails $2,3$ and preserves tails $0,1$; all phases return the appropriate threshold label at that endpoint. The lower-bound pairs in Theorem 24.4 exclude fee zero in both cases. ∎
+
+## 25. Exact unit-width envelope for arbitrary two-value targets
+
+Fix $m=1$, $k\ge2$, $T=k+1$. All phases are actual. Write the INITIAL phase as $-j$ with $0\le j\le k$. At absolute issued-bit position $t$, a successful one changes the value precisely for $j\in\{t,t+1\}\pmod T$; a zero changes no value and clears the tail. Each bit is one paid complete block. These are chronological endpoint comparisons on one actual source.
+
+**定义 25.1（Unit target and constant prefixes）。** For arbitrary $f:Q\to Y$, put
+
+$$
+F_v(j,s)=f(v,-j,s),\qquad\lambda_v(j)=F_v(j,0),
+\tag{25.1}
+$$
+
+and
+
+$$
+\ell_v(j)=\max\{h\in\{1,\ldots,k\}:F_v(j,s)=\lambda_v(j)\text{ for every }0\le s<h\}.
+\tag{25.2}
+$$
+
+Thus $1\le\ell_v(j)\le k$. This definition uses INITIAL tails even after their destructive updates. Constancy means image size at most one; an empty eligible minimum is $+\infty$.
+
+**定义 25.2（Phase expression, cleared suffix and root-archive expressions）。** For any table $\lambda:\{0,\ldots,k\}\to Y$, put
+
+$$
+J=\max\bigl(\{j\ge1:\lambda(j)\ne\lambda(0)\}\cup\{0\}\bigr),
+\tag{25.3}
+$$
+
+and let the supplied phase-only cost expression [S11, Theorem 3.1] be
+
+$$
+\phi_k(\lambda)=
+\begin{cases}
+0,&J=0,\\
+\max\bigl(J,2+\mathbf1_{\{\lambda(1)\ne\lambda(2)\}}\bigr),&k\ge3,\ J>0,\\
+3,&k=2,\ J=1,\\
+2,&k=2,\ J=2,\ \lambda(1)=\lambda(2),\\
+4,&k=2,\ J=2,\ \lambda(1)\ne\lambda(2).
+\end{cases}
+\tag{25.4}
+$$
+
+For $2\le a\le k$ define the following expression on the suffix $\{a,\ldots,k\}$:
+
+$$
+d(a,\lambda)=
+\begin{cases}
+0,&\lambda\text{ constant on }\{a,\ldots,k\},\\
+1,&\lambda(a)=\lambda(a+1)\text{ and }\lambda\text{ constant on }\{a+2,\ldots,k\},\\
+\max(2,B-a),&\text{otherwise},
+\end{cases}
+\tag{25.5}
+$$
+
+where the second line is considered only after the first fails, and
+
+$$
+B=\max\{j\in\{a,\ldots,k-1\}:\lambda(j)\ne\lambda(j+1)\}.
+\tag{25.6}
+$$
+
+The last case has a nonempty maximum. A singleton suffix uses the first line and never refers to $\lambda(k+1)$. The exact cleared-suffix interpretation of this expression is proved below, rather than taken as a supplied theorem.
+
+For each $v$, define $H_v$ by the first applicable line:
+
+$$
+H_v=
+\begin{cases}
+1,&\operatorname{Const}\{F_v(j,s):j\in\{0,1\},\ 0\le s<k-1\},\\
+k+1,&\ell_v(0),\ell_v(1)\ge k-1\text{ and }\lambda_v(0)\ne\lambda_v(1),\\
+\max(2,k-\ell_v(0),k-\ell_v(1)),&k\ge3\text{ and }F_v(0,k-2)=F_v(1,k-2),\\
++\infty,&\text{otherwise}.
+\end{cases}
+\tag{25.7}
+$$
+
+A cutoff $\tau\in\{1,\ldots,k-1\}$ is $v$-eligible when
+
+$$
+\operatorname{Const}\{F_v(j,k-z-1):z+1\le j\le k\}
+\quad\text{for every }1\le z<\tau,
+\tag{25.8}
+$$
+
+and
+
+$$
+\ell_v(j)\ge k-\tau\quad\text{for every }j\ge\tau+1.
+\tag{25.9}
+$$
+
+For such a cutoff set
+
+$$
+\begin{aligned}
+L_v(\tau)&=
+\begin{cases}
+\tau,&\lambda_v|_{\{\tau+1,\ldots,k\}}\text{ constant},\\
+\tau+1+d(\tau+1,\lambda_v),&\text{otherwise},
+\end{cases}\\
+M_v(\tau)&=\max\left(L_v(\tau),\ \max_{2\le j\le\tau}\max(j,k-\ell_v(j))\right).
+\end{aligned}
+\tag{25.10}
+$$
+
+The inner maximum is zero at $\tau=1$. All $H_v,L_v,M_v$ are total costs measured from the original root, not costs to concatenate.
+
+**引理 25.2a（Actual cleared-suffix cost）。** Suppose an actual acquired unit archive has common current value, current tail zero, and exactly INITIAL phase candidates $j\in\{a,\ldots,k\}$, with $2\le a\le k$. The next paid bit is at absolute issued position $a$, and the immutable target on each phase is $\lambda(j)$. Its minimum additional adaptive fee equals $d(a,\lambda)$ in (25.5). One common all-one continuation attains that fee, so this is also its minimum preset continuation fee. Any multiplicities of actual histories with the same phase and label are allowed.
+
+**证明。** A constant suffix stops free. Otherwise one bit can succeed only by issuing one at position $a$, which queries precisely $\{a,a+1\}$ against its complement. No source rejects from tail zero in this bit. Both sides have one label exactly in the second line of (25.5), so that line has exact fee one.
+
+In every other nonconstant case fee is at least two. For any adjacent differing pair $j,j+1$ with $j\ge a+2$, their coefficients at every position from $a$ through $j-2$ are both zero. They start with the same tail, acquire the same outputs, and take identical actions on an adaptive common archive. Even a common rejection cannot separate them. Their first possible separation is position $j-1$, requiring $j-a$ additional bits. The same lower bound is trivial for $j=a$ or $a+1$. Applying it at the largest differing boundary $B$ gives $\max(2,B-a)$.
+
+For attainment, take $n=\max(2,B-a)$ consecutive ones from absolute position $a$. Since a nonconstant suffix requires $a\le k-1$, one has $n\le\max(2,k-a-1)\le k-1$. Thus no run reaches $k$ and every seam is legal. Its first endpoint divides $\{a,a+1\}$ from the later suffix. The second endpoint distinguishes $a$ from $a+1$ and peels $a+2$ from the suffix. Each further endpoint peels the next phase. All phases through $a+n$ are therefore identified, and the remaining suffix is constant because it lies beyond $B$. When $a+n>k$, the pair is already the whole suffix and the second endpoint still distinguishes it; the last queried absolute position is at most $k$. Returning the INITIAL label on these actual archives attains the lower bound. This proves the adaptive and common-continuation equalities, without any new observations inside a block. ∎
+
+**定理 25.3（Exact adaptive unit envelope）。** If $\ell_v(j)=k$ for every $j$, set $A_v=\phi_k(\lambda_v)$. Otherwise the fibre is mixed. If its top row
+
+$$
+\{F_v(j,k-1):0\le j\le k\}
+\tag{25.11}
+$$
+
+is not constant, set $A_v=+\infty$. In the remaining mixed case set
+
+$$
+A_v=\max\left(H_v,\ \min_{\tau\text{ $v$-eligible}}M_v(\tau)\right).
+\tag{25.12}
+$$
+
+Then, for every arbitrary label set and table,
+
+$$
+C_{\rm ad}(f)=\max(A_0,A_1).
+\tag{25.13}
+$$
+
+**证明。** A phase-only fibre is exactly the domain of [S11, Theorem 3.1], including constants and the $k=2$ exceptions. Its attaining constructions are literal streams, and its lower bounds hold for adaptive trees. The initial free value chooses the fibre, so the two whole-root costs combine by a maximum.
+
+In a mixed fibre, root zero merges all tails at each phase and destroys some required distinction. Thus root one is forced. It rejects the entire top row to one archive, making (25.11) necessary. Its two successful archives are exactly
+
+$$
+\begin{array}{c|c|c|c}
+\text{archive}&\text{INITIAL phases}&\text{INITIAL tails}&\text{current value}\ \hline
+\mathcal H&\{0,1\}&0\le s<k-1&v\oplus1\\
+\mathcal M&\{2,\ldots,k\}&0\le s<k-1&v.
+\end{array}
+$$
+
+Both have current tail $s+1$. The rejection archive returns its common INITIAL label and stops at depth one. The two successful archives are siblings: their total fees must be maximized, never added.
+
+On $\mathcal H$, a constant target stops at depth one, giving the first line of (25.7). If each of its two phase rows has a constant surviving prefix but those labels differ, the second bit cannot be one: it would reject the INITIAL tail $k-2$ from both phases into one archive with different labels. A zero at absolute position one clears safely. At all later positions $2,\ldots,k-1$ both phases have zero coefficient; their cleared tails and values remain common. They cannot separate before the one at position $k$, whose endpoint has total depth $k+1$. The safe word $1\,0^{k-1}1$ attains that depth. This is the second line.
+
+In every other unresolved $\mathcal H$ case, some surviving phase row is tail-dependent, so a second-bit zero is impossible. A second-bit one is possible exactly when $F_v(0,k-2)=F_v(1,k-2)$, since those are the two rejected sources. If equality fails both actions lose a required distinction, proving infinity. If equality holds and $k\ge3$, the successful second endpoint separates phases zero and one: only phase one flips there. Each is then a phase-known archive with INITIAL tail range $0\le s<k-2$.
+
+More generally, on a phase-known archive reached by $j$ successful leading ones, remaining tails satisfy $0\le s<k-j$. Its exact total stopping depth is $\max(j,k-\ell_v(j'))$ for its known phase $j'$. To prove this, if the remaining prefix is constant it stops at depth $j$. Otherwise tails $\ell_v(j')-1$ and $\ell_v(j')$ have different labels, survive indistinguishably before absolute depth $k-\ell_v(j')$, and any earlier zero merges them. Consecutive ones through that depth reject the larger tail and then leave a constant surviving prefix. Each earlier rejection on this phase-known branch identifies exactly one INITIAL tail and returns its own label. No clearing zero is needed. Applying this at depth two to phases zero and one gives the third line of (25.7). At $k=2$ these surviving prefixes are singletons, so the first two lines already cover every finite $\mathcal H$ case. Thus $H_v$ is its exact total-root cost.
+
+On $\mathcal M$, follow the still-unidentified suffix through leading ones. After total depth $z\ge1$, that archive has exactly phases $j\ge z+1$, tails $0\le s<k-z$, and current value $v$. A one at position $z$ rejects INITIAL tail $k-z-1$ from every one of those phases, requiring precisely the constancy in (25.8); its successful flip identifies phase $z+1$, while the other successful archive is the next suffix. All previously peeled phases are separate acquired siblings. At phase $j$'s identifying endpoint of depth $j$, its best total cost is $\max(j,k-\ell_v(j))$ by the phase-known calculation above.
+
+The first zero on the unidentified suffix, if any, occurs after a total of $\tau$ ones, with $1\le\tau\le k-1$ in normalized form. It merges every surviving tail at each of its phases, so (25.9) is necessary. All earlier rejected strips require (25.8). If this suffix stops before its zero, its entire remaining table is constant and the same conditions hold for that stopping depth $\tau$. Continuing all ones to depth $k-1$ leaves only phase $k$ and tail zero, so no later cutoff is needed. Thus every finite controller yields an eligible $\tau$.
+
+At an eligible cutoff, each remaining phase has surviving label $\lambda_v(j)$. A constant suffix stops at depth $\tau$; otherwise the zero at position $\tau$ is paid, and the resulting archive is exactly the cleared suffix of Lemma 25.2a with $a=\tau+1$. Its optimal further cost is $d(\tau+1,\lambda_v)$. This proves $L_v(\tau)$, including its absolute fee origin. Together with the identified-phase siblings it gives the necessary $M_v(\tau)$ lower bound on that choice of cutoff.
+
+Conversely, choose a minimizing eligible cutoff. Issue ones on the unidentified suffix until that depth, retiring each rejected strip to its constant label. Each peeled phase independently follows its optimal phase-known all-one continuation and stops. At the chosen suffix either stop at its constant label, or issue its clearing zero followed by the safe all-one continuation in Lemma 25.2a. These are actual paths on separate acquired archives; all their depths are measured from the one original root. Their maximum is exactly $M_v(\tau)$. Independently run the attained $\mathcal H$ continuation on its sibling. Every emitted bit is charged; no source is copied and no labels are reevaluated after clearing. This attains (25.12) and (25.13), and failure of either archive condition proves unattainability. ∎
+
+**定理 25.4（Exact preset unit envelope）。** Put
+
+$$
+\Lambda(j)=(\lambda_0(j),\lambda_1(j)).
+\tag{25.14}
+$$
+
+If both fibres are phase-only, then
+
+$$
+C_{\rm pre}(f)=\phi_k(\Lambda).
+\tag{25.15}
+$$
+
+If either fibre is mixed, first require the top row (25.11) to be constant separately on each value fibre. If this fails, preset fee is infinite. Otherwise a common cutoff $\tau\in\{1,\ldots,k-1\}$ is eligible exactly when (25.8) holds for both values and
+
+$$
+\begin{aligned}
+\ell_v(j)&\ge k-\tau &&(v\in\mathbb F_2,\ 0\le j\le k),\\
+F_v(0,k-2)&=F_v(1,k-2) &&(v\in\mathbb F_2,\ \tau\ge2).
+\end{aligned}
+\tag{25.16}
+$$
+
+In particular, the prefix condition covers phases zero and one and every phase peeled before the cutoff. For $\tau=1$ its cost is
+
+$$
+D(1)=\max\left(
+\begin{cases}1,&\Lambda(0)=\Lambda(1),\\k+1,&\Lambda(0)\ne\Lambda(1),\end{cases}
+\quad
+\begin{cases}1,&\Lambda|_{\{2,\ldots,k\}}\text{ constant},\\2+d(2,\Lambda),&\text{otherwise}.
+\end{cases}
+\right).
+\tag{25.17}
+$$
+
+For $\tau\ge2$ its cost is
+
+$$
+D(\tau)=
+\begin{cases}
+\tau,&\Lambda|_{\{\tau+1,\ldots,k\}}\text{ constant},\\
+\tau+1+d(\tau+1,\Lambda),&\text{otherwise}.
+\end{cases}
+\tag{25.18}
+$$
+
+The exact preset fee is $\min_{\tau\text{ common-eligible}}D(\tau)$, including infinity for an empty eligible set. These are common-stream costs; no maximum of fibre-optimal preset costs is asserted.
+
+**证明。** Under any one literal stream, the two free-value fibres have identical source partitions at each chronological depth: on successful sources their values differ by their initial-value offset, and rejection is common within the same tail/phase subset. Therefore one can test constancy separately on each fibre, equivalently use the ordered pair of INITIAL labels on each common source partition. This correspondence does not permit different actions on the fibres. If both targets are phase-only, the lower bound in [S11, Theorem 3.1] applies to the pair table, and its literal attaining stream works for both values. This proves (25.15).
+
+If a fibre is mixed, the common root must be one. Hence root rejection forces a constant top row on each fibre, including any phase-only fibre accompanying it. Let $\tau$ be the number of leading ones before the stream's first zero. A successful source of fixed phase $j$ after those ones has INITIAL tails $0\le s<k-\tau$, all with identical previous archives on its value fibre. If they stopped earlier, their labels were already constant; otherwise the first zero merges them. Thus the first condition of (25.16) is necessary for every phase, even a phase already identified by its value archive.
+
+For $\tau\ge2$, the second one rejects the phase-zero and phase-one sources at tail $k-2$ in one $\mathcal H$ archive; it also rejects the $\mathcal M$ strip at that tail. This gives the second condition of (25.16) and the $z=1$ case of (25.8). The later unresolved suffix rejections give all other cases of (25.8). For a source that stopped before these bits, these sets remain subsets of its constant stopping archive, so the same necessity holds without executing any continuation on it. If there is no useful first zero, at $k\ge3$ normalize to $\tau=k-1$: all-one successful signatures then identify every phase, and the remaining INITIAL tail is zero. At $k=2$, two consecutive ones reject both members of the unresolved $\mathcal H$ archive, so they could finish only if already constant at depth one, which admits $\tau=1$. A stream whose first zero is later gives no extra feasible case. Every finite preset controller therefore admits a common-eligible normalized cutoff.
+
+At $\tau=1$, all surviving phase prefixes have length $k-1$ and are constant by (25.16). The $\mathcal H$ archive either has one pair label and stops at depth one, or its two phases have different pair labels. In the latter case the next one would merge differently labelled rejected sources; clearing zero is necessary, and no bit before absolute position $k$ can distinguish the two phases. Its exact total depth is $k+1$. The $\mathcal M$ archive either stops at depth one, or requires the paid zero at position one and the exact suffix cost $d(2,\Lambda)$. This proves the lower bound (25.17).
+
+For simultaneous attainment at $\tau=1$, issue the common prefix $10$. If the endpoint pair is unresolved, continue ones at positions $2,\ldots,k$, stopping it at depth $k+1$. Its run has length $k-1$, hence is safe. Every nonconstant $\mathcal M$ suffix obtains the prefix of these same ones required by Lemma 25.2a and stops at depth $2+d(2,\Lambda)\le k+1$. If the endpoint pair is already constant, use only the suffix continuation needed for $\mathcal M$. When both archives are constant, stop all sources after the root one and emit no zero. Thus their worst actual fee is exactly the maximum in (25.17).
+
+For $\tau\ge2$, after $\tau$ ones each successful phase $j\le\tau$ is identified and its surviving prefix has one label by (25.16). Those archives stop by depth $\tau$, including the two endpoint phases. Every earlier rejection was legal by the top-row condition, (25.8), and the endpoint equality. The still-unidentified suffix is constant phase by phase. If its pair labels are all equal, all sources stop by depth $\tau$; otherwise issue one zero at position $\tau$ and then the attained suffix stream of Lemma 25.2a. The all-one prefix and this zero have legal chronological seams, and the later run has length less than $k$. This attains (25.18).
+
+For the matching cutoff lower bound, a nonconstant suffix cannot stop before its first zero; the first zero costs one and Lemma 25.2a forces its stated remaining depth. A constant suffix gives an apparent lower bound $\tau$ unless every source has already stopped at some smaller common depth $d$. In that event the raw all-one archives at depth $d$ are all constant on both fibres. All rejection-strip conditions up to $d$ hold, every phase prefix of length $k-d$ is constant, and the unresolved suffix pair label is constant. Thus $d$ is itself a common-eligible cutoff, with $D(d)=d$ (or $D(1)=1$). Such an unused later cut never lowers the minimum. Minimizing over eligible cuts gives the exact lower bound and attained common stream in every case, including all early-stopped archives. ∎
+
+**推论 25.5（Sharp finite boundary and preset-infinite family）。** For $k\ge3$, every finite adaptive or preset cost above is at most $k+1$, and that bound is attained. On both value fibres choose $A\ne B$ and set $F_v(0,s)=A$, $F_v(1,s)=B$ for $s<k-1$, and every other entry $A$. Then both fees are $k+1$.
+
+For every $k\ge3$, there is also a finite-adaptive, preset-infinite target. On both fibres put
+
+$$
+F_v(1,0)=B,\qquad F_v(k,s)=B\quad(0\le s<k-1),
+\tag{25.19}
+$$
+
+and every other entry $A$, with $A\ne B$ and arbitrary $f(\bot)$. Exactly
+
+$$
+C_{\rm ad}=\begin{cases}4,&k=3,\\k-1,&k\ge4,\end{cases}
+\qquad C_{\rm pre}=+\infty.
+\tag{25.20}
+$$
+
+Proof. The phase-only expression is at most $k$ for $k\ge3$, and the endpoint expression is at most $k+1$. Every phase-known sibling costs at most $k-1$. A nonconstant cleared suffix has $\tau\le k-2$ and costs $\tau+1+\max(2,B-\tau-1)\le k+1$; its one-bit case is smaller. Thus every finite minimum has the asserted boundary. The first example has $H_v=k+1$ and a constant $\mathcal M$ archive; $1\,0^{k-1}1$ is a common attained stream.
+
+For (25.19), $\ell_v(1)=1$, $\ell_v(k)=k-1$, and the endpoint equality at tail $k-2$ holds. Consequently $H_v=\max(2,k-1)$. Cutoff one is eligible on $\mathcal M$. Its suffix labels are $A$ at $2,\ldots,k-1$ and $B$ at $k$, so Lemma 25.2a gives total suffix cost four when $k=3$, three when $k=4$, and $k-1$ when $k\ge5$. Every $\tau\ge2$ fails (25.8) already at $z=1$, where phase $k$ has label $B$ and phase two label $A$. These are the adaptive lower bounds and actual attained sibling protocols. For a preset cut, phase one's prefix condition forces $\tau\ge k-1$, while that same $z=1$ strip excludes every $\tau\ge2$. Hence there is no common cut.
+
+At $k=2$, mixed fibres have finite adaptive fee at most three, while the phase-only fee-four exception of (25.4) remains. A whole target with one fee-four phase-only fibre and another fee-one tail-dependent fibre therefore has adaptive fee four. Its preset fee is infinite if the phase-only fibre is nonconstant: the mixed fibre forces root one, whose top-row rejection destroys the phase-only distinction. ∎
+
+**命题 25.6（Peeled-tail and endpoint obstructions）。** On both fibres at $k=4$, let $F_v(2,1)=B$ and every other entry be $A\ne B$. Then both exact fees are three, attained by $111$. At $k=3$, placing the sole $B$ at either $F_v(1,1)$ or $F_v(0,1)$ gives both fees infinite.
+
+Proof. In the $k=4$ example the second successful one identifies phase two, but its INITIAL tails zero and one still have distinct labels and identical successful outputs. A zero among the first two bits merges them alive; $11$ leaves them unresolved. Thus every two-bit adaptive path on this pair fails. The third one rejects exactly its tail-one source; every other rejected source and surviving source has label $A$, while that identified-phase rejection has label $B$. This is an actual fee-three common stream. Equivalently (25.16) excludes cutoffs one and two, and cutoff three attains the fee. In the $k=3$ examples root zero loses the same-phase distinction, while root one leaves $\mathcal H$ unresolved. Its next zero merges that pair alive, and its next one merges the two phase-zero/phase-one sources of tail one with labels $A,B$ into absorption. Every legal next action destroys a required distinction, proving infinity without a finite-horizon inference. ∎
+
+## 26. Source contracts and the remaining boundary
+
+**数学引文 26.1（Source-specific reuse and deductions）。** The joint-source saturation, complete-block observation contract, INITIAL labels, first-zero loss and safe phase bound are [S1, Convention 1.3, Definition 2.1, Proposition 2.3, Lemmas 4.2–4.3, Theorems 3.1 and 5.2]. Theorem 24.2 adds one existential common cut across both free values and all archives; it normalizes already-stopped archives rather than requiring an executed first zero on them. Theorem 24.4 adds exact fee and literal compatibility for its complete threshold family at every width and gcd. No bound from a supplied phase protocol is represented as an optimum for an arbitrary target.
+
+The phase-only unit expression (25.4), its adaptive lower bounds and its literal attaining streams are [S11, Theorem 3.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/ef2fddd6bab3fe4b861b07e4c01577e942912ab8/docs/develop/theory/KBONACCI_COPRIME_PHASE_TARGET_COST.md). The new cleared-suffix law is Lemma 25.2a, with its own silent adjacent-pair lower bound and safe all-one attainment; its consumers are Theorems 25.3–25.4. Neither cited supplier is assigned this suffix law. The mixed-tail additions explicitly identify the two actual root archives, every peeled phase and rejection strip, all surviving INITIAL tail prefixes, and the chronological common-stream constraint. These are reader-specific ordinary deductions, rather than a new generic belief-game or a combination of separately optimal preset fibres. The source comparison is limited to the stated claims and the adjacent literature contracts in Mathematical citation 7.2; no absence or priority conclusion is asserted.
+
+**定义 26.2（Remaining original objective）。** The unchanged general objective is the exact minimum worst-branch number of actual emitted complete blocks for every arbitrary attainable immutable INITIAL target at every $k\ge2,m\ge1$. The unit-width arbitrary-table adaptive and preset cases are settled by Theorems 25.3–25.4, with preset infinity retained. The all-width common-stream attainability criterion and complete-threshold exact family are Theorems 24.2 and 24.4. They do not supply the exact fee of an arbitrary target at $m\ge2$, nor a universal adaptive-to-preset conversion. Previously supplied finite deadlines remain restricted to their stated horizons. Every target outside the exact scopes retains its original source, output and fee obligations; no restricted increment replaces this objective.
+
+## 追加锚（本行以下为增补区）
+
+## 27. Positive offspring and the adaptive zero-difference spine
+
+**定义 27.1（Chronological continuation and availability lists）。** Use the original matched reader, whole-history prior, immutable INITIAL labels, free initial reading, independent absorbing rejection and paid endpoint-only actions of [S24, Definitions 1.1–1.3 and Interface 1.4]. In this chapter assume $m\ge3$, $k\ge2m$, $T=k+1$, $g=\gcd(m,T)$ and $P=g\mathbb Z/T\mathbb Z$. A successful acquired archive at paid depth $b$ has already recorded a zero in its literal input. Its paid depth satisfies $b\ge1$, and the recorded zero lies in its own issued prefix, not in an unobserved source history. Its actual INITIAL phase support is $S\subseteq P$, with common current value, common current tail $\sigma<k$, and one well-defined immutable label $\lambda(j)$ for each $j\in S$. All witnesses share the entire chronological observed archive; they are continuations of their own actual initial histories, not separately assembled coordinates. If different INITIAL labels have merged at the same phase, such an archive is not successfully completable and is outside this definition.
+
+Write $W_t=[tm,(t+1)m]\pmod T$ in the ordered physical-path convention of (1.4). For any actual support $A$ and chronological offset $b$, let
+
+$$
+\mathcal L_j(d;b)=\{z\in\mathbb F_2^d:\operatorname{supp}(z)\subseteq\{i<d:j\in W_{b+i}\}\}.
+\tag{27.1}
+$$
+
+Define $K(A,\lambda;b)$ as the least $d$ admitting one $z_j\in\mathcal L_j(d;b)$ for every $j\in A$, such that different labels have different codes. Equal-label phases may have different codes. Empty and constant supports have $K=0$. These are the actual phase lists of [D11, Definitions 2.3 and 3.1], expressed in the physical $j$ indexing of Chapter 1. Their use below does not extend D11's noncoprime realization theorem to a coprime support without a separate literal proof.
+
+**定理 27.2（The coprime one-hole extension）。** Suppose $g=1$. At every actually acquired archive of Definition 27.1 with $|A|\le m$ and $\sigma\le k-m$, for every $d\ge0$ there is an adaptive continuation of additional fee at most $d$ if and only if there is a preset continuation of that fee, if and only if codes as in (27.1) exist. Consequently
+
+$$
+D_{\rm ad}(A,\lambda;b,\sigma)
+=D_{\rm pre}(A,\lambda;b,\sigma)=K(A,\lambda;b).
+\tag{27.2}
+$$
+
+This includes every chronological offset, wrapped window, repeated label and window with only one missing physical phase.
+
+Proof. The successful-path code extraction and early-stopping convention are those of [S15, Theorems 3.3–3.4]: at a nonconstant common-tail archive a rejecting action merges all candidates into the same absorbing output, so it cannot complete the target. On every actual successful path record the successive endpoint differences and pad with zero after its leaf. Unavailable physical phases give zero coordinates. Equal padded codes force the same observed prefix through the earlier stopping leaf, so different labels cannot have equal codes. Thus every adaptive protocol of depth at most $d$ supplies (27.1). This direction makes no independent-row assumption.
+
+For sufficiency take such a code assignment and prescribe its $i$th row on $A\cap W_{b+i}$. A window has $m+1$ physical vertices. If it has at least two holes relative to the fixed $A$, [S15, Lemma 2.1] constructs a literal realization containing a zero. If it has exactly one hole, necessarily $|A|=m$ and $A\subset W_{b+i}$. Even full-path parity fixes the missing charge and gives a unique word by (1.5). If that word is $1^m$, complement coordinate $i$ of every code $z_j$, $j\in A$. Every phase of $A$ is available at this coordinate, so the new codes remain in their lists. Complementing a common coordinate is a bijection on code vectors and preserves every required separation. The new row differs from the all-one word's response on $A$, so its unique inverse is not $1^m$ and contains a zero. Apply this operation independently at each such row. The fixed support is the original $A$ throughout; no hole is borrowed from a different output child.
+
+Every resulting word contains a zero. The first leading run is at most $m-1$, so its seam satisfies $\sigma+\alpha\le k-1$. Its terminal tail is at most $m-1$. Thereafter every seam has length at most $2m-2<k$. All prescribed code rows therefore occur on one literal stream, with every padding bit and every block emitted and paid. Its label decoder is well-defined by code separation. This proves all three conditions equivalent at every finite horizon. Finiteness follows from the safe paid phase-recovery stream in [S1, Theorem 3.1]; restriction of its phase-distinguishing codes to $A$ gives $K\le T-1$. Empty and constant archives stop freely. ∎
+
+**定理 27.3（Geometry and tails of actual positive offspring）。** At any archive of Definition 27.1, issue an actual successful block at index $a$. Let $A$ be its positive-difference child. Every nonconstant such child has current tail at most $k-m$. Its actual phase count is at most $m$, except when $g=1$, $m$ is odd and $A=W_a$ has all $m+1$ physical vertices. In that exceptional case the emitted word is $101\cdots01$ and the child's current tail is one.
+
+Proof. Every positive child is the intersection of the parent support with the actual charge support of one literal word, hence is contained in $P\cap W_a$. For $g>1$, this last set has $m/g+1\le m$ phases. For $g=1$ it has $m+1$ vertices. Selecting all of them requires full charge one on the entire path; its total charge is even precisely when $m$ is odd. Formula (1.5) then gives the unique alternating word starting and ending one, with a recorded internal zero and terminal tail one. If not all vertices are selected, the count is at most $m$.
+
+If the issued word contains a zero, its terminal tail is at most $m-1\le k-m$. It remains to consider $1^m$, whose full charge support is just $\{am,(a+1)m\}$ modulo $T$. If the old tail is zero, the new tail is $m\le k-m$. If the old tail is positive, the preceding block ended in one, so its charge at the common endpoint $am$ was one. The present archive took one of that preceding block's two successful difference branches. If it took difference zero, $am$ is absent from its support. If it took difference one, its support is contained in $W_{a-1}$. Since $T\ge2m+1$, the vertex $(a+1)m$ is not in $W_{a-1}$: the two consecutive physical windows overlap only at $am$. Thus in either case the next positive child has at most one phase. Its one well-defined INITIAL label is constant. The existence of the preceding block is guaranteed by the already-recorded zero and the paid chronological archive; its last charge is an actual preceding response, not an invented extra observation. Therefore a nonconstant positive child of $1^m$ must have old tail zero, proving the tail claim. ∎
+
+**定理 27.4（The acquired odd-width full-window exception）。** Suppose the exceptional child in Theorem 27.3 is acquired at depth $a+1$, so $g=1$, $m\ge3$ is odd, $A=W_a$, and its common tail is one. For every immutable phase-label table on this actual archive,
+
+$$
+D_{\rm ad}(A,\lambda;a+1,1)
+=D_{\rm pre}(A,\lambda;a+1,1)=K(A,\lambda;a+1).
+\tag{27.3}
+$$
+
+Proof. Successful-path extraction again gives $K\le D_{\rm ad}$. The safe phase-recovery stream of [S1, Theorem 3.1] gives separating availability codes of length $T-1$, so $K\le T-1$. It suffices to realize any separating code assignment of length $d\le T-1$ without increasing its length.
+
+Rotate the physical coordinates for this proof so that $A=[0,m]$. Subsequent window starts are $nm\pmod T$, $1\le n\le d$. No such window is $A$, because $\gcd(m,T)=1$ and $n<T$. It therefore has at least one hole relative to $A$. Two length-$m+1$ consecutive arcs on a cycle of length at least $2m+1$ have an intersection of size $m$ only when their starts differ by $1$ or $-1$. To verify this assertion, write a different start as $u\in\{1,\ldots,T-1\}$. If $u\le m$, then $u+m\le2m<T$, so the intersection is $[u,m]$ of size $m+1-u$, equal to $m$ only for $u=1$. If $u>m$, the window misses $A$ unless it wraps; on wrapping its intersection is $[0,u+m-T]$ of size $u+m-T+1\le m$, equal to $m$ only for $u=T-1$. Thus these two adjacent starts are the only one-hole cases. Thus a one-hole window is $[1,m+1]$ or $[-1,m-1]$. In particular its hole is an endpoint. Consecutive chronological windows themselves share just one endpoint. Since $A$ has only one vertex outside a one-hole window, each of its adjacent chronological windows intersects $A$ in at most two vertices, and hence has at least two holes when $m\ge3$.
+
+At a two-hole row use a zero-containing inverse supplied by [S15, Lemma 2.1]. At a one-hole row the inverse is unique. If it contains a zero, use it. If it is $1^m$, its response on $A$ selects exactly one phase $h$: the other physical endpoint of that window is its hole. Consequently this row's positive prefix uniquely identifies $h$ within the whole $A$. Set every later code coordinate of $h$ to zero and stop that actual phase at this endpoint. All code separations remain valid: $h$ differs from every other phase at this very coordinate, and the codes of other phases are unchanged. Repeat this operation in chronological order as necessary.
+
+These all-one rows are isolated, because both neighbouring rows have at least two holes. Immediately before any such row, the tail is at most $m-1$, or is the initial tail one if this is the first row. Thus the all-one seam is at most $2m-1<k$. Immediately after such a row enforce first bit zero in the next literal word. If the one-hole window was $[1,m+1]$, the next window's leading vertex is $m+1$, outside $A$. If it was $[-1,m-1]$, that leading vertex is $m-1=h$, whose future code was just made zero. In both cases the leading charge can be zero; the next window has at least two holes, so there is another hole after its leading vertex to compensate parity. [S15, Proposition 2.2], or directly (1.5), therefore realizes the entire next row with first bit zero. It clears the possibly long tail created by the all-one row without adding a block. Its new tail is at most $m-1$.
+
+Every other row follows a zero-containing word or is itself zero-containing; its seam is bounded by $2m-2<k$. The initial seam is at most $m<k$. All words belong to one preset stream on the original actual $A$, and all live sources are safe. The only suffix changes were on already uniquely identified phases, with permitted archive-dependent stopping; no response needed by another label was altered. Hence codes of length $K$ have actual fee $K$, giving the reverse inequality. This is a construction on this acquired full-window archive, not on arbitrary large supports or unrelated high tails. ∎
+
+**定理 27.5（Only the zero-difference spine needs adaptive actions）。** At every archive of Definition 27.1, there is an optimal adaptive continuation whose actions can depend on new differences only until the first positive difference. Thereafter the continuation is one fixed literal stream on that acquired positive child, with archive-dependent stopping. Its exact additional fee is $K$ of that child's actual support and immutable labels at its actual chronological offset. Both original alphabets have this property.
+
+Proof. The source-faithful safe phase-recovery construction [S1, Theorem 3.1] makes every archive in the definition finitely completable: one well-defined label is retained per phase, and the known paid displacement recovers INITIAL phase from current phase. Minimum worst fees are therefore attained integers; choose an optimal finite adaptive tree and stop every constant archive immediately. At any nonconstant node its next action must be successful, because the common tail makes rejection simultaneous and absorbing.
+
+By Theorem 27.3 every nonconstant positive child has low current tail and at most $m$ phases, or is exactly the exceptional acquired archive. In the coprime small-support case use Theorem 27.2; in the exceptional case use Theorem 27.4. In the noncoprime case use [D11, Theorems 2.2 and 3.2–3.4] after the bijective rescaling $j\mapsto j/g$, $m\mapsto m/g$, $T\mapsto T/g$. Its high-tail deleted availability point does not apply here, since the actual child tail is at most $k-m<k-1$. Thus that supplier's code value is exactly (27.1). Its sparse literal realization is used only within $g\ge2$, $m\ge3$, $m<k$ and a common-tail acquired archive. Constant children instead have fee and $K$ zero.
+
+Replace each subtree rooted at the first positive difference on the original zero-difference spine by its optimal preset stream. Its exact fee $K$ is no greater than the old subtree's worst fee, so the root's worst fee does not increase. Because the original tree was optimal, the new one is optimal. The choices remaining adaptive are exactly those on the chronological all-zero difference path. All preceding payments remain part of the total fee, and all later stream words are paid on the actual branches which emit them. Different first-positive children can require different streams; this establishes branchwise preset optimality and asserts no common global preset stream for all siblings. ∎
+
+## 28. Whole-colour reactivation after the first-return deadline
+
+**定义 28.1（Two colours in a guarded nonterminal strict slot）。** Retain all original source, target and fee conventions of Chapter 1. Let
+
+$$
+Q\ge2,\quad m\ge3,\quad 2\le r<m,\quad T=Qm+r,\quad k=T-1,\quad
+ g=\gcd(m,r),\quad P=g\mathbb Z/T\mathbb Z,\quad N=Q+1.
+\tag{28.1}
+$$
+
+Choose $1\le t<Q$ and disjoint nonempty actual sets
+
+$$
+U,V\subseteq P\cap[tm+g,(t+1)m-2g].
+\tag{28.2}
+$$
+
+The interval has $m/g-2$ actual vertices, so these assumptions imply $m/g\ge4$. Let $A,B,C$ be pairwise distinct. Give low phases $0,m,U,V$ labels $D,E,B,C$, respectively, and every other actual low phase label $A$. Here $D,E,R,L_\bot$ are arbitrary, including $D=E$ and every coincidence with $A,B,C$. The complete target is
+
+$$
+f_3(v,-j,s)=
+\begin{cases}
+R,&k-m\le s<k,\\
+D,&s<k-m,\ j=0,\\
+E,&s<k-m,\ j=m,\\
+B,&s<k-m,\ j\in U,\\
+C,&s<k-m,\ j\in V,\\
+A,&s<k-m,\ j\notin\{0,m\}\cup U\cup V,
+\end{cases}
+\qquad f_3(\bot)=L_\bot,
+\tag{28.3}
+$$
+
+on both free-value fibres. Set
+
+$$
+M=\min(\max U,\max V),\qquad
+L=\left\lceil\frac{T+M}{m}\right\rceil.
+\tag{28.4}
+$$
+
+Maxima refer to the displayed ordinary representatives, not cyclic order.
+
+**定理 28.2（Exact paid later-slot law）。** For every target in Definition 28.1 and both original alphabets,
+
+$$
+C_{\rm ad}(f_3)=C_{\rm pre}(f_3)=L\in\{N+t,N+t+1\}.
+\tag{28.5}
+$$
+
+Proof. The full-source joint realizations are (1.3). A root containing a zero after $a<m$ ones merges, at each phase, the actual INITIAL tails $k-m-1,k-m$: both survive that zero, since $k-m+a<k$. At least one low phase has label different from $R$, because $A,B,C$ are distinct. At such a phase this merger loses a required label difference. A correct root is therefore $1^m$. It rejects precisely the high tails, which return $R$, and leaves actual low archives $H=\{0,m\}$ and $Z=P\setminus H$ as in [S24, Theorem 20.1]. This reasoning does not require $D\ne E$.
+
+For an all-action lower bound choose the three actual phases
+
+$$
+u=\max U,\qquad v=\max V,\qquad z=(t+1)m-g.
+\tag{28.6}
+$$
+
+They have pairwise different labels $B,C,A$ and $z>\nu,v\ge M$. Choose one common free value and INITIAL tail zero for these three whole-history sources. Their only opportunity before absolute emitted position $T+M-1$ is the first-tour block of index $t$. Indeed their first coefficient positions are $j-1,j$, both strictly inside that block; their next coefficient positions are $T+j-1,T+j$. The guard also keeps $z$ strictly inside the same block. Before index $t$ their outputs and tails are identical. Any rejecting action on their shared archive would merge all three distinct labels, so every action on this archive is successful. The index-$t$ endpoint has only two successful output values, hence puts two of these three differently labelled sources on the same chronological child. Their tails are common, and until a second opportunity every later successful response on this child is zero; a rejecting response is common and absorbing. They cannot separate by a total fee $d<L$, since $dm<T+M$ implies that every emitted position is less than $T+M-1$. A deterministic controller cannot return their different labels. This excludes every smaller-fee literal adaptive controller and therefore every smaller-fee preset stream. It uses actual sources and common histories, not the count of labels alone.
+
+We construct one common attaining stream. Interchange the names of the two colour sets if necessary so that $\max U=M<\max V$. The corresponding labels are interchanged too. This is possible because the sets are disjoint and their maxima are different. Thus $U$ is the colour to reactivate, and $V$ is the whole colour retired on the first tour. Put
+
+$$
+h=(t+1)m,\qquad a=tm-r,\qquad c=(t+1)m-r,\qquad v_*=\max V.
+\tag{28.7}
+$$
+
+All $a,c,h,v_*$ are actual phases. The first second-tour window meeting $U$ has block index $Q+t$, starts at the unwrapped residue $a$ and ends at $c$. The next has index $Q+t+1$ and ends at $c+m$. We have $a>0$, $\min U>a$, and $\max(U\cup V)\le h-2g<c+m$. Thus $L=N+t$ if $M\le c$, and $L=N+t+1$ if $M>c$.
+
+All unspecified blocks in the construction are $0^m$ and are issued and paid whenever a source has not stopped. The root is $1^m$. At index $t$ use the even full physical charge set
+
+$$
+E_t=V\cup\bigl(\{h\}\text{ if }|V|\text{ is odd, otherwise }\varnothing\bigr),
+\tag{28.8}
+$$
+
+inverted by (1.5). It starts zero because $V$ lies strictly inside the slot and the left endpoint is uncharged. If $|V|$ is even its terminal tail is zero. If $|V|$ is odd, the positive root-zero child is $V\cup\{h\}$, with labels $C,A$. At index $t+1$ include the pulse $10^{m-1}$ with charge support $\{h,h+1\}$. On this acquired child it selects only $h$, so both labels are returned at this paid endpoint. On the continuing zero archive $h$ is already absent and any actual $h+1$ has label $A$, hence any additional positive child is constant $A$. No phase of $U$ is touched. In the even case every phase of $V$ stops immediately at index $t$. Thus the whole colour $V$ has genuinely stopped before its second tour; its later charges may be used without adding it to a live acquired archive. Nonactual $h+1$, when $g>1$, is never a source.
+
+For $t>1$, at index $Q$ use the endpoint pulse with support $\{T-1,0\}$, namely $0^{r-1}1\,0^{m-r}$. If $t=Q-1$ and $|V|$ is odd, also include the preceding paragraph's repair pulse in this same block: the two words are combined by bitwise XOR, which here means prescribing their symmetric-difference even charge supports and applying the single inverse (1.5). Their one positions are distinct. On $H$ this block selects only phase zero and returns $D,E$; if those labels coincide, $H$ may already have stopped at the root. On $Z$ all extra selected high-end phases have label $A$. At index $Q+t-1$ use the last-position pulse $0^{m-1}1$ with support $\{a-1,a\}$. These are low baseline phases to the left of $U,V$, with label $A$ whenever actual. Its positive $Z$ child is constant and stops. In particular phase $a$ has actually been removed from the zero continuation before index $Q+t$.
+
+For $t=1$, the preparatory pulse and the endpoint return occupy the same index $Q$, so use instead the even support $\{0,a\}$ at that index. If $Q=2$ and $|V|$ is odd, add the repair support $\{Qm,Qm+1\}$ by symmetric difference in the same row. The ordered wrapped path places zero at local vertex $r$ and $a=m-r$ at its right endpoint. Without the optional first-position repair the inverse is $0^r1^{m-r}$. On $H$ it selects zero, hence returns $D,E$. On $Z$ it selects the baseline phase $a$; the optional repair adds only the already selected boundary $h=Qm$ and the baseline actual phase $Qm+1$. The same repair decoder separates $V$ from $h$, and every other positive $Z$ child here has label $A$. Thus $a$ is again genuinely absent from the continuing zero archive. This choice also covers $a=1$, where naively combining two isolated pulses would cancel the endpoint charge at zero.
+
+It remains to query the whole returning colour $U$ on its actual second-tour windows. If $M\le c$, at index $Q+t$ prescribe the even support
+
+$$
+E=U\cup\bigl(\{a\}\text{ if }|U|\text{ is odd, otherwise }\varnothing\bigr).
+\tag{28.9}
+$$
+
+The phase $a$ has already stopped with label $A$. On the live zero archive the positive child is exactly $U$, hence returns $B$, and the zero child contains only baseline labels $A$. All other low branches have already returned their respective immutable labels. This finishes at fee $N+t=L$, including the case $M=c$ at the window endpoint.
+
+If $M>c$, put $U_-=U\cap[a,c]$ and $U_+=U\cap(c,c+m]$. The latter is nonempty. At index $Q+t$ start with $J=U_-\cup\{c\}$ and use the even support
+
+$$
+E_-=J\cup\bigl(\{a\}\text{ if }|J|\text{ is odd, otherwise }\varnothing\bigr).
+\tag{28.10}
+$$
+
+On the continuing zero archive this selects $U_-$ and $c$. If $c\in U$, all selected live phases have label $B$. If $c\in V$, it has already stopped. Otherwise $c$ has label $A$ and, if $U_-$ is nonempty, this positive child needs one paid repair; if $U_-$ is empty it stops with $A$. In every case $c$ is absent from the continuing zero archive after this row. Because $v_*=\max V>M>c$ and $v_*<c+m$, the actual phase $v_*$ is available in the next window and has already stopped with colour $C$.
+
+At index $Q+t+1$ start with $J'=U_+\cup\{c\}$ and use
+
+$$
+E_+=J'\cup\bigl(\{v_*\}\text{ if }|J'|\text{ is odd, otherwise }\varnothing\bigr).
+\tag{28.11}
+$$
+
+The added $v_*$ is a genuinely completed phase of the first-tour colour, not an unavailable algebraic mask. On the zero-continuation archive the positive child is exactly $U_+$ and returns $B$, while its zero child returns $A$. On a pending positive child from (28.10), the phases of $U_-\setminus\{c\}$ are outside the new window and have difference zero; the baseline phase $c$ has difference one. That very same complete block therefore repairs this child and returns $B,A$ correctly. The already stopped phase $v_*$ and the removed phase $a$ supply no extra source to either decoder. This is one global literal stream, finishing at fee $N+t+1=L$.
+
+Finally check every physical seam rather than extending the old deadline's safety bound. The first post-root block starts zero: if $t>1$ it is an issued zero block, and if $t=1$ it is (28.8), whose first bit is zero. Every low INITIAL tail, including $k-m-1$, is therefore cleared after the root. The scan word (28.8) contains a zero and has tail at most $m-1$. An immediately following repair has leading run one, or two if it coincides with the endpoint pulse and $r=2$, so the seam is at most $m+1<k$. Each other endpoint pulse starts zero and ends zero; the combined repair/endpoint block still ends zero because $m-r\ge1$. The later preparatory last-position pulse for $t>1$ follows zeros, has leading zero and tail one. For $t=1$ the preparatory endpoint row has terminal tail $a=m-r\le m-2$, including its optional isolated first-bit repair; its leading run is zero or one and is safe after the scan. Therefore the first returning row (28.9) or (28.10), even if it is all-one, has entering tail at most $m-2$ or one and total initial run at most $2m-2<k$.
+
+In the two-window case (28.10) leaves tail at most $m$. The next row starts with charge one at $c$, but its first subsequent charged vertex is $\min U_+$: the compensation vertex $v_*$ lies strictly beyond $M$. Hence its leading one run is $\min U_+-c\le M-c\le r-2g$. Its seam is at most $m+r-2g\le2m-3<k$. The last physical endpoint $c+m$ is uncharged, so (28.11) ends zero. All intervening waits are literal zeros, and every internal run is shorter than $k$ because $m<k$. All branches are safe through their actual stopping point; no cleanup block is omitted. Initial $\bot$ returns $L_\bot$ freely and root rejection returns $R$ at fee one. Each free value decodes its own differences on this same stream. Arbitrary endpoint, high and bottom label coincidences do not change the acquired supports or any of these decoders. The lower bound and actual attainment prove (28.5). ∎
+
+## 29. One literal stream across the two free-value fibres
+
+**定义 29.1（Value join）。** For any original $k\ge2,m\ge1$ and record target $f$, set
+
+$$
+\Gamma(\theta,s)=\bigl(f(0,\theta,s),f(1,\theta,s)\bigr).
+\tag{29.1}
+$$
+
+View $\Gamma$ as a target independent of the actual initial and current scalar value, on both free-value fibres. Give initial $\bot$ any separately prescribed pair label. Initial rejection is already freely distinguished and imposes no condition on the positive-fee stream.
+
+**定理 29.2（Exact preset value-join law, including infinity）。** For either original alphabet, for every record target and all original parameters,
+
+$$
+C_{\rm pre}(f)=C_{\rm pre}(\Gamma).
+\tag{29.2}
+$$
+
+Proof. A fixed literal stream has a value-independent phase/tail trajectory and rejection time. Before rejection, changing the INITIAL value bit complements every scalar endpoint output; after rejection both readings are $\bot$. This is the exact symmetry of the original bit updates [S1, Definition 1.2 and Convention 1.3; S24, (1.2)], valid also when $m\ge k$, when a block itself contains $1^k$, and for every allowed cross-block rejection. No intermediate reading is supplied by this symmetry.
+
+Suppose a preset controller for $f$ has uniform fee bound $d$. Use its very same literal stream on an actual source. From the actual acquired endpoint archive and known initial value $v$, deterministically form the two scalar-output archives whose initial values are zero and one by complementing precisely the successful readings as necessary. Issued words, paid depths and $\bot$ entries are the same in both. Run the original stopping/decoding rule on each of these archives. When one rule stops, retain its label; continue the actual stream until the other stops. Both stopping times are at most $d$, because the same phase and INITIAL tail with either value have actual whole-history realizations and the original controller was correct on both. The output pair is (29.1).
+
+This is a deterministic decoder applied to one actual chronological stream. It executes no second experiment, makes no source copy and imports no observation from another actual branch. The symmetry computes the other value's output string from the one already observed. Rejection cannot invalidate a label already decoded, and any rule still running sees the same prescribed absorbing suffix. The worst paid depth is the maximum of the two original stopping times, hence at most $d$. This proves $C_{\rm pre}(\Gamma)\le C_{\rm pre}(f)$ whenever the latter is finite.
+
+Conversely use a preset controller for $\Gamma$, remember the free INITIAL value, and return that component of the acquired pair. The initial bottom branch returns its independent prescribed $f(\bot)$ freely. This uses the same stream and no greater fee, giving the reverse inequality at every finite bound. Therefore existence of a controller bounded by each $d$ is equivalent in the two directions, which proves equality in $\mathbb N\cup\{+\infty\}$. ∎
+
+**定理 29.3（Unbounded finite preset excess from competing value fibres）。** Keep (28.1)–(28.2). Choose labels $A\ne B$ and $D\ne E$, with arbitrary cross coincidences, high label $R$ and initial bottom label. In free-value fibre zero put $B$ on low outside phases $U$ and $A$ on every other low outside phase. In free-value fibre one put $B$ on $V$ and $A$ elsewhere. In both fibres give low endpoints $0,m$ labels $D,E$ and high tails label $R$. Then
+
+$$
+C_{\rm ad}(f)=N,\qquad C_{\rm pre}(f)=L,
+\qquad C_{\rm pre}(f)-C_{\rm ad}(f)\in\{t,t+1\}.
+\tag{29.3}
+$$
+
+Proof. Each individual fibre is precisely [S24, Definition 21.1] with its sole nonempty batch in the nonterminal slot $t$. Since $Q\ge2$, another batch is empty. [S24, Theorem 21.2] therefore gives exact preset and adaptive fee $N$ in each fibre, under all gcds and all allowed label coincidences. The supplied free-value fibre convention [S1, (2.2) and Theorem 5.2; S24, Definition 1.3] lets the freely observed initial value select its own controller, so the full adaptive fee is the maximum $N$, with the same lower bound obtained in either fibre. This is reused fibre maximization, not a new adaptive solver.
+
+The joined low outside labels are $(A,A)$ off $U\cup V$, $(B,A)$ on $U$ and $(A,B)$ on $V$. They are pairwise distinct. The joined endpoint labels are $(D,D),(E,E)$, the high label is $(R,R)$ and the bottom pair is independent. Thus $\Gamma$ is exactly a target in Definition 28.1. Theorem 28.2 and then Theorem 29.2 give its exact common-stream fee $L$ and the asserted difference.
+
+For an explicit unbounded family fix $m=5,r=2$, take arbitrary $Q\ge2$, $t=Q-1$, $U=\{5t+1\}$ and $V=\{5t+2\}$. Here $g=1$, the guard holds, $M=5t+1$ and $L=N+t$. The excess is $Q-1$, which is unbounded. These finite costs apply to the complete original INITIAL target, with full tail ranges and free values, not to an isolated already acquired phase table. ∎
+
+**定理 29.4（Disjoint feasible roots force infinite preset fee）。** For every $2\le m<k$ and $1\le\alpha<m$, choose two distinct tail labels in each fibre, with arbitrary coincidences between fibres. In fibre zero put one label on $s<k-\alpha$ and the other on $s\ge k-\alpha$; in fibre one put one label on $s<k-m$ and the other on $s\ge k-m$. Labels are constant over actual phases, and initial bottom has an arbitrary independent label. Then
+
+$$
+C_{\rm ad}(f)=1,\qquad C_{\rm pre}(f)=+\infty.
+\tag{29.4}
+$$
+
+Proof. Both tail classes are nonempty whole-history sources by the original joint-source supplier (1.3), at every actual phase and each value. Neither fibre can stop at the free root. Fibre zero is acquired in one block by $1^\alpha0^{m-\alpha}$: rejection occurs exactly for $s\ge k-\alpha$, and every smaller tail reaches the zero and completes. Fibre one is acquired by $1^m$: it rejects exactly $s\ge k-m$. Since the free initial value selects the appropriate literal action, the adaptive fee is exactly one under both alphabets.
+
+Every correct fibre-zero first word must contain its first zero exactly after $\alpha$ ones. To prove this against all words, suppose its first zero is after $a<m$ ones. If $a<\alpha$, the adjacent INITIAL tails $k-\alpha-1,k-\alpha$ both survive that zero, then merge at the same phase with identical observed archive and different required labels. If $a>\alpha$, those same tails both reject before that zero, becoming indistinguishable absorbing sources. If the word has no zero, it is $1^m$, and those same two tails both reject because $m>\alpha$. None of these mergers can be repaired at a later complete endpoint. Thus $a=\alpha$ is necessary; later bits do not change this root requirement.
+
+Every correct fibre-one first word must be $1^m$. A zero after any $a<m$ ones lets the adjacent INITIAL tails $k-m-1,k-m$ both survive and merge. They again have different required labels. The feasible first-word sets of the two nonconstant fibres are therefore disjoint. A preset controller must emit the same first word in both, since both require a positive-fee action; archive-dependent stopping after that word cannot recover a difference already erased inside it. No correct common literal stream exists, irrespective of its proposed later horizon. Initial bottom stops for free and introduces no exception. This infinite preset boundary is a producer/control incompatibility, not a deficiency of a terminal decoder. ∎
+
+## 30. Supplying statements and remaining quantifiers
+
+**数学引文 30.1（Source-specific new bridges and exact reuse）。** The full original joint-source and fee contract is the immutable [S24, Chapter 1], with its direct credited suppliers [S1, Definition 1.2, Convention 1.3, Definition 2.1, Proposition 2.3, Theorem 3.1, Lemmas 4.2–4.3 and Theorem 5.2], [S2, Theorem 14.1] and [S10, Interface 2.1]. Whole-archive successful-path extraction, arbitrary-hole inverses and strict seam interfaces are [S15, Lemma 2.1, Proposition 2.2 and Theorems 2.3–3.4]. The noncoprime code conversion is [D11, Definitions 2.3 and 3.1 and Theorems 2.2 and 3.2–3.4], applied only at its actual hypotheses; the coprime one-hole and acquired full-window constructions are Theorems 27.2 and 27.4. The first-tour batch law used for the individual value fibres is exactly [S24, Theorem 21.2], including empty terminal batches. Theorem 28.2 supplies the later exact fee, with a new all-action three-source lower bound and an explicit one-stream second-tour realization. It does not extend the old first-tour retirement condition beyond its deadline. Availability lists retain one code per actual phase and allow distinct codes within one label class; no phase-count bound is substituted for this condition. These are ordinary source-specific deductions; no exhaustive literature priority assertion is made.
+
+**定义 30.2（Unresolved original goal and retained boundaries）。** The original objective remains the exact minimum worst-branch emitted complete-block fee for every attainable immutable INITIAL target, for all $k\ge2,m\ge1$, with legal attainment under both alphabets. Theorem 27.5 restricts the adaptive decisions after a recorded first zero when $m\ge3,k\ge2m$; it does not select the best first-zero parent or identify one common stream across its siblings. Theorem 27.2 covers low-tail acquired supports of at most $m$ phases. Theorem 27.4 covers the stated chronological full-window offspring with tail one; arbitrary larger coprime supports and unrelated high-tail supports still require their actual seam conditions. Theorem 28.2 settles its guarded nonterminal two-colour family, including all label coincidences allowed in Definition 28.1, and does not give the optimum for arbitrary repeated batches, arbitrary multi-colour later slots, unguarded endpoints or every subsequent tour. Theorem 29.2 is universal for preset value joining but does not replace adaptive fibre maximization or resolve competing first-zero parents. The finite separation and infinite boundary in Theorems 29.3–29.4 retain preset infinity and leave the universal adaptive optimum unchanged as the goal. Widths $m=1,2$, the region $k<2m$, richer attainable INITIAL-tail partitions, and full joint global-stream compatibility outside the proved families remain within that unresolved goal.
+
+[S24]: https://raw.githubusercontent.com/the-omega-institute/trureturing/186832198cce5e1f2cf8c840689b087d1bbc0941/docs/develop/theory/KBONACCI_INITIAL_TARGET_COST_THEORY.md
+
+## 追加锚（本行以下为增补区）
