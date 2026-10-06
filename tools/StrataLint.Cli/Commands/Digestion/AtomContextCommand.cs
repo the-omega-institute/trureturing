@@ -14,36 +14,9 @@ internal static class AtomContextCommand
         ArgumentNullException.ThrowIfNull(arguments);
         try
         {
-            if (arguments.Count != 2 || arguments[0] != "--atom-id"
-                || !DigestionFingerprint.IsCanonicalSha256("sha256:" + arguments[1]))
-                throw new DigestionAtomContextException(DigestionAtomContextError.ARGUMENTS_INVALID,
-                    "USAGE: StrataLint atom-context --atom-id ATOM_ID");
-            var loaded = DigestionWorkingTree.ReadLedger(
-                repository,
-                Decode,
-                BackfillInventoryLoader.LoadForDigestion);
-            var ledger = loaded.Document;
-            var targetEntries = ledger.RequireDigestionEntries()
-                .Where(entry => entry.AtomId == arguments[1])
-                .ToArray();
-            var sourceIds = targetEntries
-                .Select(static entry => entry.SourceId)
-                .ToHashSet(StringComparer.Ordinal);
-            var source = targetEntries
-                .Select(static entry => entry.SourcePath)
-                .Distinct(StringComparer.Ordinal)
-                .ToArray();
-            var sourceCas = DigestionWorkingTree.ChainCasPaths(
-                ledger,
-                ledger.RequireDigestionEntries()
-                    .Where(entry => sourceIds.Contains(entry.SourceId))
-                    .SelectMany(static entry => entry.Receipts.ChainAtoms));
-            var (_, snapshot, document) = DigestionWorkingTree.Extend(
-                repository,
-                loaded,
-                Decode,
-                [.. source, TheoryAtomizerDataLoader.DataPath, .. sourceCas]);
-            var contexts = DigestionAtomContextProjection.ResolveOccurrences(snapshot, document, arguments[1]);
+            var options = DigestionQueryArguments.Parse(arguments, "atom-context");
+            var (_, snapshot, document) = DigestionQuerySelection.ReadContext(repository, options.AtomId, options.Sources, out var atomized);
+            var contexts = DigestionAtomContextProjection.ResolveOccurrences(snapshot, document, options.AtomId, atomized);
             return new CommandResult(true, Render(contexts), string.Empty);
         }
         catch (DigestionAtomContextException error)
@@ -68,7 +41,7 @@ internal static class AtomContextCommand
         for (var ordinal = 0; ordinal < contexts.Length; ordinal++)
         {
             var context = contexts[ordinal];
-            writer.WriteLine($"OCCURRENCE index={ordinal + 1} stream_index={context.Index}/{context.Count} {NeighborToken("PREVIOUS", context.Previous, context.PreviousBoundaryReason)} {NeighborToken("NEXT", context.Next, context.NextBoundaryReason)}");
+            writer.WriteLine($"OCCURRENCE index={ordinal + 1} {NeighborToken("PREVIOUS", context.Previous, context.PreviousBoundaryReason)} {NeighborToken("NEXT", context.Next, context.NextBoundaryReason)}");
             WriteNeighbor(writer, "CURRENT", context.Current, null);
             if (context.Previous is { } previous) WriteText(writer, "PREVIOUS", previous.RawBytes);
             WriteText(writer, "CURRENT", context.Current.RawBytes);
@@ -86,7 +59,7 @@ internal static class AtomContextCommand
     {
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         writer.WriteLine($"ATOM_CONTEXT atom_id={context.Target.AtomId} source_id={context.SourceId} "
-            + $"source_path={context.SourcePath} atomizer={context.Atomizer} index={context.Index}/{context.Count}");
+            + $"source_path={context.SourcePath} atomizer={context.Atomizer}");
         WriteNeighbor(writer, "PREVIOUS", context.Previous, context.PreviousBoundaryReason);
         WriteNeighbor(writer, "CURRENT", context.Current, null);
         WriteNeighbor(writer, "NEXT", context.Next, context.NextBoundaryReason);
@@ -112,11 +85,5 @@ internal static class AtomContextCommand
         if (!text.EndsWith('\n')) writer.WriteLine();
         writer.WriteLine($"END_{label}_TEXT");
     }
-
-    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) => SnapshotDecoder.Decode(raw) switch
-    {
-        SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-        SnapshotDecodeOutcome.InfrastructureFailure error => throw new InvalidOperationException(error.Message),
-    };
 
 }

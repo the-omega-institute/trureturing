@@ -17,12 +17,10 @@ internal static class ShowAtomCommand
         ArgumentNullException.ThrowIfNull(arguments);
         try
         {
-            var atomId = ParseArguments(arguments);
-            var (_, snapshot, document) = DigestionWorkingTree.ReadLedger(
-                repository,
-                Decode,
-                BackfillInventoryLoader.LoadForDigestion,
-                DigestionCasStore.RootPath + atomId);
+            var options = DigestionQueryArguments.Parse(arguments, "show-atom");
+            var atomId = options.AtomId;
+            var loaded = DigestionQuerySelection.ReadAtom(repository, atomId, options.Sources);
+            var document = loaded.Document;
             var entries = document.RequireDigestionEntries()
                 .Where(entry => entry.AtomId == atomId)
                 .ToArray();
@@ -36,12 +34,15 @@ internal static class ShowAtomCommand
             };
             var source = document.RequireDigestionSources()
                 .Single(item => item.SourceId == entry.SourceId);
+            var (_, snapshot, _) = DigestionWorkingTree.Extend(repository, loaded, Decode,
+                DigestionQuerySelection.CasPath(entry));
             var casBytes = ReadCommittedCas(snapshot, entry);
             var stale = source.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal);
             return new CommandResult(true, Render(entry, casBytes, stale), string.Empty);
         }
         catch (Exception exception) when (
             exception is FormatException
+                or DigestionAtomContextException
                 or InvalidOperationException
                 or IOException
                 or ArgumentException
@@ -52,18 +53,6 @@ internal static class ShowAtomCommand
                 string.Empty,
                 $"SHOW_ATOM_INVALID {exception.Message}\n");
         }
-    }
-
-    private static string ParseArguments(IReadOnlyList<string> arguments)
-    {
-        if (arguments.Count != 2
-            || arguments[0] != "--atom-id"
-            || string.IsNullOrWhiteSpace(arguments[1]))
-        {
-            throw new InvalidOperationException("USAGE: StrataLint show-atom --atom-id ATOM_ID");
-        }
-
-        return arguments[1];
     }
 
     private static ImmutableArray<byte> ReadCommittedCas(

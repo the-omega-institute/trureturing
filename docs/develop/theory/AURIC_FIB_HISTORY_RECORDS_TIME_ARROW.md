@@ -555,3 +555,314 @@ $$
 **假设 125.5（共同原生交互的待证断言）。** 待证目标是在明确的同一个原生局域交互、共同来源、接缝及资源合同下，联合导出所需路径权重 $p$、相位相容作用 $U$ 与共同记录矩阵 $\Gamma$，并证明其对全部声明的未来实验充分。数学有限兼容性是第125.2–125.3条的结论；原生共同可取得性、相位控制与保护、物理距离和时间的忠实运输，以及无界成本的可支付性仍是独立未证前提。分别选择最优 $p,U,\Gamma$ 不证明它们由同一实际交互共同可达。
 
 ## 追加锚（本行以下为增补区）
+
+## 126. 跨输入的共同等距条件与唯一后继记录
+
+**定义 126.1（配置、内部载体与记录）。** 令 $X$ 为有限配置集，内部空间为
+$K=\mathbb C^d$，其中 $1\le d<\infty$。给定随机矩阵 $P=(P_{ij})$，满足
+$P_{ij}\ge0$ 且 $\sum_jP_{ij}=1$，并在每条允许边 $i\to j$ 上给定酉
+$U_{ji}\in\mathsf U(K)$。记录向量 $e_{ji}$ 属于有限维空间 $E$，且
+$\langle e_{ji},e_{ji}\rangle=1$。候选共同实现定义在
+$\mathbb C^X\otimes K$ 上：
+$$
+ V(|i\rangle\otimes\psi)=\sum_j\sqrt{P_{ij}}\,|j\rangle\otimes U_{ji}\psi\otimes e_{ji}.
+$$
+这里的 $V$ 同时承载概率、内部酉和记录；三者不能先分别选出再假定具有共同实现。
+
+**定理 126.2（跨输入等距判据）。** 上式延拓为等距映射 $V$ 当且仅当对任意
+$i,k\in X$，有算子恒等式
+$$
+ \sum_j\sqrt{P_{ij}P_{kj}}\,
+ \langle e_{ji},e_{jk}\rangle\,U_{ji}^{\dagger}U_{jk}
+ =\delta_{ik}I_K. \tag{126.1}
+$$
+
+**证明。** 对任意基向量和内部向量，展开两边内积，输出配置的正交性只留下共同后继 $j$，所得系数正是左端。输入基向量的内积为 $\delta_{ik}\langle\psi,\phi\rangle$，因而所有 $\psi,\phi$ 的内积相等恰好等价于 (126.1)。当 $i=k$ 时，记录归一化和酉性把左端化为 $\sum_jP_{ij}I_K=I_K$。当 $i\ne k$ 时，条件是不同输入之间的算子抵消关系，记录 Gram 矩阵的正性和各条边的合法性都不能代替它。有限 Stinespring 扩展与丢弃记录只是实现等距后的标准操作；本定理要求的是整个来源叠加域上的共同算子，因此强于第125章固定准备历史的等距式：后者以正交历史标签保证一个内部输入的范数，本式还检验不同配置来源之间的全部相干叠加。 $\square$
+
+**引理 126.3（唯一共同后继强制正交记录）。** 若 $i\ne k$ 只有一个共同后继 $j$，且 $P_{ij}P_{kj}>0$，则
+$\langle e_{ji},e_{jk}\rangle=0$。
+
+证明中 (126.1) 只剩非零标量乘以可逆酉 $U_{ji}^{\dagger}U_{jk}$，故该标量必须为零。若共同后继不止一个，各项可以在算子意义下相消，不能把“合流必正交”推广到这种情形。该判据与有限维通道的 Kraus/Stinespring 表示相容；参见 M.-D. Choi, “Completely positive linear maps on complex matrices”, *Linear Algebra Appl.* 10 (1975), 285–290，以及 W. F. Stinespring, “Positive functions on $C^*$-algebras”, *Proc. Amer. Math. Soc.* 6 (1955), 211–216。有限维表示的教学来源为 IBM Quantum Learning, [“Channel representations”](https://quantum.cloud.ibm.com/learning/en/courses/general-formulation-of-quantum-information/quantum-channels/representations-of-channels)：其 Kraus、Choi 与 Stinespring 表示说明实现框架，不提供额外的原生取得权限。
+
+## 127. 五模式配置图与指定的边运输
+
+固定外接缝为空，取五个配置
+$$
+ s_0=\mathrm{null}=000,\quad s_1=2,\quad s_2=25,\quad
+ s_3=5,\quad s_4=3.
+$$
+配置图是方形边 $0\!-\!1\!-\!2\!-\!3\!-\!0$ 加支边 $0\!-\!4$，每条边表示一次合法单比特翻转。它是配置更新图，不是任意窗口串接的 Zeckendorf 词；与第122章的图相同。
+
+给每个配置附加 $K=\mathbb C^2$，故完整可见载体为
+$\mathbb C^5\otimes\mathbb C^2$，维数为 $10$。令
+$$
+ a=-\mathrm iX,\qquad b=-\mathrm iY,\qquad c=ba=\mathrm iZ,
+$$
+其中 $X,Y,Z$ 是 Pauli 矩阵。于是
+$$
+ a^2=b^2=c^2=-I,\qquad ac=-ca.
+$$
+指定正向方形边
+$$
+ U_{10}=a,\quad U_{21}=c,\quad U_{32}=a^\dagger,\quad U_{03}=c^\dagger.\tag{127.1}
+$$
+支边 $U_{40}=b$，反向边取伴随，自环取 $I$。这是一项明确的内部运输合同；五个模式的名称或裸的树替换 $\rho$ 都不唯一强迫它。两端位置变化由 $a,c$ 的反对易实现，中间支路由 $b$ 实现；树来源的非单射性、右因子先作用和接缝保留为独立条件。
+
+## 128. 反对易闭路、相干混合与测量次序
+
+本章的参数合同独立于第129章：$p\in[0,1]$、$q=1-p$，故 $p+q=1$，不含 $r$。先去掉支边和自环，考虑四态方形 $0,1,2,3$ 上的酉循环 $S$：
+$$
+ S|0,\psi\rangle=|1,a\psi\rangle,\quad
+ S|1,\psi\rangle=|2,c\psi\rangle,\quad
+ S|2,\psi\rangle=|3,a^\dagger\psi\rangle,\quad
+ S|3,\psi\rangle=|0,c^\dagger\psi\rangle.
+$$
+每个输入位置被送到不同的输出位置，内部算子又都酉，故 $S$ 保持任意输入的内积且满射，确为酉。从根 $0$ 返回的内部算子为 $c^\dagger a^\dagger ca=-I$，其他根的闭路算子与之共轭，故
+$$
+ S^4=-I.\tag{128.1}
+$$
+取 $p\in[0,1]$、$q=1-p$，并令
+$$
+ W_p=\sqrt p\,S+\sqrt q\,S^\dagger .
+$$
+由 $S^{-2}=-S^2$ 和 $p+q=1$，
+$$
+ W_p^\dagger W_p=I+\sqrt{pq}(S^2+S^{-2})=I.\tag{128.2}
+$$
+因此负的中心闭路相位使正振幅的两条交叉路径抵消。若把 (128.1) 改成 $S^4=I$，则一般得到 $I+2\sqrt{pq}\,S^2$，只有 $p=0$ 或 $q=0$ 时仍自动酉。
+
+从位置 $0$ 出发，
+$$
+ W_p^2=2\sqrt{pq}\,I+(p-q)S^2.\tag{128.3}
+$$
+从确定位置单步出发，正、反两个输出位置正交，概率分别为 $p,q$，与内部态无关。不在中间测量时，两步回到原位置的概率为 $4pq$，因为同一内部态的两条回返振幅相干相加。逐步测量使用同一个明确仪器
+$$
+ \mathcal J_j(\varrho)=\Pi_jW_p\varrho W_p^\dagger\Pi_j,
+ \qquad \Pi_j=|j\rangle\langle j|\otimes I_2,
+ \qquad \sum_j\mathcal J_j\text{ 为 CPTP}.
+$$
+每次实际记录位置后，再作用 $W_p$；正后反、反后正两条回返历史各有概率 $pq$，总和为 $2pq$。这项仪器权限和记录保留是新增条件。当 $p=q=\tfrac12$ 时 $W_p^2=I$，但逐步测量的两步回返概率仍为 $\tfrac12$。输出位置 $I$ 与 $S^2$ 不同，故这些概率对任意内部密度态都成立；单步的 $P$ 不决定多时刻相干。量子行走背景为 Mario Szegedy, [“Spectra of Quantized Walks and a $\sqrt{\delta\epsilon}$ rule”](https://arxiv.org/abs/quant-ph/0401053)。该文研究量子化二部行走、谱及相应搜索模型；本章的四态反对易闭路与测量次序结论由上述有限酉计算证明，不援引其搜索加速结论。
+
+## 129. 第五模式的记录下界与无记录缺陷
+
+取 $p,q,r>0$ 且 $p+q+r<1$，令配置转移矩阵为
+$$
+ P=\begin{pmatrix}
+ 1-p-q-r&p&0&q&r\\
+ q&1-p-q&p&0&0\\
+ 0&q&1-p-q&p&0\\
+ p&0&q&1-p-q&0\\
+ r&0&0&0&1-r
+ \end{pmatrix}.\tag{129.1}
+$$
+输入 $1$ 的正支撑为 $\{0,1,2\}$，输入 $4$ 的正支撑为 $\{0,4\}$，唯一共同后继为 $0$，其概率分别为 $q,r$。输入 $3$ 的正支撑为 $\{0,2,3\}$，与输入 $4$ 的唯一共同后继仍为 $0$，概率分别为 $p,r$。由引理126.3，任何共同等距实现必须满足
+$$
+ \langle e_{0,1},e_{0,4}\rangle=0,\qquad
+ \langle e_{0,3},e_{0,4}\rangle=0.\tag{129.2}
+$$
+因此记录空间至少含两个正交方向。这是矩阵 (129.1)、边酉和全输入叠加的共同合同的结论，不是任意五态量子实现的普遍下界。
+
+若强令所有记录相同，则候选 $V_0$ 在输入块 $(1,4)$ 上的缺陷为
+$$
+ (V_0^\dagger V_0-I)_{1,4}
+ =\sqrt{qr}\,U_{0,1}^\dagger U_{0,4}.\tag{129.3}
+$$
+故 $\|V_0^\dagger V_0-I\|\ge\sqrt{qr}$。例如 $p=\tfrac14,q=r=\tfrac18$ 时下界为 $1/8$，属于结构缺陷而非数值误差。确切地说，该块是用两个正交配置投影对总缺陷作压缩，压缩的算子范数不超过总范数；其中酉乘积的范数为一，故给出所述下界。两项正交条件不要求 $e_{0,1}$ 与 $e_{0,3}$ 也互相正交。分别检查每个输入的记录 Gram 矩阵仍不能消除跨输入的算子块。
+
+## 130. 同一边仪器产生概率、酉运输与记录相关矩阵
+
+在 $\mathbb C^5\otimes\mathbb C^2$ 上定义边 Kraus 算子
+$$
+ K_{ji}=\sqrt{P_{ij}}\,|j\rangle\langle i|\otimes U_{ji}
+$$
+并给每条正边一个互相正交的记录向量 $|i\to j\rangle$。正边数为
+$4+3+3+3+2=15$，等距为
+$$
+ V_{\rm edge}=\sum_{i,j}K_{ji}\otimes|i\to j\rangle.
+$$
+逐边有
+$$
+ K_{ji}^\dagger K_{ji}=P_{ij}|i\rangle\langle i|\otimes I_2,
+ \qquad K_{ji}K_{ji}^\dagger=P_{ij}|j\rangle\langle j|\otimes I_2.
+$$
+因此行随机性给出 $\sum_{ji}K_{ji}^\dagger K_{ji}=I$，所以
+$\mathcal E(\varrho)=\sum_{ij}K_{ji}\varrho K_{ji}^\dagger$ 是 CPTP；(129.1) 的列和也为一，故同一通道还是 unital。
+
+**定义 130.1（初始化与实际历史）。** 每轮使用一份新的边记录系统，并实际供应边仪器 $\mathcal J_{ji}(\varrho)=K_{ji}\varrho K_{ji}^\dagger$ 及其记录读取。历史输入有以下两种明确合同：一是固定已知起点 $i_0$，其内部态任意，亦可与未触动参考相关；二是实际供应配置准备或初始化记录，使起点具有声明的分布 $\pi$，并保留正交初始记录 $|i_0\rangle_{R_0}$。例如允许的块对角初始来源为
+$$
+ \varrho_{\mathrm{in}}=\sum_i\pi_i|i\rangle\langle i|\otimes\varrho_i,
+ \qquad \pi_i\ge0,\quad\sum_i\pi_i=1,
+$$
+并实际关联 $R_0$。若要从任意相干配置取得这个起点记录，须另外供应
+$J(|i\rangle\otimes\psi)=|i\rangle\otimes\psi\otimes|i\rangle_{R_0}$；读取或丢弃 $R_0$ 会影响配置相干，不能作为免费初始化。内部态 $\varrho_i$ 不被初始配置标签取代。
+
+对 $N\ge1$ 的实际边历史 $h=(i_0,\ldots,i_N)$，相乘同一仪器的 Kraus 算子得
+$$
+ K_h=K_{i_Ni_{N-1}}\cdots K_{i_1i_0}
+ =\sqrt{\prod_{t=1}^NP_{i_{t-1}i_t}}\,
+ |i_N\rangle\langle i_0|\otimes U_h,
+$$
+$$
+ p_h=\pi_{i_0}\prod_{t=1}^N P_{i_{t-1}i_t},\qquad
+ U_h=U_{i_Ni_{N-1}}\cdots U_{i_1i_0}.\tag{130.1}
+$$
+这里 $P$ 的行指标始终是来源，列指标是后继。因为
+$K_h^\dagger K_h=(\prod_tP_{i_{t-1}i_t})|i_0\rangle\langle i_0|\otimes I_2$，其迹给出 $p_h$，正概率历史的条件内部态为 $U_h\varrho_{i_0}U_h^\dagger$；加入参考时改用 $U_h\otimes I$。故路径权重和条件运输均由这些实际边分支产生。
+
+固定根时取
+$|e_h\rangle=\bigotimes_{t=1}^N|i_{t-1}\to i_t\rangle$；多起点合同则取
+$|e_h\rangle=|i_0\rangle_{R_0}\otimes\bigotimes_{t=1}^N|i_{t-1}\to i_t\rangle$。两种合同都给出 $\Gamma_{hk}=\langle e_k|e_h\rangle=\delta_{hk}$：非空的不同路径至少有一条边标签不同；多起点时初始标签也可区分。$N=0$ 时乘积为一、$U_h=I_2$；固定根域只有一条空边历史，而多起点域由实际保留的 $R_0$ 保证不同单点历史正交。没有固定根或初始记录，空边记录都相同，不能宣称此时 $\Gamma=\delta$。同一起点下不同未知内部来源亦不由历史标签自动区分。
+
+于是 $p,U,\Gamma$ 来自同一边仪器及明列的初始化，而非分别择优。经典读取记录不会自动反演为相干分支；这仍需保留相关记录系统、相位相容控制及实际联合反转权限。
+
+不同 $|j\rangle\langle i|$ 的向量化彼此 Hilbert–Schmidt 正交，故这一个完整边通道的 15 个非零 Kraus 算子线性无关，Choi 矩阵
+$$
+ J(\mathcal E)=\sum_{ij}|\operatorname{vec}K_{ji}\rangle\langle\operatorname{vec}K_{ji}|
+$$
+的 15 个非零正交方向使其秩恰为 $15$：每个向量的范数平方为 $\operatorname{tr}(K_{ji}^\dagger K_{ji})=2P_{ij}>0$，不同边的内积为零。若纯初始环境维数为 $m$，对环境基取分量最多得到 $m$ 个 Kraus 算子，故 $\operatorname{rank}J\le m$；这里 $m\ge15$，边记录实现达到。此数是一轮指定通道的最小纯环境维数，不包含多起点初始化记录、时钟或全部历史档案的累计资源。这个数只属于指定的完整边通道；不能推广为所有具有同一 $P$ 的量子实现都至少需要 $15$ 维环境。Choi 秩与最小 Kraus 数的标准事实参见 Choi 1975 及 John Watrous, *The Theory of Quantum Information*, Cambridge University Press, 2018，[第2章，定理2.22及推论2.27](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)。
+
+## 131. 端点因子化、绕行数与中心相位
+
+令
+$$
+ G_0=I,\quad G_1=a,\quad G_2=ca=-b,\quad
+ G_3=a^\dagger ca=-c,\quad G_4=b,
+$$
+并令 $d_0,d_1,d_2,d_3,d_4=0,1,2,3,0$。对有向边定义权重 $w_{ji}$：正方形正向为 $+1$，反向为 $-1$，支边和自环为 $0$。置
+$$
+ \nu_{ji}=\frac{w_{ji}-d_j+d_i}{4}.\tag{131.1}
+$$
+它为整数，唯一非零情形是 $3\to0$ 的 $\nu=1$ 与反向 $0\to3$ 的 $\nu=-1$。逐边直接验证
+$$
+ U_{ji}=(-1)^{\nu_{ji}}G_jG_i^\dagger.\tag{131.2}
+$$
+证明可逐边穷尽：生成树上的 $0\to1,1\to2,2\to3,0\to4$ 分别由 $G_1=aG_0,G_2=cG_1,G_3=a^\dagger G_2,G_4=bG_0$ 得到，且这些边的 $\nu=0$。切边 $3\to0$ 有 $\nu=1$，由 $G_3=-c$ 得 $-G_0G_3^\dagger=c^\dagger=U_{03}$。反向边取伴随时 $\nu$ 变号，而中心实符号保持；自环为 $G_iG_i^\dagger=I$。这覆盖全部15条正边。
+对路径 $h=(i_0,\ldots,i_N)$，令 $W(h)=\sum_tw_{i_ti_{t-1}}$、$k(h)=\sum_t\nu_{i_ti_{t-1}}$。相邻端点因子望远镜相消，得到
+$$
+ k(h)=\frac{W(h)-d_{i_N}+d_{i_0}}4,\qquad
+ U_h=(-1)^{k(h)}G_{i_N}G_{i_0}^\dagger.\tag{131.3}
+$$
+闭路满足 $W=4k$，酉为 $(-1)^kI$，所以中心相位只看净绕行的奇偶；同一路径的概率偏置另给正特征 $(p/q)^{4k}$。二者是不同观测量。在声明的 $Q_8$ 提升中，同步替换 $a\mapsto b,b\mapsto c$ 给出 $c=ba\mapsto cb=a$，且固定中心 $-I$。故把每条边的原子表达式按此自同构运输，方形负闭路符号仍保持；概率 $P$、配置图合法性与实际操作菜单的运输必须另行指定。这不把有向三循环、原树增长和带符号提升混为同一过程。
+
+## 132. 可移动的三维关系块与端点 holonomy
+
+对任意 $A\in M_2(\mathbb C)$，定义随配置框架移动的关系块
+$$
+ \overline A=\sum_i|i\rangle\langle i|\otimes G_iAG_i^\dagger.\tag{132.1}
+$$
+若 $\mathcal E^*$ 是边通道的 Heisenberg 对偶，则由 (131.2)
+$$
+ \mathcal E^*(\overline A)
+ =\sum_{i,j}P_{ij}|i\rangle\langle i|\otimes G_iAG_i^\dagger
+ =\overline A.\tag{132.2}
+$$
+映射 $A\mapsto\overline A$ 还是保持单位和伴随的单射代数表示，因为逐块有
+$$
+ \overline A\,\overline B=\overline{AB},\quad
+ \overline{A^\dagger}=(\overline A)^\dagger,\quad
+ \overline I=I_{10}.
+$$
+其中配置 $0$ 的块就是 $A$，故核为零，说明单射性。
+因此
+$$
+ \overline X^2=\overline Y^2=\overline Z^2=I_{10},\qquad
+ \overline X\overline Y=\mathrm i\overline Z,\quad
+ \overline Y\overline Z=\mathrm i\overline X,\quad
+ \overline Z\overline X=\mathrm i\overline Y,
+$$
+反向乘积各取负号，$\operatorname{span}_{\mathbb C}\{I_{10},\overline X,\overline Y,\overline Z\}$ 表示完整 $M_2(\mathbb C)$。同一边运输固定全部 $\overline A$，包括三个非恒定实 Pauli 方向；这些是内部逻辑坐标，不是配置位置轴。
+
+取 $D=\sum_i|i\rangle\langle i|\otimes G_i^\dagger$，则
+$$
+ DK_{ji}D^\dagger=(-1)^{\nu_{ji}}\sqrt{P_{ij}}\,|j\rangle\langle i|\otimes I_2.\tag{132.3}
+$$
+故共轭后的通道为 $\widetilde{\mathcal E}=\mathcal P\otimes\operatorname{id}_{2}$，其中配置通道必须明确定义为
+$$
+ \mathcal P(A)=\sum_{i,j}P_{ij}\langle i|A|i\rangle\,|j\rangle\langle j|.\tag{132.4}
+$$
+它删除配置非对角元并执行 Markov 推进；随机矩阵 $P$ 本身不是量子通道。对任意配置—逻辑—参考联合密度态 $\omega_{CLR}$，取框架变换后的输入，乘积通道给出
+$$
+ \operatorname{Tr}_C[(\mathcal P\otimes\operatorname{id}_{LR})(\omega_{CLR})]
+ =\operatorname{Tr}_C\omega_{CLR}.
+$$
+证明是将 $\omega=\sum_{i,k}|i\rangle\langle k|\otimes\omega_{ik}$ 展开；输出为
+$\sum_{i,j}P_{ij}|j\rangle\langle j|\otimes\omega_{ii}$，对配置取迹并用行和一即得。这对全部密度态及未触动参考成立，保留完整逻辑密度和其参考关联，不只三个标签；配置相干及配置与逻辑的全部联合态并不保持。环境只记录配置边，不读逻辑因子，增加会读取该因子的耦合后不能沿用此保护结论。实际框架读取和运输资源仍须供应。这里是一个具体的逻辑接口实例，不是对所有无噪声子系统的新一般定理；可参见 David W. Kribs、Raymond Laflamme、David Poulin、Maia Lesosky, [“Operator quantum error correction”](https://arxiv.org/abs/quant-ph/0504189), *Quantum Information and Computation* 6 (2006), 382–399。该文统一标准纠错、无退相干子空间和无噪声子系统；本图的保护由上述乘积通道直接证明。
+
+**定理 132.1（端点密度态充分性）。** 在有限连通无向图上，为每条定向边供应酉，并明确要求反向边为其逆 $U_{ij}=U_{ji}^{-1}=U_{ji}^\dagger$；空路径取 $I$。对全部内部密度态，路径伴随作用只依赖起终点，当且仅当每个闭路满足 $U_\gamma=e^{\mathrm i\theta_\gamma}I$。
+
+**证明。** 必要性比较同一顶点的空路径与任意闭路。若 $\operatorname{Ad}_{U_\gamma}$ 固定全部密度态，则固定全部秩一投影；这些投影实线性张成 Hermitian 矩阵，故 $U_\gamma$ 与全部复矩阵相交换。矩阵单位的交换关系迫使它为标量，酉性给出模一相位。充分性取同端点路径 $h,k$。反向边的逆假设保证 $U_{k^{-1}}=U_k^\dagger$，故先走 $h$ 再反走 $k$ 的闭路酉为 $U_k^\dagger U_h=e^{\mathrm i\theta}I$，于是两路径的伴随作用相同。连通性保证所需端点路径存在。 $\square$
+
+反向运输若未供应为正向运输的逆，就不能由“相对路径是闭路”推出此判据。对态的充分性不等于对带控制的相干路径比较的充分性，因为中心相位仍可被实际提供的干涉读出。
+
+## 133. 稳定块、平稳熵与严格路径箭头
+
+以均匀初始分布 $\pi_i=1/5$ 按定义130.1的初始化启动 (129.1) 的边仪器，每轮使用新记录并实际取得边标签。双随机性使每步配置分布仍为均匀分布。令 $h^\leftarrow$ 为路径倒序，定义长度 $N$ 的路径箭头
+$\Sigma_N=D_{\rm KL}(P_N\Vert P_N^\leftarrow)$。正方形边的正、反概率分别为 $p,q$，每个分支边和自环在倒序中相互抵消，因而
+$$
+ \log\frac{\Pr(h)}{\Pr(h^\leftarrow)}=W(h)\log\frac pq,\qquad
+ \Sigma_N=N\,\frac45(p-q)\log\frac pq.\tag{133.1}
+$$
+平稳时单步绕行增量的期望为 $\mathbb E w=4(p-q)/5$；相加 $N$ 步，(133.1) 即由路径对数比的期望得到。四条方形无向边各贡献 $\frac15(p-q)\log(p/q)$，故 (133.1) 在 $N\ge1$、$p\ne q$ 时严格为正；$N=0$ 时为零，平衡情形 $p=q$ 也为零。
+
+由于列和为一，完整可见载体上的
+$\varrho_* =I_{10}/10$ 是固定态，且其 von Neumann 熵恒为 $\log10$。因此同一明确操作可以同时保持逻辑 Pauli 关系、保持该可见固定态的熵，并具有严格的记录路径箭头。这里的倒序是路径分布的比较，不是包含全部微观自由度、热浴或局部详细平衡的物理时间反演；故 (133.1) 不单独等同于热力学熵产生。中心相位特征 $(-1)^{k(h)}$ 在 $p=q$ 时仍可非平凡，概率特征 $(p/q)^{4k}$ 则在平衡时为一；交换 $p,q$ 只反转后者的方向。Joel L. Lebowitz、Herbert Spohn, [“A Gallavotti-Cohen Type Symmetry in the Large Deviation Functional for Stochastic Dynamics”](https://arxiv.org/abs/cond-mat/9811220) 研究 Markov 过程的涨落对称，并在局部详细平衡条件下联系熵产生；本章有限离散路径公式由直接相乘证明，不从该文借入未供应的热浴条件。
+
+## 134. 小任务边界与任意相干全历史的残余代价
+
+固定初始配置 $i_0=0$ 和长度 $N$。对合法路径定义
+$$
+ B(h)=(i_N,W(h)).
+$$
+该摘要不存储未知内部量子态 $\psi$；完整逻辑态仍需另外保留量子载体。令第133章的平稳路径律为
+$$
+ P_N^{\mathrm{stat}}(h)=\frac15\prod_{t=1}^NP_{i_{t-1}i_t},\qquad
+ \ell_{\mathrm{stat}}(h)=\log\frac{P_N^{\mathrm{stat}}(h)}{P_N^{\mathrm{stat}}(h^\leftarrow)}
+ =W(h)\log(p/q).
+$$
+本章只把这个具名的平稳比较量 $\ell_{\mathrm{stat}}$ 限制到固定根历史，不把它改成固定 $\delta_0$ 初始律自身的倒序比值。确切地说
+$P_N^0(h)=\mathbf1_{i_0=0}\prod_tP_{i_{t-1}i_t}$，其自身倒序律在 $h$ 上为 $P_N^0(h^\leftarrow)$。一步见证 $h=(0,1)$ 有正向概率 $p$，倒序路径 $(1,0)$ 在同一 $\delta_0$ 初始律下概率为零；而平稳比较的两权重为 $p/5,q/5$，给出有限 $\ell_{\mathrm{stat}}=\log(p/q)$。两个比较问题必须区分。
+它最多取 $5(2N+1)$ 个值，并可按边更新
+$$
+ (i,w)\longmapsto(j,w+w_{ji}),\qquad
+ \Pi_{n+1}(j,w)=\sum_iP_{ij}\Pi_n(i,w-w_{ji}).\tag{134.1}
+$$
+递推初始化为 $\Pi_0(j,w)=\mathbf1_{j=0}\mathbf1_{w=0}$，$\Pi_n$ 是实际固定根路径摘要的概率分布。给定 $B(h)$，终点配置、后续 Markov 律、(131.3) 的全部内部酉和具名比较量 $\ell_{\mathrm{stat}}(h)$ 都已确定，因为 $k=(W-d_{i_N})/4$；这不读取未知 $\psi$。令实际标签数为 $C_N=|B(\mathcal H_N(0))|$，则
+$$
+ C_N\le5(2N+1),\qquad
+ L_N=\lceil\log_2 C_N\rceil\le\lceil\log_2[5(2N+1)]\rceil.
+$$
+左侧 $C_N$ 是标签数，$L_N$ 才是固定长度二进制编码的比特数，固定模型下 $L_N=O(\log(N+1))$。$N=0$ 时只有历史 $(0)$，$C_0=1,L_0=0$。标签量小不表示时钟、实际边读数和原生读取资源免费，未执行的分支也不能冒充已取得的读数。
+
+考虑更强的任意合法历史寄存器相干域，要求等距作用
+$$
+ |h\rangle\otimes\psi\longmapsto |B(h)\rangle\otimes U_h\psi\otimes|r_h\rangle.\tag{134.2}
+$$
+若 $h\ne k$ 而 $B(h)=B(k)$，则全体 $\psi,\phi$ 的输入正交性给出
+$\langle r_h,r_k\rangle\langle\psi,U_h^\dagger U_k\phi\rangle=0$。对任意单位 $\psi$ 取 $\phi=U_k^\dagger U_h\psi$，第二因子为一，故 $\langle r_h,r_k\rangle=0$。同一纤维的记录遂两两正交；映射的等距性也要求每个 $r_h$ 归一化。因此
+$$
+ \dim R\ \ge\ \max_b|B^{-1}(b)|.\tag{134.3}
+$$
+若声称精确最小值，还需给出每个纤维的正交残差编码上界；这里只使用下界。由 (129.1) 的严格参数域，每个顶点至少有两个正概率后继；长度零有一条路径，每条路径每步至少可作两种不同延长，归纳得从起点 $0$ 的合法路径数至少为 $2^N$。按至多 $5(2N+1)$ 个纤维作抽屉原理，存在纤维大小
+$$
+ \max_b|B^{-1}(b)|\ge
+ \left\lceil\frac{2^N}{5(2N+1)}\right\rceil,\qquad
+ \log_2\dim R\ge N-\log_2(5(2N+1)).\tag{134.4}
+$$
+(134.4) 是任意相干全历史域的残余记录下界；它不适用于只准备好的实际历史像，也不是末端通道 $\mathcal E^N$ 的最小环境维数指数下界。此处 (134.2) 要对整个 $\operatorname{span}\{|h\rangle:h\in\mathcal H_N(0)\}\otimes\mathbb C^2$ 以及其任意叠加保持内积；一组制备好的分支振幅或单个末端通道不提供这个域。把同一终端态映射与保留全部历史当作同一合同，会错误地抹去旧来源与接缝关联。
+
+## 135. 共同实现、中心循环、移动保护与记录成本
+
+**定理 135.1（五模式相干接缝的有限共同实现）。** 在完整五态参数 $p,q,r>0,p+q+r<1$、矩阵 (129.1)、边酉 (127.1)、正交边记录及定义130.1的初始化与实际读取合同下，下列结论成立；其中第2项为具有独立参数的四态对照：
+
+1. 跨输入共同等距的充要条件是 (126.1)；唯一共同正后继强制正交记录，故第五模式的两条合流分别给出 (129.2)。
+2. 只含方形且无自环的四态对照取 $p_4\in[0,1],q_4=1-p_4$，允许 (128.2) 的反对易相干混合 $W_{p_4}$。这个 $p_4+q_4=1$ 的参数域与完整五态的 $p+q+r<1$ 分开，不能把它当作完整五态的无记录实现。
+3. 完整边仪器 $V_{\rm edge}$ 按来源行的路径权重 (130.1) 同时产生 $p_h$、条件酉 $U_h$ 和记录 $\Gamma_{hk}=\delta_{hk}$；空边历史也遵守固定根或正交初始化记录的条件。该指定的一轮通道的 Choi 秩恰为 $15$，不推广到所有同 $P$ 的量子实现。
+4. 因子化 (131.3) 给出中心闭路；反向边明确为逆时，定理132.1给出全部内部密度态端点充分的充要条件。同一框架下 (132.2) 固定完整逻辑 $M_2$ 代数，乘积通道保持任意逻辑密度及其未触动参考关联；三个 Pauli 方向是其非恒定实坐标。
+5. 在 $N\ge1,p\ne q$ 时，均匀平稳块的可见熵保持与 (133.1) 的严格正路径箭头共存；$N=0$ 或 $p=q$ 时该箭头为零。中心相位和概率偏置分别属于酉与统计两类读出。
+6. 固定根小任务摘要 $B=(i_N,W)$ 确定未来配置律、内部酉和 $\ell_{\mathrm{stat}}=W\log(p/q)$，其标签比特数为 $O(\log(N+1))$；它不存储未知量子态，也不替代自身 $\delta_0$ 初始律的倒序比较。任意相干全历史输入域仍受 (134.3)–(134.4) 的残余记录下界约束。
+
+**证明。** 第1项由定理126.2及引理126.3，代入五模式的共同支撑即得；第2项由 (128.1)–(128.3)，四态对照只检验反对易闭路的相干抵消；第3项由 Kraus 算子正交、行、列随机性及 (130.1)；第4项由逐边端点因子望远镜、反向逆边的闭路标量判据及乘积通道的参考保持式；第5项由 unital 固定态、平稳路径倒序似然比和 $(p-q)\log(p/q)>0$ 的条件；第6项由初始化后的 (134.1)、具名平稳比较量及任意相干全域内积条件和抽屉原理。各项所需的概率、控制、辅助记录和新环境均是本定理明列的合同，不从原生树语法或实际三维空间自动取得。 $\square$
+
+原生来源、五模式接缝和配置语义承接钉版 [《FIB_RELATIONAL_CONTINUATION_GEOMETRY》](https://github.com/the-omega-institute/trureturing/blob/6247af628aac8e4688aedb6a4cb1cd42642b578a/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)。实际 Read、事件取得、控制与时钟权限必须按原接口供应；本篇的 Read 指定义130.1实际取得边仪器标签的事件，可分辨或全路径公式不等于已取得某条历史。同版 [《联合来源、量子关系与有限时钟》命题1.1](https://github.com/the-omega-institute/trureturing/blob/6247af628aac8e4688aedb6a4cb1cd42642b578a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md) 给出数值编码不等于可取得操作及有向时钟的边界，不供应额外读数权限。Felix A. Pollock、César Rodríguez-Rosario、Thomas Frauenheim、Mauro Paternostro、Kavan Modi, [“Operational Markov condition for quantum processes”](https://arxiv.org/abs/1801.09811) 讨论操作意义的多时刻 Markov 条件和记忆，不从一时刻通道推出多时刻相干。Paolo Facchi、Saverio Pascazio, [“Quantum Zeno dynamics: mathematical and physical aspects”](https://arxiv.org/abs/0903.3297) 是前卷投影保护的背景综述，允许投影子空间内继续演化；本篇边通道的保护由第132章直接证明，并非 Zeno 冻结。共同原生交互能否同时产生所选 $P,U,\Gamma$，相位控制、长程资源、无限递归成本、实际距离和物理三维空间桥，仍是未证条件。
+
+## 追加锚（第126–135章以下为增补区）
