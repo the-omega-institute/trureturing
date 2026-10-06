@@ -127,14 +127,52 @@ and give $P<A<P^+$ at this same integer.
 
 There is no prime between $P$ and $A$, so the full-support products and
 sums above contain exactly the actual primes of $N$ when **$x=A$**.
-No change of integer, factorization, or exponents is involved. Moreover
-$z(N,A)=0$ and $B_2(N,A)=0$ exactly. Consequently Proposition 6 and
-Corollary 8 give the paper application
+The same source also attains the full-support core minimum. Its proper
+GA1 condition gives deletion comparisons in the range $N/p>e$, and GA2
+gives every one-prime insertion comparison. The existing archived
+[direct tangent-CA bridge](mantovanelli2026primeworkload.md), source §4,
+`thm:direct-bridge`, therefore identifies this very $N$ as the regular CA
+optimizer at
+
+$$
+\varepsilon_A=\frac1{A\log A}.
+$$
+
+This is precisely the price in Polak's full-support minimization.
+Put $Z(m)=\sigma(m)/m$. For each actual $p\le A$, the local price
+objective and $\Phi_{p,A}$ differ by an additive constant and a sign.
+Equivalently, the source's
+minimizer calculation on p.6 gives
+
+$$
+\Phi_{p,A}(a+1)-\Phi_{p,A}(a)
+=\varepsilon_A\log p
+ -\log\frac{Z(p^{a+1})}{Z(p^a)}.
+$$
+
+Thus the actual $a_p=v_p(N)$ attains
+$\min_{a\ge1}\Phi_{p,A}(a)$. Regularity excludes a tied layer.
+The correspondence uses the clock price $\varepsilon_A$, rather than
+identifying it with the support-parametrized CA-family price discussed
+at the end of Polak's p.6. Initial support and $P<A<P^+$ keep exactly
+the same prime set in both minimizations. Consequently
+
+$$
+R_{\rm core}(N,A)-C_{\rm pp}(A)=D^*(A).
+$$
+
+Moreover $z(N,A)=0$ and $B_2(N,A)=0$ exactly. Proposition 6 now gives
+the paper-level identity
 
 $$
 \Delta(N)=I_\psi(A)+R_{\rm core}(N,A)-C_{\rm pp}(A)
-          \ge I_\psi(A)+D^*(A).
+          =I_\psi(A)+D^*(A).
 $$
+
+The core optimization slack is zero at this selected source. Its exact
+strict Robin condition is $I_\psi(A)>-D^*(A)$; equality yields
+$\Delta(N)=0$ and does not satisfy strict Robin. This application
+identifies the actual minimizer and pays no new signed estimate.
 
 The numerical threshold also has an existing supplier.
 [Axler's finite stop](../notes/axler2023robin.md), author version
