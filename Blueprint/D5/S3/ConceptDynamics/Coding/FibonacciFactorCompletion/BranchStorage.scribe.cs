@@ -37,24 +37,26 @@ internal sealed class BranchStorageDocument : IScribeDocumentDefinition
     private static Formula Coord(Formula a, Formula p) => Call("coordinate", a, p);
     private static Formula Append(Formula a, Formula b) => Call("append", a, b);
     private static Formula Syn(Formula p, Formula r, Formula z) => Call("synchronousPrefix", p, r, z);
-    private static Formula Record(Formula a, Formula r) => Call("OperationRecord", I("o"), I("b"), I("closed"), a, r);
+    private static Formula Record(Formula a, Formula r) => Call("R", a, r);
     private static Formula Frame(Formula c, Formula q, Formula o) => Call("Frame", c, q, o);
     private static Formula Run(Formula r, Formula t) => Call("Run", I("action"), Call("full", r),
         Frame(I("initialConfiguration"), D(0), I("nil")), t);
-    private static Formula Reach(Formula horizon, Formula c) => Call("ReachThrough", I("action"),
+    private static Formula ReachExpanded(Formula horizon, Formula c) => Call("ReachThrough", I("action"),
         I("initialConfiguration"), Call("OperationRecordPredicate", I("o"), I("b"), I("closed")), horizon, c);
-    private static Formula Peak(Formula horizon) => Call("Peak", I("action"), I("initialConfiguration"),
+    private static Formula PeakExpanded(Formula horizon) => Call("Peak", I("action"), I("initialConfiguration"),
         Call("OperationRecordPredicate", I("o"), I("b"), I("closed")), I("encoding"), horizon);
+    private static Formula Reach(Formula horizon, Formula c) => Call("Reach", horizon, c);
+    private static Formula Peak(Formula horizon) => Call("M", horizon);
     private static Formula ZType => Fn(Call("Fin", I("n")), I("Bool"));
     private static Formula CutType => Call("FrameType", I("Configuration"), I("Label"));
-    private static Formula Horizon => Add(Len(I("P")), Mul(I("n"), I("L")));
-    private static Formula HighPrefix => Syn(I("P"), I("U"), I("z"));
-    private static Formula LowPrefix => Syn(I("Q"), I("V"), I("z"));
+    private static Formula Horizon => Call("T", I("n"));
+    private static Formula HighPrefix => Call("A1", I("n"), I("z"));
+    private static Formula LowPrefix => Call("A2", I("n"), I("z"));
     private static Formula ColorPrefix => Syn(I("h"), I("W"), I("z"));
-    private static Formula High => Address(Append(HighPrefix, I("w1")));
-    private static Formula Low => Address(Append(LowPrefix, I("w2")));
-    private static Formula HighRecord => Call("recordWithTail", I("o"), ColorPrefix, I("w1"));
-    private static Formula LowRecord => Call("recordWithTail", I("o"), ColorPrefix, I("w2"));
+    private static Formula High => Call("a1", I("n"), I("z"));
+    private static Formula Low => Call("a2", I("n"), I("z"));
+    private static Formula HighRecord => Call("r1", I("n"), I("z"));
+    private static Formula LowRecord => Call("r2", I("n"), I("z"));
     private static Formula Cut => Ap(I("cuts"), I("z"));
     private static Formula State => Call("state", Cut);
     private static Formula Output => Call("output", Cut);
@@ -106,7 +108,7 @@ internal sealed class BranchStorageDocument : IScribeDocumentDefinition
             Call("notEqual",Ap(I("V"),I("false")),Ap(I("V"),I("true"))),
             Call("le",Call("familyEndpointBudget",I("P"),I("Q"),I("h"),I("U"),I("V"),I("W"),I("L")),I("b")),
             Call("lt",I("k"),Len(I("P"))),All(Imp(Call("lt",p,I("k")),Equal(At(I("P"),p),At(I("Q"),p))),B("p",Nat)),
-            Call("notEqual",At(I("P"),I("k")),At(I("Q"),I("k"))),Contracts());
+            Call("notEqual",At(I("P"),I("k")),At(I("Q"),I("k"))),I("DecoderContracts"));
     }
     private static Formula ConstructedFamilies()
     {
@@ -116,8 +118,7 @@ internal sealed class BranchStorageDocument : IScribeDocumentDefinition
             Equal(Ap(Low,at),Ap(Address(I("w2")),p)),Equal(Coord(Append(LowPrefix,I("w2")),at),Coord(I("w2"),p)),
             Equal(Ap(HighRecord,at),Call("observe",I("o"),Coord(I("w1"),p),D(0))),
             Equal(Ap(LowRecord,at),Call("observe",I("o"),Coord(I("w2"),p),D(0)))),B("z",ZType),B("p",Nat));
-        var injection=All(Imp(Equal(Call("address",Append(Syn(I("P"),I("U"),I("z")),I("w1"))),
-            Call("address",Append(Syn(I("P"),I("U"),I("zprime")),I("w1")))),Equal(I("z"),I("zprime"))),
+        var injection=All(Imp(Equal(High,Call("a1",I("n"),I("zprime"))),Equal(I("z"),I("zprime"))),
             B("z",ZType),B("zprime",ZType));
         var cuts=All(And(Call("Cut",I("action"),I("initialConfiguration"),Call("front",HighRecord,Horizon),Cut),
             Call("le",Len(Output),I("k")),Equal(Output,Call("take",stem,Len(Output))),Call("IsPrefix",Output,stem),
@@ -134,9 +135,9 @@ internal sealed class BranchStorageDocument : IScribeDocumentDefinition
     }
     private static Formula Conclusion()
     {
-        var fixedPaths=Ex(And(Path(I("s1"),I("w1"),I("tailPath1")),Path(I("s2"),I("w2"),I("tailPath2")),
-            All(Ex(And(Splice(HighPrefix,I("w1"),I("path1"),I("tailPath1")),
-                Splice(LowPrefix,I("w2"),I("path2"),I("tailPath2"))),B("path1",Fn(Nat,I("Guard"))),B("path2",Fn(Nat,I("Guard")))),
+        var fixedPaths=Ex(And(Call("LiteralTailPath",I("s1"),I("w1"),I("tailPath1")),Call("LiteralTailPath",I("s2"),I("w2"),I("tailPath2")),
+            All(Ex(And(Call("LiteralTailSplice",HighPrefix,I("w1"),I("path1"),I("tailPath1")),
+                Call("LiteralTailSplice",LowPrefix,I("w2"),I("path2"),I("tailPath2"))),B("path1",Fn(Nat,I("Guard"))),B("path2",Fn(Nat,I("Guard")))),
                 B("n",Nat),B("z",ZType))),B("tailPath1",Fn(Nat,I("Guard"))),B("tailPath2",Fn(Nat,I("Guard"))));
         var floor=Call("toReal",Call("natDivide",Sub(I("H"),Len(I("P"))),I("L")));
         var loss=Call("logb",D(2),Call("toReal",Add(I("k"),D(1))));
@@ -167,18 +168,37 @@ internal sealed class BranchStorageDocument : IScribeDocumentDefinition
         Splice(I("A"),I("w"),I("path"),I("tailPath"))),B("A",Labels),B("w",Labels),
         B("path",Fn(Nat,I("Guard"))),B("tailPath",Fn(Nat,I("Guard")))));
 
+    private static Formula RecordDefinition() => Disp(All(new Formula.Logic(
+        Record(I("a"),I("r")),FormulaLogicOperator.Iff,
+        Call("OperationRecord",I("o"),I("b"),I("closed"),I("a"),I("r"))),
+        B("a",Fn(Nat,I("Label"))),B("r",Fn(Nat,I("Color")))));
+    private static Formula ReachDefinition() => Disp(All(new Formula.Logic(
+        Reach(I("H"),I("c")),FormulaLogicOperator.Iff,ReachExpanded(I("H"),I("c"))),
+        B("H",Nat),B("c",I("Configuration"))));
+    private static Formula PeakDefinition() => Disp(All(Equal(Peak(I("H")),PeakExpanded(I("H"))),B("H",Nat)));
+    private static Formula PrefixDefinition() => Disp(All(And(
+        Equal(Horizon,Add(Len(I("P")),Mul(I("n"),I("L")))),
+        Equal(HighPrefix,Syn(I("P"),I("U"),I("z"))),
+        Equal(LowPrefix,Syn(I("Q"),I("V"),I("z")))),B("n",Nat),B("z",ZType)));
+    private static Formula SourceDefinition() => Disp(All(And(
+        Equal(High,Address(Append(HighPrefix,I("w1")))),Equal(Low,Address(Append(LowPrefix,I("w2")))),
+        Equal(HighRecord,Call("recordWithTail",I("o"),ColorPrefix,I("w1"))),
+        Equal(LowRecord,Call("recordWithTail",I("o"),ColorPrefix,I("w2")))),B("n",Nat),B("z",ZType)));
+    private static Formula ContractDefinition() => Disp(new Formula.Logic(
+        I("DecoderContracts"),FormulaLogicOperator.Iff,Contracts()));
+
     private static Formula CommonStemCapacityStatement()
     {
         var other=Ap(I("cuts"),I("zprime"));
-        var faithful=All(Imp(And(Ex(Reach(I("M"),I("c")),B("M",Nat)),
-            Ex(Reach(I("M"),I("d")),B("M",Nat)),
+        var faithful=All(Imp(And(Ex(ReachExpanded(I("M"),I("c")),B("M",Nat)),
+            Ex(ReachExpanded(I("M"),I("d")),B("M",Nat)),
             Equal(Ap(I("encoding"),I("c")),Ap(I("encoding"),I("d")))),Equal(I("c"),I("d"))),
             B("c",I("Configuration")),B("d",I("Configuration")));
         var joint=All(Imp(Equal(Call("pair",State,Output),Call("pair",Call("state",other),Call("output",other))),
             Equal(I("z"),I("zprime"))),B("z",ZType),B("zprime",ZType));
         var cuts=All(And(Call("le",Len(Output),I("k")),
-            Equal(Output,Call("take",I("stem"),Len(Output))),Reach(I("H"),State)),B("z",ZType));
-        var bounded=Call("le",Peak(I("H")),Call("toWithTop",I("B")));
+            Equal(Output,Call("take",I("stem"),Len(Output))),ReachExpanded(I("H"),State)),B("z",ZType));
+        var bounded=Call("le",PeakExpanded(I("H")),Call("toWithTop",I("B")));
         var result=Call("le",Pow(D(2),I("n")),
             Mul(Sub(Pow(D(2),Add(I("B"),D(1))),D(1)),Add(I("k"),D(1))));
         return Disp(All(Imp(And(faithful,joint,cuts,bounded),result),
@@ -205,8 +225,11 @@ internal sealed class BranchStorageDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("fib-nondegenerate-branch-storage"),
             DeclarationHandle.Create(Prefix+"nondegenerate_branch_storage"),H("Actual paired tails at every first disagreement"),
             StatementSource.FromAuthor(Statement()),AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("synchronousPrefix(P,U,z)=P++choiceBlocks(U,List.ofFn(z)). OperationRecordPredicate(o,b,closed) is the original actual record relation at the closed error budget b. The same two finite literal tails and their guard paths are chosen before every natural depth and Boolean history. Both scalar endpoints lie strictly inside their canonical hulls. Interior transport obtains actual colors for every ownership assignment at the complete six-group endpoint budget; closed-relaxation feasibility alone is not used as an owned-endpoint assertion.")),
-                Paragraph(Text("LiteralTailPath(s,w,path) states the initial guard, every actual guard edge, coordinate support and affine recurrence. LiteralTailSplice(A,w,path,tailPath) states this full source law for A++w and exact shifted literal, scalar and guard equality with the same tail. The displayed formula expands both predicates. Empty choice histories are included. The stems agree before arbitrary k and differ at k. Safety and positionwise finite-source liveness on these target competitors force acquisition before output k, and hence finite startup; no separate startup assumption is supplied.")),
+            Blocks(Paragraph(Text("The displayed theorem uses the following shared mathematical abbreviations, local to each fixed tuple of its parameters and candidate witnesses w1,w2. R has type (Nat->Label)->(Nat->Color)->Prop, Reach has type Nat->Configuration->Prop, and M has type Nat->WithTop(Nat). For each n and z:Fin(n)->Bool, A1 and A2 are finite label lists, a1 and a2 are Nat->Label, r1 and r2 are Nat->Color, and T(n) is a natural horizon. DecoderContracts is the conjunction of the four contracts displayed below; it includes injectivity on the union of all reachable configurations.")),
+                Paragraph(Math(RecordDefinition())),Paragraph(Math(ReachDefinition())),Paragraph(Math(PeakDefinition())),
+                Paragraph(Math(PrefixDefinition())),Paragraph(Math(SourceDefinition())),Paragraph(Math(ContractDefinition())),
+                Paragraph(Text("synchronousPrefix(P,U,z)=P++choiceBlocks(U,List.ofFn(z)). OperationRecordPredicate(o,b,closed) is the original actual record relation at the closed error budget b. The same two finite literal tails and their guard paths are chosen before every natural depth and Boolean history. Both scalar endpoints lie strictly inside their canonical hulls. Interior transport obtains actual colors for every ownership assignment at the complete six-group endpoint budget; closed-relaxation feasibility alone is not used as an owned-endpoint assertion.")),
+                Paragraph(Text("LiteralTailPath and LiteralTailSplice have their complete defining formulas above. They retain the initial guard, every actual guard edge, coordinate support and affine recurrence, and exact shifted literal, scalar and guard equality with the same tail. Substituting these definitions and the shared abbreviations recovers every clause of the theorem. Empty choice histories are included. The stems agree before arbitrary k and differ at k. Safety and positionwise finite-source liveness on these target competitors force acquisition before output k, and hence finite startup; no separate startup assumption is supplied.")),
                 Paragraph(Text("Equal-length block extraction gives the first-source injection. Both actual records share the entire acquired past; the first record has one fixed literal future. The common-stem cut gives 2^n<=card(states)*(k+1). Joint state and output separation, with at most k+1 output prefixes, yields 2^n<=(2^(B+1)-1)*(k+1) under a finite complete Peak bound B. sequenceByH(H,E) denotes the sequence H mapped to E. The encoding is injective on every configuration reachable on any actual record; all intermediate readable vertices are included. The emitted prefix is a finite external count, with readable output-side information included in the configuration.")),
                 Paragraph(Text("For every H>=length(P), the bound is floor((H-length(P))/L)-1-logb(2,k+1)<=B. Natural subtraction and integer division are retained. Monotonicity fills all observation horizons, and finite or infinite peaks give liminf Peak(H)/H>=1/L. This is a necessary coefficient for each compliant decoder. The competing singleton, optional original-piece restriction and bilateral auxiliary codebook remain separate mathematical cases."))),DescribeRole.Theorem))));
 }
