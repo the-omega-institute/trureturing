@@ -5,11 +5,11 @@ def specification(label, original):
 
     composite=['DirectIndexBare','CompositeIdentityBare','CompositeIdentityEta','CompositeSuccessorBare','CompositeSuccessorEta','NominalIndexedProofField','NominalRecursiveIndexedProofField','NominalLetIndexProofField']
     if kind=='erase-level-instantiation':
-        needle='  let some type ← boundedMeta (compiledQuery (typeShape e)) `type_shape | return none'
-        replacement='''  let some type ← boundedMeta (do
+        needle='  let some type ← boundedQuery (compiledQuery (typeShape e)) `type_shape | return none'
+        replacement='''  let some type ← boundedQuery (do
     let occurrence ← match e with
       | .const n _ => do
-        let declaration ← getConstInfo n
+        let declaration ← queryConstant n
         match declaration with
         | .defnInfo _ => pure (mkConst n (declaration.levelParams.map Level.param))
         | _ => pure e
@@ -19,13 +19,27 @@ def specification(label, original):
         description='Erase explicit universe instantiations only for definition constants before inference. Retain kernel constructor occurrences, isolating the nominal-return diagnostic boundary.'
     elif kind in ['reconstruct-constructor-type','generic-inferred-telescope']:
         needle='  let mut branches := #[]\n  for ctor in family.ctors do'
-        ty='declaration.type' if kind=='reconstruct-constructor-type' else '(← Meta.inferType (mkConst ctorName levels))'
+        ty='declaration.type' if kind=='reconstruct-constructor-type' else '(← compiledQuery (typeShape (mkConst ctorName levels)))'
         replacement='''  if family.numParams == 0 && family.numIndices > 0 then
     let mut contexts := #[]
     for ctorName in family.ctors do
-      let declaration ← getConstInfo ctorName
-      let some fields ← boundedMeta (Meta.forallTelescope '''+ty+''' fun fields _ => do
-        return (← getLCtx, ← Meta.getLocalInstances, fields)) `mutant_generic_fields | return none
+      let declaration ← queryConstant ctorName
+      let telescope := '''+ty+'''
+      let bind : Expr → Array Expr → WalkM (LocalContext × Array Expr) := fun type fields =>
+        let rec loop (type : Expr) (fields : Array Expr) (remaining : Nat) :
+            WalkM (LocalContext × Array Expr) := do
+          unless remaining > 0 do
+            noteIncomplete `mutant_telescope_limit `mutant_generic_fields
+            return (← getQueryLocals, fields)
+          match type with
+          | .forallE name domain body info =>
+            withCompiledLocal name info domain fun value => do
+              let some body ← substitute body #[value]
+                | return (← getQueryLocals, fields)
+              loop body (fields.push value) (remaining - 1)
+          | _ => return (← getQueryLocals, fields)
+        loop type fields 256
+      let fields ← bind telescope #[]
       contexts := contexts.push fields
     return some contexts
   let mut branches := #[]
@@ -63,13 +77,16 @@ def specification(label, original):
     elif kind=='normalization-api':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries'
         needle='def compareCanonical (a b : Expr) : WalkM Bool := do'
-        replacement=needle+'\n  let _ ← Meta.isDefEq (mkConst ``True) (mkConst ``True)'
-        predicted=['NoSemanticNormalization']
+        replacement=needle+'''
+  let environment ← mkEmptyEnvironment
+  let _ ← (Meta.MetaM.run' (Meta.isDefEq (mkConst ``True) (mkConst ``True))).toIO
+    { fileName := "mutant", fileMap := FileMap.ofString "" } { env := environment }'''
+        predicted=['CompiledProvenanceBoundary']
         description='Call explicit definitional equality on the actual admission path; the API control must reject even a cheap comparison.'
     elif kind=='remove-algebra-families':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries'
-        needle='if Lean.isClass env name && !listedTypeClasses.contains name then'
-        replacement='if Lean.isClass env name && (!listedTypeClasses.contains name || #[`AddMonoidWithOne, `AddCommMonoid, `Semiring, `Distrib, `LinearOrder, `Field, `DivisionRing, `Fact, `CharP, `NonUnitalNonAssocCommRing, `NonUnitalCommRing].contains name) then'
+        needle='if env.isClass name && !listedTypeClasses.contains name then'
+        replacement='if env.isClass name && (!listedTypeClasses.contains name || #[`AddMonoidWithOne, `AddCommMonoid, `Semiring, `Distrib, `LinearOrder, `Field, `DivisionRing, `Fact, `CharP, `NonUnitalNonAssocCommRing, `NonUnitalCommRing].contains name) then'
         predicted=['UniformMonoidHeads','UniformRingHeads','UniformOrderHeads','UniformFieldHeads','UniformCommutativeRingHeads']
         description='Remove algebra/order class heads uniformly, regardless of instance names.'
     elif kind=='incomplete-as-unsupported':
@@ -80,15 +97,15 @@ def specification(label, original):
         description='Mislabel incomplete work as unsupported form while retaining the null payload.'
     elif kind=='erase-applied-identity':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries'
-        needle='  if let .const n _ := e.getAppFn then directConstant env n\n  if let .proj n _ _ := e then directProjection env n'
-        replacement='  if let .const n _ := e then directConstant env n\n  if let .proj n _ _ := e then directProjection env n'
+        needle='  if let .const n _ := e.getAppFn then\n    modify fun s => { s with retainedInputs := s.retainedInputs.insert n }'
+        replacement='  if let .const n _ := e then\n    modify fun s => { s with retainedInputs := s.retainedInputs.insert n }'
         predicted=['AppliedTargetIdentity','AppliedCompanionIdentity']
         description='Erase an applied proof before checking the identity of its application head.'
     elif kind=='remove-named-carrier-alias':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries'
         needle='let some carrier ← namedCarrier env args[0]! | return ← checkedType .nominalFields type mentions true'
         replacement='let some carrier ← representationType args[0]! | return ← checkedType .nominalFields type mentions true'
-        source=source.replace('    if let some (.defnInfo info) := env.find? name then\n      let value ← Core.instantiateValueLevelParams (.defnInfo info) levels\n      let some body ← aliasBody value args | return none\n      -- admission-exit: dataCarrier.6 rule=retained-witness.rule\n      return ← dataCarrier env body (active.push type)', '    if (env.find? name).any (fun i => i.hasValue) then return none')
+        source=source.replace('    if let some (.defnInfo info) := env.find? name then\n      let value ← compiledValue (.defnInfo info) levels\n      let some body ← aliasBody value args | return none\n      -- admission-exit: dataCarrier.6 rule=retained-witness.rule\n      return ← dataCarrier env body (active.push type)', '    if (env.find? name).any (fun i => i.hasValue) then return none')
         predicted=['FiniteFunctionRange']
         description='Remove named carrier alias forwarding from both collection-boundary sites.'
     elif kind=='remove-statement-projection':
@@ -141,14 +158,14 @@ def specification(label, original):
         description='Remove the audited rigid arena/signature carrier projection boundary; concrete statement payload rejection remains.'
     elif kind=='nonadmission-trace-edit':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries'
-        needle='"incomplete cause=collection_failure operation=collect_readout first={address} site={address}: {ex.toMessageData}"'
-        replacement='"incomplete cause=collection_failure operation=collect_readout first={address} site={address} detail={ex.toMessageData}"'
+        needle='"incomplete cause=collection_failure operation=collect_readout first={address} site={address}: {error}"'
+        replacement='"incomplete cause=collection_failure operation=collect_readout first={address} site={address} detail={error}"'
         predicted=[]
         description='Neutral control: edit only a trace string; no inventory or behavior assertion should fail.'
     elif kind=='remove-collection-interfaces':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries'
-        needle='if Lean.isClass env name && !listedTypeClasses.contains name then'
-        replacement='if Lean.isClass env name && (!listedTypeClasses.contains name || #[`Append, `HAppend, `Union, `Nat.AtLeastTwo].contains name) then'
+        needle='if env.isClass name && !listedTypeClasses.contains name then'
+        replacement='if env.isClass name && (!listedTypeClasses.contains name || #[`Append, `HAppend, `Union, `Nat.AtLeastTwo].contains name) then'
         predicted=['CollectionAppendHeads','CollectionUnionHead','BoundedNatInterfaceHead']
         description='Remove the observed collection and bounded-natural class interfaces uniformly by inferred class head.'
     elif kind=='remove-statement-let':
@@ -165,14 +182,14 @@ def specification(label, original):
         description='Check only candidate equality operands, allowing a computed registered-statement spelling to escape the boundary.'
     elif kind=='remove-function-interface':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries'
-        needle='if Lean.isClass env name && !listedTypeClasses.contains name then'
-        replacement='if Lean.isClass env name && (!listedTypeClasses.contains name || #[`DFunLike, `EquivLike].contains name) then'
+        needle='if env.isClass name && !listedTypeClasses.contains name then'
+        replacement='if env.isClass name && (!listedTypeClasses.contains name || #[`DFunLike, `EquivLike].contains name) then'
         predicted=['FunctionInterfaceHead','EquivalenceInterfaceHead']
         description='Remove the function-coercion class interface while leaving receiver and nominal payload checks intact.'
     elif kind=='own-clean-prop-argument':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistRules'
         needle='    let some type ← occurrenceType occurrence | return .incomplete\n    let exact ← exactScalarStatement type'
-        replacement='    let some type ← occurrenceType occurrence | return .incomplete\n    let some proof ← boundedMeta (Meta.isProp type) `mutant_prop_clean | return .incomplete\n    if proof then return .allowlisted (witness .proofBoundary type)\n    let exact ← exactScalarStatement type'
+        replacement='    let some type ← occurrenceType occurrence | return .incomplete\n    let some proof ← boundedQuery (compiledQuery (propositionShape type)) `mutant_prop_clean | return .incomplete\n    if proof then return .allowlisted (witness .proofBoundary type)\n    let exact ← exactScalarStatement type'
         predicted=['ImportedLibraryPrivateProof','IndependentProofConstant','ClosedStatementInhabitant','InlineClosedStatementInhabitant','NominalLiteral']
         description='Classify every Prop-typed argument as allowlisted immediately after bounded inference, bypassing its statement type check. visitOccurrence still erases the proof body; direct application identity check is retained.'
     elif kind=='own-remove-classical-choice':
@@ -183,7 +200,7 @@ def specification(label, original):
         description='Remove executable Classical namespace rejection; retain the independent unlisted_decision_producer fallback. Predict diagnostic-class assertion reds, not false admission.'
     elif kind=='computed-default-stop':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.Round7ComputedStatement'
-        needle='  return .unclassified ⟨"unclassified_statement_head", name,\n    namespaceLabel (← getEnv) name, (← get).theoremName⟩'
+        needle='  return .unclassified ⟨"unclassified_statement_head", name,\n    namespaceLabel (← getCompiledView) name, (← get).theoremName⟩'
         replacement='  return .recognized (witness .statementInductive head)'
         predicted=[name+suffix for suffix in ['', 'Diagnostic'] for name in ['ComputedRegisteredProof','ComputedRegisteredNominalPayload','ComputedRegisteredDecision']]
         description='Treat an unresolved registered statement head as a completed recognized stop, recreating the round-7 default admission.'
@@ -209,7 +226,7 @@ def specification(label, original):
     elif kind=='alias-carrier-default-shape':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AliasSortCarrierBoundaries'
         needle='''    | .defnInfo _ =>
-      let value ← Core.instantiateValueLevelParams declaration levels (allowOpaque := false)
+      let value ← compiledValue declaration levels (allowOpaque := false)
       let some body ← aliasBody value args | return none
       if body == concrete then return none
       let some _ ← nominalFieldShape env body parameters | return none
@@ -221,7 +238,7 @@ def specification(label, original):
         description='Treat an explicit nominal field type alias as an ordinary concrete shape without following its body. The six opaque carrier-slot fixtures must be admitted incorrectly; ordinary and proof aliases stay admitted.'
     elif kind=='nested-default-apart':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.NestedStatementIdentity'
-        needle='def checkedStatementType (env : Environment) (type : Expr) :\n    WalkM (Option ProvenanceAdmissionWitness) := do'
+        needle='def checkedStatementType (env : CompiledView) (type : Expr) :\n    WalkM (Option ProvenanceAdmissionWitness) := do'
         replacement=needle+'\n  return some (witness .statementRigidApart type)'
         predicted=['QuantifiedComputedIdentity','QuantifiedAliasIdentity','ConjoinedComputedIdentity','DisjoinedComputedIdentity','ExistentialComputedIdentity']
         description='Default-admit every observed proposition at the checkedStatementType witness exit, bypassing positive statement distinction.'

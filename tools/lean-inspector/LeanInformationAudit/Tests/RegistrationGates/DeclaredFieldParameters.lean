@@ -1,4 +1,4 @@
-import LeanInformationAudit.ReadoutProvenance
+import LeanInformationAudit.ReadoutProvenance.Compiler
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import Mathlib.Algebra.Field.ZMod
 

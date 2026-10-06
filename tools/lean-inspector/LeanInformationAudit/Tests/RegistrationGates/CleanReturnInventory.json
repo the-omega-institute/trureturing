@@ -840,7 +840,7 @@
       "function": "visitOccurrence",
       "rule_id": "retained-witness.rule",
       "kind": "checked-occurrence-boundary",
-      "source": "| .allowlisted _ => pure () -- syntaxLeaf: already inferred in its real binder context",
+      "source": "| .allowlisted _ => pure () -- syntaxLeaf: already projected in its real binder context",
       "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {

@@ -1,12 +1,12 @@
 import LeanInformationAudit.ReadoutProvenance.Types
-namespace LeanInformationAudit.RegistrationGates
+namespace LeanInformationAudit.RegistrationGates.Compiled
 open Lean
 open Contract.CompiledExpressions (typeShape propositionShape)
 
 
--- The sole admission entry: infer the occurrence in its lexical context, then
--- fold its inferred type. Nested type syntax is handled by the same type fold.
-private def classifyOccurrence (env : Environment) (occurrence : Expr)
+-- The sole admission entry: project the occurrence type in its lexical context, then
+-- fold that compiled type. Nested type syntax is handled by the same type fold.
+private def classifyOccurrence (env : CompiledView) (occurrence : Expr)
     (context : Array Expr) : WalkM TypeClassification := do
   let context := if occurrence.hasLooseBVars then context else #[]
   unless ← chargeTraversal (2 * context.size + 1) do return .incomplete
@@ -38,9 +38,9 @@ private def classifyOccurrence (env : Environment) (occurrence : Expr)
   return verdict
 
 -- Check a node before requesting its children. Independent Prop proofs are
--- leaves after identity and inferred-type checks; their bodies are never cached
+-- leaves after identity and compiled type-shape checks; their bodies are never cached
 -- or traversed. Type-valued decision dictionaries remain executable nodes.
-private partial def visitOccurrence (env : Environment) (pos : Position)
+private partial def visitOccurrence (env : CompiledView) (pos : Position)
     (origin : Name) (e : Expr) (context : Array Expr := #[]) : WalkM Unit := do
   unless ← chargeSummaryWork (fun c => { c with dispatchWork := c.dispatchWork + 1 }) do return
   let first := e.getAppFn.constName?.getD origin
@@ -92,7 +92,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
       if unknown then
         noteUnclassified ⟨"unclassified_argument_type", first, namespaceLabel env first, origin⟩
       return true
-    let some proof ← boundedMeta (compiledQuery (propositionShape type)) `proof_boundary | return false
+    let some proof ← boundedQuery (compiledQuery (propositionShape type)) `proof_boundary | return false
     return proof
   -- admission-exit: visitOccurrence.3 rule=retained-witness.rule
   if proof == some true then return
@@ -102,7 +102,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
     modify fun s => { s with walked := s.walked.insert n }
     if pos == .dataPos && n.getRoot == `Classical then
       noteUnclassified ⟨"classical_choice", n, namespaceLabel env n, origin⟩
-    if pos == .dataPos && !inProtected env n && !Lean.Meta.isInstanceCore env n then
+    if pos == .dataPos && !inProtected env n && !env.isInstance n then
       if let some type ← occurrenceType e then
         if let some h ← resultHead type then
           if decisionFamily.contains h && !listedProducers.contains n then
@@ -139,22 +139,22 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
   | .lit _ | .sort _ | .fvar _ | .bvar _ =>
     match verdict with
     -- admission-exit: visitOccurrence.5 rule=retained-witness.rule
-    | .allowlisted _ => pure () -- syntaxLeaf: already inferred in its real binder context
+    | .allowlisted _ => pure () -- syntaxLeaf: already projected in its real binder context
     | _ => noteUnclassified ⟨"unclassified_syntax_leaf", first, namespaceLabel env first, origin⟩
 
-private def visitSummary (env : Environment) (origin : Name) (summary : Summary) : WalkM Unit := do
+private def visitSummary (env : CompiledView) (origin : Name) (summary : Summary) : WalkM Unit := do
   if summary.incomplete then noteIncomplete `incomplete_summary `summary_traversal
   for index in summary.roots do
     let node := summary.nodes[index]!
     visitOccurrence env node.position origin node.expr
 
-private def visit (env : Environment) (pos : Position) (origin : Name) (e : Expr) : WalkM Unit := do
+private def visit (env : CompiledView) (pos : Position) (origin : Name) (e : Expr) : WalkM Unit := do
   let summary ← summarise env #[(pos, e)] (← get).exprFuel
   unless ← chargeSummaryWork (fun c => { c with constructionWork := c.constructionWork + summary.constructionWork }) summary.constructionWork do return
   modify fun s => { s with counters.visits := s.counters.visits + summary.visits }
   visitSummary env origin summary
 
-private def process (env : Environment) : WalkM Unit := do
+private def process (env : CompiledView) : WalkM Unit := do
   while !(← get).forbidden do
     unless ← chargeSummaryWork (fun c => { c with dispatchWork := c.dispatchWork + 1 }) do break
     let some n := (← get).pending.head? | break
@@ -168,11 +168,11 @@ private def process (env : Environment) : WalkM Unit := do
         pure cached
       else do
         let some type ← occurrenceType (mkConst n.1 n.2) | continue
-        let some proof ← boundedMeta (compiledQuery (propositionShape type)) `declaration_proof_boundary | continue
+        let some proof ← boundedQuery (compiledQuery (propositionShape type)) `declaration_proof_boundary | continue
         let summary ← if proof then summarise env #[(.typePos, type)] (← get).exprFuel
           else if info.hasValue (allowOpaque := true) then do
             let valuePos := match info with | .thmInfo _ => .proofPos | _ => .dataPos
-            let value ← Core.instantiateValueLevelParams info n.2 (allowOpaque := true)
+            let value ← compiledValue info n.2 (allowOpaque := true)
             summarise env #[(.typePos, type), (valuePos, value)] (← get).exprFuel
           else do
             let summary ← summarise env #[(.typePos, type)] (← get).exprFuel
@@ -196,12 +196,9 @@ private structure WalkResult where
   walkedNames : Array Name := #[]
   inputNames : Array Name := #[]
 
-private def collectReadout (env : Environment) (theoremName address : Name) (readout : Expr) (extractionWork : Nat := 0) (extractionFailed : Bool := false) : CoreM WalkResult := do
-  let scope := (moduleScopeCache.getState env).getD (classifyModules env)
-  let env := moduleScopeCache.setState env (some scope)
-  modifyEnv (moduleScopeCache.setState · (some scope))
+private def collectReadout (env : CompiledView) (theoremName address : Name) (readout : Expr) (extractionWork : Nat := 0) (extractionFailed : Bool := false) : QueryM WalkResult := do
   let some theoremInfo := env.find? theoremName | do
-    trace[InformationProvenance.check]
+    auditTrace s!
       "incomplete cause=missing_constant operation=registered_statement first={theoremName} site={address}"
     return { forbidden := false, unclassified := none, incomplete := true, walked := #[] }
   let statement := theoremInfo.type
@@ -214,13 +211,12 @@ private def collectReadout (env : Environment) (theoremName address : Name) (rea
     statementAliases env
     visit env .dataPos address readout
     process env
-  let budget := min provenanceExpressionFuel (provenanceExpressionLimit.get (← getOptions))
-  let (_, state) ← Meta.MetaM.run' <| computation.run {
-    theoremName, currentFirst := address, currentOrigin := address, statement, decision, summaries := summaryCache.getState env, exprFuel := budget }
+  let budget := min provenanceExpressionFuel (provenanceExpressionLimit.get (← getQueryOptions))
+  let (_, state) ← computation.run {
+    theoremName, currentFirst := address, currentOrigin := address, statement, decision, summaries := (← (← querySession).get).summaries, exprFuel := budget }
   let counters := { state.counters with chargedVisits := budget - state.exprFuel }
-  modifyEnv (summaryCache.setState · state.summaries)
-  modifyEnv (countersCache.setState · counters)
-  trace[InformationProvenance.check]
+  (← querySession).modify fun session => { session with summaries := state.summaries, counters }
+  auditTrace s!
     "theorem={theoremName} P_constants_summarised={counters.summarisedConstants} visits={counters.visits} memo_hits={counters.memoHits} charged_visits={counters.chargedVisits} rechecked_nodes={counters.recheckedNodes} spine_arguments={counters.spineArguments} canonicalizations={counters.canonicalizations} construction_work={counters.constructionWork} traversal_work={counters.traversalWork} dispatch_work={counters.dispatchWork} inferred_occurrences={counters.inferredOccurrences} case_expansions={counters.caseExpansions} family_memo_hits={counters.familyMemoHits}"
   let rootProducer := readout.getAppFn.constName?.getD address
   let admission := (state.typeChecks[(readout, (#[] : Array Expr), rootProducer)]?).bind
@@ -234,16 +230,16 @@ private def collectReadout (env : Environment) (theoremName address : Name) (rea
   return ⟨state.forbidden, unclassified, state.incomplete, admission, names,
     state.walked.toArray, inputNames.toArray⟩
 
-private def safeCollect (env : Environment) (theoremName address : Name) (readout : Expr)
-    (extractionWork : Nat := 0) (extractionFailed : Bool := false) : CoreM WalkResult :=
-  tryCatchRuntimeEx (collectReadout env theoremName address readout extractionWork extractionFailed)
-    (fun ex => do
-      trace[InformationProvenance.check] "incomplete cause=collection_failure operation=collect_readout first={address} site={address}: {ex.toMessageData}"
-      pure { forbidden := false, unclassified := none, incomplete := true, walked := #[] })
+private def safeCollect (env : CompiledView) (theoremName address : Name) (readout : Expr)
+    (extractionWork : Nat := 0) (extractionFailed : Bool := false) : QueryM WalkResult := do
+  try collectReadout env theoremName address readout extractionWork extractionFailed
+  catch error =>
+    auditTrace s!"incomplete cause=collection_failure operation=collect_readout first={address} site={address}: {error}"
+    return { forbidden := false, unclassified := none, incomplete := true, walked := #[] }
 
 /-- Query in the current environment, retaining only reusable syntax summaries. -/
-def readoutClosureCurrent (theoremName : Name) (readout : Expr) : CoreM (Bool × Option (Array String)) := do
-  let env ← getEnv
+def readoutClosureCurrent (theoremName : Name) (readout : Expr) : QueryM (Bool × Option (Array String)) := do
+  let env ← getCompiledView
   let r ← safeCollect env theoremName `readout readout
   if r.incomplete then return (false, none)
   if r.forbidden || r.unclassified.isSome then return (true, some r.walked)
@@ -251,8 +247,8 @@ def readoutClosureCurrent (theoremName : Name) (readout : Expr) : CoreM (Bool ×
   if r.admission.isSome then return (false, some r.walked)
   return (true, some r.walked)
 
-def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) : CoreM (Bool × Option (Array String)) :=
-  withEnv env (readoutClosureCurrent theoremName readout)
+def readoutClosure (env : CompiledView) (theoremName : Name) (readout : Expr) : QueryM (Bool × Option (Array String)) :=
+  withReader (fun context : QueryContext => { context with view := env }) (readoutClosureCurrent theoremName readout)
 
 private def unclassifiedJson (u : Unclassified) (walked : Array String) : Json :=
   Json.mkObj [
@@ -260,16 +256,15 @@ private def unclassifiedJson (u : Unclassified) (walked : Array String) : Json :
     ("namespace", Json.str u.namespaceName), ("site", Json.str u.siteName.toString),
     ("walked", Json.arr (walked.map Json.str))]
 
-private initialize wholeReadoutCalls : EnvExtension Nat ← registerEnvExtension (pure 0)
 
 /-- Output-only count of actual legacy whole-realization audit invocations. -/
-def observedWholeReadoutCalls : CoreM Nat :=
-  return wholeReadoutCalls.getState (← getEnv)
+def observedWholeReadoutCalls : QueryM Nat :=
+  return (← (← querySession).get).wholeReadoutCalls
 
-def provenanceErrorCurrent (root catalog theoremName realization : Name) : CoreM (Option String) := do
-  modifyEnv fun env => wholeReadoutCalls.modifyState env (· + 1)
-  let env ← getEnv
-  let budget := min provenanceExpressionFuel (provenanceExpressionLimit.get (← getOptions))
+def provenanceErrorCurrent (root catalog theoremName realization : Name) : QueryM (Option String) := do
+  (← querySession).modify fun state => { state with wholeReadoutCalls := state.wholeReadoutCalls + 1 }
+  let env ← getCompiledView
+  let budget := min provenanceExpressionFuel (provenanceExpressionLimit.get (← getQueryOptions))
   let (readout, extractionWork) := ReadoutFamily.extract env.find? realization budget
   let address := readout.map (·.2) |>.getD realization
   let result ← match readout with
@@ -285,23 +280,24 @@ def provenanceErrorCurrent (root catalog theoremName realization : Name) : CoreM
     else Json.null
   return some s!"IE-C050 ClosedTruthReadout key={root}/{catalog}/{theoremName} readout={address} reason={reason} provenance={payload.compress}"
 
-def provenanceError (env : Environment) (root catalog theoremName realization : Name) : CoreM (Option String) :=
-  withEnv env (provenanceErrorCurrent root catalog theoremName realization)
+def provenanceError (env : CompiledView) (root catalog theoremName realization : Name) : QueryM (Option String) :=
+  withReader (fun context : QueryContext => { context with view := env }) (provenanceErrorCurrent root catalog theoremName realization)
 
 /-- The independently retained P1 provider contract audits its raw reifier
 arguments. Declared templates use the enrollment grammar instead. All arguments share one lower-only debit, including
 reused syntax summaries; no template body is sent through this path. -/
 def providerArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
-    (availableWork : Nat) : CoreM (Except String (Array Name × Nat)) := do
+    (availableWork : Nat) : QueryM (Except String (Array Name × Nat)) := do
   let mut remaining := min 524288 availableWork
   let mut inputs : NameSet := {}
   for index in [:arguments.size] do
     if remaining == 0 then return .error "incomplete_closure:E8.argument_work"
     let argument := arguments[index]!
-    let result ← withOptions (fun options => options.set
-        `provenanceExpressionLimit (min remaining (provenanceExpressionLimit.get options))) <|
-      safeCollect (← getEnv) theoremName (.num `argument index) argument
-    let counters := countersCache.getState (← getEnv)
+    let result ← withReader (fun context : QueryContext => { context with
+      options := context.options.set `provenanceExpressionLimit
+        (min remaining (provenanceExpressionLimit.get context.options)) }) <|
+      safeCollect (← getCompiledView) theoremName (.num `argument index) argument
+    let counters := (← (← querySession).get).counters
     let used := counters.chargedVisits
     if used > remaining then return .error "incomplete_closure:E8.argument_work"
     remaining := remaining - used
@@ -316,7 +312,7 @@ def providerArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
 executable/type admission; the shared E2–E5 compiler owns that judgment.
 The source contract can defer the legacy apartness grammar to its existing
 rigid Lean conversion check; deferred propositions remain unclassified here. -/
-def argumentIdentityNode (env : Environment) (expression : Expr)
+def argumentIdentityNode (env : CompiledView) (expression : Expr)
     (deferStatementApart : Bool := false) : WalkM Unit := do
   unless ← chargeTraversal do return
   if let .const name _ := expression.getAppFn then directConstant env name
@@ -327,7 +323,7 @@ def argumentIdentityNode (env : Environment) (expression : Expr)
     exactScalarStatement type.getAppArgs[0]! else pure false
   if exact || decision then modify fun s => { s with forbidden := true }
   let proposition := type == .sort .zero
-  let some proof ← boundedMeta (compiledQuery (propositionShape type)) `raw_argument_proof_type | return
+  let some proof ← boundedQuery (compiledQuery (propositionShape type)) `raw_argument_proof_type | return
   if proposition || proof then
     let candidate := if proposition then expression else type
     if candidate.equal (← get).statement then
@@ -340,24 +336,24 @@ def argumentIdentityNode (env : Environment) (expression : Expr)
           "argument", (← get).currentOrigin⟩
 
 /-- Initialize identity-only state once for the whole supplied telescope. -/
-def argumentIdentityState (theoremName : Name) (available : Nat) : Meta.MetaM WalkState := do
-  let env ← getEnv
-  let info ← getConstInfo theoremName
+def argumentIdentityState (theoremName : Name) (available : Nat) : QueryM WalkState := do
+  let env ← getCompiledView
+  let info ← queryConstant theoremName
   let (_, state) ← (statementAliases env).run {
     theoremName, statement := info.type,
     decision := mkApp (mkConst ``Decidable) info.type, exprFuel := available }
   return state
 
 -- Enrollment supplies the positive E2 grammar judgment. Consumption checks
--- only statement identity in the retained, instantiated syntax and inferred
+-- only statement identity in the retained, instantiated syntax and compiled
 -- proof types. Unknown identity remains unclassified; proof implementations stop.
-private partial def retainedTypeIdentity (env : Environment) (expression : Expr) : WalkM Unit := do
+private partial def retainedTypeIdentity (env : CompiledView) (expression : Expr) : WalkM Unit := do
   unless ← chargeTraversal do return
   if let .const name _ := expression.getAppFn then directConstant env name
   if let .proj name _ _ := expression then directProjection env name
   let some type ← occurrenceType expression | return
   let proposition := type == .sort .zero
-  let some proof ← boundedMeta (compiledQuery (propositionShape type)) `retained_proof_type | return
+  let some proof ← boundedQuery (compiledQuery (propositionShape type)) `retained_proof_type | return
   if proposition || proof then
     let candidate := if proposition then expression else type
     if candidate.equal (← get).statement then
@@ -371,7 +367,7 @@ private partial def retainedTypeIdentity (env : Environment) (expression : Expr)
   | .app f a => child f; child a
   | .lam name domain body bi | .forallE name domain body bi =>
     child domain
-    Meta.withLocalDecl name bi domain fun x => do
+    withCompiledLocal name bi domain fun x => do
       let some body ← substitute body #[x] | return
       child body
   | .letE _ type value body _ =>
@@ -387,12 +383,12 @@ private partial def retainedTypeIdentity (env : Environment) (expression : Expr)
 entry runs the occurrence-relative type judgment, never a template body or proof
 implementation. All obligations share one lower-only traversal budget. -/
 def templateTypesCurrent (theoremName : Name) (types : Array (Expr × Array Expr))
-    (availableWork : Nat) : CoreM (Except String Nat) := do
-  let env ← getEnv
+    (availableWork : Nat) : QueryM (Except String Nat) := do
+  let env ← getCompiledView
   let some info := env.find? theoremName
     | return .error "incomplete_closure:dtr.instantiated_type"
   let statement := info.type
-  let budget := min (min 524288 availableWork) (provenanceExpressionLimit.get (← getOptions))
+  let budget := min (min 524288 availableWork) (provenanceExpressionLimit.get (← getQueryOptions))
   let action : WalkM Unit := do
     statementAliases env
     for (type, context) in types do
@@ -401,7 +397,7 @@ def templateTypesCurrent (theoremName : Name) (types : Array (Expr × Array Expr
         retainedTypeIdentity env type
         return true
       if checked != some true then noteIncomplete `type_obligation `instantiated_type
-  let (_, state) ← Meta.MetaM.run' <| action.run {
+  let (_, state) ← action.run {
     theoremName, currentFirst := theoremName, currentOrigin := theoremName,
     statement, decision := mkApp (mkConst ``Decidable) statement, exprFuel := budget }
   if state.incomplete then return .error "incomplete_closure:dtr.instantiated_type"
@@ -409,4 +405,4 @@ def templateTypesCurrent (theoremName : Name) (types : Array (Expr × Array Expr
   if state.unclassified.isSome then return .error "unclassified_form:dtr.instantiated_type"
   return .ok (budget - state.exprFuel)
 
-end LeanInformationAudit.RegistrationGates
+end LeanInformationAudit.RegistrationGates.Compiled

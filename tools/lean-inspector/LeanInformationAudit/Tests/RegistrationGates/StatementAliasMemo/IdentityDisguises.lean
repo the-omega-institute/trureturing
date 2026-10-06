@@ -18,7 +18,7 @@ run_meta do
       ("alias", mkApp (mkConst ``identityDisguiseAlias) statement)] do
     unless ← isDefEq candidate statement do throwError "fixture_not_defeq:{label}"
     let initial ← argumentIdentityState target 524288
-    let (apart, _) ← (checkedStatementType env candidate).run initial
+    let (apart, _) ← (Compiler.runWalk (checkedStatementType (Compiler.view env) candidate)).run initial
     if apart.isSome then throwError "[FAIL] NEGATIVE_IDENTITY_ACCEPTED:{label}"
     let verdict ← templateArgumentsCurrent target #[candidate] 524288
     match verdict with

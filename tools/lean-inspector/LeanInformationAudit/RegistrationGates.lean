@@ -1,5 +1,5 @@
 import LeanInformationAudit.RegistryTypes
-import LeanInformationAudit.ReadoutProvenance
+import LeanInformationAudit.ReadoutProvenance.Compiler
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 

@@ -208,7 +208,7 @@ run_cmd Elab.Command.liftTermElabM do
       `LeanInformationAudit.RegistrationGates.occurrenceType,
       `LeanInformationAudit.RegistrationGates.caseFields,
       `LeanInformationAudit.RegistrationGates.typeFamilyArgument,
-      `LeanInformationAudit.RegistrationGates.classifyOccurrence] do
+      `LeanInformationAudit.RegistrationGates.Compiled.classifyOccurrence] do
     let some (_, info) := env.constants.toList.find? (fun (name, _) =>
       (privateToUserName? name).getD name == userName)
       | throwError "[FAIL] NoTypeClassificationModes: missing {userName}"

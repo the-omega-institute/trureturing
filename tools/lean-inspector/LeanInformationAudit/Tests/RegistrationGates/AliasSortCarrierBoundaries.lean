@@ -1,4 +1,4 @@
-import LeanInformationAudit.ReadoutProvenance
+import LeanInformationAudit.ReadoutProvenance.Compiler
 import LeanInformationAuditAnalysis.Tests.AliasSortCarriers
 
 open Lean LeanInformationAudit.RegistrationGates

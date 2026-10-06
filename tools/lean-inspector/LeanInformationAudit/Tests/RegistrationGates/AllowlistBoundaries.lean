@@ -1,4 +1,4 @@
-import LeanInformationAudit.ReadoutProvenance
+import LeanInformationAudit.ReadoutProvenance.Compiler
 import LeanInformationAuditAnalysis.Tests.ExternalAllowlistTypes
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import Mathlib.Tactic.NormNum
@@ -302,25 +302,31 @@ run_cmd Elab.Command.liftCoreM do
 
 -- Inspect elaborated references in the classifier module. String literals,
 -- comments, counters and unrelated modules are outside this admission API guard.
--- Native inference internals are not traversed: the owner permits bounded inference.
+-- Compiled calculators may normalize compiler syntax. Native compiler
+-- environments, type checking and semantic evaluation are outside this boundary.
 run_cmd do
   let env := (← getEnv).setExporting false
   let modules := env.header.moduleNames.filter fun name =>
     name == `LeanInformationAudit.ReadoutProvenance ||
-      name.toString.startsWith "LeanInformationAudit.ReadoutProvenance."
-  if modules.isEmpty then throwError "[FAIL] NoSemanticNormalization: missing classifier module"
+      (name.toString.startsWith "LeanInformationAudit.ReadoutProvenance." &&
+        name != `LeanInformationAudit.ReadoutProvenance.Compiler) ||
+      name == `LeanInformationAudit.Contract.CompiledExpressions
+  if modules.isEmpty then throwError "[FAIL] CompiledProvenanceBoundary: missing classifier module"
   let forbidden := #[`Lean.Meta.isDefEq, `Lean.Meta.whnf,
-    `Lean.Meta.unfoldDefinition?, `Lean.MVarId.cases]
+    `Lean.Meta.unfoldDefinition?, `Lean.MVarId.cases, `Lean.Meta.inferType,
+    `Lean.Meta.isProp, `Lean.importModules, `Lean.mkEmptyEnvironment,
+    `Lean.addDecl, `Lean.Meta.checkWithKernel, `Lean.Elab.Term.elabTerm,
+    `Lean.registerEnvExtension]
   let mut found := false
   for moduleName in modules do
     let some index := env.getModuleIdx? moduleName
-      | throwError "[FAIL] NoSemanticNormalization: missing classifier module"
+      | throwError "[FAIL] CompiledProvenanceBoundary: missing classifier module"
     for name in env.header.moduleData[index]!.constNames do
       let some info := env.find? name | continue
       let some value := info.value? (allowOpaque := true) | continue
       for dependency in value.getUsedConstants do
         if forbidden.contains dependency then
           found := true
-          logError m!"[FAIL] NoSemanticNormalization: {name} references {dependency}"
-  unless found do logInfo "[PASS] NoSemanticNormalization"
+          logError m!"[FAIL] CompiledProvenanceBoundary: {name} references {dependency}"
+  unless found do logInfo "[PASS] CompiledProvenanceBoundary"
 end AllowlistBoundaries

@@ -16,12 +16,12 @@ run_meta withStatementAliasMemo do
     throwError "memo fixture did not normalize the statement"
   logInfo m!"MEMO_SCOPE cold={524288-first.exprFuel} warm={524288-second.exprFuel}"
   let disguised := mkApp2 (mkConst ``id [.succ .zero]) (.sort .zero) second.statement
-  let (apart, _) ← (checkedStatementType env disguised).run second
+  let (apart, _) ← (Compiler.runWalk (checkedStatementType (Compiler.view env) disguised)).run second
   if apart.isSome then throwError "MEMO_ACCEPTED_SAME_STATEMENT"
   let other ← argumentIdentityState ``memoOtherTarget 524288
   let candidate := mkApp2 (mkConst ``Nat.lt) (mkNatLit 5) (mkNatLit 16)
   unless ← isDefEq candidate other.statement do throwError "memo fixture is not defeq"
-  let (apart, _) ← (checkedStatementType env candidate).run other
+  let (apart, _) ← (Compiler.runWalk (checkedStatementType (Compiler.view env) candidate)).run other
   if apart.isSome then throwError "MEMO_LEAKED_ACROSS_THEOREMS"
   logInfo "[PASS] MemoWarmStatementDisguise"
   logInfo "[PASS] MemoDifferentTheoremDisguise"

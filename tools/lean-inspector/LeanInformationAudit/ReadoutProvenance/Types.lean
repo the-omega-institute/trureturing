@@ -6,7 +6,7 @@ mutual
 -- Compare a complete observed proof type, including the type of a nominal
 -- proof field. A quantified proof's open mathematical body is not another
 -- observed proof value; closed statement subtypes still pass the same guard.
-partial def observedType (env : Environment) (type : Expr)
+partial def observedType (env : CompiledView) (type : Expr)
     (active : Array Expr := #[]) : WalkM TypeClassification := do
   let some kind ← occurrenceType type | return ← unknownType type
   if kind == .sort .zero then
@@ -18,7 +18,7 @@ partial def observedType (env : Environment) (type : Expr)
 
 -- One structural fold over inferred types and their type-valued arguments.
 -- Nominal fields are native occurrences specialized by constructor-index patterns.
-private partial def inputType (env : Environment) (type : Expr)
+private partial def inputType (env : CompiledView) (type : Expr)
     (active : Array Expr := #[]) : WalkM TypeClassification := do
   unless ← chargeSummaryWork (fun c => { c with recheckedNodes := c.recheckedNodes + 1 }) do
     return ← unknownType type
@@ -55,7 +55,7 @@ private partial def inputType (env : Environment) (type : Expr)
       let exact ← compareCanonical type (← get).statement
       let decision ← compareCanonical type (← get).decision
       let (dm, du) := (← inputType env domain active).flags
-      let (bm, bu) ← (TypeClassification.flags <$> Meta.withLocalDecl n bi domain fun x => do
+      let (bm, bu) ← (TypeClassification.flags <$> withCompiledLocal n bi domain fun x => do
         let some body ← substitute body #[x] | return ← unknownType type
         -- admission-exit: inputType.forward.1 rule=retained-witness.rule
         inputType env body active)
@@ -73,13 +73,13 @@ private partial def inputType (env : Environment) (type : Expr)
     let mut mentions ← typeMentions env type
     if ← compareCanonical type (← get).decision then mentions := true
     let some reduced ← representationType type | do
-      trace[InformationProvenance.check] "failed_type={type}"
+      auditTrace s! "failed_type={type}"
       return ← checkedType .nominalFields type mentions true
     mentions := (← typeMentions env reduced) || mentions
     match reduced with
     | .forallE n domain body bi =>
       let (dm, du) := (← inputType env domain active).flags
-      let (bm, bu) ← (TypeClassification.flags <$> Meta.withLocalDecl n bi domain fun x =>
+      let (bm, bu) ← (TypeClassification.flags <$> withCompiledLocal n bi domain fun x =>
         do
           let some body ← substitute body #[x] | return ← unknownType type
           -- admission-exit: inputType.forward.2 rule=retained-witness.rule
@@ -92,7 +92,7 @@ private partial def inputType (env : Environment) (type : Expr)
       -- through this same classifier instead of treating the lambda head as
       -- an unknown escape.
       let (dm, du) := (← inputType env domain active).flags
-      let (bm, bu) ← (TypeClassification.flags <$> Meta.withLocalDecl n bi domain fun x => do
+      let (bm, bu) ← (TypeClassification.flags <$> withCompiledLocal n bi domain fun x => do
         let some body ← substitute body #[x] | return ← unknownType type
         -- admission-exit: inputType.forward.3 rule=retained-witness.rule
         inputType env body active)
@@ -101,7 +101,7 @@ private partial def inputType (env : Environment) (type : Expr)
     | .letE n domain value body nd =>
       let (dm, du) := (← inputType env domain active).flags
       let (vm, vu) := (← inputType env value active).flags
-      let (bm, bu) ← (TypeClassification.flags <$> Meta.withLetDecl n domain value (fun x => do
+      let (bm, bu) ← (TypeClassification.flags <$> withCompiledLet n domain value (fun x => do
         let some body ← substitute body #[x] | return ← unknownType type
         -- admission-exit: inputType.forward.4 rule=retained-witness.rule
         inputType env body active) (nondep := nd))
@@ -208,7 +208,7 @@ private partial def inputType (env : Environment) (type : Expr)
                 | _ => false
               | _ => false
             if closed operand && !literal && !nullary then
-              trace[InformationProvenance.check] "unsupported_equality_operand={repr operand} type={reduced}"
+              auditTrace s! "unsupported_equality_operand={repr operand} type={reduced}"
               unclassified := true
         -- admission-exit: inputType.13 rule=equality
         return ← checkedType .equality reduced mentions unclassified
@@ -234,10 +234,10 @@ private partial def inputType (env : Environment) (type : Expr)
           | return ← checkedType .nominalFields type mentions true
         let relation := mkApp (mkConst ``Ne [level]) args[0]!
         let some carrier ← namedCarrier env args[0]! | return ← checkedType .nominalFields type mentions true
-        let some rigid ← boundedMeta (do
+        let some rigid ← boundedQuery (do
           let carrier ← pure carrier
           let .fvar id := carrier | return false
-          return (← id.getDecl).value? (allowNondep := true) |>.isNone) `carrier_rigidity
+          return (← localDeclaration id).value? (allowNondep := true) |>.isNone) `carrier_rigidity
           | return ← checkedType .nominalFields type mentions true
         -- A rigid parameter is scoped to this occurrence. Applications and
         -- enclosing case substitutions get freshly inferred field types.
@@ -260,7 +260,7 @@ private partial def inputType (env : Environment) (type : Expr)
                 carrierEvidence := some cached
               else
                 let some branches ← caseFields carrier | return ← checkedType .nominalFields type mentions true
-                if branches.all (fun (_, _, fields) => fields.isEmpty) then
+                if branches.all (fun (_, fields) => fields.isEmpty) then
                   -- admission-exit: inputType.17 rule=nullaryCarrier
                   let evidence := witness .nullaryCarrier carrier
                   carrierEvidence := some evidence
@@ -278,10 +278,10 @@ private partial def inputType (env : Environment) (type : Expr)
           let disjoint ← listStatementBoundary env statement
           -- admission-exit: inputType.18 rule=listMetadata
           if disjoint.isSome then return ← checkedType .listMetadata reduced mentions unclassified
-        trace[InformationProvenance.check] "unsupported_list_boundary type={reduced} carrier={carrier} allowed={carrierEvidence.isSome} relation={relationAllowed}"
+        auditTrace s! "unsupported_list_boundary type={reduced} carrier={carrier} allowed={carrierEvidence.isSome} relation={relationAllowed}"
         return ← checkedType .nominalFields type mentions true
-      if Lean.isClass env name && !listedTypeClasses.contains name then
-        trace[InformationProvenance.check] "unsupported_class={name} type={type}"
+      if env.isClass name && !listedTypeClasses.contains name then
+        auditTrace s! "unsupported_class={name} type={type}"
         return ← checkedType .nominalFields type mentions true
       -- Quotient carriers and lifted type families expose their relation or
       -- predicate to the same argument classifier; no predicate is a leaf.
@@ -313,12 +313,12 @@ private partial def inputType (env : Environment) (type : Expr)
               if enumeration then
                 -- admission-exit: inputType.21 rule=enumRecursorType
                 return ← checkedType .enumRecursorType reduced mentions unclassified
-        trace[InformationProvenance.check] "unclassified_recursor_head={name} type={reduced}"
+        auditTrace s! "unclassified_recursor_head={name} type={reduced}"
         return ← unknownType reduced
       if let some (.defnInfo _) := env.find? name then
         -- An explicit type alias forwards its actual parameters. Its raw body
         -- must pass the same structural families; computed data is not evaluated.
-        let value ← Core.instantiateValueLevelParams declaration head.constLevels! (allowOpaque := false)
+        let value ← compiledValue declaration head.constLevels! (allowOpaque := false)
         let some unfolded ← aliasBody value args | return ← checkedType .nominalFields type mentions true
         if unfolded == reduced then return ← checkedType .nominalFields type mentions true
         let (um, uu) := (← inputType env unfolded active).flags
@@ -356,15 +356,15 @@ private partial def inputType (env : Environment) (type : Expr)
             return ← checkedType .recursiveFamily reduced mentions unclassified
           -- Different parameters are a fresh obligation, as in nested products.
       let some branches ← caseFields reduced | do
-        trace[InformationProvenance.check] "unsupported_nominal_fields type={reduced}"
+        auditTrace s! "unsupported_nominal_fields type={reduced}"
         return ← checkedType .nominalFields type mentions true
       unless ← chargeTraversal (active.size + 1) do return ← checkedType .nominalFields type mentions true
       let nextActive := active.push reduced
-      for (lctx, instances, fields) in branches do
+      for (lctx, fields) in branches do
         unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
         for field in fields do
           unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
-          let (fm, fu) ← (TypeClassification.flags <$> Meta.withLCtx lctx instances do
+          let (fm, fu) ← (TypeClassification.flags <$> withCompiledLocals lctx do
             let some fieldType ← occurrenceType field | return ← unknownType type
             let some concrete ← representationType fieldType | return ← unknownType fieldType
             -- Constructor fields that introduce a carrier, or hide their value
@@ -383,7 +383,7 @@ private partial def inputType (env : Environment) (type : Expr)
             if auditedProduct then
               modify fun s => { s with assumedProducer := some s.currentFirst }
             let auditedFamily := auditedProduct ||
-              (Lean.isClass env name && listedTypeClasses.contains name) ||
+              (env.isClass name && listedTypeClasses.contains name) ||
               #[`D5.S3.ConceptDynamics.CIRPT.DecidableKernel,
                 `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit].contains name ||
               ReadoutFamily.carrierHeads.any fun selector =>
@@ -399,7 +399,7 @@ private partial def inputType (env : Environment) (type : Expr)
             let carrierValued := fieldEvidence.isNone
             if carrierValued ||
                 (concrete.isFVar && !parameter && !auditedFamily) then
-              trace[InformationProvenance.check] "unclassified_abstract_carrier family={name} field_type={concrete} first={(← get).currentFirst}"
+              auditTrace s! "unclassified_abstract_carrier family={name} field_type={concrete} first={(← get).currentFirst}"
               return ← unknownType concrete "unclassified_abstract_carrier"
             -- admission-exit: inputType.forward.5 rule=retained-witness.rule
             observedType env concrete nextActive)
@@ -430,7 +430,7 @@ private partial def inputType (env : Environment) (type : Expr)
 
 -- Probe the inferred telescope first. Only functions ending in Sort supply
 -- type families; ordinary data functions keep their term-provenance treatment.
-private partial def typeFamilyArgument (env : Environment) (value type : Expr)
+private partial def typeFamilyArgument (env : CompiledView) (value type : Expr)
     (active : Array Expr) : WalkM FamilyClassification := do
   unless ← chargeTraversal do return .family (← unknownType type)
   -- admission-exit: typeFamilyArgument.1 rule=retained-witness.rule
@@ -452,7 +452,7 @@ private partial def typeFamilyArgument (env : Environment) (value type : Expr)
     let some reduced ← representationType type | return .family (← unknownType type)
     match reduced with
     | .forallE n domain body bi =>
-      let result ← Meta.withLocalDecl n bi domain fun x => do
+      let result ← withCompiledLocal n bi domain fun x => do
         let some body ← substitute body #[x] | return .family (← unknownType type)
         unless ← chargeTraversal do return .family (← unknownType type)
         -- admission-exit: typeFamilyArgument.forward.1 rule=retained-witness.rule

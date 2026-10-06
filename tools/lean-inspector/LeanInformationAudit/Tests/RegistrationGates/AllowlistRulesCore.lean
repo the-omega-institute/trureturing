@@ -1,4 +1,4 @@
-import LeanInformationAudit.ReadoutProvenance
+import LeanInformationAudit.ReadoutProvenance.Compiler
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.StructuralRealization
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit

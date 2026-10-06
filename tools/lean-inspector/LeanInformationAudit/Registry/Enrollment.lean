@@ -360,7 +360,7 @@ private def staticIdentity (e : Expr) : CompileM Unit := do
     | .proj typeName _ _ => RegistrationGates.isJudgeProjection typeName
     | _ => false
   if projected || (!name.isAnonymous && (InformationRegistry.hasTheorem env name ||
-      isCompanionName name || RegistrationGates.isJudgeIdentity env name)) then
+      isCompanionName name || RegistrationGates.isJudgeIdentity (RegistrationGates.Compiler.view env) name)) then
     throwError "forbidden_dependency:E6.registered_identity"
   -- Keep the same ordered predicate without the interpreter's array traversal.
   if name == `Classical.choice || name == `Classical.propDecidable ||
