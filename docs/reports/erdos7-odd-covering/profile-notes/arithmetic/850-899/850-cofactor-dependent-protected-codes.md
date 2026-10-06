@@ -7638,16 +7638,688 @@ already consumed the actual excess, so it cannot be added to CD267's
 unspent-excess inequality.
 
 The existing fixed-collision Lean theorem supplies a fixed set of at
-most two labels, while the weighted choice above additionally uses
-the graph classification, original numerical injectivity, GLC4's
-local prime/root cap and the actual guard-law source. Those integer
-and source bridges remain ordinary mathematical arguments. Separate
-finite checks of guard monotonicity, the rational constants and the
-scalar penalty replacement do not verify those bridges. No uniform
-strict contradiction for the shared-five branch follows from CD286
-or CD287 without further control of their actual pattern data.
+most two labels. The literal prime/root capacity also has a
+[general-height Lean proof](https://github.com/the-omega-institute/trureturing/blob/9ca162aa5fb65ba6dfe07c504db62cb685a6c6df/D5/S3/Arith/Covering/PrimeRootCapacity.lean):
+under the full same-count modulus-sum minimum, three top originals at
+one specified ordinary-prime root admit a cheaper three-class
+replacement. Its height-two application retains the existing
+collisionTop predicate. The weighted choice above still requires the
+graph classification, original numerical injectivity and the actual
+guard-law source; their combined weighted-selection bridge remains
+an ordinary mathematical argument. Separate finite checks of guard
+monotonicity, the rational constants and the scalar penalty replacement
+do not verify that bridge. No uniform strict contradiction for the
+shared-five branch follows from CD286 or CD287 without further control
+of their actual pattern data.
+
+### The unit inventory determines which tail threshold is available
+
+Keep the actual45 branch and its same fixed original family and law.
+Let `epsilon` indicate that75 has the selected ternary root and
+first-five phase omega, and let `beta` indicate that225 has word u
+and first-five phase omega. Actual25 is always present there.
+Let `ell_U` be the deeper pure-five and root-three guard union outside
+the full25 and active75 colors, let `kappa_U` be its overlap with
+the full active225 color, and let `h_U` be the deeper high-unit union
+outside all these guards and full colors. Normalize these actual
+unions by the same first-five fiber. Then
+
+\[
+\begin{aligned}
+g&=\frac{1+\epsilon}{5}+\ell_U,\\
+d&=\frac{4-\epsilon-\beta}{5}
+       -\ell_U+\kappa_U-h_U,\\
+d-g&=\frac{3-2\epsilon-\beta}{5}
+       -2\ell_U+\kappa_U-h_U.
+\end{aligned}
+\tag{CD288}
+\]
+
+Here `0<=ell_U<=2T_G`, `0<=h_U<=T_G`,
+`0<=kappa_U<=ell_U`, and `kappa_U=0` if `beta=0`, where
+`T_G=sum_(e=3..G)5^(1-e)=(1-5^(2-G))/20`.
+These retain possible low/high-unit overlap; the three variables
+are not independently chosen maxima.
+
+If75 is inactive, these bounds give `d>g`. If75 and225 are both
+active, CD288 gives
+
+\[
+d-g=-2\ell_U+\kappa_U-h_U\le-\ell_U-h_U\le0.
+\tag{CD289}
+\]
+
+Equality in this case requires `ell_U=h_U=0`. When75 is active
+and225 inactive, the exact test is
+`d>=g iff 2ell_U+h_U<=1/5`; it holds for `G<=3` from the tail
+inventory, while larger heights retain the actual sign. Thus the
+total-load threshold `(d-g)_+` is identically zero throughout the
+two-active-unit branch, not merely at an extreme capacity point.
+
+### Zero threshold retains a color-matching obligation
+
+Assume `d<=g`, and keep the same fixed exception set used to define
+the regular high vector h. Define its clipped color service by
+
+\[
+C_h(w)=\frac15\sum_\gamma
+                  \min(\delta_\gamma,h_\gamma(w)).
+\tag{CD290}
+\]
+
+All five colors remain in this sum. Since `0<=D_h<=d<=g`, the
+source-side joint-payment function in CD268 is exactly
+
+\[
+\begin{aligned}
+\Phi_\delta(h)
+  &:=E_h+D_h
+    =\frac15\sum_\gamma|\delta_\gamma-h_\gamma|\\
+  &=d+t_h-2C_h,\qquad
+f_h=d-2C_h.
+\end{aligned}
+\tag{CD291}
+\]
+
+It measures color mismatch, including oversupply in a color whose
+hole is already filled. Equal total demand and supply do not make
+this quantity zero unless their color vectors agree.
+
+The exception payment can be clipped at d in this branch.
+Indeed `D_h-D_b<=min(d,X)` and `E_b>=E_h`, so
+`Phi_delta(b)>=Phi_delta(h)-min(d,X)`. Consequently
+
+\[
+\boxed{
+5\rho S\ge g c_v+\mathbb E t_h+dq
+                  -2\mathbb E(1_R C_h)-K_{d,R},
+\qquad
+K_{d,R}:=\mathbb E[1_R\min(d,X)]
+       \le\min(dq,3/350).
+}
+\tag{CD292}
+\]
+
+The last bound uses the same weighted fixed exception set as its
+regular vector h. This is one exception payment and one use of the
+original excess. Neither can be added again.
+
+For the same exact regular-pattern probabilities `Q_I`, let
+
+\[
+\mathcal U_q(C)=
+ \inf_{\tau\ge0}
+ \left\{\tau q+\sum_IQ_I[C_h(I)-\tau]_+\right\}.
+\tag{CD293}
+\]
+
+Existing finite knapsack duality gives
+`E(1_R C_h)<=U_q(C)` by applying its box-and-capacity bound to the
+actual masses `alpha_I<=Q_I`, `sum alpha_I=q`. Thus a necessary
+inequality is
+
+\[
+\boxed{
+5\rho S\ge g c_v+\sum_IQ_I t_h(I)+dq
+                    -2\mathcal U_q(C)-\min(dq,3/350).
+}
+\tag{CD294}
+\]
+
+This is CD280's finite-distribution consumer expressed in the
+`d<=g` variables, with the sharper exception clipping. Its optimizing
+selector is a relaxation, not an asserted realization of R.
+
+Replacing the colors by total load uses only `C_h<=t_h` and gives
+the weaker debit `g c_v+dq-E t_h-K_(d,R)`. The corresponding
+stop-loss threshold is zero, so its expectation is exactly the
+first moment. A comparison that preserves only the total-load law
+cannot recover the missing clipped color service.
+
+### Equal total-load laws can have different color mismatch
+
+The following finite congruence control keeps the unit hole, the
+ordinary product law, the two regular event supports and their
+complete total-load distribution fixed. It compares the function
+`Phi_delta` in CD291. It is not a whole cover or a claim that a
+common low-row completion realizes either debit.
+
+Use `G=3`, actual3=`[0]_3`, actual9=`[1]_9`, safe words
+`u=4,v=7`, and `omega=1`. Take this complete unit inventory; every
+entry is an actual residue class:
+
+| Five depth | Pure-five unit | Root-three unit | High unit |
+| --- | --- | --- | --- |
+| 1 | `[0]_5` | `[7]_15` | `[16]_45` |
+| 2 | `[1]_25` | `[31]_75` | `[211]_225` |
+| 3 | `[16]_125` | `[271]_375` | `[166]_1125` |
+
+The25,75,225 units occupy colors0,1,2. In color3, the125 and1125
+prefixes occupy different third-five children. The375 prefix occupies
+one child of color4. Direct finite counting gives
+
+\[
+(\delta_0,\ldots,\delta_4)=(0,0,0,3/5,4/5),
+\quad g=12/25,\quad d=7/25,\quad \rho=63/125.
+\tag{CD295}
+\]
+
+Add the ordinary guards `[0]_7,[1]_21,[0]_11,[1]_33`.
+At the selected ternary root, the full guarded ordinary law is uniform
+on `Z_7={2,3,4,5,6}` times `Z_11={2,3,...,10}`.
+For both regular originals take ordinary literal root2 and word u.
+Their two color placements are
+
+| Placement | Modulus1575=`225*7` | Modulus2475=`225*11` |
+| --- | --- | --- |
+| Same color | `[1066]_1575`, color3 | `[2191]_2475`, color3 |
+| Split colors | `[1066]_1575`, color3 | `[1696]_2475`, color4 |
+
+Each row has first-five phase omega. The ordinary events are
+`A_7={z_7=2}` and `A_11={z_11=2}`, with probabilities `1/5`, `1/9`
+and joint probability `1/45`. They have disjoint prime supports,
+so the displayed two-label collision graph has no edge and admits
+`X=empty`. This last assertion concerns this displayed graph; it
+does not assign an empty exceptional set to an unspecified whole
+cover containing other originals.
+
+Both partial families have distinct odd nonunit labels, no27-divisible
+label, disjoint classes for every comparable numerical pair, and a
+private residue for every listed class. The full period is86625.
+They leave21696 and21688 residues uncovered, respectively.
+These noncoverage counts are part of the control's boundary.
+
+Under the same complete ordinary product law, the occurrence table is
+
+| Regular occurrence | Probability | Total load t in both placements | `Phi_delta`, same color | `Phi_delta`, split colors |
+| --- | --- | --- | --- | --- |
+| Neither | `32/45` | `0` | `7/25` | `7/25` |
+| Only7 | `8/45` | `1/5` | `6/25` | `6/25` |
+| Only11 | `4/45` | `1/5` | `6/25` | `4/25` |
+| Both | `1/45` | `2/5` | `11/25` | `3/25` |
+
+In particular,
+
+\[
+\begin{aligned}
+\operatorname{Law}(t_{\rm same})
+ &=\operatorname{Law}(t_{\rm split}),\\
+\mathbb E\Phi_{\rm same}&=307/1125,
+\qquad \mathbb E\Phi_{\rm split}=291/1125,\\
+\mathbb E C_{\rm same}&=39/1125,
+\qquad \mathbb E C_{\rm split}=47/1125.
+\end{aligned}
+\tag{CD296}
+\]
+
+Thus the scalar law loses a color distinction even when the displayed
+exception load is zero. The units and ordinary guards are unchanged;
+the2475 class changes its second-five color. No low load l is supplied
+to fill the remaining hole, and the whole-coverage implication of
+CD263 is not asserted for these partial families. Their computed
+`Phi_delta` values therefore do not claim an attained common budget
+or a recoloring that preserves coverage.
+
+The remaining quantitative target in the zero-threshold branch is
+an upper bound on `E(1_R C_h)` that retains the complete five-free
+survivor and the same original supplier colors. One may bound its
+full colored upper quantile as in CD293, or prove an additional
+restriction on its intersection with that actual R. A total-load
+tail bound or a smaller scalar exception allowance alone does not
+identify this joint quantity. No strict inequality excluding all
+admissible actual-source configurations is established by this control.
+
+
+### Actual high five-free axes restrict the colored source capacity
+
+Keep CD288–296's same actual original family, word u, first-five phase,
+fixed weighted exceptional set, regular originals, full guarded ordinary
+product law lambda and complete five-free survivor R. Assume d<=g and
+write C=C_h. The source and supplier colors remain fixed throughout.
+
+For each ordinary prime p, the coordinate law lambda_p already excludes
+every actual pure p-power prefix and every applicable root-three
+3*p-power prefix. These low guards are not charged again. Let V_(p,u)
+be the union of the ordinary prefixes of all **actual** high five-free
+originals 9*p^a at word u, retaining every actual exponent a. No absent
+or differently owned label enters this union. Define
+
+\[
+K_p=Z_p\setminus V_{p,u},\qquad
+\kappa_p=\lambda_p(K_p),\qquad
+K=\prod_pK_p=A_u^c,\qquad
+\kappa=\lambda(K)=\prod_p\kappa_p=P_u.
+\tag{CD297}
+\]
+
+Thus R is a subset of K. This is an additional exclusion by actual high
+five-free axes, not a repetition of the already imposed Z_p. If q>0,
+every kappa_p is positive. If kappa=0, then q=0 and the restricted
+service integral is zero; the normalized formulas below are needed
+only when kappa>0.
+
+A regular supplier n=9*5^e*m with v_p(m)=b is numerically divisible by
+an actual axis9*p^a whenever a<=b. Comparable-original disjointness
+then makes their prefixes disjoint at u. An axis with a>b is not a
+divisor of n: its deeper prefix must still be intersected explicitly
+with the supplier's prefix. First-p roots alone cannot replace these
+full coordinate masks.
+
+For the exact regular occurrence patterns Omega_I in CD276, put
+
+\[
+Q_I^{\rm ax}=\lambda(K\cap\Omega_I),\qquad
+\alpha_I=\lambda(R\cap\Omega_I).
+\]
+
+They satisfy
+
+\[
+0\le\alpha_I\le Q_I^{\rm ax}\le Q_I,\qquad
+\sum_I\alpha_I=q,\qquad \sum_IQ_I^{\rm ax}=\kappa.
+\tag{CD298}
+\]
+
+The same finite upper-knapsack bound therefore gives
+
+\[
+\begin{aligned}
+\mathbb E(1_R C)
+ &\le\mathcal U_q^{\rm ax}(C)\\
+ &:=\inf_{\tau\ge0}
+       \left\{\tau q+\sum_IQ_I^{\rm ax}[C(I)-\tau]_+\right\}
+ \le\mathcal U_q(C).
+\end{aligned}
+\tag{CD299}
+\]
+
+Masked capacities are subprobabilities. Their sum need not be one;
+the actual alpha is feasible because q<=kappa. Thus CD294 strengthens
+to the same-family necessary inequality
+
+\[
+\boxed{
+5\rho S\ge gc_v+\mathbb E t_h+dq
+             -2\mathcal U_q^{\rm ax}(C_h)-\min(dq,3/350).
+}
+\tag{CD300}
+\]
+
+This replaces one upper bound for the same restricted service integral.
+The original excess and the fixed exception allowance are each used
+once; CD300 is not a further term to add to CD294.
+
+### Exact masked intersections retain all ordinary prefixes
+
+For kappa>0, define the explicit auxiliary product law
+`lambda^ax=product_p (lambda_p restricted to K_p)/kappa_p`.
+It satisfies `lambda(K intersect E)=kappa*lambda^ax(E)`.
+Let H_(i,p) be regular original i's full p-power prefix and set
+
+\[
+r_i^{\rm ax}=\prod_{p\mid m_i}
+       \frac{\lambda_p(K_p\cap H_{i,p})}{\kappa_p}.
+\]
+
+Restriction preserves the empty intersections of regular originals
+sharing an ordinary prime. Originals with disjoint ordinary supports
+remain independent under this explicit auxiliary product law. Hence
+
+\[
+\begin{aligned}
+M^{\rm ax}(T)
+ &:=\lambda\left(K\cap\bigcap_{i\in T}A_i\right)\\
+ &=\begin{cases}
+   \kappa\prod_{i\in T}r_i^{\rm ax},
+        &m_i\ (i\in T)\text{ pairwise coprime},\\
+   0,&\text{otherwise},
+   \end{cases}\\
+Q_I^{\rm ax}
+ &=\sum_{J\subseteq\mathcal R\setminus I}
+                   (-1)^{|J|}M^{\rm ax}(I\cup J).
+\end{aligned}
+\tag{CD301}
+\]
+
+Here M^ax(empty)=kappa. This is the existing extremal-event
+intersection expansion applied on K. It asserts no independence
+after conditioning on R, which also excludes actual low and nonaxial
+five-free originals.
+
+An exact block version may include additional actual low or nonaxial
+five-free unions: partition the prime coordinates into disjoint blocks
+and remove a specified actual union inside each block. The resulting
+product mask still contains R. Its tuple intersections factor across
+blocks as `product_B lambda_B(K_B intersect intersection_i H_(i,B))`.
+They need not factor between different primes within a block; the
+per-original product in CD301 must not be reused there without proof.
+
+### Colored service on an excluded axis gives a strict comparison
+
+Let tau_* minimize the unmasked finite expression U_q(C). A minimizer
+exists among zero and the finitely many C(I). Evaluating the masked
+expression at this same threshold gives the correctly directed bound
+
+\[
+\boxed{
+\mathcal U_q(C)-\mathcal U_q^{\rm ax}(C)
+ \ge\sum_I(Q_I-Q_I^{\rm ax})[C(I)-\tau_*]_+
+ =\mathbb E\bigl[1_{K^c}(C-\tau_*)_+\bigr].
+}
+\tag{CD302}
+\]
+
+Positive colored tail on an actually excluded axis therefore proves a
+strict gain in this comparison. It has not been shown to occur in every
+admissible whole-cover configuration.
+
+For a concrete sufficient source of leakage, suppose9*p is actually
+present at u. Let B_p be its literal p-root event and
+`b_p=lambda(B_p)`. Remove from h every supplier whose cofactor contains
+p, obtaining `h^(-p)`. All removed suppliers vanish on B_p by comparable
+original disjointness; all remaining suppliers depend on other prime
+coordinates. The full product law, before conditioning on R, gives
+
+\[
+\mathbb E\bigl[1_{B_p}(C_h-\tau)_+\bigr]
+ =b_p\,\mathbb E\bigl[(C_{h^{(-p)}}-\tau)_+\bigr],
+ \qquad\tau\ge0.
+\tag{CD303}
+\]
+
+Since B_p is a subset of K^c, this bounds the right side of CD302
+from below at tau_*. For example, an actual supplier i with p not
+in its cofactor gives the lower bound
+`b_p*lambda(A_i)*[min(delta_color(i),5^(2-e_i))/5-tau_*]_+`.
+CD303 requires that actual shallow high axis. It does not infer9*p
+from a deeper axis or replace all higher prefixes by their roots.
+Conversely, divisor disjointness can concentrate a supplier on K;
+it supplies no general negative association between R and C_h.
+
+### A strict masked comparison on one partial arithmetic family
+
+Use CD295's unit inventory and the split-color regular originals
+`[1066]_1575` and `[1696]_2475`, with u=4, v=7 and omega=1.
+Retain `[0]_7,[1]_21,[0]_11,[1]_33`, and add the ordinary guards
+`[0]_13,[1]_39` and the high five-free axis `[67]_117`.
+Its full word is4 and its literal13-root is2.
+
+The complete guarded law is uniform on
+`{2,...,6} times {2,...,10} times {2,...,12}`. All five-free
+originals of this displayed partial family are specified; at word4,
+their complete survivor is exactly
+`R=K={z_13!=2}`, so q=10/11. The two suppliers depend only on7 and11,
+so R is independent of them in this **particular** configuration.
+This is the reason this example is simple to evaluate, not an
+independence premise for the general consumer.
+
+The residual vector, d and g remain
+`(0,0,0,3/5,4/5)`, `7/25`, and `12/25`. With
+`A_7={z_7=2}` and `A_11={z_11=2}`,
+`C=(3*1_(A_7)+4*1_(A_11))/25`.
+For neither, only7, only11 and both, Q is respectively
+`32/45,8/45,4/45,1/45`, while `Q^ax=(10/11)Q`.
+Exact finite evaluation gives
+
+\[
+\begin{aligned}
+\mathcal U_q(C)&=\mathbb EC=47/1125,\\
+\mathcal U_q^{\rm ax}(C)&=\mathbb E(1_RC)=94/2475,\\
+\mathcal U_q(C)-\mathcal U_q^{\rm ax}(C)&=47/12375>0.
+\end{aligned}
+\tag{CD304}
+\]
+
+The lower-bound functional in CD300 consequently improves by
+94/12375. No attained whole-cover budget is claimed.
+
+The20 classes have distinct odd nonunit moduli, no27-divisible label,
+disjoint classes for every comparable numerical pair, and a private
+residue for every listed class. Their period is1126125 and they leave
+252970 residues uncovered. The displayed two-supplier collision graph
+is edgeless and allows X=empty for that graph only. This family is not
+a cover, a global minimum, a complete divisor-closed inventory, or a
+verification of the global shared-prime condition. Its role is solely
+to show that the actual-axis capacity comparison can be strict.
+
+### The axis mask also has a joint numerical-inventory consumer
+
+Let A be the finite active ordinary palette, with CD172's prefix caps
+`g_p=1/(p-3)`. Omit zero-probability originals. For each actual regular
+supplier i, let S_i be its nonempty ordinary support, e_i its five depth,
+`w_i=5^(2-e_i)`, `a_i=w_i/5`, and `p_i=lambda(A_i)`. Write
+`c_i=min(delta_color(i),w_i)/5` and
+`kappa_out(S)=product_(p in A minus S) kappa_p`.
+
+Since A_i depends only on S_i, full-law independence across this support
+and its complement gives
+
+\[
+\begin{aligned}
+\lambda(R\cap A_i)
+ &\le\lambda(K\cap A_i)\\
+ &=\kappa_{\rm out}(S_i)
+       \prod_{p\in S_i}\lambda_p(K_p\cap H_{i,p})\\
+ &\le\kappa_{\rm out}(S_i)\,p_i.
+\end{aligned}
+\tag{CD305}
+\]
+
+Every actual higher axis prefix remains in the middle expression.
+Dropping only its support-interior intersection weakens the bound;
+no shallow axis or exponent divisibility is assumed here.
+The elementary clipping inequality
+`min(delta,sum z_i)<=sum min(delta,z_i)` gives
+
+\[
+\boxed{
+\mathbb E t_h-2\mathbb E(1_R C_h)
+ \ge\sum_i p_i\bigl[a_i-2c_i\kappa_{\rm out}(S_i)\bigr].
+}
+\tag{CD306}
+\]
+
+Both terms retain the same actual p_i. In particular, positive
+coefficients may be discarded as nonnegative debit; numerical upper
+caps may replace event probabilities only for the negative coefficients.
+
+Put `delta_max=max_gamma delta_gamma`,
+`r_e=min(1,delta_max/5^(2-e))`, and define
+
+\[
+T_{\rm ax}=\sum_{e=2}^{G}5^{1-e}
+       \sum_{\varnothing\ne S\subseteq A}
+         [2r_e\kappa_{\rm out}(S)-1]_+
+                  \prod_{p\in S}g_p.
+\tag{CD307}
+\]
+
+At fixed depth e and exact support S, numerical distinctness and the
+full guarded prefix bounds give
+`sum_(i:e_i=e,S_i=S) p_i<=product_(p in S)g_p`, and `c_i/a_i<=r_e`.
+Applying these caps to the negative terms of CD306 yields
+
+\[
+\mathbb E t_h-2\mathbb E(1_R C_h)\ge-T_{\rm ax},\qquad
+\boxed{5\rho S\ge gc_v+dq-T_{\rm ax}-\min(dq,3/350).}
+\tag{CD308}
+\]
+
+This is another evaluation of the same CD292 debit. It neither adds
+an excess charge nor changes the fixed exceptional set. Enlarging the
+regular numerical inventory to all allowed slots only weakens the
+lower bound. With `a_G=sum_(e=2..G)5^(1-e)`, one may further use
+
+\[
+T_{\rm ax}\le a_G
+  \sum_{\varnothing\ne S\subseteq A}
+       [2\kappa_{\rm out}(S)-1]_+\prod_{p\in S}g_p.
+\tag{CD309}
+\]
+
+When every kappa_p=1, this last expression is a_G*W. An actual outside
+axis can reduce it; a term vanishes if its outside-axis survival
+probability is at most1/2. These observations compare relaxations.
+The whole-cover assumptions have not been shown here to force enough
+reduction in every remaining branch.
+
+### A finite colored comparison keeps total load and service together
+
+A separate evaluation of the same debit retains color saturation among
+regular depth-two single-prime suppliers. Let h^0 consist of exactly
+those actual regular suppliers with e=2 and ordinary cofactor a power
+of one prime. Write h=h^0+h^1 and
+`t_0=(1/5)sum h^0_gamma`,
+`C_0=(1/5)sum min(delta_gamma,h^0_gamma)`,
+`t_1=(1/5)sum h^1_gamma`.
+Then `0<=C_h-C_0<=t_1` and `t_h=t_0+t_1`, so
+
+\[
+\begin{aligned}
+\mathbb E t_h-2\mathbb E(1_R C_h)
+ &\ge\mathbb E t_0-2\mathbb E(1_R C_0)-\mathbb E t_1,\\
+\mathbb E t_1&\le H_{\rm tail}:=T_G B+a_G D,\\
+T_G&=\sum_{e=3}^{G}5^{1-e}=(1-5^{2-G})/20,\\
+B&=\sum_{p\in A}g_p,\qquad
+D=\prod_{p\in A}(1+g_p)-1-B.
+\end{aligned}
+\tag{CD310}
+\]
+
+The remainder groups are disjoint: single-prime labels at e>=3 and
+multiprime labels at e>=2. They are paid once, while the fixed exceptions
+remain outside h and keep their existing one payment.
+
+For each p and color gamma, let x_(p,gamma) be the full-law probability
+that a regular depth-two p-power label of that color occurs. Regular
+shared-prime disjointness, including unequal ordinary exponents, gives
+
+\[
+x_{p,\gamma}\ge0,\qquad \sum_\gamma x_{p,\gamma}\le g_p,
+\qquad
+C_0=\frac15\sum_\gamma\delta_\gamma
+                   1_{\{\text{some prime chooses }\gamma\}}.
+\tag{CD311}
+\]
+
+The per-prime categorical variables are independent under the full
+product law. This still asserts no independence on R. The last equality
+uses the depth-two raw load1 and `delta_gamma<=1`.
+
+For every nonnegative threshold tau, the actual mass-q selector obeys
+
+\[
+\mathbb E_x t_0-2\mathbb E(1_R C_0)
+ \ge F_x(\tau)
+ :=\mathbb E_x t_0-2\tau q-2\mathbb E_x(C_0-\tau)_+.
+\tag{CD312}
+\]
+
+Both expectations use the same categorical law x. With every other
+prime fixed, F_x(tau) is affine in the p-category vector. The successive
+simplex minimization already used in CD176 therefore gives
+`min_x F_x(tau)=min_f F_f(tau)`, where f sends each prime either to
+an omitted symbol or to one of the five colors. A nonomitted prime
+fires independently with probability g_p in its designated color.
+An omitted prime never fires. Omission is essential: the positive
+load term can make unused capacity preferable. These vertices are
+comparison laws, not asserted realizations of original residue classes.
+
+For such f let `C_f=(1/5)sum_gamma delta_gamma*1{some active prime
+is assigned gamma}` and put
+
+\[
+\begin{aligned}
+J(q,\delta,A)
+ &=\sup_{0\le\tau\le d}\min_f
+       \left\{\frac15\sum_{p:f(p)\ne\bot}g_p
+             -2\tau q-2\mathbb E(C_f-\tau)_+\right\},\\
+5\rho S
+ &\ge gc_v+dq+J(q,\delta,A)
+                -H_{\rm tail}-\min(dq,3/350).
+\end{aligned}
+\tag{CD313}
+\]
+
+Since C_f<=d and q>=0, thresholds above d cannot improve this
+supremum. The q in CD313 remains the same actual source mass as in
+CD292 and the common-axis constraints. If only a range for q is
+available, the entire right side must be minimized over that same
+range. A substitution `q>=q_0` into a coefficient `d-2tau` requires
+checking its sign.
+
+The necessary minimax direction is only
+
+\[
+\min_x\{\mathbb E_x t_0-2\mathcal U_q(C_0)\}
+ =\min_x\sup_\tau F_x(\tau)
+ \ge\sup_\tau\min_xF_x(\tau).
+\tag{CD314}
+\]
+
+No equality after exchanging minimum and supremum is claimed. The
+right side admits mixtures of vertex laws and can weaken the product-law
+optimization. Complete actual-pattern data retain more information.
+CD313 does not independently minimize E t and maximize C from different
+source configurations.
+
+### The legal minimax relaxation can retain a strict color gain
+
+A finite categorical control uses
+`delta=(0,0,0,3/5,4/5)` and the two probability caps `(1/5,1/9)`
+from CD296. These caps describe this two-event control; they do not
+replace the general prime-power caps g_p. Enumerating all omitted/color
+vertices and the exact rational threshold-envelope intersections gives
+
+\[
+\begin{array}{c|c|c|c}
+q&J_{\rm color}&J_{\rm scalar}&J_{\rm color}-J_{\rm scalar}\\\hline
+1/5&-3/125&-1/25&2/125\\
+1/4&-11/400&-99/2000&11/500\\
+1/2&-34/1125&-64/1125&2/75
+\end{array}
+\tag{CD315}
+\]
+
+The scalar comparison replaces C_0 by `min(d,t_0)`, which can only
+increase its positive-part term and weaken the lower bound. All five
+colors can be included in the vertex enumeration; replacing a
+zero-demand color by omission preserves C_0 and decreases E t_0.
+
+Within this categorical relaxation, assign both primes to the color
+of demand4/5 and take their event probabilities respectively
+`(1/5,0)`, `(1/5,1/16)`, and `(1/5,1/9)`. Each is feasible under
+the same caps and its exact `E t_0-2U_q(C_0)` equals the corresponding
+colored value. The lower bound and these feasible relaxed laws therefore
+show no minimax loss in these three controls. They are not constructed
+congruence families or actual five-free sources, and the table excludes
+no new arithmetic palette.
+
+CD299 and CD312 reuse finite knapsack; CD301 reuses the extremal-event
+expansion; the vertex reduction reuses separate affinity on simplexes.
+Their arithmetic inputs are the actual high-axis mask, original support
+and depth inventory, and regular single-prime extraction. Those bridges
+and the complete strict whole-cover consumer remain ordinary mathematical
+arguments here. The exact finite controls establish the displayed
+rational comparisons and partial-family counts, not Lean verification
+of the whole chain or a completed Erdős #7 exclusion.
+
+Further branch exclusion requires actual whole-cover information forcing
+suitable high axes at u, or otherwise restricting the same masked colored
+pattern data, in a configuration not already excluded by CD255 and the
+common-axis budget. No such uniformly strict reverse inequality is
+established above.
 
 ### Verification scope and remaining inequality
+
+The unit-coupling, colored-mismatch, masked-capacity and joint-inventory
+consumers in CD288–315 are ordinary mathematical deductions. Their
+finite controls were checked by exact rational calculation and
+independent enumeration. They do not claim a completed Lean check of
+that chain, an original whole-cover realization of the controls, or a
+new arithmetic branch exclusion. The finite upper-knapsack and
+separate-affinity arguments are reused results, not new duality claims.
+
 
 The pointwise finite-law check for CD263–273 retains every color,
 including zero-demand colors, and verifies both alternative uses of the
