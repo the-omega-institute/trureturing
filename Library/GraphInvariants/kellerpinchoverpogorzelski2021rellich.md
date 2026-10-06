@@ -42,7 +42,7 @@ The paper's use of a positive supersolution and a Hardy weight in Theorem
 6.1 has additional hypotheses. The algebraic identity alone does not
 supply such a Hardy weight for an arbitrary attractive operator.
 
-The FIB boundary geometry volume §51 consumes this identity with actual
+The FIB boundary geometry volume §52 consumes this identity with actual
 occurrence weights and $u=1$. The shifted operator $H+gI=aL$ is
 nonnegative; the unshifted pointwise term is $-g$, with the declared
 Dirichlet killing added at the outgoing occurrence. Its uniform lower

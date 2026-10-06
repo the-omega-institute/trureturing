@@ -5329,17 +5329,348 @@ minimax常数、任意致动分类、付费节约或物理实现。
 
 ## 追加锚（本行以下为增补区）
 
-## 51. Actual occurrence continuations: lower stability, lost binding and an INITIAL spectral obstruction
+## 51. 临界两层的带符号区间解码与统一尖锐首项
+
+**定义 51.1（完整原来源上的末读区间）。** 保持定义45.1、46.1、48.1的全部合同，固定
+
+$$
+W=E\oplus\mathbb H,\quad E=\operatorname{Im}\mathbb H,\quad C=P_E,\quad d=e_4,
+\qquad
+\mathcal D_2=E\times\{b:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\}.
+\tag{51.1}
+$$
+
+初始 $a\in E$ 独立、任意且无界；半径层不带标签。公开参数、标架、锚及控制身份
+精确供应，致动精确。一个当前寄存器只执行原菜单
+$A_c(a,b)=(c\times a,bc)$（$c\in E,\ |c|\le1$）及
+$A_d(a,b)=(\operatorname{Im}b,-a)$。实际Read返回 $Cz+e$、$|e|\le\delta$，
+不改状态；所有误差可联合对抗、相关及依赖历史。控制器共同初始化、源无关、确定，
+下一事件只依赖已见有限前缀，记录保留每次实际Read、动作身份和停止；每条合法有限
+或可数记录须给一个 $W$ 值估计。可数事件按自然数排列，没有极限事件。
+目标始终为同一个 INITIAL，损失是 $W$ 中欧氏距离，估计不必在来源内。
+$\mathcal E_\pi,R_N,R_\infty$ 仍按（46.3）定义，预算只计破坏性更新，Read数量不限。
+没有标签、复位、复制、混合控制、反事实读口、当前状态目标或另供的解码端口。
+
+对 $0<\delta\le1$，原样使用（46.13）–（46.16）：
+
+$$
+\begin{aligned}
+\rho&=\delta/10,&K&=\sqrt{1-\rho^2},\\
+\alpha&=(3/5)K-(4/5)\rho,&\nu&=(4/5)K+(3/5)\rho,\\
+q&=\alpha+\nu i,&c_1&=j,\quad c_2=-\alpha j+\nu k,\quad c_1c_2=q,\\
+h&=(4/5)\nu-(3/5)\alpha,&T&=(7+25h)/2.
+\end{aligned}
+\tag{51.2}
+$$
+
+实际词仍恰为初Read、$A_{c_1}$、Read、$A_{c_2}$、Read、$A_d$、Read、停止。
+保留全部四个报告 $(y_0,y_1,y_2,y_3)\in E^4$。对任意这些报告，置
+
+$$
+\begin{aligned}
+r&=|y_3|,\qquad
+t_R^- = \min\{R,\max(0,r-\delta)\},
+&t_R^+&=\min\{R,r+\delta\},\\
+\ell_R&=\sqrt{R^2-(t_R^+)^2},
+&u_R&=\sqrt{R^2-(t_R^-)^2},\\
+I_R(y_3)&=[\ell_R-2R\rho,u_R],
+&m_R(y_3)&=(\ell_R+u_R)/2-R\rho.
+\end{aligned}
+\tag{51.3}
+$$
+
+这里 $R\in\{7,25\}$ 仅为计算索引。$0\le t_R^-\le t_R^+\le R$，所以
+区间及其中点在整个 $E$ 上有定义，$m_R$ 对固定 $R$ 连续。
+区间只包围真实隐藏实部，不把球帽来源换成填充区间，也不宣称它是精确后验。
+记两个全报告分支解码器
+
+$$
+D_R(y_0,y_1,y_2,y_3)
+=\left(y_0,\bigl(m_R(y_3)+P_R(y_3)\bigr)q^{-1}\right)\in W
+\qquad(R\in\{7,25\}).
+$$
+
+令
+
+$$
+A=7+\delta,\qquad B=25h-\delta,
+\qquad \theta(r)=\min\left\{1,\max\left\{0,\frac{r-A}{B-A}\right\}\right\}.
+$$
+
+由下述间隙计算（51.6）得 $B-A=25h-7-2\delta>0$。全部报告上的解码器定义为
+
+$$
+\widehat x=\mathscr D(y_0,y_1,y_2,y_3)
+=(1-\theta(r))D_7(y_0,y_1,y_2,y_3)
+ +\theta(r)D_{25}(y_0,y_1,y_2,y_3).
+\tag{51.4}
+$$
+
+这里的凸组合在向量空间 $W$ 中取；它只混合两个估计值，不混合控制、来源或物理执行。
+截断函数、$m_R$、球投影 $P_R$ 及右乘 $q^{-1}$ 都在其全域连续，故 $\mathscr D:E^4\to W$
+在全部报告（包括不可由原来源产生的报告）上都有定义且连续。$y_3=0$ 用 $P_R$ 的第一分支，
+无除零。两个中间报告的数值不参与估计，但它们仍被实际取得并完整保留。
+
+**定理 51.2（三更新四实际Read的改进全记录上界）。** 定义51.1的有限控制器在
+整个原来源及全部合法联合读误差上满足
+
+$$
+\mathcal E_\pi(\delta)
+\le\sqrt{2\delta^2+\bigl(5\sqrt\delta+(5/2)\delta\bigr)^2},
+\qquad 0<\delta\le1.
+\tag{51.5}
+$$
+
+证明。控制及层判别完全复用定理46.3。具体地，$0<\alpha<3/5$、$\nu>4/5$，
+$|c_1|=|c_2|=|q|=1$，且 $\rho=(3/5)\nu-(4/5)\alpha$。
+对真实 $bq=s+w$、$R=|b|$，定理45.4给内层 $|w|\le7$、外层 $|w|\ge25h$。
+原间隙仍为
+
+$$
+g=25h-7=24\rho-7(1-K)\ge(233/100)\delta>2\delta.
+\tag{51.6}
+$$
+
+真实报告 $y_3=w+e_3$ 因而在内层满足 $|y_3|\le7+\delta=A$，在外层满足 $|y_3|\ge25h-\delta=B$。
+于是合法内层记录有 $\theta(r)=0$、合法外层记录有 $\theta(r)=1$，故 $\mathscr D$ 在每条合法记录上
+分别等于 $D_7$ 或 $D_{25}$；原判别阈值 $T$ 只保留为证明层身份的中间量，不再出现在全部报告的解码定义中。
+
+由 $||w|-r|\le\delta$ 及 $|w|\le R$ 得
+$t_R^-\le|w|\le t_R^+$，于是球面身份给
+
+$$
+\ell_R\le|s|=\sqrt{R^2-|w|^2}\le u_R.
+\tag{51.7}
+$$
+
+若 $s\ge0$，它已在 $[\ell_R,u_R]$ 中。若 $s=-t<0$，原帽条件为
+$-\alpha t+\nu\langle w,i\rangle\ge(4/5)R$，所以
+$\nu\sqrt{R^2-t^2}-\alpha t\ge(4/5)R$。
+定理45.4的严格递减函数 $G(z)=\nu\sqrt{1-z^2}-\alpha z$ 满足
+$G(\rho)=4/5$，故 $t\le R\rho$。再由（51.7）有 $\ell_R\le t$，从而
+$\ell_R+t\le2R\rho$，即 $s=-t\ge\ell_R-2R\rho$。
+两种符号都给 $s\in I_R(y_3)$，于是
+
+$$
+|m_R(y_3)-s|\le (u_R-\ell_R)/2+R\rho.
+\tag{51.8}
+$$
+
+截断函数 $t\mapsto\min\{R,\max(0,t)\}$ 不扩张；因 $r+\delta\ge0$，
+两个径向端点相差至多 $2\delta$。由 $u_R\ge\ell_R\ge0$ 得
+
+$$
+\begin{aligned}
+(u_R-\ell_R)^2
+&\le u_R^2-\ell_R^2
+=(t_R^+)^2-(t_R^-)^2\\
+&=(t_R^+-t_R^-)(t_R^++t_R^-)\le4R\delta.
+\end{aligned}
+\tag{51.9}
+$$
+
+因此 $|m_R-s|\le\sqrt{R\delta}+R\rho\le5\sqrt\delta+(5/2)\delta$。
+这是原径向不确定性区间的宽度估计，保留了合法负分支；没有假定真实 $s$ 非负。
+经典标量区间中点的半宽性质只作为（51.8）的中间步骤。
+
+闭球投影不增大到真实 $w$ 的距离，直接复用（42.16）、（46.19），故
+$|v-w|\le\delta$。初读给 $|y_0-a|\le\delta$；右乘 $q^{-1}$ 保持范数，
+实部与虚部正交，遂有
+
+$$
+|\widehat x-x|^2
+=|y_0-a|^2+|m_R-s|^2+|v-w|^2
+\le2\delta^2+\bigl(5\sqrt\delta+(5/2)\delta\bigr)^2.
+\tag{51.10}
+$$
+
+该估计逐记录成立，$a$ 的大小不参与任何常数。全部动作、实际Read及停止均预定，
+没有沿误差修改来源；只使用各误差自己的范数界，没有独立、平均或重复采样前提。
+控制器恰用三个原菜单更新和四次实际Read，在同一寄存器上有限停止，证明全称上界。
+证毕。
+
+**定理 51.3（全部高预算与无上限控制的统一尖锐首项）。** 对每个整数 $N\ge3$、
+$0<\delta\le1$，
+
+$$
+5\sqrt\delta\le R_\infty(\delta)\le R_N(\delta)
+\le\sqrt{2\delta^2+\bigl(5\sqrt\delta+(5/2)\delta\bigr)^2}.
+\tag{51.11}
+$$
+
+而且有统一极限
+
+$$
+\begin{aligned}
+\lim_{\delta\downarrow0}\frac{R_\infty(\delta)}{\sqrt\delta}&=5,\\
+\lim_{\delta\downarrow0}
+\sup_{N\in\mathbb N,\ N\ge3}
+\left|\frac{R_N(\delta)}{\sqrt\delta}-5\right|&=0.
+\end{aligned}
+\tag{51.12}
+$$
+
+特别地，任意整数预算函数 $N(\delta)\ge3$，无论是否有界，都给
+$R_{N(\delta)}(\delta)/\sqrt\delta\to5$。
+
+证明。全控制器下界直接复用定理46.2，不由本节选定的固定词推成。
+其共同记录构造覆盖无锚、零内部积、全部首锚方向及所有后续动作，
+允许重复Read、任意有限停止和可数历史：逐分量差不超过 $2\delta$ 的不变量使
+每次中点报告合法，相同有限前缀迫使同一动作和停止；不存在可数事件以后的新事件。
+因此它确实约束整个 $\mathcal P_\infty$。包含关系
+$\mathcal P_3\subseteq\mathcal P_N\subseteq\mathcal P_\infty$ 与定理51.2给（51.11）。
+除以 $\sqrt\delta$ 得对全部这些预算共同成立的界
+
+$$
+0\le\frac{R_N(\delta)}{\sqrt\delta}-5
+\le\sqrt{2\delta+\bigl(5+(5/2)\sqrt\delta\bigr)^2}-5,
+\tag{51.13}
+$$
+
+右端趋零；同界也适用于 $R_\infty$。这给（51.12）和任意变量预算的结论。
+尖锐首项描述风险下确界的渐近，不假定固定正噪声下有最优控制器。
+证毕。
+
+**命题 51.4（同一完整词的噪声对与两个分支障碍）。** 使用（51.2）的控制，取
+
+$$
+t_\delta=\sqrt{100\delta-4\delta^2},\qquad
+x_0=(0,(25i)q^{-1}),\quad
+x_1=(0,(t_\delta+(25-2\delta)i)q^{-1}).
+\tag{51.14}
+$$
+
+两者均为原来源，完整四Read报告可共同为
+$(0,0,0,(25-\delta)i)$，保留（51.2）的两个内部动作、锚及停止；初态半距恰为
+$5\sqrt\delta$。此外，同一来源不能把旋转后的实部一律判为非负，也不能把
+（51.2）的倾斜参数直接置为 $\rho=0$ 而保留趋零最坏风险。
+
+证明。（51.14）是（46.9）在本有限词上的实际实例。$t_\delta^2+(25-2\delta)^2=625$；
+$\alpha>2/5$、$\nu>4/5$，且
+$t_\delta\ge\sqrt{96\delta}$ 给 $\alpha t_\delta\ge2\delta\ge2\nu\delta$。
+所以两点实部分别为 $25\nu\ge20$ 和
+$\alpha t_\delta+\nu(25-2\delta)\ge25\nu\ge20$，帽条件成立。
+初态 $a=0$ 在两个内部动作下仍为零，前三Read误差取零；首锚后实际状态分别为
+$((25i),0)$ 和 $((25-2\delta)i,0)$。第四Read误差分别取 $-\delta i$ 和
+$\delta i$，均合法；所有动作和停止共同。初态距离平方为
+$t_\delta^2+4\delta^2=100\delta$，共同 $W$ 输出至少在一端有半距误差。
+这给完整实际有限记录，不把这一选定词的例子当成全控制器证明。
+
+为检验负分支，对任一 $R\in\{7,25\}$ 取
+
+$$
+b_- =(-R\rho+RK i)q^{-1},\qquad b_+=(R\rho+RK i)q^{-1}.
+\tag{51.15}
+$$
+
+它们范数均为 $R$，由 $\nu K-\alpha\rho=4/5$，$b_-$ 恰在原帽边缘，
+$b_+$ 的实部更大。两点在 $a=0$、四个误差全零时都有完整报告
+$(0,0,0,RK i)$，但 $\operatorname{Re}(b_-q)=-R\rho<0$。
+只用正根 $\sqrt{R^2-|w|^2}$ 会在这点产生隐藏误差 $2R\rho$，故（51.8）
+必须承担负分支。带符号区间包围它，不需要新增符号标签。
+
+若改取 $\rho=0$，则 $q=3/5+(4/5)i$，$25h-7=0$。
+复用（45.21）–（45.24）的两个实际来源
+$b_7=28/5+(21/5)i$、$b_{25}=20-15i$，有
+$b_7q=7i$、$b_{25}q=24+7i$。在同一 $a=0$ 和零Read误差下，
+完整记录均为 $(0,0,0,7i)$，锚后状态同为 $(7i,0)$。
+两初态距离24，因此这个临界固定词在每个正 $\delta$ 下最坏误差至少12，
+无法供应（51.12）的趋零风险。证毕。
+
+**命题 51.5（原有理实际记录的解码误差严格改进）。** 原样取（46.26）–（46.28）
+的参数、初态、三更新四Read实际词及四个误差。定义51.1的输出满足
+
+$$
+\widehat a=\frac{601}{401}i+2j+3k,\qquad
+\widehat b=\left(-\frac{140}{401}+7i\right)q^{-1},\qquad
+|\widehat x-x|^2=\frac{59796}{160801}<\frac{118596}{160801}.
+\tag{51.16}
+$$
+
+证明。该来源与误差合法性直接复用命题46.5；其全部实际报告仍为
+
+$$
+\begin{aligned}
+y_0&=\frac{601}{401}i+2j+3k,&y_1&=\frac{803}{401}i-k,\\
+y_2&=\frac{1037}{2005}i+\frac{7148}{2005}j+\frac{3111}{2005}k,
+&y_3&=\frac{3193}{401}i.
+\end{aligned}
+\tag{51.17}
+$$
+
+这里 $\delta=400/401$、$\rho=40/401$，$T=3280/401$，且这是合法内层记录，故 $\theta(r)=0$、
+$\mathscr D=D_7$。于是 $v=P_7(y_3)=7i$。原始末读模给 $t_7^-=2793/401$、$t_7^+=7$，于是
+$\ell_7=0$、$u_7=280/401$、$m_7=140/401-280/401=-140/401$。
+真实 $bq=-280/401+(2793/401)i$，故隐藏差右乘 $q$ 后为
+$140/401+(14/401)i$；初读差为 $(200/401)i$。
+正交平方相加给 $(140^2+14^2+200^2)/401^2=59796/160801$。
+右侧较大值是（46.29）的原正根解码误差；这项实例比较不声称每条记录都严格改进。
+证毕。
+
+**约定 51.6（推导供应、连续修正与未决数学边界）。** （51.3）的原来源带符号包围区间、
+（51.5）的全记录改进及（51.12）的统一首项为 `repo-derived`。定义51.1的连续性是对全部报告的
+普遍纸面结论：固定 $R$ 时 $r\mapsto t_R^\pm$, $m_R$ 与 $P_R$ 连续，$D_R$ 连续；$B>A$ 时
+截断仿射函数 $\theta$ 连续，因而其凸组合 $\mathscr D$ 连续。对合法内外层分别有 $r\le A$
+与 $r\ge B$，所以该连续修正逐记录保留封存51解码器的输出、控制、记录、风险上界下界及统一首项。
+这段证明不把有限检查提升为普遍证明。
+
+独立的精确边界检查取 $\delta=400/401$, $\rho=40/401$，得到
+
+$$
+A=\frac{3207}{401},\qquad B=\frac{3353}{401},\qquad T=\frac{3280}{401},\qquad
+\theta(T)=\frac12.
+\tag{51.18}
+$$
+
+因此旧硬切换在 $M_*=(0,0,0,Ti)$ 与 $M_\varepsilon=(0,0,0,(T+\varepsilon)i)$ 上会把两个
+固定分支的不同极限拼接起来，而修正后的精确关系为
+
+$$
+\lim_{\varepsilon\downarrow0}\mathscr D(M_\varepsilon)
+=\mathscr D(M_*)=\frac12D_7(M_*)+\frac12D_{25}(M_*).
+\tag{51.19}
+$$
+
+这里 $D_7(M_*)$ 与 $D_{25}(M_*)$ 的隐藏坐标右乘单位四元数 $q$ 对齐后，虚部的 i 分量相差 $T-7=473/401$，完整隐藏坐标距离至少为该正值，
+所以该检查确实命中原断点；等式（51.19）则直接检验修正后的两侧极限相同。另在 $r=A$
+与 $r=B$ 处分别有 $\theta=0$ 与 $\theta=1$，精确复核了合法内层和外层边界的原输出保持。
+
+原菜单、首锚状态律与逐事件因果合同复用§40；负分支界和未标记临界层复用§45；
+完整全控制器下界、三个单位更新、四实际Read、严格层判别与球投影复用§46。
+§48–49的一、二更新结果继续按原范围成立，§49的大噪声结论也不变。
+本节只改变（46.17）的末读解码，不重复推出那些预算结果。
+
+标量区间中点与候选纤维的共同输出原则是经典中间工具，参见
+[Recovery Geometry §3](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md#31-候选纤维半径与恢复的最小最坏误差)
+及 Foucart–Liao [arXiv:2310.09677v1 §1–2](https://arxiv.org/html/2310.09677v1)。
+其 [arXiv:2401.11112v1 定理1](https://arxiv.org/html/2401.11112v1#Thmlem1) 的两个
+中心化超椭球交与固定线性观察，不等于（51.1）的两球帽并及自适应破坏性控制类；
+这里的尖锐首项还须由§46的全控制器共同记录接到有限协议。
+一般区间或中心定理不作为独立新增理论。
+FIB Atomic §429的同筛高素数带、真实核与完整补集，及 Source Completion §24的
+同一合法尾产生的实际角点距离，都保留其原共同来源关系；没有到（51.1）的连续
+球帽、单寄存器动作与 INITIAL 欧氏风险的已证对应，不能供应本节的常数。
+
+（51.11）未确定固定正 $\delta$ 的精确 minimax 值、最优低阶系数或最优策略达到性；
+它也不增加 $N\le2$ 的结论。来源制备、独立无界 $a$、参数和方向校准、精确控制
+及其身份、Read精度、记录保存、存储、实数计算及物理费用仍分别供应和计费。
+三更新四Read不是有限位或价格等价；§15的完整旋转、忠实位移、实际资源成本及
+共同环境贯通与任务容量四项原生／物理桥仍各须独立证明。
+
+
+## 追加锚（本行以下为增补区）
+
+## 52. Actual occurrence continuations: lower stability, lost binding and an INITIAL spectral obstruction
 
 The object studied here is the ordered source itself, not its composition matrix or an arbitrary graph carrying a Fibonacci name. A declared propagation model on its actual parent–child occurrences gives a joint counterexample: positive propagation, a common positive-function lower certificate and negative attained minima at every sufficiently large finite layer do not preserve a normalized ground state in the infinite continuation. The same source realization also exposes a spectral distinction which the original numerical records cannot acquire. The obstruction concerns the proposed implication between these properties; it does not negate a conditional theorem which additionally assumes compactness or a binding gap.
 
-### 51.1 Actual seams, legal grafts and a common occurrence realization
+### 52.1 Actual seams, legal grafts and a common occurrence realization
 
-**Definition 51.1 (occurrence continuation with explicit extra structure).** Use the unchanged free nonempty ordered source algebra and substitution from this volume §1 and [Continuation §§1–4](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md). Put $T_k=\rho^k\alpha$, so $T_{k+2}=\langle T_{k+1},T_k\rangle$. For an actual initial tree $t$, set
+**Definition 52.1 (occurrence continuation with explicit extra structure).** Use the unchanged free nonempty ordered source algebra and substitution from this volume §1 and [Continuation §§1–4](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md). Put $T_k=\rho^k\alpha$, so $T_{k+2}=\langle T_{k+1},T_k\rangle$. For an actual initial tree $t$, set
 
 $$
 U_0(t)=t,\qquad U_{j+1}(t)=\langle U_j(t),T_j\rangle.
-\tag{51.1}
+\tag{52.1}
 $$
 
 Each step is the original whole-source `Right(T_j)` operation. Its known context is a newly prepared occurrence of $T_j$; constructing, delivering and consuming that occurrence is additional work. Preparing it by the known-source substitution does not copy the unknown source. The unknown $t$ appears exactly once throughout. No subtree navigation or inverse graft is performed.
@@ -5353,14 +5684,14 @@ Write $\ell(t)$ for the initial number of leaves and $F_0=0,F_1=1$. The existing
 $$
 \ell(U_j)=\ell(t)+F_{j+2}-1,\qquad
 N_j:=|V_j|=2\ell(t)+2F_{j+2}-3.
-\tag{51.2}
+\tag{52.2}
 $$
 
 Indeed $T_k$ has $F_{k+1}$ leaves, and $\sum_{k=0}^{j-1}F_{k+1}=F_{j+2}-1$; a full binary tree with $\ell$ leaves has $2\ell-1$ nodes. This count describes actual domain growth. It is not a decreasing mesh size or an increase of precision on one fixed spatial domain.
 
-The unbounded graft menu of [Process §44](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) permits every finite prefix of (51.1). Under the original TM30/57 fixed-cap menu, a call instead accepts exactly when the whole candidate has at most $H$ leaves and otherwise rejects while retaining the entire old tree. At fixed $H$ the accepted tower therefore ends. The all-level analysis is a mathematical family of finite legal uncapped prefixes, or finite prefixes individually admitted by sufficiently large externally declared caps. It is not a free cap increase during a fixed-$H$ execution. The infinite union is not a finite source in $\mathcal T$ and is not a new action after an infinite prefix. In particular no limit Read is added.
+The unbounded graft menu of [Process §44](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) permits every finite prefix of (52.1). Under the original TM30/57 fixed-cap menu, a call instead accepts exactly when the whole candidate has at most $H$ leaves and otherwise rejects while retaining the entire old tree. At fixed $H$ the accepted tower therefore ends. The all-level analysis is a mathematical family of finite legal uncapped prefixes, or finite prefixes individually admitted by sufficiently large externally declared caps. It is not a free cap increase during a fixed-$H$ execution. The infinite union is not a finite source in $\mathcal T$ and is not a new action after an infinite prefix. In particular no limit Read is added.
 
-### 51.2 Propagation and the field use the same seams
+### 52.2 Propagation and the field use the same seams
 
 For the common graph define
 
@@ -5368,7 +5699,7 @@ $$
 (L_\infty f)(x)=\sum_{y\sim x}(f(x)-f(y)),\qquad
 Q_\infty(f)=\sum_{\{x,y\}\in E_\infty}|f(x)-f(y)|^2
 =\langle f,L_\infty f\rangle.
-\tag{51.3}
+\tag{52.3}
 $$
 
 The sum is over each unoriented seam once, equivalently one half of the ordered sum. The degree bound gives $0\le L_\infty\le6I$ on $\ell^2(V_\infty)$. Thus it is a bounded self-adjoint nonnegative operator on that entire Hilbert space. The same formula defines a bounded operator on $\ell^\infty$ and $\ell^1$.
@@ -5379,14 +5710,14 @@ $$
 K_s=e^{-sL_\infty}
 =e^{-3s}\sum_{m\ge0}\frac{(3s)^m}{m!}P^m,
 \qquad s\ge0.
-\tag{51.4}
+\tag{52.4}
 $$
 
 If $x,y$ are connected by an actual seam path of length $r$, its contribution to $P^r$ is at least $3^{-r}$. For every $s>0$,
 
 $$
 K_s(x,y)\ge e^{-3s}\frac{s^r}{r!}>0.
-\tag{51.5}
+\tag{52.5}
 $$
 
 The series and positivity allow summation by Tonelli. Every row of every $P^m$ sums to one, and symmetry gives the column statement, so $K_s$ preserves the total mass of any nonnegative $\ell^1$ field. This is outward propagation through any finite number of actual seams with no explosion in the supplied bounded-rate law. It supplies neither finite signal velocity nor physical time or an original numerical sensor.
@@ -5396,7 +5727,7 @@ To specify one fixed attractive field on the *same* graph, supply the homogeneou
 $$
 (I+L_\infty)\phi=b\quad\text{in }\ell^\infty(V_\infty),
 \qquad V(x)=\phi(x).
-\tag{51.6}
+\tag{52.6}
 $$
 
 There is exactly one bounded solution, $\phi=1$. In fact
@@ -5405,7 +5736,7 @@ $$
 (I+L_\infty)^{-1}
 =\frac14\sum_{m\ge0}(3P/4)^m
 =\int_0^\infty e^{-s}K_s\,ds
-\tag{51.7}
+\tag{52.7}
 $$
 
 converges in operator norm on $\ell^\infty$, and sends $1$ to $1$. It also gives a positive screened response to each single-occurrence source. The uniform density, screening coefficient, conductances and attraction coupling are supplied together; none is provided by the bare Fibonacci substitution. This is a distributed screened field, not the unscreened Euclidean point-source potential $r^{2-d}$. Its gradient energy is zero while its density has infinite total mass; no isolated-source self-energy statement is being made.
@@ -5418,14 +5749,14 @@ Q_j^{\mathrm N}(f)&=\sum_{\{x,y\}\subset V_j}|f(x)-f(y)|^2,\\
 Q_j^{\mathrm D}(f)&=Q_j^{\mathrm N}(f)+|f(r_j)|^2,\\
 L_j^{\mathrm D}&=L_j^{\mathrm N}+|r_j\rangle\langle r_j|.
 \end{aligned}
-\tag{51.8}
+\tag{52.8}
 $$
 
 The closed convention N deletes the unique outgoing seam. Convention D is the compression of $L_\infty$ to amplitudes extended by zero outside $V_j$, so its outgoing killing is counted once. Both conventions use the restriction of the same potential $V=1$. They do not recompute a different potential at each layer.
 
-Field and wavefunction boundary data must not be conflated. Restricting the field $\phi=1$ keeps its exterior value one. In D notation it satisfies $(I+L_j^{\mathrm D})\phi=1+\mathbf1_{r_j}$, the extra term being the exterior field input through the outgoing seam. In N notation it satisfies $(I+L_j^{\mathrm N})\phi=1$. Solving a zero-exterior *field* equation with right side $1$ instead would give another finite potential. That alternative is not (51.6) and cannot be silently used in its energy comparison. Heat mass is conserved for N; it can be killed at $r_j$ for D.
+Field and wavefunction boundary data must not be conflated. Restricting the field $\phi=1$ keeps its exterior value one. In D notation it satisfies $(I+L_j^{\mathrm D})\phi=1+\mathbf1_{r_j}$, the extra term being the exterior field input through the outgoing seam. In N notation it satisfies $(I+L_j^{\mathrm N})\phi=1$. Solving a zero-exterior *field* equation with right side $1$ instead would give another finite potential. That alternative is not (52.6) and cannot be silently used in its energy comparison. Heat mass is conserved for N; it can be killed at $r_j$ for D.
 
-### 51.3 A common certificate and finite minima without an infinite normalized ground state
+### 52.3 A common certificate and finite minima without an infinite normalized ground state
 
 Set
 
@@ -5434,7 +5765,7 @@ $$
 \mathcal E_j^b(f)=aQ_j^b(f)-g\|f\|_2^2,
 \quad b\in\{\mathrm N,\mathrm D\},
 \qquad \mathcal H_\infty=aL_\infty-gI.
-\tag{51.9}
+\tag{52.9}
 $$
 
 The classical graph ground-state transform is used only as an intermediate identity; its positive function is not assumed square summable. See [the graph-transform source note](../../../Library/GraphInvariants/kellerpinchoverpogorzelski2021rellich.md), §6 of the primary preprint. Here the actual certificate is $h_j=1$. The exact killing-aware identity is simply
@@ -5445,12 +5776,12 @@ $$
  \left|\frac{f(x)}{h_j(x)}-\frac{f(y)}{h_j(y)}\right|^2
 +\sum_{x\in V_j}
  \left(a\frac{L_j^bh_j(x)}{h_j(x)}-g\right)|f(x)|^2.
-\tag{51.10}
+\tag{52.10}
 $$
 
 Its second coefficient equals $-g$ for N, and $-g+a\mathbf1_{r_j}$ for D. Thus the pointwise certificate supplies the *same* lower bound $-g$ for every layer and convention. The infinite positive function $h=1$ likewise certifies $\mathcal H_\infty\ge-gI$, but $h\notin\ell^2(V_\infty)$.
 
-**Theorem 51.2 (joint source-preservation counterexample).** On the one common realization (51.1)–(51.9), outward propagation (51.5), the uniform certificate (51.10) and finite attained negative normalized minima coexist with failure of normalized ground-state preservation. More precisely, writing $m_j^b=\min_{\|f\|=1}\mathcal E_j^b(f)$,
+**Theorem 52.2 (joint source-preservation counterexample).** On the one common realization (52.1)–(52.9), outward propagation (52.5), the uniform certificate (52.10) and finite attained negative normalized minima coexist with failure of normalized ground-state preservation. More precisely, writing $m_j^b=\min_{\|f\|=1}\mathcal E_j^b(f)$,
 
 $$
 \begin{aligned}
@@ -5461,7 +5792,7 @@ m_j^{\mathrm D}\longrightarrow-g,\\
 \inf_{\|f\|=1}\langle f,\mathcal H_\infty f\rangle&=-g,
 \qquad\text{this infimum is not attained.}
 \end{aligned}
-\tag{51.11}
+\tag{52.11}
 $$
 
 D minima are negative whenever $N_j>a/g$; N minima are negative at every layer. For eight-leaf initial sources and $a=g=1$, every D layer is negative as well. After zero extension into the common Hilbert space, both the displayed N ground states and every sequence of normalized D ground states converge weakly to zero and have no strongly convergent subsequence. The infinite bottom $-g$ is an essential spectral point, not a normalizable bound state.
@@ -5479,7 +5810,7 @@ $$
 =\frac{a}{\sqrt{N_j}}(\mathbf1_{r_j}-\mathbf1_{r_{j+1}}),
 \qquad
 \|(\mathcal H_\infty+gI)f_j\|^2=\frac{2a^2}{N_j}.
-\tag{51.12}
+\tag{52.12}
 $$
 
 Together with weak convergence to zero this is a singular Weyl sequence at $-g$. It establishes the stated essential spectral point. The proof also shows that every normalized infinite near-minimizing sequence converges weakly to zero. No sequence of such vectors is strongly precompact. □
@@ -5495,21 +5826,21 @@ There is a second field obstruction on these same seams. If the supplied field i
 $$
 \Phi(r_k)-\Phi(r_{k+1})
 =\sum_{x\in V_k}(L_\infty\Phi)(x)=1.
-\tag{51.13}
+\tag{52.13}
 $$
 
-Interior seams cancel and the unique actual outgoing seam carries unit flux. The infinitely many distinct spine seams therefore contribute infinitely many units to $Q_\infty(\Phi)$, even outside any fixed finite core. No solution of this contract has finite far-field gradient energy. This conclusion is not asserted for different conductances, extra connections or a screened/localized source. In particular, positive diffusion propagation on actual FIB occurrences does not establish the finite isolated-source far-field premise of the Euclidean three-dimensional classification.
+Interior seams cancel and the unique actual outgoing seam carries unit flux. This pointwise source equation is not inconsistent: set $\Phi=0$ on $V_0$, set $\Phi(r_k)=-k$, and set $\Phi=-k$ throughout the finite $T_{k-1}$ branch attached to $r_k$ for each $k\ge1$. At $o=r_0$ the outgoing difference is one; at every later spine root the two spine differences cancel; all other differences vanish. Thus this is an actual pointwise solution. The infinitely many distinct spine seams nevertheless contribute infinitely many units to $Q_\infty(\Phi)$, even outside any fixed finite core. No solution of this contract has finite far-field gradient energy. This conclusion is not asserted for different conductances, extra connections or a screened/localized source. In particular, positive diffusion propagation on actual FIB occurrences does not establish the finite isolated-source far-field premise of the Euclidean three-dimensional classification.
 
-### 51.4 Faithful spectral elimination keeps internal spectra and normalization
+### 52.4 Faithful spectral elimination keeps internal spectra and normalization
 
 The finite spectral calculation reuses [Atomic, the correctly titled §§366–367](FIBONACCI_ATOMIC_RELATION_GENERATION.md): “FIB 路径支撑上的渗流、首达输运与反应权重” and “FIB 路径生成函数、谱行列式与量子配分接口”. Its path existence, added propagation law, determinant recursion and exceptional spectra remain separate. Static minimization and dynamic hidden-state terms retain their meanings from this volume §§18–20 and 33.
 
-For any finite occurrence tree $v$, let $\mathcal H_v^{(k)}$ use (51.9) with an additional root killing seam of conductance $k$, where $k=0$ is closed and $k=1$ is attached/zero-exterior. Define the *polynomial* pair
+For any finite occurrence tree $v$, let $\mathcal H_v^{(k)}$ use (52.9) with an additional root killing seam of conductance $k$, where $k=0$ is closed and $k=1$ is attached/zero-exterior. Define the *polynomial* pair
 
 $$
 D_v^{(k)}(z)=\det(\mathcal H_v^{(k)}-zI),\qquad
 P_v(z)=\det(\mathcal H_v^{(k)}-zI)_{\widehat r}.
-\tag{51.14}
+\tag{52.14}
 $$
 
 Deleting the root makes $P_v$ independent of $k$. Leaves have $D_v^{(k)}=ak-g-z$ and $P_v=1$, the empty minor convention. For $v=\langle s,u\rangle$, the actual child matrices have $k=1$ because each child root remains incident to its parent seam. Thus the reused determinant recursion becomes
@@ -5520,10 +5851,10 @@ P_v&=D_s^{(1)}D_u^{(1)},\\
 D_v^{(k)}&=(a(2+k)-g-z)D_s^{(1)}D_u^{(1)}
 -a^2P_sD_u^{(1)}-a^2D_s^{(1)}P_u.
 \end{aligned}
-\tag{51.15}
+\tag{52.15}
 $$
 
-These are polynomial identities at *all* $z$. Using the closed child matrices $\mathcal H_s^{(0)},\mathcal H_u^{(0)}$ would discard two actual parent killing terms and is not elimination of the specified parent matrix. In particular (51.15) applies to the tower via $U_{j+1}=\langle U_j,T_j\rangle$, with the inherited attachment included. Closed and D parent determinants differ by $aP_v$, not by a new choice of internal source.
+These are polynomial identities at *all* $z$. Using the closed child matrices $\mathcal H_s^{(0)},\mathcal H_u^{(0)}$ would discard two actual parent killing terms and is not elimination of the specified parent matrix. In particular (52.15) applies to the tower via $U_{j+1}=\langle U_j,T_j\rangle$, with the inherited attachment included. Closed and D parent determinants differ by $aP_v$, not by a new choice of internal source.
 
 Off the internal spectra, the one-root energy-dependent Schur response is
 
@@ -5531,7 +5862,7 @@ $$
 S_v^{(k)}(z)=a(2+k)-g-z
 -a^2\frac{P_s(z)}{D_s^{(1)}(z)}
 -a^2\frac{P_u(z)}{D_u^{(1)}(z)}.
-\tag{51.16}
+\tag{52.16}
 $$
 
 For a leaf the corresponding expression is $ak-g-z$. Where the full matrix is also invertible, the root resolvent is $G_v^{(k)}(z)=P_v(z)/D_v^{(k)}(z)$. These formulas do not identify a constant Schur value with a ground energy.
@@ -5541,10 +5872,10 @@ For completeness, the classical finite block calculation used *inside* this sour
 $$
 \det J=\det J_{II}\det S(z),\qquad
 n_-(J)=n_-(J_{II})+n_-(S(z))\quad(z\in\mathbb R).
-\tag{51.17}
+\tag{52.17}
 $$
 
-Indeed replacing $h$ by $h+J_{II}^{-1}J_{IB}b$ in the quadratic form yields $b^\dagger S(z)b+h^\dagger J_{II}h$ with a nonsingular coordinate change. Determinant and inertia follow. Only if $J_{II}>0$ is this stationary internal value an attained minimum for fixed $b$; a negative internal direction makes that fixed-boundary unrestricted energy unbounded below. This is the positivity condition in the existing [SchurMinimum](../../../D5/S3/Quantum/Matrix/SchurMinimum.lean), and in the static [Dörfler–Bullo note](../../../Library/GraphInvariants/dorflerbullo2013kron.md). Their static network closure is not attributed to an arbitrary indefinite shifted matrix. Successive eliminations reuse the existing [SchurComplementAssociativity](../../../D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.lean) only where its required inverses exist.
+Indeed replacing $h$ by $h+J_{II}^{-1}J_{IB}b$ in the quadratic form yields $b^\dagger S(z)b+h^\dagger J_{II}h$ with a nonsingular coordinate change. Determinant and inertia follow. In this invertible-block case, the stationary internal value is an attained minimum for fixed $b$ exactly when $J_{II}>0$; a negative internal direction makes that fixed-boundary unrestricted energy unbounded below. This is the positivity condition in the existing [SchurMinimum](../../../D5/S3/Quantum/Matrix/SchurMinimum.lean), with static network context supplied by the [Dörfler–Bullo note](../../../Library/GraphInvariants/dorflerbullo2013kron.md). Their static network closure is not attributed to an arbitrary indefinite shifted matrix. The retained boundary here is a singleton; the directly calculated block identities do not invoke the preprint's $|\alpha|\ge2$ network-closure lemma for that singleton. Successive eliminations reuse the existing [SchurComplementAssociativity](../../../D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.lean) only where its required inverses exist.
 
 At a real $z$ outside the internal spectrum with $S(z)b=0$, the corresponding full eigenvector and its normalization are
 
@@ -5553,12 +5884,12 @@ $$
 \|\psi\|^2=-b^\dagger S'(z)b,
 \quad
 S'(z)=-I-\mathcal H_{BI}(\mathcal H_{II}-zI)^{-2}\mathcal H_{IB}.
-\tag{51.18}
+\tag{52.18}
 $$
 
 The identity follows by differentiating the inverse and adding the two squared block norms. A boundary amplitude normalized to one is generally not a normalized full state.
 
-At an exceptional $z\in\sigma(\mathcal H_{II})$, inverse formulas are unavailable. Retain (51.15) and the original block equations. In particular an internal vector $h$ with $(\mathcal H_{II}-zI)h=0$ and $\mathcal H_{BI}h=0$ gives a full eigenvector $(0,h)$ invisible at the retained root. Other exceptional eigenvectors must satisfy both original block equations; they are not automatically hidden. The exceptional case can be solved without any inverse fiction. Put $K=\mathcal H_{II}-zI$, let $\Pi$ project onto $\ker K$, and let $K^+$ be the inverse on $(\ker K)^\perp$, zero on its kernel. All full eigenvectors at this $z$ are exactly
+At an exceptional $z\in\sigma(\mathcal H_{II})$, inverse formulas are unavailable. Retain (52.15) and the original block equations. In particular an internal vector $h$ with $(\mathcal H_{II}-zI)h=0$ and $\mathcal H_{BI}h=0$ gives a full eigenvector $(0,h)$ invisible at the retained root. Other exceptional eigenvectors must satisfy both original block equations; they are not automatically hidden. The exceptional case can be solved without any inverse fiction. Put $K=\mathcal H_{II}-zI$, let $\Pi$ project onto $\ker K$, and let $K^+$ be the inverse on $(\ker K)^\perp$, zero on its kernel. All full eigenvectors at this $z$ are exactly
 
 $$
 \begin{aligned}
@@ -5568,18 +5899,30 @@ h=-K^+\mathcal H_{IB}b+u,\quad u\in\ker K,\\
  +\mathcal H_{BI}u&=0,\\
 \|(b,h)\|^2&=\|b\|^2+\|K^+\mathcal H_{IB}b\|^2+\|u\|^2.
 \end{aligned}
-\tag{51.18a}
+\tag{52.18a}
 $$
 
-The internal equation has a solution precisely under the first compatibility condition; the orthogonal kernel decomposition gives the second line and norm. Its solution-space dimension is the full Hermitian eigenvalue multiplicity, agreeing with the zero order of $D_v^{(k)}$. Thus both hidden and boundary-visible exceptional eigenvectors, including their normalization, remain accounted for. Cancellation in the meromorphic root response must not delete their determinant multiplicity or inertia contributions. The polynomials $D,P$, internal spectral data and (when applicable) derivative normalization together supply the faithful finite spectral account. A static boundary matrix alone supplies none of the all-level compactness in Theorem 51.2.
+The internal equation has a solution precisely under the first compatibility condition; the orthogonal kernel decomposition gives the second line and norm. Its solution-space dimension is the full Hermitian eigenvalue multiplicity, agreeing with the zero order of $D_v^{(k)}$.
 
-### 51.5 Two actual unit sources and one exact spectral distinction
+The inertia contributions at an exceptional energy can also be retained without an inverse formula. Put $C_z=\Pi\mathcal H_{IB}$ and $A_z=\mathcal H_{BB}-zI-\mathcal H_{BI}K^+\mathcal H_{IB}$, and let $A_z|_{\ker C_z}$ mean the Hermitian compression to that subspace. Eliminating only the invertible restriction $K_R=K|_{(\ker K)^\perp}$ gives congruence to $K_R$ and the block $\left(\begin{smallmatrix}A_z&C_z^\dagger\\ C_z&0\end{smallmatrix}\right)$. If $r=\operatorname{rank}C_z$, then
+
+$$
+\begin{aligned}
+n_\pm(\mathcal H_v-zI)&=n_\pm(K_R)+r+n_\pm(A_z|_{\ker C_z}),\\
+n_0(\mathcal H_v-zI)&=\dim\ker K-r+n_0(A_z|_{\ker C_z}).
+\end{aligned}
+\tag{52.18b}
+$$
+
+To see this, split the boundary as $\ker C_z\oplus(\ker C_z)^\perp$ and the internal kernel as $\operatorname{ran}C_z\oplus\ker C_z^\dagger$. The coupled $2r$ block is nonsingular with $r$ positive and $r$ negative directions: after making its coupling the identity, a shear removes its boundary diagonal. Its inverse has zero boundary-to-boundary block, so eliminating its remaining coupling to $\ker C_z$ leaves exactly the displayed compression of $A_z$. The unused $\dim\ker K-r$ internal directions are zero. This proves (52.18b), including the zero-dimensional cases. Thus both hidden and boundary-visible exceptional eigenvectors, including their normalization and inertia, remain accounted for. Cancellation in the meromorphic root response must not delete their determinant multiplicity or inertia contributions. The polynomials $D,P$, internal spectral data and (when applicable) derivative normalization together supply the faithful finite spectral account. A static boundary matrix alone supplies none of the all-level compactness in Theorem 52.2.
+
+### 52.5 Two actual unit sources and one exact spectral distinction
 
 Use the actual eight-leaf unit word from [Transport Memory, Lemma 58.2 in §58.1](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), its displayed $\omega_{1,1}$:
 
 $$
 \omega=\alpha\beta\beta\alpha\beta\alpha\alpha\beta.
-\tag{51.19}
+\tag{52.19}
 $$
 
 Let $t_{\mathrm{bal}}$ be the complete depth-three balanced bracketing of this word, and let $t_{\mathrm{comb}}$ be its left-associated bracketing. Explicitly,
@@ -5594,10 +5937,12 @@ t_{\mathrm{comb}}&=\langle\langle\langle\langle\langle\langle
  \langle\alpha,\beta\rangle,\beta\rangle,\alpha\rangle,
  \beta\rangle,\alpha\rangle,\alpha\rangle,\beta\rangle.
 \end{aligned}
-\tag{51.20}
+\tag{52.20}
 $$
 
 Both have 15 actual occurrence nodes, composition $(4,4)$, and the original three Clifford windows $(E_0,E_1,E_2)=(1,1,1)$. This is the existing full unit-family source law, not a substituted abstract unit state. In the fixed oriented cross-product preparation of Process44 both have $q=0$; directly, the balanced tree has parallel opposite-axis cherries and the comb obtains zero at its first repeated-axis ancestor. Substitution rotates zero to zero, and grafts keep zero zero. The unit Clifford preparation and the Euclidean cross-product preparation are different declared numerical representations of these same two literal trees; they are not identified as one physical sensor.
+
+The fixed orthogonal preparation is material to this additional cross-product-port assertion. With a separately supplied nonorthogonal preparation $q\alpha=e_1$, $q\beta=e_1+e_2$, the same bracketed trees instead give $q(t_{\mathrm{bal}})=0$ and $q(t_{\mathrm{comb}})=-e_3$ by direct nested products. That different numerical port can distinguish them on its initial Read. It is a different preparation/read contract with its own calibration and acquisition costs, not an exception to the fixed Process44 contract or a distinction available in the unchanged Clifford records.
 
 Supply $a=g=1$ and the closed initial spectral target
 
@@ -5605,18 +5950,18 @@ $$
 F_{\mathrm{spec}}(t)
 :=\langle\mathbf1_r,(\mathcal H_t^{(0)}+2I)^{-1}\mathbf1_r\rangle,
 \qquad\mathcal H_t^{(0)}=L_t^{\mathrm N}-I.
-\tag{51.21}
+\tag{52.21}
 $$
 
 This is a fixed function of the *unmodified initial* occurrence tree and its declared field/kinetic realization. Since $\mathcal H_t^{(0)}+2I=L_t^{\mathrm N}+I>0$, no spectral pole or indefinite stationary-value issue enters this particular target. A source function is not thereby an acquired Read.
 
-**Proposition 51.3 (exact discriminating INITIAL responses).** For the two actual sources (51.20),
+**Proposition 52.3 (exact discriminating INITIAL responses).** For the two actual sources (52.20),
 
 $$
 F_{\mathrm{spec}}(t_{\mathrm{bal}})=\frac5{12},\qquad
 F_{\mathrm{spec}}(t_{\mathrm{comb}})=\frac{62614}{136883},\qquad
 \Delta F=\frac{66953}{1642596}>0.
-\tag{51.22}
+\tag{52.22}
 $$
 
 They also have different initial third root spectral moments, respectively $9$ and $7$. At least four independent zero-eigenvalue modes of $\mathcal H_{t_{\mathrm{bal}}}^{(0)}$ vanish at its root; therefore a scalar root response cannot by itself certify the full spectral multiplicities.
@@ -5626,32 +5971,34 @@ Proof. At $z=-2$, a leaf attached to its parent has scalar pivot $2$. For the ba
 $$
 3,\quad\frac{19}{6},\quad\frac{121}{38},\quad
 \frac{771}{242},\quad\frac{4913}{1542},\quad\frac{31307}{9826}.
-\tag{51.23}
+\tag{52.23}
 $$
 
-The closed root pivot is $5/2-9826/31307=136883/62614$. Subtracting the reciprocals gives (51.22). The full determinant pairs at this energy are
+The closed root pivot is $5/2-9826/31307=136883/62614$. Subtracting the reciprocals gives (52.22). The full determinant pairs at this energy are
 
 $$
 (D_{\mathrm{bal}}^{(0)},P_{\mathrm{bal}})=(552960,230400),\qquad
 (D_{\mathrm{comb}}^{(0)},P_{\mathrm{comb}})=(547532,250456),
-\tag{51.24}
+\tag{52.24}
 $$
 
 which also verify that the numerator/denominator account differs before rational cancellation.
 
 For either graph, $L_{rr}=2$ and $(L^2)_{rr}=6$. Enumeration of length-three matrix products gives $(L^3)_{rr}=16+d(s)+d(u)$, with the two child degrees counted in the full initial graph. These degrees are $(3,3)$ for the balanced root and $(3,1)$ for the comb root. Thus $((L-I)^3)_{rr}=(L^3)_{rr}-13$ is $9$ or $7$. These are coefficients of the large-$|z|$ root resolvent expansion, not extra free derivative measurements.
 
-Finally each of the balanced tree's four deepest cherries has a vector with entries $1/\sqrt2,-1/\sqrt2$ on its two leaf occurrences and zero elsewhere. Leaf degree is one, so $L-I$ is zero on these leaf diagonal entries; at the parent their opposite contributions cancel. These four disjoint-support vectors are orthonormal full zero modes with root value zero. Their spectral multiplicities remain present in (51.15), even though their root residues vanish. □
+Finally each of the balanced tree's four deepest cherries has a vector with entries $1/\sqrt2,-1/\sqrt2$ on its two leaf occurrences and zero elsewhere. Leaf degree is one, so $L-I$ is zero on these leaf diagonal entries; at the parent their opposite contributions cancel. These four disjoint-support vectors are orthonormal full zero modes with root value zero. Their spectral multiplicities remain present in (52.15), even though their root residues vanish.
 
-The source construction of §51.1 can start from either of these trees. Theorems about the common field and lost infinite binding therefore apply to the same initial sources used in the spectral calculation, not to an unrelated comparison graph.
+The exceptional case $z=0$ also has a root-visible zero mode for the closed balanced tree. Give its nodes at depths $0,1,2,3$ the respective values $1,1/2,0,-1/4$. The leaf equations force the depth-two parents to vanish; the depth-one equations require their values to be half the root; and each cherry's leaf sum must be minus half the root. These equations leave exactly one root parameter and four independent leaf differences. Consequently the closed zero eigenspace has dimension five, with exactly four root-invisible directions. The displayed visible vector has squared norm $1+2(1/2)^2+8(1/4)^2=2$, so its normalized root value is $1/\sqrt2$. With the D root killing added, the root equation instead forces the root parameter to be zero, leaving exactly the four invisible modes. The internal block has the same four-dimensional kernel in both conventions and $C_0=0$; the scalar $A_0$ in (52.18b) is respectively zero or one. This gives zero multiplicity five or four directly, as well as zero order five or four of the corresponding determinant. Here (52.18a), rather than an inverse of the singular internal block, supplies the visible state and its normalization. □
 
-### 51.6 The original numerical INITIAL records do not acquire this spectral target
+The source construction of §52.1 can start from either of these trees. Theorems about the common field and lost infinite binding therefore apply to the same initial sources used in the spectral calculation, not to an unrelated comparison graph.
 
-**Theorem 51.4 (source-specific chronological spectral escape).** In the original fixed-cap TM30/57 numerical interface, with common public $H\ge8$, both actual initial trees (51.20) produce identical complete numerical execution records under every common deterministic causal policy using `Read`, whole $\rho$, `Left(v)`, `Right(v)`, their accept/reject responses and Stop. The assertion also holds if the fixed numerical ports of Process44 for $c,q,n$ and their declared scalar projections are separately supplied. No such policy determines the INITIAL target (51.21) on a source domain containing this pair. Under absolute spectral-value loss, every record-only estimator has worst-case error at least
+### 52.6 The original numerical INITIAL records do not acquire this spectral target
+
+**Theorem 52.4 (source-specific chronological spectral escape).** In the original fixed-cap TM30/57 numerical interface, with common public $H\ge8$, both actual initial trees (52.20) produce identical complete numerical execution records under every common deterministic causal policy using `Read`, whole $\rho$, `Left(v)`, `Right(v)`, their accept/reject responses and Stop. The assertion also holds if the fixed numerical ports of Process44 for $c,q,n$ and their declared scalar projections are separately supplied. No such policy determines the INITIAL target (52.21) on a source domain containing this pair. Under absolute spectral-value loss, every record-only estimator has worst-case error at least
 
 $$
 \frac{\Delta F}{2}=\frac{66953}{3285192}.
-\tag{51.25}
+\tag{52.25}
 $$
 
 The target stays INITIAL even after the sources have changed; it is not a function of whichever later tree remains in the register.
@@ -5660,7 +6007,7 @@ Proof. The two trees have exactly the same ordered leaf word. The original Cliff
 
 Induction on chronological records now makes the policy choose the same next command, actual context identity and next Read or Stop. Every executed parameter in this exact native interface is the specified whole operation on its actual tree; no source-dependent execution telemetry has been supplied. Repeated Reads and refusals remain separate recorded events. A common source-independent controller initialization supplies no distinguishing program or preparation metadata. The fixed-size private preparation in TM57 §57.6 has the same public trace for these valid inputs, despite their different private token choices. Context construction and transmission, record copying, any paid verification and consumer use retain the same original numeric projection; they must not export the private tree code under a new name.
 
-If both runs are finite they stop with identical complete records; if the policy does not stop, their every finite prefix still agrees. A natural-number-indexed infinite history has no event after an infinite prefix at which to add a spectral Read. Hence all these numerical records leave both actual INITIAL trees in the compatible source fiber, while (51.22) assigns them different targets. Apply this volume §25's actual-fiber criterion and §26's two-point lower bound to obtain impossibility and (51.25). □
+If both runs are finite they stop with identical complete records; if the policy does not stop, their every finite prefix still agrees. A natural-number-indexed infinite history has no event after an infinite prefix at which to add a spectral Read. Hence all these numerical records leave both actual INITIAL trees in the compatible source fiber, while (52.22) assigns them different targets. Apply this volume §25's actual-fiber criterion and §26's two-point lower bound to obtain impossibility and (52.25). □
 
 Here is one completely literal fixed-$H$ history. Set $H=20$ and use the same preparation-independent program on both sources. Read has no command argument; bracketed entries below are its actual replies or the actual update responses:
 
@@ -5673,33 +6020,33 @@ $$
  \operatorname{Read}\,[1];\quad\rho\,[\mathrm{reject}];\quad
  \operatorname{Read}\,[1];\quad\operatorname{Stop}.
 \end{aligned}
-\tag{51.26}
+\tag{52.26}
 $$
 
 The three accepted-window leaf sizes are $8,12,20$, so the second substitution accepts at equality. The rejected right candidate has 21 leaves and the rejected substitution candidate has 32. Both refusals retain the 20-leaf current source, and all five actual Reads return the Clifford identity. The original initial target is in both cases
 
 $$
 q_{20}(t)=\left(2,\left(((0,0,0),(0,0,0),(0,0,0)),(4,4)\right)\right).
-\tag{51.27}
+\tag{52.27}
 $$
 
-This is precisely the original nested tag-2 target, not a spectral target and not the later composition. The particular authentic target-factoring supplier of TM58 also gives the same symbol: $h=5,L=2,(z,w)=(2,3)$ in its notation yields $i=2$. This observation is conditional on that supplier's actual same-source production and delivery. Arbitrary tree-dependent supplier advice could distinguish the pair, but is additional source information and is not covered by Theorem 51.4. No telemetry, advice, calibration or supplier realization is inferred from the formulas.
+This is precisely the original nested tag-2 target, not a spectral target and not the later composition. In fact the entire compatible fiber of (52.26) over the public prior $\mathcal T_{20}$ has this same original target. Its first three actual Reads force all three INITIAL Clifford windows to be units. The two accepted substitutions install the exact second image, while the subsequent `Right(alpha)` refusal forces that current image to have exactly 20 leaves: its size is at most 20 and adding one would exceed 20. Lemma TM58.2 therefore gives the initial composition $(4r,4s)$ with $r,s\ge1$ and $8r+12s=20$, hence $r=s=1$. The initial second image fits at equality, so every compatible source has the literal tag-2 target (52.27). This uses actual accepted and refused events, not an additional size Read. The particular authentic target-factoring supplier of TM58 also gives the same symbol: $h=5,L=2,(z,w)=(2,3)$ in its notation yields $i=2$. This observation is conditional on that supplier's actual same-source production and delivery. Arbitrary tree-dependent supplier advice could distinguish the pair, but is additional source information and is not covered by Theorem 52.4. No telemetry, advice, calibration or supplier realization is inferred from the formulas.
 
-The obstruction has an actual consumer. A verifier replaying all original numeric rows over a prior containing both trees must reject a proposed unique `INITIAL-spectral` value, because this fiber contains both values (51.22). The existing record-only verifier in TM57 §57.10 continues to accept a correct `INITIAL-q_H` proposal when its own fiber test passes; its receipt cannot be retagged to authorize a spectral output. This is a different target tested on the same compatible original sources, not a defect of its original correctness theorem. Computing both candidate spectra from a public enumeration cannot identify which candidate is actual.
+The obstruction has an actual consumer. A verifier replaying all original numeric rows over a prior containing both trees must reject a proposed unique `INITIAL-spectral` value, because this fiber contains both values (52.22). For the literal history and public prior $\mathcal T_{20}$, the existing record-only verifier in TM57 §57.10 accepts the correctly encoded `INITIAL-q_H` proposal (52.27) once its prescribed authentic framing, identity and receipt checks succeed: the preceding all-fiber calculation proves its constancy test. Its paid consumer can use that original receipt; the receipt cannot be retagged to authorize a spectral output. This is a different target tested on the same compatible original sources, not a defect of its original correctness theorem. Computing both candidate spectra from a public enumeration cannot identify which candidate is actual.
 
-A wider acquisition contract can instead pay for immutable-initial actual address replies and reconstruct its ordered syntax. [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean) has literal `alpha/beta/branch/absent` replies and full acquired terminal histories; it does not grant this interface to the numerical controller, nor change its original Boolean target for free. With an explicitly supplied finite syntax-output task, complete authentic initial code, or equivalent paid source acquisition, (51.15) computes (51.21) by finite rational arithmetic. There are $N-1$ actual seams on an $N$-node tree, $N$ node eliminations, and growing rational numerator/denominator widths; address requests, preparation, source/version authentication, code storage, arithmetic and output are separate resources. Physical spectral measurement is yet another supplied sensor contract. Later-state syntax alone does not authorize replacing the immutable INITIAL target or reading an old version without a retained authenticated record.
+A wider acquisition contract can instead pay for immutable-initial actual address replies and reconstruct its ordered syntax. [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean) has literal `alpha/beta/branch/absent` replies and full acquired terminal histories; it does not grant this interface to the numerical controller, nor change its original Boolean target for free. With an explicitly supplied finite syntax-output task, complete authentic initial code, or equivalent paid source acquisition, (52.15) computes (52.21) by finite rational arithmetic. There are $N-1$ actual seams on an $N$-node tree, $N$ node eliminations, and growing rational numerator/denominator widths; address requests, preparation, source/version authentication, code storage, arithmetic and output are separate resources. Physical spectral measurement is yet another supplied sensor contract. Later-state syntax alone does not authorize replacing the immutable INITIAL target or reading an old version without a retained authenticated record.
 
-### 51.7 Reuse, exact scope and the missing native connection
+### 52.7 Reuse, exact scope and the missing native connection
 
-The reusable prerequisites are classical positive-function transforms, bounded-rate heat propagation, finite block elimination/inertia, Rayleigh trials and weak Hilbert-space compactness. They are intermediate steps in the source-specific counterexample, not newly claimed general results. The graph-transform note points to Keller–Pinchover–Pogorzelski, *From Hardy to Rellich inequalities on graphs*, primary preprint §6, proof of Theorem 6.1; [Dörfler–Bullo](../../../Library/GraphInvariants/dorflerbullo2013kron.md) supplies static network context, not an indefinite spectral positivity guarantee. The algebraic identities of (51.17)–(51.18) are included only to make the actual source spectral account checkable. Finite minimization does not import the compact inverse-limit hypotheses of Continuation §10 or this volume §4: the normalized unit sphere of this increasing infinite occurrence Hilbert space is not compact.
+The reusable prerequisites are classical positive-function transforms, bounded-rate heat propagation, finite block elimination/inertia, Rayleigh trials and weak Hilbert-space compactness. They are intermediate steps in the source-specific counterexample, not newly claimed general results. The graph-transform note points to Keller–Pinchover–Pogorzelski, *From Hardy to Rellich inequalities on graphs*, primary preprint §6, proof of Theorem 6.1; [Dörfler–Bullo](../../../Library/GraphInvariants/dorflerbullo2013kron.md) supplies static network context, not an indefinite spectral positivity guarantee. The algebraic identities of (52.17)–(52.18) are included only to make the actual source spectral account checkable. Finite minimization does not import the compact inverse-limit hypotheses of Continuation §10 or this volume §4: the normalized unit sphere of this increasing infinite occurrence Hilbert space is not compact.
 
-The new ordinary deductions are the common actual graft/field realization, its single-seam flux obstruction (51.13), the joint finite/infinite preservation counterexample (51.11)–(51.12), and the consumed INITIAL record distinction (51.20)–(51.27). They are repo-derived combinations on these precise source contracts; no global novelty or exhaustive literature search is claimed.
+The new ordinary deductions are the common actual graft/field realization, its single-seam flux obstruction (52.13), the joint finite/infinite preservation counterexample (52.11)–(52.12), and the consumed INITIAL record distinction (52.20)–(52.27). They are repo-derived combinations on these precise source contracts; no global novelty or exhaustive literature search is claimed.
 
-The materially relevant nearby interfaces have different inputs. Parameterized Cross Product Recovery §§64–74 uses one supplied leaf preparation across three actual versions, and separately prices finite replies, immutable history names, size/domain certificates and complete future words. Its accurate kernel does not reconstruct arbitrary brackets from a zero cross-product source, and its extra certificates are not spectral-source ports here. AgencyHolonomy's `NamedTreePhaseTransport.selected_tree_transport` and `AnchoredPhaseClassification.anchored_phase_classification` retain selected original named edges and supplied Circle phases, with specified anchored gauges; they supply no occurrence Laplacian, potential, mass measure or compactness. In (51.1) the seam names are actual, but unit weights and symmetric field propagation remain independently supplied. The matrix Sugawara/current/conformal interfaces act on charge and oscillator carriers; neither their lattice rank nor their charged grading identifies them with the operator (51.9). They are not assumptions of this proof.
+The materially relevant nearby interfaces have different inputs. Parameterized Cross Product Recovery §§64–74 uses one supplied leaf preparation across three actual versions, and separately prices finite replies, immutable history names, size/domain certificates and complete future words. Its accurate kernel does not reconstruct arbitrary brackets from a zero cross-product source, and its extra certificates are not spectral-source ports here. AgencyHolonomy's `NamedTreePhaseTransport.selected_tree_transport` and `AnchoredPhaseClassification.anchored_phase_classification` retain selected original named edges and supplied Circle phases, with specified anchored gauges; they supply no occurrence Laplacian, potential, mass measure or compactness. In (52.1) the seam names are actual, but unit weights and symmetric field propagation remain independently supplied. The matrix Sugawara/current/conformal interfaces act on charge and oscillator carriers; neither their lattice rank nor their charged grading identifies them with the operator (52.9). `CyclicSelectorModel` and `CyclicSelectorRecovery` preserve labelled finite-group sources and complete traces, and their two-snapshot recovery assumes different selectors at known times on the same source. Their sole cyclic translation, trace fields and recovered coordinates are not the ordered-tree whole actions, original numerical records or spectral target here; they supply no occurrence field or compactness. The critical two-layer decoder and risk asymptotics of §51 remain on the unchanged $\mathcal D_2$ source with its supplied exact actuation and bounded read errors. None of these interfaces is a proof premise for the occurrence counterexample.
 
-For this native-tree INITIAL task, retaining more original numerical replies or increasing their precision cannot separate (51.20): even their complete exact numerical behaviors coincide. Useful retained memory would instead have to hold already acquired, authenticated initial syntax or another genuinely separating source measurement. Such acquisition is a different priced permission. The conditional executed-product certificate of §50 addresses its own unchanged $\mathcal D_2$ contract; without a source/action/Read-preserving correspondence it does not supply these occurrence weights, a spectral source record or near-minimizer compactness. Thus execution information, retained source memory and propagation/binding correspondence remain distinct gaps, rather than interchangeable explanations of the same dimension count.
+For this native-tree INITIAL task, retaining more original numerical replies or increasing their precision cannot separate (52.20): even their complete exact numerical behaviors coincide. Useful retained memory would instead have to hold already acquired, authenticated initial syntax or another genuinely separating source measurement. Such acquisition is a different priced permission. The conditional executed-product certificate of §50 addresses its own unchanged $\mathcal D_2$ contract; without a source/action/Read-preserving correspondence it does not supply these occurrence weights, a spectral source record or near-minimizer compactness. Thus execution information, retained source memory and propagation/binding correspondence remain distinct gaps, rather than interchangeable explanations of the same dimension count.
 
-The Euclidean dual-scale route concerns an additional joint contract: infinite Euclidean spatial domain, isotropic second-order field, unscreened attractive point source, second-order localization and the specified form domain. Its far-field integral and Hardy/Coulomb ground-state results do not identify the occurrence network with that domain. In particular the cited Bureš–Siegl [*Hydrogen atom in space with a compactified extra dimension and potential defined by Gauss' law*](https://arxiv.org/abs/1409.8530), §2, treats the four-dimensional $|x|^{-2}$ charge threshold, while its compactified model has a different domain and negative bound states. The relevant prerequisites are not exclusions of all higher-dimensional models. This chapter does not use a supplied Euclidean classification as proof of a native correspondence; (51.13) exhibits a concrete failure of its isolated-source far-field premise in the chosen actual seam realization.
+The Euclidean dual-scale route concerns an additional joint contract: infinite Euclidean spatial domain, isotropic second-order field, unscreened attractive point source, second-order localization and the specified form domain. Its far-field integral and Hardy/Coulomb ground-state results do not identify the occurrence network with that domain. In particular the cited Bureš–Siegl [*Hydrogen atom in space with a compactified extra dimension and potential defined by Gauss' law*](https://arxiv.org/abs/1409.8530), §2, treats the four-dimensional $|x|^{-2}$ charge threshold, while its compactified model has a different domain and negative bound states. The relevant prerequisites are not exclusions of all higher-dimensional models. This chapter does not use a supplied Euclidean classification as proof of a native correspondence; (52.13) exhibits a concrete failure of its isolated-source far-field premise in the chosen actual seam realization.
 
 All numerical distinctions above are exact finite rational calculations. The infinite claims follow from the all-level seam, norm and flux arguments, not from finite diagnostics. If an additionally authorized approximate spectral channel reports each value with absolute error at most $\delta$, the two allowed report intervals are disjoint exactly when $2\delta<\Delta F$; this is a two-source resolution fact, not an acquired numerical-port guarantee or a whole-source stable inverse. No read independence, free resampling or physical bit/energy price is supplied.
 
