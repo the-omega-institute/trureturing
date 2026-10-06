@@ -9,19 +9,21 @@
 /-
 proof_shape: result: bind-only. Every private theorem is bind-only and lies on the proof path of
   result (CLAUDE.md §3.2, consumed helpers): sigma_properties, channel_self_adjoint,
-  channel_unital, channel_cptp, mixed_inverse, state_eq_spin, density_coordinates, choi_psd, choi_bayes,
+  channel_unital, channel_cptp, mixed_inverse, state_eq_spin, density_coordinates, choi_bayes,
   scaled_sylvester, channel_bloch, witness_strict, support_zero, witness_numerator,
   inverse_only_mixed.
 escape_witness: none.
 admission_basis: open-problem-resolution (#13585; Proved)
 Direct frozen dependencies: D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation,
   D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence,
-  D5/S3/Quantum/Information/ActualPureQubitGeometry.
+  D5/S3/Quantum/Information/ActualPureQubitGeometry,
+  D5/S3/Quantum/Foundation/FiniteKrausRepresentation.
 -/
 
 import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
+import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -180,28 +182,12 @@ private theorem density_coordinates (ρ : Matrix (Fin 2) (Fin 2) ℂ) (hρ : IsD
   simp only [Fin.sum_univ_three]
   nlinarith
 
-private def choi (M : MatrixMap (Fin 2) (Fin 2) ℂ) :
-    Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
-  fun (j₁, i₁) (j₂, i₂) => M (Matrix.single i₁ i₂ 1) j₁ j₂
-
-private theorem choi_psd (M : MatrixMap (Fin 2) (Fin 2) ℂ)
-    (hM : M.IsCompletelyPositive) : (choi M).PosSemidef := by
-  have h_choi :
-      MatrixMap.kron M (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ)
-          (Matrix.vecMulVec (fun (x : Fin 2 × Fin 2) => if x.1 = x.2 then 1 else 0)
-            (fun (x : Fin 2 × Fin 2) => star (if x.1 = x.2 then 1 else 0))) = choi M := by
-    ext ⟨b₁, d₁⟩ ⟨b₂, d₂⟩
-    fin_cases d₁ <;> fin_cases d₂ <;>
-      simp [MatrixMap.kron_def, choi, Matrix.single, Matrix.vecMulVec]
-  rw [← h_choi]
-  exact hM 2 (Matrix.posSemidef_vecMulVec_self_star _)
-
 private theorem choi_bayes (E Eadj F : MatrixMap (Fin 2) (Fin 2) ℂ)
     (ρ : Matrix (Fin 2) (Fin 2) ℂ) (h : IsBayesianInverse E Eadj F ρ) :
-    Matrix.kronecker 1 (E ρ)ᵀ * choi F +
-      choi F * Matrix.kronecker 1 (E ρ)ᵀ =
-    Matrix.kronecker ρ 1 * choi Eadj +
-      choi Eadj * Matrix.kronecker ρ 1 := by
+    Matrix.kronecker 1 (E ρ)ᵀ * MatrixMap.choi_matrix F +
+      MatrixMap.choi_matrix F * Matrix.kronecker 1 (E ρ)ᵀ =
+    Matrix.kronecker ρ 1 * MatrixMap.choi_matrix Eadj +
+      MatrixMap.choi_matrix Eadj * Matrix.kronecker ρ 1 := by
   have hjam (N : MatrixMap (Fin 2) (Fin 2) ℂ) (i j a b : Fin 2) :
       jam N (i, a) (j, b) = N (Matrix.single j i 1) a b := by
     fin_cases i <;> fin_cases j <;> simp [jam, Matrix.single, Matrix.sum_apply]
@@ -210,7 +196,7 @@ private theorem choi_bayes (E Eadj F : MatrixMap (Fin 2) (Fin 2) ℂ)
   simp only [Matrix.add_apply, Matrix.mul_apply, Fintype.sum_prod_type,
     Matrix.kronecker, Matrix.kronecker_apply, Matrix.one_apply, hjam] at he
   simp only [Matrix.add_apply, Matrix.mul_apply, Fintype.sum_prod_type,
-    Matrix.kronecker, Matrix.kronecker_apply, Matrix.one_apply, choi,
+    Matrix.kronecker, Matrix.kronecker_apply, Matrix.one_apply, MatrixMap.choi_matrix,
     Matrix.transpose_apply]
   simpa [mul_comm, add_comm, mul_ite, ite_mul] using he
 
@@ -238,8 +224,8 @@ private def ampl (s : Fin 3 → ℝ) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) 
   Matrix.kronecker (1 : Matrix (Fin 2) (Fin 2) ℂ) (spin s)ᵀ
 private def rhs (p : Fin 4 → ℝ) (r : Fin 3 → ℝ) :
     Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
-  Matrix.kronecker (state r) 1 * choi (pauliChannel p) +
-    choi (pauliChannel p) * Matrix.kronecker (state r) 1
+  Matrix.kronecker (state r) 1 * MatrixMap.choi_matrix (pauliChannel p) +
+    MatrixMap.choi_matrix (pauliChannel p) * Matrix.kronecker (state r) 1
 private def scaledCandidate (p : Fin 4 → ℝ) (r : Fin 3 → ℝ) :
     Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
   let s := outputVector p r
@@ -380,7 +366,7 @@ private theorem witness_numerator (p : Fin 4 → ℝ) (r : Fin 3 → ℝ) (k : F
       eigenvalues, zero_add, sub_sub_sub_cancel_right, zero_sub, pow_two, Complex.ofReal_add, Complex.ofReal_neg, rhs,
       kronecker, state_eq_spin, one_div, Complex.coe_smul, smul_zero, Complex.real_smul, smul_neg, smul_add, pauliChannel,
       one_mul, zero_smul, Algebra.smul_mul_assoc, Algebra.mul_smul_comm, Fin.reduceSucc, ampl, transpose_add,
-      transpose_smul, transpose_mul, kroneckerMap_apply, choi, single, LinearMap.coe_mk, AddHom.coe_mk, add_zero,
+      transpose_smul, transpose_mul, kroneckerMap_apply, MatrixMap.choi_matrix, single, LinearMap.coe_mk, AddHom.coe_mk, add_zero,
       zero_mul, ite_mul, Fintype.sum_prod_type, Finset.sum_ite_eq, ite_self, neg_zero, neg_add_rev, transpose_apply,
       Finset.sum_ite_irrel, zero_ne_one, false_and, true_and, Fin.succ_ne_zero, and_true,
       and_false, neg_neg, neg_sub, one_ne_zero, Complex.I_mul_I, sub_neg_eq_add, map_one, map_zero, map_neg, map_mul,
@@ -401,7 +387,7 @@ private theorem witness_numerator (p : Fin 4 → ℝ) (r : Fin 3 → ℝ) (k : F
       Complex.conj_ofReal, Complex.conj_I, neg_mul, star_neg, neg_neg, mulVec, scaledCandidate, outputVector, eigenvalues,
       pow_two, Complex.ofReal_add, rhs, kronecker, state_eq_spin, one_div, Complex.coe_smul, smul_zero, Complex.real_smul,
       smul_neg, smul_add, pauliChannel, one_mul, zero_smul, Algebra.smul_mul_assoc, Algebra.mul_smul_comm, Fin.reduceSucc,
-      ampl, transpose_add, transpose_smul, transpose_mul, kroneckerMap_apply, mul_ite, choi, single, LinearMap.coe_mk,
+      ampl, transpose_add, transpose_smul, transpose_mul, kroneckerMap_apply, mul_ite, MatrixMap.choi_matrix, single, LinearMap.coe_mk,
       AddHom.coe_mk, Pi.smul_apply, smul_ite, zero_mul, ite_mul, Fintype.sum_prod_type, Finset.sum_ite_eq,
       Finset.mem_univ, ↓reduceIte, ite_self, neg_zero, Finset.sum_ite_eq', neg_add_rev, transpose_apply,
       Finset.sum_ite_irrel, true_and, zero_ne_one, false_and, Fin.succ_ne_zero, and_true,
@@ -424,7 +410,7 @@ private theorem witness_numerator (p : Fin 4 → ℝ) (r : Fin 3 → ℝ) (k : F
       mulVec, scaledCandidate, outputVector, eigenvalues, pow_two, Complex.ofReal_add, rhs, kronecker, state_eq_spin,
       one_div, Complex.coe_smul, smul_zero, Complex.real_smul, smul_neg, smul_add, pauliChannel, Algebra.smul_mul_assoc,
       Algebra.mul_smul_comm, zero_smul, Fin.reduceSucc, ampl, transpose_add, transpose_smul, transpose_mul,
-      kroneckerMap_apply, mul_ite, choi, single, LinearMap.coe_mk, AddHom.coe_mk, Pi.smul_apply, smul_ite, ite_mul,
+      kroneckerMap_apply, mul_ite, MatrixMap.choi_matrix, single, LinearMap.coe_mk, AddHom.coe_mk, Pi.smul_apply, smul_ite, ite_mul,
       Fintype.sum_prod_type, Finset.sum_ite_eq, Finset.mem_univ, ↓reduceIte, ite_self, Finset.sum_ite_eq', neg_add_rev,
       transpose_apply, Finset.sum_ite_irrel, true_and, zero_ne_one, false_and, neg_zero, Fin.succ_ne_zero,
       and_true, and_false, Finset.sum_neg_distrib, one_ne_zero, zero_sub, sub_neg_eq_add, map_zero,
@@ -446,7 +432,7 @@ private theorem witness_numerator (p : Fin 4 → ℝ) (r : Fin 3 → ℝ) (k : F
       Complex.conj_ofReal, Complex.conj_I, neg_mul, star_neg, neg_neg, mulVec, scaledCandidate, outputVector, eigenvalues,
       pow_two, Complex.ofReal_add, rhs, kronecker, state_eq_spin, one_div, Complex.coe_smul, smul_zero, Complex.real_smul,
       smul_neg, smul_add, pauliChannel, one_mul, Algebra.smul_mul_assoc, Algebra.mul_smul_comm, Fin.reduceSucc, zero_smul,
-      ampl, transpose_add, transpose_smul, transpose_mul, kroneckerMap_apply, mul_ite, choi, single, LinearMap.coe_mk,
+      ampl, transpose_add, transpose_smul, transpose_mul, kroneckerMap_apply, mul_ite, MatrixMap.choi_matrix, single, LinearMap.coe_mk,
       AddHom.coe_mk, Pi.smul_apply, smul_ite, zero_mul, ite_mul, Fintype.sum_prod_type, Finset.sum_ite_eq,
       Finset.mem_univ, ↓reduceIte, ite_self, neg_zero, Finset.sum_ite_eq', neg_add_rev, transpose_apply,
       Finset.sum_ite_irrel, true_and, zero_ne_one, false_and, Fin.succ_ne_zero, and_true,
@@ -498,28 +484,28 @@ private theorem inverse_only_mixed (p : Fin 4 → ℝ) (hp : ∀ μ, 0 ≤ p μ)
     simp only [state_eq_spin, ampl, Matrix.kronecker, Matrix.transpose_smul,
       Matrix.transpose_add, Matrix.transpose_one]
     rw [Matrix.kronecker_smul, Matrix.kronecker_add, Matrix.one_kronecker_one]
-  have hEq : choi F + (1 / 2 : ℂ) •
-      (ampl s * choi F + choi F * ampl s) = rhs p r := by
+  have hEq : MatrixMap.choi_matrix F + (1 / 2 : ℂ) •
+      (ampl s * MatrixMap.choi_matrix F + MatrixMap.choi_matrix F * ampl s) = rhs p r := by
     have hb := choi_bayes (pauliChannel p) (pauliChannel p) F (state r) hF
     rw [he, hL] at hb
     calc
-      _ = ((1 / 2 : ℂ) • (1 + ampl s)) * choi F +
-          choi F * ((1 / 2 : ℂ) • (1 + ampl s)) := by
+      _ = ((1 / 2 : ℂ) • (1 + ampl s)) * MatrixMap.choi_matrix F +
+          MatrixMap.choi_matrix F * ((1 / 2 : ℂ) • (1 + ampl s)) := by
         simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.add_mul, Matrix.mul_add,
           one_mul, mul_one]
         module
       _ = rhs p r := hb
-  have hscaled := scaled_sylvester (ampl s) (choi F) (rhs p r)
+  have hscaled := scaled_sylvester (ampl s) (MatrixMap.choi_matrix F) (rhs p r)
     ((∑ i, (s i) ^ 2 : ℝ) : ℂ) hvsq hEq
   have hsc : scaledCandidate p r =
-      (1 - ((∑ i, (s i) ^ 2 : ℝ) : ℂ)) • choi F := hscaled.symm
+      (1 - ((∑ i, (s i) ^ 2 : ℝ) : ℂ)) • MatrixMap.choi_matrix F := hscaled.symm
   have hcoef : 0 ≤ (1 - ((∑ i, (s i) ^ 2 : ℝ) : ℂ)) := by
     apply Complex.nonneg_iff.mpr
     constructor
     · change 0 ≤ 1 - ∑ i, (outputVector p r i) ^ 2
       exact sub_nonneg.mpr hnorm
     · simp [pow_two, Complex.mul_im]
-  have hC : (choi F).PosSemidef := choi_psd F hF.1.1
+  have hC : (MatrixMap.choi_matrix F).PosSemidef := (MatrixMap.choi_PSD_iff_CP_map F).mp hF.1.1
   have hscC : (scaledCandidate p r).PosSemidef := by
     rw [hsc]
     exact hC.smul hcoef
