@@ -406,7 +406,9 @@ public sealed class StandaloneLeanInspectorTests
         File.Copy(Path.Combine(root, "lean-toolchain"), Path.Combine(directory, "lean-toolchain"));
         var source = File.ReadAllText(Path.Combine(root, "tools", "lean-inspector", "Inspector.lean"));
         File.WriteAllText(Path.Combine(directory, "EncodingProbe.lean"),
-            source + "\nopen Lean LeanInformationAudit.InspectorProducer\n" + probe + "\n");
+            "import Lean\nnamespace LeanInformationAudit.InspectorProducer\nopen Lean\n"
+            + source[source.IndexOf("def atom (", StringComparison.Ordinal)..source.IndexOf("structure ModuleInput", StringComparison.Ordinal)]
+            + "\nend LeanInformationAudit.InspectorProducer\nopen Lean LeanInformationAudit.InspectorProducer\n" + probe + "\n");
         var result = TestProcessRunner.Run("lean", ["EncodingProbe.lean"], directory,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
@@ -468,9 +470,28 @@ public sealed class StandaloneLeanInspectorTests
                 File.WriteAllBytes(destination, file.RawBytes.AsSpan());
             }
 
+            var sourceRoot = TestRepositoryLayout.FindRoot();
+            File.Copy(Path.Combine(sourceRoot, "tools/lean-inspector/materials.py"),
+                Path.Combine(repositoryRoot, "materials.py"), true);
+            foreach (var relative in new[] { "RawArtifacts.lean", "CompiledMetadata.lean", "CompiledAxioms.lean", "Contract/SourceAudit.lean" })
+            {
+                var destination = Path.Combine(repositoryRoot, "LeanInformationAudit", relative);
+                Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                File.Copy(Path.Combine(sourceRoot, "tools/lean-inspector/LeanInformationAudit", relative), destination, true);
+            }
+            File.AppendAllText(Path.Combine(repositoryRoot, "lakefile.toml"),
+                "\n[[lean_lib]]\nname = \"LeanInformationAudit\"\nglobs = [\"LeanInformationAudit.+\"]\n");
+            var prepared = TestProcessRunner.Run("python3", ["-c",
+                "import sys; from pathlib import Path; sys.path.insert(0, sys.argv[1]); from test_native_support import transport_inspector; Path(sys.argv[3]).write_text(transport_inspector(Path(sys.argv[2]).read_text()))",
+                Path.Combine(sourceRoot, "tools/lean-inspector/tests"),
+                Path.Combine(sourceRoot, "tools/lean-inspector/Inspector.lean"),
+                Path.Combine(repositoryRoot, "Inspector.lean")], repositoryRoot,
+                TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024);
+            Assert.True(prepared.ExitCode == 0, Encoding.UTF8.GetString(prepared.StandardError));
+
             var build = TestProcessRunner.Run(
                 "lake",
-                ["build"],
+                ["build", "Trureturing", "LeanInformationAudit"],
                 repositoryRoot,
                 TestBudgets.LeanProcessHangGuard,
                 8 * 1024 * 1024);
@@ -485,12 +506,9 @@ public sealed class StandaloneLeanInspectorTests
             {
                 "env",
                 "lean",
-                "--root=" + Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector"),
+                "--root=" + repositoryRoot,
                 "--run",
-                Path.Combine(
-                    TestRepositoryLayout.FindRoot(),
-                    "tools", "lean-inspector",
-                    "Inspector.lean"),
+                Path.Combine(repositoryRoot, "Inspector.lean"),
                 "--statements-only",
                 "--output",
                 spoolReport,
