@@ -24,10 +24,29 @@ internal static class DigestStatusCommand
         try
         {
             var options = ParseArguments(arguments);
-            var (_, snapshot, document) = DigestionWorkingTree.Read(
-                repository,
-                Decode,
-                static current => BackfillInventoryLoader.Load(current));
+            var initial = options.FormalizeCandidates
+                ? DigestionWorkingTree.ReadLedger(
+                    repository,
+                    Decode,
+                    static current => BackfillInventoryLoader.LoadForDigestion(current))
+                : default;
+            var selectedInitial = options.FormalizeAtomId is null
+                ? null
+                : initial.Document.RequireDigestionEntries()
+                    .SingleOrDefault(entry => entry.AtomId == options.FormalizeAtomId);
+            var reportFreeCandidates = options.FormalizeCandidates
+                && (options.FormalizeAtomId is null || selectedInitial?.CoverageGids.IsEmpty == true);
+            var loaded = reportFreeCandidates
+                ? DigestionWorkingTree.ReadUncovered(
+                    repository,
+                    initial,
+                    Decode)
+                : DigestionWorkingTree.ReadEvaluation(
+                    repository,
+                    Decode,
+                    static current => BackfillInventoryLoader.LoadForDigestion(current));
+            var snapshot = loaded.Snapshot;
+            var document = loaded.Document;
 
             if (options.FormalizeCandidates)
             {
@@ -39,7 +58,7 @@ internal static class DigestStatusCommand
                         $"formalize atom {options.FormalizeAtomId} is absent from the ledger");
                 }
 
-                var formalizeEvaluation = options.FormalizeAtomId is null
+                var formalizeEvaluation = reportFreeCandidates
                     ? DigestionStatusEvaluator.EvaluateUncovered(
                         DigestionEvaluationScope.FullScan,
                         document,
@@ -55,8 +74,7 @@ internal static class DigestStatusCommand
                 var formalizeFrontier = DigestionFrontierProjection.Create(
                     document,
                     formalizeEvaluation,
-                    DigestionContentKindResolver.Resolve(snapshot, document),
-                    options.RetryDispositions);
+                    DigestionContentKindResolver.Resolve(snapshot, document));
                 return new CommandResult(
                     true,
                     DigestFormalizeCandidates.Render(
@@ -129,10 +147,10 @@ internal static class DigestStatusCommand
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(leanReportSource);
-        var (_, snapshot, document) = DigestionWorkingTree.Read(
+        var (_, snapshot, document) = DigestionWorkingTree.ReadEvaluation(
             repository,
             Decode,
-            static current => BackfillInventoryLoader.Load(current));
+            static current => BackfillInventoryLoader.LoadForDigestion(current));
         var evaluation = Evaluate(document, snapshot, leanReportSource);
         if (evaluation.HasReceiptIntegrityFailure)
         {
@@ -145,8 +163,9 @@ internal static class DigestStatusCommand
             DigestResidualSummary.RenderShards(evaluation, frontier));
     }
 
-    // The query reports what the current tree derives. A recorded status that
-    // differs is not an error here; align-digestion-status rewrites it.
+    // The query reports what the current tree derives.  Projected status is
+    // updated by the operation that changes the atom; there is no separate
+    // whole-ledger alignment command.
     private static DigestionLedgerEvaluation Evaluate(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
@@ -165,8 +184,7 @@ internal static class DigestStatusCommand
         DigestionFrontierProjection.Create(
             document,
             evaluation,
-            DigestionContentKindResolver.Resolve(snapshot, document),
-            retryDispositions: false);
+            DigestionContentKindResolver.Resolve(snapshot, document));
 
     private static DigestStatusOptions ParseArguments(IReadOnlyList<string> arguments)
     {
@@ -174,7 +192,6 @@ internal static class DigestStatusCommand
         var residualSummary = false;
         var formalizeCandidates = false;
         var readiness = false;
-        var retryDispositions = false;
         string? formalizeAtomId = null;
         for (var index = 0; index < arguments.Count; index++)
         {
@@ -192,9 +209,6 @@ internal static class DigestStatusCommand
                 case "--readiness" when !readiness:
                     readiness = true;
                     break;
-                case "--retry-dispositions" when !retryDispositions:
-                    retryDispositions = true;
-                    break;
                 case "--atom-id" when formalizeAtomId is null && index + 1 < arguments.Count:
                     formalizeAtomId = arguments[++index];
                     if (string.IsNullOrWhiteSpace(formalizeAtomId)) throw Usage();
@@ -208,8 +222,7 @@ internal static class DigestStatusCommand
                 + (residualSummary ? 1 : 0)
                 + (formalizeCandidates ? 1 : 0)
                 + (readiness ? 1 : 0) > 1
-            || (formalizeAtomId is not null && !formalizeCandidates)
-            || (retryDispositions && !formalizeCandidates))
+            || (formalizeAtomId is not null && !formalizeCandidates))
         {
             throw Usage();
         }
@@ -219,13 +232,12 @@ internal static class DigestStatusCommand
             residualSummary,
             formalizeCandidates,
             readiness,
-            retryDispositions,
             formalizeAtomId);
     }
 
     private static InvalidOperationException Usage() => new(
         "USAGE: StrataLint digest-status [--json|--residual-summary|--readiness|--formalize-candidates "
-        + "[--atom-id ATOM_ID] [--retry-dispositions]]");
+        + "[--atom-id ATOM_ID]]");
 
     internal static string RenderText(DigestionLedgerEvaluation evaluation)
     {
@@ -365,7 +377,6 @@ internal static class DigestStatusCommand
         bool ResidualSummary,
         bool FormalizeCandidates,
         bool Readiness,
-        bool RetryDispositions,
         string? FormalizeAtomId);
 
 }
