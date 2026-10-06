@@ -18,6 +18,8 @@ import Mathlib.Tactic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+noncomputable section
+
 namespace D5.S3.Arith.FibonacciAtomic.RawCorrelationMomentIdentities
 
 open scoped BigOperators
@@ -42,16 +44,20 @@ def disagreementMass (ρ : ℝ) : ℝ :=
 
 def normGap (ρ : ℝ) : ℝ := hTwo ρ * ellThree ρ - hOne ρ * ellThree ρ
 
+def scoreMean (α ρ : ℝ) : ℝ := α / 8 * (disagreementMass ρ + normGap ρ)
+
 /-- The legal parameter range and the exact finite product-law calculation behind
 the heterogeneous first-window disagreement term.  The expectation is expanded
 over all eight Bool triples, so the identity is a genuine finite-law computation.
 -/
-theorem result (ρ : ℝ) (hρ : 0 < ρ) (hρ8 : ρ ≤ 1 / 8) :
+theorem result (ρ α : ℝ) (hρ : 0 < ρ) (hρ8 : ρ ≤ 1 / 8) (hα : 0 < α) :
     0 ≤ hOne ρ ∧ hOne ρ ≤ 1 ∧
     0 ≤ hTwo ρ ∧ hTwo ρ ≤ 1 ∧
     0 ≤ ellThree ρ ∧ ellThree ρ ≤ 1 ∧
     disagreementMass ρ = 2 * ρ * (1 - 5 * ρ + 12 * ρ ^ 2) ∧
-    normGap ρ = -2 * ρ + 10 * ρ ^ 2 := by
+    normGap ρ = -2 * ρ + 10 * ρ ^ 2 ∧
+    scoreMean α ρ = 3 * α * ρ ^ 3 ∧
+    0 < scoreMean α ρ := by
   have hρ0 : 0 ≤ ρ := le_of_lt hρ
   have hρ3 : 3 * ρ ≤ 1 := by linarith
   have hρ2 : 2 * ρ ≤ 1 := by linarith
@@ -61,9 +67,17 @@ theorem result (ρ : ℝ) (hρ : 0 < ρ) (hρ8 : ρ ≤ 1 / 8) :
     simp [disagreementMass, productExpectation, disagreementIndicator,
       bernoulliMass, hOne, hTwo, ellThree]
     ring
+  have hScore : scoreMean α ρ = 3 * α * ρ ^ 3 := by
+    rw [scoreMean, hD]
+    simp [normGap, hOne, hTwo, ellThree]
+    ring
+  have hScorePos : 0 < scoreMean α ρ := by
+    rw [hScore]
+    positivity
   refine ⟨by dsimp [hOne]; linarith, by dsimp [hOne]; linarith,
     by dsimp [hTwo]; linarith, by dsimp [hTwo]; linarith,
-    by dsimp [ellThree]; linarith, by dsimp [ellThree]; linarith, ?_, ?_⟩
+    by dsimp [ellThree]; linarith, by dsimp [ellThree]; linarith, ?_, ?_,
+    hScore, hScorePos⟩
   · rw [hD]
     dsimp [hOne, hTwo, ellThree]
     ring

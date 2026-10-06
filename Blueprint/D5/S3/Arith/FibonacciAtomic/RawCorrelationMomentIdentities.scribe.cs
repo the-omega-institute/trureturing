@@ -17,7 +17,8 @@ internal sealed class RawCorrelationMomentIdentitiesDocument : IScribeDocumentDe
                 + "The three coordinates are independent Bernoulli variables with these parameters. "
                 + "The product expectation is the explicit sum over all eight Bool triples of the "
                 + "disagreement indicator: it is one exactly when the first two coordinates differ "
-                + "and the third coordinate is true. The theorem evaluates this finite law exactly.")),
+                + "and the third coordinate is true. The theorem evaluates this finite law exactly. "
+                + "For a positive channel strength alpha, the resulting raw-score mean is also evaluated.")),
             Describe.Lean(
                 DescribeId.Create("raw-correlation-moment-identities"),
                 DeclarationHandle.Create(Prefix + "result"),
@@ -27,7 +28,8 @@ internal sealed class RawCorrelationMomentIdentitiesDocument : IScribeDocumentDe
                 Blocks(Paragraph(Text(
                     "The first six conjuncts state that H1, H2 and L3 are probabilities. "
                     + "The seventh is the exact disagreement mass d=2rho(1-5rho+12rho^2), "
-                    + "and the last is the squared-norm difference H2 L3-H1 L3=-2rho+10rho^2."))),
+                    + "the last is the squared-norm difference H2 L3-H1 L3=-2rho+10rho^2, "
+                    + "and the score mean alpha/8 times their sum is 3alpha rho^3>0."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
@@ -47,15 +49,21 @@ internal sealed class RawCorrelationMomentIdentitiesDocument : IScribeDocumentDe
         var l3 = Call("L", N(3), rho);
         var d = Call("d", rho);
         var gap = Call("G", rho);
+        var alpha = V("alpha");
+        var score = Call("M", alpha, rho);
         var bounds = new Formula.Aligned([
             Seq(N(0), Leq, h1, Leq, N(1), Sp, Land, Sp,
                 N(0), Leq, h2, Leq, N(1), Sp, Land, Sp,
                 N(0), Leq, l3, Leq, N(1), Sp, Land),
             Seq(d, Sp, Eq, Sp, Seq(N(2), rho, Par(Seq(N(1), Minus, N(5), rho, Plus,
                 N(12), Sq(rho)))), Sp, Land),
-            Seq(gap, Sp, Eq, Sp, Seq(Minus, N(2), rho, Plus, N(10), Sq(rho)))
+            Seq(gap, Sp, Eq, Sp, Seq(Minus, N(2), rho, Plus, N(10), Sq(rho)), Sp, Land),
+            Seq(score, Sp, Eq, Sp, Seq(N(3), alpha, rho, Sq(rho)), Sp, Land,
+                N(0), Lt, score)
         ]);
-        return Disp(Seq(Forall, Sp, rho, Sp, InMacro, Sp, Seq(Mathbb, Grp(V("R"))), Sp,
-            Par(Seq(N(0), Lt, rho, Leq, Fraction(N(1), N(8)))), Comma, Sp, bounds));
+        return Disp(Seq(Forall, Sp, rho, Comma, Sp, alpha, Sp, InMacro, Sp,
+            Seq(Mathbb, Grp(V("R"))), Sp,
+            Par(Seq(N(0), Lt, rho, Leq, Fraction(N(1), N(8)), Sp, Land, Sp,
+                N(0), Lt, alpha)), Comma, Sp, bounds));
     }
 }
