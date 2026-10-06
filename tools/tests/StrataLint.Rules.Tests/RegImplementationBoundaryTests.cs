@@ -10,8 +10,8 @@ public sealed class RegImplementationBoundaryTests
 {
     private const string Lakefile = "Reg/lakefile.toml";
     private const string Source = "Reg/Source.lean";
-    private const string Judge = "LeanInformationAudit.Syntax";
-    private const string OtherJudge = "LeanInformationAudit.SealCommand";
+    private const string Judge = "LeanInformationAudit.ArtifactRegistration";
+    private const string OtherJudge = "LeanInformationAudit.CompiledSeal";
     private const string Config = """
         name = "reg"
         defaultTargets = ["Reg"]
@@ -107,8 +107,8 @@ public sealed class RegImplementationBoundaryTests
     public void SmallerDebtCannotIntroduceReplacement()
     {
         var baseline = Files((Source, $"import {Judge}\nimport {OtherJudge}\n"));
-        AssertBlock(Evaluate(baseline, Files((Source, "import LeanInformationAudit.Registry\n"))),
-            Source, "LeanInformationAudit.Registry");
+        AssertBlock(Evaluate(baseline, Files((Source, "import LeanInformationAudit.ArtifactAssessment\n"))),
+            Source, "LeanInformationAudit.ArtifactAssessment");
     }
 
     [Fact]
