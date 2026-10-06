@@ -161,6 +161,9 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 
     public RawRepositorySnapshot ReadCurrent() => GitRepositorySnapshotReader.ReadCurrent(root);
 
+    public RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths) =>
+        WorkingTreeReader.Read(root, paths);
+
     public RawRepositorySnapshot ReadRevision(string revision) =>
         GitRepositorySnapshotReader.ReadRevision(
             revision,

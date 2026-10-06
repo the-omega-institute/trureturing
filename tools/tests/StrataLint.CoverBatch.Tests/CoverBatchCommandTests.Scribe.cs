@@ -8,17 +8,11 @@ public sealed partial class CoverBatchCommandTests
 {
     private const string ProblemPath = "Problems/batch-problem.md";
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void CoverBatchDoesNotExecuteOrEmitScribeDefinitionsAndPreservesCoverage(bool definitionChanged)
+    [Fact]
+    public void CoverBatchDoesNotExecuteOrEmitScribeDefinitionsAndPreservesCoverage()
     {
         const string target = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
-        using var world = new BatchWorld(targetUnchanged: true)
-        {
-            UseGitReader = true,
-            ChangedPaths = definitionChanged ? [target] : [],
-        };
+        using var world = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(world.Root);
         WriteScribeFixture(world.Root, target, """
             using StrataLint.Scribe;
@@ -28,8 +22,6 @@ public sealed partial class CoverBatchCommandTests
                 public DocumentDefinition Create() => throw new System.InvalidOperationException("Scribe must not execute during cover-batch");
             }
             """);
-        world.KeepAtBaseline("Blueprint/D5/S0/Carrier/Probe.md");
-        if (!definitionChanged) world.KeepAtBaseline(target);
         world.WriteReportBundle();
         var markdown = Path.Combine(world.Root, "Blueprint/D5/S0/Carrier/Probe.md");
         var before = File.ReadAllBytes(markdown);
@@ -49,7 +41,7 @@ public sealed partial class CoverBatchCommandTests
     public void CoverBatchDoesNotCompileChangedInvalidDefinition()
     {
         const string target = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
-        using var world = new BatchWorld(targetUnchanged: true) { UseGitReader = true, ChangedPaths = [target] };
+        using var world = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(world.Root);
         WriteScribeFixture(world.Root, target, "invalid C#");
         world.WriteReportBundle();
@@ -65,7 +57,7 @@ public sealed partial class CoverBatchCommandTests
     [Fact]
     public void CoverBatchIgnoresDefinitionsWithoutFullResources()
     {
-        using var world = new BatchWorld { UseGitReader = true, ChangedPaths = ["Blueprint/D5/S0/Carrier/Probe.scribe.cs"] };
+        using var world = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(world.Root);
         WriteScribeFixture(world.Root, "Blueprint/D5/S0/Carrier/Probe.scribe.cs", """
             using StrataLint.Scribe;
@@ -114,7 +106,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(2, sequentialLoads.Catalogs);
         Assert.Equal(2, sequentialLoads.Indexes);
         WriteLoadCounts("cover-batch-parser-owner", ledgerLoads);
-        Assert.Equal(1, ledgerLoads.BaselineLoads);
+        Assert.Equal(0, ledgerLoads.BaselineLoads);
         Assert.Equal([1, 1], ledgerLoads.CandidateSnapshotLoads);
     }
 

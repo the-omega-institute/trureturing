@@ -8,11 +8,11 @@ internal static partial class CoverAtomCommand
     internal sealed class Session
     {
         private readonly string root;
-        private readonly string baselineRevision;
         private RepositorySnapshot? current;
         private BackfillInventoryDocument? document;
         internal RawRepositorySnapshot CurrentRaw { get; private set; }
         internal RepositorySnapshot Current => current ??= Decode(CurrentRaw);
+        // The ledger as the session first read it: the state its writes are compared with.
         internal RepositorySnapshot Baseline { get; }
         internal BackfillInventoryDocument Document => document ??= LoadDocument(Current);
         internal BackfillInventoryDocument BaselineDocument { get; }
@@ -25,15 +25,12 @@ internal static partial class CoverAtomCommand
         internal bool Invalidated { get; private set; }
 
         internal Session(string root, IRepositoryGateway repository, ILeanReportSource reportSource,
-            DateTimeOffset recordedAtUtc, string baselineRevision, string firstGid)
+            DateTimeOffset recordedAtUtc, string firstGid)
         {
             this.root = root;
-            this.baselineRevision = baselineRevision;
-            CurrentRaw = repository.ReadCurrent();
-            current = Decode(CurrentRaw);
-            Baseline = Decode(repository.ReadRevision(baselineRevision));
-            document = LoadDocument(current);
-            BaselineDocument = IngestCommand.LoadDocument(Baseline, baseline: true);
+            (CurrentRaw, current, document) = DigestionWorkingTree.Read(repository, Decode, LoadDocument);
+            Baseline = current;
+            BaselineDocument = document;
             Report = reportSource.Load(Current);
             Lean = ValidateLean(Current, Report);
             try
@@ -48,11 +45,11 @@ internal static partial class CoverAtomCommand
             }
             FrozenStatements = FrozenStatementIndex.Create(FrozenState, Report);
             TruthStates = LeanTruthStates.Resolve(Current, Lean);
-            Changes = repository.ReadChanges(baselineRevision);
+            Changes = RawChangeSet.Create([]);
         }
 
         internal CommandResult Apply(string atomId, ImmutableArray<string> gids) =>
-            CoverAtomCommand.Apply(this, new CoverArguments(atomId, gids, baselineRevision), allowAlreadyApplied: true);
+            CoverAtomCommand.Apply(this, new CoverArguments(atomId, gids), allowAlreadyApplied: true);
 
         internal void Commit(RawRepositorySnapshot raw, ImmutableArray<IngestCommand.LedgerUpdate> updates)
         {
