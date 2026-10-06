@@ -9202,6 +9202,30 @@ This retains the actual intersections and uses one law for all phases.
 
 The identity is bookkeeping rather than a density theorem. Report385 RE7–RE11 gives the same-law q-fibre principle and its unconditioned complete-line lower bound; Report385 SH2 gives a pointwise shallow-root condition outside a retained set. Neither controls \(n_1\) on \(R\), so neither supplies a positive lower bound for \(\sum_\omega\nu(Y_\omega)\). The common-law constructions in Report385 SF1–SF9 and RF1–RF11 require additional saturated projection or forest-intersection hypotheses. A complete private q² source at its actual first digit makes one section nonempty, but does not make the all-phase sum large. The all-phase sections cannot be treated as q copies of one section or assigned separate optimizing laws.
 
+### A conditional all-word mass bound and its exact extra hypothesis
+
+RLC3 by itself does not control the full \(n_1\) in CD353: its \(B_1\) contains the full-height labels at the fixed ternary word, whereas \(E_\omega\) may also contain lower ternary-height depth-one labels whose cylinders contain that word. A valid quantitative bridge therefore needs the strengthened condition
+\[
+ n_1(u,v_u)\le2
+\quad\text{for every }u\bmod3^h,
+\tag{CD357-hyp}
+\]
+where \(n_1\) counts **all** actual depth-one labels in the definition of \(E_\omega\), not only the labels in the RLC3 batch.
+
+Under this condition, and with the same complete source law on
+\[
+X=(\mathbf Z/3^h)\times(\mathbf Z/M),
+\]
+choose one \(v_u\in R_u\) for each \(u\). The points \(x_u=(u,v_u)\) are distinct, and each belongs to at least \(q-2\) of the sets \(Y_\omega\). Since every atom has mass \((3^hM)^{-1}\), CD353 gives
+\[
+\boxed{\displaystyle
+\sum_{\omega\bmod q}\nu(Y_\omega)
+\ge \frac1{3^hM}\sum_{u\bmod3^h}\bigl(q-n_1(u,v_u)\bigr)
+\ge \frac{q-2}{M}.}
+\tag{CD357}
+\]
+For one fixed word only, the corresponding bound is \((q-2)/(3^hM)\). Thus the bridge is useful only after separately proving the full-depth-one condition (or an equivalent exclusion of the lower-height incidences) and controlling \(M\) or an aggregate reciprocal-carrier quantity. RLC3 supplies neither by itself. Under the strengthened hypothesis CD357 can be inserted into CD356; without it CD353 remains bookkeeping.
+
 ## A sharp source-only boundary from an all-height partial family
 
 Fix a prime \(q\ge5\) and \(h\ge1\). Consider the distinct odd labels
