@@ -432,3 +432,219 @@ the actual whole-cover branch to those inputs and the probabilistic
 construction above are the explicit ordinary arguments here.
 Neither integral feasibility nor an unrestricted covering
 contradiction is asserted to be proved.
+
+## Complete colors can defeat the independent-group certificate
+
+The row-count and dependency-degree conditions FP20--FP21 are
+sufficient certificates, not necessary conditions for a prefix
+plan. A squarefree prescribed-source control has 27 cofactor primes,
+110 complete colors, cofactor capacity one and an explicit integral
+plan, while both the union-bound and symmetric local-lemma tests fail
+for the independent singleton sampling. Its source is not the exact
+q-free residual of a whole cover.
+
+Partition the 27 primes from 5 through 109, in increasing order,
+into nine consecutive blocks P_0,...,P_8 of three primes each.
+Let W be their squarefree product. For b in {0,1}^9 let w_b be
+the CRT point with coordinate b_j at every prime in P_j. Take the
+common source
+
+$$
+M=\Omega\times\{w_b:b\in\{0,1\}^9\},
+\qquad \Omega=\{2,4,5,7,8\}.
+$$
+
+Every owner below is row zero. A cofactor made from selected primes
+in specified blocks is given the literal zero-or-one phase prescribed
+by a pattern on those blocks. Its trace on M is exactly that pattern,
+because all three prime coordinates in a block carry the same bit.
+Use the following families, with a different color for each listed
+family.
+
+* In each block use its three singleton and three two-prime products.
+  Order these six cofactors first by support size, then
+  lexicographically, and pair consecutive entries. In each pair
+  give one owner phase zero and the other phase one. This gives
+  three two-owner colors per block: 27 colors and 54 owners.
+* For each unordered pair of blocks, order its nine products of one
+  prime from each block lexicographically. Use the first four for
+  one color and the next four for another. Within each color assign
+  the four binary patterns on the two blocks bijectively. This gives
+  72 colors and 288 owners.
+* Choose the first eleven unordered triples of blocks
+  lexicographically. For each triple use the first eight of its 27
+  products of one prime per block, and assign the eight binary
+  patterns bijectively. This gives eleven colors and 88 owners.
+
+There are exactly 110 colors and 430 owners. Every color partitions
+M, so every source point has exactly 110 incident owners and each
+owner has private source points within its color. The cofactor labels
+are all different: the three constructions use respectively one,
+two and three blocks, and labels within each construction are
+injective. Every exponent in W is one, so this control respects the
+current cofactor exponent upper bounds.
+
+These are literal arithmetic owners. Give the colors the distinct
+q-digits 0,...,109, put q=113, and give an owner of cofactor m the
+original modulus qm with its stated q-digit and cofactor phase.
+One may adjoin the pure guards 0 modulo 3 and 1 modulo 9 and the
+three unit-cofactor originals with q-digits 110,111,112, using
+ternary phase two for 3q and 9q. This is a family of 435 distinct
+odd nonunit APs with H_3=2 and G=1. Every original has a private
+integer; comparable originals are disjoint. For a nonunit owner,
+combine one of its private mask points with its own q-digit and
+safe word two. All other colors miss that q-digit, and its own
+color partitions the mask. The remaining five originals also have
+explicit private integers.
+
+This family is a NONCOVER and is not numerically divisor-closed.
+For example, its exact q-free residual contains the cofactor point
+whose 27 prime coordinates are all two, whereas M contains only the
+blockwise zero-or-one points. The integer
+
+```text
+4196024952267824042674142428081017145124958452
+```
+
+has that cofactor point, safe old word two and q-digit zero, and
+is uncovered. No missing q-free parents or complete source identity
+are inferred from the mask construction. The U-colored essential
+top inventory of the actual branch is absent as well.
+
+### Exact incidence rows and dependency degree
+
+Since every cofactor occurs once, the candidate palette is depth
+three. There are fifteen safe residues modulo 27. The binary colors
+read every block bit, so different b give different owner-incidence
+rows. Different safe ternary roots give different candidate rows.
+Consequently the lifted mask has exactly
+
+$$
+15\cdot2^9=7680
+$$
+
+distinct full candidate-incidence rows.
+
+Two bit patterns share an incident cofactor group unless they are
+bitwise complements. If they agree at a block, a binary color in
+that block supplies a common active owner. Complementary patterns
+share no owner, since every owner specifies at least one block bit.
+The fifteen ternary rows over the complementary bit pattern are
+therefore precisely the nonneighbors of a fixed target event in
+the dependency graph used in FP21. Its degree is exactly
+
+$$
+7680-1-15=7664.
+$$
+
+Each incident singleton owner hits a fixed target with probability
+1/15 under independent uniform prefix choices. Thus the exact miss
+probability is (14/15)^110, which is stronger than the common bound
+FP19. Nevertheless exact rational comparisons give
+
+$$
+7680(14/15)^{110}>1,
+\qquad
+2\cdot7665(14/15)^{110}>1.
+$$
+
+Since e>2, even the symmetric local-lemma condition using this
+stronger exact probability fails on the specified dependency graph.
+This conclusion concerns these two certificates, not every possible
+probabilistic argument or dependency graph.
+
+### Thirty outputs suffice by choosing whole colors together
+
+Select any fifteen of the 27 binary colors and assign them
+bijectively to the fifteen safe roots modulo 27. Give both owners
+of a selected color that color's assigned root, retaining each
+owner's literal cofactor phase. Every one of these colors covers
+the entire cofactor mask, so its two outputs cover that mask at
+its assigned ternary root. Together the thirty outputs cover every
+lift of M. Their numerical labels are distinct because all selected
+cofactors were already different. The unselected colors produce
+no outputs.
+
+This positive plan uses correlated choices within each complete
+color. It shows why a large event graph for independent cofactor
+sampling does not by itself rule out a coherent integral plan.
+
+The control differs from Report864 PC30: it has squarefree current
+exponent bounds and an integral prefix plan, and directly measures
+the rows and dependency graph. It differs from PC69--PC75: all 110
+colors here are individually complete, and no impossibility of
+integer prefix assignment is claimed. It does not refute a theorem
+using the actual E0 identity, numerical divisor closure, essential
+top originals or global minimality.
+
+The [exact checker](../../../frontier/cover-geometry/complete-color-prefix-coupling/complete_color_incidence_control.py) constructs the integer CRT phases, verifies all
+512 cofactor points, the 110 color partitions, distinct cofactors,
+private integers and comparable-original disjointness, checks the
+complement dependency relation, and verifies the thirty-output plan.
+It also checks the two probability inequalities as rational
+inequalities. These are finite arithmetic checks, not new Lean
+verification claims.
+
+### A sufficient coherent-color condition for the actual source
+
+For the actual branch, fix each safe root r modulo 27 and write
+z=r modulo nine. A color's original owners whose ternary phase
+accepts z give a complete cofactor cover of the actual X_z. Suppose
+one can select, for each of the fifteen r, a complete subcover of
+X_z from one such actual color in U, so that the map
+
+$$
+(r,i)\longmapsto m_i
+$$
+
+is injective across all selected owner occurrences. Place each
+selected owner at root r with numerical label 27m_i and its literal
+cofactor phase. This covers the full lifted E0, preserves all q-free
+originals, and has distinct fresh labels. No owner is used twice,
+so the output count is at most |S-plus| and FP17 pays it strictly.
+
+The missing condition is the simultaneous cofactor-injective
+selection of these word-specific complete subcovers. It is not
+supplied by merely choosing fifteen complete colors. Within a color,
+qm,3qm and 9qm can have different literal cofactor phases but the
+same numerical cofactor; across colors the same conflict can recur
+at different roots. Assigning them all depth three would then
+reuse 27m. The cofactor capacity three bounds each conflict's size,
+not the number of conflicts involving a color. A coherent-color
+argument for the actual source must prove an allocation avoiding
+these numerical conflicts or provide a paid way to resolve them.
+
+## Secondary minimality permits all 113 colors
+
+When every q-bearing original is deleted, all 113 colors give complete
+stripped covers of the exact E0. For any x in E0 and any q-residue v,
+CRT gives a source integer preserving x modulo 9W and having q-digit v.
+It misses F0 and hence has an original owner in D of color v. This
+argument also covers the three unit-cofactor colors excluded from U.
+
+Apply the same FP14--FP18 group construction to all of D, allowing the
+cofactor m=1. Its fresh labels still have ternary height at least three.
+Each residual point has at least 113 incident owners, so the load and
+miss bounds strengthen to
+
+$$
+A x\ge\frac{1469}{243}\mathbf1,\qquad
+p_v\le(230/243)^{113}.
+$$
+
+Exact rational arithmetic gives
+
+$$
+499(230/243)^{113}<1\le500(230/243)^{113}.
+$$
+
+An integral plan would now use at most |D| outputs. The strict per-group
+cost comparisons after FP17 still hold, including m=1, so equal count
+would contradict the secondary minimum. This change does not establish
+that an integral plan exists, nor a 499-row bound. The all-color CRT
+transport and these scalar comparisons have scoped Lean applications;
+they do not kernel-verify the full probabilistic construction.
+
+[Report870](870-matroid-prefix-rounding-and-divisor-hall-repair.md)
+uses all 113 colors in a different sampler that reserves an explicit
+repair budget and specifies its missing Hall conditions.
