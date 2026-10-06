@@ -348,19 +348,22 @@ The allocation, full CRT coverage, freshness and these bounds have
 one complete actual-source Lean check. The selected family need
 not share an old word or q-color.
 
-For q=113, add the explicit actual-label closure assumption that
-every nonunit divisor of an original modulus is itself an original
-modulus. Since 113d divides its owner's label, this supplies an
-actual row-zero original of modulus 113d. Thus the donor image is
+Every nonunit divisor of an original modulus is itself an original
+modulus. This follows from the stated minimality: an
+absent divisor could replace its original class, preserving the
+cover and numerical distinctness while strictly decreasing the
+modulus sum. An exact singleton application of the existing finite
+replacement theorem checks this closure. For q=113, since 113d
+divides its owner's label, it supplies an actual row-zero original
+of modulus 113d. Thus the donor image is
 contained in the actual P0 bank. The checked all-q budget above
 pays both its output count and its strictly smaller modulus sum.
-Neither divisor closure nor coverage of the residual is inferred
-from the matching theorem.
+Coverage of the residual is not inferred from the matching theorem.
 
 This yields a necessary source restriction. Let E be the actual
 complement of all q-free originals, and assume some original is
-divisible by 113. Under the same guards, no27, minimality and
-explicit divisor closure, the safe q-stripped traces of a fixed
+divisible by 113. Under the same guards, no27 and minimality,
+the safe q-stripped traces of a fixed
 ten-match sector cannot cover E. If they did, retaining every
 q-free original and adding DA12 would give a legal cheaper cover
 with no larger count. This implication has an exact Lean check
@@ -436,17 +439,93 @@ are not required. A combined actual-source check supplies the
 eight-prime banks, proves their 162-member stock and degree-910
 bound, and produces one coloring of numerical divisors. Every
 selected owner has a matching divisor of each of the fifteen
-colors. The remaining shared-donor CRT and paid noncoverage steps
-are not yet presented as one completed Lean proof. In particular,
-the eight-match coloring is not an injective donor allocation:
-shared numerical donors must keep one phase and one safe root.
-No new proof of the local lemma is claimed.
+colors. No new proof of the local lemma is claimed.
 
-Even a complete eight-match sector repair would not prove that
-its selected source traces cover E0. That source-wide implication
-remains missing. One cannot replace a fixed root table by a new
-table at each uncovered point and then unite the incompatible
-assignments of shared numerical donors.
+The full eight-match repair and paid noncoverage implication also
+have one complete actual-source Lean check. Choose one witness
+donor for each owner and color, then take their numerical image B.
+For each d in B choose one actual owner furnishing it. If another
+owner furnishes the same d, unique prime factorization identifies
+its prime support. Both literal residues match the same phase table
+on that support, so they agree modulo d. Thus one CRT output per
+numerical donor uses its single assigned safe root and serves every
+owner that selected it. There is no overwrite of an earlier phase.
+
+The coalesced bank has |B| at most 15|I|. Every witness donor uses
+at most seven of an owner's at least eight matching primes, so
+5d is at most that owner's cofactor. Summing over witness slots,
+then bounding the image sum by the slot sum, gives
+
+$$
+\sum_{d\in B}27d\le81\sum_i m_i.
+\tag{DA15}
+$$
+
+The fixed family covers the entire selected safe stripped union,
+including lower rows. The paid noncoverage implication holds for
+every q at least 28. It only needs count-then-sum minimality, no
+original modulus divisible by 27, some original divisible by nine,
+and some original divisible by q. No primality or height-one
+condition on q, common period, prime-pool cap, explicit divisor
+closure or separately supplied guard disjointness is required.
+
+Minimality supplies actual moduli three and nine by the singleton
+replacement argument. Their classes are disjoint: if the nine-class
+were contained in the three-class, deleting the former would lower
+the count. For every used numerical donor d, minimality likewise
+supplies the actual label q*d. Distinct d give distinct actual
+q-bearing originals, even when q is composite. Let D be all the
+actual q-bearing originals. Then the exact bank payment is
+
+$$
+|B|\le|D|,\qquad
+27\sum_{d\in B}d<\sum_{j\in D}n_j.
+\tag{DA16}
+$$
+
+If B is nonempty, use q at least 28 and the injection of q*d labels
+into D. If B is empty, the nonempty D and positivity of all original
+moduli give the strict inequality. This counts actual labels rather
+than assuming that numerical divisors have been stocked. In the
+q=113 height-one branch it specializes to the P0 budget.
+
+There is a direct actual-source formulation without a preselected
+owner family. For one fixed phase function phi and each q-bearing
+original i, put
+
+$$
+R_i(\phi)=\{p:p\text{ prime},\ p\ne3,\ p\mid n_i/q,
+\ a_i\equiv\phi_p\pmod p\}.
+\tag{DA17}
+$$
+
+Apply the eight-match construction to all actual q-bearing originals
+with at least eight such matches, using their actual quotient n_i/q.
+The checked conclusion is
+
+$$
+\forall\phi\quad\exists x\in E_q\quad
+\forall i\quad
+\bigl(q\mid n_i\ \text{and}\ x\equiv a_i\pmod{n_i/q}\bigr)
+\Longrightarrow |R_i(\phi)|\le7,
+\tag{DA18}
+$$
+
+where E_q is the literal complement of all q-free originals. At this
+same x, at least one actual q-bearing original contains x even before
+stripping q. Thus the conclusion has an actual serving owner and does
+not arise from an empty residual. The complete DA16--DA18 application
+compiles with standard axioms and default proof budgets. Its literal
+residues and quotient labels come from F; the phase table is one
+fixed parameter. The quantifier order is
+one fixed phi followed by a witness x; no common witness for every
+phase table is asserted.
+
+This restriction does not prove that the selected source traces
+cover E0. That source-wide implication remains missing. One cannot
+replace a fixed root table by a new table at each uncovered point
+and then unite the incompatible assignments of shared numerical
+donors.
 
 ## Verification and the remaining global obligation
 

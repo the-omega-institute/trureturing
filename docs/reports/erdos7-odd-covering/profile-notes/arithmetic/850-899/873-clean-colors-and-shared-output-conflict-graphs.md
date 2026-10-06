@@ -387,6 +387,23 @@ last three similarly force the phase at five to be zero modulo five. This is
 impossible even when the phase functions range over all natural
 numbers, rather than just binary phases.
 
+The Boolean obstruction is established literature. Section 4, printed
+pages 5--6, of Abbasizanjani and Kullmann, *Classification of minimally
+unsatisfiable 2-CNFs*, [arXiv:2003.03639v1](https://arxiv.org/abs/2003.03639v1),
+defines the family U^0_(n,i). Its member n=5, i=3 has exactly these
+six Boolean clauses, after setting the paper's variables
+(1,2,3,4,5)=(y,z,x,u,v). Here (x,y,z,u,v) state that the phases at
+(5,7,11,13,17), reduced modulo their respective primes, equal one.
+A zero phase implies the corresponding Boolean negation. Arbitrary
+other residues remain allowed, so the arithmetic endpoint conditions
+imply the Boolean clauses; they are not claimed equivalent for all
+phase assignments. The inspected paper attributes this family to
+Chvatal and Reed, *Mick gets some (the odds are on his side)*,
+FOCS 1992, DOI 10.1109/SFCS.1992.267789; that historical attribution
+is indirect here. Boolean clause minimality does not establish
+minimality of the arithmetic packet family or divisor bank. The
+arithmetic realization makes no priority claim.
+
 Partial intersections do not evade this obstruction for this bank.
 For each packet, the relative upper density contributed by the
 nondivisor donors is
