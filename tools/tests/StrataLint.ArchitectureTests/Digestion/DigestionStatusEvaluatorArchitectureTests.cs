@@ -12,12 +12,12 @@ public sealed class DigestionStatusEvaluatorArchitectureTests
     public void IngestAlignmentApiIsWholeLedgerOnly()
     {
         AssertParameters(typeof(DigestionLedgerAligner), "Evaluate",
-            "document", "snapshot", "baselineDocument", "mode", "atomizerResolver", "baselineSnapshot",
+            "document", "snapshot", "mode", "atomizerResolver",
             "casEvaluation", "changes", "casChanges", "contentKindAtomizerResolver");
         AssertParameters(typeof(DigestionStatusEvaluator), "EvaluateUncovered",
-            "scope", "document", "snapshot", "baselineDocument", "changes", "casChanges");
+            "scope", "document", "snapshot", "changes", "casChanges");
         AssertParameters(typeof(DigestionStatusEvaluator), "StatusAuthorityChangedAtomIds",
-            "document", "baselineDocument", "changes", "alignment");
+            "document", "changes", "alignment");
     }
 
     private static void AssertParameters(Type owner, string name, params string[] expected)

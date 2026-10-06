@@ -40,7 +40,7 @@ public sealed partial class DigestionLedgerTests
         {
             var document = Document(AtomizerRegistry.NoAtomizerId, [candidate, .. dependencies]);
             return DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan, document, snapshot,
-                AcceptedLean(targetPath), baselineDocument: document)
+                AcceptedLean(targetPath))
                 .Entries.Single(item => item.Entry.AtomId == parent.AtomId);
         }
         var openParent = EvaluateParent(parent, children);

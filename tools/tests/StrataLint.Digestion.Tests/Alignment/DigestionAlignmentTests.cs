@@ -19,7 +19,6 @@ public sealed partial class DigestionAlignmentTests
         var alignment = DigestionLedgerAligner.Evaluate(
             ledger,
             snapshot,
-            ledger,
             DigestionAlignmentMode.Ingest);
 
         var plan = ReportFreeDigestionIngestor.Plan(
@@ -65,7 +64,6 @@ public sealed partial class DigestionAlignmentTests
         var exception = Assert.Throws<FormatException>(() => DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(Encoding.UTF8.GetBytes("source"), [oldCapture]),
-            ledger,
             DigestionAlignmentMode.Ingest,
             _ => (_, _) => throw new FormatException("invalid Markdown AST span")));
 
@@ -89,7 +87,6 @@ public sealed partial class DigestionAlignmentTests
         var alignment = DigestionLedgerAligner.Evaluate(
             ledger,
             snapshot,
-            ledger,
             DigestionAlignmentMode.Ingest);
 
         var finding = Assert.Single(alignment.Findings);
@@ -124,7 +121,6 @@ public sealed partial class DigestionAlignmentTests
         var alignment = DigestionLedgerAligner.Evaluate(
             ledger,
             snapshot,
-            ledger,
             DigestionAlignmentMode.Ingest);
         var first = ReportFreeDigestionIngestor.Plan(ledger, snapshot);
 
@@ -204,14 +200,15 @@ public sealed partial class DigestionAlignmentTests
             new RawRepositoryEntry(
                 TheoryAtomizerDataLoader.DataPath,
                 ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes)),
+            RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest()),
         ]);
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
 
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             snapshot,
-            ledger,
-            DigestionAlignmentMode.Admission);
+            DigestionAlignmentMode.Admission,
+            changes: RawChangeSet.Create(["notes/unrelated.txt"]));
 
         Assert.Empty(result.Findings);
         Assert.Empty(result.Residual);
@@ -244,7 +241,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void CasBackedAdmissionDoesNotReatomizeReceiptsWhenInputsMatchBaseline()
+    public void CasBackedAdmissionDoesNotReatomizeReceiptsOutsideTheChangeSet()
     {
         var currentBytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(A)**。raw。\n\n**定理 1.2(B)**。normalized。\n");
@@ -268,10 +265,9 @@ public sealed partial class DigestionAlignmentTests
         var first = DigestionLedgerAligner.Evaluate(
             ledger,
             snapshot,
-            ledger,
             DigestionAlignmentMode.Admission,
             _ => atomizer,
-            baselineSnapshot: snapshot);
+            changes: RawChangeSet.Create(["notes/unrelated.txt"]));
 
         Assert.Empty(first.Findings);
         Assert.Empty(first.Residual);
@@ -282,10 +278,9 @@ public sealed partial class DigestionAlignmentTests
         var second = DigestionLedgerAligner.Evaluate(
             ledger,
             snapshot,
-            ledger,
             DigestionAlignmentMode.Admission,
             _ => atomizer,
-            baselineSnapshot: snapshot);
+            changes: RawChangeSet.Create(["notes/unrelated.txt"]));
 
         Assert.Empty(second.Findings);
         Assert.Equal(0, calls);
@@ -310,7 +305,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(bytes, captures),
-            ledger,
             DigestionAlignmentMode.Admission);
 
         Assert.Empty(result.Findings);
@@ -324,7 +318,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void AdmissionAcceptsCasBackedHistoricalAndCurrentReceiptsWithoutReatomizing()
+    public void AdmissionSeesHistoricalReceiptAndReportsTheRewrittenAtomAsResidual()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
@@ -332,22 +326,18 @@ public sealed partial class DigestionAlignmentTests
         var newAtom = Assert.Single(GictAtomizer.Atomize(newBytes, DigestionTestSupport.Rules).Claims);
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
         var newCapture = DigestionCasStore.Capture(newAtom.RawBytes.AsSpan());
-        var baseline = WithGenreCheck(
-            Ledger([], Entry("old-receipt", oldAtom)),
-            GenreRegistryCheck.Collected([]));
-        var unacknowledged = WithGenreCheck(
+        var historicalOnly = WithGenreCheck(
             Ledger([], Entry("old-receipt", oldAtom)),
             GenreRegistryCheck.Collected([]));
 
-        var rejected = DigestionLedgerAligner.Evaluate(
-            unacknowledged,
+        var historical = DigestionLedgerAligner.Evaluate(
+            historicalOnly,
             Snapshot(newBytes, [oldCapture]),
-            baseline,
             DigestionAlignmentMode.Admission);
 
-        Assert.Equal(DigestionReceiptAlignment.Seen, rejected.AlignmentFor(AtomId(oldAtom)));
-        Assert.Empty(rejected.Residual);
-        Assert.Empty(rejected.Findings);
+        Assert.Equal(DigestionReceiptAlignment.Seen, historical.AlignmentFor(AtomId(oldAtom)));
+        Assert.Equal(AtomId(newAtom), Assert.Single(historical.Residual).SuggestedAtomId);
+        Assert.Empty(historical.Findings);
 
         var closed = WithGenreCheck(
             Ledger(
@@ -358,7 +348,6 @@ public sealed partial class DigestionAlignmentTests
         var admitted = DigestionLedgerAligner.Evaluate(
             closed,
             Snapshot(newBytes, [oldCapture, newCapture]),
-            baseline,
             DigestionAlignmentMode.Admission);
 
         Assert.Empty(admitted.Findings);
@@ -422,7 +411,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(newBytes, [oldCapture]),
-            baseline,
             DigestionAlignmentMode.Ingest);
 
         Assert.Empty(result.Findings);
@@ -456,7 +444,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(currentBytes),
-            baseline,
             DigestionAlignmentMode.Admission);
 
         Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(oldAtomId));
@@ -485,7 +472,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(bytes),
-            baseline,
             DigestionAlignmentMode.Ingest);
 
         Assert.Contains(result.Findings, finding => finding.Contains(
@@ -520,7 +506,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(Encoding.UTF8.GetBytes("ab")),
-            ledger,
             DigestionAlignmentMode.Ingest,
             _ => (bytes, _) =>
             {

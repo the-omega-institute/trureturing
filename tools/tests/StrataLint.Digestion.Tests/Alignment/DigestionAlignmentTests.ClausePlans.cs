@@ -69,7 +69,6 @@ public sealed partial class DigestionAlignmentTests
                 childCaptures
                     .Prepend(parentCapture)
                     .DistinctBy(static capture => capture.RelativePath, StringComparer.Ordinal)),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => new AtomizedTheoryDocument(
                 [parent],
@@ -126,7 +125,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(parentBytes, childCaptures.Prepend(parentCapture)),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => new AtomizedTheoryDocument(
                 [parent],
@@ -176,7 +174,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(parentBytes.ToArray(), [captured]),
-            ledger,
             DigestionAlignmentMode.Ingest,
             _ => (_, _) => invalid);
 
@@ -217,7 +214,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(parentBytes.ToArray(), [captured]),
-            ledger,
             DigestionAlignmentMode.Ingest,
             _ => (_, _) => invalid);
 
@@ -239,14 +235,12 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) =>
             {
                 calls++;
                 return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
             },
-            baselineSnapshot: Snapshot(sourceBytes, [parentCapture, childCapture]),
             changes: changes);
 
         Assert.Empty(result.Findings);
@@ -281,14 +275,12 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) =>
             {
                 calls++;
                 return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
             },
-            baselineSnapshot: Snapshot(sourceBytes, [parentCapture, childCapture]),
             changes: RawChangeSet.Create([parentPath]));
 
         Assert.True(calls > 0);
@@ -309,14 +301,12 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
-            candidate,
             DigestionAlignmentMode.Admission,
             _ => (_, _) =>
             {
                 calls++;
                 return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
             },
-            baselineSnapshot: Snapshot(sourceBytes, [parentCapture, childCapture]),
             changes: RawChangeSet.Create([changedPath]));
 
         Assert.True(calls > 0);
@@ -334,14 +324,12 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
-            candidate,
             DigestionAlignmentMode.Admission,
             _ => (_, _) =>
             {
                 calls++;
                 return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
             },
-            baselineSnapshot: Snapshot(sourceBytes, [parentCapture, childCapture]),
             changes: RawChangeSet.Create([parentCapture.RelativePath]));
 
         Assert.True(calls > 0);

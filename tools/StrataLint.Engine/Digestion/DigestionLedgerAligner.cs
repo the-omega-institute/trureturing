@@ -75,10 +75,8 @@ internal static partial class DigestionLedgerAligner
     internal static DigestionLedgerAlignment Evaluate(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
-        BackfillInventoryDocument? baselineDocument,
         DigestionAlignmentMode mode,
         Func<string, TheoryAtomizer>? atomizerResolver = null,
-        RepositorySnapshot? baselineSnapshot = null,
         DigestionCasEvaluation? casEvaluation = null,
         RawChangeSet? changes = null,
         RawChangeSet? casChanges = null,
@@ -163,7 +161,6 @@ internal static partial class DigestionLedgerAligner
 
         var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, casChanges);
         findings.AddRange(cas.Findings);
-        var inheritedEntries = InheritedEntries(baselineDocument);
         foreach (var (source, entry) in sources
                      .SelectMany(source =>
                      source.Entries.Select(entry => (Source: source, Entry: entry))))
@@ -187,13 +184,14 @@ internal static partial class DigestionLedgerAligner
             }
         }
 
-        var baselineSources = BaselineSources(baselineDocument, findings);
         var knownContent = sources
             .SelectMany(static source => source.Entries)
             .Where(entry => cas.ValidAtomIds.Contains(entry.AtomId))
             .Select(static entry => entry.Fingerprints.RawSha256)
             .ToHashSet(StringComparer.Ordinal);
 
+        var atomizerInputsChanged = new Lazy<bool>(() =>
+            changes is not null && AtomizerInputsChanged(changes, snapshot));
         foreach (var source in sources)
         {
             if (conflictedSources.Contains(source.SourceId))
@@ -201,26 +199,20 @@ internal static partial class DigestionLedgerAligner
                 continue;
             }
 
-            var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
-            baselineSources.TryGetValue(source.SourceId, out var baselineSource);
-            var validateGenreProjection = mode == DigestionAlignmentMode.Admission
-                && !AtomizerDecisionClosureEqualBaseline(
-                    snapshot,
-                    baselineSnapshot,
-                    source,
-                    baselineSource);
-            var canSkipAfterGenreProjection = mode == DigestionAlignmentMode.Admission
+            // A change set limits which sources are replayed. It never changes what
+            // a replayed source yields.
+            if (mode == DigestionAlignmentMode.Admission
+                && changes is not null
                 && !source.Entries.IsEmpty
-                && source.Entries.All(entry =>
-                    cas.ValidAtomIds.Contains(entry.AtomId)
-                    && inheritedEntries.Contains(CanonicalEntry(source, entry)))
-                && !InheritedSourceRequiresReplay(source, changes, snapshot);
-
-            if (canSkipAfterGenreProjection && !validateGenreProjection)
+                && source.Entries.All(entry => cas.ValidAtomIds.Contains(entry.AtomId))
+                && !SourceChanged(source, changes)
+                && !atomizerInputsChanged.Value)
             {
                 continue;
             }
 
+            var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
+            var validateGenreProjection = mode == DigestionAlignmentMode.Admission;
             if (!registeredAtomizer)
             {
                 genreRegistryChecks[source.SourceId] = GenreRegistryCheck.NoGenreRegistry;
@@ -240,11 +232,6 @@ internal static partial class DigestionLedgerAligner
 
             if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
             {
-                if (canSkipAfterGenreProjection)
-                {
-                    continue;
-                }
-
                 findings.Add($"source path is dangling: {source.SourcePath}");
                 continue;
             }
@@ -324,11 +311,6 @@ internal static partial class DigestionLedgerAligner
                     source,
                     source.GenreRegistryCheck,
                     atomized.GenreRegistryCheck));
-            }
-
-            if (canSkipAfterGenreProjection)
-            {
-                continue;
             }
 
             if (atomized.Claims.IsEmpty)
