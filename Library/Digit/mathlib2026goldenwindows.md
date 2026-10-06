@@ -47,8 +47,8 @@ pinned library. The particular closed-cylinder endpoint alternatives used by
 The cited Mathlib statements do not supply those cylinder or sparse-tuple
 conclusions.
 
-## Verified locators
+## Verified locator
 
-- [Zeckendorf representations](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Fib/Zeckendorf.lean).
+- URL: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Fib/Zeckendorf.lean
 - [Golden-ratio identities and irrationality](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Real/GoldenRatio.lean).
 - [Circle quotient and integral periods](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Instances/AddCircle/Defs.lean).
