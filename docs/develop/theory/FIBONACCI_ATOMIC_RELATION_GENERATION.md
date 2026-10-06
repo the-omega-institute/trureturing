@@ -65443,3 +65443,265 @@ $I_\psi(x)=\sum_{n\in\mathcal W_x}M_{H_x}(n)J_x^{\eta_{H_x}}(n)+\mathcal C_x$
 （429.16）仍只给补集的主项补偿，没有给较小剩余量的 Robin 临界上界。该补集的符号不是可另选来源的最优值；它由同一个完整 $I_\psi$ 强制确定。整份结果没有决定 $I_\psi$ 的最终符号、全部危险来源的覆盖或 Robin/RH。
 
 ## 追加锚（本行以下为增补区）
+
+## 430. 当前连续 primorial 实际绝对纤维账的统一成本与粗糙前缀参数
+
+沿用主卷 §§384、424–428 的同一实际 $q=\Phi^{-2}=(3-\sqrt5)/2$、
+$\beta_r=\log(1-(-q)^r)$、$e=\mu*\beta$、累计前缀
+$H_{\rm raw}(m)=\sum_{r\le m}e_r$ 及同一实际核 $I_\psi$。
+本节直接复用既有实际原子符号律、$\beta$ 首尾间隙和 Mertens 乘积供应。
+新增承重关系是：这些实际约数项给（CP.4）的完整绝对纤维误差账一个随过滤器增长的下界，
+从而确定（CP.11）指定充分阈值上的同过滤器粗糙前缀参数范围。
+
+结论只下界这份已指定的误差账和充分阈值。
+它不下界真实核所需的最小阈值，也不排除改进误差预算或使用更小的 $x$。
+
+**复用合同与记号。** 保持 §428 的
+
+$$
+\ell_z=\log z,\qquad P_z=\prod_{p\le z}p,\qquad
+E_{z,0}=\prod_{p\le z}(1-1/p),\qquad a=e^{-\gamma_E}>0,
+$$
+
+其中 $z\ge2$，$\gamma_E$ 是 Euler–Mascheroni 常数。
+对任意固定正平方自由整数 $P$，保持
+
+$$
+\kappa_P(d)=\mu(d)\mathbf1_{d\mid P},\qquad
+\theta_P=\kappa_P*\beta,\qquad
+M_P(y)=\sum_{\substack{1\le r\le y\\(r,P)=1}}\mu(r).
+\tag{LC.1}
+$$
+
+令
+
+$$
+\Delta_\beta=\beta_1-\sum_{r\ge2}|\beta_r|.
+\tag{LC.2}
+$$
+
+这是主卷（384.17）的既有固定实际间隙，直接有
+$\Delta_\beta\ge94q/2205>0$。实际 $q$ 属于
+$(19/50,39/100)$，因而
+
+$$
+\Delta_\beta>\frac{893}{55125}>\delta_*:=\frac1{200}.
+\tag{LC.3}
+$$
+
+上述有理比较直接由分数运算给出；根式区间由
+$(56/25)^2-5=11/625>0$、
+$5-(111/50)^2=179/2500>0$。
+对数积分界、几何级数及首尾正化已在（384.14）–（384.17）证明，
+本节不把它们重新作为新增命题。
+
+（382.9）、（419.3）以及更直接的（240.a）已经给实际平方自由 $e_d$ 的
+$\operatorname{sgn}(e_d)=\mu(d)$，包括校正后的单位项 $e_1=\beta_1>0$。
+后面的证明只将其与（LC.2）的统一付款用于有限 Euler 约数项，
+不重复发布这个点值符号定理。
+
+保持（CP.4）的同一非负多项式与完整绝对和：
+
+$$
+\begin{aligned}
+C(W)&=\frac A6W^3+\frac D2W^2+(2D-A)W+D+\mu_0(2W+11),\\
+\mathsf C_z(U)&=\sum_{j\ge1}\frac{|\theta_{P_z}(j)|}{j}
+C(U+\log j+\log2),\\
+\mathsf L_z(U)&=\sum_{j\ge1}\frac{|\theta_{P_z}(j)|}{j}
+\left[\frac A2(U+\log j)^2+(D-A)(U+\log j)+|c_{\rm diag}|
++A(U+\log j+\log2)+D-A\right].
+\end{aligned}
+\tag{LC.4}
+$$
+
+这里原实际常数满足 $A>0,D>A,\mu_0>0$。
+$\mathsf C_z(U),\mathsf L_z(U)$ 对每个先固定的有限 $z,U$ 都有限，
+但并不把它们视为关于增长过滤器的共同常数。
+指定的充分阈值恰为（CP.11）
+
+$$
+X_z(V)=\max\{e,\exp(1+2\mathsf C_z(V\ell_z)),1+2\mathsf L_z(V\ell_z)\}.
+\tag{LC.5}
+$$
+
+**主定理（指定真实绝对账与充分阈值的全族成本）。**
+存在有限 $z_0\ge2$，使所有实数 $z\ge z_0$ 和所有实数 $V>0$ 满足
+
+$$
+\boxed{
+\mathsf C_z(V\ell_z)\ge
+\frac{\Delta_\beta A V^3}{24a}\ell_z^4,\qquad
+X_z(V)\ge
+\exp\!\left(\frac{\Delta_\beta A V^3}{12a}\ell_z^4\right).}
+\tag{LC.6}
+$$
+
+因此对每个固定 $V>0$，所有 $z\ge z_0$、所有 $x\ge X_z(V)$ 及全部正整数 $n\ge x$，
+同一过滤器的实际粗糙前缀参数满足
+
+$$
+\boxed{
+\tau_z(n):=\frac{\log n}{\log z}
+\ge\frac{\Delta_\beta A V^3}{12a}(\log z)^3.}
+\tag{LC.7}
+$$
+
+特别地这个下界随 $z\to\infty$ 趋于无穷，且对上述全部 $x,n$ 共同有效。
+若只需显式有理付款，可将（LC.6）–（LC.7）的 $\Delta_\beta$ 全部换成 $\delta_*=1/200$。
+$z_0$ 仅由以下 Mertens 乘积上界选择，不依赖 $V$；
+参数趋于无穷的结论要求 $V$ 先固定且严格正。
+
+**证明：支付实际约数项。** 若 $d\mid P$，其全部约数均整除 $P$，所以
+
+$$
+\begin{aligned}
+\theta_P(d)&=\sum_{b\mid d}\mu(b)\beta_{d/b}
+=e_d
+=\mu(d)\sum_{r\mid d}\mu(r)\beta_r,\\
+\mu(d)\theta_P(d)&=\sum_{r\mid d}\mu(r)\beta_r
+\ge\beta_1-\sum_{\substack{r\mid d\\r\ge2}}|\beta_r|
+\ge\Delta_\beta.
+\end{aligned}
+\tag{LC.8}
+$$
+
+最后一式使用 $d$ 平方自由，故
+$\mu(d/r)=\mu(d)\mu(r)$、$\mu(d)^2=1$。
+因此 $|\theta_P(d)|=\mu(d)\theta_P(d)\ge\Delta_\beta$，
+统一于全部有限 $P$ 及其约数 $d$，包括 $d=1$。
+这正是既有实际首尾间隙的有限约数应用。
+这里的点值是 $e_d$，不是累计量 $H_{\rm raw}(d)$；
+也没有对 $j\nmid P$ 的 $\theta_P(j)$ 断言相同符号或下界。
+
+对 $W\ge0$，（LC.4）的全部其余项非负，所以 $C(W)\ge AW^3/6$。
+现在在完整非负绝对和中只保留下标 $j=d\mid P_z$，不删改该账的定义。
+由（LC.8）得到对所有 $z\ge2,V>0$ 的
+
+$$
+\mathsf C_z(V\ell_z)
+\ge\sum_{d\mid P_z}\frac{|\theta_{P_z}(d)|}{d}
+C(V\ell_z+\log d+\log2)
+\ge\frac{\Delta_\beta A V^3}{6}\ell_z^3
+\sum_{d\mid P_z}\frac1d.
+\tag{LC.9}
+$$
+
+**证明：同过滤器约数总量。** 平方自由约数展开及有限 Euler 恒等式给
+
+$$
+\sum_{d\mid P_z}\frac1d
+=\prod_{p\le z}(1+1/p)
+=\frac{\prod_{p\le z}(1-1/p^2)}{E_{z,0}}.
+\tag{LC.10}
+$$
+
+令 $N=\lfloor z\rfloor\ge2$。每个因子属于 $(0,1)$，而 $p\le z$ 是
+$2\le m\le N$ 的子集，故
+
+$$
+\prod_{p\le z}(1-1/p^2)
+\ge\prod_{m=2}^N(1-1/m^2)
+=\left(\prod_{m=2}^N\frac{m-1}{m}\right)
+\left(\prod_{m=2}^N\frac{m+1}{m}\right)
+=\frac{N+1}{2N}\ge\frac12.
+\tag{LC.11}
+$$
+
+不需要额外引用无穷 Euler 乘积或数值 $\zeta(2)$。
+（CP.7）直接复用仓内 Mertens.E₃.bound'''，
+已给有限 $K_E\ge0,z_E\ge2$ 使
+$|E_{z,0}-a/\ell_z|\le K_E/\ell_z^2$ 对全部 $z\ge z_E$ 成立。
+可选 $z_0\ge z_E$ 且 $\log z_0\ge K_E/a$，从而
+
+$$
+E_{z,0}\le\frac{2a}{\ell_z},\qquad
+\sum_{d\mid P_z}\frac1d\ge\frac{\ell_z}{4a}
+\quad(z\ge z_0).
+\tag{LC.12}
+$$
+
+将（LC.12）代入（LC.9），得到（LC.6）的第一个不等式。
+再由（LC.5）
+$\log X_z(V)\ge1+2\mathsf C_z(V\ell_z)$，得到其第二个不等式。
+最后 $n\ge x\ge X_z(V)>1$，故
+$\log n\ge\log X_z(V)$；除以正的 $\ell_z$ 即得（LC.7）。$\square$
+
+**推论（已核对 fixed-$\tau$ 供应与当前同过滤器符号窗的范围边界）。**
+对 $P_z=\prod_{p\le z}p$，同一实际前缀精确为
+
+$$
+M_{P_z}(n)
+=\sum_{\substack{r\le n\\P^-(r)>z}}\mu(r)
+=M_{\rm rough}(n,z),\qquad P^-(1)=\infty.
+\tag{LC.13}
+$$
+
+仓内 Alladi 供应记录（`Library/Analytic/alladi1982roughmobius.md`）
+目前已核对的合同是：对每个先固定的 $\tau>1$，当素数 cutoff $z\to\infty$、
+$\log n/\log z=\tau$ 时，
+
+$$
+M_{\rm rough}(n,z)
+=\frac{n\rho'(\tau)}{\log z}
++O_\tau\!\left(\frac{n}{(\log z)^2}\right).
+\tag{LC.14}
+$$
+
+该记录依据 Alladi–Goswami arXiv:2412.03088v1 §1.1 对 Alladi (1982) 的陈述；
+所引陈述仅在先固定 $\tau$ 的范围使用；更长范围的统一假设与误差不作为本节前提。
+
+现在固定 $V>0$。对（CP.12）当前所选的 $x\ge X_z(V)$、
+$x\le n\le xz^V$，由（LC.7）其 $\tau_z(n)$ 的共同下界趋于无穷。
+因此对每个固定有限 $T>1$，当 $z$ 足够大时，
+这些窗口的全部实际前缀行均满足 $\tau_z(n)>T$。
+已核对的 fixed-$\tau$ 合同（LC.14）不能直接代入这一增长参数族来支付当前窗口；
+隐藏的 $O_\tau$ 常数及开始有效的 cutoff 均未被控制。
+对每个行另选 cutoff $z=n^{1/\tau_0}$ 还会改变过滤器，
+不能用于下面这份要求同一 $P_z$ 的完整配对身份。
+
+这不否定 Alladi 原文存在更强统一结果，也不排除另证增长参数估计、
+改进这份绝对账或选取其他充分阈值。
+（LC.6）是非负上界账自身的成本下界：
+从 $|\mathrm{error}|\le\mathsf C_z/\log x+\mathsf L_z/n$
+与 $\mathsf C_z$ 的下界，不能推出真实误差的下界。
+所以不能把（LC.6）改写成真实核不可能在较小 $x$ 有相同符号窗。
+
+**累计配对、首块与全补集。** 对 $x>1$，保持 §428 的绝对收敛完整身份
+
+$$
+\begin{aligned}
+H_{\rm raw}(m)&=\sum_{j\le m}\theta_{P_z}(j)M_{P_z}(\lfloor m/j\rfloor),\\
+I_\psi(x)&=\sum_{n\ge1}M_{P_z}(n)J_x^{\eta_{P_z}}(n),\\
+J_x^{\eta_{P_z}}(1)-\beta_1J_x(1)
+&=\sum_{j\ge2}\theta_{P_z}(j)\sum_{m=j}^{2j-1}J_x(m).
+\end{aligned}
+\tag{LC.15}
+$$
+
+对 $x\ge e$，令 $\mathcal W_z(x)$ 是（CP.15）三个整数范围的并集，仍精确有
+
+$$
+\begin{aligned}
+I_\psi(x)-\beta_1J_x(1)
+={}&J_x^{\eta_{P_z}}(1)-\beta_1J_x(1)\\
+&+\sum_{n\in\mathcal W_z(x)}M_{P_z}(n)J_x^{\eta_{P_z}}(n)
++\sum_{\substack{n\ge2\\n\notin\mathcal W_z(x)}}
+M_{P_z}(n)J_x^{\eta_{P_z}}(n).
+\end{aligned}
+\tag{LC.16}
+$$
+
+取 $V=3$、$z$ 同时超过 $z_0$ 和 §428 的符号阈值 $z_*$，且 $x\ge X_z(3)$，
+则（CP.15）的三个核符号窗与（LC.7）的增长粗糙参数下界同时成立。
+其首块、$n<x$、两个根附近空档与 $n>xz^3$ 的全部来源均保留，
+重排仍由（CP.3）的固定过滤器积分前绝对预算支付。
+（LC.7）只对 $n\ge x$ 的行给参数下界；
+它没有为 $n<x$ 的补集增添新估计，也没有支付真实 $M_{P_z}(n)$ 的符号。
+本节没有 Robin/RH 的临界有符号预算或数学不可能性结论。
+
+**来源。** 实际点值符号、间隙、纤维误差与指定阈值分别复用主卷
+（240.a）、（382.9）、（384.17）、（419.3）、（CP.3）–（CP.7）、（CP.11）–（CP.16）。
+第一、第三 Mertens 供应及其上游归属保持 §428 的既有来源记录；
+这里新增的是（LC.6）–（LC.7）对当前完整绝对账、指定阈值和同过滤器参数的耦合。
+
+## 追加锚（本行以下为增补区）
