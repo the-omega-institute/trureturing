@@ -527,6 +527,121 @@ replace a fixed root table by a new table at each uncovered point
 and then unite the incompatible assignments of shared numerical
 donors.
 
+## Two residues per prime allow one shared twelve-match repair
+
+Fix a finite prime pool P of size at most 27, excluding three, and
+one nonempty palette with at most two residues at each prime in P. The two
+values may coincide. Count a match for owner i only at a prime in
+P dividing its actual cofactor, where its literal residue equals
+one palette value. Palettes are fixed jointly before constructing
+any output; different coordinates may use different palette entries.
+
+Under the same actual minimal-cover, no27, nine-bearing and q-bearing
+conditions, with q at least 28, select actual owners with at least
+twelve matches. There is one shared repair of their full safe
+q-stripped union. It can preserve an existing family of outputs
+27d whenever those old numerical donors are coprime to three, have
+actual labels q*d, and at most 31 have four or more distinct prime factors. Their residues
+are not changed. The three-hit prime-and-anchor block described
+above satisfies the stock condition in its stated 27-prime branch.
+
+Choose twelve matching primes S_i for each selected owner. A fixed
+four-subset and a fixed tuple of palette phases identify at most
+fourteen actual owners by DA9. There are at most sixteen phase
+tuples per four-subset. Double counting the owner/four-subset
+incidences therefore gives
+
+$$
+|I|\binom{12}{4}\le14\cdot16\binom{27}{4},
+\qquad |I|\le7941.
+\tag{DA19}
+$$
+
+This counts the actual original slots across every row and old word.
+It does not count hypothetical independently chosen sources. Thus
+there are at most 15*7941=119115 owner/safe-root demands.
+
+For each owner use products of four, five or six primes from S_i
+as random candidates. Remove the fixed occupied old bank. Before
+removal the respective layers have 495, 792 and 924 distinct
+numerical products. Subtracting 31 separately from each layer gives
+the conservative simultaneous lower bounds 464, 761 and 893.
+For every numerical donor in the union of these banks, independently
+choose one safe root modulo 27 and one of the two palette entries
+at each of its prime factors. CRT turns that single choice into
+one output modulo 27d.
+
+A donor with t prime factors serves any compatible owner/root demand
+with probability at least 1/(15*2^t). Repeated palette values cause
+no difficulty: the proof can recognize just one suitable bit vector.
+Different demands need not be independent. For a single demand,
+its distinct numerical candidates have independent choices. Hence
+the total expected number of missing demands is at most
+
+$$
+119115\left(\frac{239}{240}\right)^{464}
+\left(\frac{479}{480}\right)^{761}
+\left(\frac{959}{960}\right)^{893}<1385.
+\tag{DA20}
+$$
+
+An exact first-moment argument supplies one common assignment with
+at most 1384 missing demands. The rational inequality in DA20 is
+checked without rounding.
+
+Reserve the products of seven through eleven primes from each S_i.
+Before excluding the old bank, every owner has
+
+$$
+\binom{12}{7}+\binom{12}{8}+\binom{12}{9}
++\binom{12}{10}+\binom{12}{11}=1585
+\tag{DA21}
+$$
+
+such numerical divisors, leaving at least 1554. Unique prime
+factorization separates this reserve from every random bank, even
+across different owners. All reserve labels are also unoccupied by
+the old repair. Since fewer than 1554 demands remain, the existing
+finite matching theorem assigns them distinct reserve labels. Give
+each its required safe root and the literal phase of its owner.
+This changes no old or random output.
+
+The resulting assignment serves every owner at all fifteen safe
+roots. A donor divides its owner's cofactor, so service covers the
+whole cofactor class at that root, not just one sampled point.
+Consequently it covers all of the owner's safe q-stripped trace,
+including lower rows. Every new donor is an actual cofactor divisor;
+minimality supplies its q*d label. The whole old/random/reserve bank
+is therefore paid by DA16. Unused donors can be assigned arbitrary
+residues without invalidating coverage or this full-bank budget.
+
+In particular, a fixed palette's twelve-match sector cannot cover
+E_q. If an old repair is retained, its target together with that
+sector still cannot cover E_q. The missing point is common to both
+failures. Taking the old bank empty gives the necessary source law
+
+$$
+\forall A\quad\exists x\in E_q\quad\forall i\quad
+\bigl(q\mid n_i\ \text{and}\ x\equiv a_i\pmod{n_i/q}\bigr)
+\Longrightarrow
+\#\{p\in P:p\mid n_i/q,\ a_i\bmod p\in A_p\}\le11.
+\tag{DA22}
+$$
+
+The count in DA22 is restricted to the stated pool P. In the
+113-height-one branch one may take P to be the prime support of W;
+it then includes every possible cofactor-prime match. Choosing
+A_p from the residues of two fixed actual points permits all
+coordinatewise mixtures of those points. Thus this palette result
+is different from selecting just two complete phase tables.
+It provides no assertion that a fixed palette sector covers E_q.
+
+The full actual-source construction and its DA22 specialization
+compile with standard axioms and default proof budgets. The
+old-bank version supplies the same witness x outside every old
+output, and at least one actual q-bearing original covers x before
+stripping q.
+
 ## Verification and the remaining global obligation
 
 Scoped exact Lean checks cover the actual two-prime incidence
