@@ -63392,23 +63392,164 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+## 418. 实际返回包两矩证书的定量分辨率门槛
 
-## 418. 实际原子误差沿二幂链的完全抵消与截断边界
+**定义 418.1（同包局部负载误差）。** 沿用定义417.1的实际根对 $a<b$、同价层完整测度 $\mu_{a,b}$、宽度 $L=b-a$ 及（417.2）的两矩表达式 $H_{a,b}$。记
 
-**定义 418.1（同一来源的二幂链）。** 沿用 §§382、384 的实际 $q=\Phi^{-2}\in(0,2/5)$、$L=\log\Phi$、$\beta_d=\log(1-(-q)^d)$、$e=\mu*\beta$ 与 $H_{\rm raw}(N)=\sum_{n\le N}e_n$（$N\ge1$）。这里 $e_1=\log(1+q)$，保留 §384 的单位修正。对正奇数 $m$，令 $R=\operatorname{rad}(m)$、$h=m/R$，并定义
+$$
+\begin{aligned}
+M_{a,b}&=\sup_{a\le t\le b}|A^+(t)-t|,\\
+K(t)&=-g'(t)=\frac1{t^2}\left(\frac1{\log t}+\frac1{\log^2t}\right),\\
+B(t)&=g''(t)=\frac1{t^3}\left(\frac2{\log t}+\frac3{\log^2t}+\frac2{\log^3t}\right).
+\end{aligned}
+\tag{418.1}
+$$
+
+此处 $A=A^+$ 为包含全部同价层的右连续规模；上确界有限，不要求跳前极值取得。全部误差和矩均取自同一实际包；$M_{a,b}$ 不表示独立可调的松弛参数。
+
+**定理 418.2（局部负载幅度限制两矩证书的窗口宽度）。** 若 $a\ge e$、$0<L\le a$，则
+
+$$
+\boxed{
+L^3>6400a^2M_{a,b}
+\quad\Longrightarrow\quad
+H_{a,b}<\overline g_{a,b}.
+}
+\tag{418.2}
+$$
+
+因此成功的充分证书 $H_{a,b}>\overline g_{a,b}$ 必须满足 $L^3\le6400a^2M_{a,b}$。这是实际负载与已有两矩证书之间的定量接口，不排除真实包的裕度下降。
+
+证明。直接复用 [Mantovanelli 存档原稿](../../../Library/Analytic/mantovanelli2026primeworkload.md) Proposition 7.6（源码 `prop:moment-workload`）与 Theorem 7.7（源码 `thm:sharp-two-moment`）的矩—负载对应和两节点表达式；下文的归一化与 Hermite 余项只作这两个既有结果的中间应用，不另立一般矩定理。
+
+设 $Y=(t-a)/L$，并记 $u=\int(1-Y)d\mu_{a,b}$、$v=\int(1-Y)^2d\mu_{a,b}$。实际端点事件外且自匹配，故对 $0\le y\le1$ 的归一化分布函数有
+
+$$
+F_\mu(y)=y+\frac{A(a+Ly)-(a+Ly)}L.
+\tag{418.3}
+$$
+
+由既有部分求和，$u=\int_0^1F_\mu(y)dy$、$v=2\int_0^1(1-y)F_\mu(y)dy$。与同一区间的均匀律比较，得到
+
+$$
+\left|u-\frac12\right|\le\frac{M_{a,b}}L,
+\qquad
+\left|v-\frac13\right|\le\frac{M_{a,b}}L.
+\tag{418.4}
+$$
+
+由（417.2）直接代入，已有两矩表达式成为
+
+$$
+H(u,v)=g(b)+\frac{u^2}v\bigl[g(b-Lv/u)-g(b)\bigr].
+\tag{418.5}
+$$
+
+在均匀律和实际测度的凸组合路径上，总有 $u,v>0$、$v\le u$；设 $h=Lv/u\in(0,L]$、$D(h)=g(b-h)-g(b)$。因 $D'=K(b-h)$、$D''=B(b-h)\ge0$，且 $K,B$ 在 $(1,\infty)$ 递减，
+
+$$
+\begin{aligned}
+\left|\frac{2D(h)}h-D'(h)\right|&\le K(a),\\
+0\le hD'(h)-D(h)
+&=\int_0^h zB(b-z)dz\le\frac{h^2}2B(a).
+\end{aligned}
+\tag{418.6}
+$$
+
+第一式来自 $0\le D(h)/h\le D'(h)\le K(a)$。对（418.5）求偏导，$\partial_uH=(u/v)(2D-hD')$、$\partial_vH=(u^2/v^2)(hD'-D)$，因此在整条共同来源路径上
+
+$$
+|\partial_uH|\le LK(a),\qquad
+|\partial_vH|\le\frac{L^2}2B(a).
+$$
+
+沿这条路径积分并使用（418.4），得到
+
+$$
+|H_{a,b}-H_0|
+\le\left(K(a)+\frac L2B(a)\right)M_{a,b},
+\qquad
+H_0=\frac34g(a+L/3)+\frac14g(b).
+\tag{418.7}
+$$
+
+这个估计不要求实际方差远离零。
+
+对均匀律直接应用上述 Theorem 7.7 证明中的二次 Hermite 余项。此时接触节点为 $a+L/3$，而 $-g'''(t)\ge6/(b^4\log b)$ 对 $a\le t\le b$ 成立。由 $\int_0^1(y-1/3)^2(1-y)dy=1/36$ 得
+
+$$
+\overline g_{a,b}-H_0\ge\frac{L^3}{36b^4\log b}.
+\tag{418.8}
+$$
+
+最后，$a\ge e$、$L\le a$ 给
+
+$$
+\frac{B(a)}{K(a)}\le\frac7{2a},\qquad
+K(a)\le\frac2{a^2\log a},\qquad
+b\le2a,\qquad \log b\le2\log a.
+$$
+
+故（418.7）的系数不超过 $11/(2a^2\log a)$，（418.8）的右边不小于 $L^3/(1152a^4\log a)$。$L^3>6336a^2M_{a,b}$ 已足以使前者严格小于后者；（418.2）使用较松的常数6400。$\square$
+
+**定理 418.3（既有无条件 PNT 误差供应器的收缩尺度应用）。** 设 $U(t)$ 最终递增且 $U(t)=o(\log t)$，并有固定 $c,C>0$ 使充分大 $t$ 满足
+
+$$
+|\psi(t)-t|\le Ct\,e^{-cU(t)},
+\qquad U(t)\longrightarrow\infty.
+\tag{418.9}
+$$
+
+则对每个固定 $0<\kappa<c/3$，全部充分大的实际成功包均满足
+
+$$
+\boxed{
+H_{a,b}>\overline g_{a,b}
+\quad\Longrightarrow\quad
+\frac{b-a}{a}<e^{-\kappa U(a)}.
+}
+\tag{418.10}
+$$
+
+证明。直接复用上述存档原稿 Theorem 8.5（源码 `thm:psi-normal-form`，Von Mangoldt normal form）及本卷§111的已有实际层分解：$A(t)-\psi(t)=(\sqrt2-1)\sqrt t+o(\sqrt t)$，端点差可吸收到这一误差。$U=o(\log t)$ 保证 $\sqrt t=o(te^{-cU(t)})$。因此（418.9）给 $A(t)-t=O(te^{-cU(t)})$，进而在同一区间 $a\le t\le2a$ 上一致有
+
+$$
+M_{a,b}\le C_1a e^{-cU(a)}.
+\tag{418.11}
+$$
+
+定理417.2在固定 $d=1$ 时已排除全部充分大 $b\ge2a$ 的成功包。剩余包若满足 $L/a\ge e^{-\kappa U(a)}$，则
+
+$$
+\frac{L^3}{a^2M_{a,b}}
+\ge C_1^{-1}e^{(c-3\kappa)U(a)}\longrightarrow\infty,
+$$
+
+与定理418.2矛盾。$\square$
+
+式（418.9）不是新增素数定理。例如可直接用 [Johnston–Yang, arXiv:2204.01980v2, Theorem 1.1](../../../Library/Weil/johnstonyang2022pnt.md) 的既有误差式，取 $U(t)=\sqrt{\log t}$ 及任意固定 $c<0.8274$ 吸收其对数幂。更近的 [Fiori–Jaskari, arXiv:2609.23222v1, Theorem 1.1 与 Table 1](../../../Library/ArithSums/nicolas2025comparison.md) 提供 $U(t)=(\log t)^{3/5}/(\log\log t)^{1/5}$ 的供应器；按上引文献注所定位原稿的陈述可取其固定正指数常数。这里约束的是同一实际包两矩证书的分辨率，所用 PNT 误差、通用矩界与求积余项均由上述既有来源承担。
+
+**边界 418.4（需要分辨的仍是实际有符号偏差）。** 定理418.2和418.3只给该充分证书的必要尺度；不提供有效数值截止，不证明任一低矩证书实际出现，也不支付潜在非正自匹配谷底的完整 Robin 裕度。五模式递归若用作这些包的地址，必须能保留这一增长分辨率下的同源矩与接缝信息；地址细化本身不能替代 $A(t)-t$ 的符号。更高矩或直接负载比较仍可处理被该两矩证书排除的窗口。
+
+## 追加锚（本行以下为增补区）
+
+
+## 419. 实际原子误差沿二幂链的完全抵消与截断边界
+
+**定义 419.1（同一来源的二幂链）。** 沿用 §§382、384 的实际 $q=\Phi^{-2}\in(0,2/5)$、$L=\log\Phi$、$\beta_d=\log(1-(-q)^d)$、$e=\mu*\beta$ 与 $H_{\rm raw}(N)=\sum_{n\le N}e_n$（$N\ge1$）。这里 $e_1=\log(1+q)$，保留 §384 的单位修正。对正奇数 $m$，令 $R=\operatorname{rad}(m)$、$h=m/R$，并定义
 
 $$
 P_A(m)=\sum_{a=0}^{A}e_{2^a m}\qquad(A\ge0).
-\tag{418.1}
+\tag{419.1}
 $$
 
 有限链先截断再求和；不同奇核的链没有预先交换求和顺序。
 
-**定理 418.2（单链的精确终端、零总和与总变差）。** 对每个正奇数 $m$，
+**定理 419.2（单链的精确终端、零总和与总变差）。** 对每个正奇数 $m$，
 
 $$
 P_A(m)=\mu(R)\sum_{d\mid R}\mu(d)\log\bigl(1-(-q)^{2^Ahd}\bigr).
-\tag{418.2}
+\tag{419.2}
 $$
 
 因此 $P_A(m)\to0$，且该链绝对可和。其严格符号依次为
@@ -63417,7 +63558,7 @@ $$
 \operatorname{sgn}(e_m)=\mu(R),\qquad
 \operatorname{sgn}(e_{2m})=-\mu(R),\qquad
 \operatorname{sgn}(e_{2^a m})=\mu(R)\quad(a\ge2).
-\tag{418.3}
+\tag{419.3}
 $$
 
 整个无限链满足
@@ -63426,7 +63567,7 @@ $$
 \sum_{a\ge0}e_{2^a m}=0,
 \qquad
 \sum_{a\ge0}|e_{2^a m}|=2|e_{2m}|.
-\tag{418.4}
+\tag{419.4}
 $$
 
 **证明。** §382.3 给出非零 Möbius 项的奇核表示。令
@@ -63435,9 +63576,9 @@ $$
 B_a(m)=\mu(R)\sum_{d\mid R}\mu(d)\beta_{2^ahd}.
 $$
 
-在 $a=0$ 时，$e_m=B_0(m)$，包括 $m=1$ 的已修正单位项。$a\ge1$ 时，非零 Möbius 系数只来自相邻的两个二进层，故 §382 的同一约数配对式给 $e_{2^am}=B_a(m)-B_{a-1}(m)$。相邻素幂层的 cyclotomic 商恒等式是经典前置，见 G. J. O. Jameson，*The cyclotomic polynomials*，[Proposition 1.14，p. 6](https://www.maths.lancs.ac.uk/~jameson/cyp.pdf) 的 $p=2$ 情形。这里直接使用该前置与既有实际分解，继续求本链的总和与成本。有限望远镜和于是恰为 $B_A(m)$，证明（418.2）。对每个固定 $d\mid R$，$q^{2^Ahd}\to0$，所以该有限和趋零。
+在 $a=0$ 时，$e_m=B_0(m)$，包括 $m=1$ 的已修正单位项。$a\ge1$ 时，非零 Möbius 系数只来自相邻的两个二进层，故 §382 的同一约数配对式给 $e_{2^am}=B_a(m)-B_{a-1}(m)$。相邻素幂层的 cyclotomic 商恒等式是经典前置，见 G. J. O. Jameson，*The cyclotomic polynomials*，[Proposition 1.14，p. 6](https://www.maths.lancs.ac.uk/~jameson/cyp.pdf) 的 $p=2$ 情形。这里直接使用该前置与既有实际分解，继续求本链的总和与成本。有限望远镜和于是恰为 $B_A(m)$，证明（419.2）。对每个固定 $d\mid R$，$q^{2^Ahd}\to0$，所以该有限和趋零。
 
-式（418.3）复用 §382.3 的奇核符号；$m=1$ 的第一项单独使用 $e_1=\log(1+q)>0$。对 $a\ge2$，同一精细界给
+式（419.3）复用 §382.3 的奇核符号；$m=1$ 的第一项单独使用 $e_1=\log(1+q)>0$。对 $a\ge2$，同一精细界给
 
 $$
 |e_{2^am}|\le\log(1+q^{2^{a-1}h})\le q^{2^{a-1}h}\le(q^h)^a.
@@ -63449,24 +63590,24 @@ $$
 |e_m|+\sum_{a\ge2}|e_{2^am}|=|e_{2m}|,
 $$
 
-从而得到（418.4）。这使用的是单条固定链的绝对可和性。$\square$
+从而得到（419.4）。这使用的是单条固定链的绝对可和性。$\square$
 
-**定理 418.3（完整有限前缀保留每条链的终端）。** 对整数 $N\ge1$ 和正奇数 $m\le N$，令 $A_N(m)$ 为满足 $2^{A_N(m)}m\le N$ 的最大非负整数。则
+**定理 419.3（完整有限前缀保留每条链的终端）。** 对整数 $N\ge1$ 和正奇数 $m\le N$，令 $A_N(m)$ 为满足 $2^{A_N(m)}m\le N$ 的最大非负整数。则
 
 $$
 H_{\rm raw}(N)=
 \sum_{\substack{1\le m\le N\\m\ \text{为奇数}}}P_{A_N(m)}(m).
-\tag{418.5}
+\tag{419.5}
 $$
 
 每条链的最后整数满足 $N/2<2^{A_N(m)}m\le N$。然而全部链的绝对质量发散：
 
 $$
 \sum_{m\ \text{为正奇数}}\sum_{a\ge0}|e_{2^am}|=\infty.
-\tag{418.6}
+\tag{419.6}
 $$
 
-**证明。** 正整数有唯一分解 $n=2^am$、$m$ 为奇数。将有限集合 $1\le n\le N$ 按这个奇核分组，便得（418.5），没有删去任何指标。最大性的定义给 $2^{A_N(m)+1}m>N$，即所述终端区间。
+**证明。** 正整数有唯一分解 $n=2^am$、$m$ 为奇数。将有限集合 $1\le n\le N$ 按这个奇核分组，便得（419.5），没有删去任何指标。最大性的定义给 $2^{A_N(m)+1}m>N$，即所述终端区间。
 
 为证明发散，取奇素数 $p$。§382.3 的实际素数原子公式给
 
@@ -63474,8 +63615,8 @@ $$
 e_{2p}=\log(1-q^p)-\log(1-q)=L+\log(1-q^p)\longrightarrow L>0.
 $$
 
-奇素数有无限多个，所以 $\sum_{m\ \text{为正奇数}}|e_{2m}|$ 发散。由（418.4），得到（418.6）。因此每条链的零总和不能通过绝对交换转成整个原子数组的零总和；对同一数组也未断言其他条件求和方式相等。
+奇素数有无限多个，所以 $\sum_{m\ \text{为正奇数}}|e_{2m}|$ 发散。由（419.4），得到（419.6）。因此每条链的零总和不能通过绝对交换转成整个原子数组的零总和；对同一数组也未断言其他条件求和方式相等。
 
 作为实际前缀的核对，$N=2$ 时只有 $m=1$，且 $H_{\rm raw}(2)=P_1(1)=\beta_2=\log(1-q^2)<0$。这与同一无限链的总和为零并存。$\square$
 
-上述恒等式直接组合既有 Möbius 约数配对与原子符号，没有重建 Fibonacci 原子分解；其经典 cyclotomic 来源仍按 §382.3 的 Sanna 引文归属。它给单条递归链完整的有符号抵消及总变差成本，而完整前缀留下随 $N$ 移动的全部链终端。（418.5）的终端指标位于同一个数值区间，不意味着它们的 $\mu(R)$ 相互独立或具有已付的联合抵消。（418.4）不提供 $H_{\rm raw}$ 的对数衰减、平方根界、完整 Robin 有符号预算或 RH。
+上述恒等式直接组合既有 Möbius 约数配对与原子符号，没有重建 Fibonacci 原子分解；其经典 cyclotomic 来源仍按 §382.3 的 Sanna 引文归属。它给单条递归链完整的有符号抵消及总变差成本，而完整前缀留下随 $N$ 移动的全部链终端。（419.5）的终端指标位于同一个数值区间，不意味着它们的 $\mu(R)$ 相互独立或具有已付的联合抵消。（419.4）不提供 $H_{\rm raw}$ 的对数衰减、平方根界、完整 Robin 有符号预算或 RH。
