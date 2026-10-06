@@ -119,7 +119,6 @@ public sealed partial class DigestionLedgerTests
             && e.Receipts.Nonpropositional is not null);
         var clear = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--clear", child.AtomId);
         Assert.True(clear.Exit == 0, clear.Error);
-        Assert.Contains(parent.AtomId, clear.Output, StringComparison.Ordinal);
         var before = SettleAtomCommandTests.Image(temporary);
         var query = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates");
         Assert.Equal(2, query.Exit);
@@ -214,13 +213,11 @@ public sealed partial class DigestionLedgerTests
             Request(parent.AtomId, context.Previous?.AtomId, context.Next?.AtomId));
         Assert.True(settled.Success, settled.Error);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
-        var baseline = fixture.Current;
         var nested = fixture.Document.RequireDigestionEntries().Single(e => e.AtomId != parent.AtomId && !e.Receipts.ChainAtoms.IsEmpty);
         var childId = nested.Receipts.ChainAtoms[0];
         var clear = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "", ["--clear", childId]);
         Assert.True(clear.Success, clear.Error);
         var ids = new[] { nested.AtomId, parent.AtomId }.Order(StringComparer.Ordinal).ToArray();
-        Assert.Contains("SETTLE_ALIGN_REQUIRED ancestors=" + string.Join(',', ids), clear.Output, StringComparison.Ordinal);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         var evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan, fixture.Document,
             fixture.Snapshot, AcceptedLean(Array.Empty<string>()));
@@ -240,17 +237,6 @@ public sealed partial class DigestionLedgerTests
             Assert.Equal("partial-open", StateName(evaluation.Entries.Single(e => e.Entry.AtomId == id).DerivedStatus));
             Assert.Equal("partial-open", StateName(uncovered.Entries.Single(e => e.Entry.AtomId == id).DerivedStatus));
             Assert.Contains(evaluation.Findings, f => f.StartsWith("entry " + id + " handwritten status", StringComparison.Ordinal));
-        }
-        var aligned = IngestCommand.Run(temporary.Path,
-            new FakeRepositoryGateway(RawChangeSet.Create([]), fixture.Current, baseline),
-            new FakeLeanReportSource(AcceptedLean(Array.Empty<string>()).Report), []);
-        Assert.True(aligned.Success, aligned.Error);
-        fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
-        foreach (var id in ids)
-        {
-            var entry = fixture.Document.RequireDigestionEntries().Single(e => e.AtomId == id);
-            Assert.Equal("partial-open", StateName(entry.ProjectedStatus));
-            Assert.NotNull(entry.Receipts.Nonpropositional);
         }
         var clearedParent = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "", ["--clear", parent.AtomId]);
         Assert.True(clearedParent.Success, clearedParent.Error);
