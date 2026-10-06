@@ -20,6 +20,7 @@ import Mathlib.Data.Complex.Basic
 import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
 
 open scoped BigOperators
+open D5.S3.Quantum.FiniteDimensional
 open Matrix D5.S3.Quantum.Information.BinaryLagrangianGraphForm
 open D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
@@ -290,11 +291,15 @@ private theorem unique_weyl_line_lagrangian {N k : ℕ}
     rw [← heq]
     exact eigen_orthogonal_iff v c ψ hne hline u
 
+private def binary (t : Fin 2) : ZMod 2 := t
+
+private lemma binary_zero : binary 0 = 0 := rfl
+private lemma binary_one : binary 1 = 1 := rfl
+private lemma binary_self (t : ZMod 2) : binary t = t := rfl
+
 private def wmat (a b : ZMod 2) : Matrix (Fin 2) (Fin 2) ℂ :=
   Matrix.of fun t s =>
-    let t' : ZMod 2 := t.val
-    let s' : ZMod 2 := s.val
-    if s' = t' + a then chi2 (b * s') else 0
+    if binary s = binary t + a then chi2 (b * binary s) else 0
 
 private lemma tensor_mul {N : ℕ} (A B : Fin N → Matrix (Fin 2) (Fin 2) ℂ) :
     tensorOp A * tensorOp B = tensorOp (fun i => A i * B i) := by
@@ -342,9 +347,9 @@ private lemma tensor_weyl {N : ℕ} (v : E N) (f : V N → ℂ) :
   let T : Matrix (V N) (V N) ℂ := tensorOp (fun i => wmat (v.1 i) (v.2 i))
   have entries (x y : V N) : T x y =
       if y = x + v.1 then chi2 (∑ i, v.2 i * y i) else 0 := by
-    change (∏ i, if ((y i).val : ZMod 2) = (x i).val + v.1 i then
-      chi2 (v.2 i * (y i).val) else 0) = _
-    simp only [ZMod.natCast_zmod_val]
+    change (∏ i, if binary (y i) = binary (x i) + v.1 i then
+      chi2 (v.2 i * binary (y i)) else 0) = _
+    simp only [binary_self]
     by_cases h : y = x + v.1
     · subst y
       simp only [Pi.add_apply, ite_true]
@@ -364,17 +369,21 @@ private lemma pauli_wmat (p : Pauli) :
     ∃ a b : ZMod 2, ∃ r : ℂ, r ≠ 0 ∧ pauliMatrix p = r • wmat a b := by
   cases p
   · refine ⟨0, 0, 1, one_ne_zero, ?_⟩
-    ext t s; fin_cases t <;> fin_cases s <;> norm_num [pauliMatrix, wmat, chi2_eq]
+    ext t s; fin_cases t <;> fin_cases s <;> norm_num [pauliMatrix, wmat, binary_zero, binary_one,
+      CharTwo.add_self_eq_zero, chi2_eq]
   · refine ⟨1, 0, 1, one_ne_zero, ?_⟩
     ext t s; fin_cases t <;> fin_cases s <;>
-      norm_num [pauliMatrix, wmat, chi2_eq, D5.S3.Quantum.FiniteDimensional.qubitX] <;> decide
+      norm_num [pauliMatrix, wmat, binary_zero, binary_one,
+        CharTwo.add_self_eq_zero, chi2_eq, D5.S3.Quantum.FiniteDimensional.qubitX]
   · refine ⟨1, 1, Complex.I, Complex.I_ne_zero, ?_⟩
     ext t s; fin_cases t <;> fin_cases s <;>
-      norm_num [pauliMatrix, wmat, chi2_eq, D5.S3.Quantum.FiniteDimensional.qubitX,
-        D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply, Fin.sum_univ_two] <;> decide
+      norm_num [pauliMatrix, wmat, binary_zero, binary_one,
+        CharTwo.add_self_eq_zero, chi2_eq, D5.S3.Quantum.FiniteDimensional.qubitX,
+        D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply, Fin.sum_univ_two]
   · refine ⟨0, 1, 1, one_ne_zero, ?_⟩
     ext t s; fin_cases t <;> fin_cases s <;>
-      norm_num [pauliMatrix, wmat, chi2_eq, D5.S3.Quantum.FiniteDimensional.qubitZ]
+      norm_num [pauliMatrix, wmat, binary_zero, binary_one,
+        CharTwo.add_self_eq_zero, chi2_eq, D5.S3.Quantum.FiniteDimensional.qubitZ]
 
 private lemma stabilizer_weyl {N : ℕ} (ψ : V N → ℂ)
     (hψ : StabilizedBy pauliSet ψ) :
@@ -402,6 +411,162 @@ private lemma stabilizer_weyl {N : ℕ} (ψ : V N → ℂ)
       ∃ a : ℂ, w = a • ψ := hline w
   simpa only [hop] using hline' 
 
+
+private def gate (h : Bool) (d : ZMod 2) : Matrix (Fin 2) (Fin 2) ℂ :=
+  (if d = 0 then 1 else !![1, 0; 0, Complex.I]) *
+    (if h then BinaryStabilizerLocalInequivalence.hadamard else 1)
+
+private lemma wmat_unitary (a b : ZMod 2) :
+    wmat a b ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+  have cases₂ : ∀ t : ZMod 2, t = 0 ∨ t = 1 := by decide
+  rw [Matrix.mem_unitaryGroup_iff]
+  rcases cases₂ a with rfl | rfl <;> rcases cases₂ b with rfl | rfl <;>
+    ext i j <;> fin_cases i <;> fin_cases j <;>
+    norm_num [wmat, binary_zero, binary_one, CharTwo.add_self_eq_zero, chi2_eq,
+      Matrix.mul_apply, Fin.sum_univ_two,
+      Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply,
+      Fin.ext_iff]
+
+private lemma gate_unitary (h : Bool) (d : ZMod 2) :
+    gate h d ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+  have hs : s2 ^ 2 = 1 / 2 := by
+    simp only [s2]
+    push_cast
+    rw [div_pow, ← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+    norm_num
+  have hr : (starRingEnd ℂ) s2 = s2 := by simp [s2, map_ofNat]
+  have cases₂ : ∀ t : ZMod 2, t = 0 ∨ t = 1 := by decide
+  rw [Matrix.mem_unitaryGroup_iff]
+  cases h <;> rcases cases₂ d with rfl | rfl <;>
+    ext i j <;> fin_cases i <;> fin_cases j <;>
+    simp [gate, BinaryStabilizerLocalInequivalence.hadamard,
+      pauliMatrix, qubitX, qubitZ, Matrix.mul_apply,
+      Fin.sum_univ_two, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply, hr]
+  all_goals ring_nf; norm_num [hs, Complex.I_sq]
+
+set_option maxHeartbeats 1000000 in
+-- The sixteen binary parameter cases expand to sixty-four matrix entry equalities.
+private lemma gate_wmat (h : Bool) (d a b : ZMod 2) :
+    let a' := if h then b else a
+    let b' := (if h then a else b) + d * a'
+    ∃ r : ℂ, r ≠ 0 ∧ gate h d * wmat a b = r • (wmat a' b' * gate h d) := by
+  have cases₂ : ∀ t : ZMod 2, t = 0 ∨ t = 1 := by decide
+  refine ⟨chi2 (if h then a * b else 0) *
+    (if d * (if h then b else a) = 0 then 1 else Complex.I), ?_, ?_⟩
+  · cases h <;> rcases cases₂ d with rfl | rfl <;>
+      rcases cases₂ a with rfl | rfl <;> rcases cases₂ b with rfl | rfl <;>
+      norm_num [chi2_eq]
+  · cases h <;> rcases cases₂ d with rfl | rfl <;>
+      rcases cases₂ a with rfl | rfl <;> rcases cases₂ b with rfl | rfl <;>
+      ext i j <;> fin_cases i <;> fin_cases j <;>
+      norm_num [gate, wmat, BinaryStabilizerLocalInequivalence.hadamard,
+        pauliMatrix, qubitX, qubitZ, Matrix.mul_apply,
+        Fin.sum_univ_two, chi2_eq, binary_zero, binary_one, CharTwo.add_self_eq_zero] <;>
+        ring_nf <;> norm_num [Complex.I_sq]
+
+
+private def graphExponent {N : ℕ} (Γ : Matrix (Fin N) (Fin N) (ZMod 2))
+    (x : V N) : ZMod 2 := ∑ i, ∑ j, if i < j then Γ i j * x i * x j else 0
+
+/-- The graph-state amplitude `(-1)^{Σ_{i<j} Γ_ij x_i x_j}` (unnormalized). -/
+def graphAmp {N : ℕ} (Γ : Matrix (Fin N) (Fin N) (ZMod 2))
+    (x : Fin N → Fin 2) : ℂ :=
+  (-1 : ℂ) ^ (∑ i, ∑ j, if i < j then
+    Γ i j * binary (x i) * binary (x j) else 0).val
+
+private lemma graph_exponent_step {N : ℕ} (Γ : Matrix (Fin N) (Fin N) (ZMod 2))
+    (hs : Γ.IsSymm) (hd : ∀ i, Γ i i = 0) (t : V N) (i : Fin N) :
+    graphExponent Γ (t + Pi.single i 1) = graphExponent Γ t + ∑ j, Γ i j * t j := by
+  classical
+  have term (a b : Fin N) :
+      (if a < b then Γ a b * (t a + (Pi.single i (1 : ZMod 2) : V N) a) *
+        (t b + (Pi.single i (1 : ZMod 2) : V N) b) else 0) =
+      (if a < b then Γ a b * t a * t b else 0) +
+      (if b = i ∧ a < b then Γ a b * t a else 0) +
+      (if a = i ∧ a < b then Γ a b * t b else 0) := by
+    by_cases hab : a < b
+    · by_cases hai : a = i
+      · subst a
+        have hbi : b ≠ i := ne_of_gt hab
+        simp [hbi, hab]
+        ring
+      · by_cases hbi : b = i
+        · subst b
+          simp [hai, hab]
+          ring
+        · simp [hai, hbi, hab]
+    · simp [hab]
+  unfold graphExponent
+  simp only [Pi.add_apply]
+  simp_rw [term, Finset.sum_add_distrib]
+  have col : (∑ a, ∑ b, if b = i ∧ a < b then Γ a b * t a else 0) =
+      ∑ a, if a < i then Γ a i * t a else 0 := by
+    apply Finset.sum_congr rfl
+    intro a _
+    rw [Finset.sum_eq_single i]
+    · simp
+    · intro b _ hbi
+      simp [hbi]
+    · simp
+  have row : (∑ a, ∑ b, if a = i ∧ a < b then Γ a b * t b else 0) =
+      ∑ b, if i < b then Γ i b * t b else 0 := by
+    rw [Finset.sum_eq_single i]
+    · simp
+    · intro a _ hai
+      simp [hai]
+    · simp
+  rw [col, row, add_assoc, ← Finset.sum_add_distrib]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro j _
+  rcases lt_trichotomy j i with h | rfl | h
+  · simp [h, hs.apply i j, not_lt_of_ge h.le]
+  · simp [hd]
+  · simp [h, not_lt_of_ge h.le]
+
+private theorem graph_fixed_line {N : ℕ} (Γ : Matrix (Fin N) (Fin N) (ZMod 2))
+    (hs : Γ.IsSymm) (hd : ∀ i, Γ i i = 0) (f : V N → ℂ)
+    (hf : ∀ i, weyl (Pi.single i 1, Γ *ᵥ Pi.single i 1) f = f) :
+    f = f 0 • graphAmp Γ := by
+  have cases₂ : ∀ a : ZMod 2, a = 0 ∨ a = 1 := by decide
+  classical
+  let g : V N → ℂ := fun t => chi2 (graphExponent Γ t) * f t
+  have step (t : V N) (i : Fin N) : g (t + Pi.single i 1) = g t := by
+    have phase : (∑ j, (Γ *ᵥ Pi.single i 1) j *
+        (t j + (Pi.single i (1 : ZMod 2) : V N) j)) = ∑ j, Γ i j * t j := by
+      simp only [Matrix.mulVec_single_one, Matrix.col_apply, mul_add, Finset.sum_add_distrib]
+      have hz : (∑ j, Γ j i * (Pi.single i (1 : ZMod 2) : V N) j) = 0 := by
+        simp [Pi.single_apply, mul_ite, hd]
+      rw [hz, add_zero]
+      exact Finset.sum_congr rfl (fun j _ => by rw [hs.apply i j])
+    have h := congrFun (hf i) t
+    simp only [weyl, phase] at h
+    dsimp only [g]
+    rw [graph_exponent_step Γ hs hd, chi2_add, mul_assoc, h]
+  have invariant (u : V N) : ∀ t : V N, g (t + u) = g t := by
+    apply Pi.single_induction (fun u => ∀ t : V N, g (t + u) = g t) u
+    · intro t
+      simp
+    · intro u v hu hv t
+      rw [← add_assoc, hv, hu]
+    · intro i a t
+      have ha : a = 0 ∨ a = 1 := cases₂ a
+      rcases ha with rfl | rfl
+      · simp
+      · exact step t i
+  funext t
+  change f t = f 0 * graphAmp Γ t
+  have hconst : g t = f 0 := by
+    simpa [g, graphExponent, chi2] using invariant t 0
+  calc
+    f t = chi2 (graphExponent Γ t) * g t := by
+      dsimp only [g]
+      rw [← mul_assoc, chi2_laws.2.2.1, one_mul]
+    _ = f 0 * graphAmp Γ t := by
+      rw [hconst]
+      have hg : graphAmp Γ t = chi2 (graphExponent Γ t) := by
+        simp [graphAmp, graphExponent, chi2, AddChar.zmodChar_apply, binary_self]
+      rw [hg, mul_comm]
 
 /- Open target: stabilizer_graph_normal_form, as stated in #13575. -/
 
