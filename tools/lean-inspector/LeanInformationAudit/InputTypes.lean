@@ -1,10 +1,9 @@
-import Lean
+import Lean.Expr
+import Lean.Data.Options
 import LeanInformationAudit.SourceSelection
 
 namespace LeanInformationAudit
 open Lean
-
-initialize registerTraceClass `InformationRegistration.check
 
 abbrev CatalogId := Name
 

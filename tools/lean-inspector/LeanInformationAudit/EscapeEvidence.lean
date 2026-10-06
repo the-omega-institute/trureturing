@@ -1,4 +1,4 @@
-import Lean
+import Lean.Data.Name
 
 namespace LeanInformationAudit
 open Lean

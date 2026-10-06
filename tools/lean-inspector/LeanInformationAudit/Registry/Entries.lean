@@ -19,29 +19,6 @@ private def primitiveRealizationName : Name :=
 private def legacyPrimitiveRealizationName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization
 
-/-- Judge-owned output names. The report rejects a registration of one of
-these companions (IE-C011). -/
-def generatedCompanionSuffixes : Array String := #[
-  theoremUnitSuffix,
-  primitiveRealizationSuffix,
-  "__lowers_escape",
-  "__trivial_in_catalog",
-  "__escape_enriched",
-  "__information_catalog",
-  "__catalog_irredundant",
-  "__catalog_redundant",
-  "__system_catalog_irredundant",
-  "__system_catalog_not_irredundant",
-  "__information_registration_diagnostic"
-]
-
-def isCompanionName : Name -> Bool
-  | .str _ suffix =>
-      -- Every reserved suffix starts with "__". Ordinary names avoid the
-      -- interpreted array scan; the registry remains the suffix authority.
-      suffix.startsWith "__" && generatedCompanionSuffixes.contains suffix
-  | _ => false
-
 def InformationRegistryEntry.lawArenaName (entry : InformationRegistryEntry) : Name :=
   entry.arenaName
 

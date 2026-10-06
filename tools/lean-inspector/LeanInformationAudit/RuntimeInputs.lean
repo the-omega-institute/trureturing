@@ -1,52 +1,12 @@
-import LeanInformationAudit.InputTypes
+import LeanInformationAudit.RegistrationData
 import LeanInformationAudit.SnapshotTypes
+import Lean
 
 namespace LeanInformationAudit
 open Lean
 
+initialize registerTraceClass `InformationRegistration.check
 
-namespace TemplateBinding
-
-structure ResolvedDeclaration where
-  theoremName : Name
-  arena : Name
-  descriptor : Option Expr
-  sourceRecord : Option Name := none
-  diagnostic : Option String := none
-  escapeInput : EscapeRecordInput := {}
-
-end TemplateBinding
-
-/-- Resolved and elaborated source input. No assessment result is stored. -/
-structure RegistrationInput where
-  entry : InformationRegistryEntry
-  sourceText : String
-  options : Options
-  suppliedPrimitives : Option Expr := none
-  viaDescriptor : Option Expr := none
-  outputEvidence : Option Expr := none
-  /-- Author-supplied bridge before an occurrence companion aliases it. -/
-  realizationSource : Option Name := none
-  declaration : Option TemplateBinding.ResolvedDeclaration := none
-
-structure TemplateEnrollmentInput where
-  owner : Name
-  name : Name
-  version : Nat
-  constructors : Array Name
-  sourceText : String
-  options : Options
-
-structure CompiledSealCatalog where
-  source : Name
-  arenaName : Name
-  catalogId : Name
-  value : Expr
-
-structure SealInput where
-  rootId : Name
-  catalogs : Array CompiledSealCatalog := #[]
-  options : Options
 
 private initialize assessmentCatalogs : EnvExtension (Array RootCatalogContract) ←
   registerEnvExtension (pure #[])
@@ -59,25 +19,6 @@ def find? (env : Environment) (rootId : Name) : Option RootCatalogContract :=
 def install (env : Environment) (contracts : Array RootCatalogContract) : Environment :=
   assessmentCatalogs.setState env contracts
 end RootCatalogs
-
-structure ExpectedOccurrence where
-  rootId : Name
-  objectArenaName : Name
-  theoremName : Name
-  statementIdentity : String := ""
-  capturedStatement : Option Expr := none
-  registrationModuleName : Name
-  deriving Inhabited, Repr
-
-def theoremUnitSuffix := "__information_unit"
-def primitiveRealizationSuffix := "__primitive_realization"
-def arenaConstructionMarker : Name := `LeanInformationAudit.arenaConstruction
-
-def catalogQualifiedName (rootId objectArenaName : Name) (catalogId : CatalogId)
-    (theoremName : Name) (suffix : String) : Name :=
-  theoremName
-    |>.str (rootId.toString ++ "/" ++ objectArenaName.toString ++ "/" ++ catalogId.toString)
-    |>.str suffix
 
 def localCompanionName (env : Environment) (rootId owner : Name) (suffix : String) : Name :=
   let name := owner.str suffix

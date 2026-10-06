@@ -1,5 +1,6 @@
 import LeanInformationAudit.InputTypes
 import LeanInformationAudit.EscapeEvidence
+import Lean.Data.Json
 
 namespace LeanInformationAudit
 open Lean

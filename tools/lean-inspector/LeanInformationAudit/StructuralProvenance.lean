@@ -1,4 +1,4 @@
-import Lean
+import Lean.Expr
 
 namespace LeanInformationAudit
 open Lean
