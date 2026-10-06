@@ -40,7 +40,7 @@ public sealed partial class DigestionLedgerTests
         WriteParentReport(temporary, fixture);
         var baseline = ReadParentFiles(temporary);
         var requestPath = WriteParentRequest(requests, parent, context, batch: false);
-        var before = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates", "--base", "baseline");
+        var before = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates");
         var set = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--request", requestPath);
         Assert.True(set.Exit == 0, set.Error);
         fixture.Current = ReadParentFiles(temporary);
@@ -50,11 +50,11 @@ public sealed partial class DigestionLedgerTests
                 fixture.Snapshot, new PrecomputedLeanReportSource(temporary.Path).Load(fixture.Snapshot))).Capability);
         Assert.Empty(full.Findings);
         Assert.Equal(State, StateName(full.Entries.Single(e => e.Entry.AtomId == parent.AtomId).DerivedStatus));
-        var after = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates", "--base", "baseline");
+        var after = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates");
         var clear = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--clear", parent.AtomId);
         Assert.True(clear.Exit == 0, clear.Error);
         AssertParentOnlyChanged(baseline, ReadParentFiles(temporary), parent.AtomId);
-        var cleared = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates", "--base", "baseline");
+        var cleared = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates");
         Assert.True(new[] { before.Exit, after.Exit, cleared.Exit }.SequenceEqual([0, 0, 0]),
             $"frontier exits={before.Exit}/{after.Exit}/{cleared.Exit}\n{before.Error}{after.Error}{cleared.Error}");
         AssertCandidates(before.Output, parent.AtomId, residual.AtomId);
@@ -110,7 +110,7 @@ public sealed partial class DigestionLedgerTests
         var requestPath = WriteParentRequest(requests, parent, context, batch: false);
         var set = RunParentCli(temporary, baseline, fullScan, "settle-atom", "--request", requestPath);
         Assert.True(set.Exit == 0, set.Error);
-        var settledQuery = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates", "--base", "baseline");
+        var settledQuery = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates");
         Assert.True(settledQuery.Exit == 0, settledQuery.Error);
         fixture.Current = ReadParentFiles(temporary);
         var branch = fixture.Document.RequireDigestionEntries().Single(e => e.AtomId != parent.AtomId
@@ -121,7 +121,7 @@ public sealed partial class DigestionLedgerTests
         Assert.True(clear.Exit == 0, clear.Error);
         Assert.Contains(parent.AtomId, clear.Output, StringComparison.Ordinal);
         var before = SettleAtomCommandTests.Image(temporary);
-        var query = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates", "--base", "baseline");
+        var query = RunParentCli(temporary, baseline, fullScan, "digest-status", "--formalize-candidates");
         Assert.Equal(2, query.Exit);
         Assert.Contains("entry " + parent.AtomId + " handwritten status", query.Error, StringComparison.Ordinal);
         Assert.Contains("differs from derived partial-open", query.Error, StringComparison.Ordinal);
@@ -244,8 +244,7 @@ public sealed partial class DigestionLedgerTests
         }
         var aligned = IngestCommand.Run(temporary.Path,
             new FakeRepositoryGateway(RawChangeSet.Create([]), fixture.Current, baseline),
-            new FakeLeanReportSource(AcceptedLean(Array.Empty<string>()).Report),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty), ["--base", "baseline"]);
+            new FakeLeanReportSource(AcceptedLean(Array.Empty<string>()).Report), []);
         Assert.True(aligned.Success, aligned.Error);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         foreach (var id in ids)

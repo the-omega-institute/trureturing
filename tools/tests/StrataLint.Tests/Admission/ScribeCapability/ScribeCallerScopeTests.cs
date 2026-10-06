@@ -27,22 +27,6 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void DigestStatusScopeUsesTheExplicitRepositoryDelta()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        var verifier = new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty);
-        var changes = RawChangeSet.Create([RuleFixture.RingPath]);
-        var environment = new ProductionCliEnvironment("/repo",
-            new FakeRepositoryGateway(changes, Snapshot(fixture.Files), Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)), verifier, CoverWorld.TimeProvider);
-
-        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal([RuleFixture.RingPath], Assert.Single(verifier.Scopes).Paths.Select(path => path.Value).ToArray());
-    }
-    [Fact]
     public void CheckCurrentScopeReadsTheProvidedNulSeparatedManifest()
     {
         using var temporary = new TemporaryDirectory();
@@ -99,28 +83,4 @@ public sealed partial class ProductionEnvironmentTests
             throw new ScribeVerificationException(exitCode, message);
     }
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void IngestAndRegistryRefreshSupplyTheirReceiptVerificationScope(bool refresh)
-    {
-        var fixture = RegistryRefreshFixture();
-        fixture.Files[RuleFixture.RingPath] += "\n-- scoped change\n";
-        using var temporary = new TemporaryDirectory();
-        WriteDirectoryLedger(temporary.Path, fixture.Files);
-        var verifier = new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty);
-        var environment = new ProductionCliEnvironment(temporary.Path,
-            new FakeRepositoryGateway(RawChangeSet.Create([]), Snapshot(fixture.Files), Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)), verifier, CoverWorld.TimeProvider);
-
-        var result = environment.AlignDigestionStatus(refresh
-            ? ["--base", "baseline", "--refresh-source", "fixture-source", "--plan"]
-            : ["--base", "baseline"]);
-
-        Assert.True(result.Success, result.Error);
-        var scope = Assert.Single(verifier.Scopes);
-        Assert.Contains(RuleFixture.RingPath, scope.Paths.Select(path => path.Value));
-        Assert.DoesNotContain("Blueprint/D5/S0/Test/Unrelated.scribe.cs",
-            scope.Paths.Select(path => path.Value));
-    }
 }

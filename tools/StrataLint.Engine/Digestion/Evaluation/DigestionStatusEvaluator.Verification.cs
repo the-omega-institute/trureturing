@@ -25,12 +25,6 @@ internal static partial class DigestionStatusEvaluator
         {
             case DigestionReceiptAlignment.Seen:
                 return true;
-            case DigestionReceiptAlignment.Stale:
-                gaps.Add(new DigestionGap(
-                    "stale-receipt-not-deletable",
-                    entry.AtomId,
-                    DigestionGapSeverity.NonFatal));
-                return false;
             default:
                 gaps.Add(new DigestionGap(
                     "structural-alignment-rejected",

@@ -60,10 +60,8 @@ $$
   comm -23 before.txt after.txt      # 必须为空
   ```
 
-- 重跑一次(同 BASE)四零齐:`residual_open_added=0`、`cas_objects_written=0`、
+- 重跑一次四零齐:`residual_open_added=0`、`cas_objects_written=0`、
   `ledger_changed=false`,且工作树零改动。
 
 差集非空意味着你改到了既有字节或撞了既有地址。**ingest 不会因此变红**——它只会为新指纹再开一条,
 旧条目留在账上再也对不上卷,成为一条没人会发现的死账。**回去找那一处,不要靠重跑消掉它。**
-判词点名的条目若不属于本卷的 `source_id`,那是追平税:`git merge origin/dev` 后重跑
-(见 `skills/theory-volume-template/SKILL.md` 的「三种追平税判词」)。

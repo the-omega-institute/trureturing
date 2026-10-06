@@ -23,11 +23,7 @@ internal sealed partial class ProductionCliEnvironment
         CoverageCommand.Run(repository, leanReportSource, arguments);
 
     public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
-        DigestStatusCommand.Run(
-            repository,
-            leanReportSource,
-            scribeEmissionVerifier,
-            arguments);
+        DigestStatusCommand.Run(repository, leanReportSource, arguments);
 
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         ShowAtomCommand.Run(repository, arguments);
@@ -36,17 +32,7 @@ internal sealed partial class ProductionCliEnvironment
         AtomContextCommand.Run(repository, arguments);
 
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
-        scribeEmissionVerifier is null
-            ? new ExplicitCommandResult(
-                2,
-                string.Empty,
-                "ECHO_VERIFY_INFRASTRUCTURE Scribe emission verifier is unavailable\n")
-            : EchoVerifyCommand.Run(
-                repositoryRoot,
-                repository,
-                leanReportSource,
-                scribeEmissionVerifier,
-                arguments);
+        EchoVerifyCommand.Run(repositoryRoot, repository, leanReportSource, arguments);
 
     public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
         GateAuthorityCommand.Run(repositoryRoot, arguments);
@@ -71,17 +57,7 @@ internal sealed partial class ProductionCliEnvironment
             reportFreeIngestDependencies);
 
     public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) =>
-        scribeEmissionVerifier is null
-            ? new CommandResult(
-                false,
-                string.Empty,
-                "ALIGN_DIGESTION_STATUS_INVALID Scribe emission verifier is unavailable\n")
-            : IngestCommand.Run(
-                repositoryRoot,
-                repository,
-                leanReportSource,
-                scribeEmissionVerifier,
-                arguments);
+        IngestCommand.Run(repositoryRoot, repository, leanReportSource, arguments);
 
     public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
         CoverAtomCommand.Run(

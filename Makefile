@@ -73,19 +73,19 @@ scribe-release-publish: export TARGET ?=
 scribe-release-fetch: export DIGEST ?=
 
 ingest:
-	@/bin/bash tools/scripts/ingest.sh ingest "$(BASE)" "$(SOURCE)"
+	@/bin/bash tools/scripts/ingest.sh ingest "$(SOURCE)"
 
 align-digestion-status:
-	@/bin/bash tools/scripts/ingest.sh align-digestion-status "$(BASE)" "$(PLAN)"
+	@/bin/bash tools/scripts/ingest.sh align-digestion-status "$(PLAN)"
 
 refresh-source-registry:
-	@/bin/bash tools/scripts/ingest.sh refresh-source-registry "$(BASE)" "$(SOURCE)" "$(PLAN_HASH)"
+	@/bin/bash tools/scripts/ingest.sh refresh-source-registry "$(SOURCE)" "$(PLAN)"
 
 mathlib-reanchor:
 	@/bin/bash tools/scripts/ingest.sh mathlib-reanchor "$(BASE)"
 
 echo-residual-summary:
-	@/bin/bash tools/scripts/report/echo-residual-summary.sh "$(BASE)"
+	@/bin/bash tools/scripts/report/echo-residual-summary.sh
 
 digestion-readiness:
 	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- digest-status --readiness
@@ -125,10 +125,10 @@ decompose:
 	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- decompose-atom --atom "$(ATOM_ID)" $(foreach offset,$(SPLIT_AT),--split-at "$(offset)") $(if $(filter 1,$(DRY_RUN)),--dry-run,)
 
 quarantine:
-	@/bin/bash tools/scripts/ingest.sh quarantine "$(BASE)" "$(REQUEST)"
+	@/bin/bash tools/scripts/ingest.sh quarantine "$(REQUEST)"
 
 quarantine-clear:
-	@/bin/bash tools/scripts/ingest.sh quarantine-clear "$(BASE)" "$(ATOM_ID)"
+	@/bin/bash tools/scripts/ingest.sh quarantine-clear "$(ATOM_ID)"
 
 settle:
 	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --request "$(REQUEST)"

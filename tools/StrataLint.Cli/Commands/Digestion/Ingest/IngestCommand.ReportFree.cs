@@ -67,61 +67,6 @@ internal static partial class IngestCommand
         }
     }
 
-    private static CommandResult WriteResult(
-        string repositoryRoot,
-        IngestPreparation prepared,
-        ImmutableArray<LedgerUpdate> ledgerUpdates,
-        BackfillInventoryDocument finalDocument,
-        DigestionLedgerEvaluation evaluation,
-        string backfillObservations)
-    {
-        var changed = ledgerUpdates.Length > 0;
-        var openGenres = finalDocument.RequireDigestionSources()
-            .SelectMany(static source => source.GenreRegistryCheck.UnregisteredGenres.Select(token =>
-                (source.SourceId, Token: token)))
-            .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
-            .ThenBy(static item => item.Token, StringComparer.Ordinal)
-            .ToImmutableArray();
-        var createdCasPaths = WriteCasObjects(repositoryRoot, prepared.Plan.CasObjects);
-        try
-        {
-            ApplyLedgerUpdatesAtomically(repositoryRoot, prepared.CurrentRaw, ledgerUpdates);
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            RollbackCasObjects(createdCasPaths, exception);
-            throw;
-        }
-
-        return new CommandResult(
-            true,
-            $"INGEST stale_acknowledged={prepared.Plan.StaleAcknowledged} "
-            + $"residual_open_added={prepared.Plan.ResidualOpenAdded} "
-            + $"coarse_fallbacks={prepared.Plan.Fallbacks.Length} "
-            + $"open_genres={openGenres.Length} "
-            + $"cas_objects_written={createdCasPaths.Length} "
-            + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
-            + string.Concat(openGenres.Select(static item =>
-                $"INGEST_OPEN_GENRE source={item.SourceId} "
-                + $"token={DigestStatusCommand.RenderDetail(item.Token)}\n"))
-            + string.Concat(prepared.Plan.Fallbacks.Select(static fallback =>
-                $"INGEST_FALLBACK source={fallback.SourceId} reason={fallback.Reason}\n"))
-            + string.Concat(prepared.SilentZeroWarnings.Select(static warning =>
-                $"WARNING silent-zero-extraction source={warning.SourceId} "
-                + $"path={warning.SourcePath}\n"))
-            + prepared.CrossVolumeClearanceGaps
-            + backfillObservations
-            + DigestStatusCommand.RenderText(evaluation)
-            + (prepared.Plan.Fallbacks.Length == 0
-                ? string.Empty
-                : $"INGEST_INCOMPLETE {prepared.Plan.Fallbacks.Length} source"
-                    + (prepared.Plan.Fallbacks.Length == 1 ? string.Empty : "s")
-                    + " registered without being atomised: "
-                    + string.Join(", ", prepared.Plan.Fallbacks.Select(static item => item.SourceId))
-                    + "\n"),
-            string.Empty);
-    }
-
     private static CommandResult WriteReportFreeResult(
         string repositoryRoot,
         RawRepositorySnapshot currentRaw,
@@ -201,32 +146,4 @@ internal static partial class IngestCommand
     }
 
     private sealed record ReportFreeOptions(ImmutableArray<string> Sources);
-
-    private sealed record IngestInputs(
-        RawRepositorySnapshot CurrentRaw,
-        RawRepositorySnapshot BaselineRaw,
-        RepositorySnapshot Current,
-        RepositorySnapshot Baseline,
-        BackfillInventoryDocument CurrentDocument,
-        BackfillInventoryDocument BaselineDocument);
-
-    private sealed record IngestPreparation(
-        RawRepositorySnapshot CurrentRaw,
-        RawRepositorySnapshot BaselineRaw,
-        RepositorySnapshot Current,
-        RepositorySnapshot Baseline,
-        BackfillInventoryDocument CurrentDocument,
-        BackfillInventoryDocument BaselineDocument,
-        DigestionIngestPlan Plan,
-        RawChangeSet RepositoryChanges,
-        RawRepositorySnapshot PlannedRaw,
-        RepositorySnapshot PlannedSnapshot,
-        BackfillInventoryDocument PlannedDocument,
-        RawChangeSet PlannedChanges,
-        RawChangeSet PlannedEvaluationChanges,
-        RawChangeSet PlannedReceiptVerificationChanges,
-        RawChangeSet PlannedCasChanges,
-        DigestionEvaluationScope PlannedScope,
-        string CrossVolumeClearanceGaps,
-        ImmutableArray<DigestionLedgerSource> SilentZeroWarnings);
 }

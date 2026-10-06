@@ -5795,3 +5795,52 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 对于任意上述实际平坦 Levi–Civita 数据 `D`，原 `nativeLogHeight` 的实际 `D.gradient` 等于原高度倒数乘以高度投影的欧氏对偶单位向量。该向量的实际自内积为 1，故平坦度量下真实梯度范数平方精确为原高度平方的倒数；梯度识别直接由公开 `inner_gradient`、已核验的原对数高度实际微分及对偶向量内积公式推出。原高度倒数的实际微分以及 `exp(±2*logheight)` 的精确原高度公式也已核验。
 
 上述原对象构造与消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。常值切向场的实际协变导数为零、平坦曲率与真正 Hessian、原高度缩放度量的曲率 −1 仍待闭合；一般原流形的通用度量覆盖及有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 原 H3 的实际平坦联络、零曲率与无条件对数高度 Hessian
+
+对同一原 H3 的实际平坦度量及任意实际 Levi–Civita 数据 `D`，原常值切向场的 Lie 括号和协变导数均为零。原欧氏坐标图的真实 `mfderiv` 为恒等映射；公开 `mpullback_mlieBracket` 将目标欧氏空间常值场的零括号搬回原切丛。真实常值切丛截面的可微性、常数内积的零微分及原零括号代入公开 Koszul 恒等式，再由正定内积，内部推出 `D.connection (fun _ => Y) p = 0`，没有额外提供联络为零的前提。
+
+上游实际点态曲率使用的 `FiberBundle.extend` 在原单图册上恰为同一常值场，因此其一阶、二阶协变导数及括号项均为零；得到原平坦度量实际 `D.curvature p U V W = 0` 和实际总化截面曲率为零。此处零曲率包含退化向量对；后续高度缩放度量的曲率 −1 仍须保留向量对线性无关或 Gram 非零条件。
+
+原对数高度的真正 Hessian 现无条件满足 `D.hessian nativeLogHeight p V W = -nativeEuclideanHeightCLM V * nativeEuclideanHeightCLM W / height p.coordinates ^ 2`。先前辅助定理的联络为零前提由上述原对象证明内部闭合；保留相同原度量、实际 `D`、原函数、原点和切向量。
+
+上述原联络、平坦曲率和无条件 Hessian 已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。原高度缩放度量的实际曲率 −1、一般原流形覆盖与有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 及官方验收仍未完成。
+
+
+### 原高度缩放度量的实际共形曲率 −1
+
+在同一原 H3 切丛上，实际 `positiveScaling nativeFlatRiemannianMetric (exp(-2*nativeLogHeight))` 与原 `nativeRiemannianMetric` 是同一度量结构。原内积等式、原正高度及 `exp(-2*logheight)=height⁻²` 内部给出该结构等式，随后沿其搬运给定原度量的同一个实际 Levi–Civita 数据 `Dprime`；等式消去保证搬运前后的实际截面曲率相等。
+
+固定上游一般 Levi–Civita 存在定理内部选择平坦数据 `Dflat`，公开共形截面曲率公式消费已经核验的实际平坦零曲率、无条件原对数高度 Hessian、梯度范数平方及指数高度恒等式。Hessian 与方向微分平方逐项抵消，剩下原高度平方乘以其负倒数，精确得到 `Dprime.sectionalCurvature p V W = -1`。本项向量对前提是原平坦度量下正交且分别单位长度；保留同一原 `p,V,W,Dprime`，没有提供曲率值或联络为零的额外前提。
+
+所需固定上游共形闭包含 33 个模块，原源码均保留并核验固定 Git blob。实际洁净编译使用先前梯度未使用参数的重命名，以及三个明确的兼容模块：两个证明局部类绑定 `letI` 改为 `let`，两个分别属于不同模块的辅助引理显式省去未使用的自动节假设；后两项保留原结论和证明正文，去掉冗余前提。没有关闭检查或添加公理。
+
+上述实际度量等式、依赖数据搬运及原曲率消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。任意原线性无关向量对的曲率接口、一般原流形覆盖与有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 及官方验收仍未完成。
+
+
+### 原 H3 的每个实际非退化切平面曲率 −1
+
+对同一原 `nativeRiemannianMetric` 的任意实际 Levi–Civita 数据 `Dprime`，原高度倒数对切向量的缩放，将原度量的正交单位向量对变成平坦度量的正交单位向量对。原实际曲率张量的公开多线性接口及实际度量双线性，分别给出截面曲率分子与 Gram 分母的相同非零缩放因子；在实际商中消去该因子，把已核验的原平坦正交单位向量对曲率 −1 搬回原度量的正交单位向量对。
+
+固定上游 `SpaceForm.Sectional` 的一般正交单位向量对接口内部完成切平面基变换，推出同一原 `p,V,W,Dprime` 在原 Gram 非零条件下实际截面曲率为 −1。原度量 Gram 等于欧氏 Gram 乘原高度四次幂的倒数；公开 Mathlib Gram 行列式判据把同一原向量对的实际线性无关转成欧氏 Gram 非零，从而得到每个实际线性无关向量对的原截面曲率 −1。没有假设平面基变换不变性或预先提供曲率 −1；没有对退化向量对声称 −1。
+
+固定上游截面曲率闭包的 35 个模块已实际编译验收，原源码及固定 Git blob 均保留并核验。除继承的 LC／共形兼容处理外，本闭包四个模块仅作明确的最小兼容修正：弃用引理别名与 tactic 改用公开同义接口，证明局部类型类绑定按现行接口书写，去掉被检查器指出未使用的自动节假设及冗余化简参数；没有关闭检查或添加公理。
+
+上述原非退化切平面消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。一般原流形的万能度量覆盖、实际 H3 分类及有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 原双曲模型的实际可缩性与 H3 单连通性
+
+任意原实内积空间 `E` 上的 `HyperbolicSpace E`，通过原 `coordinatesHomeomorph` 与原欧氏环境中的正高度半空间同胚。公开半空间凸性接口给出该真实正高度子集的凸性，原水平零向量及高度 1 给出内部非空见证；`Convex.contractibleSpace` 再沿原坐标同胚搬回真正原双曲空间，得到实际 `ContractibleSpace` 实例。没有把正高度子集替换成整个环境空间，也没有提供外部收缩同伦或可缩性前提。
+
+同一实例实际应用于原 `HyperbolicThreeSpace`，并由已有 Mathlib 可缩空间单连通接口得到实际 `SimplyConnectedSpace`。这些原实例检查及完整累计 Lean 编译均零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。一般原流形的万能度量覆盖和 H3 分类、有限体积尖点及完整给定 `h,d` 的 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 原光滑标准覆盖的完备拉回度量与第二可数性
+
+同一原完备、道路连通的三维流形 M 和指定原黎曼度量 g，在 g 的真实内蕴距离与原扩展距离相等时，原路径类标准覆盖获得实际提升光滑图册、局部微分同胚投影和 g 的实际完整微分拉回度量。欧氏图册在内部给出局部道路连通及半局部单连通，覆盖的分离性质给出真实 T3 结构；恒等等距映射显式绑定原扩展度量与指定 g 的内蕴扩展度量，内部传递完备性。
+
+消费固定上游真实 MetricComplete 与闭球紧致公开接口，实际内蕴有限距离使可数闭球覆盖同一连通覆盖空间，再由 sigma-compact 与欧氏图册得到该原标准覆盖的 SecondCountableTopology。无需底空间紧致、有限基本群、外供覆盖第二可数性或有限覆盖度。对同一原 H3/native g，已验的真正 native 内蕴距离等于原距离在内部履行兼容性，得到实际 native g 完备性及原 H3 标准覆盖第二可数性。
+
+固定来源为 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a。真实 MetricComplete 与 CompleteBalls 使用完整最小导入闭包，其余覆盖提升与完备拉回证明保留具名上游 source-slice 来源；不冒领未导入的完整 NeckCap/Harnack 扩展模块验收。完整累计临时 Lean 真实 exit 0，零错误、零警告，298 项公理报告仅含 propext、Classical.choice、Quot.sound，18 个新增目标实际接受。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证说明。实际全局负曲率指数映射与 H3 分类、完整 deck 与体积/Haar 绑定、有限体积尖点及完整给定 h,d 的 Mostow–Prasad 与官方验收仍未完成。
