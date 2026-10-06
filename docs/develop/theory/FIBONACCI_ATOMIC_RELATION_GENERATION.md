@@ -62463,3 +62463,67 @@ $$
 式（409.4）是经典积分、Euler 求和与零点事实在完整实际账上的应用，不是新的零点判据或 $\zeta$ 点态界。它表明（406.11）的低频成功不能推广为同量级的全域绝对预算：实际有符号积分仍可通过相位抵消更小，绝对账却不能。式（409.5）反驳的是使用这一绝对账和三角不等式支付临界尺度的策略，不是 Robin 或 RH。
 
 ## 追加锚（本行以下为增补区）
+
+## 410. 固定有限中心化的边界与必须保留的相位关系
+
+**定义 410.1（有限有理零积分家族）。** 沿用 §409 的实际来源与正日程。固定有限极点集 $P\subseteq\{1\}\cup\{z:\Re z>1\}$，每个极点的最高阶固定。令 $T_\varepsilon(z)$ 为只在 $P$ 上有极点、在无穷远为 $O(1/z)$ 的有理函数；所有部分分式系数在 $\varepsilon\downarrow0$ 时有有限极限，极限函数记为 $T_0$。
+
+还要求在 $1$ 的固定邻域中，$\mathscr G_\varepsilon-T_\varepsilon$ 对所有充分小的 $\varepsilon\ge0$ 都有可去延拓，并有共同界
+
+$$
+|\mathscr G_\varepsilon(z)-T_\varepsilon(z)|\le C|z-1|.
+\tag{410.1}
+$$
+
+若要把该家族用作不改变实际完整积分的中心化，还须独立支付同一权重下的零积分身份
+
+$$
+\frac1{2\pi i}\int_{\sigma_x-i\infty}^{\sigma_x+i\infty}
+T_{\varepsilon_x}(z)\widetilde w_x(z)dz=0.
+\tag{410.2}
+$$
+
+$Q_\varepsilon$ 已由（406.3）支付这一身份。一般家族在本节把（410.2）作为明确合同，不重新证明通用 Mellin 支撑定理，也不将局部中心化自动视为已支付该身份。
+
+**定理 410.2（固定有限零积分项不能改变完整绝对账的阶数）。** 对每个满足定义410.1的固定家族，置
+
+$$
+\mathcal A_T(x)=\frac1{2\pi}\int_{\mathbb R}
+|[\mathscr G_{\varepsilon_x}-T_{\varepsilon_x}](\sigma_x+i\tau)
+\widetilde w_x(\sigma_x+i\tau)|d\tau.
+\tag{410.3}
+$$
+
+则
+
+$$
+\boxed{
+\ell\mathcal A_T(x)\longrightarrow
+C_T:=\frac1{2\pi}\int_{\mathbb R}
+\frac{|-\zeta'(1+i\tau)/[(1+i\tau)\zeta(1+i\tau)]-T_0(1+i\tau)|}{|\tau|}d\tau,
+\qquad0<C_T<\infty.}
+\tag{410.4}
+$$
+
+因此，即使进一步消去任意预固定阶数的局部 Taylor 项，只要仍属于这一家族，全部绝对预算仍不能达到 $O(1/(\sqrt x\log x))$。
+
+证明。固定有限系数与极点保证所有远离 $P$ 的紧集上一致收敛，并使 $T_\varepsilon(\sigma_x+i\tau)=O(|\tau|^{-1})$ 的常数对小 $\varepsilon$ 一致。用（410.1）替代（406.4），§409 证明中的低频、紧环带与无穷高频三个支配预算保持成立；（409.8）也不改变。故同一支配收敛直接给（410.4）的有限极限。
+
+若 $C_T=0$，亚纯恒等定理再次迫使 $-\zeta'(z)/(z\zeta(z))=T_0(z)$。$T_0$ 的全部极点在 $\Re z\ge1$，而平凡零点 $-2$ 给左侧非零极点，矛盾。因此 $C_T>0$。$\square$
+
+本结论逐个固定家族给严格正的常数，不给所有家族共享的正下界。它不涉及随 $x$ 增长的项数、移动极点、发散系数或未经支付的移线。也不把 $C_T>0$ 当作实际有符号积分的下界；相位抵消仍存在。
+
+**定义 410.3（既有 Hardy 支撑接口与实际缺口）。** Burnol 的原始 [arXiv:math/0202166v1](https://arxiv.org/pdf/math/0202166v1)，引理4.3，对 $f_\varepsilon(u)=\sum_{n\ge1}\mu(n)n^{-\varepsilon}\{1/(nu)\}$，其中 $\{t\}=t-\lfloor t\rfloor$，在 $\varepsilon>0$、$\Re s>1$ 上无条件给
+
+$$
+\int_0^1f_\varepsilon(u)u^{s-1}du
+=\frac1{\zeta(1+\varepsilon)(s-1)}
+-\frac{\zeta(s)}{s\zeta(s+\varepsilon)}.
+\tag{410.5}
+$$
+
+它已经提供有理主部扣除与单侧 Mellin 支撑的经典联系，直接复用，不另证为项目成果。同文的临界线均匀移位比值估计明确假设 RH；定理4.3的消失移位 Hardy 投影身份则与 RH 等价。它们不提供本项目实际 $-\zeta'$ 分子、$\mathcal B$ 比值及 $\widetilde w_x$ 配对的无条件临界符号估计。
+
+在（410.2）已支付时，同一个实际完整 $I_{\varepsilon_x}$ 不随所选表示改变，而（410.4）说明各固定有限表示的绝对账都远大于临界尺度。继续推进需要同一实际来源的联合相位估计，或在合同之外另行构造并支付更强的全域近似；仅增加预固定阶数的局部扣除不能补足该缺口。完整 Robin 与 RH 仍未由这些接口得到证明。
+
+## 追加锚（本行以下为增补区）
