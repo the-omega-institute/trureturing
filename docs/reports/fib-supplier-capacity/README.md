@@ -1,5 +1,11 @@
 # Full-source supplier capacity at h = 15
 
+[Actual-source Read memory witnesses](read_memory.md) supplies TM68's complete
+six-call c/u/v tables and actual-tree certificate:99 states at H=60 and98 at
+H=61,62,63, all56 literal INITIAL outputs, with accepted-pre-first-rho material
+18,21,22,23 reported separately. The all-controller lower61 is retained;
+exact state minima and paid/physical memory correspondence remain unresolved.
+
 These finite mathematical artifacts support [TM60.3–5](../../develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM60-T3): the conditional authentic supplier alphabet has minimum size four at H = 60, 61, 62, 63 under the original TM30/TM58/TM59 contract.
 
 [h15_joint_cover.py](h15_joint_cover.py) uses Python 3.9 or newer and only the standard library. From any working directory, run:
@@ -29,3 +35,23 @@ The mathematical deduction is repo-derived. Atomic359–360, TM30, TM38, TM47, T
 [joint_small_caps.py](joint_small_caps.py) and [joint_small_caps.json](joint_small_caps.json) support TM63. The script enumerates all 920 unit leaf words in the complete $h=4$ composition domain, checking all three unit windows and the literal initial targets and the constant initial `Read`, and verifies the same two-call policy for $H=16,17,18,19$. The policy first attempts the original $ρ$ modification and then appends the existing actual context $a^{H-12}$ on either response branch. Its four response words are `AA`, `AR`, `RA`, `RR`, so it has three reachable REQUEST values and two worst-case modifying/total source calls. The certificate also records the binary one-call response bound and the Kraft-tight four-word code. All bracketings are covered by the Atomic360/TM47 behavior-congruence bridge in the paper proof; no finite enumeration is presented as a controller search or a physical cost proof.
 
 The same report retains 312 exact mixed-history checks on six actual composition witnesses and four caps, with both context sides, equality acceptance and unchanged rejection. It also gives a legal single-$ρ$ history whose current Read changes from $A$ to $B$ although $J(A)=A+B$, and a merged Read state with three reachable exact responses. The Read alphabet remains the original Clifford alphabet; the all-policy state lower bound rests on the paper's instruction-type case proof.
+
+## TM67 parameter frontier
+
+<a id="TM67-E1"></a>
+
+[TM67.2–3](../../develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM67-T1) give the authentic full-source material family and the joint original-call tail. [parameter_frontier.py](parameter_frontier.py) and [parameter_frontier.json](parameter_frontier.json) retain finite arithmetic falsifier evidence in this supplier-capacity domain.
+
+The script uses Python 3.9 or newer and only the standard library. From the repository root, run:
+
+```sh
+python3 -I -S -B docs/reports/fib-supplier-capacity/parameter_frontier.py
+```
+
+The default certificate path is beside the script. `--certificate PATH` selects another certificate; `--write` regenerates the deterministic JSON data. The default command recomputes the cases and checks exact certificate equality.
+
+The complete composition triangle is checked for every integer cap $8\le H\le803$: 796 caps and 5,333,200 composition points. The calculation uses the original authentic TM58 supplier formula, literal target encodings, actual positive-context guard inequalities and acceptance equality. Every branch/entry has a unique initial target, and no target is missing. The 760 tail cases with $H\ge44$ check $d_2=H-8L-11$, the $Q$ branch bound and the balanced-threshold original-call upper bound. Genuine omission contributes one prefix call and no fictitious context; emitted contexts contribute two prefix calls and material only on their accepted branches.
+
+The certificate records the cap range, regime counts, zero branch/entry collisions, zero missing targets, tail bound values, and selected cases with branch sizes. Target tuples in the calculation are injective arithmetic encodings of the literal INITIAL dictionary; the tag-2 field order remains $(2,(\mathbf u_{\rm unit},C))$ in the theorem and original output. Arithmetic encodings supply no online target or size port.
+
+This is finite falsifier evidence for the explicit source-faithful policy. It does not enumerate all policies or controllers and does not replace TM67's all-family and all-policy paper proofs. Coverage of every actual Euler word, ordered bracketing, complete history and permanent collision uses Atomic360 and TM30/TM38/TM45/TM47 under their original hypotheses. It supplies no small-cap exact call optimum and no paid, controller-memory, physical, installed, supplier-production, archive, permission, Lean or kernel certification.

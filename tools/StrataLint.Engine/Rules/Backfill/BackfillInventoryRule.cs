@@ -13,7 +13,6 @@ internal sealed record BackfillInventoryValidationContext(
     RawChangeSet? CasChanges = null,
     RawChangeSet? ProjectedStatusChanges = null,
     Func<string, TheoryAtomizerWithContentKinds>? ContentKindAtomizerResolver = null,
-    BackfillInventoryDocument? BaselineDocument = null,
     FrozenStatementIndex? FrozenStatementIndex = null,
     IReadOnlyDictionary<RepoPath, TruthState>? TruthStates = null);
 
@@ -445,7 +444,6 @@ internal static partial class BackfillInventoryRule
 
         try
         {
-            var baselineDocument = context.BaselineDocument ?? LoadBaselineDocument(context.Baseline);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 context.Changes is null
                     ? DigestionEvaluationScope.FullScan
@@ -453,8 +451,6 @@ internal static partial class BackfillInventoryRule
                 document,
                 context.Current,
                 context.Lean!,
-                baselineDocument,
-                baselineSnapshot: context.Baseline,
                 casEvaluation: casEvaluation,
                 changes: context.Changes,
                 casChanges: context.CasChanges,
@@ -495,19 +491,6 @@ internal static partial class BackfillInventoryRule
                 $"{item.Entry.AtomId}:{item.Gap.Code}:{item.Gap.Detail}",
                 AdmissionEffect.Block))
             .ToImmutableArray();
-    }
-
-    private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot baseline)
-    {
-        try
-        {
-            return BackfillInventoryLoader.LoadBaseline(baseline);
-        }
-        catch (FormatException exception) when (
-            string.Equals(exception.Message, "required governance document is missing", StringComparison.Ordinal))
-        {
-            throw new FormatException("baseline digestion ledger is missing");
-        }
     }
 
     private static bool SourceMetadataChanged(
