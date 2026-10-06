@@ -25,23 +25,25 @@ public sealed partial class CoverBatchCommandTests
     }
 
     [Fact]
-    public void FailureDispositionParsesEachLedgerSnapshotOnceIncludingDurabilityRanking()
+    public void ZeroWriteFailureReusesLedgerSnapshotForIndependentCoverage()
     {
         using var world = new BatchWorld(entry => entry.AtomId == First
             ? entry with { Receipts = entry.Receipts with { UnresolvedSubitems = ["remaining clause"] } }
             : entry);
+        var failedPath = world.LedgerPaths().Single(path => path.EndsWith(First + ".yaml", StringComparison.Ordinal));
+        var failedBytes = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, failedPath));
         LedgerLoadCounter loads;
         CommandResult result;
         using (loads = new LedgerLoadCounter())
             result = world.Run(Row(First, Gid) + Row(Second, Gid));
 
         Assert.Equal(["failed", "applied"], Results(result).Select(item => item.Status).ToArray());
-        Assert.NotNull(world.Entry(First).Receipts.CoverDisposition);
+        Assert.Null(world.Entry(First).Receipts.CoverDisposition);
+        Assert.Equal(failedBytes, TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, failedPath)));
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
-        WriteLoadCounts("disposition-then-independent-batch", loads);
-        // Initial, committed disposition.
-        Assert.Equal([1, 1], loads.CandidateSnapshotLoads);
+        WriteLoadCounts("zero-write-failure-then-independent-batch", loads);
+        Assert.Equal([1], loads.CandidateSnapshotLoads);
     }
 
     private void WriteLoadCounts(string scenario, LedgerLoadCounter loads) =>

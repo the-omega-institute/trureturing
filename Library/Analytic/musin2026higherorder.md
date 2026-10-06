@@ -54,6 +54,14 @@ For Theorem 4.1 the coordinates are $(-q_k,-G^{s_k})$: $q_k(n)>0$ decreases stri
 
 ## Consequences for the FIB research direction
 
+The author's earlier [highest-abundant construction](musin2020strongramanujan.md)
+uses the all-integer domain $n\ge5040$, abscissa $n$, and the weighted
+absolute Robin defect. Its Theorem 3(b) makes the square-root logarithmic
+contact set empty if RH is false. This differs from the unconditional
+infinite arithmetic contact families above. A finite supported hull or a
+normalized Robin maximizer cannot be identified with such a global
+highest-abundant contact without proving the missing attainment claim.
+
 The supporting-line description of classical colossally abundant numbers is older than this preprint: the introduction cites Alaoglu–Erdős for the prime-increment optimization and Musin's earlier work for the convex-envelope description. The new version develops higher-order contacts and the stated preservation and growth theorems. A local FIB reformulation must not relabel either body of work as an original geometric discovery.
 
 For the [project's theory](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), this source addresses a gap that the restricted family $N_g=1+F_r g$ does not fill: an explicit theorem retaining the full RH test when the observed family is reduced. It does not itself prove Robin on that Fibonacci family, or control the project's increment-source loss $J_s(d)$ and its complementary weighted moments.

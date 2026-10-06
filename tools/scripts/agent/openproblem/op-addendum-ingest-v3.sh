@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# op-addendum-ingest-v3.sh — append addendum (pure append on dev bytes), then loop {merge origin/dev → lean-report → align-digestion-status → ingest} up to MAXTRY
-# times (dev advances hourly; "Lean report input closure changed" / "planned rewrite" both mean: re-align on the newest dev and retry immediately),
+# op-addendum-ingest-v3.sh — append addendum (pure append on dev bytes), then loop {merge origin/dev → ingest} up to MAXTRY
+# times (dev advances hourly; ingestion is retried on the newest dev),
 # verify the addendum's atoms exist, push, open AUTO_MERGE PR.
 # usage: op-addendum-ingest-v3.sh WORKTREE VOLUME_RELPATH ADDENDUM_MD COMMIT_SUBJECT_FILE PR_MSGFILE PATTERN [MAXTRY=3]   sentinel: ADDENDUM_INGEST_OK pr=<n>
 set -euo pipefail
@@ -24,9 +24,6 @@ for try in $(seq 1 "$MAXTRY"); do
   DEVSHA=$(git rev-parse origin/dev); echo "PINNED_BASE $DEVSHA"
   set +e
   make lean-report; rc=$?; [ "$rc" -eq 0 ] || { echo "ADDENDUM_FAIL lean-report rc=$rc"; exit 4; }
-  make align-digestion-status; rc=$?
-  set -e
-  if [ "$rc" -eq 0 ]; then git add -A Meta/Digestion; git commit -q -m "digestion: align truth status before addendum ingest (try $try)" || true; else echo "ALIGN_RC $rc (continuing to ingest)"; fi
   set +e
   make ingest; rc=$?
   set -e
