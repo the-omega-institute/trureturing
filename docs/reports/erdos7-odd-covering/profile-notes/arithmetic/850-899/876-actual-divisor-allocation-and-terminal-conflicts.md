@@ -732,6 +732,72 @@ stronger interface consequence, not a new matching theorem.
 The shared construction and the actual same-point specialization
 compile with standard axioms and default proof budgets.
 
+## Joint divisor inventories also constrain lower rows
+
+Fix one actual count-then-sum-minimal odd distinct cover, with no
+original divisible by 27 and with some original divisible by nine.
+Let q be at least 28. For a positive odd d coprime to three, with
+at least fifteen divisors, define the exact ancestor residual
+
+$$
+E_d=\{b\bmod d:\ b\not\equiv a_j\pmod{n_j}
+                   \text{ whenever }n_j\mid d\}.
+\tag{DA26}
+$$
+
+All ancestors in DA26 belong to the same original cover. This is a
+residual on the divisor cut d, not the full all-q deletion hole E_q.
+No product structure or lower density for E_q is inferred from it.
+
+Let U be any finite set of positive integers such that q*d*u is an
+actual original numerical label for every u in U. Distinct u give
+distinct actual labels. The literal residue of each such original,
+reduced modulo d, belongs to E_d. Indeed, if its phase agreed with
+an ancestor n_j dividing d, its entire class would be contained in
+that ancestor's class. The labels are different because
+n_j is at most d, whereas q*d*u is greater than d. This contradicts
+minimality of the original class count.
+
+For each one phase modulo d, DA9 bounds the number of these actual
+originals by fourteen. Counting the same numerical inventory over
+its actual phases therefore gives
+
+$$
+|U|\le14|E_d|\le14d.
+\tag{DA27}
+$$
+
+This argument retains the actual phases and every ancestor guard;
+it does not optimize a separate phase distribution for each owner.
+
+In particular, take any finite family of actual original labels
+
+$$
+n_i=3^{r_i}q m_i,
+\qquad 3\nmid m_i,\qquad d\mid m_i.
+$$
+
+Numerical divisor closure supplies the complete joint inventory
+
+$$
+U=\bigcup_i\{3^a e:0\le a\le r_i,\ e\mid m_i/d\}.
+\tag{DA28}
+$$
+
+Every u in this union supplies one actual label q*d*u, so DA27
+applies directly. The union deduplicates equal numerical labels;
+it is neither the sum of separate inventory sizes nor the divisor
+set of a least common multiple presumed to be an original modulus.
+Rows zero and one are included. No actual top label 9*q*m_i is
+required, unlike the top-row inventory used in RA4.
+
+The joint actual-label supplier, ancestor-phase containment and
+finite-fiber bound compile together with standard axioms and
+default proof budgets. They reuse divisor replacement, original
+private points, DA9 and finite counting; this is not a new
+finite-fiber theorem. The pointwise lower-color count still does
+not force a common divisor and a joint inventory violating DA27.
+
 ## Verification and the remaining global obligation
 
 Scoped exact Lean checks cover the actual two-prime incidence
