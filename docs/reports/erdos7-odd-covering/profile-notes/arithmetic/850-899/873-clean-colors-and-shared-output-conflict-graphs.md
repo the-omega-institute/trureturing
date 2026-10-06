@@ -236,6 +236,122 @@ An empty part also fails. This argument concerns common-bank deletions,
 not independent pruning of each part's candidate list. The common-point
 construction above can nevertheless succeed in such cases.
 
+## A common probability table gives another sufficient certificate
+
+Fix nonempty eligible lists D_p contained in the available divisor bank
+intersect Div(m_p), and set B to the union of these lists. Thus every
+d in B appears in a list. For each such d let
+
+$$
+S_d=\{(z_p,\alpha_p\bmod d):d\in D_p\},\qquad s_d=|S_d|.
+$$
+
+Choose one value X_d in S_d times {0,1,2} for each divisor, independently
+across divisors. These are auxiliary choices of replacement outputs;
+no independence of the original phases, colors or source points is
+assumed. Every packet uses the same table for a given divisor.
+
+First take the uniform table. The bad event E_(p,c) says that none of
+the packet's eligible divisors has selected its signature and child c.
+Its exact probability and an exponential upper bound are
+
+$$
+q_p=\prod_{d\in D_p}\left(1-\frac1{3s_d}\right)
+\le\exp(-w_p),\qquad
+w_p=\sum_{d\in D_p}\frac1{3s_d}.
+\tag{CC9}
+$$
+
+A direct sufficient condition is the union bound 3 sum_p q_p<1.
+Equivalently, after clearing the common positive denominator,
+
+$$
+\sum_{(p,c)}\prod_{d\in B}
+\left(3s_d-\mathbf1_{\{d\in D_p\}}\right)
+<\prod_{d\in B}3s_d.
+\tag{CC10}
+$$
+
+Each product on the left counts the complete assignments that miss
+one specified demand. If their sum is smaller than the number of all
+assignments, some common assignment misses no demand and supplies
+MC11. This count does not assume independence between bad events.
+
+For a local-lemma condition, join distinct packets when their lists
+intersect and let Delta_P be the maximum degree of that graph. The
+ordinary dependency degree among the three demands per packet is at
+most 3 Delta_P+2. The symmetric Lovasz local lemma therefore applies
+if e times 3(Delta_P+1) times max_p q_p is at most one. In particular,
+it suffices that
+
+$$
+\min_p w_p\ge1+\log\bigl(3(\Delta_P+1)\bigr).
+\tag{CC11}
+$$
+
+This reuses Bollobas--Pritchard--Rothvoss--Scott,
+[arXiv:1009.6144v3](https://arxiv.org/abs/1009.6144v3), Lemma 8, already
+used in Report869. If every list contains the unit divisor, the ordinary
+packet dependency graph is complete. Then the direct union bound is
+stronger than this symmetric condition; a local benefit needs genuine
+sparsity or the more precise conflict structure below.
+
+## Compatible shared signatures need not be lopsided neighbors
+
+For two demands e and f, join them if some divisor in both lists has
+different desired signatures, including the child. This can be a
+strict subgraph of ordinary variable intersection.
+
+To verify the applicable dependency notion, suppose the two desired
+signatures agree on every common variable. Let assignments u,v differ
+only on those common variables, with u missing e and v missing f.
+If u served f, its serving divisor could not lie in the intersection:
+there it would also serve e. Outside the intersection its value is
+unchanged in v, contradicting that v misses f. Interchanging e,f
+gives the other direction. Thus both u and v miss both demands.
+This excludes precisely the adverse pair of assignments in the
+variable-based lopsidependency definition.
+
+Reuse Moser--Tardos, *A constructive proof of the general Lovasz Local
+Lemma*, Journal of the ACM 57(2) (2010),
+[DOI 10.1145/1667053.1667060](https://doi.org/10.1145/1667053.1667060),
+[arXiv:0903.0544v3](https://arxiv.org/abs/0903.0544v3), Section 6:
+the definition is on printed page nine and Theorem 6.1 on page ten.
+These statements apply to general bad events determined by independent
+variables, not only atomic events. The original source was read directly.
+The desired-signature conflict graph is a valid supergraph of its
+lopsidependency graph. Hence it suffices to find numbers x_e in (0,1)
+such that, simultaneously,
+
+$$
+\Pr(E_e)\le x_e\prod_{f\in\Gamma_{\rm conflict}(e)}(1-x_f).
+\tag{CC12}
+$$
+
+The published theorem gives a common assignment avoiding every bad
+event. Its resampling algorithm has expected total resamplings at most
+sum_e x_e/(1-x_e); this counts resamplings, not the cost of discovering
+the original source, detecting events or producing suitable tables.
+
+Biased tables are also allowed. If theta_d is one probability table on
+S_d times {0,1,2}, shared by all packets, replace the event probability by
+
+$$
+\Pr(E_{p,c})=
+\prod_{d\in D_p}
+\left(1-\theta_d(z_p,\alpha_p\bmod d,c)\right).
+\tag{CC13}
+$$
+
+Independent favorable tables chosen separately for different packets
+cannot be combined. The remaining sufficient-condition supplier is a
+single family of lists and tables on an actual packet cover of E0
+satisfying CC10 or CC12. Neither has been supplied for the hypothetical
+minimal cover. Failure of either test does not imply that no shared
+repair exists: even one composite packet with exactly three divisors
+has the explicit three-child assignment above while its uniform
+symmetric local-lemma test fails.
+
 ## Verification and remaining obligation
 
 The 84/29 source-slot count and the three-packet bound under five
@@ -257,6 +373,16 @@ use default budgets and standard axioms. The interpretation as an
 independent transversal and the external graph theorem application
 remain the ordinary reduction above; no new Lean proof of that
 published theorem is claimed.
+
+The finite product count and union-bound assignment implication in
+CC10 also have exact Lean applications, including two packets with
+overlapping five-candidate lists in a common six-variable alphabet.
+The lopsided interface is checked separately: agreement on shared
+desired values forbids the adverse assignment pair; a third possible
+value on each coordinate gives the converse for a shared disagreement.
+The three child values supply that third-value condition. These checks
+do not formalize the external local lemma or assert its numerical
+hypotheses for the actual source.
 
 For actual point weights, Report870's existing fractional first-stage
 solution already gives a positive margin in every corresponding
