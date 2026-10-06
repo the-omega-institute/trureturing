@@ -176,7 +176,7 @@ public sealed partial class DigestionAlignmentTests
         Assert.Empty(result.Findings);
         Assert.Empty(result.Residual);
         Assert.Equal(
-            DigestionReceiptAlignment.Stale,
+            DigestionReceiptAlignment.Seen,
             result.AlignmentFor(AtomId(migration.Coarse)));
         Assert.Equal(
             DigestionReceiptAlignment.Seen,

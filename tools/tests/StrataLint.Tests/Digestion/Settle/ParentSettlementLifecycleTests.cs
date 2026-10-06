@@ -244,8 +244,7 @@ public sealed partial class DigestionLedgerTests
         }
         var aligned = IngestCommand.Run(temporary.Path,
             new FakeRepositoryGateway(RawChangeSet.Create([]), fixture.Current, baseline),
-            new FakeLeanReportSource(AcceptedLean(Array.Empty<string>()).Report),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty), ["--base", "baseline"]);
+            new FakeLeanReportSource(AcceptedLean(Array.Empty<string>()).Report), []);
         Assert.True(aligned.Success, aligned.Error);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         foreach (var id in ids)
