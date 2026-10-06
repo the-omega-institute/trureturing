@@ -25540,6 +25540,60 @@ nor \(\tau(L)\le3\), nor \(L=r^2\) follows from this hull argument.
 At general maximal height \(e\), the same argument gives
 \(\Gamma_R=\gamma_N(E_A)=3^{e-1}K_A\), with \(3\nmid K_A\).
 
+The distinction has a uniform form in the general prime setting of
+Section 192. Keep \(Q=pN\), \(v_p(N)=e-1\), and
+\(G=\gamma_N(E_A)\). For \(S\subseteq I\), let
+\(K_S=E_A\setminus\bigcup_{i\in S}T_i\) be the complete remaining
+responsibility from (PW-Partial-Liability). Then
+\[
+\boxed{
+\gamma_Q(K_S)=
+\begin{cases}
+pG,&|S|=p-1,\\
+G,&|S|\le p-2.
+\end{cases}}
+\tag{TR4}
+\]
+In particular the original private region uses \(S=I\). The formula
+preserves the entire hull modulus, including its non-\(p\) factors.
+It does not supply a fresh replacement label or a repair budget.
+
+To prove it, the source-compatible top classes of Section 192 have
+distinct absolute residues modulo \(p^e\). On each \(N\)-fibre of
+\(E_A\), a class indexed by \(S\) removes exactly one distinct lift.
+There remain \(p-|S|\ge1\) lifts, so projection of \(K_S\) onto
+\(E_A\) modulo \(N\) is surjective. Fix \(w\in K_S\) and put
+\(\Gamma=\gamma_Q(K_S)\). Since \(K_S\subseteq E_A\) and
+\(G\mid N\mid Q\), the difference-gcd characterization of the
+hull gives \(G\mid\Gamma\). Conversely, for every \(x\in E_A\)
+some \(x+jN\) lies in \(K_S\); thus \(\gcd(\Gamma,N)\) divides
+\(x-w\). The same characterization gives
+\[
+\gcd(\Gamma,N)=G.
+\tag{TR5}
+\]
+Together with \(\Gamma\mid pN\), this implies
+\(G\mid\Gamma\mid pG\). Primality leaves only \(G\) and \(pG\).
+
+If at least two lifts remain, choose \(x+jN,x+kN\in K_S\) with
+\(0\le j<k<p\). Then \(\Gamma\mid(k-j)N\), and
+\(\gcd(p,k-j)=1\) implies \(\Gamma\mid N\), so (TR5) gives
+\(\Gamma=G\). If only one lift remains, \(S\ne\varnothing\), and
+any \(i\in S\subseteq I\) gives
+\(a_R\equiv b\pmod{p^{e-1}}\). All fibres therefore have the same
+candidate top digits and the same single surviving absolute digit.
+Thus \(K_S\) lies in one fixed residue class modulo \(p^e\), so
+\(p^e\mid\Gamma\), whereas \(G\mid N\) has \(p\)-height at
+most \(e-1\). This selects \(\Gamma=pG\).
+
+The single-lift step uses the fixed absolute top digit, not merely
+one selected representative of each reduced-period residue. For example,
+with \(p=3,N=2,E=\mathbb Z\), taking residues \(0,1\pmod6\)
+selects one lift of each residue modulo two but has hull one, not three.
+Section 192 supplies the stronger absolute-digit condition through the
+actual top phases. In the prefix-separated branch \(I=\varnothing\),
+so (TR4) agrees with (TR2); Section 196 is its single-lift endpoint.
+
 A finite arithmetic control has the following ten original classes:
 
 | Modulus | Residue |
