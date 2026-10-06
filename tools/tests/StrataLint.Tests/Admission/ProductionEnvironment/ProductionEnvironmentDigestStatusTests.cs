@@ -296,19 +296,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(expected.Output, result.Output);
     }
 
-    [Fact]
-    public void DigestStatusReportsCasBlobThatDoesNotMatchItsAddress()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files[RuleFixture.FixtureCasPath] = "tampered committed bytes";
-
-        var result = RunDigestStatus(fixture);
-
-        Assert.False(result.Success);
-        Assert.Contains("CAS blob hash mismatch", result.Error, StringComparison.Ordinal);
-    }
-
     private static ProductionCliEnvironment DigestStatusEnvironment(RuleFixture fixture) => new(
         "/repo",
         new FakeRepositoryGateway(

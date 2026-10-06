@@ -49,11 +49,9 @@ internal sealed record DigestionContentKindObservation(
 internal sealed record DigestionLedgerAlignment(
     ImmutableDictionary<string, DigestionReceiptAlignment> EntryAlignments,
     ImmutableDictionary<string, DigestionAtom> MatchedAtoms,
-    ImmutableDictionary<string, ImmutableHashSet<string>> ProducedAtomIds,
     ImmutableDictionary<string, GenreRegistryCheck> GenreRegistryChecks,
     ImmutableArray<StructuredResidualAdmission> Residual,
     ImmutableArray<DigestionSourceClausePlan> ClausePlans,
-    ImmutableHashSet<string> ClausePlanChainParents,
     ImmutableHashSet<string> VerifiedClausePlanParents,
     ImmutableArray<DigestionIngestFallback> Fallbacks,
     ImmutableArray<string> Findings,
@@ -65,9 +63,6 @@ internal sealed record DigestionLedgerAlignment(
             : throw new InvalidOperationException($"digestion alignment omitted entry {atomId}");
 
     internal DigestionAtom? AtomFor(string atomId) => MatchedAtoms.GetValueOrDefault(atomId);
-
-    internal bool IsProduced(string sourceId, string atomId) =>
-        ProducedAtomIds.TryGetValue(sourceId, out var ids) && ids.Contains(atomId);
 }
 
 internal static partial class DigestionLedgerAligner
@@ -131,13 +126,10 @@ internal static partial class DigestionLedgerAligner
         var alignments = ImmutableDictionary.CreateBuilder<string, DigestionReceiptAlignment>(
             StringComparer.Ordinal);
         var matchedAtoms = ImmutableDictionary.CreateBuilder<string, DigestionAtom>(StringComparer.Ordinal);
-        var producedAtomIds = ImmutableDictionary.CreateBuilder<string, ImmutableHashSet<string>>(
-            StringComparer.Ordinal);
         var genreRegistryChecks = ImmutableDictionary.CreateBuilder<string, GenreRegistryCheck>(
             StringComparer.Ordinal);
         var residual = ImmutableArray.CreateBuilder<StructuredResidualAdmission>();
         var clausePlans = ImmutableArray.CreateBuilder<DigestionSourceClausePlan>();
-        var clausePlanChainParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var verifiedClausePlanParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var contentKindObservations = ImmutableArray.CreateBuilder<DigestionContentKindObservation>();
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
@@ -159,7 +151,7 @@ internal static partial class DigestionLedgerAligner
                 nameof(casEvaluation));
         }
 
-        var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, casChanges);
+        var cas = casEvaluation ?? DigestionCasStore.EvaluateLedgerReferences(document, snapshot, casChanges);
         findings.AddRange(cas.Findings);
         foreach (var (source, entry) in sources
                      .SelectMany(source =>
@@ -191,7 +183,7 @@ internal static partial class DigestionLedgerAligner
             .ToHashSet(StringComparer.Ordinal);
 
         var atomizerInputsChanged = new Lazy<bool>(() =>
-            changes is not null && AtomizerInputsChanged(changes, snapshot));
+            changes is not null && AtomizerInputsChanged(changes));
         foreach (var source in sources)
         {
             if (conflictedSources.Contains(source.SourceId))
@@ -262,7 +254,6 @@ internal static partial class DigestionLedgerAligner
                 if (contentWideEntry is not null)
                 {
                     alignments[contentWideEntry.AtomId] = DigestionReceiptAlignment.Seen;
-                    producedAtomIds[source.SourceId] = [contentWideEntry.AtomId];
                     if (mode == DigestionAlignmentMode.Ingest)
                     {
                         AddCoarseFallback(
@@ -323,7 +314,6 @@ internal static partial class DigestionLedgerAligner
                 if (contentWideEntry is not null)
                 {
                     alignments[contentWideEntry.AtomId] = DigestionReceiptAlignment.Seen;
-                    producedAtomIds[source.SourceId] = [contentWideEntry.AtomId];
                     if (mode == DigestionAlignmentMode.Ingest)
                     {
                         AddCoarseFallback(
@@ -359,25 +349,10 @@ internal static partial class DigestionLedgerAligner
                 .GroupBy(static atom => atom.Fingerprints.RawSha256, StringComparer.Ordinal)
                 .Select(static group => group.First())
                 .ToArray();
-            producedAtomIds[source.SourceId] = claims
-                .Select(static atom => atom.Fingerprints.RawSha256["sha256:".Length..])
-                .ToImmutableHashSet(StringComparer.Ordinal);
-
             foreach (var plan in atomized.ClausePlans
                          .GroupBy(static plan => plan.Parent.Fingerprints.RawSha256, StringComparer.Ordinal)
                          .Select(static group => group.First()))
             {
-                var authorityFailure = ClausePlanCasAuthorityFailure(
-                    source,
-                    plan.Parent,
-                    cas.ValidAtomIds,
-                    snapshot);
-                if (authorityFailure is not null)
-                {
-                    findings.Add(authorityFailure);
-                    continue;
-                }
-
                 clausePlans.Add(new DigestionSourceClausePlan(source.SourceId, plan.Parent, plan));
             }
 
@@ -432,7 +407,6 @@ internal static partial class DigestionLedgerAligner
                 snapshot,
                 alignments,
                 matchedAtoms,
-                clausePlanChainParents,
                 verifiedClausePlanParents,
                 findings);
         }
@@ -440,11 +414,9 @@ internal static partial class DigestionLedgerAligner
         return new DigestionLedgerAlignment(
             alignments.ToImmutable(),
             matchedAtoms.ToImmutable(),
-            producedAtomIds.ToImmutable(),
             genreRegistryChecks.ToImmutable(),
             residual.ToImmutable(),
             clausePlans.ToImmutable(),
-            clausePlanChainParents.ToImmutable(),
             verifiedClausePlanParents.ToImmutable(),
             fallbacks.ToImmutable(),
             findings.Order(StringComparer.Ordinal).ToImmutableArray(),

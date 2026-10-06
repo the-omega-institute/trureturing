@@ -28,7 +28,7 @@ pre,steps,env=t[:i],t[i:j],t[j:]
 # split steps: everything up to and including step 4 → stage A; step 5.. → stage B
 m=re.search(r'\n5\. \*\*Deposit / cover\*\*',steps); assert m, 'step 5 anchor not found'
 stepsA=steps[:m.start()]; stepsB='## Steps (Stage B — doors)\n'+steps[m.start()+1:]
-stepsB=stepsB.replace('\n6. ONE builder commit','\n5′. **Anchor cover (mandatory):** `make deposit` freezes the anchor theorem but does NOT write the anchor atom\'s own coverage edge — run `make cover ATOM_ID=<anchor atom> GID=<anchor GID> BASE=origin/dev` after the deposit and verify every target atom (anchor included) is `absorbed-closed` before committing (`ls Meta/Digestion/backfill/<source>/absorbed-closed/ | grep -c <id>`); a lane whose anchor stays residual-open is incomplete (#5480, #5504 needed orchestrator repairs).\n6. ONE builder commit',1)
+stepsB=stepsB.replace('\n6. ONE builder commit','\n5′. **Anchor cover (mandatory):** `make deposit` freezes the anchor theorem but does NOT write the anchor atom\'s own coverage edge — run `make cover ATOM_ID=<anchor atom> GID=<anchor GID>` after the deposit and verify every target atom (anchor included) is `absorbed-closed` before committing (`ls Meta/Digestion/backfill/<source>/absorbed-closed/ | grep -c <id>`); a lane whose anchor stays residual-open is incomplete (#5480, #5504 needed orchestrator repairs).\n6. ONE builder commit',1)
 stopA='''
 4′. **STOP HERE (Stage A ends before any freeze), and emit in PHASE A SHAPE.** Do NOT run `make deposit`, `make cover`, `git commit`, `git push` or `make pr-open`.
 

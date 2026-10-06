@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 
@@ -22,8 +21,8 @@ public sealed partial class FormalizeCandidatesTests
         using var json = JsonDocument.Parse(result.Output);
         var candidate = Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray());
         Assert.Equal("命题", candidate.GetProperty("kind").GetString());
-        Assert.Equal("**命题 6.1**。" + body + "\n", candidate.GetProperty("atom_text").GetString());
-        Assert.Equal(Encoding.UTF8.GetString(entry.Atom.RawBytes.AsSpan()), candidate.GetProperty("atom_text").GetString());
+        Assert.Equal(string.Empty, candidate.GetProperty("atom_text").GetString());
+        Assert.DoesNotContain("完整成立", result.Output, StringComparison.Ordinal);
         Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
     }
 }

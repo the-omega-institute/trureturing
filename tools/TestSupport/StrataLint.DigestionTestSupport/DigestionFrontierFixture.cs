@@ -21,7 +21,6 @@ internal sealed record DigestionFrontierFixture(
     internal const string ClaimId = "formalizable-claim";
 
     internal static DigestionFrontierFixture Create(
-        bool retryDispositions = false,
         string coverKind = "definition",
         DigestionAtomStatusMarker? claimStatusMarker = null,
         DigestionAtomStatusMarker? chainChildStatusMarker = null,
@@ -100,8 +99,7 @@ internal sealed record DigestionFrontierFixture(
         var projection = DigestionFrontierProjection.Create(
             document,
             evaluation,
-            contentKinds,
-            retryDispositions);
+            contentKinds);
         return new DigestionFrontierFixture(
             document,
             evaluation,
