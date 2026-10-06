@@ -939,3 +939,70 @@ Here $2<\log10<5/2$ supplies the logarithmic interval, and $e^4>54$
 supplies the iterated-logarithm bound. These are scalar outward
 comparisons of the published formula, not a new zero count or a
 numerical reconstruction of the source's directed constants.
+
+### The complete signed target on a larger source-clock interval
+
+Consider every selected source with
+
+$$
+e^{50}\le A\le X_1:=3\cdot10^{23}.
+$$
+
+Then $\sqrt A<5.5\cdot10^{11}$, $L\ge50$ and
+$1+A^{-1}<1.0001$. The existing positive-series bound
+$e^{25}>6\cdot10^{10}$, and $e^t\ge1+t$ for $t\ge0$, give
+
+$$
+B(A)\le\frac{24}{29}+e^{-L/2}
+<\frac{24}{29}(1.0001).
+\tag{Z6}
+$$
+
+Use (F3) at $H_0$, (Z5) at $U$, $1+1/L\le1.02$ and
+$2(1/L+2/L^2)<0.05$. The two rational comparisons are
+
+$$
+(5.5\cdot10^{11})\frac{24}{29}(1.0001)
+\left[1.02(1.48\cdot10^{-12})+0.05(5\cdot10^{-25})\right]<0.688,
+$$
+
+$$
+(5.5\cdot10^{11})(1.0001)
+\left[1.02(7\cdot10^{-16})+0.05(7\cdot10^{-32})\right]<0.0004.
+$$
+
+Consequently $C_{\rm high}(A)<0.6884$ on the entire stated interval.
+The existing $C_{\rm low}(A)<0.054$ and $\mathcal E(L)>0.75$ then
+pay the full signed Robin condition, with the exact same-source identity:
+
+$$
+\boxed{T_A\Delta(N)>0.75-0.054-0.6884=0.0076>0.007
+\qquad(e^{50}\le A\le X_1).}
+\tag{Z7}
+$$
+
+The lower clock interval $K/2<A\le e^{50}$ was already paid in (F5)
+and is reused. Thus, conditional on the same cited source reduction,
+core, zero-free region and finite-verification inputs, a failure of RH
+must have its selected least global maximizer at
+
+$$
+\boxed{\log N>3\cdot10^{23}.}
+\tag{Z8}
+$$
+
+This improves the existing selected-source restriction
+$\log N>21\cdot10^{22}$. It does not constrain the least
+counterexample, establish Robin for every integer below $e^{X_1}$,
+or extend Polak's all-integer finite theorem. The original height
+$H_0$ is still the only verified height; $U$ is only a partition of the
+complete unverified-zero contribution.
+
+The unbounded target remains
+$T_A I_\psi(A)\ge-\mathcal E(\log A)$ at the same selected source.
+For fixed $H_0,U$, (Z3) still permits a high-zero allowance growing as
+$A^{1/2-1/240}$, and the part above $U$ retains its $\sqrt A$ factor.
+Hence (Z7) supplies no unbounded signed estimate or RH proof. The
+separate divisor-order decomposition of the same integral is not
+added to this spectral allowance; each representation keeps its own
+complete remainder.
