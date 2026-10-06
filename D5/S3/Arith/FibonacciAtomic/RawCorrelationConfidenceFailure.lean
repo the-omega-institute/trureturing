@@ -24,8 +24,9 @@ def tripleMass (ρ : ℝ) (h₁ h₂ l₃ : Bool) : ℝ :=
   bernoulliMass (hOne ρ) h₁ * bernoulliMass (hTwo ρ) h₂ *
     bernoulliMass (hTwo ρ) l₃
 
-def eventMass (ρ : ℝ) (event : Bool → Bool → Bool → Prop) : ℝ :=
-  ∑ h₁ : Bool, ∑ h₂ : Bool, ∑ l₃ : Bool,
+noncomputable def eventMass (ρ : ℝ) (event : Bool → Bool → Bool → Prop) : ℝ := by
+  classical
+  exact ∑ h₁ : Bool, ∑ h₂ : Bool, ∑ l₃ : Bool,
     if event h₁ h₂ l₃ then tripleMass ρ h₁ h₂ l₃ else 0
 
 def reverseEvent : Bool → Bool → Bool → Prop := fun h₁ h₂ l₃ =>
@@ -63,6 +64,6 @@ theorem forward_sign_symmetry (α ρ : ℝ) :
   simp [forwardPositiveMass, forwardNegativeMass, channelMass, channelBase,
     candidateClass, zScore, classOffset, rawDifference, bernoulliMass,
     hOne, hTwo, Fin.sum_univ_three]
-  ring
+  split_ifs <;> norm_num at * <;> ring
 
 end D5.S3.Arith.FibonacciAtomic.RawCorrelationConfidenceFailure
