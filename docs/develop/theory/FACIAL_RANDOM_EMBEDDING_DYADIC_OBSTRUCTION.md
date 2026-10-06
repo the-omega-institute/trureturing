@@ -161,6 +161,10 @@ The classical Cycle Double Cover conjecture is not treated here as an unresolved
 
 The finite denominator theorem is elementary finite probability and transitive symmetry; it is not claimed as a new general mathematical principle. The contribution is its application to the exact expectation assertion and the reusable signed-rotation/flag bridge, together with exact counterexample counts. No priority beyond the searched sources is asserted. No correspondence with the authors has been sent.
 
+**Proposition 9.1 (A nonuniform comparison law).** There is a nonuniform law on K4 embeddings with expected counts exactly (2,2,2).
+
+Proof. The exact certificate contains a fixed-rotation outcome with twist mask 18 and type counts (0,0,6), and one with twist mask 3 and type counts (3,3,0), using its documented convention that bit zero is untwisted. Give these outcomes probabilities 1/3 and 2/3 respectively. Their weighted count vector is (2,2,2). Averaging the law over the 24 graph automorphisms also preserves this vector and makes the distribution relabelling-invariant. This law is not the independent fair-bit sampler. ∎
+
 The paper's phrase “random embedding” by itself does not determine every possible distribution. The refutation applies to the explicit independently sampled rotations and signs implemented in the authors' notebook. If the intended law is different, that law must be stated before its corresponding expectation assertion can be judged.
 
 ## 追加锚（本行以下为增补区）
