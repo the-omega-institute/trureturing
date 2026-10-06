@@ -6,12 +6,13 @@
    utility: none
    digest: First starts of longest monochromatic Thue-Morse arithmetic progressions. -/
 
-import D5.S1.Words.Complexity.ThueMorseReducedAbelianOdd
+import D5.S1.Words.ThueMorseDyadic
 import Mathlib.Tactic.Ring
 
 namespace D5.S1.Words.ThueMorseMapFirstStart
 
 open D5.S1.Words.Complexity
+open D5.S1.Words.ThueMorseDyadic
 
 open private thueMorse_zero thueMorse_two_mul thueMorse_two_mul_add_one
   thueMorse_two_pow_add
@@ -39,24 +40,6 @@ def claim : Prop :=
     (Odd e → FirstLongest (q - 1) (q - 1))
 
 theorem result : claim := by
-  have block (e a r : Nat) (hr : r < 2 ^ e) :
-      thueMorse (a * 2 ^ e + r) = Bool.xor (thueMorse a) (thueMorse r) := by
-    induction e generalizing a r with
-    | zero =>
-        have : r = 0 := by simpa using hr
-        subst r
-        simp
-    | succ e ih =>
-        obtain ⟨v, rfl | rfl⟩ := r.even_or_odd'
-        · have hv : v < 2 ^ e := by simp only [Nat.pow_succ] at hr; omega
-          rw [show a * 2 ^ (e + 1) + 2 * v = 2 * (a * 2 ^ e + v) by
-            simp only [Nat.pow_succ]; ring]
-          simp only [thueMorse_two_mul, ih a v hv]
-        · have hv : v < 2 ^ e := by simp only [Nat.pow_succ] at hr; omega
-          rw [show a * 2 ^ (e + 1) + (2 * v + 1) = 2 * (a * 2 ^ e + v) + 1 by
-            simp only [Nat.pow_succ]; ring]
-          simp only [thueMorse_two_mul_add_one, ih a v hv]
-          cases thueMorse a <;> cases thueMorse v <;> rfl
   have complement (e r : Nat) (hr : r < 2 ^ e) :
       thueMorse (2 ^ e - 1 - r) = Bool.xor (thueMorse (2 ^ e - 1)) (thueMorse r) := by
     induction e generalizing r with
@@ -135,15 +118,6 @@ theorem result : claim := by
             rw [show 2 * a + 1 + 2 = 2 * (a + 1) + 1 by omega] at h2
             simp [t1, t2] at h1 h2
             cases c <;> cases thueMorse (a + 1) <;> simp_all
-  have top (e : Nat) : thueMorse (2 ^ e - 1) = (e % 2 == 1) := by
-    induction e with
-    | zero => simp
-    | succ e ih =>
-        have hp : 0 < 2 ^ e := Nat.two_pow_pos e
-        rw [show 2 ^ (e + 1) - 1 = 2 ^ e + (2 ^ e - 1) by
-          simp only [Nat.pow_succ]; omega]
-        rw [thueMorse_two_pow_add e _ (by omega), ih]
-        rcases Nat.mod_two_eq_zero_or_one e with he | he <;> simp [Nat.add_mod, he]
   have plus_sample (e a b j h r : Nat) (hr : r < 2 ^ e)
       (hcarry : b + j = h * 2 ^ e + r) :
       thueMorse (a * 2 ^ e + b + j * (2 ^ e + 1)) =
@@ -152,7 +126,7 @@ theorem result : claim := by
       calc
         _ = (a + j) * 2 ^ e + (b + j) := by ring
         _ = _ := by rw [hcarry]; ring
-    rw [hi, block e _ _ hr]
+    rw [hi, dyadic_block e _ _ hr]
   have minus_sample (e a b j h r : Nat) (hr : r < 2 ^ e)
       (hh : h ≤ a + j) (hborrow : j + r = b + h * 2 ^ e) :
       thueMorse (a * 2 ^ e + b + j * (2 ^ e - 1)) =
@@ -169,7 +143,7 @@ theorem result : claim := by
       omega
     have hi : a * 2 ^ e + b + j * (2 ^ e - 1) = (a + j - h) * 2 ^ e + r := by
       omega
-    rw [hi, block e _ _ hr]
+    rw [hi, dyadic_block e _ _ hr]
   have residues : ∀ e : Nat, 2 ≤ e → ∀ a b : Nat,
     b < 2 ^ e →
     (MAP (2 ^ e + 1) (a * 2 ^ e + b) (2 ^ e + 2) →
@@ -227,7 +201,7 @@ theorem result : claim := by
     · intro hev hm
       have hp : p = false := by
         dsimp [p]
-        rw [top]
+        rw [top_parity]
         simp [Nat.even_iff.mp hev]
       rw [hp] at low1 low2
       have l1 : thueMorse (q - 2) = true := low1
@@ -394,7 +368,7 @@ theorem result : claim := by
             _ = (k - 1 + 1) * q := by ring
             _ = _ := by rw [Nat.sub_add_cancel hk1]
         omega
-      rw [ha, block e _ _ (by omega), low1] at hleft
+      rw [ha, dyadic_block e _ _ (by omega), low1] at hleft
       have hnleft : thueMorse (k - 1) = !c := by
         have hh : Bool.xor (Bool.xor (thueMorse (k - 1)) (!p)) p =
             !thueMorse (k - 1) := by cases thueMorse (k - 1) <;> cases p <;> rfl
@@ -403,7 +377,7 @@ theorem result : claim := by
       have hright := sample (q + 1) 2 0 (by omega) (by omega) (by omega)
       simp only [thueMorse_zero, Bool.xor_false] at hright
       have hi : a + (q + 1) + 2 = (k + 1) * q + 1 := by rw [Nat.add_mul]; omega
-      rw [hi, block e _ _ (by omega), t1] at hright
+      rw [hi, dyadic_block e _ _ (by omega), t1] at hright
       have hnright : thueMorse (k + 1) = !c := by simpa using congrArg Bool.not hright
       have hk3 : 3 ≤ k := by
         by_contra h
@@ -418,7 +392,7 @@ theorem result : claim := by
       refine ⟨k, hk3, hk, hbfinal, ?_⟩
       have hnext := plus_sample e a b (q + 2) 2 1 (by omega) (by omega)
       have hi' : a + (q + 2) + 2 = (k + 1) * q + 2 := by rw [Nat.add_mul]; omega
-      rw [hi', block e _ _ (by omega), t1, t2, hnright] at hnext
+      rw [hi', dyadic_block e _ _ (by omega), t1, t2, hnright] at hnext
       simpa using hnext
     · change a + 2 = k * q + q / 2 at hk
       have hh : thueMorse (q / 2 + 1) = false := by
@@ -435,7 +409,7 @@ theorem result : claim := by
       have hright := sample (q + 1) 2 0 (by omega) (by omega) (by omega)
       simp only [thueMorse_zero, Bool.xor_false] at hright
       have hi : a + (q + 1) + 2 = (k + 1) * q + (q / 2 + 1) := by rw [Nat.add_mul]; omega
-      rw [hi, block e _ _ (by omega), hh, Bool.xor_false, hkp] at hright
+      rw [hi, dyadic_block e _ _ (by omega), hh, Bool.xor_false, hkp] at hright
       exact False.elim (Bool.not_ne_self c hright)
   have even_minus_barrier : ∀ e : Nat, 2 ≤ e → Even e → ∀ a b : Nat,
     b < 2 ^ e → MAP (2 ^ e - 1) (a * 2 ^ e + b) (2 ^ e + 4) →
@@ -455,7 +429,7 @@ theorem result : claim := by
     have t1 : thueMorse 1 = true := by decide
     have t2 : thueMorse 2 = true := by decide
     have hp : thueMorse (q - 1) = false := by
-      rw [top]
+      rw [top_parity]
       simp [Nat.even_iff.mp hev]
     have low1 : thueMorse (q - 2) = true := by
       have h := complement e 1 (by omega)
@@ -495,10 +469,10 @@ theorem result : claim := by
             _ = (k - 1 + 1) * q := by ring
             _ = _ := by rw [Nat.sub_add_cancel hk1]
         omega
-      rw [ha, block e _ _ (by omega), hp, Bool.xor_false] at hleft
+      rw [ha, dyadic_block e _ _ (by omega), hp, Bool.xor_false] at hleft
       have hnleft : thueMorse (k - 1) = !c := by simpa using congrArg Bool.not hleft
       have hi : a + 1 + q = (k + 1) * q + 0 := by rw [Nat.add_mul]; omega
-      rw [hi, block e _ _ (by omega), thueMorse_zero, Bool.xor_false] at hright
+      rw [hi, dyadic_block e _ _ (by omega), thueMorse_zero, Bool.xor_false] at hright
       have hnright : thueMorse (k + 1) = !c := by simpa using congrArg Bool.not hright
       have hk3 : 3 ≤ k := by
         by_contra h
@@ -513,7 +487,7 @@ theorem result : claim := by
       refine ⟨k, hk3, hk, hbfinal, ?_⟩
       have hnext := minus_sample e a b (q + 4) 2 (q - 3) (by omega) (by omega) (by omega)
       have hi' : a + (q + 4) - 2 = (k + 1) * q + 1 := by rw [Nat.add_mul]; omega
-      rw [hi', block e _ _ (by omega), t1, low2, hnright] at hnext
+      rw [hi', dyadic_block e _ _ (by omega), t1, low2, hnright] at hnext
       simpa using hnext
     · change a + 1 = k * q + q / 2 at hk
       have hh : thueMorse (q / 2) = true := by
@@ -525,7 +499,7 @@ theorem result : claim := by
         have h := thueMorse_two_pow_add (e - 1) 0 (Nat.two_pow_pos _)
         simpa using h
       have hi : a + 1 + q = (k + 1) * q + q / 2 := by rw [Nat.add_mul]; omega
-      rw [hi, block e _ _ (by omega), hh, hkp] at hright
+      rw [hi, dyadic_block e _ _ (by omega), hh, hkp] at hright
       simp only [Bool.xor_true, Bool.not_not] at hright
       exact False.elim (Bool.not_ne_self c hright)
   have attainment : ∀ e : Nat, 2 ≤ e →
@@ -554,8 +528,8 @@ theorem result : claim := by
           _ = _ := by rw [ha]; ring
       have hs : 3 * q ^ 2 - q - 1 = a * q + (q - 1) := by omega
       have hbase : thueMorse (a * q + (q - 1)) = false := by
-        rw [block e a _ (by omega), show a = 2 * q + (q - 2) by omega,
-          block e 2 _ (by omega), t2, low1]
+        rw [dyadic_block e a _ (by omega), show a = 2 * q + (q - 2) by omega,
+          dyadic_block e 2 _ (by omega), t2, low1]
         change Bool.xor (Bool.xor true (!p)) p = false
         cases p <;> rfl
       change MAP (q + 1) (3 * q ^ 2 - q - 1) (q + 2)
@@ -570,18 +544,18 @@ theorem result : claim := by
           have hr : r < q := by dsimp [r]; omega
           have h := plus_sample e a (q - 1) j 1 r hr (by dsimp [r]; omega)
           rw [show a + j + 1 = 3 * q + r by dsimp [r]; omega,
-            block e 3 r hr, t3] at h
+            dyadic_block e 3 r hr, t3] at h
           simpa using h
         · have hj' : j = q + 1 := by omega
           subst j
           have h := plus_sample e a (q - 1) (q + 1) 2 0 (by omega) (by omega)
           rw [show a + (q + 1) + 2 = 4 * q + 1 by omega,
-            block e 4 1 (by omega), t4, t1, thueMorse_zero] at h
+            dyadic_block e 4 1 (by omega), t4, t1, thueMorse_zero] at h
           simpa using h
     · intro hev
       have hp : p = false := by
         dsimp [p]
-        rw [top]
+        rw [top_parity]
         simp [Nat.even_iff.mp hev]
       let a := 3 * q - 1
       have ha : a + 1 = 3 * q := by dsimp [a]; omega
@@ -591,8 +565,8 @@ theorem result : claim := by
           _ = _ := by rw [ha]; ring
       have hs : 3 * q ^ 2 - q + 1 = a * q + 1 := by omega
       have hbase : thueMorse (a * q + 1) = false := by
-        rw [block e a 1 (by omega), show a = 2 * q + (q - 1) by omega,
-          block e 2 _ (by omega), t2, t1]
+        rw [dyadic_block e a 1 (by omega), show a = 2 * q + (q - 1) by omega,
+          dyadic_block e 2 _ (by omega), t2, t1]
         change Bool.xor (Bool.xor true p) true = false
         rw [hp]
         rfl
@@ -607,7 +581,7 @@ theorem result : claim := by
         · subst j
           have h := minus_sample e a 1 1 0 0 (by omega) (by omega) (by omega)
           rw [show a + 1 - 0 = 3 * q + 0 by omega,
-            block e 3 0 (by omega), t3, thueMorse_zero] at h
+            dyadic_block e 3 0 (by omega), t3, thueMorse_zero] at h
           simpa using h
         · by_cases hjq : j ≤ q + 1
           · let r := j - 2
@@ -617,18 +591,18 @@ theorem result : claim := by
             change thueMorse (q - 1 - r) = Bool.xor p (thueMorse r) at hl
             rw [hp, Bool.false_xor] at hl
             rw [show a + j - 1 = 3 * q + r by dsimp [r]; omega,
-              block e 3 r hr, t3, hl] at h
+              dyadic_block e 3 r hr, t3, hl] at h
             simpa using h
           · have hj' : j = q + 2 ∨ j = q + 3 := by omega
             rcases hj' with rfl | rfl
             · have h := minus_sample e a 1 (q + 2) 2 (q - 1) (by omega) (by omega) (by omega)
               rw [show a + (q + 2) - 2 = 3 * q + (q - 1) by omega,
-                block e 3 _ (by omega), t3] at h
+                dyadic_block e 3 _ (by omega), t3] at h
               change thueMorse (a * q + 1 + (q + 2) * (q - 1)) = Bool.xor (Bool.xor false p) p at h
               simpa using h
             · have h := minus_sample e a 1 (q + 3) 2 (q - 2) (by omega) (by omega) (by omega)
               rw [show a + (q + 3) - 2 = 4 * q + 0 by omega,
-                block e 4 0 (by omega), t4, thueMorse_zero, low1, hp] at h
+                dyadic_block e 4 0 (by omega), t4, thueMorse_zero, low1, hp] at h
               simpa using h
   have odd_minus :
     ∀ e : Nat, 2 ≤ e → Odd e → FirstLongest (2 ^ e - 1) (2 ^ e - 1) := by
@@ -639,7 +613,7 @@ theorem result : claim := by
       simpa [q] using h
     have hq1 : q - 1 + 1 = q := by omega
     have ht : thueMorse (q - 1) = true := by
-      rw [top]
+      rw [top_parity]
       simp [Nat.odd_iff.mp ho]
     have crossing (s : Nat) :
         thueMorse (s + (s % q + 1) * (q - 1)) =
@@ -661,8 +635,8 @@ theorem result : claim := by
         rw [Nat.add_mul]
         omega
       change thueMorse (s + (b + 1) * (q - 1)) = !thueMorse (s + b * (q - 1))
-      rw [h0, h1, block e (a + b) (q - 1) (by omega)]
-      have hh := block e (a + b) 0 (by omega)
+      rw [h0, h1, dyadic_block e (a + b) (q - 1) (by omega)]
+      have hh := dyadic_block e (a + b) 0 (by omega)
       simp only [Nat.add_zero, thueMorse_zero, Bool.xor_false] at hh
       rw [hh, ht]
       cases thueMorse (a + b) <;> rfl
@@ -681,7 +655,7 @@ theorem result : claim := by
           _ = j * ((q - 1) + 1) := by ring
           _ = _ := by rw [hq1]
       have hindex : q - 1 + j * (q - 1) = j * q + (q - 1 - j) := by omega
-      rw [hindex, block e j _ (by omega), complement e j hj, ht]
+      rw [hindex, dyadic_block e j _ (by omega), complement e j hj, ht]
       cases thueMorse j <;> rfl
     refine ⟨q, by omega, witness, bound, ?_⟩
     intro s hs h
