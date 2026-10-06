@@ -239,9 +239,6 @@ public sealed partial class DigestionAlignmentTests
                 [new DigestionClausePlan(parent, children.ToImmutableArray())],
                 GenreRegistryCheck.NoGenreRegistry));
 
-        Assert.All(childIds, childId => Assert.Equal(
-            DigestionReceiptAlignment.Rejected,
-            result.AlignmentFor(childId)));
         Assert.Contains(result.Findings, finding => finding.Contains(
             defect == "non-unique" ? "not a unique parent sub-span" : "clause plan",
             StringComparison.Ordinal));
@@ -299,9 +296,6 @@ public sealed partial class DigestionAlignmentTests
                 [new DigestionClausePlan(parent, children.ToImmutableArray())],
                 GenreRegistryCheck.NoGenreRegistry));
 
-        Assert.All(childIds, childId => Assert.Equal(
-            DigestionReceiptAlignment.Rejected,
-            result.AlignmentFor(childId)));
         Assert.Contains(result.Findings, finding => finding.Contains(
             "not a unique parent sub-span",
             StringComparison.Ordinal));

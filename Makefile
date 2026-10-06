@@ -85,7 +85,7 @@ mathlib-reanchor:
 	@/bin/bash tools/scripts/ingest.sh mathlib-reanchor "$(BASE)"
 
 echo-residual-summary:
-	@/bin/bash tools/scripts/report/echo-residual-summary.sh "$(BASE)"
+	@/bin/bash tools/scripts/report/echo-residual-summary.sh
 
 digestion-readiness:
 	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- digest-status --readiness
