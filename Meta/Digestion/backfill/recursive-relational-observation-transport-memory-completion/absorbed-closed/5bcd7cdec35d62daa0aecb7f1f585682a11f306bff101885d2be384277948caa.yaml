@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:5bcd7cdec35d62daa0aecb7f1f585682a11f306bff101885d2be384277948caa
   normalized_sha256: sha256:5bcd7cdec35d62daa0aecb7f1f585682a11f306bff101885d2be384277948caa
 cas_ref: sha256:5bcd7cdec35d62daa0aecb7f1f585682a11f306bff101885d2be384277948caa
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Estimation/DataProcessing/OrderedCoordinateFlowRealization.ordered_flow_terminal_law_realization
+    target_statement_id: sha256:febe3c9ab754292c6fa06daa4264c6b4a5ea45a78ca45547e6d36bd42291cffc
 receipts:
   unresolved_subitems: []
