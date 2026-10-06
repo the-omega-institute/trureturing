@@ -71,3 +71,49 @@ critical sources. The classical prefix formula alone does not give a sign
 for the full Robin integral or prove RH. The distinct subpower range in the
 [Alamoudi source](alamoudi2026subradicallysifted.md) is not substituted for
 the fixed positive power cutoff here.
+
+## The source-scale boundary $u\to1^+$
+
+The fixed-$u$ estimate above cannot retain an
+$O(z/\log^2 y)$ error with one bounded constant when $z/y\to c>1$.
+For all real $y\ge2$ and $y\le z\le y^2$, exact prime counting gives
+
+$$
+M_{\mathrm{rough}}(z,y)=1-\pi(z)+\pi(y).
+$$
+
+Indeed, a composite integer whose prime factors are all strictly greater
+than $y$ exceeds $y^2$. The allowed integers in this range are therefore
+the unit and the primes in $(y,z]$; their Möbius weights are $1$ and $-1$.
+For $z/y\to c>1$, the classical prime number theorem yields
+
+$$
+M_{\mathrm{rough}}(z,y)
+=-(c-1)\frac y{\log y}+o\!\left(\frac y{\log y}\right).
+$$
+
+Here $u=\log z/\log y\to1^+$ and eventually $1<u<2$. In that interval
+$\rho'(u)=-1/u$, so
+
+$$
+\frac{\log y}{y}
+\left[M_{\mathrm{rough}}(z,y)-\frac{z\rho'(u)}{\log y}\right]
+\longrightarrow1.
+$$
+
+Thus this moving-boundary error is of order $y/\log y$, rather than
+$z/\log^2 y$. This does not contradict the fixed-$u$ statement or settle
+uniformity on any interval bounded away from $u=1$. It is an elementary
+scope check using exact prime counting and the classical PNT, not a new
+rough-sum theorem or a claim about Alladi's uninspected uniform estimates.
+
+For an actual proper GA1 CA source, retain $A=\log N$ and
+$y=P(N)$ as distinct quantities. The [published GA1 envelope](../Arith/caveney2012sacaga.md),
+Theorem 13, gives $y\sim A$ as such sources tend to infinity. Initial CA
+prime support gives $\operatorname{rad}(N)=Q(y)$. Hence source-scale rows
+$z=cA$, for fixed $c>1$, have exactly this moving-boundary behavior with
+the same filter $Q(y)$, including the unit. This source class contains the
+conditional critical maximizer selected by the extraordinary-number
+reduction; no unbounded critical sequence is assumed. The asymptotic
+statement supplies no effective cutoff, growing-filter kernel estimate,
+complete compensated remainder bound, or Robin/RH conclusion.
