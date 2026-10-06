@@ -136,11 +136,16 @@ private lemma ordered_relabel {q : ℕ} (Q : ℝ → Fin q) (hQ : connectedInstr
 private lemma closed_interval {q : ℕ} (Q : ℝ → Fin q)
     (hQ : MonotoneOn Q (stateInterval false)) (i : Fin q) :
     (closure (cell Q i)).OrdConnected := by
-  have hc : (cell Q i).OrdConnected := ⟨by
-    intro x hx y hy z hz
-    have hzX : z ∈ stateInterval false := ⟨hx.1.1.trans hz.1, hz.2.trans hy.1.2⟩
-    exact ⟨hzX, le_antisymm (by simpa [hy.2] using hQ hzX hy.1 hz.2)
-      (by simpa [hx.2] using hQ hx.1 hzX hz.1)⟩⟩
+  obtain ⟨u, hu, heu⟩ :=
+    (Set.ordConnected_singleton (a := i)).preimage_monotoneOn hQ
+  have hcell : cell Q i = stateInterval false ∩ u := by
+    rw [← heu]
+    ext x
+    simp only [cell, Set.mem_setOf_eq, Set.mem_inter_iff,
+      Set.mem_preimage, Set.mem_singleton_iff]
+  have hc : (cell Q i).OrdConnected := by
+    rw [hcell]
+    exact Set.ordConnected_Icc.inter hu
   exact hc.isPreconnected.closure.ordConnected
 
 private lemma adjacent_boundary {q : ℕ} (Q : ℝ → Fin q)
