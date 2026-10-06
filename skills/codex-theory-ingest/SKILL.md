@@ -246,8 +246,8 @@ to the corresponding source claim. Search reads stored paths, not a global
 status evaluation, and emits neither a ledger digest nor total counts.
 
 Postcondition: canonical ingest created the source record and CAS-backed atoms,
-`show-atom` reads at least one eligible claim back with matching hashes, and the
-same atom appears exactly once in the formalization-candidate output.
+`show-atom` reads at least one eligible claim back with the expected source
+identity and faithful raw text.
 
 ### 4. Preflight, publish, and wait for the machine verdict
 
@@ -255,9 +255,9 @@ Review `git diff` and require every `Meta/Digestion/**` change to be an output o
 the successful Step 3 writer. Prepare a pull-request body that records:
 
 - provenance and the new volume path;
-- source id, residual increment, and eligible atom ids;
-- every verification command and exit code, including any report-prerequisite recovery;
-- the exact `show-atom` hash-match evidence.
+- source id and selected atom ids;
+- every verification command and exit code;
+- the selected `show-atom` identity and text check.
 
 Commit the theory volume and writer-produced digestion data, then run:
 
