@@ -123,3 +123,15 @@ they do not supply this fixed-ratio constant comparison or its unbounded-ratio
 uniform conclusion. This bounded source comparison does not certify an
 exhaustive literature search. Shrinking width alone still does not force
 successful actual moments, the full Robin sign, or RH.
+
+The [project's §418](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+adds a quantitative condition on the same actual packet. For $a\ge e$ and
+$L=b-a\le a$, let $M=\sup_{[a,b]}|A^+(t)-t|$. A successful two-moment
+certificate requires $L^3\le6400a^2M$. The uniform-reference Hermite loss
+and the moment formula are reused from Theorem 7.7 and Proposition 7.6;
+the additional application controls the change in that expression by the
+same packet's workload error. Theorem 8.5 (`thm:psi-normal-form`), combined
+with an existing unconditional PNT error supplier, then yields a shrinking
+necessary relative-width rate. These are restrictions on this sufficient
+certificate, not a successful actual packet, an endpoint sign theorem,
+an effective starting threshold, or a solution of §12's `prob:low-moment`.
