@@ -13,7 +13,7 @@
 | 生成 Lean 报告 / 发射 Scribe | `make lean-report` / `make emit` |
 | 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
 | 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
-| 查看开放 atom 的就绪情况 | `make digestion-readiness` |
+| 搜索指定理论的 atom | `make search-atoms SOURCE=<源ID或理论路径> [TEXT=<关键词>] [STATE=<目录状态>] [LIMIT=<上限>]` |
 | 构建、冻结并覆盖锚点 atom | `make deposit ATOM_ID=<id> GID=<gid>` |
 | 构建并冻结无 atom 的形式化 | `make deposit-uncovered GID=<gid>` |
 | 用既有冻结声明覆盖 atom | `make cover ATOM_ID=<id> GID=<gid>`；批量用 `make cover-batch ATOMS=<TSV文件>` |
@@ -337,7 +337,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 4.6 run-local 投影的归宿
 
-**run-local 投影不入 Git 索引**:`Generated/echo-residuals/<source_id>.md` 由 `.gitignore`+FILEMAP 声明为 run-local,按需现算。分片只缩小冲突面,出库才消除该族的合并冲突面;tracked 投影仍属 merge unit。`FILEMAP-RUN-LOCAL-TRACKED` 对任一分片回索引报红,声明是权威,树须服从。
+**run-local 投影不入 Git 索引**:FILEMAP 声明的 run-local 产物按需现算。分片只缩小冲突面,出库才消除该族的合并冲突面;tracked 投影仍属 merge unit。`FILEMAP-RUN-LOCAL-TRACKED` 对声明为 run-local 的产物回索引报红,声明是权威,树须服从。
 
 ### 4.7 生产链、冻结与消化状态
 

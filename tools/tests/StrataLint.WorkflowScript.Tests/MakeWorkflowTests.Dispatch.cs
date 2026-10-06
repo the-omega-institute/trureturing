@@ -135,10 +135,6 @@ public sealed partial class MakeWorkflowTests
                 recipe,
                 StringComparison.Ordinal);
         }
-        Assert.Contains(
-            EchoResidualSummaryScriptPath,
-            Recipe(makefile, "echo-residual-summary"),
-            StringComparison.Ordinal);
         var gateRecipe = string.Join('\n', RecipeLines(makefile, "gate"));
         Assert.Contains("check-current", gateRecipe, StringComparison.Ordinal);
         Assert.Contains("check-delta", gateRecipe, StringComparison.Ordinal);

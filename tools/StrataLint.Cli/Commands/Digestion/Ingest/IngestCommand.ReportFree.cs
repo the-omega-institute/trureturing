@@ -116,7 +116,7 @@ internal static partial class IngestCommand
             + $"ledger_changed={(ledgerUpdates.Length > 0).ToString().ToLowerInvariant()}\n"
             + string.Concat(openGenres.Select(static item =>
                 $"INGEST_OPEN_GENRE source={item.SourceId} "
-                + $"token={DigestStatusCommand.RenderDetail(item.Token)}\n"))
+                + $"token={System.Text.Json.JsonSerializer.Serialize(item.Token)}\n"))
             + string.Concat(plan.Fallbacks.Select(static fallback =>
                 $"INGEST_FALLBACK source={fallback.SourceId} reason={fallback.Reason}\n"))
             + (plan.Fallbacks.Length == 0
