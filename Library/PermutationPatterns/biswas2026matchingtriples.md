@@ -9,6 +9,8 @@ claim: "Classifies triples of patterns of length three up to shape-Wilf-equivale
 strata_touched:
   - D5/S3/Combinatorics/PatternMatchings/TripleAvoidingMatchings
   - D5/S3/Combinatorics/PatternMatchings/P13Correspondence
+  - D5/S3/Combinatorics/PatternMatchings/P13Completions
+  - D5/S3/Combinatorics/PatternMatchings/P13Counts
 license: citation-only
 triage: anchor
 ---
@@ -30,8 +32,11 @@ The module `D5/S3/Combinatorics/PatternMatchings/P13Correspondence` proves the s
 for every n ≥ 0, actual P13-avoiding perfect matchings of Fin(2n) are in bijection with complete general-rank scans
 accepted by explicit normalized S/T transitions. Post-closure base survivors and pending openings are separate.
 Source labels {132, 213, 321} correspond to chronological closing words {231, 312, 123}. The equivalence includes
-empty and disconnected matchings; it does not enumerate P13 or give its generating function. That part of
-Section 6, Question 1 remains open.
+empty and disconnected matchings. The companion modules `P13Completions` and `P13Counts` now prove finite
+continuation carriers, a forced-prefix and first-closure decomposition, and the triangular recurrence
+`P13Counts.c_triangular`; `P13Counts.actualCount_continuation` transfers this recurrence to the actual matching
+carrier. These results do not yet give the explicit P13 generating function or a closed coefficient formula, so the
+full enumeration part of Section 6, Question 1 remains open.
 
 ## Verified locator
 
