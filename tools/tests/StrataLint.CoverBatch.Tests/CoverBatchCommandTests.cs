@@ -175,9 +175,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(1, batch.Report.CallCount);
         WriteLoadCounts("identical-input-sequential", sequentialLoads);
         WriteLoadCounts("identical-input-batch", batchLoads);
-        Assert.Equal(0, sequentialLoads.BaselineLoads);
         Assert.Equal([1, 1], sequentialLoads.CandidateSnapshotLoads);
-        Assert.Equal(0, batchLoads.BaselineLoads);
         Assert.Equal([1, 1], batchLoads.CandidateSnapshotLoads);
     }
 

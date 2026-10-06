@@ -17,7 +17,6 @@ public sealed partial class DigestionAlignmentTests
         Assert.DoesNotContain(result.Findings, finding => finding.Contains(
             "malformed clause chain",
             StringComparison.Ordinal));
-        Assert.Contains(fixture.Parent.AtomId, result.ClausePlanChainParents);
         Assert.Contains(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
         Assert.All(fixture.Children, child => Assert.Equal(
             DigestionReceiptAlignment.Seen,
@@ -73,7 +72,6 @@ public sealed partial class DigestionAlignmentTests
             DigestionLedgerAligner.Evaluate(
                 fixture.Ledger.WithDigestionSources([.. sources]),
                 snapshot,
-                baselineDocument: null,
                 mode: DigestionAlignmentMode.Ingest);
 
         var childOwnerFirst = Evaluate(childOwner, chainOwner);
@@ -115,7 +113,6 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(
                 fixture.CurrentSourceBytes,
                 fixture.ChildCaptures.Prepend(fixture.ParentCapture)),
-            fixture.Ledger,
             DigestionAlignmentMode.Admission,
             changes: RawChangeSet.Create([baselineSource.SourcePath]));
 
@@ -163,7 +160,6 @@ public sealed partial class DigestionAlignmentTests
                         contentOwner.SourcePath,
                         ImmutableArray.CreateRange(fixture.CurrentSourceBytes)),
                 ]),
-            ledger,
             DigestionAlignmentMode.Ingest);
 
         Assert.DoesNotContain(result.Findings, finding => finding.Contains(
@@ -214,7 +210,6 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(
                 sourceBytes,
                 fixture.ChildCaptures.Prepend(fixture.ParentCapture)),
-            fixture.Ledger,
             DigestionAlignmentMode.Admission);
 
         AssertMalformedClauseChain(result, fixture.Parent.AtomId, "chain cardinality");
@@ -505,7 +500,6 @@ public sealed partial class DigestionAlignmentTests
                 fixture.CurrentSourceBytes,
                 casObjects,
                 extraEntries: extraEntries),
-            ledger,
             DigestionAlignmentMode.Ingest);
     }
 

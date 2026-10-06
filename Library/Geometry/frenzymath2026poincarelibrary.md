@@ -5851,3 +5851,83 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 消费固定上游原 IsJacobiSolOn 方程及 Linear.IsSolOn 唯一性，对任意原实赋范向量空间和真实常系数算子 A，内部证明核向量与负正规特征值对应的 t/sinh/cosh 模型确实满足原方程。方程符号保持 y'=v、v'=-Ay；正规特征值 -c² 给出正加速度双曲正弦模型。沿真实算子范数界和原初值，公开 ODE 唯一性把任意真正原方程解识别为已证明模型，并得到 c=1 的 sinh/cosh 正规公式。无需额外 CompleteSpace、外供解公式或替代解谓词。
 
 两个固定上游模块与完整累计临时 Lean 均真实 exit 0，零错误、零警告。301 项公理报告仅含 propext、Classical.choice、Quot.sound，3 个新增目标已实际验收。原草稿保留；derived 仅显式化复合/逐点加法表达式并删除一个编译器确认冗余的 ring。proof_shape: bind-only，admission_basis: none。本段是原 ODE 模型与唯一性消费者，实际流形 Jacobi 场的平行传输、曲率系数归约和原指数映射还须在后续内部证明，不能把它们升为最终 Mostow 新前提。完整 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 同一原光滑标准覆盖的单连通性、平凡基本群与实际提升
+
+消费此前已接受的同一原路径类 UniversalCover 与原投影，欧氏图册在内部给出局部道路连通和半局部单连通，实际公开标准覆盖定理给出该原覆盖的 SimplyConnectedSpace。实际任意原覆盖基点上的每个闭路均与常闭路同伦，真正原覆盖基本群的每个元素等于 1，原投影诱导的基本群同态像为底子群；不将底流形 M 的基本群误称平凡。
+
+同一原投影确实是覆盖且满射，并具有基点指定的连续映射唯一提升。提升试验域 A 与原流形 M 的 universes 独立；A 的单连通性属于真正通用提升定理的上下文，该原覆盖本身的单连通性由前述真实定理取得。无需外供原覆盖单连通性、额外度量相容性、全局紧致、有限基本群或有限覆盖度。
+
+没有新增上游导入或重复编译已接受的 canonical24。独立小消费者与完整累计临时 Lean 均真实 exit 0、零错误、零警告；307 项公理报告仅含 propext、Classical.choice、Quot.sound，6 个新增消费者及3个真实公共目标接受。proof_shape: bind-only，admission_basis: none。本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证说明。实际原 H3 分类与负曲率全局指数、完整 deck/体积/Haar、有限体积尖点及给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 原边界交比的正缩放与全部零锥配对保持
+
+对同一原 NullSphere 上的指定单射 F，真正四个互异原点的核交比保持，在内部给出由三个原锚点构造的正缩放因子。实际非对角核比例满足该缩放的双因子分解；对原零锥上的全部点对，缩放后的 F 原向量保持原 Lorentz 配对。对角比例仍为 0；对角配对保持由原零向量条件证明，没有把非对角比例的正性或分解错误推广到对角。
+
+无需外供比例分解、正缩放存在性或原 Lorentz 线性等距。独立新模块实际导入已接受的原 native 基底，完整新证明正文通过 Lean 编译，真实 exit 0、零错误、零警告；新目标 nativeBoundaryKernelScale_reconstruction 的公理闭包仅含 propext、Classical.choice、Quot.sound。导入的基底已有 301 项标准公理报告，其源码、实际导入 olean 及依赖哈希再次核对一致；新正文与累计源的追加部分逐字相同。本项验收范围为完整新模块及其目标。
+
+固定上游来源沿用 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a，以及此前已核验的原 Lorentz／边界构造。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证说明。缩放零锥到原等距的重构、有限体积推出同一真正 F 及交比性质、给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成；这些中间输入不升为最终新前提。
+
+
+### 同一原零锥缩放配对到唯一原 H3 等距的重构
+
+同一原 NullSphere 映射 F 的正缩放若保持原零锥全部点对的 Lorentz 配对，四个固定原零框架点便在内部给出真正原 Lorentz 线性等距。像框架的独立性由原 Gram 恒等式与配对非退化性证明；原 FutureUnit 的两个正零向量分解进一步证明同一矩阵保持未来分支。原 futureLorentzIsometry 随后构造唯一真正原 H3 等距 e，其原 nullSphereAction 恰为同一 F。无需外供矩阵、像框架独立性、未来保持或 H3 等距；定向反转仍包含在原等距群内。
+
+窄完整 Lean 模块真实 exit 0、零错误、零警告；全部 82 项公理报告仅含 propext、Classical.choice、Quot.sound，覆盖 nativeFutureUnit_positiveNullDecomposition、nativePositiveConeAction_futureTime、nativeScaledCone_reconstructOriginalIsometry 三个新目标。源码在实际编译前后不变，原接受基底、实际生成 olean、完整日志、退出结果及原依赖再次独立核对一致。验收范围为该完整窄模块与三个新目标。
+
+固定来源沿用 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a，以及此前已验证的原 Lorentz／边界构造。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。正缩放与全部配对由此前交比结果内部产生；有限体积给出同一真实 F 与交比性质、给定 h,d 的完整 Mostow–Prasad 及官方验收仍待完成。唯一性在本段指同一 F 的边界作用，尚不替代仅由给定群共轭或原同伦类得出的最终唯一性。
+
+
+### 同一原边界交比与完整给定群同构的原等距共轭
+
+同一原 NullSphere 单射 F 保持真正四个互异原点的核交比时，内部构造的正缩放与全部零锥配对保持给出唯一原 H3 等距 e，其实际 nullSphereAction 为 F。若 F 对同一原表示 ρ、σ 与完整指定群同构 d 等变，原边界作用的忠实性进一步给出对每个原群元素 γ 的完整共轭等式 e * ρ γ * e⁻¹ = σ (d γ)。源群与目标群的 universes 独立，原完整等距群保留定向反转。
+
+独立小模块实际导入此前已接受的窄零锥重构基底；新证明正文真实 exit 0、零错误、零警告，三个新目标的公理闭包仅含 propext、Classical.choice、Quot.sound。新源与实际编译快照一致，3071 字节完整证明尾与候选逐字一致；实际导入的基底源码、olean 及此前 82 项标准公理验收再次核对，43 项绑定工件独立验证一致。验收范围为完整导入消费者的三个新目标。
+
+固定来源沿用 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a 与此前原 Lorentz／边界构造。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。这里的唯一性包含同一 F 的边界作用；仅由给定共轭或原同伦类推出最终唯一性，以及从原有限体积内部构造同一 F 与交比性质，仍须完成。完整 Mostow–Prasad 与官方验收未完成。
+
+
+### 由原稠密吸引点得到仅依赖完整给定共轭的唯一性
+
+消费仓内原稠密吸引点中心化子定理与原忠实 NullSphere 边界表示。三个原零框架点内部给出避开任意两个原边界点的见证；原吸引点稠密性由实际原表示 ρ 的迭代趋近性质定义。边界中心化子平凡随后通过原边界作用忠实性转回完整原 H3 等距群，包含定向反转。
+
+同一完整指定群同构 d 的任意两个原等距共轭变换 e、f，只要分别对所有原群元素满足原共轭等式，就有 e = f。此唯一性无额外的同一 F 边界作用条件。结合此前同一原 F 的交比重构与实际等变性，得到唯一原等距共轭变换的存在；原群与目标群的 universes 独立。
+
+完整独立消费者实际导入已接受的原交比共轭模块与仓内原中心化子定理，真实 exit 0、零错误、零警告；三个新目标的公理闭包仅含 propext、Classical.choice、Quot.sound。实际源码、编译快照、完整派生证明尾、生成 olean、终态及导入基底一致；仓内原定理的实际源码与选中的项目 olean 也逐项绑定核对，27 项工件独立验证通过。验收范围为完整新消费者及其三个新目标。
+
+来源为仓内 D5.S3.Geometry.MostowPrasadRigidity 的原动力学／中心化子定理，此前已接受的原 Lorentz／边界构造，以及固定上游 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a。proof_shape: bind-only，admission_basis: none。本项为 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。原有限体积推出吸引点稠密性、同一实际 F 及交比保持仍待内部证明；这些中间输入不升为完整 Mostow 的新前提。原同伦类的完整存在唯一性、完整 Mostow–Prasad 与官方验收未完成。
+
+
+### 原边界归一化动作的真实微分与切向配对缩放
+
+对每个原 H3 等距 e 与原 NullSphere 点 x，原 Lorentz 矩阵 A 的归一化作用在真实原环境空间 Fin 4 → ℝ 上具有实际 HasFDerivAt。令 t = (A x)₀，其连续线性微分在任意原向量 u 上为 t⁻¹ Au − ((Au)₀/t²) Ax；分母非零与 t > 0 均由原未来分支作用内部证明。原完整等距群保留定向反转，不需要外供微分、共形性、Möbius 或 Beltrami 条件。
+
+实际原切向子空间由 u₀ = 0 与 pairing x u = 0 定义。真实原球面值曲线的导数内部满足这两个约束，原动作的真实曲线链式法则给出同一微分。该微分把原切向子空间送到实际像点的切向子空间，并使任意原切向 u、v 的 Lorentz 配对乘以正因子 1/t²；所有混合项由原零向量与切向方程消去。原 Fin 4 的 Pi 范数没有被当作欧氏球面度量。
+
+完整独立消费者实际导入已接受的原窄零锥重构模块与三个公开 Mathlib 微分模块，真实 exit 0、零错误、零警告；两个新目标的公理闭包仅含 propext、Classical.choice、Quot.sound。原始证明尾保留，派生尾仅作十项明确的证明/API 对齐，命题保持不变。实际源码、编译快照、完整派生尾、生成 olean、终态、导入基底及选中的 Mathlib 源码/olean 共 62 项绑定工件独立核对通过；导入基底已有 82 项标准公理报告。验收范围为完整新消费者与两个新目标。
+
+来源为仓内原 Lorentz/NullSphere 构造与 Mathlib@db584cd6d46c92f209a44c0f1c829460d327499d，固定上游复用范围沿用 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。实际球面流形微分、原 round 度量及复有限图的绑定仍须完成；未知边界映射 F 的构造和弱正则性、有限体积/完整尖点消费者、给定 h,d 的完整 Mostow–Prasad 与官方验收未完成。
+
+
+### 原局部流的 C¹ 变分见证与完整初值／时间微分
+
+在有限维完备实赋范空间 E 上，同一原时间依赖向量场 f 的联合函数为 C²，原 Φ 是指定基点、正初值半径与包含初始时间的区间上的实际 IsLocalFlow 时，公开 exists_isVariationalFlowProjection_one_of_C2 在内部构造正时间 T、正半径 ρ 和 C¹ 连续线性算子值函数 Y。它在真实开球与时间开区间的乘积上满足原结构 IsVariationalFlowProjection 的完整微分方程：DΦ(x,t)(u,s) = Y(x,t)u + s • f(t,Φ(x,t))。初值方向与时间方向属于同一原 Φ 的联合微分，不是分别存在但未绑定的两个候选。
+
+真实增广向量场在内部构造实际局部流，变分解唯一性将其投影识别为原 Φ 的初值微分；两个正邻域取最小值保证光滑性和微分恒等式在同一非空局部域同时成立。没有外供 Y 的存在、光滑性或原 Φ 的联合微分公式。辅助公开 fderiv_Phi_eq_coprod_fromAugFlow_aux 保留原 C¹ 向量场及实际增广局部流上下文，其增广局部流由 C² 见证定理内部履行。
+
+来源为 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a 的 PoincareLib.Analysis.ODE.LocalFlow.HigherRegularity.{VariationalCoproductDerivative,VariationalLevelOneWitness}，原作者为 qinz1yang/differential-geometry 的 DifferentialGeometry contributors，比较版本 1b535dd102b94cc42b107cca27059687888f08b3，Apache-2.0。固定来源的 14 个有序前置模块已实际编译或复用此前验收，零错误、零警告；其源码与固定原字节和 Git blob 均一致。逐项核对源码、日志、退出结果、预登记、实际生成 olean、原源码与导入检查，共 99 项工件独立验证一致。
+
+两个既有公开定理的完整递归公理闭包由只导入实际已接受模块的小检查验收，仅含 propext、Classical.choice、Quot.sound；本项没有新增证明包装或重复编译已接受正文。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。该结果是向量空间中的原局部流变分定理；流形测地线／Jacobi 场、全局原指数映射及 H3 分类的实际绑定，96 模块的完整更高正则性闭包、有限体积尖点和未知边界映射 F、给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 同一原局部流在任意有限阶的真实变分正则性
+
+公开 exists_isVariationalFlowProjection_of_C 对每个自然数 k 证明：在有限维完备实赋范空间 E 上，同一原向量场 f 的联合函数全域为 C^(k+1)，原 Φ 为指定基点、正初值半径且初始时间处于区间内部的实际 IsLocalFlow 时，内部构造正 T、正 ρ 及 C^k 连续线性算子值函数 Y，并使同一原 Φ 的完整联合微分满足 DΦ(x,t)(u,s) = Y(x,t)u + s • f(t,Φ(x,t))。光滑性和此恒等式在同一真实开球与时间开区间的乘积上成立。
+
+零阶由原 C¹ 变分见证取得；归纳步在实际有限维增广空间 E × (E →L[ℝ] E) 中构造真实增广局部流，应用对任意原空间成立的归纳假设，再由原后继阶见证回接同一个原 Φ。没有外供高阶 Y 或联合微分公式。量词是每个有限 k 各自存在 T、ρ、Y；本结果不声称一个统一邻域或一个统一 Y 上的 C∞ 结论。
+
+来源为 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a 的 PoincareLib.Analysis.ODE.LocalFlow.HigherRegularity.VariationalLinearMapSmoothness。原作者为 qinz1yang/differential-geometry 的 DifferentialGeometry contributors，比较版本 1b535dd102b94cc42b107cca27059687888f08b3，Apache-2.0。原完整模块与有序前置已真实编译或复用此前验收，零错误、零警告；固定原字节、Git blob、实际导入源码和 olean 一致。只导入原已接受模块的小检查打印该既有公开定理的完整递归公理闭包，仅含 propext、Classical.choice、Quot.sound，没有新增证明包装或重复编译已接受正文。
+
+proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。统一 C∞／真实流形测地线及 Jacobi 场的实际绑定、全局原指数映射与 H3 分类、完整有限体积尖点和未知 F 的弱正则性、给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成。
