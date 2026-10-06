@@ -22,14 +22,13 @@ elab "observe_enrollment_inputs" : command => do
   set saved
   let budgetOk := incomplete && noEvidence
   let budget := s!"[{if incomplete && noEvidence then "PASS" else "FAIL"}] enrollment_budget_incomplete result={repr exhausted}"
-  -- Missing native input at the checker boundary. No fabricated successful
-  -- definition or axiom stands in for an unavailable template body.
+  -- A missing compiled declaration cannot produce an assessed plan.
   let missingName := `LeanInformationAudit.Tests.DeclaredEnrollmentInputs.missingNativeBody
   unless !(← getEnv).contains missingName do throwError "setup: missing body unexpectedly exists"
   let missing ← enroll (← getEnv).header.mainModule (← getOptions) missingName
   let noEvidence := !(selectedPlan (← getEnv) missingName).isOk
   let incomplete := match missing with
-    | .error reason => reason.startsWith "incomplete_closure:E8.elaboration:"
+    | .error reason => reason == "incomplete_closure:E7.compiled_constant:" ++ missingName.toString
     | .ok () => false
   set saved
   (if positiveOk then logInfo else logError) positive

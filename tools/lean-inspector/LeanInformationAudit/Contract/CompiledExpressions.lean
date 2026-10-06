@@ -180,6 +180,25 @@ partial def typeShape (e : Expr) (binders : Array Expr := #[])
     return domain
   | .mvar _ => throw <| IO.userError "incomplete_closure:E7.metavariable"
 
+/-- Compare compiled data terms after bounded administrative computation.
+The comparison consumes declaration syntax and never invokes a type checker. -/
+partial def sameShape (left right : Expr) (depth : Nat := 0) : M Bool := do
+  step depth
+  if left == right then return true
+  let left ← head left depth
+  let right ← head right depth
+  if left == right then return true
+  let compare := fun a b => sameShape a b (depth + 1)
+  match left, right with
+  | .sort a, .sort b => return a.normalize == b.normalize
+  | .const a us, .const b vs =>
+    return a == b && us.map Level.normalize == vs.map Level.normalize
+  | .app f a, .app g b => return (← compare f g) && (← compare a b)
+  | .lam _ t b bi, .lam _ u c ci | .forallE _ t b bi, .forallE _ u c ci =>
+    return bi == ci && (← compare t u) && (← compare b c)
+  | .proj n i b, .proj m j c => return n == m && i == j && (← compare b c)
+  | _, _ => return false
+
 /-- Classify a compiled type's sort without checking an operand or proof. -/
 def propositionShape (type : Expr) : M Bool := do
   return (← head (← typeShape type)).isProp

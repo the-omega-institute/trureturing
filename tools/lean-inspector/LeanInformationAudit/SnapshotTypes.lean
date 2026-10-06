@@ -1,4 +1,4 @@
-import Lean
+import Lean.Environment
 
 namespace LeanInformationAudit
 open Lean

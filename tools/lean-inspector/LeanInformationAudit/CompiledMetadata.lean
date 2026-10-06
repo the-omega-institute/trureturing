@@ -45,6 +45,7 @@ structure Store where
   implementedBy : NameMap Name := {}
   externs : NameSet := {}
   reducibility : NameMap Reducibility := {}
+  recursive : NameSet := {}
 
 private def globalValue? : ScopedEntry α → Option α
   | .global value => some value
@@ -59,6 +60,10 @@ unsafe def readModule (state : Store) (data : ModuleData) : Store := Id.run do
       for entry in entries do
         let (name, projection) : Name × Projection := unsafeCast entry
         state := { state with projections := state.projections.insert name projection }
+    else if kind == `recExt then
+      for entry in entries do
+        let name : Name := unsafeCast entry
+        state := { state with recursive := state.recursive.insert name }
     else if kind == `Lean.classExtension then
       for entry in entries do
         let entry : ClassEntry := unsafeCast entry

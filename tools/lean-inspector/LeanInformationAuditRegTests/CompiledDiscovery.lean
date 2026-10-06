@@ -3,6 +3,7 @@ import LeanInformationAuditRegTests.ContractWitnessFixture
 import LeanInformationAudit.Contract.Discovery
 import LeanInformationAudit.RawArtifacts
 import LeanInformationAudit.CompiledAxioms
+import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
 
 namespace LeanInformationAuditRegTests.CompiledDiscovery
 open Lean LeanInformationAudit
@@ -18,6 +19,8 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
       `LeanInformationAuditRegTests.ContractWitnessFixture]
     let reader ← IO.mkRef ({} : RawArtifacts.Store)
     for owner in owners do RawArtifacts.loadModule owner reader
+    RawArtifacts.loadModule `LeanInformationAudit.Registry reader
+    RawArtifacts.loadModule `LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates reader
     let store ← reader.get
     unless store.owners[owners[0]!.str "source0"]? == some owners[0]! do
       throw <| IO.userError "compiled.metadata:declaration_owner"
@@ -66,6 +69,45 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
       unless target.constLevels! == definition.info.levelParams.map Level.param do
         throw <| IO.userError s!"compiled.discovery:rigid_levels:{name}"
     IO.println "[PASS] compiled discovery reads 20 registrations, 1 enrollment, 1 root and 1 seal"
+    let enrollmentContext ← TemplateAudit.CompiledEnrollment.Context.fromArtifacts store
+      `LeanInformationAudit.Tests.DeclaredTemplates {} {}
+    unless enrollmentContext.recursive `List.map && !enrollmentContext.recursive `Unit.fintype do
+      throw <| IO.userError "compiled.enrollment:recursion_metadata"
+    for (owner, enrollment) in snapshot.enrollments do
+      let plan ← (TemplateAudit.CompiledEnrollment.compileTemplate owner enrollment.name
+        enrollment.constructors).run enrollmentContext
+      unless plan.data.sourceBound && plan.data.slots.size == 3 do
+        throw <| IO.userError "compiled.enrollment:source_plan"
+    let cases : Array (Name × Option String) := #[
+      (`LeanInformationAudit.Tests.DeclaredTemplates.symbolicPointwise, none),
+      (`LeanInformationAudit.Tests.DeclaredTemplates.boolCases, none),
+      (`LeanInformationAudit.Tests.DeclaredTemplates.propositionSlot,
+        some "unclassified_form:E1.proposition_slot"),
+      (`LeanInformationAudit.Tests.DeclaredTemplates.wrongInterface,
+        some "unclassified_form:E1.return_interface"),
+      (`LeanInformationAudit.Tests.DeclaredTemplates.closedDecision,
+        some "unclassified_form:E3.closed_decision"),
+      (`LeanInformationAudit.Tests.DeclaredTemplates.recursiveBody,
+        some "unclassified_form:E4.recursion:Nat.rec")]
+    for (name, expected) in cases do
+      let actual ← try
+        let plan ← (TemplateAudit.CompiledEnrollment.compileTemplate
+          enrollmentContext.provenance.view.mainModule name #[]).run enrollmentContext
+        unless !plan.data.sourceBound && !plan.data.rules.isEmpty do
+          throw <| IO.userError "compiled.enrollment:finite_plan"
+        pure none
+      catch error => pure (some error.toString)
+      unless actual == expected do
+        throw <| IO.userError s!"compiled.enrollment:{name}:expected={expected}:actual={actual}"
+    let zero := { enrollmentContext with provenance := { enrollmentContext.provenance with
+      options := ({} : Options).set `informationTemplate.work (0 : Nat) } }
+    let exhausted ← try
+      discard <| (TemplateAudit.CompiledEnrollment.compileTemplate
+        zero.provenance.view.mainModule cases[0]!.1 #[]).run zero
+      pure false
+    catch error => pure (error.toString == "incomplete_closure:E8.erasure_work")
+    unless exhausted do throw <| IO.userError "compiled.enrollment:zero_work"
+    IO.println "[PASS] compiled enrollment: source, 6 finite cases, recursion metadata and zero work"
   finally searchPathRef.set saved
 
 run_meta do
