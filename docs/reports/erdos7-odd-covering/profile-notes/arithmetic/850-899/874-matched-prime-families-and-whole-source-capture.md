@@ -119,6 +119,33 @@ MF4 applies to mixed colors as well. It is a restriction on capture
 by one fixed union, not a license to add together independently chosen
 repairs with conflicting numerical labels.
 
+The same bound can count qualifying originals in every ternary row.
+For each q-bearing original with modulus n_j and residue a_j, use its
+entire q-stripped trace on the common residual, and define
+
+$$
+T_j^{\rm all}=E_0\cap[a_j]_{n_j/q},\qquad
+D_A^{\rm all}=\{j:q\mid n_j,\ T_j^{\rm all}\subseteq V_A\},
+\quad V_A=\{z\}\times U_A.
+\tag{MF4a}
+$$
+
+Here n_j/q is the actual positive integer quotient and divides 9W.
+Original class membership implies membership modulo this quotient. For i in A,
+(9qm_i)/q=9m_i, so A is contained in this enlarged capture set. All
+q-free originals remain retained, and the same deletion-hole argument
+and cost comparison give
+
+$$
+|D_A^{\rm all}|\le k+s,\qquad |D_A^{\rm all}\setminus A|\le s.
+\tag{MF4b}
+$$
+
+A lower-row original can be counted only if its residual trace on
+every old word lies in V_A. Inspecting just its slice at z does not
+supply MF4a. The later 55 and 30 bounds therefore also apply to this
+enlarged capture set when their respective extra hypotheses hold.
+
 ## A single literal color gives an absolute capture bound
 
 Now additionally require every selected original to have one common
@@ -238,6 +265,13 @@ Edmonds--Fulkerson, *Transversals and matroid partition*,
 [DOI 10.6028/jres.069b.016](https://doi.org/10.6028/jres.069b.016).
 No new matroid partition theorem is claimed. The numerical source
 bounds 105 and 27 are inherited from the stated conditional branch.
+For MF8, the repository's frozen
+`DUFStructure.intersecting_classification` supplies the star-or-triangle
+alternative for intersecting pairs. Removing the star center makes
+the remaining supports disjoint. In the triangle case, double counting
+gives at least three elements in the core union; all other supports
+are disjoint from it and each other. These existing classification and
+counting results supply MF8 without a new canonical theorem.
 
 Exact Lean applications check the sparse CRT construction together
 with its distinct fresh labels, cost, actual-source deletion and
@@ -253,5 +287,10 @@ covering E0 while respecting conflicting roots, all old words and
 lower-row packet multiplicities. One local repair uses the numerical
 label 27 at one old word; it cannot independently reuse that label at
 another old word. The capture restriction identifies a genuine source
-obstruction to a single coherent patch, but does not show how to join
-enough incompatible patches. Unrestricted Erdős #7 remains open.
+obstruction to a single matched-prime patch, but does not show how to
+join enough incompatible patches. Report855's permanent-plan closure
+applies after one common assignment of phases to numerical labels has
+been fixed. An augmentation must either respect that assignment or
+certify its reassignment against every remaining deletion obligation.
+Different targetwise successful plans cannot be united without that
+check. Unrestricted Erdős #7 remains open.
