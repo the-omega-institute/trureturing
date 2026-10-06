@@ -163,12 +163,60 @@ critical-source sequence. A single selected global maximizer has fixed
 support; Theorem 1 gives no explicit $K_\varepsilon$ certifying that it lies
 in the asymptotic range.
 
+## Reusing the signed-tail clock comparison
+
+For an actual $N\in U_1$ with $P=P^+(N)=p_k$ and $k>4$, set
+$P^+$ equal to the next prime, and $A=\log N$. The 2026 Theorem
+2(I)(ii)–(iii) and (III), together with the 2018 Lemma 3(i), already give
+
+$$
+P<\xi(P,0)+\log P\le A\le\xi(P^+,0)<P^+.
+$$
+
+Here the largest-prime exponent is one by Theorem 2(I)(ii).
+Thus $\vartheta(A)=\vartheta(P)$; $(P,A]$ has no ordinary prime.
+This is direct use of the published one-step conditions, with no new
+source-selection theorem. The support restriction is material:
+the 2026 footnote 4 records $14\in U_1$, whereas $\log14<7=P^+(14)$.
+
+The signed-tail comparison in the
+[Nicolas card](../ArithSums/nicolas2025comparison.md), under
+“The endpoint condition at actual self-tangent sources”, can be reused
+with the current endpoints $P,A$. The uniform clock expansion above
+gives $A-\vartheta(P)=O(\sqrt P)$ along these $U_1$ sources with support
+tending to infinity. The
+[existing uniform short-interval input](guthmaynard2024largevalues.md)
+gives $A-P\le P^+-P\le P^{2/3}$ eventually. The classical prime-power
+decomposition and monotonicity therefore give the same interval budget
+used in that comparison, $|\psi(u)-u|=O(P^{2/3})$ for $P\le u\le A$.
+Direct integration against its existing kernel yields
+
+$$
+I_\psi(P)=I_\psi(A)+O\!\left(\frac{P^{-2/3}}{\log P}\right),
+\qquad
+Z_\psi(P)=c_NZ_\psi(A)+O(P^{-1/6}),
+\quad
+c_N=\frac{\sqrt P\log P}{\sqrt A\log A}
+=1+O(P^{-1/3}),
+$$
+
+where $Z_\psi(t)=\sqrt t\log t\,I_\psi(t)$. The factor $c_N$ remains;
+ratio convergence alone does not bound the normalized tail. This is an
+application of the existing interval argument at the source's own
+support, not the Nicolas card's primorial cutoff or a selected sieve
+cutoff. It pays the eventual clock comparison on this source class,
+without supplying a signed lower bound, an effective cutoff for a fixed
+critical source, or an unbounded critical-source sequence. It introduces
+no new generic interpolation theorem, prime-gap estimate, or Lean claim,
+and does not extend the self-tangent pressure identity to arbitrary
+$U_1$ hosts.
+
 ## What remains outside this supplier
 
 The calibration leaves the needed one-sided comparison for $Q(P)$ open;
-it does not imply $\log G(N)<\gamma$. Transport to the FIB pressure clock
-$A=\log N$ still requires the actual source conditions and normalized
-$P$-to-$A$ comparison. The support calibration, the classical exponent
+it does not imply $\log G(N)<\gamma$. The eventual source-clock comparison above
+preserves its normalization factor and supplies neither that one-sided
+bound nor a finite-source cutoff. The support calibration, the classical exponent
 construction, and the existing pressure decomposition in
 [the FIB volume](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
 are reused results, not new Robin estimates.
