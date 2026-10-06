@@ -7,17 +7,172 @@
    digest: Pauli stabilizer eigenlines are local-unitary images of binary graph amplitudes. -/
 
 /-
-proof_shape: chi2, weyl, unique_weyl_line_lagrangian: bind-only, consumed helpers.
-escape_witness: none.
-admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
-Direct frozen dependencies: BinaryLagrangianGraphForm.sp; declaration identities below.
+Per-declaration judgement (definitions earn their use through the normal-form theorem):
+  chi2: proof_shape: bind-only; escape_witness: none.
+    consumer: weyl.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  chi2_eq: proof_shape: bind-only; escape_witness: none.
+    consumer: chi2_sum.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  chi2_add: proof_shape: bind-only; escape_witness: none.
+    consumer: chi2_sum.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  chi2_sum: proof_shape: bind-only; escape_witness: none.
+    consumer: tensor_weyl.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  weyl: proof_shape: bind-only; escape_witness: none.
+    consumer: eigen_orthogonal_iff.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  chi2_laws: proof_shape: bind-only; escape_witness: none.
+    consumer: weyl_mul.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  sp_bilinear: proof_shape: bind-only; escape_witness: none.
+    consumer: spForm.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  spForm: proof_shape: bind-only; escape_witness: none.
+    consumer: sp_alt.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  sp_alt: proof_shape: bind-only; escape_witness: none.
+    consumer: sp_nondegenerate.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  sp_nondegenerate: proof_shape: bind-only; escape_witness: none.
+    consumer: unique_weyl_line_lagrangian.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  weyl_linear: proof_shape: bind-only; escape_witness: none.
+    consumer: eigen_pair_orthogonal.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  weyl_mul: proof_shape: bind-only; escape_witness: none.
+    consumer: weyl_square.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  weyl_square: proof_shape: bind-only; escape_witness: none.
+    consumer: weyl_injective.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  weyl_injective: proof_shape: bind-only; escape_witness: none.
+    consumer: eigen_pair_orthogonal.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  weyl_commute: proof_shape: bind-only; escape_witness: none.
+    consumer: eigen_pair_orthogonal.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  eigen_pair_orthogonal: proof_shape: bind-only; escape_witness: none.
+    consumer: eigen_orthogonal_iff.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  generator_data: proof_shape: bind-only; escape_witness: none.
+    consumer: eigen_orthogonal_iff.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  eigen_orthogonal_iff: proof_shape: bind-only; escape_witness: none.
+    consumer: unique_weyl_line_lagrangian.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  unique_weyl_line_lagrangian: proof_shape: bind-only; escape_witness: none.
+    consumer: stabilizer_graph_eigen.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  binary: proof_shape: bind-only; escape_witness: none.
+    consumer: wmat.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  binary_zero: proof_shape: bind-only; escape_witness: none.
+    consumer: pauli_wmat.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  binary_one: proof_shape: bind-only; escape_witness: none.
+    consumer: pauli_wmat.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  binary_self: proof_shape: bind-only; escape_witness: none.
+    consumer: tensor_weyl.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  wmat: proof_shape: bind-only; escape_witness: none.
+    consumer: tensor_weyl.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  tensor_mul: proof_shape: bind-only; escape_witness: none.
+    consumer: tensor_unitary.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  tensor_one: proof_shape: bind-only; escape_witness: none.
+    consumer: tensor_unitary.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  tensor_adj: proof_shape: bind-only; escape_witness: none.
+    consumer: tensor_unitary.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  tensor_unitary: proof_shape: bind-only; escape_witness: none.
+    consumer: stabilizer_graph_normal_form.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  tensor_smul: proof_shape: bind-only; escape_witness: none.
+    consumer: stabilizer_weyl.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  tensor_weyl: proof_shape: bind-only; escape_witness: none.
+    consumer: stabilizer_weyl.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  pauli_wmat: proof_shape: bind-only; escape_witness: none.
+    consumer: stabilizer_weyl.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  stabilizer_weyl: proof_shape: bind-only; escape_witness: none.
+    consumer: stabilizer_graph_eigen.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  gate: proof_shape: bind-only; escape_witness: none.
+    consumer: gate_unitary.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  wmat_unitary: proof_shape: bind-only; escape_witness: none.
+    consumer: stabilizer_graph_normal_form.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  gate_unitary: proof_shape: bind-only; escape_witness: none.
+    consumer: stabilizer_graph_eigen.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  gate_wmat: proof_shape: bind-only; escape_witness: none.
+    consumer: tensor_clifford.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  graphExponent: proof_shape: bind-only; escape_witness: none.
+    consumer: graph_fixed_line.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  graphAmp: proof_shape: bind-only; escape_witness: none.
+    consumer: stabilizer_graph_normal_form.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  graph_exponent_step: proof_shape: bind-only; escape_witness: none.
+    consumer: graph_fixed_line.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  graph_fixed_line: proof_shape: bind-only; escape_witness: none.
+    consumer: graph_sign_correction.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  symbolTransform: proof_shape: bind-only; escape_witness: none.
+    consumer: tensor_clifford.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  tensor_clifford: proof_shape: bind-only; escape_witness: none.
+    consumer: stabilizer_graph_eigen.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  stabilizer_graph_eigen: proof_shape: bind-only; escape_witness: none.
+    consumer: stabilizer_graph_normal_form.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  graph_sign_correction: proof_shape: bind-only; escape_witness: none.
+    consumer: stabilizer_graph_normal_form.
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+  stabilizer_graph_normal_form: proof_shape: bind-only; escape_witness: none.
+    consumer: Final settlement result for #13575 (orchestrator-owned).
+    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
+This helper module has no independent first-freeze admission basis.
+Direct frozen dependencies:
+  GID: D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix
+    statement_id: sha256:7f853eaeda888a9eccbab5fe25474fc62b519a3229013530986887de25cb28d7
+  GID: D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli
+    statement_id: sha256:3758fca32bf974298628515ed91492adafcdff8dc216bac5d000b130b08b04fc
+  GID: D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.tensorOp
+    statement_id: sha256:0da7fdcc843e3d6cb83079e32e80fde7787e167c84a8fb99695fdb5e9ba7ba8e
+  GID: D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.StabilizedBy
+    statement_id: sha256:84981833e6a3c38263d5476f28eb063fbdd1f76f4349d22a4bb67f3cb128d344
+  GID: D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2
+    statement_id: sha256:ef4ae1e2fc1bec9bf605d06598d58ce332db9ba1a90facd16a497c70ae0336f7
+  GID: D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard
+    statement_id: sha256:d28d3fee83d154e42cf2331eba2ffeb942edeed66e1ff8e9221f10b0b991ddc4
+  GID: D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.pauliSet
+    statement_id: sha256:856f9c10bdadcb60566b2de31e839e712c75cb4be32af461b413c9fdc95a1014
+  GID: D5/S3/Quantum/FiniteDimensional.qubitX
+    statement_id: sha256:cfaddf4a17693b52013e93be8cd6559e7021ed57ca0305492712468b57f882f7
+  GID: D5/S3/Quantum/FiniteDimensional.qubitZ
+    statement_id: sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c
+  GID: D5/S3/Quantum/Information/BinaryLagrangianGraphForm.lagrangian_graph_form
+    statement_id: sha256:1cb9ea66caaaacf6cc8ed0ee9bede6714cc405010bd8d8f97fc35d652286ecdb
+  GID: D5/S3/Quantum/Information/BinaryLagrangianGraphForm.sp
+    statement_id: sha256:c75819ffa723a2d0e418784cdf96cce4f0e22e0ea5d31b161c4c27cd278b9395
+  GID: D5/S3/Quantum/Information/BinaryLagrangianGraphForm.swapAt
+    statement_id: sha256:2178c08684b4cb007ea35662d44cf842cb8c1341ab01195132053494ec59743c
 -/
 
 import D5.S3.Quantum.Information.BinaryLagrangianGraphForm
 import D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence
-import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
-import Mathlib.Data.Complex.Basic
-import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
 
 open scoped BigOperators
 open D5.S3.Quantum.FiniteDimensional
@@ -409,7 +564,7 @@ private lemma stabilizer_weyl {N : ℕ} (ψ : V N → ℂ)
   intro w
   have hline' : (∀ j, (show Matrix (V N) (V N) ℂ from tensorOp (O j)) *ᵥ w = w) ↔
       ∃ a : ℂ, w = a • ψ := hline w
-  simpa only [hop] using hline' 
+  simpa only [hop] using hline'
 
 
 private def gate (h : Bool) (d : ZMod 2) : Matrix (Fin 2) (Fin 2) ℂ :=
@@ -471,8 +626,8 @@ private def graphExponent {N : ℕ} (Γ : Matrix (Fin N) (Fin N) (ZMod 2))
 /-- The graph-state amplitude `(-1)^{Σ_{i<j} Γ_ij x_i x_j}` (unnormalized). -/
 def graphAmp {N : ℕ} (Γ : Matrix (Fin N) (Fin N) (ZMod 2))
     (x : Fin N → Fin 2) : ℂ :=
-  (-1 : ℂ) ^ (∑ i, ∑ j, if i < j then
-    Γ i j * binary (x i) * binary (x j) else 0).val
+  let t : Fin N → ZMod 2 := x
+  (-1 : ℂ) ^ (∑ i, ∑ j, if i < j then Γ i j * t i * t j else 0).val
 
 private lemma graph_exponent_step {N : ℕ} (Γ : Matrix (Fin N) (Fin N) (ZMod 2))
     (hs : Γ.IsSymm) (hd : ∀ i, Γ i i = 0) (t : V N) (i : Fin N) :
@@ -564,8 +719,7 @@ private theorem graph_fixed_line {N : ℕ} (Γ : Matrix (Fin N) (Fin N) (ZMod 2)
       rw [← mul_assoc, chi2_laws.2.2.1, one_mul]
     _ = f 0 * graphAmp Γ t := by
       rw [hconst]
-      have hg : graphAmp Γ t = chi2 (graphExponent Γ t) := by
-        simp [graphAmp, graphExponent, chi2, AddChar.zmodChar_apply, binary_self]
+      have hg : graphAmp Γ t = chi2 (graphExponent Γ t) := rfl
       rw [hg, mul_comm]
 
 private def symbolTransform {N : ℕ} (H : Finset (Fin N)) (d : V N) (v : E N) : E N :=
