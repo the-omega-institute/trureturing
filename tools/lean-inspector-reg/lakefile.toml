@@ -35,3 +35,8 @@ globs = ["LeanInformationAuditRegAnalysis.+"]
 name = "compiledJudgeTests"
 srcDir = "../lean-inspector"
 root = "LeanInformationAuditRegTests.CompiledDiscovery"
+
+[[lean_exe]]
+name = "nodeFactTests"
+srcDir = "../lean-inspector"
+root = "LeanInformationAuditRegTests.NodeFactMain"

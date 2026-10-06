@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.NodeFactsCore
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -60,5 +61,24 @@ example : (_root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dual_
     (∀ convention : Convention, dual convention = convention ↔
       convention = FvF ∨ convention = AvA) := rfl
 end
+
+end Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain
+
+namespace Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain
+open LeanInformationAudit.Contract
+open _root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations
+
+noncomputable def lawStatement : Prop := dualArena.Law dualRealization
+
+noncomputable def bridgeFact : NodeFact := .equivalent
+  (type_of% @_root_.D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff)
+  (dualArena.Law dualRealization)
+  { owner := `D5.S0.Certificates.SelfInterestConventionDeviationGain,
+    declaration := `D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff,
+    part := .type, path := [] }
+  { owner := `Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain,
+    declaration := `Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain.lawStatement,
+    part := .value, path := [] }
+  dual_bridge.equivalence
 
 end Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain

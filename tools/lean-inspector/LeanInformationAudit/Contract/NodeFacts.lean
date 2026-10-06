@@ -1,0 +1,336 @@
+import LeanInformationAudit.Contract.Literal
+import LeanInformationAuditInterface.Contract.NodeFacts
+
+namespace LeanInformationAudit.Contract.NodeFacts
+open Lean
+
+structure View where
+  find : Name → Option ConstantInfo
+  owner : Name → Option Name
+  external : Name → Bool
+  /-- Only independently established original-source leaves may stop data-body traversal. -/
+  sourceLeaf : Name → Bool := fun _ => false
+
+private def bad (reason : String) : Except String α :=
+  .error ("contract.node_binding:" ++ reason)
+
+private def tag (find : Name → Option ConstantInfo) (e : Expr) : Except String Name := do
+  let e ← Literal.referencedValue find e
+  unless e.isConst do bad "nonliteral_tag"
+  return e.constName!
+
+def coordinate (find : Name → Option ConstantInfo) (e : Expr) : Except String NodeCoordinate := do
+  let fs ← Literal.fields find ``NodeCoordinate e 5
+  let owner ← Literal.name "node.owner" (← Literal.resolveReferences find fs[0]!)
+  let declaration ← Literal.name "node.declaration" (← Literal.resolveReferences find fs[1]!)
+  let part ← match ← tag find fs[2]! with
+    | ``NodePart.type => pure NodePart.type
+    | ``NodePart.value => pure NodePart.value
+    | _ => bad "part"
+  let edges ← Literal.list "node.path" (← Literal.resolveReferences find fs[3]!)
+  let path ← edges.toList.mapM fun e => do
+    match ← tag find e with
+    | ``NodeEdge.function => pure NodeEdge.function
+    | ``NodeEdge.argument => pure NodeEdge.argument
+    | ``NodeEdge.domain => pure NodeEdge.domain
+    | ``NodeEdge.body => pure NodeEdge.body
+    | ``NodeEdge.letType => pure NodeEdge.letType
+    | ``NodeEdge.letValue => pure NodeEdge.letValue
+    | ``NodeEdge.letBody => pure NodeEdge.letBody
+    | ``NodeEdge.metadata => pure NodeEdge.metadata
+    | ``NodeEdge.projection => pure NodeEdge.projection
+    | _ => bad "edge"
+  let rec level : Nat → Expr → Except String Level
+    | 0, _ => bad "level_work"
+    | fuel + 1, input => do
+      let e ← Literal.referencedValue find input
+      let args := e.getAppArgs
+      match e.getAppFn.constName?.getD .anonymous with
+      | ``Level.zero =>
+        unless args.isEmpty do bad "level_arity"
+        return .zero
+      | ``Level.param =>
+        unless args.size == 1 do bad "level_arity"
+        return .param (← Literal.name "node.level" args[0]!)
+      | ``Level.succ =>
+        unless args.size == 1 do bad "level_arity"
+        return .succ (← level fuel args[0]!)
+      | ``Level.max | ``Level.imax =>
+        unless args.size == 2 do bad "level_arity"
+        let left ← level fuel args[0]!
+        let right ← level fuel args[1]!
+        return if e.getAppFn.isConstOf ``Level.max then .max left right else .imax left right
+      | _ => bad "level_constructor"
+  let levels ← (← Literal.list "node.levels" (← Literal.referencedValue find fs[4]!)).toList.mapM
+    (level 256)
+  return { owner, declaration, part, path, levels }
+
+/-- A selected open node is closed by the actual surrounding telescope.
+ Only explicit universe substitution is performed; no term substitution,
+ unfolding, type inference or conversion is performed. -/
+def locate (view : View) (location : NodeCoordinate) : Except String Expr := do
+  unless view.owner location.declaration == some location.owner do bad s!"owner:{location.declaration}"
+  let some info := view.find location.declaration | bad s!"missing:{location.declaration}"
+  unless info.levelParams.length == location.levels.length do bad "level_parameters"
+  let mut node ← match location.part with
+    | .type => pure (Literal.instantiateRawLevels info.levelParams location.levels info.type)
+    | .value => match info with
+      | .defnInfo defn =>
+        unless defn.safety == .safe do bad s!"unsafe:{location.declaration}"
+        pure (Literal.instantiateRawLevels info.levelParams location.levels defn.value)
+      | _ => bad s!"data_body_required:{location.declaration}"
+  let mut telescope : List (Expr → Expr) := []
+  for edge in location.path do
+    match edge, node with
+    | .function, .app f _ => node := f
+    | .argument, .app _ a => node := a
+    | .domain, .lam _ t _ _ | .domain, .forallE _ t _ _ => node := t
+    | .body, .lam n t b bi | .body, .forallE n t b bi =>
+      telescope := (fun e => Expr.lam n t e bi) :: telescope
+      node := b
+    | .letType, .letE _ t _ _ _ => node := t
+    | .letValue, .letE _ _ v _ _ => node := v
+    | .letBody, .letE n t v b nd =>
+      telescope := (fun e => Expr.letE n t v e nd) :: telescope
+      node := b
+    | .metadata, .mdata _ b | .projection, .proj _ _ b => node := b
+    | _, _ => bad s!"edge_shape:{location.declaration}:{repr edge}"
+  return telescope.foldl (fun e wrap => wrap e) node
+
+private def binds (view : View) (location value : Expr) : Except String NodeCoordinate := do
+  let location ← coordinate view.find location
+  unless (← locate view location).equal value do bad s!"operand:{location.declaration}:{repr location.path}"
+  return location
+
+inductive BoundRole where
+  | data | type | proof | relation
+  deriving BEq, Inhabited
+
+structure BoundOperand where
+  location : NodeCoordinate
+  value : Expr
+  role : BoundRole
+  proposition : Option Expr := none
+  deriving Inhabited
+
+/-- This decodes only the fixed fact constructors and binds their operands.
+ The proof fields have already been checked by the Reg compiler. -/
+def fact (view : View) (name : Name) : Except String (Array BoundOperand) := do
+  let some (.defnInfo info) := view.find name | bad s!"fact_definition:{name}"
+  unless info.type.isConstOf ``NodeFact && info.safety == .safe do bad s!"fact_type:{name}"
+  let e ← Literal.referencedValue view.find info.value
+  let args := e.getAppArgs
+  let one := fun role value location => do
+    return #[{ location := ← binds view location value, value, role : BoundOperand }]
+  match e.getAppFn.constName?.getD .anonymous with
+  | ``NodeFact.data =>
+    unless args.size == 3 do bad "data_arity"
+    one .data args[1]! args[2]!
+  | ``NodeFact.type =>
+    unless args.size == 2 do bad "type_arity"
+    one .type args[0]! args[1]!
+  | ``NodeFact.proof =>
+    unless args.size == 3 do bad "proof_arity"
+    let operands ← one .proof args[1]! args[2]!
+    return operands.map fun operand => { operand with proposition := some args[0]! }
+  | ``NodeFact.exact =>
+    unless args.size == 6 do bad "exact_arity"
+    let evidence ← Literal.referencedValue view.find args[5]!
+    unless evidence.getAppFn.isConstOf ``ExactMatch.evidence do bad "exact_evidence_required"
+    return (← one .relation args[1]! args[3]!) ++ (← one .relation args[2]! args[4]!)
+  | ``NodeFact.equal =>
+    unless args.size == 6 do bad "equal_arity"
+    return (← one .relation args[1]! args[3]!) ++ (← one .relation args[2]! args[4]!)
+  | ``NodeFact.equivalent =>
+    unless args.size == 5 do bad "equivalent_arity"
+    return (← one .relation args[0]! args[2]!) ++ (← one .relation args[1]! args[3]!)
+  | _ => bad s!"fact_constructor:{name}"
+
+/-- Distinct rigid inductive heads after kernel-checked definitional matches
+ establish conversion apartness. Mathematical Eq/Iff facts cannot authorize it. -/
+def inductiveApart (view : View) (left right : Name) : Except String Unit := do
+  let normalized ← #[left, right].mapM fun name => do
+    let operands ← fact view name
+    let some (.defnInfo info) := view.find name | bad "apart_fact"
+    let e ← Literal.referencedValue view.find info.value
+    unless e.getAppFn.isConstOf ``NodeFact.exact && operands.size == 2 do bad "apart_exact_required"
+    let value := operands[1]!.value
+    unless value.isConst do bad "apart_rigid_required"
+    let some (.inductInfo _) := view.find value.constName! | bad "apart_inductive_required"
+    return value.constName!
+  unless normalized[0]! != normalized[1]! do bad "apart_distinct_heads_required"
+
+private def children (location : NodeCoordinate) (node : Expr) : Array (NodeCoordinate × Expr) :=
+  let child := fun edge e => ({ location with path := location.path ++ [edge] }, e)
+  match node with
+  | .app f a => #[child .function f, child .argument a]
+  | .lam _ t b _ | .forallE _ t b _ => #[child .domain t, child .body b]
+  | .letE _ t v b _ => #[child .letType t, child .letValue v, child .letBody b]
+  | .mdata _ b => #[child .metadata b]
+  | .proj _ _ b => #[child .projection b]
+  | _ => #[]
+
+/-- Every requested raw root is walked, including discarded arguments.
+ Only a bound proof fact can cut a subtree. Roots are supplied independently
+ by the consuming contract, never selected by the coverage payload. -/
+def coverage (view : View) (expected : Array NodeCoordinate) (payload : Expr)
+    (fuel : Nat := 524288) : Except String Nat := do
+  let fs ← Literal.fields view.find ``NodeCoverage payload 2
+  let roots ← (← Literal.list "coverage.roots" (← Literal.resolveReferences view.find fs[0]!)).mapM
+    (coordinate view.find)
+  unless roots == expected do bad "coverage_roots"
+  let names ← (← Literal.list "coverage.facts" (← Literal.resolveReferences view.find fs[1]!)).mapM
+    (Literal.name "coverage.fact")
+  unless names.toList.Nodup do bad "duplicate_facts"
+  let operands := (← names.mapM (fact view)).flatten
+  let mut pending ← expected.mapM fun location => return (location, ← locate view location, false)
+  let mut visited : Array (NodeCoordinate × Bool) := #[]
+  let limit := min 524288 fuel
+  let mut remaining := limit
+  while let some (location, node, propositionOnly) := pending.back? do
+    pending := pending.pop
+    if visited.contains (location, propositionOnly) then continue
+    unless remaining > 0 do bad "coverage_fuel"
+    remaining := remaining - 1
+    visited := visited.push (location, propositionOnly)
+    let cut := if propositionOnly then none else
+      operands.find? (fun item => item.location == location && item.role == .proof)
+    if let some cut := cut then
+      let some proposition := cut.proposition | bad "proof_proposition"
+      pending := pending.push (location, proposition, true)
+    else
+      pending := pending ++ (children location node).map (fun (atNode, child) =>
+        (atNode, child, propositionOnly))
+      if let .const name _ := node then
+        let some info := view.find name | bad s!"closure_missing:{name}"
+        let some owner := view.owner name | bad s!"closure_owner:{name}"
+        unless !info.isUnsafe && !view.external name do bad s!"closure_unsafe:{name}"
+        let typeLocation : NodeCoordinate := {
+          owner, declaration := name, part := .type, path := [],
+          levels := info.levelParams.map Level.param }
+        pending := pending.push (typeLocation, info.type, false)
+        if let .inductInfo inductiveInfo := info then
+          for constructor in inductiveInfo.ctors do
+            let some ctor := view.find constructor | bad "closure_constructor"
+            let some ctorOwner := view.owner constructor | bad "closure_constructor_owner"
+            pending := pending.push ({
+              owner := ctorOwner
+              declaration := constructor
+              part := .type
+              path := []
+              levels := ctor.levelParams.map Level.param }, ctor.type, false)
+        unless view.sourceLeaf name do
+          if let .defnInfo defn := info then
+            pending := pending.push ({ typeLocation with part := .value }, defn.value, false)
+  -- A coordinate outside the traversed roots cannot provide boundary authority.
+  unless operands.all (fun item => visited.contains (item.location, false)) do bad "unused_fact_coordinate"
+  return limit - remaining
+
+def table (view : View) (value : Expr) (size : Nat) : Except String (Array Expr) := do
+  let fs ← Literal.fields view.find ``FiniteTable value 2
+  let entries ← Literal.list "table.entries" (← Literal.referencedValue view.find fs[0]!)
+  let rows ← entries.mapM fun e => Literal.fields view.find ``TableEntry e 4
+  let positions ← rows.mapM fun fs => Literal.nat "table.position" fs[0]!
+  unless positions == (List.range size).toArray do bad "table_positions"
+  return rows.map (·[2]!)
+
+def partition (view : View) (value : Expr) : Except String (Array Nat) := do
+  let fs ← Literal.fields view.find ``FinitePartition value 4
+  let entries ← Literal.list "partition.rows" (← Literal.referencedValue view.find fs[0]!)
+  let rows ← entries.mapM fun e => Literal.fields view.find ``PartitionRow e 2
+  let ids ← rows.mapM fun fs => Literal.nat "partition.class" fs[1]!
+  let mut seen : Array Nat := #[]
+  for id in ids do
+    unless seen.contains id do
+      unless id == seen.size do bad "partition_numbering"
+      seen := seen.push id
+  return ids
+
+/-- The typed indices certify negation, including definitional aliases.
+ Names, owner modules, declaration kinds and closedness remain judge rules. -/
+def utility (view : View) (certificate claim result claimOwner resultOwner : Name) : Except String Unit := do
+  let some (.defnInfo info) := view.find certificate | bad "utility_certificate"
+  unless info.safety == .safe do bad "unsafe_definition"
+  let args := info.type.getAppArgs
+  unless info.type.isAppOfArity ``UtilityRefutation 2 &&
+      args[0]!.isConstOf claim && args[1]!.isConstOf result &&
+      args[0]!.constLevels!.isEmpty && args[1]!.constLevels!.isEmpty do bad "utility_indices"
+  discard <| Literal.fields view.find ``UtilityRefutation info.value 0
+  unless view.owner claim == some claimOwner && view.owner result == some resultOwner do
+    bad "utility_owners"
+  let some (.defnInfo c) := view.find claim | bad "utility_claim"
+  let some (.thmInfo r) := view.find result | bad "utility_result"
+  unless c.levelParams.isEmpty && r.levelParams.isEmpty &&
+      #[c.type, c.value, r.type, r.value].all Literal.closed do bad "utility_closed"
+
+def exclusion (view : View) (name : Name) : Except String Unit := do
+  let some (.defnInfo info) := view.find name | bad "exclusion_definition"
+  unless info.safety == .safe do bad "unsafe_definition"
+  unless info.type.isAppOfArity ``StatementExclusion 3 do bad "exclusion_type"
+  let args := info.type.getAppArgs
+  let fs ← Literal.fields view.find ``StatementExclusion info.value 3
+  discard <| binds view fs[0]! args[1]!
+  discard <| binds view fs[1]! args[2]!
+
+def finiteLift (view : View) (name finite family lift lower : Name) : Except String Unit := do
+  let some (.defnInfo info) := view.find name | bad "finite_lift_definition"
+  unless info.safety == .safe do bad "unsafe_definition"
+  unless info.type.isAppOfArity ``FiniteLiftFacts 4 do bad "finite_lift_type"
+  let args := info.type.getAppArgs
+  unless (args.zip #[finite, family, lift, lower]).all (fun (e,n) => e.isConstOf n) do
+    bad "finite_lift_indices"
+  let fs ← Literal.fields view.find ``FiniteLiftFacts info.value 4
+  let names ← Literal.list "lift.observations" (← Literal.resolveReferences view.find fs[3]!)
+  for e in names do discard <| fact view (← Literal.name "lift.observation" e)
+
+def root (view : View) (name : Name) : Except String Nat := do
+  let some (.defnInfo info) := view.find name | bad "root_definition"
+  unless info.safety == .safe do bad "unsafe_definition"
+  let outer ← Literal.fields view.find ``RootCatalog info.value 1
+  let fs ← Literal.fields view.find ``RootCatalogData outer[0]! 5
+  let owner ← Literal.name "root.id" (← Literal.resolveReferences view.find fs[0]!)
+  unless view.owner name == some owner do bad "root_owner"
+  let expected ← Literal.array "root.expected" (← Literal.referencedValue view.find fs[1]!)
+  for value in expected do
+    let row ← Literal.fields view.find ``ExpectedOccurrence value 6
+    let theoremName ← Literal.name "root.theorem" (← Literal.resolveReferences view.find row[2]!)
+    let some (.thmInfo target) := view.find theoremName | bad "root_theorem"
+    unless row[1]!.isConstOf theoremName && Literal.closed row[1]! &&
+        row[1]!.constLevels!.length == target.levelParams.length do bad "root_proof_reference"
+  return expected.size
+
+structure SealReadout where
+  rows : Array (Nat × Nat × Array Nat × Array Nat × Array Name)
+  units : Nat
+  deriving Repr
+
+def sealFacts (view : View) (name : Name) (catalogAt : NodeCoordinate) : Except String SealReadout := do
+  let some (.defnInfo info) := view.find name | bad "seal_facts_definition"
+  unless info.safety == .safe do bad "unsafe_definition"
+  unless info.type.isAppOfArity ``SealFacts 1 do bad "seal_facts_type"
+  unless (← locate view catalogAt).equal info.type.appArg! do bad "seal_catalog_binding"
+  let cs ← Literal.fields view.find ``SealCatalog info.type.appArg! 15
+  let size ← Literal.nat "seal.size" cs[3]!
+  let fs ← Literal.fields view.find ``SealFacts info.value 3
+  let units ← table view fs[0]! size
+  let entries ← Literal.list "seal.rows" (← Literal.referencedValue view.find fs[1]!)
+  let rows ← entries.mapM fun value => do
+    let es ← Literal.fields view.find ``SealFactRow value 8
+    let position ← Literal.nat "seal.position" es[0]!
+    let row ← Literal.fields view.find ``SealRow es[2]! 8
+    let bins ← (← table view es[4]! 15).mapM (Literal.nat "seal.bin")
+    let axes ← Literal.fields view.find ``AxisTable es[5]! 3
+    let axes ← (← Literal.list "seal.axes" (← Literal.referencedValue view.find axes[0]!)).mapM fun e => do
+      let axis ← Literal.fields view.find ``AxisRow e 3
+      let label ← tag view.find axis[1]!
+      unless #[`D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.cut,
+        `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.flow,
+        `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.admit,
+        `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.anchor].contains label do bad "seal.axis"
+      return label
+    return (position, (← Literal.nat "seal.unique" row[0]!),
+      (← Literal.nat "seal.without" row[2]!), bins, (← partition view es[6]!), axes)
+  unless rows.map (·.1) == (List.range size).toArray do bad "seal_positions"
+  return { units := units.size, rows := rows.map (·.2) }
+
+end LeanInformationAudit.Contract.NodeFacts

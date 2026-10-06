@@ -3,6 +3,21 @@ import LeanInformationAuditInterface.Contract.Core
 namespace LeanInformationAudit.Contract.Literal
 open Lean
 
+/-- Substitute only universe parameter leaves. Unlike Lean's standard helper,
+ this preserves max/imax constructor trees without simplification. -/
+def instantiateRawLevels (params : List Name) (levels : List Level) (e : Expr) : Expr :=
+  let rec level : Level → Level
+    | .param name => ((params.zip levels).find? (fun pair => pair.1 == name)).map (·.2)
+        |>.getD (.param name)
+    | .succ value => .succ (level value)
+    | .max left right => .max (level left) (level right)
+    | .imax left right => .imax (level left) (level right)
+    | other => other
+  e.replace fun expression => match expression with
+    | .const name levels => some (.const name (levels.map level))
+    | .sort universeLevel => some (.sort (level universeLevel))
+    | _ => none
+
 /-- No user constant unfolding, metavariable instantiation or native execution. -/
 def closed (e : Expr) : Bool :=
   !e.hasFVar && !e.hasMVar && !e.hasLooseBVars && !e.hasLevelMVar
@@ -29,7 +44,7 @@ def referencedValue (find : Name → Option ConstantInfo) (value : Expr)
       throw s!"contract.cannot_decode:{name}:unsafe_or_invalid_reference"
     if seen.contains name then throw s!"contract.cannot_decode:{name}:reference_cycle"
     if seen.size >= 4096 then throw s!"contract.cannot_decode:{name}:reference_work"
-    value := definition.value.instantiateLevelParams definition.levelParams levels
+    value := instantiateRawLevels definition.levelParams levels definition.value
     seen := seen.insert name
   throw "contract.cannot_decode:reference_work"
 
@@ -47,7 +62,7 @@ def resolveReferences (find : Name → Option ConstantInfo)
         unless info.safety == .safe && info.levelParams.length == levels.length do
           throw s!"contract.cannot_decode:metadata:{name}:unsafe_or_invalid_reference"
         if seen.contains name then throw s!"contract.cannot_decode:metadata:{name}:reference_cycle"
-        resolveReferences find (info.value.instantiateLevelParams info.levelParams levels)
+        resolveReferences find (instantiateRawLevels info.levelParams levels info.value)
           (seen.insert name) work
       | some _ => return e
       | none => throw s!"contract.cannot_decode:metadata:{name}:missing_constant"

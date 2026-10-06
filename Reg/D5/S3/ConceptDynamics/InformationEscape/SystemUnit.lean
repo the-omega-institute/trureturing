@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Registration
+import LeanInformationAuditInterface.Contract.NodeFacts
 import Reg.Support.LegacyRelations.System
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -84,5 +84,23 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
 
 end
+
+end Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit
+
+namespace Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit
+open LeanInformationAudit.Contract
+
+noncomputable def finiteLiftFacts : FiniteLiftFacts
+    _root_.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena
+    _root_.Reg.Support.LegacyRelations.System.arena
+    _root_.Reg.Support.LegacyRelations.System.fromLegacy
+    _root_.Reg.Support.LegacyRelations.System.toLegacy where
+  lowerLift := _root_.Reg.Support.LegacyRelations.System.to_from_legacy
+  liftLower := _root_.Reg.Support.LegacyRelations.System.from_to_legacy
+  law := by
+    intro r
+    rw [_root_.Reg.Support.LegacyRelations.System.full_law_transport,
+      _root_.Reg.Support.LegacyRelations.System.to_from_legacy]
+  observations := []
 
 end Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit

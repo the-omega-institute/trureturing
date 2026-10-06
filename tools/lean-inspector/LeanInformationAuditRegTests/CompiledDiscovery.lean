@@ -5,6 +5,7 @@ import LeanInformationAuditRegTests.ContractTypeCarrier
 import LeanInformationAuditRegTests.ContractFixtures
 import LeanInformationAuditRegTests.CompiledCalculations
 import LeanInformationAuditRegTests.CompiledSeal
+import LeanInformationAuditRegTests.NodeFacts
 import LeanInformationAudit.Contract.Discovery
 import LeanInformationAudit.RawArtifacts
 import LeanInformationAudit.CompiledAxioms
@@ -291,6 +292,7 @@ unsafe def main : IO Unit := do
   let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
   LeanInformationAuditRegTests.CompiledDiscovery.readFixtures reader
     (← IO.getNumHeartbeats) (Lean.Core.getMaxHeartbeats ({} : Lean.Options))
+  LeanInformationAuditRegTests.NodeFacts.check
   LeanInformationAuditRegTests.CompiledCalculations.check reader
   LeanInformationAuditRegTests.CompiledSeal.check reader
   LeanInformationAuditRegTests.ContractRoots.check reader

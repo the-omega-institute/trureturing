@@ -1,3 +1,4 @@
+import Reg.Support.NodeFacts
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit
 import Reg.Support.DependentFamily
@@ -447,3 +448,62 @@ end Components
 
 end
 end Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit
+
+namespace Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection
+open LeanInformationAudit.Contract
+universe u
+noncomputable section
+
+def lawStatement : Prop := arena.{u}.Law registration.actual
+
+def lawFunction := arena.{u}.Law
+
+def bridgeFact : NodeFact := .equivalent
+  (type_of% @_root_.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_reflection_exclusion.{u})
+  (arena.{u}.Law registration.actual)
+  { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit,
+    declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_reflection_exclusion,
+    part := .type, path := [], levels := [.param `u] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit,
+    declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.lawStatement,
+    part := .value, path := [], levels := [.param `u] }
+  registration.bridge
+
+def exclusion : StatementExclusion arena.{u}.Law
+    (type_of% @_root_.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_reflection_exclusion.{u}) where
+  lawLocation := {
+    owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit,
+      declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.lawFunction,
+      part := .value, path := [], levels := [.param `u] }
+  statementLocation := {
+    owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit,
+      declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_reflection_exclusion,
+      part := .type, path := [], levels := [.param `u] }
+  excludes := _root_.Reg.Support.NodeFacts.excludeFixed _ _ registration.actual
+    registration.variation.2.choose
+    (by intro X s t hs ht; exact registration.variation.1 s t hs ht)
+    registration.variation.2.choose_spec
+
+
+def observed := fun {X : Type u} (s t : Equiv.Perm X)
+    (hs : Function.Involutive s) (ht : Function.Involutive t) (k : ℤ) (x : X) =>
+  actual.readout () ⟨X,s,t,k⟩ x
+
+def observationFact : NodeFact := .equal
+  (fun {X : Type u} (s t : Equiv.Perm X)
+    (hs : Function.Involutive s) (ht : Function.Involutive t) (k : ℤ) (x : X) =>
+    ((s * t) ^ k * s) x)
+  (fun {X : Type u} (s t : Equiv.Perm X)
+    (hs : Function.Involutive s) (ht : Function.Involutive t) (k : ℤ) (x : X) =>
+    actual.readout () ⟨X,s,t,k⟩ x)
+  { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit,
+    declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_reflection_exclusion,
+    part := .type, path := [.body,.body,.body,.body,.body,.argument,.body,.body,.function,.argument],
+    levels := [.param `u] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit,
+    declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.observed,
+    part := .value, path := [], levels := [.param `u] }
+  rfl
+
+end
+end Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection
