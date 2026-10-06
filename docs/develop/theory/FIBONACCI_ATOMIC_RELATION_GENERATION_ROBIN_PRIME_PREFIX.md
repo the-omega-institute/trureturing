@@ -3020,3 +3020,322 @@ I_\psi(x)=\sum_{n\ge1}M(n)J_x^\eta(n),
 §§384–385；概率正性沿用 §448。把同一实际 Fibonacci 概率对数导数
 接回原 \(I_\psi\)，得到完整带方向补偿、临界等价、真实 \(c_6<0\)
 与变化递归次数的精确临界成本，为本仓推导（repo-derived）。
+
+## 450. 原始轮廓的曲率概率、完整超额期望与对数矩
+
+**对象与既有供应。** 保持 §§441–448 的同一原始轮廓和原完整两段常数：
+
+\[
+\operatorname{Ein}(v)=\int_0^v\frac{1-e^{-w}}w\,dw,
+\qquad \Phi(v)=\exp(\operatorname{Ein}(v)),
+\qquad C=e^{\gamma_E},\qquad k=C-1>0,
+\]
+
+\[
+A=\int_0^1\frac{\Phi'(v)-1}{v}\,dv
+ +\int_1^\infty\frac{\Phi'(v)-C}{v}\,dv.
+\tag{CVP.1}
+\]
+
+零端使用原有限区间表示
+\(r(v)=\int_0^1e^{-sv}\,ds\)、\(\Phi'=\Phi r\)、\(\Phi(0)=1\)。
+§444 已证明 \(\Phi''(0)=1/2\)、\(0<\Phi''(v)<1/2\) 于全部
+\(v>0\)，且 \(\Phi''\) 在非负轴严格递减；原 \(A<1/2\) 也已支付。
+Euler 常数的经典界 \(\gamma_E>1/2\) 保证 \(k>0\)，可直接复用
+Mathlib 的 `Real.one_half_lt_eulerMascheroniConstant`。
+
+本节新增的是同一 \(\Phi\) 的曲率概率解释、原 \(A\) 的负对数矩、
+严格 Jensen 下界与二阶完全单调障碍。§433（SL.21）、§434 已有的
+经典 Dickman Laplace 身份在本节末尾复用，不另列为新变换。
+
+**引理 450.1（全部端点预算）。** 写 \(B(v)=\Phi''(v)\)，令
+\(M=\exp(e^{-1})\)。原指数积分身份在每个 \(v>0\) 给
+
+\[
+E_1(v)=\int_v^\infty\frac{e^{-w}}w\,dw,
+\quad 0<E_1(v)\le e^{-v}/v,
+\quad \Phi(v)=Cv\exp(E_1(v)),
+\]
+
+\[
+\Phi'(v)=C\exp(E_1(v))(1-e^{-v}),
+\quad
+B(v)=C\exp(E_1(v))e^{-v}\left(1-\frac{1-e^{-v}}v\right).
+\tag{CVP.2}
+\]
+
+对 \(v\ge1\)，整段尾有显式界
+
+\[
+\begin{aligned}
+0<B(v)&\le CM e^{-v},\\
+|\Phi'(v)-C|&\le CM e^{-v}(1+1/v)\le2CM e^{-v},\\
+0<\Phi(v)-Cv&\le CM e^{-v},\\
+v\Phi'(v)-\Phi(v)&=-Cv\exp(E_1(v))e^{-v}.
+\end{aligned}
+\tag{CVP.3}
+\]
+
+在近端，\(0\le\Phi'(v)-1\le v/2\) 对 \(0\le v\le1\) 成立。
+因此 \(B\)、\(vB\)、\(|\log v|B\) 在整个正轴可积，且以下边界
+全部成立：
+
+\[
+\begin{gathered}
+\Phi'(0)=1,\quad\Phi(0)=1,\quad
+\Phi'(v)\longrightarrow C,\quad\Phi(v)-Cv\longrightarrow0,\\
+v(\Phi'(v)-C)\longrightarrow0,\quad
+\log v\,(\Phi'(v)-C)\longrightarrow0,\quad
+v\Phi'(v)-\Phi(v)\longrightarrow0\qquad(v\to\infty),\\
+\log v\,(\Phi'(v)-1)\longrightarrow0\qquad(v\downarrow0).
+\end{gathered}
+\tag{CVP.4}
+\]
+
+**证明。** （CVP.2）的末式是 §444（NS.3）代入同一 Euler 归一化；
+其中 \(0<(1-e^{-v})/v<1\)。当 \(v\ge1\)，有
+\(0<E_1(v)\le e^{-1}\)，从而 \(\exp(E_1(v))\le M\)。再用
+\(e^y-1\le e^y y\)（\(y\ge0\)），得到（CVP.3）的前三行；第四行
+由（CVP.2）准确相减得到，未分别取两个发散项的极限。
+
+近端由 \(\Phi'(v)-1=\int_0^vB(w)\,dw\) 和 \(B\le1/2\) 得界。
+\(\int_0^1|\log v|\,dv=1\) 支付近端对数可积性；远端以
+\(\log v\le v\) 和 \(CM e^{-v}\) 支付。\(vB\) 的近端有界、
+远端由 \(CMve^{-v}\) 支付。（CVP.3）与
+\(v|\log v|\to0\)、\(ve^{-v}\to0\)、\(e^{-v}\log v\to0\) 给
+（CVP.4）。原（CVP.1）的近段有界，远段被 \(2CM e^{-v}/v\) 主导，
+所以两段均绝对收敛。证毕。
+
+**定理 450.2（真实曲率概率与原轮廓的超额期望）。** 存在正随机变量
+\(V\)，其严格正的密度、分布函数与生存函数为
+
+\[
+f_V(v)=\frac{B(v)}k\quad(v>0),\qquad
+\mathbb P(V\le v)=\frac{\Phi'(v)-1}k,\qquad
+\mathbb P(V>v)=\frac{C-\Phi'(v)}k\quad(v\ge0).
+\tag{CVP.5}
+\]
+
+它满足完整质量和一阶矩身份
+
+\[
+\int_0^\infty B(v)\,dv=k,\qquad
+\int_0^\infty vB(v)\,dv=1,\qquad
+\mathbb EV=\frac1k.
+\tag{CVP.6}
+\]
+
+而同一原 \(\Phi\) 对每个 \(v\ge0\) 精确满足
+
+\[
+\boxed{
+\begin{aligned}
+\Phi(v)&=1+v+k\,\mathbb E[(v-V)_+]\\
+       &=Cv+k\,\mathbb E[(V-v)_+]\\
+       &=v+k\,\mathbb E[\max(v,V)].
+\end{aligned}}
+\tag{CVP.7}
+\]
+
+所有期望使用同一 \(V\)，其无穷尾均保留。
+
+**证明：质量与一阶矩。** 引理450.1已给可积性。在有限区间上使用
+FTC，然后以（CVP.4）取极限：
+
+\[
+\int_0^R B(v)\,dv=\Phi'(R)-1\longrightarrow C-1=k,
+\]
+
+\[
+\int_0^R vB(v)\,dv
+=R\Phi'(R)-\Phi(R)+1\longrightarrow1.
+\]
+
+因此 \(B/k\) 确实定义 \((0,\infty)\) 上的概率密度。（CVP.5）由
+其从零积分得到；\(B>0\) 保证任意正长度的正轴区间有严格正质量，
+所以这不是点质量，且没有零点原子。
+
+**证明：完整超额表示。** 对固定 \(v\ge0\)，\((w-v)_+B(w)\)
+由 \(wB(w)\) 主导，故完整尾绝对收敛。有限区间分部积分给
+
+\[
+\int_v^R(w-v)B(w)\,dw
+=(R-v)\Phi'(R)-\Phi(R)+\Phi(v).
+\]
+
+准确地写成
+
+\[
+v\Phi'(R)-Cv\longrightarrow0,\qquad
+R\Phi'(R)-\Phi(R)\longrightarrow0,
+\]
+
+便得到
+\(\int_v^\infty(w-v)B(w)\,dw=\Phi(v)-Cv\)。这给（CVP.7）第二行。
+有限区间的两次 FTC 则给
+\(\Phi(v)=1+v+\int_0^v(v-w)B(w)\,dw\)，即第一行。
+最后用 \(\max(v,V)=v+(V-v)_+\) 和 \(C=1+k\) 得第三行。证毕。
+
+**定理 450.3（原 \(A\) 的完整负对数矩与严格下界）。** 同一随机变量
+满足 \(\mathbb E|\log V|<\infty\)，且
+
+\[
+\boxed{\quad A=-\int_0^\infty\log v\,B(v)\,dv
+                =-k\,\mathbb E\log V.\quad}
+\tag{CVP.8}
+\]
+
+因此原常数有严格两侧界
+
+\[
+\boxed{\qquad k\log k<A<\frac12.\qquad}
+\tag{CVP.9}
+\]
+
+**证明：完整分部及边界。** 引理450.1已先支付绝对可积性。
+对 \(0<\varepsilon<1<R\)，仅在有限区间分部积分，得
+
+\[
+\begin{aligned}
+\int_\varepsilon^1\frac{\Phi'(v)-1}{v}\,dv
+&=-\log\varepsilon\,[\Phi'(\varepsilon)-1]
+  -\int_\varepsilon^1\log v\,B(v)\,dv,\\
+\int_1^R\frac{\Phi'(v)-C}{v}\,dv
+&=\log R\,[\Phi'(R)-C]
+  -\int_1^R\log v\,B(v)\,dv.
+\end{aligned}
+\]
+
+两个截断边界由（CVP.4）趋于零，完整积分由绝对可积性收敛，故得到
+（CVP.8），没有无偿的形式分部。
+
+写 \(m=\mathbb EV=1/k\)。严格对数切线不等式给
+
+\[
+\log v\le\log m+\frac{v-m}m,
+\qquad\text{等号当且仅当 }v=m.
+\]
+
+各项期望均有限；由于 \(V\) 有全正轴严格正的密度，切线差在任意
+避开 \(m\) 的正长度紧区间上有严格正积分。因此
+\(\mathbb E\log V<\log\mathbb EV=-\log k\)，乘以 \(-k<0\) 得
+\(A>k\log k\)。上界直接复用 §444 的原 \(A<1/2\)。证毕。
+
+**推论 450.4（同一对象的 Mellin 域与非完全单调性）。** 曲率概率的矩函数
+
+\[
+\mathcal M_V(r)=\mathbb E V^r
+=\frac1k\int_0^\infty v^rB(v)\,dv
+\quad(\Re r>-1)
+\]
+
+在此半平面全纯，且
+
+\[
+\mathcal M_V(0)=1,\quad\mathcal M_V(1)=1/k,\quad
+\mathcal M_V'(0)=-A/k.
+\tag{CVP.10}
+\]
+
+尽管 \(f_V\) 严格为正、严格递减，它不是正半轴上的完全单调函数，
+也不存在对全部 \(v>0\) 成立的正 Laplace 测度表示
+\(f_V(v)=\int_{[0,\infty)}e^{-vt}\,d\nu(t)\)。
+
+**证明：矩函数的整个积分。** 对半平面中的任意紧域，取
+\(-1<a\le\Re r\le b\)。在 \(0<v\le1\) 上，第 \(j\) 阶参数导数由
+\(v^a|\log v|^j/(2k)\) 支配；在 \(v\ge1\) 上由
+\(CMv^b(\log v)^je^{-v}/k\) 支配，两者都可积。这支付任意固定阶
+求导与全纯性。（CVP.6）、（CVP.8）给（CVP.10）。
+
+**证明：二阶符号障碍。** 指数幂级数在任意有界的 \(v\) 区间与
+\(0\le s\le1\) 上一致绝对收敛，有限积分因此给
+\(r(v)=\sum_{n\ge0}(-1)^nv^n/(n+1)!\)。再在有限区间积分得
+\(\operatorname{Ein}(v)=\sum_{n\ge1}(-1)^{n-1}v^n/(n\,n!)\)。
+这些幂级数保证 \(\Phi\) 在零点解析，准确展开为
+
+\[
+\begin{aligned}
+\operatorname{Ein}(v)&=v-\frac{v^2}4+\frac{v^3}{18}-\frac{v^4}{96}
+ +O(v^5),\\
+\Phi(v)&=1+v+\frac{v^2}4-\frac{v^3}{36}-\frac{v^4}{144}+O(v^5).
+\end{aligned}
+\tag{CVP.11}
+\]
+
+第四项系数可逐项独立核对：
+
+\[
+-\frac1{96}+\frac1{18}+\frac1{32}-\frac18+\frac1{24}
+=-\frac1{144}.
+\]
+
+因而 \(\Phi'''(0)=\Phi''''(0)=-1/6\)。以 \(B/k\) 光滑延拓密度至零点后，特别
+
+\[
+f_V''(0)=\frac{\Phi''''(0)}k=-\frac1{6k}<0.
+\tag{CVP.12}
+\]
+
+由解析连续性，存在 \(\eta>0\)，使每个 \(0<v<\eta\) 都满足
+\(f_V''(v)<0\)。完全单调性要求正轴上每阶交替导数非负，二阶条件
+已在这个真正的正区间失败；零点本身不被拿来代替正轴违反点。
+
+若存在上述正 Laplace 表示，对任何固定 \(v>0\)，在 \(3v/4\le s\le5v/4\) 的邻域上，
+\(t^2e^{-st}\le K_v e^{-(v/2)t}\)，右侧对 \(\nu\) 可积，因为该
+表示在 \(v/2>0\) 有有限值。这支付局部两次微分，故
+\(f_V''(v)=\int t^2e^{-vt}\,d\nu(t)\ge0\)，与（CVP.12）后的正区间
+矛盾。证毕。
+
+**定理 450.5（复用 Dickman 变换后的同对象方差关系）。** 取 §433、§434
+已有的经典 Dickman 函数 \(\rho_D\)，满足
+\(\widehat\rho_D(v)=C/\Phi(v)\)。归一密度
+\(\rho_D(y)/C\) 定义随机变量 \(Y\)，故其 Laplace 变换为
+
+\[
+\ell(v)=\mathbb E e^{-vY}=\frac1{\Phi(v)}\qquad(v>0).
+\tag{CVP.13}
+\]
+
+对任意 \(v>0\)，用 \(e^{-vY}/\ell(v)\) 倾斜这同一概率律，记
+倾斜期望和方差为 \(\mathbb E_v\)、\(\operatorname{Var}_v\)。则
+
+\[
+\boxed{\quad
+\Phi''(v)=\Phi(v)
+\left[(\mathbb E_vY)^2-\operatorname{Var}_v(Y)\right]>0,
+\qquad
+\operatorname{Var}_v(Y)<(\mathbb E_vY)^2.
+\quad}
+\tag{CVP.14}
+\]
+
+**证明。** 经典身份在 \(v\downarrow0\) 的单调收敛给
+\(\int_0^\infty\rho_D(y)\,dy=C\)，所以归一密度确实有质量一。
+对任意固定正 \(v\) 的紧邻域，\(y^je^{-vy}\) 由固定常数乘
+\(e^{-(v/2)y}\) 支配，右侧对 Dickman 律可积。这支付前两阶
+Laplace 求导及倾斜矩的完整无穷尾。
+写 \(a=-\ell'/\ell=\mathbb E_vY\)、
+\(b=\ell''/\ell=\mathbb E_vY^2\)，准确求倒数的二阶导数得
+
+\[
+\Phi''=2(\ell')^2/\ell^3-\ell''/\ell^2
+=\Phi(2a^2-b)=\Phi(a^2-\operatorname{Var}_v(Y)).
+\]
+
+原 \(\Phi''>0\) 和 \(\Phi>0\) 给（CVP.14）。证毕。
+
+**关系与成果边界。** 原 \(\Phi\) 同时具有两个合法概率读出：
+它是经典 Dickman Laplace 变换的倒数，也是曲率律 \(V\) 的完整超额
+期望。（CVP.8）把先前需要分开正近段和负尾段的原 \(A\) 合成为这个
+同一曲率律的负对数矩。§448 的素数极值律 \(U\)、Fibonacci 律
+\(W\) 与这里的 \(V\) 都有共同的矩半平面 \(\Re r>-1\)，且三者的
+严格正密度均不能作为正 Laplace 原子；这指出了概率正性和有符号
+谱表示之间的共同限制。这里未断言它们具有同一分布、同一随机实现
+或保号变换。
+
+本节为完整纸面证明；不声称新增 Lean 核验。新组合与显式二阶障碍
+为本仓推导（`repo-derived`），未作全局原创性断言。原曲率性质、
+Euler 归一化、\(A<1/2\) 和 Dickman 身份均复用既有来源；FTC、
+绝对可积分部、严格 Jensen 与支配求导为经典供应。它没有支付完整
+Robin 配对中其余阶乘密度、实际粗糙前缀、整数纤维及有符号互补尾，
+也没有由此证明 Robin 不等式或 RH。
