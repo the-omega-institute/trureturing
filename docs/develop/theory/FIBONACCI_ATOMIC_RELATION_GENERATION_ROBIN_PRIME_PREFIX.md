@@ -2185,3 +2185,439 @@ G(x)=\int_0^s e^{-v}h(x+v)\,dv+e^{-s}G(x+s).
 指数尾质量都是经典供应；本节不将这些中间供应独立主张为原创。
 将完整指数平均及其等号层之外的正质量绑定到同一原肩部，得到
 （EA.3）–（EA.4）的统一额外储备，为本仓推导（`repo-derived`）。
+
+## 448. 实际素数极值、Fibonacci 概率读出与正 Laplace 原子的失效边界
+
+**对象。** 保持 §§441–446 的原完整素数前缀、下一素数时钟
+\(L=\log p\) 以及完整 \(J_z\) 和损失 \(\mathcal D_z\)。本节使用
+
+\[
+g(u)=\frac1{\zeta(1+u)},\qquad
+g_z(u)=E_z(1+u)(1-p^{-u})\quad(u>0).
+\]
+
+同时回到 §§384–385 的同一实际 Fibonacci 原子来源：
+
+\[
+0<q=\varphi_{\rm gold}^{-2}<2/5,\qquad
+\beta_d=\log(1-(-q)^d),\qquad
+\mathcal B(s)=\sum_{d\ge1}\beta_dd^{-s},\qquad e=\mu*\beta.
+\]
+
+这里 \(\varphi_{\rm gold}=(1+\sqrt5)/2\)，不与原轮廓
+\(\Phi=\exp(\operatorname{Ein})\) 混用。记 \(b=\beta_1=\log(1+q)>0\)，并定义
+
+\[
+\mathsf F(u)=\frac{\mathcal B(1+u)}{b\,\zeta(1+u)}
+=\frac1b\sum_{n\ge1}\frac{e_n}{n^{1+u}}\quad(u>0).
+\tag{PM.1}
+\]
+
+最后一个级数在每个 \(u>0\) 绝对收敛，来源正是（385.5）的原
+\(e_n\)，包括已校正的 \(e_1=b\)。
+
+**定理 448.1（同一 Euler 乘积的真实极值实现）。** 存在相互独立的随机
+变量 \(B_r,T_r\)，由全部素数 \(r\) 编号，满足
+
+\[
+\mathbb P(B_r=1)=1/r,\qquad
+\mathbb P(T_r>u)=e^{-u\log r},\qquad X_r=B_rT_r.
+\]
+
+令
+
+\[
+U=\sup_rX_r,\qquad
+M_z=\max\!\left(\max_{r\le z}X_r,T_p\right).
+\]
+
+则 \(0<U<\infty\) 几乎处处，且原两个轮廓精确为
+
+\[
+\boxed{\mathbb P(U\le u)=g(u),\qquad
+\mathbb P(M_z\le u)=g_z(u)\quad(u>0).}
+\tag{PM.2}
+\]
+
+\(U\) 的最大值几乎处处由唯一素数取得。在这个实现中，
+有限实际前缀的下一素数时钟 \(T_p\) 没有 Bernoulli 稀释。
+
+**证明。** 对每个素数，
+\(\mathbb P(X_r\le u)=1-r^{-1-u}\)。有限乘积与递减事件的概率连续性
+给
+
+\[
+\mathbb P(U\le u)=\prod_r(1-r^{-1-u})=\zeta(1+u)^{-1}.
+\]
+
+经典实轴 Euler 乘积在 \(u>0\) 绝对收敛。由 \(g(0+)=0\)、
+\(g(\infty)=1\)，得到 \(0<U<\infty\) 几乎处处。对每个固定有理数
+\(a>0\)，\(\sum_r\mathbb P(X_r>a)=\sum_rr^{-1-a}<\infty\)；
+因此几乎处处只有有限多个 \(X_r>a\)。在全部正有理 \(a\) 上同时取这项
+结论，当 \(U>0\) 时即可从某个有限集合取得最大值。两个不同素数的正值
+连续且独立，故其相等的概率为零；可数对的并集仍为零。有限
+\(r\le z\) 与独立 \(T_p\) 的分布函数乘积给 \(g_z\)。证毕。
+
+进一步，唯一获胜素数的联合密度为
+
+\[
+\mathbb P(U\in du,\ r\text{ 获胜})
+=g(u)\frac{\log r}{r^{1+u}-1}\,du,
+\]
+
+故
+
+\[
+g'(u)=\sum_r g(u)\frac{\log r}{r^{1+u}-1}>0.
+\tag{PM.3}
+\]
+
+局部逐项微分由 \(\sum_{n\ge2}(\log n)n^{-1-a}<\infty\) 支付；
+非负积分交换给全部获胜素数的质量和为一。这种素数标记实现保留全部素数，
+不只保留自身为 Fibonacci 项的素数。
+
+**定理 448.2（原有限损失的精确对数矩与带方向余量）。** 令
+\(Y_z=\max(M_z,1/L)\)、\(\lambda=\sigma L\)，其中最终 \(L>1\)。则对全部
+\(\sigma>0\) 精确有
+
+\[
+\boxed{
+\frac{\mathcal D_z(\sigma)}{C_z\sigma}
+=\log(1/\lambda)+1-\gamma_E-\mathbb E\log Y_z+r_z(\lambda),
+}
+\tag{PM.4}
+\]
+
+\[
+\boxed{0\le r_z(\lambda)\le\frac{\lambda}{2}\mathbb EY_z.}
+\tag{PM.5}
+\]
+
+沿实际前缀，\(\mathbb EY_z\) 一致有界，且
+\(\mathbb E\log Y_z\to\mathbb E\log U\)。因此 §446 的原常数正是
+\(d_*=1-\gamma_E-\mathbb E\log U\)。
+
+**证明。** 对完整损失（CS.19）使用非负 Tonelli，得到
+
+\[
+\frac{\mathcal D_z(\sigma)}{C_z\sigma}
+=\mathbb E K_\lambda(Y_z),\qquad
+K_\lambda(y)=\int_y^\infty\frac{1-e^{-\lambda u}}{\lambda u^2}\,du
+=\frac{1-e^{-\lambda y}}{\lambda y}+E_1(\lambda y).
+\tag{PM.6}
+\]
+
+这里 \(Y_z\) 的分布函数在 \(u<1/L\) 为零，在 \(u\ge1/L\) 为
+\(g_z(u)\)，包括 \(1/L\) 处的原子，所以该期望保留原移动近段。
+指数积分恒等式给
+
+\[
+K_\lambda(y)=\log(1/\lambda)+1-\gamma_E-\log y+\mathsf R(\lambda y),
+\]
+
+\[
+\mathsf R(a)=\operatorname{Ein}(a)+\frac{1-e^{-a}}a-1,\qquad
+\mathsf R(0)=0,\qquad
+\mathsf R'(a)=\frac{a-1+e^{-a}}{a^2}.
+\]
+
+由于
+\(a-1+e^{-a}=\int_0^a(1-e^{-t})dt\)，有
+\(0\le\mathsf R'(a)\le1/2\)，从而
+\(0\le\mathsf R(a)\le a/2\)。取期望即得（PM.4）–（PM.5）。
+
+整个 \(u\ge1\) 上的原预算
+\(1-g_z(u)\le(5/2)2^{-u}\) 给
+
+\[
+\mathbb EY_z\le1+\frac52\int_1^\infty2^{-u}\,du<\infty
+\tag{PM.7}
+\]
+
+且常数不依赖最终 \(z\)。对数矩在有限前缀中存在，因为
+\(Y_z\ge1/L>0\) 且上述远尾可积。精确积分分部给
+
+\[
+\mathbb E\log Y_z
+=-\int_{1/L}^1\frac{g_z(u)}u\,du
++\int_1^\infty\frac{1-g_z(u)}u\,du.
+\]
+
+将近段在 \(u<1/L\) 补零，§446 已付的全近区包络给固定主导 \(M\)；
+远段主导为 \((5/2)2^{-u}/u\)。固定 \(u>0\) 时 \(g_z(u)\to g(u)\)，
+所以支配收敛给
+
+\[
+\mathbb E\log Y_z\longrightarrow
+-\int_0^1\frac{g(u)}u\,du+\int_1^\infty\frac{1-g(u)}u\,du
+=\mathbb E\log U.
+\tag{PM.8}
+\]
+
+所有近段、整个远尾与两个矩边界均在极限前支付。证毕。
+
+**定理 448.3（实际 Fibonacci 带权来源也是极值分布）。** 对全部实数
+\(s\ge0\)，有
+
+\[
+0<\mathcal B(s)<b,\qquad
+\mathcal B'(s)\ge
+\frac{187}{1323}\,q^2(\log2)\,2^{-s}>0.
+\tag{PM.9}
+\]
+
+因此 \(\mathsf F\) 在非正半轴补零后是连续分布函数，正半轴有严格正密度
+\(f_{\rm Fib}=\mathsf F'\)。存在与 \(U\) 独立的非负随机变量 \(V\)，满足
+
+\[
+\mathbb P(V\le u)=\mathcal B(1+u)/b\quad(u\ge0),
+\]
+
+从而 \(W=\max(U,V)\) 的分布函数精确为 \(\mathsf F\)。
+\(V\) 在零点有质量 \(\mathcal B(1)/b\)，而 \(W\) 无零点原子。并且
+
+\[
+\boxed{
+\mathbb E\log W-\mathbb E\log U
+=\int_0^\infty \frac{g(u)}u
+\left[1-\frac{\mathcal B(1+u)}b\right]du>0.
+}
+\tag{PM.10}
+\]
+
+**证明：实际带权乘子的非负实轴单调性。** \(\beta_d\) 的指数尾已付全部固定
+阶逐项微分。偶数 \(d\) 的 \(\beta_d\) 为负，奇数 \(d\) 的
+\(\beta_d\) 为正，且
+
+\[
+-\beta_2\ge q^2,\qquad \beta_d\le q^d\quad(d\text{ 为奇数}).
+\]
+
+因 \(d\ge3\) 时 \((\log d)/d\le(\log3)/3\)，对 \(s\ge0\)，
+
+\[
+\begin{aligned}
+\mathcal B'(s)
+&\ge2^{-s}\left[q^2\log2-\sum_{\substack{d\ge3\\d\ {\rm odd}}}q^d\log d\right],\\
+\sum_{\substack{d\ge3\\d\ {\rm odd}}}q^d\log d
+&\le\frac{\log3}{3}\frac{q^3(3-q^2)}{(1-q^2)^2}.
+\end{aligned}
+\]
+
+函数 \(q(3-q^2)/(1-q^2)^2\) 的导数为
+\((3+6q^2-q^4)/(1-q^2)^3>0\)，故在 \(0<q<2/5\) 递增。
+又 \(3^5<2^8\) 给 \(\log3/\log2<8/5\)，所以最后尾项与
+\(q^2\log2\) 的比不超过
+
+\[
+\frac8{15}\frac{710}{441}=\frac{1136}{1323}<1.
+\]
+
+这支付（PM.9）的导数界。正性也可直接由
+
+\[
+\mathcal B(s)\ge\log(1+q)-\sum_{j\ge1}|\beta_{2j}|
+\ge\frac{q}{1+q}-\frac{q^2}{(1-q^2)^2}>0
+\]
+
+得到；最后比较使用
+\((1-q^2)^2>q(1+q)\)，在 \(q\le2/5\) 上由
+\(441/625>14/25\) 支付。由于 \(\mathcal B(s)\to b\)，严格递增又给
+\(\mathcal B(s)<b\)。此外，令
+\(S_{\beta,\ge2}=\sum_{d\ge2}|\beta_d|<\infty\)，有
+
+\[
+0<b-\mathcal B(s)\le S_{\beta,\ge2}\,2^{-s}.
+\tag{PM.11}
+\]
+
+于是 \(\mathcal B(1+u)/b\) 是带零点原子的非负变量分布函数。
+独立极值的乘积分布给（PM.1）的原 \(\mathsf F\)，其导数正性来自
+\(\mathcal B,\mathcal B',g,g'>0\)。又 \(0<\mathsf F<g\le u\) 在近端成立，
+远端 \(1-\mathsf F\) 由固定常数乘 \(2^{-u}\) 支付，所以
+\(\mathbb E|\log W|<\infty\)。两个绝对对数矩相减得到（PM.10），
+近端主导为一，远端由（PM.11）支付。其被积函数在全部 \(u>0\)
+严格为正。证毕。
+
+**定理 448.4（原 signed 来源的完整对数矩）。** 以下级数均按自然前缀
+\(n\le N\) 取极限。对每个实数 \(r>-1\)，有
+
+\[
+\boxed{
+\sum_{n\ge2}\frac{\mu(n)}{n(\log n)^r}
+=-\frac{\mathbb EU^r}{\Gamma(1+r)}<0,\qquad
+\sum_{n\ge2}\frac{e_n}{n(\log n)^r}
+=-\frac{b\,\mathbb EW^r}{\Gamma(1+r)}<0.
+}
+\tag{PM.12}
+\]
+
+在零阶对 \(r\) 微分，得到
+
+\[
+\boxed{
+\begin{aligned}
+\mathbb E\log U&=-\gamma_E+
+\sum_{n\ge2}\frac{\mu(n)\log\log n}{n},\\
+\mathbb E\log W&=-\gamma_E+
+\frac1b\sum_{n\ge2}\frac{e_n\log\log n}{n},\\
+d_*&=1-\sum_{n\ge2}\frac{\mu(n)\log\log n}{n}.
+\end{aligned}}
+\tag{PM.13}
+\]
+
+因此（PM.10）是同一实际 Fibonacci 与 Möbius 系数的严格完整比较，而非
+有限素原子的数值巧合。
+
+**证明：条件矩、共同解析域与自然截止。** 复用 §424 的无条件定量
+Mertens 供应及 §414 的实际 Fibonacci 转移；扩大有限头后，
+\(|M(N)|,|H_{\rm raw}(N)|\) 分别不超过固定常数乘
+\(N/(1+\log N)^4\)。对 \(a=\mu\) 或 \(a=e\)，Abel 求和因此使
+
+\[
+S_a(r)=\sum_{n\ge2}a_n/[n(\log n)^r]
+\]
+
+在 \(\Re r>-3\) 局部一致收敛并全纯。删去 \(n=1\) 只改变固定常数。
+具体地，原部分和乘末项趋零；
+导数权重与部分和的乘积由常数倍
+
+\[
+\frac{1}{x(\log x)^{4+\Re r}}
+\left(1+\frac{1+|r|}{\log x}\right)
+\]
+
+支配。每个紧域的下端 \(\Re r>-3\) 支付尾积分；对 \(r\) 求导只增加
+有限次 \(\log\log x\)，仍可积。这里没有对条件级数作无偿无限重排。
+
+\(U,W\) 的分布函数在近端均不超过 \(u\)，远端生存函数均为指数小量，
+故其矩函数 \(\mathbb EU^r,\mathbb EW^r\) 在 \(\Re r>-1\) 全纯。
+近端负矩由积分分部
+\(\int_0^1u^{-a}dF(u)\le1+a\int_0^1u^{-a}du\)（\(0<a<1\)）
+支付；紧域上的对数导数由稍扩大的同一指数区间支配。
+
+先在实数 \(r>1\) 使用尾积分矩公式。由于 \(|e_n|\) 有界，
+\(\sum_{n\ge2}|a_n|/[n(\log n)^r]<\infty\)，可以绝对交换，从
+\(1-F(u)=-a_1^{-1}\sum_{n\ge2}a_nn^{-1-u}\) 得
+
+\[
+\mathbb EX^r=-\frac{\Gamma(1+r)}{a_1}S_a(r),
+\]
+
+其中 \((X,a_1)=(U,1)\) 或 \((W,b)\)。
+在共同半平面 \(\Re r>-1\) 使用解析恒等定理，得到（PM.12）。
+\(S_a(0)=-a_1\)、\(\Gamma'(1)=-\gamma_E\) 及局部一致逐项求导给
+（PM.13）。证毕。
+
+**定理 448.5（同一正概率密度不能成为正 Laplace 原子）。** 记
+\(f_\mu=g'\)、\(f_{\rm Fib}=\mathsf F'\)，并令
+
+\[
+u_m=\frac{m}{\log6}-1\quad(m\text{ 为充分大的正整数}).
+\]
+
+原实际来源满足两个严格负的高阶导数极限：
+
+\[
+\boxed{
+\begin{aligned}
+\frac{(-1)^{m-1}f_\mu^{(m-1)}(u_m)}
+     {(\log6)^m e^{-m}}&\longrightarrow-1,\\
+\frac{(-1)^{m-1}f_{\rm Fib}^{(m-1)}(u_m)}
+     {(\log6)^m e^{-m}}&\longrightarrow
+-\frac{\log(1+q+q^2)}b<0.
+\end{aligned}}
+\tag{PM.14}
+\]
+
+因此这两个严格正密度均不完全单调，均不存在在全部 \(u>0\) 上有效的
+正测度表示 \(f(u)=\int_{[0,\infty)}e^{-ut}\,d\nu(t)\)。
+
+**证明：实际复合原子的局部化与整个无穷尾。** 在固定 \(u>0\) 的紧区间上，
+两个绝对 Dirichlet 级数可作任意固定阶微分。对
+\(a=\mu\) 或 \(a=e\)，其密度为
+
+\[
+f_a(u)=-\frac1{a_1}\sum_{n\ge2}
+a_n\frac{\log n}{n}e^{-u\log n}.
+\]
+
+代入 \(u_m\)，精确得到
+
+\[
+\frac{(-1)^{m-1}f_a^{(m-1)}(u_m)}
+     {(\log6)^m e^{-m}}
+=-\frac1{a_1}\sum_{n\ge2}a_n\rho_n^m,\qquad
+\rho_n=\frac{\log n}{\log6}
+\exp\!\left(1-\frac{\log n}{\log6}\right).
+\tag{PM.15}
+\]
+
+\(x e^{1-x}\le1\)，且仅在 \(x=1\) 等号成立，所以 \(\rho_6=1\)，
+其余全部 \(\rho_n<1\)。选择一个固定整数 \(m_0>\log6\)。那么
+
+\[
+\sum_{n\ge2}\rho_n^{m_0}
+=\frac{e^{m_0}}{(\log6)^{m_0}}
+\sum_{n\ge2}\frac{(\log n)^{m_0}}{n^{m_0/\log6}}<\infty.
+\tag{PM.16}
+\]
+
+该完整整数尾由指数 \(m_0/\log6>1\) 的积分检验支付。
+\(\mu\) 与 \(e\) 的系数均有界；对全部 \(m\ge m_0\)，
+\(|a_n|\rho_n^m\) 被同一个可求和主导支付。因此计数测度上的支配收敛
+给 \(\sum a_n\rho_n^m\to a_6\)，没有只比较有限个竞争项。
+
+真实 Möbius 原子为 \(\mu(6)=1\)。对实际 Fibonacci 原子，有限卷积恰给
+
+\[
+\begin{aligned}
+e_6&=\beta_6-\beta_3-\beta_2+\beta_1\\
+&=\log\frac{(1-q^6)(1+q)}{(1+q^3)(1-q^2)}
+=\log(1+q+q^2)>0.
+\end{aligned}
+\tag{PM.17}
+\]
+
+这证明（PM.14）。若存在所述正 Laplace 测度，任意固定 \(u>0\) 和
+整数 \(k\ge0\) 都有
+\((-1)^kf^{(k)}(u)=\int t^ke^{-ut}d\nu(t)\ge0\)；
+微分由 \(t^ke^{-ut}\le C_{k,u}e^{-ut/2}\) 支付。它与（PM.14）
+矛盾。证毕。
+
+**原 Robin 来源中的精确边界。** 正极值分布与正密度是原来源在
+实数 \(1+u>1\) 上的概率读出；（PM.14）直接排除了把同一密度改写为
+正 Laplace 原子的做法。其复域来源仍是
+
+\[
+\mathsf F(u)=\frac{\mathcal B(1+u)}{b\,\zeta(1+u)}.
+\]
+
+由（385.4）的既有无零乘子，任意非平凡 ζ 零点 \(\rho\) 的重数为 \(h\)
+时，这一来源在 \(u=\rho-1\) 的极点阶仍恰为 \(h\)，其密度的极点阶为
+\(h+1\)。极值实现没有消去这些实际算术极点。
+
+原完整 Robin 尾项仍保留（424.6）的全部商纤维，
+
+\[
+I_\psi(x)=\sum_{n\ge1}M(n)J_x^\eta(n),\qquad
+I_\psi(x)=\int_x^\infty[\psi(t)-t]\frac{1+\log t}{t^2\log^2t}\,dt.
+\]
+
+这不是（PM.6）的正损失期望。（PM.4）只给同一有限 \(J_z\) 内
+\(\mathcal D_z\) 的精确读出；（PM.12）–（PM.13）只给上述已支付
+自然截止的对数权矩。它们没有估计原 \(I_\psi\) 的完整有符号临界余量，
+也没有把 \(|H_{\rm raw}(N)|\) 的已付对数界提升到平方根尺度。
+
+**来源。** 实轴 Euler 乘积、可数独立乘积、概率连续性、Borel–Cantelli、
+非负 Tonelli、指数积分和 Gamma 矩、Abel 求和及解析恒等定理为经典
+供应；Dirichlet 与 Gamma 接口参见
+[NIST DLMF 25.2.1](https://dlmf.nist.gov/25.2.E1) 和
+[NIST DLMF 5.9.1](https://dlmf.nist.gov/5.9.E1)。
+Mertens 的定量供应复用 §424 引用的
+[Ng 作者稿 p. 5](https://www.cs.uleth.ca/~nathanng/RESEARCH/mobius2b.pdf)，
+实际 Fibonacci 系数、无零乘子及对数转移复用 §§384–385、414。
+Euler 乘积的极值解释和倒数 ζ 的非完全单调性不作全局原创性断言；
+原有限阻尼的精确对数矩及带方向余量、同一实际 Fibonacci 概率读出、
+其完整 signed 对数矩比较与由 \(e_6\) 支付的正 Laplace 原子失效边界
+为本仓推导（repo-derived）。
