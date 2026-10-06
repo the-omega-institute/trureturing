@@ -247,6 +247,8 @@ structure FixedTailData where
 private noncomputable def wordScalar (w : List Label) (x : ℝ) : ℝ :=
   w.foldr branch x
 
+/-- Maximum departure-coordinate cost over all nonempty source suffixes.
+The terminal coordinate is omitted, and the empty source contributes zero. -/
 private noncomputable def wordCost : List Label → List (Fin 6) → ℝ → ℝ
   | [], _, _ => 0
   | l :: w, i :: r, x => max
@@ -280,6 +282,8 @@ private noncomputable def entryCost (d : FixedTailData) (j : Fin 2)
   | none => wordCost (d.stem j) d.stemColor x
   | some i => wordCost (d.blocks j i) (d.blockColor i) x
 
+/-- The indexed suffix certificate, grouped into two stems and four return blocks.
+Both endpoints are tested in every group, including repeated suffix values. -/
 private noncomputable def familyBudget (d : FixedTailData) : ℝ :=
   Finset.univ.sup' ⟨(0, none), Finset.mem_univ _⟩
     (fun e : Fin 2 × Option (Fin 2) =>
@@ -289,6 +293,8 @@ private def addressObserved (c : ℝ) : List (Fin 6) → LegalDigits → Prop
   | [], _ => True
   | i :: r, x => kappa x ∈ observation c i ∧ addressObserved c r (originalT x)
 
+/-- The tails are fixed before the universal choice of the finite return word.
+Each source retains its own unobserved terminal address. -/
 private def allHistories (d : FixedTailData) (c : ℝ) (tails : Fin 2 → LegalDigits) : Prop :=
   (∀ j, stateAddress (d.guard j) (tails j)) ∧
   ∀ (z : List (Fin 2)) (j : Fin 2), ∃ source : LegalDigits,
