@@ -1834,3 +1834,174 @@ RH_OFFLINE 的增订一·10中复 Fibonacci rapidity，及 Atomic416 的固定�
 定义29.1是旧记录的理想运算求值器，不认证任意实数的符号／范数表示、全时间舍入精度、公共域承诺取得、准确制备／动作或物理传感价格。确定同时误差不供应统计复读收益。新的付费读、树码、校准、计数、复制、reset、逆、根交换或旋转菜单，以及不同目标度量或共同收缩裕量均须单独供应，不能作为本原任务已解决的替代物。准确完整未来、语法恢复、原制备反演、同制备上下文拼接与物理空间／时钟／记忆装置的恢复依然是不同关系。
 
 ## 追加锚（本行以下为增补区）
+
+## 33. 实际成对来源的方向比较与分别闭合的八元数切面
+
+**定义 33.1（声明载体上的原三读合同）。** 固定 $L,H>0$、$0<d_0<L^4$，置 $\kappa=\sqrt{d_0}/L^2\in(0,1)$，即推论16.3的 $c$。分别取 $V=\mathbb R^3$ 的原定向叉积，或约定2.3的正定实除八元数虚部 $V=\operatorname{Im}\mathbb O$ 及 $u\times v=(uv-vu)/2$。来源仍为定义1.1的全部非空有限有序树及定义1.2的一个固定叶对 $p=(a,b)$；树大小无统一上限，每个来源的所有叶出现和全部时刻使用同一 $p$。实际更新仍为 $(t,p)\mapsto(\rho t,p)$，且
+
+$$
+\begin{gathered}
+x_j=E_p(\rho^jt),\qquad
+\Delta=|a|^2|b|^2-(a\cdot b)^2,\\
+\mathcal D^V_{L,H,d_0}
+=\{(t,p)\in\mathcal T\times V^2:
+|a|,|b|\le L,\ \Delta\ge d_0,\ |x_j|\le H\ (0\le j\le2)\}.
+\end{gathered}
+$$
+
+两成员分别满足全部限制，允许不同树、不同制备及不同二生成切面。置 $w=x_2\times x_1$、$w'=x'_2\times x'_1$、$e_j=|x_j-x'_j|$，保留原目标 $x_3$ 和原记录距离 $\max_{0\le j\le2}e_j$。记
+
+$$
+\omega_V(\varepsilon)=
+\sup_{\substack{(t,p),(t',p')\in\mathcal D^V_{L,H,d_0}\\
+\max_{0\le j\le2}e_j\le\varepsilon}}|x_3-x'_3|,
+\qquad \varepsilon\ge0,
+$$
+
+空上确界取零。三维时这就是定义16.1的域与模量。
+
+取得仍按约定1.3及13.1–13.3：三次完整向量 Read、两次破坏性 $\rho$，归档原三读及来源／时间／动作／Stop 身份；回复宽度、保留记录、程序、运算、精度、时间及源成本分别保留。七维载体每次回复七个环境坐标，三读共21个精确实坐标。数学切面坐标不作为已取得校准，也不提供三坐标回复或相同资源价格；原合同不增加树码、Gram／符号口、外部向量输入、复制、复位、逆、旋转或重制备权限。
+
+**定理 33.2（初始读数与尾叉积的分别灵敏度）。** 对定义33.1任一声明载体上的每个实际来源对，
+
+$$
+\begin{aligned}
+|x_3-x'_3|
+&\le H^2 e_0+\frac{|w-w'|}{\kappa}\\
+&\le H^2 e_0+\frac{H}{\kappa}(e_1+e_2).
+\end{aligned}
+$$
+
+因而
+
+$$
+\omega_V(\varepsilon)\le
+\min\{2H^2,C_{\rm dir}\varepsilon\},
+\qquad C_{\rm dir}=H^2+\frac{2H}{\kappa}.
+$$
+
+三维中该充分系数严格小于定理17.1的充分系数：
+
+$$
+K_*-C_{\rm dir}
+=H^2\left(\frac2\kappa-1\right)
++2H\left(1+\frac1\kappa\right)>0.
+$$
+
+这比较两个充分界，不确定最优系数、实际模量的严格下降或任意非实际报告的恢复风险。
+
+证明。三维直接复用定理4.3、5.1及引理16.2。七维先在每个来源内使用约定2.3和 [Boundary定理8.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md) 的二生成闭包。其经典依据为 Baez 的 [两生成结合性](https://math.ucr.edu/home/baez/octonions/node2.html) 和 [虚部叉积](https://math.ucr.edu/home/baez/octonions/node14.html)，以及 [Darpö文献注](../../../Library/Geometry/darpo2009vectorproduct.md) 所引定义与Lemma2（这些中间工具为 literature-attested）。由于 $\Delta>0$，可在证明中将 $a$ 归一化，并将 $b$ 的垂直分量归一化为两个正交单位虚元 $e,f$；它们生成 $\operatorname{span}\{1,e,f,ef\}$ 的四元数代数，其虚部为
+
+$$
+U_p=\operatorname{span}\{a,b,b\times a\}.
+$$
+
+固定一个保内积及叉积的线性等距同构 $J_p:\mathbb R^3\to U_p$，令 $\widetilde p=(J_p^{-1}a,J_p^{-1}b)$。按原有序节点的结构归纳，对全部字面树及全部 $j\ge0$ 同时有
+
+$$
+E_p(\rho^jt)=J_pE_{\widetilde p}(\rho^jt).
+$$
+
+所有 $F^j(p)$ 也留在此切面，运输仍只是定理3.1的等式。没有重排叉积括号；四元数乘法结合不使叉积结合。该固定同构保留叶 Gram 数据、每次响应范数和来源内的投影，故引理16.2及准确符号公式逐来源适用。另一个来源使用自己的 $J_{p'}$，不把两组坐标中的差当作环境向量差；以下比较全在共同 $V$ 的内积与叉积中进行。
+
+对非零尾，写 $q_j=|x_j|$、$u=w/|w|$、$x_3=\sigma w$，其中 $\sigma\in\{\pm1\}$。复用引理16.2的两个投影界，并保留投影本身，得
+
+$$
+P=\sigma x_0\cdot u>0,\qquad
+P\ge\kappa q_0,\qquad
+|w|=q_1q_2\le q_1^2P\le H^2P.
+$$
+
+若任一尾为零，定理5.1使其目标为零；若两非零尾符号相同，目标差等于 $|w-w'|$。这些分支均满足所列界，因为 $\kappa<1$，且不对零向量归一化。
+
+余下两符号相反，交换来源名使 $\sigma=+1,\sigma'=-1$。记
+
+$$
+\begin{gathered}
+r=|w|,\quad s=|w'|,\quad
+u=w/r,\quad v=w'/s,\quad d=|u-v|\le2,\\
+P=x_0\cdot u>0,\quad P'=-x'_0\cdot v>0,\quad
+S=P+P',\quad R=r+s,\quad b_0=|w-w'|.
+\end{gathered}
+$$
+
+分别沿 $u$ 和 $v$ 展开 $S$，Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+S&=(x_0-x'_0)\cdot u+x'_0\cdot(u-v)
+\le e_0+q'_0d,\\
+S&=(x_0-x'_0)\cdot v+x_0\cdot(u-v)
+\le e_0+q_0d.
+\end{aligned}
+$$
+
+由两个投影下界，$\min(q_0,q'_0)\le(q_0+q'_0)/2\le S/(2\kappa)$。同时两个幅度界给 $R\le H^2S$，所以
+
+$$
+S\left(1-\frac d{2\kappa}\right)\le e_0,
+\qquad R\le H^2S.
+$$
+
+环境欧氏几何给
+
+$$
+b_0^2=(r-s)^2+rsd^2,\qquad
+b_0^2-\frac{R^2d^2}{4}
+=(r-s)^2\left(1-\frac{d^2}{4}\right)\ge0.
+$$
+
+因此 $Rd/2\le b_0$。若 $d\le2\kappa$，因 $1-d/(2\kappa)\ge0$，有
+
+$$
+R\left(1-\frac d{2\kappa}\right)
+\le H^2S\left(1-\frac d{2\kappa}\right)\le H^2e_0,
+$$
+
+于是 $R\le H^2e_0+Rd/(2\kappa)\le H^2e_0+b_0/\kappa$。若 $d\ge2\kappa$，直接有 $b_0\ge Rd/2\ge\kappa R$。两个分支都包括 $d=2\kappa$，不除以可能为零的差因子。异号目标差为 $|w+w'|\le R$，第一界成立。
+
+两个载体均有全局双线性和 $|z\times y|\le|z||y|$；七维中此界由正定八元数叉积范数恒等式给出，即使 $z,y$ 属不同切面也成立。因此
+
+$$
+\begin{aligned}
+|w-w'|
+&\le|(x_2-x'_2)\times x_1|
++|x'_2\times(x_1-x'_1)|\\
+&\le H(e_2+e_1).
+\end{aligned}
+$$
+
+每个实际目标范数又为 $|w|\le H^2$；取原实际成对上确界得到模量界，含零记录距离和空上确界。严格系数比较由代入定理17.1的 $c=\kappa$ 得到。本方向比较及其原来源载体对应为 repo-derived；二生成闭包、配对及范数恒等式只作已有中间工具，不需要共同切面或全 $SO(7)$ 等变。
+
+**命题 33.3（尾记录相同的实际异号对）。** 在三维中取正向正交单位基 $\mathbf e_1,\mathbf e_2,\mathbf e_3$，令 $L=2,H=1,d_0=1/1024$，故 $\kappa=1/128$。两个实际来源
+
+$$
+(t,p)=\bigl(\alpha,(\mathbf e_1/32,\mathbf e_2)\bigr),\qquad
+(t',p')=\bigl(\langle\alpha,\langle\alpha,\beta\rangle\rangle,
+(\mathbf e_3/8,2\mathbf e_1)\bigr)
+$$
+
+均属于主域，且其字面连续历史为
+
+$$
+\begin{aligned}
+(x_0,x_1,x_2,x_3)
+&=(\mathbf e_1/32,\mathbf e_2,-\mathbf e_3/32,\mathbf e_1/32),\\
+(x'_0,x'_1,x'_2,x'_3)
+&=(-\mathbf e_1/32,\mathbf e_2,-\mathbf e_3/32,-\mathbf e_1/32).
+\end{aligned}
+$$
+
+所以 $w=w'=\mathbf e_1/32$，$e_1=e_2=0$，而 $e_0=|x_3-x'_3|=1/16$。定理33.2的方向界在此取等号；对这组固定参数，任一在全主域成立的界 $|x_3-x'_3|\le A_0e_0+B_0|w-w'|$ 必须有 $A_0\ge1$，不由此确定 $C_{\rm dir}$ 的最优性。
+
+证明。第一叶对有 $\Delta=1/1024$，第二叶对有 $\Delta'=1/16$；全部叶范数不超过2，所列前三向量范数不超过1。第二来源的原括号求值为 $a\times(a\times b)$，按定理3.1依次在
+
+$$
+F^jp'=(\mathbf e_3/8,2\mathbf e_1),\ (2\mathbf e_1,-\mathbf e_2/4),\
+(-\mathbf e_2/4,\mathbf e_3/2),\ (\mathbf e_3/2,\mathbf e_1/8)
+\quad(0\le j\le3)
+$$
+
+求值，得到所列四向量；第一来源是叶，直接求原连续替换得所列结果。两尾叉积和目标差随即成立；代入 $w-w'=0$ 给 $A_0\ge1$。这是原来源的投影灵敏度见证，不是环境三元组、噪声报告或付费控制的反例。
+
+## 追加锚（本行以下为增补区）
