@@ -33,6 +33,116 @@ def sigma (m : ℕ) (S : Finset ℕ) (n : ℕ) : (t : S) → X m :=
 def cuts (m : ℕ) (S : Finset ℕ) : Finset ℕ :=
   S.biUnion (fun t => Finset.Icc (t + 1) (t + G m))
 
+/-- The raw canonical digits of a natural source have its value and Boolean row. -/
+theorem natural_row_raw_data (n : ℕ) : rawValue (rawOfZeckendorf (Nat.zeckendorf n)) = n ∧
+    ∀ j : ℕ, (if (zRow n).val j then (1 : ℝ) else 0) =
+      (rawOfZeckendorf (Nat.zeckendorf n) j : ℝ) := by
+  classical
+  let r := rawOfZeckendorf (Nat.zeckendorf n)
+  have hr : CanonicalRaw r :=
+    canonicalRaw_rawOfZeckendorf (Nat.isZeckendorfRep_zeckendorf n)
+  have hv : rawValue r = n := by
+    rw [rawValue_rawOfZeckendorf (Nat.isZeckendorfRep_zeckendorf n),
+      Nat.sum_zeckendorf_fib]
+  have hd (j : ℕ) : (if (zRow n).val j then (1 : ℝ) else 0) = r j := by
+    have hm : (zRow n).val j = true ↔ r j ≠ 0 := by
+      change decide (GoldenBase4AutomataOracle.zeckendorfBit n j = 1) = true ↔ _
+      simp only [decide_eq_true_eq]
+      have hb : GoldenBase4AutomataOracle.zeckendorfBit n j = 1 ↔
+          j + 2 ∈ Nat.zeckendorf n := by
+        by_cases h : j + 2 ∈ Nat.zeckendorf n <;>
+          simp [GoldenBase4AutomataOracle.zeckendorfBit, D5.S0.Conventions.wdigits, h]
+      rw [hb]
+      rw [← rawToZeckendorf_rawOfZeckendorf (Nat.isZeckendorfRep_zeckendorf n)]
+      simp [rawToZeckendorf, Finsupp.mem_toMultiset, r]
+    have hb := hr.1 j
+    cases h : (zRow n).val j <;> simp only [Bool.false_eq_true, ↓reduceIte]
+    · have hz : r j = 0 := by simpa [h] using hm
+      simp [hz]
+    · have hn : r j = 1 := by have := hm.mp h; omega
+      simp [hn]
+  exact ⟨hv, hd⟩
+
+/-- The phase of the canonical natural row is its golden rotation phase. -/
+theorem natural_row_phase (n : ℕ) : phase (zRow n) =
+    (((n : ℝ) * Real.goldenRatio : ℝ) : AddCircle (1 : ℝ)) := by
+  classical
+  let r := rawOfZeckendorf (Nat.zeckendorf n)
+  have hv : rawValue r = n := (natural_row_raw_data n).1
+  have hd (j : ℕ) : (if (zRow n).val j then (1 : ℝ) else 0) = r j :=
+    (natural_row_raw_data n).2 j
+  have hc (j : ℕ) : (-1 : ℝ) ^ (j + 1) * alpha ^ (j + 2) =
+      (Nat.fib (j + 2) : ℝ) * Real.goldenRatio - Nat.fib (j + 3) := by
+    have h := Real.fib_succ_sub_goldenRatio_mul_fib (j + 2)
+    rw [show j + 2 + 1 = j + 3 by omega] at h
+    have he : Real.goldenConj = -alpha := by
+      unfold alpha
+      linarith [Real.inv_goldenRatio]
+    rw [he, neg_pow] at h
+    rw [show j + 2 = (j + 1) + 1 by omega, pow_succ] at h
+    nlinarith
+  have hs : signedValue (zRow n) =
+      (n : ℝ) * Real.goldenRatio -
+        (∑ j ∈ r.support, r j * Nat.fib (j + 3) : ℕ) := by
+    unfold signedValue
+    simp_rw [hd, hc]
+    rw [tsum_eq_sum (s := r.support)]
+    · have hv' : (∑ j ∈ r.support, r j * Nat.fib (j + 2) : ℕ) = n := hv
+      push_cast at hv' ⊢
+      simp_rw [show ∀ j, ((Nat.fib (j + 2) : ℝ) * Real.goldenRatio -
+          Nat.fib (j + 3)) * r j = (r j : ℝ) * Nat.fib (j + 2) *
+          Real.goldenRatio - (r j : ℝ) * Nat.fib (j + 3) by intro j; ring]
+      rw [Finset.sum_sub_distrib, ← Finset.sum_mul]
+      rw [show (∑ j ∈ r.support, (r j : ℝ) * Nat.fib (j + 2)) = n by
+        exact_mod_cast hv']
+    · intro j hj
+      have hz : r j = 0 := by simpa only [Finsupp.mem_support_iff, not_not] using hj
+      simp only [hz, Nat.cast_zero, mul_zero]
+  change (signedValue (zRow n) : AddCircle (1 : ℝ)) = _
+  rw [hs, AddCircle.coe_sub]
+  have hz : (((∑ j ∈ r.support, r j * Nat.fib (j + 3) : ℕ) : ℝ) :
+      AddCircle (1 : ℝ)) = 0 := by
+    apply (AddCircle.coe_eq_zero_iff (1 : ℝ)).mpr
+    exact ⟨(∑ j ∈ r.support, r j * Nat.fib (j + 3) : ℕ), by simp⟩
+  exact sub_eq_self.mpr hz
+
+/-- Natural golden phases avoid all positive negative-index cuts. -/
+theorem natural_phase_avoids_cut (n k : ℕ) (hk : 1 ≤ k) :
+    (((n : ℝ) * Real.goldenRatio : ℝ) : AddCircle (1 : ℝ)) ≠ E k := by
+  intro he
+  have hz : (((n + k : ℕ) : ℝ) * Real.goldenRatio : AddCircle (1 : ℝ)) = 0 := by
+    calc
+      _ = ((n : ℝ) * Real.goldenRatio : AddCircle (1 : ℝ)) - E k := by
+        simp only [E, Nat.cast_add]; congr 1; ring
+      _ = 0 := sub_eq_zero.mpr he
+  obtain ⟨i, hi⟩ := (AddCircle.coe_eq_zero_iff (1 : ℝ)).mp hz
+  apply (Real.goldenRatio_irrational.natCast_mul (m := n + k) (by omega)).ne_int i
+  simpa only [zsmul_eq_mul, mul_one] using hi.symm
+
+/-- A natural window label is equivalent to membership in its open cylinder arc. -/
+theorem natural_window_arc (L : ℕ) (hL : 1 ≤ L) (n : ℕ) (p : X L) :
+    q L n = p ↔ phase (zRow n) ∈ A p := by
+  have hData := window_cylinder_partition.2.2
+  have hEnds := window_cylinder_partition.2.1
+  have hRowAvoid (n k : ℕ) (hk : 1 ≤ k) : phase (zRow n) ≠ E k := by
+    rw [natural_row_phase]
+    exact natural_phase_avoids_cut n k hk
+  have hEndpoint (k : ℕ) (hk : 1 ≤ k) :
+      phase (eMinus k) = E k ∧ phase (ePlus k) = E k :=
+    ⟨((hEnds k hk).2 _).mpr (by exact Or.inl rfl),
+      ((hEnds k hk).2 _).mpr (by exact Or.inr rfl)⟩
+  obtain ⟨i, j, hi, hiL, hj, hjL, hei, hej, hC⟩ := (hData L hL).2.2.2.2.2.1 p
+  change zRow n ∈ C p ↔ _
+  rw [hC]
+  constructor
+  · rintro (hn | hn)
+    · exact hn
+    · rcases hn with hn | hn
+      · exact False.elim (hRowAvoid n i hi (congrArg phase hn |>.trans (hEndpoint i hi).2))
+      · have he : zRow n = eMinus j := by simpa only [Set.mem_singleton_iff] using hn
+        exact False.elim (hRowAvoid n j hj (congrArg phase he |>.trans (hEndpoint j hj).1))
+  · exact Or.inl
+
 set_option maxHeartbeats 1600000 in
 -- The collar, common-lift, and binary-anchor arguments form one joint geometry proof.
 /-- Equal translated cut sets characterize equal natural fibres. The actual-image
@@ -49,75 +159,7 @@ theorem sparse_window_mutual_determination (m M : ℕ) (hm : 1 ≤ m)
         (∀ n, (e (q M n)).val = sigma m S n) ∧
         ∀ n, e.symm ⟨sigma m S n, ⟨n, rfl⟩⟩ = q M n) := by
   classical
-  have hRawRow (n : ℕ) : rawValue (rawOfZeckendorf (Nat.zeckendorf n)) = n ∧
-      ∀ j : ℕ, (if (zRow n).val j then (1 : ℝ) else 0) =
-        (rawOfZeckendorf (Nat.zeckendorf n) j : ℝ) := by
-    classical
-    let r := rawOfZeckendorf (Nat.zeckendorf n)
-    have hr : CanonicalRaw r :=
-      canonicalRaw_rawOfZeckendorf (Nat.isZeckendorfRep_zeckendorf n)
-    have hv : rawValue r = n := by
-      rw [rawValue_rawOfZeckendorf (Nat.isZeckendorfRep_zeckendorf n),
-        Nat.sum_zeckendorf_fib]
-    have hd (j : ℕ) : (if (zRow n).val j then (1 : ℝ) else 0) = r j := by
-      have hm : (zRow n).val j = true ↔ r j ≠ 0 := by
-        change decide (GoldenBase4AutomataOracle.zeckendorfBit n j = 1) = true ↔ _
-        simp only [decide_eq_true_eq]
-        have hb : GoldenBase4AutomataOracle.zeckendorfBit n j = 1 ↔
-            j + 2 ∈ Nat.zeckendorf n := by
-          by_cases h : j + 2 ∈ Nat.zeckendorf n <;>
-            simp [GoldenBase4AutomataOracle.zeckendorfBit, D5.S0.Conventions.wdigits, h]
-        rw [hb]
-        rw [← rawToZeckendorf_rawOfZeckendorf (Nat.isZeckendorfRep_zeckendorf n)]
-        simp [rawToZeckendorf, Finsupp.mem_toMultiset, r]
-      have hb := hr.1 j
-      cases h : (zRow n).val j <;> simp only [Bool.false_eq_true, ↓reduceIte]
-      · have hz : r j = 0 := by simpa [h] using hm
-        simp [hz]
-      · have hn : r j = 1 := by have := hm.mp h; omega
-        simp [hn]
-    exact ⟨hv, hd⟩
-  have hPhase (n : ℕ) : phase (zRow n) =
-      (((n : ℝ) * Real.goldenRatio : ℝ) : AddCircle (1 : ℝ)) := by
-    classical
-    let r := rawOfZeckendorf (Nat.zeckendorf n)
-    have hv : rawValue r = n := (hRawRow n).1
-    have hd (j : ℕ) : (if (zRow n).val j then (1 : ℝ) else 0) = r j :=
-      (hRawRow n).2 j
-    have hc (j : ℕ) : (-1 : ℝ) ^ (j + 1) * alpha ^ (j + 2) =
-        (Nat.fib (j + 2) : ℝ) * Real.goldenRatio - Nat.fib (j + 3) := by
-      have h := Real.fib_succ_sub_goldenRatio_mul_fib (j + 2)
-      rw [show j + 2 + 1 = j + 3 by omega] at h
-      have he : Real.goldenConj = -alpha := by
-        unfold alpha
-        linarith [Real.inv_goldenRatio]
-      rw [he, neg_pow] at h
-      rw [show j + 2 = (j + 1) + 1 by omega, pow_succ] at h
-      nlinarith
-    have hs : signedValue (zRow n) =
-        (n : ℝ) * Real.goldenRatio -
-          (∑ j ∈ r.support, r j * Nat.fib (j + 3) : ℕ) := by
-      unfold signedValue
-      simp_rw [hd, hc]
-      rw [tsum_eq_sum (s := r.support)]
-      · have hv' : (∑ j ∈ r.support, r j * Nat.fib (j + 2) : ℕ) = n := hv
-        push_cast at hv' ⊢
-        simp_rw [show ∀ j, ((Nat.fib (j + 2) : ℝ) * Real.goldenRatio -
-            Nat.fib (j + 3)) * r j = (r j : ℝ) * Nat.fib (j + 2) *
-            Real.goldenRatio - (r j : ℝ) * Nat.fib (j + 3) by intro j; ring]
-        rw [Finset.sum_sub_distrib, ← Finset.sum_mul]
-        rw [show (∑ j ∈ r.support, (r j : ℝ) * Nat.fib (j + 2)) = n by
-          exact_mod_cast hv']
-      · intro j hj
-        have hz : r j = 0 := by simpa only [Finsupp.mem_support_iff, not_not] using hj
-        simp only [hz, Nat.cast_zero, mul_zero]
-    change (signedValue (zRow n) : AddCircle (1 : ℝ)) = _
-    rw [hs, AddCircle.coe_sub]
-    have hz : (((∑ j ∈ r.support, r j * Nat.fib (j + 3) : ℕ) : ℝ) :
-        AddCircle (1 : ℝ)) = 0 := by
-      apply (AddCircle.coe_eq_zero_iff (1 : ℝ)).mpr
-      exact ⟨(∑ j ∈ r.support, r j * Nat.fib (j + 3) : ℕ), by simp⟩
-    exact sub_eq_self.mpr hz
+  have hPhase := natural_row_phase
   -- Irrationality separates indexed cuts.
   have hE : Function.Injective E := by
     intro i j hij
@@ -133,17 +175,7 @@ theorem sparse_window_mutual_determination (m M : ℕ) (hm : 1 ≤ m)
     apply h.ne_int k
     simpa only [zsmul_eq_mul, mul_one, Int.cast_sub, Int.cast_natCast] using hk.symm
   -- A nonnegative natural phase cannot equal a positive negative-index cut.
-  have hAvoid (n k : ℕ) (hk : 1 ≤ k) :
-      (((n : ℝ) * Real.goldenRatio : ℝ) : AddCircle (1 : ℝ)) ≠ E k := by
-    intro he
-    have hz : (((n + k : ℕ) : ℝ) * Real.goldenRatio : AddCircle (1 : ℝ)) = 0 := by
-      calc
-        _ = ((n : ℝ) * Real.goldenRatio : AddCircle (1 : ℝ)) - E k := by
-          simp only [E, Nat.cast_add]; congr 1; ring
-        _ = 0 := sub_eq_zero.mpr he
-    obtain ⟨i, hi⟩ := (AddCircle.coe_eq_zero_iff (1 : ℝ)).mp hz
-    apply (Real.goldenRatio_irrational.natCast_mul (m := n + k) (by omega)).ne_int i
-    simpa only [zsmul_eq_mul, mul_one] using hi.symm
+  have hAvoid := natural_phase_avoids_cut
   -- A translate of the dense natural orbit realizes visits above any given bound.
   have hVisit (U : Set (AddCircle (1 : ℝ))) (hU : IsOpen U) (hne : U.Nonempty) (B : ℕ) :
       ∃ n : ℕ, B < n ∧ (((n : ℝ) * Real.goldenRatio : ℝ) : AddCircle (1 : ℝ)) ∈ U := by
@@ -228,19 +260,7 @@ theorem sparse_window_mutual_determination (m M : ℕ) (hm : 1 ≤ m)
       rw [hC]
       exact Or.inl (by change phase (ePlus k) ∈ A p; rwa [(hEndpoint k hk).2])
     exact ((hData L hL).2.2.2.2.2.2 k hk).mpr hkL (hminus.trans hplus.symm)
-  have hArc (L : ℕ) (hL : 1 ≤ L) (n : ℕ) (p : X L) :
-      q L n = p ↔ phase (zRow n) ∈ A p := by
-    obtain ⟨i, j, hi, hiL, hj, hjL, hei, hej, hC⟩ := (hData L hL).2.2.2.2.2.1 p
-    change zRow n ∈ C p ↔ _
-    rw [hC]
-    constructor
-    · rintro (hn | hn)
-      · exact hn
-      · rcases hn with hn | hn
-        · exact False.elim (hRowAvoid n i hi (congrArg phase hn |>.trans (hEndpoint i hi).2))
-        · have he : zRow n = eMinus j := by simpa only [Set.mem_singleton_iff] using hn
-          exact False.elim (hRowAvoid n j hj (congrArg phase he |>.trans (hEndpoint j hj).1))
-    · exact Or.inl
+  have hArc := natural_window_arc
   have hOpenArc (L : ℕ) (p : X L) : IsOpen (A p) :=
     QuotientAddGroup.isOpenMap_coe _ isOpen_Ioo
   have hAlpha : 0 < alpha ∧ alpha < 1 ∧ alpha ^ 2 + alpha = 1 := by
