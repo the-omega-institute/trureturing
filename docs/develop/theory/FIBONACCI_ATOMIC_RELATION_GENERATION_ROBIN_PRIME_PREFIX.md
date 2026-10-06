@@ -4459,3 +4459,473 @@ I_\psi(x)=\mathscr C_x-\mathcal A_x
 **来源与范围。** 先检索并复用 §§395、424、425、427、452、453；固定 \(P=2\) 配对及临界逆范数早已覆盖，未将它们包装成新结论。新承重是（BC.12）–（BC.21）的真实面板截止边界、共同主项及严格符号翻转。解析 \(\gamma_1\) 上界与前段正性估计沿用 §453 已付清的 Laurent 约定、梯形绝对误差和有理对数界。Dirichlet 卷积 Banach 代数沿用 Library/ArithSums/glocknerlucht2011weightedinversion.md 的 Glöckner–Lucht arXiv:1112.0749v2 归属；PNT 沿用 §453 的 Johnston–Yang v2。没有新 RH 判据或全局原创性声明。
 
 本节为解析推导；复用本卷 §§452–453，原有符号临界估计仍未解决。
+
+## 455. 同一真实奇 Möbius 面板的联合临界截止补偿
+
+沿用 §§453–454 的真实核和精确截止边界，同时考虑增长的实数尺度与整数截止。以下估计给出同一面板截止补偿在原 Robin 临界归一化下的共同误差。
+
+### 455.1. 对象、精确边界及来源合同
+
+对实数 \(x\ge e\)，记 \(\ell=\log x\)、\(L=\log2\)，沿用
+
+\[
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad w(t)=\frac{1+\log t}{t^2\log^2t},
+\]
+\[
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)\,dt,
+\quad J_x^\eta(n)=P_x^\eta(n)-P_x^\eta(n+1),
+\quad \mathscr D_x(s)=P_x^\eta(s)-P_x^\eta(2s).
+\tag{CC.1}
+\]
+
+这里 \(s\) 可以为正实数；整数 \(m\) 时有精确完整纤维
+
+\[
+\mathscr D_x(m)=\sum_{n=m}^{2m-1}J_x^\eta(n).
+\tag{CC.2}
+\]
+
+取同一个真实素数面板
+
+\[
+\mathcal P_x=\{p\text{ prime}:2x<p\le4x\},\qquad
+Q_x^{\mathrm p}=\#\mathcal P_x,\qquad
+\mathcal A_x=\sum_{p\in\mathcal P_x}\mathscr D_x(p).
+\tag{CC.3}
+\]
+
+其真实奇源系数为 \(\mu(p)=-1\)。设
+
+\[
+\mathcal U_x(n)=-\#\{p\in\mathcal P_x:p\le n\},\quad
+\mathcal L_x(n)=J_x^\eta(n)-J_x^\eta(2n)-J_x^\eta(2n+1),
+\]
+\[
+\mathscr H_x(N)=\sum_{n=1}^N\mathcal U_x(n)\mathcal L_x(n),\qquad
+\mathscr E_x(N)=Q_x^{\mathrm p}\mathscr D_x(N+1).
+\tag{CC.4}
+\]
+
+§454（BC.13）–（BC.14）已经证明，对每个整数 \(N\ge\lceil8x\rceil\)，
+
+\[
+\boxed{\mathscr H_x(N)=-\mathcal A_x+\mathscr E_x(N),\qquad
+\sum_{n>N}\mathcal U_x(n)\mathcal L_x(n)=-\mathscr E_x(N).}
+\tag{CC.5}
+\]
+
+补偿项的端点始终是 **\(N+1\) 和 \(2N+2\)**。这一精确身份不是本稿的新结论；下文支付同时增长的 \(x,N\) 下的大小，而不使用固定 \(x\) 的尾趋零来代替共同精度。
+
+使用以下已证明结果与文献：
+
+1. §453（DP.9）–（DP.10）的精确低商积分与完整高商绝对预算；其高商界来自 §429.2 的经典阶乘夹逼，保留实际 \(\eta\)。
+2. §454（BC.13）–（BC.14）的同一个真实整数截止与奇端点。
+3. Johnston–Yang, *Some explicit estimates for the error term in the prime number theorem*, arXiv:2204.01980v2，2022-04-20 修订版，Theorem 1.1、式（1.3）、印刷页 2。其所有素幂误差为
+   \[
+   |\psi(t)-t|\le9.39t(\log t)^{1.515}e^{-0.8274\sqrt{\log t}}\quad(t\ge2).
+   \tag{CC.6}
+   \]
+   所需计数误差由该素幂界与有限 Abel 求和导出。
+
+### 455.2. 全高商联合核估计
+
+定义
+
+\[
+F(a)=(1+a)\log(1+a)-a=\int_0^a\log(1+t)\,dt\quad(a\ge0).
+\tag{CC.7}
+\]
+
+因此 \(F(0)=0\)、\(F'(a)=\log(1+a)\)，且 \(F(a)>0\) 对每个 \(a>0\) 成立。
+
+**引理 455.1（共同误差，含完整高商）。** 固定 \(0<\alpha\le\beta<\infty\)。对全部 \(x\ge e\) 及 \(s\ge x\)，若
+
+\[
+a=\frac{\log(s/x)}\ell\in[\alpha,\beta],
+\]
+
+则有同一个显式常数
+
+\[
+K_\beta=\frac32\beta+\frac{15}2+
+\frac L2\left[1+\log(1+\beta+L)\right]
+\tag{CC.8}
+\]
+
+使得
+
+\[
+\boxed{\left|s\mathscr D_x(s)-\frac\ell2F(a)\right|\le K_\beta.}
+\tag{CC.9}
+\]
+
+**证明。** 令 \(r=\log s=\ell(1+a)\)。§453（DP.9）的低商积分为
+
+\[
+sP_{x,\mathrm{low}}^\eta(s)
+=r\log r+(\ell^{-1}-\log\ell-1)r
++(\ell^{-1}+\ell-1)-r^{-1}.
+\]
+
+代入 \(r=\ell(1+a)\) 并逐项整理，精确得到
+
+\[
+sP_{x,\mathrm{low}}^\eta(s)=\ell F(a)+a+\ell^{-1}-r^{-1}.
+\tag{CC.10}
+\]
+
+高商使用同一 \(\eta\) 的全部区间 \(t\ge s\)。由
+
+\[
+|\eta(y)|\le1+\log y\quad(y\ge1),\qquad
+\int_1^\infty(1+\log y)y^{-2}\,dy=2,
+\]
+
+及 \(u^{-1}+u^{-2}\) 在 \(u>0\) 上递减，换元 \(t=sy\) 给
+
+\[
+\left|sP_{x,\mathrm{high}}^\eta(s)\right|
+\le2(r^{-1}+r^{-2}).
+\tag{CC.11}
+\]
+
+写 \(sP_x^\eta(s)=\ell F(a)+R_x(s)\)。因为 \(\ell\ge1\)、\(r\ge\ell\)，且 \(0\le\ell^{-1}-r^{-1}\le\ell^{-1}\)，（CC.10）–（CC.11）给
+
+\[
+|R_x(s)|\le a+\ell^{-1}+2r^{-1}+2r^{-2}\le a+5.
+\tag{CC.12}
+\]
+
+在 \(2s\) 上参数恰为 \(a+L/\ell\)，故
+
+\[
+s\mathscr D_x(s)
+=\ell F(a)-\frac\ell2F(a+L/\ell)+R_x(s)-\frac12R_x(2s).
+\tag{CC.13}
+\]
+
+由 \(F'=\log(1+a)\) 的单调性，
+
+\[
+0\le\ell[F(a+L/\ell)-F(a)]
+\le L\log(1+\beta+L).
+\]
+
+（CC.12）在两个端点给 \( |R_x(s)|\le\beta+5\)、
+
+\[
+|R_x(2s)|\le\beta+L+5.
+\]
+
+代入（CC.13）并取绝对值即得（CC.8）–（CC.9）。该估计同时支付了完整 \(s\) 到 \(2s\) 的纤维与全部高商，常数不依赖 \(x,s\)。证毕。
+
+### 455.3. 真实面板计数的误差供应
+
+**引理 455.2。** 当实数 \(x\to\infty\) 时，
+
+\[
+Q_x^{\mathrm p}=\frac{2x}\ell+O\!\left(\frac{x}{\ell^2}\right).
+\tag{CC.14}
+\]
+
+**证明。** （CC.6）与 \(u^{3.515}e^{-0.8274\sqrt u}\to0\) 给
+
+\[
+\psi(t)=t+O(t/\log^2t).
+\]
+
+对素幂余项用有限层求和与 \(\vartheta(y)\le y\log y\)，得到
+
+\[
+0\le\psi(t)-\vartheta(t)
+=\sum_{k=2}^{\lfloor\log_2t\rfloor}\vartheta(t^{1/k})
+\ll\sqrt t\log^2t=o(t/\log^2t).
+\]
+
+所以 \(\vartheta(t)=t+O(t/\log^2t)\)，并有全部 \(t\ge2\) 上的 \(\vartheta(t)\ll t\)。包含素数 2 的精确有限 Abel 求和为
+
+\[
+\pi(t)=\frac{\vartheta(t)}{\log t}
++\int_2^t\frac{\vartheta(u)}{u\log^2u}\,du.
+\tag{CC.15}
+\]
+
+积分由 \(\vartheta(u)\ll u\) 及在 \(\sqrt t\) 分段，界为 \(O(t/\log^2t)\)。故
+
+\[
+\pi(t)=\frac{t}{\log t}+O(t/\log^2t).
+\]
+
+在精确端点相减，
+
+\[
+Q_x^{\mathrm p}=\pi(4x)-\pi(2x)
+=\frac{4x}{\ell+2L}-\frac{2x}{\ell+L}+O(x/\ell^2)
+=\frac{2x}\ell+O(x/\ell^2).
+\]
+
+这证明（CC.14）。普通无误差 PNT 的 \(\sim\) 本身没有被用来声称这个 \(O\) 率。证毕。
+
+### 455.4. 锐的共同临界截止律
+
+**定理 455.3（联合面板补偿）。** 固定 \(0<\alpha\le\beta<\infty\)。令 \(N=N(x)\) 为整数、\(N\ge\lceil8x\rceil\)，写
+
+\[
+m=N+1,\qquad a_x=\frac{\log(m/x)}\ell\in[\alpha,\beta].
+\tag{CC.16}
+\]
+
+则对该范围的全部 \(N,x\) 共同有
+
+\[
+\boxed{\mathscr E_x(N)=\frac{x}{N+1}
+\left[F(a_x)+O_{\alpha,\beta}(\ell^{-1})\right].}
+\tag{CC.17}
+\]
+
+进而
+
+\[
+\boxed{\sqrt x\ell\,\mathscr E_x(N)
+=\frac{x^{3/2}\ell}{N+1}
+\left[F(a_x)+O_{\alpha,\beta}(\ell^{-1})\right].}
+\tag{CC.18}
+\]
+
+**证明。** 引理 455.1 给
+
+\[
+\mathscr D_x(m)=\frac\ell{2m}
+\left[F(a_x)+\varepsilon_{x,m}\right],\qquad
+|\varepsilon_{x,m}|\le2K_\beta/\ell.
+\]
+
+引理 455.2 可写为 \(Q_x^{\mathrm p}=(2x/\ell)(1+\delta_x)\)，其中
+
+\[
+|\delta_x|\le C_{\mathrm p}/\ell\qquad(x\ge X_{\mathrm p})
+\]
+
+的有限常数与阈值不依赖 \(N\)。乘积中 \(2\) 与 \(1/2\) 精确相消。因 \(F(a_x)\le F(\beta)\)，（CC.17）的共同误差常数可取
+
+\[
+C_{\alpha,\beta}=C_{\mathrm p}F(\beta)+2K_\beta(1+C_{\mathrm p})
+\]
+
+对 \(x\ge\max(e,X_{\mathrm p})\) 使用。乘以 \(\sqrt x\ell\) 得（CC.18）。证毕。
+
+**推论 455.4（在该共同范围内的充要截止尺度）。** 仍假设（CC.16）。则补偿项最终严格为正，并有
+
+\[
+\boxed{\sqrt x\ell\,\mathscr E_x(N(x))\longrightarrow0
+\quad\Longleftrightarrow\quad
+\frac{N(x)+1}{x^{3/2}\ell}\longrightarrow\infty.}
+\tag{CC.19}
+\]
+
+**证明。** 因 \(F(\alpha)>0\)，对全部充分大 \(x\)，（CC.18）中的中括号介于
+
+\[
+\frac12F(\alpha)\quad\text{与}\quad F(\beta)+\frac12F(\alpha)
+\]
+
+之间。因此它与 \(x^{3/2}\ell/(N+1)\) 具有两个固定正比较常数。（CC.19）及最终正性随即成立。充要条件只在明确的固定正紧区间合同下主张；没有扩张为任意无约束的 \(N(x)\)。证毕。
+
+**推论 455.5（非零临界补偿常数）。** 对每个固定 \(\lambda>0\)，取
+
+\[
+N_\lambda(x)=\left\lceil\lambda x^{3/2}\log x\right\rceil.
+\tag{CC.20}
+\]
+
+则 \(N_\lambda(x)\ge\lceil8x\rceil\) 最终成立，并且
+
+\[
+\boxed{\sqrt x\log x\,\mathscr E_x(N_\lambda(x))
+=\frac{F(1/2)}\lambda+
+O_\lambda\!\left(\frac{1+\log\log x}{\log x}\right)
+\longrightarrow\frac{\tfrac32\log(3/2)-\tfrac12}\lambda>0.}
+\tag{CC.21}
+\]
+
+**证明。** \(m=N_\lambda+1=\lambda x^{3/2}\ell+O(1)\)，其中整数误差位于 \([1,2)\)。所以
+
+\[
+a_x=\frac12+\frac{\log\ell+\log\lambda}{\ell}
++O_\lambda\!\left(\frac1{x^{3/2}\ell^2}\right),
+\qquad
+\frac{x^{3/2}\ell}m=\frac1\lambda+
+O_\lambda\!\left(\frac1{x^{3/2}\ell}\right).
+\]
+
+于是 \(a_x\) 最终位于例如 \([1/4,3/4]\)，而 \(F'\) 在此及其固定邻域有界。将以上式代入（CC.18）即得误差与极限。正性来自（CC.7）。证毕。
+
+**推论 455.6（固定幂及对数调整的全部临界情形）。** 固定 \(\lambda>0\)、\(\rho>1\)、\(b\in\mathbb R\)，令
+
+\[
+N_{\lambda,\rho,b}(x)=\lceil\lambda x^\rho\ell^b\rceil.
+\]
+
+则该截止最终满足 \(N_{\lambda,\rho,b}\ge\lceil8x\rceil\)，且共同付款后的定量式为
+
+\[
+\boxed{\sqrt x\ell\,\mathscr E_x(N_{\lambda,\rho,b}(x))
+=\frac1\lambda x^{3/2-\rho}\ell^{1-b}
+\left[F(\rho-1)+
+O_{\lambda,\rho,b}\!\left(\frac{1+\log\ell}{\ell}\right)\right].}
+\tag{CC.22a}
+\]
+
+由此恰有以下固定参数分类：
+
+| 固定参数范围 | \(\sqrt x\ell\,\mathscr E_x(N_{\lambda,\rho,b}(x))\) 的极限 |
+| --- | --- |
+| \(1<\rho<3/2\)，任意固定 \(b\) | \(+\infty\) |
+| \(\rho=3/2,\ b<1\) | \(+\infty\) |
+| \(\rho=3/2,\ b=1\) | \(F(1/2)/\lambda>0\) |
+| \(\rho=3/2,\ b>1\) | \(0\) |
+| \(\rho>3/2\)，任意固定 \(b\) | \(0\) |
+
+特别地，\(\lambda=1,b=0\) 的固定纯幂截止 \(N_\rho(x)=\lceil x^\rho\rceil\) 满足
+
+\[
+\mathscr E_x(N_\rho(x))\sim F(\rho-1)x^{1-\rho},\qquad
+\sqrt x\ell\,\mathscr E_x(N_\rho(x))
+\sim F(\rho-1)x^{3/2-\rho}\ell.
+\tag{CC.22}
+\]
+
+故临界归一化补偿在 \(1<\rho<3/2\) 时趋于 \(+\infty\)，在 \(\rho=3/2\) 时仍按正倍数 \(\log x\) 发散，而在 \(\rho>3/2\) 时趋于零。
+
+**证明。** 对每组固定参数，
+
+\[
+m=\lambda x^\rho\ell^b+O(1),\quad
+a_x=\rho-1+\frac{b\log\ell+\log\lambda}{\ell}
++O_{\lambda,\rho,b}(x^{-\rho}\ell^{-b-1}).
+\]
+
+因 \(\rho>1\)，整数误差趋于相对零，且 \(a_x\to\rho-1>0\)。可取固定正紧区间，使（CC.18）的误差共同成立；\(F'\) 在其固定邻域有界，给
+
+\[
+F(a_x)=F(\rho-1)+O_{\lambda,\rho,b}((1+\log\ell)/\ell).
+\]
+
+同时
+
+\[
+\frac{x^{3/2}\ell}{m}
+=\frac1\lambda x^{3/2-\rho}\ell^{1-b}
+\bigl[1+O_{\lambda,\rho,b}(x^{-\rho}\ell^{-b})\bigr].
+\]
+
+最后这个相对整数误差对固定 \(\rho,b\) 是 \(o(\ell^{-1})\)，故（CC.18）给（CC.22a）。因 \(F(\rho-1)>0\)，幂 \(x^{3/2-\rho}\) 压过任意固定对数幂；在 \(\rho=3/2\) 时由 \(\ell^{1-b}\) 的极限得到表中三种情形。（CC.22）是其特例。证毕。
+
+### 455.5. 精确校正观测量与完整实际缺口
+
+面板校正读数
+
+\[
+\widehat{\mathscr H}_x(N)=\mathscr H_x(N)-\mathscr E_x(N)=-\mathcal A_x
+\tag{CC.23}
+\]
+
+在全部 \(N\ge\lceil8x\rceil\) 精确保持原面板值。这里保留 **精确 \(\mathcal A_x\)**，不将其 \(C_{\rm pair}/\ell^2+o(\ell^{-2})\) 渐近替换进临界公式。§454 的 \(N\asymp x\) 正前段及负全尾已经表明补偿不能在该尺度省略；（CC.21）进一步证明，即使采用 \(x^{3/2}\log x\) 的截止，省略后仍有非零原临界误差。
+
+为明确完整来源，复用 §453（DP.26）–（DP.27）的自然奇源补集
+
+\[
+\mathscr C_x=\lim_{R\to\infty}
+\sum_{\substack{m\le R,\ m\text{ odd}\\m\notin\mathcal P_x}}
+\mu(m)\mathscr D_x(m),\qquad
+I_\psi(x)=\mathscr C_x-\mathcal A_x.
+\tag{CC.24}
+\]
+
+这一已有极限保留单位 \(m=1\)、全部其余奇素数、合数、面板两侧及完整远尾；每份奇源包含完整偶倍纤维。它恢复 §424 的同一实际 Mertens 配对，原单位首块与原 \(\beta_d=\log(1-(-q)^d)\)、\(q=(3-\sqrt5)/2\) 的全部纤维及运输补偿均来自已有完整合同。上文估计使用全部高商的实际 \(\eta\)，没有新增任何 \(\beta\) 截断。
+
+因此含完整补集的精确观测量为
+
+\[
+\boxed{\mathscr C_x+\widehat{\mathscr H}_x(N)
+=\mathscr C_x+\mathscr H_x(N)-\mathscr E_x(N)=I_\psi(x).}
+\tag{CC.25}
+\]
+
+如果省略唯一显示的面板截止校正，则同一完整来源读数变成
+
+\[
+\mathscr C_x+\mathscr H_x(N)=I_\psi(x)+\mathscr E_x(N).
+\tag{CC.26}
+\]
+
+故在（CC.20）的截止上，这个错误读数与目标之间的临界归一化差精确趋于 \(F(1/2)/\lambda>0\)。这不是关于真实完整 \(I_\psi(x)\) 符号的推断，而是同一来源上可量化的观测偏差。
+
+原一侧目标所需的剩余供应仍然是：存在固定 \(B\ge0\)，对全部充分大实数 \(x\)，
+
+\[
+\boxed{\mathscr C_x\ge\mathcal A_x-\frac B{\sqrt x\log x}.}
+\tag{CC.27}
+\]
+
+（CC.27）与 \(\sqrt x\log x\,I_\psi(x)\ge-B\) 精确等价。既有无条件 \(\mathscr C_x=\mathcal A_x+O(\ell^{-4})\) 不支付该精度；本稿的有限面板截止律也不提供完整实际 \(M/O\) 的平方根对数范数或全部来源的临界抵消。若进一步把 \(\mathscr C_x\) 改为有限实际补集，必须另外控制那个**同一来源**的完整截断余项，不能用本稿的面板补偿代替。
+
+### 455.6. 全实际 \(O\) 的有限来源读数及精确剩余供应
+
+前节的 \(\mathscr C_x\) 是完整补集。若要求一个有限来源读数，须使用实际
+
+\[
+O(n)=\sum_{\substack{m\le n\\m\text{ odd}}}\mu(m),\qquad O(0)=0,
+\quad \mathscr F_x(N)=\sum_{n=1}^NO(n)\mathcal L_x(n),
+\]
+
+并置
+
+\[
+\mathscr C_{x,N}=
+\sum_{\substack{m\le N,\ m\text{ odd}\\m\notin\mathcal P_x}}
+\mu(m)\mathscr D_x(m).
+\]
+
+对同一整数 \(N\ge\lceil8x\rceil\)，有限 Abel 求和与
+\(\mathcal L_x(n)=\mathscr D_x(n)-\mathscr D_x(n+1)\) 给
+
+\[
+\boxed{\mathscr F_x(N)+O(N)\mathscr D_x(N+1)
+=\sum_{\substack{m\le N\\m\text{ odd}}}\mu(m)\mathscr D_x(m)
+=\mathscr C_{x,N}-\mathcal A_x.}
+\tag{CC.28}
+\]
+
+证明只用
+\(O(n)-O(n-1)=\mu(n)\mathbf1_{n\text{ odd}}\)，包括 \(n=1\)，以及全部面板素数已满足 \(p\le N\)。这里校正的是**全实际 \(O(N)\)** 的截止边界；它不是面板的 \(-Q_x^{\mathrm p}\)，因而不能将（CC.19）–（CC.22a）的面板大小直接移植到这个全实际边界。
+
+定义同一自然奇源截止的剩余量
+
+\[
+\mathscr R_x(N)=\mathscr C_x-\mathscr C_{x,N}
+=\lim_{R\to\infty}
+\sum_{\substack{N<m\le R\\m\text{ odd}}}\mu(m)\mathscr D_x(m).
+\tag{CC.29}
+\]
+
+这个固定 \(x,N\) 的极限存在性直接来自 §453（DP.16）；没有推导任何增长 \(x,N\) 的共同临界误差。把（CC.28）补全得到精确完整读数
+
+\[
+\boxed{\mathscr F_x(N)+O(N)\mathscr D_x(N+1)+\mathscr R_x(N)
+=\mathscr C_x-\mathcal A_x=I_\psi(x).}
+\tag{CC.30}
+\]
+
+因此有限来源版本的原目标仍精确要求
+
+\[
+\mathscr C_{x,N}+\mathscr R_x(N)
+\ge\mathcal A_x-\frac B{\sqrt x\log x}
+\tag{CC.31}
+\]
+
+对全部充分大实数 \(x\) 成立，且 \(N=N(x)\) 为所选同一截止。支付（CC.31）需要同源完整剩余 \(\mathscr R_x(N)\) 的联合抵消；固定 \(x\) 的收敛及本稿的有限面板截止律都不提供这一供应。完整观测量（CC.30）保留单位、每份已触发来源的全部纤维、全部剩余来源及精确 \(\mathcal A_x\)。
+
+联合面板估计（CC.17）与全实际来源的有限校正身份（CC.30）作用于不同系数：前者控制面板大小，后者保留实际奇前缀与全部剩余来源。原临界下界仍要求（CC.31）的同源剩余估计。
