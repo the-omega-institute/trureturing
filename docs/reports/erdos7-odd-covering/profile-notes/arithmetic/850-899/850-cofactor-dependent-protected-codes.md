@@ -9162,3 +9162,65 @@ against these same section masses. In the two families, private witnesses
 for labels 3,5,15,7,49 are respectively 3,5,16,7,148; the final label has
 private witness 253 or 8. The integer 2 is uncovered in both families.
 They demonstrate only this missing joint information.
+
+## Summing all first-q phases under one source law
+
+Fix one original family and one full law on the non-q carrier
+\(X=(\mathbf Z/3^h)\times(\mathbf Z/M)\). Let \(R\subseteq X\) be the complete q-free residual. For every first-q digit \(\omega\in\mathbf Z/q\), let \(E_\omega\) be the union of the actual q-depth-one original cylinders whose first q digit is \(\omega\), and put \(Y_\omega=R\setminus E_\omega\). If
+\[
+n_1(x)=\#\{\omega:x\in E_\omega\},
+\]
+then the same law gives the exact identity
+\[
+\sum_{\omega\bmod q}{\bf1}_{Y_\omega}(x)
+ ={f1}_{R}(x)(q-n_1(x)),
+\qquad
+\sum_\omega\nu(Y_\omega)=\int_R(q-n_1)\,d\nu.
+\tag{CD353}
+\]
+The unions in \(E_\omega\) are essential: several depth-one originals may occupy one first-q digit.
+
+For a fixed \(x\in R\) and \(\omega\), whole q-line coverage on the fibre with first digit \(\omega\), after the depth-one rows are removed, gives
+\[
+q\,{f1}_{Y_\omega}(x)
+ \le {f1}_{Y_\omega}(x)D_\omega(x),
+\tag{CD354}
+\]
+where \(D_\omega\) is the actual weighted load of all labels with q-depth at least two and first digit \(\omega\). Summing under the same law yields
+\[
+q\sum_\omega\nu(Y_\omega)
+ \le \int_R\sum_\omega D_\omega\,d\nu.
+\tag{CD355}
+\]
+Every deep label has one first-q digit, so the right side has one global numerical-slot inventory. If the fixed collision cap gives \(s+2<q\) at every \(\omega\), the corresponding lower-row relation is
+\[
+(q-s-2)\sum_\omega\nu(Y_\omega)
+ \le\sum_\omega\int_{Y_\omega}(L_\omega+V_\omega)\,d\nu.
+\tag{CD356}
+\]
+This retains the actual intersections and uses one law for all phases.
+
+The identity is bookkeeping rather than a density theorem. Report385 RE7–RE11 gives the same-law q-fibre principle and its unconditioned complete-line lower bound; Report385 SH2 gives a pointwise shallow-root condition outside a retained set. Neither controls \(n_1\) on \(R\), so neither supplies a positive lower bound for \(\sum_\omega\nu(Y_\omega)\). The common-law constructions in Report385 SF1–SF9 and RF1–RF11 require additional saturated projection or forest-intersection hypotheses. A complete private q² source at its actual first digit makes one section nonempty, but does not make the all-phase sum large. The all-phase sections cannot be treated as q copies of one section or assigned separate optimizing laws.
+
+## A sharp source-only boundary from an all-height partial family
+
+Fix a prime \(q\ge5\) and \(h\ge1\). Consider the distinct odd labels
+\[
+\{3^a:1\le a\le h\}\cup\{q3^a:0\le a\le h\}\cup\{q^2\}.
+\]
+Give \(q\) residue one and \(q^2\) residue zero. For \(1\le a\le h\), use the ternary comb classes
+\[
+A_a=[3^{a-1}-1]_{3^a},
+\qquad
+C_a=[2\cdot3^{a-1}-1]_{3^a}\cap[0]_q.
+\]
+The two combs leave exactly \(Z_h=[-1]_{3^h}\). Every proper nonunit divisor of an original label occurs in the family, comparable original classes are disjoint, and each class has an explicit private integer by CRT: use its ternary cylinder and a q-coordinate outside the two comb roots for \(A_a\), q modulo \(q^2\) for \(C_a\), and the terminal ternary cylinder with q-residue one or zero for \(q\) and \(q^2\).
+
+For the first-q digit of the actual \(q^2\) class, removing all q-free and matching depth-one classes leaves \(Z_h\), whose full-source mass is \(3^{-h}\); the complete private q² region is one residue in the period \(3^hq^2\). The full period still has positive uncovered fraction
+\[
+\frac{1-3^{-h}}2\frac{q-2}{q}
++3^{-h}\left(1-\frac1q-\frac1{q^2}\right)>0.
+\]
+Thus numerical distinctness, divisor closure, comparable-class disjointness and a complete private q² point do not imply a height-uniform positive source density. This is a partial noncover, with no class-count or modulus-sum minimality, so it does not refute a theorem using whole-cover or extremality hypotheses.
+
+The phrase “two copies after deleting q” refers to the branch projection that forgets the q-coordinate, where \(3^a\) and \(q3^a\) have the same ternary modulus; it does not delete an original class. The fixed first-q phase must be the actual first digit of \(q^2\). At a fixed ternary word the ordinary section has mass one in this \(M=1\) example; the factor \(3^{-h}\) is the full-source word probability. The construction therefore separates section mass from global source mass and rules out importing a height-uniform density bound from source-only premises.
