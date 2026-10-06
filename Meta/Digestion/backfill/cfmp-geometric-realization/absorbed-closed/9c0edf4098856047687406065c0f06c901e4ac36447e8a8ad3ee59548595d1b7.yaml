@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:9c0edf4098856047687406065c0f06c901e4ac36447e8a8ad3ee59548595d1b7
   normalized_sha256: sha256:9c0edf4098856047687406065c0f06c901e4ac36447e8a8ad3ee59548595d1b7
 cas_ref: sha256:9c0edf4098856047687406065c0f06c901e4ac36447e8a8ad3ee59548595d1b7
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/ActualCornerTransport.actual_corner_transport
+    target_statement_id: sha256:9122cab4e963f1738a1d481752a799195a88674bc937f0283c1983295710e0b3
 receipts:
   unresolved_subitems: []
