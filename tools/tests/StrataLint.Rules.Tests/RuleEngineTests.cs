@@ -287,6 +287,12 @@ public sealed class RuleEngineTests
     {
         var fixture = new RuleFixture();
         fixture.UseSyntheticDirectoryBackfill();
+        var atomPath = fixture.Files.Keys.Single(path =>
+            BackfillInventoryLoader.IsCanonicalPath(path) && path.EndsWith(".yaml", StringComparison.Ordinal));
+        fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
+            "cas_ref: sha256:" + new string('0', 64),
+            "cas_ref: sha256:" + new string('1', 64),
+            StringComparison.Ordinal);
         fixture.Baseline.Clear();
         foreach (var pair in fixture.Files) fixture.Baseline.Add(pair.Key, pair.Value);
         fixture.Changes.Clear();
@@ -355,7 +361,7 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void Sl016ChecksMissingCasBlobBeforeOtherReceiptValidationCanReturnEarly()
+    public void Sl016ValidatesReceiptStructureWithoutCheckingMissingCasBytes()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -373,10 +379,9 @@ public sealed class RuleEngineTests
             RuleId.CreateKnown(16),
             fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics;
 
-        Assert.Contains(diagnostics, diagnostic => diagnostic.Message ==
-            $"entry {RuleFixture.FixtureAtomId} CAS blob is missing: {RuleFixture.FixtureCasPath}");
-        Assert.Contains(diagnostics, diagnostic => diagnostic.Message ==
-            $"entry {RuleFixture.FixtureAtomId} has invalid coverage GID not-a-gid");
+        Assert.Equal(
+            $"entry {RuleFixture.FixtureAtomId} has invalid coverage GID not-a-gid",
+            Assert.Single(diagnostics).Message);
     }
 
     private static string RemoveGenreMarkers(string metadata) => metadata
@@ -384,7 +389,7 @@ public sealed class RuleEngineTests
         .Replace("unregistered_genres = []\n", string.Empty, StringComparison.Ordinal);
 
     [Fact]
-    public void Sl016ChecksCasBlobHashBeforeOtherReceiptValidationCanReturnEarly()
+    public void Sl016ValidatesReceiptStructureWithoutRehashingCasBytes()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -402,13 +407,10 @@ public sealed class RuleEngineTests
             RuleCatalog.Default.Execute(
                 fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))));
 
-        Assert.Contains(completed.Capability.Diagnostics, diagnostic =>
-            diagnostic.RuleId == RuleId.CreateKnown(16)
-            && diagnostic.Message.Contains(
-                $"entry {RuleFixture.FixtureAtomId} CAS blob hash mismatch: {RuleFixture.FixtureCasPath}",
-                StringComparison.Ordinal));
-        Assert.Contains(completed.Capability.Diagnostics, diagnostic => diagnostic.Message ==
-            $"entry {RuleFixture.FixtureAtomId} has invalid coverage GID not-a-gid");
+        Assert.Equal(
+            $"entry {RuleFixture.FixtureAtomId} has invalid coverage GID not-a-gid",
+            Assert.Single(completed.Capability.Diagnostics,
+                diagnostic => diagnostic.RuleId == RuleId.CreateKnown(16)).Message);
     }
 
     [Fact]
