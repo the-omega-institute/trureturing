@@ -5920,3 +5920,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 来源为 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a 的 PoincareLib.Analysis.ODE.LocalFlow.HigherRegularity.{VariationalCoproductDerivative,VariationalLevelOneWitness}，原作者为 qinz1yang/differential-geometry 的 DifferentialGeometry contributors，比较版本 1b535dd102b94cc42b107cca27059687888f08b3，Apache-2.0。固定来源的 14 个有序前置模块已实际编译或复用此前验收，零错误、零警告；其源码与固定原字节和 Git blob 均一致。逐项核对源码、日志、退出结果、预登记、实际生成 olean、原源码与导入检查，共 99 项工件独立验证一致。
 
 两个既有公开定理的完整递归公理闭包由只导入实际已接受模块的小检查验收，仅含 propext、Classical.choice、Quot.sound；本项没有新增证明包装或重复编译已接受正文。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。该结果是向量空间中的原局部流变分定理；流形测地线／Jacobi 场、全局原指数映射及 H3 分类的实际绑定，96 模块的完整更高正则性闭包、有限体积尖点和未知边界映射 F、给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 同一原局部流在任意有限阶的真实变分正则性
+
+公开 exists_isVariationalFlowProjection_of_C 对每个自然数 k 证明：在有限维完备实赋范空间 E 上，同一原向量场 f 的联合函数全域为 C^(k+1)，原 Φ 为指定基点、正初值半径且初始时间处于区间内部的实际 IsLocalFlow 时，内部构造正 T、正 ρ 及 C^k 连续线性算子值函数 Y，并使同一原 Φ 的完整联合微分满足 DΦ(x,t)(u,s) = Y(x,t)u + s • f(t,Φ(x,t))。光滑性和此恒等式在同一真实开球与时间开区间的乘积上成立。
+
+零阶由原 C¹ 变分见证取得；归纳步在实际有限维增广空间 E × (E →L[ℝ] E) 中构造真实增广局部流，应用对任意原空间成立的归纳假设，再由原后继阶见证回接同一个原 Φ。没有外供高阶 Y 或联合微分公式。量词是每个有限 k 各自存在 T、ρ、Y；本结果不声称一个统一邻域或一个统一 Y 上的 C∞ 结论。
+
+来源为 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a 的 PoincareLib.Analysis.ODE.LocalFlow.HigherRegularity.VariationalLinearMapSmoothness。原作者为 qinz1yang/differential-geometry 的 DifferentialGeometry contributors，比较版本 1b535dd102b94cc42b107cca27059687888f08b3，Apache-2.0。原完整模块与有序前置已真实编译或复用此前验收，零错误、零警告；固定原字节、Git blob、实际导入源码和 olean 一致。只导入原已接受模块的小检查打印该既有公开定理的完整递归公理闭包，仅含 propext、Classical.choice、Quot.sound，没有新增证明包装或重复编译已接受正文。
+
+proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。统一 C∞／真实流形测地线及 Jacobi 场的实际绑定、全局原指数映射与 H3 分类、完整有限体积尖点和未知 F 的弱正则性、给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成。
