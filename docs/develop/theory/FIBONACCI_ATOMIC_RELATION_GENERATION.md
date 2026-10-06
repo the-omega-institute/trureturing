@@ -64895,3 +64895,323 @@ $$
 高带扩张与持续加入所有较小素数的连续 primorial 前缀不同；（GP.6）没有断言后者在添加 7 后再度对角变负。$5040$ 只通过其素支撑进入上述过滤，任意相同素支撑的整数给相同核。
 
 每份过滤器的（GP.2）仍是同一个完整 $I_\psi$。真实 $M_{\widehat P_z}(n)$ 的符号、其随过滤器变化的预算、首块与窗口外补集的临界联合抵消都未得到新的上界；负窗口本身不决定原尾积分的符号。负窗口结论不蕴含 Robin 不等式或 RH。
+
+## 追加锚（本行以下为增补区）
+
+## 428. 连续 primorial 前缀的完整实际核与伸长尺度三符号窗口
+
+沿用 §§384、397–399、424–427 的实际 $q=\Phi^{-2}$、$\beta_d=\log(1-(-q)^d)$、$R,J_x,Q_x,\eta,H_{\rm raw}$ 和 $I_\psi$。每份连续 primorial 前缀先固定，再取它自己的 $X_z$，则伸长轮廓可共同运输到窗口内全部真实整数核。
+
+这里 $\gamma_E$ 表示 Euler–Mascheroni 常数；$\gamma_1$ 沿用 §425 的 Stieltjes 约定。它们与 $\beta$ 的 Dirichlet 逆均是不同对象。
+
+**定义与固定有限过滤合同。** 对实数 $z\ge2$，令
+
+$$
+\begin{aligned}
+\ell_z&=\log z,\qquad P_z=\prod_{p\le z}p,\\
+E_z(s)&=\prod_{p\le z}(1-p^{-s}),\qquad E_{z,0}=E_z(1)>0,\\
+S_z&=\sum_{p\le z}\frac{\log p}{p-1},\qquad
+T_z=\sum_{p\le z}\frac{p(\log p)^2}{(p-1)^2},\\
+c_z&=\frac{S_z^2-T_z}{2}+\gamma_1,\qquad
+p_z(u)=E_{z,0}\left(\frac{u^2}{2}-S_zu+c_z\right),\\
+\kappa_z(d)&=\mu(d)\mathbf1_{d\mid P_z},\qquad
+\theta_z=\kappa_z*\beta,\qquad
+M_z(y)=\sum_{\substack{1\le r\le y\\(r,P_z)=1}}\mu(r),\\
+\eta_z(y)&=\sum_{d\mid P_z}\mu(d)\eta(y/d),\qquad
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y.
+\end{aligned}
+\tag{CP.1}
+$$
+
+所有整数索引为正，空和 $M_z(y)=0$ 只用于 $0\le y<1$，不使用 $H_{\rm raw}(0)$。保持
+$w(t)=(1+\log t)/(t^2\log^2t)$，并取
+
+$$
+P_x^{\eta_z}(s)=\int_x^\infty\eta_z(t/s)w(t)\,dt,\qquad
+J_x^{\eta_z}(n)=P_x^{\eta_z}(n)-P_x^{\eta_z}(n+1).
+$$
+
+§426 的固定十六约数证明可逐字换成每个固定 $P_z$ 的有限约数集。具体地，$\kappa_z*(\mu\mathbf1_{(\,\cdot\,,P_z)=1})=\mu$，而 §424 的全尺度恒等式给
+
+$$
+\begin{aligned}
+H_{\rm raw}(m)&=\sum_{j\le m}\theta_{z,j}M_z(\lfloor m/j\rfloor),\\
+\eta_z(y)&=\sum_{j\ge1}\theta_{z,j}R(y/j),\\
+J_x^{\eta_z}(n)&=\sum_{j\ge1}\theta_{z,j}
+\sum_{m=jn}^{j(n+1)-1}J_x(m),\\
+I_\psi(x)&=\sum_{n\ge1}M_z(n)J_x^{\eta_z}(n),\qquad x>1.
+\end{aligned}
+\tag{CP.2}
+$$
+
+此处无穷运输有每个固定 $z,x$ 的独立绝对预算。令 $\lambda(t)=1+\log t$、$c_0=1+\log2$，则
+
+$$
+\begin{aligned}
+|M_z(n)|&\le B_z\,n/\lambda(n)^4,\\
+A_{\theta_z,2}
+&:=\sum_{j\ge1}\frac{|\theta_{z,j}|\lambda(j)^2}{j}
+\le A_{\beta,2}\sum_{d\mid P_z}\frac{\lambda(d)^2}{d}<\infty,\\
+\sum_{n,j\ge1}|M_z(n)||\theta_{z,j}|
+\sum_{m=jn}^{j(n+1)-1}Q_x(m)
+&\le B_zC_xc_0^2A_{\theta_z,2}
+\sum_{n\ge1}\frac1{n\lambda(n)^2}<\infty.
+\end{aligned}
+\tag{CP.3}
+$$
+
+第一行的 $B_z$ 随过滤器改变：设 $\mathcal S_z$ 是由 $p\le z$ 生成的素数幂半群，则
+$M_z(y)=\sum_{q\in\mathcal S_z,\ q\le y}M(y/q)$。将已有普通 Mertens log-four 界扩至实参数 $t\ge1$ 后，在 $q\le\sqrt y$ 上用 $\lambda(y/q)\ge\lambda(y)/2$，在 $q>\sqrt y$ 上用
+$\sum_{q>\sqrt y}q^{-1}\le y^{-1/4}\sum_{q\in\mathcal S_z}q^{-1/2}$。
+两份半群和均为有限 Euler 乘积，且 $y^{-1/4}\lambda(y)^4$ 在 $y\ge1$ 有界，所以得到有限 $B_z$。第二、三行复用 §426 的全部商纤维端点和积分前付款。逐尺度积分交换也仍由
+$\sum_j|\theta_{z,j}|(1+\log j)<\infty$ 支付。这里不对增长的 $z$ 断言统一预算。
+
+保持 §425 的 $A>0,D>A,c_{\rm diag},p_B$ 和非负误差多项式
+
+$$
+C(W)=\frac A6W^3+\frac D2W^2+(2D-A)W+D+\mu_0(2W+11).
+$$
+
+对固定 $z$ 及任意有限 $U\ge0$，定义有限非负常数
+
+$$
+\begin{aligned}
+\mathsf C_z(U)&=\sum_{j\ge1}\frac{|\theta_{z,j}|}{j}C(U+\log j+\log2),\\
+\mathsf L_z(U)&=\sum_{j\ge1}\frac{|\theta_{z,j}|}{j}
+\left[\frac A2(U+\log j)^2+(D-A)(U+\log j)+|c_{\rm diag}|
++A(U+\log j+\log2)+D-A\right].
+\end{aligned}
+\tag{CP.4}
+$$
+
+有限性由固定有限约数卷积后的 $\beta$ 指数尾支付。对所有 $x\ge e$、正整数 $n\ge x$ 及 $u=\log(n/x)\le U$，
+
+$$
+\left|n^2\log x\,J_x^{\eta_z}(n)-p_z(u)\right|
+\le\frac{\mathsf C_z(U)}{\log x}+\frac{\mathsf L_z(U)}n.
+\tag{CP.5}
+$$
+
+为明确此合同确实来自同一实际核，§425 的完整三矩给
+
+$$
+\begin{aligned}
+\sum_{j\ge1}\frac{\theta_{z,j}}j p_B(u+\log j)
+&=\sum_{d\mid P_z}\frac{\mu(d)}d
+\left[\frac{(u+\log d)^2}{2}+\gamma_1\right]=p_z(u),\\
+E_z'(1)&=E_{z,0}S_z=-\sum_{d\mid P_z}\frac{\mu(d)\log d}{d},\\
+E_z''(1)&=E_{z,0}(S_z^2-T_z)
+=\sum_{d\mid P_z}\frac{\mu(d)(\log d)^2}{d}.
+\end{aligned}
+\tag{CP.6}
+$$
+
+§425.7–8 的第 $j$ 个纤维使用 $U+\log j+\log2$，保留 $n/[j(n+1)]$ 与 $1/j$ 的端点差；乘 $|\theta_{z,j}|$ 后由（CP.4）绝对求和。这证明（CP.5），不交换未经控制的无界 $j$ 极限。
+
+**主定理所需的经典累积估计。** 当 $z\to\infty$，
+
+$$
+S_z=\ell_z+O(1),\qquad
+T_z=\tfrac12\ell_z^2+O(\ell_z),\qquad
+c_z=\tfrac14\ell_z^2+O(\ell_z),\qquad
+E_{z,0}=\frac{e^{-\gamma_E}}{\ell_z}+O(\ell_z^{-2}).
+\tag{CP.7}
+$$
+
+**证明。** 由经典第一 Mertens 定理（[来源](../../../Library/notes/pntplus2026mertens.md)），有
+
+$$
+F(t):=\sum_{p\le t}\frac{\log p}{p},\qquad
+|F(t)-\log t|\le K_1:=\log4+4\quad(t\ge1).
+$$
+
+由于
+
+$$
+0\le S_z-F(z)
+=\sum_{p\le z}\frac{\log p}{p(p-1)}
+\le R_1:=\sum_{m\ge2}\frac{\log m}{m(m-1)}<\infty,
+$$
+
+可取 $D_S=K_1+R_1$，使 $|S_z-\ell_z|\le D_S$。此比较级数由
+$1/[m(m-1)]\le2/m^2$ 及积分检验收敛。
+
+令 $G(z)=\sum_{p\le z}(\log p)^2/p$。保留 $p=2$ 的原子，Abel 恒等式为
+
+$$
+G(z)=F(z)\log z-\int_2^z\frac{F(t)}t\,dt.
+\tag{CP.8}
+$$
+
+例如 $z=2$ 时积分为零，右侧就是 $(\log2)^2/2$；没有再减掉下端原子。写 $F(t)=\log t+\rho(t)$，$|\rho(t)|\le K_1$，得到
+
+$$
+G(z)=\frac{\ell_z^2}{2}+\frac{(\log2)^2}{2}
++\ell_z\rho(z)-\int_2^z\frac{\rho(t)}t\,dt,
+$$
+
+故
+$|G(z)-\ell_z^2/2|\le(\log2)^2/2+2K_1\ell_z$。实际 $T_z$ 的全部分母修正满足
+
+$$
+0\le T_z-G(z)
+=\sum_{p\le z}\frac{(2p-1)(\log p)^2}{p(p-1)^2}
+\le R_2:=8\sum_{m\ge2}\frac{(\log m)^2}{m^2}<\infty.
+\tag{CP.9}
+$$
+
+这里用 $p-1\ge p/2$。因此可取
+$D_T=2K_1+\frac12\log2+R_2/\log2$，使
+$|T_z-\ell_z^2/2|\le D_T\ell_z$。代入 $c_z$，可取
+
+$$
+D_c=D_S+\frac{D_T}{2}
++\frac{D_S^2/2+|\gamma_1|}{\log2},
+\qquad |c_z-\ell_z^2/4|\le D_c\ell_z.
+\tag{CP.10}
+$$
+
+最后，同一来源的经典第三 Mertens 误差给有限 $K_E\ge0,z_E\ge2$，使所有 $z\ge z_E$ 满足
+$|E_{z,0}-e^{-\gamma_E}/\ell_z|\le K_E/\ell_z^2$。
+这证明（CP.7）；无需重新证明 PNT。$\square$
+
+**主定理（完整实际核的伸长比例轮廓）。** 令
+
+$$
+a=e^{-\gamma_E}>0,\qquad h(v)=\frac{v^2}{2}-v+\frac14.
+$$
+
+对每个固定有限 $V\ge0$，存在有限 $K_V\ge0$，使以下量词成立：对每个实数 $z\ge z_E$，先固定其有限过滤器 $P_z$ 与有限范围 $U_z=V\ell_z$，再定义
+
+$$
+\boxed{
+X_z(V)=\max\!\left\{e,\ \exp\!\bigl(1+2\mathsf C_z(U_z)\bigr),\
+1+2\mathsf L_z(U_z)\right\}<\infty.}
+\tag{CP.11}
+$$
+
+那么对所有实数 $x\ge X_z(V)$ 和全部正整数 $x\le n\le xz^V$，共同有
+
+$$
+\boxed{
+\left|
+\frac{n^2\log x}{\ell_z}J_x^{\eta_z}(n)
+-a\,h\!\left(\frac{\log(n/x)}{\ell_z}\right)
+\right|\le\frac{K_V}{\ell_z}.}
+\tag{CP.12}
+$$
+
+**证明。** 对 $0\le v\le V$，置
+$q_z(v)=v^2/2-(S_z/\ell_z)v+c_z/\ell_z^2$。
+（CP.7）–（CP.10）给
+
+$$
+|q_z(v)-h(v)|\le R_V/\ell_z,\qquad R_V=D_SV+D_c,
+\qquad |E_{z,0}\ell_z-a|\le K_E/\ell_z.
+$$
+
+取 $H_V=V^2/2+V+1/4$，则
+$|q_z(v)|\le H_V+R_V/\log2$。故
+
+$$
+\sup_{0\le v\le V}
+\left|\frac{p_z(v\ell_z)}{\ell_z}-a h(v)\right|
+\le\frac{K_E(H_V+R_V/\log2)+aR_V}{\ell_z}.
+\tag{CP.13}
+$$
+
+现在固定这一份 $z$，使用（CP.5）的范围 $U=U_z$。由于 $x\ge X_z(V)$ 且 $n\ge x$，
+
+$$
+\frac{\mathsf C_z(U_z)}{\log x}+
+\frac{\mathsf L_z(U_z)}n
+\le\frac{\mathsf C_z(U_z)}{1+2\mathsf C_z(U_z)}
++\frac{\mathsf L_z(U_z)}{1+2\mathsf L_z(U_z)}<1.
+$$
+
+再除以 $\ell_z$，与（CP.13）相加，可取
+$K_V=1+K_E(H_V+R_V/\log2)+aR_V$，得到（CP.12）。
+全部原 $j$ 源的预算被 $\mathsf C_z(U_z),\mathsf L_z(U_z)$ 保留；没有把随 $z$ 增长的范围误用为固定 $U$，也没有断言 $X_z(V)$ 对 $z$ 统一。$\square$
+
+**推论（两个伸长根与实际正—负—正窗口）。** 多项式 $p_z$ 对充分大的 $z$ 有两个不同正根
+
+$$
+r_\pm(z)=S_z\pm\sqrt{T_z-2\gamma_1},\qquad
+\frac{r_\pm(z)}{\ell_z}\longrightarrow
+v_\pm:=1\pm\frac1{\sqrt2}.
+\tag{CP.14}
+$$
+
+这是（CP.7）的直接结论：判别式最终为正，$S_z>0,c_z>0$，所以两根均为正。它不声称有限 $x$ 的真实核恰有两个零点。
+
+更一般地，对固定 $V$ 及紧集 $K\subset[0,V]\setminus\{v_-,v_+\}$，若 $K$ 非空，取
+$m_K=\min_{v\in K}|h(v)|>0$。令 $z$ 足够大，使 $K_V/\ell_z<a m_K/2$，则对所有 $x\ge X_z(V)$、全部 $n$ 满足 $\log(n/x)/\ell_z\in K$，真实 $J_x^{\eta_z}(n)$ 与 $h$ 在该点严格同号，并有归一化绝对值 $>a m_K/2$。
+
+取 $V=3$ 可给不使用 $\gamma_E$ 数值近似的三个明确窗口。因为
+
+$$
+h(v)\ge1/32\ (0\le v\le1/4),\qquad
+h(v)\le-1/8\ (1/2\le v\le3/2),\qquad
+h(v)\ge1/4\ (2\le v\le3),
+$$
+
+存在一个 $z_*\ge z_E$，使所有 $z\ge z_*$、所有 $x\ge X_z(3)$、全部正整数 $n$ 同时满足
+
+$$
+\boxed{
+\begin{aligned}
+x\le n\le xz^{1/4}
+&\Longrightarrow J_x^{\eta_z}(n)>
+\frac{a\ell_z}{64n^2\log x},\\
+xz^{1/2}\le n\le xz^{3/2}
+&\Longrightarrow J_x^{\eta_z}(n)<
+-\frac{a\ell_z}{16n^2\log x},\\
+xz^2\le n\le xz^3
+&\Longrightarrow J_x^{\eta_z}(n)>
+\frac{a\ell_z}{8n^2\log x}.
+\end{aligned}}
+\tag{CP.15}
+$$
+
+只需选 $z_*$ 使 $K_3/\ell_z<a/64$。各不等式由（CP.12）和上述精确二次式界给出，因此量词同时覆盖三个窗内的全部整数。
+
+**完整配对、首块与补集。** 保持 $M_z(1)=1,\theta_{z,1}=\beta_1$。对（CP.15）的三个整数窗口的并集 $\mathcal W_z(x)$，有绝对收敛的精确分解
+
+$$
+\begin{aligned}
+I_\psi(x)-\beta_1J_x(1)
+={}&J_x^{\eta_z}(1)-\beta_1J_x(1)\\
+&+\sum_{n\in\mathcal W_z(x)}M_z(n)J_x^{\eta_z}(n)
++\sum_{\substack{n\ge2\\n\notin\mathcal W_z(x)}}M_z(n)J_x^{\eta_z}(n),\\
+J_x^{\eta_z}(1)-\beta_1J_x(1)
+={}&\sum_{j\ge2}\theta_{z,j}\sum_{m=j}^{2j-1}J_x(m).
+\end{aligned}
+\tag{CP.16}
+$$
+
+这里窗口内 $n\ge x\ge e$，所以首块与三个窗不重叠。第二个总和保留 $n<x$、两根附近的空档以及 $n>xz^3$ 的全部实际来源；（CP.3）支付各部分的重排。真实 $M_z(n)$ 的符号与剩余预算尚需控制，核的符号窗不能单独决定完整 $I_\psi$ 的符号。
+
+连续前缀包含全部 $p\le z$；它与在一份固定 $P$ 上添加 $(z,2z]$ 高素数带是不同过滤族。这里 $c_z/\log^2z\to1/4$，高素数带的负化定理则在固定比例范围上使用另一组量词。本节没有证明所有连续前缀 $c_z$ 单调，也不解释 $5040$ 边界，不给 Robin 或 RH 的全局临界有符号界。
+
+**推论（连续前缀在固定比例窗的最终正性）。** 对每个固定 $U\ge0$，令
+
+$$
+D_U=K_1^{\rm profile}+aU+\frac{aU^2}{2\log2},
+$$
+
+其中 $K_1^{\rm profile}$ 是（CP.12）在 $V=1$ 时的常数，以区别于第一 Mertens 误差常数。对所有 $z\ge\max\{z_E,e^U\}$、$x\ge X_z(1)$ 和全部正整数 $x\le n\le e^Ux$，有
+
+$$
+\left|\frac{n^2\log x}{\log z}J_x^{\eta_z}(n)-\frac a4\right|
+\le\frac{D_U}{\log z}.
+\tag{CP.17}
+$$
+
+证明。令 $u=\log(n/x)$、$v=u/\log z$，则 $0\le v\le1$ 且
+$|h(v)-1/4|\le U/\log z+U^2/(2\log^2z)$。（CP.12）取 $V=1$，再用 $\log z\ge\log2$，得到（CP.17）。因此当 $\log z>8D_U/a$ 时，整个真实固定比例窗满足
+
+$$
+J_x^{\eta_z}(n)>\frac{a\log z}{8n^2\log x}>0.
+$$
+
+这里 $X_z(1)$ 仍依赖每份固定过滤器。§427 在固定 $P$ 上添加高素数带所得的固定比例负窗，与（CP.17）的连续前缀固定比例正窗，使用不同的过滤族；两者均保留同一完整 $I_\psi$ 的实际符号配对与补集。$\square$
