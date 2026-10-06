@@ -109,7 +109,7 @@ internal sealed class GaussianFrequencyKernelDocument : IScribeDocumentDefinitio
             "The actual product-measure integral of (x-y)^4 is 12 gamma^2/kappa^2. Density normalization, the product-coordinate difference law and the existing scalar moment determine every constant."),
         Entry("spatial_difference_fourth_integrable", "Fourth difference integrability", Params(A("Integrable", Lam("z", Pair, Pow(Diff, 4)), Prod)),
             "Gaussian finite-moment integrability transports through the actual difference map and finite scaling of each coordinate measure."),
-        Entry("squareDifference", "Actual square-difference class", Params(And(A("HasType", Q, A("Lp", R, F.D(2), Prod)), Eq(Q, A("toLp", Lam("z", Pair, Pow(Diff, 2)), A("memLpOfIntegrableSquare", A("spatialDifferenceFourthIntegrable", I("c"), I("kappa"), I("hc"), I("hkappa"))))))),
+        Entry("squareDifference", "Actual square-difference class", Params(And(A("HasType", Q, A("Lp", R, F.D(2), Prod)), Eq(Q, A("toLp", A("memLpOfIntegrableSquare", A("spatialDifferenceFourthIntegrable", I("c"), I("kappa"), I("hc"), I("hkappa"))), Lam("z", Pair, Pow(Diff, 2)))))),
             "This is the toLp class of (x-y)^2, with its membership witness obtained from fourth difference integrability."),
         Entry("squareDifference_coe", "Square-difference representative", Params(A("AEEq", A("coeFn", Q), Lam("z", Pair, Pow(Diff, 2)), Prod)),
             "The L2 class has the displayed actual product-measure representative."),

@@ -132,7 +132,7 @@ Gaussian finite-moment integrability transports through the actual difference ma
 
 **Definition 1.10 (Actual square-difference class).**
 
-$$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \operatorname{HasType}\left(\operatorname{squareDifference}\left(c, kappa, hc, hkappa\right), \operatorname{Lp}\left(Real, 2, \operatorname{prod}\left(\operatorname{spatialMeasure}\left(c, kappa\right), \operatorname{spatialMeasure}\left(c, kappa\right)\right)\right)\right) \land \operatorname{squareDifference}\left(c, kappa, hc, hkappa\right) = \operatorname{toLp}\left((z:\operatorname{Prod}\left(Real, Real\right)\mapsto (\operatorname{fst}\left(z\right)-\operatorname{snd}\left(z\right))^{2}), \operatorname{memLpOfIntegrableSquare}\left(\operatorname{spatialDifferenceFourthIntegrable}\left(c, kappa, hc, hkappa\right)\right)\right)$$
+$$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \operatorname{HasType}\left(\operatorname{squareDifference}\left(c, kappa, hc, hkappa\right), \operatorname{Lp}\left(Real, 2, \operatorname{prod}\left(\operatorname{spatialMeasure}\left(c, kappa\right), \operatorname{spatialMeasure}\left(c, kappa\right)\right)\right)\right) \land \operatorname{squareDifference}\left(c, kappa, hc, hkappa\right) = \operatorname{toLp}\left(\operatorname{memLpOfIntegrableSquare}\left(\operatorname{spatialDifferenceFourthIntegrable}\left(c, kappa, hc, hkappa\right)\right), (z:\operatorname{Prod}\left(Real, Real\right)\mapsto (\operatorname{fst}\left(z\right)-\operatorname{snd}\left(z\right))^{2})\right)$$
 
 *Formalization.* `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.squareDifference` (`✓ std3`).
 
