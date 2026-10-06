@@ -230,3 +230,126 @@ already gives norm estimates in a different coefficient problem; its
 invertibility is not a substitute for (S3) or for sign control here.
 No new signed Robin lower bound, finite verification range, Lean result,
 or proof of RH is supplied by this obstruction.
+
+### Finite weighted variation also excludes an exact signed reconstruction
+
+Allowing both signs does not repair the coefficientwise reconstruction if
+the representing measure has finite variation after weighting at $n=2$.
+More precisely, there is no signed Borel measure $\nu$ on $(0,\infty)$
+such that
+
+$$
+\int_{(0,\infty)}e^{-2/y}\,d|\nu|(y)<\infty,
+\qquad
+w_A(n)=\int_{(0,\infty)}e^{-n/y}\,d\nu(y)
+\quad\text{for every integer }n\ge2.
+\tag{S6}
+$$
+
+Here a locally finite signed measure is allowed; the displayed weighted
+variation makes all the required integrals absolutely defined. This is
+an application of classical compact moment uniqueness, not a new moment
+theorem. The standard suppliers are polynomial density on $[0,1]$ and
+determination of finite measures by continuous tests. They are already
+available at the repository's Mathlib pin
+`db584cd6d46c92f209a44c0f1c829460d327499d` as
+[`polynomialFunctions_closure_eq_top'`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/ContinuousMap/Weierstrass.lean)
+and
+[`Measure.ext_of_integral_eq_on_compactlySupported`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/RieszMarkovKakutani/Real.lean).
+For finite signed measures, apply determination to their Jordan parts.
+These are inspected upstream suppliers, not a compiled Lean application
+of (S6).
+
+To apply them, put $r=e^{-1/y}$ and push the finite signed measure
+$e^{-2/y}\nu$ to $[0,1]$, extending it by zero at the endpoints. Call the
+result $\mu_\nu$. It has no atom at $0$, and (S6) says
+
+$$
+\int_{[0,1]}r^{n-2}\,d\mu_\nu(r)=w_A(n)\qquad(n\ge2).
+\tag{S7}
+$$
+
+The uncut weights $q(n)$ have a positive finite comparison measure.
+Define it on $(0,1)$, with zero endpoint masses, by
+
+$$
+d\mu_q(r)=
+r\left[\int_1^\infty
+\frac{(-\log r)^{s-1}}{\Gamma(s)}\,ds\right]dr.
+\tag{S8}
+$$
+
+The classical Gamma integral
+([DLMF 5.9.1](https://dlmf.nist.gov/5.9.E1), with $\mu=1$, $\nu=s$
+and $z=n$) and the substitution $r=e^{-t}$ give
+$\int_0^1r^{n-1}(-\log r)^{s-1}dr=\Gamma(s)n^{-s}$.
+All integrands in this comparison are nonnegative. Tonelli therefore gives
+
+$$
+\int_{[0,1]}r^{n-2}\,d\mu_q(r)
+=\int_1^\infty n^{-s}ds=q(n)\qquad(n\ge2).
+\tag{S9}
+$$
+
+In particular $\mu_q([0,1])=q(2)<\infty$, which verifies the needed
+finiteness as well as the absence of an atom at $0$.
+
+Let $m=\lfloor A\rfloor\ge2$ and $\eta=\mu_\nu-\mu_q$.
+For every $j\ge0$, the integer $n=m+1+j$ is strictly larger than $A$.
+Equations (S7)–(S9) thus give
+
+$$
+\int r^j\,d(r^{m-1}\eta)(r)=0.
+\tag{S10}
+$$
+
+Compact moment uniqueness implies $r^{m-1}\eta=0$.
+On each $[\varepsilon,1]$ the multiplier has a bounded reciprocal, so
+$\eta$ is zero there. Hence $\eta$ is supported at $0$; both original
+measures have zero mass there, and consequently $\mu_\nu=\mu_q$.
+Their zeroth moments would force $q(A)=q(2)$, whereas $A>2$ and $q$ is
+strictly decreasing. This excludes (S6).
+
+The full tail moments fix the low moments in this finite-variation
+measure class. Merely allowing negative weights therefore cannot alter
+the initial plateau while preserving every later coefficient. This
+does not rule out conditional or distributional inversion outside this
+class, approximate reconstruction with bounded losses, or identities
+specific to the actual arithmetic coefficients $\Lambda(n)-1$.
+
+### An explicit correction retains the actual arithmetic question
+
+There is still a finite correction route. With $a_n=\Lambda(n)-1$ and
+$m=\lfloor A\rfloor$, define
+
+$$
+\Delta_A=\sum_{2\le n\le m}a_n\,[q(A)-q(n)].
+$$
+
+For every $R\ge m$ one has exactly
+
+$$
+\sum_{n\le R}a_nw_A(n)
+=-q(A)+\sum_{2\le n\le R}a_nq(n)+\Delta_A.
+\tag{S11}
+$$
+
+The $n=1$ term is $-q(A)$, since $\Lambda(1)=0$; $q(1)$ is never used.
+Taking the ordered limit justified in (S2) yields
+
+$$
+I_\psi(A)=
+\lim_{R\to\infty}\sum_{2\le n\le R}a_nq(n)
++\Delta_A-q(A)+C_{\rm floor}(A).
+\tag{S12}
+$$
+
+Equation (S12) is finite subtraction followed by the existing ordered
+limit. It asserts neither absolute convergence of the arithmetic series
+nor an exchange with an exponential-mixture integral. The complete
+source dependence now includes the arithmetic signed correction $\Delta_A$;
+bounding the uncut quantity alone does not pay this correction. The
+remaining Robin obligation is a sufficiently strong joint lower bound
+at the same $A$, including $\Delta_A$ and $C_{\rm floor}(A)$.
+No such bound, new prime estimate, originality claim or RH proof is
+provided by this classical moment application.
