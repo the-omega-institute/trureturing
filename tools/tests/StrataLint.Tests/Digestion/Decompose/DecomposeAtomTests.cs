@@ -54,7 +54,7 @@ public sealed class DecomposeAtomTests
             && DigestionDecompositionPolicy.IsMultiClause(DigestionAtom.FromFrozenCas(blob.RawBytes)));
         var second = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(nestedEntry.AtomId), f.Apply);
         Assert.True(second.Success, second.Error);
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, f.Document, DigestionAlignmentMode.Ingest);
+        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest);
         Assert.Empty(alignment.Findings);
         Assert.Contains(f.Parent.AtomId, alignment.VerifiedClausePlanParents);
         Assert.Contains(nestedEntry.AtomId, alignment.VerifiedClausePlanParents);
@@ -217,12 +217,12 @@ public sealed class DecomposeAtomTests
     public void AlignerValidatesProducedPlanWithoutWritingBacklog()
     {
         var f = new DecomposeFixture(DecomposeFixture.Eight);
-        var untouched = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, f.Document, DigestionAlignmentMode.Ingest);
+        var untouched = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest);
         Assert.Empty(Assert.Single(f.Document.RequireDigestionEntries()).Receipts.ChainAtoms);
         Assert.Empty(untouched.Findings);
         var result = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply);
         Assert.True(result.Success, result.Error);
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, f.Document, DigestionAlignmentMode.Ingest);
+        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest);
         Assert.Empty(alignment.Findings);
         Assert.Contains(f.Parent.AtomId, alignment.VerifiedClausePlanParents);
     }
@@ -231,10 +231,10 @@ public sealed class DecomposeAtomTests
     public void NewAbsorptionGuardStillRejectsUndecomposedParent()
     {
         var atom = DecomposeFixture.Atom(DecomposeFixture.Eight);
-        Assert.True(DigestionDecompositionPolicy.RejectsNewAbsorption(atom,
-            DigestionMigrationState.Absorbed, 0, false, DigestionMigrationState.Residual));
-        Assert.False(DigestionDecompositionPolicy.RejectsNewAbsorption(atom,
-            DigestionMigrationState.Absorbed, 0, true, DigestionMigrationState.Residual));
+        Assert.True(DigestionDecompositionPolicy.RejectsUndecomposedAbsorption(atom,
+            DigestionMigrationState.Absorbed, 0, false));
+        Assert.False(DigestionDecompositionPolicy.RejectsUndecomposedAbsorption(atom,
+            DigestionMigrationState.Absorbed, 0, true));
     }
 
     [Fact]
@@ -342,7 +342,7 @@ public sealed class DecomposeAtomTests
         Assert.Equal(3, f.Document.RequireDigestionEntries().Length);
         var kinds = DigestionContentKindResolver.Resolve(f.Snapshot, f.Document);
         Assert.All(f.Document.RequireDigestionEntries(), entry => Assert.Equal("theorem", kinds[entry.AtomId]));
-        Assert.Empty(DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, f.Document, DigestionAlignmentMode.Ingest).Findings);
+        Assert.Empty(DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest).Findings);
     }
 
     [Fact]

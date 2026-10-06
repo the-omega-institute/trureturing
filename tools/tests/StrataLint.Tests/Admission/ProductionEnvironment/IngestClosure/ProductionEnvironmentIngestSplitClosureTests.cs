@@ -256,7 +256,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             entry,
             DigestionReceiptAlignment.Seen,
-            baselineEntryPresent: true,
             changes: RawChangeSet.Create([changedPath]),
             isBaseFactAffected: null));
     }
@@ -270,7 +269,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             entry,
             DigestionReceiptAlignment.Seen,
-            baselineEntryPresent: true,
             changes: RawChangeSet.Create([
                 ScribeEmissionAttestation.DefinitionPath(documentGid),
                 ScribeEmissionAttestation.EmissionPath(documentGid)]),
@@ -285,7 +283,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             entry,
             DigestionReceiptAlignment.Rejected,
-            baselineEntryPresent: true,
             changes: RawChangeSet.Create([entry.SourcePath]),
             isBaseFactAffected: null));
     }
@@ -314,7 +311,6 @@ public sealed partial class ProductionEnvironmentTests
 
         var changed = DigestionStatusEvaluator.StatusAuthorityChangedAtomIds(
             document,
-            document,
             RawChangeSet.Create([entry.SourcePath]),
             alignment);
 
@@ -327,7 +323,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             StatusAuthorityClosureEntry(),
             DigestionReceiptAlignment.Seen,
-            baselineEntryPresent: true,
             changes: null,
             isBaseFactAffected: null));
     }
@@ -369,7 +364,6 @@ public sealed partial class ProductionEnvironmentTests
             []);
 
         var changed = DigestionStatusEvaluator.StatusAuthorityChangedAtomIds(
-            document,
             document,
             RawChangeSet.Create([child.SourcePath]),
             alignment);
