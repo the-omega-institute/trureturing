@@ -16,6 +16,30 @@ internal sealed class FibonacciTransportFivePowerOrbitDocument : IScribeDocument
             Paragraph(Text(
             "Modulo fifty-nine, the vectors (1,26) and (1,34) lie on the "
             + "eigenaxes with eigenvalues twenty-five and thirty-three. "
-            + "Reflection exchanges these axes."))),
-        []));
+            + "Reflection exchanges these axes.")),
+            Describe.Lean(
+                DescribeId.Create("five-power-transport-orbit"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciTransportFivePowerOrbit.result"),
+                H("Exact period, signed order, and maximum orbit"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every natural a at least one, put e = 118 times 5^a. "
+                        + "The transport matrix over Z/eZ has order 348 times 5^a. "
+                        + "The signed subgroup has 696 times 5^a elements. Among all "
+                        + "vectors in (Z/eZ)^2, the greatest cardinality of an orbit "
+                        + "under transport and reflection is 1392 times 5^a.")),
+                    Paragraph(Text(
+                        "Choose the common label (1,y), where y is zero modulo "
+                        + "2 times 5^a and twenty-six modulo fifty-nine. Its stabilizer "
+                        + "in the signed subgroup is trivial: the first reduction "
+                        + "controls the transport period, and the second excludes "
+                        + "a negative sign. The reflected label lies on the other "
+                        + "eigenaxis modulo fifty-nine and cannot belong to its signed "
+                        + "orbit. The full subgroup consists of the signed subgroup "
+                        + "and its reflection coset, so this label has a free orbit "
+                        + "of the full group order. Every orbit is an image of that "
+                        + "finite group, giving the matching upper bound."))),
+                DescribeRole.Theorem))));
 }

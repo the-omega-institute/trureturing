@@ -10,6 +10,7 @@ import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
 import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.Algebra.GCDMonoid.Nat
 import Mathlib.Algebra.Ring.Parity
+import Mathlib.Algebra.Group.End
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
@@ -448,13 +449,15 @@ private theorem transport_order_mul (m n : ℕ) (hc : Nat.Coprime m n) :
       rw [hg, Prod.orderOf_mk]
     _ = _ := by simp only [orderOf_units]
 
+private theorem family_coprime (a : ℕ) : Nat.Coprime (2 * 5 ^ a) 59 := by
+  rw [Nat.coprime_mul_iff_left]
+  exact ⟨by decide, (by decide : Nat.Coprime 5 59).pow_left a⟩
+
 private theorem family_transport_order (a : ℕ) (ha : 1 ≤ a) :
     orderOf (transportG (118 * 5 ^ a)) = 348 * 5 ^ a := by
   have h2five : Nat.Coprime 2 (5 ^ a) :=
     (by decide : Nat.Coprime 2 5).pow_right a
-  have h59 : Nat.Coprime (2 * 5 ^ a) 59 := by
-    rw [Nat.coprime_mul_iff_left]
-    exact ⟨by decide, (by decide : Nat.Coprime 5 59).pow_left a⟩
+  have h59 := family_coprime a
   have h5 : orderOf (transportG (5 ^ a)) = 4 * 5 ^ a :=
     (transport_order_eq_golden (5 ^ a)).trans (golden_order_five_power a ha)
   rw [show 118 * 5 ^ a = (2 * 5 ^ a) * 59 by ring,
@@ -557,5 +560,302 @@ private theorem family_signed_card (a : ℕ) (ha : 1 ≤ a) :
   rw [signed_group_card _ (negative_one_outside_powers a ha), family_transport_order a ha]
   ring
 
+
+private theorem family_left_dvd (a : ℕ) : 2 * 5 ^ a ∣ 118 * 5 ^ a :=
+  ⟨59, by ring⟩
+
+private theorem family_right_dvd (a : ℕ) : 59 ∣ 118 * 5 ^ a :=
+  ⟨2 * 5 ^ a, by ring⟩
+
+/-- One CRT vector, with zero second coordinate at the two-and-five factor
+and second coordinate twenty-six at the fifty-nine factor. -/
+def crtLabel (a : ℕ) : Vec (118 * 5 ^ a) :=
+  ![1, ((Nat.chineseRemainder (family_coprime a) 0 26).val : ZMod (118 * 5 ^ a))]
+
+private theorem label_reductions (a : ℕ) :
+    (ZMod.castHom (family_left_dvd a) (ZMod (2 * 5 ^ a))) ∘ crtLabel a = ![1, 0] ∧
+    (ZMod.castHom (family_right_dvd a) (ZMod 59)) ∘ crtLabel a = ![1, 26] := by
+  constructor
+  · ext i
+    fin_cases i
+    · exact (ZMod.castHom (family_left_dvd a) (ZMod (2 * 5 ^ a))).map_one
+    · change ZMod.castHom (family_left_dvd a) (ZMod (2 * 5 ^ a))
+        ((Nat.chineseRemainder (family_coprime a) 0 26).val : ZMod (118 * 5 ^ a)) = 0
+      rw [map_natCast]
+      simpa only [Nat.cast_zero] using (ZMod.natCast_eq_natCast_iff _ 0 _).mpr
+        (Nat.chineseRemainder (family_coprime a) 0 26).prop.1
+  · ext i
+    fin_cases i
+    · exact (ZMod.castHom (family_right_dvd a) (ZMod 59)).map_one
+    · change ZMod.castHom (family_right_dvd a) (ZMod 59)
+        ((Nat.chineseRemainder (family_coprime a) 0 26).val : ZMod (118 * 5 ^ a)) = 26
+      rw [map_natCast]
+      exact (ZMod.natCast_eq_natCast_iff _ 26 _).mpr
+        (Nat.chineseRemainder (family_coprime a) 0 26).prop.2
+
+private theorem reduce_power_action (m n : ℕ) (hd : m ∣ n) (k : ℕ) (v : Vec n) :
+    (ZMod.castHom hd (ZMod m)) ∘ (((transportG n : Mat n) ^ k) *ᵥ v) =
+      ((transportG m : Mat m) ^ k) *ᵥ ((ZMod.castHom hd (ZMod m)) ∘ v) := by
+  let f := ZMod.castHom hd (ZMod m)
+  have hmap : f.mapMatrix ((transportG n : Mat n) ^ k) = (transportG m : Mat m) ^ k := by
+    rw [map_pow, map_transport]
+  rw [← hmap]
+  ext i
+  exact f.map_mulVec _ v i
+
+private theorem family_signed_stabilizer (a : ℕ) (ha : 1 ≤ a)
+    (A : GL (118 * 5 ^ a)) (hA : A ∈ signedGroup (118 * 5 ^ a))
+    (hfix : (A : Mat (118 * 5 ^ a)) *ᵥ crtLabel a = crtLabel a) : A = 1 := by
+  have hfin : IsOfFinOrder (transportG (118 * 5 ^ a)) := by
+    rw [← orderOf_pos_iff, family_transport_order a ha]
+    exact Nat.mul_pos (by decide) (pow_pos (by decide) a)
+  obtain ⟨k, rfl | rfl⟩ := signed_form _ hfin hA
+  · have hv : ((transportG (118 * 5 ^ a) : Mat (118 * 5 ^ a)) ^ k) *ᵥ
+        crtLabel a = crtLabel a := by simpa using hfix
+    have hm := congrArg (fun v => (ZMod.castHom (family_left_dvd a) (ZMod (2 * 5 ^ a))) ∘ v) hv
+    rw [reduce_power_action, (label_reductions a).1] at hm
+    have h59 := congrArg (fun v => (ZMod.castHom (family_right_dvd a) (ZMod 59)) ∘ v) hv
+    rw [reduce_power_action, (label_reductions a).2] at h59
+    have hk29 : 29 ∣ k := (signed_axis_stabilizer 1 k (Or.inl rfl) (by simpa using h59)).2
+    have hid : (transportG (2 * 5 ^ a) : Mat (2 * 5 ^ a)) ^ k = 1 := by
+      apply fixed_cyclic_vector _ _ _ hm
+      exact (Commute.refl (transportG (2 * 5 ^ a) : Mat (2 * 5 ^ a))).pow_left k |>.eq
+    have hkleft : orderOf (transportG (2 * 5 ^ a)) ∣ k := by
+      rw [← orderOf_units]
+      exact orderOf_dvd_of_pow_eq_one hid
+    have hleft : orderOf (transportG (2 * 5 ^ a)) = Nat.lcm 3 (4 * 5 ^ a) := by
+      rw [transport_order_mul _ _ ((by decide : Nat.Coprime 2 5).pow_right a),
+        transport_order_mod_two, transport_order_eq_golden, golden_order_five_power a ha]
+    rw [hleft] at hkleft
+    have hk2 : 2 ∣ k := dvd_trans
+      (dvd_trans (show 2 ∣ 4 * 5 ^ a from ⟨2 * 5 ^ a, by ring⟩)
+        (Nat.dvd_lcm_right 3 (4 * 5 ^ a))) hkleft
+    have hk58 : 58 ∣ k := (by decide : Nat.Coprime 2 29).mul_dvd_of_dvd_of_dvd hk2 hk29
+    have hk : orderOf (transportG (118 * 5 ^ a)) ∣ k := by
+      rw [family_transport_order a ha, ← fibonacci_transport_five_power_crt_lcm a]
+      exact Nat.lcm_dvd hkleft hk58
+    exact orderOf_dvd_iff_pow_eq_one.mp hk
+  · have hv : -(((transportG (118 * 5 ^ a) : Mat (118 * 5 ^ a)) ^ k) *ᵥ
+        crtLabel a) = crtLabel a := by simpa [Matrix.neg_mulVec] using hfix
+    have h := congrArg (fun v => (ZMod.castHom (family_right_dvd a) (ZMod 59)) ∘ v) hv
+    have hneg (v : Vec (118 * 5 ^ a)) :
+        (ZMod.castHom (family_right_dvd a) (ZMod 59)) ∘ (-v) =
+          -((ZMod.castHom (family_right_dvd a) (ZMod 59)) ∘ v) := by
+      ext i
+      exact map_neg _ _
+    rw [hneg, reduce_power_action, (label_reductions a).2] at h
+    have hb := (signed_axis_stabilizer (-1) k (Or.inr rfl) (by simpa using h)).1
+    exact False.elim ((by decide : (-1 : ZMod 59) ≠ 1) hb)
+
+private theorem signed_le_transport (n : ℕ) : signedGroup n ≤ transportGroup n := by
+  have hg : transportG n ∈ transportGroup n := Subgroup.subset_closure (by simp)
+  have hj : transportJ n ∈ transportGroup n := Subgroup.subset_closure (by simp)
+  have hneg : (-1 : GL n) ∈ transportGroup n := by
+    have h := (transportGroup n).mul_mem
+      ((transportGroup n).mul_mem ((transportGroup n).mul_mem hj hg) hj) hg
+    simpa only [reflection_transport, neg_mul, inv_mul_cancel] using h
+  apply (Subgroup.closure_le _).mpr
+  intro A hA
+  rcases (by simpa using hA : A = transportG n ∨ A = -1) with rfl | rfl
+  · exact hg
+  · exact hneg
+
+private theorem reflection_preserves_signed (n : ℕ) {A : GL n}
+    (hA : A ∈ signedGroup n) : transportJ n * A * transportJ n ∈ signedGroup n := by
+  have hjinv : (transportJ n)⁻¹ = transportJ n := Units.ext rfl
+  let f := (MulAut.conj (transportJ n)).toMonoidHom
+  have hle : (signedGroup n).map f ≤ signedGroup n := by
+    rw [signedGroup, MonoidHom.map_closure]
+    apply (Subgroup.closure_le _).mpr
+    rintro _ ⟨B, hB, rfl⟩
+    rcases (by simpa using hB : B = transportG n ∨ B = -1) with rfl | rfl
+    · have hg : transportG n ∈ signedGroup n := Subgroup.subset_closure (by simp)
+      have hn : (-1 : GL n) ∈ signedGroup n := Subgroup.subset_closure (by simp)
+      have h := (signedGroup n).mul_mem hn ((signedGroup n).inv_mem hg)
+      simpa [signedGroup, f, MulAut.conj_apply, hjinv, reflection_transport] using h
+    · simpa [f, MulAut.conj_apply, mul_assoc] using
+        (Subgroup.subset_closure (by simp) : (-1 : GL n) ∈ signedGroup n)
+  have h := hle (Subgroup.mem_map.mpr ⟨A, hA, rfl⟩)
+  simpa only [f, MulEquiv.coe_toMonoidHom, MulAut.conj_apply, hjinv] using h
+
+private theorem transport_form (n : ℕ) {A : GL n} (hA : A ∈ transportGroup n) :
+    ∃ B : GL n, B ∈ signedGroup n ∧ (A = B ∨ A = B * transportJ n) := by
+  have hjmul : transportJ n * transportJ n = 1 := by simpa only [pow_two] using reflection_square n
+  have hjinv : (transportJ n)⁻¹ = transportJ n := Units.ext rfl
+  refine Subgroup.closure_induction (p := fun A _ =>
+    ∃ B : GL n, B ∈ signedGroup n ∧ (A = B ∨ A = B * transportJ n)) ?_ ?_ ?_ ?_ hA
+  · intro B hB
+    rcases (by simpa using hB : B = transportG n ∨ B = transportJ n) with rfl | rfl
+    · exact ⟨transportG n, Subgroup.subset_closure (by simp), Or.inl rfl⟩
+    · exact ⟨1, (signedGroup n).one_mem, Or.inr (by simp)⟩
+  · exact ⟨1, (signedGroup n).one_mem, Or.inl rfl⟩
+  · rintro A B _ _ ⟨C, hC, hA⟩ ⟨D, hD, hB⟩
+    rcases hA with hA | hA <;> rcases hB with hB | hB
+    · exact ⟨C * D, (signedGroup n).mul_mem hC hD, Or.inl (by rw [hA, hB])⟩
+    · exact ⟨C * D, (signedGroup n).mul_mem hC hD, Or.inr (by rw [hA, hB, mul_assoc])⟩
+    · refine ⟨C * (transportJ n * D * transportJ n),
+        (signedGroup n).mul_mem hC (reflection_preserves_signed n hD), Or.inr ?_⟩
+      rw [hA, hB]
+      simp only [mul_assoc, hjmul, mul_one]
+    · refine ⟨C * (transportJ n * D * transportJ n),
+        (signedGroup n).mul_mem hC (reflection_preserves_signed n hD), Or.inl ?_⟩
+      rw [hA, hB]
+      simp only [mul_assoc]
+  · rintro A _ ⟨B, hB, hA⟩
+    rcases hA with hA | hA
+    · exact ⟨B⁻¹, (signedGroup n).inv_mem hB, Or.inl (by rw [hA])⟩
+    · refine ⟨transportJ n * B⁻¹ * transportJ n,
+        reflection_preserves_signed n ((signedGroup n).inv_mem hB), Or.inr ?_⟩
+      rw [hA]
+      simp only [mul_inv_rev, hjinv, mul_assoc, hjmul, mul_one]
+
+private theorem map_reflection (m n : ℕ) (hd : m ∣ n) :
+    (ZMod.castHom hd (ZMod m)).mapMatrix (transportJ n : Mat n) = (transportJ m : Mat m) := by
+  ext i j
+  change ZMod.castHom hd (ZMod m) ((transportJ n).val i j) = (transportJ m).val i j
+  fin_cases i <;> fin_cases j <;> first
+  | exact (ZMod.castHom hd (ZMod m)).map_one
+  | exact (ZMod.castHom hd (ZMod m)).map_zero
+  | exact ((ZMod.castHom hd (ZMod m)).map_neg 1).trans
+      (congrArg Neg.neg (ZMod.castHom hd (ZMod m)).map_one)
+
+private theorem family_reflection_outside_orbit (a : ℕ) (ha : 1 ≤ a)
+    (A : GL (118 * 5 ^ a)) (hA : A ∈ signedGroup (118 * 5 ^ a)) :
+    (transportJ (118 * 5 ^ a) : Mat (118 * 5 ^ a)) *ᵥ crtLabel a ≠
+      (A : Mat (118 * 5 ^ a)) *ᵥ crtLabel a := by
+  have hfin : IsOfFinOrder (transportG (118 * 5 ^ a)) := by
+    rw [← orderOf_pos_iff, family_transport_order a ha]
+    exact Nat.mul_pos (by decide) (pow_pos (by decide) a)
+  let f := ZMod.castHom (family_right_dvd a) (ZMod 59)
+  have hj : f ∘ ((transportJ (118 * 5 ^ a) : Mat (118 * 5 ^ a)) *ᵥ crtLabel a) =
+      (transportJ 59 : Mat 59) *ᵥ (f ∘ crtLabel a) := by
+    rw [← map_reflection 59 _ (family_right_dvd a)]
+    ext i
+    exact f.map_mulVec _ _ i
+  obtain ⟨k, rfl | rfl⟩ := signed_form _ hfin hA
+  · intro h
+    have heq : (transportJ (118 * 5 ^ a) : Mat (118 * 5 ^ a)) *ᵥ crtLabel a =
+        ((transportG (118 * 5 ^ a) : Mat (118 * 5 ^ a)) ^ k) *ᵥ crtLabel a := by simpa using h
+    have hh := congrArg (fun v => f ∘ v) heq
+    rw [hj, reduce_power_action, (label_reductions a).2] at hh
+    exact reflection_outside_signed_axis 1 k (by simpa using hh)
+  · intro h
+    have heq : (transportJ (118 * 5 ^ a) : Mat (118 * 5 ^ a)) *ᵥ crtLabel a =
+        -(((transportG (118 * 5 ^ a) : Mat (118 * 5 ^ a)) ^ k) *ᵥ crtLabel a) := by
+      simpa [Matrix.neg_mulVec] using h
+    have hh := congrArg (fun v => f ∘ v) heq
+    have hneg (v : Vec (118 * 5 ^ a)) : f ∘ (-v) = -(f ∘ v) := funext (fun i => f.map_neg _)
+    rw [hj, hneg, reduce_power_action, (label_reductions a).2] at hh
+    exact reflection_outside_signed_axis (-1) k (by simpa using hh)
+
+private theorem transport_card (n : ℕ) (hj : transportJ n ∉ signedGroup n) :
+    Nat.card (transportGroup n) = 2 * Nat.card (signedGroup n) := by
+  classical
+  have hjmem : transportJ n ∈ transportGroup n := Subgroup.subset_closure (by simp)
+  let f : Bool × signedGroup n → transportGroup n := fun q =>
+    ⟨if q.1 then q.2.val * transportJ n else q.2.val, by
+      split_ifs
+      · exact (transportGroup n).mul_mem (signed_le_transport n q.2.prop) hjmem
+      · exact signed_le_transport n q.2.prop⟩
+  have hcross (B C : signedGroup n) (h : B.val * transportJ n = C.val) : False := by
+    apply hj
+    have heq : transportJ n = B.val⁻¹ * C.val := by
+      calc
+        transportJ n = B.val⁻¹ * (B.val * transportJ n) := by simp
+        _ = B.val⁻¹ * C.val := by rw [h]
+    rw [heq]
+    exact (signedGroup n).mul_mem ((signedGroup n).inv_mem B.prop) C.prop
+  have hf : Function.Bijective f := by
+    constructor
+    · rintro ⟨b, A⟩ ⟨c, B⟩ h
+      have heq := congrArg Subtype.val h
+      cases b <;> cases c
+      · exact Prod.ext rfl (Subtype.ext (by simpa only [f, Bool.false_eq_true, if_false] using heq))
+      · exact False.elim (hcross B A (by simpa only [f, Bool.false_eq_true, if_false, if_true] using heq.symm))
+      · exact False.elim (hcross A B (by simpa only [f, Bool.false_eq_true, if_false, if_true] using heq))
+      · exact Prod.ext rfl (Subtype.ext (mul_right_cancel
+          (by simpa only [f, if_true] using heq)))
+    · intro A
+      obtain ⟨B, hB, h | h⟩ := transport_form n A.prop
+      · exact ⟨(false, ⟨B, hB⟩), Subtype.ext (by simpa only [f, Bool.false_eq_true, if_false] using h.symm)⟩
+      · exact ⟨(true, ⟨B, hB⟩), Subtype.ext (by simpa only [f, if_true] using h.symm)⟩
+  calc
+    Nat.card (transportGroup n) = Nat.card (Bool × signedGroup n) :=
+      Nat.card_congr (Equiv.ofBijective f hf).symm
+    _ = 2 * Nat.card (signedGroup n) := by
+      rw [Nat.card_prod, show Nat.card Bool = 2 by rw [Nat.card_eq_fintype_card, Fintype.card_bool]]
+
+private theorem family_transport_stabilizer (a : ℕ) (ha : 1 ≤ a)
+    (A : GL (118 * 5 ^ a)) (hA : A ∈ transportGroup (118 * 5 ^ a))
+    (hfix : (A : Mat (118 * 5 ^ a)) *ᵥ crtLabel a = crtLabel a) : A = 1 := by
+  obtain ⟨B, hB, h | h⟩ := transport_form _ hA
+  · rw [h] at hfix ⊢
+    exact family_signed_stabilizer a ha B hB hfix
+  · exfalso
+    rw [h] at hfix
+    have hv := congrArg (fun v => ((B⁻¹ : GL (118 * 5 ^ a)) : Mat (118 * 5 ^ a)) *ᵥ v) hfix
+    have hcancel : ((B⁻¹ : GL (118 * 5 ^ a)) : Mat (118 * 5 ^ a)) *
+        (B : Mat (118 * 5 ^ a)) = 1 := by
+      exact congrArg Units.val (inv_mul_cancel B)
+    have heq : (transportJ (118 * 5 ^ a) : Mat (118 * 5 ^ a)) *ᵥ crtLabel a =
+        ((B⁻¹ : GL (118 * 5 ^ a)) : Mat (118 * 5 ^ a)) *ᵥ crtLabel a := by
+      simpa only [Units.val_mul, Matrix.mulVec_mulVec,
+        ← Matrix.mul_assoc, hcancel, Matrix.one_mul] using hv
+    exact family_reflection_outside_orbit a ha B⁻¹ ((signedGroup _).inv_mem hB) heq
+
+private theorem orbit_card_le (n : ℕ) [NeZero n] (v : Vec n) :
+    Nat.card (vectorOrbit n v) ≤ Nat.card (transportGroup n) := by
+  classical
+  letI : Finite (GL n) := Finite.of_injective (fun A : GL n => A.val) Units.val_injective
+  let f : transportGroup n → vectorOrbit n v := fun A => ⟨(A.val : Mat n) *ᵥ v, ⟨A, rfl⟩⟩
+  apply Nat.card_le_card_of_surjective f
+  intro w
+  obtain ⟨A, hA⟩ := w.prop
+  exact ⟨A, Subtype.ext hA⟩
+
+private theorem label_orbit_card (a : ℕ) (ha : 1 ≤ a) :
+    Nat.card (vectorOrbit (118 * 5 ^ a) (crtLabel a)) = Nat.card (transportGroup (118 * 5 ^ a)) := by
+  classical
+  let f : transportGroup (118 * 5 ^ a) → vectorOrbit (118 * 5 ^ a) (crtLabel a) :=
+    fun A => ⟨(A.val : Mat (118 * 5 ^ a)) *ᵥ crtLabel a, ⟨A, rfl⟩⟩
+  have hi : Function.Injective f := by
+    intro A B h
+    have hv : (A.val : Mat (118 * 5 ^ a)) *ᵥ crtLabel a =
+        (B.val : Mat (118 * 5 ^ a)) *ᵥ crtLabel a := congrArg Subtype.val h
+    have hfix : ((B.val⁻¹ * A.val : GL (118 * 5 ^ a)) : Mat (118 * 5 ^ a)) *ᵥ
+        crtLabel a = crtLabel a := by
+      have hc : ((B.val⁻¹ : GL (118 * 5 ^ a)) : Mat (118 * 5 ^ a)) *
+          (B.val : Mat (118 * 5 ^ a)) = 1 :=
+        congrArg Units.val (inv_mul_cancel B.val)
+      rw [Units.val_mul, ← Matrix.mulVec_mulVec, hv, Matrix.mulVec_mulVec, hc, Matrix.one_mulVec]
+    have hid := family_transport_stabilizer a ha (B.val⁻¹ * A.val)
+      ((transportGroup _).mul_mem ((transportGroup _).inv_mem B.prop) A.prop) hfix
+    exact Subtype.ext (inv_mul_eq_one.mp hid).symm
+  have hs : Function.Surjective f := by
+    intro w
+    obtain ⟨A, hA⟩ := w.prop
+    exact ⟨A, Subtype.ext hA⟩
+  exact (Nat.card_congr (Equiv.ofBijective f ⟨hi, hs⟩)).symm
+
+/-- At every positive five-power depth, the transport period and signed-group
+order are exact, and one common CRT label attains the largest full-group orbit. -/
+theorem result (a : ℕ) (ha : 1 ≤ a) :
+    orderOf (transportG (118 * 5 ^ a)) = 348 * 5 ^ a ∧
+    Nat.card (signedGroup (118 * 5 ^ a)) = 696 * 5 ^ a ∧
+    IsGreatest (Set.range (fun v : Vec (118 * 5 ^ a) =>
+      Nat.card (vectorOrbit (118 * 5 ^ a) v))) (1392 * 5 ^ a) := by
+  letI : NeZero (118 * 5 ^ a) := ⟨Nat.ne_of_gt (Nat.mul_pos (by decide) (pow_pos (by decide) a))⟩
+  have hN := family_signed_card a ha
+  have hj : transportJ (118 * 5 ^ a) ∉ signedGroup (118 * 5 ^ a) := by
+    intro hj
+    exact family_reflection_outside_orbit a ha (transportJ _) hj rfl
+  have hΓ : Nat.card (transportGroup (118 * 5 ^ a)) = 1392 * 5 ^ a := by
+    rw [transport_card _ hj, hN]
+    ring
+  refine ⟨family_transport_order a ha, hN, ?_, ?_⟩
+  · exact ⟨crtLabel a, (label_orbit_card a ha).trans hΓ⟩
+  · rintro _ ⟨v, rfl⟩
+    rw [← hΓ]
+    exact orbit_card_le _ v
 
 end D5.S3.Arith.FibonacciTransportFivePowerOrbit
