@@ -50,10 +50,6 @@ def oneNeighborhood (k n s : ℕ) : Finset (Fin n → Bool) :=
 
 def logicalDimension (N : ℕ) (b : Bool) : ℕ := (primeNumbers N b).card
 
-def orderedNumbers (N : ℕ) (b : Bool) :
-    Fin (logicalDimension N b) ≃o PrimePage N b :=
-  (primeNumbers N b).orderIsoOfFin rfl
-
 def wordPages (k m : ℕ) (b : Bool) : Finset (Word m) :=
   Finset.univ.filter (fun w => DBonacciAdmissible k m w ∧
     (List.ofFn w).head? = some b)

@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:3525ee401e3fb1b9018e8579768ee921e03a9eab3e39b78cf7e237570ab2fcb8
   normalized_sha256: sha256:3525ee401e3fb1b9018e8579768ee921e03a9eab3e39b78cf7e237570ab2fcb8
 cas_ref: sha256:3525ee401e3fb1b9018e8579768ee921e03a9eab3e39b78cf7e237570ab2fcb8
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/KBonacciDirectRankEntropy.complete_original_direct_rank_entropy
+    target_statement_id: sha256:8d409ddf636b1515a79626bea2efb35dfcda20309bc8dc39217d721c9de0946e
 receipts:
   unresolved_subitems: []
   chain_atoms:
