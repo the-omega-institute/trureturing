@@ -34,7 +34,7 @@ private def ownerOf (env : Environment) (name : Name) : Option Name :=
     some ((RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule)
   else none
 
-private def runCompiled (action : ReaderT CompiledEnrollment.Context IO α) : MetaM α := do
+def runCompiled (action : ReaderT CompiledEnrollment.Context IO α) : MetaM α := do
   let env ← getEnv
   let locals ← getLCtx
   let options ← getOptions
@@ -58,7 +58,12 @@ private def runCompiled (action : ReaderT CompiledEnrollment.Context IO α) : Me
       registeredTheorems
       implementedBy := fun name => (Compiler.getImplementedBy? env name).isSome
       extern := fun name => (getExternAttrData? env name).isSome
-      collectAxioms := CompiledAxioms.collectAxiomsShared env.find? axioms }
+      collectAxioms := fun name => do
+        let exported := (env.getModuleIdxFor? name).bind fun index =>
+          env.header.moduleData[index.toNat]?.bind fun data =>
+            unsafe CompiledMetadata.exportedAxioms? data name
+        if let some closure := exported then return closure
+        CompiledAxioms.collectAxiomsShared env.find? axioms name }
     action.run context) locals
 
 def initializeGrammarPins : CommandElabM Unit := do
@@ -166,4 +171,3 @@ def templateArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
         then message else "incomplete_closure:E8.argument_elaboration:" ++ message))
 
 end LeanInformationAudit.RegistrationGates
-

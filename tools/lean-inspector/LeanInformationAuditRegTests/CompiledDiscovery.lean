@@ -4,6 +4,7 @@ import LeanInformationAudit.Contract.Discovery
 import LeanInformationAudit.RawArtifacts
 import LeanInformationAudit.CompiledAxioms
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
+import LeanInformationAudit.CompiledSourceOperands
 
 namespace LeanInformationAuditRegTests.CompiledDiscovery
 open Lean LeanInformationAudit
@@ -21,6 +22,7 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
     for owner in owners do RawArtifacts.loadModule owner reader
     RawArtifacts.loadModule `LeanInformationAudit.Registry reader
     RawArtifacts.loadModule `LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates reader
+    RawArtifacts.loadModule `Reg.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit reader
     let store ← reader.get
     unless store.owners[owners[0]!.str "source0"]? == some owners[0]! do
       throw <| IO.userError "compiled.metadata:declaration_owner"
@@ -48,7 +50,36 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
       find := (store.constants[·]?)
       heartbeatStart := start
       heartbeatLimit := limit }
-    let closures ← IO.mkRef ({} : CompiledAxioms.AxiomClosureState)
+    let natural := mkConst ``Nat
+    let identity := Expr.lam `x natural (.bvar 0) .default
+    let application := Expr.lam `f (mkForall `x .default natural natural)
+      (mkApp (.bvar 0) (mkNatLit 0)) .default
+    for other in #[application, mkConst ``Unit.unit] do
+      let (same, _) ← Contract.CompiledExpressions.run context
+        (Contract.CompiledExpressions.sameShape identity other)
+      unless !same do throw <| IO.userError "compiled.shape:mismatched_function_domains"
+    unless store.metadata.axioms.find?
+        `D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit.result ==
+        some #[`propext, `Classical.choice, `Quot.sound] do
+      throw <| IO.userError "compiled.metadata:exported_axioms"
+    let closures ← IO.mkRef
+      ({ closure := store.metadata.axioms } : CompiledAxioms.AxiomClosureState)
+    let target := `D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit.result
+    let some source := context.find target
+      | throw <| IO.userError "compiled.axioms:source_missing"
+    let aliasName := `compiledAxiomAlias
+    let aliasInfo := ConstantInfo.defnInfo {
+      name := aliasName, levelParams := source.levelParams, type := source.type,
+      value := mkConst target (source.levelParams.map Level.param),
+      hints := .abbrev, safety := .safe, all := [aliasName] }
+    let aliasAxioms ← CompiledAxioms.collectAxiomsShared
+      (fun name => if name == aliasName then some aliasInfo else context.find name) closures aliasName
+    unless aliasAxioms.qsort Name.quickLt ==
+        (store.metadata.axioms.find? target |>.getD #[]).qsort Name.quickLt do
+      throw <| IO.userError s!"compiled.axioms:seeded_closure:{aliasAxioms}"
+    unless (← closures.get).index.toArray.all (fun (name, _) =>
+        !store.metadata.axioms.contains name) do
+      throw <| IO.userError "compiled.axioms:exported_dependency_recomputed"
     let snapshot ← Contract.Discovery.discoverCompiled #[] owners context
       (fun owner => return (← store.getModule owner).constants)
       (CompiledAxioms.collectAxiomsShared context.find closures)
@@ -108,6 +139,42 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
     catch error => pure (error.toString == "incomplete_closure:E8.erasure_work")
     unless exhausted do throw <| IO.userError "compiled.enrollment:zero_work"
     IO.println "[PASS] compiled enrollment: source, 6 finite cases, recursion metadata and zero work"
+    for sourceOwner in #[`Reg.D5.S0.Tower.GoldenGapZeckendorf,
+        `Reg.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit] do
+      let sourceSnapshot ← Contract.Discovery.discoverCompiled #[] #[sourceOwner] context
+        (fun owner => return (← store.getModule owner).constants)
+        (CompiledAxioms.collectAxiomsShared context.find closures)
+      let some (_, sourceRow) := sourceSnapshot.registrations[0]?
+        | throw <| IO.userError "compiled.source:registration_missing"
+      let entry := sourceRow.input.entry
+      let some declaration := sourceRow.input.declaration
+        | throw <| IO.userError "compiled.source:declaration_missing"
+      let some selection := declaration.escapeInput.sourceSelection
+        | throw <| IO.userError "compiled.source:selection_missing"
+      let some sourceInfo := store.constants[entry.theoremName]?
+        | throw <| IO.userError "compiled.source:target_missing"
+      let some recordInfo := store.constants[entry.realizationName]?
+        | throw <| IO.userError "compiled.source:record_missing"
+      let sourceContext ← TemplateAudit.CompiledEnrollment.Context.fromArtifacts store sourceOwner
+        sourceRow.input.options (({} : NameSet).insert entry.theoremName)
+      let sourceAction : CompiledSourceScope.M Unit := do
+        let scope ← CompiledSourceScope.resolve sourceInfo selection
+        let record := mkConst entry.realizationName (recordInfo.levelParams.map Level.param)
+        let arena := recordInfo.type.getAppArgs[0]!
+        let family := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+        let signature ← CompiledSourceScope.projectField (family ++ `Arena.signature) arena
+        let actual ← CompiledSourceScope.projectField (family ++ `Registration.actual) record
+        let law ← CompiledSourceScope.projectField (family ++ `Arena.Law) arena #[actual]
+        CompiledSourceScope.reconstruct scope.expanded law
+        CompiledSourceScope.validateFields scope signature actual
+      discard <| (sourceAction.run 524288).run sourceContext
+      let rejected ← try
+        discard <| (CompiledSourceOperands.check entry.theoremName
+          #[mkConst entry.theoremName (sourceInfo.levelParams.map Level.param)] 524288).run sourceContext
+        pure false
+      catch error => pure (error.toString.startsWith "forbidden_dependency:source.operand_identity")
+      unless rejected do throw <| IO.userError "compiled.source:theorem_identity_not_rejected"
+      IO.println "[PASS] compiled source reconstruction, full observations and theorem identity rejection"
   finally searchPathRef.set saved
 
 run_meta do

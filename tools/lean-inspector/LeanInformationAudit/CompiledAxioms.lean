@@ -45,6 +45,7 @@ partial def strongConnect (find : Name → Option ConstantInfo)
   let dependencies := declarationDependencies info
   for dependency in dependencies do
     let s ← state.get
+    if s.closure.contains dependency then continue
     if !(s.index.contains dependency) then
       strongConnect find state dependency
       let s ← state.get

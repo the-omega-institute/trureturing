@@ -46,17 +46,34 @@ structure Store where
   externs : NameSet := {}
   reducibility : NameMap Reducibility := {}
   recursive : NameSet := {}
+  axioms : NameMap (Array Name) := {}
 
 private def globalValue? : ScopedEntry α → Option α
   | .global value => some value
   | .scoped .. => none
+
+private def axiomExtensionName : Name :=
+  (`_private.Lean.Util.CollectAxioms).num 0 ++ `Lean.exportedAxiomsExt
+
+/-- The compiler exports axiom closures of public declarations as data. -/
+unsafe def exportedAxioms? (data : ModuleData) (name : Name) : Option (Array Name) := do
+  let (_, entries) ← data.entries.find? (fun entry =>
+    entry.1 == axiomExtensionName)
+  for entry in entries do
+    let (constant, axioms) : Name × Array Name := unsafeCast entry
+    if constant == name then return axioms
+  none
 
 /-- Interpret the pinned payload types of the exact extension names. Other
 extensions are outside the declaration-semantic input of these gates. -/
 unsafe def readModule (state : Store) (data : ModuleData) : Store := Id.run do
   let mut state := state
   for (kind, entries) in data.entries do
-    if kind == `Lean.projectionFnInfoExt then
+    if kind == axiomExtensionName then
+      for entry in entries do
+        let (name, axioms) : Name × Array Name := unsafeCast entry
+        state := { state with axioms := state.axioms.insert name axioms }
+    else if kind == `Lean.projectionFnInfoExt then
       for entry in entries do
         let (name, projection) : Name × Projection := unsafeCast entry
         state := { state with projections := state.projections.insert name projection }

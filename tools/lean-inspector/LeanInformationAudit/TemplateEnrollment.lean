@@ -70,7 +70,7 @@ unsafe def Context.fromArtifacts (store : RawArtifacts.Store) (mainModule : Name
   for index in [:store.moduleOrder.size] do
     moduleIndices := moduleIndices.insert store.moduleOrder[index]! index
   let session ← IO.mkRef ({} : RegistrationGates.ProvenanceSession)
-  let axioms ← IO.mkRef ({} : CompiledAxioms.AxiomClosureState)
+  let axioms ← IO.mkRef ({ closure := store.metadata.axioms } : CompiledAxioms.AxiomClosureState)
   let configured := maxHeartbeats.get options
   let capped := if configured == 0 then 100000 else min 100000 configured
   return {
