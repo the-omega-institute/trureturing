@@ -18,6 +18,14 @@ T. Heib and D. E. Bruschi, *On the structural properties of Lie algebras via ass
 labeled directed graphs*, arXiv:2601.16161v1 (22 January 2026; math-ph, cross-listed
 quant-ph). Numbers below are those of the v1 PDF.
 
+## Verified locator
+
+DOI: 10.48550/arXiv.2601.16161.
+Primary version: https://arxiv.org/abs/2601.16161v1 (the only version).
+The TeX source `pr09_arXiv_01.tex` of v1 and the v1 PDF supply §I (conventions),
+Definition 16 and Eq. (7) in §II.A, Algorithm 1 and the minimal-graph definition in §II,
+and Definition 75 and Conjecture 83 (p. 48) in §IV.D.
+
 ## Source statements
 
 Conventions (§I): "We denote any field with the symbol \(\mathbb{F}\) … we write
