@@ -109,6 +109,58 @@ from a family used to generate repair demand. This does not retain
 O as a background guard or change E0: a proposed final deletion
 of all q-bearing originals must still repair the original E0.
 
+### At a common source point, at most thirteen omissions are active
+
+Keep one fixed choice of an actual edge owner from each configuration,
+and let O be their image as above. At a residual point x, call a
+chosen owner active when its q-stripped class contains x. Let O_x
+be this subset of O.
+
+The chosen prime pairs of distinct active owners are disjoint.
+Otherwise their configurations share a prime p belonging to both
+chosen pairs. They share no other prime, by the preceding linearity
+result. Since both chosen owners contain x after stripping q, their
+old words agree modulo nine and their roots at p agree with x modulo p.
+The two configurations can therefore be put under one auxiliary root
+vector on their union. Their twelve distinct actual owners give
+twelve indexed edges on seven primes, contrary to KR1.
+
+Each active owner thus consumes two different primes from P without
+overlap with another active owner. Consequently
+
+$$
+2|O_x|\le r,\qquad |O_x|\le13\quad(r\le27).
+\tag{KR3a}
+$$
+
+This pointwise bound does not use the global configuration count 54.
+Before omitting O, every literal color supplies an actual stripped
+owner at x. Any color with no surviving owner must contain an active
+member of O, so at most thirteen colors lose all their service there.
+For the same fixed O,
+
+$$
+\#\{c:\text{a surviving original of color }c\text{ serves }x\}
+\ge100
+\qquad(x\in E_0).
+\tag{KR3b}
+$$
+
+Equivalently, any fixed set of at least fourteen original colors has
+a surviving union covering the entire E0. The serving color may vary
+with x. This does not assert that one hundred fixed colors individually
+retain complete covers; KR3 still supplies only fifty-nine fixed
+untouched colors with that stronger property.
+
+For example, choose any fourteen of Report873's twenty-nine colors
+whose originals all have composite cofactors. After omitting the same
+O, their surviving originals give a fixed stripped cover of E0 with
+only composite anchors and no rooted semiprime K4. All rows and their
+literal phases are retained. Prime-power composite anchors can still
+have only one matching prime, and lower rows still require their full
+widths. Thus this source refinement neither supplies the simultaneous
+replacement phases nor pays a complete repair.
+
 ### A complete-color sector with no low-support top anchors
 
 With the additional earlier exponent cap Omega(W) at most 77 from
@@ -121,14 +173,17 @@ one q-color, the q-versus-prime cut of Report874 MF5 would bound
 their number by at most five. For every configuration wholly in
 the chosen 35 colors, choose two distinct represented colors and
 put an edge between them. The resulting simple graph has at most
-54 edges. The standard random-order independent-set bound and
-Cauchy--Schwarz give an independent set of size at least
+54 edges. Apply the existing Turan theorem to its complement.
+The complete graph has 595 edges, whereas the eight-part Turan
+graph on 35 vertices has 535 edges. Thus
 
 $$
-\frac{35^2}{2\cdot54+35}=\frac{1225}{143}>8.
+|E(G^{\rm c})|\ge595-54=541>535.
 $$
 
-Thus at least nine whole colors can be selected whose top cofactors
+The complement contains a nine-clique, giving nine independent
+colors. In fact, any graph on 35 vertices with fewer than 60 edges
+has this consequence. Thus at least nine whole colors can be selected whose top cofactors
 all have at least two distinct prime factors and whose union has
 no rooted semiprime K4. They still cover E0 after stripping q,
 using all their original rows. This does not remove lower-row
@@ -136,6 +191,16 @@ obligations. The premise concerns Omega(W), not the smaller
 individual bound Omega(m_i) at most 25.
 
 ## Changing selected prime pairs removes avoidable K4s
+
+The indexed graph-image definition and owner-preserving clique-edge
+rerouting have a published antecedent in Gravin--Karpov,
+*On proper colorings of hypergraphs*, Section 2 Definition 3 and
+Section 3's image transformation in the proof of Theorem 1(2),
+[arXiv:1111.1558v1](https://arxiv.org/abs/1111.1558v1),
+[DOI 10.1007/s10958-012-0884-2](https://doi.org/10.1007/s10958-012-0884-2).
+That argument uses a bounded-maximum-degree image. The quantified
+hereditary density and mixed-rank rigidity statement below are
+different, so the published theorem is not invoked as an exact match.
 
 Let A be a nonempty set of actual top owners at z, across arbitrary
 q-colors. For each owner let R_i be its matching primes under phi,
@@ -324,13 +389,43 @@ not counted as different configurations.
 The application then constructs one fixed set O of at most 54 actual
 originals, with actual pair-label witnesses for each chosen original
 and for the hit in every configuration. At least 59 colors avoid O.
-It explicitly retains as a premise that each original literal color
-has a q-stripped cover of the same exact q-free residual E0; under
-that premise each remaining color has its complete surviving cover.
-The prime pool and its bound of 27 are also explicit inputs. This
-complete counting application compiles with the standard three axioms.
-It does not prove those branch inputs for every hypothetical cover
-or assert a whole-cover realization of an arbitrary linear set family.
+The complete-color supplier is also checked directly from the actual
+whole cover. Assume every original modulus divides 113R and R is
+coprime to 113; here R=9W. For a point x avoiding all q-free
+originals and any prescribed color c, CRT supplies y congruent to x
+modulo R and to c modulo 113. Its actual covering owner cannot be
+q-free, and its modulus divided by 113 divides R. That owner supplies
+the required stripped cover at x with literal color c. Thus complete
+color coverage is derived rather than retained as an independent
+premise in the combined application. The common-period and
+coprimality conditions, prime pool and bound of 27 remain explicit.
+This does not prove those branch conditions for every hypothetical
+cover or realize an arbitrary linear set family as a whole cover.
+
+A combined actual-source check constructs the same fixed omission O
+and proves KR3a--KR3b and the arbitrary-fourteen-color union statement.
+It derives complete color coverage from the whole-cover CRT supplier,
+retains actual semiprime witnesses for every omission and every hit
+configuration, and uses no assumption of a favorable selector.
+The symbolic bound 2|O_x| at most |P| is checked before applying the
+27-prime cap. The complete application uses only standard axioms.
+It does not supply the all-row composite-color count.
+
+The active-pair argument also compiles at arbitrary ternary height h
+and multiplier q at least seven, for rooted configurations with actual
+labels 3^h*q*p*t and no original modulus divisible by 3^(h+1).
+It retains an arbitrary finite prime pool and proves the symbolic
+pointwise bound before any numerical rank estimate. This local
+conclusion requires neither primality nor height one for q. The
+complete-color supplier and numerical 100/14 conclusions retain the
+113-height-one common-period conditions stated above; they have not
+been generalized by that local check.
+
+The finite nine-independent-color implication directly applies pinned
+Mathlib's `SimpleGraph.CliqueFree.card_edgeFinset_le` to the complement.
+The 535-edge Turan count and the fewer-than-60 threshold compile with
+standard axioms. This finite check alone does not supply the actual
+35-color family or its nonmonochromatic configuration premises.
 
 The scalar implication from 6k at most 7*27, v at most 27,
 B=k+v and capture less than B to k at most 31, B at most 58 and
