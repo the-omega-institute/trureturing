@@ -5844,3 +5844,10 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 消费固定上游真实 MetricComplete 与闭球紧致公开接口，实际内蕴有限距离使可数闭球覆盖同一连通覆盖空间，再由 sigma-compact 与欧氏图册得到该原标准覆盖的 SecondCountableTopology。无需底空间紧致、有限基本群、外供覆盖第二可数性或有限覆盖度。对同一原 H3/native g，已验的真正 native 内蕴距离等于原距离在内部履行兼容性，得到实际 native g 完备性及原 H3 标准覆盖第二可数性。
 
 固定来源为 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a。真实 MetricComplete 与 CompleteBalls 使用完整最小导入闭包，其余覆盖提升与完备拉回证明保留具名上游 source-slice 来源；不冒领未导入的完整 NeckCap/Harnack 扩展模块验收。完整累计临时 Lean 真实 exit 0，零错误、零警告，298 项公理报告仅含 propext、Classical.choice、Quot.sound，18 个新增目标实际接受。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证说明。实际全局负曲率指数映射与 H3 分类、完整 deck 与体积/Haar 绑定、有限体积尖点及完整给定 h,d 的 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 真实负正规系数 Jacobi ODE 的双曲函数解与唯一性
+
+消费固定上游原 IsJacobiSolOn 方程及 Linear.IsSolOn 唯一性，对任意原实赋范向量空间和真实常系数算子 A，内部证明核向量与负正规特征值对应的 t/sinh/cosh 模型确实满足原方程。方程符号保持 y'=v、v'=-Ay；正规特征值 -c² 给出正加速度双曲正弦模型。沿真实算子范数界和原初值，公开 ODE 唯一性把任意真正原方程解识别为已证明模型，并得到 c=1 的 sinh/cosh 正规公式。无需额外 CompleteSpace、外供解公式或替代解谓词。
+
+两个固定上游模块与完整累计临时 Lean 均真实 exit 0，零错误、零警告。301 项公理报告仅含 propext、Classical.choice、Quot.sound，3 个新增目标已实际验收。原草稿保留；derived 仅显式化复合/逐点加法表达式并删除一个编译器确认冗余的 ring。proof_shape: bind-only，admission_basis: none。本段是原 ODE 模型与唯一性消费者，实际流形 Jacobi 场的平行传输、曲率系数归约和原指数映射还须在后续内部证明，不能把它们升为最终 Mostow 新前提。完整 Mostow–Prasad 与官方验收仍未完成。
