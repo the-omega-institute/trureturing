@@ -1004,6 +1004,120 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
+      - name: Measure changed digestion costs
+        run: |
+          cat > "$RUNNER_TEMP/digestion-loader-cost.py" <<'PROBE'
+          import hashlib, json, os, pathlib, shutil, subprocess, sys, tempfile, time
+          root = pathlib.Path(sys.argv[1]).resolve(strict=True)
+          scratch = pathlib.Path(tempfile.mkdtemp(prefix='digestion-loader-cost-', dir=os.environ.get('RUNNER_TEMP')))
+          cli = root/'tools/StrataLint.Cli/bin/Release/net10.0'
+          code = r'''
+          using System.Diagnostics;
+          using System.Reflection;
+          using System.Security.Cryptography;
+          using System.Text;
+          using System.Text.Json;
+          using StrataLint.Engine;
+          var mode = args[0]; var root = args[1]; var variant = args[2];
+          if (mode == "enumeration") {
+              var index = File.ReadAllBytes(args[3]); var others = File.ReadAllBytes(args[4]);
+              var parse = (Func<byte[],Dictionary<string,string>>)typeof(GitRepositorySnapshotReader)
+                  .GetMethod("ParseIndex", BindingFlags.Static|BindingFlags.NonPublic)!
+                  .CreateDelegate(typeof(Func<byte[],Dictionary<string,string>>));
+              var nul = (Func<byte[],IEnumerable<string>>)typeof(GitRepositorySnapshotReader)
+                  .GetMethod("ParseNulStrings", BindingFlags.Static|BindingFlags.NonPublic)!
+                  .CreateDelegate(typeof(Func<byte[],IEnumerable<string>>));
+              var enumerate = (Func<IReadOnlyList<string>?,IEnumerable<string[]>>)typeof(GitRepositorySnapshotReader)
+              .GetMethod("EnumerationScopes", BindingFlags.Static|BindingFlags.NonPublic)!
+              .CreateDelegate(typeof(Func<IReadOnlyList<string>?,IEnumerable<string[]>>));
+          var selected = File.ReadAllLines(args[5]);
+          long allocated = 0; long elapsedTicks = 0; string? digest = null;
+              Console.WriteLine("BEGIN"); Console.Out.Flush();
+              for (var iteration = 0; iteration < 5; iteration++) {
+                  var before = GC.GetAllocatedBytesForCurrentThread();
+                  var started = Stopwatch.GetTimestamp();
+                  if (variant == "optimized") {
+                      var scopes = enumerate(selected.Length == 0 ? null : selected).ToArray();
+                      if (scopes.Length != 1) { Console.Error.WriteLine("PROBE_SCOPE_INVALID"); return 3; }
+                  }
+                  var tracked = parse(index); IEnumerable<string> untracked = nul(others);
+                  if (variant == "collect") {
+                      var collected = new Dictionary<string,string>(StringComparer.Ordinal);
+                      foreach (var (path, fileMode) in tracked) {
+                          if (collected.TryGetValue(path, out var previous) && previous != fileMode) {
+                              Console.Error.WriteLine("PROBE_MODE_INVALID"); return 3;
+                          }
+                          collected[path] = fileMode;
+                      }
+                      var loose = new HashSet<string>(StringComparer.Ordinal);
+                      loose.UnionWith(untracked); tracked = collected; untracked = loose;
+                  }
+                  var paths = tracked.Keys.Concat(untracked)
+                      .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
+                  elapsedTicks += Stopwatch.GetTimestamp() - started;
+                  allocated += GC.GetAllocatedBytesForCurrentThread() - before;
+                  var rows = paths.Select(path => path+"\t"+tracked.GetValueOrDefault(path,"u"));
+                  digest = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('\n', rows))));
+              }
+              Console.WriteLine(JsonSerializer.Serialize(new { mode, variant, allocated, digest, iterations=5, seconds=(double)elapsedTicks/Stopwatch.Frequency }));
+          } else {
+              var raw = GitRepositorySnapshotReader.ReadCurrent(root, pathspecs:
+                  [BackfillInventoryLoader.RootPath.TrimEnd('/'), "D5", "Meta/FILEMAP.toml", "Meta/FILEMAP.*.toml"]);
+              var snapshot = ((SnapshotDecodeOutcome.Decoded)SnapshotDecoder.Decode(raw)).Snapshot;
+              long allocated = 0; long elapsedTicks = 0; string? digest = null; int tickets = 0;
+              Console.WriteLine("BEGIN"); Console.Out.Flush();
+              for (var iteration = 0; iteration < 3; iteration++) {
+                  var before = GC.GetAllocatedBytesForCurrentThread();
+                  var started = Stopwatch.GetTimestamp();
+                  var document = variant == "digestion" ? BackfillInventoryLoader.LoadForDigestion(snapshot)
+                      : BackfillInventoryLoader.Load(snapshot);
+                  elapsedTicks += Stopwatch.GetTimestamp() - started;
+                  allocated += GC.GetAllocatedBytesForCurrentThread() - before;
+                  tickets = document.RequireTickets().Length;
+                  var sources = JsonSerializer.SerializeToUtf8Bytes(document.RequireDigestionSources());
+                  digest = Convert.ToHexString(SHA256.HashData(sources));
+              }
+              Console.WriteLine(JsonSerializer.Serialize(new { mode, variant, allocated, digest, tickets, iterations=3, seconds=(double)elapsedTicks/Stopwatch.Frequency }));
+          }
+          return 0;
+          '''
+          (scratch/'Program.cs').write_text(code)
+          refs = ''.join(f'<Reference Include="{p.stem}"><HintPath>{p}</HintPath></Reference>' for p in cli.glob('*.dll') if p.name != 'StrataLint.dll')
+          (scratch/'Probe.csproj').write_text('<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType><AssemblyName>StrataLint.Tests</AssemblyName><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup><ItemGroup>'+refs+'</ItemGroup></Project>')
+          subprocess.run(['dotnet','build',str(scratch/'Probe.csproj'),'-c','Release','-nologo'],check=True)
+          program = scratch/'bin/Release/net10.0/StrataLint.Tests.dll'
+          all_results = []
+          def measure(mode,variant,profile,input_digest=None):
+              arguments = ['dotnet',str(program),mode,str(root),variant]
+              if mode == 'enumeration': arguments += [str(scratch/'index'),str(scratch/'others'),str(scratch/'selectors')]
+              process = subprocess.Popen(arguments,stdout=subprocess.PIPE,text=True)
+              assert process.stdout.readline().strip() == 'BEGIN'
+              started = time.perf_counter()
+              result = json.loads(process.stdout.readline())
+              result['process_seconds'] = time.perf_counter() - started
+              assert process.wait() == 0
+              result['profile'] = profile
+              if input_digest is not None: result['input_sha256'] = input_digest
+              print('DIGESTION_CHANGED_COST '+json.dumps(result),flush=True)
+              all_results.append(result)
+          for profile,specs in [('repository',[]),('lean-utility',['D5','Trureturing.lean',':(glob)Meta/*'])]:
+              index = subprocess.check_output(['git','ls-files','--stage','-z','--',*specs], cwd=root)
+              others = subprocess.check_output(['git','ls-files','--others','--exclude-standard','-z','--',*specs], cwd=root)
+              (scratch/'index').write_bytes(index); (scratch/'others').write_bytes(others)
+              (scratch/'selectors').write_text('\n'.join(specs))
+              input_digest = hashlib.sha256(index+others).hexdigest()
+              for variant in ['collect','optimized','optimized','collect','direct','optimized','optimized','direct']:
+                  measure('enumeration',variant,profile,input_digest)
+          for variant in ['normal','digestion','digestion','normal']:
+              measure('loader',variant,'same-snapshot')
+          for profile in {result['profile'] for result in all_results}:
+              assert len({result['digest'] for result in all_results if result['profile'] == profile}) == 1
+          for result in all_results:
+              if result['mode'] == 'loader' and result['variant'] == 'digestion': assert result['tickets'] == 0
+          print('DIGESTION_CHANGED_PROJECTION_MATCH sources_and_entries=true index_paths_and_modes=true tickets_excluded_by_design=true')
+          shutil.rmtree(scratch)
+          PROBE
+          python3 "$RUNNER_TEMP/digestion-loader-cost.py" "$GITHUB_WORKSPACE"
       - name: Prepare the Scribe scope
         run: tools/scripts/workflow/scribe-scope-paths.sh "$RUNNER_TEMP/changed-paths" > "$RUNNER_TEMP/scribe-paths"
       - name: Current-tree rules
