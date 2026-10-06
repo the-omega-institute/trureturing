@@ -136,6 +136,10 @@ $$\forall q \in \mathbb{N},\; (2 \le q) \Rightarrow (\forall d \in \mathbb{N},\;
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/PermutedBrickworkEvenRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/belkin-allen-clark-2025-permuted-brickwork-even-depth` (refuted) by `D5/S3/Quantum/RandomCircuits/PermutedBrickworkEvenRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"belkin-allen-clark-2025-permuted-brickwork-even-depth","declaration_gid":"D5/S3/Quantum/RandomCircuits/PermutedBrickworkEvenRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Daniel Belkin, James Allen, Bryan K. Clark (2025). *Apparent Universal Behavior in 2nd Moments of Random Quantum Circuits*. URL: <https://arxiv.org/abs/2510.23726v2>.

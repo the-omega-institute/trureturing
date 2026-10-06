@@ -10,7 +10,10 @@ internal sealed class PermutedBrickworkEvenRefutationDocument : IScribeDocumentD
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuantumStates/belkinallenclark2025secondmoments");
     private static DocumentBlock Node(string id,string title,Formula formula,string prose,string declaration,DescribeRole role) =>
         Describe.Lean(DescribeId.Create("pbeven-"+id),DeclarationHandle.Create(Prefix+declaration),H(title),StatementSource.FromAuthor(Disp(formula)),
-            declaration is "restrictReplica" or "physicalWitness" or "claim" or "result" ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),Blocks(Paragraph(DefinitionDsl.Text(prose))),role);
+            declaration is "restrictReplica" or "physicalWitness" or "claim" or "result" ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),Blocks(Paragraph(DefinitionDsl.Text(prose))),role,
+            declaration == "result"
+                ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("belkin-allen-clark-2025-permuted-brickwork-even-depth"), ResolutionKind.Refuted)
+                : null);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For four sites, every local dimension q at least two and every even depth at least two give a permuted-brickwork Haar moment with a strictly negative quadratic form.",
