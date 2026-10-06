@@ -4,8 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: The two first-window disagreement events have their exact product-law masses.
- -/
+   digest: The two first-window disagreement events have their exact product-law masses. -/
 
 import D5.S3.Arith.FibonacciAtomic.RawCorrelationMomentIdentities
 import Mathlib.Tactic
