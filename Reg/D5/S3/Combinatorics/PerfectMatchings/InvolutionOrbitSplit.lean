@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit
 import Reg.Support.DependentFamily
 
@@ -69,18 +70,39 @@ def registration : Registration arena.{u} (arena.Law actual) where
     refine ⟨⟨ULift.{u} Bool, 1, 1, 0⟩, ⟨false⟩, ⟨true⟩, ?_⟩
     simp [actual, realize]
 
-register_information_theorem fixedPointFree_iff_reflection_exclusion in arena
-  readout via (realize signature.{u}
+def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_reflection_exclusion.{u})
+    (type_of% (realize signature.{u}
+    (fun _ p x => ((p.2.1 * p.2.2.1) ^ p.2.2.2 * p.2.1) x)
+    (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_reflection_exclusion "Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit/Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena/[anonymous]") "__information_unit"
+  realizationName := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u}
     (fun _ p x => ((p.2.1 * p.2.2.1) ^ p.2.2.2 * p.2.1) x)
     (fun e => nomatch e))
-  realizes registration
-  escape from source ({
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    definition := none
     owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit
     coordinates := #[0, 1, 2, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "body", "body", "fn", "arg"]
-      stateBinder := 6 }] })
-  escape continues (open)
+      stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
 
 end Reflection
 
@@ -135,18 +157,39 @@ def registration : Registration arena.{u} (arena.Law actual) where
     simp [actual, realize, q, Equiv.swap_mul_self, Perm.sameCycle_one,
       Equiv.swap_apply_def]
 
-register_information_theorem fixedPointFree_iff_rotation_separation in arena
-  readout via (realize signature.{u}
+def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_rotation_separation.{u})
+    (type_of% (realize signature.{u}
+    (fun _ p x => (p.2.1 * p.2.2).SameCycle x (p.2.1 x))
+    (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_rotation_separation "Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit/Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena/[anonymous]") "__information_unit"
+  realizationName := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u}
     (fun _ p x => (p.2.1 * p.2.2).SameCycle x (p.2.1 x))
     (fun e => nomatch e))
-  realizes registration
-  escape from source ({
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    definition := none
     owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit
     coordinates := #[0, 1, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "body", "arg"]
-      stateBinder := 5 }] })
-  escape continues (open)
+      stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
 
 end Separation
 
@@ -203,18 +246,39 @@ def registration : Registration arena.{u} (arena.Law actual) where
       connected_iff_rotation_orbits 1 1 (fun _ => rfl) (fun _ => rfl)]
     simp
 
-register_information_theorem connected_iff_rotation_orbits in arena
-  readout via (realize signature.{u}
+def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.connected_iff_rotation_orbits.{u})
+    (type_of% (realize signature.{u}
+    (fun _ p y => Connected p.2.1 p.2.2.1 p.2.2.2 y)
+    (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.connected_iff_rotation_orbits "Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit/Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena/[anonymous]") "__information_unit"
+  realizationName := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u}
     (fun _ p y => Connected p.2.1 p.2.2.1 p.2.2.2 y)
     (fun e => nomatch e))
-  realizes registration
-  escape from source ({
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    definition := none
     owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit
     coordinates := #[0, 1, 2, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 6 }] })
-  escape continues (open)
+      stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
 
 end Reachability
 
@@ -276,18 +340,38 @@ def splitRegistration : Registration splitArena.{u} (splitArena.Law actual) wher
       exact nomatch e
   dependence := actual_dependence
 
-register_information_theorem component_split in splitArena
-  readout via (realize signature.{u}
+def splitRegistration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_split.{u})
+    (type_of% (realize signature.{u}
+    (fun _ p x => RotationOrbit (p.2.1 * p.2.2) x) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_split "Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit/Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena/[anonymous]") "__information_unit"
+  realizationName := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨splitArena.{u}⟩
+  objectArena := .source ⟨splitArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source splitArena.{u} ⟨splitRegistration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u}
     (fun _ p x => RotationOrbit (p.2.1 * p.2.2) x) (fun e => nomatch e))
-  realizes splitRegistration
-  escape from source ({
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    definition := none
     owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit
     coordinates := #[0, 1, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "fn", "arg", "arg"]
-      stateBinder := 7 }] })
-  escape continues (open)
+      stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
 
 def coincidentRejected : Realization signature.{u} := realize signature
   (fun _ p x => RotationOrbit (p.2.1 * p.2.2) (p.2.1 x)) (fun e => nomatch e)
@@ -320,18 +404,38 @@ def classesRegistration : Registration classesArena.{u} (classesArena.Law actual
       exact nomatch e
   dependence := actual_dependence
 
-register_information_theorem component_orbit_classes in classesArena
-  readout via (realize signature.{u}
+def classesRegistration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_orbit_classes.{u})
+    (type_of% (realize signature.{u}
+    (fun _ p x => RotationOrbit (p.2.1 * p.2.2) x) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_orbit_classes "Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit/Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena/[anonymous]") "__information_unit"
+  realizationName := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨classesArena.{u}⟩
+  objectArena := .source ⟨classesArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source classesArena.{u} ⟨classesRegistration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u}
     (fun _ p x => RotationOrbit (p.2.1 * p.2.2) x) (fun e => nomatch e))
-  realizes classesRegistration
-  escape from source ({
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    definition := none
     owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit
     coordinates := #[0, 1, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "fn", "arg"]
-      stateBinder := 7 }] })
-  escape continues (open)
+      stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
 
 end Components
 
