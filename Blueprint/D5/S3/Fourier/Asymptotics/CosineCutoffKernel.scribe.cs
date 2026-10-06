@@ -8,7 +8,7 @@ internal sealed class CosineCutoffKernelDocument : IScribeDocumentDefinition
     private const string Module = "D5/S3/Fourier/Asymptotics/CosineCutoffKernel.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The actual finite cosine cutoff is the ordinary inverse Fourier integral of its closed reciprocal-frequency symbol.",
+        "The actual finite cosine cutoff has ordinary and L2 inverse identities, an all-L2 convolution operator, and an actual weighted integral client.",
         H("The Finite Cosine Cutoff Kernel"),
         Blocks(Describe.Lean(
             DescribeId.Create("finite-cosine-cutoff-kernel"),
@@ -35,9 +35,71 @@ internal sealed class CosineCutoffKernelDocument : IScribeDocumentDefinition
                     + "almost everywhere, and is nonzero at both frequencies c/(2*pi) and -c/(2*pi). "
                     + "The weighted zero action quantifies over every pair of real functions rho and f.")),
                 Paragraph(Text("This statement establishes ordinary finite inverse integration and finite symbol estimates. "
-                    + "The ordinary/L2 inverse identification, the all-L2 convolution operator, "
-                    + "the positive-Ci cutoff limit, and the original weighted-operator and Gaussian path conclusions remain separate obligations."))),
-            DescribeRole.Theorem))));
+                    + "The public finite-window theorem also identifies the actual L2 inverse representative "
+                    + "of this same symbol with the complex-valued kernel in L2, "
+                    + "including its almost-everywhere representative equality."),
+                    Ref(Module + "actual_cutoff_inverse")),
+                Paragraph(Text("The positive-Ci cutoff limit and the original Gaussian series and path conclusions remain separate obligations."))),
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-finite-cutoff-l2-inverse"),
+                DeclarationHandle.Create(Module + "actual_cutoff_inverse"),
+                H("The actual L2 inverse and its kernel representative"),
+                StatementSource.FromAuthor(ActualInverseFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For c>0 and c<=N, let m be the existing closed-band symbol "
+                        + "and q(x)=ofReal(kernel(c,N,x)). The statement supplies proofs hm and hq "
+                        + "that these two specific functions belong to complex L2(volume).")),
+                    Paragraph(Text("L2FourierInverse denotes the inverse of Lp.fourierTransformₗᵢ ℝ ℂ. "
+                        + "toLp(h,f) is the L2 class constructed from the displayed MemLp witness; "
+                        + "coeFn is its measurable representative. The first equality is almost everywhere "
+                        + "for volume. The second is equality of L2 elements.")),
+                    Paragraph(Text("This theorem identifies the inverse transform of m itself. "
+                        + "It makes no assertion about the convolution of q with arbitrary L2 inputs, "
+                        + "weighted operators, or the positive-Ci limit."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-finite-cutoff-all-l2-convolution"),
+                DeclarationHandle.Create(Module + "actual_cutoff_convolution"),
+                H("The ordinary convolution on every complex L2 input"),
+                StatementSource.FromAuthor(ActualConvolutionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("HC is Lp(C,2,volume), and CLMC(HC,HC) is its space of complex "
+                        + "continuous linear maps. L2Fourier and L2FourierInverse are the mutually inverse "
+                        + "Lp Fourier isometries with the exp(-2*pi*i*x*xi) forward convention.")),
+                    Paragraph(Text("Every input f belongs to the full complex L2 space. For every real x, "
+                        + "the actual integral row q(x-y)f(y) is integrable. The displayed MemLp witnesses "
+                        + "supply the spatial integral and the frequency product as L2 elements. "
+                        + "Both are identified with the same operator output, with the inverse transform "
+                        + "applied to the frequency product.")),
+                    Paragraph(Text("The nested estimate quantifies over every real M>=N. Its operator D "
+                        + "is identified almost everywhere with the ordinary convolution using kernel(c,M). "
+                        + "Only the frequency functions m, phase*m and m*L2Fourier(f) use bounded support."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-weighted-finite-cutoff"),
+                DeclarationHandle.Create(Module + "actual_weighted_cutoff"),
+                H("The actual weighted integral operator and its density conjugacy"),
+                StatementSource.FromAuthor(ActualWeightedFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("The parameters are r and alpha with 0<r<1. Define a=(1+r)/2, "
+                        + "b=(1-r)/2, c0=1/(4*pi*sqrt(a*b)), kappa=1/a+alpha^2/b, "
+                        + "rho(x)=c0*exp(-kappa*x^2/2), and mu=volume.withDensity(ofReal(rho)). "
+                        + "The formula expands these definitions, with ennrealOfReal denoting ENNReal.ofReal. HR=Lp(R,2,volume), Hmu=Lp(R,2,mu).")),
+                    Paragraph(Text("T is obtained from the actual L2 integral-kernel factory applied to "
+                        + "K(x,y)=kernel(c,N,x-y). Its ordinary weighted integral representative and "
+                        + "almost-everywhere row integrability are established before the conjugacy is used. "
+                        + "No identity for T or C is required as a caller hypothesis.")),
+                    Paragraph(Text("U is an onto real linear isometry between the two displayed measures; "
+                        + "its inverse is also specified almost everywhere. M is multiplication by sqrt(rho). "
+                        + "compose(A,B) means A after B, and asCLM denotes the continuous linear map "
+                        + "underlying a linear isometry equivalence.")),
+                    Paragraph(Text("This finite-cutoff statement does not pass to the positive-Ci limit "
+                        + "or assert any Gaussian quadratic-series or path-limit conclusion."))),
+                DescribeRole.Theorem))));
 
     private static Formula Reals => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
     private static Formula Arrow(Formula a, Formula b) => F.Grp(F.Seq(a, F.To, F.Sp, b));
@@ -120,5 +182,112 @@ internal sealed class CosineCutoffKernelDocument : IScribeDocumentDefinition
             [new Formula.BoundVariable(FormulaIdentifier.Create("c"), Reals),
              new Formula.BoundVariable(FormulaIdentifier.Create("N"), Reals)],
             Implies(Positive(c), Implies(Le(c, n), statement))));
+    }
+
+    private static Formula ActualInverseFormula()
+    {
+        Formula c = F.Id("c"), n = F.Id("N"), x = F.Id("x"),
+            hm = F.Id("hm"), hq = F.Id("hq"), volume = F.Id("volume");
+        Formula m = Symbol(c, n);
+        Formula q = Lambda("x", Reals, Call("ofReal", Kernel(c, n, x)));
+        Formula inverse = Call("L2FourierInverse", Call("toLp", hm, m));
+        Formula conclusion = new Formula.BindMany(FormulaQuantifier.Exists,
+            [new Formula.BoundVariable(FormulaIdentifier.Create("hm"), Call("MemLp", m, F.D(2), volume)),
+             new Formula.BoundVariable(FormulaIdentifier.Create("hq"), Call("MemLp", q, F.D(2), volume))],
+            And(Call("AEEq", Call("coeFn", inverse), q, volume),
+                Equal(inverse, Call("toLp", hq, q))));
+        return F.Disp(All("c", Reals, All("N", Reals,
+            Implies(Positive(c), Implies(Le(c, n), conclusion)))));
+    }
+
+    private static Formula Complexes => F.Seq(F.Mathbb, F.Grp(F.Id("C")));
+    private static Formula HC => Call("Lp", Complexes, F.D(2), F.Id("volume"));
+    private static Formula HR => Call("Lp", Reals, F.D(2), F.Id("volume"));
+    private static Formula CLM(Formula field, Formula source, Formula target) =>
+        Call("ContinuousLinearMap", field, source, target);
+    private static Formula Exists(string name, Formula domain, Formula body) =>
+        new Formula.BindMany(FormulaQuantifier.Exists,
+            [new Formula.BoundVariable(FormulaIdentifier.Create(name), domain)], body);
+    private static Formula IntegralWith(Formula function, Formula measure) =>
+        Call("integral", function, measure);
+    private static Formula Compose(Formula a, Formula b) => Call("compose", a, b);
+    private static Formula AE(Formula a, Formula b, Formula measure) => Call("AEEq", a, b, measure);
+
+    private static Formula ActualConvolutionFormula()
+    {
+        Formula c = F.Id("c"), n = F.Id("N"), upper = F.Id("M"),
+            x = F.Id("x"), y = F.Id("y"), xi = F.Id("xi"), f = F.Id("f"),
+            op = F.Id("C"), d = F.Id("D"), hg = F.Id("hg"), hconv = F.Id("hconv"),
+            volume = F.Id("volume");
+        Formula q = Lambda("x", Reals, Call("ofReal", Kernel(c, n, x)));
+        Formula row = Lambda("y", Reals,
+            Multiply(Call("ofReal", Kernel(c, n, Subtract(x, y))), Call("f", y)));
+        Formula conv = Lambda("x", Reals, IntegralWith(row, volume));
+        Formula spectral = Lambda("xi", Reals,
+            Multiply(SymbolAt(c, n, xi), Call("eval", Call("L2Fourier", f), xi)));
+        Formula exact = Exists("hg", Call("MemLp", spectral, F.D(2), volume),
+            Exists("hconv", Call("MemLp", conv, F.D(2), volume),
+                And(AE(Call("coeFn", Call("C", f)), conv, volume),
+                    Equal(Call("C", f), Call("toLp", hconv, conv)),
+                    Equal(Call("C", f), Call("L2FourierInverse", Call("toLp", hg, spectral))))));
+        Formula upperConv = Lambda("x", Reals, IntegralWith(Lambda("y", Reals,
+            Multiply(Call("ofReal", Kernel(c, upper, Subtract(x, y))), Call("f", y))), volume));
+        Formula nested = All("M", Reals, Implies(Le(n, upper),
+            Exists("D", CLM(Complexes, HC, HC), And(
+                All("f", HC, AE(Call("coeFn", Call("D", f)), upperConv, volume)),
+                Le(Norm(Subtract(d, op)), new Formula.Fraction(TwoPi, n))))));
+        Formula conclusion = And(Call("MemLp", q, F.D(2), volume),
+            Exists("C", CLM(Complexes, HC, HC), And(
+                All("f", HC, All("x", Reals, Call("Integrable", row, volume))),
+                All("f", HC, exact), Le(Norm(op), new Formula.Fraction(TwoPi, c)), nested)));
+        return F.Disp(All("c", Reals, All("N", Reals,
+            Implies(Positive(c), Implies(Le(c, n), conclusion)))));
+    }
+
+    private static Formula ActualWeightedFormula()
+    {
+        Formula r = F.Id("r"), alpha = F.Id("alpha"), c = F.Id("c"), n = F.Id("N"),
+            x = F.Id("x"), y = F.Id("y"), f = F.Id("f"), h = F.Id("h"),
+            op = F.Id("C"), t = F.Id("T"), u = F.Id("U"), m = F.Id("M"),
+            volume = F.Id("volume");
+        Formula a = new Formula.Fraction(Add(F.D(1), r), F.D(2));
+        Formula b = new Formula.Fraction(Subtract(F.D(1), r), F.D(2));
+        Formula c0 = new Formula.Fraction(F.D(1),
+            Multiply(Multiply(F.D(4), F.Pi), Call("sqrt", Multiply(a, b))));
+        Formula kappa = Add(new Formula.Fraction(F.D(1), a),
+            new Formula.Fraction(Multiply(alpha, alpha), b));
+        Formula Rho(Formula z) => Multiply(c0, Call("exp",
+            Negative(new Formula.Fraction(Multiply(kappa, Multiply(z, z)), F.D(2)))));
+        Formula mu = Call("withDensity", volume,
+            Lambda("x", Reals, Call("ennrealOfReal", Rho(x))));
+        Formula hmu = Call("Lp", Reals, F.D(2), mu);
+        Formula row = Lambda("y", Reals,
+            Multiply(Kernel(c, n, Subtract(x, y)), Call("f", y)));
+        Formula conv = Lambda("x", Reals, IntegralWith(row, volume));
+        Formula weighted = Lambda("x", Reals, IntegralWith(row, mu));
+        Formula uinv = Call("symm", u);
+        Formula conclusion = Exists("C", CLM(Reals, HR, HR),
+            Exists("T", CLM(Reals, hmu, hmu),
+            Exists("U", Call("LinearIsometryEquiv", Reals, hmu, HR),
+            Exists("M", CLM(Reals, HR, HR), And(
+                All("f", HR, AE(Call("coeFn", Call("C", f)), conv, volume)),
+                All("f", hmu, AE(Call("coeFn", Call("T", f)), weighted, mu)),
+                All("f", hmu, Call("AlmostEverywhere", mu,
+                    Lambda("x", Reals, Call("Integrable", row, mu)))),
+                All("f", hmu, AE(Call("coeFn", Call("U", f)),
+                    Lambda("x", Reals, Multiply(Call("sqrt", Rho(x)), Call("f", x))), volume)),
+                All("h", HR, AE(Call("coeFn", Call("apply", uinv, h)),
+                    Lambda("x", Reals, new Formula.Fraction(Call("h", x), Call("sqrt", Rho(x)))), mu)),
+                All("h", HR, AE(Call("coeFn", Call("M", h)),
+                    Lambda("x", Reals, Multiply(Call("sqrt", Rho(x)), Call("h", x))), volume)),
+                Equal(Compose(Call("asCLM", u), Compose(t, Call("asCLM", uinv))),
+                    Compose(m, Compose(op, m))),
+                Le(Norm(op), new Formula.Fraction(TwoPi, c)),
+                Le(Norm(m), Call("sqrt", c0)),
+                Le(Norm(t), Multiply(c0, new Formula.Fraction(TwoPi, c))))))));
+        return F.Disp(All("r", Reals, All("alpha", Reals,
+            Implies(Positive(r), Implies(new Formula.Relation(r, FormulaRelationOperator.LessThan, F.D(1)),
+            All("c", Reals, All("N", Reals,
+                Implies(Positive(c), Implies(Le(c, n), conclusion)))))))));
     }
 }
