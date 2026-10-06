@@ -22,6 +22,11 @@ internal sealed class RemoteVectorCompensationDocument : IScribeDocumentDefiniti
         return Seq(parts.ToArray());
     }
 
+    private static DocumentBlock Definition(string name, string title, string prose) =>
+        Describe.Lean(DescribeId.Create("remote-vector-" + name.ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every legal finite prefix and complete modular Fibonacci composition have a common finite realization with a nonzero remote tail.",
         H("Remote Vector Compensation"),
