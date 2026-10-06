@@ -69,10 +69,21 @@ internal static class GitRepositorySnapshotReader
         HashSet<string> InspectedDirectories) Collect(string root, Func<string, bool>? include,
         Action<RawRepositoryEntry>? visit, Func<string, bool>? readContents, IReadOnlyList<string>? pathspecs)
     {
-        string[] scope = pathspecs is null ? [] : ["--", .. pathspecs];
-        var tracked = ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scope]));
+        var tracked = new Dictionary<string, string>(StringComparer.Ordinal);
+        var untracked = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var scope in EnumerationScopes(pathspecs))
+        {
+            foreach (var (path, mode) in ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scope])))
+            {
+                if (tracked.TryGetValue(path, out var previous) && previous != mode)
+                    throw new InvalidOperationException($"git index mode changed during enumeration: {path}");
+                tracked[path] = mode;
+            }
+            untracked.UnionWith(ParseNulStrings(Git(root,
+                ["ls-files", "--others", "--exclude-standard", "-z", .. scope])));
+        }
         var paths = tracked.Keys
-            .Concat(ParseNulStrings(Git(root, ["ls-files", "--others", "--exclude-standard", "-z", .. scope])))
+            .Concat(untracked)
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToArray();
@@ -163,6 +174,42 @@ internal static class GitRepositorySnapshotReader
         }
 
         return (entries, inventory, links, paths, inspectedDirectories);
+    }
+
+    private static IEnumerable<string[]> EnumerationScopes(IReadOnlyList<string>? pathspecs)
+    {
+        if (pathspecs is null || pathspecs.Count == 0)
+        {
+            yield return pathspecs is null ? [] : ["--"];
+            yield break;
+        }
+
+        // Positive path selections form a union. Other Git magic, including
+        // exclusions, retains its native single-invocation semantics.
+        if (pathspecs.Any(static path => path.StartsWith(':')
+                && !path.StartsWith(":(literal)", StringComparison.Ordinal)
+                && !path.StartsWith(":(glob)", StringComparison.Ordinal)))
+        {
+            yield return ["--", .. pathspecs];
+            yield break;
+        }
+
+        var limit = OperatingSystem.IsWindows() ? 16 * 1024 : 64 * 1024;
+        var batch = new List<string>();
+        var bytes = 0;
+        foreach (var path in pathspecs)
+        {
+            var size = StrictUtf8.GetByteCount(path) + 1 + IntPtr.Size;
+            if (batch.Count > 0 && bytes + size > limit)
+            {
+                yield return ["--", .. batch];
+                batch.Clear();
+                bytes = 0;
+            }
+            batch.Add(path);
+            bytes += size;
+        }
+        if (batch.Count > 0) yield return ["--", .. batch];
     }
 
     internal static RawRepositorySnapshot ReadRevision(string repositoryRoot, string revision)
