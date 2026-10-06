@@ -111,7 +111,7 @@ private theorem double_delete {m : ℕ} (z : Configuration (m + 1)) :
     delete (z ((Fin.last m).castSucc))
         (delete (z (Fin.last (m + 1))) (configurationCycle z)) =
       (blockList m (by omega) z : Cycle (Fin (m + 2))) := by
-  rw [configurationCycle_delete_last, residual_split]
+  rw [residual_delete, residual_split]
   change (((blockList m (by omega) z ++ [z ((Fin.last m).castSucc)]).filter
     (fun y => decide (y ≠ z ((Fin.last m).castSucc)))) : Cycle (Fin (m + 2))) = _
   rw [List.filter_append]
@@ -206,7 +206,7 @@ private theorem outer_double_delete {m : ℕ} (hm : 2 ≤ m) (z : Configuration 
     (k : Fin m) :
     delete (z ((Fin.last m).castSucc)) (outerCircle z k) =
       (blockList m (by omega) z : Cycle (Fin (m + 2))) := by
-  rw [← outer_penult hm z k, outerCircle, ← configurationCycle_delete_last,
+  rw [← outer_penult hm z k, outerCircle, ← residual_delete,
     double_delete, outer_block hm]
   exact Cycle.coe_eq_coe.mpr (List.IsRotated.symm ⟨k.val, rfl⟩)
 
@@ -327,14 +327,14 @@ private theorem prefix_current_rotate {m : ℕ} (hm : 2 ≤ m)
     delete (v (Fin.last (m + 1)))
         (configurationCycle (v * blockTurn (m + 1) (by omega) ^ r)) =
         (residualList (v * blockTurn (m + 1) (by omega) ^ r) : Cycle (Fin (m + 2))) := by
-      rw [← hl, configurationCycle_delete_last]
+      rw [← hl, residual_delete]
     _ = (residualList v : Cycle (Fin (m + 2))) := by
       change (blockList (m + 1) (by omega) (v * blockTurn (m + 1) (by omega) ^ r) : Cycle (Fin (m + 2))) =
         (blockList (m + 1) (by omega) v : Cycle (Fin (m + 2)))
       rw [blockTurn_pow_list (by omega) (by omega)]
       exact Cycle.coe_eq_coe.mpr (List.IsRotated.symm ⟨r, rfl⟩)
     _ = delete (v (Fin.last (m + 1))) (configurationCycle v) :=
-      (configurationCycle_delete_last v).symm
+      (residual_delete v).symm
 
 private theorem residual_block_reverse {m : ℕ} (v : Configuration (m + 1)) :
     delete (v (Fin.last (m + 1)))
@@ -347,7 +347,7 @@ private theorem residual_block_reverse {m : ℕ} (v : Configuration (m + 1)) :
     delete (v (Fin.last (m + 1)))
         (configurationCycle (v * prefixReversal m (by omega))) =
         (residualList (v * prefixReversal m (by omega)) : Cycle (Fin (m + 2))) := by
-      rw [← hl, configurationCycle_delete_last]
+      rw [← hl, residual_delete]
     _ = (residualList v : Cycle (Fin (m + 2))).reverse := by
       rw [residual_split, block_reverse_list, Equiv.Perm.mul_apply,
         prefix_fixed (by omega) _ (by simp), residual_split, Cycle.reverse_coe,
@@ -355,7 +355,7 @@ private theorem residual_block_reverse {m : ℕ} (v : Configuration (m + 1)) :
       simp only [List.reverse_singleton, List.singleton_append]
       exact Cycle.coe_cons_eq_coe_append _ _ |>.symm
     _ = (delete (v (Fin.last (m + 1))) (configurationCycle v)).reverse :=
-      congrArg Cycle.reverse (configurationCycle_delete_last v).symm
+      congrArg Cycle.reverse (residual_delete v).symm
 
 private theorem outer_classification {m : ℕ} (hm : 3 ≤ m)
     (z v : Configuration (m + 1))
@@ -434,7 +434,7 @@ private theorem outer_classification {m : ℕ} (hm : 3 ≤ m)
     refine ⟨k, Or.inl ?_⟩
     rw [← hcurrent, hk]
     change delete (z (Fin.last (m + 1))) (configurationCycle (outerAnchor z k)) = outerCircle z k
-    rw [← outer_last (by omega) z k, configurationCycle_delete_last]
+    rw [← outer_last (by omega) z k, residual_delete]
     rfl
   · let q' := q * prefixReversal m (by omega)
     have hq's : q' (Fin.last (m + 1)) = s := by
@@ -457,7 +457,7 @@ private theorem outer_classification {m : ℕ} (hm : 3 ≤ m)
     have hcc : (delete s (configurationCycle v)).reverse = outerCircle z k := by
       rw [← hcurrent, ← hq'c, hk]
       change delete (z (Fin.last (m + 1))) (configurationCycle (outerAnchor z k)) = outerCircle z k
-      rw [← outer_last (by omega) z k, configurationCycle_delete_last]
+      rw [← outer_last (by omega) z k, residual_delete]
       rfl
     simpa only [Cycle.reverse_reverse] using congrArg Cycle.reverse hcc
 

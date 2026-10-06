@@ -57,13 +57,13 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
                     + "This establishes both full coverage of the independent domain and the literal support identity."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("delete-last-residual"),
-                DeclarationHandle.Create(Prefix + "configurationCycle_delete_last"),
+                DeclarationHandle.Create(Prefix + "residual_delete"),
                 H("Deleting the Last Label"),
                 StatementSource.FromAuthor(DeletionFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For every configuration z, deleting the actual last label from its oriented circular tuple "
-                    + "gives the circle of its literal residual list. This exposes the established internal deletion "
-                    + "identity for live reuse across modules, retaining its exact orientation and proof."))),
+                    "For every configuration z, deleting its last label from its oriented circular tuple "
+                    + "gives the circle of its residual list. Injectivity places that label only in the last "
+                    + "position, so deletion preserves the order of all remaining labels."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "The result concerns one zero star and its retained factor. It does not connect distinct stars "

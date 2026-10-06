@@ -110,7 +110,7 @@ private theorem residual_nodup {m : ℕ} (z : Configuration m) : (residualList z
   apply List.nodup_ofFn.mpr
   intro i j h
   exact (Fin.castSucc_injective m) (z.injective h)
-private theorem residual_delete {m : ℕ} (z : Configuration m) : delete (z (Fin.last m)) (configurationCycle z) =
+theorem residual_delete {m : ℕ} (z : Configuration m) : delete (z (Fin.last m)) (configurationCycle z) =
       (residualList z : Cycle (Fin (m + 1))) := by
   change ((List.ofFn z).filter (fun y => decide (y ≠ z (Fin.last m))) :
     Cycle (Fin (m + 1))) = _
@@ -988,11 +988,7 @@ theorem zeroStar_b_complement_hamiltonian {m : ℕ} (hm : 6 ≤ m)
   rw [hu', he'] at hc
   simpa only [show m * ((m + 1) * 2) = 2 * m * (m + 1) by ring] using hc
 
-/-- Deleting the last label gives the literal residual circular tuple. -/
-theorem configurationCycle_delete_last {m : ℕ} (z : Configuration m) :
-    delete (z (Fin.last m)) (configurationCycle z) =
-      (residualList z : Cycle (Fin (m + 1))) := residual_delete z
-#print axioms configurationCycle_delete_last
+#print axioms residual_delete
 #print axioms coordinateEquiv
 #print axioms zeroStar_b_complement_hamiltonian
 
