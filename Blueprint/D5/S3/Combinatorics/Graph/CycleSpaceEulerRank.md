@@ -19,14 +19,14 @@ $$
 
 ## Commentary
 
-This is a genuine chain-level bridge: edge labels map to the dual of vertex potentials by summing endpoint characters, and the kernel is identified with the existing simple-cycle space. It does not assume an embedding or orient edges, which is appropriate over F2.
+This uncompiled scaffold merely aliases an existing relation-space map: edge labels map to the dual of vertex potentials by summing endpoint characters, and the kernel is identified with the existing simple-cycle space. It does not assume an embedding or orient edges, which is appropriate over F2.
 
 The staged topology bridge is:
 
 1. Add the simplicial-chain alias and verify boundary-composition against the endpoint differential.
 2. Add a face-family/2-basis interface for plane embeddings. Mac Lane's criterion says planarity is equivalent to a cycle basis in which every edge occurs in at most two basis cycles.
 3. Add the facial cycle double-cover theorem for 2-connected planar graphs.
-4. Leave the bridgeless-graph Cycle Double Cover Conjecture as the open frontier; target cubic, projective-planar, or bounded-genus cases first.
+4. Consult current cycle-double-cover literature; arXiv:2607.16356v3 presents an announced July 2026 proof, which this scaffold does not independently verify.
 
 ## References
 
