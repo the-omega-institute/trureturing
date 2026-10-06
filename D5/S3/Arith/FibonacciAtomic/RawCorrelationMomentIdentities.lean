@@ -4,13 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: The heterogeneous first-window parameters have legal Bernoulli laws and the exact finite disagreement and norm-gap identities used by raw correlation.
-   proof_shape: unsure
-   admission_basis: escape-witness
-   registration: deferred(CLAUDE.md 3.9)
-   escape_witness: finite three-coordinate product expectation is evaluated by an explicit Bool enumeration
-   frozen_deps: []
-   -/
+   digest: The heterogeneous first-window parameters have legal Bernoulli laws and the exact finite disagreement and norm-gap identities used by raw correlation. -/
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Tactic
