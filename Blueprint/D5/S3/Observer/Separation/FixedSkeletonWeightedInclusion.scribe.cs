@@ -22,7 +22,7 @@ internal sealed class FixedSkeletonWeightedInclusionDocument : IScribeDocumentDe
                     + "rational w. Its finite matrix denominator gives an integer L>0 and natural ell_z, "
                     + "with sum_z ell_z=L tau and every actual row sum at most L. R_x is the actual image "
                     + "phi(x,B). Zero weights are included. No rationality, optimum value or denominator is "
-                    + "assumed. This consumed supplier application supplies no new-content or escape credit."))),
+                    + "assumed."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("scalar-boolean-raw-layer-signatures"),
@@ -77,8 +77,14 @@ internal sealed class FixedSkeletonWeightedInclusionDocument : IScribeDocumentDe
                     + "Define tau,T,D,Theta and actual labelled widths as above. Allowed(s,psi) abbreviates exactly "
                     + "these assumptions, not a width or geometry premise. The conclusion combines the same-task "
                     + "literal minimum with a fixed k,L>0,ell chosen before real alpha and C. k attains Theta, "
-                    + "ell is the internally scaled actual optimal product dual, and every resulting ordinary "
-                    + "family is proved allowed. For every alpha<Theta and C>0, an integer m>=2 makes "
+                    + "ell is the internally scaled actual optimal product dual. FamilyAllowed holds for every "
+                    + "natural m: the maps agree with the fixed designated maps, each ordinary map has some "
+                    + "surjective row and some surjective column, and every effective output is attained. "
+                    + "This algebraic condition does not assert finiteness of the alphabets. For nonzero m, "
+                    + "the constructed endpoint and effective alphabets are finite and nonempty; at m=0, "
+                    + "any positive ell_z gives an infinite ZMod 0 coordinate. For every alpha<Theta and C>0, "
+                    + "an integer m>=2 therefore gives a finite nonempty family satisfying the original "
+                    + "assumptions and makes "
                     + "C Wpi(F_m)^alpha<Wcn(F_m). Only k's addition block varies; all others remain fixed ignored "
                     + "Boolean XOR and F_m has scalar Boolean output. The original-width coefficient is "
                     + "card XP*card YP, independent of m, with all raw cuts bounded by that coefficient times m^L. "
