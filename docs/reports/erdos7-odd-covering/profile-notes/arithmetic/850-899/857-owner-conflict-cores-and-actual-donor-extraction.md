@@ -531,3 +531,157 @@ payment and finite probability interfaces. No new Lean declaration is
 retained. The unresolved step is an actual same-geometry bound excluding
 the escape union, or another compatibility certificate strong enough
 to contradict the residual owner obstruction.
+
+## 9. A globally minimal constant-word target admits any eligible sibling
+
+Specialize to the same actual EB1 family with ternary height two,
+the actual pure 3 and 9 guards, and q=113. Reuse Report850 CD87:
+every original has q-height at most one. Thus G=1 and Deep is empty.
+This is a consequence of that existing height exclusion, not an
+additional assumption that the original family has no deeper labels.
+
+Let U be the complement of the actual unit-cofactor digits
+alpha, beta and gamma. They need not all be distinct, so |U| is
+at least 110. Fix any one of the five actual safe words z modulo 9.
+Before choosing a six-set or placing any short leaves, define
+
+$$
+\mathscr B_z=\{m>1:9qm\in D,\ (m,3q)=1,\quad
+ c_0(m),c_1(m),c_2(m)\in U,\quad
+ b_m\equiv z\pmod3,\quad z_m=z\}.
+\tag{CD20}
+$$
+
+All colors and phases in CD20 are those of the actual originals.
+Their qm and 3qm counterparts exist by numerical divisor closure.
+SC468, applied to any six-element subset of U and the constant
+assignment f=z, makes this finite set nonempty. Its capacity condition
+is 6<=9, and excluding gamma removes the final-donor exception.
+Choose m divisibility-minimal in the entire set B_z. Choosing its
+numerically smallest member is one way to do so. Put
+
+$$
+C_m=\{c_0(m),c_1(m),c_2(m)\},\qquad
+E_m=U\setminus C_m,\qquad |E_m|\ge107.
+\tag{CD21}
+$$
+
+For every d in E_m there is a lawful six-code in which m is bad,
+is minimal among all bad cofactors of that code, and d is an eligible
+short sibling of its top inverse. The choice of code may depend on d.
+
+To construct it, extend C_m union {d}, which has at most four members,
+to a six-set R inside U, and prescribe f(c)=z for every c in R.
+Badness now has exactly the SC468 predicate: the three colors lie
+in R, the middle root agrees with z, and the top word equals z.
+It is independent of the fine placement of the six short leaves.
+In particular every bad cofactor for this code belongs to B_z, so
+the previously chosen m remains divisibility-minimal.
+
+Choose an additional color in R outside C_m and {d}. There are at
+least two such choices. Assign the target top color, d and this
+additional color to the three leaves
+
+$$
+z,\quad z+27,\quad z+54\pmod{81}.
+\tag{CD22}
+$$
+
+They have the same modulo-27 parent. The three remaining colors
+can use z+9, z+18 and z+36 modulo 81. All six positions are
+distinct and lie over z. Consecutive values z+9j do not in general
+have the same modulo-27 parent; CD22 retains the literal prefix.
+
+The actual 3q root contains at least two safe old words. Choose
+one v different from z for its terminal, then another safe word
+w outside {z,v} for the q terminal. Their depths are four and
+three, respectively. They cannot intersect any of the six selected
+leaves over z or each other. The other depth-five positions complete
+the common code: there are 135 safe fine positions initially,
+the two terminal contractions remove 8 and 2 leaves, and the six
+short contractions remove 12. This leaves 113 initial leaves.
+Assign the remaining q-digits bijectively to the remaining leaves.
+The code preserves the same complete old modulo-nine and W source.
+
+### The remaining test is on the original private source
+
+Let X be the complete projected private region of the actual 9qm,
+as in Section 5. It is fixed before any of the above placements.
+For d in E_m define the actual Cross union on that same source by
+
+$$
+\operatorname{Cross}_d
+=\bigcup_{\substack{n=3^aqs\in D,\ c(n)=d\\s\nmid m}}
+ \{x\in X:x\equiv\rho_n\pmod{3^as}\}.
+\tag{CD23}
+$$
+
+If X has a point outside Cross_d, use that point's full old
+coordinate and the original q-digit d as one CRT source. A covering
+owner must be q-bearing, since X avoids all q-free originals, and
+it has q-height one by CD87. Its cofactor divides m by the choice
+of the point. It is not one because d avoids all unit digits, and
+it is not m because d avoids C_m. Thus it has a proper nonunit
+cofactor s dividing m, with literal cofactor phase agreeing with
+the target and literal ternary phase agreeing with z.
+
+Choose the code constructed above for d. This owner has a nonempty
+short inverse. Its group cannot be bad, by the global minimality
+of m, and every short owner of a good group is admissible. Its
+27s output has the same parent as the target top inverse, so
+
+$$
+X\setminus\operatorname{Cross}_d\ne\varnothing
+\quad\Longrightarrow\quad
+\exists\text{ a lawful common code and an admissible good owner }j:
+\ B_{m,2}\subseteq E_j,\quad 1<s_j<m,\quad s_j\mid m.
+\tag{CD24}
+$$
+
+The containment concerns the whole inverse, not only its private
+part: divisibility and the agreed literal phase make the 27s output
+contain the entire target cylinder. The point in X is used only to
+obtain that owner from actual whole coverage. Both Deep and Blocked
+are absent in this selected geometry.
+
+Neither X nor Cross_d depends on the fine placement. Consequently,
+if no common code permits an admissible good output singly containing
+this target's top inverse, then
+
+$$
+\forall d\in E_m,\qquad \operatorname{Cross}_d=X.
+\tag{CD25}
+$$
+
+At every x in this same X, at least |E_m|>=107 distinct actual
+Cross originals are then active across these colors: choose one
+covering each color, and their different first q-digits make the
+originals distinct. This is a necessary same-source load under the
+displayed no-code-absorption condition. EB1 alone does not establish
+that condition; failure to pay every bad group at once does not imply
+that any particular target fails in every code.
+
+CD24 allows a code to be chosen for one target and one digit. It
+does not give 107 siblings in a single tree: a depth-four leaf has
+only two other short siblings. Nor does it combine donors from
+different geometries into a permanent owner plan. The distinct-parent
+assumption of Report859 ET3--ET5 is absent in this construction;
+its two-target output cap and twelve-target exception bound cannot
+be imported for this clustered geometry. The actual Cross-escape
+statement and one simultaneous payment plan for every remaining
+bad group are still separate unproved obligations.
+
+This reduction reuses SC468, CD87 and CD17 with a global choice of
+the minimal cofactor before choosing the code. It supplies neither
+a new height exclusion nor an unrestricted odd-covering conclusion.
+
+A transient cache-guarded Lean application checks the finite
+terminal-word choice, the six literal short slots and their separation
+from the terminals, the nine available positions over z, extension of
+at most four prescribed colors to six, and the bounds three and 107
+for eligible colors. All seven axiom reports use only subsets of
+`propext`, `Classical.choice` and `Quot.sound`. This does not compile
+the entire SC468/CD87 application, global-minimum selection or CRT
+donor-extraction chain again; those remain the ordinary reuse argument
+in this section. No new tracked Lean declaration is supplied by these
+finite applications.
