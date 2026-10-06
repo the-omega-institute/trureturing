@@ -64216,3 +64216,213 @@ $$
 本节支付的是同一前缀配对的积分前绝对交换。若另改写成未阻尼原子级数，仍须独立支付 Möbius 条件矩、有限截止和 Abel 末项；（424.5）不自动给原子绝对可和。式（424.6）与（424.8）保留了原目标、全部正指标和首块的共同来源，但完整 Robin 所需的有符号估计、有限范围及常数预算仍未得到证明。这里的阶乘余核、可逆卷积及经典解析中间供应均直接复用，不作全局原创性断言。
 
 ## 追加锚（本行以下为增补区）
+
+## 425. 完整 β 商纤维的三矩读出与必需的偶尺度补偿
+
+沿用 §§398–399、424 的同一实际 $q,\beta,\mathcal B,A,D,R,P_x,J_x,\eta,P_x^\eta,J_x^\eta$。本节复用已知单核比例轮廓和 §424 的精确纤维运输，处理全部无界正 d 的共同误差；不把固定 U 的单核估计直接当成无穷 d 的统一估计。所得结论只定位实际 β 配对内的符号补偿，不给普通 M 前缀或完整 Robin 积分的符号。
+
+**定义 425.1（原轮廓与完整纤维）。** 记 $B=\mathcal B(1)>0$、$B'=\mathcal B'(1)$、$B''=\mathcal B''(1)$，保留
+
+$$
+A=B^{-1},\quad D=A+B'/B^2,\quad
+c_{\rm diag}=\frac{(B')^2}{B^3}-\frac{B''}{2B^2}+\frac{\gamma_1}{B},
+\quad p_B(v)=\frac A2v^2+(D-A)v+c_{\rm diag}.
+\tag{425.1}
+$$
+
+这里保留 §398 的 $c_{\rm diag}$；$\gamma_1$ 使用 $\zeta(1+z)=z^{-1}+\gamma-\gamma_1z+O(z^2)$ 的原约定。实际参数满足 $D>A>0$。对每个 $d,n\ge1$，置
+
+$$
+\mathcal B_{x,d}(n)=\sum_{m=dn}^{d(n+1)-1}J_x(m)
+=P_x(dn)-P_x(d(n+1)).
+\tag{425.2}
+$$
+
+全部首尾端点均保留。§424.4 给 $J_x^\eta(n)=\sum_{d\ge1}\beta_d\mathcal B_{x,d}(n)$。
+
+使用 §399 的同一误差多项式
+
+$$
+C(V)=\frac A6V^3+\frac D2V^2+(2D-A)V+D+\mu_0(2V+11),
+\qquad \mu_0=1/\delta.
+$$
+
+固定 $U\ge0$，令 $a_d=U+\log d$，并定义
+
+$$
+\begin{aligned}
+\mathsf C_\beta(U)&=\sum_{d\ge1}\frac{|\beta_d|}{d}C(a_d+\log2),\\
+\mathsf L_\beta(U)&=\sum_{d\ge1}\frac{|\beta_d|}{d}
+\left[\frac A2a_d^2+(D-A)a_d+|c_{\rm diag}|+A(a_d+\log2)+D-A\right].
+\end{aligned}
+\tag{425.3}
+$$
+
+两个常数有限：§385 的 β 指数尾支付 $(\log d)^3/d$ 的绝对加权和。
+
+**定理 425.2（完整三矩配对与共同误差）。** 对所有 $u\ge0$，有绝对收敛恒等式
+
+$$
+\boxed{\sum_{d\ge1}\frac{\beta_d}{d}p_B(u+\log d)
+=\frac{u^2}{2}+\gamma_1.}
+\tag{425.4}
+$$
+
+进一步，对全部 $U\ge0$、实数 $x\ge e$ 和正整数 $n\ge x$，若 $u=\log(n/x)\le U$，则
+
+$$
+\boxed{\left|n^2\log x\,J_x^\eta(n)
+-\left(\frac{u^2}{2}+\gamma_1\right)\right|
+\le\frac{\mathsf C_\beta(U)}{\log x}+\frac{\mathsf L_\beta(U)}n.}
+\tag{425.5}
+$$
+
+因此，对任意实数序列 $x_j\to\infty$ 与正整数序列 $n_j\ge x_j$，若 $n_j/x_j\to e^u$（固定 $u\ge0$），则
+
+$$
+n_j^2\log x_j\,J_{x_j}^\eta(n_j)\longrightarrow\frac{u^2}{2}+\gamma_1.
+\tag{425.6}
+$$
+
+**证明。** β 的三条绝对矩为
+
+$$
+\sum_{d\ge1}\frac{\beta_d}{d}=B,\qquad
+\sum_{d\ge1}\frac{\beta_d\log d}{d}=-B',\qquad
+\sum_{d\ge1}\frac{\beta_d(\log d)^2}{d}=B''.
+$$
+
+代入左侧多项式，二次项系数为 $AB/2=1/2$，一次项为 $-AB'+(D-A)B=0$，常数项为
+
+$$
+\frac A2B''-(D-A)B'+c_{\rm diag}B
+=\frac{B''}{2B}-\frac{(B')^2}{B^2}
++\frac{(B')^2}{B^2}-\frac{B''}{2B}+\gamma_1=\gamma_1.
+$$
+
+这证明（425.4），不是对 $\gamma_1$ 符号的假设。
+
+现在固定（425.5）的 x,n,U，记 $\ell=\log x$。§398 的精确参数积分及 §399.2 给
+
+$$
+\mathcal B_{x,d}(n)=\int_{dn}^{d(n+1)}\frac{\mathcal G_x(\log s)}{s^2}\,ds,
+\qquad
+|\ell\mathcal G_x(\ell+v)-p_B(v)|\le C(V)/\ell
+\quad(0\le v\le V).
+$$
+
+当 $s\in[dn,d(n+1)]$ 时，$s\ge dn\ge n\ge x$；因此每个 d 的完整端点都在同一高区间。此时
+
+$$
+u+\log d\le\log(s/x)
+\le u+\log d+\log(1+1/n)\le a_d+\log2.
+$$
+
+对该 d 使用 $V=a_d+\log2$，而不是与 d 无关的固定 U，得到
+
+$$
+\left|n^2\ell\mathcal B_{x,d}(n)
+-n^2\int_{dn}^{d(n+1)}\frac{p_B(\log(s/x))}{s^2}\,ds\right|
+\le\frac{C(a_d+\log2)}{d\ell},
+\tag{425.7}
+$$
+
+因为 $n^2\int_{dn}^{d(n+1)}s^{-2}ds=n/[d(n+1)]\le1/d$。$d=1,n=x$ 的下端点按 §398.5 的右侧连续延拓处理。
+
+令 $v=u+\log d$。区间的对数宽度至多 $1/n$，且 $p_B'(z)=Az+D-A>0$。因此
+
+$$
+|p_B(\log(s/x))-p_B(v)|
+\le\frac{A(a_d+\log2)+D-A}{n},
+\qquad
+|p_B(v)|\le\frac A2a_d^2+(D-A)a_d+|c_{\rm diag}|.
+$$
+
+还必须支付 $n/[d(n+1)]$ 与 $1/d$ 的差，不能用单点轮廓替换积分而删除端点。合并得到
+
+$$
+\left|n^2\int_{dn}^{d(n+1)}\frac{p_B(\log(s/x))}{s^2}\,ds
+-\frac{p_B(v)}d\right|
+\le\frac{\frac A2a_d^2+(D-A)a_d+|c_{\rm diag}|+A(a_d+\log2)+D-A}{dn}.
+\tag{425.8}
+$$
+
+将（425.7）和（425.8）乘 $|\beta_d|$，在全部正 d 上绝对求和，由（425.3）付款；然后使用 §424.4 和（425.4），得到（425.5）。选一个包含最终 $\log(n_j/x_j)$ 的有限 U，（425.5）和多项式连续性给（425.6）。无穷 d 的误差和已经支付，不依赖逐项极限后未经控制的交换。$\square$
+
+**推论 425.3（原正锥内的实际偶尺度补偿）。** 定义保留原 d=1 头的三个同源量
+
+$$
+F_x(n)=\beta_1J_x(n),\quad
+O_x(n)=\sum_{\substack{d\ge3\\d\ \rm odd}}\beta_d\mathcal B_{x,d}(n),\quad
+E_x(n)=\sum_{\substack{d\ge2\\d\ \rm even}}|\beta_d|\mathcal B_{x,d}(n).
+\tag{425.9}
+$$
+
+它们绝对存在，且 $J_x^\eta(n)=F_x(n)+O_x(n)-E_x(n)$。存在有限 $X_0\ge e$，使所有实数 $x\ge X_0$ 与全部正整数
+
+$$
+e^{1/20}x\le n\le e^{1/10}x
+\tag{425.10}
+$$
+
+同时满足：所有原 $J_x(m)$（$m\ge n$）严格为正，$F_x(n),O_x(n),E_x(n)>0$，并有
+
+$$
+\boxed{E_x(n)-F_x(n)-O_x(n)>
+\frac1{20n^2\log x}.}
+\tag{425.11}
+$$
+
+若 $x_j\to\infty$、$n_j/x_j\to e^{1/10}$ 且 $n_j\ge x_j$，则更精确地
+
+$$
+n_j^2\log x_j\,[E_{x_j}(n_j)-F_{x_j}(n_j)-O_{x_j}(n_j)]
+\longrightarrow-\gamma_1-\frac1{200}>\frac{67}{1000},
+\tag{425.12}
+$$
+
+$$
+n_j^2\log x_j\,F_{x_j}(n_j)
+\longrightarrow\beta_1p_B(1/10)>
+\beta_1\frac{1253}{20000}>0.
+\tag{425.13}
+$$
+
+**来源与证明。** 直接读取已有[对角源区间](../../reports/fib-robin-boundary/robin-kernel-diagonal.json)与[比例参数区间](../../reports/fib-robin-boundary/robin-kernel-ratio.json)的向外二进有理端点，得到
+
+$$
+\gamma_1<-\frac9{125},\qquad A>3,\qquad D-A>\frac35,
+\qquad p_B(3/100)>\frac7{1000}.
+\tag{425.14}
+$$
+
+这里 $\gamma_1$ 的既有来源是 FLINT Stieltjes 区间，并与 deflated ζ 的一次系数核对惯例；参见[源说明](../../reports/fib-robin-boundary/robin-kernel-diagonal.md)。本节只消费这些已保存的完整向外区间与 Binet 尾付款，不以近似小数证明符号，也不另证数值算法。
+
+由 $D>A$，$p_B$ 严格递增。§399.3 的原全比例正锥因此使所有充分大的 x 和所有 $m\ge e^{3/100}x$ 的 $J_x(m)>0$。条件（425.10）使每个 d 纤维的全部 m 均落入该正锥。β 的奇指标为正、偶指标为负，故（425.9）各量严格为正；绝对存在性由 §424 或（425.7）–（425.8）的共同付款给出。
+
+在（425.10）中，$u\le1/10$，所以（425.14）给
+
+$$
+\frac{u^2}{2}+\gamma_1<\frac1{200}-\frac9{125}
+=-\frac{67}{1000}.
+$$
+
+固定 $U=1/10$，取足够大 $X_0$ 使（425.5）的右侧在 $x\ge X_0,n\ge x$ 时小于 $17/1000$，并同时满足原正锥阈值。这给 $n^2\log x\,J_x^\eta(n)<-1/20$，即（425.11），量词对窗口内全部 n 共同有效。（425.6）给（425.12）。最后
+
+$$
+\begin{aligned}
+p_B(1/10)
+&=p_B(3/100)+\frac7{100}(D-A)
++\frac A2\left(\frac1{100}-\frac9{10000}\right)\\
+&>\frac7{1000}+\frac{21}{500}+\frac{273}{20000}
+=\frac{1253}{20000},
+\end{aligned}
+$$
+
+单独消费 §399 的原单核比例极限，得到（425.13）。$\square$
+
+**与实际 M 前缀的边界。** 以上补偿发生在同一个完整 β 纤维内部：原头与全部原商块权重均为正，β 的偶尺度贡献却超过原头与奇尾的总和。因而原核的全比例正锥不能直接运输成 $J_x^\eta(n)$ 的正锥；这不是分别挑选三个独立来源的极值。
+
+§424 的完整身份仍为 $I_\psi(x)=\sum_{n\ge1}M(n)J_x^\eta(n)$，包括 n=1 和原首块补偿。（425.11）的窗口没有穷尽该级数，且普通 M(n) 的符号未知；将其乘入 $F_x(n)+O_x(n)-E_x(n)$ 不保持独立的正性结论。所需临界增益仍必须来自同一实际 M 前缀与全部纤维、窗外补集的联合有符号关系。本文复用单核转折、经典 Stieltjes 数据和可逆卷积，补足的是完整 β 纤维的共同三矩读出与必需的偶尺度补偿，不宣称 Robin 或 RH 已解决，也不作全局原创性断言。
+
+## 追加锚（本行以下为增补区）
