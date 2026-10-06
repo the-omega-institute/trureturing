@@ -8,7 +8,6 @@ internal static partial class DigestionStatusEvaluator
         DigestionEvaluationScope scope,
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
-        BackfillInventoryDocument? baselineDocument = null,
         RawChangeSet? changes = null,
         RawChangeSet? casChanges = null)
     {
@@ -18,16 +17,16 @@ internal static partial class DigestionStatusEvaluator
         casChanges ??= changes;
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();
-        if (FindDuplicateAtomId(entries) is { } duplicateAtomId)
+        var duplicates = DuplicateAtomIds(entries);
+        if (!duplicates.IsEmpty)
         {
-            findings.Add($"duplicate atom_id: {duplicateAtomId}");
-            return new DigestionLedgerEvaluation([], findings.ToImmutable());
+            document = WithoutAtomIds(document, duplicates);
+            entries = document.RequireDigestionEntries();
         }
 
         var alignment = DigestionLedgerAligner.Evaluate(
             document,
             snapshot,
-            baselineDocument,
             DigestionAlignmentMode.Projection,
             casEvaluation: DigestionCasStore.Evaluate(document, snapshot, casChanges),
             changes: changes,
@@ -46,7 +45,6 @@ internal static partial class DigestionStatusEvaluator
             emptyLeanReport));
         var statusAuthorityChangedAtomIds = ResolveStatusAuthorityChangedAtomIds(
             entries,
-            baselineAtomIds: ImmutableHashSet<string>.Empty,
             changes,
             alignment,
             isBaseFactAffected: null);
@@ -57,14 +55,11 @@ internal static partial class DigestionStatusEvaluator
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
                 alignment.AtomFor(entry.AtomId),
-                baselineMigration: null,
-                baselineEntryPresent: false,
                 snapshot,
                 emptyLeanReport,
                 emptyTruthStates,
                 frozenStatements,
                 genreChecks[entry.SourceId],
-                changes,
                 statusAuthorityChangedAtomIds.Contains(entry.AtomId),
                 findings))
             .ToArray();

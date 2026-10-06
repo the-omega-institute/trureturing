@@ -1,6 +1,6 @@
 {
-  "scope": "Exact rational consumer for FIB407-408, using existing actual scalar enclosures and original explicit Mertens bounds. Analytic transport is paper-only, not Lean verified. No remaining-frequency signed estimate or RH proof.",
-  "producer_sha256": "68085424ab397a6c1ff0de274438e67f81e2dad0f14af23a2e7b8f01b867ddf9",
+  "scope": "Exact rational consumer for the full FIB Robin Abel budget, using existing actual scalar enclosures and original explicit Mertens bounds. Analytic transport is paper-only, not Lean verified. No remaining-frequency signed estimate or RH proof.",
+  "producer_sha256": "3f63f9cca924198f9ce5735a4f11dc4c72419c0fc49872ff9b4f840c6821b04f",
   "sources": {
     "ratio": {
       "name": "robin-kernel-ratio.json",

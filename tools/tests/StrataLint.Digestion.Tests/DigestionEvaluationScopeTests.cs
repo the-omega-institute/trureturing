@@ -227,7 +227,6 @@ public sealed class DigestionEvaluationScopeTests
             document,
             snapshot,
             AcceptedLean(targetPath),
-            baselineDocument: document,
             changes: changes);
     }
 

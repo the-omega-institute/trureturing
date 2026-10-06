@@ -13,7 +13,6 @@ internal enum DigestionAlignmentMode
 internal enum DigestionReceiptAlignment
 {
     Seen,
-    Stale,
     Rejected,
 }
 
@@ -22,7 +21,6 @@ internal static class DigestionReceiptAlignmentNames
     internal static string Render(DigestionReceiptAlignment value) => value switch
     {
         DigestionReceiptAlignment.Seen => "seen",
-        DigestionReceiptAlignment.Stale => "stale",
         DigestionReceiptAlignment.Rejected => "rejected",
         _ => throw new ArgumentOutOfRangeException(nameof(value)),
     };
@@ -58,7 +56,6 @@ internal sealed record DigestionLedgerAlignment(
     ImmutableHashSet<string> ClausePlanChainParents,
     ImmutableHashSet<string> VerifiedClausePlanParents,
     ImmutableArray<DigestionIngestFallback> Fallbacks,
-    ImmutableArray<string> ActualStale,
     ImmutableArray<string> Findings,
     ImmutableArray<DigestionContentKindObservation> ContentKindObservations = default)
 {
@@ -78,10 +75,8 @@ internal static partial class DigestionLedgerAligner
     internal static DigestionLedgerAlignment Evaluate(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
-        BackfillInventoryDocument? baselineDocument,
         DigestionAlignmentMode mode,
         Func<string, TheoryAtomizer>? atomizerResolver = null,
-        RepositorySnapshot? baselineSnapshot = null,
         DigestionCasEvaluation? casEvaluation = null,
         RawChangeSet? changes = null,
         RawChangeSet? casChanges = null,
@@ -166,7 +161,6 @@ internal static partial class DigestionLedgerAligner
 
         var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, casChanges);
         findings.AddRange(cas.Findings);
-        var inheritedEntries = InheritedEntries(baselineDocument);
         foreach (var (source, entry) in sources
                      .SelectMany(source =>
                      source.Entries.Select(entry => (Source: source, Entry: entry))))
@@ -190,73 +184,14 @@ internal static partial class DigestionLedgerAligner
             }
         }
 
-        var baselineSources = BaselineSources(baselineDocument, findings);
-        var candidateSources = sources.ToDictionary(
-            static source => source.SourceId,
-            StringComparer.Ordinal);
-        var contentWideReplacementObligationsBySource =
-            new Dictionary<string, DigestionLedgerEntry[]>(StringComparer.Ordinal);
-        var rejectedContentWideClones = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var baselineSource in baselineSources.Values)
-        {
-            candidateSources.TryGetValue(baselineSource.SourceId, out var candidateSource);
-            var obligations = ContentWideReplacementObligations(
-                baselineSource,
-                candidateSource,
-                snapshot);
-            if (obligations.Length == 0)
-            {
-                continue;
-            }
-
-            contentWideReplacementObligationsBySource.Add(baselineSource.SourceId, obligations);
-            if (candidateSource is null)
-            {
-                findings.Add(
-                    "content-wide replacement source changed or disappeared: "
-                    + baselineSource.SourceId);
-            }
-            else if (baselineSource.AcknowledgedStale.Any(id =>
-                         obligations.Any(entry => entry.AtomId == id))
-                     && !AtomizerRegistry.IsRegistered(candidateSource.Atomizer))
-            {
-                findings.Add(
-                    "settled content-wide replacement requires a registered atomizer: "
-                    + baselineSource.SourceId);
-            }
-
-            foreach (var baselineEntry in obligations)
-            {
-                foreach (var (candidateSourceId, candidateEntry) in sources
-                             .SelectMany(source =>
-                             source.Entries.Select(entry => (source.SourceId, Entry: entry))))
-                {
-                    if (candidateEntry.AtomId == baselineEntry.AtomId
-                        || candidateEntry.Fingerprints != baselineEntry.Fingerprints
-                        || candidateEntry.CasRef != baselineEntry.CasRef
-                        || candidateSourceId == baselineSource.SourceId
-                            && ContentWideIdentityEqual(candidateEntry, baselineEntry))
-                    {
-                        continue;
-                    }
-
-                    if (rejectedContentWideClones.Add(candidateEntry.AtomId))
-                    {
-                        findings.Add(
-                            $"source {baselineSource.SourceId} new content-wide receipt after "
-                            + $"atomizer replacement: {candidateEntry.AtomId}");
-                    }
-                }
-            }
-        }
-
-        var actualStale = new HashSet<string>(StringComparer.Ordinal);
         var knownContent = sources
             .SelectMany(static source => source.Entries)
             .Where(entry => cas.ValidAtomIds.Contains(entry.AtomId))
             .Select(static entry => entry.Fingerprints.RawSha256)
             .ToHashSet(StringComparer.Ordinal);
 
+        var atomizerInputsChanged = new Lazy<bool>(() =>
+            changes is not null && AtomizerInputsChanged(changes, snapshot));
         foreach (var source in sources)
         {
             if (conflictedSources.Contains(source.SourceId))
@@ -264,29 +199,20 @@ internal static partial class DigestionLedgerAligner
                 continue;
             }
 
-            var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
-            baselineSources.TryGetValue(source.SourceId, out var baselineSource);
-            var contentWideReplacementObligations =
-                contentWideReplacementObligationsBySource.GetValueOrDefault(source.SourceId) ?? [];
-            var validateGenreProjection = mode == DigestionAlignmentMode.Admission
-                && !AtomizerDecisionClosureEqualBaseline(
-                    snapshot,
-                    baselineSnapshot,
-                    source,
-                    baselineSource);
-            var canSkipAfterGenreProjection = mode == DigestionAlignmentMode.Admission
+            // A change set limits which sources are replayed. It never changes what
+            // a replayed source yields.
+            if (mode == DigestionAlignmentMode.Admission
+                && changes is not null
                 && !source.Entries.IsEmpty
-                && source.Entries.All(entry =>
-                    cas.ValidAtomIds.Contains(entry.AtomId)
-                    && inheritedEntries.Contains(CanonicalEntry(source, entry)))
-                && contentWideReplacementObligations.Length == 0
-                && !InheritedSourceRequiresReplay(source, changes, snapshot);
-
-            if (canSkipAfterGenreProjection && !validateGenreProjection)
+                && source.Entries.All(entry => cas.ValidAtomIds.Contains(entry.AtomId))
+                && !SourceChanged(source, changes)
+                && !atomizerInputsChanged.Value)
             {
                 continue;
             }
 
+            var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
+            var validateGenreProjection = mode == DigestionAlignmentMode.Admission;
             if (!registeredAtomizer)
             {
                 genreRegistryChecks[source.SourceId] = GenreRegistryCheck.NoGenreRegistry;
@@ -306,11 +232,6 @@ internal static partial class DigestionLedgerAligner
 
             if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
             {
-                if (canSkipAfterGenreProjection)
-                {
-                    continue;
-                }
-
                 findings.Add($"source path is dangling: {source.SourcePath}");
                 continue;
             }
@@ -392,11 +313,6 @@ internal static partial class DigestionLedgerAligner
                     atomized.GenreRegistryCheck));
             }
 
-            if (canSkipAfterGenreProjection)
-            {
-                continue;
-            }
-
             if (atomized.Claims.IsEmpty)
             {
                 const string reason = "atomizer recognition is incomplete or empty";
@@ -446,32 +362,6 @@ internal static partial class DigestionLedgerAligner
             producedAtomIds[source.SourceId] = claims
                 .Select(static atom => atom.Fingerprints.RawSha256["sha256:".Length..])
                 .ToImmutableHashSet(StringComparer.Ordinal);
-
-            var sourceStale = new List<string>();
-            foreach (var baselineEntry in contentWideReplacementObligations.Where(entry =>
-                         !producedAtomIds[source.SourceId].Contains(entry.AtomId)))
-            {
-                var exact = source.Entries
-                    .Where(entry => ContentWideIdentityEqual(entry, baselineEntry))
-                    .ToArray();
-                if (exact.Length != 1)
-                {
-                    findings.Add(
-                        $"source {source.SourceId} content-wide replacement receipt identity "
-                        + $"changed or disappeared: {baselineEntry.AtomId}");
-                    continue;
-                }
-
-                var entry = exact[0];
-                if (!cas.ValidAtomIds.Contains(entry.AtomId))
-                {
-                    continue;
-                }
-
-                alignments[entry.AtomId] = DigestionReceiptAlignment.Stale;
-                sourceStale.Add(entry.AtomId);
-                actualStale.Add(entry.AtomId);
-            }
 
             foreach (var plan in atomized.ClausePlans
                          .GroupBy(static plan => plan.Parent.Fingerprints.RawSha256, StringComparer.Ordinal)
@@ -545,20 +435,6 @@ internal static partial class DigestionLedgerAligner
                 clausePlanChainParents,
                 verifiedClausePlanParents,
                 findings);
-
-            if (mode == DigestionAlignmentMode.Admission)
-            {
-                var unacknowledged = sourceStale
-                    .Except(source.AcknowledgedStale, StringComparer.Ordinal)
-                    .Order(StringComparer.Ordinal)
-                    .ToArray();
-                if (unacknowledged.Length > 0)
-                {
-                    findings.Add(
-                        $"source {source.SourceId} stale receipts are not acknowledged: "
-                        + string.Join(", ", unacknowledged));
-                }
-            }
         }
 
         return new DigestionLedgerAlignment(
@@ -571,7 +447,6 @@ internal static partial class DigestionLedgerAligner
             clausePlanChainParents.ToImmutable(),
             verifiedClausePlanParents.ToImmutable(),
             fallbacks.ToImmutable(),
-            actualStale.Order(StringComparer.Ordinal).ToImmutableArray(),
             findings.Order(StringComparer.Ordinal).ToImmutableArray(),
             contentKindObservations.ToImmutable());
     }

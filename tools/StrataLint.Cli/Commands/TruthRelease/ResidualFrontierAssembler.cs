@@ -29,7 +29,6 @@ internal static class ResidualFrontierAssembler
             document,
             snapshot,
             lean,
-            baselineDocument: document,
             truthStates: truthStates);
         if (evaluation.HasReceiptIntegrityFailure)
         {

@@ -23,7 +23,7 @@ public sealed class PlaybookWorkflowScriptTests
             [
                 "make:lean-report",
                 "make:emit",
-                "make:align-digestion-status BASE=synthetic-base",
+                "make:align-digestion-status",
                 "dotnet:digest-status",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",

@@ -57,12 +57,11 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus([]);
 
         Assert.False(result.Success);
         Assert.Contains(
-            $"INGEST_INVALID ingest clause chain parent {atomId} lacks verified clause-plan proof: "
-                + $"entry {atomId} malformed clause chain: "
+            $"ALIGN_INVALID digest status is invalid: entry {atomId} malformed clause chain: "
                 + (chainAtomId == atomId ? "clause plan has no proper claim decomposition"
                     : $"CHILD_CAS_MISSING atom_id={chainAtomId}"),
             result.Error,

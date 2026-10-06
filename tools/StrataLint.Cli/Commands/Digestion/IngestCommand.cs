@@ -1,358 +1,125 @@
 using System.Collections.Immutable;
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
 internal static partial class IngestCommand
 {
+    // Brings the recorded ledger in line with what the current tree derives:
+    // coverage targets are refreshed from the Lean report and the frozen state,
+    // then every entry takes its derived status.
     internal static CommandResult Run(
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        IScribeEmissionVerifier scribeEmissionVerifier,
         IReadOnlyList<string> arguments)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(leanReportSource);
-        ArgumentNullException.ThrowIfNull(scribeEmissionVerifier);
         ArgumentNullException.ThrowIfNull(arguments);
         if (arguments.Contains("--refresh-source", StringComparer.Ordinal))
         {
-            return RefreshSourceRegistry(repositoryRoot, repository, leanReportSource,
-                scribeEmissionVerifier, arguments);
+            return RefreshSourceRegistry(repositoryRoot, repository, arguments);
         }
+
         try
         {
-            var options = ParseArguments(arguments);
-            var baselineRevision = options.BaselineRevision;
-            var inputs = ReadInputs(repository, baselineRevision);
-            var repositoryChanges = repository.ReadChanges(baselineRevision);
-            var plan = Plan(inputs, repositoryChanges);
-            var report = leanReportSource.Load(inputs.Current);
-            var prepared = Prepare(inputs, repositoryChanges, plan, report);
-            var currentRaw = prepared.CurrentRaw;
-            var current = prepared.Current;
-            var baseline = prepared.Baseline;
-            var document = prepared.CurrentDocument;
-            var baselineDocument = prepared.BaselineDocument;
-            var plannedSnapshot = prepared.PlannedSnapshot;
-            var plannedDocument = prepared.PlannedDocument;
-            var lean = ValidateLean(plannedSnapshot, report);
-            var truthStates = LeanTruthStates.Resolve(plannedSnapshot, lean);
-            plannedDocument = DigestionCoverageTargetAligner.Align(
-                plannedDocument,
-                plannedSnapshot,
-                lean,
-                truthStates);
-            var fixedPointRaw = AddCasObjects(
-                ReplaceLedger(currentRaw, document, plannedDocument),
-                plan.CasObjects);
-            var fixedPointSnapshot = Decode(fixedPointRaw);
-            var fixedPointChanges = EffectiveChanges(prepared.BaselineRaw, fixedPointRaw);
-            var deltaImpact = BackfillDeltaImpactResolver.Resolve(
-                fixedPointSnapshot,
-                baseline,
-                report,
-                plannedDocument,
-                fixedPointChanges);
-            scribeEmissionVerifier.Verify(
-                fixedPointSnapshot,
-                report,
-                deltaImpact.ReceiptVerificationChanges);
-            DigestionEvaluationScope evaluationScope;
-            RawChangeSet evaluationChanges;
-            RawChangeSet receiptVerificationChanges;
-            var remainingIterations = plannedDocument.RequireDigestionEntries().Length + 2;
-            while (true)
-            {
-                if (--remainingIterations == 0)
-                {
-                    throw new InvalidOperationException(
-                        "digestion status derivation did not reach a fixed point");
-                }
-
-                evaluationChanges = deltaImpact.EvaluationChanges;
-                receiptVerificationChanges = deltaImpact.ReceiptVerificationChanges;
-                evaluationScope = DigestionEvaluationScopes.ForChanges(
-                    fixedPointChanges,
-                    ImplementationPath, EngineeringProjectRegistry.ReadRuleBuildInputs(fixedPointSnapshot));
-                var evaluationCasChanges = DigestionIngestor.IncludeCasReverseDependencies(
-                    baselineDocument,
-                    fixedPointChanges);
-                var derived = DigestionStatusEvaluator.Evaluate(
-                    evaluationScope,
-                    plannedDocument,
-                    fixedPointSnapshot,
-                    lean,
-                    baselineDocument,
-                    validateProjectedStatus: false,
-                    baselineSnapshot: baseline,
-                    changes: receiptVerificationChanges,
-                    casChanges: evaluationCasChanges,
-                    projectedStatusChanges: evaluationChanges,
-                    truthStates: truthStates);
-                RequireNoReceiptIntegrityFailure(derived);
-
-                if (derived.Entries.All(static item =>
-                        item.DerivedStatus == item.Entry.ProjectedStatus))
-                {
-                    break;
-                }
-
-                var statusByAtomId = derived.Entries.ToDictionary(
-                    static item => item.Entry.AtomId,
-                    static item => item.DerivedStatus,
-                    StringComparer.Ordinal);
-                plannedDocument = plannedDocument.WithDigestionSources(
-                    plannedDocument.RequireDigestionSources()
-                        .Select(source => source with
-                        {
-                            Entries = source.Entries
-                                .Select(entry => entry with
-                                {
-                                    ProjectedStatus = statusByAtomId[entry.AtomId],
-                                })
-                                .ToImmutableArray(),
-                        })
-                        .ToImmutableArray());
-                fixedPointRaw = AddCasObjects(
-                    ReplaceLedger(currentRaw, document, plannedDocument),
-                    plan.CasObjects);
-                fixedPointSnapshot = Decode(fixedPointRaw);
-                fixedPointChanges = EffectiveChanges(prepared.BaselineRaw, fixedPointRaw);
-                deltaImpact = BackfillDeltaImpactResolver.Resolve(
-                    fixedPointSnapshot,
-                    baseline,
-                    report,
-                    plannedDocument,
-                    fixedPointChanges);
-            }
-
-            var finalRaw = fixedPointRaw;
-            var finalSnapshot = fixedPointSnapshot;
-            var finalDocument = LoadDocument(finalSnapshot);
-            var finalChanges = EffectiveChanges(prepared.BaselineRaw, finalRaw);
-            var finalCasChanges = DigestionIngestor.IncludeCasReverseDependencies(
-                baselineDocument,
-                finalChanges);
+            var planOnly = ParseArguments(arguments);
+            var (currentRaw, current, document) = DigestionWorkingTree.Read(
+                repository,
+                Decode,
+                static snapshot => LoadDocument(snapshot));
+            var lean = ValidateLean(current, leanReportSource.Load(current));
+            var truthStates = LeanTruthStates.Resolve(current, lean);
+            var retargeted = DigestionCoverageTargetAligner.Align(document, current, lean, truthStates);
             var evaluation = DigestionStatusEvaluator.Evaluate(
-                evaluationScope,
-                finalDocument,
-                finalSnapshot,
+                DigestionEvaluationScope.FullScan,
+                retargeted,
+                current,
                 lean,
-                baselineDocument,
-                baselineSnapshot: baseline,
-                changes: receiptVerificationChanges,
-                casChanges: finalCasChanges,
-                projectedStatusChanges: evaluationChanges,
+                validateProjectedStatus: false,
                 truthStates: truthStates);
             RequireNoReceiptIntegrityFailure(evaluation);
-            var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
-                finalDocument,
-                finalSnapshot,
-                baseline,
-                LoadPolicy(finalSnapshot),
-                lean,
-                DigestionEvaluationScopes.ResolveChanges(
-                    evaluationScope,
-                    receiptVerificationChanges),
-                casChanges: finalCasChanges,
-                projectedStatusChanges: DigestionEvaluationScopes.ResolveChanges(
-                    evaluationScope,
-                    evaluationChanges));
 
-            var ledgerUpdates = LedgerUpdates(
-                prepared.CurrentRaw, finalRaw, prepared.CurrentDocument, finalDocument);
-            if (options.PlanOnly)
+            var derived = evaluation.Entries.ToDictionary(
+                static item => (item.Entry.SourceId, item.Entry.AtomId),
+                static item => item.DerivedStatus);
+            var aligned = retargeted.WithDigestionSources(
+                retargeted.RequireDigestionSources()
+                    .Select(source => source with
+                    {
+                        Entries = source.Entries
+                            .Select(entry => entry with
+                            {
+                                ProjectedStatus = derived[(entry.SourceId, entry.AtomId)],
+                            })
+                            .ToImmutableArray(),
+                    })
+                    .ToImmutableArray());
+            var finalRaw = ReplaceLedger(currentRaw, document, aligned);
+            var ledgerUpdates = LedgerUpdates(currentRaw, finalRaw, document, aligned);
+            if (!planOnly)
             {
-                return RenderAlignmentPlan(repositoryRoot, baselineRevision, prepared,
-                    finalDocument, ledgerUpdates, evaluation, evaluationScope, backfillObservations);
+                ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
             }
 
-            return WriteResult(
-                repositoryRoot,
-                prepared,
-                ledgerUpdates,
-                finalDocument,
-                evaluation,
-                backfillObservations);
+            return new CommandResult(
+                true,
+                RenderAlignment(document, aligned, ledgerUpdates.Length, applied: !planOnly),
+                string.Empty);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return new CommandResult(false, string.Empty, $"INGEST_INVALID {exception.Message}\n");
+            return new CommandResult(false, string.Empty, $"ALIGN_INVALID {exception.Message}\n");
         }
     }
 
-    private static IngestInputs ReadInputs(
-        IRepositoryGateway repository,
-        string baselineRevision)
+    private static bool ParseArguments(IReadOnlyList<string> arguments) => arguments.Count switch
     {
-        var currentRaw = repository.ReadCurrent();
-        var baselineRaw = repository.ReadRevision(baselineRevision);
-        var current = Decode(currentRaw);
-        var baseline = Decode(baselineRaw);
-        return new IngestInputs(
-            currentRaw,
-            baselineRaw,
-            current,
-            baseline,
-            LoadDocument(current),
-            BackfillInventoryLoader.LoadBaseline(baseline));
-    }
+        0 => false,
+        1 when arguments[0] == "--plan" => true,
+        _ => throw new InvalidOperationException(
+            "USAGE: StrataLint align-digestion-status [--plan] | --refresh-source EXISTING_ID_OR_PATH [--plan]"),
+    };
 
-    private static DigestionIngestPlan Plan(
-        IngestInputs inputs,
-        RawChangeSet repositoryChanges) =>
-        DigestionIngestor.Plan(
-            inputs.CurrentDocument,
-            inputs.Current,
-            inputs.BaselineDocument,
-            inputs.Baseline,
-            changes: repositoryChanges);
-
-    private static IngestPreparation Prepare(
-        IngestInputs inputs,
-        RawChangeSet repositoryChanges,
-        DigestionIngestPlan plan,
-        LeanAxiomReport? report)
+    private static string RenderAlignment(
+        BackfillInventoryDocument before,
+        BackfillInventoryDocument after,
+        int ledgerFilesChanged,
+        bool applied)
     {
-        var currentRaw = inputs.CurrentRaw;
-        var current = inputs.Current;
-        var baseline = inputs.Baseline;
-        var currentDocument = inputs.CurrentDocument;
-        var baselineDocument = inputs.BaselineDocument;
-        var plannedRaw = AddCasObjects(
-            ReplaceLedger(currentRaw, currentDocument, plan.Document),
-            plan.CasObjects);
-        var plannedSnapshot = Decode(plannedRaw);
-        var plannedDocument = LoadDocument(plannedSnapshot);
-        var plannedChanges = IngestChanges(
-            repositoryChanges,
-            currentRaw,
-            plannedRaw,
-            plannedDocument,
-            plan.CasObjects);
-        var plannedDeltaImpact = BackfillDeltaImpactResolver.Resolve(
-            plannedSnapshot,
-            baseline,
-            report,
-            plannedDocument,
-            plannedChanges);
-        var plannedScope = DigestionEvaluationScopes.ForChanges(
-            plannedChanges,
-            ImplementationPath, EngineeringProjectRegistry.ReadRuleBuildInputs(plannedSnapshot));
-        var plannedCasChanges = DigestionIngestor.IncludeCasReverseDependencies(
-            baselineDocument,
-            plannedChanges);
-        return new IngestPreparation(
-            currentRaw,
-            inputs.BaselineRaw,
-            current,
-            baseline,
-            currentDocument,
-            baselineDocument,
-            plan,
-            repositoryChanges,
-            plannedRaw,
-            plannedSnapshot,
-            plannedDocument,
-            plannedChanges,
-            plannedDeltaImpact.EvaluationChanges,
-            plannedDeltaImpact.ReceiptVerificationChanges,
-            plannedCasChanges,
-            plannedScope,
-            RenderCrossVolumeClearanceGaps(plan.Document, baselineDocument),
-            SilentZeroExtractionWarnings(
-                currentDocument,
-                plan.Document,
-                current,
-                baseline));
-    }
-
-    private static ImmutableArray<DigestionLedgerSource> SilentZeroExtractionWarnings(
-        BackfillInventoryDocument currentDocument,
-        BackfillInventoryDocument plannedDocument,
-        RepositorySnapshot current,
-        RepositorySnapshot baseline)
-    {
-        var plannedSources = plannedDocument.RequireDigestionSources()
-            .ToDictionary(static source => source.SourceId, StringComparer.Ordinal);
-        return currentDocument.RequireDigestionSources()
-            .Where(source => AtomizerRegistry.IsRegistered(source.Atomizer))
-            .Where(source => current.TryGetFile(source.SourcePath, out var currentFile)
-                && baseline.TryGetFile(source.SourcePath, out var baselineFile)
-                && !currentFile.RawBytes.AsSpan().SequenceEqual(baselineFile.RawBytes.AsSpan()))
-            .Where(source => plannedSources[source.SourceId].Entries.Length == source.Entries.Length)
-            .OrderBy(static source => source.SourceId, StringComparer.Ordinal)
-            .ToImmutableArray();
-    }
-
-    private static string RenderCrossVolumeClearanceGaps(
-        BackfillInventoryDocument currentDocument,
-        BackfillInventoryDocument baselineDocument)
-    {
-        var currentHosts = ResidualHosts(currentDocument)
-            .Distinct()
+        var previous = before.RequireDigestionEntries().ToDictionary(
+            static entry => (entry.SourceId, entry.AtomId));
+        var changed = after.RequireDigestionEntries()
+            .Select(entry => (Entry: entry, Previous: previous[(entry.SourceId, entry.AtomId)]))
+            .Where(static item => item.Entry.ProjectedStatus != item.Previous.ProjectedStatus
+                || !item.Entry.Coverage.SequenceEqual(item.Previous.Coverage))
+            .OrderBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
+            .ThenBy(static item => item.Entry.AtomId, StringComparer.Ordinal)
             .ToArray();
-        var currentVotes = currentHosts
-            .Select(static host => new ResidueSourceVote(host.Residue, host.SourceId))
-            .ToHashSet();
-        var currentByName = currentHosts.ToLookup(static host => host.Residue, StringComparer.Ordinal);
-        var cleared = ResidualHosts(baselineDocument)
-            .GroupBy(static host => new ResidueSourceVote(host.Residue, host.SourceId))
-            .Where(group => !currentVotes.Contains(group.Key))
-            .Select(static group => group
-                .OrderBy(static host => host.AtomId, StringComparer.Ordinal)
-                .First())
-            .OrderBy(static host => host.Residue, StringComparer.Ordinal)
-            .ThenBy(static host => host.SourceId, StringComparer.Ordinal)
-            .ThenBy(static host => host.AtomId, StringComparer.Ordinal);
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
-        foreach (var host in cleared)
+        writer.Write(
+            $"ALIGN entries={previous.Count} "
+            + $"status_changed={changed.Count(static item => item.Entry.ProjectedStatus != item.Previous.ProjectedStatus)} "
+            + $"coverage_retargeted={changed.Count(static item => !item.Entry.Coverage.SequenceEqual(item.Previous.Coverage))} "
+            + $"ledger_files_changed={ledgerFilesChanged} "
+            + $"applied={applied.ToString().ToLowerInvariant()}\n");
+        foreach (var (entry, old) in changed)
         {
-            var hangingHosts = currentByName[host.Residue]
-                .Where(candidate => !string.Equals(
-                    candidate.SourceId,
-                    host.SourceId,
-                    StringComparison.Ordinal))
-                .OrderBy(static candidate => candidate.SourceId, StringComparer.Ordinal)
-                .ThenBy(static candidate => candidate.AtomId, StringComparer.Ordinal)
-                .Select(static candidate => $"{candidate.SourceId}/{candidate.AtomId}")
-                .ToArray();
-            if (hangingHosts.Length == 0)
-            {
-                continue;
-            }
-
-            var detail = JsonSerializer.Serialize(new
-            {
-                residue = host.Residue,
-                cleared_source = host.SourceId,
-                hanging_hosts = hangingHosts,
-            });
-            writer.WriteLine(
-                $"GAP atom={host.AtomId} code=cross-volume-shared-residue-half-cleared "
-                + $"severity=warn detail={detail}");
+            writer.Write(
+                $"ALIGN_ENTRY source={entry.SourceId} atom={entry.AtomId} "
+                + $"from={StatusName(old.ProjectedStatus)} to={StatusName(entry.ProjectedStatus)}\n");
         }
 
         return writer.ToString();
     }
 
-    private static IEnumerable<ResidualHost> ResidualHosts(BackfillInventoryDocument document) =>
-        document.RequireDigestionEntries().SelectMany(static entry =>
-            entry.Receipts.UnresolvedSubitems.Select(residue =>
-                new ResidualHost(residue, entry.SourceId, entry.AtomId)));
+    private static string StatusName(DigestionStatus status) =>
+        DigestionStatusNames.Migration(status.Migration) + "-" + DigestionStatusNames.Truth(status.Truth);
 
-    private sealed record ResidualHost(string Residue, string SourceId, string AtomId);
-
-    private sealed record ResidueSourceVote(string Residue, string SourceId);
-
-    internal static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot, bool baseline = false)
-    {
-        return baseline ? BackfillInventoryLoader.LoadBaseline(snapshot) : BackfillInventoryLoader.Load(snapshot);
-    }
+    internal static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
+        BackfillInventoryLoader.Load(snapshot);
 
     internal static RawRepositorySnapshot ReplaceLedger(
         RawRepositorySnapshot snapshot,

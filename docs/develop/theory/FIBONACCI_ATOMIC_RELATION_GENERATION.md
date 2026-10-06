@@ -61851,17 +61851,271 @@ $\mathcal B$ 在这里抵消，但这不是（404.9）积分极限的交换许�
 
 ## 追加锚（本行以下为增补区）
 
-## 405. 完整阻尼轮廓的中心频率增长与实际补集抵消
+## 405. Mellin 端点储备的正参数混合与实际对数尾预算
+
+本节保持 §395 的同一个实际残差 $R$、积分 $P_x$ 与相邻核 $J_x(m)=P_x(m)-P_x(m+1)$，并使用 §390 的同源 $H_m$。将 §395 中的全部指数保留为一族，而不是只取平方根指数，可直接得到临界对数权重的完整积分后预算。中间使用的正参数 Laplace 积分是经典公式；参见 [DLMF 8.2.1](https://dlmf.nist.gov/8.2.E1) 的下不完全 Gamma 积分及 [DLMF 5.2.1](https://dlmf.nist.gov/5.2.E1) 的 Gamma 积分。以下新增的结论是它们与同源实际 Robin 储备相接后的显式预算。
+
+**定理 405.1（实际 Mellin 变差族支付对数权重）.** 令 $x>1$，并设
+
+$$
+L=\log x,\qquad h_1=1+L^{-1},\qquad h_2=1+2L^{-1}+2L^{-2}.
+$$
+
+使用 §395 的实际常数 $A>0$、$D\in\mathbb R$，并记 $\mu:=\mu_0=1/\delta>0$。这里 $\mu$ 是实常数，区别于 Möbius 函数。定义
+
+$$
+\begin{aligned}
+C_x&=\frac{(h_1/2+h_2)(A+|D|/2+3\mu/2)}L,\\
+V_x&=\frac{x^{-1/2}}L(6+10/L+8/L^2)(3\mu+2A+|D|),\\
+K_x&=\frac{Ah_2}{L^2}+\frac{h_1A+h_2|D|}{L^3}
+ +\frac{2(h_1|D|+6h_2\mu)}{L^4}+\frac{36h_1\mu}{L^5}.
+\end{aligned}
+\tag{405.1}
+$$
+
+则对全部实数 $p>3$，完整级数
+
+$$
+Z_{x,p}=\sum_{m\ge2}\frac{m}{(\log m)^p}|J_x(m)|
+\tag{405.2}
+$$
+
+收敛，并且
+
+$$
+Z_{x,p}\le\frac{\sqrt2}{(\log2)^p}V_x
+ +\frac{peC_x\,2^{3-p}}{p-3}.
+\tag{405.3}
+$$
+
+在 $p=4$ 时，保留储备中的 $x^{\alpha-1}$ 给加强界
+
+$$
+Z_{x,4}\le\frac{\sqrt2}{(\log2)^4}V_x
+ +4e\min\{C_x/2,K_x\}.
+\tag{405.4}
+$$
+
+**证明.** 写 $a_m=|J_x(m)|\ge0$，并令 $\beta=1-\alpha$。§395 的完整变差界给
+
+$$
+\begin{aligned}
+S_{1-\beta}:=\sum_{m\ge1}m^{1-\beta}a_m
+&\le\frac{e^{-L\beta}}L
+ \left(h_1+\frac{h_2}\beta\right)
+ \left[\frac{|D|}\beta+\frac A{\beta^2}
+ +\mu\left(\frac1{1-\beta}+\frac1{(1-\beta)^2}\right)\right]\\
+&\le\frac{e^{-L\beta}}L
+ \left(h_1+\frac{h_2}\beta\right)
+ \left(\frac A{\beta^2}+\frac{|D|}\beta+6\mu\right)
+\le C_x\beta^{-3},\qquad 0<\beta\le\frac12.
+\end{aligned}
+\tag{405.5}
+$$
+
+最后一步使用 $e^{-L\beta}\le1$ 及非负因子的单调性：$(h_1\beta+h_2)(A+|D|\beta+6\mu\beta^2)\le(h_1/2+h_2)(A+|D|/2+3\mu/2)$。这里只需要 $1/2\le\alpha<1$；不把该三阶极点界扩张到 $\alpha\downarrow0$，因为原储备在另一端还有极点。
+
+固定有限 $N\ge2$。将（405.5）乘 $\beta^{p-1}$，对 $0<\beta<1/2$ 积分。有限求和与积分交换给
+
+$$
+\begin{aligned}
+\sum_{m=2}^Na_mW_p(m)
+&=\int_0^{1/2}\beta^{p-1}\sum_{m=2}^Nm^{1-\beta}a_m\,d\beta\\
+&\le C_x\int_0^{1/2}\beta^{p-4}\,d\beta
+ =\frac{C_x2^{3-p}}{p-3},\\
+W_p(m)&=m\int_0^{1/2}\beta^{p-1}e^{-\beta\log m}\,d\beta
+ =\frac m{(\log m)^p}\int_0^{(\log m)/2}u^{p-1}e^{-u}\,du.
+\end{aligned}
+\tag{405.6}
+$$
+
+右侧有限恰因 $p-4>-1$。对所有 $m\ge2$，后一个积分至少为 $c_p=\int_0^{(\log2)/2}u^{p-1}e^{-u}du>0$。因此（405.2）的非负有限部分和一致有界，证明完整级数收敛；此处无需预先交换任何无限级数，更未交换原 Robin 积分变量。
+
+为得到（405.3）的方便常数，对 $m\ge8$ 使用 $\log m/2\ge1$，于是
+
+$$
+\int_0^{(\log m)/2}u^{p-1}e^{-u}du
+\ge e^{-1}\int_0^1u^{p-1}du=\frac1{pe}.
+\tag{405.7}
+$$
+
+首块 $2\le m\le7$ 由 $S_{1/2}\le V_x$ 支付。在 $[2,7]$ 上，$\sqrt u/(\log u)^p$ 的对数导数为 $((\log u)/2-p)/(u\log u)<0$，故其值不超过 $\sqrt2/(\log2)^p$。将首块与（405.6）、（405.7）相加即得（405.3）。使用完整 $S_{1/2}$ 支付首块只会放大上界，没有丢弃未付项。
+
+对 $p=4$，在（405.6）中保留（405.5）的 $e^{-L\beta}$，得到
+
+$$
+\begin{aligned}
+\sum_{m=2}^Na_mW_4(m)
+&\le\frac1L\int_0^{1/2}e^{-L\beta}
+ [Ah_2+(h_1A+h_2|D|)\beta\\
+&\hspace{42mm}+(h_1|D|+6h_2\mu)\beta^2+6h_1\mu\beta^3]d\beta
+\le K_x.
+\end{aligned}
+\tag{405.8}
+$$
+
+最后一步将非负积分域放大为 $(0,\infty)$，复用经典 Laplace 矩 $\int_0^\infty\beta^je^{-L\beta}d\beta=j!/L^{j+1}$，$j=0,1,2,3$。同一混合积分还受（405.6）的 $C_x/2$ 控制。取两界较小者，再与（405.7）及同一首块相接，得到（405.4）。$\square$
+
+**定理 405.2（同源算术序列的积分后绝对预算）.** 假设同源实际序列的所有 $m\ge2$ 满足 $|H_m|\le C_Hm/(\log m)^4$，其中 $C_H\ge0$。则
+
+$$
+\begin{aligned}
+\sum_{m\ge1}|H_mJ_x(m)|
+&\le\left(|H_1|+\frac{C_H\sqrt2}{(\log2)^4}\right)V_x
+ +4eC_H\min\{C_x/2,K_x\}<\infty.
+\end{aligned}
+\tag{405.9}
+$$
+
+当 $x\to\infty$ 且同源常数固定时，该预算为 $O_{A,D,\mu,H_1,C_H}((\log x)^{-2})$。
+
+**证明.** 完整平方根变差给 $|J_x(1)|\le V_x$，因此首项不受任何 $\log1$ 分母影响。对全部 $m\ge2$ 使用假设逐项比较，再应用（405.4），即得（405.9）。$L\ge1$ 时 $h_1,h_2$ 有界，$K_x=O(L^{-2})$，而 $V_x=O(x^{-1/2}/L)$，给最后的渐近界。§390 的同源对数增长供应某个有限 $C_H$，这里不需要其数值。$\square$
+
+（405.9）直接消费整个 Mellin 指数族，给出了有符号级数本身的绝对收敛。将其和识别为原 $I_\psi$ 仍需 §397 的同源逐点身份及积分前预算 $\sum_m|H_m|Q_x(m)<\infty$。由 $|J_x(m)|\le Q_x(m)$ 不能反推该积分前预算；参数 $\beta$ 的正混合不替代原变量的 Fubini 条件。此处的 $O((\log x)^{-2})$ 也未达到完整 Robin 符号估计所需的临界幂尺度。
+
+**命题 405.3（三阶极点界本身的适用阈值）.** 仅知道非负序列满足 $\sum_{m\ge1}m^{1-\beta}a_m\le C\beta^{-3}$，$0<\beta\le1/2$，不能普遍保证 $p\le3$ 的对数加权级数收敛。
+
+**证明.** 取 $a_1=0$，$a_m=(\log m)^2/m^2$，$m\ge2$。对 $t\in[m-1,m]$，有 $m\le2t$、$m^{-1-\beta}\le t^{-1-\beta}$，因而经典积分比较与 Laplace 矩给
+
+$$
+\begin{aligned}
+\sum_{m\ge2}\frac{(\log m)^2}{m^{1+\beta}}
+&\le\int_1^\infty\frac{(\log(2t))^2}{t^{1+\beta}}dt\\
+&=\frac2{\beta^3}+\frac{2\log2}{\beta^2}+\frac{(\log2)^2}\beta
+\le\left(2+\log2+\frac{(\log2)^2}4\right)\beta^{-3}.
+\end{aligned}
+\tag{405.10}
+$$
+
+但 $\sum_{m\ge2}ma_m/(\log m)^p=\sum_{m\ge2}(\log m)^{2-p}/m$ 对 $p\le3$ 发散。该反例只限定抽象三阶极点预算的普遍保证，不判定实际 $J_x$ 在 $p\le3$ 时的收敛性。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 406. Fibonacci 乘子平移的统一预算与可逆变换的关系
+
+本节直接消费 §385 的同一个实际整函数 $\mathcal B$、系数 $\beta_d$ 与黄金参数 $q=\varphi^{-2}$，并连接 §404 的完整阻尼反演。逐项求导、线段上的微积分基本定理和非零函数比值的乘法律都是经典接口；新增的是这些接口在当前实际系数上的、对全部频率一致的显式预算。
+
+置
+
+$$
+\delta_*:=\frac{94q}{2205},\qquad
+K_B:=\frac{q^2}{(1-q)^3},\qquad
+\kappa_*:=\frac{K_B}{\delta_*}.
+\tag{406.1}
+$$
+
+这里 $\delta_*$ 是（385.4）的明确下界，不把它与其他章节采用的较强数值下界混同。黄金恒等式 $\varphi^2=\varphi+1$ 给 $1-q=\varphi^{-1}$，所以 $K_B=\varphi^{-1}$、$\kappa_*=2205\varphi/94$。
+
+**定理 406.1（整个右半平面上的实际平移预算）。** 对全部 $z,h\in\mathbb C$，若 $\Re z\ge0$ 且 $\Re(z+h)\ge0$，则
+
+$$
+\begin{aligned}
+|\mathcal B'(z)|&\le K_B,\\
+|\mathcal B(z+h)-\mathcal B(z)|&\le K_B|h|,\\
+\left|\frac{\mathcal B(z+h)}{\mathcal B(z)}-1\right|
+&\le\kappa_*|h|,\qquad
+\left|\frac{\mathcal B(z)}{\mathcal B(z+h)}-1\right|
+\le\kappa_*|h|,\\
+\frac1{1+\kappa_*|h|}
+&\le\left|\frac{\mathcal B(z+h)}{\mathcal B(z)}\right|
+\le1+\kappa_*|h|.
+\end{aligned}
+\tag{406.2}
+$$
+
+证明。§385 已支付整函数的逐项求导。因为 $\log1=0$，由（385.9）、$d^{-\Re z}\le1$ 与 $\log d\le d-1$，
+
+$$
+|\mathcal B'(z)|
+\le\sum_{d\ge2}|\beta_d|\log d
+\le\frac1{1-q}\sum_{d\ge2}(d-1)q^d
+=\frac{q^2}{(1-q)^3}.
+\tag{406.3}
+$$
+
+最后的幂级数等式直接复用几何级数及其导数。右半平面凸，故 $z+th$、$0\le t\le1$ 保持在同一域。线段上的微积分基本定理给
+
+$$
+\mathcal B(z+h)-\mathcal B(z)
+=h\int_0^1\mathcal B'(z+th)dt.
+\tag{406.4}
+$$
+
+这就支付第二行。（385.4）给两端均有 $|\mathcal B|\ge\delta_*>0$；分别除以两端的值，得到两个相对预算。它们各自给比值及逆比值的模长不超过 $1+\kappa_*|h|$，故得到最后的双边界。$\square$
+
+**推论 406.2（平移相接时的乘法律）。** 对实际非零乘子，定义
+
+$$
+r_z(h):=\frac{\mathcal B(z+h)}{\mathcal B(z)}.
+\tag{406.5}
+$$
+
+只要 $z,z+h,z+h+k$ 均处于同一右半平面，便有
+
+$$
+r_z(0)=1,\qquad
+r_z(h+k)=r_{z+h}(k)r_z(h),\qquad
+r_{z+h}(-h)=r_z(h)^{-1}.
+\tag{406.6}
+$$
+
+这些身份由消去同一个非零中间因子直接得到，是经典的乘法余循环身份。允许的位移包括全部正实平移；逆位移只在两端仍属于该域时使用，不能据此宣称右半平面承载所有复平移的群作用。
+
+更具体地，（385.4）使 $\mathcal B$ 的值始终在严格右半平面，因此其主支对数 $u(z)=\operatorname{Log}\mathcal B(z)$ 在 $\Re z>0$ 上解析。经典主支对数及导数接口参见 [DLMF §4.2](https://dlmf.nist.gov/4.2)。链式法则与（406.3）给 $|u'(z)|\le\kappa_*$，从而对两端在该开域中的位移，
+
+$$
+r_z(h)=\exp(u(z+h)-u(z)),\qquad
+|u(z+h)-u(z)|\le\kappa_*|h|.
+\tag{406.7}
+$$
+
+所以这里的乘法律来自同一解析势的差；既有源乘子的可逆性与全部频率上的变化成本都已经明列，而非只靠“像群”的直觉。
+
+**实际阻尼的消费与未支付边界。** 对 §403 的同一个 $x\ge e$，令 $\varepsilon_x=1/(\sqrt x\log x)$、$\sigma_x=1-\varepsilon_x/2$。此时 $0<\varepsilon_x<1$，§404 的整条合法反演线满足
+
+$$
+\sup_{\tau\in\mathbb R}
+\left|
+\frac{\mathcal B(\sigma_x+\varepsilon_x+i\tau)}
+{\mathcal B(\sigma_x+i\tau)}-1
+\right|
+\le\frac{\kappa_*}{\sqrt x\log x}.
+\tag{406.8}
+$$
+
+这比只在固定紧集上取点态极限多支付了全部频率的一致相对误差。它仍不能直接支付（404.9）的积分误差：若写
+
+$$
+F_{x,\varepsilon}(z)
+=-\frac{\zeta'(z)}{z\zeta(z+\varepsilon)}\widetilde w_x(z),
+\tag{406.9}
+$$
+
+则完整被积函数为 $r_z(\varepsilon)F_{x,\varepsilon}(z)$，只有在同一反演线的绝对积分范数已经支付时，才能使用
+
+$$
+\left|\frac1{2\pi i}\int(r_z(\varepsilon)-1)F_{x,\varepsilon}(z)dz\right|
+\le\frac{\kappa_*\varepsilon}{2\pi}
+\int_{-\infty}^{\infty}
+|F_{x,\varepsilon}(\sigma_\varepsilon+i\tau)|d\tau.
+\tag{406.10}
+$$
+
+由（406.2）的逆比值界，$|F_{x,\varepsilon}(z)|\le(1+\kappa_*\varepsilon)|r_z(\varepsilon)F_{x,\varepsilon}(z)|$。结合 §404 对每个固定 $x>1$、$0<\varepsilon<1$ 的完整被积函数绝对可积性，$F_{x,\varepsilon}$ 也属于同一竖线的 $L^1$，故（406.10）在这些实际反演线上已经合法。未支付的是该范数在 $\varepsilon\downarrow0$，以及 $\varepsilon=\varepsilon_x$ 与 $x$ 联合变化时所需的增长控制。由于比值和逆比值的模长在 $0<\varepsilon<1$ 时都不超过 $1+\kappa_*$，去除 Fibonacci 因子不改变已有或缺失的 $L^1$ 增长阶。（406.8）支付了 Fibonacci 因子自身的位移与相位变化，仍未支付包含 $\zeta'/\zeta(\cdot+\varepsilon)$ 的临界联合估计，也没有证明原 Robin 全和的符号或 RH。
+
+## 追加锚（本行以下为增补区）
+
+## 407. 完整阻尼轮廓的中心频率增长与实际补集抵消
 
 本节消费 §§403–404 的完整实际和，检验直接对竖线积分取绝对值是否能够支付临界预算。只使用既有 Laurent 展开、$E_1$ 小参数展开和绝对积分尾收敛；不重证 PNT，不使用 RH，也不把一般复积分工具列为新成果。所得同尺度接口为纸面推导，未完成 Lean 核验。
 
-**定义 405.1（同一实际阻尼的中心频率）。** 对 §404 的实际 $\mathcal B$，记
+**定义 407.1（同一实际阻尼的中心频率）。** 对 §404 的实际 $\mathcal B$，记
 
 $$
 \mathscr G_\varepsilon(z)
 =\frac{\mathcal B(z+\varepsilon)}{\mathcal B(z)}
 \frac{-\zeta'(z)}{z\zeta(z+\varepsilon)}.
-\tag{405.1}
+\tag{407.1}
 $$
 
 对 $x\ge e$ 保留共同日程
@@ -61870,7 +62124,7 @@ $$
 \ell=\log x,\qquad
 \varepsilon=\varepsilon_x=\frac{e^{-\ell/2}}\ell,
 \qquad z_\tau=1-\varepsilon/2+i\tau.
-\tag{405.2}
+\tag{407.2}
 $$
 
 将（404.9）的完整积分准确分成
@@ -61887,12 +62141,12 @@ $$
 \int_{-\varepsilon/2}^{\varepsilon/2}
 |\mathscr G_\varepsilon(z_\tau)\widetilde w_x(z_\tau)|d\tau.
 \end{aligned}
-\tag{405.3}
+\tag{407.3}
 $$
 
 两个有符号量均为实数，且 $I_{\varepsilon_x}(x)=\mathfrak A_x+\mathfrak C_x$。它们来自同一实际系数与共同积分线，不是两个可以分别实现的最优配置。
 
-**命题 405.2（中心频率的确切对数主项）。** 当 $x\to\infty$ 时，有
+**命题 407.2（中心频率的确切对数主项）。** 当 $x\to\infty$ 时，有
 
 $$
 \boxed{
@@ -61901,10 +62155,10 @@ $$
 \mathfrak L_x&=\frac{\log(1+\sqrt2)}{2\pi}\log x+O(1),\\
 \mathfrak C_x&=-\frac{4-\pi}{8\pi}\log x+O(1).
 \end{aligned}}
-\tag{405.4}
+\tag{407.4}
 $$
 
-因此该实际反演的完整绝对积分范数至少线性增长于 $\log x$。沿（405.2）直接使用三角不等式，不能给出 $O(1/(\sqrt x\log x))$ 的完整预算，即使假设 RH 也不会消除这一已知中心主项。
+因此该实际反演的完整绝对积分范数至少线性增长于 $\log x$。沿（407.2）直接使用三角不等式，不能给出 $O(1/(\sqrt x\log x))$ 的完整预算，即使假设 RH 也不会消除这一已知中心主项。
 
 证明。取 $\tau=\varepsilon u$、$|u|\le1/2$，令 $h=-1/2+iu$。既有 $\zeta$ 在 $1$ 的 Laurent 展开给
 
@@ -61921,7 +62175,7 @@ $$
 \varepsilon\mathscr G_\varepsilon(1+\varepsilon h)
 =r(u)+O(\varepsilon),\qquad
 r(u)=\frac{1/2+iu}{(-1/2+iu)^2}.
-\tag{405.5}
+\tag{407.5}
 $$
 
 直接复用 [DLMF §6.6.2](https://dlmf.nist.gov/6.6.E2) 的
@@ -61933,17 +62187,17 @@ $$
 =\frac\ell2-\gamma-\log(1/2-iu)
 +\frac1\ell+O(e^{-\ell/2})
 =\frac\ell2+O(1).
-\tag{405.6}
+\tag{407.6}
 $$
 
-复对数采用右半平面的主支；没有跨越割线。式（405.5）和（405.6）在真实共同日程中相乘，再以 $d\tau=\varepsilon du$ 换元，得
+复对数采用右半平面的主支；没有跨越割线。式（407.5）和（407.6）在真实共同日程中相乘，再以 $d\tau=\varepsilon du$ 换元，得
 
 $$
 \begin{aligned}
 \mathfrak A_x&=\frac\ell{4\pi}\int_{-1/2}^{1/2}r(u)du+O(1),\\
 \mathfrak L_x&=\frac\ell{4\pi}\int_{-1/2}^{1/2}|r(u)|du+O(1).
 \end{aligned}
-\tag{405.7}
+\tag{407.7}
 $$
 
 第一积分的虚部由共轭对称消去。对 $c=1/2$，直接使用初等有理原函数，
@@ -61955,27 +62209,27 @@ $$
 |r(u)|&=\frac1{\sqrt{c^2+u^2}},\qquad
 \int_{-c}^{c}|r(u)|du=2\log(1+\sqrt2).
 \end{aligned}
-\tag{405.8}
+\tag{407.8}
 $$
 
-这给（405.4）前两式。$4-\pi>0$，且完整绝对范数不小于其实际中心部分 $\mathfrak L_x$。
+这给（407.4）前两式。$4-\pi>0$，且完整绝对范数不小于其实际中心部分 $\mathfrak L_x$。
 
 最后，§397 的积分前绝对预算在任一固定 $x_0>1$ 上已支付原始 $I_\psi$ 的绝对尾积分。因此经典可积函数尾收敛给 $I_\psi(x)\to0$。由（403.6），$I_{\varepsilon_x}(x)\to0$。在已经合法的同一来源拆分 $I_{\varepsilon_x}=\mathfrak A_x+\mathfrak C_x$ 中代入第一式，便得第三式。没有重新求取素数或输入 $H$ 的增长，也没有将补集的有符号主项当作绝对上界。$\square$
 
-式（405.4）指出了当前表示中的真实联合抵消，但不是 Robin 或 RH 的反例。它也不排除先消去一份全积分为零的已知主部，再估计剩余表示。中心增长来自 $s=1$ 的经典极点，而非未知零点或五模式分支数；下一步应核对这种精确中心化能否保留完整实际积分，不能仅丢弃 $\mathfrak A_x$。
+式（407.4）指出了当前表示中的真实联合抵消，但不是 Robin 或 RH 的反例。它也不排除先消去一份全积分为零的已知主部，再估计剩余表示。中心增长来自 $s=1$ 的经典极点，而非未知零点或五模式分支数；下一步应核对这种精确中心化能否保留完整实际积分，不能仅丢弃 $\mathfrak A_x$。
 
 ## 追加锚（本行以下为增补区）
 
-## 406. 全积分为零的已知主部与中心频率的临界预算
+## 408. 全积分为零的已知主部与中心频率的临界预算
 
-本节不删除 §405 的实际中心贡献，而是使用经典 Mellin 支撑规则，在同一完整积分中扣除一份总积分恰为零的明确函数。它复用 §404 的合法反演与实际 $\mathcal B$，新增的是阻尼参数、主部系数和共同低频范围之间的接口。没有执行携带 $\zeta$ 的移线，未完成 Lean 核验，也不将这项中心化称为新的 RH 判据。
+本节不删除 §407 的实际中心贡献，而是使用经典 Mellin 支撑规则，在同一完整积分中扣除一份总积分恰为零的明确函数。它复用 §404 的合法反演与实际 $\mathcal B$，新增的是阻尼参数、主部系数和共同低频范围之间的接口。没有执行携带 $\zeta$ 的移线，未完成 Lean 核验，也不将这项中心化称为新的 RH 判据。
 
-**定义 406.1（实际极点系数与中心化源函数）。** 对充分小的 $\varepsilon\ge0$，在 $z=1$ 的邻域定义
+**定义 408.1（实际极点系数与中心化源函数）。** 对充分小的 $\varepsilon\ge0$，在 $z=1$ 的邻域定义
 
 $$
 p_\varepsilon(z)=
 \frac{\mathcal B(z+\varepsilon)}{z\mathcal B(z)\zeta(z+\varepsilon)}.
-\tag{406.1}
+\tag{408.1}
 $$
 
 $1/\zeta$ 在 $1$ 处采用其已知解析延拓值 $0$。置
@@ -61992,12 +62246,12 @@ Q_\varepsilon(z)&=
 \mathscr G_\varepsilon^\circ(z)&=
 \mathscr G_\varepsilon(z)-Q_\varepsilon(z).
 \end{aligned}
-\tag{406.2}
+\tag{408.2}
 $$
 
 $\gamma_1$ 沿用（398.13）的 Stieltjes 常数约定。三个系数只读取既有解析函数在 $1$ 附近的值与导数，不含未知 Robin 差额。$a_\varepsilon,b_\varepsilon,c_\varepsilon$ 是本节局部符号，与 §397 的核预算常数不同。最后一个有理项用于消去剩余的常数项；它不是额外的算术来源。
 
-**命题 406.2（中心化保留完整实际积分）。** 对每个固定 $x>1$ 和充分小的 $0<\varepsilon<1$，仍在同一条 $\sigma_\varepsilon=1-\varepsilon/2$ 线上，有绝对收敛等式
+**命题 408.2（中心化保留完整实际积分）。** 对每个固定 $x>1$ 和充分小的 $0<\varepsilon<1$，仍在同一条 $\sigma_\varepsilon=1-\varepsilon/2$ 线上，有绝对收敛等式
 
 $$
 \boxed{
@@ -62005,17 +62259,17 @@ $$
 Q_\varepsilon(z)\widetilde w_x(z)dz=0,\qquad
 I_\varepsilon(x)=\frac1{2\pi i}\int_{\sigma_\varepsilon-i\infty}^{\sigma_\varepsilon+i\infty}
 \mathscr G_\varepsilon^\circ(z)\widetilde w_x(z)dz.}
-\tag{406.3}
+\tag{408.3}
 $$
 
 存在独立于 $\varepsilon$ 的 $r>0$、$C<\infty$，使对充分小的 $\varepsilon\ge0$，$\mathscr G_\varepsilon^\circ$ 在 $|z-1|\le r$ 上有可去延拓，并满足
 
 $$
 \boxed{|\mathscr G_\varepsilon^\circ(z)|\le C|z-1|.}
-\tag{406.4}
+\tag{408.4}
 $$
 
-沿（405.2）的实际日程，其中心频率绝对预算因而为
+沿（407.2）的实际日程，其中心频率绝对预算因而为
 
 $$
 \boxed{
@@ -62023,7 +62277,7 @@ $$
 |\mathscr G_{\varepsilon_x}^\circ(z_\tau)\widetilde w_x(z_\tau)|d\tau
 =O\!\left(\frac1{x\log x}\right)
 =o\!\left(\frac1{\sqrt x\log x}\right).}
-\tag{406.5}
+\tag{408.5}
 $$
 
 更宽的实际低频范围也可支付。置
@@ -62032,7 +62286,7 @@ $$
 \Delta_x=\frac{x^{-1/4}}{(\log x)^{3/2}},
 \qquad \frac{\Delta_x}{\varepsilon_x}
 =\frac{x^{1/4}}{\sqrt{\log x}}\longrightarrow\infty.
-\tag{406.10}
+\tag{408.10}
 $$
 
 同一中心化源函数满足
@@ -62043,10 +62297,10 @@ $$
 |\mathscr G_{\varepsilon_x}^\circ(z_\tau)\widetilde w_x(z_\tau)|d\tau
 =O\!\left(\frac1{\sqrt x\log^2x}\right)
 =o\!\left(\frac1{\sqrt x\log x}\right).}
-\tag{406.11}
+\tag{408.11}
 $$
 
-证明。首先，$1/\zeta(z)$ 在 $1$ 的解析延拓来自既有 Laurent 展开；其邻域中的唯一零点为 $1$，可缩小邻域以排除其他零点或奇点。$\mathcal B$ 在该邻域无零点，$z$ 也非零。故（406.1）在 $(z-1,\varepsilon)$ 的一个共同复邻域中解析，而不仅逐个 $\varepsilon$ 解析。
+证明。首先，$1/\zeta(z)$ 在 $1$ 的解析延拓来自既有 Laurent 展开；其邻域中的唯一零点为 $1$，可缩小邻域以排除其他零点或奇点。$\mathcal B$ 在该邻域无零点，$z$ 也非零。故（408.1）在 $(z-1,\varepsilon)$ 的一个共同复邻域中解析，而不仅逐个 $\varepsilon$ 解析。
 
 采用同一 Laurent 约定，
 
@@ -62060,16 +62314,16 @@ $$
 \mathscr G_\varepsilon(1+t)
 =\frac{a_\varepsilon}{t^2}+\frac{b_\varepsilon}{t}
 +c_\varepsilon+O(t),
-\tag{406.6}
+\tag{408.6}
 $$
 
-余项对充分小的 $\varepsilon$ 一致有界。这一一致性可直接由共同解析邻域和紧子圆盘上的 Cauchy 导数界取得，不假设临界线上的零点条件。$c_\varepsilon/(z-2)^2$ 在 $z=1$ 的常数项恰为 $c_\varepsilon$，其余项为 $O(t)$。所以（406.4）成立。经典展开还给
+余项对充分小的 $\varepsilon$ 一致有界。这一一致性可直接由共同解析邻域和紧子圆盘上的 Cauchy 导数界取得，不假设临界线上的零点条件。$c_\varepsilon/(z-2)^2$ 在 $z=1$ 的常数项恰为 $c_\varepsilon$，其余项为 $O(t)$。所以（408.4）成立。经典展开还给
 
 $$
 a_\varepsilon=\varepsilon+O(\varepsilon^2),\qquad
 b_\varepsilon=1+O(\varepsilon),\qquad
 c_\varepsilon=-(1+\gamma)+O(\varepsilon).
-\tag{406.7}
+\tag{408.7}
 $$
 
 最后一式使用 $p_0(z)=1/[z\zeta(z)]$；这里仅复用标准 Laurent 系数。
@@ -62081,7 +62335,7 @@ $$
 $$
 |\widetilde w_x(z)|
 \le\frac{2v(\ell)e^{-(1-\sigma)\ell}}{|1-z|}.
-\tag{406.8}
+\tag{408.8}
 $$
 
 因此原竖线和左竖线的三个有理项均绝对可积。对固定 $R$，上下水平边在 $|\tau|\to\infty$ 时为 $O_{x,R,\varepsilon}(|\tau|^{-2})$，其积分趋零。$\Re z=-R$ 上的绝对积分则由常数倍
@@ -62091,20 +62345,20 @@ x^{-R-1}\left[
 \frac{|b_\varepsilon|}{R+1}
 +\frac{|a_\varepsilon|}{(R+1)^2}
 +\frac{|c_\varepsilon|}{(R+1)^2}\right]
-\tag{406.9}
+\tag{408.9}
 $$
 
-控制。这里使用 $|z-2|\ge|z-1|$ 及既有的有理函数竖线积分。令 $R\to\infty$ 得零。所有移动均只针对这份已知无左半平面极点的有理项，且先固定 $R$ 再令高度趋于无穷。由经典 Cauchy 定理即得（406.3）第一式。
+控制。这里使用 $|z-2|\ge|z-1|$ 及既有的有理函数竖线积分。令 $R\to\infty$ 得零。所有移动均只针对这份已知无左半平面极点的有理项，且先固定 $R$ 再令高度趋于无穷。由经典 Cauchy 定理即得（408.3）第一式。
 
 在（404.9）中扣除这份绝对存在且为零的完整积分，得到第二式；新的完整竖线 $L^1$ 性由旧完整积分及上述有理项共同支付。没有以一个窗口的零值代替完整积分，也没有丢失 $n=1$ 的来源。
 
-最后在 $|\tau|\le\varepsilon_x/2$ 上，$|z_\tau-1|\le\varepsilon_x/\sqrt2$。式（405.6）给 $|\widetilde w_x(z_\tau)|=O(\ell)$，与（406.4）相乘并在长度 $\varepsilon_x$ 的真实中心弧上积分，得到
+最后在 $|\tau|\le\varepsilon_x/2$ 上，$|z_\tau-1|\le\varepsilon_x/\sqrt2$。式（407.6）给 $|\widetilde w_x(z_\tau)|=O(\ell)$，与（408.4）相乘并在长度 $\varepsilon_x$ 的真实中心弧上积分，得到
 
 $$
 O(\varepsilon_x^2\ell)=O(e^{-\ell}/\ell)=O(1/(x\log x)).
 $$
 
-除以目标尺度 $1/(\sqrt x\log x)$ 后，其比值为 $O(x^{-1/2})\to0$，即（406.5）。
+除以目标尺度 $1/(\sqrt x\log x)$ 后，其比值为 $O(x^{-1/2})\to0$，即（408.5）。
 
 对更宽的 $|\tau|\le\Delta_x$，已有 $E_1$ 展开仍适用：$v=(1-z_\tau)\ell$ 的实部为 $e^{-\ell/2}/2>0$，而
 
@@ -62114,35 +62368,35 @@ $$
 \longrightarrow0.
 $$
 
-其主对数满足 $|\log v|\le\ell/2+O(1)$，因 $|\arg v|<\pi/2$。式（404.4）因而给整个该范围的 $|\widetilde w_x(z_\tau)|=O(\ell)$。$|z_\tau-1|\le\varepsilon_x/2+|\tau|$，所以（406.4）在同一实际积分中给
+其主对数满足 $|\log v|\le\ell/2+O(1)$，因 $|\arg v|<\pi/2$。式（404.4）因而给整个该范围的 $|\widetilde w_x(z_\tau)|=O(\ell)$。$|z_\tau-1|\le\varepsilon_x/2+|\tau|$，所以（408.4）在同一实际积分中给
 
 $$
 O\!\left(\ell[\varepsilon_x\Delta_x+\Delta_x^2]\right)
 =O\!\left(\frac1{\sqrt x\ell^2}\right).
 $$
 
-这里 $\varepsilon_x/\Delta_x=e^{-\ell/4}\sqrt\ell\to0$，故交叉项不大于平方项。这证明（406.11），且所有低频域与阻尼仍属于同一个 $x$。$\square$
+这里 $\varepsilon_x/\Delta_x=e^{-\ell/4}\sqrt\ell\to0$，故交叉项不大于平方项。这证明（408.11），且所有低频域与阻尼仍属于同一个 $x$。$\square$
 
-**适用边界。** $r,C$ 和起始阈值的存在来自已知函数的局部解析性，这里不给数值认证。单独扣除 $a_\varepsilon/(z-1)^2+b_\varepsilon/(z-1)$ 只会留下通常非零的常数项，不能由上述局部论证取得（406.5）；额外的 $(z-2)^{-2}$ 项在保持完整积分为零的同时支付了这项缺口。
+**适用边界。** $r,C$ 和起始阈值的存在来自已知函数的局部解析性，这里不给数值认证。单独扣除 $a_\varepsilon/(z-1)^2+b_\varepsilon/(z-1)$ 只会留下通常非零的常数项，不能由上述局部论证取得（408.5）；额外的 $(z-2)^{-2}$ 项在保持完整积分为零的同时支付了这项缺口。
 
 已被中心化的 $\log x$ 主项属于当前表示的已知极点预算。该操作保持完整 $I_\varepsilon$，并将其中心频率送到临界尺度以下；在 $|\tau|>\Delta_x$ 的实际余项仍须另行估计。减去的有理函数在 §404 的所有移位非平凡零点附近解析，因而不改变那些局部极点的阶数。零点贡献、剩余频率与源系数的临界联合抵消没有得到新的全域上界。由 §403 回接 $I_\psi$ 的误差仍可直接复用，完整 Robin 与 RH 仍未解决。
 
 ## 追加锚（本行以下为增补区）
 
-## 407. 显式 Mertens 文献界在实际 FIB 部分和上的全域预算
+## 409. 显式 Mertens 文献界在实际 FIB 部分和上的全域预算
 
-**定义 407.1（原始供应器与实际来源）。** 保留 §§384–385 的 $q=\varphi^{-2}$、$\beta_d=\log(1-(-q)^d)$、$e=\mu*\beta$ 与 $H_m=\sum_{n\le m}e_n$。实参数的经典 Mertens 函数为 $M(y)=\sum_{n\le y}\mu(n)$，故已有有限卷积身份给
+**定义 409.1（原始供应器与实际来源）。** 保留 §§384–385 的 $q=\varphi^{-2}$、$\beta_d=\log(1-(-q)^d)$、$e=\mu*\beta$ 与 $H_m=\sum_{n\le m}e_n$。实参数的经典 Mertens 函数为 $M(y)=\sum_{n\le y}\mu(n)$，故已有有限卷积身份给
 
 $$
 H_m=\sum_{d\le m}\beta_dM(m/d)\quad(m\in\mathbb N_{>0}).
-\tag{407.1}
+\tag{409.1}
 $$
 
 直接采用 Johnston–Leong–Tudzi，[arXiv:2408.04143v3，定理 A.1、式（A.5）](https://arxiv.org/html/2408.04143v3#Sx2.Thmtheorem1) 的原始界
 
 $$
 |M(y)|\le\frac{2.91890y}{(\log y)^2}\quad\text{对全部实数 }y>1.
-\tag{407.2}
+\tag{409.2}
 $$
 
 该论文已在 *Experimental Mathematics* 发表，出版标识为 [DOI:10.1080/10586458.2025.2483942](https://doi.org/10.1080/10586458.2025.2483942)。再采用 Lee–Leong，[arXiv:2208.06141v5，定理 1.1、式（10）](https://arxiv.org/html/2208.06141v5#S1.Thmtheorem1) 的原始界
@@ -62150,23 +62404,23 @@ $$
 $$
 |M(y)|<33.56y\log y\exp\!\left(-\sqrt{\log y/5.56}\right)
 \quad\text{对全部实数 }y\ge\exp(4589.20).
-\tag{407.3}
+\tag{409.3}
 $$
 
 后一个输入采用版本日期为 2026-09-09 的预印本；这一供应器组合包含发表论文与预印本，不是仅由已发表输入构成的链。两个界的实参数域允许直接代入 $m/d$，不先取整并另损失一份对数预算。
 
-**定理 407.2（实际 $H$ 的显式六次对数预算）。** 对全部整数 $m\ge2$，同一个实际部分和满足
+**定理 409.2（实际 $H$ 的显式六次对数预算）。** 对全部整数 $m\ge2$，同一个实际部分和满足
 
 $$
 \boxed{|H_m|\le10^{17}\frac{m}{(\log m)^6}.}
-\tag{407.4}
+\tag{409.4}
 $$
 
-证明。置 $L_0=4589.20$ 与 $C_M=2.91890L_0^4$。当 $0<\log y\le L_0$，直接用（407.2）得到 $|M(y)|\le C_My/(\log y)^6$。函数
+证明。置 $L_0=4589.20$ 与 $C_M=2.91890L_0^4$。当 $0<\log y\le L_0$，直接用（409.2）得到 $|M(y)|\le C_My/(\log y)^6$。函数
 
 $$
 f(L)=33.56L^7e^{-\sqrt{L/5.56}}
-\tag{407.5}
+\tag{409.5}
 $$
 
 在 $L\ge196\cdot5.56$ 上递减；这是 $f'(L)/f(L)=7/L-1/(2\sqrt{5.56L})$ 的符号。$L_0>196\cdot5.56$ 且 $L_0>28^2\cdot5.56$，正项指数级数的有限下界给
@@ -62177,69 +62431,69 @@ f(L_0)
 &<\frac{33.56L_0^7}{\displaystyle\sum_{j=0}^{100}28^j/j!}
 <C_M<1.3\cdot10^{15}.
 \end{aligned}
-\tag{407.6}
+\tag{409.6}
 $$
 
-中间两个不等式只涉及有理数与整数阶乘。因此（407.3）支付余下全部实参数，得到
+中间两个不等式只涉及有理数与整数阶乘。因此（409.3）支付余下全部实参数，得到
 
 $$
 |M(y)|\le\frac{C_My}{(\log y)^6}\quad(y>1).
-\tag{407.7}
+\tag{409.7}
 $$
 
 这仅组合原始估计，没有重新证明 Mertens 界或定量 PNT。
 
-现在将（407.1）在 $d=\sqrt m$ 分开。§385 的 $|\beta_d|\le q^d/(1-q)$ 与 $0<q<2/5$ 给
+现在将（409.1）在 $d=\sqrt m$ 分开。§385 的 $|\beta_d|\le q^d/(1-q)$ 与 $0<q<2/5$ 给
 
 $$
 \sum_{d\ge1}\frac{|\beta_d|}{d}
 \le\frac{-\log(1-q)}{1-q}
 \le\frac q{(1-q)^2}<\frac{10}{9}.
-\tag{407.8}
+\tag{409.8}
 $$
 
 低段中 $m/d\ge\sqrt m>1$、$\log(m/d)\ge\frac12\log m$，所以其绝对和至多为
 
 $$
 \frac{64C_Mm}{(\log m)^6}\frac{10}{9}.
-\tag{407.9}
+\tag{409.9}
 $$
 
 高段保留全部 $d>\sqrt m$，包括 $m/d=1$ 的端点；直接用 $|M(y)|\le y$，其绝对和至多为
 
 $$
 \frac{m q^{\sqrt m}}{(1-q)^2\sqrt m}.
-\tag{407.10}
+\tag{409.10}
 $$
 
-置 $u=\sqrt m>1$。因为 $\log u\le u$、$q<1/2$、$\log2>1/2$，将（407.10）乘 $(\log m)^6/m$ 得
+置 $u=\sqrt m>1$。因为 $\log u\le u$、$q<1/2$、$\log2>1/2$，将（409.10）乘 $(\log m)^6/m$ 得
 
 $$
 \frac{64(\log u)^6q^u}{(1-q)^2u}
 <\frac{64\cdot25}{9}u^5e^{-u/2}
 \le\frac{64\cdot25}{9}10^5e^{-5}
 <\frac{64\cdot25}{9}10^5.
-\tag{407.11}
+\tag{409.11}
 $$
 
 最后一个上界来自 $u^5e^{-u/2}$ 在 $u=10$ 的最大值，且
 
 $$
 64\frac{10}{9}C_M+\frac{64\cdot25}{9}10^5<10^{17}.
-\tag{407.12}
+\tag{409.12}
 $$
 
-（407.9）与（407.11）共同覆盖全部 $m\ge2$，得（407.4）。$\square$
+（409.9）与（409.11）共同覆盖全部 $m\ge2$，得（409.4）。$\square$
 
 ## 追加锚（本行以下为增补区）
 
-## 408. 完整 Abel 来源账的显式数值预算与可选择阻尼
+## 410. 完整 Abel 来源账的显式数值预算与可选择阻尼
 
-**定义 408.1（共同标量包络）。** 保留 §§397、403 的实际 $A,D,\mu_0,a_2,a_1,a_0,q_k,C_*$ 与 $W_x$。采用同一来源的标量界
+**定义 410.1（共同标量包络）。** 保留 §§397、403 的实际 $A,D,\mu_0,a_2,a_1,a_0,q_k,C_*$ 与 $W_x$。采用同一来源的标量界
 
 $$
 0<A<4,\qquad0<D<5,\qquad0<\mu_0<62,\qquad0<q<2/5.
-\tag{408.1}
+\tag{410.1}
 $$
 
 §§384、398–399 的实际标量包络给这些充分界。特别地，（397.3）、$\log2<1$ 与 $H_1=\log(1+q)<2/5$ 给
@@ -62247,16 +62501,16 @@ $$
 $$
 a_2<66,\qquad a_1<212,\qquad a_0<248,
 \qquad|H_1|<2/5.
-\tag{408.2}
+\tag{410.2}
 $$
 
-以下只消费这份共同包络与定理 407.2，不重新求取 $\beta$ 或逆核。$q_k$ 仍是（403.1）的差分上界，区别于黄金参数 $q$。
+以下只消费这份共同包络与定理 409.2，不重新求取 $\beta$ 或逆核。$q_k$ 仍是（403.1）的差分上界，区别于黄金参数 $q$。
 
-**定理 408.2（完整 $C_*$ 的显式上界）。** 式（403.2）由全部实际 $H_m$ 定义的同一非负常数满足
+**定理 410.2（完整 $C_*$ 的显式上界）。** 式（403.2）由全部实际 $H_m$ 定义的同一非负常数满足
 
 $$
 \boxed{C_*<\overline C:=3\cdot10^{22}.}
-\tag{408.3}
+\tag{410.3}
 $$
 
 证明。对 $p>1$ 置 $S_p=\sum_{k\ge2}1/[k(\log k)^p]$。递减正项比较与 $\log2>2/3$ 给
@@ -62266,7 +62520,7 @@ S_p\le\frac1{2(\log2)^p}
 +\frac1{(p-1)(\log2)^{p-1}}
 <\overline S_p:=\frac1{2(2/3)^p}
 +\frac1{(p-1)(2/3)^{p-1}}.
-\tag{408.4}
+\tag{410.4}
 $$
 
 同时，对 $1<p\le2$、$r\in\{1,2\}$，令 $U_r(p)=\sum_{k\ge2}(\log k)^r/k^p$。在 $t\in[k,k+1]$ 上有 $t/k\le3/2$ 与 $\log t\ge\log k$，所以
@@ -62274,10 +62528,10 @@ $$
 $$
 U_r(p)\le\frac94\int_1^\infty\frac{(\log t)^r}{t^p}dt
 =\frac94\frac{r!}{(p-1)^{r+1}}.
-\tag{408.5}
+\tag{410.5}
 $$
 
-$r=0$ 时使用更小的递减比较 $U_0(p)\le1/(p-1)$。由（408.2）得
+$r=0$ 时使用更小的递减比较 $U_0(p)\le1/(p-1)$。由（410.2）得
 
 $$
 \begin{aligned}
@@ -62286,7 +62540,7 @@ $$
 \sum_{k\ge2}q_k\sqrt k
 &\le66\cdot36+212\cdot9+248\cdot2=4780.
 \end{aligned}
-\tag{408.6}
+\tag{410.6}
 $$
 
 直接消费（403.7）与 $C_6=10^{17}$，完整来源账的四份上界为
@@ -62300,18 +62554,18 @@ C_*\le{}&C_6(66\overline S_3+212\overline S_4+248\overline S_5)
 ={}&255297.0375\cdot10^{17}+408.8
 <3\cdot10^{22}.
 \end{aligned}
-\tag{408.7}
+\tag{410.7}
 $$
 
-第一项覆盖 $q_k|H_k|\log k$，第二项保留 $H_1$，后两项分别覆盖（403.7）的低段与高段；没有删除任意实际前缀或窗外补集。等号是有限有理数计算，结合（408.4）–（408.6）即得（408.3）。$\square$
+第一项覆盖 $q_k|H_k|\log k$，第二项保留 $H_1$，后两项分别覆盖（403.7）的低段与高段；没有删除任意实际前缀或窗外补集。等号是有限有理数计算，结合（410.4）–（410.6）即得（410.3）。$\square$
 
-**定理 408.3（完整去阻尼误差的明确尺度）。** 对每个 $x\ge e$，选择
+**定理 410.3（完整去阻尼误差的明确尺度）。** 对每个 $x\ge e$，选择
 
 $$
 \varepsilon_x^{\mathrm{cert}}
 =\frac1{2\overline C\sqrt x\log x}
 =\frac1{6\cdot10^{22}\sqrt x\log x}.
-\tag{408.8}
+\tag{410.8}
 $$
 
 则（403.3）的完整实际阻尼和绝对存在，并满足
@@ -62321,48 +62575,48 @@ $$
 |I_{\varepsilon_x^{\mathrm{cert}}}(x)-I_\psi(x)|
 \le\frac1{\sqrt x(\log x)^2}
 =o\!\left(\frac1{\sqrt x\log x}\right).}
-\tag{408.9}
+\tag{410.9}
 $$
 
-证明。直接应用（403.4）、（408.3）以及 $W_x\le2/\log x$，得到（408.9）。又 $0<\varepsilon_x^{\mathrm{cert}}<1$，故（404.9）可对该选择使用；这里只调用已经支付的反演接口。$\square$
+证明。直接应用（403.4）、（410.3）以及 $W_x\le2/\log x$，得到（410.9）。又 $0<\varepsilon_x^{\mathrm{cert}}<1$，故（404.9）可对该选择使用；这里只调用已经支付的反演接口。$\square$
 
-式（408.8）是一种充分选择，不代替（403.5）的原有选择，也不宣称取得更低的计算成本。式（408.9）仅支付完整去阻尼误差；同一实际 $I_{\varepsilon_x^{\mathrm{cert}}}$ 的剩余频率有符号估计仍须另行给出。较小的正阻尼不会消去（404.16）的实际移位零点极点，也不许可未支付的移线。完整 Robin 与 RH 没有由上述常数界得到证明。
+式（410.8）是一种充分选择，不代替（403.5）的原有选择，也不宣称取得更低的计算成本。式（410.9）仅支付完整去阻尼误差；同一实际 $I_{\varepsilon_x^{\mathrm{cert}}}$ 的剩余频率有符号估计仍须另行给出。较小的正阻尼不会消去（404.16）的实际移位零点极点，也不许可未支付的移线。完整 Robin 与 RH 没有由上述常数界得到证明。
 
 ## 追加锚（本行以下为增补区）
 
-## 409. 完整中心化频率绝对账的严格对数量级
+## 411. 完整中心化频率绝对账的严格对数量级
 
-**定义 409.1（同源频率账与正阻尼日程）。** 保留 §§403–406 的同一实际 $\mathcal B$、$\mathscr G_\varepsilon$、$Q_\varepsilon$、$\mathscr G_\varepsilon^\circ$ 与 $\widetilde w_x$。令 $x\to\infty$、$\ell=\log x$，取任意正日程满足
+**定义 411.1（同源频率账与正阻尼日程）。** 保留 §§403–408 的同一实际 $\mathcal B$、$\mathscr G_\varepsilon$、$Q_\varepsilon$、$\mathscr G_\varepsilon^\circ$ 与 $\widetilde w_x$。令 $x\to\infty$、$\ell=\log x$，取任意正日程满足
 
 $$
 \varepsilon_x\longrightarrow0,\qquad
 \varepsilon_x\ell\longrightarrow0,
 \qquad \sigma_x=1-\varepsilon_x/2.
-\tag{409.1}
+\tag{411.1}
 $$
 
-因此 $0<\sigma_x<1$ 对全部充分大的 $x$ 成立，原来的完整反演合法；（403.5）与（408.8）都属于这一类。定义完整实际绝对账
+因此 $0<\sigma_x<1$ 对全部充分大的 $x$ 成立，原来的完整反演合法；（403.5）与（410.8）都属于这一类。定义完整实际绝对账
 
 $$
 \mathcal A(x)=\frac1{2\pi}\int_{\mathbb R}
 \left|\mathscr G_{\varepsilon_x}^\circ(\sigma_x+i\tau)
 \widetilde w_x(\sigma_x+i\tau)\right|d\tau.
-\tag{409.2}
+\tag{411.2}
 $$
 
-使用（406.7）的已有系数极限，记
+使用（408.7）的已有系数极限，记
 
 $$
 \begin{aligned}
 Q_0(z)&=\frac1{z-1}-\frac{1+\gamma}{(z-2)^2},\\
 g_0(z)&=-\frac{\zeta'(z)}{z\zeta(z)}-Q_0(z).
 \end{aligned}
-\tag{409.3}
+\tag{411.3}
 $$
 
-$g_0$ 在 $z=1$ 采用（406.4）的可去延拓，满足 $g_0(z)=O(|z-1|)$。在其他 $1+i\tau$ 上，经典 $\zeta(1+i\tau)\ne0$ 保证定义合法，见 [DLMF §25.10](https://dlmf.nist.gov/25.10)。$g_0$ 是实际中心化来源的零阻尼极限，不是另外选择的谱模型。
+$g_0$ 在 $z=1$ 采用（408.4）的可去延拓，满足 $g_0(z)=O(|z-1|)$。在其他 $1+i\tau$ 上，经典 $\zeta(1+i\tau)\ne0$ 保证定义合法，见 [DLMF §25.10](https://dlmf.nist.gov/25.10)。$g_0$ 是实际中心化来源的零阻尼极限，不是另外选择的谱模型。
 
-**定理 409.2（完整绝对预算的精确首阶）。** 在（409.1）的任意日程下，有
+**定理 411.2（完整绝对预算的精确首阶）。** 在（411.1）的任意日程下，有
 
 $$
 \boxed{
@@ -62370,7 +62624,7 @@ $$
 C_{\mathrm{abs}}:=\frac1{2\pi}\int_{\mathbb R}
 \frac{|g_0(1+i\tau)|}{|\tau|}d\tau,
 \qquad0<C_{\mathrm{abs}}<\infty.}
-\tag{409.4}
+\tag{411.4}
 $$
 
 积分在 $\tau=0$ 的值可任意指定；该单点不影响积分。因此完整绝对账恰为 $\Theta(1/\log x)$，并且
@@ -62379,7 +62633,7 @@ $$
 \boxed{
 \frac{\mathcal A(x)}{1/(\sqrt x\log x)}
 \sim C_{\mathrm{abs}}\sqrt x\longrightarrow\infty.}
-\tag{409.5}
+\tag{411.5}
 $$
 
 证明。先保留相位而计算权重。置 $v(u)=(u+1)/u^2$、$a=1-z$，有 $\Re a>0$。对（404.2）的对数坐标表示作两次分部积分：
@@ -62388,7 +62642,7 @@ $$
 \widetilde w_x(z)
 =e^{-a\ell}\left(\frac{v(\ell)}a+\frac{v'(\ell)}{a^2}\right)
 +\frac1{a^2}\int_\ell^\infty e^{-au}v''(u)du.
-\tag{409.6}
+\tag{411.6}
 $$
 
 这里 $v'=-u^{-2}-2u^{-3}<0$、$v''=2u^{-3}+6u^{-4}>0$，且 $\int_\ell^\infty v''=-v'(\ell)$。所以
@@ -62396,21 +62650,21 @@ $$
 $$
 \left|\widetilde w_x(z)-\frac{e^{-a\ell}v(\ell)}a\right|
 \le\frac{2e^{-\Re a\ell}|v'(\ell)|}{|a|^2}.
-\tag{409.7}
+\tag{411.7}
 $$
 
-对固定 $\tau\ne0$，取 $z=\sigma_x+i\tau$、$a=\varepsilon_x/2-i\tau$。由（409.1）、$\ell v(\ell)=1+1/\ell$ 和 $\ell|v'(\ell)|\to0$，得到保持原相位的极限
+对固定 $\tau\ne0$，取 $z=\sigma_x+i\tau$、$a=\varepsilon_x/2-i\tau$。由（411.1）、$\ell v(\ell)=1+1/\ell$ 和 $\ell|v'(\ell)|\to0$，得到保持原相位的极限
 
 $$
 \boxed{
 \ell e^{-i\tau\ell}\widetilde w_x(\sigma_x+i\tau)
 \longrightarrow\frac1{-i\tau}.}
-\tag{409.8}
+\tag{411.8}
 $$
 
-收敛在避开零的紧频率区间上一致。另一方面，$\mathcal B(z+\varepsilon)/\mathcal B(z)\to1$ 以及（406.7）在这些区间给 $\mathscr G_{\varepsilon_x}^\circ(\sigma_x+i\tau)\to g_0(1+i\tau)$。因此（409.4）的被积函数逐点极限正确；取绝对值只在这一共同相位身份之后发生。
+收敛在避开零的紧频率区间上一致。另一方面，（406.2）的既有统一平移预算给 $\mathcal B(z+\varepsilon)/\mathcal B(z)\to1$，而（408.7）在这些区间给 $\mathscr G_{\varepsilon_x}^\circ(\sigma_x+i\tau)\to g_0(1+i\tau)$。因此（411.4）的被积函数逐点极限正确；取绝对值只在这一共同相位身份之后发生。
 
-现在支付整个实轴的支配预算。对固定充分小的 $r>0$，$|\tau|\le r$ 时复用（406.4）和（406.8）：
+现在支付整个实轴的支配预算。对固定充分小的 $r>0$，$|\tau|\le r$ 时复用（408.4）和（408.8）：
 
 $$
 \begin{aligned}
@@ -62419,16 +62673,16 @@ $$
 &\le 2C\ell v(\ell)e^{-\varepsilon_x\ell/2}
 \le4C\qquad(\ell\ge1).
 \end{aligned}
-\tag{409.9}
+\tag{411.9}
 $$
 
-这里 $|z-1|=|1-z|$ 精确抵消；没有在 $\tau=0$ 先使用无效的 $1/|\tau|$ 上界。任意固定的剩余紧频率环带上，经典无零性、实际 $\mathcal B$ 的正下界及（406.7）给一致有界的中心化因子，（406.8）给有界的归一化权重。
+这里 $|z-1|=|1-z|$ 精确抵消；没有在 $\tau=0$ 先使用无效的 $1/|\tau|$ 上界。任意固定的剩余紧频率环带上，经典无零性、实际 $\mathcal B$ 的正下界及（408.7）给一致有界的中心化因子，（408.8）给有界的归一化权重。
 
 无穷高频直接消费原始显式供应器。[Lee–Leong，arXiv:2208.06141v5，定理 1.1、式（7）](https://arxiv.org/html/2208.06141v5#S1.Thmtheorem1) 对 $t\ge\mathcal H=3000175332800$、$\sigma\ge1-1/(5.56\log t)$ 给
 
 $$
 |\zeta(\sigma+it)|^{-1}\le1237(\log t)^{11/12}.
-\tag{409.10}
+\tag{411.10}
 $$
 
 实际分母的实部为 $1+\varepsilon_x/2$，属于该实参数域；负频率由共轭处理。该输入采用预印本 v5，不假设全域 RH。对实际分子的 $3/4\le\sigma_x\le1$，直接复用 [DLMF §25.2.8](https://dlmf.nist.gov/25.2.E8) 的 Euler 求和。先固定整数 $N\asymp t$ 再对 $z$ 微分；有限和用
@@ -62444,35 +62698,35 @@ $$
 $$
 |\zeta'(\sigma_x+it)|
 =O\!\left(t^{\varepsilon_x/2}(\log t)^2\right).
-\tag{409.11}
+\tag{411.11}
 $$
 
-实际 $\mathcal B$ 比值在右半平面一致有界，三个 $Q_{\varepsilon_x}$ 系数由（406.7）有界，且 $Q_{\varepsilon_x}(\sigma_x+i\tau)=O(t^{-1})$。将这些界与（406.8）共同使用，在 $t=|\tau|\ge\mathcal H$、$\varepsilon_x\le1/2$ 时得到独立于 $x$ 的可积包络
+实际 $\mathcal B$ 比值在右半平面一致有界，三个 $Q_{\varepsilon_x}$ 系数由（408.7）有界，且 $Q_{\varepsilon_x}(\sigma_x+i\tau)=O(t^{-1})$。将这些界与（408.8）共同使用，在 $t=|\tau|\ge\mathcal H$、$\varepsilon_x\le1/2$ 时得到独立于 $x$ 的可积包络
 
 $$
 \ell\left|\mathscr G_{\varepsilon_x}^\circ(z)
 \widetilde w_x(z)\right|
 =O\!\left(t^{-7/4}(\log t)^{35/12}+t^{-2}\right).
-\tag{409.12}
+\tag{411.12}
 $$
 
-（409.9）、紧环带界和（409.12）合在同一实际积分中，经典支配收敛定理给（409.4），也给 $C_{\mathrm{abs}}<\infty$。
+（411.9）、紧环带界和（411.12）合在同一实际积分中，经典支配收敛定理给（411.4），也给 $C_{\mathrm{abs}}<\infty$。
 
-最后证明常数严格为正。若为零，连续的 $g_0(1+i\tau)$ 在任意不含零的开区间上恒为零。亚纯恒等定理则使 $-\zeta'(z)/(z\zeta(z))=Q_0(z)$ 成为全局亚纯身份。但经典平凡零点 $z=-2$，见 DLMF 上引零点表述，使左侧有非零留数的极点，右侧在该点全纯，矛盾。无需假设非平凡零点的位置或单纯性。因此 $C_{\mathrm{abs}}>0$，其余结论直接由（409.4）得到。$\square$
+最后证明常数严格为正。若为零，连续的 $g_0(1+i\tau)$ 在任意不含零的开区间上恒为零。亚纯恒等定理则使 $-\zeta'(z)/(z\zeta(z))=Q_0(z)$ 成为全局亚纯身份。但经典平凡零点 $z=-2$，见 DLMF 上引零点表述，使左侧有非零留数的极点，右侧在该点全纯，矛盾。无需假设非平凡零点的位置或单纯性。因此 $C_{\mathrm{abs}}>0$，其余结论直接由（411.4）得到。$\square$
 
-式（409.4）是经典积分、Euler 求和与零点事实在完整实际账上的应用，不是新的零点判据或 $\zeta$ 点态界。它表明（406.11）的低频成功不能推广为同量级的全域绝对预算：实际有符号积分仍可通过相位抵消更小，绝对账却不能。式（409.5）反驳的是使用这一绝对账和三角不等式支付临界尺度的策略，不是 Robin 或 RH。
+式（411.4）是经典积分、Euler 求和与零点事实在完整实际账上的应用，不是新的零点判据或 $\zeta$ 点态界。它表明（408.11）的低频成功不能推广为同量级的全域绝对预算：实际有符号积分仍可通过相位抵消更小，绝对账却不能。式（411.5）反驳的是使用这一绝对账和三角不等式支付临界尺度的策略，不是 Robin 或 RH。
 
 ## 追加锚（本行以下为增补区）
 
-## 410. 固定有限中心化的边界与必须保留的相位关系
+## 412. 固定有限中心化的边界与必须保留的相位关系
 
-**定义 410.1（有限有理零积分家族）。** 沿用 §409 的实际来源与正日程。固定有限极点集 $P\subseteq\{1\}\cup\{z:\Re z>1\}$，每个极点的最高阶固定。令 $T_\varepsilon(z)$ 为只在 $P$ 上有极点、在无穷远为 $O(1/z)$ 的有理函数；所有部分分式系数在 $\varepsilon\downarrow0$ 时有有限极限，极限函数记为 $T_0$。
+**定义 412.1（有限有理零积分家族）。** 沿用 §411 的实际来源与正日程。固定有限极点集 $P\subseteq\{1\}\cup\{z:\Re z>1\}$，每个极点的最高阶固定。令 $T_\varepsilon(z)$ 为只在 $P$ 上有极点、在无穷远为 $O(1/z)$ 的有理函数；所有部分分式系数在 $\varepsilon\downarrow0$ 时有有限极限，极限函数记为 $T_0$。
 
 还要求在 $1$ 的固定邻域中，$\mathscr G_\varepsilon-T_\varepsilon$ 对所有充分小的 $\varepsilon\ge0$ 都有可去延拓，并有共同界
 
 $$
 |\mathscr G_\varepsilon(z)-T_\varepsilon(z)|\le C|z-1|.
-\tag{410.1}
+\tag{412.1}
 $$
 
 若要把该家族用作不改变实际完整积分的中心化，还须独立支付同一权重下的零积分身份
@@ -62480,18 +62734,18 @@ $$
 $$
 \frac1{2\pi i}\int_{\sigma_x-i\infty}^{\sigma_x+i\infty}
 T_{\varepsilon_x}(z)\widetilde w_x(z)dz=0.
-\tag{410.2}
+\tag{412.2}
 $$
 
-$Q_\varepsilon$ 已由（406.3）支付这一身份。一般家族在本节把（410.2）作为明确合同，不重新证明通用 Mellin 支撑定理，也不将局部中心化自动视为已支付该身份。
+$Q_\varepsilon$ 已由（408.3）支付这一身份。一般家族在本节把（412.2）作为明确合同，不重新证明通用 Mellin 支撑定理，也不将局部中心化自动视为已支付该身份。
 
-**定理 410.2（固定有限零积分项不能改变完整绝对账的阶数）。** 对每个满足定义410.1的固定家族，置
+**定理 412.2（固定有限零积分项不能改变完整绝对账的阶数）。** 对每个满足定义412.1的固定家族，置
 
 $$
 \mathcal A_T(x)=\frac1{2\pi}\int_{\mathbb R}
 |[\mathscr G_{\varepsilon_x}-T_{\varepsilon_x}](\sigma_x+i\tau)
 \widetilde w_x(\sigma_x+i\tau)|d\tau.
-\tag{410.3}
+\tag{412.3}
 $$
 
 则
@@ -62502,35 +62756,35 @@ $$
 C_T:=\frac1{2\pi}\int_{\mathbb R}
 \frac{|-\zeta'(1+i\tau)/[(1+i\tau)\zeta(1+i\tau)]-T_0(1+i\tau)|}{|\tau|}d\tau,
 \qquad0<C_T<\infty.}
-\tag{410.4}
+\tag{412.4}
 $$
 
 因此，即使进一步消去任意预固定阶数的局部 Taylor 项，只要仍属于这一家族，全部绝对预算仍不能达到 $O(1/(\sqrt x\log x))$。
 
-证明。固定有限系数与极点保证所有远离 $P$ 的紧集上一致收敛，并使 $T_\varepsilon(\sigma_x+i\tau)=O(|\tau|^{-1})$ 的常数对小 $\varepsilon$ 一致。用（410.1）替代（406.4），§409 证明中的低频、紧环带与无穷高频三个支配预算保持成立；（409.8）也不改变。故同一支配收敛直接给（410.4）的有限极限。
+证明。固定有限系数与极点保证所有远离 $P$ 的紧集上一致收敛，并使 $T_\varepsilon(\sigma_x+i\tau)=O(|\tau|^{-1})$ 的常数对小 $\varepsilon$ 一致。用（412.1）替代（408.4），§411 证明中的低频、紧环带与无穷高频三个支配预算保持成立；（411.8）也不改变。故同一支配收敛直接给（412.4）的有限极限。
 
 若 $C_T=0$，亚纯恒等定理再次迫使 $-\zeta'(z)/(z\zeta(z))=T_0(z)$。$T_0$ 的全部极点在 $\Re z\ge1$，而平凡零点 $-2$ 给左侧非零极点，矛盾。因此 $C_T>0$。$\square$
 
 本结论逐个固定家族给严格正的常数，不给所有家族共享的正下界。它不涉及随 $x$ 增长的项数、移动极点、发散系数或未经支付的移线。也不把 $C_T>0$ 当作实际有符号积分的下界；相位抵消仍存在。
 
-**定义 410.3（既有 Hardy 支撑接口与实际缺口）。** Burnol 的原始 [arXiv:math/0202166v1](https://arxiv.org/pdf/math/0202166v1)，引理4.3，对 $f_\varepsilon(u)=\sum_{n\ge1}\mu(n)n^{-\varepsilon}\{1/(nu)\}$，其中 $\{t\}=t-\lfloor t\rfloor$，在 $\varepsilon>0$、$\Re s>1$ 上无条件给
+**定义 412.3（既有 Hardy 支撑接口与实际缺口）。** Burnol 的原始 [arXiv:math/0202166v1](https://arxiv.org/pdf/math/0202166v1)，引理4.3，对 $f_\varepsilon(u)=\sum_{n\ge1}\mu(n)n^{-\varepsilon}\{1/(nu)\}$，其中 $\{t\}=t-\lfloor t\rfloor$，在 $\varepsilon>0$、$\Re s>1$ 上无条件给
 
 $$
 \int_0^1f_\varepsilon(u)u^{s-1}du
 =\frac1{\zeta(1+\varepsilon)(s-1)}
 -\frac{\zeta(s)}{s\zeta(s+\varepsilon)}.
-\tag{410.5}
+\tag{412.5}
 $$
 
 它已经提供有理主部扣除与单侧 Mellin 支撑的经典联系，直接复用，不另证为项目成果。同文的临界线均匀移位比值估计明确假设 RH；定理4.3的消失移位 Hardy 投影身份则与 RH 等价。它们不提供本项目实际 $-\zeta'$ 分子、$\mathcal B$ 比值及 $\widetilde w_x$ 配对的无条件临界符号估计。
 
-在（410.2）已支付时，同一个实际完整 $I_{\varepsilon_x}$ 不随所选表示改变，而（410.4）说明各固定有限表示的绝对账都远大于临界尺度。继续推进需要同一实际来源的联合相位估计，或在合同之外另行构造并支付更强的全域近似；仅增加预固定阶数的局部扣除不能补足该缺口。完整 Robin 与 RH 仍未由这些接口得到证明。
+在（412.2）已支付时，同一个实际完整 $I_{\varepsilon_x}$ 不随所选表示改变，而（412.4）说明各固定有限表示的绝对账都远大于临界尺度。继续推进需要同一实际来源的联合相位估计，或在合同之外另行构造并支付更强的全域近似；仅增加预固定阶数的局部扣除不能补足该缺口。完整 Robin 与 RH 仍未由这些接口得到证明。
 
 ## 追加锚（本行以下为增补区）
 
-## 411. 完整实际积分的零阻尼边界与固定相位核
+## 413. 完整实际积分的零阻尼边界与固定相位核
 
-**定义 411.1（同源边界权重与固定频率函数）。** 沿用 §§403–409 的实际来源、中心化和 $g_0$。对每个固定 $x>1$，置 $\ell=\log x$、$v(u)=(u+1)/u^2$。对 $\tau\ne0$ 定义单侧振荡权重
+**定义 413.1（同源边界权重与固定频率函数）。** 沿用 §§403–411 的实际来源、中心化和 $g_0$。对每个固定 $x>1$，置 $\ell=\log x$、$v(u)=(u+1)/u^2$。对 $\tau\ne0$ 定义单侧振荡权重
 
 $$
 \begin{aligned}
@@ -62539,7 +62793,7 @@ W_x^\partial(\tau)
 &=\frac{e^{i\tau\ell}v(\ell)}{-i\tau}
 +\frac1{-i\tau}\int_\ell^\infty e^{i\tau u}v'(u)du.
 \end{aligned}
-\tag{411.1}
+\tag{413.1}
 $$
 
 第二行采用经典分部积分；$v(T)\to0$ 且 $v'\in L^1([\ell,\infty))$，所以该定义存在。它不是把零频处发散的权重单独视为可积函数。定义
@@ -62549,81 +62803,81 @@ k(\tau)=\frac{g_0(1+i\tau)}{-i\tau}\quad(\tau\ne0),
 \qquad k(0)=-g_0'(1),
 \qquad
 h(u)=\frac1{2\pi}\int_{\mathbb R}k(\tau)e^{i\tau u}d\tau.
-\tag{411.2}
+\tag{413.2}
 $$
 
-这里 $k\in L^1(\mathbb R)$ 直接由（409.4）的可积性取得；零点值是既有可去延拓，不影响积分。经典 Fourier 连续性、Riemann–Lebesgue 引理及共轭对称性给 $h$ 实值连续、两端趋零。这些是已有 Fourier 结论的直接应用，不另列为新的衰减定理。
+这里 $k\in L^1(\mathbb R)$ 直接由（411.4）的可积性取得；零点值是既有可去延拓，不影响积分。经典 Fourier 连续性、Riemann–Lebesgue 引理及共轭对称性给 $h$ 实值连续、两端趋零。这些是已有 Fourier 结论的直接应用，不另列为新的衰减定理。
 
-**定理 411.2（固定尺度的完整去阻尼与相位保留身份）。** 对每个 $x>1$，不跨越任何算术零点，有绝对收敛的完整乘积积分
+**定理 413.2（固定尺度的完整去阻尼与相位保留身份）。** 对每个 $x>1$，不跨越任何算术零点，有绝对收敛的完整乘积积分
 
 $$
 \boxed{
 I_\psi(x)=\frac1{2\pi}\int_{\mathbb R}
 g_0(1+i\tau)W_x^\partial(\tau)d\tau
 =v(\ell)h(\ell)+\int_\ell^\infty v'(u)h(u)du.}
-\tag{411.3}
+\tag{413.3}
 $$
 
 第一份积分在 $\tau=0$ 的值可任意指定。其绝对收敛指乘积，而不指单独的 $W_x^\partial$ 在零频附近有界。$h$ 是同一实际中心化来源的固定核，与 $x$ 和所选阻尼日程无关。
 
-证明。固定 $x$ 后，让正 $\varepsilon\downarrow0$，仍使用（406.3）的完整积分及 $\sigma_\varepsilon=1-\varepsilon/2$。对每个 $\tau\ne0$，令 $a=\varepsilon/2-i\tau$。一次分部积分给
+证明。固定 $x$ 后，让正 $\varepsilon\downarrow0$，仍使用（408.3）的完整积分及 $\sigma_\varepsilon=1-\varepsilon/2$。对每个 $\tau\ne0$，令 $a=\varepsilon/2-i\tau$。一次分部积分给
 
 $$
 \widetilde w_x(\sigma_\varepsilon+i\tau)
 =\frac{e^{-a\ell}v(\ell)}a
 +\frac1a\int_\ell^\infty e^{-au}v'(u)du.
-\tag{411.4}
+\tag{413.4}
 $$
 
-$|v'|$ 可积，故经典支配收敛使（411.4）趋于（411.1）。同时共同解析性、（406.7）及 $\zeta(1+i\tau)\ne0$ 给 $\mathscr G_\varepsilon^\circ(\sigma_\varepsilon+i\tau)\to g_0(1+i\tau)$。
+$|v'|$ 可积，故经典支配收敛使（413.4）趋于（413.1）。同时共同解析性、（408.7）及 $\zeta(1+i\tau)\ne0$ 给 $\mathscr G_\varepsilon^\circ(\sigma_\varepsilon+i\tau)\to g_0(1+i\tau)$。
 
-必须对整个频率轴支付共同包络。固定充分小的中心弧，复用（406.4）与（406.8）：
+必须对整个频率轴支付共同包络。固定充分小的中心弧，复用（408.4）与（408.8）：
 
 $$
 |\mathscr G_\varepsilon^\circ(z)\widetilde w_x(z)|
 \le2Cv(\ell)e^{-\varepsilon\ell/2}.
-\tag{411.5}
+\tag{413.5}
 $$
 
-紧环带的界复用 §409 的无零性和实际 $\mathcal B$ 预算。高频使用同一个 Lee–Leong 原始供应器及统一 Euler 导数估计；（409.12）的证明在固定 $\ell>0$ 上给
+紧环带的界复用 §411 的无零性和实际 $\mathcal B$ 预算。高频使用同一个 Lee–Leong 原始供应器及统一 Euler 导数估计；（411.12）的证明在固定 $\ell>0$ 上给
 
 $$
 |\mathscr G_\varepsilon^\circ(z)\widetilde w_x(z)|
 \le C_x\left(t^{-7/4}(\log t)^{35/12}+t^{-2}\right),
 \quad t=|\tau|\ge\mathcal H,\quad 0<\varepsilon\le1/2.
-\tag{411.6}
+\tag{413.6}
 $$
 
-$C_x$ 可以依赖当前固定的 $x$，但不依赖趋零的 $\varepsilon$。这与（411.5）和紧环带界共同构成可积包络。经典支配收敛遂将（406.3）送到（411.3）的第一份积分。另一方面，（403.4）已给同一实际 $I_\varepsilon(x)\to I_\psi(x)$；没有用绝对 Dirichlet 和在 $\varepsilon=0$ 的错误交换替代这一接口。
+$C_x$ 可以依赖当前固定的 $x$，但不依赖趋零的 $\varepsilon$。这与（413.5）和紧环带界共同构成可积包络。经典支配收敛遂将（408.3）送到（413.3）的第一份积分。另一方面，（403.4）已给同一实际 $I_\varepsilon(x)\to I_\psi(x)$；没有用绝对 Dirichlet 和在 $\varepsilon=0$ 的错误交换替代这一接口。
 
-将（411.1）代入所得身份，内外积分的共同绝对账为
+将（413.1）代入所得身份，内外积分的共同绝对账为
 
 $$
 \frac1{2\pi}\int_{\mathbb R}|k(\tau)|d\tau
 \int_\ell^\infty|v'(u)|du
 =\frac{\|k\|_1}{2\pi}v(\ell)<\infty.
-\tag{411.7}
+\tag{413.7}
 $$
 
-经典绝对 Fubini 于是给（411.3）的第二式。全部频率先共同配对再积分，没有删掉补集或分别优化不同来源。$\square$
+经典绝对 Fubini 于是给（413.3）的第二式。全部频率先共同配对再积分，没有删掉补集或分别优化不同来源。$\square$
 
-**定义 411.3（定量相位义务）。** 式（411.3）将（404.17）尚未支付的固定尺度极限交换接到了同一实际来源；它把反演线接到 $\Re z=1$，没有将其移到 $\Re z=1/2$。既有 Fourier 定理只供应 $h(u)\to0$，不给指数速率。由 $\int_\ell^\infty|v'|=v(\ell)$，有直接估计
+**定义 413.3（定量相位义务）。** 式（413.3）将（404.17）尚未支付的固定尺度极限交换接到了同一实际来源；它把反演线接到 $\Re z=1$，没有将其移到 $\Re z=1/2$。既有 Fourier 定理只供应 $h(u)\to0$，不给指数速率。由 $\int_\ell^\infty|v'|=v(\ell)$，有直接估计
 
 $$
 |I_\psi(x)|\le2v(\ell)\sup_{u\ge\ell}|h(u)|.
-\tag{411.8}
+\tag{413.8}
 $$
 
-例如，若另行取得同一 $h$ 的 $|h(u)|\le K e^{-u/2}$（全部 $u\ge u_0$，$K$ 与 $u_0$ 固定），则对 $\ell\ge u_0$，（411.3）给
+例如，若另行取得同一 $h$ 的 $|h(u)|\le K e^{-u/2}$（全部 $u\ge u_0$，$K$ 与 $u_0$ 固定），则对 $\ell\ge u_0$，（413.3）给
 
 $$
 |I_\psi(x)|
 \le K e^{-\ell/2}\bigl[v(\ell)+2|v'(\ell)|\bigr]
 =\frac{K}{\sqrt x\log x}\left(1+O\!\left(\frac1{\log x}\right)\right).
-\tag{411.9}
+\tag{413.9}
 $$
 
-这只是足够的待证条件；最终单边符号和常数预算仍须按 Robin 的原目标支付。它不把 $h\in C_0$ 当成指数衰减，也不把该足够条件宣告为新的 RH 判据。尚未取得的是（411.9）的前提或能够直接控制（411.3）共同配对的更弱估计。
+这只是足够的待证条件；最终单边符号和常数预算仍须按 Robin 的原目标支付。它不把 $h\in C_0$ 当成指数衰减，也不把该足够条件宣告为新的 RH 判据。尚未取得的是（413.9）的前提或能够直接控制（413.3）共同配对的更弱估计。
 
 这里的有理主部与 Mellin 支撑关系直接复用 [Burnol 的原始文献接口](../../../Library/Analytic/burnol2003analyticestimate.md)，经典 Fourier 和 Abel 极限规则也直接复用。新增组合仅是当前实际 FIB 来源的完整边界接口；不重复已知 Chebyshev 平滑尾项或显式公式的证明，不作原创性认证。
 

@@ -38,6 +38,46 @@ internal sealed class FixedCollisionExceptionsDocument : IScribeDocumentDefiniti
                     + "a point in the intersection of their full congruence classes."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("fresh-four-slot-descent"),
+                DeclarationHandle.Create(Prefix + "fresh_four_slot_descent"),
+                H("Four fresh classes with smaller total modulus"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Choose four distinct originals in a cover whose modulus sum "
+                    + "is minimal among all covers with the same class count. "
+                    + "Four distinct fresh odd moduli greater than one cannot "
+                    + "have a smaller total modulus while their congruence "
+                    + "classes cover every point of the four removed classes. "
+                    + "Retaining all other originals would give a cheaper cover "
+                    + "with the same number of classes."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("distinct-positive-multiples-pair"),
+                DeclarationHandle.Create(Prefix + "distinct_positive_multiples_pair"),
+                H("Two distinct positive multiples"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If distinct positive natural numbers a and b are divisible "
+                    + "by d, then their sum is at least 3d. This bound supplies "
+                    + "the strict cost comparison when two collision pairs use "
+                    + "the same prime."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("collision-prime-arithmetic"),
+                DeclarationHandle.Create(Prefix + "collision_prime_arithmetic"),
+                H("Arithmetic of an ordinary prime divisor"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A prime divisor p of an original odd modulus, different "
+                    + "from 3 and 5, is odd, is at least 5, and is coprime to "
+                    + "27, 45 and 5. These arithmetic facts are used by the "
+                    + "four-slot collision descent and by the ternary-height "
+                    + "prime-root capacity construction."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("no-disjoint-ordinary-prime-collisions"),
                 DeclarationHandle.Create(Prefix + "no_disjoint_ordinary_prime_collisions"),
                 H("A four-slot replacement excludes disjoint collisions"),

@@ -91,7 +91,7 @@ def produce(ratio_source, diagonal_source):
         return {'numerator': str(value.numerator), 'denominator': str(value.denominator)}
 
     return {
-        'scope': 'Exact rational consumer for FIB407-408, using existing actual scalar enclosures and original explicit Mertens bounds. Analytic transport is paper-only, not Lean verified. No remaining-frequency signed estimate or RH proof.',
+        'scope': 'Exact rational consumer for the full FIB Robin Abel budget, using existing actual scalar enclosures and original explicit Mertens bounds. Analytic transport is paper-only, not Lean verified. No remaining-frequency signed estimate or RH proof.',
         'producer_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         'sources': {
             'ratio': {'name': ratio_source.name, 'sha256': hashlib.sha256(ratio_raw).hexdigest()},

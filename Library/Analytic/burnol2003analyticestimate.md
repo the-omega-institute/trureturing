@@ -47,7 +47,7 @@ for small positive shifts; a sequence tending to zero suffices. Its projection i
 
 ## Actual derivative-source parameter map
 
-In the [FIB boundary calculation](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), §§404–411 use
+In the [FIB boundary calculation](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), §§404, 408, 411–413 use
 
 $$
 \mathscr G_\varepsilon(z)
@@ -68,4 +68,4 @@ Burnol's $s$ maps to $z$ and his shift is the same $\varepsilon$. The displayed 
 
 The FIB rational correction $Q_\varepsilon$ has a pole at $z=2$ even though its full weighted pairing is zero. A right-half-plane Hardy argument must separate that known rational component. For each fixed nontrivial zero $\rho$, all sufficiently small positive $\varepsilon$ preserve the pole at $z=\rho-\varepsilon$ with the original multiplicity; no common threshold over all zeros is asserted. Neither a null pairing nor a change of FIB coordinates proves the required holomorphy or the signed critical estimate.
 
-The complete centered absolute norm and zero-damping boundary interface in §§409–411 are applications to the actual source with separately supplied domination. They are not statements printed in this paper. This note supplies the relevant existing Mellin/Hardy structure and its conditions; it supplies no unconditional proof of RH or full Robin.
+The complete centered absolute norm and zero-damping boundary interface in §§411–413 are applications to the actual source with separately supplied domination. They are not statements printed in this paper. This note supplies the relevant existing Mellin/Hardy structure and its conditions; it supplies no unconditional proof of RH or full Robin.

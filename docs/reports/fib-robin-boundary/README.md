@@ -1001,7 +1001,7 @@ correlations and the signed Robin budget still require estimates.
 
 `robin_abel_budget.py` consumes the existing `robin-kernel-ratio.json` and its
 same-source `robin-kernel-diagonal.json` to bound the full Abel error ledger in
-FIB §§407–408. It uses Python 3.9+ standard-library rational arithmetic and
+FIB §§409–410. It uses Python 3.9+ standard-library rational arithmetic and
 explicit paths, with no external Python dependency. The ratio-to-diagonal hash
 must match; the consumer checks the scalar enclosures against the stated caps.
 It combines JLT's original Theorem A.1 (arXiv:2408.04143v3) with Lee–Leong's

@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void IngestAdmitsDeclaredDialectOpenGenresAndRecordsTheirProjection()
+    public void IngestThenRegistryRefreshRecordsDeclaredDialectOpenGenres()
     {
         const string atomizerId = "dialect:qdo";
         var fixture = new RuleFixture();
@@ -32,12 +32,12 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
+        var result = environment.Ingest([]);
+        var refreshed = environment.AlignDigestionStatus(["--refresh-source", "fixture-source"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("residual_open_added=2", result.Output, StringComparison.Ordinal);
-        Assert.Contains("open_genres=1", result.Output, StringComparison.Ordinal);
-        Assert.Contains("INGEST_OPEN_GENRE source=fixture-source token=\"未登记体\"", result.Output, StringComparison.Ordinal);
+        Assert.True(refreshed.Success, refreshed.Error);
         var written = BackfillInventoryLoader.LoadRoot(temporary.Path);
         var source = Assert.Single(written.RequireDigestionSources());
         Assert.Equal(GenreRegistryCheckKind.Collected, source.GenreRegistryCheck.Kind);
@@ -52,7 +52,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestRoundTripsObserverOpenGenreWithTomlEscapes()
+    public void RegistryRefreshRoundTripsObserverOpenGenreWithTomlEscapes()
     {
         const string token = "**新\"判\\词。**";
         var fixture = new RuleFixture();
@@ -78,9 +78,11 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
+        var result = environment.Ingest([]);
+        var refreshed = environment.AlignDigestionStatus(["--refresh-source", "fixture-source"]);
 
         Assert.True(result.Success, result.Error);
+        Assert.True(refreshed.Success, refreshed.Error);
         var source = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path)
             .RequireDigestionSources());
         Assert.Equal([token], source.GenreRegistryCheck.UnregisteredGenres.ToArray());

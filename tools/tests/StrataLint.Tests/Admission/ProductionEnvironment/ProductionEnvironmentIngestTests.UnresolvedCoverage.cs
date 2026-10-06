@@ -81,11 +81,10 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
+        var result = environment.AlignDigestionStatus([]);
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
-        Assert.Contains("target-statement-unresolved", result.Output, StringComparison.Ordinal);
+        Assert.Contains("status_changed=1 ", result.Output, StringComparison.Ordinal);
         var projected = Assert.Single(
             BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries());
         Assert.Equal(DigestionMigrationState.Partial, projected.ProjectedStatus.Migration);
