@@ -643,7 +643,7 @@ open D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
 def ClosedExpanded (θ : ℝ) (c : Color) (z : ℝ) : Prop :=
   InSupport .G0 z ∧ cut c.val - θ ≤ z ∧ z ≤ cut (c.val + 1) + θ
 
-private theorem expanded_distance_formula (θ : ℝ) (hθ : 0 ≤ θ) (c : Color) (z : ℝ) :
+theorem expanded_distance_formula (θ : ℝ) (hθ : 0 ≤ θ) (c : Color) (z : ℝ) :
     ClosedExpanded θ c z ↔ InSupport .G0 z ∧
       max (cut c.val-z) (max 0 (z-cut (c.val+1))) ≤ θ := by
   simp only [ClosedExpanded,max_le_iff]

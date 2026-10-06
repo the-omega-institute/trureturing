@@ -269,7 +269,7 @@ def coefficientField : Subfield ℝ where
   mul_mem' := fun hx hy F ht => F.mul_mem (hx F ht) (hy F ht)
   inv_mem' := fun x hx F ht => F.inv_mem (hx F ht)
 
-private theorem literal_coefficient_mem (w : List Label) : compose w 0 ∈ coefficientField := by
+theorem literal_coefficient_mem (w : List Label) : compose w 0 ∈ coefficientField := by
   have tmem : t ∈ coefficientField := fun F ht => ht
   have gmem : g ∈ coefficientField := by
     dsimp only [g]
@@ -288,7 +288,7 @@ private theorem literal_coefficient_mem (w : List Label) : compose w 0 ∈ coeff
   | nil => exact coefficientField.zero_mem
   | cons l w ih => exact coefficientField.sub_mem (labelmem l) (coefficientField.mul_mem gmem ih)
 
-private theorem canonical_return_coefficient_mem (U : Bool → List Label) (L : ℕ) :
+theorem canonical_return_coefficient_mem (U : Bool → List Label) (L : ℕ) :
     canonicalReturnLo U L ∈ coefficientField ∧ canonicalReturnHi U L ∈ coefficientField := by
   have tmem : t ∈ coefficientField := fun F ht => ht
   have gmem : g ∈ coefficientField := by

@@ -38,7 +38,7 @@ def choiceBlocks {α : Type} (words : Bool → List α) : List Bool → List α
   | [] => []
   | i :: zs => words i ++ choiceBlocks words zs
 
-private theorem choice_lengths (R : Bool → List Label) (W : Bool → List Color)
+theorem choice_lengths (R : Bool → List Label) (W : Bool → List Color)
     (hlen : ∀ i, (R i).length = (W i).length) (zs : List Bool) :
     (choiceBlocks R zs).length = (choiceBlocks W zs).length := by
   induction zs with
@@ -176,7 +176,7 @@ theorem fixed_finite_tail_all_histories
 
 
 
-private theorem prefix_coordinates (A : List Label) (beta : ℕ → Label) (X : ℕ → ℝ)
+theorem prefix_coordinates (A : List Label) (beta : ℕ → Label) (X : ℕ → ℝ)
     (z : ℝ) (prefixLabels : ∀ p (hp : p < A.length), beta p = A[p])
     (recurrence : ∀ p, X p = branch (beta p) (X (p+1)))
     (terminal : X A.length = z) :
