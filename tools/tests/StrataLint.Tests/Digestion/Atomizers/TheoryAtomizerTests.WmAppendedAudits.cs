@@ -89,7 +89,6 @@ public sealed partial class TheoryAtomizerTests
         var alignment = DigestionLedgerAligner.Evaluate(
             ledger,
             snapshot,
-            ledger,
             DigestionAlignmentMode.Ingest);
         var plan = ReportFreeDigestionIngestor.Plan(ledger, snapshot);
 

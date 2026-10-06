@@ -28,7 +28,19 @@ Lean statement: `D5/S3/Arith/Covering/FixedCollisionExceptions.ordinaryPrimeColl
 
 Two distinct original labels collide when some prime other than 3 and 5 divides both moduli and their actual residues agree modulo that prime. This condition does not require a point in the intersection of their full congruence classes.
 
-**Theorem 1.3 (A four-slot replacement excludes disjoint collisions).**
+**Theorem 1.3 (Arithmetic of an ordinary prime divisor).**
+
+Lean statement: `D5/S3/Arith/Covering/FixedCollisionExceptions.collision_prime_arithmetic`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Covering/FixedCollisionExceptions.collision_prime_arithmetic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A prime divisor p of an original odd modulus, different from 3 and 5, is odd, is at least 5, and is coprime to 27, 45 and 5. These arithmetic facts are used by the four-slot collision descent and by the ternary-height prime-root capacity construction.
+
+**Theorem 1.4 (A four-slot replacement excludes disjoint collisions).**
 
 Lean statement: `D5/S3/Arith/Covering/FixedCollisionExceptions.no_disjoint_ordinary_prime_collisions`
 
@@ -46,7 +58,7 @@ If the collision primes coincide, use moduli 27, 135, 27p and 135p. The phases o
 
 For distinct p and r the old four-modulus sum is at least 90(p+r), while the new sum is 27(6+p+r). For equal primes, distinct positive multiples of 45p give an old sum of at least 225p, while the new sum is 162(1+p). Each replacement strictly lowers the sum without changing L, contradicting minimality.
 
-**Theorem 1.4 (One exception set works for every source point).**
+**Theorem 1.5 (One exception set works for every source point).**
 
 Lean statement: `D5/S3/Arith/Covering/FixedCollisionExceptions.exists_fixed_collision_exceptions`
 
@@ -63,6 +75,7 @@ The choice of X precedes every cofactor point and probability law. Its labels re
 ## References
 
 - Truth anchor: `D5/S3/Arith/Covering/FixedCollisionExceptions.collisionTop`
+- Truth anchor: `D5/S3/Arith/Covering/FixedCollisionExceptions.collision_prime_arithmetic`
 - Truth anchor: `D5/S3/Arith/Covering/FixedCollisionExceptions.exists_fixed_collision_exceptions`
 - Truth anchor: `D5/S3/Arith/Covering/FixedCollisionExceptions.no_disjoint_ordinary_prime_collisions`
 - Truth anchor: `D5/S3/Arith/Covering/FixedCollisionExceptions.ordinaryPrimeCollision`
