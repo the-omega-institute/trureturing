@@ -18,7 +18,15 @@ internal static class DecomposeAtomCommand
         try
         {
             var (id, dryRun, reconcileChain, splitAt) = Parse(arguments);
-            var (raw, snapshot, ledger) = DigestionWorkingTree.Read(repository, Decode, BackfillInventoryLoader.Load);
+            var loaded = DigestionWorkingTree.ReadLedger(
+                repository,
+                Decode,
+                BackfillInventoryLoader.LoadForDigestion,
+                TheoryAtomizerDataLoader.DataPath,
+                DigestionCasStore.RootPath + id);
+            var raw = loaded.Raw;
+            var snapshot = loaded.Snapshot;
+            var ledger = loaded.Document;
             var matches = ledger.RequireDigestionEntries().Where(entry => entry.AtomId == id).ToArray();
             if (matches.Length != 1) throw new FormatException($"ATOM_AMBIGUOUS atom_id={id} count={matches.Length}");
             var parent = matches[0];
@@ -26,12 +34,47 @@ internal static class DecomposeAtomCommand
             if (!(parent.ProjectedStatus.Migration == DigestionMigrationState.Partial
                 || parent.ProjectedStatus == new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open)))
                 throw new FormatException("PARENT_STATE requires residual-open or partial parent");
+            var sourceCasPaths = DigestionWorkingTree.ChainCasPaths(
+                ledger,
+                parent.Receipts.ChainAtoms);
+            loaded = DigestionWorkingTree.Extend(
+                repository,
+                loaded,
+                Decode,
+                [parent.SourcePath, .. sourceCasPaths]);
+            raw = loaded.Raw;
+            snapshot = loaded.Snapshot;
+            ledger = loaded.Document;
+            parent = ledger.RequireDigestionEntries().Single(entry => entry.AtomId == id);
             if (!snapshot.TryGetFile(DigestionCasStore.RootPath + id, out var blob))
                 throw new FormatException($"CAS_MISSING atom_id={id}");
             var rules = TheoryAtomizerDataLoader.Load(snapshot);
             var atomizer = (atomizerResolver ?? (static name => AtomizerRegistry.Require(name).Atomize))(parent.Atomizer);
             var plan = DigestionDecomposition.Plan(parent, blob.RawBytes, atomizer, rules, snapshot, splitAt);
             var entries = ledger.RequireDigestionEntries().ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
+            var requiredCasIds = DigestionWorkingTree.ChainCasPaths(
+                    ledger,
+                    plan.Children.Select(static child => child.Fingerprints.RawSha256[7..])
+                        .Concat(parent.Receipts.ChainAtoms))
+                .Select(static path => path[DigestionCasStore.RootPath.Length..])
+                .ToHashSet(StringComparer.Ordinal);
+            var existingChildCasPaths = requiredCasIds
+                .Where(entries.ContainsKey)
+                .Select(static childId => DigestionCasStore.RootPath + childId)
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+            if (existingChildCasPaths.Length > 0)
+            {
+                loaded = DigestionWorkingTree.Extend(
+                    repository,
+                    loaded,
+                    Decode,
+                    existingChildCasPaths);
+                raw = loaded.Raw;
+                snapshot = loaded.Snapshot;
+                ledger = loaded.Document;
+                entries = ledger.RequireDigestionEntries().ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
+            }
             var writes = DigestionDecomposition.Materialize(parent, plan, entries, reconcileChain, snapshot, rules);
             foreach (var child in plan.Children)
             {
@@ -59,7 +102,7 @@ internal static class DecomposeAtomCommand
                 overlay[item.RelativePath] = new RawRepositoryEntry(item.RelativePath, item.Bytes);
             }
             var final = RawRepositorySnapshot.Create(overlay.Values);
-            var replayed = BackfillInventoryLoader.Load(Decode(final));
+            var replayed = BackfillInventoryLoader.LoadForDigestion(Decode(final));
             foreach (var entry in writes.NewEntries.Append(writes.Parent))
             {
                 var roundTrip = replayed.RequireDigestionEntries().Single(item => item.AtomId == entry.AtomId);

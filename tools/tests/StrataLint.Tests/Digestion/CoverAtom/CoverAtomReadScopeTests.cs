@@ -31,7 +31,17 @@ public sealed partial class CoverAtomTests
         Assert.True(result.Success, result.Error);
         Assert.Equal(0, repository.WholeTreeReadCount);
         Assert.Equal(2, repository.ScopedCurrentReads.Count);
-        Assert.Equal(["Meta", "D5", "Reg", "Trureturing.lean", "Golden/Frozen/state"], repository.ScopedCurrentReads[0]);
+        Assert.Equal(
+            [
+                BackfillInventoryLoader.RelativePath,
+                BackfillInventoryLoader.RootPath.TrimEnd('/'),
+                TheoryAtomizerDataLoader.DataPath,
+                "D5",
+                "Reg",
+                "Trureturing.lean",
+                "Golden/Frozen/state",
+            ],
+            repository.ScopedCurrentReads[0]);
         Assert.Contains(repository.ScopedCurrentReads[1], path => path.StartsWith("docs/", StringComparison.Ordinal));
         Assert.All(repository.ScopedCurrentReads.SelectMany(static scope => scope),
             static path => Assert.DoesNotContain("docs/reports", path, StringComparison.Ordinal));

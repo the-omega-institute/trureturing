@@ -27,7 +27,6 @@ internal sealed record DigestionFrontierEntry(
     string? StatusQualifier,
     bool IsChainChild,
     ImmutableArray<string> ParentAtomIds,
-    bool HasCoverDisposition,
     bool IsAcknowledgedStale)
 {
     internal DigestionLedgerEntry Entry => Evaluation.Entry;
@@ -133,8 +132,7 @@ internal sealed class DigestionFrontierProjection
     internal static DigestionFrontierProjection Create(
         BackfillInventoryDocument ledger,
         DigestionLedgerEvaluation evaluation,
-        IReadOnlyDictionary<string, string> contentKinds,
-        bool retryDispositions)
+        IReadOnlyDictionary<string, string> contentKinds)
     {
         ArgumentNullException.ThrowIfNull(ledger);
         ArgumentNullException.ThrowIfNull(evaluation);
@@ -152,8 +150,7 @@ internal sealed class DigestionFrontierProjection
                 item,
                 contentKinds,
                 staleAtomIds,
-                parentsByChild,
-                retryDispositions))
+                parentsByChild))
             .OrderBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item.Entry.AtomId, StringComparer.Ordinal)
             .ToImmutableArray();
@@ -195,18 +192,13 @@ internal sealed class DigestionFrontierProjection
         DigestionEntryEvaluation evaluation,
         IReadOnlyDictionary<string, string> contentKinds,
         IReadOnlySet<string> staleAtomIds,
-        IReadOnlyDictionary<string, ImmutableArray<string>> parentsByChild,
-        bool retryDispositions)
+        IReadOnlyDictionary<string, ImmutableArray<string>> parentsByChild)
     {
         var entry = evaluation.Entry;
         contentKinds.TryGetValue(entry.AtomId, out var contentKind);
         var content = DigestionContentDisposition.Resolve(contentKind);
         var parentIds = parentsByChild.GetValueOrDefault(entry.AtomId, []);
         var isChainChild = !parentIds.IsEmpty;
-        var hasCoverDisposition = entry.Receipts.CoverDisposition is not null;
-        var withholdCoverDisposition = DigestionCoverDispositionSelector.Classify(
-            entry,
-            retryDispositions) == DigestionCoverDispositionSelection.Withheld;
         var isAcknowledgedStale = staleAtomIds.Contains(entry.AtomId);
         DigestionFrontierDisposition disposition;
         string detail;
@@ -219,9 +211,7 @@ internal sealed class DigestionFrontierProjection
         else
         {
             var status = evaluation.Atom?.StatusMarker;
-            var withholding = withholdCoverDisposition
-                ? (Reason: DigestionCoverDispositionSelector.WithholdReason, Qualifier: (string?)null)
-                : isAcknowledgedStale
+            var withholding = isAcknowledgedStale
                     ? (Reason: "acknowledged-stale", Qualifier: (string?)null)
                     : status?.Kind == DigestionAtomStatusMarkerKind.Malformed
                         ? (Reason: "malformed-status-marker", Qualifier: status.Qualifier)
@@ -269,7 +259,6 @@ internal sealed class DigestionFrontierProjection
             statusQualifier,
             isChainChild,
             parentIds,
-            hasCoverDisposition,
             isAcknowledgedStale);
     }
 }
