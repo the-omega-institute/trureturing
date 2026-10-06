@@ -7,6 +7,7 @@ triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/PatternMatchings/TripleAvoidingMatchings.result
   - D5/S3/Combinatorics/PatternMatchings/P13Correspondence.matchingEquiv
+  - D5/S3/Combinatorics/PatternMatchings/P13Counts.c_triangular
 ---
 
 # Generating Function of Perfect Matchings Avoiding {123, 132, 213}
@@ -18,7 +19,8 @@ of patterns of length three I: Triples*, arXiv:2609.08562v1, Section 6, Question
 that avoid the set of patterns P1 = {123, 132, 213} and P13 = {132, 213, 321}?" Matching patterns follow Section 4
 and Figure 1: three arcs form an occurrence only when all three left endpoints precede all three right endpoints, and
 the label records the complement of the order of the right endpoints. This dossier settles the P1 clause and records
-an all-size structural scan bridge for P13. The P13 enumeration remains open.
+an all-size structural scan bridge plus a finite continuation recurrence for P13. The explicit P13 enumeration and
+generating function remain open.
 
 ## Motivation
 
@@ -28,7 +30,10 @@ H(z) = Σ_{k≥0} Cat_k F_{k+3} z^k, equivalently a_0 = 1 and a_{n+1} = a_n + Σ
 
 For P13, `D5/S3/Combinatorics/PatternMatchings/P13Correspondence.matchingEquiv` proves a bijection between the
 actual source avoiders and independently accepted normalized general-rank scans, for every n ≥ 0. This is a
-structural construction supporting the remaining enumeration problem.
+structural construction supporting the remaining enumeration problem. The merged modules
+`D5/S3/Combinatorics/PatternMatchings/P13Completions` and `P13Counts` add a finite completion carrier, the
+forced-prefix and first-closure bijections, the triangular recurrence `P13Counts.c_triangular`, and the transfer
+law `P13Counts.actualCount_continuation` for the actual matching counts.
 
 ## Gap
 
@@ -81,13 +86,16 @@ matching through n=5. The source 321 crossing (1,4),(2,5),(3,6) is rejected, whe
 ## Triage
 
 `theorem`; the enumeration statement is the P1 clause of Question 1 of arXiv:2609.08562v1. The P13 structural
-construction is proved independently of the still-open P13 enumeration.
+construction and the continuation recurrence are proved independently of the still-open explicit P13 enumeration.
 
 - Proved (formalized): the generating function of P1-avoiding perfect matchings is (1 − zH)/(1 − z − zH).
 - Computed: the P13 counts 1, 3, 12, 54, 258, 1276, 6449 agree with the paper; their enumeration remains open.
 - Proved (formalized, structural bridge only): for every n ≥ 0, P13-avoiding actual matchings are in bijection with
   independently accepted normalized general-rank scans, including empty and disconnected cases.
-- Open: the all-n enumeration, completion-series recurrences and generating function of the P13 clause.
+- Proved (formalized, recurrence slice): finite P13 continuation counts admit forced-prefix and first-closure
+  decompositions and the triangular recurrence `P13Counts.c_triangular`; the actual matching carrier satisfies
+  `P13Counts.actualCount_continuation`.
+- Open: the explicit all-n coefficient formula and generating function of the P13 clause.
 
 ## ASSUMED-UNVERIFIED
 

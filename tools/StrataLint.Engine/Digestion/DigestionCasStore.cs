@@ -130,18 +130,15 @@ internal static class DigestionCasStore
             }
         }
 
-        var candidateCasPaths = snapshot.Files.Keys
-            .Select(static path => path.Value)
-            .Where(static path => path.StartsWith(RootPath, StringComparison.Ordinal));
+        // An orphan is a blob a change added without an entry that names it.
+        // A scan of the whole ledger has no such change to judge.
         if (changes is not null)
         {
-            var changedPaths = changes.Paths.Select(static path => path.Value).ToHashSet(StringComparer.Ordinal);
-            candidateCasPaths = candidateCasPaths.Where(changedPaths.Contains);
-        }
-
-        foreach (var path in candidateCasPaths)
-        {
-            if (!referencedPaths.Contains(path))
+            foreach (var path in changes.Paths
+                         .Select(static path => path.Value)
+                         .Where(path => path.StartsWith(RootPath, StringComparison.Ordinal)
+                             && snapshot.TryGetFile(path, out _)
+                             && !referencedPaths.Contains(path)))
             {
                 findings.Add($"orphan CAS blob: {path}");
             }

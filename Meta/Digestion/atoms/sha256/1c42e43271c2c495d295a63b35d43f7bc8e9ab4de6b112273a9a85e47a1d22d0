@@ -1,0 +1,18 @@
+## 12. 改为加性读出后的精确相位窗口商
+
+本节显式改变输出合同，其余实际词来源、固定原 $k$、拒绝和自主时钟规则仍如第 8 节。取有限阿贝尔群 $B$ 和加性同态 $\lambda:H_{\mathrm{add}}\to B$，当前合法输出改为 $\lambda(r)$，拒绝 $\bot\notin B$。不要求 $\lambda$ 满射，不要求它为环同态。令
+
+$$
+U=\lambda(H),\qquad c_n=\lambda(x^n)\quad(n\in\mathbb Z).
+\tag{22}
+$$
+
+因为 $x^L=1$，序列 $c$ 是周期序列，取其最小正周期 $T$。整数上的周期集合是一个加法子群，故 $T\mid L$。只保留实际观察相位 $\theta=n\bmod T$。对 $j\ge0$，定义循环窗口及其种数
+
+$$
+W_j(\theta)=(c_\theta,c_{\theta+1},\ldots,c_{\theta+j-1}),\qquad
+r_j=|\{W_j(\theta):\theta\in\mathbb Z/T\mathbb Z\}|,
+\qquad r_0=1.
+\tag{23}
+$$
+
