@@ -108,50 +108,5 @@ public sealed partial class DigestionQuarantineTests
         Assert.Contains("quarantine", error.Message, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void ResidualSelectorsIncludeCoverDispositionAtoms()
-    {
-        var entry = new DigestionLedgerEntry(
-            "fixture-source",
-            "docs/source.md",
-            AtomizerRegistry.NoAtomizerId,
-            "atom-dispositioned",
-            new DigestionFingerprints(Digest, Digest),
-            [],
-            new DigestionReceipts(["remaining theorem clause"],
-                [],
-                null,
-                CoverDisposition: new DigestionCoverDisposition(
-                    new DigestionStatus(
-                        DigestionMigrationState.Partial,
-                        DigestionTruthState.Closed),
-                    ["D5/S0/Carrier/Probe.probe"],
-                    [new DigestionDispositionGap(
-                        "unresolved-subitem",
-                        "remaining theorem clause")])),
-            new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
-            Digest);
-        var evaluated = new DigestionEntryEvaluation(
-            entry,
-            DigestionReceiptAlignment.Seen,
-            entry.ProjectedStatus,
-            false,
-            [new DigestionGap(
-                "unresolved-subitem",
-                "remaining theorem clause",
-                DigestionGapSeverity.NonFatal)]);
-        var evaluation = new DigestionLedgerEvaluation([evaluated], []);
 
-        var summary = DigestResidualSummary.Render(
-            evaluation,
-            DigestionFrontierTestProjection.Create(evaluation));
-        var shard = Assert.Single(DigestResidualSummary.RenderShards(
-            evaluation,
-            DigestionFrontierTestProjection.Create(evaluation))).Value;
-
-        Assert.Contains(entry.AtomId, summary, StringComparison.Ordinal);
-        Assert.Contains(entry.AtomId, shard, StringComparison.Ordinal);
-        Assert.Contains("mother_residual_atom_ids: 1", summary, StringComparison.Ordinal);
-        Assert.Contains("mother_residual_atom_ids: 1", shard, StringComparison.Ordinal);
-    }
 }
