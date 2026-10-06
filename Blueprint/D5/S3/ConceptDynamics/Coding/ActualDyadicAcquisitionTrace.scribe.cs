@@ -15,18 +15,18 @@ internal sealed class ActualDyadicAcquisitionTraceDocument : IScribeDocumentDefi
                 "D5/S3/ConceptDynamics/Coding/ActualDyadicAcquisitionTrace."
                     + "actual_continuation_capacity_and_saturation"),
             H("Capacity saturation excludes early stopping"),
-            StatementSource.FromAuthor(Disp(Seq(
-                Begin, Grp(F.Id("gathered")),
-                F.Id("Success"), Sp, Implies, Sp,
-                F.Id("CandidateCard"), Sp, Leq, Sp,
-                Call("pow", D(2), F.Id("remaining")),
-                RowBreak, Grp(),
-                Call("eq", F.Id("CandidateCard"), Call("pow", D(2), F.Id("remaining"))),
-                Sp, Implies, Sp,
-                Call("ReadSaturation", F.Id("remaining")),
-                End, Grp(F.Id("gathered"))))),
+            StatementSource.FromAuthor(CapacityFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(
+                Paragraph(Text(
+                    "In the display, Fin(P), Record, Action(P), Execution(P,b,policy,...) "
+                    + "and ForcedReadTrace(P,b,...) are the corresponding Lean types and "
+                    + "relations, with implicit P written explicitly and the proof of P>0 "
+                    + "suppressed. The constants read and advance are Action constructors. "
+                    + "A record is written as <events,reads>; fst and snd are product "
+                    + "projections, val is the natural representative of a Fin element, "
+                    + "quot is natural-number division, and append and cons are list operations. "
+                    + "All subtraction on natural numbers is truncated subtraction.")),
                 Paragraph(Text(
                     "Fix a positive block length, a known initial binary high bit, and a "
                     + "deterministic policy on the complete event and raw-read record. The "
@@ -60,8 +60,7 @@ internal sealed class ActualDyadicAcquisitionTraceDocument : IScribeDocumentDefi
                 "D5/S3/ConceptDynamics/Coding/ActualDyadicAcquisitionTrace."
                     + "actual_next_read_decomposition"),
             H("Silent forward evolution reaches a common next-read event"),
-            StatementSource.FromAuthor(Disp(Seq(
-                F.Id("NonemptyActualRun"), Sp, Implies, Sp, F.Id("SharedNextRead")))),
+            StatementSource.FromAuthor(NextReadFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
@@ -87,9 +86,7 @@ internal sealed class ActualDyadicAcquisitionTraceDocument : IScribeDocumentDefi
                 "D5/S3/ConceptDynamics/Coding/ActualDyadicAcquisitionTrace."
                     + "actual_dyadic_interval_trace"),
             H("Actual dyadic continuations force the chronological midpoint trace"),
-            StatementSource.FromAuthor(Disp(Seq(
-                F.Id("SaturatedIntervalSuccess"), Sp, Implies, Sp,
-                F.Id("ForcedReadTrace")))),
+            StatementSource.FromAuthor(IntervalTraceFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
@@ -122,9 +119,7 @@ internal sealed class ActualDyadicAcquisitionTraceDocument : IScribeDocumentDefi
                 "D5/S3/ConceptDynamics/Coding/ActualDyadicAcquisitionTrace."
                     + "actual_pair_common_final_query"),
             H("The actual source pair shares its pre-final record and last query"),
-            StatementSource.FromAuthor(Disp(Seq(
-                F.Id("ActualPairedExecutions"), Sp, Implies, Sp,
-                F.Id("CommonPrefinalRecordAndQuery")))),
+            StatementSource.FromAuthor(PairQueryFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
@@ -153,15 +148,167 @@ internal sealed class ActualDyadicAcquisitionTraceDocument : IScribeDocumentDefi
                     + "TM8.1 label and supplementary-bit thresholds."))),
             DescribeRole.Theorem))));
 
-    private static Formula Call(string name, params Formula[] arguments)
+    private static Formula CapacityFormula()
     {
-        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
-        for (var index = 0; index < arguments.Length; index++)
-        {
-            if (index > 0) items.AddRange([Comma, Sp]);
-            items.Add(arguments[index]);
-        }
-        items.Add(Close);
-        return Seq([.. items]);
+        var budget = V("remaining");
+        var record = V("record");
+        var candidates = V("candidates");
+        var capacity = new Formula.Power(D(2), budget);
+        var success = All(Then(Rel(V("x"), FormulaRelationOperator.MemberOf, candidates),
+            Some(Both(Run(V("x"), record, V("w"), V("T")), AtMost(Len(V("w")), budget),
+                EqualTo(Call("snd", V("T")), V("x"))), ("w", Bits()), ("T", Terminal()))), ("x", FinP()));
+        var full = All(Then(Both(Rel(V("r"), FormulaRelationOperator.MemberOf, candidates),
+            Run(V("r"), record, V("word"), V("terminal")), AtMost(Len(V("word")), budget)),
+            EqualTo(Len(V("word")), budget)),
+            ("r", FinP()), ("word", Bits()), ("terminal", Terminal()));
+        return Disp(All(Then(Both(Below(D(0), V("P")), success),
+            Both(AtMost(Call("card", candidates), capacity), Then(EqualTo(Call("card", candidates), capacity), full))),
+            ("P", NatType()), ("b", Call("Fin", D(2))), ("policy", Arrow(C("Record"), Call("Action", V("P")))),
+            ("record", C("Record")), ("remaining", NatType()), ("candidates", Call("Finset", FinP()))));
     }
+
+    private static Formula NextReadFormula()
+    {
+        var record = V("record");
+        var n = V("N");
+        var reads = Call("reads", record);
+        var other = All(Then(Both(Run(V("s"), record, V("otherword"), V("otherterminal")),
+            UnequalTo(V("otherword"), Nil())), Some(Both(
+                EqualTo(V("otherword"), Call("cons", Sensor(V("s"), n), V("tail"))),
+                Run(V("s"), Rec(n, Append(reads, Singleton(Pair(n, Sensor(V("s"), n))))),
+                    V("tail"), V("otherterminal"))), ("tail", Bits()))),
+            ("s", FinP()), ("otherword", Bits()), ("otherterminal", Terminal()));
+        return Disp(All(Then(Both(Below(D(0), V("P")),
+            Run(V("r"), record, V("word"), V("terminal")), UnequalTo(V("word"), Nil())),
+            Some(Both(AtMost(Call("events", record), n), EqualTo(App(V("policy"), Rec(n, reads)), C("read")),
+                All(Then(Both(AtMost(Call("events", record), V("k")), Below(V("k"), n)),
+                    EqualTo(App(V("policy"), Rec(V("k"), reads)), C("advance"))), ("k", NatType())), other),
+                ("N", NatType()))),
+            ("P", NatType()), ("b", Call("Fin", D(2))), ("policy", Arrow(C("Record"), Call("Action", V("P")))),
+            ("record", C("Record")), ("r", FinP()), ("word", Bits()), ("terminal", Terminal())));
+    }
+
+    private static Formula IntervalTraceFormula()
+    {
+        var lo = V("lo");
+        var d = V("d");
+        var end = PlusOf(lo, new Formula.Power(D(2), d));
+        var record = V("record");
+        var success = All(Then(Both(AtMost(lo, Val(V("x"))), Below(Val(V("x")), end)),
+            Some(Both(Run(V("x"), record, V("w"), V("T")), AtMost(Len(V("w")), d),
+                EqualTo(Call("snd", V("T")), V("x"))), ("w", Bits()), ("T", Terminal()))), ("x", FinP()));
+        return Disp(All(Then(Both(Below(D(0), V("P")), AtMost(end, V("P")), success,
+            AtMost(lo, Val(V("r"))), Below(Val(V("r")), end),
+            Run(V("r"), record, V("word"), V("terminal")), AtMost(Len(V("word")), d)),
+            Some(Both(EqualTo(Reads(V("terminal")), Append(Call("reads", record), V("trace"))),
+                Forced(V("r"), lo, d, V("trace"))), ("trace", Past()))),
+            ("P", NatType()), ("b", Call("Fin", D(2))), ("policy", Arrow(C("Record"), Call("Action", V("P")))),
+            ("record", C("Record")), ("lo", NatType()), ("d", NatType()),
+            ("r", FinP()), ("word", Bits()), ("terminal", Terminal())));
+    }
+
+    private static Formula PairQueryFormula()
+    {
+        var record = V("record");
+        var lo = V("lo");
+        var depth = PlusOf(V("d"), D(1));
+        var end = PlusOf(lo, new Formula.Power(D(2), depth));
+        var n = V("N");
+        var past = V("past");
+        var old = Append(Call("reads", record), past);
+        return Disp(All(Then(Both(Below(D(0), V("P")), Call("Even", lo), AtMost(end, V("P")),
+            EqualTo(Prefix(V("r")), Prefix(V("s"))),
+            AtMost(lo, Val(V("r"))), Below(Val(V("r")), end), AtMost(lo, Val(V("s"))), Below(Val(V("s")), end),
+            Run(V("r"), record, V("word"), V("terminal")), Run(V("s"), record, V("otherword"), V("otherterminal")),
+            EqualTo(Len(V("word")), depth), EqualTo(Len(V("otherword")), depth),
+            EqualTo(Reads(V("terminal")), Append(Call("reads", record), V("trace"))),
+            EqualTo(Reads(V("otherterminal")), Append(Call("reads", record), V("othertrace"))),
+            Forced(V("r"), lo, depth, V("trace")), Forced(V("s"), lo, depth, V("othertrace"))),
+            Some(Both(EqualTo(V("trace"), Append(past, Singleton(Pair(n, V("bit"))))),
+                EqualTo(V("othertrace"), Append(past, Singleton(Pair(n, V("otherbit"))))),
+                PhaseEquation(n, V("r")), BitEquation(V("bit"), n, V("r")), BitEquation(V("otherbit"), n, V("s")),
+                EqualTo(App(V("policy"), Rec(n, old)), C("read")),
+                Run(V("r"), Rec(n, Append(old, Singleton(Pair(n, V("bit"))))), Nil(), V("terminal")),
+                Run(V("s"), Rec(n, Append(old, Singleton(Pair(n, V("otherbit"))))), Nil(), V("otherterminal"))),
+                ("past", Past()), ("N", NatType()), ("bit", Call("Fin", D(2))), ("otherbit", Call("Fin", D(2))))),
+            ("P", NatType()), ("b", Call("Fin", D(2))), ("policy", Arrow(C("Record"), Call("Action", V("P")))),
+            ("record", C("Record")), ("lo", NatType()), ("d", NatType()), ("r", FinP()), ("s", FinP()),
+            ("word", Bits()), ("otherword", Bits()), ("terminal", Terminal()), ("otherterminal", Terminal()),
+            ("trace", Past()), ("othertrace", Past())));
+    }
+
+    private static FormulaIdentifier Variable(string name) => FormulaIdentifier.Create(name switch
+    {
+        "policy" => "p",
+        "record" => "R",
+        "remaining" => "m",
+        "candidates" => "C",
+        "word" => "w",
+        "terminal" => "T",
+        "otherword" => "v",
+        "otherterminal" => "U",
+        "lo" => "a",
+        "trace" => "A",
+        "othertrace" => "B",
+        "past" => "H",
+        "bit" => "y",
+        "otherbit" => "Y",
+        "history" => "h",
+        "query" => "n",
+        "epsilon" => "e",
+        "writer" => "f",
+        "decoder" => "D",
+        "tail" => "t",
+        _ => name,
+    });
+    private static Formula V(string name) => new Formula.Symbol(Variable(name));
+    private static Formula C(string name) => new Formula.NamedConstant(FormulaIdentifier.Create(name));
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula App(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+    private static Formula All(Formula body, params (string Name, Formula Type)[] variables) =>
+        new Formula.BindMany(FormulaQuantifier.ForAll,
+            [.. variables.Select(v => new Formula.BoundVariable(Variable(v.Name), v.Type))], body);
+    private static Formula Some(Formula body, params (string Name, Formula Type)[] variables) =>
+        new Formula.BindMany(FormulaQuantifier.Exists,
+            [.. variables.Select(v => new Formula.BoundVariable(Variable(v.Name), v.Type))], body);
+    private static Formula Both(params Formula[] clauses) => clauses.Length == 1 ? clauses[0] :
+        new Formula.Logic(clauses[0], FormulaLogicOperator.And, Both(clauses[1..]));
+    private static Formula Then(Formula premise, Formula conclusion) =>
+        new Formula.Logic(premise, FormulaLogicOperator.Implies, conclusion);
+    private static Formula Rel(Formula left, FormulaRelationOperator op, Formula right) => new Formula.Relation(left, op, right);
+    private static Formula EqualTo(Formula left, Formula right) => Rel(left, FormulaRelationOperator.Equal, right);
+    private static Formula UnequalTo(Formula left, Formula right) => Rel(left, FormulaRelationOperator.NotEqual, right);
+    private static Formula AtMost(Formula left, Formula right) => Rel(left, FormulaRelationOperator.LessThanOrEqual, right);
+    private static Formula Below(Formula left, Formula right) => Rel(left, FormulaRelationOperator.LessThan, right);
+    private static Formula PlusOf(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Add, right);
+    private static Formula MinusOf(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
+    private static Formula TimesOf(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
+    private static Formula Arrow(Formula domain, Formula codomain) => new Formula.TypeArrow(domain, codomain);
+    private static Formula Product(Formula left, Formula right) => Seq(Open, left, Sp, Times, Sp, right, Close);
+    private static Formula Pair(Formula left, Formula right) => Seq(Open, left, Comma, Sp, right, Close);
+    private static Formula Rec(Formula events, Formula reads) => Seq(Langle, Sp, events, Comma, Sp, reads, Rangle);
+    private static Formula Nil() => Seq(OpenBracket, CloseBracket);
+    private static Formula Singleton(Formula element) => Seq(OpenBracket, element, CloseBracket);
+    private static Formula NatType() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula FinP() => Call("Fin", V("P"));
+    private static Formula Bits() => Call("List", Call("Fin", D(2)));
+    private static Formula Past() => Call("List", Product(NatType(), Call("Fin", D(2))));
+    private static Formula Terminal() => Product(C("Record"), FinP());
+    private static Formula Val(Formula r) => Call("val", r);
+    private static Formula Prefix(Formula r) => Call("quot", Val(r), D(2));
+    private static Formula Len(Formula word) => Call("length", word);
+    private static Formula Reads(Formula terminal) => Call("reads", Call("fst", terminal));
+    private static Formula Append(Formula left, Formula right) => Call("append", left, right);
+    private static Formula Sensor(Formula r, Formula n) => Call("rawSensor", V("P"), V("b"), r, n);
+    private static Formula Run(Formula r, Formula record, Formula word, Formula terminal) =>
+        Call("Execution", V("P"), V("b"), V("policy"), r, record, word, terminal);
+    private static Formula Forced(Formula r, Formula lo, Formula d, Formula trace) =>
+        Call("ForcedReadTrace", V("P"), V("b"), r, lo, d, trace);
+    private static Formula PhaseEquation(Formula n, Formula r) => EqualTo(new Formula.Modulo(n, V("P")),
+        MinusOf(MinusOf(V("P"), D(1)), TimesOf(D(2), Prefix(r))));
+    private static Formula BitEquation(Formula bit, Formula n, Formula r) => EqualTo(Val(bit),
+        new Formula.Modulo(PlusOf(PlusOf(Val(V("b")), Call("quot", n, V("P"))),
+            new Formula.Modulo(Val(r), D(2))), D(2)));
+
 }
