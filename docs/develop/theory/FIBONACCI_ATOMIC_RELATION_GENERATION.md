@@ -65705,3 +65705,153 @@ $$
 这里新增的是（LC.6）–（LC.7）对当前完整绝对账、指定阈值和同过滤器参数的耦合。
 
 ## 追加锚（本行以下为增补区）
+
+## 431. 完整绝对纤维账的匹配上界与指定阈值的精确阶
+
+沿用 §§428、430 的实际 $\beta_r$、$P_z$、$\theta_{P_z}$、$\mathsf C_z$、$\mathsf L_z$ 和指定的 $X_z(V)$。本节只估计这份既定非负账及其指定充分阈值。
+
+**定义。** 记 $L=\log2$、$\ell=\log z$、$a=e^{-\gamma_E}$。写
+
+$$
+C(W)=c_3W^3+c_2W^2+c_1W+c_0,
+$$
+
+其中 $c_3=A/6$、$c_2=D/2$、$c_1=2D-A+2\mu_0$、$c_0=D+11\mu_0$ 均非负。置
+
+$$
+\begin{aligned}
+K_C&=c_3+c_2+c_1+c_0,\\
+K_L&=A/2+(D-A)+|c_{\rm diag}|+A+D-A,\\
+B_3&=\sum_{r\ge1}\frac{|\beta_r|}{r}(1+\log r/L)^3<\infty,\\
+D_V&=V+(1+L)/L,\\
+K_+&=\exp\!\left((e-1)(1+K_1/L)\right),\qquad K_1=\log4+4.
+\end{aligned}
+\tag{SU.1}
+$$
+
+$B_3$ 的有限性由实际 $\beta_r=\log(1-(-q)^r)$ 的指数尾支付。$K_C,K_L>0$，且对 $W\ge0$ 有 $C(W)\le K_C(1+W)^3$。
+
+**定理（完整账的统一上界）。** 存在 $z_1\ge2$，使对每个固定 $V\ge0$、所有 $z\ge z_1$，
+
+$$
+\boxed{
+\mathsf C_z(V\ell)\le U_C(V)\ell^4,\qquad
+\mathsf L_z(V\ell)\le U_L(V)\ell^3,}
+\tag{SU.2}
+$$
+
+其中可以取
+
+$$
+U_C(V)=\frac{12eK_+K_CD_V^3B_3}{a},\qquad
+U_L(V)=\frac{12eK_+K_LD_V^2B_3}{a}.
+\tag{SU.3}
+$$
+
+**证明：同过滤器正矩。** 定义
+
+$$
+Q_z^+=\sum_{d\mid P_z}\frac1d=\prod_{p\le z}(1+1/p).
+$$
+
+有限约数 Euler 展开精确给
+
+$$
+\frac1{Q_z^+}\sum_{d\mid P_z}\frac{\exp(\log d/\ell)}d
+=\prod_{p\le z}\left(1+\frac{\exp(\log p/\ell)-1}{p+1}\right).
+\tag{SU.4}
+$$
+
+对 $0\le t\le1$，指数函数的凸性给 $e^t-1\le(e-1)t$。又 $1+y\le e^y$ 对 $y\ge0$ 成立，故复用 §428 的第一 Mertens 供应 $\sum_{p\le z}\log p/p\le\ell+K_1$，得到
+
+$$
+\frac1{Q_z^+}\sum_{d\mid P_z}\frac{\exp(\log d/\ell)}d
+\le\exp\!\left(\frac{e-1}{\ell}\sum_{p\le z}\frac{\log p}{p+1}\right)
+\le K_+.
+\tag{SU.5}
+$$
+
+对 $y\ge0$，指数级数的三次项给 $(1+y)^3\le6e^{1+y}$。因此
+
+$$
+\sum_{d\mid P_z}\frac{(1+\log d/\ell)^k}{d}
+\le6eK_+Q_z^+,\qquad k=2,3.
+\tag{SU.6}
+$$
+
+第三 Mertens 供应允许选择与 $V$ 无关的 $z_1$，使
+$E_{z,0}\ge a/(2\ell)$ 对 $z\ge z_1$ 成立。因
+$Q_z^+=\prod_{p\le z}(1-1/p^2)/E_{z,0}\le1/E_{z,0}$，
+
+$$
+Q_z^+\le2\ell/a\quad(z\ge z_1).
+\tag{SU.7}
+$$
+
+**证明：支付全部卷积项。** 有限过滤器身份及三角不等式给
+
+$$
+|\theta_{P_z}(j)|\le\sum_{\substack{d\mid P_z\\d\mid j}}|\beta_{j/d}|.
+\tag{SU.8}
+$$
+
+对 $d\mid P_z,r\ge1$，令 $y=\log d/\ell$、$b=\log r/L$。由于 $D_V\ge1$、$\ell\ge L$，
+
+$$
+1+V\ell+\log d+\log r+L
+\le\ell D_V(1+y)(1+b).
+\tag{SU.9}
+$$
+
+在非负和中应用（SU.8），按 $j=dr$ 重排，用（SU.9）、（SU.6）和（SU.7），得到
+
+$$
+\begin{aligned}
+\mathsf C_z(V\ell)
+&\le K_C\sum_{d\mid P_z}\frac1d\sum_{r\ge1}\frac{|\beta_r|}{r}
+ (1+V\ell+\log d+\log r+L)^3\\
+&\le K_C\ell^3D_V^3 B_3\,6eK_+Q_z^+
+\le U_C(V)\ell^4.
+\end{aligned}
+\tag{SU.10}
+$$
+
+完整 $\mathsf L_z$ 的括号在 $W=V\ell+\log j$ 时至多为
+$K_L(1+W+L)^2$：其二次、一次和常数项分别由 $A/2$、$D-A$、$|c_{\rm diag}|$、$A$、$D-A$ 支付。同样用（SU.8）–（SU.9）、（SU.6），并以 $(1+b)^2\le(1+b)^3$，得到第二个（SU.2）。所有无限重排只涉及非负和；实际指数尾及（SU.6）同时证明它们有限。$\square$
+
+**推论（既定成本与阈值的精确阶）。** 对每个先固定的 $V>0$，当 $z\to\infty$ 时，
+
+$$
+\boxed{
+\mathsf C_z(V\log z)=\Theta_V((\log z)^4),\qquad
+\log X_z(V)=\Theta_V((\log z)^4).}
+\tag{SU.11}
+$$
+
+证明。第一个结论由（SU.2）和（LC.6）相合。对（CP.11）的指定最大值，
+
+$$
+\log X_z(V)
+=\max\{1,\ 1+2\mathsf C_z(V\ell),\ \log(1+2\mathsf L_z(V\ell))\}.
+$$
+
+（SU.2）使三项共同为 $O_V(\ell^4)$；（LC.6）给严格正的匹配下界。$\square$
+
+特别地，仅在选择 $x=X_z(V)$ 时，整个窗口 $x\le n\le xz^V$ 满足
+
+$$
+\frac{\log X_z(V)}{\ell}
+\le\frac{\log n}{\ell}
+\le\frac{\log X_z(V)}{\ell}+V,
+\qquad
+\frac{\log n}{\ell}=\Theta_V(\ell^3)
+\tag{SU.12}
+$$
+
+且上下常数共同适用于该窗口全部整数。对任意更大的 $x\ge X_z(V)$，仍只有（LC.7）的共同下界，不能由此宣称同一个 $O_V(\ell^3)$ 上界。
+
+（SU.11）只确定当前完整绝对账及指定阈值的阶。它不估计真实误差的下界，不给最小可行阈值的下界，也不排除保留有限 Euler 符号后的更低成本核估计。
+
+**来源。** （SU.2）、（SU.11）–（SU.12）是对 §§428、430 这份实际预算与指定阈值的新推导。经典指数凸性、有限 Euler 展开和指数级数不等式仅作证明中间步骤；第一、第三 Mertens 供应沿用 §428 的来源及范围。
+
+## 追加锚（本行以下为增补区）
