@@ -41,7 +41,7 @@ internal sealed class CycleSpaceEulerRankDocument : IScribeDocumentDefinition
                         "count is the Euler cycle rank.")),
                     Paragraph(Text(
                         "Mac Lane face bases and cycle-double-cover interfaces are staged " +
-                        "follow-on nodes; the bridgeless Cycle Double Cover Conjecture " +
-                        "remains open."))),
+                        "follow-on nodes; the classical Cycle Double Cover statement " +
+                        "is not claimed as an unresolved problem here."))),
                 DescribeRole.Theorem))));
 }
