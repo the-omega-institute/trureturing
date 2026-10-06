@@ -2012,7 +2012,7 @@ $$
 
 ### 13.5 不修改原 API
 
-工程实现不得破坏已有 theorem 名称及使用方式。它仅为 positive occurrence 生成以下伴随 theorem；trivial occurrence 按 §27 生成 triviality certificate：
+工程实现不得破坏已有 theorem 名称及使用方式。positive occurrence 的报告伴随名表示以下数学关系；trivial occurrence 使用 §27 的 triviality certificate。数学证据由编译后的契约字段提供，报告数据视图不安装新 theorem：
 
 ```lean
 theorem originalName.__escape_enriched :
@@ -7728,12 +7728,14 @@ uniqueCaptureCount = 5
 - theorem definitions；
 - 通用 correctness proofs。
 
-Meta／IO 层只负责：
+Reg 数学义务在 Lean 编译期由内核检查。报告 IO 层只负责：
 
-- 枚举环境；
-- 组织表达式；
-- 请求 elaboration；
+- 读取编译部件与声明的常量依赖；
+- 解码类型化契约构造器与常量引用；
+- 对编译字段进行有界结构评定；
 - 输出投影。
+
+报告期不构建 Environment，不调用 elaborator、Meta、类型检查器或内核。
 
 ---
 
@@ -9160,9 +9162,9 @@ Catalog
 报告使用 `CompiledSnapshots` 与 `CompiledSeal` 核对编译字段及完整登记闭包。
 禁止生成第二份证明源码、执行输入代码或在报告期新造证明。
 
-### Phase 6　伴随 theorem
+### Phase 6　伴随数据视图
 
-为每个 theorem 生成：
+从已编译契约证据投影每个 theorem 的伴随名与类型：
 
 ```text
 .__lowers_escape
@@ -9171,7 +9173,7 @@ Catalog
 
 ### Phase 7　artifact
 
-仅在全部 proof 被 environment 接受后发射 JSON／CSV／DOT。
+Reg 契约先通过 Lean 编译；报告评定成功后发射 JSON／CSV／DOT，报告期不生成或核验 proof。
 
 ### Phase 8　仓库接入
 
