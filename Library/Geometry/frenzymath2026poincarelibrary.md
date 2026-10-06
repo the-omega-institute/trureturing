@@ -5878,3 +5878,12 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 窄完整 Lean 模块真实 exit 0、零错误、零警告；全部 82 项公理报告仅含 propext、Classical.choice、Quot.sound，覆盖 nativeFutureUnit_positiveNullDecomposition、nativePositiveConeAction_futureTime、nativeScaledCone_reconstructOriginalIsometry 三个新目标。源码在实际编译前后不变，原接受基底、实际生成 olean、完整日志、退出结果及原依赖再次独立核对一致。验收范围为该完整窄模块与三个新目标。
 
 固定来源沿用 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a，以及此前已验证的原 Lorentz／边界构造。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。正缩放与全部配对由此前交比结果内部产生；有限体积给出同一真实 F 与交比性质、给定 h,d 的完整 Mostow–Prasad 及官方验收仍待完成。唯一性在本段指同一 F 的边界作用，尚不替代仅由给定群共轭或原同伦类得出的最终唯一性。
+
+
+### 同一原边界交比与完整给定群同构的原等距共轭
+
+同一原 NullSphere 单射 F 保持真正四个互异原点的核交比时，内部构造的正缩放与全部零锥配对保持给出唯一原 H3 等距 e，其实际 nullSphereAction 为 F。若 F 对同一原表示 ρ、σ 与完整指定群同构 d 等变，原边界作用的忠实性进一步给出对每个原群元素 γ 的完整共轭等式 e * ρ γ * e⁻¹ = σ (d γ)。源群与目标群的 universes 独立，原完整等距群保留定向反转。
+
+独立小模块实际导入此前已接受的窄零锥重构基底；新证明正文真实 exit 0、零错误、零警告，三个新目标的公理闭包仅含 propext、Classical.choice、Quot.sound。新源与实际编译快照一致，3071 字节完整证明尾与候选逐字一致；实际导入的基底源码、olean 及此前 82 项标准公理验收再次核对，43 项绑定工件独立验证一致。验收范围为完整导入消费者的三个新目标。
+
+固定来源沿用 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a 与此前原 Lorentz／边界构造。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。这里的唯一性包含同一 F 的边界作用；仅由给定共轭或原同伦类推出最终唯一性，以及从原有限体积内部构造同一 F 与交比性质，仍须完成。完整 Mostow–Prasad 与官方验收未完成。
