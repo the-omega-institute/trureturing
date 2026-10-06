@@ -56,9 +56,27 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
                     + "native edges. Reversing the tail of the circle word rotated to the cut gives exactly Z_j. "
                     + "This establishes both full coverage of the independent domain and the literal support identity."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("delete-last-residual"),
+                DeclarationHandle.Create(Prefix + "configurationCycle_delete_last"),
+                H("Deleting the Last Label"),
+                StatementSource.FromAuthor(DeletionFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every configuration z, deleting the actual last label from its oriented circular tuple "
+                    + "gives the circle of its literal residual list. This exposes the established internal deletion "
+                    + "identity for live reuse across modules, retaining its exact orientation and proof."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "The result concerns one zero star and its retained factor. It does not connect distinct stars "
                 + "or assert a Hamiltonian cycle on all permutations.")))));
+
+    private static Formula DeletionFormula()
+    {
+        Formula m = F.Id("m"), z = F.Id("z");
+        Formula deleted = Call("delete", Call("apply", z, Call("lastPosition", m)),
+            Call("configurationCycle", z));
+        Formula residual = Call("circleOfList", Call("residualList", z));
+        return Disp(All("m", Call("Nat"), All("z", Call("Configuration", m), Eq(deleted, residual))));
+    }
 
     private static Formula ComplementFormula()
     {

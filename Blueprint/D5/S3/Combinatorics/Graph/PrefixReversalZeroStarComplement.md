@@ -24,10 +24,23 @@ For every m at least six, every marked label t, every residual circle W, and eve
 
 To handle either residual orientation uniformly, take z=v U_j. The word U_j is an involution, so v is O(0,j) relative to z, and t is last in z. Number the native coordinates by 2r+s+2(m+1)k. Start at the odd rank 2j+1 and traverse the remaining circle backwards. The rank sequence visits every coordinate once, ends at the successor of the cut rank, and no consecutive pair is the removed edge. All its consecutive pairs are retained native edges. Reversing the tail of the circle word rotated to the cut gives exactly Z_j. This establishes both full coverage of the independent domain and the literal support identity.
 
+**Theorem 1.2 (Deleting the Last Label).**
+
+$$\forall m \in \mathrm{Nat},\; \forall z \in \mathrm{Configuration}\left(m\right),\; \mathrm{delete}\left(\mathrm{apply}\left(z, \mathrm{lastPosition}\left(m\right)\right), \mathrm{configurationCycle}\left(z\right)\right) = \mathrm{circleOfList}\left(\mathrm{residualList}\left(z\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.configurationCycle_delete_last` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every configuration z, deleting the actual last label from its oriented circular tuple gives the circle of its literal residual list. This exposes the established internal deletion identity for live reuse across modules, retaining its exact orientation and proof.
+
 The result concerns one zero star and its retained factor. It does not connect distinct stars or assert a Hamiltonian cycle on all permutations.
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.configurationCycle_delete_last`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.zeroStar_b_complement_hamiltonian`
 - Dependency: [D5/S0/CayleyGrowth/PrefixReversalTripleOddNonGeneration](../../../S0/CayleyGrowth/PrefixReversalTripleOddNonGeneration.md)
 - Dependency: [D5/S3/Combinatorics/CircularWords/CircularDeletionTransport](../CircularWords/CircularDeletionTransport.md)

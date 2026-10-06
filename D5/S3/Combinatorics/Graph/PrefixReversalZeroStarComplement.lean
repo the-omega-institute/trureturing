@@ -988,6 +988,11 @@ theorem zeroStar_b_complement_hamiltonian {m : ℕ} (hm : 6 ≤ m)
   rw [hu', he'] at hc
   simpa only [show m * ((m + 1) * 2) = 2 * m * (m + 1) by ring] using hc
 
+/-- Deleting the last label gives the literal residual circular tuple. -/
+theorem configurationCycle_delete_last {m : ℕ} (z : Configuration m) :
+    delete (z (Fin.last m)) (configurationCycle z) =
+      (residualList z : Cycle (Fin (m + 1))) := residual_delete z
+#print axioms configurationCycle_delete_last
 #print axioms coordinateEquiv
 #print axioms zeroStar_b_complement_hamiltonian
 
