@@ -299,13 +299,10 @@ public sealed partial class ProductionEnvironmentTests
         var alignment = new DigestionLedgerAlignment(
             ImmutableDictionary<string, DigestionReceiptAlignment>.Empty,
             ImmutableDictionary<string, DigestionAtom>.Empty,
-            ImmutableDictionary<string, ImmutableHashSet<string>>.Empty,
             ImmutableDictionary<string, GenreRegistryCheck>.Empty,
             [],
             [],
             ImmutableHashSet<string>.Empty,
-            ImmutableHashSet<string>.Empty,
-            [],
             [],
             []);
 
@@ -353,13 +350,10 @@ public sealed partial class ProductionEnvironmentTests
                 KeyValuePair.Create(child.AtomId, DigestionReceiptAlignment.Rejected),
             ]),
             ImmutableDictionary<string, DigestionAtom>.Empty,
-            ImmutableDictionary<string, ImmutableHashSet<string>>.Empty,
             ImmutableDictionary<string, GenreRegistryCheck>.Empty,
             [],
             [],
             ImmutableHashSet<string>.Empty,
-            ImmutableHashSet<string>.Empty,
-            [],
             [],
             []);
 
