@@ -1,0 +1,62 @@
+# Literal Fibonacci sources and occurrence coordinates
+
+## Abstract
+
+The five-label affine source uses its original legal guards, endpoint flags, literal blocks and eventually-empty tails. Each departure coordinate belongs to one complete suffix of that source.
+
+**Theorem 1.1 (One coordinate per occurrence).**
+
+$$\left(\forall s \in Guard, e \in Guard, w \in \operatorname{List}\left(Label\right), z \in Real,\; \left(\operatorname{LegalWord}\left(s, e, w\right) \land \operatorname{InSupport}\left(e, z\right)\right) \Rightarrow \operatorname{InSupport}\left(s, \operatorname{compose}\left(w, z\right)\right)\right) \land \left(\left(\forall left \in \operatorname{List}\left(Label\right), B \in \operatorname{List}\left(Label\right), right \in \operatorname{List}\left(Label\right), p \in Nat,\; \operatorname{le}\left(p, \operatorname{length}\left(B\right)\right) \Rightarrow \operatorname{coordinate}\left(\operatorname{append}\left(\operatorname{append}\left(left, B\right), right\right), \operatorname{add}\left(\operatorname{length}\left(left\right), p\right)\right) = \operatorname{add}\left(\operatorname{compose}\left(\operatorname{drop}\left(B, p\right), c0\right), \operatorname{multiply}\left(\operatorname{power}\left(\operatorname{negate}\left(g\right), \operatorname{subtract}\left(\operatorname{length}\left(B\right), p\right)\right), \operatorname{subtract}\left(\operatorname{coordinate}\left(right, 0\right), c0\right)\right)\right)\right) \land \left(\left(\forall w \in \operatorname{List}\left(Label\right), n \in Nat, p \in Nat,\; \operatorname{coordinate}\left(\operatorname{append}\left(w, \operatorname{replicate}\left(n, L0\right)\right), p\right) = \operatorname{coordinate}\left(w, p\right)\right) \land \left(\left(\forall w \in \operatorname{List}\left(Label\right), x \in Real, y \in Real,\; \operatorname{compose}\left(w, \operatorname{add}\left(x, y\right)\right) = \operatorname{add}\left(\operatorname{compose}\left(w, x\right), \operatorname{multiply}\left(\operatorname{power}\left(\operatorname{negate}\left(g\right), \operatorname{length}\left(w\right)\right), y\right)\right)\right) \land \left(\forall w \in \operatorname{List}\left(Label\right), v \in \operatorname{List}\left(Label\right), z \in Real,\; \operatorname{compose}\left(\operatorname{append}\left(w, v\right), z\right) = \operatorname{compose}\left(w, \operatorname{compose}\left(v, z\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource.literal_source_geometry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Induction over the literal word proves support preservation and its affine suffix law. Extending the finite cutoff by empty labels leaves every coordinate unchanged. The displacement in an occurrence formula is the coordinate of the actual complete right suffix minus the fixed center.
+
+**Theorem 1.2 (Reconstruct both prescribed sources).**
+
+$$\forall j \in Side, model \in Model, execution \in \operatorname{List}\left(Return\right),\; \operatorname{LegalWord}\left(G0, G0, \operatorname{sourcePrefix}\left(j, model, execution\right)\right) \land \left(\left(\forall p \in Nat,\; \operatorname{source}\left(j, model, execution, \operatorname{add}\left(\operatorname{length}\left(\operatorname{observedPrefix}\left(j, model, execution\right)\right), p\right)\right) = \operatorname{address}\left(\operatorname{tailPrefix}\left(j\right), p\right)\right) \land \left(\left(\forall p \in Nat,\; \operatorname{coordinate}\left(\operatorname{sourcePrefix}\left(j, model, execution\right), \operatorname{add}\left(\operatorname{length}\left(\operatorname{observedPrefix}\left(j, model, execution\right)\right), p\right)\right) = \operatorname{coordinate}\left(\operatorname{tailPrefix}\left(j\right), p\right)\right) \land \left(\operatorname{coordinate}\left(\operatorname{append}\left(\operatorname{append}\left(\operatorname{externalWord}\left(j, execution\right), \operatorname{anchor}\left(j, model\right)\right), \operatorname{tailPrefix}\left(j\right)\right), 0\right) = \operatorname{add}\left(c0, \operatorname{multiply}\left(\operatorname{sign}\left(j\right), \operatorname{execute}\left(j, execution, \operatorname{initial}\left(j, model\right)\right)\right)\right) \land \left(\operatorname{length}\left(\operatorname{observedPrefix}\left(j, model, execution\right)\right) = \operatorname{add}\left(\operatorname{observationOffset}\left(model\right), \operatorname{listWeight}\left(execution\right)\right) \land \left(\operatorname{length}\left(\operatorname{history}\left(model, execution\right)\right) = \operatorname{add}\left(\operatorname{observationOffset}\left(model\right), \operatorname{listWeight}\left(execution\right)\right) \land \left(\left(\forall D \in Real,\; \operatorname{compose}\left(C, \operatorname{add}\left(c0, \operatorname{multiply}\left(\operatorname{sign}\left(j\right), D\right)\right)\right) = \operatorname{add}\left(c0, \operatorname{multiply}\left(\operatorname{sign}\left(j\right), \operatorname{multiply}\left(chi, D\right)\right)\right)\right) \land \left(\left(\forall D \in Real,\; \operatorname{compose}\left(\operatorname{block}\left(j\right), \operatorname{add}\left(c0, \operatorname{multiply}\left(\operatorname{sign}\left(j\right), D\right)\right)\right) = \operatorname{add}\left(c0, \operatorname{multiply}\left(\operatorname{sign}\left(j\right), \operatorname{add}\left(\operatorname{aSide}\left(j\right), \operatorname{multiply}\left(rho, D\right)\right)\right)\right)\right) \land \left(\left(\forall a \in Return, D \in Real,\; \operatorname{compose}\left(\operatorname{returnWord}\left(j, a\right), \operatorname{add}\left(c0, \operatorname{multiply}\left(\operatorname{sign}\left(j\right), D\right)\right)\right) = \operatorname{add}\left(c0, \operatorname{multiply}\left(\operatorname{sign}\left(j\right), \operatorname{returnMap}\left(j, a, D\right)\right)\right)\right) \land \left(\left(\forall xs \in \operatorname{List}\left(Return\right), D \in Real,\; \operatorname{compose}\left(\operatorname{externalWord}\left(j, xs\right), \operatorname{add}\left(c0, \operatorname{multiply}\left(\operatorname{sign}\left(j\right), D\right)\right)\right) = \operatorname{add}\left(c0, \operatorname{multiply}\left(\operatorname{sign}\left(j\right), \operatorname{execute}\left(j, xs, D\right)\right)\right)\right) \land \operatorname{compose}\left(\operatorname{tailPrefix}\left(j\right), 0\right) = \operatorname{add}\left(c0, \operatorname{multiply}\left(\operatorname{sign}\left(j\right), \operatorname{xSide}\left(j\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource.paired_source_reconstruction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite block calculation uses every original cycle label. Induction reconstructs the reversed execution list without reversing block letters. Both templates have legal seams, the exact original tail at the unobserved terminal, the actual scalar return action, and observation lengths 26 plus the variable weight or 52 plus that weight.
+
+**Theorem 1.3 (The complete literal departure path).**
+
+$$\forall s \in Guard, e \in Guard, w \in \operatorname{List}\left(Label\right),\; \operatorname{LegalWord}\left(s, e, w\right) \Rightarrow \left(\exists path \in \operatorname{Function}\left(Nat, Guard\right),\; \operatorname{apply}\left(path, 0\right) = s \land \left(\left(\forall p \in Nat,\; \operatorname{nextGuard}\left(\operatorname{apply}\left(path, p\right), \operatorname{address}\left(w, p\right)\right) = \operatorname{some}\left(\operatorname{apply}\left(path, \operatorname{add}\left(p, 1\right)\right)\right)\right) \land \left(\left(\forall p \in Nat,\; \operatorname{InSupport}\left(\operatorname{apply}\left(path, p\right), \operatorname{coordinate}\left(w, p\right)\right)\right) \land \left(\forall p \in Nat,\; \operatorname{coordinate}\left(w, p\right) = \operatorname{branch}\left(\operatorname{address}\left(w, p\right), \operatorname{coordinate}\left(w, \operatorname{add}\left(p, 1\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource.literal_address_path` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Induction constructs a guard itinerary from the legal prefix. At every departure position, including the eventual empty tail, the coordinate lies in that guard's support and satisfies the original label branch recurrence.
+
+**Theorem 1.4 (Every original block departure slot).**
+
+$$\forall o \in Ownership, b \in Real,\; \operatorname{lt}\left(\operatorname{subtract}\left(lam, rho\right), b\right) \Rightarrow \left(\left(\forall j \in Side, D \in Real,\; \left(\operatorname{lt}\left(0, D\right) \land \operatorname{le}\left(D, \operatorname{eSide}\left(j\right)\right)\right) \Rightarrow \left(\operatorname{BlockSupply}\left(o, b, true, \operatorname{block}\left(j\right), colorsD, \operatorname{add}\left(c0, \operatorname{multiply}\left(\operatorname{sign}\left(j\right), D\right)\right)\right) \Leftrightarrow \operatorname{lt}\left(\operatorname{subtract}\left(lam, \operatorname{multiply}\left(\operatorname{power}\left(g, 2\right), D\right)\right), b\right)\right)\right) \land \left(\left(\forall j \in Side, D \in Real,\; \left(\operatorname{lt}\left(0, D\right) \land \operatorname{le}\left(D, \operatorname{eSide}\left(j\right)\right)\right) \Rightarrow \left(\operatorname{BlockSupply}\left(o, b, false, \operatorname{block}\left(j\right), colorsD, \operatorname{add}\left(c0, \operatorname{multiply}\left(\operatorname{sign}\left(j\right), D\right)\right)\right) \Leftrightarrow \left(\operatorname{lt}\left(\operatorname{subtract}\left(lam, \operatorname{multiply}\left(\operatorname{power}\left(g, 2\right), D\right)\right), b\right) \lor \left(\operatorname{subtract}\left(lam, \operatorname{multiply}\left(\operatorname{power}\left(g, 2\right), D\right)\right) = b \land \left(\left(j = high \land \operatorname{apply}\left(o, 0\right) = true\right) \lor \left(j = low \land \operatorname{apply}\left(o, 1\right) = false\right)\right)\right)\right)\right)\right) \land \left(\forall z \in Real,\; \left(\operatorname{le}\left(0, z\right) \land \operatorname{le}\left(z, T2\right)\right) \Rightarrow \operatorname{BlockSupply}\left(o, b, true, C, colorsE, z\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource.literal_full_slot_readout` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For budgets above lambda minus rho, all six positions of U and V and all twenty positions of C are checked at one fixed block input. The active position has cost lambda minus g squared times its displacement. Strict acquisition requires a strict cost inequality; equality in the closed contract uses the original high-side first flag or low-side second flag. The input domains are exactly the original comparison domains. This block law alone does not establish whole-record supply or the cap and high-guard equivalence.
+
+ActualPairSupply is independently defined through clipped readout, error bounds, the prescribed history and zero-error futures. The full-slot cap and high-guard equivalence, independent bilateral factor language, completion inverse, every-weight counts and rate equality remain open.
+
+## References
+
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource.literal_address_path`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource.literal_full_slot_readout`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource.literal_source_geometry`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource.paired_source_reconstruction`
