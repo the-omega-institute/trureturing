@@ -1,4 +1,4 @@
-# Zhang's one-deletion Lonely Runner family
+# One-deletion Lonely Runner bounds and equality cases
 
 Let `N = n - 1` and remove one speed `r` from `1, ..., N`.  Zhang's
 Question 2.11 (arXiv:2608.13599v2) asks for the exact lower bound and equality
@@ -26,16 +26,16 @@ For `2r ≤ N`, the proof constructs `q` and `a` with
 the `N=2` cases are sharp by the nearest-integer bound.
 
 The formal definition uses the supremum over all real times, while the proof
-uses explicit rational witnesses and proves a global `1/2` upper bound.  This
-settles the registered one-deletion family only; it does not claim the
-unrestricted Lonely Runner Conjecture.
+uses explicit rational witnesses and proves a global `1/2` upper bound.
+The conclusion also follows from existing literature: Tao's Proposition 1.5
+supplies the lower bound for `N ≥ 6`, and Zhang's Theorem 1.2 excludes the
+remaining equality cases; the small cases have direct witnesses. This is
+a Lean formalization of that literature consequence.
 
 *Source.* Yuhan Zhang, arXiv:2608.13599v2, Question 2.11 (2026).
-
-*Resolves.* `Problems/zhang-2026-lonely-runner-one-deletion` (proved) by
-`D5/S1/Phase/LonelyRunnerDeletion/OneDeletion.result`.
 
 ## Verified locator
 
 - URL: https://arxiv.org/abs/2608.13599v2
-- Locator: Question 2.11; Remark 2.8 and Proposition 2.10.
+- Locator: Theorem 1.2 and Question 2.11; Remark 2.8 and Proposition 2.10.
+- Tao: https://arxiv.org/abs/1701.02048, Proposition 1.5.
