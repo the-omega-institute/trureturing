@@ -297,12 +297,40 @@ Thus density is not an unproved extra premise in that application.
 The three-matching-prime K4-free conclusion is included. These
 scoped checks use only the standard three axioms.
 
+The same exact selection application also compiles at arbitrary ternary
+height h and multiplier q at least seven. Its selected labels are
+3^h*q*m_i, their actual residues share one word modulo 3^h, no
+original label is divisible by 3^(h+1), and every selected original
+has at least two primes matching the fixed auxiliary roots. The
+prime pool can be any finite set of primes. No q-primality,
+q-height-one, common-q-color, common-source-point or 27-prime bound
+is used for this density-to-rigid-selection conclusion. The numerical
+54/59 and 73/58 estimates elsewhere retain their stated special-branch
+conditions; this wider interface does not extend those estimates or
+provide a global repair.
+
 Separate transient applications verify the finite linear-four-set
 incidence bound 54 and the 113-color complement bound 59. They retain
-linearity and the four-element supports as premises; the map from
-actual rooted configurations to that linear family is the mathematical
-argument above. They do not assume or prove a whole-cover realization
-of an arbitrary linear set family.
+linearity and the four-element supports as premises. An additional
+exact actual-source application supplies these premises: it forms the
+four-prime configurations directly from actual semiprime originals,
+uses the unique original numerical labels to identify their shared
+old words and roots, and applies the actual density bound to prove
+that distinct supports intersect in at most one prime. Equal supports
+force equal old words modulo nine and equal roots modulo every
+support prime, so arbitrary extensions of the root functions are
+not counted as different configurations.
+
+The application then constructs one fixed set O of at most 54 actual
+originals, with actual pair-label witnesses for each chosen original
+and for the hit in every configuration. At least 59 colors avoid O.
+It explicitly retains as a premise that each original literal color
+has a q-stripped cover of the same exact q-free residual E0; under
+that premise each remaining color has its complete surviving cover.
+The prime pool and its bound of 27 are also explicit inputs. This
+complete counting application compiles with the standard three axioms.
+It does not prove those branch inputs for every hypothetical cover
+or assert a whole-cover realization of an arbitrary linear set family.
 
 The scalar implication from 6k at most 7*27, v at most 27,
 B=k+v and capture less than B to k at most 31, B at most 58 and
