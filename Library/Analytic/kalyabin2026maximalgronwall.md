@@ -81,6 +81,48 @@ complement as infinite, referring to its earlier one-step-unimprovability
 preprint [arXiv:1810.12585](https://arxiv.org/abs/1810.12585).
 The upper estimate is not an eventual bound over all support indices.
 
+## Directly reusable infinite one-step sources
+
+The cited antecedent is Kalyabin, *One-Step G-Unimprovable Numbers*,
+[arXiv:1810.12585v1](https://arxiv.org/pdf/1810.12585v1), submitted
+30 October 2018. Its PDF has 11 pages and SHA-256
+`6d45415c30ad326be291ccf4716d711975ea85bbabfbe822d119061d3898a72c`.
+The definition on printed p.2, Theorem 1 on p.6, and Theorem 3 with its
+argument on p.10 were inspected. This is primary-source scope checking,
+not a complete proof audit or Lean verification.
+
+Theorem 3 states that for every $M>0$ there is an actual integer $V_r$
+with $P^+(V_r)>M$ and $V_r\in U_1$. Its one-step conditions retain the
+same integer:
+
+$$
+G(V_r/p)\le G(V_r)\quad(p\mid V_r),\qquad
+G(V_rp)\le G(V_r)\quad(p\text{ prime}).
+$$
+
+The 2026 paper's Proposition 5(IV), in §3, recalls an infinite subsequence
+of these $V_k$ lying in $U_1$, hence with support indices in $E$.
+The existence of an unbounded family with both single-prime comparisons
+is therefore an existing supplier; neither its construction nor its
+infinitude needs another proof here. It is stronger source information
+than separately selecting a GA1 integer and an insertion-stable integer.
+
+The multiplier comparison in $U_1$ still concerns one prime at a time.
+GA2 requires every positive integer multiplier. The
+[existing workload note](mantovanelli2026primeworkload.md) already records
+an actual one-step source improved by the joint multiplier $3\cdot37$;
+that comparison is reused rather than recomputed. Thus the cited
+infinitude does not certify GA2 or establish an unbounded sequence of
+selected Robin-critical global maximizers. It also provides no signed
+modified-Mertens estimate or effective cutoff for one fixed source.
+
+The antecedent's Proposition 1(i) prints the opposite comparison
+$G(N)\le\min(G(N/p),G(Np))$. The conditions quoted above are those of
+its definition and Theorem 1; the reversed line is not used as a
+verified source condition.
+
+## Uniform clock expansion on the eligible sources
+
 Theorem 2(I)(iv), printed p.8, states the uniform clock expansion
 
 $$
