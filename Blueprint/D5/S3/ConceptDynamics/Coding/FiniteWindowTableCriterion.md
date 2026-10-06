@@ -50,7 +50,7 @@ Loops, parallel edges, disconnected essential components and asymmetric windows 
 
 **Definition 1.4 (Actual free expansion).**
 
-$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), order \in \operatorname{LinearOrder}\left(H\right), n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{DirectedMultigraph}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(n\right), H\right), \operatorname{Prod}\left(\operatorname{Edge}\left(\operatorname{product}\left(U, V\right)\right), H\right)\right)$$
+$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), n \in Nat, A \in \operatorname{GroupMat}\left(H, n, n\right),\; \operatorname{DirectedMultigraph}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(n\right), H\right), \operatorname{Prod}\left(\operatorname{Edge}\left(A\right), H\right)\right)$$
 
 *Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.countedExpansion` (`✓ std3`).
 
@@ -170,7 +170,7 @@ The complete dictionary is [r0,r1,r2,r3,sr0,sr3,sr2,sr1], exactly the prescribed
 
 **Definition 1.14 (orderedEdges).**
 
-$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), order \in \operatorname{LinearOrder}\left(H\right), n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{List}\left(\operatorname{Prod}\left(\operatorname{Edge}\left(A\right), H\right)\right)$$
+$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), order \in \operatorname{LinearOrder}\left(H\right), n \in Nat, A \in \operatorname{GroupMat}\left(H, n, n\right),\; \operatorname{List}\left(\operatorname{Prod}\left(\operatorname{Edge}\left(A\right), H\right)\right)$$
 
 *Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedEdges` (`✓ std3`).
 
