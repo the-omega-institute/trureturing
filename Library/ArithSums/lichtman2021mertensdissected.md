@@ -52,7 +52,7 @@ No new uniform Hardy–Ramanujan or Sathe–Selberg theorem is asserted.
 
 ## The project-specific correspondence
 
-For the [actual FIB prefix, §422](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md),
+For the [actual FIB prefix, §423](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md),
 the counted objects are odd squarefree kernels with $k$ distinct prime
 factors. Removing repeated factors and the prime 2 changes only lower
 orders for fixed $k$. The section pays this restriction by applying the
