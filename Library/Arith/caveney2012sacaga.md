@@ -5,26 +5,130 @@ year: 2012
 title: On SA, CA, and GA numbers
 doi: null
 url: https://arxiv.org/abs/1112.6010v2
-claim: The paper proves infinitely many CA numbers are GA1 and infinitely many are not; its parameter conditions must be checked before applying either class to actual self-tangent packets.
+claim: The paper supplies a critical-source reduction and necessary prime-layer restrictions for proper GA1 integers, as well as infinite CA subclasses; these do not supply a signed forward packet bound.
 strata_touched: []
 license: citation-only
 triage: anchor
 ---
 
-# Existing CA subclasses and the actual tangent parameter
+# Published GA1 source constraints and the actual tangent parameter
 
 The inspected primary is [arXiv:1112.6010v2](https://arxiv.org/pdf/1112.6010v2),
 whose first page identifies the version as 17 July 2012. It has 29 pages;
 the retrieved PDF SHA-256 is
 `7bf39ed12be2f708dc6c4dca747d7d9316470c11d8f09f071cdbc79e6f1148ae`.
 Locators below use its printed pages. The relevant statements and their
-proofs in §§5.1–5.2 were read; no independent audit of the whole paper,
+proofs in §§5.1–5.2 and §6, together with the recalled reduction and facts
+on printed p.5, were read; no independent audit of the whole paper,
 journal-version correspondence, or Lean verification is claimed.
 
 The source defines $G(n)=\sigma(n)/(n\log\log n)$ for $n>1$ and calls a
 composite $N$ GA1 when $G(N)\ge G(N/q)$ for every prime divisor $q$.
 The packet applications here use the positive-logarithm range $n>e$;
 Lemma 7 itself ensures $N/q\ge6$.
+
+## Which potentially critical Robin source is covered
+
+Theorem 4(ii), printed p.5, recalls the published same-source reduction:
+if any counterexample to Robin's strict inequality exists above 5040,
+then $\max_{n>5040}G(n)$ exists, and the least integer $N>5040$ attaining
+it is extraordinary. Here extraordinary means composite and both GA1
+and GA2; GA2 requires $G(N)\ge G(aN)$ for every positive integer $a$.
+This selects a global extremal source under the counterexample hypothesis;
+it does not say that every counterexample, regular return, or tangent
+minimum is GA1. Theorem 4(i) already states the equivalent RH criterion
+that 4 is the only extraordinary number. Both reductions are reused.
+
+The source's definition following Fact 1 on the same page calls a GA1
+integer **proper** exactly when $\Omega(N)\ge3$, counting prime factors
+with multiplicity. Fact 1 classifies the improper GA1 integers as 4 and
+$2p$ for primes $p\ge7$. Fact 2 gives $G(N)\ge e^\gamma$ for every GA2
+integer. The selected source above 5040 is therefore proper: 4 is excluded
+by size, while $\sigma(2p)/(2p)=\tfrac32(1+1/p)<2$ and
+$\log\log(2p)>2$ when $2p>5040$, so $G(2p)<1<e^\gamma$ excludes GA2.
+This is hypothesis bookkeeping for the existing reduction, not a new
+critical-source theorem or a new enumeration.
+
+## Directly reusable prime and stack envelopes
+
+Keep the same proper GA1 integer $N$ and put $A=\log N$. The following
+published restrictions are available without any CA or regular-return
+hypothesis.
+
+Theorem 9, §6.1, printed pp.20–21, gives, for every prime $p\mid N$ and
+integer $1\le r\le v_p(N)$,
+
+$$
+p\le(rA)^{1/r}\le A.
+$$
+
+Its displayed equation (34) also gives $p^r\log p\le A\log A$.
+Thus the same source's $r$th occupied prime layer has an explicit
+size restriction; its prime support and its exponents are not separate
+freely selectable data.
+
+Theorem 10, §6.2, printed pp.21–22, proves that for each fixed integer
+$k\ge3$ there are only finitely many GA1 integers with $\Omega(N)=k$.
+Its proof already supplies the quantitative bound
+
+$$
+\Omega(N)\ge\frac{A}{\log A}.
+$$
+
+Theorem 11, §6.3, printed pp.22–23, defines $R=h(A)$ using the inverse
+of $t\mapsto2^t/t$ on $[2,\infty)$, so $2^R/R=A$, and gives the
+divisibility envelope
+
+$$
+N\mid M(N),\qquad
+M(N)=\prod_{r=1}^{\lfloor R\rfloor}
+       \prod_{\substack{p\ \mathrm{prime}\\p\le(rA)^{1/r}}}p.
+$$
+
+Lemma 9 on printed p.22 gives $2\le R\le3.08\log A$.
+These are necessary restrictions and a finite divisor envelope at a
+given size; dividing $M(N)$ does not certify GA1, a tangent realization,
+or a favorable packet. The envelope is retained as a cited supplier,
+not reconstructed as another candidate enumerator.
+
+Theorem 12, §6.3, printed p.23, gives $v_{P(N)}(N)=1$, where $P(N)$
+is the largest prime factor. Its proof's check of the 84 divisors of
+43200 belongs to the published proof and is not rerun here.
+Theorem 13, §6.4, printed p.24, gives
+
+$$
+P(N)\sim\log N
+\quad\text{as }N\to\infty\text{ through proper GA1 integers}.
+$$
+
+It supplies neither an effective numerical threshold nor a forward
+signed workload estimate. The above restrictions, including the growing
+$\Omega(N)$ bound, are published results rather than project discoveries.
+
+## Host structure and the FIB atom cutoff are different inputs
+
+For the [actual packet interface](../Analytic/mantovanelli2026primeworkload.md),
+these suppliers constrain the factorization of the Robin host $N$ at
+$A=\log N$. They can be used together on the same proper GA1 source,
+including the global maximizer selected by Theorem 4(ii).
+
+The [project's §423](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+instead sorts the raw FIB correction by odd squarefree atom kernels with
+a fixed number $k$ of distinct prime factors at an atom-index cutoff $X$.
+Its $k$, $X$, and kernel are not $\Omega(N)$, $N$, and the host's prime
+factorization. Theorem 10 does not by itself transfer to a growing-
+kernel cancellation estimate, and Theorem 11 does not couple those
+signed layers to a packet from that host.
+
+A use of the host envelope in the packet problem still needs the same
+integer's CA/tangent correspondence where that interface is required,
+and an estimate of its actual joint-layer debt or an improving multiple.
+Theorem 4's selected source is GA2, so an improving multiple of that
+source would contradict its defining extremality. Constructing such an
+improvement under the critical-source hypotheses is the remaining task;
+neither the divisor envelope nor $P(N)\sim A$ establishes it. A uniformly
+positive full Robin margin on all proper GA1 integers above 5040 would
+also suffice by the recalled reduction, but is not supplied here.
 
 ## Directly reusable infinite subclasses
 
