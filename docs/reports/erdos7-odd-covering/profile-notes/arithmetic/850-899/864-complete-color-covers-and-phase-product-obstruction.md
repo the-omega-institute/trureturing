@@ -1245,3 +1245,214 @@ standard three. No new retained Lean declaration is introduced
 for these reuse applications. The original branch assumptions,
 the at least 105 top colors and the existence of the pure guards
 remain the explicitly cited inputs to these consumers.
+
+## A single actual top label bounds its entire divisor inventory
+
+Keep the same EB1 whole cover and the PC34 exponent envelope.
+Suppose 9qm is an actual original label, q=113, m|W. For each
+composite d|m, define the exact actual-guard residual
+
+$$
+R_d=\{r\bmod9d:\ r\not\equiv a_e\pmod e
+       \text{ for every original label }e\mid9d\}.
+\tag{PC44}
+$$
+
+This residual is auxiliary; it does not replace the source X_z.
+The subscript here specifies a cofactor d and the ambient modulus
+9d, unlike the pure-guard residual R_M in PC37.
+
+Report385 DR8 already bounds by two the number of proper original
+multiples of 9d in any one phase modulo 9d. Its hypotheses hold:
+the ternary height is full, 3 is the smallest support prime, and
+the composite d has at least three divisors. This is an existing
+whole-AP repair, not a consequence of independent private witnesses.
+Choosing a proper nonunit divisor p of d gives fresh labels
+27,27p,27d covering that entire phase. Every proper original multiple
+of 9d is greater than 27d, because its odd quotient exceeds one and
+is coprime to 3. Three such originals could therefore be replaced
+at the same count with a strictly smaller modulus sum.
+
+Divisor closure of the single actual label 9qm supplies exactly
+2 tau(m/d) original top labels 9dt, where t divides qm/d. Here
+q does not divide m, so the factor two is the coprime divisor-count
+formula. Remove the one label 9d from this inventory. Every remaining
+class is disjoint from every actual guard e|9d: comparable originals
+cannot intersect in an irredundant family. Its reduced phase thus
+belongs to the same R_d in PC44. The existing capacity-two bound gives
+
+$$
+2\tau(m/d)-1\le2|R_d|,
+\qquad \tau(m/d)\le|R_d|.
+\tag{PC45}
+$$
+
+The second inequality uses integrality. Excluding 9d is essential:
+its phase does not avoid its own guard. This refines the actual-label
+ancestor count of Report385 CPA5 by retaining all actual divisor
+guards. Neither W nor 9qW is assumed to be an original modulus.
+
+The actual 3 and 9 originals leave five residues modulo nine.
+For a prime p with p^2|m, the actual p and p^2 originals remove p and one disjoint
+residues modulo p^2. CRT between these two prime axes yields
+
+$$
+\tau(m/d)\le5d\quad(d\mid m\text{ composite}),\qquad
+\tau(m/p^2)\le5(p^2-p-1)\quad(p\text{ prime},\ p^2\mid m).
+\tag{PC46}
+$$
+
+Additional mixed guards can only decrease the exact residual.
+No phases are optimized independently in this deduction.
+
+## Each actual top cofactor has at most 25 prime factors with multiplicity
+
+Under PC34 and PC46,
+
+$$
+\Omega(m)\le25\qquad\text{for every actual original }9qm.
+\tag{PC47}
+$$
+
+Suppose instead Omega(m)>=26. In the squarefree case, m contains
+at least 26 of the 27 available primes. Two of 5,7,11 divide m;
+their product d is at most 77. Then
+tau(m/d)>=2^24>385>=5d, contradicting PC46.
+
+Otherwise let p be the smallest squared prime. It belongs to
+5,7,11,13,17,19,23. In m/p^2, smaller primes have exponent at most
+one, the p cap is lowered by two, and all other caps are those of
+PC34. The remaining exponent sum is at least 24. Decreasing
+coordinates until their sum is exactly 24 cannot increase the
+divisor product. The following exact minima therefore suffice:
+
+$$
+\begin{array}{c|r|r}
+p&\min_{\sum e_i=24}\prod_i(e_i+1)&5(p^2-p-1)\\\hline
+5&168&95\\
+7&312&205\\
+11&792&545\\
+13&138240&775\\
+17&9437184&1355\\
+19&12582912&1705\\
+23&16777216&2525
+\end{array}
+\tag{PC48}
+$$
+
+Each row contradicts PC46. The finite optimization uses the exact
+recurrence D_0(0)=1, D_0(t)=infinity for t>0, and
+
+$$
+D_{j+1}(t)=\min_{0\le a\le\min(c_j,t)}
+                 (a+1)D_j(t-a),\qquad0\le t\le24.
+\tag{PC49}
+$$
+
+Here c_j is the residual cap just described. Induction on j proves
+that D_j(t) is the minimum product for those first j coordinates:
+each exponent vector has a unique last coordinate a, and conversely
+every finite entry and choice a gives a feasible extended vector.
+The [exponent-budget program](../../../frontier/cover-geometry/cd-prime-capacity-controls/top_cofactor_exponent_budget.py)
+checks every recurrence entry, an attaining vector for each row,
+and the 28 possible squarefree supports. Its
+[exact data](../../../frontier/cover-geometry/cd-prime-capacity-controls/top_cofactor_exponent_budget.json)
+retain all caps and integer tables. No floating-point comparison
+or sampled phase assignment is used.
+
+A three-owner numerical block in the H_3=2, G=1 moving family has
+the actual labels qm,3qm,9qm, so PC47 applies to every such block.
+It does not give Omega(W)<=25: different actual cofactors may have
+a larger least common multiple. It also supplies neither a
+capacity-two selector nor the complete prefix payment in PC28.
+
+The exponent vector m=7^13*11^12 has Omega(m)=25 and satisfies
+all 179 composite-divisor inequalities tau(m/d)<=5d and both
+square-guard inequalities in PC46. In particular the latter read
+156<=205 and 154<=545. It is a witness in the exponent relaxation,
+not an actual phase assignment, exact guard residual or whole cover.
+Thus PC34 and PC46 alone cannot lower 25 to 24.
+
+A scoped transient Lean check verifies the proper-multiple phase
+capacity, same-count whole-hole replacement, actual indexed-ancestor
+count, coprime divisor doubling, actual-phase guard reduction and
+the finite inventory consumer in PC45. Its default-budget build
+exits successfully, with fourteen axiom closures contained in the
+standard three. Actual divisor closure, comparable-class disjointness
+and the guard counts are explicit inputs or ordinary source bridges;
+this is not an end-to-end formalization of PC44--PC49 or Erdős #7.
+
+The seven product lower bounds in PC48 also have a scoped Lean
+check quantified over every vector of 27 natural exponents under
+the stated caps and with total at least 24. It checks 189 finite
+transition inequalities, then composes the 27 prefix inequalities
+for an arbitrary vector. The sum coordinate saturates at 24, so
+the proof covers totals greater than 24 directly. All seven axiom
+closures are standard-three only; compilation uses default budgets.
+This verifies universal product bounds, rather than just the seven
+displayed numerical comparisons. The original-cover-to-exponent
+and actual-guard bridges remain as specified above.
+
+## Different actual top labels share the same divisor capacity
+
+Let M_top be the set of all m for which 9qm is an actual original.
+It is closed under taking divisors. For a composite d with
+M_d={m in M_top:d|m} nonempty, d itself belongs to M_top.
+Every t in M_d supplies both actual labels 9t and 9qt. These two
+inventories are disjoint because all t are prime to q. Their union
+has 2|M_d| members. Excluding 9d once puts every remaining literal
+phase into the same actual R_d. Thus the PC45 counting argument gives
+
+$$
+|M_d|\le |R_d|.
+\tag{PC50}
+$$
+
+This is a joint stock constraint, rather than a separate allowance
+for every maximal original. In particular, for any finite list of
+actual top cofactors m_j sharing d,
+
+$$
+\left|\bigcup_j\{t:d\mid t,\ t\mid m_j\}\right|\le |R_d|.
+\tag{PC51}
+$$
+
+The union is contained in M_d. For two such cofactors, its exact
+cardinality is
+
+$$
+\tau(m_1/d)+\tau(m_2/d)
+ -\tau(\gcd(m_1,m_2)/d)\le |R_d|.
+\tag{PC52}
+$$
+
+Indeed, division by d identifies each set with the divisors of
+m_j/d, and their intersection with the divisors of
+gcd(m_1/d,m_2/d)=gcd(m_1,m_2)/d. All these labels are supplied by
+actual originals; no label at the least common multiple is asserted.
+
+For example, the two exponent vectors
+m_1=7^13*11^12 and m_2=7^13*13^11 separately satisfy PC34 and PC46.
+The program checks all 179 and 165 relevant composite divisors,
+respectively, together with their square-guard bounds. But they
+cannot both be actual top cofactors in this family. At d=49,
+
+$$
+\tau(m_1/49)+\tau(m_2/49)-\tau(\gcd(m_1,m_2)/49)
+ =156+144-12=288>205\ge |R_{49}|.
+\tag{PC53}
+$$
+
+Separate feasibility here means only feasibility in the exponent
+relaxation. Neither vector has been supplied with actual phases.
+The conclusion is that their simultaneous occurrence is excluded
+even at this necessary counting level.
+
+A further scoped transient Lean check verifies the disjoint doubled
+inventory with its excluded base, finite fiber bound, divisor-set
+intersection and union, the exact 288 count, the contradiction with
+205, and the second vector's individual checks. The default-budget
+build exits successfully and all nine axiom closures are contained
+in the standard three. The supplier of these inventories is the same
+explicit actual-source bridge used in PC45; this does not turn a
+numerical relaxation into a phase construction or settle the selector.
