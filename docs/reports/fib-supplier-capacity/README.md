@@ -1,5 +1,11 @@
 # Full-source supplier capacity at h = 15
 
+[Actual-source Read memory witnesses](read_memory.md) supplies TM68's complete
+six-call c/u/v tables and actual-tree certificate:99 states at H=60 and98 at
+H=61,62,63, all56 literal INITIAL outputs, with accepted-pre-first-rho material
+18,21,22,23 reported separately. The all-controller lower61 is retained;
+exact state minima and paid/physical memory correspondence remain unresolved.
+
 These finite mathematical artifacts support [TM60.3–5](../../develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM60-T3): the conditional authentic supplier alphabet has minimum size four at H = 60, 61, 62, 63 under the original TM30/TM58/TM59 contract.
 
 [h15_joint_cover.py](h15_joint_cover.py) uses Python 3.9 or newer and only the standard library. From any working directory, run:
