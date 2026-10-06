@@ -844,3 +844,98 @@ $\sqrt A$; the core allowance tends to a finite constant. Thus this finite
 application supplies no unbounded signed-tail estimate or RH proof.
 It adds no Lean result and does not certify the cited papers' proofs or
 computations.
+
+## Combining finite zero verification with the classical zero-free region
+
+Keep the same selected Robin source, clock $A=\log N$, $L=\log A$,
+normalization $T_A=\sqrt A L$, effective core and verified height
+$H_0=3\cdot10^{12}$. This application controls the complete unverified
+zero contribution with two disjoint height ranges. It uses published
+inputs and symbolic outward comparisons; no zero or CA-profile
+computation is repeated, and no originality or Lean result is claimed.
+
+### The additional published input
+
+[Johnston–Yang, arXiv:2204.01980v2](https://arxiv.org/pdf/2204.01980v2),
+Lemma 2.7, printed p.5, states that for $|t|\ge2$ there are no zeta
+zeros in
+
+$$
+\beta\ge1-\frac1{R_0\log|t|},\qquad R_0=5.5666305.
+\tag{Z1}
+$$
+
+Its footnote attributes the classical region to Mossinghoff–Trudgian
+and the improved constant to the higher verified height. The versioned
+PDF is the one identified in the [existing supplier note](../Weil/johnstonyang2022pnt.md),
+SHA-256 `565993a6def48b237a68a92acba604f2c42f99165e0e71e390f8e21a313b74b2`.
+The additional lemma and footnote were directly inspected; the external
+zero-free proof is not independently certified here. The existing
+Platt–Trudgian input supplies the finite verification, rather than a
+global RH assumption.
+
+Set $U=10^{16}$. For every actual zero with
+$H_0<\gamma\le U$, (Z1), $R_0<6$, $\log U<40$, and the
+multiplicity-preserving functional-equation reflection give
+
+$$
+\frac1{240}<\beta<1-\frac1{240}.
+$$
+
+For $A>1$, convexity on this interval therefore gives
+
+$$
+A^{\beta-1}+A^{-\beta}
+\le A^{-1/240}+A^{-239/240}=:B(A).
+\tag{Z2}
+$$
+
+Apply this to the same reflected pairs in Polak's (5.12)–(5.14).
+The middle range keeps the improved factor $B(A)$; the range
+$\gamma>U$ keeps the original $1+A^{-1}$ factor. Zeros on the
+critical line, off-line quartets and every multiplicity are included.
+With the same positive-ordinate tails $S_j$, the complete high-zero
+allowance satisfies
+
+$$
+\begin{aligned}
+C_{\rm high}(A)&\le C_{\rm mid}(A)+C_{>U}(A),\\
+C_{\rm mid}(A)&\le\sqrt A\,B(A)
+\left[(1+1/L)S_2(H_0)+2(1/L+2/L^2)S_3(H_0)\right],\\
+C_{>U}(A)&\le\sqrt A(1+A^{-1})
+\left[(1+1/L)S_2(U)+2(1/L+2/L^2)S_3(U)\right].
+\end{aligned}
+\tag{Z3}
+$$
+
+The actual ranges in (Z3) are disjoint. The middle-range upper bound
+uses the larger full tail $S_j(H_0)$ as a positive envelope; this does
+not omit any zero or identify that envelope with the middle-range sum.
+Conjugation and reflection carry exactly the same factors as (F2).
+
+### Pay the entire range above the second height
+
+Reuse the full parameter formula in Polak's (5.13), obtained from the
+Hasanalizade–Shen–Wong zero-count bound. With
+$(a,b,c)=(0.1038,0.2573,9.3675)$, it gives at $U$
+
+$$
+S_2(U)\le\frac{\log(U/(2\pi))+1}{2\pi U}
++\frac{2a\log U+a/2+2b\log\log U+b/(2\log U)+2c}{U^2}.
+\tag{Z4}
+$$
+
+The elementary bounds $2\pi>6$, $32<\log U<40$,
+$\log\log U<4$, $a<1/9$, $b<1/3$ and $c<10$ give
+
+$$
+S_2(U)<\frac{41}{6U}+\frac{32}{U^2}<7\cdot10^{-16},
+\qquad
+S_3(U)\le S_2(U)/U<7\cdot10^{-32}.
+\tag{Z5}
+$$
+
+Here $2<\log10<5/2$ supplies the logarithmic interval, and $e^4>54$
+supplies the iterated-logarithm bound. These are scalar outward
+comparisons of the published formula, not a new zero count or a
+numerical reconstruction of the source's directed constants.
