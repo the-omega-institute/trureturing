@@ -1,12 +1,66 @@
 using System.Text;
-using Xunit.Abstractions;
+using System.Text.Json;
 
 namespace StrataLint.Tests;
 
-public sealed class ScopedCostProbe(ITestOutputHelper output)
+public sealed class ScopedCostProbe
 {
-    [Fact]
-    public void InstalledSourceSelectionHasMatchingProjectionAndMeasuredReadCost()
+    private sealed record Result(JsonElement[] Rows, JsonElement Input);
+    private static readonly Lazy<Result> Measurement = new(ReadMeasurements);
+
+    [Theory]
+    [MemberData(nameof(CostRows))]
+    public void InstalledSourceCost(int row, string mode, long ledgerRecords, long casFiles,
+        long bodyBytes, long allocatedBytes, double seconds, long? peakRssBytes,
+        long bodyFiles, long casBytes, long searchPaths)
+    {
+        Assert.InRange(row, 1, 6);
+        Assert.Contains(mode, new[] { "full-reference", "scoped", "search-paths", "search-text" });
+        Assert.True(double.IsFinite(seconds) && seconds >= 0);
+        Assert.True(allocatedBytes >= 0 && bodyBytes >= 0 && bodyFiles >= 0 && casBytes >= 0 && searchPaths >= 0);
+        Assert.True(peakRssBytes is null or > 0);
+        if (mode == "scoped") Assert.Equal(1, ledgerRecords);
+        if (mode.StartsWith("search-", StringComparison.Ordinal)) Assert.Equal(0, ledgerRecords);
+        Assert.Equal(mode == "search-text" ? 1 : 0, casFiles);
+    }
+
+    [Theory]
+    [MemberData(nameof(InputRows))]
+    public void InstalledSourceInput(string field, int part, string value)
+    {
+        Assert.True(part >= 0);
+        Assert.False(string.IsNullOrWhiteSpace(field));
+        Assert.False(string.IsNullOrWhiteSpace(value));
+    }
+
+    public static IEnumerable<object?[]> CostRows()
+    {
+        var index = 0;
+        foreach (var row in Measurement.Value.Rows)
+            yield return [++index, row.GetProperty("mode").GetString(), row.GetProperty("LedgerRecords").GetInt64(),
+                row.GetProperty("CasFiles").GetInt64(), row.GetProperty("BodyBytes").GetInt64(),
+                row.GetProperty("allocated").GetInt64(), row.GetProperty("seconds").GetDouble(),
+                row.GetProperty("peak_rss_bytes").ValueKind == JsonValueKind.Null ? null : row.GetProperty("peak_rss_bytes").GetInt64(),
+                row.GetProperty("BodyFiles").GetInt64(), row.GetProperty("CasBytes").GetInt64(), row.GetProperty("SearchPaths").GetInt64()];
+    }
+
+    public static IEnumerable<object?[]> InputRows()
+    {
+        foreach (var property in Measurement.Value.Input.EnumerateObject())
+        {
+            var value = property.Value.GetString()!;
+            for (var offset = 0; offset < value.Length; offset += 32)
+                yield return [property.Name, offset / 32, value.Substring(offset, Math.Min(32, value.Length - offset))];
+        }
+        foreach (var group in Measurement.Value.Rows.GroupBy(row => row.GetProperty("mode").GetString()))
+        {
+            var digest = group.First().GetProperty("digest").GetString()!;
+            yield return [group.Key + "_digest", 0, digest[..32]];
+            yield return [group.Key + "_digest", 1, digest[32..]];
+        }
+    }
+
+    private static Result ReadMeasurements()
     {
         var root = TestRepositoryLayout.FindRoot();
         var result = TestProcessRunner.Run("python3",
@@ -15,9 +69,18 @@ public sealed class ScopedCostProbe(ITestOutputHelper output)
             root, TestBudgets.LeanProcessHangGuard, 1024 * 1024);
         var stdout = Encoding.UTF8.GetString(result.StandardOutput);
         var stderr = Encoding.UTF8.GetString(result.StandardError);
-        output.WriteLine(stdout);
         Assert.True(result.ExitCode == 0, stdout + stderr);
         Assert.Contains("SCOPED_COST_PROJECTION_MATCH target=true search=true ledger_reads_in_search=0 text_limit_cas_reads=1", stdout, StringComparison.Ordinal);
+        var lines = stdout.Split('\n');
+        var rows = lines.Where(line => line.StartsWith("SCOPED_COST ", StringComparison.Ordinal))
+            .Select(line => JsonDocument.Parse(line[12..]).RootElement.Clone()).ToArray();
+        Assert.Equal(6, rows.Length);
+        var inputLine = Assert.Single(lines, line => line.StartsWith("SCOPED_COST_INPUT ", StringComparison.Ordinal));
+        var input = JsonDocument.Parse(inputLine[18..]).RootElement.Clone();
+        Assert.Equal("mub-six-fourth-basis-theory", input.GetProperty("source").GetString());
+        Assert.Equal(input.GetProperty("atom").GetString(), input.GetProperty("cas_sha256").GetString());
+        Assert.Equal("###", input.GetProperty("text").GetString());
+        return new Result(rows, input);
     }
 
     private const string Probe = """"
