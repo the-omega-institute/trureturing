@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Estimation/DataProcessing/OrderedCoordinateHistoryInterpreter
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Estimation/DataProcessing/FiniteHistoryConditionalExpectation, mathlib/module/Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic]
+   anchors: [mathlib/module/Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic]
    utility: none
    digest: Adaptive read-once coordinate histories retain named dependent results and admit staged table interpretation. -/
 
