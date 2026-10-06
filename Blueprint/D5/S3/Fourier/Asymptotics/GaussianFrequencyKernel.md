@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The original Gaussian density controls the zero-frequency quotient in actual symmetric product L2 and its same-noise Bochner integral.
+The original Gaussian density controls the zero-frequency quotient and the logarithmic singular H in actual symmetric product L2.
 
 **Definition 1.1 (Actual weighted measure).**
 
@@ -324,7 +324,63 @@ $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \for
 
 *Commentary.*
 
-The pinned continuous-linear Bochner commutation theorem applies after the actual kernel quotient has been proved integrable. Its image is the explicit same-W quadratic quotient. This L2 identity does not assert a common pointwise version, the Ci normalization, singular-kernel membership or process convergence.
+The pinned continuous-linear Bochner commutation theorem applies after the actual kernel quotient has been proved integrable. Its image is the explicit same-W quadratic quotient. This L2 identity does not assert a common pointwise version, the Ci normalization or process convergence.
+
+**Theorem 1.24 (Two-sided logarithmic control).**
+
+$$\forall x \in Real,\; \forall hx \in 0 < x,\; \operatorname{log}\left(x\right)^{2} \le 16 \cdot \operatorname{rpow}\left(x, \frac{-1}{2}\right)+x^{2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.log_square_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* David Nualart and Giovanni Peccati (2005). *Central limit theorems for sequences of multiple stochastic integrals*. DOI: [10.1214/009117904000000621](https://doi.org/10.1214/009117904000000621). URL: <https://arxiv.org/pdf/math/0503598v1>.
+
+*Commentary.*
+
+For every positive x, log(x)^2 <= 16 x^(-1/2)+x^2. Below one, the reciprocal power bound controls the logarithmic singularity; above one, log(x) <= x controls the tail. This estimate is consumed by Gaussian logarithmic integrability.
+
+**Theorem 1.25 (Gaussian integrability at the singularity).**
+
+$$\forall b \in Real,\; \forall hb \in 0 < b,\; \operatorname{Integrable}\left((x:Real\mapsto \operatorname{log}\left(\operatorname{abs}\left(x\right)\right)^{2} \cdot \operatorname{exp}\left(-b \cdot x^{2}\right)), volume\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.log_square_gaussian_integrable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* David Nualart and Giovanni Peccati (2005). *Central limit theorems for sequences of multiple stochastic integrals*. DOI: [10.1214/009117904000000621](https://doi.org/10.1214/009117904000000621). URL: <https://arxiv.org/pdf/math/0503598v1>.
+
+*Commentary.*
+
+The actual function log(|x|)^2 exp(-b x^2) is Lebesgue integrable for every b>0. The previous bound is dominated by the pinned Gaussian power integrals with exponents -1/2 and 2 on the positive half-line; reflection covers the negative half-line. The assigned value at zero has no integral effect.
+
+**Theorem 1.26 (Logarithmic moment of the actual Gaussian law).**
+
+$$\forall v \in NNReal,\; \forall hv \in \operatorname{Not}\left(v = 0\right),\; \operatorname{Integrable}\left((x:Real\mapsto \operatorname{log}\left(\operatorname{abs}\left(x\right)\right)^{2}), \operatorname{gaussianReal}\left(0, v\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.gaussian_log_square_integrable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* David Nualart and Giovanni Peccati (2005). *Central limit theorems for sequences of multiple stochastic integrals*. DOI: [10.1214/009117904000000621](https://doi.org/10.1214/009117904000000621). URL: <https://arxiv.org/pdf/math/0503598v1>.
+
+*Commentary.*
+
+For every nonzero nonnegative variance v, log(|x|)^2 is integrable under gaussianReal(0,v). The Gaussian density identity directly consumes the proved weighted Lebesgue integrability. No logarithmic moment premise is supplied.
+
+**Theorem 1.27 (Original singular H in symmetric L2).**
+
+$$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \forall D \in Real,\; \exists H \in \operatorname{symmetricKernel}\left(\operatorname{spatialMeasure}\left(c, kappa\right)\right),\; \operatorname{AEEq}\left(\operatorname{coeFn}\left(\operatorname{val}\left(H\right)\right), (z:\operatorname{Prod}\left(Real, Real\right)\mapsto 1+2 \cdot D-2 \cdot \operatorname{log}\left(\frac{\operatorname{pi}\left(\right)}{2} \cdot \operatorname{abs}\left(\operatorname{fst}\left(z\right)-\operatorname{snd}\left(z\right)\right)\right)), \operatorname{prod}\left(\operatorname{spatialMeasure}\left(c, kappa\right), \operatorname{spatialMeasure}\left(c, kappa\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.singularKernel_exists` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* David Nualart and Giovanni Peccati (2005). *Central limit theorems for sequences of multiple stochastic integrals*. DOI: [10.1214/009117904000000621](https://doi.org/10.1214/009117904000000621). URL: <https://arxiv.org/pdf/math/0503598v1>.
+
+*Commentary.*
+
+For every real D and the actual nonnegative Gaussian coefficient c with positive kappa, there exists H in the actual symmetric product L2 space with representative 1+2D-2 log((pi/2)|x-y|). Apply D=D_w for the original H. The log-square moment is transported through the actual Gaussian coordinate-difference law and unnormalized mass, including c=0. Gaussian nullity of the scalar zero set justifies logarithmic multiplication; the spatial diagonal remains an arbitrary null-set representative. Symmetry follows from coordinate swap and absolute difference. This proves membership, not Ci/Euler normalization, H_s-H=K_s or any process limit.
 
 ## References
 
@@ -335,12 +391,16 @@ The pinned continuous-linear Bochner commutation theorem applies after the actua
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.gaussianFrequency_coe`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.gaussian_difference_law`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.gaussian_fourth`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.gaussian_log_square_integrable`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.log_square_bound`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.log_square_gaussian_integrable`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.quadraticFrequency`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.quadraticFrequency_representation`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.quotientFrequency`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.quotientFrequency_continuous`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.quotientFrequency_integrable`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.quotientFrequency_norm`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.singularKernel_exists`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.spatialMass`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.spatialMass_eq_integral`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.spatialMeasure`

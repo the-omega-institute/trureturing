@@ -20,6 +20,8 @@ internal sealed class GaussianFrequencyKernelDocument : IScribeDocumentDefinitio
     private static Formula Smul(Formula x, Formula y) => A("smul", x, y);
     private static Formula All(string n, Formula type, Formula body) => new Formula.BindMany(
         FormulaQuantifier.ForAll, [new Formula.BoundVariable(FormulaIdentifier.Create(n), type)], body);
+    private static Formula Exists(string n, Formula type, Formula body) => new Formula.BindMany(
+        FormulaQuantifier.Exists, [new Formula.BoundVariable(FormulaIdentifier.Create(n), type)], body);
     private static Formula Lam(string n, Formula type, Formula body) =>
         F.Seq(F.Open, I(n), F.Colon, type, F.Mapsto, F.Sp, body, F.Close);
     private static Formula And(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.And, y);
@@ -66,7 +68,7 @@ internal sealed class GaussianFrequencyKernelDocument : IScribeDocumentDefinitio
         Blocks(Paragraph(Text(prose))), name is "spatialMeasure" or "spatialMass" or "squareDifference" or "gaussianFrequency" or "quotientFrequency" or "quadraticFrequency" ? DescribeRole.Definition : DescribeRole.Theorem);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The original Gaussian density controls the zero-frequency quotient in actual symmetric product L2 and its same-noise Bochner integral.",
+        "The original Gaussian density controls the zero-frequency quotient and the logarithmic singular H in actual symmetric product L2.",
         H("Gaussian frequency integration"), Blocks(
         Entry("spatialMeasure", "Actual weighted measure", Params(Eq(Mu, A("withDensity", I("volume"),
             Lam("x", R, A("ofReal", Rho(I("x")))))), false),
@@ -126,5 +128,18 @@ internal sealed class GaussianFrequencyKernelDocument : IScribeDocumentDefinitio
         Entry("frequency_integral_sameNoise", "Bochner commutation on the original law", Noise(All("s", R, And(
             A("IntegrableOn", Lam("v", R, Smul(A("inv", I("v")), Z(I("v")))), Window, I("volume")),
             Eq(App(I2, SetIntegral(Lam("v", R, J(I("v"))))), SetIntegral(Lam("v", R, Smul(A("inv", I("v")), Z(I("v"))))))))),
-            "The pinned continuous-linear Bochner commutation theorem applies after the actual kernel quotient has been proved integrable. Its image is the explicit same-W quadratic quotient. This L2 identity does not assert a common pointwise version, the Ci normalization, singular-kernel membership or process convergence."))));
+            "The pinned continuous-linear Bochner commutation theorem applies after the actual kernel quotient has been proved integrable. Its image is the explicit same-W quadratic quotient. This L2 identity does not assert a common pointwise version, the Ci normalization or process convergence."),
+        Entry("log_square_bound", "Two-sided logarithmic control", F.Disp(All("x", R, All("hx", Lt(F.D(0), I("x")),
+            Le(Pow(A("log", I("x")), 2), Add(Multiply(F.Seq(F.D(1), F.D(6)), A("rpow", I("x"), Div(F.Seq(F.Minus, F.D(1)), F.D(2)))), Pow(I("x"), 2)))))),
+            "For every positive x, log(x)^2 <= 16 x^(-1/2)+x^2. Below one, the reciprocal power bound controls the logarithmic singularity; above one, log(x) <= x controls the tail. This estimate is consumed by Gaussian logarithmic integrability."),
+        Entry("log_square_gaussian_integrable", "Gaussian integrability at the singularity", F.Disp(All("b", R, All("hb", Lt(F.D(0), I("b")),
+            A("Integrable", Lam("x", R, Multiply(Pow(A("log", A("abs", I("x"))), 2), A("exp", F.Seq(F.Minus, Multiply(I("b"), Pow(I("x"), 2)))))), I("volume"))))),
+            "The actual function log(|x|)^2 exp(-b x^2) is Lebesgue integrable for every b>0. The previous bound is dominated by the pinned Gaussian power integrals with exponents -1/2 and 2 on the positive half-line; reflection covers the negative half-line. The assigned value at zero has no integral effect."),
+        Entry("gaussian_log_square_integrable", "Logarithmic moment of the actual Gaussian law", F.Disp(All("v", I("NNReal"), All("hv", A("Not", Eq(I("v"), F.D(0))),
+            A("Integrable", Lam("x", R, Pow(A("log", A("abs", I("x"))), 2)), A("gaussianReal", F.D(0), I("v")))))),
+            "For every nonzero nonnegative variance v, log(|x|)^2 is integrable under gaussianReal(0,v). The Gaussian density identity directly consumes the proved weighted Lebesgue integrability. No logarithmic moment premise is supplied."),
+        Entry("singularKernel_exists", "Original singular H in symmetric L2", Params(All("D", R,
+            Exists("H", A("symmetricKernel", Mu), A("AEEq", A("coeFn", A("val", I("H"))),
+                Lam("z", Pair, Sub(Add(F.D(1), Multiply(F.D(2), I("D"))), Multiply(F.D(2), A("log", Multiply(Omega, A("abs", Diff)))))), Prod)))),
+            "For every real D and the actual nonnegative Gaussian coefficient c with positive kappa, there exists H in the actual symmetric product L2 space with representative 1+2D-2 log((pi/2)|x-y|). Apply D=D_w for the original H. The log-square moment is transported through the actual Gaussian coordinate-difference law and unnormalized mass, including c=0. Gaussian nullity of the scalar zero set justifies logarithmic multiplication; the spatial diagonal remains an arbitrary null-set representative. Symmetry follows from coordinate swap and absolute difference. This proves membership, not Ci/Euler normalization, H_s-H=K_s or any process limit."))));
 }

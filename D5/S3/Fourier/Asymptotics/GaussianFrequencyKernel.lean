@@ -4,13 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Gaussian-weighted cosine kernels have an integrable continuous same-noise quotient. -/
+   digest: Gaussian cosine quotients are Bochner integrable and the logarithmic singular kernel belongs to symmetric L2. -/
 
 import D5.S3.Fourier.Asymptotics.SameNoiseSecondChaos
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.MeasureTheory.Measure.WithDensityFinite
-open MeasureTheory ProbabilityTheory Filter
+import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+open MeasureTheory MeasureTheory.Measure ProbabilityTheory Filter Set
 open scoped ENNReal NNReal RealInnerProductSpace Topology
 noncomputable section
 namespace D5.S3.Fourier.Asymptotics.GaussianFrequencyKernel
@@ -329,4 +330,108 @@ theorem frequency_integral_sameNoise (s : ℝ) :
     exact ae_of_all _ he
 
 end Frequency
+theorem log_square_bound (x : ℝ) (hx : 0 < x) :
+    (Real.log x)^2 ≤ 16 * x ^ (-1/2 : ℝ) + x^2 := by
+  by_cases h1 : x ≤ 1
+  · have hl : Real.log x ≤ 0 := Real.log_nonpos hx.le h1
+    have h := Real.log_le_rpow_div (inv_nonneg.mpr hx.le) (by norm_num : (0 : ℝ) < 1/4)
+    rw [Real.log_inv, ← Real.rpow_neg_eq_inv_rpow] at h
+    have hp : 0 ≤ x ^ (-1/4 : ℝ) := Real.rpow_nonneg hx.le _
+    have he : (x ^ (-1/4 : ℝ))^2 = x ^ (-1/2 : ℝ) := by
+      rw [← Real.rpow_natCast, ← Real.rpow_mul hx.le]; norm_num
+    have hb : (Real.log x)^2 ≤ 16 * (x ^ (-1/4 : ℝ))^2 := by
+      norm_num at h; nlinarith
+    rw [he] at hb
+    nlinarith [sq_nonneg x]
+  · have hl : 0 ≤ Real.log x := Real.log_nonneg (le_of_not_ge h1)
+    have hb := Real.log_le_sub_one_of_pos hx
+    have hp : 0 ≤ x ^ (-1/2 : ℝ) := Real.rpow_nonneg hx.le _
+    nlinarith
+
+theorem log_square_gaussian_integrable (b : ℝ) (hb : 0 < b) :
+    Integrable (fun x : ℝ => (Real.log |x|)^2 * Real.exp (-b*x^2)) := by
+  have hi : IntegrableOn (fun x : ℝ => (Real.log |x|)^2 * Real.exp (-b*x^2)) (Ioi 0) := by
+    have hmaj := ((integrableOn_rpow_mul_exp_neg_mul_sq hb
+      (by norm_num : (-1 : ℝ) < -1/2)).const_mul 16).add
+      (integrableOn_rpow_mul_exp_neg_mul_sq hb (by norm_num : (-1 : ℝ) < 2))
+    apply hmaj.mono' (by fun_prop)
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
+    rw [Real.norm_eq_abs, abs_of_nonneg (by positivity)]
+    rw [abs_of_pos hx]
+    dsimp only [Pi.add_apply]
+    rw [Real.rpow_two]
+    have H := log_square_bound x hx
+    nlinarith [Real.exp_pos (-b*x^2)]
+  rw [← integrableOn_univ, ← @Iio_union_Ici _ _ (0 : ℝ), integrableOn_union,
+    integrableOn_Ici_iff_integrableOn_Ioi]
+  refine ⟨?_, hi⟩
+  rw [← (Measure.measurePreserving_neg (volume : Measure ℝ)).integrableOn_comp_preimage
+      (Homeomorph.neg ℝ).measurableEmbedding]
+  simpa only [Function.comp_def, abs_neg, neg_sq, neg_preimage, neg_Iio, neg_zero] using hi
+
+theorem gaussian_log_square_integrable (v : ℝ≥0) (hv : v ≠ 0) :
+    Integrable (fun x : ℝ => (Real.log |x|)^2) (gaussianReal 0 v) := by
+  rw [gaussianReal_of_var_ne_zero 0 hv]
+  apply (integrable_withDensity_iff_integrable_smul' (μ := volume) (measurable_gaussianPDF 0 v)
+    (ae_of_all _ (fun x => ENNReal.ofReal_lt_top))).mpr
+  have hvpos : 0 < (v : ℝ) := NNReal.coe_pos.mpr (pos_iff_ne_zero.mpr hv)
+  have h := (log_square_gaussian_integrable (1/(2*(v : ℝ))) (by positivity)).const_mul
+    (Real.sqrt (2 * Real.pi * (v : ℝ)))⁻¹
+  apply h.congr
+  filter_upwards [] with x
+  simp only [gaussianPDF]
+  rw [ENNReal.toReal_ofReal (gaussianPDFReal_nonneg 0 v x)]
+  simp only [smul_eq_mul, gaussianPDFReal, sub_zero]
+  rw [show -(1/(2*(v : ℝ)))*x^2 = -(x^2)/(2*(v : ℝ)) by ring]
+  ring
+
+
+theorem singularKernel_exists (c κ : ℝ) (hc : 0 ≤ c) (hκ : 0 < κ) (D : ℝ) :
+    letI := spatialMeasure_finite c κ hc hκ
+    ∃ H : symmetricKernel (spatialMeasure c κ),
+      H.val =ᵐ[(spatialMeasure c κ).prod (spatialMeasure c κ)]
+        (fun z : ℝ × ℝ => 1+2*D-2*Real.log ((Real.pi/2)*|z.1-z.2|)) := by
+  letI := spatialMeasure_finite c κ hc hκ
+  let v : ℝ≥0 := (1/κ).toNNReal
+  have hv : v+v ≠ 0 := by
+    have : 0 < v := Real.toNNReal_pos.mpr (by positivity)
+    positivity
+  let ν := gaussianReal 0 (v+v)
+  letI : NullSingletonClass ν := nullSingletonClass_gaussianReal hv
+  have hlog : MemLp (fun x : ℝ => Real.log |x|) 2 ν :=
+    (memLp_two_iff_integrable_sq (Real.measurable_log.comp measurable_abs).aestronglyMeasurable).mpr (gaussian_log_square_integrable (v+v) hv)
+  have hm : MemLp (fun x : ℝ => 1+2*D-2*Real.log ((Real.pi/2)*|x|)) 2 ν := by
+    have H := (memLp_const (1+2*D-2*Real.log (Real.pi/2)) (p := 2) (μ := ν)).sub
+      (hlog.const_mul 2)
+    apply H.ae_eq
+    filter_upwards [Measure.ae_ne ν 0] with x hx
+    simp only [Pi.sub_apply]
+    rw [Real.log_mul (by positivity : Real.pi/2 ≠ 0) (abs_ne_zero.mpr hx)]
+    ring
+  have hmprod : MemLp (fun z : ℝ × ℝ =>
+      1+2*D-2*Real.log ((Real.pi/2)*|z.1-z.2|)) 2
+      ((gaussianReal 0 v).prod (gaussianReal 0 v)) := by
+    rw [show ν = ((gaussianReal 0 v).prod (gaussianReal 0 v)).map
+      (fun z : ℝ × ℝ => z.1-z.2) by exact (gaussian_difference_law v).symm] at hm
+    exact hm.comp_of_map (by fun_prop)
+  have hmw : MemLp (fun z : ℝ × ℝ =>
+      1+2*D-2*Real.log ((Real.pi/2)*|z.1-z.2|)) 2
+      ((spatialMeasure c κ).prod (spatialMeasure c κ)) := by
+    rw [spatialMeasure_normalized c κ hc hκ, Measure.prod_smul_left, Measure.prod_smul_right]
+    exact (hmprod.smul_measure (by simp)).smul_measure (by simp)
+  let h : Lp ℝ 2 ((spatialMeasure c κ).prod (spatialMeasure c κ)) := hmw.toLp _
+  have he : h =ᵐ[(spatialMeasure c κ).prod (spatialMeasure c κ)]
+      (fun z : ℝ × ℝ => 1+2*D-2*Real.log ((Real.pi/2)*|z.1-z.2|)) := hmw.coeFn_toLp
+  have hsym : h ∈ symmetricKernel (spatialMeasure c κ) := by
+    change kernelFlip (spatialMeasure c κ) h - h = 0
+    apply sub_eq_zero.mpr
+    apply Lp.ext
+    have hs := (measurePreserving_swap (μ := spatialMeasure c κ) (ν := spatialMeasure c κ)).quasiMeasurePreserving.ae_eq he
+    have hf := Lp.coeFn_compMeasurePreserving h
+      (measurePreserving_swap (μ := spatialMeasure c κ) (ν := spatialMeasure c κ))
+    filter_upwards [hf, hs, he] with z hz hswap hrep
+    change h (Prod.swap z) = 1+2*D-2*Real.log ((Real.pi/2)*|z.2-z.1|) at hswap
+    exact hz.trans (hswap.trans (by rw [abs_sub_comm]; exact hrep.symm))
+  exact ⟨⟨h, hsym⟩, he⟩
+
 end D5.S3.Fourier.Asymptotics.GaussianFrequencyKernel
