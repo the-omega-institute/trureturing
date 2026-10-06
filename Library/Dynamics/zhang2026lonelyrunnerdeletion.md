@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.2608.13599
 url: https://arxiv.org/abs/2608.13599v2
 claim: "Question 2.11 asks whether LR([n-1] minus {r}) is at least 1/(n-1) for every n and r, with equality only for r=n-1 (apart from the n=3 symmetry)."
 strata_touched:
-  - D5/S1/Phase/LonelyRunnerDeletion
+  - D5/S1/Phase/LonelyRunnerDeletion/OneDeletion
 license: citation-only
 triage: anchor
 ---

@@ -5,7 +5,7 @@ doi: 10.48550/arXiv.2608.13599
 url: https://arxiv.org/abs/2608.13599v2
 triage: theorem
 motivation_gids:
-  - D5/S1/Phase/LonelyRunnerDeletion
+  - D5/S1/Phase/LonelyRunnerDeletion/OneDeletion
 ---
 
 # Zhang Question 2.11: one-deletion Lonely Runner values
@@ -24,12 +24,15 @@ for every (n) and (r\in[n-1]), and whether equality can occur only when
 (r=n-1).  For (n=3), deleting either speed leaves a singleton and both
 choices attain equality; the formal statement records that boundary case.
 
-## Gap and route
+## Gap
 
 The paper proves selected deletion values but leaves the all-(n,r) family as
 Question 2.11.  The formal proof writes (N=n-1), defines the Lonely Runner
 value as the supremum over real times of the nearest-integer distance, and
 uses explicit rational times.  The endpoint (r=N) is sharp at time (1/N).
+
+## Route
+
 For (r>N/2), time (1/r) gives a strict lower bound.  For (2r\le N),
 an explicitly constructed (q) with (N+r<q<2N), together with an inverse
 of (r\pmod q), forces every retained residue away from both endpoints.

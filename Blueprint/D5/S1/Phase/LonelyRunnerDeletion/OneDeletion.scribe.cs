@@ -2,14 +2,14 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Phase;
+namespace StrataLint.Scribe.Blueprint.D5.S1.Phase.LonelyRunnerDeletion;
 
 internal sealed class LonelyRunnerDeletionDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
         "D5/S1/Phase/LonelyRunnerDeletion/OneDeletion.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/zhang2026lonelyrunnerdeletion");
+        LibraryNoteRef.Create("D5/L/Dynamics/zhang2026lonelyrunnerdeletion");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Zhang's one-deletion Lonely Runner family has the universal 1/N bound and the exact equality cases.",
