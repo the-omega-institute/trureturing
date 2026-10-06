@@ -67,7 +67,10 @@ endpoints. Its improving comparison cannot be used at that source by
 changing the class label or selecting another CA integer.
 
 This excludes that particular supplier on the eligible source class;
-it does not prove a Robin sign on CA2 or settle the remaining small
-support cases. A quantitative comparison on CA3 and the reduction to
+it does not prove a Robin sign on CA2. For the selected counterexample-level
+global maximizer, the linked Kalyabin note separately excludes small
+supports by the existing seven-smooth theorem and Axler valuation stop,
+giving $k\ge6$; this does not extend Wu's CA3 starting domain.
+A quantitative comparison on CA3 and the reduction to
 CA2 do not estimate the selected source's signed prime-error remainder.
 The source's finite tables and checks are cited rather than rerun.
