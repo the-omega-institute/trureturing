@@ -5887,3 +5887,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 独立小模块实际导入此前已接受的窄零锥重构基底；新证明正文真实 exit 0、零错误、零警告，三个新目标的公理闭包仅含 propext、Classical.choice、Quot.sound。新源与实际编译快照一致，3071 字节完整证明尾与候选逐字一致；实际导入的基底源码、olean 及此前 82 项标准公理验收再次核对，43 项绑定工件独立验证一致。验收范围为完整导入消费者的三个新目标。
 
 固定来源沿用 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a 与此前原 Lorentz／边界构造。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。这里的唯一性包含同一 F 的边界作用；仅由给定共轭或原同伦类推出最终唯一性，以及从原有限体积内部构造同一 F 与交比性质，仍须完成。完整 Mostow–Prasad 与官方验收未完成。
+
+
+### 由原稠密吸引点得到仅依赖完整给定共轭的唯一性
+
+消费仓内原稠密吸引点中心化子定理与原忠实 NullSphere 边界表示。三个原零框架点内部给出避开任意两个原边界点的见证；原吸引点稠密性由实际原表示 ρ 的迭代趋近性质定义。边界中心化子平凡随后通过原边界作用忠实性转回完整原 H3 等距群，包含定向反转。
+
+同一完整指定群同构 d 的任意两个原等距共轭变换 e、f，只要分别对所有原群元素满足原共轭等式，就有 e = f。此唯一性无额外的同一 F 边界作用条件。结合此前同一原 F 的交比重构与实际等变性，得到唯一原等距共轭变换的存在；原群与目标群的 universes 独立。
+
+完整独立消费者实际导入已接受的原交比共轭模块与仓内原中心化子定理，真实 exit 0、零错误、零警告；三个新目标的公理闭包仅含 propext、Classical.choice、Quot.sound。实际源码、编译快照、完整派生证明尾、生成 olean、终态及导入基底一致；仓内原定理的实际源码与选中的项目 olean 也逐项绑定核对，27 项工件独立验证通过。验收范围为完整新消费者及其三个新目标。
+
+来源为仓内 D5.S3.Geometry.MostowPrasadRigidity 的原动力学／中心化子定理，此前已接受的原 Lorentz／边界构造，以及固定上游 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a。proof_shape: bind-only，admission_basis: none。本项为 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。原有限体积推出吸引点稠密性、同一实际 F 及交比保持仍待内部证明；这些中间输入不升为完整 Mostow 的新前提。原同伦类的完整存在唯一性、完整 Mostow–Prasad 与官方验收未完成。
