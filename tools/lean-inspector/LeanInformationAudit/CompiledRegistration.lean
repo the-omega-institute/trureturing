@@ -5,10 +5,6 @@ import LeanInformationAudit.BindingWire
 namespace LeanInformationAudit.CompiledRegistration
 open Lean TemplateAudit Contract
 
-private def witnessBridge :=
-  `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessPrimitiveRealization
-private def witnessArena :=
-  `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessArena
 private def objectArena := `D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 private def lawArena := `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena
 private def signature := `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature
@@ -68,22 +64,6 @@ def validateBinding (find : Name → Option ConstantInfo) (input : RegistrationI
   if let some source := input.realizationSource.filter (fun _ => !entry.sourceBound) then
     unless (← constant find source).isTheorem do
       throw <| IO.userError s!"IE-C006 StatementProofMismatch: {entry.theoremName}"
-  unless obligations.witnessStatement == .evidence do
-    throw <| IO.userError "unclassified_form:dtr.witness_statement_identity"
-  unless obligations.witnessActual == .evidence do
-    throw <| IO.userError "unclassified_form:dtr.witness_readout_tie"
-  if !entry.sourceBound then
-    let type := (← constant find entry.realizationName).type
-    if type.isAppOfArity witnessBridge 3 then
-      let statement := type.getAppArgs[1]!
-      unless statement.isAppOfArity ``Not 1 && statement.appArg!.isConst do
-        throw <| IO.userError "unclassified_form:dtr.witness_statement_identity"
-      let .defnInfo claim ← constant find statement.appArg!.constName!
-        | throw <| IO.userError "unclassified_form:dtr.witness_statement_identity"
-      let target ← constant find entry.theoremName
-      unless claim.levelParams.isEmpty && target.levelParams.isEmpty &&
-          #[claim.type, claim.value, target.type].all Literal.closed do
-        throw <| IO.userError "unclassified_form:dtr.witness_statement_identity"
 
 def validateCore (find : Name → Option ConstantInfo) (entry : InformationRegistryEntry) : IO Unit := do
   let some obligations := entry.compiledMathematics
@@ -140,14 +120,6 @@ def validateFinite (find : Name → Option ConstantInfo) (entry : InformationReg
     (options : Options) : IO (Option String) := do
   let some obligations := entry.compiledMathematics
     | throw <| IO.userError s!"contract.cannot_decode:{entry.theoremName}:missing_compiled_obligations"
-  if obligations.witness then
-    if obligations.witnessPositive != .evidence then
-      return some "unclassified_form:dtr.witness_bridge_requires_positive_variation"
-    if obligations.witnessNegative != .evidence then
-      return some "unclassified_form:dtr.witness_bridge_requires_negative_variation"
-    if obligations.sensitivity != .evidence then
-      return some "unclassified_form:dtr.witness_bridge_requires_sensitivity"
-    return none
   if obligations.variation != .evidence then
     return some <| variationError entry
       (if obligations.variation == .absent then "missing_witness" else "invalid_witness")
@@ -157,9 +129,9 @@ def validateFinite (find : Name → Option ConstantInfo) (entry : InformationReg
     let info ← liftM (constant find entry.arenaName)
     let arena := mkConst entry.arenaName (info.levelParams.map Level.param)
     let type ← CompiledExpressions.head (← CompiledExpressions.typeShape arena)
-    let law := if type.isConstOf witnessArena || type.isConstOf objectArena then
+    let law := if type.isConstOf objectArena then
         mkApp (mkConst (type.constName!.str "toPrimitiveLawArena") type.constLevels!) arena else arena
-    unless type.isConstOf lawArena || type.isConstOf witnessArena || type.isConstOf objectArena do
+    unless type.isConstOf lawArena || type.isConstOf objectArena do
       throw <| IO.userError s!"contract.cannot_decode:{entry.theoremName}:finite_signature"
     let sig := Expr.proj lawArena 1 law
     let readouts ← CompiledExpressions.finiteIndices (.proj signature 1 sig)

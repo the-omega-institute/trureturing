@@ -437,8 +437,7 @@ private def extract (event : TemplateOccurrenceEvent) : CompareM Expr := do
   let info ← getConstInfo name
   let raw ← if info.type.isAppOfArity
       `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 ||
-      info.type.isAppOfArity escapeForwardBridge 3 ||
-      info.type.isAppOfArity escapeWitnessBridge 3 then
+      info.type.isAppOfArity escapeForwardBridge 3 then
     pure info.type.getAppArgs[2]!
   else if isRealizationType info.type then
     match info with
@@ -609,19 +608,6 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let exposed ← forwardActual event.key.theoremName name actual
     if !(← equalRaw descriptor exposed) && !(← matchesPlan context body exposed) then
       fail "unclassified_form:dtr.realization_mismatch"
-    if escape.bridgeKind == "witness" && event.compiledMathematics.isNone then
-      let rawActual := (← getConstInfo event.realizationName).type.getAppArgs[2]!
-      let witness := `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessArena
-      let .const _ arenaLevels := (← projectType event.arena).getAppFn
-        | fail "incomplete_closure:dtr.witness_arena_type"
-      let computed := mkApp (mkConst (witness.str "realization") arenaLevels) event.arena
-      let readout (value : Expr) : Expr :=
-        .proj `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization 0 value
-      let tied ← evidence (RegistrationGates.compiledQuery do
-        if ← Contract.CompiledExpressions.sameShape rawActual computed then return true
-        Contract.CompiledExpressions.sameShape (readout rawActual) (readout computed))
-      unless tied do
-        fail "unclassified_form:dtr.witness_readout_tie"
     let .ok (descriptorIdentity, descriptorWork) ← rawIdentity event.levelParams descriptor (← get).remaining
       | fail "incomplete_closure:dtr.descriptor_identity"
     debit descriptorWork

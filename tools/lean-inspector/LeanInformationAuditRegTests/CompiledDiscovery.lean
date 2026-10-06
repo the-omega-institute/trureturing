@@ -3,7 +3,6 @@ import LeanInformationAuditRegTests.ContractRoots
 import LeanInformationAuditRegTests.ContractPaths
 import LeanInformationAuditRegTests.ContractTypeCarrier
 import LeanInformationAuditRegTests.ContractFixtures
-import LeanInformationAuditRegTests.ContractWitnessFixture
 import LeanInformationAuditRegTests.CompiledCalculations
 import LeanInformationAuditRegTests.CompiledSeal
 import LeanInformationAudit.Contract.Discovery
@@ -24,8 +23,7 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
   let saved ← searchPathRef.get
   searchPathRef.set (fixturePath :: saved)
   try
-    let owners := #[`LeanInformationAuditRegTests.ContractFixtures,
-      `LeanInformationAuditRegTests.ContractWitnessFixture]
+    let owners := #[`LeanInformationAuditRegTests.ContractFixtures]
     for owner in owners do RawArtifacts.loadModule owner reader
     RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
     RawArtifacts.loadModule `LeanInformationAuditRegTests.Fixtures.TemplateBodies reader
@@ -90,7 +88,7 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
     let snapshot ← Contract.Discovery.discoverCompiled #[] owners context
       (fun owner => return (← store.getModule owner).constants)
       (CompiledAxioms.collectAxiomsShared context.find closures)
-    unless snapshot.registrations.size == 20 && snapshot.enrollments.size == 1 &&
+    unless snapshot.registrations.size == 16 && snapshot.enrollments.size == 1 &&
         snapshot.roots.size == 1 && snapshot.seals.size == 1 do
       throw <| IO.userError "compiled.discovery:input_inventory"
     let some (_, partialRow) := snapshot.registrations.find?
@@ -120,7 +118,7 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
       let target := definition.info.type.getAppArgs[1]!
       unless target.constLevels! == definition.info.levelParams.map Level.param do
         throw <| IO.userError s!"compiled.discovery:rigid_levels:{name}"
-    IO.println "[PASS] compiled discovery reads 20 registrations, 1 enrollment, 1 root and 1 seal"
+    IO.println "[PASS] compiled discovery reads 16 registrations, 1 enrollment, 1 root and 1 seal"
     let enrollmentContext ← TemplateAudit.CompiledEnrollment.Context.fromArtifacts store
       `LeanInformationAuditRegTests.Fixtures.TemplateBodies {} {}
     unless enrollmentContext.recursive `List.map && !enrollmentContext.recursive `Unit.fintype do
@@ -130,38 +128,6 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
         enrollment.constructors).run enrollmentContext
       unless plan.data.sourceBound && plan.data.slots.size == 3 do
         throw <| IO.userError "compiled.enrollment:source_plan"
-    let some (_, witnessRow) := snapshot.registrations.find?
-        (·.2.input.entry.unitName == `ContractTests.witness.unit)
-      | throw <| IO.userError "compiled.evidence:witness_input"
-    let entry := witnessRow.input.entry
-    let some claim := witnessRow.input.declaration
-      | throw <| IO.userError "compiled.evidence:witness_claim"
-    let some theoremInfo := context.find entry.theoremName
-      | throw <| IO.userError "compiled.evidence:witness_statement"
-    let event : TemplateOccurrenceEvent := {
-      key := {
-        root := entry.registrationModuleName,
-        registrationModule := entry.registrationModuleName,
-        theoremName := entry.theoremName, objectArena := entry.objectArenaName,
-        catalog := entry.catalogId }
-      unitName := entry.unitName, realizationName := entry.realizationName,
-      statement := theoremInfo.type, levelParams := theoremInfo.levelParams,
-      statementIdentity := "", arena := mkConst claim.arena,
-      registrationSource := "", registrationSourceIdentity := "",
-      compiledMathematics := entry.compiledMathematics }
-    let evidence ← (CompiledEvidence.checkEscapeRecord event claim.escapeInput).run
-      enrollmentContext.provenance
-    unless evidence.bridgeKind == "witness" && evidence.fromObject.any
-        (·.name == ``Nat) && evidence.continuation.any (·.kind == "open") do
-      throw <| IO.userError "compiled.evidence:witness_origin_and_residual"
-    let absent ← try
-      discard <| (CompiledEvidence.checkEscapeRecord event
-        { claim.escapeInput with fromObject := some (mkConst ``Bool) }).run
-          enrollmentContext.provenance
-      pure false
-    catch error => pure (error.toString == "unclassified_form:dtr.escape_from_absent")
-    unless absent do throw <| IO.userError "compiled.evidence:absent_origin_accepted"
-    IO.println "[PASS] compiled evidence: witness origin, unknown residual and absent-origin rejection"
     let cases : Array (Name × Option String) := #[
       (`LeanInformationAudit.Tests.DeclaredTemplates.symbolicPointwise, none),
       (`LeanInformationAudit.Tests.DeclaredTemplates.boolCases, none),

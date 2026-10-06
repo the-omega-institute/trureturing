@@ -69,7 +69,6 @@ run_meta do
     ``LeanInformationAudit.Contract.BoundTheoremUnit,
     ``LeanInformationAudit.Contract.Implementation.PartialSlotEvidence,
     ``LeanInformationAudit.Contract.Implementation.Correspondence,
-    ``LeanInformationAudit.Contract.Implementation.WitnessVariationEvidence,
     ``LeanInformationAudit.Contract.SealRow,
     ``LeanInformationAudit.Contract.SealCatalog,
     ``LeanInformationAudit.Contract.Seal]

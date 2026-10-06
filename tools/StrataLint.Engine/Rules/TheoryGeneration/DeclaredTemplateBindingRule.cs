@@ -43,8 +43,7 @@ internal sealed record InformationTemplateUniverse(
 
 internal static class DeclaredTemplateBindingRule
 {
-    // τ=0 owner ruling (2026-09-20): every DTR finding is an observation. The
-    // obligation collects registration state as warnings and never blocks admission.
+    // Every DTR finding observes registration state without blocking admission.
     internal static bool IsAffectedBy(DeltaRuleContext context) =>
         InformationTemplateSelection.ChangedProducers(context).Any();
 
@@ -65,8 +64,10 @@ internal static class DeclaredTemplateBindingRule
             var currentNames = LeanDeclarationSourceNames.Read(context.Current.Files[path].Text);
             var baseNames = context.Baseline.Files.TryGetValue(path, out var baseline)
                 ? LeanDeclarationSourceNames.Read(baseline.Text) : ImmutableDictionary<string, string>.Empty;
+            var refutationResult = RefutationResult(path, context.Current.Files[path].Text);
             var newTheorems = module.Declarations
                 .Where(declaration => IsPublicTheorem(declaration, currentNames)
+                    && declaration.Name != refutationResult
                     && !(baseNames.TryGetValue(declaration.Name, out var kind) && kind is "theorem" or "lemma"))
                 .Select(declaration => declaration.Name).Distinct().Order(StringComparer.Ordinal);
             foreach (var theorem in newTheorems)
@@ -101,6 +102,18 @@ internal static class DeclaredTemplateBindingRule
                 return [];
             }
         }
+    }
+
+    private static string? RefutationResult(RepoPath path, string source)
+    {
+        if (!RepositoryRules.TryHeader(source, out var header)
+            || !UtilitySyntax.TryParse(header.Utility, out var utility, out _)
+            || utility is not { BasisKind: UtilityBasisKind.Refutes, Result: { } result }
+            || result.ToTarget() is not Target.Formal target || target.Path != path)
+            return null;
+        // SL-031 independently checks the utility relation. This exemption names
+        // just its result; it does not exempt the module's other public theorems.
+        return InformationTemplateEvidence.ModuleForSource(path.Value) + "." + target.Declaration;
     }
 
     private static RuleFinding Finding(RepoPath path, InformationTemplateOccurrence occurrence)

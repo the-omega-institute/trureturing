@@ -108,14 +108,11 @@ private unsafe def occurrence (owner : Name) (input : RegistrationInput) : M Uni
   let identity := (if entry.sourceBound || sourceRecord.isSome then compactRawIdentity else rawStatementIdentity)
     info.levelParams info.type
   let statementIdentity := match identity with | .ok (identity, _) => identity | .error _ => ""
-  let bridgeType := (← CompiledRegistration.constant (state.store.constants[·]?) entry.realizationName).type
   let arenaInfo ← CompiledRegistration.constant (state.store.constants[·]?) entry.arenaName
   let (arenaType, _) ← CompiledExpressions.run (← expressionContext input.options)
     (CompiledExpressions.head arenaInfo.type)
   let objectDomain := arenaType.isConstOf `D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
-  let arenaName := if bridgeType.isAppOfArity
-      `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessPrimitiveRealization 3 ||
-      objectDomain then entry.arenaName else entry.canonicalObjectArenaName
+  let arenaName := if objectDomain then entry.arenaName else entry.canonicalObjectArenaName
   let event : TemplateOccurrenceEvent := {
     key := {
       root := owner, registrationModule := owner, theoremName := entry.theoremName
@@ -166,9 +163,6 @@ unsafe def register (owner : Name) (row : Decoder.CompanionInput) : M Unit := do
   if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization &&
       diagnostic.isSome then
     throw <| IO.userError s!"unclassified_form:dtr.forward_bridge_requires_sensitivity:{diagnostic.get!}"
-  if type.isAppOfArity
-      `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessPrimitiveRealization 3 then
-    if let some diagnostic := diagnostic then throw <| IO.userError diagnostic
   keepDiagnostic entry diagnostic
   modify fun state => { state with entries := state.entries.push entry }
   occurrence owner { input with entry }

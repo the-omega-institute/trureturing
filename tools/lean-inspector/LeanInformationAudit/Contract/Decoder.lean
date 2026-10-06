@@ -14,7 +14,6 @@ structure CompanionInput where
   bridge : Expr
   target : Expr
   variation : Option Expr
-  positive : Option Expr
   unit : Option Expr
 
 def liftLiteral {α : Type} [Monad m] [MonadLiftT IO m]
@@ -81,7 +80,7 @@ private def obligationState (find : Name → Option ConstantInfo) (e : Expr) :
 private def arenaReference (find : Name → Option ConstantInfo) (role : String) (e : Expr) : IO (Name × Expr) := do
   let head := (← referencedValue find e).consumeMData.getAppFn.constName?.getD .anonymous
   unless #[``Contract.ArenaRef.law, ``Contract.ArenaRef.finite, ``Contract.ArenaRef.object,
-      ``Contract.ArenaRef.witness, ``Contract.ArenaRef.source].contains head do
+      ``Contract.ArenaRef.source].contains head do
     throw <| IO.userError s!"contract.literal:arena:{role}"
   reference find role e.getAppArgs.back!
 
@@ -144,12 +143,11 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
   let implementation := (← referencedValue find fs[4]!).consumeMData
   let head := implementation.getAppFn.constName?.getD .anonymous
   unless #[``Contract.Implementation.legacy, ``Contract.Implementation.forward,
-      ``Contract.Implementation.witness, ``Contract.Implementation.source].contains head do
+      ``Contract.Implementation.source].contains head do
     throw <| IO.userError s!"contract.literal:implementation:nonliteral:{head}"
   let implementationArgs := implementation.getAppArgs
   let sourceBound := head == ``Contract.Implementation.source
-  let witness := head == ``Contract.Implementation.witness
-  let expectedArity := if sourceBound then 3 else if witness then 10 else 7
+  let expectedArity := if sourceBound then 3 else 7
   unless implementationArgs.size == expectedArity do
     throw <| IO.userError "contract.registration:implementation_arity"
   let bridgeField := implementationArgs[if sourceBound then 2 else 4]!
@@ -171,33 +169,20 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
   let descriptor ← optional find fs[7]!
   let primitives := if sourceBound then none else some
     implementationArgs[3]!
-  let positive := if witness then some implementationArgs[5]! else none
   let (unit, unitCorrespondence) ← if sourceBound then pure (none, true) else do
     let bound ← fields find ``Contract.BoundTheoremUnit implementationArgs.back! 3
     let value ← fields find ``Contract.Ref bound[0]! 1
     pure (some value[0]!, (← obligationState find bound[1]!) == .evidence &&
       (← obligationState find bound[2]!) == .evidence &&
-      (← obligationState find implementationArgs[if witness then 8 else 5]!) == .evidence)
-  let (variationState, variation, witnessPositive, witnessNegative) ← if witness then do
-    let parts ← fields find ``Contract.Implementation.WitnessVariationEvidence fs[8]! 2
-    let (positiveState, positiveInput) ← obligation find parts[0]!
-    let (negativeState, negativeInput) ← obligation find parts[1]!
-    pure (if positiveState == .evidence then negativeState else positiveState,
-      positiveInput.or negativeInput, positiveState, negativeState)
-  else do
-    let (state, value) ← obligation find fs[8]!
-    pure (state, value, .evidence, .evidence)
+      (← obligationState find implementationArgs[5]!) == .evidence)
+  let (variationState, variation) ← obligation find fs[8]!
   let (sensitivityState, sensitivity) ← obligation find fs[9]!
   let partialEvidence ← (← optional find fs[10]!).mapM fun e => do
     if sourceBound then throw <| IO.userError "contract.sensitivity:finite_slots_required"
     let values ← fields find ``Contract.Implementation.PartialSlotEvidence e 2
     let computation : CompiledExpressions.M (Array Bool × Array Bool) := do
       let arena := implementationArgs[1]!
-      let arenaType ← CompiledExpressions.head (← CompiledExpressions.typeShape arena)
-      let law := if witness then
-        mkApp (mkConst ((`D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessArena).str "toPrimitiveLawArena")
-          arenaType.getAppFn.constLevels!) arena else arena
-      let signature := Expr.proj ``PrimitiveLawArena 1 law
+      let signature := Expr.proj ``PrimitiveLawArena 1 arena
       let readouts ← CompiledExpressions.partialSlotStates values[0]!
         (.proj ``PrimitiveSignature 1 signature)
       let anchors ← CompiledExpressions.partialSlotStates values[1]!
@@ -214,8 +199,6 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
   let objectStage ← obligationState find correspondenceFields[1]!
   let correspondence := if stage == .evidence && objectStage == .evidence
     then .evidence else .unsupported
-  let witnessActual ← if witness then obligationState find implementationArgs[6]! else pure .evidence
-  let witnessStatement ← if witness then obligationState find implementationArgs[7]! else pure .evidence
   let entry : InformationRegistryEntry := {
     theoremName, unitName, arenaName, realizationName
     catalogId := if occurrence then catalog else .anonymous
@@ -226,11 +209,9 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
     variationWitness := variation.map Prod.fst |>.getD .anonymous
     sensitivityWitness := sensitivity.map Prod.fst |>.getD .anonymous
     compiledMathematics := some {
-      witness,
       correspondence := if unitCorrespondence && trusted then correspondence else .unsupported,
       bundleNonempty := ← obligationState find fs[6]!,
       variation := variationState, sensitivity := sensitivityState,
-      witnessPositive, witnessNegative, witnessActual, witnessStatement,
       partialReadouts := partialEvidence.map Prod.fst, partialAnchors := partialEvidence.map Prod.snd } }
   let declaration := if descriptor.isSome || selection.isSome || origin.isSome ||
       openContinuation || residual.isSome then some {
@@ -246,7 +227,7 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
     input := {
       entry, sourceText := source, options, suppliedPrimitives := primitives, declaration
       realizationSource }
-    generated, bridge, target := typeArgs[1]!, variation := variation.map Prod.snd, positive, unit }
+    generated, bridge, target := typeArgs[1]!, variation := variation.map Prod.snd, unit }
 
 private def compiledConstant (find : Name → Option ConstantInfo)
     (name : Name) : Except String ConstantInfo := do

@@ -42,15 +42,10 @@ inductive CompiledObligationState where
   deriving Inhabited, BEq
 
 structure CompiledMathematics where
-  witness : Bool := false
   correspondence : CompiledObligationState
   bundleNonempty : CompiledObligationState
   variation : CompiledObligationState
   sensitivity : CompiledObligationState
-  witnessPositive : CompiledObligationState := .evidence
-  witnessNegative : CompiledObligationState := .evidence
-  witnessActual : CompiledObligationState := .evidence
-  witnessStatement : CompiledObligationState := .evidence
   partialReadouts : Option (Array Bool) := none
   partialAnchors : Option (Array Bool) := none
   deriving Inhabited, BEq

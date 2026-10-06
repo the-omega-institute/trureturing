@@ -8,10 +8,6 @@ abbrev Q := RegistrationGates.QueryM
 private def fail [Monad m] [MonadLiftT IO m] (reason : String) : m α :=
   liftM (m := IO) (throw (IO.userError reason) : IO α)
 
-private def witnessArenaName :=
-  `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessArena
-private def witnessBridgeName :=
-  `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessPrimitiveRealization
 private def objectDomainArenaName :=
   `D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 
@@ -62,18 +58,15 @@ private structure NormalizedArena where
   original : Expr
   law : Expr
   finite : Expr
-  witness : Bool
   domain : Option Expr
 
 private def normalizeArena (arena : Expr) : Q NormalizedArena := do
   let type ← RegistrationGates.compiledQuery <|
     Contract.CompiledExpressions.head (← projectType arena)
-  let witness := type.isConstOf witnessArenaName
   let objectDomain := type.isConstOf objectDomainArenaName
-  let law ← if witness then recordApplication (witnessArenaName.str "toPrimitiveLawArena") arena
-    else if objectDomain then recordApplication (objectDomainArenaName.str "toPrimitiveLawArena") arena
+  let law ← if objectDomain then recordApplication (objectDomainArenaName.str "toPrimitiveLawArena") arena
     else pure arena
-  let finite ← if witness || objectDomain ||
+  let finite ← if objectDomain ||
       type.isConstOf `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena then
       recordApplication `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena law
     else if type.isConstOf `D5.S3.ConceptDynamics.InformationEscape.Arena then pure arena
@@ -81,28 +74,7 @@ private def normalizeArena (arena : Expr) : Q NormalizedArena := do
   let domain ← if objectDomain then
       some <$> recordApplication (objectDomainArenaName.str "Domain") arena
     else pure none
-  return { original := arena, law, finite, witness, domain }
-
-private def witnessStatement (arena statement : Expr) (theoremName : Name) : Q Name := do
-  let reject {α : Type} : Q α := fail "unclassified_form:dtr.witness_statement_identity"
-  unless statement.isAppOfArity ``Not 1 do reject
-  let .const claimName [] := statement.appArg! | reject
-  let .defnInfo claim ← getConstInfo claimName | reject
-  let .thmInfo result ← getConstInfo theoremName | reject
-  let closed := fun e : Expr => !e.hasFVar && !e.hasMVar && !e.hasLooseBVars
-  unless claim.levelParams.isEmpty && result.levelParams.isEmpty &&
-      #[claim.type, claim.value, result.type].all closed &&
-      (← sameShape claim.type (mkSort .zero)) do reject
-  let domain ← recordApplication (witnessArenaName.str "Domain") arena
-  let predicate ← recordApplication (witnessArenaName.str "predicate") arena
-  let universal := mkForall `d .default domain
-    (mkApp (predicate.liftLooseBVars 0 1) (.bvar 0))
-  unless (← sameShape (mkConst claimName) universal) &&
-      (← sameShape result.type (mkApp (mkConst ``Not) universal)) do reject
-  let axioms ← IO.mkRef ({} : CompiledAxioms.AxiomClosureState)
-  let closure ← CompiledAxioms.collectAxiomsShared (← read).view.find? axioms theoremName
-  unless closure.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do reject
-  return claimName
+  return { original := arena, law, finite, domain }
 
 /-- Proof-opaque syntax comes from compiled declaration types and the current
 lexical binder table. The calculator has no Environment or Meta operations. -/
@@ -121,13 +93,10 @@ into the finite seal closure. Both bridges retain the exact statement check. -/
 def escapeForwardBridge : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization
 
-def escapeWitnessBridge : Name := witnessBridgeName
-
 def bridgeKind (event : TemplateOccurrenceEvent) : Q String := do
   let type := (← getConstInfo event.realizationName).type
   return if type.isAppOfArity
       `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration 2 then "source-equivalence"
-    else if type.isAppOfArity escapeWitnessBridge 3 then "witness"
     else if type.isAppOfArity escapeForwardBridge 3 then "forward" else "legacy"
 
 /-- Only closed, zero-parameter Prop definitions occurring in the original
@@ -170,15 +139,7 @@ def statementContainsOrigin (statement origin : Expr) : Q Bool := do
 /-- Semantic inputs used outside template extraction must also bind evidence
 and its cache. These are names only; the content module is never imported here. -/
 def inspectionRoots (event : TemplateOccurrenceEvent) : Q (Array Name) := do
-  let mut roots ← statementDefinitions event.statement
-  if (← bridgeKind event) == "witness" then
-    roots := roots ++ event.arena.getUsedConstants
-    let type := (← getConstInfo event.realizationName).type
-    roots := roots ++ (← statementDefinitions type.getAppArgs[1]!)
-    let arena := witnessArenaName
-    roots := roots ++ (#["Domain", "predicate", "embed", "decision", "check", "signature",
-      "Law", "realization", "constantTrue", "toPrimitiveLawArena", "toArena"].map arena.str)
-    roots := roots ++ #[escapeWitnessBridge, escapeWitnessBridge.str "toTheoremUnit"]
+  let roots ← statementDefinitions event.statement
   return roots
 
 /-- Retain the inspected definitions and their repository data/type closure,
@@ -222,9 +183,6 @@ def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInp
     let continuation : Option EscapeContinuationIdentity :=
       if input.openContinuation then some { kind := "open" } else none
     return { bridgeKind := kind, continuation }
-  if kind == "witness" && event.compiledMathematics.isNone then
-    let type := (← getConstInfo event.realizationName).type
-    discard <| witnessStatement event.arena type.getAppArgs[1]! event.key.theoremName
   -- Structural registrations without escape slots do not consume a finite arena.
   if input.fromObject.isNone && input.continuation.isNone then
     let continuation := if input.openContinuation then
@@ -240,9 +198,7 @@ def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInp
     if origin.hasFVar || origin.hasMVar || origin.hasLooseBVars then
       fail "unclassified_form:dtr.escape_from_identity"
     let type ← projectType origin
-    let state ← if normalized.witness then
-        recordApplication (witnessArenaName.str "Domain") normalized.original
-      else match normalized.domain with
+    let state ← match normalized.domain with
         | some domain => pure domain
         | none => recordApplication `D5.S3.ConceptDynamics.InformationEscape.Arena.State arena
     let represented := if ← isType origin then origin else type
