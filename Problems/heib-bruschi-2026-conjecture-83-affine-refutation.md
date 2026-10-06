@@ -34,8 +34,9 @@ The paper uses the graphs to read off centers, derived and lower central series 
 for Lie algebras that arise in quantum dynamics. Conjecture 83 is its proposed converse to
 Conjecture 80 (a nonzero center forces a proper vertex subset with the ideal-graph-property):
 trivial center should force the graph to be strongly connected unless the algebra splits.
-`D5/S3/Quantum/Algebra/HeibBruschiCenterlessIdealGraphRefutation.result` shows that the
-converse fails already in dimension two, over every field.
+`D5/S3/Quantum/Algebra/HeibBruschiCenterlessIdealGraphRefutation.conjecture_fails` shows
+that the converse fails already in dimension two, over every field, and `result` refutes
+the conjecture as stated.
 
 ## Gap
 
