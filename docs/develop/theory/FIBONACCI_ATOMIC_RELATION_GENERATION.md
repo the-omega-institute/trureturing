@@ -66985,3 +66985,166 @@ I_\psi(x)=\sum_{n\in\mathcal W_z(x)}M_z(n)J_x^{\eta_z}(n)
 
 
 ## 追加锚（本行以下为增补区）
+
+## 436. 完整 primorial 绝对账的窗口无关成本与原生源尺度
+
+**定义 436.1（同一绝对账与源时钟）。** 保持 §§430–431 的同一实际常数
+$A>0,D>A,\mu_0>0$、$a=e^{-\gamma_E}>0$、$\Delta_\beta>0$，
+以及（LC.1）、（LC.4）–（LC.5）的
+$P_z,\theta_{P_z},C,\mathsf C_z,\mathsf L_z,X_z$。
+这里 $A$ 是核的固定常数；整数来源 $N$ 的时钟另记为
+$\Lambda=\log N$。
+复用（CP.7）证明中的经典第一 Mertens 供应及其同一常数：
+
+$$
+F(z)=\sum_{p\le z}\frac{\log p}{p},\qquad
+|F(z)-\log z|\le K_1=\log4+4,
+\qquad
+R_1=\sum_{m\ge2}\frac{\log m}{m(m-1)}<\infty,
+\qquad D_S=K_1+R_1.
+\tag{436.1}
+$$
+
+§431 的完整账上界及固定正窗口的精确阶直接复用；
+下面只补 $U\ge0$ 上的共同下界，不重新推导其上界。
+§432 的 $\mathsf C_P^{\rm sgn}$ 是另一份保留符号的账，
+不属于（LC.4）的 $\mathsf C_z$；本节不对它断言相同下界。
+
+**定理 436.2（窗口无关的完整账成本）。** 存在有限 $z_1\ge2$，
+使所有实数 $z\ge z_1$ 和所有实数 $U\ge0$ 同时满足
+
+$$
+\boxed{
+\mathsf C_z(U)\ge
+\frac{\Delta_\beta A}{192a}(\log z)^4.}
+\tag{436.2}
+$$
+
+因而对全部 $z\ge z_1$、$V>0$，包括任意随 $z$ 缩小的正窗口宽度，
+（CP.11）指定的充分阈值满足
+
+$$
+\boxed{
+\log X_z(V)\ge
+\frac{\Delta_\beta A}{96a}(\log z)^4.}
+\tag{436.3}
+$$
+
+这里的下界只针对已指定的非负绝对账和充分阈值，
+不针对真实核误差或满足相同符号结论的最小阈值。
+
+证明。由（LC.8）的实际约数下界和 $C(W)\ge AW^3/6$，
+在完整非负和中保留 $j=d\mid P_z$，得到
+
+$$
+\mathsf C_z(U)
+\ge\frac{\Delta_\beta A}{6}
+\sum_{d\mid P_z}\frac{(\log d)^3}{d}.
+\tag{436.4}
+$$
+
+这里只使用 $U\ge0$、$\log2>0$；没有先固定严格正的窗口宽度。
+令有限约数总量和其归一化权重为
+
+$$
+\mathcal D_z=\sum_{d\mid P_z}\frac1d,
+\qquad \nu_z(d)=\frac1{d\mathcal D_z}.
+$$
+
+平方自由有限 Euler 展开给每个 $p\le z$ 的占位权重
+$\sum_{d\mid P_z,\ p\mid d}\nu_z(d)=1/(p+1)$，因此精确有
+
+$$
+m_z:=\sum_{d\mid P_z}\nu_z(d)\log d
+=\sum_{p\le z}\frac{\log p}{p+1}
+=F(z)-\sum_{p\le z}\frac{\log p}{p(p+1)}.
+\tag{436.5}
+$$
+
+后一个非负修正和不超过（436.1）的 $R_1$，所以
+$m_z\ge\log z-D_S$。
+取 $z_1\ge z_0$，其中 $z_0$ 是（LC.12）的同一阈值，
+并取 $\log z_1\ge2D_S$。此选择只依赖固定供应，独立于 $U,V$，且
+
+$$
+m_z\ge\tfrac12\log z,
+\qquad \mathcal D_z\ge\frac{\log z}{4a}
+\quad(z\ge z_1).
+$$
+
+对有限概率权重 $\nu_z$ 和 $[0,\infty)$ 上的凸函数 $t^3$，
+直接使用经典有限 Jensen 不等式，得到
+
+$$
+\sum_{d\mid P_z}\frac{(\log d)^3}{d}
+=\mathcal D_z\sum_{d\mid P_z}\nu_z(d)(\log d)^3
+\ge\mathcal D_zm_z^3
+\ge\frac{(\log z)^4}{32a}.
+\tag{436.6}
+$$
+
+代入（436.4）即得（436.2）。
+最后（LC.5）给
+$\log X_z(V)\ge1+2\mathsf C_z(V\log z)$，
+而 $V\log z\ge0$，故（436.3）对全部 $V>0$ 同时成立。$\square$
+
+**定理 436.3（原生 CA 支撑与时钟上的指定校准障碍）。**
+存在有限 $N_1$，使每个 $N\ge N_1$ 的 proper GA1 CA 整数，
+在同一实际来源的
+
+$$
+\Lambda=\log N,\qquad z=P(N),\qquad x=\Lambda
+$$
+
+下，都有 $\operatorname{rad}(N)=P_z$，并对全部 $V>0$ 同时满足
+
+$$
+\boxed{x<X_z(V).}
+\tag{436.7}
+$$
+
+因此缩小 $V$ 不能使这份原生支撑和时钟满足（CP.11）指定的
+$x\ge X_z(V)$ 校准条件。
+此陈述不提供有效数值 $N_1$，也不假设存在无界的被选临界全局最大源列。
+
+证明。CA 支撑的既有素数前缀性质给
+$\operatorname{rad}(N)=\prod_{p\le P(N)}p=P_z$。
+[Caveney–Nicolas–Sondow 的既有 Theorem 13](../../../Library/Arith/caveney2012sacaga.md)
+给 $z\sim\Lambda$，当 $N$ 沿 proper GA1 整数趋于无穷。
+于是 $\log z/\log\Lambda\to1$，从而
+
+$$
+\frac{\log x}{(\log z)^4}\longrightarrow0.
+$$
+
+取统一于全部 $V>0$ 的（436.3），固定正系数
+$\Delta_\beta A/(96a)$ 最终严格大于该比值，
+即得（436.7）。此推导只在实际整数来源上运输既有支撑和时钟，
+没有另选粗糙 cutoff 或把 GA1 与 CA 的两个来源分开。$\square$
+
+**定理 436.4（指定校准的必要 cutoff 范围）。**
+对所有 $z\ge z_1,V>0,x\ge X_z(V)$，必有
+
+$$
+\boxed{
+\log z\le
+\left(\frac{96a}{\Delta_\beta A}\log x\right)^{1/4},
+\qquad
+\frac{\log x}{\log z}
+\ge\left(\frac{\Delta_\beta A}{96a}\right)^{1/4}
+(\log x)^{3/4}.}
+\tag{436.8}
+$$
+
+特别地，对任意固定 $b>0$，cutoff $z=x^b$ 最终不能满足这份校准，
+统一于全部 $V>0$。这些必要条件不保证允许范围内的预算足够小，
+也不提供增长粗糙参数上的统一前缀估计。
+
+证明。（436.3）与 $x\ge X_z(V)$ 给
+$\log x\ge\Delta_\beta A(\log z)^4/(96a)$。
+取正四次根并除以 $\log z>0$ 得（436.8）。
+若 $z=x^b$，则该必要不等式要求
+$1\ge\Delta_\beta A b^4(\log x)^3/(96a)$，
+在 $x\to\infty$ 时矛盾。$\square$
+
+## 追加锚（本行以下为增补区）
