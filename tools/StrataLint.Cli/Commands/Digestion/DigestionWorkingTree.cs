@@ -49,7 +49,7 @@ internal static class DigestionWorkingTree
         var chainRoots = scoped.Document.RequireDigestionEntries()
             .Where(static entry => !entry.Receipts.ChainAtoms.IsEmpty)
             .Select(static entry => entry.AtomId);
-        return Extend(repository, scoped.Raw, decode, load, ChainCasPaths(scoped.Document, chainRoots));
+        return Extend(repository, scoped, decode, ChainCasPaths(scoped.Document, chainRoots));
     }
 
     internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadLedger(
@@ -65,7 +65,7 @@ internal static class DigestionWorkingTree
         Func<RepositorySnapshot, BackfillInventoryDocument> load,
         params string[] additional)
     {
-        // Report-free ingestion and source-registry refresh only atomize source
+        // Report-free ingestion only atomizes source
         // bytes and append/update their own ledger records.  Coverage targets,
         // tail artifacts, and rule build inputs belong to evaluation/admission;
         // reading them here only couples a local mutation to unrelated systems.
@@ -73,7 +73,7 @@ internal static class DigestionWorkingTree
             includeDeclared: false, additional: additional);
         var sourcePaths = scoped.Document.RequireDigestionSources()
             .Select(static source => source.SourcePath);
-        return Extend(repository, scoped.Raw, decode, load, sourcePaths.ToArray());
+        return Extend(repository, scoped, decode, sourcePaths.ToArray());
     }
 
     // Report-free candidate projection only needs the ledger, atomizer inputs,
@@ -82,13 +82,10 @@ internal static class DigestionWorkingTree
     // covered entries by design.
     internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadUncovered(
         IRepositoryGateway repository,
-        RawRepositorySnapshot ledgerRaw,
-        Func<RawRepositorySnapshot, RepositorySnapshot> decode,
-        Func<RepositorySnapshot, BackfillInventoryDocument> load)
+        (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) current,
+        Func<RawRepositorySnapshot, RepositorySnapshot> decode)
     {
-        ArgumentNullException.ThrowIfNull(ledgerRaw);
-        var ledgerSnapshot = decode(ledgerRaw);
-        var ledger = load(ledgerSnapshot);
+        var ledger = current.Document;
         var sourcePaths = ledger.RequireDigestionSources()
             .Select(static source => source.SourcePath);
         var chainRoots = ledger.RequireDigestionEntries()
@@ -96,9 +93,8 @@ internal static class DigestionWorkingTree
             .Select(static entry => entry.AtomId);
         return Extend(
             repository,
-            ledgerRaw,
+            current,
             decode,
-            load,
             [
                 .. sourcePaths,
                 TheoryAtomizerDataLoader.DataPath,
@@ -108,13 +104,12 @@ internal static class DigestionWorkingTree
 
     internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) Extend(
         IRepositoryGateway repository,
-        RawRepositorySnapshot current,
+        (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) current,
         Func<RawRepositorySnapshot, RepositorySnapshot> decode,
-        Func<RepositorySnapshot, BackfillInventoryDocument> load,
         params string[] additional)
     {
-        ArgumentNullException.ThrowIfNull(current);
-        var present = current.Entries
+        ArgumentNullException.ThrowIfNull(current.Raw);
+        var present = current.Raw.Entries
             .Select(static entry => entry.Path)
             .ToHashSet(StringComparer.Ordinal);
         var missing = additional
@@ -123,17 +118,19 @@ internal static class DigestionWorkingTree
             .ToArray();
         if (missing.Length == 0)
         {
-            var snapshot = decode(current);
-            return (current, snapshot, load(snapshot));
+            return current;
         }
 
         var extra = repository.ReadCurrent(missing);
-        var merged = RawRepositorySnapshot.Create(current.Entries
+        if (extra.Entries.Any(static entry => BackfillInventoryLoader.IsCanonicalPath(entry.Path)
+                || entry.Path == BackfillInventoryLoader.RelativePath))
+            throw new InvalidOperationException("digestion input extension must not add ledger files");
+        var merged = RawRepositorySnapshot.Create(current.Raw.Entries
             .Concat(extra.Entries)
             .DistinctBy(static entry => entry.Path, StringComparer.Ordinal)
             .OrderBy(static entry => entry.Path, StringComparer.Ordinal));
         var decoded = decode(merged);
-        return (merged, decoded, load(decoded));
+        return (merged, decoded, current.Document);
     }
 
     // A source context only needs CAS objects reachable through persisted chains.

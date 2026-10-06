@@ -39,9 +39,8 @@ internal static class DecomposeAtomCommand
                 parent.Receipts.ChainAtoms);
             loaded = DigestionWorkingTree.Extend(
                 repository,
-                raw,
+                loaded,
                 Decode,
-                BackfillInventoryLoader.LoadForDigestion,
                 [parent.SourcePath, .. sourceCasPaths]);
             raw = loaded.Raw;
             snapshot = loaded.Snapshot;
@@ -68,9 +67,8 @@ internal static class DecomposeAtomCommand
             {
                 loaded = DigestionWorkingTree.Extend(
                     repository,
-                    raw,
+                    loaded,
                     Decode,
-                    BackfillInventoryLoader.LoadForDigestion,
                     existingChildCasPaths);
                 raw = loaded.Raw;
                 snapshot = loaded.Snapshot;
