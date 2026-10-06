@@ -232,7 +232,10 @@ noncomputable def «seal» : Contract.Seal := {
       fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[0]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[0]'(by decide))).rows
       collisions := #[]
-      conclusion := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[0]'(by decide))).conclusion
+      conclusion := .irredundant (by
+        cases h : ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[0]'(by decide))).conclusion with
+        | irredundant proof => exact proof
+        | redundant _ => contradiction)
       enumeration := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[0]'(by decide))).enumeration
     },
     {
@@ -249,7 +252,10 @@ noncomputable def «seal» : Contract.Seal := {
       fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[1]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[1]'(by decide))).rows
       collisions := #[]
-      conclusion := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[1]'(by decide))).conclusion
+      conclusion := .irredundant (by
+        cases h : ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[1]'(by decide))).conclusion with
+        | irredundant proof => exact proof
+        | redundant _ => contradiction)
       enumeration := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[1]'(by decide))).enumeration
     },
     {
@@ -266,7 +272,10 @@ noncomputable def «seal» : Contract.Seal := {
       fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[2]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[2]'(by decide))).rows
       collisions := #[]
-      conclusion := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[2]'(by decide))).conclusion
+      conclusion := .irredundant (by
+        cases h : ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[2]'(by decide))).conclusion with
+        | irredundant proof => exact proof
+        | redundant _ => contradiction)
       enumeration := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[2]'(by decide))).enumeration
     },
     {
@@ -283,7 +292,10 @@ noncomputable def «seal» : Contract.Seal := {
       fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[3]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[3]'(by decide))).rows
       collisions := #[]
-      conclusion := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[3]'(by decide))).conclusion
+      conclusion := .irredundant (by
+        cases h : ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[3]'(by decide))).conclusion with
+        | irredundant proof => exact proof
+        | redundant _ => contradiction)
       enumeration := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[3]'(by decide))).enumeration
     },
     {
@@ -300,7 +312,10 @@ noncomputable def «seal» : Contract.Seal := {
       fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[4]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[4]'(by decide))).rows
       collisions := #[]
-      conclusion := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[4]'(by decide))).conclusion
+      conclusion := .irredundant (by
+        cases h : ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[4]'(by decide))).conclusion with
+        | irredundant proof => exact proof
+        | redundant _ => contradiction)
       enumeration := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[4]'(by decide))).enumeration
     },
     {
@@ -317,7 +332,10 @@ noncomputable def «seal» : Contract.Seal := {
       fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[5]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[5]'(by decide))).rows
       collisions := #[]
-      conclusion := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[5]'(by decide))).conclusion
+      conclusion := .irredundant (by
+        cases h : ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[5]'(by decide))).conclusion with
+        | irredundant proof => exact proof
+        | redundant _ => contradiction)
       enumeration := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[5]'(by decide))).enumeration
     },
     {
@@ -334,7 +352,10 @@ noncomputable def «seal» : Contract.Seal := {
       fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[6]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[6]'(by decide))).rows
       collisions := #[]
-      conclusion := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[6]'(by decide))).conclusion
+      conclusion := .irredundant (by
+        cases h : ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[6]'(by decide))).conclusion with
+        | irredundant proof => exact proof
+        | redundant _ => contradiction)
       enumeration := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[6]'(by decide))).enumeration
     },
     {
@@ -351,7 +372,10 @@ noncomputable def «seal» : Contract.Seal := {
       fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[7]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[7]'(by decide))).rows
       collisions := #[]
-      conclusion := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[7]'(by decide))).conclusion
+      conclusion := .irredundant (by
+        cases h : ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[7]'(by decide))).conclusion with
+        | irredundant proof => exact proof
+        | redundant _ => contradiction)
       enumeration := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[7]'(by decide))).enumeration
     },
     {
@@ -368,7 +392,10 @@ noncomputable def «seal» : Contract.Seal := {
       fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[8]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[8]'(by decide))).rows
       collisions := #[]
-      conclusion := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[8]'(by decide))).conclusion
+      conclusion := .irredundant (by
+        cases h : ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[8]'(by decide))).conclusion with
+        | irredundant proof => exact proof
+        | redundant _ => contradiction)
       enumeration := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[8]'(by decide))).enumeration
     },
     {
@@ -385,7 +412,10 @@ noncomputable def «seal» : Contract.Seal := {
       fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[9]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[9]'(by decide))).rows
       collisions := #[]
-      conclusion := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[9]'(by decide))).conclusion
+      conclusion := .irredundant (by
+        cases h : ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[9]'(by decide))).conclusion with
+        | irredundant proof => exact proof
+        | redundant _ => contradiction)
       enumeration := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[9]'(by decide))).enumeration
     },
     {
@@ -402,7 +432,10 @@ noncomputable def «seal» : Contract.Seal := {
       fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[10]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[10]'(by decide))).rows
       collisions := #[]
-      conclusion := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[10]'(by decide))).conclusion
+      conclusion := .irredundant (by
+        cases h : ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[10]'(by decide))).conclusion with
+        | irredundant proof => exact proof
+        | redundant _ => contradiction)
       enumeration := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[10]'(by decide))).enumeration
     }
   ]

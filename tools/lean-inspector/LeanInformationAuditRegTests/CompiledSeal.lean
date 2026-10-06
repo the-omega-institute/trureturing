@@ -1,4 +1,5 @@
 import Reg.Catalogs.PointwiseDisequalityRegistrations.SealedCatalog
+import Reg.Catalogs.SharedInformationRoot.SealedCatalog
 import LeanInformationAudit.ArtifactAssessment
 import LeanInformationAudit.Registry
 
@@ -56,6 +57,14 @@ unsafe def check : IO Unit := do
         | .ok _ => false) do
       throw <| IO.userError "compiled.seal:baseline_contributor_accepted"
     IO.println "[PASS] compiled seal: complete real catalog, row counts, roles, primitive statistics and snapshot rejections"
+    let sharedRoot := `Reg.Catalogs.SharedInformationRoot.SealedCatalog
+    RawArtifacts.loadModule sharedRoot reader
+    let (_, sharedSeals) ← ArtifactAssessment.assess (← reader.get) sharedRoot
+    let own := sharedSeals.filter (·.catalog.rootId == sharedRoot)
+    unless own.size == 12 && own.all (·.compiledEvidence) &&
+        own.foldl (fun count row => count + row.theorems.size) 0 == 13 do
+      throw <| IO.userError "compiled.seal:shared_literal_conclusions"
+    IO.println "[PASS] compiled shared seal: 12 catalogs and 13 rows with reused conclusion proofs"
   finally searchPathRef.set saved
 
 run_meta check
