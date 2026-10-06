@@ -61542,3 +61542,123 @@ $$
 §401 的消费者同时读取既有允许量和共同阈值，在 $\ell=109389$ 给（402.4）及（402.5）的定向正下界。它没有重新求取 $R$ 或枚举 $H$。从（402.3）控制真实与轮廓的差，与从（402.5）证明它们各自不自动消去低频极点，是两个不同读出；任何一个都未确定其与实际 $H$ 配对后的全和符号。继续研究的缺口是同一实际窗口、窗口外补集及相位项之间的临界联合估计。
 
 ## 追加锚（本行以下为增补区）
+
+## 403. 完整同源和的 Abel 阻尼与临界尺度以下的统一误差
+
+本节直接消费 §397 的实际全和、积分前预算与 $Q_x(m)$ 上界，并保留同一个 $e=\mu*\beta$。阻尼只改变真实权重，不选择一个窗口、不删去前缀，也不假设实际 $H$ 有平方根增长。经典 Abel 求和及指数的初等估计直接复用；新增的是这些接口在完整实际权重上的统一误差账。解析应用未完成 Lean 核验。
+
+**定义 403.1（实际全域阻尼）。** 保留 $x>1$、$P_x(m)$、$J_x(m)$、$H_m$、$e_m$ 以及（397.3）的实际非负常数 $a_2,a_1,a_0$。置
+
+$$
+W_x=\frac{1+\log x}{\log^2x},\qquad
+q_k=\frac{a_2(\log k)^2+a_1\log k+a_0}{k^2}\quad(k\ge2),
+\tag{403.1}
+$$
+
+并定义独立于 $x$ 的非负来源账
+
+$$
+\boxed{
+C_*=
+\sum_{k\ge2}q_k
+\left[|H_k|\log k+
+\sum_{1\le m<k}\frac{|H_m|}{m}\right].}
+\tag{403.2}
+$$
+
+对任意 $\varepsilon>0$，令
+
+$$
+I_{\varepsilon}(x)
+=\sum_{n\ge1}e_n n^{-\varepsilon}P_x(n).
+\tag{403.3}
+$$
+
+这里 $q_k$ 是（397.4）的实际上界系数，不是黄金参数 $q=\varphi^{-2}$。$C_*$ 的每个项都由实际 $H$ 和已知核系数独立给出，没有把 Robin 未知差额命名为常数。本节证明其有限，但不给其数值上界。
+
+**定理 403.2（完整阻尼误差由无条件对数预算支付）。** 实际 $C_*<\infty$，式（403.3）绝对收敛，并且对全部 $x>1$、$\varepsilon>0$，
+
+$$
+\boxed{
+|I_{\varepsilon}(x)-I_\psi(x)|
+\le\varepsilon W_xC_*.}
+\tag{403.4}
+$$
+
+因此，取实际共同尺度上的
+
+$$
+\varepsilon_x=\frac1{\sqrt x\log x}\quad(x\ge e),
+\tag{403.5}
+$$
+
+有完整同源估计
+
+$$
+\boxed{
+|I_{\varepsilon_x}(x)-I_\psi(x)|
+\le\frac{2C_*}{\sqrt x\log^2x}
+=o\!\left(\frac1{\sqrt x\log x}\right).}
+\tag{403.6}
+$$
+
+证明。§390 的既有定量 PNT 应用给某个实际有限常数 $C_6$，使 $|H_m|\le C_6m/(\log m)^6$ 对全部整数 $m\ge2$ 成立。对 $k\ge2$，将内和在 $m=\sqrt k$ 分开：低段至多有 $\sqrt k$ 项，且 $\log m\ge\log2$；高段中 $\log m\ge\frac12\log k$。故
+
+$$
+\sum_{1\le m<k}\frac{|H_m|}{m}
+\le |H_1|+C_6\left[
+\frac{\sqrt k}{(\log2)^6}+\frac{64k}{(\log k)^6}\right].
+\tag{403.7}
+$$
+
+同时 $q_k|H_k|\log k=O(1/[k(\log k)^3])$。式（403.7）与 $q_k=O((\log k)^2/k^2)$ 给其余项的收敛控制：$(\log k)^2/k^2$、$(\log k)^2/k^{3/2}$ 和 $1/[k(\log k)^4]$。经典正项级数比较证明（403.2）有限。这仅使用已经有供应器的对数预算，不重证 PNT。
+
+对固定 $x$，§398 给 $P_x(s)\to0$，而（397.4）给 $|J_x(k)|\le W_xq_k$（$k\ge2$）。因此真实望远镜和及其绝对上界为
+
+$$
+P_x(m+1)=\sum_{k\ge m+1}J_x(k),\qquad
+|P_x(m+1)|\le W_x\sum_{k\ge m+1}q_k\quad(m\ge1).
+\tag{403.8}
+$$
+
+这里保留了所有实际后继，没有把 $P_x$ 换成近似轮廓。（398.4）、（398.9）还给固定 $x$ 下 $P_x(n)=O_x(\log n\log\log n/n)$；既有 $e_n=O(1)$ 使（403.3）在每个 $\varepsilon>0$ 下绝对收敛。
+
+经典有限 Abel 求和取极限，端点 $H_NN^{-\varepsilon}P_x(N)\to0$，得到
+
+$$
+I_{\varepsilon}(x)
+=\sum_{m\ge1}H_m
+\left[m^{-\varepsilon}J_x(m)
+ +(m^{-\varepsilon}-(m+1)^{-\varepsilon})P_x(m+1)\right].
+\tag{403.9}
+$$
+
+全部交换由下面的可和上界支付。对 $m\ge1$，直接复用
+
+$$
+0\le1-m^{-\varepsilon}\le\varepsilon\log m,
+\qquad
+0\le m^{-\varepsilon}-(m+1)^{-\varepsilon}\le\frac\varepsilon m.
+\tag{403.10}
+$$
+
+第一项在 $m=1$ 为零；（403.8）与非负 Tonelli 给
+
+$$
+\begin{aligned}
+&\sum_m |H_m|
+\left[(1-m^{-\varepsilon})|J_x(m)|
+ +(m^{-\varepsilon}-(m+1)^{-\varepsilon})|P_x(m+1)|\right]\\
+&\quad\le\varepsilon W_x
+\left[\sum_{k\ge2}q_k|H_k|\log k
+ +\sum_{k\ge2}q_k\sum_{m<k}\frac{|H_m|}{m}\right]
+=\varepsilon W_xC_*.
+\end{aligned}
+\tag{403.11}
+$$
+
+（397.17）已支付未阻尼的 $\sum H_mJ_x(m)$，所以（403.11）也证明（403.9）的绝对收敛，并给（403.4）。$x\ge e$ 时 $W_x\le2/\log x$，代入（403.5）即得（403.6）。$\square$
+
+式（403.6）控制整个实际和的去阻尼误差，其量词对 $x$ 一致；它不依赖单窗轮廓误差，也不将窗外补集留作未定义项。仍缺的是 $I_{\varepsilon_x}(x)$ 本身的临界有符号估计。极小阻尼没有自动带来低计算成本、可用移线或算术抵消；没有给出 $C_*$ 的数值证书，也没有证明完整 Robin 或 RH。
+
+## 追加锚（本行以下为增补区）
