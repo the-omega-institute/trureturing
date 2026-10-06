@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/AndersonSymmetryConverseRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lindblad-guerrero-2025-anderson-symmetry-converse-refutation` (refuted) by `D5/S3/Combinatorics/Graph/AndersonSymmetryConverseRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lindblad-guerrero-2025-anderson-symmetry-converse-refutation","declaration_gid":"D5/S3/Combinatorics/Graph/AndersonSymmetryConverseRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* O. Lindblad and E. Guerrero (2025). *Simple Eigenvalues and Non-vanishing Eigenvectors of the Anderson Model*. URL: <https://arxiv.org/abs/2512.00278v1>.

@@ -31,7 +31,10 @@ internal sealed class AndersonSymmetryConverseRefutationDocument : IScribeDocume
                 H("The eight-cycle refutation"), StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Take v = (1,1,1,1,−1,1,−1,−1). For any real t, put a = √(t²+2)−t. Then a²+2ta−2 = 0, and z = (1,0,−1,a,1−a²,−2t,1,−a) is an eigenvector with eigenvalue 2+a+t = 2+√(t²+2). Its first coordinate is 1 and its coordinate of index 1 is 0, so it is nonzero and violates non-vanishing for every t. To exclude shared symmetries, the finite Laplacian is evaluated exactly. Rational linear combinations of its commutator equations and those of Matrix.diagonal v give O = (O 0 0) • I for every real commuting matrix O. Orthogonality then gives (O 0 0)² = 1, so O is I or −I. The bad potential therefore has no nontrivial shared symmetry."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lindblad-guerrero-2025-anderson-symmetry-converse-refutation"),
+                    ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string declaration,
         string prose, AssessedProvenance provenance) => Describe.Lean(
