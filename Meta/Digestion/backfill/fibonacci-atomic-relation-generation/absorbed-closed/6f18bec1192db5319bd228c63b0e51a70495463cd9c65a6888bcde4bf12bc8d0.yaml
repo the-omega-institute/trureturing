@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:6f18bec1192db5319bd228c63b0e51a70495463cd9c65a6888bcde4bf12bc8d0
   normalized_sha256: sha256:6f18bec1192db5319bd228c63b0e51a70495463cd9c65a6888bcde4bf12bc8d0
 cas_ref: sha256:6f18bec1192db5319bd228c63b0e51a70495463cd9c65a6888bcde4bf12bc8d0
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/FixedHistoryComposition.result
+    target_statement_id: sha256:1927cab5cc929b212e9367433f231eca6236a4faed8b817f70a83587cf7a856d
 receipts:
   unresolved_subitems: []
   chain_atoms:
