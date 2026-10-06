@@ -9,6 +9,8 @@
 import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
 import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.Algebra.GCDMonoid.Nat
+import Mathlib.Algebra.Ring.Parity
+import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
@@ -20,9 +22,9 @@ import D5.S3.Arith.GoldenFibonacciModulusPeriod
 namespace D5.S3.Arith.FibonacciTransportFivePowerOrbit
 
 open scoped Matrix
-local notation "Mat" n => Matrix (Fin 2) (Fin 2) (ZMod n)
-local notation "Vec" n => Fin 2 → ZMod n
-local notation "GL" n => Matrix.GeneralLinearGroup (Fin 2) (ZMod n)
+local notation "Mat" n:arg => Matrix (Fin 2) (Fin 2) (ZMod n)
+local notation "Vec" n:arg => Fin 2 → ZMod n
+local notation "GL" n:arg => Matrix.GeneralLinearGroup (Fin 2) (ZMod n)
 
 /-- The invertible Fibonacci transport matrix. -/
 def transportG (n : ℕ) : GL n where
@@ -392,6 +394,168 @@ private theorem transport_order_mod_two : orderOf (transportG 2) = 3 := by
   · intro h
     have hb := congrArg (fun A : Mat 2 => A 0 1) h
     exact (by decide : (1 : ZMod 2) ≠ 0) hb
+
+
+private theorem map_transport (m n : ℕ) (hd : m ∣ n) :
+    (ZMod.castHom hd (ZMod m)).mapMatrix (transportG n : Mat n) =
+      (transportG m : Mat m) := by
+  ext i j
+  change ZMod.castHom hd (ZMod m) ((transportG n).val i j) = (transportG m).val i j
+  fin_cases i <;> fin_cases j <;>
+    first
+    | exact (ZMod.castHom hd (ZMod m)).map_one
+    | exact (ZMod.castHom hd (ZMod m)).map_zero
+    | exact ((ZMod.castHom hd (ZMod m)).map_neg 1).trans
+        (congrArg Neg.neg (ZMod.castHom hd (ZMod m)).map_one)
+
+private theorem crt_joint_injective (m n : ℕ) (hc : Nat.Coprime m n)
+    (x y : ZMod (m * n))
+    (hm : ZMod.castHom (dvd_mul_right m n) (ZMod m) x =
+      ZMod.castHom (dvd_mul_right m n) (ZMod m) y)
+    (hn : ZMod.castHom (dvd_mul_left n m) (ZMod n) x =
+      ZMod.castHom (dvd_mul_left n m) (ZMod n) y) : x = y := by
+  apply (ZMod.chineseRemainder hc).injective
+  change (ZMod.cast x : ZMod m × ZMod n) = ZMod.cast y
+  apply Prod.ext
+  · simpa only [Prod.fst_zmod_cast, ZMod.castHom_apply] using hm
+  · simpa only [Prod.snd_zmod_cast, ZMod.castHom_apply] using hn
+
+private theorem transport_order_mul (m n : ℕ) (hc : Nat.Coprime m n) :
+    orderOf (transportG (m * n)) = Nat.lcm (orderOf (transportG m))
+      (orderOf (transportG n)) := by
+  let fm : Mat (m * n) →* Mat m :=
+    (ZMod.castHom (dvd_mul_right m n) (ZMod m)).mapMatrix.toMonoidHom
+  let fn : Mat (m * n) →* Mat n :=
+    (ZMod.castHom (dvd_mul_left n m) (ZMod n)).mapMatrix.toMonoidHom
+  let f := fm.prod fn
+  have hi : Function.Injective f := by
+    intro A B h
+    ext i j
+    apply crt_joint_injective m n hc
+    · exact congrArg (fun P : Mat m × Mat n => P.1 i j) h
+    · exact congrArg (fun P : Mat m × Mat n => P.2 i j) h
+  have hg : f (transportG (m * n) : Mat (m * n)) =
+      ((transportG m : Mat m), (transportG n : Mat n)) := by
+    apply Prod.ext
+    · exact map_transport m (m * n) (dvd_mul_right m n)
+    · exact map_transport n (m * n) (dvd_mul_left n m)
+  calc
+    orderOf (transportG (m * n)) = orderOf (transportG (m * n) : Mat (m * n)) :=
+      orderOf_units.symm
+    _ = orderOf (f (transportG (m * n) : Mat (m * n))) :=
+      (orderOf_injective f hi _).symm
+    _ = Nat.lcm (orderOf (transportG m : Mat m)) (orderOf (transportG n : Mat n)) := by
+      rw [hg, Prod.orderOf_mk]
+    _ = _ := by simp only [orderOf_units]
+
+private theorem family_transport_order (a : ℕ) (ha : 1 ≤ a) :
+    orderOf (transportG (118 * 5 ^ a)) = 348 * 5 ^ a := by
+  have h2five : Nat.Coprime 2 (5 ^ a) :=
+    (by decide : Nat.Coprime 2 5).pow_right a
+  have h59 : Nat.Coprime (2 * 5 ^ a) 59 := by
+    rw [Nat.coprime_mul_iff_left]
+    exact ⟨by decide, (by decide : Nat.Coprime 5 59).pow_left a⟩
+  have h5 : orderOf (transportG (5 ^ a)) = 4 * 5 ^ a :=
+    (transport_order_eq_golden (5 ^ a)).trans (golden_order_five_power a ha)
+  rw [show 118 * 5 ^ a = (2 * 5 ^ a) * 59 by ring,
+    transport_order_mul _ _ h59, transport_order_mul _ _ h2five,
+    transport_order_mod_two, h5, transport_order_mod_fifty_nine,
+    fibonacci_transport_five_power_crt_lcm]
+
+private theorem sign_commute (n : ℕ) (A : GL n) : Commute (-1 : GL n) A := by
+  apply Units.ext
+  simp
+
+private theorem sign_normal (n : ℕ) : (Subgroup.zpowers (-1 : GL n)).Normal := by
+  constructor
+  intro x hx A
+  obtain ⟨k, rfl⟩ := Subgroup.mem_zpowers_iff.mp hx
+  have hc := (sign_commute n A).zpow_left k
+  rw [← hc.eq, mul_assoc, mul_inv_cancel, mul_one]
+  exact Subgroup.zpow_mem_zpowers _ _
+
+private theorem signed_group_product (n : ℕ) :
+    signedGroup n = Subgroup.zpowers (transportG n) ⊔ Subgroup.zpowers (-1 : GL n) := by
+  rw [signedGroup, ← Set.singleton_union, Subgroup.closure_union,
+    ← Subgroup.zpowers_eq_closure, ← Subgroup.zpowers_eq_closure]
+
+private theorem signed_form (n : ℕ) (hfin : IsOfFinOrder (transportG n))
+    {A : GL n} (hA : A ∈ signedGroup n) :
+    ∃ k : ℕ, A = transportG n ^ k ∨ A = -(transportG n ^ k) := by
+  letI := sign_normal n
+  rw [signed_group_product] at hA
+  obtain ⟨x, hx, y, hy, hxy⟩ := Subgroup.mem_sup_of_normal_right.mp hA
+  obtain ⟨k, hk⟩ := hfin.mem_powers_iff_mem_zpowers.mpr hx
+  obtain ⟨s, rfl⟩ := Subgroup.mem_zpowers_iff.mp hy
+  refine ⟨k, ?_⟩
+  rw [← hk, neg_one_zpow_eq_ite] at hxy
+  split_ifs at hxy with hs
+  · exact Or.inl (by simpa using hxy.symm)
+  · exact Or.inr (by simpa using hxy.symm)
+
+private theorem negative_one_outside_powers (a : ℕ) (ha : 1 ≤ a) :
+    (-1 : GL (118 * 5 ^ a)) ∉ Subgroup.zpowers (transportG (118 * 5 ^ a)) := by
+  intro h
+  have hfin : IsOfFinOrder (transportG (118 * 5 ^ a)) := by
+    rw [← orderOf_pos_iff, family_transport_order a ha]
+    exact Nat.mul_pos (by decide) (pow_pos (by decide) a)
+  obtain ⟨k, hk⟩ := hfin.mem_powers_iff_mem_zpowers.mpr h
+  have hp : (transportG (118 * 5 ^ a) : Mat (118 * 5 ^ a)) ^ k = -1 := by
+    simpa using congrArg Units.val hk
+  have hd : 59 ∣ 118 * 5 ^ a := ⟨2 * 5 ^ a, by ring⟩
+  have hm := congrArg (ZMod.castHom hd (ZMod 59)).mapMatrix hp
+  rw [map_pow, map_transport, map_neg, map_one] at hm
+  have hv := congrArg (fun A : Mat 59 => A *ᵥ ![1, 26]) hm
+  rw [axis_power, Matrix.neg_mulVec, Matrix.one_mulVec] at hv
+  apply scalar_power_ne_negative_one k
+  simpa using congrFun hv 0
+
+private theorem signed_group_card (n : ℕ)
+    (hneg : (-1 : GL n) ∉ Subgroup.zpowers (transportG n)) :
+    Nat.card (signedGroup n) = 2 * orderOf (transportG n) := by
+  classical
+  let C := Subgroup.zpowers (transportG n)
+  let S := Subgroup.zpowers (-1 : GL n)
+  letI : S.Normal := sign_normal n
+  have hdis : Disjoint C S := by
+    rw [Subgroup.disjoint_def]
+    intro x hx hy
+    obtain ⟨s, rfl⟩ := Subgroup.mem_zpowers_iff.mp hy
+    rw [neg_one_zpow_eq_ite] at hx ⊢
+    split_ifs at hx ⊢
+    · rfl
+    · exact False.elim (hneg hx)
+  let f : C × S → signedGroup n := fun q =>
+    ⟨q.1.val * q.2.val, by rw [signed_group_product]; exact Subgroup.mul_mem_sup q.1.prop q.2.prop⟩
+  have hf : Function.Bijective f := by
+    constructor
+    · intro x y h
+      exact Subgroup.mul_injective_of_disjoint hdis (congrArg Subtype.val h)
+    · intro A
+      have hA := A.prop
+      simp only [signed_group_product] at hA
+      obtain ⟨x, hx, y, hy, hxy⟩ := Subgroup.mem_sup_of_normal_right.mp hA
+      exact ⟨(⟨x, hx⟩, ⟨y, hy⟩), Subtype.ext hxy⟩
+  have hsign : orderOf (-1 : GL n) = 2 := by
+    haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+    apply orderOf_eq_prime
+    · simp
+    · intro h
+      apply hneg
+      rw [h]
+      exact C.one_mem
+  calc
+    Nat.card (signedGroup n) = Nat.card (C × S) :=
+      Nat.card_congr (Equiv.ofBijective f hf).symm
+    _ = Nat.card C * Nat.card S := Nat.card_prod _ _
+    _ = 2 * orderOf (transportG n) := by
+      rw [Nat.card_zpowers, Nat.card_zpowers, hsign, Nat.mul_comm]
+
+
+private theorem family_signed_card (a : ℕ) (ha : 1 ≤ a) :
+    Nat.card (signedGroup (118 * 5 ^ a)) = 696 * 5 ^ a := by
+  rw [signed_group_card _ (negative_one_outside_powers a ha), family_transport_order a ha]
+  ring
 
 
 end D5.S3.Arith.FibonacciTransportFivePowerOrbit
