@@ -3056,3 +3056,429 @@ Parameterized Cross Product Recovery 的实际联合来源与有限参数像、T
 相变分类或四项原生／物理桥中的任何一项。
 
 ## 追加锚（本行以下为增补区）
+
+## 46. 临界同源的正读误差：平方根初态风险与有限实际取得
+
+**定义 46.1（固定来源上的有界读误差风险）。** 保持定义45.1的来源不变：
+
+$$
+W=E\oplus\mathbb H,\qquad E=\operatorname{Im}\mathbb H,\qquad
+\mathcal D_2=E\times
+\{b:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\}.
+\tag{46.1}
+$$
+
+可见初态 $a\in E$ 独立、任意且无界；两个半径是未标记的初始制备层，整个运行
+始终以同一个 INITIAL $x=(a,b)$ 为目标。公开精确供应来源参数、标架、固定单位锚
+$d=e_4$ 和控制身份，致动精确，原菜单仍为
+
+$$
+A_c(a,b)=(c\times a,bc),\quad c\in E,\ |c|\le1,
+\qquad A_d(a,b)=(\operatorname{Im}b,-a).
+\tag{46.2}
+$$
+
+只把精确Read换为定义44.1的同一误差合同：每次实际Read返回 $Cz+e$，其中
+$C=P_E$、$|e|\le\delta$，且不改当前状态。误差可以联合对抗、相关及依赖历史；
+没有独立性、平均、重抽样或按读取次数缩小误差的规则。本节的定量范围是
+$0<\delta\le1$。
+
+控制器共同初始化、确定、因果，每次事件只依赖已经实际取得的有限记录前缀。
+完整记录包含全部实际Read、动作身份及停止信息；每条合法有限或可数记录都须
+给出一个 $W$ 值估计，估计不必属于来源。只有一个被更新覆盖的当前寄存器，不供应
+标签、复位、副本、混合控制、反事实端口、极限Read或后继目标。可数事件按自然数
+排列，不存在无穷事件以后的额外事件。
+
+记控制器的全初态最坏欧氏误差与预算风险为
+
+$$
+\begin{aligned}
+\mathcal E_\pi(\delta)
+ &=\sup_{x\in\mathcal D_2}\sup_{\text{全部合法实际读误差}}
+       |\widehat x_\pi(M)-x|,\\
+R_N(\delta)
+ &=\inf_{\pi\in\mathcal P_N}\mathcal E_\pi(\delta)
+   =\mathcal R_N^2(\delta;1,7,25,4/5),\qquad N\in\mathbb N_0.
+\end{aligned}
+\tag{46.3}
+$$
+
+$\mathcal P_N$ 限制至多 $N$ 次破坏性更新，不另设Read数量上限。以
+$\mathcal P_\infty$ 表示同一事件合同下没有预设有限更新上限的控制器，允许可数
+更新，令 $R_\infty(\delta)=\inf_{\pi\in\mathcal P_\infty}\mathcal E_\pi(\delta)$。
+下确界的记号不预设最优控制器存在。
+
+**定理 46.2（全部实际因果控制器的正噪声阻塞）。** 对每个 $0<\delta\le1$，
+每个 $\pi\in\mathcal P_\infty$ 都满足
+
+$$
+\mathcal E_\pi(\delta)\ge5\sqrt\delta.
+\tag{46.4}
+$$
+
+证明。固定控制器，在共同初态 $a=0$ 的首锚前分支上，每次实际Read报告零。
+式（46.2）使这时真实可见状态始终为零，所以全部报告都是合法的零误差；实际
+内部控制、Read选择和停止逐事件由这个共同记录确定。若永不执行锚，或者首锚前
+已经执行零内部控制，取
+
+$$
+b_-=20-15i,\qquad b_+=20+15i.
+$$
+
+两点范数25、实部20，均在来源中；隐藏区别不可见或已被零控制消去，全部记录
+可以相同。初态半距15，不小于 $5\sqrt\delta$。无限内部前缀而无锚也属于此分支。
+
+其余情形的首次锚发生在有限事件处。按定理40.2，首锚前有序积为
+$p\ne0$，$\lambda=|p|\le1$。写 $p=\sigma\lambda q$，其中
+$\sigma\in\{1,-1\}$，选择符号使单位四元数
+
+$$
+q=\alpha+\nu u,\quad \alpha\ge0,\quad
+\nu=\sqrt{1-\alpha^2},\quad |u|=1,\quad u\in E.
+\tag{46.5}
+$$
+
+$\nu=0$ 时任取 $u$；符号 $\sigma$ 始终保留在实际首锚读数中。
+沿用 $\tau=4/5$、$\kappa=3/5$。
+
+若 $\alpha\ge\kappa$，引理45.2(ii)给出两层相同投影的合法来源。当
+$\kappa\le\alpha<\tau$ 时，它们的距离满足
+
+$$
+\sqrt{25^2-r^2}-\sqrt{7^2-r^2}
+ =\frac{576}{\sqrt{25^2-r^2}+\sqrt{7^2-r^2}}\ge18;
+\tag{46.6}
+$$
+
+当 $\alpha\ge\tau$ 时距离恰为18。两点首锚后的实际状态完全相同，后续零误差
+记录相同，半距至少9，也不小于 $5\sqrt\delta$。
+
+设 $0\le\alpha<\kappa$，令
+
+$$
+\rho=\kappa\nu-\tau\alpha>0,\qquad
+K=\kappa\alpha+\tau\nu=\sqrt{1-\rho^2}.
+\tag{46.7}
+$$
+
+若 $\rho\ge\sqrt\delta/5$，使用引理45.2(i)的半径25两点。它们的初态距离
+$50\rho$，首锚后的状态完全相同，零误差共同记录给半距
+$25\rho\ge5\sqrt\delta$。
+
+余下 $0<\rho<\sqrt\delta/5\le1/5$。由
+$\alpha=\kappa K-\tau\rho$ 及 $K\ge1-\rho^2\ge24/25$，有
+
+$$
+\alpha\ge\frac{52}{125}>\frac25,
+\qquad \nu>\frac45.
+\tag{46.8}
+$$
+
+取同一半径25的两个固定初始来源
+
+$$
+\begin{aligned}
+t_\delta&=\sqrt{100\delta-4\delta^2},\\
+b_0&=(25u)q^{-1},\\
+b_1&=(t_\delta+(25-2\delta)u)q^{-1}.
+\end{aligned}
+\tag{46.9}
+$$
+
+$0<\delta\le1$ 保证所有根号有意义，并给
+$t_\delta\ge\sqrt{96\delta}$。两点范数均为25；其来源帽条件逐点为
+
+$$
+\operatorname{Re}b_0=25\nu\ge20,\qquad
+\operatorname{Re}b_1=\alpha t_\delta+\nu(25-2\delta)\ge20.
+\tag{46.10}
+$$
+
+第二个不等式由 $\alpha>2/5$、$\nu\le1$ 和
+$(2/5)\sqrt{96\delta}\ge2\delta$ 得到：
+$\alpha t_\delta\ge2\delta\ge2\nu\delta$，所以其左端至少 $25\nu$。
+此外
+
+$$
+|b_1-b_0|^2=t_\delta^2+4\delta^2=100\delta.
+\tag{46.11}
+$$
+
+此前全部真实可见读仍为零。首次锚后，两实际状态之差为
+$(-2\sigma\lambda\delta u,0)$：实数 $t_\delta$ 被锚消去，隐藏分量因
+共同 $a=0$ 而相同。此时两个差分量的范数分别不超过 $2\delta$。式（46.2）的
+内部动作分别在 $E$ 上作叉积收缩、在 $\mathbb H$ 上作右乘收缩；锚把差分量
+变为 $(\operatorname{Im}\Delta b,-\Delta a)$。所以“两差分量各不超过
+$2\delta$”在全部后续原动作下保持，任何后续实际Read的真实值之差至多
+$2\delta$。
+
+从首锚开始，每次Read共同报告两个真实值的中点，给两次实际运行使用相反的
+半差误差，每次范数都不超过 $\delta$。共同报告前缀迫使同一下一动作、Read选择
+和停止；这个递推覆盖任意重复Read、有限停止及可数完整记录。两初始来源在运行前
+各自固定，没有随历史换半径或换来源，中点也不必是合法初始来源。这里保持的是
+报告不可区分，不声称正误差下两个真实当前状态完全相同。
+
+每一分支都得到相同完整实际记录的两个合法 INITIAL。它们的共同 $W$ 值输出由
+三角不等式至少对其中一个有半距误差；在最后一分支该半距恰为
+$5\sqrt\delta$。若使用可数记录，其所有有限前缀已经相同，记录函数不会增添新
+事件或新信息。这证明（46.4），并未预设任何有限更新或Read上限。证毕。
+
+**定理 46.3（三更新四实际Read的全记录稳定取得）。** 对每个
+$0<\delta\le1$，原菜单有一个共同初始化的确定有限控制器，恰用三次更新、
+四次实际Read后停止，输出一个全定义的 $W$ 值估计，并满足
+
+$$
+\mathcal E_\pi(\delta)
+ \le\sqrt{2\delta^2+(5\delta+\sqrt{50\delta})^2}
+ <14\sqrt\delta.
+\tag{46.12}
+$$
+
+证明。只依赖公开的误差上界选择
+
+$$
+\begin{aligned}
+\rho&=\delta/10,\qquad K=\sqrt{1-\rho^2},\\
+\alpha&=(3/5)K-(4/5)\rho,\qquad
+\nu=(4/5)K+(3/5)\rho,\qquad q=\alpha+\nu i.
+\end{aligned}
+\tag{46.13}
+$$
+
+$0<\rho\le1/10$ 给 $0<\alpha<3/5$、$\nu>4/5$、
+$\alpha^2+\nu^2=1$，并有 $\kappa\nu-\tau\alpha=\rho$。
+设 $h=\tau\nu-\kappa\alpha$，由定理45.4证明中的实际投影范围，半径7的
+投影模至多7，半径25的投影模至少 $25h$。其间隙为
+
+$$
+\begin{aligned}
+g&=25h-7=24\rho-7(1-K),\\
+g&\ge\frac{12}{5}\delta-\frac7{100}\delta^2
+ \ge\frac{233}{100}\delta>2\delta.
+\end{aligned}
+\tag{46.14}
+$$
+
+这里 $1-K=\rho^2/(1+K)\le\rho^2$。选原菜单中的单位纯虚控制
+
+$$
+c_1=j,\qquad c_2=-\alpha j+\nu k,
+\qquad c_1c_2=q,
+\tag{46.15}
+$$
+
+执行同一来源的实际事件序列
+
+$$
+\text{初Read},\ A_{c_1},\ \text{Read},\ A_{c_2},\
+\text{Read},\ A_d,\ \text{Read},\ \text{停止}.
+\tag{46.16}
+$$
+
+记四个实际报告为 $(y_0,y_1,y_2,y_3)\in E^4$；真实首锚投影为
+$w=\operatorname{Im}(bq)$，所以 $y_0=a+e_0$、$y_3=w+e_3$。
+所有动作及停止预先固定，两个中间报告仍实际取得并保留。
+
+以下估计在整个 $E^4$ 上全定义。令
+
+$$
+\begin{aligned}
+T&=(7+25h)/2,\\
+\widehat R&=
+ \begin{cases}7,&|y_3|\le T,\\25,&|y_3|>T,\end{cases}\\
+P_R(y)&=
+ \begin{cases}y,&|y|\le R,\\R y/|y|,&|y|>R,\end{cases}\\
+v&=P_{\widehat R}(y_3),\qquad
+\widehat s=\sqrt{\widehat R^2-|v|^2},\\
+\widehat a&=y_0,\qquad
+\widehat b=(\widehat s+v)q^{-1},\qquad
+\widehat x=(\widehat a,\widehat b)\in W.
+\end{aligned}
+\tag{46.17}
+$$
+
+在 $y=0$ 时使用投影的第一分支，不作除零；投影后根号恒非负。估计对全部四个
+报告全定义，忽略中间两个数值不使它们变成未执行的读口。
+
+对每个真实来源及每条合法实际误差记录，（46.14）给
+
+$$
+|b|=7\Longrightarrow |y_3|\le7+\delta<T,
+\qquad
+|b|=25\Longrightarrow |y_3|\ge25h-\delta>T.
+\tag{46.18}
+$$
+
+因此 $\widehat R$ 始终等于这个来源自己的初始半径 $R$，不是额外供应的标签。
+真实 $w$ 在闭球 $|w|\le R$ 中。复用§42的欧氏球投影不扩张性质及§43的根号模量，
+可得
+
+$$
+\begin{aligned}
+|v-w|&\le\delta,\\
+\left|\sqrt{R^2-|v|^2}-\sqrt{R^2-|w|^2}\right|^2
+ &\le\bigl||v|^2-|w|^2\bigr|\le2R\delta.
+\end{aligned}
+\tag{46.19}
+$$
+
+写真实 $bq=s+w$。$s\ge0$ 时真实实部就是正平方根。若 $s<0$，来源条件给
+$\nu\sqrt{R^2-s^2}-\alpha|s|\ge\tau R$；函数
+$G(t)=\nu\sqrt{1-t^2}-\alpha t$ 在 $[0,1]$ 上严格递减，
+$G(\rho)=\tau$，所以 $|s|\le R\rho$，与定理45.4的负分支界相同。
+无论哪种符号，都有
+
+$$
+|\widehat s-s|\le2R\rho+\sqrt{2R\delta}
+ \le5\delta+\sqrt{50\delta}.
+\tag{46.20}
+$$
+
+右乘 $q^{-1}$ 保持范数，实部与虚部正交，加上初读
+$|\widehat a-a|\le\delta$，得到（46.12）的第一个不等式。由于 $\delta\le1$，
+
+$$
+2\delta^2+(5\delta+\sqrt{50\delta})^2
+ \le(77+50\sqrt2)\delta<196\delta.
+\tag{46.21}
+$$
+
+全部四个误差只各自使用 $|e_j|\le\delta$，从未把它们相加后假设独立或平均，
+故结论覆盖联合对抗及历史相关的全部实际记录。可见初态的无界性不改变这个
+绝对误差界。证毕。
+
+**推论 46.4（固定来源的平方根律与二次精度条件）。** 对每个 $N\ge3$、
+$0<\delta\le1$，有
+
+$$
+5\sqrt\delta\le R_\infty(\delta)\le R_N(\delta)
+ \le\sqrt{2\delta^2+(5\delta+\sqrt{50\delta})^2}
+ <14\sqrt\delta.
+\tag{46.22}
+$$
+
+给定 $\varepsilon>0$，任何允许的控制器若对全部 INITIAL 及合法读误差保证
+$\mathcal E_\pi(\delta)\le\varepsilon$，则必要有
+
+$$
+\delta\le\varepsilon^2/25.
+\tag{46.23}
+$$
+
+反过来，若 $N\ge3$ 且
+
+$$
+0<\delta\le\min\{1,\varepsilon^2/196\},
+\tag{46.24}
+$$
+
+则定理46.3的实际三更新四Read控制器保证
+$\mathcal E_\pi(\delta)<\varepsilon$。两条数值条件分别是必要条件与充分条件，
+不把它们之间的常数间隔写成精确误差阈值。
+
+更精确地，对任意 $\delta(\varepsilon)\in(0,1]$ 和任意整数预算
+$N(\varepsilon)\ge3$，当 $\varepsilon\downarrow0$ 时，二次阶的充要关系为
+
+$$
+R_{N(\varepsilon)}(\delta(\varepsilon))=O(\varepsilon)
+\quad\Longleftrightarrow\quad
+\delta(\varepsilon)=O(\varepsilon^2).
+\tag{46.25}
+$$
+
+证明。$\mathcal P_N\subseteq\mathcal P_\infty$，所以相应下确界按（46.22）排序；
+两端由定理46.2、46.3给出。（46.23）平方正量下界即得，（46.24）代入严格上界
+即给明确控制器，而不是由下确界假设达到。对（46.25），若左侧以常数 $A$
+上界，则 $\delta(\varepsilon)\le(A/5)^2\varepsilon^2$；若右侧以常数 $B$
+上界，则 $R_{N(\varepsilon)}\le14\sqrt B\,\varepsilon$，且已有实际有限
+控制器实现这个阶。证毕。
+
+**命题 46.5（含全部实际误差的有理实例）。** 在定理46.3中取
+
+$$
+\delta=\frac{400}{401},\quad \rho=\frac{40}{401},\quad
+K=\frac{399}{401},\quad
+\alpha=\frac{1037}{2005},\quad \nu=\frac{1716}{2005},
+\tag{46.26}
+$$
+
+令初态为
+
+$$
+a=i+2j+3k,\qquad b=\frac{28}{5}+\frac{21}{5}i.
+\tag{46.27}
+$$
+
+执行（46.16），四次实际读误差依次为
+
+$$
+e_0=\frac{200}{401}i,\quad e_1=-\delta i,\quad
+e_2=\delta j,\quad e_3=\delta i.
+\tag{46.28}
+$$
+
+这是一条合法记录；全定义估计给
+
+$$
+\begin{aligned}
+\widehat a&=\frac{601}{401}i+2j+3k,\\
+\widehat b&=\frac{12012}{2005}+\frac{7259}{2005}i,\\
+|\widehat x-x|^2&=\frac{118596}{160801}.
+\end{aligned}
+\tag{46.29}
+$$
+
+证明。$399^2+40^2=401^2$ 及
+$1037^2+1716^2=2005^2$ 核对单位控制；$|b|=7$、
+$\operatorname{Re}b=(4/5)7$ 核对初始来源。由（46.26）直接算得
+
+$$
+g=\frac{946}{401}>2\delta=\frac{800}{401},\qquad
+T=\frac{3280}{401},\qquad
+bq=-\frac{280}{401}+\frac{2793}{401}i.
+\tag{46.30}
+$$
+
+两次内部更新的可见真实状态依次为
+$a_1=3i-k$ 和 $a_2=\alpha i+3\nu j+3\alpha k$。
+完整四次实际Read报告因而是
+
+$$
+\begin{aligned}
+y_0&=\frac{601}{401}i+2j+3k,\\
+y_1&=\frac{803}{401}i-k,\\
+y_2&=\frac{1037}{2005}i+\frac{7148}{2005}j+\frac{3111}{2005}k,\\
+y_3&=\frac{3193}{401}i.
+\end{aligned}
+\tag{46.31}
+$$
+
+每个误差都恰为（46.28），范数不超过 $\delta$，中间两读没有省略。
+$|y_3|<T$ 判得半径7，但 $|y_3|>7$，所以球投影为 $v=7i$，
+$\widehat s=0$，从而 $\widehat b=7i q^{-1}=7\nu+7\alpha i$。
+在右乘 $q$ 后，真实与估计的隐藏坐标差为
+$280/401+(14/401)i$，可见坐标差为 $(200/401)i$，平方相加为
+$(280^2+14^2+200^2)/401^2=118596/160801$。证毕。
+
+**约定 46.6（推导依赖与解释范围）。** 本节的承重推导是（46.9）的同层合法
+噪声对、（46.14）的可执行正间隙及（46.17）对全部实际记录的有限估计。
+同源正噪声与实际取得关系的文献表态为 `repo-derived`。
+原菜单状态律、首锚盲线、后续中点不变量、球面根号模量及临界方向分类分别复用
+§§40、43、42、45；共同记录的半距下界只用
+[Recovery Geometry §3](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)的
+既有候选纤维工具。这里没有把一般纤维中心公式另列为新内容，也没有由固定线性
+观察的恢复定理推出额外控制权限。
+
+同一个固定来源在零读误差下的风险下确界为零而单一控制器不达到，仍按定理45.3、
+45.4解释；每个正 $\delta\le1$ 则有（46.22）的统一非零阻塞，任意增加实际
+Read或原菜单更新也不消去它。三次更新是本节已构造的充分预算，不主张这是最小
+必要预算；精确正噪声 minimax 常数及完整预算相变不在这些不等式中。
+
+来源的联合内禀维数仍为6，局部方向Read仍在三维 $E$，环境载体 $W$ 为七维。
+这些维数与取得INITIAL、识别后来状态、读精度、有限位编码及物理成本分开。
+制备两个初始半径与球帽、校准、按（46.13）精确致动、记录、计算及存储都是
+明确供应的数学条件；更新与Read计数不是价格或位数。假设15.1的四项原生／物理桥
+——完整旋转关系、忠实位移、实际资源成本、共同环境的贯通与任务容量——仍全部
+未证。本节不从平方根精度律推出这些桥或三维物理空间。
+
+## 追加锚（本行以下为增补区）
