@@ -142,12 +142,36 @@ Use the [Caveney–Nicolas–Sondow source reduction](../Arith/caveney2012sacaga
 directly. Under its counterexample hypothesis, let $N>5040$ be the least
 integer attaining the global maximum of $G$ over that range. This is the
 selected extraordinary, CA source, not the least Robin counterexample.
-GA1 and GA2 imply $N\in U_1\subset U_{1,k}$ with $k$ its own support
+GA1 and GA2 imply $N\in U_1$ and $N\in U_{1,k}$ with $k$ its own support
 index, so $k\in E$. Initial CA prime support gives $N\in\widetilde W_k$.
-The source's upper estimate can therefore be applied once its cutoff is
-met. If also $T(p_k)>5040$, every member of $\widetilde W_k$ belongs to
-the global maximization domain, giving $\log G(N)=\widetilde g_k$.
-This last domain condition must be retained when combining both estimates.
+
+The small-support conditions can be discharged for this selected source
+by reusing existing results. If $k\le4$, all prime factors of $N$ lie
+in $\{2,3,5,7\}$. The repository's
+[seven-smooth Robin theorem](../../Blueprint/D5/S3/Arith/Robin/SevenSmooth.md),
+`robin_seven_smooth`, gives $G(N)<e^\gamma$, contradicting the selected
+counterexample-level maximum. Its exponents are unrestricted, so this
+exclusion has no finite enumeration cutoff. Hence $k>4$, and the
+endpoint conditions below give $\log N<p_{k+1}$ at this same integer.
+
+[Axler's existing valuation stop](../notes/axler2023robin.md), author
+version [2110.13478v3](https://arxiv.org/pdf/2110.13478v3), Theorem 1.4
+(published Theorem 3), gives strict Robin for $N>5040$ with
+$v_2(N)\le20$. Thus $v_2(N)\ge21$ at the selected source. If $k=5$,
+the endpoint would give $\log N<13$, whereas
+$\log N\ge21\log2>13$. Therefore $k\ge6$, $P\ge13$, and
+
+$$
+T(P)\ge T(13)=30030>5040.
+$$
+
+Every member of $\widetilde W_k$ consequently belongs to the selected
+global maximization domain, and $\log G(N)=\widetilde g_k$ without an
+extra support-size hypothesis. This is a paper application of the cited
+source conditions and existing seven-smooth theorem, not a new valuation
+bound, enumeration, Lean declaration, or signed Robin estimate.
+The source's asymptotic estimates still require their own
+$k>K_\varepsilon$ cutoff; $k\ge6$ does not pay that requirement.
 
 Consequently the asymptotic calibration along such sources with unbounded
 support is
