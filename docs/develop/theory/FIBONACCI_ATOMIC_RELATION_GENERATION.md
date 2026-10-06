@@ -63267,3 +63267,127 @@ $$
 **对原路线的含义。** §397 的全 $x>1$ 显式二次对数上界仍成立；本节固定 $x$ 的 更精确的估计把充分可和条件从该粗界要求的 $p>3$ 降至精确的 $p>2$。例如 $p=4$ 的固定 $x$ 绝对尾阶为 $O_x(\log\log M/(\log M)^2)$，但未给 $C_H$ 的数值证书，也不能取代原全参数显式预算。对于任意满足 $|H_m|\le Bm/(\log m)^p$ 的输入，$p>2$ 保证其绝对预算有限；$p\le2$ 的饱和正输入说明仅凭这份增长上界不能保证可和。这个比较输入不是把真实 Fibonacci $H_m$ 改成正序列。
 
 由（416.1），每个足够晚的单块内取绝对值的相对费用趋于零；完整 Robin 难点仍包含跨不同 $m$ 的实际 $H_m$ 符号关系，以及同时变化的观察尺度。§398 的对角尺度 $x=m$ 有另外的主项，本节固定 $x$ 的结论不运输到那个尺度，不证明 Robin 全称符号或 RH。
+## 417. 实际素层返回包的两矩证书需要增长的相对分辨率
+
+**定义 417.1（同一实际激活来源的有限包）。** 沿用 §§98、111 的无约束压力、激活尺度 $\tau_{p,k}$ 和包含全部同价层的右连续规模 $A=A^+$。令 $a<b$ 为事件外的严格稳定自匹配根，即
+
+$$
+a,b\notin\mathcal E,\qquad A(a)=a,\qquad A(b)=b,
+\qquad L=b-a.
+$$
+
+把两端之间全部实际激活层保留为有限概率测度
+
+$$
+\mu_{a,b}=\frac1L\sum_{a<\tau_{p,k}<b}(\log p)\,\delta_{\tau_{p,k}}.
+\tag{417.1}
+$$
+
+总质量为 $[A(b)-A(a)]/L=1$；同时激活层各保留自身权重，两个端点没有原子。令 $m=\int t\,d\mu_{a,b}$、$V=\int(t-m)^2d\mu_{a,b}$，并定义显式两矩表达式
+
+$$
+\begin{aligned}
+g(t)&=\frac1{t\log t},&
+r&=m-\frac V{b-m},&
+\alpha&=\frac{b-m}{b-r},\\
+H_{a,b}&=\alpha g(r)+(1-\alpha)g(b),&
+\overline g_{a,b}&=\frac{\log\log b-\log\log a}{b-a}.
+\end{aligned}
+\tag{417.2}
+$$
+
+有限支撑位于 $(a,b)$，故 $b-m>0$。经典有界支撑方差界 $V\le(m-a)(b-m)$ 给 $r\ge a>1$，因此表达式有定义；$V=0$ 时 $r=m$、$\alpha=1$。该方差界及同一 $H_{a,b}$ 的最优期望下界直接复用 [Mantovanelli 存档原稿](../../../Library/Analytic/mantovanelli2026primeworkload.md)，§7.4、Theorem 7.7（源码 `thm:sharp-two-moment`）；不另立一般矩或求积定理。
+
+**定理 417.2（固定相对宽度和无界比例均不足以触发该证书）。** 对每个固定 $d>0$，存在 $X_d>1$，使全部实际根对
+
+$$
+a\ge X_d,\qquad b\ge(1+d)a
+$$
+
+都满足
+
+$$
+\boxed{H_{a,b}<\overline g_{a,b}.}
+\tag{417.3}
+$$
+
+不提供有效数值截止，也不声称截止统一于 $d\downarrow0$。特别地，若实际包列 $a_n\to\infty$ 满足 $H_{a_n,b_n}>\overline g_{a_n,b_n}$，则必须 $b_n/a_n\to1$。
+
+证明。§111.2 所用的已有层尺度分解和普通 PNT 给 $A^-(t)=t+o(t)$。$A^+$ 是 $A^-$ 的右极限；对充分大实数上的同一尾部界取右极限，直接得到 $A^+(t)=t+o(t)$，不需要独立的跳幅假设。下文只使用这一已有无条件供应器。
+
+[同一原稿](../../../Library/Analytic/mantovanelli2026primeworkload.md) Proposition 7.6（源码 `prop:moment-workload`）已给出完整矩—负载对应。对其实际激活测度应用既有 Stieltjes 分部求和，端点恰为 $A(a)=a$、$A(b)=b$，得到本处的前向矩写法
+
+$$
+\begin{aligned}
+m&=\frac{a+b}{2}-\frac1L\int_a^b[A(t)-t]dt,\\
+\int t^2d\mu_{a,b}
+&=\frac{a^2+ab+b^2}{3}-\frac2L\int_a^b t[A(t)-t]dt.
+\end{aligned}
+\tag{417.4}
+$$
+
+这里的部分求和是经典工具的应用；两个矩、两个端点及全部误差始终来自同一实际包。
+
+先取任意实际包列 $a\to\infty$、$b/a\to c\in(1,\infty)$。由 $A(t)=t+o(t)$ 在这同一增长区间上的尾部一致性，（417.4）给
+
+$$
+\frac ma\to\frac{1+c}{2},\qquad
+\frac V{a^2}\to\frac{(c-1)^2}{12},\qquad
+\frac ra\to\frac{c+2}{3},\qquad
+\alpha\to\frac34.
+\tag{417.5}
+$$
+
+因 $\log(ta)/\log a\to1$ 对远离零的有界 $t$ 一致，有
+
+$$
+\begin{aligned}
+a\log a\,H_{a,b}&\longrightarrow\frac9{4(c+2)}+\frac1{4c},\\
+a\log a\,\overline g_{a,b}&\longrightarrow\frac{\log c}{c-1}.
+\end{aligned}
+\tag{417.6}
+$$
+
+第二个常数严格较大。为核对严格方向，令
+
+$$
+F(c)=\log c-\frac{(c-1)(5c+1)}{2c(c+2)}.
+$$
+
+直接代数给 $F(1)=0$、$F'(c)=(c-1)^3/[c^2(c+2)^2]>0$。两个常数的差为 $F(c)/(c-1)>0$；例如 $c=2$ 时是 $\log2-11/16>0$。这是经典两节点求积损失的标量归一化，不另计为一般矩定理。因此这类序列上最终有（417.3）。
+
+再取 $a\to\infty$、$b/a\to\infty$ 的实际包列。仍由（417.4），以 $b$ 归一化得到
+
+$$
+\frac mb\to\frac12,\qquad
+\frac V{b^2}\to\frac1{12},\qquad
+\frac rb\to\frac13,\qquad
+\alpha\to\frac34,
+$$
+
+从而 $b\log b\,H_{a,b}\to5/2$。另一方面，经典 $\log u\ge1-1/u$ 在 $u=\log b/\log a>1$ 上给
+
+$$
+b\log b\,\overline g_{a,b}
+=\frac b{b-a}\log b\log\frac{\log b}{\log a}
+\ge\frac b{b-a}\log\frac ba\longrightarrow\infty.
+\tag{417.7}
+$$
+
+因此 $H_{a,b}/\overline g_{a,b}\to0$，该类序列也最终满足（417.3）。
+
+若固定 $d$ 的统一结论不成立，可选坏包列 $a_n\to\infty$、$b_n/a_n\ge1+d$、$H_{a_n,b_n}\ge\overline g_{a_n,b_n}$。比例有界的子列再取收敛子列，其极限 $c\ge1+d$，与（417.6）矛盾；比例无界的子列可再取趋于无穷的子列，与（417.7）矛盾。两种情况穷尽，得到（417.3）。成功列若比例不趋于1，则某个固定 $d>0$ 上仍有无穷子列，同样矛盾。$\square$
+
+**边界 417.3（增长分辨率与尚未支付的符号）。** 既有 §98 的完整裕度 $\mathfrak D$ 在这些实际根处满足
+
+$$
+\mathfrak D(b)-\mathfrak D(a)
+=L\left(\overline g_{a,b}-\int g\,d\mu_{a,b}\right).
+\tag{417.8}
+$$
+
+[Mantovanelli 的既有 Theorem 7.7](../../../Library/Analytic/mantovanelli2026primeworkload.md) 给 $\int g\,d\mu_{a,b}\ge H_{a,b}$，因此 $H_{a,b}>\overline g_{a,b}$ 给完整裕度的严格下降，仍不给任一端点的正性。定理417.2只排除固定相对宽度上这条充分证书；它不排除真实包的下降、其他同源比较或 RH。
+
+五模式地址的尺度运输不能把实际激活测度替换成区间长度律。固定倍率的 FIB 窗口若用于这条证书，最终损失过大；提高地址分辨率可以使窗口相对宽度趋零，却不能强迫它的真实均值、方差或（417.2）的严格方向。原目标仍须从每个相关的潜在非正自匹配谷底取得足够的实际有符号比较，并接回完整 Robin；小窗口条件本身不承担这一义务。
+
+## 追加锚（本行以下为增补区）
