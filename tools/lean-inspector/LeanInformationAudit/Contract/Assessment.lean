@@ -1,4 +1,4 @@
-import LeanInformationAudit.Contract.Discovery
+import LeanInformationAudit.Contract.DiscoveryCompiler
 
 namespace LeanInformationAudit.TypedAssessment
 open LeanInformationAudit.Contract

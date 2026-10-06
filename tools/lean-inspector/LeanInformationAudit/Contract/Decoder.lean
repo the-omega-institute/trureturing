@@ -1,11 +1,11 @@
-import LeanInformationAudit.Registry
+import LeanInformationAudit.RegistrationData
 import LeanInformationAudit.Contract.Literal
 import LeanInformationAudit.Contract.CompiledExpressions
 import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditInterface.Contract.Catalog
 
 namespace LeanInformationAudit.Contract.Decoder
-open Lean Meta
+open Lean
 open D5.S3.ConceptDynamics.InformationEscape
 
 structure CompanionInput where
@@ -17,10 +17,8 @@ structure CompanionInput where
   positive : Option Expr
   unit : Option Expr
 
-def liftLiteral {α : Type} (value : Except String α) : MetaM α :=
-  match value with
-  | .ok value => pure value
-  | .error error => throwError "{error}"
+def liftLiteral {α : Type} [Monad m] [MonadLiftT IO m]
+    (value : Except String α) : m α := liftM (IO.ofExcept value)
 
 /-- Follow at most 4096 compiled definition references. Applications,
 projections and recursors require computation and have no decoding route. -/
@@ -197,7 +195,7 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
       let arena := implementationArgs[1]!
       let arenaType ← CompiledExpressions.head (← CompiledExpressions.typeShape arena)
       let law := if witness then
-        mkApp (mkConst (RegistrationElaboration.witnessArenaName.str "toPrimitiveLawArena")
+        mkApp (mkConst ((`D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessArena).str "toPrimitiveLawArena")
           arenaType.getAppFn.constLevels!) arena else arena
       let signature := Expr.proj ``PrimitiveLawArena 1 law
       let readouts ← CompiledExpressions.partialSlotStates values[0]!

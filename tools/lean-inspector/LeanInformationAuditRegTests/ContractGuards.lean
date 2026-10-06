@@ -1,5 +1,5 @@
 import LeanInformationAuditRegTests.ContractAssertions
-import LeanInformationAudit.Contract.Discovery
+import LeanInformationAudit.Contract.DiscoveryCompiler
 import LeanInformationAudit.Contract.InterfaceGuard
 import D5.S3.ConceptDynamics.InformationEscape.Arena
 
@@ -23,6 +23,21 @@ abbrev referenceForm : LeanInformationAudit.Contract.Seal.{0,0} := structureForm
 
 def updatedForm : LeanInformationAudit.Contract.Seal.{0,0} :=
   { structureForm with rootId := metadataRoot, catalogs := #[], options := #[] }
+
+def delayedSeal (_ : Unit) : LeanInformationAudit.Contract.Seal.{0,0} := structureForm
+
+run_meta do
+  let delayed ← getConstInfo ``delayedSeal
+  assertTest "discovery.function_returning_contract_is_input"
+    (LeanInformationAudit.Contract.SourceAudit.isInput delayed)
+  assertTest "discovery.function_returning_contract_cannot_decode"
+    (match LeanInformationAudit.Contract.SourceAudit.checkInputDefinition delayed with
+      | .error reason => reason == s!"contract.cannot_decode:{delayed.name}:computed_type"
+      | .ok _ => false)
+  for name in #[``LeanInformationAudit.Contract.Seal.mk,
+      ``LeanInformationAudit.Contract.Seal.rec] do
+    assertTest "discovery.compiler_schema_declaration_is_not_input"
+      (!LeanInformationAudit.Contract.SourceAudit.isInput (← getConstInfo name))
 
 run_meta do
   for name in #[``structureForm, ``constructorForm, ``referenceForm, ``updatedForm] do

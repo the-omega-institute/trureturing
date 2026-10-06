@@ -12,10 +12,13 @@ def heads : Array Name := #[
 
 /-- Type heads and data constructors identify schema inputs without source text. -/
 def isInput (info : ConstantInfo) : Bool :=
-  heads.contains (info.type.getAppFn.constName?.getD .anonymous) ||
-    (!info.type.getForallBody.isSort &&
-      heads.any fun head => (info.value? (allowOpaque := true)).any fun value =>
-        value.consumeMData.getAppFn.isConstOf (head.str "mk"))
+  match info with
+  | .inductInfo _ | .ctorInfo _ | .recInfo _ | .quotInfo _ => false
+  | _ =>
+    heads.contains (info.type.getForallBody.getAppFn.constName?.getD .anonymous) ||
+      (!info.type.getForallBody.isSort &&
+        heads.any fun head => (info.value? (allowOpaque := true)).any fun value =>
+          value.consumeMData.getLambdaBody.consumeMData.getAppFn.isConstOf (head.str "mk"))
 
 /-- The compiler input schema, independent of the source declaration syntax. -/
 def checkInputDefinition (info : ConstantInfo) : Except String DefinitionVal := do

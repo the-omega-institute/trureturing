@@ -1,5 +1,5 @@
 import LeanInformationAudit.Registry.Repository
-import LeanInformationAudit.RuntimeInputs
+import LeanInformationAudit.RegistrationData
 
 namespace LeanInformationAudit.Contract.RootStructure
 open Lean
@@ -42,13 +42,6 @@ def requiredFor (owners : Array Name) (sourceOf : Name → IO System.FilePath)
       throw <| IO.userError s!"contract.root_structure:required_source_missing:{owner}"
     result := result.push ⟨owner, owner, kindFromPath path⟩
   return result
-
-/-- The loaded Reg source tree fixes obligations before candidate discovery.
-Unmoved legacy files are ordinary under this rule; their typed-entry migration
-state is measured separately rather than inferred from legacy catalog commands. -/
-def required (env : Environment) : IO (Array Requirement) :=
-  requiredFor (env.header.moduleNames.push env.header.mainModule |>.filter ((`Reg).isPrefixOf ·))
-    fun owner => Repository.source (owner.toString.replace "." "/" ++ ".lean")
 
 /-- Required owners cannot disappear through the discover module filter. -/
 def checkScope (requirements : Array Requirement) (modules : Array Name) : Except String Unit := do

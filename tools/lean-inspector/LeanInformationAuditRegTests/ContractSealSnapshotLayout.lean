@@ -1,5 +1,5 @@
 import LeanInformationAuditRegTests.ContractControl
-import LeanInformationAudit.Contract.Discovery
+import LeanInformationAudit.Contract.DiscoveryCompiler
 import LeanInformationAudit.SealCommand
 
 namespace LeanInformationAuditRegTests.ContractSealSnapshotLayout
