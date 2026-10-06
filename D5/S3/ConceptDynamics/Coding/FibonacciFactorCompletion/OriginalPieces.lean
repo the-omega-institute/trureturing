@@ -1,5 +1,7 @@
 /- GID: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/OriginalPieces
    generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/OriginalPieces
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: A selected competing scalar lifts one fixed tail through every original full-containing piece path. -/

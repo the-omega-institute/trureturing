@@ -1,5 +1,7 @@
 /- GID: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry
    generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Legal supported tails and owned intervals control competing scalar orbits. -/

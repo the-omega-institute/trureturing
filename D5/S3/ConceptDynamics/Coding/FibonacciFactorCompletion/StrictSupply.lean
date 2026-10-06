@@ -1,5 +1,7 @@
 /- GID: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply
    generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Actual boundaries and active costs control the same paired source supply. -/

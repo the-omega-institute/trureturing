@@ -1,5 +1,7 @@
 /- GID: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ResetCodebook
    generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ResetCodebook
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Positive reset blocks tile one bilateral letter realization with exact guards. -/

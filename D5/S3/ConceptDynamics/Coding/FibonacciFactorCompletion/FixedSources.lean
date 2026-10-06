@@ -1,5 +1,7 @@
 /- GID: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FixedSources
    generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FixedSources
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Fixed literal tails supply every history and common-stem operation counts. -/

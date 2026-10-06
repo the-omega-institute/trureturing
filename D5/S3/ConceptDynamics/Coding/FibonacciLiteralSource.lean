@@ -1,5 +1,7 @@
 /- GID: D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource
    generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/FibonacciLiteralSource
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Literal five-label Fibonacci sources retain one suffix coordinate at every occurrence. -/
