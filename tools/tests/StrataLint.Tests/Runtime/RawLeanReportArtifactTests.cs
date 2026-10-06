@@ -278,74 +278,17 @@ public sealed class RawLeanReportArtifactTests
     {
         const string unicodeSource = "def term𝒪φ : Nat := 1\n";
         using var repository = new TemporaryDirectory();
-        var manifest = Path.Combine(repository.Path, LeanReportRegistrationFixture.ManifestPath);
-        File.WriteAllText(manifest, LeanReportRegistrationFixture.Manifest);
-        File.WriteAllText(
-            Path.Combine(repository.Path, "lakefile.toml"),
+        File.WriteAllText(Path.Combine(repository.Path, "lakefile.toml"),
             "name = \"producer_probe\"\nversion = \"0.1.0\"\ndefaultTargets = [\"Trureturing\"]\n\n[[lean_lib]]\nname = \"Trureturing\"\n",
             new UTF8Encoding(false));
-        File.WriteAllText(
-            Path.Combine(repository.Path, "lean-toolchain"),
-            "leanprover/lean4:v4.31.0\n",
-            new UTF8Encoding(false));
-        File.WriteAllText(
-            Path.Combine(repository.Path, "Trureturing.lean"),
-            unicodeSource,
-            new UTF8Encoding(false));
-        var build = TestProcessRunner.Run(
-            "lake",
-            ["build"],
-            repository.Path,
-            TestBudgets.LeanProcessHangGuard,
-            8 * 1024 * 1024);
-        Assert.True(
-            build.ExitCode == 0,
-            Encoding.UTF8.GetString(build.StandardOutput) + Encoding.UTF8.GetString(build.StandardError));
-        var output = Path.Combine(repository.Path, "raw-lean-report.json");
-        var spoolReport = output + ".spool.json";
-        var spoolMaterials = output + ".spool-materials";
-        var inspector = Path.Combine(
-            TestRepositoryLayout.FindRoot(),
-            "tools", "lean-inspector",
-            "Inspector.lean");
-        var sourceHash = "sha256:" + Convert.ToHexStringLower(
-            SHA256.HashData(Encoding.UTF8.GetBytes(unicodeSource)));
-
-        var inspected = TestProcessRunner.Run(
-            "lake",
-            [
-                "env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector, "--statements-only",
-                "--output", spoolReport,
-                "--material-spool", spoolMaterials,
-                "Trureturing", "Trureturing.lean", sourceHash,
-            ],
-            repository.Path,
-            TestBudgets.LeanProcessHangGuard,
-            8 * 1024 * 1024);
-
-        Assert.True(
-            inspected.ExitCode == 0,
-            Encoding.UTF8.GetString(inspected.StandardOutput)
-                + Encoding.UTF8.GetString(inspected.StandardError));
-        var compacted = TestProcessRunner.Run(
-            "python3",
-            [
-                Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "materials.py"),
-                "compact", spoolReport, spoolMaterials, output, manifest,
-            ],
-            repository.Path,
-            TestBudgets.LeanProcessHangGuard,
-            8 * 1024 * 1024);
-        Assert.True(
-            compacted.ExitCode == 0,
-            Encoding.UTF8.GetString(compacted.StandardOutput)
-                + Encoding.UTF8.GetString(compacted.StandardError));
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "lean-toolchain"),
+            Path.Combine(repository.Path, "lean-toolchain"));
         var raw = RawRepositorySnapshot.Create(new[]
         {
             RawRepositoryEntry.FromText("Trureturing.lean", unicodeSource),
         });
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
-        var report = RawLeanReportArtifact.ReadFile(output, snapshot);
+        var report = new StandaloneLeanInspectorTests.TestLeanReportProducer(repository.Path).Inspect(snapshot);
         Assert.Contains(
             report.Files.Single().Value.Declarations,
             declaration => declaration.Name == "term𝒪φ");

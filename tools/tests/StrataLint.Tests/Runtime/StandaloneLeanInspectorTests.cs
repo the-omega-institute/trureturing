@@ -456,7 +456,7 @@ public sealed class StandaloneLeanInspectorTests
             report.Error) { InformationRegistrationErrors = report.InformationRegistrationErrors };
     }
 
-    private sealed class TestLeanReportProducer(string repositoryRoot)
+    internal sealed class TestLeanReportProducer(string repositoryRoot)
     {
         internal LeanAxiomReport Inspect(RepositorySnapshot snapshot)
         {
