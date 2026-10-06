@@ -4,10 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Same-noise centered squares on finite symmetric kernel sums. -/
+   digest: Same-noise second integral on the full symmetric product-measure L2 space. -/
 
-import D5.S3.Fourier.Asymptotics.GaussianEvenMoment
+import D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticFourthMoment
 import Mathlib.Analysis.Normed.Operator.Extend
+import Mathlib.Analysis.InnerProductSpace.Projection.Submodule
+import Mathlib.MeasureTheory.Function.AEEqOfIntegral
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.MeasureTheory.Function.L2Space
 import Mathlib.MeasureTheory.Function.LpSpace.Indicator
@@ -92,6 +94,111 @@ theorem rankOne_inner (f g h k : Lp ℝ 2 μ) :
     _ = _ := integral_prod_mul (μ := μ) (ν := μ)
       (fun x : X => h x * f x) (fun x : X => k x * g x)
 
+private theorem rankOne_total (k : Lp ℝ 2 (μ.prod μ))
+    (hk : ∀ f g : Lp ℝ 2 μ, ⟪rankOne μ f g, k⟫ = 0) : k = 0 := by
+  have hi : Integrable k (μ.prod μ) := (Lp.memLp k).integrable (by norm_num)
+  have hr (s t : Set X) (hs : MeasurableSet s) (ht : MeasurableSet t) :
+      (∫ z in s ×ˢ t, k z ∂μ.prod μ) = 0 := by
+    let f : Lp ℝ 2 μ := indicatorConstLp 2 hs (measure_ne_top μ s) 1
+    let g : Lp ℝ 2 μ := indicatorConstLp 2 ht (measure_ne_top μ t) 1
+    have hf : f =ᵐ[μ] s.indicator (fun _ => (1 : ℝ)) := indicatorConstLp_coeFn
+    have hg : g =ᵐ[μ] t.indicator (fun _ => (1 : ℝ)) := indicatorConstLp_coeFn
+    have hf' := (quasiMeasurePreserving_fst (μ := μ) (ν := μ)).ae_eq hf
+    have hg' := (quasiMeasurePreserving_snd (μ := μ) (ν := μ)).ae_eq hg
+    have he : ⟪rankOne μ f g, k⟫ = ∫ z in s ×ˢ t, k z ∂μ.prod μ := by
+      rw [L2.inner_def, ← integral_indicator (hs.prod ht)]
+      apply integral_congr_ae
+      filter_upwards [rankOne_coe μ f g, hf', hg'] with z hz hzf hzg
+      simp only [RCLike.inner_apply, conj_trivial, Function.comp_def] at *
+      rw [hz, hzf, hzg]
+      by_cases hzs : z.1 ∈ s <;> by_cases hzt : z.2 ∈ t <;>
+        simp [Set.mem_prod, hzs, hzt]
+    rw [← he]; exact hk f g
+  have hu : (∫ z, k z ∂μ.prod μ) = 0 := by
+    simpa using hr Set.univ Set.univ MeasurableSet.univ MeasurableSet.univ
+  have hall (s : Set (X × X)) (hs : MeasurableSet s) :
+      (∫ z in s, k z ∂μ.prod μ) = 0 := by
+    refine MeasurableSpace.induction_on_inter generateFrom_prod.symm
+      isPiSystem_prod ?_ ?_ ?_ ?_ s hs
+    · simp
+    · rintro _ ⟨a, ha, b, hb, rfl⟩
+      exact hr a b ha hb
+    · intro t ht hzero
+      have h := integral_add_compl ht hi
+      rw [hzero, hu, zero_add] at h
+      exact h
+    · intro f hd hm hz
+      rw [integral_iUnion hm hd hi.integrableOn]
+      simp [hz]
+  apply Lp.ext
+  exact (hi.ae_eq_zero_of_forall_setIntegral_eq_zero
+    (fun s hs _ => hall s hs)).trans (Lp.coeFn_zero ℝ 2 (μ.prod μ)).symm
+
+private theorem kernelFlip_rankOne (f g : Lp ℝ 2 μ) :
+    kernelFlip μ (rankOne μ f g) = rankOne μ g f := by
+  apply Lp.ext
+  have hf := rankOne_coe μ f g
+  have hswap := (measurePreserving_swap (μ := μ) (ν := μ)).quasiMeasurePreserving.ae_eq hf
+  have hflip := Lp.coeFn_compMeasurePreserving (rankOne μ f g)
+    (measurePreserving_swap (μ := μ) (ν := μ))
+  filter_upwards [hflip, hswap, rankOne_coe μ g f] with z hz hs hr
+  change rankOne μ f g (Prod.swap z) = f z.2 * g z.1 at hs
+  exact hz.trans (hs.trans ((mul_comm _ _).trans hr.symm))
+
+private theorem diagonal_add (f g : Lp ℝ 2 μ) :
+    rankOne μ (f + g) (f + g) = rankOne μ f f + rankOne μ f g +
+      rankOne μ g f + rankOne μ g g := by
+  apply Lp.ext
+  have ha := Lp.coeFn_add f g
+  have ha1 := (quasiMeasurePreserving_fst (μ := μ) (ν := μ)).ae_eq ha
+  have ha2 := (quasiMeasurePreserving_snd (μ := μ) (ν := μ)).ae_eq ha
+  filter_upwards [rankOne_coe μ (f + g) (f + g), rankOne_coe μ f f,
+    rankOne_coe μ f g, rankOne_coe μ g f, rankOne_coe μ g g,
+    Lp.coeFn_add (rankOne μ f f + rankOne μ f g + rankOne μ g f) (rankOne μ g g),
+    Lp.coeFn_add (rankOne μ f f + rankOne μ f g) (rankOne μ g f),
+    Lp.coeFn_add (rankOne μ f f) (rankOne μ f g), ha1, ha2] with z h hff hfg hgf hgg h3 h2 h1 ha1 ha2
+  simp only [Function.comp_def, Pi.add_apply] at ha1 ha2
+  simp only [Pi.add_apply] at h3 h2 h1
+  rw [h, h3, h2, h1, hff, hfg, hgf, hgg, ha1, ha2]
+  ring
+
+instance symmetricKernel_complete : CompleteSpace (symmetricKernel μ) := by
+  let T : Lp ℝ 2 (μ.prod μ) →L[ℝ] Lp ℝ 2 (μ.prod μ) :=
+    (kernelFlip μ).toContinuousLinearMap - ContinuousLinearMap.id ℝ _
+  have hc : IsClosed (symmetricKernel μ : Set (Lp ℝ 2 (μ.prod μ))) := T.isClosed_ker
+  exact hc.completeSpace_coe
+
+/-- The actual diagonal-kernel finite map has dense range in the full symmetric L² space. -/
+theorem finiteKernelMap_dense : DenseRange (finiteKernelMap μ) := by
+  have hclosure : (LinearMap.range (finiteKernelMap μ)).topologicalClosure = ⊤ := by
+    rw [Submodule.topologicalClosure_eq_top_iff, Submodule.eq_bot_iff]
+    intro k hk
+    have hd (f : Lp ℝ 2 μ) : ⟪rankOne μ f f, k.val⟫ = 0 := by
+      have hf : diagonalKernel μ f ∈ LinearMap.range (finiteKernelMap μ) := by
+        refine ⟨Finsupp.single f 1, ?_⟩
+        simp [finiteKernelMap]
+      have h := (Submodule.mem_orthogonal _ k).mp hk (diagonalKernel μ f) hf
+      exact h
+    have hsym : kernelFlip μ k.val = k.val := by
+      have h := k.property
+      change kernelFlip μ k.val - k.val = 0 at h
+      exact sub_eq_zero.mp h
+    have hf (f g : Lp ℝ 2 μ) : ⟪rankOne μ f g, k.val⟫ = ⟪rankOne μ g f, k.val⟫ := by
+      have h := (kernelFlip μ).inner_map_map (rankOne μ f g) k.val
+      rw [kernelFlip_rankOne μ f g, hsym] at h
+      exact h.symm
+    have hz : k.val = 0 := rankOne_total μ k.val (by
+      intro f g
+      have h := hd (f + g)
+      rw [diagonal_add μ f g, inner_add_left, inner_add_left, inner_add_left,
+        hd f, hd g, ← hf f g] at h
+      linarith)
+    exact Subtype.ext hz
+  rw [DenseRange, dense_iff_closure_eq]
+  rw [← LinearMap.coe_range, ← Submodule.topologicalClosure_coe, hclosure]
+  rfl
+
+
 end Spatial
 
 section SameNoise
@@ -151,7 +258,7 @@ theorem fourthMoment (f : Lp ℝ 2 μ) :
   have hv : (‖f‖ ^ 2).toNNReal = ‖f‖₊ ^ 2 := by
     apply NNReal.eq
     simp [Real.coe_toNNReal _ (sq_nonneg _)]
-  have h := GaussianEvenMoment.centralMoment_two_mul 0 ‖f‖₊ 2
+  have h := CountableGaussianQuadraticFourthMoment.centralMoment_two_mul 0 ‖f‖₊ 2
   have hs : (∫ x : ℝ, x^4 ∂gaussianReal 0 (‖f‖ ^ 2).toNNReal) = 3 * ‖f‖^4 := by
     rw [hv]
     simpa [centralMoment, integral_id_gaussianReal, mul_comm] using h
@@ -364,6 +471,141 @@ theorem finiteSecondIntegral_apply (c : Lp ℝ 2 μ →₀ ℝ) :
       ⟨finiteKernelMap μ c, LinearMap.mem_range_self _ c⟩ = finiteNoiseMap μ P W hW c := by
   exact LinearMap.compLeftInverse_apply_of_bdd _ _
     ⟨Real.sqrt 2, finiteBound μ P W hW⟩ c _ rfl
+
+/-- The continuous same-W second integral on all actual symmetric product-space kernels. -/
+def secondIntegral : symmetricKernel μ →L[ℝ] Lp ℝ 2 P :=
+  (finiteNoiseMap μ P W hW).extendOfNorm (finiteKernelMap μ)
+
+private theorem secondIntegral_apply (c : Lp ℝ 2 μ →₀ ℝ) :
+    secondIntegral μ P W hW (finiteKernelMap μ c) = finiteNoiseMap μ P W hW c :=
+  LinearMap.extendOfNorm_eq (finiteKernelMap_dense μ)
+    ⟨Real.sqrt 2, finiteBound μ P W hW⟩ c
+
+private theorem secondIntegral_diagonal (f : Lp ℝ 2 μ) :
+    secondIntegral μ P W hW (diagonalKernel μ f) = centeredSquare μ P W hW f := by
+  simpa [finiteKernelMap, finiteNoiseMap] using
+    secondIntegral_apply μ P W hW (Finsupp.single f 1)
+
+private theorem secondIntegral_inner (k l : symmetricKernel μ) :
+    ⟪secondIntegral μ P W hW k, secondIntegral μ P W hW l⟫ = 2 * ⟪k, l⟫ := by
+  refine (finiteKernelMap_dense μ).induction_on₂
+    (p := fun k l => ⟪secondIntegral μ P W hW k, secondIntegral μ P W hW l⟫ = 2 * ⟪k, l⟫)
+    (isClosed_eq (by fun_prop) (by fun_prop)) ?_ k l
+  intro c b
+  rw [secondIntegral_apply, secondIntegral_apply]
+  exact finiteGram μ P W hW c b
+
+private theorem secondIntegral_norm (k : symmetricKernel μ) :
+    ‖secondIntegral μ P W hW k‖ = Real.sqrt 2 * ‖k‖ := by
+  have h := secondIntegral_inner μ P W hW k k
+  rw [real_inner_self_eq_norm_sq, real_inner_self_eq_norm_sq] at h
+  have hs : (Real.sqrt 2)^2 = 2 := Real.sq_sqrt (by norm_num)
+  have he : (Real.sqrt 2 * ‖k‖)^2 = 2 * ‖k‖^2 := by rw [mul_pow, hs]
+  have hn : 0 ≤ Real.sqrt 2 * ‖k‖ := by positivity
+  nlinarith [norm_nonneg (secondIntegral μ P W hW k)]
+
+omit hW in
+private theorem inner_one_integral (Z : Lp ℝ 2 P) :
+    ⟪(memLp_const (1 : ℝ) (p := 2) (μ := P)).toLp (fun _ => 1), Z⟫ = ∫ ω, Z ω ∂P := by
+  rw [L2.inner_def]
+  apply integral_congr_ae
+  filter_upwards [(memLp_const (1 : ℝ) (p := 2) (μ := P)).coeFn_toLp] with ω hω
+  simp only [RCLike.inner_apply, conj_trivial]
+  rw [hω, mul_one]
+
+private theorem centeredSquare_mean (f : Lp ℝ 2 μ) :
+    (∫ ω, centeredSquare μ P W hW f ω ∂P) = 0 := by
+  calc
+    _ = ∫ ω, (W f ω)^2 - ‖f‖^2 ∂P := integral_congr_ae (centeredSquare_coe μ P W hW f)
+    _ = (∫ ω, (W f ω)^2 ∂P) - ∫ _ : Ω, ‖f‖^2 ∂P :=
+      integral_sub (Lp.memLp (W f)).integrable_sq (integrable_const _)
+    _ = 0 := by rw [secondMoment μ P W f]; simp
+
+private theorem secondIntegral_mean (k : symmetricKernel μ) :
+    (∫ ω, secondIntegral μ P W hW k ω ∂P) = 0 := by
+  rw [← inner_one_integral P]
+  refine (finiteKernelMap_dense μ).induction_on k
+    (p := fun k => ⟪(memLp_const (1 : ℝ) (p := 2) (μ := P)).toLp (fun _ => 1),
+      secondIntegral μ P W hW k⟫ = 0)
+    (isClosed_eq (by fun_prop) continuous_const) ?_
+  intro c
+  rw [secondIntegral_apply]
+  classical
+  simp only [finiteNoiseMap, Finsupp.linearCombination_apply, Finsupp.inner_sum,
+    real_inner_smul_right]
+  simp only [inner_one_integral P, centeredSquare_mean μ P W hW,
+    mul_zero, Finsupp.sum, Finset.sum_const_zero]
+
+private theorem secondIntegral_unique (J : symmetricKernel μ →L[ℝ] Lp ℝ 2 P)
+    (hJ : ∀ f : Lp ℝ 2 μ, J (diagonalKernel μ f) = centeredSquare μ P W hW f) :
+    J = secondIntegral μ P W hW := by
+  apply ContinuousLinearMap.ext
+  intro k
+  refine (finiteKernelMap_dense μ).induction_on k
+    (p := fun k => J k = secondIntegral μ P W hW k)
+    (isClosed_eq (by fun_prop) (by fun_prop)) ?_
+  intro c
+  rw [secondIntegral_apply]
+  classical
+  simp only [finiteKernelMap, finiteNoiseMap, Finsupp.linearCombination_apply,
+    map_finsuppSum, map_smul, hJ]
+
+/-- The extension has the original mean, covariance, exact norm, and uniqueness on the same W. -/
+theorem secondIntegral_characterization :
+    (∀ k : symmetricKernel μ, (∫ ω, secondIntegral μ P W hW k ω ∂P) = 0) ∧
+    (∀ k l : symmetricKernel μ,
+      ⟪secondIntegral μ P W hW k, secondIntegral μ P W hW l⟫ = 2 * ⟪k, l⟫) ∧
+    (∀ k : symmetricKernel μ, ‖secondIntegral μ P W hW k‖ = Real.sqrt 2 * ‖k‖) ∧
+    (∀ J : symmetricKernel μ →L[ℝ] Lp ℝ 2 P,
+      (∀ f : Lp ℝ 2 μ, J (diagonalKernel μ f) = centeredSquare μ P W hW f) →
+      J = secondIntegral μ P W hW) :=
+  ⟨secondIntegral_mean μ P W hW, secondIntegral_inner μ P W hW,
+    secondIntegral_norm μ P W hW, secondIntegral_unique μ P W hW⟩
+
+/-- Symmetrization as an actual symmetric product-measure class. -/
+def symmetrizedKernel (f g : Lp ℝ 2 μ) : symmetricKernel μ :=
+  (1 / 2 : ℝ) • (diagonalKernel μ (f + g) - diagonalKernel μ f - diagonalKernel μ g)
+
+/-- The extension sends symmetrized products to the original centered W products. -/
+theorem secondIntegral_product (f g : Lp ℝ 2 μ) :
+    ((symmetrizedKernel μ f g).val =ᵐ[μ.prod μ]
+      (fun z : X × X => (f z.1 * g z.2 + g z.1 * f z.2) / 2)) ∧
+    (secondIntegral μ P W hW (symmetrizedKernel μ f g) =ᵐ[P]
+      (fun ω => W f ω * W g ω - ⟪f, g⟫)) := by
+  constructor
+  · have he : (symmetrizedKernel μ f g).val =
+        (1 / 2 : ℝ) • (rankOne μ f g + rankOne μ g f) := by
+      change (1 / 2 : ℝ) • (rankOne μ (f + g) (f + g) -
+        rankOne μ f f - rankOne μ g g) = _
+      rw [diagonal_add μ f g]
+      congr 1
+      abel
+    rw [he]
+    filter_upwards [Lp.coeFn_smul (1 / 2 : ℝ) (rankOne μ f g + rankOne μ g f),
+      Lp.coeFn_add (rankOne μ f g) (rankOne μ g f), rankOne_coe μ f g,
+      rankOne_coe μ g f] with z hsm hadd hfg hgf
+    simp only [Pi.smul_apply, smul_eq_mul] at hsm
+    simp only [Pi.add_apply] at hadd
+    rw [hsm, hadd, hfg, hgf]
+    ring
+  · have he : secondIntegral μ P W hW (symmetrizedKernel μ f g) =
+        (1 / 2 : ℝ) • (centeredSquare μ P W hW (f + g) -
+          centeredSquare μ P W hW f - centeredSquare μ P W hW g) := by
+      simp only [symmetrizedKernel, map_smul, map_sub, secondIntegral_diagonal]
+    rw [he]
+    have ha : (fun ω => W (f + g) ω) =ᵐ[P] (fun ω => W f ω + W g ω) := by
+      rw [map_add]; exact Lp.coeFn_add _ _
+    filter_upwards [Lp.coeFn_smul (1 / 2 : ℝ)
+        (centeredSquare μ P W hW (f + g) - centeredSquare μ P W hW f - centeredSquare μ P W hW g),
+      Lp.coeFn_sub (centeredSquare μ P W hW (f + g) - centeredSquare μ P W hW f)
+        (centeredSquare μ P W hW g),
+      Lp.coeFn_sub (centeredSquare μ P W hW (f + g)) (centeredSquare μ P W hW f),
+      centeredSquare_coe μ P W hW (f + g), centeredSquare_coe μ P W hW f,
+      centeredSquare_coe μ P W hW g, ha] with ω hsm hsub hsub' hsum hf hg ha
+    simp only [Pi.smul_apply, smul_eq_mul] at hsm
+    simp only [Pi.sub_apply] at hsub hsub'
+    rw [hsm, hsub, hsub', hsum, hf, hg, ha, norm_add_sq_real]
+    ring
 
 end SameNoise
 
