@@ -61662,3 +61662,191 @@ $$
 式（403.6）控制整个实际和的去阻尼误差，其量词对 $x$ 一致；它不依赖单窗轮廓误差，也不将窗外补集留作未定义项。仍缺的是 $I_{\varepsilon_x}(x)$ 本身的临界有符号估计。极小阻尼没有自动带来低计算成本、可用移线或算术抵消；没有给出 $C_*$ 的数值证书，也没有证明完整 Robin 或 RH。
 
 ## 追加锚（本行以下为增补区）
+
+## 404. 完整实际核的共同 Mellin 条带、合法阻尼反演与非消去范围
+
+本节连接 §403 的完整阻尼与 §§385、395、398 的同一实际来源。经典 Mellin 反演、Euler 求和及 Stieltjes 型积分直接复用；所得参数接口不列为新的通用 RH 判据，也不作文献原创性声明。未完成 Lean 核验。
+
+**定义 404.1（完整变换及其已支付条带）。** 保持实际 $R(y)=K(y)-Ay\log y+Dy$、$P_x(s)=\int_x^\infty R(t/s)w(t)dt$、$e=\mu*\beta$ 与 $\mathcal C=\mathcal B/\zeta$。对 $x>1$、$z=\sigma+i\tau$、$0<\sigma<1$ 定义
+
+$$
+\widehat R(z)=\int_0^\infty R(y)y^{-z-1}dy,\qquad
+\widetilde P_x(z)=\int_0^\infty P_x(s)s^{z-1}ds,
+\tag{404.1}
+$$
+
+以及
+
+$$
+\widetilde w_x(z)=\int_x^\infty t^zw(t)dt.
+\tag{404.2}
+$$
+
+这里采用正实数上的实对数定义复幂。§395 已支付 $M_\sigma(R)<\infty$。这是一个充分的绝对收敛条带；不在此宣称其下边界必要。另一方面，§398 的固定 $x$ 渐近给 $P_x(s)\sim A\log s\log\log s/s$，所以（404.1）的 $P_x$ 变换在 $\sigma\ge1$ 不绝对收敛。有限裁剪的反演不能仅因裁剪上端趋于无穷，就沿原来的 $\sigma>1$ 直线换成完整反演。
+
+**命题 404.2（同一实际来源的全域变换）。** 在上述条带中，三个积分均绝对存在，且
+
+$$
+\boxed{
+\widehat R(z)=-\frac{\zeta'(z)}{z\mathcal B(z)},\qquad
+\widetilde P_x(z)=-\frac{\zeta'(z)}{z\mathcal B(z)}\widetilde w_x(z).}
+\tag{404.3}
+$$
+
+令 $\ell=\log x>0$，对 $\Re a>0$ 采用标准 $E_1(a)=\int_1^\infty e^{-av}dv/v$，则
+
+$$
+\boxed{
+\widetilde w_x(z)=\frac{x^{z-1}}{\log x}
++zE_1((1-z)\log x).}
+\tag{404.4}
+$$
+
+证明。先在高商积分 $\int_1^\infty R(y)y^{-z-1}dy$ 上复用（398.17）。§395 的高商包络保证该积分在 $\Re z>0$ 上解析；右侧在 $z=1$ 的两项主部由实际 $A,D$ 消去，$\mathcal B$ 在右半平面无零点。恒等定理将原有 $\Re z>1$ 身份接到 $0<\Re z<1$，并给
+
+$$
+\int_1^\infty R(y)y^{-z-1}dy
+=-\frac{\zeta'(z)}{z\mathcal B(z)}
+-\frac A{(z-1)^2}+\frac D{z-1}.
+\tag{404.5}
+$$
+
+真实低商 $R(y)=Dy-Ay\log y$ 给
+
+$$
+\int_0^1R(y)y^{-z-1}dy
+=\frac D{1-z}+\frac A{(1-z)^2}.
+\tag{404.6}
+$$
+
+两份来自同一个 $R$ 的主部恰好抵消，得第一式（404.3）。不能只保留（404.5）而丢失（404.6）。
+
+对第二式，非负 Tonelli 和正尺度换元 $y=t/s$ 给完整绝对预算
+
+$$
+\begin{aligned}
+&\int_0^\infty\int_x^\infty
+|R(t/s)|w(t)s^{\sigma-1}dt\,ds\\
+&\quad=M_\sigma(R)\int_x^\infty t^\sigma w(t)dt<\infty.
+\end{aligned}
+\tag{404.7}
+$$
+
+经典绝对 Fubini 遂给变换乘积。再令 $u=\log t$，并对 $e^{-(1-z)u}/u$ 作一次分部积分：无穷端点为零，有限端点保留 $e^{-(1-z)\ell}/\ell$，得到（404.4）。参数 $(1-z)\ell$ 的实部为正，不涉及 $E_1$ 的割线。$\square$
+
+**命题 404.3（完整反演与实际系数的绝对交换）。** 对每个固定 $x>1$、$0<\varepsilon<1$，取
+
+$$
+\sigma_\varepsilon=1-\varepsilon/2.
+\tag{404.8}
+$$
+
+则 §403 的实际完整和满足
+
+$$
+\boxed{
+I_\varepsilon(x)=\frac1{2\pi i}
+\int_{\sigma_\varepsilon-i\infty}^{\sigma_\varepsilon+i\infty}
+\frac{\mathcal B(z+\varepsilon)}{\zeta(z+\varepsilon)}
+\frac{-\zeta'(z)}{z\mathcal B(z)}
+\widetilde w_x(z)\,dz.}
+\tag{404.9}
+$$
+
+此竖线积分绝对收敛，身份保留全部 $n\ge1$，没有删去前缀或把窗口补集留作未知项。这里只证明每个正 $\varepsilon$ 的合法性，不宣称其绝对积分范数对 $\varepsilon\downarrow0$ 一致有界。
+
+证明。先支付反演的正则性。用已合法的换元写
+
+$$
+P_x(s)=\int_{x/s}^\infty R(y)s w(sy)dy.
+$$
+
+在任意 $s_0>0$ 的充分小紧邻域中，积分下端有统一正下界，且 $sy\ge x$ 的被积函数由常数倍 $|R(y)|y^{-2}$ 控制。该包络在下端以上可积；移动端点的单点集合不影响积分。经典支配收敛因此证明 $P_x$ 在正半轴连续。（404.7）同时给 $\int_0^\infty|P_x(s)|s^{\sigma-1}ds<\infty$。
+
+竖线可积性直接消费 [DLMF §25.2.8](https://dlmf.nist.gov/25.2.E8) 的既有一次 Euler 求和公式。固定 $0<\sigma<1$，取整数 $N\asymp|\tau|\ge2$，在公式中对 $z$ 微分；有界小数部分的积分与其对数矩给经典粗界
+
+$$
+\zeta'(\sigma+i\tau)
+=O_\sigma(|\tau|^{1-\sigma}\log|\tau|).
+\tag{404.10}
+$$
+
+这里求导时先固定该整数 $N$；不对随 $\tau$ 选择的 $N$ 求导。该估计是既有 Euler 公式的标准应用，不是新的 $\zeta'$ 估计。
+
+在（404.2）中令 $v(u)=(u+1)/u^2$。$v$ 及 $v'$ 在 $[\ell,\infty)$ 上有相应指数可积包络，对 $e^{-(1-z)u}v(u)$ 分部积分给
+
+$$
+\widetilde w_x(\sigma+i\tau)=O_{x,\sigma}(|\tau|^{-1}).
+\tag{404.11}
+$$
+
+§385 的实际 $|\mathcal B(z)|\ge\delta>0$ 在右半平面一致成立。将（404.10）、（404.11）代入（404.3），得到
+
+$$
+\widetilde P_x(\sigma+i\tau)
+=O_{x,\sigma}(|\tau|^{-1-\sigma}\log|\tau|).
+\tag{404.12}
+$$
+
+这在竖线上属于 $L^1$；有界频率段由（404.7）控制。于是直接使用 [DLMF §1.14.35](https://dlmf.nist.gov/1.14.E35) 的 Mellin 反演，在所有 $s>0$ 有
+
+$$
+P_x(s)=\frac1{2\pi i}\int_{\sigma-i\infty}^{\sigma+i\infty}
+\widetilde P_x(z)s^{-z}dz.
+\tag{404.13}
+$$
+
+等价地，$u\mapsto e^{\sigma u}P_x(e^u)$ 及其 Fourier 变换均属于 $L^1$，且前者连续；标准 Fourier 反演给同一身份。没有只用形式变换替代反演条件。
+
+现在取（404.8）。因 $\sigma_\varepsilon+\varepsilon=1+\varepsilon/2>1$，实际有界系数 $e_n$ 的绝对 Dirichlet 和满足
+
+$$
+\sum_{n\ge1}|e_n|n^{-\sigma_\varepsilon-\varepsilon}<\infty.
+\tag{404.14}
+$$
+
+（404.12）与（404.14）的乘积恰好支付系数求和与竖线积分的绝对 Fubini。其有符号和直接复用原有 $\sum e_n n^{-z-\varepsilon}=\mathcal B(z+\varepsilon)/\zeta(z+\varepsilon)$，即得（404.9）。$\square$
+
+### 404.1 完整权重的非消去与仍未支付的符号预算
+
+**命题 404.4（正尾权重的零点不被新增阻尼消去）。** 对全部 $x>1$、$\Re z<1$，有 $\widetilde w_x(z)\ne0$。进一步，固定任意实际非平凡零点 $\rho$，对充分小的 $\varepsilon>0$，（404.9）的被积函数作局部亚纯延拓，在 $z=\rho-\varepsilon$ 仍具有与 $\rho$ 相同的极点阶数。
+
+证明。这是正 Laplace 密度的 Stieltjes 表示在实际权重上的应用。令 $a=1-z$、$\ell=\log x$；由
+
+$$
+v(\ell+u)=\int_0^\infty(1+t)e^{-(\ell+u)t}dt
+$$
+
+及绝对 Fubini，得
+
+$$
+\boxed{
+e^{a\ell}\widetilde w_x(z)
+=\int_0^\infty\frac{(1+t)e^{-\ell t}}{a+t}dt.}
+\tag{404.15}
+$$
+
+当 $\Re a>0$ 时，$\Re[1/(a+t)]=(\Re a+t)/|a+t|^2>0$。所以（404.15）的实部严格为正，$\widetilde w_x(z)$ 不为零。此处不把五模式长度守恒当作该正性；它来自原始 $w$ 的明确积分表示。
+
+设 $\rho$ 的重数为 $m\ge1$，其已有局部 Taylor 形式为 $\zeta(\rho+h)=b_mh^m+O(h^{m+1})$、$b_m\ne0$。故对充分小的正 $\varepsilon$，
+
+$$
+\zeta'(\rho-\varepsilon)
+=mb_m(-\varepsilon)^{m-1}+O(\varepsilon^m)\ne0.
+\tag{404.16}
+$$
+
+同时可取 $0<\Re(\rho-\varepsilon)<1$，$\rho-\varepsilon\ne0$。实际 $\mathcal B(\rho)$、$\mathcal B(\rho-\varepsilon)$ 及（404.15）的权重均不为零，而 $\zeta(z+\varepsilon)$ 在该点恰有 $m$ 阶零点。这就保留完整 $m$ 阶极点。该局部陈述不执行移线，也不将单个极点转换成未经误差支付的实际振荡。$\square$
+
+在已建立的 $0<\Re z<1$ 条带中，远离 $\zeta$ 零点、$0$ 和 $1$ 的紧集上，$\varepsilon\downarrow0$ 时被积函数逐点趋向经典的
+
+$$
+-\frac{\zeta'(z)}{z\zeta(z)}\widetilde w_x(z).
+\tag{404.17}
+$$
+
+$\mathcal B$ 在这里抵消，但这不是（404.9）积分极限的交换许可：共同反演线也随 $\varepsilon$ 移动，绝对 Dirichlet 预算与反演常数并未取得统一界。§403 已用同一实际 $H$ 支付的是 $I_{\varepsilon_x}-I_\psi$ 的去阻尼误差，而不是把（404.17）自动移到临界线。
+
+因此可在每个 $x\ge e$ 上合法使用 $\varepsilon_x=1/(\sqrt x\log x)$ 与（404.9），并由（403.6）将它接回原始 $I_\psi$。仍需取得的是真实积分（404.9）的完整临界有符号预算；新增阻尼既没有消去算术零点，也没有通过已有对数估计支付这一预算。已查原始反演与 Euler 供应器，未取得该临界联合估计；这只限定当前检索结果，不声称该结果不存在或当前接口原创。完整 Robin 与 RH 仍未解决。
+
+## 追加锚（本行以下为增补区）
