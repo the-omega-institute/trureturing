@@ -211,7 +211,7 @@ public sealed partial class ProductionEnvironmentTests
             [RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes),
             [oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan()),
         }));
-        var plan = DigestionIngestor.Plan(baselineDocument, planningSnapshot, baselineDocument);
+        var plan = ReportFreeDigestionIngestor.Plan(baselineDocument, planningSnapshot);
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, plan.Document);

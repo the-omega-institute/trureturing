@@ -10,13 +10,11 @@ public sealed partial class ProductionEnvironmentTests
     private static readonly string[] ReportInputUnchangedArguments = [];
 
     [Fact]
-    public void IngestUncoveredOnlyDoesNotLoadLeanOrVerifyScribeAndMatchesAlignedBytes()
+    public void IngestUncoveredOnlyDoesNotLoadLeanOrVerifyScribe()
     {
         var fixture = UncoveredOnlyIngestFixture();
         using var reportFreeRoot = new TemporaryDirectory();
-        using var alignedRoot = new TemporaryDirectory();
         WriteDirectoryLedger(reportFreeRoot.Path, fixture.Files);
-        WriteDirectoryLedger(alignedRoot.Path, fixture.Files);
         var reportSource = new FakeLeanReportSource(report: null);
         var scribeVerifier = new FakeScribeEmissionVerifier(verification: null);
         var reportFree = new ProductionCliEnvironment(
@@ -33,18 +31,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(result.Success, result.Error);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(0, scribeVerifier.CallCount);
-
-        var alignedResult = IngestCommand.Run(
-            alignedRoot.Path,
-            new FakeRepositoryGateway(
-                RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath]),
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
-            ["--base", "baseline"]);
-        Assert.True(alignedResult.Success, alignedResult.Error);
-        Assert.Equal(GeneratedIngestImage(alignedRoot), GeneratedIngestImage(reportFreeRoot));
     }
 
     [Fact]

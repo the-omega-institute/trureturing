@@ -223,17 +223,16 @@ public sealed partial class DigestionLedgerTests
         Assert.Contains("SETTLE_ALIGN_REQUIRED ancestors=" + string.Join(',', ids), clear.Output, StringComparison.Ordinal);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         var evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan, fixture.Document,
-            fixture.Snapshot, AcceptedLean(Array.Empty<string>()), baselineDocument: fixture.Document);
+            fixture.Snapshot, AcceptedLean(Array.Empty<string>()));
         var uncovered = DigestionStatusEvaluator.EvaluateUncovered(DigestionEvaluationScope.FullScan,
-            fixture.Document, fixture.Snapshot, baselineDocument: fixture.Document);
+            fixture.Document, fixture.Snapshot);
         var clearedChild = fixture.Document.RequireDigestionEntries().Single(e => e.AtomId == childId);
         var changes = RawChangeSet.CreateWithKinds([
             (PathFor(clearedChild, State), RawChangeKind.Deleted),
             (PathFor(clearedChild), RawChangeKind.Added),
         ]);
         var delta = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.ChangedSet, fixture.Document,
-            fixture.Snapshot, AcceptedLean(Array.Empty<string>()),
-            baselineDocument: BackfillInventoryLoader.Load(Decode(baseline)), baselineSnapshot: Decode(baseline), changes: changes);
+            fixture.Snapshot, AcceptedLean(Array.Empty<string>()), changes: changes);
         foreach (var id in ids)
         {
             Assert.Equal("partial-open", StateName(delta.Entries.Single(e => e.Entry.AtomId == id).DerivedStatus));
@@ -244,8 +243,7 @@ public sealed partial class DigestionLedgerTests
         }
         var aligned = IngestCommand.Run(temporary.Path,
             new FakeRepositoryGateway(RawChangeSet.Create([]), fixture.Current, baseline),
-            new FakeLeanReportSource(AcceptedLean(Array.Empty<string>()).Report),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty), ["--base", "baseline"]);
+            new FakeLeanReportSource(AcceptedLean(Array.Empty<string>()).Report), []);
         Assert.True(aligned.Success, aligned.Error);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         foreach (var id in ids)

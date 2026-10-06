@@ -67,10 +67,10 @@ public sealed class DigestionSourceConflictMarkerTests
         Assert.Contains($"{TheoryPath}:2", error.Message, StringComparison.Ordinal);
     }
 
-    private static DigestionIngestPlan Plan(string sourcePath, string source)
+    private static ReportFreeDigestionIngestPlan Plan(string sourcePath, string source)
         => Plan(sourcePath, Encoding.UTF8.GetBytes(source));
 
-    private static DigestionIngestPlan Plan(string sourcePath, byte[] sourceBytes)
+    private static ReportFreeDigestionIngestPlan Plan(string sourcePath, byte[] sourceBytes)
     {
         var ledger = DigestionTestSupport.Document(
             AtomizerRegistry.GenericId,
@@ -79,6 +79,6 @@ public sealed class DigestionSourceConflictMarkerTests
             sourcePath,
             GenreRegistryCheck.Collected([]));
         var snapshot = DigestionTestSupport.Snapshot((sourcePath, sourceBytes));
-        return DigestionIngestor.Plan(ledger, snapshot, ledger);
+        return ReportFreeDigestionIngestor.Plan(ledger, snapshot);
     }
 }

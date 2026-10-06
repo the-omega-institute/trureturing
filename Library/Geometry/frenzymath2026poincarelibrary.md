@@ -5817,3 +5817,46 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 所需固定上游共形闭包含 33 个模块，原源码均保留并核验固定 Git blob。实际洁净编译使用先前梯度未使用参数的重命名，以及三个明确的兼容模块：两个证明局部类绑定 `letI` 改为 `let`，两个分别属于不同模块的辅助引理显式省去未使用的自动节假设；后两项保留原结论和证明正文，去掉冗余前提。没有关闭检查或添加公理。
 
 上述实际度量等式、依赖数据搬运及原曲率消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。任意原线性无关向量对的曲率接口、一般原流形覆盖与有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 及官方验收仍未完成。
+
+
+### 原 H3 的每个实际非退化切平面曲率 −1
+
+对同一原 `nativeRiemannianMetric` 的任意实际 Levi–Civita 数据 `Dprime`，原高度倒数对切向量的缩放，将原度量的正交单位向量对变成平坦度量的正交单位向量对。原实际曲率张量的公开多线性接口及实际度量双线性，分别给出截面曲率分子与 Gram 分母的相同非零缩放因子；在实际商中消去该因子，把已核验的原平坦正交单位向量对曲率 −1 搬回原度量的正交单位向量对。
+
+固定上游 `SpaceForm.Sectional` 的一般正交单位向量对接口内部完成切平面基变换，推出同一原 `p,V,W,Dprime` 在原 Gram 非零条件下实际截面曲率为 −1。原度量 Gram 等于欧氏 Gram 乘原高度四次幂的倒数；公开 Mathlib Gram 行列式判据把同一原向量对的实际线性无关转成欧氏 Gram 非零，从而得到每个实际线性无关向量对的原截面曲率 −1。没有假设平面基变换不变性或预先提供曲率 −1；没有对退化向量对声称 −1。
+
+固定上游截面曲率闭包的 35 个模块已实际编译验收，原源码及固定 Git blob 均保留并核验。除继承的 LC／共形兼容处理外，本闭包四个模块仅作明确的最小兼容修正：弃用引理别名与 tactic 改用公开同义接口，证明局部类型类绑定按现行接口书写，去掉被检查器指出未使用的自动节假设及冗余化简参数；没有关闭检查或添加公理。
+
+上述原非退化切平面消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。一般原流形的万能度量覆盖、实际 H3 分类及有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 原双曲模型的实际可缩性与 H3 单连通性
+
+任意原实内积空间 `E` 上的 `HyperbolicSpace E`，通过原 `coordinatesHomeomorph` 与原欧氏环境中的正高度半空间同胚。公开半空间凸性接口给出该真实正高度子集的凸性，原水平零向量及高度 1 给出内部非空见证；`Convex.contractibleSpace` 再沿原坐标同胚搬回真正原双曲空间，得到实际 `ContractibleSpace` 实例。没有把正高度子集替换成整个环境空间，也没有提供外部收缩同伦或可缩性前提。
+
+同一实例实际应用于原 `HyperbolicThreeSpace`，并由已有 Mathlib 可缩空间单连通接口得到实际 `SimplyConnectedSpace`。这些原实例检查及完整累计 Lean 编译均零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。一般原流形的万能度量覆盖和 H3 分类、有限体积尖点及完整给定 `h,d` 的 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 原光滑标准覆盖的完备拉回度量与第二可数性
+
+同一原完备、道路连通的三维流形 M 和指定原黎曼度量 g，在 g 的真实内蕴距离与原扩展距离相等时，原路径类标准覆盖获得实际提升光滑图册、局部微分同胚投影和 g 的实际完整微分拉回度量。欧氏图册在内部给出局部道路连通及半局部单连通，覆盖的分离性质给出真实 T3 结构；恒等等距映射显式绑定原扩展度量与指定 g 的内蕴扩展度量，内部传递完备性。
+
+消费固定上游真实 MetricComplete 与闭球紧致公开接口，实际内蕴有限距离使可数闭球覆盖同一连通覆盖空间，再由 sigma-compact 与欧氏图册得到该原标准覆盖的 SecondCountableTopology。无需底空间紧致、有限基本群、外供覆盖第二可数性或有限覆盖度。对同一原 H3/native g，已验的真正 native 内蕴距离等于原距离在内部履行兼容性，得到实际 native g 完备性及原 H3 标准覆盖第二可数性。
+
+固定来源为 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a。真实 MetricComplete 与 CompleteBalls 使用完整最小导入闭包，其余覆盖提升与完备拉回证明保留具名上游 source-slice 来源；不冒领未导入的完整 NeckCap/Harnack 扩展模块验收。完整累计临时 Lean 真实 exit 0，零错误、零警告，298 项公理报告仅含 propext、Classical.choice、Quot.sound，18 个新增目标实际接受。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证说明。实际全局负曲率指数映射与 H3 分类、完整 deck 与体积/Haar 绑定、有限体积尖点及完整给定 h,d 的 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 真实负正规系数 Jacobi ODE 的双曲函数解与唯一性
+
+消费固定上游原 IsJacobiSolOn 方程及 Linear.IsSolOn 唯一性，对任意原实赋范向量空间和真实常系数算子 A，内部证明核向量与负正规特征值对应的 t/sinh/cosh 模型确实满足原方程。方程符号保持 y'=v、v'=-Ay；正规特征值 -c² 给出正加速度双曲正弦模型。沿真实算子范数界和原初值，公开 ODE 唯一性把任意真正原方程解识别为已证明模型，并得到 c=1 的 sinh/cosh 正规公式。无需额外 CompleteSpace、外供解公式或替代解谓词。
+
+两个固定上游模块与完整累计临时 Lean 均真实 exit 0，零错误、零警告。301 项公理报告仅含 propext、Classical.choice、Quot.sound，3 个新增目标已实际验收。原草稿保留；derived 仅显式化复合/逐点加法表达式并删除一个编译器确认冗余的 ring。proof_shape: bind-only，admission_basis: none。本段是原 ODE 模型与唯一性消费者，实际流形 Jacobi 场的平行传输、曲率系数归约和原指数映射还须在后续内部证明，不能把它们升为最终 Mostow 新前提。完整 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 同一原光滑标准覆盖的单连通性、平凡基本群与实际提升
+
+消费此前已接受的同一原路径类 UniversalCover 与原投影，欧氏图册在内部给出局部道路连通和半局部单连通，实际公开标准覆盖定理给出该原覆盖的 SimplyConnectedSpace。实际任意原覆盖基点上的每个闭路均与常闭路同伦，真正原覆盖基本群的每个元素等于 1，原投影诱导的基本群同态像为底子群；不将底流形 M 的基本群误称平凡。
+
+同一原投影确实是覆盖且满射，并具有基点指定的连续映射唯一提升。提升试验域 A 与原流形 M 的 universes 独立；A 的单连通性属于真正通用提升定理的上下文，该原覆盖本身的单连通性由前述真实定理取得。无需外供原覆盖单连通性、额外度量相容性、全局紧致、有限基本群或有限覆盖度。
+
+没有新增上游导入或重复编译已接受的 canonical24。独立小消费者与完整累计临时 Lean 均真实 exit 0、零错误、零警告；307 项公理报告仅含 propext、Classical.choice、Quot.sound，6 个新增消费者及3个真实公共目标接受。proof_shape: bind-only，admission_basis: none。本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证说明。实际原 H3 分类与负曲率全局指数、完整 deck/体积/Haar、有限体积尖点及给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成。

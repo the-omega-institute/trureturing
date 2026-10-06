@@ -65,7 +65,6 @@ internal static partial class DigestionLedgerAligner
         RepositorySnapshot snapshot,
         IDictionary<string, DigestionReceiptAlignment> alignments,
         IDictionary<string, DigestionAtom> matchedAtoms,
-        ISet<string> clausePlanChainParents,
         ISet<string> verifiedClausePlanParents,
         ICollection<string> findings)
     {
@@ -77,8 +76,7 @@ internal static partial class DigestionLedgerAligner
                     parent,
                     globalEntriesById,
                     alignments,
-                    matchedAtoms,
-                    clausePlanChainParents);
+                    matchedAtoms);
                 RejectClauseChain(parent, "parent CAS proof is invalid", findings);
                 continue;
             }
@@ -90,8 +88,7 @@ internal static partial class DigestionLedgerAligner
                     parent,
                     globalEntriesById,
                     alignments,
-                    matchedAtoms,
-                    clausePlanChainParents);
+                    matchedAtoms);
                 RejectClauseChain(parent, $"parent CAS blob is missing: {parentPath}", findings);
                 continue;
             }
@@ -112,8 +109,7 @@ internal static partial class DigestionLedgerAligner
                 parent,
                 globalEntriesById,
                 alignments,
-                matchedAtoms,
-                clausePlanChainParents);
+                matchedAtoms);
             if (plan is null)
             {
                 RejectClauseChain(parent, planFailure ?? "parent CAS blob has no clause plan", findings);
@@ -191,10 +187,8 @@ internal static partial class DigestionLedgerAligner
         DigestionLedgerEntry parent,
         IReadOnlyDictionary<string, DigestionLedgerEntry> entriesById,
         IDictionary<string, DigestionReceiptAlignment> alignments,
-        IDictionary<string, DigestionAtom> matchedAtoms,
-        ISet<string> clausePlanChainParents)
+        IDictionary<string, DigestionAtom> matchedAtoms)
     {
-        clausePlanChainParents.Add(parent.AtomId);
         foreach (var childId in parent.Receipts.ChainAtoms)
         {
             if (!entriesById.ContainsKey(childId))

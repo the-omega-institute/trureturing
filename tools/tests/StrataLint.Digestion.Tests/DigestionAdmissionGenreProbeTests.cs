@@ -20,9 +20,7 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             migration.Candidate,
             migration.CandidateSnapshot,
-            migration.Baseline,
-            DigestionAlignmentMode.Admission,
-            baselineSnapshot: migration.BaselineSnapshot);
+            DigestionAlignmentMode.Admission);
 
         Assert.Empty(result.Findings);
     }
@@ -41,9 +39,7 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             migration.CandidateSnapshot,
-            migration.Baseline,
-            DigestionAlignmentMode.Admission,
-            baselineSnapshot: migration.BaselineSnapshot);
+            DigestionAlignmentMode.Admission);
 
         Assert.Contains(result.Findings, finding =>
             finding.Contains("genre registry projection differs", StringComparison.Ordinal)
@@ -68,9 +64,7 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             migration.CandidateSnapshot,
-            migration.Baseline,
-            DigestionAlignmentMode.Admission,
-            baselineSnapshot: migration.BaselineSnapshot);
+            DigestionAlignmentMode.Admission);
 
         Assert.Contains(result.Findings, finding =>
             finding.Contains("genre registry projection differs", StringComparison.Ordinal)
@@ -93,9 +87,7 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             migration.CandidateSnapshot,
-            migration.Baseline,
-            DigestionAlignmentMode.Admission,
-            baselineSnapshot: migration.BaselineSnapshot);
+            DigestionAlignmentMode.Admission);
 
         Assert.Contains(result.Findings, finding =>
             finding.Contains("genre registry projection differs", StringComparison.Ordinal)
@@ -117,9 +109,7 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             migration.CandidateSnapshot,
-            migration.Baseline,
-            DigestionAlignmentMode.Admission,
-            baselineSnapshot: migration.BaselineSnapshot);
+            DigestionAlignmentMode.Admission);
 
         Assert.Contains(result.Findings, finding =>
             finding.Contains("genre registry projection differs", StringComparison.Ordinal)
@@ -145,10 +135,8 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             migration.CandidateSnapshot,
-            migration.Baseline,
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => atomized,
-            migration.BaselineSnapshot);
+            _ => (_, _) => atomized);
 
         Assert.Contains(result.Findings, finding =>
             finding.Contains("genre registry projection differs", StringComparison.Ordinal)
@@ -169,14 +157,12 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             migration.Candidate,
             migration.CandidateSnapshot,
-            migration.Baseline,
-            DigestionAlignmentMode.Admission,
-            baselineSnapshot: migration.BaselineSnapshot);
+            DigestionAlignmentMode.Admission);
 
         Assert.Empty(result.Findings);
         Assert.Empty(result.Residual);
         Assert.Equal(
-            DigestionReceiptAlignment.Stale,
+            DigestionReceiptAlignment.Seen,
             result.AlignmentFor(AtomId(migration.Coarse)));
         Assert.Equal(
             DigestionReceiptAlignment.Seen,
@@ -212,14 +198,13 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             candidateSnapshot,
-            ledger,
             DigestionAlignmentMode.Admission,
             _ => (_, _) =>
             {
                 calls++;
                 return atomized;
             },
-            baselineSnapshot);
+            changes: RawChangeSet.Create(["Meta/domains.yaml"]));
 
         Assert.Equal(0, calls);
         Assert.Empty(result.Findings);
@@ -247,10 +232,8 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             migration.Candidate,
             migration.CandidateSnapshot,
-            migration.Baseline,
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => atomized,
-            migration.BaselineSnapshot);
+            _ => (_, _) => atomized);
 
         Assert.Equal(
             ["source source atomizer integrity failed: claim at byte 0 fingerprint does not match its raw bytes"],
@@ -285,10 +268,8 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             migration.CandidateSnapshot,
-            migration.Baseline,
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => atomized,
-            migration.BaselineSnapshot);
+            _ => (_, _) => atomized);
 
         Assert.Empty(result.Findings);
         Assert.Equal(
@@ -310,14 +291,12 @@ public sealed partial class DigestionAlignmentTests
         var exception = Assert.Throws<FormatException>(() => DigestionLedgerAligner.Evaluate(
             migration.Candidate,
             migration.CandidateSnapshot,
-            migration.Baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) =>
             {
                 calls++;
                 throw new FormatException("unknown declared dialect");
-            },
-            migration.BaselineSnapshot));
+            }));
 
         Assert.Equal("unknown declared dialect", exception.Message);
         Assert.Equal(1, calls);
@@ -331,7 +310,6 @@ public sealed partial class DigestionAlignmentTests
         var exception = Assert.Throws<InvalidOperationException>(() => DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(Encoding.UTF8.GetBytes("source"), [oldCapture]),
-            ledger,
             DigestionAlignmentMode.Ingest,
             _ => (_, _) => new AtomizedTheoryDocument(
                 [],
