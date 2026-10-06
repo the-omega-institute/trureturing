@@ -690,17 +690,7 @@ theorem complete_original_direct_rank_entropy : completeOriginal72 := by
             (pointerState (X b i)).val * (pointerState (X b j)).val = 0) := by
           intro i j hij
           have hx : X b i ≠ X b j := fun h => hij (hX b h)
-          change Matrix.diagonal (fun x => if x = X b i then (1 : ℂ) else 0) *
-            Matrix.diagonal (fun x => if x = X b j then (1 : ℂ) else 0) = 0
-          rw [Matrix.diagonal_mul_diagonal]
-          have hz : (fun x : Word mX =>
-              (if x = X b i then (1 : ℂ) else 0) * (if x = X b j then 1 else 0)) = 0 := by
-            funext x
-            by_cases hi : x = X b i
-            · subst x;simp [hx]
-            · simp [hi]
-          rw [hz]
-          ext x z;simp [Matrix.diagonal_apply]
+          exact pointerState_orthogonal hx
         rw [orthogonal_mixture_entropy (prob b) (hp b) (hps b) (fun j => pointerState (X b j)) ho]
         simp only [entropy_pointerState,mul_zero,Finset.sum_const_zero,add_zero]
         simp [shannonEntropy,prob,Real.negMulLog,Real.log_inv,hdn b]
