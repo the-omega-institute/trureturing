@@ -9,7 +9,7 @@ internal sealed class PairSelectionReroutingDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/Graph/PairSelectionRerouting.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A finite family of supports admits a pair selection in which every remaining four-clique has only two-element supports.",
+        "If each support has at least two vertices and every legal pair selection is sparse, some selection has only two-element supports on its four-cliques.",
         H("Rerouting Pair Selections"),
         Blocks(
             Paragraph(Text(
