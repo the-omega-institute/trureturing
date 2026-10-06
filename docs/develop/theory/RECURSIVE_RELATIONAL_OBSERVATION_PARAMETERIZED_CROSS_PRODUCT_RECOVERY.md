@@ -2771,3 +2771,1030 @@ $$
 求值，得到所列四向量；第一来源是叶，直接求原连续替换得所列结果。两尾叉积和目标差随即成立；代入 $w-w'=0$ 给 $A_0\ge1$。这是原来源的投影灵敏度见证，不是环境三元组、噪声报告或付费控制的反例。
 
 ## 追加锚（本行以下为增补区）
+
+## 49. 来源、取得及表示合同
+
+本文固定非空有限自由有序二叉树、原定向三维叉积及同一次执行中共享的叶对。主要结论是一个平方范数多项式求值核：有一致收缩证书时，它以有限记录和有限计算控制整个未来；在两个单位平台上，具有统一有限位上限的完整记录的统一误差下确界为 $1/2$，但该端点不能达到；在三个增长制度中，甚至任意逐源有限、长度无统一上界的记录也不能保证任何有限统一绝对误差。精确有理回复和另行供应的可细化名字具有不同的正结果。全文是普通数学证明；有限算术核对只用于检出实例、索引和程序错误，没有新的 Lean 或内核验证。
+
+来源语法为 $t::=\alpha\mid\beta\mid\langle s,t\rangle$，左右次序与全部括号保留。对一个实际固定叶对 $p=(a,b)\in(\mathbb R^3)^2$，定义
+
+$$
+E_p(\alpha)=a,\quad E_p(\beta)=b,\quad E_p\langle s,t\rangle=E_p(s)\times E_p(t),
+\qquad \rho\alpha=\beta,\quad\rho\beta=\langle\beta,\alpha\rangle.
+$$
+
+$\rho$ 保持节点。记 $x_j=E_p(\rho^jt)$、$q_j=|x_j|$。实际取得固定为
+
+$$\operatorname{Read}(x_0);\ \rho;\ \operatorname{Read}(x_1);\ \rho;\ \operatorname{Read}(x_2);\ \operatorname{Stop}.$$
+
+目标始终是同一共同坐标系中全部 $j\ge3$ 的向量，以 $\sup_{j\ge3}|\widehat x_j-x_j|$ 计误差。停止后的当前源是 $\rho^2t$。没有树码、计数、叶读取、校准、复制、重置、逆动作或进一步源读口。构造竞争来源时的旋转、缩放、根反序与已知树生成，只用于证明，不增加未知源的动作。
+
+传感器和生产者必须共同保证九个有限整数 $n_{ik}$、公共有限整数 $b\ge0$ 所表示的 $y_{ik}=n_{ik}2^{-b}$ 满足 $|y_i-x_i|\le e$，$i=0,1,2$。误差可以相关、对抗并依赖历史；不假设平均可以改善它。准确准备与准确 $\rho$ 是模型前提，不能把动作或准备误差偷换成读误差。程序使用的 $\bar H,\rho,c_-,\kappa,E$ 等均为有限有理数及其有效证书；数学上的任意实参数比较不是可执行分类器。证书文字、校验成本、发行依据和身份另计。
+
+“完整记录”包括全部源相关程序、元数据、建议和选择信息。统一有限位上限意味着它只有有限种取值；每源有限而长度无界意味着至多可数种取值。任意实数寄存器和可细化无限名字不属于这两个合同。动作、读时刻、坐标系、源版本和 Stop 身份的合法记录也计费，身份不得夹带隐藏大小、树码或源相关建议。
+
+## 50. 实际三锚、投影和多项式核
+
+置 $A=|a|^2,B=|b|^2,C=a\cdot b,\Delta=AB-C^2$，$K=b\times a$、$U=K\times a=Ca-Ab$、$V=K\times b=Ba-Cb$。运输 $F(a,b)=(b,K)$ 满足 $E_p(\rho^jt)=E_{F^jp}(t)$：两个叶直接成立，节点用双线性结构归纳，随后对 $j$ 归纳。它只是解释换参。
+
+以下五符号表、尾递推和三读符号恒等式复用本卷引理 4.2、定理 4.3、5.1；此处 $U,V$ 对应原表的 $L,N$，$F$ 对应定理 3.1 的解释运输。给出其关系是为了固定求值核的参数，不将这些经典恒等式或已发表证明计为新数学。完整上三角叉积表为
+
+| $\times$ | $b$ | $K$ | $U$ | $V$ |
+|---|---|---|---|---|
+| $a$ | $-K$ | $-U$ | $AK$ | $CK$ |
+| $b$ | | $-V$ | $CK$ | $BK$ |
+| $K$ | | | $-\Delta a$ | $-\Delta b$ |
+| $U$ | | | | $-\Delta K$ |
+
+同向项为零，反序取负。逐项由重复向量恒等式及上述 $U,V$ 展开验证；例如 $U\times V=-\Delta K$。因此每树有对全部准备同时有效的零描述子，或 $\epsilon A^uB^vC^h\Delta^wZ$，$Z\in\{a,b,K,U,V\}$。在单位叶 $(e_1,e_2)$ 处，令 $f_1=e_1,f_2=e_2,f_3=e_2\times e_1$，单位标签 $\chi(t)$ 为 $0,\pm f_i$。表归纳说明标签非零恰是所选描述子无正 $C$ 因子且非零；其初始方向依次为 $\sigma(a\text{ 或 }V)$、$\sigma(b\text{ 或 }-U)$、$\sigma K$，各乘正单项式。
+
+若 $\Delta>0$，$r=\sqrt B,s=\sqrt\Delta$，$g_1=b/r,g_2=K/s,g_3=V/(rs)$ 是左手正交单位标架。树的组成 $(m,n)$ 为两种实际叶数。对 $\chi(t)=\sigma f_i\ne0$，齐次性和运输给
+
+$$x_1=\sigma r^ms^ng_i,\quad x_2=\sigma r^ns^{m+n}g_{i+1},\quad
+q_{j+2}=q_jq_{j+1},\quad x_{j+2}=\sigma(x_{j+1}\times x_j)\quad(j\ge1).$$
+
+因为组成更新矩阵 $M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$ 满足 $M^2=M+I$，每个幅度指数满足该递推；标架叉积表给方向。标签零时 $F(p)$ 已正交，全部 $j\ge1$ 为零，但 $x_0$ 可非零；$\Delta=0$ 时 $F^2p=0$，全部 $j\ge2$ 为零。
+
+令 $w=x_2\times x_1$。初始五符号中 $a\cdot V=\Delta$、$(-U)\cdot b=\Delta$，其余相应内积为正范数平方，故
+
+$$x_3=\operatorname{sgn}(x_0\cdot w)w,\qquad\operatorname{sgn}(0)=0.$$
+
+零及依赖分支 $w=0$ 仍成立。将此式应用于每个实际替换后树，三次准确读决定完整未来。
+
+以下投影恒等式与无除法不等式复用本卷引理 16.2、推论 16.3；其五符号次数证明覆盖全部实际树。它们是实际像中的量化约束，不能给环境三元组强加它。给 $A,B,C,\Delta$ 双次数 $(2,0),(0,2),(1,1),(2,2)$，给 $a,b,K,U,V$ 双次数 $(1,0),(0,1),(1,1),(2,1),(1,2)$。表保持次数。非零标签写 $x_0=\sigma A^uB^v\Delta^w Z$、$Z\in\{a,b,K,-U,V\}$。对应单位正投影依次为 $s/r,r,s,s^2/r,rs$，恰为 $(s/r)^{m_Z}r^{n_Z}$。因此，$\widehat w=w/|w|$ 时
+
+$$\sigma x_0\cdot\widehat w=(AB/\Delta)^u q_2/q_1\ge q_2/q_1,
+\qquad \sigma x_0\cdot\widehat w\ge\sqrt{\Delta/(AB)}q_0.$$
+
+后式由五个方向的投影/范数比分别为 $\sqrt{\Delta/(AB)},1,1,\sqrt{\Delta/(AB)},1$ 得到。退化分支两边归零。于是所有实际来源都有
+
+$$|x_0\cdot w|\ge q_2^2,\quad q_2\le q_0q_1;\qquad
+\Delta\ge d_0,\ |a|,|b|\le L\Longrightarrow |x_0\cdot w|\ge c q_0|w|,\quad c=\sqrt{d_0}/L^2.$$
+
+若三读均不超过 $H$，又有 $|w|=q_1q_2\le H^2q_0$。
+
+令 $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$。对 $j\ge3$，置 $a_j=F_{j-2},b_j=F_{j-1}$。归纳给 $q_j=q_1^{a_j}q_2^{b_j}$，并把向量写成非负三锚式：相位 $1,2,0$ 分别为
+
+$$q_1^{a_j-1}q_2^{b_j}x_1,\quad q_1^{a_j}q_2^{b_j-1}x_2,\quad q_1^{a_j-1}q_2^{b_j-1}x_3.$$
+
+所有出现的指数非负，约定 $0^0=1$；依赖分支中 $x_3=0,q_2=0$，后两个相位亦由正 $q_2$ 次数消为零。$F_n\bmod2$ 的状态 $(F_n,F_{n+1})$ 从 $(0,1)$ 经 $(1,1),(1,0)$ 返回，故周期三。于是对任意有限报告，取
+
+$$Z=\operatorname{sgn}(y_0\cdot(y_2\times y_1))(y_2\times y_1),\quad U_y=|y_1|^2,V_y=|y_2|^2,$$
+
+得到统一执行核
+
+$$P_j(y)=\begin{cases}
+U_y^{(a_j-1)/2}V_y^{b_j/2}y_1,&j\equiv1\pmod3,\\
+U_y^{a_j/2}V_y^{(b_j-1)/2}y_2,&j\equiv2\pmod3,\\
+U_y^{(a_j-1)/2}V_y^{(b_j-1)/2}Z,&j\equiv0\pmod3.
+\end{cases}$$
+
+这些指数全为非负整数，报告为实际准确值时 $P_j=x_j$。除三锚的有限符号比较外，核在 $y_1,y_2$ 中总次数为 $F_j$。不需要平方根、归一化、裁剪或真实范数端口；平方根只用于证明其误差。
+
+## 51. 所有准备的稳健第三锚
+
+**定理 51.1。** 若 $q_0,q_1,q_2\le\bar H$ 且同时 $|y_i-x_i|\le e$，则
+
+$$|Z-x_3|\le B_e+2\bar H\sqrt{P_e},\qquad B_e=(2\bar H+e)e,\quad P_e=\bar H^2e+(\bar H+e)B_e.$$
+
+证明。双线性给 $|y_2\times y_1-w|\le B_e$。真实尾零或报告符号正确时误差至多 $B_e$。符号错误或报告标量零时，两标量异号或后者为零，故
+
+$$q_2^2\le|x_0\cdot w|\le|x_0\cdot w-y_0\cdot(y_2\times y_1)|\le e|w|+(q_0+e)B_e\le P_e.$$
+
+于是 $|w|\le\bar Hq_2\le\bar H\sqrt{P_e}$，而反号误差至多 $B_e+2|w|$。这覆盖极小向量、零计算结果、错误符号、非正交及不在实际像中的报告。
+
+取 $\bar H\ge1,e\le1$，令 $P=3\bar H^2+3\bar H+1$、$C_s=2\bar H+1+2\bar HP$。有 $P_e\le Pe$、$B_e\le(2\bar H+1)e$，$\sqrt P\le P$，所以 $|Z-x_3|\le C_s\sqrt e$。当 $\bar H=1$，更紧的 $3e+2\sqrt{7e}\le9\sqrt e$ 可用。
+
+**定理 51.2。** 在有条件域 $|a|,|b|\le L,\Delta\ge d_0>0$，供应 $0<c_-\le c$，$e\le1$ 时，同一核满足
+
+$$|Z-x_3|\le C_ce,\qquad C_c=4(\bar H^2+2\bar H+1)/c_-.$$
+
+证明。只须考虑符号错误分支。若 $q_0<2e$，$|w|\le\bar H^2q_0$ 给误差 $\le4\bar H^2e+B_e$。若 $q_0\ge2e>0$，投影下界及 $|w|\le\bar H^2q_0$ 给
+
+$$c_-q_0|w|\le e|w|+(q_0+e)B_e\le\bar H^2q_0e+\tfrac32q_0B_e.$$
+
+因此 $2|w|+B_e\le2\bar H^2e/c_-+(3/c_-+1)B_e\le4(\bar H^2e+B_e)/c_-$，即所列界。$e=0$ 由准确公式承担。该线性结论与无行列式下界的平方根结论是不同条件。
+
+## 52. 无行列式下界的一致收缩与整个尾部
+
+**定理 52.1。** 供应有限有理数 $\bar H\ge1,0\le\rho<1$，所有实际准备满足 $q_0\le\bar H,q_1,q_2\le\rho$；无叶范数、行列式或角度下界。对每个有理 $E>0$，同一多项式核给一个有限报告、有限工作空间的全未来解码器。
+
+令 $R=(1+\rho)/2$，$K_s=C_s+R/(1-R)^2$，并要求
+
+$$e\le e_*:=\min\{1,(1-\rho)/2,(E/(2K_s))^2\},\qquad \xi_{out}\le E/2.$$
+
+选择有限整数 $T\ge0$ 使 $R^T\le E/2$，取最小 $J\ge3$ 使 $F_J\ge T$。$3\le j<J$ 执行 $P_j$ 后舍入；全部 $j\ge J$ 输出零。
+
+证明。$|y_1|,|y_2|\le R$，$|Z|\le R^2$。对两个长度 $n$ 的非负乘积，逐因子替换给差 $\le nR^{n-1}e$，因为范数的误差至多 $e$。相位1、2的标量次数为 $n=F_j-1$，真锚范数至多 $R$；相位0的次数为 $n=F_j-2$，真锚至多 $R^2$。锚误差分别为 $e,e,C_s\sqrt e$。将乘积差乘真锚，再将报告系数乘锚差，得到每相位误差至多
+
+$$C_s\sqrt e+nR^ne\le\left(C_s+\sum_{n\ge1}nR^n\right)\sqrt e=K_s\sqrt e.$$
+
+这直接证明较宽来源域上的多项式核误差，不靠把有条件结论移植过来。有限头部加输出舍入至多 $E$。对于整个无界尾部，准确实际幅度满足
+
+$$q_j=q_1^{F_{j-2}}q_2^{F_{j-1}}\le\rho^{F_j}\le R^{F_j}\le R^T\le E/2\qquad(j\ge J).$$
+
+$F_j$ 在 $j\ge3$ 单调，故这是一条全尾证明。$R<1$ 使有理乘法搜索 $T$ 终止；Fibonacci 加法搜索 $J$ 亦终止。$\rho=0$ 直接包含全零分支。
+
+若另外供应 $c_-$，把 $K_s\sqrt e$ 换成 $K_c e$，其中 $K_c=C_c+R/(1-R)^2$，并取 $e_*\le E/(2K_c)$，得到线性精度预算，仍用同一个无范数执行核。所有原线性制度均能接入：$L<1$ 时树范数由叉积范数不等式至多 $L^{\#叶}\le L$；其余线性行 $H<1$ 已给 $q_1,q_2\le H$。实际供方必须给一个有效有理上界 $\rho<1$；此事实不供应免费的任意实数比较。
+
+**平方根率的已发表实际见证。** 下述成对构造复用本卷定理 21.3；这里验证它在 $q_0$ 仅有界、$q_1,q_2$ 一致收缩的较宽域内仍成立。 当 $0<\rho<1$ 时，固定 $0<h_0<\bar H,0<h_1<\rho$，取小 $s>0$，$r=\sqrt{h_1/s}$、$C=\sqrt{h_0^2h_1/s^3-s^2}$，$b=re_1,a=(C/r)e_1+(s/r)e_2$。直接算得 $K=se_3,V=rse_2$；实际树 $t=\langle\alpha,\langle\alpha,\beta\rangle\rangle$ 的三式为 $U,-BK,-\Delta V$，给
+
+$$x_0=(s/r)(-se_1+Ce_2),\quad x_1=-h_1e_3,\quad x_2=-qe_2,\quad q=\sqrt{h_1}s^{5/2}.$$
+
+取 $\theta=2\arctan(s/C)$、$b'=r(\cos\theta e_1+\sin\theta e_2)$、$K'=-se_3$、$V'=rs(\sin\theta e_1-\cos\theta e_2)$、$a'=(C/B)b'+V'/B$，并用根反序树 $t'=\langle\langle\alpha,\beta\rangle,\alpha\rangle$。直接用半角公式验证两个 Gram 相同、$U'=-U$，故 $x'_0=x_0,x'_1=x_1,x'_2=q(\sin\theta e_1-\cos\theta e_2)$。三读距离为 $\epsilon_s=2s^5/h_0$，第三未来距离为 $\sqrt2h_1^{3/2}\sqrt{h_0}\sqrt{\epsilon_s}\cos(\theta/2)$。两源均满足 $q_0=h_0,q_1=h_1,q_2=q<\rho$，而 $\epsilon_s$ 覆盖全部充分小的正数。共同中点报告给平方根风险下界。两叶范数发散、$\Delta\to0$，故不能反驳有条件域的线性界。
+
+## 53. 完整十制度及真实达到阈值
+
+定义原参数域 $\mathcal D_{L,H,d_0}$ 为所有实际来源满足 $|a|,|b|\le L,\Delta\ge d_0$ 及 $q_0,q_1,q_2\le H$，$L,H>0,0<d_0<L^4$。令 $d_3=\max_{i\le2}|x_i-x'_i|$、$d_\infty=\sup_{j\ge3}|x_j-x'_j|$、$\Omega(\epsilon)=\sup_{d_3\le\epsilon}d_\infty$。置
+
+$$\varphi=(1+\sqrt5)/2,\quad\psi=-1/\varphi,\quad s_0=\sqrt{d_0},\quad z=\log s_0,\quad\ell=\log L,
+\quad D_{crit}=L^{2/\varphi^2},\quad G=\varphi^2z-\ell.$$
+
+| 行 | 原参数条件 | 全未来制度 | 有限表示结果 |
+|---|---|---|---|
+| 1 | $L<1$，任意 $H$ | $\Omega=\Theta(\epsilon)$ | 任意正 $E$，付费精度及证书下可解 |
+| 2 | $L=1,H<1$ | 同上 | 同上 |
+| 3 | $L=1,H\ge1$ | 单位平台 | 有统一位上限时恰为 $E>1/2$ 可解 |
+| 4 | $L>1,d_0<D_{crit},H<1$ | 线性 | 同行1 |
+| 5 | $L>1,d_0<D_{crit},H=1$ | 单位平台，包含 $d_0>1$ | 同行3 |
+| 6 | $L>1,d_0<D_{crit},H>1$ | 任意 $\epsilon>0$，$\Omega=\infty$ | 任意有限逐源字亦不能保证有限统一 $E$ |
+| 7 | $L>1,d_0=D_{crit},H\le1$ | 全零未来 | 有效付费制度证书下准确零输出 |
+| 8 | $L>1,d_0=D_{crit},H>1$ | 无限放大 | 同行6 |
+| 9 | $L>1,d_0>D_{crit},H<H_*$ | 全零未来 | 同行7 |
+| 10 | $L>1,d_0>D_{crit},H\ge H_*$ | 无限放大，等号达到 | 同行6 |
+
+准确记录在全部十行都有 $\Omega(0)=0$。平台的原模量保持 $\Omega(\epsilon)=1$ 在充分小的正区间，$\Omega\le2$，$\epsilon\ge2$ 时 $\Omega=2$；不主张中间完整曲线。
+
+这张十行表的全时间制度、实际支撑与达到阈值分别复用本卷定理 24.2、18.2–18.4、19.1–19.3、25.1–28.2；有限表示一栏由下述新条件构造与障碍承担。以下说明保留原判据的完整关系，有限支持只用于数学证书，不授观察者计数。非零标签可能的组成恰为
+
+$$\mathcal S=\{(1,0),(0,1)\}\cup\{(m,n):m,n>0,\ (m,n)\notin(2\mathbb N)^2\}.$$
+
+必要性由单位轴的 $\mathbb F_2^2$ 分次给出，纯标签至少两叶含零 cherry。充分性从 $\langle\beta,\alpha\rangle$ 出发，每次双左接一种叶加2而不消零；奇/奇全部可得，一次左接补偶/奇或奇/偶。根反序给相反符号。每个见证仍是一棵真实有限有序树。
+
+原叶界允许的 $(r,s)$ 恰为 $s_0\le s\le L^2,s/L\le r\le L$。必要性由 $s\le|a||b|\le Lr$；充分性取正交 $a=(s/r)e_1,b=re_2$。正交化保持 $B,\Delta$ 和两个尾范数，且由第50节投影恒等式把 $q_0$ 降到最小值 $(s/r)^mr^n$；随后同比缩叶降到 $s=s_0$，每个树值按其真实叶数缩小。故非零三读可行当且仅当某个 $\mathcal S$ 中组成及 $v\in I=[z-\ell,\ell]$ 满足
+
+$$f_0=mz+(n-m)v\le\log H,\quad f_1=nz+mv\le\log H,\quad f_2=f_0+f_1\le\log H.$$
+
+正交准备和该组成的真实树反向实现三项。非零未来的增长量为 $\Gamma=\log r+\varphi\log s$。取 $l_i=\log q_i$，递推的准确解是 $\log q_j=F_{j-2}l_1+F_{j-1}l_2$。两根 $\varphi,\psi$ 的初值验证给 $F_n=(\varphi^n-\psi^n)/\sqrt5$，从而
+
+$$\log q_j=\frac{\varphi^{j-2}}{\sqrt5}(l_1+\varphi l_2)-\frac{\psi^{j-2}}{\sqrt5}(l_1+\psi l_2),\qquad l_1+\varphi l_2=(m+\varphi n)\Gamma.$$
+
+正权重和 $|\psi|<1$ 证明趋零、趋1、趋无穷分别对应 $\Gamma<0,=0,>0$。
+
+若 $G<0$，三读最小上界的下确界为0且不达到。$z>0$ 时令 $\eta=\ell/z-1>\varphi$，选互素正整数比 $1+1/\eta<n/m<\eta$，取任意大奇数倍，$v=z-\ell$ 使 $f_0,f_1,f_2$ 都趋负无穷。$s_0\le1$ 的情形可取 $s$ 严格在 $s_0$ 与 $\min(1,L^2)$ 之间及 $r=s/L$，这使 $\Gamma<0$；其标准替换轨道的尾范数趋零，有限平移后全部三读小于任意 $H$。$s_0=1,L>1$ 时改取 $1<s<L^{1/\varphi^2}$，同样 $\Gamma<0$。非零有限树在 $\Delta>0$ 下范数正，故下确界不达到。
+
+若 $G=0$，$z>0,\eta=\varphi$，端点三项为 $-\varphi e,e,-e/\varphi$，$e=n-\varphi m\ne0$。它们最大值严格正。连续 Fibonacci 组成给 $e\to0$，且不双偶，故读界下确界1而不达到。正权重式和 $\Gamma\ge G$ 也排除 $H\le1$ 的非零来源。
+
+若 $G>0$，定义
+
+$$\log H_* =\min_{(m,n)\in\mathcal S}\min_{v\in I}\max(f_0,f_1,f_2).$$
+
+叶 $\alpha$ 的等叶长 $\sqrt{s_0}<L$ 给上界 $s_0$。并且 $f_1+\varphi f_2=(m+\varphi n)(v+\varphi z)\ge(m+\varphi n)G$；若三个 $f_i\le z$，则 $(m+\varphi n)G\le\varphi^2z$。所以只需有限支持 $m+\varphi n\le\varphi^2z/G$，其它组成不能持平或改善该叶上界。每个闭区间内三仿射线最大值在端点或线交点达到最小；有限最小严格正，故 $1<H_*\le s_0$ 且由真实树和正交准备达到。两种更宽截止只要保留完整三线测试，亦给同一个阈值，不增加源大小限制。
+
+特别地，若有限有理证书给 $L_+>1,d_-\ge L_+,H_+>0,H_+^2<d_-$，并且供方确证真实叶界、行列式下界和三读界分别不超过/不低于这些数，则未来全零。证明：$z=\log\sqrt{d_-},\ell=\log L_+$ 有 $2z\ge\ell>0$。每个混合支持 $(m,n)$ 在 $v\ge z-\ell$ 处满足 $f_2\ge mz+n(2z-\ell)\ge z$；叶 $\beta$ 的 $f_1=z$；叶 $\alpha$ 在 $v\ge0$ 时 $f_2\ge z$，在 $v<0$ 时 $f_0>z$。故非零三读最大至少 $\sqrt{d_-}>H_+$，矛盾。等叶长的 $\alpha$ 又达到 $\sqrt{d_-}$（当类非空且 $d_-<L_+^4$），与原阈值一致。这只是一个充分有限证书，不能穷尽分类所有任意实数临界条件。准确零解码仍先支付原三读两更新；零类证书既可公开按制度给出，也可属于计费的来源承诺。
+
+线性行由第52节有条件线性界，准确实际对亦可直接套用其中一个作报告，给 $\Omega\le K\epsilon$。每行存在上述严格允许的非零来源，绕垂直于非零 $x_3$ 的轴作小正向旋转同时转两叶，记录距离至多 $H|\theta|$，$x_3$ 距离为 $2q_3\sin(|\theta|/2)$，给线性下界。旋转保持 Gram、叶界和全部读界。零行由不存在非零标签来源、退化尾零而准确成立。平台和增长的完整实际见证在后两节给出。
+
+原小平台上界也保留：令实际三读距离 $\epsilon$，$H$ 的有效读上界取1。相同符号/零分支 $|x_3-x'_3|\le2\epsilon$；异号时两个归一化三重积相差至少 $2c$。归一化向量差至多 $2\epsilon/q_i$，三重积逐因子相减给 $2c\le2\epsilon(q_0^{-1}+q_1^{-1}+q_2^{-1})\le6\epsilon/q_2$，其中 $q_0,q_1\ge q_2$ 由投影幅度关系得到。所以 $q_2\le3\epsilon/c$，锚差 $\le|w-w'|+2|w|\le(2+6/c)\epsilon$。同相位单位方向与幅度均不超过1：任意范数不超过1的向量 $v,v'$ 的缩小倍数 $sv,s'v'$（$s,s'\in[0,1]$）距离不超过 $\max\{|v|,|v'|,|v-v'|\}$，因为距离是两倍数的凸函数，矩形顶点给该上界。对相位锚 $x_1,x_2,x_3$，$\epsilon\le(2+6/c)^{-1}$ 时锚间距离均不超过1，故全未来距离不超过1。全时上界2由幅度界；相反单位/近单位相位及收缩对给小误差下界1（第55节），根反序或转到反向的真实单位极限给 $\epsilon\ge2$ 时下界2。这些是数学原制度，不能作为任意实数制度分类的执行器。
+
+## 54. 单位读界下的有限平台库及更紧点态界
+
+**定理 54.1。** 对所有准备，只要 $q_0,q_1,q_2\le1$，无行列式下界，供应任意有理 $\tau>0$ 就能以有限报告给统一误差 $E=1/2+\tau$。令首个未来周期锚
+
+$$A_3=x_3,\quad A_4=q_2^2x_1,\quad A_5=q_1^2q_2^2x_2.$$
+
+把 $A_3/2,A_4/2,A_5/2$ 分别用于相位 $0,1,2$。每个后续同相位向量是对应 $A_r$ 的 $[0,1]$ 倍数，因此理想误差至多 $|A_r|/2\le1/2$。用报告替换为 $Z/2,V_yy_1/2,U_yV_yy_2/2$，是次数2、3、5的库。
+
+证明。$q_1,q_2\le1$ 使指数非负增加时不增幅度，故所有 $q_j\le q_3=q_1q_2\le1$，三条射线固定；各相位从 $j=3,4,5$ 开始，之后单项式系数不增。零/依赖分支照样成立。$e\le1$ 时 $|y_i|\le2$、$||y_i|^2-q_i^2|\le3e$。第51节给 $|Z-x_3|\le9\sqrt e$。第二锚差至多 $4e+3e=7e$；第三锚差至多 $16e+12e+3e=31e$。所以全部未来误差至多
+
+$$\frac12+\frac{31}{2}\sqrt e+\xi_{out}.$$
+
+取 $e\le\min(1,(\tau/31)^2)$、$\xi_{out}\le\tau/2$ 即得结论。整个库用相同有限符号算法；不把看似不在像中的报告判成另一来源。
+
+**定理 54.2（幅度加权改进）。** 理想库 $(q_2x_1/2,q_1x_2/2,x_3/2)$ 每个中心长度为 $q_3/2$，全部未来误差至多 $q_3/2$。这比普通半锚 $(x_1/2,x_2/2,x_3/2)$ 的逐相位 $q_i/2$ 界更紧。若有限范数近似误差至多 $\eta$，把报告范数近似裁剪到 $[0,1]$ 得 $u,v$，执行 $(vy_1/2,uy_2/2,Z/2)$，则误差至多
+
+$$q_3/2+\max\{e+\eta/2,(9/2)\sqrt e\}+\xi_{out}.$$
+
+原有条件域还有更紧的 $q_3/2+\max\{e+\eta/2,8e/c_-\}+\xi_{out}$。
+
+证明。每相位 $0\le q_j\le q_3$，到其射线中点的距离至多 $q_3/2$。范数为1-Lipschitz，裁剪对 $q_i\in[0,1]$ 不增加误差，故 $|u-q_1|,|v-q_2|\le e+\eta$。第一中心差 $\le(v e+q_1(e+\eta))/2\le e+\eta/2$，第二相同；第三使用第51节。真实零、极小和符号分支不需要分母。
+
+范数近似是有限整数运算：若向量为 $n_k2^{-b}$，整数 $S=\sum n_k^2$，取 $p\ge b$，令 $t=\lfloor\sqrt{S2^{2(p-b)}}\rfloor$，则 $t2^{-p}\le|y|<(t+1)2^{-p}$。二进制整数平方根由有限区间平方比较搜索取得，包含完全平方数，宽度 $2^{-p}$。这明确支付了 $\eta$，未询问真实实数范数。
+
+一个完整有限预算为 $\eta\le\tau/4,\xi_{out}\le\tau/2$，以及 $e\le\min\{1,\tau/4,(\tau/9)^2\}$；有 $c_-$ 时可把最后平方项改为 $c_-\tau/16$。前两个中心误差不超过 $3\tau/8$，第三中心误差不超过 $\tau/2$，故统一误差至多 $1/2+\tau$。程序用范数分数位数 $\max\{b,\operatorname{precision}(\tau/4)\}$，所以范数求值的整数移位始终合法。
+
+上述加权库和首个未来周期多项式库不互相点态支配。例 $q_1=q_2=1/2$ 时，$j=4$ 的加权中心恰为 $x_4$，多项式半中心误差 $1/16$；该相位足够晚时加权误差趋 $1/8$，多项式半中心误差趋 $1/16$。多项式库的相位最坏界分别是 $q_3/2,q_1q_2^2/2,q_1^2q_2^3/2$，其全相位最大仍为 $q_3/2$。加权库的全相位点态界具有真实量化价值，多项式库则免去范数算术。
+
+**带门控的归一化比较。** 在有 $c_-$ 的原平台域，令 $A_c=\max(1,16/c_-)$，$e\le1/(8A_c)$。若 $|Z|\le1/2$，常零的误差至多 $1/2+A_ce$。否则真实 $q_3>3/8$，$q_1,q_2\ge q_3$，三个真实锚范数至少1/4，报告锚至少1/8。规范化不等式 $|v/|v|-x/|x||\le2|v-x|/|x|$（加减 $v/|x|$ 即得）给方向误差至多 $8A_ce$。报告范数在 $[0,4]$；有理平方比较二分到误差 $\eta_n\le\min(1/16,\nu/16)$，中点分母至少1/16，故除法方向误差至多 $16\eta_n\le\nu$。三半单位方向再舍入给 $1/2+4A_ce+\nu/2+\xi_{out}$。取 $e\le\tau/(16A_c),\nu\le\tau/2,\xi_{out}\le\tau/4$ 可严格小于 $1/2+\tau$。门控零尾确实走零支路。它是有效的有条件线性噪声保证，但域比定理54.1窄，误差系数比定理54.2保守；无需把它另作为主要执行核。普通半锚 $(x_1/2,x_2/2,x_3/2)$ 的全未来理想界是 $\max(q_1,q_2,q_3)/2\le1/2$；以 $(y_1/2,y_2/2,Z/2)$ 替换并舍入，全部准备域有 $1/2+(9/2)\sqrt e+\xi_{out}$，有条件域有 $1/2+8e/c_-+\xi_{out}$。证明是逐相位真中心误差加相应的半锚误差；$e/2\le(9/2)\sqrt e$，且 $c_-\le1$ 时 $e/2\le8e/c_-$。它的噪声常数优于首个未来周期库的保守常数，却没有 $q_3/2$ 的理想点态界。其有限执行说明仅为调用共同 `anchors`、各乘 dyadic $1/2$、舍入并按同一个流解析器选相位；没有归一化、范数口或另一套控制机制。加权库同时保留 $q_3/2$ 与更好的噪声常数，但支付有限范数取得；这三种取舍不能只按常数或次数删掉实际点态信息。
+
+## 55. 两个平台的实际族与有限完整记录端点
+
+**实际族引理。** 下述规范树、叶数索引及缩放族复用本卷定理 27.2 的已发表构造；只取其中较慢的一族并允许第一平台的近单位成员也都严格收缩。 两个平台均有一列实际严格收缩来源，固定每个时刻的向量极限为 $U_j=e_1,e_2,-e_3$ 的三循环，并且三读趋向 $U=(e_1,e_2,-e_3)$。
+
+第一平台取同一树 $\alpha$、$p_\lambda=(\lambda e_1,\lambda e_2)$，$\lambda\uparrow1$ 且 $\lambda^4\ge d_0$。$q_j=\lambda^{F_{j+1}}$，固定 $j$ 趋1，每个 $\lambda<1$ 随 $j\to\infty$ 趋0。第二平台选择
+
+$$\max(1,s_0)<s_*<L^{1/\varphi^2},\quad a_*=s_*^{\varphi^2},\quad r_*=s_*^{-\varphi},
+\quad p_*=(a_*e_1,r_*e_2),\quad C_* =\log a_*.$$
+
+两个叶长严格小于 $L$，$\Delta_*=s_*^2>d_0$。规范实际树 $T_k=\rho^k\alpha$ 的叶数为 $F_{k+1}$，$\log|E_{p_*}(T_k)|=C_*\psi^k$；两初值、原有序递推给两式。只取正的12倍数 $k$，令
+
+$$\tau_k=2(1+C_*)\varphi^{-k}/F_{k+1},\qquad s_k=(T_k,e^{-\tau_k}p_*).$$
+
+在相对时刻 $h$ 的对数为 $C_*\psi^{k+h}-\tau_k F_{k+h+1}$。$h=0,1,2$ 时正项不超过 $C_*\varphi^{-k}$，减项至少 $2(1+C_*)\varphi^{-k}$，故三读都严格小于1。$\tau_k\to0$，全部足够晚成员仍有 $\Delta_*e^{-4\tau_k}\ge d_0$ 和叶界。固定 $h$ 时两项趋0，相位由 $k\equiv0\pmod3$ 固定；每成员 $\Gamma=-(1+2\varphi)\tau_k<0$，故整个尾趋零。这里每成员的九个真值来自同一树及同一数值准备，不是可行边缘的乘积。
+
+若 $d_0>1$，此平台甚至没有非零中性成员：$q_1,q_2\le1$ 及 $\Gamma=0$ 会迫使 $q_1=q_2=1$，两幅度对数方程的整数组成行列式 $m^2+mn-n^2\ne0$（否则整数比为黄金无理根），继而 $r=s=1$，与 $\Delta\ge d_0>1$ 矛盾。严格收缩族仍成立。
+
+该族还证明原模量平台下界。给 $\epsilon,\eta>0$，先固定一个三读到 $U$ 小于 $\epsilon/2$ 的真实收缩成员，再固定足够晚的相位1时刻使其幅度小于 $\eta$，最后选族中足够晚的另一成员，使三读到 $U$ 小于 $\epsilon/2$ 且该固定时刻幅度大于 $1-\eta$。两实际来源的 $d_3\le\epsilon$，未来距离至少 $1-2\eta$；令 $\eta\downarrow0$ 得 $\Omega(\epsilon)\ge1$。将一个近单位成员两叶正向旋到该相位的反向，所有三读距离仍至多2，未来距离趋2，给 $\Omega(\epsilon)=2$ 对 $\epsilon\ge2$ 的下界。限次序已经指定。
+
+**定理 55.1。** 在每个平台，任意源感知编码器的完整记录若有统一有限位上限，则不可能统一保证 $E\le1/2$，即使三个读数本身无噪且允许编码器知道整个来源。每个 $E>1/2$ 则在充分细的付费精度下由定理54.1实现。
+
+证明。将上述整个族同时旋转两叶，使未来相位 $j\equiv1\pmod3$ 的单位极限为任意单位方向 $u$。正向旋转保持所有约束。有限记录字母表为 $\mathcal A$。对每个 $u$，无限族中有一个记录字在无穷子列重复，选其中之一 $a(u)$。不同的至少两个方向 $u\ne v$ 具有同一 $a$。对每个固定 $j\equiv1\pmod3$，沿各自重复子列的固定时刻极限，解码值 $r_a(j)$ 必须同时满足 $|r_a(j)-u|,|r_a(j)-v|\le E$。从其中一个重复子列固定一位真实收缩成员，随后让 $j$ 在该相位趋无穷，得 $\limsup|r_a(j)|\le E$。有界子列极限 $z$ 因而满足 $|z|,|z-u|,|z-v|\le E$。$E<1/2$ 与 $|u|=1$ 的三角不等式矛盾；$E=1/2$ 的等号迫使 $z=u/2=v/2$，仍矛盾。限次序不互换，也不要求源中存在中性成员。源相关代码、选择数据若另存于“程序”也属于 $a$。可数无限字母表不受这里的有限鸽巢证明排除。
+
+## 56. 正噪声三点纤维和特定 dyadic 单元下界
+
+风险的精确定义如下：来源集为所声明的实际类 $\mathcal S_{act}$，报告空间为 $(\mathbb R^3)^3$，兼容纤维为 $\mathcal A_\delta(y)=\{s:\max_{i\le2}|y_i-x_i(s)|\le\delta\}$。允许的估计器 $D(y,j)$ 是所有集合函数，不假定可计算或有限记录；定义
+
+$$R_\delta=\inf_D\sup_{s\in\mathcal S_{act}}\ \sup_{y:\ s\in\mathcal A_\delta(y)}\ \sup_{j\ge3}|D(y,j)-x_j(s)|.$$
+
+有限记录定理则单独量化有限字编码 $a(s)$ 及固定 $D(a,j)$，不能把这个实数报告界面的 $\delta=0$ 值直接搬到有限字界面。
+
+**定理 56.1。** 令 $R_\delta$ 为原三次读完整乘积误差球上、所有集合函数序列估计器的最坏风险。在两个平台的每一个中，对每个 $\delta>0$，选择 $0<\theta<\pi/4$ 使 $2\sin(\theta/2)<\delta/2$，就有
+
+$$R_\delta\ge \frac1{2\cos\theta}>\frac12.$$
+
+证明。取共同完整报告 $U=(e_1,e_2,-e_3)$，以 $Q_\pm$ 表示绕 $e_3$ 的正向 $\pm\theta$ 旋转。把第55节的族两叶同时旋转，保留同一字面树。所有足够晚的成员之三读到 $Q_\pm U$ 的距离小于剩余 $\delta/2$，故都兼容同一个 $U$。再固定一个足够晚的未旋转实际收缩成员，它也在该完整纤维中。旋转竞争者每次执行内的准备始终固定；两竞争世界的准备可不同，这是原来源量词允许的比较，不是声称其数值叶对相同。
+
+固定 $j\equiv0\pmod3$，先让族索引趋无穷，两个真实未来趋于 $u_\pm=(\cos\theta,\pm\sin\theta,0)$。若一个估计器有有限风险 $r$，其在数据 $U$ 上的输出 $r_j$ 满足 $|r_j-u_\pm|\le r$。然后保持已固定的未旋转收缩成员，让这个相位的 $j\to\infty$，得到 $|r_j|\le r+o(1)$。取有界子列极限，$\{0,u_+,u_-\}$ 被半径 $r$ 的球包围。
+
+其最小包围球半径恰为 $r_\theta=1/(2\cos\theta)$。投影去掉第三坐标、对第二坐标反射后取中心平均，凸性不增最大距离，故可取中心 $te_1,t\ge0$。目标为 $\max\{t,\sqrt{1+t^2-2t\cos\theta}\}$。两项相等的点为 $t=r_\theta<\cos\theta$；$t\le r_\theta$ 时第二项至少 $r_\theta$，$t\ge r_\theta$ 时第一项至少它，且该点达到。于是每个估计器 $r\ge r_\theta$，再取下确界。证明对没有中性实际成员的 $d_0>1$ 也完全成立。原规范树的 $x_3=e_1$，所以本证明使用相位0；绕 $e_3$ 的旋转固定的是相位2的 $-e_3$。
+
+**定理 56.2（仅针对最近格点仪器）。** 若仪器合同是对真实精确坐标作最近步长 $h=2^{-b}$ 的格点舍入，则在任意有限 $b\ge0$，且记录仅含九个舍入坐标、公共 $b$ 及同一日程／动作／Stop 元数据，没有另附源相关建议、程序选择或精确身份侧信道，则该记录解码器必须有
+
+$$E=1/2+\tau\quad\Longrightarrow\quad\tau\ge 2^{-2b}/384.$$
+
+证明。取 $\theta=h/8\le1/8$。$U$ 在格点上，每个旋转单位坐标与 $U$ 差至多 $\theta\le h/8$；取族充分晚，使附加真坐标差严格小于 $h/8$，并固定同样足够晚的未旋转收缩成员。所有坐标均在 $U$ 的单元内部，距离小于 $h/4<h/2$，因此九个报告字严格相同，任何平局规则都无关。按上一定理两次极限，风险至少 $r_\theta$。对 $0\le\theta\le1/8$，交错 Taylor 余项给 $\cos\theta\le1-\theta^2/2+\theta^4/24\le1-\theta^2/3$。故
+
+$$r_\theta-1/2=(1-\cos\theta)/(2\cos\theta)\ge\theta^2/6=h^2/384.$$
+
+得到 $b\ge\frac12\log_2(1/(384\tau))$ 在右边为正时的必要条件。定理54.1给固定参数下 $b=O(1+\log(1/\tau))$ 的充分阶（需相应小的传感误差）；不声称常数最优。单元论证不适用于任意编码器，也不能未经校核应用到“先有限近似再舍入”的另一个仪器。后者的原理见第59节。一般任意有统一位上限的编码器只有第55节的端点结论。
+
+对完整误差球还复用一般纤维不等式 $\Omega(2\delta)/2\le R_\delta\le\Omega(2\delta)$，但其上界是抽象选择而非有限算法。证明：任一对三读距离不超过 $2\delta$ 的实际源兼容共同中点数据，三角不等式迫使任意统一估计器的误差至少为其未来距离一半；取上确界得左界。对每个非空兼容纤维选择其中一实际源，把该源未来作为输出；纤维内每两源三读距离不超过 $2\delta$，故风险不超过右界，空纤维任意定义即可。此选择不供应付费的可执行来源取得。下述三个线性行用定理52.1的有条件直接公式替代选择，结合第53节的旋转下界，得到 $R_\delta=\Theta(\delta)$ 当 $\delta\downarrow0$；两个零行常零给全部噪声下风险0。因此任何固定正完整传感误差球在非零线性类中都有正风险地板，不能从同一旧记录要求任意准确。
+
+**风险不连续。** $R_0=0$ 因第50节准确三读公式。定理54.1的理想报告算术给 $R_\delta\le1/2+(31/2)\sqrt\delta$，$\delta\le1$；有条件的加权或门控界还给线性趋近。与定理56.1合起来，$\lim_{\delta\downarrow0}R_\delta=1/2$，但每个正 $\delta$ 都严格大于1/2。$R$ 的定义允许任意实数数据和所有集合函数，故 $R_0=0$ 不等价于统一有限位记录的端点可达。变量有限字、固定上限字、任意实记录与无限细化名字都要分别声明。原来的 $\delta\ge1$ 平台风险恰1也保留：常零上界1，反向单位/近单位方向在共同零报告中逼近距离2，给下界1。这里没有完整有限正噪声曲线或最优常数。
+
+## 57. 三个增长制度中的任意有限字障碍
+
+**定理 57.1。** 在表中行6、8、10，包括达到的 $H=H_*$，任何每源有限的二进制完整记录编码器，都不能在原全部实准备上保证任何有限统一全未来误差 $E$。记录长度可以依源任意大；源相关程序、元数据与建议也必须包含在有限字中。
+
+证明。首先每行有实际非零增长来源。$G\le0,H>1$ 时，选择 $1<s_*\le L^{1/\varphi^2}$ 且 $s_*^2\ge d_0$，临界正交 $p_*=(s_*^{\varphi^2}e_1,s_*^{-\varphi}e_2)$ 的规范树 $T_k$ 在足够晚时三读接近1，严格小于 $H$。$G=0$ 允许第一叶恰为 $L$；作小的 $r\mapsto re^v,a\mapsto ae^{-v}$，$v>0$，保持 $s,\Delta$，叶长仍满足界（第二叶原有严格余量），有限三读由连续性仍小于 $H$，$\Gamma=v>0$。$G<0$ 可先选严格临界余量，完全相同。$G>0,H\ge H_*$ 时用第53节的实际达到者，$\Gamma\ge G>0$，不需移开任何等号。
+
+固定此一真实树及准备，绕非零 $x_1$ 的轴以一个长度小于 $\pi$ 的实角区间旋转两叶。各成员树相同，全部范数和 Gram 相同，故保留每个活跃界。相位2的 $x_j$ 垂直于此轴；任意不同角 $\theta,\theta'$ 有
+
+$$|Q_\theta x_j-Q_{\theta'}x_j|=2\sin(|\theta-\theta'|/2)q_j\longrightarrow\infty\qquad(j\equiv2\pmod3).$$
+
+因此得到不可数个两两无限分离的实际同树历史。有限二进制字只有可数多个；两个不同角必须取得相同完整字。共同解码序列若在两端误差均不超过有限 $E$，逐时刻三角不等式会给距离至多 $2E$，矛盾。该证明比固定有限字母表下界强，且不能用一个不收费的源相关程序绕过。
+
+同样可以把角区间取得任意小，使整段旋转的三读均兼容一个正误差球数据；其中未来距离无穷，故原完整误差球 $R_\delta=\infty$ 对每个 $\delta>0$。准确任意实记录的 $R_0=0$ 则依旧成立。增长源中也有零标签树；有证书的全零类必须单独处理，不能把一个有限精度报告的“看似零”当作准确实数相等分类。
+
+**已发表的达到例。** 以下阈值和八叶实际树复用本卷定理 31.1 的覆盖证明及准确求值。 $L=6,d_0=4$ 的实际阈值 $H_*=32/27$。有限覆盖来自 $559^2<5\cdot250^2$ 及 $2^{103411}>6^{40000}$，它们给 $\varphi^2\log2-\log6>\varphi^2\log2/80$，故任何能改善叶上界2的支持组成有 $m+n<80$。$m>n$ 时三线最优最大对数 $(m+n-n^2/m)\log2>m\log2$，不能改善2；$n\ge m$ 时所有斜率非负，端点准备 $(6e_1,e_2/3)$ 给幅度 $6^m/3^n,2^n/3^m$ 及其乘积。两个纯叶的最优读界都是2；准确测试 $m+n\le80$ 的2380个混合非双偶组成得到唯一最优 $(3,5)$ 和 $32/27$。该有限检验的完整整数／Fraction 代码及输出在第63节列出，覆盖证明已经给出。
+
+实际树从 $k=\langle\beta,\alpha\rangle$ 双左接 $\alpha$ 一次、双左接 $\beta$ 两次，组成 $(3,5)$，单位标签 $-f_3$。字面求值得 $x_0=(0,0,8/9),x_1=(-32/27,0,0),x_2=(0,-256/243,0),x_3=(0,0,8192/6561)$。三个取得范数最大恰为 $32/27$，而 $\Gamma>0$，所以阈值等号本身受定理57.1约束。
+
+## 58. 三项非冗余的条件例外
+
+**逐实例收缩证书。** 在读界1的平台中，另行供应并付费验证 $q_1q_2\le\kappa<1$ 的有理证书，则对任意 $E>0$ 有有限头/尾方法，但费用依 $\kappa$。因为 $a_j\le b_j$，
+
+$$q_j=(q_1q_2)^{F_{j-2}}q_2^{F_{j-1}-F_{j-2}}\le\kappa^{F_{j-2}}.$$
+
+取 $T$ 使 $\kappa^T\le E/2$，最小 $J\ge3$ 使 $F_{J-2}\ge T$，整个 $j\ge J$ 输出零。有限头中报告范数至多2、第三锚误差至多 $9\sqrt e$，$N=F_J$，乘积替换与第52节相同，保守给 $|P_j-x_j|\le B\sqrt e$，$B=2^{N+1}(9+N)$。取 $e\le\min(1,(E/(2B))^2)$ 和输出误差 $E/2$。一切搜索、幂和截尾有限，同一执行核实现。若已有 $c_-$，同一多项式核可改取 $B_c=2^{N+1}(\max(1,C_c)+N)$，用 $e\le\min(1,E/(2B_c))$ 取得线性预算；带范数近似的旧三锚形式另给有限头 $(\max(1,C_c)+D)e+D\eta+\xi_{out}$，$D=F_{J-1}$，因为系数因子在 $[0,1]$ 时逐因子替换至多 $D(e+\eta)$。本方法不需要后续源读取；同一次已取得精度可否认证 $\kappa$，由范数上包络 $|y_i|+e$ 的乘积是否严格小于1决定，固定噪声地板可能使认证失败。不能安装停止后免费细化口。没有一致 $\kappa$ 就没有本段一致成本，第55节已给障碍。
+
+**精确有限有理回复的受限表示类。** 若仪器真正承诺原三次准确回复都是给定有限有理数，零传感误差、没有量化偏差，则所有实际准备包括退化零分支，对每个有限 $j$ 都可准确求未来。把九个有理数化成一个正共同分母 $D$，以整数向量替换 dyadic 的分子/分母对：加法、乘法、叉积、点积和正分母下的符号均准确，多项式核给分母 $D^{F_j}$。若输入分子和共同分母总位宽受 $B$ 控制，分子位宽为 $O(F_j(B+1))$，分母位宽 $F_j\log_2D+O(1)$，约分不会增大。dyadic 情形 $D=2^b$ 的可用分母指数为 $bF_j$；若真读界为 $H$，分子位宽 $O(1+F_j[b+\log_2(1+H)])$，指数头宽 $O(j+\log(b+1))$。这是无界整数机器上的逐请求终止定理，不是固定有限状态全源机器，也不保证任意实数来源能发出这些准确有限字。逐次带符号叉积是相同准确结论的另一实现，不必并存两套核。
+
+**另供可细化 Cauchy 名字。** 若另行供应原三次准确向量的可复用认证 dyadic 名字，允许请求任何有限精度，此为无限信息表示扩展。它使每个有限 $(j,E)$ 可以计算，即使增长。先取得粗近似及误差界，用其坐标绝对值和加1构造有限有理 $\bar H\ge1$ 包住真三读。令 $R=\bar H+1,N=F_j,B_j=R^{N+1}(C_s+N)$。取名字精度使 $e\le\min(1,(E/(2B_j))^2)$，执行同一核并用输出误差 $E/2$。标量乘积次数至多 $N$，真/报范数至多 $R$，真第三锚至多 $R^2$，逐项替换给 $|P_j-x_j|\le B_j\sqrt e$，所以有限终止。若有 $c_-$ 可改线性精度。本扩展的名字读取及供应成本另计，不能把每个请求只读有限前缀解释成一个固定有限完整记录；原接口在 Stop 后没有这个精度请求权。附带 `named_query` 先付费访问精度0的三个名字，其同时误差至多1，以各行整数坐标绝对值之和加1生成 $\bar H$；然后 `setup_name_query` 用上述公式选择精度，再付费访问一次名字。`read_name(b)` 的明确合同是返回九整数表示的三向量并认证同时误差不超过 $2^{-b}$，访问与供方生成费用另计。它不调用真实来源的新 Read。
+
+**输出宽度的实际下界。** 原树 $\alpha$ 和 $p=(2e_1,2e_2)$ 满足 $L=2,H=4,d_0=1$，其 $q_j=2^{F_{j+1}}$。以通常二进制固定点数值输出、绝对误差 $E<1/2$ 时，一个非零坐标整数部分至少需要 $F_{j+1}+O(1)$ 位；因为该坐标绝对值至少 $2^{F_{j+1}}-1/2$，位长不能缩小。符号和分数精度还要另计。符号幂表达式是另一个收费输出格式，不能用它否定这个位置数值宽度下界。
+
+## 59. 有限生产者、预算及可执行契约
+
+先得到一个付费传感向量 $r_i$，保证 $|r_i-x_i|\le\sigma$。生产者再付费取得每坐标的 $(b+4)$ 分数位有限整数近似 $d_{ik}$，令近似数值为 $d_{ik}2^{-b-4}$ 并保证 $|d_{ik}2^{-b-4}-r_{ik}|\le2^{-b-4}$，随后仅对这个有限整数作最近步长 $2^{-b}$ 的舍入，平局采用预定有限规则。每坐标误差至多 $(9/16)2^{-b}$；向量误差至多 $(9\sqrt3/16)2^{-b}<2^{-b}$，因为 $243<256$。于是总预算
+
+$$e\le\sigma+2^{-b}.$$
+
+给定 $e_*$，选择 $\sigma\le e_*/2$，用有限有理比较选 $b$ 使 $2^{-b}\le e_*/2$。这一生产者没有未知真实坐标的平局判定 oracle。传感近似和守卫位发行都要实际付费；九个守卫字是瞬态资源，不算免费。第56节最近真实格点仪器则是一项不同数学承诺；其单元下界不自动适用本段先近似的生产者。
+
+有限有理证书的一个可执行检查为 $L_+>0,d_->0,0<c_-\le1,c_-^2L_+^4\le d_-$，它推出 $c_-\le\sqrt{d_-}/L_+^2$。附带函数也检查上述充分零证书的纯有理不等式；这些有限检查为固定次数整数/有理算术，保守耗时 $O(C_{pub}^3)$、工作 $O(C_{pub})$。检查不证明现实中的 $|a|,|b|\le L_+$ 或 $\Delta\ge d_-$；这种真值仍须由已付费供方承诺或证据承担。稳定配置的 $\rho<1$ 可来自 $L_+<1$ 或真实读界 $H_+<1$，也可直接是实际 $q_1,q_2$ 的有效上界；`setup_stable` 检查有限数的关系，不能从九个近似字免费推知隐藏真实范围。
+
+第62节完整给出整数参考程序；第63节给出可直接运行的准确核验。dyadic 用 $(n,b)$ 表示 $n2^{-b}$，不要求约分；加法对齐分母指数，乘法相加，符号只比较整数。平方范数和叉积均准确。幂用二进制平方/乘法，$0^0=1$。输出最近舍入的每坐标误差至多 $2^{-p-1}$，故向量误差小于 $2^{-p}$；选择 $p$ 使 $2^{-p}$ 不超过指定 $\xi_{out}$。这把传感、量化、第三锚及系数计算、确实使用的范数包络和最终输出分别置于同一个预算。主稳定核和主平台库的中间算术准确，故中间舍入误差为零；加权库才用第54节的有限范数包络。程序从来不要求报告本身正交或可实现。
+
+请求接口是一枚以流结束标记终止的规范二进制 token，无前导零，必须表示 $j\ge3$；非法 token 由参考程序抛出 `ValueError`：非二进制字符或前导零使用 `invalid binary query`，空 token 或数值小于3使用 `future query must be at least 3`；查询函数不捕获该异常或将其序列化为错误字，准确输出合同只量化合法请求。程序逐字检查，维护 $\min(j,J)$ 和模3，禁止预先把任意长请求读为一个无限宽整数。对于有限头，饱和值等于真实 $j$；饱和值为 $J$ 时整个尾输出零。平台只需饱和值3和模3。所有字符都读取，包括已饱和后的字符，故合法性与查询长度成本明确。
+
+## 60. 同一程序的位、时间、工作及源侧费用
+
+记 $C_{pub}$ 为实际保留的公共有理数、证书、格式、程序选择与可变参数总位宽，$M_{id}$ 为实际来源/坐标系/时刻/动作/Stop 元数据宽度。若 $e\le1,q_0,q_1,q_2\le\bar H$，报告分子每个可用 $B=O(1+b+\log_2(1+\bar H))$ 位。原完整报告是九个这样的字，故 $9B$，再加公共 $b$、格式和 $M_{id}$。记实际完整程序、解释器及整数/有理算术库的保留位数为 $C_{prog}$，它们是有限而有价的。主稳定配置的保留位数为 $9B+C_{pub}+M_{id}+C_{prog}+O(\log(b+1)+\log(J+1)+\log(p+1))$；这里 $C_{pub}$ 包含配置中实际保留的 $R,K,e_*$ 等有理数，并非只计原始参数。参考程序每请求重算第三锚，不隐藏缓存；缓存若另选则还支付其三字。平台实现另保留九个舍入后的库坐标，各 $p+O(1)$ 位；本配置保留原报告时同时计 $9B+9(p+O(1))$。所有配置保留程序和证书，不能把设计文稿大小当成观察者内存。
+
+零制度配置的 `zero_query` 只须保留有效制度／来源证书、公共程序和合法日程／动作／Stop 元数据，按其实际位宽 $C_{pub}+C_{prog}+M_{id}$ 收费；若还保留九个报告，另加 $9B$ 和格式位。原三读两更新及报告的瞬态取得仍须支付。规范请求的解析时间为 $O(\lambda_q)$、工作状态为 $O(1)$，不缓存任意长请求；三个零坐标及固定指数头的输出为 $O(1)$ 位。
+
+稳定设置中 $T=O(1+\log_+(1/E)/(1-R))$，$J=O(1+\log(T+1))$。若 $J>3$，最小性给 $F_J<2T$；$T=0$ 或 $J=3$ 则整个头为空。以 $N=\max(2,F_J)$，一个安全工作位上界为
+
+$$W=O(N(B+C_{pub}+1)+p+J+\log(N+1)).$$
+
+一切 dyadic 乘积的指数和分子长度至多次数的常数倍；平方/乘法在程序中不会产生高于最终幂次数常数倍的额外字。固定个数的 $W$ 位字、$O(J)$ 位 Fibonacci/幂指数和 $O(\log(J+1))$ 位流解析状态足够。常规整数乘法、长除法各 $O(W^2)$；二进制整数平方根可用 $O(W^3)$ 的保守平方比较界。程序只在设置中用 Fraction，若对其 Euclid 约分采用保守 $O(W^3)$，搜索 $T$ 的上界可取 $O((T+1)((T+1)(C_{pub}+1))^3)$，工作 $O((T+1)(C_{pub}+1))$；$J$ 搜索用整数加法，$O(J^2)$ 位工作时间上界。输出精度搜索有 $O((p+1)(p+C_{pub}+1)^3)$ 保守上界。它们是一次设置费用，不能只报告后来查询很快。
+
+稳定每请求在长度 $\lambda_q$ 的流上用 $O(\lambda_q\log(J+1))$ 位时间、$O(\log(J+1))$ 解析工作；头部 Fibonacci 逐加计算 $O(J^2)$，两个二进制幂 $O(\log(N+1)W^2)$，叉点积固定次乘加、输出舍入和发射亦计入 $O(W^2+p)$。故共同上界
+
+$$O(\lambda_q\log(J+1)+J^2+\log(N+1)W^2+p),\qquad O(W+\log(J+1))\text{ 工作位}.$$
+
+对固定证书、容差和 $J$，$\log(J+1)$ 是固定常数，所以可说请求解析 $O(\lambda_q)$；这不是参数统一的同一界。平台库设置的次数最多5，工作 $O(B+C_{pub}+p)$，可保守用立方位时间包含有理设置；后来请求 $O(\lambda_q+p)$、解析状态固定有限，库和输出缓冲分开收费。加权库的范数包络另支付所用精度与整数平方根费用；门控归一化另支付有理二分/除法字，不能挪到多项式核上当免费。
+
+逐实例方法费用依其自己的 $J,N$，并非平台统一价格。附带 `setup_instance` 在 $J$ 搜索中每次重算 Fibonacci，故这部分是 $O(J^3)$ 位时间而非稳定设置的 $O(J^2)$；另有 $O(\log(N+1)(N+C_{pub}+1)^3)$ 的保守有理幂/预算费用、按 $\kappa$ 的 $T$ 次有理乘法，以及实际输入/输出精度搜索费用。其后来查询直接调用同一个 `stable_query`，按本段 $J,N,W$ 上界计价。精确有理/名字扩展需随 $j$ 增长的 $O(F_j(B+1))$ 位字，准确或定精度输出另付位长；名字取得成本不由下游乘法定价。精确有理表示的 `parse_unbounded` 则实际构造 $j$，规范请求长度 $\lambda_q$ 下耗时 $O(\lambda_q^2)$、存储 $O(\lambda_q)$ 位，不能套用饱和解析的常空间结论。令该请求的 $W_j=O(F_j(B+1)+j)$，`rational_kernel` 的两个 Fibonacci 逐加循环为 $O(j^2)$ 位时间，两个有理幂最多 $O(j)$ 次乘法；采用含约分的保守立方算术界，完整上界为 $O(\lambda_q^2+j^2+jW_j^3+\lambda_{out})$、工作 $O(W_j+\lambda_q)$ 位，其中 $\lambda_{out}$ 是实际序列化输出长度。dyadic 核可用平方算术界代替立方界。名字扩展还支付精度请求、名字访问、取得字长及其供方计算费用；其下游工作字长把该请求所需精度计入 $B$。`setup_name_query` 的预算幂还计 $O(\log(N+1)[N(C_{pub}+1)]^3)$ 保守位时间和 $O(N(C_{pub}+1))$ 工作位，精度搜索按所选名字位数另计；$N=F_j$，不声称固定有限状态价格。
+
+固定有限精度、固定证书和容差时，上述稳定和平台配置可以实现为有限状态控制器，算术字长和饱和解析均有固定界；变化这些参数是有限控制器族，准确增长求值则是无界算术机。有限状态存在不供应免费指数转移表。
+
+源侧仍有实际准备、共同参考系、物理传感、准确更新、精度发行/核验和隐藏树维护成本。若另供字面树码，实际初叶数 $N_0=m+n$ 时三个已读版本叶数恰为 $m+n,m+2n,2m+3n$，逐节点求三读需要 $4m+6n-3\le6N_0-3$ 次叉积，节点和深度工作按实际表示收费；该精化以实际叶组成递推证明，但没有把计数或代码读口加入原协议。若实际实现字面两次替换，扫描及发出节点需 $O(N_0+N_1+N_2)$ 次节点动作，$N_1=m+2n,N_2=2m+3n$；节点字段、深度栈和每次内部叉积的算术精度/位成本另计，上述叉积次数不是实寄存器的有限位时间结论。无界树的 Read 不能因下游九个字而被定为固定免费成本。公开数学证书与物理发放/准确性验证是两个责任，不主张任何秒数、能量或物理互恢复。
+
+## 61. 复用的实际球面位下界及证据边界
+
+在每个非零线性域，固定一个第53节实现的允许非零来源，其 $|x_3|=r_0>0$。旋转两叶使该目标遍历半径 $r_0$ 球面，树不变、所有约束保持。球面上取 $(x,y,\sqrt{r_0^2-x^2-y^2})$，$x,y\in[-r_0/4,r_0/4]$，以步长 $3E$ 排网格。不同点 欧氏 距离至少 $3E>2E$，数量为 $\Omega((r_0/E)^2)$。任何统一误差 $E$ 的有限完整记录必须逐点不同，故总位上限至少 $2\log_2(r_0/E)-O(1)$。这是通用球面打包方法接到真实来源映射后的复用，不是唯一的新结果，也不是所有资源的最优下界。它与增长中的不可数字障碍及平台端点/单元下界各有不同量词。
+
+固定稳定证书、固定有界元数据及足够小的目标 $E=2^{-k}$ 时，平方根预算取 $e=\Theta(E^2)$、线性预算取 $e=\Theta(E)$ 都只要求 $b=O(1+k)$，九个报告坐标共 $O(1+k)$ 位；目标的实际有限表示和公共常数也另计。结合上述真实球面下界，源相关完整记录的最优位数阶为 $\Theta(1+\log(1/E))$，不声称最优系数、工作位或时间。任意冗长参数/身份编码的实际长度不能被该渐近式隐藏；固定传感误差地板亦可能阻止这样的更细取得。
+
+此外，在每个非零制度中，任意逐源有限字也不能准确恢复全部实来源：上面固定非零来源的旋转目标构成不可数球面，一个有限字在请求 $j=3$ 只能给一个值，可数全部有限字不可能覆盖该球面。这是 $E=0$ 的一般信息障碍；它不排除稳定域每个固定正 $E$ 的有限解码器族，也不替代平台和增长的更强结论。零行仍须使用另付费有效制度证书，协议照常执行原三读两更新，再准确常零输出。
+
+原始依据是本卷第1–32节的已发表普通定义及证明、原自由树／组成／方向源；第33–47节涉及另外的独立参考取得问题，第48节给出实际成对灵敏度及其声明载体的比较；这些已发表增补不作为这里有限表示设计的前提。下面列出精确复用与未作实例化的形式接口。
+
+| 61来源 | 对应与适用范围 |
+|---|---|
+| 本卷定义1.1–1.3、定理3.1 | 非空有序树、同次共享叶对、原叉积、原 $\rho$ 和唯一当前源；解释换参不执行换制备。 |
+| 本卷引理4.2、定理4.3、5.1、引理16.2、推论16.3 | $U,V$ 对应原五符号 $L,N$；复用带符号尾、三次读准确恢复式及实际投影下界，零／依赖分支保留。 |
+| 本卷18.1–19.3、24.2–28.2、31.1 | 复用全部组成支撑、三线实际可行性、十行制度、两平台规范收缩族、三个增长行的实际来源以及 $H_*(6,4)=32/27$ 的达到证明。 |
+| `D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean` | `Source=FreeMagma Bool` 的 true／false 对应 $\alpha$／$\beta$；相同有序节点归纳给语法映射。只复用源对应，不声称有限位恢复已形式化。 |
+| `D5/S3/ObserverMemory/PredictionPseudometrics/FiniteHorizonPredictionPseudometric.lean` | 任意状态 $Y$、度量输出 $O$、任意更新 $Y\to Y$ 与读出 $Y\to O$ 及有限 $T\in\mathbb N$；未折扣预测距离是时刻 $0,\ldots,T$ 输出距离的有限最大值，满足伪度量律，零核为有限未来一致。约定32.1已给出 $Y=\mathcal T\times\mathcal P$、更新 $(t,p)\mapsto(\rho t,p)$、读出 $E_p(t)$、$T=2$ 的原树实例；比较初态可限制到 $\mathcal D$，无需该域更新不变。有限结论不要求全局输出距离界；同文件另一个 `bounded_infinite_horizon_prediction_zero_kernel` 才要求整个输出载体的全局距离界。两者均不供应有限位解码或本稿的新 Lean 核验。 |
+| `D5/S3/Observer/Hankel/RankOneInfiniteHorizonRisk.lean` | 标量 $a^n$、$0<a<1$、有限窗口及正确定全噪声球；只借鉴极限量词，两个平台仍用上述实际树族证明。 |
+| `D5/S3/Observer/SymbolicStability/NoUniformInfiniteFutureRadius.lean` | 黄金无理转角和 floor 字母读口；仅比较条件，未移植到原向量源。 |
+
+有限线性 Krylov/核定理假设有限维内积载体与线性 $T,C$；它们不是非线性叉积树的有限位实现。秩一 Hankel 全未来风险定理只涉及标量 $a^n$、$0<a<1$、正逐点噪声；它启发极限量词，但不能取代本稿两个实际平台族。机械符号圆周定理假设黄金无理转角和 floor 字母读口，也不是本来源。
+
+主要文献只承担其真实范围：Darpö《Vector product algebras》[原文](https://arxiv.org/pdf/0810.5464v1)初始定义及 Lemma2在特征不为2、交替双线性积、非退化对称型、循环配对和 Gram 范数恒等式下给代数工具，原定向 欧氏 $\mathbb R^3$ 满足它们；本稿的具体公式亦直接证明。Larcombe–Bagdasar《On a result of Bunder involving Horadam sequences: a proof and generalization》[原文](https://www.fq.math.ca/Papers1/51-2/LarcombeBagdasarHoradam.pdf)式(2.2)–(2.3)和完整二阶归纳，在正初幅度、幂参数 $p=q=1$ 下给经典乘法 Fibonacci 工具；实际零、符号、共同准备和来源存在均由本稿处理。Mark Braverman 与 Stephen Cook，*Computing over the Reals: Foundations for Scientific Computing*，[arXiv:cs/0509042v1](https://arxiv.org/pdf/cs/0509042v1)，PDF 第7–9页、§3.1–3.2，以任意可请求精度的 dyadic 名字表示实数，并计入取得及读取近似的时间；这里的名字扩展明确采用这一无限信息合同，而闭合有限记录不取得免费精度口。该文定理1的连续性必要条件不使任意实数符号可计算，也不代替这里的实际纤维下界。本文不依赖未核对的文献断言来证明正结果或下界，不声称全球新颖性或穷尽检索。
+
+本文尚不决定完整有限误差曲线、最佳常数、最优总时间/位数、任意实参数临界分类的有效性、任意真实仪器的有限精度发行或物理价格。这些不是本稿暗设的免费前提。这里新增的是原实际来源上的有限表示／计算构造、平台完整记录端点与严格正噪声纤维、可数有限字增长障碍及明确表示例外；经典身份、通用球面打包及上述已发表来源证明按复用处理。这些普通推导不主张全球新颖性，不给出物理空间、时钟或记忆装置间的互恢复，也没有新的 Lean 核验状态。
+
+## 62. 有限整数参考实现
+
+以下完整代码保存为 `reference.py`，仅使用 Python 整数和标准库 `fractions.Fraction`。代码不调用未知源；配置函数只校验其有限数值关系，传感误差及真实来源证书按第49、59节的供方合同承担。`stable_query` 也承担逐实例截尾配置；`plateau_query` 对多项式库与加权库使用同一相位协议。`rational_kernel` 只用于准确有限有理回复；`named_query` 的回调只属于另供的无限信息名字扩展。返回的三整数和公共分数位数必须按第60节支付保留、缓冲及实际发射位长。
+
+```python
+"""Finite-word arithmetic reference. No source calls are made by this module."""
+from fractions import Fraction as Q
+
+def isqrt(n):
+    assert n >= 0
+    if n < 2:
+        return n
+    lo, hi = 0, 1 << ((n.bit_length()+1)//2)
+    while lo+1 < hi:
+        mid = (lo+hi)//2
+        if mid*mid <= n:
+            lo = mid
+        else:
+            hi = mid
+    return lo
+
+def add(x, y):
+    b = max(x[1], y[1])
+    return ((x[0] << (b-x[1])) + (y[0] << (b-y[1])), b)
+
+def neg(x):
+    return (-x[0], x[1])
+
+def mul(x, y):
+    return (x[0]*y[0], x[1]+y[1])
+
+def power(x, n):
+    assert n >= 0
+    z = (1, 0)
+    while n:
+        if n & 1:
+            z = mul(z, x)
+        n >>= 1
+        if n:
+            x = mul(x, x)
+    return z
+
+def dot(x, y):
+    z = (0, 0)
+    for a, b in zip(x, y):
+        z = add(z, mul(a, b))
+    return z
+
+def cross(x, y):
+    return tuple(add(mul(x[i], y[j]), neg(mul(x[j], y[i])))
+                 for i, j in ((1,2), (2,0), (0,1)))
+
+def scale(c, x):
+    return tuple(mul(c, a) for a in x)
+
+def anchors(nums, b):
+    assert len(nums) == 9 and b >= 0
+    y = tuple(tuple((nums[3*i+k], b) for k in range(3)) for i in range(3))
+    w = cross(y[2], y[1])
+    d = dot(y[0], w)[0]
+    s = (d > 0) - (d < 0)
+    return y[1], y[2], scale((s, 0), w)
+
+def fib(n):
+    assert n >= 0
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a+b
+    return a
+
+def kernel(nums, b, j):
+    assert j >= 3
+    y1, y2, z = anchors(nums, b)
+    u, v = dot(y1,y1), dot(y2,y2)
+    a, c = fib(j-2), fib(j-1)
+    phase = j % 3
+    if phase == 1:
+        m, n, anchor = (a-1)//2, c//2, y1
+        assert a % 2 == 1 and c % 2 == 0
+    elif phase == 2:
+        m, n, anchor = a//2, (c-1)//2, y2
+        assert a % 2 == 0 and c % 2 == 1
+    else:
+        m, n, anchor = (a-1)//2, (c-1)//2, z
+        assert a % 2 == 1 and c % 2 == 1
+    return scale(mul(power(u,m),power(v,n)), anchor)
+
+def round_num(x, p):
+    """Nearest p-fractional-bit word; exact ties go away from zero."""
+    n, b = x
+    if b <= p:
+        return n << (p-b)
+    d = 1 << (b-p)
+    r = (2*abs(n)+d)//(2*d)
+    return r if n >= 0 else -r
+
+def round_vec(x, p):
+    return tuple(round_num(a,p) for a in x)
+
+def parse(bits, cap):
+    """One canonical binary token, ended by iterator exhaustion; no query buffer."""
+    assert cap >= 3
+    v, phase, seen = 0, 0, False
+    for digit in bits:
+        if digit not in ('0','1') or (not seen and digit != '1'):
+            raise ValueError('invalid binary query')
+        seen = True
+        d = int(digit)
+        v = min(cap, 2*v+d)
+        phase = (2*phase+d) % 3
+    if not seen or v < 3:
+        raise ValueError('future query must be at least 3')
+    return v, phase
+
+def output_precision(budget):
+    assert budget > 0
+    p, h = 0, Q(1)
+    while h > budget:
+        p, h = p+1, h/2
+    return p
+
+def producer_precision(e_star):
+    # A paid finite sensor approximation must separately guarantee sigma <= e_star/2.
+    return output_precision(e_star/2)
+
+def setup_stable(hbar, rho, E, conditioned_c=None):
+    hbar, rho, E = Q(hbar), Q(rho), Q(E)
+    assert hbar >= 1 and 0 <= rho < 1 and E > 0
+    R = (1+rho)/2
+    P = 3*hbar*hbar + 3*hbar + 1
+    Cs = 2*hbar+1 + 2*hbar*P
+    if conditioned_c is None:
+        K = Cs + R/(1-R)**2
+        e_star = min(Q(1),(1-rho)/2,(E/(2*K))**2)
+    else:
+        c = Q(conditioned_c)
+        assert 0 < c <= 1
+        C = 4*(hbar*hbar+2*hbar+1)/c
+        K = C + R/(1-R)**2
+        e_star = min(Q(1),(1-rho)/2,E/(2*K))
+    T, rpower = 0, Q(1)
+    while rpower > E/2:
+        T, rpower = T+1, rpower*R
+    J, a, c = 3, 1, 2
+    while c < T:  # c = F_J
+        J, a, c = J+1, c, a+c
+    return {'J':J, 'T':T, 'p':output_precision(E/2),
+            'b':producer_precision(e_star), 'e_star':e_star, 'K':K, 'R':R}
+
+def stable_query(nums, b, cfg, bits):
+    j, _ = parse(bits, cfg['J'])
+    if j == cfg['J']:
+        return (0,0,0), cfg['p']
+    return round_vec(kernel(nums,b,j),cfg['p']), cfg['p']
+
+def setup_plateau(nums, b, tau):
+    tau = Q(tau)
+    assert tau > 0
+    e_star = min(Q(1),(tau/31)**2)
+    p = output_precision(tau/2)
+    y1, y2, z = anchors(nums,b)
+    u, v = dot(y1,y1), dot(y2,y2)
+    bank = (scale((1,1),z), scale(mul((1,1),v),y1),
+            scale(mul(mul((1,1),u),v),y2))
+    return {'words':tuple(round_vec(x,p) for x in bank), 'p':p,
+            'e_star':e_star, 'required_b':producer_precision(e_star)}
+
+def plateau_query(cfg, bits):
+    _, phase = parse(bits, 3)
+    return cfg['words'][phase], cfg['p']
+
+def norm_interval(vector, p):
+    """Exact dyadic floor norm and upper enclosure of width 2**(-p)."""
+    sq = dot(vector,vector)
+    n, b = sq
+    assert n >= 0 and 2*p >= b
+    t = isqrt(n << (2*p-b))
+    return (t,p), (t+1,p)
+
+def setup_weighted(nums, b, norm_p, out_p):
+    assert norm_p >= b and out_p >= 0
+    y1, y2, z = anchors(nums,b)
+    u = norm_interval(y1,norm_p)[0]
+    v = norm_interval(y2,norm_p)[0]
+    # Floor norms are nonnegative; clipping to 1 is an exact integer comparison.
+    u = (min(u[0],1 << norm_p),norm_p)
+    v = (min(v[0],1 << norm_p),norm_p)
+    bank = (scale((1,1),z), scale(mul((1,1),v),y1),
+            scale(mul((1,1),u),y2))
+    return {'words':tuple(round_vec(x,out_p) for x in bank),'p':out_p,
+            'norm_p':norm_p}
+
+def setup_weighted_budget(nums, b, tau, conditioned_c=None):
+    tau = Q(tau)
+    assert tau > 0
+    if conditioned_c is None:
+        e_star = min(Q(1),tau/4,(tau/9)**2)
+    else:
+        c = Q(conditioned_c)
+        assert 0 < c <= 1
+        e_star = min(Q(1),tau/4,c*tau/16)
+    cfg = setup_weighted(nums,b,max(b,output_precision(tau/4)),
+                         output_precision(tau/2))
+    cfg.update({'e_star':e_star,'required_b':producer_precision(e_star)})
+    return cfg
+
+def verify_conditioned_certificate(L_upper, d_lower, c_lower):
+    L,d,c = Q(L_upper),Q(d_lower),Q(c_lower)
+    # Arithmetic validation only; physical leaf/Gram promises are supplier owned.
+    return L > 0 and d > 0 and 0 < c <= 1 and c*c*L**4 <= d
+
+def verify_zero_certificate(L_upper, d_lower, H_upper):
+    L,d,H = Q(L_upper),Q(d_lower),Q(H_upper)
+    # Sufficient rational certificate, not an arbitrary-real regime classifier.
+    return L > 1 and d >= L and H > 0 and H*H < d
+
+def zero_query(bits):
+    # Invoke only after a valid paid all-zero regime/source-class certificate.
+    parse(bits,3)
+    return (0,0,0),0
+
+def setup_instance(kappa, E):
+    kappa, E = Q(kappa), Q(E)
+    assert 0 <= kappa < 1 and E > 0
+    T, rpower = 0, Q(1)
+    while rpower > E/2:
+        T, rpower = T+1, rpower*kappa
+    J = 3
+    while fib(J-2) < T:
+        J += 1
+    N = fib(J)
+    B = Q(2)**(N+1)*(9+N)
+    e_star = min(Q(1),(E/(2*B))**2)
+    return {'J':J,'p':output_precision(E/2),'b':producer_precision(e_star),
+            'e_star':e_star,'N':N}
+
+def finite_guard_round(raw_integer, b):
+    # raw_integer is the paid (b+4)-fractional-bit coordinate approximation.
+    return round_num((raw_integer,b+4),b)
+
+def parse_unbounded(bits):
+    j, seen = 0, False
+    for digit in bits:
+        if digit not in ('0','1') or (not seen and digit != '1'):
+            raise ValueError('invalid binary query')
+        seen = True
+        j = 2*j+int(digit)
+    if not seen or j < 3:
+        raise ValueError('future query must be at least 3')
+    return j
+
+def rational_kernel(replies, j):
+    # Same squared-norm polynomial on the EXACT finite rational presentation class.
+    assert len(replies) == 3 and all(len(v) == 3 for v in replies) and j >= 3
+    y0,y1,y2 = (tuple(Q(c) for c in v) for v in replies)
+    def dq(x,y):
+        return sum((a*b for a,b in zip(x,y)),Q(0))
+    w = tuple(y2[i]*y1[k]-y2[k]*y1[i] for i,k in ((1,2),(2,0),(0,1)))
+    d = dq(y0,w)
+    s = (d > 0)-(d < 0)
+    z = tuple(s*c for c in w)
+    u,v = dq(y1,y1),dq(y2,y2)
+    a,c = fib(j-2),fib(j-1)
+    if j % 3 == 1:
+        m,n,anchor = (a-1)//2,c//2,y1
+    elif j % 3 == 2:
+        m,n,anchor = a//2,(c-1)//2,y2
+    else:
+        m,n,anchor = (a-1)//2,(c-1)//2,z
+    coefficient = u**m*v**n
+    return tuple(coefficient*x for x in anchor)
+
+def setup_name_query(hbar, j, E):
+    # ONLY the separately paid reusable Cauchy-name extension.
+    hbar,E = Q(hbar),Q(E)
+    assert hbar >= 1 and j >= 3 and E > 0
+    R = hbar+1
+    P = 3*hbar*hbar+3*hbar+1
+    Cs = 2*hbar+1+2*hbar*P
+    N = fib(j)
+    B = R**(N+1)*(Cs+N)
+    e_star = min(Q(1),(E/(2*B))**2)
+    return {'j':j,'b':output_precision(e_star),'p':output_precision(E/2),
+            'e_star':e_star,'N':N,'B':B}
+
+def named_query(read_name, bits, E):
+    # read_name(b) is a CHARGED finite access to the three already supplied names.
+    # Its nine integers certify simultaneous vector error <= 2**(-b).
+    # This callback does not exist in the original stopped finite-record interface.
+    j = parse_unbounded(bits)
+    coarse = read_name(0)
+    assert len(coarse) == 9
+    hbar = max(1,max(sum(abs(coarse[3*i+k]) for k in range(3))+1
+                     for i in range(3)))
+    cfg = setup_name_query(hbar,j,E)
+    nums = read_name(cfg['b'])
+    assert len(nums) == 9
+    return round_vec(kernel(nums,cfg['b'],j),cfg['p']),cfg['p']
+```
+
+## 63. 准确有限核验与复现
+
+以下完整代码保存为与 `reference.py` 同目录的 `verify.py`，运行 `python3 verify.py`。它枚举1–5叶的550棵实际有序树和6个固定制备，检查字面节点求值、原替换／解释运输、多项式核与实际投影不等式；另核验零、极小、报告符号零／错误符号、不在实际像中的非正交报告、长请求、舍入边界、范数包络、逐实例和名字接口，以及达到阈值的支撑覆盖和字面树。四个准确有理平方根尖锐对分别由两个真实树及同次固定准备实现；它们不来自任意环境三元组。
+
+```python
+import json
+from fractions import Fraction as Q
+from pathlib import Path
+import reference as R
+
+def cx(x,y):
+    return tuple(x[i]*y[k]-x[k]*y[i] for i,k in ((1,2),(2,0),(0,1)))
+def dp(x,y): return sum(a*b for a,b in zip(x,y))
+def ev(t,p):
+    if t == 'a': return p[0]
+    if t == 'b': return p[1]
+    return cx(ev(t[0],p),ev(t[1],p))
+def sub(t):
+    if t == 'a': return 'b'
+    if t == 'b': return ('b','a')
+    return (sub(t[0]),sub(t[1]))
+def F(p): return p[1],cx(p[1],p[0])
+def read3(t,p):
+    a=[]
+    for _ in range(3):
+        a.append(ev(t,p));p=F(p)
+    return a
+def nums(y,b):
+    out=[]
+    for v in y:
+        for x in v:
+            z=Q(x)*(1 << b)
+            assert z.denominator==1
+            out.append(z.numerator)
+    return out
+def value(x): return tuple(Q(a,1 << b) for a,b in x)
+def err2(x,y): return dp(tuple(a-b for a,b in zip(x,y)),tuple(a-b for a,b in zip(x,y)))
+trees={1:['a','b']}
+for n in range(2,6):
+    trees[n]=[(s,t) for k in range(1,n) for s in trees[k] for t in trees[n-k]]
+preps=[((Q(1),0,0),(0,Q(1),0)),((Q(1,2),0,0),(0,Q(3,4),0)),
+       ((Q(1),Q(1),0),(Q(1),0,Q(1))),((Q(2),0,0),(Q(3),0,0)),
+       ((0,0,0),(0,Q(1),0)),((Q(1),Q(1),0),(0,0,0))]
+total=0
+for group in trees.values():
+    for t in group:
+        for p in preps:
+            y=read3(t,p); n=nums(y,32)
+            pp=p
+            for j in range(12):
+                x=ev(t,pp)
+                if j>=3:
+                    assert value(R.kernel(n,32,j))==x
+                    assert R.rational_kernel(y,j)==x
+                if j<=3 and len(group)<100:
+                    tt=t
+                    for _ in range(j): tt=sub(tt)
+                    assert ev(tt,p)==x
+                pp=F(pp)
+            w=cx(y[2],y[1])
+            assert abs(dp(y[0],w))>=dp(y[2],y[2])
+            assert dp(y[2],y[2])<=dp(y[0],y[0])*dp(y[1],y[1])
+            total+=1
+
+# Exact integer square-root enclosure, output boundaries and ties.
+for n in range(1001):
+    t=R.isqrt(n);assert t*t<=n<(t+1)*(t+1)
+for n in range(-100,101):
+    for b in range(7):
+        for p in range(7):
+            k=R.round_num((n,b),p)
+            assert abs(Q(k,1 << p)-Q(n,1 << b))<=Q(1,1 << (p+1))
+for p in range(12,17):
+    v=tuple((k,12) for k in (3,4,5))
+    lo,hi=R.norm_interval(v,p)
+    sq=R.dot(v,v)
+    assert Q(lo[0],1 << lo[1])**2<=Q(sq[0],1 << sq[1])<Q(hi[0],1 << hi[1])**2
+
+# Stable uniform-cutoff arithmetic, and every finite head phase.
+cfg=R.setup_stable(Q(1),Q(3,4),Q(1,8))
+p=((Q(1,2),0,0),(0,Q(1,2),0));y=read3('a',p);n=nums(y,cfg['b'])
+pp=p
+for j in range(cfg['J']+8):
+    x=ev('a',pp)
+    if j>=3:
+        word,pout=R.stable_query(n,cfg['b'],cfg,iter(bin(j)[2:]))
+        assert err2(tuple(Q(k,1 << pout) for k in word),x)<=Q(1,8)**2
+    pp=F(pp)
+assert cfg['R']**cfg['T']<=Q(1,16)
+assert R.fib(cfg['J'])>=cfg['T']
+assert R.parse(iter('1'+'0'*100000),cfg['J'])[0]==cfg['J']
+assert R.parse(iter('1'+'0'*100000),3)[1]==pow(2,100000,3)
+for bad in ['', '0','01','10','1x','0011']:
+    try: R.parse(iter(bad),cfg['J'])
+    except ValueError: pass
+    else: raise AssertionError(bad)
+
+# Tiny actual wrong-sign and off-image report corners.
+p=((Q(1,1 << 30),0,0),(0,Q(1,1 << 30),0));y=read3('a',p)
+y[0]=tuple(-a for a in y[0]);b=100;n=nums(y,b)
+z=value(R.anchors(n,b)[2]);x3=ev('a',F(F(F(p))))
+assert dp(z,x3)<0
+e=Q(1,1 << 29)
+assert err2(z,x3)<=81*e
+
+# Plateau polynomial/weighted words on all tested admissible sources.
+plateau_checks=0
+for t in trees[5]+trees[1]:
+    p=((Q(1,2),0,0),(0,Q(3,4),0));y=read3(t,p);n=nums(y,32)
+    pc=R.setup_plateau(n,32,Q(1,8));wc=R.setup_weighted(n,32,40,40)
+    pp=p
+    q3=ev(t,F(F(F(p))))
+    for j in range(18):
+        x=ev(t,pp)
+        if j>=3:
+            for c in (pc,wc):
+                word,pout=R.plateau_query(c,iter(bin(j)[2:]))
+                assert err2(tuple(Q(k,1 << pout) for k in word),x)<=Q(5,8)**2
+        pp=F(pp)
+    plateau_checks+=1
+
+# Exact indexing check of the canonical PC2 phase and rotations.
+qrot=((Q(3,5),Q(4,5),0),(Q(-4,5),Q(3,5),0))
+assert ev('a',F(F(F(qrot))))==qrot[0]
+assert ev('a',F(F(qrot)))==(0,0,-1)
+assert ev('a',F(F(F(F(qrot)))))==qrot[1]
+
+# Conditional budgets, certificates and finite guard rounding.
+assert R.verify_conditioned_certificate(2,1,Q(1,4))
+assert not R.verify_conditioned_certificate(2,1,Q(1,2))
+assert R.verify_zero_certificate(2,2,1)
+assert not R.verify_zero_certificate(2,2,Q(3,2))
+assert R.zero_query(iter('11'))==((0,0,0),0)
+assert R.parse_unbounded(iter('1011'))==11
+for b0 in range(6):
+    for raw in range(-200,201):
+        nout=R.finite_guard_round(raw,b0)
+        assert abs(Q(nout,1 << b0)-Q(raw,1 << (b0+4)))<=Q(1,1 << (b0+1))
+icfg=R.setup_instance(Q(1,4),Q(1,8))
+p=((Q(1,2),0,0),(0,Q(1,2),0));y=read3('a',p)
+ns=nums(y,icfg['b']);pp=p
+for j in range(icfg['J']+5):
+    x=ev('a',pp)
+    if j>=3:
+        word,pout=R.stable_query(ns,icfg['b'],icfg,iter(bin(j)[2:]))
+        assert err2(tuple(Q(k,1 << pout) for k in word),x)<=Q(1,8)**2
+    pp=F(pp)
+def finite_name(b0):
+    return [R.round_num((int(c*16),4),b0) for v in y for c in v]
+for j in range(3,8):
+    word,pout=R.named_query(finite_name,iter(bin(j)[2:]),Q(1,8))
+    pp=p
+    for _ in range(j):pp=F(pp)
+    assert err2(tuple(Q(k,1 << pout) for k in word),ev('a',pp))<=Q(1,8)**2
+for cc in (None,Q(1,4)):
+    wc=R.setup_weighted_budget(nums(y,8),8,Q(1,8),cc)
+    assert wc['e_star']>0 and wc['norm_p']>=8
+# Strict interior of actual nearest-dyadic cells, unaffected by any tie rule.
+for b0 in range(8):
+    h=Q(1,1 << b0);t0=h/32
+    c=(1-t0*t0)/(1+t0*t0);s=2*t0/(1+t0*t0);lam=1-h/64
+    pp=((lam*c,lam*s,0),(-lam*s,lam*c,0))
+    yy=read3('a',pp)
+    U=((1,0,0),(0,1,0),(0,0,-1))
+    for v,w0 in zip(yy,U):
+        for a,z0 in zip(v,w0):
+            assert abs(a-z0)<h/4
+            rounded=Q(a)/h+Q(1,2)
+            assert rounded.numerator//rounded.denominator==z0*(1 << b0)
+
+# Attained threshold certificate, covering every potentially improving composition.
+assert 559**2<5*250**2 and 2**103411>6**40000
+best=Q(2);mins=[];supported=0
+for m in range(1,81):
+    for n0 in range(1,81-m):
+        if m%2==0 and n0%2==0:continue
+        supported+=1
+        if m>n0:
+            assert Q(m+n0)-Q(n0*n0,m)>m
+            continue
+        q0=Q(6)**m/Q(3)**n0;q1=Q(2)**n0/Q(3)**m
+        h=max(q0,q1,q0*q1)
+        if h<best:best=h;mins=[(m,n0)]
+        elif h==best:mins.append((m,n0))
+assert supported==2380 and best==Q(32,27) and mins==[(3,5)]
+t=('b','a')
+for a in ['a','a','b','b','b','b']:t=(a,t)
+p=((Q(6),0,0),(0,Q(1,3),0));pp=p;actual=[]
+for _ in range(4):actual.append(ev(t,pp));pp=F(pp)
+assert actual==[(0,0,Q(8,9)),(Q(-32,27),0,0),(0,Q(-256,243),0),(0,0,Q(8192,6561))]
+evidence={'exact_tree_preparation_histories':total,'trees':sum(map(len,trees.values())),
+          'preparations':len(preps),'future_kernel_indices':[3,11],
+          'plateau_histories':plateau_checks,'plateau_indices':[3,17],
+          'stable_cfg':{k:str(v) for k,v in cfg.items()},'long_query_bits':100001,
+          'sqrt_integer_cases':1001,'rounding_cases':201*49,
+          'threshold_supported':supported,'threshold':str(best),'threshold_minimizers':mins,
+          'pc2_index_check':{'alpha_unit_x3':[1,0,0],
+                              'correct_phase':'j congruent to 0 modulo 3'},
+          'additional_contract_checks':{'guard_rounding_cases':2406,
+              'certificate_checks':4,'instance_queries':'head and five tail samples',
+              'cauchy_name_extension_queries':5,'strict_actual_dyadic_cells':8},
+          'status':'finite falsifiers passed; universal claims depend on ordinary proofs'}
+# Jointly actual rational sharp pairs, plus reported zero/sign/off-image corners.
+sharp_pairs = []
+for M in (4,8,16,32):
+    s0, r0, N0 = Q(1,M*M), Q(M,2), Q(M**5,2)
+    C0 = s0*(N0*N0-1)/(2*N0)
+    co, si = (C0*C0-s0*s0)/(C0*C0+s0*s0), 2*C0*s0/(C0*C0+s0*s0)
+    a0,b0 = (C0/r0,s0/r0,Q(0)), (r0,Q(0),Q(0))
+    b1 = (r0*co,r0*si,Q(0))
+    V1 = (r0*s0*si,-r0*s0*co,Q(0))
+    a1 = tuple(C0/(r0*r0)*c+v/(r0*r0) for c,v in zip(b1,V1))
+    t0,t1 = ('a',('a','b')), (('a','b'),'a')
+    yy0,yy1 = read3(t0,(a0,b0)),read3(t1,(a1,b1))
+    assert yy0[:2] == yy1[:2]
+    assert dp(a0,a0)==dp(a1,a1) and dp(b0,b0)==dp(b1,b1)
+    assert dp(a0,b0)==dp(a1,b1)
+    assert dp(yy0[0],yy0[0]) <= 1
+    assert dp(yy0[1],yy0[1])==Q(1,16)
+    assert dp(yy0[2],yy0[2]) < Q(1,4)
+    q2 = r0*s0**3
+    eps = 4*q2*N0/(N0*N0+1)
+    assert err2(yy0[2],yy1[2])==eps**2
+    xx0=ev(t0,F(F(F((a0,b0)))))
+    xx1=ev(t1,F(F(F((a1,b1)))))
+    target = 2*Q(1,4)*q2*(N0*N0-1)/(N0*N0+1)
+    assert err2(xx0,xx1)==target**2
+    sharp_pairs.append({'M':M,'record_distance':str(eps),
+                        'future_distance':str(target),
+                        'future_squared_over_record':str(target**2/eps)})
+
+adversarial_cases = []
+p0=((Q(1,2),0,0),(0,Q(3,4),0))
+y_true=read3('a',p0)
+e0=Q(1,1<<24)
+signs=((1,-1,1),(-1,1,1),(1,1,-1))
+y_bad=[tuple(c+sgn*e0/4 for c,sgn in zip(v,z0))
+       for v,z0 in zip(y_true,signs)]
+assert dp(y_bad[1],y_bad[2]) != 0  # off actual nonzero orthogonal tail image
+adversarial_cases.append(('nonorthogonal-off-image','a',p0,y_bad,e0))
+p_tiny=((Q(1,1<<30),0,0),(0,Q(1,1<<30),0))
+y_tiny=read3('a',p_tiny)
+adversarial_cases.append(('tiny-wrong-sign','a',p_tiny,
+                          [tuple(-v for v in y_tiny[0]),y_tiny[1],y_tiny[2]],Q(1,1<<29)))
+adversarial_cases.append(('tiny-reported-sign-zero','a',p_tiny,
+                          [(0,0,0),y_tiny[1],y_tiny[2]],Q(1,1<<30)))
+p_zero=((Q(1,2),0,0),(0,Q(1,2),0))
+y_zero=[tuple(sgn*e0/4 for sgn in z0) for z0 in signs]
+adversarial_cases.append(('zero-source-off-image',('a','a'),p_zero,y_zero,e0))
+for label,t0,p0,y_report,e0 in adversarial_cases:
+    true=read3(t0,p0)
+    assert all(err2(v,w0)<=e0**2 for v,w0 in zip(true,y_report))
+    nn=nums(y_report,100)
+    z=value(R.anchors(nn,100)[2])
+    x3=ev(t0,F(F(F(p0))))
+    assert err2(z,x3)<=17**2*e0
+    assert e0<=cfg['e_star']
+    pp=p0
+    for j in range(cfg['J']+5):
+        x=ev(t0,pp)
+        if j>=3:
+            word,pout=R.stable_query(nn,100,cfg,iter(bin(j)[2:]))
+            assert err2(tuple(Q(k,1<<pout) for k in word),x)<=Q(1,8)**2
+        pp=F(pp)
+evidence['joint_actual_sqrt_pairs']=sharp_pairs
+evidence['adversarial_report_cases']=[case[0] for case in adversarial_cases]
+evidence['executed_scope']='literal all-tree samples, exact rational arithmetic, contracts and boundary witnesses only'
+Path('evidence.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2))
+print(json.dumps(evidence,ensure_ascii=False))
+```
+
+命令 `python3 verify.py` 的退出码为0，准确结果如下。该数据只核验所列有限实例、索引、程序分支及有证明覆盖的阈值算术；不替代第50–61节的全称普通证明，不认证现实传感／动作精度，也不产生 Lean 状态。
+
+```json
+{
+  "exact_tree_preparation_histories": 3300,
+  "trees": 550,
+  "preparations": 6,
+  "future_kernel_indices": [
+    3,
+    11
+  ],
+  "plateau_histories": 450,
+  "plateau_indices": [
+    3,
+    17
+  ],
+  "stable_cfg": {
+    "J": "8",
+    "T": "21",
+    "p": "4",
+    "b": "22",
+    "e_star": "1/1364224",
+    "K": "73",
+    "R": "7/8"
+  },
+  "long_query_bits": 100001,
+  "sqrt_integer_cases": 1001,
+  "rounding_cases": 9849,
+  "threshold_supported": 2380,
+  "threshold": "32/27",
+  "threshold_minimizers": [
+    [
+      3,
+      5
+    ]
+  ],
+  "pc2_index_check": {
+    "alpha_unit_x3": [
+      1,
+      0,
+      0
+    ],
+    "correct_phase": "j congruent to 0 modulo 3"
+  },
+  "additional_contract_checks": {
+    "guard_rounding_cases": 2406,
+    "certificate_checks": 4,
+    "instance_queries": "head and five tail samples",
+    "cauchy_name_extension_queries": 5,
+    "strict_actual_dyadic_cells": 8
+  },
+  "status": "finite falsifiers passed; universal claims depend on ordinary proofs",
+  "joint_actual_sqrt_pairs": [
+    {
+      "M": 4,
+      "record_distance": "1/262145",
+      "future_distance": "262143/1073745920",
+      "future_squared_over_record": "68718952449/4398063288320"
+    },
+    {
+      "M": 8,
+      "record_distance": "1/268435457",
+      "future_distance": "268435455/35184372219904",
+      "future_squared_over_record": "72057593501057025/4611686035607257088"
+    },
+    {
+      "M": 16,
+      "record_distance": "1/274877906945",
+      "future_distance": "274877906943/1152921504611041280",
+      "future_squared_over_record": "75557863725364567605249/4835703278476108884869120"
+    },
+    {
+      "M": 32,
+      "record_distance": "1/281474976710657",
+      "future_distance": "281474976710655/37778931862957295927296",
+      "future_squared_over_record": "79228162514263774643590529025/5070602400912935620385322303488"
+    }
+  ],
+  "adversarial_report_cases": [
+    "nonorthogonal-off-image",
+    "tiny-wrong-sign",
+    "tiny-reported-sign-zero",
+    "zero-source-off-image"
+  ],
+  "executed_scope": "literal all-tree samples, exact rational arithmetic, contracts and boundary witnesses only"
+}
+```
+
+## 追加锚（本行以下为增补区）
