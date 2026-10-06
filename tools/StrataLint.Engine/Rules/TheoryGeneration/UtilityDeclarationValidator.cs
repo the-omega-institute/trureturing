@@ -130,16 +130,17 @@ internal static class UtilityDeclarationValidator
         var softTarget = declaration.BasisTarget;
         if (softTarget is { Kind: UtilityTargetKind.Atom or UtilityTargetKind.Task })
         {
-            if (softTarget.Kind is UtilityTargetKind.Atom && !snapshot.Files.Keys.Any(path =>
-                    BackfillInventoryLoader.IsCanonicalPath(path.Value)
-                    && path.Value.EndsWith("/" + softTarget.Value + ".yaml", StringComparison.Ordinal)))
+            var atomSnapshot = softTarget.Kind is UtilityTargetKind.Atom
+                ? SelectAtomTarget(snapshot, softTarget.Value)
+                : null;
+            if (atomSnapshot is not null && atomSnapshot.Files.IsEmpty)
                 return Failure(declaration, UtilityValidationFailure.TargetDangling,
                     $"target={TargetDisplay(softTarget)}");
             BackfillInventoryDocument? backfill = null;
             try
             {
                 if (softTarget.Kind is UtilityTargetKind.Atom)
-                    backfill = BackfillInventoryLoader.LoadForDigestion(snapshot);
+                    backfill = BackfillInventoryLoader.LoadForDigestion(atomSnapshot!);
                 else if (!BackfillInventoryLoader.DeriveTickets(snapshot).Any(ticket =>
                              string.Equals(ticket.CaseId, softTarget.Value, StringComparison.Ordinal)))
                     return Failure(declaration, UtilityValidationFailure.TargetDangling,
@@ -232,6 +233,24 @@ internal static class UtilityDeclarationValidator
         }
 
         return Accepted(declaration);
+    }
+
+    private static RepositorySnapshot SelectAtomTarget(RepositorySnapshot snapshot, string atomId)
+    {
+        var atomFiles = snapshot.Files
+            .Where(pair => BackfillInventoryLoader.IsCanonicalPath(pair.Key.Value)
+                && pair.Key.Value.EndsWith("/" + atomId + ".yaml", StringComparison.Ordinal))
+            .ToImmutableDictionary();
+        var selected = atomFiles.ToBuilder();
+        foreach (var atomPath in atomFiles.Keys)
+        {
+            var sourceEnd = atomPath.Value.IndexOf('/', BackfillInventoryLoader.RootPath.Length);
+            var metadataPath = RepoPath.CreateKnown(atomPath.Value[..(sourceEnd + 1)] + "source.toml");
+            if (snapshot.Files.TryGetValue(metadataPath, out var metadata))
+                selected[metadataPath] = metadata;
+        }
+
+        return RepositorySnapshot.Create(selected.ToImmutable());
     }
 
     private static UtilityValidationResult Accepted(UtilityDeclaration declaration) =>
