@@ -1,3 +1,4 @@
+import LeanInformationAudit.Contract.CompiledExpressions
 import LeanInformationAudit.RuntimeInputs
 import LeanInformationAudit.BindingRecords
 import LeanInformationAudit.CatalogRecords
@@ -44,9 +45,6 @@ inductive PlanNode where
 /- Construction is bounded independently of typing. A step is charged before
 visiting or allocating a node; binder cutoffs are not traversal depths. Cached
 Expr flags permit immutable no-op reuse, never an uncharged transformation. -/
-/-- Compiler-owned typing placeholder; never a delivered kernel proof. -/
-def proofPlaceholder (type : Expr) : Expr := mkApp (mkConst ``lcProof) type
-
 namespace PlanTransform
 
 private abbrev WorkM := StateT Nat (Except String)

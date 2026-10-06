@@ -8,6 +8,9 @@ run_meta do
       `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2
     | throwError "production registration definition absent"
   let row ← Contract.Decoder.registration
+    { find := (← getEnv).find?
+      heartbeatStart := ← getInitHeartbeats
+      heartbeatLimit := ← getMaxHeartbeats } (← collectAxioms info.name)
     `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors info ""
   let some declaration := row.input.declaration
     | throwError "production declaration absent"

@@ -7,6 +7,10 @@ open LeanInformationAuditRegTests.ContractGuards
 
 run_meta do
   let owner := `LeanInformationAuditRegTests.ContractFixtures
+  let context : CompiledExpressions.Context := {
+    find := (← getEnv).find?
+    heartbeatStart := ← getInitHeartbeats
+    heartbeatLimit := ← getMaxHeartbeats }
   for index in [0, 1] do
     let .defnInfo info ← getConstInfo (owner.str s!"source{index}")
       | throwError "setup:registration_definition"
@@ -17,7 +21,7 @@ run_meta do
       ("carrier_levels", toJson ((info.type.getAppArgs.extract 2 4).map fun carrier =>
         carrier.getAppFn.constLevels!.map toString))]).compress}"
     let decoded ← try
-      pure (some (← Decoder.registration owner info ""))
+      pure (some (← Decoder.registration context (← collectAxioms info.name) owner info ""))
     catch _ => pure none
     assertTest s!"target.name.derived.{index}" (decoded.any fun row =>
       row.input.entry.theoremName == target.constName! && row.target == target)
@@ -36,13 +40,13 @@ run_meta do
   for (label, value, diagnostic) in bad do
     let candidate := { info with type := mkAppN info.type.getAppFn (args.set! 1 value) }
     let error ← try
-      discard <| Decoder.registration owner candidate ""
+      discard <| Decoder.registration context (← collectAxioms info.name) owner candidate ""
       pure "accepted"
     catch ex => ex.toMessageData.toString
     assertTest s!"target.negative.{label}" (error.startsWith diagnostic)
   let candidate := { info with type := mkAppN info.type.getAppFn args.pop }
   let error ← try
-    discard <| Decoder.registration owner candidate ""
+    discard <| Decoder.registration context (← collectAxioms info.name) owner candidate ""
     pure "accepted"
   catch ex => ex.toMessageData.toString
   assertTest "target.negative.arity" (error.startsWith "contract.registration:target_arity")

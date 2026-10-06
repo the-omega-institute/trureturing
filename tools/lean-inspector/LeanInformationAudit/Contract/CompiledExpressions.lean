@@ -1,4 +1,14 @@
-import LeanInformationAudit.RegistryTypes
+import Lean.Declaration
+import Lean.LocalContext
+import Lean.Util.InstantiateLevelParams
+
+namespace LeanInformationAudit.TemplateAudit
+open Lean
+
+/-- Compiler-owned typing placeholder; never a delivered kernel proof. -/
+def proofPlaceholder (type : Expr) : Expr := mkApp (mkConst ``lcProof) type
+
+end LeanInformationAudit.TemplateAudit
 
 namespace LeanInformationAudit.Contract.CompiledExpressions
 open Lean
@@ -11,7 +21,7 @@ structure Context where
   heartbeatStart : Nat
   heartbeatLimit : Nat
 
-private abbrev M := ReaderT Context (StateT Nat IO)
+abbrev M := ReaderT Context (StateT Nat IO)
 
 private def step (depth : Nat) : M Unit := do
   if depth > 256 then throw <| IO.userError "incomplete_closure:E8.compiled_expression_depth"
@@ -30,7 +40,7 @@ private def constant (name : Name) : M ConstantInfo := do
 
 /-- Administrative reduction of compiler terms. Opaque proof implementations
 stay opaque. Recursor rules and projection layouts are compiler data. -/
-private partial def head (e : Expr) (depth : Nat := 0) : M Expr := do
+partial def head (e : Expr) (depth : Nat := 0) : M Expr := do
   step depth
   let child := fun e => head e (depth + 1)
   match e with
@@ -58,25 +68,36 @@ private partial def head (e : Expr) (depth : Nat := 0) : M Expr := do
       fn ← child (body.instantiate1 argument)
     let result := mkAppN fn args
     let .const name levels := fn | return result
-    let .recInfo recursor ← constant name | return result
-    let some major := args[recursor.getMajorIdx]? | return result
-    let major ← child major
-    let (ctor, fields) ← match major with
-      | .lit (.natVal n) =>
-        if n == 0 then pure (``Nat.zero, #[]) else pure (``Nat.succ, #[mkNatLit (n - 1)])
-      | _ => do
+    let description ← constant name
+    if let .quotInfo quotient := description then
+      if quotient.kind matches .lift then
+        let some major := args[5]? | return result
+        let major ← child major
         let .const ctor _ := major.getAppFn | return result
-        let .ctorInfo info ← constant ctor | return result
-        unless major.getAppArgs.size == info.numParams + info.numFields do
-          throw <| IO.userError s!"incomplete_closure:E7.compiled_constructor:{ctor}"
-        pure (ctor, major.getAppArgs.extract info.numParams major.getAppArgs.size)
-    let some rule := recursor.rules.find? (·.ctor == ctor) | return result
-    unless rule.nfields == fields.size && levels.length == recursor.levelParams.length do
-      throw <| IO.userError s!"incomplete_closure:E7.compiled_recursor:{name}"
-    let leading := args.extract 0 (recursor.numParams + recursor.numMotives + recursor.numMinors)
-    let suffix := args.extract (recursor.getMajorIdx + 1) args.size
-    child <| mkAppN (rule.rhs.instantiateLevelParams recursor.levelParams levels)
-      (leading ++ fields ++ suffix)
+        let .quotInfo constructor ← constant ctor | return result
+        unless (constructor.kind matches .ctor) && major.getAppNumArgs == 3 do return result
+        child <| mkAppN (mkApp args[3]! major.getAppArgs[2]!) (args.extract 6 args.size)
+      else return result
+    else
+      let .recInfo recursor := description | return result
+      let some major := args[recursor.getMajorIdx]? | return result
+      let major ← child major
+      let (ctor, fields) ← match major with
+        | .lit (.natVal n) =>
+          if n == 0 then pure (``Nat.zero, #[]) else pure (``Nat.succ, #[mkNatLit (n - 1)])
+        | _ => do
+          let .const ctor _ := major.getAppFn | return result
+          let .ctorInfo info ← constant ctor | return result
+          unless major.getAppArgs.size == info.numParams + info.numFields do
+            throw <| IO.userError s!"incomplete_closure:E7.compiled_constructor:{ctor}"
+          pure (ctor, major.getAppArgs.extract info.numParams major.getAppArgs.size)
+      let some rule := recursor.rules.find? (·.ctor == ctor) | return result
+      unless rule.nfields == fields.size && levels.length == recursor.levelParams.length do
+        throw <| IO.userError s!"incomplete_closure:E7.compiled_recursor:{name}"
+      let leading := args.extract 0 (recursor.numParams + recursor.numMotives + recursor.numMinors)
+      let suffix := args.extract (recursor.getMajorIdx + 1) args.size
+      child <| mkAppN (rule.rhs.instantiateLevelParams recursor.levelParams levels)
+        (leading ++ fields ++ suffix)
   | .proj name index value =>
     let value ← child value
     let .const ctor _ := value.getAppFn | return .proj name index value
@@ -90,7 +111,7 @@ private partial def head (e : Expr) (depth : Nat := 0) : M Expr := do
 
 /-- Project declaration types through their already compiled application spine.
 No argument is compared with a domain, and no proof body is inferred or checked. -/
-private partial def typeShape (e : Expr) (binders : Array Expr := #[])
+partial def typeShape (e : Expr) (binders : Array Expr := #[])
     (depth : Nat := 0) : M Expr := do
   step depth
   let child := fun e => typeShape e binders (depth + 1)
@@ -180,6 +201,53 @@ private partial def erase (e : Expr) (binders : Array Expr := #[])
   | .proj name index value => return .proj name index (← child value)
   | .mvar _ => throw <| IO.userError "incomplete_closure:E7.metavariable"
   | _ => return e
+
+/-- Run one bounded compiled-data calculation. All shape queries and reductions
+share its original work quota and heartbeat boundary. -/
+def run (context : Context) (action : M α) (fuel : Nat := 524288) : IO (α × Nat) := do
+  let limit := min fuel 524288
+  let (result, remaining) ← action.run context |>.run limit
+  return (result, limit - remaining)
+
+/-- Reflect the compiler's finite signature dictionary, retaining its declared
+order. Only its index constructors are read; realizations are never enumerated. -/
+def finiteIndices (dictionary : Expr) : M (Array Expr) := do
+  let elems ← head (.proj `Fintype 0 dictionary)
+  let multiset ← head (.proj `Finset 0 elems)
+  unless multiset.isAppOfArity ``Quot.mk 3 do
+    throw <| IO.userError "contract.cannot_decode:partial_sensitivity:finite_index_dictionary"
+  let mut pending := multiset.getArg! 2
+  let mut indices := #[]
+  repeat
+    pending ← head pending
+    if pending.isAppOfArity ``List.nil 1 then break
+    unless pending.isAppOfArity ``List.cons 3 do
+      throw <| IO.userError "contract.cannot_decode:partial_sensitivity:finite_index_list"
+    indices := indices.push (pending.getArg! 1)
+    pending := pending.getArg! 2
+  return indices
+
+/-- Read the obligation constructors selected by a compiled partial-slot family.
+Compiler types supply the ULift layout, without operand validation or proof checking. -/
+def partialSlotStates (fn dictionary : Expr) : M (Array Bool) := do
+  let type ← head (← typeShape fn)
+  let .forallE _ domain _ _ := type
+    | throw <| IO.userError "contract.cannot_decode:partial_sensitivity:slot_function_type"
+  let domain ← head domain
+  unless domain.isAppOf ``ULift do
+    throw <| IO.userError "contract.cannot_decode:partial_sensitivity:index_carrier"
+  let slots ← finiteIndices dictionary
+  slots.mapM fun index => do
+    let lifted := mkAppN (mkConst ``ULift.up domain.getAppFn.constLevels!)
+      (domain.getAppArgs.push index)
+    let value ← head (mkApp fn lifted)
+    let name := value.getAppFn.constName?.getD .anonymous
+    if name == `LeanInformationAudit.Contract.Obligation.evidence then return true
+    unless #[`LeanInformationAudit.Contract.Obligation.unsupported,
+        `LeanInformationAudit.Contract.Obligation.unknown,
+        `LeanInformationAudit.Contract.Obligation.absent].contains name do
+      throw <| IO.userError "contract.cannot_decode:partial_sensitivity:slot_obligation"
+    return false
 
 /-- Preserve original syntax and charge declaration-type traversal to the same
 fixed work quota as the proof-opaque expression walk. -/

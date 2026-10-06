@@ -102,7 +102,7 @@ private def signatureLabel (mask : Nat) : String :=
 then read its kernel-checked fields. No seal proof is constructed or rechecked. -/
 private def compiledTheoremProofs (prepared : PreparedCatalog) (input : CompiledSealCatalog) :
     Lean.Elab.Term.TermElabM SealArenaRecord := do
-  let fs ← Contract.Decoder.fields ``Contract.SealCatalog input.value 15
+  let fs ← Contract.Decoder.fields ((← getEnv).find? ·) ``Contract.SealCatalog input.value 15
   let record := prepared.record
   let size ← Contract.Decoder.liftLiteral (Contract.Literal.nat "seal.size" fs[3]!)
   unless size == record.units.size && input.arenaName == record.arenaName &&
@@ -125,7 +125,7 @@ private def compiledTheoremProofs (prepared : PreparedCatalog) (input : Compiled
   for unit in record.units do
     let index ← finValue unit.index size
     let row ← whnf (mkApp fs[11]! index)
-    let rs ← Contract.Decoder.fields ``Contract.SealRow row 8
+    let rs ← Contract.Decoder.fields ((← getEnv).find? ·) ``Contract.SealRow row 8
     let unique ← Contract.Decoder.liftLiteral (Contract.Literal.nat "seal.unique" rs[0]!)
     let without ← Contract.Decoder.liftLiteral (Contract.Literal.nat "seal.without" rs[2]!)
     let conclusion ← whnf rs[7]!
