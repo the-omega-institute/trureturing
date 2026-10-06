@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f47da233fd974d81e4c940e35422396fa79500ae32ef48454d93c93ed0f0db68
+  normalized_sha256: sha256:f47da233fd974d81e4c940e35422396fa79500ae32ef48454d93c93ed0f0db68
+cas_ref: sha256:f47da233fd974d81e4c940e35422396fa79500ae32ef48454d93c93ed0f0db68
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.result
+    target_statement_id: sha256:211e4ff73740f8149478aa6c6772bce1f698874719b56d689c5724d2efa055a6
+  - gid: D5/S3/Arith/FibonacciAtomic/SelfCalibratingFibonacciBounds.raw_word_fibonacci_bounds
+    target_statement_id: sha256:9126a42b003cda4c77ef052dbda3204c2d4b5267879e4b59a47b967c23d84bbc
+receipts:
+  unresolved_subitems: []

@@ -6,7 +6,6 @@ namespace StrataLint.Cli;
 
 internal static class DigestStatusCommand
 {
-    private const string ImplementationPath = "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs";
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         WriteIndented = true,
@@ -17,78 +16,54 @@ internal static class DigestStatusCommand
     internal static CommandResult Run(
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        IScribeEmissionVerifier? scribeEmissionVerifier,
-        IReadOnlyList<string> arguments,
-        IAtomHistorySource atomHistorySource,
-        TimeProvider ageTimeProvider)
+        IReadOnlyList<string> arguments)
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(leanReportSource);
         ArgumentNullException.ThrowIfNull(arguments);
-        ArgumentNullException.ThrowIfNull(atomHistorySource);
-        ArgumentNullException.ThrowIfNull(ageTimeProvider);
         try
         {
             var options = ParseArguments(arguments);
-            var requiresScribe = !options.Readiness
-                && (!options.FormalizeCandidates || options.FormalizeAtomId is not null);
-            if (requiresScribe && scribeEmissionVerifier is null)
-            {
-                throw new InvalidOperationException("Scribe emission verifier is unavailable");
-            }
-
-            var snapshot = Decode(repository.ReadCurrent());
-            var registeredInputs = EngineeringProjectRegistry.ReadRuleBuildInputs(snapshot);
-            var changes = options.BaselineRevision is null
-                ? repository.ReadCurrentChanges()
-                : repository.ReadChanges(options.BaselineRevision);
-            var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath, registeredInputs);
+            var initial = options.FormalizeCandidates
+                ? DigestionWorkingTree.ReadLedger(
+                    repository,
+                    Decode,
+                    static current => BackfillInventoryLoader.LoadForDigestion(current))
+                : default;
+            var selectedInitial = options.FormalizeAtomId is null
+                ? null
+                : initial.Document.RequireDigestionEntries()
+                    .SingleOrDefault(entry => entry.AtomId == options.FormalizeAtomId);
+            var reportFreeCandidates = options.FormalizeCandidates
+                && (options.FormalizeAtomId is null || selectedInitial?.CoverageGids.IsEmpty == true);
+            var loaded = reportFreeCandidates
+                ? DigestionWorkingTree.ReadUncovered(
+                    repository,
+                    initial,
+                    Decode)
+                : DigestionWorkingTree.ReadEvaluation(
+                    repository,
+                    Decode,
+                    static current => BackfillInventoryLoader.LoadForDigestion(current));
+            var snapshot = loaded.Snapshot;
+            var document = loaded.Document;
 
             if (options.FormalizeCandidates)
             {
-                var formalizeLeanReport = options.FormalizeAtomId is null
-                    ? null
-                    : leanReportSource.Load(snapshot);
-                var formalizeDocument = BackfillInventoryLoader.Load(snapshot, scope, changes);
-                BackfillInventoryDocument? formalizeBaselineDocument = null;
-                RepositorySnapshot? formalizeBaselineSnapshot = null;
-                if (options.BaselineRevision is not null)
-                {
-                    formalizeBaselineSnapshot = Decode(
-                        repository.ReadRevision(options.BaselineRevision));
-                    formalizeBaselineDocument = BackfillInventoryLoader.LoadBaseline(
-                        formalizeBaselineSnapshot);
-                }
-
                 if (options.FormalizeAtomId is not null
-                    && !formalizeDocument.RequireDigestionEntries().Any(entry =>
+                    && !document.RequireDigestionEntries().Any(entry =>
                         string.Equals(entry.AtomId, options.FormalizeAtomId, StringComparison.Ordinal)))
                 {
                     throw new InvalidOperationException(
                         $"formalize atom {options.FormalizeAtomId} is absent from the ledger");
                 }
 
-                if (options.FormalizeAtomId is not null)
-                {
-                    scribeEmissionVerifier!.Verify(snapshot, formalizeLeanReport!, changes);
-                }
-
-                var formalizeEvaluation = options.FormalizeAtomId is null
+                var formalizeEvaluation = reportFreeCandidates
                     ? DigestionStatusEvaluator.EvaluateUncovered(
-                        scope,
-                        formalizeDocument,
-                        snapshot,
-                        formalizeBaselineDocument,
-                        changes: changes)
-                    : DigestionStatusEvaluator.Evaluate(
-                        scope,
-                        formalizeDocument,
-                        snapshot,
-                        ValidateLean(snapshot, formalizeLeanReport!),
-                        formalizeBaselineDocument,
-                        baselineSnapshot: formalizeBaselineSnapshot,
-                        changes: changes,
-                        projectedStatusChanges: changes);
+                        DigestionEvaluationScope.FullScan,
+                        document,
+                        snapshot)
+                    : Evaluate(document, snapshot, leanReportSource);
                 if (options.FormalizeAtomId is null
                     ? formalizeEvaluation.Findings.Length > 0
                     : formalizeEvaluation.HasReceiptIntegrityFailure)
@@ -96,58 +71,21 @@ internal static class DigestStatusCommand
                     return InvalidEvaluation(formalizeEvaluation);
                 }
 
-                var formalizeContentKinds = DigestionContentKindResolver.Resolve(
-                    snapshot,
-                    formalizeDocument);
                 var formalizeFrontier = DigestionFrontierProjection.Create(
-                    formalizeDocument,
+                    document,
                     formalizeEvaluation,
-                    formalizeContentKinds,
-                    options.RetryDispositions);
+                    DigestionContentKindResolver.Resolve(snapshot, document));
                 return new CommandResult(
                     true,
                     DigestFormalizeCandidates.Render(
                         formalizeFrontier,
                         snapshot,
-                        formalizeDocument,
+                        document,
                         options.FormalizeAtomId),
                     string.Empty);
             }
 
-            var leanReport = leanReportSource.Load(snapshot);
-            var lean = ValidateLean(snapshot, leanReport);
-            if (requiresScribe)
-            {
-                scribeEmissionVerifier!.Verify(snapshot, leanReport, changes);
-            }
-            var document = BackfillInventoryLoader.Load(snapshot, scope, changes);
-            BackfillInventoryDocument? baselineDocument = null;
-            RepositorySnapshot? baselineSnapshot = null;
-            if (options.BaselineRevision is not null)
-            {
-                baselineSnapshot = Decode(repository.ReadRevision(options.BaselineRevision));
-                baselineDocument = BackfillInventoryLoader.LoadBaseline(baselineSnapshot);
-            }
-
-            var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes, registeredInputs);
-            bool IsBaseFactAffected(string path) =>
-                BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
-            var casEvaluation = DigestionCasStore.Evaluate(
-                document,
-                snapshot,
-                DigestionEvaluationScopes.ResolveChanges(scope, changes),
-                IsBaseFactAffected);
-            var evaluation = DigestionStatusEvaluator.Evaluate(
-                scope,
-                document,
-                snapshot,
-                lean,
-                baselineDocument,
-                baselineSnapshot: baselineSnapshot,
-                casEvaluation: casEvaluation,
-                changes: changes,
-                isBaseFactAffected: IsBaseFactAffected,
-                projectedStatusChanges: changes);
+            var evaluation = Evaluate(document, snapshot, leanReportSource);
             var readinessDiagnostics = string.Empty;
             if (options.Readiness)
             {
@@ -171,11 +109,7 @@ internal static class DigestStatusCommand
             DigestionFrontierProjection? frontier = null;
             if (options.Readiness || options.ResidualSummary || options.Json)
             {
-                frontier = DigestionFrontierProjection.Create(
-                    document,
-                    evaluation,
-                    DigestionContentKindResolver.Resolve(snapshot, document),
-                    retryDispositions: false);
+                frontier = Frontier(document, snapshot, evaluation);
             }
 
             if (options.Readiness)
@@ -187,22 +121,14 @@ internal static class DigestStatusCommand
                     readinessDiagnostics);
             }
 
-            var age = options.ResidualSummary || options.Json
-                ? DigestAtomAge.Read(evaluation, frontier!, atomHistorySource, ageTimeProvider)
-                : null;
             return new CommandResult(
                 true,
                 options.ResidualSummary
-                    ? DigestResidualSummary.Render(evaluation, frontier!) + age!.RenderSummary()
+                    ? DigestResidualSummary.Render(evaluation, frontier!)
                     : options.Json
-                        ? RenderJson(evaluation, frontier!, age!)
+                        ? RenderJson(evaluation, frontier!)
                         : RenderText(evaluation),
                 string.Empty);
-        }
-        catch (AtomHistoryUnavailableException exception)
-        {
-            return new CommandResult(false, string.Empty,
-                $"DIGEST_AGE_HISTORY_UNAVAILABLE {exception.Message}\n");
         }
         catch (Exception exception) when (
             exception is FormatException
@@ -214,50 +140,51 @@ internal static class DigestStatusCommand
         }
     }
 
-    internal static IReadOnlyDictionary<string, string> RenderShards(
+    // The residual summary and its per-source shards, from one evaluation of the ledger.
+    internal static (string Summary, IReadOnlyDictionary<string, string> Shards) RenderResidual(
         IRepositoryGateway repository,
-        ILeanReportSource leanReportSource,
-        IScribeEmissionVerifier scribeEmissionVerifier,
-        string baselineRevision)
+        ILeanReportSource leanReportSource)
     {
-        var snapshot = Decode(repository.ReadCurrent());
-        var registeredInputs = EngineeringProjectRegistry.ReadRuleBuildInputs(snapshot);
-        var baseline = Decode(repository.ReadRevision(baselineRevision));
-        var changes = repository.ReadChanges(baselineRevision);
-        var leanReport = leanReportSource.Load(snapshot);
-        var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes, registeredInputs);
-        bool IsBaseFactAffected(string path) =>
-            BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
-        var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath, registeredInputs);
-        var document = BackfillInventoryLoader.Load(snapshot, scope, changes);
-        scribeEmissionVerifier.Verify(snapshot, leanReport, changes);
-        var evaluation = DigestionStatusEvaluator.Evaluate(
-            scope,
-            document,
-            snapshot,
-            ValidateLean(snapshot, leanReport),
-            BackfillInventoryLoader.LoadBaseline(baseline),
-            baselineSnapshot: baseline,
-            casEvaluation: DigestionCasStore.Evaluate(
-                document,
-                snapshot,
-                DigestionEvaluationScopes.ResolveChanges(scope, changes),
-                IsBaseFactAffected),
-            changes: changes,
-            isBaseFactAffected: IsBaseFactAffected,
-            projectedStatusChanges: changes);
+        ArgumentNullException.ThrowIfNull(repository);
+        ArgumentNullException.ThrowIfNull(leanReportSource);
+        var (_, snapshot, document) = DigestionWorkingTree.ReadEvaluation(
+            repository,
+            Decode,
+            static current => BackfillInventoryLoader.LoadForDigestion(current));
+        var evaluation = Evaluate(document, snapshot, leanReportSource);
         if (evaluation.HasReceiptIntegrityFailure)
         {
             throw new InvalidOperationException(InvalidEvaluation(evaluation).Error.TrimEnd());
         }
 
-        var frontier = DigestionFrontierProjection.Create(
+        var frontier = Frontier(document, snapshot, evaluation);
+        return (
+            DigestResidualSummary.Render(evaluation, frontier),
+            DigestResidualSummary.RenderShards(evaluation, frontier));
+    }
+
+    // The query reports what the current tree derives.  Projected status is
+    // updated by the operation that changes the atom; there is no separate
+    // whole-ledger alignment command.
+    private static DigestionLedgerEvaluation Evaluate(
+        BackfillInventoryDocument document,
+        RepositorySnapshot snapshot,
+        ILeanReportSource leanReportSource) =>
+        DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
+            document,
+            snapshot,
+            ValidateLean(snapshot, leanReportSource.Load(snapshot)),
+            validateProjectedStatus: false);
+
+    private static DigestionFrontierProjection Frontier(
+        BackfillInventoryDocument document,
+        RepositorySnapshot snapshot,
+        DigestionLedgerEvaluation evaluation) =>
+        DigestionFrontierProjection.Create(
             document,
             evaluation,
-            DigestionContentKindResolver.Resolve(snapshot, document),
-            retryDispositions: false);
-        return DigestResidualSummary.RenderShards(evaluation, frontier);
-    }
+            DigestionContentKindResolver.Resolve(snapshot, document));
 
     private static DigestStatusOptions ParseArguments(IReadOnlyList<string> arguments)
     {
@@ -265,8 +192,6 @@ internal static class DigestStatusCommand
         var residualSummary = false;
         var formalizeCandidates = false;
         var readiness = false;
-        var retryDispositions = false;
-        string? baselineRevision = null;
         string? formalizeAtomId = null;
         for (var index = 0; index < arguments.Count; index++)
         {
@@ -284,13 +209,6 @@ internal static class DigestStatusCommand
                 case "--readiness" when !readiness:
                     readiness = true;
                     break;
-                case "--retry-dispositions" when !retryDispositions:
-                    retryDispositions = true;
-                    break;
-                case "--base" when baselineRevision is null && index + 1 < arguments.Count:
-                    baselineRevision = arguments[++index];
-                    if (string.IsNullOrWhiteSpace(baselineRevision)) throw Usage();
-                    break;
                 case "--atom-id" when formalizeAtomId is null && index + 1 < arguments.Count:
                     formalizeAtomId = arguments[++index];
                     if (string.IsNullOrWhiteSpace(formalizeAtomId)) throw Usage();
@@ -304,8 +222,7 @@ internal static class DigestStatusCommand
                 + (residualSummary ? 1 : 0)
                 + (formalizeCandidates ? 1 : 0)
                 + (readiness ? 1 : 0) > 1
-            || (formalizeAtomId is not null && !formalizeCandidates)
-            || (retryDispositions && !formalizeCandidates))
+            || (formalizeAtomId is not null && !formalizeCandidates))
         {
             throw Usage();
         }
@@ -315,14 +232,12 @@ internal static class DigestStatusCommand
             residualSummary,
             formalizeCandidates,
             readiness,
-            retryDispositions,
-            baselineRevision,
             formalizeAtomId);
     }
 
     private static InvalidOperationException Usage() => new(
         "USAGE: StrataLint digest-status [--json|--residual-summary|--readiness|--formalize-candidates "
-        + "[--atom-id ATOM_ID] [--retry-dispositions]] [--base REV]");
+        + "[--atom-id ATOM_ID]]");
 
     internal static string RenderText(DigestionLedgerEvaluation evaluation)
     {
@@ -348,8 +263,7 @@ internal static class DigestStatusCommand
 
     internal static string RenderJson(
         DigestionLedgerEvaluation evaluation,
-        DigestionFrontierProjection frontier,
-        DigestAtomAge age)
+        DigestionFrontierProjection frontier)
     {
         ArgumentNullException.ThrowIfNull(evaluation);
         ArgumentNullException.ThrowIfNull(frontier);
@@ -358,7 +272,6 @@ internal static class DigestStatusCommand
             schema = "stratalint-digest-status-v1",
             entries_total = evaluation.Entries.Length,
             deletable_now = evaluation.DeletableCount,
-            age_histogram = new { total = age.Total, per_source = age.PerSource },
             frontier = new
             {
                 total = FrontierCounts(frontier.Total),
@@ -376,9 +289,6 @@ internal static class DigestStatusCommand
                     kind_label = entry.KindLabel,
                     is_chain_child = entry.IsChainChild,
                     parent_atom_ids = entry.ParentAtomIds,
-                    first_seen_date = age.Entries[entry.Entry.AtomId].FirstSeenDate,
-                    age_days = age.Entries[entry.Entry.AtomId].AgeDays,
-                    age_bucket = age.Entries[entry.Entry.AtomId].AgeBucket,
                 }),
             },
             entries = evaluation.Entries
@@ -393,9 +303,6 @@ internal static class DigestStatusCommand
                     migration = DigestionStatusNames.Migration(item.DerivedStatus.Migration),
                     truth = DigestionStatusNames.Truth(item.DerivedStatus.Truth),
                     deletable = item.Deletable,
-                    first_seen_date = age.Entries.GetValueOrDefault(item.Entry.AtomId)?.FirstSeenDate,
-                    age_days = age.Entries.GetValueOrDefault(item.Entry.AtomId)?.AgeDays,
-                    age_bucket = age.Entries.GetValueOrDefault(item.Entry.AtomId)?.AgeBucket,
                     gaps = item.Gaps.Select(static gap => new
                     {
                         code = gap.Code,
@@ -470,8 +377,6 @@ internal static class DigestStatusCommand
         bool ResidualSummary,
         bool FormalizeCandidates,
         bool Readiness,
-        bool RetryDispositions,
-        string? BaselineRevision,
         string? FormalizeAtomId);
 
 }

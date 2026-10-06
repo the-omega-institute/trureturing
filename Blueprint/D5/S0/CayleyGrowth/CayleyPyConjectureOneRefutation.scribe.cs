@@ -85,6 +85,14 @@ internal sealed class CayleyPyConjectureOneRefutationDocument : IScribeDocumentD
                     + "all transpositions. Both generator sets have polynomial-size explicit "
                     + "enumerations. The full-support rotation gives the nonsquare lower bound, "
                     + "and the triple-product bound gives the square upper bound. The output-time "
-                    + "estimate is discharged outside Lean."))),
-                DescribeRole.Theorem))));
+                    + "estimate is discharged outside Lean. The source claim is: ‘For any "
+                    + "generators of S_n (or A_n) which can be constructed by an algorithm with "
+                    + "say polynomial complexity in n (e.g. a Python function which takes as input "
+                    + "n and outputs generators in time polynomial in n) the diameter of the Cayley "
+                    + "graph will be given by some quadratic or linear quasi-polynomial in n (at "
+                    + "least for n large enough).’"))),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chervov-2025-cayleypy-conjecture-one-refutation"),
+                    ResolutionKind.Refuted)))));
 }

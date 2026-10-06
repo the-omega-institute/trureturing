@@ -148,6 +148,13 @@ $U<313165777.4653100$. Its chosen sufficient count is $J'=262144$,
 with complete action-tail bound below $0.000448454143055800<1/1000$.
 This count is not asserted minimal or practical.
 
+The [coherent-root Fourier supplier](strip-root.md) bounds the full
+Gamma action omitted beyond a finite frequency band on this same
+five-generator family. It retains $Z=QH_{1024,64}EB$ even when a later
+action uses the full digamma symbol. Its directed band-$512$ allowance
+is below $5.80\cdot10^{-18}$; it does not evaluate retained integrals
+or certify a residual Gram.
+
 This bound is uniform on the five explicit high generators. Applying it
 to $Y$ requires their actual common coefficient map and the ground
 normalization, rather than substituting a unit trial bound separately
@@ -170,3 +177,38 @@ integration grid is repeated. Outputs include exact upper dyadics,
 trial and source hashes, the selected sufficient $J'$ and the unpaid
 matrix obligations. The program is project-authored; directed arithmetic
 and dependency licensing come from python-flint/FLINT.
+
+
+The [stable projected-ground application](stable-ground.md) gives a
+nonzero $e=E^*Pv_0$ directly from the existing one-sided operator tail
+and exact ground relation. On $u\perp e$, the lift (HT2) becomes
+$YEu=ZAu$. Its classical second Schur allowance is less than
+$0.004660867160108$; the actual direction and restricted matrix remain
+uncomputed.
+
+The [continuous sinc projection supplier](continuous-projection.md)
+applies to the localized forward map $H_{1024,64}EB$ before sharp-$Q$,
+which can create spatial tails. It pays the infinite physical-lattice
+quadrature and omitted input samples for the true cutoff64. Actual
+forward sample errors, off-lattice high prime evaluations, common Grams
+and the restricted matrix sign are separate obligations.
+
+The [local high sample producer](local-high.md) now retains the actual
+core $H,PH$ enclosures for these four columns. The
+[localized whole-line Gram replay](local-z-gram.md) uses them to bound
+$\|Z\|<1.0090$ and $\|(g,Z)\|<1.00904$. These actual real norms can
+replace the conservative real $R$ allowance above; they do not replace
+$U$ or the strip norms required for unbounded actions.
+
+The [full-Gamma periodization supplier](full-gamma-periodic.md) gives
+a local analytic replacement allowance on this same high family,
+without changing the finite-$J$ definition of $Z$. This allowance alone
+does not evaluate actions or other Gram blocks and does not settle the
+exact-ground restricted sign.
+
+The [off-grid/full-action interface](off-grid-action.md) and
+[four-column high action](high-full-action.md) supply the actual
+full-Gamma $Z$ actions and whole-line $Z^*CZ,(CZ)^*(CZ)$ blocks with
+complete prime-tail transport. They retain the original trial
+definition and give $\|CZ\|<1.051588$. The95 low actions, mixed blocks,
+common residual Gram and restricted sign remain separate obligations.

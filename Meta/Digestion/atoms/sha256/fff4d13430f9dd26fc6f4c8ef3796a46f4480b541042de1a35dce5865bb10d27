@@ -1,0 +1,32 @@
+**定义 363.1（有限实际族、激活偏序与闭包）。** 取 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$。对任意有限正指标集合 $S\subseteq\mathbb N_{>0}$，沿用定义 362.1 的
+
+$$
+D(S)=\{r\ge1:\exists s\in S,\ r\mid s\},
+\qquad M(S)=\operatorname{lcm}\{F_s:s\in S\},
+\qquad M(\varnothing)=1.
+\tag{363.1}
+$$
+
+每个 $F_s$（$s\ge1$）为正整数，因而每个 $M(S)$ 为正整数。称正整数 $m$ 为七光滑，当且仅当它的每个素因子属于 $H=\{2,3,5,7\}$；整数一满足此定义。置
+
+$$
+E=\{1,2,3,4,5,6,8,12\},\qquad
+P=\{3,4,5,6,8,12\},\qquad
+\mathcal A_7=\{M(S):S\subseteq\mathbb N_{>0}\text{ 有限且 }M(S)\text{ 七光滑}\}.
+\tag{363.2}
+$$
+
+$P$ 的偏序是指标整除：$j\preceq k$ 当且仅当 $j\mid k$。令 $\mathcal J(P)$ 为它的全部下理想，即满足 $k\in I$、$j\in P$、$j\mid k\Rightarrow j\in I$ 的子集 $I\subseteq P$，允许空理想。沿用（362.8）–（362.11）的正整数原子与首现秩，记
+
+$$
+\begin{aligned}
+\Psi_j&=\prod_{e\mid j}F_e^{\mu(j/e)},
+&\Phi(I)&=\prod_{j\in I}\Psi_j,\\
+z(q)&=\min\{n\ge1:q\mid F_n\}\quad(q\ge2),
+&\mathscr C(m)&=\operatorname{lcm}_{p^e\parallel m}F_{z(p^e)},\qquad \mathscr C(1)=1.
+\end{aligned}
+\tag{363.3}
+$$
+
+这里 $\mu$ 是 Möbius 函数，$p^e\parallel m$ 表示 $p$ 是素数且 $e=v_p(m)\ge1$；空乘积与空最小公倍数均取一。$\Phi(I)$ 表示本章的理想乘积映射。
+

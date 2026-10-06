@@ -1,0 +1,25 @@
+**散斑与相干统计 286.2。** 对由 `N` 个 unresolved 散射中心组成的分辨单元，令复回波为
+
+$$
+Z_N=\sum_{k=1}^{N}A_k\exp(\mathrm i\phi_k).
+$$
+
+若外加相位独立且均匀、幅度二阶矩有限，并且 `N` 足够大，则中心极限定理可给出圆对称复高斯近似
+
+$$
+Z_N\Rightarrow\mathcal{CN}(0,\sigma_Z^2),
+\qquad
+I_N=|Z_N|^2\sim\operatorname{Exp}(\sigma_Z^{-2}).
+$$
+
+若散射中心数有限、幅度重尾、相位有偏或存在相干主散射，强度分布可以转为 K 分布、Nakagami 分布、非中心复高斯或其他复合模型。FIB 的路径数与递归深度不提供相位均匀性、独立性或幅度尾，因此不决定散斑分布的形状参数。
+
+对于多视处理，若第 `m` 个视图的强度为 `I_m`，只有在外加视图独立或给定相关矩阵 `C` 后，平均强度的方差才可写成
+
+$$
+\operatorname{Var}\!\left(\frac1M\sum_{m=1}^{M}I_m\right)
+=\frac1{M^2}\sum_{m=1}^{M}\sum_{n=1}^{M}\operatorname{Cov}(I_m,I_n).
+$$
+
+因此视数与 Fibonacci 数列同阶不意味着斑点对比度按 Fibonacci 的倒平方根衰减；平台运动、时间去相干和共同散射中心会保留非零协方差。
+

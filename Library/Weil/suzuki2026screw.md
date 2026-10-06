@@ -81,3 +81,25 @@ The [half-weighted Mangoldt supplier](chirrehelfgott2025nonnegative.md) gives an
 Chirre–Helfgott Proposition 9.1 supplies a quantitative absolute bound for this actual $G$ above its threshold, and the same paper's whole-range and finite-interval estimates supply the missing lower interval by partial summation. These improve the available finite-support error input. For a fixed verified zero height they retain a growing $\sqrt x/T$ allowance and give no favorable sign to the paired arithmetic integral. A finite-height source estimate therefore does not settle the all-scale kernel positivity or the spectral limit described above.
 
 The project already has [golden support-layer positivity induction](../../D5/S3/Weil/TestFunctions/GoldenPositivityInduction.lean), [infinite-complement leakage bounds](../../D5/S3/Weil/ZetaBridge/WeilInfiniteComplementLeakage.lean) and [an arithmetic boundary coupling jet](../../D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.lean). Their stated assumptions and Fourier/form-identification boundaries remain in force; this source review did not rebuild them. A generic recurrence or Schur-complement reduction should be reused. The remaining work is an estimate for the actual arithmetic form that pays for the coupling to each new test space, uniformly over all its coefficients and with the required scale and tail controls. Neither a positive shifted model nor fixed-window positivity supplies that estimate.
+
+
+## Retain the theta model's metric in the derivative coordinates
+
+The [weighted window interface](../../docs/reports/theta-mixed-matrix/weighted-window-metric.md)
+reuses the derivative pairing of Suzuki,
+[arXiv:2206.03682v4](https://arxiv.org/html/2206.03682v4), Proposition 3.1,
+equation (3.8), and the existing theta ground-transform identity.
+It transports the original variance to an explicit rank-one-corrected
+operator $B_L$. A sufficient relative window estimate is
+$\mathcal G_{L_j}+\varepsilon_jB_{L_j}\succeq0$ with
+$L_j\to\infty$ and $\varepsilon_j\to0$, not positivity in a substituted
+unweighted metric. Its scalar conversion has a vanishing denominator
+and requires a relative error rate for the converted window allowance.
+The [fixed-test and centered-window interface](../../docs/reports/theta-mixed-matrix/centered-window.md)
+separately gives the sufficient absolute-error limit on fixed tests and
+the original-mean parameter map for the published pole constraint.
+These are applications of existing criteria and domain suppliers;
+the actual arithmetic estimates remain unproved.
+The [finite-pencil source](shi2026finitepencils.md) has a related
+relative-control problem with a different contrast space and metric;
+no identification of the two metrics is asserted.

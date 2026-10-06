@@ -1,0 +1,5 @@
+**Theorem 2.2 (two incident rooms).** For finite $T$, every internal door
+$(\tau,D)$ has precisely two distinct incident rooms: there exist
+$(\sigma_1,C_1)\ne(\sigma_2,C_2)$, both rooms incident to $(\tau,D)$,
+and every incident room is one of these two pairs.
+

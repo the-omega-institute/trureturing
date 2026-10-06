@@ -37,13 +37,10 @@ internal interface ICliEnvironment
     CommandResult Ingest(IReadOnlyList<string> arguments);
 
 
-    CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments);
-
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
 
     CommandResult CoverBatch(IReadOnlyList<string> arguments);
 
-    CommandResult QuarantineAtom(IReadOnlyList<string> arguments);
     CommandResult SettleBatch(IReadOnlyList<string> arguments);
     CommandResult SettleAtom(IReadOnlyList<string> arguments);
 
@@ -106,8 +103,6 @@ internal static class CliApplication
         Func<ICliEnvironment, string[], ICliConsole, int>> Handlers =
         new Dictionary<string, Func<ICliEnvironment, string[], ICliConsole, int>>(StringComparer.Ordinal)
         {
-            ["align-digestion-status"] = static (environment, tail, console) =>
-                RenderCommand(environment.AlignDigestionStatus(tail), console),
             ["capacity-audit"] = static (environment, tail, console) =>
                 RenderExplicit(environment.CapacityAudit(tail), console),
             ["check"] = static (environment, tail, console) =>
@@ -126,8 +121,6 @@ internal static class CliApplication
                 RenderCommand(environment.CoverAtom(tail), console),
             ["cover-batch"] = static (environment, tail, console) =>
                 RenderCommand(environment.CoverBatch(tail), console),
-            ["quarantine-atom"] = static (environment, tail, console) =>
-                RenderCommand(environment.QuarantineAtom(tail), console),
             ["settle-batch"] = static (environment, tail, console) =>
                 RenderCommand(environment.SettleBatch(tail), console),
             ["settle-atom"] = static (environment, tail, console) =>

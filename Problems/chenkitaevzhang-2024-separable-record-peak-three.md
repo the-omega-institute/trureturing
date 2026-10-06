@@ -73,24 +73,36 @@ $$
 
 where $\delta(n,k)=1$ exactly when $n=k=1$. They reduce the remaining
 four declining laws at $n\ge5$ to the actual irreducible right-maximum
-law.
+law. `RecordFirstDecline.actual_four_record_first_decline` proves the
+first declining comparison $a(n,4)\le a(n,3)$ at every natural length,
+and its strict form for every $n\ge3$, on all four actual class/statistic
+pairs. The proof establishes its exact positive quotient and infinite tail
+inside the actual weighted inference.
 
 ## Gap
 
-The actual irreducible right-maximum declining law, its universal coefficient
-argument for every $k\ge3$, and the global maximum remain open. The
-Motzkin differential recurrence, support and Newton identity, the remaining
-exact quotient certificates with unbounded nonnegative tails, and their
-actual-series applications are missing. No full open-problem resolution or
-KPI increment is attributed to the partial theorems.
+The actual irreducible right-maximum declining comparisons for arbitrary
+$k\ge4$ and the global maximum remain open.
+`RecordNewtonPositivity.actual_q_record_newton_nonnegative` proves the
+unbounded coefficient sign law $[t^n]G_r(q(t))\ge0$ for every natural $r,n$.
+Its proof constructs the Motzkin series from Mathlib's Catalan supplier,
+derives its differential recurrence at every index, and propagates two
+pairs of consecutive positive-composition certificates to the universal
+tail. This removes the universal kernel-sign obligation.
+
+The exact remaining bridge is the normalized actual $J_k$ coefficient
+formula and its Newton transform. They must identify each actual decline
+with a nonnegative combination of the defined kernels; the sign theorem
+has no actual-record-fiber correspondence in its conclusion. No new
+actual declining range, full open-problem resolution or KPI increment is
+attributed to this partial unit.
 
 ## Route
 
 Use the actual record quadratic and scalar series from the right-maximum
-proof to derive the universal Motzkin and Newton identities inside the
-full declining proof. Establish every required quotient coefficient bound
-and its arbitrary-index tail, then compose with the positive actual scalar
-series and extract the actual record coefficients. The exact transports
+proof to derive the normalized Motzkin formula and Newton transform inside
+the full declining proof. Apply the proved all-index kernel sign law and
+extract the actual record coefficients. The exact transports
 give the remaining three declining laws at $n\ge5$. Combine rising and
 declining inequalities to obtain the global maximum. A conditional
 generating-function theorem or finite row computation does not discharge
@@ -119,13 +131,13 @@ Conjecture 15 are separate open problems.
 ## Triage
 
 Theorem: a Tier 2 published universal mathematical conjecture with exact
-source classes and record definitions. The two partial actual-carrier
-theorems leave the complete conjecture open. Neither is a full external
-settlement, and neither carries an `OpenProblemResolutionClaim`.
+source classes and record definitions. The partial actual-carrier
+theorems leave the complete conjecture open. None is a full external
+settlement or carries an `OpenProblemResolutionClaim`.
 
 ## ASSUMED-UNVERIFIED
 
 The journal version of record body, exhaustive citation coverage and global
 novelty are unverified. Uncompiled algebraic research does not establish
-the missing universal Motzkin/Newton or quotient premises. Reg enrollment
+the missing normalized actual coefficient formula or Newton transform. Reg enrollment
 is user-paused; no completed registration audit is claimed.

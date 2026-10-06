@@ -10,8 +10,10 @@ public sealed class RepositoryPolicyInstructionTests
         var text = File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "CLAUDE.md"), Encoding.UTF8);
         Assert.Contains("`pr.sh` 为 `open`/`watch` 双动词", text, StringComparison.Ordinal);
-        Assert.Contains("缺省不 arm auto-merge", text, StringComparison.Ordinal);
-        Assert.DoesNotContain("`make pr-open` 自带 auto-merge", text, StringComparison.Ordinal);
+        Assert.Contains("默认 arm auto-merge", text, StringComparison.Ordinal);
+        Assert.Contains("`AUTO_MERGE=0` 不 arm 但仍等 CI", text, StringComparison.Ordinal);
+        Assert.Contains("`DRAFT=1` 传 `--draft`", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("缺省不 arm auto-merge", text, StringComparison.Ordinal);
         Assert.DoesNotContain("create → App-token 隔离 → arm auto-merge → 等 required-CI 判词", text, StringComparison.Ordinal);
         Assert.DoesNotContain("需要重复由调用方 shell 循环", text, StringComparison.Ordinal);
         Assert.DoesNotContain("单动词(`update`", text, StringComparison.Ordinal);

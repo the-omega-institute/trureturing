@@ -1,4 +1,3 @@
-using StrataLint.Scribe.Documents;
 using System.Collections.Immutable;
 using StrataLint.Engine;
 using StrataLint.FileMap;
@@ -14,7 +13,7 @@ public sealed partial class FileMapPolicyTests
     public void EmptyRegPackagePassesRepositoryFileMapConformance()
     {
         Assert.Empty(FileMapPolicy.InspectRepository(TestRepositoryLayout.FindRoot(),
-            DocumentAssembly.Definitions.Select(definition => definition.RelativePath.Value)));
+            FileMapPolicy.DocumentPaths(TestRepositoryLayout.FindRoot())));
     }
 
     [Theory]

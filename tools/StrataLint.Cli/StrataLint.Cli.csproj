@@ -16,7 +16,6 @@
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
     <ProjectReference Include="../StrataLint.TestEvidence/StrataLint.TestEvidence.csproj" />
     <ProjectReference Include="../StrataLint.Lean/StrataLint.Lean.csproj" />
-    <ProjectReference Include="../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj" />
     <ProjectReference Include="../StrataLint.Scribe/StrataLint.Scribe.csproj" />
   </ItemGroup>
 </Project>

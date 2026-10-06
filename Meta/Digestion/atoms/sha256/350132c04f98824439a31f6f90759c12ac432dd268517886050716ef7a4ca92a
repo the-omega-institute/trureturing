@@ -1,0 +1,35 @@
+**Markov renewal 核与首达变换 291.1。** 定义带时间的核
+
+$$
+Q_{j,xy}(dt)=P_j(x,y)F_{j,xy}(dt).
+\tag{291.5}
+$$
+
+从 `a` 到 `b` 的更新测度满足
+
+$$
+U_{j,ab}(dt)
+=\mathbf 1_{\{a=b\}}\delta_0(dt)
++\sum_{y\in V_j}\int_{[0,t]}U_{j,ay}(d(t-s))Q_{j,yb}(ds).
+\tag{291.6}
+$$
+
+对目标端口集合 `B`，令
+
+$$
+H_B=\inf\{n\ge0:X_n\in B\},
+\qquad
+\mathcal T_B=T_{H_B}.
+\tag{291.7}
+$$
+
+若 `K_{j,B}(s)` 是 `B^c` 上的矩阵，其元素为 `Q` 的拉普拉斯变换，`r_{j,B}(s)` 是从 `B^c` 直接进入 `B` 的边界向量，并且 `ρ(K_{j,B}(s))<1`，则
+
+$$
+\mathbb E_x\!\left[e^{-s\mathcal T_B};H_B<\infty\right]
+=\left[(I-K_{j,B}(s))^{-1}r_{j,B}(s)\right]_x.
+\tag{291.8}
+$$
+
+因此 FIB 路径只提供矩阵的组合支撑；物理首达分布还需要 `P`、停留时间律、目标边界和拉普拉斯收敛域。
+

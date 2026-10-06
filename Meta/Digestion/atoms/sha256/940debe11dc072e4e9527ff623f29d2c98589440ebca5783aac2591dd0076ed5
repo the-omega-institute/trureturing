@@ -1,0 +1,4 @@
+# Maximal multiplication domains and physical modulation
+
+Teschl, Graduate Studies in Mathematics 99, equation (2.21), printed pages 59-60, gives the maximal multiplication domain. Theorem 5.1(ii), printed pages 123-124, identifies the strong derivative domain of the unitary exponential with the domain of its self-adjoint generator. For the real multiplier A(x) = -(b dot x)/hbar, the convention U(t) = exp(-itA) gives positive modulation and derivative (i/hbar)(b dot x)f. These are known results, with this parameter correspondence.
+

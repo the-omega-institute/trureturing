@@ -62,6 +62,16 @@ internal sealed class AxisConvergenceDocument : IScribeDocumentDefinition
             InfiniteWordSum(x, y, n), F.Dot));
     }
 
+    private static Formula FibonacciGrowthFormula()
+    {
+        Formula k = F.Id("K");
+
+        return F.Disp(F.Seq(
+            F.Forall, F.Sp, k, F.Sp, F.InMacro, F.Sp, Naturals(), F.Comma, F.Sp,
+            Fraction(Power(F.Varphi, k), F.Varphi), F.Sp, F.Le, F.Sp,
+            F.Id("Fib"), F.Underscore, F.Grp(k, F.Plus, F.D(1)), F.Dot));
+    }
+
     private static Formula TailBoundFormula()
     {
         Formula x = F.Id("x");
@@ -142,7 +152,7 @@ internal sealed class AxisConvergenceDocument : IScribeDocumentDefinition
             Paragraph(Text(
                 "The condition x > 0 is essential. At x = y = 0 every word has weight one, the "
                     + "depth-K partial sum is Fib(K+1), and the sequence diverges to positive "
-                    + "infinity. This is the corrected boundary clause of PZG 6.35.")),
+                    + "infinity.")),
             Describe.Lean(
                 DescribeId.Create("positive-x-word-weights-are-summable"),
                 DeclarationHandle.Create(LeanPrefix + "wordWeight_summable"),
@@ -162,6 +172,17 @@ internal sealed class AxisConvergenceDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "Series convergence is restricted along the cofinal Fibonacci cutoffs that "
                         + "define the depth windows."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("golden-ratio-powers-bound-fibonacci-growth"),
+                DeclarationHandle.Create(LeanPrefix + "goldenRatio_pow_div_le_fib_succ"),
+                H("Golden-ratio powers bound Fibonacci growth"),
+                StatementSource.FromAuthor(FibonacciGrowthFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For the positive golden ratio phi, the comparison holds at every natural "
+                        + "depth K, including zero. The Fibonacci/golden-ratio identity and "
+                        + "monotonicity give the lower bound used in the axis tail estimate."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("the-axis-tail-is-doubly-exponentially-small"),

@@ -1,0 +1,8 @@
+**定理 6.5（最小充分边界）。** 若 $m:X\to M$ 能恢复每个允许上下文的输出，则存在唯一满射
+
+$$
+m(X)\twoheadrightarrow X/{\approx}.
+$$
+
+有限情形下 $|m(X)|\ge|X/{\approx}|$。
+

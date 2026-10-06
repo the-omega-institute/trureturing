@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:511ca2ff385eb7242df5ade7b033d354b61978a63126d9f227075e1fe936b71c
+  normalized_sha256: sha256:511ca2ff385eb7242df5ade7b033d354b61978a63126d9f227075e1fe936b71c
+cas_ref: sha256:511ca2ff385eb7242df5ade7b033d354b61978a63126d9f227075e1fe936b71c
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Scarf/ColorfulCell.Scarf
+    target_statement_id: sha256:4bb58a7ab515800d9d337063970562adb21c6b50c0eccfa59a6abf1a7f70efa5
+receipts:
+  unresolved_subitems: []

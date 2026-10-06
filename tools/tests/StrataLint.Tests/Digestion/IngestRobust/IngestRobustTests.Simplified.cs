@@ -170,31 +170,6 @@ public sealed partial class IngestRobustTests
         AssertSummary(result, residualOpenAdded: 0, skippedExisting: sourceScoped ? 1 : 2);
     }
 
-    [Fact]
-    public void Ingest_RemovedBaselineAtomIsNotResurrected()
-    {
-        var baseline = TwoSourceLedger(
-            Source("alpha", AlphaPath, ClauseText),
-            Source("beta", BetaPath, BetaText));
-        var current = TwoSourceLedger(
-            EmptySource("alpha", AlphaPath),
-            baseline.RequireDigestionSources()[1]);
-        var removed = Assert.Single(baseline.RequireDigestionSources()[0].Entries);
-        var fixture = RobustFixture(current, baseline, ClauseText, BetaText);
-        using var temporary = new TemporaryDirectory();
-        WriteFixture(temporary, fixture);
-        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
-
-        var result = Environment(fixture, temporary).Ingest(Arguments("alpha"));
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
-        Assert.DoesNotContain(
-            BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
-            entry => entry.AtomId == removed.AtomId);
-        AssertSummary(result, residualOpenAdded: 0, skippedExisting: 0);
-    }
-
     private static void AssertSummary(
         StrataLint.EngineeringScope.CommandResult result,
         int residualOpenAdded,

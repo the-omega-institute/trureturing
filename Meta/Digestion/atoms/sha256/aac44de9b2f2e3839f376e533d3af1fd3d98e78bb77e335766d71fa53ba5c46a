@@ -1,0 +1,67 @@
+## 366. FIB 路径支撑上的渗流、首达输运与反应权重
+
+对 FIB 原生状态集合 `V_F`，令 `\mathcal P_F(x,y)` 表示从 `x` 到 `y` 的合法路径族。原生可达性是
+
+$$
+x\rightsquigarrow_F y
+\quad\Longleftrightarrow\quad
+\mathcal P_F(x,y)\ne\varnothing .
+\tag{366.1}
+$$
+
+它只说明路径是否存在，不说明边是否开放、传播需要多久或观测是否成功。
+
+给每条原生边附加外部开放变量 `\omega_e\in\{0,1\}`，随机开放路径为
+
+$$
+\mathcal P_\omega(x,y)
+=\{\gamma\in\mathcal P_F(x,y):
+\omega_e=1\text{ 对所有 }e\in\gamma\}.
+\tag{366.2}
+$$
+
+外部增边形成的连接不属于 FIB 原生可达性，除非这些边已被登记为新的 FIB 原语。若 `\omega_e=\mathbf1_{\{U_e\le p\}}`，其中 `U_e` 在同一实际实现上固定，则 `p_1\le p_2` 给出单调耦合
+
+$$
+\mathcal P_{\omega^{(p_1)}}(x,y)
+\subseteq
+\mathcal P_{\omega^{(p_2)}}(x,y).
+\tag{366.3}
+$$
+
+在具有无穷体积极限和足够平移一致性的模型中，可以定义拓扑贯通概率
+
+$$
+\Theta_x(p)=\Pr_p(x\text{ 属于无穷开放分支}),
+\qquad
+p_c=\inf\{p:\sup_x\Theta_x(p)>0\}.
+\tag{366.4}
+$$
+
+有限 FIB ATOM 或有限实验窗口不自动具有奇异阈值；此时应使用有限尺寸贯通概率或给定误差 `\varepsilon` 的阈值。
+
+若边带非负传播代价 `w_e`，首达代价为
+
+$$
+R_\omega(x,y)=
+\inf_{\gamma\in\mathcal P_\omega(x,y)}
+\sum_{e\in\gamma}w_e,
+\tag{366.5}
+$$
+
+空路径族时取 `R_\omega=+\infty`。首达时间分布还需指定 `w_e` 的联合律、边相关性和时间单位；FIB 只给出取下确界的路径族。
+
+给路径附加非负反应或杀灭率 `\kappa_e\ge0`。令 `\Gamma_B` 表示按外加 Markov 传播核 `Q` 运行、直到首次到达 `B` 或按终止规则停止的带停留时间路径；第 `k` 次经过边 `e` 的停留时间记为 `\tau_e^{(k)}`。Feynman–Kac 型响应可写成
+
+$$
+u(x)=\mathbb E_x\left[
+\exp\left(-\sum_{(e,k)\in\Gamma_B}\kappa_e\tau_e^{(k)}\right)
+\mathbf1_{\{\Gamma_B\text{ 在有限时间到达 }B\}}
+\right].
+\tag{366.6}
+$$
+
+这要求 `Q`、路径终止规则、率的可积性和目标边界 `B` 已给定。若存在共享环境，式（366.6）必须在同一联合概率空间中计算，不能把各边的边缘到达率相乘。
+
+相同 FIB 支撑可以取恒定 `w_e=1`、重尾 `w_e` 或状态依赖 `w_e`，从而产生不同的首达尾和动态临界。也可以保持同一 `p_c` 而改变路径重叠，得到不同的簇极值与响应方差。因此渗流阈值、最短路指数和反应输运律都是外加模型在 FIB 路径支撑上的条件结论。
+

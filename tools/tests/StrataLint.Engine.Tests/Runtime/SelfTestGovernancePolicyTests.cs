@@ -176,6 +176,22 @@ public sealed class SelfTestGovernancePolicyTests
     }
 
     [Fact]
+    public void RegisteredDataSourceIsOutsideProgramNamespaceOwnership()
+    {
+        using var fixture = new NamespaceFixture();
+        var manifest = FileMapLoader.LoadRepository(TestRepositoryLayout.FindRoot());
+        fixture.Write(FileMapLoader.RelativePath,
+            System.Text.Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(manifest).AsSpan()));
+        fixture.Write("Blueprint/D5/S0/Carrier/Probe.scribe.cs", "independent script data");
+        fixture.Write("tools/owner/Owned.cs", "namespace Declared.Space;");
+        fixture.Register(Owner("tools/owner/Owned.cs"));
+        Assert.Empty(fixture.Inspect());
+        fixture.Write("tools/owner/Undeclared.cs", "namespace Declared.Space;");
+        fixture.Track();
+        Assert.Contains("unregistered engineering source: tools/owner/Undeclared.cs", Assert.Single(fixture.Inspect()));
+    }
+
+    [Fact]
     public void MissingSourceOwnershipFailsBeforeNamespaceValidation()
     {
         using var fixture = new NamespaceFixture();

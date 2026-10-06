@@ -11,13 +11,6 @@ internal sealed record GeneratedArtifactIdentity(
 internal static class GeneratedArtifactInventory
 {
     internal static ImmutableArray<GeneratedArtifactIdentity> Create(
-        IEnumerable<DocumentDefinition> definitions)
-    {
-        ArgumentNullException.ThrowIfNull(definitions);
-        return Create(definitions.Select(static definition => definition.RelativePath.Value));
-    }
-
-    internal static ImmutableArray<GeneratedArtifactIdentity> Create(
         IEnumerable<string> documentPaths)
     {
         ArgumentNullException.ThrowIfNull(documentPaths);

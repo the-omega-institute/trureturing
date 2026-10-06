@@ -1,0 +1,37 @@
+### 定义 6.1（全矩阵隐藏合同）
+
+固定 $N\ge2$、$k\ge2$，沿用定义 1.1 的 $x_{b,r}$、$M_0=A_N$、$M_1=P_N$。逻辑空间及其页投影为
+
+$$
+\mathcal H_L=\bigoplus_{b=0}^1\mathbb C^{M_b},\qquad
+|b,r\rangle=|x_{b,r}\rangle,\qquad
+\Pi_b=\sum_{r=0}^{M_b-1}|b,r\rangle\langle b,r|.
+$$
+
+取 $m_X,m_Y\ge1$。物理空间是环境 qubit 张量积
+
+$$
+\mathcal H_X=(\mathbb C^2)^{\otimes m_X},\qquad
+\mathcal H_Y=(\mathbb C^2)^{\otimes m_Y}.
+$$
+
+其中 $\mathcal H_{X,b}$ 是所有首位为 $b$ 的合法长度 $m_X$ 词的计算基张成空间，投影为 $Q_{X,b}$，维数为 $c_{X,b}=C_b(k,m_X)$；$\mathcal H_{Y,b}$、$Q_{Y,b}$、$c_{Y,b}=C_b(k,m_Y)$ 同理。合法词空间本身不假定具有逐位张量分解。
+
+区域编码是等距映射 $J:\mathcal H_L\to\mathcal H_X\otimes\mathcal H_Y$，满足
+
+$$
+(Q_{X,b}\otimes I)J=J\Pi_b=(I\otimes Q_{Y,b})J
+$$
+
+以及对每个 $A\in\operatorname{End}(\mathcal H_L)$ 成立的精确通道恒等式
+
+$$
+\mathcal N_X(A):=\operatorname{Tr}_Y(JAJ^\dagger)
+=\bigoplus_{b=0}^1\operatorname{Tr}(\Pi_bA)\,\sigma_b,
+\tag{6.1}
+$$
+
+其中 $\sigma_b$ 是支撑在 $\mathcal H_{X,b}$ 上、与 $A$ 无关的密度算符。右侧直和按两个正交页嵌入 $\mathcal H_X$，未使用的空间上取零。合同保留页标而完全隐藏页内逻辑矩阵；只验证计算基输入不足以保证式（6.1）。等价地，可以对全部密度矩阵要求它，再用任意 Hermitian 矩阵的正负部分及复线性分解延拓到全部矩阵。
+
+以下熵统一使用自然对数：$S(\rho)=-\operatorname{Tr}(\rho\log\rho)$、$H(q)=-\sum_iq_i\log q_i$，并约定 $0\log0=0$。这里 $J$ 表示新的区域等距，与定理 1.3 只在配对词上定义的首位翻转映射不同。
+

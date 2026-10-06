@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:26ee8bacd2ff93d798e34f52ae3fd66f515b3f3054c53f3de4b083e6f1001469
+  normalized_sha256: sha256:26ee8bacd2ff93d798e34f52ae3fd66f515b3f3054c53f3de4b083e6f1001469
+cas_ref: sha256:26ee8bacd2ff93d798e34f52ae3fd66f515b3f3054c53f3de4b083e6f1001469
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Quantum/Analysis/PhysicalHermiteTests.physical_hermite_tests
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 26ee8bacd2ff93d798e34f52ae3fd66f515b3f3054c53f3de4b083e6f1001469
