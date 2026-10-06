@@ -279,4 +279,3 @@ unsafe def check : IO Unit := do
     `D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation
 
 end LeanInformationAuditRegTests.NodeFacts
-
