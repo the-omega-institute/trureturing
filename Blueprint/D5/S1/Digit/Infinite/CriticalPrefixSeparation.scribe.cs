@@ -26,16 +26,16 @@ internal sealed class CriticalPrefixSeparationDocument : IScribeDocumentDefiniti
                     + "t/2 in the supremum metric. The empty source and the infinite repetition of five "
                     + "attain it, and both are legal under either incoming guard.")),
                 Paragraph(Text(
-                    "The five translations have smallest gap t^2. At a differing window the "
-                    + "difference of translations is the difference of two consecutive samples, "
-                    + "with coefficients one and t^3. Thus the maximum sample difference M satisfies "
+                    "The five translations have smallest gap t^2. Let d_i be the difference of "
+                    + "the two sources' samples at time i. At a differing window j the translation "
+                    + "difference is d_j+t^3 d_(j+1). Thus the maximum sample difference M satisfies "
                     + "t^2 <= (1+t^3)M = 2tM.")),
                 Paragraph(Text(
                     "For eventually empty sources each scalar belongs to the embedded golden "
                     + "integer ring. Irrationality excludes t/2 from that ring. The attained maximum "
                     + "coordinate difference therefore cannot equal t/2, and distinct finite-tail "
                     + "prefixes are strictly farther apart. Their distance infimum is nevertheless "
-                    + "t/2: N repetitions of five followed by the empty tail have coordinate j equal "
+                    + "t/2: for N>h, N repetitions of five followed by the empty tail have coordinate j equal "
                     + "to (t/2)(1-(-t^3)^(N-j)), and converge to the constant t/2 response.")),
                 Paragraph(Text(
                     "For every nonnegative closed error radius epsilon, a uniformly correct prefix "
