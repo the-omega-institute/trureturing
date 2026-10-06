@@ -18,7 +18,11 @@ internal static class ShowAtomCommand
         try
         {
             var atomId = ParseArguments(arguments);
-            var (_, snapshot, document) = DigestionWorkingTree.Read(repository, Decode, BackfillInventoryLoader.Load);
+            var (_, snapshot, document) = DigestionWorkingTree.ReadLedger(
+                repository,
+                Decode,
+                BackfillInventoryLoader.LoadForDigestion,
+                DigestionCasStore.RootPath + atomId);
             var entries = document.RequireDigestionEntries()
                 .Where(entry => entry.AtomId == atomId)
                 .ToArray();

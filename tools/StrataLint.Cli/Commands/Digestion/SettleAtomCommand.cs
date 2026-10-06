@@ -11,6 +11,77 @@ internal static partial class SettleAtomCommand
     private const string Usage = "USAGE: StrataLint settle-atom --request FILE | settle-atom --clear ATOM_ID";
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
+    private sealed class Session
+    {
+        internal Session(IRepositoryGateway repository)
+        {
+            var loaded = DigestionWorkingTree.ReadLedger(
+                repository,
+                Decode,
+                BackfillInventoryLoader.LoadForDigestion);
+            CurrentRaw = loaded.Raw;
+            Current = loaded.Snapshot;
+            Document = loaded.Document;
+        }
+
+        internal RawRepositorySnapshot CurrentRaw { get; private set; }
+        internal RepositorySnapshot Current { get; private set; }
+        internal BackfillInventoryDocument Document { get; private set; }
+
+        internal void Extend(IRepositoryGateway repository, params string[] paths)
+        {
+            var loaded = DigestionWorkingTree.Extend(
+                repository,
+                CurrentRaw,
+                Decode,
+                BackfillInventoryLoader.LoadForDigestion,
+                paths);
+            CurrentRaw = loaded.Raw;
+            Current = loaded.Snapshot;
+            Document = loaded.Document;
+        }
+
+        internal void ReadChainEvaluation(IRepositoryGateway repository, DigestionLedgerEntry target)
+        {
+            var closure = ChainClosureIds(Document, target.AtomId);
+            var paths = Document.RequireDigestionEntries()
+                .Where(entry => closure.Contains(entry.AtomId))
+                .SelectMany(static entry => entry.CoverageGids
+                    .Select(static gid => Gid.TryParse(gid, out var parsed) ? parsed.Path.Value : null)
+                    .Append(entry.Receipts.TailAuthorization?.Path)
+                    .Append(entry.SourcePath))
+                .OfType<string>()
+                .Concat(["D5", "Reg", "Trureturing.lean", "Golden/Frozen/state"])
+                .Distinct(StringComparer.Ordinal)
+                .ToArray();
+            var loaded = DigestionWorkingTree.Extend(
+                repository,
+                CurrentRaw,
+                Decode,
+                BackfillInventoryLoader.LoadForDigestion,
+                paths);
+            CurrentRaw = loaded.Raw;
+            Current = loaded.Snapshot;
+            Document = loaded.Document;
+        }
+
+        internal void Commit(ImmutableArray<IngestCommand.LedgerUpdate> updates)
+        {
+            var entries = CurrentRaw.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
+            foreach (var update in updates)
+            {
+                if (update.Bytes is { } bytes)
+                    entries[update.Path] = new RawRepositoryEntry(update.Path, bytes);
+                else
+                    entries.Remove(update.Path);
+            }
+
+            CurrentRaw = RawRepositorySnapshot.Create(entries.Values);
+            Current = Decode(CurrentRaw);
+            Document = BackfillInventoryLoader.LoadForDigestion(Current);
+        }
+    }
+
     internal static CommandResult Run(string root, IRepositoryGateway repository, IReadOnlyList<string> arguments,
         ILeanReportSource? reportSource = null) =>
         Run(root, repository, arguments, BackfillInventoryWriter.WriteAtom, ReadRequest,
@@ -21,6 +92,17 @@ internal static partial class SettleAtomCommand
         Func<string, string, ImmutableArray<byte>> readRequest,
         Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>> applyUpdates,
         ILeanReportSource? reportSource = null)
+        => RunCore(root, repository, arguments, writeAtom, readRequest, applyUpdates, reportSource,
+            session: null, suppliedRequest: null);
+
+    private static CommandResult RunCore(string root, IRepositoryGateway repository,
+        IReadOnlyList<string> arguments,
+        Func<DigestionLedgerEntry, ImmutableArray<byte>> writeAtom,
+        Func<string, string, ImmutableArray<byte>> readRequest,
+        Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>> applyUpdates,
+        ILeanReportSource? reportSource,
+        Session? session,
+        SettleRequest? suppliedRequest)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(root);
         ArgumentNullException.ThrowIfNull(repository);
@@ -30,10 +112,14 @@ internal static partial class SettleAtomCommand
         ArgumentNullException.ThrowIfNull(applyUpdates);
         try
         {
-            var options = ParseArguments(arguments);
-            var request = options.RequestPath is null ? null : LoadRequest(readRequest(root, options.RequestPath));
-            var atomId = request?.AtomId ?? options.ClearAtomId!;
-            var (current, snapshot, document) = DigestionWorkingTree.Read(repository, Decode, BackfillInventoryLoader.Load);
+            var options = suppliedRequest is null ? ParseArguments(arguments) : null;
+            var request = suppliedRequest
+                ?? (options!.RequestPath is null ? null : LoadRequest(readRequest(root, options.RequestPath)));
+            var atomId = request?.AtomId ?? options!.ClearAtomId!;
+            session ??= new Session(repository);
+            var current = session.CurrentRaw;
+            var snapshot = session.Current;
+            var document = session.Document;
             var target = LocateTarget(document, atomId);
             DigestionLedgerEntry updated;
             if (request is null)
@@ -49,6 +135,24 @@ internal static partial class SettleAtomCommand
             else
             {
                 RequireWritable(target);
+                var sourceCasPaths = DigestionWorkingTree.ChainCasPaths(
+                    document,
+                    [
+                        target.AtomId,
+                        .. document.RequireDigestionEntries()
+                        .Where(entry => entry.SourceId == target.SourceId)
+                        .SelectMany(static entry => entry.Receipts.ChainAtoms),
+                    ]);
+                var requiredPaths = new[]
+                {
+                    target.SourcePath,
+                    TheoryAtomizerDataLoader.DataPath,
+                }.Concat(sourceCasPaths).ToArray();
+                session.Extend(repository, requiredPaths);
+                current = session.CurrentRaw;
+                snapshot = session.Current;
+                document = session.Document;
+                target = LocateTarget(document, atomId);
                 var contexts = DigestionAtomContextProjection.ResolveOccurrences(snapshot, document, atomId);
                 if (contexts.Length > 1 && request.OccurrenceIndex is null)
                     throw Invalid("OCCURRENCE_INDEX_REQUIRED", $"atom_id={atomId} occurrences={contexts.Length}");
@@ -60,18 +164,24 @@ internal static partial class SettleAtomCommand
                 if (context.Previous?.AtomId != request.PreviousAtomId || context.Next?.AtomId != request.NextAtomId)
                     throw Invalid("CONTEXT_MISMATCH", $"atom_id={atomId}");
                 if (!target.Receipts.ChainAtoms.IsEmpty)
+                {
+                    session.ReadChainEvaluation(repository, target);
+                    current = session.CurrentRaw;
+                    snapshot = session.Current;
+                    document = session.Document;
+                    target = LocateTarget(document, atomId);
                     RequireCompleteChain(snapshot, document, target, reportSource);
+                }
                 updated = target with
                 {
                     Receipts = target.Receipts with { Nonpropositional = new(request.Justification, request.PreviousAtomId, request.NextAtomId) },
                     ProjectedStatus = new(DigestionMigrationState.Nonpropositional, DigestionTruthState.Inapplicable),
                 };
             }
-            var path = Write(root, current, target, updated, writeAtom, applyUpdates);
+            var (path, updates) = Write(root, current, target, updated, writeAtom, applyUpdates);
+            session.Commit(updates);
             var sentinel = request is null ? "SETTLE_CLEARED" : "SETTLED_NONPROPOSITIONAL";
             var output = $"{sentinel} atom_id={atomId} path={path}\n";
-            var ancestors = ProgressAncestors(document, atomId);
-            if (ancestors.Length > 0) output += "SETTLE_ALIGN_REQUIRED ancestors=" + string.Join(',', ancestors) + "\n";
             return new CommandResult(true, output, string.Empty);
         }
         catch (DigestionAtomContextException error)
@@ -99,6 +209,7 @@ internal static partial class SettleAtomCommand
         var closure = DigestionDecomposition.ValidatedClosure([target.AtomId], entries, snapshot,
             TheoryAtomizerDataLoader.Load(snapshot));
         closure.Remove(target.AtomId);
+        var closureDocument = ClosureDocument(document, closure, target.AtomId);
         DigestionLedgerEvaluation evaluation;
         if (closure.Any(id => !entries[id].Coverage.IsEmpty))
         {
@@ -109,14 +220,14 @@ internal static partial class SettleAtomCommand
                 LeanValidationOutcome.InfrastructureFailure failure => throw Invalid("CHAIN_INCOMPLETE", failure.Message),
             };
             evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
-                document, snapshot, lean, validateProjectedStatus: false);
+                closureDocument, snapshot, lean, validateProjectedStatus: false);
         }
         else
         {
             // This complete descendant closure has no coverage edges to validate. Keep
             // unrelated managed Lean inputs outside the report-free receipt evaluation.
             evaluation = DigestionStatusEvaluator.EvaluateUncovered(DigestionEvaluationScope.FullScan,
-                document, snapshot);
+                closureDocument, snapshot);
         }
         var evaluated = evaluation.Entries.ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
         var streams = new Dictionary<string, DigestionAtomContextProjection.SourceStream>(StringComparer.Ordinal);
@@ -142,6 +253,38 @@ internal static partial class SettleAtomCommand
         }
     }
 
+    private static BackfillInventoryDocument ClosureDocument(
+        BackfillInventoryDocument document,
+        IReadOnlySet<string> descendants,
+        string targetId) =>
+        document.WithDigestionSources(document.RequireDigestionSources()
+            .Select(source => source with
+            {
+                Entries = source.Entries
+                    .Where(entry => entry.AtomId == targetId || descendants.Contains(entry.AtomId))
+                    .ToImmutableArray(),
+            })
+            .Where(static source => !source.Entries.IsEmpty)
+            .ToImmutableArray());
+
+    private static HashSet<string> ChainClosureIds(BackfillInventoryDocument document, string root)
+    {
+        var entries = document.RequireDigestionEntries()
+            .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
+            .Where(static group => group.Count() == 1)
+            .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
+        var closure = new HashSet<string>(StringComparer.Ordinal);
+        var pending = new Queue<string>();
+        pending.Enqueue(root);
+        while (pending.TryDequeue(out var id))
+        {
+            if (!closure.Add(id) || !entries.TryGetValue(id, out var entry)) continue;
+            foreach (var child in entry.Receipts.ChainAtoms) pending.Enqueue(child);
+        }
+
+        return closure;
+    }
+
     private static void RequireWritable(DigestionLedgerEntry entry)
     {
         if (entry.Receipts.Nonpropositional is not null
@@ -153,7 +296,8 @@ internal static partial class SettleAtomCommand
         if (!entry.Receipts.UnresolvedSubitems.IsEmpty) throw Invalid("UNRESOLVED_SUBITEMS_PRESENT", $"atom_id={entry.AtomId}");
     }
 
-    private static string Write(string root, RawRepositorySnapshot current, DigestionLedgerEntry original,
+    private static (string Path, ImmutableArray<IngestCommand.LedgerUpdate> Updates) Write(
+        string root, RawRepositorySnapshot current, DigestionLedgerEntry original,
         DigestionLedgerEntry updated, Func<DigestionLedgerEntry, ImmutableArray<byte>> writeAtom,
         Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>> applyUpdates)
     {
@@ -167,7 +311,7 @@ internal static partial class SettleAtomCommand
             var bytes = writeAtom(updated);
             final = RawRepositorySnapshot.Create(current.Entries.Where(entry => entry.Path != oldPath)
                 .Append(new RawRepositoryEntry(newPath, bytes)));
-            var replay = LocateTarget(BackfillInventoryLoader.Load(Decode(final)), updated.AtomId);
+            var replay = LocateTarget(BackfillInventoryLoader.LoadForDigestion(Decode(final)), updated.AtomId);
             if (!writeAtom(replay).AsSpan().SequenceEqual(bytes.AsSpan()))
                 throw new FormatException("serialized shard did not replay byte-identically");
         }
@@ -175,27 +319,9 @@ internal static partial class SettleAtomCommand
         {
             throw Invalid("ROUND_TRIP_FAILED", $"atom_id={updated.AtomId} {error.Message}");
         }
-        applyUpdates(root, current, IngestCommand.LedgerUpdates(current, final));
-        return newPath;
-    }
-
-    private static string[] ProgressAncestors(BackfillInventoryDocument document, string atomId)
-    {
-        var visited = new HashSet<string>(StringComparer.Ordinal) { atomId };
-        var ancestors = new HashSet<string>(StringComparer.Ordinal);
-        var pending = new Queue<string>();
-        pending.Enqueue(atomId);
-        var entries = document.RequireDigestionEntries();
-        while (pending.TryDequeue(out var child))
-        {
-            foreach (var parent in entries.Where(entry => entry.Receipts.ChainAtoms.Contains(child, StringComparer.Ordinal)))
-            {
-                if (!visited.Add(parent.AtomId)) continue;
-                pending.Enqueue(parent.AtomId);
-                if (!parent.Coverage.IsEmpty || parent.Receipts.Nonpropositional is not null) ancestors.Add(parent.AtomId);
-            }
-        }
-        return ancestors.Order(StringComparer.Ordinal).ToArray();
+        var updates = IngestCommand.LedgerUpdates(current, final);
+        applyUpdates(root, current, updates);
+        return (newPath, updates);
     }
 
     private static SettleRequest LoadRequest(ImmutableArray<byte> bytes)

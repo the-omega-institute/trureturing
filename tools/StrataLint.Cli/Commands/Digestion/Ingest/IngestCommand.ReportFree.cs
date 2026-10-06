@@ -26,7 +26,7 @@ internal static partial class IngestCommand
         {
             var options = ParseReportFreeArguments(arguments);
             // Undeclared theory documents are registered from the theory directory itself.
-            var (currentRaw, current, document) = DigestionWorkingTree.Read(
+            var (currentRaw, current, document) = DigestionWorkingTree.ReadIngest(
                 repository,
                 Decode,
                 static snapshot => LoadDocument(snapshot),

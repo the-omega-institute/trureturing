@@ -11,7 +11,6 @@ internal sealed record DigestionCasObject(
 internal sealed record DigestionCasEvaluation(
     ImmutableArray<string> Findings,
     ImmutableHashSet<string> ValidAtomIds,
-    int RehashedObjectCount,
     ImmutableArray<RawChange>? EvaluatedChanges)
 {
     internal bool Matches(RawChangeSet? changes) =>
@@ -53,12 +52,12 @@ internal static class DigestionCasStore
             ImmutableArray.CreateRange(bytes.ToArray()));
     }
 
-    internal static DigestionCasEvaluation Evaluate(
+    internal static DigestionCasEvaluation EvaluateLedgerReferences(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot) =>
-        Evaluate(document, snapshot, changes: null);
+        EvaluateLedgerReferences(document, snapshot, changes: null);
 
-    internal static DigestionCasEvaluation Evaluate(
+    internal static DigestionCasEvaluation EvaluateLedgerReferences(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
         RawChangeSet? changes,
@@ -67,87 +66,35 @@ internal static class DigestionCasStore
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         var findings = ImmutableArray.CreateBuilder<string>();
-        var referencedPaths = new HashSet<string>(StringComparer.Ordinal);
         var validAtomIds = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
-        var rehashedObjectCount = 0;
         foreach (var entry in document.RequireDigestionEntries())
         {
             var reference = entry.CasRef;
-            var entryChanged = changes is null
-                || EntryChanged(entry, changes)
-                || isBaseFactAffected?.Invoke(entry.SourcePath) == true;
             if (!DigestionFingerprint.IsCanonicalSha256(reference))
             {
-                if (entryChanged)
-                {
-                    findings.Add($"entry {entry.AtomId} cas_ref must use canonical sha256:<64 lowercase hex>");
-                }
+                findings.Add($"entry {entry.AtomId} cas_ref must use canonical sha256:<64 lowercase hex>");
                 continue;
             }
 
-            var valid = true;
-            if (entryChanged && entry.Fingerprints.RawSha256 != reference)
+            if (entry.Fingerprints.RawSha256 != reference)
             {
                 findings.Add(
                     $"entry {entry.AtomId} cas_ref {reference} differs from raw fingerprint "
                     + entry.Fingerprints.RawSha256);
-                valid = false;
-            }
-
-            var path = RootPath + reference["sha256:".Length..];
-            referencedPaths.Add(path);
-            var blobChanged = changes is null
-                || (isBaseFactAffected?.Invoke(path)
-                    ?? changes.Paths.Any(changed => changed.Value == path));
-            if (!entryChanged && !blobChanged)
-            {
-                validAtomIds.Add(entry.AtomId);
                 continue;
             }
 
-            if (!snapshot.TryGetFile(path, out var blob))
-            {
-                findings.Add($"entry {entry.AtomId} CAS blob is missing: {path}");
-                continue;
-            }
-
-            if (blobChanged)
-            {
-                var actual = Capture(blob.RawBytes.AsSpan()).Reference;
-                rehashedObjectCount++;
-                if (actual != reference)
-                {
-                    findings.Add(
-                        $"entry {entry.AtomId} CAS blob hash mismatch: {path} "
-                        + $"declares {reference} but contains {actual}");
-                    valid = false;
-                }
-            }
-
-            if (valid)
-            {
-                validAtomIds.Add(entry.AtomId);
-            }
-        }
-
-        // An orphan is a blob a change added without an entry that names it.
-        // A scan of the whole ledger has no such change to judge.
-        if (changes is not null)
-        {
-            foreach (var path in changes.Paths
-                         .Select(static path => path.Value)
-                         .Where(path => path.StartsWith(RootPath, StringComparison.Ordinal)
-                             && snapshot.TryGetFile(path, out _)
-                             && !referencedPaths.Contains(path)))
-            {
-                findings.Add($"orphan CAS blob: {path}");
-            }
+            // CAS bytes are content-addressed storage, not a query index.  A
+            // status evaluation records the ledger reference and leaves blob
+            // availability/hash verification to the command that explicitly
+            // reads that atom (show/context/cover).  This keeps a frontier
+            // query from traversing or rehashing the complete CAS store.
+            validAtomIds.Add(entry.AtomId);
         }
 
         return new DigestionCasEvaluation(
             findings.Order(StringComparer.Ordinal).ToImmutableArray(),
             validAtomIds.ToImmutable(),
-            rehashedObjectCount,
             changes?.Entries);
     }
 

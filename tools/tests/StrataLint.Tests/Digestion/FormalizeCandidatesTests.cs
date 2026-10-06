@@ -155,23 +155,20 @@ public sealed partial class FormalizeCandidatesTests
         Assert.Contains("duplicate atom_id: duplicate-atom", result.Error, StringComparison.Ordinal);
     }
 
-    [Theory]
-    [InlineData(false, "CAS blob is missing")]
-    [InlineData(true, "CAS blob hash mismatch")]
-    public void FormalizeCandidatesFailsClosedForMissingOrDriftedCas(
-        bool includeDriftedBlob,
-        string expectedError)
+    [Fact]
+    public void FormalizeCandidatesEmitsAnIndexWithoutReadingCas()
     {
         var entry = Entry("source", "candidate", "定理", "3.1");
 
         var result = Run(
             [entry],
-            includeCas: includeDriftedBlob,
-            driftCas: includeDriftedBlob);
+            includeCas: false);
 
-        Assert.False(result.Success);
-        Assert.Empty(result.Output);
-        Assert.Contains(expectedError, result.Error, StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        var candidate = Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray());
+        Assert.Equal(entry.AtomId, candidate.GetProperty("atom_id").GetString());
+        Assert.Equal(string.Empty, candidate.GetProperty("atom_text").GetString());
     }
 
     [Fact]
@@ -222,7 +219,7 @@ public sealed partial class FormalizeCandidatesTests
     }
 
     [Fact]
-    public void FormalizeCandidatesReadsCompleteAtomTextFromCasAndAddressesLedgerBytes()
+    public void FormalizeCandidatesLeavesAtomTextForShowAtom()
     {
         var entry = Entry(
             "source",
@@ -240,10 +237,8 @@ public sealed partial class FormalizeCandidatesTests
             DigestionLedgerPreimage.ComputeSha256(ledger),
             json.RootElement.GetProperty("ledger_sha256").GetString());
         var candidate = Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray());
-        Assert.Equal(
-            Encoding.UTF8.GetString(entry.Atom.RawBytes.AsSpan()),
-            candidate.GetProperty("atom_text").GetString());
-        Assert.Contains("完整推导", candidate.GetProperty("atom_text").GetString(), StringComparison.Ordinal);
+        Assert.Equal(string.Empty, candidate.GetProperty("atom_text").GetString());
+        Assert.DoesNotContain("完整推导", result.Output, StringComparison.Ordinal);
         Assert.Equal(entry.Atom.Fingerprints.RawSha256, candidate.GetProperty("raw_sha256").GetString());
         Assert.Equal(entry.Atom.Fingerprints.RawSha256, candidate.GetProperty("cas_ref").GetString());
     }

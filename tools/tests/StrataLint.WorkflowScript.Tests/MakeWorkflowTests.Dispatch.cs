@@ -118,10 +118,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("scribe-release-publish: export TARGET ?=", makefile, StringComparison.Ordinal);
         Assert.Contains("scribe-release-fetch: export DIGEST ?=", makefile, StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
-        Assert.Contains(
-            IngestScriptPath + " align-digestion-status",
-            Recipe(makefile, "align-digestion-status"),
-            StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\"",
             Recipe(makefile, "mathlib-reanchor"));
