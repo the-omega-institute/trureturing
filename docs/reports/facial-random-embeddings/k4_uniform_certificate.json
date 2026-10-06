@@ -1,0 +1,1592 @@
+{
+  "graph": "K4",
+  "vertices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "edges": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      2,
+      3
+    ]
+  ],
+  "type_order": [
+    "good",
+    "bad",
+    "regular"
+  ],
+  "twist_convention": "Bit 0 untwisted. Notebook lambda t = 1 - this bit.",
+  "samples": 1024,
+  "totals": [
+    2208,
+    1728,
+    2208
+  ],
+  "expectations": [
+    "69/32",
+    "27/16",
+    "69/32"
+  ],
+  "per_edge_counts": [
+    [
+      368,
+      288,
+      368
+    ],
+    [
+      368,
+      288,
+      368
+    ],
+    [
+      368,
+      288,
+      368
+    ],
+    [
+      368,
+      288,
+      368
+    ],
+    [
+      368,
+      288,
+      368
+    ],
+    [
+      368,
+      288,
+      368
+    ]
+  ],
+  "per_edge_probabilities": [
+    "23/64",
+    "9/32",
+    "23/64"
+  ],
+  "conjectured_expectations": [
+    "2",
+    "2",
+    "2"
+  ],
+  "histogram": {
+    "0,2,4": 48,
+    "4,2,0": 192,
+    "1,1,4": 96,
+    "3,3,0": 256,
+    "2,1,3": 192,
+    "0,3,3": 64,
+    "2,0,4": 48,
+    "1,0,5": 96,
+    "0,0,6": 32
+  },
+  "gauge_quotient": {
+    "group": "Independent reversal of each vertex disk orientation",
+    "action": "(r,t) -> (r xor flip, t xor delta(flip))",
+    "orbit_size": 16,
+    "orbits": 64,
+    "fixed_rotation_totals": [
+      138,
+      108,
+      138
+    ],
+    "expectations": [
+      "69/32",
+      "27/16",
+      "69/32"
+    ],
+    "warning": "This gauge quotient retains vertex and edge labels. It is not the graph-isomorphism quotient."
+  },
+  "graph_isomorphism_quotient": {
+    "group": "Aut(K4) = S4 acting on the 64 gauge classes",
+    "orbits": 11,
+    "uniform_unlabelled_totals": [
+      16,
+      15,
+      35
+    ],
+    "uniform_unlabelled_expectations": [
+      "16/11",
+      "15/11",
+      "35/11"
+    ],
+    "warning": "The author's sampler gives these orbits probability size/64, not equal probability.",
+    "classes": [
+      {
+        "representative": 0,
+        "size": 3,
+        "members": [
+          0,
+          30,
+          51
+        ],
+        "counts": [
+          0,
+          2,
+          4
+        ],
+        "faces": 2,
+        "orientable": true
+      },
+      {
+        "representative": 1,
+        "size": 12,
+        "members": [
+          1,
+          4,
+          8,
+          14,
+          28,
+          31,
+          32,
+          35,
+          49,
+          55,
+          59,
+          62
+        ],
+        "counts": [
+          4,
+          2,
+          0
+        ],
+        "faces": 1,
+        "orientable": false
+      },
+      {
+        "representative": 2,
+        "size": 6,
+        "members": [
+          2,
+          16,
+          19,
+          22,
+          26,
+          50
+        ],
+        "counts": [
+          1,
+          1,
+          4
+        ],
+        "faces": 2,
+        "orientable": false
+      },
+      {
+        "representative": 3,
+        "size": 12,
+        "members": [
+          3,
+          6,
+          10,
+          17,
+          20,
+          23,
+          24,
+          27,
+          34,
+          48,
+          54,
+          58
+        ],
+        "counts": [
+          3,
+          3,
+          0
+        ],
+        "faces": 1,
+        "orientable": false
+      },
+      {
+        "representative": 5,
+        "size": 12,
+        "members": [
+          5,
+          9,
+          15,
+          29,
+          36,
+          39,
+          40,
+          43,
+          46,
+          53,
+          57,
+          60
+        ],
+        "counts": [
+          2,
+          1,
+          3
+        ],
+        "faces": 2,
+        "orientable": false
+      },
+      {
+        "representative": 7,
+        "size": 4,
+        "members": [
+          7,
+          25,
+          42,
+          52
+        ],
+        "counts": [
+          0,
+          3,
+          3
+        ],
+        "faces": 2,
+        "orientable": true
+      },
+      {
+        "representative": 11,
+        "size": 4,
+        "members": [
+          11,
+          21,
+          38,
+          56
+        ],
+        "counts": [
+          3,
+          3,
+          0
+        ],
+        "faces": 1,
+        "orientable": false
+      },
+      {
+        "representative": 12,
+        "size": 3,
+        "members": [
+          12,
+          33,
+          63
+        ],
+        "counts": [
+          2,
+          0,
+          4
+        ],
+        "faces": 2,
+        "orientable": false
+      },
+      {
+        "representative": 13,
+        "size": 6,
+        "members": [
+          13,
+          37,
+          41,
+          44,
+          47,
+          61
+        ],
+        "counts": [
+          1,
+          0,
+          5
+        ],
+        "faces": 3,
+        "orientable": false
+      },
+      {
+        "representative": 18,
+        "size": 1,
+        "members": [
+          18
+        ],
+        "counts": [
+          0,
+          0,
+          6
+        ],
+        "faces": 3,
+        "orientable": false
+      },
+      {
+        "representative": 45,
+        "size": 1,
+        "members": [
+          45
+        ],
+        "counts": [
+          0,
+          0,
+          6
+        ],
+        "faces": 4,
+        "orientable": true
+      }
+    ]
+  },
+  "surface_counts": {
+    "orientable,2": {
+      "samples": 112,
+      "totals": [
+        0,
+        288,
+        384
+      ],
+      "chi": 0
+    },
+    "nonorientable,1": {
+      "samples": 448,
+      "totals": [
+        1536,
+        1152,
+        0
+      ],
+      "chi": -1
+    },
+    "nonorientable,2": {
+      "samples": 336,
+      "totals": [
+        576,
+        288,
+        1152
+      ],
+      "chi": 0
+    },
+    "nonorientable,3": {
+      "samples": 112,
+      "totals": [
+        96,
+        0,
+        576
+      ],
+      "chi": 1
+    },
+    "orientable,4": {
+      "samples": 16,
+      "totals": [
+        0,
+        0,
+        96
+      ],
+      "chi": 2
+    }
+  },
+  "conditional_expectations": {
+    "orientable": {
+      "samples": 128,
+      "totals": [
+        0,
+        288,
+        480
+      ],
+      "expectations": [
+        "0",
+        "9/4",
+        "15/4"
+      ]
+    },
+    "nonorientable": {
+      "samples": 896,
+      "totals": [
+        2208,
+        1440,
+        1728
+      ],
+      "expectations": [
+        "69/28",
+        "45/28",
+        "27/14"
+      ]
+    }
+  },
+  "checks": {
+    "gaugeChecks": 16384,
+    "twistChecks": 6144,
+    "notebookChecks": 1024,
+    "compositionChecks": 1024,
+    "connectivityChecks": 1024,
+    "boundary_occurrences_per_embedding": 12,
+    "oriented_phi_cycles_per_physical_face": 2
+  },
+  "fixed_rotation_enumeration": [
+    {
+      "twist_mask": 0,
+      "counts": [
+        0,
+        2,
+        4
+      ],
+      "edge_types": [
+        2,
+        1,
+        2,
+        2,
+        1,
+        2
+      ],
+      "faces": 2,
+      "orientable": true
+    },
+    {
+      "twist_mask": 1,
+      "counts": [
+        4,
+        2,
+        0
+      ],
+      "edge_types": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 2,
+      "counts": [
+        1,
+        1,
+        4
+      ],
+      "edge_types": [
+        2,
+        1,
+        2,
+        2,
+        0,
+        2
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 3,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 4,
+      "counts": [
+        4,
+        2,
+        0
+      ],
+      "edge_types": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 5,
+      "counts": [
+        2,
+        1,
+        3
+      ],
+      "edge_types": [
+        2,
+        1,
+        2,
+        0,
+        2,
+        0
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 6,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 7,
+      "counts": [
+        0,
+        3,
+        3
+      ],
+      "edge_types": [
+        2,
+        1,
+        2,
+        1,
+        2,
+        1
+      ],
+      "faces": 2,
+      "orientable": true
+    },
+    {
+      "twist_mask": 8,
+      "counts": [
+        4,
+        2,
+        0
+      ],
+      "edge_types": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 9,
+      "counts": [
+        2,
+        1,
+        3
+      ],
+      "edge_types": [
+        2,
+        2,
+        0,
+        2,
+        1,
+        0
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 10,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 11,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 12,
+      "counts": [
+        2,
+        0,
+        4
+      ],
+      "edge_types": [
+        0,
+        2,
+        2,
+        2,
+        2,
+        0
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 13,
+      "counts": [
+        1,
+        0,
+        5
+      ],
+      "edge_types": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        0
+      ],
+      "faces": 3,
+      "orientable": false
+    },
+    {
+      "twist_mask": 14,
+      "counts": [
+        4,
+        2,
+        0
+      ],
+      "edge_types": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 15,
+      "counts": [
+        2,
+        1,
+        3
+      ],
+      "edge_types": [
+        2,
+        0,
+        2,
+        1,
+        2,
+        0
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 16,
+      "counts": [
+        1,
+        1,
+        4
+      ],
+      "edge_types": [
+        2,
+        0,
+        2,
+        2,
+        1,
+        2
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 17,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        0,
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 18,
+      "counts": [
+        0,
+        0,
+        6
+      ],
+      "edge_types": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "faces": 3,
+      "orientable": false
+    },
+    {
+      "twist_mask": 19,
+      "counts": [
+        1,
+        1,
+        4
+      ],
+      "edge_types": [
+        0,
+        2,
+        2,
+        2,
+        2,
+        1
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 20,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 21,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 22,
+      "counts": [
+        1,
+        1,
+        4
+      ],
+      "edge_types": [
+        2,
+        2,
+        0,
+        1,
+        2,
+        2
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 23,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 24,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        0,
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 25,
+      "counts": [
+        0,
+        3,
+        3
+      ],
+      "edge_types": [
+        2,
+        2,
+        1,
+        2,
+        1,
+        1
+      ],
+      "faces": 2,
+      "orientable": true
+    },
+    {
+      "twist_mask": 26,
+      "counts": [
+        1,
+        1,
+        4
+      ],
+      "edge_types": [
+        2,
+        2,
+        1,
+        0,
+        2,
+        2
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 27,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        0,
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 28,
+      "counts": [
+        4,
+        2,
+        0
+      ],
+      "edge_types": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 29,
+      "counts": [
+        2,
+        1,
+        3
+      ],
+      "edge_types": [
+        2,
+        2,
+        1,
+        2,
+        0,
+        0
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 30,
+      "counts": [
+        0,
+        2,
+        4
+      ],
+      "edge_types": [
+        2,
+        2,
+        1,
+        1,
+        2,
+        2
+      ],
+      "faces": 2,
+      "orientable": true
+    },
+    {
+      "twist_mask": 31,
+      "counts": [
+        4,
+        2,
+        0
+      ],
+      "edge_types": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 32,
+      "counts": [
+        4,
+        2,
+        0
+      ],
+      "edge_types": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 33,
+      "counts": [
+        2,
+        0,
+        4
+      ],
+      "edge_types": [
+        2,
+        2,
+        0,
+        0,
+        2,
+        2
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 34,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 35,
+      "counts": [
+        4,
+        2,
+        0
+      ],
+      "edge_types": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 36,
+      "counts": [
+        2,
+        1,
+        3
+      ],
+      "edge_types": [
+        0,
+        2,
+        2,
+        0,
+        1,
+        2
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 37,
+      "counts": [
+        1,
+        0,
+        5
+      ],
+      "edge_types": [
+        2,
+        2,
+        2,
+        0,
+        2,
+        2
+      ],
+      "faces": 3,
+      "orientable": false
+    },
+    {
+      "twist_mask": 38,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        0,
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 39,
+      "counts": [
+        2,
+        1,
+        3
+      ],
+      "edge_types": [
+        2,
+        0,
+        2,
+        0,
+        2,
+        1
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 40,
+      "counts": [
+        2,
+        1,
+        3
+      ],
+      "edge_types": [
+        0,
+        1,
+        0,
+        2,
+        2,
+        2
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 41,
+      "counts": [
+        1,
+        0,
+        5
+      ],
+      "edge_types": [
+        2,
+        2,
+        0,
+        2,
+        2,
+        2
+      ],
+      "faces": 3,
+      "orientable": false
+    },
+    {
+      "twist_mask": 42,
+      "counts": [
+        0,
+        3,
+        3
+      ],
+      "edge_types": [
+        1,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "faces": 2,
+      "orientable": true
+    },
+    {
+      "twist_mask": 43,
+      "counts": [
+        2,
+        1,
+        3
+      ],
+      "edge_types": [
+        1,
+        0,
+        0,
+        2,
+        2,
+        2
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 44,
+      "counts": [
+        1,
+        0,
+        5
+      ],
+      "edge_types": [
+        0,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "faces": 3,
+      "orientable": false
+    },
+    {
+      "twist_mask": 45,
+      "counts": [
+        0,
+        0,
+        6
+      ],
+      "edge_types": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "faces": 4,
+      "orientable": true
+    },
+    {
+      "twist_mask": 46,
+      "counts": [
+        2,
+        1,
+        3
+      ],
+      "edge_types": [
+        0,
+        0,
+        1,
+        2,
+        2,
+        2
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 47,
+      "counts": [
+        1,
+        0,
+        5
+      ],
+      "edge_types": [
+        2,
+        0,
+        2,
+        2,
+        2,
+        2
+      ],
+      "faces": 3,
+      "orientable": false
+    },
+    {
+      "twist_mask": 48,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 49,
+      "counts": [
+        4,
+        2,
+        0
+      ],
+      "edge_types": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 50,
+      "counts": [
+        1,
+        1,
+        4
+      ],
+      "edge_types": [
+        1,
+        2,
+        2,
+        2,
+        2,
+        0
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 51,
+      "counts": [
+        0,
+        2,
+        4
+      ],
+      "edge_types": [
+        1,
+        2,
+        2,
+        2,
+        2,
+        1
+      ],
+      "faces": 2,
+      "orientable": true
+    },
+    {
+      "twist_mask": 52,
+      "counts": [
+        0,
+        3,
+        3
+      ],
+      "edge_types": [
+        1,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "faces": 2,
+      "orientable": true
+    },
+    {
+      "twist_mask": 53,
+      "counts": [
+        2,
+        1,
+        3
+      ],
+      "edge_types": [
+        1,
+        2,
+        2,
+        0,
+        0,
+        2
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 54,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 55,
+      "counts": [
+        4,
+        2,
+        0
+      ],
+      "edge_types": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 56,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 57,
+      "counts": [
+        2,
+        1,
+        3
+      ],
+      "edge_types": [
+        2,
+        2,
+        0,
+        2,
+        0,
+        1
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 58,
+      "counts": [
+        3,
+        3,
+        0
+      ],
+      "edge_types": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 59,
+      "counts": [
+        4,
+        2,
+        0
+      ],
+      "edge_types": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 60,
+      "counts": [
+        2,
+        1,
+        3
+      ],
+      "edge_types": [
+        0,
+        2,
+        2,
+        1,
+        0,
+        2
+      ],
+      "faces": 2,
+      "orientable": false
+    },
+    {
+      "twist_mask": 61,
+      "counts": [
+        1,
+        0,
+        5
+      ],
+      "edge_types": [
+        2,
+        2,
+        2,
+        2,
+        0,
+        2
+      ],
+      "faces": 3,
+      "orientable": false
+    },
+    {
+      "twist_mask": 62,
+      "counts": [
+        4,
+        2,
+        0
+      ],
+      "edge_types": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "faces": 1,
+      "orientable": false
+    },
+    {
+      "twist_mask": 63,
+      "counts": [
+        2,
+        0,
+        4
+      ],
+      "edge_types": [
+        2,
+        0,
+        2,
+        2,
+        0,
+        2
+      ],
+      "faces": 2,
+      "orientable": false
+    }
+  ],
+  "source_fidelity": {
+    "paper": "https://arxiv.org/html/2605.01410v1#S4",
+    "notebook": "https://github.com/babakghanbari993/cdc-random-embeddings/blob/0d4404941894d3ef8dd9f27f1e61829bec2bcde5/notebooks/random_embedding_experiment.ipynb",
+    "notebook_blob_sha": "82fb13311d4c9ef254d644ab021346915e61618a",
+    "notebook_kernel": "SageMath 10.1",
+    "sage_convention": "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html",
+    "caveat": "Paper Section 4 does not explicitly define a probability measure. This exact refutation uses the pinned author notebook sampler and its equivalent signed-rotation gauge quotient. No native Sage process was run."
+  }
+}
