@@ -39,7 +39,10 @@ internal sealed class GayrardMixedMemoryRefutationDocument : IScribeDocumentDefi
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For F(x)=x²/2 and M(N)=5, take m=(5/8,3/8,3/8,1/8,1/8), padded by zeros. The integer fields 5x₁+3x₂+3x₃+x₄+x₅ never vanish. Summing each coordinate times their sign over all 32 cube points gives (20,12,12,4,4). An infinite product of fair Boolean coordinates supplies the independent patterns; the strong law yields the five normalized overlap limits. There are no unused coordinates among the first five. The allowable compositions of five are (5), (2,3), (4,1), (2,2,1), and every padded block coordinate has absolute value at most 1/2. Permutations and the prescribed sign powers preserve this bound, while m₁=5/8. Theorem 1.2's sufficient direction is compatible with this failure of necessity. No local-minimum assertion is made."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gayrard-2025-mixed-memory-converse-refutation"),
+                    ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose, string declaration) =>
         Node(id, title, formula, Paragraph(Text(prose)), declaration);

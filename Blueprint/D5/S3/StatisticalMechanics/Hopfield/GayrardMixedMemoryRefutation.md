@@ -106,6 +106,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Hopfield/GayrardMixedMemoryRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gayrard-2025-mixed-memory-converse-refutation` (refuted) by `D5/S3/StatisticalMechanics/Hopfield/GayrardMixedMemoryRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gayrard-2025-mixed-memory-converse-refutation","declaration_gid":"D5/S3/StatisticalMechanics/Hopfield/GayrardMixedMemoryRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Véronique Gayrard (2025). *Mixed memories in Hopfield networks*. URL: <https://arxiv.org/abs/2504.04879v2>.
