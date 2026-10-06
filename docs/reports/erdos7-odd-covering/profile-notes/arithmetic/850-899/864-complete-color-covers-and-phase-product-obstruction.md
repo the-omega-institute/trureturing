@@ -1032,3 +1032,112 @@ actual-source restriction PC29, supplies a useful cofactor-capacity
 selection remains unresolved. Even such a selection would still
 need the permanent prefix service in PC28 before yielding an
 original whole-cover contradiction.
+
+## Distinct colors permit complete private regions in the repair
+
+Keep the same actual minimal whole cover, H_3=2, q=113 and a fixed
+safe old word z. For a top original i at this word, let P_i be the
+projection modulo W of its complete original private region:
+
+$$
+P_i=\{x\bmod W:\ x\in[\rho_i]_{d_i},\quad
+                 x\notin[\rho_j]_{d_j}\text{ for every }j\ne i\}.
+\tag{PC35}
+$$
+
+These sets are nonempty by original irredundancy and satisfy
+P_i subset T_i. They are not individual chosen witnesses. They
+retain all private integers, including every lift in the original
+period.
+
+Suppose J consists of four top originals at z with different first
+q-digits. Their original integer classes are pairwise disjoint.
+Consequently the complete joint hole after deleting J is exactly
+the union of their complete private regions. Indeed, a point in
+that hole has a deleted owner by whole coverage, no retained owner
+by definition, and no other deleted owner by q-phase disjointness.
+The reverse inclusion holds directly.
+
+Thus PC29 strengthens on this distinct-color family: it suffices
+that the four P_i, rather than the larger T_i, lie in the same two
+specified different nonunit cofactor cosets. The three fresh labels
+27,27s_1,27s_2 then pay the complete joint deletion hole. This is an
+application of the existing whole-hole repair. Without disjoint
+deleted classes, a union of private regions need not equal the
+simultaneous hole, so the distinct-color condition cannot be dropped
+from this argument.
+
+## Pure guards bound colors with a concentrated private projection
+
+Let M divide W and have two different nonunit divisors. Define B_M
+to be the set of top colors c at z for which some top original i
+of color c has its entire nonempty P_i in one residue modulo M.
+Let R_M be the residues modulo M avoiding every actual pure
+prime-power original whose modulus divides M. Then
+
+$$
+|B_M|\le3|R_M|.
+\tag{PC36}
+$$
+
+For a fixed r in R_M, four distinct colors with private projections
+contained in [r]_M would give four originals in the preceding repair:
+choose two distinct nonunit divisors of M and reduce r to their
+phases. Hence each residue can account for at most three colors.
+For each color in B_M, choose one qualifying original and residue;
+its private points avoid every pure guard, so its residue belongs
+to R_M. Counting the fibers of this one simultaneous choice proves
+PC36. The count is of colors, not of all top originals.
+
+Numerical divisor closure supplies all these pure prime-power
+guards. For a fixed prime p, their classes at powers p through p^e
+are pairwise disjoint: otherwise a higher-power original would be
+contained in a lower-power one and have no private integer. Thus
+the exact guard-avoiding count is
+
+$$
+|R_M|=\prod_{p^e\parallel M}
+ \left(p^e-\sum_{j=1}^{e}p^{e-j}\right).
+\tag{PC37}
+$$
+
+The product uses CRT only between distinct prime directions. No
+independence of the actual P_i or X_z is assumed; other retained
+originals can further restrict their residues.
+
+In particular, when the respective divisibility conditions hold,
+
+$$
+\begin{array}{c|c|c|c}
+M&|R_M|&|B_M|\text{ upper bound}
+  &\text{top colors outside }B_M\text{, at least}\\\hline
+25\mid W&25-5-1=19&57&48\\
+35\mid W&(5-1)(7-1)=24&72&33
+\end{array}
+\tag{PC38}
+$$
+
+The last column uses the same at least 105 top colors at z from
+PC21. For each color outside B_M, every top original of that color
+at z has private points in at least two different M-residues. In
+particular, none of those top cofactors is divisible by M. This
+conclusion concerns complete private projections and is stronger
+than merely excluding a particular top cofactor label.
+
+The sets of 48 and 33 colors need not coincide. Different colors'
+cofactor projections may overlap, so these counts cannot be added
+as distinct source points or converted into a density bound. PC38
+supplies no common choice across different old words, no capacity-two
+selector, and no prefix allocation. It restricts where a proposed actual
+obstruction can concentrate while retaining the full deletion
+liability; it does not close the q=113 branch or the unrestricted
+odd covering problem.
+
+A transient Lean check verifies the distinct-color private-region
+repair, its bucket bound under actual whole-cover minimality,
+the nonempty-private-set guard interface, finite fiber counting,
+and the exact 25/35 guard counts and numerical consequences.
+The default-budget build succeeds with fifteen axiom closures
+contained in the standard three. These are reuse checks; the
+general prime-power product PC37 is an ordinary CRT deduction,
+not a claimed additional compiled theorem.
