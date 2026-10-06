@@ -240,3 +240,68 @@ all proper local wells. They give neither an unbounded family nor a
 result restricted to potentially persistent Robin-level sources. The
 full signed source-coverage obligation remains open; these additions have
 no Lean verification or literature originality certification.
+
+### Repetitions can be removed within a bounded multiplier search
+
+The existing layer formula in §2, `eq:layer-data`, and the finite-size
+comparison in §4 give a useful paper-level pruning interface. Keep the
+same integer $N$, put $A=\log N>27/8$, and assume
+$G(Np)\le G(N)$ for every prime $p$. For every positive integer multiplier
+$u$ with $W=\log u\le A/2$, let $\operatorname{rad}(u)$ be the product of
+its distinct prime factors, with $\operatorname{rad}(1)=1$. Then
+
+$$
+G(N\operatorname{rad}(u))\ge G(Nu),
+$$
+
+with strict inequality when $u$ has a repeated prime factor. This uses
+neither a CA hypothesis nor a prior positive Robin margin.
+
+For the calculation, write
+
+$$
+c_A(w)=\log\log(A+w)-\log\log A=\int_A^{A+w}g(t)\,dt,
+\qquad
+h_{p,j}=\log r_{p,j}.
+$$
+
+If $S_{p,j}=p+\cdots+p^j$, the classical formula gives
+$S_{p,j+1}=p(S_{p,j}+1)$. The elementary bounds
+$\log(1+t)<t$ and $\log(1+t)\ge t/(1+t)$, for $t>0$, hence give
+
+$$
+h_{p,j+1}<\frac1{p(S_{p,j}+1)}\le\frac{h_{p,j}}p.
+$$
+
+Source insertion stability says
+$h_{p,v_p(N)+1}\le c_A(\log p)$. If a current multiplier still contains
+at least two copies of $p$, its top inserted layer therefore has reward
+less than $\tfrac12(\log p)g(A)$. The current integer $m$ has
+$A\le\log m\le A+W$, and removing that copy saves the denominator cost
+
+$$
+\int_{\log m-\log p}^{\log m}g(t)\,dt
+\ge(\log p)g(A+W)>\tfrac12(\log p)g(A).
+$$
+
+The last inequality follows from $W\le A/2$ and
+$(3A/2)\log(3A/2)<2A\log A$, which is equivalent to $A>27/8$.
+Thus each such deletion strictly increases $G$. Iterating removes only
+the repeated copies in $u$, retains $N$ and all required stack prefixes,
+and reduces the multiplier budget. Intermediate states need not be
+insertion-stable: the comparison continues to use the original source's
+next-layer bound. When $u$ is squarefree the two integers coincide.
+
+Consequently, within this budget, an improving multiplier with at most
+$k$ inserted layers exists exactly when an improving subset of at most
+$k$ distinct primes exists. A construction with the explicit bound
+$W=O(\log A)$ eventually lies in this budget. A fixed layer count alone
+does not imply that bound. The reduction need not preserve exactly $k$
+layers, a prescribed endpoint, or the structure of an actual return packet;
+it is suitable for the unrestricted-multiple target of `thm:cone-envelope`.
+It supplies no improving subset or critical-source coverage.
+
+This is a derived application of the cited layer and finite-size data,
+not a statement attributed verbatim to the manuscript, a new generic
+inequality, or a Lean result. No originality certification or full
+Robin/RH conclusion is supplied.
