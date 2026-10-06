@@ -11,7 +11,6 @@ private def theoremUnitType := `D5.S3.ConceptDynamics.InformationEscape.TheoremU
 private def bundleType := `D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle
 private def atomType := `D5.S3.ConceptDynamics.CIRPT.PrimitiveAtom
 private def kernelType := `D5.S3.ConceptDynamics.CIRPT.DecidableKernel
-private def witnessType := `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessArena
 private def objectType := `D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 
 /-- A finite index data view. The opaque field is never checked, published or
@@ -40,9 +39,9 @@ private def finiteArena (find : Name → Option ConstantInfo) (entry : Informati
   let arena := mkConst name (info.levelParams.map Level.param)
   let type ← CompiledExpressions.head info.type
   if type.isConstOf arenaType then return arena
-  let law := if type.isConstOf witnessType || type.isConstOf objectType then
+  let law := if type.isConstOf objectType then
       mkApp (mkConst (type.constName!.str "toPrimitiveLawArena") type.constLevels!) arena else arena
-  unless type.isConstOf lawArenaType || type.isConstOf witnessType || type.isConstOf objectType do
+  unless type.isConstOf lawArenaType || type.isConstOf objectType do
     throw <| IO.userError s!"contract.cannot_decode:{entry.theoremName}:seal_finite_arena"
   return .proj lawArenaType 0 law
 

@@ -56,7 +56,7 @@ structure InformationRegistryEntry where
   unitName : Name
   /-- The `PrimitiveLawArena` presentation. -/
   arenaName : Name
-  /-- The declaration holding the native realization or the legacy witness. -/
+  /-- The declaration holding the native realization or the legacy bridge. -/
   realizationName : Name
   variationWitness : Name := .anonymous
   sensitivityWitness : Name := .anonymous
