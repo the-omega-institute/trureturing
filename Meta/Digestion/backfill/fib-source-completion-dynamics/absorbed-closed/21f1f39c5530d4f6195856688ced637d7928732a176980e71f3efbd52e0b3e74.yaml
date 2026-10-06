@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:21f1f39c5530d4f6195856688ced637d7928732a176980e71f3efbd52e0b3e74
   normalized_sha256: sha256:21f1f39c5530d4f6195856688ced637d7928732a176980e71f3efbd52e0b3e74
 cas_ref: sha256:21f1f39c5530d4f6195856688ced637d7928732a176980e71f3efbd52e0b3e74
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/ClosedObservationGraphRealization.closed_observation_graph_realization
+    target_statement_id: sha256:2216344ecd20f42bcc7521b54cb4dca365bfb86273b26a106a3d68bfd09b4f18
 receipts:
   unresolved_subitems: []
   chain_atoms:
