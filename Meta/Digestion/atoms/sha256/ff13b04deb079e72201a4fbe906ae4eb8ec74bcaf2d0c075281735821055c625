@@ -1,0 +1,114 @@
+先取 $\mathsf R$ 再取 $\mathsf V$ 得到最小共同不动点：
+
+$$
+\begin{gathered}
+\mathsf V(\mathsf V(\mathsf R(H)))=\mathsf V(\mathsf R(H)),\qquad
+\mathsf R(\mathsf V(\mathsf R(H)))=\mathsf V(\mathsf R(H)),\\
+H\subseteq K=\mathsf R(K)=\mathsf V(K)
+\ \Longrightarrow\ \mathsf V(\mathsf R(H))\subseteq K,\\
+\mathsf R(\mathsf V(H))\subseteq\mathsf V(\mathsf R(H)),\qquad
+\mathsf V(\mathsf R(\varnothing))=\{2,3,5\},\\
+q\in\mathsf V(\mathsf R(H))\ \Longrightarrow\
+ z(q)\le B+1\quad\text{且}\quad q\le F_{B+1}.
+\end{gathered}
+\tag{364.5}
+$$
+
+其中 $K$ 的量词限于有限素数调色板；共同不动点必含种子 $2,3,5$。最后一行是素数入口秩的界，不是所有 $H$ 光滑指标或其素幂深度的界。次序一般不能互换。实际族中的严格见证为
+
+$$
+\begin{gathered}
+\forall M\in\mathcal M,\quad31\mid M\ \Longrightarrow\ 61\mid M,\qquad
+61\mid F_{15},\quad31\nmid F_{15},\\
+\mathsf R(\{2,3,5,31\})=\{2,3,5,31\},\qquad
+\nexists M\in\mathcal M:\operatorname{Supp}(M)=\{2,3,5,31\},\\
+\forall M\in\mathcal M,\quad37\mid M\ \Longleftrightarrow\ 113\mid M,\qquad
+\mathsf V(\{37\})=\{37,113\},\\
+\mathsf R(\{37\})=\{2,3,5,19,37\},\\
+\mathsf R(\mathsf V(\{37\}))=\{2,3,5,19,37,113\}
+\ \subsetneq\ \mathsf V(\mathsf R(\{37\}))
+=\{2,3,5,17,19,37,113\}.
+\end{gathered}
+\tag{364.6}
+$$
+
+因此实际值的支撑可以是 $\mathsf V$ 不动点而不是 $\mathsf R$ 不动点；值支撑也可以越过初始调色板的最大素数。
+
+（三）$E_H$ 总是有限。置
+
+$$
+N_H=5\operatorname{lcm}_{p\in\mathsf R(H)}z(p),\qquad
+C_H=\{1,2,6,12\}\cup\{z(p):p\in H\}.
+$$
+
+有两个精确的支撑筛选式：
+
+$$
+E_H
+=\{d>0:d\mid N_H,\ \operatorname{Supp}(F_d)\subseteq H\}
+=\{n\in C_H:\operatorname{Supp}(F_n)\subseteq H\}.
+\tag{364.7}
+$$
+
+$C_H$ 必须经过实际支撑筛选，不能直接用它代替 $E_H$。若 $\mathsf V(H)=H$，定义 $B_H=\operatorname{lcm}_{n\in E_H}F_n$，则 $A_H,B_H\in\mathcal M$、$\operatorname{Supp}(A_H)=\operatorname{Supp}(B_H)=H$、$A_H\mid B_H$，而满支撑纤维恰为
+
+$$
+\{M\in\mathcal M:\operatorname{Supp}(M)=H\}
+=\{M\in\mathcal M:A_H\mid M\text{ 且 }M\mid B_H\}.
+\tag{364.8}
+$$
+
+这个整除区间始终限制在实际值 $\mathcal M$ 中。空调色板满足 $E_{\varnothing}=\{1,2\}$、$A_{\varnothing}=B_{\varnothing}=1$，纤维为 $\{1\}$。
+
+（四）对 $H_7=\{2,3,5,7\}$，从定理 363.2 的二十二态实际格提取的满支撑纤维为
+
+$$
+\begin{gathered}
+E_{H_7}=\{1,2,3,4,5,6,8,12\},\qquad
+A_{H_7}=210,\quad B_{H_7}=5040,\\
+\{M\in\mathcal M:\operatorname{Supp}(M)=H_7\}
+=\{210,840,5040\}.
+\end{gathered}
+\tag{364.9}
+$$
+
+对 $H_{19}=\{2,3,5,7,11,13,17,19\}$，有
+
+$$
+\begin{gathered}
+E_{H_{19}}=\{1,2,3,4,5,6,7,8,9,10,12,18\},\\
+A_{H_{19}}=38798760,\qquad B_{H_{19}}=232792560,\\
+\{M\in\mathcal M:\operatorname{Supp}(M)=H_{19}\}
+=\{38798760,232792560\}.
+\end{gathered}
+\tag{364.10}
+$$
+
+再加入二十三，$H_{23}=H_{19}\cup\{23\}$ 给
+
+$$
+\begin{gathered}
+E_{H_{23}}=\{1,2,3,4,5,6,7,8,9,10,12,18,24\},\\
+A_{H_{23}}=B_{H_{23}}=\operatorname{lcm}(F_7,F_{10},F_{18},F_{24})
+=10708457760\\
+=2^5\,3^2\,5\,7\,11\,13\,17\,19\,23,\\
+\{M\in\mathcal M:\operatorname{Supp}(M)=H_{23}\}
+=\{10708457760\}.
+\end{gathered}
+\tag{364.11}
+$$
+
+在这次满支撑扩张中，任一旧纤维成员加入 $F_{24}$ 后都成为同一个新实际值，且上端点的增加由同一个 Möbius 原子记录：
+
+$$
+\begin{aligned}
+\operatorname{lcm}(38798760,F_{24})
+&=\operatorname{lcm}(232792560,F_{24})=10708457760,\\
+\frac{B_{H_{23}}}{B_{H_{19}}}
+&=\Psi_{24}=\frac{F_{24}F_4}{F_{12}F_8}=46=2\cdot23.
+\end{aligned}
+\tag{364.12}
+$$
+
+新素数二十三强迫的不仅是它自身，还包括已有素数二的更高赋值层。
+

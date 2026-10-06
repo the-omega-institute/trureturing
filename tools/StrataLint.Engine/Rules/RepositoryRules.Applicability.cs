@@ -29,7 +29,8 @@ internal static partial class RepositoryRules
         LeanClosureValidator.IsReportLean(artifact.Path.Value);
 
     private static bool CapacityScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
-        !artifact.Path.Value.StartsWith("docs/develop/", StringComparison.Ordinal)
+        IsTheoryDocument(artifact.Path.Value)
+        || !artifact.Path.Value.StartsWith("docs/develop/", StringComparison.Ordinal)
         && artifact.Path.Value != "lake-manifest.json"
         && artifact.Path.Value != BackfillInventoryLoader.RelativePath;
 

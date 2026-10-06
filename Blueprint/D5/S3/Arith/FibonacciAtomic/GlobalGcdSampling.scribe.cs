@@ -28,6 +28,15 @@ internal sealed class GlobalGcdSamplingDocument : IScribeDocumentDefinition
                 + "The proof-local inverse of c is the ZMod inverse; the affine calculation proves c is a unit for prime p and e>=2. "
                 + "For a in ZMod(p), val(a) is its canonical natural representative. castZMod(r,n) is the natural coercion into ZMod(r). "
                 + "Finset denotes finite sets of distinct values.")),
+            Support("castState", "Reduction of an integer pair", "For natural m and x in Z times Z, castState(m,x) reduces each coordinate in ZMod(m).", DescribeRole.Definition),
+            Support("iterate_second", "The second Fibonacci coordinate", "For any commutative semiring A, natural t and x in A times A, the second coordinate of step^t(x) equals F(t)x_1+F(t+1)x_2.", DescribeRole.Theorem),
+            Support("iterate_first", "The first positive Fibonacci coordinate", "For any commutative semiring A, positive natural t and x in A times A, the first coordinate of step^t(x) equals F(t-1)x_1+F(t)x_2.", DescribeRole.Theorem),
+            Support("actual_source_value", "The original natural observation", "For every natural k and natural pair v, quantity(step^k(v)) equals F(k+3)v_1+F(k+4)v_2, including k=0.", DescribeRole.Theorem),
+            Support("actual_signed_quantity", "The positive-time signed representation", "For every positive natural k and natural pair v, the integer cast of quantity(step^k(v)) equals y(k,observe(v)), with both observation coordinates cast to integers.", DescribeRole.Theorem),
+            Support("actual_quantity_scaling", "Scaling the same natural observation", "For all natural Q,k and natural pairs v, quantity(step^k(Q v_1,Q v_2)) equals Q times quantity(step^k(v)).", DescribeRole.Theorem),
+            Support("rank_facts", "Positive prime-power entry ranks", "For every natural prime p and natural e>=1, zeroRank(p^e)>=3, p^e divides F(zeroRank(p^e)), and for every natural k, p^e divides F(k) exactly when zeroRank(p^e) divides k.", DescribeRole.Theorem),
+            Support("phase_transport", "Threshold transport along the rank", "For prime p, d>=1, natural s,t and integer x, equality of s and t modulo zeroRank(p^d) makes p^d dividing y(s+1,x) equivalent to p^d dividing y(t+1,x).", DescribeRole.Theorem),
+            Support("phase_from_unit", "The threshold class of a unit parent hit", "For prime p, d>=1, natural t,k and integer x, assume the first coordinate of step^t(x) is a unit modulo p^d and y(t+1,x) vanishes there. Then p^d divides y(k+1,x) exactly when k and t agree modulo zeroRank(p^d).", DescribeRole.Theorem),
             Node("signedValue", "Positive-time signed observation", Disp(
                 All(Natural, ["k"], All(State, ["x"], Equal(Value(F.Id("k"), "x"),
                     Add(Mul(Call("F", Sub(F.Id("k"), D(1))), Coordinate("x", 1)),
@@ -111,6 +120,11 @@ internal sealed class GlobalGcdSamplingDocument : IScribeDocumentDefinition
             DescribeId.Create("global-gcd-sampling-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+
+    private static DocumentBlock Support(string name, string title, string statement, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create("sampling-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(statement))), role);
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);

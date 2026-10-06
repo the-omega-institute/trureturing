@@ -1,0 +1,28 @@
+## Verified locator
+
+The fixed upstream sources are:
+
+https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/InnerProductSpace/TensorProduct.lean
+
+https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/InnerProductSpace/Completion.lean
+
+https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Function/L2Space.lean
+
+https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/Prod.lean
+
+https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Function/AEEqOfIntegral.lean#L359
+
+The local integrable uniqueness step uses
+`Integrable.ae_eq_zero_of_forall_setIntegral_eq_zero` at line 359.
+
+The tensor module identifies Monica Omar as its author and supplies the
+inner-product tensor structure, `TensorProduct.inner_tmul` and
+`TensorProduct.norm_tmul`. The L2 module identifies Rémy Degenne and supplies
+`memLp_two_iff_integrable_sq_norm` and `L2.integrable_inner`. The product
+integral module identifies Floris van Doorn and supplies `Integrable.mul_prod`
+and `integral_prod_mul`. Each source carries the Apache-2.0 license header.
+The completion structure and continuous-linear completion extension are
+upstream APIs. These component sources do not state the complete product-L2
+unitary assembled below; no whole-result supplier or originality claim is
+assigned to them.
+

@@ -1,0 +1,32 @@
+**假设 33.3（完整实际来源条件与四张全图）。** 完整采用假设 24.1 的每一条前提，包括它经假设 23.1、21.1 继承的全部来源条件。所有实际值均来自定义 15.1、式 (24.1) 的同一个 Cloitre 序列；准确保留
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,&D_N&=\{1,\ldots,N-1\},\\
+T_N(x)&=N-C(x),&x_0&=N-1,\\
+x_{i+1}&=T_N(x_i),&d_N&=C(N-1),\\
+g_N&=x_{d_N},&C(N)&=C(g_N)+C(N-g_N)\quad(N\ge3).
+\end{aligned}
+\tag{33.8}
+$$
+
+保留全局合法域、$G\le C\le U\le n$、$U$ 的非减及步长界、全部 Fibonacci 锚值和锚前值、捕获与不变性、全锚交集、规定深度入周期、实际两子的闭块和继承阶数，以及来源参数网络、共享物理行、终端编码及守恒逆标签预算的原有限定。实际规定深度和同一轨道的绝对时间相位保持式 (33.8)，不以另选周期点代替 $g_N$。全部继承的有限数值前提仍为 `ASSUMED-UNVERIFIED`，包括黄金比值区间 $[16384,131071]$、黄金归纳基 $[1,65535]$、规定深度入周期基域 $3\le N\le52$、式 (24.10) 的两条初始行及其余来源有限基础。四张实际图的结论条件于这一完整假设，不给这些有限前提独立认证，不假设 $C$ 单调、黄金收敛或任意实际周期族。
+
+记 $\alpha=(\sqrt5-1)/2$、$G(n)=\lfloor\alpha(n+1)\rfloor$、$E(n)=C(n)-G(n)$。$E$ 是规范黄金缺陷，亦即定理 15.3 的同一实际拆分树总进位；它不是上锚高度亏量 $\lambda_m$。在定义 33.1 的全部接缝、唯一单位末字母及全部共同高端补零合同下，四图准确为
+
+$$
+\begin{aligned}
+\Gamma_C&=\left\{\bigl(W_H(n),W_H(C(n))\bigr)_{\mathrm{sync}}:
+ n\ge1,\ H\ge\max\{L(n),L(C(n))\}\right\},\\
+\Gamma_E&=\left\{\bigl(W_H(n),W_H(E(n))\bigr)_{\mathrm{sync}}:
+ n\ge1,\ H\ge\max\{L(n),L(E(n))\}\right\},\\
+\Gamma_g&=\left\{\bigl(W_H(N),W_H(g_N)\bigr)_{\mathrm{sync}}:
+ N\ge3,\ H\ge\max\{L(N),L(g_N)\}\right\},\\
+\Gamma_d&=\left\{\bigl(W_H(N),W_H(d_N)\bigr)_{\mathrm{sync}}:
+ N\ge3,\ H\ge\max\{L(N),L(d_N)\}\right\}.
+\end{aligned}
+\tag{33.9}
+$$
+
+前三图分别是 §§20、25、27 的 $\mathcal G_C,\mathcal G_{E_C},\mathcal G_g$；第四图保留完整整数深度。由实际界，$0\le E(n)\le C(n)\le n$、$1\le g_N<N$、$1\le d_N\le N-1$，故各图的允许长度也分别等于 $H\ge L(n)$ 或 $H\ge L(N)$。
+

@@ -1,0 +1,39 @@
+## 9. 固定偏移下的五读数恢复
+
+四读数无偏模型假定每次读数都直接给出 `tr(A R)`。现在允许量具带一个未知但固定的加性偏移：
+
+$$
+z_A=\operatorname{tr}(A R)+\delta.
+$$
+
+仍令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+$$
+
+并沿一条不可重置路径读取五次：
+
+$$
+I,\quad M,\quad JM,\quad MJM,\quad M^2JM.
+$$
+
+这对应在已有 `\rho\to\sigma\to\rho` 路径之后再执行一次 `\rho`。若
+
+$$
+R=\begin{pmatrix}p&q\\r&s\end{pmatrix},
+$$
+
+记对应读数为 $z_0,\ldots,z_4$，则直接展开得到
+
+$$
+\begin{aligned}
+p&=z_0+z_1-z_2-2z_3+z_4,\\
+q&=z_0+2z_1-2z_2-2z_3+z_4,\\
+r&=z_2-z_0,\\
+s&=z_3-z_1,\\
+\delta&=z_2-z_4+z_3.
+\end{aligned}
+$$
+

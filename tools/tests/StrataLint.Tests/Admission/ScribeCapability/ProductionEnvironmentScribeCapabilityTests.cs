@@ -68,7 +68,7 @@ public sealed partial class ProductionEnvironmentTests
             ProductionCliEnvironment.VerifyScribeForAdmission(
                 new ProjectionReconciliationFailureVerifier(),
                 RepositorySnapshot.Create([]),
-                report));
+                report, RawChangeSet.Create([])));
     }
 
     [Fact]
@@ -148,7 +148,7 @@ public sealed partial class ProductionEnvironmentTests
         var verifiedScribeEmissions = ProductionCliEnvironment.VerifyScribeForAdmission(
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Create([record], [coveredGid])),
             current,
-            currentReport);
+            currentReport, changes);
 
         var outcome = SnapshotAdmissionCore.Evaluate(
             current,
@@ -176,8 +176,7 @@ public sealed partial class ProductionEnvironmentTests
             DigestionEvaluationScope.FullScan,
             baselineDocument,
             current,
-            currentLean,
-            baselineDocument).Entries);
+            currentLean).Entries);
         Assert.Equal(DigestionMigrationState.Absorbed, currentStatus.DerivedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, currentStatus.DerivedStatus.Truth);
         Assert.True(currentStatus.Deletable);
@@ -204,8 +203,7 @@ public sealed partial class ProductionEnvironmentTests
             DigestionEvaluationScope.FullScan,
             BackfillInventoryLoader.Load(changedSnapshot),
             changedSnapshot,
-            changedLean,
-            baselineDocument).Entries);
+            changedLean).Entries);
         Assert.Equal(DigestionMigrationState.Absorbed, changedStatus.DerivedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, changedStatus.DerivedStatus.Truth);
         Assert.True(changedStatus.Deletable);
@@ -394,7 +392,7 @@ internal sealed class ProjectionReconciliationFailureVerifier : IScribeEmissionV
     public VerifiedScribeEmissions Verify(
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
-        RawChangeSet? changes = null,
+        RawChangeSet? changes,
         FrozenStateCatalog? frozenState = null,
         FrozenStatementIndex? frozenStatements = null) =>
         throw new InvalidDataException("projection fixture/live-report disagreement");
@@ -418,7 +416,7 @@ internal sealed class ReportDerivedScribeEmissionVerifier(
     public VerifiedScribeEmissions Verify(
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
-        RawChangeSet? changes = null,
+        RawChangeSet? changes,
         FrozenStateCatalog? frozenState = null,
         FrozenStatementIndex? frozenStatements = null)
     {

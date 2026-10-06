@@ -11,7 +11,8 @@ internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid,
 
 internal sealed record CheckArguments(
     string? ProtectedBase,
-    string? CandidateLeanReport);
+    string? CandidateLeanReport,
+    string? ScribePaths = null);
 
 internal interface IRepositoryGateway
 {
@@ -22,6 +23,14 @@ internal interface IRepositoryGateway
     FrozenRevisionIdentity ResolveCurrentRevision();
 
     RawRepositorySnapshot ReadCurrent();
+
+    /// Reads the files at the given paths from the current repository snapshot. A
+    /// directory selects everything under it, and the same FILEMAP/symlink policy as
+    /// the whole-tree reader is applied.
+    RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths);
+
+    /// Searches current paths without reading their file bodies.
+    IReadOnlyList<string> SearchCurrentPaths(IReadOnlyList<string> paths);
 
     RawRepositorySnapshot ReadRevision(string revision);
 
@@ -52,7 +61,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     private readonly ILeanReportSource leanReportSource;
     private readonly IScribeEmissionVerifier? scribeEmissionVerifier;
     private readonly TimeProvider timeProvider;
-    private readonly IAtomHistorySource atomHistorySource;
     private readonly ReportFreeIngestDependencies reportFreeIngestDependencies;
 
     internal ProductionCliEnvironment(string repositoryRoot)
@@ -81,7 +89,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
-        IAtomHistorySource? atomHistorySource = null,
         ReportFreeIngestDependencies? reportFreeIngestDependencies = null)
         : this(
             repositoryRoot,
@@ -89,7 +96,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             leanReportSource,
             scribeEmissionVerifier,
             TimeProvider.System,
-            atomHistorySource,
             reportFreeIngestDependencies)
     {
     }
@@ -100,7 +106,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
         TimeProvider timeProvider,
-        IAtomHistorySource? atomHistorySource = null,
         ReportFreeIngestDependencies? reportFreeIngestDependencies = null)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
@@ -108,7 +113,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         this.leanReportSource = leanReportSource;
         this.scribeEmissionVerifier = scribeEmissionVerifier;
         this.timeProvider = timeProvider;
-        this.atomHistorySource = atomHistorySource ?? new GitAtomHistorySource(this.repositoryRoot);
         this.reportFreeIngestDependencies =
             reportFreeIngestDependencies ?? new ReportFreeIngestDependencies();
     }
@@ -258,7 +262,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         IScribeEmissionVerifier? verifier,
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes)
     {
         if (verifier is null)
         {
@@ -328,6 +332,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     {
         string? protectedBase = null;
         string? candidateLeanReport = null;
+        string? scribePaths = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -339,6 +344,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             {
                 "--protected-base" when protectedBase is null => 0,
                 "--candidate-lean-report" when candidateLeanReport is null => 1,
+                "--scribe-paths-from" when scribePaths is null => 2,
                 _ => throw CheckUsage(),
             };
             switch (target)
@@ -349,15 +355,18 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 case 1:
                     candidateLeanReport = arguments[index + 1];
                     break;
+                case 2:
+                    scribePaths = arguments[index + 1];
+                    break;
             }
         }
 
-        return new CheckArguments(protectedBase, candidateLeanReport);
+        return new CheckArguments(protectedBase, candidateLeanReport, scribePaths);
     }
 
     private static InvalidOperationException CheckUsage() => new(
         "USAGE: StrataLint check [--protected-base REV] "
-        + "--candidate-lean-report FILE");
+        + "--candidate-lean-report FILE [--scribe-paths-from FILE]");
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch

@@ -645,9 +645,241 @@ $$
 For $h\in\mathcal L\cap\mathcal R$, the reducing projection
 $P_\mathcal R$ retains at most the same form error, while its output
 generally has noncompact support. The bound concerns the original
-operator's whole fixed-gap spectral subspace, not the eventual finite
-discretization of its interior. Interior approximation with a complete
-lower spectral certificate and control uniform as
+operator's whole fixed-gap spectral subspace. The
+[quantitative interior construction](jarohsweth2020local.md) provides a
+finite-rank map with uniform error in the original form norm, including
+a prescribed even translated-kernel family indexed by the existing legal
+FIB interval mesh. Verified finite matrix signs, a complete lower spectral
+certificate and control uniform as
 $\varepsilon\downarrow0$ remain unresolved. Subthreshold accumulation is
-not excluded; RH and full Robin remain unresolved. These are paper-level model
+not excluded. That construction also gives a conditional complete-window
+exclusion from PSD at $c_\varepsilon=1/2-\varepsilon/2$, with its uniform
+form error chosen below $\varepsilon/8$; the matrix condition is not
+verified. RH and full Robin remain unresolved. These are paper-level model
 deductions, without new Lean certification or an originality claim.
+
+The [directed assembly interface](jarohsweth2020local.md) retains the
+same complete Gamma/prime matrix, regularizes the trial kernels' jumps,
+and supplies explicit positive-tail and full-mean correction bounds.
+Validated quadrature and a simultaneous coefficient-error allowance can
+produce a Loewner lower matrix. Its entries and sign remain uncomputed;
+this interface does not discharge the fixed-window matrix hypothesis or
+the cofinal-window requirement.
+
+## Same-form theta exterior bound and low-projector cutoff
+
+Reuse the [mixed nullity and ground-state identity](lagarias2004li.md),
+the [complete compact Weil formula](chenwang2012weighted.md), and the original minimal operator
+and complete prime off-diagonal operator above, with the
+[closed-form realization](fukushima2011dirichlet.md). All
+statements below concern the actual even minimal realization in
+$L^2(\nu)$, $d\nu=2\Phi\cosh(x/2)dx$, $\nu(\mathbb R)=1$.
+These are paper-level model deductions from the cited identities, with no
+new generic theorem, originality or Lean-certification claim.
+
+### Exact pole cancellation on the same test
+
+Write
+
+$$
+G_{\rm flat}(f)=\int_0^\infty\psi(t)
+ \|f(\cdot+t)-f\|_{L^2(dx)}^2dt,
+\quad c_\Gamma=\operatorname{digamma}(1/4)-\log\pi,
+\quad\psi(t)=\frac{e^{-t/2}}{1-e^{-2t}}.
+$$
+
+For even complex compact smooth $h$, $f=\Phi h$ is the same admissible
+test in the two existing identities. They give
+
+$$
+Q(\Phi h)=D(h)-\tfrac12\operatorname{Var}_\nu(h)
+=P(\Phi h)+G_{\rm flat}(\Phi h)+c_\Gamma\|\Phi h\|_2^2
+-\langle B_ph,h\rangle_\nu.
+$$
+
+Here $B_p$ is the bounded self-adjoint full prime graph off-diagonal
+operator. Its quadratic form is the complete prime correlation sum,
+$2\sum_{n\ge2}w_n\Re\operatorname{Corr}_{\Phi h}(\log n)$, with every
+prime power. Evenness gives
+$P(\Phi h)=2|\int e^{x/2}\Phi h|^2
+=\tfrac12|\int h\,d\nu|^2$.
+Therefore the pole and variance mean terms cancel exactly:
+
+$$
+\boxed{D(h)=\tfrac12\|h\|_\nu^2+G_{\rm flat}(\Phi h)
+ +c_\Gamma\|\Phi h\|_2^2-\langle B_ph,h\rangle_\nu.} \tag{JE}
+$$
+
+$G_{\rm flat}(\Phi h)$ is a nonnegative flat translation form on the
+weighted test $\Phi h$. It is distinct from $E_\Gamma(h)$, and (JE)
+retains the original complete $D=E_\Gamma+E_p$.
+
+### Extension through the actual minimal form closure
+
+The multiplier $h\mapsto\Phi h$ is bounded from $L^2(\nu)$ to $L^2(dx)$,
+because $\Phi^2/\rho=\Phi/(2\cosh(x/2))\le9/5$ by the existing
+global theta bound. Also $c_\Gamma<0$ and $|c_\Gamma|<8$:
+the classical quarter digamma value gives
+$-c_\Gamma=\gamma+\pi/2+3\log2+\log\pi<8$.
+
+Applied to differences of core approximants, (JE) yields
+
+$$
+G_{\rm flat}(\Phi u)\le D(u)
+ +(8\cdot9/5+\|B_p\|)\|u\|_\nu^2.
+$$
+
+The flat jump form has its standard closed Fourier realization, whose
+multiplier is $2\int_0^\infty\psi(t)(1-\cos(\xi t))dt\ge0$.
+Thus a Cauchy sequence in the actual minimal $D$ form norm maps to a
+Cauchy sequence in that closed flat form norm. All bounded terms in (JE)
+converge and the identity extends to the actual even minimal form domain.
+No equality with a maximal domain or operator-core assertion is used.
+
+### A complete exterior lower bound from theta tails
+
+Let $E_R=\{|x|>R\}$, $R\ge0$, and let
+$p_R=\sup_{E_R}\Phi(x)/(2\cosh(x/2))$. Reuse the original-series bounds
+
+$$
+p_R\le\frac{72}{5}e^{-(3/2)e^{2R}},\qquad
+\|\mathbf1_{E_R}B_p\|\le\frac{216}{5}e^{-(3/8)e^{2R}}=:b_R^*.
+$$
+
+The second is the existing full two-direction prime estimate, including
+its shifted adjoint. For every minimal-form $h$ zero on $[-R,R]$,
+nonnegativity of the flat form in (JE) and self-adjointness of $B_p$ give
+
+$$
+\boxed{D(h)\ge(\tfrac12-d_R)\|h\|_\nu^2,\qquad
+d_R=8p_R+b_R^*\le160e^{-(3/8)e^{2R}}.} \tag{JL}
+$$
+
+This controls the complete energy, including Gamma edges crossing the
+removed interval and all prime powers. It uses the joint formula before
+estimating its two bounded negative terms. The quantitative prime-counting
+remainder used to control $a_p$ separately is not needed for (JL).
+
+### A Hilbert-Schmidt bound for the full cutoff commutator
+
+Use the existing real even cutoff $0\le\eta_R\le1$, zero on $[-R,R]$,
+one outside $[-R-2,R+2]$, with Lipschitz constant at most one.
+Conjugating its Gamma commutator by $Uh=\sqrt\rho\,h$ gives the kernel
+
+$$
+\widetilde K_R(x,y)=
+\frac{\sqrt{\Phi(x)\Phi(y)}}
+ {2\sqrt{\cosh(x/2)\cosh(y/2)}}
+\psi(|x-y|)(\eta_R(x)-\eta_R(y)).
+$$
+
+A nonzero cutoff difference requires at least one endpoint in $E_R$.
+The existing short- and long-jump bounds give
+$\psi(t)\min(t,1)\le3/2$ for all $t>0$.
+With $P_\Phi=\int\Phi\le1/2$ and
+$\mathcal T(R)=\int_{E_R}\Phi$, therefore
+
+$$
+\|K_R\|^2\le\|\widetilde K_R\|_{\rm HS}^2
+\le\frac9{16}\iint\Phi(x)\Phi(y)
+ \mathbf1_{\{x\in E_R\text{ or }y\in E_R\}}dxdy
+\le\frac9{16}\mathcal T(R).
+$$
+
+The singular Gamma neighborhood is retained: its cutoff difference pays
+the factor $t$. Reuse
+$\mathcal T(R)\le(96/5)e^{-2R}e^{-(3/2)e^{2R}}$ to obtain
+
+$$
+\|K_R\|\le\tfrac34\sqrt{\mathcal T(R)}
+\le4e^{-(3/4)e^{2R}}.
+$$
+
+The diagonal prime multiplier commutes with $\eta_R$. Its off-diagonal
+commutator has norm at most $2b_R^*$, because both
+$\|M_{\eta_R}B_p\|$ and $\|B_pM_{\eta_R}\|$ have the same bound.
+The prior minimal-domain cutoff argument extends the full identity to
+$D(A)$, giving
+
+$$
+[A,M_{\eta_R}]=K_R-[B_p,M_{\eta_R}],\qquad
+\|[A,M_{\eta_R}]\|\le k_R:=91e^{-(3/8)e^{2R}}. \tag{JK}
+$$
+
+This is a norm bound for the complete commutator. No scalar eigenvalue is
+assigned to a mixture of low spectral vectors.
+
+### Uniform whole-low-subspace form approximation
+
+Fix $0<\varepsilon\le1/2$, $a=1/2-\varepsilon$, and
+$P_\varepsilon=\mathbf1_{[0,a]}(A_{\rm even})$.
+Restrict the original closed $D$ form to even functions zero on $[-R,R]$
+and call its killed operator $A_R$. Formula (JL) gives
+$A_R\ge1/2-d_R$.
+
+The already established operator-domain cutoff statement puts
+$T_R=M_{\eta_R}|_{\operatorname{ran}P_\varepsilon}$ in $D(A_R)$
+and yields the same separated-spectra equation, now for the full $A_R$:
+
+$$
+A_RT_R-T_RA|_{\operatorname{ran}P_\varepsilon}
+=\mathbf1_{E_R}[A,M_{\eta_R}]|_{\operatorname{ran}P_\varepsilon}.
+$$
+
+Reuse the standard decaying-semigroup integral from (LP). If
+$d_R<\varepsilon$, then
+
+$$
+\boxed{\|M_{\eta_R}P_\varepsilon\|
+\le\frac{k_R}{\varepsilon-d_R}.} \tag{JLP}
+$$
+
+For every unit $h$ in that entire spectral subspace, write
+$s_R=k_R/(\varepsilon-d_R)$. Since $Ah$ remains in that same subspace,
+(JLP) gives $\|\eta_RAh\|_\nu\le a s_R$. The full operator identity gives
+
+$$
+D(\eta_Rh)\le a s_R^2+k_Rs_R,
+\qquad\|\eta_Rh\|_{\mathcal F}^2\le(1+a)s_R^2+k_Rs_R. \tag{JF}
+$$
+
+For $0<\tau\le1$, a single explicit sufficient radius condition is
+
+$$
+R\ge2,\qquad e^{2R}\ge\frac83
+ \log\frac{728}{\varepsilon\tau}. \tag{JR}
+$$
+
+It gives $d_R<\varepsilon/2$, $k_R\le\varepsilon\tau/8$
+and $s_R\le\tau/4$. Since $a\le1/2$ and $\varepsilon\le1/2$,
+$\|\eta_Rh\|_{\mathcal F}^2\le7\tau^2/64<\tau^2$ uniformly, so
+$(1-\eta_R)P_\varepsilon$ is the required compact-support form
+approximation to the whole fixed-gap subspace.
+
+When this cutoff feeds the previously prescribed translated-kernel/FIB
+mesh, retain that mesh transfer's independent interval-margin and floor
+conditions. The new radius replaces its quantitative prime-remainder
+condition; it does not remove the minimum-density factors still present
+in the smoothing estimate or establish a practical matrix rank.
+
+The center matrix signs and a cofinal $\varepsilon\downarrow0$
+certificate remain missing. Neither this complete exterior bound nor the
+[scalar assembly pilot](../../docs/reports/theta-mixed-matrix/README.md)
+proves the critical-half inequality, RH or Robin.
+
+## Weighted Fourier finite-family interface
+
+The [weighted Fourier cutoff and finite cosine construction](fukushima2011dirichlet.md)
+uses the same actual minimal form, (JE), complete prime operator, and
+(JF)–(JR). The [original theta derivative suppliers](../Analytic/romik2021orthogonal.md)
+provide its global coefficient hypotheses. It gives an explicit
+finite-rank map with uniform original-form error $<\tau$ on the entire
+$P_\varepsilon$ subspace, for every fixed $0<\varepsilon\le1/2$ and
+$0<\tau\le1$. Its prescribed cosine generators and bounded Fourier
+cell-integral coefficients require no unknown eigenbasis.
+
+At $\tau=\varepsilon/8$, the existing complete-window matrix transfer
+can use this family if its complete original-form/full-variance matrix
+is PSD at $1/2-\varepsilon/2$. Matrix signs, useful numerical ranks and
+cofinal certificates remain missing. This is a paper-level construction,
+with no new Lean certification or arithmetic benefit from FIB labels.

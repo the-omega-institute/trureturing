@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c793d43b37cbc3378f6cb8874006c114f941ec27baaca055a0fc5bbd07b4d246
+  normalized_sha256: sha256:c793d43b37cbc3378f6cb8874006c114f941ec27baaca055a0fc5bbd07b4d246
+cas_ref: sha256:c793d43b37cbc3378f6cb8874006c114f941ec27baaca055a0fc5bbd07b4d246
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.target_recovery_criterion
+    target_statement_id: sha256:410a18915874469254a738a6d25e7be1dd97b7f4f721e0a1a04b7f8ceca5af18
+receipts:
+  unresolved_subitems: []

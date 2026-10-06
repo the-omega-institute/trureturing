@@ -1,0 +1,32 @@
+### 命题 9.3（同一新码中的相同边缘态与相反面积速度）
+
+固定命题 9.1 的 $J$ 及一个 $0\le r<54$，记逻辑态
+
+$$
+|\psi_\pm\rangle=\frac{|0,r\rangle\pm i|1,r\rangle}{\sqrt2}.
+$$
+
+它们编码后的 $X$、$Y$ 边缘态完全相同，并且在定理 8.2 的每个前缀划分上，两侧边缘态也分别相同。取实数 $\Omega\ne0$，以 $\hbar=1$ 定义
+
+$$
+h=\frac\Omega2\left(|0,r\rangle\langle1,r|+|1,r\rangle\langle0,r|\right),
+\qquad \rho(t)=e^{-ith}\rho(0)e^{ith},
+\tag{9.3}
+$$
+
+其中 $h$ 在其余逻辑方向上为零。编码空间上的实现是 $JhJ^\dagger$，在正交补上为零；此实现一般跨越 $X|Y$。两态的素数页概率及全 $X$ 面积期望为
+
+$$
+p_1^\pm(t)=\frac{1\mp\sin(\Omega t)}2,\qquad
+\mathcal A_\pm(t):=\operatorname{Tr}(\rho_\pm(t)\mathcal L_3)
+=(\log3)p_1^\pm(t),
+$$
+
+$$
+\dot{\mathcal A}_\pm(t)=\mp\frac{\Omega\log3}{2}\cos(\Omega t),
+\qquad \dot{\mathcal A}_\pm(0)=\mp\frac{\Omega\log3}{2}.
+\tag{9.4}
+$$
+
+因此，在这个指定更新下，当前两侧区域态的有序对不足以确定其未来区域态，亦不足以确定面积速度。
+

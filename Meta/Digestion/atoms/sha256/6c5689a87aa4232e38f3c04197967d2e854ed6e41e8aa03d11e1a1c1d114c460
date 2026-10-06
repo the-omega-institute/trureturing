@@ -1,0 +1,17 @@
+**Definition 3.1 (Positive series).** In $\mathbb Q[[t]][[y]]$, put
+
+$$
+\begin{aligned}
+U&=\sum_{n\ge1,k\ge0}U(n,k)t^ny^k,&
+J&=\sum_{n\ge1,k\ge0}J(0,n,k)t^ny^k,\\
+R&=\sum_{n\ge1,k\ge0}D(0,n,k)t^ny^k,&
+I_0&=\sum_{n\ge1}j(0,n)t^n,\\
+I&=I_0\quad\text{as a constant series in }y,&
+q&=\sum_{n\ge1}|A_n|t^n,\qquad z=ty.
+\end{aligned}
+$$
+
+Every coefficient is an actual finite cardinality. The empty permutation is
+excluded from all six positive series. Scalar series are embedded as constant
+series in $y$; no evaluation at $y=1$ is used in these definitions.
+

@@ -69,10 +69,29 @@ internal static class GitRepositorySnapshotReader
         HashSet<string> InspectedDirectories) Collect(string root, Func<string, bool>? include,
         Action<RawRepositoryEntry>? visit, Func<string, bool>? readContents, IReadOnlyList<string>? pathspecs)
     {
-        string[] scope = pathspecs is null ? [] : ["--", .. pathspecs];
-        var tracked = ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scope]));
+        var scopes = EnumerationScopes(pathspecs).ToArray();
+        var tracked = ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scopes[0]]));
+        IEnumerable<string> untracked = ParseNulStrings(Git(root,
+            ["ls-files", "--others", "--exclude-standard", "-z", .. scopes[0]]));
+        if (scopes.Length > 1)
+        {
+            var combinedUntracked = untracked.ToHashSet(StringComparer.Ordinal);
+            for (var index = 1; index < scopes.Length; index++)
+            {
+                var scope = scopes[index];
+                foreach (var (path, mode) in ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scope])))
+                {
+                    if (tracked.TryGetValue(path, out var previous) && previous != mode)
+                        throw new InvalidOperationException($"git index mode changed during enumeration: {path}");
+                    tracked[path] = mode;
+                }
+                combinedUntracked.UnionWith(ParseNulStrings(Git(root,
+                    ["ls-files", "--others", "--exclude-standard", "-z", .. scope])));
+            }
+            untracked = combinedUntracked;
+        }
         var paths = tracked.Keys
-            .Concat(ParseNulStrings(Git(root, ["ls-files", "--others", "--exclude-standard", "-z", .. scope])))
+            .Concat(untracked)
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToArray();
@@ -163,6 +182,42 @@ internal static class GitRepositorySnapshotReader
         }
 
         return (entries, inventory, links, paths, inspectedDirectories);
+    }
+
+    private static IEnumerable<string[]> EnumerationScopes(IReadOnlyList<string>? pathspecs)
+    {
+        if (pathspecs is null || pathspecs.Count == 0)
+        {
+            yield return pathspecs is null ? [] : ["--"];
+            yield break;
+        }
+
+        // Positive path selections form a union. Other Git magic, including
+        // exclusions, retains its native single-invocation semantics.
+        if (pathspecs.Any(static path => path.StartsWith(':')
+                && !path.StartsWith(":(literal)", StringComparison.Ordinal)
+                && !path.StartsWith(":(glob)", StringComparison.Ordinal)))
+        {
+            yield return ["--", .. pathspecs];
+            yield break;
+        }
+
+        var limit = OperatingSystem.IsWindows() ? 16 * 1024 : 64 * 1024;
+        var batch = new List<string>();
+        var bytes = 0;
+        foreach (var path in pathspecs)
+        {
+            var size = StrictUtf8.GetByteCount(path) + 1 + IntPtr.Size;
+            if (batch.Count > 0 && bytes + size > limit)
+            {
+                yield return ["--", .. batch];
+                batch.Clear();
+                bytes = 0;
+            }
+            batch.Add(path);
+            bytes += size;
+        }
+        if (batch.Count > 0) yield return ["--", .. batch];
     }
 
     internal static RawRepositorySnapshot ReadRevision(string repositoryRoot, string revision)

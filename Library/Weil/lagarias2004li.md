@@ -387,3 +387,252 @@ For the even operator, any remaining eigenvalues $0<\lambda<1/2$
 are discrete, with eigenvectors in $\mathcal R$, and may accumulate
 at $1/2$. These source applications do not prove the one-half bound
 in (5), equivalently the remainder lower bound stated after (10).
+
+The [same-form exterior transfer](lenz2010compactness.md#same-form-theta-exterior-bound-and-low-projector-cutoff)
+combines (4) with the complete compact Weil formula on the same even
+test $f=\Phi h$. Its pole and variance mean terms cancel, leaving a
+nonnegative flat translation form and two bounded negative terms.
+The bounded multiplier and closed flat form extend that identity through
+the actual minimal form closure; original theta tails then control the
+full killed exterior energy and cutoff of the whole fixed-gap subspace.
+This paper-level transfer replaces the quantitative prime-counting
+remainder only in that exterior estimate. It does not establish the
+remaining spectral lower bound in (5), RH, Robin or Lean certification.
+
+
+The [ordered-semigroup source check](karlinmcgregor1959coincidence.md)
+separately tests a proposed oscillation route from the critical family.
+The actual even theta semigroup fails all-times order-two positivity
+under radial ordering. Its ordinary positivity preservation cannot
+therefore locate the known half eigenvectors as the first nonzero
+spectral level by that route. Weaker justified spectral-ordering
+methods and the remainder lower bound are still unresolved.
+
+### The compressed remainder has no inherited positive cone
+
+The [ideal-space exterior-square source check](kushelzabreiko2008ideal.md)
+addresses the separate proposal to apply positive-operator theory after
+compressing to $\mathcal R$. Because $\mathcal R\subset1^\perp$ and
+$\nu$ is finite, its inherited cone of nonnegative functions is
+$\{0\}$. It is not an ideal function space in the original radial
+coordinates. Any ambient positivity-preserving linear operator with
+range in $\mathcal R$ must therefore vanish, whereas
+$Q_{\mathcal R}e^{-tA}Q_{\mathcal R}$ and
+$Q_{\mathcal R}(A+\alpha)^{-1}Q_{\mathcal R}$ are nonzero for
+$t,\alpha>0$. Thus neither compression can supply the source's ordinary
+nonnegative-kernel interface in those coordinates. This paper-level
+check does not exclude a separately justified transported order and does
+not assert compactness of the restriction.
+
+The actual numerical obligation can still be written as
+$\|(A|_{\mathcal R}+\alpha)^{-1}\|\le(\alpha+1/2)^{-1}$ for any fixed
+$\alpha>0$, by the standard spectral theorem. This is exactly the
+remaining half-bound after (10), not an improved estimate. The critical
+vectors in $N$ are excluded from $\mathcal R$, so they cannot be used
+as its first or second eigenvectors. RH and Robin remain unresolved;
+no new Lean certification is asserted.
+
+### A raw absolute Schur certificate must also preserve the critical family
+
+The [Schur equality application](../Fourier/teschl2009mathematical.md#equality-in-schurs-test-checks-the-unprojected-theta-edge-shortcut)
+tests a signed-kernel proposal for the same half-slack. With the actual
+positive and negative parts of $J-(\nu\otimes\nu)/2$ and their raw
+increment maps $C_\pm$, it excludes simultaneous exact reconstruction
+$SC_+h=C_-h$ on the entire original even core and an ordinary measurable
+kernel's finite-positive-weight absolute Schur product at most one.
+The known critical vectors would attain equality in that certificate.
+Their theta jets distinguish the unordered radial endpoint pair, forcing
+each nonzero row onto a finite fiber of zero input edge measure. Prime
+jump lengths are atomic, but the original prime edge graphs still have
+zero point mass because their source position is integrated against $dx$.
+
+This is a conditional paper application of the classical equality
+mechanism to the original theta family. It excludes neither a better
+actual norm estimate than the absolute certificate nor products above
+one approaching one, controlled approximate reconstruction, measure
+kernels, or a transfer defined only on $\mathcal R$.
+
+The same mixed nullity removes the closed critical edge images jointly:
+for $e_\pm=(I-P_\pm)C_\pm$, where $P_\pm$ project onto
+$\overline{C_\pm N}$, the slack is
+$q(h)=\|e_+h\|^2-\|e_-h\|^2$. Since $e_\pm v_k=0$, the preceding
+raw norm-attainment argument has no stated conclusion for this projected
+transfer. The actual reconstruction and norm comparison after that
+projection remain unproved. No new generic Schur, variance or contraction
+theorem, numerical half-bound, RH/Robin result or Lean certification is
+claimed.
+
+### A common-source inverse for both critical edge projections
+
+This is a conditional paper application to the accepted original theta measures, not a half-bound or Lean-certified result. Classical two-step path comparison, closed-range projection and Neumann inversion are reused. The additional interface is the explicit coercivity of the actual negative-edge metric, yielding one bounded critical-source inverse for both edge projections.
+
+Retain the probability measure $
+u$, signed edge measures $K_\pm$, increment maps $C_\pm$ and mixed nullity from the [Schur application](../Fourier/teschl2009mathematical.md#equality-in-schurs-test-checks-the-unprojected-theta-edge-shortcut), equations (S1)–(S7). Write
+
+$$a(x,y)=\left[1-\frac{\psi_\Gamma(|x-y|)}{2\cosh(x/2)\cosh(y/2)}\right]_+,$$
+
+so $K_-=(a/2)\nu\otimes\nu$ off the diagonal. Put $t=1/2$, $a_t=1-\psi_\Gamma(t)/2>0$, and choose three anchor intervals
+
+$$I_-=[-3/2,-5/4],\quad I_0=[-1/8,1/8],\quad I_+=[5/4,3/2].$$
+
+Let $\eta=\min_j\nu(I_j)>0$ and $c=a_t\eta/8$. The gaps between anchors exceed $2t$. Each forbidden interval $(x-t,x+t)$ intersects at most one anchor; two forbidden intervals therefore leave at least one anchor entirely available. Hence for every $x,y$,
+
+$$\nu\{z:|z-x|\ge t,|z-y|\ge t\}\ge\eta.$$
+
+Apply $|h(y)-h(x)|^2\le2|h(z)-h(x)|^2+2|h(y)-h(z)|^2$ on these common neighbors, then integrate over the same product probability measure. With
+
+$$I_t(h)=\iint_{|x-y|\ge t}|h(y)-h(x)|^2d\nu(x)d\nu(y),$$
+
+this gives $2\eta\operatorname{Var}_\nu(h)\le4I_t(h)$. Monotonicity of the actual psi and cosh>=1 give $a(x,y)\ge a_t$ on those edges. Therefore for every ambient even $h\in L^2(\nu)$,
+
+$$c\operatorname{Var}_\nu(h)\le\|C_-h\|^2\le\operatorname{Var}_\nu(h)/2.\tag{G1}$$
+
+Here $\psi_\Gamma(1/2)<2$ follows from $e>2$ and $e^{-1/4}<1$. This is a positive symbolic constant for the negative-edge metric; it supplies no lower bound for the original positive energy or its half-slack.
+
+Set $B=C_-^*C_-$ on the actual ambient even Hilbert space. It is bounded positive and, in the weak L2 sense,
+
+$$(Bh)(x)=\frac12\int a(x,y)(h(x)-h(y))d\nu(y).\tag{G2}$$
+
+Let $P_N$ be the existing orthogonal projection onto the centered critical source space $N$. The common Gram operator on $N$ is
+
+$$G=P_NB|_N,\qquad cI_N\le G\le\tfrac12I_N.\tag{G3}$$
+
+It is independently invertible. The two maps $A_\pm=C_\pm|_N$ are bounded, have $A_\pm^*A_\pm=G$ by the accepted mixed nullity, and have closed ranges by G1. Thus the closure signs in the known critical edge image spaces can be removed.
+
+For every $h$ in the actual form domain, mixed nullity gives the same coefficient for both projections:
+
+$$A_+^*C_+h=A_-^*C_-h=P_NBh.$$
+
+Consequently with $n_h=G^{-1}P_NBh\in N$,
+
+$$P_\pm C_\pm h=C_\pm n_h,\qquad e_\pm h=C_\pm(h-n_h).\tag{G4}$$
+
+This is one simultaneous source correction, using a generally different projection from the ambient $P_Nh$. It does not assume that $B$ commutes with $P_N$, and $h-n_h$ need not belong to the ambient orthogonal remainder $\mathcal R$.
+
+The classical norm-convergent inverse series is explicit:
+
+$$G^{-1}=2\sum_{j\ge0}(I_N-2G)^j,\qquad\|I_N-2G\|\le1-2c.$$
+
+For $n_h^{(m)}=2\sum_{j=0}^m(I_N-2G)^jP_NBh$, the truncation has the certified bound
+
+$$\|n_h-n_h^{(m)}\|\le\frac{(1-2c)^{m+1}}{c}\|P_NBh\|\le\frac{(1-2c)^{m+1}}{2c}\|h-\nu(h)1\|.\tag{G5}$$
+
+Because its source error lies in $N$, each edge error is at most $\|n_h-n_h^{(m)}\|/\sqrt2$. Mixed nullity also keeps $q(h-n_h^{(m)})=q(h)$ exactly. Thus the two errors are paired through one source, not independently optimized.
+
+What is still missing: explicit acquisition or approximation of $P_N$ itself, a transfer between the actual projected increments, and its joint reconstruction/norm estimate. The anchors' positive mass can be very small and no useful numerical conditioning is claimed. The inverse series is an operator identity involving the exact $P_N$, not a finite algorithm or a spectral certificate for the original remainder. G1 bounds K_- only, not D, and does not prove RH, Robin, the half-bound or the cofinal comparison.
+
+
+### Even geometry gives a stronger negative-edge inverse constant
+
+Retain the same $a(x,y)$, $B=C_-^*C_-$ and $G$ from (G1)–(G5).
+Let $\mu$ be the law of $|X|$ for $X\sim\nu$, and write an even input
+as $h(x)=f(|x|)$. Folding the two signs gives
+
+$$\|C_-h\|^2=\frac18\iint
+[a(r,s)+a(r,-s)]|f(r)-f(s)|^2\,d\mu(r)d\mu(s).$$
+
+Choose $t>0$ with $\psi_\Gamma(t)<2$ and put
+$p_t=\mu([t,\infty))$, $a_t=1-\psi_\Gamma(t)/2>0$.
+On $\max(r,s)\ge t$, the opposite-sign edge has $a(r,-s)\ge a_t$.
+For $u=f-\mu(f)$, $A=[0,t)$ and $T=[t,\infty)$, direct expansion gives
+
+$$\begin{aligned}
+J_T&=\iint_{\max(r,s)\ge t}|u(r)-u(s)|^2\,d\mu(r)d\mu(s)\\
+&=2p_t\int_A|u|^2d\mu+2\int_T|u|^2d\mu
+  +2\left|\int_Tu\,d\mu\right|^2
+\ge2p_t\operatorname{Var}_\mu(f).
+\end{aligned}$$
+
+Consequently $\|C_-h\|^2\ge a_tp_t\operatorname{Var}_\nu(h)/4$.
+The positive first term of the original theta series has the exact
+integrated lower bound
+
+$$p_t\ge[4u(1+e^t)-2]e^{-u},\qquad u=\pi e^{2t}.$$
+
+Its derivative in $t$ is minus twice the first-term $\nu$ density, and
+it tends to zero at infinity. At $t=7/20$, outward interval evaluation
+with python-flint 0.9.0 at 256 bits gives
+$a_t>1662/10000$ and the displayed mass bound $>1059/10000$.
+Their product divided by four exceeds $11/2500$. Thus, on the actual
+centered even space and in its inherited $L^2(\nu)$ norm,
+
+$$\begin{gathered}
+c_*:=\frac{11}{2500},\qquad
+c_*\operatorname{Var}_\nu(h)\le\|C_-h\|^2
+\le\tfrac12\operatorname{Var}_\nu(h),\\
+\|G^{-1}\|\le\frac{2500}{11},\qquad
+\kappa(G)\le\frac{1250}{11}<114,\qquad
+\|I_N-2G\|\le1-\frac{22}{2500}.
+\end{gathered}$$
+
+This controls the negative-edge metric and its critical compression.
+It does not bound $D$ or the half-slack. Matrices in an unnormalized
+derivative basis need not have this condition number. The comparison
+is a paper application of the actual even product measure; the scalar
+interval evaluation is numerical evidence, not new Lean certification.
+
+The [theta-translation Fredholm interface](../Dynamics/clason2021regularization.md#actual-theta-translations-generate-the-critical-source)
+represents the common correction by a small-window integral kernel and
+Tikhonov normal equation, without an exact $P_N$ in its construction.
+Its fitted sources converge strongly, with a separate fixed-parameter
+discretization bound. The required input's small-spectral-value error
+and the projected transfer estimate remain unproved. Positive finite
+regularization does not remove the existing exact raw Schur-certificate
+obstruction.
+
+### A complete block minorant improves the inverse constant
+
+The [whole-space negative-edge block estimate](../../docs/reports/theta-mixed-matrix/theta-negative-block-gap.md)
+reuses the existing depth-two five-mode FIB tiling of $[0,3/2]$, adds
+the whole outside cell and integrates the actual folded theta masses.
+A nonnegative block conductance minorant separates within-cell
+conditional variance from block means. Directed congruence and
+Gershgorin margins verify both sufficient conditions at $c_{**}=1/100$.
+Under the inherited actual-model and numerical-supplier premises this
+gives, for every ambient even $h\in L^2(\nu)$,
+
+$$
+\frac1{100}\operatorname{Var}_\nu(h)\le\|C_-h\|^2
+\le\frac12\operatorname{Var}_\nu(h),\qquad
+\|G^{-1}\|\le100,\quad\kappa(G)\le50,\quad
+\|I_N-2G\|\le\frac{49}{50}.
+$$
+
+The outside cell retains its conditional variance, so the assertion
+does not restrict $h$ to block-constant functions. It is a conditional
+paper estimate with directed numerical evidence, not a new generic
+Poincare theorem or Lean result. It improves common-source inverse
+conditioning; the original energy's half-bound, cofinal projected
+comparison, Robin and RH remain unproved.
+
+### The critical eigenvector also tests sharp gradient mechanisms
+
+The [actual jump-gradient check](fukushima2011dirichlet.md#the-sharp-pointwise-gradient-route-fails-on-the-original-core)
+uses the same first critical vector $v_1$, the invariant minimal even
+semigroup and the original all-prime PNT rate. The proposed pointwise
+estimate $\mathcal G(P_t h)\le e^{-t}P_t\mathcal G(h)$ would force
+$\mathcal G(v_1)$ to be invariant and hence constant. Its incoming
+prime edges to a compact interval instead give an unbounded lower
+minorant, so that estimate fails on the original core. This is a
+conditional paper obstruction to that sufficient gradient route,
+without a diffusion-curvature equivalence or new Lean certification.
+It does not determine the sign of the integrated half-slack on
+$\mathcal R$, or invalidate the existing conditional $0.41$ bound.
+The full half-bound, Robin and RH remain unresolved.
+
+### Positive radial derivative transport needs a different interface
+
+The [published birth–death derivative interface](chafaijoulin2013intertwining.md)
+uses a positive Feynman–Kac transport of a weighted first derivative.
+Its radial analogue would preserve nondecreasing functions of $|x|$.
+The original theta model's reflected prime-two map
+$r\mapsto|\log2-r|$ gives two ordered compact averaging probes with
+reversed short-time averages for a smooth monotone plateau input.
+The complete Gamma and other prime-power row backgrounds converge to
+the same limit, while this one actual atom switches by a positive amount.
+Under the original minimal-form and semigroup premises, that paper test
+excludes this radial monotonicity interface independently of the existing
+order-two determinant obstruction. It does not exclude ordinary Markov
+positivity, signed or vector derivative transports, other orders or
+fixed-time estimates. No new Lean certification or all-input half-bound
+is supplied; actual cofinal signs, full Robin and RH remain unresolved.

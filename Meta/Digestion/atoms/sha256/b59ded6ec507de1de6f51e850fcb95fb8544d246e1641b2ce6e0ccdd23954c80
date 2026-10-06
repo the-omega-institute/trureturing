@@ -1,0 +1,35 @@
+## 5. Finite real boxes
+
+Let $E$ be finite and let
+
+$$\Omega=\{x:E\to\mathbb R:\forall e,\ a_e\leq x_e\leq b_e\}$$
+
+be nonempty. A continuous $F:\Omega\to\Omega$ has a fixed point.
+For empty $E$ there is exactly one coordinate function and hence one point
+of $\Omega$; every self-map fixes it. For nonempty $E$, enumerate it by
+$\{0,\ldots,k-1\}$ and set $R=1+\sum_e(b_e-a_e)>0$.
+Embed $x$ in $\Delta_{k+1}$ with coordinates
+$(x_e-a_e)/R$ and one extra coordinate $1-\sum_e(x_e-a_e)/R$.
+The projection sends simplex coordinates to
+
+$$P(p)_e=\max(a_e,\min(b_e,a_e+Rp_e)).$$
+
+Both maps are continuous and $P(\mathrm{embed}(x))=x$.
+The fixed point of $\mathrm{embed}\circ F\circ P$ therefore gives a
+fixed point of $F$. Zero-width coordinates require no division by their
+width and are included.
+
+For strictly positive widths and a continuous $K:\Omega\to\mathbb R^E$,
+fix a target $\kappa\in\mathbb R^E$. If $K_e(x)>\kappa_e$ throughout
+the entire lower face $x_e=a_e$ and $K_e(x)<\kappa_e$ throughout the
+entire upper face $x_e=b_e$, the continuous clamped map
+
+$$F(x)_e=\max(a_e,\min(b_e,x_e+K_e(x)-\kappa_e))$$
+
+has a fixed point in the interior. Neither face can contain it because of
+the corresponding strict inequality. At an interior fixed point the clamp
+cannot hide a nonzero displacement, so $K(x)=\kappa$. These are statements
+about a single specified box and its actual maps. They give no geometric
+realization, uniqueness, trajectory containment, Hessian, or convergence
+assertion without the corresponding additional hypotheses.
+

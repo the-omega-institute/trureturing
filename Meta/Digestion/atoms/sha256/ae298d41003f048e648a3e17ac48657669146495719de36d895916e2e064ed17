@@ -1,0 +1,34 @@
+**定理 66.17（三树付费批次的精确相变）。** 对定义 66.10 的全部合格采样器及完整控制器，原始／粗接口有相同锐值
+
+$$
+\begin{aligned}
+\Gamma_N(\lambda)&:=\inf G_{F^{(3)},N}(\lambda)\\
+ &=\min\left\{17N,\ \frac{67N}{4}+\frac{3\lambda}{2},\
+                      \frac{50N}{3}+\frac{8\lambda}{3}\right\}\\
+ &=\begin{cases}
+17N,&N\le6\lambda,\\
+67N/4+3\lambda/2,&6\lambda\le N\le14\lambda,\\
+50N/3+8\lambda/3,&N\ge14\lambda.
+\end{cases}
+\end{aligned}
+$$
+
+交界处两式相等，全部下确界达到；同种子先取最大再求期望的独立目标仍为 $17N$。
+
+证明。引理 66.13—66.15 把任一实际采样器的目标下界化为 $17N-Nt+\lambda L_3(p)$，但保留原来消费位的费用。若 $N\le6\lambda$，第一支持线给至少 $17N+(6\lambda-N)t\ge17N$。中间取 $x=N/\lambda\in[6,14]$，两条支持线按非负权重 $(14-x)/8,(x-6)/8$ 相加，得
+
+$$
+L_3(p)\ge xt-\frac{x-6}{4},
+\qquad
+17N-Nt+\lambda L_3(p)\ge\frac{67N}{4}+\frac{3\lambda}{2}.
+$$
+
+若 $N\ge14\lambda$，第二线及 $t\le1/3$ 给
+
+$$
+17N-2\lambda+(14\lambda-N)t
+\ge\frac{50N}{3}+\frac{8\lambda}{3}.
+$$
+
+三个实际采样器分别取得这些界。点律在空词发出 $\sigma_0$，$K=0$。前缀词 $0,10,11$ 分别发出 $\sigma_0,\sigma_1,\sigma_2$，律为 $(1/2,1/4,1/4)$，$\mathbb EK=3/2$。均匀律用两位块：$00,01,10$ 分别发出三个端点，$11$ 用新位重启同一块。每轮继续概率 $1/4$，无限重启概率零；每个结果概率为 $(1/4)/(1-1/4)=1/3$，$\mathbb EK=2/(1-1/4)=8/3$。发出后不再取位，且每个端点已经全域总。把各律的 $t=0,1/4,1/3$ 和位费代入，分别给三条显示直线，证明锐值与两个开关。$\square$
+

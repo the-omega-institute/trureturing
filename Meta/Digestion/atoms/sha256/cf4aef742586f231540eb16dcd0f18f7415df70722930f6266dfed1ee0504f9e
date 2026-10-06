@@ -1,0 +1,38 @@
+**证明。** 先作穷尽性的结构归约。任取不同的 $P,Q\in\mathcal I_3(14)$ 且 $\operatorname{NC}(P,Q)$。使用[引理 30.3](#30-实际三步像的分歧前沿七叶分离与有限容量)在唯一前像上供应的分歧孔集，另记为 $\mathcal H$，其共同部分叶数为 $h_0$。每孔的原子／复合大小差非零，而式（30.4）使这些差之和为零，故至少有两个孔，且原子侧分别在 $P,Q$ 的相反朝向出现。引理 30.2 又使每孔两侧叶数之和至少为 $3+8=11$。于是
+
+$$
+28=2h_0+\sum_{w\in\mathcal H}\bigl(n(P|_w)+n(Q|_w)\bigr)
+ \ge 2h_0+11|\mathcal H|.
+\tag{33.9}
+$$
+
+三个孔会使右侧至少为 $33$，故 $|\mathcal H|=2$ 且 $0\le h_0\le3$。共同部分的叶来自引理 30.3 中保留下来的相同终端实际像；每个非空终端至少有三片叶。因此 $h_0$ 只有 $0,3$ 两种可能。
+
+若 $h_0=3$，共同部分恰有一个终端，且只能为 $A$。式（33.9）取等，两个孔的各自总叶数都为十一；这强制原子侧为三叶的 $A$、复合侧为八叶，并由引理 30.2 的唯一八叶情形强制为 $B$。两个孔朝向相反。保留的有序满二叉上下文有且仅有三个终端：两个孔和一个固定的 $A$。三个终端的有序满二叉上下文只有式（33.3）的两种括号，每个被填后的树恰在一槽有 $B$、另外两槽为 $A$，两个不同的树把 $B$ 放在不同槽。故这一情形恰给 $\binom{F_{\mathrm R}}2$ 与 $\binom{F_{\mathrm L}}2$。反之，这些对在两个不同槽上比较 $A,B$，引理 30.2 给没有共享叶的局部非冲突比较，其余一槽相同，所以它们全部非冲突。各槽真实地址前缀互不包含，局部判断因此确实组合成同一全树上的判断。
+
+若 $h_0=0$，保留的上下文没有相同终端，恰有两个孔。只有两个终端的满二叉上下文只能把孔放在根的左右孩子；否则任一孩子再分支就会产生至少第三个终端。每孔是一侧原子、另一侧复合，等叶数又使两孔的朝向相反。因此一棵树的左孩子为原子、另一棵的右孩子为原子，原子组合只能是 $AA,AC,CA,CC$。在这种根分拆上，$\operatorname{NC}$ 等价于左右孩子各自非冲突：所有共享叶地址都分别以 $\mathtt L$ 或 $\mathtt R$ 开始，两个集合不交。
+
+所需的全部小块比较直接由引理 30.2 和式（33.6）求得：
+
+$$
+\begin{aligned}
+Z\in\mathcal I_3(11):\quad
+ &\operatorname{NC}(A,Z)\ \Longleftrightarrow\ Z\in\mathcal V,
+ &\operatorname{NC}(C,Z)\ \Longleftrightarrow\ Z\in\{D_0,D_1\},\\
+Z\in\mathcal I_3(9):\quad
+ &\operatorname{NC}(A,Z)\ \Longleftrightarrow\ Z=R,
+ &\operatorname{NC}(C,Z)\ \Longleftrightarrow\ Z=S.
+\end{aligned}
+\tag{33.10}
+$$
+
+为写清这四个筛选，十一叶块中 $D_0,D_1$ 的左孩子为 $A$，其余四棵即 $\mathcal V$ 的左孩子都不同于 $A$，故得到第一项。与 $C$ 比较时，引理 30.2 要求右孩子不同于 $A$，并要求左孩子为 $A$，或左孩子复合且其左孩子不同于 $A$。$D_0,D_1$ 满足第一种；$\langle C,H\rangle$ 的左孩子为原子 $C$，$\langle H,C\rangle$ 的左孩子 $H$ 以 $A$ 为左孩子，均不满足；$\langle B,A\rangle,\langle T,A\rangle$ 的右孩子为 $A$，也不满足。九叶块只有 $S=\langle A,H\rangle$ 与 $R=\langle H,A\rangle$；第一行的左孩子条件只保留 $R$，与 $C$ 比较的右孩子条件及左侧条件则只保留 $S$。这证明式（33.10）而不隐去根例。
+
+现在令原子在第一棵的左孩子、第二棵的右孩子；交换整对不改变边。$AA$ 情形写成 $\langle A,D\rangle,\langle D',A\rangle$，两棵复合孩子都为十一叶，式（33.10）恰要求 $D,D'\in\mathcal V$，给式（33.8）的十六条边。$AC$ 情形是 $\langle A,D\rangle,\langle Z,C\rangle$，其中 $n(D)=11,n(Z)=9$；式（33.10）强制 $D=D_j,Z=R$，给两条 $\{\langle A,D_j\rangle,\langle R,C\rangle\}$。$CA$ 情形同样强制为 $\{\langle C,R\rangle,\langle D_j,A\rangle\}$，再给两条。$CC$ 情形强制两个复合孩子均为 $S$，只给 $\{\langle C,S\rangle,\langle S,C\rangle\}$，它正是[命题 32.3](#32-非冲突分歧的-α-分离双孔取等与递归容量)的既有十四叶对。反向，每项都满足式（33.10）的两个孩子条件，故确实非冲突。$h_0=0,3$ 已穷尽一切可能，所以没有其他边。
+
+最后从这个符号关系证明族分类。记 $x_D=\langle A,D\rangle$、$y_D=\langle D,A\rangle$。第一项是 $\{x_D:D\in\mathcal V\}$ 与 $\{y_D:D\in\mathcal V\}$ 之间的完整二部关系，它本身没有三角形。其余根边使 $\langle R,C\rangle$ 只邻接 $x_{D_0},x_{D_1}$，使 $\langle C,R\rangle$ 只邻接 $y_{D_0},y_{D_1}$；各自的两个邻点之间都没有边，故它们不参与三角形。$\langle C,S\rangle,\langle S,C\rangle$ 只互相邻接，$\langle H,T\rangle,\langle T,H\rangle$ 没有邻点，也不参与三角形。
+
+剩下的边恰为两个指定三角形。右侧三角形的三个顶点为 $\langle B,H\rangle,x_{\langle B,A\rangle},x_{D_0}$；其中 $\langle B,H\rangle$ 只邻接另外两者。$x_{D_0}$ 除这两者外只邻接 $\langle R,C\rangle$，而后者不邻接 $x_{\langle B,A\rangle}$。$x_{\langle B,A\rangle}$ 的其余邻点都是二部关系的 $y_D$（$D\in\mathcal V$），它们均不邻接 $x_{D_0}$。因此包含两个 $x$ 顶点的三角形只能是 $F_{\mathrm R}$。左侧完全按式（33.8）核对：$\langle H,B\rangle$ 只邻接 $y_{\langle B,A\rangle},y_{D_0}$，$y_{D_0}$ 的另一个邻点只有 $\langle C,R\rangle$，而二部关系中的 $x_D$ 都不邻接 $y_{D_0}$。故包含两个 $y$ 顶点的三角形只能是 $F_{\mathrm L}$。其他顶点已排除，跨二部关系又不可能在两侧各只取一个顶点而构成三角形，所以这两者是全部三角形。
+
+任一四元素两两非冲突族的任意三元素子族都须是三角形；取其中一个三角形，它有一个只邻接该三角形另外两者的顶点，即上述 $\langle B,H\rangle$ 或 $\langle H,B\rangle$，无法再加入与它相邻的第四顶点。因此没有四元素族，更大的族也不可能。空族和单元素族的成对条件为空约束，二元素族恰为边，三元素族恰为两个三角形，给全部评价族分类。前三项分别有 $16,4,1$ 条边，两三角形各有三条，字面顶点及所述孔情形表明各项不重复，合计 $27$。证毕。
+

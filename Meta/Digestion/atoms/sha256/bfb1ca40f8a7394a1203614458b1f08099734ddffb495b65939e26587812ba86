@@ -1,0 +1,7 @@
+定理 23.1 给出注入性及无有限 Lipschitz 常数。$L$ 的 $b=f,\delta=-f$ 同样给出 $D=-(k+1)f$。于是得到两种分离量，并且
+
+$$
+\phi_Q(\ell)-\phi_L(\ell)
+=\ell\left(\frac h\zeta\ell-f\right).
+$$
+

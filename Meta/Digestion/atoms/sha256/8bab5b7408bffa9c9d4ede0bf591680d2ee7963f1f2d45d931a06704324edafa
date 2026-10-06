@@ -1,0 +1,11 @@
+**定理 38.2（显式六度实现）。** 对每个实数 $d>6$，存在唯一 $x_d>x_0$ 满足
+
+$$\boxed{2\bigl(1+\cos(6\pi/d)\bigr)x_d(x_d-1)^2=3x_d-1.}$$
+
+设 $y_d=x_d-1/2-1/(2x_d)$。若一个真实剖分满足推论 37.3 的角色条件和共同高边度数 $d$，则直接赋值
+
+$$l_e=\operatorname{arccosh}x_d\ (e\in L),\qquad
+l_e=\operatorname{arccosh}y_d\ (e\in H)$$
+
+即给出其非退化双曲实现。剖分中的 $d$ 因角色次数为整数而必须是三的倍数。
+

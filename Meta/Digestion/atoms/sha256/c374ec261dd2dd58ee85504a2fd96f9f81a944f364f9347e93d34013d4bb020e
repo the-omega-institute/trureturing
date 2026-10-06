@@ -1,0 +1,52 @@
+**步数测度与时间占用测度 291.2。** 假设外加链不可约，平稳分布为 `π_j`，并令边条件平均停留时间为
+
+$$
+m_{j,x}=\sum_yP_j(x,y)\,\mathbb E[\tau_{n+1}\mid X_n=x,X_{n+1}=y].
+\tag{291.9}
+$$
+
+若 `\bar\tau_j=\sum_x\pi_j(x)m_{j,x}<\infty`，按步数抽样看到的是 `π_j`，按物理时间均匀抽样看到的占用比例则为
+
+$$
+\pi^{\mathrm{time}}_j(x)=\frac{\pi_j(x)m_{j,x}}{\bar\tau_j}.
+\tag{291.10}
+$$
+
+只有平均停留时间相同，或观测协议明确抵消其差异时，两种测度才一致。长停留状态的偏置来自随机时钟，而不是来自 FIB 路径计数的改变。
+
+若每个组合步有奖励 `Y_n`，物理时间内的累计量为
+
+$$
+S(t)=\sum_{n=1}^{N(t)}Y_n.
+\tag{291.11}
+$$
+
+对同一再生周期定义步数 `\ell_q`、物理长度 `R_q` 和奖励 `Z_q`，且周期向量在同一实际实现上独立同分布，若 `0<\mathbb ER_q<\infty`，则更新速度和奖励速度分别是
+
+$$
+v_j=\frac{\mathbb E\ell_q}{\mathbb ER_q},
+\qquad
+r_j=\frac{\mathbb EZ_q}{\mathbb ER_q}.
+\tag{291.12}
+$$
+
+二阶矩有限并满足再生周期的 Lindeberg 条件时，中心极限中的方差由联合周期量给出：
+
+$$
+\frac{N(t)-v_jt}{\sqrt t}
+\Longrightarrow
+\mathcal N\!\left(0,
+\frac{\operatorname{Var}(\ell_q-v_jR_q)}{\mathbb ER_q}\right),
+\tag{291.13}
+$$
+
+$$
+\frac{S(t)-r_jt}{\sqrt t}
+\Longrightarrow
+\mathcal N\!\left(0,
+\frac{\operatorname{Var}(Z_q-r_jR_q)}{\mathbb ER_q}\right).
+\tag{291.14}
+$$
+
+分别计算步数方差和停留时间方差，再把两个最优值拼接起来，不能替代同一周期内的联合方差。
+

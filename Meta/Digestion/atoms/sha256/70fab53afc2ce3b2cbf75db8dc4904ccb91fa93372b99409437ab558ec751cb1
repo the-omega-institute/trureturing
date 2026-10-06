@@ -1,0 +1,172 @@
+**定理 362.3（全部有限实际 Fibonacci lcm 的共同 Robin 包络）。** 对每个先固定的实数 $1/2<\eta<3/5$，令
+
+$$
+c(\eta)=\frac{3-5\eta}{2(1-\eta)},
+\qquad K_\eta=(2\eta)^{-c(\eta)}\in(0,1).
+\tag{362.15}
+$$
+
+则对每个 $\varepsilon>0$，存在先于一切有限集合 $S\subseteq\mathbb N_{>0}$ 选定的实数 $B_0>0$，使
+
+$$
+\forall S\subseteq\mathbb N_{>0}\text{ 有限},\qquad
+b(S)\ge B_0\ \Longrightarrow
+\bigl(M(S)>5040\ \text{且}\ \mathcal R(M(S))\le K_\eta+\varepsilon\bigr).
+\tag{362.16}
+$$
+
+$B_0$ 仅依赖固定的 $\eta,\varepsilon$ 及下述经典解析供给。没有基数、最大指标、删除方式或嵌套条件。特别地，$\eta=11/20$ 给 $K_\eta=(10/11)^{5/18}<1$；取 $\varepsilon=(1-K_\eta)/2$，整个实际有限族在同一个 $b$ 阈值之后满足严格 Robin 不等式。这里保留任意正误差，不断言 $\varepsilon=0$ 的最终界，不指定数值起点。
+
+**证明。** 固定 $\eta$，先在任何 $S$ 之前选定
+
+$$
+\frac1{2\eta}<\theta<1,
+\qquad 0<\rho<c(\eta),
+\qquad
+T=B^6=\begin{pmatrix}13&8\\8&5\end{pmatrix},
+\quad B=\begin{pmatrix}1&1\\1&0\end{pmatrix}.
+\tag{362.17}
+$$
+
+$T$ 的行列式为一、迹为 $18>2$，特征值为 $\Phi^6,\Phi^{-6}$，且 $T\equiv I\pmod2$，符合固定双曲 cat map 的条件。在 $r=z(p)$ 处，Fibonacci 矩阵公式使 $B^r=aI\pmod p$，因为 $F_r=0$、$F_{r+1}=F_{r-1}$；行列式给 $a^2=(-1)^r$，故 $B^{4r}=I$、$T^{2r}=B^{12r}=I$。因此对素数 $p$ 有
+
+$$
+\operatorname{ord}_p(T)\mid2z(p).
+\tag{362.18}
+$$
+
+Pär Kurlberg、Ze'ev Rudnick，*On quantum ergodicity for linear maps of the torus*，[原文 Theorem 14、式（6.1）](https://people.kth.se/~kurlberg/eprints/catmap2.pdf)，对固定 $T$ 给
+
+$$
+\#\{p\le y:\operatorname{ord}_p(T)>y^\eta\}
+\ge c(\eta)\pi(y)+o(\pi(y)).
+$$
+
+原始阈值为 $y^\eta$。现在定义固定素数集与其固定计数函数
+
+$$
+\mathcal P_\eta=\{p>5\text{ 为素数}:\operatorname{ord}_p(T)>p^\eta\},
+\qquad A_\eta(y)=\#\{p\in\mathcal P_\eta:p\le y\}.
+$$
+
+$p\le y$ 时 $p^\eta\le y^\eta$，故 KR 所计的移动集合除去 $2,3,5$ 后包含于这个固定集合。先取 $\rho_1\in(\rho,c(\eta))$，KR 的余项保证尾部计数至少为 $\rho_1\pi(y)$。Pierre Dusart，*Estimates of Some Functions Over Primes without R.H.*，[arXiv:1002.0442v1，Theorem 6.9，式（6.5）](https://arxiv.org/pdf/1002.0442v1)，给 $\pi(y)\ge y/\log y$（$y\ge599$）以及 $\pi(y)\le(y/\log y)(1+1.2762/\log y)$（$y>1$）。扩大一个固定起点以吸收至多三个例外素数，便可先选 $X_{\eta,\rho}\ge599$，使每个实数积分点 $y\ge X_{\eta,\rho}$ 都满足
+
+$$
+A_\eta(y)\ge\rho\frac y{\log y},
+\qquad \frac{\pi(y)}y\le\frac2{\log y}.
+\tag{362.19}
+$$
+
+这个起点与任何 $S$ 无关。
+
+对充分大的实际 $b=b(S)$，取同一对象的截止
+
+$$
+x=b,\qquad u=b^\theta,\qquad N=\lfloor b\rfloor+1,
+\qquad R=\tfrac12b^{\theta\eta}.
+\tag{362.20}
+$$
+
+先取统一的 $b$ 起点保证 $b\ge2973$、$b>\log5040$、$u\ge X_{\eta,\rho}$、$R>5$ 及
+
+$$
+\Delta=\frac{LR}{A\log N}-1\ge\frac{LR}{2A\log N}>0.
+\tag{362.21}
+$$
+
+后一条件可满足，因为 $R/\log N\to\infty$。令 $\mathcal A_b=\mathcal P_\eta\cap(u,b]$，并记同一个实际 $M=M(S)$ 在该区间的支撑费用
+
+$$
+W_{\rm supp}(S,b)=\sum_{\substack{p\in\mathcal A_b\\p\mid M(S)}}w(p).
+$$
+
+对每个 $p\in\mathcal A_b$，（362.18）给 $z(p)\ge\operatorname{ord}_p(T)/2>p^\eta/2>R$。若同时 $p\mid M(S)$，整数性给 $p\le\lfloor b\rfloor=N-1$，因此它确实属于定理 362.2 的同一个 $U$。由（362.4）、（362.21）及 $R^2=b^{2\theta\eta}/4$，
+
+$$
+\begin{aligned}
+0\le W_{\rm supp}(S,b)
+&\le\frac{6H_N b}{R\Delta}
+\le\frac{12A(\log N)H_N b}{LR^2}\\
+&=\frac{48A}{L}(\log N)H_N b^{1-2\theta\eta}
+=:h_{\theta,\eta}(b)\longrightarrow0.
+\end{aligned}
+\tag{362.22}
+$$
+
+$N\le b+1$、$H_N\le1+\log N$ 且 $2\theta\eta>1$，所以右侧为 $O(b^{1-2\theta\eta}(\log b)^2)=o(1)$。这是仅依赖实际标量 $b$ 的共同界，适用于全部有限 $S$，不借助指标上界。
+
+固定计数函数在完整区间 $(u,b]$ 上的 Abel 部分求和为
+
+$$
+\begin{aligned}
+\sum_{p\in\mathcal A_b}\frac1p
+&=\frac{A_\eta(b)}b-\frac{A_\eta(u)}u
++\int_u^b\frac{A_\eta(y)}{y^2}\,dy\\
+&\ge-\frac2{\log u}+\rho\int_u^b\frac{dy}{y\log y}
+=\rho\log(1/\theta)-\frac2{\theta\log b}.
+\end{aligned}
+\tag{362.23}
+$$
+
+这里舍去非负上端项，用 $A_\eta(u)\le\pi(u)$ 控制下端项；（362.19）在每一个积分点成立。$1/p\le w(p)$，且支撑与非支撑在同一个 $\mathcal A_b$ 中分拆，故实际缺失费用满足
+
+$$
+\sum_{\substack{p\in\mathcal A_b\\p\nmid M}}w(p)
+\ge\rho\log(1/\theta)-\frac2{\theta\log b}-W_{\rm supp}(S,b).
+\tag{362.24}
+$$
+
+无需断言整个区间都缺失；其中所有实际存在的素数已经由（362.22）支付。
+
+对这个实际整数，低素数支撑从全部 $p\le b$ 中删除上述缺失部分；所有实际高素因子 $p>b$ 也一并支付，因为
+
+$$
+w(p)\le\frac1{p-1}
+\le\frac{\log p}{(b-1)\log b}\quad(p>b),
+\qquad \sum_{p\mid M}\log p\le\log M=b.
+$$
+
+于是高素数总费用至多 $b/((b-1)\log b)$。有限几何级数的精确 Euler 恒等式给
+
+$$
+\log\frac{\sigma(M)}M
+=\sum_{p\mid M}w(p)+E(M),
+\qquad E(M)=\sum_{p\mid M}\log(1-p^{-v_p(M)-1})\le0.
+$$
+
+这里只使用符号，不要求 $E(M)$ 趋零。Dusart 同文 [Theorem 6.12](https://arxiv.org/pdf/1002.0442v1) 的正确方向是
+
+$$
+\prod_{p\le x}(1-1/p)^{-1}
+<e^\gamma\log x\left(1+\frac{0.2}{(\log x)^2}\right)
+\quad(x\ge2973).
+$$
+
+取对数、用 $\log(1+t)\le t$，在 $x=b$ 处的上界为 $\gamma+\log\log b+0.2/(\log b)^2$。而 $\log\mathcal R(M)=\log(\sigma(M)/M)-\gamma-\log(\log b)$，所以 Robin 的对数归一化在此精确抵消，并非以渐近替换分母。合并（362.24）及全部高素数费用，得到
+
+$$
+\log\mathcal R(M(S))
+\le\rho\log\theta+\frac2{\theta\log b}
++W_{\rm supp}(S,b)
++\frac{0.2}{(\log b)^2}
++\frac b{(b-1)\log b}.
+\tag{362.25}
+$$
+
+$E(M)\le0$ 已被舍去。除 $\rho\log\theta$ 外的所有项由（362.22）控制，并且在 $b\to\infty$ 时共同趋零。
+
+最后按所需包络选择参数，保持选择先于集合。给定 $\varepsilon>0$，在（362.17）的开区间内先选 $\theta,\rho$，使
+
+$$
+K':=\theta^\rho<K_\eta+\varepsilon/2;
+$$
+
+这是因为 $\theta\downarrow1/(2\eta)$、$\rho\uparrow c(\eta)$ 时 $\theta^\rho\to K_\eta$。再固定 $\delta=\log((K_\eta+\varepsilon)/K')>0$。取一个共同 $B_0$，使每个实数 $b\ge B_0$ 满足此前全部起点条件，以及
+
+$$
+\frac2{\theta\log b}+h_{\theta,\eta}(b)
++\frac{0.2}{(\log b)^2}+\frac b{(b-1)\log b}\le\delta.
+$$
+
+对任意有限 $S$，只要 $b(S)\ge B_0$，便有 $M(S)>5040$；（362.25）指数化给 $\mathcal R(M(S))\le K'e^\delta=K_\eta+\varepsilon$，证明（362.16）。空集或 $M(S)=1$ 的 $b=0$ 不满足此前提，故从未对它们取双重对数。$c(11/20)=5/18$ 给所述具体常数与正误差下的最终严格不等式。整个推导不使用 RH，且结论只作用于所定义的实际有限 Fibonacci lcm 族。$\square$
+

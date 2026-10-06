@@ -7,89 +7,123 @@ namespace StrataLint.CoverBatch.Tests;
 public sealed partial class CoverBatchCommandTests
 {
     private const string ProblemPath = "Problems/batch-problem.md";
-    private const string FrozenPath = "Golden/Frozen/state/D5/S0/Carrier/Probe.lean.json";
 
     [Fact]
-    public void ProductionScribeReusesFrozenLoadsAndMatchesSequentialBytes()
+    public void CoverBatchDoesNotExecuteOrEmitScribeDefinitionsAndPreservesCoverage()
+    {
+        const string target = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
+        using var world = new BatchWorld { UseGitReader = true };
+        WriteEmissionInputs(world.Root);
+        WriteScribeFixture(world.Root, target, """
+            using StrataLint.Scribe;
+            using static StrataLint.Scribe.DefinitionDsl;
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => throw new System.InvalidOperationException("Scribe must not execute during cover-batch");
+            }
+            """);
+        world.WriteReportBundle();
+        var markdown = Path.Combine(world.Root, "Blueprint/D5/S0/Carrier/Probe.md");
+        var before = File.ReadAllBytes(markdown);
+
+        var result = world.RunProducers(Row(First, Gid) + Row(Second, OtherGid));
+
+        Assert.True(result.Success, result.Error + result.Output);
+        Assert.Equal(before, File.ReadAllBytes(markdown));
+        Assert.DoesNotContain("Blueprint/D5/S0/Carrier/Probe.md", result.Output, StringComparison.Ordinal);
+        Assert.Contains(CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
+        Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
+        Assert.Equal([Gid], world.Entry(First).CoverageGids.ToArray());
+        Assert.Equal([OtherGid], world.Entry(Second).CoverageGids.ToArray());
+    }
+
+    [Fact]
+    public void CoverBatchDoesNotCompileChangedInvalidDefinition()
+    {
+        const string target = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
+        using var world = new BatchWorld { UseGitReader = true };
+        WriteEmissionInputs(world.Root);
+        WriteScribeFixture(world.Root, target, "invalid C#");
+        world.WriteReportBundle();
+
+        var result = world.RunProducers(Row(First, Gid) + Row(Second, OtherGid));
+
+        Assert.True(result.Success, result.Error + result.Output);
+        Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
+        Assert.Single(world.Entry(First).Coverage);
+        Assert.Single(world.Entry(Second).Coverage);
+    }
+
+    [Fact]
+    public void CoverBatchIgnoresDefinitionsWithoutFullResources()
+    {
+        using var world = new BatchWorld { UseGitReader = true };
+        WriteEmissionInputs(world.Root);
+        WriteScribeFixture(world.Root, "Blueprint/D5/S0/Carrier/Probe.scribe.cs", """
+            using StrataLint.Scribe;
+            using static StrataLint.Scribe.DefinitionDsl;
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H("Probe"), Blocks(Paragraph(Text("body")))));
+            }
+            """);
+        WriteScribeFixture(world.Root, "Blueprint/D5/S0/Carrier/Unselected.scribe.cs", "invalid C#");
+        world.WriteReportBundle();
+
+        var result = world.RunProducers(Row(First, Gid) + Row(Second, OtherGid));
+
+        Assert.True(result.Success, result.Error + result.Output);
+        Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
+        Assert.NotEmpty(File.ReadAllBytes(Path.Combine(world.Root, "Blueprint/D5/S0/Carrier/Probe.md")));
+        Assert.False(File.Exists(Path.Combine(world.Root, "Blueprint/D5/S0/Carrier/Unselected.md")));
+        Assert.False(File.Exists(Path.Combine(world.Root, "tools/Generated/scribe-emissions.v1.json")));
+    }
+
+    [Fact]
+    public void CoverBatchReusesFrozenLoadsAndMatchesSequentialBytes()
     {
         using var sequential = new BatchWorld();
         using var batch = new BatchWorld();
         WriteProblem(sequential.Root);
         WriteProblem(batch.Root);
-        var verifier = new ProductionScribeEmissionVerifier(typeof(BatchClaimDefinition).Assembly);
         FrozenLoadCounter sequentialLoads;
-        using (sequentialLoads = new FrozenLoadCounter()) sequential.RunSingles(verifier);
+        using (sequentialLoads = new FrozenLoadCounter()) sequential.RunSingles();
         FrozenLoadCounter batchLoads;
         using var ledgerLoads = new LedgerLoadCounter();
         CommandResult result;
         using (batchLoads = new FrozenLoadCounter())
-            result = batch.Run(Row(First, Gid) + Row(Second, OtherGid), verifier);
+            result = batch.Run(Row(First, Gid) + Row(Second, OtherGid));
 
         Assert.True(result.Success, result.Error + result.Output);
         Assert.Equal(sequential.LedgerImage(), batch.LedgerImage());
         Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
-        Assert.Equal(1, batch.EmitCount);
+        Assert.Contains(CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
         output.WriteLine("FROZEN_LOADS session_only sequential_catalog={0} sequential_index={1} batch_catalog={2} batch_index={3}",
             sequentialLoads.Catalogs, sequentialLoads.Indexes, batchLoads.Catalogs, batchLoads.Indexes);
         Assert.Equal(1, batchLoads.Catalogs);
         Assert.Equal(1, batchLoads.Indexes);
         Assert.Equal(2, sequentialLoads.Catalogs);
         Assert.Equal(2, sequentialLoads.Indexes);
-        WriteLoadCounts("production-scribe-parser-owner", ledgerLoads);
-        Assert.Equal(1, ledgerLoads.BaselineLoads);
-        Assert.Equal([1, 1, 1], ledgerLoads.CandidateSnapshotLoads);
+        WriteLoadCounts("cover-batch-parser-owner", ledgerLoads);
+        Assert.Equal([1, 1], ledgerLoads.CandidateSnapshotLoads);
     }
 
     [Fact]
-    public void ProductionScribeRejectsMissingResolutionDossierForEveryItem()
+    public void CoverBatchDoesNotValidateScribeResolutionDossiers()
     {
         using var world = new BatchWorld();
         WriteProblem(world.Root);
         TemporaryFileSystem.File.Delete(Path.Combine(world.Root, ProblemPath));
         var before = world.LedgerImage();
-        var verifier = new ProductionScribeEmissionVerifier(typeof(BatchClaimDefinition).Assembly);
 
-        var result = world.Run(Row(First, Gid) + Row(Second, OtherGid), verifier);
+        var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));
 
-        Assert.Equal(1, result.ExitCode);
-        Assert.Equal(["failed", "failed"], Results(result).Select(item => item.Status).ToArray());
-        Assert.All(Results(result), item =>
-            Assert.Contains("dangling-problem-slug", item.Reason, StringComparison.Ordinal));
-        Assert.Equal(before, world.LedgerImage());
-        Assert.Equal(1, world.EmitCount);
-    }
-
-    [Theory]
-    [InlineData(FrozenPath)]
-    [InlineData(ProblemPath)]
-    [InlineData("D5/S0/Carrier/Probe.lean")]
-    public void ProductionScribeCannotHideChangedSharedInputsAfterOneSuccess(string changedPath)
-    {
-        using var world = new BatchWorld();
-        WriteProblem(world.Root);
-        var verifier = new ProductionScribeEmissionVerifier(typeof(BatchClaimDefinition).Assembly);
-        var calls = 0;
-        BatchClaimDefinition.Creating.Value = () =>
-        {
-            if (++calls == 2)
-                TemporaryFileSystem.File.AppendAllText(Path.Combine(world.Root, changedPath), "\n");
-        };
-        try
-        {
-            var result = world.Run(Row(First, Gid) + Row(Second, OtherGid) + Row("missing-atom", Gid), verifier);
-
-            Assert.Equal(1, result.ExitCode);
-            Assert.Equal(["applied", "failed", "blocked"], Results(result).Select(item => item.Status).ToArray());
-            Assert.Contains("shared cover context changed: " + changedPath, result.Error, StringComparison.Ordinal);
-            Assert.Single(world.Entry(First).Coverage);
-            Assert.Empty(world.Entry(Second).Coverage);
-            Assert.Equal(2, calls);
-            Assert.Equal(0, world.EmitCount);
-        }
-        finally
-        {
-            BatchClaimDefinition.Creating.Value = null;
-        }
+        Assert.True(result.Success, result.Error + result.Output);
+        Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
+        Assert.NotEqual(before, world.LedgerImage());
+        Assert.Single(world.Entry(First).Coverage);
+        Assert.Single(world.Entry(Second).Coverage);
     }
 
     private sealed class FrozenLoadCounter : IDisposable
@@ -114,11 +148,8 @@ public sealed partial class CoverBatchCommandTests
 
     private sealed class BatchClaimDefinition : IScribeDocumentDefinition
     {
-        internal static readonly AsyncLocal<Action?> Creating = new();
-
         public DocumentDefinition Create()
         {
-            Creating.Value?.Invoke();
             var statement = FormulaDsl.In(
                 DefinitionDsl.Equal(DefinitionDsl.Id("x"), DefinitionDsl.Id("x")));
             var claim = Describe.Lean(DescribeId.Create("resolution"), DeclarationHandle.Create(Gid),

@@ -9,42 +9,28 @@ public sealed class DocumentGraph
 {
     internal DocumentGraph(
         ImmutableDictionary<string, ImmutableArray<DocumentEdge>> edges,
-        ImmutableDictionary<string, ImmutableArray<DocumentEdge>> explicitEdges,
         ImmutableArray<DocumentGraphFinding> findings)
     {
         Edges = edges;
-        ExplicitEdges = explicitEdges;
         Findings = findings;
     }
 
     internal ImmutableDictionary<string, ImmutableArray<DocumentEdge>> Edges { get; }
-
-    internal ImmutableDictionary<string, ImmutableArray<DocumentEdge>> ExplicitEdges { get; }
 
     internal ImmutableArray<DocumentGraphFinding> Findings { get; }
 
     internal ImmutableArray<DocumentEdge> For(ScribeDocument document) =>
         Edges.TryGetValue(document.Header.Gid.Value, out var edges) ? edges : [];
 
-    internal ImmutableHashSet<string> ReferencedDescribeIds(ScribeDocument document) =>
-        ExplicitEdges.Values
-            .SelectMany(static edges => edges)
-            .OfType<DocumentEdge.NarrativeReference>()
-            .Select(static edge => edge.Target)
-            .OfType<NarrativeTarget.Describe>()
-            .Where(target => string.Equals(
-                target.DocumentGid.Value,
-                document.Header.Gid.Value,
-                StringComparison.Ordinal))
-            .Select(static target => target.DescribeId.Value)
-            .ToImmutableHashSet(StringComparer.Ordinal);
 }
 
 public static class DocumentGraphAssembler
 {
     public static DocumentGraph Assemble(
         IEnumerable<ScribeDocument> documents,
-        DeclarationCatalog? catalog)
+        DeclarationCatalog? catalog,
+        string? repositoryRoot = null,
+        bool validateTargets = true)
     {
         ArgumentNullException.ThrowIfNull(documents);
         var material = documents.ToImmutableArray();
@@ -58,37 +44,57 @@ public static class DocumentGraphAssembler
         var findings = ImmutableArray.CreateBuilder<DocumentGraphFinding>();
         var edges = ImmutableDictionary.CreateBuilder<string, ImmutableArray<DocumentEdge>>(
             StringComparer.Ordinal);
-        var explicitEdges = ImmutableDictionary.CreateBuilder<string, ImmutableArray<DocumentEdge>>(
-            StringComparer.Ordinal);
-
         foreach (var document in material.OrderBy(static item => item.Header.Gid.Value, StringComparer.Ordinal))
         {
             var assembled = Extract(document)
-                .Concat(ProjectLeanImports(document, catalog, byLeanModule))
+                .Concat(ProjectLeanImports(document, catalog, byLeanModule, repositoryRoot))
                 .DistinctBy(CanonicalKey, StringComparer.Ordinal)
                 .OrderBy(RoleOrder)
                 .ThenBy(CanonicalKey, StringComparer.Ordinal)
                 .ToImmutableArray();
             edges.Add(document.Header.Gid.Value, assembled);
-            explicitEdges.Add(document.Header.Gid.Value, document.Edges);
+            var describeIds = DescribeIds(document.Content);
             foreach (var edge in assembled)
             {
+                if (edge is DocumentEdge.NarrativeReference { Target: NarrativeTarget.Describe describe })
+                {
+                    if (!string.Equals(describe.DocumentGid.Value, document.Header.Gid.Value,
+                        StringComparison.Ordinal))
+                    {
+                        findings.Add(new DocumentGraphFinding(
+                            "cross-document-describe-reference", document.Header.Gid.Value,
+                            $"Describe reference targets another document: {describe.DocumentGid.Value}"
+                            + $"#describe/{describe.DescribeId.Value}; use a document-level reference"));
+                        continue;
+                    }
+
+                    if (!describeIds.Contains(describe.DescribeId.Value))
+                    {
+                        findings.Add(new DocumentGraphFinding(
+                            "dangling-describe-edge", document.Header.Gid.Value,
+                            $"Describe edge does not resolve: {describe.DocumentGid.Value}#describe/{describe.DescribeId.Value}"));
+                    }
+                    continue;
+                }
                 var isExplicit = document.Edges.Any(candidate => string.Equals(
                     CanonicalKey(candidate), CanonicalKey(edge), StringComparison.Ordinal));
-                ValidateTarget(
-                    document.Header.Gid.Value,
-                    edge,
-                    isExplicit,
-                    byGid,
-                    catalog,
-                    findings);
+                if (validateTargets)
+                {
+                    ValidateTarget(
+                        document.Header.Gid.Value,
+                        edge,
+                        isExplicit,
+                        byGid,
+                        catalog,
+                        findings);
+                }
             }
         }
 
-        FindDependencyCycles(edges, findings);
+        if (validateTargets)
+            FindDependencyCycles(edges, findings);
         return new DocumentGraph(
             edges.ToImmutable(),
-            explicitEdges.ToImmutable(),
             findings
                 .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
                 .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
@@ -106,12 +112,9 @@ public static class DocumentGraphAssembler
 
     internal static string CanonicalKey(DocumentEdge edge) => edge switch
     {
-        // The canonical key is BOTH the dedup key and the ordering key (see .DistinctBy/.ThenBy
-        // in Assemble). DescribeId must therefore come AFTER the declaration: putting it first
-        // reorders anchors across declarations, which rewrites every emitted References section
-        // and invalidates the digestion coverage GIDs that point at them. Keeping the explicit
-        // anchor's key byte-identical preserves the previous ordering exactly, while the
-        // "#<describe-id>" suffix still keeps two Describes on one declaration distinct.
+        // Assemble uses the canonical key for both deduplication and ordering. The declaration
+        // precedes DescribeId so anchors group by declaration and retain the coverage GID order.
+        // The "#<describe-id>" suffix distinguishes Describes on the same declaration.
         DocumentEdge.TruthAnchor truth => truth.DescribeId is null
             ? $"truth:{truth.Target.Value}"
             : $"truth:{truth.Target.Value}#{truth.DescribeId.Value}",
@@ -138,7 +141,8 @@ public static class DocumentGraphAssembler
     private static IEnumerable<DocumentEdge> ProjectLeanImports(
         ScribeDocument document,
         DeclarationCatalog? catalog,
-        IReadOnlyDictionary<string, string> documentsByLeanModule)
+        IReadOnlyDictionary<string, string> documentsByLeanModule,
+        string? repositoryRoot)
     {
         if (!RepoPath.TryCreate(document.Header.Gid.Value + ".lean", out var sourcePath))
         {
@@ -154,12 +158,22 @@ public static class DocumentGraphAssembler
                      .Distinct(StringComparer.Ordinal)
                      .Order(StringComparer.Ordinal))
         {
-            if (documentsByLeanModule.TryGetValue(importedModule, out var targetGid)
+            var targetGid = repositoryRoot is null
+                ? documentsByLeanModule.GetValueOrDefault(importedModule)
+                : SourceGidForExistingDefinition(repositoryRoot, importedModule);
+            if (targetGid is not null
                 && !string.Equals(targetGid, document.Header.Gid.Value, StringComparison.Ordinal))
             {
                 yield return DocumentEdge.Dependency.Create(GidRef.Create(targetGid));
             }
         }
+    }
+
+    private static string? SourceGidForExistingDefinition(string repositoryRoot, string leanModule)
+    {
+        var relative = leanModule.Replace('.', '/') + ".scribe.cs";
+        var path = Path.Combine(repositoryRoot, "Blueprint", relative);
+        return File.Exists(path) ? leanModule.Replace('.', '/') : null;
     }
 
     private static string LeanModuleName(string documentGid) =>
@@ -245,11 +259,9 @@ public static class DocumentGraphAssembler
             DocumentEdge.Dependency dependency => dependency.Target,
             DocumentEdge.NarrativeReference { Target: NarrativeTarget.Document document } =>
                 document.DocumentGid,
-            DocumentEdge.NarrativeReference { Target: NarrativeTarget.Describe describe } =>
-                describe.DocumentGid,
             _ => throw new InvalidOperationException("Unknown document edge."),
         };
-        if (!documents.TryGetValue(target.Value, out var targetDocument))
+        if (!documents.ContainsKey(target.Value))
         {
             findings.Add(new DocumentGraphFinding(
                 isExplicit ? "dangling-document-edge" : "dangling-gid", source,
@@ -257,13 +269,6 @@ public static class DocumentGraphAssembler
             return;
         }
 
-        if (edge is DocumentEdge.NarrativeReference { Target: NarrativeTarget.Describe describeTarget }
-            && !DescribeIds(targetDocument.Content).Contains(describeTarget.DescribeId.Value))
-        {
-            findings.Add(new DocumentGraphFinding(
-                "dangling-describe-edge", source,
-                $"Describe edge does not resolve: {target.Value}#describe/{describeTarget.DescribeId.Value}"));
-        }
     }
 
     private static HashSet<string> DescribeIds(BlockSequence blocks)

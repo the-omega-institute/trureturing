@@ -1,0 +1,36 @@
+### 63.8 不限制控制器的完整记录下界
+
+保留第 62.5–62.6 节的实际行 KL 与共同历史分解，明确换用商类和合法正值 End 输入。令
+
+$$
+U=(4+2\alpha)/12,\quad V=(4-\alpha)/12,\quad H=(U+V)/2.
+$$
+
+三行为 $(U,V,V),(H,V,H),(V,V,U)$。定义
+
+$$
+D_\alpha=\frac\alpha4\ln\frac UV,\quad
+d_0=U\ln\frac UH+V\ln\frac VH,\quad
+d_1=H\ln\frac{H^2}{UV}.
+$$
+
+完整有向行 KL 表为
+
+$$
+\begin{pmatrix}0&d_0&D_\alpha\\d_1&0&d_1\\D_\alpha&d_0&0\end{pmatrix},\quad
+d_0+d_1=D_\alpha/2,
+\quad D_\alpha\le3\alpha^2/16.
+\tag{63.29}
+$$
+
+末界来自 $\frac{d}{d\alpha}\ln\frac{4+2\alpha}{4-\alpha}=12/((4+2\alpha)(4-\alpha))\le3/4$。对完整均匀记录，KL 恰为实际输入律下条件行 KL 的平均；Pinsker 和行 TV $\alpha|c-c'|/8$ 还给
+
+$$
+\alpha^2\gamma/32\le
+\mathrm{KL}(P_{\theta,\alpha}^{(X,Y)}\|P_{\tau,\alpha}^{(X,Y)})\le D_\alpha
+\quad(\theta\not\equiv_+\tau).
+\tag{63.30}
+$$
+
+此处没有沿用产品域的成对概率或 $\rho^{-2}$ 公式。
+

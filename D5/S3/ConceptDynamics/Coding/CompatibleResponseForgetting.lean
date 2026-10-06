@@ -317,7 +317,7 @@ noncomputable def incomingResponseV {p : ℕ} {M : CountMat p p} {Q : Type}
   classical
   exact fun Z H => if incomingResponseProjection L d H = Z then 1 else 0
 
-private theorem incoming_response_matrix_factor_base {p : ℕ} {M : CountMat p p}
+theorem incoming_response_matrix_factor_base {p : ℕ} {M : CountMat p p}
     {Q : Type} (L : IncomingLift M Q) (d : ℕ)
     [Fintype (Quotient (L.response (d + 1)))] :
     incomingResponseMatrix L d =

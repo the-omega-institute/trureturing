@@ -1,0 +1,15 @@
+## 4. 四个关系读数的代数逆
+
+对任意交换环和任意
+
+$$
+R=\begin{pmatrix}p&q\\r&s\end{pmatrix},
+$$
+
+记
+
+$$
+z_0=\operatorname{tr}(R),\quad z_1=\operatorname{tr}(MR),\quad
+z_2=\operatorname{tr}(JMR),\quad z_3=\operatorname{tr}(MJMR).
+$$
+

@@ -1,0 +1,99 @@
+{
+  "scope": "Paper-model same-family off-grid and full-Gamma retained-prime action inputs; no numerical action/Gram/sign",
+  "input_sha256": {
+    "strip-root-bounds-result.json": "d3057a0ff4017ee12be9825498080c8c925fdcfc3a1d676465795103039139de",
+    "high-trial-bounds-result.json": "88bb6871cc29fedecbfd79076e37b39d65b33337a26076b2f15c49cbd88d669a",
+    "continuous-projection-result.json": "b6ede09833c48b5716d5aa07b63b82e89096f19022e234e682c19aba799fb3c8",
+    "local-z-gram-result.json": "3ae37d3aed00a4226eb9bd04519268bf967a50effd8d11b97f64c64ca80c9de0",
+    "full-gamma-periodic-result.json": "04003b6bf45dcae458a30d49a97bb81308dfaaa676afc155206421892a542248",
+    "forward-action-result.json": "23e59d29ae6a4ff995a8443c838621f405873ce7e667d2e69542f722ed2bb957"
+  },
+  "precision_bits": 192,
+  "H_cardinal_Fourier_tail_pointwise_upper": {
+    "display": "[2.64047577091365492138627287727461918999233373838295353631e-35 +/- 2.75e-93]",
+    "dyadic": [
+      "1721198124797008598724113618630964425576199370729555734603",
+      "-305"
+    ]
+  },
+  "H_cardinal_lattice_quadrature_pointwise_upper": {
+    "display": "[2.64047577091365492138627287727461918999233373838295353636e-35 +/- 4.74e-92]",
+    "dyadic": [
+      "3442396249594017197448227237261928851152398741459111469277",
+      "-306"
+    ]
+  },
+  "off_lattice_Z_analytic_pointwise_error_upper": {
+    "display": "[5.28095154182730984277254575454923837998483966152964657573e-35 +/- 1.38e-92]",
+    "dyadic": [
+      "26893720699953259355064275291108819149628992034045093407",
+      "-298"
+    ]
+  },
+  "wide_strip_same_high_line_L2_upper": {
+    "display": "[2973918040.95474752048417219170334735153089687725325929287 +/- 3.91e-48]",
+    "dyadic": [
+      "1086596521535818675589955037482400296646917565564989754581",
+      "-158"
+    ]
+  },
+  "retained_prime_full_HZ_line_L2_upper": {
+    "display": "[185054098774.905630587781262986919723593663649244045316221 +/- 4.30e-46]",
+    "dyadic": [
+      "4225888568036237733355137492841667633439796538840184314865",
+      "-154"
+    ]
+  },
+  "retained_prime_full_HZ_pointwise_envelope_coefficient_upper": {
+    "display": "[13793073729949012.3448192911809133539407691049489778881145 +/- 2.05e-41]",
+    "dyadic": [
+      "4806184730564676717931107192404574876712699233585130478545",
+      "-138"
+    ]
+  },
+  "retained_prime_full_HZ_physical_and_lattice_L1_tail_upper": {
+    "display": "[6.97742403651258277472475262083899829396024540573111994650e-2015 +/- 4.26e-2072]",
+    "dyadic": [
+      "851265994906329024787323081011258404288134769978802355491",
+      "-6880"
+    ]
+  },
+  "retained_prime_full_HZ_sinc_projection_pointwise_error_upper": {
+    "display": "[4.21248119604116389766203264640006503154914220542476906300e-73 +/- 2.74e-130]",
+    "dyadic": [
+      "4671927579726855295884343528732095469158418777674839191415",
+      "-432"
+    ]
+  },
+  "same_high_real_mean_quadrature_and_tail_upper": {
+    "display": "[1.37646688483661896962953901514127203062728959457640706741e-78 +/- 3.52e-135]",
+    "dyadic": [
+      "4001877738439184704521584051243529053621869167706559438287",
+      "-450"
+    ]
+  },
+  "same_high_core_gamma_and_mean_analytic_error_upper": {
+    "display": "[6.79557731419990423555374738445533795646487434882347708011e-12 +/- 4.06e-69]",
+    "dyadic": [
+      "5862668862826502538825322692459196075237656424969063317333",
+      "-229"
+    ]
+  },
+  "same_high_prime_off_grid_input_error_upper": {
+    "display": "[4.14188703669471300839107542606649036096764050816422907348e-33 +/- 7.25e-91]",
+    "dyadic": [
+      "527323306478785381984864698011023536738072627605932461535",
+      "-296"
+    ]
+  },
+  "complete_omitted_prime_L2_action_error_same_family_upper": {
+    "display": "[9.37565314663704398013196884193601447307472409098457548301e-19 +/- 1.20e-76]",
+    "dyadic": [
+      "3392582705667253067547781655387854157354343230289225324261",
+      "-251"
+    ]
+  },
+  "full_Gamma_evaluated": false,
+  "common_residual_Gram_evaluated": false,
+  "Lean_certification": false
+}

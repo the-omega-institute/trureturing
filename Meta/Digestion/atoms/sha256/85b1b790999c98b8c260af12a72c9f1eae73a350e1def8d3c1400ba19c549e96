@@ -1,0 +1,11 @@
+## Theorem 1 Completed product-L2 unitary
+
+For arbitrary measurable spaces X and Y and arbitrary sigma-finite measures
+μ on X and ν on Y, there exists a complex linear isometric equivalence
+from the metric completion of the algebraic inner-product tensor
+L²(X,μ;ℂ) ⊗[ℂ] L²(Y,ν;ℂ) onto L²(X×Y,μ×ν;ℂ).
+For every f in L²(X,μ;ℂ) and g in L²(Y,ν;ℂ), this equivalence sends the
+completion image of f ⊗ g to the almost-everywhere class of
+(x,y) ↦ f(x)g(y). No topology, basis, caller-supplied density, finite
+total measure, positive measure or nonempty-space assumption is required.
+

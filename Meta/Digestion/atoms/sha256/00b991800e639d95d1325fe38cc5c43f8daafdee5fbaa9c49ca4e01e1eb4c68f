@@ -1,0 +1,23 @@
+**Theorem 11.1 (homomorphism-filtered fixed-point census).** Let $G$
+be a finite abelian group, let $A$ be any abelian group, and let
+$f:G\to A$ be an additive homomorphism. Put
+
+$$
+  \mathcal V_f=\{X\subset G:|X|=3,
+    \ f\text{ is injective on }X\}.
+$$
+
+Translation by $G$ preserves $\mathcal V_f$. For every nonzero
+$t\in G$,
+
+$$
+  |\operatorname{Fix}_t(\mathcal V_f)|=
+  \begin{cases}
+    |G|/3,&3t=0\text{ and }f(t)\ne0,\\
+    0,&\text{otherwise}.
+  \end{cases}
+$$
+
+The codomain $A$ may be infinite. Preservation itself holds for any
+abelian $G$, without a finiteness assumption.
+

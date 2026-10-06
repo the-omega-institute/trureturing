@@ -1,0 +1,22 @@
+**定义 362.1（任意有限实际族与 Euler 权重）。** 取 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$，并令 $\Phi=(1+\sqrt5)/2$、$L=\log\Phi>0$。对任意有限集合 $S\subseteq\mathbb N_{>0}$，定义
+
+$$
+\begin{aligned}
+D(S)&=\{d\in\mathbb N_{>0}:\exists s\in S,\ d\mid s\},\\
+M(S)&=\operatorname{lcm}\{F_s:s\in S\},& b(S)&=\log M(S),\\
+\Psi_d&=\prod_{e\mid d}F_e^{\mu(d/e)},& c_d&=\log\Psi_d,\\
+H_N&=\sum_{j=1}^N\frac1j,& w(p)&=\log\frac p{p-1}\quad(p\text{ 为素数}).
+\end{aligned}
+\tag{362.1}
+$$
+
+空最小公倍数与空乘积均取一；$\Psi_d$ 先在正有理数中定义。$\mu$ 为 Möbius 函数，$\varphi$ 为 Euler totient 函数，$v_p$ 为素数赋值。沿用 §358、§361 的实际首现秩 $z(a)=\min\{n\ge1:a\mid F_n\}$（整数 $a\ge2$），其存在性与整除判据见（361.8）。所有对数均为自然对数，正实数的实幂取 $t^a=\exp(a\log t)$。对整数 $M>5040$，记
+
+$$
+\mathcal R(M)=\frac{\sigma(M)}{e^\gamma M\log\log M},
+\qquad \sigma(M)=\sum_{d\mid M}d,
+\tag{362.2}
+$$
+
+其中 $\gamma$ 为 Euler 常数。
+

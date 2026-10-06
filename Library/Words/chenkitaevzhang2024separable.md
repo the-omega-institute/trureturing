@@ -11,6 +11,10 @@ strata_touched:
   - D5/S1/Words/Patterns/Separable/MinimumCutKernel
   - D5/S1/Words/Patterns/Separable/CutFactorization
   - D5/S1/Words/Patterns/Separable/ProperCut
+  - D5/S1/Words/Patterns/Separable/RecordPeak
+  - D5/S1/Words/Patterns/Separable/RecordTransport
+  - D5/S1/Words/Patterns/Separable/RecordFirstDecline
+  - D5/S1/Words/Patterns/Separable/RecordNewtonPositivity
 license: citation-only
 triage: anchor
 ---
@@ -74,9 +78,9 @@ the no-proper-cut prefix class, $J$ its exact record fiber, and $U$ the
 full avoiding record fiber. Both factor lengths are positive. At lengths
 zero and one there are no proper cuts. These helper formulas are known
 source and normalization reductions, obtained by strict block comparisons
-and weighting the existing minimum-cut reconstruction. They are source/library
-intake, with four ingested definition/theorem atoms still open, and carry no
-retained new Lean formalization, theorem settlement, or novelty claim.
+and weighting the existing minimum-cut reconstruction. They are used locally
+in the actual right-maximum proof below; no new standalone normalization helper
+theorems are retained.
 
 `ActualCardinality.actual_schroder_cardinality` supplies the existing actual
 signed least-cut equivalence with exact dependent-length reconstruction.
@@ -87,13 +91,77 @@ equivalence. The least-cut reconstruction used by the mathematical source is
 the existing project supplier. Fu–Lin–Zeng's later greatest-cut tree
 construction is a separate decomposition.
 
-The full actual record generating-function bridge, its unmarked series
-identification and boundary corrections, universal coefficient positivity
-and peak-three inequalities, and avoidance/class/record symmetry transports
-for all four pairs remain missing. The signed record helpers supply none of
-these full assertions by themselves. The relevant scalar cut and cardinality
-results are in `ActualCardinality`, `MinimumCutKernel`, `CutFactorization`,
-and `ProperCut`; descent statistics in Fu–Lin–Zeng are a different question.
+For every $n\ge4$, the actual $2413/3142$ avoiders with no proper direct cut
+and exactly two strict right maxima are at most those with exactly three:
+$a_{\mathrm{irreducible},\mathrm{rmax}}(n,2)\le
+a_{\mathrm{irreducible},\mathrm{rmax}}(n,3)$. This is supplied by
+[`RecordPeak.actual_record_rising`](../../Blueprint/D5/S1/Words/Patterns/Separable/RecordPeak.md)
+with no generating-function premise. Local finite-fiber and scalar
+generating-function derivations, together with a universal positive quotient
+and derivative composition argument, establish this adjacent comparison.
+
+[`RecordTransport.actual_four_record_transports_and_rising`](../../Blueprint/D5/S1/Words/Patterns/Separable/RecordTransport.md)
+gives the exact all-length actual transports. If $i_t$ and $d_t$ are the
+positive irreducible and proper-direct-cut record counts, then
+$i_{\mathrm{lmin}}=i_{\mathrm{rmax}}$ and
+$d_{\mathrm{lmax}}+\delta=d_{\mathrm{rmin}}+\delta=i_{\mathrm{rmax}}$,
+where $\delta(n,k)=1$ exactly at $n=k=1$. The theorem constructs actual
+reverse, complement and reverse-complement avoidance and cut transports,
+and restricts their record-position bijections to the exact record fibers.
+It excludes the empty permutation from irreducibility and treats the
+singleton separately. It also proves, for all four class/statistic pairs,
+zero counts at record zero for positive lengths, zero counts at record one
+for $n\ge2$, and every adjacent rising comparison $k<3$ for every $n\ge4$.
+The two-to-three right-maximum comparison uses the existing `RecordPeak`
+theorem directly.
+
+[`RecordFirstDecline.actual_four_record_first_decline`](../../Blueprint/D5/S1/Words/Patterns/Separable/RecordFirstDecline.md)
+gives the actual comparison $a(n,4)\le a(n,3)$ at every natural length,
+and the strict comparison $a(n,4)<a(n,3)$ for every $n\ge3$, for all four
+class/statistic pairs. Its actual weighted difference is $t^3F(q(t))$,
+where $F(x)=1+4x+2x^2-8x^3-6x^4+11x^5+15x^6+5x^7$.
+The exact quotient $(1+x)^2F'(x)/(1-2x-x^2)$ has coefficients
+$4,20,32,16,47,286,889,2224,5372$ through index eight and an unbounded
+nonnegative tail satisfying $v_m=2v_{m-1}+v_{m-2}$. Its positive-index
+composition coefficients dominate those of $20q(t)$; the scalar Schröder
+recurrence gives positivity of the actual $q$ at every positive index.
+The derivative identity and $F(0)=1$ therefore establish strict positivity
+of every coefficient of $F(q(t))$. The theorem applies the existing
+record transports directly. It has no conditional generating-function
+premise and uses no finite length cutoff.
+
+[`RecordNewtonPositivity.actual_q_record_newton_nonnegative`](../../Blueprint/D5/S1/Words/Patterns/Separable/RecordNewtonPositivity.md)
+proves $[t^n]G_r(q(t))\ge0$ for all natural kernel indices $r$ and length
+indices $n$, using the actual scalar $q=tL(t)$. In the independent variable
+$u$, let $a=u(3+2u)$, $b=u(1+u)^3$, $c=u(4+3u)$ and
+$M(z)=(1-az)^{-1}C(bz^2/(1-az)^2)$, where $C$ is Mathlib's Catalan
+series. With $T_r=[z^r]M$, the kernel is
+
+$$
+G_r=(1+u)^2(T_r+T_{r+1})
+-u(1-u)(1+u)(T_r+2T_{r+1}+T_{r+2}).
+$$
+
+The proof derives the universal recurrence
+$(r+4)T_{r+2}=(2r+5)aT_{r+1}+(r+1)cT_r$ inside the live theorem.
+Twelve exact derivative-quotient certificates give the initial kernels.
+Two consecutive certificates for each of $E_1T_r$ and $E_2T_r$, with
+$E_1=(1+u)^2(1-u-2u^2+3u^3)$ and
+$E_2=(1+u)^2(1-2u-2u^2+4u^3)$, propagate by that recurrence to every
+remaining kernel. The reduction uses the actual scalar identity
+$t(1+q)=q(1-q)$; there is no parameter cutoff or assumed sign premise.
+
+The declining inequalities at arbitrary $k\ge4$ and the global maximum
+at three remain open. The missing inference is the normalized actual
+record-coefficient formula and its Newton transform connecting each
+actual difference to these nonnegative kernels. The unbounded sign law
+alone supplies neither correspondence.
+The [problem dossier](../../Problems/chenkitaevzhang-2024-separable-record-peak-three.md)
+keeps the complete target distinct from them. Full CKZ Conjecture 2 and C15
+remain OPEN; no partial theorem is a full external resolution, novelty or
+priority claim. The relevant scalar cut and cardinality results are in
+`ActualCardinality`, `MinimumCutKernel`, `CutFactorization` and `ProperCut`;
+descent statistics in Fu–Lin–Zeng are a different question.
 
 The supplied bounded literature screen reports examination of the primary
 and manuscript bodies, five known citing bodies, and related record, descent,
@@ -108,4 +176,4 @@ Han–Kitaev–Zhang, arXiv:2408.12865v1. The screen found no equivalent proof
 or refutation of Conjecture 2 within that corpus. This scope does not establish
 global priority, exhaustive citation coverage, exclusive ownership, or the
 unavailable journal body's contents. No originality or open-problem resolution
-is attributed to the two helper identities.
+is attributed to these partial conclusions.
