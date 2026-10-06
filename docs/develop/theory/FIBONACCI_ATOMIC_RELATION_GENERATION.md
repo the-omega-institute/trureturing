@@ -61965,3 +61965,166 @@ $$
 式（405.4）指出了当前表示中的真实联合抵消，但不是 Robin 或 RH 的反例。它也不排除先消去一份全积分为零的已知主部，再估计剩余表示。中心增长来自 $s=1$ 的经典极点，而非未知零点或五模式分支数；下一步应核对这种精确中心化能否保留完整实际积分，不能仅丢弃 $\mathfrak A_x$。
 
 ## 追加锚（本行以下为增补区）
+
+## 406. 全积分为零的已知主部与中心频率的临界预算
+
+本节不删除 §405 的实际中心贡献，而是使用经典 Mellin 支撑规则，在同一完整积分中扣除一份总积分恰为零的明确函数。它复用 §404 的合法反演与实际 $\mathcal B$，新增的是阻尼参数、主部系数和共同低频范围之间的接口。没有执行携带 $\zeta$ 的移线，未完成 Lean 核验，也不将这项中心化称为新的 RH 判据。
+
+**定义 406.1（实际极点系数与中心化源函数）。** 对充分小的 $\varepsilon\ge0$，在 $z=1$ 的邻域定义
+
+$$
+p_\varepsilon(z)=
+\frac{\mathcal B(z+\varepsilon)}{z\mathcal B(z)\zeta(z+\varepsilon)}.
+\tag{406.1}
+$$
+
+$1/\zeta$ 在 $1$ 处采用其已知解析延拓值 $0$。置
+
+$$
+\begin{aligned}
+a_\varepsilon&=p_\varepsilon(1),\qquad
+b_\varepsilon=p_\varepsilon'(1),\\
+c_\varepsilon&=\frac12p_\varepsilon''(1)+\gamma_1a_\varepsilon,\\
+Q_\varepsilon(z)&=
+\frac{a_\varepsilon}{(z-1)^2}
++\frac{b_\varepsilon}{z-1}
++\frac{c_\varepsilon}{(z-2)^2},\\
+\mathscr G_\varepsilon^\circ(z)&=
+\mathscr G_\varepsilon(z)-Q_\varepsilon(z).
+\end{aligned}
+\tag{406.2}
+$$
+
+$\gamma_1$ 沿用（398.13）的 Stieltjes 常数约定。三个系数只读取既有解析函数在 $1$ 附近的值与导数，不含未知 Robin 差额。$a_\varepsilon,b_\varepsilon,c_\varepsilon$ 是本节局部符号，与 §397 的核预算常数不同。最后一个有理项用于消去剩余的常数项；它不是额外的算术来源。
+
+**命题 406.2（中心化保留完整实际积分）。** 对每个固定 $x>1$ 和充分小的 $0<\varepsilon<1$，仍在同一条 $\sigma_\varepsilon=1-\varepsilon/2$ 线上，有绝对收敛等式
+
+$$
+\boxed{
+\frac1{2\pi i}\int_{\sigma_\varepsilon-i\infty}^{\sigma_\varepsilon+i\infty}
+Q_\varepsilon(z)\widetilde w_x(z)dz=0,\qquad
+I_\varepsilon(x)=\frac1{2\pi i}\int_{\sigma_\varepsilon-i\infty}^{\sigma_\varepsilon+i\infty}
+\mathscr G_\varepsilon^\circ(z)\widetilde w_x(z)dz.}
+\tag{406.3}
+$$
+
+存在独立于 $\varepsilon$ 的 $r>0$、$C<\infty$，使对充分小的 $\varepsilon\ge0$，$\mathscr G_\varepsilon^\circ$ 在 $|z-1|\le r$ 上有可去延拓，并满足
+
+$$
+\boxed{|\mathscr G_\varepsilon^\circ(z)|\le C|z-1|.}
+\tag{406.4}
+$$
+
+沿（405.2）的实际日程，其中心频率绝对预算因而为
+
+$$
+\boxed{
+\frac1{2\pi}\int_{-\varepsilon_x/2}^{\varepsilon_x/2}
+|\mathscr G_{\varepsilon_x}^\circ(z_\tau)\widetilde w_x(z_\tau)|d\tau
+=O\!\left(\frac1{x\log x}\right)
+=o\!\left(\frac1{\sqrt x\log x}\right).}
+\tag{406.5}
+$$
+
+更宽的实际低频范围也可支付。置
+
+$$
+\Delta_x=\frac{x^{-1/4}}{(\log x)^{3/2}},
+\qquad \frac{\Delta_x}{\varepsilon_x}
+=\frac{x^{1/4}}{\sqrt{\log x}}\longrightarrow\infty.
+\tag{406.10}
+$$
+
+同一中心化源函数满足
+
+$$
+\boxed{
+\frac1{2\pi}\int_{-\Delta_x}^{\Delta_x}
+|\mathscr G_{\varepsilon_x}^\circ(z_\tau)\widetilde w_x(z_\tau)|d\tau
+=O\!\left(\frac1{\sqrt x\log^2x}\right)
+=o\!\left(\frac1{\sqrt x\log x}\right).}
+\tag{406.11}
+$$
+
+证明。首先，$1/\zeta(z)$ 在 $1$ 的解析延拓来自既有 Laurent 展开；其邻域中的唯一零点为 $1$，可缩小邻域以排除其他零点或奇点。$\mathcal B$ 在该邻域无零点，$z$ 也非零。故（406.1）在 $(z-1,\varepsilon)$ 的一个共同复邻域中解析，而不仅逐个 $\varepsilon$ 解析。
+
+采用同一 Laurent 约定，
+
+$$
+-\zeta'(1+t)=t^{-2}+\gamma_1+O(t).
+$$
+
+将共同解析函数 $p_\varepsilon(1+t)$ 的 Taylor 展开代入，得到
+
+$$
+\mathscr G_\varepsilon(1+t)
+=\frac{a_\varepsilon}{t^2}+\frac{b_\varepsilon}{t}
++c_\varepsilon+O(t),
+\tag{406.6}
+$$
+
+余项对充分小的 $\varepsilon$ 一致有界。这一一致性可直接由共同解析邻域和紧子圆盘上的 Cauchy 导数界取得，不假设临界线上的零点条件。$c_\varepsilon/(z-2)^2$ 在 $z=1$ 的常数项恰为 $c_\varepsilon$，其余项为 $O(t)$。所以（406.4）成立。经典展开还给
+
+$$
+a_\varepsilon=\varepsilon+O(\varepsilon^2),\qquad
+b_\varepsilon=1+O(\varepsilon),\qquad
+c_\varepsilon=-(1+\gamma)+O(\varepsilon).
+\tag{406.7}
+$$
+
+最后一式使用 $p_0(z)=1/[z\zeta(z)]$；这里仅复用标准 Laurent 系数。
+
+其次，证明所扣除的项完整积分确实为零。经典 Mellin 支撑规则可用一个完全受控的矩形积分说明：$\widetilde w_x$ 在 $\Re z<1$ 上解析，$Q_\varepsilon$ 的唯一极点为 $1,2$，都在原反演线右边。对任意固定 $R>0$，只将 $Q_\varepsilon\widetilde w_x$ 的积分线移动至 $\Re z=-R$；矩形内没有极点。这不是将携带 $\zeta$ 的完整被积函数移线。
+
+从（404.2）置 $v(u)=(u+1)/u^2$、$\ell=\log x$。$v$ 正且递减。一次分部积分给，对 $z=\sigma+i\tau$、$\sigma<1$，
+
+$$
+|\widetilde w_x(z)|
+\le\frac{2v(\ell)e^{-(1-\sigma)\ell}}{|1-z|}.
+\tag{406.8}
+$$
+
+因此原竖线和左竖线的三个有理项均绝对可积。对固定 $R$，上下水平边在 $|\tau|\to\infty$ 时为 $O_{x,R,\varepsilon}(|\tau|^{-2})$，其积分趋零。$\Re z=-R$ 上的绝对积分则由常数倍
+
+$$
+x^{-R-1}\left[
+\frac{|b_\varepsilon|}{R+1}
++\frac{|a_\varepsilon|}{(R+1)^2}
++\frac{|c_\varepsilon|}{(R+1)^2}\right]
+\tag{406.9}
+$$
+
+控制。这里使用 $|z-2|\ge|z-1|$ 及既有的有理函数竖线积分。令 $R\to\infty$ 得零。所有移动均只针对这份已知无左半平面极点的有理项，且先固定 $R$ 再令高度趋于无穷。由经典 Cauchy 定理即得（406.3）第一式。
+
+在（404.9）中扣除这份绝对存在且为零的完整积分，得到第二式；新的完整竖线 $L^1$ 性由旧完整积分及上述有理项共同支付。没有以一个窗口的零值代替完整积分，也没有丢失 $n=1$ 的来源。
+
+最后在 $|\tau|\le\varepsilon_x/2$ 上，$|z_\tau-1|\le\varepsilon_x/\sqrt2$。式（405.6）给 $|\widetilde w_x(z_\tau)|=O(\ell)$，与（406.4）相乘并在长度 $\varepsilon_x$ 的真实中心弧上积分，得到
+
+$$
+O(\varepsilon_x^2\ell)=O(e^{-\ell}/\ell)=O(1/(x\log x)).
+$$
+
+除以目标尺度 $1/(\sqrt x\log x)$ 后，其比值为 $O(x^{-1/2})\to0$，即（406.5）。
+
+对更宽的 $|\tau|\le\Delta_x$，已有 $E_1$ 展开仍适用：$v=(1-z_\tau)\ell$ 的实部为 $e^{-\ell/2}/2>0$，而
+
+$$
+\frac{e^{-\ell/2}}2\le|v|
+\le\frac{e^{-\ell/2}}2+\frac{e^{-\ell/4}}{\sqrt\ell}
+\longrightarrow0.
+$$
+
+其主对数满足 $|\log v|\le\ell/2+O(1)$，因 $|\arg v|<\pi/2$。式（404.4）因而给整个该范围的 $|\widetilde w_x(z_\tau)|=O(\ell)$。$|z_\tau-1|\le\varepsilon_x/2+|\tau|$，所以（406.4）在同一实际积分中给
+
+$$
+O\!\left(\ell[\varepsilon_x\Delta_x+\Delta_x^2]\right)
+=O\!\left(\frac1{\sqrt x\ell^2}\right).
+$$
+
+这里 $\varepsilon_x/\Delta_x=e^{-\ell/4}\sqrt\ell\to0$，故交叉项不大于平方项。这证明（406.11），且所有低频域与阻尼仍属于同一个 $x$。$\square$
+
+**适用边界。** $r,C$ 和起始阈值的存在来自已知函数的局部解析性，这里不给数值认证。单独扣除 $a_\varepsilon/(z-1)^2+b_\varepsilon/(z-1)$ 只会留下通常非零的常数项，不能由上述局部论证取得（406.5）；额外的 $(z-2)^{-2}$ 项在保持完整积分为零的同时支付了这项缺口。
+
+已被中心化的 $\log x$ 主项属于当前表示的已知极点预算。该操作保持完整 $I_\varepsilon$，并将其中心频率送到临界尺度以下；在 $|\tau|>\Delta_x$ 的实际余项仍须另行估计。减去的有理函数在 §404 的所有移位非平凡零点附近解析，因而不改变那些局部极点的阶数。零点贡献、剩余频率与源系数的临界联合抵消没有得到新的全域上界。由 §403 回接 $I_\psi$ 的误差仍可直接复用，完整 Robin 与 RH 仍未解决。
+
+## 追加锚（本行以下为增补区）
