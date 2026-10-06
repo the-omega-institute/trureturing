@@ -20,13 +20,14 @@ open D5.S3.Fourier.CharacterSelection.BinaryCharacterCodeDuality
 sent to the linear functional obtained by summing its endpoint characters.
 Over ZMod 2 this is the usual unoriented graph boundary, expressed through
 the standard coordinate pairing. -/
-noncomputable def graphBoundary {V : Type*} (G : SimpleGraph V) :
+noncomputable def graphBoundary {V : Type*} (G : SimpleGraph V)
+    [Fintype G.edgeSet] :
     (G.edgeSet → ZMod 2) →ₗ[ZMod 2] Module.Dual (ZMod 2) (V → ZMod 2) :=
   Fintype.linearCombination (ZMod 2) (endpointCharacters G)
 
 /-- First homology in the finite binary graph chain model. -/
-noncomputable def graphFirstHomology {V : Type*} [Fintype G.edgeSet]
-    (G : SimpleGraph V) : Submodule (ZMod 2) (G.edgeSet → ZMod 2) :=
+noncomputable def graphFirstHomology {V : Type*} (G : SimpleGraph V)
+    [Fintype G.edgeSet] : Submodule (ZMod 2) (G.edgeSet → ZMod 2) :=
   LinearMap.ker (graphBoundary G)
 
 /-- The cycle-space carrier is exactly the kernel of the graph boundary. -/
@@ -40,7 +41,8 @@ theorem graphFirstHomology_eq_simpleCycleSpace
   simpa [graphFirstHomology, graphBoundary, characterRelationSpace] using hspace.symm
 
 /-- The first Betti rank of the finite binary graph chain model. -/
-def graphBettiOne {V : Type*} [DecidableEq V] (G : SimpleGraph V) : Nat :=
+def graphBettiOne {V : Type*} [DecidableEq V] (G : SimpleGraph V)
+    [Fintype G.edgeSet] : Nat :=
   Module.finrank (ZMod 2) (graphFirstHomology G)
 
 /-- The Euler cycle rank |E| - |V| + c, written with natural subtraction
