@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement;
 internal sealed class CharacteristicThreeSpikeAmbiguityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Measurement/CharacteristicThreeSpikeAmbiguity.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Quantum/zhu2026stable");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuantumStates/zhu2026stable");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Flat-plus-spike states have uniformly nonvanishing characteristic-three ambiguity.",
