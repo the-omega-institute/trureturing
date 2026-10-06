@@ -1103,6 +1103,82 @@ Hall inequalities; separate choices per color do not establish them.
 This leaves the same actual-source allocation obligation, without
 requiring the stronger cofactor-disjointness condition.
 
+## Minimal divisor-allocation failures have small row deficits
+
+Retain one specified finite family of selected occurrences with an
+injective map to actual original slots. Distinct selected colors at
+different safe roots, and no repeated original within one root, are
+one way to ensure this injectivity. Existence of a complete slice
+selection with these properties remains an obligation.
+
+Let B be a finite ideal of positive numerical divisors containing
+every selected cofactor, with every qd, d in B, an actual original
+label. In the existing joint Hall criterion, suppose J is an
+inclusion-minimal deficient divisor ideal contained in B. Put
+
+$$
+N(J)=\#\{i:m_i\in J\},\qquad
+\delta=N(J)-|J|>0.
+$$
+
+Minimality means N(K)<=|K| for every proper divisor ideal K contained
+in J. If m is maximal in J under divisibility, removing m leaves a
+divisor ideal. Let k_m count selected originals with cofactor m.
+Then
+
+$$
+N(J)=N(J\setminus\{m\})+k_m,
+\qquad k_m\ge\delta+1.
+\tag{DA34}
+$$
+
+If all selected actual labels have the form q*3^a*m with 0<=a<h,
+distinctness of original numerical moduli makes the row map on each
+cofactor fiber injective. Consequently
+
+$$
+1\le\delta<h,\qquad
+\delta+1\le k_m\le h
+\quad\text{for every maximal }m\in J.
+\tag{DA35}
+$$
+
+With three rows the deficit is one or two. If it is two, every
+maximal cofactor has all three selected row labels, including an
+actual 9qm original. The deficit-two condition therefore supplies
+the actual-top-label premise of the existing inventory bound at
+every maximal cofactor; that bound's other hypotheses still apply.
+Deficit one alone establishes neither this premise nor the absence
+of a top owner. With only the two lower rows the deficit is one
+and every maximal cofactor occurs exactly twice. These statements
+have scoped Lean checks directly on injectively selected actual
+originals, using default proof budgets and the standard three axioms.
+They reuse finite cardinality and the numerical-label injection.
+
+Neither repeated labels nor a deficit of two makes their phases,
+colors or private old words equal. In particular, existence of the
+actual 9qm label licenses its individual inventory bounds; it does
+not put different maximal owners through one common point and so
+does not by itself license a same-point packet capacity bound.
+
+This locates minimal allocation failures without repairing them.
+If an ancestor is q-free, its full private region is outside E_q;
+the complete-color cover on E_q does not constrain that region.
+Report385 DP3's cross-cofactor payment requires full private-region
+concentration as a separate input. A Hall deficit does not supply
+that input. DA27 and the missing-enclosure inventory inequality are
+upper bounds, not lower bounds on available donor stock.
+
+Report385 PH3--PH4 also retains the complete private hull's period
+constraint. For a nonempty full private region, its periodicity by
+Q implies that any single congruence class containing it has modulus
+dividing Q: apply the class to a private point and that point plus Q.
+Thus an original system of ternary height two cannot place a parent's
+entire private region inside a single new 27d or 81d class. Such a
+repair needs the full prefix forest or another established joint
+replacement. The missing bridge remains an actual-source joint
+matching, compatible shared output, or fully paid parent exchange.
+
 ## Verification and the remaining global obligation
 
 Scoped exact Lean checks cover the actual two-prime incidence
