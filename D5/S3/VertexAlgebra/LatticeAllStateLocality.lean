@@ -9,8 +9,34 @@
 import D5.S3.VertexAlgebra.FieldNormalProductLocality
 import D5.S3.VertexAlgebra.LatticeActualChargedLocality
 import D5.S3.VertexAlgebra.LatticeActualMixedLocality
-import D5.S3.VertexAlgebra.LatticeActualCurrentAlgebra
+import D5.S3.VertexAlgebra.LatticeSugawaraCurrents
 import D5.S3.VertexAlgebra.StateFieldResidueReconstruction
+
+/- The released all-sector Heisenberg law gives uniform neutral locality. -/
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+namespace D5.S3.VertexAlgebra.LatticeActualCurrentLocality
+open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration
+open FieldNormalProductLocality
+open scoped VertexOperator
+
+/-- Uniform neutral locality on every charge and polynomial, with order two. -/
+theorem actual_neutral_neutral_locality (D : LatticeData) (i j : Fin D.rank) :
+    delta^[2] (FieldNormalProductLocality.commutator (neutralField D i) (neutralField D j)) = 0 := by
+  funext left right
+  simp only [Function.iterate_succ_apply', Function.iterate_zero_apply, delta,
+    FieldNormalProductLocality.commutator, LatticeAllStateField.neutral_modes]
+  simp_rw [LatticeSugawaraCurrents.neutralMode_heisenberg]
+  rw [show left+1+1+right = left+right+2 by omega,
+    show left+1+(right+1) = left+right+2 by omega,
+    show left+(right+1+1) = left+right+2 by omega]
+  by_cases h : left+right+2 = 0
+  · simp only [if_pos h, Pi.zero_apply]
+    push_cast
+    module
+  · simp [h]
+
+end D5.S3.VertexAlgebra.LatticeActualCurrentLocality
 
 /- Generic finite field-locality calculus.
 Proof text adapted from sealed PolynomialFockStateField at a9f81b99,

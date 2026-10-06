@@ -1,11 +1,10 @@
-// Apache-2.0. Source-only canonical staging; official emission remains separate.
+// Apache-2.0.
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
 
 internal sealed class LatticePositiveEnergyDocument : IScribeDocumentDefinition
 {
-    // Prospective precise library note; registration is recorded in ScribeLibraryReferencePlan.json.
     // FromLiterature identifies construction context, not a verbatim source for the new native proofs.
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice");
@@ -22,65 +21,13 @@ internal sealed class LatticePositiveEnergyDocument : IScribeDocumentDefinition
                 + "E_D(alpha,d)=q_D(alpha)+w(d) in Z. Geometric positivity means exactly hD: "
                 + "Matrix.PosDef(G.map(Int.cast:Z->R)); it is supplied only where stated. There is no positive-rank, "
                 + "integral determinant-unit, unimodularity or assumed finite-grade premise.")),
-            Paragraph(Text("Every declaration described here is publicly named in D5.S3.VertexAlgebra.LatticePositiveEnergy, "
-                + "including declarations whose source module has a different file name. Definition bindings expose the "
-                + "actual data or constructed equivalences; the substantive completion consists of the proved "
-                + "positivity, finiteness, decomposition and actual-operator theorems.")),
-            Paragraph(Text("The five lower-matrix/cocycle helpers are exact consumed bodies from the public "
-                + "LatticeTwistedGroundRealization.SignQuotient generation source, SHA256 "
-                + "f7032c03d6edd67435d766c9e0c503774dd50561742e3c6e95f722b657f47781. They are used in two_chargeEnergy "
-                + "and subsequent positivity, not unused scaffolding. The finite oscillator encoding adapts the "
-                + "source-only advisory probe and PolynomialFockLZeroSpectrum; no historical probe object is claimed.")),
-            Describe.Lean(
-                DescribeId.Create("latticepositiveenergy-lowermatrix"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticePositiveEnergy.lowerMatrix"),
-                H("Integral lower Gram matrix"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("The strict lower triangle of G is completed with the integral halfDiagonal on its diagonal. This is "
-                        + "the consumed realized-cocycle helper, with its proof source retained exactly."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("latticepositiveenergy-lower-matrix-formula"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticePositiveEnergy.lower_matrix_formula"),
-                H("Cocycle as a matrix contraction"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("For all charges alpha,beta, lowerCocycleExponent(D,alpha,beta) is sum_i sum_j alpha_i "
-                        + "lowerMatrix(D)_(ij) beta_j. No positivity is needed."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticepositiveenergy-lower-matrix-symmetrization"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticePositiveEnergy.lower_matrix_symmetrization"),
-                H("Integral symmetrization"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("lowerMatrix(D)+transpose(lowerMatrix(D))=G. Symmetry and even diagonal are fields of D, not "
-                        + "additional assumptions."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticepositiveenergy-integral-cocycle-symmetrization"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticePositiveEnergy.integral_cocycle_symmetrization"),
-                H("Cocycle recovers the bilinear form"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("For all charges alpha,beta, c(alpha,beta)+c(beta,alpha)=B_D(alpha,beta). This identity is consumed "
-                        + "in the exact integral half-norm proof."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticepositiveenergy-integral-cocycle-square"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticePositiveEnergy.integral_cocycle_square"),
-                H("Exact integral half-norm"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("c(alpha,alpha)=B_D(alpha,alpha)/2 in Z, for every ordinary D and charge alpha. Division is integral, "
-                        + "and the preceding symmetrization establishes exact divisibility."))),
-                DescribeRole.Theorem),
+            Paragraph(Text("The same labels index the energy fibres. The coefficient basis identifies each grade "
+                + "with its fibre, and the actual Sugawara operator identifies these grades with its eigenspaces.")),
+            Paragraph(Text("The exact half-norm identities reuse the released public "
+                + "LatticeTwistedGroundRealization.SignQuotient.integral_cocycle_square and "
+                + "integral_cocycle_symmetrization declarations directly in chargeEnergy_cocycle "
+                + "and two_chargeEnergy. The finite oscillator encoding follows the finite sublevel "
+                + "construction in PolynomialFockLZeroSpectrum.")),
             Describe.Lean(
                 DescribeId.Create("latticepositiveenergy-exponent"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticePositiveEnergy.Exponent"),
@@ -130,16 +77,6 @@ internal sealed class LatticePositiveEnergyDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("2*q_D(alpha)=B_D(alpha,alpha) in Z. Evenness is proved from the consumed realized integral cocycle, "
                         + "not a divisibility axiom."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticepositiveenergy-bilinear-even"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticePositiveEnergy.bilinear_even"),
-                H("All integral charge squares are even"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("Even(B_D(alpha,alpha)) for every charge alpha follows from the exact doubling identity. No "
-                        + "positivity or unimodularity is used."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticepositiveenergy-chargeenergy-zero"),
@@ -253,9 +190,7 @@ internal sealed class LatticePositiveEnergyDocument : IScribeDocumentDefinition
                 + "assumed. Its regularity theorem is not proved by this unit.")),
             Paragraph(Text("Lean 4.33.0 and the declared Mathlib pin db584cd6d46c92f209a44c0f1c829460d327499d supply the actual "
                 + "imported finite-support, basis, compactness and matrix APIs. Mathlib adaptations retain Apache-2.0 "
-                + "and the original authorship. Exact producer References, SourceInputs, SourceAdaptation, "
-                + "MathlibLocators and source/object/import hashes are delivered with this staging; the pin is "
-                + "inherited from sealed toolchain evidence and was not established by a fresh Git inspection.")),
+                + "and the original authorship.")),
             Paragraph(Text("This unit supplies the actual lattice carrier with a positive finite energy grading and identifies "
                 + "it with the actual Sugawara L_0 eigenspaces under the explicit inverse pair. It does not construct a "
                 + "PCT involution, Hermitian form, analytic Hilbert completion, twisted vertex algebra, Monster "

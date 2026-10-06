@@ -25,6 +25,28 @@ internal sealed class LatticeActualProductKernelDocument : IScribeDocumentDefini
                 + "rawCoeff and commonKernel on single(delta,p) agree with these convolutions and their "
                 + "actual cocycle scalars.")),
             Describe.Lean(
+                DescribeId.Create("latticeactualgeneratorlocality-epsilon-skew"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeActualProductKernel.epsilon_skew"),
+                H("The actual cocycle skew law"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(
+                    Paragraph(Text("For all charges alpha,beta, epsilon(alpha,beta)=paritySign(B(alpha,beta)) "
+                        + "epsilon(beta,alpha), including coincident charges. The released integral cocycle symmetrization "
+                        + "proves the sign; it is not a field-locality assumption."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latticeactualgeneratorlocality-actual-contraction-binomial"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeActualProductKernel.actual_contraction_binomial"),
+                H("Actual coefficient contraction"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(
+                    Paragraph(Text("For every integer t and natural j, coefficient j of translatedPolynomial(alpha, "
+                        + "creationCoeff(beta,t)) is (-1)^j choose(B(alpha,beta),j) creationCoeff(beta,t-j). The "
+                        + "choose function is the integer generalized binomial cast to C."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("latticeactualproductkernel-kernel-creator"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeActualProductKernel.kernel_creator"),
                 H("Both independent oscillator shifts of the kernel"),

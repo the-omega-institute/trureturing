@@ -92,16 +92,6 @@ namespace D5.S3.VertexAlgebra.LatticeActualEdgeCases
 open LatticeGeneratingFieldLocality LatticeAllStateField FieldNormalProduct
 open scoped VertexOperator
 
-theorem actual_zero (D : LatticeData) : actualField D 0 = identityField := by
-  rw [← stateField_ground]
-  exact stateField_vacuum D
-
-theorem identity_modes (D : LatticeData) (m : ℤ) :
-    ((identityField : VertexOperator ℂ (Carrier D))[[m]]) =
-      if m = -1 then LinearMap.id else 0 := by
-  rw [identityField,VertexOperator.ncoeff_of_coeff]
-  simp only [show -m-1 = 0 ↔ m = -1 by omega]
-
 theorem actual_zero_locality (D : LatticeData) (A : VertexOperator ℂ (Carrier D)) :
     FieldNormalProductLocality.commutator (actualField D 0) A = 0 := by
   rw [actual_zero]

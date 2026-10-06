@@ -124,7 +124,7 @@ Borcherds, Vertex algebras, Kac-Moody algebras, and the Monster, PNAS 83 (1986),
 
 Dong-Li-Mason, Regularity of rational vertex operator algebras, arXiv q-alg/9508018v1 (24 August 1995), printed/PDF page 3, Definition 2.1, supplies the ordinary-module finite-dimensional eigenspace and lower-truncation convention. Those properties are derived here from hD, rather than assumed. Its regularity theorem is not proved by this unit.
 
-Lean 4.33.0 and the declared Mathlib pin db584cd6d46c92f209a44c0f1c829460d327499d supply the actual imported finite-support, basis, compactness and matrix APIs. Mathlib adaptations retain Apache-2.0 and the original authorship. Exact producer References, SourceInputs, SourceAdaptation, MathlibLocators and source/object/import hashes are delivered with this staging; the pin is inherited from sealed toolchain evidence and was not established by a fresh Git inspection.
+Lean 4.33.0 and the declared Mathlib pin db584cd6d46c92f209a44c0f1c829460d327499d supply the actual imported finite-support, basis, compactness and matrix APIs. Mathlib adaptations retain Apache-2.0 and the original authorship.
 
 The consumed Sugawara architecture retains Kalle Kytola, VirasoroProject revision 5ff4245383b2cdd4eea7a0524bc1274c32041eb4, Apache-2.0. The actual field normal-product and integer residue interfaces retain Scott Carnahan, vertexAlg revision 4453e34ec390e82a0c789c731ada8f9a6e86bdea, VertexAlg/VertexBasic/VertexOperator.lean, Apache-2.0. These are supplier attribution records from the allowed sealed Scribe generation sources; no supplier source is copied or rebuilt here, and no review result is inherited.
 

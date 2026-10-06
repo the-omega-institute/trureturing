@@ -473,10 +473,6 @@ def fiberAddHom (inner outer : ℕ) (t : ℤ) :
   map_zero' := by ext g; rfl
   map_add' F G := by ext g; rfl
 
-theorem residue_sub (inner outer : ℕ)
-    (F G : HahnSeries (Indices ((inner + 1) + outer)) S) :
-    residue inner outer (F - G) = residue inner outer F - residue inner outer G :=
-  (fiberAddHom inner outer (-1)).map_sub F G
 
 end CollisionRationalExpansions.HahnFiberResidue
 end

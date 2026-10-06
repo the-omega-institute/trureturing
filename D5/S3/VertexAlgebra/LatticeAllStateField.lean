@@ -69,7 +69,7 @@ theorem polynomialField_monomial (D : LatticeData) (δ : Charge D)
     polynomialField D δ (monomial e 1) = wordField D δ (occurrences D e) :=
   (basisMonomials (Index D) ℂ).constr_basis ℂ _ e
 
-private theorem exponential_constant (D : LatticeData) (δ : Charge D) :
+theorem exponential_constant (D : LatticeData) (δ : Charge D) :
     PowerSeries.coeff 0 (creationExponential D δ) = 1 := by
   have hA : PowerSeries.constantCoeff (creationSeries D δ) = 0 := by
     simp [creationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
@@ -100,7 +100,7 @@ private theorem actual_creativity (D : LatticeData) (δ : Charge D) (m : ℤ)
   rw [actual_vacuum_coeff]
   simp [creationCoeff, show -m - 1 < 0 by omega]
 
-private theorem neutral_modes (D : LatticeData) (i : Fin D.rank) (m : ℤ) :
+theorem neutral_modes (D : LatticeData) (i : Fin D.rank) (m : ℤ) :
     ((neutralField D i)[[m]]) = neutralMode D i m := by
   rw [neutralField, VertexOperator.ncoeff_of_coeff]
   rw [show -(-m - 1) - 1 = m by omega]
@@ -186,7 +186,7 @@ theorem occurrences_multiset (D : LatticeData) (e : Index D →₀ ℕ) :
     (occurrences D e : Multiset (Index D)) = e.toMultiset :=
   Multiset.coe_toList _
 
-private theorem occurrences_product (D : LatticeData) (e : Index D →₀ ℕ) :
+theorem occurrences_product (D : LatticeData) (e : Index D →₀ ℕ) :
     ((occurrences D e).map (fun x => (X x : Oscillator D))).prod = monomial e 1 := by
   rw [occurrences, Multiset.prod_map_toList]
   induction e using Finsupp.induction with
@@ -347,7 +347,7 @@ theorem stateField_covariance (D : LatticeData) (v : Carrier D) (m : ℤ) :
 theorem translation_kills_vacuum (D : LatticeData) : translation D (vacuum D) = 0 :=
   translation_vacuum D
 
-private theorem identity_modes (D : LatticeData) (m : ℤ) :
+theorem identity_modes (D : LatticeData) (m : ℤ) :
     ((identityField : VertexOperator ℂ (Carrier D))[[m]]) =
       if m = -1 then LinearMap.id else 0 := by
   rw [identityField, VertexOperator.ncoeff_of_coeff]
@@ -379,7 +379,7 @@ private theorem creationCoeff_zero (D : LatticeData) (t : ℤ) :
     · simp [creationCoeff, ht, h0]
     · simp [creationCoeff, ht, h0, he, show t.toNat ≠ 0 by omega]
 
-private theorem actual_zero (D : LatticeData) :
+theorem actual_zero (D : LatticeData) :
     actualField D 0 = (identityField : VertexOperator ℂ (Carrier D)) := by
   apply HVertexOperator.coeff_inj
   funext k

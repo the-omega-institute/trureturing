@@ -10,7 +10,19 @@ Consumed finite locality calculus proves symmetry, monotonicity of order, scalar
 
 Residue reconstruction consumes this proved actual locality, creativity, creation and covariance under the same actual T. Relative creative vacuum uniqueness identifies each integer residue with the existing Y; membership in its image and the desired iterate are not hypotheses.
 
-**Theorem 1.1 (Every two actual word fields are local).**
+**Theorem 1.1 (Uniform actual neutral locality).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeAllStateLocality.actual_neutral_neutral_locality`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeAllStateLocality.actual_neutral_neutral_locality` (`✓ std3`). ∎
+
+*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+
+*Commentary.*
+
+The released all-sector Heisenberg commutator gives order-two locality for every pair of neutral fields, on every charge and oscillator polynomial. No positivity or inverse Gram matrix is required.
+
+**Theorem 1.2 (Every two actual word fields are local).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeAllStateLocality.word_locality`
 
@@ -22,7 +34,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeAllStateLocality.word_locality`
 
 For all charges and finite occurrence words, a finite uniform order kills the coefficient commutator. Each derivative and nested normal product is handled by the consumed locality theorems.
 
-**Theorem 1.2 (Every two actual state fields are local).**
+**Theorem 1.3 (Every two actual state fields are local).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeAllStateLocality.stateField_locality`
 
@@ -34,7 +46,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeAllStateLocality.stateField_locality
 
 For arbitrary a,b in V there exists a natural N with delta^N([Y(a),Y(b)])=0 as an endomorphism distribution.
 
-**Theorem 1.3 (The same actual Y is closed under all integer residues).**
+**Theorem 1.4 (The same actual Y is closed under all integer residues).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeAllStateLocality.residue_closure`
 
@@ -46,7 +58,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeAllStateLocality.residue_closure`
 
 For every integer r, Y(mu(a,r,b)) equals the actual residueField(r,a,b).operator. Both positive residue cancellation and negative divided-derivative normal products are consumed from the existing generic supplier.
 
-**Theorem 1.4 (Complete finite integer iterate).**
+**Theorem 1.5 (Complete finite integer iterate).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeAllStateLocality.stateField_iterate`
 
@@ -70,12 +82,13 @@ This is algebraic ungraded vertex-algebra mathematics. Finite graded pieces, pos
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeAllStateLocality.actual_neutral_neutral_locality`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeAllStateLocality.residue_closure`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeAllStateLocality.stateField_iterate`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeAllStateLocality.stateField_locality`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeAllStateLocality.word_locality`
 - Dependency: [D5/S3/VertexAlgebra/FieldNormalProductLocality](FieldNormalProductLocality.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeActualChargedLocality](LatticeActualChargedLocality.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeActualCurrentAlgebra](LatticeActualCurrentAlgebra.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeActualMixedLocality](LatticeActualMixedLocality.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraCurrents](LatticeSugawaraCurrents.md)
 - Dependency: [D5/S3/VertexAlgebra/StateFieldResidueReconstruction](StateFieldResidueReconstruction.md)

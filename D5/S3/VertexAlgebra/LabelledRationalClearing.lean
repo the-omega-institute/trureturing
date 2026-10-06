@@ -202,30 +202,6 @@ theorem curry_pair_right (i : Remaining z) :
   rw [pairPolynomial, map_sub, curry_variable_z, curry_variable_remaining]
   simp [linearPole, RatFunc.algebraMap_X, RatFunc.algebraMap_C]
 
-/-- Partial fractions are derived from the actual allowed linear factors;
-their monicity and coprimeness are proved, not hypotheses. No unrestricted
-rational-denominator residue equation is asserted. -/
-theorem allowed_partial_fractions (f : Polynomial (CoefficientField K z))
-    (n : Remaining z → ℕ) :
-    ∃ (q : Polynomial (CoefficientField K z))
-      (rem : (i : Remaining z) → Fin (n i) → Polynomial (CoefficientField K z)),
-      (∀ i, ∀ j, (rem i j).degree < (linearPole K z i).degree) ∧
-      algebraMap _ (RatFunc (CoefficientField K z)) f *
-        ∏ i, (algebraMap _ (RatFunc (CoefficientField K z)) (linearPole K z i))⁻¹ ^ n i =
-      algebraMap _ (RatFunc (CoefficientField K z)) q +
-        ∑ i, ∑ j, algebraMap _ (RatFunc (CoefficientField K z)) (rem i j) *
-          (algebraMap _ (RatFunc (CoefficientField K z)) (linearPole K z i))⁻¹ ^ (j.val + 1) := by
-  classical
-  obtain ⟨q, rem, hr, he⟩ := Polynomial.mul_prod_pow_inverse_eq_quo_add_sum_rem_mul_pow_inverse
-    (K := RatFunc (CoefficientField K z)) (s := Finset.univ) f
-    (fun i _ => linearPole_monic K z i)
-    (fun i _ j _ hij => linearPole_pairwise_coprime K z hij) n
-    (fun i _ => inv_mul_cancel₀ (by
-      simpa only [map_zero] using
-        (IsFractionRing.injective (Polynomial (CoefficientField K z))
-          (RatFunc (CoefficientField K z))).ne (linearPole_monic K z i).ne_zero))
-  exact ⟨q, rem, fun i j => hr i (Finset.mem_univ i) j, he⟩
-
 end LabelledRationalClearing.PairDifferenceLocalization
 end
 

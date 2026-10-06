@@ -64,7 +64,7 @@ internal sealed class LatticeActualOrderedProductsDocument : IScribeDocumentDefi
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text("The same substitution in the proved reverse coefficient product gives F_beta[n] "
-                        + "F_alpha[m] on every actual single(delta,p). These are consumed mode corollaries of the "
+                        + "F_alpha[m] on every actual single(delta,p). These are normalized mode identities from the "
                         + "whole ordered-product proof."))),
                 DescribeRole.Theorem),
             Paragraph(Text("Bakalov-Kac, arXiv math/0402315v1, section 4.1, equations (4.12)-(4.16), DOI "

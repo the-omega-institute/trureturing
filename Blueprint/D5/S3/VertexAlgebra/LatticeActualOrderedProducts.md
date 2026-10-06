@@ -54,7 +54,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeActualOrderedProducts.actual_field_r
 
 *Commentary.*
 
-The same substitution in the proved reverse coefficient product gives F_beta[n] F_alpha[m] on every actual single(delta,p). These are consumed mode corollaries of the whole ordered-product proof.
+The same substitution in the proved reverse coefficient product gives F_beta[n] F_alpha[m] on every actual single(delta,p). These are normalized mode identities from the whole ordered-product proof.
 
 Bakalov-Kac, arXiv math/0402315v1, section 4.1, equations (4.12)-(4.16), DOI 10.1142/9789812702562_0001, supplies the lattice field, ordered-product, translation and conformal construction. Equation numbers refer to arXiv v1.
 

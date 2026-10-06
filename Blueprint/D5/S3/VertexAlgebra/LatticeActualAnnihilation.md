@@ -68,6 +68,6 @@ This is algebraic ungraded vertex-algebra mathematics. Finite graded pieces, pos
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeActualAnnihilation.annihilation_convolution`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeActualAnnihilation.annihilation_creation`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeActualAnnihilation.annihilation_transport`
-- Dependency: [D5/S3/VertexAlgebra/LatticeActualCurrentAlgebra](LatticeActualCurrentAlgebra.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeActualProductKernel](LatticeActualProductKernel.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality](LatticeGeneratingFieldLocality.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraCurrents](LatticeSugawaraCurrents.md)

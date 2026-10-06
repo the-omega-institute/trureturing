@@ -17,7 +17,7 @@ Degree convention: Borcherds, PNAS 83 (1986), 3068--3071, author
 retypesetting SHA822e39a2ec7bd33ad81193b06b7a66ae89abcec43c4cb7974d4bc513c3fce5b5,
 §2 p.2. No assertion about Monster realization is made.
 -/
-import D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
+import D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Data.Finsupp.Weight
 import Mathlib.Data.Fintype.Pi
@@ -30,69 +30,6 @@ open LatticeGeneratingFieldLocality Matrix
 open scoped BigOperators
 noncomputable section
 
-/- Faithful consumed excerpt of SignQuotient, immutable source
-f7032c03d6edd67435d766c9e0c503774dd50561742e3c6e95f722b657f47781. -/
-def lowerMatrix (D : LatticeData) : Matrix (Fin D.rank) (Fin D.rank) ℤ :=
-  fun i j => (if j < i then D.G i j else 0) +
-    (if j = i then halfDiagonal D i else 0)
-
-theorem lower_matrix_formula (D : LatticeData) (a b : Charge D) :
-    lowerCocycleExponent D a b = ∑ i, ∑ j, a i * lowerMatrix D i j * b j := by
-  classical
-  unfold lowerCocycleExponent
-  rw [← Finset.sum_add_distrib]
-  apply Finset.sum_congr rfl
-  intro i hi
-  simp only [lowerMatrix, mul_add, add_mul, Finset.sum_add_distrib]
-  congr 1
-  · rw [Finset.sum_filter]
-    apply Finset.sum_congr rfl
-    intro j hj
-    split_ifs <;> ring
-  · rw [Finset.sum_eq_single i]
-    · simp only [ite_true]
-      ring
-    · intro j hj hji
-      simp [hji]
-    · simp
-
-theorem lower_matrix_symmetrization (D : LatticeData) :
-    lowerMatrix D + (lowerMatrix D).transpose = D.G := by
-  ext i j
-  change lowerMatrix D i j + lowerMatrix D j i = D.G i j
-  by_cases hij : i = j
-  · subst j
-    obtain ⟨k, hk⟩ := D.even_diagonal i
-    simp only [lowerMatrix, lt_self_iff_false, if_false, if_true, zero_add, halfDiagonal]
-    omega
-  · rcases lt_or_gt_of_ne hij with hij | hji
-    · simp [lowerMatrix, hij, ne_of_lt hij, (ne_of_lt hij).symm,
-        not_lt_of_gt hij, D.symmetric i j]
-    · simp [lowerMatrix, hji, ne_of_gt hji, (ne_of_gt hji).symm,
-        not_lt_of_gt hji]
-
-theorem integral_cocycle_symmetrization (D : LatticeData) (a b : Charge D) :
-    lowerCocycleExponent D a b + lowerCocycleExponent D b a = bilinear D a b := by
-  rw [lower_matrix_formula, lower_matrix_formula]
-  unfold bilinear
-  conv_lhs => rhs; rw [Finset.sum_comm]
-  rw [← Finset.sum_add_distrib]
-  apply Finset.sum_congr rfl
-  intro i hi
-  rw [← Finset.sum_add_distrib]
-  apply Finset.sum_congr rfl
-  intro j hj
-  have h := congrFun (congrFun (lower_matrix_symmetrization D) i) j
-  change lowerMatrix D i j + lowerMatrix D j i = D.G i j at h
-  rw [← h]
-  ring
-
-theorem integral_cocycle_square (D : LatticeData) (a : Charge D) :
-    lowerCocycleExponent D a a = bilinear D a a / 2 := by
-  have h := integral_cocycle_symmetrization D a a
-  omega
-
-
 abbrev Exponent (D : LatticeData) := Index D →₀ ℕ
 abbrev Label (D : LatticeData) := Charge D × Exponent D
 
@@ -100,16 +37,13 @@ def chargeEnergy (D : LatticeData) (a : Charge D) : ℤ := bilinear D a a / 2
 
 theorem chargeEnergy_cocycle (D : LatticeData) (a : Charge D) :
     chargeEnergy D a = lowerCocycleExponent D a a :=
-  (integral_cocycle_square D a).symm
+  (LatticeTwistedGroundRealization.SignQuotient.integral_cocycle_square D a).symm
 
 theorem two_chargeEnergy (D : LatticeData) (a : Charge D) :
     2 * chargeEnergy D a = bilinear D a a := by
   rw [chargeEnergy_cocycle]
-  have h := integral_cocycle_symmetrization D a a
+  have h := LatticeTwistedGroundRealization.SignQuotient.integral_cocycle_symmetrization D a a
   omega
-
-theorem bilinear_even (D : LatticeData) (a : Charge D) : Even (bilinear D a a) := by
-  exact ⟨chargeEnergy D a, by have h := two_chargeEnergy D a; omega⟩
 
 @[simp] theorem chargeEnergy_zero (D : LatticeData) : chargeEnergy D 0 = 0 := by
   simp [chargeEnergy, bilinear]

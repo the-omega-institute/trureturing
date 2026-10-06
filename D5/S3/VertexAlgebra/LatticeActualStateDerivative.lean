@@ -26,12 +26,6 @@ open LatticeAllStateReconstruction FieldNormalProduct
 open scoped VertexOperator
 noncomputable section
 
-private theorem identity_modes (D : LatticeData) (q : ℤ) :
-    ((identityField : VertexOperator ℂ (Carrier D))[[q]]) =
-      if q = -1 then LinearMap.id else 0 := by
-  rw [identityField, VertexOperator.ncoeff_of_coeff]
-  simp only [show -q - 1 = 0 ↔ q = -1 by omega]
-
 private theorem minus_two_weight (j : ℕ) :
     (-1 : ℂ)^j * ((Ring.choose (-2) j : ℤ) : ℂ) = (j + 1 : ℂ) := by
   have choose : ((Ring.choose (-2) j : ℤ) : ℂ) =

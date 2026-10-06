@@ -8,7 +8,31 @@ Let D be any finite-rank ordinary lattice: its Gram matrix G is integral and sym
 
 A one-variable polynomial convolution pairs a translated coefficient with creationCoeff(alpha,s+d). A two-variable convolution pairs each actual translated polynomial monomial with creationCoeff(alpha,u+e_0) creationCoeff(beta,v+e_1). Actual rawCoeff and commonKernel on single(delta,p) agree with these convolutions and their actual cocycle scalars.
 
-**Theorem 1.1 (Both independent oscillator shifts of the kernel).**
+**Theorem 1.1 (The actual cocycle skew law).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeActualProductKernel.epsilon_skew`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeActualProductKernel.epsilon_skew` (`✓ std3`). ∎
+
+*Citation.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+For all charges alpha,beta, epsilon(alpha,beta)=paritySign(B(alpha,beta)) epsilon(beta,alpha), including coincident charges. The released integral cocycle symmetrization proves the sign; it is not a field-locality assumption.
+
+**Theorem 1.2 (Actual coefficient contraction).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeActualProductKernel.actual_contraction_binomial`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeActualProductKernel.actual_contraction_binomial` (`✓ std3`). ∎
+
+*Citation.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+For every integer t and natural j, coefficient j of translatedPolynomial(alpha, creationCoeff(beta,t)) is (-1)^j choose(B(alpha,beta),j) creationCoeff(beta,t-j). The choose function is the integer generalized binomial cast to C.
+
+**Theorem 1.3 (Both independent oscillator shifts of the kernel).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeActualProductKernel.kernel_creator`
 
@@ -20,7 +44,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeActualProductKernel.kernel_creator`
 
 Multiplication of p by X(i,n) gives its actual creator action on the common kernel, minus the alpha pairing times the shift u+n+1, minus the beta pairing times the shift v+n+1. Both translated variables are retained.
 
-**Theorem 1.2 (Separate lower bounds on the actual kernel).**
+**Theorem 1.4 (Separate lower bounds on the actual kernel).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeActualProductKernel.kernel_lower_bounds`
 
@@ -32,7 +56,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeActualProductKernel.kernel_lower_bou
 
 For every alpha,beta,delta and polynomial p there exist integers a,b such that commonKernel(alpha,beta,u,v)(single(delta,p))=0 if u<a or v<b. The bounds come from the two coordinate maxima of the finite translatedPairPolynomial support and the actual charge pairings.
 
-**Theorem 1.3 (Both ordered kernels have finite support).**
+**Theorem 1.5 (Both ordered kernels have finite support).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeActualProductKernel.ordered_kernel_finite`
 
@@ -52,7 +76,10 @@ This is algebraic ungraded vertex-algebra mathematics. Finite graded pieces, pos
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeActualProductKernel.actual_contraction_binomial`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeActualProductKernel.epsilon_skew`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeActualProductKernel.kernel_creator`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeActualProductKernel.kernel_lower_bounds`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeActualProductKernel.ordered_kernel_finite`
-- Dependency: [D5/S3/VertexAlgebra/LatticeActualGeneratorLocality](LatticeActualGeneratorLocality.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeAllStateField](LatticeAllStateField.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeTwistedGroundRealization](LatticeTwistedGroundRealization.md)

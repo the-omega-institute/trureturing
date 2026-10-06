@@ -40,7 +40,7 @@ def currentState (D : LatticeData) (i : Fin D.rank) : Carrier D :=
 
 theorem current_state_creation (D : LatticeData) (i : Fin D.rank) :
     ((neutralField D i)[[-1]]) (vacuum D) = currentState D i := by
-  rw [LatticeActualGeneratorLocality.neutral_modes]
+  rw [LatticeAllStateField.neutral_modes]
   simp [neutralMode, neutralPolynomialMode, vacuum, currentState]
 
 theorem current_state_field (D : LatticeData) (i : Fin D.rank) :
@@ -51,7 +51,7 @@ theorem current_state_field (D : LatticeData) (i : Fin D.rank) :
 theorem current_minus_one_current (D : LatticeData) (i j : Fin D.rank) :
     mu D (currentState D i) (-1) (currentState D j) =
       Finsupp.single 0 (X (i, 0) * X (j, 0)) := by
-  rw [mu, current_state_field, LatticeActualGeneratorLocality.neutral_modes]
+  rw [mu, current_state_field, LatticeAllStateField.neutral_modes]
   simp [currentState, neutralMode, neutralPolynomialMode]
 
 /-- Exact evaluation of the actual canonical quadratic state. -/

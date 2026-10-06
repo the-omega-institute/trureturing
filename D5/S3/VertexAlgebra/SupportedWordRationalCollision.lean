@@ -346,9 +346,6 @@ theorem originalQ_ne_zero (n : ℕ) (z : Fin n) (k : ℕ) :
     clearingPolynomial n k ≠ 0 :=
   SupportedWordRationalCollision.ClearingNonzero.actual_clearing_ne_zero ℂ z k
 
-theorem ordered_expansion_injective (n : ℕ) (sigma : Equiv.Perm (Fin n)) :
-    Function.Injective (orderedRationalFor ℂ n sigma) :=
-  (orderedRationalFor ℂ n sigma).injective
 
 /-- Every complete label order is a permutation of the original supplier order. -/
 lemma supplier_order_perm {n : ℕ} (order : List (Fin n)) (nodup : order.Nodup)
@@ -433,8 +430,6 @@ open D5.S3.VertexAlgebra
 set_option backward.isDefEq.respectTransparency false
 variable {V : Type*} [AddCommGroup V] [Module ℂ V]
 
-theorem exact_native_Q (N k : ℕ) :
-    UniformGradedLocalCorrelator.clearingPolynomial N k = LabelledRationalClearing.PairDifferenceLocalization.clearingPolynomial ℂ N k := rfl
 
 /-- The rational is coefficientwise lambda(numerator)/the exact native Q.
 Its numerator is supplied by actual locality, creation, and covariance, and

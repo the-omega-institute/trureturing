@@ -61,7 +61,6 @@ theorem polyZX_injective : Function.Injective (polyZX K) :=
 def iotaXZ : Rational K →+* XZ K := IsFractionRing.lift (polyXZ_injective K)
 def iotaZX : Rational K →+* ZX K := IsFractionRing.lift (polyZX_injective K)
 
-def coeffXZ (F : XZ K) : Coefficients K := fun z x => (F.coeff z).coeff x
 def coeffZX (F : ZX K) : Coefficients K := fun z x => (F.coeff x).coeff z
 
 def resZ_XZ (F : XZ K) : LaurentSeries K := F.coeff (-1)
@@ -71,8 +70,6 @@ def resZ_ZX (F : ZX K) : LaurentSeries K :=
 theorem coeff_resZ_ZX (F : ZX K) (x : ℤ) :
     (resZ_ZX K F).coeff x = coeffZX K F (-1) x := rfl
 
-theorem coeff_resZ_XZ (F : XZ K) (x : ℤ) :
-    (resZ_XZ K F).coeff x = coeffXZ K F (-1) x := rfl
 
 /-- The fused coordinate u is outer/smaller; x is inner. This is only a
 polynomial coordinate change; no substitution on unrestricted series. -/

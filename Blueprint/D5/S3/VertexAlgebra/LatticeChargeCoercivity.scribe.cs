@@ -1,11 +1,10 @@
-// Apache-2.0. Source-only canonical staging; official emission remains separate.
+// Apache-2.0.
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
 
 internal sealed class LatticeChargeCoercivityDocument : IScribeDocumentDefinition
 {
-    // Prospective precise library note; registration is recorded in ScribeLibraryReferencePlan.json.
     // FromLiterature identifies construction context, not a verbatim source for the new native proofs.
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice");
@@ -156,9 +155,7 @@ internal sealed class LatticeChargeCoercivityDocument : IScribeDocumentDefinitio
                 + "assumed. Its regularity theorem is not proved by this unit.")),
             Paragraph(Text("Lean 4.33.0 and the declared Mathlib pin db584cd6d46c92f209a44c0f1c829460d327499d supply the actual "
                 + "imported finite-support, basis, compactness and matrix APIs. Mathlib adaptations retain Apache-2.0 "
-                + "and the original authorship. Exact producer References, SourceInputs, SourceAdaptation, "
-                + "MathlibLocators and source/object/import hashes are delivered with this staging; the pin is "
-                + "inherited from sealed toolchain evidence and was not established by a fresh Git inspection.")),
+                + "and the original authorship.")),
             Paragraph(Text("This unit supplies the actual lattice carrier with a positive finite energy grading and identifies "
                 + "it with the actual Sugawara L_0 eigenspaces under the explicit inverse pair. It does not construct a "
                 + "PCT involution, Hermitian form, analytic Hilbert completion, twisted vertex algebra, Monster "

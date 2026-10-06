@@ -367,16 +367,6 @@ theorem wordField_theta (D : LatticeData) (d : Charge D) (w : List (Index D))
       (by intro m u; exact ih m u) n v
     simpa [List.length_cons, pow_succ, mul_comm] using h
 
-theorem occurrences_product (D : LatticeData) (e : Index D →₀ ℕ) :
-    ((occurrences D e).map (fun x => (X x : Oscillator D))).prod = monomial e 1 := by
-  rw [occurrences, Multiset.prod_map_toList]
-  induction e using Finsupp.induction with
-  | zero => simp
-  | single_add x n tail absent nonzero ih =>
-    rw [Finsupp.toMultiset_add, Multiset.map_add, Multiset.prod_add,
-      Finsupp.toMultiset_single, Multiset.map_nsmul, Multiset.prod_nsmul,
-      Multiset.map_singleton, Multiset.prod_singleton, ih, monomial_single_add]
-
 theorem sigma_word_product (D : LatticeData) (w : List (Index D)) :
     sigma D ((w.map (fun x => (X x : Oscillator D))).prod) =
       ((-1 : ℂ)^w.length) • (w.map (fun x => (X x : Oscillator D))).prod := by
@@ -452,9 +442,6 @@ def eigenspace (D : LatticeData) (s : ℂ) : Submodule ℂ (Carrier D) :=
 def fixedSpace (D : LatticeData) : Submodule ℂ (Carrier D) := eigenspace D 1
 def minusSpace (D : LatticeData) : Submodule ℂ (Carrier D) := eigenspace D (-1)
 
-theorem fixedSpace_eq_ker (D : LatticeData) :
-    fixedSpace D = LinearMap.ker (thetaLinear D - LinearMap.id) := by
-  simp [fixedSpace, eigenspace]
 
 @[simp] theorem mem_fixedSpace (D : LatticeData) (v : Carrier D) :
     v ∈ fixedSpace D ↔ theta D v = v := by simp [fixedSpace]

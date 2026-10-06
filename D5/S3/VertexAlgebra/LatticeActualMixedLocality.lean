@@ -20,7 +20,7 @@ set_option maxHeartbeats 1000000
 
 namespace D5.S3.VertexAlgebra.LatticeActualMixedLocality
 open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration
-open LatticeActualGeneratorLocality LatticeActualCurrentAlgebra
+open LatticeActualGeneratorLocality
 open LatticeActualProductKernel LatticeActualOrderedProducts LatticeActualAnnihilation
 open scoped BigOperators VertexOperator
 noncomputable section
@@ -61,7 +61,7 @@ theorem positive_current_raw (D : LatticeData) (i : Fin D.rank) (n : ℕ)
       (bilinear D (unitCharge D i) α : ℂ) • rawCoeff D α (k-(n+1 : ℕ)) := by
   apply Finsupp.lhom_ext
   intro δ p
-  simp only [LinearMap.sub_apply,Module.End.mul_apply,neutral_single,raw_single_convolution,
+  simp only [LinearMap.sub_apply,Module.End.mul_apply,LatticeSugawaraCurrents.neutralMode_single,raw_single_convolution,
     LinearMap.smul_apply,map_smul,←Finsupp.smul_single]
   rw [←smul_sub,←Finsupp.single_sub,positive_sector_raw]
   rw [show k-bilinear D α δ-(n+1 : ℕ) = k-(n+1 : ℕ)-bilinear D α δ by omega]
@@ -73,7 +73,7 @@ theorem zero_current_raw (D : LatticeData) (i : Fin D.rank)
       (bilinear D (unitCharge D i) α : ℂ) • rawCoeff D α k := by
   apply Finsupp.lhom_ext
   intro δ p
-  simp only [LinearMap.sub_apply,Module.End.mul_apply,neutral_single,raw_single_convolution,
+  simp only [LinearMap.sub_apply,Module.End.mul_apply,LatticeSugawaraCurrents.neutralMode_single,raw_single_convolution,
     neutralPolynomialMode,lt_self_iff_false,if_false,if_true,LinearMap.smul_apply,
     LinearMap.id_apply,map_smul,translated_smul,convolution_smul,←Finsupp.smul_single,
     bilinear_add_right,Int.cast_add]
@@ -113,7 +113,7 @@ theorem neutral_actual_commutator (D : LatticeData) (i : Fin D.rank)
     (α : Charge D) (m n : ℤ) :
     FieldNormalProductLocality.commutator (neutralField D i) (actualField D α) m n =
       (bilinear D (unitCharge D i) α : ℂ) • (actualField D α)[[m+n]] := by
-  simp only [FieldNormalProductLocality.commutator,neutral_modes,actual_modes]
+  simp only [FieldNormalProductLocality.commutator,LatticeAllStateField.neutral_modes,actual_modes]
   rw [neutral_raw_commutator]
   congr 2
   omega

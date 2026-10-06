@@ -29,6 +29,16 @@ internal sealed class LatticeAllStateLocalityDocument : IScribeDocumentDefinitio
                 + "integer residue with the existing Y; membership in its image and the desired iterate are "
                 + "not hypotheses.")),
             Describe.Lean(
+                DescribeId.Create("latticeallstatelocality-neutral-locality"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeAllStateLocality.actual_neutral_neutral_locality"),
+                H("Uniform actual neutral locality"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("The released all-sector Heisenberg commutator gives order-two locality "
+                    + "for every pair of neutral fields, on every charge and oscillator polynomial. "
+                    + "No positivity or inverse Gram matrix is required."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("latticeallstatelocality-word-locality"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeAllStateLocality.word_locality"),
                 H("Every two actual word fields are local"),

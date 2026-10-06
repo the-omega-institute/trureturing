@@ -6,7 +6,8 @@
    utility: none
    digest: Polynomial convolutions give finite intermediate-vector bounds for the actual common kernel. -/
 
-import D5.S3.VertexAlgebra.LatticeActualGeneratorLocality
+import D5.S3.VertexAlgebra.LatticeAllStateField
+import D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
 
 /- Actual coefficient convolution and common-kernel recurrences.
    The linear convolution presentation adapts the explicit polynomial functional
@@ -16,6 +17,86 @@ import D5.S3.VertexAlgebra.LatticeActualGeneratorLocality
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+/- Signed coefficient normalization uses the released integral cocycle and
+actual creation-coefficient transport on the same lattice carrier. -/
+namespace D5.S3.VertexAlgebra.LatticeActualGeneratorLocality
+open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration
+open FieldNormalProduct MvPolynomial
+open scoped BigOperators VertexOperator
+noncomputable section
+
+theorem bilinear_symmetric (D : LatticeData) (α β : Charge D) :
+    bilinear D α β = bilinear D β α := by
+  rw [← LatticeTwistedGroundRealization.SignQuotient.integral_cocycle_symmetrization D α β,
+    ← LatticeTwistedGroundRealization.SignQuotient.integral_cocycle_symmetrization D β α]
+  exact add_comm _ _
+
+@[simp] theorem bilinear_add_right (D : LatticeData) (α β δ : Charge D) :
+    bilinear D α (β + δ) = bilinear D α β + bilinear D α δ := by
+  simp [bilinear, mul_add, Finset.sum_add_distrib]
+
+theorem paritySign_add (a b : ℤ) : paritySign (a + b) = paritySign a * paritySign b := by
+  by_cases ha : Even a <;> by_cases hb : Even b <;>
+    simp [paritySign, Int.even_add, ha, hb]
+
+@[simp] theorem paritySign_square (a : ℤ) : paritySign a * paritySign a = 1 := by
+  unfold paritySign
+  split_ifs <;> ring
+
+@[simp] theorem epsilon_add_left (D : LatticeData) (α β δ : Charge D) :
+    epsilon D (α + β) δ = epsilon D α δ * epsilon D β δ := by
+  unfold epsilon
+  rw [show lowerCocycleExponent D (α + β) δ =
+      lowerCocycleExponent D α δ + lowerCocycleExponent D β δ by
+    simp [lowerCocycleExponent, add_mul, mul_add, Finset.sum_add_distrib]
+    <;> ring]
+  exact paritySign_add _ _
+
+@[simp] theorem epsilon_add_right (D : LatticeData) (α β δ : Charge D) :
+    epsilon D α (β + δ) = epsilon D α β * epsilon D α δ := by
+  unfold epsilon
+  rw [show lowerCocycleExponent D α (β + δ) =
+      lowerCocycleExponent D α β + lowerCocycleExponent D α δ by
+    simp [lowerCocycleExponent, mul_add, Finset.sum_add_distrib]
+    <;> ring]
+  exact paritySign_add _ _
+
+/-- The actual sign, including coincident charges, obeys the required skew law. -/
+theorem epsilon_skew (D : LatticeData) (α β : Charge D) :
+    epsilon D α β = paritySign (bilinear D α β) * epsilon D β α := by
+  rw [← LatticeTwistedGroundRealization.SignQuotient.integral_cocycle_symmetrization, paritySign_add]
+  unfold epsilon
+  rw [mul_assoc, paritySign_square, mul_one]
+
+/-- Both product signs are computed from the actual cocycle, on every sector. -/
+theorem epsilon_ordered (D : LatticeData) (α β δ : Charge D) :
+    epsilon D α (β + δ) * epsilon D β δ =
+      epsilon D α β * epsilon D (α + β) δ := by
+  rw [epsilon_add_right, epsilon_add_left]
+  ring
+
+/-- Evenness of every lattice norm follows from the actual cocycle identity. -/
+theorem bilinear_self_even (D : LatticeData) (α : Charge D) :
+    Even (bilinear D α α) :=
+  ⟨lowerCocycleExponent D α α, (LatticeTwistedGroundRealization.SignQuotient.integral_cocycle_symmetrization D α α).symm⟩
+
+@[simp] theorem actual_modes (D : LatticeData) (α : Charge D) (m : ℤ) :
+    (actualField D α)[[m]] = rawCoeff D α (-m - 1) := by
+  rw [actualField, VertexOperator.ncoeff_of_coeff]
+
+/-- Full contraction law, with the library's integer choose and sign convention. -/
+theorem actual_contraction_binomial (D : LatticeData) (α β : Charge D)
+    (t : ℤ) (j : ℕ) :
+    (translatedPolynomial D α (creationCoeff D β t)).coeff j =
+      ((-1 : ℂ)^j * (Ring.choose (bilinear D α β) j : ℤ)) •
+        creationCoeff D β (t - j) := by
+  rw [(actual_creation_coefficient_transport D α β).2.1]
+  rw [PowerSeries.coeff_rescale, PowerSeries.binomialSeries_coeff (R := ℤ)]
+  simp [zsmul_eq_mul]
+
+end
+end D5.S3.VertexAlgebra.LatticeActualGeneratorLocality
 
 namespace D5.S3.VertexAlgebra.LatticeActualProductKernel
 open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration

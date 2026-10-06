@@ -7,7 +7,7 @@
    digest: Current derivations act on actual creation exponentials and translated polynomials. -/
 
 import D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
-import D5.S3.VertexAlgebra.LatticeActualCurrentAlgebra
+import D5.S3.VertexAlgebra.LatticeSugawaraCurrents
 import D5.S3.VertexAlgebra.LatticeActualProductKernel
 import Mathlib.Algebra.Polynomial.Derivation
 
@@ -65,17 +65,6 @@ theorem derivative_commute (D : LatticeData)
     add_zero, smul_eq_mul]
   ring
 
-theorem exponential_constant (D : LatticeData) (α : Charge D) :
-    PowerSeries.coeff 0 (creationExponential D α) = 1 := by
-  have hA : PowerSeries.constantCoeff (creationSeries D α) = 0 := by
-    simp [creationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
-  rw [creationExponential, PowerSeries.coeff_subst'
-    (PowerSeries.HasSubst.of_constantCoeff_zero' hA), finsum_eq_single _ 0]
-  · simp
-  · intro j hj
-    rw [PowerSeries.coeff_zero_eq_constantCoeff, map_pow, hA]
-    simp [hj]
-
 /-- Any coefficientwise polynomial derivation obeys the exponential chain rule. -/
 theorem actual_exponential_derivation (D : LatticeData)
     (d : Derivation ℂ (Oscillator D) (Oscillator D)) (α : Charge D) :
@@ -101,7 +90,7 @@ theorem actual_exponential_derivation (D : LatticeData)
     ring
   have h0 : PowerSeries.coeff 0 H = 0 := by
     dsimp only [H]
-    rw [map_sub, series_coeff, exponential_constant, Derivation.map_one_eq_zero]
+    rw [map_sub, series_coeff, LatticeAllStateField.exponential_constant, Derivation.map_one_eq_zero]
     rw [PowerSeries.coeff_mul]
     simp only [Finset.Nat.antidiagonal_zero,Finset.sum_singleton,series_coeff]
     simp [S,creationSeries]
@@ -142,9 +131,13 @@ set_option maxHeartbeats 1000000
 
 namespace D5.S3.VertexAlgebra.LatticeActualAnnihilation
 open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration
-open LatticeActualCurrentAlgebra LatticeActualProductKernel ActualSeriesDerivation MvPolynomial
+open LatticeActualProductKernel ActualSeriesDerivation MvPolynomial
 open scoped BigOperators
 noncomputable section
+
+/-- The released Gram-weighted polynomial derivative. -/
+abbrev annihilate (D : LatticeData) (i : Fin D.rank) (k : ℕ) :
+    Module.End ℂ (Oscillator D) := LatticeSugawaraCurrents.weightedPartial D i k
 
 def annihilationDerivation (D : LatticeData) (i : Fin D.rank) (k : ℕ) :
     Derivation ℂ (Oscillator D) (Oscillator D) :=
@@ -157,8 +150,40 @@ def annihilationDerivation (D : LatticeData) (i : Fin D.rank) (k : ℕ) :
       (D.G i j : ℂ) • pderiv (j,k))) p = _
   rw [map_sum]
   simp only [Finset.sum_apply,Derivation.coeFnAddMonoidHom_apply,
-    Derivation.coe_smul,Pi.smul_apply,annihilate,LinearMap.sum_apply,
+    Derivation.coe_smul,Pi.smul_apply,annihilate,LatticeSugawaraCurrents.weightedPartial,LinearMap.sum_apply,
     LinearMap.smul_apply,Derivation.coeFn_coe]
+
+/-- Leibniz for the actual polynomial annihilation derivation. -/
+theorem annihilate_mul (D : LatticeData) (i : Fin D.rank) (k : ℕ)
+    (p q : Oscillator D) :
+    annihilate D i k (p*q) = annihilate D i k p * q + p * annihilate D i k q := by
+  simp only [← annihilation_apply, Derivation.leibniz, smul_eq_mul]
+  ring
+
+/-- The released sector current law determines the annihilation of a variable. -/
+theorem annihilate_X (D : LatticeData) (i j : Fin D.rank) (k l : ℕ) :
+    annihilate D i k (X (j,l)) =
+      if k = l then (D.G i j : ℂ) • (1 : Oscillator D) else 0 := by
+  classical
+  have h := congrArg (fun f : Module.End ℂ (Oscillator D) => f 1)
+    (LatticeSugawaraCurrents.neutralPolynomialMode_heisenberg D i j (0 : Charge D)
+      ((k : ℤ) + 1) (-(l : ℤ) - 1))
+  rw [LatticeSugawaraCurrents.neutralPolynomialMode_positive,
+    LatticeSugawaraCurrents.neutralPolynomialMode_negative] at h
+  have hzero : annihilate D i k (1 : Oscillator D) = 0 := by
+    rw [← annihilation_apply, Derivation.map_one_eq_zero]
+  have hidx : (k : ℤ) + 1 + (-(l : ℤ) - 1) = 0 ↔ k = l := by omega
+  simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.smul_apply,
+    LinearMap.mulLeft_apply, Module.End.one_apply,
+    Int.cast_add, Int.cast_natCast, Int.cast_one, hidx] at h
+  change (k + 1 : ℂ) • annihilate D i k (X (j,l) * 1) -
+    X (j,l) * ((k + 1 : ℂ) • annihilate D i k 1) = _ at h
+  rw [hzero, smul_zero, mul_zero, sub_zero, mul_one] at h
+  have hs : (k + 1 : ℂ) ≠ 0 := by exact_mod_cast (Nat.succ_ne_zero k)
+  apply smul_right_injective (Oscillator D) hs
+  by_cases hkl : k = l
+  · simpa only [if_pos hkl, smul_smul] using h
+  · simpa only [if_neg hkl, zero_smul, smul_zero] using h
 
 theorem pairing_sum (D : LatticeData) (i : Fin D.rank) (α : Charge D) :
     (∑ j : Fin D.rank, (α j : ℂ)*(D.G i j : ℂ)) = (bilinear D (unitCharge D i) α : ℂ) := by
@@ -253,7 +278,7 @@ theorem polynomialDerivation_C (D : LatticeData) (i : Fin D.rank)
 theorem polynomialDerivation_X (D : LatticeData) (i : Fin D.rank) (k : ℕ) :
     polynomialDerivation D i k Polynomial.X = 0 := by
   rw [←Polynomial.monomial_one_one_eq_X,polynomialDerivation_monomial]
-  simp [annihilate]
+  simp [annihilate,LatticeSugawaraCurrents.weightedPartial]
 
 /-- Actual translations commute with every positive current derivation. -/
 theorem annihilation_transport (D : LatticeData) (i : Fin D.rank) (k : ℕ)
@@ -264,7 +289,7 @@ theorem annihilation_transport (D : LatticeData) (i : Fin D.rank) (k : ℕ)
       polynomialDerivation D i k (translatedPolynomial D α (X x)) := by
     rcases x with ⟨j,l⟩
     have hc (z : ℂ) : annihilate D i k (z • (1 : Oscillator D)) = 0 := by
-      simp [annihilate]
+      simp [annihilate,LatticeSugawaraCurrents.weightedPartial]
     have ht (z : ℂ) : translatedPolynomial D α (z • (1 : Oscillator D)) =
         Polynomial.C (z • (1 : Oscillator D)) := by
       simp [translatedPolynomial,Algebra.smul_def]
@@ -279,7 +304,7 @@ theorem annihilation_transport (D : LatticeData) (i : Fin D.rank) (k : ℕ)
       exact ht _
     · simp [h,translatedPolynomial]
   induction p using MvPolynomial.induction_on with
-  | C c => simp [translatedPolynomial,polynomialDerivation_C,annihilate]
+  | C c => simp [translatedPolynomial,polynomialDerivation_C,annihilate,LatticeSugawaraCurrents.weightedPartial]
   | add p q hp hq => simp only [map_add,translatedPolynomial,map_add] at hp hq ⊢; rw [hp,hq]
   | mul_X p x hp =>
     rw [annihilate_mul]
