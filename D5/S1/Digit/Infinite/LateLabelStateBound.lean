@@ -84,7 +84,7 @@ def pathAddress {G : Representation V E} (p : Path G) : LegalDigits :=
 
 /-- The scalar image of every infinite path from the finite initial set. -/
 def scalarImage (G : Representation V E) : Set ℝ :=
-  {e | ∃ p : Path G, G.source (p.val 0) ∈ G.initial ∧ kappa p.pathAddress = e}
+  {e | ∃ p : Path G, G.source (p.val 0) ∈ G.initial ∧ kappa (pathAddress p) = e}
 
 /-- Exactly the vertices retained after removing those with no infinite continuation. -/
 def Surviving (G : Representation V E) :=
@@ -94,7 +94,7 @@ def Surviving (G : Representation V E) :=
 noncomputable def survivorCount (G : Representation V E) : ℕ := Nat.card (Surviving G)
 
 private theorem address_window {G : Representation V E} (p : Path G) (n : ℕ) :
-    window p.pathAddress n = G.label (p.val n) := by
+    window (pathAddress p) n = G.label (p.val n) := by
   apply Subtype.ext
   funext i
   simp only [window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift, pathAddress]
@@ -103,7 +103,7 @@ private theorem address_window {G : Representation V E} (p : Path G) (n : ℕ) :
   simp [hd, hm]
 
 private theorem address_shift {G : Representation V E} (p : Path G) (n : ℕ) :
-    (p.shiftPath n).pathAddress = bitShift p.pathAddress (3 * n) := by
+    (pathAddress ((shiftPath p n))) = bitShift (pathAddress p) (3 * n) := by
   apply Subtype.ext
   funext j
   simp only [pathAddress, shiftPath, bitShift]
@@ -113,7 +113,7 @@ private theorem address_shift {G : Representation V E} (p : Path G) (n : ℕ) :
 
 private theorem splice_shift {G : Representation V E} (p q : Path G) (n : ℕ)
     (h : G.source (q.val 0) = G.source (p.val n)) :
-    (p.splicePath q n h).shiftPath n = q := by
+    (shiftPath ((splicePath p q n h)) n) = q := by
   apply Subtype.ext
   funext j
   simp [splicePath, shiftPath]
@@ -162,53 +162,53 @@ private theorem finite_shift (x : LegalDigits) (n : ℕ) (hx : finiteTail x) :
   exact ⟨N, fun j hj => hN (j + n) (by omega)⟩
 
 private theorem path_recurrence {G : Representation V E} (p : Path G) :
-    kappa p.pathAddress = offset (G.label (p.val 0)) - g * kappa (p.shiftPath 1).pathAddress := by
-  have h := (closed_observation_graph_realization.2.2.1 p.pathAddress).1
+    kappa (pathAddress p) = offset (G.label (p.val 0)) - g * kappa (pathAddress ((shiftPath p 1))) := by
+  have h := (closed_observation_graph_realization.2.2.1 (pathAddress p)).1
   rw [address_window] at h
   simpa only [branch, originalT, address_shift, Nat.mul_one] using h
 
 private theorem shift_add {G : Representation V E} (p : Path G) (n m : ℕ) :
-    (p.shiftPath n).shiftPath m = p.shiftPath (m + n) := by
+    (shiftPath ((shiftPath p n)) m) = (shiftPath p (m + n)) := by
   apply Subtype.ext
   funext j
   simp [shiftPath, Nat.add_assoc]
 
 private theorem prefix_difference {G : Representation V E} (p q : Path G) (n : ℕ)
     (h : ∀ j < n, G.label (p.val j) = G.label (q.val j)) :
-    kappa p.pathAddress - kappa q.pathAddress =
-      (-g) ^ n * (kappa (p.shiftPath n).pathAddress - kappa (q.shiftPath n).pathAddress) := by
+    kappa (pathAddress p) - kappa (pathAddress q) =
+      (-g) ^ n * (kappa (pathAddress ((shiftPath p n))) - kappa (pathAddress ((shiftPath q n)))) := by
   induction n generalizing p q with
   | zero =>
     simp only [pow_zero, one_mul]
     rfl
   | succ n ih =>
     have hh : ∀ j < n,
-        G.label ((p.shiftPath 1).val j) = G.label ((q.shiftPath 1).val j) := by
+        G.label (((shiftPath p 1)).val j) = G.label (((shiftPath q 1)).val j) := by
       intro j hj
       exact h (j + 1) (by omega)
-    have hi := ih (p.shiftPath 1) (q.shiftPath 1) hh
+    have hi := ih ((shiftPath p 1)) ((shiftPath q 1)) hh
     rw [shift_add, shift_add] at hi
     calc
-      kappa p.pathAddress - kappa q.pathAddress =
-          (-g) * (kappa (p.shiftPath 1).pathAddress - kappa (q.shiftPath 1).pathAddress) := by
+      kappa (pathAddress p) - kappa (pathAddress q) =
+          (-g) * (kappa (pathAddress ((shiftPath p 1))) - kappa (pathAddress ((shiftPath q 1)))) := by
         rw [path_recurrence p, path_recurrence q, h 0 (by omega)]
         ring
       _ = (-g) ^ (n + 1) *
-          (kappa (p.shiftPath (n + 1)).pathAddress - kappa (q.shiftPath (n + 1)).pathAddress) := by
+          (kappa (pathAddress ((shiftPath p (n + 1)))) - kappa (pathAddress ((shiftPath q (n + 1))))) := by
         rw [hi, pow_succ]
         ring
 
 private theorem splice_difference {G : Representation V E} (p q : Path G) (n : ℕ)
     (h : G.source (q.val 0) = G.source (p.val n)) :
-    kappa (p.splicePath q n h).pathAddress - kappa p.pathAddress =
-      (-g) ^ n * (kappa q.pathAddress - kappa (p.shiftPath n).pathAddress) := by
-  have hh := prefix_difference (p.splicePath q n h) p n
+    kappa (pathAddress ((splicePath p q n h))) - kappa (pathAddress p) =
+      (-g) ^ n * (kappa (pathAddress q) - kappa (pathAddress ((shiftPath p n)))) := by
+  have hh := prefix_difference ((splicePath p q n h)) p n
     (fun j hj => by simp [splicePath, hj])
   rwa [splice_shift] at hh
 
 private theorem splice_start {G : Representation V E} (p q : Path G) (n : ℕ)
     (h : G.source (q.val 0) = G.source (p.val n)) :
-    G.source ((p.splicePath q n h).val 0) = G.source (p.val 0) := by
+    G.source (((splicePath p q n h)).val 0) = G.source (p.val 0) := by
   by_cases hn : 0 < n
   · simp [splicePath, hn]
   · have hn' : n = 0 := by omega
@@ -217,21 +217,21 @@ private theorem splice_start {G : Representation V E} (p q : Path G) (n : ℕ)
 
 private theorem equal_signed_tails {G : Representation V E} (p : Path G)
     (hp : G.source (p.val 0) ∈ G.initial)
-    (he : IsLeast (scalarImage G) (kappa p.pathAddress) ∨
-      IsGreatest (scalarImage G) (kappa p.pathAddress))
+    (he : IsLeast (scalarImage G) (kappa (pathAddress p)) ∨
+      IsGreatest (scalarImage G) (kappa (pathAddress p)))
     (i k : ℕ) (hv : G.source (p.val i) = G.source (p.val k))
     (hs : i % 2 = k % 2) :
-    kappa (p.shiftPath i).pathAddress = kappa (p.shiftPath k).pathAddress := by
-  have hi : G.source ((p.shiftPath k).val 0) = G.source (p.val i) := by
+    kappa (pathAddress ((shiftPath p i))) = kappa (pathAddress ((shiftPath p k))) := by
+  have hi : G.source (((shiftPath p k)).val 0) = G.source (p.val i) := by
     simpa [shiftPath] using hv.symm
-  have hk : G.source ((p.shiftPath i).val 0) = G.source (p.val k) := by
+  have hk : G.source (((shiftPath p i)).val 0) = G.source (p.val k) := by
     simpa [shiftPath] using hv
-  have hmi : kappa (p.splicePath (p.shiftPath k) i hi).pathAddress ∈ scalarImage G :=
-    ⟨_, (splice_start p (p.shiftPath k) i hi).symm ▸ hp, rfl⟩
-  have hmk : kappa (p.splicePath (p.shiftPath i) k hk).pathAddress ∈ scalarImage G :=
-    ⟨_, (splice_start p (p.shiftPath i) k hk).symm ▸ hp, rfl⟩
-  have hdi := splice_difference p (p.shiftPath k) i hi
-  have hdk := splice_difference p (p.shiftPath i) k hk
+  have hmi : kappa (pathAddress ((splicePath p ((shiftPath p k)) i hi))) ∈ scalarImage G :=
+    ⟨_, (splice_start p ((shiftPath p k)) i hi).symm ▸ hp, rfl⟩
+  have hmk : kappa (pathAddress ((splicePath p ((shiftPath p i)) k hk))) ∈ scalarImage G :=
+    ⟨_, (splice_start p ((shiftPath p i)) k hk).symm ▸ hp, rfl⟩
+  have hdi := splice_difference p ((shiftPath p k)) i hi
+  have hdk := splice_difference p ((shiftPath p i)) k hk
   have ht : g ≠ 0 := pow_ne_zero 3 (inv_pos.mpr Real.goldenRatio_pos).ne'
   have hpos : 0 < (-g) ^ i * (-g) ^ k := by
     rw [← pow_add]
@@ -240,9 +240,9 @@ private theorem equal_signed_tails {G : Representation V E} (p : Path G)
   · have hli := he.2 hmi
     have hlk := he.2 hmk
     have hai : 0 ≤ (-g) ^ i *
-        (kappa (p.shiftPath k).pathAddress - kappa (p.shiftPath i).pathAddress) := by linarith
+        (kappa (pathAddress ((shiftPath p k))) - kappa (pathAddress ((shiftPath p i)))) := by linarith
     have hak : 0 ≤ (-g) ^ k *
-        (kappa (p.shiftPath i).pathAddress - kappa (p.shiftPath k).pathAddress) := by linarith
+        (kappa (pathAddress ((shiftPath p i))) - kappa (pathAddress ((shiftPath p k)))) := by linarith
     rcases lt_or_gt_of_ne (pow_ne_zero i (neg_ne_zero.mpr ht)) with hn | hn
     · have hkn : (-g) ^ k < 0 := by nlinarith
       have h1 := nonpos_of_mul_nonneg_right hai hn
@@ -255,9 +255,9 @@ private theorem equal_signed_tails {G : Representation V E} (p : Path G)
   · have hli := he.2 hmi
     have hlk := he.2 hmk
     have hai : (-g) ^ i *
-        (kappa (p.shiftPath k).pathAddress - kappa (p.shiftPath i).pathAddress) ≤ 0 := by linarith
+        (kappa (pathAddress ((shiftPath p k))) - kappa (pathAddress ((shiftPath p i)))) ≤ 0 := by linarith
     have hak : (-g) ^ k *
-        (kappa (p.shiftPath i).pathAddress - kappa (p.shiftPath k).pathAddress) ≤ 0 := by linarith
+        (kappa (pathAddress ((shiftPath p i))) - kappa (pathAddress ((shiftPath p k)))) ≤ 0 := by linarith
     rcases lt_or_gt_of_ne (pow_ne_zero i (neg_ne_zero.mpr ht)) with hn | hn
     · have hkn : (-g) ^ k < 0 := by nlinarith
       have h1 := nonneg_of_mul_nonpos_right hai hn
@@ -303,16 +303,16 @@ theorem result (G : Representation V E) (e : ℝ)
   classical
   have hem : e ∈ scalarImage G := he.elim (fun h => h.1) (fun h => h.1)
   obtain ⟨p, hp, hpe⟩ := hem
-  have haddr : p.pathAddress = x := finite_address_unique x p.pathAddress hx (hpe.trans hxe.symm)
-  have hpf : finiteTail p.pathAddress := by rwa [haddr]
-  have hpn : window p.pathAddress j ≠ nullLabel := by rwa [haddr]
-  have hpex : IsLeast (scalarImage G) (kappa p.pathAddress) ∨
-      IsGreatest (scalarImage G) (kappa p.pathAddress) := by rwa [hpe]
+  have haddr : (pathAddress p) = x := finite_address_unique x (pathAddress p) hx (hpe.trans hxe.symm)
+  have hpf : finiteTail (pathAddress p) := by rwa [haddr]
+  have hpn : window (pathAddress p) j ≠ nullLabel := by rwa [haddr]
+  have hpex : IsLeast (scalarImage G) (kappa (pathAddress p)) ∨
+      IsGreatest (scalarImage G) (kappa (pathAddress p)) := by rwa [hpe]
   haveI : Finite (Surviving G) :=
     inferInstanceAs (Finite {z : V // ∃ p : Path G, G.source (p.val 0) = z})
   letI : Fintype (Surviving G) := Fintype.ofFinite (Surviving G)
   let state : Fin (j + 2) → Surviving G × Fin 2 := fun n =>
-    (⟨G.source (p.val n), ⟨p.shiftPath n, by simp [shiftPath]⟩⟩,
+    (⟨G.source (p.val n), ⟨(shiftPath p n), by simp [shiftPath]⟩⟩,
       ⟨n.val % 2, Nat.mod_lt _ (by decide)⟩)
   have hinj : Function.Injective state := by
     intro a b hab
@@ -323,14 +323,14 @@ theorem result (G : Representation V E) (e : ℝ)
     have hs : a.val % 2 = b.val % 2 :=
       congrArg (fun z : Surviving G × Fin 2 => z.2.val) hab
     have ht := equal_signed_tails p hp hpex a b hv hs
-    have hf : finiteTail (p.shiftPath a).pathAddress := by
+    have hf : finiteTail (pathAddress ((shiftPath p a))) := by
       rw [address_shift]
-      exact finite_shift p.pathAddress (3 * a.val) hpf
-    have ha := finite_address_unique (p.shiftPath a).pathAddress (p.shiftPath b).pathAddress hf ht.symm
+      exact finite_shift (pathAddress p) (3 * a.val) hpf
+    have ha := finite_address_unique (pathAddress ((shiftPath p a))) (pathAddress ((shiftPath p b))) hf ht.symm
     rw [address_shift, address_shift] at ha
     rcases lt_or_gt_of_ne hne with hlt | hlt
-    · exact hpn (repeated_tail_null p.pathAddress hpf a b j hlt (by omega) ha.symm)
-    · exact hpn (repeated_tail_null p.pathAddress hpf b a j hlt (by omega) ha)
+    · exact hpn (repeated_tail_null (pathAddress p) hpf a b j hlt (by omega) ha.symm)
+    · exact hpn (repeated_tail_null (pathAddress p) hpf b a j hlt (by omega) ha)
   have hc := Fintype.card_le_of_injective state hinj
   have hcount : j + 2 ≤ 2 * survivorCount G := by
     simpa only [Fintype.card_fin, Fintype.card_prod, survivorCount,
