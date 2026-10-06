@@ -7,6 +7,20 @@ namespace StrataLint.Tests;
 
 public sealed class DecomposeAtomTests
 {
+    [Theory]
+    [InlineData("Meta/Digestion/backfill/unrelated/source.toml")]
+    [InlineData("Meta/Digestion/backfill/probe/residual-open/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.yaml")]
+    public void DecompositionIgnoresUnrelatedMalformedRecords(string path)
+    {
+        var f = new DecomposeFixture();
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Append(
+            RawRepositoryEntry.FromText(path, "malformed [")));
+        var result = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply);
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(1, f.Writes);
+        Assert.Contains(f.Current.Entries, e => e.Path == path && Encoding.UTF8.GetString(e.Bytes.AsSpan()) == "malformed [");
+    }
+
     [Fact]
     public void DeclaredDialectWritesExactBoldClauseChain()
     {

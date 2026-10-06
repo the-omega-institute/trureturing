@@ -200,7 +200,7 @@ public sealed partial class CoverBatchCommandTests
     {
         using var world = new BatchWorld();
         var session = new CoverAtomCommand.Session(world.Root, world.Repository, world.Report,
-            CoverWorld.FixtureUtc, Gid);
+            CoverWorld.FixtureUtc, Gid, [First]);
         Assert.True(session.Apply(First, [Gid]).Success);
         Assert.True(session.Apply(First, [OtherGid]).Success);
 
@@ -244,6 +244,35 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(DigestionMigrationState.Absorbed, world.Entry(world.ParentId!).ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, world.Entry(world.ParentId!).ProjectedStatus.Truth);
         Assert.DoesNotContain(world.LedgerPaths(), path => path.Contains("residual-open", StringComparison.Ordinal));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ParentCoverageLoadsCrossSourceDescendantsAndChecksTheirCas(bool corruptChild)
+    {
+        using var world = new BatchWorld(chain: true, externalChild: true);
+        Assert.True(world.Run(Row(world.ChildIds[0], Gid) + Row(world.ChildIds[1], OtherGid)).Success);
+        if (corruptChild)
+            File.WriteAllText(Path.Combine(world.Root, DigestionCasStore.RootPath + world.ChildIds[1]), "changed\n");
+        var before = world.LedgerImage();
+
+        var result = world.Run(Row(world.ParentId!, OtherGid));
+
+        Assert.Equal(!corruptChild, result.Success);
+        if (corruptChild)
+        {
+            Assert.Equal("failed", Assert.Single(Results(result)).Status);
+            Assert.Contains("clause chain", Results(result)[0].Reason, StringComparison.Ordinal);
+            Assert.Equal(before, world.LedgerImage());
+        }
+        else
+        {
+            Assert.Equal(DigestionMigrationState.Absorbed, world.Entry(world.ParentId!).ProjectedStatus.Migration);
+            Assert.Equal("external-child", world.Entry(world.ChildIds[1]).SourceId);
+        }
+        Assert.DoesNotContain(world.Repository.ScopedCurrentReads.SelectMany(static paths => paths),
+            path => path == BackfillInventoryLoader.RootPath.TrimEnd('/'));
     }
 
     [Fact]
@@ -312,18 +341,22 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal("failed", Assert.Single(Results(result)).Status);
     }
 
-    [Fact]
-    public void IndependentUnrequestedLedgerBytesRemainUnchanged()
+    [Theory]
+    [InlineData("# preserved unrelated annotation\n")]
+    [InlineData("malformed: [\n")]
+    public void IndependentUnrequestedLedgerBytesRemainUnchanged(string suffix)
     {
         using var world = new BatchWorld();
         var path = world.LedgerPaths().Single(path => path.EndsWith(Second + ".yaml", StringComparison.Ordinal));
-        File.AppendAllText(path, "# preserved unrelated annotation\n");
+        File.AppendAllText(path, suffix);
         var before = TemporaryFileSystem.File.ReadAllBytes(path);
 
         var result = world.Run(Row(First, Gid));
 
         Assert.True(result.Success, result.Error + result.Output);
         Assert.Equal(before, TemporaryFileSystem.File.ReadAllBytes(path));
+        Assert.DoesNotContain(world.Repository.ScopedCurrentReads.SelectMany(static paths => paths),
+            selected => selected == BackfillInventoryLoader.RootPath.TrimEnd('/'));
     }
 
     private const string Gid = "D5/S0/Carrier/Probe.probe";
@@ -357,7 +390,8 @@ public sealed partial class CoverBatchCommandTests
         internal string? ParentId { get; }
         internal ImmutableArray<string> ChildIds { get; } = [];
 
-        internal BatchWorld(Func<DigestionLedgerEntry, DigestionLedgerEntry>? edit = null, bool chain = false)
+        internal BatchWorld(Func<DigestionLedgerEntry, DigestionLedgerEntry>? edit = null, bool chain = false,
+            bool externalChild = false)
         {
             Root = Path.Combine(temporary.Path, "repo");
             inputs = new CoverSpec { OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"] }.Materialize();
@@ -402,12 +436,24 @@ public sealed partial class CoverBatchCommandTests
                     Coverage = [],
                     Receipts = new([], [], null),
                     ProjectedStatus = new(DigestionMigrationState.Residual, DigestionTruthState.Open),
-                });
-                document = document.WithDigestionSources([source with
+                }).ToImmutableArray();
+                var parentSource = source with
                 {
                     Atomizer = AtomizerRegistry.PzgId,
-                    Entries = [parentEntry, .. childEntries],
-                }]);
+                    Entries = [parentEntry, .. externalChild ? childEntries.Take(1) : childEntries],
+                };
+                document = document.WithDigestionSources(externalChild
+                    ? [parentSource, parentSource with
+                    {
+                        SourceId = "external-child",
+                        SourcePath = "docs/COVER_EXTERNAL.md",
+                        Entries = [childEntries[1] with
+                        {
+                            SourceId = "external-child", SourcePath = "docs/COVER_EXTERNAL.md",
+                        }],
+                    }]
+                    : [parentSource]);
+                if (externalChild) inputs.Files["docs/COVER_EXTERNAL.md"] = sourceText;
                 inputs.Files[source.SourcePath] = sourceText;
                 foreach (var atom in children.Prepend(parent))
                 {

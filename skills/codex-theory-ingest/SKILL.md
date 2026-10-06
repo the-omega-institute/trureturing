@@ -221,49 +221,16 @@ eligible numbered lowercase heading.
 
 ### 3. Ingest and verify the new atoms
 
-Record `git status --short`, then run the canonical writer:
+Run the canonical writer for the requested volume:
 
 ```sh
-make ingest
+make ingest SOURCE=<source-id-or-volume-path>
 ```
 
-Require exit 0, `coarse_fallbacks=0`, `ledger_changed=true`, and
-`residual_open_added` greater than zero. There is one named recovery. If, and
-only if, `make ingest` exits 2 and at least one complete output line matches one
-of these owner-stage predicates, treat it as a report prerequisite:
-
-- it starts `report-consumer: raw Lean report is missing at ` and ends
-  `; run make lean-report first`;
-- it starts `report-consumer: raw Lean report bundle is incomplete at ` and ends
-  `; run make lean-report first`;
-- it starts `lean-report-input: ` and ends `; run make lean-report first`.
-
-The later supervisor line `report-consumer: consumption failed; the raw Lean
-report may be stale, run make lean-report first` never satisfies this predicate,
-even when the overall exit is 2.
-
-This predicate comes from the current owners: `report-consumer.sh:16-18` owns
-missing reports, `report-consumer.sh:33-36` owns incomplete bundles,
-`lean-report-input.sh:343-398` owns SHA, attestation, and repository-input
-freshness, while `report-consumer.sh:45-46` appends the excluded generic line
-after every nonzero supervised command. `CliApplication.cs:289-294` maps every
-failed `CommandResult`, including semantic ingest failures, to exit 2. The
-2026-08-17 owner-output probes were:
-
-- report temporarily absent, `make ingest` exit 2:
-  `report-consumer: raw Lean report is missing at /Users/auric/trureturing-theorygen-intake/.lake/build/stratalint/raw-lean-report.json; run make lean-report first`;
-- provenance member temporarily absent, `make ingest` exit 2:
-  `report-consumer: raw Lean report bundle is incomplete at /Users/auric/trureturing-theorygen-intake/.lake/build/stratalint/raw-lean-report.json.provenance.json; run make lean-report first`;
-- SHA member replaced by an invalid fixture, `make ingest` exit 2:
-  `lean-report-input: raw Lean report SHA is stale; run make lean-report first`;
-- valid bundle with a supervised `/bin/bash -c 'exit 2'`, exit 2:
-  `report-consumer: consumption failed; the raw Lean report may be stale, run make lean-report first`.
-
-run `make lean-report` exactly once, require exit 0, then retry `make ingest`
-exactly once. The retry must itself exit 0 and satisfy every ingest postcondition
-above. A nonzero `make lean-report`, any failed retry, or an exit 2 without one of
-the three diagnostics takes the global `open` transition. Never treat an
-arbitrary exit 2 as a report prerequisite and never attempt a second recovery.
+An explicit source is required. Multiple sources may be supplied together.
+Require exit 0 and `coarse_fallbacks=0`. Ingest does not consume a Lean report
+or Scribe verification. A failed ingest must be resolved from its actual
+`INGEST_INVALID` diagnostic; generating a Lean report is not a recovery step.
 
 Do not create or edit any `Meta/Digestion/**` file yourself. Locate the one
 generated `Meta/Digestion/backfill/<source_id>/source.toml` whose `path` equals
