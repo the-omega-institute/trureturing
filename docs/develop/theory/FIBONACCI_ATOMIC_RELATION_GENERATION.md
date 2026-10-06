@@ -66985,3 +66985,480 @@ I_\psi(x)=\sum_{n\in\mathcal W_z(x)}M_z(n)J_x^{\eta_z}(n)
 
 
 ## 追加锚（本行以下为增补区）
+
+## 436. 完整 primorial 绝对账的窗口无关成本与原生源尺度
+
+**定义 436.1（同一绝对账与源时钟）。** 保持 §§430–431 的同一实际常数
+$A>0,D>A,\mu_0>0$、$a=e^{-\gamma_E}>0$、$\Delta_\beta>0$，
+以及（LC.1）、（LC.4）–（LC.5）的
+$P_z,\theta_{P_z},C,\mathsf C_z,\mathsf L_z,X_z$。
+这里 $A$ 是核的固定常数；整数来源 $N$ 的时钟另记为
+$\Lambda=\log N$。
+复用（CP.7）证明中的经典第一 Mertens 供应及其同一常数：
+
+$$
+F(z)=\sum_{p\le z}\frac{\log p}{p},\qquad
+|F(z)-\log z|\le K_1=\log4+4,
+\qquad
+R_1=\sum_{m\ge2}\frac{\log m}{m(m-1)}<\infty,
+\qquad D_S=K_1+R_1.
+\tag{436.1}
+$$
+
+§431 的完整账上界及固定正窗口的精确阶直接复用；
+下面只补 $U\ge0$ 上的共同下界，不重新推导其上界。
+§432 的 $\mathsf C_P^{\rm sgn}$ 是另一份保留符号的账，
+不属于（LC.4）的 $\mathsf C_z$；本节不对它断言相同下界。
+
+**定理 436.2（窗口无关的完整账成本）。** 存在有限 $z_1\ge2$，
+使所有实数 $z\ge z_1$ 和所有实数 $U\ge0$ 同时满足
+
+$$
+\boxed{
+\mathsf C_z(U)\ge
+\frac{\Delta_\beta A}{192a}(\log z)^4.}
+\tag{436.2}
+$$
+
+因而对全部 $z\ge z_1$、$V>0$，包括任意随 $z$ 缩小的正窗口宽度，
+（CP.11）指定的充分阈值满足
+
+$$
+\boxed{
+\log X_z(V)\ge
+\frac{\Delta_\beta A}{96a}(\log z)^4.}
+\tag{436.3}
+$$
+
+这里的下界只针对已指定的非负绝对账和充分阈值，
+不针对真实核误差或满足相同符号结论的最小阈值。
+
+证明。由（LC.8）的实际约数下界和 $C(W)\ge AW^3/6$，
+在完整非负和中保留 $j=d\mid P_z$，得到
+
+$$
+\mathsf C_z(U)
+\ge\frac{\Delta_\beta A}{6}
+\sum_{d\mid P_z}\frac{(\log d)^3}{d}.
+\tag{436.4}
+$$
+
+这里只使用 $U\ge0$、$\log2>0$；没有先固定严格正的窗口宽度。
+令有限约数总量和其归一化权重为
+
+$$
+\mathcal D_z=\sum_{d\mid P_z}\frac1d,
+\qquad \nu_z(d)=\frac1{d\mathcal D_z}.
+$$
+
+平方自由有限 Euler 展开给每个 $p\le z$ 的占位权重
+$\sum_{d\mid P_z,\ p\mid d}\nu_z(d)=1/(p+1)$，因此精确有
+
+$$
+m_z:=\sum_{d\mid P_z}\nu_z(d)\log d
+=\sum_{p\le z}\frac{\log p}{p+1}
+=F(z)-\sum_{p\le z}\frac{\log p}{p(p+1)}.
+\tag{436.5}
+$$
+
+后一个非负修正和不超过（436.1）的 $R_1$，所以
+$m_z\ge\log z-D_S$。
+取 $z_1\ge z_0$，其中 $z_0$ 是（LC.12）的同一阈值，
+并取 $\log z_1\ge2D_S$。此选择只依赖固定供应，独立于 $U,V$，且
+
+$$
+m_z\ge\tfrac12\log z,
+\qquad \mathcal D_z\ge\frac{\log z}{4a}
+\quad(z\ge z_1).
+$$
+
+对有限概率权重 $\nu_z$ 和 $[0,\infty)$ 上的凸函数 $t^3$，
+直接使用经典有限 Jensen 不等式，得到
+
+$$
+\sum_{d\mid P_z}\frac{(\log d)^3}{d}
+=\mathcal D_z\sum_{d\mid P_z}\nu_z(d)(\log d)^3
+\ge\mathcal D_zm_z^3
+\ge\frac{(\log z)^4}{32a}.
+\tag{436.6}
+$$
+
+代入（436.4）即得（436.2）。
+最后（LC.5）给
+$\log X_z(V)\ge1+2\mathsf C_z(V\log z)$，
+而 $V\log z\ge0$，故（436.3）对全部 $V>0$ 同时成立。$\square$
+
+**定理 436.3（原生 CA 支撑与时钟上的指定校准障碍）。**
+存在有限 $N_1$，使每个 $N\ge N_1$ 的 proper GA1 CA 整数，
+在同一实际来源的
+
+$$
+\Lambda=\log N,\qquad z=P(N),\qquad x=\Lambda
+$$
+
+下，都有 $\operatorname{rad}(N)=P_z$，并对全部 $V>0$ 同时满足
+
+$$
+\boxed{x<X_z(V).}
+\tag{436.7}
+$$
+
+因此缩小 $V$ 不能使这份原生支撑和时钟满足（CP.11）指定的
+$x\ge X_z(V)$ 校准条件。
+此陈述不提供有效数值 $N_1$，也不假设存在无界的被选临界全局最大源列。
+
+证明。CA 支撑的既有素数前缀性质给
+$\operatorname{rad}(N)=\prod_{p\le P(N)}p=P_z$。
+[Caveney–Nicolas–Sondow 的既有 Theorem 13](../../../Library/Arith/caveney2012sacaga.md)
+给 $z\sim\Lambda$，当 $N$ 沿 proper GA1 整数趋于无穷。
+于是 $\log z/\log\Lambda\to1$，从而
+
+$$
+\frac{\log x}{(\log z)^4}\longrightarrow0.
+$$
+
+取统一于全部 $V>0$ 的（436.3），固定正系数
+$\Delta_\beta A/(96a)$ 最终严格大于该比值，
+即得（436.7）。此推导只在实际整数来源上运输既有支撑和时钟，
+没有另选粗糙 cutoff 或把 GA1 与 CA 的两个来源分开。$\square$
+
+**定理 436.4（指定校准的必要 cutoff 范围）。**
+对所有 $z\ge z_1,V>0,x\ge X_z(V)$，必有
+
+$$
+\boxed{
+\log z\le
+\left(\frac{96a}{\Delta_\beta A}\log x\right)^{1/4},
+\qquad
+\frac{\log x}{\log z}
+\ge\left(\frac{\Delta_\beta A}{96a}\right)^{1/4}
+(\log x)^{3/4}.}
+\tag{436.8}
+$$
+
+特别地，对任意固定 $b>0$，cutoff $z=x^b$ 最终不能满足这份校准，
+统一于全部 $V>0$。这些必要条件不保证允许范围内的预算足够小，
+也不提供增长粗糙参数上的统一前缀估计。
+
+证明。（436.3）与 $x\ge X_z(V)$ 给
+$\log x\ge\Delta_\beta A(\log z)^4/(96a)$。
+取正四次根并除以 $\log z>0$ 得（436.8）。
+若 $z=x^b$，则该必要不等式要求
+$1\ge\Delta_\beta A b^4(\log x)^3/(96a)$，
+在 $x\to\infty$ 时矛盾。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 437. 同一实际 primorial 核的源平移、精确补偿与对角符号分类
+
+### 定义与适用范围
+
+沿用 §§433–435 的实际 primorial 核及其完整极限轮廓。记
+
+\[
+c_*=e^{-\gamma_E}>0,\qquad
+\varphi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vb}}b\,db\right),
+\]
+
+\[
+\Xi_\sigma(a)=c_*\int_0^\infty e^{-\sigma v}
+\frac{e^{-av}\varphi(v)-1+(a-1)v}{v^2}\,dv,
+\qquad \sigma>0,\quad a\ge0.
+\tag{ST.1}
+\]
+
+已有的零端展开与全尾包络为
+
+\[
+\varphi(v)=1+v+\tfrac14v^2+O(v^3)\quad(v\downarrow0),
+\qquad 0<\varphi(v)\le e(1+v)\quad(v\ge0).
+\tag{ST.2}
+\]
+
+本节的承重结论是这个实际轮廓的源参数变换律及其对角符号分类。下列 Frullani 积分与补偿后的指数积分是经典分析恒等式，仅作为该变换律的中间供应；它们不作为新的独立数论结论。
+
+### 定理：任意两个正源指数之间的精确变换律
+
+设 \(\sigma,\tau>0\)、\(a\ge0\)，并要求
+\(b=\sigma+a-\tau\ge0\)。则
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma(a)=\Xi_\tau(\sigma+a-\tau)
++c_*\left[(\sigma-\tau)
+-(\sigma+a-1)\log\frac\sigma\tau\right].}
+\tag{ST.3}
+\]
+
+特别地，全部 \(\sigma\ge1\)、\(a\ge0\) 的轮廓由临界源指数 \(1\) 的同一条曲线精确确定：
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma(a)=\Xi_1(\sigma+a-1)
++c_*\left[(\sigma-1)-(\sigma+a-1)\log\sigma\right].}
+\tag{ST.4}
+\]
+
+这里平移与补偿都保持完整积分，未省去首块、低商项或有符号高商项。
+
+### 证明
+
+先支付两个经典中间积分。对任意 \(\sigma,\tau>0\)，
+
+\[
+F(\sigma,\tau)=\int_0^\infty
+\frac{e^{-\sigma v}-e^{-\tau v}}v\,dv
+=\log\frac\tau\sigma.
+\tag{ST.5}
+\]
+
+零端的指数差为 \((\tau-\sigma)v+O(v^2)\)，无穷端由正指数衰减支付。又因
+
+\[
+\frac{e^{-\sigma v}-e^{-\tau v}}v
+=-\int_\tau^\sigma e^{-tv}\,dt,
+\]
+
+在 \(t\) 的两个正端点之间，交换所需绝对积分由
+\(\int_{\min\{\sigma,\tau\}}^{\max\{\sigma,\tau\}}dt/t<\infty\)
+支付。故积分为 \(-\int_\tau^\sigma dt/t\)，得到（ST.5），也包含 \(\sigma<\tau\) 的有向积分。
+
+再令
+
+\[
+J(\sigma,\tau)=\int_0^\infty
+\frac{e^{-\tau v}-e^{-\sigma v}-(\sigma-\tau)v e^{-\tau v}}
+{v^2}\,dv.
+\]
+
+分子零端二阶消失；无穷端可积。对 \(\sigma\) 在任意正紧区间内求导，得到
+
+\[
+\frac{\partial J}{\partial\sigma}
+=\int_0^\infty\frac{e^{-\sigma v}-e^{-\tau v}}v\,dv
+=\log\frac\tau\sigma.
+\]
+
+微分的零端由常数共同控制，无穷端由两个正指数中的较小者共同控制。利用 \(J(\tau,\tau)=0\)，
+
+\[
+J(\sigma,\tau)
+=-\sigma\log\frac\sigma\tau+\sigma-\tau.
+\tag{ST.6}
+\]
+
+现在（ST.1）两项中含 \(\varphi\) 的部分，因
+\(\sigma+a=\tau+b\) 而完全抵消。剩余分子恰为
+
+\[
+e^{-\tau v}-e^{-\sigma v}
+-(\sigma-\tau)v e^{-\tau v}
++(a-1)v(e^{-\sigma v}-e^{-\tau v}).
+\]
+
+两项分别由（ST.6）与 \((a-1)F(\sigma,\tau)\) 支付。代入后即得（ST.3），取 \(\tau=1\) 得（ST.4）。所有相减都作用于已经绝对可积的完整轮廓或已经支付的补偿积分，未拆出两个各自发散的零端积分。证毕。
+
+### 定理：源变换的复合律与共同曲率
+
+固定 \(s>0\)，在 \(0<\sigma\le s\) 上定义
+
+\[
+Y_s(\sigma)=\Xi_\sigma(s-\sigma),
+\qquad
+T_{\sigma\leftarrow\tau}(s)
+=c_*\left[(\sigma-\tau)-(s-1)\log\frac\sigma\tau\right].
+\]
+
+对 \(\sigma,\tau,\rho\in(0,s]\)，有
+
+\[
+Y_s(\sigma)=Y_s(\tau)+T_{\sigma\leftarrow\tau}(s),
+\]
+
+\[
+T_{\sigma\leftarrow\tau}(s)+T_{\tau\leftarrow\rho}(s)
+=T_{\sigma\leftarrow\rho}(s),\qquad
+T_{\sigma\leftarrow\sigma}(s)=0.
+\tag{ST.7}
+\]
+
+因此不同源指数的关系具有明确的可逆复合律。该律只针对保持 \(s=\sigma+a\) 的实际轮廓变换，不将任意 RH 等价判据或五分类直接宣称为一个群。
+
+另定义对 \(s>0\) 的共同势函数
+
+\[
+H(s)=c_*\int_0^\infty
+\frac{(e^{-sv}-e^{-v})\varphi(v)+(s-1)v e^{-v}}{v^2}\,dv.
+\tag{ST.8}
+\]
+
+则 \(H\) 在正半轴二次连续可微，且
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma(a)-\Xi_\sigma(0)
+=H(\sigma+a)-H(\sigma)-c_*a\log\sigma,}
+\tag{ST.9}
+\]
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma''(a)=H''(\sigma+a)
+=c_*\int_0^\infty e^{-(\sigma+a)v}\varphi(v)\,dv>0.}
+\tag{ST.10}
+\]
+
+在 \(a=0\) 处，（ST.10）的导数按右导数理解；同一公式也给正邻域的延拓。若
+
+\[
+C_\sigma(a)=\Xi_\sigma(a)-\Xi_\sigma(0)+c_*a\log\sigma,
+\]
+
+则对于全部 \(\delta\ge0\)、\(a\ge0\)，
+
+\[
+C_{\sigma+\delta}(a)=C_\sigma(a+\delta)-C_\sigma(\delta).
+\tag{ST.11}
+\]
+
+### 证明
+
+（ST.7）由（ST.3）及正数对数的加法律得到。对（ST.8），在任意 \(s\) 的正紧区间，零端的分子与其一次 \(s\) 导数均为 \(O(v^2)\)，二次导数除以 \(v^2\) 后为 \(e^{-sv}\varphi(v)\)。这些估计由（ST.2）共同给出。无穷端由 \(\varphi(v)\le e(1+v)\) 与该紧区间的最小正指数支付，故可两次微分，并得到（ST.10）。积分严格为正，因为其被积函数对全部 \(v>0\) 严格为正。
+
+将两个完整差分按以下顺序相减，\(\varphi\) 项再次完全抵消：
+
+\[
+\bigl[\Xi_\sigma(a)-\Xi_\sigma(0)\bigr]
+-\bigl[H(\sigma+a)-H(\sigma)\bigr]
+=c_*a\int_0^\infty\frac{e^{-\sigma v}-e^{-v}}v\,dv
+=-c_*a\log\sigma.
+\]
+
+这给（ST.9）。该式在共同势函数上的差分立即给（ST.11）。证毕。
+
+### 定理：固定总指数的完整对角双根分类
+
+对每个先固定的 \(s>1\)，恰存在两个数
+
+\[
+0<\beta_-(s)<s-1<\beta_+(s)<s
+\]
+
+使得对全部 \(0<\sigma\le s\)，
+
+\[
+\begin{cases}
+\Xi_\sigma(s-\sigma)>0,
+&0<\sigma<\beta_-(s)\ \text{或}\ \beta_+(s)<\sigma\le s,\\
+\Xi_\sigma(s-\sigma)=0,
+&\sigma=\beta_-(s)\ \text{或}\ \sigma=\beta_+(s),\\
+\Xi_\sigma(s-\sigma)<0,
+&\beta_-(s)<\sigma<\beta_+(s).
+\end{cases}
+\tag{ST.12}
+\]
+
+这两根属于固定 \(s=\sigma+a\) 的源参数轴，与 §433 固定 \(\sigma\) 后在 \(a\) 轴上的两根是两个不同的切片。
+
+### 证明
+
+取（ST.3）中的参考源 \(\tau=s\)，参考位移为 \(0\)，得到
+
+\[
+Y_s(\sigma)=\Xi_s(0)
++c_*\left[(\sigma-s)-(s-1)\log\frac\sigma s\right].
+\tag{ST.13}
+\]
+
+因此
+
+\[
+Y_s'(\sigma)=c_*\left(1-\frac{s-1}\sigma\right),
+\qquad Y_s''(\sigma)=\frac{c_*(s-1)}{\sigma^2}>0.
+\]
+
+它在 \((0,s-1)\) 严格下降，在 \((s-1,s]\) 严格上升，唯一最小点为 \(\sigma=s-1\)。该点对应 \(a=1\)，§434 的严格符号给
+\(Y_s(s-1)=\Xi_{s-1}(1)<0\)。右端
+\(Y_s(s)=\Xi_s(0)>0\)，左端由（ST.13）满足
+\(Y_s(\sigma)\to+\infty\) 当 \(\sigma\downarrow0\)。连续性及两段严格单调性分别给且仅给一根，得到（ST.12）。这也覆盖 \(1<s\le2\)，不要求较小源指数大于 \(1\)。证毕。
+
+### 定理：总指数不超过一时的唯一根与严格临界储备
+
+临界正储备 \(c_0=\Xi_1(0)\) 满足严格界
+
+\[
+\boxed{0<c_0<c_*.}
+\tag{ST.14}
+\]
+
+对每个 \(0<s\le1\)，恰存在一个 \(\beta(s)\in(0,s)\)，使得在完整源域 \(0<\sigma\le s\) 上，
+
+\[
+\begin{cases}
+\Xi_\sigma(s-\sigma)<0,&0<\sigma<\beta(s),\\
+\Xi_\sigma(s-\sigma)=0,&\sigma=\beta(s),\\
+\Xi_\sigma(s-\sigma)>0,&\beta(s)<\sigma\le s.
+\end{cases}
+\tag{ST.15}
+\]
+
+边界 \(s=1\) 的根有精确表达式
+
+\[
+\boxed{\beta(1)=1-\frac{c_0}{c_*}\in(0,1).}
+\tag{ST.16}
+\]
+
+### 证明
+
+令 \(g(v)=e^{-v}\varphi(v)\)。由 §§433–434 的严格夹逼，全部 \(v>0\) 上 \(0<g(v)<1\)。零端（ST.2）给
+\(g(v)=1-v^2/4+O(v^3)\)，全尾线性包络给
+\(g(v)\le e(1+v)e^{-v}\)。因此
+
+\[
+I=c_*\int_0^\infty\frac{g(v)-1}{v^2}\,dv<0
+\]
+
+绝对收敛，并且其严格负号来自整个正半轴的严格负被积函数。完整相减得到
+
+\[
+c_0-I=c_*\int_0^\infty
+\frac{1-(1+v)e^{-v}}{v^2}\,dv=c_*.
+\]
+
+最后一个积分用分部积分支付：记
+\(f(v)=1-(1+v)e^{-v}\)，则 \(f'(v)=ve^{-v}\)，
+\(f(v)/v\to0\) 在零端及无穷端都成立，故
+\(\int_0^\infty f(v)/v^2\,dv=\int_0^\infty e^{-v}\,dv=1\)。
+于是 \(c_0=c_*+I<c_*\)；正号已经由 \(\varphi(v)>1+v\) 给出。得到（ST.14）。
+
+当 \(0<s<1\) 时，（ST.13）给
+
+\[
+Y_s'(\sigma)=c_*\left(1+\frac{1-s}\sigma\right)>0,
+\qquad \lim_{\sigma\downarrow0}Y_s(\sigma)=-\infty,
+\qquad Y_s(s)=\Xi_s(0)>0.
+\]
+
+严格单调性与连续性给唯一一根以及（ST.15）。该源切片的二阶导数为负，不将它称为凸切片；共同势函数 \(H\) 的严格凸性仍由（ST.10）成立。
+
+当 \(s=1\) 时，（ST.13）恰为
+
+\[
+Y_1(\sigma)=c_0+c_*(\sigma-1).
+\]
+
+（ST.14）给唯一根（ST.16），并给同样的符号分类。\(\sigma=0\) 仅用于单侧极限，未定义或宣称零源指数的实际轮廓。证毕。
+
+### 推论：同一素数规模处的补偿保持源信息
+
+对 \(\sigma,\tau>0\)、\(a\ge0\) 及 \(b=\sigma+a-\tau\ge0\)，§434 的实际核极限与（ST.3）同时适用。两种源分别为 \(x=z^\sigma\) 与 \(x'=z^\tau\)，而同一整数纤维的对数位置分别为
+
+\[
+a_n=\frac{\log n}{\log z}-\sigma,
+\qquad b_n=\frac{\log n}{\log z}-\tau.
+\]
+
+只要两个源指数与总指数保持在各自先固定的合法紧区间，并且两个源都不超过该整数纤维，二者的完整极限差由（ST.3）的补偿项确定。因而改变源规模所改变的符号信息，可以在一个共同凸轮廓与显式补偿之间准确追踪。
+
+（ST.12）仍是完整核极限的符号分类。它不控制与 \(M_z(n)\) 相乘后全部整数纤维的总和，也不去掉 §435 已证的主项反向补偿；抵消后更小尺度的 Robin 有符号残量仍须另行估计。
