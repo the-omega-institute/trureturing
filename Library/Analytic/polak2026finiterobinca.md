@@ -322,6 +322,281 @@ the selected CA source or FIB addresses supplying that premise is
 established here. The selected-source condition
 $I_\psi(A)>-D^*(A)$ therefore remains unchanged and unproved.
 
+The cited Ford–Soundararajan–Zaharescu sequel and its original
+[fixed smooth-test supplier](../Weil/fordzaharescu2005zerophases.md)
+do identify $-J_q/(2\pi)$ in the ordinate-phase average for each fixed
+integer $q>1$. Their fixed-scale expansion does not bound the actual
+weighted buffer or the signed state-prime work above. The golden
+eigen-scale has no correction density in that theorem; this is a
+parameter application, not an FIB-to-Robin estimate.
+
+## Exact FIB coordinates for the published forced flow
+
+The source's equation (8.17), p.22, already gives the regularized dynamics
+
+$$
+\widehat B''-\frac14\widehat B
+=-e^{t/2}+\sum_{q=p^m}J_q\delta(t-\log q),\qquad t>0.
+$$
+
+Reuse this equation and its finite right-limit initial data. The following
+is a linear coordinate and clock application, not a new event system or
+estimate. The existing [FIB composition frame](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md),
+§§3 and 149, has $M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$,
+$S=M^3$ and $C=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$.
+Here its coordinates are extended to $\mathbb R^2$; a real state in these
+coordinates is not thereby the composition of a finite FIB tree.
+
+Remove the known resonant drift, including its derivative:
+
+$$
+Y(t)=\widehat B(t)+te^{t/2},\qquad
+Y'(t)=\widehat B'(t)+(1+t/2)e^{t/2}.
+$$
+
+Then $Y''-Y/4=\sum_qJ_q\delta(t-\log q)$.
+Define the simultaneous state transport by
+
+$$
+\begin{pmatrix}Y\\Y'\end{pmatrix}
+=T\begin{pmatrix}a\\b\end{pmatrix},\qquad
+T=\begin{pmatrix}2&1\\0&\sqrt5/2\end{pmatrix},\qquad
+a=\frac Y2-\frac{Y'}{\sqrt5},\quad b=\frac{2Y'}{\sqrt5}.
+$$
+
+On each open event cell the homogeneous propagator in this frame is
+
+$$
+\Phi(s)=\cosh(s/2)I+\frac{2M-I}{\sqrt5}\sinh(s/2).
+$$
+
+Its generator is $(2M-I)/(2\sqrt5)$ and its eigenvalues are
+$e^{s/2},e^{-s/2}$. For $h=4\log\varphi$,
+
+$$
+\Phi(h)=M^2,\qquad \Phi(3h)=M^6=S^2,\qquad
+C\Phi(s)C^{-1}=\Phi(-s).
+$$
+
+These are substitutions into the existing hyperbolic flow and FIB matrix
+identities. $M$ and the single three-position step $S$ have determinant
+$-1$, whereas this homogeneous propagator has determinant $1$.
+Thus the even steps above match the continuous flow; an odd FIB step
+would require an additional orientation reversal. Evaluating $\Phi(h)$
+does not assert that an actual event-free cell has length $h$.
+
+The original readout must be transported too:
+
+$$
+\widehat B(t)=2a(t)+b(t)-te^{t/2},\qquad
+\widehat B'(t)=\frac{\sqrt5}{2}b(t)-(1+t/2)e^{t/2}.
+$$
+
+Neither readout is the original FIB quantity $q(a,b)=2a+3b$.
+For a passive frame $\mathbf z_k=C^k\mathbf z$, transport the input vector
+by $C^k$, the propagator by $C^k\Phi C^{-k}$, and each linear readout row
+$\ell$ by $\ell C^{-k}$. The clock and the explicit drift terms are retained.
+An active rotation of the state alone changes the forcing direction and
+is not an invariance of the given prime trajectory.
+
+### Retain the actual prime inputs in every step
+
+At $\tau_q=\log q$, continuity of $Y$ and the derivative jump $J_q$ give
+
+$$
+\Delta\mathbf z_q=\frac{J_q}{\sqrt5}\begin{pmatrix}-1\\2\end{pmatrix},
+\qquad \mathbf z=(a,b)^{\mathsf T}.
+$$
+
+Taking the initial and final states on the right, the actual fixed-time
+update is therefore
+
+$$
+\mathbf z(t+h)=M^2\mathbf z(t)+
+\sum_{t<\tau_q\le t+h}
+\Phi(t+h-\tau_q)\frac{J_q}{\sqrt5}\begin{pmatrix}-1\\2\end{pmatrix}.
+$$
+
+For two three-position windows, replace $h$ by $3h$ and $M^2$ by $M^6$;
+the entire corresponding event sum remains. This is the finite forced
+propagator formula, with every actual prime power and its timing included.
+The input term is determined by the prime measure, rather than one of
+the five fixed integer translations $0,(1,0),(0,1),(2,1),(1,1)$.
+
+Already the event $q=2$ has first component
+$-\log2/\sqrt{10}\in(-1,0)$. Thus this kick is outside $\mathbb Z^2$
+in the transported frame. An integral unimodular frame change generated
+by $M,J,C$ cannot turn it into an integer vector: its inverse preserves
+$\mathbb Z^2$. This obstructs identifying these event maps with the
+original integer-coordinate five-pattern translations. A response
+computed from a full FIB address can still reconstruct $q$, its event
+time and $\Lambda(q)$; that is an additional arithmetic response map,
+whose weights and estimates must be retained.
+
+### Read Robin's actual residual at the same clock
+
+For the tail target, retain the existing prime-power cutoff as a scalar
+accumulator of this same event history:
+
+$$
+\mathcal P_\Pi(t)=\Pi_r(e^t)
+=\sum_{p^m\le e^t}\frac1{mp^m},\qquad
+\Delta\mathcal P_\Pi(\tau_q)
+=\frac{J_qe^{-\tau_q/2}}{\tau_q}.
+$$
+
+It is constant between events. The
+[existing cross-family signed-tail identity](bhattacharyamartinsimpson2026weightedprimeerrors.md)
+and the source's characteristic coordinates give, for $t>0$,
+
+$$
+\begin{aligned}
+\psi(e^t)&=e^{t/2}[-a(t)+(\varphi-1)b(t)]-\log(2\pi),\\
+I_\psi(e^t)&=\frac{\psi(e^t)-e^t}{e^t t}
+             -\mathcal P_\Pi(t)+\log t+\gamma.
+\end{aligned}
+$$
+
+These are transported readouts of already established paper identities,
+not a new tail formula. The accumulator keeps the distinct $1/\log q$
+factor in the event weight; it can also be computed from the complete
+forced history. It is not replaced by the golden quadratic invariant.
+
+At the selected critical source above, under its cited premises, put
+$A=\log N$ and **$t=\log A$**, not $t=\log N$.
+The exact core application then reads the original Robin margin as
+
+$$
+\Delta(N)=\frac{\psi(A)-A}{A\log A}
+ -\Pi_r(A)+\log\log A+\gamma+D^*(A).
+$$
+
+This retains the same integer, cutoff, prime events and complete weights.
+The fixed $h$ grid is a grid of real cutoffs; it constructs no successor
+critical integer and supplies no coverage of critical sources by its nodes.
+The homogeneous matrix correspondence supplies no sign for this centered
+combination; its required lower bound remains the original signed-tail
+obligation.
+
+### The transported conservation law retains the centering problem
+
+The existing golden form becomes
+
+$$
+Q_F(a,b)=a^2+ab-b^2=\frac{Y^2}{4}-Y'^2.
+$$
+
+It is constant during homogeneous propagation, while an event changes it
+by $-2J_qY'(\tau_q^-)-J_q^2$. Equations (8.19)–(8.21) identify its actual
+value without new spectral assumptions. With $c=\log(2\pi)$ and
+$\psi_r(x)=\sum_{q\le x}\Lambda(q)/q$ they give
+
+$$
+\begin{aligned}
+Y(t)&=e^{t/2}[\psi_r(e^t)+\gamma+1]
+       -e^{-t/2}[\psi(e^t)+c],\\
+Y'(t)&=\frac12e^{t/2}[\psi_r(e^t)+\gamma+1]
+       +\frac12e^{-t/2}[\psi(e^t)+c],\\
+Q_F(\mathbf z(t))&=-[\psi_r(e^t)+\gamma+1][\psi(e^t)+c].
+\end{aligned}
+$$
+
+The factors are positive and nondecreasing, so this actual product is
+constant between events and decreases at each event. This is a product
+law for the counts, not a positive norm bound for the centered buffer.
+At any fixed time, a fixed negative $Q_F$ allows arbitrarily large $|Y|$
+on its real level set; subtracting $te^{t/2}$ does not change that fact.
+This states the limitation of this scalar invariant on the real carrier,
+not a no-go for additional constraints on the actual arithmetic orbit.
+In particular Polak's retained energy jump still involves the original
+$\widehat B'$ and its signed state-prime work, not just this product.
+
+This coordinate interface exhibits the common expanding and contracting
+directions and transports the actual forcing and observer. It supplies
+no estimate for the retained input sum or the centered cancellation,
+no cone-kick bound, and no proof of $I_\psi(A)>-D^*(A)$ or RH.
+It is a paper application with no new Lean declaration or originality
+claim.
+
+The [short-interval zero-count supplier](fiori2026shortzerodensity.md)
+refines a specified absolute frequency-block allowance in the actual
+$I_\psi$ formula, with the source's ordinate thresholds and multiplicities
+retained. It supplies no sign for the complete response, does not control
+the remaining zeros, and leaves the same critical-source estimate unpaid.
+
+## Earlier support-harmonic route: the envelope is still a target
+
+The author's *Derived Prime-Harmonic Envelope on CA Support*, dated
+4 June 2026, is a ten-page
+[primary supplement](https://github.com/robopol/Riemann-hypothesis/blob/e61ed0c0707e499f6748efb916bd4bdfbccaa445/papers/Derived_Prime_Harmonic_Envelope_on_CA_Support_en.pdf),
+with PDF SHA-256
+`6a65507bde32150569791b632866485fe99d86533ffe77104ab1c823408d2a21`.
+Its abstract, §§2–8 and Analytic Target 1 on p.9 were inspected.
+The [author's scope statement](https://github.com/robopol/Riemann-hypothesis/blob/e61ed0c0707e499f6748efb916bd4bdfbccaa445/README.md)
+identifies it as an earlier corrected-status paper, rather than a later
+completion of the finite-verification manuscript. It explicitly derives
+a required prime-harmonic envelope without proving its infinite-range
+validity. Its cited estimates and numerical tables are not independently
+audited or rerun here; no Lean verification is claimed.
+
+To keep the support variable distinct from the current $A=\log N$, write
+
+$$
+\mathcal A_p(x)=\sum_{p\le x}\frac1p-\log\log x,
+$$
+
+and let $B_1$ be the Meissel–Mertens prime constant. On one actual sampled
+CA-support block $1<Y<x$, with $\nu=\pi(x)-\pi(Y)>0$, put
+
+$$
+\begin{aligned}
+H&=\log\frac{\log x}{\log Y},\qquad \mu=H/\nu,\\
+C_2(Y,x)&=\sum_{Y<p\le x}\frac1{p(p-1)},\\
+D_{\rm br}(Y,x)&=\nu[1-(1+\mu)e^{-\mu}].
+\end{aligned}
+$$
+
+The source uses a certified lower divisor-deficit envelope to form the
+reserve $R^\Theta(x)$, and retains the incoming certified upper ledger
+$U(Y)$. Its equations (11)–(16), pp.6–7, already show that the sufficient
+first-moment block gate $M_1(Y,x)\le R^\Theta(x)-U(Y)$ is equivalent to
+
+$$
+\mathcal A_p(x)\le\mathcal A^\Theta_{\rm req}(Y,x)
+:=\mathcal A_p(Y)-C_2(Y,x)
+  +e^\mu[R^\Theta(x)-U(Y)+D_{\rm br}(Y,x)].
+$$
+
+Equations (19)–(22) therefore express the required upper envelope as
+
+$$
+\mathcal A_p(x)-B_1\le
+\frac{C^\Theta_{\rm req}(x)}{\sqrt x\log x},\qquad
+C^\Theta_{\rm req}(x)
+=[\mathcal A^\Theta_{\rm req}(Y,x)-B_1]\sqrt x\log x.
+$$
+
+This is the author's existing gate and target, not an unconditional
+prime estimate or a newly derived Robin criterion. The required constant
+depends on the same block's incoming ledger, prime count, harmonic
+remainder and reserve. No fixed lower bound for that constant or
+infinite-range certification of the gate is supplied. Replacing the
+actual deficit by its smaller analytic lower envelope reduces the
+admissible budget, as source equation (20) records. The sampled table
+does not establish coverage of all critical sources. Closing a
+non-strict block gate also does not by itself certify the final strict
+Robin margin; the ledger's transfer and strictness obligations remain.
+
+At the currently selected integer, the support endpoint is
+$x=P^+(N)$, whereas the retained signed-tail estimate uses $A=\log N$.
+The already-paid condition $P^+(N)<A<P^+_{\rm next}(N)$ does not identify
+these cutoffs. Applying this earlier route would require a certified
+incoming ledger and block coverage at that same source, together with
+the still-missing upper envelope. It does not supply
+$I_\psi(A)>-D^*(A)$ by renaming the cutoff. The supplement's $\beta(x)$
+is the Euler product $\prod_{p\le x}p/(p-1)$, not the FIB atom
+$\beta=\rho(\alpha)$; equality of the symbol supplies no bridge.
+
 ## Boundary for FIB
 
 The finite certificate is organized by CA exponent profiles and

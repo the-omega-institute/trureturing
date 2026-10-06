@@ -454,6 +454,12 @@ internal static partial class BackfillInventoryLoader
     internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot) =>
         LoadSnapshot(snapshot, LoadCandidateDirectorySnapshot);
 
+    // Digestion commands never consume the ticket index.  Keep the rule-engine
+    // loader above authoritative, while avoiding a D5-wide TASK scan whenever a
+    // command only needs the ledger projection.
+    internal static BackfillInventoryDocument LoadForDigestion(RepositorySnapshot snapshot) =>
+        LoadSnapshot(snapshot, static current => LoadCandidateDirectorySnapshot(current, deriveTickets: false));
+
     internal static BackfillInventoryDocument LoadCandidateDelta(
         RepositorySnapshot candidate,
         RepositorySnapshot baseline,
@@ -571,13 +577,20 @@ internal static partial class BackfillInventoryLoader
 
     private static BackfillInventoryDocument LoadCandidateDirectorySnapshot(
         RepositorySnapshot snapshot) =>
+        LoadCandidateDirectorySnapshot(snapshot, deriveTickets: true);
+
+    private static BackfillInventoryDocument LoadCandidateDirectorySnapshot(
+        RepositorySnapshot snapshot,
+        bool deriveTickets) =>
         LoadDirectorySnapshot(
             snapshot,
-            ParseCandidateSourceMetadata);
+            ParseCandidateSourceMetadata,
+            deriveTickets);
 
     private static BackfillInventoryDocument LoadDirectorySnapshot(
         RepositorySnapshot snapshot,
-        Func<string, string, ParsedSourceMetadata> parseSourceMetadata)
+        Func<string, string, ParsedSourceMetadata> parseSourceMetadata,
+        bool deriveTickets)
     {
         DocumentLoading.Value?.Invoke(snapshot);
         var metadata = snapshot.Files
@@ -660,7 +673,9 @@ internal static partial class BackfillInventoryLoader
             }
         }
 
-        return BackfillInventoryDocument.Create(sources.ToImmutable(), DeriveTickets(snapshot));
+        return BackfillInventoryDocument.Create(
+            sources.ToImmutable(),
+            deriveTickets ? DeriveTickets(snapshot) : []);
     }
 
     internal static ImmutableArray<BackfillTicketReference> DeriveTickets(
