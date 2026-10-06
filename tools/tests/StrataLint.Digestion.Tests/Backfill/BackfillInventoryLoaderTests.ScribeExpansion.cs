@@ -9,7 +9,6 @@ public sealed partial class BackfillInventoryLoaderTests
     {
         var snapshot = ScribeOptionalSnapshot();
         var document = BackfillInventoryLoader.Load(snapshot);
-        var baseline = BackfillInventoryLoader.LoadBaseline(snapshot);
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan, document, snapshot,
@@ -43,9 +42,6 @@ public sealed partial class BackfillInventoryLoaderTests
         var without = ScribeOptionalSnapshot(receipt, state: state);
         var document = BackfillInventoryLoader.Load(without);
         var entry = Assert.Single(document.RequireDigestionEntries());
-        var baselineEntry = Assert.Single(BackfillInventoryLoader.LoadBaseline(without).RequireDigestionEntries());
-        Assert.Equal(BackfillInventoryWriter.WriteAtom(entry).ToArray(),
-            BackfillInventoryWriter.WriteAtom(baselineEntry).ToArray());
         switch (field)
         {
             case "quarantine":
@@ -87,20 +83,16 @@ public sealed partial class BackfillInventoryLoaderTests
     {
         const string coverage = "coverage_gids:\n  - gid: D5/S0/Carrier/Probe.probe\n    target_statement_id: null\n";
         var snapshot = ScribeOptionalSnapshot(coverage: coverage, state: "partial-open");
-        foreach (var baseline in new[] { false, true })
-        {
-            var document = baseline ? BackfillInventoryLoader.LoadBaseline(snapshot) : BackfillInventoryLoader.Load(snapshot);
-            var edge = Assert.Single(Assert.Single(document.RequireDigestionEntries()).Coverage);
-            Assert.Equal("D5/S0/Carrier/Probe.probe", edge.Gid);
-            Assert.Null(edge.TargetStatementId);
-            var invalid = key == "gid"
-                ? "coverage_gids:\n  - target_statement_id: null\n"
-                : "coverage_gids:\n  - gid: D5/S0/Carrier/Probe.probe\n";
-            var error = Assert.Throws<FormatException>(() => baseline
-                ? BackfillInventoryLoader.LoadBaseline(ScribeOptionalSnapshot(coverage: invalid))
-                : BackfillInventoryLoader.Load(ScribeOptionalSnapshot(coverage: invalid)));
-            Assert.Contains("coverage edge keys are not canonical", error.Message, StringComparison.Ordinal);
-        }
+        var document = BackfillInventoryLoader.Load(snapshot);
+        var edge = Assert.Single(Assert.Single(document.RequireDigestionEntries()).Coverage);
+        Assert.Equal("D5/S0/Carrier/Probe.probe", edge.Gid);
+        Assert.Null(edge.TargetStatementId);
+        var invalid = key == "gid"
+            ? "coverage_gids:\n  - target_statement_id: null\n"
+            : "coverage_gids:\n  - gid: D5/S0/Carrier/Probe.probe\n";
+        var error = Assert.Throws<FormatException>(() =>
+            BackfillInventoryLoader.Load(ScribeOptionalSnapshot(coverage: invalid)));
+        Assert.Contains("coverage edge keys are not canonical", error.Message, StringComparison.Ordinal);
         var status = Assert.Single(EvaluateScribeOptional(snapshot).Entries);
         Assert.Equal(DigestionTruthState.Open, status.DerivedStatus.Truth);
         Assert.False(status.Deletable);
@@ -114,13 +106,9 @@ public sealed partial class BackfillInventoryLoaderTests
     public void InvalidLiveReceiptsAreStillRejected(string receipt, string expected)
     {
         Assert.Single(BackfillInventoryLoader.Load(ScribeOptionalSnapshot()).RequireDigestionEntries());
-        foreach (var baseline in new[] { false, true })
-        {
-            var snapshot = ScribeOptionalSnapshot(receipt);
-            var error = Assert.Throws<FormatException>(() => baseline
-                ? BackfillInventoryLoader.LoadBaseline(snapshot) : BackfillInventoryLoader.Load(snapshot));
-            Assert.Contains(expected, error.Message, StringComparison.Ordinal);
-        }
+        var snapshot = ScribeOptionalSnapshot(receipt);
+        var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
+        Assert.Contains(expected, error.Message, StringComparison.Ordinal);
     }
 
     [Theory]
@@ -134,14 +122,9 @@ public sealed partial class BackfillInventoryLoaderTests
         // last committed key. The loader now has no such key, so any entry carrying one is
         // an unknown key and must fail closed rather than be parsed and ignored.
         Assert.Single(BackfillInventoryLoader.Load(ScribeOptionalSnapshot()).RequireDigestionEntries());
-        foreach (var baseline in new[] { false, true })
-        {
-            var snapshot = ScribeOptionalSnapshot(receipt);
-            var error = Assert.Throws<FormatException>(() => baseline
-                ? BackfillInventoryLoader.LoadBaseline(snapshot)
-                : BackfillInventoryLoader.Load(snapshot));
-            Assert.Contains("receipts keys are not canonical", error.Message, StringComparison.Ordinal);
-        }
+        var snapshot = ScribeOptionalSnapshot(receipt);
+        var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
+        Assert.Contains("receipts keys are not canonical", error.Message, StringComparison.Ordinal);
     }
 
     private static DigestionLedgerEvaluation EvaluateScribeOptional(RepositorySnapshot snapshot) =>
