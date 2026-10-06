@@ -18,7 +18,31 @@ internal static class AtomContextCommand
                 || !DigestionFingerprint.IsCanonicalSha256("sha256:" + arguments[1]))
                 throw new DigestionAtomContextException(DigestionAtomContextError.ARGUMENTS_INVALID,
                     "USAGE: StrataLint atom-context --atom-id ATOM_ID");
-            var (_, snapshot, document) = DigestionWorkingTree.Read(repository, Decode, BackfillInventoryLoader.Load);
+            var loaded = DigestionWorkingTree.ReadLedger(
+                repository,
+                Decode,
+                BackfillInventoryLoader.LoadForDigestion);
+            var ledger = loaded.Document;
+            var targetEntries = ledger.RequireDigestionEntries()
+                .Where(entry => entry.AtomId == arguments[1])
+                .ToArray();
+            var sourceIds = targetEntries
+                .Select(static entry => entry.SourceId)
+                .ToHashSet(StringComparer.Ordinal);
+            var source = targetEntries
+                .Select(static entry => entry.SourcePath)
+                .Distinct(StringComparer.Ordinal)
+                .ToArray();
+            var sourceCas = DigestionWorkingTree.ChainCasPaths(
+                ledger,
+                ledger.RequireDigestionEntries()
+                    .Where(entry => sourceIds.Contains(entry.SourceId))
+                    .SelectMany(static entry => entry.Receipts.ChainAtoms));
+            var (_, snapshot, document) = DigestionWorkingTree.Extend(
+                repository,
+                loaded,
+                Decode,
+                [.. source, TheoryAtomizerDataLoader.DataPath, .. sourceCas]);
             var contexts = DigestionAtomContextProjection.ResolveOccurrences(snapshot, document, arguments[1]);
             return new CommandResult(true, Render(contexts), string.Empty);
         }
@@ -94,4 +118,5 @@ internal static class AtomContextCommand
         SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
         SnapshotDecodeOutcome.InfrastructureFailure error => throw new InvalidOperationException(error.Message),
     };
+
 }

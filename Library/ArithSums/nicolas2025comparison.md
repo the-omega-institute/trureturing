@@ -247,6 +247,103 @@ $$
 
 For example, bounds $I_\psi(x)\ge-\kappa/(\sqrt x\log x)$ and $|\vartheta(x)-x|\le Kx^{3/4}$ with fixed nonnegative constants satisfying $\kappa+K^2/2<2\sqrt2-2$ would suffice. These are additional prime-distribution hypotheses, not consequences of a large divisor core or of a FIB address. No equivalence between this restricted sufficient condition and RH is asserted.
 
+### The endpoint condition at actual self-tangent sources
+
+There is a more specific source condition under which the squared endpoint
+term above is already negligible. Take an actual regular self-tangent CA
+integer $N=C_A$ with $A=\log N$ as in the
+[archived workload interface](../Analytic/mantovanelli2026primeworkload.md).
+Keep $x$ as the primorial cutoff of this same $N$:
+$\vartheta(x)\le A<\vartheta(x^+)$, with $x^+$ the next prime.
+It is not the largest prime factor of $C_A$ or the clock coordinate $A$.
+
+The archived manuscript's §8, `thm:theta-normal-form`, equation
+`eq:self-tangent-theta`, already gives
+
+$$
+A-\vartheta(A)=\sqrt{2A}\,(1+o(1))
+$$
+
+along regular returns tending to infinity. The source uses a strict
+prime cutoff; changing to the weak $\vartheta$ used here costs at most
+$O(\log A)$ and preserves this assertion. This return identity is reused,
+not rederived. The manuscript's §11, `lem:external-extremal-input` and
+`thm:persistent-obstruction`, also supplies the existing reduction to a
+proper GA1 regular source at or above the Robin level if RH fails.
+The estimates here apply to that selected source class; GA1, CA status,
+or a five-window address alone is not the self-tangency hypothesis.
+
+The [existing uniform short-interval supplier and inverse-$\vartheta$
+argument](../Analytic/guthmaynard2024largevalues.md) can now be applied at
+this actual $A$. With $H=A^{2/3}$, it gives
+$\vartheta(A+H)-\vartheta(A)\sim H$. Since the return deficit is only
+$O(\sqrt A)$, eventually $\vartheta(A+H)>A$.
+There is a prime in $(A,A+H]$; at the first such prime the added mass is
+$O(\log A)$, smaller than the return deficit, so its $\vartheta$ value
+is still below $A$. Monotonicity therefore locates the same primorial
+cutoff and its residual as
+
+$$
+0<x-A\le A^{2/3},\qquad
+0\le h_N:=A-\vartheta(x)<\log x^+=O(\log A).
+$$
+
+Consequently $\vartheta(x)-x=-(x-A)-h_N$ and
+
+$$
+\frac{(\vartheta(x)-x)^2}{x^{3/2}}=O(A^{-1/6})=o(1),
+\qquad
+\sqrt x\log x\,Q(x)=O(A^{-1/6}).
+$$
+
+The second estimate uses the already displayed expansion of the exact
+endpoint $Q$. The exponent $2/3$ is a convenient choice within the cited
+uniform short-interval range, not a new prime-gap estimate. This application
+does not require an effective starting threshold or assume RH, and it
+does not claim the endpoint estimate at arbitrary FIB candidates.
+
+There is also a controlled transfer of the unnormalized tail. The same
+manuscript's §8, `thm:psi-normal-form`, gives
+$\psi(A)-A=-(\sqrt2-1)\sqrt A+o(\sqrt A)$ at a regular return.
+At the primorial cutoff, $\vartheta(x)=A-h_N$ and the classical
+prime-power decomposition gives $\psi(x)=A+O(\sqrt A)$.
+For $A\le u\le x$, monotonicity of $\psi$ hence bounds
+$|\psi(u)-u|=O(A^{2/3})$. Integrating over the same interval against
+$k(u)=O(A^{-2}/\log A)$ yields
+
+$$
+I_\psi(x)=I_\psi(A)+O\!\left(\frac{A^{-2/3}}{\log A}\right).
+$$
+
+With $Z_\psi(t)=\sqrt t\log t\,I_\psi(t)$ this is precisely
+
+$$
+Z_\psi(x)=c_NZ_\psi(A)+O(A^{-1/6}),\qquad
+c_N=\frac{\sqrt x\log x}{\sqrt A\log A}
+=1+O(A^{-1/3}).
+$$
+
+The factor $c_N$ must remain unless a suitable bound on $Z_\psi(A)$ is
+available; $x/A\to1$ alone does not justify an additive $o(1)$ comparison
+of the normalized tails. A fixed one-sided lower bound at $A$ can be
+transported with this factor. No such lower bound follows from the return
+identity, which fixes a point value of $\psi$ rather than its entire tail.
+
+For $\mathscr L(N)=R_-(N)$, the existing comparison margin therefore
+simplifies on this source class to
+
+$$
+\sqrt x\log x\,\mathfrak m_N
+=2\sqrt2-2+Z_\psi(x)+o(1).
+$$
+
+This pays the endpoint requirement of that comparison, not its signed-tail
+requirement. The source-clock pressure identity and its reserve constant
+$2(\sqrt2-1)$ are already recorded in the FIB volume, §§87 and 93;
+rewriting the remaining tail condition is not a new RH criterion or a
+stronger Robin estimate. This is a paper application connecting two
+existing observation cutoffs, with no Lean or originality certification.
+
 ### The 2026 signed formula and the available absolute-error scale
 
 Broadbent–Fiori–Kadiri–Ng–Wilk, *Bounds for Mertens sums*, [arXiv:2608.01498v1](https://arxiv.org/abs/2608.01498v1), Proposition 13(i), equation (55), gives an unconditional explicit formula for $I_\psi(x)$ for $x\ge2$. Its proof, equations (82)–(83), also gives the form

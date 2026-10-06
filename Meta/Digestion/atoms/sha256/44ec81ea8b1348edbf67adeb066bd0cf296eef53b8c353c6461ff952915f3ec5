@@ -1,0 +1,19 @@
+### 定理 6.2（指定谱的可行性与双页同时最优值）
+
+对指定的 $\sigma_b$，置 $d_b=\operatorname{rank}\sigma_b$。定义 6.1 的合同可行，当且仅当每页满足
+
+$$
+d_b\le c_{X,b},\qquad M_bd_b\le c_{Y,b}.
+\tag{6.2}
+$$
+
+若允许选择 $\sigma_b$，则合同可行当且仅当
+
+$$
+D_b:=\min\left(c_{X,b},\left\lfloor\frac{c_{Y,b}}{M_b}\right\rfloor\right)\ge1
+\qquad(b=0,1).
+\tag{6.3}
+$$
+
+在可行情形，每页的最大辅助熵为 $\log D_b$，两个最大值可以在同一个 $J$ 中同时达到。
+

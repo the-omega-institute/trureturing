@@ -211,16 +211,19 @@ public sealed partial class CoverBatchCommandTests
     }
 
     [Fact]
-    public void TerminalFailureDispositionAdvancesSessionAndDoesNotPreventIndependentWrite()
+    public void FailedCoverLeavesAtomBytesUnchangedAndDoesNotPreventIndependentWrite()
     {
         using var world = new BatchWorld(entry => entry.AtomId == First
             ? entry with { Receipts = entry.Receipts with { UnresolvedSubitems = ["remaining clause"] } }
             : entry);
 
+        var failedPath = world.LedgerPaths().Single(path => path.EndsWith(First + ".yaml", StringComparison.Ordinal));
+        var failedBytes = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, failedPath));
         var result = world.Run(Row(First, Gid) + Row(Second, Gid));
 
         Assert.Equal(["failed", "applied"], Results(result).Select(item => item.Status).ToArray());
-        Assert.NotNull(world.Entry(First).Receipts.CoverDisposition);
+        Assert.Null(world.Entry(First).Receipts.CoverDisposition);
+        Assert.Equal(failedBytes, TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, failedPath)));
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
         Assert.Single(result.Output.Split('\n'), line =>
