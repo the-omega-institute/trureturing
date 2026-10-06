@@ -19,6 +19,7 @@ open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.SignedSeriesRange (signedValue signed_series_range v)
 open D5.S1.Digit.Infinite.SignedSeriesFibres
+open D5.S0.Automata.BinaryZeckendorfBlockSkeleton (ReturnBlock)
 open private prependBlock from D5.S1.Digit.Infinite.SignedSeriesFibres
 
 private theorem shift_add (x : LegalDigits) (a b : ℕ) :
@@ -55,7 +56,8 @@ private theorem prepend_not_odd_periodic (w : List Block) (d : ℕ) (hd : Odd d)
 private theorem odd_periodic_scalar_injective (d : ℕ) (hd : Odd d)
     (x y : LegalDigits) (hx : Function.Periodic x.val d)
     (he : kappa x = kappa y) : x = y := by
-  have hg := D5.S1.Digit.Infinite.ClosedObservationGraphRealization.closed_observation_graph_realization.1
+  have hg :=
+    D5.S1.Digit.Infinite.ClosedObservationGraphRealization.closed_observation_graph_realization.1
   have hs : signedValue x = signedValue y := by
     have ht : 0 < t := inv_pos.mpr Real.goldenRatio_pos
     rw [hg x, hg y] at he
@@ -64,9 +66,11 @@ private theorem odd_periodic_scalar_injective (d : ℕ) (hd : Odd d)
     rintro ⟨w, hw⟩
     rcases ((signed_series_fibres.1 w).2 x).mp hw.symm with h | h
     · subst x
-      exact prepend_not_odd_periodic (w ++ [D5.S0.Automata.BinaryZeckendorfBlockSkeleton.ReturnBlock.zero]) d hd (by change Function.Periodic (prependWord (w ++ [D5.S0.Automata.BinaryZeckendorfBlockSkeleton.ReturnBlock.zero]) v).val d at hx; exact hx)
+      change Function.Periodic (prependWord (w ++ [ReturnBlock.zero]) v).val d at hx
+      exact prepend_not_odd_periodic (w ++ [ReturnBlock.zero]) d hd hx
     · subst x
-      exact prepend_not_odd_periodic (w ++ [D5.S0.Automata.BinaryZeckendorfBlockSkeleton.ReturnBlock.oneZero]) d hd (by change Function.Periodic (prependWord (w ++ [D5.S0.Automata.BinaryZeckendorfBlockSkeleton.ReturnBlock.oneZero]) v).val d at hx; exact hx)
+      change Function.Periodic (prependWord (w ++ [ReturnBlock.oneZero]) v).val d at hx
+      exact prepend_not_odd_periodic (w ++ [ReturnBlock.oneZero]) d hd hx
   have hb : signedValue x ∈ Set.Icc
       D5.S1.Digit.Infinite.SignedSeriesRange.a D5.S1.Digit.Infinite.SignedSeriesRange.b := by
     rw [← signed_series_range.1]
@@ -126,7 +130,10 @@ private theorem color_geometry (β : ℝ) (hb : β < lambda) (c : Fin 6) :
     have h1 := l.property 1 (by decide)
     have hext (p q : Label) : p = q ↔ ∀ i, p.val i = q.val i := by
       exact Subtype.ext_iff.trans funext_iff
-    simp only [hext, Fin.forall_fin_succ,
+    rw [hext l nullLabel, hext l threeLabel, hext l fiveLabel,
+      hext l twoLabel, hext l twoFiveLabel]
+    clear hext
+    simp only [Fin.forall_fin_succ,
       Fin.forall_fin_zero, nullLabel, threeLabel, fiveLabel, twoLabel, twoFiveLabel]
     cases ha : l.val 0 <;> cases hb : l.val 1 <;> cases hc : l.val 2 <;>
       simp_all
@@ -269,7 +276,9 @@ private theorem actual_parity_step (β : ℝ) (hb : β < lambda) (c : Fin 6)
     (max (-1) (cellLower c - β)) (min (1 + t) (cellUpper c + β)) hg hgap
     (fun i => kappa (x i)) (fun i => kappa (originalT (x i))) p
   · intro i
-    have hr := D5.S1.Digit.Infinite.ClosedObservationGraphRealization.closed_observation_graph_realization.2.2.1 (x i)
+    have hr :=
+      D5.S1.Digit.Infinite.ClosedObservationGraphRealization.closed_observation_graph_realization.2.2.1
+        (x i)
     rw [hr.1]
     unfold branch
     rw [hlab]
@@ -277,7 +286,8 @@ private theorem actual_parity_step (β : ℝ) (hb : β < lambda) (c : Fin 6)
   · exact hobs
   · exact hne
   · intro i j hi' hj'
-    have hiL : window (x i) 0 = lo := by simpa only [hi', Bool.false_eq_true, ↓reduceIte] using hlab i
+    have hiL : window (x i) 0 = lo := by
+      simpa only [hi', Bool.false_eq_true, ↓reduceIte] using hlab i
     have hjH : window (x j) 0 = hi := by simpa only [hj', ↓reduceIte] using hlab j
     apply lt_of_le_of_ne (horder (x i) (x j) hiL hjH)
     intro he
@@ -342,7 +352,7 @@ private theorem no_three_sources (β : ℝ) (hb : β < lambda) (m : ℕ)
     have he := htwo.nat_mul k 1
     rw [hk]
     have he' : S (2 * k + 1) = S 1 := by
-      convert he using 1 <;> omega
+      simpa only [Nat.cast_id, Nat.mul_comm, Nat.add_comm] using he
     exact he'.trans (hstep 0)
   exact Bool.not_ne_self _ (hodd.symm.trans hreturn)
 
