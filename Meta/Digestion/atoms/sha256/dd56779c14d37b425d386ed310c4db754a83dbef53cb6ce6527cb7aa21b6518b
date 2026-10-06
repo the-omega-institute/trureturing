@@ -1,0 +1,20 @@
+**Theorem 8.2 (the complete $p=2$ and $p=3$ cases).** There are no
+admissible triples for $p=2$, and there are exactly six for $p=3$:
+
+$$
+\begin{aligned}
+  A(2)&=0,\\
+  \mathcal T_3&=
+    \{\Gamma(a,b,F):a\in\{1,2\},\ b\in F\},\\
+  A(3)&=6.
+\end{aligned}
+$$
+
+For $p=3$, these six triples form exactly two translation orbits,
+one for each nonzero slope. Each orbit has three triples, and
+$\Gamma(a,b,F)$ has translation stabilizer
+
+$$
+  H_a=\{(h,ah):h\in F\}.
+$$
+

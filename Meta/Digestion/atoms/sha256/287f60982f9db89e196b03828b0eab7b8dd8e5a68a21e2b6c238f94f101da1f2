@@ -1,0 +1,46 @@
+**定理 30.1（全局常数最优词的有限误差交叉反例族）。** 固定实际第二历史 $V^k$，$k\ge1$，取临界纤维 $x=k\zeta$，故 $\rho=k$。对每个整数预算 $C\ge3$，令
+
+$$
+f=F_{C-2},\qquad g=F_C,\qquad h=g-f=F_{C-1},
+$$
+
+并比较两个实际长度恰为 $C$ 的第三词
+
+$$
+L=JM^{C-2}J,\qquad Q=JM^{C-1}.
+$$
+
+$L$ 复用定理 25.3 的全局 Lipschitz 预算最优构造，其 $(\mu_L,e_L)=(f,f)$；$Q$ 有 $(\mu_Q,e_Q)=(0,g)$，在整个开纤维上注入，但没有有限全局 Lipschitz 逆。二者的弱端点分离量为
+
+$$
+\phi_L(\ell)=f\ell+\frac f\zeta\ell^2,\qquad
+\phi_Q(\ell)=\frac g\zeta\ell^2.
+$$
+
+交叉间距及容差是
+
+$$
+\ell_* =\frac{\zeta f}{h},\qquad
+\tau_* =\frac{\zeta g f^2}{h^2}.
+$$
+
+所有 $C\ge4,k\ge1$，以及 $C=3,k\ge2$，都有 $0<\ell_*<x$。在这些情形下，令
+
+$$
+T_L=fx(1+k),\qquad T_Q=gkx.
+$$
+
+则 $0<\tau_*<T_L<T_Q$，且
+
+$$
+\begin{array}{c|c}
+\text{容差区间}&\text{标量模量比较}\\ \hline
+0<\tau<\tau_*&\Omega_L(\tau)<\Omega_Q(\tau)\\
+\tau=\tau_*&\Omega_L(\tau)=\Omega_Q(\tau)=\ell_*\\
+\tau_*<\tau<T_Q&\Omega_Q(\tau)<\Omega_L(\tau)\\
+\tau\ge T_Q&\Omega_L(\tau)=\Omega_Q(\tau)=x
+\end{array}
+$$
+
+零容差时二者均为零。还有某个 $\varepsilon>0$，使 $\tau_*<\tau<\tau_*+\varepsilon$ 时 $\mathcal M_Q(\tau)<\mathcal M_L(\tau)$。因此全局常数最优词 $L$ 不对所有有限容差最优，且反例预算无上界。此结论不声称 $Q$ 是一般预算下的全词集最优词。唯一的 $C=3,k=1$ 边界有 $\ell_*=x$，不产生内部严格反向改进。
+

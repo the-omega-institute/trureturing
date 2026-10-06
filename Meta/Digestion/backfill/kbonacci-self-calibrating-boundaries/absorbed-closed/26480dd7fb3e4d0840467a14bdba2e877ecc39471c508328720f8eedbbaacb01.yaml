@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:26480dd7fb3e4d0840467a14bdba2e877ecc39471c508328720f8eedbbaacb01
+  normalized_sha256: sha256:26480dd7fb3e4d0840467a14bdba2e877ecc39471c508328720f8eedbbaacb01
+cas_ref: sha256:26480dd7fb3e4d0840467a14bdba2e877ecc39471c508328720f8eedbbaacb01
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/KBonacciResonantWindowCounts.kbonacci_resonant_window_counts
+    target_statement_id: sha256:bd24794c579d15078c0426d01842d17d1df70b8c4c0a84b55a6a09e47b79e7cd
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,51 @@
+**命题 68.12（$6k+1$ 个实际 Pareto 端点）。** 原始超额向量的全部最小元恰为
+
+$$
+\mathbf1-\mathbf e_i\quad(i=0,y_j,h_j,z_j),\qquad
+\mathbf1-\mathbf e_{a_j}+\mathbf e_b\quad(b=y_j,h_j,z_j).
+$$
+
+这里 $\mathbf e_i$ 是坐标单位向量；第一类有 $3k+1$ 个，第二类有 $3k$ 个。任何正确总控制器的向量都被其中一个端点逐坐标弱支配；这不宣称所有向上向量均可实现。
+
+**下界证明。** 若 $a_j$ 零超额，限制到 $S_j$ 后首次信息查询必须是它的叶。活动 $A$ 的三个叶在其余四行全为分叉；补偿 $R_a$ 的叶中，三个全共同，五个支持 $\{0,a,z\}$、排除的 $y,h$ 同为不存在，五个支持 $\{0,a,h\}$、排除的 $y,z$ 同为不存在，另八个仅支持 $a$、其余四行同为不存在。因此首次分裂必有至少两行同获非叶回复，且可取两行于 $\{y_j,h_j,z_j\}$；四行子情形中这三行至多一行能避免后续非叶。NC 迫使这些尚未区分的行在后来某个新地址再分裂，至少一行再付一次非叶费。故 $a_j$ 零超额必伴随某个 $y_j,h_j,z_j$ 超额至少二。
+
+若没有零坐标，每行至少一，被第一类任一端点支配；若零坐标不是 $a_j$，被对应第一类支配；若是 $a_j$，由刚证的局部二超额被第二类支配。每个列出的端点又因唯一零坐标及该障碍不能严格改进。这也适用于 68.11 静态剪枝以前的任意重复、自适应运行。
+
+给 $a_j$ 权重二、其余行权重一，总权重 $s=5k+1$。无零时加权超额至少 $s$；非 $a$ 零时至少 $s-1$；$a$ 零时先有 $s-2$，局部二超额再补一。故逐控制器恒有
+
+$$
+2\sum_j e_{a_j}+e_0+\sum_j(e_{y_j}+e_{h_j}+e_{z_j})\ge5k.
+$$
+
+归一化权重 $\lambda_{a_j}=2/s$、其余 $\lambda_i=1/s$ 给出这个费用比较的加权对偶见证，不改变控制器模型或引入输入先验。对任意控制器律积分给出 $R\ge n+5k/s$，NC 给出逐种子最大超额至少一，从而 $D,W\ge n+1$。
+
+**全部端点的实际路线。** 普通槽扫描依次查询 $p_iLLLR$：$\bot$ 选 $a_i$，$\mathrm{br}$ 选 $y_i$，$\alpha$ 则查 $p_iLRR$；后者 $\mathrm{br}$ 选 $h_i$，$\alpha$ 则查 $p_iRLR$，其 $\mathrm{br}$ 选 $z_i$、$\alpha$ 继续下一槽。每次选择只启动 68.11 的完整核验器，所有未列回复都回退。扫描全部槽并在全部继续时选基线，取得 $0$ 零端点。其各异常行的非叶集为
+
+$$
+X_{a_i}=X_{y_i}=\{p_iLLLR\},\qquad X_{h_i}=\{p_iLRR\},\qquad X_{z_i}=\{p_iRLR\},\qquad X_0=\varnothing.
+$$
+
+要取得其余端点，先按固定递增次序扫描除 $j$ 外的所有槽；若未退出，余下是 $S_j$。在下表中 $Q:\eta\mapsto P$ 表示查询 $Q$，回复 $\eta$ 后选原型 $P$；指向另一列即继续查询。活动地址全部位于槽 $j$，所有未列回复均回退。
+
+| 目标零／二超额 | 剩余五行上的完整尾段 |
+|---|---|
+| $y_j$ 零 | $t:\bot\mapsto a,\mathrm{br}\mapsto z,\beta\mapsto d$；$d:\bot\mapsto0,\beta\mapsto e$；$e:\beta\mapsto y,\bot\mapsto h$ |
+| $h_j$ 零 | $v:\bot\mapsto a,\mathrm{br}\mapsto y,\beta\mapsto t$；$t:\mathrm{br}\mapsto z,\beta\mapsto d$；$d:\bot\mapsto0,\beta\mapsto h$ |
+| $z_j$ 零 | $v:\bot\mapsto a,\mathrm{br}\mapsto y,\beta\mapsto u$；$u:\mathrm{br}\mapsto h,\beta\mapsto f$；$f:\bot\mapsto0,\beta\mapsto z$ |
+| $a_j$ 零、$h_j$ 二 | $x_q:\bot\mapsto e,\alpha\mapsto g_q$；$e:\beta\mapsto y,\bot\mapsto h$；$g_q:\bot\mapsto z,\beta\mapsto r_q$；$r_q:\bot\mapsto0,\beta\mapsto a$ |
+| $a_j$ 零、$y_j$ 二 | $x_q:\bot\mapsto v,\alpha\mapsto g_q$；$v:\beta\mapsto h,\mathrm{br}\mapsto y$；$g_q:\bot\mapsto z,\beta\mapsto r_q$；$r_q:\bot\mapsto0,\beta\mapsto a$ |
+| $a_j$ 零、$z_j$ 二 | $g_q:\bot\mapsto t,\beta\mapsto x_q$；$t:\beta\mapsto y,\mathrm{br}\mapsto z$；$x_q:\bot\mapsto h,\alpha\mapsto r_q$；$r_q:\bot\mapsto0,\beta\mapsto a$ |
+
+确切的 $X$ 如下，行中活动字母均带 $p_j$：
+
+| 尾段 | $X_0$ | $X_{a_j}$ | $X_{y_j}$ | $X_{h_j}$ | $X_{z_j}$ |
+|---|---|---|---|---|---|
+| $y_j$ 零 | $\{d\}$ | $\{t\}$ | $\varnothing$ | $\{e\}$ | $\{t\}$ |
+| $h_j$ 零 | $\{d\}$ | $\{v\}$ | $\{v\}$ | $\varnothing$ | $\{t\}$ |
+| $z_j$ 零 | $\{f\}$ | $\{v\}$ | $\{v\}$ | $\{u\}$ | $\varnothing$ |
+| $a_j$ 零、$h_j$ 二 | $\{r_q\}$ | $\varnothing$ | $\{x_q\}$ | $\{x_q,e\}$ | $\{g_q\}$ |
+| $a_j$ 零、$y_j$ 二 | $\{r_q\}$ | $\varnothing$ | $\{x_q,v\}$ | $\{x_q\}$ | $\{g_q\}$ |
+| $a_j$ 零、$z_j$ 二 | $\{r_q\}$ | $\varnothing$ | $\{g_q\}$ | $\{x_q\}$ | $\{g_q,t\}$ |
+
+余下五行在此前扫描中只请求自己的 $B$ 叶；其他槽的异常行退出时仍只付普通扫描的一个非叶地址。每条尾段路径地址互异，核验器再请求完整 $L_i$，故实际并集正是 $L_i\cup X_i$。这实现全部 $6k+1$ 个最小元并完成族外语义。$\square$
+

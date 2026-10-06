@@ -1,0 +1,31 @@
+{
+  "scope": "Finite exact regression checks; paper proofs carry universal claims. No Lean or full grid conjecture claim.",
+  "group": {"permutations": 24, "image_order": 6, "kernel_order": 4},
+  "incidence_graphs": 1099,
+  "lattice_words": 21845,
+  "grid_cases": [
+    {"m": 2, "n": 2, "pairs": 25},
+    {"m": 2, "n": 4, "pairs": 548},
+    {"m": 2, "n": 6, "pairs": 12179},
+    {"m": 4, "n": 4, "pairs": 249116}
+  ],
+  "sharp_abstract_paths": 59,
+  "overloaded_component_witness": {
+    "m": 4,
+    "n": 6,
+    "T": [0, 5, 12, 17, 19, 22],
+    "M": [[1, 2], [3, 4], [7, 13], [10, 16], [8, 9]],
+    "core": {
+      "r": [0, 1, 0, 0, 2, 0],
+      "edges": [[0, 1], [1, 2]],
+      "t": [1, 0, 1, 2, 0, 2],
+      "h": [0, 1, 0, 0, 0, 0],
+      "s": [1, 0, 1, 0, 0, 0],
+      "d": 2,
+      "counts": {"a": 1, "b": 2, "c": 0, "o": 0, "q": -1, "holes": 4},
+      "leaves": [0, 2]
+    }
+  },
+  "script_sha256": "9356bd14bba1f256015b4c1d023915dc30c4ffe71ad4e3eab01d0292cce898eb",
+  "result": "ALL_LISTED_CHECKS_PASSED"
+}

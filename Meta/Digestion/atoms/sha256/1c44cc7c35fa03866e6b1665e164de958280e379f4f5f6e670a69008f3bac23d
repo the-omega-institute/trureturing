@@ -1,0 +1,6 @@
+## 2. Scope and boundary
+
+The condition $m>(h+1)^2$ with $h\geq0$ implies $m>h^2$, so the theorem applies to that shorter-hull predicate. The distinct triples $(875,891,896)$ and $(880,882,900)$ lie in $[875,900]$, have product $698544000$ and sum $2662$, and satisfy $875>26^2$. This hull contains the primes $877,881,883,887$.
+
+Without the interval premise, $(1,2,12)$ and $(1,3,8)$ have equal product $24$ and unequal sums $15$ and $12$. The theorem does not classify all six-row unit relations or establish Hall conditions, complete-hull compositeness, higher-endpoint sectors, nonunit relations, larger cores, long spans, or unrestricted Grimm's conjecture.
+

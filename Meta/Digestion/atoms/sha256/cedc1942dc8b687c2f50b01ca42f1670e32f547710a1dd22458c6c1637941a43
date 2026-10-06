@@ -1,0 +1,12 @@
+**定理 71.30（所有根路径的实际树与正确费用方向）。** 每条合法根路径都可用固定标签规则生成一棵实际逐位收费前缀树，返回某个非负归一律 $p^\gamma$，满足
+
+$$
+p^\gamma_1=t_\gamma=\min_i p^\gamma_i,\qquad
+\Pr(K>d)=r_d2^{-d},\qquad
+\mathbb EK=C_\gamma\le m,\qquad
+C_\gamma\ge L_m(p^\gamma).
+\tag{71.8}
+$$
+
+当 $t_\gamma>0$ 时，该律属于 $\mathcal P_m^+$。一般路径不能加强为 $C_\gamma=L_m(p^\gamma)$。
+

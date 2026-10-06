@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>StrataLint.Scribe</RootNamespace>
     <AssemblyName>StrataLint.Scribe</AssemblyName>
   </PropertyGroup>
@@ -23,11 +23,12 @@
     <AdditionalFiles Include="../Architecture/BannedSymbols.Guid.txt" />
   </ItemGroup>
   <Target Name="ExportScribeScriptDefineConstants" BeforeTargets="GetAssemblyAttributes"
-          DependsOnTargets="AddImplicitDefineConstants">
+          DependsOnTargets="AddImplicitDefineConstants;ResolvePackageAssets">
     <Error Condition="'$(DefineConstants)' == ''"
            Text="Scribe DefineConstants are unavailable." />
     <ItemGroup>
       <AssemblyMetadata Include="ScribeScriptDefineConstants" Value="$(DefineConstants)" />
+      <AssemblyMetadata Include="ScribeSdkPackageAnalyzers" Value="@(ResolvedAnalyzers->'%(FullPath)')" />
     </ItemGroup>
   </Target>
 </Project>

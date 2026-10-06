@@ -24,9 +24,7 @@ public sealed class NonpropositionalConsumerTests
         Assert.Empty(DigestionReadinessQuery.Classify(frontier));
         Assert.DoesNotContain(entry.AtomId, DigestResidualSummary.Render(evaluation, frontier), StringComparison.Ordinal);
         Assert.Contains(State, DigestStatusCommand.RenderText(evaluation), StringComparison.Ordinal);
-        var json = DigestStatusCommand.RenderJson(evaluation, frontier, new DigestAtomAge(
-            new Dictionary<string, DigestAgeRecord>(), new DigestAgeHistogram("all", 0, null,
-                new Dictionary<string, int>(), new Dictionary<string, IReadOnlyDictionary<string, int>>()), []));
+        var json = DigestStatusCommand.RenderJson(evaluation, frontier);
         using var parsed = JsonDocument.Parse(json);
         Assert.Contains("\"migration\": \"nonpropositional\"", json, StringComparison.Ordinal);
         Assert.Contains("\"truth\": \"inapplicable\"", json, StringComparison.Ordinal);

@@ -1,0 +1,23 @@
+**推论 29.4（实际联合响应集合与叶数的数值充分性）。** 设 $F=(P_i)_{i\in[m]}$、$F'=(P'_i)_{i\in[m]}$ 都满足定义 29.1，且存在同一个指标置换 $\eta:[m]\to[m]$。对任意坐标向量 $x$，定义 $(T_\eta x)_{\eta(i)}=x_i$。若
+
+$$
+n'_{\eta(i)}=n_i\quad(i\in[m]),\qquad
+\mathcal A_{F'}=\{T_\eta a:a\in\mathcal A_F\},
+\tag{29.16}
+$$
+
+则其核心逐坐标对应，五个数值目标相等：
+
+$$
+\begin{gathered}
+\Gamma_{F'}(\eta(S))=T_\eta\Gamma_F(S)
+\quad(\varnothing\ne S\subseteq[m]),\qquad
+\mathcal V_{F'}=T_\eta\mathcal V_F,\\
+(D,R,R_{\mathrm u},W,W_{\mathrm u})(F')
+ =(D,R,R_{\mathrm u},W,W_{\mathrm u})(F).
+\end{gathered}
+\tag{29.17}
+$$
+
+这是实际族之间对本合同的充分资料；不附带该资料的必要性、极小性或任意抽象响应表的实际可实现性。两个族各自使用自己的真实地址、代表、完整叶测试及后备。
+

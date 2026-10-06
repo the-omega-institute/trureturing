@@ -1,0 +1,19 @@
+### 15.2 相邻一的两个余类窗口
+
+对 $j\ge0$ 和起点 $q\in\mathbb Z/T\mathbb Z$，写
+
+$$
+ W_j(q):=(c_q,c_{q+1},\ldots,c_{q+j-1}),
+ \qquad W_0(q)=().
+ \tag{15.6}
+$$
+
+只对 $q\in P$ 或 $q\in P+1$ 取这些窗口。令
+
+$$
+ A_j:=|\{W_j(q):q\in P\}|,
+ \qquad
+ D_j:=|\{W_j(q):q\in P+1\}|.
+ \tag{15.7}
+$$
+

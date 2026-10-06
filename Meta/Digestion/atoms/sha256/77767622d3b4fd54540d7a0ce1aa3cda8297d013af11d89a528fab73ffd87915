@@ -1,0 +1,102 @@
+**命题 28.3（字面来源、完整前沿与全部地址分类）。** 两族各自的四棵树两两不同，式（28.5）给各自唯一完整三步前像。每个评价来源及其前像满足
+
+$$
+\begin{gathered}
+\rho^3(Q_i^{\mathrm b})=P_i^{\mathrm b}\in\mathcal I_3,\quad
+\rho^3(Q_i^{\mathrm p})=P_i^{\mathrm p}\in\mathcal I_3,\\
+c(Q_i^{\mathrm b})=c(Q_i^{\mathrm p})=(9,3)^{\mathsf T},\quad
+c(P_i^{\mathrm b})=c(P_i^{\mathrm p})=(15,27)^{\mathsf T},\\
+|L(P_i^{\mathrm b})|=|L(P_i^{\mathrm p})|=42,\quad
+c(R_0)=(4,2)^{\mathsf T},\quad c(R)=(8,14)^{\mathsf T},\quad |L(R)|=22.
+\end{gathered}
+\tag{28.6}
+$$
+
+$A,U$ 的原始响应在所有有限残词 $v$ 上恰为下表。最后一行是前六行地址集合的补集，包含全部更长残词。
+
+$$
+\begin{array}{c|c|l}
+\operatorname{out}_A(v)&\operatorname{out}_U(v)&v\\ \hline
+\mathsf{branch}&\mathsf{branch}&\varepsilon,\ \mathtt L\\
+\mathsf{leaf}_\beta&\mathsf{branch}&\mathtt{LL},\ \mathtt R\\
+\mathsf{leaf}_\alpha&\mathsf{branch}&\mathtt{LR}\\
+\mathsf{absent}&\mathsf{branch}&\mathtt{LLL},\ \mathtt{LRL},\ \mathtt{RL},\ \mathtt{RLL},\ \mathtt{RR}\\
+\mathsf{absent}&\mathsf{leaf}_\alpha&\mathtt{LLLR},\ \mathtt{LRLR},\ \mathtt{RLLR},\ \mathtt{RRR}\\
+\mathsf{absent}&\mathsf{leaf}_\beta&\mathtt{LLLL},\ \mathtt{LLR},\ \mathtt{LRLL},\ \mathtt{LRR},\ \mathtt{RLLL},\ \mathtt{RLR},\ \mathtt{RRL}\\
+\mathsf{absent}&\mathsf{absent}&\text{其余全部有限词}
+\end{array}
+\tag{28.7}
+$$
+
+以 $\mathcal F(X)$ 记带标签叶前沿。$A,U$ 的前沿取自式（25.16）；共同补块继承的 $A,C$ 前沿完整写为
+
+$$
+\begin{aligned}
+\mathcal F(A)&=\{(\mathtt{LL},\beta),(\mathtt{LR},\alpha),(\mathtt R,\beta)\},\\
+\mathcal F(C)&=\{(\mathtt{LLL},\beta),(\mathtt{LLR},\alpha),(\mathtt{LR},\beta),
+(\mathtt{RL},\beta),(\mathtt{RR},\alpha)\}.
+\end{aligned}
+\tag{28.8}
+$$
+
+令 $(s_1,\ldots,s_6)=(\mathtt L,\mathtt{RL},\mathtt{RRL},\mathtt{RRRL},\mathtt{RRRRL},\mathtt{RRRRR})$ 为 $R$ 内部六孔地址，其全部 $22$ 片带标签叶恰为
+
+$$
+\begin{aligned}
+\mathcal F(R)=&\bigsqcup_{j=1}^4
+\{(s_j\mathtt{LL},\beta),(s_j\mathtt{LR},\alpha),(s_j\mathtt R,\beta)\}\\
+&\sqcup\bigsqcup_{j=5}^6\{(s_j\mathtt{LLL},\beta),(s_j\mathtt{LLR},\alpha),
+(s_j\mathtt{LR},\beta),(s_j\mathtt{RL},\beta),(s_j\mathtt{RR},\alpha)\}.
+\end{aligned}
+\tag{28.9}
+$$
+
+对两族各自的 $T=6,5$ 及每个有限地址 $w$，全部上下文祖先报告分支，其余词唯一分解为 $p_j^{(T)}v$ 并读取该孔条目：
+
+$$
+\begin{aligned}
+\operatorname{out}_{B_T(X_1,\ldots,X_T)}(w)&=
+\begin{cases}\mathsf{branch},&w\prec p_j^{(T)}\text{ 对某个 }j,\\
+\operatorname{out}_{X_j}(v),&w=p_j^{(T)}v\text{ 对唯一的 }j,\end{cases}\\
+\mathcal F(B_T(X_1,\ldots,X_T))&=
+\bigsqcup_{j=1}^T\{(p_j^{(T)}v,\ell):(v,\ell)\in\mathcal F(X_j)\}.
+\end{aligned}
+\tag{28.10}
+$$
+
+平衡族的任一非常值查询都恰产生 $2+2$ 划分；其在四行上为常值的查询全部报告非叶值。私有族的任一非常值查询都恰产生 $1+3$ 划分；第五孔的全部报告恒同。每个非常值查询的两个不同报告中，至少一个是非叶值；两族各自任意两行在共享叶地址上的标签都相同。
+
+**证明。** $\rho^3$ 保留每个有序二叉构造，式（28.2）的 $A,U$ 是既有完整实际三步像，逐孔替换 $R_0$ 又给 $R$，所以式（28.5）的前像等式直接成立。平衡表每行三个 $A$、三个 $U$，前像三个 $\alpha$、三个 $u_0$；私有表每行三个 $A$、一个 $U$、一个 $R$，前像三个 $\alpha$、一个 $u_0$、一个 $R_0$。由[母卷定义 3.3、定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的组成加性与替换作用，已知 $c(A)=(1,2)^{\mathsf T}$、$c(U)=(4,7)^{\mathsf T}$、$c(C)=(2,3)^{\mathsf T}$、$c(u_0)=(2,1)^{\mathsf T}$，得到
+
+$$
+\begin{aligned}
+c(R)&=4(1,2)^{\mathsf T}+2(2,3)^{\mathsf T}=(8,14)^{\mathsf T},\\
+c(Q_i^{\mathrm b})&=3(1,0)^{\mathsf T}+3(2,1)^{\mathsf T}=(9,3)^{\mathsf T},\\
+c(Q_i^{\mathrm p})&=3(1,0)^{\mathsf T}+(2,1)^{\mathsf T}+(4,2)^{\mathsf T}=(9,3)^{\mathsf T},\\
+c(P_i^{\mathrm b})&=3(1,2)^{\mathsf T}+3(4,7)^{\mathsf T}=(15,27)^{\mathsf T},\\
+c(P_i^{\mathrm p})&=3(1,2)^{\mathsf T}+(4,7)^{\mathsf T}+(8,14)^{\mathsf T}=(15,27)^{\mathsf T}.
+\end{aligned}
+\tag{28.11}
+$$
+
+平衡表各行的前两位 $00,11,10,01$ 不同，故前像在至少一个相同孔分别为 $\alpha,u_0$，字面不同。私有表在自己的第 $i$ 孔为 $u_0$，其他行该孔为 $\alpha$，也使前像两两不同。直接调用[规范编译卷命题 4.3 的字面树替换单射性](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)，其三次复合使两族分别有不同的像与唯一完整前像。该命题中的原子 $A,B$ 在此对应 $\alpha,\beta$；组成逆公式不承担前像存在或字面恢复。
+
+对有限树 $X$，令 $N(X)$ 为全部存在节点的地址集合，包括内节点与叶；它是 $L(X)$ 的全部前缀集合。式（25.16）的完整 $U$ 前沿给其内节点集合恰为
+
+$$
+\begin{aligned}
+N(U)\setminus L(U)&=\{\varepsilon,\mathtt L,\mathtt{LL},\mathtt{LLL},\mathtt{LR},
+\mathtt{LRL},\mathtt R,\mathtt{RL},\mathtt{RLL},\mathtt{RR}\},\\
+N(A)&=\{\varepsilon,\mathtt L,\mathtt{LL},\mathtt{LR},\mathtt R\}\subseteq N(U).
+\end{aligned}
+\tag{28.12}
+$$
+
+$U$ 的其余存在节点正是式（25.16）的十一片叶，按标签分成式（28.7）的四个 $\alpha$ 地址与七个 $\beta$ 地址。$A$ 的两个内节点、三片叶在式（28.12）中全部列出，三片叶都变成 $U$ 的内节点。于是 $N(A)\cup N(U)=N(U)$ 的全部 $21$ 个节点逐项给出式（28.7）的前六行，集合外地址在两块中都不存在。这是有限节点集合及其补集的符号穷尽，不以有限长度截断代替任意长地址论证。特别地，$L(A)\cap L(U)=\varnothing$，任何不同的局部报告都不能同时是两片叶。
+
+式（28.8）的 $A$ 前沿直接取式（25.16），$C$ 前沿取定理 25.5 证明对 $C=\langle A,E\rangle$ 的完整展开。加上内部孔前缀 $s_j$ 即得式（28.9）；孔地址前缀自由，各并互不交，总数 $4\cdot3+2\cdot5=22$。$R$ 的节点集合是这 $22$ 个叶地址的全部前缀：叶地址按式（28.9）给标签，真前缀报告分支，集合外的所有地址报告不存在。这也精确规定穿过任一补块叶之后的全部更长查询。
+
+式（28.10）复用[引理 26.2 的全部地址上下文分解式（26.6）、（26.8）](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)。其路径证明只用上下文满二叉、每片上下文叶都是孔以及孔前缀自由，与所填块的名字无关，故同一分解适用于第五孔的 $R$。路径或者结束于某个孔的真前缀，或者经过唯一孔而留下任意残词，没有第三类词。第五孔内部再用同一分解读取 $B_6(A,A,A,A,C,C)$，连同式（28.8）、（28.9）覆盖全部存在、缺失与任意长地址。平衡前沿给 $3\cdot3+3\cdot11=42$ 片；私有前四孔给 $3\cdot3+11=20$ 片，再加第五孔 $22$ 片也为 $42$。共同补块叶均包含在完整带标签前沿中。
+
+平衡表每列恰有两个 $A$、两个 $U$。上下文祖先为常值分支；孔内两块响应相同只可能是式（28.7）的分支—分支或不存在—不存在，其余查询恰按该列分成两个二元素响应类。因此常值查询都是非叶，非常值查询都是 $2+2$，至少一类报告非叶。私有前四列各有一个 $U$、三个 $A$，同一表给 $1+3$；第五孔是完全相同的 $R$，其常值查询允许报告叶。在每个族内部，对任意两行，在不同块的孔内没有共同叶，在同块的孔内字面相同保证叶标签相同，上下文祖先不是叶。式（28.10）排除跨孔遗漏，故共享叶没有标签冲突。证毕。
+

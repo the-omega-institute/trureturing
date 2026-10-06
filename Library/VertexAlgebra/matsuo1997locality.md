@@ -2,7 +2,7 @@
 bibkey: matsuo1997locality
 authors: Atsushi Matsuo; Kiyokazu Nagatomo
 year: 1997
-title: On axioms for a vertex algebra and locality of quantum fields
+title: On axioms for a vertex algebra and the locality of quantum fields
 doi: null
 url: https://arxiv.org/abs/hep-th/9706118v1
 claim: Pairwise local creative fields with a common translation operator reconstruct a vertex algebra; residue products preserve locality.
@@ -49,7 +49,9 @@ with creation index `-(k+1)`, not a changed Heisenberg normalization.
 ## Source adaptation
 
 `FieldNormalProduct.lean` selectively adapts Hasse lifting and the finite
-support arguments from Scott Carnahan's `VertexAlg/VertexBasic/VertexOperator.lean`
+support arguments, and `PolynomialFockJacobi.lean` uses the two active integer
+residue-support kernels inside its actual residue-field constructor, from
+Scott Carnahan's `VertexAlg/VertexBasic/VertexOperator.lean`
 at revision `4453e34ec390e82a0c789c731ada8f9a6e86bdea` of
 `ScottCarnahan/vertexAlg`. The original file's SHA-256 is
 `ec4e543a6411876f19638138f825668785f2f30ace3f30cbe9328640ac02a2e2`.
@@ -62,12 +64,23 @@ The source pins Lean 4.33.1 and Mathlib revision
 `0df444a360eaa60ab8c11dca51a86af692955474`; this repository instead uses Lean
 4.33.0 and Mathlib revision `db584cd6d46c92f209a44c0f1c829460d327499d`.
 The transplant reuses the latter's `LaurentSeries.hasseDeriv`; it does not
-alter either dependency pin. Only the minus-one coefficient construction
-is retained, with its bounded-pole argument expressed using finitely many
-actual intermediate states. The ordinary covariance calculation is a
-separate Lean proof. The derivative and normal-product locality proofs are
+alter either dependency pin. The minus-one coefficient construction and
+the all-integer residue coefficients have bounded-pole arguments expressed
+using finitely many actual intermediate states. Residue coefficients use
+integer generalized binomial coefficients cast to the complex numbers and
+the integer power of minus one. The support kernels are local constructor
+facts, not separately frozen mathematical results. Covariance is proved by
+supported coefficient telescoping inside the actual residue-closure proof.
+The derivative and normal-product locality proofs are
 also developed here from coefficient functions, not attributed to an upstream
 compiled locality theorem.
+
+Nonnegative residues use finite double-commutator cancellation in commuting
+coefficient shifts. Relative vacuum uniqueness requires locality only with
+the existing state fields, not membership in their image. The integer
+composition identity follows from residue closure, the high-residue locality
+region and the supported Pascal discrepancy recurrence, including negative
+integer indices.
 
 Upstream derivative-locality and Dong locality statements are commented
 sketches, not compiled suppliers. No such sketch is copied as a theorem
@@ -79,7 +92,36 @@ for the actual Fock consumer.
 
 - Matsuo–Nagatomo, arXiv `hep-th/9706118v1`, PDF SHA-256
   `2e1dabebeffe511c8bd14c0a4e6449afefcf508a02135d96df2042a0ccca07ea`,
-  Proposition 1.5.5 and Theorems 5.2.1 and 5.4.1:
+Lemma 1.5.4, Propositions 1.5.5 and 3.2.2, and Theorems 5.2.1 and 5.4.1:
   https://arxiv.org/abs/hep-th/9706118v1
 - Carnahan source:
   https://github.com/ScottCarnahan/vertexAlg/blob/4453e34ec390e82a0c789c731ada8f9a6e86bdea/VertexAlg/VertexBasic/VertexOperator.lean
+
+## Power-state coefficient conventions
+
+Sections 1.2 and 1.4 use the expansion $A(z)=\sum_{n\in\mathbb Z}A_n z^{-n-1}$
+and the lower truncation condition on each input vector. For the minus-one
+residual product, Section 1.4 gives
+
+$$
+(A_{(-1)}B)_n v
+=\sum_{j\geq0} A_{-j-1}B_{n+j}v
+ +\sum_{j\geq0} B_{n-j-1}A_jv.
+$$
+
+Each branch is finite on the specified vector. The operator order is the
+order of the displayed products; normal products need not commute. In the
+complex polynomial realization, $Y(X_0^p)$ is the right-nested word of
+$p$ currents. Its coefficients on $X_0^q$ require evaluating those finite
+branches, the creation-series convolution, and the falling-factorial
+multiplicities. This realization calculation is a classical formalization
+contribution, not a new abstract Wick theorem.
+
+Tong, *String Theory*, Section 4.3.3, printed pages 80–82, explains summing
+over pair contractions and gives multiplicities 2 and 4 in the stress-tensor
+example, equation (4.28):
+https://davidtong.org/pdfs/teaching/string-theory/string4.pdf .
+His holomorphic derivative contraction is $-\alpha'/2$ times the inverse
+squared separation.
+This is background for pairing counts, not an exact source for the
+all-integer polynomial output formula with the unit Heisenberg normalization.

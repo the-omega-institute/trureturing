@@ -1,7 +1,6 @@
-using System.Reflection;
+using System.Collections.Immutable;
 using StrataLint.Engine;
 using StrataLint.Scribe;
-using StrataLint.Scribe.Documents;
 using Trureturing.Truth;
 
 namespace StrataLint.Cli;
@@ -49,24 +48,21 @@ internal static class DagRenderCommand
             return Usage($"unknown argument {argument}");
         }
 
-        if ((packPath is null) != (packDigest is null))
-            return Usage("--scribe-pack and --scribe-pack-digest must be supplied together");
+        if (packPath is null || packDigest is null)
+            return Usage("--scribe-pack and --scribe-pack-digest are required");
         if (packDigest is not null && !ScribePackInput.IsDigest(packDigest))
             return Usage("scribe pack digest must contain exactly 64 hexadecimal characters");
         if (packPath is not null && string.IsNullOrWhiteSpace(packPath))
             return Usage("--scribe-pack requires a nonempty path");
 
-        IEnumerable<DocumentDefinition>? definitions = null;
-        if (packPath is not null)
+        ImmutableArray<DocumentDefinition> definitions;
+        try
         {
-            try
-            {
-                definitions = ScribePackInput.ReadDefinitions(packPath, packDigest!);
-            }
-            catch (FormatException exception)
-            {
-                return new CommandResult(false, string.Empty, $"dag-render: {exception.Message}\n");
-            }
+            definitions = ScribePackInput.ReadDefinitions(packPath!, packDigest!);
+        }
+        catch (FormatException exception)
+        {
+            return new CommandResult(false, string.Empty, $"dag-render: {exception.Message}\n");
         }
 
         TruthContext truth;
@@ -87,29 +83,20 @@ internal static class DagRenderCommand
             return Failure("truth DAG could not be built", exception);
         }
 
-        return definitions is null
-            ? Run(repositoryRoot, truth, check, typeof(DocumentAssembly).Assembly)
-            : Run(repositoryRoot, truth, check, definitions);
+        return Run(repositoryRoot, truth, check, definitions);
     }
 
     internal static CommandResult Run(
         string repositoryRoot,
         TruthContext truth,
         bool check,
-        Assembly documentsAssembly) => RunCore(repositoryRoot, truth, check,
-            () => DocumentDefinitions.Discover(documentsAssembly, repositoryRoot));
-
-    internal static CommandResult Run(
-        string repositoryRoot,
-        TruthContext truth,
-        bool check,
-        IEnumerable<DocumentDefinition> definitions) => RunCore(repositoryRoot, truth, check, () => definitions);
+        IEnumerable<DocumentDefinition> definitions) => RunCore(repositoryRoot, truth, check, definitions);
 
     private static CommandResult RunCore(
         string repositoryRoot,
         TruthContext truth,
         bool check,
-        Func<IEnumerable<DocumentDefinition>> definitions)
+        IEnumerable<DocumentDefinition> definitions)
     {
         var output = new StringWriter();
         var error = new StringWriter();
@@ -128,10 +115,10 @@ internal static class DagRenderCommand
         try
         {
             documentProjection = DocumentGraphExportProjectionExtensions.AssembleRepository(
-                definitions(),
-                repositoryRoot,
+                definitions,
                 DeclarationCatalog.Create(truth.Report),
-                projection.Nodes.Select(static node => node.RepoPath.Value).ToHashSet(StringComparer.Ordinal));
+                projection.Nodes.Select(static node => node.RepoPath.Value)
+                    .ToHashSet(StringComparer.Ordinal));
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
@@ -162,7 +149,7 @@ internal static class DagRenderCommand
         new(false, string.Empty, $"dag-render: {summary}: {Innermost(exception).Message}\n");
 
     private static CommandResult Usage(string message) => new(false, string.Empty,
-        $"dag-render: {message}\nusage: dag-render [--check] [--scribe-pack FILE --scribe-pack-digest HEX64]\n");
+        $"dag-render: {message}\nusage: dag-render --scribe-pack FILE --scribe-pack-digest HEX64 [--check]\n");
 
     private static Exception Innermost(Exception exception) =>
         exception.InnerException is null ? exception : Innermost(exception.InnerException);

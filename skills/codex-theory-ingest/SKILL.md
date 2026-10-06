@@ -285,10 +285,10 @@ Use the live CLI to verify both the ledger and downstream queue:
 ```sh
 theory_ingest_tmp="$(mktemp -d)"
 dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
-  --configuration Release -- digest-status --json --base origin/dev \
+  --configuration Release -- digest-status --json \
   > "$theory_ingest_tmp/status.json"
 dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
-  --configuration Release -- digest-status --formalize-candidates --base origin/dev \
+  --configuration Release -- digest-status --formalize-candidates \
   > "$theory_ingest_tmp/candidates.json"
 jq -e --arg source_id '<source-id>' \
   '[.entries[] | select(.source_id == $source_id and .migration == "residual" and .truth == "open")] | length > 0' \

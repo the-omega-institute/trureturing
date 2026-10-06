@@ -1,0 +1,38 @@
+**定义 351.1（保留复零点和同一截断的三个级数）。** 沿用定义348.1的全部正纵坐标非平凡复零点指标 $I_+$、解析重数 $m_\rho$、正纵坐标 $\gamma_\rho$。不同复零点即使纵坐标相同仍为不同指标。记
+
+$$
+\begin{aligned}
+D_\rho&=\tfrac14+\gamma_\rho^2,&
+a_\rho&=\frac{m_\rho}{\gamma_\rho D_\rho},\\
+b_\rho&=1/D_\rho-2,&c_\rho&=2\gamma_\rho/D_\rho,\\
+g_\rho&=8\gamma_\rho^2/D_\rho^2,&
+h_\rho&=-2/\gamma_\rho+8\gamma_\rho/D_\rho-4\gamma_\rho/D_\rho^2.
+\end{aligned}
+$$
+
+保持原完整目标
+
+$$
+\begin{aligned}
+\delta(t)&=\sum_\rho2a_\rho(1-\cos(\gamma_\rho t)),\\
+F(t)&=\sum_\rho a_\rho[b_\rho\cos(\gamma_\rho t)-c_\rho\sin(\gamma_\rho t)],\\
+G(t)&=\sum_\rho a_\rho[g_\rho\cos(\gamma_\rho t)-h_\rho\sin(\gamma_\rho t)],\\
+\mathcal J_\varepsilon(t)&=\delta(t)+\varepsilon F(t)+\varepsilon^2G(t),\\
+K&=\sum_\rho\frac{a_\rho\gamma_\rho^2}{D_\rho},&
+A_{\rm quad}&=\sum_\rho\frac{a_\rho\gamma_\rho^2}{D_\rho^2}.
+\end{aligned} \tag{351.1}
+$$
+
+对 $T\ge1$，在三个原级数上同时乘同一个掩码 $\mathbf1_{\{\gamma_\rho\le T\}}$，定义 $\delta_{\le T},F_{\le T},G_{\le T}$；补集为严格的 $\gamma_\rho>T$，用下标 $>T$ 表示。定义
+
+$$
+\mathcal J^{\rm phase}_{\varepsilon,\le T}(u)
+=\delta_{\le T}(u)+\varepsilon F(u)+\varepsilon^2G(u)
+=\mathcal J_\varepsilon(u)-\delta_{>T}(u),
+$$
+
+$$
+\mathcal J_{\varepsilon,\le T}(u)
+=\delta_{\le T}(u)+\varepsilon F_{\le T}(u)+\varepsilon^2G_{\le T}(u).
+$$
+

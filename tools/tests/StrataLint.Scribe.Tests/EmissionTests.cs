@@ -8,6 +8,52 @@ public sealed class EmissionTests
 {
 
     [Fact]
+    public void FullEmitCheckStillRejectsLocalSourceOutsideDefinitions()
+    {
+        var root = TemporaryFileSystem.Directory.CreateTempSubdirectory("scribe-bijection-").FullName;
+        try
+        {
+            var definition = SyntheticDefinition();
+            WriteSyntheticScribeInputs(root, definition);
+            File.WriteAllText(Path.Combine(root, "Blueprint/D5/S0/Synthetic/LocalOnly.scribe.cs"), "local source\n");
+            var error = new StringWriter();
+
+            var exit = ScribeEmitter.Emit(root, check: true, TextWriter.Null, error,
+                LeanReportFixture.ForDocuments([definition.Document]), [definition]);
+
+            Assert.NotEqual(0, exit);
+            Assert.Contains("LocalOnly.scribe.cs", error.ToString(), StringComparison.Ordinal);
+        }
+        finally { TemporaryFileSystem.Directory.Delete(root, true); }
+    }
+
+    [Fact]
+    public void ScopedVerifyAcceptsDocumentEdgeToUnselectedDefinition()
+    {
+        var root = TemporaryFileSystem.Directory.CreateTempSubdirectory("scribe-scoped-edge-").FullName;
+        try
+        {
+            var document = ScribeDocument.Create(
+                DefinitionDsl.Header("D5/S0/Synthetic/CheckMode", "Synthetic check-mode fixture."),
+                DefinitionDsl.H("Synthetic check mode"),
+                DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Synthetic body."))),
+                [DocumentEdge.NarrativeReference.ToDocument(GidRef.Create("D5/S0/Synthetic/Unselected"))]);
+            var definition = DocumentDefinition.Create(document, "Blueprint/D5/S0/Synthetic/CheckMode.scribe.cs");
+            WriteSyntheticScribeInputs(root, definition);
+            var formal = Path.Combine(root, "D5/S0/Synthetic/CheckMode.lean");
+            Directory.CreateDirectory(Path.GetDirectoryName(formal)!);
+            File.WriteAllText(formal, "def checkMode : Nat := 0\n");
+            var error = new StringWriter();
+
+            var capability = ScribeEmitter.Verify(root, error,
+                LeanReportFixture.ForDocuments([definition.Document]), [definition], scoped: true);
+
+            Assert.True(capability is not null, error.ToString());
+        }
+        finally { TemporaryFileSystem.Directory.Delete(root, true); }
+    }
+
+    [Fact]
     public void ActualProducerCapabilityMaterialRoundTripsWithoutReemissionAndBindsSource()
     {
         var root = TemporaryFileSystem.Directory.CreateTempSubdirectory("scribe-material-").FullName;
@@ -137,14 +183,13 @@ public sealed class EmissionTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
-            DocumentlessAssembly.Value,
             ["emit", "--write-somewhere"],
             TemporaryFileSystem.Directory.GetCurrentDirectory(),
             TextWriter.Null,
             error);
 
         Assert.Equal(2, exit);
-        Assert.Contains("emit|emit-values|filemap [--check]", error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("emit-values|filemap [--check]", error.ToString(), StringComparison.Ordinal);
     }
 
     private static DocumentDefinition SyntheticDefinition()

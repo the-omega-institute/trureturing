@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "f9d58e56ac69757cd7e473ac29d95e4b4008befc19177fa29f954093cb2e5590";
+        "23d6e96decd4fe98c297ae13b3ef1c188db62ce7a02badd772ca6915e6608ea5";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -34,11 +34,7 @@ public sealed partial class FormulaCorpusInventoryTests
             "formula-children:Power(Base=Power,Exponent=Number)",
             vocabulary);
 
-        // 闭字母表覆盖:Formula 的每个公开节点类型都必须出现在**完整**固定语料里
-        // (这里要的是完整语料,不是上面那个只含一个 Power 的探针词汇表 —— 第一次
-        // 改接就接错了对象,当场红)。这条原先与「固定语料是否覆盖真仓库的组合」同处
-        // AssertRendererVocabularyCoverage;后者需要真语料、随文档迁出本程序集而失去
-        // 主体并已退役,这一条不依赖仓库,故保留。
+        // Formula 的每个公开节点类型都必须出现在完整固定语料里。
         AssertClosedFormulaVocabularyIsCovered(
             RendererVocabulary(FixedDocumentCorpus(), FixedFormulaCorpus()));
     }
@@ -190,8 +186,8 @@ public sealed partial class FormulaCorpusInventoryTests
                 DocumentEdge.Dependency.Create(GidRef.Create(targetGid)),
                 DocumentEdge.NarrativeReference.ToDocument(GidRef.Create(targetGid)),
                 DocumentEdge.NarrativeReference.ToDescribe(
-                    GidRef.Create(targetGid),
-                    DescribeId.Create("target")),
+                    GidRef.Create(sourceGid),
+                    DescribeId.Create("lemma")),
             ]);
         var target = ScribeDocument.Create(
             Header(targetGid, "Fixed target digest."),
@@ -397,14 +393,13 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(group, digits));
         formulas.Add(new Formula.Power(new Formula.LatexMacro(FormulaLatexMacro.Phi), group));
         formulas.Add(new Formula.Power(word, sequence));
-        // 26 条模块合并后暴露的完整差集(由 InventoryAllLegacyLatexStatementsAndSyntaxFamilies
-        // 自己列出,一次补齐;逐条从判词读一条补一条已失败五次)。
+        // 固定语料覆盖幂、下标、分组与负号的子节点组合。
         var macroPhi = new Formula.LatexMacro(FormulaLatexMacro.Phi);
         // 两个都需要,不可互相替代:
         //   Negate(multiplicative) 覆盖 Negate.Operand=precedence:multiplicative;
         //   Binary(Negate x, *, y) 才是 precedence:multiplicative 且 starts-with-negation:true
         //   (即 (-x)*y;而 -(x*y) 的 precedence 是 prefix)。
-        // 且 FunctionCall 与 Apply 是不同节点,判词点名的是 FunctionCall.Arguments。
+        // FunctionCall 与 Apply 是不同节点,FunctionCall.Arguments 需要独立覆盖。
         formulas.Add(new Formula.Power(word, negative));
         formulas.Add(new Formula.Power(new Formula.Norm(x), digits));
         formulas.Add(new Formula.Subscript(macroPhi, macroPhi));
@@ -420,20 +415,20 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(function, one));
         formulas.Add(new Formula.Power(function, script));
         formulas.Add(new Formula.Power(function, subscript));
-        // 2026-09-02 席位新增 scribe 定义暴露的两项(判词逐字):
+        // 幂与下标的子节点组合:
         //   formula-children:Power(Base=Apply,Exponent=LatexWord)
         //   formula-children:Subscript(Base=LatexMacro,Index=LatexWord)
         var applyNode = new Formula.Apply(subscript, [x]);
         formulas.Add(new Formula.Power(applyNode, word));
         formulas.Add(new Formula.Subscript(macroPhi, word));
-        // 2026-09-04 判词逐字（一次补齐四项，逐条补已吃过五轮 CI 试错）：
+        // 二元运算、数字、宏与嵌套脚标的组合:
         //   Power(Base=Binary,Exponent=LatexMacro) / Power(Base=LatexDigits,Exponent=Binary)
         //   Power(Base=Power,Exponent=LatexWord)   / Subscript(Base=LatexMacro,Index=Subscript)
         formulas.Add(new Formula.Power(additive, macroPhi));
         formulas.Add(new Formula.Power(digits, additive));
         formulas.Add(new Formula.Power(new Formula.Power(x, one), word));
         formulas.Add(new Formula.Subscript(macroPhi, subscript));
-        // 2026-09-04 第二批判词（四项，一次补齐）：
+        // 分组与序列的脚标组合及乘法优先级:
         //   Power(Base=LatexGroup,Exponent=LatexSequence) / Power(Base=LatexGroup,Exponent=LatexWord)
         //   Subscript(Base=LatexSequence,Index=LatexWord)
         //   LatexGroup.Items=precedence:multiplicative
@@ -441,15 +436,14 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(group, word));
         formulas.Add(new Formula.Subscript(sequence, word));
         formulas.Add(new Formula.LatexGroup([multiplicative]));
-        // 2026-09-05 判词逐字: formula-context:Negate.Operand=precedence:script;produces-script:true
+        // formula-context:Negate.Operand=precedence:script;produces-script:true
         formulas.Add(new Formula.Negate(script));
-        // 2026-09-02 判词逐字: formula-context:LatexGroup.Items=precedence:logic;
+        // formula-context:LatexGroup.Items=precedence:logic;
         //   produces-script:false;starts-with-negation:false
         // precedence:logic 只由 Formula.Logic 产生(LatexWriter.WriteLogic 的 LogicPrecedence)。
         var logicNode = new Formula.Logic(x, FormulaLogicOperator.And, y);
         formulas.Add(new Formula.LatexGroup([logicNode]));
-        // 仓库实际使用过的 Power 子组合。原由 AssertRendererVocabularyCoverage 点名要求覆盖,
-        // 该 helper 随真语料测试一并退役(文档已迁出本程序集),此处保留为固定语料的样本。
+        // 固定语料中的 Power 子组合样本。
         formulas.Add(new Formula.Power(function, sequence));
         formulas.Add(new Formula.Power(function, x));
         formulas.Add(new Formula.Power(one, one));
@@ -486,7 +480,7 @@ public sealed partial class FormulaCorpusInventoryTests
             new Formula.LatexMacro(FormulaLatexMacro.Phi),
             sequence));
         formulas.Add(new Formula.Subscript(word, digits));
-        // 仓库公式使用 LatexWord 底、二元运算下标(如 word_{x+y}),由覆盖断言点名要求。
+        // LatexWord 底与二元运算下标的组合,如 word_{x+y}。
         formulas.Add(new Formula.Subscript(word, additive));
         formulas.Add(new Formula.Subscript(
             word,

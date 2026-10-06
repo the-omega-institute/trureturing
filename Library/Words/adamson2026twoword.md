@@ -5,9 +5,11 @@ year: 2026
 title: "2-word-π-representable Graphs"
 doi: null
 url: https://arxiv.org/abs/2605.27183v1
-claim: "Definitions 1 and 14 define representation by equality of two-letter projections in two k-uniform words; the conclusion asks for an explicit graph outside G2."
+claim: "Definitions 1 and 14 use adjacency iff equality of two-letter projections in two k-uniform words; Conjecture 31 asks for proper adjacent inclusion at every positive k."
 strata_touched:
   - D5/S1/Words/GraphRepresentation/ExplicitNonTwoUniform
+  - D5/S1/Words/GraphRepresentation/UniformVertexExtension
+  - D5/S1/Words/GraphRepresentation/UniformHierarchy
 license: citation-only
 triage: anchor
 ---
@@ -45,3 +47,44 @@ scoped exact-title and neighborhood-complexity searches found no exact
 published explicit witness; the latter is weak negative evidence. The
 candidate's novelty is `suspected-novel` within that scope. Worldwide priority
 is `ASSUMED-UNVERIFIED`.
+
+## Prescribed-neighborhood extension and hierarchy boundary
+
+Remark 2 preserves an existing representation under a common prefix or suffix.
+Remarks 36 and 39 insert respectively a universal or an isolated vertex. The
+inspected primary proof sections do not state an arbitrary-neighborhood fresh
+vertex extension with a one-unit uniformity increase. That construction uses
+old nonneighbors N and old neighbors T, each enumerated once, and the actual
+words x^k w xNT and x^k vNxT. Its mathematical statement is repository-derived;
+this source note supplies the representation definitions, not that proof.
+
+The earlier four-author Dietz–Fleischmann–Huch–Sacher contribution in IFIG
+Report 2501, printed pp. 21–24 (PDF pp. 29–32), has Definition 3.1 for the
+same model and Conjecture 3.2 on printed p. 23 for the same all-positive-k
+adjacent strictness question. Its Open Problems section on p. 24 explicitly
+says that only k=1 strictness was proved. The actual four-page body was read
+from <https://www.informatik.uni-giessen.de/theorietag2025/2025-Theorietag35-Schotten.pdf>.
+This earlier statement is the same problem, not an additional settlement.
+
+The full consumer `UniformHierarchy.result` proves adjacent inclusion for every
+positive k and every finite graph, together with a finite same-carrier separator.
+Its known Theorem 29 nonuniversality component is proved internally: for
+m=64k², the membership graph has 2^m right vertices but at most
+(km+1)^(2k) ≤ 2^(20k²) < 2^m ordered cut signatures. Reconstruction and
+injective marker cancellation force colliding signatures to have equal
+neighborhoods, a contradiction. This component is not a separate new target.
+A minimum-cardinality nonrepresented induced subset has a represented vertex
+deletion. Actual word transport and the frozen arbitrary-neighborhood extension
+give the next-uniform representation on the original subset carrier. Appending
+one common enumeration supplies inclusion. No literature theorem, minimality,
+deletion closure, relabeling or strictness is assumed as a theorem parameter.
+The two original left orders may differ and tied cuts are preserved.
+
+A same-title bibliographic citation
+lists *Gradiva*, 8(9) (2022), pp. 528–533. The journal body and SSRN DOI
+10.2139/ssrn.5336494 remain body-unverified; the SSRN abstract page returned
+HTTP 403. A title and citation match does not establish that an earlier work
+uses this projection-equality model or proves this extension or the hierarchy.
+Bounded repository, pinned Mathlib and public Lean repository searches found no exact
+extension supplier; the public WordRepTensor source inspected uses single-word
+alternation. These limits do not support a global absence or priority claim.

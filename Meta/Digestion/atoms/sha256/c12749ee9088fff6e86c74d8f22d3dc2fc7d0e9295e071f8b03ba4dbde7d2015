@@ -1,0 +1,29 @@
+## 295. FIB 观察商、任务充分性与信息几何边界
+
+令 `\mathcal X` 为 FIB 来源对象，`o:\mathcal X\to\mathcal Z` 为观察，定义观察等价
+
+$$
+x\sim_o x'\iff o(x)=o(x').
+\tag{295.1}
+$$
+
+给定任务 `r:\mathcal X\to\mathcal Y`，观察能够准确恢复任务，当且仅当
+
+$$
+o(x)=o(x')\Longrightarrow r(x)=r(x').
+\tag{295.2}
+$$
+
+此时存在唯一的实际像上读出 `\bar r`，使 `r=\bar r\circ o`。这是一条确定性的观察商判据，不需要概率测度。
+
+若任务还允许操作 `T_a:D_a\to\mathcal X`，动态充分性还要求
+
+$$
+x\in D_a\iff x'\in D_a,
+\qquad
+o(T_ax)=o(T_ax')
+\tag{295.3}
+$$
+
+对同一观察纤维中的 `x,x'` 成立。当前读数相同而后续操作权限不同的两个对象，已经足以否定当前观察的动态充分性。
+

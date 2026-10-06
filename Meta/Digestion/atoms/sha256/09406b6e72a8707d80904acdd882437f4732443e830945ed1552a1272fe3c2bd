@@ -1,0 +1,14 @@
+**推论 27.11（极小不相容模式的覆盖费用）。** 对定理 26.6 已有的 $K_m=2^{[m]}\setminus\{[m]\}$，在定义 27.1 中只向其已完成的原表添加指定私有列，不另建立原表的规模定理。所得实际族的值为
+
+$$
+\begin{aligned}
+\tau(K_m)&=\frac{m}{m-1},\qquad t(K_m)=\frac{m-1}{m},\\
+\inf_{\Pi\in\mathfrak R_3}\max_i\mathbb E C_\Pi(\cdot,P_i)
+&=n+\frac1m,\qquad D(K_m)=W(K_m)=n+1,\\
+n&=(m-1)(11m-8)+3m+8.
+\end{aligned}
+\tag{27.26}
+$$
+
+固定均匀种子空间也取得相同随机锐值。
+

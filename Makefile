@@ -2,17 +2,21 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
 BASE ?= origin/dev
+AUTO_MERGE ?= 1
+DRAFT ?= 0
+ALLOW_LOW_DISK ?= 0
 WORKTREE_DEST = $(if $(DEST),$(DEST),../trureturing-$(NAME))
 LEAN_REPORT ?= .lake/build/stratalint/raw-lean-report.json
+export LEAN_SKIP_LOCK ?= 0
 CENSUS_OUT ?= build/census/$(shell date -u +%Y%m%dT%H%M%S)
 CENSUS_PREFIX ?= D5
-.PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report build emit scribe-release ingest align-digestion-status refresh-source-registry mathlib-reanchor echo-residual-summary digestion-readiness show-atom atom-context truth-export deliver-check deposit deposit-uncovered cover cover-batch decompose quarantine quarantine-clear settle settle-clear worktree worktree-clean worktree-remove pr-open pr-watch gate census census-derivational
+.PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report build emit dag filemap scribe-release scribe-release-publish scribe-release-fetch ingest align-digestion-status refresh-source-registry mathlib-reanchor echo-residual-summary digestion-readiness show-atom atom-context truth-export deliver-check deposit deposit-uncovered cover cover-batch decompose quarantine quarantine-clear settle settle-clear worktree worktree-clean worktree-remove pr pr-open pr-watch gate census census-derivational
 
 help:
-	@printf '%s\n' 'make test  Run lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR]  Initialize an isolated worktree; Lean cache is lazy and never symlinked' 'make gate [BASE=origin/dev]  Run independent CI-equivalent commands' 'make lean-report  Produce the canonical raw Lean report' 'make scribe-release  Rebuild and verify local Scribe release assets'
+	@printf '%s\n' 'make pr HEAD=branch MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]  Open a PR; auto-merge defaults on; drafts return without merging or watching CI' 'make pr-open HEAD=branch MESSAGE=file  Same options as make pr' 'make pr-watch PR=number HEAD_SHA=sha  Wait for required CI on the exact commit' 'make lean [LEAN_TARGETS="..."] [LEAN_SKIP_LOCK=1]  Build Lean; set LEAN_SKIP_LOCK=1 to skip the shared build lock' 'make test  Run lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR] [ALLOW_LOW_DISK=1]  Initialize a worktree; refuse below 5% available disk unless explicitly overridden' 'make gate [BASE=origin/dev]  Run independent CI-equivalent commands' 'make lean-report  Produce the canonical raw Lean report' 'make emit [BASE=origin/dev] [PATHS=FILE]  Emit changed Scribe projections and values' 'make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG' 'make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml' 'make scribe-release  Rebuild and verify local Scribe release assets' 'make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]  Publish or verify the exact Scribe resource release' 'make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch and verify the exact Scribe resource pack'
 
 test:
-	@set -e; make lean-report; dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -nologo; dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll check-current --candidate-lean-report "$(LEAN_REPORT)"
+	@set -e; paths="$$(mktemp)"; trap 'rm -f "$$paths"' EXIT; git diff --name-only -z "$(BASE)" -- > "$$paths"; git ls-files --others --exclude-standard -z >> "$$paths"; make lean-report; dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -nologo; dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll check-current --candidate-lean-report "$(LEAN_REPORT)" --scribe-paths-from "$$paths"
 
 lean-cache-ensure:
 	@/bin/bash tools/scripts/worktree/lean-cache-ensure.sh
@@ -42,23 +46,46 @@ build: lean
 emit:
 	@/bin/bash tools/scripts/scribe.sh emit
 
+emit: export BASE ?= origin/dev
+emit: export PATHS ?=
+
+PREFIX ?= scribe-resources
+DIGEST ?=
+SCRIBE_PACK = Generated/$(PREFIX)/$(DIGEST)/scribe-resources.zip
+
+dag:
+	@test -n "$(DIGEST)" || { echo 'make dag: DIGEST is required' >&2; exit 2; }; make scribe-release-fetch DIGEST="$(DIGEST)" PREFIX="$(PREFIX)" && dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- dag-render --scribe-pack "$(SCRIBE_PACK)" --scribe-pack-digest "$(DIGEST)"
+
+filemap:
+	@dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- filemap
+
 scribe-release:
 	@/bin/bash tools/scripts/scribe-release.sh
 
+scribe-release-publish:
+	@/bin/bash tools/scripts/scribe-release.sh publish --prefix "$$PREFIX" --target "$$TARGET"
+
+scribe-release-fetch:
+	@/bin/bash tools/scripts/scribe-release.sh fetch "$$DIGEST" --prefix "$$PREFIX"
+
+scribe-release-publish scribe-release-fetch: export PREFIX ?= scribe-resources
+scribe-release-publish: export TARGET ?=
+scribe-release-fetch: export DIGEST ?=
+
 ingest:
-	@/bin/bash tools/scripts/ingest.sh ingest "$(BASE)" "$(SOURCE)"
+	@/bin/bash tools/scripts/ingest.sh ingest "$(SOURCE)"
 
 align-digestion-status:
-	@/bin/bash tools/scripts/ingest.sh align-digestion-status "$(BASE)" "$(PLAN)"
+	@/bin/bash tools/scripts/ingest.sh align-digestion-status "$(PLAN)"
 
 refresh-source-registry:
-	@/bin/bash tools/scripts/ingest.sh refresh-source-registry "$(BASE)" "$(SOURCE)" "$(PLAN_HASH)"
+	@/bin/bash tools/scripts/ingest.sh refresh-source-registry "$(SOURCE)" "$(PLAN)"
 
 mathlib-reanchor:
 	@/bin/bash tools/scripts/ingest.sh mathlib-reanchor "$(BASE)"
 
 echo-residual-summary:
-	@/bin/bash tools/scripts/report/echo-residual-summary.sh "$(BASE)"
+	@/bin/bash tools/scripts/report/echo-residual-summary.sh
 
 digestion-readiness:
 	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- digest-status --readiness
@@ -89,28 +116,29 @@ deposit-uncovered:
 	@/bin/bash tools/scripts/workflow/playbook-workflows.sh deposit-uncovered "$(BASE)" "$(GID)"
 
 cover:
-	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover "$(BASE)" "$(ATOM_ID)" "$(GID)"
+	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover "$(ATOM_ID)" "$(GID)"
 
 cover-batch:
-	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover-batch "$(BASE)" "$(ATOMS)"
+	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover-batch "$(ATOMS)"
 
 decompose:
-	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- decompose-atom --atom "$(ATOM_ID)" --base "$(BASE)" $(foreach offset,$(SPLIT_AT),--split-at "$(offset)") $(if $(filter 1,$(DRY_RUN)),--dry-run,)
+	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- decompose-atom --atom "$(ATOM_ID)" $(foreach offset,$(SPLIT_AT),--split-at "$(offset)") $(if $(filter 1,$(DRY_RUN)),--dry-run,)
 
 quarantine:
-	@/bin/bash tools/scripts/ingest.sh quarantine "$(BASE)" "$(REQUEST)"
+	@/bin/bash tools/scripts/ingest.sh quarantine "$(REQUEST)"
 
 quarantine-clear:
-	@/bin/bash tools/scripts/ingest.sh quarantine-clear "$(BASE)" "$(ATOM_ID)"
+	@/bin/bash tools/scripts/ingest.sh quarantine-clear "$(ATOM_ID)"
 
 settle:
-	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --request "$(REQUEST)" --base "$(BASE)"
+	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --request "$(REQUEST)"
 
 settle-clear:
-	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --clear "$(ATOM_ID)" --base "$(BASE)"
+	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --clear "$(ATOM_ID)"
 
 worktree:
-	@/bin/bash tools/scripts/worktree-init.sh "$(KIND)" "$(NAME)" "$(WORKTREE_DEST)" "$(BASE)"
+	@/bin/bash tools/scripts/worktree-init.sh "$(KIND)" "$(NAME)" "$(WORKTREE_DEST)" "$(BASE)" "$${WORKTREE_ALLOW_LOW_DISK}"
+worktree: export WORKTREE_ALLOW_LOW_DISK := $(if $(filter command line,$(origin ALLOW_LOW_DISK)),$(value ALLOW_LOW_DISK),0)
 
 worktree-clean:
 	@/bin/bash tools/scripts/clean-lanes.sh --base "$(BASE)" --lanes-only --force
@@ -122,8 +150,10 @@ unexport NAMES
 worktree-remove: override WORKTREE_REMOVE_NAMES := $(value NAMES)
 export WORKTREE_REMOVE_NAMES
 
+pr: pr-open
+
 pr-open:
-	@/bin/bash tools/scripts/pr.sh open --head "$(HEAD)" --message-file "$(MESSAGE)" $(if $(filter 1,$(AUTO_MERGE)),--auto-merge,) $(if $(WATCH_TIMEOUT_SECONDS),--timeout-seconds "$(WATCH_TIMEOUT_SECONDS)",) $(if $(WATCH_INTERVAL_SECONDS),--interval-seconds "$(WATCH_INTERVAL_SECONDS)",)
+	@/bin/bash tools/scripts/pr.sh open --head "$(HEAD)" --message-file "$(MESSAGE)" $(if $(filter 1,$(DRAFT)),--draft,$(if $(filter 1,$(AUTO_MERGE)),--auto-merge,)) $(if $(WATCH_TIMEOUT_SECONDS),--timeout-seconds "$(WATCH_TIMEOUT_SECONDS)",) $(if $(WATCH_INTERVAL_SECONDS),--interval-seconds "$(WATCH_INTERVAL_SECONDS)",)
 
 pr-watch:
 	@/bin/bash tools/scripts/pr.sh watch --pr "$(PR)" --head-sha "$(HEAD_SHA)" $(if $(WATCH_TIMEOUT_SECONDS),--timeout-seconds "$(WATCH_TIMEOUT_SECONDS)",) $(if $(WATCH_INTERVAL_SECONDS),--interval-seconds "$(WATCH_INTERVAL_SECONDS)",)
@@ -132,8 +162,8 @@ gate:
 	@set -e; \
 	make lean-report; \
 	dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -nologo; \
-	cli=tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll; \
-	dotnet "$$cli" check-current --candidate-lean-report "$(LEAN_REPORT)"; \
-	bash tools/scripts/workflow/scribe-content-checks.sh "$(LEAN_REPORT)"; \
+	cli=tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll; paths="$$(mktemp)"; trap 'rm -f "$$paths"' EXIT; git diff --name-only -z "$(BASE)" -- > "$$paths"; git ls-files --others --exclude-standard -z >> "$$paths"; \
+	dotnet "$$cli" check-current --candidate-lean-report "$(LEAN_REPORT)" --scribe-paths-from "$$paths"; \
+	bash tools/scripts/workflow/scribe-content-checks.sh "$(LEAN_REPORT)" tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll "$$paths"; \
 	dotnet "$$cli" filemap-conform; \
 	dotnet "$$cli" check-delta --protected-base "$$(git rev-parse --verify '$(BASE)^{commit}')" --candidate-lean-report "$(LEAN_REPORT)"

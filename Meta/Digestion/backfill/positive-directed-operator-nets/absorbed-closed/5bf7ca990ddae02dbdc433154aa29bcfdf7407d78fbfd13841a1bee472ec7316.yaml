@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5bf7ca990ddae02dbdc433154aa29bcfdf7407d78fbfd13841a1bee472ec7316
+  normalized_sha256: sha256:5bf7ca990ddae02dbdc433154aa29bcfdf7407d78fbfd13841a1bee472ec7316
+cas_ref: sha256:5bf7ca990ddae02dbdc433154aa29bcfdf7407d78fbfd13841a1bee472ec7316
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurements/DirectedPositiveNet.directed_positive_net_strong_of_isLUB
+    target_statement_id: sha256:bb5b2db39ad27677511da0e6fbb9fac57e1bd48edf87fbfbb382a5752c3ae4c7
+receipts:
+  unresolved_subitems: []

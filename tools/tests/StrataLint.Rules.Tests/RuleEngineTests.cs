@@ -439,8 +439,6 @@ public sealed class RuleEngineTests
             document,
             context.Current,
             context.Lean,
-            baselineDocument: BackfillInventoryLoader.Load(context.Baseline),
-            baselineSnapshot: context.Baseline,
             casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
             changes: changes);
 
@@ -532,8 +530,6 @@ public sealed class RuleEngineTests
             document,
             context.Current,
             context.Lean,
-            baselineDocument: BackfillInventoryLoader.Load(context.Baseline),
-            baselineSnapshot: context.Baseline,
             casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
             changes: changes);
         return Assert.Single(evaluation.Entries);

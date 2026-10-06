@@ -1,0 +1,57 @@
+## Actual Gibbs generators and the same Hamiltonian
+
+For physical Hermitian H_A,H_B and beta>0 put K_A=-beta H_A,
+K_B=-beta H_B and H0=H_A tensor I+I tensor H_B. The existing Gibbs owner
+uses the exponential generator K, not the physical energy H without this sign.
+The tensor embeddings are continuous algebra homomorphisms and their ranges
+commute. Mapping the exponential through each embedding and applying the
+commuting exponential sum identity gives
+
+$$
+e^{-\beta H0}=e^{-\beta H_A}\otimes e^{-\beta H_B},\quad
+Z_0=Z_AZ_B,\quad\gamma_{H0}=\gamma_A\otimes\gamma_B.
+$$
+
+These are direct existing exponential applications and normalization.
+For the original same-H splitting, with d=dim A, e=dim B,
+
+$$
+h_0=\operatorname{Tr}H/(de),\quad
+H_A=e^{-1}\operatorname{Tr}_BH-h_0I_A,\quad
+H_B=d^{-1}\operatorname{Tr}_AH,\quad V=H-H0,
+$$
+
+write f_H=-beta⁻¹ log Z_H, G_H(rho)=beta⁻¹ D(rho||gamma_H),
+E(rho)=D(rho||recovered), and Delta_H=G_H(rho)-beta⁻¹D(R||gamma_A).
+The existing Gibbs variational identity and the finite chain give
+
+$$
+\Delta_H-\beta^{-1}E(\rho)=\operatorname{Tr}(\rho V)-(f_H-f_{H0}),
+$$
+
+$$
+G_H(\rho)-G_H(\widehat\rho)=\beta^{-1}E(\rho)
++\operatorname{Tr}((\rho-\widehat\rho)V).
+$$
+
+They compare gamma_H with the actual product gamma_H0. They do not replace
+a correlated gamma_H by the product of its marginals. Given the original
+perturbation bound |f_H-f_H0|≤||V||≤delta(H), positivity and trace one imply
+|Delta_H-beta⁻¹E|≤2delta(H). With quantum Pinsker in nats and the unhalved
+trace norm, ||rho-sigma||_1²≤2D(rho||sigma), the original recovery estimate is
+
+$$
+\|\rho-\widehat\rho\|_1\le
+\min\{2,\sqrt{2\beta(\Delta_H+2\delta(H))}\}.
+$$
+
+Its radicand is nonnegative because Delta_H+2delta(H)≥E/beta≥0.
+For V=0 the product unitary transports both rho and its recovered state;
+the hidden local Gibbs state is fixed, so the defect is conserved. Zero defect
+characterizes exact recovery once zero-separation is supplied. These last
+implications use relative-entropy nonnegativity and quantum Pinsker; they are
+not consequences of the chain rule alone.
+
+Finite matrix calculus does not establish the infinite-dimensional oscillator
+tensor domains, actual observable-compatible metaplectic splitting, selfadjoint
+closures and cores, or trace-class Gibbs and partition-factorization results.

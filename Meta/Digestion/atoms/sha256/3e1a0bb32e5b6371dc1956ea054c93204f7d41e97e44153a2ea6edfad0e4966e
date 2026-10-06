@@ -1,0 +1,18 @@
+**引理 30.2（原子像与复合像的全部非冲突比较）。** 对 $X,Y\in\mathcal I_3$，原子像之间只有相同者满足 $\operatorname{NC}$。原子像与复合像的比较恰为以下情形：
+
+$$
+\begin{aligned}
+\operatorname{NC}(A,\langle X,Y\rangle)
+&\Longleftrightarrow X\ne A,\\
+\operatorname{NC}(C,\langle X,Y\rangle)
+&\Longleftrightarrow
+Y\ne A\ \land\
+\left(X=A\ \lor\
+\bigl(\exists X_1,X_2\in\mathcal I_3,
+X=\langle X_1,X_2\rangle\ \land\ X_1\ne A\bigr)\right).
+\end{aligned}
+\tag{30.3}
+$$
+
+第一行成立时，共享叶数为零，$n(\langle X,Y\rangle)\ge8$，且大小恰为 $8$ 的唯一可能是 $\langle X,Y\rangle=B$。第二行中，若 $X=A$，共享叶数恰为 $3$，两侧未共享叶数分别为 $2$ 和 $n(Y)\ge5$；若 $X$ 为其中的复合像，共享叶数为零，且 $n(X)\ge8$、$n(Y)\ge5$。因此每个非冲突的原子／复合比较中，原子侧严格较小，原子侧至少有 $2$ 片未共享叶，复合侧至少有 $5$ 片未共享叶；两侧总叶数分别至少为 $3$ 和 $8$。
+

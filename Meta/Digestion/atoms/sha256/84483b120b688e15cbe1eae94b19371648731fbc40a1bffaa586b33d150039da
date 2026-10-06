@@ -1,0 +1,16 @@
+**命题 33.2（十四叶实际像的根分解全集）。** 全部十四叶实际三步像恰为以下三个互不相交的集合之并：
+
+$$
+\boxed{\begin{aligned}
+\mathcal I_3(14)
+={}&\{\langle A,D\rangle,\langle D,A\rangle:D\in\mathcal Z\}\\
+ &\ \cup\{\langle C,S\rangle,\langle S,C\rangle,
+               \langle C,R\rangle,\langle R,C\rangle\}\\
+ &\ \cup\{\langle H,T\rangle,\langle T,H\rangle,
+               \langle H,B\rangle,\langle B,H\rangle\}.
+\end{aligned}}
+\tag{33.5}
+$$
+
+它们共有二十棵，每棵的唯一实际前像组成都为 $(3,1)^{\mathsf T}$，输出组成都为 $(5,9)^{\mathsf T}$。特别地，式（33.4）的六棵树互不相同，均具有这种前像和输出组成。
+

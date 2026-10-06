@@ -1,0 +1,25 @@
+**定理 20.1（逐非对角元的尖锐有符号词长界）。** 对任意长度恰为 $n\ge0$ 的 $M/J$ 词，写其矩阵为
+
+$$
+B=\begin{pmatrix}\alpha&\beta\\\gamma&\eta\end{pmatrix},\qquad
+D=\eta-\alpha,\qquad
+H_n=\left\lfloor\frac{n+1}{2}\right\rfloor,\qquad
+L_n=\max\left(0,\left\lfloor\frac{n-1}{2}\right\rfloor\right).
+$$
+
+分别对 $e=\beta$ 和 $e=\gamma$，都有
+
+$$
+-L_n e\le D\le H_n e.
+$$
+
+这些不等式包括 $e=0$，此时强制 $D=0$。对每个 $n\ge1$、每个单独选定的非对角元，两个比值端点 $-L_n,H_n$ 都由长度恰为 $n$、且该非对角元为正的词达到；奇偶词长分别给出行列式 $-1,+1$ 的尖锐端点。不要求偶数长度时同一个矩阵同时达到两个分母的端点。$n=0$ 时只有 $I$，两个非对角元均为零，界退化为等式。
+
+因此，对任意整数 $C\ge0$，长度不超过 $C$ 的词若 $e>0$，则
+
+$$
+\frac{|D|}{e}\le\left\lfloor\frac{C+1}{2}\right\rfloor.
+$$
+
+$C=0$ 时没有可用的正分母。
+

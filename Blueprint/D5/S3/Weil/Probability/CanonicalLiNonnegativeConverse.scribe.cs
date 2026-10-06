@@ -1,9 +1,9 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.Blueprint.D5.S3.Zeros.ActualZeroGeometryDocument;
+using F = StrataLint.Scribe.FormulaDsl;
+using static StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability.CanonicalLiNonnegativeConverseFormula;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability;
 
-[ScribeSharedSource("Blueprint/D5/S3/Zeros/ActualZeroGeometry.scribe.cs")]
 internal sealed class CanonicalLiNonnegativeConverseDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -21,4 +21,14 @@ internal sealed class CanonicalLiNonnegativeConverseDocument : IScribeDocumentDe
                     Paragraph(Text("At real x in [0,1), the original xi argument (1-x) inverse is at least one and cannot be a strict-strip zero. Thus the actual generator is analytic there. Frozen analytic continuation uniqueness identifies the series along the real segment. The resulting convergence at every NNReal r<1, including zero, feeds the frozen canonical_li_disk_summability_implies_rh theorem.")),
                     Paragraph(Text("The Li specialization is repository assembly with the cited Pringsheim argument acknowledged. This is A006 reverse only. A007 reverse may later consume it; forward positivity, strictness and the fixed-lambda1 A013 bound remain unchanged. No full equivalence atom, independent review, admission, freeze, coverage or publication is claimed by this document."))),
                 DescribeRole.Theorem))));
+}
+
+internal static class CanonicalLiNonnegativeConverseFormula
+{
+    internal static Formula Natural => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+    internal static Formula RH => Id("RiemannHypothesis");
+    internal static Formula All(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), domain, body);
+    internal static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    internal static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
 }

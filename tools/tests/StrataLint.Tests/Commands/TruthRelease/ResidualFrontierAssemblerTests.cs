@@ -23,7 +23,6 @@ public sealed class ResidualFrontierAssemblerTests
             fixture.Document,
             fixture.Snapshot,
             fixture.Lean,
-            baselineDocument: fixture.Document,
             truthStates: fixture.TruthStates);
 
         Assert.Empty(canonical.Findings);
@@ -48,7 +47,7 @@ public sealed class ResidualFrontierAssemblerTests
             fixture.Lean,
             fixture.Lean.Report,
             new FakeScribeEmissionVerifier(fixture.VerifiedScribeEmissions),
-            fixture.TruthStates);
+            fixture.TruthStates, []);
         var canonicalFrontier = DigestionFrontierProjection.Create(
             fixture.Document,
             canonical,

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c8922a8ca0d0a5ec97f77d8cb9854e0170d3f30d5dd3463528d99dc9f1be1ea4
+  normalized_sha256: sha256:c8922a8ca0d0a5ec97f77d8cb9854e0170d3f30d5dd3463528d99dc9f1be1ea4
+cas_ref: sha256:c8922a8ca0d0a5ec97f77d8cb9854e0170d3f30d5dd3463528d99dc9f1be1ea4
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/ConditionalComparison/PrefixLiability.prefix_liability
+    target_statement_id: sha256:5389d07e95d2ab2ce633f87738b37c11138fbbe909d612f61702e8c874065c1f
+receipts:
+  unresolved_subitems: []

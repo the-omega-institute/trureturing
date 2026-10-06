@@ -11,9 +11,7 @@ internal static partial class DigestionStatusEvaluator
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
-        BackfillInventoryDocument? baselineDocument = null,
         bool validateProjectedStatus = true,
-        RepositorySnapshot? baselineSnapshot = null,
         DigestionCasEvaluation? casEvaluation = null,
         RawChangeSet? changes = null,
         RawChangeSet? casChanges = null,
@@ -30,12 +28,7 @@ internal static partial class DigestionStatusEvaluator
         casChanges ??= changes;
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();
-        var duplicates = PartitionDuplicateAtomIds(entries, baselineDocument);
-        if (duplicates.CandidateIntroduced is { } duplicateAtomId)
-        {
-            findings.Add($"duplicate atom_id: {duplicateAtomId}");
-            return new DigestionLedgerEvaluation([], findings.ToImmutable());
-        }
+        var duplicates = DuplicateAtomIds(entries);
 
         if (casEvaluation is not null && !casEvaluation.Matches(casChanges))
         {
@@ -49,41 +42,24 @@ internal static partial class DigestionStatusEvaluator
             snapshot,
             casChanges,
             isBaseFactAffected);
-        // A duplicate the protected baseline already carries is base-owned data: the
-        // candidate did not write it, so it is neither read by the aligner nor judged nor
-        // a cause of failure at this layer. It stays visible as an observation until a
-        // content PR settles the ledger. The CAS store above still saw every record, so
-        // the blobs behind the excluded records are not reported as orphans.
-        if (!duplicates.Inherited.IsEmpty)
+        // An atom id recorded more than once is not evaluated and does not fail the
+        // evaluation; it is reported as an observation. The CAS store above still saw
+        // every record, so the blobs behind the excluded records are not orphans.
+        if (!duplicates.IsEmpty)
         {
-            document = document.WithDigestionSources(document.RequireDigestionSources()
-                .Select(source => source with
-                {
-                    Entries = source.Entries
-                        .Where(entry => !duplicates.Inherited.Contains(entry.AtomId))
-                        .ToImmutableArray(),
-                })
-                .ToImmutableArray());
+            document = WithoutAtomIds(document, duplicates);
             entries = document.RequireDigestionEntries();
         }
 
         var alignment = DigestionLedgerAligner.Evaluate(
             document,
             snapshot,
-            baselineDocument,
             DigestionAlignmentMode.Admission,
-            baselineSnapshot: baselineSnapshot,
             casEvaluation: casEvaluation,
             changes: changes,
             casChanges: casChanges,
             contentKindAtomizerResolver: contentKindAtomizerResolver);
         findings.AddRange(alignment.Findings);
-        var baselineEntries = (baselineDocument?.RequireDigestionEntries()
-                ?? ImmutableArray<DigestionLedgerEntry>.Empty)
-            .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
-            .Where(static group => group.Count() == 1)
-            .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
-
         var states = truthStates ?? LeanTruthStates.Resolve(snapshot, lean);
         var genreChecks = document.RequireDigestionSources()
             .ToDictionary(
@@ -95,34 +71,23 @@ internal static partial class DigestionStatusEvaluator
             lean.Report));
         var statusAuthorityChangedAtomIds = ResolveStatusAuthorityChangedAtomIds(
             entries,
-            baselineEntries.Keys.ToHashSet(StringComparer.Ordinal),
             projectedStatusChanges ?? changes,
             alignment,
             isBaseFactAffected);
-        var work = entries.Select(entry =>
-        {
-            var baselineMigration = baselineEntries.TryGetValue(entry.AtomId, out var baselineEntry)
-                ? baselineEntry.ProjectedStatus.Migration
-                : (DigestionMigrationState?)null;
-            return Inspect(
-                entry,
-                alignment.AlignmentFor(entry.AtomId),
-                alignment.AtomFor(entry.AtomId),
-                baselineMigration,
-                baselineEntry is not null,
-                snapshot,
-                lean.Report,
-                states,
-                frozenStatements,
-                genreChecks[entry.SourceId],
-                changes,
-                statusAuthorityChangedAtomIds.Contains(entry.AtomId),
-                findings);
-        }).ToArray();
+        var work = entries.Select(entry => Inspect(
+            entry,
+            alignment.AlignmentFor(entry.AtomId),
+            alignment.AtomFor(entry.AtomId),
+            snapshot,
+            lean.Report,
+            states,
+            frozenStatements,
+            genreChecks[entry.SourceId],
+            statusAuthorityChangedAtomIds.Contains(entry.AtomId),
+            findings)).ToArray();
         DeriveMigration(work);
-        RequireDecompositionBeforeNewAbsorption(
+        RequireDecompositionBeforeAbsorption(
             work,
-            baselineEntries,
             alignment.VerifiedClausePlanParents,
             findings);
 
@@ -130,8 +95,8 @@ internal static partial class DigestionStatusEvaluator
             .Select(static item =>
                 $"source {item.SourceId} has unregistered residual-open atom "
                 + $"{item.SuggestedAtomId}; run make ingest to close it")
-            .Concat(duplicates.Inherited.Select(static atomId =>
-                $"duplicate atom_id inherited from baseline (not judged): {atomId}"))
+            .Concat(duplicates.Select(static atomId =>
+                $"duplicate atom_id (not judged): {atomId}"))
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
         return CompleteEvaluation(
@@ -144,73 +109,48 @@ internal static partial class DigestionStatusEvaluator
             alignment.ContentKindObservations);
     }
 
-    private static void RequireDecompositionBeforeNewAbsorption(
+    // Judged only where the evaluation's scope reaches: an entry outside the
+    // change set keeps whatever the ledger records for it.
+    private static void RequireDecompositionBeforeAbsorption(
         IEnumerable<EntryWork> work,
-        IReadOnlyDictionary<string, DigestionLedgerEntry> baselineEntries,
         IReadOnlySet<string> verifiedClausePlanParents,
         ImmutableArray<string>.Builder findings)
     {
-        foreach (var item in work.Where(static item => item.Atom is not null))
+        foreach (var item in work.Where(static item => item.Atom is not null && item.StatusAuthorityChanged))
         {
-            var baselineMigration = baselineEntries.TryGetValue(item.Entry.AtomId, out var baseline)
-                ? baseline.ProjectedStatus.Migration
-                : (DigestionMigrationState?)null;
-            if (!DigestionDecompositionPolicy.RejectsNewAbsorption(
+            if (!DigestionDecompositionPolicy.RejectsUndecomposedAbsorption(
                     item.Atom!,
                     item.Migration,
                     item.Entry.Receipts.UnresolvedSubitems.Length,
-                    verifiedClausePlanParents.Contains(item.Entry.AtomId),
-                    baselineMigration))
+                    verifiedClausePlanParents.Contains(item.Entry.AtomId)))
             {
                 continue;
             }
 
             findings.Add(
-                $"entry {item.Entry.AtomId} has multiple clauses but newly claims absorbed "
+                $"entry {item.Entry.AtomId} has multiple clauses but claims absorbed "
                 + "with unresolved_subitems=[]; decompose the uncovered clauses before absorption");
         }
     }
 
-    private static string? FindDuplicateAtomId(IEnumerable<DigestionLedgerEntry> entries) =>
+    internal static ImmutableHashSet<string> DuplicateAtomIds(IEnumerable<DigestionLedgerEntry> entries) =>
         entries
             .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
-            .FirstOrDefault(static group => group.Count() > 1)
-            ?.Key;
-
-    // Candidate-introduced duplicates keep the named `duplicate atom_id` finding; a duplicate
-    // that the baseline already holds at least as many times is inherited and only observed.
-    private static (string? CandidateIntroduced, ImmutableHashSet<string> Inherited) PartitionDuplicateAtomIds(
-        ImmutableArray<DigestionLedgerEntry> entries,
-        BackfillInventoryDocument? baselineDocument)
-    {
-        var duplicated = entries
-            .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
             .Where(static group => group.Count() > 1)
-            .Select(static group => (AtomId: group.Key, Count: group.Count()))
-            .ToArray();
-        if (duplicated.Length == 0)
-        {
-            return (null, ImmutableHashSet<string>.Empty);
-        }
+            .Select(static group => group.Key)
+            .ToImmutableHashSet(StringComparer.Ordinal);
 
-        var baselineCounts = (baselineDocument?.RequireDigestionEntries()
-                ?? ImmutableArray<DigestionLedgerEntry>.Empty)
-            .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
-            .ToDictionary(static group => group.Key, static group => group.Count(), StringComparer.Ordinal);
-        var inherited = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
-        foreach (var (atomId, count) in duplicated)
-        {
-            if (baselineCounts.TryGetValue(atomId, out var baselineCount) && baselineCount >= count)
+    internal static BackfillInventoryDocument WithoutAtomIds(
+        BackfillInventoryDocument document,
+        IReadOnlySet<string> atomIds) =>
+        document.WithDigestionSources(document.RequireDigestionSources()
+            .Select(source => source with
             {
-                inherited.Add(atomId);
-                continue;
-            }
-
-            return (atomId, ImmutableHashSet<string>.Empty);
-        }
-
-        return (null, inherited.ToImmutable());
-    }
+                Entries = source.Entries
+                    .Where(entry => !atomIds.Contains(entry.AtomId))
+                    .ToImmutableArray(),
+            })
+            .ToImmutableArray());
 
     private static DigestionLedgerEvaluation CompleteEvaluation(
         IReadOnlyList<EntryWork> work,
@@ -271,14 +211,11 @@ internal static partial class DigestionStatusEvaluator
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
         DigestionAtom? atom,
-        DigestionMigrationState? baselineMigration,
-        bool baselineEntryPresent,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport,
         IReadOnlyDictionary<RepoPath, TruthState> states,
         Lazy<FrozenStatementIndex> frozenStatements,
         GenreRegistryCheck genreRegistryCheck,
-        RawChangeSet? changes,
         bool authorityChanged,
         ImmutableArray<string>.Builder findings)
     {
@@ -355,16 +292,7 @@ internal static partial class DigestionStatusEvaluator
                 DigestionGapSeverity.NonFatal));
         }
 
-        // Partial is an aggregate baseline verdict: at least one local predicate failed,
-        // but the ledger does not record which one. A nonempty delta can only replace that
-        // verdict when the entry's complete authority closure changed and every current
-        // witness can therefore be replayed.
-        var baselineKeepsLocalIncomplete = baselineMigration == DigestionMigrationState.Partial
-            && changes is not null
-            && changes.Paths.Any()
-            && !authorityChanged;
-        var localComplete = !baselineKeepsLocalIncomplete
-            && structured
+        var localComplete = structured
             && (nonpropositional || (edgeValidations.Values.Count(static edge => edge.IsResolved)
                 == entry.CoverageGids.Distinct(StringComparer.Ordinal).Count()
                 && entry.CoverageGids.Length > 0
@@ -389,7 +317,6 @@ internal static partial class DigestionStatusEvaluator
     internal static bool StatusAuthorityClosureChanged(
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
-        bool baselineEntryPresent,
         RawChangeSet? changes,
         Func<string, bool>? isBaseFactAffected)
     {
@@ -397,15 +324,6 @@ internal static partial class DigestionStatusEvaluator
         if (changes is null || DigestionCasStore.EntryChanged(entry, changedSet))
         {
             return true;
-        }
-
-        // A changed-set caller without a baseline still has an explicit
-        // scope. Without a base-fact resolver, a missing historical entry alone does
-        // not make every entry affected. Production callers provide the resolver and continue
-        // through the full authority-closure check below.
-        if (!baselineEntryPresent && isBaseFactAffected is null)
-        {
-            return false;
         }
 
         bool Affected(string path) => isBaseFactAffected?.Invoke(path) ?? PathChanged(changedSet, path);
@@ -428,10 +346,7 @@ internal static partial class DigestionStatusEvaluator
                 continue;
             }
 
-            var documentGid = ScribeEmissionAttestation.DocumentGid(gidText);
-            if (Affected(gid.Path.Value)
-                || Affected(ScribeEmissionAttestation.DefinitionPath(documentGid))
-                || Affected(ScribeEmissionAttestation.EmissionPath(documentGid)))
+            if (Affected(gid.Path.Value))
             {
                 return true;
             }

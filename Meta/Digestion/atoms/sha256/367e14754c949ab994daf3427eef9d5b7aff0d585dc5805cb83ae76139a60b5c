@@ -1,0 +1,8 @@
+## Source and conclusion boundaries
+
+The prescribed-neighborhood construction above is repository-derived. The inspected primary proof sections cover common prefix/suffix preservation (Remark 2), universal-vertex insertion (Remark 36), isolated-vertex insertion (Remark 39), and edge deletion. They do not state theorem 2.1. A bounded search of the repository, pinned Mathlib and public Lean repositories found no exact theorem supplying it. These searches establish no worldwide priority claim.
+
+Conjecture 31 remains a separate full target. The extension alone establishes neither nonuniversality nor a separator between adjacent classes. A full argument additionally needs all-positive-$k$ nonuniversality as an actual closed proof, finite minimal nonmember/deletion/renaming bridges, common-enumeration inclusion, and the same-carrier separating graph.
+
+The earlier four-author contribution by Dietz, Fleischmann, Huch and Sacher in IFIG Report 2501, printed pp. 21–24 (PDF pp. 29–32), states the same hierarchy question as Conjecture 3.2 on p. 23. The reproducible source is <https://www.informatik.uni-giessen.de/theorietag2025/2025-Theorietag35-Schotten.pdf>. The available earlier-source reading reports only $k=1$ strictness on p. 24; direct content verification is required before a priority claim. SSRN DOI 10.2139/ssrn.5336494 has not been body-verified. Neither unresolved bibliographic boundary is evidence of global absence of a prior solution.
+

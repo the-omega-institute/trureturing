@@ -1,0 +1,31 @@
+## Locator
+
+The declared source URL is:
+https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/QuantumInfo/ForMathlib/HermitianMat/LogExp.lean
+
+`HermitianMat.log_kron_diagonal_with_proj` and `HermitianMat.log_kron_with_proj`
+give the singular tensor-log formula. The same revision's
+`QuantumInfo/ForMathlib/Isometry.lean`,
+`Matrix.IsHermitian.cfc_eq_any_isometry`, supplies the arbitrary-diagonalization
+argument. `QuantumInfo/Entropy/Relative.lean`, private
+`fixed_support_kron_right` and `qMutualInfo_as_qRelativeEnt`, supplies the actual
+marginal-support argument and the weighted support cancellation.
+`QuantumInfo/ForMathlib/Matrix.lean`, `trace_mul_kron_one_right` and
+`trace_mul_one_kron_right`, gives the raw complex trace contractions.
+
+Capel, Lucia and Pérez-García, *Quantum conditional relative entropy and
+quasi-factorization of the relative entropy*,
+https://arxiv.org/abs/1804.09525v2, §3.3, Case 2, identifies the product-reference
+conditional relative entropy with relative entropy to product recovery.
+Their subsystem subscript denotes the erased subsystem; exchange its labels
+to retain A here. Their Remark 4 assumes full-rank states throughout the paper.
+The whole recovery chain below is a repository-derived composition of these
+known source mechanisms. Its singular step uses the explicit kernel and
+zero-eigenvalue calculation, rather than attributing a singular-state statement
+to that full-rank convention. These identities are known mathematics;
+the receiving adaptation does not assert novelty.
+
+The cited Physlib code is Apache-2.0, with the original Alex Meiburg copyright
+headers retained in the adapted code and the full license in
+`docs/reports/inoutbalance/physlib-LICENSE.txt`. The mathematical paper is citation-only.
+

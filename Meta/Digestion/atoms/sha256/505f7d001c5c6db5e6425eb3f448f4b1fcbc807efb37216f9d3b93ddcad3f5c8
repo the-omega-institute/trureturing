@@ -1,0 +1,30 @@
+**全部端点的实际路线。** 普通槽扫描依次查询 $p_iLLLR$：$\bot$ 选 $a_i$，$\mathrm{br}$ 选 $y_i$，$\alpha$ 则查 $p_iLRR$；后者 $\mathrm{br}$ 选 $h_i$，$\alpha$ 则查 $p_iRLR$，其 $\mathrm{br}$ 选 $z_i$、$\alpha$ 继续下一槽。每次选择只启动 68.11 的完整核验器，所有未列回复都回退。扫描全部槽并在全部继续时选基线，取得 $0$ 零端点。其各异常行的非叶集为
+
+$$
+X_{a_i}=X_{y_i}=\{p_iLLLR\},\qquad X_{h_i}=\{p_iLRR\},\qquad X_{z_i}=\{p_iRLR\},\qquad X_0=\varnothing.
+$$
+
+要取得其余端点，先按固定递增次序扫描除 $j$ 外的所有槽；若未退出，余下是 $S_j$。在下表中 $Q:\eta\mapsto P$ 表示查询 $Q$，回复 $\eta$ 后选原型 $P$；指向另一列即继续查询。活动地址全部位于槽 $j$，所有未列回复均回退。
+
+| 目标零／二超额 | 剩余五行上的完整尾段 |
+|---|---|
+| $y_j$ 零 | $t:\bot\mapsto a,\mathrm{br}\mapsto z,\beta\mapsto d$；$d:\bot\mapsto0,\beta\mapsto e$；$e:\beta\mapsto y,\bot\mapsto h$ |
+| $h_j$ 零 | $v:\bot\mapsto a,\mathrm{br}\mapsto y,\beta\mapsto t$；$t:\mathrm{br}\mapsto z,\beta\mapsto d$；$d:\bot\mapsto0,\beta\mapsto h$ |
+| $z_j$ 零 | $v:\bot\mapsto a,\mathrm{br}\mapsto y,\beta\mapsto u$；$u:\mathrm{br}\mapsto h,\beta\mapsto f$；$f:\bot\mapsto0,\beta\mapsto z$ |
+| $a_j$ 零、$h_j$ 二 | $x_q:\bot\mapsto e,\alpha\mapsto g_q$；$e:\beta\mapsto y,\bot\mapsto h$；$g_q:\bot\mapsto z,\beta\mapsto r_q$；$r_q:\bot\mapsto0,\beta\mapsto a$ |
+| $a_j$ 零、$y_j$ 二 | $x_q:\bot\mapsto v,\alpha\mapsto g_q$；$v:\beta\mapsto h,\mathrm{br}\mapsto y$；$g_q:\bot\mapsto z,\beta\mapsto r_q$；$r_q:\bot\mapsto0,\beta\mapsto a$ |
+| $a_j$ 零、$z_j$ 二 | $g_q:\bot\mapsto t,\beta\mapsto x_q$；$t:\beta\mapsto y,\mathrm{br}\mapsto z$；$x_q:\bot\mapsto h,\alpha\mapsto r_q$；$r_q:\bot\mapsto0,\beta\mapsto a$ |
+
+确切的 $X$ 如下，行中活动字母均带 $p_j$：
+
+| 尾段 | $X_0$ | $X_{a_j}$ | $X_{y_j}$ | $X_{h_j}$ | $X_{z_j}$ |
+|---|---|---|---|---|---|
+| $y_j$ 零 | $\{d\}$ | $\{t\}$ | $\varnothing$ | $\{e\}$ | $\{t\}$ |
+| $h_j$ 零 | $\{d\}$ | $\{v\}$ | $\{v\}$ | $\varnothing$ | $\{t\}$ |
+| $z_j$ 零 | $\{f\}$ | $\{v\}$ | $\{v\}$ | $\{u\}$ | $\varnothing$ |
+| $a_j$ 零、$h_j$ 二 | $\{r_q\}$ | $\varnothing$ | $\{x_q\}$ | $\{x_q,e\}$ | $\{g_q\}$ |
+| $a_j$ 零、$y_j$ 二 | $\{r_q\}$ | $\varnothing$ | $\{x_q,v\}$ | $\{x_q\}$ | $\{g_q\}$ |
+| $a_j$ 零、$z_j$ 二 | $\{r_q\}$ | $\varnothing$ | $\{g_q\}$ | $\{x_q\}$ | $\{g_q,t\}$ |
+
+余下五行在此前扫描中只请求自己的 $B$ 叶；其他槽的异常行退出时仍只付普通扫描的一个非叶地址。每条尾段路径地址互异，核验器再请求完整 $L_i$，故实际并集正是 $L_i\cup X_i$。这实现全部 $6k+1$ 个最小元并完成族外语义。$\square$
+

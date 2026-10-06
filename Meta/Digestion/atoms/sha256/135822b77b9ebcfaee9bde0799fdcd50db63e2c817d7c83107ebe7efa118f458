@@ -1,0 +1,29 @@
+**假设 351.1（完整相位与全部极小点的同一组估计）。** 取定理346.6的 $L_0\ge2$、$B\ge0$，使 $\sum a_\rho$、$\sum a_\rho\gamma_\rho$ 可和，并令
+
+$$
+\alpha=\frac1{4\pi},\qquad
+T_0=\min(L_0^{-1},e^{-1})>0.
+$$
+
+其相位估计在 $0<|t|\le T_0$ 上就是（350.1）的带符号形式。再取定理348.1给出的一个固定区间 $[-a,a]$、$\varepsilon_{\rm opt}>0$、$Q_{\rm opt}\ge1$，并记
+
+$$
+C_*=4\pi K,\qquad D_*=4\pi K^2>0,
+\qquad \alpha C_*^2=D_*.
+$$
+
+对全部 $0<\varepsilon<\varepsilon_{\rm opt}$，完整目标在该区间取得极小值，每个极小点均为正内点。对每个这样的极小点，记
+$L=\log(1/\varepsilon)$、$H=\log L$、$\ell=\log(1/t)$，同时有
+
+$$
+\begin{aligned}
+|\ell-(L+2H-\log C_*)|&\le Q_{\rm opt}H/L,\\
+\left|\frac{tL^2}{C_*\varepsilon}-(1-4H/L)\right|&\le Q_{\rm opt}/L,\\
+\left|\mathcal J_\varepsilon(t)-\mathcal J_\varepsilon(0)
+ +D_*\frac{\varepsilon^2}{L^2}-4D_*\frac{\varepsilon^2H}{L^3}\right|
+&\le Q_{\rm opt}\frac{\varepsilon^2}{L^3}.
+\end{aligned} \tag{351.2}
+$$
+
+这里 $\mathcal J_\varepsilon(0)=\varepsilon F(0)+8A_{\rm quad}\varepsilon^2$，不改变原基线。这些是本节条件应用的输入；它们不要求 RH、纵坐标单射或极小点唯一。
+

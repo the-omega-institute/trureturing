@@ -1,0 +1,16 @@
+### 63.12 有界文献与项目对应
+
+本章使用母卷定义 104.2 的单位、字面接缝与正值 End，及本卷第 2、6、35、44、46、52 章的任务／域区分。清洁分类按 63.2 的两个标题复用，条件来源分离按 63.4 的标题复用；整数损失复用 58.5–58.6，实际通道和有限控制器复用第 62 章而补齐本章合法操作假设。对应 D5 的 `LegalPriorityTeacher`、`LegalConditionedSeparation` 使用不含 End 的合法载体，这些声明及这里的普通证明不提供本章新结论的编译证据。
+
+边界卷定义 47、50、52 与推论 54.3 区分共同合法补全、拒绝总化及联合相容性。这里全教师共享同一个完整定义域，按函数相等取商；不从只在相交后缀上相等的非传递关系拼商。来源完成卷 14.3–14.4 的左端与平稳律、统计卷 1.4、2.4 的出现与压力律都提示边界和共同来源必须保留，不能替代（63.8）的有限 End 律。ScaleReadout 第 30 章的实际自由树三步像、七叶分离、四值地址报告与完整成员认证费用属于另外的输入、观察和动作合同，不提供这里的窗口设置许可或噪声标签下界。
+
+- [Bshouty–Costa, *Exact Learning of Juntas from Membership Queries*, §2、引理 11](https://arxiv.org/pdf/1706.06934v1)：相关变量与混合查询的成熟方法；完整 Boolean 立方体的混合动作不能直接用于硬接缝语言。
+- [Arpe, *Learning Juntas in the Presence of Noise*, 引言](https://eccc.weizmann.ac.il/report/2005/088/download/)：噪声下相关变量恢复的既有研究；其均匀例子及属性噪声假设不同于本章相关合法输入与三值行通道。
+- [Chandrasekaran–Klivans, *Learning Juntas under Markov Random Fields*, 定义 1.2、定理 1.3](https://arxiv.org/pdf/2506.00764v1)：依赖坐标学习已有方法，但有界有限势与随机平滑、对平滑的成功概率不覆盖本固定硬禁配置律。
+- [Hochman, *Notes on Topological Dynamics*, §9、9.1](https://math.huji.ac.il/~mhochman/courses/TD2022/notes-v3.pdf)：有限型移位与路径计数是成熟框架；本章直接保留多重字母、初态及非零末向量，不使用平稳无限来源替代有限计数。
+- [Dereniowski–Łukasiewicz–Uznański, *Noisy (Binary) Searching: Simple, Fast and Correct*, 定理 1.1、1.3 与 §3](https://arxiv.org/pdf/2107.05753v4)：期望与最坏查询范围不同。全文引言和正文的算法交叉编号不一致，采用定理及实际停止规则的范围；（63.24）的历史条件有限保证由本章展示的势与指数矩证明承担。
+- [Kaufmann–Cappé–Garivier, *On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models*, 引理 1](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf)：自适应换测度和二元事件信息的成熟来源；本章给出整个合法输入／标签／停止核的具体分解，不把 bandit 的期望停止费用代入固定标签上限。
+- [Hauser–Bühlmann, *Characterization and Greedy Learning of Interventional Markov Equivalence Classes of Directed Acyclic Graphs*, 引言](https://arxiv.org/pdf/1104.2808v1)：可辨识性依赖允许的实验族，但其结构因果模型和干预前提没有在这里建立。
+
+以上对应是有界比较，不是穷尽新颖性或实际机器学习应用认证。有限状态来源采样、条件方差、补偿损失、集中与 Fano 均是供应方法；本章只承担精确合法 End 域上的信息／操作／费用接合。全部新增推导为普通理论文本，不具有新增 Lean kernel、冻结、物理因果或神经模型白盒保证。
+

@@ -1,0 +1,249 @@
+**定理 351.1（全有界实指数带上的共同截止律）。** 在定义351.1和假设351.1下，令定理350.1的常数由该完整谱的 $\alpha,B,T_0,\sum a_\rho$ 确定。保持上述同一个 $a$。对每个固定 $R>0$，存在 $\varepsilon_R>0$、$Q_R\ge1$ 和 $C_R\ge0$，在选择 $\varepsilon,t,q$ 之前确定，使下述结论同时成立。对任意
+
+$$
+0<\varepsilon<\varepsilon_R,\quad
+t\in[-a,a],\quad
+\operatorname{IsMinOn}(\mathcal J_\varepsilon,[-a,a],t),\quad |q|\le R,
+$$
+
+有 $0<t<\varepsilon$、$\delta(t)>0$，并可定义实指数截止
+
+$$
+T_q(\varepsilon)=\varepsilon^{-1}L^q
+=\varepsilon^{-1}\exp(q\log L),\qquad
+\log T_q=L+qH,
+$$
+
+以及 $\operatorname{high}_q(t)=\delta_{>T_q}(t)$。同时有
+
+$$
+\left|\frac{\operatorname{high}_q(t)}{\delta(t)}
+ -(4-2q)_+\frac HL\right|\le\frac{Q_R}{L},
+\qquad x_+=\max(x,0), \tag{351.3}
+$$
+
+$$
+\begin{aligned}
+\delta(t)&=D_*\frac{\varepsilon^2}{L^2}
+ -4D_*\frac{\varepsilon^2H}{L^3}
+ +O(\varepsilon^2/L^3),\\
+\operatorname{high}_q(t)&=D_*(4-2q)_+\frac{\varepsilon^2H}{L^3}
+ +O_R(\varepsilon^2/L^3),
+\end{aligned} \tag{351.4}
+$$
+
+$$
+\mathcal J^{\rm phase}_{\varepsilon,\le T_q}(t)-\mathcal J_\varepsilon(0)
+=-D_*\frac{\varepsilon^2}{L^2}
+ +D_*\min(2q,4)\frac{\varepsilon^2H}{L^3}
+ +O_R(\varepsilon^2/L^3), \tag{351.5}
+$$
+
+$$
+\left|\mathcal J_{\varepsilon,\le T_q}(t)-\mathcal J_{\varepsilon,\le T_q}(0)
+ +D_*\frac{\varepsilon^2}{L^2}
+ -D_*\min(2q,4)\frac{\varepsilon^2H}{L^3}\right|
+\le C_R\frac{\varepsilon^2}{L^3}. \tag{351.6}
+$$
+
+各 $O_R$ 均对全部这些完整极小点和 $|q|\le R$ 一致。其量词次序是
+$\exists a>0\ \forall R>0\ \exists\varepsilon_R,Q_R,C_R\ \forall\varepsilon\ \forall t\ \forall q$，其中 $a$ 已由原完整目标固定，不随 $R$ 改变。特别地，$q=0$ 时（351.5）和（351.6）的双重对数项精确消去；$q\ge2$ 时系数为 $4$。这些是原完整目标的每个极小点处的评价，不断言它们是任何截断目标的极小点。
+
+**证明。** 首先确认三个完整级数及其掩码均可和。对全部 $\gamma>0$，$D=1/4+\gamma^2$ 给
+$|b|\le2$、$|c|\le2$、$|g|\le8$、$|\gamma h|\le14$。因此
+
+$$
+|h\sin(\gamma u)|\le|\gamma h|\,|u|\le14|u|,
+$$
+
+而不是要求 $h$ 在早段有界或 $\sum a_\rho/\gamma_\rho$ 可和。于是 $F$ 的主控为 $4a_\rho$，$G$ 在每个固定 $u$ 的主控为 $(8+14|u|)a_\rho$，在紧时间区间上亦可统一主控。特别地，代 $u=0$ 给 $G(0)=8A_{\rm quad}$、$\delta(0)=0$，这验证了（351.2）的原基线。完整早段的解析重数和正分母给 $a_\rho\ge0$；（350.3）的严格尾因而可直接使用，不另引入计数律。
+
+给出共同阈值及误差常数。置
+
+$$
+\begin{aligned}
+k&=\log C_*,&M&=2+|k|+Q_{\rm opt},&N_R&=2+R+|k|+Q_{\rm opt},\\
+D_{{\rm band},R}&=4(R+3M)+8M^2,\\
+Q_R&=\max\bigl(1,4N_RD_{{\rm band},R}+2|k|+2Q_{\rm opt}+2Q_{\rm cdf}\bigr),\\
+L_{{\rm band},R}&=\max\bigl(e,16M^2,16R^2,2\log(1/t_*),
+ \exp(|k|+Q_{\rm opt}+1)\bigr).
+\end{aligned} \tag{351.7}
+$$
+
+相位能量展开另用固定常数
+
+$$
+\begin{aligned}
+V&=|k|+Q_{\rm opt},&
+S_\phi&=32+V+\tfrac54Q_{\rm opt}+Q_{\rm opt}V,&Z_\phi&=5S_\phi+16,\\
+C_\phi&=D_*Z_\phi+12BC_*^2,&C_w&=4D_*+C_\phi,&W&=D_*+C_\phi,\\
+L_\phi&=\max\bigl(e,256,Q_{\rm opt},2V,\log Y_0,
+ 2\log(1/T_0),8B/\alpha,\exp(|k|+Q_{\rm opt}+1)\bigr),\\
+\varepsilon_R&=\min\bigl(\varepsilon_{\rm opt},
+ \exp(-\max(L_{{\rm band},R},L_\phi))\bigr).
+\end{aligned} \tag{351.8}
+$$
+
+这统一了所有后续步骤所用的阈值。对 $0<\varepsilon<\varepsilon_R$，有
+$L>\max(L_{{\rm band},R},L_\phi)$、$H\ge1$、$H\le2\sqrt L$、$H^2\le4L$。
+写 $\ell=L+2H-k+r$，其中 $|r|\le Q_{\rm opt}H/L$；则
+$|\ell-L|\le MH\le L/2$，所以 $\ell\ge L/2>\log(1/t_*)$。
+并且阈值中的指数项给
+$\ell-L\ge2H-|k|-Q_{\rm opt}>0$，故同时 $0<t<t_*$、$t<\varepsilon$，可使用（350.4）。
+
+对全部 $|q|\le R$，令 $U=L+qH$。有 $|U-L|\le RH\le L/2$，所以 $U\ge0$、$T_q\ge1$。令
+$s=\min(1,\max(0,U/\ell))\in[0,1]$。若 $U\le\ell$，用（350.4）的闭低频；若 $U\ge\ell$，用尾的单调性和 $s=1$ 的残差界。两种情况给同一个估计
+
+$$
+\left|\frac{\operatorname{high}_q(t)}{\delta(t)}
+ -\left(1-\frac{U^2}{\ell^2}\right)_+\right|
+\le\frac{Q_{\rm cdf}}\ell. \tag{351.9}
+$$
+
+其中严格高频恰是闭低频的补集。若换用严格低频和闭高频，（350.4）的另一端点版本亦给同界。没有将 $s>1$ 代入区间 $[0,1]$ 内的分布估计。
+
+令 $v=\ell-L$、$u=U-L$，精确恒等式
+
+$$
+L(\ell+U)-2\ell^2=L(u-3v)-2v^2
+$$
+
+与上述界给
+
+$$
+\left|\frac{\ell+U}{\ell^2}-\frac2L\right|
+\le D_{{\rm band},R}\frac H{L^2},
+\qquad |\ell-U|\le N_RH.
+$$
+
+再用 $\ell-U=(2-q)H-k+r$，得到
+
+$$
+\left|1-\frac{U^2}{\ell^2}-(4-2q)\frac HL\right|
+\le\frac{4N_RD_{{\rm band},R}+2|k|+2Q_{\rm opt}}L.
+$$
+
+正部映射为 $1$-Lipschitz；（351.9）的误差至多为 $2Q_{\rm cdf}/L$。故（351.7）确实给（351.3），同一证明包括 $q=2$ 两侧，不预判 $C_*$ 与 $1$ 的大小。
+
+为证明未归一化结论，置
+
+$$
+z=H/L,\qquad x=\frac{tL^2}{C_*\varepsilon}=1-4z+\eta,
+\qquad y=\ell/L=1+2z+\xi.
+$$
+
+由（351.2）有 $|\eta|\le Q_{\rm opt}/L$、$|\xi|\le V/L$。共同阈值使
+$0\le z\le1/8$、$0<x\le2$、$1/2\le y\le2$。精确乘积
+
+$$
+xy=1-2z-8z^2+(1-4z)\xi+(1+2z)\eta+\eta\xi
+$$
+
+因此满足 $|xy-(1-2z)|\le S_\phi/L$。再由 $|xy|\le4$、$|1-2z|\le1$，得到
+
+$$
+|(xy)^2-(1-4z)|\le Z_\phi/L.
+$$
+
+$\alpha C_*^2=D_*$ 给
+$\alpha t^2\ell^2=D_*\varepsilon^2(xy)^2/L^2$。
+相位误差亦满足
+$Bt^2(\ell+1)\le12BC_*^2\varepsilon^2/L^3$，因为
+$t\le2C_*\varepsilon/L^2$、$\ell\le2L$、$L\ge1$。遂有明确界
+
+$$
+\left|\delta(t)-D_*\frac{\varepsilon^2}{L^2}
+ +4D_*\frac{\varepsilon^2H}{L^3}\right|
+\le C_\phi\frac{\varepsilon^2}{L^3},\quad
+\delta(t)\le W\frac{\varepsilon^2}{L^2},\quad
+\left|\delta(t)-D_*\frac{\varepsilon^2}{L^2}\right|
+\le C_w\frac{\varepsilon^2H}{L^3}. \tag{351.10}
+$$
+
+将（351.3）乘 $\delta(t)$ 时，除归一化误差外，还必须保留能量乘积误差
+
+$$
+(4-2q)_+\frac HL
+\left|\delta(t)-D_*\frac{\varepsilon^2}{L^2}\right|
+\le(4+2R)C_w\frac{\varepsilon^2H^2}{L^4}
+\le4(4+2R)C_w\frac{\varepsilon^2}{L^3}.
+$$
+
+故定义
+
+$$
+C_{\rm high}(R)=WQ_R+4(4+2R)C_w
+$$
+
+即得
+$|\operatorname{high}_q(t)-D_*(4-2q)_+\varepsilon^2H/L^3|
+\le C_{\rm high}(R)\varepsilon^2/L^3$。这证明（351.4），也说明
+$O_R(\varepsilon^2H^2/L^4)$ 的乘积误差为何可吸收，而不是略去。
+以（351.2）减此高频能量，再用精确恒等式
+
+$$
+4-(4-2q)_+=\min(2q,4),
+$$
+
+得到（351.5），其误差常数可取 $Q_{\rm opt}+C_{\rm high}(R)$。此处
+$\mathcal J^{\rm phase}_{\varepsilon,\le T_q}(0)=\mathcal J_\varepsilon(0)$，因为 $\delta_{>T_q}(0)=0$。
+
+最后同时控制两个驱动尾。对 $\gamma_\rho>T\ge1$，有
+$|b_\rho|\le2$、$|c_\rho|\le2$、$|g_\rho|\le8$、$|h_\rho|\le14$。对每个实数 $u$，余弦增量至多 $2$，正弦至多 $1$，所以
+
+$$
+\begin{aligned}
+|F_{>T}(u)-F_{>T}(0)|&\le6\mathcal T^{>}(T),\\
+|G_{>T}(u)-G_{>T}(0)|&\le30\mathcal T^{>}(T).
+\end{aligned} \tag{351.11}
+$$
+
+用（350.3）所推出的尾界，而不另加计数假设。共同阈值给 $0<\varepsilon<1$、$L\ge1$，故对全部 $|q|\le R$，驱动尾增量的合并误差满足
+
+$$
+\begin{aligned}
+\varepsilon|F_{>T_q}(u)-F_{>T_q}(0)|
+ +\varepsilon^2|G_{>T_q}(u)-G_{>T_q}(0)|
+&\le36\varepsilon C_TT_q^{-2}(\log T_q+1)\\
+&\le36C_T(R+2)\varepsilon^3L^{2R+1}.
+\end{aligned} \tag{351.12}
+$$
+
+这里 $L^{-2q}\le L^{2R}$，$\log T_q+1=L+qH+1\le(R+2)L$。选任一整数 $n_R\ge2R+4$，则
+$e^L\ge L^{n_R}/n_R!$ 给
+$\varepsilon L^{2R+4}\le n_R!$。因此（351.12）至多为
+
+$$
+C_{\rm drive}(R)\frac{\varepsilon^2}{L^3},
+\qquad C_{\rm drive}(R)=36C_T(R+2)n_R!.
+$$
+
+可和掩码的精确增量恒等式是
+
+$$
+\begin{aligned}
+\mathcal J_{\varepsilon,\le T}(t)-\mathcal J_{\varepsilon,\le T}(0)
+={}&\mathcal J_\varepsilon(t)-\mathcal J_\varepsilon(0)-\delta_{>T}(t)\\
+&-\varepsilon[F_{>T}(t)-F_{>T}(0)]\\
+&-\varepsilon^2[G_{>T}(t)-G_{>T}(0)].
+\end{aligned} \tag{351.13}
+$$
+
+故（351.6）可明确取
+$C_R=Q_{\rm opt}+C_{\rm high}(R)+C_{\rm drive}(R)$。在 $q=0$ 的单点上还可用更小的驱动常数：
+$36C_T\varepsilon^3(L+1)\le1728C_T\varepsilon^2/L^3$，因为
+$L+1\le2L$ 且 $e^L\ge L^4/24$。于是在 $R=1$ 的共同阈值内有
+
+$$
+\left|\mathcal J_{\varepsilon,\le\varepsilon^{-1}}(t)
+ -\mathcal J_{\varepsilon,\le\varepsilon^{-1}}(0)
+ +D_*\frac{\varepsilon^2}{L^2}\right|
+\le\bigl(Q_{\rm opt}+C_{\rm high}(1)+1728C_T\bigr)
+\frac{\varepsilon^2}{L^3}. \tag{351.14}
+$$
+
+由（351.2），自然频率 $1/t$ 与 $\varepsilon^{-1}L^2$ 同阶，而截止 $\varepsilon^{-1}$ 比它少约 $2\log L$ 的对数频宽。（350.16）的边缘密度为 $2$，故这条带的归一化能量主项是 $4\log L/L$；乘以（351.10）的总能量即为完整目标的正双对数校正。在 $q=0$ 时，低频相位更具体地为
+$\delta_{\le\varepsilon^{-1}}(t)=D_*\varepsilon^2/L^2-8D_*\varepsilon^2H/L^3+O(\varepsilon^2/L^3)$；既有线性驱动位移 $-2K\varepsilon t$ 的展开为
+$-2D_*\varepsilon^2/L^2+8D_*\varepsilon^2H/L^3+O(\varepsilon^2/L^3)$，因为 $2KC_*=2D_*$。这解释了相消的位置，并没有交换先截断与先优化的顺序。
+
+上述定义和估计只涉及完整纵坐标模型以及其原区间上的全部极小点，不蕴含实际 Robin 有符号尾的符号、实际截止轨道逼近移动极小点的速率、截断目标与 $\sigma(n)/n$ 的算术恒等式、新的整数证书范围或 RH。§§237、240、241 的五窗递归与 Fibonacci 转移保留其有限语言和算术预算的条件；加法分裂的范数恒等式不把这些频率识别为零点纵坐标。将本节纵坐标模型接回§349的实际相位路线时，仍保留那里的 RH 识别和相位轨道闭包条件。$\square$

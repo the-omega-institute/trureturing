@@ -1,0 +1,12 @@
+**定理 27.6（可测固定种子的同时面比较）。** 对定义 27.1 的最终族，固定任一 $\Pi\in\mathfrak R_3$ 及它自己的概率空间 $(\Omega,\mathcal A,\mu)$。存在可测满测度集合 $G_\Pi^{\mathrm{tot}}$，其每个种子在整个 $\mathcal T$ 上确定一个属于 $\mathfrak D_3$ 的策略。存在一个可测的有限值面变量 $Z:\Omega\to K$，使 $\mu$ 的面推前律 $p_F=\mu\{Z=F\}$ 满足
+
+$$
+\mathbb E_\mu C_\Pi(\cdot,P_i)
+\ \ge\ \sum_{F\in K}p_F b_F(i)
+\ =\ n+1-\sum_{\substack{F\in K\\i\in F}}p_F
+\quad(i\in[m]).
+\tag{27.12}
+$$
+
+允许左侧为无穷；全部坐标使用同一个面律。每个随机期望费用向量因而逐坐标大于或等于实际面费用向量的一个有限凸组合。
+

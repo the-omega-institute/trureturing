@@ -8,7 +8,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Scribe.Tests;
 
-public sealed class OpenProblemResolutionClaimTests
+public sealed partial class OpenProblemResolutionClaimTests
 {
     private const string ProblemSlug = "sample-open-problem";
     private const string ModuleGid = "D5/S1/Phase/Basic";

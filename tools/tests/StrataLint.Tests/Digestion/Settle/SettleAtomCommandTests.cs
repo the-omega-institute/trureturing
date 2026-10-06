@@ -79,7 +79,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         var before = Image(temporary);
         var applyCalls = 0;
         var result = Run(temporary.Path, raw, request,
-            code == "NONPROPOSITIONAL_ABSENT" ? ["--clear", target.AtomId, "--base", "baseline"] : null,
+            code == "NONPROPOSITIONAL_ABSENT" ? ["--clear", target.AtomId] : null,
             (root, current, updates) => { applyCalls++; IngestCommand.ApplyLedgerUpdatesAtomically(root, current, updates); });
         Assert.False(result.Success);
         if (code == "CONTEXT_MISMATCH") output.WriteLine(result.Error.TrimEnd());
@@ -186,35 +186,6 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     }
 
     [Fact]
-    public void SettleReportsConcurrentLedgerChangeWithoutOverwritingBytes()
-    {
-        var fixture = AtomContextFixture.Create();
-        var id = AtomContextFixture.Id(fixture.Atomized.Claims[1]);
-        var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == id);
-        var raw = fixture.RawSnapshot();
-        using var temporary = new TemporaryDirectory();
-        WriteFiles(temporary.Path, raw);
-        TemporaryFileSystem.File.AppendAllText(Path.Combine(temporary.Path, PathFor(target)), "\n", Encoding.UTF8);
-        var before = Image(temporary);
-        var applyCalls = 0;
-        var commitCalls = 0;
-        var result = Run(temporary.Path, raw, Request(fixture, id), apply: (root, current, updates) =>
-        {
-            applyCalls++;
-            IngestCommand.ApplyLedgerUpdatesAtomically(root, current, updates, (pending, destination) =>
-            {
-                commitCalls++;
-                File.Move(pending, destination, true);
-            });
-        });
-        Assert.False(result.Success);
-        Assert.StartsWith("SETTLE_INVALID INFRASTRUCTURE ledger changed under us ", result.Error, StringComparison.Ordinal);
-        Assert.Equal(1, applyCalls);
-        Assert.Equal(0, commitCalls);
-        Assert.Equal(before, Image(temporary));
-    }
-
-    [Fact]
     public void SettleReportsMalformedLedgerWithoutWrites()
     {
         var fixture = AtomContextFixture.Create();
@@ -242,7 +213,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         using var temporary = new TemporaryDirectory();
         var raw = fixture.RawSnapshot();
         WriteFiles(temporary.Path, raw);
-        var result = Run(temporary.Path, raw, "", ["--clear", target.AtomId, "--base", "baseline"]);
+        var result = Run(temporary.Path, raw, "", ["--clear", target.AtomId]);
         Assert.True(result.Success, result.Error);
         Assert.Equal($"SETTLE_CLEARED atom_id={target.AtomId} path={PathFor(target)}\n", result.Output);
         Assert.Equal(BackfillInventoryWriter.WriteAtom(target).ToArray(),
@@ -314,7 +285,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     {
         var fixture = AtomContextFixture.Create("## Claim\n\nProse.\n");
         var result = Run("/synthetic", fixture.RawSnapshot(), "",
-            ["--request", "request.toml", "--base", "baseline", "--replace"]);
+            ["--request", "request.toml", "--replace"]);
         Assert.False(result.Success);
         Assert.StartsWith("SETTLE_INVALID ARGUMENTS_INVALID", result.Error, StringComparison.Ordinal);
     }
@@ -350,7 +321,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         using var temporary = new TemporaryDirectory();
         WriteFiles(temporary.Path, fixture.RawSnapshot());
         var result = Run(temporary.Path, fixture.RawSnapshot(), Request(fixture, id),
-            clear ? ["--clear", id, "--base", "baseline"] : null);
+            clear ? ["--clear", id] : null);
         Assert.True(result.Success, result.Error);
         var lines = result.Output.Split('\n', StringSplitOptions.RemoveEmptyEntries);
         Assert.Equal(covered ? 2 : 1, lines.Length);
@@ -365,7 +336,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         fixture = fixture.WithEntries([target]);
         var raw = fixture.RawSnapshot();
         var result = QuarantineAtomCommand.Run("/synthetic", new FakeRepositoryGateway(RawChangeSet.Create([]), raw, raw),
-            ["--clear", target.AtomId, "--base", "baseline"]);
+            ["--clear", target.AtomId]);
         Assert.False(result.Success);
         Assert.StartsWith("QUARANTINE_INVALID NONPROPOSITIONAL_PRESENT", result.Error, StringComparison.Ordinal);
     }
@@ -385,7 +356,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     {
         return Assert.IsType<CommandResult>(SettleAtomCommand.Run(root,
             new FakeRepositoryGateway(RawChangeSet.Create([]), raw, raw),
-            arguments ?? ["--request", "request.toml", "--base", "baseline"],
+            arguments ?? ["--request", "request.toml"],
             writer ?? BackfillInventoryWriter.WriteAtom,
             (_, _) => [.. Encoding.UTF8.GetBytes(request)],
             apply ?? ((directory, current, updates) => IngestCommand.ApplyLedgerUpdatesAtomically(directory, current, updates))));

@@ -1,0 +1,29 @@
+**假设 36.1（精确的 Campbell 尺度公式）。** 本章只承继假设 17.1，即 [Campbell note，Theorem 1](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/campbell/note.tex) 的完整分支公式：对 $n\ge2$，在相应半开区间中取唯一的 $s=3^k$，有
+
+$$
+\begin{aligned}
+b(n)&=\min(n-s,3s)&&\text{若 }n\text{ 为偶数， }2s\le n<6s,\\
+b(n)&=\max(2s,n-3s)&&\text{若 }n\text{ 为奇数， }3s\le n<9s.
+\end{aligned}
+\tag{36.1}
+$$
+
+沿用定义 17.2 的五窗字母表 $\Sigma=\{\mathrm{null},[2],[3],[25],[5]\}$、专用单位末字母表 $\mathcal U=\{\underline0,\underline1\}$ 以及所有窗口内、相邻窗口和最低窗口到单位位的接缝守卫。每一行的合法表示都保留实际单位分解
+
+$$
+x=e_x+q c_x,\qquad q=(2,3),
+\tag{36.2}
+$$
+
+其中 $e_x\in\{0,1\}$ 是该行真实的末单位位，$c_x$ 是窗口 Horner 状态；同步词最后配对的是 $(\underline {e_x},\underline {e_y})$，而不是一个可另行供应的时钟或标记。
+
+定义规范首输入图
+
+$$
+\mathcal G_b^{\mathrm{can}}
+ =\left\{\bigl(W_{L(n)}(n),W_{L(n)}(b(n))\bigr)_{\mathrm{sync}}:n\ge1\right\},
+\tag{36.3}
+$$
+
+其中第二行以同一个 $H=L(n)$ 写出；由于 $b(n)\le n$，这个共同长度在合法容量内。令 $\mathcal G_b^{\mathrm{all}}=\mathcal G_b$ 为定义 17.2 的全共同补零图，即保留每个 $H\ge\max\{L(n),L(b(n))\}$。
+

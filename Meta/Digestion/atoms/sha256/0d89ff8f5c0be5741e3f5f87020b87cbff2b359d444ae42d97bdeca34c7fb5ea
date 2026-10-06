@@ -1,0 +1,1 @@
+- [Dereniowski–Łukasiewicz–Uznański, *Noisy (Binary) Searching: Simple, Fast and Correct*, 定理 1.1、1.3 与 §3](https://arxiv.org/pdf/2107.05753v4)：期望与最坏查询范围不同。全文引言和正文的算法交叉编号不一致，采用定理及实际停止规则的范围；（63.24）的历史条件有限保证由本章展示的势与指数矩证明承担。
