@@ -3,6 +3,7 @@ import LeanInformationAuditRegTests.ContractPaths
 import LeanInformationAuditRegTests.ContractTypeCarrier
 import LeanInformationAuditRegTests.ContractFixtures
 import LeanInformationAuditRegTests.ContractWitnessFixture
+import LeanInformationAuditRegTests.CompiledCalculations
 import LeanInformationAudit.Contract.Discovery
 import LeanInformationAudit.RawArtifacts
 import LeanInformationAudit.CompiledAxioms
@@ -249,12 +250,31 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
         CompiledSourceScope.reconstruct scope.expanded law
         CompiledSourceScope.validateFields scope signature actual
       discard <| (sourceAction.run 524288).run sourceContext
-      let rejected ← try
-        discard <| (CompiledSourceOperands.check entry.theoremName
-          #[mkConst entry.theoremName (sourceInfo.levelParams.map Level.param)] 524288).run sourceContext
+      let record := mkConst entry.realizationName (recordInfo.levelParams.map Level.param)
+      let lawAction : CompiledSourceScope.M (Expr × Expr) := do
+        let type ← CompiledSourceScope.projectType record
+        let law ← CompiledSourceScope.projectField
+          `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law type.getAppArgs[0]!
+        let .forallE _ domain _ _ ← CompiledSourceScope.normalizeHead
+            (← CompiledSourceScope.projectType law)
+          | throw <| IO.userError "compiled.source:law_function_type"
+        return (law, domain)
+      let ((law, domain), _) ← (lawAction.run 524288).run sourceContext
+      for evidence in #[none, some (record, law)] do
+        let rejected ← try
+          discard <| (CompiledSourceOperands.check entry.theoremName
+            #[mkConst entry.theoremName (sourceInfo.levelParams.map Level.param)] 524288
+            evidence).run sourceContext
+          pure false
+        catch error => pure (error.toString.startsWith "forbidden_dependency:source.operand_identity")
+        unless rejected do throw <| IO.userError "compiled.source:theorem_identity_not_rejected"
+      let unrelated := Expr.lam `realization domain (mkConst ``True) .default
+      let unrelatedRejected ← try
+        discard <| (CompiledSourceOperands.check entry.theoremName #[] 524288
+          (some (record, unrelated))).run sourceContext
         pure false
-      catch error => pure (error.toString.startsWith "forbidden_dependency:source.operand_identity")
-      unless rejected do throw <| IO.userError "compiled.source:theorem_identity_not_rejected"
+      catch error => pure (error.toString.startsWith "unclassified_form:source.variation_law")
+      unless unrelatedRejected do throw <| IO.userError "compiled.source:unrelated_variation_law"
       IO.println "[PASS] compiled source reconstruction, full observations and theorem identity rejection"
   finally searchPathRef.set saved
 
@@ -267,6 +287,7 @@ unsafe def main : IO Unit := do
   Lean.searchPathRef.modify (fixturePath :: ·)
   LeanInformationAuditRegTests.CompiledDiscovery.readFixtures
     (← IO.getNumHeartbeats) (Lean.Core.getMaxHeartbeats ({} : Lean.Options))
+  LeanInformationAuditRegTests.CompiledCalculations.check
   LeanInformationAuditRegTests.ContractRoots.check
   LeanInformationAuditRegTests.ContractPaths.check
   LeanInformationAuditRegTests.ContractTypeCarrier.check

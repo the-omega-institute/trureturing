@@ -78,13 +78,14 @@ private def sourceNames (statement : Expr) (fuel : Nat) : ReaderT Context IO (Na
   let (found, work) ← (RegistrationGates.compiledQueryWork action fuel).run (← read).provenance
   return (found, fuel - work)
 
-private partial def visit (e : Expr) (depth : Nat := 0) : M Unit := do
-  try visitCore e depth
+private partial def visit (e : Expr) (depth : Nat := 0)
+    (varyingLaw : Option Expr := none) (lawBody : Option Expr := none) : M Unit := do
+  try visitCore e depth varyingLaw lawBody
   catch error =>
     if error.toString.contains "source_operand=" then throw error
     fail s!"{error}; source_operand={e.getAppFn.constName?.getD .anonymous}"
 
-where visitCore (e : Expr) (depth : Nat) : M Unit := do
+where visitCore (e : Expr) (depth : Nat) (varyingLaw lawBody : Option Expr) : M Unit := do
   debit
   if depth > 256 then fail "incomplete_closure:E8.source_operand_depth"
   if (← get).visited.contains e then return
@@ -112,7 +113,12 @@ where visitCore (e : Expr) (depth : Nat) : M Unit := do
       if candidate.hasMVar || candidate.hasLevelMVar then
         fail "incomplete_closure:source.identity_metavariable"
       let same ← try
-        if ← typeQuery (Contract.CompiledExpressions.apartTypes candidate identity.statement)
+        -- Registration.variation proves this complete Law takes both truth
+        -- values as its arbitrary realization varies. Its exact generic body
+        -- cannot be a fixed closed source proposition. Proper subexpressions
+        -- retain the ordinary identity checks and every raw dependency is visited.
+        if candidate.hasFVar && lawBody.any (candidate.equal ·) then pure false
+        else if ← typeQuery (Contract.CompiledExpressions.apartTypes candidate identity.statement)
             "rigid_type_heads" then pure false
         else typeQuery (Contract.CompiledExpressions.sameShape candidate identity.statement) "statement_identity"
       catch error =>
@@ -124,12 +130,18 @@ where visitCore (e : Expr) (depth : Nat) : M Unit := do
   modify fun s => { s with identity }
   -- Proof propositions remain raw dependencies, proof bodies are opaque.
   if ← typeQuery (do Contract.CompiledExpressions.propositionShape (← Contract.CompiledExpressions.typeShape e)) "proof_classification" then
-    visit (← typeQuery (Contract.CompiledExpressions.typeShape e)) (depth + 1)
+    visit (← typeQuery (Contract.CompiledExpressions.typeShape e)) (depth + 1) varyingLaw lawBody
     return
-  let child := fun e => visit e (depth + 1)
+  let child := fun e => visit e (depth + 1) varyingLaw lawBody
   match e with
   | .app f a => child f; child a
-  | .lam n t b bi | .forallE n t b bi =>
+  | .lam n t b bi =>
+    child t
+    withLocal n bi t none fun x => do
+      let body := b.instantiate1 x
+      let lawBody := if varyingLaw.any (e.consumeMData.equal ·) then some body else lawBody
+      visit body (depth + 1) varyingLaw lawBody
+  | .forallE n t b bi =>
     child t
     withLocal n bi t none fun x => child (b.instantiate1 x)
   | .letE n t v b _ =>
@@ -169,10 +181,29 @@ where visitCore (e : Expr) (depth : Nat) : M Unit := do
 /-- Source linkage supplies the positive operand rule; the existing identity
 rejection machinery is applied before any reduction or proof erasure. -/
 def check (theoremName : Name) (expressions : Array Expr) (fuel : Nat)
-    (law : Option Expr := none) (sourceDefinition : Option Expr := none)
+    (law : Option (Expr × Expr) := none) (sourceDefinition : Option Expr := none)
     (checkedFiniteArena : Option Expr := none) : ReaderT Context IO (Array Name × Nat) := do
   let limit := min 524288 fuel
-  let identity ← (RegistrationGates.Compiled.argumentIdentityState theoremName limit).run (← read).provenance
+  -- Read the law from the same compiler-checked dependent Registration whose
+  -- Variation field certifies nonconstancy. A caller-supplied law must match
+  -- that complete field; no proof body or evaluation supplies this authority.
+  let (varyingLaw, available) ← match law with
+    | none => pure (none, limit)
+    | some (record, observed) => do
+      let action : CompiledSourceScope.M (Option Expr) := do
+        unless record.isConst do fail "unclassified_form:source.variation_record"
+        let type ← CompiledSourceScope.projectType record
+        let family := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+        unless type.isAppOfArity (family ++ `Registration) 2 do
+          fail "unclassified_form:source.variation_record"
+        let expected ← CompiledSourceScope.normalizeHead
+          (← CompiledSourceScope.projectField (family ++ `Arena.Law) type.getAppArgs[0]!)
+        let observed ← CompiledSourceScope.normalizeHead observed
+        unless expected.isLambda && expected.equal observed do
+          fail "unclassified_form:source.variation_law"
+        return some expected
+      action.run limit
+  let identity ← (RegistrationGates.Compiled.argumentIdentityState theoremName available).run (← read).provenance
   let theoremType := (← getConstInfo theoremName).type
   let (source, remaining) ← sourceNames theoremType identity.exprFuel
   let (source, remaining) ← match sourceDefinition with
@@ -192,8 +223,8 @@ def check (theoremName : Name) (expressions : Array Expr) (fuel : Nat)
   (← read).provenance.trace s!"source operand inventory names={source.size}; \
     remaining={remaining}; initial={limit}; identity_remaining={identity.exprFuel}"
   let action : M Unit := do
-    for e in expressions do visit e
-    if let some law := law then visit law
+    for e in expressions do visit e (varyingLaw := varyingLaw)
+    if let some (_, law) := law then visit law (varyingLaw := varyingLaw)
   let (_, state) ← action.run { identity := { identity with exprFuel := remaining }, source, remaining }
   let used := (remaining - state.remaining) + (remaining - state.identity.exprFuel)
   unless used ≤ remaining do fail "incomplete_closure:E8.source_operand_work"

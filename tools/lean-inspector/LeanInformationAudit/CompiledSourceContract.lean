@@ -200,7 +200,7 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let rawActual := value.getAppArgs[2]!
     let lawFunction ← projectField (family ++ `Arena.Law) arena
     let (_, work) ← (CompiledSourceOperands.check event.key.theoremName
-      #[descriptor, rawActual] (← get) (some lawFunction)
+      #[descriptor, rawActual] (← get) (some (record, lawFunction))
       (scope.definition.map (·.value))
       (if input.finiteBridge.isSome then some objectArena else none)).run (← read)
     debit work

@@ -32,7 +32,7 @@ structure Memo where
   heads : Std.HashMap (ExprStructEq × Bool × Bool) (Result Expr) := {}
   types : Std.HashMap (ExprStructEq × Array ExprStructEq) (Result Expr) := {}
   propositions : Std.HashMap (ExprStructEq × Array ExprStructEq) (Result Bool) := {}
-  erased : Std.HashMap (ExprStructEq × Array ExprStructEq) (Result Expr) := {}
+  erased : Std.HashMap (USize × Array USize) (Expr × Array Expr × Result Expr) := {}
   comparisons : Std.HashMap (ExprStructEq × ExprStructEq × Array ExprStructEq) (Result Bool) := {}
 
   deriving Inhabited
@@ -404,19 +404,21 @@ partial def erase (e : Expr) (binders : Array Expr := #[])
     (depth : Nat := 0) : M Expr := do
   step depth
   let binders := if e.hasLooseBVars then binders else #[]
-  let key := (ExprStructEq.mk e, binders.map ExprStructEq.mk)
-  if let some value := (← get).erased[key]? then return ← reuse value depth
+  -- Erasure retains raw metadata, whose source bytes Expr.equal can ignore.
+  -- Keep the live inputs as well as their exact pointer keys.
+  let key := (unsafe ptrAddrUnsafe e, binders.map fun (type : Expr) => unsafe ptrAddrUnsafe type)
+  if let some (_, _, value) := (← get).erased[key]? then return ← reuse value depth
   let closed := !e.hasFVar && !binders.any (·.hasFVar)
   if closed then
-    if let some value := (← get).shared.erased[key]? then return ← reuse value depth
+    if let some (_, _, value) := (← get).shared.erased[key]? then return ← reuse value depth
   let enclosingDepth := (← get).maxDepth
   modify fun state => { state with maxDepth := depth }
   let value ← eraseCore e binders depth
   let result := { value, height := (← get).maxDepth - depth : Result _ }
   modify fun state => { state with
-    erased := state.erased.insert key result
+    erased := state.erased.insert key (e, binders, result)
     maxDepth := max enclosingDepth state.maxDepth
-    shared := if closed then { state.shared with erased := state.shared.erased.insert key result }
+    shared := if closed then { state.shared with erased := state.shared.erased.insert key (e, binders, result) }
       else state.shared }
   return value
 

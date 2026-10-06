@@ -61,6 +61,14 @@ unsafe def check : IO Unit := do
   let (implicit, _) ← fingerprint (.lam `a (mkConst ``Nat) (.bvar 0) .implicit)
   unless renamed == explicit && explicit != implicit do
     throw <| IO.userError "compiled.identity:binder_annotation"
+  let marked := fun (position : Nat) => Expr.mdata
+    ⟨[(`source, .ofSyntax (.atom (.synthetic ⟨position⟩ ⟨position + 1⟩ false) "token"))]⟩ value
+  let ((sourceA, sourceB), _) ← run context do
+    let first ← erase (marked 0)
+    let second ← erase (marked 1)
+    return (first, second)
+  unless (← fingerprint sourceA).1 != (← fingerprint sourceB).1 do
+    throw <| IO.userError "compiled.identity:raw_metadata_source_bytes"
   let deep := (List.range 257).foldl (fun body _ => Expr.lam `a (mkConst ``Nat) body .default)
     (mkNatLit 0)
   unless (match TemplateAudit.compactRawIdentity [] deep with

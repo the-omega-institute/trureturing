@@ -284,6 +284,10 @@ depth limits remain effective on shared expression calculations. Calculation
 memos retain the immutable compiled table and lexical context; cached results
 retain their checked depth.
 
+Source identity checks reuse the compiler-checked `Registration.variation`
+field only for the exact complete generic Law body. All raw dependencies and
+proper subexpressions retain their identity checks.
+
 `make census` projects production registration records without reassessment.
 Independent structural graph and certificate tools do not issue registration
 verdicts. Utility refutations compare compiled types by bounded structural
