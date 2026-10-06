@@ -214,7 +214,21 @@ $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \for
 
 The global cosine remainder inequality and exact square-difference norm give ||D_v|| <= sqrt(3)(pi/2)^2 gamma v^2/kappa for every real v, including zero.
 
-**Theorem 1.16 (Frequency L2 continuity).**
+**Theorem 1.16 (Global frequency regularity).**
+
+$$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \exists K \in NNReal,\; \operatorname{LipschitzWith}\left(K, (v:Real\mapsto \operatorname{gaussianFrequency}\left(c, kappa, hc, hkappa, v\right))\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.frequency_lipschitz` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* David Nualart and Giovanni Peccati (2005). *Central limit theorems for sequences of multiple stochastic integrals*. DOI: [10.1214/009117904000000621](https://doi.org/10.1214/009117904000000621). URL: <https://arxiv.org/pdf/math/0503598v1>.
+
+*Commentary.*
+
+There is a finite nonnegative Lipschitz constant for the actual Gaussian frequency kernel on the whole real line. The proof uses the same cosine bound and dominating L2 class 1+(x-y)^2 as frequency continuity, whose proof consumes this helper. The helper adds no mathematical content credit. Composition with the original second integral gives the regularity needed by the existing jointly measurable L2 version theorem, on the original probability space.
+
+**Theorem 1.17 (Frequency L2 continuity).**
 
 $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \operatorname{Continuous}\left((v:Real\mapsto \operatorname{gaussianFrequency}\left(c, kappa, hc, hkappa, v\right))\right)$$
 
@@ -226,9 +240,9 @@ $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \for
 
 *Commentary.*
 
-The cosine Lipschitz inequality is dominated by the actual L2 class 1+(x-y)^2. Norm comparison gives continuity in the symmetric product L2 space.
+The consumed global Lipschitz helper supplies continuity in the actual symmetric product L2 space.
 
-**Definition 1.17 (Zero-inclusive quotient).**
+**Definition 1.18 (Zero-inclusive quotient).**
 
 $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \forall v \in Real,\; \operatorname{quotientFrequency}\left(c, kappa, hc, hkappa, v\right) = \operatorname{smul}\left(\operatorname{inv}\left(v\right), \operatorname{gaussianFrequency}\left(c, kappa, hc, hkappa, v\right)\right)$$
 
@@ -242,7 +256,7 @@ $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \for
 
 Real inverse assigns zero at zero, so J_v=v^-1 D_v has J_0=0 and the original D_v/v representative elsewhere.
 
-**Theorem 1.18 (Linear quotient bound).**
+**Theorem 1.19 (Linear quotient bound).**
 
 $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \forall v \in Real,\; \operatorname{norm}\left(\operatorname{quotientFrequency}\left(c, kappa, hc, hkappa, v\right)\right) \le \frac{\operatorname{sqrt}\left(3\right) \cdot \frac{\operatorname{pi}\left(\right)}{2}^{2} \cdot \operatorname{spatialMass}\left(c, kappa\right)}{kappa} \cdot \operatorname{abs}\left(v\right)$$
 
@@ -256,7 +270,7 @@ $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \for
 
 Cancellation of one frequency factor gives ||J_v|| <= sqrt(3)(pi/2)^2 gamma |v|/kappa. The zero case is proved separately.
 
-**Theorem 1.19 (Continuity at the boundary).**
+**Theorem 1.20 (Continuity at the boundary).**
 
 $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \operatorname{Continuous}\left((v:Real\mapsto \operatorname{quotientFrequency}\left(c, kappa, hc, hkappa, v\right))\right)$$
 
@@ -270,7 +284,7 @@ $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \for
 
 Away from zero, continuity follows from inverse and scalar multiplication. At zero, the linear norm bound squeezes J_v to J_0=0.
 
-**Theorem 1.20 (Every original finite window).**
+**Theorem 1.21 (Every original finite window).**
 
 $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \forall s \in Real,\; \operatorname{IntegrableOn}\left((v:Real\mapsto \operatorname{quotientFrequency}\left(c, kappa, hc, hkappa, v\right)), \operatorname{Icc}\left(0, \operatorname{exp}\left(s\right)\right), volume\right)$$
 
@@ -284,7 +298,7 @@ $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \for
 
 Continuity on the compact closed interval [0,exp(s)] supplies Bochner integrability for every real s. The boundary is included.
 
-**Definition 1.21 (Actual same-W quadratic frequency).**
+**Definition 1.22 (Actual same-W quadratic frequency).**
 
 $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \forall Omega \in Type,\; \forall SigmaOmega \in \operatorname{MeasurableSpace}\left(Omega\right),\; \forall P \in \operatorname{Measure}\left(Omega\right),\; \forall hprob \in \operatorname{IsProbabilityMeasure}\left(P\right),\; \forall W \in \operatorname{LinearIsometry}\left(Real, \operatorname{Lp}\left(Real, 2, \operatorname{spatialMeasure}\left(c, kappa\right)\right), \operatorname{Lp}\left(Real, 2, P\right)\right),\; \forall hW \in \left(\forall f \in \operatorname{Lp}\left(Real, 2, \operatorname{spatialMeasure}\left(c, kappa\right)\right),\; \operatorname{HasLaw}\left(\operatorname{coeFn}\left(\operatorname{apply}\left(W, f\right)\right), \operatorname{gaussianReal}\left(0, \operatorname{toNNReal}\left(\operatorname{norm}\left(f\right)^{2}\right)\right), P\right)\right),\; \forall v \in Real,\; \operatorname{quadraticFrequency}\left(c, kappa, hc, hkappa, P, W, hW, v\right) = \operatorname{centeredSquare}\left(\operatorname{spatialMeasure}\left(c, kappa\right), P, W, hW, \operatorname{cosineVector}\left(\operatorname{spatialMeasure}\left(c, kappa\right), v\right)\right)+\operatorname{centeredSquare}\left(\operatorname{spatialMeasure}\left(c, kappa\right), P, W, hW, \operatorname{sineVector}\left(\operatorname{spatialMeasure}\left(c, kappa\right), v\right)\right)-\operatorname{centeredSquare}\left(\operatorname{spatialMeasure}\left(c, kappa\right), P, W, hW, \operatorname{oneVector}\left(\operatorname{spatialMeasure}\left(c, kappa\right)\right)\right)$$
 
@@ -298,7 +312,7 @@ $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \for
 
 For one fixed original isometry W and its centered Gaussian marginal laws on P, the quadratic class is the sum of the centered cosine and sine squares minus the centered constant square.
 
-**Theorem 1.22 (Exact same-noise identification).**
+**Theorem 1.23 (Exact same-noise identification).**
 
 $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \forall Omega \in Type,\; \forall SigmaOmega \in \operatorname{MeasurableSpace}\left(Omega\right),\; \forall P \in \operatorname{Measure}\left(Omega\right),\; \forall hprob \in \operatorname{IsProbabilityMeasure}\left(P\right),\; \forall W \in \operatorname{LinearIsometry}\left(Real, \operatorname{Lp}\left(Real, 2, \operatorname{spatialMeasure}\left(c, kappa\right)\right), \operatorname{Lp}\left(Real, 2, P\right)\right),\; \forall hW \in \left(\forall f \in \operatorname{Lp}\left(Real, 2, \operatorname{spatialMeasure}\left(c, kappa\right)\right),\; \operatorname{HasLaw}\left(\operatorname{coeFn}\left(\operatorname{apply}\left(W, f\right)\right), \operatorname{gaussianReal}\left(0, \operatorname{toNNReal}\left(\operatorname{norm}\left(f\right)^{2}\right)\right), P\right)\right),\; \forall v \in Real,\; \operatorname{apply}\left(\operatorname{secondIntegral}\left(\operatorname{spatialMeasure}\left(c, kappa\right), P, W, hW\right), \operatorname{gaussianFrequency}\left(c, kappa, hc, hkappa, v\right)\right) = \operatorname{quadraticFrequency}\left(c, kappa, hc, hkappa, P, W, hW, v\right) \land \operatorname{AEEq}\left(\operatorname{coeFn}\left(\operatorname{quadraticFrequency}\left(c, kappa, hc, hkappa, P, W, hW, v\right)\right), (omega:Omega\mapsto \operatorname{evaluation}\left(\operatorname{apply}\left(W, \operatorname{cosineVector}\left(\operatorname{spatialMeasure}\left(c, kappa\right), v\right)\right), omega\right)^{2}+\operatorname{evaluation}\left(\operatorname{apply}\left(W, \operatorname{sineVector}\left(\operatorname{spatialMeasure}\left(c, kappa\right), v\right)\right), omega\right)^{2}-\operatorname{evaluation}\left(\operatorname{apply}\left(W, \operatorname{oneVector}\left(\operatorname{spatialMeasure}\left(c, kappa\right)\right)\right), omega\right)^{2}), P\right)$$
 
@@ -312,7 +326,7 @@ $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \for
 
 The continuous second integral agrees with the finite construction. Trigonometric energy cancels the centering terms, so the displayed representative is |F(v)|^2-Y^2 for the same W and P.
 
-**Theorem 1.23 (Bochner commutation on the original law).**
+**Theorem 1.24 (Bochner commutation on the original law).**
 
 $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \forall Omega \in Type,\; \forall SigmaOmega \in \operatorname{MeasurableSpace}\left(Omega\right),\; \forall P \in \operatorname{Measure}\left(Omega\right),\; \forall hprob \in \operatorname{IsProbabilityMeasure}\left(P\right),\; \forall W \in \operatorname{LinearIsometry}\left(Real, \operatorname{Lp}\left(Real, 2, \operatorname{spatialMeasure}\left(c, kappa\right)\right), \operatorname{Lp}\left(Real, 2, P\right)\right),\; \forall hW \in \left(\forall f \in \operatorname{Lp}\left(Real, 2, \operatorname{spatialMeasure}\left(c, kappa\right)\right),\; \operatorname{HasLaw}\left(\operatorname{coeFn}\left(\operatorname{apply}\left(W, f\right)\right), \operatorname{gaussianReal}\left(0, \operatorname{toNNReal}\left(\operatorname{norm}\left(f\right)^{2}\right)\right), P\right)\right),\; \forall s \in Real,\; \operatorname{IntegrableOn}\left((v:Real\mapsto \operatorname{smul}\left(\operatorname{inv}\left(v\right), \operatorname{quadraticFrequency}\left(c, kappa, hc, hkappa, P, W, hW, v\right)\right)), \operatorname{Icc}\left(0, \operatorname{exp}\left(s\right)\right), volume\right) \land \operatorname{apply}\left(\operatorname{secondIntegral}\left(\operatorname{spatialMeasure}\left(c, kappa\right), P, W, hW\right), \operatorname{setIntegral}\left((v:Real\mapsto \operatorname{quotientFrequency}\left(c, kappa, hc, hkappa, v\right)), \operatorname{Icc}\left(0, \operatorname{exp}\left(s\right)\right), volume\right)\right) = \operatorname{setIntegral}\left((v:Real\mapsto \operatorname{smul}\left(\operatorname{inv}\left(v\right), \operatorname{quadraticFrequency}\left(c, kappa, hc, hkappa, P, W, hW, v\right)\right)), \operatorname{Icc}\left(0, \operatorname{exp}\left(s\right)\right), volume\right)$$
 
@@ -324,9 +338,9 @@ $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \for
 
 *Commentary.*
 
-The pinned continuous-linear Bochner commutation theorem applies after the actual kernel quotient has been proved integrable. Its image is the explicit same-W quadratic quotient. This L2 identity does not assert a common pointwise version, the Ci normalization or process convergence.
+The pinned continuous-linear Bochner commutation theorem applies after the actual kernel quotient has been proved integrable. Its image is the explicit same-W quadratic quotient. For the spatial representative, the existing L2ContinuousPrimitive theorem applies to the jointly measurable cosine quotient and the continuous L2 derivative. It proves equality almost everywhere at each fixed endpoint and common continuous spatial primitives by product integrability and Fubini. This does not identify an uncountable common pointwise linear version of W, the Ci normalization or process convergence.
 
-**Theorem 1.24 (Two-sided logarithmic control).**
+**Theorem 1.25 (Two-sided logarithmic control).**
 
 $$\forall x \in Real,\; \forall hx \in 0 < x,\; \operatorname{log}\left(x\right)^{2} \le 16 \cdot \operatorname{rpow}\left(x, \frac{-1}{2}\right)+x^{2}$$
 
@@ -340,7 +354,7 @@ $$\forall x \in Real,\; \forall hx \in 0 < x,\; \operatorname{log}\left(x\right)
 
 For every positive x, log(x)^2 <= 16 x^(-1/2)+x^2. Below one, the reciprocal power bound controls the logarithmic singularity; above one, log(x) <= x controls the tail. This estimate is consumed by Gaussian logarithmic integrability.
 
-**Theorem 1.25 (Gaussian integrability at the singularity).**
+**Theorem 1.26 (Gaussian integrability at the singularity).**
 
 $$\forall b \in Real,\; \forall hb \in 0 < b,\; \operatorname{Integrable}\left((x:Real\mapsto \operatorname{log}\left(\operatorname{abs}\left(x\right)\right)^{2} \cdot \operatorname{exp}\left(-b \cdot x^{2}\right)), volume\right)$$
 
@@ -354,7 +368,7 @@ $$\forall b \in Real,\; \forall hb \in 0 < b,\; \operatorname{Integrable}\left((
 
 The actual function log(|x|)^2 exp(-b x^2) is Lebesgue integrable for every b>0. The previous bound is dominated by the pinned Gaussian power integrals with exponents -1/2 and 2 on the positive half-line; reflection covers the negative half-line. The assigned value at zero has no integral effect.
 
-**Theorem 1.26 (Logarithmic moment of the actual Gaussian law).**
+**Theorem 1.27 (Logarithmic moment of the actual Gaussian law).**
 
 $$\forall v \in NNReal,\; \forall hv \in \operatorname{Not}\left(v = 0\right),\; \operatorname{Integrable}\left((x:Real\mapsto \operatorname{log}\left(\operatorname{abs}\left(x\right)\right)^{2}), \operatorname{gaussianReal}\left(0, v\right)\right)$$
 
@@ -368,7 +382,7 @@ $$\forall v \in NNReal,\; \forall hv \in \operatorname{Not}\left(v = 0\right),\;
 
 For every nonzero nonnegative variance v, log(|x|)^2 is integrable under gaussianReal(0,v). The Gaussian density identity directly consumes the proved weighted Lebesgue integrability. No logarithmic moment premise is supplied.
 
-**Theorem 1.27 (Original singular H in symmetric L2).**
+**Theorem 1.28 (Original singular H in symmetric L2).**
 
 $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \forall D \in Real,\; \exists H \in \operatorname{symmetricKernel}\left(\operatorname{spatialMeasure}\left(c, kappa\right)\right),\; \operatorname{AEEq}\left(\operatorname{coeFn}\left(\operatorname{val}\left(H\right)\right), (z:\operatorname{Prod}\left(Real, Real\right)\mapsto 1+2 \cdot D-2 \cdot \operatorname{log}\left(\frac{\operatorname{pi}\left(\right)}{2} \cdot \operatorname{abs}\left(\operatorname{fst}\left(z\right)-\operatorname{snd}\left(z\right)\right)\right)), \operatorname{prod}\left(\operatorname{spatialMeasure}\left(c, kappa\right), \operatorname{spatialMeasure}\left(c, kappa\right)\right)\right)$$
 
@@ -386,6 +400,7 @@ For every real D and the actual nonnegative Gaussian coefficient c with positive
 
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.frequency_continuous`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.frequency_integral_sameNoise`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.frequency_lipschitz`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.frequency_norm_bound`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.gaussianFrequency`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.gaussianFrequency_coe`

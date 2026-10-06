@@ -180,7 +180,8 @@ theorem frequency_norm_bound (v : ℝ) :
   convert hb using 1
   ring
 
-theorem frequency_continuous : Continuous (gaussianFrequency c κ hc hκ) := by
+theorem frequency_lipschitz :
+    ∃ K : ℝ≥0, LipschitzWith K (gaussianFrequency c κ hc hκ) := by
   let := spatialMeasure_finite c κ hc hκ
   let g : Lp ℝ 2 ((spatialMeasure c κ).prod (spatialMeasure c κ)) :=
     (memLp_const (1 : ℝ)).toLp (fun _ => 1) + squareDifference c κ hc hκ
@@ -224,10 +225,13 @@ theorem frequency_continuous : Continuous (gaussianFrequency c κ hc hκ) := by
           nlinarith [sq_abs (z.1-z.2), sq_nonneg (|z.1-z.2|-1)]
     nlinarith [hn]
   have hC : 0 ≤ (Real.pi/2)*‖g‖ := by positivity
-  apply LipschitzWith.continuous (K := ((Real.pi/2)*‖g‖).toNNReal)
+  refine ⟨((Real.pi/2)*‖g‖).toNNReal, ?_⟩
   apply LipschitzWith.of_dist_le_mul
   intro v u
   simpa only [dist_eq_norm, Real.norm_eq_abs, Real.coe_toNNReal _ hC] using hb v u
+
+theorem frequency_continuous : Continuous (gaussianFrequency c κ hc hκ) :=
+  (frequency_lipschitz c κ hc hκ).choose_spec.continuous
 
 def quotientFrequency (v : ℝ) :
     (letI := spatialMeasure_finite c κ hc hκ; symmetricKernel (spatialMeasure c κ)) :=
