@@ -1141,3 +1141,107 @@ The default-budget build succeeds with fifteen axiom closures
 contained in the standard three. These are reuse checks; the
 general prime-power product PC37 is an ordinary CRT deduction,
 not a claimed additional compiled theorem.
+
+## Modulus-sum minimality reduces the private bucket capacity to two
+
+PC36 uses class-count minimality alone. The same actual EB1 family
+also minimizes the modulus sum among all whole covers with that
+class count. Suppose a private-phase bucket contains three different
+top colors, and select one original from each. Write their numerical
+moduli as 9q m_1,9q m_2,9q m_3. The same complete private-region
+argument permits replacing precisely these three originals by
+27,27s_1,27s_2. The number of classes is unchanged; freshness and
+distinctness are the same as in the four-original repair.
+
+The exact strict-cost condition is
+
+$$
+3(1+s_1+s_2)<q(m_1+m_2+m_3).
+\tag{PC39}
+$$
+
+Every m_i is positive. Consequently the condition
+1+s_1+s_2<q suffices uniformly, without a phase-dependent estimate
+of the removed moduli. The new sum is then at most
+27(1+s_1+s_2)<27q, whereas the removed sum is at least 27q.
+This contradicts same-count modulus-sum minimality. Thus, whenever
+M|W has two distinct nonunit divisors satisfying this sufficient
+cost condition,
+
+$$
+|B_M|\le2|R_M|.
+\tag{PC40}
+$$
+
+This is a direct whole-cover exchange. It does not allocate
+independently optimized prefixes or ignore other deleted originals:
+there are exactly three deleted originals, and their complete joint
+hole is covered.
+
+For q=113, the following choices give the resulting bounds; each
+row retains its condition M|W:
+
+$$
+\begin{array}{c|c|c|c|c}
+M&(s_1,s_2)&|R_M|&|B_M|\text{ upper bound}
+ &\text{top colors outside }B_M\text{, at least}\\\hline
+25&(5,25)&19&38&67\\
+35&(5,7)&24&48&57\\
+49&(7,49)&41&82&23\\
+55&(5,11)&40&80&25\\
+65&(5,13)&48&96&9
+\end{array}
+\tag{PC41}
+$$
+
+For 49 the pure 7 and 49 originals exclude seven and one disjoint
+residues, leaving 41. For 55 and 65, CRT gives respectively
+4 times 10 and 4 times 12 guard-avoiding residues. Each displayed
+1+s_1+s_2 is less than 113.
+
+There is now a simultaneous consequence on one fixed old word.
+If both 25 and 35 divide W, the same set C_z of at least 105 top
+colors satisfies
+
+$$
+|C_z\setminus(B_{25}\cup B_{35})|
+ \ge105-38-48=19.
+\tag{PC42}
+$$
+
+For every one of these colors, every top original at z has its
+complete private projection varying modulo both 25 and 35.
+This is counting the union of two bad-color sets, not combining
+separately chosen source points. Two private residues can already
+give both variations; neither three private residues nor positive
+source density follows. A capacity-two cofactor selector and the
+permanent prefix service of PC28 still remain to be established.
+
+In fact each such top original has one pair of its own complete
+private points separating both readouts:
+
+$$
+\exists x,y\in P_i:\quad
+x\not\equiv y\pmod{25},\qquad
+x\not\equiv y\pmod{35}.
+\tag{PC43}
+$$
+
+To see this, take a pair separating the first readout. If it also
+separates the second, it suffices. Otherwise both points have the
+same second readout. A third point with a different second readout
+must differ in the first readout from at least one of the original
+pair. That pair separates both. The argument uses only points in
+the same P_i; it supplies no single pair shared by different
+originals or colors.
+
+Two scoped transient Lean checks verify the same-count whole-hole
+replacement with its exact sum comparison, the three-color
+private-region consumer and capacity-two bucket bound, the five
+guard-count interfaces, the simultaneous 19-color count and the
+same-private-pair implication. Both builds exit successfully under
+default budgets; all 29 reported axiom closures use only the
+standard three. No new retained Lean declaration is introduced
+for these reuse applications. The original branch assumptions,
+the at least 105 top colors and the existence of the pure guards
+remain the explicitly cited inputs to these consumers.
