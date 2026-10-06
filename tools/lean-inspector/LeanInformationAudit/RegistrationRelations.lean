@@ -2,6 +2,7 @@ import LeanInformationAudit.Sha256
 import LeanInformationAudit.TemplateData
 import LeanInformationAudit.RegistrationData
 import LeanInformationAudit.Registry.ArenaProvenance
+import LeanInformationAudit.Contract.NodeFacts
 
 namespace LeanInformationAudit.RegistrationReifier
 open Lean
@@ -15,58 +16,31 @@ end LeanInformationAudit.RegistrationReifier
 namespace LeanInformationAudit
 open Lean
 
-/-- A correctness bound, independent of host speed and caller heartbeat options.
-Every head transition, declaration lookup and compiled-table lookup spends one unit. -/
-def arenaAliasWorkBudget : Nat := 4096
-
-private inductive AliasClosure where
-  | mk (term : Expr) (bindings : List AliasClosure)
-
-/-- Fuelled weak-head reduction of forwarding aliases only (delta/beta/zeta).
-Closures avoid substitution and never traverse or normalize argument subtrees.
-Unlike unrestricted `whnfR`, this stops at constructors, projections and recursors,
-and never performs structure eta. A bare named target becomes the next owner;
-an application that constructs a value retains the last named owner.
-The single budget covers both outer aliases and all work inside applications. -/
-def resolveCanonicalArenaName (find : Name → Option ConstantInfo)
-    (spelling : Name) : Except String Name := do
-  unless (find spelling).isSome do return spelling
-  let mut owner := spelling
-  let mut current := AliasClosure.mk (mkConst spelling) []
-  let mut arguments : List AliasClosure := []
-  let mut fuel := arenaAliasWorkBudget
-  while fuel > 0 do
-    fuel := fuel - 1
-    let .mk term bindings := current
-    match term with
-    | .mdata data body =>
-      if data.contains arenaConstructionMarker then return owner
-      if data.contains ArenaProvenance.unsupported then
-        throw s!"IE-C003 ArenaSourceUnsupported arena={spelling} owner={owner}"
-      current := .mk body bindings
-    | .app fn arg =>
-      arguments := .mk arg bindings :: arguments
-      current := .mk fn bindings
-    | .letE _ _ value body _ =>
-      current := .mk body (.mk value bindings :: bindings)
-    | .lam _ _ body _ =>
-      match arguments with
-      | [] => return owner
-      | arg :: rest =>
-        arguments := rest
-        current := .mk body (arg :: bindings)
-    | .bvar index =>
-      match bindings with
-      | [] => throw s!"IE-C003 ArenaResolutionFailed: {spelling}"
-      | value :: rest =>
-        current := if index == 0 then value else .mk (.bvar (index - 1)) rest
-    | .const name _ =>
-      if arguments.isEmpty then owner := name
-      match find name with
-      | some (.defnInfo info) => current := .mk info.value []
-      | _ => return owner
-    | _ => return owner
-  throw s!"IE-C003 ArenaResolutionBudgetExceeded arena={spelling} limit={arenaAliasWorkBudget}"
+/-- Canonical identity is a named operand of a bound ExactMatch. Generic head
+facts ending at constructors cannot select a registry name. No alias body,
+application, binder or local term is evaluated here. -/
+def resolveCanonicalArena (find : Name → Option ConstantInfo)
+    (facts : Array Contract.NodeFacts.BoundOperand) (arena : Expr) : Except String Expr := do
+  let mut candidates : Array Expr := #[]
+  for fact in facts do
+    unless fact.relation == some ``Contract.NodeFact.exact && fact.value.equal arena do continue
+    let some other := fact.other | continue
+    let .const name _ := other.getAppFn | continue
+    let some info := find name | throw s!"IE-C003 ArenaResolutionFailed: {name}"
+    if let .ctorInfo _ := info then continue
+    unless candidates.contains other do candidates := candidates.push other
+  let some canonical := candidates[0]?
+    | throw s!"contract.node_binding:arena.canonical_fact_missing:{arena.getAppFn.constName!}"
+  unless candidates.size == 1 do throw "contract.node_binding:arena.canonical_fact_ambiguous"
+  for operand in #[arena, canonical] do
+    let name := operand.getAppFn.constName!
+    let some info := find name | throw s!"IE-C003 ArenaResolutionFailed: {name}"
+    if info.value?.any (fun value => (value.find? fun node =>
+        match node with
+        | .mdata data _ => data.contains ArenaProvenance.unsupported
+        | _ => false).isSome) then
+      throw s!"IE-C003 ArenaSourceUnsupported arena={arena.getAppFn.constName!} owner={name}"
+  return canonical
 
 def InformationRegistryEntry.occurrenceKey
     (entry : InformationRegistryEntry) : Name × Name :=

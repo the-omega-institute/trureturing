@@ -19,8 +19,8 @@ def debit (n : Nat := 1) : M Unit := do
   unless n ≤ (← get) do fail "incomplete_closure:E8.source_work"
   modify (· - n)
 
-def query (action : Contract.CompiledExpressions.M α) : M α := do
-  let (value, work) ← (RegistrationGates.compiledQueryWork action (← get)).run
+def query (action : RegistrationGates.QueryM α) : M α := do
+  let (value, work) ← (RegistrationGates.boundQueryWork action (← get)).run
     (← read).provenance
   debit work
   return value
@@ -36,17 +36,17 @@ def ownerOf (name : Name) : M Name := do
     | fail s!"incomplete_closure:E7.compiled_owner:{name}"
   return owner
 
-def projectType (e : Expr) : M Expr := query (Contract.CompiledExpressions.typeShape e)
+def projectType (e : Expr) : M Expr := query (RegistrationGates.typedNodeType e)
 def isType (e : Expr) : M Bool := do
-  return (← query (Contract.CompiledExpressions.head (← projectType e))).isSort
+  return (← query (RegistrationGates.exactNodeHead (← projectType e))).isSort
 
-def isProp (e : Expr) : M Bool := query (Contract.CompiledExpressions.propositionShape e)
+def isProp (e : Expr) : M Bool := query (RegistrationGates.typedNodeProp e)
 def isProof (e : Expr) : M Bool := do isProp (← projectType e)
-def normalizeHead (e : Expr) : M Expr := query (Contract.CompiledExpressions.head e)
-def sameShape (a b : Expr) : M Bool := query (Contract.CompiledExpressions.sameShape a b)
+def normalizeHead (e : Expr) : M Expr := query (RegistrationGates.exactNodeHead e)
+def sameShape (a b : Expr) : M Bool := query (RegistrationGates.certifiedNodeRelation a b)
 
 def withLocal (name : Name) (bi : BinderInfo) (type : Expr)
-    (value : Option Expr) (body : Expr → M α) : M α := do
+    (value : Option Expr) (body : Expr → M α) (nondep : Bool := false) : M α := do
   debit
   let locals := (← read).provenance.locals
   let mut index := locals.numIndices
@@ -54,16 +54,12 @@ def withLocal (name : Name) (bi : BinderInfo) (type : Expr)
   let id : FVarId := ⟨Name.num `compiledSourceLocal index⟩
   let locals := match value with
     | none => locals.mkLocalDecl id name type bi
-    | some value => locals.mkLetDecl id name type value
+    | some value => locals.mkLetDecl id name type value nondep
   withReader (fun context : Context => { context with provenance :=
     { context.provenance with locals } }) (body (mkFVar id))
 
 private def withLocalDecl (name : Name) (bi : BinderInfo) (type : Expr)
     (body : Expr → M α) : M α := withLocal name bi type none body
-private def withLocalDeclD (name : Name) (type : Expr) (body : Expr → M α) : M α :=
-  withLocalDecl name .default type body
-private def withLetDecl (name : Name) (type value : Expr) (body : Expr → M α) : M α :=
-  withLocal name .default type (some value) body
 
 /-- Named record projections use only their compiled layout. The base and
 explicit field arguments are existing checked terms. -/
@@ -73,32 +69,7 @@ def projectField (name : Name) (base : Expr) (arguments : Array Expr := #[]) : M
     | fail s!"incomplete_closure:E7.compiled_projection:{name}"
   let .ctorInfo ctor ← getConstInfo projection.ctorName
     | fail s!"incomplete_closure:E7.compiled_constructor:{projection.ctorName}"
-  return mkAppN (.proj ctor.induct projection.i base) arguments
-
-private def typeLevel (type : Expr) : M Level := do
-  let .sort sort ← normalizeHead (← projectType type)
-    | fail "unclassified_form:source.packing_sort"
-  let some level := sort.dec | fail "unclassified_form:source.packing_sort"
-  return level
-
-private def mkLambdaFVars (xs : Array Expr) (body : Expr) : M Expr := do
-  let mut body := body
-  for x in xs.reverse do
-    let some binder := (← read).provenance.locals.find? x.fvarId!
-      | fail "incomplete_closure:E7.compiled_local"
-    body := .lam binder.userName binder.type (body.abstract #[x]) binder.binderInfo
-  return body
-
-/-- Predicate reification is symbolic. Its decision dictionary is not executed
-or synthesized; the comparison recognizes the proposition of a compiled decide. -/
-private def mkDecide (proposition : Expr) : M Expr := do
-  debit
-  return mkApp2 (mkConst ``Decidable.decide) proposition
-    (mkApp (mkConst ``Classical.propDecidable) proposition)
-
-private def mkEq (left right : Expr) : M Expr := do
-  debit
-  return mkApp3 (mkConst ``Eq [.succ .zero]) (mkConst ``Bool) left right
+  return mkAppN (← query (RegistrationGates.literalRecordField ctor.induct projection.i base)) arguments
 
 /-- A dependency-closed coordinate projection and its inverse, preserving raw syntax. -/
 partial def project (slots : Array Nat) (scope : Nat) (e : Expr)
@@ -214,17 +185,12 @@ partial def inContext (context : Array SourceBinder) (k : Array Expr → M α)
   if i == context.size then return ← k locals
   let b := context[i]!
   let domain := b.domain.instantiateRev locals
-  withLocal b.name b.info domain (b.value.map (·.instantiateRev locals)) fun x =>
+  withLocal b.name b.info domain (b.value.map (·.instantiateRev locals)) (nondep := b.nondep) fun x =>
     inContext context k (i + 1) (locals.push x)
 
 structure ReadoutScope where
-  context : Array SourceBinder
-  observation : Expr
-  state : Expr
-  output : Expr
-  projected : Expr
-  rawContext : Array SourceBinder := #[]
-  rawObservation : Expr := default
+  rawContext : Array SourceBinder
+  rawObservation : Expr
 
 structure DefinitionEntry where
   path : Array String
@@ -234,11 +200,6 @@ structure DefinitionEntry where
   value : Expr
 
 structure Scope where
-  /-- The theorem's raw type remains the binding root even when a named claim
-  definition is entered for lexical source observations. -/
-  source : Expr
-  /-- One-step replacement preserves the surrounding raw theorem structure. -/
-  expanded : Expr
   definition : Option DefinitionEntry
   levels : List Name
   selection : SourceSelection
@@ -252,6 +213,121 @@ private partial def dictionary (type : Expr) : M Bool := do
   | .forallE n d b bi =>
     withLocalDecl n bi d fun x => dictionary (b.instantiate1 x)
   | _ => return (← read).provenance.view.isClass (type.getAppFn.constName?.getD .anonymous)
+
+private partial def originalPath (node : Expr) : List String → Except String (List Contract.NodeEdge)
+  | [] => pure []
+  | edge :: rest => do
+    let (selected, child) ← match edge, node with
+      | "fn", .app f _ => pure (Contract.NodeEdge.function, f)
+      | "arg", .app _ a => pure (Contract.NodeEdge.argument, a)
+      | "domain", .lam _ t _ _ | "domain", .forallE _ t _ _ =>
+        pure (Contract.NodeEdge.domain, t)
+      | "body", .lam _ _ b _ | "body", .forallE _ _ b _ => pure (Contract.NodeEdge.body, b)
+      | "type", .letE _ t _ _ _ => pure (Contract.NodeEdge.letType, t)
+      | "value", .letE _ _ v _ _ => pure (Contract.NodeEdge.letValue, v)
+      | "body", .letE _ _ _ b _ => pure (Contract.NodeEdge.letBody, b)
+      | "body", .mdata _ b => pure (Contract.NodeEdge.metadata, b)
+      | "body", .proj _ _ b => pure (Contract.NodeEdge.projection, b)
+      | _, _ => throw "unclassified_form:source.coordinate_edge"
+    return selected :: (← originalPath child rest)
+
+private def observationAt (theoremName : Name) (definition : Option DefinitionEntry)
+    (levels : List Name) (selected : SourceReadoutSelection) : M Contract.NodeCoordinate := do
+  let (declaration, part, path) := match definition with
+    | none => (theoremName, Contract.NodePart.type, selected.path)
+    | some definition => (definition.name, Contract.NodePart.value,
+        selected.path.extract definition.path.size selected.path.size)
+  let owner ← ownerOf declaration
+  let info ← getConstInfo declaration
+  unless info.levelParams.length == levels.length do
+    fail "contract.node_binding:source.coordinate_levels"
+  let root ← match part with
+    | .type => pure info.type
+    | .value => match info.value? with
+      | some value => pure value
+      | none => fail "unclassified_form:source.coordinate_definition"
+  let root := Contract.Literal.instantiateRawLevels info.levelParams
+    (levels.map Level.param) root
+  let path ← IO.ofExcept <| originalPath root path.toList
+  return { owner, declaration, part, path, levels := levels.map Level.param }
+
+private def boundObservationBody (theoremName : Name) (definition : Option DefinitionEntry)
+    (levels : List Name) (selected : SourceReadoutSelection) (context : Array SourceBinder)
+    (observation : Expr) : M Expr := do
+  let location ← observationAt theoremName definition levels selected
+  let closed := context.foldr (fun b e =>
+    if let some value := b.value then Expr.letE b.name b.domain value e b.nondep
+    else Expr.lam b.name b.domain e b.info) observation
+  let some fact := (← read).provenance.nodeFacts.find? (fun fact =>
+      fact.location == location && fact.relation == some (if selected.booleanPredicate then
+        `LeanInformationAudit.Contract.BoolReflection else ``Contract.NodeFact.equal) &&
+      fact.value.equal closed)
+    | fail "unclassified_form:source.observation_fact_missing"
+  let some observed := fact.other | fail "contract.node_binding:source.observation_endpoint"
+  let mut body := observed
+  for binder in context do
+    debit
+    body ← match binder.value, body with
+      | none, .lam _ domain tail info =>
+        unless binder.info == info && binder.domain.equal domain do
+          fail "contract.node_binding:source.observation_telescope"
+        pure tail
+      | some value, .letE _ domain actualValue tail nondep =>
+        unless binder.domain.equal domain && value.equal actualValue && binder.nondep == nondep do
+          fail "contract.node_binding:source.observation_let"
+        pure tail
+      | _, _ => fail "contract.node_binding:source.observation_telescope"
+  unless body.getAppFn.isConstOf `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout
+      && body.getAppArgs.size == (if selected.functionOperand then 4 else 5) do
+    fail "contract.node_binding:source.observation_readout"
+  return body
+
+/-- Literal parameter constructors preserve the selected data coordinates in
+ order. Extra leaves must be original lexical proof or dictionary binders;
+ they remain dependencies of the same full-telescope observation fact. -/
+private partial def packedCoordinates (context : Array SourceBinder) (value : Expr)
+    (expected : Array Expr) (position : Nat := 0) (retained : Array Nat := #[])
+    (depth : Nat := 0) : M (Nat × Array Nat) := do
+  debit
+  if depth > 256 then fail "incomplete_closure:E8.source_parameter_depth"
+  if expected[position]?.any (value.equal ·) then return (position + 1, retained)
+  if let .bvar index := value then
+    unless index < context.size do fail "contract.node_binding:source.parameter_scope"
+    let ordinal := context.size - 1 - index
+    let binder := context[ordinal]!
+    unless binder.value.isNone do fail "contract.node_binding:source.parameter_let"
+    let authorized ← inContext (context.extract 0 ordinal) fun locals => do
+      let domain := binder.domain.instantiateRev locals
+      return (← isProp domain) || (← dictionary domain)
+    unless authorized do fail "contract.node_binding:source.parameter_unselected_data"
+    return (position, if retained.contains ordinal then retained else retained.push ordinal)
+  if let .mdata _ body := value then
+    return ← packedCoordinates context body expected position retained (depth + 1)
+  let .const constructorName _ := value.getAppFn
+    | fail "contract.node_binding:source.parameter_literal"
+  let .ctorInfo constructor ← getConstInfo constructorName
+    | fail "contract.node_binding:source.parameter_constructor"
+  let .inductInfo inductiveInfo ← getConstInfo constructor.induct
+    | fail "contract.node_binding:source.parameter_inductive"
+  unless inductiveInfo.ctors == [constructorName] &&
+      value.getAppArgs.size == constructor.numParams + constructor.numFields do
+    fail "contract.node_binding:source.parameter_layout"
+  if constructor.numFields == 0 && !value.isConstOf ``PUnit.unit then
+    fail "contract.node_binding:source.parameter_unselected_data"
+  let mut next := position
+  let mut captured := retained
+  for field in value.getAppArgs.extract constructor.numParams value.getAppArgs.size do
+    let (position, retained) ← packedCoordinates context field expected next captured (depth + 1)
+    next := position
+    captured := retained
+  return (next, captured)
+
+private def parameterSlots (context : Array SourceBinder) (value : Expr)
+    (slots : Array Nat) : M (Array Nat) := do
+  let expected := slots.map fun ordinal => Expr.bvar (context.size - 1 - ordinal)
+  let (used, retained) ← packedCoordinates context value expected
+  unless used == slots.size do fail "contract.node_binding:source.observation_parameters"
+  return (slots ++ retained).toList.eraseDups.toArray.qsort (· < ·)
 
 def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
   unless info.isTheorem do fail "unclassified_form:source.theorem"
@@ -287,10 +363,10 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
         unless selected.path.size < readout.path.size &&
             readout.path.extract 0 selected.path.size == selected.path do
           fail "unclassified_form:source.definition_readout_path"
-      let value := declaration.value.instantiateLevelParams definitionInfo.levelParams
-        (info.levelParams.map Level.param)
-      let type := definitionInfo.type.instantiateLevelParams definitionInfo.levelParams
-        (info.levelParams.map Level.param)
+      let value := Contract.Literal.instantiateRawLevels definitionInfo.levelParams
+        (info.levelParams.map Level.param) declaration.value
+      let type := Contract.Literal.instantiateRawLevels definitionInfo.levelParams
+        (info.levelParams.map Level.param) definitionInfo.type
       pure (some {
         path := selected.path
         owner := definitionOwner
@@ -333,24 +409,27 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
           (← isProp domain) || (← dictionary domain) then
         fail "unclassified_form:source.dictionary_or_proof_coordinate"
     if b.value.isSome then fail "unclassified_form:source.let_coordinate"
-    let domain ← transport (coordinateContext.extract 0 i) (slots.filter (· < i)) b.domain
-    coordinates := coordinates.push { b with domain }
+    coordinates := coordinates.push b
     previous := some i
   let readouts ← (selection.readouts.zip occurrences).mapM fun (selected, context, observation) => do
+    let body ← boundObservationBody info.name definition info.levelParams selected context observation
+    let actualSlots ← parameterSlots context body.getAppArgs[3]! slots
+    for ordinal in actualSlots do
+      discard <| transport (context.extract 0 ordinal)
+        (actualSlots.filter (· < ordinal)) context[ordinal]!.domain
     if selected.functionOperand || selected.stateOperand.isSome then
       unless selected.stateBinder == 0 && !(selected.functionOperand && selected.stateOperand.isSome) &&
           !(selected.functionOperand && selected.booleanPredicate) do
         fail "unclassified_form:source.operand_mode"
-      let (state, body) ← inContext context fun locals => do
+      inContext context fun locals => do
         let term := observation.instantiateRev locals
         if selected.functionOperand then
           let .forallE _ domain output .default := (← projectType term)
             | fail "unclassified_form:source.function_operand"
-          unless !output.hasLooseBVars && !(← isProp domain) && !(← isType term) do
+          unless !output.hasLooseBVars && !(← isProp domain) && !(← isType term) &&
+              !(← normalizeHead output).isSort do
             fail "unclassified_form:source.function_operand"
-          let typeArgument ← withLocalDeclD `state domain fun state => isType state
-          if typeArgument then fail "unclassified_form:source.function_operand"
-          return (domain.abstract locals, mkApp (observation.liftLooseBVars 0 1) (.bvar 0))
+          discard <| transport context actualSlots observation
         else
           let path := selected.stateOperand.get!
           unless !path.isEmpty && path.size ≤ 256 do
@@ -360,55 +439,32 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
           let operand := operand.instantiateRev locals
           unless !(← isProof operand) && !(← isType operand) do
             fail "unclassified_form:source.state_operand_data"
-          let state ← projectType operand
-          let body ← replaceAt (observation.liftLooseBVars 0 1) path.toList (.bvar 0)
-          return (state.abstract locals, body)
-      let extended := context.push {name := `state, info := .default, domain := state}
-      let body ← if selected.booleanPredicate then
-          inContext extended fun locals => do
-            let term := body.instantiateRev locals
+          if selected.booleanPredicate then
             unless ← isProp term do fail "unclassified_form:source.boolean_predicate"
-            return (← mkDecide term).abstract locals
-        else pure body
-      let output ← inContext extended fun locals => do
-        let term := body.instantiateRev locals
-        unless !(← isProof term) && !(← isType term) do
-          fail "unclassified_form:source.observation_data"
-        return (← projectType term).abstract locals
-      let state ← transport context slots state
-      let output ← transport extended slots output
-      let projected ← transport extended (slots.push context.size) body
-      return {
-        context := extended
-        observation := body
-        state, output, projected
-        rawContext := context
-        rawObservation := observation : ReadoutScope }
+          else
+            unless !(← isProof term) && !(← isType term) do
+              fail "unclassified_form:source.observation_data"
+          let state ← projectType operand
+          let extended := context.push { name := `state, info := .default, domain := state.abstract locals }
+          let body ← replaceAt (observation.liftLooseBVars 0 1) path.toList (.bvar 0)
+          discard <| transport extended (actualSlots.push context.size) body
+      return { rawContext := context, rawObservation := observation : ReadoutScope }
     if selected.booleanPredicate then fail "unclassified_form:source.operand_mode"
-    unless selected.stateBinder < context.size && slots.all (· < selected.stateBinder) do
+    unless selected.stateBinder < context.size && actualSlots.all (· < selected.stateBinder) do
       fail "unclassified_form:source.state_binder"
     let stateBinder := context[selected.stateBinder]!
     if stateBinder.value.isSome then fail "unclassified_form:source.let_state"
-    let output ← inContext context fun locals => do
+    inContext context fun locals => do
       let term := observation.instantiateRev locals
       unless !(← isProof term) && !(← isType term) do
         fail "unclassified_form:source.observation_data"
-      return (← projectType term).abstract locals
-    let output ← transport context slots output
-    let state ← transport (context.extract 0 selected.stateBinder) slots stateBinder.domain
-    let projected ← transport context (slots.push selected.stateBinder) observation
-    return { context, observation, state, output, projected, rawContext := context, rawObservation := observation : ReadoutScope }
-  let mut reconstructedSource := source
-  for (selected, context, observation) in selection.readouts.zip occurrences do
-    if selected.booleanPredicate then
-      let reified ← inContext context fun locals => do
-        let term := observation.instantiateRev locals
-        unless ← isProp term do fail "unclassified_form:source.boolean_predicate"
-        return (← mkEq (← mkDecide term) (mkConst ``Bool.true)).abstract locals
-      reconstructedSource ← replaceAt reconstructedSource selected.path.toList reified
+      let output := (← projectType term).abstract locals
+      discard <| transport context actualSlots output
+    discard <| transport (context.extract 0 selected.stateBinder)
+      (actualSlots.filter (· < selected.stateBinder)) stateBinder.domain
+    discard <| transport context (actualSlots.push selected.stateBinder) observation
+    return { rawContext := context, rawObservation := observation : ReadoutScope }
   return {
-    source := info.type
-    expanded := reconstructedSource
     definition := definition
     levels := info.levelParams
     selection := selection
@@ -416,103 +472,48 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
     coordinates := coordinates
     readouts := readouts }
 
-private partial def packedType (domains : Array SourceBinder) (i : Nat)
-    (parameters : Array Expr) : M Expr := do
-  debit
-  if i ≥ domains.size then return mkConst ``Unit
-  let b := domains[i]!
-  let domain := b.domain.instantiateRev parameters
-  if i + 1 == domains.size then return domain
-  withLocalDecl b.name b.info domain fun x => do
-    let tail ← packedType domains (i + 1) (parameters.push x)
-    let u ← typeLevel domain
-    let v ← typeLevel tail
-    return mkApp2 (mkConst ``Sigma [u, v]) domain (← mkLambdaFVars #[x] tail)
-
-private partial def packedValue (type : Expr) (parameters : Array Expr) (i : Nat) : M Expr := do
-  debit
-  if i ≥ parameters.size then return mkConst ``Unit.unit
-  if i + 1 == parameters.size then return parameters[i]!
-  let args := type.getAppArgs
-  unless type.isAppOfArity ``Sigma 2 do fail "unclassified_form:source.packing"
-  let tailType ← normalizeHead (mkApp args[1]! parameters[i]!)
-  return mkApp4 (mkConst ``Sigma.mk type.getAppFn.constLevels!) args[0]! args[1]!
-    parameters[i]! (← packedValue tailType parameters (i + 1))
-
 private def family := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-/-- Every selected role is checked at the actual source occurrence and its type.
-Coordinate projection is inverted before compiled shapes are compared. -/
-def validateFields (scope : Scope) (signature actual : Expr) : M Unit := do
-  let params ← packedType scope.coordinates 0 #[]
-  unless ← sameShape params (← projectField (family ++ `Signature.Params) signature) do
-    fail "unclassified_form:source.params"
-  let roles ← query <| Contract.CompiledExpressions.finiteIndices
-    (← projectField (family ++ `Signature.finiteRole) signature)
+/-- Completeness and duplicate freedom are kernel fields; the judge reads
+ only the literal enumeration and its actual indexed carrier. -/
+def enumeration (name : Name) (carrier : Expr) : M (Array Expr) := do
+  let info ← getConstInfo name
+  unless info.type.isAppOfArity `LeanInformationAudit.Contract.FiniteEnumeration 1 do
+    fail "contract.node_binding:source.enumeration_type"
+  unless ← sameShape info.type.appArg! carrier do
+    fail "contract.node_binding:source.enumeration_carrier"
+  let some value := info.value? | fail "contract.node_binding:source.enumeration_definition"
+  let find := (← read).provenance.view.find?
+  let fields ← IO.ofExcept <| Contract.Literal.fields find
+    `LeanInformationAudit.Contract.FiniteEnumeration value 3
+  let entries ← IO.ofExcept <| Contract.Literal.referencedValue find fields[0]!
+  IO.ofExcept <| Contract.Literal.list "source.enumeration" entries
+
+/-- A source observation is compared through its kernel-checked full-telescope
+ Eq. The actual readout, role, parameter coordinates and state are literal
+ operands of its right endpoint; no source expression is evaluated. -/
+def validateFields (scope : Scope) (actual : Expr) (theoremName : Name)
+    (roles : Array Expr) : M Unit := do
   unless roles.size == scope.readouts.size do fail "unclassified_form:source.roles"
-  inContext scope.coordinates fun locals => do
-    let parameter ← packedValue params locals 0
-    for (role, readout) in roles.zip scope.readouts do
-      debit
-      let state := readout.state.instantiateRev locals
-      let output := readout.output.instantiateRev locals
-      unless (← isType state) && (← isType output) &&
-          (← sameShape state (← projectField (family ++ `Signature.State) signature #[parameter])) &&
-          (← sameShape output (← projectField (family ++ `Signature.Output) signature #[role, parameter])) do
-        fail "unclassified_form:source.state_or_output"
-      let observation := Expr.lam `state readout.state readout.projected .default
-      let observation := observation.instantiateRev locals
-      let actualReadout ← projectField (family ++ `Realization.readout) actual #[role, parameter]
-      unless ← sameShape observation actualReadout do
-        fail "unclassified_form:source.actual_observation"
-
-/-- Structural reconstruction checks every hypothesis, dictionary and conclusion.
-BinderInfo is checked explicitly since Lean defeq alone ignores it. -/
-partial def reconstruct (source law : Expr) (depth : Nat := 0) : M Unit := do
-  debit
-  if depth > 256 then fail "incomplete_closure:E8.reconstruction_depth"
-  if source.equal law then return
-  let law ← match law with
-    | .forallE .. | .lam .. | .letE .. => pure law
-    | _ =>
-      if !source.isAppOfArity ``Not 1 && source.getAppFn == law.getAppFn then pure law
-      else query (Contract.CompiledExpressions.head law (zeta := false))
-  -- Head computation exposes Not as an implication. Keep its source polarity and inspect
-  -- the full proposition underneath, including all binder modes.
-  if source.isAppOfArity ``Not 1 then
-    let .forallE _ domain body .default := law
-      | fail "unclassified_form:source.statement_reconstruction"
-    unless body.equal (mkConst ``False) do
-      fail "unclassified_form:source.statement_reconstruction"
-    reconstruct source.getAppArgs[0]! domain (depth + 1)
-    return
-  match source, law with
-  | .letE n d v b _, .letE _ d' v' b' _ =>
-    reconstruct d d' (depth + 1)
-    unless ← sameShape v v' do fail "unclassified_form:source.let_reconstruction"
-    withLetDecl n d v fun x =>
-      reconstruct (b.instantiate1 x) (b'.instantiate1 x) (depth + 1)
-  | .letE .., _ => fail "unclassified_form:source.missing_let"
-  | .forallE n d b bi, .forallE _ d' b' bi' =>
-    unless bi == bi' do
-      fail "unclassified_form:source.telescope_reconstruction"
-    reconstruct d d' (depth + 1)
-    withLocalDecl n bi d fun x =>
-      reconstruct (b.instantiate1 x) (b'.instantiate1 x) (depth + 1)
-  | .forallE .., _ => fail "unclassified_form:source.missing_binder"
-  | .lam n d b bi, .lam _ d' b' bi' =>
-    unless bi == bi' do fail "unclassified_form:source.lambda_reconstruction"
-    reconstruct d d' (depth + 1)
-    withLocalDecl n bi d fun x =>
-      reconstruct (b.instantiate1 x) (b'.instantiate1 x) (depth + 1)
-  | _, _ =>
-    unless ← sameShape source law do fail "unclassified_form:source.statement_reconstruction"
-    -- Inspect logical clauses without interpreting their mathematical operands.
-    -- In particular defeq must not erase binder modes below a conjunction or Exists.
-    if #[``And, ``Or, ``Iff, ``Not, ``Exists].contains (source.getAppFn.constName?.getD .anonymous) &&
-        source.getAppFn == law.getAppFn && source.getAppNumArgs == law.getAppNumArgs then
-      for (left, right) in source.getAppArgs.zip law.getAppArgs do
-        reconstruct left right (depth + 1)
-
+  for h : i in [:scope.readouts.size] do
+    debit
+    let readout := scope.readouts[i]
+    let selected := scope.selection.readouts[i]!
+    let body ← boundObservationBody theoremName scope.definition scope.levels selected
+      readout.rawContext readout.rawObservation
+    let arguments := body.getAppArgs
+    let expectedArity := if selected.functionOperand then 4 else 5
+    unless arguments.size == expectedArity && arguments[1]!.equal actual &&
+        arguments[2]!.equal roles[i]! do
+      fail "contract.node_binding:source.observation_actual_role"
+    discard <| parameterSlots readout.rawContext arguments[3]! scope.selection.coordinates
+    unless selected.functionOperand do
+      let state ← match selected.stateOperand with
+        | none => pure (.bvar (readout.rawContext.size - 1 - selected.stateBinder))
+        | some path => do
+          let (inside, state) ← atPath readout.rawObservation path
+          unless inside.isEmpty do fail "contract.node_binding:source.observation_state_scope"
+          pure state
+      unless arguments[4]!.equal state do fail "contract.node_binding:source.observation_state"
 
 end LeanInformationAudit.CompiledSourceScope

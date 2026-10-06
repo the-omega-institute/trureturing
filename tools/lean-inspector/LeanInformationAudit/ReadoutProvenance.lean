@@ -1,7 +1,6 @@
 import LeanInformationAudit.ReadoutProvenance.Types
 namespace LeanInformationAudit.RegistrationGates.Compiled
 open Lean
-open Contract.CompiledExpressions (typeShape propositionShape)
 
 
 -- The sole admission entry: project the occurrence type in its lexical context, then
@@ -50,10 +49,10 @@ private partial def visitOccurrence (env : CompiledView) (pos : Position)
     directConstant env n
   if let .proj n _ _ := e then directProjection env n
   if (← get).forbidden then return
-  if ReadoutFamily.carrierHeads.contains first && e.isApp then
+  if carrierHeads.contains first && e.isApp then
     let decoded ← inBinderContext context fun locals => do
       let some actual ← substitute e locals | return false
-      let (value, work) := ReadoutFamily.carrier env.find? actual (← get).exprFuel
+      let (value, work) ← boundQueryWork (some <$> exactNodeHead actual) (← get).exprFuel
       unless ← chargeTraversal work do return false
       let some value := value | return false
       if value == actual then return false
@@ -92,7 +91,7 @@ private partial def visitOccurrence (env : CompiledView) (pos : Position)
       if unknown then
         noteUnclassified ⟨"unclassified_argument_type", first, namespaceLabel env first, origin⟩
       return true
-    let some proof ← boundedQuery (compiledQuery (propositionShape type)) `proof_boundary | return false
+    let some proof ← boundedQuery (typedNodeProp type) `proof_boundary | return false
     return proof
   -- admission-exit: visitOccurrence.3 rule=retained-witness.rule
   if proof == some true then return
@@ -168,7 +167,7 @@ private def process (env : CompiledView) : WalkM Unit := do
         pure cached
       else do
         let some type ← occurrenceType (mkConst n.1 n.2) | continue
-        let some proof ← boundedQuery (compiledQuery (propositionShape type)) `declaration_proof_boundary | continue
+        let some proof ← boundedQuery (typedNodeProp type) `declaration_proof_boundary | continue
         let summary ← if proof then summarise env #[(.typePos, type)] (← get).exprFuel
           else if info.hasValue (allowOpaque := true) then do
             let valuePos := match info with | .thmInfo _ => .proofPos | _ => .dataPos
@@ -261,11 +260,29 @@ private def unclassifiedJson (u : Unclassified) (walked : Array String) : Json :
 def observedWholeReadoutCalls : QueryM Nat :=
   return (← (← querySession).get).wholeReadoutCalls
 
+private def literalReadout (realization : Name) : QueryM (Option (Expr × Name) × Nat) := do
+  boundQueryWork (do
+    let info ← queryConstant realization
+    let raw ← match info with
+      | .thmInfo _ =>
+        unless info.type.isAppOfArity
+            `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 do return none
+        pure info.type.getAppArgs[2]!
+      | .defnInfo definition => pure definition.value
+      | _ => return none
+    let value ← exactNodeHead raw
+    let head := value.getAppFn.constName?.getD .anonymous
+    unless #[`D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.mk,
+        `LeanInformationAudit.StructuralPrimitiveRealization.mk].contains head do return none
+    let some (.ctorInfo constructor) := (← getCompiledView).find? head | return none
+    let some readout := value.getAppArgs[constructor.numParams]? | return none
+    return some (readout, readout.getAppFn.constName?.getD realization))
+
 def provenanceErrorCurrent (root catalog theoremName realization : Name) : QueryM (Option String) := do
   (← querySession).modify fun state => { state with wholeReadoutCalls := state.wholeReadoutCalls + 1 }
   let env ← getCompiledView
   let budget := min provenanceExpressionFuel (provenanceExpressionLimit.get (← getQueryOptions))
-  let (readout, extractionWork) := ReadoutFamily.extract env.find? realization budget
+  let (readout, extractionWork) ← literalReadout realization
   let address := readout.map (·.2) |>.getD realization
   let result ← match readout with
     | some (e, _) => safeCollect env theoremName address e extractionWork
@@ -310,10 +327,8 @@ def providerArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
 
 /-- One raw node's occurrence-relative rejection checks. This grants no
 executable/type admission; the shared E2–E5 compiler owns that judgment.
-The source contract can defer the legacy apartness grammar to its existing
-rigid Lean conversion check; deferred propositions remain unclassified here. -/
-def argumentIdentityNode (env : CompiledView) (expression : Expr)
-    (deferStatementApart : Bool := false) : WalkM Unit := do
+Apartness requires coordinate-bound exact facts and distinct inductive heads. -/
+def argumentIdentityNode (env : CompiledView) (expression : Expr) : WalkM Unit := do
   unless ← chargeTraversal do return
   if let .const name _ := expression.getAppFn then directConstant env name
   if let .proj name _ _ := expression then directProjection env name
@@ -323,25 +338,31 @@ def argumentIdentityNode (env : CompiledView) (expression : Expr)
     exactScalarStatement type.getAppArgs[0]! else pure false
   if exact || decision then modify fun s => { s with forbidden := true }
   let proposition := type == .sort .zero
-  let some proof ← boundedQuery (compiledQuery (propositionShape type)) `raw_argument_proof_type | return
+  let some proof ← boundedQuery (typedNodeProp type) `raw_argument_proof_type | return
   if proposition || proof then
     let candidate := if proposition then expression else type
     if candidate.equal (← get).statement then
       modify fun s => { s with forbidden := true }
     else
-      let unresolved ← if deferStatementApart then pure true
-        else (·.isNone) <$> checkedStatementType env candidate
+      let unresolved ← (·.isNone) <$> checkedStatementType env candidate
       if unresolved then
         noteUnclassified ⟨"unresolved_statement_identity", (← get).currentFirst,
           "argument", (← get).currentOrigin⟩
 
 /-- Initialize identity-only state once for the whole supplied telescope. -/
-def argumentIdentityState (theoremName : Name) (available : Nat) : QueryM WalkState := do
+def argumentIdentityState (theoremName : Name) (available : Nat)
+    (levels : Option (List Level) := none) : QueryM WalkState := do
   let env ← getCompiledView
   let info ← queryConstant theoremName
+  if let some levels := levels then
+    unless info.levelParams.length == levels.length do
+      throw <| IO.userError "contract.node_binding:statement_levels"
+  let statement := match levels with
+    | none => info.type
+    | some levels => Contract.Literal.instantiateRawLevels info.levelParams levels info.type
   let (_, state) ← (statementAliases env).run {
-    theoremName, statement := info.type,
-    decision := mkApp (mkConst ``Decidable) info.type, exprFuel := available }
+    theoremName, statement,
+    decision := mkApp (mkConst ``Decidable) statement, exprFuel := available }
   return state
 
 -- Enrollment supplies the positive E2 grammar judgment. Consumption checks
@@ -353,7 +374,7 @@ private partial def retainedTypeIdentity (env : CompiledView) (expression : Expr
   if let .proj name _ _ := expression then directProjection env name
   let some type ← occurrenceType expression | return
   let proposition := type == .sort .zero
-  let some proof ← boundedQuery (compiledQuery (propositionShape type)) `retained_proof_type | return
+  let some proof ← boundedQuery (typedNodeProp type) `retained_proof_type | return
   if proposition || proof then
     let candidate := if proposition then expression else type
     if candidate.equal (← get).statement then
@@ -383,11 +404,16 @@ private partial def retainedTypeIdentity (env : CompiledView) (expression : Expr
 entry runs the occurrence-relative type judgment, never a template body or proof
 implementation. All obligations share one lower-only traversal budget. -/
 def templateTypesCurrent (theoremName : Name) (types : Array (Expr × Array Expr))
-    (availableWork : Nat) : QueryM (Except String Nat) := do
+    (availableWork : Nat) (levels : Option (List Level) := none) : QueryM (Except String Nat) := do
   let env ← getCompiledView
   let some info := env.find? theoremName
     | return .error "incomplete_closure:dtr.instantiated_type"
-  let statement := info.type
+  if let some levels := levels then
+    unless info.levelParams.length == levels.length do
+      return .error "contract.node_binding:statement_levels"
+  let statement := match levels with
+    | none => info.type
+    | some levels => Contract.Literal.instantiateRawLevels info.levelParams levels info.type
   let budget := min (min 524288 availableWork) (provenanceExpressionLimit.get (← getQueryOptions))
   let action : WalkM Unit := do
     statementAliases env

@@ -110,6 +110,10 @@ structure BoundOperand where
   location : NodeCoordinate
   value : Expr
   role : BoundRole
+  type : Option Expr := none
+  relation : Option Name := none
+  other : Option Expr := none
+  otherLocation : Option NodeCoordinate := none
   proposition : Option Expr := none
   deriving Inhabited
 
@@ -117,33 +121,90 @@ structure BoundOperand where
  The proof fields have already been checked by the Reg compiler. -/
 def fact (view : View) (name : Name) : Except String (Array BoundOperand) := do
   let some (.defnInfo info) := view.find name | bad s!"fact_definition:{name}"
-  unless info.type.isConstOf ``NodeFact && info.safety == .safe do bad s!"fact_type:{name}"
+  unless info.safety == .safe do bad s!"fact_safety:{name}"
+  if !info.type.isConstOf ``NodeFact then
+    let mut type := info.type
+    let mut value := info.value
+    let mut telescope : List (Expr → Expr) := []
+    let mut types : List (Expr → Expr) := []
+    while true do
+      match type with
+      | .forallE binder domain body mode =>
+        let .lam _ actualDomain actualBody actualMode := value
+          | bad "reflection_lambda"
+        unless domain.equal actualDomain && mode == actualMode do bad "reflection_telescope"
+        telescope := (fun e => Expr.lam binder domain e mode) :: telescope
+        types := (fun e => Expr.forallE binder domain e mode) :: types
+        type := body
+        value := actualBody
+      | .letE binder domain assigned body nd =>
+        let .letE _ actualDomain actualAssigned actualBody actualNd := value
+          | bad "reflection_let"
+        unless domain.equal actualDomain && assigned.equal actualAssigned && nd == actualNd do
+          bad "reflection_let_telescope"
+        let wrap := fun e => Expr.letE binder domain assigned e nd
+        telescope := wrap :: telescope
+        types := wrap :: types
+        type := body
+        value := actualBody
+      | _ => break
+    unless type.isAppOfArity `LeanInformationAudit.Contract.BoolReflection 2 do
+      bad s!"fact_type:{name}"
+    unless value.getAppFn.isConstOf `LeanInformationAudit.Contract.BoolReflection.mk &&
+        value.getAppArgs.size == 5 do bad "reflection_constructor"
+    let indices := type.getAppArgs
+    let fields := value.getAppArgs
+    unless fields[0]!.equal indices[0]! && fields[1]!.equal indices[1]! do
+      bad "reflection_indices"
+    let left := telescope.foldl (fun e wrap => wrap e) indices[0]!
+    let right := telescope.foldl (fun e wrap => wrap e) indices[1]!
+    let leftAt ← binds view fields[2]! left
+    let rightAt ← binds view fields[3]! right
+    let leftType := types.foldl (fun e wrap => wrap e) (mkSort .zero)
+    let rightType := types.foldl (fun e wrap => wrap e) (mkConst ``Bool)
+    let relation := some `LeanInformationAudit.Contract.BoolReflection
+    return #[
+      { location := leftAt, value := left, role := .relation, type := some leftType,
+        relation, other := some right, otherLocation := some rightAt },
+      { location := rightAt, value := right, role := .relation, type := some rightType,
+        relation, other := some left, otherLocation := some leftAt }]
   let e ← Literal.referencedValue view.find info.value
   let args := e.getAppArgs
-  let one := fun role value location => do
-    return #[{ location := ← binds view location value, value, role : BoundOperand }]
+  let one := fun role value location type => do
+    return #[{ location := ← binds view location value, value, role, type : BoundOperand }]
+  let two := fun constructor left right leftAt rightAt type => do
+    let left ← one .relation left leftAt type
+    let right ← one .relation right rightAt type
+    return (left.map fun item => { item with
+      relation := some constructor
+      other := some right[0]!.value
+      otherLocation := some right[0]!.location }) ++
+      (right.map fun item => { item with
+        relation := some constructor
+        other := some left[0]!.value
+        otherLocation := some left[0]!.location })
   match e.getAppFn.constName?.getD .anonymous with
   | ``NodeFact.data =>
     unless args.size == 3 do bad "data_arity"
-    one .data args[1]! args[2]!
+    one .data args[1]! args[2]! (some args[0]!)
   | ``NodeFact.type =>
     unless args.size == 2 do bad "type_arity"
-    one .type args[0]! args[1]!
+    one .type args[0]! args[1]! (e.getAppFn.constLevels!.head?.map mkSort)
   | ``NodeFact.proof =>
     unless args.size == 3 do bad "proof_arity"
-    let operands ← one .proof args[1]! args[2]!
+    let operands ← one .proof args[1]! args[2]! (some args[0]!)
     return operands.map fun operand => { operand with proposition := some args[0]! }
   | ``NodeFact.exact =>
     unless args.size == 6 do bad "exact_arity"
     let evidence ← Literal.referencedValue view.find args[5]!
     unless evidence.getAppFn.isConstOf ``ExactMatch.evidence do bad "exact_evidence_required"
-    return (← one .relation args[1]! args[3]!) ++ (← one .relation args[2]! args[4]!)
+    two ``NodeFact.exact args[1]! args[2]! args[3]! args[4]! (some args[0]!)
   | ``NodeFact.equal =>
     unless args.size == 6 do bad "equal_arity"
-    return (← one .relation args[1]! args[3]!) ++ (← one .relation args[2]! args[4]!)
+    two ``NodeFact.equal args[1]! args[2]! args[3]! args[4]! (some args[0]!)
   | ``NodeFact.equivalent =>
     unless args.size == 5 do bad "equivalent_arity"
-    return (← one .relation args[0]! args[2]!) ++ (← one .relation args[1]! args[3]!)
+    two ``NodeFact.equivalent args[0]! args[1]! args[2]! args[3]! (some (mkSort .zero))
   | _ => bad s!"fact_constructor:{name}"
 
 /-- Distinct rigid inductive heads after kernel-checked definitional matches
@@ -193,6 +254,11 @@ def coverage (view : View) (expected : Array NodeCoordinate) (payload : Expr)
     unless remaining > 0 do bad "coverage_fuel"
     remaining := remaining - 1
     visited := visited.push (location, propositionOnly)
+    unless propositionOnly do
+      for operand in operands do
+        if operand.location == location then
+          if let some other := operand.otherLocation then
+            pending := pending.push (other, ← locate view other, false)
     let cut := if propositionOnly then none else
       operands.find? (fun item => item.location == location && item.role == .proof)
     if let some cut := cut then
@@ -304,14 +370,21 @@ structure SealReadout where
   units : Nat
   deriving Repr
 
-def sealFacts (view : View) (name : Name) (catalogAt : NodeCoordinate) : Except String SealReadout := do
+def sealFacts (view : View) (reference : Expr) (catalogAt : NodeCoordinate) : Except String SealReadout := do
+  let reference := reference.consumeMData
+  unless reference.isConst do bad "seal_facts_reference"
+  let name := reference.constName!
   let some (.defnInfo info) := view.find name | bad "seal_facts_definition"
-  unless info.safety == .safe do bad "unsafe_definition"
-  unless info.type.isAppOfArity ``SealFacts 1 do bad "seal_facts_type"
-  unless (← locate view catalogAt).equal info.type.appArg! do bad "seal_catalog_binding"
-  let cs ← Literal.fields view.find ``SealCatalog info.type.appArg! 15
+  unless info.safety == .safe && !view.external name do bad "unsafe_definition"
+  let levels := reference.constLevels!
+  unless info.levelParams.length == levels.length do bad "seal_facts_levels"
+  let type := Literal.instantiateRawLevels info.levelParams levels info.type
+  let value := Literal.instantiateRawLevels info.levelParams levels info.value
+  unless type.isAppOfArity ``SealFacts 1 do bad "seal_facts_type"
+  unless (← locate view catalogAt).equal type.appArg! do bad "seal_catalog_binding"
+  let cs ← Literal.fields view.find ``SealCatalog type.appArg! 15
   let size ← Literal.nat "seal.size" cs[3]!
-  let fs ← Literal.fields view.find ``SealFacts info.value 3
+  let fs ← Literal.fields view.find ``SealFacts value 3
   let units ← table view fs[0]! size
   let entries ← Literal.list "seal.rows" (← Literal.referencedValue view.find fs[1]!)
   let rows ← entries.mapM fun value => do

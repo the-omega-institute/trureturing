@@ -111,8 +111,14 @@ def AnchorSensitivity {P : Prop} : (implementation : Implementation.{u,v,w,t,s,r
 /-- Individual slot submissions preserve partial support in the arena's own
 finite enumeration. Each evidence constructor proves that exact registered slot. -/
 structure PartialSlotEvidence {P : Prop} (implementation : Implementation.{u,v,w,t,s,r,o,a,k} P) where
-  readouts : ∀ i, Obligation (implementation.ReadoutSensitivity i)
-  anchors : ∀ i, Obligation (implementation.AnchorSensitivity i)
+  readouts : List (Sigma fun i : implementation.ReadoutIndex =>
+    Obligation (implementation.ReadoutSensitivity i))
+  readoutsNodup : (readouts.map Sigma.fst).Nodup
+  readoutsComplete : ∀ i, i ∈ readouts.map Sigma.fst
+  anchors : List (Sigma fun i : implementation.AnchorIndex =>
+    Obligation (implementation.AnchorSensitivity i))
+  anchorsNodup : (anchors.map Sigma.fst).Nodup
+  anchorsComplete : ∀ i, i ∈ anchors.map Sigma.fst
 
 end Implementation
 end LeanInformationAudit.Contract

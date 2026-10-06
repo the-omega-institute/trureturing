@@ -1,4 +1,4 @@
-import LeanInformationAudit.Contract.CompiledExpressions
+import LeanInformationAuditInterface.Contract.NodeFactsCore
 import LeanInformationAudit.BindingRecords
 import LeanInformationAudit.CatalogData
 import LeanInformationAudit.StructuralProvenance
@@ -9,6 +9,9 @@ namespace LeanInformationAudit
 open Lean
 
 namespace TemplateAudit
+
+/-- Compiler-owned proof boundary marker; never a delivered kernel proof. -/
+def proofPlaceholder (type : Expr) : Expr := mkApp (mkConst ``lcProof) type
 
 register_option informationTemplate.work : Nat := {
   defValue := 524288
@@ -65,60 +68,6 @@ private inductive Operation where
   | abstract (localId : FVarId)
   | universes (parameters : List Name) (values : List Level)
 
-private partial def sameLevel (a b : Level) (depth : Nat) : WorkM Bool := do
-  step depth
-  match a, b with
-  | .zero, .zero => return true
-  | .param a, .param b => return a == b
-  | .mvar a, .mvar b => return a == b
-  | .succ a, .succ b => sameLevel a b (depth + 1)
-  | .max a b, .max c d | .imax a b, .imax c d =>
-    return (← sameLevel a c (depth + 1)) && (← sameLevel b d (depth + 1))
-  | _, _ => return false
-
-private partial def offset (u : Level) (depth : Nat) : WorkM (Level × Nat) := do
-  step depth
-  match u with
-  | .succ v =>
-    let (base, amount) ← offset v (depth + 1)
-    return (base, amount + 1)
-  | _ => return (u, 0)
-
-private partial def neverZero (u : Level) (depth : Nat) : WorkM Bool := do
-  step depth
-  match u with
-  | .succ _ => return true
-  | .max a b => return (← neverZero a (depth + 1)) || (← neverZero b (depth + 1))
-  | .imax _ b => neverZero b (depth + 1)
-  | _ => return false
-
-/-- Exactly the cheap universe simplifications performed by Lean's
-instantiateLevelParams (mkLevelMax'/mkLevelIMax'), with charged traversals.
-This is universe substitution, not term normalization or defeq comparison. -/
-private def maxLevel (u v : Level) (depth : Nat) : WorkM Level := do
-  step depth
-  if ← sameLevel u v depth then return u
-  if u.isZero then return v
-  if v.isZero then return u
-  let (ub, uo) ← offset u depth
-  let (vb, vo) ← offset v depth
-  let subsumes := fun a b bb bo ao => do
-    if bb.isZero && ao ≥ bo then return true
-    match a with
-    | .max a₁ a₂ => return (← sameLevel b a₁ depth) || (← sameLevel b a₂ depth)
-    | _ => return false
-  if ← subsumes u v vb vo uo then return u
-  if ← subsumes v u ub uo vo then return v
-  if ← sameLevel ub vb depth then return if uo ≥ vo then u else v
-  return .max u v
-
-private def imaxLevel (u v : Level) (depth : Nat) : WorkM Level := do
-  step depth
-  if ← neverZero v depth then return ← maxLevel u v depth
-  if v.isZero || u.isZero then return v
-  if ← sameLevel u v depth then return u
-  return .imax u v
-
 private partial def level (u : Level) (parameters : List Name) (values : List Level)
     (depth : Nat) : WorkM Level := do
   step depth
@@ -134,8 +83,8 @@ private partial def level (u : Level) (parameters : List Name) (values : List Le
       | _, _ => pure u
     lookup parameters values
   | .succ v => return .succ (← child v)
-  | .max a b => maxLevel (← child a) (← child b) (depth + 1)
-  | .imax a b => imaxLevel (← child a) (← child b) (depth + 1)
+  | .max a b => return .max (← child a) (← child b)
+  | .imax a b => return .imax (← child a) (← child b)
   | _ => return u
 
 private partial def raw (operation : Operation) (e : Expr) (cutoff depth : Nat) : WorkM Expr := do

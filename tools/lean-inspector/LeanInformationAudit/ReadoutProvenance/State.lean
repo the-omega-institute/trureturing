@@ -1,8 +1,7 @@
 import Lean.Data.Options
 import Lean.Data.Json
 import LeanInformationAudit.ReadoutProvenance.View
-import LeanInformationAudit.Contract.CompiledExpressions
-import LeanInformationAudit.ReadoutProvenance.Family
+import LeanInformationAudit.Contract.NodeFacts
 /-!
 Occurrence type shapes are projected from compiled declarations in their original
 lexical binder context at the existing work limit. An allowlist checks structural
@@ -14,7 +13,6 @@ contain declaration syntax only, while projected types and verdicts are query-lo
 
 namespace LeanInformationAudit.RegistrationGates
 open Lean
-open Contract.CompiledExpressions (typeShape propositionShape)
 
 -- §10.1 budget record: safety limit outside the capacity domain; owner=governance lane;
 -- basis=the existing 4100-link closure-exhaustion fixture;
@@ -127,6 +125,20 @@ def isJudgeProjection (name : Name) : Bool :=
 
 def closed (e : Expr) : Bool := !e.hasLooseBVars && !e.hasFVar && !e.hasMVar
 
+def carrierHeads : Array Name := #[
+  `D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.Index,
+  `D5.S3.ConceptDynamics.InformationEscape.Catalog.Index,
+  `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index,
+  `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Output,
+  `D5.S3.ConceptDynamics.InformationEscape.Arena.State,
+  `LeanInformationAudit.StructuralPrimitiveSignature.Index,
+  `LeanInformationAudit.StructuralPrimitiveSignature.Output,
+  `LeanInformationAudit.StructuralArena.State,
+  `D5.S3.ConceptDynamics.InformationEscape.StructuralArena.State,
+  `D5.S3.ConceptDynamics.InformationEscape.StructuralPrimitiveSignature.Index,
+  `D5.S3.ConceptDynamics.InformationEscape.StructuralPrimitiveSignature.Output]
+
+
 def decisionFamily : Array Name := #[
   ``Decidable, ``DecidablePred, ``DecidableRel, ``DecidableEq,
   ``DecidableLE, ``DecidableLT]
@@ -178,8 +190,7 @@ inductive ProvenanceAllowRule where
   | ordinaryData | typeFamily | scalarCarrier | rigidCarrier | functionCarrier
   | containerCarrier | subtypeCarrier | nullaryCarrier | nominalCarrier
   | fieldProposition | fieldConcrete | fieldParameter | fieldFunction | fieldAlias | fieldAudited
-  | statementHeadApart | statementLiteralApart | statementDomainApart
-  | statementBodyApart | statementArgumentApart | statementRigidApart | statementMetadataApart
+  | statementHeadApart
   | proofBoundary | propositionBoundary | externalLeaf | syntaxLeaf
   | listForall | listNegated | listPositive | carrierAlias | carrierProjection
   deriving BEq, Repr
@@ -276,14 +287,16 @@ structure ProvenanceSession where
   counters : ProvenanceCounters := {}
   aliasMemo : Bool × Option StatementAliasMemo := (false, none)
   wholeReadoutCalls : Nat := 0
-  expressions : Option (CompiledView × Contract.CompiledExpressions.Memo ×
-    Std.HashMap USize (LocalContext × Contract.CompiledExpressions.Memo)) := none
+  nodeWork : Nat := 0
+  nodeIndexes : Std.HashMap USize (Array Contract.NodeFacts.BoundOperand ×
+    Std.HashMap Expr (Array Contract.NodeFacts.BoundOperand)) := {}
   deriving Inhabited
 
 structure QueryContext where
   view : CompiledView
   session : IO.Ref ProvenanceSession
   locals : LocalContext := {}
+  nodeFacts : Array Contract.NodeFacts.BoundOperand := #[]
   options : Options := {}
   heartbeatStart : Nat
   heartbeatLimit : Nat
@@ -325,7 +338,7 @@ def compiledValue (info : ConstantInfo) (levels : List Level)
     throw <| IO.userError s!"incomplete_closure:provenance.levels:{info.name}"
   let some value := info.value? (allowOpaque := allowOpaque)
     | throw <| IO.userError s!"incomplete_closure:provenance.value:{info.name}"
-  return value.instantiateLevelParams info.levelParams levels
+  return Contract.Literal.instantiateRawLevels info.levelParams levels value
 
 structure WalkState where
   theoremName : Name
@@ -621,30 +634,196 @@ def listedTypeClasses : Array Name := #[
   `GroupWithZero, `CommGroupWithZero, `CommMonoidWithZero, `Nontrivial,
   `Fact, `CharP]
 
-/-- Share completed closed calculations in this immutable-table session.
-Local expressions retain their own query memo and current lexical table. -/
-def compiledQueryWork (action : Contract.CompiledExpressions.M α)
-    (fuel : Nat := 524288) : QueryM (α × Nat) := do
-  let context ← read
-  let (closed, scopes) := match (← context.session.get).expressions with
-    | some (view, closed, scopes) =>
-      if view.constantsIdentity == context.view.constantsIdentity then (closed, scopes)
-      else (default, {})
-    | none => (default, {})
-  let address := unsafe ptrAddrUnsafe context.locals
-  let localMemo := (scopes[address]?).map (·.2) |>.getD default
-  let (value, work, closed, localMemo) ← Contract.CompiledExpressions.runScoped {
-    find := context.view.find?
-    local? := context.locals.find?
-    heartbeatStart := context.heartbeatStart
-    heartbeatLimit := context.heartbeatLimit } action closed localMemo fuel
-  context.session.modify fun session => { session with
-    expressions := some (context.view, closed, scopes.insert address (context.locals, localMemo)) }
-  return (value, work)
+/-- Bound facts supply compiler-checked types and relations. The lookup closes
+ the actual lexical telescope; it never infers a type or reduces a term. -/
+private def closeNode (locals : LocalContext) (e : Expr) : Expr := Id.run do
+  let mut result := e
+  for declaration in locals.decls.toArray.reverse do
+    if let some declaration := declaration then
+      let x := mkFVar declaration.fvarId
+      let body := result.abstract #[x]
+      result := if let some value := declaration.value? (allowNondep := true) then
+        .letE declaration.userName declaration.type value body declaration.isNondep
+      else .lam declaration.userName declaration.type body declaration.binderInfo
+  return result
 
-/-- Project compiler-owned type shapes through the current lexical table. -/
-def compiledQuery (action : Contract.CompiledExpressions.M α) : QueryM α := do
-  return (← compiledQueryWork action).1
+private def openNodeType (locals : LocalContext) (type : Expr) : Option Expr := Id.run do
+  let mut result := type
+  for declaration in locals.decls.toArray do
+    if let some declaration := declaration then
+      match result with
+      | .forallE _ _ body _ => result := body.instantiate1 (mkFVar declaration.fvarId)
+      | .letE _ _ _ body _ => result := body.instantiate1 (mkFVar declaration.fvarId)
+      | _ => return none
+  return some result
+
+private def closeProposition (locals : LocalContext) (e : Expr) : Expr := Id.run do
+  let mut result := e
+  for declaration in locals.decls.toArray.reverse do
+    if let some declaration := declaration then
+      let body := result.abstract #[mkFVar declaration.fvarId]
+      result := if let some value := declaration.value? (allowNondep := true) then
+        .letE declaration.userName declaration.type value body declaration.isNondep
+      else .forallE declaration.userName declaration.type body declaration.binderInfo
+  return result
+
+private def factsAt (e : Expr) : QueryM (Array Contract.NodeFacts.BoundOperand) := do
+  let context ← read
+  let identity := unsafe ptrAddrUnsafe context.nodeFacts
+  let session ← context.session.get
+  let index ← if let some (_, index) := session.nodeIndexes[identity]? then pure index else do
+    let mut index : Std.HashMap Expr (Array Contract.NodeFacts.BoundOperand) := {}
+    for fact in context.nodeFacts do
+      index := index.insert fact.value ((index[fact.value]?).getD #[] |>.push fact)
+      if let some proposition := fact.proposition then
+        let boundary := { fact with
+          value := proposition, role := .type,
+          type := some (mkSort .zero), proposition := some proposition,
+          relation := none, other := none, otherLocation := none }
+        index := index.insert proposition ((index[proposition]?).getD #[] |>.push boundary)
+    context.session.modify fun session => { session with
+      nodeWork := session.nodeWork + context.nodeFacts.size
+      nodeIndexes := session.nodeIndexes.insert identity (context.nodeFacts, index) }
+    pure index
+  context.session.modify fun session => { session with
+    nodeWork := session.nodeWork + context.locals.numIndices + 1 }
+  let closed := closeNode context.locals e
+  let proposition := closeProposition context.locals e
+  let inferred := ((index[proposition]?).getD #[]).filter fun fact =>
+    fact.role == .type && fact.proposition.any (·.equal fact.value)
+  return (index[e]?).getD #[] ++ (if closed.equal e then #[] else (index[closed]?).getD #[]) ++ inferred
+
+private def matchingFact (e : Expr) : QueryM (Option Contract.NodeFacts.BoundOperand) := do
+  return (← factsAt e).find? (·.type.isSome)
+
+def typedNodeType (e : Expr) : QueryM Expr := do
+  (← read).session.modify fun session => { session with nodeWork := session.nodeWork + 1 }
+  if e.isAppOfArity ``lcProof 1 then return e.appArg!
+  if let .fvar id := e then return (← localDeclaration id).type
+  if let .const name levels := e then
+    let info ← queryConstant name
+    unless info.levelParams.length == levels.length do
+      throw <| IO.userError "contract.node_binding:type_levels"
+    return Contract.Literal.instantiateRawLevels info.levelParams levels info.type
+  let some fact ← matchingFact e
+    | throw <| IO.userError "unclassified_form:node.type_fact_missing"
+  let some type := fact.type
+    | throw <| IO.userError "unclassified_form:node.type_fact_missing"
+  if fact.value.equal e || (fact.role == .type && fact.proposition.any (·.equal fact.value)) then return type
+  let some type := openNodeType (← read).locals type
+    | throw <| IO.userError "contract.node_binding:type_telescope"
+  return type
+
+/-- Only an explicit ExactMatch supplies a certified compiler head. -/
+def exactNodeHead? (e : Expr) : QueryM (Option Expr) := do
+  let context ← read
+  let fact := (← factsAt e).find? fun fact =>
+    fact.relation == some ``Contract.NodeFact.exact && fact.other.isSome
+  let some fact := fact | return none
+  let some target := fact.other | return none
+  if fact.value.equal e then return some target
+  let mut result := target
+  for declaration in context.locals.decls.toArray do
+    if let some declaration := declaration then
+      match result with
+      | .lam _ _ body _ | .letE _ _ _ body _ =>
+        result := body.instantiate1 (mkFVar declaration.fvarId)
+      | _ => throw <| IO.userError "contract.node_binding:exact_telescope"
+  return some result
+
+/-- An absent exact fact leaves the compiler expression unchanged. -/
+def exactNodeHead (e : Expr) : QueryM Expr := do
+  return (← exactNodeHead? e).getD e
+
+/-- Decode one named structure field from a literal, kernel-bound record.
+ The field index is compiler layout data; no beta, recursor or conversion runs. -/
+def literalRecordField (structureName : Name) (index : Nat) (base : Expr) : QueryM Expr := do
+  let view ← getCompiledView
+  let value ← exactNodeHead base
+  let value ← IO.ofExcept <| Contract.Literal.referencedValue view.find? value
+  let .const constructor _ := value.getAppFn
+    | throw <| IO.userError "unclassified_form:node.record_literal"
+  let some (.ctorInfo info) := view.find? constructor
+    | throw <| IO.userError "unclassified_form:node.record_constructor"
+  unless info.induct == structureName && index < info.numFields do
+    throw <| IO.userError "contract.node_binding:record_layout"
+  let some field := value.getAppArgs[info.numParams + index]?
+    | throw <| IO.userError "contract.node_binding:record_arity"
+  return field
+
+def typedNodeProp (e : Expr) : QueryM Bool := do
+  return (← exactNodeHead (← typedNodeType e)) == mkSort .zero
+
+/-- An absent proof classification retains the raw subtree without erasure. -/
+def typedNodeProof (e : Expr) : QueryM Bool := do
+  if e.isAppOfArity ``lcProof 1 then return true
+  if let some fact ← matchingFact e then
+    if fact.role == .proof then return true
+    if fact.role == .data || fact.role == .type then return false
+  return false
+
+/-- Eq and Iff witnesses are used only for mathematical correspondence.
+ Exact compiler operand binding has already been checked by NodeFacts.fact. -/
+def certifiedNodeRelation (left right : Expr) : QueryM Bool := do
+  if left.equal right then return true
+  let rightClosed := closeNode (← read).locals right
+  return (← factsAt left).any fun fact =>
+    fact.relation.any (#[``Contract.NodeFact.exact, ``Contract.NodeFact.equal,
+      ``Contract.NodeFact.equivalent].contains ·) &&
+      fact.other.any (fun value => value.equal right || value.equal rightClosed)
+
+/-- Every fact lookup spends the same query-local work budget as traversal. -/
+def boundQueryWork (action : QueryM α) (fuel : Nat := 524288) : QueryM (α × Nat) := do
+  let session ← querySession
+  let before := (← session.get).nodeWork
+  let result ← action
+  let work := (← session.get).nodeWork - before
+  unless work ≤ fuel do throw <| IO.userError "incomplete_closure:E8.node_work"
+  return (result, work)
+
+private partial def eraseBoundNode (e : Expr) (depth : Nat) : StateT Nat QueryM Expr := do
+  unless (← get) > 0 && depth ≤ 256 do
+    throw <| IO.userError "incomplete_closure:E8.node_erasure"
+  modify (· - 1)
+  if ← typedNodeProof e then
+    let proposition ← typedNodeType e
+    return mkApp (mkConst ``lcProof) (← eraseBoundNode proposition (depth + 1))
+  let child := fun e => eraseBoundNode e (depth + 1)
+  match e with
+  | .app f a => return .app (← child f) (← child a)
+  | .lam name type body info | .forallE name type body info =>
+    let domain ← child type
+    let context ← read
+    let id : FVarId := ⟨Name.num `boundErasure context.locals.numIndices⟩
+    let localTerm := mkFVar id
+    let body ← withReader (fun context : QueryContext => { context with
+      locals := context.locals.mkLocalDecl id name type info }) <|
+      child (body.instantiate1 localTerm)
+    let body := body.abstract #[localTerm]
+    return if e.isLambda then .lam name domain body info else .forallE name domain body info
+  | .letE name type value body nondep =>
+    let domain ← child type
+    let value' ← child value
+    let context ← read
+    let id : FVarId := ⟨Name.num `boundErasure context.locals.numIndices⟩
+    let localTerm := mkFVar id
+    let body ← withReader (fun context : QueryContext => { context with
+      locals := context.locals.mkLetDecl id name type value nondep }) <|
+      child (body.instantiate1 localTerm)
+    return .letE name domain value' (body.abstract #[localTerm]) nondep
+  | .mdata data body => return .mdata data (← child body)
+  | .proj name index receiver => return .proj name index (← child receiver)
+  | .mvar _ | .bvar _ => throw <| IO.userError "incomplete_closure:E7.node_erasure_open"
+  | _ => return e
+
+/-- Proof cuts come only from bound kernel-checked facts. The proposition is
+ retained and recursively inspected; absent facts never authorize erasure. -/
+def eraseBoundProofs (e : Expr) (fuel : Nat := 524288) : QueryM (Expr × Nat) := do
+  let limit := min 524288 fuel
+  let ((result, remaining), queries) ← boundQueryWork ((eraseBoundNode e 0).run limit) limit
+  let work := limit - remaining + queries
+  unless work ≤ limit do throw <| IO.userError "incomplete_closure:E8.node_erasure_work"
+  return (result, work)
 
 def boundedQuery (action : QueryM α) (site : Name := `type_classification)
     (operations : Nat := 1) : WalkM (Option α) := do
@@ -656,15 +835,19 @@ def boundedQuery (action : QueryM α) (site : Name := `type_classification)
     auditTrace s!"incomplete cause=heartbeat_exhaustion operation={site} first={(← get).currentFirst} site={(← get).currentOrigin}"
     return none
   let start ← IO.getNumHeartbeats
-  let result : Except IO.Error α ← try
+  let available := (← get).exprFuel
+  let result : Except IO.Error (α × Nat) ← try
     let value ← withReader (fun context : QueryContext =>
-      { context with heartbeatStart := start, heartbeatLimit := budget * operations }) action
+      { context with heartbeatStart := start, heartbeatLimit := budget * operations })
+      (boundQueryWork action available)
     if (← IO.getNumHeartbeats) - start > budget * operations then
       throw <| IO.userError "incomplete_closure:E8.compiled_expression_heartbeats"
     pure (.ok value)
   catch error => pure (.error error)
   match result with
-  | .ok value => return some value
+  | .ok (value, work) =>
+    unless ← chargeTraversal work do return none
+    return some value
   | .error error =>
     (← read).trace s!"query_failure operation={site}: {error}"
     let heartbeat := error.toString.contains "compiled_expression_heartbeats"
@@ -681,7 +864,7 @@ def occurrenceType (e : Expr) : WalkM (Option Expr) := do
     noteUnclassified ⟨"unclassified_occurrence", `occurrence, "unclassified", `occurrence⟩
     return none
   if let some type := (← get).inferredTypes[e]? then return some type
-  let some type ← boundedQuery (compiledQuery (typeShape e)) `type_shape | return none
+  let some type ← boundedQuery (typedNodeType e) `type_shape | return none
   modify fun s => { s with
     inferredTypes := s.inferredTypes.insert e type
     counters.inferredOccurrences := s.counters.inferredOccurrences + 1 }

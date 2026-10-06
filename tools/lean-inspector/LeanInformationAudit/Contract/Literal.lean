@@ -3,6 +3,13 @@ import LeanInformationAuditInterface.Contract.Core
 namespace LeanInformationAudit.Contract.Literal
 open Lean
 
+structure Context where
+  find : Name → Option ConstantInfo
+  owner : Name → Option Name
+  external : Name → Bool
+  heartbeatStart : Nat
+  heartbeatLimit : Nat
+
 /-- Substitute only universe parameter leaves. Unlike Lean's standard helper,
  this preserves max/imax constructor trees without simplification. -/
 def instantiateRawLevels (params : List Name) (levels : List Level) (e : Expr) : Expr :=

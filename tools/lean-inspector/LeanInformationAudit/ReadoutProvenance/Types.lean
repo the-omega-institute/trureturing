@@ -23,8 +23,8 @@ private partial def inputType (env : CompiledView) (type : Expr)
   unless ← chargeSummaryWork (fun c => { c with recheckedNodes := c.recheckedNodes + 1 }) do
     return ← unknownType type
   if type.hasLooseBVars || type.hasMVar || type.hasLevelMVar then return ← unknownType type
-  if ReadoutFamily.carrierHeads.contains (type.getAppFn.constName?.getD .anonymous) then
-    let (decoded, work) := ReadoutFamily.carrier env.find? type (← get).exprFuel
+  if carrierHeads.contains (type.getAppFn.constName?.getD .anonymous) then
+    let (decoded, work) ← boundQueryWork (some <$> exactNodeHead type) (← get).exprFuel
     unless ← chargeTraversal work do return ← unknownType type
     let some decoded := decoded | return ← unknownType type
     if decoded == type then return ← unknownType type
@@ -318,8 +318,8 @@ private partial def inputType (env : CompiledView) (type : Expr)
       if let some (.defnInfo _) := env.find? name then
         -- An explicit type alias forwards its actual parameters. Its raw body
         -- must pass the same structural families; computed data is not evaluated.
-        let value ← compiledValue declaration head.constLevels! (allowOpaque := false)
-        let some unfolded ← aliasBody value args | return ← checkedType .nominalFields type mentions true
+        let (unfolded, work) ← boundQueryWork (exactNodeHead reduced) (← get).exprFuel
+        unless ← chargeTraversal work do return ← checkedType .nominalFields type mentions true
         if unfolded == reduced then return ← checkedType .nominalFields type mentions true
         let (um, uu) := (← inputType env unfolded active).flags
         -- admission-exit: inputType.22 rule=aliasType
@@ -386,7 +386,7 @@ private partial def inputType (env : CompiledView) (type : Expr)
               (env.isClass name && listedTypeClasses.contains name) ||
               #[`D5.S3.ConceptDynamics.CIRPT.DecidableKernel,
                 `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit].contains name ||
-              ReadoutFamily.carrierHeads.any fun selector =>
+              carrierHeads.any fun selector =>
               (env.getProjectionFnInfo? selector).any fun projection =>
                 (env.find? projection.ctorName).any fun declaration =>
                   match declaration with

@@ -1,4 +1,5 @@
 import LeanInformationAuditInterface.Contract.Implementation
+import LeanInformationAuditInterface.Contract.NodeFactsCore
 
 namespace LeanInformationAudit.Contract
 open Lean
@@ -29,5 +30,10 @@ structure Registration {P : Prop} (target : P)
   continuation : Continuation Residual
   familyRecord : Option (Sigma fun family : DependentFamily.Arena.{t,s,r,o,a} => Ref (DependentFamily.Registration family P))
   options : Array OptionSetting
+  coverage : NodeCoverage
+  exclusion : Option Name
+  finiteLift : Option Name
+  roleEnumeration : Option Name
+  anchorEnumeration : Option Name
 
 end LeanInformationAudit.Contract

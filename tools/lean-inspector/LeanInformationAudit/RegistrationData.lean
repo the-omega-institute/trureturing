@@ -1,5 +1,6 @@
 import LeanInformationAudit.InputTypes
 import LeanInformationAudit.SnapshotTypes
+import LeanInformationAuditInterface.Contract.NodeFactsCore
 
 namespace LeanInformationAudit
 open Lean
@@ -27,6 +28,8 @@ structure RegistrationInput where
   /-- Author-supplied bridge before an occurrence companion aliases it. -/
   realizationSource : Option Name := none
   declaration : Option TemplateBinding.ResolvedDeclaration := none
+  coverage : Expr := .sort .zero
+  coverageRoots : Array Contract.NodeCoordinate := #[]
 
 structure TemplateEnrollmentInput where
   owner : Name
@@ -35,12 +38,17 @@ structure TemplateEnrollmentInput where
   constructors : Array Name
   sourceText : String
   options : Options
+  enrollmentName : Name := .anonymous
+  bodyFact : Name := .anonymous
+  coverage : Expr := .sort .zero
 
 structure CompiledSealCatalog where
   source : Name
   arenaName : Name
   catalogId : Name
   value : Expr
+  facts : Expr
+  catalogAt : Contract.NodeCoordinate
 
 structure SealInput where
   rootId : Name

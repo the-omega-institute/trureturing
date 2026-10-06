@@ -34,8 +34,8 @@ def baseline (root : Name) (baseline snapshot : Array ExpectedOccurrence) : Exce
     (baseline.map expectedContributor |>.qsort (· < ·))
     (retained.map expectedContributor |>.qsort (· < ·))
 
-/-- Independent expectations are compared with the root's complete registry
-in all three coordinates, after canonical arena alias resolution. -/
+/-- Independent expectations name canonical arenas explicitly and are compared
+with the root's complete registry in all three coordinates. -/
 def registry (find : Name → Option ConstantInfo) (root : Name)
     (contract : Option RootCatalogContract) (actual : Array InformationRegistryEntry)
     : Except String Unit := do
@@ -44,8 +44,9 @@ def registry (find : Name → Option ConstantInfo) (root : Name)
       (snapshotExpectations root contract.source)
   let expected ← (contract.map (fun c => snapshotExpectations root c.expected) |>.getD #[]).mapM
     fun entry => do
-      let objectArenaName ← resolveCanonicalArenaName find entry.objectArenaName
-      return { entry with objectArenaName }
+      unless (find entry.objectArenaName).isSome do
+        throw s!"IE-C003 ArenaResolutionFailed: {entry.objectArenaName}"
+      return entry
   compare root "member-set" (expected.map expectedKey |>.qsort (· < ·))
     (actual.map InformationRegistryEntry.occurrenceKeyString |>.qsort (· < ·))
   compare root "statement-identities" (expected.map expectedIdentity |>.qsort (· < ·))

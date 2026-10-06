@@ -37,7 +37,7 @@ def auditConstants (owner : Name) (constants : Array ConstantInfo) :
 /-- Discover every typed input from compiled constant arrays. Axiom closure and
 constant lookup come from the same compiled-data reader as the arrays. -/
 def discoverCompiled (requirements : Array RootStructure.Requirement)
-    (moduleNames : Array Name) (context : CompiledExpressions.Context)
+    (moduleNames : Array Name) (context : Literal.Context)
     (constantsOf : Name → IO (Array ConstantInfo))
     (axiomsOf : Name → IO (Array Name))
     (sourceOf : Name → IO System.FilePath := moduleSource) : IO Snapshot := do
@@ -68,7 +68,7 @@ def discoverCompiled (requirements : Array RootStructure.Requirement)
           throw <| IO.userError s!"contract.root_structure:independent_expected_not_allowed:{owner}:{info.name}"
         else if head == ``Contract.Seal then
           let value ← IO.ofExcept <|
-            Decoder.readSeal context.find (← axiomsOf info.name) info.name info.value
+            Decoder.readSeal context (← axiomsOf info.name) info.name info.value
           result := { result with seals := result.seals.push (owner, value) }
       catch error =>
         throw <| IO.userError s!"contract.decode_failed:{owner}:{info.name}:{error}"

@@ -1,49 +1,10 @@
 import LeanInformationAudit.ArtifactRegistration
 import LeanInformationAudit.CompiledSnapshots
+import LeanInformationAudit.Contract.NodeFacts
 import Lean.PrivateName
 
 namespace LeanInformationAudit.CompiledSeal
 open Lean Contract TemplateAudit
-
-private def arenaType := `D5.S3.ConceptDynamics.InformationEscape.Arena
-private def lawArenaType := `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena
-private def theoremUnitType := `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
-private def bundleType := `D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle
-private def atomType := `D5.S3.ConceptDynamics.CIRPT.PrimitiveAtom
-private def kernelType := `D5.S3.ConceptDynamics.CIRPT.DecidableKernel
-private def objectType := `D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
-
-/-- A finite index data view. The opaque field is never checked, published or
-used as evidence; the compiler checked the input function for every index. -/
-def indexValue (index size : Nat) : Expr :=
-  mkAppN (mkConst ``Fin.mk) #[mkNatLit size, mkNatLit index,
-    proofPlaceholder (mkApp2 (mkConst ``Nat.lt) (mkNatLit index) (mkNatLit size))]
-
-private def calculate (context : CompiledExpressions.Context) (action : CompiledExpressions.M α)
-    : IO α := return (← CompiledExpressions.run context action).1
-
-private def natural (role : String) (value : Expr) : CompiledExpressions.M Nat := do
-  IO.ofExcept <| Literal.nat role (← CompiledExpressions.head value)
-
-private def array (role : String) (value : Expr) : CompiledExpressions.M (Array Expr) := do
-  IO.ofExcept <| Literal.array role (← CompiledExpressions.head value)
-
-private def fields (name : Name) (value : Expr) (count : Nat) : CompiledExpressions.M (Array Expr) := do
-  let context ← read
-  IO.ofExcept <| Literal.fields context.find name (← CompiledExpressions.head value) count
-
-private def finiteArena (find : Name → Option ConstantInfo) (entry : InformationRegistryEntry)
-    : CompiledExpressions.M Expr := do
-  let name := if entry.objectArenaName.isAnonymous then entry.arenaName else entry.objectArenaName
-  let info ← CompiledRegistration.constant find name
-  let arena := mkConst name (info.levelParams.map Level.param)
-  let type ← CompiledExpressions.head info.type
-  if type.isConstOf arenaType then return arena
-  let law := if type.isConstOf objectType then
-      mkApp (mkConst (type.constName!.str "toPrimitiveLawArena") type.constLevels!) arena else arena
-  unless type.isConstOf lawArenaType || type.isConstOf objectType do
-    throw <| IO.userError s!"contract.cannot_decode:{entry.theoremName}:seal_finite_arena"
-  return .proj lawArenaType 0 law
 
 private def localName (store : RawArtifacts.Store) (contract : Option RootCatalogContract)
     (root owner : Name) (suffix : String) : Name :=
@@ -72,106 +33,93 @@ private def mismatch (root catalog : Name) (component : String) : IO α :=
   throw <| IO.userError s!"IE-C028 AnalysisCertificateMismatch root={root} catalog={catalog} \
     component={component} expected=raw-catalog actual=different"
 
-/-- Primitive axes and kernel classes are output projections of compiled
-bundle fields. They never determine seal admission or certificate selection. -/
-private def primitiveStatistics (arena unit : Expr) : CompiledExpressions.M
-    (Nat × Array String × String) := do
-  let bundle := Expr.proj theoremUnitType 0 unit
-  let indices ← CompiledExpressions.finiteIndices (.proj bundleType 1 bundle)
-  let atoms := indices.map fun index => mkApp (.proj bundleType 3 bundle) index
-  let mut axes := #[]
-  for atom in atoms do
-    let axis ← CompiledExpressions.head (.proj atomType 0 atom)
-    let some label := #[("cut", `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.cut),
-      ("flow", `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.flow),
-      ("admit", `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.admit),
-      ("anchor", `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.anchor)].find?
-        (fun pair => axis.isConstOf pair.2)
-      | throw <| IO.userError "contract.cannot_decode:seal.primitive_axis"
-    axes := axes.push label.1
-  -- Match the existing axis serialization order.
-  axes := #["cut", "flow", "admit", "anchor"].foldl
-    (fun output label => output ++ axes.filter (· == label)) #[]
-  let states ← CompiledExpressions.finiteIndices (.proj arenaType 1 arena)
-  let mut classes : Array (Array Nat) := #[]
-  for ordinal in [:states.size] do
-    let mut selected := none
-    for index in [:classes.size] do
-      let representative := (classes[index]!)[0]!
-      let mut same := true
-      for atom in atoms do
-        let kernel := Expr.proj atomType 1 atom
-        let decision ← CompiledExpressions.head
-          (mkApp2 (.proj kernelType 2 kernel) states[ordinal]! states[representative]!)
-        if decision.isAppOf ``Decidable.isFalse then
-          same := false
-          break
-        unless decision.isAppOf ``Decidable.isTrue do
-          throw <| IO.userError s!"contract.cannot_decode:seal.primitive_relation:{decision.getAppFn.constName?.getD .anonymous}"
-      if same then
-        selected := some index
-        break
-    classes := match selected with
-      | some index => classes.modify index (·.push ordinal)
-      | none => classes.push #[ordinal]
-  let serialization := String.intercalate ";" (toString classes.size ::
-    classes.toList.map (fun members => String.intercalate "," (members.toList.map toString)))
-  return (indices.size, axes, "sha256:" ++ Sha256.hex serialization.toUTF8)
+/-- Canonical class numbers and axis labels are literal certified data. -/
+private def primitiveStatistics (classes : Array Nat) (labels : Array Name)
+    : Nat × Array String × String := Id.run do
+  let mut groups : Array (Array Nat) := #[]
+  for ordinal in [:classes.size] do
+    let classId := classes[ordinal]!
+    if classId == groups.size then groups := groups.push #[ordinal]
+    else groups := groups.modify classId (·.push ordinal)
+  let serialization := String.intercalate ";" (toString groups.size ::
+    groups.toList.map (fun members => String.intercalate "," (members.toList.map toString)))
+  let axes := #[
+    ("cut", `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.cut),
+    ("flow", `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.flow),
+    ("admit", `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.admit),
+    ("anchor", `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.anchor)].foldl
+      (fun output pair => output ++ (labels.filter (· == pair.2)).map (fun _ => pair.1)) #[]
+  return (labels.size, axes, "sha256:" ++ Sha256.hex serialization.toUTF8)
 
 private def signatureLabel (mask : Nat) : String :=
   String.ofList <| (List.range 4).map (fun coordinate =>
     if mask / (2 ^ (3 - coordinate)) % 2 == 1 then '1' else '0')
 
-private def consumeCatalog (context : CompiledExpressions.Context) (record : CatalogRecord)
-    (expectedArena : Expr) (input : CompiledSealCatalog) : IO (SealArenaRecord × ConstantInfo) := do
-  let fs ← Decoder.fields context.find ``Contract.SealCatalog input.value 15
+private def consumeCatalog (store : RawArtifacts.Store) (record : CatalogRecord)
+    (input : CompiledSealCatalog) : IO (SealArenaRecord × ConstantInfo) := do
+  let find : Name → Option ConstantInfo := fun name => store.constants[name]?
+  let view : Contract.NodeFacts.View := {
+    find
+    owner := fun name => store.owners[name]?
+    external := fun name =>
+      store.metadata.externs.contains name || store.metadata.implementedBy.contains name }
+  let readout ← IO.ofExcept <| Contract.NodeFacts.sealFacts view input.facts input.catalogAt
+  let fs ← Decoder.fields find ``Contract.SealCatalog input.value 15
   let size ← Decoder.liftLiteral (Literal.nat "seal.size" fs[3]!)
-  unless size == record.units.size && input.arenaName == record.arenaName &&
-      input.catalogId == record.catalogId do mismatch record.rootId record.catalogId "reg-membership"
-  unless ← calculate context (CompiledExpressions.sameShape fs[2]! expectedArena) do
-    mismatch record.rootId record.catalogId "reg-arena"
-  -- Exhaust the compiler-checked finite function's complete domain. Equality
-  -- is computed on its compiled values, rather than proved or kernel-rechecked.
-  for unit in record.units do
-    let index := indexValue unit.index size
-    let unitInfo ← CompiledRegistration.constant context.find unit.unitName
-    unless ← calculate context (CompiledExpressions.sameShape (mkApp fs[4]! index)
-        (mkConst unit.unitName (unitInfo.levelParams.map Level.param))) do
+  unless size == record.units.size && readout.units == size &&
+      input.arenaName == record.arenaName && input.catalogId == record.catalogId do
+    mismatch record.rootId record.catalogId "reg-membership"
+  let factsReference := input.facts.consumeMData
+  let some factsInfo := find factsReference.constName!
+    | throw <| IO.userError "contract.cannot_decode:seal.facts_missing"
+  let factsValue := Literal.instantiateRawLevels factsInfo.levelParams factsReference.constLevels!
+    (factsInfo.value?.getD factsInfo.type)
+  let facts ← Decoder.fields find ``Contract.SealFacts factsValue 3
+  let units ← IO.ofExcept <| Contract.NodeFacts.table view facts[0]! size
+  -- Each typed table row certifies the actual catalog position. Its item must
+  -- be the original Reg operand retained by the independently decoded unit.
+  for (unit, item) in record.units.zip units do
+    let info ← CompiledRegistration.constant find unit.unitName
+    let some value := info.value?
+      | mismatch record.rootId record.catalogId s!"reg-vector:{unit.unitName}"
+    let item ← IO.ofExcept <| Literal.referencedValue find item
+    let value ← IO.ofExcept <| Literal.referencedValue find value
+    unless item.equal value do
       mismatch record.rootId record.catalogId s!"reg-vector:{unit.unitName}"
   let stateCard ← Decoder.liftLiteral (Literal.nat "seal.stateCard" fs[7]!)
   let full ← Decoder.liftLiteral (Literal.nat "seal.full" fs[9]!)
-  let catalog ← calculate context do
-    let type ← CompiledExpressions.head (← CompiledExpressions.typeShape fs[11]!)
-    let .forallE _ _ body _ := type
-      | throw <| IO.userError "contract.cannot_decode:seal.row_type"
-    let body ← CompiledExpressions.head body
-    unless body.isAppOfArity ``Contract.SealRow 3 do
-      throw <| IO.userError "contract.cannot_decode:seal.row_type"
-    return body.getAppArgs[1]!
-  let catalogType ← calculate context (CompiledExpressions.typeShape catalog)
+  let raw ← IO.ofExcept <| Literal.referencedValue find input.value
+  let levels := raw.getAppFn.constLevels!
+  unless levels.length == 2 do throw <| IO.userError "contract.cannot_decode:seal.levels"
+  let catalogType := mkApp (mkConst `D5.S3.ConceptDynamics.InformationEscape.Catalog
+    (levels ++ [Level.zero])) fs[2]!
+  let catalog := mkAppN (mkConst `D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector levels)
+    #[fs[2]!, fs[3]!, fs[4]!]
+  let parameters := (collectLevelParams (collectLevelParams {} catalogType) catalog).params.toList
   let catalogInfo : ConstantInfo := .defnInfo {
-    name := record.catalogName, levelParams := [], type := catalogType, value := catalog
+    name := record.catalogName, levelParams := parameters, type := catalogType, value := catalog
     hints := .abbrev, safety := .safe, all := [record.catalogName] }
   let nameFor (owner : Name) (suffix : String) := if record.localSealNames then
       owner.str suffix else catalogQualifiedName record.rootId record.arenaName record.catalogId owner suffix
+  let literalRows ← IO.ofExcept <| Literal.list "seal.rows"
+    (← IO.ofExcept <| Literal.referencedValue find facts[1]!)
   let mut theorems := #[]
-  for unit in record.units do
-    let index := indexValue unit.index size
-    let rs ← calculate context (fields ``Contract.SealRow (mkApp fs[11]! index) 8)
-    let unique ← Decoder.liftLiteral (Literal.nat "seal.unique" rs[0]!)
-    let without ← Decoder.liftLiteral (Literal.nat "seal.without" rs[2]!)
-    let conclusion ← Decoder.referencedValue context.find rs[7]!
+  for index in [:record.units.size] do
+    let unit := record.units[index]!
+    let (unique, without, bins, classes, labels) := readout.rows[index]!
+    unless classes.size == stateCard do mismatch record.rootId record.catalogId "reg-state-cardinality"
+    let es ← Decoder.fields find ``Contract.SealFactRow literalRows[index]! 8
+    let rs ← Decoder.fields find ``Contract.SealRow es[2]! 8
+    let conclusion ← Decoder.referencedValue find rs[7]!
     let positive := conclusion.isAppOf ``Contract.SealRowConclusion.positive
     unless positive || conclusion.isAppOf ``Contract.SealRowConclusion.zero do
       throw <| IO.userError "contract.cannot_decode:seal.row_conclusion"
     let name := nameFor unit.theoremName (if positive then "__lowers_escape" else "__trivial_in_catalog")
     let mut roles := #[]
-    for bucket in [:15] do
-      let count ← calculate context (natural "seal.role_bin" (mkApp rs[4]! (indexValue bucket 15)))
+    for bucket in [:bins.size] do
+      let count := bins[bucket]!
       if count > 0 then roles := roles.push (signatureLabel (bucket + 1), count)
-    let unitInfo ← CompiledRegistration.constant context.find unit.unitName
-    let (count, axes, address) ← calculate context
-      (primitiveStatistics expectedArena (mkConst unit.unitName (unitInfo.levelParams.map Level.param)))
+    let (count, axes, address) := primitiveStatistics classes labels
     theorems := theorems.push {
       theoremName := unit.theoremName, unitName := unit.unitName, realizationName := unit.realizationName
       registrationModuleName := unit.registrationModuleName, index := unit.index
@@ -183,10 +131,12 @@ private def consumeCatalog (context : CompiledExpressions.Context) (record : Cat
   let pairs ← Decoder.liftLiteral (Literal.array "seal.collisions" fs[12]!)
   let mut classes : Array (Array Name × Array Name) := #[]
   for pair in pairs do
-    let args := pair.getAppArgs
-    let nested := args.back!.getAppArgs
-    let i ← calculate context (natural "seal.collision_left" (.proj ``Fin 0 args[args.size - 2]!))
-    let j ← calculate context (natural "seal.collision_right" (.proj ``Fin 0 nested[nested.size - 2]!))
+    let pair ← Decoder.fields find ``Sigma pair 2
+    let nested ← Decoder.fields find ``Sigma pair[1]! 2
+    let left ← Decoder.fields find ``Fin pair[0]! 2
+    let right ← Decoder.fields find ``Fin nested[0]! 2
+    let i ← Decoder.liftLiteral (Literal.nat "seal.collision_left" left[0]!)
+    let j ← Decoder.liftLiteral (Literal.nat "seal.collision_right" right[0]!)
     unless i < size && j < size && i != j do
       throw <| IO.userError "contract.cannot_decode:seal.collision_index"
     let name := catalogQualifiedName record.rootId record.arenaName record.catalogId record.arenaName
@@ -196,7 +146,7 @@ private def consumeCatalog (context : CompiledExpressions.Context) (record : Cat
     if let some index := classes.findIdx? (fun row => row.1[0]? == some left) then
       classes := classes.modify index (fun row => (row.1.push right, row.2.push name))
     else classes := classes.push (#[left, right], #[name])
-  let conclusion ← Decoder.referencedValue context.find fs[13]!
+  let conclusion ← Decoder.referencedValue find fs[13]!
   let redundant := conclusion.isAppOf ``Contract.SealCatalogConclusion.redundant
   unless redundant || conclusion.isAppOf ``Contract.SealCatalogConclusion.irredundant do
     throw <| IO.userError "contract.cannot_decode:seal.catalog_conclusion"
@@ -244,8 +194,6 @@ unsafe def consume (snapshot : Discovery.Snapshot) (owner : Name) (input : SealI
   unless groups.size == input.catalogs.size do
     throw <| IO.userError s!"IE-C028 AnalysisCertificateMismatch component=reg-catalog-domain expected={groups.size} actual={input.catalogs.size}"
   let mut records := #[]
-  let context := CompiledRegistration.expressionContext ((← get).store.constants[·]?)
-    (← IO.getNumHeartbeats) input.options
   for (arena, entries) in groups do
     let sorted := entries.qsort (fun left right => left.theoremName.lt right.theoremName)
     let catalogId ← IO.ofExcept <| validateMaximalCatalog owner arena sorted
@@ -260,21 +208,19 @@ unsafe def consume (snapshot : Discovery.Snapshot) (owner : Name) (input : SealI
     let record : CatalogRecord := {
       rootId := owner, catalogId, catalogKind := .canonicalMaximal
       arenaName := arena, catalogName, units, localSealNames := localNames }
-    let some firstEntry := sorted[0]?
-      | throw <| IO.userError "IE-C026 MissingMaximalCatalog: empty group"
-    let expectedArena ← calculate context (finiteArena context.find firstEntry)
     let some matchingInput := matching[0]?
       | throw <| IO.userError "IE-C028 AnalysisCertificateMismatch component=reg-catalog-identity"
+    let store := (← get).store
     let consume : IO (SealArenaRecord × ConstantInfo) := do
       try
-        return ← consumeCatalog context record expectedArena matchingInput
+        return ← consumeCatalog store record matchingInput
       catch error =>
         throw <| IO.userError s!"contract.assessment_failed:{owner}:{matchingInput.source}:{error}"
     let (result, catalogInfo) ← consume
     if let some existing := (← get).store.constants[catalogName]? then
-      let same ← calculate context (CompiledExpressions.sameShape existing.type catalogInfo.type)
+      let same := existing.type.equal catalogInfo.type
       let some value := existing.value? | throw <| IO.userError s!"IE-C009 ProofConstructionFailed:{catalogName}"
-      unless same && (← calculate context (CompiledExpressions.sameShape value (catalogInfo.value?.getD catalogInfo.type))) do
+      unless same && value.equal (catalogInfo.value?.getD catalogInfo.type) do
         throw <| IO.userError (qualifiedNameCollisionError owner catalogId catalogName sorted)
     modify fun state => { state with
       store := { state.store with

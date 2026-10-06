@@ -1,7 +1,6 @@
 import LeanInformationAudit.ReadoutProvenance.State
 namespace LeanInformationAudit.RegistrationGates
 open Lean
-open Contract.CompiledExpressions (typeShape propositionShape)
 
 /-- Reuse statement syntax only within one binding-validation scope. -/
 def withCompiledAliasMemo (action : QueryM α) : QueryM α := do
@@ -17,17 +16,13 @@ private def sameStatementObject {α : Type} (a b : α) : Bool := unsafe ptrEq a 
 
 
 
-partial def aliasBody (value : Expr) (args : Array Expr) : WalkM (Option Expr) := do
-  unless ← chargeTraversal do return none
-  if args.isEmpty then return some value
-  match value with
-  | .lam _ _ body _ =>
-    let some body ← substitute body #[args[0]!] | return none
-    aliasBody body (args.extract 1 args.size)
-  | .mdata _ body => aliasBody body args
-  | _ =>
-    unless ← chargeTraversal args.size do return none
-    return some (mkAppN value args)
+def aliasBody (value : Expr) (args : Array Expr) : WalkM (Option Expr) := do
+  unless ← chargeTraversal (args.size + 1) do return none
+  let application := mkAppN value args
+  let (result, work) ← boundQueryWork (exactNodeHead application) (← get).exprFuel
+  unless ← chargeTraversal work do return none
+  if result.equal application && !args.isEmpty && application.getAppFn.isLambda then return none
+  return some result
 
 partial def representationType (type : Expr) : WalkM (Option Expr) := do
   unless ← chargeTraversal do return none
@@ -86,8 +81,8 @@ partial def nominalFieldShape (env : CompiledView) (type : Expr)
       -- admission-exit: nominalFieldShape.6 rule=fieldConcrete
       return some (witness .fieldConcrete concrete)
     | .defnInfo _ =>
-      let value ← compiledValue declaration levels (allowOpaque := false)
-      let some body ← aliasBody value args | return none
+      let (body, work) ← boundQueryWork (exactNodeHead concrete) (← get).exprFuel
+      unless ← chargeTraversal work do return none
       if body == concrete then return none
       let some _ ← nominalFieldShape env body parameters | return none
       -- admission-exit: nominalFieldShape.7 rule=fieldAlias
@@ -113,40 +108,15 @@ private def statementUnknown (head : Expr) : WalkM StatementStep := do
     namespaceLabel (← getCompiledView) name, (← get).theoremName⟩
 
 def statementStep (env : CompiledView) (current : Expr) : WalkM StatementStep := do
-  let some (head, args) ← applicationParts current | return .incomplete
-  match head with
-  -- admission-exit: statementStep.1 rule=statementForall
-  | .forallE .. => return .recognized (witness .statementForall current)
-  | .const n levels =>
-    match env.find? n with
-    -- admission-exit: statementStep.2 rule=statementInductive
-    | some (.inductInfo _) => return .recognized (witness .statementInductive current)
-    | some (.defnInfo info) =>
-      let value ← compiledValue (.defnInfo info) levels
-      let some body ← aliasBody value args | return .incomplete
-      return .next body
-    | _ => return ← statementUnknown head
-  | .lam .. =>
-    if args.isEmpty then return ← statementUnknown head
-    let some body ← aliasBody head args | return .incomplete
-    return .next body
-  | .mdata _ body => return .next (mkAppN body args)
-  | .letE _ _ value body _ =>
-    let some body ← substitute body #[value] | return .incomplete
-    let some body ← aliasBody body args | return .incomplete
-    return .next body
-  | .proj structureName index receiver =>
-    let (record, work) := ReadoutFamily.carrier env.find? receiver (← get).exprFuel
-    unless ← chargeTraversal work do return .incomplete
-    let some record := record | return ← statementUnknown head
-    let some (ctor, fields) ← applicationParts record | return .incomplete
-    let some (.ctorInfo info) := ctor.constName?.bind env.find?
-      | return ← statementUnknown head
-    unless info.induct == structureName do return ← statementUnknown head
-    let some field := fields[info.numParams + index]? | return ← statementUnknown head
-    let some body ← aliasBody field args | return .incomplete
-    return .next body
-  | _ => return ← statementUnknown head
+  let some (head, _) ← applicationParts current | return .incomplete
+  if current.isForall then return .recognized (witness .statementForall current)
+  if let .const name _ := head then
+    if (env.find? name).any (fun info => match info with
+        | .inductInfo _ => true | _ => false) then
+      return .recognized (witness .statementInductive current)
+  let (next, work) ← boundQueryWork (exactNodeHead current) (← get).exprFuel
+  unless ← chargeTraversal work do return .incomplete
+  if next.equal current then statementUnknown head else return .next next
 
 private partial def statementOuter (env : CompiledView) (type : Expr) :
     WalkM (Option ProvenanceAdmissionWitness) := do
@@ -174,14 +144,14 @@ partial def listStatementBoundary (env : CompiledView) (type : Expr)
   match type with
   | .forallE n domain body bi =>
     if binders == 0 then
-      let some firstProof ← boundedQuery (compiledQuery (propositionShape domain)) `list_statement_domain | return none
+      let some firstProof ← boundedQuery (typedNodeProp domain) `list_statement_domain | return none
       if !firstProof then
         let twoDataBinders ← withCompiledLocal n bi domain fun x => do
           let some body ← substitute body #[x] | return false
           let some evidence ← statementOuter env body | return false
           let body := evidence.matchedType
           let .forallE _ secondDomain _ _ := body | return false
-          let some secondProof ← boundedQuery (compiledQuery (propositionShape secondDomain)) `list_statement_domain
+          let some secondProof ← boundedQuery (typedNodeProp secondDomain) `list_statement_domain
             | return false
           return !secondProof
         -- admission-exit: listStatementBoundary.1 rule=listForall
@@ -228,7 +198,7 @@ partial def dataCarrier (env : CompiledView) (type : Expr)
     -- Only registered arena/signature carrier selectors inherit the rigid
     -- local parameter boundary. Concrete receivers expose their actual field,
     -- which must pass the same carrier test (including Prop/payload fences).
-    let audited := ReadoutFamily.carrierHeads.any fun selector =>
+    let audited := carrierHeads.any fun selector =>
       match env.getProjectionFnInfo? selector with
       | some projection => projection.i == index &&
         (env.find? projection.ctorName).any fun info =>
@@ -342,8 +312,8 @@ partial def namedCarrier (env : CompiledView) (type : Expr) : WalkM (Option Expr
   let some type ← representationType type | return none
   let .const name levels := type.getAppFn | return some type
   let some (.defnInfo info) := env.find? name | return some type
-  let value ← compiledValue (.defnInfo info) levels
-  let some body ← aliasBody value type.getAppArgs | return none
+  let (body, work) ← boundQueryWork (exactNodeHead type) (← get).exprFuel
+  unless ← chargeTraversal work do return none
   unless body.getAppFn.isConst do return some type
   if body == type then return none
   namedCarrier env body
@@ -410,172 +380,25 @@ def noteFamilyAssumption (depth : Nat) : WalkM Unit := do
   unless ← chargeTraversal do return
   modify fun s => { s with assumedFamilyDepth := mergeAssumptions s.assumedFamilyDepth (some depth) }
 
--- A hash mismatch never proves that two propositions have different statement
--- identities. This bounded recognizer establishes an actual rigid distinction:
--- different kernel heads, literals, domains, or a distinguishing live argument.
--- Unknown/computed heads stop. It never evaluates a recursor or proof term.
-private partial def rigidStatementLocal (expression : Expr) : WalkM Bool := do
-  unless ← chargeTraversal do return false
-  match expression with
-  | .fvar id => return ((← localDeclaration id).value? (allowNondep := true)).isNone
-  | .proj _ _ receiver => rigidStatementLocal receiver
-  | .app function _ => rigidStatementLocal function
-  | _ => return false
-
-private partial def statementIdentityForm (env : CompiledView) (expression : Expr) :
-    WalkM (Option Expr) := do
-  unless ← chargeTraversal do return none
-  let some expression ← representationType expression | return none
-  let some (head, args) ← applicationParts expression | return none
-  if let .fvar id := head then
-    if let some value := (← localDeclaration id).value? (allowNondep := true) then
-      let some body ← aliasBody value args | return none
-      return ← statementIdentityForm env body
-    return some expression
-  if let .proj structureName index receiver := head then
-    -- A projection chain from an unassigned local record is rigid. A concrete
-    -- receiver still follows the audited constructor-field decoder below.
-    if let some localReceiver ← statementIdentityForm env receiver then
-      if ← rigidStatementLocal localReceiver then
-        return some (mkAppN (.proj structureName index localReceiver) args)
-  match expression with
-  | .sort _ | .lit _ | .lam .. => return some expression
-  | _ => pure ()
-  -- These quotient predicates have fixed proposition families after every
-  -- possible reduction: List.Pairwise and List.Mem respectively. They do not
-  -- expose an arbitrary proposition chosen by a carrier or callback.
-  if #[`Multiset.Nodup, `Multiset.Mem].contains (head.constName?.getD Name.anonymous) then
-    return some expression
-  if (naturalLiteral expression).isSome ||
-      expression.isConstOf ``Bool.true || expression.isConstOf ``Bool.false then
-    return some expression
-  if let .const name _ := head then
-    if (env.find? name).any (fun info => match info with
-        | .ctorInfo c => c.induct == ``Nat
-        | _ => false) then return some expression
-  match ← statementStep env expression with
-  | .recognized evidence => return some evidence.matchedType
-  | .next next => statementIdentityForm env next
-  | .unclassified site =>
-    if (← get).identityUnknown.isNone then modify fun s => { s with identityUnknown := some site }
-    return none
-  | .incomplete => noteIncomplete `incomplete_classification `statement_identity; return none
-
-private partial def statementApart (env : CompiledView) (left right : Expr) :
-    WalkM (Option ProvenanceAdmissionWitness) := do
-  unless ← chargeTraversal do return none
-  -- Equal fingerprints include possible collisions, so they never admit.
-  if hash left == hash right then return none
-  let some a ← statementIdentityForm env left | return none
-  let some b ← statementIdentityForm env right | return none
-  if hash a == hash b then return none
-  if let some x := naturalLiteral a then
-    if let some y := naturalLiteral b then
-      if x != y then
-        -- admission-exit: statementApart.1 rule=statementLiteralApart
-        return some (witness .statementLiteralApart a)
-  if (a.isConstOf ``Bool.true && b.isConstOf ``Bool.false) ||
-      (a.isConstOf ``Bool.false && b.isConstOf ``Bool.true) then
-    -- admission-exit: statementApart.2 rule=statementLiteralApart
-    return some (witness .statementLiteralApart a)
-  if let .lit x := a then
-    if let .lit y := b then
-      -- admission-exit: statementApart.3 rule=statementLiteralApart
-      if x != y then return some (witness .statementLiteralApart a)
-  let kernelHead := fun expression => expression.getAppFn.constName?.filter fun name =>
-    (env.find? name).any fun info => match info with
-      | .inductInfo _ => true
-      | .ctorInfo c => c.induct == ``Nat
-      | _ => false
-  let metadataFamily := fun e =>
-    if e.getAppFn.isConstOf `Multiset.Nodup then some ``List.Pairwise
-    else if e.getAppFn.isConstOf `Multiset.Mem then some ``List.Mem else none
-  let am := metadataFamily a
-  let bm := metadataFamily b
-  let ah := am.orElse fun _ => kernelHead a
-  let bh := bm.orElse fun _ => kernelHead b
-  if let some an := ah then
-    if let some bn := bh then
-      if an != bn then
-        -- admission-exit: statementApart.4 rule=statementMetadataApart
-        if am.isSome || bm.isSome then return some (witness .statementMetadataApart a)
-        -- admission-exit: statementApart.5 rule=statementHeadApart
-        return some (witness .statementHeadApart a)
-      -- A shared metadata family is not evidence of identity or disjointness;
-      -- its quotient representation is deliberately left unresolved.
-      if am.isSome || bm.isSome then return none
-      let aa := a.getAppArgs
-      let ba := b.getAppArgs
-      unless aa.size == ba.size do return none
-      unless ← chargeTraversal aa.size do return none
-      for i in [:aa.size] do
-        if (← statementApart env aa[i]! ba[i]!).isSome then
-          -- admission-exit: statementApart.6 rule=statementArgumentApart
-          return some (witness .statementArgumentApart a)
-      return none
-  -- A rigid type parameter cannot reduce to a kernel inductive type head.
-  -- No distinct-proof-variable or proof-constructor comparison is permitted.
-  let rigidValue := fun e h => h.isSome || e.isForall || e.isSort ||
-    (naturalLiteral e).isSome || e.isConstOf ``Bool.true || e.isConstOf ``Bool.false
-  let an ← rigidStatementLocal a.getAppFn
-  let bn ← rigidStatementLocal b.getAppFn
-  if (an && rigidValue b bh) || (bn && rigidValue a ah) then
-    -- admission-exit: statementApart.7 rule=statementRigidApart
-    return some (witness .statementRigidApart a)
-  match a, b with
-  | .forallE n da ab bi, .forallE _ db bb _
-  | .lam n da ab bi, .lam _ db bb _ =>
-    if (← statementApart env da db).isSome then
-      -- admission-exit: statementApart.8 rule=statementDomainApart
-      return some (witness .statementDomainApart a)
-    -- Congruence is conditional on equal domains. In that case one shared
-    -- binder gives both well-typed bodies; unequal domains already distinguish
-    -- the binders. This does not decide domain equality or normalize a carrier.
-    withCompiledLocal n bi da fun x => do
-      let some ab ← substitute ab #[x] | return none
-      let some bb ← substitute bb #[x] | return none
-      if (← statementApart env ab bb).isSome then
-        -- admission-exit: statementApart.9 rule=statementBodyApart
-        return some (witness .statementBodyApart a)
-      return none
-  | .forallE .., _ =>
-    -- admission-exit: statementApart.10 rule=statementMetadataApart
-    if bm.isSome then return some (witness .statementMetadataApart a)
-    -- admission-exit: statementApart.11 rule=statementHeadApart
-    if bh.isSome || b.isSort then return some (witness .statementHeadApart a)
-    return none
-  | _, .forallE .. =>
-    -- admission-exit: statementApart.12 rule=statementMetadataApart
-    if am.isSome then return some (witness .statementMetadataApart a)
-    -- admission-exit: statementApart.13 rule=statementHeadApart
-    if ah.isSome || a.isSort then return some (witness .statementHeadApart a)
-    return none
-  | .sort .zero, .sort (.succ _) | .sort (.succ _), .sort .zero =>
-    -- admission-exit: statementApart.14 rule=statementHeadApart
-    return some (witness .statementHeadApart a)
-  | .sort _, _ =>
-    -- admission-exit: statementApart.15 rule=statementHeadApart
-    if bh.isSome || b.isFVar then return some (witness .statementHeadApart a)
-    return none
-  | _, .sort _ =>
-    -- admission-exit: statementApart.16 rule=statementHeadApart
-    if ah.isSome || a.isFVar then return some (witness .statementHeadApart a)
-    return none
-  | _, _ => return none
-
 def checkedStatementType (env : CompiledView) (type : Expr) :
     WalkM (Option ProvenanceAdmissionWitness) := do
   unless ← chargeTraversal do return none
   -- admission-exit: checkedStatementType.1 rule=retained-witness.rule
   if let some evidence := (← get).apartPropositions[type]? then return some evidence
   modify fun s => { s with identityUnknown := none }
-  -- statementAliases already paid for this outer reduction in the same query.
-  -- Reuse its checked form; unresolved heads retain the original fallback.
   let state ← get
-  let statement := state.recognizedStatement.map (·.matchedType) |>.getD state.statement
-  let evidence ← statementApart env type statement
-  if evidence.isNone then
-    if let some site := (← get).identityUnknown then noteUnclassified site
+  let statement := state.statement
+  let evidence ← do
+    let some (some left) ← boundedQuery (exactNodeHead? type) `statement_exact_left
+      | return none
+    let some (some right) ← boundedQuery (exactNodeHead? statement) `statement_exact_right
+      | return none
+    let some leftName := left.getAppFn.constName? | return none
+    let some rightName := right.getAppFn.constName? | return none
+    let some (.inductInfo _) := env.find? leftName | return none
+    let some (.inductInfo _) := env.find? rightName | return none
+    unless leftName != rightName do return none
+    return some (witness .statementHeadApart left)
   if evidence.isNone && !(← get).identityFailureTraced then
     modify fun s => { s with identityFailureTraced := true }
     auditTrace s!

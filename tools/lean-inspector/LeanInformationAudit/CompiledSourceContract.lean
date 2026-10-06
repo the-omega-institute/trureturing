@@ -7,9 +7,11 @@ open Lean CompiledSourceScope
 private def fail [Monad m] [MonadLiftT IO m] (reason : String) : m α :=
   liftM (m := IO) (throw (IO.userError reason) : IO α)
 
-private def constantReference (name : Name) : M Expr := do
+private def constantReference (event : TemplateOccurrenceEvent) (name : Name) : M Expr := do
   let info ← getConstInfo name
-  return mkConst name (info.levelParams.map Level.param)
+  unless info.levelParams.length == event.levelParams.length do
+    fail "contract.node_binding:source.finite_lift_levels"
+  return mkConst name (event.levelParams.map Level.param)
 
 private def abstractLambda (xs : Array Expr) (body : Expr) : M Expr := do
   let mut body := body
@@ -22,71 +24,41 @@ private def abstractLambda (xs : Array Expr) (body : Expr) : M Expr := do
 private def family := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 private def finite := `D5.S3.ConceptDynamics.InformationEscape
 
-/-- A Unit-indexed family may audit an existing finite catalog only through the
-same signature, all realizations, full Law, actual readouts and anchors. -/
-def validate (event : TemplateOccurrenceEvent) (arena signature actual : Expr)
-    (bridgeName : Name) : M Unit := do
-  debit
-  let bridge ← constantReference bridgeName
+/-- The finite bridge is transported through a kernel-checked bijection and
+ whole-family Law certificate. Its actual realization remains a bound operand. -/
+def validate (event : TemplateOccurrenceEvent) (arena actual : Expr)
+    (bridgeName liftName : Name) : M Unit := do
+  let bridge ← constantReference event bridgeName
   let bridgeType ← projectType bridge
   unless bridgeType.isAppOfArity (finite ++ `LegacyPrimitiveRealization) 3 do
     fail "unclassified_form:source.finite_bridge"
-  let objectArena := event.arena
-  if event.compiledMathematics.isNone then
-    unless ← sameShape bridgeType.getAppArgs[0]! objectArena do
-      fail "unclassified_form:source.finite_arena"
-    unless ← sameShape bridgeType.getAppArgs[1]! event.statement do
-      fail "unclassified_form:source.finite_statement"
-  let finiteActual := bridgeType.getAppArgs[2]!
-  let finiteSignature ← projectField (finite ++ `PrimitiveLawArena.signature) objectArena
-  let finiteType ← projectType finiteActual
-  unless ← sameShape (← projectField (family ++ `Signature.Params) signature) (mkConst ``Unit) do
-    fail "unclassified_form:source.finite_params"
-  let liftRealization : Expr → M Expr := fun r => do
-    let roleType ← projectField (finite ++ `PrimitiveSignature.Index) finiteSignature
-    let anchorType ← projectField (finite ++ `PrimitiveSignature.AnchorIndex) finiteSignature
-    unless (← sameShape roleType (← projectField (family ++ `Signature.Role) signature)) &&
-        (← sameShape anchorType (← projectField (family ++ `Signature.Anchor) signature)) do
-      fail "unclassified_form:source.finite_signature"
-    let readout ← withLocal `role .default roleType none fun role =>
-      withLocal `parameter .default (mkConst ``Unit) none fun parameter => do
-        abstractLambda #[role, parameter]
-          (← projectField (finite ++ `PrimitiveRealization.readout) r #[role])
-    let anchor ← withLocal `anchor .default anchorType none fun role =>
-      withLocal `parameter .default (mkConst ``Unit) none fun parameter => do
-        abstractLambda #[role, parameter]
-          (← projectField (finite ++ `PrimitiveRealization.anchor) r #[role])
-    let levels := (← normalizeHead (← projectType signature)).getAppFn.constLevels!
-    let lifted := mkApp3 (mkConst (family ++ `Realization.mk) levels) signature readout anchor
-    pure lifted
-  -- Compare whole state functions at every role, not a sample of states.
-  -- Empty anchor types have no inhabitants to compare.
-  for role in ← query (Contract.CompiledExpressions.finiteIndices
-      (← projectField (family ++ `Signature.finiteRole) signature)) do
-    debit
-    unless ← sameShape
-        (← projectField (family ++ `Realization.readout) actual #[role, mkConst ``Unit.unit])
-        (← projectField (finite ++ `PrimitiveRealization.readout) finiteActual #[role]) do
-      fail "unclassified_form:source.finite_actual"
-  for anchor in ← query (Contract.CompiledExpressions.finiteIndices
-      (← projectField (family ++ `Signature.finiteAnchor) signature)) do
-    debit
-    unless ← sameShape
-        (← projectField (family ++ `Realization.anchor) actual #[anchor, mkConst ``Unit.unit])
-        (← projectField (finite ++ `PrimitiveRealization.anchor) finiteActual #[anchor]) do
-      fail "unclassified_form:source.finite_anchor"
-  let check : M Unit := withLocal `realization .default finiteType none fun r => do
-    let left ← projectField (family ++ `Arena.Law) arena #[← liftRealization r]
-    let right ← projectField (finite ++ `PrimitiveLawArena.Law) objectArena #[r]
-    unless ← sameShape left right do fail "unclassified_form:source.finite_full_law"
-    if event.compiledMathematics.isNone then
-      let unit ← constantReference event.unitName
-      let arenaLevels := (← normalizeHead (← projectType objectArena)).getAppFn.constLevels!
-      let expected := mkAppN (mkConst (finite ++ `LegacyPrimitiveRealization.toTheoremUnit) arenaLevels)
-        #[objectArena, bridgeType.getAppArgs[1]!, finiteActual, bridge,
-          ← constantReference event.key.theoremName]
-      unless ← sameShape unit expected do fail "unclassified_form:source.finite_unit"
-  check
+  let certificate ← getConstInfo liftName
+  unless certificate.levelParams.length == event.levelParams.length do
+    fail "contract.node_binding:source.finite_lift_levels"
+  let certificateType := Contract.Literal.instantiateRawLevels certificate.levelParams
+    (event.levelParams.map Level.param) certificate.type
+  unless certificateType.isAppOfArity `LeanInformationAudit.Contract.FiniteLiftFacts 4 do
+    fail "contract.node_binding:source.finite_lift_type"
+  let indices := certificateType.getAppArgs
+  unless (← sameShape indices[0]! event.arena) && (← sameShape indices[1]! arena) do
+    fail "contract.node_binding:source.finite_lift_arenas"
+  let some value := certificate.value? | fail "contract.node_binding:source.finite_lift_definition"
+  let value := Contract.Literal.instantiateRawLevels certificate.levelParams
+    (event.levelParams.map Level.param) value
+  let find := (← read).provenance.view.find?
+  let fields ← IO.ofExcept <| Contract.Literal.fields find
+    `LeanInformationAudit.Contract.FiniteLiftFacts value 4
+  let observationTable ← IO.ofExcept <| Contract.Literal.resolveReferences find fields[3]!
+  let observations ← IO.ofExcept <| Contract.Literal.list "finite_lift.observations" observationTable
+  let context ← read
+  let view : Contract.NodeFacts.View := {
+    find, owner := context.provenance.view.ownerOf,
+    external := fun n => context.extern n || context.implementedBy n }
+  for observation in observations do
+    let name ← IO.ofExcept <| Contract.Literal.name "finite_lift.observation" observation
+    discard <| IO.ofExcept <| Contract.NodeFacts.fact view name
+  unless ← sameShape actual (mkApp indices[2]! bridgeType.getAppArgs[2]!) do
+    fail "contract.node_binding:source.finite_lift_actual"
 
 end LeanInformationAudit.CompiledSourceFinite
 
@@ -98,8 +70,7 @@ private def fail [Monad m] [MonadLiftT IO m] (reason : String) : m α :=
 
 private def fingerprintInput (params : List Name) (e : Expr) (fuel : Nat) :
     M (Except String (String × Nat)) := do
-  let (erased, work) ← (RegistrationGates.compiledQueryWork
-    (Contract.CompiledExpressions.erase e) fuel).run (← read).provenance
+  let (erased, work) ← (RegistrationGates.eraseBoundProofs e fuel).run (← read).provenance
   return (compactRawIdentity params erased (fuel - work)).map fun (identity, cost) =>
     (identity, cost + work)
 
@@ -158,7 +129,15 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let some selection := input.sourceSelection | fail "unclassified_form:source.selection_missing"
     unless input.fromObject.isNone && input.continuation.isNone && input.openContinuation do
       fail "unclassified_form:source.residual_requires_open"
-    let info ← getConstInfo event.key.theoremName
+    let original ← getConstInfo event.key.theoremName
+    let .thmInfo theoremInfo := original | fail "unclassified_form:source.theorem"
+    unless theoremInfo.levelParams.length == event.levelParams.length do
+      fail "contract.node_binding:source.theorem_levels"
+    let instantiate := Contract.Literal.instantiateRawLevels theoremInfo.levelParams
+      (event.levelParams.map Level.param)
+    let info : ConstantInfo := .thmInfo { theoremInfo with
+      levelParams := event.levelParams, type := instantiate theoremInfo.type,
+      value := instantiate theoremInfo.value }
     let scope ← resolve info selection
     emit s!"source phase=resolve work={limit - (← get)}"
     let objectArena ← atLevels event event.key.objectArena
@@ -178,23 +157,33 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     unless arena.equal (← atLevels event arenaName) do
       fail "unclassified_form:source.arena_identity"
     safe arenaName
-    if input.finiteBridge.isNone && !arena.equal objectArena then
-      fail "unclassified_form:source.record_statement"
+    if input.finiteBridge.isNone then
+      unless ← sameShape arena objectArena do fail "unclassified_form:source.record_statement"
     let actual ← projectField (family ++ `Registration.actual) record
     let signature ← projectField (family ++ `Arena.signature) arena
-    let law ← projectField (family ++ `Arena.Law) arena #[actual]
-    reconstruct scope.expanded law
-    validateFields scope signature actual
+    let law := mkApp2 (mkConst (family ++ `Arena.Law) arena.constLevels!) arena
+      (mkAppN (mkConst (family ++ `Registration.actual) record.constLevels!)
+        #[arena, type.getAppArgs[1]!, record])
+    unless ← sameShape info.type law do fail "unclassified_form:source.statement_bridge_fact"
+    let some roleEnumeration := input.roleEnumeration
+      | fail "unclassified_form:source.role_enumeration_missing"
+    let roles ← enumeration roleEnumeration (← projectField (family ++ `Signature.Role) signature)
+    let some anchorEnumeration := input.anchorEnumeration
+      | fail "unclassified_form:source.anchor_enumeration_missing"
+    discard <| enumeration anchorEnumeration (← projectField (family ++ `Signature.Anchor) signature)
+    validateFields scope actual event.key.theoremName roles
     if let some bridge := input.finiteBridge then
       safe bridge
-      CompiledSourceFinite.validate event arena signature actual bridge
+      let some finiteLift := input.finiteLift | fail "unclassified_form:source.finite_lift_missing"
+      safe finiteLift
+      CompiledSourceFinite.validate event arena actual bridge finiteLift
     emit s!"source phase=reconstruction_and_fields work={limit - (← get)}"
     discard <| normalizeHead actual
     -- Inspect every raw supplied operand before shape comparison.
     let recordInfo ← getConstInfo event.realizationName
     let some value := recordInfo.value? | fail "unclassified_form:source.record_definition"
-    let value := (value.instantiateLevelParams recordInfo.levelParams
-      (event.levelParams.map Level.param)).consumeMData
+    let value := (Contract.Literal.instantiateRawLevels recordInfo.levelParams
+      (event.levelParams.map Level.param) value).consumeMData
     unless value.isAppOfArity (family ++ `Registration.mk) 7 do
       fail "unclassified_form:source.record_literal"
     let rawActual := value.getAppArgs[2]!
@@ -202,7 +191,8 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let (_, work) ← (CompiledSourceOperands.check event.key.theoremName
       #[descriptor, rawActual] (← get) (some (record, lawFunction))
       (scope.definition.map (·.value))
-      (if input.finiteBridge.isSome then some objectArena else none)).run (← read)
+      (if input.finiteBridge.isSome then some objectArena else none) input.exclusion
+      (some (event.levelParams.map Level.param))).run (← read)
     debit work
     emit s!"source phase=operands work={limit - (← get)}"
     unless ← sameShape descriptor rawActual do fail "unclassified_form:source.descriptor_actual"

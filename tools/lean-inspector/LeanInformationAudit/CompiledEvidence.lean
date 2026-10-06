@@ -16,25 +16,24 @@ private def getConstInfo (name : Name) : Q ConstantInfo := do
     | fail s!"incomplete_closure:dtr.compiled_constant:{name}"
   return info
 private def projectType (e : Expr) : Q Expr :=
-  RegistrationGates.compiledQuery (Contract.CompiledExpressions.typeShape e)
+  RegistrationGates.typedNodeType e
 private def sameShape (a b : Expr) : Q Bool :=
-  RegistrationGates.compiledQuery (Contract.CompiledExpressions.sameShape a b)
+  RegistrationGates.certifiedNodeRelation a b
 private def isProp (e : Expr) : Q Bool :=
-  RegistrationGates.compiledQuery (Contract.CompiledExpressions.propositionShape e)
+  RegistrationGates.typedNodeProp e
 private def isProof (e : Expr) : Q Bool := do isProp (← projectType e)
 private def isType (e : Expr) : Q Bool := do
-  RegistrationGates.compiledQuery (do
-    return (← Contract.CompiledExpressions.head (← Contract.CompiledExpressions.typeShape e)).isSort)
+  return (← RegistrationGates.exactNodeHead (← RegistrationGates.typedNodeType e)).isSort
 
 private def withLocal (name : Name) (bi : BinderInfo) (type : Expr)
-    (value : Option Expr) (body : Expr → Q α) : Q α := do
+    (value : Option Expr) (body : Expr → Q α) (nondep : Bool := false) : Q α := do
   let context ← read
   let mut index := context.locals.numIndices
   while context.locals.contains ⟨Name.num `compiledEvidenceLocal index⟩ do index := index + 1
   let id : FVarId := ⟨Name.num `compiledEvidenceLocal index⟩
   let locals := match value with
     | none => context.locals.mkLocalDecl id name type bi
-    | some value => context.locals.mkLetDecl id name type value
+    | some value => context.locals.mkLetDecl id name type value nondep
   withReader (fun context : RegistrationGates.QueryContext => { context with locals })
     (body (mkFVar id))
 
@@ -44,9 +43,8 @@ private def recordApplication (name : Name) (base : Expr) : Q Expr := do
   if let some projection := (← read).view.getProjectionFnInfo? name then
     let .ctorInfo ctor ← getConstInfo projection.ctorName
       | fail s!"incomplete_closure:dtr.compiled_projection:{name}"
-    return .proj ctor.induct projection.i base
-  let type ← RegistrationGates.compiledQuery <|
-    Contract.CompiledExpressions.head (← projectType base)
+    return ← RegistrationGates.literalRecordField ctor.induct projection.i base
+  let type ← RegistrationGates.exactNodeHead (← projectType base)
   let .const _ levels := type.getAppFn
     | fail s!"incomplete_closure:dtr.record_type:{name}"
   let info ← getConstInfo name
@@ -61,8 +59,7 @@ private structure NormalizedArena where
   domain : Option Expr
 
 private def normalizeArena (arena : Expr) : Q NormalizedArena := do
-  let type ← RegistrationGates.compiledQuery <|
-    Contract.CompiledExpressions.head (← projectType arena)
+  let type ← RegistrationGates.exactNodeHead (← projectType arena)
   let objectDomain := type.isConstOf objectDomainArenaName
   let law ← if objectDomain then recordApplication (objectDomainArenaName.str "toPrimitiveLawArena") arena
     else pure arena
@@ -76,10 +73,10 @@ private def normalizeArena (arena : Expr) : Q NormalizedArena := do
     else pure none
   return { original := arena, law, finite, domain }
 
-/-- Proof-opaque syntax comes from compiled declaration types and the current
-lexical binder table. The calculator has no Environment or Meta operations. -/
+/-- Proof-opaque syntax comes from bound compiler facts and the current
+lexical binder table. No type inference or conversion runs here. -/
 def eraseProofs (e : Expr) (fuel : Nat := 524288) : Q (Expr × Nat) := do
-  RegistrationGates.compiledQueryWork (Contract.CompiledExpressions.erase e) fuel
+  RegistrationGates.eraseBoundProofs e fuel
 
 /-- Proof-opaque source data fingerprint, sharing repeated raw type subtrees. -/
 def compactIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
@@ -123,9 +120,9 @@ private partial def bodyContainsOrigin (body origin : Expr) (depth : Nat := 0) :
   | .lam name type body bi | .forallE name type body bi =>
     if ← child type then return true
     withLocal name bi type none fun x => child (body.instantiate1 x)
-  | .letE name type value body _ =>
+  | .letE name type value body nondep =>
     if (← child type) || (← child value) then return true
-    withLocal name .default type (some value) fun x => child (body.instantiate1 x)
+    withLocal name .default type (some value) (nondep := nondep) fun x => child (body.instantiate1 x)
   | .mdata _ body | .proj _ _ body => child body
   | _ => return false
 

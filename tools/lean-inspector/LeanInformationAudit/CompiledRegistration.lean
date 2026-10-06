@@ -1,6 +1,7 @@
 import LeanInformationAudit.RegistrationRelations
 import LeanInformationAudit.Contract.Decoder
 import LeanInformationAudit.BindingWire
+import LeanInformationAudit.ReadoutProvenance.State
 
 namespace LeanInformationAudit.CompiledRegistration
 open Lean TemplateAudit Contract
@@ -9,28 +10,21 @@ private def objectArena := `D5.S3.ConceptDynamics.InformationEscape.ObjectDomain
 private def lawArena := `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena
 private def signature := `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature
 
-def expressionContext (find : Name → Option ConstantInfo) (start : Nat)
-    (options : Options) (cap : Nat := 200000) : CompiledExpressions.Context :=
-  let configured := maxHeartbeats.get options
-  { find, heartbeatStart := start
-    heartbeatLimit := (if configured == 0 then cap else min cap configured) * 1000 }
-
 def constant (find : Name → Option ConstantInfo) (name : Name) : IO ConstantInfo :=
   RawArtifacts.getConstant find name
 
 /-- A companion is an immutable report view of an already compiled term.
 No declaration is installed, compiled or checked. -/
-def companion (find : Name → Option ConstantInfo) (context : CompiledExpressions.Context)
+def companion (find : Name → Option ConstantInfo) (context : RegistrationGates.QueryContext)
     (name : Name) (value : Expr) (isTheorem : Bool)
     (parameters : Option (List Name) := none) : IO ConstantInfo := do
-  let (type, _) ← CompiledExpressions.run context (CompiledExpressions.typeShape value)
+  let type ← (RegistrationGates.typedNodeType value).run context
   unless Literal.closed value && Literal.closed type do
     throw <| IO.userError s!"incomplete_closure:contract.companion_open:{name}"
   let levels := parameters.getD
     (collectLevelParams (collectLevelParams {} type) value).params.toList
   if let some previous := find name then
-    let (same, _) ← CompiledExpressions.run context (CompiledExpressions.sameShape previous.type type)
-    unless previous.levelParams == levels && same &&
+    unless previous.levelParams == levels && previous.type.equal type &&
         previous.value? (allowOpaque := true) == some value do
       throw <| IO.userError s!"contract.companion_collision:{name}"
     return previous
@@ -42,9 +36,9 @@ def companion (find : Name → Option ConstantInfo) (context : CompiledExpressio
       safety := .safe, all := [name] }
 
 def prepare (find : Name → Option ConstantInfo) (owner : Name)
-    (entry : InformationRegistryEntry) : IO InformationRegistryEntry := do
-  let spelling := if entry.objectArenaName.isAnonymous then entry.arenaName else entry.objectArenaName
-  let resolvedArenaName ← IO.ofExcept <| resolveCanonicalArenaName find spelling
+    (entry : InformationRegistryEntry) (resolvedArenaName : Name) : IO InformationRegistryEntry := do
+  unless (find resolvedArenaName).isSome do
+    throw <| IO.userError s!"IE-C003 ArenaResolutionFailed: {resolvedArenaName}"
   let info ← constant find entry.theoremName
   let statementIdentity := if info.isTheorem then "sha256:" ++ Sha256.hex (toString info.type).toUTF8 else ""
   return { entry with
@@ -124,20 +118,12 @@ def validateFinite (find : Name → Option ConstantInfo) (entry : InformationReg
     return some <| variationError entry
       (if obligations.variation == .absent then "missing_witness" else "invalid_witness")
   if obligations.sensitivity == .evidence then return none
-  let context := expressionContext find (← IO.getNumHeartbeats) options
-  let (slots, _) ← CompiledExpressions.run context do
-    let info ← liftM (constant find entry.arenaName)
-    let arena := mkConst entry.arenaName (info.levelParams.map Level.param)
-    let type ← CompiledExpressions.head (← CompiledExpressions.typeShape arena)
-    let law := if type.isConstOf objectArena then
-        mkApp (mkConst (type.constName!.str "toPrimitiveLawArena") type.constLevels!) arena else arena
-    unless type.isConstOf lawArena || type.isConstOf objectArena do
-      throw <| IO.userError s!"contract.cannot_decode:{entry.theoremName}:finite_signature"
-    let sig := Expr.proj lawArena 1 law
-    let readouts ← CompiledExpressions.finiteIndices (.proj signature 1 sig)
-    let anchors ← CompiledExpressions.finiteIndices (.proj signature 8 sig)
-    return ((readouts.mapIdx fun i _ => (s!"readout[{i}]", (obligations.partialReadouts.bind (·[i]?)).getD false)) ++
-      (anchors.mapIdx fun i _ => (s!"anchor[{i}]", (obligations.partialAnchors.bind (·[i]?)).getD false)))
+  let some readouts := obligations.partialReadouts
+    | throw <| IO.userError s!"unclassified_form:finite.partial_readouts_missing:{entry.theoremName}"
+  let some anchors := obligations.partialAnchors
+    | throw <| IO.userError s!"unclassified_form:finite.partial_anchors_missing:{entry.theoremName}"
+  let slots := (readouts.mapIdx fun i supported => (s!"readout[{i}]", supported)) ++
+    (anchors.mapIdx fun i supported => (s!"anchor[{i}]", supported))
   let some failed := slots.find? (! ·.2) | return none
   let support := Json.arr (((slots.filter (·.2)).map (·.1)).qsort (· < ·) |>.map Json.str)
   return some s!"IE-C049 UnusedPrimitiveInBundle key={entry.registrationModuleName}/{entry.effectiveCatalogId}/{entry.theoremName} signature={entry.arenaName}.signature primitive={failed.1} support={support.compress}"

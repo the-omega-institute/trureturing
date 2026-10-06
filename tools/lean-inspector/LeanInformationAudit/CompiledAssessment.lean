@@ -27,23 +27,26 @@ private def rawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
   evidence (CompiledEvidence.rawIdentity params e fuel)
 private def isRecursiveDefinition (name : Name) : M Bool := return (← read).enrollment.recursive name
 private def isProp (e : Expr) : M Bool :=
-  evidence (RegistrationGates.compiledQuery (Contract.CompiledExpressions.propositionShape e))
+  evidence (RegistrationGates.typedNodeProp e)
 private def projectType (e : Expr) : M Expr :=
-  evidence (RegistrationGates.compiledQuery (Contract.CompiledExpressions.typeShape e))
+  evidence (RegistrationGates.typedNodeType e)
 private def isProof (e : Expr) : M Bool := do isProp (← projectType e)
 private def checkExtractionType (theoremName : Name) (type : Expr) (available : Nat)
-    (constructors : Array Name) : M (Array DependencyIdentity × Nat) := do
-  (CompiledEnrollment.checkExtractionType theoremName type available constructors).run
+    (constructors : Array Name) (levelParams : List Name) : M (Array DependencyIdentity × Nat) := do
+  (CompiledEnrollment.checkExtractionType theoremName type available constructors
+    (some (levelParams.map Level.param))).run
     (← read).enrollment
 private def templateArguments (theoremName : Name) (arguments : Array Expr) (available : Nat)
-    (constructors : Array Name) (indices : Array Bool) : M (Except String (Array Name × Nat)) := do
+    (constructors : Array Name) (indices : Array Bool) (levelParams : List Name) :
+    M (Except String (Array Name × Nat)) := do
   try
     return .ok (← (CompiledEnrollment.checkArguments theoremName arguments available
-      constructors indices).run (← read).enrollment)
+      constructors indices (some (levelParams.map Level.param))).run (← read).enrollment)
   catch error => return .error error.toString
 private def templateTypes (theoremName : Name) (types : Array (Expr × Array Expr))
-    (available : Nat) : M (Except String Nat) :=
-  evidence (RegistrationGates.Compiled.templateTypesCurrent theoremName types available)
+    (available : Nat) (levelParams : List Name) : M (Except String Nat) :=
+  evidence (RegistrationGates.Compiled.templateTypesCurrent theoremName types available
+    (some (levelParams.map Level.param)))
 private def selectedPlan (name : Name) : M (Except String TemplatePlanData) :=
   return (← read).plans.lookup name (pure () : Id Unit)
 private def checkHeartbeat : M Unit := do
@@ -155,7 +158,8 @@ private def isRealizationType (type : Expr) : Bool :=
 exactly once, in its original order, as a whole argument. Proof parameters and
 arguments are opaque; their propositions still pass the shared compiler.
 No beta reduction is performed inside an actual supplied argument. -/
-private def forwardActual (theoremName selected : Name) (initial : Expr) : CompareM Expr := do
+private def forwardActual (theoremName selected : Name) (levelParams : List Name)
+    (initial : Expr) : CompareM Expr := do
   let mut actual := initial
   let mut visited : NameSet := {}
   for _ in [:256] do
@@ -192,13 +196,13 @@ private def forwardActual (theoremName selected : Name) (initial : Expr) : Compa
         return forwarded == expected
     unless ← forwarding do return actual
     let (dependencies, typeWork) ← checkExtractionType theoremName info.type
-      (← get).remaining (← get).constructorTypes
+      (← get).remaining (← get).constructorTypes levelParams
     debit typeWork
     let indices := CompiledEnrollment.typePositions info.type
     debit indices.size
     let (argumentNames, argumentWork) ← match ←
         templateArguments theoremName arguments (← get).remaining
-          (← get).constructorTypes indices with
+          (← get).constructorTypes indices levelParams with
       | .ok result => pure result
       | .error diagnostic => fail diagnostic
     debit argumentWork
@@ -305,6 +309,7 @@ end
 
 private structure MatchContext where
   theoremName : Name
+  levelParams : List Name
   selected : Name
   descriptor : Expr
   body : PlanNode
@@ -347,7 +352,7 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
   if let .supplied raw := plan then return ← equalRaw raw actual
   if let some projection ← fixedProjection actual then
     if realizationInterfaces.contains projection.typeName then
-      let base ← forwardActual context.theoremName context.selected projection.base
+      let base ← forwardActual context.theoremName context.selected context.levelParams projection.base
       if ← equalRaw base context.descriptor then
         let record ← checkedHead context.body
         let (head, fields) := planSpine record
@@ -374,7 +379,8 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
             debit (indices.size + projection.parameters.size)
             let (names, work) ← match ← templateArguments
                 context.theoremName (fields ++ projection.parameters) (← get).remaining
-                (← get).constructorTypes (indices ++ indices.extract 0 projection.parameters.size) with
+                (← get).constructorTypes (indices ++ indices.extract 0 projection.parameters.size)
+                context.levelParams with
               | .ok result => pure result
               | .error diagnostic => fail diagnostic
             debit work
@@ -573,7 +579,7 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
   let arguments := descriptor.getAppArgs
   let budget := initialBudget - eraseWork
   let (argumentNames, argumentWork) ← match ← templateArguments event.key.theoremName arguments budget plan.constructorTypes
-      (plan.slots.map fun slot => slot.type.isConstOf ``Nat || slot.kind == .dictionary) with
+      (plan.slots.map fun slot => slot.type.isConstOf ``Nat || slot.kind == .dictionary) event.levelParams with
     | .ok result => pure result
     | .error reason => fail reason
   let compare : CompareM TemplateBindingCertificate := do
@@ -594,18 +600,19 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     obligations := obligations.push ((← materialize type), #[])
     obligations := obligations ++ (← retainedTypes type) ++ (← retainedTypes body)
     let typeWork ← match ← templateTypes event.key.theoremName
-        obligations (← get).remaining with
+        obligations (← get).remaining event.levelParams with
       | .ok work => pure work
       | .error diagnostic => fail diagnostic
     debit typeWork
     let context : MatchContext := {
       theoremName := event.key.theoremName
+      levelParams := event.levelParams
       selected := name
       descriptor
       body }
     let actualType ← projectType actual
     unless ← matchesPlan context type actualType do fail "unclassified_form:dtr.signature_mismatch"
-    let exposed ← forwardActual event.key.theoremName name actual
+    let exposed ← forwardActual event.key.theoremName name event.levelParams actual
     if !(← equalRaw descriptor exposed) && !(← matchesPlan context body exposed) then
       fail "unclassified_form:dtr.realization_mismatch"
     let .ok (descriptorIdentity, descriptorWork) ← rawIdentity event.levelParams descriptor (← get).remaining

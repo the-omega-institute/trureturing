@@ -14,6 +14,10 @@ structure EscapeRecordInput where
   fromObject : Option Expr := none
   continuation : Option Expr := none
   openContinuation : Bool := false
+  exclusion : Option Name := none
+  finiteLift : Option Name := none
+  roleEnumeration : Option Name := none
+  anchorEnumeration : Option Name := none
   deriving Inhabited, BEq
 
 inductive CatalogKind where

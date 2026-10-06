@@ -70,12 +70,8 @@ dictionary references are calculated; no environment extension is replayed. -/
 unsafe def Context.fromArtifacts (store : RawArtifacts.Store) (mainModule : Name)
     (options : Options) (registeredTheorems : NameSet) : IO Context := do
   discard <| store.getModule `LeanInformationAudit.TemplateEnrollment
-  let expressionContext : Contract.CompiledExpressions.Context := {
-    find := (store.constants[·]?), heartbeatStart := (← IO.getNumHeartbeats)
-    heartbeatLimit := 100000 * 1000 }
   let fingerprint := fun (info : ConstantInfo) (value : Expr) => do
-    let (erased, work) ← Contract.CompiledExpressions.eraseProofs expressionContext value
-    return (← IO.ofExcept <| compactRawIdentity info.levelParams erased (524288 - work)).1
+    return (← IO.ofExcept <| compactRawIdentity info.levelParams value 524288).1
   let mut pins := #[]
   for name in standardDictionaryNames do
     if let some info := store.constants[name]? then
@@ -141,26 +137,25 @@ private def getView : CompileM RegistrationGates.CompiledView :=
 private def recursive (name : Name) : CompileM Bool :=
   return (← read).recursive name
 
-private def query (action : Contract.CompiledExpressions.M α) : CompileM α := do
-  let (value, work) ← (RegistrationGates.compiledQueryWork action (← get).remaining).run
+private def query (action : RegistrationGates.QueryM α) : CompileM α := do
+  let (value, work) ← (RegistrationGates.boundQueryWork action (← get).remaining).run
     (← read).provenance
   charge work
   return value
 
-private def projectType (e : Expr) : CompileM Expr := query (Contract.CompiledExpressions.typeShape e)
+private def projectType (e : Expr) : CompileM Expr := query (RegistrationGates.typedNodeType e)
+private def exactHead (e : Expr) : CompileM Expr := query (RegistrationGates.exactNodeHead e)
 private def isType (e : Expr) : CompileM Bool := do
-  return (← query (Contract.CompiledExpressions.head (← projectType e))).isSort
-private def isProp (e : Expr) : CompileM Bool := query (Contract.CompiledExpressions.propositionShape e)
-private def isProof (e : Expr) : CompileM Bool := do
-  isProp (← projectType e)
+  return (← exactHead (← projectType e)).isSort
+private def isProp (e : Expr) : CompileM Bool := query (RegistrationGates.typedNodeProp e)
+private def isProof (e : Expr) : CompileM Bool := query (RegistrationGates.typedNodeProof e)
 private def getConstInfo (name : Name) : CompileM ConstantInfo := do
   let some info := (← getView).find? name
     | fail s!"incomplete_closure:E7.compiled_constant:{name}"
   return info
 
 private def erase (e : Expr) (fuel : Nat) : CompileM (Expr × Nat) := do
-  (RegistrationGates.compiledQueryWork (Contract.CompiledExpressions.erase e) fuel).run
-    (← read).provenance
+  (RegistrationGates.eraseBoundProofs e fuel).run (← read).provenance
 
 private def identity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
     CompileM (Except String (String × Nat)) := do
@@ -273,6 +268,10 @@ private def binder (name : Name) (bi : BinderInfo) (type : Expr)
   withReader (fun context : Context => { context with provenance :=
     { context.provenance with locals := locals.mkLocalDecl id name type bi } }) (body (mkFVar id))
 
+private def atDeclaration (action : CompileM α) : CompileM α :=
+  withReader (fun context : Context => { context with provenance :=
+    { context.provenance with locals := {} } }) action
+
 private def ownerOf (view : RegistrationGates.CompiledView) (name : Name) : Option Name :=
   view.ownerOf name
 
@@ -280,7 +279,7 @@ private partial def fields (type : Expr) (body : Array Expr → Expr → Compile
     (values : Array Expr := #[]) (depth : Nat := 0) : CompileM α := do
   charge
   if depth > 256 then fail "incomplete_closure:E8.depth"
-  match ← query (Contract.CompiledExpressions.head type) with
+  match ← exactHead type with
   | .forallE name domain tail bi =>
     binder name bi domain fun value => do
       fields (← instantiate tail value) body (values.push value) (depth + 1)
@@ -330,12 +329,16 @@ private def dependency (info : ConstantInfo) : CompileM Unit := do
   if state.dependencies.any (·.name == info.name) then return
   if state.dependencies.size ≥ 4096 then fail "incomplete_closure:E8.definition_constants"
   let some owner := ownerOf (← getView) info.name | fail "incomplete_closure:E7.owner"
-  let .ok (typeId, typeBytes) ← identity info.levelParams info.type state.remaining
+  let fingerprint := fun (value : Expr) (fuel : Nat) =>
+    if standardDictionaryNames.contains info.name then
+      pure (compactRawIdentity info.levelParams value fuel)
+    else atDeclaration (identity info.levelParams value fuel)
+  let .ok (typeId, typeBytes) ← fingerprint info.type state.remaining
     | fail "incomplete_closure:E7.type_identity"
   charge typeBytes
   let (bodyId, bodyBytes) ← if ← isProp info.type then pure ("", 0) else match info.value? with
     | some body =>
-      let .ok pair ← identity info.levelParams body (← get).remaining
+      let .ok pair ← fingerprint body (← get).remaining
         | fail "incomplete_closure:E7.body_identity"
       pure pair
     | none => pure ("", 0)
@@ -359,23 +362,21 @@ private def dataTypes : Array Name :=
 private def propTypes : Array Name := #[`Eq, `True, `False, `And, `Or, `Not, `Iff, `Exists, `Nat.lt]
 private def dictionaryTypes : Array Name := #[`Fintype, `DecidableEq, `Decidable, `DecidablePred, `DecidableRel]
 
--- Inspect imported abbreviations with the same bounded substitution used by
--- expansion. Raw types still pass compileExpr and remain in the checked plan.
+-- Carrier aliases require an exact, bound endpoint. The original alias and
+-- its complete raw inputs remain covered; no abbreviation body is evaluated.
 private partial def sourceCarrierShape (type : Expr) (depth : Nat := 0) : CompileM Expr := do
   charge
   if depth > 256 then fail "incomplete_closure:E8.depth"
   let type := type.consumeMData
-  let .const name levels := type.getAppFn | return type
+  let .const name _ := type.getAppFn | return type
   if dataTypes.contains name || propTypes.contains name ||
       dictionaryTypes.contains name || interfaceTypes.contains name then return type
   let .defnInfo info ← getConstInfo name | return type
   unless (info.hints matches .abbrev) && info.safety == .safe && info.all.length == 1 &&
       (← independentSource name) && !(← recursive name) do return type
-  let mut value ← construct (fun fuel => PlanTransform.instantiateExpr info.value info.levelParams levels fuel)
-  for arg in type.getAppArgs do
-    let .lam _ _ body _ := value.consumeMData | return type
-    value ← instantiate body arg
-  sourceCarrierShape value (depth + 1)
+  let exposed ← exactHead type
+  if exposed.equal type then return type
+  sourceCarrierShape exposed (depth + 1)
 
 private partial def containsIndependentCarrier (type : Expr) (depth : Nat := 0) : CompileM Bool := do
   charge
@@ -554,8 +555,13 @@ private partial def compileNode (e : Expr) (depth : Nat)
         args[0]!.isConstOf `Nat && args[1]!.isConstOf `instLTNat then
       dependency info
       dependency (← getConstInfo `instLTNat)
-      return .expanded e (← compileExpr (mkApp2 (mkConst `Nat.lt) args[2]! args[3]!)
-        (depth + 1) true)
+      let mut plan := PlanNode.atom head
+      plan := .app plan (← compileExpr args[0]! (depth + 1) true)
+      plan := .app plan (.atom args[1]!)
+      for arg in args.extract 2 args.size do
+        plan := .app plan (← compileExpr arg (depth + 1) true)
+      rule "E2.nat_order_encoding"
+      return plan
     if name == `OfNat.ofNat then
       unless typePosition && args.size == 3 && args[0]!.isConstOf `Nat &&
           args[2]!.isAppOfArity `instOfNatNat 1 && args[2]!.getAppArgs[0]!.equal args[1]! do
@@ -563,7 +569,10 @@ private partial def compileNode (e : Expr) (depth : Nat)
       dependency info
       dependency (← getConstInfo `instOfNatNat)
       rule "E3.nat_index_encoding"
-      return .expanded e (← compileExpr args[1]! (depth + 1) true)
+      let mut plan := PlanNode.atom head
+      plan := .app plan (← compileExpr args[0]! (depth + 1) true)
+      plan := .app plan (← compileExpr args[1]! (depth + 1) true)
+      return .app plan (.atom args[2]!)
     if info.isUnsafe then fail "unclassified_form:E1.unsafe_definition"
     let fixedType := dataTypes.contains name || propTypes.contains name ||
       dictionaryTypes.contains name || interfaceTypes.contains name ||
@@ -586,10 +595,14 @@ private partial def compileNode (e : Expr) (depth : Nat)
           return ctor.numFields == 0
         if enumeration then
           let motive := args[r.numParams]!
-          -- Compiled match eta-expands its supplied constant motive. Retain
-          -- and check the raw argument below, including these beta redexes.
-          unless motive.isLambda && !motive.bindingBody!.headBeta.hasLooseBVar 0 do
-            fail "unclassified_form:E4c.structural_descent"
+          -- A supplied exact endpoint may expose a constant motive. The
+          -- complete raw argument remains an independent obligation below.
+          let constantMotive ← match motive with
+            | .lam n type body bi => binder n bi type fun x => do
+              let result ← exactHead (body.instantiate1 x)
+              return (result.find? (· == x)).isNone
+            | _ => pure false
+          unless constantMotive do fail "unclassified_form:E4c.structural_descent"
           rule "E4c.enumeration_dispatch"
           dependency info
           let mut plan := PlanNode.atom head
@@ -673,16 +686,18 @@ private partial def compileNode (e : Expr) (depth : Nat)
         for arg in args do plan := .app plan (← compileExpr arg (depth + 1) true)
         rule "E2.independent_carrier"
         return plan
-    if args.isEmpty && (← independentSource name) && (← hasIndependentInputCarrier info.type) then
+    if args.isEmpty && (← independentSource name) && (← atDeclaration (hasIndependentInputCarrier info.type)) then
       if let .defnInfo defn := info then
         if defn.safety == .safe && defn.all.length == 1 &&
             !(← recursive name) then
           if let .forallE _ _ result _ := info.type.consumeMData then
-            if !result.hasLooseBVars && !(← isProp result) then
-              let typePlan ← compileExpr info.type (depth + 1) true
-              dependency info
-              rule "E5.independent_source"
-              return .audit typePlan (.atom e)
+            if !result.hasLooseBVars then
+              let dataResult ← atDeclaration <| fields info.type fun _ result => return !(← isProp result)
+              if dataResult then
+                let typePlan ← atDeclaration (compileExpr info.type (depth + 1) true)
+                dependency info
+                rule "E5.independent_source"
+                return .audit typePlan (.atom e)
     match info with
     | .thmInfo _ => fail s!"forbidden_dependency:E6.executable_theorem:{name}"
     | .recInfo _ => fail s!"unclassified_form:E4.recursion:{name}"
@@ -693,30 +708,28 @@ private partial def compileNode (e : Expr) (depth : Nat)
       if (← isProp e) && !e.hasFVar then
         fail "unclassified_form:E2.closed_proposition"
       -- Nesting independent calls is not a definition dependency cycle. Lean's
-      -- declaration metadata identifies source recursion before substitution.
+      -- declaration metadata identifies source definition recursion.
       if (← recursive name) || defn.all.length > 1 then
         fail "unclassified_form:E5.recursive_definition"
       dependency info
-      -- Check every raw argument before capture-avoiding expansion, including
-      -- arguments unused by the definition body.
+      -- Check the generic compiled definition and every supplied input as
+      -- separate raw trees. Saturation is a binder-count check, never execution.
       let mut inputs ← args.mapM child
-      let erasedValue ← eraseInput defn.value
-      let mut value ← construct (fun fuel => PlanTransform.instantiateExpr erasedValue defn.levelParams levels fuel)
-      let erasedType ← eraseInput defn.type
-      let mut type ← construct (fun fuel => PlanTransform.instantiateExpr erasedType defn.levelParams levels fuel)
-      for arg in args do
-        let .lam _ bodyDomain body _ := value
-          | fail s!"unclassified_form:E5.unsaturated_definition:{name}"
-        let .forallE _ domain tail _ := type
-          | fail s!"unclassified_form:E5.unsaturated_definition:{name}"
-        inputs := inputs.push (← compileExpr domain (depth + 1) true)
-        inputs := inputs.push (← compileExpr bodyDomain (depth + 1) true)
+      let value ← atDeclaration (eraseInput defn.value)
+      let type ← atDeclaration (eraseInput defn.type)
+      let mut body := value
+      let mut result := type
+      for _ in args do
         charge
-        type ← instantiate tail arg
-        value ← instantiate body arg
-      if value.isLambda then fail s!"unclassified_form:E5.unsaturated_definition:{name}"
-      inputs := inputs.push (← compileExpr type (depth + 1) true)
-      let mut plan ← child value
+        let .lam _ _ tail _ := body
+          | fail s!"unclassified_form:E5.unsaturated_definition:{name}"
+        let .forallE _ _ range _ := result
+          | fail s!"unclassified_form:E5.unsaturated_definition:{name}"
+        body := tail
+        result := range
+      if body.isLambda then fail s!"unclassified_form:E5.unsaturated_definition:{name}"
+      inputs := inputs.push (← atDeclaration (compileExpr type (depth + 1) true))
+      let mut plan ← atDeclaration (compileExpr value (depth + 1) typePosition args.size)
       for input in inputs.reverse do
         unless ← containsInput plan input do plan := .audit input plan
       rule "E5.definition"
@@ -751,7 +764,7 @@ private partial def checkTelescope (type : Expr) (depth : Nat := 0) : CompileM (
     -- These exact standard aliases describe indexed dictionaries. Classify
     -- their Pi telescope too; an alias must not bypass the family obligation.
     let shape ← if #[`DecidablePred, `DecidableRel].contains
-        (domain.getAppFn.constName?.getD .anonymous) then query (Contract.CompiledExpressions.head domain) else pure domain
+        (domain.getAppFn.constName?.getD .anonymous) then exactHead domain else pure domain
     let kind ← match domain with
       | .sort (.succ _) => pure SlotKind.carrier
       | .sort _ => fail "unclassified_form:E1.carrier_universe"
@@ -760,10 +773,9 @@ private partial def checkTelescope (type : Expr) (depth : Nat := 0) : CompileM (
         else if shape.isForall then
           fields shape fun fields result => do
             if result.isAppOf `Decidable then
-              -- Typing normalization is confined to the dependency test. The
-              -- raw domain was checked above and remains in the retained plan.
-              -- In particular, a beta/let wrapper cannot manufacture an index.
-              let proposition ← query (Contract.CompiledExpressions.head result.getAppArgs[0]!)
+              -- Only a bound exact endpoint can expose the proposition used
+              -- by this dependency test. The complete raw domain remains checked.
+              let proposition ← exactHead result.getAppArgs[0]!
               unless fields.any (fun x => (proposition.find? (· == x)).isSome) do
                 fail "unclassified_form:E1.unindexed_decision_family"
               pure .dictionary
@@ -826,7 +838,8 @@ private def checkConstructorType (name : Name) : CompileM Unit := do
 
 /-- Finite enrollment. The constructor is private and only its checked output
 can enter the assessment index; public query data never grants insertion. -/
-def compileTemplate (rootId name : Name) (constructors : Array Name) :
+def compileTemplate (rootId enrollmentName name : Name) (constructors : Array Name)
+    (bodyFact : Name) (coveragePayload : Expr) :
     ReaderT Context IO CheckedTemplatePlan := do
   let context ← read
   let env := context.provenance.view
@@ -838,6 +851,37 @@ def compileTemplate (rootId name : Name) (constructors : Array Name) :
   let some owner := ownerOf env name | fail "incomplete_closure:E7.owner"
   if name.toString.utf8ByteSize > 1024 then fail "incomplete_closure:E8.name_bytes"
   let limit := min 524288 (informationTemplate.work.get context.provenance.options)
+  if limit == 0 then fail "incomplete_closure:E8.work"
+  let nodeView : Contract.NodeFacts.View := {
+    find := env.find?, owner := env.ownerOf,
+    external := fun n => context.implementedBy n || context.extern n }
+  let root := fun (declaration : Name) (part : Contract.NodePart) => do
+    let some constant := env.find? declaration | fail "incomplete_closure:E7.coverage_constant"
+    let some owner := env.ownerOf declaration | fail "incomplete_closure:E7.coverage_owner"
+    return ({
+      owner := owner
+      declaration := declaration
+      part := part
+      path := []
+      levels := constant.levelParams.map Level.param
+    } : Contract.NodeCoordinate)
+  let expected := #[← root name .type, ← root name .value] ++
+    (← constructors.mapM (fun constructor => root constructor .type))
+  let coverageWork ← IO.ofExcept <| Contract.NodeFacts.coverage nodeView expected coveragePayload limit
+  let relation ← IO.ofExcept <| Contract.NodeFacts.fact nodeView bodyFact
+  unless relation.size == 2 do fail "unclassified_form:E7.body_fact"
+  let some enrollment := env.find? enrollmentName | fail "incomplete_closure:E7.enrollment"
+  let enrollmentAt : Contract.NodeCoordinate := {
+    owner := rootId, declaration := enrollmentName, part := .type, path := [.argument],
+    levels := enrollment.levelParams.map Level.param }
+  unless relation[0]!.location == enrollmentAt && relation[1]!.location == expected[1]! do
+    fail "unclassified_form:E7.body_fact_coordinates"
+  let coverageFields ← IO.ofExcept <| Contract.Literal.fields env.find? ``Contract.NodeCoverage coveragePayload 2
+  let factList ← IO.ofExcept <| Contract.Literal.resolveReferences env.find? coverageFields[1]!
+  let factValues ← IO.ofExcept <| Contract.Literal.list "coverage.facts" factList
+  let factNames ← IO.ofExcept <| factValues.mapM (Contract.Literal.name "coverage.fact")
+  let facts ← IO.ofExcept <| factNames.mapM (Contract.NodeFacts.fact nodeView)
+  let context := { context with provenance := { context.provenance with nodeFacts := facts.flatten ++ relation } }
   let sourceBound := info.type.getForallBody.isAppOf
     `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization
   if sourceBound then
@@ -854,12 +898,13 @@ def compileTemplate (rootId name : Name) (constructors : Array Name) :
         unless (← projectType xs[0]!).isConstOf
             `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature do
           fail "unclassified_form:E1.source_signature"
-        let actual ← query <| Contract.CompiledExpressions.head (mkAppN info.value xs)
+        let mut actual := relation[1]!.value
+        for _ in [:xs.size] do
+          let .lam _ _ body _ := actual | fail "unclassified_form:E1.source_template_constructor"
+          actual := body
         unless actual.isAppOfArity
             `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.mk 3 &&
-            actual.getAppArgs == xs do
-          fail "unclassified_form:E1.source_template_constructor"
-        unless ← query (Contract.CompiledExpressions.sameShape (← projectType actual) result) do
+            actual.getAppArgs == #[.bvar 2, .bvar 1, .bvar 0] do
           fail "unclassified_form:E1.source_template_constructor"
       dependency (.defnInfo info)
       let mut slots := #[]
@@ -875,12 +920,12 @@ def compileTemplate (rootId name : Name) (constructors : Array Name) :
     let typePlan ← compileExpr erasedType 0 true
     let plan ← compileExpr (← eraseInput info.value) 0 false slots.size
     return (slots, typePlan, plan)
-  let ((slots, typePlan, plan), state) ← action.run { remaining := limit }
+  let ((slots, typePlan, plan), state) ← (action.run { remaining := limit - coverageWork }).run context
   let (.ok (typeIdentity, typeBytes), next) ←
-    (identity info.levelParams info.type state.remaining).run state
+    ((identity info.levelParams info.type state.remaining).run state).run context
     | fail "incomplete_closure:E7.type_identity"
   let (.ok (bodyIdentity, bodyBytes), _) ←
-    (identity info.levelParams info.value (state.remaining - typeBytes)).run next
+    ((identity info.levelParams info.value (state.remaining - typeBytes)).run next).run context
     | fail "incomplete_closure:E7.body_identity"
   let data : TemplatePlanData := {
     compiler := Lean.versionString, toolchain := Lean.versionString,
@@ -914,15 +959,16 @@ def typePositions (type : Expr) : Array Bool := Id.run do
     current := body
   return positions
 
-/-- Supplied arguments and every expanded executable dependency use exactly
+/-- Supplied arguments and every raw executable dependency use exactly
  the enrollment compiler. Proof propositions are checked before data identity
  checks, projection reduction and definition substitution. There is no carrier-decoding shortcut. -/
 def checkArguments (theoremName : Name) (arguments : Array Expr) (available : Nat)
-    (constructors : Array Name := #[]) (indices : Array Bool := #[]) : ReaderT Context IO (Array Name × Nat) := do
+    (constructors : Array Name := #[]) (indices : Array Bool := #[])
+    (levels : Option (List Level) := none) : ReaderT Context IO (Array Name × Nat) := do
   let limit := min (min 524288 available)
     (RegistrationGates.provenanceExpressionLimit.get (← read).provenance.options)
   if limit == 0 then fail "incomplete_closure:E8.argument_work"
-  let identity ← (RegistrationGates.Compiled.argumentIdentityState theoremName limit).run (← read).provenance
+  let identity ← (RegistrationGates.Compiled.argumentIdentityState theoremName limit levels).run (← read).provenance
   let action : CompileM Unit := do
     for ast in constructors do checkConstructorType ast
     for i in [:arguments.size] do
@@ -933,9 +979,10 @@ def checkArguments (theoremName : Name) (arguments : Array Expr) (available : Na
 /-- Extraction helper types satisfy the same E2/E6 judgment. This examines a
 helper's type, not the selected template body, and returns its actual work debit. -/
 def checkExtractionType (theoremName : Name) (type : Expr) (available : Nat)
-    (constructors : Array Name := #[]) : ReaderT Context IO (Array DependencyIdentity × Nat) := do
+    (constructors : Array Name := #[]) (levels : Option (List Level) := none) :
+    ReaderT Context IO (Array DependencyIdentity × Nat) := do
   let limit := min 524288 available
-  let identity ← (RegistrationGates.Compiled.argumentIdentityState theoremName limit).run (← read).provenance
+  let identity ← (RegistrationGates.Compiled.argumentIdentityState theoremName limit levels).run (← read).provenance
   let action : CompileM Unit := do
     for ast in constructors do checkConstructorType ast
     discard <| compileExpr (← eraseInput type) 0 true
@@ -944,9 +991,9 @@ def checkExtractionType (theoremName : Name) (type : Expr) (available : Nat)
 
 /-- Check the data-input condition used by the independent source rule. -/
 def checkIndependentInputCarrier (theoremName : Name) (type : Expr)
-    (available : Nat) : ReaderT Context IO Bool := do
+    (available : Nat) (levels : Option (List Level) := none) : ReaderT Context IO Bool := do
   let limit := min 524288 available
-  let identity ← (RegistrationGates.Compiled.argumentIdentityState theoremName limit).run (← read).provenance
+  let identity ← (RegistrationGates.Compiled.argumentIdentityState theoremName limit levels).run (← read).provenance
   let (result, _) ← hasIndependentInputCarrier type |>.run
     { remaining := identity.exprFuel, identityState := some identity }
   return result

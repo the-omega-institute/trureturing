@@ -1,6 +1,6 @@
 import LeanInformationAudit.RegistrationData
 import LeanInformationAudit.Contract.Literal
-import LeanInformationAudit.Contract.CompiledExpressions
+import LeanInformationAudit.Contract.NodeFacts
 import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditInterface.Contract.Catalog
 
@@ -122,11 +122,11 @@ def rigidLevels (info : DefinitionVal) (value : Expr) : Except String Unit := do
   unless value.isConst && value.constLevels! == info.levelParams.map Level.param do
     throw s!"contract.discovery:rigid_universes:{info.name}"
 
-def registration (context : CompiledExpressions.Context) (axioms : Array Name)
+def registration (context : Literal.Context) (axioms : Array Name)
     (owner : Name) (info : DefinitionVal) (source : String)
     : IO CompanionInput := do
   let find := context.find
-  let all ← fields find ``Contract.Registration info.value 20
+  let all ← fields find ``Contract.Registration info.value 25
   let trusted := axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·)
   let typeArgs := info.type.getAppArgs
   unless typeArgs.size == 5 do throw <| IO.userError "contract.registration:target_arity"
@@ -179,21 +179,33 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
   let (sensitivityState, sensitivity) ← obligation find fs[9]!
   let partialEvidence ← (← optional find fs[10]!).mapM fun e => do
     if sourceBound then throw <| IO.userError "contract.sensitivity:finite_slots_required"
-    let values ← fields find ``Contract.Implementation.PartialSlotEvidence e 2
-    let computation : CompiledExpressions.M (Array Bool × Array Bool) := do
-      let arena := implementationArgs[1]!
-      let signature := Expr.proj ``PrimitiveLawArena 1 arena
-      let readouts ← CompiledExpressions.partialSlotStates values[0]!
-        (.proj ``PrimitiveSignature 1 signature)
-      let anchors ← CompiledExpressions.partialSlotStates values[1]!
-        (.proj ``PrimitiveSignature 8 signature)
-      return (readouts, anchors)
-    let ((readouts, anchors), _) ← CompiledExpressions.run context computation
-    return (readouts, anchors)
+    let values ← fields find ``Contract.Implementation.PartialSlotEvidence e 6
+    let slots := fun value => do
+      let entries ← IO.ofExcept <| Literal.list "partial.slots" (← referencedValue find value)
+      entries.mapM fun entry => do
+        let row ← fields find ``Sigma entry 2
+        return (← obligationState find row[1]!) == .evidence
+    return (← slots values[0]!, ← slots values[3]!)
   let origin ← optional find fs[11]!
   let selection ← (← optional find fs[12]!).mapM (sourceSelection find)
   let (openContinuation, residual) ← continuation find fs[13]!
   let options ← metadata find fs[15]! Literal.options
+  let namedOption (index : Nat) : IO (Option Name) := do
+    (← optional find fs[index]!).mapM fun value =>
+      metadata find value (Literal.name "registration.fact")
+  let exclusion ← namedOption 17
+  let finiteLift ← namedOption 18
+  let roleEnumeration ← namedOption 19
+  let anchorEnumeration ← namedOption 20
+  let coordinate := fun declaration part path => ({
+    owner := (context.owner declaration).getD owner,
+    declaration, part, path, levels := if declaration == info.name then
+      info.levelParams.map Level.param else typeArgs[1]!.constLevels! } : NodeCoordinate)
+  let operandPath := fun index => List.replicate (25 - index - 1) NodeEdge.function ++ [.argument]
+  let roots := #[coordinate theoremName .type [], coordinate info.name .value (operandPath 8),
+    coordinate info.name .value (operandPath 4), coordinate info.name .value (operandPath 5)] ++
+    (if descriptor.isSome then #[coordinate info.name .value (operandPath 11 ++ [.argument])] else #[]) ++
+    (selection.bind (·.definition) |>.toArray.map fun definition => coordinate definition.name .value [])
   let correspondenceFields ← fields find ``Contract.Implementation.Correspondence fs[5]! 2
   let stage ← obligationState find correspondenceFields[0]!
   let objectStage ← obligationState find correspondenceFields[1]!
@@ -221,11 +233,13 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
       escapeInput := {
         sourceSelection := selection
         finiteBridge := if family.isSome then some suppliedName else none
-        fromObject := origin, continuation := residual, openContinuation }
+        fromObject := origin, continuation := residual, openContinuation,
+        exclusion, finiteLift, roleEnumeration, anchorEnumeration }
       : TemplateBinding.ResolvedDeclaration } else none
   return {
     input := {
-      entry, sourceText := source, options, suppliedPrimitives := primitives, declaration
+      entry, sourceText := source, options, suppliedPrimitives := primitives, declaration,
+      coverage := fs[16]!, coverageRoots := roots
       realizationSource }
     generated, bridge, target := typeArgs[1]!, variation := variation.map Prod.snd, unit }
 
@@ -274,7 +288,7 @@ def rootCatalog (find : Name → Option ConstantInfo) (e : Expr) :
 
 def enrollment (find : Name → Option ConstantInfo) (owner : Name)
     (info : DefinitionVal) (source : String) : Except String TemplateEnrollmentInput := do
-  let fs ← Literal.fields find ``Contract.TemplateEnrollment info.value 4
+  let fs ← Literal.fields find ``Contract.TemplateEnrollment info.value 6
   let name ← compiledMetadata find fs[0]! (Literal.name "name")
   let args := info.type.getAppArgs
   unless args.size ≥ 2 && args[1]!.getAppFn.constName? == some name do
@@ -290,20 +304,112 @@ def enrollment (find : Name → Option ConstantInfo) (owner : Name)
     discard <| compiledConstant find name
     return name
   let options ← compiledMetadata find fs[3]! Literal.options
-  return { owner, name, version, constructors, sourceText := source, options }
+  return {
+    owner, name, version, constructors, sourceText := source, options,
+    enrollmentName := info.name,
+    bodyFact := ← compiledMetadata find fs[4]! (Literal.name "template.body_fact"),
+    coverage := fs[5]! }
+
+private structure SealNode where
+  value : Expr
+  atNode : NodeCoordinate
+
+private def sealChild (node : SealNode) (edge : NodeEdge) (value : Expr) : SealNode :=
+  { value, atNode := { node.atNode with path := node.atNode.path ++ [edge] } }
+
+/-- Reference edges change declaration coordinates; constructor edges retain
+ their actual compiler paths. No application or projection is evaluated. -/
+private def sealReferences (context : Literal.Context) (input : SealNode)
+    : Except String SealNode := do
+  let mut node := input
+  let mut seen : NameSet := {}
+  for _ in [:4097] do
+    match node.value with
+    | .mdata _ value => node := sealChild node .metadata value
+    | .letE _ _ _ body _ =>
+      if Literal.closed body then node := sealChild node .letBody body
+      else return node
+    | .const name levels =>
+      let some info := context.find name | throw s!"contract.cannot_decode:{name}:missing_constant"
+      let .defnInfo definition := info | return node
+      unless definition.safety == .safe && definition.levelParams.length == levels.length &&
+          !context.external name do throw s!"contract.cannot_decode:{name}:unsafe_or_invalid_reference"
+      if seen.contains name then throw s!"contract.cannot_decode:{name}:reference_cycle"
+      if seen.size >= 4096 then throw s!"contract.cannot_decode:{name}:reference_work"
+      let some owner := context.owner name | throw s!"contract.node_binding:owner:{name}"
+      node := {
+        value := Literal.instantiateRawLevels definition.levelParams levels definition.value
+        atNode := { owner, declaration := name, part := .value, path := [], levels } }
+      seen := seen.insert name
+    | _ => return node
+  throw "contract.cannot_decode:reference_work"
+
+private def sealArgument (node : SealNode) (index : Nat) : Except String SealNode := do
+  let args := node.value.getAppArgs
+  unless index < args.size do throw "contract.literal:seal.argument"
+  let path := List.replicate (args.size - 1 - index) NodeEdge.function ++ [NodeEdge.argument]
+  return { value := args[index]!, atNode := { node.atNode with path := node.atNode.path ++ path } }
+
+private def sealField (context : Literal.Context) (node : SealNode)
+    (typeName : Name) (count index : Nat) : Except String SealNode := do
+  let node ← sealReferences context node
+  discard <| Literal.fields context.find typeName node.value count
+  let some (.ctorInfo constructor) := context.find (typeName.str "mk")
+    | throw s!"contract.literal:unknown_structure:{typeName}"
+  unless index < count do throw "contract.literal:seal.field"
+  sealArgument node (constructor.numParams + index)
+
+/-- Shared literal list tails are followed to their actual constructor nodes.
+ A bound tail is a stored node reference, not a term substitution. -/
+private partial def sealList (context : Literal.Context) (input : SealNode)
+    (tails : Array (Array SealNode) := #[]) : Except String (Array SealNode) := do
+  let node ← sealReferences context input
+  match node.value with
+  | .letE _ type value body _ =>
+    unless type.isAppOfArity ``List 1 && Literal.closed type do
+      Literal.reject "seal.catalogs" node.value
+    let tail ← sealList context (sealChild node .letValue value) tails
+    return ← sealList context (sealChild node .letBody body) (tails.push tail)
+  | .bvar index =>
+    if index < tails.size then return tails[tails.size - 1 - index]!
+    Literal.reject "seal.catalogs" node.value
+  | _ =>
+    if node.value.isAppOfArity ``List.nil 1 then return #[]
+    unless node.value.isAppOfArity ``List.cons 3 do Literal.reject "seal.catalogs" node.value
+    return #[← sealArgument node 1] ++ (← sealList context (← sealArgument node 2) tails)
 
 /-- Axiom closure is read from compiled dependencies by the caller; no proof
 checking, environment access or row-function evaluation occurs here. -/
-def readSeal (find : Name → Option ConstantInfo) (axioms : Array Name)
+def readSeal (context : Literal.Context) (axioms : Array Name)
     (source : Name) (e : Expr) : Except String SealInput := do
-  let fs ← Literal.fields find ``Contract.Seal e 3
+  let find := context.find
   unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
     throw s!"IE-C009 ProofConstructionFailed: {source} unapproved axiom dependency"
-  let catalogs ← (← compiledArray find fs[1]!).mapM fun value => do
+  let some (.defnInfo declaration) := find source | throw "seal.source_definition"
+  unless declaration.safety == .safe && !context.external source do
+    throw s!"contract.cannot_decode:{source}:unsafe_or_invalid_reference"
+  let some owner := context.owner source | throw s!"contract.node_binding:owner:{source}"
+  let sourceNode : SealNode := {
+    value := e
+    atNode := {
+      owner, declaration := source, part := .value, path := [],
+      levels := declaration.levelParams.map Level.param } }
+  let fs ← Literal.fields find ``Contract.Seal e 3
+  let arrayNode ← sealReferences context (← sealField context sourceNode ``Contract.Seal 3 1)
+  unless arrayNode.value.isAppOfArity ``List.toArray 2 ||
+      arrayNode.value.isAppOfArity ``Array.mk 2 do Literal.reject "seal.catalogs" arrayNode.value
+  let catalogValues ← sealList context (← sealArgument arrayNode 1)
+  let catalogs ← catalogValues.mapM fun view => do
+    let catalog ← sealField context view ``Contract.SealCatalogView 2 0
+    let fact ← sealField context view ``Contract.SealCatalogView 2 1
+    let value := catalog.value
     let cs ← Literal.fields find ``Contract.SealCatalog value 15
     let arenaName ← compiledMetadata find cs[0]! (Literal.name "seal.arena")
     let catalogId ← compiledMetadata find cs[1]! (Literal.name "seal.catalog")
-    return ({ source, arenaName, catalogId, value } : CompiledSealCatalog)
+    let facts := fact.value.consumeMData
+    unless facts.isConst do Literal.reject "seal.facts" facts
+    discard <| Literal.constantName find "seal.facts" facts
+    return ({ source, arenaName, catalogId, value, facts, catalogAt := catalog.atNode } : CompiledSealCatalog)
   return { rootId := ← compiledMetadata find fs[0]! (Literal.name "seal.root")
            catalogs, options := ← compiledMetadata find fs[2]! Literal.options }
 

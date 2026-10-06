@@ -28,16 +28,16 @@ private def debit : M Unit := do
   unless (← get).remaining > 0 do fail "incomplete_closure:E8.source_operands"
   modify fun s => { s with remaining := s.remaining - 1 }
 
-private def typeQuery (action : Contract.CompiledExpressions.M α)
+private def typeQuery (action : RegistrationGates.QueryM α)
     (operation : String := "type_shape") : M α := do
   let (value, work) ← try
-    (RegistrationGates.compiledQueryWork action (← get).remaining).run (← read).provenance
+    (RegistrationGates.boundQueryWork action (← get).remaining).run (← read).provenance
   catch error => fail s!"{error}; source_query={operation}; remaining={(← get).remaining}"
   modify fun state => { state with remaining := state.remaining - work }
   return value
 
 private def withLocal (name : Name) (bi : BinderInfo) (type : Expr)
-    (value : Option Expr) (body : Expr → M α) : M α := do
+    (value : Option Expr) (body : Expr → M α) (nondep : Bool := false) : M α := do
   let locals := (← read).provenance.locals
   let mut index := (← get).identity.nextLocal
   while locals.contains ⟨Name.num `compiledOperandLocal index⟩ do index := index + 1
@@ -45,7 +45,7 @@ private def withLocal (name : Name) (bi : BinderInfo) (type : Expr)
   let id : FVarId := ⟨Name.num `compiledOperandLocal index⟩
   let locals := match value with
     | none => locals.mkLocalDecl id name type bi
-    | some value => locals.mkLetDecl id name type value
+    | some value => locals.mkLetDecl id name type value nondep
   withReader (fun context : Context => { context with provenance :=
     { context.provenance with locals } }) (body (mkFVar id))
 
@@ -53,30 +53,28 @@ private def withLocal (name : Name) (bi : BinderInfo) (type : Expr)
 their types. Only repository data bodies are unfolded for this inventory. -/
 private def sourceNames (statement : Expr) (fuel : Nat) : ReaderT Context IO (NameSet × Nat) := do
   let view := (← read).provenance.view
-  let action : Contract.CompiledExpressions.M NameSet := do
-    let mut pending := statement.getUsedConstants.toList
-    let mut found : NameSet := {}
-    while let n :: rest := pending do
-      pending := rest
-      if found.contains n then continue
-      Contract.CompiledExpressions.step 0
-      found := found.insert n
-      let some info := view.find? n
-        | fail s!"incomplete_closure:E7.compiled_constant:{n}"
-      let some owner := view.ownerOf n
-        | fail s!"incomplete_closure:E7.compiled_owner:{n}"
-      let type ← try Contract.CompiledExpressions.erase info.type
-        catch error => fail s!"{error}; source_declaration_type={n}"
-      pending := type.getUsedConstants.toList ++ pending
-      if (`D5).isPrefixOf owner then
-        if !(← Contract.CompiledExpressions.propositionShape info.type) then
-          if let some value := info.value? then
-            let value ← try Contract.CompiledExpressions.erase value
-              catch error => fail s!"{error}; source_declaration_value={n}"
-            pending := value.getUsedConstants.toList ++ pending
-    return found
-  let (found, work) ← (RegistrationGates.compiledQueryWork action fuel).run (← read).provenance
-  return (found, fuel - work)
+  let mut pending := statement.getUsedConstants.toList
+  let mut found : NameSet := {}
+  let mut remaining := fuel
+  while let n :: rest := pending do
+    pending := rest
+    if found.contains n then continue
+    unless remaining > 0 do fail "incomplete_closure:E8.source_inventory"
+    remaining := remaining - 1
+    found := found.insert n
+    let some info := view.find? n
+      | fail s!"incomplete_closure:E7.compiled_constant:{n}"
+    let some owner := view.ownerOf n
+      | fail s!"incomplete_closure:E7.compiled_owner:{n}"
+    let (type, work) ← (RegistrationGates.eraseBoundProofs info.type remaining).run (← read).provenance
+    remaining := remaining - work
+    pending := type.getUsedConstants.toList ++ pending
+    if (`D5).isPrefixOf owner && !info.isTheorem then
+      if let some value := info.value? then
+        let (value, work) ← (RegistrationGates.eraseBoundProofs value remaining).run (← read).provenance
+        remaining := remaining - work
+        pending := value.getUsedConstants.toList ++ pending
+  return (found, remaining)
 
 private partial def visit (e : Expr) (depth : Nat := 0)
     (varyingLaw : Option Expr := none) (lawBody : Option Expr := none) : M Unit := do
@@ -92,11 +90,10 @@ where visitCore (e : Expr) (depth : Nat) (varyingLaw lawBody : Option Expr) : M 
   modify fun s => { s with visited := s.visited.insert e }
   let state ← get
   let env := (← read).provenance.view
-  -- This branch already settles rigid proposition identity by compiled shape comparison
-  -- below. Do not first expand the same complete telescope through the legacy
-  -- statement-apart grammar. Raw heads, types and dependencies are still checked.
-  let (_, identity) ← ((RegistrationGates.Compiled.argumentIdentityNode env e
-    (deferStatementApart := true)).run state.identity).run (← read).provenance
+  -- Identity is checked before proof erasure. Apartness requires explicit exact
+  -- facts; the varying Law retains its independently bound exclusion route.
+  let (_, identity) ← ((RegistrationGates.Compiled.argumentIdentityNode env e).run
+    state.identity).run (← read).provenance
   if identity.forbidden then fail "forbidden_dependency:source.operand_identity"
   if identity.incomplete then
     (← read).provenance.trace s!"source operand incomplete remaining={(← get).remaining}; \
@@ -106,21 +103,34 @@ where visitCore (e : Expr) (depth : Nat) (varyingLaw lawBody : Option Expr) : M 
       -- The finite grammar can leave an opaque source proposition undecided.
       -- Compiled shape comparison settles only statement identity; it grants no
       -- readout/source correspondence (checked independently by SourceScope).
-      let type ← typeQuery (Contract.CompiledExpressions.typeShape e)
+      let type ← typeQuery (RegistrationGates.typedNodeType e)
       let candidate ← if type == mkSort .zero then pure e
-        else if ← typeQuery (Contract.CompiledExpressions.propositionShape type) "proposition" then pure type
+        else if ← typeQuery (RegistrationGates.typedNodeProp type) "proposition" then pure type
         else fail s!"incomplete_closure:source.operand_identity:{repr e}; type={repr type}"
       if candidate.hasMVar || candidate.hasLevelMVar then
         fail "incomplete_closure:source.identity_metavariable"
       let same ← try
-        -- Registration.variation proves this complete Law takes both truth
-        -- values as its arbitrary realization varies. Its exact generic body
-        -- cannot be a fixed closed source proposition. Proper subexpressions
-        -- retain the ordinary identity checks and every raw dependency is visited.
         if candidate.hasFVar && lawBody.any (candidate.equal ·) then pure false
-        else if ← typeQuery (Contract.CompiledExpressions.apartTypes candidate identity.statement)
-            "rigid_type_heads" then pure false
-        else typeQuery (Contract.CompiledExpressions.sameShape candidate identity.statement) "statement_identity"
+        else
+          let leftMatch ← typeQuery (RegistrationGates.exactNodeHead? candidate) "exact_candidate"
+          let rightMatch ← typeQuery (RegistrationGates.exactNodeHead? identity.statement) "exact_statement"
+          let left := leftMatch.getD candidate
+          let right := rightMatch.getD identity.statement
+          if left.equal right then pure true
+          else
+            unless leftMatch.isSome && rightMatch.isSome do
+              fail "unclassified_form:source.statement_apart_certificate"
+            let some leftName := left.getAppFn.constName?
+              | fail "unclassified_form:source.statement_apart_certificate"
+            let some rightName := right.getAppFn.constName?
+              | fail "unclassified_form:source.statement_apart_certificate"
+            let some (.inductInfo _) := env.find? leftName
+              | fail "unclassified_form:source.statement_apart_certificate"
+            let some (.inductInfo _) := env.find? rightName
+              | fail "unclassified_form:source.statement_apart_certificate"
+            unless leftName != rightName do
+              fail "unclassified_form:source.statement_apart_certificate"
+            pure false
       catch error =>
         (← read).provenance.trace s!"statement identity failed candidate={repr candidate}; statement={repr identity.statement}"
         throw error
@@ -129,8 +139,8 @@ where visitCore (e : Expr) (depth : Nat) (varyingLaw lawBody : Option Expr) : M 
     else pure identity
   modify fun s => { s with identity }
   -- Proof propositions remain raw dependencies, proof bodies are opaque.
-  if ← typeQuery (do Contract.CompiledExpressions.propositionShape (← Contract.CompiledExpressions.typeShape e)) "proof_classification" then
-    visit (← typeQuery (Contract.CompiledExpressions.typeShape e)) (depth + 1) varyingLaw lawBody
+  if ← typeQuery (RegistrationGates.typedNodeProof e) "proof_classification" then
+    visit (← typeQuery (RegistrationGates.typedNodeType e)) (depth + 1) varyingLaw lawBody
     return
   let child := fun e => visit e (depth + 1) varyingLaw lawBody
   match e with
@@ -144,10 +154,10 @@ where visitCore (e : Expr) (depth : Nat) (varyingLaw lawBody : Option Expr) : M 
   | .forallE n t b bi =>
     child t
     withLocal n bi t none fun x => child (b.instantiate1 x)
-  | .letE n t v b _ =>
+  | .letE n t v b nd =>
     child t
     child v
-    withLocal n .default t (some v) fun x => child (b.instantiate1 x)
+    withLocal n .default t (some v) (nondep := nd) fun x => child (b.instantiate1 x)
   | .mdata _ b | .proj _ _ b => child b
   | .const name levels =>
     if (← get).declarations.contains (name, levels) then return
@@ -161,20 +171,22 @@ where visitCore (e : Expr) (depth : Nat) (varyingLaw lawBody : Option Expr) : M 
     -- A transparent alias supplies no authority: inspect its raw type and
     -- data body, including recursive declaration references, once per name.
     -- Only the previously resolved source operands are opaque mathematical leaves.
-    match info with
-    | .inductInfo inductiveInfo =>
-      child (info.type.instantiateLevelParams info.levelParams levels)
-      -- A discarded carrier can still carry a whole-statement decision in a field.
-      -- Constructor types are data dependencies, even if no constructor is applied.
-      for constructor in inductiveInfo.ctors do
-        let ctor ← getConstInfo constructor
-        child (ctor.type.instantiateLevelParams ctor.levelParams levels)
-    | .ctorInfo _ | .recInfo _ | .quotInfo _ =>
-      child (info.type.instantiateLevelParams info.levelParams levels)
-    | .defnInfo definition =>
-      child (info.type.instantiateLevelParams info.levelParams levels)
-      child (definition.value.instantiateLevelParams info.levelParams levels)
-    | _ => fail s!"unclassified_form:source.unlinked_operand:{name}"
+    withReader (fun context : Context => { context with provenance :=
+      { context.provenance with locals := {} } }) do
+      match info with
+      | .inductInfo inductiveInfo =>
+        child (Contract.Literal.instantiateRawLevels info.levelParams levels info.type)
+        -- A discarded carrier can still carry a whole-statement decision in a field.
+        -- Constructor types are data dependencies, even if no constructor is applied.
+        for constructor in inductiveInfo.ctors do
+          let ctor ← getConstInfo constructor
+          child (Contract.Literal.instantiateRawLevels ctor.levelParams levels ctor.type)
+      | .ctorInfo _ | .recInfo _ | .quotInfo _ =>
+        child (Contract.Literal.instantiateRawLevels info.levelParams levels info.type)
+      | .defnInfo definition =>
+        child (Contract.Literal.instantiateRawLevels info.levelParams levels info.type)
+        child (Contract.Literal.instantiateRawLevels info.levelParams levels definition.value)
+      | _ => fail s!"unclassified_form:source.unlinked_operand:{name}"
   | .mvar _ | .bvar _ => fail "unclassified_form:source.open_operand"
   | _ => pure ()
 
@@ -182,14 +194,29 @@ where visitCore (e : Expr) (depth : Nat) (varyingLaw lawBody : Option Expr) : M 
 rejection machinery is applied before any reduction or proof erasure. -/
 def check (theoremName : Name) (expressions : Array Expr) (fuel : Nat)
     (law : Option (Expr × Expr) := none) (sourceDefinition : Option Expr := none)
-    (checkedFiniteArena : Option Expr := none) : ReaderT Context IO (Array Name × Nat) := do
+    (checkedFiniteArena : Option Expr := none)
+    (exclusion : Option Name := none) (levels : Option (List Level) := none) :
+    ReaderT Context IO (Array Name × Nat) := do
   let limit := min 524288 fuel
+  let theoremInfo ← getConstInfo theoremName
+  let theoremType := match levels with
+    | none => theoremInfo.type
+    | some levels => Contract.Literal.instantiateRawLevels theoremInfo.levelParams levels theoremInfo.type
   -- Read the law from the same compiler-checked dependent Registration whose
   -- Variation field certifies nonconstancy. A caller-supplied law must match
   -- that complete field; no proof body or evaluation supplies this authority.
   let (varyingLaw, available) ← match law with
     | none => pure (none, limit)
     | some (record, observed) => do
+      let some exclusion := exclusion | fail "unclassified_form:source.exclusion_missing"
+      let context ← read
+      let view := context.provenance.view
+      let certificate ← getConstInfo exclusion
+      discard <| IO.ofExcept <| Contract.NodeFacts.exclusion {
+        find := view.find?, owner := view.ownerOf,
+        external := context.extern } exclusion
+      unless certificate.type.getAppArgs[2]!.equal theoremType do
+        fail "contract.node_binding:source.exclusion_statement"
       let action : CompiledSourceScope.M (Option Expr) := do
         unless record.isConst do fail "unclassified_form:source.variation_record"
         let type ← CompiledSourceScope.projectType record
@@ -199,12 +226,13 @@ def check (theoremName : Name) (expressions : Array Expr) (fuel : Nat)
         let expected ← CompiledSourceScope.normalizeHead
           (← CompiledSourceScope.projectField (family ++ `Arena.Law) type.getAppArgs[0]!)
         let observed ← CompiledSourceScope.normalizeHead observed
+        unless (← CompiledSourceScope.normalizeHead certificate.type.getAppArgs[1]!).equal observed do
+          fail "contract.node_binding:source.exclusion_law"
         unless expected.isLambda && expected.equal observed do
           fail "unclassified_form:source.variation_law"
         return some expected
       action.run limit
-  let identity ← (RegistrationGates.Compiled.argumentIdentityState theoremName available).run (← read).provenance
-  let theoremType := (← getConstInfo theoremName).type
+  let identity ← (RegistrationGates.Compiled.argumentIdentityState theoremName available levels).run (← read).provenance
   let (source, remaining) ← sourceNames theoremType identity.exprFuel
   let (source, remaining) ← match sourceDefinition with
     | none => pure (source, remaining)
