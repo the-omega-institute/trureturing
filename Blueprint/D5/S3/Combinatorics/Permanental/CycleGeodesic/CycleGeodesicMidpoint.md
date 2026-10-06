@@ -192,6 +192,10 @@ $$(\exists C \in \mathbb{R},\; (0 \le C) \land (\forall n \in \mathbb{N},\; 1 \l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicMidpoint.result2` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rivin-2026-cycle-geodesic-midpoint-formula` (proved) by `D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicMidpoint.result2`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rivin-2026-cycle-geodesic-midpoint-formula","declaration_gid":"D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicMidpoint.result2","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Igor Rivin (2026). *Permanents of matrix ensembles: computation, distribution, and geometry*. URL: <https://arxiv.org/abs/2602.10141v3>.

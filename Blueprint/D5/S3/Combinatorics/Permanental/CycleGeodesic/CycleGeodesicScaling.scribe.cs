@@ -24,13 +24,16 @@ internal sealed class CycleGeodesicScalingDocument : IScribeDocumentDefinition
             Node("claim3", "claim3", Disp(IffTo(F.Id("claim3"), And(Parenthesized(All("t", Reals(), ImpliesTo(LtTo(D(0), F.Id("t")), ImpliesTo(LtTo(F.Id("t"), D(1)), ImpliesTo(NeqTo(F.Id("t"), Frac(D(1), D(2))), Call("Tendsto", LambdaOf("n", Naturals(), Call("rate", F.Id("n"), F.Id("t"))), Qualified("Filter", "atTop"), Call("nhds", Call("universal", F.Id("t"))))))))), Parenthesized(Call("Tendsto", LambdaOf("m", Naturals(), Call("rate", Add(Mul(D(2), F.Id("m")), D(1)), Frac(D(1), D(2)))), Qualified("Filter", "atTop"), Call("nhds", D(1))))))),
                 Blocks(Paragraph(Text("Page 19, Section 8.4, Open Problem 3: \"Find a closed form for the universal function f(t).\" The encoding identifies this function by the all-dimension rate limit at every t in (0,1) except 1/2, and by the odd-dimensional limit at 1/2. The endpoint values refer to continuous extension."))), DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result3", "result3", Disp(And(Parenthesized(All("t", Reals(), ImpliesTo(LtTo(D(0), F.Id("t")), ImpliesTo(LtTo(F.Id("t"), D(1)), ImpliesTo(NeqTo(F.Id("t"), Frac(D(1), D(2))), Call("Tendsto", LambdaOf("n", Naturals(), Call("rate", F.Id("n"), F.Id("t"))), Qualified("Filter", "atTop"), Call("nhds", Call("universal", F.Id("t"))))))))), Parenthesized(Call("Tendsto", LambdaOf("m", Naturals(), Call("rate", Add(Mul(D(2), F.Id("m")), D(1)), Frac(D(1), D(2)))), Qualified("Filter", "atTop"), Call("nhds", D(1)))))),
-                Blocks(Paragraph(Text("The exact product turns the logarithmic rate into a left Riemann sum. Uniform continuity gives convergence away from the midpoint, and an elementary quadratic-logarithm integral gives 1 - pi delta cot(pi delta). The explicit odd midpoint estimate supplies the remaining limit."))), DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                Blocks(Paragraph(Text("The exact product turns the logarithmic rate into a left Riemann sum. Uniform continuity gives convergence away from the midpoint, and an elementary quadratic-logarithm integral gives 1 - pi delta cot(pi delta). The explicit odd midpoint estimate supplies the remaining limit."))), DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("rivin-2026-cycle-geodesic-universal-function"),
+                    ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string id, string declaration, Formula formula,
-        BlockSequence prose, DescribeRole role, AssessedProvenance provenance) =>
+        BlockSequence prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(declaration), StatementSource.FromAuthor(formula), provenance,
-            prose, role);
+            prose, role, resolution);
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);

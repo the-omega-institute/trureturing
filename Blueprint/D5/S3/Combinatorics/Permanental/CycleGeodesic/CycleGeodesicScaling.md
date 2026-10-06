@@ -64,6 +64,10 @@ $$(\forall t \in \mathbb{R},\; 0 < t \Rightarrow \left(t < 1 \Rightarrow \left(t
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicScaling.result3` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rivin-2026-cycle-geodesic-universal-function` (proved) by `D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicScaling.result3`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rivin-2026-cycle-geodesic-universal-function","declaration_gid":"D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicScaling.result3","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Igor Rivin (2026). *Permanents of matrix ensembles: computation, distribution, and geometry*. URL: <https://arxiv.org/abs/2602.10141v3>.

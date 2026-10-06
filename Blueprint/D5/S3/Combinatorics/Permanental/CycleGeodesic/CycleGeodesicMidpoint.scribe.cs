@@ -42,13 +42,16 @@ internal sealed class CycleGeodesicMidpointDocument : IScribeDocumentDefinition
                     Text("perm(γ(1/2)) = (-1)^((n-1)/2) · 2e^(-n)(1 + 1/(3n) + O(n^(-2)))"),
                     Text(".\" The norm bound encodes the big-O term uniformly over positive odd n. Observation 5 on page 8 supplies the even-dimensional zero clause."))), DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result2", "result2", Disp(And(Parenthesized(ExistsOver("C", Reals(), And(Parenthesized(LeqTo(D(0), F.Id("C"))), Parenthesized(All("n", Naturals(), ImpliesTo(LeqTo(D(1), F.Id("n")), ImpliesTo(Call("Odd", F.Id("n")), LeqTo(Norm(Sub(Sub(Frac(Apply(Qualified("Matrix", "permanent"), Call("gamma", F.Id("n"), Frac(D(1), D(2)))), Call("midpointScale", F.Id("n"))), D(1)), Frac(D(1), Mul(D(3), Cast(F.Id("n"), Complexes()))))), Frac(F.Id("C"), Pow(Cast(F.Id("n"), Reals()), D(2))))))))))), Parenthesized(All("n", Naturals(), ImpliesTo(LeqTo(D(1), F.Id("n")), ImpliesTo(Call("Even", F.Id("n")), Equal(Apply(Qualified("Matrix", "permanent"), Call("gamma", F.Id("n"), Frac(D(1), D(2)))), D(0)))))))),
-                Blocks(Paragraph(Text("The permanent has the stated alternating exponential scale and the 1/(3n) correction. A single constant C = 16 works for all positive odd n; every positive even n gives zero."))), DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                Blocks(Paragraph(Text("The permanent has the stated alternating exponential scale and the 1/(3n) correction. A single constant C = 16 works for all positive odd n; every positive even n gives zero."))), DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("rivin-2026-cycle-geodesic-midpoint-formula"),
+                    ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string id, string declaration, Formula formula,
-        BlockSequence prose, DescribeRole role, AssessedProvenance provenance) =>
+        BlockSequence prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(declaration), StatementSource.FromAuthor(formula), provenance,
-            prose, role);
+            prose, role, resolution);
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
