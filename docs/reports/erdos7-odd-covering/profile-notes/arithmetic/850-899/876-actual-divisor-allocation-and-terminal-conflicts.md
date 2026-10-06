@@ -317,12 +317,64 @@ a scoped Lean check with standard axioms, including its stock
 and global incidence suppliers. It needs no common old word,
 q-color, q-height-one or bound on the total prime pool.
 
-Fifteen donors suffice for the five-word, three-child signature
-slots of a lower owner. The injection proves the simultaneous
-allocation step; full CRT trace coverage, membership in P0 and a
-selected family covering all E0 remain further obligations. Neither
-the fifteen-donor count nor the matching theorem alone proves
-those source conditions.
+These donors give a complete fixed CRT repair of the selected safe
+stripped traces. Number the fifteen roots modulo 27 that avoid both
+retained guards. For each owner assign its fifteen donors to these
+roots. On donor d assigned to root v use the output
+
+$$
+x\equiv v\pmod{27},\qquad x\equiv a_i\pmod d.
+\tag{DA12}
+$$
+
+The product donor is coprime to three, so CRT applies. All 15|I|
+numerical labels 27d are distinct, odd nonunits and fresh. Any point
+in one selected q-stripped class that avoids the two guards has a
+safe root v; the donor assigned to v divides that owner's cofactor,
+so its fixed output contains the point. This covers the entire safe
+trace, including every relevant old word of a lower-row owner.
+
+Each four-prime donor omits at least six matching primes from its
+owner. Oddness and exclusion of three put each omitted prime at
+least five. Consequently
+
+$$
+5^6d(i,c)\le m_i,\qquad
+5^6\sum_{i,c}27d(i,c)\le405\sum_i m_i.
+\tag{DA13}
+$$
+
+The allocation, full CRT coverage, freshness and these bounds have
+one complete actual-source Lean check. The selected family need
+not share an old word or q-color.
+
+For q=113, add the explicit actual-label closure assumption that
+every nonunit divisor of an original modulus is itself an original
+modulus. Since 113d divides its owner's label, this supplies an
+actual row-zero original of modulus 113d. Thus the donor image is
+contained in the actual P0 bank. The checked all-q budget above
+pays both its output count and its strictly smaller modulus sum.
+Neither divisor closure nor coverage of the residual is inferred
+from the matching theorem.
+
+This yields a necessary source restriction. Let E be the actual
+complement of all q-free originals, and assume some original is
+divisible by 113. Under the same guards, no27, minimality and
+explicit divisor closure, the safe q-stripped traces of a fixed
+ten-match sector cannot cover E. If they did, retaining every
+q-free original and adding DA12 would give a legal cheaper cover
+with no larger count. This implication has an exact Lean check
+using the literal source predicate
+
+$$
+E(x)\iff
+\forall j\ (113\nmid n_j\Longrightarrow x\not\equiv a_j\pmod{n_j}).
+\tag{DA14}
+$$
+
+No independently prescribed mask or common-period premise enters
+this noncoverage result. It restricts a hypothetical minimal cover
+in the stated branch; it does not eliminate every possible cover.
 
 ## Published polychromatic coloring supplies a conditional route
 
@@ -380,9 +432,15 @@ using its exp(1)*p*(D+1) criterion. The exact fifteen-color,
 162-candidate, degree-910 instance also compiles, using exp(1)<3
 and rational arithmetic. The general adapter allows indexed finite
 banks of size at least the threshold; equal bank sizes and linearity
-are not required. The combined arithmetic-bank-to-CRT repair chain
-is not yet presented as one completed Lean proof. No new proof of
-the local lemma is claimed.
+are not required. A combined actual-source check supplies the
+eight-prime banks, proves their 162-member stock and degree-910
+bound, and produces one coloring of numerical divisors. Every
+selected owner has a matching divisor of each of the fifteen
+colors. The remaining shared-donor CRT and paid noncoverage steps
+are not yet presented as one completed Lean proof. In particular,
+the eight-match coloring is not an injective donor allocation:
+shared numerical donors must keep one phase and one safe root.
+No new proof of the local lemma is claimed.
 
 Even a complete eight-match sector repair would not prove that
 its selected source traces cover E0. That source-wide implication
