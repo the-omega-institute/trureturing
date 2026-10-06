@@ -65705,3 +65705,1283 @@ $$
 这里新增的是（LC.6）–（LC.7）对当前完整绝对账、指定阈值和同过滤器参数的耦合。
 
 ## 追加锚（本行以下为增补区）
+
+## 431. 完整绝对纤维账的匹配上界与指定阈值的精确阶
+
+沿用 §§428、430 的实际 $\beta_r$、$P_z$、$\theta_{P_z}$、$\mathsf C_z$、$\mathsf L_z$ 和指定的 $X_z(V)$。本节只估计这份既定非负账及其指定充分阈值。
+
+**定义。** 记 $L=\log2$、$\ell=\log z$、$a=e^{-\gamma_E}$。写
+
+$$
+C(W)=c_3W^3+c_2W^2+c_1W+c_0,
+$$
+
+其中 $c_3=A/6$、$c_2=D/2$、$c_1=2D-A+2\mu_0$、$c_0=D+11\mu_0$ 均非负。置
+
+$$
+\begin{aligned}
+K_C&=c_3+c_2+c_1+c_0,\\
+K_L&=A/2+(D-A)+|c_{\rm diag}|+A+D-A,\\
+B_3&=\sum_{r\ge1}\frac{|\beta_r|}{r}(1+\log r/L)^3<\infty,\\
+D_V&=V+(1+L)/L,\\
+K_+&=\exp\!\left((e-1)(1+K_1/L)\right),\qquad K_1=\log4+4.
+\end{aligned}
+\tag{SU.1}
+$$
+
+$B_3$ 的有限性由实际 $\beta_r=\log(1-(-q)^r)$ 的指数尾支付。$K_C,K_L>0$，且对 $W\ge0$ 有 $C(W)\le K_C(1+W)^3$。
+
+**定理（完整账的统一上界）。** 存在 $z_1\ge2$，使对每个固定 $V\ge0$、所有 $z\ge z_1$，
+
+$$
+\boxed{
+\mathsf C_z(V\ell)\le U_C(V)\ell^4,\qquad
+\mathsf L_z(V\ell)\le U_L(V)\ell^3,}
+\tag{SU.2}
+$$
+
+其中可以取
+
+$$
+U_C(V)=\frac{12eK_+K_CD_V^3B_3}{a},\qquad
+U_L(V)=\frac{12eK_+K_LD_V^2B_3}{a}.
+\tag{SU.3}
+$$
+
+**证明：同过滤器正矩。** 定义
+
+$$
+Q_z^+=\sum_{d\mid P_z}\frac1d=\prod_{p\le z}(1+1/p).
+$$
+
+有限约数 Euler 展开精确给
+
+$$
+\frac1{Q_z^+}\sum_{d\mid P_z}\frac{\exp(\log d/\ell)}d
+=\prod_{p\le z}\left(1+\frac{\exp(\log p/\ell)-1}{p+1}\right).
+\tag{SU.4}
+$$
+
+对 $0\le t\le1$，指数函数的凸性给 $e^t-1\le(e-1)t$。又 $1+y\le e^y$ 对 $y\ge0$ 成立，故复用 §428 的第一 Mertens 供应 $\sum_{p\le z}\log p/p\le\ell+K_1$，得到
+
+$$
+\frac1{Q_z^+}\sum_{d\mid P_z}\frac{\exp(\log d/\ell)}d
+\le\exp\!\left(\frac{e-1}{\ell}\sum_{p\le z}\frac{\log p}{p+1}\right)
+\le K_+.
+\tag{SU.5}
+$$
+
+对 $y\ge0$，指数级数的三次项给 $(1+y)^3\le6e^{1+y}$。因此
+
+$$
+\sum_{d\mid P_z}\frac{(1+\log d/\ell)^k}{d}
+\le6eK_+Q_z^+,\qquad k=2,3.
+\tag{SU.6}
+$$
+
+第三 Mertens 供应允许选择与 $V$ 无关的 $z_1$，使
+$E_{z,0}\ge a/(2\ell)$ 对 $z\ge z_1$ 成立。因
+$Q_z^+=\prod_{p\le z}(1-1/p^2)/E_{z,0}\le1/E_{z,0}$，
+
+$$
+Q_z^+\le2\ell/a\quad(z\ge z_1).
+\tag{SU.7}
+$$
+
+**证明：支付全部卷积项。** 有限过滤器身份及三角不等式给
+
+$$
+|\theta_{P_z}(j)|\le\sum_{\substack{d\mid P_z\\d\mid j}}|\beta_{j/d}|.
+\tag{SU.8}
+$$
+
+对 $d\mid P_z,r\ge1$，令 $y=\log d/\ell$、$b=\log r/L$。由于 $D_V\ge1$、$\ell\ge L$，
+
+$$
+1+V\ell+\log d+\log r+L
+\le\ell D_V(1+y)(1+b).
+\tag{SU.9}
+$$
+
+在非负和中应用（SU.8），按 $j=dr$ 重排，用（SU.9）、（SU.6）和（SU.7），得到
+
+$$
+\begin{aligned}
+\mathsf C_z(V\ell)
+&\le K_C\sum_{d\mid P_z}\frac1d\sum_{r\ge1}\frac{|\beta_r|}{r}
+ (1+V\ell+\log d+\log r+L)^3\\
+&\le K_C\ell^3D_V^3 B_3\,6eK_+Q_z^+
+\le U_C(V)\ell^4.
+\end{aligned}
+\tag{SU.10}
+$$
+
+完整 $\mathsf L_z$ 的括号在 $W=V\ell+\log j$ 时至多为
+$K_L(1+W+L)^2$：其二次、一次和常数项分别由 $A/2$、$D-A$、$|c_{\rm diag}|$、$A$、$D-A$ 支付。同样用（SU.8）–（SU.9）、（SU.6），并以 $(1+b)^2\le(1+b)^3$，得到第二个（SU.2）。所有无限重排只涉及非负和；实际指数尾及（SU.6）同时证明它们有限。$\square$
+
+**推论（既定成本与阈值的精确阶）。** 对每个先固定的 $V>0$，当 $z\to\infty$ 时，
+
+$$
+\boxed{
+\mathsf C_z(V\log z)=\Theta_V((\log z)^4),\qquad
+\log X_z(V)=\Theta_V((\log z)^4).}
+\tag{SU.11}
+$$
+
+证明。第一个结论由（SU.2）和（LC.6）相合。对（CP.11）的指定最大值，
+
+$$
+\log X_z(V)
+=\max\{1,\ 1+2\mathsf C_z(V\ell),\ \log(1+2\mathsf L_z(V\ell))\}.
+$$
+
+（SU.2）使三项共同为 $O_V(\ell^4)$；（LC.6）给严格正的匹配下界。$\square$
+
+特别地，仅在选择 $x=X_z(V)$ 时，整个窗口 $x\le n\le xz^V$ 满足
+
+$$
+\frac{\log X_z(V)}{\ell}
+\le\frac{\log n}{\ell}
+\le\frac{\log X_z(V)}{\ell}+V,
+\qquad
+\frac{\log n}{\ell}=\Theta_V(\ell^3)
+\tag{SU.12}
+$$
+
+且上下常数共同适用于该窗口全部整数。对任意更大的 $x\ge X_z(V)$，仍只有（LC.7）的共同下界，不能由此宣称同一个 $O_V(\ell^3)$ 上界。
+
+（SU.11）只确定当前完整绝对账及指定阈值的阶。它不估计真实误差的下界，不给最小可行阈值的下界，也不排除保留有限 Euler 符号后的更低成本核估计。
+
+**来源。** （SU.2）、（SU.11）–（SU.12）是对 §§428、430 这份实际预算与指定阈值的新推导。经典指数凸性、有限 Euler 展开和指数级数不等式仅作证明中间步骤；第一、第三 Mertens 供应沿用 §428 的来源及范围。
+
+## 追加锚（本行以下为增补区）
+
+## 432. 完整有限 Euler 核的有符号误差账与连续前缀幂阈值
+
+沿用 §§414、419、424–430 的实际 $\beta_j=\log(1-(-q)^j)$、$e=\mu*\beta$、$H_{\rm raw}(m)=\sum_{r\le m}e_r$（$m\ge1$）与完整 Robin 配对。§419 的逐二幂链消去不是下面的交换前提；这里先消费已付款的完整阶乘身份，再在每份有限 Euler 过滤器内部保留符号。本节新增的是同一真实核的显式误差账及其幂阈值，不重发已有三矩主项，也不降低 §430 对原指定绝对账的成本下界。
+
+**记号与已有身份。** 对正平方自由整数 $P$（允许 $P=1$），保持
+
+$$
+\begin{gathered}
+E_P(s)=\prod_{p\mid P}(1-p^{-s}),\qquad E_0=E_P(1)>0,\\
+S=\sum_{p\mid P}\frac{\log p}{p-1},\quad
+T=\sum_{p\mid P}\frac{p(\log p)^2}{(p-1)^2},\quad
+R_3=\sum_{p\mid P}\frac{p(p+1)(\log p)^3}{(p-1)^3},\\
+c_P=(S^2-T)/2+\gamma_1,\qquad
+p_P(u)=E_0(u^2/2-Su+c_P),\\
+\kappa_P(d)=\mu(d)\mathbf1_{d\mid P},\quad
+\theta_P=\kappa_P*\beta,\quad
+\eta_P(y)=\sum_{d\mid P}\mu(d)\eta(y/d),\\
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y.
+\end{gathered}
+\tag{SE.1}
+$$
+
+$\gamma_1$ 保持 $\zeta(1+z)=z^{-1}+\gamma_E-\gamma_1z+O(z^2)$ 的原约定。沿用 $w(t)=(1+\log t)/(t^2\log^2t)$ 和 $P_x^{\eta_P}(s)=\int_x^\infty\eta_P(t/s)w(t)\,dt$、$J_x^{\eta_P}(n)=P_x^{\eta_P}(n)-P_x^{\eta_P}(n+1)$。
+
+已有完整纤维身份给
+$J_x^{\eta_P}(n)=\sum_{j\ge1}\theta_P(j)\sum_{m=jn}^{j(n+1)-1}J_x(m)$。
+对 $t\ge0$，其系数的绝对收敛 Dirichlet 变换为
+$\sum_{j\ge1}\theta_P(j)j^{-1-t}=\mathcal B(1+t)E_P(1+t)$，特别地 $\sum_j\theta_P(j)/j=\mathcal B(1)E_0$。这一零阶矩本身不能把任意逐纤维误差的绝对和换成有符号和；下面使用的是完整实际阶乘密度的共同解析表达式。
+
+**阶乘高商供应。** 定义
+
+$$
+\mathcal A_\eta(r)=\int_1^\infty\eta(y)y^{-r-1}\,dy\quad(r\ge1),\qquad
+D_\eta(t)=(1+t)^2\mathcal A_\eta(1+t)-(1+t)\quad(t\ge0).
+$$
+
+§429 已由经典阶乘积分夹逼支付 $|\eta(y)|\le1+\log y$（$y\ge1$）。因此
+
+$$
+|\mathcal A_\eta(r)|\le r^{-1}+r^{-2},\quad
+|\mathcal A_\eta'(r)|\le r^{-2}+2r^{-3},\quad
+|D_\eta'(t)|\le4+\frac4{1+t}\le8.
+\tag{SE.2}
+$$
+
+参数微分由 $(1+\log y)\log y\,y^{-3/2}$ 的局部可积包络支付。对 $r>1$，阶乘的绝对收敛分组给
+$\mathcal A_\eta(r)=-\zeta'(r)/r-(r-1)^{-2}+(r-1)^{-1}$；令 $r\downarrow1$，由既有 Laurent 约定和支配收敛得到
+
+$$
+D_\eta(0)=\mathcal A_\eta(1)-1=\gamma_1,\qquad
+|D_\eta(t)-\gamma_1|\le8t.
+\tag{SE.3}
+$$
+
+这只复用阶乘夹逼、经典 $\zeta$ 展开与参数积分，并非新增 Stieltjes 数值供应。
+
+**命题（完整有限有符号 Laplace 表达式）。** 置 $\ell=\log x\ge1$。对 $u\ge0$，定义
+
+$$
+K(t,u)=e^{-ut}E_P(1+t),\quad K_0=K(0,u)=E_0,\quad
+\mathscr K_{P,\ell}(u)=\ell\sum_{d\mid P}\frac{\mu(d)}d
+G_{\eta,x}(\ell+u+\log d),
+$$
+
+其中 $G_{\eta,x}$ 是 §429.2 的同一完整阶乘密度。则
+
+$$
+\boxed{
+\mathscr K_{P,\ell}(u)=\ell\int_0^\infty e^{-\ell t}
+\left\{
+\bigl[K(t,u)-K_0-tK'(0,u)\bigr](t^{-2}+t^{-1})
++K(t,u)D_\eta(t)
+\right\}dt.}
+\tag{SE.4}
+$$
+
+积分在零点使用连续延拓的二次差商，绝对收敛。全部 $P$ 约数均保留；公式不使用 $H_{\rm raw}(0)$。
+
+**证明。** §429.2 精确给出（$v\ge0$）
+$\ell G_{\eta,x}(\ell+v)=\ell^2F(v/\ell)+v-\ell\log(1+v/\ell)-\ell/(\ell+v)-\ell/(\ell+v)^2+\ell Z_\eta(\ell+v)$，其中 $F(a)=(1+a)\log(1+a)-a$。经典 Laplace 积分给
+
+$$
+\begin{aligned}
+\ell^2F(v/\ell)&=\ell\int_0^\infty e^{-\ell t}
+\frac{e^{-vt}-1+vt}{t^2}\,dt,\\
+v-\ell\log(1+v/\ell)&=\ell\int_0^\infty e^{-\ell t}
+\frac{e^{-vt}-1+vt}{t}\,dt,\\
+h(r)&=\int_0^\infty e^{-rt}(1+t)^2\,dt.
+\end{aligned}
+$$
+
+前两式可对 $v$ 求导并使用 $v=0$ 的值验证；非负二次余项同时支付零点。高商积分的绝对交换由 $|\eta(y)|\le1+\log y$ 与 $\ell+v\ge1$ 支付。对 $v=u+\log d$ 取有限有符号约数和，利用 $\sum_{d\mid P}\mu(d)e^{-t\log d}/d=E_P(1+t)$、$\sum_{d\mid P}\mu(d)(u+\log d)/d=-K'(0,u)$，即得（SE.4）。有限 $P$ 的源没有被截断；无穷 $\beta$ 重组使用已有完整阶乘身份。$\square$
+
+**定理（显式有符号误差账与完整端点）。** 对 $W\ge0$，置
+
+$$
+\begin{aligned}
+B_2(W)&=(W+S)^2+T,\\
+B_3(W)&=(W+S)^3+3(W+S)T+R_3,\\
+\mathsf C_P^{\rm sgn}(W)
+&=E_0\left[\frac23B_3(W)+2B_2(W)+4|\gamma_1|(W+S)+32\right],\\
+\mathsf L_P^{\rm sgn}(U)
+&=E_0\left[\frac{U^2}{2}+SU+|c_P|+U+\log2+S\right].
+\end{aligned}
+\tag{SE.5}
+$$
+
+若 $x\ge e$、$\ell\ge2S$、$n\ge x$ 为正整数，且 $0\le u=\log(n/x)\le U$，则
+
+$$
+\boxed{
+\left|n^2\ell J_x^{\eta_P}(n)-p_P(u)\right|
+\le\frac{\mathsf C_P^{\rm sgn}(U+\log2)}\ell
++\frac{\mathsf L_P^{\rm sgn}(U)}n.}
+\tag{SE.6}
+$$
+
+这里 $E_0$ 保留有限 Euler 的有符号消去；该账不是（CP.4）的绝对逐来源账。
+
+**证明：共同有符号余项。** 对 $t\ge0$，几何级数微分给
+$(\log E_P)'(1+t)=S(t)$、$(\log E_P)''(1+t)=-T(t)$、$(\log E_P)'''(1+t)=R_3(t)$，三个非负和分别不超过 $S,T,R_3$。于是
+
+$$
+0<K(t,u)\le E_0e^{St},\quad
+|K'(t,u)|\le E_0e^{St}(u+S),\quad
+|K''(t,u)|\le E_0e^{St}B_2(u),\quad
+|K'''(t,u)|\le E_0e^{St}B_3(u).
+\tag{SE.7}
+$$
+
+特别地 $K''(0,u)/2+\gamma_1K_0=p_P(u)$。从（SE.4）减去该主项，精确余项为
+
+$$
+\ell\int_0^\infty e^{-\ell t}
+\left\{
+\frac{K-K_0-tK'(0)-t^2K''(0)/2}{t^2}
++\frac{K-K_0-tK'(0)}t
++K D_\eta-\gamma_1K_0
+\right\}dt.
+\tag{SE.8}
+$$
+
+这三个同源有符号余项都来自共同 $K$；不对独立误差硬套矩消去。Taylor 积分余项给前两份分子界 $E_0e^{St}B_3(u)t^3/6$、$E_0e^{St}B_2(u)t^2/2$。（SE.3）、（SE.7）给第三份界 $E_0e^{St}[|\gamma_1|(u+S)+8]t$。令 $b=\ell-S\ge\ell/2>0$，使用 $\int_0^\infty te^{-bt}dt=b^{-2}$，便得
+
+$$
+|\mathscr K_{P,\ell}(u)-p_P(u)|
+\le\frac{\ell E_0}{(\ell-S)^2}
+\left[\frac{B_3(u)}6+\frac{B_2(u)}2+|\gamma_1|(u+S)+8\right]
+\le\frac{\mathsf C_P^{\rm sgn}(u)}\ell.
+\tag{SE.9}
+$$
+
+**证明：保留端点。** 原有限约数纤维换元 $s=dr$ 后精确为
+
+$$
+n^2\ell J_x^{\eta_P}(n)
+=n^2\int_n^{n+1}\frac{\mathscr K_{P,\ell}(\log(s/x))}{s^2}\,ds.
+\tag{SE.10}
+$$
+
+区间上 $u\le\log(s/x)\le u+\log(1+1/n)\le U+\log2$，而总质量为 $n/(n+1)$。用（SE.9）支付密度余项；再用 $|p_P'(v)|\le E_0(U+\log2+S)$、$|p_P(u)|\le E_0(U^2/2+SU+|c_P|)$ 和对数宽度 $\le1/n$，支付变动及 $n/(n+1)$ 与 $1$ 的差，得到（SE.6）。$s=x$ 仍按 §398 的右侧连续延拓处理。$\square$
+
+**推论（连续前缀账的二次对数规模）。** 对 $P=P_z=\prod_{p\le z}p$，记 $L=\log z$、$a=e^{-\gamma_E}>0$。对每个固定有限 $V\ge0$，存在明确有限的 $D_V,F_V\ge0$，使全部 $z\ge z_E$ 满足
+
+$$
+\mathsf C_{P_z}^{\rm sgn}(VL+\log2)\le D_VL^2,
+\qquad \mathsf L_{P_z}^{\rm sgn}(VL)\le F_VL.
+\tag{SE.11}
+$$
+
+**证明与常数。** 直接复用（CP.7）–（CP.10）的 $D_S,D_T,D_c,K_E,z_E$，令 $L_0=\log2$，
+
+$$
+d_S=1+D_S/L_0,\quad d_T=1/2+D_T/L_0,\quad
+d_c=1/4+D_c/L_0,\quad e_*=a+K_E/L_0,\quad b_V=V+1+d_S.
+$$
+
+则 $S_z\le d_SL$、$T_z\le d_TL^2$、$|c_z|\le d_cL^2$、$E_z(1)\le e_*/L$。逐素数比较还给
+$R_{z,3}\le3LT_z$，因为 $(p+1)/(p-1)\le3$、$\log p\le L$。因此可取
+
+$$
+\begin{aligned}
+D_V=e_*\left[\frac23(b_V^3+3b_Vd_T+3d_T)
++\frac{2(b_V^2+d_T)}{L_0}
++\frac{4|\gamma_1|b_V}{L_0^2}+\frac{32}{L_0^3}\right],\\
+F_V=e_*\left[V^2/2+d_SV+d_c+(V+1+d_S)/L_0\right].
+\end{aligned}
+$$
+
+代入（SE.5）即得（SE.11），不需要新增第三素数矩文献供应。$\square$
+
+例如定义新的充分阈值
+
+$$
+X_z^{\rm sgn}(V)=\max\left\{
+\exp\!\left(\max\{1,2S_z,1+2\mathsf C_{P_z}^{\rm sgn}(VL+\log2)\}\right),
+1+2\mathsf L_{P_z}^{\rm sgn}(VL)\right\}.
+\tag{SE.12}
+$$
+
+其 $\log X_z^{\rm sgn}(V)=O_V(L^2)$；对 $x\ge X_z^{\rm sgn}(V)$、$x\le n\le xz^V$，原（CP.12）的 $O_V(1/L)$ 精度仍成立。具体地，（SE.6）右侧严格小于 $1$，再与（CP.13）相加即可。这个新的充分阈值不改变（CP.11）指定阈值或（LC.6）的下界。
+
+**主推论（同一完整核的固定幂三符号窗）。** 存在固定有限 $\kappa>1$、$z_*\ge z_E$，使所有实数 $z\ge z_*$、所有实数 $x\ge z^\kappa$ 和所有正整数 $n$ 共同满足
+
+$$
+\boxed{
+\begin{aligned}
+x\le n\le xz^{1/4}
+&\Longrightarrow J_x^{\eta_{P_z}}(n)>\frac{aL}{64n^2\log x},\\
+xz^{1/2}\le n\le xz^{3/2}
+&\Longrightarrow J_x^{\eta_{P_z}}(n)<-\frac{aL}{16n^2\log x},\\
+xz^2\le n\le xz^3
+&\Longrightarrow J_x^{\eta_{P_z}}(n)>\frac{aL}{8n^2\log x}.
+\end{aligned}}
+\tag{SE.13}
+$$
+
+**证明。** （CP.13）给有限 $K_V^{\rm prof}$，使 $|p_z(vL)/L-a h(v)|\le K_V^{\rm prof}/L$（$0\le v\le V$），其中 $h(v)=v^2/2-v+1/4$。由（SE.6）、（SE.11），只要 $\ell\ge\max(1,2S_z)$，就有
+
+$$
+\left|\frac{n^2\ell}{L}J_x^{\eta_{P_z}}(n)-a h(u/L)\right|
+\le D_V\frac L\ell+\frac{F_V}{n}+\frac{K_V^{\rm prof}}L
+\quad(0\le u\le VL).
+\tag{SE.14}
+$$
+
+选 $\kappa>\max\{1,1/L_0,2d_S,128D_3/a\}$。当 $x\ge z^\kappa$ 时第一项 $<a/128$，且 $\ell\ge\max(1,2S_z)$。再选 $z_*$ 使全部 $z\ge z_*$ 有 $F_3/z^\kappa+K_3^{\rm prof}/L<a/128$，得到共同误差 $<a/64$。已有精确多项式界 $h\ge1/32$ 于 $[0,1/4]$、$h\le-1/8$ 于 $[1/2,3/2]$、$h\ge1/4$ 于 $[2,3]$，于是得到（SE.13）。$\square$
+
+**适用边界与完整配对。** 与 §430 原账所选阈值不同，现在可选择同一行时钟 $x=z^\kappa$。其全部 $x\le n\le xz^3$ 满足 $\kappa\le\log n/\log z\le\kappa+3$，因而不再被原账强制推到增长 $\tau$ 区间。但仓内 Alladi 记录只核对 fixed-$\tau$ 公式，未支付这个紧区间内全部整数行的统一误差，亦未支付沿取整指标的 moving-$\tau$ 用法。因此本节没有自动取得共同粗糙前缀的符号。
+
+对每份 $z,x$，仍保持 §428 的绝对收敛身份
+$I_\psi(x)=\sum_{n\ge1}M_{P_z}(n)J_x^{\eta_{P_z}}(n)$、$M_{P_z}(1)=1$，以及完整原首块补偿
+$J_x^{\eta_{P_z}}(1)-\beta_1J_x(1)=\sum_{j\ge2}\theta_{P_z}(j)\sum_{m=j}^{2j-1}J_x(m)$。
+三个窗的并集及其补集仍按（CP.16）完整分解；$n<x$、两根附近空档、$n>xz^3$ 与首块均保留。现有固定过滤器积分前绝对预算允许对每份 $z$ 使用此身份，无需把它误称为增长过滤器的统一绝对账。新结论支付的是这些实际核的共同误差和符号，不支付全积分的算术联合符号，亦不产生 Robin/RH 的临界全局结论。
+
+**来源。** 实际卷积及完整运输复用 §§414、419、424–429；阶乘精确密度和包络复用（429.2）及其证明，三矩主项、连续前缀第一/第三 Mertens 常数复用（CP.6）–（CP.10）、（CP.13）。Mertens 供应继续采用仓内 `Library/notes/pntplus2026mertens.md` 的既有上游与 Goldmakher/ Diamond–Pintz 归属；Laplace 矩是 §405 已使用的经典 Gamma 积分接口。Alladi 的适用范围继续采用 `Library/Analytic/alladi1982roughmobius.md` 的精确已核对合同。（SE.4）–（SE.14）给出同一有限有符号核的误差运输；本节没有全局 Robin 结论。
+
+## 追加锚（本行以下为增补区）
+
+## 433. 连续 primorial 的有符号 Laplace 轮廓与多项式同源三符号窗口
+
+### 适用对象与来源
+
+沿用主卷 §§398、424–430 的同一实际阶乘余核
+
+\[
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad w(t)=\frac{1+\log t}{t^2\log^2t},
+\]
+
+以及有限过滤器
+
+\[
+P_z=\prod_{p\le z}p,\quad L=\log z,\quad
+E_z(s)=\prod_{p\le z}(1-p^{-s}),\quad E_{z,0}=E_z(1),
+\quad \eta_z(y)=\sum_{d\mid P_z}\mu(d)\eta(y/d).
+\]
+
+保持实际源积分及相邻块
+
+\[
+P_x^{\eta_z}(s)=\int_x^\infty\eta_z(t/s)w(t)\,dt,
+\qquad J_x^{\eta_z}(n)=P_x^{\eta_z}(n)-P_x^{\eta_z}(n+1).
+\]
+
+复用主卷（CP.7）的经典供应
+
+\[
+LE_{z,0}\longrightarrow c_*=e^{-\gamma_E},\qquad
+S_z/L\longrightarrow1,\qquad T_z/L^2\longrightarrow\tfrac12,
+\]
+
+其中
+
+\[
+S_z=\sum_{p\le z}\frac{\log p}{p-1},\qquad
+T_z=\sum_{p\le z}\frac{p(\log p)^2}{(p-1)^2}.
+\]
+
+同时复用第一 Mertens 供应
+\(A(t)=\sum_{p\le t}\log p/p=\log t+O(1)\)，及 §429.2 的精确阶乘核公式。
+这些经典供应并非本节的新增结论。本节的推导先保留有限 Euler 符号和，再支付整体 Laplace 余项，将同一实际 primorial 核运输到 \(x=z^\sigma\)、先固定 \(\sigma>1\) 的源规模。
+
+有限 \(P\) 的 \(\theta_P=\kappa_P*\beta\) 满足
+\(\sum_j\theta_P(j)/j=E_P(1)\mathcal B(1)>0\)，并不为零。本节不以无限 Möbius 系列的零和代替这个有限同筛身份，也不使用未支付的无限 log 矩。
+
+### 定理：同时增长的完整实际核轮廓
+
+定义对 \(v\ge0\) 的正函数
+
+\[
+\varphi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vt}}t\,dt\right),
+\qquad \varphi(0)=1.
+\tag{SL.1}
+\]
+
+对每个先固定的 \(\sigma>1\) 和 \(a\ge0\)，定义
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma(a)=c_*\int_0^\infty
+e^{-\sigma v}\,
+\frac{e^{-av}\varphi(v)-1+(a-1)v}{v^2}\,dv.}
+\tag{SL.2}
+\]
+
+分子在零处为二阶小量，故零端没有奇点。对每个固定有限 \(V\ge0\)，当 \(z\to\infty\) 并取同一源 \(x=z^\sigma\) 时，全部正整数 \(x\le n\le xz^V\) 共同满足
+
+\[
+\boxed{\begin{gathered}
+\forall\varepsilon>0\ \exists Z\ \forall z\ge Z\ \forall n\in\mathbb N_{>0},\\
+z^\sigma\le n\le z^{\sigma+V}\ \Longrightarrow
+\left|n^2J_{z^\sigma}^{\eta_z}(n)
+-\Xi_\sigma\!\left(\frac{\log(n/z^\sigma)}{\log z}\right)\right|
+<\varepsilon.
+\end{gathered}}
+\tag{SL.3}
+\]
+
+若某个退化窗口没有整数，其共同误差断言为空量词；不把空集的实上确界另作定义。\(\sigma\) 与 \(V\) 在该结论中先固定，未断言随 \(z\) 改变的 \(\sigma\downarrow1\) 也有统一误差。
+
+### 证明第一步：精确有符号 Laplace 密度
+
+令 \(\Lambda=\log x\)，\(r=\log s\ge\Lambda\)，\(u=r-\Lambda\ge0\)。§429.2 给
+
+\[
+-\frac{d}{ds}P_x^\eta(s)=\frac{G_{\eta,x}(\log s)}{s^2},
+\]
+
+\[
+\begin{aligned}
+G_{\eta,x}(\Lambda+u)
+={}&(\Lambda+u)\log(1+u/\Lambda)-u
++u/\Lambda-\log(1+u/\Lambda)\\
+&-\frac1{\Lambda+u}-\frac1{(\Lambda+u)^2}
++\int_1^\infty\frac{\eta(y)}{y^2}
+h(\Lambda+u+\log y)\,dy,\\
+h(r)&=r^{-1}+2r^{-2}+2r^{-3}.
+\end{aligned}
+\tag{SL.4}
+\]
+
+阶乘夹逼提供 \(|\eta(y)|\le1+\log y\) 对全部 \(y\ge1\) 成立。
+定义
+
+\[
+\mathcal A_\eta(t)=\int_1^\infty\eta(y)y^{-2-t}\,dy,\qquad
+D_\eta(t)=(1+t)^2\mathcal A_\eta(t)-(1+t),\quad t\ge0.
+\]
+
+这给足以支付全部高商的简单界
+
+\[
+|\mathcal A_\eta(t)|\le\frac1{1+t}+\frac1{(1+t)^2},\qquad
+\boxed{|D_\eta(t)|\le3+2t.}
+\tag{SL.5}
+\]
+
+对任意固定有限平方自由 \(P\)，记
+
+\[
+\mathcal G_{P,x}(r)=\sum_{d\mid P}\frac{\mu(d)}d
+G_{\eta,x}(r+\log d),\qquad
+K(t)=e^{-ut}E_P(1+t).
+\]
+
+则 \(K(0)=E_P(1)\)、\(K'(0)=E_P(1)(S_P-u)\)，且精确有
+
+\[
+\boxed{\displaystyle
+\mathcal G_{P,x}(\Lambda+u)=
+\int_0^\infty e^{-\Lambda t}
+\left\{[K(t)-K(0)-tK'(0)](t^{-2}+t^{-1})
++K(t)D_\eta(t)\right\}\,dt.}
+\tag{SL.6}
+\]
+
+证明这个身份只用有限和与以下普通 Laplace 公式：
+
+\[
+\begin{aligned}
+(\Lambda+b)\log(1+b/\Lambda)-b
+&=\int_0^\infty e^{-\Lambda t}
+\frac{e^{-bt}-1+bt}{t^2}\,dt,\\
+b/\Lambda-\log(1+b/\Lambda)
+&=\int_0^\infty e^{-\Lambda t}
+\frac{e^{-bt}-1+bt}{t}\,dt,\\
+h(r)&=\int_0^\infty e^{-rt}(1+t)^2\,dt.
+\end{aligned}
+\]
+
+这里 \(b=u+\log d\ge0\)，加权有限和的 \(e^{-bt}\) 项恰为 \(K(t)\)；常数项和一次项也全部保留。高商积分的绝对交换由（SL.5）和上述 Laplace 指数衰减支付。于是（SL.6）包括原公式的低商、\(-1/r-1/r^2\) 和完整高商，并没有删除某个有符号余项。
+
+对该同一 \(P\)，有限换元给
+
+\[
+\boxed{\displaystyle
+J_x^{\eta_P}(n)=\int_n^{n+1}\frac{\mathcal G_{P,x}(\log s)}{s^2}\,ds,
+\qquad n\ge x.}
+\tag{SL.7}
+\]
+
+\(n=x\) 下端按 §398 的右侧连续延拓处理。后面用这条完整纤维积分运输所有真实整数，而非只取一个密度点值。
+
+### 证明第二步：有限 Euler 比率的共同极限
+
+令
+
+\[
+F_z(v)=\frac{E_z(1+v/L)}{E_{z,0}},\qquad s_z=S_z/L.
+\]
+
+有限 Euler 乘积的对数微分给
+
+\[
+\frac{d}{dv}\log F_z(v)
+=\frac1L\sum_{p\le z}\frac{\log p}{p^{1+v/L}-1}.
+\tag{SL.8}
+\]
+
+将分母换成 \(p^{1+v/L}\) 的误差，对全部 \(v\ge0\) 至多为
+
+\[
+\frac1L\sum_{p\le z}\frac{\log p}{p(p-1)}=O(L^{-1}).
+\]
+
+设 \(A(t)=\sum_{p\le t}\log p/p\)。对其作保留两端的 Abel 求和，使用 \(A(t)=\log t+O(1)\)，得到对每个固定有限 \(W\)，共同于 \(0\le v\le W\) 的
+
+\[
+\frac1L\sum_{p\le z}\frac{\log p}{p}e^{-v\log p/L}
+=\int_0^1e^{-vb}\,db+O_W(L^{-1}).
+\tag{SL.9}
+\]
+
+确切地，主项由 \(L^{-1}\int_1^z e^{-v\log t/L}dt/t\) 给出；有界 Abel 余项的端点和积分分别为 \(O(L^{-1})\) 和 \(O_W(L^{-1})\)。在（SL.8）中积分并用 \(F_z(0)=1\)，可得
+
+\[
+\boxed{F_z(v)\longrightarrow\varphi(v)}
+\tag{SL.10}
+\]
+
+对每个 \(v\) 紧区间共同成立，因
+\(\int_0^v\int_0^1e^{-wb}db\,dw=\int_0^1(1-e^{-vb})db/b\)。
+
+另一方面，\((\log E_P)'(1+t)\) 随 \(t\ge0\) 递减且非负，因此
+
+\[
+1\le F_z(v)\le e^{s_zv},\qquad s_z\longrightarrow1.
+\tag{SL.11}
+\]
+
+此外 \(T_z/L^2\) 有界。对 \(E_z\) 作第二次对数微分可知，给定有限 \(V\)，所有充分大 \(z\)、\(a\in[0,V]\)、\(v\in[0,1]\) 满足
+
+\[
+\left|\frac{d^2}{dv^2}[e^{-av}F_z(v)]\right|\le C_{\sigma,V}<\infty.
+\tag{SL.12}
+\]
+
+因为该导数等于 \(e^{-av}F_z(v)\) 乘
+\( [S_z(1+v/L)/L-a]^2-T_z(1+v/L)/L^2\)，而这些 \(S,T\) 随其实参数增大不增。这里 \(\sigma\) 只用于选择一个固定 \(s_z\) 上界，并未引入新输入假设。
+
+### 证明第三步：完整共同主导与后两项付款
+
+现在先固定 \(\sigma>1\)、有限 \(V\)，取
+
+\[
+x=z^\sigma,\quad \Lambda=\sigma L,\quad u=aL,\quad0\le a\le V.
+\]
+
+选择固定 \(m\) 使 \(1<m<\sigma\)，再取 \(z\) 足够大使 \(s_z\le m\)。定义
+
+\[
+B_{z,a}(v)=e^{-av}F_z(v)-1+(a-s_z)v.
+\]
+
+（SL.12）及 \(B_{z,a}(0)=B'_{z,a}(0)=0\) 给
+
+\[
+|B_{z,a}(v)|\le Cv^2\quad(0\le v\le1),
+\qquad
+|B_{z,a}(v)|\le e^{mv}+1+(V+m)v\quad(v\ge1).
+\tag{SL.13}
+\]
+
+于是 \(e^{-\sigma v}|B_{z,a}(v)|/v^2\) 和
+\(e^{-\sigma v}|B_{z,a}(v)|/v\) 分别有独立于 \(z,a\) 的可积主导函数。
+这是保留符号和之后的主导；没有引入（CP.4）的 \(\sum|\theta_z(j)|/j\) 预算。
+
+在（SL.6）中取 \(t=v/L\)，得到精确三项分解
+
+\[
+\begin{aligned}
+\mathcal G_{P_z,z^\sigma}((\sigma+a)L)
+={}&LE_{z,0}\int_0^\infty e^{-\sigma v}\frac{B_{z,a}(v)}{v^2}\,dv\\
+&+E_{z,0}\int_0^\infty e^{-\sigma v}\frac{B_{z,a}(v)}v\,dv\\
+&+\frac{E_{z,0}}L\int_0^\infty e^{-\sigma v-av}
+F_z(v)D_\eta(v/L)\,dv.
+\end{aligned}
+\tag{SL.14}
+\]
+
+由（SL.5）、（SL.11）及（SL.13），后两项共同分别为
+\(O_{\sigma,V}(E_{z,0})=O_{\sigma,V}(L^{-1})\) 和
+\(O_{\sigma,V}(E_{z,0}/L)=O_{\sigma,V}(L^{-2})\)。
+
+第一项使用 \(LE_{z,0}\to c_*\)、\(s_z\to1\) 和（SL.10），趋于（SL.2）。
+其趋近对 \(a\in[0,V]\) 共同成立：对每个 \(v\)，可先取该紧区间的误差上确界，紧区间内的 \(e^{-av}\) 因子不超过一；近零和无穷端分别由（SL.13）的可积主导支付。由此得
+
+\[
+\sup_{0\le a\le V}
+|\mathcal G_{P_z,z^\sigma}((\sigma+a)L)-\Xi_\sigma(a)|\longrightarrow0.
+\tag{SL.15}
+\]
+
+外部指数是 \(\sigma\)，位移指数 \(a\) 在 \(e^{-av}\) 内；二阶微分后的指数才合并为 \(\sigma+a\)。有限约数的 \(\log d\) 已在 \(F_z(v)\) 中完整保留，未重复或遗漏位移。
+
+### 证明第四步：完整真实整数纤维
+
+对 \(z^\sigma\le n\le z^{\sigma+V}\)，置
+\(a_n=\log(n/z^\sigma)/L\)。在整个 \(s\in[n,n+1]\) 上，
+
+\[
+0\le\frac{\log(s/z^\sigma)}L-a_n
+\le\frac{\log(1+1/n)}L\le\frac1{nL}\longrightarrow0
+\]
+
+共同成立。用（SL.15）的范围 \([0,V+1]\) 和 \(\Xi_\sigma\) 在其上的一致连续性，可将整个密度纤维共同替换为 \(\Xi_\sigma(a_n)\)。
+（SL.7）的完整端点因子是
+
+\[
+n^2\int_n^{n+1}s^{-2}ds=\frac n{n+1};
+\]
+
+它的差也共同趋于零，因为 \(n\ge z^\sigma\to\infty\)。这证明（SL.3），包括窗口内全部真实整数和首个可能的 \(n=\lceil x\rceil\)，没有逐行另选过滤器。
+
+### 严格两根及三个共同符号窗口
+
+对 \(v>0\)，有
+
+\[
+\boxed{1+v<\varphi(v)<e^v.}
+\tag{SL.16}
+\]
+
+上界来自 \((\log\varphi)'(v)=(1-e^{-v})/v<1\)。下界来自
+
+\[
+\frac{d}{dv}[\log\varphi(v)-\log(1+v)]
+=\frac{1-(1+v)e^{-v}}{v(1+v)}>0.
+\]
+
+（SL.2）的各个分子于是分别满足
+
+\[
+\begin{array}{ll}
+a=0:&\varphi(v)-1-v>0,\\
+a=1:&e^{-v}\varphi(v)-1<0,\\
+a=2:&e^{-2v}\varphi(v)-1+v
+>e^{-2v}(1+v)-1+v>0.
+\end{array}
+\]
+
+最后一个表达式在零处为零，导数是
+\(1-(1+2v)e^{-2v}>0\)。积分得到
+
+\[
+\boxed{\Xi_\sigma(0)>0,\qquad\Xi_\sigma(1)<0,
+\qquad\Xi_\sigma(2)>0.}
+\tag{SL.17}
+\]
+
+同一主导容许对 \(a\) 两次求导，并给
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma''(a)=c_*\int_0^\infty
+e^{-(\sigma+a)v}\varphi(v)\,dv>0\qquad(a\ge0).}
+\tag{SL.18}
+\]
+
+因此它严格凸，恰有两个非负根
+
+\[
+0<\alpha_-(\sigma)<1<\alpha_+(\sigma)<2.
+\]
+
+中间值定理各给一个根；严格凸性排除第三个根，且在两根之间为负、之前和之后为正。这里唯一性针对极限轮廓，不断言每个有限 \(z\) 的整个实际核只有两个零点。
+
+给定先固定的 \(\sigma>1\)，存在 \(\varepsilon_\sigma\in(0,1/4)\) 和有限 \(z_\sigma\)，使全部 \(z\ge z_\sigma\) 的同一过滤器、同一源 \(x=z^\sigma\) 满足
+
+\[
+\begin{array}{c|c}
+\text{全部正整数 }n\text{ 的范围}&J_{z^\sigma}^{\eta_z}(n)\text{ 的符号}\\ \hline
+z^\sigma\le n\le z^{\sigma+\varepsilon_\sigma}&>0\\
+z^{\sigma+1-\varepsilon_\sigma}\le n\le z^{\sigma+1+\varepsilon_\sigma}&<0\\
+z^{\sigma+2-\varepsilon_\sigma}\le n\le z^{\sigma+2+\varepsilon_\sigma}&>0.
+\end{array}
+\tag{SL.19}
+\]
+
+选择 \(\varepsilon_\sigma\) 使三个紧区间分别留在（SL.17）的严格符号邻域，再取（SL.3）的共同误差小于其最小绝对幅度，即得全部整数的共同断言。
+更一般地，任意先固定且避开两根的有限闭区间，都有相应的共同实际符号。
+
+### 二次主项与 Dickman 联系
+
+从（SL.1）的零处展开得
+
+\[
+\varphi(v)=1+v+\tfrac14v^2+O(v^3).
+\]
+
+故对每个固定有限 \(V\)，共同于 \(a\in[0,V]\)，当 \(\sigma\to\infty\) 时
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma(a)=\frac{c_*}{\sigma}
+\left(\frac{a^2}{2}-a+\frac14\right)
++O_V(\sigma^{-2}).}
+\tag{SL.20}
+\]
+
+证明只需将分子写成
+\([a^2/2-a+1/4]v^2+O_V(v^3)\) 于 \(0\le v\le1\)，在无穷端用 \(\varphi(v)\le e^v\)，再分别积分。它恢复（CP.13）在源指数较大时的二次主项，但（SL.2）保留任意先固定 \(\sigma>1\) 的非二次修正，并用有符号整体付款控制实际核。
+由于两根分别限制在 \((0,1)\) 和 \((1,2)\)，（SL.20）的紧区间一致收敛也给
+
+\[
+\alpha_\pm(\sigma)\longrightarrow1\pm1/\sqrt2
+\qquad(\sigma\to\infty).
+\]
+
+若用经典 Dickman 函数 \(\rho\) 的 Laplace 变换
+\(\widehat\rho(v)=\int_0^\infty\rho(t)e^{-vt}dt\)，其普通恒等式为
+
+\[
+\widehat\rho(v)=\frac{e^{\gamma_E}}{\varphi(v)}.
+\tag{SL.21}
+\]
+
+这条经典身份可由 \(t\rho'(t)=-\rho(t-1)\)、\(\rho=1\) 于 \([0,1]\) 直接核对：分部积分给
+\(v\widehat\rho'(v)=(e^{-v}-1)\widehat\rho(v)\)，所以
+\(\widehat\rho(v)\varphi(v)\) 为常数；再用
+\(\widehat\rho(v)\sim1/v\)、
+\(\log\varphi(v)=\log v+\gamma_E+\int_v^\infty e^{-t}dt/t\)
+确定常数为 \(e^{\gamma_E}\)。该 Dickman 变换为经典来源，并不作为本稿新增定理。
+
+因而新轮廓的严格正曲率可写成
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma''(a)=\int_0^\infty
+\frac{e^{-(\sigma+a)v}}{\widehat\rho(v)}\,dv>0.}
+\tag{SL.22}
+\]
+
+这是同筛实际核与 Dickman 机制的明确关系；它不是把粗糙前缀 \(M_{P_z}(n)\) 直接换成 \(\rho'(\log n/L)\)，也未使用 Alladi 隐藏常数的增长参数统一性。
+
+### 完整配对与成果边界
+
+每个 \(z\) 仍是有限过滤器，所以（CP.2）–（CP.3）的绝对预算逐个支付同一完整身份
+
+\[
+I_\psi(z^\sigma)=\sum_{n\ge1}M_{P_z}(n)J_{z^\sigma}^{\eta_z}(n).
+\]
+
+原首块、\(n<x\)、根附近空档和全部大尺度补集均保留。新的（SL.19）将连续 primorial 的真实核三符号窗带到 \(x=z^\sigma\)；它没有下界或改写（CP.4）的绝对账，也不否认 §430 对那个已指定账和充分阈值的成本结论。
+
+在（SL.3）的同源窗口中，粗糙前缀参数恰为
+\(\tau_z(n)=\log n/L=\sigma+a_n\in[\sigma,\sigma+V]\)，保持有界且远离一。这移除了 §430 所选巨大阈值造成的 \(\tau\to\infty\) 范围错配，但现有仓内 Alladi note 只核对逐个先固定 \(\tau\) 的公式；它仍没有支付整窗的 compact-\(\tau\) 统一前缀误差。该新核结论本身不需那个前缀公式，不由未知统一性支撑。
+
+完整 Robin 临界积分的符号和余量仍需同筛前缀、首块及全补集的联合付款；这些局部核符号不决定全积分的符号。
+
+
+## 434. 连续 primorial 有符号核轮廓的正源指数扩展与临界筛尺度
+
+沿用上一节同一实际阶乘余核、有限连续 primorial 过滤器及完整相邻块。记
+
+\[
+L=\log z,\quad P_z=\prod_{p\le z}p,\quad
+E_z(s)=\prod_{p\le z}(1-p^{-s}),\quad E_{z,0}=E_z(1),
+\]
+
+\[
+\eta_z(y)=\sum_{d\mid P_z}\mu(d)\eta(y/d),\qquad
+J_x^{\eta_z}(n)=P_x^{\eta_z}(n)-P_x^{\eta_z}(n+1).
+\]
+
+这里补足全 Laplace 参数的统一 Euler 包络，使源指数可取任意先固定的 \(\sigma>0\)，特别是同一筛尺度 \(x=z\)。经典第一、第三 Mertens 供应、阶乘夹逼及上一节的精确有符号密度均直接复用；下述新增承重关系是全 \(v\) 的 Abel 付款及其在实际核上的参数一致运输。
+
+### 434.1 全参数 Abel 误差与 Euler 包络
+
+保持已有经典第一 Mertens 合同
+
+\[
+A(t)=\sum_{p\le t}\frac{\log p}{p}=\log t+\rho_A(t),\qquad
+|\rho_A(t)|\le K_1\quad(t\ge1),
+\]
+
+其中 \(A(1)=\rho_A(1)=0\)，且可取仓内既有 \(K_1=\log4+4\)。这里 \(\rho_A\) 只是 Mertens 余项，区别于 Dickman 函数。
+置
+
+\[
+R_1=\sum_{m\ge2}\frac{\log m}{m(m-1)}<\infty,\qquad
+D=K_1+R_1,
+\]
+
+\[
+F_z(v)=\frac{E_z(1+v/L)}{E_{z,0}},\qquad
+\varphi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vb}}b\,db\right),
+\quad v\ge0.
+\]
+
+**引理 434.1（全 \(v\) 的带权第一 Mertens 误差）。** 对全部 \(z\ge2\)、\(v\ge0\)，有
+
+\[
+\boxed{\displaystyle
+\left|\frac1L\sum_{p\le z}\frac{\log p}{p}e^{-v\log p/L}
+-\int_0^1e^{-vb}\,db\right|\le\frac{K_1}{L}.}
+\tag{GE.1}
+\]
+
+证明。对 \(A(t)=\log t+\rho_A(t)\) 作 Abel 求和，\(\rho_A(1)=0\) 保留了下端点。主项由 \(L^{-1}\int_1^z e^{-v\log t/L}dt/t\) 给出，误差恰为
+
+\[
+\frac{e^{-v}\rho_A(z)}L
++\frac vL\int_0^1\rho_A(z^b)e^{-vb}\,db.
+\]
+
+当 \(v>0\) 时，其绝对值不超过
+
+\[
+\frac{K_1}{L}\left[e^{-v}+v\int_0^1e^{-vb}db\right]
+=\frac{K_1}{L}.
+\]
+
+\(v=0\) 时误差为 \(\rho_A(z)/L\)，同一界成立。这里没有随 \(v\) 增长的隐含常数。
+
+**引理 434.2（完整有限 Euler 比率的全参数包络）。** 对全部 \(z\ge2\)、\(v\ge0\)，有
+
+\[
+\boxed{\displaystyle
+e^{-K_1v/L}\varphi(v)\le F_z(v)
+\le e^{Dv/L}\varphi(v).}
+\tag{GE.2}
+\]
+
+证明。有限 Euler 乘积给
+
+\[
+(\log F_z)'(v)=\frac1L\sum_{p\le z}
+\frac{\log p}{p^{1+v/L}-1}.
+\]
+
+分母替换的差非负，并共同满足
+
+\[
+0\le\frac1L\sum_{p\le z}\log p
+\left(\frac1{p^{1+v/L}-1}-\frac1{p^{1+v/L}}\right)
+\le\frac{R_1}{L}.
+\]
+
+结合（GE.1）与
+\((\log\varphi)'(v)=\int_0^1e^{-vb}db\)，得到
+
+\[
+-\frac{K_1}{L}\le(\log F_z)'(v)-(\log\varphi)'(v)
+\le\frac D L.
+\]
+
+从零积分并用 \(F_z(0)=\varphi(0)=1\)，即得（GE.2）。
+
+此外，有适合全尾付款的多项式包络
+
+\[
+\boxed{\varphi(v)\le e\max\{1,v\}\le e(1+v)\quad(v\ge0).}
+\tag{GE.3}
+\]
+
+当 \(0\le v\le1\) 时 \(\log\varphi(v)\le v\le1\)；当 \(v\ge1\) 时，在
+\(\log\varphi(v)=\int_0^v(1-e^{-t})dt/t\) 中将区间分为 \([0,1]\)、\([1,v]\)，分别界为一和 \(\log v\)。
+
+因此，对任意先固定的 \(\sigma_0>0\)，只要 \(L\ge2D/\sigma_0\)，就有共同于全部 \(\sigma\ge\sigma_0\)、\(a\ge0\)、\(v\ge0\) 的
+
+\[
+\boxed{\displaystyle
+e^{-\sigma v-av}F_z(v)
+\le e(1+v)e^{-\sigma_0v/2}.}
+\tag{GE.4}
+\]
+
+它为任意正源指数提供统一全尾预算，不要求 \(\sigma>1\)。同时（GE.2）直接给 \(F_z\to\varphi\) 于每个固定 \(v\) 紧区间共同成立。
+
+### 434.2 任意正源指数及其紧区间的实际核极限
+
+对全部 \(\sigma>0\)、\(a\ge0\)，保持同一轮廓表达式
+
+\[
+\Xi_\sigma(a)=e^{-\gamma_E}\int_0^\infty
+e^{-\sigma v}\frac{e^{-av}\varphi(v)-1+(a-1)v}{v^2}\,dv.
+\tag{GE.5}
+\]
+
+零处分子是二阶小量，无穷端由（GE.3）及 \(\sigma>0\) 付款；因此这一定义在新的全部正指数范围均成立。
+
+**定理 434.3（正源指数紧区间上的完整同筛共同极限）。** 任取先固定的
+\(0<\sigma_0\le\sigma_1<\infty\) 和有限 \(V\ge0\)。对每个 \(\varepsilon>0\)，存在有限 \(Z\ge2\)，使全部实数 \(z\ge Z\)、全部 \(\sigma\in[\sigma_0,\sigma_1]\) 和全部正整数 \(n\) 满足
+
+\[
+\boxed{\displaystyle
+z^\sigma\le n\le z^{\sigma+V}
+\ \Longrightarrow
+\left|n^2J_{z^\sigma}^{\eta_z}(n)
+-\Xi_\sigma\!\left(\frac{\log(n/z^\sigma)}{\log z}\right)\right|
+<\varepsilon.}
+\tag{GE.6}
+\]
+
+特别地，每个先固定的 \(\sigma>0\) 都有该实际极限，且每个 \(z\) 的全部行保持同一 \(P_z\) 和同一源 \(x=z^\sigma\)。该定理不声称 \(\sigma_0=0\) 时仍有统一误差。
+
+证明。记 \(s_z=S_z/L\)，\(B_{z,a}(v)=e^{-av}F_z(v)-1+(a-s_z)v\)。上一节的有限 Euler 微分与（CP.7）仍给独立于 \(\sigma\) 的近零付款
+
+\[
+|B_{z,a}(v)|\le C_Vv^2
+\quad(0\le v\le1,\ 0\le a\le V),
+\tag{GE.7}
+\]
+
+因为 \(s_z\) 与 \(T_z/L^2\) 有界，而该分子在零处的值和一阶导数均为零。在 \(v\ge1\) 上使用（GE.4），以及 \(s_z\) 有界，可使
+\(e^{-\sigma v}|B_{z,a}(v)|/v^2\) 和
+\(e^{-\sigma v}|B_{z,a}(v)|/v\) 均被独立于 \(z,a,\sigma\) 的可积函数主导。这保留 \(a\) 紧区间的误差上确界，并没有把分子的线性项单独积到零端。
+
+精确有符号密度令 \(r=\log s\)、\(\Lambda=\log x\)，定义为
+
+\[
+\mathcal G_{P_z,x}(r)=\sum_{d\mid P_z}\frac{\mu(d)}d
+G_{\eta,x}(r+\log d).
+\]
+
+上一节完整有限 Euler Laplace 身份在 \(x=z^\sigma\)、\(r=(\sigma+a)L\) 时仍精确给
+
+\[
+\begin{aligned}
+\mathcal G_{P_z,z^\sigma}((\sigma+a)L)
+={}&LE_{z,0}\int_0^\infty e^{-\sigma v}\frac{B_{z,a}(v)}{v^2}\,dv\\
+&+E_{z,0}\int_0^\infty e^{-\sigma v}\frac{B_{z,a}(v)}v\,dv\\
+&+\frac{E_{z,0}}L\int_0^\infty e^{-\sigma v-av}
+F_z(v)D_\eta(v/L)\,dv.
+\end{aligned}
+\tag{GE.8}
+\]
+
+这里 \(D_\eta(t)=(1+t)^2\int_1^\infty\eta(y)y^{-2-t}dy-(1+t)\)，且既有阶乘夹逼给 \(|D_\eta(t)|\le3+2t\)。所以后两项共同分别为
+\(O_{\sigma_0,V}(E_{z,0})=O_{\sigma_0,V}(L^{-1})\) 和
+\(O_{\sigma_0,V}(E_{z,0}/L)=O_{\sigma_0,V}(L^{-2})\)。
+
+第一项使用 \(LE_{z,0}\to e^{-\gamma_E}\)、\(s_z\to1\)、（GE.2），连同（GE.7）和全尾主导，可在 \((\sigma,a)\in[\sigma_0,\sigma_1]\times[0,V]\) 的共同上确界下取极限，得到
+
+\[
+\sup_{\substack{\sigma_0\le\sigma\le\sigma_1\\0\le a\le V}}
+|\mathcal G_{P_z,z^\sigma}((\sigma+a)L)-\Xi_\sigma(a)|\longrightarrow0.
+\tag{GE.9}
+\]
+
+对每个固定 \(v\) 的误差共同收敛；近零二阶主导和无穷端 \(e^{-\sigma_0v/2}\) 多项式主导分别支付两个端点。\(\sigma\) 的变化只进入外部指数，故未改变有限约数的位移或其全尾付款。
+
+对真实整数 \(n\ge z^\sigma\)，完整纤维身份仍是
+
+\[
+J_{z^\sigma}^{\eta_z}(n)=\int_n^{n+1}
+\mathcal G_{P_z,z^\sigma}(\log s)s^{-2}ds.
+\]
+
+纤维内的 \(a\) 位移共同不超过
+\(1/(nL)\le1/(z^{\sigma_0}L)\to0\)，完整端点因子是 \(n/(n+1)\)，其差共同不超过 \(z^{-\sigma_0}\)。
+（GE.5）在紧参数矩形上联合连续；用（GE.9）的 \(a\in[0,V+1]\) 范围及该联合一致连续性，得到（GE.6）。这包括 \(\sigma=1\)、\(n=\lceil z\rceil\) 和全部整数窗口，未用单点密度替代未支付的纤维。
+
+### 434.3 临界筛尺度的两根与全部整数三符号窗口
+
+对于每个 \(\sigma>0\)，上一节的严格比较
+\(1+v<\varphi(v)<e^v\)、\(v>0\)，仍给
+
+\[
+\Xi_\sigma(0)>0,\qquad\Xi_\sigma(1)<0,\qquad\Xi_\sigma(2)>0.
+\]
+
+由（GE.3）可在任何正 \(\sigma\) 范围两次微分，并得
+
+\[
+\Xi_\sigma''(a)=e^{-\gamma_E}\int_0^\infty
+e^{-(\sigma+a)v}\varphi(v)dv>0.
+\tag{GE.10}
+\]
+
+所以轮廓仍严格凸，恰有两根
+\(0<\alpha_-(\sigma)<1<\alpha_+(\sigma)<2\)。若使用经典 Dickman Laplace 身份
+\(\widehat\rho_D(v)=e^{\gamma_E}/\varphi(v)\)，同一曲率也写成
+\(\int_0^\infty e^{-(\sigma+a)v}/\widehat\rho_D(v)dv\)；本节没有改变该经典变换的归属。
+
+特别在 \(\sigma=1\) 的同一实际筛尺度 \(x=z\)，存在固定
+\(\varepsilon_1\in(0,1/4)\) 和有限 \(Z_1\ge2\)，使全部 \(z\ge Z_1\) 的同一过滤器满足
+
+\[
+\begin{array}{c|c}
+\text{全部正整数 }n\text{ 的范围}&J_z^{\eta_z}(n)\text{ 的符号}\\ \hline
+z\le n\le z^{1+\varepsilon_1}&>0\\
+z^{2-\varepsilon_1}\le n\le z^{2+\varepsilon_1}&<0\\
+z^{3-\varepsilon_1}\le n\le z^{3+\varepsilon_1}&>0.
+\end{array}
+\tag{GE.11}
+\]
+
+证明是选择三个轮廓严格符号邻域，再将（GE.6）的共同误差界于其最小绝对幅度之下。
+更强地，对任意先固定的正指数紧区间 \([\sigma_0,\sigma_1]\)，联合连续性和紧性可选择同一个 \(\varepsilon\in(0,1/4)\) 及同一个 \(Z\)，使对应的三个 \(a\) 窗口对其全部 \(\sigma\) 同时有效。
+根的唯一性属于极限轮廓；未断言每个有限筛的全部实际核只有两次变号。
+
+### 434.4 同筛前缀与完整来源范围
+
+每个 \(z\) 的过滤器仍有限，（CP.2）–（CP.3）的逐筛绝对预算保留
+
+\[
+I_\psi(z^\sigma)=\sum_{n\ge1}M_{P_z}(n)J_{z^\sigma}^{\eta_z}(n),
+\qquad
+M_{P_z}(n)=\sum_{\substack{r\le n\\P^-(r)>z}}\mu(r).
+\]
+
+在 \(\sigma=1\) 的窗口中，粗糙参数为
+\(\tau_z(n)=\log n/L=1+a_n\)，处于固定有限区间。
+\(a_n=0\) 对应粗糙参数一的边界；现有 Alladi 合同假设先固定 \(\tau>1\)，因此不能直接支付这个边界，也没有据此得到整窗共同前缀误差。若需使用该供应，应另将 \(a\ge\delta>0\) 的前缀范围及其 uniform 合同完整核对。
+
+本节的实际核结论只使用经典 Mertens、完整有限 Euler 算子和阶乘包络，无需那个待核对的前缀估计。
+原首块、\(n<x\)、根附近空档和全部大尺度补集均保留；没有用核的三个符号代替整个积分的符号。
+新的全参数 Abel 付款改变的是实际核可用的源尺度，不改变 §430 对（CP.4）指定绝对账和充分阈值的成本结论。
+这里得到同一数学问题内的完整新有符号运输结果，没有 Robin/RH 结论或全球原创性断言。
+
+## 435. 临界连续 primorial 的同筛粗糙前缀与真实核联合窗口
+
+沿用 §§428、430、433–434 的连续 primorial、实际阶乘过滤核及完整配对。对实数 \(z\ge2\)，记
+
+\[
+L=\log z,\qquad P_z=\prod_{p\le z}p,\qquad
+M_z(n)=M_{P_z}(n)=\sum_{\substack{1\le r\le n\\P^-(r)>z}}\mu(r),
+\]
+
+其中 \(P^-(1)=\infty\)。过滤核仍为
+\(\eta_z(y)=\sum_{d\mid P_z}\mu(d)\eta(y/d)\)，相邻块仍为
+\(J_x^{\eta_z}(n)=P_x^{\eta_z}(n)-P_x^{\eta_z}(n+1)\)。
+
+以下 \(x=x(z)>1\) 是同一实际源函数，满足
+
+\[
+\frac{x(z)}z\longrightarrow1\qquad(z\to\infty).
+\tag{CW.1}
+\]
+
+每个 \(z\) 的全部行使用同一个过滤器 \(P_z\) 和同一个 \(x(z)\)，不逐行重选 cutoff。定义上一节临界轮廓的正数
+
+\[
+c_0=\Xi_1(0)=e^{-\gamma_E}\int_0^\infty
+e^{-v}\frac{\varphi(v)-1-v}{v^2}dv>0.
+\tag{CW.2}
+\]
+
+该正性由 \(\varphi(v)>1+v\) 给出，积分两端已由全参数 Laplace 包络支付。
+
+### 435.1 临界源固定比例窗的联合密度
+
+**定理 435.1（同一有限筛的完整前缀与正核）。** 任取先固定的
+\(1\le\lambda<\Lambda<\infty\)，定义全部真实整数窗口
+
+\[
+\mathcal W_z(x)=\{n\in\mathbb N_{>0}:\lambda x\le n\le\Lambda x\}.
+\tag{CW.3}
+\]
+
+则当 \(z\to\infty\) 时，该窗口的全部整数共同满足
+
+\[
+\boxed{\displaystyle
+\frac LxM_z(n)=1-\frac nx+o(1),\qquad
+n^2J_x^{\eta_z}(n)=c_0+o(1).}
+\tag{CW.4}
+\]
+
+共同误差的量词是：任意 \(\varepsilon>0\) 都有有限 \(Z\)，使全部 \(z\ge Z\) 和全部 \(n\in\mathcal W_z(x(z))\) 的两份误差绝对值小于 \(\varepsilon\)。两份 \(o(1)\) 允许依赖所选源函数和固定 \(\lambda,\Lambda\)，不依赖该窗口中的行。
+
+因而核在整个窗口最终严格为正；若 \(\lambda>1\)，实际粗糙前缀在整个窗口最终严格为负。\(\lambda=1\) 时不对边界每行的前缀宣称严格负性。
+
+证明。首先 \(x/z\to1\) 给 \(\Lambda x<z^2\) 对全部充分大 \(z\) 成立。在 \(1\le n<z^2\) 内，每个非单位且全部素因子大于 \(z\) 的整数必为一个素数：若它含至少两个素因子，连同重数，其值严格大于 \(z^2\)。故对所有这样的 \(n\)，包括 \(n<z\)，有精确身份
+
+\[
+\boxed{M_z(n)=1-\max\{\pi(n)-\pi(z),0\}.}
+\tag{CW.5}
+\]
+
+其中 \(\pi(t)\) 计数 \(p\le t\)。它保留 \(P^-(r)>z\) 的严格 cutoff，以及原单位项。\(n\ge z\) 时是 \(1-\pi(n)+\pi(z)\)；\(n<z\) 时右侧仍是精确的单位一。
+
+经典 PNT \(\pi(t)=t/\log t\,[1+o(1)]\) 在
+\(t=n\in[\lambda x,\Lambda x]\) 上共同有效，因为这整个范围的下端趋于无穷。又 \(n/z\) 在固定正紧区间内，故 \(L/\log n\to1\) 共同成立，而
+
+\[
+\frac Lx\pi(z)\longrightarrow1,\qquad
+\frac Lx\pi(n)=\frac nx+o(1)
+\]
+
+于整个窗口共同成立。因此
+
+\[
+\frac Lx[\pi(n)-\pi(z)]=\frac nx-1+o(1).
+\]
+
+正部函数是一 Lipschitz 函数，且 \(n/x\ge\lambda\ge1\)，于是
+
+\[
+\max\left\{\frac Lx[\pi(n)-\pi(z)],0\right\}
+=\frac nx-1+o(1).
+\]
+
+（CW.5）与 \(L/x\to0\) 给第一份（CW.4）。这同时支付 \(\lambda=1\)、\(x<z\) 时的窄端区间，没有把 \(n<z\) 的单位项误写为素数差。
+
+为证明第二份，取实际源指数
+
+\[
+\sigma_z=\frac{\log x}L
+=1+\frac{\log(x/z)}L\longrightarrow1,
+\quad x=z^{\sigma_z},\qquad
+a_{z,n}=\frac{\log(n/x)}L.
+\]
+
+对全部窗口行，\(0\le a_{z,n}\le\log\Lambda/L\to0\) 共同成立。充分大 \(z\) 时 \(\sigma_z\in[1/2,3/2]\)；§434 的正指数紧区间共同极限可取 \(V=1\)，因为 \(\Lambda x\le xz\) 最终成立。它给
+
+\[
+n^2J_x^{\eta_z}(n)=\Xi_{\sigma_z}(a_{z,n})+o(1)
+\]
+
+共同于全部窗口整数。轮廓在正参数矩形上联合连续，故右侧共同趋于 \(\Xi_1(0)=c_0\)。
+这是完整整数纤维结论，使用原积分端点而非逐行密度猜测。最后取共同误差小于 \(c_0/2\) 可得核严格正；\(\lambda>1\) 时再取前缀误差小于 \((\lambda-1)/2\)，可得全部前缀严格负。
+
+### 435.2 完整有限比例窗口的负主项
+
+**定理 435.2（同筛窗口的联合负主项）。** 对（CW.1）–（CW.3）的同一源和同一过滤器，有
+
+\[
+\boxed{\displaystyle
+L\sum_{n\in\mathcal W_z(x)}M_z(n)J_x^{\eta_z}(n)
+\longrightarrow
+c_0\left[\frac1\lambda-\frac1\Lambda
+-\log\left(\frac\Lambda\lambda\right)\right]<0.}
+\tag{CW.6}
+\]
+
+这包括 \(\lambda=1\) 的完整整数窗口；其严格负性是全窗口的结论，并未断言该边界范围的每个前缀都负。
+
+证明。令 \(t_n=n/x\)，及
+
+\[
+U_{z,n}=\frac LxM_z(n),\qquad V_{z,n}=n^2J_x^{\eta_z}(n).
+\]
+
+（CW.4）给两者在窗口内共同有界，并且
+\(U_{z,n}V_{z,n}=c_0(1-t_n)+o(1)\) 共同成立。精确相乘得到
+
+\[
+L M_z(n)J_x^{\eta_z}(n)
+=\frac1x\frac{U_{z,n}V_{z,n}}{t_n^2}
+=\frac{c_0}{x}\frac{1-t_n}{t_n^2}+o(x^{-1})
+\]
+
+共同于全部窗口行。窗口有 \(O_{\lambda,\Lambda}(x)\) 个整数，故这些共同误差之和为 \(o(1)\)。保留两端取整的普通 Riemann 和给
+
+\[
+\frac1x\sum_{n\in\mathcal W_z(x)}\frac{1-t_n}{t_n^2}
+\longrightarrow\int_\lambda^\Lambda\frac{1-t}{t^2}dt
+=\frac1\lambda-\frac1\Lambda-\log(\Lambda/\lambda).
+\]
+
+在 \(1\le\lambda<\Lambda\) 下，该被积函数非正，且于正长度子区间严格负；因此完整极限严格负。
+
+这个主项的尺度是 \(1/\log z\)。只需经典 PNT 和该筛内的精确单位—素数结构，未使用 Alladi 的 compact-\(\tau\) 统一误差，也未把 fixed-\(\tau>1\) 渐近延伸到 \(\tau\downarrow1\)。
+
+### 435.3 保留首块的完整补集反向主项
+
+定义同一源、同一有限过滤器的完整补集
+
+\[
+\mathcal C_z(x)=\sum_{n\in\mathbb N_{>0}\setminus\mathcal W_z(x)}
+M_z(n)J_x^{\eta_z}(n).
+\tag{CW.7}
+\]
+
+每个固定 \(z\) 的级数绝对收敛：（CP.2）–（CP.3）的固定有限筛预算及积分前付款仍适用，不要求其常数对增长的 \(z\) 一致。由于窗口下端至少为 \(x\to\infty\)，此补集完整包含原 \(n=1\) 首块、\(n<x\)、窗口两侧的全部来源及全部远尾。
+
+**推论 435.3（完整补集的必需反向主项）。** 保持 §429.5 已复用的定量 PNT 尾积分供应
+\(|I_\psi(x)|=O((\log x)^{-2})\)。则
+
+\[
+\boxed{\displaystyle
+L\mathcal C_z(x)
+\longrightarrow
+-c_0\left[\frac1\lambda-\frac1\Lambda
+-\log\left(\frac\Lambda\lambda\right)\right]>0.}
+\tag{CW.8}
+\]
+
+证明。（CP.2）的同一完整身份是
+
+\[
+I_\psi(x)=\sum_{n\in\mathcal W_z(x)}M_z(n)J_x^{\eta_z}(n)
++\mathcal C_z(x).
+\]
+
+经典定量 PNT 已在 §429.5 给出
+
+\[
+|I_\psi(x)|\ll
+\int_x^\infty\frac{1+\log t}{t\log^4t}dt
+=\frac1{2\log^2x}+\frac1{3\log^3x}.
+\]
+
+因为 \(\log x/L\to1\)，有 \(L I_\psi(x)\to0\)。从上述精确身份减去（CW.6），即得（CW.8）。这里先用完整恒等式取差，未对补集逐项取极限，也未删除首块或其运输补偿。
+
+### 435.4 适用范围与来源
+
+在该固定比例窗口中，粗糙参数
+\(\tau_z(n)=\log n/L=1+o(1)\) 共同趋于一。现有 Alladi 记录核对的是先固定 \(\tau>1\) 的公式；本节不调用该记录支付这个移动边界。相反，\(n<z^2\) 内的精确单位—素数分解已给所需实际前缀，§434 的有符号完整 Laplace 运输已给所需实际核，所以联合主项无需新增前缀统一性假设。
+
+此处的负窗口与反向补集由同一个 \(I_\psi\) 强制配对，并非另选来源的优化值。窗口负主项与全补集正主项在 \(1/\log z\) 层相抵；剩余更小尺度仍没有 Robin 临界有符号上界。
+整个 \(I_\psi\) 的最终符号仍未决定。经典 PNT 与精确粗糙单位—素数身份作为证明中间步骤；这里的联合窗口及必需补偿保持同一连续 primorial 临界源、原始核、量词和全部来源。
+
+
+## 追加锚（本行以下为增补区）
