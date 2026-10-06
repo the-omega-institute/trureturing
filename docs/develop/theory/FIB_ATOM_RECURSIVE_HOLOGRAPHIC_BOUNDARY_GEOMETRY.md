@@ -2777,7 +2777,7 @@ $$
 对任意 \(R\) 定义
 
 $$
-t=R\rho,\qquad s_0=RK,qquad
+t=R\rho,\qquad s_0=RK,\qquad
 b_\pm=(\pm t+s_0u)q^{-1}.
 \tag{45.5}
 $$
@@ -2826,8 +2826,15 @@ $$
 $$
 
 故 \(\operatorname{Re}b_- =-\alpha t+\nu s_0=\tau R\)，而 \(b_+\) 的实部更大；
-二者的虚部投影相同，差只在实部方向，得到所述距离。对 (ii)，把等式
-\(F(z)=\tau\) 平方后化简，两个根正是 \(h,H\)，凹性给出根之间的下界。
+二者的虚部投影相同，差只在实部方向，得到所述距离。对 (ii)，
+$\kappa\le\alpha<\tau$ 给出 $\tau\alpha-\kappa\nu\ge0$，直接展开得
+
+$$
+\sqrt{1-h^2}=\tau\alpha+\kappa\nu,\qquad
+\sqrt{1-H^2}=\tau\alpha-\kappa\nu.
+$$
+
+故 $F(h)=F(H)=\tau$，两值都满足未平方的原方程；凹性给出 $[h,H]$ 上的下界。
 式 (45.7) 等价于
 
 $$
@@ -2854,7 +2861,7 @@ Read、动作与停止），但 \(x_0\ne x_1\)。因此该控制器的无噪最�
 
 余下为首次锚前 \(p\ne0\)。若 \(\alpha<\kappa\)，取引理45.2(i)的半径
 \(R=25\) 两点。它们在首锚前的所有实际读数相同，首锚读数也是同一个向量（按原方向记为
-\(\pm\lambda s_0u\)，且锚后当前状态也相同，因为共同的
+\(\pm\lambda s_0u\)），且锚后当前状态也相同，因为共同的
 \(a=0\) 在内部控制下始终为零。以后每个动作和 Read 都从相同当前状态和相同记录
 出发，归纳地相同；若记录可数，所有有限前缀相同即给出相同整条记录。两初态距离
 为 \(50\rho>0\)。
@@ -2889,7 +2896,7 @@ $$
 \(\nu=\sqrt{1-\alpha^2}\)、\(q=\alpha+\nu i\)。取
 
 $$
-c_1=j,qquad c_2=-\alpha j+\nu k,qquad c_1c_2=q.
+c_1=j,\qquad c_2=-\alpha j+\nu k,\qquad c_1c_2=q.
 \tag{45.12}
 $$
 
@@ -2909,10 +2916,19 @@ $$
 \tag{45.14}
 $$
 
-该函数从 \(z=0\) 的 \(\alpha<\tau\) 上升并在 \(z=h=\tau\nu-\kappa\alpha\)
-达到阈值；其另一根为 \(H=\tau\nu+\kappa\alpha\)，所以 \(z<h\) 不合法，所有合法点满足
-\(|w|\ge Rh\)。另一方面 \(|w|\le R\)。并且 \(h\) 在 \([0,\kappa]\) 上严格递减，
-\(h(\kappa)=\tau^2-\kappa^2=7/25\)，故在 \(\alpha<\kappa\) 时
+在本证明的 $0\le\alpha<\kappa$ 范围内，$\nu>\tau$，
+$h=\tau\nu-\kappa\alpha$ 满足 $0<h<\nu$，且
+
+$$
+\sqrt{1-h^2}=\tau\alpha+\kappa\nu,\qquad F(h)=\tau.
+$$
+
+当 $\alpha>0$ 时，$F'(z)=\nu-\alpha z/\sqrt{1-z^2}>0$ 在 $0<z<\nu$ 成立；
+$\alpha=0$ 时 $F(z)=z$。因此 $0\le z<h$ 时 $F(z)<\tau$。又由凹性及
+$F(1)=\nu>\tau$，在 $h\le z\le1$ 上有 $F(z)\ge\tau$。所以 (45.14) 在
+$[0,1]$ 内的解集恰为 $[h,1]$，所有合法点满足 $|w|\ge Rh$。另一方面 $|w|\le R$。
+并且 $h'(\alpha)=-\tau\alpha/\nu-\kappa<0$ 在 $[0,\kappa]$ 上给出严格递减，
+$h(\kappa)=\tau^2-\kappa^2=7/25$，故在 $\alpha<\kappa$ 时
 
 $$
 25h-7=25(\tau\nu-\kappa\alpha)-7>0
@@ -2932,14 +2948,15 @@ $$
 \(\widehat a=a\)，用首锚读的模判出 \(R\)，再置
 
 $$
-\widehat s=\sqrt{R^2-|w|^2},qquad
+\widehat s=\sqrt{R^2-|w|^2},\qquad
 \widehat b=(\widehat s+w)q^{-1}.
 \tag{45.17}
 $$
 
-若真实 \(s\ge0\)，估计完全正确。若 \(s=-t<0\)，则 (45.14) 的未取绝对值形式给
-\(\nu\sqrt{R^2-t^2}-\alpha t\ge\tau R\)；该方程的正根为 \(R\rho\)，所以
-\(t\le R\rho\)。因此
+若真实 \(s\ge0\)，估计完全正确。若 $s=-t<0$，则来源条件给
+$\nu\sqrt{R^2-t^2}-\alpha t\ge\tau R$。令
+$G(y)=\nu\sqrt{1-y^2}-\alpha y$，$0\le y\le1$；由 (45.4)、(45.9) 得
+$G(\rho)=\tau$，而 $G$ 在 $[0,1]$ 上严格递减，故 $t\le R\rho$。因此
 
 $$
 |\widehat b-b|=2t\le2R\rho\le50\rho<\varepsilon,
@@ -2965,7 +2982,7 @@ $$
 (45.13) 的四次实际 Read（按初读、两次内部更新后、锚后排列）为
 
 $$
-(0,0,0,\tfrac{28}{5}i),qquad
+(0,0,0,\tfrac{28}{5}i),\qquad
 (0,0,0,20i),
 \tag{45.20}
 $$
@@ -2985,7 +3002,7 @@ $$
 它们的范数分别为7、25，实部分别为 \((4/5)7\)、\((4/5)25\)，且
 
 $$
-b_7^{\rm coal}q=7i,qquad
+b_7^{\rm coal}q=7i,\qquad
 b_{25}^{\rm coal}q=24+7i.
 \tag{45.22}
 $$
@@ -3029,7 +3046,7 @@ $$
 Parameterized Cross Product Recovery 的实际联合来源与有限参数像、Transport Memory
 的完整记录与合法续接、Process Geometry 的部分过程相容性，均未授予本节之外的端口或
 独立制备。FIB Atomic、BIG3、CFMP 及其新增报告处理不同的树、切口或几何实现，未给
-(45.1) 的半径投影间隙；[read_memory](../../../reports/fib-supplier-capacity/read_memory.md)
+(45.1) 的半径投影间隙；[read_memory](../../reports/fib-supplier-capacity/read_memory.md)
 给出的 TM68–4 有限实际 Read／动作计数也属于另一棵 authentic FIB 树和另一项目标，
 不供应本节的连续半径来源。Darpö/Baez 坐标以及文献注中的初态识别量词是背景复用；没有
 把其有限模式、可逆流或嵌入假设套到这里的破坏性连续单历史上。
