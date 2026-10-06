@@ -52,8 +52,7 @@ public sealed class ScribeCoverageDeltaTests
         });
         var repository = fixture.Gateway(RawChangeSet.Create([CoverageWithoutScribeFixture.EntryPath(fixture.First)]));
 
-        var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report),
-            new FakeScribeEmissionVerifier(fixture.Verified), ["--base", "baseline"]);
+        var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report), []);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("absorbed-closed", result.Output, StringComparison.Ordinal);
@@ -66,8 +65,7 @@ public sealed class ScribeCoverageDeltaTests
         var fixture = new CoverageWithoutScribeFixture(84);
         var repository = fixture.Gateway(RawChangeSet.Create([]));
 
-        var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report),
-            new FakeScribeEmissionVerifier(fixture.Verified), ["--base", "baseline"]);
+        var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report), []);
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(84, result.Output.Split('\n').Count(line =>
@@ -87,27 +85,10 @@ public sealed class ScribeCoverageDeltaTests
         });
         var repository = fixture.Gateway(RawChangeSet.Create([CoverageWithoutScribeFixture.EntryPath(fixture.First)]));
 
-        var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report),
-            new FakeScribeEmissionVerifier(fixture.Verified), ["--base", "baseline"]);
+        var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report), []);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("absorbed-closed", result.Output, StringComparison.Ordinal);
-        Assert.DoesNotContain("scribe-", result.Output, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void UnrelatedDeltaRetainsPartialBaselineWithoutScribeGaps()
-    {
-        var fixture = new CoverageWithoutScribeFixture(84);
-        var repository = fixture.Gateway(RawChangeSet.Create(["notes/unrelated.txt"]));
-
-        var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report),
-            new FakeScribeEmissionVerifier(fixture.Verified), ["--base", "baseline"]);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal(84, result.Output.Split('\n').Count(line =>
-            line.StartsWith("ENTRY ", StringComparison.Ordinal)
-                && line.Contains("partial-closed", StringComparison.Ordinal)));
         Assert.DoesNotContain("scribe-", result.Output, StringComparison.Ordinal);
     }
 

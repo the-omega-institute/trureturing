@@ -68,7 +68,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void DetailedCandidateStillRequiresScribeVerification()
+    public void DetailedCandidateDoesNotRequireScribe()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -82,32 +82,30 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.DigestStatus(
             ["--formalize-candidates", "--atom-id", RuleFixture.FixtureAtomId]);
 
-        Assert.False(result.Success);
-        Assert.Contains("Scribe emission verification failed", result.Error, StringComparison.Ordinal);
-        Assert.Equal(1, verifier.CallCount);
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(0, verifier.CallCount);
     }
 
     [Fact]
     public void ReadinessStillRejectsInvalidCoverageBinding()
     {
-        var environment = DigestStatusHistoricalCoverageEnvironment(RawChangeSet.Create([]));
+        var environment = DigestStatusHistoricalCoverageEnvironment();
 
-        var result = environment.DigestStatus(["--readiness", "--base", "baseline"]);
+        var result = environment.DigestStatus(["--readiness"]);
 
         Assert.False(result.Success);
         Assert.Contains("coverage-target-mismatch", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void ReadinessStillRejectsChangedCorruptCas()
+    public void ReadinessStillRejectsCorruptCas()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Files[RuleFixture.FixtureCasPath] = "corrupt CAS";
-        var environment = DigestStatusEnvironment(
-            fixture, RawChangeSet.Create([RuleFixture.FixtureCasPath]));
+        var environment = DigestStatusEnvironment(fixture);
 
-        var result = environment.DigestStatus(["--readiness", "--base", "baseline"]);
+        var result = environment.DigestStatus(["--readiness"]);
 
         Assert.False(result.Success);
         Assert.Contains("CAS blob hash mismatch", result.Error, StringComparison.Ordinal);

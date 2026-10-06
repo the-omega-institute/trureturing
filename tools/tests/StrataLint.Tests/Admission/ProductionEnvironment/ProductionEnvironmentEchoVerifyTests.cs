@@ -22,21 +22,18 @@ public sealed partial class ProductionEnvironmentTests
         File.WriteAllText(Path.Combine(output, "keep.txt"), "keep");
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        var verifier = new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
-                RawChangeSet.Create([RuleFixture.RingPath]),
+                RawChangeSet.Create(Array.Empty<string>()),
                 Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
+                null),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            verifier);
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var emitted = environment.EchoVerify(["--emit", "--base", "baseline"]);
+        var emitted = environment.EchoVerify(["--emit"]);
 
         Assert.Equal(0, emitted.ExitCode);
-        Assert.NotEmpty(verifier.Scopes);
-        Assert.All(verifier.Scopes, scope => Assert.Equal([RuleFixture.RingPath], scope.Paths.Select(path => path.Value).ToArray()));
         Assert.StartsWith(
             "<!-- echo-residual-summary:v3 residual=sha256:",
             emitted.Output,

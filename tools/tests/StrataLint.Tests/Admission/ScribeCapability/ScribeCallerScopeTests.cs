@@ -27,22 +27,6 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void DigestStatusScopeUsesTheExplicitRepositoryDelta()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        var verifier = new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty);
-        var changes = RawChangeSet.Create([RuleFixture.RingPath]);
-        var environment = new ProductionCliEnvironment("/repo",
-            new FakeRepositoryGateway(changes, Snapshot(fixture.Files), Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)), verifier, CoverWorld.TimeProvider);
-
-        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal([RuleFixture.RingPath], Assert.Single(verifier.Scopes).Paths.Select(path => path.Value).ToArray());
-    }
-    [Fact]
     public void CheckCurrentScopeReadsTheProvidedNulSeparatedManifest()
     {
         using var temporary = new TemporaryDirectory();
