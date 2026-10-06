@@ -7876,3 +7876,358 @@ $$
 本章支付的是每条已给定实际周期的规范质量及均值下界。实际 G.5 后续共同响应与更宽轮廓取得、既有合格域外的盆及着陆、校正同历史相位、真实无界周期长度族、统一外侧缺陷和终端占用、联合块补偿与离散度、实际取得并达到的优化策略、全局 $C(n)/n$ 收敛、自治有限状态闭合及完整跨递归对象／操作／历史／资源对应仍是未决义务。另一递归只有在证明其自己的整数点集、下包络和真实置换对应后才能应用引理 40.3；本章不供应这个跨类型桥梁。完整研究目标保留这些义务。
 
 ## 40.99 追加锚
+
+## 41. 实际选中正跳跃与黄金全局极限
+
+### 41.1 完整来源条件与同一实际选择
+
+**假设 41.1（完整假设 21.1）。** 本章条件于完整假设 21.1，使用定义 15.1 的同一个实际 Cloitre 序列。取
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{j+1}=F_j+F_{j-1},
+\qquad
+\alpha=\frac{\sqrt5-1}{2},\qquad
+\varphi=\alpha^{-1}.
+$$
+
+对每个整数 $N\ge3$，原始求值关系始终为
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,\\
+D_N&=\{1,\ldots,N-1\},&
+T_N(x)&=N-C(x),\\
+X_N(0)&=N-1,&
+X_N(r+1)&=T_N(X_N(r)),\\
+d_N&=C(N-1),&
+g_N&=X_N(d_N),\\
+C(N)&=C(g_N)+C(N-g_N).
+\end{aligned}
+\tag{41.1}
+$$
+
+完整继承的来源是 [foundations，§§1、4](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/proof.md)、[golden structure，§§5–6](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/golden-proof.md) 与 [Fibonacci collars，§1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/fibonacci-collars.md)。它们在本章保留假设 21.1 的全部条件：合法域、$G(n)=\lfloor\alpha(n+1)\rfloor\le C(n)\le U(n)\le n$、$U(1)=1$、$U$ 的非减性及增量界、全部所列锚值与邻点值、全轨道捕获和不变性、全部周期的捕获，以及从 $N-1$ 出发在规定深度 $d_N$ 已入周期的结论。其中
+
+$$
+U(n)=\min\{n-F_{q-2},F_q\}
+\qquad(F_q\le n<F_{q+1},\ q\ge3),
+\tag{41.2}
+$$
+
+且对每个 $q\ge6$、整数 $t\ge0$、$N=F_q+t$，全部周期都在
+
+$$
+I_{q,t}=[F_{q-1},F_{q-1}+t]\cap\mathbb Z\subseteq D_N
+\tag{41.3}
+$$
+
+内。锚值、邻点值及其原阶数范围仍完整沿用假设 21.1；这里只列证明直接使用的分段式与捕获式，不缩减其余前提。
+
+黄金比值基础 $16384\le n\le131071$、黄金归纳基 $1\le n\le65535$、规定深度入周期基础 $3\le N\le52$ 仍是 UNEXECUTED／ASSUMED-UNVERIFIED 的来源条件，本章不给它们独立证明。所引 collars §6 的双种子及固定带 $-12\le t\le32$ 也不成为新的任意宽度前提。此处引用的字面修订与 §§24、28、30、40 各自引用的原生修订分别保留；不把不同修订的 collar、轮廓或种子合并成一个更强假设。
+
+式 (41.1) 的两个加法子项都是原 $C$ 的值。一个子根 $M\ge3$ 的值仍由它自己的 $T_M$、起点 $M-1$、深度 $C(M-1)$ 和所选点 $g_M$ 定义；根 $N$ 的历史不会充当子根的求值历史。两个子出现均保留，即使其物理索引相同也不删去一项。初值 $1,2$ 不作为新的迭代根展开。不假设 $C$ 单调，不另选周期、相位或深度。
+
+**定义 41.2（原有符号跳跃与全根上极限）。** 沿用 §§29–30 的同一有符号整数跳跃，令
+
+$$
+\begin{aligned}
+K(N)&=g_N-T_N(g_N)=g_N+C(g_N)-N,\\
+K(N)^+&=\max\{K(N),0\},\\
+\beta&=\limsup_{N\to\infty}\frac{C(N)}N,&
+\kappa&=\limsup_{N\to\infty}\frac{K(N)^+}N.
+\end{aligned}
+\tag{41.4}
+$$
+
+两个上极限均沿全部整数根 $N\ge3$ 取值。$K$ 是带符号的差，正部只在作差之后取；它与定义 15.3 的校正组成 $K_C$ 分开。
+
+对整数 $n\ge F_6$，唯一取 $q=q(n)\ge6$ 使 $F_q\le n<F_{q+1}$，定义辅助分析坐标
+
+$$
+\theta(n)=\frac{n-F_q}{F_{q-1}}\in[0,1).
+\tag{41.5}
+$$
+
+这个半开分割只用于比较趋于无穷的整数索引。它不重标记 §§24、28 的自然闭块、继承阶数或端点；原五窗字母、接缝、独立单位末字母与共同 $H$ 的合同均保留。$\theta(n)$ 也不是规定深度的时间相位，不能替换原轨道的入口修正或停止读出。
+
+### 41.2 全根定量界与准确的收敛判据
+
+**定理 41.3（实际选中正跳跃的全局收敛桥梁）。** 在完整假设 41.1 下，定义 41.2 的全根上极限满足
+
+$$
+\beta\le\alpha+\varphi\kappa.
+\tag{41.6}
+$$
+
+在完全相同的条件下，有
+
+$$
+\frac{C(N)}N\longrightarrow\alpha
+\quad\Longleftrightarrow\quad
+\frac{K(N)^+}N\longrightarrow0.
+\tag{41.7}
+$$
+
+结论涉及原起点与原深度所选出的 $g_N$，以及式 (41.1) 的实际两个加法子根。它不附加有利相位、外供轮廓或概率律、优化器的达到、实际周期族的达到、周期长度界或额外有限基础。
+
+证明。先确定实际子根的尺度和上包络的极限形状。对充分大的 $N$，用式 (41.5) 的唯一块写
+
+$$
+N=F_q+t,\qquad 0\le t<F_{q-1}.
+$$
+
+规定深度入周期与式 (41.3) 给
+
+$$
+F_{q-1}\le g_N\le F_{q-1}+t,
+\qquad
+h_N:=N-g_N\ge F_{q-2}.
+\tag{41.8}
+$$
+
+因此沿任何 $N\to\infty$，两个实际子根都趋于无穷，且
+
+$$
+\frac{g_N}{N}\ge\frac{F_{q-1}}{F_{q+1}}\longrightarrow\alpha^2,
+\qquad
+\frac{h_N}{N}\ge\frac{F_{q-2}}{F_{q+1}}\longrightarrow\alpha^3
+\tag{41.9}
+$$
+
+中的右端给出统一正下界。特别地，存在固定 $c>0$，使充分大的全部根上，两项平均权重都至少为 $c$。这里只复用原捕获结论；没有要求两个子根属于一个另外供应的可选族。
+
+令 $r_q=F_q/F_{q-1}$。式 (41.2) 准确给出
+
+$$
+\frac{U(n)}n
+=\frac{\min\{1+\theta(n),r_q\}}{r_q+\theta(n)}.
+\tag{41.10}
+$$
+
+由 Fibonacci 递推的经典比值极限 $r_q\to\varphi$，当 $n_i\to\infty$ 且 $\theta(n_i)\to\theta\in[0,1]$ 时，式 (41.10) 趋于连续函数
+
+$$
+u(\theta)=
+\begin{cases}
+\dfrac{1+\theta}{\varphi+\theta},&0\le\theta\le\alpha,\\[6pt]
+\dfrac{\varphi}{\varphi+\theta},&\alpha\le\theta\le1.
+\end{cases}
+\tag{41.11}
+$$
+
+这里 $\varphi-1=\alpha$，两段在 $\theta=\alpha$ 相接，且
+
+$$
+u(0)=u(1)=\alpha,\qquad
+\max_{0\le\theta\le1}u(\theta)
+=\frac{\varphi}{\varphi+\alpha}<1.
+\tag{41.12}
+$$
+
+函数 $u$ 是已给上包络的极限形状，不是对实际 $C$ 供应的新轮廓。$G(n)/n\to\alpha$ 与 $G\le C\le U$ 给
+
+$$
+\alpha\le\beta\le\frac{\varphi}{\varphi+\alpha}.
+\tag{41.13}
+$$
+
+上界也可直接按子列核对：$C\le U\le n$ 先保证 $\beta$ 有限，在一条比值趋于 $\beta$ 的子列上再取 $\theta$ 收敛子列，式 (41.10)–(41.12) 就给出该上界。
+
+同时，$g_N,T_N(g_N)\in D_N$，故 $0\le K(N)^+/N<1$，从而 $0\le\kappa\le1$。所有上极限都有限。
+
+为证明式 (41.6)，反设
+
+$$
+\beta>\alpha+\varphi\kappa.
+\tag{41.14}
+$$
+
+于是 $\beta>\alpha$。令 $\mathcal H$ 为全部可由极值子列达到的极限位置：
+
+$$
+\mathcal H=
+\left\{\theta\in[0,1]:
+\ \exists\,n_i\to\infty,\quad
+\frac{C(n_i)}{n_i}\to\beta,\quad
+\theta(n_i)\to\theta
+\right\}.
+\tag{41.15}
+$$
+
+有限上极限的定义先给一条比值趋于 $\beta$ 的子列，再由 $[0,1]$ 的序列紧致性给 $\mathcal H\ne\varnothing$。它也闭合：若 $\theta_m\in\mathcal H$ 且 $\theta_m\to\theta$，从每个定义中的见证子列选一个整数 $n_m\ge m$，使
+
+$$
+\left|\frac{C(n_m)}{n_m}-\beta\right|<\frac1m,
+\qquad
+|\theta(n_m)-\theta_m|<\frac1m.
+$$
+
+这条对角子列见证 $\theta\in\mathcal H$。因此 $\mathcal H$ 紧致。对其中每个 $\theta$，$C\le U$ 和式 (41.10)–(41.11) 给 $\beta\le u(\theta)$。由式 (41.12) 及 $\beta>\alpha$，两个端点都不在 $\mathcal H$ 内。于是 $\mathcal H$ 是 $(0,1)$ 内的非空紧集，有最小元 $\theta_*$。
+
+取见证这个最小元的原根子列 $N_i$，写
+
+$$
+\begin{aligned}
+q_i&=q(N_i),&
+g_i&=g_{N_i},&
+h_i&=N_i-g_i,&
+a_i&=\frac{g_i}{N_i},\\
+\frac{C(N_i)}{N_i}&\to\beta,&
+\theta(N_i)&\to\theta_*.
+\end{aligned}
+\tag{41.16}
+$$
+
+原加法递归给同一实现上的准确平均
+
+$$
+\frac{C(N_i)}{N_i}
+=a_i\frac{C(g_i)}{g_i}
+ +(1-a_i)\frac{C(h_i)}{h_i}.
+\tag{41.17}
+$$
+
+两个权重在充分大的 $i$ 上都至少为 $c$，两个子根都发散。全根上极限的定义使任意 $\varepsilon>0$ 下，两项子比值最终都不超过 $\beta+\varepsilon$。若某一项在无限子列上至多为 $\beta-\delta$，其中 $\delta>0$ 固定，式 (41.17) 在该子列上至多为 $\beta-c\delta+\varepsilon$。取 $\varepsilon<c\delta/2$，与根比值趋于 $\beta$ 矛盾。两项的上极限又都不超过 $\beta$，所以
+
+$$
+\frac{C(g_i)}{g_i}\to\beta,
+\qquad
+\frac{C(h_i)}{h_i}\to\beta.
+\tag{41.18}
+$$
+
+这一步只用实际两个出现的加法与统一正权重，没有独立性或分别最优的可达性前提；每个子项仍按自己的原递归定义取值。
+
+在同一选中点上，原有符号跳跃满足
+
+$$
+a_i\left(1+\frac{C(g_i)}{g_i}\right)
+=1+\frac{K(N_i)}{N_i}.
+\tag{41.19}
+$$
+
+因为 $K\le K^+$，式 (41.18) 与全根 $\kappa$ 给
+
+$$
+\limsup_{i\to\infty}a_i
+\le a_0:=\frac{1+\kappa}{1+\beta}.
+\tag{41.20}
+$$
+
+反设 (41.14) 等价于 $\kappa<\alpha(\beta-\alpha)$。用 $1-\alpha=\alpha^2$，得到
+
+$$
+1+\kappa<1+\alpha\beta-\alpha^2
+=\alpha(1+\beta),
+\qquad a_0<\alpha.
+\tag{41.21}
+$$
+
+固定 $a_0<\bar a<\alpha$，则充分大的 $i$ 上 $g_i\le\bar aN_i$。式 (41.8) 给 $g_i\ge F_{q_i-1}$，而
+
+$$
+g_i\le\bar aN_i<\bar a F_{q_i+1}<F_{q_i}
+\tag{41.22}
+$$
+
+的最后一步对充分大的 $i$ 成立，因为 $\bar aF_{q_i+1}/F_{q_i}\to\bar a\varphi<1$。因此这些实际选中子根准确落在前一个半开分析块，包含其下端点，且
+
+$$
+\begin{aligned}
+\theta(g_i)
+&=\frac{g_i-F_{q_i-1}}{F_{q_i-2}}\\
+&\le
+\bar a\left(
+\frac{F_{q_i}}{F_{q_i-2}}
++\theta(N_i)\frac{F_{q_i-1}}{F_{q_i-2}}
+\right)
+-\frac{F_{q_i-1}}{F_{q_i-2}}.
+\end{aligned}
+\tag{41.23}
+$$
+
+取上极限，用 $\alpha\varphi=1$，有
+
+$$
+\begin{aligned}
+\limsup_{i\to\infty}\theta(g_i)
+&\le\bar a(\varphi^2+\varphi\theta_*)-\varphi\\
+&=\theta_*-(\alpha-\bar a)(\varphi^2+\varphi\theta_*)\\
+&<\theta_*.
+\end{aligned}
+\tag{41.24}
+$$
+
+从 $[0,1]$ 内的这些子根位置再取收敛子列。它们的索引 $g_i\to\infty$，比值由式 (41.18) 趋于 $\beta$，故其位置极限仍属于 $\mathcal H$；式 (41.24) 却使该极限小于 $\mathcal H$ 的最小元。矛盾证明式 (41.6)。端点的处理来自上包络在 $0,1$ 的同一极限值，没有把端点或不利相位先从原根域中排除。
+
+若 $K(N)^+/N\to0$，则 $\kappa=0$，式 (41.6) 给 $\beta\le\alpha$；同时 $G\le C$ 给 $\liminf C(N)/N\ge\alpha$，所以 $C(N)/N\to\alpha$。
+
+反向假设 $C(n)/n\to\alpha$。对每个充分大的原根 $N=F_q+t$，令 $O_N$ 是从 $N-1$ 出发、包含原选中点 $g_N$ 的那一条实际周期。$T_N$ 在同一有限集 $O_N$ 上是置换，且全部 $x\in O_N$ 满足 $x\ge F_{q-1}$。定义
+
+$$
+\delta_N=\max_{x\in O_N}
+\left|\frac{C(x)}x-\alpha\right|,
+\qquad
+R_N=\max_{x\in O_N}\left|\frac{x}{N}-\alpha\right|.
+\tag{41.25}
+$$
+
+给定任意 $\varepsilon>0$，全局收敛使全部充分大的整数 $x$ 都满足 $|C(x)/x-\alpha|<\varepsilon$。周期点的统一下界 $F_{q-1}\to\infty$ 遂使 $\delta_N\to0$；这与周期的长度无关。
+
+对 $x\in O_N$，写 $y_x=x/N$、$e_x=C(x)/x-\alpha$。由原内步及 $1-\alpha=\alpha^2$ 准确有
+
+$$
+y_{T_N(x)}-\alpha
+=-\alpha(y_x-\alpha)-e_xy_x.
+\tag{41.26}
+$$
+
+合法域给 $0<y_x<1$，故
+
+$$
+|y_{T_N(x)}-\alpha|
+\le\alpha|y_x-\alpha|+\delta_N.
+$$
+
+因为 $T_N(O_N)=O_N$，在这同一周期两边取最大值，得到
+
+$$
+R_N\le\alpha R_N+\delta_N,
+\qquad
+R_N\le\frac{\delta_N}{1-\alpha}
+=\frac{\delta_N}{\alpha^2}.
+\tag{41.27}
+$$
+
+原 $g_N$ 与它在同一 $T_N$ 下的后继都属于 $O_N$，所以
+
+$$
+0\le\frac{K(N)^+}N
+\le\frac{|g_N-T_N(g_N)|}{N}
+\le2R_N
+\le\frac{2\delta_N}{\alpha^2}
+\longrightarrow0.
+\tag{41.28}
+$$
+
+这完成式 (41.7) 的另一方向。紧致性、正权平均与扰动收缩均是证明内部的标准分析步骤；同一实际加法递归迫使的极值子根和严格位置下降是式 (41.6) 的连接。证毕。
+
+### 41.3 全根未决条件与取得范围
+
+**定义 41.4（仍待证明的全根正跳条件）。** 对原递归，记统一条件
+
+$$
+\forall\varepsilon>0\ \exists N_\varepsilon\in\mathbb N\quad
+\forall N\in\mathbb N,\qquad
+N\ge\max(3,N_\varepsilon)\ \Longrightarrow\
+\max\{g_N+C(g_N)-N,0\}\le\varepsilon N.
+\tag{41.29}
+$$
+
+定理 41.3 在完整假设 21.1 下把式 (41.29) 与黄金全局极限相连接，没有证明式 (41.29) 本身，也没有给出 $N_\varepsilon$ 的界。受限亏量扇区的正费用结算、同周期有符号跳跃的望远镜和次线性宽度锚点邻域，各保持其原有量词，不能替代式 (41.29) 的全部原根量词。
+
+式 (41.15) 的极值集合与式 (41.25) 的周期最大值是分析对象。其存在不供应原合法操作中的周期取得、遍历、读数认证或有限停止证书；最小极限位置也不供应可选的有利实际相位。原始历史、自然深度、独立四／五阶停止合同、物理别名的一致值及各出现的质量继续保留，分析坐标不改变其共同 $H$ 资源。
+
+其余未决内容仍是实际有限状态闭合及取得条件、真实最小周期长度的无界族与更强周期／规范缺陷关系、完整跨类型的对象／操作／历史／查询／读出／停止／标签／合法域／资源对应，以及实际共同网关与更宽数值轮廓、盆和着陆、校正同历史相位、统一终端占用、同一实际来源的联合块末补偿与离散度、实际达到的策略。定理 41.3 不给无条件收敛、收敛率或这些联合取得结论；它提供的准确判据只连接原 $C$ 的全根正跳与全局黄金极限。
+
+## 41.99 追加锚
