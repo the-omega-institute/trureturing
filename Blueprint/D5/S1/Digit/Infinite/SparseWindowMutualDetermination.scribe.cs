@@ -29,6 +29,142 @@ internal sealed class SparseWindowMutualDeterminationDocument : IScribeDocumentD
                     + "with witness n, and val for the underlying value of a range element. "
                     + "Equiv denotes a bijection with a specified inverse.")),
             Describe.Lean(
+                DescribeId.Create("sparse-window-natural-row-raw-data"),
+                DeclarationHandle.Create(
+                    "D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_raw_data"),
+                H("Canonical natural digits"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, the raw digits of its Zeckendorf expansion have value n. At every position their real coefficient equals the Boolean digit of zRow(n)."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-natural-row-phase"),
+                DeclarationHandle.Create(
+                    "D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_phase"),
+                H("Natural row phase"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, the phase of zRow(n) is n times the golden ratio modulo one. The equality identifies natural digit observations with circle rotation."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-natural-phase-avoids-cut"),
+                DeclarationHandle.Create(
+                    "D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_avoids_cut"),
+                H("Natural phases avoid positive cuts"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n and every positive cut index k, the phase n times the golden ratio modulo one differs from E(k). Irrationality excludes equality."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-natural-window-arc"),
+                DeclarationHandle.Create(
+                    "D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_window_arc"),
+                H("Natural labels and cylinder arcs"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every positive width L, natural n, and legal word p of width L, q(L,n)=p if and only if the phase of zRow(n) belongs to the open cylinder arc A(p). Natural rows avoid the endpoint alternatives of the closed cylinder."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-cut-injective"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.cut_injective"),
+                H("Distinct indexed cuts"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The map E from natural cut indices to the circle is injective."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-natural-phase-visit"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_visit"),
+                H("Late visits to open sets"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every nonempty open circle set U and natural bound B, some natural n greater than B has golden phase in U."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-natural-phase-translate"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_translate"),
+                H("Translation of natural phases"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For all natural n and t, the phase of zRow(n+t) is the phase of zRow(n) plus t times the golden ratio modulo one."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-endpoint-phase"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.endpoint_phase"),
+                H("The phases of the two endpoint rows"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every positive cut index k, both endpoint rows eMinus(k) and ePlus(k) have phase E(k)."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-window-arc-avoids-cut"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_avoids_cut"),
+                H("Open arcs avoid their native cuts"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive width L, each open window arc avoids E(k) whenever 1 is at most k and k is at most G(L)."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-window-arc-isopen"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_isOpen"),
+                H("Window arcs are open"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every width L and legal word p, its cylinder arc A(p) is open on the circle."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-golden-inverse-data"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.golden_inverse_data"),
+                H("The inverse golden ratio"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The inverse golden ratio alpha is strictly between zero and one and satisfies alpha squared plus alpha equals one."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-signed-interval-length"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.signed_interval_length"),
+                H("Length of the signed interval"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The right endpoint b of the signed series range is a+1, where a is its left endpoint."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-window-arc-cover"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_cover"),
+                H("Open arcs cover every regular point"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each positive width L and circle point outside B(L), some legal L-word has an open cylinder arc containing that point."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-window-cut-orientation"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_cut_orientation"),
+                H("Labels on the two sides of a cut"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive L and 1 at most k at most G(L), the upper endpoint of the eMinus(k) label and the lower endpoint of the ePlus(k) label both project to E(k)."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-circle-integer-offset"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.circle_integer_offset"),
+                H("Integer differences of equal circle points"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("If two real numbers have equal images modulo one, their difference is an integer."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-circle-integer-zero"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.circle_integer_zero"),
+                H("Integers have zero circle phase"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every integer, regarded as a real number, projects to zero modulo one."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-window-cut-collar"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_cut_collar"),
+                H("Open collars at a window cut"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive L and 1 at most k at most G(L), there are a real lift c of E(k) and a radius delta strictly between zero and one half. The real interval (c-delta,c) projects into the eMinus(k) window arc, and (c,c+delta) projects into the ePlus(k) window arc."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-natural-phase-visit-sides"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_visit_sides"),
+                H("Late natural sources on both sides"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a real c, a radius strictly between zero and one half, an open circle neighborhood U of c, and any natural bound B, two natural sources greater than B have phases in U with real lifts in the respective open left and right intervals."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-translated-cut"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.translated_cut"),
+                H("Translation of cut indices"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For natural t and j, E(t+j) plus the golden phase of t equals E(j)."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-translated-cut-mem"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.translated_cut_mem"),
+                H("Translated cuts and index intervals"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For natural L, t and k, E(k) plus the golden phase of t belongs to B(L) exactly when k is in the inclusive interval from t+1 to t+G(L)."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-missing-cut-witness"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cut_witness"),
+                H("Missing target cuts"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For 1 at most m at most M, a finite S, 1 at most k at most G(M) with k outside K(m,S), and every natural bound B, two sources greater than B have the same sparse tuple and different M-windows."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-extra-cut-witness"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_witness"),
+                H("Extra observation cuts"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For 1 at most m at most M, a finite S, an index k in K(m,S) outside the target cut interval, and every natural bound B, two sources greater than B have the same M-window and different sparse tuples."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("sparse-window-mutual-determination"),
                 DeclarationHandle.Create(
                     "D5/S1/Digit/Infinite/SparseWindowMutualDetermination."
