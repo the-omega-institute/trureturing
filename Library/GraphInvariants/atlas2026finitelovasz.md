@@ -8,7 +8,6 @@ url: https://github.com/facebookresearch/atlas-lean/blob/0b121a198307b6153181f5a
 claim: "Finite real probability weights with a dependency graph satisfy the symmetric local lemma under exp(1) p (d+1) at most one."
 strata_touched:
   - D5/S3/Combinatorics/Probability/FiniteLovaszLocalLemma
-  - D5/S3/Combinatorics/Probability/UniformPolychromatic
 license: Apache-2.0
 triage: anchor
 ---
