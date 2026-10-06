@@ -29,6 +29,14 @@ open private actual_phase actual_phase_guard from D5.S1.Digit.Infinite.SevenCycl
 open private feeding_scalar from D5.S1.Digit.Infinite.SevenCycleCollisionFuture
 open private entry_bounds from D5.S1.Digit.Infinite.SevenCycleCollisionColors
 
+private theorem shared_tail_shift (f : LegalDigits)
+    (ht : originalT f = originalT (source true)) (j : ℕ) (hj : 0 < j) :
+    bitShift f (3 * j) = bitShift (source true) (3 * j) := by
+  apply Subtype.ext
+  funext i
+  have h := congrArg (fun z : LegalDigits => z.val (i + 3 * j - 3)) ht
+  simpa only [originalT, bitShift, show i + 3 * j - 3 + 3 = i + 3 * j by omega] using h
+
 private theorem joint_actual_records (Q : ℝ → Fin 6) (hQ : instrument Q) :
     ∃ f : LegalDigits, ∃ e : Bool → ℕ → ℝ, ∃ ef er : ℕ → ℝ, ∃ epsilon : ℝ,
       stateAddress false f ∧ window f 0 = nullLabel ∧
@@ -58,10 +66,7 @@ private theorem joint_actual_records (Q : ℝ → Fin 6) (hQ : instrument Q) :
     simpa only [↓reduceIte] using feeding_scalar
   have htail (j : ℕ) (hj : 0 < j) :
       bitShift f (3 * j) = bitShift (source true) (3 * j) := by
-    apply Subtype.ext
-    funext i
-    have h := congrArg (fun z : LegalDigits => z.val (i + 3 * j - 3)) hf.2.2
-    simpa only [originalT, bitShift, show i + 3 * j - 3 + 3 = i + 3 * j by omega] using h
+    exact shared_tail_shift f hf.2.2 j hj
   obtain ⟨e, epsilon, hu, hv⟩ := periodic_actual_records Q hQ
   let epsilon' := min epsilon budget
   have hp : 0 < epsilon' := lt_min hu.1 budget_bounds.2.2.1

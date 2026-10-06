@@ -20,7 +20,7 @@ open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upper
   from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private strictRecord from D5.S1.Digit.Infinite.SevenCycleActualRecords
 open D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
-open private joint_actual_records from D5.S1.Digit.Infinite.SevenCycleJointRecords
+open private joint_actual_records shared_tail_shift from D5.S1.Digit.Infinite.SevenCycleJointRecords
 open private budget_bounds shifted_source_tail shifted_source_windows actual_entry entry_fixed
   from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private actual_phase_mod phase_state from D5.S1.Digit.Infinite.SevenCycleCollisionRecords
@@ -53,10 +53,7 @@ private theorem actual_collision :
     joint_actual_records Q hQ
   have htail (j : ℕ) (hj : 0 < j) :
       bitShift f (3 * j) = bitShift (source true) (3 * j) := by
-    apply Subtype.ext
-    funext i
-    have h := congrArg (fun z : LegalDigits => z.val (i + 3 * j - 3)) ht
-    simpa only [originalT, bitShift, show i + 3 * j - 3 + 3 = i + 3 * j by omega] using h
+    exact shared_tail_shift f ht j hj
   have hfirst : kappa (source true) ∈ observation budget 1 := by
     simpa [phaseColor, bitShift] using strict_member Q hQ _ _ _ _ hu 0
   have hrival1 : kappa (source false) ∈ observation budget 1 := by
