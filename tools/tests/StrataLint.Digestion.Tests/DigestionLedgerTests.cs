@@ -23,8 +23,7 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             document,
             snapshot,
-            AcceptedLean(Array.Empty<string>()),
-            baselineDocument: document).Entries);
+            AcceptedLean(Array.Empty<string>())).Entries);
 
         Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
         Assert.DoesNotContain(status.Gaps, static gap => gap.Code == "source-missing");
@@ -52,8 +51,7 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             document,
             snapshot,
-            AcceptedLean(Array.Empty<string>()),
-            baselineDocument: document).Entries);
+            AcceptedLean(Array.Empty<string>())).Entries);
 
         Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
         Assert.DoesNotContain(status.Gaps, static gap => gap.Code == "source-missing");
@@ -238,8 +236,7 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             document,
             Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
-            AcceptedLean(Array.Empty<string>()),
-            baselineDocument: document).Entries);
+            AcceptedLean(Array.Empty<string>())).Entries);
 
         Assert.Contains(status.Gaps, gap =>
             gap.Code == "chain-migration-incomplete" && gap.Detail == "missing-child");
@@ -317,8 +314,7 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             chained,
             snapshot,
-            AcceptedLean(targetPath),
-            baselineDocument: chained);
+            AcceptedLean(targetPath));
 
         Assert.Equal(3, evaluation.Entries.Length);
         Assert.DoesNotContain(

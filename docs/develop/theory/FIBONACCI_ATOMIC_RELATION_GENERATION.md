@@ -61990,3 +61990,117 @@ $$
 但 $\sum_{m\ge2}ma_m/(\log m)^p=\sum_{m\ge2}(\log m)^{2-p}/m$ 对 $p\le3$ 发散。该反例只限定抽象三阶极点预算的普遍保证，不判定实际 $J_x$ 在 $p\le3$ 时的收敛性。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 406. Fibonacci 乘子平移的统一预算与可逆变换的关系
+
+本节直接消费 §385 的同一个实际整函数 $\mathcal B$、系数 $\beta_d$ 与黄金参数 $q=\varphi^{-2}$，并连接 §404 的完整阻尼反演。逐项求导、线段上的微积分基本定理和非零函数比值的乘法律都是经典接口；新增的是这些接口在当前实际系数上的、对全部频率一致的显式预算。
+
+置
+
+$$
+\delta_*:=\frac{94q}{2205},\qquad
+K_B:=\frac{q^2}{(1-q)^3},\qquad
+\kappa_*:=\frac{K_B}{\delta_*}.
+\tag{406.1}
+$$
+
+这里 $\delta_*$ 是（385.4）的明确下界，不把它与其他章节采用的较强数值下界混同。黄金恒等式 $\varphi^2=\varphi+1$ 给 $1-q=\varphi^{-1}$，所以 $K_B=\varphi^{-1}$、$\kappa_*=2205\varphi/94$。
+
+**定理 406.1（整个右半平面上的实际平移预算）。** 对全部 $z,h\in\mathbb C$，若 $\Re z\ge0$ 且 $\Re(z+h)\ge0$，则
+
+$$
+\begin{aligned}
+|\mathcal B'(z)|&\le K_B,\\
+|\mathcal B(z+h)-\mathcal B(z)|&\le K_B|h|,\\
+\left|\frac{\mathcal B(z+h)}{\mathcal B(z)}-1\right|
+&\le\kappa_*|h|,\qquad
+\left|\frac{\mathcal B(z)}{\mathcal B(z+h)}-1\right|
+\le\kappa_*|h|,\\
+\frac1{1+\kappa_*|h|}
+&\le\left|\frac{\mathcal B(z+h)}{\mathcal B(z)}\right|
+\le1+\kappa_*|h|.
+\end{aligned}
+\tag{406.2}
+$$
+
+证明。§385 已支付整函数的逐项求导。因为 $\log1=0$，由（385.9）、$d^{-\Re z}\le1$ 与 $\log d\le d-1$，
+
+$$
+|\mathcal B'(z)|
+\le\sum_{d\ge2}|\beta_d|\log d
+\le\frac1{1-q}\sum_{d\ge2}(d-1)q^d
+=\frac{q^2}{(1-q)^3}.
+\tag{406.3}
+$$
+
+最后的幂级数等式直接复用几何级数及其导数。右半平面凸，故 $z+th$、$0\le t\le1$ 保持在同一域。线段上的微积分基本定理给
+
+$$
+\mathcal B(z+h)-\mathcal B(z)
+=h\int_0^1\mathcal B'(z+th)dt.
+\tag{406.4}
+$$
+
+这就支付第二行。（385.4）给两端均有 $|\mathcal B|\ge\delta_*>0$；分别除以两端的值，得到两个相对预算。它们各自给比值及逆比值的模长不超过 $1+\kappa_*|h|$，故得到最后的双边界。$\square$
+
+**推论 406.2（平移相接时的乘法律）。** 对实际非零乘子，定义
+
+$$
+r_z(h):=\frac{\mathcal B(z+h)}{\mathcal B(z)}.
+\tag{406.5}
+$$
+
+只要 $z,z+h,z+h+k$ 均处于同一右半平面，便有
+
+$$
+r_z(0)=1,\qquad
+r_z(h+k)=r_{z+h}(k)r_z(h),\qquad
+r_{z+h}(-h)=r_z(h)^{-1}.
+\tag{406.6}
+$$
+
+这些身份由消去同一个非零中间因子直接得到，是经典的乘法余循环身份。允许的位移包括全部正实平移；逆位移只在两端仍属于该域时使用，不能据此宣称右半平面承载所有复平移的群作用。
+
+更具体地，（385.4）使 $\mathcal B$ 的值始终在严格右半平面，因此其主支对数 $u(z)=\operatorname{Log}\mathcal B(z)$ 在 $\Re z>0$ 上解析。经典主支对数及导数接口参见 [DLMF §4.2](https://dlmf.nist.gov/4.2)。链式法则与（406.3）给 $|u'(z)|\le\kappa_*$，从而对两端在该开域中的位移，
+
+$$
+r_z(h)=\exp(u(z+h)-u(z)),\qquad
+|u(z+h)-u(z)|\le\kappa_*|h|.
+\tag{406.7}
+$$
+
+所以这里的乘法律来自同一解析势的差；既有源乘子的可逆性与全部频率上的变化成本都已经明列，而非只靠“像群”的直觉。
+
+**实际阻尼的消费与未支付边界。** 对 §403 的同一个 $x\ge e$，令 $\varepsilon_x=1/(\sqrt x\log x)$、$\sigma_x=1-\varepsilon_x/2$。此时 $0<\varepsilon_x<1$，§404 的整条合法反演线满足
+
+$$
+\sup_{\tau\in\mathbb R}
+\left|
+\frac{\mathcal B(\sigma_x+\varepsilon_x+i\tau)}
+{\mathcal B(\sigma_x+i\tau)}-1
+\right|
+\le\frac{\kappa_*}{\sqrt x\log x}.
+\tag{406.8}
+$$
+
+这比只在固定紧集上取点态极限多支付了全部频率的一致相对误差。它仍不能直接支付（404.9）的积分误差：若写
+
+$$
+F_{x,\varepsilon}(z)
+=-\frac{\zeta'(z)}{z\zeta(z+\varepsilon)}\widetilde w_x(z),
+\tag{406.9}
+$$
+
+则完整被积函数为 $r_z(\varepsilon)F_{x,\varepsilon}(z)$，只有在同一反演线的绝对积分范数已经支付时，才能使用
+
+$$
+\left|\frac1{2\pi i}\int(r_z(\varepsilon)-1)F_{x,\varepsilon}(z)dz\right|
+\le\frac{\kappa_*\varepsilon}{2\pi}
+\int_{-\infty}^{\infty}
+|F_{x,\varepsilon}(\sigma_\varepsilon+i\tau)|d\tau.
+\tag{406.10}
+$$
+
+由（406.2）的逆比值界，$|F_{x,\varepsilon}(z)|\le(1+\kappa_*\varepsilon)|r_z(\varepsilon)F_{x,\varepsilon}(z)|$。结合 §404 对每个固定 $x>1$、$0<\varepsilon<1$ 的完整被积函数绝对可积性，$F_{x,\varepsilon}$ 也属于同一竖线的 $L^1$，故（406.10）在这些实际反演线上已经合法。未支付的是该范数在 $\varepsilon\downarrow0$，以及 $\varepsilon=\varepsilon_x$ 与 $x$ 联合变化时所需的增长控制。由于比值和逆比值的模长在 $0<\varepsilon<1$ 时都不超过 $1+\kappa_*$，去除 Fibonacci 因子不改变已有或缺失的 $L^1$ 增长阶。（406.8）支付了 Fibonacci 因子自身的位移与相位变化，仍未支付包含 $\zeta'/\zeta(\cdot+\varepsilon)$ 的临界联合估计，也没有证明原 Robin 全和的符号或 RH。
+
+## 追加锚（本行以下为增补区）

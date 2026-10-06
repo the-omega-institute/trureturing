@@ -13,7 +13,7 @@ public sealed partial class BackfillInventoryLoaderTests
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan, document, snapshot,
-            DigestionTestSupport.AcceptedLean(Array.Empty<string>()), baselineDocument: baseline);
+            DigestionTestSupport.AcceptedLean(Array.Empty<string>()));
 
         Assert.Empty(evaluation.Findings);
         var status = Assert.Single(evaluation.Entries);
