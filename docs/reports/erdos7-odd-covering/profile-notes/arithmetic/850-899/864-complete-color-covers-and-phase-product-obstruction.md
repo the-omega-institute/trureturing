@@ -617,6 +617,30 @@ where the shallow payment conflict remains. Nor does its existence
 give a useful lower bound on the mass of X_z or a Cross-free point
 in a specified top original's private projection.
 
+There is also an exact distinction between the one-switch mechanism
+and single-output payment. Its redundant modulus satisfies
+\(m_c\mid\operatorname{lcm}_{d\ne c}m_d\), so its class contains
+the common intersection of the other selected classes. This need
+not contain any one of those whole classes. For example,
+
+$$
+[0]_{55}\cap[0]_{77}\subseteq[0]_{35},\qquad
+[0]_{55}\nsubseteq[0]_{35},\qquad
+[0]_{77}\nsubseteq[0]_{35}.
+\tag{PC23}
+$$
+
+The integers 55 and 77 witness the last two failures. All three
+cofactors are odd and coprime to three. This elementary distinction
+is a boundary of the proposed implication, not an EB1 model.
+Once other outputs are already legally paid, an intersection can
+describe their remaining joint hole and enter Report858's residual
+hull test. Before that payment is supplied it cannot replace the
+whole inverse in the donor-containment requirement. Removing one
+owner per color also need not remove every owner that forces that
+color's deepest prefix, so PC19 supplies no automatic saving of
+22 leaves in the 135-versus-113 comparison.
+
 ### Exact formal checks and remaining bridge
 
 A transient Lean application proves PC19's one-switch conclusion
@@ -641,3 +665,8 @@ minimal-subcover selection in the complete application remain the
 ordinary reuse argument above; this is not a kernel replay of the
 full EB1-to-PC20 chain. No new D5 wrapper, freeze, source-density
 estimate or payment certificate is claimed.
+
+The universal containment and two integer witnesses in PC23 have a
+separate transient Lean check. It uses the ordinary coprime-modulus
+combination and exact arithmetic, without asserting an original
+whole-cover realization.
