@@ -2477,3 +2477,328 @@ General width two, arbitrary coprime proper-narrow global continuation, and the 
 [S25]: https://raw.githubusercontent.com/the-omega-institute/trureturing/0b48df40f9ceea93e0b1e777381663cb67ae879b/docs/develop/theory/KBONACCI_INITIAL_TARGET_COST_THEORY.md
 
 ## 追加锚（本行以下为增补区）
+## 36. A wide INITIAL common cut and the parity of one global stream
+
+**定义 36.1（Wide source contract and joined phase cells）。** In Chapters 36–40 use the original reader (1.1)–(1.2), with $k\ge2$, $m\ge k$, $T=k+1$, $g=\gcd(m,T)$ and $P=g\mathbb Z/T\mathbb Z$. The two alphabets remain all literal $m$-bit words and the internally legal literal $m$-bit words. A block is observed only at its endpoint. INITIAL value or independent initial $\bot$ is free, and every subsequently emitted complete block costs one. The target $f$ is an arbitrary map on the full jointly attainable INITIAL record set, with arbitrary label coincidences. Put
+
+$$
+\Gamma(j,s)=\bigl(f(0,-j,s),f(1,-j,s)\bigr),\qquad
+\Lambda(j)=\Gamma(j,0),\qquad j\in P,\quad 0\le s<k.
+\tag{36.1}
+$$
+
+The pair is ordered: its components need not agree. By the credited Theorem 29.2, the preset cost of $f$ equals the preset cost of the target $\Gamma$, independent of the actual scalar value. This is a decoder symmetry on one actual stream, not permission to choose different streams for the two values.
+
+The full source prior is unchanged at wide widths. For every $(v,j,s)$, choose the single history (1.3), with $\ell\equiv0\pmod m$, $\ell\equiv-j\pmod T$, and $\ell\ge s+2$. Its separating zero and terminal run $s<k$ make the whole history legal, hence each constituent block internally legal. It realizes all three coordinates together. Under the internally legal alphabet, absorption is realized by following such an endpoint with tail $k-1$ by $10^{m-1}$; rejection occurs at the first bit across the seam. No source history length is observed. These are the supplied wide joint-source witnesses in Definition 24.1.
+
+Call $a\in\{0,\ldots,k-1\}$ a common eligible cut when
+
+$$
+\begin{aligned}
+\Gamma(j,s)&=\Lambda(j)&& (j\in P,\ 0\le s<k-a),\\
+\Gamma(j,s)&=\rho&& (j\in P,\ k-a\le s<k)
+\end{aligned}
+\tag{36.2}
+$$
+
+for one pair label $\rho$ when $a>0$. For $a=0$ the second line is empty. There is no freshness requirement on $\rho$, and $f(\bot)$ is independent of $\rho$. Since $a<k\le m$, the all-one block count before this cut is zero. Thus (36.2) is precisely the credited common-cut criterion of Theorem 24.2, specialized to this width and joined target. In particular, finite preset acquisition is equivalent to existence of one such common cut.
+
+For a literal block $B$ at chronological paid index $t$, write $u_t=tm\pmod T$ and define its folded actual bits and arithmetic successful response by
+
+$$
+d_B(r)=\bigoplus_{\substack{0\le i<m\\i\equiv r\ (T)}}B_i,\qquad
+q_t(j)=d_B(j-u_t)\oplus d_B(j-u_t-1).
+\tag{36.3}
+$$
+
+Indeed $c_{u_t-j+i}=1$ exactly at $i\equiv j-u_t$ or $j-u_t-1\pmod T$. Formula (36.3) describes an endpoint difference on a successful source, even when the word is unsafe on some other source. It confers no intermediate observation. If $g=1$, summing over all actual phases gives
+
+$$
+\bigoplus_{j\in P}q_t(j)=0.
+\tag{36.4}
+$$
+
+Every folded bit occurs twice. For $g\ge2$ this full-cycle identity imposes no parity condition on restriction to the actual subgroup $P$.
+
+**定义 36.2（Separated phase codes with actual multiplicities）。** Let $D_g(\Lambda)$ be the least $d\ge0$ for which there are vectors $z_j\in\mathbb F_2^d$, one for every actual phase, with
+
+$$
+\Lambda(j)\ne\Lambda(j')\ \Longrightarrow\ z_j\ne z_{j'},
+\qquad
+\bigoplus_{j\in P}z_j=0\quad\text{if }g=1.
+\tag{36.5}
+$$
+
+When $g\ge2$ only separation is required. Equal-label phases may have different vectors. The multiplicity in the XOR is the number of actual phases, not the number of labels and not a count of INITIAL tails. The single-label case has $D_g=0$. This definition is an algebraic constraint; legal literal attainment is supplied separately in Theorem 38.1. The optimum is a set-theoretic quantity on the finite record set. An effective construction may take its finite label partition or a finite label table with decidable equality as input; target comparison, offline search and controller memory are separate from emitted block fee.
+
+**定理 36.3（Preset lower bound with early stopping and rejection）。** For either original alphabet, every correct preset controller with worst actual emitted fee $H$ satisfies
+
+$$
+H\ge D_g(\Lambda).
+\tag{36.6}
+$$
+
+If $\Gamma$ is nonconstant on successful INITIAL records, also $H\ge1$. These bounds hold for arbitrary words, attempted rejection, archive-dependent stopping and coincident labels. They do not assume that stopped sources execute a common suffix.
+
+Proof. Use the exact value join of Theorem 29.2 without increasing $H$. Restrict the joined controller to the actual joint sources $(0,-j,0)$ for $j\in P$. Under any one literal prefix their raw tails are identical, because the tail update depends on bits alone. Consequently their first rejecting block, if any, has an index $b$ independent of phase. Before that block all these sources, when continued as raw sources, succeed; their endpoint differences are exactly (36.3).
+
+At an actually reached archive in block $b$, all still-running tail-zero candidates reject to the same absorbing output. That output and every later output contain no further distinction among those candidates. Correctness therefore forces their joined labels already to be constant in their preceding archive. A source previously stopped on that archive forces every source with the same preceding observations to have stopped there as well. Thus the restricted decoder can stop every such archive before block $b$, retaining its label. This normalization only shortens the stopping times of this subprior; it does not add a rejection branch, issue a block or charge an unused suffix. It need not be a controller for the other INITIAL tails, which are used separately in the positive-fee lower bound.
+
+Let $q_t$ be the row (36.3) for $0\le t<\min(b,H)$, taking $b=+\infty$ if there is no raw rejection within the bound. Complete the matrix to $H$ rows with zero rows when $b<H$. The row for a fixed written word can be evaluated at phases that stopped earlier; this evaluation is an algebraic set calculation, not a further experiment on those sources. Every row has even total parity when $g=1$, by (36.4). Its columns therefore satisfy the XOR condition in (36.5).
+
+If two columns coincide, the corresponding sources have identical differences up to the earlier normalized stopping time, hence identical endpoint observations on the same free-value fibre. A deterministic stopping rule cannot stop and decode one differently from the other on that common archive. Their joined INITIAL labels must agree. This proves separation, including labels that occur at several stopping leaves. Thus a code family of length $H$ exists, giving (36.6). Padding each individual stopped column by zero was not used: such padding could destroy the row parity. The calculation instead retains the response of each common written row on the full original phase set.
+
+Finally, at fee zero one has only the free INITIAL value or bottom. The joined target is independent of that value, and the full joint successful prior contains every $(j,s)$. Zero fee is therefore possible exactly when $\Gamma$ is constant on those records. This proves the additional bound. Initial bottom remains its own free branch. ∎
+
+## 37. Exact phase multiplicity corrections for a preset stream
+
+**定理 37.1（Complete finite-vector multiplicity law）。** Let $n=|\Lambda[P]|$. For $n=1$, $D_g(\Lambda)=0$. For $n\ge2$, put
+
+$$
+h=\lceil\log_2 n\rceil,\qquad M=2^h,\qquad
+r=\bigl|\{L\in\Lambda[P]:|\Lambda^{-1}(L)|\text{ is odd}\}\bigr|.
+\tag{37.1}
+$$
+
+For $g\ge2$, $D_g(\Lambda)=h$. For $g=1$ and $h=1$,
+
+$$
+D_1(\Lambda)=h+\mathbf1_{\{r=2\}}.
+\tag{37.2}
+$$
+
+For $g=1$ and $h\ge2$,
+
+$$
+D_1(\Lambda)=h+
+\mathbf1_{\{(n=M\ \text{and}\ r\in\{2,M-2\})\ \text{or}\ T=n=M-2\}}.
+\tag{37.3}
+$$
+
+Thus the optimum depends only on the actual phase-cell multiplicities at these wide query scopes. The equality $T=n$ in (37.3) refers to the original number of phases, since $g=1$; it means every label cell is a singleton.
+
+Proof. Separation requires at least $n$ different vectors, hence $d\ge h$. Without parity, give every label one different vector of length $h$ and repeat it at its phases. This proves the noncoprime case. For the coprime case, write $t_L=|\Lambda^{-1}(L)|$.
+
+We use the following existing subset-sum spectrum, with its exact domain made explicit. In the additive elementary abelian group $V=\mathbb F_2^e$, $e\ge2$, of order $N=2^e$, a subset of cardinality $b$ and sum zero exists for every $0\le b\le N$ except $b=2,N-2$. This is Bajnok–Edwards, *On two questions about restricted sumsets in finite abelian groups* [S27, Corollary 18], including zero as an allowed element; their Theorem 16 instead states the spectrum for $V\setminus\{0\}$. The empty set is added directly. The two excluded sizes also follow from distinctness and the zero sum of all of $V$. All uses below have $e\ge2$. This classical spectrum is credited mathematics inside the proof, not a new theorem of this volume.
+
+First suppose $h\ge2$ and $r\notin\{2,M-2\}$. Choose $r$ distinct vectors in $\mathbb F_2^h$ whose XOR is zero, and assign them, one each, to the odd cells. Give each even cell a distinct unused vector. There are $M-r\ge n-r$ available vectors. Repeating a cell's assigned vector $t_L$ times contributes that vector if $t_L$ is odd and zero otherwise. Therefore the total XOR is zero, giving depth $h$.
+
+Next suppose $r=2$ and $n<M$. Since $h\ge2$ implies $n\ge3$, some cell is even and has size at least two. Choose four distinct vectors of XOR zero, for example an affine two-dimensional plane. Give two to the two odd cells. Give the other two to the selected even cell, placing one phase at one vector and its other $t_L-1$ phases at the other vector. Both counts are odd. Every remaining even cell receives its own unused single vector. The total number of used vectors is $n+1\le M$, and its odd-multiplicity vectors are exactly the four chosen ones. This realizes (36.5). In particular a cell is allowed to occupy two different codes.
+
+Now suppose $r=M-2$, $n<M$, and the preceding case has not already applied. Then $n=M-2$ or $M-1$. If $n=M-1$, there is exactly one even cell. Assign the $M-2$ odd cells one vector each and split that even cell between the remaining two vectors with odd counts. All of $\mathbb F_2^h$ then has odd multiplicity, so its total XOR is zero. If $n=M-2$ and $T>n$, all cells are odd and some cell has size at least three. Give each of the other $n-1$ cells a different single vector. Split the selected cell among the remaining three vectors, with phase counts $1,1,t_L-2$, all odd. Here exactly $n+2=M$ vectors are used, again with odd multiplicity throughout the whole vector space. These assignments are possible for the actual cells, because the selected cell has the required number of phases. They account for every unsaturated case outside $T=n=M-2$.
+
+For the lower bounds in the excluded cases, if $n=M$ then every code vector is required by some label. No label can use a second vector: a vector shared by two labels violates separation, while giving two to one label leaves fewer than $M-1$ for the remaining labels. Thus each label has one vector and every vector is used. The total XOR is the sum of the $r$ distinct vectors assigned to odd cells. For $r=2$ this is nonzero. For $r=M-2$ it equals the sum of the two omitted vectors, also nonzero, since the sum of the whole space is zero. If $T=n=M-2$, every phase has a different label; its $M-2$ distinct vectors likewise have nonzero XOR. These arguments rule out length $h$, without assuming that codes are constant on labels in any unsaturated case.
+
+Every excluded case attains length $h+1$. For $n=M$, $r=2$, select an even cell, which exists since $M\ge4$. Split it with odd counts between two vectors, use two further vectors for the two odd cells, and choose these four to have XOR zero. Fill the remaining even cells with distinct unused vectors. Only $n+1\le2M$ vectors are needed. For $n=M$, $r=M-2$, select an even cell and use the $M$ vectors of an $h$-dimensional subspace of $\mathbb F_2^{h+1}$: one for each odd cell and two for that even cell with odd counts. Their XOR is zero because $h\ge2$. The other even cells have enough distinct vectors outside this subspace and contribute zero. For $T=n=M-2$, the relation $h=\lceil\log_2 n\rceil$ forces $h\ge3$; in $\mathbb F_2^{h+1}$ the desired cardinality $M-2\ge6$ is neither two nor $2M-2$. The credited spectrum supplies $n$ distinct vectors of XOR zero, one per phase. This proves both attainment and optimality in (37.3).
+
+It remains to handle $h=1$, where $n=2$ and the vector space is $\mathbb F_2$. Two labels require its two distinct vectors. If $r=0$, both cells contribute zero; if $r=1$, assign zero to the odd cell. These give depth one. If $r=2$, the XOR of the two distinct vectors is one, so depth one is impossible. Both cell sizes are odd. The full actual prior has $T\ge3$, and their sum is even, hence $T\ge4$ and one cell has size at least three. In $\mathbb F_2^2$ give that cell three distinct vectors with odd counts $1,1,t_L-2$ and give the other cell the remaining vector repeated its odd number of times. All four vectors then have odd multiplicity and XOR zero. Depth two is attained. This proves (37.2). ∎
+
+**数学引文 37.2（Applicability of the classical spectrum）。** In [S27] the group rank is the code dimension, and the subset cardinality is the number of vectors assigned odd multiplicity; neither is the original reader order $k$ or block width $m$. Corollary 18 is applied only to the additive group $\mathbb F_2^e$ with $e\ge2$. It permits the zero vector and requires distinct elements within the subset. These are exactly the requirements in the proof of Theorem 37.1. The cases $e=1$, cardinality zero, and the multiplicities greater than one are handled explicitly there.
+
+Kosters, *The subset sum problem for finite abelian groups* [S28, Theorem 2.3] gives an exact subset count for every finite abelian group. With group $\mathbb F_2^e$, order $N=2^e$, target zero and cardinality $b$, it specializes to
+
+$$
+N_e(b,0)=
+\begin{cases}
+N^{-1}\binom Nb,&b\text{ odd},\\[2mm]
+N^{-1}\left[\binom Nb+(-1)^{b/2}(N-1)\binom{N/2}{b/2}\right],&b\text{ even}.
+\end{cases}
+\tag{37.4}
+$$
+
+Here the group exponent is two, its two-torsion is the whole group and $e(0)=2$ in Kosters' notation. Li–Wan, *On the subset sum problem over finite fields* [S29, Theorem 1.2] gives the same formula on taking the full finite field of order $N$, characteristic two, and target zero; its additive group is $\mathbb F_2^e$. The field multiplication has no role in this use. The support is the full field, not its nonzero part or a reader phase subgroup. Formula (37.4) is credited counting mathematics, not a count of legal source words. The proof of the reader law uses the spectrum [S27], so no additional positivity inference from (37.4) is required.
+
+## 38. The exact wide preset fee and its literal common stream
+
+**定理 38.1（Room-qualified arbitrary INITIAL preset law）。** Use Definition 36.1. If $\Gamma$ is constant on successful INITIAL records, then $C_{\rm pre}(f)=0$, independently of its initial bottom label. If there is no common eligible cut (36.2), then $C_{\rm pre}(f)=+\infty$. Otherwise, whenever at least one common eligible cut $a$ satisfies
+
+$$
+a+k+2\le m,
+\tag{38.1}
+$$
+
+the exact minimum worst actual emitted complete-block fee, for both original alphabets, is
+
+$$
+C_{\rm pre}(f)=\max\{1,D_g(\Lambda)\}
+\quad\text{if }\Gamma\text{ is nonconstant}.
+\tag{38.2}
+$$
+
+Here $D_g$ is exactly (37.2)–(37.3) and the noncoprime value in Theorem 37.1. Every finite value asserted in (38.2) is attained by one fixed literal stream, common to all successful INITIAL sources and both free values, with archive-dependent stopping. If eligible cuts exist but none meets (38.1), this theorem makes no numerical finite-cost assertion from (38.2).
+
+Proof. Zero fee and its necessity were proved in Theorem 36.3. The infinite criterion is the credited Theorem 24.2 with $a<k\le m$, applied through the credited value join. For a nonconstant target with a room-qualified cut, Theorem 36.3 supplies the lower bound $\max(1,D_g)$ for every correct preset controller, including controllers that try to use rejection or stop before part of the written stream. It remains to construct an attaining stream.
+
+Let $d=\max(1,D_g(\Lambda))$. Choose the code assignment from Theorem 37.1 at length $D_g$; when that length is zero, use one all-zero coordinate. For each $0\le t<d$, prescribe the actual phase mask
+
+$$
+E_t=\{j\in P:(z_j)_t=1\}.
+\tag{38.3}
+$$
+
+For $g=1$ every $E_t$ has even cardinality by (36.5). At $t=0$ prescribe the literal prefix $1^a0$. At each later $t$ prescribe first bit zero, so its prefix parameter is zero. The remainder of each row is the credited one-block construction of [S26, proof of Theorem 3.1], whose literal realization is given below in the coordinates of (36.3). It is used for one predetermined row at every global chronological index, not for a different row on each observed branch.
+
+Write $a_t=a$ at $t=0$ and $a_t=0$ at $t>0$. Put ones at positions $0,\ldots,a_t-1$ and zero at position $a_t$. Let $A_t(j)$ be the arithmetic charge of these prescribed ones and let
+
+$$
+R_t(j)=\mathbf1_{E_t}(j)\oplus A_t(j),\qquad
+J_t=\{a_t+1,\ldots,a_t+T\}.
+\tag{38.4}
+$$
+
+The room condition is exactly $a_t+T\le m-1$, so $J_t$ is a set of actual positions within this same paid block, each residue modulo $T$ occurring once. The known displacement is $u_t=tm\pmod T$.
+
+If $g\ge2$, select optional ones only at positions $i\in J_t$ with $i\equiv-1\pmod g$. Such a one has two ambient charge vertices, $u_t+i$ and $u_t+i+1$. The former is outside $P$, and the latter is its unique actual vertex. As $i$ varies through the $T$ consecutive positions in $J_t$, these latter vertices cover $P$ once each. Set the bit at that position equal to $R_t(u_t+i+1)$. All other suffix bits are zero. These pulses are spaced by $g\ge2$, so each suffix one is isolated. This gives exactly the residual row on the actual phases. The unobserved ambient vertices supply no source or information to a branch.
+
+If $g=1$, both $E_t$ and the prefix charge have even cardinality, so $\bigoplus_{j\in P}R_t(j)=0$. Solve the cyclic equations
+
+$$
+x_r\oplus x_{r-1}=R_t(u_t+r),\qquad r\in\mathbb Z/T\mathbb Z.
+\tag{38.5}
+$$
+
+Choose $x_0$, recurse through the other residues, and use the zero total XOR to verify the final equation. The two solutions complement one another. Select one with at most $\lfloor T/2\rfloor$ ones and put bit $x_{i\bmod T}$ at each actual $i\in J_t$. Equation (36.3) proves that these positions contribute exactly $R_t$. Also
+
+$$
+\lfloor T/2\rfloor=\lfloor(k+1)/2\rfloor<k.
+\tag{38.6}
+$$
+
+Hence no suffix run reaches $k$; bounding the total number of suffix ones bounds every such run. This is a lawful representative of the response row, rather than an abstract span used as an operation.
+
+In both cases all unspecified positions are actual zeros. The first block rejects exactly the INITIAL tails $s\ge k-a$, before its first zero; they all have joined label $\rho$ by (36.2), and can return it at this first endpoint. For $s<k-a$, the leading run is safe and the first zero clears the old tail. The prefix and suffix runs are separated by that zero, every internal suffix run is shorter than $k$, and padding adds only zeros. Thus all those sources succeed and the first observed difference is precisely $\mathbf1_{E_0}(j)$. Their immutable label is already $\Lambda(j)$ by (36.2).
+
+Every subsequent block begins with zero. It clears the known terminal tail of the preceding literal block, even if that tail is nonzero; no seam can reject a surviving source. The same suffix argument proves internal legality. The selected words therefore belong to the internally legal alphabet as well as the unrestricted alphabet, and the complete literal concatenation is safe on every low-tail source. They implement (38.3) relative to INITIAL phase at their own chronological offsets. The controller never observes or reverses a hidden source clock.
+
+A surviving source records the code $z_j$ as successive differences of its own successful scalar readings, remembering its free initial value. Distinct joined labels have distinct codes, so after at most $d$ endpoints its label is determined. Return the component selected by that remembered value. Any archive already homogeneous in joined labels may stop earlier. A high-tail rejection returns its constant pair's component at fee one; initial bottom returns $f(\bot)$ at fee zero.
+
+There are exactly $d$ blocks in the global stream. All clearing zeros, prefix ones, compensating bits and suffix padding occupy positions in those same blocks. There is no separate wait, repair or final cleanup block. A stopped source emits only its own prefix. Thus the worst actual fee is at most $d$, matching the lower bound. The case $D_g=0$ but $\Gamma$ nonconstant uses the single zero-response threshold block and pays one; a coincident rejection label does not change the decoder or lower bound. ∎
+
+**推论 38.2（Complete arbitrary-target wide preset spectrum）。** For every $k\ge2$ and $m\ge2k+1$, every arbitrary immutable INITIAL target under the full joint prior, and either original alphabet,
+
+$$
+C_{\rm pre}(f)=
+\begin{cases}
+0,&\Gamma\text{ constant on successful INITIAL records},\\
++\infty,&\text{no common eligible cut exists},\\
+\max\{1,D_g(\Lambda)\},&\text{otherwise}.
+\end{cases}
+\tag{38.7}
+$$
+
+The finite value is the optimum actual emitted complete-block fee, with one literal attaining stream; it is not an upper bound or a fee for an already acquired phase archive.
+
+Proof. Every eligible $0\le a<k$ satisfies $a+k+2\le(k-1)+k+2=2k+1\le m$. Apply Theorem 38.1. Constant $\Gamma$ admits cut zero, so the zero and infinite cases are disjoint. All sources, their initial tails and their independent bottom remain those of Definition 36.1. ∎
+
+## 39. Full-source separations and necessary splitting inside a label
+
+**命题 39.1（A two-row optimum that must split one label cell）。** Take $k=3$, $m=7$, $T=4$ and $g=1$. On both free-value fibres, for every INITIAL tail, give phases $j=0,1,2,3$ respectively the labels $A,B,C,C$, where $A,B,C$ are distinct. Give initial bottom any independent label. Then
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)=2.
+\tag{39.1}
+$$
+
+One attaining preset stream is
+
+$$
+0010000\mid0011000.
+\tag{39.2}
+$$
+
+A code assignment constant on each label cell cannot meet the full-phase XOR constraint at any dimension; thus within-label splitting is necessary here, not just a convenience of an optimal construction.
+
+Proof. The target is phase-only and admits common cut zero. It has $n=3$, $h=2$, $M=4$, $r=2$, with an even cell of size two and a spare code. Theorem 37.1 therefore gives $D_1=2$, and Corollary 38.2 gives preset fee two. The credited adaptive wide law [S26, Theorem 3.1] gives adaptive fee two as well; alternatively three tail-zero labels cannot be distinguished by the single useful binary endpoint of one block.
+
+Both words in (39.2) start zero, and their only runs of ones have lengths one and two, respectively, shorter than $k=3$. The first word has charge mask $\{2,3\}$ at offset zero. The second has charge mask $\{1,3\}$ at the known offset $7\equiv3\pmod4$. Hence the actual code columns are
+
+$$
+z_0=00,\qquad z_1=01,\qquad z_2=10,\qquad z_3=11.
+\tag{39.3}
+$$
+
+Their XOR is zero, and the two codes for $C$ are different. Every INITIAL tail is cleared by the first zero, all subsequent seams are legal, and the two scalar values use their own differences. All emitted zeros are inside the two paid blocks.
+
+If instead codes were constant on labels, let the codes of $A,B,C$ be $a,b,c$. Full-phase XOR would be $a\oplus b\oplus c\oplus c=a\oplus b$, nonzero since separation requires $a\ne b$. This excludes every such assignment regardless of code length. The actual sources for all four phases and all tails are the histories of Definition 36.1. ∎
+
+**命题 39.2（Three infinite families of one-block preset excess）。** Let $h\ge2$ and $M=2^h$. Take a phase-only target, the same on both free values, whose label-cell sizes are either
+
+$$
+(1,1,\underbrace{2,\ldots,2}_{M-2}),\qquad T=2M-2,
+\tag{39.4}
+$$
+
+or
+
+$$
+(\underbrace{1,\ldots,1}_{M-2},2,2),\qquad T=M+2.
+\tag{39.5}
+$$
+
+At $k=T-1$, $m=2T-1$, both original alphabets have
+
+$$
+C_{\rm ad}(f)=h,\qquad C_{\rm pre}(f)=h+1.
+\tag{39.6}
+$$
+
+For $h\ge3$, the same separation holds for $T=M-2$ with every phase given a distinct label, at the same $k=T-1$, $m=2T-1$. Each target is defined on every INITIAL tail; its bottom label is arbitrary.
+
+Proof. Here $m=2k+1$ and $\gcd(m,T)=1$, so every phase is actual and all targets have common cut zero with sufficient room. Both (39.4) and (39.5) have $n=M$, and their odd-cell counts are respectively $2$ and $M-2$. These are the saturated exceptions of (37.3). The third family has $T=n=M-2$ and $\lceil\log_2 n\rceil=h$, its singleton exception. Corollary 38.2 gives preset fee $h+1$, with literal attainment from Theorem 38.1.
+
+For every family $n\ge3$. The supplied adaptive wide law [S26, Theorem 3.1] gives fee $\lceil\log_2 n\rceil=h$ on each free-value fibre, hence overall fee $h$. Its branch-specific even extensions are used only in that adaptive protocol. They are not combined into one preset stream. All cell sizes sum to the displayed actual $T$, so these are complete-source targets, not known-source encodings. ∎
+
+**命题 39.3（A finite common-stream penalty across free values）。** At $k=2$, $m=5$, $T=3$, $g=1$, take distinct scalar labels $A,B$. Independently of INITIAL tail, give the ordered pair $\Gamma$ at $j=0,1,2$ respectively
+
+$$
+(A,A),\quad(A,B),\quad(B,A).
+\tag{39.7}
+$$
+
+Then $C_{\rm ad}(f)=1$ and $C_{\rm pre}(f)=2$ under both alphabets. One common preset stream is
+
+$$
+01000\mid00010.
+\tag{39.8}
+$$
+
+Proof. Each scalar-value fibre has two phase cells of sizes two and one, so the credited adaptive wide law has no odd/odd exception and gives one paid block. Explicitly, on initial value zero use $00010$, whose first-index mask is $\{0,1\}$; on initial value one use $00100$, whose mask is $\{0,2\}$. These are the respective $A$ cells. Both words start zero and have a single one, so they clear every INITIAL tail and are legal. Both fibres are nonconstant, giving the one-block lower bound.
+
+The joined target has three distinct labels, so at least two binary successful endpoints are required on the full tail-zero subprior. In (39.8) the first mask is $\{1,2\}$; at offset $5\equiv2\pmod3$ the second mask is $\{0,2\}$. Their columns are $01,10,11$ at $j=0,1,2$, have XOR zero and distinguish all three pairs. The words start zero and have only isolated ones, so every original INITIAL tail succeeds and all seams are legal. Decode the pair and return its free-value component. This attains fee two and includes every zero in the displayed blocks. ∎
+
+**命题 39.4（Adaptive fee one with infinite wide preset fee）。** At the same $k=2,m=5$, choose labels $A\ne B$ and $C\ne D$, allowing arbitrary coincidences between the two pairs. In free-value fibre zero take the phase-only target $A$ at $j=0,2$ and $B$ at $j=1$, at both tails. In fibre one take $C$ at INITIAL tail zero and $D$ at INITIAL tail one, independent of phase. Then
+
+$$
+C_{\rm ad}(f)=1,\qquad C_{\rm pre}(f)=+\infty.
+\tag{39.9}
+$$
+
+Proof. In fibre zero, word $00100$ has even mask $\{0,2\}$, starts zero and is legal, giving the required phase label in one block. In fibre one, word $10000$ rejects exactly INITIAL tail one across its first-bit seam, and its surviving tail-zero sources return $C$; its first endpoint returns $D$ on rejection. Both fibres are nonconstant, so one block is also necessary. Free INITIAL value selects these different actions adaptively, while initial bottom stops independently at zero fee.
+
+Fibre zero is nonconstant and phase-only. It permits cut zero; every positive cut has a high band containing every phase and both labels, so no positive cut is eligible. Fibre one's distinct tail labels exclude cut zero and require cut one. Thus there is no common cut for the joined target. The credited common-cut criterion, or the infinite case of Theorem 38.1, gives infinite preset fee. Cross-component label coincidences do not remove either failed constancy condition. ∎
+
+## 40. Source scope and the unchanged all-parameter objective
+
+**数学引文 40.1（Credited inputs and reader-specific deductions）。** The complete INITIAL prior and operation/observation contract are those of Chapters 1 and 24; Theorem 24.2 supplies common-cut attainability and Theorem 29.2 supplies exact preset value joining. The literal response realization with a prescribed first-zero prefix and room $a+T+1\le m$ is [S26, proof of Theorem 3.1]. The same theorem supplies the wide adaptive fee used in Propositions 39.1–39.2. These are credited existing reader results. The elementary abelian zero-sum subset spectrum and counts are [S27, Theorem 16 and Corollary 18], [S28, Theorem 2.3] and [S29, Theorem 1.2], with their exact parameter correspondence in Mathematical citation 37.2. They are credited external mathematics, not new source-acquisition results.
+
+Theorem 36.3 extracts the full-phase parity constraint from one preset stream while preserving actual stopping and attempted rejection. Theorem 37.1 solves its multiplicity constraint, including saturated codes and the necessary within-label splitting constructions. Theorem 38.1 connects that solution to one legal first-zero parent and every subsequent chronological row, and Corollary 38.2 supplies the complete arbitrary INITIAL preset fee at $m\ge2k+1$. Their literature status is `repo-derived`: ordinary reader-specific mathematical deductions on the credited interfaces. The external subset spectrum and counting formulas are `literature-attested` within the exact scopes in Mathematical citation 37.2. They are not obtained by taking the maximum of separately optimal sibling streams, counting arbitrary algebraic representatives as actions, or replacing an INITIAL record by a current image. No broad novelty or literature-priority claim is made.
+
+**定义 40.2（Residual original objective and nontransferable boundaries）。** The original goal remains the exact minimum worst-branch ACTUAL EMITTED COMPLETE-BLOCK fee for every arbitrary attainable immutable INITIAL target at all original $k\ge2,m\ge1$, separately for adaptive control and one global preset stream, under both original alphabets. Corollary 38.2 settles its entire wide preset region $m\ge2k+1$, including zero and infinity. Theorem 38.1 also settles the finite optimum at $m\ge k$ when there is a common eligible cut with $a+k+2\le m$. The common-cut existence law retains its own all-parameter scope; an eligible cut without that room is not assigned (38.2) by this chapter. The already supplied wide adaptive law is not counted as a new outcome. The existing critical-width adaptive law in [S30, Theorem 4.1] also remains at its original scope; it does not identify one common preset stream for competing free-value fibres.
+
+The arbitrary unit-width classification in Theorems 25.3–25.4 and the arbitrary noncoprime proper-narrow preset certificate in Theorem 33.2 remain supplied settled regions. General width-two chronological seams, arbitrary coprime proper-narrow common-stream compatibility, the remaining critical and insufficient-room preset fees, and the adaptive gaps outside the supplied exact scopes remain within the original objective. Their sources, labels, phases, alphabets and paid fee are unchanged.
+
+The supplied $k=2,m=4$ target of [S26, Theorem 6.1] retains its original $\theta$-indexed cells, distinct labels $A,B,\star$, forced prefix $10$, and exact fee two; its only usable cut has $a+k+2=5>4$. Thus it continues to exclude dropping (38.1), even though its unrestricted parity-code depth is one. The supplied $k=8,m=4$ acquired archive of Mathematical counterexample 34.4 and [S15, Theorem 8.1] retains exactly the seven phases $\{0,1,3,4,5,6,8\}$, four labels, paid nine-block acquisition, additional adaptive fee two and additional preset fee three. Its incompatible $1111\mid1111$ seam is outside the wide realization hypothesis. Neither source is replaced by a smaller phase set, a different target, an unpaid acquisition or a changed fee.
+
+The common-image plateau theorem in [D13] concerns raw exact-length images of known legal words under polynomial remainder maps. Its source, observation and resource are different from returning an unknown immutable INITIAL label after destructive complete-block experiments. Its saturation conclusion supplies neither a free phase query nor the cost (38.7). The latter depends on first-zero loss, joint-history sources, preset row parity, actual literal realization and chronological seams, as proved above.
+
+These statements are ordinary proofs in the declared mathematical model. Finite evaluation of examples can only provide regression evidence for those evaluated instances. No finite enumeration replaces the universal proofs, and no Lean/kernel certification of Chapters 36–40 is asserted.
+
+[S26]: https://raw.githubusercontent.com/the-omega-institute/trureturing/3fa4d2325f1e8bcf3f4f9813f83fdf4c1156fdd0/docs/develop/theory/KBONACCI_TARGET_ACQUISITION_COST.md
+[S27]: https://arxiv.org/pdf/1607.05718v1
+[S28]: https://arxiv.org/pdf/1112.6294v1
+[S29]: https://arxiv.org/pdf/0708.2456v1
+[S30]: KBONACCI_CRITICAL_WIDTH_TARGET_COST.md
+[D13]: https://raw.githubusercontent.com/the-omega-institute/trureturing/9e834a13e0760767641dd65bbdcc92521589baf3/D5/S1/Words/AdmissibleWords/KBonacciActualCommonImagePlateau.lean
+
+## 追加锚（本行以下为增补区）
+
