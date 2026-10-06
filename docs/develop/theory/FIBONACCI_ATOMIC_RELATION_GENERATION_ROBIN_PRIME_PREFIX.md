@@ -3449,3 +3449,242 @@ half-gamma substitution and stronger displayed reserve are the repo-derived
 simplification of that existing construction.
 
 This is a complete paper proof. It reports no new Lean acceptance.
+
+## 452. Fibonacci 极值递归在临界增长空间中的精确范数与指数逆成本
+
+**原对象与既有供应。** 保持 §§384–385、414、448–449 的同一实际来源
+\[
+q=\varphi_{\rm gold}^{-2}\in(0,2/5),\quad
+\beta_d=\log(1-(-q)^d),\quad b=\beta_1=\log(1+q),\quad
+\mathcal B(s)=\sum_{d\ge1}\beta_dd^{-s},\quad \gamma=\beta^{-1},
+\]
+\[
+\delta_\beta=b-\sum_{d\ge2}|\beta_d|>0,\qquad
+\sum_{d\ge1}|\gamma_d|\le1/\delta_\beta.
+\tag{IC.1}
+\]
+这里 \(\gamma\) 是 Dirichlet 卷积逆，不是 Euler 常数；
+\(\delta_\beta\) 不与 §451 的肩项常数混用。卷积单位为
+\(\varepsilon_1=1,\varepsilon_n=0\)（\(n>1\)）。§448 给全部实数 \(s\ge0\) 上
+\[
+0<\mathcal B(s)<b,\quad
+\mathcal B'(s)\ge c_*q^2(\log2)2^{-s},\quad
+c_*=\frac{187}{1323},\quad
+\mathcal B(s)\longrightarrow b\quad(s\to\infty).
+\tag{IC.2}
+\]
+以下不假定原 Mertens 函数的临界界，也不假定 RH。
+
+**同一最大值递归的算术读出。** 令
+\[
+a=\beta/b,\quad \eta=b\gamma,\quad
+a_m=a^{*m},\quad \eta_m=\eta^{*m}\quad(m\in\mathbb Z_{\ge0}),
+\qquad a_0=\eta_0=\varepsilon.
+\tag{IC.3}
+\]
+则 \(a_m*\eta_m=\varepsilon\)。§448 的非负变量 \(V\) 有分布函数
+\(h(u)=\mathcal B(1+u)/b\)（\(u\ge0\)）；与原素数极值 \(U\) 独立的
+\(m\) 份 \(V\) 给
+\[
+\mathsf F_m(u)=\mathbb P(\max(U,V_1,\ldots,V_m)\le u)
+=\frac{\mathcal B(1+u)^m}{b^m\zeta(1+u)}\quad(u>0).
+\tag{IC.4}
+\]
+这确实是点态 CDF 乘法的交换幺半群递归。其同一算术系数是
+\(e^{(m)}=\mu*a_m\)。对整数 \(N\ge1\)，置
+\[
+M(N)=\sum_{n\le N}\mu(n),\qquad H_m(N)=\sum_{n\le N}e^{(m)}_n,
+\qquad M(0)=H_m(0)=0.
+\]
+因此 \(H_0=M\)，\(H_1=H_{\rm raw}/b\)。在 \(\Re s>1\) 上的全部
+Dirichlet 级数身份绝对收敛，因为 \(a_m\in\ell^1\)、\(|\mu(n)|\le1\)；
+（IC.4）的系数绑定不依赖条件级数重排。
+
+**临界增长空间。** 固定一个整数 \(j\ge0\)，标量域取 \(\mathbb R\) 或 \(\mathbb C\)。
+序列与算术核使用同一标量域。令 \(\mathcal X_j\) 为满足
+\(f(0)=0\) 且下列范数有限的序列空间：
+\[
+W_j(N)=\sqrt N(1+\log N)^j,\qquad
+\|f\|_{\mathcal X_j}=\sup_{N\ge1}\frac{|f(N)|}{W_j(N)}.
+\tag{IC.5}
+\]
+对算术核 \(v=(v_d)_{d\ge1}\)，定义
+\[
+(T_vf)(N)=\sum_{1\le d\le N}v_df(\lfloor N/d\rfloor),\quad N\ge1,
+\qquad (T_vf)(0)=0,\qquad
+\|v\|_{1,1/2}=\sum_{d\ge1}|v_d|d^{-1/2}.
+\tag{IC.6}
+\]
+所有正商至少为一。有限约数分组给
+\(H_m=T_{a_m}M\)、\(M=T_{\eta_m}H_m\)，不要求实际 \(M,H_m\)
+已经属于 \(\mathcal X_j\)。
+
+**引理 452.1（全部整数纤维的精确算子成本）。** 若 \(\|v\|_{1,1/2}<\infty\)，则
+\[
+\boxed{\ \|T_v\|_{\mathcal X_j\to\mathcal X_j}
+=\sum_{d\ge1}|v_d|d^{-1/2}.\ }
+\tag{IC.7}
+\]
+**证明。** 对 \(d\le N\)，令 \(n=\lfloor N/d\rfloor\)。由
+\(1\le n\le N/d\)、\(j\ge0\)，有 \(W_j(n)/W_j(N)\le d^{-1/2}\)。
+完整正尾预算因而给
+\(\|T_vf\|_{\mathcal X_j}\le\|v\|_{1,1/2}\|f\|_{\mathcal X_j}\)。
+
+反向固定整数 \(D\ge1\)，取整数 \(N>D(D+1)\)。因为
+\(N/d-N/(d+1)=N/[d(d+1)]>1\) 对 \(1\le d\le D\) 成立，
+前 \(D\) 个正商 \(n_d=\lfloor N/d\rfloor\) 严格互异，而全部 \(d>D\)
+的商都严格低于 \(n_D\)。定义 \(f_N\) 仅在这些 \(D\) 个商上非零：
+当 \(v_d\ne0\) 时取
+\(f_N(n_d)=\overline{v_d}W_j(n_d)/|v_d|\)，当 \(v_d=0\) 时取零；
+其余处及零点取零。实核只需取 \(\operatorname{sign}(v_d)W_j(n_d)\)。
+则 \(\|f_N\|_{\mathcal X_j}\le1\)，且无后续商混入，
+\[
+\|T_v\|_{\mathcal X_j\to\mathcal X_j}
+\ge\frac{|(T_vf_N)(N)|}{W_j(N)}
+=\sum_{d\le D}|v_d|\frac{W_j(\lfloor N/d\rfloor)}{W_j(N)}.
+\]
+先令 \(N\to\infty\)，每个固定 \(d\) 的比值趋于 \(d^{-1/2}\)；
+再令 \(D\to\infty\)，完整非负级数收敛，得到反向界。这里是对
+operator norm 的有限支撑测试，测试输入随 \(N,D\) 变化，
+不是指定的实际 \(M\)。证毕。
+
+**定理 452.2（同一递归的统一临界逆成本）。** 对每个固定整数 \(j\ge0\)、
+每个整数 \(m\ge0\)，\(T_{a_m}\) 和 \(T_{\eta_m}\) 是互逆有界算子，且
+\[
+\boxed{
+\left(\frac b{\mathcal B(1/2)}\right)^m
+\le\|T_{\eta_m}\|_{\mathcal X_j\to\mathcal X_j}
+=\|\eta_m\|_{1,1/2}
+\le\left(\frac b{\delta_\beta}\right)^m.
+}
+\tag{IC.8}
+\]
+其中
+\[
+\lambda:=\log\frac b{\mathcal B(1/2)}
+\ge\lambda_0:=\frac{187q^2}{1323b\sqrt2}>0.
+\tag{IC.9}
+\]
+这是整个增长空间上的最坏成本；不声称未知的实际 \(M\) 或 \(H_m\)
+必然取得该下界。
+
+**证明：有界性与真实逆。** 完整正双和按乘积分组，且
+\((dk)^{-1/2}=d^{-1/2}k^{-1/2}\)，故
+\(\|v*w\|_{1,1/2}\le\|v\|_{1,1/2}\|w\|_{1,1/2}\)。于是
+\[
+\|\eta_m\|_{1,1/2}
+\le\|b\gamma\|_{1,1/2}^{\,m}\le(b/\delta_\beta)^m<\infty.
+\]
+\(a_m\) 也有完整有限范数。每个 \(N\) 上的双和是有限和，
+\(\lfloor\lfloor N/d\rfloor/k\rfloor=\lfloor N/(dk)\rfloor\)，所以
+\(T_vT_w=T_{v*w}\)。结合 \(a_m*\eta_m=\varepsilon\) 和（IC.7）
+即得真实互逆、范数等式及完整上界。
+
+**证明：正临界测试与完整尾 DCT。** 取同一个正序列
+\(f_j(0)=0\)、\(f_j(N)=W_j(N)\)（\(N\ge1\)），其范数恰为一。
+固定 \(m\)。令
+\[
+R_{N,d}=
+\begin{cases}
+W_j(\lfloor N/d\rfloor)/W_j(N),&d\le N,\\
+0,&d>N.
+\end{cases}
+\]
+对每个固定 \(d\)，\(R_{N,d}\to d^{-1/2}\)，并且对全部 \(N,d\) 有
+\(0\le R_{N,d}\le d^{-1/2}\)。在整个计数测度上，
+\[
+|\eta_{m,d}R_{N,d}|\le|\eta_{m,d}|d^{-1/2},\qquad
+\sum_{d\ge1}|\eta_{m,d}|d^{-1/2}<\infty.
+\]
+因此完整支配收敛与绝对收敛的 Dirichlet 卷积乘法给
+\[
+\frac{(T_{\eta_m}f_j)(N)}{W_j(N)}
+\longrightarrow\sum_{d\ge1}\eta_{m,d}d^{-1/2}
+=\left(\frac b{\mathcal B(1/2)}\right)^m.
+\tag{IC.10}
+\]
+最后的身份复用同一 \(\gamma\) 的完整逆级数。全部 \(d>N\) 的补集
+保留在共同可求和主导中，未把有限头当完整尾。范数至少为这个正极限，
+给（IC.8）左界。本证明对每个 \(m\) 分别成立；应用于 \(m=m(x)\)
+时使用已证明的全称界，不偷换成 \(m,N\) 的未经支付联合 DCT。
+
+**证明：\(\lambda\) 的完整积分下界。** 对有限 \(R>1/2\)，（IC.2）给
+\[
+\mathcal B(R)-\mathcal B(1/2)
+\ge c_*q^2(\log2)\int_{1/2}^{R}2^{-s}ds
+=c_*q^2(2^{-1/2}-2^{-R}).
+\]
+令 \(R\to\infty\)，由 \(\mathcal B(R)\to b\) 得
+\(b-\mathcal B(1/2)\ge c_*q^2/\sqrt2\)。令
+\(z=(b-\mathcal B(1/2))/b\in(0,1)\)，由 \(-\log(1-z)\ge z\)
+得到（IC.9）。积分端点准确为 **\(1/2\) 到 \(\infty\)**，
+没有把 \(\mathcal B(1)\) 当作 \(b\)。证毕。
+
+**命题 452.3（同一逆的具体非保号事件）。** 对每个 \(m\ge1\)，素指标三处
+\[
+\eta_{m,3}=m\eta_3=-m\beta_3/b<0.
+\tag{IC.11}
+\]
+**证明。** 因为 \(\gamma_1=1/b\)、\(\gamma_3=-\beta_3/b^2\)，素数三的 \(m\) 重
+卷积中恰有一个因子取三，其余全取一。取非负输入
+\(f(N)=\mathbf1_{N=3}\)、\(f(0)=0\)。它属于每个 \(\mathcal X_j\)，
+而 \(1\le d\le9\) 时 \(\lfloor9/d\rfloor=3\) 仅在 \(d=3\) 成立，故
+\[
+(T_{\eta_m}f)(9)=\eta_{m,3}<0.
+\tag{IC.12}
+\]
+所以反向算术运输不保持非负序列锥。独立最大值的正 CDF 并不使
+同一个 Dirichlet 逆成为保号概率操作。证毕。
+
+**推论 452.4（原 RH 临界归一化下的准确成本冲突）。** §449 保持
+\[
+I_\psi(x)=\int_x^\infty[\psi(t)-t]
+\frac{1+\log t}{t^2\log^2t}\,dt,\qquad
+Z_\psi(x)=\sqrt x\log x\,I_\psi(x).
+\]
+同一 \(\mathsf F_m\) 的对数导数读出给 \(I_m,Z_m\)，并已证明
+\[
+Z_m(x)-Z_\psi(x)=\frac m{\sqrt x}
+[\kappa+\epsilon_\beta(x)],\qquad
+\kappa>0,\quad|\epsilon_\beta(x)|\le M_\alpha x^{-\alpha}.
+\tag{IC.13}
+\]
+当 \(m=m(x)\) 时，每个 \(x\) 先固定该整数，在全部 \(t\ge x\) 的
+原完整尾上使用同一个 \(m(x)\)。若固定 \(K>0,r\ge0\) 使充分大 \(x\) 上
+\[
+\|T_{\eta_{m(x)}}\|_{\mathcal X_j\to\mathcal X_j}\le Kx^r,
+\tag{IC.14}
+\]
+**证明。** （IC.8）和正 \(\lambda\) 强迫
+\[
+m(x)\le\frac{\log K+r\log x}{\lambda}=O(\log x),\qquad
+Z_{m(x)}(x)-Z_\psi(x)\longrightarrow0.
+\tag{IC.15}
+\]
+这是**假定统一 operator cost 至多多项式时的必要条件**。反过来，
+若 \(m(x)/\sqrt x\to a_*\) 且 **\(a_*>0\)**，那么新增临界补偿趋于
+\(a_*\kappa>0\)，同时
+\[
+\|T_{\eta_{m(x)}}\|_{\mathcal X_j\to\mathcal X_j}
+\ge\exp(\lambda m(x))
+=\exp[(a_*\lambda+o(1))\sqrt x],
+\tag{IC.16}
+\]
+超过任意固定幂 \(x^r\)。两者是同一 max 因子、同一迭代次数在
+对数导数读出和完整逆运输中的不同真实成本。原 \(I_\psi\) 仍须扣回
+（IC.13）的同一完整补偿；本节没有给该尾新增免费储备。证毕。
+
+**范围与来源。** \(\mathcal B(1/2)/b\) 是算术乘子在实数 \(s=1/2\) 的值，
+不能当作 \(u=-1/2\) 的概率 CDF；§448 的概率律在负轴补零。本节也没有
+将正实概率密度改写成正 Laplace 测度。算子最坏成本下界不证明实际
+\(M,H_m,I_\psi\) 发散，不否定可能利用实际符号抵消的其他估计，
+不推出 RH 或其否定。
+
+绝对 Dirichlet 卷积 Banach 代数与 Neumann 逆预算参照
+Glöckner–Lucht，*Weighted inversion of general Dirichlet series*，
+[arXiv:1112.0749v2](https://arxiv.org/abs/1112.0749v2)。
+实际 \(\beta,\gamma\) 复用 §§384–385；整数商复合身份复用 §414；
+概率单调性复用 §448；原临界补偿复用 §449。新增承重是全部整数
+纤维的精确临界算子范数、重复逆的显式指数下界、具体非保号输入及
+多项式统一成本与平方根递归深度的定量冲突，为本仓推导（repo-derived），
+不作全局原创性断言。

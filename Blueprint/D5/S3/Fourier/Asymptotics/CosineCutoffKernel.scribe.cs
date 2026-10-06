@@ -99,6 +99,34 @@ internal sealed class CosineCutoffKernelDocument : IScribeDocumentDefinition
                         + "underlying a linear isometry equivalence.")),
                     Paragraph(Text("This finite-cutoff statement does not pass to the positive-Ci limit "
                         + "or assert any Gaussian quadratic-series or path-limit conclusion."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-finite-cutoff-real-convolution"),
+                DeclarationHandle.Create(Module + "actual_cutoff_real"),
+                H("The real finite convolution supplier"),
+                StatementSource.FromAuthor(ActualRealFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every positive c and every N>=c the actual real cutoff kernel is measurable and in real L2. Its ordinary real convolution is represented by a continuous linear map of norm at most 2*pi/c. This original-owner supplier is consumed by the actual positive-Ci high-pass L2 limit and operator construction."),
+                    Ref("D5/S3/Fourier/Asymptotics/CosineCutoffKernel/Highpass.actual_highpass_convolution"))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("complex-l2-bilinear-pairing-integral"),
+                DeclarationHandle.Create(Module + "pair_eq"),
+                H("The actual bilinear L2 pairing"),
+                StatementSource.FromAuthor(PairFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every two complex L2 elements f and g, the original bilinear map pair evaluates to the integral of f(x)g(x), without complex conjugation. pair is the L2 pairing induced by complex multiplication. This supplier identifies the high-pass convolution integral under translation-reflection."),
+                    Ref(Module + "pair"),
+                    Ref("D5/S3/Fourier/Asymptotics/CosineCutoffKernel/Highpass.actual_highpass_convolution"))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("complex-l2-product-integrability"),
+                DeclarationHandle.Create(Module + "product_integrable"),
+                H("Integrability of complex L2 products"),
+                StatementSource.FromAuthor(ProductFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary complex functions a and b in Lebesgue L2, their pointwise product is Lebesgue integrable. The actual high-pass convolution uses this fact for each translated-reflected kernel row and every input."),
+                    Ref("D5/S3/Fourier/Asymptotics/CosineCutoffKernel/Highpass.actual_highpass_convolution"))),
                 DescribeRole.Theorem))));
 
     private static Formula Reals => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
@@ -290,4 +318,28 @@ internal sealed class CosineCutoffKernelDocument : IScribeDocumentDefinition
             All("c", Reals, All("N", Reals,
                 Implies(Positive(c), Implies(Le(c, n), conclusion)))))))));
     }
+    private static Formula ActualRealFormula()
+    {
+        Formula c=F.Id("c"), n=F.Id("N"), f=F.Id("f"), op=F.Id("C"), x=F.Id("x"), y=F.Id("y"), volume=F.Id("volume");
+        Formula conv=Lambda("x",Reals,IntegralWith(Lambda("y",Reals,
+            Multiply(Kernel(c,n,Subtract(x,y)),Call("f",y))),volume));
+        return F.Disp(All("c",Reals,All("N",Reals,Implies(Positive(c),Implies(Le(c,n),And(
+            Call("Measurable",Call("kernel",c,n)),Call("MemLp",Call("kernel",c,n),F.D(2),volume),
+            Exists("C",CLM(Reals,HR,HR),And(All("f",HR,AE(Call("coeFn",Call("C",f)),conv,volume)),
+                Le(Norm(op),new Formula.Fraction(TwoPi,c))))))))));
+    }
+    private static Formula PairFormula()
+    {
+        Formula f=F.Id("f"), g=F.Id("g"), x=F.Id("x");
+        return F.Disp(All("f",HC,All("g",HC,Equal(Call("pair",f,g),
+            IntegralWith(Lambda("x",Reals,Multiply(Call("f",x),Call("g",x))),F.Id("volume"))))));
+    }
+    private static Formula ProductFormula()
+    {
+        Formula a=F.Id("a"), b=F.Id("b"), x=F.Id("x"), volume=F.Id("volume");
+        return F.Disp(All("a",Arrow(Reals,Complexes),All("b",Arrow(Reals,Complexes),
+            Implies(Call("MemLp",a,F.D(2),volume),Implies(Call("MemLp",b,F.D(2),volume),
+                Call("Integrable",Lambda("x",Reals,Multiply(Call("a",x),Call("b",x))),volume))))));
+    }
+
 }
