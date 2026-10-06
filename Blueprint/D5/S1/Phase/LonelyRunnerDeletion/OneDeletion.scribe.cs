@@ -27,14 +27,16 @@ internal sealed class LonelyRunnerDeletionDocument : IScribeDocumentDefinition
                         + "nearest-integer distance. The theorem includes the N = 2 boundary, "
                         + "where either deletion leaves a singleton and equality holds.")),
                 Paragraph(Text(
+                    "The mathematical conclusion follows from known literature: Tao's "
+                        + "Proposition 1.5 supplies the lower bound beyond the small cases, "
+                        + "and Zhang's Theorem 1.2 excludes the remaining equality cases. "
+                        + "The formal proof below instead supplies direct rational witnesses.")),
+                Paragraph(Text(
                     "For r > N/2, time 1/r gives a strict surplus over 1/N. For 2r <= N, "
                         + "an explicit q with N+r < q < 2N and an inverse of r modulo q keeps "
                         + "every retained residue at least two units from either endpoint. "
                         + "The endpoint r = N is sharp at time 1/N."))),
-            DescribeRole.Theorem,
-            new OpenProblemResolutionClaim(
-                ProblemSlugRef.Create("zhang-2026-lonely-runner-one-deletion"),
-                ResolutionKind.Proved)))));
+            DescribeRole.Theorem))));
 
     private static Formula ResultFormula()
     {
