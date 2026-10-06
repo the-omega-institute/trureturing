@@ -63847,4 +63847,89 @@ $$
 
 这些应用定量说明：单看素核，会留下比完整前缀大得多的有符号主项；正确合并复合核后，已付的低阶主项消去。现有对数衰减仍未达到 §384 的 RH 临界幂尺度，本节也没有改善它。其结果是实际素切面的主项与同源补偿接口，不是完整 Robin 预算、CA 危险源点覆盖或 RH 证明。链终端、PNT、Mertens 界及对数区间算法均直接复用；新增分区应用是纸面推导与精确有限实验，未作 Lean 核验或原创性认证。
 
+## 422. 普通 Möbius 轮廓的填孔、全指标对数支付与实际原子转移
+
+§414 已将实际 Fibonacci 误差前缀与普通 Mertens 前缀放入同一个可逆约数变换。这里补全一条可直接接入现有 ζ 供应的纸面解析链：对数四次增长支付来自无条件零自由区域；最后仍须控制 Robin 的有符号联合相位。本节不是新的 Mertens 定理，不声称新增 Lean 验收。
+
+**实际来源与供应。** 令 $M(N)=\sum_{n=1}^{N}\mu(n)$、$x=N+1/2$、$L=\log x$、$c=1+1/L$（先取 $N\ge3$）。经典截断 Perron 核满足，对所有 $c,T,y>0$ 且 $y\ne1$，
+
+$$
+\left|\frac1{2\pi}\int_{-T}^{T}\frac{y^{c+it}}{c+it}\,dt-\mathbf1_{y>1}\right|
+\le\frac{y^c}{\pi T|\log y|}.
+\tag{422.1}
+$$
+
+可按 $\log y$ 的符号向左或向右闭合矩形；两个水平边各由 $\int e^{\sigma\log y}\,d\sigma/T$ 支付，远纵边趋零。$\log y>0$ 时包围零处留数一，$\log y<0$ 时没有极点。这是经典截断 Perron 估计的直接证明，不能用要求纵线绝对可积的 Mellin 反演替代。
+
+在 $\Re s=c>1$ 使用真实 Möbius Dirichlet 级数，有限纵段由 $x^c n^{-c}/c$ 支配，允许逐项积分。半整数 $x$ 保证每个正整数 $n$ 的 $x/n\ne1$。将误差和分为 $x/2<n<2x$ 与其补域：补域的对数分母至少 $\log2$；近域有 $|\log(x/n)|\ge|x-n|/(2x)$、$(x/n)^c\le4$，且两列半整数距离的倒数和不超过 $2(3+\log x)$。于是
+
+$$
+|M(N)-P_T(x)|\le D\frac{x(1+L)}T,
+\quad P_T(x)=\frac1{2\pi}\int_{-T}^{T}\frac{x^{c+it}}{(c+it)\zeta(c+it)}\,dt,
+\quad D=\frac{48+e/\log2}{\pi}.
+\tag{422.2}
+$$
+
+仓库既有 `ZetaInvBnd` 与独立的 `ZetaZeroFree` 给高处供应。令 $a$ 为两者宽度常数的较小者，扩大正预算常数 $C$ 后，对所有 $|t|>3$ 及 $\sigma\ge1-a/\log(|t|+3)^9$ 有
+
+$$
+\zeta(\sigma+it)\ne0,\qquad |1/\zeta(\sigma+it)|\le C\log(|t|+3)^9.
+\tag{422.3}
+$$
+
+原倒数供应只在邻近一的半开条带给七次对数预算；远右侧由真实 Möbius 级数及 $\sum_{n\ge1}n^{-\sigma}\le1+1/(\sigma-1)$ 补齐，包含半开条带排除的右端点。倒数上界本身不能支付无零性：形式系统中的 $1/0=0$，所以（422.3）在 $\sigma<1$ 的非零分支必须另用 `ZetaZeroFree`，在 $\sigma\ge1$ 则直接消费 Mathlib 的 `riemannZeta_ne_zero_of_one_le_re`。
+
+**填孔与完整矩形。** 取既有 `ZetaNoZerosInBox 3` 的固定 $\sigma_0\in(1/2,1)$，令 $Z_1(s)$ 为 Mathlib 的整函数 `riemannZeta₁`，并定义
+
+$$
+R(s)=\frac{s-1}{Z_1(s)},\quad
+T=L^{12},\quad q_T=\log(T+3),\quad
+\sigma_1=1-a/q_T^9.
+\tag{422.4}
+$$
+
+充分大的 $N$ 同时满足 $T>3$、$\sigma_0<\sigma_1<1<c\le2$。低处 $[\sigma_0,2]\times[-3,3]$ 上，$Z_1(1)=1$ 与无零性给 $R$ 的固定紧致预算 $C_0$。高处 $|t|\le T$ 的条带宽度由 $\log(|t|+3)\le q_T$ 支付，因而（422.3）覆盖整个有限矩形；不要求更高的无限纵尾具有同一宽度。
+
+$R(1)=0$，且仅在 $s\ne1$ 时有 $R(s)=1/\zeta(s)$。这一限制在 Lean 中必须保留：Mathlib 的原始 $\zeta(1)=(\gamma-\log(4\pi))/2\ne0$ 是定义在极点处的默认值，其总化倒数不等于零。矩形内部使用 $R$ 的解析性；与原 Perron 被积函数的相等只在避开一的边界使用。
+
+函数 $G(s)=x^sR(s)/s$ 在整个矩形上解析，$\sigma_1>1/2$ 排除零。Cauchy 矩形等式把右纵边移到左纵边及两个水平边，**一处没有留数主项**。左纵边将 $|t|\le3$ 与 $3<|t|\le T$ 分开；前者使用 $|s|\ge1/2$，后者使用 $|s|\ge|t|$。两个水平边使用 $|s|\ge T$、$x^{\Re s}\le ex$ 及 $c-\sigma_1<2$。由（422.2）得到
+
+$$
+|M(N)|\le
+ D\frac{x(1+L)}{L^{12}}
+ +\frac{2eC}{\pi}\frac{xq_T^9}{L^{12}}
+ +\frac{x}{2\pi}e^{-aL/q_T^9}(12C_0+2Cq_T^{10}).
+\tag{422.5}
+$$
+
+**全指标支付。** 最终有 $q_T\le13\log L$。经典对数与幂比较给 $(\log L)^{10}/L\to0$，从而最终 $aL/q_T^9\ge20\log L$，指数项不超过 $L^{-20}$。将（422.5）三项分别乘 $L^4/x$，三者都趋零，故存在整数 $N_0\ge3$，使每个 $N\ge N_0$ 有 $|M(N)|\le3x/L^4$。利用 $x\le3N/2$、$L\ge\log N\ge1$ 与 $1+\log N\le2\log N$，得到
+
+$$
+|M(N)|\le72\frac{N}{(1+\log N)^4}\quad(N\ge N_0).
+$$
+
+有限头直接用 $|\mu(n)|\le1$ 支付 $|M(N)|\le N$。因此令
+
+$$
+C_M=\max\{72,(1+\log N_0)^4\}>0,
+\qquad
+|M(N)|\le C_M\frac{N}{(1+\log N)^4}\quad(N\ge1).
+\tag{422.6}
+$$
+
+这保留原始普通 Möbius 和、全部正指标及有限头，不把最终结论弱化成仅充分大指标的条件。
+
+最后消费 §414 的实际有限约数身份 $H_{\rm raw}(N)=\sum_{1\le d\le N}\beta_dM(\lfloor N/d\rfloor)$；每个商 $\lfloor N/d\rfloor\ge1$，不消费零指标。沿用已付 $S_\beta=\sum_{d\ge1}|\beta_d|<\infty$ 与 $A_\beta=\sum_{d\ge1}|\beta_d|(1+\log d)^4/d$，有 $A_\beta\le24eS_\beta$，故可取
+
+$$
+B_H=C_M(24eS_\beta)(1+\log2)^4,
+\qquad |H_{\rm raw}(m)|\le B_H\frac{m}{(\log m)^4}\quad(m\ge2).
+\tag{422.7}
+$$
+
+这条纸面链说明：完成普通 Möbius 的解析供应与有限转移，就能支付实际商块绝对积分交换所需的增长前提；这个支付无须假设 RH。它仍不确定剩余 Robin 积分的符号，亦不产生临界平方根尺度的联合相位界。§419 的逐二幂链零总和不能替代这里的全前缀解析控制。
+
+**来源及形式边界。** 截断 Perron 与由零自由区域推出 Mertens 对数衰减均属经典数学；更强的无条件文献供应已在 §390 归属，本节不重复取得其新颖性。现有 ζ 与矩形接口来自 AlexKontorovich/PrimeNumberTheoremAnd，revision `6a380f0c4658c04a420a9eb00b1ed62a1e3fde01`，及 anthropics/zeta-23-lean，revision `3635e74826a4c1fcece7d1cd2b6fa75e43a00510`，按仓库来源头保留 Apache 2.0 归属；Mathlib 固定版本为 `db584cd6d46c92f209a44c0f1c829460d327499d`。原生 Lean 尚须验收截断核、真实级数交换、紧致填孔、矩形三边预算、最终参数条件、全指标常数及实际 $H_{\rm raw}$ 组合。本节的完整纸面证明不冒充这些编译、axiom 或冻结验收，也不声称 RH 已解决。
+
 ## 追加锚（本行以下为增补区）
+
