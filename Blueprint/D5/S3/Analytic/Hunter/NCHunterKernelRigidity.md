@@ -22,6 +22,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Hunter/NCHunterKernelRigidity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/garcia-volcic-2025-nc-hunter-kernel-rigidity` (proved) by `D5/S3/Analytic/Hunter/NCHunterKernelRigidity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"garcia-volcic-2025-nc-hunter-kernel-rigidity","declaration_gid":"D5/S3/Analytic/Hunter/NCHunterKernelRigidity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* S. R. Garcia and J. Volčič (2025). *A noncommutative generalization of Hunter's positivity theorem*. DOI: [10.1090/proc/17480](https://doi.org/10.1090/proc/17480). URL: <https://arxiv.org/abs/2503.12376v2>.

@@ -32,7 +32,8 @@ internal sealed class NCHunterKernelRigidityDocument : IScribeDocumentDefinition
                         Text(".” Fin n indexes all n letters starting at zero. H is complete over C; ContinuousLinearMap represents bounded complex-linear operators. LinearMap.ker and iInf are the literal kernels and their intersection. H_{2d} is nchs n (2*d), using the reciprocal-fibre coefficient, and mu retains both parity branches and the n = 1 branch."))),DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("nc-hunter-kernel-result"),DeclarationHandle.Create(Prefix+"result"),
                     H("The kernel equality"),StatementSource.FromAuthor(Disp(F.Id("claim"))),AssessedProvenance.FromRepo(Source),
-                    Blocks(Paragraph(Text("The positive residual form forces every mixed-word row to vanish. A strictly positive shifted factorial kernel then forces the grouped word coefficients to vanish. Even and odd degrees use separate contractions. Finally, a self-adjoint operator and its positive powers have the same kernel. The reverse inclusion follows by evaluating every positive-length word on the common kernel."))),DescribeRole.Theorem)
+                    Blocks(Paragraph(Text("The positive residual form forces every mixed-word row to vanish. A strictly positive shifted factorial kernel then forces the grouped word coefficients to vanish. Even and odd degrees use separate contractions. Finally, a self-adjoint operator and its positive powers have the same kernel. The reverse inclusion follows by evaluating every positive-length word on the common kernel."))),DescribeRole.Theorem,
+                    new OpenProblemResolutionClaim(ProblemSlugRef.Create("garcia-volcic-2025-nc-hunter-kernel-rigidity"), ResolutionKind.Proved))
             ),[]));
     }
 
