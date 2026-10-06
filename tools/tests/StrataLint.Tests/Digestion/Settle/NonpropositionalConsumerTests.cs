@@ -17,7 +17,7 @@ public sealed class NonpropositionalConsumerTests
         var evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
             fixture.Ledger, Decode(WithCas(fixture)), DigestionTestSupport.AcceptedLean(Array.Empty<string>()));
         var frontier = DigestionFrontierProjection.Create(fixture.Ledger, evaluation,
-            new Dictionary<string, string> { [entry.AtomId] = "theorem" }, false);
+            new Dictionary<string, string> { [entry.AtomId] = "theorem" });
         Assert.Empty(frontier.Entries);
         Assert.Equal(0, frontier.Total.ResidualOpen);
         Assert.Equal(0, frontier.Total.FormalizationFrontier);
