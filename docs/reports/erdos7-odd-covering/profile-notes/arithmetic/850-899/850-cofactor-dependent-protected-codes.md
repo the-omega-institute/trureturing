@@ -8744,3 +8744,421 @@ and unrestricted odd distinct
 covering remain unresolved. CD148, CD152 and CD159 exclude every
 specified single exceptional prime q at least seven by full-prime-guard
 arguments, with separate shared-label pools required for q=7.
+## All-height fixed exceptions and their actual-source consumer
+
+The fixed-collision construction of Report385 §172 GLC1 applies to
+any natural ternary height h and distinguished prime q at least five
+under the following same-count modulus-sum minimum. The fixed
+exception set is chosen from the original family before any ordinary
+coordinate or probability law. The source and moment consumers reuse
+CD206–219 and CD39; they add no source-density premise automatically.
+
+Let one actual odd distinct nonunit whole cover have period dividing
+
+\[
+Q=3^h q^G M,\qquad h\ge0,\quad G\ge2,\quad q\ge5\text{ prime},\quad (M,3q)=1.
+\]
+
+Assume its modulus sum is minimum among all covers with the same number of classes, with unrestricted competitor heights, and no original modulus is divisible by \(3^{h+1}\). Write every actual original uniquely as
+
+\[
+n_i=3^{a_i}q^{e_i}m_i,\quad 0\le a_i\le h,\quad m_i\mid M.
+\]
+
+Fix one complete ternary word \(u\bmod3^h\) and one first-q digit \(\omega\). The same fixed exception set \(X=X(u,\omega)\), of at most two original labels, is chosen before any ordinary coordinate or law. It meets every literal ordinary-prime collision among all top originals with \(a_i=h,e_i\ge1\) and the fixed \(u,\omega\) phases. All exceptional originals remain in the covering family.
+
+### Complete source and unit holes
+
+Use the full ordinary CRT carrier \(\Omega=\mathbb Z/M\mathbb Z\), or a specified rectangular subset of it. Give this carrier one product probability law \(\lambda=\bigotimes_{p\mid M}\lambda_p\). No conditional independence on a survivor is used.
+
+An original is ternary-active when its residue is \(u\bmod3^{a_i}\). Let \(C_i\subseteq\Omega\) be its actual ordinary cofactor cylinder, restricted to the carrier. Define the complete shallow survivor \(Y=Y_{u,\omega}\) by removing:
+
+- every ternary-active q-free original cylinder;
+- every ternary-active original with \(e_i=1\) and first-q phase \(\omega\).
+
+These removals include unit originals \(m_i=1\). Thus a point of \(Y\), together with any q-coordinate whose first digit is \(\omega\), is uncovered by every original of q-depth at most one. The definition supplies neither \(Y\ne\varnothing\) nor \(\lambda(Y)>0\); an application must establish the required source statement separately.
+
+For each second-q digit \(c\), let
+
+\[
+B_c=\{z\bmod q^G:z\equiv\omega+qc\pmod{q^2}\}.
+\]
+
+Remove from \(B_c\) the literal q-prefixes of all ternary-active unit originals \(m_i=1\), at every depth \(e_i\ge2\). Let \(\delta_c\) be the remaining fraction of \(B_c\). This is one actual unit-hole vector; it is not a collection of independently chosen capacities. Put \(\mathcal C=\{c:\delta_c>0\}\).
+
+For every ternary-active, ordinary-bearing original with \(e_i\ge2\), first digit \(\omega\), and second digit c, retain its actual weight
+
+\[
+w_i=q^{2-e_i}.
+\]
+
+Define on the same carrier
+
+\[
+\begin{aligned}
+l_c(y)&=\sum_{a_i<h,\;m_i>1}w_i\mathbf1_{C_i}(y),\\
+x_c(y)&=\sum_{a_i=h,\;i\in X,\;m_i>1}w_i\mathbf1_{C_i}(y),\\
+h_c(y)&=\sum_{a_i=h,\;i\notin X,\;m_i>1}w_i\mathbf1_{C_i}(y),
+\end{aligned}
+\]
+
+where every sum additionally uses the displayed activity, depth and color conditions. Whole original coverage of each complete remaining q-fibre gives
+
+\[
+y\in Y\quad\Longrightarrow\quad l_c(y)+x_c(y)+h_c(y)\ge\delta_c.
+\tag{CD330}
+\]
+
+Unlike the height-two two-word setting, \(l_c\) generally depends on the full chosen word u: the intermediate ternary exponents have different compatibility classes. There is no assertion that one low function is shared by every word.
+
+### Direct tuple and lower-row consumers
+
+For two different nonexceptional top originals, a common ordinary point and a common prime divisor of their cofactors would give a literal collision edge outside X. Consequently, all nonexceptional top originals simultaneously active at one ordinary point have pairwise coprime nonunit cofactors.
+
+For any nonempty \(K\subseteq\mathcal C\), define the actual tuple quantity
+
+\[
+Z_K=\sum_{\substack{i_c\text{ regular top of color }c\;(c\in K)\\m_{i_c}\text{ pairwise coprime}}}\prod_{c\in K}w_{i_c}\lambda(C_{i_c}).
+\]
+
+Different colors ensure different original indices. The same full product law factors precisely those tuples whose ordinary supports are disjoint; every other tuple has empty intersection. Reusing CD212–215 gives
+
+\[
+\int\prod_{c\in K}h_c\,d\lambda=Z_K,
+\qquad
+\int_Y\prod_{c\in K}[\delta_c-l_c-x_c]_+\,d\lambda\le Z_K,
+\tag{CD331}
+\]
+
+and
+
+\[
+\lambda(Y)\le\sum_{c\in K}\frac{\int_Y(l_c+x_c)\,d\lambda}{\delta_c}
++\frac{Z_K}{\prod_{c\in K}\delta_c}.
+\tag{CD332}
+\]
+
+These formulas retain one fixed X, one family, its actual colors, and the same law. A change from five to q affects the actual depth weights and color alphabet, not the product expansion itself.
+
+There is also a deterministic weighted color-count consumer. Let \(A\) be the union of ordinary prime supports of all relevant ordinary-bearing top originals and let \(s=|A|\). Let \(E_X\) be the set of second-q colors containing a relevant exceptional label and put \(\mathcal C'=\mathcal C\setminus E_X\). This set is fixed independently of y and \(|E_X|\le2\). Choose any \(\delta_{\min}\ge0\) satisfying \(\delta_c\ge\delta_{\min}\) on \(\mathcal C\); when that set is empty choose zero. The same argument permits any fixed subset of the positive-hole colors in place of \(\mathcal C\). For a nonnegative vector \(\delta\) on \(\mathcal C'\), define
+
+\[
+T_s(\delta;\mathcal C')=\min_{\substack{J\subseteq\mathcal C'\\|J|\le s}}\sum_{c\in\mathcal C'\setminus J}\delta_c.
+\]
+
+At one point y, at most s colors have any regular top supplier: choosing one supplier from each such color gives pairwise disjoint nonempty subsets of A. No exceptional supplier has a color in \(\mathcal C'\). Thus, for every y in Y, each remaining color's complete hole must be covered by its lower-row originals, and
+
+\[
+\sum_{c\in\mathcal C'}l_c(y)\ge T_s(\delta;\mathcal C').
+\]
+
+For any law, including a nonproduct law, this pointwise statement yields
+
+\[
+\boxed{\sum_{c\in\mathcal C'}\int l_c\,d\lambda
+\ge T_s(\delta;\mathcal C')\lambda(Y)
+\ge\delta_{\min}(|\mathcal C|-s-2)_+\lambda(Y).}
+\tag{CD333}
+\]
+
+Only CD331's exact tuple evaluation needs the product-law assumption. CD333 reuses the support-count mechanism; it neither adds an exception debit nor deletes X from the cover. It weakens the available-color set once to avoid exception service.
+
+### An explicit application domain beyond height two
+
+At most \(h+1\) unit numerical labels have q-depth exactly two: \(3^a q^2\), \(0\le a\le h\). Excluding their actual second-digit colors leaves a fixed set \(\mathcal C_0\) of at least \(q-h-1\) colors. On each of those colors, numerical distinctness and the full higher unit inventory give
+
+\[
+\delta_c\ge d_{h,q,G}:=1-(h+1)\sum_{e=3}^{G}q^{2-e}
+=1-\frac{h+1}{q-1}(1-q^{2-G}).
+\tag{CD334}
+\]
+
+The empty sum at G=2 is zero. Positivity is ensured, for example, by \(q>h+2\). No higher unit original has been dropped: CD334 is a union bound over all \(a\le h\) and all \(e\ge3\).
+
+For \(h=3,q=17\), one has \(|\mathcal C_0|\ge13\) and
+
+\[
+d_{3,17,G}=\frac34+\frac14\,17^{2-G}>\frac34.
+\]
+
+The same-family conditional consequence is therefore
+
+\[
+\boxed{\sum_c\int l_c\,d\lambda\ge d_{3,17,G}(11-s)_+\lambda(Y).}
+\tag{CD335}
+\]
+
+The lower-row load includes every ternary exponent below three and every depth e>=2; the complete source Y excludes all shallower originals. For example, s=7 forces lower-row weighted load at least \(4d_{3,17,G}\lambda(Y)\), which exceeds \(3\lambda(Y)\) when \(\lambda(Y)>0\). This is a parameter specialization of the source interface, not a constructed cover, a certified old-bound survivor, or a new arithmetic branch exclusion. If s is too large, the counting bound becomes vacuous and the actual tuple relation CD332 remains available.
+
+### Remaining obligations
+
+A contradiction requires a lower bound for this same \(\lambda(Y)\) and an upper bound for these same lower-row loads, or an incompatible bound for the actual tuple quantities. The fixed-exception theorem alone supplies neither. In particular, one cannot transplant the height-two two-word geometry, its low-row inventory multiplier 2, its guard cap \(1/(p-3)\), its exception price \(3/350\), or its scalar S budget without deriving the corresponding all-height source and guard relations. No independent optimization of unit-hole, source or supplier extrema is justified by CD330–CD335.
+
+## Full-word averaging preserves the actual source intersections
+
+The same actual-family source can be averaged over every complete ternary word. This replaces a linear-in-height raw lower-row allowance by a convergent geometric sum. It does not eliminate the density or conditional-incidence obligation. The fixed-exception information survives as a pointwise cap on the number of top-served colors; after all source intersections are discarded, its scalar consequence can be weaker than the ordinary complete-line bound.
+
+These are ordinary deductions and reuse interfaces, not a new retained Lean theorem or an arithmetic branch exclusion. The existing sources are Report385 §124 CF3–CF9, §127 RE7–RE11, §133 DT6–DT7 and §172 GLC1; Report850 CD206–219 supplies the fixed-exception tuple expansion. Report572 FS2–FS3a supplies a conditional lift with an explicit compatibility price. Report385 TB1–TB5 and GM2–GM3 preserve an initial ternary block inside a specified distortion process, with the required moment and loss hypotheses. None of these statements supplies an unconditional density bound for the source below.
+
+### One full joint law
+
+Keep one original odd distinct whole cover with period dividing
+
+\[
+Q=3^h q^G M,\quad (M,3q)=1,\quad G\ge2,
+\]
+
+and the sum-minimality hypotheses of the fixed top-collision theorem. Fix one first-q phase \(\omega\). Write each original numerical label as \(3^{a_i}q^{e_i}m_i\), where \(m_i\mid M\). Let
+
+\[
+\nu=U_{\mathbb Z/3^h}\otimes U_{\mathbb Z/M}.
+\]
+
+Thus the ordinary law is the same full Haar law at every word. Word-dependent guarded product laws cannot be inserted into this formula without recomputing their common joint measure and cylinder prices.
+
+Let \(Y\) be the complete complement of all actual q-free originals and all actual q-depth-one originals whose first digit is \(\omega\). Let \(Y_u\) be its ordinary section, and set
+
+\[
+\beta_u=|Y_u|/M,\qquad \beta=\nu(Y)=3^{-h}\sum_u\beta_u.
+\tag{CD336}
+\]
+
+For each actual original define its complete non-q cylinder
+
+\[
+B_i=\{(u,y):u\equiv r_i\pmod{3^{a_i}},\quad y\equiv r_i\pmod{m_i}\}.
+\]
+
+The unconditioned counting identity is exactly
+
+\[
+\nu(B_i)=3^{-a_i}/m_i.
+\tag{CD337}
+\]
+
+An original at height a meets exactly \(3^{h-a}\) full words. This count occurs once even when the event later participates in several moment products.
+
+At each word u remove all actual unit q-prefixes, for every \(a\le h,e\ge2\), from each second-q color fibre. Denote the remaining fractions by \(\delta_{u,c}\), and put
+
+\[
+V_u=\sum_c(1-\delta_{u,c}),\qquad
+U_u=\sum_{\substack{i:m_i=1,e_i\ge2\\r_i\equiv\omega\ (q)}}q^{2-e_i}\mathbf1_{u\equiv r_i\ (3^{a_i})}.
+\]
+
+Here \(V_u\) is the exact union load and \(V_u\le U_u\). Overlapping unit prefixes are not declared disjoint. All higher unit towers remain present.
+
+Let \(L(u,y)\) and \(T(u,y)\) be the raw weighted loads of the actual ordinary-bearing deep originals at heights \(a_i<h\) and \(a_i=h\), respectively, with first digit \(\omega\), weight \(w_i=q^{2-e_i}\), and their actual colors.
+
+### Pointwise comparison with complete-line accounting
+
+For every \((u,y)\in Y\), complete q-line coverage gives
+
+\[
+q\le V_u+L(u,y)+T(u,y).
+\tag{CD338}
+\]
+
+This is the same elementary line-counting input underlying RE11, with the first digit fixed and the deep weights rescaled by q. It cannot produce a contradiction merely by reclassifying the same raw charges.
+
+Choose one fixed valid exceptional set \(X_u=X(u,\omega)\) for every u before varying y. Different words may have different such sets; there is no assertion of one two-label set across all words. Let s bound the number of ordinary primes in the top cofactors. At one point, all simultaneously active nonexceptional top cofactors are pairwise coprime and nonunit. Hence there are at most s such top originals, and at most two exceptional originals. Since every weight is at most one,
+
+\[
+T(u,y)\le s+2.
+\tag{CD339}
+\]
+
+The color argument also says that at most s+2 second colors have any top service. Removing their at-most-one hole contribution gives the same useful total-load consequence, with its positive part retained:
+
+\[
+\boxed{\mathbf1_Y L\ge\mathbf1_Y[q-s-2-V_u]_+.}
+\tag{CD340}
+\]
+
+CD339 is additional structural information absent from raw RE11; it comes from the fixed collision graph. It does not establish independence between Y and either load. Integrating CD340 gives
+
+\[
+\begin{aligned}
+L_Y&:=\int_Y L\,d\nu
+\ge3^{-h}\sum_u\beta_u[q-s-2-V_u]_+,\\
+(q-s-2)\beta&\le L_Y+V_Y,\qquad
+V_Y:=3^{-h}\sum_u\beta_u V_u.
+\end{aligned}
+\tag{CD341}
+\]
+
+These are the same-source quantities that must be bounded. The exact lower-row expression is
+
+\[
+L_Y=\sum_{\substack{i:a_i<h,\ m_i>1,e_i\ge2\\r_i\equiv\omega\ (q)}}w_i\nu(Y\cap B_i).
+\tag{CD342}
+\]
+
+Similarly,
+
+\[
+V_Y\le\sum_{\substack{i:m_i=1,e_i\ge2\\r_i\equiv\omega\ (q)}}w_i\nu(Y\cap B_i).
+\tag{CD343}
+\]
+
+Replacing these intersections by products with beta is not justified. If a particular unit is constant on the non-q carrier, its actual contribution may instead be separated exactly as a multiple of beta; this is a property of that original cylinder, not a general independence rule.
+
+### Geometric inventory and its exact dominance test
+
+Define
+
+\[
+A_G=\sum_{e=2}^Gq^{2-e},\quad
+S_h=\sum_{a=0}^h3^{-a},\quad S_{-1}=0,\quad
+W=\sum_{\substack{m\mid M\\m>1}}\frac1m.
+\]
+
+Full Haar and numerical-label uniqueness give the simultaneous raw allowances
+
+\[
+\begin{aligned}
+L_0:=\int L\,d\nu&\le A_G S_{h-1}W,\\
+U_0:=\mathbb E_u U_u&\le A_G S_h,\\
+T_0:=\int T\,d\nu&\le A_G3^{-h}W.
+\end{aligned}
+\tag{CD344}
+\]
+
+Each numerical triple \((a,e,m)\) occurs at most once; no inventory is restarted at each word. Thus
+
+\[
+(q-s-2)\beta\le L_Y+V_Y\le L_0+U_0
+\le A_G(S_{h-1}W+S_h)<\tfrac32 A_G(W+1).
+\tag{CD345}
+\]
+
+The final strict inequality holds for finite h; it is an upper allowance and not a claim of simultaneous attainment. The corresponding raw complete-line bound from CD338 is
+
+\[
+q\beta\le L_0+U_0+T_0\le A_G S_h(W+1).
+\tag{CD346}
+\]
+
+For the same actual nonnegative raw values \(A=L_0+U_0\), \(T=T_0\), and \(c=s+2<q\), the graph scalar cap \(A/(q-c)\) is smaller than the raw-line cap \((A+T)/q\) exactly when
+
+\[
+cA<(q-c)T.
+\tag{CD347}
+\]
+
+Using the gross numerical-slot allowances from CD344 on both sides, the analogous criterion is
+
+\[
+\boxed{(s+2)S_h(W+1)<q3^{-h}W.}
+\tag{CD348}
+\]
+
+Consequently there is no automatic scalar improvement. If
+
+\[
+2q\le(s+2)(3^{h+1}-1),
+\]
+
+CD348 is impossible for every \(W\ge0\). In particular the earlier h=3,q=17 interface example has no improvement over the raw line bound after all intersections are discarded, regardless of its ordinary inventory. This does not make CD340–CD342 redundant: their possible gain depends on retaining the actual restricted loads, unit-source correlation, colors or tuple constraints. It prevents counting a weaker gross scalar estimate as progress.
+
+### One common-word factor in the global tuple inventory
+
+Fix a nonempty set K of r distinct second-q colors, so 1≤r≤q. For each u, use that word's same fixed \(X_u\) to define its regular top color loads \(h_{u,c}(y)\). Let \(Z_{u,K}\) be the actual coprime tuple sum of CD211 with weights \(q^{2-e_i}\). The existing CD212 product expansion and the uniform word law give exactly
+
+\[
+\int\prod_{c\in K}h_{u,c}(y)\,d\nu(u,y)
+=3^{-h}\sum_u Z_{u,K}.
+\tag{CD349}
+\]
+
+All tuple entries require the SAME complete word. Its cylinder probability is \(3^{-h}\) once, not \(3^{-hr}\). There is no independent choice of a ternary word for each factor.
+
+Among all top originals, \(i\mapsto(e_i,m_i)\) is globally injective, including across different u, because the original numerical modulus is \(3^h q^{e_i}m_i\). Therefore the union, over u, of its compatible actual tuples injects into ONE global ordered numerical-slot tuple set. No such tuple is copied into another word's inventory: since r≥1, any one tuple member determines its unique complete ternary word. This step requires a nonempty tuple.
+
+For \(p\mid M\), put \(g_p=\sum_{b=1}^{v_p(M)}p^{-b}\), and reuse the nonnegative coprime-slot polynomial
+
+\[
+F_r(g)=\sum_{j=0}^r(-1)^{r-j}\binom rj\prod_{p\mid M}(1+jg_p).
+\]
+
+The weighted version of CD218, applied to that one global slot set, yields
+
+\[
+\boxed{\int\prod_{c\in K}h_{u,c}\,d\nu
+\le3^{-h}A_G^rF_r(g).}
+\tag{CD350}
+\]
+
+The source consumer, again for r≥1, keeps the same u, actual color holes, lower loads and exceptions:
+
+\[
+\boxed{\int_Y\prod_{c\in K}[\delta_{u,c}-l_{u,c}(y)-x_{u,c}(y)]_+\,d\nu
+\le3^{-h}A_G^rF_r(g).}
+\tag{CD351}
+\]
+
+The empty-product boundary is separate. For r=0, CD349 still reads 1=3^(-h) sum_u 1, but the left side of CD350 is 1 while its displayed right side would be 3^(-h), because F_0=1 and A_G^0=1. Thus CD350 is false at r=0 when h>0; CD351 at r=0 has left side beta and is not bounded by 3^(-h) in general. The valid universal empty-product bounds are 1≤1 and beta≤1, without a global-slot factor 3^(-h).
+
+This global aggregation uses the existing CRT product and coprime-slot arguments. A bounded source search found the constituent results in Report850 CD212/CD218, Report387 CC12, and the general factorization encoding in `D5/S3/Arith/CoprimeDivisorTuples.lean`; Report818 retains common actual phase layouts in moment sums. The displayed common-u global-slot application was not explicitly found in those searched sections. It is a synthesis of their already available mechanisms, not a literature-originality or new-content-admission claim. If r exceeds the number of distinct prime divisors of M, the right side is zero. If r>s, the actual regular-top product is zero by the deterministic top count; the gross polynomial allowance can remain positive when M includes additional primes used only in lower rows. No source conditioning or reselection of X_u after observing y or choosing a moment is introduced.
+
+An optional smaller inventory uses any divisor N of M such that every actual regular-top cofactor participating in these moments divides N; their least common multiple is one choice. Keep the full source carrier, Haar law and Y on M unchanged. In CD350–CD351 only, the existing sum-subset bound permits F_r to use g_p=∑_(b=1)^v_p(N) p^(−b) and primes p dividing N. This merely removes unused numerical slots. It neither projects Y to N nor conditions the remaining coordinates, and supplies no new source density or arithmetic exclusion.
+
+### The exact missing common-source condition
+
+For this private-source specialization, now take omega to be the first-q phase of the actual q² original. If that q² class is essential and comparable originals are disjoint, its complete private region is the product of this Y with its one q² prefix. This supplies Y nonempty and, for full Haar, only
+
+\[
+\beta\ge(3^hM)^{-1}.
+\]
+
+A general same-count sum minimum alone does not supply essentiality; the EB1 class-count minimum is the separate source of that premise. Nonemptiness does not meet an h- or M-independent density threshold.
+
+For beta>0, the linear inequality in CD341 becomes the conditional demand
+
+\[
+q-s-2\le\mathbb E_{\nu(\cdot\mid Y)}(L+V).
+\tag{CD352}
+\]
+
+A closing argument needs a strictly smaller upper bound for these SAME conditional occupancies, or a lower bound for the left side of CD351 that exceeds its global tuple allowance. Replacing the conditional cylinder prices by the unconditioned \(3^{-a}/m\) drops the problem. The always valid bound
+
+\[
+\nu(B_i\mid Y)\le\min\{1,3^{-a_i}/(m_i\beta)\}
+\]
+
+has the same explicit density loss as RE10/DT7. Report572 FS2–FS3a can preserve a chosen ordinary marginal while conditioning the actual ternary fibres, but requires their reserve \(c(y)\) and prices \(1/c(y)\). It does not force a useful reserve for arbitrary Y. The initial-block distortion bounds TB1/GM2 preserve the ternary marginal within a specified avoidance process; proving its required loss budget and relating its support to this complete Y are still necessary.
+
+If q is the largest original support prime, oddness gives the sharper count \(s\le\pi(q)-3\), excluding 2,3,q. The corresponding finite Euler product bounds W+1. These improve the numerical coefficient and inventory in CD345, but do not supply beta or the joint intersections in CD342–CD343. The largest-prime inventory results in Report385 §§56 and60 count original labels; they do not give the missing private-source density. No direct theorem supplying this source bridge was located in the searched repository statements.
+
+### Exact arithmetic control of the unresolved correlation
+
+Two six-class partial inventories use the same labels
+
+\[
+3,5,15,7,49,147
+\]
+
+with residues \(0,0,1,0,1\) at the first five labels. At147 use either106 or8. Both families have distinct odd nonunit moduli, disjoint comparable classes, and a private point for every original. They are partial noncovers, not EB1 counterexamples.
+
+Take q=7, first digit1, and the same full non-q carrier modulo15. In both cases
+
+\[
+(\beta_0,\beta_1,\beta_2)=(0,3/5,4/5),\quad
+\beta=7/15,\quad \mathbb E U_u=4/3.
+\]
+
+The complete private49 source is the same, with seven private residues in period735. In the106 case the additional unit is active at ternary root1; in the8 case it is active at root2. Consequently
+
+\[
+\mathbb E(\beta_uV_u)=\mathbb E(\beta_uU_u)
+=2/3\quad\text{or}\quad11/15,
+\]
+
+whereas the product of the common marginals is28/45. Thus identical source mass and unconditional unit inventory do not determine their required intersection, even for literal original phases and a complete private source. The source excludes ternary root zero, ordinary residue zero modulo five,
+and the joint residue one modulo fifteen. This gives the displayed
+section masses directly. The two unit prefixes have distinct second-q
+colors, so their union load is exactly one plus the indicator of the
+chosen ternary root. The displayed joint values follow by summing
+against these same section masses. In the two families, private witnesses
+for labels 3,5,15,7,49 are respectively 3,5,16,7,148; the final label has
+private witness 253 or 8. The integer 2 is uncovered in both families.
+They demonstrate only this missing joint information.
