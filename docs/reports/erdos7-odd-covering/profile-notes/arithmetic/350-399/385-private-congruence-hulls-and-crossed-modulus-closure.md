@@ -25496,143 +25496,119 @@ must pay an external-coordinate phase and its full source liability. The
 result does not force such an \(h\), nor does it prove a global exchange or
 settle unrestricted Erdős #7.
 
-## 216. The full-height prefix-separated ternary branch has a single cofactor prime
+## 216. A prefix-separated private hull retains the reduced-period height
 
-There is a further reduction in one of the remaining \(p=3\) branches. Assume
-that the occupied top layer has exactly three classes
-
+Assume that the maximal ternary layer has exactly three classes
 \[
-  9m_1,\quad 9m_2,\quad 9m_3,
-  \qquad 3\nmid m_i,
-  \tag{TR1}
+9m_1,\quad9m_2,\quad9m_3,\qquad3\nmid m_i,
+\qquad v_3(Q)=2.
+\tag{TR1}
 \]
+Write \(L=\operatorname{lcm}(m_1,m_2,m_3)\), \(R=3L\), and
+\(N=Q/3\). Suppose the occupied class \(A=[a_R]_R\) and the
+source class \(B=[b]_R\) have different prefixes modulo three.
 
-that \(e=2=v_3(Q)\), and that the source phase is prefix-separated from the
-occupied label \(R=3L\) modulo \(3\). Here
+Section 193 identifies the occupied class's complete private region with
+\(E_A=A\setminus\mathcal U\). Every class in \(\mathcal U\), and
+\(A\) itself, has modulus dividing \(N\). Thus \(P_R=E_A\) is
+nonempty and \(N\)-periodic. If \(w\in P_R\), then \(w+N\in P_R\).
+Any modulus containing all of \(P_R\) in one residue class must divide
+\((w+N)-w=N\).
 
+Consequently the complete private hull computed on \(Q\) equals its
+hull on \(N\). With the notation of Section 195, the identity is
 \[
-  L=\operatorname{lcm}(m_1,m_2,m_3),
-  \qquad
-  N=Q/3.
+\boxed{\Gamma_R=\gamma_N(E_A)=3K_A,\qquad L\mid K_A,\qquad3\nmid K_A.}
+\tag{TR2}
 \]
+In particular \(v_3(\Gamma_R)=1\), because
+\(R=3L\mid\Gamma_R\mid N\) and \(v_3(N)=1\).
+The formula \(\Gamma_R=9K_A\) is incompatible with this periodicity.
+Section 196's formula \(\Gamma_R=pG_A\) has a different hypothesis:
+exactly one incompatible top digit restricts the private region to one
+lift. In the prefix-separated branch every top class is disjoint from
+\(A\), so all three lifts remain private together.
 
-Section 193 identifies the occupied class's liability with its complete
-private region \(P_R\). Reusing its private-hull identity and the notation
-of Section 192 gives
-
+The valid consequence of (PS-Hull-Occupancy) is
 \[
-  \Gamma_R=9K_A,\qquad L\mid K_A,
-  \tag{TR2}
+3d\in D\qquad(d\mid K_A).
+\tag{TR3}
 \]
+These are lower-layer labels. They do not consume the three available
+top-layer positions. Neither occupation of every \(9d\) with \(d\mid L\),
+nor \(\tau(L)\le3\), nor \(L=r^2\) follows from this hull argument.
+At general maximal height \(e\), the same argument gives
+\(\Gamma_R=\gamma_N(E_A)=3^{e-1}K_A\), with \(3\nmid K_A\).
 
-where \(\Gamma_R\) is the complete private hull computed on the original
-period. The prefix-separated hull-occupancy conclusion (PS-Hull-Occupancy)
-therefore forces
+A finite arithmetic control has the following ten original classes:
 
+| Modulus | Residue |
+| ---: | ---: |
+| 3 | 2 |
+| 5 | 2 |
+| 7 | 2 |
+| 9 | 0 |
+| 15 | 6 |
+| 21 | 3 |
+| 35 | 3 |
+| 45 | 30 |
+| 63 | 42 |
+| 105 | 1 |
+
+The full period is \(315\), the top cofactors are \(1,5,7\), and
+\(L=35\), \(R=N=105\). The reduced top congruences have source phase
+zero modulo \(105\); their three classes cover that entire source fibre.
+The occupied \(105\)-class has prefix one modulo three and is disjoint
+from every other displayed class. Its complete private residues are
+\(1,106,211\), giving
 \[
-  9d\in D\qquad(d\mid L).
-  \tag{TR3}
+\Gamma_{105}=\gcd(315,105,210)=105,\qquad K_A=35.
 \]
+The family is divisor-closed, its comparable classes are disjoint, and
+every class has a private point. It is a partial noncover: integer four
+is uncovered. Thus it checks the periodic-hull distinction without
+providing an EB1 whole cover or refuting a branch theorem that additionally
+assumes whole-cover extremality.
 
-Indeed, every \(9d\) in (TR3) is an odd nonunit divisor of \(\Gamma_R\), so
-it cannot be a fresh numerical label in an EB1 comparison.
+## 217. The minimum-divisor cost bound does not require top-layer hull occupancy
 
-Since \(v_3(Q)=2\), the labels in (TR3) are exactly the original labels at
-3-height two. The top layer in (TR1) has only three members, so
+Continue with the prefix-separated hypotheses of Section 216, keeping
+the general top cofactors \(\mathcal M=\{m_1,m_2,m_3\}\). The complete
+responsibility sets \(E_A,E_B\) are nonempty and \(N\)-periodic. Section
+194 classifies any cover of either set by exactly three classes whose
+ternary heights are at least two: all three heights are exactly two,
+and their labels are \(9s_i\) for three distinct divisors of the
+corresponding \(K_A\) or \(K_B\).
 
+The independent same-count modulus-sum comparison in Section 195 gives
 \[
-  \tau(L)\le 3.
-  \tag{TR4}
+\mathcal M=S_3(K_A)=S_3(K_B)=S_3(L).
 \]
-
-The three distinct cofactors \(m_i\mid L\) already give
-\(\tau(L)\ge3\). Hence equality holds. The only positive integer with exactly
-three divisors is the square of a prime, and \(3\nmid L\), so
-
+Here \(S_3(K)\) is the set of its three smallest positive divisors.
+Therefore every such three-class high-layer repair has cost at least
 \[
-  \boxed{
-  L=r^2,\qquad
-  \{m_1,m_2,m_3\}=\{1,r,r^2\}
-  }
-  \tag{TR5}
+9\sum_{m\in\mathcal M}m.
 \]
+The inequality is strict if its numerical-label set differs from the
+original top-label set. In particular a wholly fresh three-class
+repair costs strictly more. This uses the minimum-divisor comparison;
+it does not assert that every potential label \(9s\), \(s\mid K_A\),
+is already occupied.
 
-for one odd prime \(r\). Divisor closure and (TR3) consequently occupy all
-of
+Retaining \(A\) and replacing the top packet requires covering \(E_B\).
+Rephasing \(A\) to the source class \(B\), while deleting the top packet,
+requires covering \(P_R=E_A\). On either side fewer than three high-layer
+classes cannot cover a complete surviving \(N\)-fibre, and the displayed
+bound prevents a strict sum decrease with three. Four or more high-layer
+classes increase the class count in this comparison.
 
-\[
-  3,\ 3r,\ 3r^2,\ 9,\ 9r,\ 9r^2.
-  \tag{TR6}
-\]
+Thus this pure high-layer route supplies no strict EB1 improvement.
+The periodic-hull argument supplies no height-three lower bound for the
+first fresh label. The factor \(27\) bound does not follow; the established
+tied-count bound is the factor \(9\) comparison above. Mixed repairs and
+larger exchanges must still preserve the complete actual responsibility,
+freshness and distinct numerical labels. Their existence remains open.
 
-This is a genuine branch reduction: none of the labels in (TR6) may be
-reused as a fresh repair label in the prefix-separated \(e=2\) branch. It
-does not apply when \(v_3(Q)>2\), because the \(p^e\parallel Q\) hypothesis
-behind Sections 192--194 then fails. It also leaves the equal-prefix branch,
-the \(\lvert I_-\rvert=2\) phase liability, and the resulting \(r\)-phase
-problem open; no unrestricted Erdős #7 conclusion follows.
-
-## 217. The full-height prefix-separated ternary packet has no fresh exact-height repair
-
-Continue under the hypotheses of Section 216.  Write
-
-\[
- B=[b]_R,
- \qquad R=3r^2,
- \qquad \{T_1,T_2,T_3\}=
- \{9,9r,9r^2\}\text{ with their source phases}.
-\]
-
-Each source phase is congruent to (b) modulo (3m_i).  On the source
-class (B), the three top classes therefore each have relative density
-(1/3).  The source-cover identity from Section 192 says that their union
-covers (B); hence they partition (B), and their secondary ternary digits
-modulo (9) are the three distinct lifts of the common residue modulo (3).
-This is a phase statement about the original classes, not an independently
-chosen replacement phase.
-
-There are two useful exchange consequences.
-
-First retain the occupied class (A), delete the three top classes, and use
-the source class (B).  The remaining responsibility on this side is
-(E_B).  A pure high-layer repair by three classes of ternary height (2)
-has labels (9s_i) with (s_i\mid K_B).  The minimum-divisor normal form
-(NF1) gives
-
-\[
- S_3(K_B)=S_3(L)=\{1,r,r^2\},
-\]
-
-whereas Section 216 has already forced the numerical labels
-
-\[
- 9,\quad 9r,\quad 9r^2
-\]
-
-into the original inventory.  A fresh exact-height three-class repair thus
-has strictly larger modulus sum than the deleted top packet.  Any possible
-strict descent in this exchange must consequently use a low-height bridge;
-the one-low-plus-three-high reduction of Section 203 leaves its actual
-source phase and deleted-point hull comparison to be checked.
-
-Second rephase (A) to (B) and delete the top packet.  The remaining
-responsibility is the complete private region (P_R) of (A).  The
-prefix-separated hull occupancy of Section 193 forces every divisor of its
-complete hull (Gamma_R=9K_A) to be an occupied numerical label.  Thus no
-fresh height-(2) label (9s), (s\mid K_A), can appear in a complete
-three-class high-layer repair of (P_R).  The first possible fresh ternary
-height is at least (3), giving the lower bound
-
-\[
-  27\,S_3(K_A)
-  =27(1+r+r^2)
-  >9(1+r+r^2),
-\]
-
-which is the old top-packet sum.  Hence the pure high-layer rephase route
-cannot give an EB1 class-count or modulus-sum descent.  Mixed repairs still
-have to pay the complete source liability; this section closes the exact-
-height packet route but does not claim a universal forcing theorem.
 ## 218. Equal-prefix low bridges must expose an external cofactor
 
 The equal-prefix branch has a further source-compatible reduction.  Keep the
