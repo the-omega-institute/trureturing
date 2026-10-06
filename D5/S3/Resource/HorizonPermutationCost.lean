@@ -6,6 +6,7 @@
    utility: none
    digest: Exact state cost for finite-horizon initialized permutation simulation. -/
 
+import D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity
 import Mathlib.Logic.Equiv.Fintype
 import Mathlib.Logic.Function.Iterate
 import Mathlib.SetTheory.Cardinal.Finite
@@ -18,23 +19,19 @@ namespace D5.S3.Resource.HorizonPermutationCost
 
 universe u v
 
-/-- A fixed, total readout reproduces the source dynamics for every initialized
-state through the specified horizon. No law is imposed on other trajectories. -/
-def IsSimulation {X : Type u} {E : Type v} (f : X → X) (H : ℕ)
-    (P : Equiv.Perm E) (readout : E → X) (init : X → E) : Prop :=
-  ∀ x t, t ≤ H → readout ((P : E → E)^[t] (init x)) = f^[t] x
+open D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity
 
 private theorem init_injective {X : Type u} {E : Type v}
     {f : X → X} {H : ℕ} {P : Equiv.Perm E} {readout : E → X} {init : X → E}
-    (hs : IsSimulation f H P readout init) : Function.Injective init := by
+    (hs : WindowCorrect f id H init (P : E → E) readout) : Function.Injective init := by
   apply Function.LeftInverse.injective (g := readout)
   intro x
-  simpa using hs x 0 (Nat.zero_le _)
+  simpa using hs x 0
 
 /-- Cancelling the earlier time exposes a forbidden predecessor of a leaf. -/
 private theorem leaf_collision {X : Type u} {E : Type v}
     {f : X → X} {H : ℕ} {P : Equiv.Perm E} {readout : E → X} {init : X → E}
-    (hs : IsSimulation f H P readout init)
+    (hs : WindowCorrect f id H init (P : E → E) readout)
     (l : {x : X // x ∉ Set.range f}) (x : X) (t s : ℕ)
     (hts : t ≤ s) (hsH : s ≤ H)
     (heq : (P : E → E)^[t] (init l) = (P : E → E)^[s] (init x)) :
@@ -44,8 +41,8 @@ private theorem leaf_collision {X : Type u} {E : Type v}
     rw [← Function.iterate_add_apply]
     simpa [Nat.add_sub_of_le hts] using heq
   have hr : (l : X) = f^[s - t] x := by
-    have h0 := hs l 0 (Nat.zero_le _)
-    have hd := hs x (s - t) (by omega)
+    have h0 := hs l 0
+    have hd := hs x ⟨s - t, by omega⟩
     simpa using h0.symm.trans ((congrArg readout hc).trans hd)
   have hst : s - t = 0 := by
     by_contra hn
@@ -59,7 +56,7 @@ private theorem leaf_collision {X : Type u} {E : Type v}
 
 private theorem lower_bound {X : Type u} {E : Type v} [Finite X] [Finite E]
     (f : X → X) (H : ℕ) (P : Equiv.Perm E) (readout : E → X) (init : X → E)
-    (hs : IsSimulation f H P readout init) :
+    (hs : WindowCorrect f id H init (P : E → E) readout) :
     Nat.card X + H * Nat.card {x : X // x ∉ Set.range f} ≤ Nat.card E := by
   classical
   let embed : X ⊕ ({x : X // x ∉ Set.range f} × Fin H) → E :=
@@ -123,7 +120,7 @@ private noncomputable def delayNext : States → States := by
     (fun a => if h : a.2.val + 1 < H then Sum.inr (a.1, ⟨a.2.val + 1, h⟩)
       else Sum.inl a.1.val)
 
-/-- The predecessor of an original leaf is the last added state; zero delay
+/-- Original leaves have the last added state as predecessor; first added
 positions have the original terminal as predecessor. -/
 private noncomputable def delayPrev : States → States := by
   classical
@@ -146,8 +143,7 @@ private theorem delay_left_inverse :
         dif_neg hx, Equiv.symm_apply_apply]
   | inr a =>
     by_cases hj : a.2.val + 1 < H
-    · simp only [delayNext, Sum.elim_inr, dif_pos hj, delayPrev, Sum.elim_inr,
-        ]
+    · simp only [delayNext, Sum.elim_inr, dif_pos hj, delayPrev, Sum.elim_inr]
       rw [dif_neg (by omega : ¬ a.2.val + 1 = 0)]
       exact congrArg Sum.inr (Prod.ext rfl (Fin.ext (Nat.add_sub_cancel a.2.val 1)))
     · simp only [delayNext, Sum.elim_inr, dif_neg hj, delayPrev, Sum.elim_inl,
@@ -167,8 +163,7 @@ private theorem delay_right_inverse :
   cases e with
   | inl x =>
     by_cases hx : x ∉ Set.range f
-    · simp only [delayPrev, Sum.elim_inl, dif_pos hx, delayNext, Sum.elim_inr,
-        ]
+    · simp only [delayPrev, Sum.elim_inl, dif_pos hx, delayNext, Sum.elim_inr]
       rw [dif_neg (by omega : ¬ H - 1 + 1 < H)]
     · simp only [delayPrev, Sum.elim_inl, delayNext, Sum.elim_inl,
         Equiv.apply_symm_apply, dif_neg hx]
@@ -178,8 +173,7 @@ private theorem delay_right_inverse :
         Equiv.apply_symm_apply, dif_pos a.1.property]
       apply congrArg Sum.inr
       exact Prod.ext rfl (Fin.ext hj.symm)
-    · simp only [delayPrev, Sum.elim_inr, dif_neg hj, delayNext, Sum.elim_inr,
-        ]
+    · simp only [delayPrev, Sum.elim_inr, dif_neg hj, delayNext, Sum.elim_inr]
       rw [dif_pos (by have := a.2.isLt; omega : a.2.val - 1 + 1 < H)]
       apply congrArg Sum.inr
       apply Prod.ext
@@ -226,8 +220,9 @@ private theorem delay_step
 
 private theorem delay_simulates
     (hq : ∀ x, q x ∈ Set.range f → q x = f x) :
-    IsSimulation f H (delayPerm f H hH q) (delayReadout f H q) Sum.inl := by
-  intro x t ht
+    WindowCorrect f id H Sum.inl (delayPerm f H hH q : States → States)
+      (delayReadout f H q) := by
+  intro x t
   have trajectory : ∀ n, n ≤ H →
       delayReadout f H q ((delayPerm f H hH q : States → States)^[n] (Sum.inl x)) =
         f^[n] x ∧
@@ -247,7 +242,7 @@ private theorem delay_simulates
       constructor
       · rw [step.1, hr, Function.iterate_succ_apply']
       · exact le_trans step.2 (Nat.add_le_add_right ha 1)
-  exact (trajectory t ht).1
+  exact (trajectory t.val (by have := t.isLt; omega)).1
 
 end Delay
 
@@ -256,11 +251,11 @@ and a finite simulation attains it, including the empty source and zero horizon.
 theorem result {X : Type u} [Finite X] (f : X → X) (H : ℕ) :
     (∀ (E : Type v) (_ : Finite E) (P : Equiv.Perm E)
       (readout : E → X) (init : X → E),
-      IsSimulation f H P readout init →
+      WindowCorrect f id H init (P : E → E) readout →
         Nat.card X + H * Nat.card {x : X // x ∉ Set.range f} ≤ Nat.card E) ∧
     (∃ (E : Type u) (_ : Finite E) (P : Equiv.Perm E)
       (readout : E → X) (init : X → E),
-      IsSimulation f H P readout init ∧
+      WindowCorrect f id H init (P : E → E) readout ∧
         Nat.card E = Nat.card X + H * Nat.card {x : X // x ∉ Set.range f}) := by
   constructor
   · intro E hE P readout init hs
@@ -269,8 +264,8 @@ theorem result {X : Type u} [Finite X] (f : X → X) (H : ℕ) :
   · cases H with
     | zero =>
       refine ⟨X, inferInstance, Equiv.refl X, id, id, ?_, ?_⟩
-      · intro x t ht
-        have ht0 : t = 0 := by omega
+      · intro x t
+        have ht0 : t = 0 := Fin.ext (by have := t.isLt; omega)
         subst t
         rfl
       · simp
