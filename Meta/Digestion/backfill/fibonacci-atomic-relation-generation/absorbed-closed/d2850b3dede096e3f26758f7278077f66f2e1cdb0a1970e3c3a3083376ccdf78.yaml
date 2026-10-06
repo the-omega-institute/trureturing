@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d2850b3dede096e3f26758f7278077f66f2e1cdb0a1970e3c3a3083376ccdf78
   normalized_sha256: sha256:d2850b3dede096e3f26758f7278077f66f2e1cdb0a1970e3c3a3083376ccdf78
 cas_ref: sha256:d2850b3dede096e3f26758f7278077f66f2e1cdb0a1970e3c3a3083376ccdf78
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Knapsack/IntegerRankCapacityDefect.integer_rank_capacity_defect
+    target_statement_id: sha256:a0a6bc9c3c91bd4ce4b6c0af0d0198405c1b504c0e41386015f666dded60af1f
 receipts:
   unresolved_subitems: []
