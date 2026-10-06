@@ -183,7 +183,7 @@ private theorem pointerState_idempotent (i : n) : IsIdempotentElem (pointerState
   funext j
   split_ifs <;> simp
 
-private theorem pointerState_orthogonal :
+theorem pointerState_orthogonal :
     Pairwise (fun i j : n => (pointerState i).1 * (pointerState j).1 = 0) := by
   intro i j hij
   change Matrix.diagonal (fun a : n => if a = i then (1 : ℂ) else 0) *

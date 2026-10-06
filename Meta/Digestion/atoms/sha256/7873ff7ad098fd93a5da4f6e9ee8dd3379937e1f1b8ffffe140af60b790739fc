@@ -1,0 +1,4 @@
+**定义 10.3（全域精确恢复与最坏情形读取次数）。** 一个协议全域精确恢复，指它对每个 $R\in\mathcal R_+$ 都在有限次读取及有限次原子操作后停止，并输出初始关系矩阵 $R$。恢复目标不是分别确定 $c,\ell$ 的绝对尺度，也不是恢复原始有序树。若存在整数 $n$ 使所有来源的读取次数都不超过 $n$，称 $n$ 为该协议的统一读取上界。合同的最小读取次数，是所有全域精确恢复协议可达到的最小统一读取上界。
+
+本定义使用双线性逆问题的可识别性观点：先明确来源域、观察映射和恢复目标，再判断不同来源能否被观察区分。相关一般框架见 Yanjun Li、Kiryung Lee、Yoram Bresler，*A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*，[arXiv:1501.06120](https://arxiv.org/abs/1501.06120)。该引用提供一般可识别性背景；以下具体 $M/J$ 读取界由各自证明给出。
+

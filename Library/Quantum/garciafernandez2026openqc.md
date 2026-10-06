@@ -46,3 +46,13 @@ paper states:
   depth $d$ and independent geometries", `\paragraph{Conjecture 1}` and
   `\paragraph{Conjecture 2}`; Theorems 1 and 2 in the section "General
   construction".
+
+## Integrability conjecture
+
+The TeX source `OpenQC.tex`, §3.1.2, “From the circuit to $\vec{n}$”, states:
+
+> For the open-boundary case, similarly to the periodic setting \cite{Paletta:2025sap}, we conjecture that any circuit in which each gate $U_{i,i+1}$ (constructed from an $\check{R}$-matrix) appears exactly once per period to every nearest-neighbor pair of spins, and where each boundary gate is constructed from a $K$-matrix, is integrable.
+
+Section 5, “Conclusion and Outlook”, states:
+
+> First, for two types of inhomogeneities, we conjecture that a circuit is Yang–Baxter integrable if: (1) the bulk gate is a solution of the Yang–Baxter equation; (2) the boundary gates satisfy the boundary Yang–Baxter equations; and (3) each bulk gate is applied exactly once to every pair of consecutive qubits. We have verified this conjecture numerically up to thirty sites. However, an analytic proof, even for the periodic case, remains an open problem.

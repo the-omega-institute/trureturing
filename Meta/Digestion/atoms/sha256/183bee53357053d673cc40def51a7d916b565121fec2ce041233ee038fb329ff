@@ -1,0 +1,24 @@
+**Theorem 10.1 (slope-filtered fixed-point census).** For each
+nonnegative integer $n$ and each $a\in\mathbb Z/n\mathbb Z$, let
+
+$$
+  \mathcal V_a=
+    \{X\subset\mathbb Z/n\mathbb Z:|X|=3,
+      \ x\mapsto ax\text{ is injective on }X\}.
+$$
+
+Translation by any $t\in\mathbb Z/n\mathbb Z$ preserves
+$\mathcal V_a$, without a positivity assumption on $n$. If $n>0$
+and $t\ne0$, the exact fixed-point count is
+
+$$
+  |\operatorname{Fix}_t(\mathcal V_a)|=
+  \begin{cases}
+    n/3,&3t=0\text{ and }at\ne0,\\
+    0,&\text{otherwise}.
+  \end{cases}
+$$
+
+Only injectivity on the individual set $X$ is required; multiplication
+by $a$ need not be injective on the whole ring, and $a$ need not be a unit.
+

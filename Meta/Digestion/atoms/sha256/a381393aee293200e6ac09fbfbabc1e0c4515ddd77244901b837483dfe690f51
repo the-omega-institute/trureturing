@@ -1,0 +1,39 @@
+## Marginal kernel contraction and zero weights
+
+Take an eigenbasis u_i of R and any orthonormal basis w_j of the second
+factor. Put e_ij=u_i tensor w_j and
+t_ij=⟨e_ij,rho e_ij⟩. Positivity gives t_ij≥0. Expanding the actual marginal
+entries and using completeness of w_j gives
+
+$$
+\sum_j t_{ij}=\langle u_i,Ru_i\rangle=r_i.
+$$
+
+If r_i=0, every t_ij=0. For a positive semidefinite operator,
+⟨v,rho v⟩=0 implies rho v=0: writing rho=F*F, the quadratic form is
+the squared norm of Fv. Hence rho annihilates every e_ij with r_i=0.
+These vectors span ker(R) tensor H_B. Since B is invertible,
+
+$$
+\ker(R\otimes B)=\ker R\otimes\mathcal H_B\subseteq\ker\rho.
+$$
+
+Equivalently, with Q=P_R tensor I_B,
+
+$$
+\rho Q=\rho=Q\rho.
+$$
+
+The proof uses the rotated positive matrix
+T=(U* tensor I) rho (U tensor I). Its right partial trace is diag(r_i).
+A zero marginal diagonal is a sum of nonnegative diagonals T_(i,j),(i,j),
+so each is zero. The positive-matrix zero-quadratic theorem then annihilates
+the corresponding entire column of T. Thus T diag(chi(r_i))=T, which
+conjugates back to rho Q=rho.
+
+For a spectral rho=∑_k lambda_k |v_k⟩⟨v_k|, let
+W_kij=|⟨v_k,e_ij⟩|². Then t_ij=∑_k lambda_k W_kij, and
+r_i=0 implies lambda_k W_kij=0 for every k,j. This is the explicit zero-weight
+cancellation; no logarithm of a positive argument is applied before those
+zero terms are removed.
+

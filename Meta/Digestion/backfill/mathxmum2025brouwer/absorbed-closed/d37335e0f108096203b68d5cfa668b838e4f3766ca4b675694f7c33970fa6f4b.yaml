@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d37335e0f108096203b68d5cfa668b838e4f3766ca4b675694f7c33970fa6f4b
+  normalized_sha256: sha256:d37335e0f108096203b68d5cfa668b838e4f3766ca4b675694f7c33970fa6f4b
+cas_ref: sha256:d37335e0f108096203b68d5cfa668b838e4f3766ca4b675694f7c33970fa6f4b
+coverage_gids:
+  - gid: D5/S3/Geometry/FixedPoint/Brouwer.Brouwer
+    target_statement_id: sha256:61b338f483529a50dcd3c835c987417fae4fae461721f6c068e2365e4f119134
+receipts:
+  unresolved_subitems: []

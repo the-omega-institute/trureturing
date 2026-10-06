@@ -12,9 +12,10 @@ proof_shape: linearEntropy, concurrence, residualSum: definition (the paper's li
 proof_shape: claim: definition (published conjecture, arXiv:quant-ph/0703098, read for every
   normalized four-qubit vector and every local instrument on qubit A)
 proof_shape: psi, instrument: definition (the counterexample state and measurement)
-proof_shape: phi0, phi1, pairEquiv, outEquiv, singleEquiv, out3Equiv, fourEquiv, xmat, rmat:
-  private definition (the two normalized outcomes, coordinate equivalences of the qubit
-  configurations, and real X matrices)
+proof_shape: pairEquiv, outEquiv, singleEquiv, out3Equiv, fourEquiv: definition (coordinate
+  equivalences of the qubit configurations)
+proof_shape: phi0, phi1, xmat, rmat: private definition (the two normalized outcomes and real X
+  matrices)
 proof_shape: result: bind-only (as local steps: the reindexing of the frozen reduced states and of
   sigmaYTensor to Fin 2 × Fin 2, invariance of the characteristic polynomial under reindexing,
   the factorization of the characteristic polynomial of an X matrix and the sorting of its
@@ -108,7 +109,7 @@ def claim : Prop :=
         residualSum ψ
 
 /-- The configurations of the pair `{p, q}` as `Fin 2 × Fin 2`, the qubit `p` first. -/
-private def pairEquiv (p q : Fin 4) (h : p ≠ q) :
+def pairEquiv (p q : Fin 4) (h : p ≠ q) :
     (↥({p, q} : Finset (Fin 4)) → Fin 2) ≃ Fin 2 × Fin 2 where
   toFun x := (x ⟨p, by simp⟩, x ⟨q, by simp⟩)
   invFun ab i := if i.1 = p then ab.1 else ab.2
@@ -121,7 +122,7 @@ private def pairEquiv (p q : Fin 4) (h : p ≠ q) :
   right_inv ab := by simp [Ne.symm h]
 
 /-- The configurations of the two qubits `r, s` outside `{p, q}` as `Fin 2 × Fin 2`. -/
-private def outEquiv (p q r s : Fin 4) (hr : r ∉ ({p, q} : Finset (Fin 4)))
+def outEquiv (p q r s : Fin 4) (hr : r ∉ ({p, q} : Finset (Fin 4)))
     (hs : s ∉ ({p, q} : Finset (Fin 4))) (hrs : r ≠ s)
     (hcov : ∀ i : Fin 4, i ∉ ({p, q} : Finset (Fin 4)) → i = r ∨ i = s) :
     (Outside ({p, q} : Finset (Fin 4)) → Fin 2) ≃ Fin 2 × Fin 2 where
@@ -135,7 +136,7 @@ private def outEquiv (p q r s : Fin 4) (hr : r ∉ ({p, q} : Finset (Fin 4)))
   right_inv cd := by simp [Ne.symm hrs]
 
 /-- The configurations of the single qubit `k` as `Fin 2`. -/
-private def singleEquiv (k : Fin 4) : (↥({k} : Finset (Fin 4)) → Fin 2) ≃ Fin 2 where
+def singleEquiv (k : Fin 4) : (↥({k} : Finset (Fin 4)) → Fin 2) ≃ Fin 2 where
   toFun x := x ⟨k, by simp⟩
   invFun a _ := a
   left_inv x := by
@@ -146,7 +147,7 @@ private def singleEquiv (k : Fin 4) : (↥({k} : Finset (Fin 4)) → Fin 2) ≃ 
   right_inv _ := rfl
 
 /-- The configurations of the three qubits `r, s, t` outside `k` as `Fin 2 × Fin 2 × Fin 2`. -/
-private def out3Equiv (k r s t : Fin 4) (hr : r ∉ ({k} : Finset (Fin 4)))
+def out3Equiv (k r s t : Fin 4) (hr : r ∉ ({k} : Finset (Fin 4)))
     (hs : s ∉ ({k} : Finset (Fin 4))) (ht : t ∉ ({k} : Finset (Fin 4))) (hrs : r ≠ s)
     (hrt : r ≠ t) (hst : s ≠ t)
     (hcov : ∀ i : Fin 4, i ∉ ({k} : Finset (Fin 4)) → i = r ∨ i = s ∨ i = t) :
@@ -162,7 +163,7 @@ private def out3Equiv (k r s t : Fin 4) (hr : r ∉ ({k} : Finset (Fin 4)))
   right_inv x := by simp [Ne.symm hrs, Ne.symm hrt, Ne.symm hst]
 
 /-- The configurations of the four qubits as `Fin 2 × Fin 2 × Fin 2 × Fin 2`. -/
-private def fourEquiv : (Fin 4 → Fin 2) ≃ Fin 2 × Fin 2 × Fin 2 × Fin 2 where
+def fourEquiv : (Fin 4 → Fin 2) ≃ Fin 2 × Fin 2 × Fin 2 × Fin 2 where
   toFun w := (w 0, w 1, w 2, w 3)
   invFun x := ![x.1, x.2.1, x.2.2.1, x.2.2.2]
   left_inv w := by funext i; fin_cases i <;> rfl

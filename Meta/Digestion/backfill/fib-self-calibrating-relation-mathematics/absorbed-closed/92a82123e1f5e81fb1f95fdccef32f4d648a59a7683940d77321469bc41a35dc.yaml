@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:92a82123e1f5e81fb1f95fdccef32f4d648a59a7683940d77321469bc41a35dc
+  normalized_sha256: sha256:92a82123e1f5e81fb1f95fdccef32f4d648a59a7683940d77321469bc41a35dc
+cas_ref: sha256:92a82123e1f5e81fb1f95fdccef32f4d648a59a7683940d77321469bc41a35dc
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Experiment/SelfCalibratingFibers.full_fiber_and_signed_capacity
+    target_statement_id: sha256:b0ac0bcd76ecb70f26c6d1111429a11263303964a6dbbf01e84f7da2b3991f95
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - f878f1ef870489061b3f356a4c90142879e9765d592308e6cb283a25e0cf5e60
+    - 13290d038606c4002daaada0be882f0267777956ae90c7e80035b6de664968d8
+    - b4a7db0550cdd51b98d02180e583bffa3ecccf8575d981863c129cd278598cd7

@@ -124,10 +124,10 @@ private def flip {n : ℕ} (x : Fin n → Fin 2) : Fin n → Fin 2 := fun i => x
 /-! ## The six binary operators of the witness -/
 
 /-- `√2 / 2`. -/
-private def s2 : ℂ := ((Real.sqrt 2 / 2 : ℝ) : ℂ)
+def s2 : ℂ := ((Real.sqrt 2 / 2 : ℝ) : ℂ)
 
 /-- `H = (X + Z)/√2`. -/
-private def hadamard : Matrix (Fin 2) (Fin 2) ℂ := s2 • (pauliMatrix .X + pauliMatrix .Z)
+def hadamard : Matrix (Fin 2) (Fin 2) ℂ := s2 • (pauliMatrix .X + pauliMatrix .Z)
 
 /-- `K = (X + Y)/√2`. -/
 private def kmat : Matrix (Fin 2) (Fin 2) ℂ := s2 • (pauliMatrix .X + pauliMatrix .Y)

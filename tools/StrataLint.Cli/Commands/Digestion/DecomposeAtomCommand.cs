@@ -17,11 +17,16 @@ internal static class DecomposeAtomCommand
     {
         try
         {
-            var (id, revision, dryRun, reconcileChain, splitAt) = Parse(arguments);
-            var raw = repository.ReadCurrent();
-            _ = repository.ReadRevision(revision);
-            var snapshot = Decode(raw);
-            var ledger = BackfillInventoryLoader.Load(snapshot);
+            var (id, dryRun, reconcileChain, splitAt) = Parse(arguments);
+            var loaded = DigestionWorkingTree.ReadLedger(
+                repository,
+                Decode,
+                BackfillInventoryLoader.LoadForDigestion,
+                TheoryAtomizerDataLoader.DataPath,
+                DigestionCasStore.RootPath + id);
+            var raw = loaded.Raw;
+            var snapshot = loaded.Snapshot;
+            var ledger = loaded.Document;
             var matches = ledger.RequireDigestionEntries().Where(entry => entry.AtomId == id).ToArray();
             if (matches.Length != 1) throw new FormatException($"ATOM_AMBIGUOUS atom_id={id} count={matches.Length}");
             var parent = matches[0];
@@ -29,12 +34,47 @@ internal static class DecomposeAtomCommand
             if (!(parent.ProjectedStatus.Migration == DigestionMigrationState.Partial
                 || parent.ProjectedStatus == new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open)))
                 throw new FormatException("PARENT_STATE requires residual-open or partial parent");
+            var sourceCasPaths = DigestionWorkingTree.ChainCasPaths(
+                ledger,
+                parent.Receipts.ChainAtoms);
+            loaded = DigestionWorkingTree.Extend(
+                repository,
+                loaded,
+                Decode,
+                [parent.SourcePath, .. sourceCasPaths]);
+            raw = loaded.Raw;
+            snapshot = loaded.Snapshot;
+            ledger = loaded.Document;
+            parent = ledger.RequireDigestionEntries().Single(entry => entry.AtomId == id);
             if (!snapshot.TryGetFile(DigestionCasStore.RootPath + id, out var blob))
                 throw new FormatException($"CAS_MISSING atom_id={id}");
             var rules = TheoryAtomizerDataLoader.Load(snapshot);
             var atomizer = (atomizerResolver ?? (static name => AtomizerRegistry.Require(name).Atomize))(parent.Atomizer);
             var plan = DigestionDecomposition.Plan(parent, blob.RawBytes, atomizer, rules, snapshot, splitAt);
             var entries = ledger.RequireDigestionEntries().ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
+            var requiredCasIds = DigestionWorkingTree.ChainCasPaths(
+                    ledger,
+                    plan.Children.Select(static child => child.Fingerprints.RawSha256[7..])
+                        .Concat(parent.Receipts.ChainAtoms))
+                .Select(static path => path[DigestionCasStore.RootPath.Length..])
+                .ToHashSet(StringComparer.Ordinal);
+            var existingChildCasPaths = requiredCasIds
+                .Where(entries.ContainsKey)
+                .Select(static childId => DigestionCasStore.RootPath + childId)
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+            if (existingChildCasPaths.Length > 0)
+            {
+                loaded = DigestionWorkingTree.Extend(
+                    repository,
+                    loaded,
+                    Decode,
+                    existingChildCasPaths);
+                raw = loaded.Raw;
+                snapshot = loaded.Snapshot;
+                ledger = loaded.Document;
+                entries = ledger.RequireDigestionEntries().ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
+            }
             var writes = DigestionDecomposition.Materialize(parent, plan, entries, reconcileChain, snapshot, rules);
             foreach (var child in plan.Children)
             {
@@ -62,7 +102,7 @@ internal static class DecomposeAtomCommand
                 overlay[item.RelativePath] = new RawRepositoryEntry(item.RelativePath, item.Bytes);
             }
             var final = RawRepositorySnapshot.Create(overlay.Values);
-            var replayed = BackfillInventoryLoader.Load(Decode(final));
+            var replayed = BackfillInventoryLoader.LoadForDigestion(Decode(final));
             foreach (var entry in writes.NewEntries.Append(writes.Parent))
             {
                 var roundTrip = replayed.RequireDigestionEntries().Single(item => item.AtomId == entry.AtomId);
@@ -116,20 +156,18 @@ internal static class DecomposeAtomCommand
         SnapshotDecodeOutcome.InfrastructureFailure failure => throw new FormatException(failure.Message),
     };
 
-    private static (string AtomId, string BaseRevision, bool DryRun, bool ReconcileChain, ImmutableArray<int> SplitAt) Parse(IReadOnlyList<string> arguments)
+    private static (string AtomId, bool DryRun, bool ReconcileChain, ImmutableArray<int> SplitAt) Parse(IReadOnlyList<string> arguments)
     {
         string? atom = null;
-        string? revision = null;
         var dryRun = false;
         var reconcileChain = false;
         var splitAt = ImmutableArray.CreateBuilder<int>();
-        var invalid = new FormatException("ARGUMENTS_INVALID USAGE: StrataLint decompose-atom --atom ATOM_ID --base REV [--reconcile-chain] [--split-at BYTE_OFFSET ...] [--dry-run]");
+        var invalid = new FormatException("ARGUMENTS_INVALID USAGE: StrataLint decompose-atom --atom ATOM_ID [--reconcile-chain] [--split-at BYTE_OFFSET ...] [--dry-run]");
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
             {
                 case "--atom" when atom is null && index + 1 < arguments.Count: atom = arguments[++index]; break;
-                case "--base" when revision is null && index + 1 < arguments.Count: revision = arguments[++index]; break;
                 case "--dry-run" when !dryRun: dryRun = true; break;
                 case "--reconcile-chain" when !reconcileChain: reconcileChain = true; break;
                 case "--split-at":
@@ -141,9 +179,8 @@ internal static class DecomposeAtomCommand
                 default: throw invalid;
             }
         }
-        if (atom is null || !DigestionFingerprint.IsCanonicalSha256("sha256:" + atom)
-            || string.IsNullOrWhiteSpace(revision) || revision != revision.Trim() || revision.StartsWith("--", StringComparison.Ordinal))
+        if (atom is null || !DigestionFingerprint.IsCanonicalSha256("sha256:" + atom))
             throw invalid;
-        return (atom, revision, dryRun, reconcileChain, splitAt.ToImmutable());
+        return (atom, dryRun, reconcileChain, splitAt.ToImmutable());
     }
 }

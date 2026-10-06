@@ -1,0 +1,18 @@
+**整数合同。** 付费读取有效整数 $A_0\ge1,k_\delta\ge1$，满足 $1/A_0\le a$、$2^{-k_\delta}\le\delta$。所有算法可用 $1/A_0$ 代替下界。无需浮点估计共同 $\alpha$。足够的全整数上限为
+
+$$
+\begin{aligned}
+m_P&=320\cdot3125 A_0^2
+[\lceil\log_2(2(M_n-1))\rceil+k_\delta],\\
+L&=8000,\quad K=2048A_0^2,\quad
+T_*=2\lceil\log_2(n+1)\rceil+16(k_\delta+3),\\
+K_{\rm type}&=128A_0^2(k_\delta+3),\qquad
+K_H=96A_0^2,\\
+S_H&=96\cdot3125
+[\lceil\log_2(2(M_n-1))\rceil+k_\delta].
+\end{aligned}
+\tag{63.37}
+$$
+
+$K\ge128A_0^2\ln(384L)$、$L\ge\beta^{-1}\ln96$ 保证组界；整数置信上限支配相应自然对数。三类阈值以 $8A_0\sum Z$ 与 $\pm K$ 的整数比较实现；系数测试同样比较 $8A_0\sum Z$ 与 $K_{\rm type}$。可分别取秩提案上限 $\lceil\log_2(2H)\rceil+k_\delta$ 或 $\lceil\log_2(5H)\rceil+k_\delta$。证书真实性是合同前提，程序不能从有限标签无误认证未知噪声下界；宽松证书增加实际预算。整数预算、类数、平方、乘法、阈值、位长和全部计数器均收费。
+

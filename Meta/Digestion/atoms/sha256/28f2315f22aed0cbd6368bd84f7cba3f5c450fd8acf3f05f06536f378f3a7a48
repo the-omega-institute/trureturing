@@ -1,0 +1,24 @@
+**定理 32.2（三片 $\alpha$ 分离与全部双孔取等形）。** 对任意 $P,Q\in\mathcal I_3$，若 $P\ne Q$、$n(P)=n(Q)$ 且 $\operatorname{NC}(P,Q)$，则
+
+$$
+\delta(P,Q)\ge3,\qquad \delta(Q,P)\ge3.
+\tag{32.2}
+$$
+
+而且下列三个条件等价：$\delta(P,Q)=3$；$\delta(Q,P)=3$；规范分歧前沿恰有两个孔，适当命名后存在同一个实际像双孔上下文 $J$ 和同一个
+
+$$
+Y\in\{C,\langle A,A\rangle\}
+\tag{32.3}
+$$
+
+使
+
+$$
+P=J[C,\langle A,Y\rangle],\qquad
+Q=J[\langle A,Y\rangle,C].
+\tag{32.4}
+$$
+
+$J$ 的固定部分正是引理 30.3 给出的共同部分。反之，每个这样的 $J,Y$ 都给出不同、等叶数、非冲突的实际三步像，两个定向 $\alpha$ 缺额均为 $3$。取等必有 $c(P)=c(Q)$，唯一前像的组成也相等；两侧总未共享叶数在 $Y=C$ 时均为 $7$，在 $Y=\langle A,A\rangle$ 时均为 $8$。
+

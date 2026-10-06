@@ -1,0 +1,14 @@
+**推论 32.5（非冲突同规模队列的两片残差终端条件）。** 对任意有限历史 $H$ 和任意 $P,Q\in\mathcal E_H$，若 $n(P)=n(Q)$、$\operatorname{NC}(P,Q)$ 且
+
+$$
+|\Lambda_\alpha(P)\setminus\Gamma_H|\le2,
+\tag{32.17}
+$$
+
+则 $P=Q$。若在相同等叶数、非冲突条件下 $P\ne Q$ 且一侧残差恰为 $3$，则两者必为定理 32.2 的双孔取等形，而且
+
+$$
+\Gamma_H=\Lambda_\alpha(P)\cap\Lambda_\alpha(Q).
+\tag{32.18}
+$$
+

@@ -1,0 +1,26 @@
+**外加动力学 283.2（岩浆流变与热压反馈）。** 对每个节点附加压力 `P_v`、温度 `T_v`、晶体体积分数 `\phi_v`，对每条边附加通道长度 `\ell_e`、有效孔径 `a_e`、屈服压差 `\tau_e`、流变指数 `n_e` 和导流系数 `K_e`。一个允许非牛顿岩浆的离散本构可以写成
+
+$$
+Q_e
+=K_e(T_e,\phi_e,a_e,\ell_e)
+\operatorname{sgn}(\Delta P_e)
+\bigl(|\Delta P_e|-\tau_e\bigr)_+^{n_e},
+\qquad
+\Delta P_e=P_{\mathrm{tail}(e)}-P_{\mathrm{head}(e)}.
+$$
+
+节点质量守恒与热量守恒可取为
+
+$$
+C_v^P\dot P_v
+=I_v-\sum_{e\ni v}\varepsilon_{ve}Q_e-\Lambda_v(P_v,T_v),
+$$
+
+$$
+C_v^T\dot T_v
+=H_v-\sum_{e\ni v}\varepsilon_{ve}^{T}Q_eT_e
+-\kappa_v(T_v-T_v^{\mathrm{rock}})-L_v\dot\phi_v.
+$$
+
+这里 `I_v`、`H_v`、`\Lambda_v`、`\kappa_v`、`L_v`、边界压力和散热律均为外加数据。它们可以产生升压、冷却、结晶和黏度反馈，但不能从 FIB 的组合递归中推出。
+

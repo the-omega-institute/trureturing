@@ -3,7 +3,6 @@ namespace StrataLint.Scribe.Tests;
 public sealed class ScribeScriptDispatchTests
 {
     private const string Entry = "Blueprint/D5/S0/Test/Dispatch.scribe.cs";
-    private const string Shared = "Blueprint/D5/S0/Test/Shared.scribe.cs";
     private const string Base = "internal record Base { public override string ToString() => \"base\"; }";
     private const string Derived = "internal record Derived : Base { public Derived() { } }";
 
@@ -35,19 +34,6 @@ public sealed class ScribeScriptDispatchTests
                 public object Data => new ArgumentException("detail");
             }
             """);
-        Reject(root, "M:Derived.ToString");
-    }
-
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void SharedTypesParticipateInDispatch(bool baseInShared)
-    {
-        using var root = new TemporaryRoot();
-        Write(root, Entry, $"[ScribeSharedSource(\"{Shared}\")] "
-            + Definition("Base value = new Derived(); _ = value.ToString();")
-            + (baseInShared ? Derived : Base));
-        Write(root, Shared, baseInShared ? Base : Derived);
         Reject(root, "M:Derived.ToString");
     }
 

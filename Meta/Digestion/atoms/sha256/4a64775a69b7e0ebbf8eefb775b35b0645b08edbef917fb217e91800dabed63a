@@ -1,0 +1,52 @@
+### 36.5 有限单纯形变分支配：既有证明的完整应用
+
+令 $I$ 为任意宇宙中的非空有限指标型，$A:I\times I\to\mathbb R$
+逐项非负；不要求 $A$ 对称或正半定。定义
+
+$$
+\begin{aligned}
+\Delta_I&=\{p:I\to\mathbb R:p_i\ge0,\ \sum_i p_i=1\},\\
+Q_A(w)&=\sum_{i,j}A_{ij}w_iw_j,\\
+R_A(p,x)&=\sum_{i,j}\sqrt{p_i}\sqrt{p_j}A_{ij}
+                 \operatorname{Re}(\overline{x_i}x_j).
+\end{aligned}
+$$
+
+存在同一个 $r\in\Delta_I$，同时满足
+
+$$
+\begin{aligned}
+&\forall w\in\Delta_I,\quad Q_A(w)\le Q_A(r),\\
+&\forall p\in\Delta_I\ \forall x:I\to\mathbb C,\quad
+ \sum_i|x_i|^2=1\ \Longrightarrow\ R_A(p,x)\le Q_A(r).
+\end{aligned}
+$$
+
+$r$ 的存在量词在两组全称量词之前，因而不随 $w,p,x$ 改变。单指标、
+零矩阵、$p$ 的零坐标及非对称非负矩阵都在范围内。由非空紧单纯形
+上的连续多项式取最大点 $r$。对任意允许的 $p,x$，置
+$y_i=\sqrt{p_i}|x_i|$、$m=\sum_i y_i$；Cauchy--Schwarz 给出
+
+$$
+0\le m,\qquad
+m^2\le\left(\sum_i(\sqrt{p_i})^2\right)
+       \left(\sum_i|x_i|^2\right)=1,
+\qquad m\le1.
+$$
+
+固定 $i_0\in I$，令 $w_i=y_i+(1-m)\mathbf1_{i=i_0}$。则
+$w\ge y\ge0$ 且 $\sum_iw_i=1$。逐项使用
+$\operatorname{Re}(\overline{x_i}x_j)\le|x_i||x_j|$，乘以非负系数
+$\sqrt{p_i}\sqrt{p_j}A_{ij}$ 后求和，得到完整链
+
+$$
+R_A(p,x)\le Q_A(y)\le Q_A(w)\le Q_A(r).
+$$
+
+这是既有 `FiniteSectorSchurUpper.lean` 的 `schur_upper` 证明中，
+局部 `hSchurPureUpper` 内 `hRayleighMax` 的 `hRayleigh` 推导的应用。
+任意 $A$ 的范围来自这段局部证明；公开 `schur_upper` 的残余重叠
+核假设不能直接替代该范围。紧性、相位界和亏缺填补均沿既有证明
+使用，不增加独立的绑定声明。此步骤提供有限扇区被动参考估计的
+变分上界，不将 §36.1 的全信道优化或连续引力 RT 当作其结论。
+

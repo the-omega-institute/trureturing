@@ -1,0 +1,6 @@
+## Source model
+
+For a finite set $V$, a simple graph $G$ on $V$, and a positive integer $k$, write $R_k(G)$ if there are actual finite words $w,v\in V^*$ such that every vertex occurs exactly $k$ times in each word and, for every distinct $a,b\in V$, adjacency is equivalent to equality of the two actual projections $\pi_{a,b}(w)=\pi_{a,b}(v)$. The projection deletes every other letter, preserving order and repetitions. Positivity ensures that both alphabets are exactly $V$.
+
+The source is Adamson, Dietz, Fleischmann, Huch and Sacher, *2-word-π-representable Graphs*, arXiv:2605.27183v1, Definitions 1 and 14. Their Remark 16 gives inclusion $\mathcal G_k\subseteq\mathcal G_{k+1}$; Theorem 29 gives fixed-$k$ nonuniversality; Conjecture 31 asks whether every positive-$k$ adjacent inclusion is proper. Equality of projections differs from single-word alternation and from unions of word-represented graphs.
+

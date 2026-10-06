@@ -1,0 +1,27 @@
+## 292. FIB 路径谱、熵率、压力函数、大偏差与极值边界
+
+对第 `j` 层端口 `a,b`，令
+
+$$
+N_j^{ab}(n)=\#\{\gamma\in\mathcal P_j(a,b):|\gamma|=n\},
+\tag{292.1}
+$$
+
+并令 `T_j` 是由允许边给出的邻接矩阵。逐步演化且边权为一时，`N_j^{ab}(n)=(T_j^n)_{ab}`。固定有限不可约图的步数拓扑熵为
+
+$$
+h_{\mathrm{step},j}=\lim_{n\to\infty}\frac1n\log\sum_{a,b}(T_j^n)_{ab}=\log\rho(T_j).
+\tag{292.2}
+$$
+
+层级熵和物理长度熵却是不同归一化：
+
+$$
+h_{\mathrm{lev}}=\limsup_{j\to\infty}\frac1j\log\#\mathcal P_j,
+\qquad
+h_{\mathrm{phys}}=\limsup_{j\to\infty}\frac1{L_j}\log\#\mathcal P_j.
+\tag{292.3}
+$$
+
+即使路径总数满足 Fibonacci 递归而 `L_j\asymp\varphi^j`，也可能有 `h_{\mathrm{lev}}=\log\varphi` 但 `h_{\mathrm{phys}}=0`。黄金比例增长不能单独推出单位物理长度的熵率。
+

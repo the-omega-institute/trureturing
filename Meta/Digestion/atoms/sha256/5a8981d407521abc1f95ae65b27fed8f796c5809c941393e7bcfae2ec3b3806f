@@ -1,0 +1,22 @@
+**定理 28.2（任意有限实际预算的标量／矩阵桥梁）。** 对非空 $\mathscr A_C$ 和每个 $\tau\ge0$，有
+
+$$
+\boxed{\mathcal M_C(\tau)=G(O_C(\tau)).}
+$$
+
+因此每个标量最优实际词都是矩阵最优实际词；标量次序经 $G$ 后只能保持或形成并列，不能反转。当 $\rho\le2$ 时，两种最优词集合相同；一般参数下矩阵最优集合可严格更大。
+
+定义共同分离量包络
+
+$$
+\begin{aligned}
+E_C(\ell)
+&=\max_{W\in\mathscr A_C}\phi_W(\ell)\\
+&=\ell\max_{W\in\mathscr A_C}
+\left[\left(1-\frac\ell x\right)\mu_W+\frac\ell x A_W\right],
+\qquad 0\le\ell\le x.
+\end{aligned}
+$$
+
+$E_C$ 连续、严格递增，$E_C(0)=0$。$O_C$ 是其封顶逆：$0\le\tau<E_C(x)$ 时，它是 $E_C(\ell)=\tau$ 的唯一解；$\tau\ge E_C(x)$ 时，$O_C=x$。在逆解处达到 $E_C$ 的一个实际词，同时达到两种设计最优值；封顶时可取在 $x$ 处达到包络的词。这里“达到”指有限词集上的最小值；每个正来源对上确界仍不取到，两种来源最坏序列也无需相同。
+

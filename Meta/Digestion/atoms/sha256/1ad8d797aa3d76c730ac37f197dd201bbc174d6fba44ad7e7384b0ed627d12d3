@@ -1,0 +1,29 @@
+## Canonical channel relative entropy
+
+Let a,b be finite nonempty complex matrix carriers, Phi a completely positive
+trace-preserving linear map, and rho,sigma positive semidefinite matrices of
+trace one. All logarithms are natural. Define
+$$
+D(\rho\|\sigma)=
+\begin{cases}
+\operatorname{Re}\operatorname{Tr}\rho(\log\rho-\log\sigma),
+ &\ker\sigma\subseteq\ker\rho,\\
++\infty,&\text{otherwise}.
+\end{cases}
+$$
+The functional-calculus logarithm is totalized at zero; the infinite branch is
+specified by the actual vector kernels. For every such channel and state pair,
+$$
+D(\Phi(\rho)\|\Phi(\sigma))\le D(\rho\|\sigma).
+$$
+This includes dimension one and singular noncommuting states.
+
+The support contraction argument follows Petz, *Monotonicity of quantum
+relative entropy revisited*, §3, equations (3)–(4),
+https://arxiv.org/abs/quant-ph/0209053, and Hiai–Mosonyi–Petz–Bény,
+*Quantum f-divergences and error correction*, version 6, §4, Lemmas 4.1–4.2,
+https://arxiv.org/abs/1008.2529v6. The latter version corrects an earlier
+continuity proposition. This argument uses only a finite scalar logarithm limit.
+These are known results; the coordinates below express their argument on
+finite matrices.
+

@@ -1,0 +1,14 @@
+**命题 359.5（实际正像中的非分裂有限商）。** 令
+$$
+X=L(1,0,0),\qquad Y=L(0,1,0),\qquad Z=L(0,0,1),
+$$
+并令 $H=\langle g,h\rangle$ 为三元组单位所生成的群。则
+$$
+N=\langle X,Y,Z\rangle\cong\mathbb Z^3
+$$
+在 $H$ 中正规，且
+$$
+1\longrightarrow N\longrightarrow H\longrightarrow(\mathbb Z/2\mathbb Z)^2\longrightarrow1
+$$
+不分裂。其四个陪集代表为 $1,g,h,gh$。
+

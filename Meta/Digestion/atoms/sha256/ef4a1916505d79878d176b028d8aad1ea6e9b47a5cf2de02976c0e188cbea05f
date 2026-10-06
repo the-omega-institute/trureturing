@@ -1,0 +1,20 @@
+**定义 2.3（精确长度像、首次取得与饱和）。** 令
+
+$$
+I_n=\{\mathcal O_R(P_w):w\in\mathcal W_n^{(k)}\}\subseteq H,
+\qquad
+\ell(y)=\min\{n\ge0:y\in I_n\},
+$$
+
+其中空的最小值暂记为 $+\infty$。费用只计实现词的实际位数，不包含计算一个实现词、枚举目标或解码的运行时间。定义
+
+$$
+N_* =\min\{n\ge0:I_n=H\}.
+$$
+
+高位侧追加零不改变余数或合法性，所以 $I_n\subseteq I_{n+1}$。因此长度至多 $n$ 的合法像等于 $I_n$，且一旦 $\ell(y)$ 有限，$y\in I_n$ 当且仅当 $n\ge\ell(y)$。这一等价仅针对不限制终端尾和相位的余数任务。供应卷命题 9.1 已证明所有 $\ell(y)$ 有限；第 3 章给另一条有量化界的证明。于是
+
+$$
+N_* =\max_{y\in H}\ell(y),\qquad I_n=H\Longleftrightarrow n\ge N_*.
+$$
+

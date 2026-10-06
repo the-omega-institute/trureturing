@@ -1,0 +1,16 @@
+**命题 2.3（纯推进的具体碰撞）。** 令
+
+$$
+R_1=\begin{pmatrix}3&5\\6&10\end{pmatrix},
+\qquad
+R_2=\begin{pmatrix}4&6\\6&9\end{pmatrix}.
+$$
+
+则对所有 $n\ge0$，
+
+$$
+\operatorname{tr}(M^nR_1)=\operatorname{tr}(M^nR_2),
+$$
+
+共同序列从 $13,21$ 开始。
+

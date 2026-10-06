@@ -109,7 +109,7 @@ public sealed partial class DigestionQuarantineTests
     }
 
     [Fact]
-    public void ResidualSelectorsExcludeCoverDispositionAtoms()
+    public void ResidualSelectorsIncludeCoverDispositionAtoms()
     {
         var entry = new DigestionLedgerEntry(
             "fixture-source",
@@ -149,9 +149,9 @@ public sealed partial class DigestionQuarantineTests
             evaluation,
             DigestionFrontierTestProjection.Create(evaluation))).Value;
 
-        Assert.DoesNotContain(entry.AtomId, summary, StringComparison.Ordinal);
-        Assert.DoesNotContain(entry.AtomId, shard, StringComparison.Ordinal);
-        Assert.Contains("mother_residual_atom_ids: 0", summary, StringComparison.Ordinal);
-        Assert.Contains("mother_residual_atom_ids: 0", shard, StringComparison.Ordinal);
+        Assert.Contains(entry.AtomId, summary, StringComparison.Ordinal);
+        Assert.Contains(entry.AtomId, shard, StringComparison.Ordinal);
+        Assert.Contains("mother_residual_atom_ids: 1", summary, StringComparison.Ordinal);
+        Assert.Contains("mother_residual_atom_ids: 1", shard, StringComparison.Ordinal);
     }
 }

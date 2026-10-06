@@ -1,0 +1,8 @@
+对于 $Q$，$C-1\ge2$，复用引理 25.1 的 Fibonacci 矩阵式，
+
+$$
+JM^{C-1}
+=\begin{pmatrix}F_{C-1}&F_C\\F_{C-2}&F_{C-1}\end{pmatrix}.
+$$
+
+故其 $b=g>0,\delta=0$，累计 $QV^k$ 的 $e=g,D=-kg$。因为 $x/\zeta=k$，$\mu_Q=kg-kg=0$。

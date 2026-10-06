@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:25dfed97699f171038822e289cc971a31df68ab1214383cab22074f0a05140d5
+  normalized_sha256: sha256:25dfed97699f171038822e289cc971a31df68ab1214383cab22074f0a05140d5
+cas_ref: sha256:25dfed97699f171038822e289cc971a31df68ab1214383cab22074f0a05140d5
+coverage_gids:
+  - gid: D5/S3/Geometry/FixedPoint/SimplexMesh.size_bound_key
+    target_statement_id: sha256:f544c67957da03d8af9d2375dbbd0e63537cd2b83142184ee46a2267c139c296
+receipts:
+  unresolved_subitems: []

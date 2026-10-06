@@ -156,6 +156,82 @@ noncomputable def realStopRadius {Z : Type*} [MetricSpace Z]
     (out : L → Z) (target : W → Z) (C : Finset W) (B : Nat) : Real :=
   ⨅ l : {l : L // Legal C l ∧ tp C l ≤ B}, realRisk out target C (fun _ => l.val)
 
+theorem execute_mono (read : (q : Q) → W → Y q) (policy : Hist Y → Sum Q L) :
+    ∀ n m h x t l, n ≤ m → execute read policy n h x = some (t,l) →
+      execute read policy m h x = some (t,l) := by
+  intro n
+  induction n with
+  | zero => simp [execute]
+  | succ n ih =>
+    intro m h x t l hnm hr
+    cases m with
+    | zero => omega
+    | succ m =>
+      cases hp : policy h with
+      | inr a => simpa [execute,hp] using hr
+      | inl q =>
+        simp only [execute,hp] at hr ⊢
+        obtain ⟨r,er,ee⟩ := Option.map_eq_some_iff.mp hr
+        exact Option.map_eq_some_iff.mpr ⟨r,ih m _ _ _ _ (by omega) er,ee⟩
+
+theorem tree_execution (read : (q : Q) → W → Y q) (p : PassiveProtocol Q Y)
+    (d : Hist Y → L) (x : W) :
+    execute read (treePolicy p d) ((runPassiveProtocol read p x).length + 1) [] x =
+      some (runPassiveProtocol read p x, d (runPassiveProtocol read p x)) := by
+  have aux : ∀ (t : PassiveProtocol Q Y) h, residual p h = t →
+      execute read (treePolicy p d) ((runPassiveProtocol read t x).length + 1) h x =
+        some (runPassiveProtocol read t x, d (h ++ runPassiveProtocol read t x)) := by
+    intro t
+    induction t with
+    | stop =>
+      intro h he
+      simp [runPassiveProtocol, execute, treePolicy, he]
+    | query q next ih =>
+      intro h he
+      have hn : residual p (h ++ [⟨q, read q x⟩]) = next (read q x) := by
+        simp only [residual, List.foldl_append, List.foldl_cons, List.foldl_nil]
+        change advance (residual p h) ⟨q, read q x⟩ = _
+        simp [he, advance]
+      have hp : treePolicy p d h = .inl q := by simp [treePolicy, he]
+      simp only [runPassiveProtocol, List.length_cons, Nat.add_assoc]
+      change execute read (treePolicy p d) ((runPassiveProtocol read (next (read q x)) x).length + 1 + 1) h x = _
+      rw [execute, hp]
+      dsimp only
+      rw [ih _ _ hn]
+      simp [List.append_assoc]
+  simpa [residual] using aux p [] rfl
+
+
+theorem execute_transfer (read : (q : Q) → W → Y q)
+    (policy : Hist Y → Sum Q L) : ∀ n h x t l, execute read policy n h x = some (t,l) →
+    (∀ a ∈ t, read a.1 x = a.2) ∧
+    ∀ y, (∀ a ∈ t, read a.1 y = a.2) → execute read policy n h y = some (t,l) := by
+  intro n
+  induction n with
+  | zero => simp [execute]
+  | succ n ih =>
+    intro h x t l hr
+    cases hp : policy h with
+    | inr a =>
+      simp only [execute,hp,Option.some.injEq,Prod.mk.injEq] at hr
+      rcases hr with ⟨rfl,rfl⟩
+      exact ⟨by simp,fun y _ => by simp [execute,hp]⟩
+    | inl q =>
+      simp only [execute,hp] at hr
+      obtain ⟨⟨s,a⟩,hs,he⟩ := Option.map_eq_some_iff.mp hr
+      simp only [Prod.mk.injEq] at he
+      rcases he with ⟨rfl,rfl⟩
+      obtain ⟨hc,ht⟩ := ih _ _ _ _ hs
+      refine ⟨?_,?_⟩
+      · simpa using hc
+      · intro y hy
+        have hyq : read q y = read q x := hy _ (List.mem_cons_self ..)
+        have hys : ∀ a ∈ s, read a.1 y = a.2 := fun a ha => hy a (List.mem_cons_of_mem _ ha)
+        rw [execute,hp]
+        dsimp only
+        rw [hyq,ht y hys]
+        rfl
+
 /-- Passive normalization, exact terminal fibers, horizon equality and minimax recursion.
 Only actual-world termination is required. Terminal labels, legality and prices
 are retained, and the stopping and continuation risk infima need not be attained. -/
@@ -207,23 +283,6 @@ theorem result {Z : Type*} [MetricSpace Z] [Finite Q]
        rawValue read price Legal tp (fun l x => ENNReal.ofReal (dist (out l) (target x))) C B ∧
      rawValue read price Legal tp (fun l x => ENNReal.ofReal (dist (out l) (target x))) C B ≠ ⊤) := by
   classical
-  have execute_mono (read : (q : Q) → W → Y q) (policy : Hist Y → Sum Q L) :
-      ∀ n m h x t l, n ≤ m → execute read policy n h x = some (t,l) →
-        execute read policy m h x = some (t,l) := by
-    intro n
-    induction n with
-    | zero => simp [execute]
-    | succ n ih =>
-      intro m h x t l hnm hr
-      cases m with
-      | zero => omega
-      | succ m =>
-        cases hp : policy h with
-        | inr a => simpa [execute,hp] using hr
-        | inl q =>
-          simp only [execute,hp] at hr ⊢
-          obtain ⟨r,er,ee⟩ := Option.map_eq_some_iff.mp hr
-          exact Option.map_eq_some_iff.mpr ⟨r,ih m _ _ _ _ (by omega) er,ee⟩
   have normalize_bounded
       (read : (q : Q) → W → Y q) (policy : Hist Y → Sum Q L)
       (n : Nat) (h : Hist Y) (C : Finset W) (tr : W → Hist Y) (lab : W → L)
@@ -433,33 +492,6 @@ theorem result {Z : Type*} [MetricSpace Z] [Finite Q]
         (((hs x hx).1.map (fun a => price a.1)).sum_le_sum (by simp))
         (terminalPrice (C.filter (fun y => tr y = tr x)) (lab x))
       exact ⟨hc,hc.trans (budget x hx)⟩
-
-  have tree_execution (read : (q : Q) → W → Y q) (p : PassiveProtocol Q Y)
-      (d : Hist Y → L) (x : W) :
-      execute read (treePolicy p d) ((runPassiveProtocol read p x).length + 1) [] x =
-        some (runPassiveProtocol read p x, d (runPassiveProtocol read p x)) := by
-    have aux : ∀ (t : PassiveProtocol Q Y) h, residual p h = t →
-        execute read (treePolicy p d) ((runPassiveProtocol read t x).length + 1) h x =
-          some (runPassiveProtocol read t x, d (h ++ runPassiveProtocol read t x)) := by
-      intro t
-      induction t with
-      | stop =>
-        intro h he
-        simp [runPassiveProtocol, execute, treePolicy, he]
-      | query q next ih =>
-        intro h he
-        have hn : residual p (h ++ [⟨q, read q x⟩]) = next (read q x) := by
-          simp only [residual, List.foldl_append, List.foldl_cons, List.foldl_nil]
-          change advance (residual p h) ⟨q, read q x⟩ = _
-          simp [he, advance]
-        have hp : treePolicy p d h = .inl q := by simp [treePolicy, he]
-        simp only [runPassiveProtocol, List.length_cons, Nat.add_assoc]
-        change execute read (treePolicy p d) ((runPassiveProtocol read (next (read q x)) x).length + 1 + 1) h x = _
-        rw [execute, hp]
-        dsimp only
-        rw [ih _ _ hn]
-        simp [List.append_assoc]
-    simpa [residual] using aux p [] rfl
 
   have horizon_identity (read : (q : Q) → W → Y q) (price : Q → Nat)
       (Legal : Finset W → L → Prop) (tp : Finset W → L → Nat)
@@ -795,38 +827,10 @@ theorem result {Z : Type*} [MetricSpace Z] [Finite Q]
       (runs : ∀ x ∈ C, ∃ n, execute read policy n [] x = some (tr x,lab x)) :
       ∀ x ∈ C, candidates read C (tr x) = leaf C tr x := by
     classical
-    have transfer : ∀ n h x t l, execute read policy n h x = some (t,l) →
-        (∀ a ∈ t, read a.1 x = a.2) ∧
-        ∀ y, (∀ a ∈ t, read a.1 y = a.2) → execute read policy n h y = some (t,l) := by
-      intro n
-      induction n with
-      | zero => simp [execute]
-      | succ n ih =>
-        intro h x t l hr
-        cases hp : policy h with
-        | inr a =>
-          simp only [execute,hp,Option.some.injEq,Prod.mk.injEq] at hr
-          rcases hr with ⟨rfl,rfl⟩
-          exact ⟨by simp,fun y _ => by simp [execute,hp]⟩
-        | inl q =>
-          simp only [execute,hp] at hr
-          obtain ⟨⟨s,a⟩,hs,he⟩ := Option.map_eq_some_iff.mp hr
-          simp only [Prod.mk.injEq] at he
-          rcases he with ⟨rfl,rfl⟩
-          obtain ⟨hc,ht⟩ := ih _ _ _ _ hs
-          refine ⟨?_,?_⟩
-          · simpa using hc
-          · intro y hy
-            have hyq : read q y = read q x := hy _ (List.mem_cons_self ..)
-            have hys : ∀ a ∈ s, read a.1 y = a.2 := fun a ha => hy a (List.mem_cons_of_mem _ ha)
-            rw [execute,hp]
-            dsimp only
-            rw [hyq,ht y hys]
-            rfl
     have mono := execute_mono read policy
     intro x hx
     obtain ⟨n,hn⟩ := runs x hx
-    obtain ⟨hc,ht⟩ := transfer _ _ _ _ _ hn
+    obtain ⟨hc,ht⟩ := execute_transfer read policy _ _ _ _ _ hn
     ext y
     simp only [candidates,leaf,Finset.mem_filter]
     constructor
@@ -838,7 +842,7 @@ theorem result {Z : Type*} [MetricSpace Z] [Finite Q]
       exact ⟨hy,congrArg Prod.fst he⟩
     · rintro ⟨hy,he⟩
       obtain ⟨m,hm⟩ := runs y hy
-      have hc' := (transfer _ _ _ _ _ hm).1
+      have hc' := (execute_transfer read policy _ _ _ _ _ hm).1
       exact ⟨hy,he ▸ hc'⟩
 
   have source_value_clauses

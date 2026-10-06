@@ -1,0 +1,22 @@
+**命题 32.3（十四叶双孔取等与三片残差的共同历史）。** 令
+
+$$
+\begin{aligned}
+P_{14}&=\langle C,\langle A,\langle A,A\rangle\rangle\rangle
+ =\rho^3\bigl(\langle\beta,\langle\alpha,\langle\alpha,\alpha\rangle\rangle\rangle\bigr),\\
+Q_{14}&=\langle\langle A,\langle A,A\rangle\rangle,C\rangle
+ =\rho^3\bigl(\langle\langle\alpha,\langle\alpha,\alpha\rangle\rangle,\beta\rangle\bigr).
+\end{aligned}
+\tag{32.12}
+$$
+
+它们不同、非冲突，且 $c(P_{14})=c(Q_{14})=(5,9)^{\mathsf T}$、$n(P_{14})=n(Q_{14})=14$。其全部共享带标签叶恰为式（30.7）的六片，两侧共享 $\alpha$ 地址恰为 $\{\mathtt{LLLR},\mathtt{RLLR}\}$；两个定向 $\alpha$ 缺额均为 $3$，两个总叶缺额均为 $8$。合法的实际历史
+
+$$
+H_*=\bigl((\mathtt{LLLR},\mathsf{leaf}_\alpha),
+          (\mathtt{RLLR},\mathsf{leaf}_\alpha)\bigr)
+\tag{32.13}
+$$
+
+同时匹配两者，且 $\Gamma_{H_*}=\{\mathtt{LLLR},\mathtt{RLLR}\}$，每棵树仍有三片未覆盖 $\alpha$。
+

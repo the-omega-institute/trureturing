@@ -1,0 +1,11 @@
+**Definition 4.1 (the lattice and coordinate orders).** For positive integers
+$n,l$, set
+
+$$T_{n,l}=\{x\in\{0,\ldots,l\}^{\{0,\ldots,n-1\}}:\sum_i x_i=l\}.$$
+
+The order indexed by $i$ first compares $x_i$ and then compares the whole
+coordinate tuple lexicographically. The projection to the real standard
+simplex is $x\mapsto(x_i/l)_i$, where
+
+$$\Delta_n=\{p\in\mathbb R^n:p_i\geq0,\quad\sum_i p_i=1\}.$$
+

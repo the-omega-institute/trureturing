@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5590d6e0da077e6eb810049b029b13cdf71b7858e82180da535e15809b237864
+  normalized_sha256: sha256:5590d6e0da077e6eb810049b029b13cdf71b7858e82180da535e15809b237864
+cas_ref: sha256:5590d6e0da077e6eb810049b029b13cdf71b7858e82180da535e15809b237864
+coverage_gids:
+  - gid: D5/S1/Words/Patterns/Separable/RecordNewtonPositivity.actual_q_record_newton_nonnegative
+    target_statement_id: sha256:f2578f1a69be2d0eb7bb4555b474556bc3c631d1bcfc1bbff8e8c4f9670427a9
+receipts:
+  unresolved_subitems: []

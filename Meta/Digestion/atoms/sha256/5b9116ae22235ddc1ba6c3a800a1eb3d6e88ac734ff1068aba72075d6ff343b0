@@ -1,0 +1,29 @@
+**来源接口。** 下列均为来源复用。在每个完整自然闭块上，固定版本 $40d10f50aa9c16adf0a1c5021810be9a1b90bceb$ 的 [C.1--C.3](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) 给出：
+
+1. 零帽规律单独保留为
+   $$
+   Q_j(t)=0\Longleftrightarrow t\le L_j
+   $$
+   （定理 24.3 在 $j\ge8$ 的完整零平台；C.1 的零帽部分使用它），不代入正帽不等式；
+2. 对 $j\ge9$，正帽时
+   $$
+   Q_j(t)>0\Longrightarrow t\le P_jQ_j(t);
+   $$
+3. 对每个 $j\ge11$ 和父索引 $m=F_j-t$，在其规定起点和深度选出的实际两子准确写为
+   $$
+   \begin{aligned}
+   g_m&=F_{j-1}-r,&m-g_m&=F_{j-2}-s,\\
+   0\le r&\le F_{j-3},&0\le s&\le F_{j-4},\\
+   e_1&=Q_{j-1}(r),&e_2&=Q_{j-2}(s),\\
+   t&=r+s,&e=Q_j(t)&=e_1+e_2,\qquad e_1,e_2\in\mathbb Z_{\ge0}.
+   \end{aligned}
+   $$
+   子块阶数是 $j-1,j-2$。当 $t=0$，两子缺口均为零，使用各自闭块上端点；当 $t=F_{j-2}$，两子缺口为 $F_{j-3},F_{j-4}$，使用各自闭块下端点。不将上端点重新归入更高阶块；
+4. 对 $j\ge11$，$P_j-P_{j-1}=L_{j-2}$ 且 $P_j-P_{j-2}\ge L_{j-1}$；对 $j\ge9$，$L_j\le P_j$。
+
+同一固定版本的 [H.1](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/exact-collars.md#two-higher-cap-levels-and-their-phase-selected-closure) 在整个闭块上给出
+$$
+Q_j(t)\le3\Longleftrightarrow t\le Z_j\qquad(j\ge21).
+$$
+这些是已有来源接口的复用；零帽平台、低帽停止和正帽守恒分别承担不同作用。
+

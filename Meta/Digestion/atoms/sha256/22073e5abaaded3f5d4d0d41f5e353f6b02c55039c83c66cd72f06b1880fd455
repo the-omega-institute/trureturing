@@ -1,0 +1,6 @@
+$$
+u\ E_{j+1}\ v\quad\Longleftrightarrow\quad
+p(u)=p(v)\ \land\
+\forall a\in E_G\ (t(a)=p(u)\Rightarrow\lambda_a(u)\ E_j\ \lambda_a(v)).
+$$
+
