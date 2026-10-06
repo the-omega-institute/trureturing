@@ -798,6 +798,85 @@ private points, DA9 and finite counting; this is not a new
 finite-fiber theorem. The pointwise lower-color count still does
 not force a common divisor and a joint inventory violating DA27.
 
+## Low-support service and fixed-bank escape do not force large cofactors
+
+Use the prescribed coordinate mask M from Report864 PC69: each of
+27 prime coordinates takes the values zero and one; roots congruent
+to two modulo three carry the whole binary cube, while roots four
+and seven modulo nine carry only the all-zero point. No identity
+between M and an actual retained-family residual is assumed.
+
+Keep the two lower owners at each coordinate. Partition fifteen of
+the coordinates into five disjoint triangles. For every edge {p,t},
+add two owners with cofactor p*t: a row-zero owner at phase 00, and
+a row-one owner at phase 11 with ternary root two. There are
+2*27+2*15=84 owners, which can be assigned distinct colors among
+113 labels. At every source point the coordinate owners supply
+27 active owners. Every binary triangle has an equal-valued edge,
+so the five triangles supply at least five more. At the all-zero
+source points the row-zero edge owners are active. Thus every
+source point has at least 32 distinct serving owners.
+
+Each cofactor occurs twice and has at most two distinct prime
+factors. Its divisor count is at most four, so none supplies either
+a twelve-prime cofactor or a divisor with fifteen divisors. The
+cofactor divisor bank explicitly declared for this control is
+
+$$
+P_{\triangle}=\{1\}\cup\{\text{the 27 coordinate primes}\}
+                 \cup\{\text{the 15 triangle edge products}\},
+\qquad |P_{\triangle}|=43.
+\tag{DA29}
+$$
+
+This is the numerical divisor closure of these cofactors. It is
+not a construction of the original-label divisor closure of an
+actual minimal whole cover.
+
+Even allowing one arbitrary fixed output of label 27d for every
+d in this bank cannot cover M. It suffices to consider the nine
+roots congruent to two modulo three in a period of 27. The unit
+donor occupies at most one root. A single isolated-coordinate
+output cannot cover both values of that coordinate. For one
+triangle at one root, let P and E count its assigned prime and
+edge donors. Covering its complete three-bit cube requires
+
+$$
+2P+E\ge5.
+\tag{DA30}
+$$
+
+The entire triangle has only weight 2*3+3=9 across all roots,
+since every numerical donor has one fixed root. It cannot cover
+two roots completely. If a union of independent-component
+cylinders covers a whole product, at least one component is
+covered completely: otherwise combine one escape from each
+component. The five triangles and the unit donor can therefore
+cover at most six of the nine roots completely.
+
+Consequently, for every fixed assignment of all bank outputs,
+there is one source point escaping every output while still
+having at least 32 active owners. Every owner's palette count
+is at most two, and every cofactor has at most two owners.
+The finite coordinate statement, including this same witness,
+the three-bit cost and the fixed-root occupancy bound, is
+Lean-checked with standard axioms and default proof budgets.
+Absent phases and every possible binary singleton or pair phase
+are included in the codes. Interpreting the coordinates as
+prime products and integer residue classes uses the usual CRT
+identification; that integer application is not separately
+compiled in this check.
+
+Thus 32-color lower service, multiplicity at most two, low support,
+and escape from every fixed output assignment of this declared
+bank do not imply the large-cofactor candidates needed by DA25
+or a nonempty inventory to which DA27 applies. The control does
+not supply all the required complete original color families,
+identify M with their exact q-free residual, or realize global
+count-then-sum minimality. Those actual joint conditions remain
+available to a closing argument. Adding these owners also does
+not inherit the original PC69 two-output prefix impossibility.
+
 ## Ancestor residuals do not supply unrestricted continuation
 
 The phases counted in DA27 and points in the all-q deletion residual
@@ -855,6 +934,12 @@ an irredundant coset cover of a whole abelian group. It does not provide the
 nineteen-cylinder extraction on the nonproduct residual required
 by DA25. BBMST's bounded-reuse mechanism likewise retains the
 one-exploration-tree adapter described in Report385, Section247.
+
+## Fixed-color completions need their own minimality check
+
+Global minimal unsatisfiability does not make every fixed-color completion minimal with the same retained formula. A Boolean control has retained clauses \(R=\{x,y\}\) and moving clauses \((Q\ne0)\lor\neg x\), \((Q\ne1)\lor\neg y\). The full four-clause formula is unsatisfiable, and deleting each clause in the displayed order admits, respectively, the assignments \((Q,x,y)=(0,0,1),(1,1,0),(0,1,1),(1,1,1)\). It is therefore minimally unsatisfiable. At \(Q=0\), however, the completion reduces to \(x\land y\land\neg x\), and the retained clause \(y\) is dispensable; at \(Q=1\), it reduces to \(x\land y\land\neg y\), and \(x\) is dispensable.
+
+Consequently, applying a minimal-unsatisfiable classification separately to all color completions while keeping one common retained formula requires an additional essentiality argument. This Boolean control refutes only that general inference; it is not an actual odd congruence-cover construction. The four-clause statement and both dispensable retained clauses were checked by Lean with default proof budgets and the standard `propext` axiom, using only finite Boolean decision procedures. The check is transient and adds no canonical Lean declaration.
 
 ## Verification and the remaining global obligation
 
