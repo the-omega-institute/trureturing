@@ -52,7 +52,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
   if ReadoutFamily.carrierHeads.contains first && e.isApp then
     let decoded ← inBinderContext context fun locals => do
       let some actual ← substitute e locals | return false
-      let (value, work) := ReadoutFamily.carrier env actual (← get).exprFuel
+      let (value, work) := ReadoutFamily.carrier env.find? actual (← get).exprFuel
       unless ← chargeTraversal work do return false
       let some value := value | return false
       if value == actual then return false
@@ -270,7 +270,7 @@ def provenanceErrorCurrent (root catalog theoremName realization : Name) : CoreM
   modifyEnv fun env => wholeReadoutCalls.modifyState env (· + 1)
   let env ← getEnv
   let budget := min provenanceExpressionFuel (provenanceExpressionLimit.get (← getOptions))
-  let (readout, extractionWork) := ReadoutFamily.extract env realization budget
+  let (readout, extractionWork) := ReadoutFamily.extract env.find? realization budget
   let address := readout.map (·.2) |>.getD realization
   let result ← match readout with
     | some (e, _) => safeCollect env theoremName address e extractionWork

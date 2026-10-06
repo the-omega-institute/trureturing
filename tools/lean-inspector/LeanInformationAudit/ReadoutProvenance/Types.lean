@@ -24,7 +24,7 @@ private partial def inputType (env : Environment) (type : Expr)
     return ← unknownType type
   if type.hasLooseBVars || type.hasMVar || type.hasLevelMVar then return ← unknownType type
   if ReadoutFamily.carrierHeads.contains (type.getAppFn.constName?.getD .anonymous) then
-    let (decoded, work) := ReadoutFamily.carrier env type (← get).exprFuel
+    let (decoded, work) := ReadoutFamily.carrier env.find? type (← get).exprFuel
     unless ← chargeTraversal work do return ← unknownType type
     let some decoded := decoded | return ← unknownType type
     if decoded == type then return ← unknownType type

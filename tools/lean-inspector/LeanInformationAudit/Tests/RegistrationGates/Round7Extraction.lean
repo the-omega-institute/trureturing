@@ -20,7 +20,7 @@ run_cmd Elab.Command.liftCoreM do
             message.contains "first=" && message.contains "site=" then cause := true
       if cause then logInfo m!"[PASS] {label}Cause: exhaustion address and origin"
       else logError m!"[FAIL] {label}Cause: missing cause/operation/first/site"
-      let (extracted, work) := ReadoutFamily.extract fresh holder limit
+      let (extracted, work) := ReadoutFamily.extract fresh.find? holder limit
       logInfo m!"[EXTRACTION] {label}: fuel={limit} work={work} found={extracted.isSome} holder={holder}"
       if actual.any (·.contains "reason=incomplete_closure provenance=null") then
         logInfo m!"[PASS] {label}: diagnostic shape"

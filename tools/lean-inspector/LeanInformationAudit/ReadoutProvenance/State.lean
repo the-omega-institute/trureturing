@@ -1,3 +1,4 @@
+import Lean
 import LeanInformationAudit.ReadoutProvenance.Family
 /-!
 Occurrences are inferred in their original binder context at the existing native

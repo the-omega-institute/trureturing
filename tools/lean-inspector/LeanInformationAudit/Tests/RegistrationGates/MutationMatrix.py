@@ -93,8 +93,8 @@ def specification(label, original):
         description='Remove named carrier alias forwarding from both collection-boundary sites.'
     elif kind=='remove-statement-projection':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries'
-        needle='  | .proj structureName index receiver =>\n    let (record, work) := ReadoutFamily.carrier env receiver (← get).exprFuel'
-        replacement='  | .proj structureName index receiver =>\n    return ← statementUnknown (.proj structureName index receiver)\n    let (record, work) := ReadoutFamily.carrier env receiver (← get).exprFuel'
+        needle='  | .proj structureName index receiver =>\n    let (record, work) := ReadoutFamily.carrier env.find? receiver (← get).exprFuel'
+        replacement='  | .proj structureName index receiver =>\n    return ← statementUnknown (.proj structureName index receiver)\n    let (record, work) := ReadoutFamily.carrier env.find? receiver (← get).exprFuel'
         predicted=['ProjectedStatementAlias']
         description='Treat explicit record projection aliases as opaque when retaining statement rejection witnesses.'
     elif kind=='resume-proposition-operands':

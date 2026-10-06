@@ -149,7 +149,7 @@ def statementStep (env : Environment) (current : Expr) : WalkM StatementStep := 
     let some body ← aliasBody body args | return .incomplete
     return .next body
   | .proj structureName index receiver =>
-    let (record, work) := ReadoutFamily.carrier env receiver (← get).exprFuel
+    let (record, work) := ReadoutFamily.carrier env.find? receiver (← get).exprFuel
     unless ← chargeTraversal work do return .incomplete
     let some record := record | return ← statementUnknown head
     let some (ctor, fields) ← applicationParts record | return .incomplete
