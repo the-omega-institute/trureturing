@@ -10,8 +10,9 @@ import D5.S3.VertexAlgebra.LatticeActualConformalState
 import D5.S3.VertexAlgebra.LatticeActualStateDerivative
 
 /-
-Full integer Ward identities and actual state derivatives. Finite support is
-proved from actual omega-mode truncation, including negative Virasoro indices.
+Full integer Ward identities and actual state derivatives. Inner-state finite
+support follows from released Sugawara-field truncation and its mode convention,
+including negative Virasoro indices.
 The state derivative is proved independently from the actual vacuum residue iterate.
 See LatticeActualConformalState for primary sources and retained licenses.
 -/
@@ -45,23 +46,6 @@ def wardTerm (D : LatticeData)
     (a : Carrier D) (m q : ℤ) (j : ℕ) : Module.End ℂ (Carrier D) :=
   integerBinomial (m + 1) j •
     ((Y D (sugawaraMode D H ((j : ℤ) - 1) a))[[m + q + 1 - j]])
-
-/-- The actual inner states truncate independently of the binomial factor. -/
-theorem conformal_actions_finite (D : LatticeData)
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (a : Carrier D) :
-    Function.HasFiniteSupport (fun j : ℕ => sugawaraMode D H ((j : ℤ) - 1) a) := by
-  simpa only [omega_product] using nonnegative_products_finite D (omega D H) a
-
-theorem ward_terms_finite (D : LatticeData)
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (a : Carrier D) (m q : ℤ) :
-    Function.HasFiniteSupport (wardTerm D H a m q) := by
-  classical
-  apply (conformal_actions_finite D H a).subset
-  intro j member
-  contrapose! member
-  have zeroState : sugawaraMode D H ((j : ℤ) - 1) a = 0 := by
-    simpa only [Function.mem_support, not_not] using member
-  simp [wardTerm, zeroState]
 
 /-- Full Ward commutator at all integer indices. No primary-state or energy
 eigenvector premise is imposed: all higher conformal actions are retained. -/

@@ -33,9 +33,6 @@ def carrierCoeffEquiv (D : LatticeData) : Carrier D ≃ₗ[ℂ] (Label D →₀ 
   (Finsupp.mapRange.linearEquiv (basisMonomials (Index D) ℂ).repr).trans
     (Finsupp.curryLinearEquiv ℂ).symm
 
-@[simp] theorem carrierCoeffEquiv_apply (D : LatticeData) (v : Carrier D) (a : Label D) :
-    carrierCoeffEquiv D v a = coeff a.2 (v a.1) := rfl
-
 def carrierBasis (D : LatticeData) : Module.Basis (Label D) ℂ (Carrier D) :=
   Module.Basis.ofRepr (carrierCoeffEquiv D)
 
@@ -45,10 +42,12 @@ def carrierBasis (D : LatticeData) : Module.Basis (Label D) ℂ (Carrier D) :=
   change (carrierCoeffEquiv D) ((carrierCoeffEquiv D).symm (Finsupp.single a 1)) = _
   rw [LinearEquiv.apply_symm_apply]
   ext b
+  change Finsupp.single a (1 : ℂ) b =
+    coeff b.2 ((Finsupp.single a.1 (monomial a.2 1)) b.1)
   by_cases h : a.1 = b.1
-  · simp [carrierCoeffEquiv_apply, Finsupp.single_apply, h, coeff_monomial,
+  · simp [Finsupp.single_apply, h, coeff_monomial,
       Prod.ext_iff, and_comm]
-  · simp [carrierCoeffEquiv_apply, Finsupp.single_apply, h, Prod.ext_iff]
+  · simp [Finsupp.single_apply, h, Prod.ext_iff]
 
 /-- Exact support of the actual charge/monomial coefficients at integer energy n. -/
 abbrev grade (D : LatticeData) (n : ℤ) : Submodule ℂ (Carrier D) :=
@@ -196,6 +195,7 @@ theorem gradeProjection_mem (D : LatticeData) (n : ℤ) (v : Carrier D) :
     gradeProjection D n v ∈ grade D n := by
   rw [mem_grade_iff]
   intro a ha
+  change carrierCoeffEquiv D (gradeProjection D n v) a = 0
   simpa [ha] using gradeProjection_coeff D n v a
 
 theorem gradeProjection_on_grade (D : LatticeData) (n : ℤ)

@@ -110,9 +110,6 @@ theorem theta_involutive (D : LatticeData) : Function.Involutive (thetaLinear D)
 def theta (D : LatticeData) : Carrier D ≃ₗ[ℂ] Carrier D :=
   LinearEquiv.ofInvolutive (thetaLinear D) (theta_involutive D)
 
-@[simp] theorem theta_apply (D : LatticeData) (v : Carrier D) :
-    theta D v = thetaLinear D v := rfl
-
 theorem theta_eval (D : LatticeData) (v : Carrier D) (a : Charge D) :
     theta D v (-a) = sigma D (v a) := by
   have h : (Finsupp.lapply (-a)).comp (thetaLinear D) =
@@ -140,7 +137,7 @@ theorem theta_support (D : LatticeData) (v : Carrier D) :
   · rintro ⟨b, hb, he⟩; subst a; simpa using Finsupp.mem_support_iff.mp hb
 
 @[simp] theorem theta_vacuum (D : LatticeData) : theta D (vacuum D) = vacuum D := by
-  simp [vacuum]
+  simp [theta, vacuum]
 
 
 /-! ## Charged creation and translation coefficients -/
@@ -210,7 +207,8 @@ theorem theta_rawSingle (D : LatticeData) (a : Charge D) (k : ℤ)
     (d : Charge D) (p : Oscillator D) :
     theta D (rawSingle D a k d p) = rawSingle D (-a) k (-d) (sigma D p) := by
   classical
-  simp only [rawSingle, map_smul, theta_apply, theta_single, map_sum,
+  change thetaLinear D (rawSingle D a k d p) = _
+  simp only [rawSingle, map_smul, theta_single, map_sum,
     sigma_smul, sigma_creationCoeff, epsilon_neg_neg, bilinear_neg_neg,
     translatedPolynomial_sigma_support, translatedPolynomial_sigma_coeff, neg_add]
   congr 2
@@ -437,7 +435,7 @@ def eigenspace (D : LatticeData) (s : ℂ) : Submodule ℂ (Carrier D) :=
 
 @[simp] theorem mem_eigenspace (D : LatticeData) (s : ℂ) (v : Carrier D) :
     v ∈ eigenspace D s ↔ theta D v = s • v := by
-  simp [eigenspace, LinearMap.mem_ker, sub_eq_zero]
+  simp [eigenspace, LinearMap.mem_ker, sub_eq_zero, theta]
 
 def fixedSpace (D : LatticeData) : Submodule ℂ (Carrier D) := eigenspace D 1
 def minusSpace (D : LatticeData) : Submodule ℂ (Carrier D) := eigenspace D (-1)
@@ -456,25 +454,16 @@ def minusPart (D : LatticeData) (v : Carrier D) : Carrier D :=
 theorem plusPart_mem (D : LatticeData) (v : Carrier D) :
     plusPart D v ∈ fixedSpace D := by
   rw [mem_fixedSpace]
-  simp only [plusPart, map_smul, map_add, theta_apply]
+  simp only [plusPart, map_smul, map_add, theta, LinearEquiv.coe_ofInvolutive]
   rw [theta_involutive D v]
   rw [add_comm]
 
 theorem minusPart_mem (D : LatticeData) (v : Carrier D) :
     minusPart D v ∈ minusSpace D := by
   rw [mem_minusSpace]
-  simp only [minusPart, map_smul, map_sub, theta_apply]
+  simp only [minusPart, map_smul, map_sub, theta, LinearEquiv.coe_ofInvolutive]
   rw [theta_involutive D v]
   rw [← neg_sub v (thetaLinear D v), smul_neg]
-
-theorem eigenspace_split (D : LatticeData) (v : Carrier D) :
-    v = plusPart D v + minusPart D v := by
-  unfold plusPart minusPart
-  rw [← smul_add]
-  have h : v + theta D v + (v - theta D v) = (2 : ℂ) • v := by
-    rw [two_smul]; abel
-  rw [h, smul_smul]
-  norm_num
 
 theorem fixed_minus_intersection (D : LatticeData) :
     fixedSpace D ⊓ minusSpace D = ⊥ := by
@@ -550,7 +539,7 @@ theorem theta_ground_DongNagatomo (D : LatticeData) (a : Charge D) :
     unfold paritySign
     split_ifs <;> norm_num
   rw [hs, one_smul]
-  simp
+  simp [theta]
 
 
 /-! ## The restricted actual fixed vertex algebra -/

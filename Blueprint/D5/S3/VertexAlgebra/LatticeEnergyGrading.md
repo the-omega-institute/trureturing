@@ -22,19 +22,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierCoeffEquiv`
 
 Carrier(D) is linearly equivalent over C to Label(D)->_0 C. Polynomial monomial-basis coordinates in each finite-support charge sector are uncurried. No positivity or finiteness of grades is required.
 
-**Theorem 1.2 (Exact coefficient evaluation).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierCoeffEquiv_apply`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierCoeffEquiv_apply` (`✓ std3`). ∎
-
-*Citation.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
-
-*Commentary.*
-
-For every actual state v and label (alpha,d), carrierCoeffEquiv(D,v)(alpha,d)=coeff(d,v(alpha)). This is the actual polynomial coefficient, not an abstract eigenbasis assumption.
-
-**Definition 1.3 (Basis of the entire actual carrier).**
+**Definition 1.2 (Basis of the entire actual carrier).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierBasis`
 
@@ -46,7 +34,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierBasis`
 
 The actual carrier basis is obtained from carrierCoeffEquiv and is indexed by every charge/exponent label.
 
-**Theorem 1.4 (Actual basis vector formula).**
+**Theorem 1.3 (Actual basis vector formula).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierBasis_apply`
 
@@ -58,7 +46,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierBasis_apply`
 
 carrierBasis(D,(alpha,d))=single(alpha,monomial(d,1)), exactly on the actual carrier.
 
-**Definition 1.5 (Integer coefficient-support grade).**
+**Definition 1.4 (Integer coefficient-support grade).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade`
 
@@ -70,7 +58,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade`
 
 grade(D,n) is the inverse image under actual coefficient coordinates of Finsupp.supported at {a | E_D(a)=n}. It is a C-submodule of Carrier(D), for each n:Z.
 
-**Theorem 1.6 (Exact grade membership for arbitrary states).**
+**Theorem 1.5 (Exact grade membership for arbitrary states).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.mem_grade_iff`
 
@@ -82,7 +70,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.mem_grade_iff`
 
 v belongs to grade(D,n) iff for every label a with E_D(a)!=n, coeff(a.2,v(a.1))=0. v is any actual state, including nonhomogeneous finite sums.
 
-**Definition 1.7 (Full fiber coefficient equivalence).**
+**Definition 1.6 (Full fiber coefficient equivalence).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeCoeffEquiv`
 
@@ -94,7 +82,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeCoeffEquiv`
 
 grade(D,n) is linearly equivalent over C to EnergyFiber(D,n)->_0 C. This uses the entire fiber and needs neither positivity nor finiteness.
 
-**Definition 1.8 (Basis indexed by the whole energy fiber).**
+**Definition 1.7 (Basis indexed by the whole energy fiber).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeBasis`
 
@@ -106,7 +94,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeBasis`
 
 The basis of grade(D,n) is indexed by EnergyFiber(D,n), with no finite-fiber premise. hD later proves that this basis index type is finite.
 
-**Theorem 1.9 (Grade basis is the actual carrier basis).**
+**Theorem 1.8 (Grade basis is the actual carrier basis).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeBasis_coe`
 
@@ -118,7 +106,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeBasis_coe`
 
 For each a:EnergyFiber(D,n), the image of gradeBasis(D,n,a) in Carrier(D) equals carrierBasis(D,a.val).
 
-**Theorem 1.10 (Grade is the actual energy-basis span).**
+**Theorem 1.9 (Grade is the actual energy-basis span).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_eq_span`
 
@@ -130,7 +118,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_eq_span`
 
 grade(D,n)=span_C(carrierBasis(D) image {a | E_D(a)=n}), unconditionally for every ordinary D.
 
-**Theorem 1.11 (Derived finite-dimensional actual grades).**
+**Theorem 1.10 (Derived finite-dimensional actual grades).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_finiteDimensional`
 
@@ -142,7 +130,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_finiteDimensiona
 
 Under hD, grade(D,n) is finite-dimensional over C for every integer n. The proof uses the constructed grade basis and the derived finite full fiber; finite-dimensionality is not a hypothesis.
 
-**Theorem 1.12 (Exact integer-grade dimension).**
+**Theorem 1.11 (Exact integer-grade dimension).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_finrank`
 
@@ -154,7 +142,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_finrank`
 
 Under hD, finrank_C(grade(D,n))=Nat.card(EnergyFiber(D,n)) for every n:Z, including negative n and rank zero.
 
-**Theorem 1.13 (Natural-energy specialization).**
+**Theorem 1.12 (Natural-energy specialization).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_finrank_nat`
 
@@ -166,7 +154,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_finrank_nat`
 
 Under hD and N:N, finrank_C(grade(D,(N:Z)))=Nat.card(EnergyFiber(D,(N:Z))). This is a specialization of the all-integer dimension theorem.
 
-**Theorem 1.14 (Negative actual grades vanish).**
+**Theorem 1.13 (Negative actual grades vanish).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_negative`
 
@@ -178,7 +166,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_negative`
 
 Under hD and n<0, grade(D,n)=bottom, derived from full energy nonnegativity and exact coefficient separation.
 
-**Theorem 1.15 (Zero grade is exactly the actual vacuum line).**
+**Theorem 1.14 (Zero grade is exactly the actual vacuum line).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_zero`
 
@@ -190,7 +178,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_zero`
 
 Under hD, grade(D,0)=span_C{vacuum(D)}. The only energy-zero label is (0,0), whose actual basis vector is single(0,1).
 
-**Theorem 1.16 (Actual vacuum is nonzero).**
+**Theorem 1.15 (Actual vacuum is nonzero).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.vacuum_nonzero`
 
@@ -202,7 +190,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.vacuum_nonzero`
 
 vacuum(D)!=0 for every ordinary D. This does not require positivity, a conformal inverse, or positive rank.
 
-**Definition 1.17 (Scalar parametrization of zero grade).**
+**Definition 1.16 (Scalar parametrization of zero grade).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.vacuumGradeEquiv`
 
@@ -214,7 +202,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.vacuumGradeEquiv`
 
 Under hD, the constructed linear equivalence C ~= grade(D,0) is scalar multiplication of the actual vacuum, transported through grade_zero.
 
-**Theorem 1.18 (Negative full fibers are empty).**
+**Theorem 1.17 (Negative full fibers are empty).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.energyFiber_negative`
 
@@ -226,7 +214,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.energyFiber_negative`
 
 Under hD and n<0, EnergyFiber(D,n) is empty. This assertion concerns every actual charge/exponent label.
 
-**Theorem 1.19 (Rank-zero label type has one element).**
+**Theorem 1.18 (Rank-zero label type has one element).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.rank_zero_label`
 
@@ -238,7 +226,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.rank_zero_label`
 
 Assuming only D.rank=0, every label equals (0,0). No positivity or inverse-Gram equation is needed.
 
-**Theorem 1.20 (Rank-zero carrier is the vacuum span).**
+**Theorem 1.19 (Rank-zero carrier is the vacuum span).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.rank_zero_carrier`
 
@@ -250,7 +238,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.rank_zero_carrier`
 
 Assuming only D.rank=0, span_C{vacuum(D)}=top on the entire actual Carrier(D), by the exact carrier basis.
 
-**Definition 1.21 (Rank-zero actual carrier is one vacuum line).**
+**Definition 1.20 (Rank-zero actual carrier is one vacuum line).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.rankZeroVacuumEquiv`
 
@@ -262,7 +250,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.rankZeroVacuumEquiv`
 
 Assuming only D.rank=0, the actual carrier is linearly equivalent to C by scalar multiplication of vacuum. The general finite-rank theorems above do not reduce to this boundary case.
 
-**Definition 1.22 (Actual coefficient-filter projection).**
+**Definition 1.21 (Actual coefficient-filter projection).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection`
 
@@ -274,7 +262,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection`
 
 gradeProjection(D,n) is the actual linear endomorphism obtained by keeping just coefficients at energy n and transporting back to Carrier(D).
 
-**Theorem 1.23 (Projection acts on exact coefficients).**
+**Theorem 1.22 (Projection acts on exact coefficients).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_coeff`
 
@@ -286,7 +274,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_coeff`
 
 At label a, the coefficient of gradeProjection(D,n,v) is the original coefficient if E_D(a)=n, and zero otherwise.
 
-**Theorem 1.24 (Projection lands in its actual grade).**
+**Theorem 1.23 (Projection lands in its actual grade).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_mem`
 
@@ -298,7 +286,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_mem`
 
 gradeProjection(D,n,v) belongs to grade(D,n) for any integer n and actual v.
 
-**Theorem 1.25 (Projection fixes its own grade).**
+**Theorem 1.24 (Projection fixes its own grade).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_on_grade`
 
@@ -310,7 +298,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_on_gra
 
 If v belongs to grade(D,n), gradeProjection(D,n,v)=v.
 
-**Theorem 1.26 (Projection kills distinct grades).**
+**Theorem 1.25 (Projection kills distinct grades).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_other_grade`
 
@@ -322,7 +310,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_other_
 
 If m!=n and v belongs to grade(D,n), gradeProjection(D,m,v)=0.
 
-**Theorem 1.27 (Projection is idempotent).**
+**Theorem 1.26 (Projection is idempotent).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_idempotent`
 
@@ -334,7 +322,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_idempo
 
 gradeProjection(D,n)*gradeProjection(D,n)=gradeProjection(D,n) as actual linear endomorphisms.
 
-**Theorem 1.28 (Distinct projections compose to zero).**
+**Theorem 1.27 (Distinct projections compose to zero).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_disjoint`
 
@@ -346,7 +334,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_disjoi
 
 For m!=n, gradeProjection(D,m)*gradeProjection(D,n)=0 as actual linear endomorphisms.
 
-**Definition 1.29 (Finite energies of a nonhomogeneous actual state).**
+**Definition 1.28 (Finite energies of a nonhomogeneous actual state).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.stateEnergies`
 
@@ -358,7 +346,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.stateEnergies`
 
 stateEnergies(D,v) is the finite image under E_D of the support of carrierCoeffEquiv(D,v). No homogeneity or positivity is assumed.
 
-**Theorem 1.30 (Only finitely many projections survive).**
+**Theorem 1.29 (Only finitely many projections survive).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_outside`
 
@@ -370,7 +358,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_outsid
 
 If n is outside stateEnergies(D,v), gradeProjection(D,n,v)=0, for any actual v including mixed charges and mixed energies.
 
-**Theorem 1.31 (Finite reconstruction of every actual state).**
+**Theorem 1.30 (Finite reconstruction of every actual state).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.sum_gradeProjections`
 
@@ -382,7 +370,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.sum_gradeProjections`
 
 sum over n in stateEnergies(D,v) of gradeProjection(D,n,v) equals v. This proves a finite nonhomogeneous decomposition on the actual carrier, without hD.
 
-**Theorem 1.32 (Independence against all other grades).**
+**Theorem 1.31 (Independence against all other grades).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grades_independent`
 
@@ -394,7 +382,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grades_independent`
 
 The family grade(D) is iSup-independent: each grade meets the supremum of all the other grades trivially. This is stronger than only pairwise disjointness.
 
-**Theorem 1.33 (All grades span the actual carrier).**
+**Theorem 1.32 (All grades span the actual carrier).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grades_iSup`
 
@@ -406,7 +394,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grades_iSup`
 
 The supremum over all integer grades is top, by finite projection reconstruction for arbitrary actual states.
 
-**Theorem 1.34 (Genuine actual internal direct sum).**
+**Theorem 1.33 (Genuine actual internal direct sum).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grades_internal`
 
@@ -418,7 +406,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grades_internal`
 
 DirectSum.IsInternal(grade(D)) holds: the canonical sum of subtype inclusions from the integer-indexed direct sum is bijective. No hD is needed for internality.
 
-**Definition 1.35 (Constructed canonical decomposition equivalence).**
+**Definition 1.34 (Constructed canonical decomposition equivalence).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierEnergyDecomposition`
 
@@ -445,7 +433,6 @@ This unit supplies the actual lattice carrier with a positive finite energy grad
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierBasis`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierBasis_apply`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierCoeffEquiv`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierCoeffEquiv_apply`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierEnergyDecomposition`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.energyFiber_negative`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade`

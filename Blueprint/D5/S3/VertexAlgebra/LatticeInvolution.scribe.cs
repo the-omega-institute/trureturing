@@ -170,24 +170,13 @@ internal sealed class LatticeInvolutionDocument : IScribeDocumentDefinition
                         + "premise or an assumption that divergent sums vanish."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("actual-eigenspace-split"),
-                DeclarationHandle.Create(Prefix + "eigenspace_split"),
-                H("Every actual state splits into its two sign parts"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Background),
-                Blocks(Paragraph(Text("Set plusPart(v)=(v+theta(v))/2 and "
-                    + "minusPart(v)=(v-theta(v))/2. They belong to the actual "
-                    + "+1 and -1 eigenspaces and their sum is v."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("actual-sign-intersection"),
                 DeclarationHandle.Create(Prefix + "fixed_minus_intersection"),
                 H("The sign splitting is unique"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Background),
                 Blocks(Paragraph(Text("The +1 and -1 eigenspaces intersect "
-                    + "only at zero: their two equations imply 2v=0 over C. "
-                    + "Together with the explicit split, this proves uniqueness."))),
+                    + "only at zero: their two equations imply 2v=0 over C."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-mode-eigenvalue-selection"),

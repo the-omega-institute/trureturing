@@ -20,29 +20,10 @@ internal sealed class LatticeActualConformalWardDocument : IScribeDocumentDefini
                 + "single(0,1), Y is the constructed actual state-field map, T is the charge-sensitive "
                 + "translation, and mu(a,q,b)=(Y(a))_q b.")),
             Paragraph(Text("H remains arbitrary. For every integer m,q and every actual state a define "
-                + "wardTerm(j)=choose(m+1,j) (Y(L_(j-1)a))_(m+q+1-j). The identification omega_j a=L_(j-1)a "
-                + "gives actual inner-state truncation before binomial multiplication. Higher conformal "
+                + "wardTerm(j)=choose(m+1,j) (Y(L_(j-1)a))_(m+q+1-j), where omega_j a=L_(j-1)a. "
+                + "Their finite support follows directly from the released "
+                + "Sugawara-field truncation and its mode convention, before binomial multiplication. Higher conformal "
                 + "actions are retained.")),
-            Describe.Lean(
-                DescribeId.Create("latticeactualconformalward-conformal-actions-finite"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeActualConformalWard.conformal_actions_finite"),
-                H("Actual conformal inner states have finite support"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("For every a, j to L_(j-1)a has finite support, by the actual Hahn truncation of "
-                        + "Y(omega)a. No finite-support assertion about choose(m+1,j) is used when m is negative."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticeactualconformalward-ward-terms-finite"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeActualConformalWard.ward_terms_finite"),
-                H("The whole endomorphism Ward sum is finite"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("The support of wardTerm is a subset of the proved support of its inner actual states, "
-                        + "for every integer m,q."))),
-                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticeactualconformalward-ward-commutator"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeActualConformalWard.ward_commutator"),

@@ -114,21 +114,7 @@ For fixed a,b,c and arbitrary p,q,r in Z, put mu(a,n,b)=(fixedY(a))_n b and C(k,
 
 Subtype inclusion preserves each nested summand, reflects zero exactly, and hence identifies the genuine supports. It transports each of the three ambient finite-support proofs and preserves finsums by injectivity. Thus the full equality is inherited without a fixed-algebra compatibility premise or an assumption that divergent sums vanish.
 
-**Theorem 1.8 (Every actual state splits into its two sign parts).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.eigenspace_split`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeInvolution.eigenspace_split` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-Set plusPart(v)=(v+theta(v))/2 and minusPart(v)=(v-theta(v))/2. They belong to the actual +1 and -1 eigenspaces and their sum is v.
-
-**Theorem 1.9 (The sign splitting is unique).**
+**Theorem 1.8 (The sign splitting is unique).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_minus_intersection`
 
@@ -140,9 +126,9 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_minus_intersection`
 
 *Commentary.*
 
-The +1 and -1 eigenspaces intersect only at zero: their two equations imply 2v=0 over C. Together with the explicit split, this proves uniqueness.
+The +1 and -1 eigenspaces intersect only at zero: their two equations imply 2v=0 over C.
 
-**Theorem 1.10 (Actual mode eigenvalues multiply).**
+**Theorem 1.9 (Actual mode eigenvalues multiply).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.mode_eigenvalue_selection`
 
@@ -156,7 +142,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.mode_eigenvalue_selection
 
 For arbitrary complex s,t, the explicit actual equations theta(a)=s a and theta(b)=t b imply theta(a_n b)=(st)(a_n b) for every integer n. In particular (++),(+-),(-+),(--) give signs +,-,-,+. These are state-mode selection laws; no tensor-category fusion or anomaly classification is claimed.
 
-**Theorem 1.11 (At rank zero reflection is identity).**
+**Theorem 1.10 (At rank zero reflection is identity).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_rank_zero`
 
@@ -170,7 +156,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_rank_zero`
 
 There are no oscillator variables and only the zero charge when r=0, so theta(v)=v. Square identity therefore does not imply universal exact order two.
 
-**Theorem 1.12 (The rank-zero minus eigenspace is zero).**
+**Theorem 1.11 (The rank-zero minus eigenspace is zero).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.minusSpace_rank_zero`
 
@@ -190,7 +176,6 @@ This result constructs an ungraded fixed vertex algebra. Conformal grading, PCT,
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.eigenspace_split`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_actualVertexAlgebra`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_borcherds`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_minus_intersection`

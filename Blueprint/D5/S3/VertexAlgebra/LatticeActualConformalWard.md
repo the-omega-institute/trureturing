@@ -6,33 +6,9 @@ Actual conformal actions truncate before binomial weighting and satisfy every in
 
 Let D be any finite-rank ordinary lattice: its Gram matrix G is integral and symmetric with even diagonal. Rank zero is included. No positivity, nondegeneracy or unimodularity is assumed. Charges are Fin(rank(D)) to Z, oscillators are complex multivariate polynomials indexed by Fin(rank(D)) times N, and V is the finite-support charge direct sum of that polynomial algebra. Write B for the original integral bilinear form. Normalized coefficient q means the Laurent coefficient at -q-1. The vacuum is single(0,1), Y is the constructed actual state-field map, T is the charge-sensitive translation, and mu(a,q,b)=(Y(a))_q b.
 
-H remains arbitrary. For every integer m,q and every actual state a define wardTerm(j)=choose(m+1,j) (Y(L_(j-1)a))_(m+q+1-j). The identification omega_j a=L_(j-1)a gives actual inner-state truncation before binomial multiplication. Higher conformal actions are retained.
+H remains arbitrary. For every integer m,q and every actual state a define wardTerm(j)=choose(m+1,j) (Y(L_(j-1)a))_(m+q+1-j), where omega_j a=L_(j-1)a. Their finite support follows directly from the released Sugawara-field truncation and its mode convention, before binomial multiplication. Higher conformal actions are retained.
 
-**Theorem 1.1 (Actual conformal inner states have finite support).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeActualConformalWard.conformal_actions_finite`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeActualConformalWard.conformal_actions_finite` (`✓ std3`). ∎
-
-*Citation.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-For every a, j to L_(j-1)a has finite support, by the actual Hahn truncation of Y(omega)a. No finite-support assertion about choose(m+1,j) is used when m is negative.
-
-**Theorem 1.2 (The whole endomorphism Ward sum is finite).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeActualConformalWard.ward_terms_finite`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeActualConformalWard.ward_terms_finite` (`✓ std3`). ∎
-
-*Citation.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-The support of wardTerm is a subset of the proved support of its inner actual states, for every integer m,q.
-
-**Theorem 1.3 (Full Ward identity at all integer modes).**
+**Theorem 1.1 (Full Ward identity at all integer modes).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeActualConformalWard.ward_commutator`
 
@@ -56,8 +32,6 @@ This is algebraic ungraded vertex-algebra mathematics. Finite graded pieces, pos
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeActualConformalWard.conformal_actions_finite`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeActualConformalWard.ward_commutator`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeActualConformalWard.ward_terms_finite`
 - Dependency: [D5/S3/VertexAlgebra/LatticeActualConformalState](LatticeActualConformalState.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeActualStateDerivative](LatticeActualStateDerivative.md)

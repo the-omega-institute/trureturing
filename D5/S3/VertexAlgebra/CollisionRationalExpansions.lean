@@ -460,11 +460,6 @@ def residue (inner outer : ℕ)
     (F : HahnSeries (Indices ((inner + 1) + outer)) R) :
     HahnSeries (Indices (inner + outer)) R := fiber inner outer (-1) F
 
-@[simp] theorem residue_coeff (inner outer : ℕ)
-    (F : HahnSeries (Indices ((inner + 1) + outer)) R)
-    (g : Indices (inner + outer)) :
-    (residue inner outer F).coeff g = F.coeff (insertIndex inner outer (-1) g) := rfl
-
 variable {S : Type*} [AddCommGroup S]
 def fiberAddHom (inner outer : ℕ) (t : ℤ) :
     HahnSeries (Indices ((inner + 1) + outer)) S →+

@@ -40,16 +40,6 @@ internal sealed class LatticeEnergyGradingDocument : IScribeDocumentDefinition
                         + "each finite-support charge sector are uncurried. No positivity or finiteness of grades is required."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("latticeenergygrading-carriercoeffequiv-apply"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierCoeffEquiv_apply"),
-                H("Exact coefficient evaluation"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("For every actual state v and label (alpha,d), carrierCoeffEquiv(D,v)(alpha,d)=coeff(d,v(alpha)). "
-                        + "This is the actual polynomial coefficient, not an abstract eigenbasis assumption."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("latticeenergygrading-carrierbasis"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierBasis"),
                 H("Basis of the entire actual carrier"),
