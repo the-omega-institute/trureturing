@@ -599,6 +599,11 @@ $\beta=\rho(\alpha)$; equality of the symbol supplies no bridge.
 
 ## Boundary for FIB
 
+The [golden-field Mertens source](hathi2025numberfieldmertens.md) uses
+prime-ideal norms, retains a separate $L(s,\chi_5)$ response and
+identifies unit multiples under the ideal observation. Its hypotheses
+and cutoff accounting do not supply this ordinary same-source tail bound.
+
 The finite certificate is organized by CA exponent profiles and
 consecutive-CA interpolation, whereas a FIB family is specified by additive
 Zeckendorf windows or congruence classes. A FIB address alone does not
