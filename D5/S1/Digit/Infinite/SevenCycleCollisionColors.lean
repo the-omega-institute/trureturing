@@ -13,7 +13,9 @@ set_option autoImplicit false
 namespace D5.S1.Digit.Infinite.SevenCycleCollisionColors
 
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
-open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase from D5.S1.Digit.Infinite.SevenCycleCollisionData
+open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry
+  referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase
+  from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private golden_data budget_bounds from D5.S1.Digit.Infinite.SevenCycleCollisionData
 
 private theorem entry_algebra :

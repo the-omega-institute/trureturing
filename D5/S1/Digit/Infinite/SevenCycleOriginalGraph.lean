@@ -17,7 +17,9 @@ open D5.S1.Scale (embedding)
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.ClosedObservationGraphRealization
-open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase from D5.S1.Digit.Infinite.SevenCycleCollisionData
+open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry
+  referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase
+  from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private golden_data budget_bounds actual_entry source_windows shifted_source_windows shifted_source_tail
   from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private entry_algebra entry_bounds from D5.S1.Digit.Infinite.SevenCycleCollisionColors

@@ -34,6 +34,8 @@ open private denominator orbitVertex orbit_edge orbit_period entry_lattice origi
 open private periodic_targets from D5.S1.Digit.Infinite.SevenCycleActualRecords
 open private source_fibre from D5.S1.Digit.Infinite.SevenCycleSourceFibres
 
+local notation "PV" => (Vertex denominator 100 × Vertex denominator 100)
+
 private theorem orbit_edge_unique (b : Bool) (j : ℕ) (l : Label)
     (u : Vertex denominator 100) (he : edge (orbitVertex b j) l u) :
     l = window (source b) j ∧ u = orbitVertex b (j + 1) := by
@@ -79,9 +81,9 @@ private theorem orbit_edge_unique (b : Bool) (j : ℕ) (l : Label)
   exact Prod.ext (hu.trans hs.symm) (Prod.ext ha hb)
 
 private noncomputable def orbitPair (j : ℕ) :
-    Vertex denominator 100 × Vertex denominator 100 := (orbitVertex true j, orbitVertex false j)
+    PV := (orbitVertex true j, orbitVertex false j)
 
-local noncomputable instance : Quiver (Vertex denominator 100 × Vertex denominator 100) :=
+private noncomputable local instance : Quiver (PV) :=
   pairedGraph budget denominator 100
 
 private theorem orbit_common_color (j : ℕ) :
@@ -112,23 +114,23 @@ private noncomputable def orbit_arrow (j : ℕ) : orbitPair j ⟶ orbitPair (j +
     orbit_edge true j, orbit_edge false j,
     ⟨_, (orbit_common_color j).1, (orbit_common_color j).2⟩⟩
 
-private theorem pair_arrow_unique (j : ℕ) (z : Vertex denominator 100 × Vertex denominator 100)
+private theorem pair_arrow_unique (j : ℕ) (z : PV)
     (e : orbitPair j ⟶ z) :
     e.val = (window (source true) j, window (source false) j) ∧ z = orbitPair (j + 1) := by
   have h1 := orbit_edge_unique true j e.val.1 z.1 e.property.1
   have h2 := orbit_edge_unique false j e.val.2 z.2 e.property.2.1
   exact ⟨Prod.ext h1.1 h2.1, Prod.ext h1.2 h2.2⟩
 
-private theorem arrow_from_orbit (a z : Vertex denominator 100 × Vertex denominator 100)
+private theorem arrow_from_orbit (a z : PV)
     (j : ℕ) (ha : a = orbitPair j) (e : a ⟶ z) :
     e.val = (window (source true) j, window (source false) j) ∧ z = orbitPair (j + 1) := by
   subst a
   exact pair_arrow_unique j z e
 
-private theorem path_forced (j : ℕ) {z : Vertex denominator 100 × Vertex denominator 100}
+private theorem path_forced (j : ℕ) {z : PV}
     (H : Path (orbitPair j) z) :
     z = orbitPair (j + H.length) ∧
-    output (fun {a z : Vertex denominator 100 × Vertex denominator 100} (e : a ⟶ z) => e.val) H = (List.range H.length).map
+    output (fun {a z : PV} (e : a ⟶ z) => e.val) H = (List.range H.length).map
       (fun i => (window (source true) (j + i), window (source false) (j + i))) := by
   induction H with
   | nil => simp [output]
@@ -137,7 +139,7 @@ private theorem path_forced (j : ℕ) {z : Vertex denominator 100 × Vertex deno
     refine ⟨?_, ?_⟩
     · simpa only [Path.length_cons, Nat.add_assoc] using he.2
     · simp only [output, Path.weight_cons, FreeMonoid.toList_mul, FreeMonoid.toList_of]
-      change output (fun {a z : Vertex denominator 100 × Vertex denominator 100} (e : a ⟶ z) => e.val) H ++ [e.val] = _
+      change output (fun {a z : PV} (e : a ⟶ z) => e.val) H ++ [e.val] = _
       rw [ih.2, he.1, Path.length_cons, List.range_succ, List.map_append]
       rfl
 
@@ -159,93 +161,17 @@ private noncomputable def orbit_return (j : ℕ) : Path (orbitPair j) (orbitPair
   Eq.rec (motive := fun z _ => Path (orbitPair j) z) (orbit_segment j 7) (pair_period j)
 
 private theorem return_length (j : ℕ) : (orbit_return j).length = 7 := by
-  have cast_length (a b c : Vertex denominator 100 × Vertex denominator 100)
+  have cast_length (a b c : PV)
       (h : b = c) (H : Path a b) : (Eq.rec (motive := fun z _ => Path a z) H h).length = H.length := by
     subst c
     rfl
   exact (cast_length _ _ _ (pair_period j) (orbit_segment j 7)).trans (segment_length j 7)
 
-private theorem component_orbit (a : Component (StronglyConnectedComponent.mk (orbitPair 1))) :
-    ∃ j : ℕ, a.val = orbitPair j := by
-  obtain ⟨⟨H⟩, _⟩ := StronglyConnectedComponent.mk_eq_mk.mp a.property.symm
-  exact ⟨1 + H.length, (path_forced 1 H).1⟩
-
-private theorem all_component_singletons
-    (a : Component (StronglyConnectedComponent.mk (orbitPair 1))) :
-    ∃ x y : ℝ, piece a.val.1 = {x} ∧ piece a.val.2 = {y} := by
-  obtain ⟨j, hj⟩ := component_orbit a
-  rw [hj]
-  exact ⟨_, _, Set.Icc_self _, Set.Icc_self _⟩
-
-private theorem inclusion_length
-    (S : StronglyConnectedComponent (Vertex denominator 100 × Vertex denominator 100))
-    {a z : Component S} (H : Path a z) :
-    ((componentInclusion S).mapPath H).length = H.length := by
-  induction H <;> simp_all [Prefunctor.mapPath, Path.length]
-
-private theorem original_component_coherent :
-    Coherent (fun {a z : Vertex denominator 100 × Vertex denominator 100} (e : a ⟶ z) => e.val.1) (StronglyConnectedComponent.mk (orbitPair 1)) ∧
-    Coherent (fun {a z : Vertex denominator 100 × Vertex denominator 100} (e : a ⟶ z) => e.val.2) (StronglyConnectedComponent.mk (orbitPair 1)) ∧
-    Coherent (fun {a z : Vertex denominator 100 × Vertex denominator 100} (e : a ⟶ z) => e.val) (StronglyConnectedComponent.mk (orbitPair 1)) := by
-  classical
-  have hfinite := (closed_observation_graph_realization.2.2.2.2.2.1
-    budget denominator 100 original_parameters).2.2.1
-  letI : Finite (Vertex denominator 100) := Set.finite_univ_iff.mp hfinite
-  have hcy : Cyclic (StronglyConnectedComponent.mk (orbitPair 1)) := by
-    let q : Component (StronglyConnectedComponent.mk (orbitPair 1)) := ⟨orbitPair 1, rfl⟩
-    obtain ⟨J, hJ⟩ := liftComponentPath _ (orbit_return 1) rfl rfl
-    refine ⟨q, J, ?_⟩
-    have hl := congrArg Path.length hJ
-    rw [inclusion_length, return_length] at hl
-    omega
-  have hprefix {α : Type} (f : Label × Label → α) :
-      PeriodicPrefixes (fun {a z : Vertex denominator 100 × Vertex denominator 100} (e : a ⟶ z) => f e.val) (StronglyConnectedComponent.mk (orbitPair 1)) := by
-    intro a
-    obtain ⟨j, hj⟩ := component_orbit a
-    rcases a with ⟨a, ha⟩
-    change a = orbitPair j at hj
-    subst a
-    refine ⟨(fun i => f (window (source true) (j + i), window (source false) (j + i))),
-      7, by decide, ?_, ?_⟩
-    · intro n
-      simp [source_windows, Nat.add_mod, Nat.add_assoc]
-    · intro z H i hi
-      let K := (componentInclusion _).mapPath H
-      have hK : output (fun {a z : Vertex denominator 100 × Vertex denominator 100} (e : a ⟶ z) => f e.val) K =
-          output (componentLabel (fun {a z : Vertex denominator 100 × Vertex denominator 100} (e : a ⟶ z) => f e.val) _) H := by
-        induction H with
-        | nil => rfl
-        | cons H e ih =>
-          simp only [output, Prefunctor.mapPath_cons, Path.weight_cons,
-            FreeMonoid.toList_mul, FreeMonoid.toList_of] at ih ⊢
-          exact congrArg (fun l => l ++ [f e.val]) ih
-      have hlen : K.length = H.length := inclusion_length _ H
-      have hout : output (fun {a z : Vertex denominator 100 × Vertex denominator 100} (e : a ⟶ z) => f e.val) K =
-          (List.range H.length).map
-            (fun n => f (window (source true) (j + n), window (source false) (j + n))) := by
-        have hf := (path_forced j K).2
-        have hm : output (fun {a z : Vertex denominator 100 × Vertex denominator 100} (e : a ⟶ z) => f e.val) K = (output (fun {a z : Vertex denominator 100 × Vertex denominator 100} (e : a ⟶ z) => e.val) K).map f := by
-          induction K with
-          | nil => rfl
-          | cons K e ih =>
-            simp only [output, Path.weight_cons, FreeMonoid.toList_mul,
-              FreeMonoid.toList_of, List.map_append, List.map_cons, List.map_nil] at ih ⊢
-            exact congrArg (fun l => l ++ [f e.val]) ih
-        rw [hm, hf, hlen, List.map_map]
-        rfl
-      rw [← hK, hout]
-      simp [hi]
-  have hcoherent {α : Type} (f : Label × Label → α) :
-      Coherent (fun {a z : Vertex denominator 100 × Vertex denominator 100} (e : a ⟶ z) => f e.val) (StronglyConnectedComponent.mk (orbitPair 1)) :=
-    (coherent_component_phases _ _ hcy).1.mpr
-      ((coherent_component_phases _ _ hcy).2.1.mpr (hprefix f))
-  exact ⟨hcoherent Prod.fst, hcoherent Prod.snd, hcoherent id⟩
-
 private noncomputable def feedingVertex : Vertex denominator 100 :=
   ⟨(false, feedingEntry, feedingEntry), entry_lattice.2.2, entry_lattice.2.2,
     entry_lattice.2.2.1, entry_lattice.2.2.1, le_rfl, Or.inl rfl⟩
 
-private noncomputable def feedingPair : Vertex denominator 100 × Vertex denominator 100 :=
+private noncomputable def feedingPair : PV :=
   (feedingVertex, orbitVertex false 0)
 
 private noncomputable def feeding_arrow : feedingPair ⟶ orbitPair 1 := by
@@ -268,7 +194,7 @@ private noncomputable def feeding_arrow : feedingPair ⟶ orbitPair 1 := by
     simp only [Set.Icc_self, Set.singleton_subset_iff]
     refine ⟨by simp [lawful, outgoing, nullLabel], ⟨_, ?_, hscalar.symm⟩,
       ⟨feedingEntry, ⟨le_rfl, le_rfl⟩, hinv⟩⟩
-    simpa [phaseGuard] using hs
+    simpa [orbitVertex, phaseGuard] using hs
   have hcolor : permits budget feedingVertex 2 ∧ permits budget (orbitVertex false 0) 2 := by
     have hb : 0 < budget := budget_bounds.2.2.1
     have hf := entry_bounds.2.2.2.2.2
@@ -310,6 +236,89 @@ private theorem no_return_to_head : ¬ Nonempty (Path (orbitPair 1) feedingPair)
     (path_forced 1 H).1 feeding_arrow
   apply no_null_window (1 + H.length)
   simpa only [feeding_arrow] using (congrArg Prod.fst he.1).symm
+
+private theorem component_orbit (a : Component (StronglyConnectedComponent.mk (orbitPair 1))) :
+    ∃ j : ℕ, a.val = orbitPair j := by
+  obtain ⟨⟨H⟩, _⟩ := StronglyConnectedComponent.mk_eq_mk.mp a.property.symm
+  by_cases hh : a.val = feedingPair
+  · exact False.elim (no_return_to_head ⟨hh ▸ H⟩)
+  · exact ⟨1 + H.length, (path_forced 1 H).1⟩
+
+private theorem inclusion_length
+    (S : StronglyConnectedComponent (PV))
+    {a z : Component S} (H : Path a z) :
+    ((componentInclusion S).mapPath H).length = H.length := by
+  induction H <;> simp_all [Prefunctor.mapPath, Path.length]
+
+private theorem inclusion_output
+    (S : StronglyConnectedComponent (PV))
+    {α : Type} (f : Label × Label → α) {a z : Component S} (H : Path a z) :
+    output (fun {a z : PV} (e : a ⟶ z) => f e.val)
+      ((componentInclusion S).mapPath H) =
+    output (componentLabel
+      (fun {a z : PV} (e : a ⟶ z) => f e.val) S) H := by
+  induction H with
+  | nil => simp [output]
+  | cons H e ih =>
+    simp only [output, Prefunctor.mapPath_cons, Path.weight_cons,
+      FreeMonoid.toList_mul, FreeMonoid.toList_of] at ih ⊢
+    exact congrArg (fun l => l ++ [f e.val]) ih
+
+private theorem output_map {α : Type} (f : Label × Label → α)
+    {a z : PV} (H : Path a z) :
+    output (fun {a z : PV} (e : a ⟶ z) => f e.val) H =
+      (output (fun {a z : PV} (e : a ⟶ z) => e.val) H).map f := by
+  induction H with
+  | nil => simp [output]
+  | cons H e ih =>
+    simp only [output, Path.weight_cons, FreeMonoid.toList_mul,
+      FreeMonoid.toList_of, List.map_append, List.map_cons, List.map_nil] at ih ⊢
+    exact congrArg (fun l => l ++ [f e.val]) ih
+
+private theorem original_component_coherent :
+    Coherent (fun {a z : PV} (e : a ⟶ z) => e.val.1) (StronglyConnectedComponent.mk (orbitPair 1)) ∧
+    Coherent (fun {a z : PV} (e : a ⟶ z) => e.val.2) (StronglyConnectedComponent.mk (orbitPair 1)) ∧
+    Coherent (fun {a z : PV} (e : a ⟶ z) => e.val) (StronglyConnectedComponent.mk (orbitPair 1)) := by
+  classical
+  have hfinite := (closed_observation_graph_realization.2.2.2.2.2.1
+    budget denominator 100 original_parameters).2.2.1
+  letI : Finite (Vertex denominator 100) := Set.finite_univ_iff.mp hfinite
+  have hcy : Cyclic (StronglyConnectedComponent.mk (orbitPair 1)) := by
+    let q : Component (StronglyConnectedComponent.mk (orbitPair 1)) := ⟨orbitPair 1, rfl⟩
+    obtain ⟨J, hJ⟩ := liftComponentPath _ (orbit_return 1) rfl rfl
+    refine ⟨q, J, ?_⟩
+    have hl := congrArg Path.length hJ
+    rw [inclusion_length, return_length] at hl
+    omega
+  have hprefix {α : Type} (f : Label × Label → α) :
+      PeriodicPrefixes (fun {a z : PV} (e : a ⟶ z) => f e.val) (StronglyConnectedComponent.mk (orbitPair 1)) := by
+    intro a
+    obtain ⟨j, hj⟩ := component_orbit a
+    rcases a with ⟨a, ha⟩
+    change a = orbitPair j at hj
+    subst a
+    refine ⟨(fun i => f (window (source true) (j + i), window (source false) (j + i))),
+      7, by decide, ?_, ?_⟩
+    · intro n
+      simp [source_windows, Nat.add_mod, Nat.add_assoc]
+    · intro z H i hi
+      let K := (componentInclusion _).mapPath H
+      have hK := inclusion_output _ f H
+      have hlen : K.length = H.length := inclusion_length _ H
+      have hout : output (fun {a z : PV} (e : a ⟶ z) => f e.val) K =
+          (List.range H.length).map
+            (fun n => f (window (source true) (j + n), window (source false) (j + n))) := by
+        have hf := (path_forced j K).2
+        have hm := output_map f K
+        rw [hm, hf, hlen, List.map_map]
+        rfl
+      rw [← hK, hout]
+      simp [hi]
+  have hcoherent {α : Type} (f : Label × Label → α) :
+      Coherent (fun {a z : PV} (e : a ⟶ z) => f e.val) (StronglyConnectedComponent.mk (orbitPair 1)) :=
+    (coherent_component_phases _ _ hcy).1.mpr
+      ((coherent_component_phases _ _ hcy).2.1.mpr (hprefix f))
+  exact ⟨hcoherent Prod.fst, hcoherent Prod.snd, hcoherent id⟩
 
 private theorem actual_coherent_rival :
     actualCoherentRival budget denominator 100 (source false) := by

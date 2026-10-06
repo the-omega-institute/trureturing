@@ -14,18 +14,17 @@ set_option autoImplicit false
 namespace D5.S1.Digit.Infinite.SevenCycleCollisionResult
 
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
-open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase from D5.S1.Digit.Infinite.SevenCycleCollisionData
+open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry
+  referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase
+  from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
 open private denominator orbitVertex from D5.S1.Digit.Infinite.SevenCycleOriginalGraph
 open private budget_bounds from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private original_parameters rival_qualified from D5.S1.Digit.Infinite.SevenCycleOriginalGraph
 open private actual_collision from D5.S1.Digit.Infinite.SevenCycleActualCollision
 
-/-- The universal unconditional finite-future separation assertion is false. -/
-theorem result : ¬ claim := by
-  intro hc
-  obtain ⟨n, hn⟩ := hc budget denominator 100 budget_bounds.2.2.1 budget_bounds.2.2.2
-    original_parameters (source false) rival_qualified
+private theorem counterexample : ¬ separates budget (source false) := by
+  rintro ⟨n, hn⟩
   have hd : threeLabel ≠ nullLabel := by
     intro h
     have he := congrArg (fun l : Label => l.val 1) h
@@ -36,5 +35,11 @@ theorem result : ¬ claim := by
   have hm := hpersist n
   rw [h] at hm
   exact Set.notMem_empty _ hm
+
+/-- The universal unconditional finite-future separation assertion is false. -/
+theorem result : ¬ claim := by
+  intro hc
+  exact counterexample (hc budget denominator 100 budget_bounds.2.2.1
+    budget_bounds.2.2.2 original_parameters (source false) rival_qualified)
 
 end D5.S1.Digit.Infinite.SevenCycleCollisionResult

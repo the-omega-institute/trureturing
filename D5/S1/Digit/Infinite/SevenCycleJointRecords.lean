@@ -16,12 +16,15 @@ namespace D5.S1.Digit.Infinite.SevenCycleJointRecords
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.ClosedObservationGraphRealization
-open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase from D5.S1.Digit.Infinite.SevenCycleCollisionData
+open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry
+  referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase
+  from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private strictRecord from D5.S1.Digit.Infinite.SevenCycleActualRecords
 open D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
 open private periodic_actual_records interior_owned cell_geometry
   from D5.S1.Digit.Infinite.SevenCycleActualRecords
-open private budget_bounds shifted_source_tail actual_entry from D5.S1.Digit.Infinite.SevenCycleCollisionData
+open private budget_bounds shifted_source_tail actual_entry
+  from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private actual_phase actual_phase_guard from D5.S1.Digit.Infinite.SevenCycleCollisionRecords
 open private feeding_scalar from D5.S1.Digit.Infinite.SevenCycleCollisionFuture
 open private entry_bounds from D5.S1.Digit.Infinite.SevenCycleCollisionColors

@@ -15,7 +15,9 @@ namespace D5.S1.Digit.Infinite.SevenCycleActualCollision
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.ClosedObservationGraphRealization
-open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase from D5.S1.Digit.Infinite.SevenCycleCollisionData
+open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry
+  referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase
+  from D5.S1.Digit.Infinite.SevenCycleCollisionData
 open private strictRecord from D5.S1.Digit.Infinite.SevenCycleActualRecords
 open D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
 open private joint_actual_records from D5.S1.Digit.Infinite.SevenCycleJointRecords
