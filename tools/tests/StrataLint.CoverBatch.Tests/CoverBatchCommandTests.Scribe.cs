@@ -106,7 +106,6 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(2, sequentialLoads.Catalogs);
         Assert.Equal(2, sequentialLoads.Indexes);
         WriteLoadCounts("cover-batch-parser-owner", ledgerLoads);
-        Assert.Equal(0, ledgerLoads.BaselineLoads);
         Assert.Equal([1, 1], ledgerLoads.CandidateSnapshotLoads);
     }
 

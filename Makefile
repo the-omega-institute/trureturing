@@ -116,10 +116,10 @@ deposit-uncovered:
 	@/bin/bash tools/scripts/workflow/playbook-workflows.sh deposit-uncovered "$(BASE)" "$(GID)"
 
 cover:
-	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover "$(BASE)" "$(ATOM_ID)" "$(GID)"
+	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover "$(ATOM_ID)" "$(GID)"
 
 cover-batch:
-	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover-batch "$(BASE)" "$(ATOMS)"
+	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover-batch "$(ATOMS)"
 
 decompose:
 	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- decompose-atom --atom "$(ATOM_ID)" $(foreach offset,$(SPLIT_AT),--split-at "$(offset)") $(if $(filter 1,$(DRY_RUN)),--dry-run,)

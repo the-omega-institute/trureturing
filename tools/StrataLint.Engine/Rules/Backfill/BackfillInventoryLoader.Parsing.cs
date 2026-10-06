@@ -11,54 +11,17 @@ internal static partial class BackfillInventoryLoader
 
     private static ParsedSourceMetadata ParseCandidateSourceMetadata(
         string text,
-        string path,
-        RawChangeSet? canonicalEncodingChanges = null)
+        string path)
     {
         var fields = ParseSourceMetadataFields(text, path);
         RequireCandidateSourceMetadataKeys(fields, path);
         RequireSourceIdentity(fields, path);
         var check = ParseGenreRegistryCheck(fields, path);
-        if (canonicalEncodingChanges is null
-            || SourceMetadataWriterInputChanged(fields, path, canonicalEncodingChanges))
-        {
-            RequireCanonicalSourceMetadata(
-                text,
-                path,
-                BackfillInventoryWriter.WriteSourceMetadata(Source(fields, GenreRegistryProjection.Available(check))));
-        }
-
+        RequireCanonicalSourceMetadata(
+            text,
+            path,
+            BackfillInventoryWriter.WriteSourceMetadata(Source(fields, GenreRegistryProjection.Available(check))));
         return new ParsedSourceMetadata(fields, GenreRegistryProjection.Available(check));
-    }
-
-    private static ParsedSourceMetadata ParseBaselineSourceMetadata(
-        string text,
-        string path)
-    {
-        var fields = ParseSourceMetadataFields(text, path);
-        var keys = fields.Keys.ToHashSet(StringComparer.Ordinal);
-        var currentKeys = CandidateSourceMetadataKeys(fields);
-        var historicalKeys = HistoricalSourceMetadataKeys(fields);
-        if (!keys.SetEquals(currentKeys) && !keys.SetEquals(historicalKeys))
-        {
-            throw new FormatException($"source metadata keys are not canonical: {path}");
-        }
-
-        RequireSourceIdentity(fields, path);
-        return new ParsedSourceMetadata(fields, GenreRegistryProjection.Unavailable);
-    }
-
-    private static bool SourceMetadataWriterInputChanged(
-        IReadOnlyDictionary<string, List<string>> fields,
-        string metadataPath,
-        RawChangeSet changes)
-    {
-        var sourceRoot = metadataPath[..^"source.toml".Length];
-        var sourcePath = fields["path"].Single();
-        return changes.Paths.Any(path =>
-            path.Value == metadataPath
-            || path.Value == sourcePath
-            || path.Value == TheoryAtomizerDataLoader.DataPath
-            || path.Value.StartsWith(sourceRoot, StringComparison.Ordinal));
     }
 
     private static Dictionary<string, List<string>> ParseSourceMetadataFields(
@@ -153,12 +116,6 @@ internal static partial class BackfillInventoryLoader
 
         return [.. keys];
     }
-
-    private static string[] HistoricalSourceMetadataKeys(
-        IReadOnlyDictionary<string, List<string>> fields) =>
-        fields.ContainsKey("acknowledged_stale")
-            ? ["source_id", "path", "atomizer", "acknowledged_stale"]
-            : ["source_id", "path", "atomizer"];
 
     private static void RequireSourceIdentity(
         IReadOnlyDictionary<string, List<string>> fields,

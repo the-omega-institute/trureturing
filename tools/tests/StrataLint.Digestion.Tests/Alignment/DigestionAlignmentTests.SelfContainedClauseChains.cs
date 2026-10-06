@@ -17,7 +17,6 @@ public sealed partial class DigestionAlignmentTests
         Assert.DoesNotContain(result.Findings, finding => finding.Contains(
             "malformed clause chain",
             StringComparison.Ordinal));
-        Assert.Contains(fixture.Parent.AtomId, result.ClausePlanChainParents);
         Assert.Contains(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
         Assert.All(fixture.Children, child => Assert.Equal(
             DigestionReceiptAlignment.Seen,
