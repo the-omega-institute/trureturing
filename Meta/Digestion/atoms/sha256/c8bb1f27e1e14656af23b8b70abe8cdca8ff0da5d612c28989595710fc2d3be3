@@ -4,3 +4,5 @@ $$
 \epsilon(U,W,F)=(-1)^{n+k+\sum_{u\in U}u+\sum_{w\in W}w}\operatorname{sgn}(\sigma_F).
 $$
 
+
+Integration acceptance probe.
