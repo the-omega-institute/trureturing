@@ -538,7 +538,7 @@ def actualEuler (z s : ℝ) : ℝ :=
 def actualRatio (z v : ℝ) : ℝ :=
   actualEuler z (1 + v / Real.log z) / actualEuler z 1
 
-private def actualSlope (z v : ℝ) : ℝ :=
+def actualSlope (z v : ℝ) : ℝ :=
   scaledSlope (primeCutoff z) (Real.log z) v
 
 private theorem actual_cutoff_prime (z : ℝ) :
@@ -549,7 +549,7 @@ private theorem actual_cutoff_prime (z : ℝ) :
 private theorem actual_log_pos {z : ℝ} (hz : 2 ≤ z) : 0 < Real.log z :=
   Real.log_pos (lt_of_lt_of_le (by norm_num) hz)
 
-private theorem actualRatio_pos {z v : ℝ} (hz : 2 ≤ z) (hv : 0 ≤ v) :
+theorem actualRatio_pos {z v : ℝ} (hz : 2 ≤ z) (hv : 0 ≤ v) :
     0 < actualRatio z v :=
   scaledRatio_pos _ (actual_cutoff_prime z) (actual_log_pos hz) hv
 
@@ -594,7 +594,7 @@ private theorem actualSlope_first_mertens_bound {z v : ℝ} (hz : 2 ≤ z) (hv :
         exact hweighted
     _ = (Real.log 4 + 4 + denominatorBudget S) / L := by ring
 
-private theorem actualSlope_first_mertens_uniform {z v : ℝ} (hz : 2 ≤ z) (hv : 0 ≤ v) :
+theorem actualSlope_first_mertens_uniform {z v : ℝ} (hz : 2 ≤ z) (hv : 0 ≤ v) :
     |actualSlope z v - ∫ b in (0 : ℝ)..1, Real.exp (-v * b)| ≤
       (Real.log 4 + 4 + Mertens.E₁) / Real.log z := by
   apply (actualSlope_first_mertens_bound hz hv).trans
@@ -758,5 +758,174 @@ theorem result {z v : ℝ} (hz : 2 ≤ z) (hv : 0 ≤ v) :
       actualRatio z v ≤ Real.exp (budget * v / Real.log z + 1) * (1 + v) := by
   exact ⟨actual_euler_global_phi_envelope hz hv,
     actual_euler_global_linear_envelope hz hv⟩
+
+/- The compensated-numerator consumer imports the actual finite-support suppliers below. -/
+
+/-- Curvature of the same literal actual prime-cutoff Euler ratio. -/
+def actualCurvature (z v : ℝ) : ℝ :=
+  (∑ p ∈ primeCutoff z,
+    (p : ℝ) ^ (1 + v / Real.log z) * (Real.log (p : ℝ)) ^ 2 /
+      ((p : ℝ) ^ (1 + v / Real.log z) - 1) ^ 2) / (Real.log z) ^ 2
+
+private theorem hasDerivAt_primeSlope_curvature {p : ℕ} (hp : p.Prime)
+    {s : ℝ} (hs : 0 < s) :
+    HasDerivAt (fun t : ℝ => Real.log (p : ℝ) / ((p : ℝ) ^ t - 1))
+      (-((p : ℝ) ^ s * (Real.log (p : ℝ)) ^ 2 /
+        ((p : ℝ) ^ s - 1) ^ 2)) s := by
+  have hpow : HasDerivAt (fun t : ℝ => (p : ℝ) ^ t)
+      (Real.log (p : ℝ) * (p : ℝ) ^ s) s := by
+    simpa only [mul_one, id_eq] using
+      (hasDerivAt_id s).const_rpow (prime_cast_pos hp)
+  have h := (hasDerivAt_const s (Real.log (p : ℝ))).div
+    (hpow.sub_const 1) (prime_rpow_sub_one_pos hp hs).ne'
+  apply h.congr_deriv
+  ring
+
+/-- The actual slope derivative is minus the actual cutoff curvature. -/
+theorem hasDerivAt_actualSlope {z v : ℝ} (hz : 2 ≤ z) (hv : 0 ≤ v) :
+    HasDerivAt (actualSlope z) (-actualCurvature z v) v := by
+  have hL := actual_log_pos hz
+  have hs : 0 < 1 + v / Real.log z := by
+    have := div_nonneg hv hL.le
+    linarith
+  have hsum : HasDerivAt (eulerSlope (primeCutoff z))
+      (-(∑ p ∈ primeCutoff z,
+        (p : ℝ) ^ (1 + v / Real.log z) * (Real.log (p : ℝ)) ^ 2 /
+          ((p : ℝ) ^ (1 + v / Real.log z) - 1) ^ 2))
+      (1 + v / Real.log z) := by
+    change HasDerivAt
+      (fun t : ℝ => ∑ p ∈ primeCutoff z,
+        Real.log (p : ℝ) / ((p : ℝ) ^ t - 1)) _ _
+    rw [← Finset.sum_neg_distrib]
+    apply HasDerivAt.fun_sum
+    intro p hp
+    exact hasDerivAt_primeSlope_curvature (actual_cutoff_prime z p hp) hs
+  have hlin : HasDerivAt (fun w : ℝ => 1 + w / Real.log z)
+      (1 / Real.log z) v :=
+    ((hasDerivAt_id v).div_const (Real.log z)).const_add 1
+  have h := (hsum.comp v hlin).div_const (Real.log z)
+  apply h.congr_deriv
+  unfold actualCurvature
+  ring
+
+private theorem actual_cutoff_cast_le {z : ℝ} (hz : 2 ≤ z)
+    {p : ℕ} (hp : p ∈ primeCutoff z) : (p : ℝ) ≤ z := by
+  have hpn : p ≤ ⌊z⌋₊ :=
+    (Finset.mem_Ioc.mp (Finset.mem_filter.mp hp).1).2
+  exact (Nat.cast_le.mpr hpn).trans (Nat.floor_le (by linarith : 0 ≤ z))
+
+private theorem actual_prime_rpow_ge {z v : ℝ} (hz : 2 ≤ z) (hv : 0 ≤ v)
+    {p : ℕ} (hp : p ∈ primeCutoff z) :
+    (p : ℝ) ≤ (p : ℝ) ^ (1 + v / Real.log z) := by
+  have hexp : (1 : ℝ) ≤ 1 + v / Real.log z := by
+    have := div_nonneg hv (actual_log_pos hz).le
+    linarith
+  simpa only [Real.rpow_one] using
+    Real.rpow_le_rpow_of_exponent_le
+      (prime_cast_one_lt (actual_cutoff_prime z p hp)).le hexp
+
+theorem actualSlope_nonneg {z v : ℝ} (hz : 2 ≤ z) (hv : 0 ≤ v) :
+    0 ≤ actualSlope z v := by
+  have hL := actual_log_pos hz
+  change 0 ≤ (∑ p ∈ primeCutoff z,
+    Real.log (p : ℝ) / ((p : ℝ) ^ (1 + v / Real.log z) - 1)) / Real.log z
+  apply div_nonneg _ hL.le
+  apply Finset.sum_nonneg
+  intro p hp
+  have hPrime := actual_cutoff_prime z p hp
+  exact div_nonneg (Real.log_nonneg (prime_cast_one_lt hPrime).le)
+    (by have := actual_prime_rpow_ge hz hv hp
+        have := prime_cast_one_lt hPrime
+        linarith)
+
+theorem actualSlope_le_initial {z v : ℝ} (hz : 2 ≤ z) (hv : 0 ≤ v) :
+    actualSlope z v ≤ actualSlope z 0 := by
+  unfold actualSlope scaledSlope eulerSlope
+  simp only [zero_div, add_zero, Real.rpow_one]
+  apply div_le_div_of_nonneg_right _ (actual_log_pos hz).le
+  apply Finset.sum_le_sum
+  intro p hp
+  have hPrime := actual_cutoff_prime z p hp
+  exact div_le_div_of_nonneg_left
+    (Real.log_nonneg (prime_cast_one_lt hPrime).le)
+    (sub_pos.mpr (prime_cast_one_lt hPrime))
+    (sub_le_sub_right (actual_prime_rpow_ge hz hv hp) 1)
+
+/-- Finite support pays the curvature using the same actual slope. -/
+theorem actualCurvature_bounds {z v : ℝ} (hz : 2 ≤ z) (hv : 0 ≤ v) :
+    0 ≤ actualCurvature z v ∧ actualCurvature z v ≤ 2 * actualSlope z v := by
+  have hL := actual_log_pos hz
+  constructor
+  · unfold actualCurvature
+    apply div_nonneg _ (sq_nonneg _)
+    apply Finset.sum_nonneg
+    intro p hp
+    exact div_nonneg
+      (mul_nonneg
+        (Real.rpow_pos_of_pos (prime_cast_pos (actual_cutoff_prime z p hp)) _).le
+        (sq_nonneg _)) (sq_nonneg _)
+  · have hsum :
+        (∑ p ∈ primeCutoff z,
+          (p : ℝ) ^ (1 + v / Real.log z) * (Real.log (p : ℝ)) ^ 2 /
+            ((p : ℝ) ^ (1 + v / Real.log z) - 1) ^ 2) ≤
+        (2 * Real.log z) * (∑ p ∈ primeCutoff z,
+          Real.log (p : ℝ) / ((p : ℝ) ^ (1 + v / Real.log z) - 1)) := by
+      rw [Finset.mul_sum]
+      apply Finset.sum_le_sum
+      intro p hp
+      let q : ℝ := (p : ℝ) ^ (1 + v / Real.log z)
+      let u : ℝ := Real.log (p : ℝ)
+      have hPrime := actual_cutoff_prime z p hp
+      have hp2 : (2 : ℝ) ≤ (p : ℝ) := by exact_mod_cast hPrime.two_le
+      have hq2 : 2 ≤ q := hp2.trans (actual_prime_rpow_ge hz hv hp)
+      have hu0 : 0 ≤ u := Real.log_nonneg (prime_cast_one_lt hPrime).le
+      have huL : u ≤ Real.log z :=
+        Real.log_le_log (prime_cast_pos hPrime) (actual_cutoff_cast_le hz hp)
+      have hd : 0 < q - 1 := by linarith
+      have hqu : q * u ≤ (2 * Real.log z) * (q - 1) := by
+        have hmul := mul_le_mul_of_nonneg_left huL (by linarith : 0 ≤ q)
+        have haux := mul_nonneg hL.le (by linarith : 0 ≤ q - 2)
+        nlinarith
+      have hquu : q * u ^ 2 ≤ (2 * Real.log z) * (q - 1) * u := by
+        have hmul := mul_le_mul_of_nonneg_right hqu hu0
+        nlinarith
+      change q * u ^ 2 / (q - 1) ^ 2 ≤
+        (2 * Real.log z) * (u / (q - 1))
+      calc
+        _ ≤ ((2 * Real.log z) * (q - 1) * u) / (q - 1) ^ 2 :=
+          div_le_div_of_nonneg_right hquu (sq_nonneg _)
+        _ = (2 * Real.log z) * (u / (q - 1)) := by
+          field_simp [hd.ne'] <;> ring
+    change _ / (Real.log z) ^ 2 ≤ 2 * (_ / Real.log z)
+    calc
+      _ ≤ ((2 * Real.log z) * (∑ p ∈ primeCutoff z,
+          Real.log (p : ℝ) / ((p : ℝ) ^ (1 + v / Real.log z) - 1))) /
+          (Real.log z) ^ 2 := div_le_div_of_nonneg_right hsum (sq_nonneg _)
+      _ = 2 * ((∑ p ∈ primeCutoff z,
+          Real.log (p : ℝ) / ((p : ℝ) ^ (1 + v / Real.log z) - 1)) /
+          Real.log z) := by
+            field_simp [hL.ne'] <;> ring
+
+theorem hasDerivAt_actualRatio {z v : ℝ} (hz : 2 ≤ z) (hv : 0 ≤ v) :
+    HasDerivAt (actualRatio z) (actualRatio z v * actualSlope z v) v :=
+  hasDerivAt_scaledRatio _ (actual_cutoff_prime z) (actual_log_pos hz) hv
+
+theorem actualRatio_zero (z : ℝ) : actualRatio z 0 = 1 :=
+  scaledRatio_zero (primeCutoff z) (actual_cutoff_prime z) (Real.log z)
+
+theorem actualRatio_le_exp_two {z v : ℝ} (hz : 2 ≤ z)
+    (hbudget : budget / Real.log z ≤ 1) (hv : 0 ≤ v) (hv1 : v ≤ 1) :
+    actualRatio z v ≤ Real.exp 2 := by
+  have h := (abs_le.mp (actual_log_ratio_ein_error hz hv)).2
+  have hb : budget * v / Real.log z ≤ v := by
+    calc
+      _ = (budget / Real.log z) * v := by ring
+      _ ≤ 1 * v := mul_le_mul_of_nonneg_right hbudget hv
+      _ = v := one_mul v
+  have he := ein_le_self hv
+  have hlog : Real.log (actualRatio z v) ≤ 2 := by linarith
+  have hExp := Real.exp_le_exp.mpr hlog
+  simpa only [Real.exp_log (actualRatio_pos hz hv)] using hExp
+
 
 end D5.S3.Arith.Robin.PrimorialGlobalLaplaceEnvelope
