@@ -115,8 +115,8 @@ The histogram of (good,bad,regular) over the 1024 outcomes is:
 
 Independent implementations agree separately on all 1024 outcomes:
 
-1. [enumerate_signed_rotations.py](../../reports/facial-random-embeddings/enumerate_signed_rotations.py), using the doubled permutation face cycles
-2. [verify_ribbon_boundaries.mjs](../../reports/facial-random-embeddings/verify_ribbon_boundaries.mjs), independently counting each physical ribbon boundary once
+1. [enumerate_signed_rotations.py](../../../experiments/facial-random-embeddings/enumerate_signed_rotations.py), using the doubled permutation face cycles
+2. [verify_ribbon_boundaries.mjs](../../../experiments/facial-random-embeddings/verify_ribbon_boundaries.mjs), independently counting each physical ribbon boundary once
 
 The full [integer certificate](../../reports/facial-random-embeddings/k4_uniform_certificate.json) lists all 64 fixed-rotation representatives, the checks, and pinned source identifiers. [Reproduction instructions](../../reports/facial-random-embeddings/README.md) give the exact commands.
 

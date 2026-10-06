@@ -6,12 +6,14 @@ The uniform experiment consists of two cyclic rotations at each of the four vert
 
 ## Run
 
-From this directory, with Python 3 and Node.js:
+From the repository root, with Python 3 and Node.js. Both entry points are self-contained and also work when invoked by absolute path from another working directory:
 
 ```sh
-python3 enumerate_signed_rotations.py
-node verify_ribbon_boundaries.mjs computed_certificate.json
+python3 experiments/facial-random-embeddings/enumerate_signed_rotations.py
+node experiments/facial-random-embeddings/verify_ribbon_boundaries.mjs /tmp/k4-computed-certificate.json
 ```
+
+The executable sources live under [experiments/facial-random-embeddings](../../../experiments/facial-random-embeddings/). This directory retains only documentation and the mathematical certificate data.
 
 The first program follows cycles of the product of two involutions on 24 flags, accounting for doubled oriented facial walks. The second was written independently using physical ribbon-boundary components. It emits the full exact JSON certificate, including all 64 fixed-rotation representatives.
 
