@@ -4187,3 +4187,275 @@ C_{\rm pair}=\int_2^4\int_u^{2u}
 * `Library/Weil/johnstonyang2022pnt.md`：`adb7c7bc038556fe195dc977121a4fe9a34d804e0578c81964b4e8c3a2a779d8`。
 
 这些源与经典供给的归属保持原记录。本节是纸面证明；原临界有符号估计、其常数和全范围仍未解决。
+
+## 454. 真实素数面板在有界二倍逆运输后的有限截止符号翻转
+
+同一个真实 Möbius 素数面板在原配对中有严格负主项；将它改写成奇数前缀配对，再只取 \(N=\lceil8x\rceil\) 以前的部分，主项却严格为正。完整逆运输保留原符号，有限截止留下一个精确边界块。这个边界仍是 \(1/\log^2x\) 量级，必须与正前段共同保留。
+
+本节的承重结论是这个实际面板的截止符号翻转及其完整边界。二倍逆范数直接复用 §452，原奇数 Möbius 完整配对及积分前预算直接复用 §427 的 \(P=2\) 情形；这些复用接口不另作新成果。原 Robin 临界有符号界仍未解决。
+
+### 454.1 同一实际对象与两个配对
+
+保持 §§424、453 的字面定义
+\[
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,\qquad
+w(t)=\frac{1+\log t}{t^2\log^2t},
+\]
+\[
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)dt,\qquad
+J_x^\eta(n)=P_x^\eta(n)-P_x^\eta(n+1),\qquad
+\mathscr D_x(m)=P_x^\eta(m)-P_x^\eta(2m).
+\tag{BC.1}
+\]
+这里 \(\eta\) 固定，\(x\ge e\) 为同一实数源；全部整数索引均为正。令
+\[
+\ell=\log x,\quad L=\log2,\quad
+\mathcal P_x=\{p\text{ 素数}:2x<p\le4x\},\quad Q_x^\mathrm{p}=\#\mathcal P_x,
+\]
+\[
+\mathcal A_x=\sum_{p\in\mathcal P_x}\mathscr D_x(p),\qquad
+\Pi_x=-\mathcal A_x.
+\tag{BC.2}
+\]
+上端闭、下端严格，面板中的每个素数均为奇数且 \(\mu(p)=-1\)。\(Q_x^\mathrm{p}\) 是素数数目，不是此前的核积分范数 \(Q_x\)。
+
+对 \(n\ge0\)，定义面板的真实奇数前缀及完整 Möbius 前缀分量
+\[
+\mathcal U_x(n)=\sum_{\substack{p\in\mathcal P_x\\p\le n}}\mu(p)
+=-\#\{p\in\mathcal P_x:p\le n\},
+\qquad
+\mathcal V_x(n)=\mathcal U_x(n)-\mathcal U_x(\lfloor n/2\rfloor).
+\tag{BC.3}
+\]
+两列在零处为零；\(\mathcal U_x(n)=0\) 当 \(n\le2x\)，而
+\(\mathcal U_x(n)=-Q_x^\mathrm{p}\) 当 \(n\ge4x\)。
+实际 \(\mu(2p)=-\mu(p)=1\) 给
+\[
+\mathcal V_x(n)=-\#\{p\in\mathcal P_x:p\le n<2p\}.
+\tag{BC.4}
+\]
+所以 \(\mathcal V_x\) 支撑于 \(n<8x\)。有限面板及完整整数纤维求和直接给
+\[
+\sum_{n\ge1}\mathcal V_x(n)J_x^\eta(n)
+=-\sum_{p\in\mathcal P_x}\sum_{n=p}^{2p-1}J_x^\eta(n)
+=-\mathcal A_x=\Pi_x.
+\tag{BC.5}
+\]
+这正是 §453 的实际面板，不是另选符号或测试输入。
+
+### 454.2 已付款的逆运输、对偶空间与全来源
+
+在 \(f(0)=0\) 的序列上，保持
+\[
+(T_2f)(n)=f(\lfloor n/2\rfloor),\qquad
+(B_2k)(n)=k(2n)+k(2n+1).
+\]
+对于固定整数 \(j\ge0\)，§452 的
+\(W_j(n)=\sqrt n(1+\log n)^j\)、
+\(\mathcal X_j=\ell^\infty(W_j^{-1})\)
+与自然配对的前对偶
+\[
+\mathcal Y_j=\left\{k:\ \|k\|_{\mathcal Y_j}
+=\sum_{n\ge1}W_j(n)|k(n)|<\infty\right\}
+\]
+满足 \(\mathcal X_j=(\mathcal Y_j)^*\)。\(\mathcal Y_j\) 不被宣称为 \(\mathcal X_j\) 的整个 Banach 对偶。
+完整商纤维给
+\(\langle T_2f,k\rangle=\langle f,B_2k\rangle\)；
+\(r=1\) 的零商乘 \(f(0)=0\)，其余纤维恰为 \(r=2n,2n+1\)。
+§452 的精确系数范数直接给
+\[
+\|T_2\|=\|B_2\|=2^{-1/2},\qquad
+G=(I-T_2)^{-1}=\sum_{a\ge0}T_{2^a},\qquad
+\|G\|=2+\sqrt2.
+\tag{BC.6}
+\]
+算术系数是 \(g_d=\mathbf1_{d=2^a,\ a\ge0}\)，其完整临界系数和为
+\(\sum_a2^{-a/2}=2+\sqrt2\)；每个整数输入点的逆和因零商而局部终止。
+相应前对偶逆 \(\sum_aB_2^a\) 在算子范数中收敛，范数相同。
+这是加权 Dirichlet 卷积单位群的既有算子表示及经典 Neumann 逆应用。
+
+定义原核的完整前对偶变换
+\[
+\mathcal L_x(n)=(I-B_2)J_x^\eta(n)
+=J_x^\eta(n)-J_x^\eta(2n)-J_x^\eta(2n+1)
+=\mathscr D_x(n)-\mathscr D_x(n+1).
+\tag{BC.7}
+\]
+§424.12 的完整积分范数界给
+\(Q_x^\eta(n)\le C'_x(1+\log n)^2/n^2\)，故每个固定 \(x\) 与 \(j\) 上
+\[
+\sum_{n\ge1}W_j(n)Q_x^\eta(n)<\infty,\qquad
+J_x^\eta,\mathcal L_x\in\mathcal Y_j.
+\tag{BC.8}
+\]
+因为 \(\mathcal U_x\) 有界，面板配对还具有直接的积分前绝对账：
+\[
+\sum_{n\ge1}|\mathcal U_x(n)|
+\int_x^\infty|\eta_2(t/n)-\eta_2(t/(n+1))|w(t)dt
+\le Q_x^\mathrm{p}\sum_{n\ge1}
+[Q_x^\eta(n)+Q_x^\eta(2n)+Q_x^\eta(2n+1)]<\infty,
+\tag{BC.9}
+\]
+其中固定 \(\eta_2(y)=\eta(y)-\eta(y/2)\)。因此（BC.5）的完整前对偶运输绝对合法：
+\[
+\boxed{\sum_{n\ge1}\mathcal U_x(n)\mathcal L_x(n)
+=\sum_{n\ge1}\mathcal V_x(n)J_x^\eta(n)
+=-\mathcal A_x.}
+\tag{BC.10}
+\]
+
+对全实际来源 \(O(n)=\sum_{m\le n,\ m\text{ 奇}}\mu(m)\)，已有 §427（GP.1）–（GP.3）取固定 \(P=2\) 正好给
+\[
+I_\psi(x)=\sum_{n\ge1}O(n)\mathcal L_x(n),\qquad
+\sum_n|O(n)|Q_x^{\eta_2}(n)<\infty.
+\tag{BC.11}
+\]
+这里 \(O(1)=1\)、\(\theta_{2,1}=\beta_1\)，原首块补偿及全部纤维均保留。
+这份完整实际预算来自无条件 \(O(n)=O(n/(1+\log n)^4)\) 和固定过滤器账，未假设全实际 \(M,O\in\mathcal X_j\)。RH 的全部 \(N^{1/2+\varepsilon}\) 供应不能被当成某个固定平方根对数范数的免费输入。
+
+### 454.3 截止不交换及精确边界
+
+对整数 \(N\ge\lceil8x\rceil\)，令 \(P_{\le N}f=f\,\mathbf1_{n\le N}\)。实际常值前缀给逐点恒等式
+\[
+\boxed{(I-T_2)(P_{\le N}\mathcal U_x)-\mathcal V_x
+=Q_x^\mathrm{p}\mathbf1_{N<n\le2N+1}.}
+\tag{BC.12}
+\]
+当 \(n\le N\)，两者恰相同；当 \(N<n\le2N+1\)，正商满足
+\(4x\le\lfloor n/2\rfloor\le N\)，故右侧恰为
+\(-\mathcal U_x(\lfloor n/2\rfloor)=Q_x^\mathrm{p}\)；
+当 \(n>2N+1\)，两份截止读出为零，而 \(\mathcal V_x(n)=0\)。
+这保留奇端点 \(2N+1\)，没有用连续区间代替真实整数商。
+
+记同一面板的有限前段及全尾为
+\[
+\mathscr H_x(N)=\sum_{n=1}^N\mathcal U_x(n)\mathcal L_x(n),\qquad
+\mathscr T_x(N)=\sum_{n>N}\mathcal U_x(n)\mathcal L_x(n).
+\]
+对（BC.12）配对并在有限边界块中望远镜，得到
+\[
+\boxed{\mathscr H_x(N)
+=-\mathcal A_x+Q_x^\mathrm{p}
+[P_x^\eta(N+1)-P_x^\eta(2N+2)]
+=-\mathcal A_x+Q_x^\mathrm{p}\mathscr D_x(N+1).}
+\tag{BC.13}
+\]
+§453（DP.11）已给固定 \(x\) 的 \(P_x^\eta(s)\to0\)。
+因此由（BC.7）及（BC.8）的绝对收敛，
+\[
+\boxed{\mathscr T_x(N)=-Q_x^\mathrm{p}\mathscr D_x(N+1),\qquad
+\mathscr H_x(N)+\mathscr T_x(N)=-\mathcal A_x.}
+\tag{BC.14}
+\]
+等价地，每个面板素数 \(p\) 在 \(\mathcal U_x\) 中留下完整阶跃，
+\(\sum_{n\ge p}\mathcal L_x(n)=\mathscr D_x(p)\)。
+原有限支撑被变成常值前缀的无限尾；上述完整边界支付后总配对仍相同。
+
+### 454.4 原核的共同边界主项及解析符号
+
+取同一真实截止 \(N_x=\lceil8x\rceil\)。令
+\[
+q_\eta(v)=\tfrac12\log^2v+\gamma_1,\qquad
+k_2(u)=\int_u^{2u}\frac{q_\eta(v)}{v^2}dv.
+\]
+§453（DP.17）–（DP.19）的证明直接消费 §425.5。在这里对全部
+\(8x\le m\le9x\) 使用同一个 \(U=\log18\)，给
+\[
+\left|x\ell\mathscr D_x(m)-k_2(m/x)\right|
+\le\frac{\mathsf C_\beta(\log18)}{8\ell}
++\frac{\mathsf L_\beta(\log18)+D_{18}/2}{64x},
+\quad D_{18}=\log18+\log^218+2|\gamma_1|.
+\tag{BC.15}
+\]
+付款步骤仍是对 \(m\le n\le2m-1\) 的完整共同误差求和，
+再用 \( |[q_\eta(s/x)/s^2]'|\le D_{18}/s^3\) 支付单位纤维到积分的端点误差。
+这覆盖 \(m=N_x+1\)，其 \(m/x\to8\)，所以
+\[
+x\ell\mathscr D_x(N_x+1)\longrightarrow
+k_2(8)=\frac{1+\gamma_1+2L+L^2}{16}>0.
+\tag{BC.16}
+\]
+正性已由 §453 的解析 \(\gamma_1>-1/8\) 及 \(L>1/2\) 付款。
+既有 PNT 给 \(\ell Q_x^\mathrm{p}/x\to2\)。故定义
+\[
+C_{\rm tail}=2k_2(8)=\frac{1+\gamma_1+2L+L^2}{8},
+\qquad
+C_{\rm pair}=\frac{(1+\gamma_1)L}{2}+\frac{L^2}{4}-\frac{5L^3}{12}>0,
+\tag{BC.17}
+\]
+则（BC.13）–（BC.16）和 §453（DP.24）共同给
+\[
+\ell^2\mathscr T_x(N_x)\to-C_{\rm tail},\qquad
+\ell^2\mathscr H_x(N_x)\to C_{\rm head}:=C_{\rm tail}-C_{\rm pair}.
+\tag{BC.18}
+\]
+
+还须证明 \(C_{\rm head}>0\)，不能用近似数值判断符号。
+§453（DG.3）–（DG.5）的同一**绝对**梯形余项也给反向界
+\[
+\gamma_1\le L/4-L^2/2+(1-L)/32+1/(8e^3)
+<7/40-2/9+1/96+1/64=-61/2880<0.
+\tag{BC.19}
+\]
+这里严格界 \(2/3<L<7/10\)、\(e>2\) 均已在 §453 解析证明。
+由（BC.17）直接展开，
+\[
+C_{\rm head}=(1+\gamma_1)(1/8-L/2)
++L/4-L^2/8+5L^3/12.
+\]
+因为 \(1/8-L/2<0\)、\(1+\gamma_1<1\)，所以
+\[
+\boxed{C_{\rm head}>
+1/8-L/4-L^2/8+5L^3/12
+>1/8-7/40-49/800+10/81
+=791/64800>0.}
+\tag{BC.20}
+\]
+因此对于全部充分大实数 \(x\)，同一个实际面板满足
+\[
+\boxed{\mathscr H_x(\lceil8x\rceil)>0,\qquad
+\mathscr T_x(\lceil8x\rceil)<0,\qquad
+\mathscr H_x(\lceil8x\rceil)+\mathscr T_x(\lceil8x\rceil)
+=-\mathcal A_x<0.}
+\tag{BC.21}
+\]
+负尾的主项严格大于正前段的主项，差值恰是原 \(C_{\rm pair}\)。
+共同边界用了（BC.15），没有将固定 \(x\) 的尾趋零界用于增长 \(N_x,x\)。
+
+### 454.5 与临界预算、完整来源及既有递归的关联
+
+每个固定 \(x\) 的面板 \(\mathcal U_x,\mathcal V_x\) 确实属于全部固定 \(\mathcal X_j\)，但它们的共同 \(x\)-范数并不有界。令 \(n_x=\lfloor4x\rfloor\)，有
+\(\mathcal U_x(n_x)=\mathcal V_x(n_x)=-Q_x^\mathrm{p}\)；
+非零项的下端均大于 \(2x\)。因此由单调 \(W_j\) 和 PNT，
+\[
+\|\mathcal U_x\|_{\mathcal X_j}
+\asymp_j\|\mathcal V_x\|_{\mathcal X_j}
+\asymp_j\frac{\sqrt x}{\ell^{j+1}}
+\quad(x\to\infty,\ j\text{ 先固定}).
+\tag{BC.22}
+\]
+§395 的可测核定理在 \(\eta\) 上给
+\(M_{1/2}(\eta)=\int_0^\infty|\eta(y)|y^{-3/2}dy\le12\)，因此
+\(\|J_x^\eta\|_{\mathcal Y_0}\le144/(\sqrt x\log x)\) 对 \(x\ge e\) 成立。
+这里 \(M_{1/2}(\eta)\) 是核的 Mellin 绝对矩，绝非实际 Mertens 平方根范数。
+对 \(j>0\)，本节只用（BC.8）的固定 \(x,j\) 完整前对偶成员性；不把 \(j=0\) 的共同临界常数推广到带对数权空间。
+
+所以（BC.6）的有界逆与实际 \(1/\ell^2\) 面板响应相容。
+本操作将二倍尺度深度作几何求和；§452 的同 β 最大值递归则反复施加卷积逆幂。
+二者的真实系数不同，算子恢复成本不提供实际联合相位预算。
+完整变换保留总配对，截止与变换不交换时，已经付款的逆范数也不能替代（BC.14）的真实边界。
+
+保持 §453 的同源全补集 \(\mathscr C_x\)，原目标仍精确为
+\[
+I_\psi(x)=\mathscr C_x-\mathcal A_x
+=\mathscr C_x+\mathscr H_x(N_x)+\mathscr T_x(N_x).
+\tag{BC.23}
+\]
+一侧临界下界仍须控制精确 \(\mathscr C_x\ge\mathcal A_x-B/(\sqrt x\log x)\)。
+（BC.18）的任一非零主项归一化后都为 \(\sqrt x/\log x\) 量级；
+省去负尾会改变这个实际面板的符号，却不构成原完整 \(I_\psi\) 的正性证明。
+原单位、原首块补偿和全部窗外来源均由（BC.11）、（BC.23）保留。
+
+**来源与范围。** 先检索并复用 §§395、424、425、427、452、453；固定 \(P=2\) 配对及临界逆范数早已覆盖，未将它们包装成新结论。新承重是（BC.12）–（BC.21）的真实面板截止边界、共同主项及严格符号翻转。解析 \(\gamma_1\) 上界与前段正性估计沿用 §453 已付清的 Laurent 约定、梯形绝对误差和有理对数界。Dirichlet 卷积 Banach 代数沿用 Library/ArithSums/glocknerlucht2011weightedinversion.md 的 Glöckner–Lucht arXiv:1112.0749v2 归属；PNT 沿用 §453 的 Johnston–Yang v2。没有新 RH 判据或全局原创性声明。
+
+本节为解析推导；复用本卷 §§452–453，原有符号临界估计仍未解决。
