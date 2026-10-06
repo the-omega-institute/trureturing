@@ -61850,3 +61850,118 @@ $\mathcal B$ 在这里抵消，但这不是（404.9）积分极限的交换许�
 因此可在每个 $x\ge e$ 上合法使用 $\varepsilon_x=1/(\sqrt x\log x)$ 与（404.9），并由（403.6）将它接回原始 $I_\psi$。仍需取得的是真实积分（404.9）的完整临界有符号预算；新增阻尼既没有消去算术零点，也没有通过已有对数估计支付这一预算。已查原始反演与 Euler 供应器，未取得该临界联合估计；这只限定当前检索结果，不声称该结果不存在或当前接口原创。完整 Robin 与 RH 仍未解决。
 
 ## 追加锚（本行以下为增补区）
+
+## 405. 完整阻尼轮廓的中心频率增长与实际补集抵消
+
+本节消费 §§403–404 的完整实际和，检验直接对竖线积分取绝对值是否能够支付临界预算。只使用既有 Laurent 展开、$E_1$ 小参数展开和绝对积分尾收敛；不重证 PNT，不使用 RH，也不把一般复积分工具列为新成果。所得同尺度接口为纸面推导，未完成 Lean 核验。
+
+**定义 405.1（同一实际阻尼的中心频率）。** 对 §404 的实际 $\mathcal B$，记
+
+$$
+\mathscr G_\varepsilon(z)
+=\frac{\mathcal B(z+\varepsilon)}{\mathcal B(z)}
+\frac{-\zeta'(z)}{z\zeta(z+\varepsilon)}.
+\tag{405.1}
+$$
+
+对 $x\ge e$ 保留共同日程
+
+$$
+\ell=\log x,\qquad
+\varepsilon=\varepsilon_x=\frac{e^{-\ell/2}}\ell,
+\qquad z_\tau=1-\varepsilon/2+i\tau.
+\tag{405.2}
+$$
+
+将（404.9）的完整积分准确分成
+
+$$
+\begin{aligned}
+\mathfrak A_x&=\frac1{2\pi}
+\int_{-\varepsilon/2}^{\varepsilon/2}
+\mathscr G_\varepsilon(z_\tau)\widetilde w_x(z_\tau)d\tau,\\
+\mathfrak C_x&=\frac1{2\pi}
+\int_{|\tau|>\varepsilon/2}
+\mathscr G_\varepsilon(z_\tau)\widetilde w_x(z_\tau)d\tau,\\
+\mathfrak L_x&=\frac1{2\pi}
+\int_{-\varepsilon/2}^{\varepsilon/2}
+|\mathscr G_\varepsilon(z_\tau)\widetilde w_x(z_\tau)|d\tau.
+\end{aligned}
+\tag{405.3}
+$$
+
+两个有符号量均为实数，且 $I_{\varepsilon_x}(x)=\mathfrak A_x+\mathfrak C_x$。它们来自同一实际系数与共同积分线，不是两个可以分别实现的最优配置。
+
+**命题 405.2（中心频率的确切对数主项）。** 当 $x\to\infty$ 时，有
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak A_x&=\frac{4-\pi}{8\pi}\log x+O(1),\\
+\mathfrak L_x&=\frac{\log(1+\sqrt2)}{2\pi}\log x+O(1),\\
+\mathfrak C_x&=-\frac{4-\pi}{8\pi}\log x+O(1).
+\end{aligned}}
+\tag{405.4}
+$$
+
+因此该实际反演的完整绝对积分范数至少线性增长于 $\log x$。沿（405.2）直接使用三角不等式，不能给出 $O(1/(\sqrt x\log x))$ 的完整预算，即使假设 RH 也不会消除这一已知中心主项。
+
+证明。取 $\tau=\varepsilon u$、$|u|\le1/2$，令 $h=-1/2+iu$。既有 $\zeta$ 在 $1$ 的 Laurent 展开给
+
+$$
+-\zeta'(1+\varepsilon h)
+=\frac1{\varepsilon^2h^2}+O(1),\qquad
+\frac1{\zeta(1+\varepsilon(h+1))}
+=\varepsilon(h+1)+O(\varepsilon^2).
+$$
+
+实际 $\mathcal B$ 在 $1$ 非零且解析，故其同源比值为 $1+O(\varepsilon)$，$1/z=1+O(\varepsilon)$。所有误差对该紧 $u$ 范围一致；特别地，$h$ 和 $h+1$ 都远离零。于是
+
+$$
+\varepsilon\mathscr G_\varepsilon(1+\varepsilon h)
+=r(u)+O(\varepsilon),\qquad
+r(u)=\frac{1/2+iu}{(-1/2+iu)^2}.
+\tag{405.5}
+$$
+
+直接复用 [DLMF §6.6.2](https://dlmf.nist.gov/6.6.E2) 的
+$E_1(v)=-\gamma-\log v-\sum_{n\ge1}(-1)^nv^n/(n!n)$。
+这里 $v=-\varepsilon\ell h$ 位于右半平面的一个固定闭扇形，且 $\varepsilon\ell=e^{-\ell/2}$。因此（404.4）在同一 $u$ 范围给
+
+$$
+\widetilde w_x(1+\varepsilon h)
+=\frac\ell2-\gamma-\log(1/2-iu)
++\frac1\ell+O(e^{-\ell/2})
+=\frac\ell2+O(1).
+\tag{405.6}
+$$
+
+复对数采用右半平面的主支；没有跨越割线。式（405.5）和（405.6）在真实共同日程中相乘，再以 $d\tau=\varepsilon du$ 换元，得
+
+$$
+\begin{aligned}
+\mathfrak A_x&=\frac\ell{4\pi}\int_{-1/2}^{1/2}r(u)du+O(1),\\
+\mathfrak L_x&=\frac\ell{4\pi}\int_{-1/2}^{1/2}|r(u)|du+O(1).
+\end{aligned}
+\tag{405.7}
+$$
+
+第一积分的虚部由共轭对称消去。对 $c=1/2$，直接使用初等有理原函数，
+
+$$
+\begin{aligned}
+\Re r(u)&=\frac{c(c^2-3u^2)}{(c^2+u^2)^2},\\
+\int_{-c}^{c}r(u)du&=2-\frac\pi2,\\
+|r(u)|&=\frac1{\sqrt{c^2+u^2}},\qquad
+\int_{-c}^{c}|r(u)|du=2\log(1+\sqrt2).
+\end{aligned}
+\tag{405.8}
+$$
+
+这给（405.4）前两式。$4-\pi>0$，且完整绝对范数不小于其实际中心部分 $\mathfrak L_x$。
+
+最后，§397 的积分前绝对预算在任一固定 $x_0>1$ 上已支付原始 $I_\psi$ 的绝对尾积分。因此经典可积函数尾收敛给 $I_\psi(x)\to0$。由（403.6），$I_{\varepsilon_x}(x)\to0$。在已经合法的同一来源拆分 $I_{\varepsilon_x}=\mathfrak A_x+\mathfrak C_x$ 中代入第一式，便得第三式。没有重新求取素数或输入 $H$ 的增长，也没有将补集的有符号主项当作绝对上界。$\square$
+
+式（405.4）指出了当前表示中的真实联合抵消，但不是 Robin 或 RH 的反例。它也不排除先消去一份全积分为零的已知主部，再估计剩余表示。中心增长来自 $s=1$ 的经典极点，而非未知零点或五模式分支数；下一步应核对这种精确中心化能否保留完整实际积分，不能仅丢弃 $\mathfrak A_x$。
+
+## 追加锚（本行以下为增补区）
