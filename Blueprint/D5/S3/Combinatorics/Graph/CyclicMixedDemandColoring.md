@@ -92,7 +92,19 @@ $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), 
 
 Assume 0<m<=n, c>0, s(0)=0, strictly positive blocks s(i+1)-s(i), k(i)<=s(i+1)-s(i), c divides s(n), and every wrapping m-block sum is at most c. Color rank r at prefix i by (s(i)+r) mod c. For an adjacent ordered pair, selected slots are strictly ordered and less than c apart. Across the seam translate the second slot by s(n), which preserves its residue. Distinct ranks in one block are handled by the same strict bound. Thus the coloring is proper, including equality of a window sum with c.
 
-**Theorem 1.8 (Shortened singleton blocks).**
+**Theorem 1.8 (Exact shortened-slot formula).**
+
+$$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), \left(\forall a: \left(\mathbb{N}\right), \left(\forall rho: \left(\mathbb{N}\right), \left(\forall k: \left(\left(\operatorname{Fin}\left(n\right)\right) \to \left(\mathbb{N}\right)\right), \left(\forall R: \left(\operatorname{Finset}\left(\mathbb{N}\right)\right), \left(\left(\left(\left(0 < m\right) \land \left(m \le n\right)\right) \land \left(\left(n = \left(\left(m\right) \cdot \left(a\right)\right) + \left(rho\right)\right) \land \left(\left(\forall t: \left(\operatorname{Fin}\left(n\right)\right), \left(\left(\operatorname{k}\left(t\right) = 1\right) \lor \left(\operatorname{k}\left(t\right) = 2\right)\right)\right) \land \left(\left(R \subseteq \operatorname{range}\left(n\right)\right) \land \left(\left(\operatorname{card}\left(R\right) = \left(2\right) \cdot \left(rho\right)\right) \land \left(\forall t: \left(\operatorname{Fin}\left(n\right)\right), \left(\left(\operatorname{val}\left(t\right) \in R\right) \implies \left(\operatorname{k}\left(t\right) = 1\right)\right)\right)\right)\right)\right)\right)\right) \implies \left(let s: \left(\mathbb{N}\right) \to \left(\mathbb{N}\right) := \lambda i: \left(\mathbb{N}\right) \mapsto \left(\left(\left(2\right) \cdot \left(i\right)\right) - \left(\operatorname{card}\left(\operatorname{filter}\left(R, \lambda t: \left(\mathbb{N}\right) \mapsto \left(t < i\right)\right)\right)\right)\right); \left(\left(\operatorname{s}\left(0\right) = 0\right) \land \left(\left(\forall i: \left(\mathbb{N}\right), \left(\left(\operatorname{s}\left(\left(i\right) + \left(1\right)\right)\right) - \left(\operatorname{s}\left(i\right)\right) = if i \in R then 1 else 2\right)\right) \land \left(\left(\operatorname{s}\left(n\right) = \left(\left(2\right) \cdot \left(m\right)\right) \cdot \left(a\right)\right) \land \left(\operatorname{Proper}\left(m, k, \lambda x: \left(\operatorname{Vertex}\left(k\right)\right) \mapsto \left(\langle\operatorname{mod}\left(\left(\operatorname{s}\left(\operatorname{val}\left(\operatorname{fst}\left(x\right)\right)\right)\right) + \left(\operatorname{val}\left(\operatorname{snd}\left(x\right)\right)\right), \left(2\right) \cdot \left(m\right)\right)\rangle:\operatorname{Fin}\left(\left(2\right) \cdot \left(m\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/CyclicMixedDemandColoring.low_slot_formula_valid` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the shortened singleton blocks, the displayed cumulative formula starts at zero, has length one exactly on R and length two elsewhere, ends at 2ma, and its chosen slot residues form a proper coloring. The existential constructor uses this coloring.
+
+**Theorem 1.9 (Shortened singleton blocks).**
 
 $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), \left(\forall a: \left(\mathbb{N}\right), \left(\forall rho: \left(\mathbb{N}\right), \left(\forall k: \left(\left(\operatorname{Fin}\left(n\right)\right) \to \left(\mathbb{N}\right)\right), \left(\forall R: \left(\operatorname{Finset}\left(\mathbb{N}\right)\right), \left(\left(\left(\left(0 < m\right) \land \left(m \le n\right)\right) \land \left(\left(n = \left(\left(m\right) \cdot \left(a\right)\right) + \left(rho\right)\right) \land \left(\left(\forall t: \left(\operatorname{Fin}\left(n\right)\right), \left(\left(\operatorname{k}\left(t\right) = 1\right) \lor \left(\operatorname{k}\left(t\right) = 2\right)\right)\right) \land \left(\left(R \subseteq \operatorname{range}\left(n\right)\right) \land \left(\left(\operatorname{card}\left(R\right) = \left(2\right) \cdot \left(rho\right)\right) \land \left(\forall t: \left(\operatorname{Fin}\left(n\right)\right), \left(\left(\operatorname{val}\left(t\right) \in R\right) \implies \left(\operatorname{k}\left(t\right) = 1\right)\right)\right)\right)\right)\right)\right)\right) \implies \left(\exists color: \left(\left(\operatorname{Vertex}\left(k\right)\right) \to \left(\operatorname{Fin}\left(\left(2\right) \cdot \left(m\right)\right)\right)\right), \left(\operatorname{Proper}\left(m, k, color\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -104,7 +116,7 @@ $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), 
 
 Assume 0<m<=n, n=ma+rho, and every demand is one or two. Choose a set R of exactly 2rho singleton prefixes. Set s(i)=2i-#{r in R:r<i}. Each chosen block has length one; every other block has length two. All demands are contained, the total is 2ma, and every wrapping m-block sum is at most 2m. Cyclic slot validity supplies 2m colors for any placement of the chosen singleton prefixes.
 
-**Theorem 1.9 (The low branch).**
+**Theorem 1.10 (The low branch).**
 
 $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), \left(\forall a: \left(\mathbb{N}\right), \left(\forall rho: \left(\mathbb{N}\right), \left(\forall k: \left(\left(\operatorname{Fin}\left(n\right)\right) \to \left(\mathbb{N}\right)\right), \left(\left(\left(\left(0 < m\right) \land \left(m \le n\right)\right) \land \left(\left(n = \left(\left(m\right) \cdot \left(a\right)\right) + \left(rho\right)\right) \land \left(\left(\forall t: \left(\operatorname{Fin}\left(n\right)\right), \left(\left(\operatorname{k}\left(t\right) = 1\right) \lor \left(\operatorname{k}\left(t\right) = 2\right)\right)\right) \land \left(\left(2\right) \cdot \left(rho\right) \le \operatorname{card}\left(\operatorname{filter}\left(\operatorname{univ}\left(\operatorname{Fin}\left(n\right)\right), \lambda t: \left(\operatorname{Fin}\left(n\right)\right) \mapsto \left(\operatorname{k}\left(t\right) = 1\right)\right)\right)\right)\right)\right)\right) \implies \left(\exists color: \left(\left(\operatorname{Vertex}\left(k\right)\right) \to \left(\operatorname{Fin}\left(\left(2\right) \cdot \left(m\right)\right)\right)\right), \left(\operatorname{Proper}\left(m, k, color\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -116,7 +128,7 @@ $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), 
 
 Assume 0<m<=n, n=ma+rho, and every demand is one or two. If there are at least 2rho singleton prefixes, select exactly 2rho of them and use the shortened-block construction. No contiguous placement condition is imposed on the singletons.
 
-**Theorem 1.10 (Spaced extra slots).**
+**Theorem 1.11 (Spaced extra slots).**
 
 $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), \left(\forall k: \left(\left(\operatorname{Fin}\left(n\right)\right) \to \left(\mathbb{N}\right)\right), \left(\forall R: \left(\operatorname{Finset}\left(\mathbb{N}\right)\right), \left(\left(\left(\left(0 < m\right) \land \left(m \le n\right)\right) \land \left(\left(\forall t: \left(\operatorname{Fin}\left(n\right)\right), \left(\operatorname{k}\left(t\right) \le 2\right)\right) \land \left(\left(R \subseteq \operatorname{range}\left(n\right)\right) \land \left(\left(\forall x: \left(\mathbb{N}\right), \left(\forall y: \left(\mathbb{N}\right), \left(\left(\left(x \in R\right) \land \left(\left(y \in R\right) \land \left(x \neq y\right)\right)\right) \implies \left(\neg\left(\left(\left(x < \left(y\right) + \left(m\right)\right) \land \left(y < \left(x\right) + \left(m\right)\right)\right) \lor \left(\left(\left(n\right) + \left(x\right) < \left(y\right) + \left(m\right)\right) \lor \left(\left(n\right) + \left(y\right) < \left(x\right) + \left(m\right)\right)\right)\right)\right)\right)\right)\right) \land \left(\operatorname{mod}\left(\left(\left(2\right) \cdot \left(n\right)\right) + \left(\operatorname{card}\left(R\right)\right), \left(\left(2\right) \cdot \left(m\right)\right) + \left(1\right)\right) = 0\right)\right)\right)\right)\right) \implies \left(\exists color: \left(\left(\operatorname{Vertex}\left(k\right)\right) \to \left(\operatorname{Fin}\left(\left(\left(2\right) \cdot \left(m\right)\right) + \left(1\right)\right)\right)\right), \left(\operatorname{Proper}\left(m, k, color\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -128,7 +140,19 @@ $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), 
 
 Assume 0<m<=n and every demand is at most two. Start with blocks of length two and add one slot at each prefix in a cyclically m-separated set R. Set s(i)=2i+#{r in R:r<i}. Every wrapping m-window contains at most one extra slot, so its sum is at most 2m+1. If 2m+1 divides 2n+|R|, this gives a proper coloring with 2m+1 colors.
 
-**Theorem 1.11 (The high branch).**
+**Theorem 1.12 (Exact spaced-slot formula).**
+
+$$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), \left(\forall a: \left(\mathbb{N}\right), \left(\forall rho: \left(\mathbb{N}\right), \left(\forall k: \left(\left(\operatorname{Fin}\left(n\right)\right) \to \left(\mathbb{N}\right)\right), \left(\left(\left(\left(0 < m\right) \land \left(m \le n\right)\right) \land \left(\left(n = \left(\left(m\right) \cdot \left(a\right)\right) + \left(rho\right)\right) \land \left(\left(\left(2\right) \cdot \left(rho\right) \le a\right) \land \left(\forall t: \left(\operatorname{Fin}\left(n\right)\right), \left(\operatorname{k}\left(t\right) \le 2\right)\right)\right)\right)\right) \implies \left(let c: \mathbb{N} := \left(\left(2\right) \cdot \left(m\right)\right) + \left(1\right); \left(let z: \mathbb{N} := \operatorname{mod}\left(\left(a\right) - \left(\left(2\right) \cdot \left(rho\right)\right), c\right); \left(let R: \operatorname{Finset}\left(\mathbb{N}\right) := \operatorname{image}\left(\operatorname{range}\left(z\right), \lambda q: \left(\mathbb{N}\right) \mapsto \left(\left(q\right) \cdot \left(m\right)\right)\right); \left(let s: \left(\mathbb{N}\right) \to \left(\mathbb{N}\right) := \lambda i: \left(\mathbb{N}\right) \mapsto \left(\left(\left(2\right) \cdot \left(i\right)\right) + \left(\operatorname{card}\left(\operatorname{filter}\left(R, \lambda t: \left(\mathbb{N}\right) \mapsto \left(t < i\right)\right)\right)\right)\right); \left(\left(\operatorname{s}\left(0\right) = 0\right) \land \left(\left(\operatorname{s}\left(n\right) = \left(\left(2\right) \cdot \left(n\right)\right) + \left(z\right)\right) \land \left(\operatorname{Proper}\left(m, k, \lambda x: \left(\operatorname{Vertex}\left(k\right)\right) \mapsto \left(\langle\operatorname{mod}\left(\left(\operatorname{s}\left(\operatorname{val}\left(\operatorname{fst}\left(x\right)\right)\right)\right) + \left(\operatorname{val}\left(\operatorname{snd}\left(x\right)\right)\right), c\right)\rangle:\operatorname{Fin}\left(c\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/CyclicMixedDemandColoring.high_slot_formula_valid` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+With c=2m+1, z=(a-2rho) mod c, and R={qm:0<=q<z}, the cumulative formula starts at zero, ends at 2n+z, and its chosen slot residues form a proper coloring. The high-branch constructor uses this coloring.
+
+**Theorem 1.13 (The high branch).**
 
 $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), \left(\forall a: \left(\mathbb{N}\right), \left(\forall rho: \left(\mathbb{N}\right), \left(\forall k: \left(\left(\operatorname{Fin}\left(n\right)\right) \to \left(\mathbb{N}\right)\right), \left(\left(\left(\left(0 < m\right) \land \left(m \le n\right)\right) \land \left(\left(n = \left(\left(m\right) \cdot \left(a\right)\right) + \left(rho\right)\right) \land \left(\left(\left(2\right) \cdot \left(rho\right) \le a\right) \land \left(\forall t: \left(\operatorname{Fin}\left(n\right)\right), \left(\operatorname{k}\left(t\right) \le 2\right)\right)\right)\right)\right) \implies \left(\exists color: \left(\left(\operatorname{Vertex}\left(k\right)\right) \to \left(\operatorname{Fin}\left(\left(\left(2\right) \cdot \left(m\right)\right) + \left(1\right)\right)\right)\right), \left(\operatorname{Proper}\left(m, k, color\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -140,7 +164,7 @@ $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), 
 
 Assume 0<m<=n, n=ma+rho, a>=2rho, and every demand is at most two. Put c=2m+1 and z=(a-2rho) mod c. Add slots at 0,m,...,(z-1)m. Since z<=a, consecutive extras and the cyclic closing gap are at least m apart. The identity 2n+(a-2rho)=ca shows that c divides 2n+z. This construction allows arbitrary singleton positions and even applies when every demand is two.
 
-**Definition 1.12 (A cyclic consecutive window).**
+**Definition 1.14 (A cyclic consecutive window).**
 
 $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), \left(\left(m \le n\right) \implies \left(\forall start: \left(\operatorname{Fin}\left(n\right)\right), \left(\forall i: \left(\operatorname{Fin}\left(m\right)\right), \left(\operatorname{val}\left(\operatorname{cyclicIndex}\left(start, i\right)\right) = if \left(\operatorname{val}\left(start\right)\right) + \left(\operatorname{val}\left(i\right)\right) < n then \left(\operatorname{val}\left(start\right)\right) + \left(\operatorname{val}\left(i\right)\right) else \left(\left(\operatorname{val}\left(start\right)\right) + \left(\operatorname{val}\left(i\right)\right)\right) - \left(n\right)\right)\right)\right)\right)\right)$$
 
@@ -152,7 +176,7 @@ $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), 
 
 The offset i from start is start+i when this is below n, and start+i-n otherwise. Offsets range over Fin(m), with m<=n, so there is at most one seam crossing.
 
-**Theorem 1.13 (The double-demand clique).**
+**Theorem 1.15 (The double-demand clique).**
 
 $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), \left(\forall c: \left(\mathbb{N}\right), \left(\forall k: \left(\left(\operatorname{Fin}\left(n\right)\right) \to \left(\mathbb{N}\right)\right), \left(\forall start: \left(\operatorname{Fin}\left(n\right)\right), \left(\forall color: \left(\left(\operatorname{Vertex}\left(k\right)\right) \to \left(\operatorname{Fin}\left(c\right)\right)\right), \left(\left(\left(m \le n\right) \land \left(\left(\forall i: \left(\operatorname{Fin}\left(m\right)\right), \left(\operatorname{k}\left(\operatorname{cyclicIndex}\left(start, i\right)\right) = 2\right)\right) \land \left(\operatorname{Proper}\left(m, k, color\right)\right)\right)\right) \implies \left(\left(2\right) \cdot \left(m\right) \le c\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -164,7 +188,7 @@ $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), 
 
 If an m-consecutive cyclic window consists entirely of double-demand prefixes, its 2m types form a clique. Their colors are distinct, giving c>=2m for every proper coloring.
 
-**Theorem 1.14 (The exact mixed minimum).**
+**Theorem 1.16 (The exact mixed minimum).**
 
 $$\forall n: \left(\mathbb{N}\right), \left(\forall m: \left(\mathbb{N}\right), \left(\forall a: \left(\mathbb{N}\right), \left(\forall rho: \left(\mathbb{N}\right), \left(\forall k: \left(\left(\operatorname{Fin}\left(n\right)\right) \to \left(\mathbb{N}\right)\right), \left(\forall start: \left(\operatorname{Fin}\left(n\right)\right), \left(\left(\left(2 \le m\right) \land \left(\left(\left(2\right) \cdot \left(m\right) < n\right) \land \left(\left(n = \left(\left(m\right) \cdot \left(a\right)\right) + \left(rho\right)\right) \land \left(\left(rho < m\right) \land \left(\left(\left(2\right) \cdot \left(rho\right) \le a\right) \land \left(\left(\forall t: \left(\operatorname{Fin}\left(n\right)\right), \left(\left(\operatorname{k}\left(t\right) = 1\right) \lor \left(\operatorname{k}\left(t\right) = 2\right)\right)\right) \land \left(\forall i: \left(\operatorname{Fin}\left(m\right)\right), \left(\operatorname{k}\left(\operatorname{cyclicIndex}\left(start, i\right)\right) = 2\right)\right)\right)\right)\right)\right)\right)\right) \implies \left(let L: \mathbb{N} := \operatorname{card}\left(\operatorname{filter}\left(\operatorname{univ}\left(\operatorname{Fin}\left(n\right)\right), \lambda t: \left(\operatorname{Fin}\left(n\right)\right) \mapsto \left(\operatorname{k}\left(t\right) = 1\right)\right)\right); \left(let capacity: \mathbb{N} := \operatorname{max}\left(\left(2\right) \cdot \left(m\right), \operatorname{div}\left(\left(\left(\left(\left(2\right) \cdot \left(n\right)\right) - \left(L\right)\right) + \left(a\right)\right) - \left(1\right), a\right)\right); \left(\left(\operatorname{IsLeast}\left(\{c: \mathbb{N} \mid \exists color: \left(\left(\operatorname{Vertex}\left(k\right)\right) \to \left(\operatorname{Fin}\left(c\right)\right)\right), \left(\operatorname{Proper}\left(m, k, color\right)\right)\}, capacity\right)\right) \land \left(capacity = \left(\left(2\right) \cdot \left(m\right)\right) + \left(if L < \left(2\right) \cdot \left(rho\right) then 1 else 0\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -186,8 +210,10 @@ Assume m>=2, n>2m, n=ma+rho, rho<m, a>=2rho, demands k(t) in {1,2}, and one m-co
 - Truth anchor: `D5/S3/Combinatorics/Graph/CyclicMixedDemandColoring.cyclic_slot_coloring`
 - Truth anchor: `D5/S3/Combinatorics/Graph/CyclicMixedDemandColoring.double_window_lower_bound`
 - Truth anchor: `D5/S3/Combinatorics/Graph/CyclicMixedDemandColoring.high_branch_coloring`
+- Truth anchor: `D5/S3/Combinatorics/Graph/CyclicMixedDemandColoring.high_slot_formula_valid`
 - Truth anchor: `D5/S3/Combinatorics/Graph/CyclicMixedDemandColoring.low_branch_coloring`
 - Truth anchor: `D5/S3/Combinatorics/Graph/CyclicMixedDemandColoring.low_slot_construction`
+- Truth anchor: `D5/S3/Combinatorics/Graph/CyclicMixedDemandColoring.low_slot_formula_valid`
 - Truth anchor: `D5/S3/Combinatorics/Graph/CyclicMixedDemandColoring.mixed_demand_minimum`
 - Truth anchor: `D5/S3/Combinatorics/Graph/CyclicMixedDemandColoring.packing_lower_bound`
 - Truth anchor: `D5/S3/Combinatorics/Graph/CyclicMixedDemandColoring.separated_packing`
