@@ -33,6 +33,7 @@ private theorem periodic_shift (x : LegalDigits) (d n : ℕ)
     Function.Periodic (bitShift x n).val d := by
   exact hx.add_const n
 
+/-- The nonconstant alternating seam tail cannot occur in a purely odd-periodic stream. -/
 private theorem prepend_not_odd_periodic (w : List Block) (d : ℕ) (hd : Odd d) :
     ¬ Function.Periodic (prependWord w v).val d := by
   induction w with
@@ -53,6 +54,7 @@ private theorem prepend_not_odd_periodic (w : List Block) (d : ℕ) (hd : Odd d)
       simpa [prependWord, prependBlock, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
         using h (j + 2)
 
+/-- Apply the frozen fiber classification after excluding its displayed seam streams. -/
 private theorem odd_periodic_scalar_injective (d : ℕ) (hd : Odd d)
     (x y : LegalDigits) (hx : Function.Periodic x.val d)
     (he : kappa x = kappa y) : x = y := by
@@ -77,9 +79,6 @@ private theorem odd_periodic_scalar_injective (d : ℕ) (hd : Odd d)
     exact ⟨x, rfl⟩
   obtain ⟨z, hz, hu⟩ := signed_series_fibres.2.2 _ hb hn
   exact (hu x rfl).trans (hu y hs.symm).symm
-
-
-
 private theorem golden_relations :
     0 < t ∧ t < 1 ∧ t ^ 2 = 1 - t ∧ g = 2 * t - 1 ∧ (1 : ℝ) / 2 < t := by
   have ht : 0 < t := inv_pos.mpr Real.goldenRatio_pos
@@ -94,6 +93,7 @@ private theorem golden_relations :
       congrArg (fun z : ℝ => t * z) ht2]
   · nlinarith
 
+/-- Membership in the root image supplied by the frozen realization theorem. -/
 private theorem root_bounds (x : LegalDigits) :
     kappa x ∈ Set.Icc
       (if (window x 0).val 1 then -1 else if (window x 0).val 0 then
@@ -109,6 +109,7 @@ private theorem root_bounds (x : LegalDigits) :
   apply (hrange (outgoing (window x 0))).subset
   exact ⟨originalT x, (hrec x).2.1, rfl⟩
 
+/-- At most two adjacent roots meet a color; its width is below their translation gap. -/
 private theorem color_geometry (β : ℝ) (hb : β < lambda) (c : Fin 6) :
     ∃ lo hi : Label,
       offset lo < offset hi ∧
@@ -189,6 +190,7 @@ private theorem color_geometry (β : ℝ) (hb : β < lambda) (c : Fin 6) :
 private noncomputable def orderParity (x : Fin 3 → ℝ) : Bool :=
   (decide (x 0 < x 1) ^^ decide (x 1 < x 2)) ^^ decide (x 2 < x 0)
 
+/-- Same-branch comparisons reverse, while separated cross-branch comparisons persist. -/
 private theorem two_branch_parity (a b g L R : ℝ) (hg : 0 < g)
     (hgap : R - L < b - a) (x y : Fin 3 → ℝ) (p : Fin 3 → Bool)
     (hrec : ∀ i, x i = (if p i then b else a) - g * y i)
@@ -242,8 +244,6 @@ private theorem two_branch_parity (a b g L R : ℝ) (hg : 0 < g)
   cases p 0 <;> cases p 1 <;> cases p 2 <;>
     cases decide (y 0 < y 1) <;> cases decide (y 1 < y 2) <;>
     cases decide (y 2 < y 0) <;> rfl
-
-
 private theorem periodic_shift_injective (d : ℕ) (hd : 0 < d) (n : ℕ)
     (x y : LegalDigits) (hx : Function.Periodic x.val d)
     (hy : Function.Periodic y.val d) (he : bitShift x n = bitShift y n) : x = y := by
@@ -357,7 +357,8 @@ private theorem no_three_sources (β : ℝ) (hb : β < lambda) (m : ℕ)
   exact Bool.not_ne_self _ (hodd.symm.trans hreturn)
 
 /-- Every fixed odd closed color word admits at most two distinct actual periodic
-addresses whose window period divides its length. -/
+addresses whose window period divides its length. A window deletes three bits,
+so returning after `m` windows is exactly a pure digit period of `3 * m`. -/
 theorem result (β : ℝ) (hb : β < lambda) (m : ℕ) (hm : Odd m)
     (c : Fin m → Fin 6) :
     {x : LegalDigits | Function.Periodic x.val (3 * m) ∧

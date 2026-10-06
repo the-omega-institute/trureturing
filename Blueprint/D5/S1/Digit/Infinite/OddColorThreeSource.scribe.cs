@@ -19,7 +19,10 @@ internal sealed class OddColorThreeSourceDocument : IScribeDocumentDefinition
                     + "For every word of m original closed colors, the set of actual legal addresses "
                     + "with a window period dividing m and with the prescribed closed color at "
                     + "every time has extended cardinality at most two. The coordinates are the "
-                    + "literal kappa values after each three-bit deletion.")),
+                    + "literal kappa values after each three-bit deletion. Precisely, the period "
+                    + "condition says that digit n + 3m equals digit n for every n; this is "
+                    + "equivalent to repeating the legal three-bit windows every m steps. "
+                    + "The color condition holds at every nonnegative time j, using color j modulo m.")),
                 Paragraph(Text(
                     "An address with an odd bit period cannot have a finite return-block prefix "
                     + "followed by the nonconstant alternating endpoint tail. The signed-series "
@@ -27,8 +30,8 @@ internal sealed class OddColorThreeSourceDocument : IScribeDocumentDefinition
                     + "Periodicity also makes deletion injective among these addresses, so three "
                     + "distinct sources would have three distinct scalar values at every time.")),
                 Paragraph(Text(
-                    "Each closed color allows two adjacent root branches, with only one branch "
-                    + "available where the other does not meet the color. Below the critical budget, "
+                    "Each closed color permits at most two adjacent root branches. "
+                    + "Below the critical budget, "
                     + "the color width is strictly smaller than the translation difference. Thus "
                     + "the two root groups retain their order after inverse iteration, including "
                     + "closed endpoints, while every single branch reverses the order within its group.")),
