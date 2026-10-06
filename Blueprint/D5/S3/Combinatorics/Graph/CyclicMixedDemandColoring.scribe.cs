@@ -45,6 +45,10 @@ internal sealed class CyclicMixedDemandColoringDocument : IScribeDocumentDefinit
                 + "are strictly ordered and less than c apart. Across the seam translate the second slot "
                 + "by s(n), which preserves its residue. Distinct ranks in one block are handled by the same "
                 + "strict bound. Thus the coloring is proper, including equality of a window sum with c."),
+            Claim("low-slot-formula", "low_slot_formula_valid", "Exact shortened-slot formula",
+                "For the shortened singleton blocks, the displayed cumulative formula starts at zero, "
+                + "has length one exactly on R and length two elsewhere, ends at 2ma, and its chosen "
+                + "slot residues form a proper coloring. The existential constructor uses this coloring."),
             Claim("low-slots", "low_slot_construction", "Shortened singleton blocks",
                 "Assume 0<m<=n, n=ma+rho, and every demand is one or two. Choose a set R "
                 + "of exactly 2rho singleton prefixes. Set s(i)=2i-#{r in R:r<i}. "
@@ -60,6 +64,10 @@ internal sealed class CyclicMixedDemandColoringDocument : IScribeDocumentDefinit
                 + "and add one slot at each prefix in a cyclically m-separated set R. "
                 + "Set s(i)=2i+#{r in R:r<i}. Every wrapping m-window contains at most one extra slot, "
                 + "so its sum is at most 2m+1. If 2m+1 divides 2n+|R|, this gives a proper coloring with 2m+1 colors."),
+            Claim("high-slot-formula", "high_slot_formula_valid", "Exact spaced-slot formula",
+                "With c=2m+1, z=(a-2rho) mod c, and R={qm:0<=q<z}, the cumulative formula "
+                + "starts at zero, ends at 2n+z, and its chosen slot residues form a proper coloring. "
+                + "The high-branch constructor uses this coloring."),
             Claim("high-branch", "high_branch_coloring", "The high branch",
                 "Assume 0<m<=n, n=ma+rho, a>=2rho, and every demand is at most two. "
                 + "Put c=2m+1 and z=(a-2rho) mod c. Add slots at "
@@ -200,6 +208,22 @@ internal sealed class CyclicMixedDemandColoringDocument : IScribeDocumentDefinit
                     Eqn(Mod(Call("s", n), c), D(0)), Q("i", N, Imp(Less(i, n), Leq(Call("Window", n, m, s, i), c)))),
                     Call("Proper", m, k, slotColor)))));
         }
+        else if (declaration == "low_slot_formula_valid")
+        {
+                var boundary = Fn("i", N, Sub(Mul(D(2), i),
+                    Card(Call("filter", removed, Fn("t", N, Less(t, i))))));
+                var slotColor = Fn("x", vertex, Seq(Langle,
+                    Mod(Add(Call("s", Val(Call("fst", x))), Val(Call("snd", x))), Mul(D(2), m)),
+                    Rangle, Colon, Fin(Mul(D(2), m))));
+                result = Q("n m a rho", N, Q("k", demandType, Q("R", Call("Finset", N),
+                    Imp(And(bounds, decomposition, demands, within, Eqn(Card(removed), Mul(D(2), rho)),
+                        Q("t", Fin(n), Imp(Member(Val(t), removed), Eqn(Call("k", t), D(1))))),
+                        Let("s", Arr(N, N), boundary, And(Eqn(Call("s", D(0)), D(0)),
+                            Q("i", N, Eqn(Sub(Call("s", Add(i, D(1))), Call("s", i)),
+                                Choice(Member(i, removed), D(1), D(2)))),
+                            Eqn(Call("s", n), Mul(Mul(D(2), m), a)),
+                            Call("Proper", m, k, slotColor)))))));
+        }
         else if (declaration == "low_slot_construction")
         {
                 result = Q("n m a rho", N, Q("k", demandType, Q("R", Call("Finset", N),
@@ -219,6 +243,25 @@ internal sealed class CyclicMixedDemandColoringDocument : IScribeDocumentDefinit
                     Imp(And(bounds, atMostTwo, within, separatedR,
                         Eqn(Mod(Add(Mul(D(2), n), Card(removed)), Add(Mul(D(2), m), D(1))), D(0))),
                         Ex("color", Arr(vertex, Fin(Add(Mul(D(2), m), D(1)))), proper)))));
+        }
+        else if (declaration == "high_slot_formula_valid")
+        {
+                var z = V("z");
+                var boundary = Fn("i", N, Add(Mul(D(2), i),
+                    Card(Call("filter", removed, Fn("t", N, Less(t, i))))));
+                var slotColor = Fn("x", vertex, Seq(Langle,
+                    Mod(Add(Call("s", Val(Call("fst", x))), Val(Call("snd", x))), c),
+                    Rangle, Colon, Fin(c)));
+                result = Q("n m a rho", N, Q("k", demandType,
+                    Imp(And(bounds, decomposition, Leq(Mul(D(2), rho), a), atMostTwo),
+                        Let("c", N, Add(Mul(D(2), m), D(1)),
+                            Let("z", N, Mod(Sub(a, Mul(D(2), rho)), c),
+                                Let("R", Call("Finset", N), Call("image", Call("range", z),
+                                    Fn("q", N, Mul(V("q"), m))),
+                                    Let("s", Arr(N, N), boundary,
+                                        And(Eqn(Call("s", D(0)), D(0)),
+                                            Eqn(Call("s", n), Add(Mul(D(2), n), z)),
+                                            Call("Proper", m, k, slotColor)))))))));
         }
         else if (declaration == "high_branch_coloring")
         {
