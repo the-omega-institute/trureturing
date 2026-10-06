@@ -92,8 +92,7 @@ theorem  proposition  lemma  corollary  theorem-form
 写成 `**定理 7.2（…）。**` 的段落 ⟹ 地址 `定理/7.2` ⟹ 计入形式化候选,将来可被 `make cover` 覆盖。
 写成 `**定义 7.1（…）。**` ⟹ 地址 `unregistered:定义/7.1` ⟹ 合法、入账、但**不计入可形式化分母**。
 这不是缺陷:定义、约定、注记本就不是待证命题。**要它被证,就用上面五个词之一;不打算证,就别用。**
-(本条依据是源码里的那张表;`make digestion-readiness` 的运行时分类读数要先跑 `make lean-report`,
-本次**未取**,标 `ASSUMED-UNVERIFIED`。)
+
 
 **5. atom 的边界。** 一个 claim 从它的 lead 起,延伸到**下一个边界**为止:claim 到下一个 claim
 或下一个同级/更高级 heading 的起点;非 claim 的 section 到**任何**后续边界的起点。

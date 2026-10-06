@@ -76,32 +76,6 @@ internal static class DigestionWorkingTree
         return Extend(repository, scoped, decode, sourcePaths.ToArray());
     }
 
-    // Report-free candidate projection only needs the ledger, atomizer inputs,
-    // source bytes, and the CAS objects named by that ledger. It must not pull
-    // Lean, frozen state, or registry inputs into a query whose result excludes
-    // covered entries by design.
-    internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadUncovered(
-        IRepositoryGateway repository,
-        (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) current,
-        Func<RawRepositorySnapshot, RepositorySnapshot> decode)
-    {
-        var ledger = current.Document;
-        var sourcePaths = ledger.RequireDigestionSources()
-            .Select(static source => source.SourcePath);
-        var chainRoots = ledger.RequireDigestionEntries()
-            .Where(static entry => !entry.Receipts.ChainAtoms.IsEmpty)
-            .Select(static entry => entry.AtomId);
-        return Extend(
-            repository,
-            current,
-            decode,
-            [
-                .. sourcePaths,
-                TheoryAtomizerDataLoader.DataPath,
-                .. ChainCasPaths(ledger, chainRoots),
-            ]);
-    }
-
     internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) Extend(
         IRepositoryGateway repository,
         (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) current,

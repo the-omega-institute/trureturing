@@ -12,7 +12,6 @@ namespace StrataLint.Tests;
 
 internal sealed class StubCliEnvironment(
     AdmissionOutcome outcome,
-    ExplicitCommandResult? echoVerify = null,
     ExplicitCommandResult? fileMapConform = null,
     CommandResult? cleanLanes = null,
     ExplicitCommandResult? capacityAudit = null,
@@ -21,7 +20,6 @@ internal sealed class StubCliEnvironment(
     ExplicitCommandResult? checkDelta = null) : ICliEnvironment
 {
     internal IReadOnlyList<string> CleanLanesArguments { get; private set; } = [];
-
 
     public ExplicitCommandResult CheckCurrent(IReadOnlyList<string> arguments) =>
         checkCurrent ?? throw new NotSupportedException();
@@ -40,17 +38,14 @@ internal sealed class StubCliEnvironment(
     public CommandResult Coverage(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "coverage is not configured in this fixture");
 
-    public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "digest status is not configured in this fixture");
+    public CommandResult SearchAtoms(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "atom search is not configured in this fixture");
 
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "show atom is not configured in this fixture");
 
     public CommandResult AtomContext(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "atom context is not configured in this fixture");
-
-    public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
-        echoVerify ?? new(2, string.Empty, "echo verify is not configured in this fixture");
 
     public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
         new(2, string.Empty, "gate authority is not configured in this fixture");
@@ -84,7 +79,6 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "decompose-atom is not configured in this fixture");
-
 
     public CommandResult Route(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "route is not configured in this fixture");

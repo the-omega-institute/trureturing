@@ -668,7 +668,6 @@ jobs:
             tools/scripts/lib/*
             tools/scripts/local-harness-gate.sh
             tools/scripts/pr.sh
-            tools/scripts/report/echo-residual-summary.sh
             tools/scripts/report/lean-report-input.sh
             tools/scripts/report/lean-report.sh
             tools/scripts/report/report-consumer.sh
@@ -788,7 +787,6 @@ jobs:
             tools/scripts/clean-lanes.sh
             tools/scripts/ingest.sh
             tools/scripts/local-harness-gate.sh
-            tools/scripts/report/echo-residual-summary.sh
             tools/scripts/report/lean-report.sh
             tools/scripts/report/report-consumer.sh
             tools/scripts/scribe.sh
