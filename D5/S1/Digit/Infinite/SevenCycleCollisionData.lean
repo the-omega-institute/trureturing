@@ -105,20 +105,25 @@ private theorem golden_data :
 private theorem source_period (b : Bool) : bitShift (source b) 21 = source b := by
   apply Subtype.ext
   funext j
-  simp only [bitShift, source]
-  congr 1
-  omega
+  simp [bitShift, source, Nat.add_mod]
 
 private theorem source_windows (b : Bool) (j : ℕ) :
     window (source b) j =
       if b then firstLabel ⟨j % 7, Nat.mod_lt _ (by decide)⟩
       else rivalLabel ⟨j % 7, Nat.mod_lt _ (by decide)⟩ := by
+  have hm0 : 3 * j % 21 = 3 * (j % 7) := by omega
+  have hm1 : (1 + 3 * j) % 21 = 1 + 3 * (j % 7) := by omega
+  have hm2 : (2 + 3 * j) % 21 = 2 + 3 * (j % 7) := by omega
+  have hr : j % 7 < 7 := Nat.mod_lt _ (by decide)
   apply Subtype.ext
   funext i
   fin_cases i <;> cases b <;>
-    simp [window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift,
-      source, firstLabel, rivalLabel, nullLabel, threeLabel, twoLabel, fiveLabel] <;>
-    split_ifs <;> simp_all <;> omega
+    simp only [window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift,
+      source, Fin.val_zero, Fin.val_one, Fin.reduceFinMk, Nat.zero_add, hm0, hm1, hm2]
+  all_goals rcases (show j % 7 = 0 ∨ j % 7 = 1 ∨ j % 7 = 2 ∨ j % 7 = 3 ∨
+      j % 7 = 4 ∨ j % 7 = 5 ∨ j % 7 = 6 by omega) with hj | hj | hj | hj | hj | hj | hj
+  all_goals simp [hj, firstLabel, rivalLabel, nullLabel, threeLabel, twoLabel, fiveLabel]
+  all_goals omega
 
 private theorem budget_bounds : 0 < reduction ∧ reduction < 1 / 20480 ∧
     0 < budget ∧ budget < lambda := by
@@ -140,4 +145,94 @@ private theorem budget_bounds : 0 < reduction ∧ reduction < 1 / 20480 ∧
     nlinarith
   refine ⟨hd0, hd, ?_, ?_⟩ <;> unfold budget <;> linarith
 
+private theorem suffix_identity (z : ℝ) :
+    phase z 1 = referenceTail + g ^ 6 * (z - referenceEnd) := by
+  obtain ⟨ht2, hg, hg2, _, _⟩ := golden_data
+  have ht : t = (1 + g) / 2 := by linarith
+  have htsq : t ^ 2 = (1 - g) / 2 := by linarith
+  simp [phase, branch, offset, threeLabel, fiveLabel, twoLabel,
+    referenceTail, referenceEnd]
+  rw [htsq, ht]
+  linear_combination
+    (-1 / 5 + 3 / 10 * g + 3 / 10 * g ^ 3 - 3 / 10 * g ^ 4 +
+      1 / 10 * g ^ 5) * hg2
+
+private theorem entry_fixed (b : Bool) :
+    (if b then firstEntry else rivalEntry) =
+      branch (if b then threeLabel else nullLabel)
+        (phase (if b then firstEntry else rivalEntry) 1) := by
+  obtain ⟨ht2, hg, hg2, hglo, _⟩ := golden_data
+  have hg0 : 0 < g := by linarith
+  have hD : 1 + g ^ 7 ≠ 0 := by positivity
+  have h3 : branch threeLabel referenceTail = lowerEntry := by
+    simp [branch, offset, threeLabel, referenceTail, lowerEntry]
+    nlinarith
+  have h0 : branch nullLabel referenceTail = upperEntry := by
+    simp [branch, offset, nullLabel, referenceTail, upperEntry]
+    nlinarith
+  have hlin (l : Label) (z : ℝ) :
+      branch l (referenceTail + g ^ 6 * (z - referenceEnd)) =
+        branch l referenceTail - g ^ 7 * (z - referenceEnd) := by
+    simp only [branch]
+    ring
+  cases b
+  · simp only [Bool.false_eq_true, ↓reduceIte]
+    rw [suffix_identity, hlin, h0]
+    have he : upperEntry - referenceEnd = g - 1 / 5 := by
+      unfold upperEntry referenceEnd
+      linarith
+    have hr : 4 * reduction = g ^ 7 * (upperEntry - referenceEnd) / (1 + g ^ 7) := by
+      rw [he]
+      unfold reduction
+      field_simp [hD] <;> ring
+    simp only [rivalEntry, hr]
+    field_simp [hD] <;> ring
+  · simp only [↓reduceIte]
+    rw [suffix_identity, hlin, h3]
+    unfold firstEntry
+    field_simp [hD] <;> ring
+
+private theorem shifted_source_windows (b : Bool) (j n : ℕ) :
+    window (bitShift (source b) (3 * j)) n = window (source b) (j + n) := by
+  apply Subtype.ext
+  funext i
+  simp [window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P,
+    bitShift, Nat.mul_add, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
+
+private theorem shifted_source_tail (b : Bool) (j : ℕ) :
+    originalT (bitShift (source b) (3 * j)) = bitShift (source b) (3 * (j + 1)) := by
+  apply Subtype.ext
+  funext i
+  simp [originalT, bitShift, Nat.mul_add, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
+
+private theorem source_tail_seven (b : Bool) : bitShift (source b) (3 * 7) = source b :=
+  source_period b
+
+private theorem actual_entry (b : Bool) :
+    kappa (source b) = if b then firstEntry else rivalEntry := by
+  let v (j : ℕ) := kappa (bitShift (source b) (3 * j))
+  have hrec (j : ℕ) :
+      v j = branch (window (source b) j) (v (j + 1)) := by
+    have h := closed_observation_graph_realization.2.2.1
+      (bitShift (source b) (3 * j))
+    simpa only [v, shifted_source_windows, Nat.add_zero, shifted_source_tail] using h.1
+  have h7 : v 7 = v 0 := by
+    change kappa (bitShift (source b) 21) = kappa (bitShift (source b) 0)
+    rw [source_period]
+    rfl
+  have hfix : v 0 = branch (if b then threeLabel else nullLabel) (phase (v 0) 1) := by
+    conv_lhs => rw [hrec 0, hrec 1, hrec 2, hrec 3, hrec 4, hrec 5, hrec 6, h7]
+    simp [source_windows, firstLabel, rivalLabel, phase]
+  have hg0 : 0 < g := by have := golden_data.2.2.2.1; linarith
+  have hinj (x y : ℝ)
+      (hx : x = branch (if b then threeLabel else nullLabel) (phase x 1))
+      (hy : y = branch (if b then threeLabel else nullLabel) (phase y 1)) : x = y := by
+    rw [suffix_identity] at hx hy
+    simp only [branch] at hx hy
+    have hn : 1 + g ^ 7 ≠ 0 := by positivity
+    apply (mul_right_cancel₀ hn)
+    nlinarith [hx, hy]
+  exact hinj _ _ hfix (entry_fixed b)
+
 end D5.S1.Digit.Infinite.SevenCycleCollisionData
+
