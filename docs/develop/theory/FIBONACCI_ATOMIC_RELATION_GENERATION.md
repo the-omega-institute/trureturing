@@ -67148,3 +67148,317 @@ $1\ge\Delta_\beta A b^4(\log x)^3/(96a)$，
 在 $x\to\infty$ 时矛盾。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 437. 同一实际 primorial 核的源平移、精确补偿与对角符号分类
+
+### 定义与适用范围
+
+沿用 §§433–435 的实际 primorial 核及其完整极限轮廓。记
+
+\[
+c_*=e^{-\gamma_E}>0,\qquad
+\varphi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vb}}b\,db\right),
+\]
+
+\[
+\Xi_\sigma(a)=c_*\int_0^\infty e^{-\sigma v}
+\frac{e^{-av}\varphi(v)-1+(a-1)v}{v^2}\,dv,
+\qquad \sigma>0,\quad a\ge0.
+\tag{ST.1}
+\]
+
+已有的零端展开与全尾包络为
+
+\[
+\varphi(v)=1+v+\tfrac14v^2+O(v^3)\quad(v\downarrow0),
+\qquad 0<\varphi(v)\le e(1+v)\quad(v\ge0).
+\tag{ST.2}
+\]
+
+本节的承重结论是这个实际轮廓的源参数变换律及其对角符号分类。下列 Frullani 积分与补偿后的指数积分是经典分析恒等式，仅作为该变换律的中间供应；它们不作为新的独立数论结论。
+
+### 定理：任意两个正源指数之间的精确变换律
+
+设 \(\sigma,\tau>0\)、\(a\ge0\)，并要求
+\(b=\sigma+a-\tau\ge0\)。则
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma(a)=\Xi_\tau(\sigma+a-\tau)
++c_*\left[(\sigma-\tau)
+-(\sigma+a-1)\log\frac\sigma\tau\right].}
+\tag{ST.3}
+\]
+
+特别地，全部 \(\sigma\ge1\)、\(a\ge0\) 的轮廓由临界源指数 \(1\) 的同一条曲线精确确定：
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma(a)=\Xi_1(\sigma+a-1)
++c_*\left[(\sigma-1)-(\sigma+a-1)\log\sigma\right].}
+\tag{ST.4}
+\]
+
+这里平移与补偿都保持完整积分，未省去首块、低商项或有符号高商项。
+
+### 证明
+
+先支付两个经典中间积分。对任意 \(\sigma,\tau>0\)，
+
+\[
+F(\sigma,\tau)=\int_0^\infty
+\frac{e^{-\sigma v}-e^{-\tau v}}v\,dv
+=\log\frac\tau\sigma.
+\tag{ST.5}
+\]
+
+零端的指数差为 \((\tau-\sigma)v+O(v^2)\)，无穷端由正指数衰减支付。又因
+
+\[
+\frac{e^{-\sigma v}-e^{-\tau v}}v
+=-\int_\tau^\sigma e^{-tv}\,dt,
+\]
+
+在 \(t\) 的两个正端点之间，交换所需绝对积分由
+\(\int_{\min\{\sigma,\tau\}}^{\max\{\sigma,\tau\}}dt/t<\infty\)
+支付。故积分为 \(-\int_\tau^\sigma dt/t\)，得到（ST.5），也包含 \(\sigma<\tau\) 的有向积分。
+
+再令
+
+\[
+J(\sigma,\tau)=\int_0^\infty
+\frac{e^{-\tau v}-e^{-\sigma v}-(\sigma-\tau)v e^{-\tau v}}
+{v^2}\,dv.
+\]
+
+分子零端二阶消失；无穷端可积。对 \(\sigma\) 在任意正紧区间内求导，得到
+
+\[
+\frac{\partial J}{\partial\sigma}
+=\int_0^\infty\frac{e^{-\sigma v}-e^{-\tau v}}v\,dv
+=\log\frac\tau\sigma.
+\]
+
+微分的零端由常数共同控制，无穷端由两个正指数中的较小者共同控制。利用 \(J(\tau,\tau)=0\)，
+
+\[
+J(\sigma,\tau)
+=-\sigma\log\frac\sigma\tau+\sigma-\tau.
+\tag{ST.6}
+\]
+
+现在（ST.1）两项中含 \(\varphi\) 的部分，因
+\(\sigma+a=\tau+b\) 而完全抵消。剩余分子恰为
+
+\[
+e^{-\tau v}-e^{-\sigma v}
+-(\sigma-\tau)v e^{-\tau v}
++(a-1)v(e^{-\sigma v}-e^{-\tau v}).
+\]
+
+两项分别由（ST.6）与 \((a-1)F(\sigma,\tau)\) 支付。代入后即得（ST.3），取 \(\tau=1\) 得（ST.4）。所有相减都作用于已经绝对可积的完整轮廓或已经支付的补偿积分，未拆出两个各自发散的零端积分。证毕。
+
+### 定理：源变换的复合律与共同曲率
+
+固定 \(s>0\)，在 \(0<\sigma\le s\) 上定义
+
+\[
+Y_s(\sigma)=\Xi_\sigma(s-\sigma),
+\qquad
+T_{\sigma\leftarrow\tau}(s)
+=c_*\left[(\sigma-\tau)-(s-1)\log\frac\sigma\tau\right].
+\]
+
+对 \(\sigma,\tau,\rho\in(0,s]\)，有
+
+\[
+Y_s(\sigma)=Y_s(\tau)+T_{\sigma\leftarrow\tau}(s),
+\]
+
+\[
+T_{\sigma\leftarrow\tau}(s)+T_{\tau\leftarrow\rho}(s)
+=T_{\sigma\leftarrow\rho}(s),\qquad
+T_{\sigma\leftarrow\sigma}(s)=0.
+\tag{ST.7}
+\]
+
+因此不同源指数的关系具有明确的可逆复合律。该律只针对保持 \(s=\sigma+a\) 的实际轮廓变换，不将任意 RH 等价判据或五分类直接宣称为一个群。
+
+另定义对 \(s>0\) 的共同势函数
+
+\[
+H(s)=c_*\int_0^\infty
+\frac{(e^{-sv}-e^{-v})\varphi(v)+(s-1)v e^{-v}}{v^2}\,dv.
+\tag{ST.8}
+\]
+
+则 \(H\) 在正半轴二次连续可微，且
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma(a)-\Xi_\sigma(0)
+=H(\sigma+a)-H(\sigma)-c_*a\log\sigma,}
+\tag{ST.9}
+\]
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma''(a)=H''(\sigma+a)
+=c_*\int_0^\infty e^{-(\sigma+a)v}\varphi(v)\,dv>0.}
+\tag{ST.10}
+\]
+
+在 \(a=0\) 处，（ST.10）的导数按右导数理解；同一公式也给正邻域的延拓。若
+
+\[
+C_\sigma(a)=\Xi_\sigma(a)-\Xi_\sigma(0)+c_*a\log\sigma,
+\]
+
+则对于全部 \(\delta\ge0\)、\(a\ge0\)，
+
+\[
+C_{\sigma+\delta}(a)=C_\sigma(a+\delta)-C_\sigma(\delta).
+\tag{ST.11}
+\]
+
+### 证明
+
+（ST.7）由（ST.3）及正数对数的加法律得到。对（ST.8），在任意 \(s\) 的正紧区间，零端的分子与其一次 \(s\) 导数均为 \(O(v^2)\)，二次导数除以 \(v^2\) 后为 \(e^{-sv}\varphi(v)\)。这些估计由（ST.2）共同给出。无穷端由 \(\varphi(v)\le e(1+v)\) 与该紧区间的最小正指数支付，故可两次微分，并得到（ST.10）。积分严格为正，因为其被积函数对全部 \(v>0\) 严格为正。
+
+将两个完整差分按以下顺序相减，\(\varphi\) 项再次完全抵消：
+
+\[
+\bigl[\Xi_\sigma(a)-\Xi_\sigma(0)\bigr]
+-\bigl[H(\sigma+a)-H(\sigma)\bigr]
+=c_*a\int_0^\infty\frac{e^{-\sigma v}-e^{-v}}v\,dv
+=-c_*a\log\sigma.
+\]
+
+这给（ST.9）。该式在共同势函数上的差分立即给（ST.11）。证毕。
+
+### 定理：固定总指数的完整对角双根分类
+
+对每个先固定的 \(s>1\)，恰存在两个数
+
+\[
+0<\beta_-(s)<s-1<\beta_+(s)<s
+\]
+
+使得对全部 \(0<\sigma\le s\)，
+
+\[
+\begin{cases}
+\Xi_\sigma(s-\sigma)>0,
+&0<\sigma<\beta_-(s)\ \text{或}\ \beta_+(s)<\sigma\le s,\\
+\Xi_\sigma(s-\sigma)=0,
+&\sigma=\beta_-(s)\ \text{或}\ \sigma=\beta_+(s),\\
+\Xi_\sigma(s-\sigma)<0,
+&\beta_-(s)<\sigma<\beta_+(s).
+\end{cases}
+\tag{ST.12}
+\]
+
+这两根属于固定 \(s=\sigma+a\) 的源参数轴，与 §433 固定 \(\sigma\) 后在 \(a\) 轴上的两根是两个不同的切片。
+
+### 证明
+
+取（ST.3）中的参考源 \(\tau=s\)，参考位移为 \(0\)，得到
+
+\[
+Y_s(\sigma)=\Xi_s(0)
++c_*\left[(\sigma-s)-(s-1)\log\frac\sigma s\right].
+\tag{ST.13}
+\]
+
+因此
+
+\[
+Y_s'(\sigma)=c_*\left(1-\frac{s-1}\sigma\right),
+\qquad Y_s''(\sigma)=\frac{c_*(s-1)}{\sigma^2}>0.
+\]
+
+它在 \((0,s-1)\) 严格下降，在 \((s-1,s]\) 严格上升，唯一最小点为 \(\sigma=s-1\)。该点对应 \(a=1\)，§434 的严格符号给
+\(Y_s(s-1)=\Xi_{s-1}(1)<0\)。右端
+\(Y_s(s)=\Xi_s(0)>0\)，左端由（ST.13）满足
+\(Y_s(\sigma)\to+\infty\) 当 \(\sigma\downarrow0\)。连续性及两段严格单调性分别给且仅给一根，得到（ST.12）。这也覆盖 \(1<s\le2\)，不要求较小源指数大于 \(1\)。证毕。
+
+### 定理：总指数不超过一时的唯一根与严格临界储备
+
+临界正储备 \(c_0=\Xi_1(0)\) 满足严格界
+
+\[
+\boxed{0<c_0<c_*.}
+\tag{ST.14}
+\]
+
+对每个 \(0<s\le1\)，恰存在一个 \(\beta(s)\in(0,s)\)，使得在完整源域 \(0<\sigma\le s\) 上，
+
+\[
+\begin{cases}
+\Xi_\sigma(s-\sigma)<0,&0<\sigma<\beta(s),\\
+\Xi_\sigma(s-\sigma)=0,&\sigma=\beta(s),\\
+\Xi_\sigma(s-\sigma)>0,&\beta(s)<\sigma\le s.
+\end{cases}
+\tag{ST.15}
+\]
+
+边界 \(s=1\) 的根有精确表达式
+
+\[
+\boxed{\beta(1)=1-\frac{c_0}{c_*}\in(0,1).}
+\tag{ST.16}
+\]
+
+### 证明
+
+令 \(g(v)=e^{-v}\varphi(v)\)。由 §§433–434 的严格夹逼，全部 \(v>0\) 上 \(0<g(v)<1\)。零端（ST.2）给
+\(g(v)=1-v^2/4+O(v^3)\)，全尾线性包络给
+\(g(v)\le e(1+v)e^{-v}\)。因此
+
+\[
+I=c_*\int_0^\infty\frac{g(v)-1}{v^2}\,dv<0
+\]
+
+绝对收敛，并且其严格负号来自整个正半轴的严格负被积函数。完整相减得到
+
+\[
+c_0-I=c_*\int_0^\infty
+\frac{1-(1+v)e^{-v}}{v^2}\,dv=c_*.
+\]
+
+最后一个积分用分部积分支付：记
+\(f(v)=1-(1+v)e^{-v}\)，则 \(f'(v)=ve^{-v}\)，
+\(f(v)/v\to0\) 在零端及无穷端都成立，故
+\(\int_0^\infty f(v)/v^2\,dv=\int_0^\infty e^{-v}\,dv=1\)。
+于是 \(c_0=c_*+I<c_*\)；正号已经由 \(\varphi(v)>1+v\) 给出。得到（ST.14）。
+
+当 \(0<s<1\) 时，（ST.13）给
+
+\[
+Y_s'(\sigma)=c_*\left(1+\frac{1-s}\sigma\right)>0,
+\qquad \lim_{\sigma\downarrow0}Y_s(\sigma)=-\infty,
+\qquad Y_s(s)=\Xi_s(0)>0.
+\]
+
+严格单调性与连续性给唯一一根以及（ST.15）。该源切片的二阶导数为负，不将它称为凸切片；共同势函数 \(H\) 的严格凸性仍由（ST.10）成立。
+
+当 \(s=1\) 时，（ST.13）恰为
+
+\[
+Y_1(\sigma)=c_0+c_*(\sigma-1).
+\]
+
+（ST.14）给唯一根（ST.16），并给同样的符号分类。\(\sigma=0\) 仅用于单侧极限，未定义或宣称零源指数的实际轮廓。证毕。
+
+### 推论：同一素数规模处的补偿保持源信息
+
+对 \(\sigma,\tau>0\)、\(a\ge0\) 及 \(b=\sigma+a-\tau\ge0\)，§434 的实际核极限与（ST.3）同时适用。两种源分别为 \(x=z^\sigma\) 与 \(x'=z^\tau\)，而同一整数纤维的对数位置分别为
+
+\[
+a_n=\frac{\log n}{\log z}-\sigma,
+\qquad b_n=\frac{\log n}{\log z}-\tau.
+\]
+
+只要两个源指数与总指数保持在各自先固定的合法紧区间，并且两个源都不超过该整数纤维，二者的完整极限差由（ST.3）的补偿项确定。因而改变源规模所改变的符号信息，可以在一个共同凸轮廓与显式补偿之间准确追踪。
+
+（ST.12）仍是完整核极限的符号分类。它不控制与 \(M_z(n)\) 相乘后全部整数纤维的总和，也不去掉 §435 已证的主项反向补偿；抵消后更小尺度的 Robin 有符号残量仍须另行估计。
