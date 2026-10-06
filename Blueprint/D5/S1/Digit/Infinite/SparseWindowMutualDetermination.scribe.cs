@@ -87,7 +87,7 @@ internal sealed class SparseWindowMutualDeterminationDocument : IScribeDocumentD
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For positive width L, each open window arc avoids E(k) whenever 1 is at most k and k is at most G(L)."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("sparse-window-window-arc-isOpen"),
+                DescribeId.Create("sparse-window-window-arc-isopen"),
                 DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_isOpen"),
                 H("Window arcs are open"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -157,7 +157,7 @@ internal sealed class SparseWindowMutualDeterminationDocument : IScribeDocumentD
                 DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cut_witness"),
                 H("Missing target cuts"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For 1 at most m at most M, a finite S, a target index k outside K(m,S), and every natural bound B, two sources greater than B have the same sparse tuple and different M-windows."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For 1 at most m at most M, a finite S, 1 at most k at most G(M) with k outside K(m,S), and every natural bound B, two sources greater than B have the same sparse tuple and different M-windows."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("sparse-window-extra-cut-witness"),
                 DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_witness"),

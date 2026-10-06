@@ -345,7 +345,7 @@ theorem natural_phase_visit_sides (c δ : ℝ) (hd : 0 < δ) (hdhalf : δ < 1 / 
   · rw [natural_row_phase b, ← heb]
     exact hsub ⟨by linarith [hxb.1], by linarith [hxb.2]⟩
 theorem translated_cut (t j : ℕ) : E (t + j) + gamma t = E j := by
-  dsimp [E, gamma]
+  dsimp [E]
   rw [← AddCircle.coe_add]
   congr 1
   push_cast
@@ -450,6 +450,7 @@ theorem extra_cut_witness (m M : ℕ) (hm : 1 ≤ m)
   rw [hma, hmb] at he
   exact ((window_cylinder_partition.2.2 m hm).2.2.2.2.2.2 (k - t) hkj.1).mpr hkj.2 he
 set_option maxHeartbeats 1600000 in
+-- The collar, common-lift, and binary-anchor arguments form one joint geometry proof.
 /-- Equal translated cut sets characterize equal natural fibres. The actual-image
 equivalence uses the canonical finite value V in its forward map. -/
 theorem sparse_window_mutual_determination (m M : ℕ) (hm : 1 ≤ m)
@@ -505,7 +506,6 @@ theorem sparse_window_mutual_determination (m M : ℕ) (hm : 1 ≤ m)
     simp [GoldenBase4AutomataOracle.zeckendorfBit, D5.S0.Conventions.wdigits,
       ← he, rawToZeckendorf, Finsupp.mem_toMultiset, r, j.isLt]
   have hData := window_cylinder_partition.2.2
-  have hEnds := window_cylinder_partition.2.1
   have hRowAvoid (n k : ℕ) (hk : 1 ≤ k) : phase (zRow n) ≠ E k := by
     rw [hPhase]
     exact hAvoid n k hk
@@ -773,7 +773,7 @@ theorem sparse_window_mutual_determination (m M : ℕ) (hm : 1 ≤ m)
     have hmid : ((upper (q M a) : ℝ) : AddCircle (1 : ℝ)) + gamma t ∈ A p := by
       refine ⟨upper (q M a) + (t : ℝ) * Real.goldenRatio - z, ?_, ?_⟩
       · constructor <;> linarith only [hza.1, hza.2, hzb.1, hzb.2, hx.2, hup]
-      · simp only [AddCircle.coe_sub, AddCircle.coe_add, circle_integer_zero, sub_zero, gamma]
+      · simp only [AddCircle.coe_sub, AddCircle.coe_add, circle_integer_zero, sub_zero]
     have hcut : E j + gamma t ∈ B m := (translated_cut_mem m t j).mpr hjt
     obtain ⟨k, hk, he⟩ := hcut
     rw [hej, ← he] at hmid

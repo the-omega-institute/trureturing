@@ -48,9 +48,9 @@ internal sealed class SparseCutTwoSidedWitnessDocument : IScribeDocumentDefiniti
         Formula indices = Seq(Forall, Sp, m, Comma, big, Comma, bound, Sp, InMacro, Sp, N());
         Formula hypotheses = Seq(D(1), Sp, Le, Sp, m, Sp, Le, Sp, big);
         Formula missing = Seq(Exists, Sp, k, Sp, InMacro, Sp, target, Comma, Sp,
-            k, Sp, Seq(Neg, Sp, InMacro), Sp, cuts);
+            Neg, Sp, Par(Seq(k, Sp, InMacro, Sp, cuts)));
         Formula extra = Seq(Exists, Sp, k, Sp, InMacro, Sp, cuts, Comma, Sp,
-            k, Sp, Seq(Neg, Sp, InMacro), Sp, target);
+            Neg, Sp, Par(Seq(k, Sp, InMacro, Sp, target)));
         Formula late = Seq(Exists, Sp, a, Comma, b, Sp, InMacro, Sp, N(), Comma, Sp,
             bound, Sp, Lt, Sp, a, Sp, Land, Sp, bound, Sp, Lt, Sp, b, Sp, Land, Sp);
         Formula decode = Seq(late, S(m,times,a), Sp, Eq, Sp, S(m,times,b), Sp, Land, Sp,

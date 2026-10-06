@@ -12,6 +12,7 @@ set_option autoImplicit false
 
 namespace D5.S3.Arith.FibonacciAtomic.SparseCutTwoSidedWitness
 
+open D5.S1.Digit.Infinite.WindowSuccessorGraph
 open D5.S1.Digit.Infinite.WindowCylinderPartition
 open D5.S1.Digit.Infinite.SparseWindowMutualDetermination
 
