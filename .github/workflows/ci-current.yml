@@ -551,9 +551,10 @@ jobs:
             tools/StrataLint.Runtime/*
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
-            tools/StrataLint.Scribe/*
+            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
+            tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/tests/StrataLint.FileMap.Tests/*
             [tests-header-script]
             tools/StrataLint.Engineering/*
@@ -1154,9 +1155,14 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['filemap']
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: >-
-        dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo &&
-        dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll filemap-conform
+      command: make filemap-conform
+      cache-dependency-path: |
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
 
   selftest:
     needs: detect

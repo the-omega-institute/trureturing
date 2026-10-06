@@ -91,8 +91,16 @@ FILEMAP also declares each path's required resources and their explicit owners,
 tools, cache layers and materials. These registrations govern planning without
 discovering dependencies from code.
 
-Engine owns the pure current-schema model, parser and canonical policy writer. CLI
-acquires bytes and joins the domain vocabulary; Scribe projects the validated model.
+Engine owns the current-schema model, parser, canonical policy writer and generated
+artifact identity inventory. FileMap, Scribe emitters and snapshot digests consume the
+same path, producer and artifact-id contract; FILEMAP owns disposition and admission.
+Scribe projects the validated model.
+
+`make filemap-conform` builds and runs the FileMap executable with Configuration,
+Engine and their necessary lower dependencies. The aggregate CLI consumes FileMap's
+command implementation. `FILEMAP_SCOPE` and `FILEMAP_PRODUCER` select the scope and
+committed write-set queries. Whole-tree checks read tracked actor sources, including
+Scribe, without compiling or loading Scribe, QuestPDF, Jint or Acornima.
 Current writes use schema 6 and a deterministic TOML encoding. Canonical snapshots use
 schema 2 with `filemap_sha256`, binding the validated FILEMAP policy. Changed policy
 bytes and structured Evidence are checked at the write boundary; unrelated deltas do

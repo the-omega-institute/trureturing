@@ -70,7 +70,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(2, result.ExitCode);
         Assert.Equal(0, world.Repository.ReadCount);
         Assert.Equal(0, world.Report.CallCount);
-        Assert.DoesNotContain(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, result.Output, StringComparison.Ordinal);
         Assert.Equal(before, world.LedgerImage());
     }
 
@@ -94,7 +94,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Empty(world.Repository.ReadChangesCalls);
         Assert.Equal(1, world.Report.CallCount);
         Assert.Single(result.Output.Split('\n'), line =>
-            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
+            line.Contains(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -109,7 +109,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
         Assert.Single(result.Output.Split('\n'), line =>
-            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
+            line.Contains(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -227,7 +227,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
         Assert.Single(result.Output.Split('\n'), line =>
-            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
+            line.Contains(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -260,7 +260,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Null(world.Entry(First).Receipts.CoverDisposition);
         Assert.Single(result.Output.Split('\n'), line =>
-            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
+            line.Contains(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -277,7 +277,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(2, result.ExitCode);
         Assert.Contains("cycle", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.Equal(before, world.LedgerImage());
-        Assert.DoesNotContain(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -294,7 +294,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(["already_applied", "applied"], Results(result).Select(item => item.Status).ToArray());
         Assert.Equal(appliedBytes, TemporaryFileSystem.File.ReadAllBytes(appliedPath));
         Assert.Single(result.Output.Split('\n'), line =>
-            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
+            line.Contains(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, StringComparison.Ordinal));
     }
 
     [Fact]

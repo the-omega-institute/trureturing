@@ -191,8 +191,7 @@
         "type": "Project",
         "dependencies": {
           "StrataLint.Configuration": "[1.0.0, )",
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.Scribe": "[1.0.0, )"
+          "StrataLint.Engine": "[1.0.0, )"
         }
       },
       "stratalint.lean": {
