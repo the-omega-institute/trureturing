@@ -16,13 +16,18 @@ Information-escape registration is paused under CLAUDE.md section 3.9.
 
 import D5.S1.Words.Palindromes.PeriodDoubling.SparseExactDiagonal
 import D5.S1.Words.Palindromes.PeriodDoubling.SparseExactOffDiagonal
-import D5.S1.Words.Palindromes.PeriodDoubling.KernelSpan
+import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 namespace D5.S1.Words.Palindromes.PeriodDoubling
 
 open D5.S1.Words.FridPrefix (PL PalFactors)
 open scoped BigOperators
 set_option autoImplicit false
 set_option maxHeartbeats 0
+
+/-- All subsequences obtained from every binary-kernel address. -/
+def twoKernel {A : Type*} (f : ℕ → A) : Set (ℕ → A) :=
+  {g | ∃ e r : ℕ, r < 2 ^ e ∧ g = fun n => f (2 ^ e * n + r)}
+
 theorem stronger_PPL_kernel_span :
     let P : ℕ → ℕ := fun n => PL (List.ofFn (fun i : Fin n => u_pd i))
     ¬FiniteDimensional ℚ (Submodule.span ℚ (twoKernel (fun n => (P n : ℚ)))) := by

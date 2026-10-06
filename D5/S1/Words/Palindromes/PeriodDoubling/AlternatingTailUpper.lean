@@ -15,7 +15,7 @@ Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
 import D5.S1.Words.Palindromes.PeriodDoubling.OddPalindromeRadius
-import D5.S1.Words.Palindromes.PeriodDoubling.PalindromicLength
+import D5.S1.Words.Palindromes.FridPrefix.PalindromicLength
 namespace D5.S1.Words.Palindromes.PeriodDoubling
 
 open D5.S1.Words.FridPrefix (PL PalFactors)
