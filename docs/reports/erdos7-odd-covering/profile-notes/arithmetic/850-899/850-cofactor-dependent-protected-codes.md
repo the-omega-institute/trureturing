@@ -7148,7 +7148,528 @@ follows from the intersection identity. Thus this citation supplies no
 strict-closing term to add to CD247, CD255 or CD258.
 
 
+### Pointwise color deficits consume the same whole-cofactor budget
+
+Keep CD249–251's actual45 branch, the same whole covering family, the
+same guarded ordinary product law lambda, and the same fixed exceptional
+original set `X_u`. All functions below belong to that one actual
+realization. In particular, the exceptional set is fixed before an
+ordinary point is selected.
+
+Use all five second-five colors `gamma`, including a color occupied by
+a retained depth-two unit. Let `B_gamma` be the full ambient color
+fiber inside the first-five phase omega, and let `E_unit` be the
+complement of every retained unit tower at u. Put
+
+\[
+\delta_\gamma=
+ \frac{|E_{\rm unit}\cap B_\gamma|}{|B_\gamma|}\in[0,1],
+\qquad d=\frac15\sum_\gamma\delta_\gamma>0.
+\tag{CD260}
+\]
+
+Thus an occupied color has `delta_gamma=0`; it is not removed from
+the sums. The complete all-Mixed deletion hole at `(u,w)` is
+`E_unit` when `w in R_u`, and is empty otherwise. The unit complement
+and its five densities do not depend on w.
+
+Write `R=R_u`, and let `mathsf H(w)` mean that an actual ordinary-bearing
+depth-one original at phase omega is incident at u. Retain the full
+two-word shallow count
+
+\[
+N(w)=\sum_{j\in\{u,v\}}\sum_{n\in\mathcal H}
+             1_{C_{n,j}^{\rm ord}}(w),
+\qquad
+\mathsf H(w)\Longrightarrow N(w)\ge1.
+\tag{CD261}
+\]
+
+A low shallow original contributes at both words. There is no
+depth-one unit original at `(u,omega)`: actual5 or the applicable
+root15 there would contain actual45, while actual45 itself has word v.
+Consequently the complete source is `Y_u=R intersect mathsf H^c`.
+
+Extend CD208's actual color-load functions to all five colors:
+`l_gamma` is the low deep load, `x_gamma` the deep high load in
+`X_u`, and `h_gamma` the deep regular high load outside `X_u`.
+Every incident original contributes its actual raw color weight
+`5^(2-e_n)`. Distinct originals remain separate indices even when
+their numerical cofactors agree. Put `b_gamma=x_gamma+h_gamma` and
+let the reached-hole fraction be
+
+\[
+r_\gamma(w)=
+ \frac{|E_{(u,w)}\cap V_T(u,w)\cap B_\gamma|}{|B_\gamma|}.
+\tag{CD262}
+\]
+
+The full ambient prefix union bound and whole coverage give
+
+\[
+\begin{aligned}
+0&\le r_\gamma\le l_\gamma+b_\gamma,\\
+w\in R&\Longrightarrow r_\gamma\le\delta_\gamma,\\
+w\notin R&\Longrightarrow r_\gamma=0,\\
+w\in R\cap\mathsf H^c&\Longrightarrow r_\gamma=\delta_\gamma.
+\end{aligned}
+\tag{CD263}
+\]
+
+The last line retains the complete source condition. Raw prefixes
+outside `Z_5` remain in the loads; their allowances are already paid
+by CD246's cancellation.
+
+With `g=5*rho*s>=1/5`, define
+
+\[
+\begin{aligned}
+l&=\frac15\sum_\gamma l_\gamma,&
+t_b&=\frac15\sum_\gamma b_\gamma,\\
+o&=5\rho O_{\rm all}(u,w)
+   =\frac15\sum_\gamma(l_\gamma+b_\gamma-r_\gamma),&
+P&=gN+l+o
+   =gN+\frac15\sum_\gamma(2l_\gamma+b_\gamma-r_\gamma).
+\end{aligned}
+\tag{CD264}
+\]
+
+The normalization is exact because
+`|B_gamma|=5^(G-2)` and `|Z_5|=rho*5^G`. CD250 supplies the
+additional low payment l from the blocked word v. Thus CD251 is
+
+\[
+\boxed{5\rho S\ge g c_v+\int P\,d\lambda.}
+\tag{CD265}
+\]
+
+For a nonnegative color-load vector b, set
+
+\[
+D_b=\frac15\sum_\gamma[\delta_\gamma-b_\gamma]_+,
+\qquad
+E_b=\frac15\sum_\gamma[b_\gamma-\delta_\gamma]_+.
+\tag{CD266}
+\]
+
+On `R intersect mathsf H^c`, CD263 implies `l>=D_b`; on
+`R intersect mathsf H`, the shallow payment is at least g. Therefore
+
+\[
+gN+l\ge1_R\min(g,D_b),
+\qquad
+\boxed{
+5\rho S\ge g c_v+5\rho O_u^*
+                  +\int_R\min(g,D_b)\,d\lambda.
+}
+\tag{CD267}
+\]
+
+This form leaves the actual u-word excess unspent. A second form
+uses that same excess jointly with the low load:
+
+\[
+\boxed{
+P\ge
+\begin{cases}
+E_b+\min(g,D_b),&w\in R,\\
+t_b,&w\notin R.
+\end{cases}}
+\tag{CD268}
+\]
+
+Indeed, on `R intersect mathsf H^c`, one has
+`r_gamma=delta_gamma` and
+`l_gamma>=[delta_gamma-b_gamma]_+`, so
+
+\[
+2l_\gamma+b_\gamma-r_\gamma
+ \ge[\delta_\gamma-b_\gamma]_+
+      +[b_\gamma-\delta_\gamma]_+.
+\]
+
+On `R intersect mathsf H`, the same summand is both nonnegative
+and at least `b_gamma-delta_gamma`; hence `l+o>=E_b`, while
+`gN>=g`. Outside R, CD263 gives `l+o=2l+t_b>=t_b`.
+These three cases prove CD268 without conditioning the ordinary law.
+
+Since
+
+\[
+0\le D_b\le d,
+\qquad t_b-d=E_b-D_b,
+\qquad f_b=D_b+\min(g,D_b)-d,
+\tag{CD269}
+\]
+
+the joint payment has the equivalent form
+
+\[
+P\ge t_b+1_R f_b,
+\qquad
+\boxed{
+5\rho S\ge g c_v+\int t_b\,d\lambda+\int_R f_b\,d\lambda.
+}
+\tag{CD270}
+\]
+
+Here `O_u^*` is already consumed. CD270 cannot be added to CD267,
+to CD255, or to another lower bound on that same excess.
+
+### The fixed exceptions have a clipped actual price
+
+For the regular vector h, use the same definitions `D_h,E_h,t_h,f_h`,
+and put
+
+\[
+X(w)=\frac15\sum_\gamma x_\gamma(w).
+\]
+
+Adding the nonnegative exception vector gives
+
+\[
+D_h-X\le D_b\le D_h,
+\qquad E_b\ge E_h,
+\qquad t_b=t_h+X.
+\tag{CD271}
+\]
+
+The map `z -> min(g,z)` on nonnegative z is increasing,
+1-Lipschitz, and takes values in `[0,g]`. Consequently
+
+\[
+E_b+\min(g,D_b)
+ \ge E_h+\min(g,D_h)-\min(g,X).
+\tag{CD272}
+\]
+
+CD268 then yields
+
+\[
+P\ge t_h+1_R f_h-1_R\min(g,X),
+\qquad
+\boxed{
+5\rho S+\int_R\min(g,X)\,d\lambda
+ \ge g c_v+\int t_h\,d\lambda+\int_R f_h\,d\lambda.
+}
+\tag{CD273}
+\]
+
+Outside R an additional X is available and has been discarded.
+No independence of the exceptions from R or from the regular events
+is used.
+
+There are at most two actual deep high exception labels. For two
+such labels, let `A_i` be their actual ordinary-prefix events and
+write
+
+\[
+X=a_1 1_{A_1}+a_2 1_{A_2},
+\qquad a_i=5^{1-e_i}\le1/5\le g,
+\qquad p_i=\lambda(A_i),\quad p_{12}=\lambda(A_1\cap A_2).
+\]
+
+The exact full-law price is
+
+\[
+\boxed{
+B_X:=\int\min(g,X)\,d\lambda
+ =a_1p_1+a_2p_2-[a_1+a_2-g]_+p_{12}.
+}
+\tag{CD274}
+\]
+
+With zero or one exception, omit the absent terms. The intersection
+probability is that of the two actual cylinders under the same
+guarded product law; it is not replaced by `p_1*p_2` without the
+corresponding disjoint-support condition. Clipping improves the
+unclipped price only when the coefficient and actual overlap in
+CD274 are both positive. For `q=lambda(R)`,
+
+\[
+0\le\int_R\min(g,X)\,d\lambda\le\min(gq,B_X).
+\tag{CD275}
+\]
+
+### A finite lower-tail consumer removes the unknown source association
+
+Let `mathcal R` be the actual regular high deep original labels at u.
+For a regular occurrence pattern `I subseteq mathcal R`, retain its
+exact full-law probability
+
+\[
+Q_I=\lambda\!\left(\left\{w:
+       \{n\in\mathcal R:w\in C_n^{\rm ord}\}=I\right\}\right).
+\tag{CD276}
+\]
+
+CD212 and Report387 CC12 give these probabilities from the actual
+intersection expansion: shared-prime regular events are disjoint,
+and collections with disjoint ordinary-prime supports are independent
+under the full guarded law. Thus the nonzero intersections use the
+products of the actual event probabilities, with every original label
+retained. This computation does not condition on R.
+
+For every pattern, define
+
+\[
+\begin{aligned}
+h_\gamma(I)&=
+ \sum_{\substack{n\in I\\\operatorname{color}(n)=\gamma}}
+                      5^{2-e_n},\\
+D(I)&=\frac15\sum_\gamma[\delta_\gamma-h_\gamma(I)]_+,
+\qquad t(I)=\frac15\sum_\gamma h_\gamma(I),\\
+f(I)&=D(I)+\min(g,D(I))-d.
+\end{aligned}
+\tag{CD277}
+\]
+
+The actual joint masses
+`alpha_I=lambda(R intersect {pattern=I})` obey
+`0<=alpha_I<=Q_I` and `sum alpha_I=q`. Define the finite threshold value
+
+\[
+\mathcal L_q(f)=
+ \sup_{\tau\in\mathbb R}
+ \left\{\tau q-\sum_IQ_I[\tau-f(I)]_+\right\}.
+\tag{CD278}
+\]
+
+This is the existing lower-tail fractional-knapsack quantity of
+[note16 KR2](../../001-064/16-a-common-dual-test-law-for-redistributing-charged-bad-mass.md).
+For its complement formulation, remove zero-mass patterns and take
+weights `Q_I`, nonnegative values
+`Q_I F(I)` with `F(I)=f(I)+d=D(I)+min(g,D(I))`, budget `1-q`,
+and actual item variables `1-alpha_I/Q_I`. Their capacity is exactly
+`1-q`, so they are feasible for the existing upper-knapsack problem.
+Subtract its dual upper value from `sum Q_I F(I)` and then subtract
+`d*q`. The substitution `tau=price-d` gives CD278. Prices below
+`tau=-d` cannot improve the value because `f(I)>=-d` and `q>=0`.
+In particular,
+
+\[
+\int_R f_h\,d\lambda=\sum_I\alpha_I f(I)
+ \ge\mathcal L_q(f).
+\tag{CD279}
+\]
+
+Equivalently, each threshold follows directly from
+`alpha_I*f(I)>=tau*alpha_I-Q_I*[tau-f(I)]_+`.
+Fractional boundary atoms belong to the relaxation. Neither CD279 nor
+the knapsack optimum identifies a fractional selector with the actual
+source, a new whole cover, or a legal recoloring.
+
+Combining CD273, CD275 and CD279 gives the actual-family necessary
+inequality
+
+\[
+\boxed{
+5\rho S\ge g c_v+\sum_IQ_I t(I)
+                 +\mathcal L_q(f)-\min(gq,B_X).
+}
+\tag{CD280}
+\]
+
+If only `q>=q_0` is available, retain nonnegative thresholds and use
+the full exception price:
+
+\[
+\boxed{
+5\rho S\ge g c_v+\sum_IQ_I t(I)-B_X
+ +\sup_{\tau\ge0}
+   \left\{\tau q_0-\sum_IQ_I[\tau-f(I)]_+\right\}.
+}
+\tag{CD281}
+\]
+
+The threshold expression is finite and piecewise linear in tau;
+its breakpoints are the actual values `f(I)`, with zero included for
+CD281. Keeping the full pattern distribution preserves simultaneous
+color loads before relaxing their unknown association with the
+five-free survivor. No conditional independence on R or Y is asserted.
+
+The arithmetic contribution is CD268's joint consumption of the
+two-word low payment and the reached-hole excess, followed by the
+fixed-exception price. The event-occurrence expansion and finite
+knapsack duality are existing results. To close a branch, one still
+needs bounds on its actual pattern law, unit residuals, exception
+intersections and source mass that force the right side of CD280 or
+CD281 to exceed `5*rho*S`. No uniform strict inequality over all
+admissible palettes and unit configurations is established here.
+
+### A fixed collision cover has a uniform guarded weight cap
+
+Keep the original family and the full literal collision graph at
+`(u,omega)`, including every positive five depth and every ordinary
+cofactor source. For each top original `n=9*5^{e_n}m_n`, define its
+actual deep exceptional weight by
+
+\[
+\alpha_n(\lambda)=
+\begin{cases}
+5^{1-e_n}\lambda(C_n^{\rm ord}),&e_n\ge2,\ m_n>1,\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{CD282}
+\]
+
+Actual ternary-inactive and opposite-root events keep their zero
+convention. Numerical distinctness makes `n -> (e_n,m_n)` injective.
+The exceptional set below is selected from these integer labels and
+the collision graph before choosing any ordinary point or guarded
+law; zero probabilities are used only to check the selected set.
+
+Report385 section172 supplies matching number at most one. Its GLC4
+proof also supplies the stronger local fact that at most two originals
+occupy any one literal ordinary-prime root. The latter, rather than
+only the displayed aggregate bound `#{n:p|m_n}<=p`, is needed for the
+triangle case. It follows there from divisor closure, DR8 and
+comparable-original disjointness.
+
+For an active ordinary prime `p>=7`, CD217 gives
+
+\[
+\eta_{p,a}\le p^{1-a}\,\overline\eta(p),
+\qquad
+\overline\eta(p)=\frac{p-1}{p(p-3)}.
+\tag{CD283}
+\]
+
+The function `overline eta` decreases for `p>=7`: for `7<=p<=r`,
+its cross-multiplied numerator difference is
+`(r-p)(pr-p-r+3)>=0`. In particular
+`overline eta(7)=3/14`, `overline eta(11)=5/44` and
+`overline eta(13)=6/65`. Every remaining active factor is below one,
+so discarding other prime factors gives a valid upper bound on an
+actual event probability. An inactive original contributes zero.
+
+The graph classification gives a fixed choice `X_u` with
+
+\[
+\boxed{
+|X_u|\le2,\qquad X_u\text{ meets every collision edge},\qquad
+\sum_{n\in X_u}\alpha_n(\lambda)\le\frac3{350}
+}
+\tag{CD284}
+\]
+
+simultaneously for every guarded law satisfying CD217. Isolated
+vertices are omitted. To see the uniformity, fix an ordering of
+original labels for tie breaking and use the following choices.
+
+If there is no edge, choose the empty set. If there is a single edge
+and a shallow endpoint, select such an endpoint. Otherwise both
+endpoints are deep. They cannot both have `e=2,m=p` prime: a collision
+would force the same p and the same numerical modulus 225p. Select a
+nonprimitive endpoint using its `(e,m)`. At depth at least three its
+weight is at most `overline eta(7)/25=3/350`. At depth two, a prime-power
+cofactor `p^a`, `a>=2`, gives at most
+`overline eta(7)/(5*7)=3/490`; at least two distinct ordinary primes
+give at most `overline eta(7)overline eta(11)/5=3/616`.
+
+For a star with at least two leaves, select its center. Two different
+center-leaf edges have different witness primes; otherwise the leaves
+would share the center's literal root and would be adjacent. The
+center therefore has at least two distinct ordinary prime factors,
+so its deep active weight is at most 3/616.
+
+For a triangle, choose a witness prime for each edge by a fixed rule,
+such as the smallest witness prime. These three witnesses are
+pairwise distinct: equality for two incident edges would put all
+three originals at one literal prime/root, contrary to GLC4's local
+cap. Select the two endpoints of the edge with largest witness r.
+They meet every edge. Writing p,q for the other two witnesses, with
+`p<q`, gives `p>=7,q>=11,r>=13`, and therefore
+
+\[
+\sum_{n\in X_u}\alpha_n
+\le\frac{\overline\eta(r)}5
+       \bigl(\overline\eta(p)+\overline\eta(q)\bigr)
+\le\frac{303}{50050}<\frac3{350}.
+\]
+
+A shallow or inactive selected endpoint only decreases these sums.
+None of the cases assumes that the complete ordinary cylinders have
+a common point, and none uses the probability law to choose X.
+
+For this same fixed `X_u`, the all-color normalization in CD260–274
+gives `integral X d lambda=sum_{n in X_u} alpha_n`. Thus
+
+\[
+B_X\le\int X\,d\lambda\le\frac3{350},
+\qquad
+\int_R\min(g,X)\,d\lambda
+ \le\min\left(gq,\frac3{350}\right).
+\tag{CD285}
+\]
+
+Only the actual deep-high part of `X_u` enters this identity; no
+shallow or low load is added. Recompute the regular set, its pattern
+probabilities `Q_I`, and the functions `h_gamma(I),t(I),f(I)` using
+this same `X_u`. A change of exceptional set changes those data, so
+one cannot minimize the scalar exception price while retaining the
+pattern law of a different choice.
+
+CD280 now yields the safe necessary inequality
+
+\[
+\boxed{
+5\rho S\ge g c_v+\sum_IQ_I t(I)+\mathcal L_q(f)
+                 -\min\left(gq,\frac3{350}\right).
+}
+\tag{CD286}
+\]
+
+If only `q>=q_0` is available, CD281 instead gives
+
+\[
+\boxed{
+5\rho S\ge g c_v+\sum_IQ_I t(I)-\frac3{350}
+ +\sup_{\tau\ge0}
+   \left\{\tau q_0-\sum_IQ_I[\tau-f(I)]_+\right\}.
+}
+\tag{CD287}
+\]
+
+These bounds retain the same actual family, residual colors, regular
+pattern law and source mass. They do not assert independence of R
+from exceptions or regular occurrences. The joint-use budget has
+already consumed the actual excess, so it cannot be added to CD267's
+unspent-excess inequality.
+
+The existing fixed-collision Lean theorem supplies a fixed set of at
+most two labels, while the weighted choice above additionally uses
+the graph classification, original numerical injectivity, GLC4's
+local prime/root cap and the actual guard-law source. Those integer
+and source bridges remain ordinary mathematical arguments. Separate
+finite checks of guard monotonicity, the rational constants and the
+scalar penalty replacement do not verify those bridges. No uniform
+strict contradiction for the shared-five branch follows from CD286
+or CD287 without further control of their actual pattern data.
+
 ### Verification scope and remaining inequality
+
+The pointwise finite-law check for CD263–273 retains every color,
+including zero-demand colors, and verifies both alternative uses of the
+same excess term. It also verifies the clipped exceptional-load loss
+under the same survivor predicate. The exact five-color application
+and the existing real-valued fractional-knapsack complement application
+compile with the standard axioms listed below. These are finite
+algebra and reuse checks, with no new retained Lean declaration.
+The integer realization of the pointwise fields, the original S budget,
+the actual pattern/selector identification, and the rational-to-real
+interface joining these separate checks remain unverified in Lean.
+A separate finite rational-law check verifies CD274–275 with the
+actual intersection probability, nonnegative exception coefficients
+bounded by g, and exactly the same exceptional load in its budget
+consumer. It also verifies the guard-cap monotonicity, the four
+rational branch bounds in CD284, and the scalar replacement by
+min(g*q,3/350). These checks use the same standard axioms. They do not
+derive the graph-selected weight bound from the integer cover or
+identify the actual pattern law. The final threshold composition
+CD278–281 and its complete arithmetic consumer remain ordinary
+deductions here.
+
 
 A scoped transient Lean check confirms whole-support component
 constancy on an arbitrary base set; six-subset inclusion counts and
