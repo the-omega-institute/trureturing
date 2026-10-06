@@ -47,7 +47,7 @@ public sealed partial class DigestionLedgerTests
             fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         }
         var evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
-            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()), baselineDocument: fixture.Document);
+            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()));
         Assert.Empty(evaluation.Findings);
         var evaluatedParent = evaluation.Entries.Single(item => item.Entry.AtomId == parent.AtomId);
         Assert.Equal("residual-open", StateName(evaluatedParent.DerivedStatus));
@@ -69,7 +69,7 @@ public sealed partial class DigestionLedgerTests
         Assert.True(result.Success, result.Error);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
-            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()), baselineDocument: fixture.Document);
+            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()));
         Assert.Empty(evaluation.Findings);
         Assert.Equal(State, StateName(evaluation.Entries.Single(item => item.Entry.AtomId == parent.AtomId).DerivedStatus));
 
@@ -96,7 +96,7 @@ public sealed partial class DigestionLedgerTests
         Assert.Null(clearedChild.Receipts.Nonpropositional);
         Assert.Equal("residual-open", StateName(clearedChild.ProjectedStatus));
         evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
-            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()), baselineDocument: fixture.Document);
+            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()));
         Assert.Contains(evaluation.Findings, finding => finding.Contains("entry " + parent.AtomId + " handwritten status", StringComparison.Ordinal));
         evaluatedParent = evaluation.Entries.Single(item => item.Entry.AtomId == parent.AtomId);
         Assert.Equal("partial-open", StateName(evaluatedParent.DerivedStatus));

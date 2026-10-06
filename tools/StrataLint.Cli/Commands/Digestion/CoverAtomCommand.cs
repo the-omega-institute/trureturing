@@ -45,7 +45,6 @@ internal static partial class CoverAtomCommand
             var current = session.Current;
             var baseline = session.Baseline;
             var document = session.Document;
-            var baselineDocument = session.BaselineDocument;
             var report = session.Report;
             var lean = session.Lean;
 
@@ -243,9 +242,7 @@ internal static partial class CoverAtomCommand
                 plannedDocument,
                 current,
                 lean,
-                baselineDocument,
                 validateProjectedStatus: false,
-                baselineSnapshot: baseline,
                 changes: receiptVerificationChanges,
                 projectedStatusChanges: evaluationChanges,
                 truthStates: truthStates,
@@ -279,8 +276,6 @@ internal static partial class CoverAtomCommand
                     document,
                     current,
                     lean,
-                    baselineDocument,
-                    baselineSnapshot: baseline,
                     changes: receiptVerificationChanges,
                     projectedStatusChanges: evaluationChanges,
                     truthStates: truthStates,
