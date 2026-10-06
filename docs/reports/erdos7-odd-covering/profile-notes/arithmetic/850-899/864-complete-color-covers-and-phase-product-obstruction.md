@@ -1787,3 +1787,141 @@ common residual, and private-point hypotheses remain the explicit
 arithmetic deductions above; this is not one end-to-end formal proof
 of those suppliers or of Erdős #7. Permanent prefix assignment and
 complete deletion payment remain unproved.
+
+## A 27-fold genuinely mixed mask still has no two-output prefix plan
+
+The pointwise multiplicity and two-owner cofactor bound in PC67--PC68
+are not alone a permanent-prefix theorem. The following prescribed
+mask retains both bounds and the actual lower-row widths. It does
+not supply a whole-cover realization or identify the mask with E_0.
+
+Take the 27 primes from 5 through 109, and let W be their squarefree
+product. On each coordinate retain the two source values 0 and 1.
+For a ternary tail t and a vector v in the product of these two-point
+coordinate sets, define the common mask by
+
+$$
+\begin{split}
+M={}&\{(t,v):t\equiv2\pmod3,\ v\in\{0,1\}^{27}\}\\
+ &\cup\{(t,\mathbf0):t\equiv4\text{ or }7\pmod9\}.
+\end{split}
+\tag{PC69}
+$$
+
+The retained pure guards are $[0]_3$ and $[1]_9$, which miss M.
+For each prime p take the lower owners
+
+$$
+L_{p,0}:v_p=0,\qquad
+L_{p,1}:t\equiv2\pmod3\text{ and }v_p=1.
+\tag{PC70}
+$$
+
+These are literal cofactor phases of row-zero and row-one classes,
+respectively; their q-bearing numerical labels can be $qp$ and
+$3qp$ with q=113. Give the 54 owners distinct q-colors. Every source
+point of M has exactly one active owner per prime, hence 27 active
+colors. Each numerical cofactor has two owners, and every individual
+color misses some point of M. Thus this is a genuinely mixed union,
+not a collection of individually complete colors. The squarefree W
+also respects the stated 27-prime exponent envelope.
+
+Permit at most one fresh replacement AP per owner, preserving its
+literal p-phase and cofactor p. Its numerical modulus is $3^k p$
+with $k\ge3$, and all replacement moduli must be distinct. Owners
+may be unused. Also permit any finite set of fresh pure classes,
+one at each selected numerical label $3^k$, $k\ge3$. Prefixes and
+heights can otherwise be chosen arbitrarily. Even this enlarged
+replacement family cannot cover M.
+
+To prove the obstruction, write $P_{p,b}$ for the ternary prefix
+cylinder of the output for $L_{p,b}$, or the empty set if unused.
+Work on a common finite ternary period containing all output depths,
+and use normalized counting measure. If a tail in root two is not
+covered by a pure output, coverage of the entire binary product at
+that tail requires
+
+$$
+\exists p:\quad t\in P_{p,0}\cap P_{p,1}.
+\tag{PC71}
+$$
+
+Otherwise, for each p choose an inactive one of its two phases.
+The single resulting product vector is a common missed source;
+this does not combine incompatible private witnesses.
+
+If both outputs at p are present, numerical distinctness forces
+their ternary depths to differ. Their cylinder intersection is
+empty or is the narrower cylinder, so
+
+$$
+\mu(P_{p,0}\cap P_{p,1})\le\frac1{81},\qquad
+\mu(P_{p,0})\le\frac1{27}.
+\tag{PC72}
+$$
+
+Let T count the axes for which $P_{p,0}$ is nonempty and lies in
+root one modulo three. Such a cylinder cannot serve root two. Let $u_1,u_2$ be the
+masses of the pure-output union in roots one and two. The two
+root requirements then imply
+
+$$
+\frac13\le\frac{27-T}{81}+u_2,\qquad
+\frac29\le\frac{T}{27}+u_1.
+\tag{PC73}
+$$
+
+The second inequality uses the all-zero source on the two safe
+root-one words. Only phase-zero outputs or pure outputs can serve
+that source. The first uses PC71 and the fact that the T axes have
+no complete pair in root two. All masses use the same full ternary
+period.
+
+Distinct pure numerical labels and their minimum depth give
+
+$$
+u_1+u_2\le\sum_{k\ge3}3^{-k}=\frac1{18}.
+\tag{PC74}
+$$
+
+But PC73, together with $u_1\ge0$, gives
+
+$$
+6\le T+27u_1\le81u_2+27u_1
+\le81(u_1+u_2)\le\frac92,
+\tag{PC75}
+$$
+
+a contradiction. No count or modulus-sum restriction was used.
+Allowing larger heights or extra pure labels therefore does not
+repair this particular one-output-per-owner interface.
+
+Without pure outputs the obstruction already reduces to 81 ternary
+words: enlarge the shallower output at each p to depth three and
+the deeper to depth four. At the root-one source t=4 one phase-zero
+output must be active, excluding its axis from complete pairs on
+root two. Each of the 27 root-two words needs a complete pair, and
+one pair can serve at most one such word. An injection of these
+27 words into the remaining 26 axes is impossible.
+
+Scoped Lean checks establish the exact old-source incidence and
+individual color incompleteness, the product-source implication
+PC71, and this finite 27-to-26 impossibility without enumerating
+all binary source vectors. Separate exact applications establish
+the finite pure-depth mass bound through the existing geometric
+series inequality and the inconsistency of PC73--PC74. The reduction
+from arbitrary congruence prefixes to these finite and mass inputs
+is the ordinary argument above, not an asserted end-to-end kernel
+formalization of the arbitrary-height arithmetic model.
+
+This control has 54 nonempty lower colors. It does not supply the
+at least 105 complete original color families, their actual top
+private witnesses, the exact residual of all retained q-free
+originals, or global count-and-sum minimality. It is not a
+counterexample to the full hypotheses giving PC68 or to Erdős #7.
+Its consequence is narrower: a proposed repair using only the
+27-fold lower service, two-owner capacities, lower-row widths and
+prime envelope is insufficient, even when fresh pure labels are
+free. A successful actual-source argument must use further joint
+structure, a larger replacement interface, or different complete
+liabilities.

@@ -393,3 +393,218 @@ are not included in those Lean claims. The control's retained
 program and exact data have passed their arithmetic checks, and the
 finite-palette mass obstruction is the ordinary argument DS12.
 No simultaneous allocation is asserted for the actual whole cover.
+
+## A typed forest lowers the simultaneous divisor demands
+
+The ten-tag condition DS7 can be weakened by retaining each displaced
+parent's actual ternary phase. Keep the disjoint pure 3 and pure 9
+guards, and let B be a nonempty set of displaced parents
+
+$$
+P_i=[\rho_i]_{3^{a_i}t_i},\qquad
+0\le a_i\le2,\qquad t_i>1,\qquad (t_i,3)=1.
+\tag{DS13}
+$$
+
+Write $z_i=\rho_i\bmod3^{a_i}$ and
+$D_i=\{e>1:e\mid t_i\}$. These are the actual old parent phases;
+no phase is chosen independently of its original. The parents and
+the stripped classes still have ternary height at most two.
+
+Normalize the retained guards to $[0]_3$ and $[1]_9$. This does not
+restrict their actual phases. If the original guard phases are
+$\alpha\bmod3$ and $\beta\bmod9$, disjointness gives
+$\alpha\not\equiv\beta\pmod3$. Choose $u\in\{-1,1\}$ with
+$u(\alpha-\beta)\equiv-1\pmod3$. The integer bijection
+$x\mapsto u(x-\beta)+1$ sends the guards to the stated phases,
+transports every original congruence class and preserves its numerical
+modulus. All phases below use this same normalization.
+
+Use the two shared pure leaves $[8]_{27}$ and $[7]_{81}$.
+The private leaves, listed by their ternary depth k, are
+
+$$
+\begin{aligned}
+F_3&=\{13,16,22,25,11,14,17,20,23,26\},\\
+F_4&=\{31,58,34,61,2,29,56,5,32,59\},\\
+F_5&=\{4,85,166\}.
+\end{aligned}
+\tag{DS14}
+$$
+
+Together these leaves partition exactly the ternary tails outside
+the two retained guards. Indeed, among the fifteen safe roots modulo
+27, expand the four roots $2,4,5,7$ and retain the other eleven,
+using root 8 for the shared pure leaf. At depth four, expand root 4,
+use root 7 for the other shared pure leaf and retain the other ten.
+The final expansion of root 4 gives $4,85,166$ modulo 243.
+
+For parent i, retain only the private leaves lying in its old
+ternary phase and put
+
+$$
+F_{i,k}=\{v\in F_k:v\equiv z_i\pmod{3^{a_i}}\},\qquad
+ d_{i,k}=|F_{i,k}|.
+\tag{DS15}
+$$
+
+Comparable-original disjointness with the retained guards leaves
+exactly the eight types in the following table. The divisor demand
+column is $\max_k d_{i,k}$ for one parent. The private-class count
+is $\sum_k d_{i,k}$, and the cost coefficient is
+$c_i=\sum_k3^k d_{i,k}$.
+
+| Parent type $(a_i,z_i)$ | $(d_{i,3},d_{i,4},d_{i,5})$ | Individual divisor demand | Private classes | $c_i$ |
+| --- | --- | ---: | ---: | ---: |
+| $(0,0)$ | $(10,10,3)$ | 10 | 23 | 1809 |
+| $(1,1)$ | $(4,4,3)$ | 4 | 11 | 1161 |
+| $(1,2)$ | $(6,6,0)$ | 6 | 12 | 648 |
+| $(2,2)$ | $(2,3,0)$ | 3 | 5 | 297 |
+| $(2,4)$ | $(2,2,3)$ | 3 | 7 | 945 |
+| $(2,5)$ | $(2,3,0)$ | 3 | 5 | 297 |
+| $(2,7)$ | $(2,2,0)$ | 2 | 4 | 216 |
+| $(2,8)$ | $(2,0,0)$ | 2 | 2 | 54 |
+
+At each depth independently, assign a tag $e_{i,k,v}\in D_i$ to
+each $v\in F_{i,k}$, requiring all tags at that depth to be distinct.
+Tags may be reused at different depths. By the same finite Hall
+theorem used in DS7, such assignments exist exactly when
+
+$$
+\left|\bigcup_{i\in J}D_i\right|
+\ge\sum_{i\in J}d_{i,k}
+\qquad\text{for every }J\subseteq B
+\text{ and }k\in\{3,4,5\}.
+\tag{DS16}
+$$
+
+This is Hall applied separately to the parent copies at each depth;
+it does not require the same divisor assignment at different depths.
+The stronger condition with right side
+$\sum_{i\in J}\max_k d_{i,k}$ also suffices. For parents confined
+to rows zero and one these conditions agree, since every parent's
+maximum is attained at both depths three and four. DS7 implies
+DS16, but DS16 demands only four or six tags for a row-one parent
+and two or three for a top parent.
+
+Given DS16, replace a private leaf v for parent i by the CRT class
+
+$$
+x\equiv v\pmod{3^k},\qquad
+x\equiv\rho_i\pmod{e_{i,k,v}}.
+\tag{DS17}
+$$
+
+Every point of the entire old parent $P_i$ is covered by a retained
+guard, a shared pure leaf or one of its assigned private classes.
+At a private leaf, its tag divides $t_i$, so the point satisfies the
+literal old cofactor congruence in DS17. This verifies coverage of
+the full simultaneous old parent union, including points outside
+the original component deletion hole.
+
+At a fixed depth, injectivity of the assigned tags makes the
+numerical labels distinct. Different depths have different ternary
+valuations, and the private tags exceed one, so they cannot collide
+with the shared pure labels. All labels have ternary height at least
+three and are therefore fresh against the retained originals and
+the stripped classes. The common packet is one permanent assignment;
+it is not a collection of incompatible parent-by-parent repairs.
+
+## Exact count and modulus-sum payment for the typed forest
+
+Let $E_{i,k}$ be the set of divisors assigned to parent i at depth k.
+With the two shared pure leaves included once, the packet has
+
+$$
+\begin{aligned}
+r&=2+\sum_{i\in B}\sum_{k=3}^{5}d_{i,k},\\
+\Sigma_{\mathrm{repair}}
+ &=108+\sum_{i\in B}\sum_{k=3}^{5}
+       3^k\sum_{e\in E_{i,k}}e\\
+ &\le108+\sum_{i\in B}c_i t_i.
+\end{aligned}
+\tag{DS18}
+$$
+
+The inequality uses $e\mid t_i$ and $e>0$, hence $e\le t_i$.
+The preceding line is the exact sum, so an actual assignment can
+use its selected divisor values instead of the upper bound. In
+particular, for a purely lower-row selection, with parent counts
+$b_0,b_1,b_2$ of types $(0,0),(1,1),(1,2)$,
+
+$$
+r=2+23b_0+11b_1+12b_2.
+\tag{DS19}
+$$
+
+For all eight types, $r\le23|B|+2\le25|B|$. The empty-parent case
+uses an empty packet, with count and cost zero.
+
+There is a further exact cancellation when $G=1$. Let C be the
+set of deleted q-bearing originals, $M=|C|$, and let S be a selected
+subset whose literal q-strips cover the entire hole left by deleting
+C. This coverage is a premise of the exchange: DS2 supplies it for
+one complete color of a component, and Report864 PC66 supplies it
+for the fixed lower selector when C consists of all q-bearing
+originals. These two choices have different size guarantees.
+
+Every selected original has label $q h_i$, where
+$h_i=3^{a_i}t_i$, $a_i\le2$, $t_i>1$ and $(t_i,3q)=1$,
+as in DS13. Thus no stripped label is either retained pure guard.
+Divisor closure supplies the unique actual original
+with label $h_i$. It is q-free, hence outside C. The strips have
+distinct labels, so their entire collision set B has $|B|=|S|$,
+and the sums of the numerical labels of B and of the strips are
+equal. Delete C and B, insert the strips and one fresh simultaneous
+repair of B as above. If N and $\Sigma$ are the original count and
+modulus sum, then
+
+$$
+N'=N-M+r,\qquad
+\Sigma'=\Sigma-\sum_{i\in C}\operatorname{modulus}(i)
+                    +\Sigma_{\mathrm{repair}}.
+\tag{DS20}
+$$
+
+Thus $r<M$ gives a count contradiction. If $r=M$, a strict
+inequality between the repair sum and the deleted C sum gives
+the secondary contradiction when the original cover is also
+modulus-sum minimal among count-minimal covers. The cancellation uses
+numerical labels, not equality of old and inserted phases.
+
+For a smallest complete color, write $k=|S|$. DS1 gives
+$nk\le M$, and DS18 gives $r\le25k<M$ when $n\ge26$ and
+$k>0$; if $k=0$, the empty repair suffices. This count comparison
+needs no modulus-sum estimate. The fixed union of lower owners in
+Report864 PC66--PC68 is not one smallest complete color and does
+not inherit $nk\le M$. Its parent repair must instead be compared
+with its actual deleted count using DS20.
+
+## What the typed condition leaves unresolved
+
+DS16 is a sufficient simultaneous repair criterion. Neither the
+fixed two-owner selector nor its pointwise lower-color multiplicity
+has been shown to force this criterion in the actual whole source.
+For a prime cofactor $t_i=p$, the only nonunit divisor is p, whereas
+every row in the table needs at least two distinct divisors. Such
+a parent fails even the singleton instance of DS16. The pointwise
+lower-color bound 32 in Report864 PC65 does not by itself discard
+these parents: 27 cofactor-prime axes provide 54 possible numerical
+lower labels $qp,3qp$. This inventory comparison is not an assertion
+that a whole cover realizing such service exists.
+
+Failure of DS16 rejects this particular whole-parent forest, not
+every possible repair. Other final retained originals and the inserted
+strips can reduce the actual parent liability; compatible old cofactor
+phases can permit a class to serve several parents; and tags outside
+the displayed divisor palettes are not excluded by this test. A
+bridge from the actual shared source to a feasible permanent plan,
+with its complete deletion liability and payment, remains unproved.
+
+A scoped Lean check verifies the exact partition on all 243 ternary
+words, the eight rows of private-leaf counts and every displayed
+cost coefficient. Its three checked declarations have empty axiom
+closures. These finite checks do not prove DS16 for the actual
+parents. The conditional Hall, CRT and exchange arguments above
+reuse the existing interfaces; no new D5 declaration or actual-source
+closure claim is made.
