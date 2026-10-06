@@ -225,14 +225,14 @@ private lemma forced_colors (Q : ℝ → Fin 6)
     intro i j hij
     change i.val < j.val at hij
     fin_cases i <;> try fin_cases j
-    all_goals try omega
+    all_goals norm_num at hij
     all_goals simp [a] <;>
       nlinarith only [hs, hg, htlo, hthi]
   have hbMono : StrictMono b := by
     intro i j hij
     change i.val < j.val at hij
     fin_cases i <;> try fin_cases j
-    all_goals try omega
+    all_goals norm_num at hij
     all_goals simp [b] <;>
       nlinarith only [hs, hg, hfour, htlo, hthi]
   have mem (x : ℝ) (hx : x ∈ stateInterval false) :
@@ -312,9 +312,7 @@ private lemma forced_colors (Q : ℝ → Fin 6)
   have hfix5 : branch fiveLabel s = s := by
     simp [branch, offset, fiveLabel, s, hg, hs]; nlinarith only [hs]
   have hfix2 : branch twoLabel r = r := by
-    change 1 - g * r = r
-    dsimp [r]
-    rw [hg]
+    simp [branch, offset, twoLabel, r, hg]
     nlinarith only [hs]
   have hQslegal : s ∈ stateInterval (outgoing fiveLabel) := by
     simp [stateInterval, outgoing, fiveLabel]; dsimp [s]; constructor <;> linarith
@@ -364,9 +362,6 @@ private lemma no_pure_ordered (Q : ℝ → Fin 6)
   let a : Fin 5 → ℝ := fun i =>
     if i.val = 0 then -t ^ 2 else if i.val = 1 then g else if i.val = 2 then t else
       if i.val = 3 then 2 * t else 1 + t
-  let b : Fin 5 → ℝ := fun i =>
-    if i.val = 0 then -t - t ^ 4 else if i.val = 1 then -t ^ 4 else
-      if i.val = 2 then g else if i.val = 3 then 1 - t ^ 4 else 2 * t
   let l : Fin 5 → Label := fun i =>
     if i.val = 0 then threeLabel else if i.val = 1 then nullLabel else
       if i.val = 2 then fiveLabel else if i.val = 3 then twoLabel else twoFiveLabel
@@ -519,12 +514,13 @@ private lemma no_pure_ordered (Q : ℝ → Fin 6)
     intro i he
     have he' := congrArg (fun w : Label => (w.val 0, w.val 1, w.val 2)) he
     fin_cases i <;>
-      simp [labels2, threeLabel, nullLabel, fiveLabel, twoLabel, twoFiveLabel] at he'
+      simp [labels2, l, threeLabel, nullLabel, fiveLabel, twoLabel, twoFiveLabel] at he'
     all_goals rfl
   have hbad := hp 4 3 twoLabel twoFiveLabel β₃ t (hb3legal 3) (htlegal 4)
     hβ₃3 ht3 hb3two (by rw [hbeval4]; exact h2t4)
   have hbad' := congrArg (fun w : Label => w.val 2) hbad
-  norm_num [twoLabel, twoFiveLabel] at hbad'
+  change false = true at hbad'
+  cases hbad'
 
 /-- No instrument with one through six nonempty connected cells can decode every
 actual legal address with a positive uniform open error margin. -/
