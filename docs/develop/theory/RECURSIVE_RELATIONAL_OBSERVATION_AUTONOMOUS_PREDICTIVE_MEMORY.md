@@ -535,7 +535,7 @@ $$
 for every tolerant bin $2^{-h}\le D\le4\cdot2^{-h}$. PCR §78 supplies old receipts at this fixed $K$ with those bins, for the same actual trees and common preparations. Their cached installations therefore have $\Theta(h^2)$ list payload and complete peak $\Theta(h^2)$, since $W_c=O(h+1)$ at fixed $K$. This is the resource cost of the materialized-list algorithm, not a lower bound against every implementation accepting an old receipt.
 
 For clarity about the smaller-space alternative, use an internal cutoff
-$J=2(h+K+20)+8$. If $h\le K+20$, all head Fibonacci exponents and a grid of width $J+(K+10)+24$ have $O(K)$ bits; rounded powering has degree-times-grid error below $2^{-(K+10)-23}$. If $h>K+20$, the encoded losses satisfy $d_{\max}<8\sigma<\epsilon2^{-18}$. With $z'=Rd_1+Sd_2$, integration of $1/(1-d)$ gives
+$J=2(h+K+20)+8$. If $h\le K+20$, all head Fibonacci exponents and a grid of width $J+(K+10)+24$ have $O(K)$ bits; rounded powering has degree-times-grid error below $2^{-(K+10)-23}$. If $h>K+20$, the encoded losses satisfy $d_{\max}<8\sigma\le\epsilon2^{-18}$. With $z'=Rd_1+Sd_2$, integration of $1/(1-d)$ gives
 
 $$
 0\le e^{-z'}-(1-d_1)^R(1-d_2)^S
