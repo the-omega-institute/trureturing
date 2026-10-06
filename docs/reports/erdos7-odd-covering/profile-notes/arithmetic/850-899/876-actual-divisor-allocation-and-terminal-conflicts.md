@@ -704,6 +704,28 @@ at all safe roots. In particular, a family of at most nineteen such
 cylinders cannot cover the exact residual E_q. No existence of a
 nineteen-cylinder subcover of E_q has been proved.
 
+The sufficient global obligation can be weakened accordingly. For a
+fixed palette A, let H_A be the union of the actual q-stripped classes
+with at least twelve matches in P. If J is any family of at most
+nineteen eligible actual cofactor classes as above, the same-point
+conclusion is
+
+$$
+E_q\setminus\left(H_A\cup\bigcup_{j\in J}[a_j]_{m_j}\right)
+\ne\varnothing.
+\tag{DA25}
+$$
+
+A contradiction would therefore follow from one fixed palette and
+one such J covering E_q minus H_A. Covering all of E_q by J is not
+needed. This extraction is not supplied by the known fixed lower-owner
+cover PC66--PC68: that cover bounds multiplicity at each numerical
+cofactor by two, but neither its total size nor the required twelve
+prime factors. Restricting a complete color cover to E_q minus H_A
+preserves coverage of that sector. It need not preserve an original
+private point, since the private region's intersection with that
+sector has not been shown nonempty.
+
 The argument is an application of the existing finite matching,
 prime-product, CRT and actual old-bank results. It supplies a
 stronger interface consequence, not a new matching theorem.
