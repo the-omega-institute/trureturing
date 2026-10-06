@@ -3339,3 +3339,113 @@ Euler 归一化、\(A<1/2\) 和 Dickman 身份均复用既有来源；FTC、
 绝对可积分部、严格 Jensen 与支配求导为经典供应。它没有支付完整
 Robin 配对中其余阶乘密度、实际粗糙前缀、整数纤维及有符号互补尾，
 也没有由此证明 Robin 不等式或 RH。
+
+## 451. 同一原始完整肩项的半 Gamma 负储备
+
+This section strictly strengthens §447 for the same literal objects. Set
+\[
+ C=e^\gamma,\qquad k=C-1,\qquad
+ \delta=\frac{2\log2-1}{6}>0,
+\]
+and retain the original complete two-piece constant \(A<1/2\),
+\[
+ Q(u)=u\Re\zeta(1+u),\qquad
+ K(t)=A-k(\log t+\gamma)
+ +C\int_{u>0}e^{-tu}\frac{1/Q(u)-1}{u}\,du\quad(t>0).
+\]
+No new shoulder, finite truncation, or assumed infinite bound is introduced.
+The suppliers for complete integrability and the literal comparison are
+exactly those in §447.
+
+### The existing complete average and its positive tail mass
+
+For \(x>0\), let
+\[
+ E_1(x)=\int_{y>x}\frac{e^{-y}}y\,dy,\qquad
+ G(x)=k(\log(x/2)+\gamma)+Ce^x E_1(x).
+\]
+The actual \(Q(u)\ge1+u/2\) gives
+\((1/Q(u)-1)/u\le-1/(u+2)\); the complete affine substitution
+\(y=t(u+2)\) therefore gives \(K(t)\le A-G(2t)\).
+The full logarithmic FTC identity and \(C=1+k\) give the unit-mass average
+\[
+ G(x)=e^x\int_{y>x}e^{-y}
+ \left[k(\log(y/2)+\gamma)+\frac1y\right]dy.
+\]
+All integrals above are over their full specified domains and are absolutely
+integrable. Let
+\[
+ \Lambda(k)=k\left[1+\log\frac{1+k}{2k}\right],\qquad
+ m(k)=ke^{-2/k}(\log2-1/2)=3k\delta e^{-2/k}.
+\]
+The scalar gap equals \(k[\log(ky)+1/(ky)-1]\ge0\).
+For \(y>x+2/k\), its value is at least \(k(\log2-1/2)\),
+and that part of the normalized complete average has mass \(e^{-2/k}\).
+Consequently, for every \(x>0\),
+\[
+ G(x)\ge\Lambda(k)+m(k),\qquad
+ K(t)\le R:=A-\Lambda(k)-m(k).
+\]
+The number \(R\) is independent of \(t\).
+
+### The half-gamma simplification
+
+The already available strict classical bound \(\gamma>1/2\) and the
+exponential tangent inequality \(e^\gamma\ge1+\gamma\) yield
+\[
+ k=e^\gamma-1\ge\gamma>1/2.
+\]
+Put \(z=(1+k)/(2k)>0\). The logarithmic tangent is used in its lower-bound
+direction, \(\log z\ge1-1/z\), so
+\[
+ \Lambda(k)\ge k\left(2-\frac{2k}{1+k}\right)
+ =\frac{2k}{1+k}>\frac23.
+\]
+This estimate requires neither the location of a minimum of \(G\) nor
+monotonicity or differentiation of \(\Lambda\).
+Because \(k>1/2\), one also has \(2/k<4\), hence
+\[
+ m(k)=3k\delta e^{-2/k}
+ >\frac32\delta e^{-4}.
+\]
+The positivity of \(\delta\) follows from the strict logarithmic tangent
+at \(1/2\), giving \(\log2>1/2\).
+
+### A strict supremum paid by a common barrier
+
+Combining the strict bound on the original \(A\) with the two strict
+constant reserves gives
+\[
+ R=A-\Lambda(k)-m(k)
+ <-\frac16-\frac32\delta e^{-4}.
+\]
+The set \(\{K(t):t>0\}\) is nonempty (take \(t=1\)) and every member is
+bounded above by the same \(R\). Thus the conditional complete supremum
+satisfies
+\[
+ \boxed{\sup_{t>0}K(t)\le R
+ <-\frac16-\frac32\delta e^{-4}.}
+\]
+This is a genuine strict supremum estimate; pointwise strictness alone is
+not substituted for a uniform barrier.
+
+It strictly improves §447. The strict upper tangent \(\log2<1\) gives
+\(0<\delta<1/6\), and
+\((3/2)\delta e^{-4}>\delta e^{-6}\). Therefore
+\[
+ -\frac16-\frac32\delta e^{-4}
+ <-\delta(1+e^{-6}),
+\]
+recovering its advertised bound with strictly more reserve.
+
+This is a bound for the same original complete shoulder. The full Robin
+pairing and the remaining signed tail still require their own proofs; this
+section does not claim RH or an unproved bound for that tail.
+
+Provenance: §447 complete exponential-average construction; original
+\(A<1/2\) from PrimePrefixOriginalA; classical Euler-constant and exponential
+bounds from Mathlib; lower logarithmic tangent from Mathlib. The
+half-gamma substitution and stronger displayed reserve are the repo-derived
+simplification of that existing construction.
+
+This is a complete paper proof. It reports no new Lean acceptance.
