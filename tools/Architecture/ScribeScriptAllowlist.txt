@@ -106,7 +106,6 @@ T:StrataLint.Scribe.ProjectionGap
 T:StrataLint.Scribe.ResolutionKind
 T:StrataLint.Scribe.ScribeDocument
 T:StrataLint.Scribe.ScribeNode
-T:StrataLint.Scribe.ScribeSharedSourceAttribute
 T:StrataLint.Scribe.StatementSource
 T:StrataLint.Scribe.StatementSource.Authored
 T:StrataLint.Scribe.StatementSource.LeanDerived
@@ -228,6 +227,7 @@ M:StrataLint.Scribe.DocumentBlock.DisplayFormula.#ctor(StrataLint.Scribe.Formula
 M:StrataLint.Scribe.DocumentBlock.Section.#ctor(StrataLint.Scribe.Heading,StrataLint.Scribe.BlockSequence)
 M:StrataLint.Scribe.DocumentDefinition.Create(StrataLint.Scribe.ScribeDocument,System.String)
 M:StrataLint.Scribe.DocumentEdge.Dependency.Create(StrataLint.Scribe.GidRef)
+M:StrataLint.Scribe.DocumentEdge.NarrativeReference.ToDescribe(StrataLint.Scribe.GidRef,StrataLint.Scribe.DescribeId)
 M:StrataLint.Scribe.DocumentEdge.NarrativeReference.ToDocument(StrataLint.Scribe.GidRef)
 M:StrataLint.Scribe.Formula.Absolute.#ctor(StrataLint.Scribe.Formula)
 M:StrataLint.Scribe.Formula.Aligned.#ctor(System.Collections.Immutable.ImmutableArray{StrataLint.Scribe.Formula})
@@ -281,7 +281,6 @@ M:StrataLint.Scribe.OpenProblemResolutionClaim.#ctor(StrataLint.Scribe.ProblemSl
 M:StrataLint.Scribe.OpenProblemResolutionClaim.#ctor(StrataLint.Scribe.ProblemSlugRef,StrataLint.Scribe.ResolutionKind,System.Collections.Generic.IEnumerable{StrataLint.Scribe.DeclarationHandle})
 M:StrataLint.Scribe.ProblemSlugRef.Create(System.String)
 M:StrataLint.Scribe.ScribeNode.Create(System.String,StrataLint.Scribe.Heading,StrataLint.Scribe.BlockSequence,System.Collections.Generic.IEnumerable{StrataLint.Scribe.DocumentEdge},System.Collections.Generic.IEnumerable{StrataLint.Engine.Anchor},System.String)
-M:StrataLint.Scribe.ScribeSharedSourceAttribute.#ctor(System.String)
 M:StrataLint.Scribe.StatementSource.FromAuthor(StrataLint.Scribe.Formula)
 M:StrataLint.Scribe.StatementSource.FromLean
 M:StrataLint.Scribe.StatementSource.WithoutFormula

@@ -1,0 +1,26 @@
+## 定义 29.1：固定状态预算的综合问题
+
+给定有限集合：
+
+$$
+I,\quad Z,\quad S,\quad A,\quad O
+$$
+
+以及实验表格、初始候选关系和控制状态预算 $K$。
+
+需要寻找：
+
+$$
+c:I\to\{1,\ldots,K\},
+$$
+
+$$
+u:\{1,\ldots,K\}\to A\sqcup\operatorname{Halt}(Z),
+$$
+
+$$
+v:\{1,\ldots,K\}\times O\to\{1,\ldots,K\},
+$$
+
+使对应闭环满足定理 27.2。
+

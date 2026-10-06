@@ -34,8 +34,7 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains("build: lean", makefile, StringComparison.Ordinal);
         Assert.Equal(0, RecipeCount(makefile, "build"));
-        // `scribe-strip` retired with the Scribe receipt field it existed to remove; the
-        // target must be gone from both the recipe list and the help text.
+        // `scribe-strip` is not a supported target or help entry.
         Assert.DoesNotContain("scribe-strip", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("strip-scribe-receipts", makefile, StringComparison.Ordinal);
         // make test 是薄委托;数学门链条的唯一真源在 math-gate.sh 里,断言脚本本体。
@@ -106,11 +105,19 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("[[ -d", cacheEnsure, StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
         Assert.Equal($"\t@/bin/bash {ScribeReleaseScriptPath}", Recipe(makefile, "scribe-release"));
-        Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
+        Assert.Equal(
+            $"\t@/bin/bash {ScribeReleaseScriptPath} publish --prefix \"$$PREFIX\" --target \"$$TARGET\"",
+            Recipe(makefile, "scribe-release-publish"));
+        Assert.Equal(
+            $"\t@/bin/bash {ScribeReleaseScriptPath} fetch \"$$DIGEST\" --prefix \"$$PREFIX\"",
+            Recipe(makefile, "scribe-release-fetch"));
         Assert.Contains(
-            IngestScriptPath + " align-digestion-status",
-            Recipe(makefile, "align-digestion-status"),
+            "scribe-release-publish scribe-release-fetch: export PREFIX ?= scribe-resources",
+            makefile,
             StringComparison.Ordinal);
+        Assert.Contains("scribe-release-publish: export TARGET ?=", makefile, StringComparison.Ordinal);
+        Assert.Contains("scribe-release-fetch: export DIGEST ?=", makefile, StringComparison.Ordinal);
+        Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\"",
             Recipe(makefile, "mathlib-reanchor"));
@@ -118,8 +125,7 @@ public sealed partial class MakeWorkflowTests
         // recipe line: the dispatch table above allows at most one line per target, and
         // CliVerbLinkageTests reads the verb out of this file to prove it is registered. The same
         // line first checks that the build output exists and builds it when it does not, because a
-        // fresh worktree carries none; on 2026-09-11 two of five implementation seats hit a raw
-        // process-start exception six times between them while every brief opens by calling show-atom.
+        // fresh worktree has no build output.
         foreach (var noBuildTarget in new[] { "show-atom", "atom-context", "settle", "settle-clear" })
         {
             var recipe = Recipe(makefile, noBuildTarget);
@@ -140,18 +146,10 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
         Assert.Contains("\"$(KIND)\" \"$(NAME)\"", worktreeRecipe, StringComparison.Ordinal);
         Assert.Contains("\"$(WORKTREE_DEST)\"", worktreeRecipe, StringComparison.Ordinal);
-        // 回收**不得**是建树的前置(#2769)。此前它是依赖形式,于是每次 `make worktree`
-        // 都无条件回收所有「已合并且干净」的 lane —— 而那正是一条刚建好、worker 尚未落笔
-        // 的 lane 的默认状态。实测后果:另一会话建树时删掉了本会话正在使用的 lane、其分支
-        // 与约 15G 热缓存,一条实施席因此 blocked。
-        //
-        // 原断言的注释里已写明「判官树的判据区分不了『跑完了』和『正在跑』」,并以
-        // `--lanes-only` 缓解;但那限定的是「哪些东西算 lane」,**不是「谁的 lane」**,
-        // 对跨会话误删不构成防护。
-        //
-        // 反转而非删除:删掉断言就没有东西拦住同一个直觉(「开工前先扫干净」)把依赖加回来。
+        // 回收不得是建树的前置:「已合并且干净」不能区分已完成与正在使用的 lane。
+        // `--lanes-only` 只限定 lane 类型,不限定会话所有权。
         Assert.DoesNotContain("worktree: worktree-clean", makefile, StringComparison.Ordinal);
-        // `worktree-clean` 保留为**显式**目标:回收本身没错,错的是让建树隐含回收。
+        // `worktree-clean` 是显式目标,建树不隐含回收。
         var worktreeCleanRecipe = Recipe(makefile, "worktree-clean");
         Assert.Contains(CleanLanesScriptPath, worktreeCleanRecipe, StringComparison.Ordinal);
         Assert.Contains("--lanes-only", worktreeCleanRecipe, StringComparison.Ordinal);
@@ -178,6 +176,9 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Single(Regex.Matches(openRecipe, Regex.Escape(PrOpenScriptPath)));
         Assert.Single(Regex.Matches(watchRecipe, Regex.Escape(PrWatchScriptPath)));
+        Assert.Contains("AUTO_MERGE ?= 1", makefile, StringComparison.Ordinal);
+        Assert.Contains("pr: pr-open", makefile, StringComparison.Ordinal);
+        Assert.Contains("$(if $(filter 1,$(DRAFT)),--draft,", openRecipe, StringComparison.Ordinal);
         Assert.Contains("$(if $(filter 1,$(AUTO_MERGE)),--auto-merge,)", openRecipe, StringComparison.Ordinal);
         Assert.Contains("--timeout-seconds \"$(WATCH_TIMEOUT_SECONDS)\"", openRecipe, StringComparison.Ordinal);
         Assert.Contains("--interval-seconds \"$(WATCH_INTERVAL_SECONDS)\"", openRecipe, StringComparison.Ordinal);
@@ -222,7 +223,7 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains(".DEFAULT_GOAL := help", makefile, StringComparison.Ordinal);
         Assert.Contains(
-            "HERE := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))",
+            "HERE := $(shell cd \"$$(dirname \"$(MAKEFILE_LIST)\")\" && pwd -P)",
             makefile,
             StringComparison.Ordinal);
         var phony = Assert.Single(
@@ -443,10 +444,21 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("make test  Run lean-report and check-current", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make gate [BASE=origin/dev]  Run independent CI-equivalent commands", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make lean-report  Produce the canonical raw Lean report", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make scribe-release  Rebuild and verify local Scribe release assets", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]", rootOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("make dotnet", rootOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("make tools-test", rootOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("pr-update", rootOutput, StringComparison.Ordinal);
+
+        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
+        Assert.Contains("make scribe-release-fetch DIGEST=\"$(DIGEST)\" PREFIX=\"$(PREFIX)\"", Recipe(makefile, "dag"), StringComparison.Ordinal);
+        Assert.Contains("--scribe-pack \"$(SCRIBE_PACK)\" --scribe-pack-digest \"$(DIGEST)\"", Recipe(makefile, "dag"), StringComparison.Ordinal);
+        Assert.DoesNotContain("DIGEST", Recipe(makefile, "filemap"), StringComparison.Ordinal);
+        Assert.DoesNotContain("scribe-release-fetch", Recipe(makefile, "filemap"), StringComparison.Ordinal);
+        Assert.Contains("-- filemap", Recipe(makefile, "filemap"), StringComparison.Ordinal);
 
         Assert.Equal(0, toolsResult.ExitCode);
         var toolsOutput = System.Text.Encoding.UTF8.GetString(toolsResult.StandardOutput);

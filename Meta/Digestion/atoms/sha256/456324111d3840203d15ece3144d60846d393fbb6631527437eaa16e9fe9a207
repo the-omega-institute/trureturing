@@ -1,0 +1,16 @@
+**定义 6.1（共同多项式观察）。** 对交换含幺系数环 $R$ 和非空有限互异阶族 $a_1,\ldots,a_r\ge2$，其中 $r\ge1$，定义
+
+$$
+\Phi_a=X^a-\sum_{j=0}^{a-1}X^j,\qquad
+F=\prod_{i=1}^r\Phi_{a_i},\qquad D=\sum_{i=1}^ra_i,
+\qquad I_i=(\Phi_{a_i})\subset R[X].
+$$
+
+首一除法给每个商唯一的次数小于 $a_i$ 的余数代表。对同一个 $P\in R[X]$，联合观察是
+
+$$
+\mathcal O_R(P)=(\operatorname{rem}_{\Phi_{a_i}}P)_{i=1}^r.
+$$
+
+其联合核永远是实际理想交 $J_R=\bigcap_iI_i$；实际像是 $\mathcal O_R(R[X])$，未必是全部余数的 Cartesian 积。一个任意写出的余数组须先检验是否属于实际像，才能谈共同来源。对词来源还要进一步限制为 $\mathcal O_R(\{P_w\})$；这一限制不会仅因代数相容而自动消失。
+

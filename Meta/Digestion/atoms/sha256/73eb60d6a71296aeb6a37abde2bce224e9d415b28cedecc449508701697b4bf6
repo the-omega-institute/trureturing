@@ -1,0 +1,16 @@
+The inverse $\Psi_P$ is as follows, for every eligible tail
+$(s^\dagger,p)$ and every pair of digits in the displayed intervals.
+Read $\rho$ from the subword of $s^\dagger$ on $[L]$ and insert the maximum
+$A$ at position $A-d$ to obtain $\theta$. Select $t$ to be the position of
+the $(b+1)$-st entry of $s^\dagger$ whose label is at most $B$. Put
+
+$$
+j=\#\{u<t:s^\dagger_u\leq L\},\qquad a=\theta_{j+1}.
+$$
+
+Delete this entry $a$ from $\theta$ and apply $\delta_a$ to obtain a word
+$\eta\in\mathfrak S_L$. Replace the low-row slots of $s^\dagger$ by
+$\eta$ to obtain $s$, then apply the ordinary insertion formulas of
+Definition 2.1 to $(s,p,a,t)$. In particular, the tail pair is one coupled
+state: the row word and column permutation are retained together.
+

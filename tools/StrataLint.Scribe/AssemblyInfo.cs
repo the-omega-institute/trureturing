@@ -2,7 +2,6 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("StrataLint.RepositoryFileMap.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.Scribe.Tests")]
-[assembly: InternalsVisibleTo("StrataLint.Scribe.Documents.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.ArchitectureTests")]
 [assembly: InternalsVisibleTo("StrataLint.ScriptTests")]
 [assembly: InternalsVisibleTo("StrataLint")]
@@ -12,3 +11,5 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.FileMap")]
 
 [assembly: InternalsVisibleTo("StrataLint.FileMap.Tests")]
+
+[assembly: InternalsVisibleTo("StrataLint.CoverBatch.Tests")]

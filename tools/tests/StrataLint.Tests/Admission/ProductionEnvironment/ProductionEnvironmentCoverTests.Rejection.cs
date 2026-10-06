@@ -6,11 +6,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-// ProductionEnvironmentCoverTests 的后半:cover 拒绝路径一族。
-// 分出来的直接理由是余量:宿主原 795 行,离 SL-003 的 800 行硬线只剩 5 行。
-// 该类本就是 partial,故切分不动类声明。
-// 切点用「缩进 4 的真方法收尾 ∧ 后接空行 ∧ 再后是缩进 4 的特性行」判定,
-// 全文件 16 处候选取最接近中点者(第 416 行)。
+// ProductionEnvironmentCoverTests 的 cover 拒绝路径与相关完整性检查。
 
 public sealed partial class ProductionEnvironmentTests
 {
@@ -223,6 +219,16 @@ public sealed partial class ProductionEnvironmentTests
         var snapshotEntries = new List<RawRepositoryEntry>
         {
             RawRepositoryEntry.FromText("captured/probe.txt", "captured bytes\n"),
+            RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path,
+                EngineeringRegistrationFixture.Manifest()),
+            RawRepositoryEntry.FromText("Meta/ReportProducers/scribe-content.json", """
+                {"schema":"report-producer-scope-v2","registration":"lean-report-inputs.json",
+                 "scope":"scribe-content","projects":[]}
+                """),
+            RawRepositoryEntry.FromText("lean-report-inputs.json", """
+                {"inspector_sources":{"include":[],"exclude":[]},"producer_scopes":{
+                 "lean-report":{"include":[],"exclude":[]},"scribe-content":{"include":[],"exclude":[]}}}
+                """),
         };
         snapshotEntries.AddRange(fixtureFiles.Select(static fixture =>
             RawRepositoryEntry.FromText(fixture.Path, fixture.Content)));
@@ -236,7 +242,7 @@ public sealed partial class ProductionEnvironmentTests
                     static module => module.Key,
                     static module => new LeanFileReport(
                         [], module.Select(static item => item.Declaration).ToImmutableArray()),
-                    StringComparer.Ordinal)));
+                    StringComparer.Ordinal)), RawChangeSet.Create(fixtureFiles.Select(fixture => fixture.Path)));
 
         Assert.Same(verification, actual);
         Assert.Equal("captured bytes\n", observed);
@@ -246,5 +252,5 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     private static string[] CoverArgs(CoverInputs inputs) =>
-        ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"];
+        ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid];
 }

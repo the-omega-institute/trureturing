@@ -1,0 +1,31 @@
+**Theorem 8.1 (translation criterion in graph coordinates).** For
+$(a,b,X),(a',b',X')\in\mathcal P_p$, their graph triples are in the
+same translation orbit in $F^2$ if and only if
+
+$$
+  a'=a\quad\text{and}\quad
+  \exists h\in F,\quad X'=h+X,
+  \qquad h+X=\{h+x:x\in X\}.
+$$
+
+More precisely, translation by $(h,k)$ obeys
+
+$$
+  (h,k)+\Gamma(a,b,X)
+    =\Gamma(a,b+k-ah,h+X).
+$$
+
+**Proof.** For a point $(x,ax+b)$, put $x'=h+x$. Its translated
+second coordinate is
+
+$$
+  k+ax+b=a(h+x)+(b+k-ah)=ax'+(b+k-ah).
+$$
+
+This identifies the whole translated set with the asserted graph.
+If it equals $\Gamma(a',b',X')$, uniqueness in Theorem 7.2 gives
+$a'=a$, $X'=h+X$, and $b'=b+k-ah$. Conversely, if $a'=a$ and
+$X'=h+X$, choose $k=b'-b+ah$. The displayed transformation then
+sends the first graph triple to the second. Thus the intercept imposes
+no additional restriction on the translation orbit. $\square$
+

@@ -42,7 +42,19 @@ $$\operatorname{Triple}\left(n\right) = \{ S \in \operatorname{Finset}\left(\ope
 
 An object is a finite set, not an ordered tuple. Its cardinal condition is exactly three, so each unordered configuration contributes once.
 
-**Theorem 1.4 (The A146557 divisibility conjecture).**
+**Theorem 1.4 (Every fixing translation is three-torsion).**
+
+$$\forall n \in \mathbb{N}, \forall S \in \operatorname{Triple}\left(n\right), \forall t \in \operatorname{Point}\left(n\right), t+S = S \implies 3t = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Factorization/CollinearTripleTranslationOrbits.stabilizing_translation_three_torsion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Summing the three elements of an invariant unordered set gives three times the translation vector plus the original sum. Cancellation forces that vector to be annihilated by three, for every modulus, including modulus zero.
+
+**Theorem 1.5 (The A146557 divisibility conjecture).**
 
 $$\forall n \in \mathbb{N}, 0 < n \implies \neg (3 \mid n) \implies n^{2} \mid \operatorname{card}\left(\operatorname{Triple}\left(n\right)\right)$$
 
@@ -66,3 +78,4 @@ Translation preserves coordinate injectivity and every coordinate difference, so
 - Truth anchor: `D5/S3/Factorization/CollinearTripleTranslationOrbits.Point`
 - Truth anchor: `D5/S3/Factorization/CollinearTripleTranslationOrbits.Triple`
 - Truth anchor: `D5/S3/Factorization/CollinearTripleTranslationOrbits.square_dvd_card_collinear_triples`
+- Truth anchor: `D5/S3/Factorization/CollinearTripleTranslationOrbits.stabilizing_translation_three_torsion`

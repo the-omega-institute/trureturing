@@ -69,7 +69,7 @@ private theorem shift_digits_eq_zero_of_lt {offset i : Nat} (r : RawDigits)
   subst i
   exact (Nat.not_lt_of_ge (Nat.le_add_right offset j)) less
 
-private theorem shift_digits_canonical (offset : Nat) {r : RawDigits}
+theorem shift_digits_canonical (offset : Nat) {r : RawDigits}
     (canonical : CanonicalRaw r) : CanonicalRaw (shiftDigits offset r) := by
   constructor
   · intro i

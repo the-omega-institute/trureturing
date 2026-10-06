@@ -1,0 +1,86 @@
+**定理 365.2（实际完整支撑的三态、上端点比较与单元素剩余）。** 对任意有限素数调色板 $H$，有以下共同刻画。
+
+（一）若 $\mathsf V(H)\ne H$，则 $\mathcal T_H=\varnothing$。若 $\mathsf V(H)=H$，则
+
+$$
+\mathcal T_H
+=\{A_H\}
+\ \cup\ \{\operatorname{lcm}(A_H,8):2\in H\}
+\ \cup\ \{\operatorname{lcm}(A_H,144):\{2,3\}\subseteq H\}.
+\tag{365.3}
+$$
+
+右侧按集合取不同整数，条件不成立的项不加入，重复项只计一次。因此每个非空纤维至多有三个成员，按整除成链；最小元为 $A_H$，最大元为既有 $B_H$。具体地，$2\notin H$ 时 $B_H=A_H$；$2\in H,3\notin H$ 时 $B_H=\operatorname{lcm}(A_H,8)$；$\{2,3\}\subseteq H$ 时 $B_H=\operatorname{lcm}(A_H,144)$。空调色板的纤维为 $\mathcal T_{\varnothing}=\{1\}$，两端点均为一。
+
+（二）对同一完整支撑的任意两个实际值 $m,m'\in\mathcal T_H$，每个素数 $p\ge5$ 都满足 $v_p(m)=v_p(m')$。在可实现调色板内，全部非单元素情形恰为
+
+$$
+\begin{array}{c|c|c}
+\text{调色板及最小元条件}&\mathcal T_H&\#\mathcal T_H\\ \hline
+\{2,3\}\subseteq H,\ a=1,\ b=1&\{6K,24K,144K\}&3\\
+\{2,3\}\subseteq H,\ a=3,\ b=1&\{24K,144K\}&2\\
+2\in H,\ 3\notin H,\ a=1,\ b=0&\{2K,8K\}&2
+\end{array}
+\tag{365.4}
+$$
+
+因此三成员纤维只能是第一行；含三的二成员纤维只能是第二行；不含三的二成员纤维只能是第三行。每行的最小系数对应 $A_H$。特别地，
+
+$$
+\#\mathcal T_H>1\quad\Longrightarrow\quad
+\forall m\in\mathcal T_H,\qquad v_2(m)\le4,\quad v_3(m)\le2.
+\tag{365.5}
+$$
+
+这些上界不施加于单元素纤维；（365.4）也不是对任意与六互素的 $K$ 自动断言可实现性。
+
+（三）对每个实际 $m\in\mathcal T_H$ 且 $m>5040$，有
+
+$$
+\mathcal R(m)\le\mathcal R(B_H),
+\qquad
+\mathcal R(m)=\mathcal R(B_H)\ \Longleftrightarrow\ m=B_H.
+\tag{365.6}
+$$
+
+更强地，同一纤维中 $5040<m<m'$ 必有 $\mathcal R(m)<\mathcal R(m')$。这是完整支撑下不同实际值之间的比较，不是任意整数整除区间上的单调性。
+
+（四）对每个素指标 $r\ge5$，令 $H_r=\{2,3\}\cup\operatorname{Supp}(F_r)$，则
+
+$$
+\begin{gathered}
+\gcd(F_r,6)=1,\qquad \mathsf V(H_r)=H_r,\qquad A_{H_r}=6F_r,\\
+\mathcal T_{H_r}=\{6F_r,24F_r,144F_r\},\\
+M(\{3,4,r\})=6F_r,\qquad
+M(\{4,6,r\})=24F_r,\qquad
+M(\{12,r\})=144F_r.
+\end{gathered}
+\tag{365.7}
+$$
+
+这些三成员纤维的最小元无界：对每个实数 $X>0$，存在这样的 $r$ 使 $6F_r>X$。
+
+（五）每个非单元素纤维中的成员只要大于 $5040$，都满足严格 Robin 不等式。因而
+
+$$
+m\in\mathcal M,\quad m>5040,\quad\mathcal R(m)\ge1
+\quad\Longrightarrow\quad
+\mathcal T_{\operatorname{Supp}(m)}=\{m\},\qquad
+m=A_{\operatorname{Supp}(m)}=B_{\operatorname{Supp}(m)}.
+\tag{365.8}
+$$
+
+整个实际族上的严格 Robin 命题等价于只在可实现单元素调色板上的命题：
+
+$$
+\begin{aligned}
+&\forall m\in\mathcal M,\quad m>5040\ \Longrightarrow\ \mathcal R(m)<1\\
+\Longleftrightarrow\quad
+&\forall H\text{ 有限素数调色板且 }\mathsf V(H)=H,\quad
+A_H=B_H>5040\ \Longrightarrow\ \mathcal R(A_H)<1.
+\end{aligned}
+\tag{365.9}
+$$
+
+右侧的 $B_H$ 只在已满足 $\mathsf V(H)=H$ 的调色板上使用。
+

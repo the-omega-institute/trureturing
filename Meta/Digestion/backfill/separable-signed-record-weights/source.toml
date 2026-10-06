@@ -1,0 +1,5 @@
+source_id = "separable-signed-record-weights"
+path = "docs/develop/theory/SEPARABLE_SIGNED_RECORD_WEIGHTS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

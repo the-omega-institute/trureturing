@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:40b6268f7150e7b364e3f7b61f9456572be1a55c4e4a10e8aedc29356d5f4811
+  normalized_sha256: sha256:40b6268f7150e7b364e3f7b61f9456572be1a55c4e4a10e8aedc29356d5f4811
+cas_ref: sha256:40b6268f7150e7b364e3f7b61f9456572be1a55c4e4a10e8aedc29356d5f4811
+coverage_gids:
+  - gid: D5/S1/Words/Patterns/Separable/RecordTransport.actual_four_record_transports_and_rising
+    target_statement_id: sha256:69b48b9927fe90d940eeeb5cd7d2798ef9c76ea5f781b9f6b3995a231e0cc079
+receipts:
+  unresolved_subitems: []

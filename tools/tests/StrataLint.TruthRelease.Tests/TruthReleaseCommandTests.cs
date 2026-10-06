@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
+using StrataLint.Scribe;
 using Trureturing.Truth;
 using static StrataLint.TestSupport.FrozenLedgerTestData;
 
@@ -89,7 +90,21 @@ public sealed partial class TruthReleaseCommandTests
         Assert.Equal(1, exitCode);
         Assert.Contains("--commit-on-protected-dev true|false", console.Error, StringComparison.Ordinal);
         Assert.Contains("--required-check NAME=CONCLUSION", console.Error, StringComparison.Ordinal);
-        Assert.Contains("[--scribe-pack FILE --scribe-pack-digest HEX64]", console.Error, StringComparison.Ordinal);
+        Assert.Contains("--scribe-pack FILE --scribe-pack-digest HEX64", console.Error, StringComparison.Ordinal);
+        Assert.Empty(Directory.EnumerateFiles(output.Path));
+    }
+
+    [Fact]
+    public void MissingScribePackFailsClosedWithoutWritingABundle()
+    {
+        using var fixture = CreateFixture();
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), []);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("--scribe-pack FILE --scribe-pack-digest HEX64", console.Error,
+            StringComparison.Ordinal);
         Assert.Empty(Directory.EnumerateFiles(output.Path));
     }
 
@@ -123,12 +138,27 @@ public sealed partial class TruthReleaseCommandTests
             "--produced-at", "2026-08-23T00:00:00Z",
         };
         arguments.AddRange(trustArguments);
-        if (extraArguments is not null) arguments.AddRange(extraArguments);
-        var exitCode = CliApplication.Run(
-            arguments,
-            fixture.Environment,
-            console);
-        return (exitCode, console);
+        string? generatedPack = null;
+        if (extraArguments is not null)
+        {
+            arguments.AddRange(extraArguments);
+        }
+        else
+        {
+            generatedPack = Path.Combine(Path.GetTempPath(), $"scribe-pack-{Guid.NewGuid():N}.zip");
+            var digest = ScribeResourcePack.Write(generatedPack, PackDefinitions(fixture)).TotalSha256;
+            arguments.AddRange(PackArguments(generatedPack, digest));
+        }
+
+        try
+        {
+            var exitCode = CliApplication.Run(arguments, fixture.Environment, console);
+            return (exitCode, console);
+        }
+        finally
+        {
+            if (generatedPack is not null && File.Exists(generatedPack)) File.Delete(generatedPack);
+        }
     }
 
     private static string[] GreenTrustArguments() =>
@@ -138,7 +168,8 @@ public sealed partial class TruthReleaseCommandTests
         "--required-check", "current=success",
     ];
 
-    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false)
+    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false,
+        bool additionalLocalSource = false)
     {
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var blueprintSourcePath = $"Blueprint/{BlueprintGid}.scribe.cs";
@@ -189,6 +220,11 @@ public sealed partial class TruthReleaseCommandTests
         if (receiptIntegrityMismatch)
         {
             AddReceiptIntegrityMismatch(files);
+        }
+        if (additionalLocalSource)
+        {
+            files["Blueprint/D5/S0/Carrier/LocalOnly.scribe.cs"] = "local definition outside the resource pack\n";
+            files["Blueprint/D5/S0/Carrier/LocalOnly.md"] = "# Local projection\n";
         }
         var snapshotWithoutLedger = Decode(files);
         var report = LeanAxiomReport.Create(reports);

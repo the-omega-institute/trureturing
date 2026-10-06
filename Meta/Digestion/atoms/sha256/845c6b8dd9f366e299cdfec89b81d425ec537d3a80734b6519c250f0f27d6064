@@ -1,0 +1,18 @@
+**定义 356.1（连续叶积窗口）。** 沿用定义 2.1、定义 3.1、定义 355.1 的自由有序二叉树 $\mathcal T$、替换 $\rho$、观察 $E$ 及 Clifford 代数 $C$。对整数 $m\ge1$ 定义
+
+$$
+W_m(t)=\bigl(E(t),E(\rho(t)),\ldots,E(\rho^{m-1}(t))\bigr)\in C^m,
+\qquad
+W_m(\mathcal T)=\{W_m(t):t\in\mathcal T\}.
+$$
+
+窗口的 $m$ 个坐标必须来自同一棵实际原树 $t$。称全原树上的长度 $m$ 窗口闭合，是指存在唯一的函数
+
+$$
+F_m:W_m(\mathcal T)\longrightarrow W_m(\mathcal T),
+\qquad
+F_m(W_m(t))=W_m(\rho(t))\quad(t\in\mathcal T).
+$$
+
+这里的定义域和值域都是实际窗口像，不把 $C^m$ 中任意代数元组当作可实现的窗口。
+

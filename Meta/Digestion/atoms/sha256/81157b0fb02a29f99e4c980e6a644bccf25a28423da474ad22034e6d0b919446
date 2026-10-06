@@ -1,0 +1,16 @@
+## Supplier reuse and retirement
+
+The six source modules retain the supplier's immutable leaf results as ordinary
+repository content, with the complete MIT notice. They introduce no Lake package
+dependency. The supplier and this repository both pin
+`leanprover/lean4:v4.33.0` and mathlib revision
+`db584cd6d46c92f209a44c0f1c829460d327499d`. Matching pins, source availability
+and the MIT notice are source qualification facts; they do not establish the
+currently open A17 automatic dependency-admission predicates.
+
+A retained supplier declaration is retired in favor of direct reuse when this
+repository's own pinned mathlib contains an equivalent declaration with the
+same hypotheses and conclusion. Equivalence and its exact application must be
+checked against that pinned source. Supplier uptake by another repository is
+not the retirement condition.
+

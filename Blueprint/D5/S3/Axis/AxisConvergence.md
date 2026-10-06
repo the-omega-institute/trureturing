@@ -8,7 +8,7 @@ Each natural number is read through its Zeckendorf digits. Positivity of the fir
 
 The depth-K window contains exactly the integers below Fib(K+1), so ordinary series convergence gives convergence of the axis partial sums. The omitted geometric tail begins there. Comparing Fib(K+1) with phi^K / phi converts that tail into the displayed doubly-exponential depth bound.
 
-The condition x > 0 is essential. At x = y = 0 every word has weight one, the depth-K partial sum is Fib(K+1), and the sequence diverges to positive infinity. This is the corrected boundary clause of PZG 6.35.
+The condition x > 0 is essential. At x = y = 0 every word has weight one, the depth-K partial sum is Fib(K+1), and the sequence diverges to positive infinity.
 
 **Theorem 1.1 (Positive-x word weights are summable).**
 
@@ -34,7 +34,19 @@ $$\forall x,y \in \mathbb{R}, 0 < x \Rightarrow \lim_{K\to\infty} W_{K}(x,y) = \
 
 Series convergence is restricted along the cofinal Fibonacci cutoffs that define the depth windows.
 
-**Theorem 1.3 (The axis tail is doubly exponentially small).**
+**Theorem 1.3 (Golden-ratio powers bound Fibonacci growth).**
+
+$$\forall K \in \mathbb{N}, \frac{\varphi^{K}}{\varphi} \le Fib_{K+1}.$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Axis/AxisConvergence.goldenRatio_pow_div_le_fib_succ` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the positive golden ratio phi, the comparison holds at every natural depth K, including zero. The Fibonacci/golden-ratio identity and monotonicity give the lower bound used in the axis tail estimate.
+
+**Theorem 1.4 (The axis tail is doubly exponentially small).**
 
 $$\forall x,y \in \mathbb{R}, 0 < x \Rightarrow \forall K \in \mathbb{N}, \lvert W_{K}(x,y) - \sum_{n=0}^{\infty} w_{x,y}(n) \rvert \le \frac{\exp(\lvert y \rvert \cdot \frac{\lvert \psi \rvert}{1-\lvert \psi \rvert})}{1-\exp(-x)} \cdot \exp(-(\frac{x}{\varphi}) \cdot \varphi^{K}).$$
 
@@ -46,7 +58,7 @@ $$\forall x,y \in \mathbb{R}, 0 < x \Rightarrow \forall K \in \mathbb{N}, \lvert
 
 The exact geometric tail constant is retained, and the Fibonacci cutoff is bounded below by phi^K / phi to obtain the depth rate.
 
-**Theorem 1.4 (The origin window is Fibonacci).**
+**Theorem 1.5 (The origin window is Fibonacci).**
 
 $$\forall K \in \mathbb{N}, W_{K}(0,0) = Fib_{K+1}.$$
 
@@ -58,7 +70,7 @@ $$\forall K \in \mathbb{N}, W_{K}(0,0) = Fib_{K+1}.$$
 
 Every word weight is one at the origin, so the window cardinality is exactly the next Fibonacci number.
 
-**Theorem 1.5 (The origin window diverges).**
+**Theorem 1.6 (The origin window diverges).**
 
 $$\lim_{K\to\infty} W_{K}(0,0) = +\infty.$$
 
@@ -70,7 +82,7 @@ $$\lim_{K\to\infty} W_{K}(0,0) = +\infty.$$
 
 The Fibonacci identity turns standard Fibonacci growth into divergence of the partial sums to positive infinity.
 
-**Theorem 1.6 (The origin counterexample package).**
+**Theorem 1.7 (The origin counterexample package).**
 
 $$(\forall K \in \mathbb{N}, W_{K}(0,0) = Fib_{K+1}) \land (\lim_{K\to\infty} W_{K}(0,0) = +\infty).$$
 
@@ -89,5 +101,6 @@ This conjunction binds the exact Fibonacci value at every depth together with di
 - Truth anchor: `D5/S3/Axis/AxisConvergence.axisPartialSum_zero_zero`
 - Truth anchor: `D5/S3/Axis/AxisConvergence.axisPartialSum_zero_zero_package`
 - Truth anchor: `D5/S3/Axis/AxisConvergence.axisPartialSum_zero_zero_tendsto_atTop`
+- Truth anchor: `D5/S3/Axis/AxisConvergence.goldenRatio_pow_div_le_fib_succ`
 - Truth anchor: `D5/S3/Axis/AxisConvergence.wordWeight_summable`
 - Dependency: [D5/S3/Axis/AxisPartialSum](AxisPartialSum.md)

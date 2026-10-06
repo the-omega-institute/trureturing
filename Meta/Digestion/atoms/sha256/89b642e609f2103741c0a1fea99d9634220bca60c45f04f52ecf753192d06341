@@ -1,0 +1,22 @@
+**定义 348.1（完整纵坐标模型的同源目标）。** 沿用定理346.6的全部不同正纵坐标非平凡复零点指标 $I_+$，保留解析重数。对每个指标记 $D_\rho=1/4+\gamma_\rho^2$、$a_\rho=m_\rho/(\gamma_\rho D_\rho)$，并使用定义344.1的同一有理系数 $b_\rho,c_\rho,g_\rho,h_\rho$。置
+
+$$
+\begin{aligned}
+F(t)&=\sum_{\rho\in I_+}a_\rho[b_\rho\cos(\gamma_\rho t)-c_\rho\sin(\gamma_\rho t)],\\
+G(t)&=\sum_{\rho\in I_+}a_\rho[g_\rho\cos(\gamma_\rho t)-h_\rho\sin(\gamma_\rho t)],\\
+\mathcal J_\varepsilon(t)&=\delta_+(t)+\varepsilon F(t)+\varepsilon^2G(t),\\
+M_0&=\sum_\rho a_\rho,\qquad M_1=\sum_\rho a_\rho\gamma_\rho,\\
+K&=\sum_\rho\frac{a_\rho\gamma_\rho^2}{D_\rho}
+=\sum_\rho\frac{m_\rho\gamma_\rho}{D_\rho^2},\qquad
+A=\sum_\rho\frac{a_\rho\gamma_\rho^2}{D_\rho^2},\qquad f_*=F(0).
+\end{aligned}
+$$
+
+模型以纵坐标为权重变量，作为上述实函数定义无需 RH。解释为定义344.1的实际 Robin 相位模型时，仍使用 RH 所给的同一实际频率识别。若再有 $\iota\in H$，则 $z(t)=\iota\phi(t)\in H$，逐坐标 $\operatorname{Im}z_\rho(t)=\cos(\gamma_\rho t)$、$\operatorname{Re}z_\rho(t)=-\sin(\gamma_\rho t)$，从而精确有
+
+$$
+J_\varepsilon(z(t))=\mathcal J_\varepsilon(t).
+$$
+
+这保留原相位包络的 $H$ 与同源目标，不将独立参数 $t$ 替换成实际截止 $T=1/\varepsilon$。
+

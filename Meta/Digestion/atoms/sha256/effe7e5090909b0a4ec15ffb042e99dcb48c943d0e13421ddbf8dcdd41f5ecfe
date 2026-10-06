@@ -1,0 +1,6 @@
+## 1. Scope
+
+This is a reference account of a finite construction for distinct odd covering systems. Its source is the height-coded absorption argument HPA3–HPA9 in the project's report on private congruence hulls and crossed modulus closure. It asserts ordinary mathematics; kernel verification is determined by the corresponding Lean declarations and their checked dependencies.
+
+All source congruence tests use the literal original residues; output residues are chosen from the corresponding actual inverse images. A covering system of size $L$ is a family $(r_i,d_i)_{i<L}$ with pairwise distinct odd integers $d_i>1$ such that every natural number is congruent to some $r_i$ modulo $d_i$. By periodicity this is equivalent to covering every integer.
+

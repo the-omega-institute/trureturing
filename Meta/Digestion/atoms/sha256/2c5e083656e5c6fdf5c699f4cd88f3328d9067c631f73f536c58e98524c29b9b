@@ -1,0 +1,86 @@
+### 38.10 命题：同源双边历史与完整标量轨迹
+
+定义合法双边位空间、移位及右尾投影
+
+$$
+\widehat\Omega=\{z\in\{0,1\}^{\mathbb Z}:z_jz_{j+1}=0\},\qquad
+(\mathcal Sz)_j=z_{j+1},\qquad
+\pi_+(z)=(z_j)_{j\geq0}.
+$$
+
+$\widehat T=\mathcal S^3$ 是双射同胚，且
+
+$$
+\pi_+\widehat T=T\pi_+.
+$$
+
+$\pi_+$ 满射，因为任一右尾在负指标补零即可，跨零接缝也合法。
+
+对 $X=\Omega$ 或 $D$，令
+
+$$
+\mathcal H_{X,T}=\{(\omega^{(r)})_{r\geq0}:\omega^{(r)}\in X,
+\ T\omega^{(r+1)}=\omega^{(r)}\}.
+$$
+
+其历史更新与逆为
+
+$$
+\widehat T_H(\omega^{(0)},\omega^{(1)},\ldots)
+=(T\omega^{(0)},\omega^{(0)},\omega^{(1)},\ldots),\qquad
+\widehat T_H^{-1}(\omega^{(0)},\omega^{(1)},\ldots)
+=(\omega^{(1)},\omega^{(2)},\ldots).
+$$
+
+在 $X=\Omega$ 时，同胚与共轭由
+
+$$
+\Phi(z)^{(r)}_j=z_{j-3r},\qquad
+z_k=\omega^{(r)}_{k+3r}\quad(k+3r\geq0),\qquad
+\Phi\mathcal S^3=\widehat T_H\Phi
+$$
+
+给出。证明。兼容关系保证任意两个允许的 $r$ 所定义的 $z_k$ 相同；对相邻 $k,k+1$ 取同一个足够大的 $r$，它们成为同一合法右尾的相邻位，故没有新造非法接缝。两公式互逆，每个输出位只依赖一个输入位，因而双向连续。按坐标移位计算得到共轭式。$\square$
+
+对同一 $z\in\widehat\Omega$ 和 $n\in\mathbb Z$，置
+
+$$
+a_n=(z_{3n},z_{3n+1},z_{3n+2}),\quad s_n=z_{3n-1},\qquad
+x_n=\kappa_{s_n}((z_{3n+j})_{j\geq0}).
+$$
+
+实际接缝保证该尾在 $A_{s_n}$，并有
+
+$$
+x_n=\Delta_{a_n}+\gamma x_{n+1},\qquad
+x_{n+1}=r_{a_n}(x_n),\qquad x_n=f_{a_n}(x_{n+1}).
+$$
+
+双边标量轨迹 $\mathcal J(z)=(x_n)_{n\in\mathbb Z}$ 是连续单射，且在其实际像上与 $\mathcal S^3$ 共轭。证明。每个差分 $x_n-\gamma x_{n+1}$ 恢复唯一 $a_n$，全部整数窗口恢复全部 $z_j$；连续性来自每个右尾上的收敛编码。$\widehat\Omega$ 紧，目标实数乘积 Hausdorff，故它是到像的同胚。$\square$
+
+这个实际像也可表为：存在同一条合法双边接缝—窗口路径，$x_n\in I_{s_n}$，且满足上述全部递推。必要性已证；充分性中路径先拼成一条共同双边位串，再迭代
+
+$$
+x_n=\sum_{j=0}^{N-1}\gamma^j\Delta_{a_{n+j}}+\gamma^Nx_{n+N}.
+$$
+
+区间一致有界使末项趋零，故每个 $x_n$ 都是该同源右尾的编码。任意不带合法共同路径的形式实数递推不属于此像。
+
+在有限来源上限制为
+
+$$
+Z_D=\{z\in\widehat\Omega:\exists J\in\mathbb Z, \forall j\geq J, z_j=0\}.
+$$
+
+$\mathcal S^{\pm3}$ 保持 $Z_D$，右尾投影满射到 $D$，上述 $\Phi$ 限制为 $Z_D\cong\mathcal H_{D,T}$；每个历史右尾仍为有限来源。这是源卷定理13.6的三位时钟版本。
+
+它是一种可逆实现，不是唯一可能的实现。双侧有限支持子集 $Z_{\rm fin}\subsetneq Z_D$ 也被 $\mathcal S^{\pm3}$ 保持，且负指标补零使其仍满射到 $D$；它不包含左侧无限多个孤立一的允许历史。因此满射实现每个当前来源，不等于保留全部允许过去。此区别复用源卷命题13.8。
+
+若全部历史坐标都限制在同一个 $D_N$，则只有零历史：取 $3k\geq N$，有 $\omega^{(r)}=T^k\omega^{(r+k)}=\mathbf0$。更一般地，任何满射 $p:E\to X$ 若与双射 $g:E\to E$ 满足 $pg=Up$，则 $U$ 必满射，因为 $x=p(e)=U(p(g^{-1}e))$。而
+
+$$
+T(D_N)=D_{\max(N-3,0)}\subsetneq D_N\quad(N\geq1),
+$$
+
+所以 $D_N$ 不存在这种全局可逆因子。像等式由删除的支持界及前接零窗直接得到。这不排除指定时域的初始化模拟；源卷命题13.4、推论13.9对此另有合同。选择负指标全零也只选了一条相容过去，不证明实际过程已经经历或观察到它。
+

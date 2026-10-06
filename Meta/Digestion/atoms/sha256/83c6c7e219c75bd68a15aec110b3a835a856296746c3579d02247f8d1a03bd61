@@ -1,0 +1,34 @@
+## Theorem 1. Finite canonical product recovery
+
+For every pair of finite index types A and B, every canonical joint density
+state rho on A times B, and every pair of canonical density states gammaA on
+A and gammaB on B whose underlying matrices are positive definite, set R to
+the actual right partial-trace marginal of rho, S to its actual left
+partial-trace marginal, recovered to the product state of R and gammaB, and
+reference to the product state of gammaA and gammaB. The existing
+canonical-to-legacy and legacy-to-canonical conversions preserve these
+matrices. No positive-definiteness hypothesis is imposed on rho, R or S.
+Let Dfin denote finiteTraceLogRelativeEntropy and D denote the canonical
+extendedQuantumRelativeEntropy with values in WithTop of the reals. Then
+
+$$
+\begin{gathered}
+\operatorname{SupportContained}(\rho,\mathrm{recovered}),\\
+D_{\mathrm{fin}}(\rho\Vert\mathrm{reference})-D_{\mathrm{fin}}(R\Vert\gamma_A)
+ =D_{\mathrm{fin}}(\rho\Vert\mathrm{recovered}),\\
+D(\rho\Vert\mathrm{reference})
+ =D(\rho\Vert\mathrm{recovered})+D(R\Vert\gamma_A),\\
+D(\rho\Vert\mathrm{reference})\ne\top,\quad
+D(\rho\Vert\mathrm{recovered})\ne\top,\quad
+D(R\Vert\gamma_A)\ne\top,\quad D(S\Vert\gamma_B)\ne\top,\\
+D_{\mathrm{fin}}(\rho\Vert\mathrm{recovered})
+ =I(A:B)_\rho+D_{\mathrm{fin}}(S\Vert\gamma_B).
+\end{gathered}
+$$
+
+Here I(A:B) is the receiving quantumMutualInformation of the same rho.
+Support containment is reverse inclusion of matrix nullspaces. Every support
+and finiteness conclusion is derived from the stated density and faithful
+reference hypotheses. Trace one excludes empty density carriers; dimension
+one and singular marginals remain included.
+

@@ -1,0 +1,25 @@
+**Theorem 5.1 (actual compact-test adjoint graph).** For every natural
+dimension $d$ and arbitrary real coordinate coefficients $a,b$, let
+$H_{a,b}$ be the differential sum of Theorem 4.1, let $J$ be the actual
+complex Lebesgue $L^2$ embedding and define the partial linear operator
+$S(J\varphi)=JH_{a,b}\varphi$ on the range of all complex Schwartz functions.
+Then $S$ has dense domain, is symmetric and is closable. For arbitrary
+$f,g\in L^2(V,\mathbb C;\mathrm{volume})$,
+$$
+\bigl[\forall\psi\in\mathcal S(V,\mathbb C),\quad
+\operatorname{supp}\psi\text{ compact}\ \Longrightarrow\
+\langle JH_{a,b}\psi,f\rangle=\langle J\psi,g\rangle\bigr]
+\quad\Longleftrightarrow\quad (f,g)\in\operatorname{graph}(S^*).
+$$
+No separate derivative or potential integrability is imposed on $f$ or $g$,
+and the dimension may be zero.
+
+*Proof.* Choose a smooth compact bump equal to one near zero and bounded
+between zero and one. The simultaneous limits in Theorem 4.1 and continuity
+of the Hilbert inner product extend compact tests to every Schwartz test.
+The dense embedding identifies this identity with the actual partial-map
+adjoint graph. Real-bilinear integration by parts twice, with the pairing
+$\overline z w$, gives symmetry of the second derivatives. Multiplication
+by each real quadratic potential is symmetric. The adjoint is closed and
+contains $S$, so $S$ is closable.
+

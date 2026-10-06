@@ -1,0 +1,16 @@
+**推论 3.2（延迟分离）。** 对上一节的 $R_1,R_2$，有
+
+$$
+\operatorname{tr}(JMR_1)=\operatorname{tr}(JMR_2)=19,
+$$
+
+但
+
+$$
+\operatorname{tr}(MJMR_1)=31,
+\qquad
+\operatorname{tr}(MJMR_2)=30.
+$$
+
+因此新增 $J$ 严格缩小纯 $M$ 观察的行为商；差异在交换后的下一次推进中出现。
+

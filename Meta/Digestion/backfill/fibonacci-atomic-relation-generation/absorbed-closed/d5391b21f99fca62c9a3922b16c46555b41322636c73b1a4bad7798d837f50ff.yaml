@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d5391b21f99fca62c9a3922b16c46555b41322636c73b1a4bad7798d837f50ff
+  normalized_sha256: sha256:d5391b21f99fca62c9a3922b16c46555b41322636c73b1a4bad7798d837f50ff
+cas_ref: sha256:d5391b21f99fca62c9a3922b16c46555b41322636c73b1a4bad7798d837f50ff
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroData/ZetaOrdinateCompleteOptimizer.actual_zeta_complete_optimizer
+    target_statement_id: sha256:b281e1b4664a2bc6d728c36881a3955fa55c6a349bd069581ce3cf3137e56a13
+receipts:
+  unresolved_subitems: []

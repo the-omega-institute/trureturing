@@ -1,0 +1,37 @@
+**命题 66.14（批次的两个量词次序）。** 对任一采样器及其发出的 $\pi$，定义
+
+$$
+\begin{aligned}
+G_{F,N}(\lambda)
+ &=\max_{(i_1,\ldots,i_N)}\mathbb E\left[\lambda K+
+                  \sum_{r=1}^N C_\pi(P_{i_r})\right],\\
+H_{F,N}(\lambda)
+ &=\mathbb E\left[\max_{(i_1,\ldots,i_N)}
+           \left(\lambda K+\sum_{r=1}^N C_\pi(P_{i_r})\right)\right],
+\end{aligned}
+$$
+
+其中元组在固定族的全部 $m^N$ 个元组中取。非负扩展期望下仍有
+
+$$
+G_{F,N}=\lambda\mathbb EK+N\max_i\mathbb EC_\pi(P_i),
+\qquad
+H_{F,N}=\lambda\mathbb EK+N\mathbb E\max_i C_\pi(P_i).
+$$
+
+证明。各次重置使每次费用就是所选同一控制器的独立执行费用；这里的“独立执行”指逻辑初态和空缓存，不宣称这些同种子费用是概率独立的。有限和的期望可逐项相加，重复期望最大的固定成员取得第一个最大值；逐种子重复该种子费用最大的成员取得第二个最大值。$\lambda K$ 对所有元组相同，故可提出，两个等式不交换最大值与期望。$\square$
+
+重标后的共同端点律为 $p_i=\sum_{w\text{ 标为 }i}2^{-|w|}$，令 $t=\min_i p_i$。于是
+
+$$
+\mathbb EC_{\sigma_I}(P_j)=n+1-p_j,\qquad
+G_{F,N}=(n+1)N-Nt+\lambda\mathbb EK,\qquad
+H_{F,N}=(n+1)N+\lambda\mathbb EK.
+$$
+
+原采样器的每个费用坐标及每个元组均支配重标后的值。尤其任意原控制器逐种子最大费用至少为 $n+1$，零位确定性端点达到它，所以
+
+$$
+\inf H_{F^{(3)},N}=17N,\qquad \inf H_{F^{(5)},N}=22N.
+$$
+

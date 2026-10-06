@@ -1,0 +1,26 @@
+**命题 4.3（声明相位后的最短实际长度）。** 对 $0\le h<L$，定义
+
+$$
+\operatorname{round}_h(t)=t+((h-t)\bmod L),
+$$
+
+其中余数取 $0,\ldots,L-1$，$t\ge0$。没有尾限制时，取得 $y\in H$ 且相位为 $x^h$ 的最短长度为 $\operatorname{round}_h(\ell(y))$。要求至少 $z$ 个末零时，最短长度为 $\operatorname{round}_h(z+\ell(y))$。
+
+要求终端一串恰为 $s$ 时，非例外词，即 $n\ge s+1$，的最短长度为
+
+$$
+\operatorname{round}_h\left(s+1+\ell\bigl(y-x^{h-s}S_s\bigr)\right).
+$$
+
+还须单独允许例外长度 $n=s$：它存在当且仅当 $y=S_s$ 且 $s\equiv h\pmod L$。整体最小值取非例外值与这个可用例外值中较小者。负幂 $x^{h-s}$ 按单位 $x$ 解释；不在循环子群 $\langle x\rangle$ 中的相位无实际词可达。
+
+证明。$x$ 的阶恰为 $L$，所以相位条件等价于 $n\equiv h\pmod L$。无尾时 $y\in I_n$ 等价于 $n\ge\ell(y)$，在这一半直线内选最小的正确同余长度就是取整公式。末零条件由命题 4.1 化为 $n\ge z+\ell(y)$。精确尾的非例外条件则为
+
+$$
+y-x^{n-s}S_s\in I_{n-s-1}.
+$$
+
+在指定相位上 $x^{n-s}=x^{h-s}$，此平移固定，成员条件等价于 $n\ge s+1+\ell(y-x^{h-s}S_s)$。同余取整给出结论；例外全一词必须独立检查。证毕。
+
+若观察者保留的是乘积商 $A$ 中的完整相位，就把这一命题的模数 $L$ 全部换成 $L_A$，并用 $X^h$ 指定该相位；余数平移仍通过 $A\to H$ 计算。这是因为实际保留条件此时是 $n\equiv h\pmod{L_A}$。较小的投影相位不能代替被保留的完整相位。对固定尾 $s$，要求相位 $x^h$ 的共同全像最短长度是 $\operatorname{round}_h(N_*+s+1)$；全部尾同时的全像最短长度是 $\operatorname{round}_h(N_*+k)$。这两个结论使用同一长度内的全目标条件，不是分别首次命中后忘记时间。
+

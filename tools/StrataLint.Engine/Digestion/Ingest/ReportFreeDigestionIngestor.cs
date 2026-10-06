@@ -20,7 +20,6 @@ internal static class ReportFreeDigestionIngestor
     internal static ReportFreeDigestionIngestPlan Plan(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
-        BackfillInventoryDocument baselineDocument,
         ImmutableHashSet<string>? sourceIds = null,
         ImmutableHashSet<string>? registrationPaths = null,
         Func<string, TheoryAtomizer>? atomizerResolver = null,
@@ -28,7 +27,6 @@ internal static class ReportFreeDigestionIngestor
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
-        ArgumentNullException.ThrowIfNull(baselineDocument);
         if (atomizerResolver is null && contentKindAtomizerResolver is null)
         {
             contentKindAtomizerResolver = static id =>
@@ -38,10 +36,6 @@ internal static class ReportFreeDigestionIngestor
 
         var currentAtomIds = document.RequireDigestionEntries()
             .Select(static entry => entry.AtomId)
-            .ToImmutableHashSet(StringComparer.Ordinal);
-        var reservedRemovedAtomIds = baselineDocument.RequireDigestionEntries()
-            .Select(static entry => entry.AtomId)
-            .Except(currentAtomIds, StringComparer.Ordinal)
             .ToImmutableHashSet(StringComparer.Ordinal);
         var currentSourceIds = document.RequireDigestionSources()
             .Select(static source => source.SourceId)
@@ -130,7 +124,7 @@ internal static class ReportFreeDigestionIngestor
                     skippedExisting++;
                     continue;
                 }
-                if (reservedRemovedAtomIds.Contains(atomId) || !knownAtomIds.Add(atomId))
+                if (!knownAtomIds.Add(atomId))
                 {
                     continue;
                 }
@@ -156,13 +150,6 @@ internal static class ReportFreeDigestionIngestor
                 var childObjects = clausePlan.Children
                     .Select(child => (Atom: child, Captured: DigestionCasStore.Capture(child.RawBytes.AsSpan())))
                     .ToArray();
-                if (childObjects.Any(item =>
-                        reservedRemovedAtomIds.Contains(item.Captured.Reference["sha256:".Length..])
-                        && !knownAtomIds.Contains(item.Captured.Reference["sha256:".Length..])))
-                {
-                    continue;
-                }
-
                 var chain = ImmutableArray.CreateBuilder<string>(childObjects.Length);
                 foreach (var (child, captured) in childObjects)
                 {

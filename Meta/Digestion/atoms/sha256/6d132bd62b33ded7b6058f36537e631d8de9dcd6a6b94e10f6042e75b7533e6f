@@ -1,0 +1,48 @@
+## Spectral calculation without aligned enumerations
+
+Write X=U diag(x_i) U* and Y=V diag(y_j) V* using any two independent
+orthonormal eigenbases. U tensor V diagonalizes X tensor Y with diagonal
+x_i y_j. There is no assertion equating this indexing with the functional
+calculus implementation's chosen eigenvalue enumeration.
+
+To justify functional calculus on this diagonalization, let Z also have a
+chosen diagonalization V0 diag(z_k) V0*. Set W=U* V0. The equality of the
+two representations gives
+
+$$
+x_iW_{ik}=W_{ik}z_k.
+$$
+
+If x_i differs from z_k, W_ik=0; otherwise f(x_i)W_ik=W_ik f(z_k) for
+any function f. Thus diag(f(x)) W=W diag(f(z)). Multiplying by U and V0*
+proves cfc(f,Z)=U diag(f(x_i)) U*. This argument handles repeated and zero
+eigenvalues. Every function is continuous on the finite real spectrum, so
+the discontinuity of chi at zero does not obstruct this finite CFC use.
+
+For nonnegative x,y,
+
+$$
+\log(xy)=\log x\,\chi(y)+\chi(x)\log y,\qquad
+\chi(xy)=\chi(x)\chi(y).
+$$
+
+If either factor is zero the first equality has both sides zero. If both
+are positive it is the ordinary product logarithm. Applying the preceding
+diagonalization gives
+
+$$
+L(X\otimes Y)=L(X)\otimes P_Y+P_X\otimes L(Y),\qquad
+P_{X\otimes Y}=P_X\otimes P_Y.
+$$
+
+In particular,
+
+$$
+L(\widehat\rho)=L(R)\otimes I_B+P_R\otimes L(B),\qquad
+L(\gamma)=L(C)\otimes I_B+I_A\otimes L(B).
+$$
+
+The projection in the first expression is essential. For
+R=diag(1,0), B=I_2/2, the left-hand side has diagonal
+(-log 2,-log 2,0,0). Replacing P_R by I incorrectly gives -(log 2)I_4.
+

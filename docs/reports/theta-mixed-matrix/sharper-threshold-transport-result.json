@@ -1,0 +1,89 @@
+{
+  "scope": "Quantified two-Schur coercivity and bounded parameter transport under the paper supplier/ground premises; no Lean, cofinal, Robin or RH conclusion",
+  "input_sha256": {
+    "stable-ground-result.json": "9feb3bb1100db1c8fd25f6ea99533928b13b188f4fe083e9b16722185ddf8913",
+    "sharp-center-result.json": "68bf470fc81e1d0765f6fb049cf362fb8e672318cfe6c073bf75ca2859cac952",
+    "restricted-schur-result.json": "e8cfe6787072c343d86de05c0ec0244c713967593b055ceeabfbab102538d63e",
+    "local-z-gram-result.json": "3ae37d3aed00a4226eb9bd04519268bf967a50effd8d11b97f64c64ca80c9de0",
+    "sharper-exterior-result.json": "adb2d1b8aebbc0cf895ef49e90c14464869797c3f886109ba2a5f53e36353cd5"
+  },
+  "precision_bits": 192,
+  "base_c": "3/8",
+  "target_c": "41/100",
+  "complementary_low_gap_lower": {
+    "display": "[0.103080911611888697198018221209731022414462001028223580280 +/- 1.78e-58]",
+    "dyadic": [
+      "1122451730805169150830589347226933896047",
+      "-133"
+    ]
+  },
+  "low_shear_off_diagonal_norm_upper": {
+    "display": "[0.212639644385753515761353433594982325953617840285645597751 +/- 5.55e-59]",
+    "dyadic": [
+      "2669521361571640126361590571008111500764478889815990882567",
+      "-193"
+    ]
+  },
+  "low_ground_orthogonal_gap_lower": {
+    "display": "[0.0808769712949327092252499375718374527316849465013725832156 +/- 2.76e-60]",
+    "dyadic": [
+      "2030691907472963499292466736668296596189002864300560106653",
+      "-194"
+    ]
+  },
+  "polynomial_H_tail_upper": {
+    "display": "[1.71247514479174705582022142945229020022629609224883926503e-6 +/- 4.85e-63]",
+    "dyadic": [
+      "2817885655054111959890822594316121415788197008452749684111",
+      "-210"
+    ]
+  },
+  "full_inverse_coupling_on_E_upper": {
+    "display": "[0.811037505480293229188194941417912818946261172345928163718 +/- 3.66e-58]",
+    "dyadic": [
+      "2545482466557016619682282072261993937204115436888796626551",
+      "-191"
+    ]
+  },
+  "full_inverse_coupling_on_low_complement_upper": {
+    "display": "[1.86855213432373978636734584272122070531231292184299276518e-5 +/- 2.36e-62]",
+    "dyadic": [
+      "480423601972184401152503571942452690766548505988259408961",
+      "-204"
+    ]
+  },
+  "full_inverse_coupling_operator_norm_upper": {
+    "display": "[0.811037505695541417750993927848832362911802641071507708080 +/- 1.90e-58]",
+    "dyadic": [
+      "5090964934465168017330949152673487546333871407407028026197",
+      "-192"
+    ]
+  },
+  "base_ground_orthogonal_gap_lower": {
+    "display": "[0.0366942548084756539926448218151973518147083366922028125748 +/- 1.40e-59]",
+    "dyadic": [
+      "921334282148014331440867772276608197114774719527398396141",
+      "-194"
+    ]
+  },
+  "target_ground_orthogonal_gap_lower": {
+    "display": "[0.00169425480847565399264482181519735181470833669220281257479 +/- 1.60e-60]",
+    "dyadic": [
+      "42540039193879024503857253027534898860444957302433564335",
+      "-194"
+    ]
+  },
+  "positive_scalar_transport_check": true,
+  "same_unit_ground_and_operator_family_required": true,
+  "cofinal_positivity": "Unverified",
+  "RH_and_full_Robin": "Unresolved",
+  "Lean_certification": false,
+  "high_gap_supplier": "sharper-exterior-result.json",
+  "base_high_gap_lower": {
+    "display": "[0.0916471696633458076444757480667717985493989656834241860087 +/- 4.58e-59]",
+    "dyadic": [
+      "31934377794199693836259308724596428708615",
+      "-138"
+    ]
+  }
+}

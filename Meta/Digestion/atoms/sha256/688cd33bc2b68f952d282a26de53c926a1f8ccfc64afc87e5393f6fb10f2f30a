@@ -1,0 +1,39 @@
+**Theorem 2.2 (Signed proper-cut record convolution).** For every
+$s\in\{0,1\}$ and every $n,k\in\mathbb N$, define
+
+$$
+\begin{aligned}
+C(0,n,k)&=\sum_{0<c<n}j(0,c)U(n-c,k),\\
+C(1,n,k)&=\sum_{0<c<n}\sum_{b=0}^{k}J(1,c,b)U(n-c,k-b).
+\end{aligned}
+$$
+
+Then $D(s,n,k)=C(s,n,k)$. The outer sums range over natural integers $c$;
+each factor has its indicated dependent length $c$ or $n-c$. The inner sum
+ranges over $0\le b\le k$, so $k-b$ is ordinary nonnegative subtraction.
+The identities include $n=0$, $n=1$, and all $k$, including $k>n$.
+
+Proof. Use the least proper cut of sign $s$ to identify $P_{s,n}$ with the
+disjoint union over $0<c<n$ of $B_{s,c}\times A_{n-c}$. This is the signed
+minimum-cut decomposition: standardizing the prefix and suffix preserves
+avoidance; a smaller cut in the prefix would contradict leastness; conversely
+the signed block sum of a prefix with no proper cut of sign $s$ and an arbitrary
+avoiding suffix has least cut $c$. The block sum preserves avoidance in both
+directions. The signed decomposition is the classical separable-permutation
+decomposition of Fu, Lin and Zeng, Proposition 2.1; the direct and skew record
+mechanisms also occur in Chen, Kitaev and Zhang, Section 2.
+
+For a direct cut, $n-c>0$, and Theorem 2.1 makes the total record count exactly
+the suffix count. Thus the record-$k$ fiber at $c$ is
+$B_{0,c}\times\{\beta\in A_{n-c}:r(\beta)=k\}$, with cardinality
+$j(0,c)U(n-c,k)$. For a skew cut, Theorem 2.1 gives
+$r(\alpha)+r(\beta)=k$. Partition this fiber by $b=r(\alpha)$.
+Nonnegativity gives $0\le b\le k$ and $r(\beta)=k-b$; conversely these two
+record counts sum to $k$. The fiber is therefore the disjoint union of
+$\{\alpha\in B_{1,c}:r(\alpha)=b\}\times
+\{\beta\in A_{n-c}:r(\beta)=k-b\}$ over $b=0,\ldots,k$.
+Count the products and then the cuts. The length identity $c+(n-c)=n$
+identifies the reconstructed permutation's positions with the original ones
+without changing their order or record count. At $n=0$ and $n=1$ there is no
+proper cut; both sides are zero. No restriction on $k$ was used.
+

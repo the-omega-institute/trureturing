@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a06bb86613f8afa4cd6b911feb1e0eaec5d0a3c78b3dfe74e8ba9eea75e3f2f8
+  normalized_sha256: sha256:a06bb86613f8afa4cd6b911feb1e0eaec5d0a3c78b3dfe74e8ba9eea75e3f2f8
+cas_ref: sha256:a06bb86613f8afa4cd6b911feb1e0eaec5d0a3c78b3dfe74e8ba9eea75e3f2f8
+coverage_gids:
+  - gid: D5/S3/QuadraticForms/PositiveDefiniteWilliamson.skew_paired_basis_induction
+    target_statement_id: sha256:54436ecddd85ddabca9cde51fd34930a3412b14577a5dd01f02b1f5f542233e1
+receipts:
+  unresolved_subitems: []

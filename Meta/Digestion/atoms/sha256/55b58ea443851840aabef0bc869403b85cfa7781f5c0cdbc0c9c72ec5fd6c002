@@ -1,0 +1,20 @@
+**定义 3.3（实际活动位置与脉冲词）。** 以下 $g\ge2$。INITIAL 相位 $\theta_j$ 的非零系数位置是
+
+$$
+t\equiv jg-1,jg\pmod T.
+\tag{3.1}
+$$
+
+其中 $j=0$ 在非负第一周期的位置为 $0,T-1$；$j>0$ 的首次两位置为 $jg-1,jg$。在绝对位置 $jg-1+\ell T$ 发出单个一，只影响 INITIAL 相位 $\theta_j$；在 $jg+\ell T$ 发出一，也只影响该相位。因为 $P$ 的相位是 $g$ 的倍数，另一个支撑余类不在 $P$ 中。
+
+为写出整个字面块，记
+
+$$
+E_m(t)=0^t1\,0^{m-t-1}\quad(0\le t<m),\qquad
+\mathcal P_{g,u}(H)=\prod_{j=1}^{u}\bigl(0^{g-1}\varepsilon_j\bigr),
+\quad \varepsilon_j=\mathbf1_H(j),\quad m=gu.
+\tag{3.2}
+$$
+
+乘积表示按 $j$ 递增串接，不是抽象作用复合。$\mathcal P_{g,u}(H)$ 恰在局部位置 $jg-1$、$j\in H$ 有一，其余全部为零，包括每个空格和末尾填充。各一间距至少 $g$，块首零，终端尾至多一。连续使用这些词时，下一首零保护实际接缝；所有块均收费。
+

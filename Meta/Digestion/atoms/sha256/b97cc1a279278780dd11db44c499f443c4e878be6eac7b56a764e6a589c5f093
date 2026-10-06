@@ -1,0 +1,93 @@
+**定理 68.10（精确费用）。** 在下述全域正确、逐输入有限终止的控制器模型中，原始读出满足
+
+$$
+R_{\rm raw}=n+1-\frac1{5k+1},\qquad D_{\rm raw}=W_{\rm raw}=n+1,
+$$
+
+且同一个输入前控制器律的全部非支配 $(r,w)$ 对为
+
+$$
+\left(n+1-t,\ n+1+kt\right),\qquad 0\le t\le\frac1{5k+1}.
+$$
+
+粗读出满足
+
+$$
+R_{\rm coarse}=n+\max\left\{\frac{5k-1}{4k},\frac{4k-2}{3k}\right\},
+\qquad D_{\rm coarse}=W_{\rm coarse}=n+2.
+$$
+
+两个分式之差为 $(5-k)/(12k)$；在 $k=5$ 交叉。一个实际有限混合同时取得粗读出的 $R,W$，故其唯一非支配对为 $(R_{\rm coarse},n+2)$。例如 $k=1,n=24$ 时原始 $R=149/6$，粗 $R=25$、$D=W=26$；$k=2,n=32$ 时粗 $R=265/8>n+1$。因此粗读出的全参数值不能写成 $n+1$。
+
+未知输入仍是所有非空有限有序满二叉 $\alpha/\beta$ 树。变换 $\rho$ 在叶上为 $\rho(\alpha)=\beta$、$\rho(\beta)=(\beta,\alpha)$，在二叉结点上逐子树作用；任务是判定输入是否属于 $\rho^3$ 的像。评价族只决定费用坐标，不给大小、原型或肯定输入承诺。每个有限地址（含根 $\varepsilon$）都可查询。原始回复为 $\alpha,\beta,\mathrm{br},\bot$，其中后两者分别为分叉与地址不存在；粗回复只将它们合并为 $\nu$。费用是本次运行实际请求的不同地址数。
+
+一个种子指定一整个确定性控制器，其在上述全部输入上正确且有限终止。允许在输入前免费取与输入独立的这种控制器的分布 $\mu$；同一种子在所有反事实评价输入上指定同一个控制器。令 $C_i(c)$ 为控制器 $c$ 在第 $i$ 棵评价树上的费用，要求这些费用函数可测，定义
+
+$$
+r(\mu)=\max_i\mathbb E_\mu C_i(c),\qquad
+w(\mu)=\mathbb E_\mu\max_i C_i(c),\qquad
+D=\inf_c\max_i C_i(c),\quad R=\inf_\mu r(\mu),\quad W=\inf_\mu w(\mu).
+$$
+
+允许无限期望；定理中的最优值均由有限有理混合取得。本章不收取种子位费用，不引入输入先验、在线学习或跨次缓存；第 66、67 章的付费选模目标不代入这里。
+
+为明确原型，记
+
+$$
+\begin{gathered}
+E=(\beta,\alpha),\quad A=(E,\beta),\quad C=(A,E),\quad
+B=(C,A),\quad T=(A,C),\\
+W_1=(B,C),\quad H=K_T=(T,A),\quad Y=(W_1,A),\quad Z=(C,B),\quad
+R_0=(T,B),\quad R_a=(T,Z).
+\end{gathered}
+$$
+
+用有 $k+1$ 个槽的右梳连接这些块：活动槽根 $p_j=R^{j-1}L$，$1\le j\le k$，补偿槽根 $q=R^k$。这些根互不为前缀。族指标为
+$\mathcal F=\{0\}\cup\{a_j,y_j,h_j,z_j:1\le j\le k\}$。基线 $0$ 的活动块全为 $B$、补偿块为 $R_0$；其余四行仅在槽 $j$ 改动：
+
+| 行 | 活动槽 $j$ | 补偿槽 |
+|---|---|---|
+| $a_j$ | $A$ | $R_a$ |
+| $y_j$ | $Y$ | $B$ |
+| $h_j$ | $H$ | $Z$ |
+| $z_j$ | $Z$ | $H$ |
+
+所有其他活动槽仍为 $B$。完整前像也在同一右梳中逐槽给出：置 $b=(\beta,\alpha)$、$t=(\alpha,\beta)$、$w=(b,\beta)$、$h=(t,\alpha)$、$y=(w,\alpha)$、$z=(\beta,b)$、$r_0=(t,b)$、$r_a=(t,z)$，则 $A,C,B,T,W_1,H,Y,Z,R_0,R_a$ 的 $\rho^3$ 前像分别为 $\alpha,\beta,b,t,w,h,y,z,r_0,r_a$。每个前像的叶组成是 $(k+2,k+2)$，像的叶组成是 $(3k+6,5k+10)$，合计 $n$；$\rho$ 的既有单射性给出唯一前像。
+
+下表是完整局部带标签叶前沿。行名 $0,a,y,h,z$ 在活动槽表示 $B,A,Y,H,Z$，在补偿槽表示 $R_0,R_a,B,Z,H$。一格列出的地址依次带所列标签；“支持”列恰列出在这些地址具有该叶的全部行。
+
+| 活动槽支持 | 完整地址组 | 标签组 |
+|---|---|---|
+| $\{a\}$ | $LL,LR,R$ | $\beta,\alpha,\beta$ |
+| $\{0,h,z\}$ | $LLLL,LLLR,LLR$ | $\beta,\alpha,\beta$ |
+| $\{0,z\}$ | $LRL,LRR$ | $\beta,\alpha$ |
+| $\{0,y,h\}$ | $RLL,RLR,RR$ | $\beta,\alpha,\beta$ |
+| $\{y,h\}$ | $LRLLL,LRLLR,LRLR,LRRL,LRRR$ | $\beta,\alpha,\beta,\beta,\alpha$ |
+| $\{y\}$ | $LLLLLL,LLLLLR,LLLLR,LLLRL,LLLRR,LLRLL,LLRLR,LLRR$ | $\beta,\alpha,\beta,\beta,\alpha,\beta,\alpha,\beta$ |
+| $\{z\}$ | $RLLLL,RLLLR,RLLR,RLRL,RLRR,RRLL,RRLR,RRR$ | $\beta,\alpha,\beta,\beta,\alpha,\beta,\alpha,\beta$ |
+
+| 补偿槽支持 | 完整地址组 | 标签组 |
+|---|---|---|
+| 全部五行 | $LLLL,LLLR,LLR$ | $\beta,\alpha,\beta$ |
+| $\{y,h\}$ | $LRL,LRR$ | $\beta,\alpha$ |
+| $\{0,a,z\}$ | $LRLLL,LRLLR,LRLR,LRRL,LRRR$ | $\beta,\alpha,\beta,\beta,\alpha$ |
+| $\{y,z\}$ | $RLL,RLR,RR$ | $\beta,\alpha,\beta$ |
+| $\{0,a,h\}$ | $RLLLL,RLLLR,RLLR,RLRL,RLRR$ | $\beta,\alpha,\beta,\beta,\alpha$ |
+| $\{0,h\}$ | $RRLL,RRLR,RRR$ | $\beta,\alpha,\beta$ |
+| $\{a\}$ | $RRLLLL,RRLLLR,RRLLR,RRLRL,RRLRR,RRRLL,RRRLR,RRRR$ | $\beta,\alpha,\beta,\beta,\alpha,\beta,\alpha,\beta$ |
+
+活动块叶数依次为 $8,3,16,11,13$，补偿块为 $16,21,8,13,11$；每个异常对合计 $24$，再加其余 $8(k-1)$ 叶即 $n$。表中每个叶的严格前缀回复 $\mathrm{br}$，其余非叶地址回复 $\bot$；粗读出统一为 $\nu$。全局地址在活动表前加 $p_j$、补偿表前加 $q$，梳的其他祖先均为分叉。这同时穷尽所有叶、分叉和不存在地址。任意两行的共同叶地址标签相同，记此局部及全局非冲突性质为 NC。
+
+令 $A_* =\{a_i\}$、$Y_* =\{y_i\}$、$H_* =\{h_i\}$、$Z_* =\{z_i\}$。所有非空、非常量全局叶支持恰为：
+
+$$
+\begin{array}{ll}
+\text{活动槽 }j:&\{a_j\},\ \mathcal F\setminus\{a_j,y_j\},\ \mathcal F\setminus\{a_j,y_j,h_j\},\\
+&\mathcal F\setminus\{a_j,z_j\},\ \{y_j,h_j\},\ \{y_j\},\ \{z_j\};\\
+\text{补偿槽}:&Y_*\cup H_*,\ \{0\}\cup A_*\cup Z_*,\ Y_*\cup Z_*,\\
+&\{0\}\cup A_*\cup H_*,\ \{0\}\cup H_*,\ A_*.
+\end{array}
+$$
+
+补偿表首组的三个地址支持为全 $\mathcal F$，未在两张前沿表出现的地址叶支持为空。特别地，在嵌入的 $S_j=\{0,a_j,y_j,h_j,z_j\}$ 上，叶支持大小仅为 $1,2,3,5$，没有四行支持。
+

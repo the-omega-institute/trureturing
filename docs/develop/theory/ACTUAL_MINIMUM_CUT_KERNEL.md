@@ -308,3 +308,58 @@ occupation, discrepancy, filtration, hitting transfer, or the full
 derangement-ratio limit.
 
 <!-- APPEND -->
+
+## 7. Exact actual cardinalities and the shifted Schröder convention
+
+Use the actual carriers $U_n$ and $J_n^\varepsilon$ of Section 1.
+Let $D_n^\varepsilon$ be the actual members of $U_n$ admitting a proper
+cut of sign $\varepsilon$, without any empty or singleton padding.
+Write $a_n=|U_n|$, $b_n^\varepsilon=|J_n^\varepsilon|$, and
+$d_n^\varepsilon=|D_n^\varepsilon|$. Define the large Schröder numbers by
+$L_0=1$ and $L_{r+1}=L_r+\sum_{i=0}^rL_iL_{r-i}$. The pinned Mathlib
+small Schröder sequence has the shifted convention $S_0=S_1=1$ and
+$2S_{r+1}=L_r$ for $r\geq1$; in particular $S_2=1$ and $S_3=3$.
+
+**Theorem 7.1 (actual signed minimum-cut enumeration and cardinal bridge).**
+For every sign $\varepsilon$ and every natural $n$, the proper signed
+carrier has a bijection with the disjoint union, over $0<m<n$, of
+$J_m^\varepsilon\times U_{n-m}$, given by the actual block sum at its
+minimum cut. Consequently
+$$
+d_n^\varepsilon=\sum_{0<m<n}b_m^\varepsilon a_{n-m}.
+$$
+The genuine boundary counts are $a_0=a_1=b_0^\varepsilon=b_1^\varepsilon=1$
+and $d_0^\varepsilon=d_1^\varepsilon=0$. For every $n\geq2$,
+$$
+d_n^\varepsilon=b_n^{1-\varepsilon},\qquad
+b_n^0=b_n^1,\qquad 2b_n^\varepsilon=a_n.
+$$
+For every positive $n$ and either sign,
+$$
+a_n=L_{n-1},\qquad b_n^\varepsilon=S_n.
+$$
+The identity $b_0^\varepsilon=S_0$ also holds. None of these formulas
+assumes a count sequence in place of the actual permutation carrier.
+
+*Proof.* Every proper signed cut has a unique least positive cut.
+The actual minimum-cut Cartesian kernel reconstructs its unique factors;
+their minimum cut recovers the union index, proving the displayed
+bijection. For $n\geq2$, proper-cut existence and incompatibility of
+opposite signs identify the complement of each signed class with the
+opposite signed class. Value complementation interchanges literal $2413$
+and $3142$ containment and reverses the cut sign, giving equal signed
+cardinalities. Thus $a_n=2b_n^\varepsilon$ and the union recurrence becomes
+$b_n^\varepsilon=\sum_{0<m<n}b_m^\varepsilon a_{n-m}$. The actual empty and
+singleton permutations have no proper cut and give the stated boundaries.
+Multiplying the recurrence by two and separating $m=1$ yields
+$$
+a_n=2a_{n-1}+\sum_{m=2}^{n-1}a_ma_{n-m}\quad(n\geq2).
+$$
+Induction with $a_1=1$ identifies this with the defining recurrence of
+$L_{n-1}$: the $i=0$ term contributes the second copy of $L_{n-2}$.
+The pinned relation $2S_n=L_{n-1}$ for $n\geq2$, cancellation in the
+naturals, and the genuine $n=0,1$ boundaries give $b_n^\varepsilon=S_n$.
+This is an exact count bridge, not a count-ratio asymptotic or a proof of
+the full derangement-ratio limit. $\square$
+
+<!-- APPEND -->
