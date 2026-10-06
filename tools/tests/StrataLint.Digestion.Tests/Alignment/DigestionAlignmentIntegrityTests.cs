@@ -28,7 +28,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(currentBytes, [forgedCapture]),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => Atomized(currentAtom));
 
@@ -54,7 +53,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(currentBytes, [oldCapture]),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => Atomized(currentAtom));
 
@@ -77,7 +75,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(currentBytes, [oldCapture]),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => Atomized(currentAtom));
 
@@ -101,7 +98,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(currentBytes, [currentCapture]),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => Atomized(currentAtom));
 
@@ -159,13 +155,11 @@ public sealed partial class DigestionAlignmentTests
         var standalone = DigestionLedgerAligner.Evaluate(
             unchained,
             snapshot,
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => atomized);
         var admitted = DigestionLedgerAligner.Evaluate(
             chained,
             snapshot,
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => atomized);
 
@@ -219,7 +213,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(parentBytes, [parentCapture, firstCapture]),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => atomized);
 
@@ -269,7 +262,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(parentBytes, [parentCapture, firstCapture, probeCapture]),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => atomized);
 
@@ -303,6 +295,7 @@ public sealed partial class DigestionAlignmentTests
                 },
             ]));
 
+        fixture.Changes.AddRange(fixture.Files.Keys.Where(BackfillInventoryLoader.IsCanonicalPath));
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
             fixture.Build());
@@ -327,7 +320,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(bytes, [captured]),
-            ledger,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => Atomized(atom));
 
@@ -461,8 +453,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionEvaluationScope.FullScan,
             candidate,
             snapshot,
-            DigestionTestSupport.AcceptedLean(targetPath),
-            baselineDocument: baseline);
+            DigestionTestSupport.AcceptedLean(targetPath));
 
         var evaluatedParent = Assert.Single(
             evaluation.Entries,
@@ -515,7 +506,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(parentBytes, [parentCapture, firstCapture, invalidCapture]),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => atomized);
 

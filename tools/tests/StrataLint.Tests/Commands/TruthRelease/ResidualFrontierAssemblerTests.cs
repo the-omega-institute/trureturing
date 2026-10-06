@@ -23,7 +23,6 @@ public sealed class ResidualFrontierAssemblerTests
             fixture.Document,
             fixture.Snapshot,
             fixture.Lean,
-            baselineDocument: fixture.Document,
             truthStates: fixture.TruthStates);
 
         Assert.Empty(canonical.Findings);

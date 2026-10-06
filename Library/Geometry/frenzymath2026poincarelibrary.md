@@ -5851,3 +5851,12 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 消费固定上游原 IsJacobiSolOn 方程及 Linear.IsSolOn 唯一性，对任意原实赋范向量空间和真实常系数算子 A，内部证明核向量与负正规特征值对应的 t/sinh/cosh 模型确实满足原方程。方程符号保持 y'=v、v'=-Ay；正规特征值 -c² 给出正加速度双曲正弦模型。沿真实算子范数界和原初值，公开 ODE 唯一性把任意真正原方程解识别为已证明模型，并得到 c=1 的 sinh/cosh 正规公式。无需额外 CompleteSpace、外供解公式或替代解谓词。
 
 两个固定上游模块与完整累计临时 Lean 均真实 exit 0，零错误、零警告。301 项公理报告仅含 propext、Classical.choice、Quot.sound，3 个新增目标已实际验收。原草稿保留；derived 仅显式化复合/逐点加法表达式并删除一个编译器确认冗余的 ring。proof_shape: bind-only，admission_basis: none。本段是原 ODE 模型与唯一性消费者，实际流形 Jacobi 场的平行传输、曲率系数归约和原指数映射还须在后续内部证明，不能把它们升为最终 Mostow 新前提。完整 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 同一原光滑标准覆盖的单连通性、平凡基本群与实际提升
+
+消费此前已接受的同一原路径类 UniversalCover 与原投影，欧氏图册在内部给出局部道路连通和半局部单连通，实际公开标准覆盖定理给出该原覆盖的 SimplyConnectedSpace。实际任意原覆盖基点上的每个闭路均与常闭路同伦，真正原覆盖基本群的每个元素等于 1，原投影诱导的基本群同态像为底子群；不将底流形 M 的基本群误称平凡。
+
+同一原投影确实是覆盖且满射，并具有基点指定的连续映射唯一提升。提升试验域 A 与原流形 M 的 universes 独立；A 的单连通性属于真正通用提升定理的上下文，该原覆盖本身的单连通性由前述真实定理取得。无需外供原覆盖单连通性、额外度量相容性、全局紧致、有限基本群或有限覆盖度。
+
+没有新增上游导入或重复编译已接受的 canonical24。独立小消费者与完整累计临时 Lean 均真实 exit 0、零错误、零警告；307 项公理报告仅含 propext、Classical.choice、Quot.sound，6 个新增消费者及3个真实公共目标接受。proof_shape: bind-only，admission_basis: none。本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证说明。实际原 H3 分类与负曲率全局指数、完整 deck/体积/Haar、有限体积尖点及给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成。

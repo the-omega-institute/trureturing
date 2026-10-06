@@ -6,19 +6,13 @@ internal static partial class DigestionStatusEvaluator
 {
     internal static ImmutableHashSet<string> StatusAuthorityChangedAtomIds(
         BackfillInventoryDocument document,
-        BackfillInventoryDocument baselineDocument,
         RawChangeSet? changes,
         DigestionLedgerAlignment alignment)
     {
         ArgumentNullException.ThrowIfNull(document);
-        ArgumentNullException.ThrowIfNull(baselineDocument);
         ArgumentNullException.ThrowIfNull(alignment);
-        var entries = document.RequireDigestionEntries();
-        var baselineEntries = baselineDocument.RequireDigestionEntries()
-            .ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
         return ResolveStatusAuthorityChangedAtomIds(
-            entries,
-            baselineEntries.Keys.ToHashSet(StringComparer.Ordinal),
+            document.RequireDigestionEntries(),
             changes,
             alignment,
             isBaseFactAffected: null);
@@ -26,7 +20,6 @@ internal static partial class DigestionStatusEvaluator
 
     private static ImmutableHashSet<string> ResolveStatusAuthorityChangedAtomIds(
         IEnumerable<DigestionLedgerEntry> sourceEntries,
-        IReadOnlySet<string> baselineAtomIds,
         RawChangeSet? changes,
         DigestionLedgerAlignment alignment,
         Func<string, bool>? isBaseFactAffected)
@@ -38,7 +31,6 @@ internal static partial class DigestionStatusEvaluator
                 alignment.EntryAlignments.GetValueOrDefault(
                     entry.AtomId,
                     DigestionReceiptAlignment.Rejected),
-                baselineAtomIds.Contains(entry.AtomId),
                 changes,
                 isBaseFactAffected))
             .Select(static entry => entry.AtomId);

@@ -28,7 +28,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(sourceBytes.ToArray(), [oldCapture]),
-            ledger,
             DigestionAlignmentMode.Ingest,
             _ => (_, _) => corruptDocument);
 
@@ -57,7 +56,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(sourceBytes.ToArray(), [oldCapture]),
-            ledger,
             DigestionAlignmentMode.Ingest,
             _ => (_, _) => fabricatedDocument);
 
@@ -80,7 +78,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(sourceBytes.ToArray(), [oldCapture]),
-            ledger,
             DigestionAlignmentMode.Ingest,
             _ => (_, _) => corrupt);
 
