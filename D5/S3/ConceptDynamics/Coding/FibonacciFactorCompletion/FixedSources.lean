@@ -58,7 +58,7 @@ theorem legal_append (s e q : Guard) (u v : List Label)
       have hu' : LegalWord s' e u := by simpa [LegalWord, walk, hn] using hu
       simpa [LegalWord, walk, hn] using ih s' hu'
 
-private theorem choices_legal (s : Guard) (R : Bool → List Label)
+theorem choices_legal (s : Guard) (R : Bool → List Label)
     (hR : ∀ i, LegalWord s s (R i)) (zs : List Bool) :
     LegalWord s s (choiceBlocks R zs) := by
   induction zs with
@@ -425,17 +425,17 @@ private theorem uniform_choice_injective (R : Bool → List Label) (L : ℕ)
 def synchronousPrefix {A : Type} (P : List A) (R : Bool → List A)
     {n : ℕ} (z : Fin n → Bool) : List A := P ++ choiceBlocks R (List.ofFn z)
 
-private theorem synchronous_length {A : Type} (P : List A) (R : Bool → List A)
+theorem synchronous_length {A : Type} (P : List A) (R : Bool → List A)
     (L : ℕ) (hlen : ∀ i, (R i).length = L) (n : ℕ) (z : Fin n → Bool) :
     (synchronousPrefix P R z).length = P.length + n*L := by
   simp only [synchronousPrefix,List.length_append,uniform_choice_length R L hlen,List.length_ofFn]
 
-private theorem address_prefix (A w : List Label) (p : ℕ) (hp : p < A.length) :
+theorem address_prefix (A w : List Label) (p : ℕ) (hp : p < A.length) :
     address (A ++ w) p = A[p] := by
   have htotal : p < (A ++ w).length := by simp; omega
   simp only [address,List.getElem?_eq_getElem htotal,Option.getD_some,List.getElem_append_left hp]
 
-private theorem synchronous_address_injective (P : List Label) (R : Bool → List Label)
+theorem synchronous_address_injective (P : List Label) (R : Bool → List Label)
     (L : ℕ) (hlen : ∀ i, (R i).length = L) (hne : R false ≠ R true)
     (w : List Label) (n : ℕ) :
     Function.Injective (fun z : Fin n → Bool => address (synchronousPrefix P R z ++ w)) := by

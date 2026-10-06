@@ -464,7 +464,7 @@ def PeriodicTail (s : Guard) (w : List Label) (z : ℝ) : Prop :=
     (∀ p (hp : p < w.length), a p = w[p]) ∧
     (∀ p, a (p+w.length) = a p ∧ x (p+w.length) = x p ∧ path (p+w.length) = path p)
 
-private theorem prefix_path_endpoint (s e : Guard) (w : List Label)
+theorem prefix_path_endpoint (s e : Guard) (w : List Label)
     (hw : LegalWord s e w) (a : ℕ → Label) (path : ℕ → Guard)
     (h0 : path 0 = s)
     (hedges : ∀ p, nextGuard (path p) (a p) = some (path (p+1)))

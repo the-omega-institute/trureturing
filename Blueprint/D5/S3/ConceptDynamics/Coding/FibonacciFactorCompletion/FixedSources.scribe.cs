@@ -123,10 +123,46 @@ internal sealed class FixedSourcesDocument : IScribeDocumentDefinition
             B("L",I("Nat")),B("lo",I("Real")),B("hi",I("Real")),B("a",I("Real")),B("y",I("Real")),B("k",I("Nat"))));
     }
 
+    private static Formula ChoiceLegal() => Disp(All(Imp(
+        All(Call("LegalWord",I("s"),I("s"),Call("apply",I("R"),I("i"))),B("i",I("Bool"))),
+        Call("LegalWord",I("s"),I("s"),Call("choiceBlocks",I("R"),I("zs")))),
+        B("s",I("Guard")),B("R",Fn(I("Bool"),Call("List",I("Label")))),B("zs",Call("List",I("Bool")))));
+    private static Formula SynchronousLength() => Disp(All(Imp(
+        All(Equal(Call("length",Call("apply",I("R"),I("i"))),I("L")),B("i",I("Bool"))),
+        Equal(Call("length",Call("synchronousPrefix",I("P"),I("R"),I("z"))),
+            Add(Call("length",I("P")),Mul(I("n"),I("L"))))),
+        B("A",I("Type")),B("P",Call("List",I("A"))),B("R",Fn(I("Bool"),Call("List",I("A")))),
+        B("L",I("Nat")),B("n",I("Nat")),B("z",Fn(Call("Fin",I("n")),I("Bool")))));
+    private static Formula AddressPrefix() => Disp(All(Imp(Call("lt",I("p"),Call("length",I("A"))),
+        Equal(Call("apply",Call("address",Call("append",I("A"),I("w"))),I("p")),Call("getElem",I("A"),I("p")))),
+        B("A",Call("List",I("Label"))),B("w",Call("List",I("Label"))),B("p",I("Nat"))));
+    private static Formula SynchronousInjection()
+    {
+        var ztype=Fn(Call("Fin",I("n")),I("Bool"));
+        Formula Source(Formula z) => Call("address",Call("append",Call("synchronousPrefix",I("P"),I("R"),z),I("w")));
+        return Disp(All(Imp(And(All(Equal(Call("length",Call("apply",I("R"),I("i"))),I("L")),B("i",I("Bool"))),
+            Call("notEqual",Call("apply",I("R"),I("false")),Call("apply",I("R"),I("true")))),
+            All(Imp(Equal(Source(I("z")),Source(I("zprime"))),Equal(I("z"),I("zprime"))),B("z",ztype),B("zprime",ztype))),
+            B("P",Call("List",I("Label"))),B("R",Fn(I("Bool"),Call("List",I("Label")))),B("L",I("Nat")),
+            B("w",Call("List",I("Label"))),B("n",I("Nat"))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Both actual Fibonacci starts retain the complete-boundary, closed and strict source laws and one finite actual reset map.",
         H("Actual boundaries for Fibonacci completion"),
         Blocks(
+            Describe.Lean(DescribeId.Create("fib-helper-choices-legal"),DeclarationHandle.Create(Prefix+"choices_legal"),
+                H("Every Boolean choice preserves the return guard"),StatementSource.FromAuthor(ChoiceLegal()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every Boolean choice preserves the return guard. The synchronized source constructions use this exact relation with their chosen fixed tail."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-helper-synchronous-length"),DeclarationHandle.Create(Prefix+"synchronous_length"),
+                H("The exact synchronized observation length"),StatementSource.FromAuthor(SynchronousLength()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The exact synchronized observation length. The synchronized source constructions use this exact relation with their chosen fixed tail."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-helper-address-prefix"),DeclarationHandle.Create(Prefix+"address_prefix"),
+                H("Actual addresses retain the literal prefix"),StatementSource.FromAuthor(AddressPrefix()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Actual addresses retain the literal prefix. The synchronized source constructions use this exact relation with their chosen fixed tail."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-helper-synchronous-address-injective"),DeclarationHandle.Create(Prefix+"synchronous_address_injective"),
+                H("Equal-length block extraction separates literal sources"),StatementSource.FromAuthor(SynchronousInjection()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Equal-length block extraction separates literal sources. The synchronized source constructions use this exact relation with their chosen fixed tail."))),DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fib-fixed-finite-all-histories"),DeclarationHandle.Create(Prefix+"fixed_finite_tail_all_histories"),
                 H("One finite tail supplies all high histories"),StatementSource.FromAuthor(TailHigh()),AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The numerical hull is nondegenerate, supported and invariant under both legal returns; its stem and return endpoint costs satisfy EndpointCertificate. One finite word w is selected before all Bool choice lists. Each source is address((P++choiceBlocks(R,zs))++w), with the prescribed h++choiceBlocks(W,zs) past followed by the literal zero-error coordinate future of w. Errors are chosen on this same source and are zero after the past. Empty stems and histories remain included. A common positive margin over unbounded histories is not asserted."))),DescribeRole.Theorem),

@@ -350,10 +350,28 @@ internal sealed class FibonacciFactorCompletionDocument : IScribeDocumentDefinit
             B("K", I("Nat")), B("family", MarginFamilies)));
     }
 
+    private static Formula PrefixPathEndpoint()
+    {
+        Formula Imp(Formula x,Formula y) => new Formula.Logic(x,FormulaLogicOperator.Implies,y);
+        var p=I("p");var path=I("path");var a=I("address");var w=I("word");
+        return Disp(All(Imp(And(Call("LegalWord",I("s"),I("e"),w),
+            Equal(Call("apply",path,D(0)),I("s")),
+            All(Equal(Call("nextGuard",Call("apply",path,p),Call("apply",a,p)),
+                Call("some",Call("apply",path,Add(p,D(1))))),B("p",I("Nat"))),
+            All(Imp(Call("lt",p,Call("length",w)),Equal(Call("apply",a,p),Call("getElem",w,p))),B("p",I("Nat")))),
+            Equal(Call("apply",path,Call("length",w)),I("e"))),
+            B("s",I("Guard")),B("e",I("Guard")),B("word",Call("List",I("Label"))),
+            B("address",new Formula.TypeArrow(I("Nat"),I("Label"))),B("path",new Formula.TypeArrow(I("Nat"),I("Guard")))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Both actual Fibonacci starts retain the complete-boundary, closed and strict source laws and one finite actual reset map.",
         H("Actual boundaries for Fibonacci completion"),
         Blocks(
+            Describe.Lean(DescribeId.Create("fib-literal-prefix-guard-endpoint"),
+                DeclarationHandle.Create(Prefix+"prefix_path_endpoint"),H("The guard after a legal literal prefix"),
+                StatementSource.FromAuthor(PrefixPathEndpoint()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("An actual guard path whose initial guard and every prefix label agree with a legal finite word ends at the prescribed terminal guard. Guard-edge determinism then aligns a fixed tail path after every legal prefix."))),DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fib-canonical-high-fixed-finite-tail"),
                 DeclarationHandle.Create(Prefix+"canonical_high_fixed_finite_tail"),
                 H("The canonical high hull supplies one finite tail for all histories"),
