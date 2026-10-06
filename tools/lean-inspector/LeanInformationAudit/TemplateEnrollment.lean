@@ -120,6 +120,7 @@ private structure CompileState where
   nextLocal : Nat := 0
   constructorTypes : NameSet := {}
   independentOwners : Std.HashMap Name Bool := {}
+  compiledNodes : Std.HashMap (USize × Nat × Bool × Nat) (Expr × PlanNode) := {}
   /-- Only original AST parameters and direct constructor fields carry descent
   authority. An arbitrary local with the same type does not. -/
   astVariables : FVarIdSet := {}
@@ -461,11 +462,22 @@ private def staticIdentity (e : Expr) : CompileM Unit := do
 mutual
 private partial def compileExpr (e : Expr) (depth : Nat := 0)
     (typePosition : Bool := false) (templateBinders : Nat := 0) : CompileM PlanNode := do
+  -- Closed compiler nodes have the same judgment within this assessment.
+  -- Retain the original expression and exact depth and mode on every hit.
+  let closed := !e.hasFVar && !e.hasLooseBVars && !e.hasMVar
+  let key := (unsafe ptrAddrUnsafe e, depth, typePosition, templateBinders)
+  if closed then
+    if let some (_, plan) := (← get).compiledNodes[key]? then
+      charge
+      return plan
   let checked ← compileNode e depth typePosition templateBinders
-  if ← isType e then
+  let result ← if ← isType e then
     rule "E7.type_obligation"
-    return .typeNode checked
-  return checked
+    pure <| .typeNode checked
+    else pure checked
+  if closed then
+    modify fun state => { state with compiledNodes := state.compiledNodes.insert key (e, result) }
+  return result
 
 private partial def compileNode (e : Expr) (depth : Nat)
     (typePosition : Bool) (templateBinders : Nat) : CompileM PlanNode := do
