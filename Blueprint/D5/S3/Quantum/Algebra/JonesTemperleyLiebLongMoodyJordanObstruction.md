@@ -162,7 +162,7 @@ b(ell) = -alpha_ell^(-3), the eigenvalue of rho(sigma_j) on the image of E_j.
 
 **Definition 1.14 (The Jordan obstruction).**
 
-$$claim \Leftrightarrow (\forall \ell : \mathbb{N}, \forall n : \mathbb{N}, \forall t : \operatorname{Fin}\left(\ell - 1\right), (4 \le \ell) \Rightarrow ((3 \le n) \Rightarrow ((2 \le \operatorname{card}\left(\operatorname{Sector}\left(\ell, n, h, t\right)\right)) \Rightarrow ((\forall j : \operatorname{Fin}\left(n\right), \forall v : \operatorname{Sector}\left(\ell, n, h, t\right) \to \mathbb{C}, (\operatorname{mulVec}\left(\operatorname{g}\left(\ell, n, h, t, j\right), v\right) = v) \Rightarrow (v = 0)) \land (\exists w : (\operatorname{Fin}\left(n\right) \times \operatorname{Sector}\left(\ell, n, h, t\right)) \to \mathbb{C}, (\operatorname{mulVec}\left(\operatorname{S1}\left(\ell, n, h, t\right) - \operatorname{b}\left(\ell\right) \cdot 1, \operatorname{mulVec}\left(\operatorname{S1}\left(\ell, n, h, t\right) - \operatorname{b}\left(\ell\right) \cdot 1, w\right)\right) = 0) \land (\operatorname{mulVec}\left(\operatorname{S1}\left(\ell, n, h, t\right) - \operatorname{b}\left(\ell\right) \cdot 1, w\right) \ne 0))))))$$
+$$claim \Leftrightarrow (\forall \ell : \mathbb{N}, \forall n : \mathbb{N}, \forall t : \operatorname{Fin}\left(\ell - 1\right), \forall hl : (4 \le \ell), (3 \le n) \Rightarrow (\operatorname{let} h : (2 \le \ell) := \operatorname{trans}\left(\operatorname{decide}, hl\right); ((2 \le \operatorname{card}\left(\operatorname{Sector}\left(\ell, n, h, t\right)\right)) \Rightarrow ((\forall j : \operatorname{Fin}\left(n\right), \forall v : \operatorname{Sector}\left(\ell, n, h, t\right) \to \mathbb{C}, (\operatorname{mulVec}\left(\operatorname{g}\left(\ell, n, h, t, j\right), v\right) = v) \Rightarrow (v = 0)) \land (\exists w : (\operatorname{Fin}\left(n\right) \times \operatorname{Sector}\left(\ell, n, h, t\right)) \to \mathbb{C}, (\operatorname{mulVec}\left(\operatorname{S1}\left(\ell, n, h, t\right) - \operatorname{b}\left(\ell\right) \cdot 1, \operatorname{mulVec}\left(\operatorname{S1}\left(\ell, n, h, t\right) - \operatorname{b}\left(\ell\right) \cdot 1, w\right)\right) = 0) \land (\operatorname{mulVec}\left(\operatorname{S1}\left(\ell, n, h, t\right) - \operatorname{b}\left(\ell\right) \cdot 1, w\right) \ne 0))))))$$
 
 *Formalization.* `D5/S3/Quantum/Algebra/JonesTemperleyLiebLongMoodyJordanObstruction.claim` (`✓ std3`).
 
@@ -170,7 +170,7 @@ $$claim \Leftrightarrow (\forall \ell : \mathbb{N}, \forall n : \mathbb{N}, \for
 
 *Commentary.*
 
-For every ell >= 4, n >= 3 and end vertex t whose sector has at least two paths (in the formula h is the proof of 2 <= ell obtained from ell >= 4, which the sector and the operators take as an argument): no seed generator g_j has a nonzero fixed vector (so K = 0, the sectors admitted by the remark's test), and S_1 - b is not semisimple at b: some w has (S_1 - b)^2 w = 0 and (S_1 - b) w != 0.
+For every ell >= 4, n >= 3 and end vertex t whose sector has at least two paths (as in the Lean statement, h is let-bound to the proof of 2 <= ell obtained from hl : 4 <= ell, and the sector and the operators take it as an argument): no seed generator g_j has a nonzero fixed vector (so K = 0, the sectors admitted by the remark's test), and S_1 is not semisimple at b: some w has (S_1 - b)^2 w = 0 and (S_1 - b) w != 0.
 
 **Theorem 1.15 (The Jordan obstruction holds for every endpoint sector).**
 

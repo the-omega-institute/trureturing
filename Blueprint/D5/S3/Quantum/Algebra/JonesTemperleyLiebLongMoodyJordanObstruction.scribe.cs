@@ -54,7 +54,7 @@ internal sealed class JonesTemperleyLiebLongMoodyJordanObstructionDocument : ISc
                 "b(ell) = -alpha_ell^(-3), the eigenvalue of rho(sigma_j) on the image of E_j.",
                 "b", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The Jordan obstruction", ClaimFormula(),
-                "For every ell >= 4, n >= 3 and end vertex t whose sector has at least two paths (in the formula h is the proof of 2 <= ell obtained from ell >= 4, which the sector and the operators take as an argument): no seed generator g_j has a nonzero fixed vector (so K = 0, the sectors admitted by the remark's test), and S_1 - b is not semisimple at b: some w has (S_1 - b)^2 w = 0 and (S_1 - b) w != 0.",
+                "For every ell >= 4, n >= 3 and end vertex t whose sector has at least two paths (as in the Lean statement, h is let-bound to the proof of 2 <= ell obtained from hl : 4 <= ell, and the sector and the operators take it as an argument): no seed generator g_j has a nonzero fixed vector (so K = 0, the sectors admitted by the remark's test), and S_1 is not semisimple at b: some w has (S_1 - b)^2 w = 0 and (S_1 - b) w != 0.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The Jordan obstruction holds for every endpoint sector", Disp(F.Id("claim")),
                 "Put a = alpha_ell, delta = 2 cos(pi/ell) = -(a^2 + a^(-2)). The weights satisfy sum over neighbours of mu = delta mu (the boundary terms sin 0 and sin pi vanish), so the frozen Temperley-Lieb theorem gives E_j^2 = delta E_j and (rho_j - a)(rho_j + a^(-3)) = 0. Hence every g_j satisfies (g - a^2)(g - a^(-6)) = 0, and since ell >= 4 neither a^2 nor a^(-6) is 1, so g_j has no fixed vector. A sector with two paths contains a path beginning 1, 2, 1 and the same path with its vertex 2 replaced by 3 (vertex 3 exists as ell >= 4); on their span rho_0 and rho_1 act, in a suitable basis f_0, f_1, by (-a^(-3), a; 0, a) and (a, 0; a^(-3), -a^(-3)). On the four-dimensional subspace of slots 0 and 1 the operator S_1 is (0, UG; U, U(I - H)) with U = rho_1, G = rho_0^2, H = U G U^(-1), and an explicit Laurent-polynomial vector w gives (S_1 - b)^2 w = 0 and (S_1 - b) w = (a^6 - 1) times a nonzero vector, which is nonzero as a^6 != 1.",
@@ -217,8 +217,11 @@ internal sealed class JonesTemperleyLiebLongMoodyJordanObstructionDocument : ISc
         Formula once = Call("mulVec", shifted, w);
         Formula jordan = Some(w, Seq(Parenthesized(Seq(Call("Fin", N()), Sp, Times, Sp, Sector())), Sp, To, Sp, Complexes()),
             And(Equal(Call("mulVec", shifted, once), F.D(0)), NotEqual(once, F.D(0))));
-        Formula body = Implies(Leq(F.D(4), L()), Implies(Leq(F.D(3), N()),
-            Implies(Leq(F.D(2), Call("card", Sector())), And(noFixed, jordan))));
+        Formula hl = F.Id("hl");
+        Formula letH = Seq(Operatorname, Grp(F.Id("let")), Sp, Hp(), Sp, Colon, Sp, TwoLeq(), Sp, Colon, Eq, Sp,
+            Call("trans", Named("decide"), hl), Semi, Sp);
+        Formula afterLet = Seq(letH, Parenthesized(Implies(Leq(F.D(2), Call("card", Sector())), And(noFixed, jordan))));
+        Formula body = All(hl, Parenthesized(Leq(F.D(4), L())), Implies(Leq(F.D(3), N()), afterLet));
         return Disp(Iff(F.Id("claim"), All(L(), Naturals(), All(N(), Naturals(), All(T(), Vertices(), body)))));
     }
 }

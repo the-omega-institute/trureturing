@@ -158,8 +158,8 @@ are not addressed.
 
 **Effect on the paper.** The table entry "An exact obstruction remains open"
 is settled: the Jones–Temperley–Lieb endpoint-sector seeds give
-non-semisimple, hence non-unitarizable, ambient Long–Moody representations for
-every $n\ge3$, $\ell\ge4$; the paper's other results are unaffected.
+non-semisimple, hence non-unitarizable, ambient Long–Moody representations in
+every endpoint sector of dimension at least two, for every $n\ge3$, $\ell\ge4$; the paper's other results are unaffected.
 
 ## ASSUMED-UNVERIFIED
 
