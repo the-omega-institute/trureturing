@@ -5931,3 +5931,16 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 来源为 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a 的 PoincareLib.Analysis.ODE.LocalFlow.HigherRegularity.VariationalLinearMapSmoothness。原作者为 qinz1yang/differential-geometry 的 DifferentialGeometry contributors，比较版本 1b535dd102b94cc42b107cca27059687888f08b3，Apache-2.0。原完整模块与有序前置已真实编译或复用此前验收，零错误、零警告；固定原字节、Git blob、实际导入源码和 olean 一致。只导入原已接受模块的小检查打印该既有公开定理的完整递归公理闭包，仅含 propext、Classical.choice、Quot.sound，没有新增证明包装或重复编译已接受正文。
 
 proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。统一 C∞／真实流形测地线及 Jacobi 场的实际绑定、全局原指数映射与 H3 分类、完整有限体积尖点和未知 F 的弱正则性、给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 官方 PO 目标的中心、拓扑与 Haar 复用接口
+
+官方 LeanEval.Geometry.MostowRigidity.mostow_rigidity 的对象是 PO(n,1) = unitary(MatrixSum (Fin n) (Fin 1) ℝ) / center，MatrixSum 的 star 使用实际不定签名矩阵，PO 的可测结构为 Borel、体积为 Haar。目标对所有 n ≥ 3 的原离散子群 Γ、Λ，在原 HasFundamentalDomain Γ (PO n 1)、HasFundamentalDomain Λ (PO n 1) 及两者原 covolume ≠ ⊤ 下，要求实现指定完整群同构的原 PO 共轭，允许挠元。当前原 H3／Mat4 构造只处理三维；普通正定 unitary、另选 Haar 或要求自由作用的覆盖模型均不能直接替代这个对象。
+
+Mathlib 的 Matrix.GeneralLinearGroup.center_eq_range_scalar 处理与全部 GL 元素交换的矩阵；原不定正交群的中心只给出与该正交群元素交换，不能直接套用。待形式化的代数路线是在实际 indefinite-star unitary 中构造每个坐标的符号反射，利用交换方程消去非对角项；再对每个空间坐标与时间坐标构造块矩阵 [[5/4,3/4],[3/4,5/4]] 的 Lorentz boost，利用交换方程对齐对角项，最后用原 unitary 方程约束共同标量。每个反射及 boost 的双侧 unitary 条件、中心恰为 ±I、实际时间分支子群 H = {A | A_tt > 0} 的封闭运算／开放性，以及每个中心陪集唯一的未来分支代表，均仍须证明。此研究路线不加入无挠或保定向前提。
+
+可复用的拓扑入口是 Topology.Algebra.Group.Quotient 中的 QuotientGroup.continuous_mk、QuotientGroup.isOpenMap_coe，Topology.Constructions 中的 IsOpenMap.domRestrict，以及 Topology.Homeomorph.Defs 中的 Equiv.toHomeomorphOfContinuousOpen。它们分别提供实际商映射的连续性／开放性、对开子集的限制及连续开放双射到同胚的升级。实际 H 与 PO 间的双射群同态尚未构造，不能仅由这些入口宣称已有 PO 同胚。
+
+三维坐标对齐可检索 Matrix.reindexAlgEquiv（LinearAlgebra.Matrix.Reindex），但仍须验证 Fin 3 ⊕ Fin 1 与原 Fin 4 的精确重排及实际签名方程。测度侧可检索 ContinuousMulEquiv.isHaarMeasure_map（MeasureTheory.Group.Measure）、Measure.isMulLeftInvariant_eq_smul 与 haarScalarFactor_pos_of_isHaarMeasure（MeasureTheory.Measure.Haar.Unique）；Haar 唯一性需要实际局部紧、第二可数及测度实例，比较系数的正性与有限性也须绑定。基本域侧 IsFundamentalDomain.image_of_equiv 和 IsFundamentalDomain.covolume_eq_volume（MeasureTheory.Group.FundamentalDomain）仍要求实际作用、测度搬运及相应可数性条件；含挠元的原双曲商体积与尖点桥未完成。
+
+来源为官方题目原陈述，以及 Mathlib@db584cd6d46c92f209a44c0f1c829460d327499d 的上述具名模块，Mathlib 为 Apache-2.0；反射／boost 组合是本项待验证研究路线，不归为上游已有中心定理。此项仅完成原陈述与源码接口检索，未新增或编译 Lean 证明；远端 CI 验证 Library 说明。实际中心／PO 拓扑／原 Haar 和余体积绑定、所有维数的几何证明、完整 Mostow–Prasad 与官方验收仍未完成。
