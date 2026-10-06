@@ -7,6 +7,7 @@
    digest: Odd closed color words support at most two actual periodic addresses. -/
 
 import D5.S1.Digit.Infinite.ClosedObservationGraphRealization
+import D5.S1.Digit.Infinite.SignedSeriesFibres
 import Mathlib.Algebra.Ring.Periodic
 import Mathlib.Data.Bool.Basic
 import Mathlib.Data.Set.Card

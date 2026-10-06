@@ -17,7 +17,7 @@ internal sealed class OddColorThreeSourceDocument : IScribeDocumentDefinition
                 Paragraph(Text(
                     "Let beta be strictly below lambda and let m be a positive odd integer. "
                     + "For every word of m original closed colors, the set of actual legal addresses "
-                    + "with a window period dividing m and with the prescribed closed color at "
+                    + "that return after every m three-bit windows and have the prescribed closed color at "
                     + "every time has extended cardinality at most two. The coordinates are the "
                     + "literal kappa values after each three-bit deletion. Precisely, the period "
                     + "condition says that digit n + 3m equals digit n for every n; this is "

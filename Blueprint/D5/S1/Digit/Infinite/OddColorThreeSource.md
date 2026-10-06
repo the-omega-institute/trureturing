@@ -14,7 +14,7 @@ Lean statement: `D5/S1/Digit/Infinite/OddColorThreeSource.result`
 
 *Commentary.*
 
-Let beta be strictly below lambda and let m be a positive odd integer. For every word of m original closed colors, the set of actual legal addresses with a window period dividing m and with the prescribed closed color at every time has extended cardinality at most two. The coordinates are the literal kappa values after each three-bit deletion. Precisely, the period condition says that digit n + 3m equals digit n for every n; this is equivalent to repeating the legal three-bit windows every m steps. The color condition holds at every nonnegative time j, using color j modulo m.
+Let beta be strictly below lambda and let m be a positive odd integer. For every word of m original closed colors, the set of actual legal addresses that return after every m three-bit windows and have the prescribed closed color at every time has extended cardinality at most two. The coordinates are the literal kappa values after each three-bit deletion. Precisely, the period condition says that digit n + 3m equals digit n for every n; this is equivalent to repeating the legal three-bit windows every m steps. The color condition holds at every nonnegative time j, using color j modulo m.
 
 An address with an odd bit period cannot have a finite return-block prefix followed by the nonconstant alternating endpoint tail. The signed-series fiber classification therefore makes its scalar encoding unique. Periodicity also makes deletion injective among these addresses, so three distinct sources would have three distinct scalar values at every time.
 
@@ -26,3 +26,4 @@ For three distinct values, either all three belong to one root group or one grou
 
 - Truth anchor: `D5/S1/Digit/Infinite/OddColorThreeSource.result`
 - Dependency: [D5/S1/Digit/Infinite/ClosedObservationGraphRealization](ClosedObservationGraphRealization.md)
+- Dependency: [D5/S1/Digit/Infinite/SignedSeriesFibres](SignedSeriesFibres.md)
