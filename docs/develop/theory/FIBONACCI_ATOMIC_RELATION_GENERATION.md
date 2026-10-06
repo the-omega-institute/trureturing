@@ -64057,3 +64057,162 @@ $$
 本节排除了把此类固定截断的补偿成本忽略到 §384 的 RH 临界尺度这一做法；没有把剩余量控制到该尺度，没有建立完整 Robin 预算或危险来源覆盖。Landau 计数、链终端、原始前缀的 Mertens 转移以及 $b_q$ 证书均直接复用。平方自由奇核的参数对应与分层应用为纸面推导，未作 Lean 核验或原创性认证；没有新增计算程序或重跑既有实验。
 
 ## 追加锚（本行以下为增补区）
+
+## 424. 实际 β 的阶乘余核配对与完整前缀运输
+
+沿用 §§384–387、390、395、397、414 的同一实际 $q=\Phi^{-2}$、$\beta_d=\log(1-(-q)^d)$、$\gamma=\beta^{-1}$、$e=\mu*\beta$、$k=\gamma*\log$、$K,R,A,D$ 和 $H_{\rm raw}$。本节复用 §387.13 的阶乘余核 $\eta$，补足其反向配对在原积分和整数商纤维上的交换预算。普通 Mertens 估计、阶乘积分夹逼与绝对积分—级数交换均使用既有供应。
+
+**定义 424.1（同一尺度的辅助配对）。** 对全部 $y>0$，取
+
+$$
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y.
+$$
+
+对全部实数 $x>1,s>0$，保留 $w(t)=(1+\log t)/(t^2\log^2t)$ 和原 $P_x,J_x,Q_x$，另记
+
+$$
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)\,dt,
+\quad J_x^\eta(n)=P_x^\eta(n)-P_x^\eta(n+1),
+\quad Q_x^\eta(n)=\int_x^\infty|\eta(t/n)-\eta(t/(n+1))|w(t)\,dt.
+\tag{424.1}
+$$
+
+全部整数指标 $n,m,d$ 均为正。预算符号取 $\lambda(r)=1+\log r$（$r\ge1$）、$c_0=1+\log2$ 及
+
+$$
+A_{\beta,2}=\sum_{d\ge1}|\beta_d|\frac{\lambda(d)^2}{d}<\infty.
+\tag{424.2}
+$$
+
+其有限性由 §385 的 $S_\beta=\sum_{d\ge1}|\beta_d|<\infty$ 和 $\lambda(d)^2/d\le2e$ 得到。直接复用 §390 引用的 [Ng 作者稿 p. 5](https://www.cs.uleth.ca/~nathanng/RESEARCH/mobius2b.pdf) 的无条件定量 Mertens 供应，扩大有限头后，固定 $C_M\ge0$ 使 $|M(n)|\le C_Mn/\lambda(n)^4$ 对全部 $n\ge1$ 成立。§397.4 的实际差分预算同样给每个固定 $x>1$ 一个有限 $C_x\ge0$，使
+
+$$
+Q_x(m)\le C_x\frac{\lambda(m)^2}{m^2}\qquad(m\ge1).
+\tag{424.3}
+$$
+
+这里 $m=1$ 由 §397.4 的首项单独供应，并吸入 $C_x$；没有删除有限头。
+
+**定理 424.2（全尺度配对、积分前预算及原首块补偿）。** 对每个 $x>1,s>0$，$P_x^\eta(s)$ 绝对存在，而且
+
+$$
+P_x^\eta(s)=\sum_{d\ge1}\beta_dP_x(ds),
+\qquad
+J_x^\eta(n)=\sum_{d\ge1}\beta_d\sum_{m=dn}^{d(n+1)-1}J_x(m)\quad(n\ge1).
+\tag{424.4}
+$$
+
+全部积分前的三重预算满足
+
+$$
+\begin{aligned}
+\mathcal T_x&:=\sum_{n,d\ge1}|M(n)||\beta_d|\sum_{m=dn}^{d(n+1)-1}Q_x(m)\\
+&\le C_MC_xc_0^2A_{\beta,2}\sum_{n\ge1}\frac1{n\lambda(n)^2}<\infty,
+\qquad
+\sum_{n\ge1}|M(n)|Q_x^\eta(n)\le\mathcal T_x.
+\end{aligned}
+\tag{424.5}
+$$
+
+因此同一原始有符号积分有绝对收敛身份
+
+$$
+\boxed{I_\psi(x)=\sum_{n\ge1}M(n)J_x^\eta(n)},
+\qquad I_\psi(x)=\int_x^\infty[\psi(t)-t]w(t)\,dt.
+\tag{424.6}
+$$
+
+原首块 $\beta_1J_x(1)$ 的补偿保持为
+
+$$
+J_x^\eta(1)-\beta_1J_x(1)
+=\sum_{d\ge2}\beta_d\sum_{m=d}^{2d-1}J_x(m),
+\tag{424.7}
+$$
+
+$$
+\boxed{\sum_{m\ge2}H_{\rm raw}(m)J_x(m)
+=\sum_{n\ge2}M(n)J_x^\eta(n)
++\sum_{d\ge2}\beta_d\sum_{m=d}^{2d-1}J_x(m).}
+\tag{424.8}
+$$
+
+**证明。** 先核对 §387 逆展开的反向配对。由 $\beta*k=\log$，且 $K(y/d)=0$ 当 $d>y$，有限三角重排给所有 $y>0$ 的
+
+$$
+\sum_{d\ge1}\beta_dK(y/d)
+=\sum_{dj\le y}\beta_dk(j)
+=\sum_{r\le y}\log r=\log(\lfloor y\rfloor!).
+$$
+
+§385 的指数尾支付连续项的绝对和。使用 $\sum\beta_d/d=B(1)$、$\sum\beta_d\log d/d=-B'(1)$ 及原 $A,D$，有
+
+$$
+\begin{aligned}
+\sum_{d\ge1}\beta_dG(y/d)
+&=y[(A\log y-D)B(1)+AB'(1)]\\
+&=y\log y-y.
+\end{aligned}
+$$
+
+故对全部 $y>0$，包括 $0<y<1$ 的低商，有绝对收敛式
+
+$$
+\sum_{d\ge1}\beta_dR(y/d)=\eta(y).
+\tag{424.9}
+$$
+
+这只是 §387.16–17 的 $R=\gamma*\eta$ 与既有逆身份的反向应用。
+
+为了把（424.9）送入原积分，置 $\mu_0=1/\delta$ 和 $g(s)=|D|+A+\mu_0(1+|\log s|)$。§395 的高域包络与低商公式共同给 $|R(t/s)|\le g(s)(1+\log t)$（$t>1,s>0$）。又 $g(ds)\le g(s)+\mu_0\log d$，所以
+
+$$
+\begin{aligned}
+\sum_{d\ge1}|\beta_d|\int_x^\infty|R(t/(ds))|w(t)\,dt
+&\le\frac{(1+1/\log x)^2}{x}
+\sum_{d\ge1}|\beta_d|[g(s)+\mu_0\log d]\\
+&<\infty.
+\end{aligned}
+\tag{424.10}
+$$
+
+这里使用 $(1+\log t)w(t)\le(1+1/\log x)^2t^{-2}$。每个被积函数由实际阶跃 $K$ 与连续项构成，因而可测且绝对可积。（424.10）正好支付[既有绝对积分—级数交换](../../../Library/Analytic/mathlib2026absoluteintegralsum.md)的前提；对（424.9）积分，得到（424.4）的第一式。在 $s=n,n+1$ 两处作差，并对每个固定 d 作有限望远镜求和，得到第二式。
+
+积分前三角不等式及非负 Tonelli 进一步给
+
+$$
+Q_x^\eta(n)\le\sum_{d\ge1}|\beta_d|
+\sum_{m=dn}^{d(n+1)-1}Q_x(m).
+\tag{424.11}
+$$
+
+这个纤维保留了全部 d 个真实差分。其内 $m\ge dn$、$m<d(n+1)\le2dn$，故 $\lambda(m)\le c_0\lambda(d)\lambda(n)$。由（424.3），
+
+$$
+\sum_{d\ge1}|\beta_d|\sum_{m=dn}^{d(n+1)-1}Q_x(m)
+\le C_xc_0^2A_{\beta,2}\frac{\lambda(n)^2}{n^2}.
+\tag{424.12}
+$$
+
+这同时计入 η 的 $\log n$ 跳跃；没有用 η 的单点增长界代替差分预算。将（424.12）乘 $|M(n)|$ 并对全部正 n 求和，得到（424.5）。$\sum1/[n\lambda(n)^2]$ 的有限性由经典递减正项积分比较给出。这里直接支付的是三重积分范数和，不能仅从 $\sum|M(n)J_x^\eta(n)|<\infty$ 反推。
+
+最后直接消费 §397.17 的原积分身份及 §384 的有限 dilation：
+
+$$
+\begin{aligned}
+I_\psi(x)
+&=\sum_{m\ge1}H_{\rm raw}(m)J_x(m)\\
+&=\sum_{m\ge1}\sum_{d\le m}\beta_dM(\lfloor m/d\rfloor)J_x(m)\\
+&=\sum_{n\ge1}M(n)\sum_{d\ge1}\beta_d
+\sum_{m=dn}^{d(n+1)-1}J_x(m).
+\end{aligned}
+\tag{424.13}
+$$
+
+重排的绝对付款是（424.5）和 $|J_x(m)|\le Q_x(m)$；商纤维恰为 $\lfloor m/d\rfloor=n\iff dn\le m<d(n+1)$。因此（424.4）给（424.6），且（424.11）支付其积分前预算。所有商均至少为一，未使用 $H_{\rm raw}(0)$。由 $H_{\rm raw}(1)=\beta_1$、$M(1)=1$，（424.4）取 $n=1$ 得（424.7）；再从（424.6）剥去原首块，得到（424.8）。各补偿和的绝对收敛同样由（424.5）支付。$\square$
+
+**有符号边界。** 反向配对没有使 η 成为全域非负核：[经典 Stirling 式，DLMF 5.11.1](https://dlmf.nist.gov/5.11.E1) 给固定 $0\le\theta<1$ 时 $\eta(N+\theta)=(1/2-\theta)\log N+\tfrac12\log(2\pi)+O_\theta(N^{-1})$。因此整数处最终为正，$N+3/4$ 处最终为负；这里只援引既有 Stirling 供应，不另立其渐近为新定理，也不由此断言 $J_x^\eta(n)$ 逐项变号。
+
+本节支付的是同一前缀配对的积分前绝对交换。若另改写成未阻尼原子级数，仍须独立支付 Möbius 条件矩、有限截止和 Abel 末项；（424.5）不自动给原子绝对可和。式（424.6）与（424.8）保留了原目标、全部正指标和首块的共同来源，但完整 Robin 所需的有符号估计、有限范围及常数预算仍未得到证明。这里的阶乘余核、可逆卷积及经典解析中间供应均直接复用，不作全局原创性断言。
+
+## 追加锚（本行以下为增补区）
