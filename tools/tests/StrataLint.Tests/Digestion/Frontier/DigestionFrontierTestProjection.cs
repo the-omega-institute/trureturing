@@ -8,8 +8,7 @@ internal static class DigestionFrontierTestProjection
     internal static DigestionFrontierProjection Create(
         DigestionLedgerEvaluation evaluation,
         IReadOnlyDictionary<string, string>? contentKinds = null,
-        ImmutableArray<string> acknowledgedStale = default,
-        bool retryDispositions = false)
+        ImmutableArray<string> acknowledgedStale = default)
     {
         var sources = evaluation.Entries
             .GroupBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
@@ -28,7 +27,6 @@ internal static class DigestionFrontierTestProjection
         return DigestionFrontierProjection.Create(
             document,
             evaluation,
-            contentKinds ?? new Dictionary<string, string>(StringComparer.Ordinal),
-            retryDispositions);
+            contentKinds ?? new Dictionary<string, string>(StringComparer.Ordinal));
     }
 }
