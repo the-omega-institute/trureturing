@@ -1,3 +1,4 @@
+import LeanInformationAudit.CompiledSnapshots
 import LeanInformationAudit.ProofBuilder
 import LeanInformationAudit.Projection.ProjectionSeal
 import LeanInformationAudit.Contract.Assessment
@@ -279,74 +280,17 @@ private def preflightNames (env : Environment) (records : Array SealArenaRecord)
           throwError "IE-C009 ProofConstructionFailed: {name}\ngenerated name collision"
     seen := seen.push name
 
-private def expectedKey (entry : ExpectedOccurrence) : String :=
-  entry.objectArenaName.toString ++ "/" ++ entry.theoremName.toString
-
-private def actualKey (entry : InformationRegistryEntry) : String :=
-  entry.occurrenceKeyString
-
-private def expectedIdentity (entry : ExpectedOccurrence) : String :=
-  expectedKey entry ++ "=" ++ entry.statementIdentity
-
-private def actualIdentity (entry : InformationRegistryEntry) : String :=
-  actualKey entry ++ "=" ++ entry.statementIdentity
-
-private def expectedContributor (entry : ExpectedOccurrence) : String :=
-  expectedKey entry ++ "=" ++ entry.registrationModuleName.toString
-
-private def actualContributor (entry : InformationRegistryEntry) : String :=
-  actualKey entry ++ "=" ++ entry.registrationModuleName.toString
-
-private def throwSnapshotMismatch (rootId : Name) (component : String)
-    (expected actual : Array String) : CommandElabM Unit :=
-  throwError
-    "IE-C028 AnalysisCertificateMismatch root={rootId} catalog=registry-snapshot \
-component={component} expected={(toJson expected).compress} actual={(toJson actual).compress}"
-
-/-- Fail closed if source snapshot regeneration loses or changes a frozen row.
-Uses CIRPT-42 / section 31's IE-C028 payload, as does registry validation below. -/
+/-- Compare source snapshot regeneration with every retained baseline row. -/
 def validateFrozenBaselineInSnapshot (rootId : Name)
     (snapshot : Array ExpectedOccurrence) : CommandElabM Unit := do
-  let baseline := match RootCatalogs.find? (← getEnv) rootId with
-    | some contract => snapshotExpectations rootId contract.baseline
-    | none => #[]
-  let baselineKeys := baseline.map expectedKey |>.qsort (· < ·)
-  let retained := snapshot.filter fun row => baselineKeys.contains (expectedKey row)
-  let retainedKeys := retained.map expectedKey |>.qsort (· < ·)
-  unless baselineKeys == retainedKeys do
-    throwSnapshotMismatch rootId "frozen-baseline-member-set" baselineKeys retainedKeys
-  let baselineIdentities := baseline.map expectedIdentity |>.qsort (· < ·)
-  let retainedIdentities := retained.map expectedIdentity |>.qsort (· < ·)
-  unless baselineIdentities == retainedIdentities do
-    throwSnapshotMismatch rootId "frozen-baseline-statement-identities"
-      baselineIdentities retainedIdentities
-  let baselineContributors := baseline.map expectedContributor |>.qsort (· < ·)
-  let retainedContributors := retained.map expectedContributor |>.qsort (· < ·)
-  unless baselineContributors == retainedContributors do
-    throwSnapshotMismatch rootId "frozen-baseline-contributor-modules"
-      baselineContributors retainedContributors
+  let baseline := (RootCatalogs.find? (← getEnv) rootId).map
+    (fun contract => snapshotExpectations rootId contract.baseline) |>.getD #[]
+  ofExcept <| CompiledSnapshots.baseline rootId baseline snapshot
 
-/-- Compare the independent root manifest with the sealed import-closure registry. -/
+/-- Compare the independent root manifest with the complete registry. -/
 def validateRegistrySnapshot (rootId : Name) (env : Environment) : CommandElabM Unit := do
-  if let some contract := RootCatalogs.find? env rootId then
-    validateFrozenBaselineInSnapshot rootId (snapshotExpectations rootId contract.source)
-  let expectedEntries ← liftTermElabM <|
-    (expectedOccurrencesForRoot env rootId).mapM fun entry => do
-      let objectArenaName ← ofExcept <| resolveCanonicalArenaName (env.find? ·) entry.objectArenaName
-      pure { entry with objectArenaName }
-  let actualEntries := InformationRegistry.forRoot env rootId
-  let expectedKeys := expectedEntries.map expectedKey |>.qsort (· < ·)
-  let actualKeys := actualEntries.map actualKey |>.qsort (· < ·)
-  unless expectedKeys == actualKeys do
-    throwSnapshotMismatch rootId "member-set" expectedKeys actualKeys
-  let expectedIdentities := expectedEntries.map expectedIdentity |>.qsort (· < ·)
-  let actualIdentities := actualEntries.map actualIdentity |>.qsort (· < ·)
-  unless expectedIdentities == actualIdentities do
-    throwSnapshotMismatch rootId "statement-identities" expectedIdentities actualIdentities
-  let expectedContributors := expectedEntries.map expectedContributor |>.qsort (· < ·)
-  let actualContributors := actualEntries.map actualContributor |>.qsort (· < ·)
-  unless expectedContributors == actualContributors do
-    throwSnapshotMismatch rootId "contributor-modules" expectedContributors actualContributors
+  ofExcept <| CompiledSnapshots.registry (env.find? ·) rootId
+    (RootCatalogs.find? env rootId) (InformationRegistry.forRoot env rootId)
 
 private def rootQualifiedEntry (rootId : Name) (localSealNames : Bool)
     (entry : InformationRegistryEntry) : InformationRegistryEntry :=
@@ -408,7 +352,7 @@ def prepareSealPublication (snapshot : ValidatedSourceSnapshot) (compiled : Seal
 private def elabSealInformationTheory : ValidatedSourceSnapshot → SealInput → CommandElab :=
   terminalSealCommand prepareSealPublication
 
-/-- The report entry uses exactly the command assessment and kernel publisher.
+/-- The standalone command uses its assessment and kernel publisher.
 Every environment change, including assessment extensions, rolls back on failure. -/
 def assessAndSealRegistration (input : RegistrationAssessmentInput) (compiled : SealInput) : CoreM Unit := do
   let saved ← getEnv

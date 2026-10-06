@@ -12,7 +12,8 @@ def heads : Array Name := #[
 
 /-- Type heads and data constructors identify schema inputs without source text. -/
 def isInput (info : ConstantInfo) : Bool :=
-  match info with
+  if heads.any (fun head => info.name == (head.str "mk").str "_flat_ctor") then false
+  else match info with
   | .inductInfo _ | .ctorInfo _ | .recInfo _ | .quotInfo _ => false
   | _ =>
     heads.contains (info.type.getForallBody.getAppFn.constName?.getD .anonymous) ||

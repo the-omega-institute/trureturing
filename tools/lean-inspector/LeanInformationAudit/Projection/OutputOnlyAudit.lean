@@ -85,7 +85,8 @@ def terminalInformationAnalysisExportCommand
   liftIO <| writeAnalysisArtifacts stx plan
 
 /-- Exact seal runtime allowlist, pinned by Noninterference.Contract. -/
-def sealIOAllowlist : List Name := [``Lean.logInfo]
+def sealIOAllowlist : List Name :=
+  [``Lean.logInfo, ``IO.ofExcept, ``IO.userError, ``IO.getNumHeartbeats]
 
 /-- Current-reference capabilities can recover the ambient seal command syntax. -/
 def sealSyntaxDenylist : List Name :=

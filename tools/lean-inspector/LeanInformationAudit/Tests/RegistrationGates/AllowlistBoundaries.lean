@@ -3,7 +3,7 @@ import LeanInformationAudit.TemplateEnrollment
 import LeanInformationAudit.CompiledSourceContract
 import LeanInformationAudit.CompiledEvidence
 import LeanInformationAudit.CompiledAssessment
-import LeanInformationAudit.ArtifactRegistration
+import LeanInformationAudit.ArtifactAssessment
 import LeanInformationAuditAnalysis.Tests.ExternalAllowlistTypes
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import Mathlib.Tactic.NormNum
@@ -316,6 +316,15 @@ run_cmd do
       (name.toString.startsWith "LeanInformationAudit.ReadoutProvenance." &&
         name != `LeanInformationAudit.ReadoutProvenance.Compiler) ||
       name == `LeanInformationAudit.Contract.CompiledExpressions ||
+      name == `LeanInformationAudit.Contract.Literal ||
+      name == `LeanInformationAudit.Contract.SourceAudit ||
+      name == `LeanInformationAudit.Contract.Decoder ||
+      name == `LeanInformationAudit.Contract.Discovery ||
+      name == `LeanInformationAudit.Contract.RootStructure ||
+      name == `LeanInformationAudit.CompiledMetadata ||
+      name == `LeanInformationAudit.CompiledAxioms ||
+      name == `LeanInformationAudit.RegistrationRelations ||
+      name == `LeanInformationAudit.BindingWire ||
       name == `LeanInformationAudit.TemplateEnrollment ||
       name == `LeanInformationAudit.CompiledSourceScope ||
       name == `LeanInformationAudit.CompiledSourceOperands ||
@@ -323,13 +332,18 @@ run_cmd do
       name == `LeanInformationAudit.CompiledEvidence ||
       name == `LeanInformationAudit.CompiledAssessment ||
       name == `LeanInformationAudit.CompiledRegistration ||
-      name == `LeanInformationAudit.ArtifactRegistration
+      name == `LeanInformationAudit.ArtifactRegistration ||
+      name == `LeanInformationAudit.ArtifactAssessment ||
+      name == `LeanInformationAudit.CompiledSnapshots ||
+      name == `LeanInformationAudit.CompiledSeal
   if modules.isEmpty then throwError "[FAIL] CompiledProvenanceBoundary: missing classifier module"
   let forbidden := #[`Lean.Meta.isDefEq, `Lean.Meta.whnf,
     `Lean.Meta.unfoldDefinition?, `Lean.MVarId.cases, `Lean.Meta.inferType,
     `Lean.Meta.isProp, `Lean.importModules, `Lean.mkEmptyEnvironment,
     `Lean.addDecl, `Lean.Meta.checkWithKernel, `Lean.Elab.Term.elabTerm,
-    `Lean.registerEnvExtension]
+    `Lean.registerEnvExtension, `Lean.enableInitializersExecution,
+    `Lean.getEnv, `MonadEnv.getEnv, `Lean.setEnv, `Lean.withEnv,
+    `Lean.evalConst, `Lean.evalConstCheck, `Lean.Elab.Command.getRef, `MonadRef.getRef]
   let mut found := false
   for moduleName in modules do
     let some index := env.getModuleIdx? moduleName
@@ -338,7 +352,9 @@ run_cmd do
       let some info := env.find? name | continue
       let some value := info.value? (allowOpaque := true) | continue
       for dependency in value.getUsedConstants do
-        if forbidden.contains dependency then
+        if forbidden.contains dependency || (`Lean.Meta).isPrefixOf dependency ||
+            (`Lean.Elab).isPrefixOf dependency || (`Lean.Kernel).isPrefixOf dependency ||
+            (`IO.FS).isPrefixOf dependency || (`IO.Process).isPrefixOf dependency then
           found := true
           logError m!"[FAIL] CompiledProvenanceBoundary: {name} references {dependency}"
   unless found do logInfo "[PASS] CompiledProvenanceBoundary"

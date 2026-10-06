@@ -22,7 +22,8 @@ example : Name -> CommandElabM Unit := @prepareInformationAnalysisStage
 example : Name -> List ArtifactKind -> CommandElabM AnalysisExportPlan :=
   @prepareInformationAnalysisExport
 
-#guard sealIOAllowlist == [``Lean.logInfo]
+#guard sealIOAllowlist ==
+  [``Lean.logInfo, ``IO.ofExcept, ``IO.userError, ``IO.getNumHeartbeats]
 
 #guard sealSyntaxDenylist ==
   [``Lean.Elab.Command.getRef, ``MonadRef.getRef, ``withRef, ``MonadRef.withRef]

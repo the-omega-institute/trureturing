@@ -87,6 +87,9 @@ private partial def headCore (e : Expr) (depth : Nat := 0) (zeta : Bool := true)
       args := args.extract 1 args.size
       fn ← child (body.instantiate1 argument)
     let result := mkAppN fn args
+    -- Delta/beta computation can expose a partially applied head. Revisit its
+    -- complete spine after supplying the remaining arguments.
+    if fn.isApp && !args.isEmpty then return ← child result
     let .const name levels := fn | return result
     let description ← constant name
     if let .quotInfo quotient := description then
@@ -100,6 +103,19 @@ private partial def headCore (e : Expr) (depth : Nat := 0) (zeta : Bool := true)
       else return result
     else
       let .recInfo recursor := description | return result
+      unless levels.length == recursor.levelParams.length do
+        throw <| IO.userError s!"incomplete_closure:E7.compiled_recursor:{name}"
+      -- A compiler-checked equality transport with identical endpoint shapes
+      -- carries no runtime data. Inspect the pinned recursor and endpoints,
+      -- never its proof body and never a type-checking or kernel operation.
+      if name == ``Eq.rec && recursor.k && args.size >= 6 then
+        if ← sameShape args[1]! args[4]! (depth + 1) then
+          let some rule := recursor.rules.find? (fun rule => rule.ctor == ``Eq.refl && rule.nfields == 0)
+            | throw <| IO.userError "incomplete_closure:E7.equality_recursor_layout"
+          let leading := args.extract 0 (recursor.numParams + recursor.numMotives + recursor.numMinors)
+          let suffix := args.extract (recursor.getMajorIdx + 1) args.size
+          return ← child <| mkAppN (rule.rhs.instantiateLevelParams recursor.levelParams levels)
+            (leading ++ suffix)
       let some major := args[recursor.getMajorIdx]? | return result
       let major ← child major
       let (ctor, fields) ← match major with
@@ -128,8 +144,6 @@ private partial def headCore (e : Expr) (depth : Nat := 0) (zeta : Bool := true)
       | throw <| IO.userError s!"incomplete_closure:E7.compiled_projection_field:{name}:{index}"
     child field
   | _ => return e
-
-end
 
 /-- Project declaration types through their already compiled application spine.
 No argument is compared with a domain, and no proof body is inferred or checked. -/
@@ -224,7 +238,6 @@ partial def propositionShape (type : Expr) (binders : Array Expr := #[])
   | .mdata _ body => propositionShape body binders (depth + 1)
   | _ => return (← head (← typeShape type binders (depth + 1)) (depth + 1)).isProp
 
-mutual
 /-- Compare compiled data terms after bounded administrative computation.
 The comparison consumes declaration syntax and never invokes a type checker.
 Binder annotations are compared by the source reconstruction consumer. -/
