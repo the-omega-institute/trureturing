@@ -87,8 +87,10 @@ private lemma purity_of_correct {q : ℕ} (Q : ℝ → Fin q)
     have hc := hcorrect x (u - kappa x) (v - kappa (originalT x))
       (by simpa [hx] using heu) (by simpa [hxt] using hev)
     rw [add_sub_cancel, add_sub_cancel] at hc
-    simp only [Set.projIcc_of_mem (by linarith [parameters.1]) (show u ∈ Set.Icc (-1) (1 + t) from hu.1),
-      Set.projIcc_of_mem (by linarith [parameters.1]) (show v ∈ Set.Icc (-1) (1 + t) from hv.1)] at hc
+    simp only [Set.projIcc_of_mem (by linarith [parameters.1])
+      (show u ∈ Set.Icc (-1) (1 + t) from hu.1),
+      Set.projIcc_of_mem (by linarith [parameters.1])
+        (show v ∈ Set.Icc (-1) (1 + t) from hv.1)] at hc
     simpa only [hu.2, hv.2, hxl] using hc
   exact (decode l y hyl hy hly).symm.trans (decode m z hzm hz hmz)
 
