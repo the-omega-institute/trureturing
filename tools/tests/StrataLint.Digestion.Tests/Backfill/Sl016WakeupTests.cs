@@ -4,8 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Digestion.Tests;
 
-// SL-016 的唤醒路径。独立成文件而非并入 RuleEngineTests:后者已达 SL-003 硬线 800 行,
-// 按 CLAUDE.md 第 8 条「桶满则裂、只裂不迁」,新条目入新桶,既有条目原地不动。
+// SL-016 的唤醒路径:目录族模式与 CAS 字节均可触发相关 atom 的评估。
 public sealed class Sl016WakeupTests
 {
     private const string AtomPath =
@@ -140,6 +139,35 @@ public sealed class Sl016WakeupTests
             FrozenStatementReceiptTestData.Id('a'));
         fixture.Files[targetPath] += "\n-- candidate value change\n";
         var context = fixture.Build(RawChangeSet.Create([targetPath]));
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+        var impact = BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            context.Lean.Report,
+            document,
+            context.Changes);
+        var entry = Assert.Single(document.RequireDigestionEntries());
+
+        Assert.False(impact.HasAffectedEdges);
+        Assert.False(DigestionCasStore.EntryChanged(entry, impact.EvaluationChanges));
+    }
+
+    [Fact]
+    public void BlueprintChangeOfCoverageTargetDoesNotWakeReferencedEdge()
+    {
+        const string targetGid = "D5/S0/Carrier/BackfillTarget";
+        var documentGid = ScribeEmissionAttestation.DocumentGid(targetGid);
+        var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
+        var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
+        var fixture = CoverageReceiptFixture(
+            targetGid,
+            FrozenStatementReceiptTestData.Id('a'));
+        fixture.Files[definitionPath] = "// candidate definition change\n";
+        fixture.Files[emissionPath] = "candidate projection change\n";
+        var context = fixture.Build(RawChangeSet.Create([definitionPath, emissionPath]));
         var document = BackfillInventoryLoader.LoadCandidateDelta(
             context.Current,
             context.Baseline,

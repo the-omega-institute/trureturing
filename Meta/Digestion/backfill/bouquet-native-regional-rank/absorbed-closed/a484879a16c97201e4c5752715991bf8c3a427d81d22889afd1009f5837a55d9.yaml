@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a484879a16c97201e4c5752715991bf8c3a427d81d22889afd1009f5837a55d9
+  normalized_sha256: sha256:a484879a16c97201e4c5752715991bf8c3a427d81d22889afd1009f5837a55d9
+cas_ref: sha256:a484879a16c97201e4c5752715991bf8c3a427d81d22889afd1009f5837a55d9
+coverage_gids:
+  - gid: D5/S3/ArithUnits/BouquetNativeRegionalRank.native_regional_rank
+    target_statement_id: sha256:6d0ad3acd8e2960b95324a8cb395b2a4f770453df19d3ab04c077a7a0bc9f2a1
+receipts:
+  unresolved_subitems: []

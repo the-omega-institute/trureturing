@@ -1,0 +1,19 @@
+**定义 33.1（共长字母投影与锚缺口阈值）。** 沿用定义 2.1、17.2、20.1 的 Zeckendorf 五窗词，取 $F_0=0$、$F_1=1$、$F_{j+2}=F_{j+1}+F_j$。记窗口字母表为 $\Sigma=\{\mathrm{null},[2],[3],[25],[5]\}$，专用单位末字母表为 $\mathcal U=\{\underline0,\underline1\}$。$k$ 轨同步词的字母表是 $\Sigma^k\sqcup\mathcal U^k$；合法词先有 $H$ 个窗口字母，再恰有一个单位末字母。每一轨满足窗口内、相邻窗口之间及最低窗口到单位位的全部不相邻占位守卫。所有坐标投影都是逐字母删轨，保留每个位置及唯一单位末字母；逆投影也使用这一共长字母映射。
+
+直接采用式 (25.4)、(27.3) 的同一阈值语言：
+
+$$
+\begin{aligned}
+p_m&=\left\lfloor\frac{2m-9}{3}\right\rfloor,\\
+\mathcal P_2&=
+\left\{\bigl(W_H(F_m),W_H(b)\bigr)_{\mathrm{sync}}:
+\begin{array}{l}
+m\ge8,\quad m\equiv2\pmod3,\quad 0\le b\le p_m,\\
+H\ge\max\{L(F_m),L(b)\}
+\end{array}\right\}.
+\end{aligned}
+\tag{33.1}
+$$
+
+这里每一个允许的 $H$ 都保留。式 (33.1) 自身只涉及 Fibonacci 整数与规范表示，不使用实际 $C$、来源的有限数值前提或任何周期假设。以下使用上下文无关语言对逆同态、与正则语言相交、同态像及有限并的经典闭合性质，以及上下文无关语言与普通单向非确定下推自动机的等价；这些是已知中间工具，见 Hopcroft、Motwani、Ullman，*Introduction to Automata Theory, Languages, and Computation*，第三版 §§6.3、7.3。各处实际使用的同态均为不删除位置的字母映射。
+

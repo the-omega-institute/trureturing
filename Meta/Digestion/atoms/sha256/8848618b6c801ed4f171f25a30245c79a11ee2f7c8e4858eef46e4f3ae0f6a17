@@ -1,0 +1,16 @@
+## 10. 长度至多预算的完整分区与尖锐视界
+
+记 $Q_h$ 为所有实际历史按后缀长度至多 $h$ 的最终输出相等取商。拒绝历史在每个 $Q_h$ 中独立成类。对于合法三元组，定义
+
+$$
+\begin{aligned}
+\Sigma_0(r,z,s)&=r,\\
+\Sigma_1(r,z,s)&=
+\begin{cases}(r,\star),&s=k-1,\\(r,z),&s<k-1,\end{cases}\\
+\Sigma_h(r,z,s)&=(r,z,\min(k-s,h+1)),\qquad h\ge2,
+\end{aligned}
+\tag{17}
+$$
+
+其中 $\star$ 是不属于相位集合的标签。
+

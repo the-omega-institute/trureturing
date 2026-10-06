@@ -1,0 +1,20 @@
+**定理 1.1（物理乘积 Hermite 的实际积分正交归一性）。** 对每个自然数 $d\in\mathbb N$，在 $E_d=\mathrm{EuclideanSpace}\;\mathbb R\;(\mathrm{Fin}\,d)$ 上取实际 Euclidean Lebesgue 体积。取 $\hbar>0$ 与函数 $m,\omega:\mathrm{Fin}\,d\to\mathbb R$，满足每个 $j:\mathrm{Fin}\,d$ 都有 $m_j>0$、$\omega_j>0$。设 $\ell_j=\sqrt{\hbar/(m_j\omega_j)}$，$\mathrm{He}_n$ 表示 probabilists Hermite 多项式。对每个自然多重指标 $\alpha:\mathrm{Fin}\,d\to\mathbb N$ 定义
+
+$$
+\Phi_\alpha(x)=\prod_{j:\mathrm{Fin}\,d}
+\frac{\mathrm{He}_{\alpha_j}(\sqrt 2\,x_j/\ell_j)
+\exp(-(x_j/\ell_j)^2/2)}
+{\sqrt{\ell_j}\sqrt{\alpha_j!\sqrt\pi}}
+\quad\in\mathbb R\subseteq\mathbb C.
+$$
+
+则对所有 $\alpha,\beta:\mathrm{Fin}\,d\to\mathbb N$，实际复积分满足
+
+$$
+\int_{E_d}\Phi_\alpha(x)\Phi_\beta(x)\,dx
+=\begin{cases}1,&\alpha=\beta,\\0,&\alpha\ne\beta.\end{cases}
+$$
+
+当 $d=0$ 时，两多重指标均为唯一的空函数，$\Phi_\alpha=1$，上述实际体积为 Dirac 测度，积分等于 $1$。
+
+

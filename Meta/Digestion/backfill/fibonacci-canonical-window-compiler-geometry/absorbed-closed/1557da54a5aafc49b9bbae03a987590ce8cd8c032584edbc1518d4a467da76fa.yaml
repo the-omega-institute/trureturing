@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1557da54a5aafc49b9bbae03a987590ce8cd8c032584edbc1518d4a467da76fa
+  normalized_sha256: sha256:1557da54a5aafc49b9bbae03a987590ce8cd8c032584edbc1518d4a467da76fa
+cas_ref: sha256:1557da54a5aafc49b9bbae03a987590ce8cd8c032584edbc1518d4a467da76fa
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/SparseWindowMutualDetermination.sparse_window_mutual_determination
+    target_statement_id: sha256:4e85ceb941705936a57cfb82ca2aceccc9091d2beb750a5f5cf6f75a05e4bdc6
+receipts:
+  unresolved_subitems: []

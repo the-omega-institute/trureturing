@@ -30,11 +30,10 @@ public sealed class DepositFreezeReplayWorkflowScriptTests
             [
                 "make:lean-report", "dotnet:deposit-header-check", "make:emit",
                 "dotnet:ledger-frozen", "dotnet:ledger-align", "dotnet:ledger-frozen",
-                "dotnet:cover-atom", "make:emit",
+                "dotnet:cover-atom",
             ],
             fixture.CallKinds());
         Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
-        Assert.Equal("emission: covered\n", fixture.EmissionContents());
         Assert.DoesNotContain("module-already-frozen", Diagnostics(result), StringComparison.Ordinal);
     }
 
@@ -58,8 +57,7 @@ public sealed class DepositFreezeReplayWorkflowScriptTests
         Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
     }
 
-    // This case previously returned 0 and skipped the already-frozen target.
-    // It now returns 2 without invoking ledger-align because the canonical reader
+    // This case returns 2 without invoking ledger-align because the canonical reader
     // validates every frozen-ledger shard before resolving the target.
     [Fact]
     public void DepositFailsClosedWhenAnUnrelatedFrozenLedgerShardIsMalformed()

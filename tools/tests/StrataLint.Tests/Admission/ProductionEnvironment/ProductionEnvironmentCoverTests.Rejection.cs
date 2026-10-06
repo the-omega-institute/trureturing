@@ -6,11 +6,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-// ProductionEnvironmentCoverTests 的后半:cover 拒绝路径一族。
-// 分出来的直接理由是余量:宿主原 795 行,离 SL-003 的 800 行硬线只剩 5 行。
-// 该类本就是 partial,故切分不动类声明。
-// 切点用「缩进 4 的真方法收尾 ∧ 后接空行 ∧ 再后是缩进 4 的特性行」判定,
-// 全文件 16 处候选取最接近中点者(第 416 行)。
+// ProductionEnvironmentCoverTests 的 cover 拒绝路径与相关完整性检查。
 
 public sealed partial class ProductionEnvironmentTests
 {
@@ -256,5 +252,5 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     private static string[] CoverArgs(CoverInputs inputs) =>
-        ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"];
+        ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid];
 }

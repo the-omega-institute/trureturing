@@ -1,0 +1,12 @@
+**推论 71.31（正锚比值等值与零锚排除）。** 对全部正锚根路径，
+
+$$
+\alpha_m=\inf_{\gamma:t_\gamma>0}\frac{C_\gamma}{t_\gamma},
+\qquad
+m\le\alpha_m\le\ell2^\ell<\infty,\quad
+\ell=\lceil\log_2m\rceil.
+\tag{71.12}
+$$
+
+每条根路径都有 $C_\gamma\ge1$；因而 $t_\gamma=0$ 时，对任意实价格 $x$ 都有 $C_\gamma-xt_\gamma\ge1$。
+

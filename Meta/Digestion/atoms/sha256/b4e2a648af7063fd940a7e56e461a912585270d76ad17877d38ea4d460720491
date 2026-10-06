@@ -1,0 +1,50 @@
+**定义 1.2（完整块、端点输出和拒绝）。** 两种分别讨论的控制字母表为
+
+$$
+\mathcal A_{\mathrm{all}}=\{0,1\}^m,
+\qquad
+\mathcal A_{\mathrm{loc}}
+=\{B\in\{0,1\}^m:B\text{ 内部不含 }1^k\}.
+\tag{1.2}
+$$
+
+来源先验是所选字母表上的全部有限实际块历史，包括空历史和已拒绝历史。跨块的 $1^k$ 在两种字母表中都拒绝；全字母表还允许内部非法的块。拒绝输出为独立符号 $\bot\notin\mathbb F_2$，进入后吸收。合法历史 $w$ 的记录和当前输出分别为
+
+$$
+q(w)=(v,\theta,s),\qquad
+v=V_k(w)\bmod2,\quad
+\theta=|w|\bmod T,\quad
+s=\text{词尾连续一的长度},\qquad o(q)=v.
+$$
+
+空词尾长取零。因为 $|w|$ 是 $m$ 的倍数，令
+
+$$
+g=\gcd(m,T),\qquad p=T/g,
+\qquad P=g\mathbb Z/T\mathbb Z.
+\tag{1.3}
+$$
+
+合法端点相位恰在 $P$ 中。实际端点记录集合为
+
+$$
+Q=\bigl(\mathbb F_2\times P\times\{0,\ldots,k-1\}\bigr)
+\sqcup\{\bot\}.
+\tag{1.4}
+$$
+
+一位更新用于定义块更新，但其块内输出不提供给实验者：
+
+$$
+\delta_b(v,\theta,s)=
+\begin{cases}
+(v,\theta+1,0),&b=0,\\
+(v+c_\theta,\theta+1,s+1),&b=1, s<k-1,\\
+\bot,&b=1, s=k-1,
+\end{cases}
+\qquad \delta_b(\bot)=\bot.
+\tag{1.5}
+$$
+
+相位在 $\mathbb Z/T\mathbb Z$ 中计算，值在 $\mathbb F_2$ 中计算。块更新 $\delta_B$ 是按词序进行的 $m$ 次复合；只有完成块后的 $o(\delta_Bq)$ 可见。初始当前输出同样可见，不计追加块费用。
+
