@@ -5828,3 +5828,10 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 固定上游截面曲率闭包的 35 个模块已实际编译验收，原源码及固定 Git blob 均保留并核验。除继承的 LC／共形兼容处理外，本闭包四个模块仅作明确的最小兼容修正：弃用引理别名与 tactic 改用公开同义接口，证明局部类型类绑定按现行接口书写，去掉被检查器指出未使用的自动节假设及冗余化简参数；没有关闭检查或添加公理。
 
 上述原非退化切平面消费者已通过完整累计 Lean 编译，零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。一般原流形的万能度量覆盖、实际 H3 分类及有限体积尖点绑定、完整给定 `h,d` 的 Mostow–Prasad 和官方验收仍未完成。
+
+
+### 原双曲模型的实际可缩性与 H3 单连通性
+
+任意原实内积空间 `E` 上的 `HyperbolicSpace E`，通过原 `coordinatesHomeomorph` 与原欧氏环境中的正高度半空间同胚。公开半空间凸性接口给出该真实正高度子集的凸性，原水平零向量及高度 1 给出内部非空见证；`Convex.contractibleSpace` 再沿原坐标同胚搬回真正原双曲空间，得到实际 `ContractibleSpace` 实例。没有把正高度子集替换成整个环境空间，也没有提供外部收缩同伦或可缩性前提。
+
+同一实例实际应用于原 `HyperbolicThreeSpace`，并由已有 Mathlib 可缩空间单连通接口得到实际 `SimplyConnectedSpace`。这些原实例检查及完整累计 Lean 编译均零错误、零警告，公理闭包仅含 `propext, Classical.choice, Quot.sound`。逐声明 `proof_shape: bind-only`、`admission_basis: none`，本项交付为 Library 复用说明，精确 Lean 为临时编译证据，远端 CI 验证本说明。一般原流形的万能度量覆盖和 H3 分类、有限体积尖点及完整给定 `h,d` 的 Mostow–Prasad 与官方验收仍未完成。
