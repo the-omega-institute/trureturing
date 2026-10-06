@@ -5898,3 +5898,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 完整独立消费者实际导入已接受的原交比共轭模块与仓内原中心化子定理，真实 exit 0、零错误、零警告；三个新目标的公理闭包仅含 propext、Classical.choice、Quot.sound。实际源码、编译快照、完整派生证明尾、生成 olean、终态及导入基底一致；仓内原定理的实际源码与选中的项目 olean 也逐项绑定核对，27 项工件独立验证通过。验收范围为完整新消费者及其三个新目标。
 
 来源为仓内 D5.S3.Geometry.MostowPrasadRigidity 的原动力学／中心化子定理，此前已接受的原 Lorentz／边界构造，以及固定上游 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a。proof_shape: bind-only，admission_basis: none。本项为 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。原有限体积推出吸引点稠密性、同一实际 F 及交比保持仍待内部证明；这些中间输入不升为完整 Mostow 的新前提。原同伦类的完整存在唯一性、完整 Mostow–Prasad 与官方验收未完成。
+
+
+### 原边界归一化动作的真实微分与切向配对缩放
+
+对每个原 H3 等距 e 与原 NullSphere 点 x，原 Lorentz 矩阵 A 的归一化作用在真实原环境空间 Fin 4 → ℝ 上具有实际 HasFDerivAt。令 t = (A x)₀，其连续线性微分在任意原向量 u 上为 t⁻¹ Au − ((Au)₀/t²) Ax；分母非零与 t > 0 均由原未来分支作用内部证明。原完整等距群保留定向反转，不需要外供微分、共形性、Möbius 或 Beltrami 条件。
+
+实际原切向子空间由 u₀ = 0 与 pairing x u = 0 定义。真实原球面值曲线的导数内部满足这两个约束，原动作的真实曲线链式法则给出同一微分。该微分把原切向子空间送到实际像点的切向子空间，并使任意原切向 u、v 的 Lorentz 配对乘以正因子 1/t²；所有混合项由原零向量与切向方程消去。原 Fin 4 的 Pi 范数没有被当作欧氏球面度量。
+
+完整独立消费者实际导入已接受的原窄零锥重构模块与三个公开 Mathlib 微分模块，真实 exit 0、零错误、零警告；两个新目标的公理闭包仅含 propext、Classical.choice、Quot.sound。原始证明尾保留，派生尾仅作十项明确的证明/API 对齐，命题保持不变。实际源码、编译快照、完整派生尾、生成 olean、终态、导入基底及选中的 Mathlib 源码/olean 共 62 项绑定工件独立核对通过；导入基底已有 82 项标准公理报告。验收范围为完整新消费者与两个新目标。
+
+来源为仓内原 Lorentz/NullSphere 构造与 Mathlib@db584cd6d46c92f209a44c0f1c829460d327499d，固定上游复用范围沿用 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。实际球面流形微分、原 round 度量及复有限图的绑定仍须完成；未知边界映射 F 的构造和弱正则性、有限体积/完整尖点消费者、给定 h,d 的完整 Mostow–Prasad 与官方验收未完成。
