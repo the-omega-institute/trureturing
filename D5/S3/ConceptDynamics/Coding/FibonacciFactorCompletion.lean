@@ -18,6 +18,7 @@ import Mathlib.Analysis.SpecialFunctions.Log.Base
 import Mathlib.Data.Real.ENatENNReal
 import Mathlib.Topology.Instances.ENNReal.Lemmas
 import Mathlib.Topology.Algebra.Order.LiminfLimsup
+import Mathlib.Data.EReal.Basic
 
 set_option autoImplicit false
 
@@ -222,6 +223,379 @@ def StrictControl (j : Side) (b : ℝ) : List Return → ℝ → Prop
       StrictControl j b rest (returnMap j a D)
 
 set_option maxHeartbeats 1600000 in
+/-- Above the nonactive-slot bound, the complete actual paired supply is
+equivalent to its actual stem, anchor and innermost return costs. -/
+theorem actual_strict_cost_supply (model : Model) (o : Ownership) (b : ℝ)
+    (execution : List Return) (hb : lam - rho < b) :
+    ActualPairSupply model o b .strict execution ↔
+      lam - g ^ 2 * chi * execute .high execution (initial .high model) < b ∧
+      (model = .anchored → lam - g ^ 2 * chi * xSide .high < b) ∧
+      StrictControl .high b execution (initial .high model) := by
+  classical
+  have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)
+  have hs0 := Real.sqrt_nonneg (5 : ℝ)
+  have root : g ^ 2 + 4 * g = 1 := by dsimp [g, t]; nlinarith
+  have gp : 0 < g := by dsimp [g, t]; nlinarith
+  have gq : g < 1 / 4 := by nlinarith
+  have rp : 0 < rho := pow_pos gp 6
+  have cp : 0 < chi := pow_pos gp 20
+  have r1 : rho < 1 := pow_lt_one₀ gp.le (by linarith) (by decide)
+  have c1 : chi < 1 := pow_lt_one₀ gp.le (by linarith) (by decide)
+  have tg : t = (1 + g) / 2 := by dsimp [g]; ring
+  have hp (j : Side) : 0 < hSide j ∧ hSide j < eSide j := by
+    cases j <;> dsimp [hSide, eSide, c0, T2] <;>
+      rw [tg] <;> constructor <;> linarith
+  have ap (j : Side) : 0 < aSide j := mul_pos (sub_pos.mpr r1) (hp j).1
+  have bp : 0 < b := by
+    have hr : rho < 1 / 4096 := by
+      have h := pow_lt_pow_left₀ gq gp.le (by decide : (6 : ℕ) ≠ 0)
+      norm_num [rho] at h ⊢
+      exact h
+    have hl : 3 / 80 < lam := by dsimp [lam, T2]; rw [tg]; linarith
+    linarith
+  have app := literal_source_geometry.2.2.2.2
+  have appendSupply (w v : List Label) (cs ds : List Color) (z : ℝ)
+      (len : w.length = cs.length) :
+      BlockSupply o b true (w ++ v) (cs ++ ds) z ↔
+        BlockSupply o b true w cs (compose v z) ∧ BlockSupply o b true v ds z := by
+    constructor
+    · intro h
+      constructor
+      · intro p hpc
+        have hpp : p < (cs ++ ds).length := by simp only [List.length_append]; omega
+        obtain ⟨e, he, ho⟩ := h p hpp
+        refine ⟨e, he, ?_⟩
+        have hd : (w ++ v).drop p = w.drop p ++ v :=
+          List.drop_append_of_le_length (by omega)
+        simpa only [hd, app, List.getElem_append_left hpc] using ho
+      · intro p hpd
+        have hpp : cs.length + p < (cs ++ ds).length := by
+          simp only [List.length_append]; omega
+        obtain ⟨e, he, ho⟩ := h (cs.length + p) hpp
+        refine ⟨e, he, ?_⟩
+        have hd : (w ++ v).drop (cs.length + p) = v.drop p := by
+          rw [List.drop_append, ← len, List.drop_eq_nil_of_le (by omega)]
+          simp
+        simpa only [hd, List.getElem_append_right (as := cs) (bs := ds)
+          (i := cs.length + p) (by omega), Nat.add_sub_cancel_left] using ho
+    · rintro ⟨hw, hv⟩ p hpc
+      by_cases hleft : p < cs.length
+      · obtain ⟨e, he, ho⟩ := hw p hleft
+        refine ⟨e, he, ?_⟩
+        have hd : (w ++ v).drop p = w.drop p ++ v :=
+          List.drop_append_of_le_length (by omega)
+        simpa only [hd, app, List.getElem_append_left hleft] using ho
+      · have hright : p - cs.length < ds.length := by
+          simp only [List.length_append] at hpc
+          omega
+        obtain ⟨e, he, ho⟩ := hv (p - cs.length) hright
+        refine ⟨e, he, ?_⟩
+        have hd : (w ++ v).drop p = v.drop (p - cs.length) := by
+          rw [List.drop_append, len, List.drop_eq_nil_of_le (by omega)]
+          simp
+        simpa only [hd, List.getElem_append_right (as := cs) (bs := ds)
+          (i := p) (by omega)] using ho
+  have repeatLength (w : List Label) (n : ℕ) : (repeatWord w n).length = w.length * n := by
+    induction n with
+    | zero => simp [repeatWord]
+    | succ n ih => simp [repeatWord, ih, Nat.mul_add]; omega
+  have repeatAct (j : Side) (n : ℕ) (D : ℝ) :
+      compose (repeatWord (block j) n) (c0 + sign j * D) =
+        c0 + sign j * (hSide j - rho ^ n * (hSide j - D)) := by
+    induction n with
+    | zero => simp [repeatWord, compose]
+    | succ n ih =>
+        rw [repeatWord, app, ih,
+          (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.1]
+        dsimp [aSide]
+        rw [pow_succ]
+        ring
+  have repeatCAct (j : Side) (n : ℕ) (D : ℝ) :
+      compose (repeatWord C n) (c0 + sign j * D) = c0 + sign j * (chi ^ n * D) := by
+    induction n with
+    | zero => simp [repeatWord, compose]
+    | succ n ih =>
+        rw [repeatWord, app, ih,
+          (paired_source_reconstruction j .original []).2.2.2.2.2.2.1]
+        rw [pow_succ]
+        ring
+  have domain (j : Side) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
+      0 ≤ c0 + sign j * D ∧ c0 + sign j * D ≤ T2 := by
+    have hE := lt_trans hD.2 (hp j).2
+    cases j <;> dsimp [sign, eSide, c0, T2] at * <;> constructor <;> linarith
+  have csLength : ∀ n : ℕ, ((List.replicate n colorsD).flatten).length = 6 * n := by
+    intro n
+    induction n with
+    | zero => rfl
+    | succ n ih => simp [List.replicate_succ, ih, colorsD]; omega
+  have activeCostDrops (j : Side) (D : ℝ) (hD : D < hSide j) (n : ℕ) :
+      lam - g ^ 2 * (hSide j - rho ^ (n + 1) * (hSide j - D)) <
+        lam - g ^ 2 * (hSide j - rho ^ n * (hSide j - D)) := by
+    have gain : 0 < g ^ 2 * rho ^ n * (1 - rho) * (hSide j - D) :=
+      mul_pos (mul_pos (mul_pos (pow_pos gp 2) (pow_pos rp n))
+        (sub_pos.mpr r1)) (sub_pos.mpr hD)
+    rw [pow_succ rho n]
+    nlinarith
+  have activeInputLower (j : Side) (D : ℝ) (hD : D < hSide j) (n : ℕ) :
+      D ≤ hSide j - rho ^ n * (hSide j - D) := by
+    induction n with
+    | zero =>
+        simp only [pow_zero, one_mul]
+        linarith
+    | succ k ihk =>
+        have hdrop := activeCostDrops j D hD k
+        have gg : 0 < g ^ 2 := pow_pos gp 2
+        have step : hSide j - rho ^ k * (hSide j - D) <
+            hSide j - rho ^ (k + 1) * (hSide j - D) := by nlinarith
+        exact ihk.trans step.le
+  have six (j : Side) (n : ℕ) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
+      BlockSupply o b true (repeatWord (block j) n)
+        (List.replicate n colorsD).flatten (c0 + sign j * D) ↔
+      (0 < n → lam - g ^ 2 * D < b) := by
+    induction n with
+    | zero => simp [repeatWord, BlockSupply]
+    | succ n ih =>
+        have len : (block j).length = colorsD.length := by cases j <;> rfl
+        rw [repeatWord, List.replicate_succ, List.flatten_cons,
+          appendSupply _ _ _ _ _ len, repeatAct]
+        have dn : 0 < hSide j - rho ^ n * (hSide j - D) ∧
+            hSide j - rho ^ n * (hSide j - D) < hSide j := by
+          have rr := pow_pos rp n
+          have rl : rho ^ n ≤ 1 := pow_le_one₀ rp.le r1.le
+          have gg := mul_pos rr (sub_pos.mpr hD.2)
+          have gl := mul_le_mul_of_nonneg_right rl (sub_pos.mpr hD.2).le
+          constructor <;> nlinarith [hD.1]
+        rw [(literal_full_slot_readout o b hb).1 j _ dn.1
+          (le_of_lt (lt_trans dn.2 (hp j).2)), ih]
+        have lower := activeInputLower j D hD.2 n
+        have gg : 0 < g ^ 2 := pow_pos gp 2
+        constructor
+        · rintro ⟨houter, hinner⟩ _
+          cases n with
+          | zero => simpa using houter
+          | succ n => exact hinner (by omega)
+        · intro h
+          constructor
+          · have hc := mul_le_mul_of_nonneg_left lower gg.le
+            have hbase := h (by omega)
+            nlinarith
+          · intro _
+            exact h (by omega)
+  have twenty (j : Side) (n : ℕ) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
+      BlockSupply o b true (repeatWord C n)
+        (List.replicate n colorsE).flatten (c0 + sign j * D) := by
+    induction n with
+    | zero => simp [BlockSupply]
+    | succ n ih =>
+        rw [repeatWord, List.replicate_succ, List.flatten_cons,
+          appendSupply _ _ _ _ _ (by rfl), repeatCAct]
+        refine ⟨?_, ih⟩
+        have pp := pow_pos cp n
+        have pl : chi ^ n ≤ 1 := pow_le_one₀ cp.le c1.le
+        have dn : 0 < chi ^ n * D ∧ chi ^ n * D < hSide j := by
+          constructor
+          · exact mul_pos pp hD.1
+          · exact lt_of_le_of_lt (mul_le_mul_of_nonneg_right pl hD.1.le)
+              (by simpa only [one_mul] using hD.2)
+        exact (literal_full_slot_readout o b hb).2.2 _ (domain j _ dn).1 (domain j _ dn).2
+  have returns (j : Side) (a : Return) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
+      BlockSupply o b true (returnWord j a) (returnColors a) (c0 + sign j * D) ↔
+        lam - g ^ 2 * chi ^ a.r * D < b := by
+    have len : (repeatWord (block j) a.m).length =
+        (List.replicate a.m colorsD).flatten.length := by
+      rw [repeatLength, csLength]
+      cases j <;> rfl
+    rw [returnWord, returnColors, appendSupply _ _ _ _ _ len, repeatCAct]
+    have pp := pow_pos cp a.r
+    have pl : chi ^ a.r ≤ 1 := pow_le_one₀ cp.le c1.le
+    have dn : 0 < chi ^ a.r * D ∧ chi ^ a.r * D < hSide j := by
+      constructor
+      · exact mul_pos pp hD.1
+      · exact lt_of_le_of_lt (mul_le_mul_of_nonneg_right pl hD.1.le)
+          (by simpa only [one_mul] using hD.2)
+    rw [six j a.m _ dn]
+    simp only [a.m_pos, forall_const, twenty j a.r D hD, and_true, mul_assoc]
+  have extLen (j : Side) (xs : List Return) : (externalWord j xs).length =
+      (xs.reverse.map returnColors).flatten.length := by
+    have a := (paired_source_reconstruction j .original xs).2.2.2.2.1
+    have b := (paired_source_reconstruction j .original xs).2.2.2.2.2.1
+    have st : (stem j).length = 26 := by cases j <;> rfl
+    have hd : colorsD.length = 6 := rfl
+    have he : colorsE.length = 20 := rfl
+    simp only [observedPrefix, history, List.length_append, anchor, List.length_nil,
+      Nat.add_zero, st, hd, he] at a b
+    omega
+  have boundary := actual_complete_boundary_geometry model execution
+  have initialDomain (j : Side) (md : Model) : 0 < initial j md ∧ initial j md < hSide j := by
+    have h := (actual_complete_boundary_geometry md []).1 j 0
+    simp only [List.take_nil, execute] at h
+    exact ⟨lt_trans (ap j) h.1, h.2⟩
+  have runDomain (j : Side) (xs : List Return) (md : Model) :
+      0 < execute j xs (initial j md) ∧ execute j xs (initial j md) < hSide j := by
+    have h := (actual_complete_boundary_geometry md xs).1 j xs.length
+    rw [List.take_length] at h
+    exact ⟨lt_trans (ap j) h.1, h.2⟩
+  have stemSupply (j : Side) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
+      BlockSupply o b true (stem j) (colorsD ++ colorsE) (c0 + sign j * D) ↔
+        lam - g ^ 2 * chi * D < b := by
+    have h := returns j ⟨1, 1, by decide, by decide⟩ D hD
+    simpa only [returnWord, returnColors, repeatWord, List.append_nil,
+      List.replicate_succ, List.replicate_zero, List.flatten_cons, List.flatten_nil,
+      stem, pow_one] using h
+  have pairErrors : ActualPairSupply model o b .strict execution ↔
+      ∀ j : Side, BlockSupply o b true (observedPrefix j model execution)
+        (history model execution) (coordinate (tailPrefix j) 0) := by
+    have lengthEq (j : Side) : (observedPrefix j model execution).length =
+        (history model execution).length := by
+      rw [(paired_source_reconstruction j model execution).2.2.2.2.1,
+        (paired_source_reconstruction j model execution).2.2.2.2.2.1]
+    have coord (j : Side) (p : ℕ) (hp : p < (history model execution).length) :
+        coordinate (sourcePrefix j model execution) p =
+          compose ((observedPrefix j model execution).drop p) (coordinate (tailPrefix j) 0) := by
+      rw [coordinate, sourcePrefix,
+        List.drop_append_of_le_length (by rw [lengthEq]; omega), app]
+      rfl
+    constructor
+    · intro h j p hp
+      obtain ⟨err, herr, hread, hzero, hfuture⟩ := h j
+      refine ⟨err p, herr p, ?_⟩
+      rw [← coord j p hp]
+      exact hread p hp
+    · intro h j
+      let choice (p : ℕ) (hp : p < (history model execution).length) : ℝ :=
+        Classical.choose (h j p hp)
+      let err (p : ℕ) : ℝ :=
+        if hp : p < (history model execution).length then choice p hp else 0
+      refine ⟨err, ?_, ?_, ?_, ?_⟩
+      · intro p
+        dsimp [err]
+        split_ifs with hp
+        · exact (Classical.choose_spec (h j p hp)).1
+        · simpa using bp
+      · intro p hp
+        dsimp [err]
+        rw [dif_pos hp, coord j p hp]
+        exact (Classical.choose_spec (h j p hp)).2
+      · intro p hp
+        dsimp [err]
+        rw [dif_neg (by omega)]
+      · intro p
+        have hz : err ((observedPrefix j model execution).length + p) = 0 := by
+          dsimp [err]
+          rw [dif_neg (by rw [lengthEq]; omega)]
+        rw [hz, (paired_source_reconstruction j model execution).2.2.1]
+  rw [pairErrors]
+  have returnDomain (j : Side) (a : Return) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
+      0 < returnMap j a D ∧ returnMap j a D < hSide j := by
+    have rr := pow_pos rp a.m
+    have rl : rho ^ a.m ≤ 1 := pow_le_one₀ rp.le r1.le
+    have cc := pow_pos cp a.r
+    have cl : chi ^ a.r ≤ 1 := pow_le_one₀ cp.le c1.le
+    have cz : 0 < chi ^ a.r * D := mul_pos cc hD.1
+    have ch : chi ^ a.r * D < hSide j :=
+      lt_of_le_of_lt (mul_le_mul_of_nonneg_right cl hD.1.le)
+        (by simpa only [one_mul] using hD.2)
+    have gap := mul_pos rr (sub_pos.mpr ch)
+    have low := mul_le_mul_of_nonneg_right rl (sub_pos.mpr ch).le
+    dsimp [returnMap]
+    constructor <;> nlinarith
+  have extSupply (j : Side) (xs : List Return) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
+      BlockSupply o b true (externalWord j xs) (xs.reverse.map returnColors).flatten
+        (c0 + sign j * D) ↔ StrictControl j b xs D := by
+    induction xs generalizing D with
+    | nil => simp [externalWord, BlockSupply, StrictControl]
+    | cons a xs ih =>
+        simp only [externalWord, List.reverse_cons, List.map_append, List.map_cons,
+          List.map_nil, List.flatten_append, List.flatten_cons, List.flatten_nil,
+          List.append_nil]
+        change BlockSupply o b true (externalWord j xs ++ returnWord j a)
+          ((xs.reverse.map returnColors).flatten ++ returnColors a) (c0 + sign j * D) ↔
+            StrictControl j b (a :: xs) D
+        rw [appendSupply _ _ _ _ _ (extLen j xs),
+          (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.2.1,
+          ih _ (returnDomain j a D hD), returns j a D hD]
+        change (StrictControl j b xs (returnMap j a D) ∧
+          lam - g ^ 2 * chi ^ a.r * D < b) ↔
+            (lam - g ^ 2 * chi ^ a.r * D < b ∧ StrictControl j b xs (returnMap j a D))
+        exact and_comm
+  have anchorTail (j : Side) :
+      compose (anchor j model) (coordinate (tailPrefix j) 0) =
+        c0 + sign j * initial j model := by
+    have h := (paired_source_reconstruction j model []).2.2.2.1
+    simpa only [externalWord, List.reverse_nil, List.map_nil, List.flatten_nil,
+      List.nil_append, coordinate, List.drop_zero, app, execute] using h
+  have anchorSupply (j : Side) (md : Model) :
+      BlockSupply o b true (anchor j md)
+        (match md with | .original => [] | .anchored => colorsD ++ colorsE)
+        (coordinate (tailPrefix j) 0) ↔
+          (md = .anchored → lam - g ^ 2 * chi * xSide j < b) := by
+    have tail := (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.2.2.2
+    cases md with
+    | original => simp [anchor, BlockSupply]
+    | anchored =>
+        simp only [anchor, coordinate, List.drop_zero, tail, true_implies]
+        exact stemSupply j (xSide j) (initialDomain j .original)
+  have wholeSide (j : Side) :
+      BlockSupply o b true (observedPrefix j model execution) (history model execution)
+        (coordinate (tailPrefix j) 0) ↔
+          lam - g ^ 2 * chi * execute j execution (initial j model) < b ∧
+          (model = .anchored → lam - g ^ 2 * chi * xSide j < b) ∧
+          StrictControl j b execution (initial j model) := by
+    have len : (stem j).length = (colorsD ++ colorsE).length := by cases j <;> rfl
+    simp only [observedPrefix, history]
+    rw [List.append_assoc (stem j), List.append_assoc (colorsD ++ colorsE)]
+    rw [appendSupply _ _ _ _ _ len, appendSupply _ _ _ _ _ (extLen j execution),
+      app, anchorTail,
+      (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.2.2.1,
+      stemSupply j _ (runDomain j execution model),
+      extSupply j execution _ (initialDomain j model)]
+    exact ⟨fun h => ⟨h.1, (anchorSupply j model).mp h.2.2, h.2.1⟩,
+      fun h => ⟨h.1, h.2.2, (anchorSupply j model).mpr h.2.1⟩⟩
+  have hh : hSide .high < hSide .low := by dsimp [hSide]; linarith
+  have returnOrder (a : Return) (DH DL : ℝ) (ho : DH < DL) :
+      returnMap .high a DH < returnMap .low a DL := by
+    have rr := pow_pos rp a.m
+    have rl := pow_lt_one₀ rp.le r1 (Nat.ne_of_gt a.m_pos)
+    have cc := pow_pos cp a.r
+    have gainH := mul_pos (sub_pos.mpr rl) (sub_pos.mpr hh)
+    have gainD := mul_pos (mul_pos rr cc) (sub_pos.mpr ho)
+    dsimp [returnMap]
+    nlinarith
+  have controlOrder (xs : List Return) (DH DL : ℝ) (ho : DH < DL)
+      (hc : StrictControl .high b xs DH) : StrictControl .low b xs DL := by
+    induction xs generalizing DH DL with
+    | nil => trivial
+    | cons a xs ih =>
+        refine ⟨?_, ih _ _ (returnOrder a DH DL ho) hc.2⟩
+        have gain := mul_pos (mul_pos (pow_pos gp 2) (pow_pos cp a.r)) (sub_pos.mpr ho)
+        have h := hc.1
+        nlinarith
+  have io : initial .high model < initial .low model := by
+    simpa only [List.take_zero, execute] using boundary.2.1 0
+  have xo : xSide .high < xSide .low := by
+    simpa only [List.take_nil, execute, initial] using
+      (actual_complete_boundary_geometry .original []).2.1 0
+  have eo : execute .high execution (initial .high model) <
+      execute .low execution (initial .low model) := by
+    simpa only [List.take_length] using boundary.2.1 execution.length
+  constructor
+  · intro h
+    exact (wholeSide .high).mp (h .high)
+  · rintro ⟨hstem, hanchor, hcontrol⟩ j
+    apply (wholeSide j).mpr
+    cases j with
+    | high => exact ⟨hstem, hanchor, hcontrol⟩
+    | low =>
+        have coeff := mul_pos (pow_pos gp 2) cp
+        have gstem := mul_pos coeff (sub_pos.mpr eo)
+        have ganchor := mul_pos coeff (sub_pos.mpr xo)
+        refine ⟨?_, ?_, controlOrder execution _ _ io hcontrol⟩
+        · nlinarith
+        · intro hm
+          have h := hanchor hm
+          nlinarith
+
+set_option maxHeartbeats 1600000 in
 -- Repeated blocks and all-source errors are constructed in one live proof.
 /-- Every finite departure error is assembled on the prescribed source. The
 stem and paid anchor are included; the terminal future is read with zero error. -/
@@ -277,300 +651,8 @@ theorem actual_strict_record_supply (model : Model) (o : Ownership) (b : ℝ)
     have ht : t = (1 + g) / 2 := by dsimp [g]; ring
     have hl : 3 / 80 < lam := by dsimp [lam, T2]; rw [ht]; linarith
     linarith
-  have app := literal_source_geometry.2.2.2.2
-  have appendSupply (w v : List Label) (cs ds : List Color) (z : ℝ)
-      (len : w.length = cs.length) :
-      BlockSupply o b true (w ++ v) (cs ++ ds) z ↔
-        BlockSupply o b true w cs (compose v z) ∧ BlockSupply o b true v ds z := by
-    constructor
-    · intro h; constructor
-      · intro p hpc
-        have hpp : p < (cs ++ ds).length := by simp only [List.length_append]; omega
-        obtain ⟨e, he, ho⟩ := h p hpp
-        refine ⟨e, he, ?_⟩
-        have hd : (w ++ v).drop p = w.drop p ++ v := by
-          exact List.drop_append_of_le_length (by omega)
-        simpa only [hd, app, List.getElem_append_left hpc] using ho
-      · intro p hpd
-        have hpp : cs.length + p < (cs ++ ds).length := by simp only [List.length_append]; omega
-        obtain ⟨e, he, ho⟩ := h (cs.length + p) hpp
-        refine ⟨e, he, ?_⟩
-        have hd : (w ++ v).drop (cs.length + p) = v.drop p := by
-          rw [List.drop_append, ← len, List.drop_eq_nil_of_le (by omega)]
-          simp
-        simpa only [hd, List.getElem_append_right (as := cs) (bs := ds) (i := cs.length + p) (by omega), Nat.add_sub_cancel_left] using ho
-    · rintro ⟨hw, hv⟩ p hpc
-      by_cases hleft : p < cs.length
-      · obtain ⟨e, he, ho⟩ := hw p hleft
-        refine ⟨e, he, ?_⟩
-        have hd : (w ++ v).drop p = w.drop p ++ v :=
-          List.drop_append_of_le_length (by omega)
-        simpa only [hd, app, List.getElem_append_left hleft] using ho
-      · have hright : p - cs.length < ds.length := by simp only [List.length_append] at hpc; omega
-        obtain ⟨e, he, ho⟩ := hv (p - cs.length) hright
-        refine ⟨e, he, ?_⟩
-        have hd : (w ++ v).drop p = v.drop (p - cs.length) := by
-          rw [List.drop_append, len, List.drop_eq_nil_of_le (by omega)]; simp
-        simpa only [hd, List.getElem_append_right (as := cs) (bs := ds) (i := p) (by omega)] using ho
-  have repeatLength (w : List Label) (n : ℕ) : (repeatWord w n).length = w.length * n := by
-    induction n with
-    | zero => simp [repeatWord]
-    | succ n ih => simp [repeatWord, ih, Nat.mul_add]; omega
-  have repeatAct (j : Side) (n : ℕ) (D : ℝ) :
-      compose (repeatWord (block j) n) (c0 + sign j * D) =
-        c0 + sign j * (hSide j - rho ^ n * (hSide j - D)) := by
-    induction n with
-    | zero => simp [repeatWord, compose]
-    | succ n ih =>
-      rw [repeatWord, app, ih,
-        (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.1]
-      dsimp [aSide]; rw [pow_succ]; ring
-  have repeatCAct (j : Side) (n : ℕ) (D : ℝ) :
-      compose (repeatWord C n) (c0 + sign j * D) = c0 + sign j * (chi ^ n * D) := by
-    induction n with
-    | zero => simp [repeatWord, compose]
-    | succ n ih =>
-      rw [repeatWord, app, ih,
-        (paired_source_reconstruction j .original []).2.2.2.2.2.2.1]
-      rw [pow_succ]; ring
-  have domain (j : Side) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-      0 ≤ c0 + sign j * D ∧ c0 + sign j * D ≤ T2 := by
-    have hE := lt_trans hD.2 (hp j).2
-    cases j <;> dsimp [sign, eSide, c0, T2] at * <;> constructor <;> linarith
-  have csLength : ∀ n : ℕ, ((List.replicate n colorsD).flatten).length = 6 * n := by
-    intro n; induction n with
-    | zero => rfl
-    | succ n ih => simp [List.replicate_succ, ih, colorsD]; omega
-  have six (j : Side) (n : ℕ) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-      BlockSupply o b true (repeatWord (block j) n)
-        (List.replicate n colorsD).flatten (c0 + sign j * D) ↔
-      (0 < n → lam - g ^ 2 * D < b) := by
-    induction n with
-    | zero => simp [repeatWord, BlockSupply]
-    | succ n ih =>
-      have len : (block j).length = colorsD.length := by cases j <;> rfl
-      rw [repeatWord, List.replicate_succ, List.flatten_cons,
-        appendSupply _ _ _ _ _ len, repeatAct]
-      have dn : 0 < hSide j - rho ^ n * (hSide j - D) ∧
-          hSide j - rho ^ n * (hSide j - D) < hSide j := by
-        have rr := pow_pos rp n
-        have rl : rho ^ n ≤ 1 := pow_le_one₀ rp.le r1.le
-        have gg := mul_pos rr (sub_pos.mpr hD.2)
-        have gl := mul_le_mul_of_nonneg_right rl (sub_pos.mpr hD.2).le
-        constructor <;> nlinarith [hD.1]
-      rw [(literal_full_slot_readout o b hb).1 j _ dn.1 (le_of_lt (lt_trans dn.2 (hp j).2)), ih]
-      have lower : D ≤ hSide j - rho ^ n * (hSide j - D) := by
-        have rl : rho ^ n ≤ 1 := pow_le_one₀ rp.le r1.le
-        have gl := mul_le_mul_of_nonneg_right rl (sub_pos.mpr hD.2).le
-        linarith
-      have gg : 0 < g ^ 2 := pow_pos gp 2
-      constructor
-      · rintro ⟨houter, hinner⟩ _
-        cases n with
-        | zero => simpa using houter
-        | succ n => exact hinner (by omega)
-      · intro h
-        constructor
-        · have hc := mul_le_mul_of_nonneg_left lower gg.le
-          have hbase := h (by omega)
-          nlinarith
-        · intro _; exact h (by omega)
-  have twenty (j : Side) (n : ℕ) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-      BlockSupply o b true (repeatWord C n)
-        (List.replicate n colorsE).flatten (c0 + sign j * D) := by
-    induction n with
-    | zero => simp [BlockSupply]
-    | succ n ih =>
-      rw [repeatWord, List.replicate_succ, List.flatten_cons,
-        appendSupply _ _ _ _ _ (by rfl), repeatCAct]
-      refine ⟨?_, ih⟩
-      have pp := pow_pos cp n
-      have pl : chi ^ n ≤ 1 := pow_le_one₀ cp.le c1.le
-      have dn : 0 < chi ^ n * D ∧ chi ^ n * D < hSide j := by
-        constructor
-        · exact mul_pos pp hD.1
-        · exact lt_of_le_of_lt (mul_le_mul_of_nonneg_right pl hD.1.le) (by simpa only [one_mul] using hD.2)
-      exact (literal_full_slot_readout o b hb).2.2 _ (domain j _ dn).1 (domain j _ dn).2
-  have returns (j : Side) (a : Return) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-      BlockSupply o b true (returnWord j a) (returnColors a) (c0 + sign j * D) ↔
-        lam - g ^ 2 * chi ^ a.r * D < b := by
-    have len : (repeatWord (block j) a.m).length = (List.replicate a.m colorsD).flatten.length := by
-      rw [repeatLength, csLength]; cases j <;> rfl
-    rw [returnWord, returnColors, appendSupply _ _ _ _ _ len, repeatCAct]
-    have pp := pow_pos cp a.r
-    have pl : chi ^ a.r ≤ 1 := pow_le_one₀ cp.le c1.le
-    have dn : 0 < chi ^ a.r * D ∧ chi ^ a.r * D < hSide j := by
-      constructor
-      · exact mul_pos pp hD.1
-      · exact lt_of_le_of_lt (mul_le_mul_of_nonneg_right pl hD.1.le) (by simpa only [one_mul] using hD.2)
-    rw [six j a.m _ dn]
-    simp only [a.m_pos, forall_const, twenty j a.r D hD, and_true, mul_assoc]
-  have extLen (j : Side) (xs : List Return) : (externalWord j xs).length =
-      (xs.reverse.map returnColors).flatten.length := by
-    have a := (paired_source_reconstruction j .original xs).2.2.2.2.1
-    have b := (paired_source_reconstruction j .original xs).2.2.2.2.2.1
-    have st : (stem j).length = 26 := by cases j <;> rfl
-    have hd : colorsD.length = 6 := rfl
-    have he : colorsE.length = 20 := rfl
-    simp only [observedPrefix, history, List.length_append, anchor, List.length_nil,
-      Nat.add_zero, st, hd, he] at a b
-    omega
   have boundary := actual_complete_boundary_geometry model execution
-  have initialDomain (j : Side) (md : Model) : 0 < initial j md ∧ initial j md < hSide j := by
-    have h := (actual_complete_boundary_geometry md []).1 j 0
-    simp only [List.take_nil, execute] at h
-    exact ⟨lt_trans (ap j) h.1, h.2⟩
-  have runDomain (j : Side) (xs : List Return) (md : Model) :
-      0 < execute j xs (initial j md) ∧ execute j xs (initial j md) < hSide j := by
-    have h := (actual_complete_boundary_geometry md xs).1 j xs.length
-    rw [List.take_length] at h
-    exact ⟨lt_trans (ap j) h.1, h.2⟩
-  have stemSupply (j : Side) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-      BlockSupply o b true (stem j) (colorsD ++ colorsE) (c0 + sign j * D) ↔
-        lam - g ^ 2 * chi * D < b := by
-    have h := returns j ⟨1, 1, by decide, by decide⟩ D hD
-    simpa only [returnWord, returnColors, repeatWord, List.append_nil,
-      List.replicate_succ, List.replicate_zero, List.flatten_cons, List.flatten_nil,
-      stem, pow_one] using h
-  have pairErrors : ActualPairSupply model o b .strict execution ↔
-      ∀ j : Side, BlockSupply o b true (observedPrefix j model execution)
-        (history model execution) (coordinate (tailPrefix j) 0) := by
-    have lengthEq (j : Side) : (observedPrefix j model execution).length =
-        (history model execution).length := by
-      rw [(paired_source_reconstruction j model execution).2.2.2.2.1,
-        (paired_source_reconstruction j model execution).2.2.2.2.2.1]
-    have coord (j : Side) (p : ℕ) (hp : p < (history model execution).length) :
-        coordinate (sourcePrefix j model execution) p =
-        compose ((observedPrefix j model execution).drop p) (coordinate (tailPrefix j) 0) := by
-      rw [coordinate, sourcePrefix, List.drop_append_of_le_length (by rw [lengthEq]; omega), app]
-      rfl
-    constructor
-    · intro h j p hp
-      obtain ⟨err, herr, hread, hzero, hfuture⟩ := h j
-      refine ⟨err p, herr p, ?_⟩
-      rw [← coord j p hp]; exact hread p hp
-    · intro h j
-      let choice (p : ℕ) (hp : p < (history model execution).length) : ℝ :=
-        Classical.choose (h j p hp)
-      let err (p : ℕ) : ℝ := if hp : p < (history model execution).length then choice p hp else 0
-      refine ⟨err, ?_, ?_, ?_, ?_⟩
-      · intro p; dsimp [err]; split_ifs with hp
-        · exact (Classical.choose_spec (h j p hp)).1
-        · simpa using bp
-      · intro p hp
-        dsimp [err]; rw [dif_pos hp, coord j p hp]
-        exact (Classical.choose_spec (h j p hp)).2
-      · intro p hp; dsimp [err]; rw [dif_neg (by omega)]
-      · intro p
-        have hz : err ((observedPrefix j model execution).length + p) = 0 := by
-          dsimp [err]; rw [dif_neg (by rw [lengthEq]; omega)]
-        rw [hz, (paired_source_reconstruction j model execution).2.2.1]
-  have costs : ActualPairSupply model o b .strict execution ↔
-      lam - g ^ 2 * chi * execute .high execution (initial .high model) < b ∧
-      (model = .anchored → lam - g ^ 2 * chi * xSide .high < b) ∧
-      StrictControl .high b execution (initial .high model) := by
-    rw [pairErrors]
-  
-    have returnDomain (j : Side) (a : Return) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-        0 < returnMap j a D ∧ returnMap j a D < hSide j := by
-      have rr := pow_pos rp a.m
-      have rl : rho ^ a.m ≤ 1 := pow_le_one₀ rp.le r1.le
-      have cc := pow_pos cp a.r
-      have cl : chi ^ a.r ≤ 1 := pow_le_one₀ cp.le c1.le
-      have cz : 0 < chi ^ a.r * D := mul_pos cc hD.1
-      have ch : chi ^ a.r * D < hSide j :=
-        lt_of_le_of_lt (mul_le_mul_of_nonneg_right cl hD.1.le) (by simpa only [one_mul] using hD.2)
-      have gap := mul_pos rr (sub_pos.mpr ch)
-      have low := mul_le_mul_of_nonneg_right rl (sub_pos.mpr ch).le
-      dsimp [returnMap]; constructor <;> nlinarith
-    have extSupply (j : Side) (xs : List Return) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-        BlockSupply o b true (externalWord j xs) (xs.reverse.map returnColors).flatten
-          (c0 + sign j * D) ↔ StrictControl j b xs D := by
-      induction xs generalizing D with
-      | nil => simp [externalWord, BlockSupply, StrictControl]
-      | cons a xs ih =>
-        simp only [externalWord, List.reverse_cons, List.map_append, List.map_cons,
-          List.map_nil, List.flatten_append, List.flatten_cons, List.flatten_nil,
-          List.append_nil]
-        change BlockSupply o b true (externalWord j xs ++ returnWord j a)
-          ((xs.reverse.map returnColors).flatten ++ returnColors a) (c0 + sign j * D) ↔
-          StrictControl j b (a :: xs) D
-        rw [appendSupply _ _ _ _ _ (extLen j xs),
-          (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.2.1,
-          ih _ (returnDomain j a D hD), returns j a D hD]
-        change (StrictControl j b xs (returnMap j a D) ∧
-          lam - g ^ 2 * chi ^ a.r * D < b) ↔
-          (lam - g ^ 2 * chi ^ a.r * D < b ∧ StrictControl j b xs (returnMap j a D))
-        exact and_comm
-    have anchorTail (j : Side) : compose (anchor j model) (coordinate (tailPrefix j) 0) =
-        c0 + sign j * initial j model := by
-      have h := (paired_source_reconstruction j model []).2.2.2.1
-      simpa only [externalWord, List.reverse_nil, List.map_nil, List.flatten_nil,
-        List.nil_append, coordinate, List.drop_zero, app, execute] using h
-    have anchorSupply (j : Side) (md : Model) :
-        BlockSupply o b true (anchor j md)
-          (match md with | .original => [] | .anchored => colorsD ++ colorsE)
-          (coordinate (tailPrefix j) 0) ↔
-        (md = .anchored → lam - g ^ 2 * chi * xSide j < b) := by
-      have tail := (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.2.2.2
-      cases md with
-      | original => simp [anchor, BlockSupply]
-      | anchored =>
-        simp only [anchor, coordinate, List.drop_zero, tail, true_implies]
-        exact stemSupply j (xSide j) (initialDomain j .original)
-    have wholeSide (j : Side) :
-        BlockSupply o b true (observedPrefix j model execution) (history model execution)
-          (coordinate (tailPrefix j) 0) ↔
-        lam - g ^ 2 * chi * execute j execution (initial j model) < b ∧
-        (model = .anchored → lam - g ^ 2 * chi * xSide j < b) ∧
-        StrictControl j b execution (initial j model) := by
-      have len : (stem j).length = (colorsD ++ colorsE).length := by cases j <;> rfl
-      simp only [observedPrefix, history]
-      rw [List.append_assoc (stem j), List.append_assoc (colorsD ++ colorsE)]
-      rw [appendSupply _ _ _ _ _ len, appendSupply _ _ _ _ _ (extLen j execution),
-        app, anchorTail,
-        (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.2.2.1,
-        stemSupply j _ (runDomain j execution model), extSupply j execution _ (initialDomain j model)]
-      exact ⟨fun h => ⟨h.1, (anchorSupply j model).mp h.2.2, h.2.1⟩,
-        fun h => ⟨h.1, h.2.2, (anchorSupply j model).mpr h.2.1⟩⟩
-    have hh : hSide .high < hSide .low := by dsimp [hSide]; linarith
-    have returnOrder (a : Return) (DH DL : ℝ) (ho : DH < DL) :
-        returnMap .high a DH < returnMap .low a DL := by
-      have rr := pow_pos rp a.m
-      have rl := pow_lt_one₀ rp.le r1 (Nat.ne_of_gt a.m_pos)
-      have cc := pow_pos cp a.r
-      have gainH := mul_pos (sub_pos.mpr rl) (sub_pos.mpr hh)
-      have gainD := mul_pos (mul_pos rr cc) (sub_pos.mpr ho)
-      dsimp [returnMap]; nlinarith
-    have controlOrder (xs : List Return) (DH DL : ℝ) (ho : DH < DL)
-        (hc : StrictControl .high b xs DH) : StrictControl .low b xs DL := by
-      induction xs generalizing DH DL with
-      | nil => trivial
-      | cons a xs ih =>
-        refine ⟨?_, ih _ _ (returnOrder a DH DL ho) hc.2⟩
-        have gain := mul_pos (mul_pos (pow_pos gp 2) (pow_pos cp a.r)) (sub_pos.mpr ho)
-        have h := hc.1; nlinarith
-    have io : initial .high model < initial .low model := by
-      simpa only [List.take_zero, execute] using boundary.2.1 0
-    have xo : xSide .high < xSide .low := by
-      simpa only [List.take_nil, execute, initial] using
-        (actual_complete_boundary_geometry .original []).2.1 0
-    have eo : execute .high execution (initial .high model) <
-        execute .low execution (initial .low model) := by
-      simpa only [List.take_length] using boundary.2.1 execution.length
-    constructor
-    · intro h; exact (wholeSide .high).mp (h .high)
-    · rintro ⟨hstem, hanchor, hcontrol⟩ j
-      apply (wholeSide j).mpr
-      cases j with
-      | high => exact ⟨hstem, hanchor, hcontrol⟩
-      | low =>
-        have coeff := mul_pos (pow_pos gp 2) cp
-        have gstem := mul_pos coeff (sub_pos.mpr eo)
-        have ganchor := mul_pos coeff (sub_pos.mpr xo)
-        refine ⟨?_, ?_, controlOrder execution _ _ io hcontrol⟩
-        · nlinarith
-        · intro hm; have h := hanchor hm; nlinarith
+  have costs := actual_strict_cost_supply model o b execution hb
   -- The scalar cap is derived after the fixed-source error assembly.
   let H : ℝ := hSide .high
   let A : ℝ := aSide .high
@@ -5618,5 +5700,481 @@ theorem canonical_periodic_endpoints (s : Guard) (U : Bool → List Label)
         (by simp only [List.length_append,hlen]; omega) hi hshi
       rw [if_neg hpos] at contact
       rw [literal_source_geometry.2.2.2.2,affine,affine,hmax,hmin,← contact.1,← contact.2]
+
+/-- All actual high-return gaps, across every list and every position. A list
+decomposition selects its actual execution prefix without any weight bound. -/
+def actualFamilyHighGaps (model : Model) (b : ℝ) (K : ℕ)
+    (family : Set (List Return)) : Set ℝ :=
+  {gap | ∃ (before : List Return) (a : Return) (after : List Return),
+    before ++ a :: after ∈ family ∧ a.r = K ∧
+    gap = execute .high before (initial .high model) -
+      (lam - b) / g ^ 2 / chi ^ K}
+
+/-- Signed gaps embed into the complete extended real order. In particular,
+an empty high-return set has infimum top, and negative gaps are not truncated. -/
+noncomputable def actualFamilyDelta (model : Model) (b : ℝ) (K : ℕ)
+    (family : Set (List Return)) : EReal :=
+  sInf ((fun gap : ℝ => (gap : EReal)) '' actualFamilyHighGaps model b K family)
+
+/-- One epsilon is chosen before every record and both literal source sides.
+ActualPairSupply retains every departure observation and the original zero-error
+future of that same source. -/
+def ActualUniformFamilyMargin (model : Model) (o : Ownership) (b : ℝ)
+    (family : Set (List Return)) : Prop :=
+  ∃ eps : ℝ, 0 < eps ∧
+    ∀ execution ∈ family, ActualPairSupply model o (b - eps) .closed execution
+
+/-- A consumed structural interface to the existing recursive guard. -/
+private theorem uniform_guard_trace_iff_split
+    (K : ℕ) (d : ℝ) (strict : Bool) (j : Side)
+    (execution : List Return) (D : ℝ) :
+    GuardTrace K d strict j execution D ↔
+      ∀ (before : List Return) (a : Return) (after : List Return),
+        execution = before ++ a :: after →
+          a.r ≤ K ∧ (a.r = K →
+            if strict then d < execute j before D
+            else d ≤ execute j before D) := by
+  induction execution generalizing D with
+  | nil =>
+      constructor
+      · intro _ before a after hsplit
+        have hlen := congrArg List.length hsplit
+        simp only [List.length_nil, List.length_append, List.length_cons] at hlen
+        omega
+      · intro _
+        exact True.intro
+  | cons first rest ih =>
+      constructor
+      · rintro ⟨hcap, hguard, hrest⟩ before a after hsplit
+        cases before with
+        | nil =>
+            simp only [List.nil_append, List.cons.injEq] at hsplit
+            rcases hsplit with ⟨rfl, rfl⟩
+            exact ⟨hcap, hguard⟩
+        | cons first' before =>
+            simp only [List.cons_append, List.cons.injEq] at hsplit
+            rcases hsplit with ⟨rfl, hsplit⟩
+            simpa only [execute] using
+              (ih (returnMap j first D)).mp hrest before a after hsplit
+      · intro h
+        have hfirst := h [] first rest rfl
+        refine ⟨hfirst.1, hfirst.2, (ih (returnMap j first D)).mpr ?_⟩
+        intro before a after hsplit
+        have hsplit' : first :: rest = (first :: before) ++ a :: after := by
+          simpa only [List.cons_append] using congrArg (List.cons first) hsplit
+        simpa only [execute] using h (first :: before) a after hsplit'
+
+/-- Budget enlargement keeps the identical error and literal-source witnesses. -/
+private theorem uniform_closed_supply_mono
+    (model : Model) (o : Ownership) (execution : List Return)
+    {small large : ℝ} (hbudget : small ≤ large)
+    (hsupply : ActualPairSupply model o small .closed execution) :
+    ActualPairSupply model o large .closed execution := by
+  intro j
+  rcases hsupply j with ⟨err, herr, hread, hzero, hfuture⟩
+  refine ⟨err, ?_, hread, hzero, hfuture⟩
+  intro p
+  exact (herr p).trans hbudget
+
+/-- The original uniform epsilon bounds every actual high-return gap, even if
+the supplied smaller budget was not assumed to lie in the transition interval. -/
+theorem actual_uniform_margin_gap_lower_bound
+    (model : Model) (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 ≤ K)
+    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
+    (hbp : b < lam - g ^ 2 * chi ^ K *
+      (aSide .high / (1 - rho * chi ^ K)))
+    (family : Set (List Return)) (eps : ℝ) (heps : 0 < eps)
+    (hsupply : ∀ execution ∈ family,
+      ActualPairSupply model o (b - eps) .closed execution) :
+    ∀ gap ∈ actualFamilyHighGaps model b K family,
+      eps / (g ^ 2 * chi ^ K) ≤ gap := by
+  have hsqrt := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)
+  have hsqrt0 := Real.sqrt_nonneg (5 : ℝ)
+  have hg : 0 < g := by dsimp [g, t]; nlinarith
+  have hg2 : 0 < g ^ 2 := pow_pos hg 2
+  have hchi : 0 < chi := pow_pos hg 20
+  have hchiK : 0 < chi ^ K := pow_pos hchi K
+  let c : ℝ := g ^ 2 * chi ^ K
+  let q : ℝ := lam - c * hSide .high
+  have hc : 0 < c := mul_pos hg2 hchiK
+  have threshold_mul (budget : ℝ) :
+      ((lam - budget) / g ^ 2 / chi ^ K) * c = lam - budget := by
+    dsimp [c]
+    field_simp [ne_of_gt hg2, ne_of_gt hchiK] <;> ring
+  rintro gap ⟨before, a, after, hfamily, ha, rfl⟩
+  let D : ℝ := execute .high before (initial .high model)
+  let cost : ℝ := lam - c * D
+  have hD : D < hSide .high := by
+    simpa [D] using
+      ((actual_complete_boundary_geometry model before).1 .high before.length).2
+  have hqcost : q < cost := by dsimp [q, cost]; nlinarith
+  apply (div_le_iff₀ hc).2
+  by_contra hbad
+  have hbad' :
+      (D - (lam - b) / g ^ 2 / chi ^ K) * c < eps :=
+    lt_of_not_ge hbad
+  have hsmallcost : b - eps < cost := by
+    have hd := threshold_mul b
+    dsimp [cost]
+    nlinarith
+  let lower : ℝ := max q (b - eps)
+  let upper : ℝ := min b cost
+  have hlowerupper : lower < upper := by
+    exact max_lt (lt_min hqb hqcost) (lt_min (by linarith) hsmallcost)
+  let budget : ℝ := (lower + upper) / 2
+  have hlowerbudget : lower < budget := by dsimp [budget]; linarith
+  have hbudgetupper : budget < upper := by dsimp [budget]; linarith
+  have hqbudget : q < budget :=
+    lt_of_le_of_lt (le_max_left q (b - eps)) hlowerbudget
+  have hsmallbudget : b - eps ≤ budget :=
+    (le_max_right q (b - eps)).trans hlowerbudget.le
+  have hbudgetb : budget < b :=
+    lt_of_lt_of_le hbudgetupper (min_le_left b cost)
+  have hbudgetcost : budget < cost :=
+    lt_of_lt_of_le hbudgetupper (min_le_right b cost)
+  have hrecord : ActualPairSupply model o budget .closed (before ++ a :: after) :=
+    uniform_closed_supply_mono model o (before ++ a :: after)
+      hsmallbudget (hsupply _ hfamily)
+  have htrace := (actual_closed_record_supply model o budget
+    (before ++ a :: after) K hK hqbudget (hbudgetb.trans hbp)).mp hrecord
+  have hguard := ((uniform_guard_trace_iff_split K
+    ((lam - budget) / g ^ 2 / chi ^ K) (!o 0) .high
+    (before ++ a :: after) (initial .high model)).mp htrace
+      before a after rfl).2 ha
+  have hweak : (lam - budget) / g ^ 2 / chi ^ K ≤ D := by
+    cases hown : o 0 with
+    | false =>
+        have hstrict : (lam - budget) / g ^ 2 / chi ^ K < D := by
+          simpa [hown, D] using hguard
+        exact hstrict.le
+    | true =>
+        simpa [hown, D] using hguard
+  have hscaled := mul_le_mul_of_nonneg_right hweak hc.le
+  rw [threshold_mul budget] at hscaled
+  have hcostbudget : cost ≤ budget := by dsimp [cost]; linarith
+  exact (not_lt_of_ge hcostbudget) hbudgetcost
+
+/-- Original 62.16, including the fixed anchor's input X_H. -/
+noncomputable def actualAutomaticCost (K : ℕ) : ℝ :=
+  max (max (lam - g ^ 2 * chi * xSide .high)
+    (lam - g ^ 2 * chi ^ (K - 1) * aSide .high)) (lam - g ^ 6)
+
+/-- The original automatic bound is below q_K and pays the nonactive slots,
+the fixed anchor, every stem and every return with r<K. -/
+theorem actual_automatic_cost_envelope (K : ℕ) (hK : 2 ≤ K) :
+    actualAutomaticCost K < lam - g ^ 2 * chi ^ K * hSide .high ∧
+    lam - rho ≤ actualAutomaticCost K ∧
+    lam - g ^ 2 * chi * xSide .high ≤ actualAutomaticCost K ∧
+    (∀ D : ℝ, aSide .high < D →
+      lam - g ^ 2 * chi * D < actualAutomaticCost K) ∧
+    (∀ (r : ℕ) (D : ℝ), r < K → aSide .high < D →
+      lam - g ^ 2 * chi ^ r * D < actualAutomaticCost K) := by
+  have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)
+  have hs0 := Real.sqrt_nonneg (5 : ℝ)
+  have root : g ^ 2 + 4 * g = 1 := by dsimp [g, t]; nlinarith
+  have gp : 0 < g := by dsimp [g, t]; nlinarith
+  have gq : g < 1 / 4 := by nlinarith
+  have gp1 : g < 1 := by linarith
+  have g2p : 0 < g ^ 2 := pow_pos gp 2
+  have rp : 0 < rho := pow_pos gp 6
+  have cp : 0 < chi := pow_pos gp 20
+  have r1 : rho < 1 := pow_lt_one₀ gp.le gp1 (by decide)
+  have c1 : chi < 1 := pow_lt_one₀ gp.le gp1 (by decide)
+  have chi4 : chi ≤ g ^ 4 :=
+    pow_le_pow_of_le_one gp.le gp1.le (by decide)
+  have rbound : rho < 1 / 4096 := by
+    have h := pow_lt_pow_left₀ gq gp.le (by decide : (6 : ℕ) ≠ 0)
+    norm_num [rho] at h ⊢
+    exact h
+  have cbound : chi < 1 / 256 := by
+    have h := pow_lt_pow_left₀ gq gp.le (by decide : (4 : ℕ) ≠ 0)
+    norm_num at h
+    exact lt_of_le_of_lt chi4 h
+  have Hp : 0 < hSide .high := by dsimp [hSide]; linarith
+  have H1 : hSide .high < 1 := by dsimp [hSide]; linarith
+  have Ap : 0 < aSide .high := mul_pos (sub_pos.mpr r1) Hp
+  have gap : chi * hSide .high < aSide .high := by
+    have h := mul_lt_mul_of_pos_right (show chi < 1 - rho by linarith) Hp
+    exact h
+  have Xlower : aSide .high < xSide .high := by
+    simpa only [List.take_nil, execute, initial] using
+      ((actual_complete_boundary_geometry .original []).1 .high 0).1
+  have km : 1 ≤ K - 1 := by omega
+  have ckm : chi ^ (K - 1) ≤ chi := by
+    simpa only [pow_one] using pow_le_pow_of_le_one cp.le c1.le km
+  have cK2 : chi ^ K ≤ chi ^ 2 :=
+    pow_le_pow_of_le_one cp.le c1.le hK
+  have cK : chi ^ K ≤ chi := by
+    simpa only [pow_one] using
+      pow_le_pow_of_le_one cp.le c1.le (show 1 ≤ K by omega)
+  have pkm : 0 < chi ^ (K - 1) := pow_pos cp (K - 1)
+  have pk : chi ^ K = chi ^ (K - 1) * chi := by
+    rw [← pow_succ]
+    congr 1
+    omega
+  have lowQ : lam - g ^ 2 * chi ^ (K - 1) * aSide .high <
+      lam - g ^ 2 * chi ^ K * hSide .high := by
+    have h := mul_lt_mul_of_pos_left gap (mul_pos g2p pkm)
+    rw [pk]
+    nlinarith
+  have anchorQ : lam - g ^ 2 * chi * xSide .high <
+      lam - g ^ 2 * chi ^ K * hSide .high := by
+    have h1 := mul_lt_mul_of_pos_left Xlower cp
+    have h2 := mul_lt_mul_of_pos_left gap cp
+    have h3 := mul_le_mul_of_nonneg_right cK2 Hp.le
+    have h4 : chi ^ K * hSide .high < chi * xSide .high := by nlinarith
+    have h5 := mul_lt_mul_of_pos_left h4 g2p
+    nlinarith
+  have cKh : chi ^ K * hSide .high < chi :=
+    lt_of_lt_of_le (by simpa using
+      mul_lt_mul_of_pos_left H1 (pow_pos cp K)) cK
+  have powerId : g ^ 2 * g ^ 4 = rho := by dsimp [rho]; ring
+  have costSmall : g ^ 2 * chi ^ K * hSide .high < rho := by
+    have h1 := mul_lt_mul_of_pos_left cKh g2p
+    have h2 := mul_le_mul_of_nonneg_left chi4 g2p.le
+    rw [powerId] at h2
+    nlinarith
+  have inactiveQ : lam - g ^ 6 < lam - g ^ 2 * chi ^ K * hSide .high := by
+    simpa only [rho] using (sub_lt_sub_left costSmall lam)
+  have lowLe : lam - g ^ 2 * chi ^ (K - 1) * aSide .high ≤
+      actualAutomaticCost K :=
+    (le_max_right _ _).trans (le_max_left _ _)
+  refine ⟨max_lt (max_lt anchorQ lowQ) inactiveQ, ?_, ?_, ?_, ?_⟩
+  · simpa only [rho, actualAutomaticCost] using
+      (le_max_right
+        (max (lam - g ^ 2 * chi * xSide .high)
+          (lam - g ^ 2 * chi ^ (K - 1) * aSide .high))
+        (lam - g ^ 6))
+  · exact (le_max_left _ _).trans (le_max_left _ _)
+  · intro D hD
+    have h1 := mul_lt_mul_of_pos_left hD cp
+    have h2 := mul_le_mul_of_nonneg_right ckm Ap.le
+    have h3 : chi ^ (K - 1) * aSide .high < chi * D := by linarith
+    have h4 := mul_lt_mul_of_pos_left h3 g2p
+    apply lt_of_lt_of_le _ lowLe
+    nlinarith
+  · intro r D hr hD
+    have hDp : 0 < D := Ap.trans hD
+    have hpower : chi ^ (K - 1) ≤ chi ^ r :=
+      pow_le_pow_of_le_one cp.le c1.le (show r ≤ K - 1 by omega)
+    have h1 := mul_lt_mul_of_pos_left hD pkm
+    have h2 := mul_le_mul_of_nonneg_right hpower hDp.le
+    have h3 : chi ^ (K - 1) * aSide .high < chi ^ r * D := by linarith
+    have h4 := mul_lt_mul_of_pos_left h3 g2p
+    apply lt_of_lt_of_le _ lowLe
+    nlinarith
+
+private theorem exact_control_iff_split (j : Side) (budget : ℝ)
+    (execution : List Return) (D : ℝ) :
+    StrictControl j budget execution D ↔
+      ∀ (before : List Return) (a : Return) (after : List Return),
+        execution = before ++ a :: after →
+          lam - g ^ 2 * chi ^ a.r * execute j before D < budget := by
+  induction execution generalizing D with
+  | nil =>
+      constructor
+      · intro _ before a after hsplit
+        have hlen := congrArg List.length hsplit
+        simp only [List.length_nil, List.length_append, List.length_cons] at hlen
+        omega
+      · intro _
+        trivial
+  | cons first rest ih =>
+      constructor
+      · rintro ⟨hfirst, hrest⟩ before a after hsplit
+        cases before with
+        | nil =>
+            simp only [List.nil_append, List.cons.injEq] at hsplit
+            rcases hsplit with ⟨rfl, rfl⟩
+            exact hfirst
+        | cons first' before =>
+            simp only [List.cons_append, List.cons.injEq] at hsplit
+            rcases hsplit with ⟨rfl, hsplit⟩
+            simpa only [execute] using
+              (ih (returnMap j first D)).mp hrest before a after hsplit
+      · intro h
+        refine ⟨h [] first rest rfl, (ih (returnMap j first D)).mpr ?_⟩
+        intro before a after hsplit
+        have hsplit' : first :: rest = (first :: before) ++ a :: after := by
+          simpa only [List.cons_append] using congrArg (List.cons first) hsplit
+        simpa only [execute] using h (first :: before) a after hsplit'
+
+/-- This sufficiency needs only budget>C_auto, including budgets below q_K.
+It retains the cap and each actual high-position cost as separate hypotheses. -/
+theorem actual_capped_strict_supply_of_high_costs
+    (model : Model) (o : Ownership) (K : ℕ) (hK : 2 ≤ K)
+    (budget : ℝ) (hbudget : actualAutomaticCost K < budget)
+    (execution : List Return)
+    (hcap : ∀ a ∈ execution, a.r ≤ K)
+    (hhigh : ∀ (before : List Return) (a : Return) (after : List Return),
+      execution = before ++ a :: after → a.r = K →
+        lam - g ^ 2 * chi ^ K *
+          execute .high before (initial .high model) < budget) :
+    ActualPairSupply model o budget .strict execution := by
+  have hauto := actual_automatic_cost_envelope K hK
+  apply (actual_strict_cost_supply model o budget execution
+    (hauto.2.1.trans_lt hbudget)).mpr
+  have hwhole : aSide .high < execute .high execution (initial .high model) := by
+    simpa only [List.take_length] using
+      ((actual_complete_boundary_geometry model execution).1 .high execution.length).1
+  refine ⟨(hauto.2.2.2.1 _ hwhole).trans hbudget,
+    fun _ => hauto.2.2.1.trans_lt hbudget, ?_⟩
+  apply (exact_control_iff_split .high budget execution (initial .high model)).mpr
+  intro before a after hsplit
+  by_cases ha : a.r = K
+  · simpa only [ha] using hhigh before a after hsplit ha
+  · have hmem : a ∈ execution := by rw [hsplit]; simp
+    have hr : a.r < K := by
+      have hc := hcap a hmem
+      omega
+    have hD : aSide .high < execute .high before (initial .high model) := by
+      simpa only [List.take_length] using
+        ((actual_complete_boundary_geometry model before).1 .high before.length).1
+    exact (hauto.2.2.2.2 a.r _ hr hD).trans hbudget
+
+/-- Original 62.6's numerical choice, with its separate empty-high-position
+branch. A nonempty positive gap infimum is finite, so toReal preserves it. -/
+noncomputable def actualExactFamilyMargin (model : Model) (b : ℝ) (K : ℕ)
+    (family : Set (List Return)) : ℝ := by
+  classical
+  exact if (actualFamilyHighGaps model b K family).Nonempty then
+    min (b - actualAutomaticCost K)
+      ((g ^ 2 * chi ^ K) * (actualFamilyDelta model b K family).toReal) / 2
+  else (b - actualAutomaticCost K) / 2
+
+/-- The exact displayed sufficient margin of original 62.6 works for every
+whole paired record and its original zero-error future, across the entire family. -/
+theorem actual_exact_uniform_family_margin
+    (model : Model) (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 ≤ K)
+    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
+    (hbp : b < lam - g ^ 2 * chi ^ K *
+      (aSide .high / (1 - rho * chi ^ K)))
+    (family : Set (List Return))
+    (hcap : ∀ execution ∈ family, ∀ a ∈ execution, a.r ≤ K)
+    (hdelta : 0 < actualFamilyDelta model b K family) :
+    let eps := actualExactFamilyMargin model b K family
+    0 < eps ∧ ∀ execution ∈ family,
+      ActualPairSupply model o (b - eps) .strict execution := by
+  classical
+  have hauto := actual_automatic_cost_envelope K hK
+  have hCb : actualAutomaticCost K < b := hauto.1.trans hqb
+  have hbC : 0 < b - actualAutomaticCost K := sub_pos.mpr hCb
+  let eps := actualExactFamilyMargin model b K family
+  change 0 < eps ∧ ∀ execution ∈ family,
+    ActualPairSupply model o (b - eps) .strict execution
+  by_cases hnonempty : (actualFamilyHighGaps model b K family).Nonempty
+  · have highExists := hnonempty
+    obtain ⟨witness, hwitness⟩ := highExists
+    have hupper : actualFamilyDelta model b K family ≤ (witness : EReal) :=
+      sInf_le ⟨witness, hwitness, rfl⟩
+    have hnotTop : actualFamilyDelta model b K family ≠ ⊤ :=
+      ne_of_lt (hupper.trans_lt (EReal.coe_lt_top witness))
+    have hnotBot : actualFamilyDelta model b K family ≠ ⊥ :=
+      ne_of_gt ((show (⊥ : EReal) < 0 by simp).trans hdelta)
+    let delta := (actualFamilyDelta model b K family).toReal
+    have hdeltaReal : 0 < delta := EReal.toReal_pos hdelta hnotTop
+    have hcoe : (delta : EReal) = actualFamilyDelta model b K family :=
+      EReal.coe_toReal hnotTop hnotBot
+    have hgap : ∀ gap ∈ actualFamilyHighGaps model b K family, delta ≤ gap := by
+      intro gap hmem
+      apply EReal.coe_le_coe_iff.mp
+      rw [hcoe]
+      exact sInf_le ⟨gap, hmem, rfl⟩
+    have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)
+    have hs0 := Real.sqrt_nonneg (5 : ℝ)
+    have hg : 0 < g := by dsimp [g, t]; nlinarith
+    have hg2 : 0 < g ^ 2 := pow_pos hg 2
+    have hchi : 0 < chi := pow_pos hg 20
+    have hchiK : 0 < chi ^ K := pow_pos hchi K
+    let c : ℝ := g ^ 2 * chi ^ K
+    have hc : 0 < c := mul_pos hg2 hchiK
+    have hcdelta : 0 < c * delta := mul_pos hc hdeltaReal
+    have hepsEq : eps = min (b - actualAutomaticCost K) (c * delta) / 2 := by
+      simp only [eps, actualExactFamilyMargin, if_pos hnonempty, c, delta]
+    have heps : 0 < eps := by
+      rw [hepsEq]
+      exact div_pos (lt_min hbC hcdelta) (by norm_num)
+    have hepsAuto : eps < b - actualAutomaticCost K := by
+      have hm := min_le_left (b - actualAutomaticCost K) (c * delta)
+      rw [hepsEq]
+      linarith
+    have hepsHigh : eps < c * delta := by
+      have hm := min_le_right (b - actualAutomaticCost K) (c * delta)
+      rw [hepsEq]
+      linarith
+    have hbudget : actualAutomaticCost K < b - eps := by linarith
+    have threshold_mul :
+        ((lam - b) / g ^ 2 / chi ^ K) * c = lam - b := by
+      dsimp [c]
+      field_simp [ne_of_gt hg2, ne_of_gt hchiK] <;> ring
+    refine ⟨heps, ?_⟩
+    intro execution hexecution
+    apply actual_capped_strict_supply_of_high_costs model o K hK
+      (b - eps) hbudget execution (hcap execution hexecution)
+    intro before a after hsplit ha
+    have hmember : execute .high before (initial .high model) -
+        (lam - b) / g ^ 2 / chi ^ K ∈ actualFamilyHighGaps model b K family := by
+      refine ⟨before, a, after, ?_, ha, rfl⟩
+      rw [← hsplit]
+      exact hexecution
+    have hlower := mul_le_mul_of_nonneg_right (hgap _ hmember) hc.le
+    change lam - c * execute .high before (initial .high model) < b - eps
+    nlinarith
+  · have hepsEq : eps = (b - actualAutomaticCost K) / 2 := by
+      simp only [eps, actualExactFamilyMargin, if_neg hnonempty]
+    have heps : 0 < eps := by rw [hepsEq]; positivity
+    have hbudget : actualAutomaticCost K < b - eps := by rw [hepsEq]; linarith
+    refine ⟨heps, ?_⟩
+    intro execution hexecution
+    apply actual_capped_strict_supply_of_high_costs model o K hK
+      (b - eps) hbudget execution (hcap execution hexecution)
+    intro before a after hsplit ha
+    have hmember : execute .high before (initial .high model) -
+        (lam - b) / g ^ 2 / chi ^ K ∈ actualFamilyHighGaps model b K family := by
+      refine ⟨before, a, after, ?_, ha, rfl⟩
+      rw [← hsplit]
+      exact hexecution
+    exact (hnonempty ⟨_, hmember⟩).elim
+
+/-- Original 62.6 for arbitrary families of whole actual return records.
+The single positive margin includes every original literal zero-error future. -/
+theorem actual_uniform_family_margin_iff
+    (model : Model) (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 ≤ K)
+    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
+    (hbp : b < lam - g ^ 2 * chi ^ K *
+      (aSide .high / (1 - rho * chi ^ K)))
+    (family : Set (List Return))
+    (hcap : ∀ execution ∈ family, ∀ a ∈ execution, a.r ≤ K) :
+    ActualUniformFamilyMargin model o b family ↔
+      0 < actualFamilyDelta model b K family := by
+  have hsqrt := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)
+  have hsqrt0 := Real.sqrt_nonneg (5 : ℝ)
+  have hg : 0 < g := by dsimp [g, t]; nlinarith
+  have hg2 : 0 < g ^ 2 := pow_pos hg 2
+  have hchi : 0 < chi := pow_pos hg 20
+  have hchiK : 0 < chi ^ K := pow_pos hchi K
+  let c : ℝ := g ^ 2 * chi ^ K
+  have hc : 0 < c := mul_pos hg2 hchiK
+  constructor
+  · rintro ⟨eps, heps, hsupply⟩
+    have hbound := actual_uniform_margin_gap_lower_bound
+      model o b K hK hqb hbp family eps heps hsupply
+    have hinf : ((eps / c : ℝ) : EReal) ≤ actualFamilyDelta model b K family := by
+      unfold actualFamilyDelta
+      apply le_sInf
+      rintro _ ⟨gap, hgap, rfl⟩
+      exact EReal.coe_le_coe (hbound gap hgap)
+    have hpos : (0 : EReal) < ((eps / c : ℝ) : EReal) := by
+      exact_mod_cast (div_pos heps hc)
+    exact hpos.trans_le hinf
+  · intro hdelta
+    obtain ⟨heps, hsupply⟩ := actual_exact_uniform_family_margin
+      model o b K hK hqb hbp family hcap hdelta
+    refine ⟨actualExactFamilyMargin model b K family, heps, ?_⟩
+    intro execution hexecution j
+    rcases hsupply execution hexecution j with ⟨err, herr, hread, hzero, hfuture⟩
+    refine ⟨err, ?_, hread, hzero, hfuture⟩
+    intro p
+    exact (herr p).le
 
 end D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion

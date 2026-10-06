@@ -830,6 +830,122 @@ internal sealed class FibonacciFactorCompletionDocument : IScribeDocumentDefinit
             B("U",Fn(I("Bool"),Call("List",I("Label")))),B("L",I("Nat"))));
     }
 
+    private static Formula MarginFamilies => Call("Set", Returns);
+    private static Formula MarginEquivalence(Formula a, Formula b) => And(Imp(a, b), Imp(b, a));
+    private static Formula UniformMarginScale => Mul(Pow(I("g"), D(2)), Pow(I("chi"), I("K")));
+    private static Formula UniformMarginTransitionPremises()
+    {
+        var q = Sub(I("lam"), Mul(UniformMarginScale, Call("hSide", I("high"))));
+        var z = Call("divide", Call("aSide", I("high")),
+            Sub(D(1), Mul(I("rho"), Pow(I("chi"), I("K")))));
+        var psi = Sub(I("lam"), Mul(UniformMarginScale, z));
+        return And(Call("le", D(2), I("K")), Call("lt", q, I("b")),
+            Call("lt", I("b"), psi));
+    }
+    private static Formula UniformMarginFamilySupply(Formula eps) =>
+        All(Imp(Call("member", I("execution"), I("family")),
+            Call("ActualPairSupply", I("model"), I("o"), Sub(I("b"), eps),
+                I("closed"), I("execution"))), B("execution", Returns));
+    private static Formula UniformMarginFamilyCap() =>
+        All(Imp(Call("member", I("execution"), I("family")),
+            All(Imp(Call("member", I("a"), I("execution")),
+                Call("le", Call("r", I("a")), I("K"))), B("a", I("Return")))),
+            B("execution", Returns));
+    private static Formula UniformMarginGapSet =>
+        Call("actualFamilyHighGaps", I("model"), I("b"), I("K"), I("family"));
+    private static Formula UniformMarginGapLowerBound()
+    {
+        var premise = And(UniformMarginTransitionPremises(), Call("lt", D(0), I("eps")),
+            UniformMarginFamilySupply(I("eps")));
+        var conclusion = All(Imp(Call("member", I("gap"), UniformMarginGapSet),
+            Call("le", Call("divide", I("eps"), UniformMarginScale), I("gap"))),
+            B("gap", I("Real")));
+        return Disp(All(Imp(premise, conclusion),
+            B("model", I("Model")), B("o", I("Ownership")), B("b", I("Real")),
+            B("K", I("Nat")), B("family", MarginFamilies), B("eps", I("Real"))));
+    }
+    private static Formula UniformMarginIff()
+    {
+        var uniform = Ex(And(Call("lt", D(0), I("eps")), UniformMarginFamilySupply(I("eps"))),
+            B("eps", I("Real")));
+        var delta = Call("actualFamilyDelta", I("model"), I("b"), I("K"), I("family"));
+        return Disp(All(Imp(And(UniformMarginTransitionPremises(), UniformMarginFamilyCap()),
+            MarginEquivalence(uniform, Call("lt", D(0), delta))),
+            B("model", I("Model")), B("o", I("Ownership")), B("b", I("Real")),
+            B("K", I("Nat")), B("family", MarginFamilies)));
+    }
+
+    private static Formula AutomaticMarginG2 => Pow(I("g"), D(2));
+    private static Formula AutomaticMarginScale => Mul(AutomaticMarginG2, Pow(I("chi"), I("K")));
+    private static Formula AutomaticMarginCost => Call("actualAutomaticCost", I("K"));
+    private static Formula AutomaticMarginHighState(Formula prefix) =>
+        Call("execute", I("high"), prefix, Call("initial", I("high"), I("model")));
+    private static Formula AutomaticMarginActive(Formula exponent, Formula state) =>
+        Sub(I("lam"), Mul(Mul(AutomaticMarginG2, Pow(I("chi"), exponent)), state));
+    private static Formula AutomaticMarginAnchorCost =>
+        Sub(I("lam"), Mul(Mul(AutomaticMarginG2, I("chi")), Call("xSide", I("high"))));
+    private static Formula AutomaticMarginQ => Sub(I("lam"), Mul(AutomaticMarginScale, Call("hSide", I("high"))));
+    private static Formula AutomaticMarginPsi => Sub(I("lam"), Mul(AutomaticMarginScale,
+        Call("divide", Call("aSide", I("high")),
+            Sub(D(1), Mul(I("rho"), Pow(I("chi"), I("K")))))));
+    private static Formula AutomaticMarginCap(Formula xs) =>
+        All(Imp(Call("member", I("a"), xs), Call("le", Call("r", I("a")), I("K"))),
+            B("a", I("Return")));
+    private static Formula AutomaticMarginStrictCostSupplier()
+    {
+        var stem = Sub(I("lam"), Mul(Mul(AutomaticMarginG2, I("chi")), AutomaticMarginHighState(I("execution"))));
+        var costs = And(Call("lt", stem, I("budget")),
+            Imp(Equal(I("model"), I("anchored")), Call("lt", AutomaticMarginAnchorCost, I("budget"))),
+            Call("StrictControl", I("high"), I("budget"), I("execution"),
+                Call("initial", I("high"), I("model"))));
+        return Disp(All(Imp(Call("lt", Sub(I("lam"), I("rho")), I("budget")),
+            MarginEquivalence(Call("ActualPairSupply", I("model"), I("o"), I("budget"),
+                I("strict"), I("execution")), costs)),
+            B("model", I("Model")), B("o", I("Ownership")), B("budget", I("Real")),
+            B("execution", Returns)));
+    }
+    private static Formula AutomaticMarginEnvelope()
+    {
+        var domain = Call("lt", Call("aSide", I("high")), I("D"));
+        var stem = Sub(I("lam"), Mul(Mul(AutomaticMarginG2, I("chi")), I("D")));
+        var conclusion = And(Call("lt", AutomaticMarginCost, AutomaticMarginQ),
+            Call("le", Sub(I("lam"), I("rho")), AutomaticMarginCost), Call("le", AutomaticMarginAnchorCost, AutomaticMarginCost),
+            All(Imp(domain, Call("lt", stem, AutomaticMarginCost)), B("D", I("Real"))),
+            All(Imp(And(Call("lt", I("r"), I("K")), domain),
+                Call("lt", AutomaticMarginActive(I("r"), I("D")), AutomaticMarginCost)),
+                B("r", I("Nat")), B("D", I("Real"))));
+        return Disp(All(Imp(Call("le", D(2), I("K")), conclusion), B("K", I("Nat"))));
+    }
+    private static Formula AutomaticMarginCappedSupplier()
+    {
+        var split = Equal(I("execution"), Call("append", I("before"),
+            Call("cons", I("a"), I("after"))));
+        var high = All(Imp(And(split, Equal(Call("r", I("a")), I("K"))),
+            Call("lt", AutomaticMarginActive(I("K"), AutomaticMarginHighState(I("before"))), I("budget"))),
+            B("before", Returns), B("a", I("Return")), B("after", Returns));
+        return Disp(All(Imp(And(Call("le", D(2), I("K")),
+            Call("lt", AutomaticMarginCost, I("budget")), AutomaticMarginCap(I("execution")), high),
+            Call("ActualPairSupply", I("model"), I("o"), I("budget"),
+                I("strict"), I("execution"))),
+            B("model", I("Model")), B("o", I("Ownership")), B("K", I("Nat")),
+            B("budget", I("Real")), B("execution", Returns)));
+    }
+    private static Formula AutomaticMarginExactSupply()
+    {
+        var delta = Call("actualFamilyDelta", I("model"), I("b"), I("K"), I("family"));
+        var eps = Call("actualExactFamilyMargin", I("model"), I("b"), I("K"), I("family"));
+        var cap = All(Imp(Call("member", I("execution"), I("family")), AutomaticMarginCap(I("execution"))),
+            B("execution", Returns));
+        var supplied = All(Imp(Call("member", I("execution"), I("family")),
+            Call("ActualPairSupply", I("model"), I("o"), Sub(I("b"), eps),
+                I("strict"), I("execution"))), B("execution", Returns));
+        return Disp(All(Imp(And(Call("le", D(2), I("K")), Call("lt", AutomaticMarginQ, I("b")),
+            Call("lt", I("b"), AutomaticMarginPsi), cap, Call("lt", D(0), delta)),
+            And(Call("lt", D(0), eps), supplied)),
+            B("model", I("Model")), B("o", I("Ownership")), B("b", I("Real")),
+            B("K", I("Nat")), B("family", MarginFamilies)));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Both actual Fibonacci starts retain the complete-boundary, closed and strict source laws and one finite actual reset map.",
         H("Actual boundaries for Fibonacci completion"),
@@ -1003,6 +1119,52 @@ internal sealed class FibonacciFactorCompletionDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("An acquisition stage takes a complete readable configuration and the next color, performs its finite computation, and returns the next configuration and a finite ordered output batch. All control, counters, timing, positions and readable output-side information belong to Configuration. The transition does not read the cumulative emitted word. appendOutputStep(advance)((q,v),c) is (q',v concatenated with batch), where advance(q,c)=(q',batch). foldl starts at the fixed initial configuration and initial output. runHistory and configurationHistory apply this recurrence to history(model,xs), taking respectively the joint pair and its first component. Safety is required for every supported legal affine source and actual error-bounded record; liveness requires each position, including L0 positions, at a finite acquisition stage of every eventually-L0 source.")),
                     Paragraph(Text("pairedRecord(model,o,xs,j)(p) equals history(model,xs)[p] while p is less than its length M, and equals observe(o,coordinate(tailPrefix(j),p-M),0) thereafter. Its actual error witness, guard path, supported coordinate path and eventual empty tail are constructed from the original paired supply and source reconstruction. Thus the M departures are acquired once, the terminal M is unobserved at the cut, and the original literal future starts there. The original and anchored offsets are 26 and 52; the weight N may be zero or unsupported, and the family may be empty. Every endpoint flag and each original contract remains a parameter.")),
                     Paragraph(Text("The high stem begins with L5 and the low stem with L0, so their actual first differing position is k=0. Safety on both continuations forces the cumulative output at the common departure cut to be empty. In general the prefix factor would be k+1; here it is 0+1. Equal cut configurations therefore give equal joint pairs. Folding either pair along the same high-side literal future gives identical subsequent output. Positionwise finite liveness and safety then equate the two high source addresses, and equal-weight actual address separation recovers the lists. The joint and configuration maps are injective and the number of family members is at most the number of reached complete configurations times one. The emitted word supplies no readable memory. This finite lower bound applies to each compliant transition semantics; it asserts no upper bound on inefficient decoders and no storage-capacity estimate without a configuration encoding."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-actual-strict-cost-supply"),
+                DeclarationHandle.Create(Prefix + "actual_strict_cost_supply"),
+                H("Complete actual source costs above the nonactive-slot bound"),
+                StatementSource.FromAuthor(AutomaticMarginStrictCostSupplier()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This supplier exposes the existing whole-source cost construction with its actual lower-budget hypothesis budget>lam-rho. It is the same fixed source, history, external block order and literal tail used by the strict record theorem. StrictControl recursively tests lam-g^2*chi^r*D at each actual return start. The stem tests chi times the final whole-list state, and the paid anchor tests chi times X_H, not its output Y_H.")),
+                    Paragraph(Text("For a six-block input D<h_j, the nth outer input is h_j-rho^n*(h_j-D). Its active cost minus the next active cost is g^2*rho^n*(1-rho)*(h_j-D)>0. The local activeCostDrops proof is consumed by the bound for arbitrary repetitions. literal_full_slot_readout supplies every six-slot and twenty-slot departure above lam-rho. High/low ordering transports the high costs to the actual paired low source, and pairErrors chooses the finite errors and appends the unchanged zero-error future."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-actual-automatic-cost-envelope"),
+                DeclarationHandle.Create(Prefix + "actual_automatic_cost_envelope"),
+                H("The exact three-term automatic bound"),
+                StatementSource.FromAuthor(AutomaticMarginEnvelope()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("actualAutomaticCost(K)=max(max(lam-g^2*chi*xSide(high),lam-g^2*chi^(K-1)*aSide(high)),lam-g^6). This is precisely C_auto of the original display. The three entries are the fixed-anchor cost Theta_1, the low-return and stem envelope, and the nonactive-slot bound. For K>=2, chi*h_H<A_H and X_H>A_H give the first two strict comparisons with q_K; g^2*chi^K*h_H<g^6 gives the third. The natural subtraction in K-1 is used only under K>=2.")),
+                    Paragraph(Text("Every actual complete state lies above A_H. A stem uses chi*D; every r<K return uses chi^r*D>=chi^(K-1)*D. These inputs strictly exceed chi^(K-1)*A_H and their active costs are below C_auto. The stated scalar bounds are consumed by the capped supplier and the exact-margin theorem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-actual-capped-strict-supply-of-high-costs"),
+                DeclarationHandle.Create(Prefix + "actual_capped_strict_supply_of_high_costs"),
+                H("Capped complete sources at every budget above C_auto"),
+                StatementSource.FromAuthor(AutomaticMarginCappedSupplier()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Only budget>C_auto, the literal cap r<=K, and the active-cost test at each actual r=K position are needed. There is no q_K<budget premise. The exact split before++(a::after) identifies the actual prefix state. Automatic slots pass by the envelope; high positions pass by the supplied strict cost. The resulting ActualPairSupply contains the whole prescribed paired sources and original zero-error futures for arbitrary ownership flags."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-actual-exact-uniform-family-margin"),
+                DeclarationHandle.Create(Prefix + "actual_exact_uniform_family_margin"),
+                H("The original C_auto-based numerical margin for the whole family"),
+                StatementSource.FromAuthor(AutomaticMarginExactSupply()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Write G=actualFamilyHighGaps(model,b,K,family), Delta=actualFamilyDelta(model,b,K,family), and c=g^2*chi^K. If G is nonempty, actualExactFamilyMargin is min(b-C_auto,c*Delta.toReal)/2. If G is empty, it is (b-C_auto)/2. Delta is the signed EReal infimum over every actual high position; in the nonempty positive case the proof establishes Delta<top and Delta!=bottom before using toReal. No attained minimum is assumed.")),
+                    Paragraph(Text("The same positive epsilon is fixed before all lists and both source sides. In the nonempty case every high gap is at least Delta.toReal. Taking half the displayed minimum leaves strict budget room both above C_auto and above every high active cost. With no high returns the latter condition is vacuous, so the separate original formula applies even if the new budget is below q_K. All slots satisfy strict error bound b-epsilon, which also gives the requested closed bound with that exact epsilon, and the original literal futures have zero error.")),
+                    Paragraph(Text("The family remains an arbitrary set of finite return lists, with unbounded exponents m, histories, list depths and weights. Both actual models and every ownership assignment remain parameters. The earlier full-family iff and exact necessary epsilon lower bound are retained. The ownership-sensitive closed high-guard law is unchanged. No original13, original39.4, original39.5 or original39.7 goal is changed or declared settled."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-actual-uniform-margin-gap-lower-bound"),
+                DeclarationHandle.Create(Prefix + "actual_uniform_margin_gap_lower_bound"),
+                H("The supplied epsilon bounds every actual high-return gap"),
+                StatementSource.FromAuthor(UniformMarginGapLowerBound()), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("actualFamilyHighGaps(model,b,K,family) is the real set of execute(high,before,initial(high,model))-(lam-b)/g^2/chi^K, for every literal decomposition before++(a::after) belonging to family with a.r=K. Each decomposition selects the actual state before that return. This includes every high-return position of every family list; no return-length, list-depth, weight or family-cardinality bound is imposed.")),
+                    Paragraph(Text("The same supplied epsilon is used for every record and both sides. Its closed error budget b-eps is not required as an extra premise to belong to the transition interval. If a control cost exceeded that budget, the complete-boundary inequality D<h_H would permit an intermediate budget strictly above q_K and strictly below both b and that cost. Monotonicity preserves the identical errors, observations and literal futures at that intermediate budget. The existing ownership-sensitive closed guard then contradicts its control cost. Thus the original eps, without shrinking, gives gap>=eps/(g^2*chi^K). This bound is consumed by the family equivalence."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-actual-uniform-family-margin-iff"),
+                DeclarationHandle.Create(Prefix + "actual_uniform_family_margin_iff"),
+                H("Positive extended-real infimum is equivalent to one family margin"),
+                StatementSource.FromAuthor(UniformMarginIff()), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("actualFamilyDelta is sInf of the image of actualFamilyHighGaps under the signed real inclusion into EReal. Negative gaps are preserved. The empty high-return set has infimum top, namely positive infinity. The family itself may be empty, and a nonempty family may have no high return. No compactness, attained minimum, finite codebook or common weight is assumed.")),
+                    Paragraph(Text("ActualUniformFamilyMargin means there exists one real eps>0 such that every execution in family satisfies ActualPairSupply(model,o,b-eps,closed,execution). Unfolding that existing supply predicate, every side has its own error function bounded by b-eps at all natural positions, reads every departure of the complete history from the same sourcePrefix, is zero at and beyond the history length, and gives the original tailPrefix zero-error readout after the observedPrefix. The stem, paid anchor, all repetitions, literal external block order and unchanged eventual-empty tail therefore remain those of the existing source construction.")),
+                    Paragraph(Text("The reverse implication directly consumes actual_exact_uniform_family_margin. It chooses the original C_auto-based epsilon for the nonempty or empty actual high-gap set, then uses those same whole-source witnesses with the closed b-eps bound. The exact sufficient-margin supplier remains valid even when that new budget is below q_K. This works for either original or anchored model and every ownership assignment. Individual-record margins and ownership-sensitive equality at the original closed budget remain the separate existing statements.")),
+                    Paragraph(Text("The forward implication consumes the exact necessary bound for the original supplied epsilon; the reverse implication consumes the precise two-branch C_auto margin. Together they retain the whole-family infimum criterion. The original13, original39.4, original39.5 and original39.7 targets retain their existing scope."))),
                 DescribeRole.Theorem),
             Paragraph(Text("The classwise deletion and finite exact-weight cardinality applications are separate from the retained run and actual-membership declarations. The finite configuration lower bound uses full actual supply, safety and positionwise liveness. A lower or upper occurrence map alone does not supply a common positive margin for an infinite family.")))));
 }
