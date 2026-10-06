@@ -62882,3 +62882,104 @@ $$
 这里的有理主部与 Mellin 支撑关系直接复用 [Burnol 的原始文献接口](../../../Library/Analytic/burnol2003analyticestimate.md)，经典 Fourier 和 Abel 极限规则也直接复用。新增组合仅是当前实际 FIB 来源的完整边界接口；不重复已知 Chebyshev 平滑尾项或显式公式的证明，不作原创性认证。
 
 ## 追加锚（本行以下为增补区）
+## 414. Fibonacci 可逆约数变换保留对数衰减类
+
+本节继续使用 §§384–385 的实际系数 $\beta_d=\log(1-(-q)^d)$、$q=\varphi^{-2}$，及其 Dirichlet 卷积逆 $\gamma$。已付事实为 $\sum_{d\ge1}|\beta_d|<\infty$、$\sum_{d\ge1}|\gamma_d|\le1/\delta$、$\delta=\beta_1-\sum_{d\ge2}|\beta_d|>0$，以及 $e=\mu*\beta$。这里复用已有逆核与来源身份；以下是纸面推导，尚未形成新的 Lean 供应。
+
+**定义 414.1（正指标上的加权衰减类）。** 置 $\ell(t)=1+\log t$（$t\ge1$）。对正整数上的实数或复数序列 $f$ 定义
+
+$$
+\|f\|_{\log,4}:=\sup_{N\ge1}\frac{\ell(N)^4}{N}|f(N)|,
+\qquad
+(T_bf)(N):=\sum_{d=1}^{N}b_df(\lfloor N/d\rfloor),
+\qquad
+A_b:=\sum_{d\ge1}|b_d|\frac{\ell(d)^4}{d}.
+\tag{414.1}
+$$
+
+该范数可以为无穷；本节只在有限范数类中作有界性断言。有限和中的全部商均至少为一，因此不对实际 $H_{\rm raw}(0)$ 作零延拓假设。
+
+**定理 414.2（有限约数和的完整对数支付）。** 若 $C,A\ge0$，且对全部正整数 $n,N$ 有
+
+$$
+|f(n)|\le C\frac{n}{\ell(n)^4},\qquad
+\sum_{d=1}^{N}|b_d|\frac{\ell(d)^4}{d}\le A,
+\tag{414.2}
+$$
+
+则对每个正整数 $N$，
+
+$$
+\boxed{|(T_bf)(N)|\le CA(1+\log2)^4\frac{N}{\ell(N)^4}.}
+\tag{414.3}
+$$
+
+证明。固定 $1\le d\le N$，令 $n=\lfloor N/d\rfloor\ge1$。整数商接缝给 $dn\le N<d(n+1)\le2dn$。记 $u=\log d\ge0$、$v=\log n\ge0$、$a=\log2>0$，则
+
+$$
+\ell(N)\le1+a+u+v\le(1+a)(1+u)(1+v).
+\tag{414.4}
+$$
+
+第二个不等式的差为 $a(u+v)+(1+a)uv\ge0$。正值允许四次幂及倒数比较，结合 $n\le N/d$，得到
+
+$$
+|b_df(n)|\le C(1+\log2)^4\frac{N}{\ell(N)^4}
+|b_d|\frac{\ell(d)^4}{d}.
+\tag{414.5}
+$$
+
+对同一个有限和使用三角不等式与（414.2），即得（414.3）。没有交换无限和与积分，也没有将商尾截掉。$\square$
+
+**绝对系数预算的直接供应。** 若 $S_b:=\sum_{d\ge1}|b_d|<\infty$，则 $A_b<\infty$ 且 $A_b\le24eS_b$。因为正项指数级数给 $(1+\log d)^4/4!\le\exp(1+\log d)=ed$。更精确地，经典求导给 $\sup_{t\ge1}(1+\log t)^4/t=256/e^3$，故也有 $A_b\le(256/e^3)S_b$。这里直接应用指数级数与一元极值接口；四次对数权不要求系数另有指数尾。
+
+因此（414.3）给
+
+$$
+\|T_bf\|_{\log,4}\le(1+\log2)^4A_b\|f\|_{\log,4}.
+\tag{414.6}
+$$
+
+**命题 414.3（实际 $M$ 与 $H$ 的双向预算）。** 对全部 $N\ge1$，同一实际来源满足
+
+$$
+H_{\rm raw}(N)=T_\beta M(N),\qquad M(N)=T_\gamma H_{\rm raw}(N).
+\tag{414.7}
+$$
+
+第一式就是既有 Mertens dilation 身份。第二式由 $\gamma*e=\mu$ 的有限约数分组取得：将右侧写成 $\sum_{d\le N}\gamma_d\sum_{n\le N/d}e_n$，按 $dn\le N$ 分组，得到 $\sum_{r\le N}(\gamma*e)_r=M(N)$。全部索引为正，不消费零指标值。
+
+应用（414.6）与已付的两个绝对系数预算，得到
+
+$$
+\begin{aligned}
+\|H_{\rm raw}\|_{\log,4}&\le(1+\log2)^4A_\beta\|M\|_{\log,4},\\
+\|M\|_{\log,4}&\le(1+\log2)^4A_\gamma\|H_{\rm raw}\|_{\log,4},
+\qquad A_\gamma\le24e/\delta.
+\end{aligned}
+\tag{414.8}
+$$
+
+所以两者属于这一对数衰减类是等价的。更一般地，有限约数分组与嵌套整数商身份给 $T_bT_c=T_{b*c}$。当 $b,c$ 均绝对可和、且 $b*c$ 为卷积单位时，（414.6）使这对代数逆成为该加权类中的有界逆。这说明“像群”的直觉在这里对应的是具体可逆算子及其成本，不自动产生未付的符号消去。
+
+**实际形式化前提与有限头。** 若普通 Mertens 界先写为 $|M(n)|\le C_0n/(\log n)^4$（全部 $n\ge2$），令
+
+$$
+\widetilde C=\max\{1,C_0(1+1/\log2)^4\}.
+\tag{414.9}
+$$
+
+由 $M(1)=1$ 与 $\ell(n)/\log n\le1+1/\log2$，得到全部 $n\ge1$ 的 shifted-log 界。再由（414.3）和 $\ell(m)\ge\log m>0$，实际 $H_{\rm raw}$ 的 $m\ge2$ 前提可取
+
+$$
+B=\widetilde C A_\beta(1+\log2)^4,
+\qquad |H_{\rm raw}(m)|\le Bm/(\log m)^4.
+\tag{414.10}
+$$
+
+若普通界只在充分大指标成立，有限头的最大值即可扩大 $C_0$；存在性结论不要求阈值有效可算。§390 已从无条件定量 Mertens 文献界支付纸面增长，§409 另给实际六次对数显式预算。本节补充的是仅凭绝对可和核、保留全部正商的双向加权接口；不重证这些文献估计，也不替它们提供 Lean 验收。
+
+当前正式供应缺口仍是普通 Mertens 的对数衰减及这条有限转移桥的编译证明。临界平方根尺度、完整 Robin 有符号积分和 RH 不由（414.8）得到。已付 Fibonacci 逆核表明素数端的增长信息可以换坐标，但不会由换坐标自行消失。
+
+## 追加锚（本行以下为增补区）
+
