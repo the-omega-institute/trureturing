@@ -318,6 +318,38 @@ public sealed class RepositorySymlinkTests
     }
 
     [Fact]
+    public void LargeLiteralScopeKeepsSelectedFilesAndValidatesTheirLinkReferents()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        Write(repository.Path, "docs/reference.md", "reference\n");
+        Declare(repository.Path, ("Meta/reference", "../docs/reference.md", "file"));
+        Link(repository.Path, "Meta/reference", "../docs/reference.md");
+        Commit(repository.Path);
+        Write(repository.Path, "D5/untracked.lean", "untracked\n");
+        Link(repository.Path, "outside/invalid", "../missing");
+        var paths = Enumerable.Range(0, 24000)
+            .Select(index => ":(literal)absent/" + index + "/" + new string('a', 100))
+            .ToArray();
+        paths[0] = ":(glob)Meta/*";
+        paths[^1] = "Meta/FILEMAP.toml";
+        string[] scope = [.. paths, "D5/untracked.lean"];
+
+        var read = GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope);
+
+        Assert.Equal(
+            ["D5/untracked.lean", "Meta/FILEMAP.toml", "Meta/reference", "docs/reference.md"],
+            read.Entries.Select(entry => entry.Path));
+        Assert.Equal("reference\n", Text(read, "docs/reference.md"));
+        Assert.Equal("untracked\n", Text(read, "D5/untracked.lean"));
+        Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadCurrent(repository.Path));
+        File.Delete(Path.Combine(repository.Path, "docs/reference.md"));
+        Assert.Throws<InvalidOperationException>(() =>
+            GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope));
+    }
+
+    [Fact]
     public void ScopedReadValidatesTheWholeReferentDirectoryWhenItsScopeCoversPart()
     {
         using var repository = new TemporaryDirectory();
