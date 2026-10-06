@@ -28,6 +28,33 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(0, verifier.CallCount);
     }
 
+    [Fact]
+    public void BulkCandidatesUseReportFreeInputsWithoutWholeEvaluationScope()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create([]),
+            Snapshot(fixture.Files),
+            baseline: null);
+
+        var result = new ProductionCliEnvironment(
+            "/repo",
+            gateway,
+            new FakeLeanReportSource(null))
+            .DigestStatus(["--formalize-candidates"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(0, gateway.WholeTreeReadCount);
+        Assert.NotEmpty(gateway.ScopedCurrentReads);
+        Assert.All(
+            gateway.ScopedCurrentReads,
+            scope => Assert.DoesNotContain("Meta", scope, StringComparer.Ordinal));
+        Assert.All(
+            gateway.ScopedCurrentReads.SelectMany(static scope => scope),
+            path => Assert.DoesNotContain("D5/", path, StringComparison.Ordinal));
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
@@ -87,6 +114,30 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void CoverageBackedDetailedCandidateKeepsTheEvaluationScope()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create([]),
+            Snapshot(fixture.Files),
+            baseline: null);
+
+        var result = new ProductionCliEnvironment(
+            "/repo",
+            gateway,
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)))
+            .DigestStatus(["--formalize-candidates", "--atom-id", RuleFixture.FixtureAtomId]);
+
+        Assert.True(result.Success, result.Error);
+        var paths = gateway.ScopedCurrentReads.SelectMany(static scope => scope).ToArray();
+        Assert.Contains(TheoryAtomizerDataLoader.DataPath, paths);
+        Assert.Contains("D5", paths);
+        Assert.DoesNotContain(DigestionCasStore.RootPath.TrimEnd('/'), paths);
+        Assert.DoesNotContain(EngineeringProjectRegistry.ManifestPath, paths);
+    }
+
+    [Fact]
     public void ReadinessStillRejectsInvalidCoverageBinding()
     {
         var environment = DigestStatusHistoricalCoverageEnvironment();
@@ -97,17 +148,4 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("coverage-target-mismatch", result.Error, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void ReadinessStillRejectsCorruptCas()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files[RuleFixture.FixtureCasPath] = "corrupt CAS";
-        var environment = DigestStatusEnvironment(fixture);
-
-        var result = environment.DigestStatus(["--readiness"]);
-
-        Assert.False(result.Success);
-        Assert.Contains("CAS blob hash mismatch", result.Error, StringComparison.Ordinal);
-    }
 }

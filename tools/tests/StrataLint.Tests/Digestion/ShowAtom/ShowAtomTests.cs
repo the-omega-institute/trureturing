@@ -423,6 +423,37 @@ public sealed partial class ShowAtomTests
         Assert.Equal(string.Empty, console.Error);
     }
 
+    [Fact]
+    public void ShowAtomReadsOnlyTheLedgerAndRequestedCasObject()
+    {
+        const string sourcePath = "fixtures/show-atom/scope.md";
+        var rawBytes = Encoding.UTF8.GetBytes("scope receipt\n");
+        var fingerprints = DigestionFingerprint.Compute(rawBytes);
+        var files = FixtureFiles(
+            ContentLedger(sourcePath, fingerprints.RawSha256, fingerprints.NormalizedSha256),
+            sourcePath,
+            rawBytes,
+            fingerprints.RawSha256,
+            rawBytes);
+        var gateway = new StrataLint.TestSupport.FakeRepositoryGateway(
+            RawChangeSet.Create([]), files, baseline: null);
+
+        var result = new ProductionCliEnvironment(
+            "/repo", gateway, new FakeLeanReportSource(report: null))
+            .ShowAtom(["--atom-id", BareAtomId(fingerprints.RawSha256)]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Single(gateway.ScopedCurrentReads);
+        Assert.Equal(
+            [
+                BackfillInventoryLoader.RootPath.TrimEnd('/'),
+                BackfillInventoryLoader.RelativePath,
+                DigestionCasStore.RootPath + BareAtomId(fingerprints.RawSha256),
+            ],
+            gateway.ScopedCurrentReads[0]);
+        Assert.Equal(0, gateway.WholeTreeReadCount);
+    }
+
     private static ProductionCliEnvironment Environment(
         string repositoryRoot,
         RawRepositorySnapshot current) => new(

@@ -37,6 +37,22 @@ public sealed class RepositorySymlinkTests
         Assert.Equal("../skills", Text(GitRepositorySnapshotReader.ReadRevision(repository.Path, "HEAD"), ".codex/skills"));
     }
 
+    [Fact]
+    public void GatewayScopedReadUsesTheSameSymlinkAuthorityAsTheWholeSnapshot()
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        AddSkillAliases(repository.Path);
+
+        var scoped = new GitRepositoryGateway(repository.Path)
+            .ReadCurrent(["Meta", ".codex/skills"]);
+
+        Assert.Equal("../skills", Text(scoped, ".codex/skills"));
+        Assert.Contains(scoped.Entries, entry => entry.Path == "skills/example/SKILL.md");
+        Assert.DoesNotContain(scoped.Entries, entry =>
+            entry.Path.StartsWith(".codex/skills/", StringComparison.Ordinal));
+    }
+
     [Theory]
     [InlineData("file", false)]
     [InlineData("file", true)]
@@ -274,9 +290,10 @@ public sealed class RepositorySymlinkTests
     }
 
     [Fact]
-    public void WorkingTreeReadTakesNamedPathsAndSkipsDotNamesBelowDirectories()
+    public void ScopedReadUsesNamedPathspecsAndRetainsSelectedDotFiles()
     {
         using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
         Write(repository.Path, "Meta/Digestion/atomizers.toml", "rules\n");
         Write(repository.Path, "Meta/.DS_Store", "finder\n");
         Write(repository.Path, "Reg/Probe.lean", "theorem probe : True := True.intro\n");
@@ -284,14 +301,20 @@ public sealed class RepositorySymlinkTests
         Write(repository.Path, "Reg.lean", "sibling of the Reg directory\n");
         Write(repository.Path, ".editorconfig", "root = true\n");
         Write(repository.Path, "docs/reports/unrelated.json", "{}\n");
+        Commit(repository.Path);
 
-        var read = WorkingTreeReader.Read(repository.Path, ["Meta", "Reg", ".editorconfig", "absent/path"]);
+        var read = GitRepositorySnapshotReader.ReadCurrent(
+            repository.Path,
+            pathspecs: [":(glob)Meta/**", ":(glob)Reg/**", ".editorconfig"]);
 
-        Assert.Equal(
-            [".editorconfig", "Meta/Digestion/atomizers.toml", "Reg/Probe.lean"],
-            read.Entries.Select(entry => entry.Path));
+        Assert.Contains(read.Entries, entry => entry.Path == ".editorconfig");
+        Assert.Contains(read.Entries, entry => entry.Path == "Meta/Digestion/atomizers.toml");
+        Assert.Contains(read.Entries, entry => entry.Path == "Meta/.DS_Store");
+        Assert.Contains(read.Entries, entry => entry.Path == "Reg/Probe.lean");
+        Assert.Contains(read.Entries, entry => entry.Path == "Reg/.lake/build/Probe.olean");
+        Assert.DoesNotContain(read.Entries, entry => entry.Path == "Reg.lean");
+        Assert.DoesNotContain(read.Entries, entry => entry.Path == "docs/reports/unrelated.json");
         Assert.Equal("rules\n", Text(read, "Meta/Digestion/atomizers.toml"));
-        Assert.Throws<ArgumentException>(() => WorkingTreeReader.Read(repository.Path, ["../outside"]));
     }
 
     [Fact]

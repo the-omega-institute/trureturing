@@ -439,7 +439,7 @@ public sealed class RuleEngineTests
             document,
             context.Current,
             context.Lean,
-            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
+            casEvaluation: DigestionCasStore.EvaluateLedgerReferences(document, context.Current, changes),
             changes: changes);
 
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
@@ -530,7 +530,7 @@ public sealed class RuleEngineTests
             document,
             context.Current,
             context.Lean,
-            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
+            casEvaluation: DigestionCasStore.EvaluateLedgerReferences(document, context.Current, changes),
             changes: changes);
         return Assert.Single(evaluation.Entries);
     }

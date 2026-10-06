@@ -388,11 +388,18 @@ public sealed partial class ProductionEnvironmentTests
             SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot;
         var lean = AcceptedLeanClosure.Create(LeanAxiomReport.Create(fixture.Reports));
         var truthStates = LeanTruthStates.Resolve(snapshot, lean);
-        var aligned = DigestionCoverageTargetAligner.Align(
-            BackfillInventoryLoader.Load(snapshot),
-            snapshot,
-            lean,
-            truthStates);
+        var document = BackfillInventoryLoader.Load(snapshot);
+        var aligned = document.WithDigestionSources(document.RequireDigestionSources()
+            .Select(source => source with
+            {
+                Entries = source.Entries.Select(entry => entry with
+                {
+                    Coverage = entry.Coverage.Select(edge => edge with
+                    {
+                        TargetStatementId = FrozenStatementReceiptTestData.Resolve(fixture.Files, edge.Gid),
+                    }).ToImmutableArray(),
+                }).ToImmutableArray(),
+            }).ToImmutableArray());
         var statusByAtomId = DigestionStatusEvaluator.Evaluate(
                 DigestionEvaluationScope.FullScan,
                 aligned,

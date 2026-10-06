@@ -12,16 +12,6 @@ internal static partial class IngestCommand
                 throw new InvalidOperationException(failure.Message),
         };
 
-    private static AcceptedLeanClosure ValidateLean(
-        RepositorySnapshot snapshot,
-        LeanAxiomReport report) =>
-        LeanClosureValidator.Validate(snapshot, report) switch
-        {
-            LeanValidationOutcome.Accepted accepted => accepted.Capability,
-            LeanValidationOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
-
     internal static void RequireNoReceiptIntegrityFailure(
         DigestionLedgerEvaluation evaluation)
     {
