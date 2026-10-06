@@ -44,7 +44,10 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
     private static Formula Fraction(Formula a, Formula b) => Seq(Frac, Grp(a), Grp(b));
-    private static Formula Sq(Formula a) => Seq(Par(a), Caret, Grp(D(2)));
+    private static Formula N(int value) => D(value.ToString(System.Globalization.CultureInfo.InvariantCulture)
+        .Select(character => (byte)(character - '0')).ToArray());
+    private static Formula Pow(Formula a, int exponent) =>
+        Seq(Par(a), Caret, Grp(N(exponent)));
     private static Formula Par(Formula value) => Seq(Open, value, Close);
 
     private static Formula ResultFormula()
@@ -55,7 +58,7 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
         var range = Seq(D(0), Lt, rho, Leq, Fraction(D(1), D(8)));
         var body = Seq(
             reverse, Sp, Eq, Sp,
-            Seq(D(12), Sq(rho)), Sp, Land, Sp,
+            Seq(N(12), Pow(rho, 3)), Sp, Land, Sp,
             forward, Sp, Eq, Sp,
             Seq(D(2), rho, Par(Seq(D(1), Minus, D(3), rho)),
                 Par(Seq(D(1), Minus, D(2), rho))));
