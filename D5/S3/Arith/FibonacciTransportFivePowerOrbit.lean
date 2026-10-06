@@ -7,7 +7,13 @@
    digest: Signed Fibonacci transport and the common CRT label at five-power moduli. -/
 
 import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+import Mathlib.LinearAlgebra.Matrix.Reindex
 import Mathlib.LinearAlgebra.Eigenspace.Basic
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Data.ZMod.Basic
+import Mathlib.GroupTheory.OrderOfElement
+import Mathlib.Algebra.Group.Subgroup.Lattice
+import Mathlib.Algebra.GCDMonoid.Basic
 import Mathlib.Algebra.GCDMonoid.Nat
 import Mathlib.Algebra.Ring.Parity
 import Mathlib.Algebra.Group.End
@@ -16,7 +22,11 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.LinearCombination
+import D5.S0.Carrier.Ring
+import D5.S0.Carrier.Conj
 import D5.S0.Carrier.Units
+import D5.S1.Scale.Fibonacci
+import D5.S3.Arith.GoldenApparition
 import D5.S3.Arith.GoldenPrimePowerOrder
 import D5.S3.Arith.GoldenFibonacciModulusPeriod
 
@@ -843,7 +853,8 @@ theorem result (a : ℕ) (ha : 1 ≤ a) :
     orderOf (transportG (118 * 5 ^ a)) = 348 * 5 ^ a ∧
     Nat.card (signedGroup (118 * 5 ^ a)) = 696 * 5 ^ a ∧
     IsGreatest (Set.range (fun v : Vec (118 * 5 ^ a) =>
-      Nat.card (vectorOrbit (118 * 5 ^ a) v))) (1392 * 5 ^ a) := by
+      Nat.card (vectorOrbit (118 * 5 ^ a) v))) (1392 * 5 ^ a) ∧
+    Nat.card (vectorOrbit (118 * 5 ^ a) (crtLabel a)) = 1392 * 5 ^ a := by
   letI : NeZero (118 * 5 ^ a) := ⟨Nat.ne_of_gt (Nat.mul_pos (by decide) (pow_pos (by decide) a))⟩
   have hN := family_signed_card a ha
   have hj : transportJ (118 * 5 ^ a) ∉ signedGroup (118 * 5 ^ a) := by
@@ -852,8 +863,9 @@ theorem result (a : ℕ) (ha : 1 ≤ a) :
   have hΓ : Nat.card (transportGroup (118 * 5 ^ a)) = 1392 * 5 ^ a := by
     rw [transport_card _ hj, hN]
     ring
-  refine ⟨family_transport_order a ha, hN, ?_, ?_⟩
-  · exact ⟨crtLabel a, (label_orbit_card a ha).trans hΓ⟩
+  have hlabel := (label_orbit_card a ha).trans hΓ
+  refine ⟨family_transport_order a ha, hN, ⟨?_, ?_⟩, hlabel⟩
+  · exact ⟨crtLabel a, hlabel⟩
   · rintro _ ⟨v, rfl⟩
     rw [← hΓ]
     exact orbit_card_le _ v

@@ -29,7 +29,9 @@ internal sealed class FibonacciTransportFivePowerOrbitDocument : IScribeDocument
                         + "The transport matrix over Z/eZ has order 348 times 5^a. "
                         + "The signed subgroup has 696 times 5^a elements. Among all "
                         + "vectors in (Z/eZ)^2, the greatest cardinality of an orbit "
-                        + "under transport and reflection is 1392 times 5^a.")),
+                        + "under transport and reflection is 1392 times 5^a. The "
+                        + "specified common CRT label itself has an orbit with "
+                        + "1392 times 5^a elements.")),
                     Paragraph(Text(
                         "Choose the common label (1,y), where y is zero modulo "
                         + "2 times 5^a and twenty-six modulo fifty-nine. Its stabilizer "
@@ -40,6 +42,11 @@ internal sealed class FibonacciTransportFivePowerOrbitDocument : IScribeDocument
                         + "orbit. The full subgroup consists of the signed subgroup "
                         + "and its reflection coset, so this label has a free orbit "
                         + "of the full group order. Every orbit is an image of that "
-                        + "finite group, giving the matching upper bound."))),
+                        + "finite group, giving the matching upper bound.")),
+                    Paragraph(Text(
+                        "This theorem concerns the 118 times 5^a family. It does "
+                        + "not establish the bounds on the supremum over all moduli, "
+                        + "the 6 times 5^a family, or the literal label (1,380) and "
+                        + "its failure to be cyclic at a = 1."))),
                 DescribeRole.Theorem))));
 }
