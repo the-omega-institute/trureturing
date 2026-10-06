@@ -46,11 +46,11 @@ public sealed class QuarantineSummaryCommandTests
         var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, raw);
         var report = new FakeLeanReportSource(LeanAxiomReport.Create(
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)));
-        var scribe = new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty);
 
-        var result = DigestStatusCommand.Run(gateway, report, scribe, ["--residual-summary"]);
+        var result = DigestStatusCommand.Run(gateway, report, ["--residual-summary"]);
         Assert.True(result.Success, result.Error);
-        var shards = DigestStatusCommand.RenderShards(gateway, report, scribe, "baseline");
+        var (summary, shards) = DigestStatusCommand.RenderResidual(gateway, report);
+        Assert.Equal(result.Output, summary);
 
         var sourceShard = shards["Generated/echo-residuals/source-a.md"];
         foreach (var output in new[] { result.Output, sourceShard })

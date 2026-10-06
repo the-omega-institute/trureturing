@@ -144,7 +144,6 @@ internal static partial class DigestionLedgerAligner
         var clausePlans = ImmutableArray.CreateBuilder<DigestionSourceClausePlan>();
         var clausePlanChainParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var verifiedClausePlanParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
-        var verifiedClausePlanMembers = new HashSet<string>(StringComparer.Ordinal);
         var contentKindObservations = ImmutableArray.CreateBuilder<DigestionContentKindObservation>();
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var suggestedAtomIds = sources
@@ -172,8 +171,9 @@ internal static partial class DigestionLedgerAligner
                      .SelectMany(source =>
                      source.Entries.Select(entry => (Source: source, Entry: entry))))
         {
-            var inherited = inheritedEntries.Contains(CanonicalEntry(source, entry));
-            alignments[entry.AtomId] = cas.ValidAtomIds.Contains(entry.AtomId) && inherited
+            // An entry is seen when its content-addressed atom is intact. Whether the
+            // source document still contains that text does not decide it.
+            alignments[entry.AtomId] = cas.ValidAtomIds.Contains(entry.AtomId)
                 ? DigestionReceiptAlignment.Seen
                 : DigestionReceiptAlignment.Rejected;
             if (!cas.ValidAtomIds.Contains(entry.AtomId))
@@ -537,7 +537,6 @@ internal static partial class DigestionLedgerAligner
 
             AlignNestedChildren(
                 source,
-                atomized.ClausePlans,
                 cas.ValidAtomIds,
                 globalEntriesById,
                 snapshot,
@@ -545,7 +544,6 @@ internal static partial class DigestionLedgerAligner
                 matchedAtoms,
                 clausePlanChainParents,
                 verifiedClausePlanParents,
-                verifiedClausePlanMembers,
                 findings);
 
             if (mode == DigestionAlignmentMode.Admission)

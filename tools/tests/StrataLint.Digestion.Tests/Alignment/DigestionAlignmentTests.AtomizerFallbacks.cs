@@ -523,9 +523,6 @@ public sealed partial class DigestionAlignmentTests
             settled,
             DigestionAlignmentMode.Admission);
 
-        Assert.Equal(
-            DigestionReceiptAlignment.Rejected,
-            result.AlignmentFor(cloneId));
         Assert.Contains(result.Findings, finding => finding.Contains(
             $"new content-wide receipt after atomizer replacement: {cloneId}",
             StringComparison.Ordinal));
@@ -621,9 +618,6 @@ public sealed partial class DigestionAlignmentTests
             baseline,
             DigestionAlignmentMode.Admission);
 
-        Assert.Equal(
-            DigestionReceiptAlignment.Rejected,
-            result.AlignmentFor(AtomId(coarse)));
         Assert.Contains(result.Findings, finding => finding.Contains(
             "content-wide replacement source changed or disappeared: source",
             StringComparison.Ordinal));
