@@ -771,8 +771,8 @@ theorem three_action_modulus_envelope
     have hfirst := (hlow (r * h) (by positivity) (by nlinarith)).2 w
     have heS := hfirst.1 (ho (r * h) (by positivity))
     let t := ((2 * r * h) + 2 * (k + 1) * x) / 2
-    have ht : 2 * r * h < t := by dsimp [t]; linarith
-    have ht' : t < 2 * (k + 1) * x := by dsimp [t]; linarith
+    have ht : 2 * r * h < t := left_lt_add_div_two.mpr (hstarlt.trans htslt)
+    have ht' : t < 2 * (k + 1) * x := add_div_two_lt_right.mpr (hstarlt.trans htslt)
     have heA := (hhigh t ht ht').2 w |>.1 (ho t (by linarith))
     exact hSA (heS.symm.trans heA)
 
