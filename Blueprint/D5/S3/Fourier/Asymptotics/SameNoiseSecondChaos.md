@@ -18,7 +18,49 @@ $$\forall X \in Type, SigmaX \in \operatorname{MeasurableSpace}\left(X\right), m
 
 The continuous second integral sends each actual diagonal kernel to the centered square of the same original W. The constant vector supplies the centered Y square in the finite-frequency remainder.
 
-**Theorem 1.2 (Constant vector representative).**
+**Theorem 1.2 (Cosine vector representative).**
+
+$$\forall mu \in \operatorname{Measure}\left(Real\right),\; \forall hfinite \in \operatorname{IsFiniteMeasure}\left(mu\right),\; \forall v \in Real,\; \operatorname{AEEq}\left(\operatorname{coeFn}\left(\operatorname{cosineVector}\left(mu, v\right)\right), (x:Real\mapsto \operatorname{cos}\left(\frac{\operatorname{pi}\left(\right)}{2} \cdot v \cdot x\right)), mu\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.cosineVector_coe` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* David Nualart and Giovanni Peccati (2005). *Central limit theorems for sequences of multiple stochastic integrals*. DOI: [10.1214/009117904000000621](https://doi.org/10.1214/009117904000000621). URL: <https://arxiv.org/pdf/math/0503598v1>.
+
+*Commentary.*
+
+For each real frequency v and finite spatial measure, the cosine L2 class equals cos((pi/2)vx) almost everywhere. This statement concerns each fixed frequency.
+
+**Theorem 1.3 (Sine vector representative).**
+
+$$\forall mu \in \operatorname{Measure}\left(Real\right),\; \forall hfinite \in \operatorname{IsFiniteMeasure}\left(mu\right),\; \forall v \in Real,\; \operatorname{AEEq}\left(\operatorname{coeFn}\left(\operatorname{sineVector}\left(mu, v\right)\right), (x:Real\mapsto \operatorname{sin}\left(\frac{\operatorname{pi}\left(\right)}{2} \cdot v \cdot x\right)), mu\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.sineVector_coe` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* David Nualart and Giovanni Peccati (2005). *Central limit theorems for sequences of multiple stochastic integrals*. DOI: [10.1214/009117904000000621](https://doi.org/10.1214/009117904000000621). URL: <https://arxiv.org/pdf/math/0503598v1>.
+
+*Commentary.*
+
+For each real frequency v and finite spatial measure, the sine L2 class equals sin((pi/2)vx) almost everywhere. Both trigonometric vectors are inputs to the same real Gaussian isometry.
+
+**Theorem 1.4 (Spatial square integral).**
+
+$$\forall mu \in \operatorname{Measure}\left(Real\right),\; \forall hfinite \in \operatorname{IsFiniteMeasure}\left(mu\right),\; \forall f \in \operatorname{Lp}\left(Real, 2, mu\right),\; \operatorname{norm}\left(f\right)^{2} = \operatorname{integral}\left((x:Real\mapsto \operatorname{evaluation}\left(f, x\right)^{2}), mu\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.norm_sq_integral` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* David Nualart and Giovanni Peccati (2005). *Central limit theorems for sequences of multiple stochastic integrals*. DOI: [10.1214/009117904000000621](https://doi.org/10.1214/009117904000000621). URL: <https://arxiv.org/pdf/math/0503598v1>.
+
+*Commentary.*
+
+The squared norm of each real spatial L2 class is the integral of its representative squared. For the constant class this identifies its squared norm with the actual unnormalized spatial mass.
+
+**Theorem 1.5 (Constant vector representative).**
 
 $$\forall mu \in \operatorname{Measure}\left(Real\right),\; \forall hfinite \in \operatorname{IsFiniteMeasure}\left(mu\right),\; \operatorname{AEEq}\left(\operatorname{coeFn}\left(\operatorname{oneVector}\left(mu\right)\right), (x:Real\mapsto 1), mu\right)$$
 
@@ -32,7 +74,7 @@ $$\forall mu \in \operatorname{Measure}\left(Real\right),\; \forall hfinite \in 
 
 For every finite measure on the real line, the constant L2 vector has representative one almost everywhere. Its diagonal product therefore represents the constant spatial kernel.
 
-**Theorem 1.3 (Density in the actual symmetric space).**
+**Theorem 1.6 (Density in the actual symmetric space).**
 
 $$\forall X \in Type, SigmaX \in \operatorname{MeasurableSpace}\left(X\right), mu \in \operatorname{Measure}\left(X\right), hfinite \in \operatorname{IsFiniteMeasure}\left(mu\right),\; \operatorname{DenseRange}\left(\operatorname{finiteKernelMap}\left(mu\right)\right)$$
 
@@ -48,7 +90,7 @@ For every finite measure mu on any measurable space X, the range of the finite d
 
 A kernel orthogonal to every rank-one class has zero integral on every measurable rectangle. Rectangles generate the product sigma algebra; complements and disjoint countable unions preserve zero integrals. The kernel therefore vanishes almost everywhere. For a symmetric kernel, polarization of diagonal generators and invariance of inner products under swap reduce diagonal orthogonality to rank-one orthogonality. The symmetric subspace is closed and complete.
 
-**Theorem 1.4 (Continuous extension and characterization).**
+**Theorem 1.7 (Continuous extension and characterization).**
 
 $$\forall X \in Type, SigmaX \in \operatorname{MeasurableSpace}\left(X\right), mu \in \operatorname{Measure}\left(X\right), hfinite \in \operatorname{IsFiniteMeasure}\left(mu\right), Omega \in Type, SigmaOmega \in \operatorname{MeasurableSpace}\left(Omega\right), P \in \operatorname{Measure}\left(Omega\right), hprob \in \operatorname{IsProbabilityMeasure}\left(P\right), W \in \operatorname{LinearIsometry}\left(Real, \operatorname{Lp}\left(Real, 2, mu\right), \operatorname{Lp}\left(Real, 2, P\right)\right), hW \in \left(\forall f \in \operatorname{Lp}\left(Real, 2, mu\right),\; \operatorname{HasLaw}\left(\operatorname{representative}\left(\operatorname{apply}\left(W, f\right)\right), \operatorname{gaussianReal}\left(0, \operatorname{toNNReal}\left(\operatorname{norm}\left(f\right)^{2}\right)\right), P\right)\right),\; \left(\left(\left(\forall k \in \operatorname{symmetricKernel}\left(mu\right),\; \operatorname{Integral}\left(P, (omega:Omega\mapsto \operatorname{evaluation}\left(\operatorname{apply}\left(\operatorname{secondIntegral}\left(mu, P, W, hW\right), k\right), omega\right))\right) = 0\right) \land \left(\forall k \in \operatorname{symmetricKernel}\left(mu\right),\; \forall l \in \operatorname{symmetricKernel}\left(mu\right),\; \operatorname{inner}\left(\operatorname{apply}\left(\operatorname{secondIntegral}\left(mu, P, W, hW\right), k\right), \operatorname{apply}\left(\operatorname{secondIntegral}\left(mu, P, W, hW\right), l\right)\right) = 2 \cdot \operatorname{inner}\left(k, l\right)\right)\right) \land \left(\forall k \in \operatorname{symmetricKernel}\left(mu\right),\; \operatorname{norm}\left(\operatorname{apply}\left(\operatorname{secondIntegral}\left(mu, P, W, hW\right), k\right)\right) = \operatorname{sqrt}\left(2\right) \cdot \operatorname{norm}\left(k\right)\right)\right) \land \left(\forall J \in \operatorname{ContinuousLinearMap}\left(Real, \operatorname{symmetricKernel}\left(mu\right), \operatorname{Lp}\left(Real, 2, P\right)\right),\; \left(\forall f \in \operatorname{Lp}\left(Real, 2, mu\right),\; \operatorname{apply}\left(J, \operatorname{diagonalKernel}\left(mu, f\right)\right) = \operatorname{centeredSquare}\left(mu, P, W, hW, f\right)\right) \Rightarrow J = \operatorname{secondIntegral}\left(mu, P, W, hW\right)\right)$$
 
@@ -64,7 +106,7 @@ Let P be a probability measure and W a fixed real linear isometry from L2(mu) to
 
 Every output has mean zero. For arbitrary symmetric kernels k and l its covariance is 2 inner(k,l), and its norm is sqrt(2)||k||. It is the unique continuous real linear map sending each diagonal kernel f(x)f(y) to the actual class W(f)^2-||f||^2. Density passes the finite Gram identity and mean to the full space. Every random variable uses the original W and P.
 
-**Theorem 1.5 (Actual symmetrized products).**
+**Theorem 1.8 (Actual symmetrized products).**
 
 $$\forall X \in Type, SigmaX \in \operatorname{MeasurableSpace}\left(X\right), mu \in \operatorname{Measure}\left(X\right), hfinite \in \operatorname{IsFiniteMeasure}\left(mu\right), Omega \in Type, SigmaOmega \in \operatorname{MeasurableSpace}\left(Omega\right), P \in \operatorname{Measure}\left(Omega\right), hprob \in \operatorname{IsProbabilityMeasure}\left(P\right), W \in \operatorname{LinearIsometry}\left(Real, \operatorname{Lp}\left(Real, 2, mu\right), \operatorname{Lp}\left(Real, 2, P\right)\right), hW \in \left(\forall f \in \operatorname{Lp}\left(Real, 2, mu\right),\; \operatorname{HasLaw}\left(\operatorname{representative}\left(\operatorname{apply}\left(W, f\right)\right), \operatorname{gaussianReal}\left(0, \operatorname{toNNReal}\left(\operatorname{norm}\left(f\right)^{2}\right)\right), P\right)\right),\; \forall f \in \operatorname{Lp}\left(Real, 2, mu\right),\; \forall g \in \operatorname{Lp}\left(Real, 2, mu\right),\; \operatorname{AlmostEverywhere}\left(\operatorname{prod}\left(mu, mu\right), (z:\operatorname{Prod}\left(X, X\right)\mapsto \operatorname{evaluation}\left(\operatorname{val}\left(\operatorname{symmetrizedKernel}\left(mu, f, g\right)\right), z\right) = \frac{\operatorname{evaluation}\left(f, \operatorname{fst}\left(z\right)\right) \cdot \operatorname{evaluation}\left(g, \operatorname{snd}\left(z\right)\right)+\operatorname{evaluation}\left(g, \operatorname{fst}\left(z\right)\right) \cdot \operatorname{evaluation}\left(f, \operatorname{snd}\left(z\right)\right)}{2})\right) \land \operatorname{AlmostEverywhere}\left(P, (omega:Omega\mapsto \operatorname{evaluation}\left(\operatorname{apply}\left(\operatorname{secondIntegral}\left(mu, P, W, hW\right), \operatorname{symmetrizedKernel}\left(mu, f, g\right)\right), omega\right) = \operatorname{evaluation}\left(\operatorname{apply}\left(W, f\right), omega\right) \cdot \operatorname{evaluation}\left(\operatorname{apply}\left(W, g\right), omega\right)-\operatorname{inner}\left(f, g\right))\right)$$
 
@@ -78,7 +120,7 @@ $$\forall X \in Type, SigmaX \in \operatorname{MeasurableSpace}\left(X\right), m
 
 For all f and g in L2(mu), symmetrizedKernel(f,g) has the product-measure representative (f(x)g(y)+g(x)f(y))/2. Its second integral has the almost-everywhere representative W(f)W(g)-inner(f,g) on the original probability space. Both conclusions include zero vectors, zero measure and linearly dependent vectors.
 
-**Theorem 1.6 (Exact finite Gram identity).**
+**Theorem 1.9 (Exact finite Gram identity).**
 
 $$\forall X \in Type, SigmaX \in \operatorname{MeasurableSpace}\left(X\right), mu \in \operatorname{Measure}\left(X\right), hfinite \in \operatorname{IsFiniteMeasure}\left(mu\right), Omega \in Type, SigmaOmega \in \operatorname{MeasurableSpace}\left(Omega\right), P \in \operatorname{Measure}\left(Omega\right), hprob \in \operatorname{IsProbabilityMeasure}\left(P\right), W \in \operatorname{LinearIsometry}\left(Real, \operatorname{Lp}\left(Real, 2, mu\right), \operatorname{Lp}\left(Real, 2, P\right)\right), hW \in \left(\forall f \in \operatorname{Lp}\left(Real, 2, mu\right),\; \operatorname{HasLaw}\left(\operatorname{representative}\left(\operatorname{apply}\left(W, f\right)\right), \operatorname{gaussianReal}\left(0, \operatorname{toNNReal}\left(\operatorname{norm}\left(f\right)^{2}\right)\right), P\right)\right),\; \forall c \in \operatorname{Finsupp}\left(\operatorname{Lp}\left(Real, 2, mu\right), Real\right),\; \forall b \in \operatorname{Finsupp}\left(\operatorname{Lp}\left(Real, 2, mu\right), Real\right),\; \operatorname{inner}\left(\operatorname{finiteNoiseMap}\left(mu, P, W, hW, c\right), \operatorname{finiteNoiseMap}\left(mu, P, W, hW, b\right)\right) = 2 \cdot \operatorname{inner}\left(\operatorname{finiteKernelMap}\left(mu, c\right), \operatorname{finiteKernelMap}\left(mu, b\right)\right)$$
 
@@ -96,7 +138,7 @@ For finite real coefficients c on H, let e(c) be the sum of c(h)r(h,h) and j(c) 
 
 The identity implies ||j(c)||=sqrt(2)||e(c)|| and e(c)=0 implies j(c)=0. Quotienting by the kernel of e therefore defines a bounded real linear map on the actual finite-kernel range. This map uses the given W and P throughout.
 
-**Theorem 1.7 (Actual trigonometric frequency).**
+**Theorem 1.10 (Actual trigonometric frequency).**
 
 $$\forall mu \in \operatorname{Measure}\left(Real\right), hfinite \in \operatorname{IsFiniteMeasure}\left(mu\right), Omega \in Type, SigmaOmega \in \operatorname{MeasurableSpace}\left(Omega\right), P \in \operatorname{Measure}\left(Omega\right), hprob \in \operatorname{IsProbabilityMeasure}\left(P\right), W \in \operatorname{LinearIsometry}\left(Real, \operatorname{Lp}\left(Real, 2, mu\right), \operatorname{Lp}\left(Real, 2, P\right)\right), hW \in \left(\forall f \in \operatorname{Lp}\left(Real, 2, mu\right),\; \operatorname{HasLaw}\left(\operatorname{representative}\left(\operatorname{apply}\left(W, f\right)\right), \operatorname{gaussianReal}\left(0, \operatorname{toNNReal}\left(\operatorname{norm}\left(f\right)^{2}\right)\right), P\right)\right),\; \forall v \in Real,\; \operatorname{AlmostEverywhere}\left(P, (omega:Omega\mapsto \operatorname{evaluation}\left(\operatorname{finiteSecondIntegral}\left(mu, P, W, hW\right), \operatorname{frequencyKernel}\left(mu, v\right), omega\right) = \operatorname{evaluation}\left(W, \operatorname{cosineVector}\left(mu, v\right), omega\right)^{2}+\operatorname{evaluation}\left(W, \operatorname{sineVector}\left(mu, v\right), omega\right)^{2}-\operatorname{evaluation}\left(W, \operatorname{oneVector}\left(mu\right), omega\right)^{2})\right)$$
 
@@ -116,11 +158,14 @@ The finite frequency identity agrees with the continuous extension on its actual
 
 ## References
 
+- Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.cosineVector_coe`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.finiteFrequency_sameNoise`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.finiteGram`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.finiteKernelMap_dense`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.norm_sq_integral`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.oneVector_coe`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.secondIntegral_characterization`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.secondIntegral_diagonal`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.secondIntegral_product`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos.sineVector_coe`
 - Dependency: [D5/S3/Fourier/Asymptotics/CountableGaussianQuadraticFourthMoment](CountableGaussianQuadraticFourthMoment.md)

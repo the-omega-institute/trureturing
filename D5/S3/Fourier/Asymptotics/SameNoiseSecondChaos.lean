@@ -636,16 +636,16 @@ def sineVector (v : ℝ) : Lp ℝ 2 μ :=
 /-- The constant vector retains the actual unnormalized spatial mass. -/
 def oneVector : Lp ℝ 2 μ := (memLp_const (1 : ℝ)).toLp (fun _ => 1)
 
-private theorem cosineVector_coe (v : ℝ) : cosineVector μ v =ᵐ[μ]
+theorem cosineVector_coe (v : ℝ) : cosineVector μ v =ᵐ[μ]
     (fun x => Real.cos ((Real.pi / 2) * v * x)) := (cos_memLp μ v).coeFn_toLp
 
-private theorem sineVector_coe (v : ℝ) : sineVector μ v =ᵐ[μ]
+theorem sineVector_coe (v : ℝ) : sineVector μ v =ᵐ[μ]
     (fun x => Real.sin ((Real.pi / 2) * v * x)) := (sin_memLp μ v).coeFn_toLp
 
 theorem oneVector_coe : oneVector μ =ᵐ[μ] (fun _ => (1 : ℝ)) :=
   (memLp_const (1 : ℝ)).coeFn_toLp
 
-private theorem norm_sq_integral (f : Lp ℝ 2 μ) : ‖f‖^2 = ∫ x, (f x)^2 ∂μ := by
+theorem norm_sq_integral (f : Lp ℝ 2 μ) : ‖f‖^2 = ∫ x, (f x)^2 ∂μ := by
   rw [← real_inner_self_eq_norm_sq, L2.inner_def]
   simp [RCLike.inner_apply, conj_trivial, pow_two]
 

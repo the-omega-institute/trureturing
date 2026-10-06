@@ -22,6 +22,33 @@ internal sealed class SameNoiseSecondChaosDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The continuous second integral sends each actual diagonal kernel to the centered square of the same original W. The constant vector supplies the centered Y square in the finite-frequency remainder."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("same-noise-cosine-representative"),
+                DeclarationHandle.Create(Module + "cosineVector_coe"),
+                H("Cosine vector representative"),
+                StatementSource.FromAuthor(TrigRepresentative("cosineVector", "cos")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/nualart2005multiple")),
+                Blocks(Paragraph(Text("For each real frequency v and finite spatial measure, the cosine L2 class equals cos((pi/2)vx) almost everywhere. This statement concerns each fixed frequency."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("same-noise-sine-representative"),
+                DeclarationHandle.Create(Module + "sineVector_coe"),
+                H("Sine vector representative"),
+                StatementSource.FromAuthor(TrigRepresentative("sineVector", "sin")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/nualart2005multiple")),
+                Blocks(Paragraph(Text("For each real frequency v and finite spatial measure, the sine L2 class equals sin((pi/2)vx) almost everywhere. Both trigonometric vectors are inputs to the same real Gaussian isometry."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("same-noise-square-integral"),
+                DeclarationHandle.Create(Module + "norm_sq_integral"),
+                H("Spatial square integral"),
+                StatementSource.FromAuthor(F.Disp(All("mu", At("Measure", F.Id("Real")),
+                    All("hfinite", At("IsFiniteMeasure", F.Id("mu")), All("f", HSpace,
+                    Eq(Pow(At("norm", F.Id("f")), 2), At("integral",
+                        Lambda("x", F.Id("Real"), Pow(At("evaluation", F.Id("f"), F.Id("x")), 2)), F.Id("mu")))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/nualart2005multiple")),
+                Blocks(Paragraph(Text("The squared norm of each real spatial L2 class is the integral of its representative squared. For the constant class this identifies its squared norm with the actual unnormalized spatial mass."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("same-noise-constant-representative"),
                 DeclarationHandle.Create(Module + "oneVector_coe"),
                 H("Constant vector representative"),
@@ -78,6 +105,13 @@ internal sealed class SameNoiseSecondChaosDocument : IScribeDocumentDefinition
                     Paragraph(Text("The norm-square sum ||c_v||^2+||s_v||^2=||1||^2 equals the original spatial mass. Centering therefore cancels exactly. The finite second integral has the almost-everywhere representative W(c_v)^2+W(s_v)^2-W(1)^2, which is |F(v)|^2-Y^2 for F(v)=W(c_v)-iW(s_v) and Y=W(1).")),
                     Paragraph(Text("The finite frequency identity agrees with the continuous extension on its actual finite-kernel input. Frequency integration and the singular logarithmic kernel require additional analytic statements; common continuous paths and process convergence require separate probability results."))),
                 DescribeRole.Theorem))));
+
+    private static Formula TrigRepresentative(string vector, string trig) =>
+        F.Disp(All("mu", At("Measure", F.Id("Real")),
+            All("hfinite", At("IsFiniteMeasure", F.Id("mu")), All("v", F.Id("Real"),
+            At("AEEq", At("coeFn", At(vector, F.Id("mu"), F.Id("v"))),
+                Lambda("x", F.Id("Real"), At(trig, Multiply(
+                    Multiply(new Formula.Fraction(At("pi"), F.D(2)), F.Id("v")), F.Id("x")))), F.Id("mu"))))));
 
     private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
     private static Formula At(string name, params Formula[] xs) => Call(name, xs);
