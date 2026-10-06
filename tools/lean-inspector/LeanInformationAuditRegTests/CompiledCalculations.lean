@@ -3,8 +3,7 @@ import LeanInformationAudit.ArtifactAssessment
 namespace LeanInformationAuditRegTests.CompiledCalculations
 open Lean LeanInformationAudit Contract.CompiledExpressions
 
-unsafe def check : IO Unit := do
-  let reader ← IO.mkRef ({} : RawArtifacts.Store)
+unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
   RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
   let store ← reader.get
   let context := CompiledRegistration.expressionContext (store.constants[·]?)

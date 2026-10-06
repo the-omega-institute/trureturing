@@ -19,14 +19,13 @@ open Lean LeanInformationAudit
 
 /-- Exercise the standalone artifact-reader boundary on every contract input
 kind, including an indexed partial-slot family and rigid theorem universes. -/
-unsafe def readFixtures (start limit : Nat) : IO Unit := do
+unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat) : IO Unit := do
   let fixturePath ← Repository.source ".lake/build/lean-inspector/reg/lib/lean"
   let saved ← searchPathRef.get
   searchPathRef.set (fixturePath :: saved)
   try
     let owners := #[`LeanInformationAuditRegTests.ContractFixtures,
       `LeanInformationAuditRegTests.ContractWitnessFixture]
-    let reader ← IO.mkRef ({} : RawArtifacts.Store)
     for owner in owners do RawArtifacts.loadModule owner reader
     RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
     RawArtifacts.loadModule `LeanInformationAuditRegTests.Fixtures.TemplateBodies reader
@@ -323,11 +322,12 @@ unsafe def main : IO Unit := do
   let fixturePath ← LeanInformationAudit.Repository.source ".lake/build/lean-inspector/reg/lib/lean"
   Lean.searchPathRef.modify (fixturePath :: ·)
   LeanInformationAuditRegTests.CompiledDiscovery.checkProductionReport
-  LeanInformationAuditRegTests.CompiledDiscovery.readFixtures
+  let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
+  LeanInformationAuditRegTests.CompiledDiscovery.readFixtures reader
     (← IO.getNumHeartbeats) (Lean.Core.getMaxHeartbeats ({} : Lean.Options))
-  LeanInformationAuditRegTests.CompiledCalculations.check
-  LeanInformationAuditRegTests.CompiledSeal.check
-  LeanInformationAuditRegTests.ContractRoots.check
-  LeanInformationAuditRegTests.ContractPaths.check
-  LeanInformationAuditRegTests.ContractTypeCarrier.check
-  LeanInformationAuditRegTests.ContractPaths.checkMirror
+  LeanInformationAuditRegTests.CompiledCalculations.check reader
+  LeanInformationAuditRegTests.CompiledSeal.check reader
+  LeanInformationAuditRegTests.ContractRoots.check reader
+  LeanInformationAuditRegTests.ContractPaths.check reader
+  LeanInformationAuditRegTests.ContractTypeCarrier.check reader
+  LeanInformationAuditRegTests.ContractPaths.checkMirror reader

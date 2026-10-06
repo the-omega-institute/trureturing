@@ -21,8 +21,7 @@ open Lean Meta Elab Command LeanInformationAudit.Contract
 private def checkTest (label : String) (ok : Bool) : IO Unit :=
   unless ok do throw <| IO.userError s!"compiled.fixture:{label}"
 
-unsafe def check : IO Unit := do
-  let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
+unsafe def check (reader : IO.Ref LeanInformationAudit.RawArtifacts.Store) : IO Unit := do
   let discover := CompiledFixtureReader.discover reader
   for (fixture, diagnostic) in #[
       ("Spelling.Rootcatalog", "contract.root_structure:root_catalog_count:"),
@@ -56,8 +55,7 @@ unsafe def check : IO Unit := do
     catch ex => pure ex.toString
     checkTest s!"root.path.filtered.{fixture}"
       (error.startsWith "contract.root_structure:required_module_missing:")
-unsafe def checkMirror : IO Unit := do
-  let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
+unsafe def checkMirror (reader : IO.Ref LeanInformationAudit.RawArtifacts.Store) : IO Unit := do
   let discover := CompiledFixtureReader.discover reader
   for leaf in #["RootCatalog", "SealedCatalog"] do
     let owner := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror ++ leaf.toName

@@ -5,13 +5,12 @@ import LeanInformationAudit.ArtifactAssessment
 namespace LeanInformationAuditRegTests.CompiledSeal
 open Lean LeanInformationAudit
 
-unsafe def check : IO Unit := do
+unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
   let fixturePath ← Repository.source ".lake/build/lean-inspector/reg/lib/lean"
   let saved ← searchPathRef.get
   searchPathRef.set (fixturePath :: saved)
   try
     let root := `Reg.Catalogs.PointwiseDisequalityRegistrations.SealedCatalog
-    let reader ← IO.mkRef ({} : RawArtifacts.Store)
     RawArtifacts.loadModule root reader
     RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
     let store ← reader.get

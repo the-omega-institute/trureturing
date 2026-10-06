@@ -21,8 +21,7 @@ open Lean Meta Elab Command LeanInformationAudit.Contract
 private def checkTest (label : String) (ok : Bool) : IO Unit :=
   unless ok do throw <| IO.userError s!"compiled.fixture:{label}"
 
-unsafe def check : IO Unit := do
-  let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
+unsafe def check (reader : IO.Ref LeanInformationAudit.RawArtifacts.Store) : IO Unit := do
   let discover := CompiledFixtureReader.discover reader
   for (fixture, diagnostic) in #[
     ("DuplicateCatalog", "contract.root_structure:root_catalog_count:"),
