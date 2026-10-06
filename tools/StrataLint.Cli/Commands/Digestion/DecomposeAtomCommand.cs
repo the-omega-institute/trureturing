@@ -18,9 +18,7 @@ internal static class DecomposeAtomCommand
         try
         {
             var (id, dryRun, reconcileChain, splitAt) = Parse(arguments);
-            var raw = repository.ReadCurrent();
-            var snapshot = Decode(raw);
-            var ledger = BackfillInventoryLoader.Load(snapshot);
+            var (raw, snapshot, ledger) = DigestionWorkingTree.Read(repository, Decode, BackfillInventoryLoader.Load);
             var matches = ledger.RequireDigestionEntries().Where(entry => entry.AtomId == id).ToArray();
             if (matches.Length != 1) throw new FormatException($"ATOM_AMBIGUOUS atom_id={id} count={matches.Length}");
             var parent = matches[0];

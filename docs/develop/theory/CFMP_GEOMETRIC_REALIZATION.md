@@ -2588,3 +2588,356 @@ $$
 对第 1 节的原始面商使用本判据时，必须先在同一带标签载体中核对实际面生成识别确为上述零坐标触发的固定置换，并保持原始面配对及其完整等价闭包。该接口不替代共同边长、实际闭面等距、边不反转、精确出现角和或同一流形上的双曲度量实现。
 
 ## 追加锚（本行以下为增补区）
+
+## 68. 延拓角在平坦接缝处的正则性边界
+
+**定义 68.1（标量延拓角与正长度路径）。** 沿用第 1 节的实际六边顺序
+
+$$
+(e_1,e_2,e_3,e_4,e_5,e_6)=(12,13,14,34,24,23),
+$$
+
+其中第一槽与第四槽互为对边。对局部正长度向量 $l\in\mathbb R_{>0}^6$，令 $x_i=\cosh l_i$，并按原余弦公式定义第一槽的标量延拓角
+
+$$
+\widetilde\alpha_1(l)
+=\arccos\!\left(\max\{-1,\min\{\varphi_1(x),1\}\}\right).
+$$
+
+这里的截断延拓是 Feng–Ge–Hua，arXiv:2009.03731，Definition 2.4 的定义。取 $0\le\varepsilon<1$，设
+
+$$
+\begin{aligned}
+x^\varepsilon&=(2,2,2,17-\varepsilon,2,2),\\
+l^\varepsilon&=(\operatorname{arccosh}2,\operatorname{arccosh}2,
+\operatorname{arccosh}2,\operatorname{arccosh}(17-\varepsilon),
+\operatorname{arccosh}2,\operatorname{arccosh}2).
+\end{aligned}
+$$
+
+全部六个长度严格为正，并且 $\cosh l_i^\varepsilon=x_i^\varepsilon$。特别地，接缝点 $l^0$ 位于正长度空间的内部；它不是零长度边界点。
+
+**命题 68.2（实际标量延拓角没有局部 Lipschitz 界）。** 对 $l^0$ 的任意邻域 $U\subseteq\mathbb R_{>0}^6$ 和任意有限常数 $K\ge0$，存在 $0<\varepsilon<1$，使 $l^\varepsilon\in U$ 且
+
+$$
+\left|\widetilde\alpha_1(l^\varepsilon)-\widetilde\alpha_1(l^0)\right|
+>K\,\|l^\varepsilon-l^0\|_2.
+$$
+
+因此第 1 节原六变量公式的这一标量延拓角在正长度点 $l^0$ 不局部 Lipschitz。结论只需第一槽的角和第四槽的实际长度变化。
+
+证明。直接代入第 1 节的两个被开方数和分子，得到
+
+$$
+\begin{aligned}
+A(x^\varepsilon)=B(x^\varepsilon)
+&=2\cdot2\cdot2\cdot2+2^2+2^2+2^2-1=27,\\
+P_1(x^\varepsilon)
+&=2\cdot2+2\cdot2+2\cdot2\cdot2+2\cdot2\cdot2
+-(2^2-1)(17-\varepsilon)\\
+&=24-3(17-\varepsilon)=-27+3\varepsilon,\\
+\varphi_1(x^\varepsilon)
+&=\frac{-27+3\varepsilon}{\sqrt{27\cdot27}}
+=-1+\frac{\varepsilon}{9}.
+\end{aligned}
+$$
+
+分母恰为 $27>0$。当 $0<\varepsilon<1$ 时，这个原始余弦值严格位于 $(-1,1)$；当 $\varepsilon=0$ 时恰为 $-1$。因此在整个所用路径上，第一槽的截断不改变余弦值。反余弦恒等式给出
+
+$$
+\widetilde\alpha_1(l^\varepsilon)
+=\arccos\!\left(-1+\frac{\varepsilon}{9}\right)
+=\pi-\arccos\!\left(1-\frac{\varepsilon}{9}\right),
+\qquad
+\widetilde\alpha_1(l^0)=\pi.
+$$
+
+令 $\theta_\varepsilon=\arccos(1-\varepsilon/9)$。因为 $1-\varepsilon/9\in[-1,1]$，反余弦的值域与余弦、反余弦的标准恒等式（$\operatorname{Real.cos\_arccos}$）给出
+
+$$
+\theta_\varepsilon\ge0,
+\qquad
+\cos\theta_\varepsilon=1-\frac{\varepsilon}{9}.
+$$
+
+由标准余弦界 $1-\cos t\le t^2/2$，得到
+
+$$
+\frac{\varepsilon}{9}
+=1-\cos\theta_\varepsilon
+\le\frac{\theta_\varepsilon^2}{2},
+\qquad
+\left|\widetilde\alpha_1(l^\varepsilon)-\widetilde\alpha_1(l^0)\right|
+=\theta_\varepsilon
+\ge\sqrt{\frac{2\varepsilon}{9}}.
+$$
+
+另一方面，$\operatorname{arccosh}$ 在 $[16,17]$ 上可微，导数满足
+
+$$
+0<\frac{d}{ds}\operatorname{arccosh}s
+=\frac{1}{\sqrt{s^2-1}}
+\le\frac{1}{\sqrt{255}}.
+$$
+
+由于 $17-\varepsilon\in(16,17)$，中值定理给出实际长度差
+
+$$
+0<d_\varepsilon
+:=\operatorname{arccosh}17-\operatorname{arccosh}(17-\varepsilon)
+\le\frac{\varepsilon}{\sqrt{255}}.
+$$
+
+其余五个长度完全相同，故 $\|l^\varepsilon-l^0\|_2=d_\varepsilon$，并有
+
+$$
+\frac{\left|\widetilde\alpha_1(l^\varepsilon)-\widetilde\alpha_1(l^0)\right|}
+{\|l^\varepsilon-l^0\|_2}
+\ge
+\frac{\sqrt{2\varepsilon/9}}{\varepsilon/\sqrt{255}}
+=\frac{\sqrt{510}}{3\sqrt\varepsilon}.
+$$
+
+这一下界在 $\varepsilon\downarrow0$ 时趋于无穷。为明确邻域和常数的量词，给定上述 $U$ 和 $K$，取 $\rho>0$，使正长度空间内以 $l^0$ 为中心、半径 $\rho$ 的欧氏球包含于 $U$。选择
+
+$$
+0<\varepsilon<
+\min\left\{1,\rho\sqrt{255},\frac{510}{9(K+1)^2}\right\}.
+$$
+
+长度上界保证 $l^\varepsilon\in U$，角长比下界严格大于 $K+1$，从而严格大于 $K$。这给出每个邻域和每个有限常数的违例，包括 $K=0$。角值本身仍趋于 $\pi$，所以连续性与这里的局部 Lipschitz 失败相容。
+
+**命题 68.3（标量正则性推理与流结论的范围）。** Feng–Ge–Hua，arXiv:2009.03731，Proposition 4.3 证明中的“余弦局部 Lipschitz，所以延拓角局部 Lipschitz”不能作为一般的标量正则性推理；命题 68.2 不反驳该文的完整流结论，不证明流的不唯一性，也不影响第 3 节紧致真实度量盒上的光滑流论证。
+
+证明。在所用长度切片上，原始余弦恰为 $(8-\cosh l_4)/9$，它在 $l_4=\operatorname{arccosh}17$ 附近光滑。命题 68.2 却排除了该处延拓角的每个局部 Lipschitz 界。失败发生在反余弦的端点 $-1$，而非原余弦分母消失。
+
+本反例只涉及同一个局部四面体公式中的一个标量角。它没有把该六长度路径实现为某个固定剖分的共同全局长度路径，也没有验证实际出现映射 $P$ 的兼容性或组装角和中的抵消。因此它不能单独推出某个指定全局曲率和或乘法流场的局部 Lipschitz 失败。它也不以六个角同时处于真实四面体域为前提；所需的截断一致性仅针对已计算的第一槽。
+
+第 3 节的盒 $\Omega$ 紧包含于真实非退化度量域，各局部余弦连续且严格位于 $(-1,1)$，故在这个紧盒上与反余弦端点保持正距离。该处的光滑复合、向内流场和紧致延拓论证不受本反例影响。对于任意正长度初态的完整延拓流，解的存在性、唯一性、全局延拓和收敛须由各自独立的论证建立，不能以已失败的标量正则性推理替代；本节不增加这些结论的前提，也不在这里证明或反驳这些完整流命题。本节的结论是原公式的直接计算和标准分析不等式的应用，不作新颖性主张。
+
+## 追加锚（本行以下为增补区）
+
+## 69. 标准四面体第二次重心细分闭星的尖锐坐标界与分离
+
+**定义 69.1（标准单纯形、两次细分与全部含顶点的闭星）。** 令 $I=\{1,2,3,4\}$，对每个 $i\in I$，令 $e_i\in\mathbb R^4$ 为第 $i$ 个标准基向量。固定同一个标准四面体
+
+$$
+\Delta=\left\{x\in\mathbb R^4:\ x_j\ge0\ (j\in I),\quad\sum_{j\in I}x_j=1\right\}
+=\operatorname{conv}\{e_j:j\in I\}.
+$$
+
+每个非空集合 $F\subseteq I$ 表示原四面体的一个非空闭面 $\operatorname{conv}\{e_j:j\in F\}$，其重心为
+
+$$
+b_F=\frac{1}{|F|}\sum_{j\in F}e_j,
+\qquad
+b_F(j)=\begin{cases}|F|^{-1},&j\in F,\\0,&j\notin F.\end{cases}
+$$
+
+第一次重心细分的非空面由原非空面的严格包含链给出。具体地，令 $\mathcal C$ 为所有形如
+
+$$
+C=\{F_1,\ldots,F_m\},\qquad
+\varnothing\ne F_1\subsetneq\cdots\subsetneq F_m\subseteq I,\qquad m\ge1
+$$
+
+的有限集合；这里链内的对象是原面的顶点指标集，$C$ 的包含关系是这些指标集所组成的集合之间的包含关系。对应的第一次细分闭单纯形及其重心是
+
+$$
+\sigma_C^{(1)}=\operatorname{conv}\{b_F:F\in C\},
+\qquad
+b_C=\frac{1}{|C|}\sum_{F\in C}b_F.
+$$
+
+第二次重心细分的顶点是这些 $b_C$。令 $\mathcal D$ 为所有第一次细分非空面的严格包含链，即
+
+$$
+D=\{C_1,\ldots,C_q\},\qquad
+C_1\subsetneq\cdots\subsetneq C_q,\qquad C_a\in\mathcal C\ (1\le a\le q),\quad q\ge1.
+$$
+
+其实际闭单纯形为
+
+$$
+\sigma_D^{(2)}=\operatorname{conv}\{b_C:C\in D\}.
+$$
+
+上述链的凸包就是经典几何重心细分的单纯形，包括所有维数的非空面。每个 $b_F$、$b_C$ 及其凸组合均具有非负坐标且坐标和为 $1$，因而这两次细分的全部单纯形都位于同一个 $\Delta$ 中。对 $i\in I$，记 $C_i=\{\{i\}\}\in\mathcal C$，则 $b_{C_i}=b_{\{i\}}=e_i$。定义
+
+$$
+\operatorname{Star}_i
+=\bigcup_{\substack{D\in\mathcal D\\ e_i\in\{b_C:C\in D\}}}\sigma_D^{(2)}.
+$$
+
+这里取遍以实际原顶点 $e_i$ 为顶点的所有第二次细分闭单纯形，并包含这些单纯形的全部点；不是只挑选某些最高维单纯形。星的指标条件要求点的精确相等 $b_C=e_i$，不能只凭某个面标签中出现 $i$ 就把它当作原顶点。由于链集合有限，这个并是有限个闭单纯形的并，故 $\operatorname{Star}_i$ 是 $\mathbb R^4$ 中的闭集。
+
+**定理 69.2（原顶点的精确识别与链的关联）。** 对任意 $i\in I$ 和 $C\in\mathcal C$，有
+
+$$
+b_C=e_i\quad\Longleftrightarrow\quad C=C_i.
+$$
+
+对任意 $D\in\mathcal D$，下列三个条件等价：$e_i\in\sigma_D^{(2)}$；$e_i$ 是 $\sigma_D^{(2)}$ 的链顶点之一，即 $e_i\in\{b_C:C\in D\}$；$C_i\in D$。在这些条件成立时，每个 $C\in D$ 都包含 $\{i\}$，并且每个 $F\in C$ 都包含 $i$。
+
+证明。若 $C=C_i$，定义立即给出 $b_C=e_i$。反之，设 $b_C=e_i$。对每个 $j\in I\setminus\{i\}$，有
+
+$$
+0=e_i(j)=b_C(j)=\frac{1}{|C|}\sum_{F\in C}b_F(j).
+$$
+
+链 $C$ 非空，所有平均权重 $1/|C|$ 严格为正，所有 $b_F(j)$ 非负。因此对每个 $F\in C$ 和每个 $j\ne i$，必有 $b_F(j)=0$；若某一项为正，整个有限和就为正。原面 $F$ 非空，而且当 $j\in F$ 时 $b_F(j)=1/|F|>0$，故 $F$ 不含任何 $j\ne i$。于是 $F\subseteq\{i\}$，非空性又迫使 $F=\{i\}$。这对全部 $F\in C$ 成立，而 $C$ 自身非空，故 $C=C_i$。
+
+精确识别式说明，$e_i\in\{b_C:C\in D\}$ 当且仅当 $C_i\in D$，且这一条件显然推出 $e_i\in\sigma_D^{(2)}$。为证另一个方向，若 $e_i\in\sigma_D^{(2)}$，则存在权重 $\lambda_C\ge0$，$C\in D$，满足
+
+$$
+\sum_{C\in D}\lambda_C=1,
+\qquad
+e_i=\sum_{C\in D}\lambda_C b_C.
+$$
+
+至少一个 $C_0\in D$ 的权重严格为正。对每个 $j\ne i$，右侧第 $j$ 个坐标是非负项之和，且和为零，故 $b_{C_0}(j)=0$。又因 $b_{C_0}$ 的坐标和为 $1$，有 $b_{C_0}(i)=1$，所以 $b_{C_0}=e_i$。前面的精确识别给出 $C_0=C_i$，从而 $C_i\in D$。这也证明了定义 69.1 的闭星等于取遍所有几何上包含点 $e_i$ 的第二次细分闭单纯形的并。
+
+最后，设 $C_i\in D$ 并取任意 $C\in D$。由于 $D$ 是按集合包含排列的链，$C$ 与 $C_i$ 可比。若 $C_i\subseteq C$，则 $\{i\}\in C$；若 $C\subseteq C_i$，由 $C$ 非空且 $C_i$ 只有一个元素得到 $C=C_i$，仍有 $\{i\}\in C$。对任意 $F\in C$，第一次细分的链条件使 $F$ 与 $\{i\}$ 可比。若 $\{i\}\subseteq F$，则 $i\in F$；若 $F\subseteq\{i\}$，由 $F$ 非空得到 $F=\{i\}$，亦有 $i\in F$。证明完毕。
+
+**定理 69.3（全部秩型与尖锐的 $25/48$ 坐标下界）。** 对每个 $i\in I$ 和每个 $x\in\operatorname{Star}_i$，有
+
+$$
+x_i\ge\frac{25}{48}.
+$$
+
+该常数对这个闭星的坐标下界是尖锐的：对每个 $i$，都存在 $x\in\operatorname{Star}_i$ 满足 $x_i=25/48$。
+
+证明。先取任意 $D\in\mathcal D$ 满足 $C_i\in D$，再取任意 $C\in D$。由定理 69.2，$\{i\}\in C$ 且每个 $F\in C$ 都包含 $i$。原面严格嵌套时，其基数严格递增。因此
+
+$$
+J(C)=\{|F|:F\in C\}\subseteq\{1,2,3,4\},
+\qquad 1\in J(C),\qquad |J(C)|=|C|.
+$$
+
+映射 $F\mapsto|F|$ 在这条链上没有重复，故平均公式恰为
+
+$$
+b_C(i)
+=\frac{1}{|C|}\sum_{F\in C}\frac{1}{|F|}
+=\frac{1}{|J(C)|}\sum_{k\in J(C)}\frac{1}{k}.
+$$
+
+包含 $1$ 的 $\{1,2,3,4\}$ 子集恰有以下八个；每一行都直接按上式计算。末列同时给出与 $25/48$ 的精确差，以比较全部情形。
+
+| 秩集合 $J$ | 平均式 | $b_C(i)$ | $b_C(i)-25/48$ |
+| --- | --- | --- | --- |
+| $\{1\}$ | $1$ | $1$ | $23/48$ |
+| $\{1,2\}$ | $(1+1/2)/2$ | $3/4$ | $11/48$ |
+| $\{1,3\}$ | $(1+1/3)/2$ | $2/3$ | $7/48$ |
+| $\{1,4\}$ | $(1+1/4)/2$ | $5/8$ | $5/48$ |
+| $\{1,2,3\}$ | $(1+1/2+1/3)/3$ | $11/18$ | $13/144$ |
+| $\{1,2,4\}$ | $(1+1/2+1/4)/3$ | $7/12$ | $1/16$ |
+| $\{1,3,4\}$ | $(1+1/3+1/4)/3$ | $19/36$ | $1/144$ |
+| $\{1,2,3,4\}$ | $(1+1/2+1/3+1/4)/4$ | $25/48$ | $0$ |
+
+这些差全部非负，故每个此类第二次细分单纯形的每个顶点都满足 $b_C(i)\ge25/48$。对任意 $x\in\sigma_D^{(2)}$，按闭凸包定义可写
+
+$$
+x=\sum_{C\in D}\lambda_Cb_C,
+\qquad\lambda_C\ge0,\qquad\sum_{C\in D}\lambda_C=1.
+$$
+
+由此逐点得到
+
+$$
+x_i=\sum_{C\in D}\lambda_Cb_C(i)
+\ge\sum_{C\in D}\lambda_C\frac{25}{48}
+=\frac{25}{48}.
+$$
+
+闭星中的每个点都属于某个满足 $C_i\in D$ 的 $\sigma_D^{(2)}$，所以上式覆盖整个 $\operatorname{Star}_i$，包括所有边界点。
+
+为证尖锐性，固定 $i$，把其余三个指标依次记为 $j,k,\ell$，其中四个指标互异。取原面的完整极大链
+
+$$
+C^{\max}
+=\big\{\{i\},\{i,j\},\{i,j,k\},I\big\},
+\qquad
+\{i\}\subsetneq\{i,j\}\subsetneq\{i,j,k\}\subsetneq I.
+$$
+
+它是 $\mathcal C$ 的元素，且 $C_i\subsetneq C^{\max}$。因此 $D^{\mathrm{edge}}=\{C_i,C^{\max}\}$ 是第一次细分非空面的严格包含链，属于 $\mathcal D$。其第二次细分闭单纯形恰为
+
+$$
+\sigma_{D^{\mathrm{edge}}}^{(2)}
+=\operatorname{conv}\{b_{C_i},b_{C^{\max}}\}
+=[e_i,b_{C^{\max}}].
+$$
+
+其中
+
+$$
+b_{C^{\max}}(i)
+=\frac14\left(1+\frac12+\frac13+\frac14\right)
+=\frac14\cdot\frac{25}{12}
+=\frac{25}{48}<1.
+$$
+
+所以两个端点不同，这确实是一条第二次细分的边。它以 $e_i$ 为顶点，故整条闭边都在 $\operatorname{Star}_i$ 中；特别地，其另一端点 $b_{C^{\max}}\in\operatorname{Star}_i$，并且该端点的第 $i$ 个坐标恰为 $25/48$。任何比 $25/48$ 大的统一坐标下界都会在此点失败。证明完毕。
+
+**定理 69.4（同一标准单纯形内闭星不交与定量分离）。** 对任意不同的 $i,j\in I$，有
+
+$$
+\operatorname{Star}_i\cap\operatorname{Star}_j=\varnothing,
+\qquad
+\forall x\in\operatorname{Star}_i\ \forall y\in\operatorname{Star}_j,
+\quad\|x-y\|_\infty\ge\frac{1}{24},
+$$
+
+其中 $\|z\|_\infty=\max_{a\in I}|z_a|$ 是 $\mathbb R^4$ 中的环境范数。这里的 $1/24$ 是保证分离的下界，不主张它是两个闭星之间的最优距离。
+
+证明。若 $z$ 同时在两个闭星中，则定理 69.3 给出
+
+$$
+z_i+z_j\ge\frac{25}{48}+\frac{25}{48}=\frac{25}{24}>1.
+$$
+
+但 $z\in\Delta$，其全部坐标非负且坐标和为 $1$，故不同坐标之和满足 $z_i+z_j\le1$，矛盾。因此两个闭星不交。
+
+进一步，任取 $x\in\operatorname{Star}_i$ 和 $y\in\operatorname{Star}_j$。因为 $y\in\Delta$ 且 $i\ne j$，有
+
+$$
+y_i\le1-y_j\le1-\frac{25}{48}=\frac{23}{48},
+\qquad
+x_i-y_i\ge\frac{25}{48}-\frac{23}{48}=\frac{1}{24}.
+$$
+
+故 $|x_i-y_i|\ge1/24$，再由环境范数定义得到 $\|x-y\|_\infty\ge1/24$。证明使用的是同一个标准四面体中的两个实际点及其共同坐标和约束。证明完毕。
+
+**定理 69.5（环境开邻域的共同半径）。** 对 $r>0$ 和 $i\in I$，定义环境 $L^\infty$ 开 $r$ 邻域
+
+$$
+U_i(r)=\big\{z\in\mathbb R^4:\ \exists x\in\operatorname{Star}_i,
+\ \|z-x\|_\infty<r\big\}.
+$$
+
+则对任意 $0<r<1/48$，四个集合 $U_i(r)$ 两两不交。它们是环境空间中的开集，且各自包含对应的整个闭星；在 $\Delta$ 内取交仍两两不交。
+
+证明。每个 $U_i(r)$ 是以 $\operatorname{Star}_i$ 的实际点为中心、半径 $r$ 的开球的并，故是开集；对 $x\in\operatorname{Star}_i$，有 $\|x-x\|_\infty=0<r$，故该闭星包含于 $U_i(r)$。若不同的 $i,j$ 有公共点 $z\in U_i(r)\cap U_j(r)$，则按定义存在实际星内点 $x\in\operatorname{Star}_i$ 和 $y\in\operatorname{Star}_j$，满足
+
+$$
+\|z-x\|_\infty<r,
+\qquad
+\|z-y\|_\infty<r.
+$$
+
+由三角不等式及定理 69.4，得到
+
+$$
+\frac{1}{24}\le\|x-y\|_\infty
+\le\|x-z\|_\infty+\|z-y\|_\infty
+<2r<\frac{1}{24},
+$$
+
+矛盾。与 $\Delta$ 取交不改变这个不交性。证明完毕。
+
+**注记 69.6（第二闭星邻域构造的使用条件）。** 本节给出标准四面体内第二闭星邻域构造的坐标与分离引理：在同一标准四面体的实际第二次重心细分中，四个原顶点的全部闭星分别处于 $x_i\ge25/48$ 的区域，并可在上述环境范数下取共同半径的互不相交开邻域。原非空面链及其凸包是经典几何重心细分的定义；$25/48$ 的尖锐坐标界、八种秩型计算和这里的分离界是本仓在这一模型中的有理数推导，不作新颖性主张。
+
+将该引理用于实际归一化极坐标模型或流形，需要给出实际单纯形识别，证明所用图表与这里的坐标、度量比较，核对面粘合与领圈的相容性，并在同一个 $N$ 上建立原构造要求的关联。这些是回接原对象的额外数学义务：单个单位标准单纯形内的坐标和约束及 $L^\infty$ 距离界，不会自动成为跨图表、跨粘合或流形度量中的同一界。该引理的应用仍需上述接口；原剖分上径向邻域的流形结构及其与同一 $N$ 的对应仍待证明。
+
+## 追加锚（本行以下为增补区）

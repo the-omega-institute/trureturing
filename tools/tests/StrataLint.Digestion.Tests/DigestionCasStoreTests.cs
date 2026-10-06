@@ -7,7 +7,7 @@ namespace StrataLint.Digestion.Tests;
 public sealed class DigestionCasStoreTests
 {
     [Fact]
-    public void UnreferencedBlobIsRejectedAsAnOrphan()
+    public void BlobAddedWithoutAnEntryIsRejectedAsAnOrphan()
     {
         var referenced = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("referenced atom\n"));
         var orphan = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("orphan atom\n"));
@@ -16,9 +16,14 @@ public sealed class DigestionCasStoreTests
             new RawRepositoryEntry(referenced.RelativePath, referenced.Bytes),
             new RawRepositoryEntry(orphan.RelativePath, orphan.Bytes));
 
-        var evaluation = DigestionCasStore.Evaluate(document, snapshot);
+        var added = DigestionCasStore.Evaluate(
+            document,
+            snapshot,
+            RawChangeSet.Create([orphan.RelativePath]));
+        var wholeLedger = DigestionCasStore.Evaluate(document, snapshot);
 
-        Assert.Contains($"orphan CAS blob: {orphan.RelativePath}", evaluation.Findings);
+        Assert.Contains($"orphan CAS blob: {orphan.RelativePath}", added.Findings);
+        Assert.DoesNotContain(wholeLedger.Findings, finding => finding.StartsWith("orphan CAS blob", StringComparison.Ordinal));
     }
 
     [Fact]

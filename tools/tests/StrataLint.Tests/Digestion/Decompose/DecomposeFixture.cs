@@ -58,7 +58,9 @@ internal sealed class DecomposeFixture
     internal void Apply(string _, RawRepositorySnapshot expected,
         ImmutableArray<DigestionCasObject> cas, ImmutableArray<IngestCommand.LedgerUpdate> updates)
     {
-        Assert.Same(Current, expected);
+        Assert.Equal(
+            Current.Entries.OrderBy(static entry => entry.Path, StringComparer.Ordinal),
+            expected.Entries.OrderBy(static entry => entry.Path, StringComparer.Ordinal));
         Writes++;
         CasWrites = cas;
         LedgerWrites = updates;

@@ -404,7 +404,9 @@ public sealed class QuarantineAtomCommandTests
         {
             applyCalls++;
             Assert.Equal("synthetic-repository", repositoryRoot);
-            Assert.Same(before, current);
+            Assert.Equal(
+                before.Entries.OrderBy(static entry => entry.Path, StringComparer.Ordinal),
+                current.Entries.OrderBy(static entry => entry.Path, StringComparer.Ordinal));
             var update = Assert.Single(updates);
             var bytes = Assert.IsType<ImmutableArray<byte>>(update.Bytes);
             after = RawRepositorySnapshot.Create(current.Entries.Select(entry =>
