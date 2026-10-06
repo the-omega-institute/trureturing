@@ -29,7 +29,8 @@ internal sealed class RawCorrelationMomentIdentitiesDocument : IScribeDocumentDe
                     "The first six conjuncts state that H1, H2 and L3 are probabilities. "
                     + "The seventh is the exact disagreement mass d=2rho(1-5rho+12rho^2), "
                     + "the last is the squared-norm difference H2 L3-H1 L3=-2rho+10rho^2, "
-                    + "and the score mean alpha/8 times their sum is 3alpha rho^3>0."))),
+                    + "and the score mean alpha/8 times their sum is 3alpha rho^3>0. "
+                    + "The same finite sum gives the exact variance kappa_alpha d-9alpha^2rho^6."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
@@ -40,6 +41,8 @@ internal sealed class RawCorrelationMomentIdentitiesDocument : IScribeDocumentDe
         .Select(character => (byte)(character - '0')).ToArray());
     private static Formula Fraction(Formula a, Formula b) => Seq(Frac, Grp(a), Grp(b));
     private static Formula Sq(Formula a) => Seq(Par(a), Caret, Grp(N(2)));
+    private static Formula Pow(Formula a, int exponent) =>
+        Seq(Par(a), Caret, Grp(N(exponent)));
 
     private static Formula ResultFormula()
     {
@@ -51,6 +54,8 @@ internal sealed class RawCorrelationMomentIdentitiesDocument : IScribeDocumentDe
         var gap = Call("G", rho);
         var alpha = V("alpha");
         var score = Call("M", alpha, rho);
+        var variance = Call("V", alpha, rho);
+        var kap = Call("kappa", alpha);
         var bounds = new Formula.Aligned([
             Seq(N(0), Leq, h1, Leq, N(1), Sp, Land, Sp,
                 N(0), Leq, h2, Leq, N(1), Sp, Land, Sp,
@@ -58,8 +63,11 @@ internal sealed class RawCorrelationMomentIdentitiesDocument : IScribeDocumentDe
             Seq(d, Sp, Eq, Sp, Seq(N(2), rho, Par(Seq(N(1), Minus, N(5), rho, Plus,
                 N(12), Sq(rho)))), Sp, Land),
             Seq(gap, Sp, Eq, Sp, Seq(Minus, N(2), rho, Plus, N(10), Sq(rho)), Sp, Land),
-            Seq(score, Sp, Eq, Sp, Seq(N(3), alpha, rho, Sq(rho)), Sp, Land,
-                N(0), Lt, score)
+            Seq(score, Sp, Eq, Sp,
+                Seq(Fraction(alpha, N(8)), Par(Seq(d, Plus, gap))), Sp, Land),
+            Seq(score, Sp, Eq, Sp, Seq(N(3), alpha, rho, Sq(rho)), Sp, Land),
+            Seq(variance, Sp, Eq, Sp, Seq(kap, d, Minus, N(9), Sq(alpha), Pow(rho, 6)), Sp, Land),
+            Seq(N(0), Lt, score)
         ]);
         return Disp(Seq(Forall, Sp, rho, Comma, Sp, alpha, Sp, InMacro, Sp,
             Seq(Mathbb, Grp(V("R"))), Sp,
