@@ -29,7 +29,7 @@ structure Result (α : Type) where
   deriving Inhabited
 
 structure Memo where
-  heads : Std.HashMap (ExprStructEq × Bool × Bool) (Result Expr) := {}
+  heads : Std.HashMap (ExprStructEq × Bool × Bool × Array ExprStructEq) (Result Expr) := {}
   types : Std.HashMap (ExprStructEq × Array ExprStructEq) (Result Expr) := {}
   propositions : Std.HashMap (ExprStructEq × Array ExprStructEq) (Result Bool) := {}
   erased : Std.HashMap (USize × Array USize) (Expr × Array Expr × Result Expr) := {}
@@ -70,16 +70,17 @@ mutual
 /-- Administrative reduction of compiler terms. Opaque proof implementations
 stay opaque. Recursor rules and projection layouts are compiler data. -/
 partial def head (e : Expr) (depth : Nat := 0) (zeta : Bool := true)
-    (preserveDecisions : Bool := false) : M Expr := do
+    (preserveDecisions : Bool := false) (binders : Array Expr := #[]) : M Expr := do
   step depth
-  let key := (ExprStructEq.mk e, zeta, preserveDecisions)
+  let binders := if e.hasLooseBVars then binders else #[]
+  let key := (ExprStructEq.mk e, zeta, preserveDecisions, binders.map ExprStructEq.mk)
   if let some value := (← get).heads[key]? then return ← reuse value depth
-  let closed := !e.hasFVar
+  let closed := !e.hasFVar && !binders.any (·.hasFVar)
   if closed then
     if let some value := (← get).shared.heads[key]? then return ← reuse value depth
   let enclosingDepth := (← get).maxDepth
   modify fun state => { state with maxDepth := depth }
-  let value ← headCore e depth zeta preserveDecisions
+  let value ← headCore e depth zeta preserveDecisions binders
   let result := { value, height := (← get).maxDepth - depth : Result _ }
   modify fun state => { state with
     heads := state.heads.insert key result
@@ -89,9 +90,9 @@ partial def head (e : Expr) (depth : Nat := 0) (zeta : Bool := true)
   return value
 
 private partial def headCore (e : Expr) (depth : Nat := 0) (zeta : Bool := true)
-    (preserveDecisions : Bool := false) : M Expr := do
+    (preserveDecisions : Bool := false) (binders : Array Expr := #[]) : M Expr := do
   if preserveDecisions && e.isAppOfArity ``Decidable.decide 2 then return e
-  let child := fun e => head e (depth + 1) zeta preserveDecisions
+  let child := fun e => head e (depth + 1) zeta preserveDecisions binders
   match e with
   | .mdata _ body => child body
   | .letE _ _ value body _ => if zeta then child (body.instantiate1 value) else pure e
@@ -140,7 +141,7 @@ private partial def headCore (e : Expr) (depth : Nat := 0) (zeta : Bool := true)
       -- carries no runtime data. Inspect the pinned recursor and endpoints,
       -- never its proof body and never a type-checking or kernel operation.
       if name == ``Eq.rec && recursor.k && args.size >= 6 then
-        if ← sameShape args[1]! args[4]! (depth + 1) then
+        if ← sameShape args[1]! args[4]! (depth + 1) binders then
           let some rule := recursor.rules.find? (fun rule => rule.ctor == ``Eq.refl && rule.nfields == 0)
             | throw <| IO.userError "incomplete_closure:E7.equality_recursor_layout"
           let leading := args.extract 0 (recursor.numParams + recursor.numMotives + recursor.numMinors)
@@ -218,25 +219,26 @@ where typeShapeCore (e : Expr) (binders : Array Expr) (depth : Nat) : M Expr := 
   | .lit (.natVal _) => return mkConst ``Nat
   | .lit (.strVal _) => return mkConst ``String
   | .app function argument =>
-    let .forallE _ _ body _ ← head (← child function) (depth + 1)
+    let .forallE _ _ body _ ← head (← child function) (depth + 1) (binders := binders)
       | throw <| IO.userError s!"incomplete_closure:E7.compiled_application_type:{repr e}"
     return (body.instantiate1 argument).headBeta
   | .lam name domain body info =>
     let result ← typeShape body (binders.push domain) (depth + 1)
     return .forallE name domain result info
   | .forallE _ domain body _ =>
-    let .sort v ← head (← typeShape body (binders.push domain) (depth + 1)) (depth + 1)
+    let .sort v ← head (← typeShape body (binders.push domain) (depth + 1))
+        (depth + 1) (binders := binders.push domain)
       | throw <| IO.userError "incomplete_closure:E7.compiled_body_sort"
     -- For a compiler-checked proposition, imax u 0 = 0. The domain's
     -- declaration is still inspected by provenance; its sort adds no result data.
     if v.isZero then return mkSort .zero
-    let .sort u ← head (← child domain) (depth + 1)
+    let .sort u ← head (← child domain) (depth + 1) (binders := binders)
       | throw <| IO.userError "incomplete_closure:E7.compiled_domain_sort"
     return .sort ((Level.imax u v).normalize)
   | .letE _ _ value body _ => child (body.instantiate1 value)
   | .mdata _ body => child body
   | .proj name index value =>
-    let baseType ← head (← child value) (depth + 1)
+    let baseType ← head (← child value) (depth + 1) (binders := binders)
     unless baseType.getAppFn.isConstOf name do
       throw <| IO.userError s!"incomplete_closure:E7.compiled_projection_type:{name}"
     let .inductInfo shape ← constant name
@@ -251,15 +253,15 @@ where typeShapeCore (e : Expr) (binders : Array Expr) (depth : Nat) : M Expr := 
     let mut type := description.type.instantiateLevelParams description.levelParams levels
     for parameter in baseType.getAppArgs.extract 0 description.numParams do
       step depth
-      let .forallE _ _ body _ ← head type (depth + 1)
+      let .forallE _ _ body _ ← head type (depth + 1) (binders := binders)
         | throw <| IO.userError s!"incomplete_closure:E7.compiled_structure_parameters:{name}"
       type := body.instantiate1 parameter
     for previous in [:index] do
       step depth
-      let .forallE _ _ body _ ← head type (depth + 1)
+      let .forallE _ _ body _ ← head type (depth + 1) (binders := binders)
         | throw <| IO.userError s!"incomplete_closure:E7.compiled_structure_fields:{name}"
       type := body.instantiate1 (.proj name previous value)
-    let .forallE _ domain _ _ ← head type (depth + 1)
+    let .forallE _ domain _ _ ← head type (depth + 1) (binders := binders)
       | throw <| IO.userError s!"incomplete_closure:E7.compiled_projection_domain:{name}"
     return domain
   | .mvar _ => throw <| IO.userError "incomplete_closure:E7.metavariable"
@@ -282,7 +284,8 @@ partial def propositionShape (type : Expr) (binders : Array Expr := #[])
     | .forallE _ domain body _ => propositionShape body (binders.push domain) (depth + 1)
     | .letE _ _ value body _ => propositionShape (body.instantiate1 value) binders (depth + 1)
     | .mdata _ body => propositionShape body binders (depth + 1)
-    | _ => pure (← head (← typeShape type binders (depth + 1)) (depth + 1)).isProp
+    | _ => pure (← head (← typeShape type binders (depth + 1))
+        (depth + 1) (binders := binders)).isProp
   let result := { value, height := (← get).maxDepth - depth : Result _ }
   modify fun state => { state with
     propositions := state.propositions.insert key result
@@ -292,10 +295,24 @@ partial def propositionShape (type : Expr) (binders : Array Expr := #[])
       else state.shared }
   return value
 
-private partial def neutralLocal (e : Expr) : M Bool := do
+private partial def neutralLocal (e : Expr) (depth : Nat := 0)
+    (binders : Array Expr := #[]) : M Bool := do
+  step depth
   match e with
   | .fvar id => return ((← read).local? id).any (·.value?.isNone)
-  | .app function _ | .proj _ _ function => neutralLocal function
+  | .app function _ =>
+    if let .const name _ := e.getAppFn then
+      if let .recInfo recursor ← constant name then
+        let .inductInfo datatype ← constant recursor.getMajorInduct | return false
+        -- Multi-constructor data has neither proof irrelevance nor structure eta.
+        -- A recursor blocked on a neutral local remains neutral after reduction.
+        if datatype.ctors.length > 1 then
+          if let some major := e.getAppArgs[recursor.getMajorIdx]? then
+            if major.hasFVar && !(← propositionShape (← typeShape major binders) binders) then
+              return ← neutralLocal (← head major (depth + 1) (binders := binders))
+                (depth + 1) binders
+    neutralLocal function (depth + 1) binders
+  | .proj _ _ function => neutralLocal function (depth + 1) binders
   | _ => return false
 
 /-- Compare compiled data terms after bounded administrative computation.
@@ -349,16 +366,19 @@ private partial def sameShapeCore (left right : Expr) (depth : Nat := 0)
   -- Compiled proof terms are compared through their propositions. No proof
   -- implementation is read or checked, including for proof-valued class fields.
   let leftType ← typeShape left binders
+  let rightType ← typeShape right binders
+  -- Compiler-checked terms with distinct rigid types cannot be definitionally
+  -- equal. Reject this pair before computing either mathematical data value.
+  if ← apartTypes leftType rightType (depth + 1) binders then return false
   if ← propositionShape leftType binders (depth + 1) then
-    let rightType ← typeShape right binders
     if ← propositionShape rightType binders (depth + 1) then
       return ← sameShape leftType rightType (depth + 1) binders
-  let left ← head left depth (preserveDecisions := true)
+  let left ← head left depth (preserveDecisions := true) (binders := binders)
   -- A neutral free local cannot be introduced by reducing a closed term.
   -- Proof terms were compared through their propositions above.
-  if left.hasFVar && !right.hasFVar && (← neutralLocal left) then return false
-  let right ← head right depth (preserveDecisions := true)
-  if right.hasFVar && !left.hasFVar && (← neutralLocal right) then return false
+  if left.hasFVar && !right.hasFVar && (← neutralLocal left depth binders) then return false
+  let right ← head right depth (preserveDecisions := true) (binders := binders)
+  if right.hasFVar && !left.hasFVar && (← neutralLocal right depth binders) then return false
   if left == right then return true
   -- Decidable dictionaries for the same proposition determine the same Bool.
   -- Reification compares that proposition without running or synthesizing a dictionary.
@@ -379,12 +399,12 @@ private partial def sameShapeCore (left right : Expr) (depth : Nat := 0)
     unless n == m && i == j do return false
     compare b c
   | .lam _ domain body _, function =>
-    let .forallE _ functionDomain _ _ ← head (← typeShape function binders)
+    let .forallE _ functionDomain _ _ ← head (← typeShape function binders) (binders := binders)
       | return false
     unless ← compare domain functionDomain do return false
     sameShape body (mkApp (function.liftLooseBVars 0 1) (.bvar 0)) (depth + 1) (binders.push domain)
   | function, .lam _ domain body _ =>
-    let .forallE _ functionDomain _ _ ← head (← typeShape function binders)
+    let .forallE _ functionDomain _ _ ← head (← typeShape function binders) (binders := binders)
       | return false
     unless ← compare domain functionDomain do return false
     sameShape (mkApp (function.liftLooseBVars 0 1) (.bvar 0)) body (depth + 1) (binders.push domain)
@@ -397,6 +417,31 @@ private partial def sameShapeCore (left right : Expr) (depth : Nat := 0)
     unless n > 0 do return false
     compare tail (mkNatLit (n - 1))
   | _, _ => return false
+
+/-- Distinct rigid type heads cannot become the same type by computing their
+indices. Telescope domains and bodies are types; data arguments and proof
+implementations are not inspected by this negative type comparison. -/
+partial def apartTypes (left right : Expr) (depth : Nat := 0)
+    (binders : Array Expr := #[]) : M Bool := do
+  step depth
+  if left == right then return false
+  let left ← head left depth (binders := binders)
+  let right ← head right depth (binders := binders)
+  match left, right with
+  | .forallE _ a b _, .forallE _ c d _ =>
+    if ← apartTypes a c (depth + 1) binders then return true
+    apartTypes b d (depth + 1) (binders.push a)
+  | .sort a, .sort b => return a.normalize != b.normalize
+  | _, _ =>
+    let rigid := fun expression => do
+      let some name := expression.getAppFn.constName? | return false
+      return (← constant name) matches .inductInfo _
+    let leftRigid ← rigid left
+    let rightRigid ← rigid right
+    if leftRigid && rightRigid then
+      return left.getAppFn.constName! != right.getAppFn.constName!
+    return (leftRigid && (right.isForall || right.isSort)) ||
+      (rightRigid && (left.isForall || left.isSort))
 
 end
 
@@ -440,30 +485,6 @@ where eraseCore (e : Expr) (binders : Array Expr) (depth : Nat) : M Expr := do
   | .proj name index value => return .proj name index (← child value)
   | .mvar _ => throw <| IO.userError "incomplete_closure:E7.metavariable"
   | _ => return e
-
-/-- Distinct rigid type heads cannot become the same type by computing their
-indices. Telescope domains and bodies are types; data arguments and proof
-implementations are not inspected by this negative type comparison. -/
-partial def apartTypes (left right : Expr) (depth : Nat := 0) : M Bool := do
-  step depth
-  if left == right then return false
-  let left ← head left depth
-  let right ← head right depth
-  match left, right with
-  | .forallE _ a b _, .forallE _ c d _ =>
-    if ← apartTypes a c (depth + 1) then return true
-    apartTypes b d (depth + 1)
-  | .sort a, .sort b => return a.normalize != b.normalize
-  | _, _ =>
-    let rigid := fun expression => do
-      let some name := expression.getAppFn.constName? | return false
-      return (← constant name) matches .inductInfo _
-    let leftRigid ← rigid left
-    let rightRigid ← rigid right
-    if leftRigid && rightRigid then
-      return left.getAppFn.constName! != right.getAppFn.constName!
-    return (leftRigid && (right.isForall || right.isSort)) ||
-      (rightRigid && (left.isForall || left.isSort))
 
 /-- Scoped results require the exact same immutable declaration table and
 lexical context. Closed results can also be shared across lexical scopes. -/

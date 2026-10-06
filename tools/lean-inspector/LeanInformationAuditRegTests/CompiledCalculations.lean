@@ -45,6 +45,34 @@ unsafe def check : IO Unit := do
     (sameShape (mkFVar id) (mkConst ``True.intro))
   unless !apart && discarded && proofSame do
     throw <| IO.userError "compiled.local_neutral:closed_terms_and_proof_irrelevance"
+  let expensive := mkApp2 (mkConst ``Nat.decEq) (mkNatLit 2520) (mkNatLit 2519)
+  let (differentTypes, _) ← run context (sameShape (mkNatLit 0) expensive) 256
+  unless !differentTypes do
+    throw <| IO.userError "compiled.comparison:rigid_types_before_data"
+  let neutralRecursor := mkAppN (mkConst ``Nat.rec [1]) #[
+    .lam `index (mkConst ``Nat) (mkConst ``Nat) .default,
+    mkRawNatLit 0,
+    .lam `index (mkConst ``Nat) (.lam `previous (mkConst ``Nat) (mkRawNatLit 1) .default)
+      .default,
+    mkFVar id]
+  let (blocked, _) ← run localContext
+    (sameShape neutralRecursor (mkApp2 (mkConst ``Nat.gcd) (mkNatLit 2520) (mkNatLit 1))) 256
+  let letLocals := ({} : LocalContext).mkLetDecl id `x (mkConst ``Nat) (mkRawNatLit 0)
+  let (reduced, _) ← run {context with local? := letLocals.find?}
+    (sameShape neutralRecursor (mkRawNatLit 0)) 256
+  unless !blocked && reduced do
+    throw <| IO.userError "compiled.comparison:neutral_data_recursor_and_local_let"
+  let sourceType := Expr.bvar 0
+  let targetType := mkApp (.lam `value (mkConst ``Nat) (.bvar 0) .default) sourceType
+  let transport := mkAppN (mkConst ``Eq.rec [1, 1]) #[
+    mkConst ``Nat, sourceType, mkLambda `value .default (mkConst ``Nat)
+      (mkLambda `proof .default (mkApp3 (mkConst ``Eq [1]) (mkConst ``Nat) (.bvar 1) (.bvar 0))
+        (mkConst ``Nat)), mkNatLit 7, targetType,
+    TemplateAudit.proofPlaceholder
+      (mkApp3 (mkConst ``Eq [1]) (mkConst ``Nat) sourceType targetType)]
+  let (transported, _) ← run context (head transport (binders := #[mkConst ``Nat]))
+  unless transported == mkRawNatLit 7 do
+    throw <| IO.userError "compiled.comparison:equality_transport_binder_scope"
   let fingerprint := fun e => IO.ofExcept (TemplateAudit.compactRawIdentity [] e)
   let repeated := (List.range 18).foldl
     (fun term _ => mkApp2 (mkConst ``Nat.add) term term) value

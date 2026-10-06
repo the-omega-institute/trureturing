@@ -285,6 +285,10 @@ reconstruction, negative dependencies and catalog/seal checks. Fixed work and
 depth limits remain effective on shared expression calculations. Calculation
 memos retain the immutable compiled table and lexical context; cached results
 retain their checked depth.
+Equality transports retain their bound-variable context. Distinct rigid term
+types are compared before mathematical data values are reduced.
+A data recursor blocked on a neutral local is compared without computing a
+closed opponent; proof irrelevance and structure eta remain outside this rejection rule.
 
 Source identity checks reuse the compiler-checked `Registration.variation`
 field only for the exact complete generic Law body. All raw dependencies and
