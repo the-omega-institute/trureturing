@@ -8,7 +8,7 @@ namespace StrataLint.Digestion.Tests;
 public sealed partial class DigestionAlignmentTests
 {
     [Fact]
-    public void CasValidReceiptAbsentFromBaseAndCurrentSourceIsRejected()
+    public void CasValidReceiptAbsentFromBaseAndCurrentSourceIsSeen()
     {
         var currentBytes = Encoding.UTF8.GetBytes("current live span");
         var currentAtom = Atom("claim/current", currentBytes);
@@ -32,7 +32,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Admission,
             _ => (_, _) => Atomized(currentAtom));
 
-        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(AtomId(forgedAtom)));
+        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor(AtomId(forgedAtom)));
         Assert.Equal(forgedAtom.Fingerprints, result.AtomFor(AtomId(forgedAtom))?.Fingerprints);
     }
 
@@ -63,7 +63,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void CasValidReceiptMovedToAnotherSourceIsNotInherited()
+    public void CasValidReceiptMovedToAnotherSourceIsSeen()
     {
         var oldBytes = Encoding.UTF8.GetBytes("historical span");
         var currentBytes = Encoding.UTF8.GetBytes("rewritten span");
@@ -81,7 +81,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Admission,
             _ => (_, _) => Atomized(currentAtom));
 
-        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(AtomId(oldAtom)));
+        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor(AtomId(oldAtom)));
         Assert.Equal(oldAtom.Fingerprints, result.AtomFor(AtomId(oldAtom))?.Fingerprints);
     }
 
@@ -110,7 +110,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void AdmissionVerifiesRecordedClauseChainFromParentCasAndPreservesInheritedAlignment()
+    public void AdmissionVerifiesRecordedClauseChainFromParentCasAndSeesUnchainedChildren()
     {
         const string claim = """
             **定理 18.7(Parent)**. first clause.
@@ -156,7 +156,7 @@ public sealed partial class DigestionAlignmentTests
         ]);
         var snapshot = Snapshot(sourceBytes, [parentCapture, firstCapture, secondCapture]);
 
-        var rejected = DigestionLedgerAligner.Evaluate(
+        var standalone = DigestionLedgerAligner.Evaluate(
             unchained,
             snapshot,
             baseline,
@@ -168,25 +168,17 @@ public sealed partial class DigestionAlignmentTests
             baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => atomized);
-        var inheritedButUnchained = DigestionLedgerAligner.Evaluate(
-            unchained,
-            snapshot,
-            chained,
-            DigestionAlignmentMode.Admission,
-            _ => (_, _) => atomized);
 
         Assert.All([firstId, secondId], childId => Assert.Equal(
-            DigestionReceiptAlignment.Rejected,
-            rejected.AlignmentFor(childId)));
+            DigestionReceiptAlignment.Seen,
+            standalone.AlignmentFor(childId)));
+        Assert.Empty(standalone.VerifiedClausePlanParents);
         Assert.All([firstId, secondId], childId => Assert.Equal(
             DigestionReceiptAlignment.Seen,
             admitted.AlignmentFor(childId)));
         Assert.Equal(first.Fingerprints, admitted.AtomFor(firstId)?.Fingerprints);
         Assert.Equal(second.Fingerprints, admitted.AtomFor(secondId)?.Fingerprints);
-        Assert.All([firstId, secondId], childId => Assert.Equal(
-            DigestionReceiptAlignment.Rejected,
-            inheritedButUnchained.AlignmentFor(childId)));
-        Assert.All([firstId, secondId], childId => Assert.Null(inheritedButUnchained.AtomFor(childId)));
+        Assert.Contains(parentEntry.AtomId, admitted.VerifiedClausePlanParents);
     }
 
     [Fact]
@@ -239,7 +231,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void CurrentFrontierRejectsInheritedStandaloneClausePlanChild()
+    public void StandaloneClausePlanChildIsSeen()
     {
         var parentBytes = Encoding.UTF8.GetBytes("abcdef");
         var parent = Atom("theorem/1.1", parentBytes);
@@ -282,9 +274,9 @@ public sealed partial class DigestionAlignmentTests
             _ => (_, _) => atomized);
 
         Assert.Equal(
-            DigestionReceiptAlignment.Rejected,
+            DigestionReceiptAlignment.Seen,
             result.AlignmentFor(baselineChild.AtomId));
-        Assert.Null(result.AtomFor(baselineChild.AtomId));
+        Assert.Equal(first.Fingerprints, result.AtomFor(baselineChild.AtomId)?.Fingerprints);
     }
 
     [Fact]

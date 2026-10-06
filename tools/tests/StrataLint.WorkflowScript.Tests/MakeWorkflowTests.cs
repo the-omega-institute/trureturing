@@ -135,7 +135,7 @@ public sealed partial class MakeWorkflowTests
             Path.Combine(binDirectory, "dotnet"),
             """
             #!/usr/bin/env bash
-            [[ "$*" == *"echo-verify --emit --base synthetic-base"* ]] || exit 19
+            [[ "$*" == *"echo-verify --emit" ]] || exit 19
             printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
             """);
         File.SetUnixFileMode(
@@ -147,7 +147,7 @@ public sealed partial class MakeWorkflowTests
 
         var result = TestProcessRunner.Run(
             "/bin/bash",
-            ["-c", "PATH=\"$1:$PATH\" exec make --no-print-directory echo-residual-summary BASE=synthetic-base", "echo-make", binDirectory],
+            ["-c", "PATH=\"$1:$PATH\" exec make --no-print-directory echo-residual-summary", "echo-make", binDirectory],
             fixture.Path,
             BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
