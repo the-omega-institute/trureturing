@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Combinatorics/PatternMatchings/P13Correspondence
   - D5/S3/Combinatorics/PatternMatchings/P13Completions
   - D5/S3/Combinatorics/PatternMatchings/P13Counts
+  - D5/S3/Combinatorics/PatternMatchings/P13Series
 license: citation-only
 triage: anchor
 ---
@@ -38,10 +39,26 @@ continuation carriers, a forced-prefix and first-closure decomposition, and the 
 carrier. These results do not yet give the explicit P13 generating function or a closed coefficient formula, so the
 full enumeration part of Section 6, Question 1 remains open.
 
+The companion module `D5/S3/Combinatorics/PatternMatchings/P13Series` proves `P13.completion_functional_equation`
+for the concrete catalytic series `F(u,z) = Σ_{d≥0}(Σ_{m=0}^d c(m,d)u^m)z^d ∈ ℚ[u][[z]]`, where `c(m,d)` counts
+literal completions from an old single block of size `m`: `u` marks that size and `z` marks the `d` future closures.
+The proved support is `c(m,d)=0` for `m>d`, with `c(m,m)=1`, so `[z^d]F` has `u`-degree at most `d`. Its `u^0`
+coefficient is `A(z)=Σ_{n≥0}c(0,n)z^n=Σ_{n≥0}actualCount(n)z^n`, the ordinary series for the original P13-avoiding
+perfect matchings of `Fin(2n)`, including empty and disconnected matchings. The finite triangular recurrence yields
+`(u-1-z*u^2)*F = u-(1+z*u^2)*A+z*u^2*F(1/(1-z*u),z)`; the transformed marker is evaluated coefficientwise on
+finite polynomials, with each resulting `z` coefficient a finite sum. This proves the functional-equation step only:
+it does not supply an explicit `G`, prove `A=G`, give a closed all-n coefficient formula, or complete P13/Question 1.
+
+In Fatima Hessas’s thesis [On generating functions associated to patterns](https://dspace.ummto.dz/server/api/core/bitstreams/776a19a2-c9b8-4af6-898e-46fa091e1c59/content)
+(academic year 2023/2024), the inspected Theorems 3.1–3.2 concern ordinary matchings avoiding the single pattern 312
+or listed class-I pairs; Theorem 3.3 concerns set partitions. These theorem scopes do not provide an exact ordinary
+matching triple theorem for P13 = {132, 213, 321}.
+
 ## Verified locator
 
 DOI: 10.48550/arXiv.2609.08562
 
 URL: https://arxiv.org/abs/2609.08562v1
 
-- Locator: Section 4 and Figure 1 (matching patterns); Section 6, Question 1; the table of counts in Section 1.
+- Locator: Section 4 and Figure 1 (matching patterns); Section 6, Question 1; Table 2 (reported counts).
+- Formal locator: `D5/S3/Combinatorics/PatternMatchings/P13Series`, `P13.completion_functional_equation`.
