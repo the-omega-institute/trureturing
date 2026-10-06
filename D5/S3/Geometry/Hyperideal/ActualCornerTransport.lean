@@ -218,14 +218,17 @@ theorem actual_corner_transport (q : Pairing T) (u v : S → Corner T) (w : S �
     simp [chi,List.count_eq_zero.mpr hi,List.count_eq_zero.mpr hji]
   have count_sum (is : List (Slot T)) (f : Slot T → K) :
       (∑ i : Slot T, (is.count i : K) * f i) = (is.map f).sum := by
-    induction is with
-    | nil => simp
-    | cons j is ih =>
-      simp only [List.count_cons,beq_iff_eq,Nat.cast_add,Nat.cast_ite,
-        Nat.cast_one,Nat.cast_zero,add_mul,Finset.sum_add_distrib,List.map_cons,List.sum_cons]
-      simp only [ite_mul,one_mul,zero_mul]
-      rw [ih]
-      simp [add_comm]
+    rw [Finset.sum_list_map_count]
+    simp only [nsmul_eq_mul]
+    symm
+    simpa only [List.count_eq_countP, Bool.beq_eq_decide_eq] using
+      (Finset.sum_subset
+        (s₁ := is.toFinset) (s₂ := (Finset.univ : Finset (Slot T)))
+        (f := fun i : Slot T => (is.count i : K) * f i)
+        (Finset.subset_univ is.toFinset) (by
+          intro i _ hi
+          simp only [List.mem_toFinset] at hi
+          simp [List.count_eq_zero.mpr hi]))
   have telescoping : ∀ {x y : Corner T} {is : List (Slot T)}, Follows q x y is →
       ∀ c : Corner T,
       (is.map (fun i => ((if b i = c then 1 else 0) -
