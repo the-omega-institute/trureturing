@@ -3072,3 +3072,754 @@ $$
 第 13 章无限值域乘法任务的障碍、第 14 章高斯族及有限界面的限制、第 19、20、29、37、48、60 章的原生相位、来源、接缝、空间运输和有限到连续未决桥均保留。欧氏体积或拉普拉斯的点源稳定窗口与关系形状双曲度量是不同载体；赋予双曲位置意义须重给传播核和稳定条件。有限维密度矩阵中全部实际单次历史线性闭包只证明该固定量子合同的任务，不消除无限来源、扩大共同载体或任意原生取得问题。前述定理没有从无 $11$ 语法推导量子公设，也没有证明实际空间必为三维。
 
 ## 追加锚（本行以下为增补区）
+## 73. 来源、完整历史与共同物理替换
+
+**定义 73.1（原生来源与五模式的不同载体）。** 原生来源仍是自由有序二叉树
+
+$$
+T::=\alpha\mid\beta\mid\langle T,T\rangle,
+\qquad
+\rho(\alpha)=\beta,\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+树保留叶标签、左右顺序和括号；组成只计叶数，数量观察再给组成赋权。窗口占位是另一个观察：三位按低到高书写，合法模式为 $000,100,010,001,101$，依次记作 $N,2,3,5,25$。其中 $25$ 是两端同时占位，零层权重为 $2+5$，不是十进制二十五。$N$ 即已读到的 $\mathrm{null}=000$，与没有读取、结束、停止不同。这些约定及跨窗口守卫沿用钉版 [FIB 关系续篇几何，定义 1.1、1.3、2.1–2.4](https://github.com/the-omega-institute/trureturing/blob/89a68b6d8c6725f99b5e5f32e45c8b0b1857b53d/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)。树、窗口占位、加法组成和数值读数之间的观察映射可以遗忘信息，不能彼此认作同一来源。
+
+若另行采用第 61.1 条的正交量子实现，则
+
+$$
+\mathcal H_F=\mathbb C^5,
+\qquad (|N\rangle,|2\rangle,|3\rangle,|5\rangle,|25\rangle)
+$$
+
+是指定的单位正交基。$|N\rangle$ 是范数一的读零模式基向量，既不是零向量，也没有被指定为外部真空。这一 Hilbert 载体、任意相干制备和量子操作都是附加合同，不由原生树语法单独导出。以下用 $\varrho$ 表示密度算子，$\rho$ 专用于 FIB 替换。
+
+**定义 73.2（实际仪器及固定完整历史）。** 有限维载体上的实际仪器由有限结果和 Kraus 族给出：
+
+$$
+\mathcal J_y(\varrho)=\sum_\mu K_{y\mu}\varrho K_{y\mu}^\dagger,
+\qquad \sum_{y,\mu}K_{y\mu}^\dagger K_{y\mu}=I.
+$$
+
+每个分支完全正且迹不增加，总和保迹。允许的控制只依赖已经保留的结果、时钟和控制资料。固定完整历史 $h$ 后，沿该路径实际选择的控制和分支均固定，其复合为 $\mathcal J_h$；隐藏 Kraus 指标不是可供选择器使用的结果。定义
+
+$$
+E_h=\mathcal J_h^\dagger(I),\qquad
+p_{\varrho}(h)=\operatorname{tr}\mathcal J_h(\varrho).
+$$
+
+失败、停止及末端读出也属于记录。一个事件可以是同一完整协议中互斥历史的并，其效果是对应 $E_h$ 的和。
+
+**命题 73.3（历史概率线性，条件归一化另算）。** 对任意允许初态，包括载体内部的任意关联，
+
+$$
+0\le E_h\le I,
+\qquad p_{\varrho}(h)=\operatorname{tr}(E_h\varrho).
+$$
+
+只有 $p_{\varrho}(h)>0$ 时，条件态 $\mathcal J_h(\varrho)/p_{\varrho}(h)$ 才有定义。
+
+证明（73.3）。单分支的对偶为 $O\mapsto\sum_\mu K_{y\mu}^\dagger O K_{y\mu}$，保正且把单位送到不超过单位的算子。若 $0\le O\le I$，其像也介于零和单位之间。沿固定路径反复拉回单位即得效果界；反复使用迹循环性给概率公式。控制虽可随记录自适应，固定 $h$ 已固定每一步的 map，所以联合历史概率仍是初态的线性函数。条件概率是两个这种线性量的比值，不能把它当成新的线性效果；零概率处不取比值。完整协议各终端分支的总迹为一，故互斥事件求和仍给 $0\le E\le I$。$\square$
+
+Grigoletto–Ticozzi，[*Exact model reduction for discrete-time conditional quantum dynamics*, arXiv:2403.12575v2，§II.A–B、定义 1、问题 1及注记 1](https://arxiv.org/pdf/2403.12575v2)，讨论有限维、离散时间仪器的未归一化条件演化，要求约化模型对每个初态及每个结果序列保持指定输出；输出包含单位时也保持历史概率，再在正概率处恢复条件期望。这里借用的是这种历史与归一化的区分；它没有直接提供任意控制菜单下的近似 diamond 范数结论，也不是任意原生来源的量子化定理。
+
+**定义 73.4（一次未知输入的共同可组合替换）。** 固定 CPTP 映射
+
+$$
+\mathrm{Enc}:B(\mathcal H)\longrightarrow B(\mathcal K),\qquad
+\mathrm{Dec}:B(\mathcal K)\longrightarrow B(\mathcal H),\qquad
+\mathcal T=\mathrm{Dec}\circ\mathrm{Enc}.
+$$
+
+若任务是保持实际历史统计，则要求同一对编解码器满足
+
+$$
+\operatorname{tr}(E_h\mathcal T(\varrho))
+=\operatorname{tr}(E_h\varrho)
+\quad\text{对全部允许初态和全部允许历史 }h.
+$$
+
+解码器必须支持编码之后才选择的任一允许测量，不能随问题改换为已经知道答案的解码器。完全正性要求 $\mathcal T\otimes\mathrm{id}_R$ 对任何未触及参考系统 $R$ 的关联输入仍合法；仅在孤立输入上保正不足以保证这个条件。测量相对压缩与有限免费经典记录的资源约定见 Bluhm–Rauber–Wolf，[*Quantum Compression Relative to a Set of Measurements*, arXiv:1708.04898v4，定义 4.1](https://arxiv.org/pdf/1708.04898v4)：固定共同 CPTP 编解码、遍历全部输入态、只计中间量子维数。第 79 章将明确其免费经典 flag 合同。
+
+保持受限态族的统计与保持全部密度输入的统计是不同命题。第 75、79 章的刚性定理均明确使用后一个量词；不能从某个原生制备子集的统计保持直接引用它们。实际效果的线性张成仍按第 64 章定义，不自动改成生成乘法代数。
+
+## 74. 互补二元观测的复闭包与重数
+
+**假设 74.1（锐二元互补对）。** 在非零有限维复 Hilbert 空间 $\mathcal K$ 上，$A,B$ 是 Hermitian 算子，满足
+
+$$
+A^2=B^2=I,\qquad AB+BA=0.
+$$
+
+二元锐度意味着谱在 $\{1,-1\}$ 中；反交换是指定的互补关系，比名称不同或仅有 $AB\ne BA$ 更强。定义有向第三算子 $C=-iAB$。
+
+**定理 74.2（四维星代数与三个无迹方向）。** 在假设 74.1 下，
+
+$$
+C^\dagger=C,\quad C^2=I,\qquad
+AB=iC,\quad BC=iA,\quad CA=iB.
+$$
+
+反序乘积取负号，$\operatorname{span}_{\mathbb C}\{I,A,B,C\}$ 对乘法与伴随封闭。其 Hermitian 部分是四维实空间，三个非恒定关系方向为 $A,B,C$。
+
+证明（74.2）。$C^\dagger=iBA=-iAB=C$，且 $C^2=-ABAB=A^2B^2=I$。定义给 $AB=iC$；$BC=-iBAB=iA$，$CA=-iABA=iB$。这些等式及平方关系列出任意两基元的乘积，因此有限复线性组合的乘法不出此空间；基元自伴又给伴随封闭。四维性、无迹性及 Hermitian 系数的实性由下一条的具体分解同时得到。$\square$
+
+**定理 74.3（偶数维载体与 qubit 重数分解）。** 存在整数 $r\ge1$ 和一个酉基识别，使
+
+$$
+\mathcal K\simeq\mathbb C^2\otimes\mathbb C^r,
+\qquad
+A=Z\otimes I_r,\quad B=X\otimes I_r,\quad C=Y\otimes I_r.
+$$
+
+因而 $\dim_{\mathbb C}\mathcal K=2r$，所表示的代数恰为 $M_2(\mathbb C)\otimes I_r$；最小非平凡载体是 $\mathbb C^2$。
+
+证明（74.3）。设 $\mathcal K_\pm$ 为 $A$ 的 $\pm1$ 特征空间。若 $Av=v$，则 $ABv=-BAv=-Bv$，所以 $B$ 把 $\mathcal K_+$ 送到 $\mathcal K_-$；反向同理。$B^\dagger=B$、$B^2=I$ 使该映射酉且互逆，两空间维数相等。若一空间为零，另一空间也为零，与载体非零矛盾，故共同维数 $r\ge1$。取 $\mathcal K_+$ 的正交基 $e_j$，以 $f_j=Be_j$ 配对得到 $\mathcal K_-$ 的正交基；在顺序 $(e_1,\ldots,e_r,f_1,\ldots,f_r)$ 中，$A$ 是两对角块 $I_r,-I_r$，$B$ 交换两块，得到所列 $Z,X$，而 $-iZX=Y$ 给 $C$。
+
+标准 $I_2,X,Y,Z$ 的矩阵项独立且复线性张成 $M_2(\mathbb C)$，张量 $I_r$ 不改变独立性。若 $O=a_0I+a_AA+a_BB+a_CC$ 自伴，比较 $O^\dagger$ 并用独立性，得到各系数均实；故 Hermitian 部分实维四。$A,B,C$ 的两阶迹为零，张量后仍无迹，所以去掉恒定单位方向留下三个方向。$\square$
+
+这里复载体维数二、Hermitian 实维四、迹一切面的三个可变方向是三种不同计数。最小载体上的态为 $(I+xX+yY+zZ)/2$，正性给 $x^2+y^2+z^2\le1$，不是三个可同时锐取的经典轴。$r>1$ 时上述代数只观察 qubit 因子，其期望由约化 qubit 态决定；它不表达环境或重数态以及双方全部关联。完整 $2r$ 维迹一态有 $(2r)^2-1$ 个实参数，不能以三个方向替代。
+
+Pauli、Clifford 与旋转的结构是成熟数学。Baez，[*The Octonions*, Introduction](https://math.ucr.edu/home/baez/octonions/node1.html)，说明单位四元数群 $SU(2)$ 双覆盖 $SO(3)$，并将其置于 Clifford 与旋量背景中。这里的分解由以上矩阵证明给出；旋转对应没有授权任何新的原生门或真实空间轴。下面的完全正保持条件还比单纯代数闭包更强。
+
+## 75. 两个锐观测的共同 CPTP 保持刚性
+
+**命题 75.1（全态读出保持与对偶固定）。** 对固定通道 $\mathcal T$，置 $\Phi=\mathcal T^\dagger$。对 Hermitian $O$，若 $\operatorname{tr}(O\mathcal T(\varrho))=\operatorname{tr}(O\varrho)$ 对全部密度算子成立，则 $\Phi(O)=O$；反向也成立。二元 $A$ 的结果效果为 $(I\pm A)/2$，所以保持全部输入的二元概率等价于固定 $A$。
+
+证明（75.1）。对偶把概率等式变成 $\operatorname{tr}((\Phi(O)-O)\varrho)=0$。差为 Hermitian；取其每个特征向量的纯态投影，得每个特征值为零，所以差算子为零。反向直接代入；通道对偶固定 $I$，故两个二元效果与 $A$ 的保持等价。$\square$
+
+**定理 75.2（第三方向不可独立丢弃）。** 在假设 74.1 下，设
+
+$$
+\mathcal T(\varrho)=\sum_\nu K_\nu\varrho K_\nu^\dagger,
+\qquad \sum_\nu K_\nu^\dagger K_\nu=I.
+$$
+
+若 $\Phi(A)=A$、$\Phi(B)=B$，则每个 $K_\nu$ 同时与 $A,B,C$ 交换，且 $\Phi(C)=C$。在最小载体 $\mathbb C^2$ 上必有 $\mathcal T=\mathrm{id}$。一般重数分解上则 $K_\nu=I_2\otimes L_\nu$，故 $\mathcal T=\mathrm{id}_2\otimes\mathcal S$，其中 $\mathcal S$ 为重数空间上的 CPTP 通道。
+
+证明（75.2）。记 $[A,K]=AK-KA$。用 $A^2=I$、保迹和对偶定义逐项展开，得到
+
+$$
+\begin{aligned}
+\sum_\nu[A,K_\nu]^\dagger[A,K_\nu]
+&=\sum_\nu\bigl(K_\nu^\dagger K_\nu
+-K_\nu^\dagger A K_\nu A
+-AK_\nu^\dagger A K_\nu
++AK_\nu^\dagger K_\nu A\bigr)\\
+&=2I-\Phi(A)A-A\Phi(A)=0.
+\end{aligned}
+$$
+
+每项为正算子。对任意向量取二次型，非负数之和为零，所以每个 $[A,K_\nu]$ 都为零。对 $B$ 重复同一论证。于是每个 $K_\nu$ 与 $C=-iAB$ 交换，其伴随也与 $C$ 交换，故
+
+$$
+\Phi(C)=\sum_\nu K_\nu^\dagger C K_\nu
+=C\sum_\nu K_\nu^\dagger K_\nu=C.
+$$
+
+在第 74.3 条的基中，与 $Z\otimes I_r$ 交换的算子没有两块间的非对角角；再与 $X\otimes I_r$ 交换迫使两对角块相等，故它恰为 $I_2\otimes L$。保迹条件成为 $\sum L_\nu^\dagger L_\nu=I_r$，给所述通道。在 $r=1$ 时 $K_\nu=c_\nu I_2$、$\sum|c_\nu|^2=1$，因而 $\mathcal T(\varrho)=\varrho$ 对全部矩阵成立。$\square$
+
+第三方向即使不在实际读出列表中，也不能在上述共同物理替换中被删掉。这个论断不把第三方向升级为已授权的直接测量；它限制的是合法通道。重数 $r>1$ 时，选择 $\mathcal S$ 为重数因子的退相干或重置通道，仍固定整个 qubit 代数却可以改变联合态，说明“固定 qubit 关系”不等于“固定全部载体态”。全态量词同样必要：只准 $Z$ 对角输入时，$Z$ 基退相干对该态族同时保持 $Z$ 与 $X$ 的期望，却不是全态恒等通道。
+
+**命题 75.3（仅正性允许删相位，参考关联禁止）。** 在标准 qubit 基中，复线性映射
+
+$$
+\mathcal R(\varrho)=\frac{\varrho+\varrho^T}{2}
+$$
+
+保迹、保正，将 Bloch 向量 $(x,y,z)$ 送到 $(x,0,z)$，但不完全正。
+
+证明（75.3）。转置保迹并把正矩阵送到正矩阵，平均仍正；$X^T=X,Z^T=Z,Y^T=-Y$ 给所列响应。取归一化 Bell 向量 $|\Omega\rangle=(|00\rangle+|11\rangle)/\sqrt2$，令 $F$ 为交换两 qubit 的算子。归一化 Choi 算子为
+
+$$
+J_{\mathcal R}=(\mathrm{id}\otimes\mathcal R)(|\Omega\rangle\langle\Omega|)
+=\frac12|\Omega\rangle\langle\Omega|+\frac14F.
+$$
+
+$F$ 在三维对称空间取 $1$，在一维反对称空间取 $-1$。$|\Omega\rangle$ 是对称单位向量，所以其方向的特征值为 $3/4$，另两个对称方向为 $1/4$，反对称方向为 $-1/4$。它作用在合法 Bell 关联输入上产生负算子，因此不是 CP，不能作为定义 73.4 的替换。$\square$
+
+**定理 75.4（一般 qubit 通道的方向下界）。** 对任意 qubit CPTP 通道，不要求它幺正、unital 或 Pauli 对角，定义
+
+$$
+\lambda_i=\frac12\operatorname{tr}\bigl(\sigma_i\mathcal T(\sigma_i)\bigr),
+\qquad i=x,y,z.
+$$
+
+则 $\lambda_y\ge\lambda_x+\lambda_z-1$。若 $\lambda_x,\lambda_z\ge1-\epsilon$，其中 $\epsilon\ge0$，就有 $\lambda_y\ge1-2\epsilon$。
+
+证明（75.4）。每个 Kraus 算子唯一展开为 $K_\nu=a_{\nu0}I+a_{\nu x}X+a_{\nu y}Y+a_{\nu z}Z$。置 $p_j=\sum_\nu|a_{\nu j}|^2\ge0$。Pauli 的迹正交性及保迹条件的迹给
+
+$$
+\sum_jp_j=\frac12\sum_\nu\operatorname{tr}(K_\nu^\dagger K_\nu)=1.
+$$
+
+共轭 $\sigma_i\sigma_j\sigma_i$ 在 $j=0,i$ 时等于 $\sigma_j$，在另两方向时等于 $-\sigma_j$。展开 $\operatorname{tr}(\sigma_iK_\nu\sigma_iK_\nu^\dagger)$ 后，不同 Pauli 项的迹为零，故
+
+$$
+\lambda_i=p_0+p_i-\sum_{j\ne0,i}p_j=2(p_0+p_i)-1.
+$$
+
+因此 $1-\lambda_x+\lambda_y-\lambda_z=4p_y\ge0$，代入两个下界即得结论。$\square$
+
+这些 $\lambda_i$ 是各方向对自身的线性响应系数；通道可以另有平移及交叉响应。此不等式本身没有给完整通道保真度、所有状态的距离或 diamond 距离界。精确刚性依赖共同 CPTP map、锐平方关系和全态读出保持；上述近似方向结论不能替代这些精确条件。
+
+## 76. 五模式中的局部 qubit、质量与跨块相干
+
+**推论 76.1（全五态二元 Pauli 接口的维数障碍）。** $\mathbb C^5$ 上不存在同时满足 $A^2=B^2=I_5$、$AB=-BA$ 的 Hermitian 对。
+
+证明（76.1）。第 74.3 条已证明载体维数必须为 $2r$，而五为奇数。该障碍只排除作用于全部五模式的全局锐二元互补对；它不排除局部 qubit、其他三生成元代数或某种内部三维响应。$\square$
+
+**定义 76.2（自然互补占位块）。** 取
+
+$$
+P=\Pi_3+\Pi_{25},\qquad Q=I_5-P,\qquad
+\mathcal K_{\mathrm{loc}}=P\mathcal H_F
+=\operatorname{span}\{|3\rangle,|25\rangle\},
+$$
+
+以及按局部顺序 $(3,25)$ 的算子
+
+$$
+\begin{aligned}
+X_P&=|3\rangle\langle25|+|25\rangle\langle3|,\\
+Y_P&=-i|3\rangle\langle25|+i|25\rangle\langle3|,\\
+Z_P&=\Pi_3-\Pi_{25}.
+\end{aligned}
+$$
+
+模式 $010$ 与 $101$ 在三位上互补，此语法关系用于选择该块，不自动授予相干门。三个算子在 $Q$ 上均为零。
+
+**命题 76.3（局部正球及一般输入的质量）。** 有
+
+$$
+X_P^2=Y_P^2=Z_P^2=P,\qquad
+X_PY_P=iZ_P,\quad Y_PZ_P=iX_P,\quad Z_PX_P=iY_P.
+$$
+
+支撑于 $P$ 的归一化态唯一写成
+
+$$
+\varrho_P=\frac{P+xX_P+yY_P+zZ_P}{2},
+\qquad r=(x,y,z),\quad |r|\le1.
+$$
+
+对一般五态 $\varrho$，令 $p=\operatorname{tr}(P\varrho)\in[0,1]$。仅当 $p>0$ 时才定义条件向量 $r$，并有
+
+$$
+P\varrho P=\frac p2(P+r\cdot\sigma_P).
+$$
+
+当 $p=0$ 时 $P\varrho P=0$ 且 $P\varrho Q=0$，没有唯一的条件 Bloch 向量。
+
+证明（76.3）。限制到 $(3,25)$ 基后矩阵恰为标准 Pauli，直接相乘给平方及循环式；它们在完整五态上的平方为 $P\ne I_5$，所以不能当作全局 involution。局部 Hermitian 正交基 $P,X_P,Y_P,Z_P$ 给唯一展开，迹一把单位系数固定为 $1/2$。$(r\cdot\sigma_P)^2=|r|^2P$，故两局部特征值为 $(1\pm|r|)/2$，正性恰为球条件。一般压缩块是正算子，迹为 $p$；正迹时除以 $p$ 应用该结论。若 $p=0$，正算子的非负特征值之和为零，所以压缩块为零。对正 $\varrho$ 和任意 $u\in P\mathcal H_F,v\in Q\mathcal H_F$，正二次型的 Cauchy–Schwarz 不等式给
+
+$$
+|\langle u|\varrho|v\rangle|^2
+\le\langle u|\varrho|u\rangle\langle v|\varrho|v\rangle.
+$$
+
+第一因子为零时跨块项全为零，得最后断言；一般情况下该式仍约束跨块相干。$\square$
+
+条件 $r$ 没有包含质量 $p$。例如 $\varrho_p=p\Pi_3+(1-p)\Pi_N$，$0<p\le1$，有相同条件向量 $(0,0,1)$，但实际 $P$ 读出概率为 $p$。即使给定两个对角块 $P\varrho P,Q\varrho Q$，跨块项 $P\varrho Q$ 也可不同；第 78.3 条的同质量纯态将用同一行走显示这种差异。故局部态语法、局部块成员身份和实际操作下的自治是三个条件。
+
+Kribs–Laflamme–Poulin–Lesosky，[*Operator Quantum Error Correction*, arXiv:quant-ph/0504189v3，§2 的 noiseless subsystem 条件及§3 的 correctable triple](https://arxiv.org/pdf/quant-ph/0504189v3)，给有限维任意量子通道的受保护子系统与恢复框架。它要求关于指定误差 map 与恢复 map 的条件，不把任选二维支撑自动判为受保护块。本块是否持续存在仍须检查实际操作，下一章给出这个 $K$ 的具体结论。
+
+## 77. 动态支撑保持、复振幅泄漏与 Zeno 条件
+
+**定理 77.1（全部等待时间的保持判据）。** 设 $K$ 是有限维 Hermitian 矩阵，$P$ 为正交投影，$Q=I-P$，$U(\tau)=e^{-i\tau K}$。则
+
+$$
+U(\tau)P\mathcal H\subseteq P\mathcal H
+\quad\text{对全部 }\tau\ge0
+\quad\Longleftrightarrow\quad QKP=0.
+$$
+
+此时 $PKQ=0$，$[P,K]=0$，支撑也在全部实时间下保持。
+
+证明（77.1）。保持假设等价于 $QU(\tau)P=0$。有限矩阵指数可在零点取右范数导数，得 $-iQKP=0$。反向，Hermitian 性给 $PKQ=(QKP)^\dagger=0$，故 $K=PKP+QKQ$ 对 $P\mathcal H\oplus Q\mathcal H$ 块对角；各幂及指数均块对角，得所有时间保持。$\square$
+
+**命题 77.2（指定五模式行走的严格局部泄漏）。** 沿用第 63.1 条的附加行走，仍按 $(N,2,3,5,25)$ 排列：
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\1&0&0&0&1\\1&0&0&0&0\\1&0&0&0&1\\0&1&0&1&0
+\end{pmatrix},\qquad U(\tau)=e^{-i\tau K}.
+$$
+
+它不是原生组成矩阵 $M$。对第 76.2 条的 $P$，有 $PKP=0$，且若 $L=QKP$，则
+
+$$
+K|3\rangle=|N\rangle,\qquad
+K|25\rangle=|2\rangle+|5\rangle,\qquad
+L^\dagger L\big|_{P\mathcal H_F}=\begin{pmatrix}1&0\\0&2\end{pmatrix}.
+$$
+
+对任意复数 $a,b$、$|a|^2+|b|^2=1$ 及 $\psi=a|3\rangle+b|25\rangle$，
+
+$$
+\|QU(\tau)\psi\|^2
+=\tau^2(|a|^2+2|b|^2)+O(\tau^4).
+$$
+
+余项可在局部单位球上一致控制，每个非零局部向量均不能永久留在该块。
+
+证明（77.2）。所列两列直接给 $PKP=0$；其 $Q$ 像正交且范数平方分别为一、二，所以得到泄漏矩阵。为处理复振幅，不能仅从一阶振幅略去三次项。令 $M_2=QK^2P$，具体计算给
+
+$$
+M_2|3\rangle=|2\rangle+|5\rangle,
+\qquad M_2|25\rangle=2|N\rangle,
+\qquad
+L^\dagger M_2\big|_{P\mathcal H_F}=\begin{pmatrix}0&2\\2&0\end{pmatrix}.
+$$
+
+指数展开为 $QU(\tau)P=-i\tau L-\tau^2M_2/2+O(\tau^3)$。其范数平方的三次系数为
+
+$$
+2\operatorname{Re}\left\langle-iL\psi,-\tfrac12M_2\psi\right\rangle
+=\operatorname{Im}\langle\psi,L^\dagger M_2\psi\rangle=0,
+$$
+
+因为 $L^\dagger M_2$ Hermitian；明确地，该期望是 $2\overline a b+2\overline b a$，对复 $a,b$ 仍实。二次系数就是 $\langle\psi,L^\dagger L\psi\rangle$。三阶振幅余项与一阶主项的乘积为四阶，二阶项平方也是四阶。有限矩阵指数的尾界
+
+$$
+\left\|\sum_{n\ge m}\frac{(-i\tau K)^n}{n!}\right\|
+\le e^{|\tau|\|K\|}\frac{(|\tau|\|K\|)^m}{m!}
+$$
+
+给局部单位球上一致的余项界。归一化向量的二次系数至少为一，所以所有充分小的正 $\tau$ 都产生严格正泄漏。对非零向量归一化即可排除永久保持。$\square$
+
+一般仪器分支的单向支撑条件是 $QK_{y\mu}P=0$ 对每个实际 Kraus 算子成立；双向 reducing 才要求两个跨块角同时为零。这与钉版 [相干运输边界，假设 10.4、命题 10.5、命题 32.3](https://github.com/the-omega-institute/trureturing/blob/89a68b6d8c6725f99b5e5f32e45c8b0b1857b53d/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md)的逐分支持续性一致。合法初态语法与效果成员身份不能替代这些操作条件。
+
+**定理 77.3（附加无区分投影的有限维 Zeno 极限）。** 另行允许二结果 Lüders 测量 $\{P,Q\}$，它只区分块，不读取块内基标签。固定有限 $\tau$，每次等待 $\tau/N$ 后测量，保留全部结果。全成功历史的 Kraus 算子为
+
+$$
+W_N(\tau)=\left(Pe^{-i\tau K/N}P\right)^N.
+$$
+
+对任意有限维 Hermitian $K$，它在算子范数下趋于 $e^{-i\tau PKP}P$。对本例 $PKP=0$，极限就是 $P$；初态支撑于 $P$ 时全成功概率趋于一，成功后的局部态趋于原态。
+
+证明（77.3）。在 $P\mathcal H$ 上把 $P$ 当作单位，记 $H_P=PKP|_{P\mathcal H}$。指数尾界给
+
+$$
+Pe^{-i\tau K/N}P\big|_{P\mathcal H}
+=I_P-i\tau H_P/N+O(N^{-2}).
+$$
+
+与 $e^{-i\tau H_P/N}$ 的差为 $O(N^{-2})$，其中常数可对有界 $\tau$ 区间统一选取。前者为酉压缩，范数不超过一；后者酉。恒等式
+
+$$
+S^N-R^N=\sum_{j=0}^{N-1}S^{N-1-j}(S-R)R^j
+$$
+
+因而把 $N$ 步差控制为 $NO(N^{-2})=O(N^{-1})$，而 $R^N=e^{-i\tau H_P}$。延拓到全载体时两者在 $Q$ 上都为零，给范数收敛。本例 $H_P=0$，每压缩步为 $I_P+O(N^{-2})$，故全成功算子趋于 $P$。对支撑于 $P$ 的 $\varrho$，未归一化成功输出 $W_N\varrho W_N^\dagger\to\varrho$，迹趋于一，正概率处的归一化遂有同一极限。$\square$
+
+Facchi–Pascazio，[*Quantum Zeno dynamics: mathematical and physical aspects*, arXiv:0903.3297v1，§3、§5 的有界 Hamiltonian 乘积公式](https://arxiv.org/pdf/0903.3297v1)，给相同的有限维或有界算子背景。一般 Zeno 有效生成元 $PKP$ 可以非零，保持子空间并不意味着冻结态；本例冻结来自具体的 $PKP=0$。有限 $N$ 的失败分支并未删除，每次投影都是新增操作许可。极限不提供无限快测量的免费实现或费用保证。若要得到持续而非冻结的非平凡局部循环，仍须额外指定块内生成元、纠错或保护机制。
+
+## 78. 局部三循环与全局相位提升的选择
+
+**定义 78.1（局部有向树表示）。** 在第 76.2 条的块内，令 $B(U,W)=(UW-WU)/(2i)$，定义
+
+$$
+q(\alpha)=X_P,\qquad q(\beta)=Y_P,
+\qquad q(\langle s,t\rangle)=B(q(s),q(t)).
+$$
+
+$\gamma=\rho(\beta)=\langle\beta,\alpha\rangle$ 的像为 $-Z_P$。该括号是一项表示规则，不是输入密度算子的 CP 更新。
+
+**命题 78.2（三循环的 SU(2) 提升）。** 有
+
+$$
+B(Y_P,X_P)=-Z_P,\quad B(-Z_P,Y_P)=X_P,\quad
+B(X_P,-Z_P)=Y_P.
+$$
+
+令
+
+$$
+S=X_P+Y_P-Z_P,\qquad V=\frac{P+iS}{2}.
+$$
+
+则 $V^\dagger V=VV^\dagger=P$，且
+
+$$
+VX_PV^\dagger=Y_P,\qquad
+VY_PV^\dagger=-Z_P,\qquad
+V(-Z_P)V^\dagger=X_P,\qquad V^3=-P.
+$$
+
+局部密度算子的共轭三次为恒等。
+
+证明（78.2）。第 76.3 条的 Pauli 乘法与反序符号直接给三条括号式。不同 Pauli 反交换，故 $S^2=3P$，于是
+
+$$
+V^\dagger V=(P-iS)(P+iS)/4=P,
+\quad V^2=(-P+iS)/2,\quad V^3=-P.
+$$
+
+为明确共轭方向，写 $n=(1,1,-1)$、$S=n\cdot\sigma_P$。Pauli 乘法给
+
+$$
+S\sigma_{P,i}S=2n_iS-3\sigma_{P,i},\qquad
+V\sigma_{P,i}V^\dagger
+=\frac14\bigl(\sigma_{P,i}+i[S,\sigma_{P,i}]+S\sigma_{P,i}S\bigr).
+$$
+
+分别代入 $X_P,Y_P,Z_P$，所得为 $Y_P,-Z_P,-X_P$，即所列方向。$V^3=-P$ 在块内仅为标量相位，故其对局部密度算子的三次共轭恒等。$\square$
+
+酉共轭保持上述括号；在两个叶上已经有 $q\rho=\operatorname{Ad}_Vq$，对二叉节点用括号相容性作结构归纳，得到该式对全树成立。因此有限表示可有三周期，但原生树并未被商掉。对 $T_j=\rho^j(\alpha)$，原生结构递推 $T_{j+2}=\langle T_{j+1},T_j\rangle$ 使叶数满足初值 $1,1$ 的 Fibonacci 递推，所以叶数 $F_{j+1}$ 无界增长；有限表示周期不恢复这些来源。例如 $q(\langle\alpha,\alpha\rangle)=0$ 也已证明表示不忠实。这里的 $V$ 是附加候选门，不是由原生替换取得的酉实现。
+
+**命题 78.3（同一局部共轭的两种全局周期）。** 在五模式上取
+
+$$
+\widetilde V=V+Q,\qquad \widetilde V'=-V+Q.
+$$
+
+两者酉且对局部 Pauli 给相同共轭。然而
+
+$$
+\widetilde V^3=-P+Q,\qquad \widetilde V^6=I_5,
+\qquad (\widetilde V')^3=I_5.
+$$
+
+前者三次共轭固定两个对角块，却把 $P\varrho Q$ 与 $Q\varrho P$ 变号。此差异可被已有的实际行走及终端模式测量区分。
+
+证明（78.3）。$VQ=QV=0$，故块对角扩展的酉性来自 $V^\dagger V=P$ 与 $Q^2=Q$。幂只在各自块内计算，给 $V^3+Q=-P+Q$，六次为单位；$(-V)^3+Q=P+Q=I_5$。局部标量负号在一次共轭中相消，所以局部三循环不能选择两种扩展之一。对 $W=-P+Q$，直接展开
+
+$$
+W\varrho W^\dagger=P\varrho P+Q\varrho Q-P\varrho Q-Q\varrho P.
+$$
+
+具体取 $\Omega_\pm=(|2\rangle\pm|3\rangle)/\sqrt2$。$W\Omega_+=\Omega_-$，两纯态在 $P,Q$ 上的对角块分别相同，均有 $p=1/2$，却有相反跨块相干。已有的同一个 $K$ 满足
+
+$$
+\langle N|K|\Omega_+\rangle=\sqrt2,
+\qquad \langle N|K|\Omega_-\rangle=0,
+\qquad K\Omega_-=|25\rangle/\sqrt2\ne0.
+$$
+
+从 $\Omega_\pm$ 所在二部图的 $\{2,3,5\}$ 部到 $N$ 只有奇次路径，故实际等待 $\tau$ 后终端读 $\Pi_N$ 给
+
+$$
+p_N(\tau\mid\Omega_+)=2\tau^2+O(\tau^4),\qquad
+p_N(\tau\mid\Omega_-)=O(\tau^6).
+$$
+
+第二式来自其一阶幅为零且下一可能项为三阶；有限指数尾界控制余项。所以充分小的正等待就区分这两态。$K\Omega_-\ne0$ 也明确说明它不是第 63.2 条那种全时暗核态。$\square$
+
+$\widetilde V$ 本身阶六而 $\widetilde V'$ 阶三，局部伴随作用却相同；不能由局部 Pauli 周期推出强制的全局量子 FIB 六周期。Baez 上引 Introduction 中的 $SU(2)$ 双覆盖只说明局部旋转可以有符号不同的酉提升。选择相对补空间的相位及允许该门仍是额外合同，既不消除树来源历史，也不证明原生相位取得或空间旋转许可。
+
+## 79. 实际可见维数与单份未知态的量子存储
+
+**约定 79.1（复用指定实际效果证书）。** 使用第 65.1 条的三个实际菜单，不替换仪器：对角菜单保留五模式 Lüders 分支及明确使对角统计闭合的动作；行走菜单加入同一个 $K$ 的全部非负连续等待，仍只用这些实际 Lüders 分支，并允许按已保留记录选有限续接；相位扩充菜单再允许独立模式相位前置。第 65.2–65.4 条已经给出它们的实际效果实张成维数为 $5,15,25$。
+
+特别地，行走菜单的固定帧为
+
+$$
+D=\operatorname{diag}(1,i,i,i,1),\qquad A=-iD^\dagger KD,
+\qquad D^\dagger U(\tau)D=e^{\tau A}.
+$$
+
+$A$ 实反对称，实际历史效果在该帧中实对称。这里直接使用第 65.3 条的完整整数证书：次数零至四的累积秩 $5,9,12,14,15$，其指定十五列行列式为 $-72$；所以实际行走效果的张成恰为 $D\operatorname{Sym}_5(\mathbb R)D^\dagger$。这是一项既有结果的应用，不另立秩计算。保持这个实际张成，与保持 $C^*$ 生成代数，是不同要求；Bluhm–Rauber–Wolf 上引文推论 8.5 也给出生成代数相同而压缩维数不同的情形。
+
+**定理 79.2（实对称读出保持已迫使全通道恒等）。** 在 $\mathbb C^d$ 上，设 $\mathcal T$ 为 CPTP，且对全部密度输入、全部实对称 $E$ 满足
+
+$$
+\operatorname{tr}(E\mathcal T(\varrho))=\operatorname{tr}(E\varrho).
+$$
+
+则 $\mathcal T=\mathrm{id}$。对任一固定酉帧 $D$，若保持的是 $D\operatorname{Sym}_d(\mathbb R)D^\dagger$，结论相同。
+
+证明（79.2）。任取实单位向量 $v$，$P_v=|v\rangle\langle v|$ 为实对称投影。输入取 $P_v$、测试也取 $P_v$，便有 $\operatorname{tr}(P_v\mathcal T(P_v))=1$。输出为正的迹一矩阵，因此其在 $v^\perp$ 上的质量为零。正二次型的 Cauchy–Schwarz 进一步使跨角为零，所以输出恰为 $P_v$。
+
+在任意 Kraus 表示 $\mathcal T(\varrho)=\sum_\nu K_\nu\varrho K_\nu^\dagger$ 中，对 $w\perp v$ 有
+
+$$
+0=\langle w|\mathcal T(P_v)|w\rangle
+=\sum_\nu|\langle w|K_\nu v\rangle|^2.
+$$
+
+每项非负，故每个 $K_\nu v$ 都与 $v$ 共线。先取所有实标准基 $e_i$，得 $K_\nu e_i=c_{\nu i}e_i$；再取实 $(e_i+e_j)/\sqrt2$，其共线性迫使 $c_{\nu i}=c_{\nu j}$。对 $d=1$ 结论直接成立；对 $d\ge2$，所有系数相等，故 $K_\nu=c_\nu I_d$。保迹给 $\sum_\nu|c_\nu|^2=1$，所以通道在全部复矩阵上恒等，连隐藏的虚相干也被保留。
+
+一般帧中定义 $\widehat{\mathcal T}(X)=D^\dagger\mathcal T(DXD^\dagger)D$，它仍为 CPTP，且保持全部实对称期望，故为恒等，原通道也恒等。证明没有假设 Kraus 矩阵为实。$\square$
+
+本定理也可用全体实对称效果 $0\le E\le I$ 陈述，因为它们包含全部实纯投影并张成实对称空间。实际菜单不必逐个允许这些投影；第 65.3 条已证明它们属于实际效果的线性张成，保持全部实际概率后线性延拓即可使用它们。这里没有新增测量许可，也没有先把张成换成生成代数。线性统计可以忽略虚反对称部分，物理 CP 遗忘通道却受到额外限制，第 75.3 条就是二维反例。
+
+**定义 79.3（免费有限 flag 的单份端口合同）。** 给一份未知 $\mathbb C^5$ 输入，固定同一个编码和状态解码供后来选择的全部允许实验使用。允许任意有限经典 flag 集 $F$，中间记忆代数为
+
+$$
+\bigoplus_{f\in F}M_q(\mathbb C).
+$$
+
+只计公共量子端口维数 $q\ge1$，经典标签免费。一般编码分支 $\mathrm{Enc}_f$ 完全正、总编码保迹，可以依赖整个输入；不要求 flag 是模式标签。解码为各整块 CPTP map $\mathrm{Dec}_f:M_q\to M_5$ 的和。全部未知量子信息必须经过这个端口；没有隐藏量子旁路、另存原输入或预共享纠缠。固定辅助态及其丢弃可吸收入编解码。有限标签不等于从一份未知态取得无限精度经典描述。
+
+此合同采用 Bluhm–Rauber–Wolf 上引文定义 4.1 的 $M_q\otimes\mathbb C^{|F|}$ 资源；其定义使用全部输入及同一个 CPTP 复合来保持指定 Hermitian 集的期望。本文实际历史集合的保持先归为其有限维线性张成，再应用该资源约定。下界由下面的 Kraus 秩证明给出，不从任意生成代数的最大块计数直接借来。
+
+**定理 79.4（同一实际菜单的精确单份量子成本）。** 在定义 79.3 下，三个菜单的最小端口为
+
+| 本章实际菜单 | 实际效果实维数 | 最小量子端口 $q$ |
+| --- | --- | --- |
+| $79\!:\!\text{对角菜单}$ | $5$ | $1$ |
+| $79\!:\!\text{全非负等待行走加模式 Lüders}$ | $15$ | $5$ |
+| $79\!:\!\text{再加模式相位前置}$ | $25$ | $5$ |
+
+证明（79.4）。行走菜单的全态统计保持，通过约定 79.1 的实际张成和定理 79.2 强制 $\mathcal T=\mathrm{Dec}\,\mathrm{Enc}=\mathrm{id}_5$。相位扩充菜单包含它，所以同样强制恒等。
+
+令编码第 $f$ 分支 Kraus 算子为 $E_{f,a}:\mathbb C^5\to\mathbb C^q$，解码第 $f$ 整块 Kraus 算子为 $R_{f,b}:\mathbb C^q\to\mathbb C^5$。复合通道的 Kraus 算子为 $C_{f,b,a}=R_{f,b}E_{f,a}$，每一个秩不超过 $q$。恒等通道固定所有实纯投影，定理 79.2 证明中的正项逐项论证适用于这任一 Kraus 表示，因此每个 $C_{f,b,a}=c_{f,b,a}I_5$。保迹迫使 $\sum|c_{f,b,a}|^2=1$，至少一个系数非零，该复合算子秩为五，故 $q\ge5$。$q=5$ 时取单一 flag、恒等编解码即达到上界。标签数虽可任意有限增长，却不能改变各复合 Kraus 经过同一 $q$ 端口的秩界；解码必须在每个整块上 CPTP，而不是只在某组编码像上形式定义。
+
+对角菜单取 $q=1$、$F=\{N,2,3,5,25\}$，编码 $\mathrm{Enc}_s(\varrho)=\operatorname{tr}(\Pi_s\varrho)$，解码把非负标量 $u$ 送到 $u\Pi_s$。各整块解码完全正且保迹，复合为 $\sum_s\Pi_s\varrho\Pi_s$，精确保留对角菜单的全部实际历史概率。$q\ge1$ 是端口定义中的最小正维数，故此上界已最优。$\square$
+
+十五个可见线性效果因而可以要求五维量子端口，即使一般五态还有实际行走菜单不直接区分的虚相干。这个成本属于一份未知输入、免费有限经典 flag、无旁路、共同精确 CPTP 解码的合同。它不是比特数、单次实验取得的实参数数目、物理空间维数，也不是多份渐近源编码、受限已知态族、逐问题解码或近似恢复的成本。第 65.4 条的归一化统计维数 $4,14,24$ 仍用于另一种线性预测优化；经典有限状态或读出下界不能替代这里的量子端口证明。
+
+## 80. 仅经典记录的单份 qubit 近似基准
+
+**定义 80.1（有限测量—制备合同与最坏误差）。** 给一份未知 qubit，测量后只保留有限经典结果，再据结果制备输出；没有量子侧通道、留存输入或纠缠辅助旁路。通道为
+
+$$
+\mathcal T(\varrho)=\sum_k\operatorname{tr}(E_k\varrho)\sigma_k,
+\qquad E_k\ge0,\quad \sum_kE_k=I,
+$$
+
+其中 $\sigma_k$ 是制备的密度算子。定义
+
+$$
+\epsilon(\mathcal T)=\sup_{\varrho\in\mathcal D(\mathbb C^2)}
+\frac12\|\mathcal T(\varrho)-\varrho\|_1.
+$$
+
+此处取有限结果已足够达到下面的最优值；若改用无限结果，须另规定可测、可积的 POVM 与制备核，不能把无定义的求和作为操作。
+
+**定理 80.2（单份测量—制备的精确 minimax 误差）。** 在定义 80.1 下，
+
+$$
+\inf_{\mathcal T\text{ 为有限测量—制备}}\epsilon(\mathcal T)=\frac13.
+$$
+
+证明（80.2）。每个非零效果可唯一写成 $E_k=\alpha_k(I+n_k\cdot\sigma)$，其中 $\alpha_k=\operatorname{tr}(E_k)/2>0$，正性给 $|n_k|\le1$；零效果取 $\alpha_k=0,n_k=0$。POVM 归一化给 $\sum_k\alpha_k=1$、$\sum_k\alpha_kn_k=0$。写 $\sigma_k=(I+s_k\cdot\sigma)/2$、$|s_k|\le1$。输入 Bloch 向量为 $r$ 时结果概率为 $\alpha_k(1+n_k\cdot r)$，输出向量因而为
+
+$$
+r'=t+Ar,\qquad
+ t=\sum_k\alpha_ks_k,\qquad
+ A=\sum_k\alpha_ks_kn_k^T.
+$$
+
+这里的 $A$ 是三阶实响应矩阵，与第 74 章的二元算子没有识别关系。逐项 Cauchy–Schwarz 给
+
+$$
+\operatorname{tr}A=\sum_k\alpha_k(s_k\cdot n_k)
+\le\sum_k\alpha_k|s_k||n_k|\le1.
+$$
+
+对六个纯态 $r=\pm e_i$，$i=x,y,z$，输入投影与输出的重叠为 $[1+r\cdot(t+Ar)]/2$。正负配对消掉 $t$，六态平均为
+
+$$
+\frac16\sum_{i,\pm}\operatorname{tr}\bigl(\varrho_{\pm e_i}\mathcal T(\varrho_{\pm e_i})\bigr)
+=\frac12+\frac{\operatorname{tr}A}{6}\le\frac23.
+$$
+
+至少一个输入纯态 $\varrho_v$ 的重叠不超过 $2/3$。用它本身的投影作二元效果，原输入概率为一，输出不超过 $2/3$，故迹距离至少为 $1/3$。这使用 Hermitian 无迹差的正负谱分解：任一效果的概率差不超过 $\|\Delta\|_1/2$。所以每个允许通道的最坏误差都至少为 $1/3$。
+
+为达到下界，均匀随机选 $X,Y,Z$ 的一个进行锐测量，再制备对应结果本征态。将随机选择和结果合为六个有限标签，得到
+
+$$
+E_{i,\pm}=\frac{I\pm\sigma_i}{6},\qquad
+\sigma_{i,\pm}=\frac{I\pm\sigma_i}{2}.
+$$
+
+此 POVM 总和为单位，输出向量为 $r/3$。两 Bloch 态的迹距离为其向量差长度的一半，故
+
+$$
+\frac12\|\mathcal T(\varrho_r)-\varrho_r\|_1
+=\frac{|r-r/3|}{2}=\frac{|r|}{3}\le\frac13.
+$$
+
+纯态达到等号，因而这个有限通道的最坏误差恰为 $1/3$，与通用下界相合。$\square$
+
+Diósi，[*Single Qubit Estimation from Repeated Unsharp Measurements*, arXiv:quant-ph/0205150v1，摘要及§1 的式 (1)–(2)](https://arxiv.org/pdf/quant-ph/0205150v1)，陈述对随机未知单份纯 qubit 的平均估计保真度上限 $2/3$，并讨论随机方向锐测量及重复弱测量的取得。该来源中的平均纯态估计目标与本章遍历全部密度态的最坏迹误差不同；本章上下界均由上面的六态平均与有限达到构造自行证明。重复测量同一个系统不会增加独立未知副本，也不会从一份态精确取得三个连续实坐标。经典有限状态或 Hofstadter 读出常数没有作为此量子估计与存储基准的前提。
+
+## 81. 任意联合初态下的闭 Hamiltonian 自治
+
+**定义 81.1（全联合来源的瞬时自治纤维）。** 令 $\mathcal H_A=\mathbb C^2$、$\mathcal H_E$ 为非零有限维环境，$H$ 是 $\mathcal H_A\otimes\mathcal H_E$ 上固定 Hermitian 矩阵。闭演化满足 $\dot\varrho=-i[H,\varrho]$。称局部瞬时变化只依赖当前局部态，若对任意两个联合密度算子 $\varrho,\sigma$，只要 $\operatorname{Tr}_E\varrho=\operatorname{Tr}_E\sigma$，便有
+
+$$
+\operatorname{Tr}_E\bigl(-i[H,\varrho]\bigr)
+=\operatorname{Tr}_E\bigl(-i[H,\sigma]\bigr).
+$$
+
+量词包含所有初始关联，没有预设乘积制备、固定环境态或环境重置。
+
+**引理 81.2（纤维条件与局部 Heisenberg 代数等价）。** 定义 81.1 等价于
+
+$$
+i[H,A\otimes I_E]\in M_2(\mathbb C)\otimes I_E
+\quad\text{对每个局部 }A\in M_2(\mathbb C).
+$$
+
+证明（81.2）。先取 Hermitian $A$，令 $L_A=i[H,A\otimes I_E]$，它也 Hermitian。局部期望的导数为
+
+$$
+\operatorname{tr}\bigl((A\otimes I_E)(-i[H,\varrho])\bigr)
+=\operatorname{tr}(L_A\varrho).
+$$
+
+若 $L_A=M_A\otimes I_E$，导数就是 $\operatorname{tr}(M_A\operatorname{Tr}_E\varrho)$，所以对同一局部态的纤维不变；全体 Hermitian $A$ 的迹配对非退化，便推出局部导数算子相同。
+
+反向，设纤维条件成立。任取 Hermitian $D$ 且 $\operatorname{Tr}_E D=0$，其总迹也为零。令环境维数为 $m$；对充分小 $u>0$，$I_{2m}/(2m)\pm uD$ 均为密度算子，而且局部约化态相同。纤维条件及上述导数配对遂给 $\operatorname{tr}(L_AD)=0$。定义
+
+$$
+M_A=\frac1m\operatorname{Tr}_E L_A,
+\qquad R_A=L_A-M_A\otimes I_E.
+$$
+
+$R_A$ Hermitian 且 $\operatorname{Tr}_E R_A=0$，所以可以取 $D=R_A$。另一方面 $\operatorname{tr}((M_A\otimes I_E)R_A)=\operatorname{tr}(M_A\operatorname{Tr}_E R_A)=0$，因而
+
+$$
+0=\operatorname{tr}(L_AR_A)=\operatorname{tr}(R_A^2).
+$$
+
+Hermitian 平方的迹是非负特征值平方之和，故 $R_A=0$，$L_A=M_A\otimes I_E$。任意复矩阵是两个 Hermitian 矩阵的复线性组合，交换子的线性性将结论延伸到全部 $A$。$\square$
+
+**定理 81.3（强闭自治合同排除耦合项）。** 定义 81.1 成立，当且仅当
+
+$$
+H=H_A\otimes I_E+I_2\otimes H_E
+$$
+
+对某些 Hermitian $H_A,H_E$ 成立。此时局部态在全部时间按 $e^{-itH_A}$ 酉演化，即使初态关联也自治。
+
+证明（81.3）。以 Pauli 正交基展开
+
+$$
+H=I_2\otimes B_0+X\otimes B_x+Y\otimes B_y+Z\otimes B_z,
+$$
+
+其中 $B_j=\tfrac12\operatorname{Tr}_A((\sigma_j\otimes I_E)H)$，$\sigma_0=I_2$。部分迹在局部因子上的循环性使这些系数 Hermitian。Pauli 交换关系给
+
+$$
+i[H,X\otimes I_E]=2Z\otimes B_y-2Y\otimes B_z.
+$$
+
+由引理 81.2，此算子属于局部代数。分别以 $Z,Y$ 的局部迹配对抽取系数，说明 $B_y,B_z$ 必为标量乘 $I_E$，因为局部代数的每个 Pauli 系数都只能是标量单位。同理
+
+$$
+i[H,Y\otimes I_E]=-2Z\otimes B_x+2X\otimes B_z
+$$
+
+迫使 $B_x$ 也为标量单位。写 $B_i=b_iI_E$、$b_i\in\mathbb R$，令 $H_A=b_xX+b_yY+b_zZ$、$H_E=B_0$，即得分解；一个标量单位项可在两部分之间重分配而不影响结论。
+
+反向，局部交换子为 $i[H_A,A]\otimes I_E$，由引理知瞬时自治。两 Hamiltonian 项交换，故全酉因子化为 $e^{-itH_A}\otimes e^{-itH_E}$；环境酉不改变部分迹，所以
+
+$$
+\operatorname{Tr}_E\varrho(t)
+=e^{-itH_A}(\operatorname{Tr}_E\varrho(0))e^{itH_A},
+$$
+
+没有对初始相关性作任何限制。$\square$
+
+例如环境也为 qubit、$H=Z\otimes Z$ 时，联合态 $|+\rangle\langle+|\otimes\Pi_0$ 与 $|+\rangle\langle+|\otimes\Pi_1$ 有相同局部态，但 $i[H,Y\otimes I]=2X\otimes Z$ 的期望分别为 $2,-2$。只给局部态确实不能确定该耦合的局部瞬时变化。
+
+本章结论限于有限维环境、固定闭 Hamiltonian、全部联合来源的强合同。它没有排除受限制备族上的自治、有效 Markov 模型、环境重置、增加记忆或响应块，以及满足实际纠错条件的受保护子系统。Kribs–Laflamme–Poulin–Lesosky 上引 OQEC 的引理 2.3、定理 2.5 和§3 针对指定通道及恢复的噪声子系统，属于另一组操作条件；它不替代本章的全联合初态量词。新增联合边界资料在这里表示环境和关联，不能自动解释为额外物理空间轴。
+
+## 82. 递归完整历史的参考稳定误差
+
+**定义 82.1（保留记录的完全动作与相容约化）。** 固定有限维原载体 $\mathcal H$ 与边界载体 $\mathcal B$。状态包括实际保留的有限经典测量、停止、失败、时钟及控制寄存器；经典寄存器以正交标签的块对角态表示。一次完整动作 $\mathcal T_a$ 是 CPTP，把各仪器分支及其保留结果一起写入后继态，不先取条件归一化。停止后可补恒等步骤，形成长度至多 $N$ 的同一有限时域。
+
+编码 $\eta:B(\mathcal H)\to B(\mathcal B)$ 固定且 CPTP，对全部实际保留的记录与控制标签忠实保留其类型和值。约化动作 $\overline{\mathcal T}_a$ 也 CPTP，使用同一可见控制和记录，并更新相容的记录寄存器。若策略自适应，它必须是这些保留数据的同一个函数，不可另依赖未编码的内部资料、隐藏 Kraus 指标或已丢弃历史。需要的误差合同为
+
+$$
+\frac12\|\eta\mathcal T_a-\overline{\mathcal T}_a\eta\|_\diamond
+\le\delta_a
+$$
+
+对实际菜单及实际需要的块控制动作一致成立。diamond 范数取任意未触及有限参考系统 $R$，对所有输入矩阵的迹范数放大取上确界；特别地，上式对任意输入密度算子与其参考关联成立。原记录若不能容纳全部时域，须先扩到该任务实际所需的有限记录载体，不能以末端局部读数替代完整记录。
+
+比较对象是原演化经 $\eta$ 得到的完整记录—边界输出，与约化演化的同类型输出。共同的 CPTP 末端读出或输出解码可再作用于二者。若所需输出是原载体上的某个量子输出，必须另有相容输出接口 $\mathcal F=\mathrm{Dec}_{\mathrm{out}}\eta$；仅有边界误差式不凭空恢复编码已舍弃的原系统输出。
+
+**定理 82.2（任意参考下的有限完整历史误差）。** 对一列相容完整动作，设第 $j$ 步的误差上界为 $\delta_j$。初始原联合态为 $\varrho_0$，初始约化联合态为 $\sigma_0$，两者共用未触及参考 $R$，并满足
+
+$$
+D\bigl((\eta\otimes\mathrm{id}_R)(\varrho_0),\sigma_0\bigr)
+\le\epsilon_0,\qquad D(\xi,\zeta)=\tfrac12\|\xi-\zeta\|_1.
+$$
+
+则最多 $N$ 步后的完整记录—输出误差不超过
+
+$$
+\epsilon_0+\sum_{j=1}^{N}\delta_j.
+$$
+
+均匀 $\delta_j\le\delta$ 时上界为 $\epsilon_0+N\delta$；共同 CPTP 末端读出后的误差也不超过该值。
+
+证明（82.2）。为简洁略去各 map 上的 $\otimes\mathrm{id}_R$，它们实际一直存在。设原态与约化态分别为 $\varrho_j=\mathcal T_j(\varrho_{j-1})$、$\sigma_j=\overline{\mathcal T}_j(\sigma_{j-1})$，令 $e_j=D(\eta\varrho_j,\sigma_j)$。加减 $\overline{\mathcal T}_j\eta(\varrho_{j-1})$，得到
+
+$$
+\begin{aligned}
+e_j&\le\frac12\|\eta\mathcal T_j(\varrho_{j-1})
+-\overline{\mathcal T}_j\eta(\varrho_{j-1})\|_1\\
+&\quad+D\bigl(\overline{\mathcal T}_j\eta(\varrho_{j-1}),
+\overline{\mathcal T}_j(\sigma_{j-1})\bigr)\\
+&\le\delta_j+e_{j-1}.
+\end{aligned}
+$$
+
+第一项用参考稳定的一步 diamond 假设；第二项用 CPTP 的迹距离收缩。收缩可直接由 Hermitian 差 $\Delta=\Delta_+-\Delta_-$ 的 Jordan 分解证明：CP 把两正部分送到正算子，保迹保持其迹，三角不等式给 $\|\Lambda(\Delta)\|_1\le\operatorname{tr}\Delta_++\operatorname{tr}\Delta_- =\|\Delta\|_1$。对参考扩展仍为 CPTP，故同一证明适用。迭代递推即得结论，末端 CPTP 再收缩。
+
+等价的 map 望远镜恒等式是
+
+$$
+\begin{aligned}
+&\eta\mathcal T_N\cdots\mathcal T_1
+-\overline{\mathcal T}_N\cdots\overline{\mathcal T}_1\eta\\
+&=\sum_{j=1}^{N}
+\overline{\mathcal T}_N\cdots\overline{\mathcal T}_{j+1}
+(\eta\mathcal T_j-\overline{\mathcal T}_j\eta)
+\mathcal T_{j-1}\cdots\mathcal T_1.
+\end{aligned}
+$$
+
+各项在原前缀产生的合法关联态上应用一步误差，再由约化后缀收缩；初始边界误差另由全约化串收缩。这也说明为何不得遗漏 $\epsilon_0$。$\square$
+
+**命题 82.3（自适应与增长时域的适用条件）。** 定理 82.2 适用于由保留记录选择的自适应策略，只要在每一步把策略实现为同一记录上的块控制 CPTP 动作，并满足定义 82.1 的误差合同。对一族递归任务，$\delta_j\to0$ 单独不保证增长时域 $N_j$ 的总误差趋于零；$N_j\delta_j\to0$ 是均匀步误差的充分增量条件，加上 $\epsilon_{0,j}\to0$ 才给总误差趋于零。
+
+证明（82.3）。在一个当前记录标签上，策略选定的动作及其记录更新固定。各标签的动作组合为整体 CPTP map；对保留标签的块对角关联态，各块的迹范数相加，若同一个编码及同一套相容约化对各块均有参考稳定误差 $\delta$，以该块概率乘其单位态误差并求和就仍不超过 $\delta$。因此可以逐步使用定理 82.2，而无须按偶然走到的历史另选编解码。更一般的控制实现直接使用假设中已含的块控制 diamond 界。各单字母分别存在某个最优约化、却不共享编码或记录，并不能推出这个受控动作界。
+
+增长时域的反例可完全经典：原系统每步写成功，约化系统在尚未失败时以概率 $\delta_j$ 写失败并进入吸收失败状态，之后保留失败记录。编码为恒等，初始完全相同，每步动作是成功动作与失败动作的概率混合，参考稳定的一步误差不超过 $\delta_j$。在 $N_j$ 步中“至少一次失败”的实际记录概率差为 $1-(1-\delta_j)^{N_j}$。取 $\delta_j=1/j,N_j=j$，$j\ge2$，这个差趋于 $1-e^{-1}>0$，尽管步误差趋于零。每个成员仍使用有限记录和有限时域，例子不需要无限记录载体。反之 $N_j\delta_j\to0$ 与初始误差趋零时，定理 82.2 的上界趋零，故总误差趋零。$\square$
+
+这个乘积条件只是充分条件，不声称必要、总被达到或控制任意无限历史；不同任务可能有更强结构、抵消或较小实际误差。逐步非均匀界使用 $\sum_{k=1}^{N_j}\delta_{j,k}$，而不是各步误差分别趋零。
+
+**命题 82.4（罕见成功的归一化可以放大误差）。** 令成功、失败为正交经典标签 $S,F$，输出 $|0\rangle,|1\rangle$ 正交，$\tau$ 为同一失败输出。对 $0<p\le1$，取
+
+$$
+\begin{aligned}
+\xi_p&=p|S\rangle\langle S|\otimes\Pi_0
++(1-p)|F\rangle\langle F|\otimes\tau,\\
+\zeta_p&=p|S\rangle\langle S|\otimes\Pi_1
++(1-p)|F\rangle\langle F|\otimes\tau.
+\end{aligned}
+$$
+
+则完整记录态的迹距离为 $p$，而成功条件态的距离为一。故没有成功概率下界时，完整记录小误差不推出统一的条件小误差。
+
+证明（82.4）。失败块差为零，成功块差是 $p(\Pi_0-\Pi_1)$，迹范数为 $2p$，所以完整距离为 $p$；除以相同成功质量 $p$ 后得到两个正交纯态，距离一。若两过程的成功概率同为 $p\ge p_{\min}>0$，成功块的未归一化迹范数差不超过完整差，于是条件距离至多完整距离除以 $p_{\min}$。概率不同则还须计入归一化常数的差，不能沿用相同质量等式。$\square$
+
+Grigoletto–Ticozzi 上引文的§II、问题 1及§IV 的精确条件模型约化保持指定未归一化历史输出并由其恢复条件量；其原合同与定理 82.2 中的任意参考、共同 CPTP 编码和近似 diamond 界不同。这里的望远镜界在已声明的强误差条件下自行证明，未从该文自动借入，也没有由删除失败记录得到条件保证。
+
+## 83. 最小可组合三方向量子关系块
+
+**定理 83.1（互补、完全正性与保持的统一结论）。** 在非零有限复载体上指定 Hermitian 二元锐观测 $A,B$，满足 $A^2=B^2=I$、$AB=-BA$。有向 $C=-iAB$ 完成所表示的 $M_2(\mathbb C)\otimes I_r$ 代数，载体维数为 $2r$；最小非平凡载体为二，且其完整迹一态有三个实关系方向。在同一个 CPTP 边界替换对全部密度来源保持 $A,B$ 读出的条件下，$C$ 也必须固定；最小载体上替换必为恒等。
+
+若 $r>1$，固定的是 qubit 因子代数，重数及全部联合态不必固定。要将此关系块解释为持续局部系统，还必须另给实际逐分支不泄漏或受保护子系统条件；要解释为物理三维空间，还必须另给忠实实际运输、度量及接缝的桥梁。
+
+证明（83.1）。第 74.2–74.3 条给闭包、重数和最小载体，二阶 Hermitian 的 Pauli 展开把迹一态参数固定为三个实数，正性限制为 Bloch 球。全态读出保持由第 75.1 条等价于对偶固定 $A,B$，第 75.2 条的正交换子平方和迫使全部 Kraus 交换，从而固定 $C$；$r=1$ 时每个 Kraus 标量，通道恒等。$r>1$ 时每个 Kraus 为 $I_2\otimes L_\nu$，允许重数通道改变联合态，所以不能强化为全载体恒等。第 77.1 条提供闭 Hamiltonian 支撑保持的另一个判据，实际仪器还需逐 Kraus 支撑条件；第 77.2 条的指定五模式局部块恰不满足它。以上推导均是载体与操作的关系，没有构造实际空间运输或其 metric、因果及拼接 map，故不解除这些物理桥梁。$\square$
+
+**推论 83.2（五模式与局部周期不能代替完整边界）。** 在本卷指定的五模式合同中，完整系统不能拥有作用于全五态的上述 qubit 二元接口；$P=\Pi_3+\Pi_{25}$ 虽承载局部 Pauli，却会在现有 $K$ 下泄漏。额外反复投影能在固定有限时间的 Zeno 极限中将该局部块冻结；附加局部门的三循环又可有不同全局相位提升。已有行走实际效果的十五维张成，在第 79.3 条的精确单份共同解码合同中，仍要求五维量子端口。
+
+证明（83.2）。奇维障碍由第 76.1 条给出。局部块的泄漏矩阵 $\operatorname{diag}(1,2)$ 在每个非零局部方向均正，第 77.2 条排除永久留存；$PKP=0$ 与第 77.3 条给新增投影合同的冻结极限。第 78.3 条的 $V+Q$ 与 $-V+Q$ 有相同局部三循环而分别为六阶、三阶，且前者三轮后的跨块变号被实际后续行走读取。第 79.1 条直接复用第 65 章的实际菜单证书，再由第 79.2–79.4 条证明全态 CPTP 恒等与端口秩下界。故这些结论既不把局部周期当成原树周期，也不把可见维数当作端口或空间维数。$\square$
+
+**假设 83.3（原生与物理解释仍需的桥梁）。** 可组合论证的条件链为：原生 FIB 来源及严格接缝，经已指定的表示与制备进入互补观测载体；共同 CP 遗忘约束给关系保持；实际动力学及逐分支支撑给持续性；保留控制、失败和全部历史后，参考稳定的一步误差给有限任务的总预算。各箭头都必须有实际对象、同源映射、允许操作和量词，不能由相同数字、名称或有限表示的周期补出。
+
+第 38–72 章关于树来源、窗口进位与筛选、共同振幅及 Gram、局部和联合制备、付费取得与保持、相位获取与控制、原生量子化、无界递归任务、连续空间与因果、实际运输、度量及严格接缝的未决桥继续保留。第 13 章无界值域任务和第 72.2 条的有限到连续条件也没有被这里的有限矩阵合同消除。锐二元互补对不是由五种占位自动取得的原生公设，新增 $V$ 与 $\{P,Q\}$ 也不属于无需授权的原生操作；局部正球或环境关联信息没有自动变成三条或更多物理轴。OQEC、Pauli/Clifford、双覆盖、Zeno 与测量相对压缩是按各自条件使用的成熟工具，本卷综合只承诺上述明确合同内的结论。
+
+完整历史误差还依赖第 82 章的共同 CPTP 编码、相容记录控制、任意参考界和有限时域；罕见成功须另给概率下界才有统一条件误差。有限线性预测、物理量子存储、单次未知态取得与实际空间运输是不同任务，不能因三方向、十五效果或五模式而互相代替。物理三空间完成仍要求忠实运输与度量接缝证明。
+
+## 追加锚（本行以下为增补区）
