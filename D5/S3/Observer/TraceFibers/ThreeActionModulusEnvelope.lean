@@ -20,10 +20,10 @@ namespace D5.S3.Observer.TraceFibers.ThreeActionModulusEnvelope
 
 open D5.S3.Observer.TraceFibers.FixedFiberPairModulus
 
-def shape (w : List Action) : ℝ × ℝ :=
+private def shape (w : List Action) : ℝ × ℝ :=
   (wordMatrix w 1 1 - wordMatrix w 0 0, wordMatrix w 1 0)
 
-theorem short_word_shapes (w : List Action) (hw : w.length ≤ 3) :
+private theorem short_word_shapes (w : List Action) (hw : w.length ≤ 3) :
     shape w = (0, 0) ∨ shape w = (0, 1) ∨ shape w = (1, 1) ∨
       shape w = (0, 2) ∨ shape w = (-1, 1) ∨ shape w = (2, 1) ∨
       shape w = (2, 2) := by
@@ -58,33 +58,11 @@ theorem short_word_shapes (w : List Action) (hw : w.length ≤ 3) :
                   simp only [List.length_cons, Nat.reduceAdd] at hw
                   omega
 
-def root (μ α τ : ℝ) : ℝ :=
-  (Real.sqrt (μ ^ 2 + 4 * α * τ) - μ) / (2 * α)
+private def phiS (r h d : ℝ) : ℝ := (2 - h) * d + d ^ 2 / r
 
-def clipped (x μ α τ : ℝ) : ℝ := min x (root μ α τ)
+private def phiA (r h d : ℝ) : ℝ := (2 - 2 * h) * d + 2 * d ^ 2 / r
 
-def omegaS (x r h τ : ℝ) : ℝ := clipped x (2 - h) (1 / r) τ
-
-def omegaA (x r h τ : ℝ) : ℝ := clipped x (2 - 2 * h) (2 / r) τ
-
-def phiS (r h d : ℝ) : ℝ := (2 - h) * d + d ^ 2 / r
-
-def phiA (r h d : ℝ) : ℝ := (2 - 2 * h) * d + 2 * d ^ 2 / r
-
-theorem root_equation (μ α τ : ℝ) (hα : 0 < α) (hμ : 0 ≤ μ) (hτ : 0 ≤ τ) :
-    0 ≤ root μ α τ ∧ μ * root μ α τ + α * (root μ α τ) ^ 2 = τ := by
-  dsimp [root]
-  have hrad : 0 ≤ μ ^ 2 + 4 * α * τ := by positivity
-  have hs := Real.sq_sqrt hrad
-  have hn := Real.sqrt_nonneg (μ ^ 2 + 4 * α * τ)
-  have hm : μ ≤ Real.sqrt (μ ^ 2 + 4 * α * τ) := by
-    nlinarith
-  constructor
-  · exact div_nonneg (sub_nonneg.mpr hm) (by positivity)
-  · field_simp
-    nlinarith
-
-theorem three_action_modulus_envelope
+private theorem finite_envelope_facts
     (k : ℕ) (h x r τ : ℝ)
     (hk : 1 ≤ k) (hh : 0 < h) (hh1 : h < 1) (hr : 0 < r)
     (hx : x = (k + h) * r) (hτ : 0 ≤ τ) :
@@ -117,5 +95,143 @@ theorem three_action_modulus_envelope
     ring
   · intro w hw
     exact short_word_shapes w hw
+
+private theorem scalar_formula_of_result
+    (upper : Bool) (executed continuation : List Action) (k : ℕ)
+    (x ζ τ : ℝ) (hx : 0 < x) (hζ : 0 < ζ) (hk : 1 ≤ k)
+    (hexecuted : wordMatrix executed = secondMatrix upper k)
+    (he : 0 < (if upper then (wordMatrix continuation * wordMatrix executed) 1 0
+      else (wordMatrix continuation * wordMatrix executed) 0 1))
+    (hμ : 0 ≤ |(wordMatrix continuation * wordMatrix executed) 1 1 -
+      (wordMatrix continuation * wordMatrix executed) 0 0| -
+      (if upper then (wordMatrix continuation * wordMatrix executed) 1 0
+        else (wordMatrix continuation * wordMatrix executed) 0 1) / ζ * x)
+    (hτ : 0 ≤ τ) :
+    let B := wordMatrix continuation * wordMatrix executed
+    let e := if upper then B 1 0 else B 0 1
+    let D := B 1 1 - B 0 0
+    let α := e / ζ
+    let μ := |D| - α * x
+    scalarModulus upper x ζ B τ =
+      min x ((Real.sqrt (μ ^ 2 + 4 * α * τ) - μ) / (2 * α)) := by
+  have hres := result upper executed continuation k x ζ τ hx hζ hk hexecuted hτ he hμ
+  dsimp only at hres
+  rcases hres with ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, hscalar, _, _, _⟩
+  exact hscalar
+
+/-- The finite word classification and the fixed-fiber scalar interface share
+    one conclusion; the entry hypotheses identify the two displayed words with
+    their corresponding cumulative matrices. -/
+theorem three_action_modulus_envelope
+    (k : ℕ) (h x r τ : ℝ) (executed : List Action)
+    (hk : 1 ≤ k) (hh : 0 < h) (hh1 : h < 1) (hr : 0 < r)
+    (hx : x = (k + h) * r) (hτ : 0 ≤ τ)
+    (hexecuted : wordMatrix executed = secondMatrix true k)
+    (hS_e : (wordMatrix [Action.advance, Action.exchange, Action.advance] *
+      wordMatrix executed) 1 0 = 1)
+    (hS_D : |(wordMatrix [Action.advance, Action.exchange, Action.advance] *
+      wordMatrix executed) 1 1 -
+      (wordMatrix [Action.advance, Action.exchange, Action.advance] *
+        wordMatrix executed) 0 0| = k + 2)
+    (hA_e : (wordMatrix [Action.advance, Action.advance, Action.advance] *
+      wordMatrix executed) 1 0 = 2)
+    (hA_D : |(wordMatrix [Action.advance, Action.advance, Action.advance] *
+      wordMatrix executed) 1 1 -
+      (wordMatrix [Action.advance, Action.advance, Action.advance] *
+        wordMatrix executed) 0 0| = 2 * k + 2) :
+    let τstar := 2 * r * h
+    let dstar := r * h
+    let ts := (k + 2) * x
+    let ta := 2 * (k + 1) * x
+    τstar = 2 * dstar ∧ 0 < τstar ∧ τstar < ts ∧ ts < ta ∧
+    (∀ d, phiA r h d - phiS r h d = d * (d / r - h)) ∧
+    (∀ w : List Action, w.length ≤ 3 →
+      shape w = (0, 0) ∨ shape w = (0, 1) ∨ shape w = (1, 1) ∨
+        shape w = (0, 2) ∨ shape w = (-1, 1) ∨ shape w = (2, 1) ∨
+        shape w = (2, 2)) ∧
+    scalarModulus true x r
+        (wordMatrix [Action.advance, Action.exchange, Action.advance] * wordMatrix executed) τ =
+      min x ((Real.sqrt ((2 - h) ^ 2 + 4 * τ / r) - (2 - h)) / (2 / r)) ∧
+    scalarModulus true x r
+        (wordMatrix [Action.advance, Action.advance, Action.advance] * wordMatrix executed) τ =
+      min x ((Real.sqrt ((2 - 2 * h) ^ 2 + 8 * τ / r) - (2 - 2 * h)) / (4 / r)) := by
+  dsimp
+  have hbase := finite_envelope_facts k h x r τ hk hh hh1 hr hx hτ
+  have hxpos : 0 < x := by rw [hx]; positivity
+  have hr0 : r ≠ 0 := ne_of_gt hr
+  have hS_e_pos : 0 < (wordMatrix [Action.advance, Action.exchange, Action.advance] *
+      wordMatrix executed) 1 0 := by rw [hS_e]; norm_num
+  have hA_e_pos : 0 < (wordMatrix [Action.advance, Action.advance, Action.advance] *
+      wordMatrix executed) 1 0 := by rw [hA_e]; norm_num
+  have hS_mu : 0 ≤ |(wordMatrix [Action.advance, Action.exchange, Action.advance] *
+      wordMatrix executed) 1 1 - (wordMatrix [Action.advance, Action.exchange, Action.advance] *
+      wordMatrix executed) 0 0| - (wordMatrix [Action.advance, Action.exchange, Action.advance] *
+      wordMatrix executed) 1 0 / r * x := by
+    rw [hS_D, hS_e, hx]
+    have hk0 : (0 : ℝ) ≤ k := by exact_mod_cast (Nat.zero_le k)
+    field_simp
+    nlinarith
+  have hA_mu : 0 ≤ |(wordMatrix [Action.advance, Action.advance, Action.advance] *
+      wordMatrix executed) 1 1 - (wordMatrix [Action.advance, Action.advance, Action.advance] *
+      wordMatrix executed) 0 0| - (wordMatrix [Action.advance, Action.advance, Action.advance] *
+      wordMatrix executed) 1 0 / r * x := by
+    rw [hA_D, hA_e, hx]
+    have hk0 : (0 : ℝ) ≤ k := by exact_mod_cast (Nat.zero_le k)
+    field_simp
+    nlinarith
+  have hS := scalar_formula_of_result true executed
+    [Action.advance, Action.exchange, Action.advance] k x r τ hxpos hr hk hexecuted hS_e_pos hS_mu hτ
+  have hA := scalar_formula_of_result true executed
+    [Action.advance, Action.advance, Action.advance] k x r τ hxpos hr hk hexecuted hA_e_pos hA_mu hτ
+  refine ⟨hbase.1, hbase.2.1, hbase.2.2.1, hbase.2.2.2.1, hbase.2.2.2.2.1,
+    hbase.2.2.2.2.2, ?_, ?_⟩
+  · dsimp at hS
+    have hlinear : (k : ℝ) + 2 - 1 / r * x = 2 - h := by
+      rw [hx]
+      field_simp [hr0]
+      ring
+    have hroot :
+        (Real.sqrt (((k : ℝ) + 2 - 1 / r * x) ^ 2 + 4 * (1 / r) * τ) -
+          ((k : ℝ) + 2 - 1 / r * x)) / (2 * (1 / r)) =
+        (Real.sqrt ((2 - h) ^ 2 + 4 * τ / r) - (2 - h)) / (2 / r) := by
+      rw [hlinear]
+      have hrad : (2 - h) ^ 2 + 4 * (1 / r) * τ =
+          (2 - h) ^ 2 + 4 * τ / r := by
+        field_simp [hr0] <;> ring
+      rw [hrad]
+      field_simp [hr0] <;> ring
+    calc
+      scalarModulus true x r
+          (wordMatrix [Action.advance, Action.exchange, Action.advance] * wordMatrix executed) τ =
+        min x ((Real.sqrt (((k : ℝ) + 2 - 1 / r * x) ^ 2 + 4 * (1 / r) * τ) -
+          ((k : ℝ) + 2 - 1 / r * x)) / (2 * (1 / r))) := by
+            simpa [hS_e, hS_D] using hS
+      _ = min x ((Real.sqrt ((2 - h) ^ 2 + 4 * τ / r) - (2 - h)) /
+          (2 / r)) := by
+            rw [hroot]
+  · dsimp at hA
+    have hlinear : 2 * (k : ℝ) + 2 - 2 / r * x = 2 - 2 * h := by
+      rw [hx]
+      field_simp [hr0]
+      ring
+    have hroot :
+        (Real.sqrt ((2 * (k : ℝ) + 2 - 2 / r * x) ^ 2 + 4 * (2 / r) * τ) -
+          (2 * (k : ℝ) + 2 - 2 / r * x)) / (2 * (2 / r)) =
+      (Real.sqrt ((2 - 2 * h) ^ 2 + 8 * τ / r) - (2 - 2 * h)) / (4 / r) := by
+      rw [hlinear]
+      have hrad : (2 - 2 * h) ^ 2 + 4 * (2 / r) * τ =
+          (2 - 2 * h) ^ 2 + 8 * τ / r := by
+        field_simp [hr0] <;> ring
+      rw [hrad]
+      field_simp [hr0] <;> ring
+    calc
+      scalarModulus true x r
+          (wordMatrix [Action.advance, Action.advance, Action.advance] * wordMatrix executed) τ =
+        min x ((Real.sqrt ((2 * (k : ℝ) + 2 - 2 / r * x) ^ 2 + 4 * (2 / r) * τ) -
+          (2 * (k : ℝ) + 2 - 2 / r * x)) / (2 * (2 / r))) := by
+            simpa [hA_e, hA_D] using hA
+      _ = min x ((Real.sqrt ((2 - 2 * h) ^ 2 + 8 * τ / r) - (2 - 2 * h)) /
+          (4 / r)) := by
+            rw [hroot]
 
 end D5.S3.Observer.TraceFibers.ThreeActionModulusEnvelope
