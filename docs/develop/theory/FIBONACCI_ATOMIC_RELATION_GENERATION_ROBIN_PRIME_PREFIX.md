@@ -2621,3 +2621,831 @@ Euler 乘积的极值解释和倒数 ζ 的非完全单调性不作全局原创�
 原有限阻尼的精确对数矩及带方向余量、同一实际 Fibonacci 概率读出、
 其完整 signed 对数矩比较与由 \(e_6\) 支付的正 Laplace 原子失效边界
 为本仓推导（repo-derived）。
+
+## 449. Fibonacci 概率对数导数与原 Robin 临界尾的精确运输
+
+**原对象与记号。** 本节保持原自然数 von Mangoldt 函数和原实数截断
+\(x>1\)：
+
+\[
+\Lambda(n)=
+\begin{cases}
+\log r,&n=r^j,\ r\text{ 为素数},\ j\ge1,\\
+0,&\text{其余情形},
+\end{cases}
+\qquad
+\psi(t)=\sum_{n\le t}\Lambda(n),
+\]
+
+\[
+w(t)=\frac{1+\log t}{t^2\log^2t},\qquad
+I_\psi(x)=\int_x^\infty[\psi(t)-t]w(t)\,dt.
+\tag{HT.1}
+\]
+
+\(\psi\) 与 \(I_\psi\) 的全部整数和及完整无穷尾均保留；原绝对存在性
+复用 §424。仍取 §§384–385 的同一实际 Fibonacci 来源
+
+\[
+q=\varphi_{\rm gold}^{-2}\in(0,2/5),\quad
+\beta_d=\log(1-(-q)^d),\quad
+b=\beta_1=\log(1+q),\quad
+\mathcal B(s)=\sum_{d\ge1}\beta_dd^{-s},\quad e=\mu*\beta.
+\]
+
+这里 \(\gamma=(\gamma_d)_{d\ge1}=\beta^{-1}\) 专指正整数上的
+Dirichlet 卷积逆，不是 Euler 常数 \(\gamma_E\)。卷积单位记为
+\(\varepsilon_1=1,\varepsilon_n=0\)（\(n>1\)）。复用（384.5）的正间隙
+
+\[
+\delta=b-\sum_{d\ge2}|\beta_d|
+\ge\delta_0:=\frac{94q}{2205}>0.
+\tag{HT.2}
+\]
+
+保持 §448 的同一概率分布函数
+
+\[
+g(u)=\zeta(1+u)^{-1},\qquad
+\mathsf F(u)=\frac{\mathcal B(1+u)}{b\,\zeta(1+u)}.
+\]
+
+定义实际乘子的算术对数导数系数、累积和及其规范读出：
+
+\[
+c=-\,(\beta\cdot\log)*\gamma,\qquad
+(\beta\cdot\log)_d=\beta_d\log d,\qquad
+C_\beta(t)=\sum_{n\le t}c_n,
+\]
+
+\[
+\psi_{\mathsf F}(t)=\psi(t)+C_\beta(t),\qquad
+I_{\mathsf F}(x)=\int_x^\infty[\psi_{\mathsf F}(t)-t]w(t)\,dt.
+\tag{HT.3}
+\]
+
+\(\psi_{\mathsf F}\) 是原实际 \(\mathsf F\) 的对数导数所确定的读出；
+它不重新定义（HT.1）的原 \(\psi\)。
+
+**定理 449.1（同一概率来源的完整算术身份）。** 有
+
+\[
+\boxed{
+\frac{\mathsf F'(u)}{\mathsf F(u)}
+=-\frac{\zeta'}{\zeta}(1+u)
++\frac{\mathcal B'}{\mathcal B}(1+u)
+=\sum_{n\ge1}\frac{\Lambda(n)+c_n}{n^{1+u}},
+\qquad u>0.
+}
+\tag{HT.4}
+\]
+
+令
+
+\[
+T_0=\frac{q^2(2-q)}{(1-q)^3},\qquad
+U_0=\frac{q^2(4-3q+q^2)}{(1-q)^4},\qquad
+M_0=\frac{T_0}{\delta_0},
+\]
+
+\[
+\alpha=\min\!\left\{1,\frac{\delta_0}{2U_0}\right\}>0,\qquad
+M_\alpha=\frac{2U_0}{\delta_0}.
+\tag{HT.5}
+\]
+
+则全部实际系数的无穷预算满足
+
+\[
+\boxed{
+\sum_{n\ge1}|\gamma_n|\le\frac1\delta\le\frac1{\delta_0},\quad
+\sum_{n\ge1}|\gamma_n|n^\alpha\le\frac2{\delta_0},\quad
+\sum_{n\ge1}|c_n|\le M_0,\quad
+\sum_{n\ge1}|c_n|n^\alpha\le M_\alpha.
+}
+\tag{HT.6}
+\]
+
+此外，在整个 \(\Re s\ge-\alpha\) 上，绝对收敛身份为
+
+\[
+\boxed{
+\sum_{n\ge1}\gamma_nn^{-s}=\frac1{\mathcal B(s)},\qquad
+\sum_{n\ge1}c_nn^{-s}=\frac{\mathcal B'(s)}{\mathcal B(s)}.
+}
+\tag{HT.7}
+\]
+
+**证明：有符号逆与全系数预算。** 写 \(\beta=b\varepsilon+a\)，其中
+\(a_1=0\)，\(\|a\|_1=b-\delta<b\)。正整数 Dirichlet 卷积的绝对范数
+满足 \(\|h*k\|_1\le\|h\|_1\|k\|_1\)，因为完整非负双和可按乘积分组。
+因此实际逆有绝对收敛 Neumann 展开
+
+\[
+\gamma=b^{-1}\sum_{j\ge0}(-a/b)^{*j},
+\qquad
+\|\gamma\|_1\le\frac1\delta.
+\tag{HT.8}
+\]
+
+每个固定整数系数只用有限多阶非单位卷积，故该逆也是既有有限递推定义
+的同一个 \(\gamma\)。
+
+指数尾 \(|\beta_d|\le q^d/(1-q)\) 与 \(\log d\le d\) 给完整预算
+
+\[
+\sum_{d\ge2}|\beta_d|\log d\le T_0,\qquad
+\sum_{d\ge2}|\beta_d|d\log d\le U_0.
+\tag{HT.9}
+\]
+
+右侧分别由完整几何级数的 \(\sum_{d\ge2}dq^d\) 和
+\(\sum_{d\ge2}d^2q^d\) 得出，没有截去后续系数。
+
+对 \(0<\alpha\le1\)，有
+\(d^\alpha-1=\int_0^\alpha d^v\log d\,dv\le\alpha d\log d\)。
+因此
+
+\[
+\sum_{d\ge2}|\beta_d|d^\alpha
+\le b-\delta+\alpha U_0\le b-\delta_0/2.
+\]
+
+权 \(n^\alpha\) 满足 \((mn)^\alpha=m^\alpha n^\alpha\)，故同一
+Neumann 展开在这个完整加权范数中收敛，给
+\(\sum|\gamma_n|n^\alpha\le2/\delta_0\)。卷积定义（HT.3）与（HT.9）
+随后给 \(c\) 的两条完整预算（HT.6）。
+
+若 \(\Re s\ge-\alpha\)，则 \(|n^{-s}|\le n^\alpha\)；
+上述全部 Dirichlet 级数及卷积双和均绝对收敛。在同一域中，
+\(|\mathcal B(s)-b|\le b-\delta_0/2<b\)，所以 \(\mathcal B(s)\ne0\)。
+卷积身份与逐项微分给（HT.7）。当 \(s=1+u>1\) 时，经典
+von Mangoldt Dirichlet 级数给
+\(-\zeta'/\zeta(s)=\sum\Lambda(n)n^{-s}\)。对原 \(\mathsf F\)
+取对数导数即得（HT.4）。证毕。
+
+**定理 449.2（完整原尾的显式补偿与单侧方向）。** 定义
+
+\[
+\kappa=\sum_{n\ge1}c_n=\frac{\mathcal B'(0)}{\mathcal B(0)},\qquad
+\kappa_0=\frac{187}{1323}\frac{q^2\log2}{b}>0.
+\tag{HT.10}
+\]
+
+则 \(\kappa\ge\kappa_0\)，且对每个原实数 \(x>1\) 精确有
+
+\[
+I_{\mathsf F}(x)-I_\psi(x)=
+\int_x^\infty C_\beta(t)w(t)\,dt,
+\qquad
+|I_{\mathsf F}(x)-I_\psi(x)|\le\frac{M_0}{x\log x},
+\tag{HT.11}
+\]
+
+\[
+\boxed{
+\left|I_{\mathsf F}(x)-I_\psi(x)
+-\frac{\kappa}{x\log x}\right|
+\le\frac{M_\alpha x^{-\alpha}}{x\log x}.
+}
+\tag{HT.12}
+\]
+
+特别地，令
+
+\[
+X_\beta=\max\!\left\{
+e,\left(\frac{2M_\alpha}{\kappa_0}\right)^{1/\alpha}
+\right\}<\infty.
+\]
+
+则对全部 \(x\ge X_\beta\)，有可量化单侧预算
+
+\[
+\boxed{
+I_\psi(x)\le I_{\mathsf F}(x)-\frac{\kappa_0}{2x\log x},
+\qquad
+I_{\mathsf F}(x)-I_\psi(x)
+=\frac{\kappa}{x\log x}
++O\!\left(\frac{x^{-1-\alpha}}{\log x}\right)>0.
+}
+\tag{HT.13}
+\]
+
+**证明：完整实际尾的运输。** （HT.7）在 \(s=0\) 的绝对收敛给
+\(\sum c_n=\mathcal B'(0)/\mathcal B(0)\)。§448 的非负实轴结论给
+
+\[
+0<\mathcal B(0)<b,\qquad
+\mathcal B'(0)\ge\frac{187}{1323}q^2\log2,
+\]
+
+所以 \(\kappa\ge\kappa_0>0\)。对每个 \(t\ge1\)，整个未保留补集满足
+
+\[
+|C_\beta(t)|\le M_0,\qquad
+|\kappa-C_\beta(t)|
+\le\sum_{n>t}|c_n|
+\le M_\alpha t^{-\alpha}.
+\tag{HT.14}
+\]
+
+这里最后一步直接消费完整加权无穷尾，没有把有限源估计当成全尾界。
+
+原 \(I_\psi\) 已绝对存在，而 \(C_\beta\) 有界，故 \(I_{\mathsf F}\)
+也绝对存在。原权重精确满足
+
+\[
+w(t)=-\left(\frac1{t\log t}\right)',\qquad
+\int_x^\infty w(t)\,dt=\frac1{x\log x}.
+\tag{HT.15}
+\]
+
+对（HT.3）中的两个完整积分作差，得到（HT.11）的身份和绝对界；
+对（HT.14）的尾差在整个 \(t\ge x\) 上积分，并用
+\(t^{-\alpha}\le x^{-\alpha}\)，得到（HT.12）。
+当 \(x\ge X_\beta\) 时，
+\(M_\alpha x^{-\alpha}\le\kappa_0/2\)，于是（HT.13）成立。证毕。
+
+**定理 449.3（临界有符号部分保持原样）。** 在原归一化下，令
+
+\[
+Z_\psi(x)=\sqrt{x}\log x\,I_\psi(x),\qquad
+Z_{\mathsf F}(x)=\sqrt{x}\log x\,I_{\mathsf F}(x).
+\]
+
+则
+
+\[
+\boxed{
+Z_{\mathsf F}(x)-Z_\psi(x)
+=\frac{\kappa}{\sqrt{x}}
++O(M_\alpha x^{-1/2-\alpha})\longrightarrow0.
+}
+\tag{HT.16}
+\]
+
+因此两个完整尾的上极限、下极限及绝对值上极限相同，允许扩展实数值。
+特别地，
+
+\[
+I_\psi(x)=O\!\left(\frac1{\sqrt{x}\log x}\right)
+\quad\Longleftrightarrow\quad
+I_{\mathsf F}(x)=O\!\left(\frac1{\sqrt{x}\log x}\right).
+\tag{HT.17}
+\]
+
+**证明。** 乘（HT.12）以 \(\sqrt{x}\log x\) 得（HT.16）；
+趋零差保留上述全部上、下极限，且（HT.11）给
+\(|Z_{\mathsf F}-Z_\psi|\le M_0/\sqrt{x}\)，从而得到（HT.17）。
+这是在同一完整原尾上的精确运输；并未证明两边任一临界界实际成立。
+证毕。
+
+**定理 449.4（概率正对数导数仍有真实负算术事件）。** 虽然 §448 给
+\(\mathsf F'/\mathsf F>0\) 在全部 \(u>0\) 上成立，但（HT.4）的原
+算术系数在复合指标六处严格为负：
+
+\[
+\boxed{
+c_6=\frac{\log6}{b^2}
+\left(\beta_2\beta_3-b\beta_6\right)<0,\qquad
+\Lambda(6)+c_6=c_6<0.
+}
+\tag{HT.18}
+\]
+
+因此其自然累积读出 \(\psi_{\mathsf F}\) 在 \(t=6\) 向下跳跃。
+
+**证明：原精确系数与全部参数区间。** 有限 Dirichlet 逆递推给
+
+\[
+\gamma_1=1/b,\qquad
+\gamma_2=-\beta_2/b^2,\qquad
+\gamma_3=-\beta_3/b^2.
+\]
+
+在原 \(c=-(\beta\cdot\log)*\gamma\) 的 \(n=6\) 系数中保留全部四个约数：
+\(d=1\) 项因 \(\log1=0\) 消失，其余三项给
+
+\[
+c_6=-\frac{\beta_6\log6}{b}
++\frac{\beta_2\beta_3(\log2+\log3)}{b^2},
+\]
+
+即（HT.18）的精确公式。这里
+\(\beta_2,\beta_6<0\)、\(\beta_3,b>0\)，且经典对数积分界给
+
+\[
+|\beta_2|\beta_3\ge\frac{q^5}{1+q^3},\qquad
+b|\beta_6|\le\frac{q^7}{1-q^6}.
+\]
+
+对全部 \(0<q<2/5\)，
+\(q^2+q^5+q^6<3q^2<12/25<1\)，故
+\(1-q^6>q^2(1+q^3)\)。于是
+\(|\beta_2|\beta_3>b|\beta_6|\)，证明 \(c_6<0\)。
+六不是素数幂，所以 \(\Lambda(6)=0\)。证毕。
+
+**概率递归与实际逆的准确关系。** 非负变量的分布函数在点态乘法下闭合，
+对应独立变量取最大值；该运算可结合、交换，单位为零点质量一的分布。
+但本节的非平凡 Fibonacci 因子满足
+\(0<\mathcal B(1+u)/b<1\)，其点态倒数 \(b/\mathcal B(1+u)>1\)
+不是概率分布函数。概率乘法并不带这个逆。
+
+同一实际 \(\beta\) 在绝对 Dirichlet 卷积代数中则有（HT.8）的
+\(\gamma\) 逆。这个逆保留符号：例如
+\(\gamma_3=-\beta_3/b^2<0\)。因而可逆的算术运输与概率最大值递归有
+明确不同的载体；（HT.11）–（HT.17）支付前者的完整成本，
+概率读出的单调性没有消除这个有符号逆。
+
+**推论 449.5（递归次数在原临界尺度上的准确成本）。** 对整数 \(m\ge0\)，
+取同一极值递归的分布函数
+
+\[
+\mathsf F_m(u)=g(u)\left[\frac{\mathcal B(1+u)}b\right]^m.
+\]
+
+其对数导数的规范算术读出为
+\(\psi_m(t)=\psi(t)+mC_\beta(t)\)。记相应完整尾为 \(I_m(x)\)。
+则对每个 \(x>1\) 和整数 \(m\ge0\)，精确有
+
+\[
+I_m(x)-I_\psi(x)=m[I_{\mathsf F}(x)-I_\psi(x)],
+\]
+
+\[
+\boxed{
+\sqrt{x}\log x\,[I_m(x)-I_\psi(x)]
+=\frac{m}{\sqrt{x}}
+\left[\kappa+\epsilon_\beta(x)\right],
+\qquad
+|\epsilon_\beta(x)|\le M_\alpha x^{-\alpha}.
+}
+\tag{HT.19}
+\]
+
+若 \(m=m(x)\) 变化，每个 \(x\) 先固定该整数，在整个积分尾 \(t\ge x\)
+上使用同一个 \(m(x)\)。于是 \(m=o(\sqrt{x})\) 时临界差趋零；
+若 \(m/\sqrt{x}\to a<\infty\)，临界差趋于 \(a\kappa\)；
+若 \(m/\sqrt{x}\to\infty\)，临界差趋于 \(+\infty\)。
+
+**证明。** 取同一 CDF 乘积的对数导数，新增项精确为
+\(m\mathcal B'/\mathcal B\)，所以自然整数系数新增 \(mc_n\)。
+全部尾积分由固定 \(m\) 的（HT.6）支付。完整线性身份与（HT.12）
+给（HT.19），三种极限随即成立。证毕。
+
+增长到平方根次数的概率递归可以产生临界量级的新增读出，但原
+\(I_\psi\) 必须扣回（HT.19）的同一完整补偿。因此该新增量不成为
+原 Robin 余量的免费储备。
+
+**剩余边界与来源。** 原目标仍是（HT.1）及（424.6）的全量配对
+
+\[
+I_\psi(x)=\sum_{n\ge1}M(n)J_x^\eta(n),
+\]
+
+包括原首块与所有整数纤维。（HT.13）给实际、显式、单侧且低于临界
+尺度的补偿；（HT.16）证明未控的临界有符号部分在这个规范概率读出中
+保持相同。由（HT.7），新增 \(\mathcal B'/\mathcal B\) 在
+\(\Re s>-\alpha\) 解析，所以原 \(-\zeta'/\zeta\) 的非平凡零点极点
+及其留数仍保留。此处不排除其他概率方法，但本节的单调读出和迭代本身
+没有估计共同的原临界部分，也没有得到全局 Robin 符号或 RH。
+
+完整 von Mangoldt Dirichlet 级数、绝对卷积与带权 Neumann 求逆、
+几何级数、对数积分界及完整积分权重为经典供应。带权逆的来源沿用
+§388 所引 Glöckner–Lucht，
+[Weighted inversion of general Dirichlet series](https://arxiv.org/abs/1112.0749)；
+本节的 \(\alpha\) 和全部预算仅用（384.5）的解析间隙及完整指数尾，
+不依赖 §388 的定向数值前提。原实际 \(\beta,e,\gamma\) 的归属沿用
+§§384–385；概率正性沿用 §448。把同一实际 Fibonacci 概率对数导数
+接回原 \(I_\psi\)，得到完整带方向补偿、临界等价、真实 \(c_6<0\)
+与变化递归次数的精确临界成本，为本仓推导（repo-derived）。
+
+## 450. 原始轮廓的曲率概率、完整超额期望与对数矩
+
+**对象与既有供应。** 保持 §§441–448 的同一原始轮廓和原完整两段常数：
+
+\[
+\operatorname{Ein}(v)=\int_0^v\frac{1-e^{-w}}w\,dw,
+\qquad \Phi(v)=\exp(\operatorname{Ein}(v)),
+\qquad C=e^{\gamma_E},\qquad k=C-1>0,
+\]
+
+\[
+A=\int_0^1\frac{\Phi'(v)-1}{v}\,dv
+ +\int_1^\infty\frac{\Phi'(v)-C}{v}\,dv.
+\tag{CVP.1}
+\]
+
+零端使用原有限区间表示
+\(r(v)=\int_0^1e^{-sv}\,ds\)、\(\Phi'=\Phi r\)、\(\Phi(0)=1\)。
+§444 已证明 \(\Phi''(0)=1/2\)、\(0<\Phi''(v)<1/2\) 于全部
+\(v>0\)，且 \(\Phi''\) 在非负轴严格递减；原 \(A<1/2\) 也已支付。
+Euler 常数的经典界 \(\gamma_E>1/2\) 保证 \(k>0\)，可直接复用
+Mathlib 的 `Real.one_half_lt_eulerMascheroniConstant`。
+
+本节新增的是同一 \(\Phi\) 的曲率概率解释、原 \(A\) 的负对数矩、
+严格 Jensen 下界与二阶完全单调障碍。§433（SL.21）、§434 已有的
+经典 Dickman Laplace 身份在本节末尾复用，不另列为新变换。
+
+**引理 450.1（全部端点预算）。** 写 \(B(v)=\Phi''(v)\)，令
+\(M=\exp(e^{-1})\)。原指数积分身份在每个 \(v>0\) 给
+
+\[
+E_1(v)=\int_v^\infty\frac{e^{-w}}w\,dw,
+\quad 0<E_1(v)\le e^{-v}/v,
+\quad \Phi(v)=Cv\exp(E_1(v)),
+\]
+
+\[
+\Phi'(v)=C\exp(E_1(v))(1-e^{-v}),
+\quad
+B(v)=C\exp(E_1(v))e^{-v}\left(1-\frac{1-e^{-v}}v\right).
+\tag{CVP.2}
+\]
+
+对 \(v\ge1\)，整段尾有显式界
+
+\[
+\begin{aligned}
+0<B(v)&\le CM e^{-v},\\
+|\Phi'(v)-C|&\le CM e^{-v}(1+1/v)\le2CM e^{-v},\\
+0<\Phi(v)-Cv&\le CM e^{-v},\\
+v\Phi'(v)-\Phi(v)&=-Cv\exp(E_1(v))e^{-v}.
+\end{aligned}
+\tag{CVP.3}
+\]
+
+在近端，\(0\le\Phi'(v)-1\le v/2\) 对 \(0\le v\le1\) 成立。
+因此 \(B\)、\(vB\)、\(|\log v|B\) 在整个正轴可积，且以下边界
+全部成立：
+
+\[
+\begin{gathered}
+\Phi'(0)=1,\quad\Phi(0)=1,\quad
+\Phi'(v)\longrightarrow C,\quad\Phi(v)-Cv\longrightarrow0,\\
+v(\Phi'(v)-C)\longrightarrow0,\quad
+\log v\,(\Phi'(v)-C)\longrightarrow0,\quad
+v\Phi'(v)-\Phi(v)\longrightarrow0\qquad(v\to\infty),\\
+\log v\,(\Phi'(v)-1)\longrightarrow0\qquad(v\downarrow0).
+\end{gathered}
+\tag{CVP.4}
+\]
+
+**证明。** （CVP.2）的末式是 §444（NS.3）代入同一 Euler 归一化；
+其中 \(0<(1-e^{-v})/v<1\)。当 \(v\ge1\)，有
+\(0<E_1(v)\le e^{-1}\)，从而 \(\exp(E_1(v))\le M\)。再用
+\(e^y-1\le e^y y\)（\(y\ge0\)），得到（CVP.3）的前三行；第四行
+由（CVP.2）准确相减得到，未分别取两个发散项的极限。
+
+近端由 \(\Phi'(v)-1=\int_0^vB(w)\,dw\) 和 \(B\le1/2\) 得界。
+\(\int_0^1|\log v|\,dv=1\) 支付近端对数可积性；远端以
+\(\log v\le v\) 和 \(CM e^{-v}\) 支付。\(vB\) 的近端有界、
+远端由 \(CMve^{-v}\) 支付。（CVP.3）与
+\(v|\log v|\to0\)、\(ve^{-v}\to0\)、\(e^{-v}\log v\to0\) 给
+（CVP.4）。原（CVP.1）的近段有界，远段被 \(2CM e^{-v}/v\) 主导，
+所以两段均绝对收敛。证毕。
+
+**定理 450.2（真实曲率概率与原轮廓的超额期望）。** 存在正随机变量
+\(V\)，其严格正的密度、分布函数与生存函数为
+
+\[
+f_V(v)=\frac{B(v)}k\quad(v>0),\qquad
+\mathbb P(V\le v)=\frac{\Phi'(v)-1}k,\qquad
+\mathbb P(V>v)=\frac{C-\Phi'(v)}k\quad(v\ge0).
+\tag{CVP.5}
+\]
+
+它满足完整质量和一阶矩身份
+
+\[
+\int_0^\infty B(v)\,dv=k,\qquad
+\int_0^\infty vB(v)\,dv=1,\qquad
+\mathbb EV=\frac1k.
+\tag{CVP.6}
+\]
+
+而同一原 \(\Phi\) 对每个 \(v\ge0\) 精确满足
+
+\[
+\boxed{
+\begin{aligned}
+\Phi(v)&=1+v+k\,\mathbb E[(v-V)_+]\\
+       &=Cv+k\,\mathbb E[(V-v)_+]\\
+       &=v+k\,\mathbb E[\max(v,V)].
+\end{aligned}}
+\tag{CVP.7}
+\]
+
+所有期望使用同一 \(V\)，其无穷尾均保留。
+
+**证明：质量与一阶矩。** 引理450.1已给可积性。在有限区间上使用
+FTC，然后以（CVP.4）取极限：
+
+\[
+\int_0^R B(v)\,dv=\Phi'(R)-1\longrightarrow C-1=k,
+\]
+
+\[
+\int_0^R vB(v)\,dv
+=R\Phi'(R)-\Phi(R)+1\longrightarrow1.
+\]
+
+因此 \(B/k\) 确实定义 \((0,\infty)\) 上的概率密度。（CVP.5）由
+其从零积分得到；\(B>0\) 保证任意正长度的正轴区间有严格正质量，
+所以这不是点质量，且没有零点原子。
+
+**证明：完整超额表示。** 对固定 \(v\ge0\)，\((w-v)_+B(w)\)
+由 \(wB(w)\) 主导，故完整尾绝对收敛。有限区间分部积分给
+
+\[
+\int_v^R(w-v)B(w)\,dw
+=(R-v)\Phi'(R)-\Phi(R)+\Phi(v).
+\]
+
+准确地写成
+
+\[
+v\Phi'(R)-Cv\longrightarrow0,\qquad
+R\Phi'(R)-\Phi(R)\longrightarrow0,
+\]
+
+便得到
+\(\int_v^\infty(w-v)B(w)\,dw=\Phi(v)-Cv\)。这给（CVP.7）第二行。
+有限区间的两次 FTC 则给
+\(\Phi(v)=1+v+\int_0^v(v-w)B(w)\,dw\)，即第一行。
+最后用 \(\max(v,V)=v+(V-v)_+\) 和 \(C=1+k\) 得第三行。证毕。
+
+**定理 450.3（原 \(A\) 的完整负对数矩与严格下界）。** 同一随机变量
+满足 \(\mathbb E|\log V|<\infty\)，且
+
+\[
+\boxed{\quad A=-\int_0^\infty\log v\,B(v)\,dv
+                =-k\,\mathbb E\log V.\quad}
+\tag{CVP.8}
+\]
+
+因此原常数有严格两侧界
+
+\[
+\boxed{\qquad k\log k<A<\frac12.\qquad}
+\tag{CVP.9}
+\]
+
+**证明：完整分部及边界。** 引理450.1已先支付绝对可积性。
+对 \(0<\varepsilon<1<R\)，仅在有限区间分部积分，得
+
+\[
+\begin{aligned}
+\int_\varepsilon^1\frac{\Phi'(v)-1}{v}\,dv
+&=-\log\varepsilon\,[\Phi'(\varepsilon)-1]
+  -\int_\varepsilon^1\log v\,B(v)\,dv,\\
+\int_1^R\frac{\Phi'(v)-C}{v}\,dv
+&=\log R\,[\Phi'(R)-C]
+  -\int_1^R\log v\,B(v)\,dv.
+\end{aligned}
+\]
+
+两个截断边界由（CVP.4）趋于零，完整积分由绝对可积性收敛，故得到
+（CVP.8），没有无偿的形式分部。
+
+写 \(m=\mathbb EV=1/k\)。严格对数切线不等式给
+
+\[
+\log v\le\log m+\frac{v-m}m,
+\qquad\text{等号当且仅当 }v=m.
+\]
+
+各项期望均有限；由于 \(V\) 有全正轴严格正的密度，切线差在任意
+避开 \(m\) 的正长度紧区间上有严格正积分。因此
+\(\mathbb E\log V<\log\mathbb EV=-\log k\)，乘以 \(-k<0\) 得
+\(A>k\log k\)。上界直接复用 §444 的原 \(A<1/2\)。证毕。
+
+**推论 450.4（同一对象的 Mellin 域与非完全单调性）。** 曲率概率的矩函数
+
+\[
+\mathcal M_V(r)=\mathbb E V^r
+=\frac1k\int_0^\infty v^rB(v)\,dv
+\quad(\Re r>-1)
+\]
+
+在此半平面全纯，且
+
+\[
+\mathcal M_V(0)=1,\quad\mathcal M_V(1)=1/k,\quad
+\mathcal M_V'(0)=-A/k.
+\tag{CVP.10}
+\]
+
+尽管 \(f_V\) 严格为正、严格递减，它不是正半轴上的完全单调函数，
+也不存在对全部 \(v>0\) 成立的正 Laplace 测度表示
+\(f_V(v)=\int_{[0,\infty)}e^{-vt}\,d\nu(t)\)。
+
+**证明：矩函数的整个积分。** 对半平面中的任意紧域，取
+\(-1<a\le\Re r\le b\)。在 \(0<v\le1\) 上，第 \(j\) 阶参数导数由
+\(v^a|\log v|^j/(2k)\) 支配；在 \(v\ge1\) 上由
+\(CMv^b(\log v)^je^{-v}/k\) 支配，两者都可积。这支付任意固定阶
+求导与全纯性。（CVP.6）、（CVP.8）给（CVP.10）。
+
+**证明：二阶符号障碍。** 指数幂级数在任意有界的 \(v\) 区间与
+\(0\le s\le1\) 上一致绝对收敛，有限积分因此给
+\(r(v)=\sum_{n\ge0}(-1)^nv^n/(n+1)!\)。再在有限区间积分得
+\(\operatorname{Ein}(v)=\sum_{n\ge1}(-1)^{n-1}v^n/(n\,n!)\)。
+这些幂级数保证 \(\Phi\) 在零点解析，准确展开为
+
+\[
+\begin{aligned}
+\operatorname{Ein}(v)&=v-\frac{v^2}4+\frac{v^3}{18}-\frac{v^4}{96}
+ +O(v^5),\\
+\Phi(v)&=1+v+\frac{v^2}4-\frac{v^3}{36}-\frac{v^4}{144}+O(v^5).
+\end{aligned}
+\tag{CVP.11}
+\]
+
+第四项系数可逐项独立核对：
+
+\[
+-\frac1{96}+\frac1{18}+\frac1{32}-\frac18+\frac1{24}
+=-\frac1{144}.
+\]
+
+因而 \(\Phi'''(0)=\Phi''''(0)=-1/6\)。以 \(B/k\) 光滑延拓密度至零点后，特别
+
+\[
+f_V''(0)=\frac{\Phi''''(0)}k=-\frac1{6k}<0.
+\tag{CVP.12}
+\]
+
+由解析连续性，存在 \(\eta>0\)，使每个 \(0<v<\eta\) 都满足
+\(f_V''(v)<0\)。完全单调性要求正轴上每阶交替导数非负，二阶条件
+已在这个真正的正区间失败；零点本身不被拿来代替正轴违反点。
+
+若存在上述正 Laplace 表示，对任何固定 \(v>0\)，在 \(3v/4\le s\le5v/4\) 的邻域上，
+\(t^2e^{-st}\le K_v e^{-(v/2)t}\)，右侧对 \(\nu\) 可积，因为该
+表示在 \(v/2>0\) 有有限值。这支付局部两次微分，故
+\(f_V''(v)=\int t^2e^{-vt}\,d\nu(t)\ge0\)，与（CVP.12）后的正区间
+矛盾。证毕。
+
+**定理 450.5（复用 Dickman 变换后的同对象方差关系）。** 取 §433、§434
+已有的经典 Dickman 函数 \(\rho_D\)，满足
+\(\widehat\rho_D(v)=C/\Phi(v)\)。归一密度
+\(\rho_D(y)/C\) 定义随机变量 \(Y\)，故其 Laplace 变换为
+
+\[
+\ell(v)=\mathbb E e^{-vY}=\frac1{\Phi(v)}\qquad(v>0).
+\tag{CVP.13}
+\]
+
+对任意 \(v>0\)，用 \(e^{-vY}/\ell(v)\) 倾斜这同一概率律，记
+倾斜期望和方差为 \(\mathbb E_v\)、\(\operatorname{Var}_v\)。则
+
+\[
+\boxed{\quad
+\Phi''(v)=\Phi(v)
+\left[(\mathbb E_vY)^2-\operatorname{Var}_v(Y)\right]>0,
+\qquad
+\operatorname{Var}_v(Y)<(\mathbb E_vY)^2.
+\quad}
+\tag{CVP.14}
+\]
+
+**证明。** 经典身份在 \(v\downarrow0\) 的单调收敛给
+\(\int_0^\infty\rho_D(y)\,dy=C\)，所以归一密度确实有质量一。
+对任意固定正 \(v\) 的紧邻域，\(y^je^{-vy}\) 由固定常数乘
+\(e^{-(v/2)y}\) 支配，右侧对 Dickman 律可积。这支付前两阶
+Laplace 求导及倾斜矩的完整无穷尾。
+写 \(a=-\ell'/\ell=\mathbb E_vY\)、
+\(b=\ell''/\ell=\mathbb E_vY^2\)，准确求倒数的二阶导数得
+
+\[
+\Phi''=2(\ell')^2/\ell^3-\ell''/\ell^2
+=\Phi(2a^2-b)=\Phi(a^2-\operatorname{Var}_v(Y)).
+\]
+
+原 \(\Phi''>0\) 和 \(\Phi>0\) 给（CVP.14）。证毕。
+
+**关系与成果边界。** 原 \(\Phi\) 同时具有两个合法概率读出：
+它是经典 Dickman Laplace 变换的倒数，也是曲率律 \(V\) 的完整超额
+期望。（CVP.8）把先前需要分开正近段和负尾段的原 \(A\) 合成为这个
+同一曲率律的负对数矩。§448 的素数极值律 \(U\)、Fibonacci 律
+\(W\) 与这里的 \(V\) 都有共同的矩半平面 \(\Re r>-1\)，且三者的
+严格正密度均不能作为正 Laplace 原子；这指出了概率正性和有符号
+谱表示之间的共同限制。这里未断言它们具有同一分布、同一随机实现
+或保号变换。
+
+本节为完整纸面证明；不声称新增 Lean 核验。新组合与显式二阶障碍
+为本仓推导（`repo-derived`），未作全局原创性断言。原曲率性质、
+Euler 归一化、\(A<1/2\) 和 Dickman 身份均复用既有来源；FTC、
+绝对可积分部、严格 Jensen 与支配求导为经典供应。它没有支付完整
+Robin 配对中其余阶乘密度、实际粗糙前缀、整数纤维及有符号互补尾，
+也没有由此证明 Robin 不等式或 RH。
+
+## 451. 同一原始完整肩项的半 Gamma 负储备
+
+This section strictly strengthens §447 for the same literal objects. Set
+\[
+ C=e^\gamma,\qquad k=C-1,\qquad
+ \delta=\frac{2\log2-1}{6}>0,
+\]
+and retain the original complete two-piece constant \(A<1/2\),
+\[
+ Q(u)=u\Re\zeta(1+u),\qquad
+ K(t)=A-k(\log t+\gamma)
+ +C\int_{u>0}e^{-tu}\frac{1/Q(u)-1}{u}\,du\quad(t>0).
+\]
+No new shoulder, finite truncation, or assumed infinite bound is introduced.
+The suppliers for complete integrability and the literal comparison are
+exactly those in §447.
+
+### The existing complete average and its positive tail mass
+
+For \(x>0\), let
+\[
+ E_1(x)=\int_{y>x}\frac{e^{-y}}y\,dy,\qquad
+ G(x)=k(\log(x/2)+\gamma)+Ce^x E_1(x).
+\]
+The actual \(Q(u)\ge1+u/2\) gives
+\((1/Q(u)-1)/u\le-1/(u+2)\); the complete affine substitution
+\(y=t(u+2)\) therefore gives \(K(t)\le A-G(2t)\).
+The full logarithmic FTC identity and \(C=1+k\) give the unit-mass average
+\[
+ G(x)=e^x\int_{y>x}e^{-y}
+ \left[k(\log(y/2)+\gamma)+\frac1y\right]dy.
+\]
+All integrals above are over their full specified domains and are absolutely
+integrable. Let
+\[
+ \Lambda(k)=k\left[1+\log\frac{1+k}{2k}\right],\qquad
+ m(k)=ke^{-2/k}(\log2-1/2)=3k\delta e^{-2/k}.
+\]
+The scalar gap equals \(k[\log(ky)+1/(ky)-1]\ge0\).
+For \(y>x+2/k\), its value is at least \(k(\log2-1/2)\),
+and that part of the normalized complete average has mass \(e^{-2/k}\).
+Consequently, for every \(x>0\),
+\[
+ G(x)\ge\Lambda(k)+m(k),\qquad
+ K(t)\le R:=A-\Lambda(k)-m(k).
+\]
+The number \(R\) is independent of \(t\).
+
+### The half-gamma simplification
+
+The already available strict classical bound \(\gamma>1/2\) and the
+exponential tangent inequality \(e^\gamma\ge1+\gamma\) yield
+\[
+ k=e^\gamma-1\ge\gamma>1/2.
+\]
+Put \(z=(1+k)/(2k)>0\). The logarithmic tangent is used in its lower-bound
+direction, \(\log z\ge1-1/z\), so
+\[
+ \Lambda(k)\ge k\left(2-\frac{2k}{1+k}\right)
+ =\frac{2k}{1+k}>\frac23.
+\]
+This estimate requires neither the location of a minimum of \(G\) nor
+monotonicity or differentiation of \(\Lambda\).
+Because \(k>1/2\), one also has \(2/k<4\), hence
+\[
+ m(k)=3k\delta e^{-2/k}
+ >\frac32\delta e^{-4}.
+\]
+The positivity of \(\delta\) follows from the strict logarithmic tangent
+at \(1/2\), giving \(\log2>1/2\).
+
+### A strict supremum paid by a common barrier
+
+Combining the strict bound on the original \(A\) with the two strict
+constant reserves gives
+\[
+ R=A-\Lambda(k)-m(k)
+ <-\frac16-\frac32\delta e^{-4}.
+\]
+The set \(\{K(t):t>0\}\) is nonempty (take \(t=1\)) and every member is
+bounded above by the same \(R\). Thus the conditional complete supremum
+satisfies
+\[
+ \boxed{\sup_{t>0}K(t)\le R
+ <-\frac16-\frac32\delta e^{-4}.}
+\]
+This is a genuine strict supremum estimate; pointwise strictness alone is
+not substituted for a uniform barrier.
+
+It strictly improves §447. The strict upper tangent \(\log2<1\) gives
+\(0<\delta<1/6\), and
+\((3/2)\delta e^{-4}>\delta e^{-6}\). Therefore
+\[
+ -\frac16-\frac32\delta e^{-4}
+ <-\delta(1+e^{-6}),
+\]
+recovering its advertised bound with strictly more reserve.
+
+This is a bound for the same original complete shoulder. The full Robin
+pairing and the remaining signed tail still require their own proofs; this
+section does not claim RH or an unproved bound for that tail.
+
+Provenance: §447 complete exponential-average construction; original
+\(A<1/2\) from PrimePrefixOriginalA; classical Euler-constant and exponential
+bounds from Mathlib; lower logarithmic tangent from Mathlib. The
+half-gamma substitution and stronger displayed reserve are the repo-derived
+simplification of that existing construction.
+
+This is a complete paper proof. It reports no new Lean acceptance.
