@@ -101,23 +101,23 @@ theorem hidden_self : hidden = hidden := rfl
             self.assertFalse((self.root / 'judge-tripwire').exists())
             return result.stdout + result.stderr
 
-        inspect(['--compiled-only'])
+        inspect([])
         driver = self.root / '.lake/build/lib/lean/LeanInformationAudit/SealCommand.olean'
         driver_bytes = driver.read_bytes()
         try:
             driver.unlink()
-            inspect(['--compiled-only'])
+            inspect([])
         finally:
             driver.write_bytes(driver_bytes)
-        # An omitted mode must fail before import, rather than use the judge.
-        self.assertIn('raw.mode_requires_compiled_only', inspect([], False))
+        # The unified reader succeeds without loading the compiled driver.
+        inspect([])
         own = self.root / '.lake/build/lib/lean/D5/B.olean'
         private = own.with_name(own.name + '.private')
         original = private.read_bytes()
         try:
             private.unlink()
             self.assertIn('raw.missing_olean_part:D5.B:private',
-                          inspect(['--compiled-only'], False))
+                          inspect([], False))
             self.assertFalse(output.exists())
         finally:
             private.write_bytes(original)
@@ -129,7 +129,7 @@ theorem hidden_self : hidden = hidden := rfl
                      'raw.compiler_identity')]:
                 own.unlink()
                 own.write_bytes(data)
-                self.assertIn(error, inspect(['--compiled-only'], False))
+                self.assertIn(error, inspect([], False))
                 self.assertFalse(output.exists())
         finally:
             own.unlink()
@@ -165,7 +165,7 @@ def main (args : List String) : IO Unit := do
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         arguments[-3:] = ['Broken', 'Broken.lean', 'sha256:' + '0' * 64]
         arguments = arguments[:4] + arguments[6:]
-        self.assertIn('raw.incomplete_closure:raw_missing', inspect(['--compiled-only'], False))
+        self.assertIn('raw.incomplete_closure:raw_missing', inspect([], False))
         self.assertFalse(output.exists())
 
     def test_native_typed_owner_version_scope(self):

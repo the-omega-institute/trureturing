@@ -215,7 +215,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let env := workspace.augmentedEnvVars
   let file := root / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
   (deps.add (Job.mixArray exports) |>.add projection |>.add inspector).mapM fun _ => do
-    -- Inspector's private import mode reads transitive private values, also
+    -- The compiler reader consumes transitive private values, also
     -- through public imports. Lake's legacy trace follows that same closure;
     -- allTransTrace follows each import's visibility and can omit those values.
     -- Apply this to the module and every external utility claim.
@@ -225,11 +225,11 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     let inputs ← readJson (← projection.await)
     let ownInputs ← IO.ofExcept (inputs.getObjValAs? (Array Json) "inputs")
     unless ownInputs.isEmpty do
-      -- Only typed owners demand the judge implementation; its build succeeds
-      -- without adding program bytes to the report trace.
-      let some driver := workspace.findModule? `LeanInformationAudit.SealCommand
+      -- Typed owners require compiled primitive-pin data. Await its compilation
+      -- without mixing implementation bytes into the report trace.
+      let some registry := workspace.findModule? `LeanInformationAudit.Registry
         | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
-      discard <| (← JobM.runFetchM driver.exportInfo.fetch).await
+      discard <| (← JobM.runFetchM registry.exportInfo.fetch).await
       let version ← inputBinFile (root / ".lake/build/lean-inspector" / "registration-version")
       discard <| version.await
       addTrace version.getTrace

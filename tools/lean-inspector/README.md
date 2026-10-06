@@ -269,8 +269,13 @@ The production reader uses `RawArtifacts.Store` for every target. It reads compi
 constant tables without creating an Environment, initializing extensions, invoking elaboration, Meta, the type
 checker or the kernel. Contract inputs are decoded from constructor trees and safe constant references in those
 parts. A value that requires evaluation, a missing part, an unknown format or a read failure is a named
-`raw.contract.cannot_decode` or raw-artifact failure; there is no fallback reader. Utility relationships retain
-their bounded computation over compiled terms. Report reuse still comes only from the Lake trace and the single
-semantic version.
+`contract.decode_failed:<owner>:<declaration>:<reason>` or raw-artifact failure; there is no fallback reader. Utility relationships retain
+their bounded computation over compiled terms. `ArtifactAssessment` constructs target-local registration data;
+`CompiledAssessment` executes template, evidence and binding gates; `CompiledSeal` checks independent snapshots,
+source uniqueness, joins, qualified-name collisions, catalog membership and every finite vector element, then
+reads compiler-checked row conclusions and computes output statistics. Companion constants are immutable report
+views, never installed declarations. Computing compiled expression shapes and finite projections does not decode
+an otherwise computed top-level contract input. Raw terms never execute code or acquire kernel authority.
+Report reuse comes only from the Lake trace and the single semantic version.
 
 `STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和逐模块的编译输入处理；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。

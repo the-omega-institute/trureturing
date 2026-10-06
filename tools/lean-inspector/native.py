@@ -21,8 +21,8 @@ import publication as public
 
 selection = public.selection
 ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
-# Each process reads one bounded compiler-artifact closure. Typed input owners
-# additionally import the fixed judge and assess their own registrations.
+# Each process reads one bounded compiler-artifact closure and assesses its
+# typed input owners directly from the compiled data.
 NATIVE_BATCH_MODULES = 100
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
@@ -200,21 +200,12 @@ def input_projection(root, name):
     return projection
 
 
-def inspection_arguments(root, names, arguments):
-    owners = [bool(input_projection(root, name)['inputs']) for name in names]
-    if any(owners) and not all(owners):
-        raise ValueError('raw.mixed_input_owners')
-    return arguments if all(owners) else ['--compiled-only', *arguments]
-
-
 def run_inspector(root, executable, arguments, request_file=None):
     try:
         command = ['--request-file', str(request_file)] if request_file else arguments
         subprocess.run([str(executable), *command], cwd=root, check=True)
     except subprocess.CalledProcessError as error:
-        if arguments[0] == '--compiled-only':
-            raise ValueError(f'raw.reader_failed:exit={error.returncode}') from error
-        raise
+        raise ValueError(f'raw.reader_failed:exit={error.returncode}') from error
 
 
 def row_binding(rows, root, module_name, utility_path, *, template_inputs=None):
@@ -253,7 +244,6 @@ def module(root, name, source, utility_path, executable, output):
         report = directory / public.RAW
         arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
             '--utility-input', str(utility), name, record['source_path'], 'sha256:' + public.digest(source)]
-        arguments = inspection_arguments(root, [name], arguments)
         capture = retain_request(root, executable, arguments, record['utilities'])
         with phase('native-inspect', request_capture=capture):
             run_inspector(root, executable, arguments)
@@ -299,7 +289,6 @@ def produce_batch_chunk(requests):
         utility_file.write_bytes(materials.canonical_json(utilities))
         arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
                      '--utility-input', str(utility_file), *triples]
-        arguments = inspection_arguments(root, list(bindings), arguments)
         argument_file = directory / 'arguments.json'
         argument_file.write_text(json.dumps(arguments))
         capture = retain_request(root, executable, arguments, utilities, origin)

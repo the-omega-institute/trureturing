@@ -136,8 +136,6 @@ class NativeBatchStateTests(unittest.TestCase):
 
             def inspect(command, **kwargs):
                 arguments = json.loads(Path(command[-1]).read_text())
-                if arguments[0] == '--compiled-only':
-                    arguments = arguments[1:]
                 spool = Path(arguments[arguments.index('--material-spool') + 1])
                 rows = []
                 for index, (name, path, sha) in enumerate(zip(*[iter(arguments[6:])]*3)):
@@ -594,13 +592,13 @@ raise SystemExit(37)
         self.addCleanup(environment.stop)
 
     def fail_producer(self, module=False):
-        with self.assertRaises(subprocess.CalledProcessError) as failure:
+        with self.assertRaisesRegex(ValueError, 'raw.reader_failed:exit=37') as failure:
             if module:
                 native.module(*self.requests[0])
             else:
                 native.produce_batch(self.requests)
-        self.assertEqual(failure.exception.returncode, 37)
-        self.assertEqual(failure.exception.cmd[0], str(self.executable))
+        self.assertEqual(failure.exception.__cause__.returncode, 37)
+        self.assertEqual(failure.exception.__cause__.cmd[0], str(self.executable))
         received = json.loads(self.seen.read_text())
         # The actual temporary request, utility and spool are gone on failure.
         for path in received['arguments'][1:6:2]:
@@ -665,9 +663,9 @@ raise SystemExit(37)
         with patch.object(native.os, 'replace', side_effect=PermissionError('capture denied')), \
                 patch.object(native.subprocess, 'run', side_effect=failure), \
                 patch('sys.stderr', new_callable=io.StringIO) as stderr:
-            with self.assertRaises(subprocess.CalledProcessError) as raised:
+            with self.assertRaisesRegex(ValueError, 'raw.reader_failed:exit=41') as raised:
                 native.produce_batch(self.requests)
-        self.assertIs(raised.exception, failure)
+        self.assertIs(raised.exception.__cause__, failure)
         self.assertIn('capture denied', stderr.getvalue())
         self.assertEqual(previous, {path: path.read_bytes() for path in self.logs.glob('native-request-*.json')})
         self.assertEqual(list(self.logs.glob('*.tmp')), [])
@@ -709,7 +707,7 @@ raise SystemExit(37)
             cwd=self.logs, env=environment, capture_output=True, text=True, timeout=30)
         self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=report exit=1', result.stderr)
-        self.assertIn('exit status 37', result.stderr)
+        self.assertIn('raw.reader_failed:exit=37', result.stderr)
         self.assertEqual(report.read_text(), 'previous report')
         phases = [json.loads(line) for line in self.phases.read_text().splitlines()]
         self.assertNotIn('stale', [row['phase'] for row in phases])
