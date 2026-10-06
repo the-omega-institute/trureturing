@@ -112,7 +112,7 @@ private theorem fresh_four_slot_descent
   change (∑ i, F.modulus i) ≤ ∑ i, newMod i at hmin
   omega
 
-private theorem collision_prime_arithmetic
+theorem collision_prime_arithmetic
     (F : OddDistinctCoveringSystem L) (i : Fin L)
     (p : ℕ) (hp : Nat.Prime p) (hp3 : p ≠ 3) (hp5 : p ≠ 5)
     (hpd : p ∣ F.modulus i) :

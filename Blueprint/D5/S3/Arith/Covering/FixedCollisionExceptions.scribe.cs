@@ -38,6 +38,19 @@ internal sealed class FixedCollisionExceptionsDocument : IScribeDocumentDefiniti
                     + "a point in the intersection of their full congruence classes."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("collision-prime-arithmetic"),
+                DeclarationHandle.Create(Prefix + "collision_prime_arithmetic"),
+                H("Arithmetic of an ordinary prime divisor"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A prime divisor p of an original odd modulus, different "
+                    + "from 3 and 5, is odd, is at least 5, and is coprime to "
+                    + "27, 45 and 5. These arithmetic facts are used by the "
+                    + "four-slot collision descent and by the ternary-height "
+                    + "prime-root capacity construction."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("no-disjoint-ordinary-prime-collisions"),
                 DeclarationHandle.Create(Prefix + "no_disjoint_ordinary_prime_collisions"),
                 H("A four-slot replacement excludes disjoint collisions"),
