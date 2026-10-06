@@ -83,9 +83,28 @@ its activation rule is not the paper's CA-family activation rule.
 Proposition 10, p.8, gives the effective, unbounded continuation
 
 $$
-\sqrt x\log x\,D^*(x)>\frac12
+\sqrt x\log x\,D^*(x)>D_{\rm lb}(x)>\frac12
 \qquad(x\ge56\,048\,351).
 $$
+
+The full envelope is explicitly defined on p.7. Put
+
+$$
+\begin{aligned}
+L_x&=\log x,& \ell_x&=\frac{L_x+\log2}{2},&
+\epsilon_x&=\frac{3.965}{\ell_x^2},& q_x&=1-\sqrt{\frac2x},\\
+a_x&=\frac{L_x}{\sqrt2\,\ell_x},&
+j_x&=\frac{L_x}{\sqrt2}
+       \left(\frac{q_x}{\ell_x}-\frac1{\ell_x^2}\right),\\
+s_x&=(1-\epsilon_x)j_x-2\epsilon_xa_x-\frac1{\sqrt x},\\
+D_{\rm lb}(x)&=\left(\frac12-\frac1{3\sqrt{2x}}\right)s_x.
+\end{aligned}
+$$
+
+Here $a_x,j_x,s_x$ are the paper's $A(L),J(L),S(L)$ at $L=\log x$;
+$A=\log N$ below is the source clock. Proposition 10 also states that
+$D_{\rm lb}$ is increasing on this range. Retaining this published
+function avoids discarding its effective surplus above $1/2$.
 
 That continuation uses the cited Dusart theta bound and the explicit
 positive contributions from $\sqrt{2x}<p\le x$. It is separate from
@@ -108,14 +127,52 @@ and give $P<A<P^+$ at this same integer.
 
 There is no prime between $P$ and $A$, so the full-support products and
 sums above contain exactly the actual primes of $N$ when **$x=A$**.
-No change of integer, factorization, or exponents is involved. Moreover
-$z(N,A)=0$ and $B_2(N,A)=0$ exactly. Consequently Proposition 6 and
-Corollary 8 give the paper application
+The same source also attains the full-support core minimum. Its proper
+GA1 condition gives deletion comparisons in the range $N/p>e$, and GA2
+gives every one-prime insertion comparison. The existing archived
+[direct tangent-CA bridge](mantovanelli2026primeworkload.md), source §4,
+`thm:direct-bridge`, therefore identifies this very $N$ as the regular CA
+optimizer at
+
+$$
+\varepsilon_A=\frac1{A\log A}.
+$$
+
+This is precisely the price in Polak's full-support minimization.
+Put $Z(m)=\sigma(m)/m$. For each actual $p\le A$, the local price
+objective and $\Phi_{p,A}$ differ by an additive constant and a sign.
+Equivalently, the source's
+minimizer calculation on p.6 gives
+
+$$
+\Phi_{p,A}(a+1)-\Phi_{p,A}(a)
+=\varepsilon_A\log p
+ -\log\frac{Z(p^{a+1})}{Z(p^a)}.
+$$
+
+Thus the actual $a_p=v_p(N)$ attains
+$\min_{a\ge1}\Phi_{p,A}(a)$. Regularity excludes a tied layer.
+The correspondence uses the clock price $\varepsilon_A$, rather than
+identifying it with the support-parametrized CA-family price discussed
+at the end of Polak's p.6. Initial support and $P<A<P^+$ keep exactly
+the same prime set in both minimizations. Consequently
+
+$$
+R_{\rm core}(N,A)-C_{\rm pp}(A)=D^*(A).
+$$
+
+Moreover $z(N,A)=0$ and $B_2(N,A)=0$ exactly. Proposition 6 now gives
+the paper-level identity
 
 $$
 \Delta(N)=I_\psi(A)+R_{\rm core}(N,A)-C_{\rm pp}(A)
-          \ge I_\psi(A)+D^*(A).
+          =I_\psi(A)+D^*(A).
 $$
+
+The core optimization slack is zero at this selected source. Its exact
+strict Robin condition is $I_\psi(A)>-D^*(A)$; equality yields
+$\Delta(N)=0$ and does not satisfy strict Robin. This application
+identifies the actual minimizer and pays no new signed estimate.
 
 The numerical threshold also has an existing supplier.
 [Axler's finite stop](../notes/axler2023robin.md), author version
@@ -140,14 +197,34 @@ $$
 In particular a hypothetical selected counterexample must satisfy
 $\sqrt A\log A\,I_\psi(A)<-1/2$. A source-specific lower bound
 $\sqrt A\log A\,I_\psi(A)\ge-1/2$ would suffice to exclude it.
-That signed bound remains unproved. The available half-unit reserve
-has an explicit cutoff paid at one finite source; it needs neither an
-unbounded critical-source sequence nor Kalyabin's existential
-$K_\varepsilon$ for this application. It does not make that separate
-asymptotic cutoff effective.
+
+The same application retains the complete envelope and gives
+
+$$
+\sqrt A\log A\,\Delta(N)
+>\sqrt A\log A\,I_\psi(A)+D_{\rm lb}(A).
+$$
+
+Thus it is enough to prove the weaker source-specific condition
+
+$$
+\boxed{\sqrt A\log A\,I_\psi(A)\ge-D_{\rm lb}(A).}
+$$
+
+It is weaker than the half-unit condition because $D_{\rm lb}(A)>1/2$.
+Conversely, a hypothetical selected counterexample must satisfy the
+stronger necessary condition
+$\sqrt A\log A\,I_\psi(A)<-D_{\rm lb}(A)$.
+The strict inequality in Proposition 10 supplies strict Robin even
+if the sufficient tail condition is attained with equality.
+The signed condition remains unproved. Its explicit core envelope and
+cutoff are paid at this same finite source, without an unbounded
+critical-source sequence or Kalyabin's existential $K_\varepsilon$.
+This does not make that separate asymptotic cutoff effective.
 
 This is reuse of Polak's core estimate on the endpoint-restricted source,
-not a new reserve theorem or signed Robin estimate. Positivity of $D^*$
+including its full published envelope, not a new reserve theorem,
+numerical evaluation, or signed Robin estimate. Positivity of $D^*$
 does not assert positivity of $\Delta$; the unknown signed $I_\psi(A)$
 has been retained. Neither the complete divisor-deletion comparisons
 nor the all-multiplier GA2 comparisons have yet supplied its needed bound.
