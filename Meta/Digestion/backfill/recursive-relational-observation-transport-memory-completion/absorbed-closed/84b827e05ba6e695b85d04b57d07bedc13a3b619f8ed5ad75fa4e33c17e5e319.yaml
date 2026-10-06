@@ -2,7 +2,11 @@ fingerprints:
   raw_sha256: sha256:84b827e05ba6e695b85d04b57d07bedc13a3b619f8ed5ad75fa4e33c17e5e319
   normalized_sha256: sha256:84b827e05ba6e695b85d04b57d07bedc13a3b619f8ed5ad75fa4e33c17e5e319
 cas_ref: sha256:84b827e05ba6e695b85d04b57d07bedc13a3b619f8ed5ad75fa4e33c17e5e319
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Estimation/DataProcessing/PartialAssignmentOccupancyFlow.occupancy_terminal_law_range
+    target_statement_id: sha256:084ad6d4b3172d8e43f84b74e14478c3a23c2756af81415f054a257b99e86547
+  - gid: D5/S3/Estimation/DataProcessing/PartialAssignmentOccupancyFlow.realize_occupancy_state_strategy
+    target_statement_id: sha256:f93757e2f49f1c254842551db23f5bf8e8ab6962429bf151a026f398df1d3b59
 receipts:
   unresolved_subitems: []
   chain_atoms:
