@@ -201,3 +201,42 @@ An arbitrary unbounded winning family would address the archived
 intermediate problem. Applying that family to full Robin still requires
 a selection theorem covering the relevant potentially nonpositive
 self-matching minima, without assuming those sources are safe.
+
+## Source-local multipliers use the existing finite-size and cone results
+
+Section 4's `lem:neutral-point` and `thm:neutral-mean` already give the
+finite layer's insertion/deletion thresholds. A successful untied singleton
+packet has $C_b=pC_a$, so its source is improved by one prime insertion.
+It therefore cannot start at a proper prime-local well, where every such
+insertion is non-improving. This is a direct application of the cited source,
+not a new obstruction theorem. Arbitrary winning singleton families do
+not pay the source-selection obligation at these wells.
+
+The existing `thm:cone-envelope` gives a less restrictive constructive
+target: any actual multiple $m$ with $G(m)>G(C_a)$ guarantees an improving
+later regular return. A joint multiplier need not itself be a CA prefix or
+end at a prescribed return. Endpoint isolation and a fixed packet length
+are optional stronger conditions for a particular construction.
+
+The [source-local multiplier experiment](../../docs/reports/fib-source-local-multipliers/README.md)
+reuses catalog factorizations and the author's original rational log
+enclosure implementation for 109 additional comparisons. At
+$N=2021649740510400$, all single-prime insertions and deletions decrease
+$G$. The archive's existing `verification/packet_identity_checks.json`
+already verifies the ascent to return 7, precisely the joint insertion
+$3\cdot37$; that positive comparison is directly reused, not recomputed
+as a new result. At
+$N=160626866400$, all one- and two-prime insertions decrease it, including
+repeated primes. Its $2\cdot29$ descent is also directly reused from the
+archive's existing return 4-to-5 check, leaving 65 additional pair
+comparisons at that source. Universal prime coverage here uses the elementary
+absent-prime replacement argument stated in the report; the computed
+intervals themselves cover its finite pool. Neither the integers nor
+the log-enclosure method are claimed as new discoveries.
+
+These finite applications distinguish actual joint improvement from
+single-layer improvement, and disallow a universal two-prime shortcut at
+all proper local wells. They give neither an unbounded family nor a
+result restricted to potentially persistent Robin-level sources. The
+full signed source-coverage obligation remains open; these additions have
+no Lean verification or literature originality certification.
