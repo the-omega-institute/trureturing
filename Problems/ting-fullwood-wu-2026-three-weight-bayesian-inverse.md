@@ -62,12 +62,12 @@ no settlement. `not-found-in-searched-scope`.
    rule applied to $\mathbb 1$ and $\sigma_j$ determines
    $\mathcal F(\mathbb 1)$ and $\mathcal F(\sigma_j)$, hence the Choi matrix $C$ of
    any inverse.
-3. **A negative direction.** With the zero weight moved to index 0 by relabelling
-   the Pauli indices, $h_i=(1-p_i)r_i$ and
-   $w=(\mathbb 1\otimes(\mathbb 1-h\cdot\sigma))\Omega$, one has
-   $w^*Cw=-4[(1-|h|^2)B+KA]/D$ with $A=\sum p_ih_i^2$,
-   $B=\sum p_i^2(1-p_i)r_i^2$, $K=\sum p_i^2r_i^2$ and $D>0$; for $r\ne0$,
-   $B>0$ and $|h|<1$, so $w^*Cw<0$, contradicting complete positivity.
+3. **A negative direction.** If $p_k=0$, let $a_1,a_2,a_3$ be the other three weights
+   (listed through the Pauli product table) and $h_i=(1-a_i)r_i$. The vector
+   $w(j,i)=((\mathbb 1-h\cdot\sigma)\sigma_k)_{ji}$, indexed like the Choi matrix by
+   output $j$ and input $i$, gives $w^*Cw=-4[(1-|h|^2)B+KA]/D$ with
+   $A=\sum a_ih_i^2$, $B=\sum a_i^2(1-a_i)r_i^2$, $K=\sum a_i^2r_i^2$ and $D>0$;
+   for $r\ne0$, $B>0$ and $|h|<1$, so $w^*Cw<0$, contradicting complete positivity.
 
 ## Falsifier
 
@@ -128,8 +128,8 @@ maximally mixed state; this is the first alternative of the paper's sentence,
 which also implies its second.
 
 **Established inside the proof.** The obstruction is a single explicit direction:
-the Choi matrix of the forced candidate is negative on
-$(\mathbb 1\otimes(\mathbb 1-h\cdot\sigma))\Omega$ as soon as $r\ne0$, with a
+the Choi matrix of the forced candidate is negative on the vector
+$w(j,i)=((\mathbb 1-h\cdot\sigma)\sigma_k)_{ji}$ as soon as $r\ne0$, with a
 closed-form value (`witness_numerator`, `witness_strict`).
 
 **Argued, not formalized.**
