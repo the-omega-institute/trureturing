@@ -1,4 +1,5 @@
 import LeanInformationAudit.RegistryTypes
+import LeanInformationAudit.CompiledRegistration
 import LeanInformationAudit.ReadoutProvenance.Compiler
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
@@ -197,30 +198,8 @@ def validateFinite (entry : InformationRegistryEntry) : MetaM (Option String) :=
       return some s!"IE-C050 ClosedTruthReadout \
         key={entry.registrationModuleName}/{entry.effectiveCatalogId}/{entry.theoremName} \
         reason={reason} rule={rule} site=\"p1.arguments\""
-  if let some obligations := entry.compiledMathematics then
-    if obligations.witness then
-      if obligations.witnessPositive != .evidence then
-        return some "unclassified_form:dtr.witness_bridge_requires_positive_variation"
-      if obligations.witnessNegative != .evidence then
-        return some "unclassified_form:dtr.witness_bridge_requires_negative_variation"
-      if obligations.sensitivity != .evidence then
-        return some "unclassified_form:dtr.witness_bridge_requires_sensitivity"
-      return none
-    if obligations.variation != .evidence then
-      return some <| variationError entry.registrationModuleName entry.effectiveCatalogId
-        entry.theoremName entry.arenaName "all"
-        (if obligations.variation == .absent then "missing_witness" else "invalid_witness")
-    if obligations.sensitivity == .evidence then return none
-    let arena := (← normalizeArena (← mkConstWithFreshMVarLevels entry.arenaName)).law
-    let sig ← mkAppM ``PrimitiveLawArena.signature #[arena]
-    let readouts ← indices (← mkAppM ``PrimitiveSignature.Index #[sig])
-      (← mkAppM ``PrimitiveSignature.indexFintype #[sig])
-    let anchors ← indices (← mkAppM ``PrimitiveSignature.AnchorIndex #[sig])
-      (← mkAppM ``PrimitiveSignature.anchorFintype #[sig])
-    return sensitivityError entry.registrationModuleName entry.effectiveCatalogId
-      entry.theoremName entry.arenaName
-      ((readouts.mapIdx fun i _ => (s!"readout[{i}]", (obligations.partialReadouts.bind (·[i]?)).getD false)) ++
-        (anchors.mapIdx fun i _ => (s!"anchor[{i}]", (obligations.partialAnchors.bind (·[i]?)).getD false)))
+  if entry.compiledMathematics.isSome then
+    return ← CompiledRegistration.validateFinite ((← getEnv).find? ·) entry (← getOptions)
   let bridgeType := (← getConstInfo entry.realizationName).type
   if bridgeType.isAppOfArity witnessBridgeName 3 then
     return ← witnessEvidence (← mkConstWithFreshMVarLevels entry.arenaName)

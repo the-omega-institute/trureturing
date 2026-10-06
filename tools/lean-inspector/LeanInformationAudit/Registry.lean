@@ -1,6 +1,7 @@
 import LeanInformationAudit.Registry.Assessment
 import LeanInformationAudit.RuntimeInputs
 import LeanInformationAudit.BindingWire
+import LeanInformationAudit.CompiledRegistration
 
 namespace LeanInformationAudit.TemplateBinding
 open Lean Meta TemplateAudit
@@ -255,28 +256,8 @@ def validateRecordedBinding (input : RegistrationInput) : MetaM Unit := do
   let entry := input.entry
   if input.declaration.any (fun d => d.sourceRecord.isSome && !d.escapeInput.openContinuation) then
     throwError "unclassified_form:source.residual_requires_open"
-  if let some obligations := entry.compiledMathematics then
-    unless obligations.correspondence == .evidence do
-      throwError "IE-C006 StatementProofMismatch: {entry.theoremName}"
-    if let some source := input.realizationSource.filter (fun _ => !entry.sourceBound) then
-      unless isTheoremBridge (← getEnv) source do
-        throwError "IE-C006 StatementProofMismatch: {entry.theoremName}"
-    unless obligations.witnessStatement == .evidence do
-      throwError "unclassified_form:dtr.witness_statement_identity"
-    unless obligations.witnessActual == .evidence do
-      throwError "unclassified_form:dtr.witness_readout_tie"
-    if !entry.sourceBound then
-      let bridgeType := (← getConstInfo entry.realizationName).type
-      if bridgeType.isAppOfArity RegistrationElaboration.witnessBridgeName 3 then
-        let statement := bridgeType.getAppArgs[1]!
-        unless statement.isAppOfArity ``Not 1 && statement.appArg!.isConst do
-          throwError "unclassified_form:dtr.witness_statement_identity"
-        let .defnInfo claim ← getConstInfo statement.appArg!.constName!
-          | throwError "unclassified_form:dtr.witness_statement_identity"
-        let target ← getConstInfo entry.theoremName
-        unless claim.levelParams.isEmpty && target.levelParams.isEmpty &&
-            #[claim.type, claim.value, target.type].all (fun e => !e.hasFVar && !e.hasMVar && !e.hasLooseBVars) do
-          throwError "unclassified_form:dtr.witness_statement_identity"
+  if entry.compiledMathematics.isSome then
+    CompiledRegistration.validateBinding ((← getEnv).find? ·) input
     return
   if entry.sourceBound then return
   if let some source := input.realizationSource then

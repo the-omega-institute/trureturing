@@ -3,6 +3,7 @@ import LeanInformationAudit.TemplateEnrollment
 import LeanInformationAudit.CompiledSourceContract
 import LeanInformationAudit.CompiledEvidence
 import LeanInformationAudit.CompiledAssessment
+import LeanInformationAudit.ArtifactRegistration
 import LeanInformationAuditAnalysis.Tests.ExternalAllowlistTypes
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import Mathlib.Tactic.NormNum
@@ -320,7 +321,9 @@ run_cmd do
       name == `LeanInformationAudit.CompiledSourceOperands ||
       name == `LeanInformationAudit.CompiledSourceContract ||
       name == `LeanInformationAudit.CompiledEvidence ||
-      name == `LeanInformationAudit.CompiledAssessment
+      name == `LeanInformationAudit.CompiledAssessment ||
+      name == `LeanInformationAudit.CompiledRegistration ||
+      name == `LeanInformationAudit.ArtifactRegistration
   if modules.isEmpty then throwError "[FAIL] CompiledProvenanceBoundary: missing classifier module"
   let forbidden := #[`Lean.Meta.isDefEq, `Lean.Meta.whnf,
     `Lean.Meta.unfoldDefinition?, `Lean.MVarId.cases, `Lean.Meta.inferType,

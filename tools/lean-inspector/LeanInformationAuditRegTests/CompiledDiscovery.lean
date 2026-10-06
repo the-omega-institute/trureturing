@@ -6,6 +6,7 @@ import LeanInformationAudit.CompiledAxioms
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
 import LeanInformationAudit.CompiledSourceOperands
 import LeanInformationAudit.CompiledEvidence
+import LeanInformationAudit.ArtifactRegistration
 
 namespace LeanInformationAuditRegTests.CompiledDiscovery
 open Lean LeanInformationAudit
@@ -93,6 +94,20 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
     unless partialRow.input.entry.compiledMathematics.any (fun evidence =>
         evidence.partialReadouts == some #[true, false] && evidence.partialAnchors == some #[]) do
       throw <| IO.userError "compiled.discovery:partial_slot_support"
+    let partialEntry ← CompiledRegistration.prepare context.find owners[0]! partialRow.input.entry
+    let partialDiagnostic ← CompiledRegistration.validateFinite context.find partialEntry partialRow.input.options
+    unless partialDiagnostic.any (fun message => message.startsWith "IE-C049" &&
+        (message.splitOn "primitive=readout[1]").length == 2 &&
+        (message.splitOn "support=[\"readout[0]\"]").length == 2) do
+      throw <| IO.userError s!"compiled.registration:partial_support:{partialDiagnostic}"
+    let some obligations := partialEntry.compiledMathematics
+      | throw <| IO.userError "compiled.registration:obligations_missing"
+    let noVariation := { partialEntry with compiledMathematics := some { obligations with variation := .absent } }
+    unless (← CompiledRegistration.validateFinite context.find noVariation partialRow.input.options).any
+        (fun message => message.startsWith "IE-C048" &&
+          (message.splitOn "reason=missing_witness").length == 2) do
+      throw <| IO.userError "compiled.registration:variation_precedence"
+    IO.println "[PASS] compiled registration: finite partial support and variation precedence"
     for index in [:5] do
       let name := owners[0]!.str s!"source{index}"
       let some definition := snapshot.definitions.find? (·.info.name == name)
@@ -172,6 +187,36 @@ unsafe def readFixtures (start limit : Nat) : IO Unit := do
     catch error => pure (error.toString == "incomplete_closure:E8.erasure_work")
     unless exhausted do throw <| IO.userError "compiled.enrollment:zero_work"
     IO.println "[PASS] compiled enrollment: source, 6 finite cases, recursion metadata and zero work"
+    let canonical := `Reg.D5.S0.Tower.GoldenGapZeckendorf
+    let reachable := reachableModules (ArtifactRegistration.importsOf store) canonical
+    let canonicalOwners := store.moduleOrder.filter (fun owner =>
+      reachable.contains owner && (`Reg).isPrefixOf owner)
+    let canonicalSnapshot ← Contract.Discovery.discoverCompiled #[] canonicalOwners context
+      (fun owner => return (← store.getModule owner).constants)
+      (CompiledAxioms.collectAxiomsShared context.find closures)
+    let action : ArtifactRegistration.M Unit := do
+      ArtifactRegistration.prepareSnapshot canonicalSnapshot
+      let records ← ArtifactRegistration.assessJoined canonical
+      unless records.size == canonicalSnapshot.registrations.size &&
+          records.all (fun record => match record.result with
+            | .declaredValidated _ => true | _ => false) do
+        for record in records do
+          if let .declaredUnresolved message := record.result then IO.println message
+        throw <| IO.userError "compiled.registration:canonical_join_assessment"
+      modify fun state => { state with records }
+    let (_, canonicalState) ← action.run { store }
+    let canonicalJson ← ArtifactRegistration.targetJson canonical canonicalState
+    unless (canonicalJson.getObjValAs? (Array Json) "records").toOption.any
+        (·.size == canonicalSnapshot.registrations.size) do
+      throw <| IO.userError "compiled.registration:owner_records"
+    let some firstEntry := canonicalState.entries[0]?
+      | throw <| IO.userError "compiled.registration:empty_canonical_entries"
+    let duplicate ← try
+      CompiledRegistration.validateUnique firstEntry canonicalState.entries
+      pure false
+    catch error => pure (error.toString.startsWith "IE-C002 DuplicateRegistration")
+    unless duplicate do throw <| IO.userError "compiled.registration:duplicate_accepted"
+    IO.println "[PASS] compiled registration: complete canonical snapshot, companions, join and duplicate rejection"
     for sourceOwner in #[`Reg.D5.S0.Tower.GoldenGapZeckendorf,
         `Reg.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit] do
       let sourceSnapshot ← Contract.Discovery.discoverCompiled #[] #[sourceOwner] context
