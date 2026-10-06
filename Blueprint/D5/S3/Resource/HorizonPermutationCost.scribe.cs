@@ -52,7 +52,7 @@ internal sealed class HorizonPermutationCostDocument : IScribeDocumentDefinition
                             + "H states per missing-image point."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Card(Formula set) => F.Seq(F.Lvert, set, F.Rvert);
+    private static Formula Card(Formula set) => F.Seq(F.Lvert, F.Sp, set, F.Sp, F.Rvert);
 
     private static Formula CostFormula()
     {
@@ -64,17 +64,18 @@ internal sealed class HorizonPermutationCostDocument : IScribeDocumentDefinition
             F.Id("r"), F.Comma, F.Id("i"), F.Close);
         var simulations = F.Seq(F.Id("S"), F.Open, f, F.Comma, h, F.Close);
         var image = F.Seq(f, F.Open, x, F.Close);
-        var cost = F.Seq(Card(x), F.Sp, F.Plus, F.Sp, h, F.Cdot,
-            Card(F.Seq(x, F.Setminus, image)));
+        var cost = F.Seq(Card(x), F.Sp, F.Plus, F.Sp, h, F.Cdot, F.Sp,
+            Card(F.Seq(x, F.Setminus, F.Sp, image)));
         return F.Disp(F.Seq(
             F.Forall, F.Sp, x, F.Comma, F.Sp,
-            F.Operatorname, F.Grp(F.Id("Finite")), F.Open, x, F.Close, F.Comma,
-            F.Sp, F.Forall, F.Sp, f, F.Colon, x, F.To, x, F.Comma,
-            F.Sp, F.Forall, F.Sp, h, F.InMacro, F.Mathbb, F.Grp(F.Id("N")),
+            F.OpenBracket, F.Operatorname, F.Grp(F.Id("Finite")), F.Open, x,
+            F.Close, F.CloseBracket, F.Comma,
+            F.Sp, F.Forall, F.Sp, f, F.Colon, x, F.To, F.Sp, x, F.Comma,
+            F.Sp, F.Forall, F.Sp, h, F.InMacro, F.Sp, F.Mathbb, F.Grp(F.Id("N")),
             F.Comma, F.RowBreak,
-            F.Open, F.Forall, F.Sp, tuple, F.InMacro, simulations, F.Comma,
-            F.Sp, cost, F.Leq, Card(e), F.Close, F.RowBreak,
-            F.Land, F.Sp, F.Open, F.Exists, F.Sp, tuple, F.InMacro, simulations,
+            F.Open, F.Forall, F.Sp, tuple, F.InMacro, F.Sp, simulations, F.Comma,
+            F.Sp, cost, F.Leq, F.Sp, Card(e), F.Close, F.RowBreak,
+            F.Land, F.Sp, F.Open, F.Exists, F.Sp, tuple, F.InMacro, F.Sp, simulations,
             F.Comma, F.Sp, Card(e), F.Eq, cost, F.Close));
     }
 }
