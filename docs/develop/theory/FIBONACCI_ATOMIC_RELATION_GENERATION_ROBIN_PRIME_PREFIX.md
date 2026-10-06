@@ -3688,3 +3688,502 @@ Glöckner–Lucht，*Weighted inversion of general Dirichlet series*，
 纤维的精确临界算子范数、重复逆的显式指数下界、具体非保号输入及
 多项式统一成本与平方根递归深度的定量冲突，为本仓推导（repo-derived），
 不作全局原创性断言。
+
+## 453. 实际奇数 Möbius 二倍配对的原尾素数面板与必需联合补偿
+
+本单元检验 §419 所提示的二幂消去，在 §424 的**原始实际阶乘配对**中能否单独取得 Robin 临界收益。结论是一个实际输入的局部障碍：精确配对后的真实素数面板仍有严格负的 \(1/\log^2x\) 主项；同一完整补集必须反向补偿它。这里不把面板贡献当成全尾下界，也不声称 RH 的反例或一般数学不可能性。
+
+新增承重内容是：实际奇数 Möbius 源的有限截止、条件级数末项付款，以及固定二倍配对在 \(p\asymp x\) 上的原尾素数面板主项。移动尺度的核误差直接消费 §425.5，不重证其完整 β 纤维预算。以下为解析推导；原临界有符号估计仍未解决。
+
+### 453.1 原字面对象与既有供应
+
+固定真实 Möbius 函数 \(\mu\)，\(M(n)=\sum_{r=1}^n\mu(r)\)。对于全部 \(y>0\)，保持
+
+\[
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y.
+\]
+
+\(\eta\) 是这个固定函数，不随 \(x\)、素数面板或截止改变。对于实数 \(x>1,s>0\) 和正整数 \(n\)，保持 §424.1 的字面定义
+
+\[
+w(t)=\frac{1+\log t}{t^2\log^2t},\qquad
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)\,dt,
+\qquad J_x^\eta(n)=P_x^\eta(n)-P_x^\eta(n+1).
+\tag{DP.1}
+\]
+
+同一个完整目标是
+
+\[
+I_\psi(x)=\int_x^\infty[\psi(t)-t]w(t)\,dt,
+\qquad Z_\psi(x)=\sqrt x\log x\,I_\psi(x).
+\tag{DP.2}
+\]
+
+下列既有供应直接复用，并保留其证据范围。
+
+* §§422、424：存在固定有限 \(C_M\)，对全部 \(n\ge1\) 有
+  \( |M(n)|\le C_M n/(1+\log n)^4\)。§424.5 已支付积分前绝对预算，故
+  \(I_\psi(x)=\sum_{n\ge1}M(n)J_x^\eta(n)\) 绝对收敛，包含原首块及全部整数纤维。它没有支付未阻尼的 Möbius 原子绝对和。
+* §425.5：对于固定 \(U\ge0\)，既有有限常数 \(\mathsf C_\beta(U),\mathsf L_\beta(U)\) 满足
+
+  \[
+  \left|n^2\log x\,J_x^\eta(n)
+  -\left[\frac{\log^2(n/x)}2+\gamma_1\right]\right|
+  \le\frac{\mathsf C_\beta(U)}{\log x}
+  +\frac{\mathsf L_\beta(U)}n
+  \quad(x\ge e,\ x\le n\le e^Ux).
+  \tag{DP.3}
+  \]
+
+  这些是 §425.3 对全部无界 β 来源的完整常数，不能换成逐个固定来源的极限。
+* §429.2–3：\( |\eta(y)|\le1+\log y\) 对 \(y\ge1\) 成立。若 \(s>x\ge e\)，\(\ell=\log x\)、\(v=\log(s/x)\)，则
+
+  \[
+  -\frac{d}{ds}P_x^\eta(s)=\frac{G_{\eta,x}(\log s)}{s^2},\qquad
+  |\ell G_{\eta,x}(\ell+v)|\le v^2/2+v+12.
+  \tag{DP.4}
+  \]
+
+  该导数来自同一完整阶乘核，不用点值包络代替跳跃差分。
+* \(\gamma_1\) 使用原约定 \(\zeta(1+z)=z^{-1}+\gamma_E-\gamma_1z+O(z^2)\)。下一小节用纯解析证明 \(\gamma_1>-167/1600>-1/8\)，面板正性据此付款。既有 `robin-kernel-diagonal.json` 的向外下端点为
+
+  \[
+  g_-=-3656579760393884564419850453066548425766419045455786552735\cdot2^{-195}.
+  \]
+
+  该保存区间及精确比较 \(g_->-1/8\) 只作交叉参考，不是下文的证明前提，也不是 Lean 定理。来源是既有 FLINT `acb.stieltjes(1)` 区间，源说明还核对 deflated ζ 的一次系数约定；两接口不是独立数值算法的声明。
+* 仓内 `Library/Weil/johnstonyang2022pnt.md` 记录 Johnston–Yang arXiv:2204.01980v2，Theorem 1.1、(1.3)、印刷 p.2：对全部 \(t\ge2\)，
+
+  \[
+  |\psi(t)-t|\le9.39t(\log t)^{1.515}e^{-0.8274\sqrt{\log t}}.
+  \tag{DP.5}
+  \]
+
+  这是包含全部素幂的无条件既有供应。下文的 PNT 求和和粗于临界的尾预算都是它的经典后果，没有把有限验零输入升级成全局 RH。
+
+### 453.2 \(\gamma_1\) 的纯解析下界及符号约定
+
+先付清 Stieltjes 极限与原 Laurent 约定的联系。对 \(\Re z>0\)，经典 Dirichlet 级数与积分给
+
+\[
+\zeta(1+z)-z^{-1}
+=\sum_{n\ge1}\left[n^{-1-z}-\int_n^{n+1}t^{-1-z}dt\right].
+\tag{DG.1}
+\]
+
+在 \(|z|\le1/4\) 上，每个差值由关于 \(t\) 的一阶导数控制，其项及关于 \(z\) 的一阶导数共同有 \(O((1+\log n)n^{-7/4})\) 的可和包络。因此差值级数在此盘正常收敛并可逐项微分；它解析延拓（DG.1）的左侧到零点。原 Laurent 约定给其零点导数为 \(-\gamma_1\)，所以
+
+\[
+\gamma_1=\lim_{N\to\infty}
+\left[\sum_{n=1}^N\frac{\log n}{n}-\frac{\log^2N}{2}\right].
+\tag{DG.2}
+\]
+
+实际逐项微分先产生 \(\log^2(N+1)/2\)；由于 \(\tfrac12[\log^2(N+1)-\log^2N]\to0\)，上式的端点替换已经支付。
+
+令 \(f(t)=\log t/t\)、\(L=\log2\)。对于整数 \(N\ge3\)，复合梯形和为
+
+\[
+T_{2,N}=\frac{f(2)}2+\sum_{n=3}^{N-1}f(n)+\frac{f(N)}2.
+\]
+
+两次有限分部积分给保留端点的 Peano 核恒等式
+
+\[
+T_{2,N}-\int_2^Nf(t)dt
+=\frac12\sum_{n=2}^{N-1}
+\int_n^{n+1}(t-n)(n+1-t)f''(t)dt.
+\tag{DG.3}
+\]
+
+该单元核在整个单位区间不超过 \(1/8\)，故
+
+\[
+\left|T_{2,N}-\int_2^Nf(t)dt\right|
+\le\frac18\int_2^N|f''(t)|dt.
+\]
+
+这里 \(f'(t)=(1-\log t)/t^2\)、\(f''(t)=(2\log t-3)/t^3\)。\(f''\) 在 \(2<t<e^{3/2}\) 为负，在 \(t>e^{3/2}\) 为正；\(f'(e^{3/2})=-1/(2e^3)\)，而 \(f'(t)\to0\)。因此完整绝对曲率质量精确为
+
+\[
+\int_2^\infty|f''(t)|dt=\frac{1-L}{4}+e^{-3}.
+\tag{DG.4}
+\]
+
+再用
+\(\sum_{n=1}^Nf(n)=T_{2,N}+f(2)/2+f(N)/2\)、
+\(\int_2^Nf=(\log^2N-L^2)/2\)、
+\(f(N)\to0\)，从（DG.2）–（DG.4）得到
+
+\[
+\gamma_1\ge\frac L4-\frac{L^2}{2}
+-\frac{1-L}{32}-\frac1{8e^3}.
+\tag{DG.5}
+\]
+
+严格凸函数 \(1/t\) 的中点积分比较给 \(L>2/3\)。正项 Taylor 级数给
+
+\[
+e^{7/10}>1+\frac7{10}+\frac{49}{200}+\frac{343}{6000}
+=\frac{12013}{6000}>2,
+\]
+
+所以 \(L<7/10\)；同样 \(e>2\)。逐项用这些严格界，即得完全有理的解析下界
+
+\[
+\boxed{\displaystyle
+\gamma_1>
+\frac16-\frac{49}{200}-\frac1{96}-\frac1{64}
+=-\frac{167}{1600}>-\frac18.}
+\tag{DG.6}
+\]
+
+这个证明支付无限端点和原符号约定，不需数值 Stieltjes 区间。
+
+### 453.3 奇数前缀与固定 \(x\) 的截止末项
+
+定义 \(O(y)=\sum_{1\le m\le y,\ m\text{ 奇}}\mu(m)\)（\(y\ge0\)，空和为零）。实际恒等式 \(\mu(2m)=-\mu(m)\) 对奇数 \(m\) 成立，而 \(4\mid r\) 时 \(\mu(r)=0\)。因此
+
+\[
+M(n)=O(n)-O(n/2)
+=\sum_{n/2<m\le n,\ m\text{ 奇}}\mu(m).
+\tag{DP.6}
+\]
+
+递归展开并在正指标终止，给 \(y\ge1\) 的有限恒等式
+
+\[
+O(y)=\sum_{\substack{a\ge0\\2^a\le y}}M(\lfloor y/2^a\rfloor).
+\tag{DP.7}
+\]
+
+这不消费零指标的 Mertens 估计。若 \(y\ge4\)，令 \(a_0=\lfloor\tfrac12\log_2y\rfloor\)。对于 \(a\le a_0\)，
+
+\[
+\lfloor y/2^a\rfloor\ge\frac{\sqrt y}{2},\qquad
+1+\log\lfloor y/2^a\rfloor\ge\tfrac12\log y,
+\]
+
+第二式使用 \(1>\log2\)。用既有 Mertens 供应及几何和，得到
+
+\[
+\sum_{a\le a_0}|M(\lfloor y/2^a\rfloor)|
+\le\frac{32C_My}{\log^4y}.
+\]
+
+余下部分用 \( |M(k)|\le k\)，其总量不超过
+
+\[
+\sum_{a>a_0}y/2^a=y/2^{a_0}<2\sqrt y.
+\]
+
+因为 \(\log^4y/\sqrt y\to0\)，并可用 \( |O(y)|\le y\) 吸收有限头，故存在有限常数 \(C_O\) 使
+
+\[
+|O(y)|\le C_O\frac{y}{(1+\log y)^4}\qquad(y\ge1).
+\tag{DP.8}
+\]
+
+还要独立控制 \(P_x^\eta\) 的原子截止。固定 \(x\ge e\)，写 \(\ell=\log x\)、\(r=\log s\)。对于 \(s\ge x\)，低商 \(x\le t\le s\) 上有 \(\eta(t/s)=(t/s)[1-\log(t/s)]\)，从而直接积分得
+
+\[
+\begin{aligned}
+P_{x,\mathrm{low}}^\eta(s)
+&=\frac1s\int_\ell^r\left[\frac{1+r}{u^2}+\frac r u-1\right]du\\
+&=\frac1s\left[r\log r+
+  (\ell^{-1}-\log\ell-1)r+
+  (\ell^{-1}+\ell-1)-r^{-1}\right].
+\end{aligned}
+\tag{DP.9}
+\]
+
+高商 \(t\ge s\) 换元 \(t=sy\)，由 \(\int_1^\infty(1+\log y)y^{-2}dy=2\) 给
+
+\[
+|P_{x,\mathrm{high}}^\eta(s)|
+\le\frac2s(r^{-1}+r^{-2}).
+\tag{DP.10}
+\]
+
+所以（DP.4）、（DP.9）–（DP.10）共同支付
+
+\[
+|P_x^\eta(s)|=O_x\!\left(\frac{(1+\log s)^2}s\right),\qquad
+|(P_x^\eta)'(s)|=O_x\!\left(\frac{(1+\log s)^2}{s^2}\right)
+\quad(s>x).
+\tag{DP.11}
+\]
+
+常数允许依赖这个固定 \(x\)；此处没有增长 \(x\) 的统一截止账。
+
+### 453.4 精确有限配对及条件极限
+
+定义真实二倍配对核
+
+\[
+\mathscr D_x(m)=P_x^\eta(m)-P_x^\eta(2m)
+=\sum_{n=m}^{2m-1}J_x^\eta(n)\qquad(m\ge1).
+\tag{DP.12}
+\]
+
+对每个整数 \(N\ge1\)，令 \(S_N(x)=\sum_{n=1}^NM(n)J_x^\eta(n)\)。在有限集合中使用（DP.6）及望远镜，精确得到
+
+\[
+\boxed{\displaystyle
+S_N(x)=\sum_{m\le N,\ m\text{ 奇}}\mu(m)
+\left[P_x^\eta(m)-P_x^\eta(\min\{2m,N+1\})\right].}
+\tag{DP.13}
+\]
+
+触发条件是 \(m\le n<2m\)；一个完整奇源纤维恰为 \(m\le n\le2m-1\)。这包括原单位源 \(m=1\)，其核 \(\mathscr D_x(1)=J_x^\eta(1)\) 保留 §424.7 的原首块补偿。
+
+令 \(T_N(x)=\sum_{m\le N,\ m\text{ 奇}}\mu(m)\mathscr D_x(m)\)，则
+
+\[
+E_N(x):=S_N(x)-T_N(x)
+=\sum_{N/2<m\le N,\ m\text{ 奇}}\mu(m)
+\left[P_x^\eta(2m)-P_x^\eta(N+1)\right].
+\tag{DP.14}
+\]
+
+若 \(2m=N+1\)，括号精确为零，所以该写法对奇偶 \(N\) 都成立。取固定 \(x\)，随后令 \(N\to\infty\)。对 \(N>2x\)，在 \([N/2,N]\) 上置
+
+\[
+B_N(t)=O(t)-O(N/2),\qquad
+F_N(t)=P_x^\eta(2t)-P_x^\eta(N+1).
+\]
+
+（DP.8）给 \(\sup|B_N(t)|=O(N/\log^4N)\)；（DP.11）给
+
+\[
+|F_N(N)|+\int_{N/2}^N|F_N'(t)|dt
+=O_x(\log^2N/N).
+\]
+
+有限 Abel 求和保留全部端点：
+
+\[
+E_N(x)=B_N(N)F_N(N)-\int_{N/2}^NB_N(t)F_N'(t)dt
+=O_x(\log^{-2}N)\longrightarrow0.
+\tag{DP.15}
+\]
+
+§424 的绝对 Mertens 配对使 \(S_N(x)\to I_\psi(x)\)，故得到付清截止末项后的原子身份
+
+\[
+\boxed{\displaystyle
+I_\psi(x)=\lim_{N\to\infty}
+\sum_{m\le N,\ m\text{ 奇}}\mu(m)\mathscr D_x(m).}
+\tag{DP.16}
+\]
+
+这个极限按所写奇源自然截止定义。它没有从 §424 的绝对累计配对推出原子绝对交换。事实上（DP.9）–（DP.10）还给固定 \(x\) 下
+
+\[
+\mathscr D_x(m)\sim\frac{\log m\log\log m}{2m}\qquad(m\to\infty).
+\]
+
+在真实奇素数 \(p\) 上 \( |\mu(p)|=1\)，因此该原子绝对和发散：充分大的素数项至少为 \(\log p/(4p)\)，而既有第一 Mertens 供应 \(\sum_{p\le Y}\log p/p=\log Y+O(1)\) 发散。这里的条件截止付款不可删除，也不能将全部素数与合数另作未经支付的无限分拆。
+
+### 453.5 \(p\asymp x\) 的共同二倍核估计
+
+保持 \(x\ge e\)、\(\ell=\log x\)。令
+
+\[
+q_\eta(v)=\tfrac12\log^2v+\gamma_1,\quad
+C_*=\mathsf C_\beta(\log8),\quad L_*=\mathsf L_\beta(\log8),
+\quad D_* =\log8+\log^28+2|\gamma_1|.
+\]
+
+对每个整数 \(2x<m\le4x\)，纤维 \(m\le n\le2m-1\) 的全部行满足 \(2<n/x<8\)。因此（DP.3）用**同一个** \(U=\log8\)，求和并用 \(\sum_{n=m}^{2m-1}n^{-2}\le m^{-1}\)、\(\sum n^{-3}\le m^{-2}\)，得到
+
+\[
+\left|\mathscr D_x(m)-\frac1\ell
+\sum_{n=m}^{2m-1}\frac{q_\eta(n/x)}{n^2}\right|
+\le\frac{C_*}{m\ell^2}+\frac{L_*}{m^2\ell}.
+\tag{DP.17}
+\]
+
+函数 \(f_x(s)=q_\eta(s/x)/s^2\) 在 \([m,2m]\) 上满足
+
+\[
+f_x'(s)=\frac{\log(s/x)-\log^2(s/x)-2\gamma_1}{s^3},
+\qquad |f_x'(s)|\le D_*/s^3.
+\]
+
+逐个完整单位区间积分，故
+
+\[
+\left|\sum_{n=m}^{2m-1}f_x(n)-\int_m^{2m}f_x(s)ds\right|
+\le\frac{D_*}{2m^2}.
+\]
+
+定义固定紧区间轮廓
+
+\[
+k_2(u)=\int_u^{2u}\frac{q_\eta(v)}{v^2}dv\qquad(2\le u\le4).
+\tag{DP.18}
+\]
+
+换元 \(s=xv\)，得到显式共同误差
+
+\[
+\boxed{\displaystyle
+\left|x\ell\,\mathscr D_x(m)-k_2(m/x)\right|
+\le\frac{C_*}{2\ell}+\frac{L_*+D_*/2}{4x}
+\quad(2x<m\le4x).}
+\tag{DP.19}
+\]
+
+此界同时适用于面板内全部真实素数，且保留原 \(2m\) 端点。没有将固定 \(x\) 渐近冒充联合 \(x,m\) 渐近。
+
+令 \(L=\log2\)。由 \(L=\int_1^2dt/t>1/2\) 及已支付的 \(\gamma_1>-1/8\)，
+
+\[
+q_0:=\tfrac12L^2+\gamma_1>0,\qquad
+k_2(u)\ge q_0\int_u^{2u}v^{-2}dv
+=q_0/(2u)\ge q_0/8.
+\tag{DP.20}
+\]
+
+当（DP.19）的共同误差小于 \(q_0/16\) 时，所有面板核都严格为正，并有 \(\mathscr D_x(m)>q_0/(16x\ell)\)。该共同阈值存在；本篇不提供其数值。
+
+### 453.6 真实素数面板的严格主项
+
+对于同一实数 \(x\)，令
+
+\[
+\mathcal P_x=\{p\text{ 素数}:2x<p\le4x\},\qquad
+\mathcal A_x=\sum_{p\in\mathcal P_x}\mathscr D_x(p),\qquad
+\Pi_x=\sum_{p\in\mathcal P_x}\mu(p)\mathscr D_x(p)=-\mathcal A_x.
+\tag{DP.21}
+\]
+
+因为 \(x\ge e\)，面板中每个素数均为奇数，真实系数精确为 \(\mu(p)=-1\)。对于任何 \(N\ge\lceil8x\rceil\)，这些素数源都已经在（DP.13）中触发完整纤维，因为 \(2p-1\le N\)。\(2x\) 的严格下端和 \(4x\) 的闭上端不被改变。
+
+经典 PNT 在全部 \(u\in[2,4]\) 上共同给
+
+\[
+F_x(u):=\frac\ell x[\pi(ux)-\pi(2x)]\longrightarrow u-2.
+\tag{DP.22}
+\]
+
+这也可直接由（DP.5）导出：素幂余项 \(\psi(t)-\vartheta(t)=O(\sqrt t\log^2t)\) 给 \(\vartheta(t)=t+o(t)\)，再对 \(\vartheta\) 有限 Abel 求和得到 \(\pi(t)\sim t/\log t\)。共同性来自 \(ux\ge2x\to\infty\) 及 \(\ell/\log(ux)\to1\) 于固定紧区间共同成立；未调用短区间 PNT。
+
+对 \(k_2\) 有限 Abel 求和，保留 \(F_x(2)=0\)，得到
+
+\[
+\frac\ell x\sum_{p\in\mathcal P_x}k_2(p/x)
+=k_2(4)F_x(4)-\int_2^4F_x(u)k_2'(u)du
+\longrightarrow C_{\rm pair}:=\int_2^4k_2(u)du>0.
+\tag{DP.23}
+\]
+
+PNT 还给 \(\#\mathcal P_x=O(x/\ell)\)。因此（DP.19）在整个面板求和的核误差为 \(O(\ell^{-3})+O((x\ell^2)^{-1})=O(\ell^{-3})\)，从而
+
+\[
+\boxed{\displaystyle
+\mathcal A_x=\frac{C_{\rm pair}}{\log^2x}+o(\log^{-2}x),\qquad
+\Pi_x=-\frac{C_{\rm pair}}{\log^2x}+o(\log^{-2}x).}
+\tag{DP.24}
+\]
+
+常数具有完全指定的正积分和闭式。积分原函数给
+
+\[
+k_2(u)=\frac1{2u}\left[1+\gamma_1-L-\frac{L^2}2
++(1-L)\log u+\frac{\log^2u}2\right],
+\]
+
+故
+
+\[
+\boxed{\displaystyle
+C_{\rm pair}=\int_2^4\int_u^{2u}
+\frac{\tfrac12\log^2v+\gamma_1}{v^2}\,dv\,du
+=\frac{(1+\gamma_1)L}{2}+\frac{L^2}{4}-\frac{5L^3}{12}>0.}
+\tag{DP.25}
+\]
+
+正性由（DP.20）证明，不依赖闭式小数求值。
+
+### 453.7 保留完整来源的反向补偿与精确缺口
+
+定义同一奇源截止的完整补集
+
+\[
+\mathscr C_x=\lim_{N\to\infty}
+\sum_{\substack{m\le N,\ m\text{ 奇}\\m\notin\mathcal P_x}}
+\mu(m)\mathscr D_x(m).
+\tag{DP.26}
+\]
+
+这是删除一个有限面板后的自然截止极限；（DP.16）证明它存在。它保留单位源、全部其余奇素数、所有合数源、\(m<x\)、面板两侧和全部远尾，以及每份奇源中的完整偶倍配对。通过（DP.13）–（DP.15），这些来源恢复同一个原 Mertens 配对，故没有遗失原首块或 β 运输补偿。精确身份是
+
+\[
+\boxed{I_\psi(x)=\Pi_x+\mathscr C_x=\mathscr C_x-\mathcal A_x.}
+\tag{DP.27}
+\]
+
+（DP.5）使存在有限 \(C_4\) 满足 \( |\psi(t)-t|\le C_4t/\log^4t\) 对全部 \(t\ge2\) 成立，因为 \(u^{5.515}e^{-0.8274\sqrt u}\) 在 \(u\ge\log2\) 上有界。直接在原核积分给
+
+\[
+|I_\psi(x)|\le C_4\left[\frac1{4\ell^4}+\frac1{5\ell^5}\right].
+\tag{DP.28}
+\]
+
+所以该同源补集已有必需反向主项
+
+\[
+\boxed{\displaystyle
+\mathscr C_x=\mathcal A_x+O(\log^{-4}x)
+=\frac{C_{\rm pair}}{\log^2x}+o(\log^{-2}x).}
+\tag{DP.29}
+\]
+
+这里先使用同一个完整身份取差，没有对补集逐项取 \(x\to\infty\) 的极限；也没有把其来源换成另一优化值。两份实际量在临界归一化下分别为
+
+\[
+\sqrt x\log x\,\Pi_x\sim-C_{\rm pair}\frac{\sqrt x}{\log x}\to-\infty,
+\qquad
+\sqrt x\log x\,\mathscr C_x\sim C_{\rm pair}\frac{\sqrt x}{\log x}\to+\infty.
+\tag{DP.30}
+\]
+
+因此，二倍配对已经发生，却没有单独把这个实际面板降至 Robin 临界尺度。完整补集确实产生反向抵消；（DP.28）的对数预算仍不支付它们差值的临界预算。面板负项不构成 \(I_\psi\) 的负下界。
+
+若原目标要求某个固定 \(B\ge0\) 的一侧临界下界，缺失的同源联合条件须对**精确面板值**写成
+
+\[
+\boxed{\displaystyle
+\mathscr C_x\ge\mathcal A_x-\frac B{\sqrt x\log x}
+\quad\text{对全部充分大实数 }x.}
+\tag{DP.31}
+\]
+
+这是（DP.27）下原下界的字面要求，不是新 RH 判据或已证结论。如果选用更强的绝对临界预算，则需要
+
+\[
+|\mathscr C_x-\mathcal A_x|\le B/(\sqrt x\log x).
+\tag{DP.32}
+\]
+
+（DP.24）的 \(o(\log^{-2}x)\) 或共同核账中的 \(O(\log^{-3}x)\) 都不能直接替代（DP.31）中的精确 \(\mathcal A_x\)：它们没有临界误差预算。与面板 \(C_{\rm pair}/\log^2x\) 相比，临界缺额的允许比例只有 \(O(\log x/\sqrt x)\)；一侧目标允许更大的正向补偿，不要求两侧相等。也不能把（DP.15）的固定 \(x\) 末项界用于未经支付的联合截止 \(N=N(x)\)。
+
+### 453.8 来源、非重复范围及证据边界
+
+§419 是实际 Fibonacci \(e_n\) 的逐二幂链终端；§421、§423 是 \(H_{\rm raw}\) 的素核／固定复杂度层主项。本单元处理原 \(I_\psi\) 中真实普通 Möbius 的固定二倍配对，并在 \(p\asymp x\) 上计算完整相邻纤维的面板。§§429、435 已给其他增长 Euler 过滤器的实际窗口及反向补集；这里没有重发其结果或声称“补集补偿”这个原则的新颖性。§452 的输入空间算子成本也没有被当成真实 Möbius 达到最坏情况的证据。
+
+直接复用范围：§§422、424、425.3–5、429.2–3；既有第一 Mertens 供应；Johnston–Yang v2 的上述无条件 Chebyshev 误差供应。新增推导为（DP.13）–（DP.16）的实际有限截止与 Abel 付款、（DP.17）–（DP.25）的同一二倍纤维面板及显式常数，以及以精确面板保留全部补集的（DP.27）–（DP.31）。不作全球原创性声明。
+
+（DG.1）–（DG.6）给出本节使用的解析下界、正常收敛及原约定联系。Stieltjes 经典约定仍沿用既有源说明及 DLMF §25.2.4；梯形误差、有限分部积分与正常收敛只是经典中间工具。保存的 FLINT 向外区间只作交叉参考，没有作为解析下界前提或 Lean 定理。
+
+本次读取的源快照 SHA-256：
+
+* `docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md`：`eb0bcb3fad6aaded820f8e6d3c8cb07008068c694a7747ac369cd1f5ad96acda`。
+* `docs/reports/fib-robin-boundary/robin-kernel-diagonal.json`：`29834f084f6b7be486efd5c1516093e4b6c2a12e690c46d01e94e31c472e963d`。
+* `docs/reports/fib-robin-boundary/robin-kernel-diagonal.md`：`1f8347eda47d65d874dbda10c053fc1ee743ac040b99470350b3b279c33f45c7`。
+* `Library/Weil/johnstonyang2022pnt.md`：`adb7c7bc038556fe195dc977121a4fe9a34d804e0578c81964b4e8c3a2a779d8`。
+
+这些源与经典供给的归属保持原记录。本节是纸面证明；原临界有符号估计、其常数和全范围仍未解决。
