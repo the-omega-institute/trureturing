@@ -70,6 +70,10 @@ $$\forall K \in \mathbb{N},\; (2 \le K) \Rightarrow ((\forall p \in ((\operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/MerminCglmpFacet.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/grandjean-liang-bancal-brunner-gisin-2012-mermin-cglmp-facet` (proved) by `D5/S3/QuantumBounds/MerminCglmpFacet.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"grandjean-liang-bancal-brunner-gisin-2012-mermin-cglmp-facet","declaration_gid":"D5/S3/QuantumBounds/MerminCglmpFacet.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* B. Grandjean; Y.-C. Liang; J.-D. Bancal; N. Brunner; N. Gisin (2012). *Bell inequalities for three systems and arbitrarily many measurement outcomes*. DOI: [10.48550/arXiv.1204.3829](https://doi.org/10.48550/arXiv.1204.3829). URL: <https://arxiv.org/abs/1204.3829v2>.

@@ -31,13 +31,16 @@ internal sealed class MerminCglmpFacetDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The inequality defines a facet", ClaimFormula(false),
                 "Fixing Charlie's two outputs relabels each slice to CGLMP. The short-arc rigidity theorem supplies a multiplier for each slice. Additive separability in Charlie's outputs imposes a rectangular identity. Strategies with A_1+A_2+B_2−B_1 equal to 0 or −1 force each multiplier to be independent of both Charlie outputs. The common multiplier gives global rigidity. The convex-geometric bridge then proves the affine-dimension equation, while linearity extends validity from deterministic generators to their convex hull.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("grandjean-liang-bancal-brunner-gisin-2012-mermin-cglmp-facet"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("mermin-facet-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula All(string name, Formula type, Formula body) =>
