@@ -1456,3 +1456,48 @@ build exits successfully and all nine axiom closures are contained
 in the standard three. The supplier of these inventories is the same
 explicit actual-source bridge used in PC45; this does not turn a
 numerical relaxation into a phase construction or settle the selector.
+
+## Coarse joint stock ceilings still allow many shallow cofactors
+
+PC21 gives at least 105 top originals on each of the five safe old
+words, hence at least 525 distinct actual top cofactors. The five
+sets are disjoint by old word, and distinct labels 9qm give distinct m. The
+relaxed numerical consequences of PC50 do not contradict this count.
+Let S be the 27 cofactor primes from 5 through 109 and set
+
+$$
+\mathcal M=\left\{\prod_{p\in A}p:A\subseteq S,\ |A|\le3\right\}.
+\tag{PC54}
+$$
+
+This is a divisor downset with
+|M|=1+27+351+2925=3304. Every member is squarefree and has Omega
+at most three; the lcm has Omega 27. For d in M with two prime
+factors, exactly 26 members are divisible by d: d itself and its
+25 extensions by one further prime. For a three-prime d there is
+only d itself. Thus every composite d in this downset satisfies
+
+$$
+|\mathcal M_d|\le5\prod_{p\mid d}(p-1)\le5d.
+\tag{PC55}
+$$
+
+The first right side is at least 120 for pairs and 1200 for triples,
+whereas the left sides are 26 and one. Square-divisor tests are
+vacuous. Any union of principal inventories is contained in the
+corresponding M_d, so these same numerical ceilings also hold for
+all such unions simultaneously.
+
+The experiment above checks integer divisibility for all 3276
+composite fibers. A scoped transient Lean application of Mathlib's
+fixed-subset counts and prime-product identities verifies the
+3304 count, divisor-downset interface and fiber counts for any
+27-element prime pool. Its default-budget build succeeds and all
+eight axiom closures are standard-three only.
+
+This control refutes only an inference from the displayed relaxed
+numerical ceilings to |M|<525. It supplies no original phases, exact
+R_d, complete color covers, selector or paid replacement. In
+particular it does not satisfy or refute PC50 with its actual-source
+residual. Further progress must retain more of that joint source
+than its coarse stock ceilings.

@@ -8955,5 +8955,23 @@
     "union_size": 288,
     "actual_shared_stock_upper_bound": 205,
     "interpretation": "Separate exponent relaxations pass; simultaneous actual top labels are excluded."
+  },
+  "rank_three_stock_control": {
+    "stock_size": 3304,
+    "rank_counts": [
+      1,
+      27,
+      351,
+      2925
+    ],
+    "omega_lcm": 27,
+    "maximum_individual_rank": 3,
+    "square_divisors": 0,
+    "pair_fibers": 351,
+    "pair_fiber_size": 26,
+    "triple_fibers": 2925,
+    "triple_fiber_size": 1,
+    "minimum_mixed_pair_ceiling": 95,
+    "interpretation": "Numerical stock ceilings only; no phases, actual guard residual, cover, selector or prefix payment."
   }
 }

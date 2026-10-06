@@ -6,6 +6,7 @@ tau(m/p**2)<=5*(p*p-p-1) for p**2|m.
 This program audits their consequence under the declared exponent caps.
 """
 import argparse
+from itertools import combinations
 import json
 import math
 from pathlib import Path
@@ -126,6 +127,31 @@ second_stock = {7 ** a * 13 ** b for a in range(12) for b in range(12)}
 assert (len(first_stock), len(second_stock), len(first_stock & second_stock)) == (156, 144, 12)
 assert len(first_stock | second_stock) == 288 > 205
 
+# Joint numerical ceilings alone still admit a large shallow downset.
+shallow_supports = [s for k in range(4) for s in combinations(PRIMES, k)]
+shallow_stock = {math.prod(s): s for s in shallow_supports}
+assert len(shallow_stock) == len(shallow_supports) == 3304
+assert all(math.prod(t) in shallow_stock for s in shallow_supports
+           for k in range(len(s) + 1) for t in combinations(s, k))
+assert all(m % (p * p) != 0 for m in shallow_stock for p in PRIMES)
+pair_fibers = triple_fibers = 0
+mixed_ceilings = []
+for d, s in shallow_stock.items():
+    if len(s) < 2:
+        continue
+    count = sum(m % d == 0 for m in shallow_stock)
+    assert count == (26 if len(s) == 2 else 1)
+    assert count <= 5 * math.prod(p - 1 for p in s) <= 5 * d
+    if len(s) == 2:
+        pair_fibers += 1
+        p, r = s
+        mixed = 5 * (p - 1) * (r - 1) - 3 * (p + r - 2) + 5
+        assert count <= mixed
+        mixed_ceilings.append(mixed)
+    else:
+        triple_fibers += 1
+assert (pair_fibers, triple_fibers, min(mixed_ceilings)) == (351, 2925, 95)
+
 result = {
     'scope': 'Exact integer DP for exponent relaxation; whole-cover inequalities assumed.',
     'prime_caps': CAPS,
@@ -152,6 +178,19 @@ result = {
         'actual_shared_stock_upper_bound': 205,
         'interpretation': 'Separate exponent relaxations pass; simultaneous actual top labels are excluded.'
     },
+    'rank_three_stock_control': {
+        'stock_size': len(shallow_stock),
+        'rank_counts': [math.comb(27, k) for k in range(4)],
+        'omega_lcm': 27,
+        'maximum_individual_rank': 3,
+        'square_divisors': 0,
+        'pair_fibers': pair_fibers,
+        'pair_fiber_size': 26,
+        'triple_fibers': triple_fibers,
+        'triple_fiber_size': 1,
+        'minimum_mixed_pair_ceiling': min(mixed_ceilings),
+        'interpretation': 'Numerical stock ceilings only; no phases, actual guard residual, cover, selector or prefix payment.'
+    },
 }
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--output', type=Path, required=True)
@@ -165,3 +204,5 @@ print('squarefree_cases', len(squarefree_cases), 'max_d',
 print('omega25_witness_composite_checks', len(witness_checks))
 print('second_witness_composite_checks', len(second_checks),
       'shared_stock', len(first_stock | second_stock), 'bound', 205)
+print('rank_three_stock', len(shallow_stock), 'composite_fibers',
+      pair_fibers + triple_fibers)
