@@ -236,7 +236,7 @@ The Notes notice applies only to Notes and does not cover this Lean source.
 
 -/
 
-private theorem geometric_bound_supplier
+theorem geometric_bound_supplier
     {A : Type*} [NormedRing A] [CompleteSpace A] [NormedAlgebra ℂ A]
     (a : A) (rate : ℝ≥0) (ha : spectralRadius ℂ a < (rate : ℝ≥0∞)) :
     ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, ‖a ^ n‖ ≤ C * (rate : ℝ) ^ n := by
@@ -319,7 +319,7 @@ private theorem power_nonnegative (side : MemorySide) (n K : ℕ) (d z : ℝ)
     intro a _
     split_ifs <;> positivity
 
-private theorem path_mass_norm_bounds (side : MemorySide) (n K : ℕ) (d z : ℝ)
+theorem path_mass_norm_bounds (side : MemorySide) (n K : ℕ) (d z : ℝ)
     (nonnegative : 0 ≤ z) (k : ℕ) :
     0 ≤ pathMass side n K d z k ∧
     ‖complexAdjacency side n K d z ^ k‖ ≤ pathMass side n K d z k ∧

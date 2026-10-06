@@ -365,7 +365,7 @@ private theorem factor_log_rate_bounds (X : Set (ℤ → CuLetter)) :
   rw [div_le_iff₀ tp]
   nlinarith
 
-private theorem factor_rate_nonneg (X : Set (ℤ → CuLetter)) :
+theorem factor_rate_nonneg (X : Set (ℤ → CuLetter)) :
     0 ≤ weightedFactorRate X :=
   le_limsup_of_frequently_le (Frequently.of_forall (factor_log_rate_bounds X).1)
     (factor_log_rate_bounds X).2
