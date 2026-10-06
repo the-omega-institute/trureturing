@@ -69,18 +69,26 @@ internal static class GitRepositorySnapshotReader
         HashSet<string> InspectedDirectories) Collect(string root, Func<string, bool>? include,
         Action<RawRepositoryEntry>? visit, Func<string, bool>? readContents, IReadOnlyList<string>? pathspecs)
     {
-        var tracked = new Dictionary<string, string>(StringComparer.Ordinal);
-        var untracked = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var scope in EnumerationScopes(pathspecs))
+        var scopes = EnumerationScopes(pathspecs).ToArray();
+        var tracked = ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scopes[0]]));
+        IEnumerable<string> untracked = ParseNulStrings(Git(root,
+            ["ls-files", "--others", "--exclude-standard", "-z", .. scopes[0]]));
+        if (scopes.Length > 1)
         {
-            foreach (var (path, mode) in ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scope])))
+            var combinedUntracked = untracked.ToHashSet(StringComparer.Ordinal);
+            for (var index = 1; index < scopes.Length; index++)
             {
-                if (tracked.TryGetValue(path, out var previous) && previous != mode)
-                    throw new InvalidOperationException($"git index mode changed during enumeration: {path}");
-                tracked[path] = mode;
+                var scope = scopes[index];
+                foreach (var (path, mode) in ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scope])))
+                {
+                    if (tracked.TryGetValue(path, out var previous) && previous != mode)
+                        throw new InvalidOperationException($"git index mode changed during enumeration: {path}");
+                    tracked[path] = mode;
+                }
+                combinedUntracked.UnionWith(ParseNulStrings(Git(root,
+                    ["ls-files", "--others", "--exclude-standard", "-z", .. scope])));
             }
-            untracked.UnionWith(ParseNulStrings(Git(root,
-                ["ls-files", "--others", "--exclude-standard", "-z", .. scope])));
+            untracked = combinedUntracked;
         }
         var paths = tracked.Keys
             .Concat(untracked)
