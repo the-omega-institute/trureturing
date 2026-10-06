@@ -240,3 +240,183 @@ all proper local wells. They give neither an unbounded family nor a
 result restricted to potentially persistent Robin-level sources. The
 full signed source-coverage obligation remains open; these additions have
 no Lean verification or literature originality certification.
+
+### Repetitions can be removed within a bounded multiplier search
+
+The existing layer formula in §2, `eq:layer-data`, and the finite-size
+comparison in §4 give a useful paper-level pruning interface. Keep the
+same integer $N$, put $A=\log N>27/8$, and assume
+$G(Np)\le G(N)$ for every prime $p$. For every positive integer multiplier
+$u$ with $W=\log u\le A/2$, let $\operatorname{rad}(u)$ be the product of
+its distinct prime factors, with $\operatorname{rad}(1)=1$. Then
+
+$$
+G(N\operatorname{rad}(u))\ge G(Nu),
+$$
+
+with strict inequality when $u$ has a repeated prime factor. This uses
+neither a CA hypothesis nor a prior positive Robin margin.
+
+For the calculation, write
+
+$$
+c_A(w)=\log\log(A+w)-\log\log A=\int_A^{A+w}g(t)\,dt,
+\qquad
+h_{p,j}=\log r_{p,j}.
+$$
+
+If $S_{p,j}=p+\cdots+p^j$, the classical formula gives
+$S_{p,j+1}=p(S_{p,j}+1)$. The elementary bounds
+$\log(1+t)<t$ and $\log(1+t)\ge t/(1+t)$, for $t>0$, hence give
+
+$$
+h_{p,j+1}<\frac1{p(S_{p,j}+1)}\le\frac{h_{p,j}}p.
+$$
+
+Source insertion stability says
+$h_{p,v_p(N)+1}\le c_A(\log p)$. If a current multiplier still contains
+at least two copies of $p$, its top inserted layer therefore has reward
+less than $\tfrac12(\log p)g(A)$. The current integer $m$ has
+$A\le\log m\le A+W$, and removing that copy saves the denominator cost
+
+$$
+\int_{\log m-\log p}^{\log m}g(t)\,dt
+\ge(\log p)g(A+W)>\tfrac12(\log p)g(A).
+$$
+
+The last inequality follows from $W\le A/2$ and
+$(3A/2)\log(3A/2)<2A\log A$, which is equivalent to $A>27/8$.
+Thus each such deletion strictly increases $G$. Iterating removes only
+the repeated copies in $u$, retains $N$ and all required stack prefixes,
+and reduces the multiplier budget. Intermediate states need not be
+insertion-stable: the comparison continues to use the original source's
+next-layer bound. When $u$ is squarefree the two integers coincide.
+
+Consequently, within this budget, an improving multiplier with at most
+$k$ inserted layers exists exactly when an improving subset of at most
+$k$ distinct primes exists. A construction with the explicit bound
+$W=O(\log A)$ eventually lies in this budget. A fixed layer count alone
+does not imply that bound. The reduction need not preserve exactly $k$
+layers, a prescribed endpoint, or the structure of an actual return packet;
+it is suitable for the unrestricted-multiple target of `thm:cone-envelope`.
+It supplies no improving subset or critical-source coverage.
+
+This is a derived application of the cited layer and finite-size data,
+not a statement attributed verbatim to the manuscript, a new generic
+inequality, or a Lean result. No originality certification or full
+Robin/RH conclusion is supplied.
+
+## The complete Euler transform of actual GA2 subset losses
+
+This is a scope check using classical Bernstein complete alternation and
+finite Euler expansion, not an additional theorem attributed to the
+archived manuscript or a new Robin estimate. Use the
+[Caveney–Nicolas–Sondow GA2 condition](../Arith/caveney2012sacaga.md)
+at one actual integer $N>5040$, put $A=\log N$, and assume
+$P^+(N)\le A$. For a finite prime set $\mathcal B\subset\{p:p>A\}$,
+define, for every $\mathcal S\subseteq\mathcal B$,
+
+$$
+\begin{aligned}
+q_{\mathcal S}&=\prod_{p\in\mathcal S}p,&
+w_{\mathcal S}&=\log q_{\mathcal S},&
+b_{\mathcal S}&=\sum_{p\in\mathcal S}\log(1+1/p),\\
+C_A(w)&=\log\log(A+w)-\log\log A,&
+L_A(\mathcal S)&=C_A(w_{\mathcal S})-b_{\mathcal S}.
+\end{aligned}
+$$
+
+Multiplicativity and GA2 directly give
+$L_A(\mathcal S)=\log[G(N)/G(Nq_{\mathcal S})]\ge0$.
+All comparisons retain the same $N$. The empty block is included with
+$q_\varnothing=1$ and $L_A(\varnothing)=0$.
+
+The denominator cost has the classical positive representation
+
+$$
+C_A(w)=\int_{(0,\infty)}(1-e^{-wt})\,\nu_A(dt),\qquad w\ge0,
+$$
+
+with a nonzero positive measure. It can be checked without a general
+Bernstein theorem: the classical log integral and the Gamma Laplace
+integral, with $r=s/\log A>0$, give
+
+$$
+\begin{aligned}
+C_A(w)
+&=\int_0^\infty\frac{e^{-s}}s
+\left[1-(1+w/A)^{-s/\log A}\right]ds\\
+&=\int_0^\infty\int_0^\infty
+(1-e^{-wt})\frac{e^{-s}A^r t^{r-1}e^{-At}}{s\Gamma(r)}\,dt\,ds.
+\end{aligned}
+$$
+
+Tonelli applies to this positive integrand. The density on $s,t>0$ is
+strictly positive. For every nonempty $\mathcal U\subseteq\mathcal B$,
+the interaction integral
+
+$$
+I_A(\mathcal U)=\int_{(0,\infty)}
+\prod_{p\in\mathcal U}(1-p^{-t})\,\nu_A(dt)
+$$
+
+is finite and strictly positive: selecting $p_0\in\mathcal U$, its
+integrand lies between zero and $1-p_0^{-t}$, whose integral is
+$C_A(\log p_0)<\infty$.
+
+Set $E_0=\prod_{p\in\mathcal B}(1-1/p)>0$. The actual complete
+Euler-weighted loss transform satisfies
+
+$$
+\begin{aligned}
+\mathsf T_A(\mathcal B)
+&:=\sum_{\mathcal S\subseteq\mathcal B}
+\frac{\mu(q_{\mathcal S})}{q_{\mathcal S}}L_A(\mathcal S)\\
+&=-E_0\left[
+\sum_{p\in\mathcal B}\frac{L_A(\{p\})}{p-1}
++\sum_{\substack{\mathcal U\subseteq\mathcal B\\|\mathcal U|\ge2}}
+\frac{I_A(\mathcal U)}{\prod_{p\in\mathcal U}(p-1)}\right].
+\end{aligned}
+$$
+
+For the finite calculation, keep
+$E_{\mathcal B}(t)=\prod_{p\in\mathcal B}(1-p^{-1-t})$ and use
+
+$$
+\sum_{\mathcal S\subseteq\mathcal B}
+\frac{\mu(q_{\mathcal S})}{q_{\mathcal S}}C_A(w_{\mathcal S})
+=\int_{(0,\infty)}[E_0-E_{\mathcal B}(t)]\,\nu_A(dt),
+$$
+
+$$
+\sum_{\mathcal S\subseteq\mathcal B}
+\frac{\mu(q_{\mathcal S})}{q_{\mathcal S}}b_{\mathcal S}
+=-E_0\sum_{p\in\mathcal B}\frac{\log(1+1/p)}{p-1},\qquad
+\frac{E_{\mathcal B}(t)}{E_0}
+=\prod_{p\in\mathcal B}\left(1+\frac{1-p^{-t}}{p-1}\right).
+$$
+
+Expand the last finite product completely. Its singleton terms integrate
+to $C_A(\log p)$ and combine with the additive benefits to yield the
+displayed loss transform. Keep $E_0-E_{\mathcal B}(t)$ together inside
+the integral; the individual constant integrals need not converge.
+
+Thus $\mathsf T_A(\mathcal B)\le0$, and it is strictly negative if
+$|\mathcal B|\ge2$. This conclusion needs only the actual singleton
+losses to be nonnegative; strict singleton losses are unnecessary.
+For $\mathcal B=\varnothing$ the transform is zero, and for
+$\mathcal B=\{p\}$ it is $-L_A(\{p\})/p$. No subset order is discarded.
+The particular choice $\mathcal B=\{p:A<p\le2A\}$ is allowed; no limit
+over an infinite prime tail is asserted.
+
+Consequently neither pointwise GA2 loss positivity nor the additional
+Bernstein structure makes this particular complete transform nonnegative.
+Its negative has the displayed positive decomposition, but no
+sign-preserving comparison with the already recombined actual
+$I_\psi(A)+R(A)$ has been supplied. The
+[FIB volume's §§434–435](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+pair the native same-filter kernel window with its complete complement;
+those are different quantities and are reused directly. This scope check
+excludes the proposed unflipped loss transform as a positive supplier,
+not other Abel or cumulative transforms, and gives no Robin-critical
+margin, source coverage, new Bernstein theorem, or Lean verification.

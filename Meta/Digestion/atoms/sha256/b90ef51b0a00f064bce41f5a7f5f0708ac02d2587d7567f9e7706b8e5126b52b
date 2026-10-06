@@ -1,0 +1,96 @@
+### 定理 1.3（有限双页编码、精确最短宽度与配对）
+
+对 $N\ge2$、$k\ge2$，有 $A\ge P\ge1$。对 $m\ge1$，记首位为 $b$ 的合法词数为 $C_b(k,m)$，则
+
+$$
+C_0(k,m)=G_{m-1},\qquad C_1(k,m)=G_m-G_{m-1},
+\qquad 1\le C_1(k,m)\le C_0(k,m).
+$$
+
+两页的地址区间分别为
+
+$$
+[0,G_{m-1})\cap\mathbb Z,\qquad [G_{m-1},G_m)\cap\mathbb Z.
+$$
+
+合同可行当且仅当 $A\le C_0(k,m)$ 且 $P\le C_1(k,m)$。集合非空，故可定义
+
+$$
+m_*(N,k)=\min\{m\ge1:A\le G_{m-1},\ P\le G_m-G_{m-1}\}.
+$$
+
+在任意可行宽度 $m$，令
+
+$$
+E_{N,k,m}(x_{b,r})=Z_{k,m}(r+bG_{m-1}),\qquad
+\mathcal C_{N,k,m}=E_{N,k,m}(X_N).
+$$
+
+对 $w\in\mathcal C_{N,k,m}$，置 $t=\operatorname{val}_k(w)$，定义
+
+$$
+D_{N,k,m}(w)=
+\begin{cases}
+x_{0,t},&0\le t<A,\\
+x_{1,t-G_{m-1}},&G_{m-1}\le t<G_{m-1}+P.
+\end{cases}
+$$
+
+这两个分支恰好给出实际像上的解码，且
+
+$$
+D_{N,k,m}\circ E_{N,k,m}=\operatorname{id}_{X_N},\qquad
+E_{N,k,m}\circ D_{N,k,m}=\operatorname{id}_{\mathcal C_{N,k,m}}.
+$$
+
+编码合法且首位为 $\chi$，其最小宽度 $m_*(N,k)$ 在所有满足定义 1.1 合同的编码中最优，不限于页内保序的编码。在 $m=m_*(N,k)$ 时简记为 $E_{N,k}$、$D_{N,k}$、$\mathcal C_{N,k}$。
+
+若只要求合法词保存完整身份，最小宽度为
+
+$$
+m_0(N,k)=\min\{m\ge0:G_m\ge N+1\}.
+$$
+
+它满足
+
+$$
+m_0(N,k)\le m_*(N,k)\le m_0(N,k)+1,
+$$
+
+并有精确二择一公式（下式 $m_0=m_0(N,k)$）：
+
+$$
+m_*(N,k)=
+\begin{cases}
+m_0,&A\le G_{m_0-1}\ \text{且}\ P\le G_{m_0}-G_{m_0-1},\\
+m_0+1,&\text{其余情形}.
+\end{cases}
+$$
+
+随着 $k$ 增大，$m_0(N,k)$ 与 $m_*(N,k)$ 均不增，且
+
+$$
+\min_{k\ge2}m_*(N,k)=m_{\mathrm{bin}}^*(N)
+=1+\lceil\log_2 A\rceil.
+$$
+
+达到该宽度的最小阶数为
+
+$$
+k_{\min}(N)=\min\left\{k\ge2:
+A\le G_{m_{\mathrm{bin}}^*(N)-1}^{(k)},\quad
+P\le G_{m_{\mathrm{bin}}^*(N)}^{(k)}-G_{m_{\mathrm{bin}}^*(N)-1}^{(k)}
+\right\}.
+$$
+
+对任意可行 $m$ 和 $0\le r<P$，还有精确配对
+
+$$
+E_{N,k,m}(x_{0,r})=0Z_{k,m-1}(r),\qquad
+E_{N,k,m}(x_{1,r})=1Z_{k,m-1}(r).
+$$
+
+因此这对码字的 Hamming 距离为一。翻转首位的映射 $J$ 在这 $2P$ 个配对词组成的集合上是对合。对未配对的非素数序号 $P\le r<A$，翻转结果在 $r<C_1(k,m)$ 时合法但未分配，在 $r\ge C_1(k,m)$ 时含禁串；不能据此把 $J$ 当作整个实际码集的对合。
+
+在确定性、零错误、按位读取、只给定有效码字而不预先给定页标的模型中，判素所需的最坏读取次数恰为一。
+
