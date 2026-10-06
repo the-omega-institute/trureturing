@@ -25,6 +25,7 @@ internal sealed class FakeRepositoryGateway(
     internal int WholeTreeReadCount { get; private set; }
 
     internal List<IReadOnlyList<string>> ScopedCurrentReads { get; } = [];
+    internal List<IReadOnlyList<string>> CurrentPathSearches { get; } = [];
 
     internal int CurrentRevisionResolutionCount { get; private set; }
 
@@ -59,6 +60,12 @@ internal sealed class FakeRepositoryGateway(
     {
         ScopedCurrentReads.Add(paths);
         return Scoped(ReadWholeCurrent(), paths);
+    }
+
+    public IReadOnlyList<string> SearchCurrentPaths(IReadOnlyList<string> paths)
+    {
+        CurrentPathSearches.Add(paths);
+        return Scoped(ReadWholeCurrent(), paths).Entries.Select(static entry => entry.Path).ToArray();
     }
 
     public RawRepositorySnapshot ReadRevision(string revision)
@@ -97,7 +104,7 @@ internal sealed class FakeRepositoryGateway(
     // A path selects itself and, as a directory, everything under it.
     private static RawRepositorySnapshot Scoped(RawRepositorySnapshot snapshot, IReadOnlyList<string> paths) =>
         RawRepositorySnapshot.Create(snapshot.Entries.Where(entry => paths.Any(path =>
-            entry.Path == path || entry.Path.StartsWith(path + "/", StringComparison.Ordinal))));
+            GitRepositoryGateway.MatchesPathSelection(entry.Path, path))));
 
     private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>
         snapshot.Entries.Any(static entry => entry.Path == TheoryAtomizerDataLoader.DataPath)

@@ -155,12 +155,13 @@ public sealed partial class ShowAtomTests
             fingerprints.RawSha256,
             rawBytes);
 
-        var result = Environment("/repo", files).ShowAtom(["--atom-id", "no-such-atom"]);
+        var missingId = new string('0', 64);
+        var result = Environment("/repo", files).ShowAtom(["--atom-id", missingId]);
 
         Assert.False(result.Success);
         Assert.Equal(string.Empty, result.Output);
         Assert.Equal(
-            "SHOW_ATOM_INVALID atom_id no-such-atom is absent from digestion ledger\n",
+            $"SHOW_ATOM_INVALID atom_id {missingId} is absent from digestion ledger\n",
             result.Error);
     }
 
@@ -443,14 +444,10 @@ public sealed partial class ShowAtomTests
             .ShowAtom(["--atom-id", BareAtomId(fingerprints.RawSha256)]);
 
         Assert.True(result.Success, result.Error);
-        Assert.Single(gateway.ScopedCurrentReads);
-        Assert.Equal(
-            [
-                BackfillInventoryLoader.RootPath.TrimEnd('/'),
-                BackfillInventoryLoader.RelativePath,
-                DigestionCasStore.RootPath + BareAtomId(fingerprints.RawSha256),
-            ],
-            gateway.ScopedCurrentReads[0]);
+        Assert.DoesNotContain(gateway.ScopedCurrentReads.SelectMany(static scope => scope),
+            path => path == BackfillInventoryLoader.RootPath.TrimEnd('/'));
+        Assert.Contains(DigestionCasStore.RootPath + BareAtomId(fingerprints.RawSha256),
+            gateway.ScopedCurrentReads.SelectMany(static scope => scope));
         Assert.Equal(0, gateway.WholeTreeReadCount);
     }
 

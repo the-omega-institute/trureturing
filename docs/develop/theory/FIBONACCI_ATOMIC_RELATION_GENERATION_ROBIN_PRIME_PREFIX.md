@@ -1673,3 +1673,951 @@ Robin 配对的全局符号。证毕。
 和初等积分界为经典供应，Mertens 的来源归属沿用上述文献记录。原
 \(\Delta_z\) 的精确有符号分解、全轴余项排序、临界负首修正与实际根位移
 为本仓推导（repo-derived），由同一原完整积分及 §§441–444 的预算得出。
+
+## 446. 临界阻尼常数项与同一 ζ 轮廓的对数矩
+
+**对象与范围。** 沿用 §§441–445 的完整实际素数前缀。令 \(z\ge2\)
+为素数，\(p\) 为严格大于 \(z\) 的最小素数，统一使用 \(L=\log p\)。
+仍令
+
+\[
+E_z(s)=\prod_{q\le z}(1-q^{-s}),\qquad C_z=E_z(1)^{-1},\qquad
+F_z(v)=C_zE_z(1+v/L),
+\]
+
+\[
+H_z(v)=F_z(v)(1-e^{-v})-v,\qquad
+J_z(\sigma)=\int_0^\infty e^{-\sigma v}\frac{H_z(v)}{v^2}\,dv.
+\]
+
+乘积包含全部 \(q\le z\) 的素数。保持原常数
+\(C=e^{\gamma_E}\)、\(Q(u)=u\zeta(1+u)\)、\(A,Z_0,Z_1,B_*\)，
+以及 \(t_*=\exp(-\gamma_E-B_*)\)。记 \(h_L=L^{1-C}\)。全部前缀
+极限沿实际素数 \(z\to\infty\) 取得；以下一致性均指 \(t\) 位于任意
+固定正紧区间 \([a,b]\subset(0,\infty)\)。
+
+定义同一宏观轮廓的另一种表示和一个固定常数：
+
+\[
+g(u)=\frac1{\zeta(1+u)}=\frac{u}{Q(u)}\quad(u>0),
+\qquad
+d_*=1-\gamma_E+\int_0^1\frac{du}{Q(u)}
++\int_1^\infty\frac{g(u)-1}{u}\,du.
+\tag{CM.1}
+\]
+
+这两个积分均绝对收敛。近端由（PX.9）的 \(Q\ge1\) 支付；在整个
+\(u\ge1\) 上，经典 Dirichlet 级数与整数尾积分给
+
+\[
+0\le1-g(u)\le\zeta(1+u)-1
+\le2^{-u}(1/2+1/u)\le\frac32\,2^{-u}.
+\]
+
+因此远端绝对值由 \((3/2)2^{-u}/u\) 支配。
+
+**定理 446.1（完整阻尼损失的常数项）。** 沿用（CS.7）的完整正损失
+\(\mathcal D_z\)，有
+
+\[
+\boxed{
+\sup_{t\in[a,b]}
+\left|\frac{\mathcal D_z(tL^{-C})}{C_ztL^{-C}}
+-\big[(C-1)\log L-\log t+d_*\big]\right|\longrightarrow0.
+}
+\tag{CM.2}
+\]
+
+**定理 446.2（原完整积分与实际零点的常数级修正）。** 在上述紧区间
+上一致有
+
+\[
+\boxed{
+J_z(tL^{-C})=\log(t/t_*)
+-CtL^{1-C}\big[(C-1)\log L-\log t+d_*\big]+o(L^{1-C}).
+}
+\tag{CM.3}
+\]
+
+令 \(\sigma_z\) 为 §441 的唯一实际阻尼零点，\(t_z=\sigma_zL^C\)。则
+
+\[
+\boxed{
+t_z=t_*+Ct_*^2L^{1-C}\big[(C-1)\log L-\log t_*+d_*\big]
++o(L^{1-C}),
+}
+\tag{CM.4}
+\]
+
+\[
+\boxed{
+\begin{aligned}
+\sigma_z={}&t_*L^{-C}
++C(C-1)t_*^2L^{1-2C}\log L\\
+&+Ct_*^2(d_*-\log t_*)L^{1-2C}+o(L^{1-2C}).
+\end{aligned}
+}
+\tag{CM.5}
+\]
+
+**证明：整个移动近段和完整远尾。** 置
+\(\sigma=tL^{-C}\)、\(\lambda=\sigma L=th_L\)，并沿用
+\(g_z(u)=E_z(1+u)(1-p^{-u})\)。定义
+
+\[
+w_\lambda(u)=\frac{1-e^{-\lambda u}}{\lambda u}
+=\int_0^1e^{-s\lambda u}\,ds.
+\]
+
+于是 \(0<w_\lambda\le1\)，且 \(w_\lambda\) 随 \(\lambda\) 递减。
+对原完整损失使用（CS.19），精确得到
+
+\[
+\frac{\mathcal D_z(\sigma)}{C_z\sigma}
+=\int_{1/L}^\infty w_\lambda(u)\frac{g_z(u)}u\,du.
+\tag{CM.6}
+\]
+
+在整个移动区间 \(1/L\le u\le1\) 上，§441 的原全近区包络和
+（CS.13）的最终 \(C_z/L\ge C/2\) 给固定 \(M\)，使
+
+\[
+0\le\frac{g_z(u)}u=\frac{L}{C_z}R_z(Lu)\le M.
+\]
+
+将这份近段被积函数在 \(0<u<1/L\) 上补为零，便在固定区间
+\((0,1)\) 上得到同一个可积主导 \(M\)。对每个固定 \(u>0\)，
+实轴绝对收敛 Euler 乘积和 \(p^{-u}\to0\) 给
+\(g_z(u)\to g(u)\)。近段的零延拓因此在 \(L^1(0,1)\) 中收敛到
+\(g(u)/u=1/Q(u)\)。
+
+在整个 \(u\ge1\) 上，§445 已付的有限乘积界给
+
+\[
+0\le1-g_z(u)\le\frac52\,2^{-u}.
+\]
+
+结合原 \(g\) 的远端界，差
+\([(g_z-1)-(g-1)]/u\) 的绝对值由 \(4\cdot2^{-u}/u\) 支付。
+支配收敛于是同时给出两个完整的绝对差极限：
+
+\[
+\begin{aligned}
+\int_0^1\left|
+\boldsymbol 1_{[1/L,1]}(u)\frac{g_z(u)}u-\frac1{Q(u)}
+\right|du&\longrightarrow0,\\
+\int_1^\infty\frac{|g_z(u)-g(u)|}{u}\,du&\longrightarrow0.
+\end{aligned}
+\tag{CM.7}
+\]
+
+这里的零延拓保留（CM.6）的原近段，整个远尾也未被截去。
+
+**证明：模型常数与一致性。** 经典指数积分模型满足
+
+\[
+\begin{aligned}
+\frac1\lambda\int_1^\infty\frac{1-e^{-\lambda u}}{u^2}\,du
+&=\frac{1-e^{-\lambda}}\lambda+E_1(\lambda)\\
+&=\log(1/\lambda)+1-\gamma_E+O(\lambda).
+\end{aligned}
+\tag{CM.8}
+\]
+
+从（CM.6）减去这一完整模型，精确剩下
+
+\[
+\int_{1/L}^1w_\lambda(u)\frac{g_z(u)}u\,du
++\int_1^\infty w_\lambda(u)\frac{g_z(u)-1}u\,du.
+\]
+
+先用 \(w_\lambda\le1\) 和（CM.7）替换为极限轮廓，误差不超过两项
+与 \(t\) 无关的绝对差积分。再移除极限轮廓上的 \(w_\lambda\)，对
+\(t\in[a,b]\) 有
+
+\[
+\sup_{t\in[a,b]}|w_{th_L}(u)-1|
+\le1-w_{bh_L}(u)\longrightarrow0.
+\]
+
+近段主导为 \(1/Q\le1\)，远段主导为 \((3/2)2^{-u}/u\)，所以第二步
+误差也一致趋于零。（CM.8）的模型余量一致为 \(O(bh_L)\)。因
+\(C>1\)，\(h_L\to0\)，合并得到（CM.2）。这一极限只需上述全段
+支配收敛，无需新增 Euler 尾收敛速率。
+
+**证明：原归一化和局部项的排序。** 沿用 §445 的同一精确恒等式
+（CS.8）：
+
+\[
+J_z(tL^{-C})=\log(t/t_*)+\Delta_z+\mathcal L_z(tL^{-C})
+-\mathcal D_z(tL^{-C})-\operatorname{Ein}(tL^{-C}).
+\]
+
+已付（CS.13）给 \(C_z=CL+O(1)\)，所以在固定正 \(t\) 紧区间上
+
+\[
+C_ztL^{-C}=Cth_L+O(h_L/L).
+\]
+
+归一化误差乘上（CM.2）中的 \(O(\log L)\) 括号，只产生
+\(O(h_L\log L/L)=o(h_L)\)。已付（CS.18）与（CS.9）分别给
+
+\[
+\Delta_z=O(\log L/L)=o(h_L),\qquad
+\mathcal L_z(tL^{-C})-\operatorname{Ein}(tL^{-C})
+=O(L^{-C})=o(h_L).
+\tag{CM.9}
+\]
+
+第一项使用已证 \(C<2\)，因为
+\((\log L/L)/h_L=L^{C-2}\log L\to0\)；第二项使用
+\(L^{-C}/h_L=1/L\)。把（CM.2）代入原完整恒等式即得（CM.3）。
+这里保留 §445 已付的移动 Euler 尾和归一化预算，没有用定性收敛替代
+这些原误差的速率。
+
+**证明：实际根的常数级残量。** §441 已证 \(t_z\to t_*\)，所以实际根
+最终落在某个固定正紧区间。§445 的首位移同时给
+\(t_z-t_*=O(h_L\log L)\)。由（CM.3）的一致性可以直接代入实际根，
+得到
+
+\[
+\log(t_z/t_*)
+=Ct_zh_L\big[(C-1)\log L-\log t_z+d_*\big]+o(h_L).
+\]
+
+左侧对 \(t_z-t_*\) 线性化的误差为
+\(O(h_L^2\log^2L)\)。右侧括号乘 \(t_z\) 的函数，在固定正紧区间上
+关于 \(t_z\) 的导数为 \(O(\log L)\)，所以把右侧 \(t_z\) 替为
+\(t_*\)，再乘 \(h_L\)，误差同为 \(O(h_L^2\log^2L)\)。由于 \(C>1\)，
+
+\[
+h_L^2\log^2L=o(h_L).
+\]
+
+因此左侧为 \((t_z-t_*)/t_*+o(h_L)\)，右侧可以使用原 \(t_*\)，即得
+（CM.4）。乘回 \(L^{-C}\) 并拆开对数项得到（CM.5）。这一根展开
+不需要新增 \(J_z\) 的导数估计。证毕。
+
+**定理 446.3（同一宏观轮廓的绝对对数矩）。** 将（CM.1）的 \(g\)
+在非正半轴补成零，则 \(g\) 是连续分布函数，在 \(u>0\) 上有严格
+正密度 \(g'(u)\)，且
+
+\[
+\int_0^\infty g'(u)\,du=1,\qquad
+\int_0^\infty g'(u)|\log u|\,du<\infty.
+\tag{CM.10}
+\]
+
+其对数矩精确给出
+
+\[
+\boxed{
+d_*=1-\gamma_E-\int_0^\infty g'(u)\log u\,du,
+\qquad
+d_*-\log t_*=1+B_*-\int_0^\infty g'(u)\log u\,du.
+}
+\tag{CM.11}
+\]
+
+**证明：密度与两个边界。** 经典 Dirichlet 级数在任意正 \(u\)
+紧区间上可逐项求导。若其下端为 \(a>0\)，导数级数绝对值由
+\(\sum_{n\ge2}(\log n)n^{-1-a}<\infty\) 一致支配；该级数的收敛由
+整数尾积分支付。因此
+
+\[
+g'(u)=\frac{\sum_{n\ge2}(\log n)n^{-1-u}}{\zeta(1+u)^2}>0.
+\]
+
+又 \(0<g(u)=u/Q(u)\le u\)，故 \(g(0+)=0\)；（CM.1）后的指数尾界
+给 \(g(\infty)=1\)。这支付连续分布函数的两个端点。基本微积分给
+\(\int_\varepsilon^R g'=g(R)-g(\varepsilon)\)，令
+\(\varepsilon\downarrow0\)、\(R\to\infty\)，由非负性得到总密度为一。
+
+对 \(0<\varepsilon<1<R\)，分别积分分部，得到
+
+\[
+\begin{aligned}
+\int_\varepsilon^1(-\log u)g'(u)\,du
+&=g(\varepsilon)\log\varepsilon
++\int_\varepsilon^1\frac{g(u)}u\,du,\\
+\int_1^R(\log u)g'(u)\,du
+&=[g(R)-1]\log R
++\int_1^R\frac{1-g(u)}u\,du.
+\end{aligned}
+\tag{CM.12}
+\]
+
+两个边界项分别满足
+\(|g(\varepsilon)\log\varepsilon|\le\varepsilon|\log\varepsilon|\to0\)
+和 \(|[g(R)-1]\log R|\le(3/2)2^{-R}\log R\to0\)。两份右侧积分
+均已由（CM.1）的近端和远端主导支付。非负被积函数的极限于是给
+
+\[
+\int_0^1(-\log u)g'(u)\,du=\int_0^1\frac{du}{Q(u)},\qquad
+\int_1^\infty(\log u)g'(u)\,du
+=\int_1^\infty\frac{1-g(u)}u\,du.
+\]
+
+这同时证明（CM.10）的绝对对数可积性。相减并代入原 \(d_*\) 定义，
+得到（CM.11）的第一式；再用原 \(\log t_*=-\gamma_E-B_*\)，得到
+第二式。证毕。
+
+（CM.11）把（CM.5）的常数级系数写成
+\(Ct_*^2[1+B_*-\int_0^\infty g'(u)\log u\,du]\)。§441 的宏观交点
+由 \(C/Q(u)\) 控制；本节的下一常数由同一轮廓
+\(g(u)=u/Q(u)\) 的完整对数矩控制。点态交点与全域矩是这份实际
+前缀轮廓的两种不同读出，原 \(J_z\) 和时钟始终相同。
+
+本节结论属于（PX.2）的完整首补偿积分及其阻尼零点。完整 Robin
+配对在更新粗糙前缀和所有整数纤维后仍需共同的有符号估计；上述
+对数矩表示没有支付该估计。
+
+**来源。** 实轴绝对收敛 Euler 乘积、经典 ζ Dirichlet 级数及其局部
+一致逐项微分、指数积分模型、支配收敛和积分分部为经典供应；ζ 级数
+参见 [NIST DLMF 25.2.1](https://dlmf.nist.gov/25.2.E1)。Mertens
+归一化、移动近段和 Euler 尾预算均沿用 §445。完整损失的常数级一致
+匹配、实际阻尼零点的常数级残量，以及同一宏观轮廓的对数矩表示为
+本仓推导（repo-derived）。
+
+## 447. 完整指数平均中的额外统一肩部储备
+
+**对象与条件。** 保留 §441–§446 的同一个实际素数前缀、原字面轮廓
+\(\Phi\)、原完整两段常数 \(A\)、原归一化
+\(Q(u)=u\zeta(1+u)\)，以及原完整肩部
+
+\[
+K(t)=A-(C-1)(\log t+\gamma_E)
+ +C\int_0^\infty e^{-tu}\frac{1/Q(u)-1}{u}\,du,
+\qquad C=e^{\gamma_E},\quad t>0.
+\]
+
+令 \(k=C-1>0\)，保持 §444 的
+
+\[
+\Lambda(k)=k\left[1+\log\frac{1+k}{2k}\right],
+\qquad \delta=\frac{2\log2-1}{6}>0.
+\]
+
+下面所有指数积分都保留完整无穷尾。定义
+
+\[
+E_1(x)=\int_x^\infty\frac{e^{-y}}y\,dy,
+\quad H(x)=e^xE_1(x),
+\quad
+G(x)=k(\log(x/2)+\gamma_E)+CH(x),\qquad x>0.
+\]
+
+§444 已证明 \(A<1/2\)、\(k>1/3\)、
+\(\Lambda(k)>1/2+\delta\)，以及对全部 \(t>0\) 的原比较
+\(K(t)\le A-G(2t)\)。本节先给同一 \(G\ge\Lambda\) 的替代证明，
+随后证明一个显式正的额外储备，因而严格加强原统一负界。
+
+**引理 447.1（完整指数平均恒等式）。** 令
+
+\[
+h(y)=k(\log(y/2)+\gamma_E)+\frac1y,\qquad y>0.
+\]
+
+则对每个 \(x>0\)，完整地有
+
+\[
+G(x)=e^x\int_x^\infty e^{-y}h(y)\,dy
+ =\int_0^\infty e^{-v}h(x+v)\,dv,
+\qquad
+e^x\int_x^\infty e^{-y}\,dy=1.
+\tag{EA.1}
+\]
+
+**完整可积性。** 固定 \(x>0\)。原 Gamma 积分供应给
+\(\int_0^\infty e^{-y}|\log y|\,dy<\infty\)，而
+\(e^{-y}/y\le e^{-y}/x\) 对全部 \(y>x\) 成立。
+因此
+
+\[
+e^{-y}|h(y)|
+\le k e^{-y}|\log y|
+ +k(|\log2|+|\gamma_E|)e^{-y}+\frac{e^{-y}}y
+\]
+
+在整个 \((x,\infty)\) 上可积。这也支付下文的全部完整平均和
+常数差积分；没有从一个积分值等式反推可积性。
+
+**恒等式证明。** 原完整有限／无限 FTC 给
+
+\[
+\int_x^\infty e^{-y}\log y\,dy
+ =e^{-x}\log x+E_1(x),\qquad
+\int_x^\infty e^{-y}\,dy=e^{-x}.
+\]
+
+代入 \(h\)，利用准确的 \(k+1=C\)，得到
+
+\[
+\begin{aligned}
+e^x\int_x^\infty e^{-y}h(y)\,dy
+ &=k(\log(x/2)+\gamma_E)+(k+1)e^xE_1(x)\\
+ &=G(x).
+\end{aligned}
+\]
+
+完整平移 \(y=x+v\) 给（EA.1）的第二式。权重质量由完整指数尾
+精确计算为一。这里无须寻找 \(G\) 的全局极小点。证毕。
+
+**引理 447.2（唯一等号层之外的对数差）。** 对 \(r>0\) 令
+
+\[
+f(r)=\log r+\frac1r-1.
+\]
+
+则 \(f(r)\ge0\)，等号恰在 \(r=1\)。对任意 \(a>1\) 和
+\(r\ge a\)，还有 \(f(r)\ge f(a)>0\)。原 Euler 幅度关系
+\(\gamma_E=\log C=\log(1+k)\) 给准确恒等式
+
+\[
+h(y)-\Lambda(k)=k f(ky)\ge0,\qquad y>0.
+\tag{EA.2}
+\]
+
+**证明。** 经典严格对数切线界等价于
+\(\log r\ge1-1/r\)，在 \(r\ne1\) 时严格。
+若 \(r\ge a>1\)，将同一非严格界应用于 \(r/a\)，得到
+
+\[
+\begin{aligned}
+f(r)-f(a)
+ &=\log(r/a)+\frac1r-\frac1a\\
+ &\ge1-\frac ar+\frac1r-\frac1a
+ =(a-1)\left(\frac1a-\frac1r\right)\ge0.
+\end{aligned}
+\]
+
+（EA.2）由 \(\log(ky)=\log k+\log y\) 与原 \(C=1+k\)
+直接展开；不改变归一化常数。证毕。
+
+（EA.1）与（EA.2）已立即给 \(G(x)\ge\Lambda(k)\)。这是
+§444 同一比较函数下界的完整平均证明。进一步，非退化的完整指数
+权重不能仅支撑于单一等号层 \(ky=1\)，因此可以支付显式正储备。
+
+**定理 447.3（完整平均的显式额外储备）。** 对任意 \(a>1\)，定义
+
+\[
+m_a(k)=k e^{-a/k}\left(\log a+\frac1a-1\right)>0.
+\]
+
+则对所有 \(x>0\)，同一个固定常数满足
+
+\[
+G(x)\ge\Lambda(k)+m_a(k).
+\tag{EA.3}
+\]
+
+**证明。** 由完整单位质量平均和（EA.2），
+
+\[
+G(x)-\Lambda(k)
+ =e^x\int_x^\infty e^{-y}k f(ky)\,dy.
+\]
+
+整个被积函数非负。在完整尾 \(y>x+a/k\) 上，
+\(ky>kx+a>a\)，所以 \(f(ky)\ge f(a)>0\)。保留该完整尾、
+以非负性支付其余部分，准确地得到
+
+\[
+\begin{aligned}
+G(x)-\Lambda(k)
+ &\ge e^x k f(a)\int_{x+a/k}^\infty e^{-y}\,dy\\
+ &=k f(a)e^{-a/k}=m_a(k).
+\end{aligned}
+\]
+
+所取尾的权重质量恰为 \(e^{-a/k}\)，独立于 \(x\)。此处是在完整
+积分上比较两个可积核，保留的也是整个无穷尾；没有将有限截断称为
+完整平均。证毕。
+
+**推论 447.4（原完整肩部的严格加强）。** 取 \(a=2\)，记
+
+\[
+m(k)=k e^{-2/k}(\log2-1/2)=3k\delta e^{-2/k}>0.
+\]
+
+则对所有 \(t>0\)，
+
+\[
+K(t)\le A-\Lambda(k)-m(k)
+ <-\delta(1+e^{-6})< -\delta<0,
+\qquad
+\sup_{t>0}K(t)<-\delta(1+e^{-6}).
+\tag{EA.4}
+\]
+
+**证明。** 原 \(K(t)\le A-G(2t)\) 与（EA.3）直接给第一个
+非严格界。由于原 \(k>1/3\)，有 \(2/k<6\)，因此
+
+\[
+m(k)=3k\delta e^{-2/k}>\delta e^{-6}.
+\]
+
+再由原 \(A<1/2\)、\(\Lambda(k)>1/2+\delta\)，得到
+\(A-\Lambda(k)-m(k)<-\delta(1+e^{-6})\)。同一个固定上界
+\(A-\Lambda(k)-m(k)\) 严格低于目标，故上确界也严格低于目标。
+不是从各点严格界未经统一储备便推出严格上确界。证毕。
+
+**完整平均的递推关系。** 同一个（EA.1）对任意 \(s>0\) 还给
+
+\[
+G(x)=\int_0^s e^{-v}h(x+v)\,dv+e^{-s}G(x+s).
+\tag{EA.5}
+\]
+
+这是完整平均在平移下的精确递推；迭代保持同一无穷尾。
+等价的正轴微分关系是 \(G'(x)=G(x)-h(x)\)，即 §444 中准确的
+\(G'(x)=CH(x)-1/x\)。额外储备来自等号层之外的固定正质量，
+不是由递推形式本身推断出符号。此处的平均、平移与递推有准确的
+数学关系，无须赋予不同 RH 等价判据一个未定义的群结构。
+
+**结论范围。** （EA.1）–（EA.2）为已得 \(G\ge\Lambda\) 的
+替代证明；（EA.3）–（EA.4）给明确的严格加强。它们保持原
+\(A,C,Q,K\)，只加强完整首补偿积分的宏观肩部储备。没有因此支付
+完整 Robin 配对中其他权重、整数纤维或互补尾，也没有给出 RH 的
+证明、实际移动价格带的联合均匀估计或临界阻尼根的新精细项。
+
+**来源。** 完整指数积分、Gamma 对数核可积性、对数切线不等式与
+指数尾质量都是经典供应；本节不将这些中间供应独立主张为原创。
+将完整指数平均及其等号层之外的正质量绑定到同一原肩部，得到
+（EA.3）–（EA.4）的统一额外储备，为本仓推导（`repo-derived`）。
+
+## 448. 实际素数极值、Fibonacci 概率读出与正 Laplace 原子的失效边界
+
+**对象。** 保持 §§441–446 的原完整素数前缀、下一素数时钟
+\(L=\log p\) 以及完整 \(J_z\) 和损失 \(\mathcal D_z\)。本节使用
+
+\[
+g(u)=\frac1{\zeta(1+u)},\qquad
+g_z(u)=E_z(1+u)(1-p^{-u})\quad(u>0).
+\]
+
+同时回到 §§384–385 的同一实际 Fibonacci 原子来源：
+
+\[
+0<q=\varphi_{\rm gold}^{-2}<2/5,\qquad
+\beta_d=\log(1-(-q)^d),\qquad
+\mathcal B(s)=\sum_{d\ge1}\beta_dd^{-s},\qquad e=\mu*\beta.
+\]
+
+这里 \(\varphi_{\rm gold}=(1+\sqrt5)/2\)，不与原轮廓
+\(\Phi=\exp(\operatorname{Ein})\) 混用。记 \(b=\beta_1=\log(1+q)>0\)，并定义
+
+\[
+\mathsf F(u)=\frac{\mathcal B(1+u)}{b\,\zeta(1+u)}
+=\frac1b\sum_{n\ge1}\frac{e_n}{n^{1+u}}\quad(u>0).
+\tag{PM.1}
+\]
+
+最后一个级数在每个 \(u>0\) 绝对收敛，来源正是（385.5）的原
+\(e_n\)，包括已校正的 \(e_1=b\)。
+
+**定理 448.1（同一 Euler 乘积的真实极值实现）。** 存在相互独立的随机
+变量 \(B_r,T_r\)，由全部素数 \(r\) 编号，满足
+
+\[
+\mathbb P(B_r=1)=1/r,\qquad
+\mathbb P(T_r>u)=e^{-u\log r},\qquad X_r=B_rT_r.
+\]
+
+令
+
+\[
+U=\sup_rX_r,\qquad
+M_z=\max\!\left(\max_{r\le z}X_r,T_p\right).
+\]
+
+则 \(0<U<\infty\) 几乎处处，且原两个轮廓精确为
+
+\[
+\boxed{\mathbb P(U\le u)=g(u),\qquad
+\mathbb P(M_z\le u)=g_z(u)\quad(u>0).}
+\tag{PM.2}
+\]
+
+\(U\) 的最大值几乎处处由唯一素数取得。在这个实现中，
+有限实际前缀的下一素数时钟 \(T_p\) 没有 Bernoulli 稀释。
+
+**证明。** 对每个素数，
+\(\mathbb P(X_r\le u)=1-r^{-1-u}\)。有限乘积与递减事件的概率连续性
+给
+
+\[
+\mathbb P(U\le u)=\prod_r(1-r^{-1-u})=\zeta(1+u)^{-1}.
+\]
+
+经典实轴 Euler 乘积在 \(u>0\) 绝对收敛。由 \(g(0+)=0\)、
+\(g(\infty)=1\)，得到 \(0<U<\infty\) 几乎处处。对每个固定有理数
+\(a>0\)，\(\sum_r\mathbb P(X_r>a)=\sum_rr^{-1-a}<\infty\)；
+因此几乎处处只有有限多个 \(X_r>a\)。在全部正有理 \(a\) 上同时取这项
+结论，当 \(U>0\) 时即可从某个有限集合取得最大值。两个不同素数的正值
+连续且独立，故其相等的概率为零；可数对的并集仍为零。有限
+\(r\le z\) 与独立 \(T_p\) 的分布函数乘积给 \(g_z\)。证毕。
+
+进一步，唯一获胜素数的联合密度为
+
+\[
+\mathbb P(U\in du,\ r\text{ 获胜})
+=g(u)\frac{\log r}{r^{1+u}-1}\,du,
+\]
+
+故
+
+\[
+g'(u)=\sum_r g(u)\frac{\log r}{r^{1+u}-1}>0.
+\tag{PM.3}
+\]
+
+局部逐项微分由 \(\sum_{n\ge2}(\log n)n^{-1-a}<\infty\) 支付；
+非负积分交换给全部获胜素数的质量和为一。这种素数标记实现保留全部素数，
+不只保留自身为 Fibonacci 项的素数。
+
+**定理 448.2（原有限损失的精确对数矩与带方向余量）。** 令
+\(Y_z=\max(M_z,1/L)\)、\(\lambda=\sigma L\)，其中最终 \(L>1\)。则对全部
+\(\sigma>0\) 精确有
+
+\[
+\boxed{
+\frac{\mathcal D_z(\sigma)}{C_z\sigma}
+=\log(1/\lambda)+1-\gamma_E-\mathbb E\log Y_z+r_z(\lambda),
+}
+\tag{PM.4}
+\]
+
+\[
+\boxed{0\le r_z(\lambda)\le\frac{\lambda}{2}\mathbb EY_z.}
+\tag{PM.5}
+\]
+
+沿实际前缀，\(\mathbb EY_z\) 一致有界，且
+\(\mathbb E\log Y_z\to\mathbb E\log U\)。因此 §446 的原常数正是
+\(d_*=1-\gamma_E-\mathbb E\log U\)。
+
+**证明。** 对完整损失（CS.19）使用非负 Tonelli，得到
+
+\[
+\frac{\mathcal D_z(\sigma)}{C_z\sigma}
+=\mathbb E K_\lambda(Y_z),\qquad
+K_\lambda(y)=\int_y^\infty\frac{1-e^{-\lambda u}}{\lambda u^2}\,du
+=\frac{1-e^{-\lambda y}}{\lambda y}+E_1(\lambda y).
+\tag{PM.6}
+\]
+
+这里 \(Y_z\) 的分布函数在 \(u<1/L\) 为零，在 \(u\ge1/L\) 为
+\(g_z(u)\)，包括 \(1/L\) 处的原子，所以该期望保留原移动近段。
+指数积分恒等式给
+
+\[
+K_\lambda(y)=\log(1/\lambda)+1-\gamma_E-\log y+\mathsf R(\lambda y),
+\]
+
+\[
+\mathsf R(a)=\operatorname{Ein}(a)+\frac{1-e^{-a}}a-1,\qquad
+\mathsf R(0)=0,\qquad
+\mathsf R'(a)=\frac{a-1+e^{-a}}{a^2}.
+\]
+
+由于
+\(a-1+e^{-a}=\int_0^a(1-e^{-t})dt\)，有
+\(0\le\mathsf R'(a)\le1/2\)，从而
+\(0\le\mathsf R(a)\le a/2\)。取期望即得（PM.4）–（PM.5）。
+
+整个 \(u\ge1\) 上的原预算
+\(1-g_z(u)\le(5/2)2^{-u}\) 给
+
+\[
+\mathbb EY_z\le1+\frac52\int_1^\infty2^{-u}\,du<\infty
+\tag{PM.7}
+\]
+
+且常数不依赖最终 \(z\)。对数矩在有限前缀中存在，因为
+\(Y_z\ge1/L>0\) 且上述远尾可积。精确积分分部给
+
+\[
+\mathbb E\log Y_z
+=-\int_{1/L}^1\frac{g_z(u)}u\,du
++\int_1^\infty\frac{1-g_z(u)}u\,du.
+\]
+
+将近段在 \(u<1/L\) 补零，§446 已付的全近区包络给固定主导 \(M\)；
+远段主导为 \((5/2)2^{-u}/u\)。固定 \(u>0\) 时 \(g_z(u)\to g(u)\)，
+所以支配收敛给
+
+\[
+\mathbb E\log Y_z\longrightarrow
+-\int_0^1\frac{g(u)}u\,du+\int_1^\infty\frac{1-g(u)}u\,du
+=\mathbb E\log U.
+\tag{PM.8}
+\]
+
+所有近段、整个远尾与两个矩边界均在极限前支付。证毕。
+
+**定理 448.3（实际 Fibonacci 带权来源也是极值分布）。** 对全部实数
+\(s\ge0\)，有
+
+\[
+0<\mathcal B(s)<b,\qquad
+\mathcal B'(s)\ge
+\frac{187}{1323}\,q^2(\log2)\,2^{-s}>0.
+\tag{PM.9}
+\]
+
+因此 \(\mathsf F\) 在非正半轴补零后是连续分布函数，正半轴有严格正密度
+\(f_{\rm Fib}=\mathsf F'\)。存在与 \(U\) 独立的非负随机变量 \(V\)，满足
+
+\[
+\mathbb P(V\le u)=\mathcal B(1+u)/b\quad(u\ge0),
+\]
+
+从而 \(W=\max(U,V)\) 的分布函数精确为 \(\mathsf F\)。
+\(V\) 在零点有质量 \(\mathcal B(1)/b\)，而 \(W\) 无零点原子。并且
+
+\[
+\boxed{
+\mathbb E\log W-\mathbb E\log U
+=\int_0^\infty \frac{g(u)}u
+\left[1-\frac{\mathcal B(1+u)}b\right]du>0.
+}
+\tag{PM.10}
+\]
+
+**证明：实际带权乘子的非负实轴单调性。** \(\beta_d\) 的指数尾已付全部固定
+阶逐项微分。偶数 \(d\) 的 \(\beta_d\) 为负，奇数 \(d\) 的
+\(\beta_d\) 为正，且
+
+\[
+-\beta_2\ge q^2,\qquad \beta_d\le q^d\quad(d\text{ 为奇数}).
+\]
+
+因 \(d\ge3\) 时 \((\log d)/d\le(\log3)/3\)，对 \(s\ge0\)，
+
+\[
+\begin{aligned}
+\mathcal B'(s)
+&\ge2^{-s}\left[q^2\log2-\sum_{\substack{d\ge3\\d\ {\rm odd}}}q^d\log d\right],\\
+\sum_{\substack{d\ge3\\d\ {\rm odd}}}q^d\log d
+&\le\frac{\log3}{3}\frac{q^3(3-q^2)}{(1-q^2)^2}.
+\end{aligned}
+\]
+
+函数 \(q(3-q^2)/(1-q^2)^2\) 的导数为
+\((3+6q^2-q^4)/(1-q^2)^3>0\)，故在 \(0<q<2/5\) 递增。
+又 \(3^5<2^8\) 给 \(\log3/\log2<8/5\)，所以最后尾项与
+\(q^2\log2\) 的比不超过
+
+\[
+\frac8{15}\frac{710}{441}=\frac{1136}{1323}<1.
+\]
+
+这支付（PM.9）的导数界。正性也可直接由
+
+\[
+\mathcal B(s)\ge\log(1+q)-\sum_{j\ge1}|\beta_{2j}|
+\ge\frac{q}{1+q}-\frac{q^2}{(1-q^2)^2}>0
+\]
+
+得到；最后比较使用
+\((1-q^2)^2>q(1+q)\)，在 \(q\le2/5\) 上由
+\(441/625>14/25\) 支付。由于 \(\mathcal B(s)\to b\)，严格递增又给
+\(\mathcal B(s)<b\)。此外，令
+\(S_{\beta,\ge2}=\sum_{d\ge2}|\beta_d|<\infty\)，有
+
+\[
+0<b-\mathcal B(s)\le S_{\beta,\ge2}\,2^{-s}.
+\tag{PM.11}
+\]
+
+于是 \(\mathcal B(1+u)/b\) 是带零点原子的非负变量分布函数。
+独立极值的乘积分布给（PM.1）的原 \(\mathsf F\)，其导数正性来自
+\(\mathcal B,\mathcal B',g,g'>0\)。又 \(0<\mathsf F<g\le u\) 在近端成立，
+远端 \(1-\mathsf F\) 由固定常数乘 \(2^{-u}\) 支付，所以
+\(\mathbb E|\log W|<\infty\)。两个绝对对数矩相减得到（PM.10），
+近端主导为一，远端由（PM.11）支付。其被积函数在全部 \(u>0\)
+严格为正。证毕。
+
+**定理 448.4（原 signed 来源的完整对数矩）。** 以下级数均按自然前缀
+\(n\le N\) 取极限。对每个实数 \(r>-1\)，有
+
+\[
+\boxed{
+\sum_{n\ge2}\frac{\mu(n)}{n(\log n)^r}
+=-\frac{\mathbb EU^r}{\Gamma(1+r)}<0,\qquad
+\sum_{n\ge2}\frac{e_n}{n(\log n)^r}
+=-\frac{b\,\mathbb EW^r}{\Gamma(1+r)}<0.
+}
+\tag{PM.12}
+\]
+
+在零阶对 \(r\) 微分，得到
+
+\[
+\boxed{
+\begin{aligned}
+\mathbb E\log U&=-\gamma_E+
+\sum_{n\ge2}\frac{\mu(n)\log\log n}{n},\\
+\mathbb E\log W&=-\gamma_E+
+\frac1b\sum_{n\ge2}\frac{e_n\log\log n}{n},\\
+d_*&=1-\sum_{n\ge2}\frac{\mu(n)\log\log n}{n}.
+\end{aligned}}
+\tag{PM.13}
+\]
+
+因此（PM.10）是同一实际 Fibonacci 与 Möbius 系数的严格完整比较，而非
+有限素原子的数值巧合。
+
+**证明：条件矩、共同解析域与自然截止。** 复用 §424 的无条件定量
+Mertens 供应及 §414 的实际 Fibonacci 转移；扩大有限头后，
+\(|M(N)|,|H_{\rm raw}(N)|\) 分别不超过固定常数乘
+\(N/(1+\log N)^4\)。对 \(a=\mu\) 或 \(a=e\)，Abel 求和因此使
+
+\[
+S_a(r)=\sum_{n\ge2}a_n/[n(\log n)^r]
+\]
+
+在 \(\Re r>-3\) 局部一致收敛并全纯。删去 \(n=1\) 只改变固定常数。
+具体地，原部分和乘末项趋零；
+导数权重与部分和的乘积由常数倍
+
+\[
+\frac{1}{x(\log x)^{4+\Re r}}
+\left(1+\frac{1+|r|}{\log x}\right)
+\]
+
+支配。每个紧域的下端 \(\Re r>-3\) 支付尾积分；对 \(r\) 求导只增加
+有限次 \(\log\log x\)，仍可积。这里没有对条件级数作无偿无限重排。
+
+\(U,W\) 的分布函数在近端均不超过 \(u\)，远端生存函数均为指数小量，
+故其矩函数 \(\mathbb EU^r,\mathbb EW^r\) 在 \(\Re r>-1\) 全纯。
+近端负矩由积分分部
+\(\int_0^1u^{-a}dF(u)\le1+a\int_0^1u^{-a}du\)（\(0<a<1\)）
+支付；紧域上的对数导数由稍扩大的同一指数区间支配。
+
+先在实数 \(r>1\) 使用尾积分矩公式。由于 \(|e_n|\) 有界，
+\(\sum_{n\ge2}|a_n|/[n(\log n)^r]<\infty\)，可以绝对交换，从
+\(1-F(u)=-a_1^{-1}\sum_{n\ge2}a_nn^{-1-u}\) 得
+
+\[
+\mathbb EX^r=-\frac{\Gamma(1+r)}{a_1}S_a(r),
+\]
+
+其中 \((X,a_1)=(U,1)\) 或 \((W,b)\)。
+在共同半平面 \(\Re r>-1\) 使用解析恒等定理，得到（PM.12）。
+\(S_a(0)=-a_1\)、\(\Gamma'(1)=-\gamma_E\) 及局部一致逐项求导给
+（PM.13）。证毕。
+
+**定理 448.5（同一正概率密度不能成为正 Laplace 原子）。** 记
+\(f_\mu=g'\)、\(f_{\rm Fib}=\mathsf F'\)，并令
+
+\[
+u_m=\frac{m}{\log6}-1\quad(m\text{ 为充分大的正整数}).
+\]
+
+原实际来源满足两个严格负的高阶导数极限：
+
+\[
+\boxed{
+\begin{aligned}
+\frac{(-1)^{m-1}f_\mu^{(m-1)}(u_m)}
+     {(\log6)^m e^{-m}}&\longrightarrow-1,\\
+\frac{(-1)^{m-1}f_{\rm Fib}^{(m-1)}(u_m)}
+     {(\log6)^m e^{-m}}&\longrightarrow
+-\frac{\log(1+q+q^2)}b<0.
+\end{aligned}}
+\tag{PM.14}
+\]
+
+因此这两个严格正密度均不完全单调，均不存在在全部 \(u>0\) 上有效的
+正测度表示 \(f(u)=\int_{[0,\infty)}e^{-ut}\,d\nu(t)\)。
+
+**证明：实际复合原子的局部化与整个无穷尾。** 在固定 \(u>0\) 的紧区间上，
+两个绝对 Dirichlet 级数可作任意固定阶微分。对
+\(a=\mu\) 或 \(a=e\)，其密度为
+
+\[
+f_a(u)=-\frac1{a_1}\sum_{n\ge2}
+a_n\frac{\log n}{n}e^{-u\log n}.
+\]
+
+代入 \(u_m\)，精确得到
+
+\[
+\frac{(-1)^{m-1}f_a^{(m-1)}(u_m)}
+     {(\log6)^m e^{-m}}
+=-\frac1{a_1}\sum_{n\ge2}a_n\rho_n^m,\qquad
+\rho_n=\frac{\log n}{\log6}
+\exp\!\left(1-\frac{\log n}{\log6}\right).
+\tag{PM.15}
+\]
+
+\(x e^{1-x}\le1\)，且仅在 \(x=1\) 等号成立，所以 \(\rho_6=1\)，
+其余全部 \(\rho_n<1\)。选择一个固定整数 \(m_0>\log6\)。那么
+
+\[
+\sum_{n\ge2}\rho_n^{m_0}
+=\frac{e^{m_0}}{(\log6)^{m_0}}
+\sum_{n\ge2}\frac{(\log n)^{m_0}}{n^{m_0/\log6}}<\infty.
+\tag{PM.16}
+\]
+
+该完整整数尾由指数 \(m_0/\log6>1\) 的积分检验支付。
+\(\mu\) 与 \(e\) 的系数均有界；对全部 \(m\ge m_0\)，
+\(|a_n|\rho_n^m\) 被同一个可求和主导支付。因此计数测度上的支配收敛
+给 \(\sum a_n\rho_n^m\to a_6\)，没有只比较有限个竞争项。
+
+真实 Möbius 原子为 \(\mu(6)=1\)。对实际 Fibonacci 原子，有限卷积恰给
+
+\[
+\begin{aligned}
+e_6&=\beta_6-\beta_3-\beta_2+\beta_1\\
+&=\log\frac{(1-q^6)(1+q)}{(1+q^3)(1-q^2)}
+=\log(1+q+q^2)>0.
+\end{aligned}
+\tag{PM.17}
+\]
+
+这证明（PM.14）。若存在所述正 Laplace 测度，任意固定 \(u>0\) 和
+整数 \(k\ge0\) 都有
+\((-1)^kf^{(k)}(u)=\int t^ke^{-ut}d\nu(t)\ge0\)；
+微分由 \(t^ke^{-ut}\le C_{k,u}e^{-ut/2}\) 支付。它与（PM.14）
+矛盾。证毕。
+
+**原 Robin 来源中的精确边界。** 正极值分布与正密度是原来源在
+实数 \(1+u>1\) 上的概率读出；（PM.14）直接排除了把同一密度改写为
+正 Laplace 原子的做法。其复域来源仍是
+
+\[
+\mathsf F(u)=\frac{\mathcal B(1+u)}{b\,\zeta(1+u)}.
+\]
+
+由（385.4）的既有无零乘子，任意非平凡 ζ 零点 \(\rho\) 的重数为 \(h\)
+时，这一来源在 \(u=\rho-1\) 的极点阶仍恰为 \(h\)，其密度的极点阶为
+\(h+1\)。极值实现没有消去这些实际算术极点。
+
+原完整 Robin 尾项仍保留（424.6）的全部商纤维，
+
+\[
+I_\psi(x)=\sum_{n\ge1}M(n)J_x^\eta(n),\qquad
+I_\psi(x)=\int_x^\infty[\psi(t)-t]\frac{1+\log t}{t^2\log^2t}\,dt.
+\]
+
+这不是（PM.6）的正损失期望。（PM.4）只给同一有限 \(J_z\) 内
+\(\mathcal D_z\) 的精确读出；（PM.12）–（PM.13）只给上述已支付
+自然截止的对数权矩。它们没有估计原 \(I_\psi\) 的完整有符号临界余量，
+也没有把 \(|H_{\rm raw}(N)|\) 的已付对数界提升到平方根尺度。
+
+**来源。** 实轴 Euler 乘积、可数独立乘积、概率连续性、Borel–Cantelli、
+非负 Tonelli、指数积分和 Gamma 矩、Abel 求和及解析恒等定理为经典
+供应；Dirichlet 与 Gamma 接口参见
+[NIST DLMF 25.2.1](https://dlmf.nist.gov/25.2.E1) 和
+[NIST DLMF 5.9.1](https://dlmf.nist.gov/5.9.E1)。
+Mertens 的定量供应复用 §424 引用的
+[Ng 作者稿 p. 5](https://www.cs.uleth.ca/~nathanng/RESEARCH/mobius2b.pdf)，
+实际 Fibonacci 系数、无零乘子及对数转移复用 §§384–385、414。
+Euler 乘积的极值解释和倒数 ζ 的非完全单调性不作全局原创性断言；
+原有限阻尼的精确对数矩及带方向余量、同一实际 Fibonacci 概率读出、
+其完整 signed 对数矩比较与由 \(e_6\) 支付的正 Laplace 原子失效边界
+为本仓推导（repo-derived）。
