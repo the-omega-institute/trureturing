@@ -66,7 +66,10 @@ no settlement. `not-found-in-searched-scope`.
    (listed through the Pauli product table) and $h_i=(1-a_i)r_i$. The vector
    $w(j,i)=((\mathbb 1-h\cdot\sigma)\sigma_k)_{ji}$, indexed like the Choi matrix by
    output $j$ and input $i$, gives $w^*Cw=-4[(1-|h|^2)B+KA]/D$ with
-   $A=\sum a_ih_i^2$, $B=\sum a_i^2(1-a_i)r_i^2$, $K=\sum a_i^2r_i^2$ and $D>0$;
+   $A=\sum a_ih_i^2$, $B=\sum a_i^2(1-a_i)r_i^2$, $K=\sum a_i^2r_i^2$ and
+   $D=1-|s|^2>0$, where $s_i=\lambda_ir_i$ is the Bloch vector of the output state and
+   $|\lambda_i|<1$ are the contraction factors of the channel (the proof works with $DC$ and
+   never divides by $D$);
    for $r\ne0$, $B>0$ and $|h|<1$, so $w^*Cw<0$, contradicting complete positivity.
 
 ## Falsifier
