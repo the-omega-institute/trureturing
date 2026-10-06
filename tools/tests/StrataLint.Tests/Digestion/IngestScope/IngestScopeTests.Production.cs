@@ -7,6 +7,32 @@ namespace StrataLint.Tests;
 
 public sealed partial class IngestScopeTests
 {
+    [Fact]
+    public void ReportFreeIngestReadsSourcesWithoutCoverageOrEngineeringInputs()
+    {
+        var fixture = Fixture();
+        fixture.Files[BetaPath] += Addition;
+        using var temporary = new TemporaryDirectory();
+        WriteFixture(temporary, fixture);
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create([BetaPath]),
+            Raw(fixture.Files),
+            Raw(fixture.Baseline));
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            gateway,
+            new FakeLeanReportSource(null),
+            new FakeScribeEmissionVerifier(null));
+
+        var result = environment.Ingest(["--source", "beta"]);
+
+        Assert.True(result.Success, result.Error);
+        var reads = gateway.ScopedCurrentReads.SelectMany(static scope => scope).ToArray();
+        Assert.DoesNotContain(reads, static path => path == EngineeringProjectRegistry.ManifestPath);
+        Assert.DoesNotContain(reads, static path => path.StartsWith("D5/", StringComparison.Ordinal));
+        Assert.DoesNotContain(reads, static path => path.Contains("BackfillTarget", StringComparison.Ordinal));
+    }
+
     [Theory]
     [InlineData("beta")]
     [InlineData("alpha")]

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e1a77e48e3dc919a0da92d6968f895ec268e284538bc34224c0aebf4aae37193
+  normalized_sha256: sha256:e1a77e48e3dc919a0da92d6968f895ec268e284538bc34224c0aebf4aae37193
+cas_ref: sha256:e1a77e48e3dc919a0da92d6968f895ec268e284538bc34224c0aebf4aae37193
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/KBonacciHammingCapacity.kbonacci_actual_hamming_capacity
+    target_statement_id: sha256:8820b1ea817622980754f9d0d6516baac30f4062a9aa9cf4deeea5eaa65aa327
+receipts:
+  unresolved_subitems: []

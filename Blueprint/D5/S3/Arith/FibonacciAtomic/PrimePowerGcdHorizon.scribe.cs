@@ -28,6 +28,16 @@ internal sealed class PrimePowerGcdHorizonDocument : IScribeDocumentDefinition
                 + "The horizon is T=r when r=R and T=r-R otherwise. The theorem proves "
                 + "that the only alternative is r=pR, so the growth horizon is (p-1)R.",
                 DescribeRole.Definition),
+            Node("adjacent_divisibility", "Primitive states and adjacent observations",
+                "For every prime p, integers n,z and natural s, p divides both Y(s) and Y(s+1) "
+                + "exactly when p divides both initial coordinates n,z. This includes s=0.",
+                DescribeRole.Theorem),
+            Node("parent_hit_decoder", "The omitted child of a primitive parent hit",
+                "For every prime p and e>=2 with r=pR, a primitive signed pair and any natural s "
+                + "with p^(e-1) dividing Y(s), p^e divides Y(s+(p-1)R) exactly when p^e divides none "
+                + "of Y(s+jR) for 0<=j<p-1. Here R=zeroRank(p^(e-1)) and r=zeroRank(p^e). "
+                + "Only divisibility is inferred; no higher-precision numerical reply is supplied.",
+                DescribeRole.Theorem),
             Node("sharp_prime_power_gcd_horizon", "The exact unconditional horizon",
                 "For every prime p and every natural e at least 2, all ranks zeroRank(p^j), "
                 + "for every natural j, exist, are positive, have divisible Fibonacci numbers "

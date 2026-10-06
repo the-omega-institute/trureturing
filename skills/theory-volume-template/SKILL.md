@@ -11,7 +11,8 @@ description: 新建或追加 docs/develop/theory/ 下的理论卷时使用:给�
 ①被 canonical 消化器正确切分成 atom,②不改判任何既有 atom。
 
 **不用**:消化**外部作者**已写好的卷(那是 `skills/codex-theory-ingest/SKILL.md`);
-把 atom 形式化成 Lean(那是 `skills/codex-formalize/SKILL.md`)。
+把 atom 形式化成 Lean(那是 `skills/codex-formalize/SKILL.md`)。形式化不以理论卷为前置:
+无 atom 的内容直接写 D5 Lean 与 Blueprint Scribe,经 `make deposit-uncovered` 冻结(`CLAUDE.md` 第 1.2 条)。
 
 **本文件没有独立权威。** `docs/develop/spec/golden-ledger-repo-spec.md` 是唯一规范,
 `CLAUDE.md` 是不动标架,活的 harness 输出是关于当前树的事实裁判。三者与本文件冲突时,本文件是 bug。
@@ -198,11 +199,11 @@ ingest 判 `INGEST_TRUTH_ALIGNMENT_REQUIRED planned rewrite of existing entry <i
 1  make worktree KIND=theory NAME=<lane> BASE=origin/dev
 2  写卷/写追加块(照 TEMPLATE.md / APPEND.md;编号只增,不动既有字节)
 3  git commit 文档 → push(推与本地验证并行,别串行等)
-4  make ingest BASE=origin/dev > log 2>&1; echo "EXIT=$?"    # 不需要 lean-report
+4  make ingest > log 2>&1; echo "EXIT=$?"                    # 不需要 lean-report,也不读 git
 5  grep -E '^INGEST |EXIT=' log —— 判据见下
 6  git commit 账目(Meta/Digestion/**) → push
 7  git merge origin/dev → 重跑 ingest → 四零齐 ∧ 工作树零改动
-8  make pr-open HEAD=<branch> MESSAGE=<file> [AUTO_MERGE=1]   # 自带同步等待,别在外面套轮询
+8  make pr-open HEAD=<branch> MESSAGE=<file> [AUTO_MERGE=0] [DRAFT=1]   # 普通 PR 自带同步等待;草稿直接返回;别在外面套轮询
 9  合入后同步主检出、git worktree remove、删分支
 ```
 
@@ -220,20 +221,7 @@ ingest 判 `INGEST_TRUTH_ALIGNMENT_REQUIRED planned rewrite of existing entry <i
 **别用管道判绿**:`make ingest | tail` 会吞掉真退出码,zsh 里 `${PIPESTATUS[0]}` 恒空。
 落文件、读哨兵。
 
-## 五、三种追平税判词(都不要照它说的跑 align)
-
-```
-INGEST_TRUTH_ALIGNMENT_REQUIRED existing entry <id> removed; run make align-digestion-status
-INGEST_TRUTH_ALIGNMENT_REQUIRED Lean report input closure changed; ...
-INGEST_TRUTH_ALIGNMENT_REQUIRED existing entry <id> changed status-authority inputs; ...
-```
-
-**统一判据:判词点名的条目若不属于本卷的 `source_id`,那就是追平税**——别人刚合入的账目条目,
-`git merge origin/dev` 后重跑即通过。`align → ingest` 是失败不动点,越跑越远。
-查 dev 改了什么用 `git diff --name-only $(git merge-base HEAD origin/dev)..origin/dev`,
-**不能**用 `HEAD..origin/dev`(那会把自己的追加反算成别人的改动)。
-
-## 六、反面即病
+## 五、反面即病
 
 1. 见到自己**回去改**卷里既有的一句话——哪怕只是改错别字。正解是新章勘误,旧字节不动。
 2. 见到自己把导航、目录、修订记录写在**卷首**并每批更新它——那是每批都改既有 atom。

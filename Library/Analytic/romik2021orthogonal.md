@@ -155,6 +155,144 @@ All constants are deliberately loose and keep the original kernel and
 normalization. These model applications have no new Lean certification
 or originality claim.
 
+## Weighted Fourier coefficient suppliers
+
+For the [weighted Fourier cutoff](../Weil/fukushima2011dirichlet.md), define
+on the whole real line
+
+$$
+s(x)=\sqrt{\frac{\Phi(x)}{2\cosh(x/2)}}.
+$$
+
+The existing strictly positive smooth even original kernel makes $s$
+smooth and even, including at zero. The following original-series
+estimates supply $s\in H^3(\mathbb R)$, bounded $s,s'$, and the derivative
+summability of the complete prime graph. They are model deductions from
+the source series, with no useful numerical constant sizes or new Lean
+certification asserted.
+
+For $x\ge0$, $u=e^{2x}\ge1$, write
+
+$$
+\Phi(x)=\sum_{n\ge1}
+ (4\pi^2n^4e^{9x/2}-6\pi n^2e^{5x/2})e^{-\pi n^2u}.
+$$
+
+Every summand is positive. Its first summand gives
+$\Phi(x)>18e^{5x/2}e^{-\pi u}$, using $\pi>3$.
+Define derivative polynomials by
+
+$$
+P_{0,a}(z)=1,\qquad
+P_{j+1,a}(z)=(a-2z)P_{j,a}(z)+2zP'_{j,a}(z),\qquad
+P_{j,a}(z)=\sum_{k=0}^jp_{j,a,k}z^k.
+$$
+
+Direct differentiation gives
+$\partial_x^j(e^{ax}e^{-\pi n^2u})
+=e^{ax}e^{-\pi n^2u}P_{j,a}(\pi n^2u)$.
+For $0\le j\le3$ let
+
+$$
+C_j=\sum_{n\ge1}e^{-\pi(n^2-1)}
+\left(4\pi^2n^4\sum_{k=0}^j|p_{j,9/2,k}|\pi^kn^{2k}
+ +6\pi n^2\sum_{k=0}^j|p_{j,5/2,k}|\pi^kn^{2k}\right).
+$$
+
+Normal convergence of the original series permits termwise
+differentiation. Using $u^k\le u^j$ and
+$e^{-\pi(n^2-1)u}\le e^{-\pi(n^2-1)}$ gives
+
+$$
+|\Phi^{(j)}(x)|\le C_je^{(9/2+2j)x}e^{-\pi u},\qquad
+\frac{|\Phi^{(j)}(x)|}{\Phi(x)}
+\le\gamma_je^{(2+2j)x},\quad\gamma_j=C_j/18. \tag{WC1}
+$$
+
+These constants have explicit tail majorants. For $q\le10$, $n\ge2$,
+the ratio of successive terms $a_n=n^qe^{-\pi(n^2-1)}$ is at most
+$r_*=(3/2)^{10}e^{-5\pi}<1$. Every monomial in $C_j$ has degree at
+most ten, so its tail after $N\ge1$ is at most
+$a_{N+1}/(1-r_*)$, with its displayed coefficient retained.
+
+Put $d=2\cosh(x/2)$ and $\ell=\log s$. The first three derivatives of
+$\log d$ have absolute bounds $1/2,1/4,1/4$. Thus
+
+$$
+|\ell'|\le A_1e^{4x},\quad |\ell''|\le A_2e^{8x},\quad
+|\ell'''|\le A_3e^{12x},
+$$
+
+where
+
+$$
+\begin{aligned}
+A_1&=\gamma_1/2+1/4,\\
+A_2&=(\gamma_2+\gamma_1^2)/2+1/8,\\
+A_3&=(\gamma_3+3\gamma_1\gamma_2+2\gamma_1^3)/2+1/8.
+\end{aligned}
+$$
+
+Since $d\ge e^{x/2}$, (WC1) gives
+$s\le\sqrt{C_0}\,u e^{-\pi u/2}$. Apply
+$s'=s\ell'$, $s''=s((\ell')^2+\ell'')$, and
+$s'''=s((\ell')^3+3\ell'\ell''+\ell''')$ to obtain
+
+$$
+|s^{(j)}(x)|\le\sqrt{C_0}B_ju^{1+2j}e^{-\pi u/2},\qquad
+(B_0,B_1,B_2,B_3)=(1,A_1,A_1^2+A_2,A_1^3+3A_1A_2+A_3).
+$$
+
+For $c=3/8$, $\zeta=\pi/2-c>0$, define
+$v_m=\max\{1,m/\zeta\}$, $M_m=v_m^me^{-\zeta v_m}$ and
+$K_j=\sqrt{C_0}B_jM_{1+2j}$. Maximizing the remaining scalar factor,
+and then using evenness, yields
+
+$$
+|s^{(j)}(x)|\le K_je^{-c e^{2|x|}}
+\qquad(x\in\mathbb R,\ 0\le j\le3). \tag{WC2}
+$$
+
+Substitution on the two tails gives, with the unitary Fourier convention,
+
+$$
+\begin{aligned}
+\|s^{(j)}\|_2^2&\le K_j^2\frac{e^{-2c}}{2c},\\
+\|s\|_{H^3}^2
+:=\int(1+\xi^2)^3|\widehat s(\xi)|^2d\xi
+&\le\frac{e^{-2c}}{2c}\sum_{j=0}^3\binom3jK_j^2,\\
+\|(s^2)'\|_\infty&\le2K_0K_1.
+\end{aligned} \tag{WC3}
+$$
+
+For the prime operator use the same coefficients as in the mixed model:
+$t_n=\log n$, $w_n=\Lambda(n)/\sqrt n$ and
+$b_n(x)=w_ns(x)s(x+t_n)$. Product differentiation and
+$e^{2|x|}+e^{2|x+t_n|}\ge2n$ imply
+$\|b_n'\|_\infty\le2K_0K_1w_ne^{-2cn}$.
+With $r=e^{-2c}$ and $w_n\le n$,
+
+$$
+\sum_{n\ge2}\|b_n'\|_\infty
+\le2K_0K_1\left(\frac r{(1-r)^2}-r\right)<\infty. \tag{WC4}
+$$
+
+This sum is per representative undirected edge and includes every prime
+power. The translated adjoint has the same derivative supremum norm, so
+the explicitly two-direction estimate is
+
+$$
+\sum_{n\ge2}\left(\|b_n'\|_\infty+
+ \|(b_n(\cdot-\log n))'\|_\infty\right)
+\le4K_0K_1\left(\frac r{(1-r)^2}-r\right). \tag{WC5}
+$$
+
+These estimates discharge the coefficient hypotheses in (WF2), (WF5)
+and (WF7) of the linked cutoff construction for the actual theta model.
+They retain the full graph and provide deliberately coarse constants;
+useful bandwidth and matrix certificates require further quantitative
+work.
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the

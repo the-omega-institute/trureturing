@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:ad14132752b0093faaaf86707d48d7da86a5eae9891f779bf840a9b6d79c1554
+  normalized_sha256: sha256:ad14132752b0093faaaf86707d48d7da86a5eae9891f779bf840a9b6d79c1554
+cas_ref: sha256:ad14132752b0093faaaf86707d48d7da86a5eae9891f779bf840a9b6d79c1554
+coverage_gids:
+  - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.finite_relation_eq_infinite_of_stable
+    target_statement_id: sha256:41829345e3221fc3ae1903accf0b81c2d1fac85a322e87846f3dfe3120f3a8bc
+  - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.finite_relation_succ
+    target_statement_id: sha256:b20da54eeb9200239bf633f37ca3d1168b119970009660a54cd8910824eeb75d
+  - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.finite_relation_zero
+    target_statement_id: sha256:b87f76b1270bf2955e1631a9e20ce568a8be9127265d402b1b0d3af542b0f1fc
+  - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.infinite_relation_as_intersection
+    target_statement_id: sha256:ffdb19decffb5da553281781dcad51603229d12ebfdeb5bc24ae12ad42ddf8a3
+  - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.infinite_relation_below_kernel
+    target_statement_id: sha256:a2f1c8a01d7a31837c678244cbc10a09e5839362c677f8595c7b7a0ff86fa8a8
+  - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.infinite_relation_equivalence
+    target_statement_id: sha256:800fe36e14d13545ea98ac40c547c2e63d22f910362f07b2a9c6bd0bcce00675
+  - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.infinite_relation_invariant
+    target_statement_id: sha256:9ce2d126d64300ee1e505edbc1c35bb1f2f228cf4f1f1ce2730089bde26908ed
+  - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.relation_le_infinite
+    target_statement_id: sha256:bd7eb29929002462e454ea56be64ea181ce94671aa2d1ca2575c44e5a9ab6fa5
+  - gid: D5/S3/Observer/Separation/FiniteObservationRefinementBound.finite_observation_refinement_and_stability_bound
+    target_statement_id: sha256:d575e66c715d45b2e72ad8b247eb8a6e4a9814c618fd59150e3fe5eb76ba588d
+receipts:
+  unresolved_subitems: []

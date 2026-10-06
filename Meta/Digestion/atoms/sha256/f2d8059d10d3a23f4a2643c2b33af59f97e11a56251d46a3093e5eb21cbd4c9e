@@ -1,0 +1,12 @@
+**Proof.** Fix $i\in I$ and count incidences with doors of missing color
+$i$. There is exactly one exterior incidence: the empty door with index set
+$\{i\}$ is incident to the singleton room consisting of the maximum of
+$T$ in the $i$-order. Every internal-door fiber has two rooms by Theorem 2.2.
+An incident room is either colorful or of the same missing color. Every
+noncolorful-room fiber has two doors by Lemma 3.2, and nearly colorful doors
+incident to a room of missing color $i$ also have missing color $i$.
+Partitioning the same finite incidence set first by outside/internal doors
+and then by colorful/noncolorful rooms shows that the colorful incidence
+count is odd. Its positivity produces a colorful room and hence a colorful
+cell. No colorful cell is assumed in the construction.
+

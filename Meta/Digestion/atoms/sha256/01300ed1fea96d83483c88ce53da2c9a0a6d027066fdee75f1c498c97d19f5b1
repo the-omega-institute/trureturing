@@ -1,0 +1,10 @@
+## 272. GraftAffineClosure 的完整动态观察仍不包含 Robin 价格
+
+最新合入的 `D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.result` 给出了一个精确的来源侧接口。对正模数 $H$ 和 Fibonacci 原子块 $w=M^j(1,0)$，同一有限操作词上的全部 gcd 读出满足
+
+$$
+\operatorname{behavior}_H(w,v,v')
+\iff
+\rho_H(v)=\rho_H(v'),
+$$
+

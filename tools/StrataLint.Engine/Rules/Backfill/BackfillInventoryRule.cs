@@ -13,7 +13,6 @@ internal sealed record BackfillInventoryValidationContext(
     RawChangeSet? CasChanges = null,
     RawChangeSet? ProjectedStatusChanges = null,
     Func<string, TheoryAtomizerWithContentKinds>? ContentKindAtomizerResolver = null,
-    BackfillInventoryDocument? BaselineDocument = null,
     FrozenStatementIndex? FrozenStatementIndex = null,
     IReadOnlyDictionary<RepoPath, TruthState>? TruthStates = null);
 
@@ -222,40 +221,6 @@ internal static partial class BackfillInventoryRule
         return findings.ToImmutable();
     }
 
-    /// <summary>
-    /// The inverse of the source-path check above, and the reason it exists: that one asks
-    /// whether a declared source names a governed document, this one asks whether a
-    /// governed theory document has a source. Without it a volume can sit in the tree
-    /// undigested with nothing red — a dangling reference in the direction nobody checks,
-    /// which produces no symptom because the thing that is missing is the reader.
-    /// </summary>
-    private static void ValidateTheoryCoverage(
-        BackfillInventoryValidationContext context,
-        IEnumerable<string> declaredPaths,
-        ImmutableArray<RuleFinding>.Builder findings)
-    {
-        // Enumerate actual theory files: FILEMAP registers the family through a pattern,
-        // so an undigested volume need not have its own literal manifest entry.
-        var declared = declaredPaths.ToHashSet(StringComparer.Ordinal);
-        foreach (var path in context.Current.Files.Keys
-                     .Select(static path => path.Value)
-                     .Where(static path => path.StartsWith(
-                         DigestionOpaquePathPolicy.TheoryRootPath,
-                         StringComparison.Ordinal))
-                     .Where(path => !declared.Contains(path))
-                     .Order(StringComparer.Ordinal))
-        {
-            // 与「未登记残余原子」同理:全新理论卷入库但尚未跑 ingest,是账本四态里的
-            // `open`,不是违规。一个只改 markdown 的 PR 不该被它挡住——第三方本来就
-            // 跑不了本仓的 producer。判词照发(带补救命令),但不阻断准入。
-            findings.Add(new RuleFinding(
-                BackfillPath,
-                $"theory document '{path}' has no digestion source: run make ingest, "
-                + "which registers it with the default atomizer",
-                AdmissionEffect.Observe));
-        }
-    }
-
     private static void ValidateDigestionEntries(
         BackfillInventoryValidationContext context,
         BackfillInventoryDocument document,
@@ -362,8 +327,6 @@ internal static partial class BackfillInventoryRule
             }
         }
 
-        ValidateTheoryCoverage(context, seenPaths.Keys, findings);
-
         if (entries.Length == 0)
         {
             return;
@@ -425,18 +388,6 @@ internal static partial class BackfillInventoryRule
 
         // Nonblocking source observations must not suppress status/receipt admission.
         var hasStructuralFindings = findings.Any(static finding => finding.Effect != AdmissionEffect.Observe);
-        // CAS integrity is part of SL-016 itself, so it must run even when another
-        // receipt-shape finding below would otherwise return before status derivation.
-        // The result is threaded into the alignment pass below, which used to recompute it.
-        var casEvaluation = DigestionCasStore.Evaluate(
-            document,
-            context.Current,
-            context.CasChanges ?? context.Changes,
-            context.IsBaseFactAffected);
-        foreach (var finding in casEvaluation.Findings)
-        {
-            findings.Add(new RuleFinding(BackfillPath, finding));
-        }
 
         if (hasStructuralFindings)
         {
@@ -445,7 +396,6 @@ internal static partial class BackfillInventoryRule
 
         try
         {
-            var baselineDocument = context.BaselineDocument ?? LoadBaselineDocument(context.Baseline);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 context.Changes is null
                     ? DigestionEvaluationScope.FullScan
@@ -453,9 +403,6 @@ internal static partial class BackfillInventoryRule
                 document,
                 context.Current,
                 context.Lean!,
-                baselineDocument,
-                baselineSnapshot: context.Baseline,
-                casEvaluation: casEvaluation,
                 changes: context.Changes,
                 casChanges: context.CasChanges,
                 isBaseFactAffected: context.IsBaseFactAffected,
@@ -495,19 +442,6 @@ internal static partial class BackfillInventoryRule
                 $"{item.Entry.AtomId}:{item.Gap.Code}:{item.Gap.Detail}",
                 AdmissionEffect.Block))
             .ToImmutableArray();
-    }
-
-    private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot baseline)
-    {
-        try
-        {
-            return BackfillInventoryLoader.LoadBaseline(baseline);
-        }
-        catch (FormatException exception) when (
-            string.Equals(exception.Message, "required governance document is missing", StringComparison.Ordinal))
-        {
-            throw new FormatException("baseline digestion ledger is missing");
-        }
     }
 
     private static bool SourceMetadataChanged(

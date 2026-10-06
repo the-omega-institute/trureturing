@@ -1,0 +1,4 @@
+**Lemma 3.2 (two nearly colorful doors).** Every nearly colorful room
+$(\sigma,C)$ has distinct doors $d_1,d_2$ with
+$\mathrm{NCdoors}(\sigma,C)=\{d_1,d_2\}$.
+

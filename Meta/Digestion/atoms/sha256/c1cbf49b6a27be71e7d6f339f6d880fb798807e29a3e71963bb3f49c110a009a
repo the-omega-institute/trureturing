@@ -1,0 +1,22 @@
+## 294. FIB 分支树、随机环境与灭绝临界的外加条件
+
+沿用原子类型 `\alpha,\beta` 及替换
+
+$$
+\rho(\alpha)=\beta,
+\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle.
+\tag{294.1}
+$$
+
+对固定有限初始树保留每个叶子的身份、母子关系、子槽次序和更新轮数，得到更新出现森林 `\mathcal H_n`。原始替换给出的类型计数向量满足
+
+$$
+Z_n=\binom{A_n}{B_n}=M^nZ_0,
+\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+\tag{294.2}
+$$
+
+这是确定性的组合事实。`\mathcal H_n` 始终记录原子如何出现；它本身不是随机分支过程，也不带物理时间。
+

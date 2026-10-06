@@ -1,0 +1,22 @@
+**Theorem-form 2.2 (compact cutoff graph limits).** For all parameters of
+Definition 1.3 and every Schwartz map $\varphi$, a fixed smooth scalar bump
+$\chi$, equal to one on $[-1,1]$ and supported in $[-2,2]$, gives
+$\theta_N(x)=\prod_{j<d}\chi(x_j/(N+1))$ with
+$$
+J(\theta_N\varphi)\longrightarrow J\varphi,\qquad
+JH_0(\theta_N\varphi)\longrightarrow JH_0\varphi
+$$
+in $\mathcal H$. The products are smooth and compactly supported, also for
+$d=0$. The required commutator is
+$$
+H_0(\theta_N\varphi)-\theta_N H_0\varphi
+=-\sum_{j<d}\frac{\hbar^2}{2m_j}
+\left[2(\partial_j\theta_N)(\partial_j\varphi)
++(\partial_j^2\theta_N)\varphi\right].
+$$
+
+*Derivation to be established.* Product and chain rules give first and second
+cutoff derivatives bounded by $C_1/(N+1)$ and $C_2/(N+1)^2$. Squared dominated
+convergence controls $(\theta_N-1)u$ for each square-integrable Schwartz $u$.
+The finite sum in the displayed commutator then gives the simultaneous limits.
+

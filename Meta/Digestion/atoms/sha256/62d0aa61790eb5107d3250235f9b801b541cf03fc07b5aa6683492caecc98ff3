@@ -1,0 +1,28 @@
+### 38.2 命题：先有头尾无损分解，再有投影
+
+对每条合法边 $a:s\to s'$，前接是带类型映射
+
+$$
+P_a:A_{s'}\longrightarrow A_s,\qquad P_a(\nu)=a\nu.
+$$
+
+令
+
+$$
+J_s=\coprod_{a:s\to s'}\{a\}\times A_{s'}.
+$$
+
+则
+
+$$
+A_s\longleftrightarrow J_s,\qquad
+\omega\longmapsto(\operatorname{head}\omega,T\omega),\qquad
+(a,\nu)\longmapsto a\nu
+$$
+
+互为逆；在 $D$ 上限制尾部为最终零地址仍成立。
+
+证明。三位头部内部满足 no-$11$；头部最高位与尾部首位的跨缝限制恰是 $\nu\in A_{s'}$，输入接缝与头部最低位的限制恰是合法边 $s\to s'$。所以合法来源给出且只给出一个合法头尾对，反向拼接逐位恢复原来源。$\square$
+
+联合记录无损，单独投影则可能丢失区别。例如 $\mathrm{null}\,\mathbf0$ 与 $[3]\mathbf0$ 的尾部相同，删窗合并它们；固定头部而改变合法尾部，也使头部观察不能恢复来源。这是源卷命题14.2的窗口版本。保留被删窗头是增加记录，不能与只留下尾部的操作混称为同一种遗忘。
+

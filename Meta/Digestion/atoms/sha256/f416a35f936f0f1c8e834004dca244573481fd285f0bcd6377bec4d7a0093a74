@@ -1,0 +1,70 @@
+## 定理 19.6：局部误差的递归传播
+
+> **度量与统一性补注。** 每个 $d_i$ 是相应状态空间上的度量；$L_i$ 与 $\epsilon_i$ 均为有限非负常数。Lipschitz 界及局部实现误差须在访问到的全部相关状态（包括 $y_i$）上统一成立。统一收缩界中的 $0\le\lambda<1$ 与误差界 $\epsilon\ge0$ 也按同一访问域解释。
+
+
+
+设真实操作：
+
+$$
+f_i:X_i\to X_{i+1}
+$$
+
+具有 Lipschitz 常数 $L_i$。
+
+近似实现满足：
+
+$$
+d_{i+1}(\widetilde f_i(x),f_i(x))
+\le\epsilon_i
+$$
+
+对全部相关中间状态成立。
+
+若：
+
+$$
+x_{i+1}=f_i(x_i),
+\qquad
+y_{i+1}=\widetilde f_i(y_i),
+$$
+
+则：
+
+$$
+\boxed{
+d_n(x_n,y_n)
+\le
+\left(\prod_{i=0}^{n-1}L_i\right)d_0(x_0,y_0)
++
+\sum_{j=0}^{n-1}
+\epsilon_j
+\prod_{i=j+1}^{n-1}L_i.
+}
+$$
+
+### 19.6 证明
+
+三角不等式与 Lipschitz 条件给：
+
+$$
+\begin{aligned}
+d_{i+1}(x_{i+1},y_{i+1})
+&\le
+d_{i+1}(f_i(x_i),f_i(y_i))\\
+&\quad+
+d_{i+1}(f_i(y_i),\widetilde f_i(y_i))\\
+&\le L_i d_i(x_i,y_i)+\epsilon_i.
+\end{aligned}
+$$
+
+逐层展开递推即得。∎
+
+所以，“每一层都近似正确”不足以推出任意深度仍然正确。
+
+若每层 $L_i\le\lambda<1$、$\epsilon_i\le\epsilon$，误差有统一上界；若 $L_i=1$，可能线性积累；若存在持续扩张，早期误差可能被放大。
+
+**FIB 递归的近似实现必须携带误差预算，不能只携带一个“已近似”的标签。**
+
+---
+

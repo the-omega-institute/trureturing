@@ -16,7 +16,7 @@ public sealed partial class DigestionLedgerTests
         var document = BackfillInventoryLoader.Load(snapshot);
         var changes = RawChangeSet.Create([PathFor(entry, State)]);
         var evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.ChangedSet,
-            document, snapshot, DigestionTestSupport.AcceptedLean(Array.Empty<string>()), baselineDocument: fixture.Ledger,
+            document, snapshot, DigestionTestSupport.AcceptedLean(Array.Empty<string>()),
             changes: changes, casChanges: RawChangeSet.Create([]));
         Assert.Contains(evaluation.Findings, message => message ==
             $"entry {entry.AtomId} handwritten status {State} differs from derived residual-open");

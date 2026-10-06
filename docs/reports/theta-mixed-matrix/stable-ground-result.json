@@ -1,0 +1,55 @@
+{
+  "scope": "Paper-model coefficient application; exact ground direction, entries, restricted sign and RH remain unresolved",
+  "precision_bits": 128,
+  "input_sha256": {
+    "sharp-center-result.json": "68bf470fc81e1d0765f6fb049cf362fb8e672318cfe6c073bf75ca2859cac952",
+    "ground-residual-result.json": "8078a76c52a40d09fa355e0dd5b19894efca7b76122eee7c9a53eb36c827bc39"
+  },
+  "alpha": "1/8",
+  "rank": 95,
+  "L_one_sided_polynomial_tail_upper": {
+    "display": "[0.021919088388111302801981778790268977586 +/- 4.63e-40]",
+    "dyadic": [
+      "238677736878584703022909082500138949777",
+      "-133"
+    ]
+  },
+  "projected_ground_norm_lower": {
+    "display": "[0.98446761205523396245933483725284389425 +/- 3.32e-39]",
+    "dyadic": [
+      "167498484593579612702411183482353252663",
+      "-127"
+    ]
+  },
+  "projected_ground_inverse_norm_upper": {
+    "display": "[1.0157774494097776235347206637240635361 +/- 4.89e-38]",
+    "dyadic": [
+      "172825577375036478375219184624635743599",
+      "-127"
+    ]
+  },
+  "complementary_center_gap_lower": {
+    "display": "[0.10308091161188869719801822120973102241 +/- 3.82e-39]",
+    "dyadic": [
+      "140306466350646143853823668403366737005",
+      "-130"
+    ]
+  },
+  "second_schur_allowance_upper": {
+    "display": "[0.0046608671601078866681874004091038131587 +/- 2.29e-41]",
+    "dyadic": [
+      "203009396370634794438057612234818732803",
+      "-135"
+    ]
+  },
+  "joint_premises": [
+    "S=alpha I+L bounded self-adjoint",
+    "S p0=0 exactly",
+    "norm L(I-EE*) <= e94/2",
+    "canonical lower bound for norm p0"
+  ],
+  "old_grids_rerun": false,
+  "retained_ground_direction_evaluated": false,
+  "restricted_matrix_sign": "Unverified",
+  "Lean_certification": false
+}

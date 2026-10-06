@@ -8,34 +8,27 @@ internal static partial class CoverAtomCommand
     internal sealed class Session
     {
         private readonly string root;
-        private readonly string baselineRevision;
+        private RepositorySnapshot? current;
+        private BackfillInventoryDocument? document;
         internal RawRepositorySnapshot CurrentRaw { get; private set; }
-        internal RepositorySnapshot Current { get; private set; }
+        internal RepositorySnapshot Current => current ??= Decode(CurrentRaw);
+        // The ledger as the session first read it: the state its writes are compared with.
         internal RepositorySnapshot Baseline { get; }
-        internal BackfillInventoryDocument Document { get; private set; }
-        internal BackfillInventoryDocument BaselineDocument { get; }
+        internal BackfillInventoryDocument Document => document ??= LoadDocument(Current);
         internal LeanAxiomReport Report { get; }
         internal AcceptedLeanClosure Lean { get; }
         internal FrozenStateCatalog FrozenState { get; }
         internal FrozenStatementIndex FrozenStatements { get; }
         internal IReadOnlyDictionary<RepoPath, TruthState> TruthStates { get; }
-        internal ValidatedPolicy Policy { get; }
-        internal IScribeEmissionVerifier Scribe { get; }
         internal RawChangeSet Changes { get; private set; }
-        internal Action? ValidateInputs { get; set; }
         internal bool Invalidated { get; private set; }
 
         internal Session(string root, IRepositoryGateway repository, ILeanReportSource reportSource,
-            IScribeEmissionVerifier scribe, DateTimeOffset recordedAtUtc, string baselineRevision, string firstGid)
+            DateTimeOffset recordedAtUtc, string firstGid)
         {
             this.root = root;
-            this.baselineRevision = baselineRevision;
-            Scribe = scribe;
-            CurrentRaw = repository.ReadCurrent();
-            Current = Decode(CurrentRaw);
-            Baseline = Decode(repository.ReadRevision(baselineRevision));
-            Document = LoadDocument(Current);
-            BaselineDocument = IngestCommand.LoadDocument(Baseline, baseline: true);
+            (CurrentRaw, current, document) = DigestionWorkingTree.ReadEvaluation(repository, Decode, LoadDocument);
+            Baseline = current;
             Report = reportSource.Load(Current);
             Lean = ValidateLean(Current, Report);
             try
@@ -50,33 +43,16 @@ internal static partial class CoverAtomCommand
             }
             FrozenStatements = FrozenStatementIndex.Create(FrozenState, Report);
             TruthStates = LeanTruthStates.Resolve(Current, Lean);
-            Policy = LoadPolicy(Current);
-            Changes = repository.ReadChanges(baselineRevision);
+            Changes = RawChangeSet.Create([]);
         }
 
         internal CommandResult Apply(string atomId, ImmutableArray<string> gids) =>
-            CoverAtomCommand.Apply(this, new CoverArguments(atomId, gids, baselineRevision), allowAlreadyApplied: true);
+            CoverAtomCommand.Apply(this, new CoverArguments(atomId, gids), allowAlreadyApplied: true);
 
-        internal void RequireUnchanged()
+        internal void Commit(RawRepositorySnapshot raw, ImmutableArray<IngestCommand.LedgerUpdate> updates)
         {
             try
             {
-                ValidateInputs?.Invoke();
-                IngestCommand.RequireLedgerUnchanged(root, CurrentRaw);
-            }
-            catch
-            {
-                Invalidated = true;
-                throw;
-            }
-        }
-
-        internal void Commit(RawRepositorySnapshot raw, RepositorySnapshot snapshot,
-            BackfillInventoryDocument document, ImmutableArray<IngestCommand.LedgerUpdate> updates)
-        {
-            try
-            {
-                ValidateInputs?.Invoke();
                 IngestCommand.ApplyLedgerUpdatesAtomically(root, CurrentRaw, updates);
             }
             catch
@@ -105,8 +81,8 @@ internal static partial class CoverAtomCommand
             }
             Changes = RawChangeSet.CreateWithKinds(changes.Select(pair => (pair.Key, pair.Value)));
             CurrentRaw = raw;
-            Current = snapshot;
-            Document = document;
+            current = null;
+            document = null;
         }
     }
 }

@@ -79,6 +79,9 @@ public sealed class WorktreeMakeWorkflowTests
         File.Copy(
             Path.Combine(root, WorktreeInitScriptPath),
             Path.Combine(fixtureRoot, WorktreeInitScriptPath));
+        File.Copy(
+            Path.Combine(root, "tools", "scripts", "host-cleanup.py"),
+            Path.Combine(scriptDirectory, "host-cleanup.py"));
         var dotnet = Path.Combine(binDirectory, "dotnet");
         File.WriteAllText(
             dotnet,

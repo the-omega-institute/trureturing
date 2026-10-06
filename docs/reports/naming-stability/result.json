@@ -1,0 +1,319 @@
+{
+  "scope": {
+    "cover_degree": 2,
+    "a": "2L",
+    "budget_domain": "0 <= L < 1/2",
+    "loss": "normalized uniform mean squared complex chord error",
+    "method": "capped-density finite program with independent dual, periodic triangle competitor",
+    "verification": "exact rational mass constraints; floating point objective",
+    "continuum_selector_reduction": "ordinary mathematical derivation, not Lean verified"
+  },
+  "rows": [
+    {
+      "a": "0",
+      "L": "0",
+      "density_low": "1",
+      "density_high": "1",
+      "candidate": "2.0000000000",
+      "existing_winding_lower_bound": "2.0000000000",
+      "checks": [
+        {
+          "cells": 512,
+          "density_primal": "2.0000000000",
+          "density_dual": "2.0000000000",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0122718463",
+          "triangle_input_quadrature": "2.0000000000",
+          "triangle_quadrature_bound": "0.0122718463",
+          "density_formula_difference": "0.0000000000",
+          "triangle_formula_difference": "0.0000000000"
+        },
+        {
+          "cells": 2048,
+          "density_primal": "2.0000000000",
+          "density_dual": "2.0000000000",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0030679616",
+          "triangle_input_quadrature": "2.0000000000",
+          "triangle_quadrature_bound": "0.0030679616",
+          "density_formula_difference": "0.0000000000",
+          "triangle_formula_difference": "0.0000000000"
+        },
+        {
+          "cells": 8192,
+          "density_primal": "2.0000000000",
+          "density_dual": "2.0000000000",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0007669904",
+          "triangle_input_quadrature": "2.0000000000",
+          "triangle_quadrature_bound": "0.0007669904",
+          "density_formula_difference": "0.0000000000",
+          "triangle_formula_difference": "0.0000000000"
+        }
+      ]
+    },
+    {
+      "a": "1/8",
+      "L": "1/16",
+      "density_low": "8/9",
+      "density_high": "8/7",
+      "candidate": "1.8414254471",
+      "existing_winding_lower_bound": "1.7777777778",
+      "checks": [
+        {
+          "cells": 512,
+          "density_primal": "1.8414244521",
+          "density_dual": "1.8414244521",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0122718463",
+          "triangle_input_quadrature": "1.8414264266",
+          "triangle_quadrature_bound": "0.0138058271",
+          "density_formula_difference": "0.0000009950",
+          "triangle_formula_difference": "0.0000009795"
+        },
+        {
+          "cells": 2048,
+          "density_primal": "1.8414253849",
+          "density_dual": "1.8414253849",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0030679616",
+          "triangle_input_quadrature": "1.8414255083",
+          "triangle_quadrature_bound": "0.0034514568",
+          "density_formula_difference": "0.0000000622",
+          "triangle_formula_difference": "0.0000000612"
+        },
+        {
+          "cells": 8192,
+          "density_primal": "1.8414254432",
+          "density_dual": "1.8414254432",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0007669904",
+          "triangle_input_quadrature": "1.8414254509",
+          "triangle_quadrature_bound": "0.0008628642",
+          "density_formula_difference": "0.0000000039",
+          "triangle_formula_difference": "0.0000000038"
+        }
+      ]
+    },
+    {
+      "a": "1/4",
+      "L": "1/8",
+      "density_low": "4/5",
+      "density_high": "4/3",
+      "candidate": "1.6863146786",
+      "existing_winding_lower_bound": "1.6000000000",
+      "checks": [
+        {
+          "cells": 512,
+          "density_primal": "1.6863127102",
+          "density_dual": "1.6863127102",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0122718463",
+          "triangle_input_quadrature": "1.6863165239",
+          "triangle_quadrature_bound": "0.0153398079",
+          "density_formula_difference": "0.0000019684",
+          "triangle_formula_difference": "0.0000018454"
+        },
+        {
+          "cells": 2048,
+          "density_primal": "1.6863145555",
+          "density_dual": "1.6863145555",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0030679616",
+          "triangle_input_quadrature": "1.6863147939",
+          "triangle_quadrature_bound": "0.0038349520",
+          "density_formula_difference": "0.0000001230",
+          "triangle_formula_difference": "0.0000001153"
+        },
+        {
+          "cells": 8192,
+          "density_primal": "1.6863146709",
+          "density_dual": "1.6863146709",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0007669904",
+          "triangle_input_quadrature": "1.6863146858",
+          "triangle_quadrature_bound": "0.0009587380",
+          "density_formula_difference": "0.0000000077",
+          "triangle_formula_difference": "0.0000000072"
+        }
+      ]
+    },
+    {
+      "a": "1/2",
+      "L": "1/4",
+      "density_low": "2/3",
+      "density_high": "2",
+      "candidate": "1.3997891226",
+      "existing_winding_lower_bound": "1.3333333333",
+      "checks": [
+        {
+          "cells": 512,
+          "density_primal": "1.3997853563",
+          "density_dual": "1.3997853563",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0122718463",
+          "triangle_input_quadrature": "1.3997919473",
+          "triangle_quadrature_bound": "0.0184077695",
+          "density_formula_difference": "0.0000037663",
+          "triangle_formula_difference": "0.0000028247"
+        },
+        {
+          "cells": 2048,
+          "density_primal": "1.3997888872",
+          "density_dual": "1.3997888872",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0030679616",
+          "triangle_input_quadrature": "1.3997892991",
+          "triangle_quadrature_bound": "0.0046019424",
+          "density_formula_difference": "0.0000002354",
+          "triangle_formula_difference": "0.0000001765"
+        },
+        {
+          "cells": 8192,
+          "density_primal": "1.3997891078",
+          "density_dual": "1.3997891078",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0007669904",
+          "triangle_input_quadrature": "1.3997891336",
+          "triangle_quadrature_bound": "0.0011504856",
+          "density_formula_difference": "0.0000000147",
+          "triangle_formula_difference": "0.0000000110"
+        }
+      ]
+    },
+    {
+      "a": "3/4",
+      "L": "3/8",
+      "density_low": "4/7",
+      "density_high": "4",
+      "candidate": "1.1647182642",
+      "existing_winding_lower_bound": "1.1428571429",
+      "checks": [
+        {
+          "cells": 512,
+          "density_primal": "1.1647130229",
+          "density_dual": "1.1647130229",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0122718463",
+          "triangle_input_quadrature": "1.1647205573",
+          "triangle_quadrature_bound": "0.0214757310",
+          "density_formula_difference": "0.0000052414",
+          "triangle_formula_difference": "0.0000022931"
+        },
+        {
+          "cells": 2048,
+          "density_primal": "1.1647179366",
+          "density_dual": "1.1647179366",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0030679616",
+          "triangle_input_quadrature": "1.1647184075",
+          "triangle_quadrature_bound": "0.0053689328",
+          "density_formula_difference": "0.0000003276",
+          "triangle_formula_difference": "0.0000001433"
+        },
+        {
+          "cells": 8192,
+          "density_primal": "1.1647182438",
+          "density_dual": "1.1647182438",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0007669904",
+          "triangle_input_quadrature": "1.1647182732",
+          "triangle_quadrature_bound": "0.0013422332",
+          "density_formula_difference": "0.0000000205",
+          "triangle_formula_difference": "0.0000000090"
+        }
+      ]
+    },
+    {
+      "a": "7/8",
+      "L": "7/16",
+      "density_low": "8/15",
+      "density_high": "8",
+      "candidate": "1.0726522723",
+      "existing_winding_lower_bound": "1.0666666667",
+      "checks": [
+        {
+          "cells": 512,
+          "density_primal": "1.0726464532",
+          "density_dual": "1.0726464532",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0122718463",
+          "triangle_input_quadrature": "1.0726536361",
+          "triangle_quadrature_bound": "0.0230097118",
+          "density_formula_difference": "0.0000058191",
+          "triangle_formula_difference": "0.0000013639"
+        },
+        {
+          "cells": 2048,
+          "density_primal": "1.0726519086",
+          "density_dual": "1.0726519086",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0030679616",
+          "triangle_input_quadrature": "1.0726523575",
+          "triangle_quadrature_bound": "0.0057524280",
+          "density_formula_difference": "0.0000003637",
+          "triangle_formula_difference": "0.0000000852"
+        },
+        {
+          "cells": 8192,
+          "density_primal": "1.0726522495",
+          "density_dual": "1.0726522495",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0007669904",
+          "triangle_input_quadrature": "1.0726522776",
+          "triangle_quadrature_bound": "0.0014381070",
+          "density_formula_difference": "0.0000000227",
+          "triangle_formula_difference": "0.0000000053"
+        }
+      ]
+    },
+    {
+      "a": "99/100",
+      "L": "99/200",
+      "density_low": "100/199",
+      "density_high": "100",
+      "candidate": "1.0050660418",
+      "existing_winding_lower_bound": "1.0050251256",
+      "checks": [
+        {
+          "cells": 512,
+          "density_primal": "1.0050766325",
+          "density_dual": "1.0050766325",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0122718463",
+          "triangle_input_quadrature": "1.0050661661",
+          "triangle_quadrature_bound": "0.0244209741",
+          "density_formula_difference": "0.0000105907",
+          "triangle_formula_difference": "0.0000001242"
+        },
+        {
+          "cells": 2048,
+          "density_primal": "1.0050661705",
+          "density_dual": "1.0050661705",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0030679616",
+          "triangle_input_quadrature": "1.0050660496",
+          "triangle_quadrature_bound": "0.0061052435",
+          "density_formula_difference": "0.0000001287",
+          "triangle_formula_difference": "0.0000000078"
+        },
+        {
+          "cells": 8192,
+          "density_primal": "1.0050660905",
+          "density_dual": "1.0050660905",
+          "primal_dual_gap": "0.0000000000",
+          "density_grid_bound": "0.0007669904",
+          "triangle_input_quadrature": "1.0050660423",
+          "triangle_quadrature_bound": "0.0015263109",
+          "density_formula_difference": "0.0000000487",
+          "triangle_formula_difference": "0.0000000005"
+        }
+      ]
+    }
+  ],
+  "boundary": {
+    "a_zero_candidate": "2.0000000000",
+    "a_one_continuous_extension": "1.0000000000",
+    "formal_low_budget_optimality": "open"
+  }
+}

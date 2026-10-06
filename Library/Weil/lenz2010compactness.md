@@ -866,3 +866,20 @@ The center matrix signs and a cofinal $\varepsilon\downarrow0$
 certificate remain missing. Neither this complete exterior bound nor the
 [scalar assembly pilot](../../docs/reports/theta-mixed-matrix/README.md)
 proves the critical-half inequality, RH or Robin.
+
+## Weighted Fourier finite-family interface
+
+The [weighted Fourier cutoff and finite cosine construction](fukushima2011dirichlet.md)
+uses the same actual minimal form, (JE), complete prime operator, and
+(JF)–(JR). The [original theta derivative suppliers](../Analytic/romik2021orthogonal.md)
+provide its global coefficient hypotheses. It gives an explicit
+finite-rank map with uniform original-form error $<\tau$ on the entire
+$P_\varepsilon$ subspace, for every fixed $0<\varepsilon\le1/2$ and
+$0<\tau\le1$. Its prescribed cosine generators and bounded Fourier
+cell-integral coefficients require no unknown eigenbasis.
+
+At $\tau=\varepsilon/8$, the existing complete-window matrix transfer
+can use this family if its complete original-form/full-variance matrix
+is PSD at $1/2-\varepsilon/2$. Matrix signs, useful numerical ranks and
+cofinal certificates remain missing. This is a paper-level construction,
+with no new Lean certification or arithmetic benefit from FIB labels.

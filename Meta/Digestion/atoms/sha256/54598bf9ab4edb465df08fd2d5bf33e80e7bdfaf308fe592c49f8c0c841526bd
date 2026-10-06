@@ -1,0 +1,11 @@
+## Theorem 1 (strong convergence to the operator-order least upper bound)
+
+Let $H$ be any complete complex inner-product space, including the zero space, and let $J$ be a nonempty directed preorder. Let $X:J\to B(H)$ be a monotone net of positive operators. Suppose $U\in B(H)$ is the actual least upper bound of $\{X_j:j\in J\}$ for the positive-operator order. Then
+
+$$
+\forall j\in J,\quad \|X_j\|\leq\|U\|,
+\qquad
+\forall v\in H,\quad X_jv\longrightarrow Uv
+\quad(j\to\infty).
+$$
+

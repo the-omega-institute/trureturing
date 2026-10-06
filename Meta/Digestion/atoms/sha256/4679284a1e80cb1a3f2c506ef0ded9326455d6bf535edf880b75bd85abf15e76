@@ -1,0 +1,90 @@
+**证明。** 先建立一个同时保留系数信息的逐层界。设 $B\subseteq I$ 为 $\rho$ 的一个前缀标签集，令
+
+$$
+J_B=\{j:a_j\in B\}.
+$$
+
+若 $J_B=\varnothing$，取 $P=\varnothing$、$E=\varnothing$。此时 $B$ 只含指定坐标，前缀赋值数即给出下文的界。若 $J_B\ne\varnothing$，在所有已触及的普通对中选取 $k$，使
+
+$$
+p=\operatorname{pos}(a_k)=\max_{j\in J_B}\operatorname{pos}(a_j),
+\qquad P=\{v:\operatorname{pos}(v)\leq p\}.
+$$
+
+这个 $P$ 截止于所有已触及普通对中最晚的第一端点；当前半读对即使是普通对，其第一端点也不一定达到这个最大值。置
+
+$$
+E=\{i:\xi_i,\eta_i\notin B,\ \xi_i\in P\},
+\qquad t_E=\prod_{i\in E}\tau_i.
+$$
+
+完成次序给出 $E\subseteq N_k$：对 $i\in E$，不同标签的位置互异，故 $\operatorname{pos}(\xi_i)<p$；普通对 $k$ 已在 $B$ 触及而指定对 $i$ 尚未触及，故 $\operatorname{pos}(b_k)<\operatorname{pos}(\eta_i)$。于是
+
+$$
+\operatorname{pos}(\xi_i)<\operatorname{pos}(a_k)
+ <\operatorname{pos}(b_k)<\operatorname{pos}(\eta_i),
+\qquad t_E\leq\theta_k\leq\Theta.
+$$
+
+同一几何还给出以下坐标事实。每个已触及普通对的第一端点都在 $P$。未触及对的第二端点不在 $P$，因为其完成位置晚于 $b_k$。若 $B$ 有当前半读对，其第二端点也不在 $P$：当前对在已触及对中完成最晚，而 $p<\operatorname{pos}(b_k)$。因此指定坐标中 $P\setminus B$ 恰为 $\{\xi_i:i\in E\}$。这些事实同时容许当前半读对为指定对或普通对。
+
+记 $I_\Delta=\{\xi_i,\eta_i:1\leq i\leq r\}$，并定义
+
+$$
+Q=I_\Delta\cap(B\setminus P),
+\qquad d(B,P)=\prod_{v\in Q}|U_v|\leq D.
+$$
+
+只按 $Q$ 上已观察的指定原始值 $c\in\Omega_Q$ 对 $B$ 前缀分组，记该组为
+
+$$
+\mathcal C_c=\{b\in\Omega_B:b|_Q=c\}.
+$$
+
+指定坐标 $B\cap P$ 上的值可以随 $b$ 变化，不固定在组标记中。将证明
+
+$$
+\kappa_B(F)\leq d(B,P)\,\kappa_P(F)^{t_E}. \tag{33.1}
+$$
+
+若 $J_B=\varnothing$，已有 $Q=B$、$d(B,P)=|\Omega_B|$、$\kappa_P=1$，故该式直接成立，包括空初始层。
+
+下面设 $J_B\ne\varnothing$。定义一个共同的带标签域
+
+$$
+\mathcal D_B=\Omega_{I\setminus(B\cup\{\xi_i,\eta_i:i\in E\})},
+\qquad Z_E=\prod_{i\in E}Z_i.
+$$
+
+对 $b\in\mathcal C_c$ 和 $z\in Z_E$，令 $H_z^b:\mathcal D_B\to O$ 为如下函数：在 $b$ 与 $d\in\mathcal D_B$ 上计算全部普通输出及 $E$ 外的指定输出，把 $E$ 内指定输出设为 $z$，再代入同一个 $G$。实际有限关系取为
+
+$$
+R_c=\{(H_z^b)_{z\in Z_E}:b\in\mathcal C_c\}
+\subseteq\prod_{z\in Z_E}O^{\mathcal D_B}. \tag{33.2}
+$$
+
+此处属性是有效输出元组 $z$，属性值是同一域 $\mathcal D_B$ 上的残余函数。若两个这样的元组相等，把任一实际 $B$ 后缀中 $E$ 的输出代为 $z$，就得两个原始响应相等。反之，给定任意 $z,d$，各 $\phi_i$ 满射到 $Z_i$，且 $E$ 的两端点均在 $B$ 外，故可以同时选出原始端点对实现 $z$，并与 $d$ 合为同一个 $B$ 后缀；原始响应相等就推出每个 $H_z$ 相等。因此 $|R_c|$ 正好是该组实际 $B$ 响应的个数，不是自由指定的一族函数数目。
+
+对每个普通构件固定满射行、列及其截面
+
+$$
+a_j^{\mathrm R}\in A_j,\quad b_j^{\mathrm C}\in B_j,
+\quad R_j:V_j\to B_j,\quad C_j:V_j\to A_j,
+$$
+
+满足
+
+$$
+\psi_j(a_j^{\mathrm R},R_j(v))=v
+=\psi_j(C_j(v),b_j^{\mathrm C})\qquad(v\in V_j).
+$$
+
+这些有限选择可依赖当前普通映射，以下计数系数不依赖它们。固定任意 $x\in\prod_{i\in E}X_i$，令
+
+$$
+S_x=\prod_{i\in E}\phi_i(\{x_i\}\times Y_i)\subseteq Z_E.
+$$
+
+对每个 $b\in\mathcal C_c$ 构造一个实际 $P$ 前缀 $q_x(b)\in\Omega_P$。在指定坐标上，对 $i\in E$ 置 $\xi_i=x_i$；在 $I_\Delta\cap B\cap P$ 逐坐标复制 $b$ 的值。几何事实保证这已穷尽 $P$ 的指定坐标。普通坐标按以下互斥情形赋值：
+
+- 若普通对在 $B$ 已完整读取且 $b_j\in P$，复制它的两个原始值。

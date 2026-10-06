@@ -202,23 +202,11 @@ public static class LeanReportRegistrationFixture
                 },
                 {
                   "optional": true,
-                  "pattern": "tools/StrataLint.Scribe.Documents/**/*.cs"
-                },
-                {
-                  "optional": true,
                   "pattern": "tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
                 },
                 {
                   "optional": true,
-                  "pattern": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
-                },
-                {
-                  "optional": true,
                   "pattern": "tools/StrataLint.Scribe/packages.lock.json"
-                },
-                {
-                  "optional": true,
-                  "pattern": "tools/StrataLint.Scribe.Documents/packages.lock.json"
                 },
                 {
                   "optional": true,

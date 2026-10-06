@@ -161,6 +161,16 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 
     public RawRepositorySnapshot ReadCurrent() => GitRepositorySnapshotReader.ReadCurrent(root);
 
+    public RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths) =>
+        GitRepositorySnapshotReader.ReadCurrent(
+            root,
+            pathspecs:
+            [
+                .. paths,
+                AdmissionPlanePolicy.FileMapPath,
+                "Meta/FILEMAP.*.toml",
+            ]);
+
     public RawRepositorySnapshot ReadRevision(string revision) =>
         GitRepositorySnapshotReader.ReadRevision(
             revision,

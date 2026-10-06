@@ -56,7 +56,7 @@ public sealed class CompileProofCliTests
             """);
         File.SetUnixFileMode(shim, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var result = TestProcessRunner.Run("env", ["PATH=" + bin + ":/usr/bin:/bin", "PROOF_LOG=" + log,
-            "PROOF_KIND=" + proof, "PROOF_SCENARIO=" + scenario, Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint"),
+            "PROOF_KIND=" + proof, "PROOF_SCENARIO=" + scenario, Path.Combine(Path.GetDirectoryName(typeof(StrataLint.Cli.Program).Assembly.Location)!, "StrataLint"),
             "compile-proof", proof], fixture.Path, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
         var output = Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError);
         Assert.True(result.ExitCode == expectedExit, $"expected {expectedExit}, actual {result.ExitCode}: {output}");

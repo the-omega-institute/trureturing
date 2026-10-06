@@ -384,7 +384,7 @@ private lemma selected_position_decomposition {n m s p d : ℕ}
       · simp at hk
     · rw [hselMem] at hj
       exact hj.2
-private lemma swapPairs_length : ∀ x : List ℕ, (swapPairs x).length = x.length
+lemma swapPairs_length : ∀ x : List ℕ, (swapPairs x).length = x.length
   | [] => rfl
   | [a] => rfl
   | a :: b :: t => by simp [swapPairs, swapPairs_length t]

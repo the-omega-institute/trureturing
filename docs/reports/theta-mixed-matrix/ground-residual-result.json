@@ -1,0 +1,71 @@
+{
+  "scope": "Paper-model ground normalization and residual action-tail difference on the exact ground complement; no residual norm, retained Gram, matrix sign, Lean or RH certificate",
+  "runtime": {
+    "python": "3.13.12",
+    "python_flint": "0.9.0",
+    "precision_bits": 128
+  },
+  "input_sha256": {
+    "derivative-bandwidth-result.json": "a00f013d6d9a1151672a71f6a2e295df54a47af396b4eaa308af58145dd1f0e1",
+    "forward-action-result.json": "23e59d29ae6a4ff995a8443c838621f405873ce7e667d2e69542f722ed2bb957",
+    "high-trial-bounds-result.json": "88bb6871cc29fedecbfd79076e37b39d65b33337a26076b2f15c49cbd88d669a",
+    "derivative_bandwidth.py": "a74b0d95fdc546c240b605df15ed69fe7c50f4963deeff2a4ad6498fb687bb40"
+  },
+  "bandwidth_N": 64,
+  "physical_split_R": 3,
+  "original_derivative_grid_rerun": false,
+  "v0_derivative_norm_upper": [
+    {
+      "display": "[6.8827826361527964608241831979738382574 +/- 1.37e-38]",
+      "dyadic": [
+        "36595149475506405976509854319886560571",
+        "-122"
+      ]
+    },
+    {
+      "display": "[36.018400925856997726570433529286877907 +/- 9.44e-38]",
+      "dyadic": [
+        "95753333748108910696254226722130948669",
+        "-121"
+      ]
+    }
+  ],
+  "Qv0_norm_upper": {
+    "display": "[0.0087935549135393060855884847483610541765 +/- 9.38e-42]",
+    "dyadic": [
+      "95753333748108910696254226722130948669",
+      "-133"
+    ]
+  },
+  "Pv0_norm_lower": {
+    "display": "[0.99996133594853684659084917766911635045 +/- 1.55e-39]",
+    "dyadic": [
+      "340269210225991828647342054216744459469",
+      "-128"
+    ]
+  },
+  "ground_inverse_squared_normalization_upper": {
+    "display": "[1.0000773325878841415634959081539958053 +/- 2.17e-38]",
+    "dyadic": [
+      "85077170459245950160785400500210357951",
+      "-126"
+    ]
+  },
+  "ground_lift_operator_norm_upper": {
+    "display": "[0.0087938949211450988030794495055776308129 +/- 2.56e-41]",
+    "dyadic": [
+      "47878518051540379624854148196935115743",
+      "-132"
+    ]
+  },
+  "low_action_gamma_terms": 1024,
+  "high_action_gamma_terms": 262144,
+  "residual_action_tail_difference_upper": {
+    "display": "[0.00066138828549350704295219410464571270777 +/- 1.46e-43]",
+    "dyadic": [
+      "28807522718913531597888300107095986861",
+      "-135"
+    ]
+  },
+  "retained_actions_evaluated": false
+}

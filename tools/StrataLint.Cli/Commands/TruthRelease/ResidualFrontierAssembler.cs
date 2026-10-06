@@ -13,7 +13,7 @@ internal static class ResidualFrontierAssembler
         LeanAxiomReport report,
         IScribeEmissionVerifier scribeEmissionVerifier,
         IReadOnlyDictionary<RepoPath, TruthState> truthStates,
-        IReadOnlyList<DocumentDefinition>? definitions = null)
+        IReadOnlyList<DocumentDefinition> definitions)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
@@ -21,17 +21,14 @@ internal static class ResidualFrontierAssembler
         ArgumentNullException.ThrowIfNull(scribeEmissionVerifier);
         ArgumentNullException.ThrowIfNull(truthStates);
 
-        if (definitions is null)
-            scribeEmissionVerifier.Verify(snapshot, report);
-        else
-            scribeEmissionVerifier.Verify(snapshot, report, definitions);
+        ArgumentNullException.ThrowIfNull(definitions);
+        scribeEmissionVerifier.Verify(snapshot, report, definitions);
         var document = BackfillInventoryLoader.Load(snapshot);
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,
             document,
             snapshot,
             lean,
-            baselineDocument: document,
             truthStates: truthStates);
         if (evaluation.HasReceiptIntegrityFailure)
         {
@@ -43,8 +40,7 @@ internal static class ResidualFrontierAssembler
         var frontier = DigestionFrontierProjection.Create(
             document,
             evaluation,
-            DigestionContentKindResolver.Resolve(snapshot, document),
-            retryDispositions: false);
+            DigestionContentKindResolver.Resolve(snapshot, document));
         var summary = DigestResidualSummary.Render(evaluation, frontier);
         return ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(EchoResidualBlock.Render(summary)));
     }

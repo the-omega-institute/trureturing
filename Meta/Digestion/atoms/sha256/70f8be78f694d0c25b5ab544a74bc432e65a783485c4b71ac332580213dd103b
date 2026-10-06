@@ -1,0 +1,15 @@
+**Proof.** When $p=2$, an injective first-coordinate projection of a
+three-element set into the two-element field is impossible. Equivalently,
+$\mathcal X_2$ is empty and $\binom23=0$.
+
+When $p=3$, the only three-element subset of $F$ is $F$ itself. There
+are two nonzero slopes and three intercepts; Theorem 7.2 shows that all
+six graph triples are admissible, distinct, and exhaustive. Accordingly,
+$3(3-1)\binom33=6$. Since $h+F=F$ for every $h$, Theorem 8.1
+identifies precisely the three intercept choices for each fixed slope
+as one orbit. A translation fixes such a graph exactly when
+$b+k-ah=b$, or $k=ah$, giving the displayed stabilizer of size three.
+For $n=3$, these two stabilizers are the subgroups $H_+$ and $H_-$
+of Theorem 1, and its two exceptional orbits exhaust $\mathcal T_3$.
+$\square$
+

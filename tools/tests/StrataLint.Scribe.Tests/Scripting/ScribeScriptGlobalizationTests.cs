@@ -58,8 +58,7 @@ public sealed class ScribeScriptGlobalizationTests(ITestOutputHelper output)
                     return Run(args);
                 }
                 [MethodImpl(MethodImplOptions.NoInlining)]
-                private static int Run(string[] args) => ScribeCli.Run(typeof(ScribeCli).Assembly,
-                    args[2..], args[1], Console.Out, Console.Error);
+                private static int Run(string[] args) => ScribeCli.Run(args[2..], args[1], Console.Out, Console.Error);
             }
             """;
         var references = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")!).Split(Path.PathSeparator)
