@@ -130,9 +130,8 @@ private theorem returnEval_mem_hull (A : Fin 2 → ℝ) (a : ℝ) (ha : |a| < 1)
     (z : List (Fin 2)) (x : ℝ)
     (hx : x ∈ Set.Icc (hullLower A a) (hullUpper A a)) :
     returnEval A a z x ∈ Set.Icc (hullLower A a) (hullUpper A a) := by
-  induction z with
-  | nil => exact hx
-  | cons i z ih => exact hull_invariant A a ha i ih
+  exact List.foldrRecOn z (fun i y => A i + a * y) hx
+    (fun y hy i _ => hull_invariant A a ha i hy)
 
 private theorem extremal_words (A : Fin 2 → ℝ) (a : ℝ) (ha : |a| < 1) :
     ∃ wlo whi : List (Fin 2), ∀ x : ℝ,
@@ -250,10 +249,10 @@ private noncomputable def translation (d : FixedTailData) (j i : Fin 2) : ℝ :=
 
 private noncomputable def slope (d : FixedTailData) : ℝ := (-g) ^ d.L
 
-private noncomputable def lower (d : FixedTailData) (j : Fin 2) : ℝ :=
+noncomputable def lower (d : FixedTailData) (j : Fin 2) : ℝ :=
   hullLower (translation d j) (slope d)
 
-private noncomputable def upper (d : FixedTailData) (j : Fin 2) : ℝ :=
+noncomputable def upper (d : FixedTailData) (j : Fin 2) : ℝ :=
   hullUpper (translation d j) (slope d)
 
 private noncomputable def entryCost (d : FixedTailData) (j : Fin 2)
@@ -264,7 +263,7 @@ private noncomputable def entryCost (d : FixedTailData) (j : Fin 2)
 
 /-- The indexed suffix certificate, grouped into two stems and four return blocks.
 Both endpoints are tested in every group, including repeated suffix values. -/
-private noncomputable def familyBudget (d : FixedTailData) : ℝ :=
+noncomputable def familyBudget (d : FixedTailData) : ℝ :=
   Finset.univ.sup' ⟨(0, none), Finset.mem_univ _⟩
     (fun e : Fin 2 × Option (Fin 2) =>
       max (entryCost d e.1 e.2 (lower d e.1)) (entryCost d e.1 e.2 (upper d e.1)))
@@ -275,7 +274,7 @@ private def addressObserved (c : ℝ) : List (Fin 6) → LegalDigits → Prop
 
 /-- The tails are fixed before the universal choice of the finite return word.
 Each source retains its own unobserved terminal address. -/
-private def allHistories (d : FixedTailData) (c : ℝ) (tails : Fin 2 → LegalDigits) : Prop :=
+def allHistories (d : FixedTailData) (c : ℝ) (tails : Fin 2 → LegalDigits) : Prop :=
   (∀ j, stateAddress (d.guard j) (tails j)) ∧
   ∀ (z : List (Fin 2)) (j : Fin 2), ∃ source : LegalDigits,
     stateAddress false source ∧
@@ -480,10 +479,7 @@ private theorem cost_continuous (w : List Label) (r : List (Fin 6)) :
 
 private theorem return_lengths (d : FixedTailData) (j : Fin 2) (z : List (Fin 2)) :
     (z.flatMap (d.blocks j)).length = (z.flatMap d.blockColor).length := by
-  induction z with
-  | nil => rfl
-  | cons i z ih => simp only [List.flatMap_cons, List.length_append,
-      d.block_length, d.block_color_length, ih]
+  simp only [List.length_flatMap, d.block_length, d.block_color_length]
 
 private theorem entry_bounded (d : FixedTailData) (j : Fin 2) (i : Option (Fin 2)) :
     entryCost d j i (lower d j) ≤ familyBudget d ∧
