@@ -129,7 +129,7 @@ The private theorems `loop_path`, `local_vectors`, `sector_jordan` and
 `perron_frobenius`, `δ_pos`, `E_square`, `α_data`, `E_triple`, `ρ_inverse`,
 `seed_zero_polynomial`, `first_projection`, `block_action`) is bind-only and is
 used on the proof path of `result` (CLAUDE.md §3.2 「有消费的辅助声明」). The
-direct frozen dependency is `WeightedLegalPathTemperleyLieb`. Utility is `none`: the module proves a universal statement and
+direct frozen dependencies are `WeightedLegalPathTemperleyLieb` and `ReferenceFrameTax`. Utility is `none`: the module proves a universal statement and
 contains no finite enumeration, checker, numeric reduction or certified
 instance. There is no digestion atom.
 
