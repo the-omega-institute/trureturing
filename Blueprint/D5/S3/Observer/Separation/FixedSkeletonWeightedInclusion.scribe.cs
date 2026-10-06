@@ -144,6 +144,165 @@ internal sealed class FixedSkeletonWeightedInclusionDocument : IScribeDocumentDe
                 StatementSource.FromAuthor(ActiveStatement()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For finite coordinate and constraint types I,J, let a_j be real linear functionals, b_j real constants, and K={u: forall j, a_j(u)<=b_j}. Let v be an extreme point of K. Active(v,j) means a_j(v)=b_j. A real direction d vanishes whenever every original active normal evaluates to zero on d. The identifier zero denotes the zero scalar or vector. Inactive slacks provide one positive finite perturbation radius. Both v plus and minus epsilon d remain feasible, and their midpoint is v; extremality forces d=0."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("rational-extreme-point"),
+                DeclarationHandle.Create("D5/S3/Observer/Separation/FixedSkeletonWeightedInclusion.rational_extreme_point"),
+                H("Rational coordinates from original active rows"),
+                StatementSource.FromAuthor(RationalExtremeStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For finite coordinate and original constraint types I,J, take A:J times I -> Q "
+                    + "and b:J -> Q. Matrix(J,I,Q) denotes these rational matrices. Let K(A,b) consist of real vectors u satisfying sum_i cast(A(j,i))*u(i)<=cast(b(j)) "
+                    + "for every j. Every extreme point v of this original real polyhedron is the coordinatewise "
+                    + "real cast C_I(q) of some q:I -> Q. Neither nonempty types nor a rational optimum value are assumed. "
+                    + "Restrict A to precisely its original active rows at v. The retained active-normal theorem makes "
+                    + "their real kernel zero. Cast rational kernel vectors to obtain the rational kernel result. "
+                    + "The rational Gram matrix therefore admits a rational solution for the original active right sides. "
+                    + "Casting this equation and real Gram uniqueness identify that solution with v. "
+                    + "No objective-value row is part of the reconstruction."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("row-image-rational-duality"),
+                DeclarationHandle.Create("D5/S3/Observer/Separation/FixedSkeletonWeightedInclusion.row_image_rational_duality"),
+                H("Equal rational certificates optimal among all real feasible vectors"),
+                StatementSource.FromAuthor(RationalDualityStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let X and Z be finite, with Z nonempty, let Y be any type, and let phi:X times Y -> Z "
+                    + "attain each z at some actual pair. A(z,x)=1 exactly when some y satisfies phi(x,y)=z. "
+                    + "P_Q(lambda) and Q_Q(w) are nonnegative rational actual covering and packing constraints. "
+                    + "Their coordinate sums S_X(lambda) and S_Z(w) are equal in Q. C_X and C_Z are coordinatewise "
+                    + "casts into the reals. P and Q without subscripts are the real feasibility predicates above. "
+                    + "There exist rational lambda and w satisfying these constraints, whose real casts minimize "
+                    + "and maximize against every real feasible mu and v, respectively. Rationality and attainment "
+                    + "are conclusions, not input premises; no uniform slice-surjectivity is required.")),
+                    Paragraph(Text(
+                        "Use the retained real extrema and open-separation duality. Each attained optimum face is "
+                        + "closed and nonempty. The primal face lies in the nonnegative box bounded by its fixed sum; "
+                        + "the dual face lies in the unit box because every effective output belongs to an actual row. "
+                        + "Select extreme points of these compact exposed faces and transport extremality to the original "
+                        + "feasible polyhedra. Reconstruct rational coordinates from original nonnegativity and incidence "
+                        + "rows only, then transfer feasibility, equality and the unrestricted real optimal comparisons. "
+                        + "Zero dual weights, singleton effective images, repeated rows and singleton empty products are included. "
+                        + "This certificate result does not prove same-law weighted entropy, global layer bounds, the literal "
+                        + "minimum, the least uniform exponent or Boolean sharpness of original theorem33."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("fractional-submodular-cover"),
+                DeclarationHandle.Create("D5/S3/Observer/Separation/FixedSkeletonWeightedInclusion.fractional_submodular_cover"),
+                H("A finite fractional cover for a submodular function"),
+                StatementSource.FromAuthor(FractionalCoverStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let A be a type with decidable equality, R a finite row type, U a finite subset of A, "
+                    + "and S_r subsets of U. H maps finite subsets of A to real numbers, H(empty)=0, "
+                    + "H is monotone under inclusion, and H(s union t)+H(s intersection t)<=H(s)+H(t). "
+                    + "The real weights w_r are nonnegative, and every a in U has sum of incident w_r at least 1. "
+                    + "SubmodularCoverAssumptions denotes exactly these premises, and L(a,b) denotes a<=b. "
+                    + "Then H(U)<=sum_r w_r H(S_r). Empty U, empty selected sets, repeated row labels and zero "
+                    + "weights are allowed. The proof inducts on U using the contracted function "
+                    + "H(insert a,t)-H({a}) and the actual weighted incidence of a."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-coordinate-entropy"),
+                DeclarationHandle.Create("D5/S3/Observer/Separation/FixedSkeletonWeightedInclusion.weighted_coordinate_entropy"),
+                H("Fractional coordinate entropy on one actual law"),
+                StatementSource.FromAuthor(WeightedEntropyStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "X,A,R are arbitrary finite sample, attribute and row types. V_a are finite, possibly "
+                    + "different value types. p:X->real is nonnegative and sums to 1. Each u_a:X->V_a is an "
+                    + "actual readout. For S subset A, tuple_S(x)=(u_a(x)) for a in S, and "
+                    + "H_p(S) is Shannon entropy in nats of pushforward tuple_S p. Every law is a literal "
+                    + "pushforward of this same p. L means <=. LawAndCover denotes p>=0, sum p=1 and the following cover premises. The real row weights w_r are nonnegative and their "
+                    + "sum over rows containing each attribute is at least 1. No independence or positive "
+                    + "marginal premise is used. Empty selected subsets have singleton tuple carrier and entropy 0; "
+                    + "repeated rows and zero weights remain included. This statement alone does not prove "
+                    + "the original fixed-skeleton global bounds, literal minimum or Boolean sharpness."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("fractional-relation-log-bound"),
+                DeclarationHandle.Create("D5/S3/Observer/Separation/FixedSkeletonWeightedInclusion.fractional_relation_log_bound"),
+                H("Fractional entropy on actual relation images"),
+                StatementSource.FromAuthor(RelationLogStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "C,A,R are finite types, C is nonempty, and the finite V_a may differ by attribute. "
+                    + "H:C->product_a V_a is an actual tuple family. S_r subset A and w_r>=0 cover every "
+                    + "attribute with incident total at least 1. Cover denotes exactly nonnegativity and these coverage constraints; L means <=. N(H)=card(range H). P_r(H) is the "
+                    + "actual range of the S_r coordinate restriction of H, not its ambient tuple carrier. "
+                    + "The inequality uses the uniform law on range H and literal pushforwards of that one "
+                    + "law. Its restriction-image lifts are normalized and their injective inclusions preserve "
+                    + "entropy. Empty selected sets, repeated rows, zero weights and singleton relations are included."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("grouped-response-bound"),
+                DeclarationHandle.Create("D5/S3/Observer/Separation/FixedSkeletonWeightedInclusion.grouped_response_bound"),
+                H("A grouped bound for the same actual task"),
+                StatementSource.FromAuthor(GroupedBoundStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "I and O and all endpoint/effective alphabets X_i,Y_i,Z_i are finite; X_i,Y_i are nonempty. "
+                    + "The maps phi_i and total G define one actual F on the complete labelled endpoint product. "
+                    + "Use designated and B_1,B_2,P_1,P_2 with B_2 subset B_1, P_2 subset P_1, P_2 subset B_2, "
+                    + "and every ordinary first endpoint touched by B also in P. Every ordinary map has some "
+                    + "surjective row and some surjective column; other slices can be constant. Each designated "
+                    + "effective output is attained at an actual pair. E=designated intersect (P_1 minus B_1). "
+                    + "For each assignment c to only the designated endpoints in B minus P, C_c is the actual "
+                    + "group of B prefixes. Shared B intersect P designated values remain variable. For any "
+                    + "nonnegative real w_x on product_i_in_E X_i covering every z in product_i_in_E Z_i by "
+                    + "actual product row incidence, K_c is the cardinality of the actual B response image on C_c, "
+                    + "ReplayAndCover denotes exactly the cut, ordinary-slice, designated-attainment and covering premises just stated; L means <=, "
+                    + "and kappaP the cardinality of the full actual P response image. Then K_c<=kappaP^(sum_x w_x). "
+                    + "One b-independent surjective full-suffix map identifies group responses with actual residual "
+                    + "tuples. The original common replay bounds every actual row image by kappaP. E empty gives "
+                    + "one residual-function attribute, not zero attributes. This is a per-group, per-cut bound; "
+                    + "optimal product-value identification, group-union counting, every original skeleton layer, "
+                    + "the separate coefficient-one bound and Boolean sharpness remain additional obligations."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("grouped-optimal-product-bound"),
+                DeclarationHandle.Create("D5/S3/Observer/Separation/FixedSkeletonWeightedInclusion.grouped_optimal_product_bound"),
+                H("The actual product optimum in the grouped bound"),
+                StatementSource.FromAuthor(GroupedOptimalStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Use exactly the finite actual task, cuts, designated-only group C_c, weak ordinary "
+                    + "some-row/some-column surjectivity and designated effective-output attainment of the "
+                    + "preceding grouped theorem. ReplayPremises denotes those premises. rowCoverNumber(phi_i) "
+                    + "is the real sum of the rational optimal primal supplied by row_image_rational_duality, "
+                    + "whose real cast minimizes against every real feasible competitor. It is not an assumed "
+                    + "rational optimum. Write tau_i for this number, E=designated intersect(P_1 minus B_1), "
+                    + "and K_c,kappaP for the same actual response-image cardinalities. Tensor factor primal "
+                    + "and dual weights are feasible for the actual product incidence, including zero weights "
+                    + "and empty products. Their two objectives equal product_i_in_E tau_i. Compare the "
+                    + "actual product optimizer with these tensors in both primal and dual directions to "
+                    + "identify its attained real optimum with that product. The grouped bound uses that "
+                    + "actual product primal, so K_c<=kappaP^(product_i_in_E tau_i). L means <=. "
+                    + "The statement does not yet sum groups or derive the original permutation's all-layer "
+                    + "bounds, literal minimum or one-addition-block sharpness."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("nonnested-cut-product-bound"),
+                DeclarationHandle.Create("D5/S3/Observer/Separation/FixedSkeletonWeightedInclusion.nonnested_cut_product_bound"),
+                H("A whole-cut bound with the designated group coefficient"),
+                StatementSource.FromAuthor(WholeCutStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Use exactly the actual task and ReplayPremises of the preceding theorem. For these "
+                    + "arbitrary compatible nonnested cuts, E=designated intersect(P_1 minus B_1). Q is the "
+                    + "complete independent product of designated endpoint values in B minus P, separately "
+                    + "for first and second labels; d(B,P)=card Q. kappaB and kappaP count the full actual "
+                    + "B and P response images for this same phi and G. Each B prefix lies in the group "
+                    + "labelled by its actual Q values. Choosing one representative of each full B response "
+                    + "injects that image into the disjoint sum of its grouped response images. Groups may "
+                    + "have overlapping response values; this only decreases the full count. Therefore "
+                    + "kappaB<=d(B,P)*kappaP^(product_i_in_E tau_i), with tau_i the attained real row-cover "
+                    + "values defined above. L means <=. Empty E and Q, initial and terminal compatible "
+                    + "cuts, singleton effective images and constant G are included. This per-cut theorem "
+                    + "does not itself derive compatible cuts from every original labelled permutation or "
+                    + "prove the literal minimum and Boolean sharpness."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
@@ -194,4 +353,61 @@ internal sealed class FixedSkeletonWeightedInclusionDocument : IScribeDocumentDe
             App(Sub(V("a"),V("j")),V("d")), Eq, V("zero"))), Implies, Sp, V("d"), Eq, V("zero"), Dot));
 
 
+    private static Formula RationalExtremeStatement() => Disp(Seq(
+        Forall, Sp, V("A"), InMacro, Sp, App(V("Matrix"), V("J"), V("I"), V("Q")), Comma, Sp,
+        V("b"), InMacro, Sp, Seq(V("Q"), Caret, Grp(V("J"))), Comma, Sp,
+        Forall, Sp, V("v"), InMacro, Sp,
+        App(V("Extreme"), App(V("K"), V("A"), V("b"))), Comma, Sp,
+        Exists, Sp, V("q"), InMacro, Sp, Seq(V("Q"), Caret, Grp(V("I"))), Comma, Sp,
+        App(Sub(V("C"), V("I")), V("q")), Eq, V("v"), Dot));
+
+    private static Formula RationalDualityStatement() => Disp(Seq(
+        Exists, Sp, V("lambda"), InMacro, Sp, Seq(V("Q"), Caret, Grp(V("X"))), Comma, Sp,
+        V("w"), InMacro, Sp, Seq(V("Q"), Caret, Grp(V("Z"))), Comma, Sp,
+        App(Sub(V("P"), V("Q")), V("lambda")), Comma, Sp,
+        App(Sub(V("Q"), V("Q")), V("w")), Comma, Sp,
+        App(Sub(V("S"), V("X")), V("lambda")), Eq,
+        App(Sub(V("S"), V("Z")), V("w")), Comma, Sp,
+        Forall, Sp, V("mu"), InMacro, Sp, Seq(V("R"), Caret, Grp(V("X"))), Comma, Sp,
+        Grp(Seq(App(V("P"), V("mu")), Implies, Sp,
+            App(V("L"), App(Sub(V("S"), V("X")), App(Sub(V("C"), V("X")), V("lambda"))),
+                App(Sub(V("S"), V("X")), V("mu"))))), Comma, Sp,
+        Forall, Sp, V("v"), InMacro, Sp, Seq(V("R"), Caret, Grp(V("Z"))), Comma, Sp,
+        Grp(Seq(App(V("Q"), V("v")), Implies, Sp,
+            App(V("L"), App(Sub(V("S"), V("Z")), V("v")),
+                App(Sub(V("S"), V("Z")), App(Sub(V("C"), V("Z")), V("w")))))), Dot));
+
+    private static Formula FractionalCoverStatement() => Disp(Seq(
+        Forall, Sp, V("H"), Comma, V("U"), Comma, V("S"), Comma, V("w"), Comma, Sp,
+        App(V("SubmodularCoverAssumptions"), V("H"), V("U"), V("S"), V("w")), Implies, Sp,
+        App(V("L"), App(V("H"), V("U")),
+            App(V("sum"), V("r"), Seq(Sub(V("w"), V("r")), App(V("H"), Sub(V("S"), V("r")))))), Dot));
+
+    private static Formula WeightedEntropyStatement() => Disp(Seq(
+        Forall, Sp, V("p"), Comma, V("u"), Comma, V("S"), Comma, V("w"), Comma, Sp,
+        App(V("LawAndCover"), V("p"), V("S"), V("w")), Implies, Sp,
+        App(V("L"), App(Sub(V("H"), V("p")), V("A")),
+            App(V("sum"), V("r"), Seq(Sub(V("w"), V("r")), App(Sub(V("H"), V("p")), Sub(V("S"), V("r")))))), Dot));
+
+    private static Formula RelationLogStatement() => Disp(Seq(
+        Forall, Sp, V("H"), Comma, V("S"), Comma, V("w"), Comma, Sp,
+        App(V("Cover"), V("S"), V("w")), Implies, Sp,
+        App(V("L"), App(V("log"), App(V("N"), V("H"))),
+            App(V("sum"), V("r"), Seq(Sub(V("w"), V("r")), App(V("log"), App(Sub(V("P"), V("r")), V("H")))))), Dot));
+
+    private static Formula GroupedBoundStatement() => Disp(Seq(
+        Forall, Sp, V("phi"), Comma, V("G"), Comma, V("B"), Comma, V("P"), Comma, V("c"), Comma, V("w"), Comma, Sp,
+        App(V("ReplayAndCover"), V("phi"), V("B"), V("P"), V("w")), Implies, Sp,
+        App(V("L"), Sub(V("K"), V("c")),
+            Seq(V("kappaP"), Caret, Grp(App(V("sum"), V("x"), Sub(V("w"), V("x")))))), Dot));
+    private static Formula GroupedOptimalStatement() => Disp(Seq(
+        Forall, Sp, V("phi"), Comma, V("G"), Comma, V("B"), Comma, V("P"), Comma, V("c"), Comma, Sp,
+        App(V("ReplayPremises"), V("phi"), V("B"), V("P")), Implies, Sp,
+        App(V("L"), Sub(V("K"), V("c")),
+            Seq(V("kappaP"), Caret, Grp(App(V("product"), V("i"), V("E"), Sub(V("tau"), V("i")))))), Dot));
+    private static Formula WholeCutStatement() => Disp(Seq(
+        Forall, Sp, V("phi"), Comma, V("G"), Comma, V("B"), Comma, V("P"), Comma, Sp,
+        App(V("ReplayPremises"), V("phi"), V("B"), V("P")), Implies, Sp,
+        App(V("L"), V("kappaB"), Seq(App(V("d"), V("B"), V("P")),
+            V("kappaP"), Caret, Grp(App(V("product"), V("i"), V("E"), Sub(V("tau"), V("i")))))), Dot));
 }
