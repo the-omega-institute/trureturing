@@ -164,7 +164,7 @@ public sealed class ExplicitDecompositionTests
         Assert.Equal(3, context.Count);
         Assert.Null(context.Next);
         Assert.Equal("theorem", DigestionContentKindResolver.Resolve(f.Snapshot, f.Document)[thirdId]);
-        var ingest = DigestionIngestor.Plan(f.Document, f.Snapshot, f.Document);
+        var ingest = ReportFreeDigestionIngestor.Plan(f.Document, f.Snapshot);
         Assert.Equal(0, ingest.ResidualOpenAdded);
         Assert.Empty(ingest.CasObjects);
         Assert.Equal(DirectoryLedgerTestSupport.Image(f.Document), DirectoryLedgerTestSupport.Image(ingest.Document));

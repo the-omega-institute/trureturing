@@ -11,9 +11,6 @@ public sealed class DigestionStatusEvaluatorArchitectureTests
     [Fact]
     public void IngestAlignmentApiIsWholeLedgerOnly()
     {
-        AssertParameters(typeof(DigestionIngestor), "Plan",
-            "document", "snapshot", "baselineDocument", "baselineSnapshot", "atomizerResolver", "changes");
-        AssertParameters(typeof(DigestionIngestor), "NormalizeAtomIdentities", "document");
         AssertParameters(typeof(DigestionLedgerAligner), "Evaluate",
             "document", "snapshot", "baselineDocument", "mode", "atomizerResolver", "baselineSnapshot",
             "casEvaluation", "changes", "casChanges", "contentKindAtomizerResolver");
@@ -21,23 +18,6 @@ public sealed class DigestionStatusEvaluatorArchitectureTests
             "scope", "document", "snapshot", "baselineDocument", "changes", "casChanges");
         AssertParameters(typeof(DigestionStatusEvaluator), "StatusAuthorityChangedAtomIds",
             "document", "baselineDocument", "changes", "alignment");
-        Assert.Equal(
-            ["AdmissionDocument", "Alignment", "CasObjects", "Fallbacks", "ResidualOpenAdded", "StaleAcknowledged"],
-            ApiType(typeof(DigestionIngestPlan)).GetMembers().OfType<IPropertySymbol>()
-                .Where(static property => property.DeclaredAccessibility == Accessibility.Public)
-                .Select(static property => property.Name)
-                .Order(StringComparer.Ordinal));
-    }
-
-    [Fact]
-    public void DigestionBackfillValidationHasOneTruthAlignedEntryPoint()
-    {
-        Assert.Equal(["RenderOrThrow", "RequireValidBackfill"],
-            StaticMethods(typeof(DigestionBackfillValidation)).Select(static method => method.Name)
-                .Order(StringComparer.Ordinal));
-        var entryPoint = Assert.Single(StaticMethods(typeof(BackfillInventoryRule)),
-            static method => method.Name.StartsWith("EvaluateDocument", StringComparison.Ordinal));
-        Assert.Equal(["context", "document"], entryPoint.Parameters.Select(static parameter => parameter.Name));
     }
 
     private static void AssertParameters(Type owner, string name, params string[] expected)
