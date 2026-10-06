@@ -5909,3 +5909,14 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 完整独立消费者实际导入已接受的原窄零锥重构模块与三个公开 Mathlib 微分模块，真实 exit 0、零错误、零警告；两个新目标的公理闭包仅含 propext、Classical.choice、Quot.sound。原始证明尾保留，派生尾仅作十项明确的证明/API 对齐，命题保持不变。实际源码、编译快照、完整派生尾、生成 olean、终态、导入基底及选中的 Mathlib 源码/olean 共 62 项绑定工件独立核对通过；导入基底已有 82 项标准公理报告。验收范围为完整新消费者与两个新目标。
 
 来源为仓内原 Lorentz/NullSphere 构造与 Mathlib@db584cd6d46c92f209a44c0f1c829460d327499d，固定上游复用范围沿用 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。实际球面流形微分、原 round 度量及复有限图的绑定仍须完成；未知边界映射 F 的构造和弱正则性、有限体积/完整尖点消费者、给定 h,d 的完整 Mostow–Prasad 与官方验收未完成。
+
+
+### 原局部流的 C¹ 变分见证与完整初值／时间微分
+
+在有限维完备实赋范空间 E 上，同一原时间依赖向量场 f 的联合函数为 C²，原 Φ 是指定基点、正初值半径与包含初始时间的区间上的实际 IsLocalFlow 时，公开 exists_isVariationalFlowProjection_one_of_C2 在内部构造正时间 T、正半径 ρ 和 C¹ 连续线性算子值函数 Y。它在真实开球与时间开区间的乘积上满足原结构 IsVariationalFlowProjection 的完整微分方程：DΦ(x,t)(u,s) = Y(x,t)u + s • f(t,Φ(x,t))。初值方向与时间方向属于同一原 Φ 的联合微分，不是分别存在但未绑定的两个候选。
+
+真实增广向量场在内部构造实际局部流，变分解唯一性将其投影识别为原 Φ 的初值微分；两个正邻域取最小值保证光滑性和微分恒等式在同一非空局部域同时成立。没有外供 Y 的存在、光滑性或原 Φ 的联合微分公式。辅助公开 fderiv_Phi_eq_coprod_fromAugFlow_aux 保留原 C¹ 向量场及实际增广局部流上下文，其增广局部流由 C² 见证定理内部履行。
+
+来源为 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a 的 PoincareLib.Analysis.ODE.LocalFlow.HigherRegularity.{VariationalCoproductDerivative,VariationalLevelOneWitness}，原作者为 qinz1yang/differential-geometry 的 DifferentialGeometry contributors，比较版本 1b535dd102b94cc42b107cca27059687888f08b3，Apache-2.0。固定来源的 14 个有序前置模块已实际编译或复用此前验收，零错误、零警告；其源码与固定原字节和 Git blob 均一致。逐项核对源码、日志、退出结果、预登记、实际生成 olean、原源码与导入检查，共 99 项工件独立验证一致。
+
+两个既有公开定理的完整递归公理闭包由只导入实际已接受模块的小检查验收，仅含 propext、Classical.choice、Quot.sound；本项没有新增证明包装或重复编译已接受正文。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。该结果是向量空间中的原局部流变分定理；流形测地线／Jacobi 场、全局原指数映射及 H3 分类的实际绑定，96 模块的完整更高正则性闭包、有限体积尖点和未知边界映射 F、给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成。
