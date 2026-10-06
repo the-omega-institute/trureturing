@@ -927,3 +927,749 @@ J. Math. Anal. Appl. 470(2) (2019), 821–845，
 实际阻尼零点仍位于 §441 的 \(L^{-C}\) 尺度；本节没有将其移到
 \(L^{-1}\) 尺度，也没有断言有限前缀导数在全轴上的唯一零点。
 完整 Robin 配对中其余有符号项的联合临界估计仍待证明。
+
+## 444. 原始轮廓的曲率与完整肩部的严格负储备
+
+**对象。** 保持 §441–§443 的原常数与原完整积分。仍令
+\(C=e^{\gamma_E}\)、\(\Phi(v)=\exp(\operatorname{Ein}(v))\)、
+\(Q(u)=u\zeta(1+u)\)，并使用（PX.14）中的原常数 \(A\)。肩部为
+
+\[
+K(t)=A-(C-1)(\log t+\gamma_E)
+ +C\int_0^\infty e^{-tu}\frac{1/Q(u)-1}{u}\,du,
+\qquad t>0.
+\]
+
+实际前缀仍包含全部 \(q\le z\) 的素数；\(p\) 是严格大于素数
+\(z\) 的最小素数，\(L=\log p\)，\(J_z\) 是 §441 中同一时钟下的
+完整首补偿积分。以下新增符号
+
+\[
+\delta=\frac{2\log2-1}{6}
+\]
+
+是一个固定正数。
+
+**定理 444.1（全轴曲率与原轮廓常数）。** \(\Phi\) 在零点光滑延拓，
+满足
+
+\[
+\Phi'(0)=1,\qquad \Phi''(0)=1/2,
+\qquad 0<\Phi''(v)<1/2\quad(v>0).
+\tag{NS.1}
+\]
+
+其二阶导数在整个正轴严格递减，且原常数满足
+
+\[
+A<1/2.
+\tag{NS.2}
+\]
+
+**证明：零端与曲率代数。** 令 \(r(v)=(1-e^{-v})/v\)，在零点补成
+\(r(0)=1\)。有限区间上的经典表示
+
+\[
+r(v)=\int_0^1e^{-sv}\,ds
+\]
+
+给同一函数的光滑延拓，且 \(r'(0)=-1/2\)。因
+\(\Phi'=\Phi r\) 及 \(\Phi(0)=1\)，得到（NS.1）的两项零端值。
+对 \(v>0\)，准确地有
+
+\[
+\Phi''(v)=\Phi(v)e^{-v}\frac{v-1+e^{-v}}{v^2}.
+\tag{NS.3}
+\]
+
+\(v-1+e^{-v}\) 从零开始，其导数 \(1-e^{-v}\) 在正轴严格为正，
+故（NS.3）严格为正。对其正值取对数并求导，得到
+
+\[
+\begin{aligned}
+(\log\Phi'')'(v)
+&=\frac{1-e^{-v}}v-1
+ +\frac{1-e^{-v}}{v-1+e^{-v}}-\frac2v\\
+&=\frac{D(v)}{v(v-1+e^{-v})},\\
+D(v)&=1+v-v^2-3ve^{-v}-e^{-2v}.
+\end{aligned}
+\tag{NS.4}
+\]
+
+置 \(T(v)=-e^{2v}D(v)=(v^2-v-1)e^{2v}+3ve^v+1\)。连续导数为
+
+\[
+\begin{aligned}
+T'(v)&=(2v^2-3)e^{2v}+3(v+1)e^v,\\
+T''(v)&=(4v^2+4v-6)e^{2v}+3(v+2)e^v,\\
+T'''(v)&=(8v^2+16v-8)e^{2v}+3(v+3)e^v,\\
+T''''(v)&=(16v^2+48v)e^{2v}+3(v+4)e^v.
+\end{aligned}
+\]
+
+\(T(0)=T'(0)=T''(0)=0\)、\(T'''(0)=1\)，且 \(T''''(v)>0\) 对
+全部 \(v\ge0\) 成立。从零点连续积分给
+\(T'''(v)>1\)、\(T''(v)>v\)、\(T'(v)>v^2/2\)，最后
+\(T(v)>v^3/6>0\)。于是 \(D(v)<0\)；（NS.4）的分母正，故
+\(\Phi''\) 在整个正轴严格递减。由零点连续性及正性，得到
+\(0<\Phi''(v)<1/2\)。
+
+**证明：原常数的完整两段积分。** 原定义中的
+\(\Phi(v)(1-e^{-v})=v\Phi'(v)\) 直接给
+
+\[
+A=\int_0^1\frac{\Phi'(v)-1}{v}\,dv
+ +\int_1^\infty\frac{\Phi'(v)-C}{v}\,dv.
+\tag{NS.5}
+\]
+
+这保持了两段原积分及整个无限尾。由（NS.1），对每个 \(v>0\)，
+
+\[
+0<\Phi'(v)-1=\int_0^v\Phi''(w)\,dw<v/2.
+\]
+
+近段被积函数在零端连续补成 \(1/2\)，且在正轴严格小于
+\(1/2\)。其与常数 \(1/2\) 的差在任意内部正长度紧区间上有
+严格正的积分，故近段积分严格小于 \(1/2\)。
+
+使用 §441 中的经典指数积分恒等式，
+
+\[
+\Phi(v)=Cv\exp(E_1(v)),\qquad
+\Phi'(v)=C\exp(E_1(v))(1-e^{-v}),\qquad
+0<E_1(v)\le e^{-v}/v,
+\]
+
+得到 \(\Phi'(v)\to C\)。又 \(\Phi''>0\) 使 \(\Phi'\) 严格增加，
+因此每个有限 \(v\) 均有 \(\Phi'(v)<C\)，远段被积函数严格为负。
+其绝对收敛也直接支付：对 \(v\ge1\)，取固定
+\(M=\exp(e^{-1})\)，由 \(e^y-1\le e^y y\) 得
+
+\[
+|\Phi'(v)-C|
+\le C[\exp(E_1(v))-1+\exp(E_1(v))e^{-v}]
+\le CM e^{-v}(1+1/v)\le2CM e^{-v}.
+\]
+
+除以 \(v\) 后仍可积。远段在 \([1,2]\) 上连续严格为负，而其余
+尾也非正，故完整远段积分严格为负。与已支付的近段合并得到
+（NS.2）。证毕。
+
+**定理 444.2（完整肩部的统一严格负界）。** 对所有 \(t>0\)，
+
+\[
+K(t)\le A-\Lambda(C-1)<-\delta
+=\frac{1-2\log2}{6}<0,
+\qquad
+\Lambda(k)=k\left[1+\log\frac{1+k}{2k}\right]\quad(k>0).
+\tag{NS.6}
+\]
+
+因此 \(\sup_{t>0}K(t)<-\delta\)。
+
+**证明：真实斜率与完整比较积分。** §441 通过经典 Gamma 质量、
+一阶矩及密度比单交点比较支付了
+\(Q(b)-Q(a)>(b-a)/2\)（\(0<a<b\)）。保持原归一化
+\(Q(0+)=1\)，固定 \(u>0\) 并令 \(a\downarrow0\)，得到
+非严格的极限界
+
+\[
+Q(u)\ge1+u/2,\qquad
+\frac{1/Q(u)-1}{u}\le-\frac1{u+2}.
+\tag{NS.7}
+\]
+
+所有分母正；这里没有将严格割线不等式在端点极限中仍宣称为严格。
+对任意 \(t>0\)，原肩部积分和比较积分均在整个正轴绝对收敛。
+积分比较及完整换元 \(w=t(u+2)\) 给
+
+\[
+\begin{aligned}
+K(t)&\le A-(C-1)(\log t+\gamma_E)
+ -C\int_0^\infty\frac{e^{-tu}}{u+2}\,du\\
+&=A-(C-1)(\log t+\gamma_E)-Ce^{2t}E_1(2t).
+\end{aligned}
+\tag{NS.8}
+\]
+
+指数积分的下限为 \(2t\)，上限仍为无穷。
+
+**证明：比较函数的两端与全局最小值。** 写 \(k=C-1>0\)，定义
+
+\[
+H(x)=e^xE_1(x),\qquad
+\mathcal G(x)=k(\log(x/2)+\gamma_E)+CH(x)\quad(x>0).
+\]
+
+（NS.8）即 \(K(t)\le A-\mathcal G(2t)\)。经典指数积分的基本
+微积分公式给 \(H'(x)=H(x)-1/x\)，从而导数中的边际系数准确取消为
+
+\[
+\mathcal G'(x)=\frac kx+C\left[H(x)-\frac1x\right]
+=CH(x)-\frac1x,
+\tag{NS.9}
+\]
+
+因为 \(k-C=-1\)。
+
+在零端，\(E_1(x)=-\log x-\gamma_E+O(x)\)，所以
+\(H(x)=-\log x-\gamma_E+o(1)\)，其中使用
+\(x|\log x|\to0\)。于是
+
+\[
+\mathcal G(x)=-\log x-\gamma_E-k\log2+o(1)
+\longrightarrow+\infty\qquad(x\downarrow0).
+\]
+
+在远端，正的 \(H\) 已给
+\(\mathcal G(x)\ge k(\log(x/2)+\gamma_E)\to+\infty\)。两端均趋
+正无穷的连续函数因而在某个内部点 \(x_0>0\) 取得全局最小值。
+（NS.9）给 \(CH(x_0)=1/x_0\)，故
+
+\[
+\min_{x>0}\mathcal G(x)
+=k(\log(x_0/2)+\gamma_E)+1/x_0.
+\]
+
+函数 \(x\mapsto k(\log(x/2)+\gamma_E)+1/x\) 的导数为
+\((kx-1)/x^2\)，在 \(x=1/k\) 取得其全局最小值。因此
+
+\[
+\min_{x>0}\mathcal G(x)
+\ge k[1+\gamma_E-\log(2k)]
+=k\left[1+\log\frac{1+k}{2k}\right]=\Lambda(k).
+\tag{NS.10}
+\]
+
+最后一步保持原 Euler 幅度关系 \(\gamma_E=\log C=\log(1+k)\)。
+该全局下界不需要定位 \(x_0\)。
+
+**证明：Euler 常数的经典调和序列界。** 记
+\(H_n=\sum_{j=1}^n1/j\)，并用经典下调和序列
+\(\gamma_n^-=H_n-\log(n+1)\)。它趋于 \(\gamma_E\)，且
+
+\[
+\gamma_{n+1}^--\gamma_n^-
+=\frac1{n+1}-\log\left(1+\frac1{n+1}\right)>0.
+\]
+
+所以 \(\gamma_E\ge\gamma_1^-=1-\log2\)。再由指数函数的正项
+级数 \(e>1+1+1/2+1/6=8/3\)，得到
+
+\[
+C=e^{\gamma_E}\ge e/2>4/3,\qquad k>1/3.
+\tag{NS.11}
+\]
+
+对 \(k>0\)，令 \(r=k/(1+k)\in(0,1)\)。经典对数界
+\(\log y\le y-1\) 给
+
+\[
+\Lambda'(k)=r-\log(2r)\ge1-r>0.
+\]
+
+故
+
+\[
+\Lambda(C-1)>\Lambda(1/3)=\frac{1+\log2}{3}
+=\frac12+\delta.
+\tag{NS.12}
+\]
+
+严格积分比较 \(\log2=\int_1^2dw/w>1/2\) 同时支付 \(\delta>0\)。
+结合 \(A<1/2\)、（NS.8）与（NS.10），得到（NS.6）。同一上界
+\(A-\Lambda(C-1)\) 对所有 \(t>0\) 成立，故其上确界也严格小于
+\(-\delta\)。证毕。
+
+**推论 444.3（负最大值分支与实际宏观负修正）。** 推论 443.2
+对原实际 \(K\) 落在负最大值分支：其唯一全局最大点 \(t_0\)
+满足 \(K(t_0)<-\delta\)，且 \(K\) 没有正零点。对任意固定
+\([a,b]\subset(0,\infty)\)，沿实际素数 \(z\to\infty\)，最终对所有
+\(t\in[a,b]\) 有
+
+\[
+J_z(t/L)-(C-1)\log L<-\delta/2.
+\tag{NS.13}
+\]
+
+**证明。** 定理 443.1 已支付唯一全局最大点；（NS.6）给该点的
+严格负值，故推论 443.2 的负最大值分支适用。§442 的完整宏观
+极限在每个固定正 \(t\) 紧区间上一致成立，因此最终
+
+\[
+\sup_{t\in[a,b]}
+|J_z(t/L)-(C-1)\log L-K(t)|<\delta/2.
+\]
+
+与 \(K(t)<-\delta\) 合并即得（NS.13）。证毕。
+
+这里支付的是完整首补偿积分的有限宏观修正：\(J_z(t/L)\) 的正
+主项仍为 \((C-1)\log L\)。固定紧区间结论没有给移动
+\(t_z\to0\) 或 \(t_z\to\infty\) 的联合均匀性，也没有由此判断
+\(\alpha=C,t=t_*\) 时 \(J_z(t_*L^{-C})\to0\) 的有限前缀符号。
+完整 Robin 配对中的其余阶乘密度、实际粗糙前缀权重、整数纤维
+及互补尾仍需共同的有符号估计。本节将经典指数积分与调和序列界
+绑定到原 \(A,Q,K\)，确定的是该原肩部的严格负储备。
+
+**来源。** 原常数 \(A\) 的曲率控制、同一肩部的全轴统一负界及
+实际宏观负修正为本仓推导（`repo-derived`）。本节消耗 §441–§443
+的原对象与估计；指数积分恒等式、调和序列的 Euler 常数界、
+对数与指数的基本不等式及连续函数的全局极小值判据为经典供应。
+
+## 445. 临界阻尼的带符号余项与实际零点偏移
+
+**对象与结论范围。** 沿用 §§441–444 的完整实际素数前缀。令 \(z\ge2\)
+为素数，\(p\) 为严格大于 \(z\) 的最小素数，统一使用
+\(L=\log p\)、\(\ell=\log z\)。定义仍为
+
+\[
+E_z(s)=\prod_{q\le z}(1-q^{-s}),\qquad C_z=E_z(1)^{-1},\qquad
+F_z(v)=C_zE_z(1+v/L),
+\]
+
+\[
+H_z(v)=F_z(v)(1-e^{-v})-v,\qquad
+J_z(\sigma)=\int_0^\infty e^{-\sigma v}\frac{H_z(v)}{v^2}\,dv.
+\]
+
+乘积包含全部 \(q\le z\) 的素数。本节保留原常数
+\(C=e^{\gamma_E}\)、\(\Phi=e^{\operatorname{Ein}}\)、
+\(Q(u)=u\zeta(1+u)\)、\(A,Z_0,Z_1,B_*\)，并记
+
+\[
+\beta(u)=\frac{1/Q(u)-1}{u},\qquad
+t_*=\exp(-\gamma_E-B_*),\qquad
+\epsilon_L=L^{1-C}\log L.
+\tag{CS.1}
+\]
+
+全部前缀极限沿实际素数 \(z\to\infty\) 取得。以下一致性均指
+\(t\) 位于任意固定的正紧区间 \([a,b]\subset(0,\infty)\)。
+
+**定理 445.1（原完整积分的首个带符号修正）。** 有
+
+\[
+\boxed{
+J_z(tL^{-C})=\log(t/t_*)-C(C-1)t\,\epsilon_L
++O(L^{1-C}),
+}
+\tag{CS.2}
+\]
+
+且余项在上述 \(t\) 区间上一致。因此原先常数级极限为零的临界点满足
+
+\[
+\boxed{
+\frac{J_z(t_*L^{-C})}{L^{1-C}\log L}
+\longrightarrow-C(C-1)t_*<0.
+}
+\tag{CS.3}
+\]
+
+特别地，原完整首积分在该临界阻尼处最终严格为负。
+
+**定理 445.2（实际阻尼零点的首个偏移）。** 令
+\(\sigma_z\) 为 §441 的唯一实际阻尼零点，\(t_z=\sigma_zL^C\)。则
+
+\[
+\boxed{
+\frac{t_z/t_*-1}{L^{1-C}\log L}\longrightarrow C(C-1)t_*,
+\qquad
+t_z-t_*\sim C(C-1)t_*^2L^{1-C}\log L.
+}
+\tag{CS.4}
+\]
+
+等价地，
+
+\[
+\boxed{
+\sigma_z=t_*L^{-C}
++C(C-1)t_*^2L^{1-2C}\log L
++o(L^{1-2C}\log L).
+}
+\tag{CS.5}
+\]
+
+因此 \(\sigma_z>t_*L^{-C}\) 最终成立。
+
+**证明：所需常数区间。** 本节只需 \(1<C<2\)，可完全由经典积分比较
+支付。下端比较给 \(\gamma_E\ge1-\log2>0\)。另一方面，\(1/x\) 严格凸，
+故对每个整数 \(n\ge2\)，
+
+\[
+\frac1n<\int_{n-1/2}^{n+1/2}\frac{dx}{x}.
+\]
+
+求和后令上端趋于无穷，得到 \(\gamma_E\le1-\log(3/2)\)。指数级数中
+\(n!\ge2^{n-1}\) 对 \(n\ge2\) 成立，并在 \(n=3\) 严格，故 \(e<3\)。
+于是
+
+\[
+1<C\le\frac{2e}{3}<2.
+\tag{CS.6}
+\]
+
+特别地，\(\epsilon_L\to0\)，并且
+\(\log L/L=o(L^{1-C})\)。
+
+**证明：临界余项的精确恒等式。** 定义
+
+\[
+\mathcal B_z=\int_0^1\frac{H_z(v)}{v^2}\,dv+
+\int_1^\infty\frac{F_z(v)(1-e^{-v})}{v^2}\,dv,\qquad
+\Delta_z=\mathcal B_z-C\log L-B_*,
+\]
+
+\[
+\mathcal L_z(\sigma)=\int_0^1(e^{-\sigma v}-1)\frac{H_z(v)}{v^2}\,dv,
+\qquad
+\mathcal D_z(\sigma)=\int_1^\infty
+(1-e^{-\sigma v})\frac{F_z(v)(1-e^{-v})}{v^2}\,dv\ge0.
+\tag{CS.7}
+\]
+
+§441 的统一局部预算给固定 \(K_0\)，使最终所有前缀在
+\(0\le v\le1\) 上满足 \(|H_z(v)|\le K_0v^2\)；远端用
+\(F_z\le C_z\)。因此这些积分均绝对收敛。直接在原完整积分的 \(v=1\)
+处分割，得到
+
+\[
+J_z(\sigma)=\mathcal B_z+\mathcal L_z(\sigma)
+-\mathcal D_z(\sigma)-E_1(\sigma).
+\]
+
+经典指数积分恒等式
+\(E_1(\sigma)=-\log\sigma-\gamma_E+\operatorname{Ein}(\sigma)\)
+与原 \(t_*\) 给出精确式
+
+\[
+\boxed{
+J_z(tL^{-C})=\log(t/t_*)+\Delta_z+\mathcal L_z(tL^{-C})
+-\mathcal D_z(tL^{-C})-\operatorname{Ein}(tL^{-C}).
+}
+\tag{CS.8}
+\]
+
+而 \(1-e^{-\sigma v}\le\sigma v\) 给
+
+\[
+|\mathcal L_z(\sigma)|\le K_0\sigma/2,\qquad
+0\le\operatorname{Ein}(\sigma)\le\sigma.
+\tag{CS.9}
+\]
+
+**证明：Mertens 归一化、Euler 尾与时钟尾的精确分离。** 对
+\(1\le V<L\)，置 \(\varepsilon=V/L\)，定义
+
+\[
+N_z(V)=\int_0^V
+\frac{[F_z(v)-\Phi(v)](1-e^{-v})}{v^2}\,dv,
+\]
+
+\[
+a_\infty(V)=\int_V^\infty
+\left[\frac{\Phi(v)(1-e^{-v})}{v^2}-\frac Cv\right]\,dv,
+\qquad
+W(\varepsilon)=\int_\varepsilon^\infty
+\frac{du}{u^2\zeta(1+u)},
+\]
+
+\[
+T_z^E(\varepsilon)=\int_\varepsilon^\infty
+\frac{E_z(1+u)-1/\zeta(1+u)}{u^2}\,du\ge0,
+\qquad
+T_z^p(\varepsilon)=\int_\varepsilon^\infty
+\frac{p^{-u}E_z(1+u)}{u^2}\,du\ge0,
+\]
+
+\[
+\eta_z=\frac{C_z}{L}-C.
+\tag{CS.10}
+\]
+
+\(\mathcal B_z\) 的近段恰为
+\(A+C\log V-a_\infty(V)+N_z(V)\)；远段在 \(v=Lu\) 后恰为
+
+\[
+\frac{C_z}{L}[W(\varepsilon)+T_z^E(\varepsilon)-T_z^p(\varepsilon)].
+\]
+
+利用 \(1/(u^2\zeta(1+u))=1/u+\beta(u)\)，有
+
+\[
+\log\varepsilon+W(\varepsilon)
+=Z_0+Z_1-\int_0^\varepsilon\beta(u)\,du.
+\]
+
+于是得到全量、带符号的恒等式
+
+\[
+\boxed{
+\Delta_z=N_z(V)-a_\infty(V)-C\int_0^\varepsilon\beta(u)\,du
++\eta_zW(\varepsilon)
++\frac{C_z}{L}[T_z^E(\varepsilon)-T_z^p(\varepsilon)].
+}
+\tag{CS.11}
+\]
+
+这里 \(W\) 是归一化误差的真实权重；遗漏素数的 Euler 尾为正，
+下一素数时钟尾以负号进入。本证明不预设 \(\Delta_z\) 的符号。
+
+**证明：归一化只需既有的弱经典速率。** 复用（CP.7）所用的
+[经典 Mertens 供应](../../../Library/notes/pntplus2026mertens.md)。
+经典第三 Mertens 的对数误差给
+
+\[
+E_3(x)=\sum_{q\le x}\log(1-1/q)+\log\log x+\gamma_E,
+\qquad |E_3(x)|\le K/\log x\quad(x\ge2).
+\]
+
+这一弱误差采用 Goldmakher 的经典 Mertens 论证；下文也从第一 Mertens
+预算与既有第三常数直接推导。Diamond–Pintz 的文献引文确认经典第三
+公式，其振荡定理不作为这里误差速率的来源。准确归一化为
+
+\[
+\eta_z=C\left[\frac{\ell}{L}e^{-E_3(z)}-1\right].
+\tag{CS.12}
+\]
+
+因此 \(C_z=C\ell+O(1)\)。Bertrand 给
+\(0<L-\ell\le\log2\)，从而
+
+\[
+\boxed{C_z=CL+O(1),\qquad \eta_z=O(1/L).}
+\tag{CS.13}
+\]
+
+也可从同一第一 Mertens 预算直接推出所需速率。写
+
+\[
+S(x)=\sum_{q\le x}\frac{\log q}{q-1}=\log x+e(x),
+\qquad |e(x)|\le D_S,
+\]
+
+其中 \(D_S\) 已由（CP.7）的
+\(\left|\sum_{q\le x}\log q/q-\log x\right|\le\log4+4\)
+及收敛分母修正
+\(\sum_{n\ge2}\log n/[n(n-1)]\) 支付。
+令 \(U(x)=\sum_{q\le x}1/(q-1)\)。保留 \(q=2\) 原子的 Abel 恒等式给
+
+\[
+\begin{aligned}
+U(x)
+&=\frac{S(x)}{\log x}+\int_2^x\frac{S(t)}{t\log^2t}\,dt\\
+&=\log\log x+U_\infty+\frac{e(x)}{\log x}
+-\int_x^\infty\frac{e(t)}{t\log^2t}\,dt.
+\end{aligned}
+\]
+
+后两项绝对值之和不超过 \(2D_S/\log x\)。对素数 \(q\)，定义
+
+\[
+d(q)=-\log(1-1/q)-\frac1{q-1}
+=-\sum_{k\ge2}(1-1/k)q^{-k},\qquad |d(q)|\le2/q^2.
+\]
+
+故 \(\sum_{q>z}|d(q)|\le2/z\)，而既有定性第三 Mertens 常数识别
+\(U_\infty+\sum_qd(q)=\gamma_E\)。于是精确地
+
+\[
+\log C_z=\log\ell+\gamma_E+\frac{e(z)}{\ell}
+-\int_z^\infty\frac{e(t)}{t\log^2t}\,dt-\sum_{q>z}d(q).
+\tag{CS.14}
+\]
+
+这再次给出 \(O(1/\ell)\) 的对数归一化误差，并证明（CS.13）；
+没有引入有效 PNT 或 RH 前提。
+
+**证明：整个移动分割点的预算。** （PX.6）的全轴误差给
+
+\[
+|F_z(v)-\Phi(v)|
+\le e(1+v)\frac{Bv}{L}e^{Bv/L}.
+\]
+
+因 \((1+v)(1-e^{-v})/v\le2\)，对全部 \(1\le V<L\) 有
+
+\[
+|N_z(V)|\le2eB e^{BV/L}V/L.
+\tag{CS.15}
+\]
+
+由 \(\Phi(v)=Cv\,e^{E_1(v)}\) 和 \(E_1(v)\le e^{-v}/v\)，有固定常数
+\(K_a\) 使
+
+\[
+|a_\infty(V)|\le K_a e^{-V}/V\qquad(V\ge1).
+\]
+
+又由（PX.9），\(-1\le\beta\le0\)，且
+
+\[
+W(\varepsilon)\le\log(1/\varepsilon)+1,\qquad
+\left|\int_0^\varepsilon\beta(u)\,du\right|\le\varepsilon.
+\tag{CS.16}
+\]
+
+对每个 \(u>0\)，收敛 Euler 乘积与整数尾积分给
+
+\[
+0\le E_z(1+u)-1/\zeta(1+u)
+\le\sum_{q>z}q^{-1-u}
+\le\sum_{n=z+1}^\infty n^{-1-u}
+\le z^{-u}/u.
+\]
+
+故整个 Euler 尾和整个时钟尾分别满足
+
+\[
+T_z^E(\varepsilon)\le
+\frac{e^{-\ell\varepsilon}}{\ell\varepsilon^3},
+\qquad
+T_z^p(\varepsilon)\le
+\frac{e^{-L\varepsilon}}{L\varepsilon^2}.
+\tag{CS.17}
+\]
+
+取 \(V=4\log L\)、\(\varepsilon=4\log L/L\)。最终 \(1\le V<L\)，且
+必须保留 Bertrand 的完整时钟预算：
+
+\[
+e^{-\ell\varepsilon}
+=L^{-4}\exp(4(L-\ell)\log L/L)=O(L^{-4}).
+\]
+
+因此（CS.15）–（CS.17）给
+
+\[
+\begin{aligned}
+N_z(V)&=O(\log L/L),&
+a_\infty(V)&=O(L^{-4}/\log L),\\
+\int_0^\varepsilon\beta(u)\,du&=O(\log L/L),&
+\eta_zW(\varepsilon)&=O(\log L/L),\\
+T_z^E(\varepsilon)&=O(L^{-2}/\log^3L),&
+T_z^p(\varepsilon)&=O(L^{-3}/\log^2L).
+\end{aligned}
+\]
+
+\(C_z/L\) 有界，代入精确式（CS.11）得到
+
+\[
+\boxed{\Delta_z=O(\log L/L).}
+\tag{CS.18}
+\]
+
+**证明：完整阻尼损失。** 置
+\(\lambda=\sigma L\)、\(g_z(u)=E_z(1+u)(1-p^{-u})\)。
+从（CS.7）对完整损失作变量替换，有
+
+\[
+\mathcal D_z(\sigma)=\frac{C_z}{L}
+\int_{1/L}^\infty(1-e^{-\lambda u})\frac{g_z(u)}{u^2}\,du.
+\tag{CS.19}
+\]
+
+在整个 \(1/L\le u\le1\) 上，§441 的全近区包络
+\(R_z(Lu)\le2e\,e^B\) 与最终 \(C_z/L\ge C/2\) 给固定 \(M\)，使
+
+\[
+\frac{g_z(u)}u=\frac{L}{C_z}R_z(Lu)\le M.
+\]
+
+于是完整近段满足
+
+\[
+0\le\int_{1/L}^1(1-e^{-\lambda u})\frac{g_z(u)}{u^2}\,du
+\le M\lambda.
+\tag{CS.20}
+\]
+
+在整个 \(u\ge1\) 上，有限乘积不等式给
+
+\[
+\begin{aligned}
+0\le1-g_z(u)
+&\le\sum_{n\ge2}n^{-1-u}+p^{-u}\\
+&\le2^{-u}(1/2+1/u)+2^{-u}
+\le(5/2)2^{-u}.
+\end{aligned}
+\]
+
+因此将这一完整远段的 \(g_z\) 替为 \(1\) 所需的误差不超过
+
+\[
+\frac52\lambda\int_1^\infty\frac{2^{-u}}u\,du=O(\lambda).
+\tag{CS.21}
+\]
+
+剩下的模型积分精确为
+
+\[
+\begin{aligned}
+\int_1^\infty\frac{1-e^{-\lambda u}}{u^2}\,du
+&=1-e^{-\lambda}+\lambda E_1(\lambda)\\
+&=\lambda[\log(1/\lambda)+1-\gamma_E]+O(\lambda^2).
+\end{aligned}
+\tag{CS.22}
+\]
+
+因此对最终所有前缀与 \(0<\lambda\le1\)，一致有
+
+\[
+\mathcal D_z(\sigma)
+=C_z\sigma[\log(1/(\sigma L))+O(1)].
+\tag{CS.23}
+\]
+
+对 \(\sigma=tL^{-C}\)，有
+\(\lambda=tL^{1-C}\to0\) 在正紧区间上一致成立。使用（CS.13），得到
+
+\[
+\boxed{
+\mathcal D_z(tL^{-C})=C(C-1)tL^{1-C}\log L+O(L^{1-C}).
+}
+\tag{CS.24}
+\]
+
+这里 \(\log(1/(\sigma L))=(C-1)\log L-\log t\)；
+完整 \(v<L\) 区域只有 \(O(\sigma L)\) 的损失。故主修正系数为
+\(C(C-1)\)。
+
+**证明：临界符号与实际零点。** （CS.6）给
+
+\[
+\frac{\log L/L}{L^{1-C}}\to0,\qquad
+\frac{L^{-C}}{L^{1-C}}\to0.
+\]
+
+把（CS.9）、（CS.18）、（CS.24）代回原完整恒等式（CS.8），即得
+一致展开（CS.2）。取 \(t=t_*\)，再除以
+\(\epsilon_L=L^{1-C}\log L\)，得到（CS.3）。
+
+§441 已证 \(t_z\to t_*\)，故最终 \(t_z\) 位于某个固定正紧区间内。
+一致展开允许直接代入实际零点，得到
+
+\[
+\log(t_z/t_*)=C(C-1)t_z\epsilon_L+o(\epsilon_L).
+\]
+
+右侧为 \(O(\epsilon_L)\)，先得 \(t_z/t_*-1=O(\epsilon_L)\)；
+再用 \(\log(1+x)=x+O(x^2)\) 与 \(t_z\to t_*\)，便得（CS.4）。
+乘回 \(L^{-C}\) 得（CS.5）。这里无需新增 \(J_z\) 的导数速率。
+
+最后，同一时钟下的精确插入恒等式（PX.2）仍给
+
+\[
+I_p(t_*L^{-C})-I_z(t_*L^{-C})
+=\frac{J_z(t_*L^{-C})}{p-1}<0
+\]
+
+最终成立。本节的符号属于这个原完整首补偿积分；它不直接给出完整
+Robin 配对的全局符号。证毕。
+
+**来源。** Bertrand、第一与第三 Mertens、实轴收敛 Euler 乘积及指数积分
+和初等积分界为经典供应，Mertens 的来源归属沿用上述文献记录。原
+\(\Delta_z\) 的精确有符号分解、全轴余项排序、临界负首修正与实际根位移
+为本仓推导（repo-derived），由同一原完整积分及 §§441–444 的预算得出。
