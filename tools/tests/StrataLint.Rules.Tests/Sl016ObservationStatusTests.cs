@@ -10,7 +10,7 @@ public sealed class Sl016ObservationStatusTests
     [InlineData(true, false)]
     [InlineData(false, true)]
     [InlineData(true, true)]
-    public void UnrelatedObservationDoesNotSuppressStatusMismatch(
+    public void UningestedTheoryDoesNotAddDiagnosticsOrSuppressStatusMismatch(
         bool hasUnregisteredTheory,
         bool hasStaleStatus)
     {
@@ -29,7 +29,7 @@ public sealed class Sl016ObservationStatusTests
             fixture.Files[unregisteredPath] = "# Undigested theory\n";
         }
 
-        // Both snapshots start with a valid uncovered leaf and the same unrelated observation.
+        // Both snapshots start with a valid uncovered leaf and the same unrelated theory.
         fixture.Baseline.Clear();
         foreach (var (path, text) in fixture.Files)
         {
@@ -67,14 +67,7 @@ public sealed class Sl016ObservationStatusTests
             diagnostic.AdmissionEffect == AdmissionEffect.Observe).ToArray();
         var blocks = diagnostics.Where(static diagnostic =>
             diagnostic.AdmissionEffect == AdmissionEffect.Block).ToArray();
-        Assert.Equal(hasUnregisteredTheory ? 1 : 0, observations.Length);
-        if (hasUnregisteredTheory)
-        {
-            Assert.Equal(
-                $"theory document '{unregisteredPath}' has no digestion source: run make ingest, "
-                    + "which registers it with the default atomizer",
-                Assert.Single(observations).Message);
-        }
+        Assert.Empty(observations);
         Assert.Equal(hasStaleStatus ? 1 : 0, blocks.Length);
         if (hasStaleStatus)
         {

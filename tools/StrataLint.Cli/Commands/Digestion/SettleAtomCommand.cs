@@ -32,9 +32,8 @@ internal static partial class SettleAtomCommand
         {
             var loaded = DigestionWorkingTree.Extend(
                 repository,
-                CurrentRaw,
+                (CurrentRaw, Current, Document),
                 Decode,
-                BackfillInventoryLoader.LoadForDigestion,
                 paths);
             CurrentRaw = loaded.Raw;
             Current = loaded.Snapshot;
@@ -56,9 +55,8 @@ internal static partial class SettleAtomCommand
                 .ToArray();
             var loaded = DigestionWorkingTree.Extend(
                 repository,
-                CurrentRaw,
+                (CurrentRaw, Current, Document),
                 Decode,
-                BackfillInventoryLoader.LoadForDigestion,
                 paths);
             CurrentRaw = loaded.Raw;
             Current = loaded.Snapshot;

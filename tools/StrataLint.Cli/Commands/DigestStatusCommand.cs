@@ -39,9 +39,8 @@ internal static class DigestStatusCommand
             var loaded = reportFreeCandidates
                 ? DigestionWorkingTree.ReadUncovered(
                     repository,
-                    initial.Raw,
-                    Decode,
-                    static current => BackfillInventoryLoader.LoadForDigestion(current))
+                    initial,
+                    Decode)
                 : DigestionWorkingTree.ReadEvaluation(
                     repository,
                     Decode,
