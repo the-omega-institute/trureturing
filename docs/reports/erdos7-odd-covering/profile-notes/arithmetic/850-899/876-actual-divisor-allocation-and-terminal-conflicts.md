@@ -941,6 +941,168 @@ Global minimal unsatisfiability does not make every fixed-color completion minim
 
 Consequently, applying a minimal-unsatisfiable classification separately to all color completions while keeping one common retained formula requires an additional essentiality argument. This Boolean control refutes only that general inference; it is not an actual odd congruence-cover construction. The four-clause statement and both dispensable retained clauses were checked by Lean with default proof budgets and the standard `propext` axiom, using only finite Boolean decision procedures. The check is transient and adds no canonical Lean declaration.
 
+## A missing enclosure bounds the actual joint inventory more sharply
+
+Retain one actual count-minimal odd distinct whole cover F. Let d>1 be
+an actual original label, let q>1, and let U be a finite set of positive
+integers such that every qdu, u in U, is an actual original label. Write
+P_d for the complete private region of the original d-class. Suppose
+an odd nonunit e is absent from the original numerical inventory and
+one residue class [w]_e contains all of P_d. Then
+
+$$
+|U|\le |E_d|.
+$$
+
+This is the actual-inventory application of Report385 DR4--DR6, with a
+specified missing enclosure in place of the full private hull. It needs
+neither the no-27 branch, a lower bound of 28 on q, nor modulus-sum
+minimality. Those conditions remain part of the separate fourteen-per-
+phase bound in DA26--DA28.
+
+For clarity, the reduction preserves the actual whole cover. If two
+selected descendants have the same phase modulo d, change the d-class
+to that phase and replace the first descendant by [w]_e. Every point
+private to d is covered by the replacement. Every other old d-point
+has another original owner. The new d-class covers both descendants,
+so the second descendant is redundant and can be deleted. The missing
+odd nonunit e keeps all labels legal and distinct. This contradicts
+count minimality. Hence the selected descendant phases are distinct.
+Every such phase belongs to E_d by the original owner's private point,
+and distinct u give distinct actual labels qdu, proving the bound.
+
+Equivalently, if |U|>|E_d|, every odd nonunit modulus admitting a single
+residue class enclosing all of P_d must already be an original label.
+Taking the existing complete private hull Gamma_d as that modulus is
+Report385's conclusion that Gamma_d is present. It does not imply
+Gamma_d>d: Gamma_d may equal the already present parent d. No missing
+complete-private-region enclosure has been obtained from the current
+whole-cover hypotheses.
+
+A scoped transient Lean application checks the actual replacement,
+the phase injection, and the qdu inventory bound above directly on
+OddDistinctCoveringSystem, reusing the existing private-point and
+redundant-owner deletion results. It is an exact check of the reused
+DR mechanism, not a new general theorem or a proof of hull growth.
+
+## Joining the actual-source pointwise bounds
+
+The PC62--PC65 count admits an exact composition that retains its
+arithmetic premises. Let F be one whole odd distinct cover, minimal
+first in count and then in modulus sum, with no modulus divisible by
+27. Suppose every actual modulus divides 113R, with (113,R)=1.
+Fix x in the complement E_113 of every original not divisible by 113.
+
+For a packet M of actual top originals 9*113*m_i, assume all old
+words agree with x modulo 9 and each owner has two distinct matching
+primes in a common pool P of at most 27 primes: a_i is congruent
+to x modulo each selected prime. The existing actual
+prime-cut supplier and frozen graph density theorem give
+
+$$
+2|M|\le3|P|\le81,\qquad |M|\le40.
+\tag{DA31}
+$$
+
+For the actual pure-prime-power packet J, keep the PC62 indexing of
+27 prime axes, all at least five. Each label is 9*113*p^a with a>=1, and its stripped
+class contains this same x modulo 9*p^a. On the first four axes,
+actual deep descendants a>=2 are bounded by two, and numerical
+label distinctness allows at most one a=1 owner. The next three
+axes retain the explicit exponent bound a<=2; the last twenty
+retain a<=1. Therefore
+
+$$
+|J|\le4\cdot3+3\cdot2+20=38.
+\tag{DA32}
+$$
+
+The phase condition here is modulo the whole p^a, not merely p.
+The exponent envelope remains an explicit premise; this composition
+does not prove it for arbitrary odd covers.
+
+Require the actual classification: every original divisible by 9*113
+whose stripped class contains x belongs to M or J, apart from the
+unit-cofactor labels 113,339,1017. CRT supplies every one of the 113
+literal colors at this same x. Let C_unit be the set of colors of
+all actual unit-cofactor originals. These labels contribute at most
+three colors. Taking images under the actual color map consequently
+gives
+
+$$
+\#\left(\{a_i\bmod113:
+  113\mid n_i,\ 9\nmid n_i,\ x\equiv a_i\pmod{n_i/113}\}
+  \setminus C_{\rm unit}\right)
+\ge113-40-38-3=32.
+\tag{DA33}
+$$
+
+The exact composition derives both packet bounds and the 113-color
+service from the stated whole-cover data, rather than assuming the
+numbers 40,38,113. It explicitly retains the exponent bounds and the
+exhaustive top classification. Candidate subfamilies without that
+classification do not suffice. The packet sets need not be disjoint;
+the upper union bound has the required direction.
+
+This verifies the existing pointwise conclusion under its declared
+conditions. It does not produce 32 fixed complete lower-color covers
+or a permanent numerical-donor assignment. All constituent checks and
+the combined statement compile with default proof budgets and only
+the standard three axioms. They remain transient applications of the
+existing suppliers, not new canonical declarations.
+
+## Repeated cofactors inside a literal color
+
+Report869 already supplies a sufficient coherent-color condition:
+for each of the fifteen safe roots r modulo 27, choose a subfamily
+of one actual complete color that covers X_z, where z=r modulo 9,
+and require the numerical cofactors of all selected occurrences to
+be globally distinct. The outputs 27m_i then cover the exact residual
+and satisfy the existing payment theorem. Disjoint cofactor sets
+between selected colors alone are insufficient: qm,3qm,9qm can
+repeat the same cofactor within a color.
+
+Fix a prime q>3 of height one, with every actual modulus dividing
+qR and (q,R)=1. For moving originals write n_i=q*3^(r_i)*m_i,
+where r_i is the actual ternary valuation, r_i<=2, and 3 does not
+divide m_i. Let x be a complete private point of original i.
+Then x belongs to the exact q-free residual. Any original j of the
+same literal q-color whose stripped class contains x must equal i:
+combining the congruences modulo q and n_j/q would otherwise make
+j cover the original private point as well.
+
+Hence every same-color subfamily covering the complete X_z must
+retain i whenever its private region meets the old word z modulo 9.
+In particular, if two distinct originals have the same color and
+cofactor, and both private regions meet the same word z, every such
+complete slice subcover must contain both. Its cofactor map cannot
+be injective. This is a conditional obstruction; no assertion is
+made that such a pair must occur in an actual minimal cover.
+
+In this situation the two residues modulo the shared m must differ.
+Otherwise the two private points would agree modulo 9m, because
+(9,m)=1. The stripped modulus of either owner divides 9m, so it
+would also serve the other's private point. The obstruction thus
+lies in different ancestor-phase fibers. Same-phase capacity bounds
+do not by themselves separate these private-word sets.
+
+Scoped Lean applications verify the actual private-point projection,
+its necessity in a complete color slice, and the distinct-phase
+consequence. The general exact check permits arbitrary row labels;
+the numerical-cofactor interpretation here additionally uses the
+explicit factorization and ternary-coprimality conditions above.
+Count minimality supplies each owner's private point, but not a
+separation of the private words of repeated-cofactor owners.
+
+A weaker sufficient condition than distinct m_i is already available
+from the donor-matching interface in Reports870 and872: choose a
+globally distinct divisor d_i of each selected occurrence's m_i.
+The literal phase projected modulo d_i and output 27d_i cover that
+occurrence's whole slice. All shared demands must satisfy the joint
+Hall inequalities; separate choices per color do not establish them.
+This leaves the same actual-source allocation obligation, without
+requiring the stronger cofactor-disjointness condition.
+
 ## Verification and the remaining global obligation
 
 Scoped exact Lean checks cover the actual two-prime incidence
