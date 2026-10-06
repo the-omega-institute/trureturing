@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.Configuration;
-using StrataLint.Scribe;
 
 namespace StrataLint.FileMap;
 

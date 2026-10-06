@@ -118,8 +118,8 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline[definitionPath] = definition;
         fixture.Files[emissionPath] = emission;
         fixture.Baseline[emissionPath] = emission;
-        fixture.Files[ScribeEmissionAttestation.RelativePath] = attestation;
-        fixture.Baseline[ScribeEmissionAttestation.RelativePath] = attestation;
+        fixture.Files[GeneratedArtifactInventory.ScribeAttestation.Path] = attestation;
+        fixture.Baseline[GeneratedArtifactInventory.ScribeAttestation.Path] = attestation;
         var targetReport = new LeanFileReport(
             ImmutableArray<string>.Empty,
             [new LeanDeclaration(
@@ -189,7 +189,7 @@ public sealed partial class ProductionEnvironmentTests
         var changedFiles = new Dictionary<string, string>(fixture.Files, StringComparer.Ordinal)
         {
             [emissionPath] = changedEmission,
-            [ScribeEmissionAttestation.RelativePath] = Encoding.UTF8.GetString(
+            [GeneratedArtifactInventory.ScribeAttestation.Path] = Encoding.UTF8.GetString(
                 ScribeEmissionAttestation.Write(
                 [
                     record with { EmissionSha256 = changedEmissionHash },
