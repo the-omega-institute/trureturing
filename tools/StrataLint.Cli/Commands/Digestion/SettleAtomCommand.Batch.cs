@@ -41,17 +41,42 @@ internal static partial class SettleAtomCommand
         }
 
         var output = new StringBuilder();
+        Session? session = null;
         for (var index = 0; index < requests.Count; index++)
         {
             var table = requests[index];
             var atomId = table.TryGetValue("atom_id", out var value) && value is string id
                 && DigestionNonpropositional.IsAtomId(id.Trim()) ? id.Trim() : "invalid";
-            // Reuse the complete single writer, including fresh repository reads,
-            // request validation, adjacency, round-trip validation and atomic commit.
-            var result = Run(root, repository, ["--request", file],
-                BackfillInventoryWriter.WriteAtom,
-                (_, _) => [.. StrictUtf8.GetBytes(TomlSerializer.Serialize(table))],
-                static (directory, current, updates) => IngestCommand.ApplyLedgerUpdatesAtomically(directory, current, updates), reportSource);
+            CommandResult result;
+            try
+            {
+                var request = LoadRequest([.. StrictUtf8.GetBytes(TomlSerializer.Serialize(table))]);
+                session ??= new Session(repository);
+                // Reuse the complete single writer, including request validation,
+                // adjacency, round-trip validation and atomic commit. The session
+                // keeps the scoped ledger and source context across records.
+                result = RunCore(
+                    root,
+                    repository,
+                    [],
+                    BackfillInventoryWriter.WriteAtom,
+                    ReadRequest,
+                    static (directory, current, updates) =>
+                        IngestCommand.ApplyLedgerUpdatesAtomically(directory, current, updates),
+                    reportSource,
+                    session,
+                    request);
+            }
+            catch (SettleAtomException error)
+            {
+                result = new CommandResult(false, string.Empty,
+                    $"SETTLE_INVALID {error.Code} {error.Message}\n");
+            }
+            catch (Exception error) when (error is not OutOfMemoryException)
+            {
+                result = new CommandResult(false, string.Empty,
+                    $"SETTLE_INVALID INFRASTRUCTURE {error.Message}\n");
+            }
             output.Append(result.Output);
             if (!result.Success)
             {

@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -7,7 +6,6 @@ namespace StrataLint.Cli;
 
 internal static class DigestFormalizeCandidates
 {
-    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         WriteIndented = true,
@@ -67,24 +65,9 @@ internal static class DigestFormalizeCandidates
         RepositorySnapshot snapshot)
     {
         var entry = frontier.Entry;
-        var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
-        if (!snapshot.TryGetFile(casPath, out var atom))
-        {
-            throw new InvalidOperationException($"entry {entry.AtomId} CAS blob is missing: {casPath}");
-        }
-
-        string atomText;
-        try
-        {
-            atomText = StrictUtf8.GetString(atom.RawBytes.AsSpan());
-        }
-        catch (DecoderFallbackException exception)
-        {
-            throw new FormatException(
-                $"entry {entry.AtomId} CAS blob must contain strict UTF-8: {casPath}",
-                exception);
-        }
-
+        // Candidate projection is an index for the next AI action.  Fetch the
+        // selected atom with show-atom when text is needed; constructing this
+        // list must not read every candidate blob from CAS.
         return new FormalizeProjection(
             entry.SourceId,
             entry.AtomId,
@@ -94,7 +77,7 @@ internal static class DigestFormalizeCandidates
                 frontier.KindLabel,
                 entry.CasRef,
                 entry.Fingerprints.RawSha256,
-                atomText),
+                string.Empty),
             null,
             null);
     }

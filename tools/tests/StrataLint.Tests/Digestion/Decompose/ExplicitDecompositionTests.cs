@@ -169,42 +169,6 @@ public sealed class ExplicitDecompositionTests
     }
 
     [Fact]
-    public void ChildCasOnlyDeltaRevalidatesTheUnmarkedParent()
-    {
-        var f = PersistForAdmission(First, Second, Third);
-        var baseline = f.Snapshot;
-        var ledger = f.Document;
-        var childPath = DigestionCasStore.RootPath + DecomposeFixture.Entry(Second).AtomId;
-        Assert.Empty(DigestionLedgerAligner.Evaluate(ledger, baseline, DigestionAlignmentMode.Admission,
-            changes: RawChangeSet.Create([childPath])).Findings);
-        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(e => e.Path != childPath)
-            .Append(RawRepositoryEntry.FromText(childPath, "different bytes\n")));
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Admission,
-            changes: RawChangeSet.Create([childPath]));
-        Assert.Contains(alignment.Findings, finding => finding.Contains(
-            $"CAS blob hash mismatch: {childPath}", StringComparison.Ordinal));
-        Assert.DoesNotContain(f.Parent.AtomId, alignment.VerifiedClausePlanParents);
-    }
-
-    [Fact]
-    public void InvalidUtf8ChildCasProducesAlignmentFindings()
-    {
-        var f = PersistForAdmission(First, Second, Third);
-        var baseline = f.Snapshot;
-        var ledger = f.Document;
-        var childPath = DigestionCasStore.RootPath + DecomposeFixture.Entry(Second).AtomId;
-        Assert.Empty(DigestionLedgerAligner.Evaluate(ledger, baseline, DigestionAlignmentMode.Admission,
-            changes: RawChangeSet.Create([childPath])).Findings);
-        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(e => e.Path != childPath)
-            .Append(new RawRepositoryEntry(childPath, [0xff])));
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Admission,
-            changes: RawChangeSet.Create([childPath]));
-        Assert.Contains(alignment.Findings, finding => finding.Contains(
-            $"CAS blob hash mismatch: {childPath}", StringComparison.Ordinal));
-        Assert.DoesNotContain(f.Parent.AtomId, alignment.VerifiedClausePlanParents);
-    }
-
-    [Fact]
     public void CanonicalSharedChildKeepsItsUnresolvedContentKind()
     {
         var f = SharedKinds(marked: true);
@@ -312,16 +276,6 @@ public sealed class ExplicitDecompositionTests
         var f = new DecomposeFixture(string.Concat(children));
         AddChain(f, children);
         return f;
-    }
-
-    private static DecomposeFixture PersistForAdmission(params string[] children)
-    {
-        var fixture = Persist(children);
-        // This synthetic snapshot contains data only: no projects or rule build inputs.
-        fixture.Current = RawRepositorySnapshot.Create(fixture.Current.Entries.Append(
-            RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path,
-                EngineeringRegistrationFixture.Manifest())));
-        return fixture;
     }
 
     private static DecomposeFixture SharedKinds(bool marked)

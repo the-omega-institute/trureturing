@@ -146,8 +146,7 @@ public sealed class DigestionReadinessQueryTests
         var projection = DigestionFrontierProjection.Create(
             document,
             evaluation,
-            Kinds([deposit, routing, quarantine]),
-            retryDispositions: false);
+            Kinds([deposit, routing, quarantine]));
         var first = DigestionReadinessQuery.Classify(projection);
         var second = DigestionReadinessQuery.Classify(projection);
 
@@ -207,7 +206,7 @@ public sealed class DigestionReadinessQueryTests
     }
 
     [Fact]
-    public void QuarantinedAndWithheldEntriesAppearWithTheirOwnAction()
+    public void QuarantineRemainsExplicitAndCoverDispositionDoesNotWithhold()
     {
         var quarantined = Entry(
             "source",
@@ -227,13 +226,9 @@ public sealed class DigestionReadinessQueryTests
 
         Assert.Equal("quarantined", result[0].Action);
         Assert.Equal(["quarantine:missing-prerequisite"], result[0].OrderedBlockers.ToArray());
-        Assert.Equal("withheld", result[1].Action);
+        Assert.Equal("deposit", result[1].Action);
     }
 
-    // 第三轮评审(architecture/quality/tests 三席独立)实测:只改 ActionPriorities 中的一个常数
-    // (如 cover-now 6->9)即可让 972 条可直接 cover 的工作排到 repair-scribe/deposit 之后,
-    // 而定向 81/81 全绿、零具名红 —— 即整张 action 优先级表当时无任何测试守着。
-    // 故断言**完整序列**而非相邻两项:任何单常数退化都必须红。
     [Fact]
     public void ActionPriorityOrderIsTheFullApprovedSequence()
     {
@@ -269,7 +264,6 @@ public sealed class DigestionReadinessQueryTests
         Assert.Equal(
             [
                 "quarantined",
-                "withheld",
                 "refresh-stale",
                 "not-formalizable",
                 "chain-child",
@@ -314,8 +308,7 @@ public sealed class DigestionReadinessQueryTests
         return DigestionReadinessQuery.Classify(DigestionFrontierProjection.Create(
             Document(entries, acknowledgedStale),
             Evaluation(entries),
-            Kinds(entries),
-            retryDispositions: false));
+            Kinds(entries)));
     }
 
     private static DigestionLedgerEvaluation Evaluation(

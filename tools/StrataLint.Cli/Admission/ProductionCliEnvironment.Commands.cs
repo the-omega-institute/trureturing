@@ -56,9 +56,6 @@ internal sealed partial class ProductionCliEnvironment
             arguments,
             reportFreeIngestDependencies);
 
-    public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) =>
-        IngestCommand.Run(repositoryRoot, repository, leanReportSource, arguments);
-
     public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
         CoverAtomCommand.Run(
             repositoryRoot,
@@ -66,9 +63,6 @@ internal sealed partial class ProductionCliEnvironment
             leanReportSource,
             timeProvider.GetUtcNow(),
             arguments);
-
-    public CommandResult QuarantineAtom(IReadOnlyList<string> arguments) =>
-        QuarantineAtomCommand.Run(repositoryRoot, repository, arguments);
 
     public CommandResult CoverBatch(IReadOnlyList<string> arguments) =>
         CoverBatchCommand.Run(repositoryRoot, repository, leanReportSource,
