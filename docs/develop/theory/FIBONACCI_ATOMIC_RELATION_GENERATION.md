@@ -61850,3 +61850,143 @@ $\mathcal B$ 在这里抵消，但这不是（404.9）积分极限的交换许�
 因此可在每个 $x\ge e$ 上合法使用 $\varepsilon_x=1/(\sqrt x\log x)$ 与（404.9），并由（403.6）将它接回原始 $I_\psi$。仍需取得的是真实积分（404.9）的完整临界有符号预算；新增阻尼既没有消去算术零点，也没有通过已有对数估计支付这一预算。已查原始反演与 Euler 供应器，未取得该临界联合估计；这只限定当前检索结果，不声称该结果不存在或当前接口原创。完整 Robin 与 RH 仍未解决。
 
 ## 追加锚（本行以下为增补区）
+
+## 405. Mellin 端点储备的正参数混合与实际对数尾预算
+
+本节保持 §395 的同一个实际残差 $R$、积分 $P_x$ 与相邻核 $J_x(m)=P_x(m)-P_x(m+1)$，并使用 §390 的同源 $H_m$。将 §395 中的全部指数保留为一族，而不是只取平方根指数，可直接得到临界对数权重的完整积分后预算。中间使用的正参数 Laplace 积分是经典公式；参见 [DLMF 8.2.1](https://dlmf.nist.gov/8.2.E1) 的下不完全 Gamma 积分及 [DLMF 5.2.1](https://dlmf.nist.gov/5.2.E1) 的 Gamma 积分。以下新增的结论是它们与同源实际 Robin 储备相接后的显式预算。
+
+**定理 405.1（实际 Mellin 变差族支付对数权重）.** 令 $x>1$，并设
+
+$$
+L=\log x,\qquad h_1=1+L^{-1},\qquad h_2=1+2L^{-1}+2L^{-2}.
+$$
+
+使用 §395 的实际常数 $A>0$、$D\in\mathbb R$，并记 $\mu:=\mu_0=1/\delta>0$。这里 $\mu$ 是实常数，区别于 Möbius 函数。定义
+
+$$
+\begin{aligned}
+C_x&=\frac{(h_1/2+h_2)(A+|D|/2+3\mu/2)}L,\\
+V_x&=\frac{x^{-1/2}}L(6+10/L+8/L^2)(3\mu+2A+|D|),\\
+K_x&=\frac{Ah_2}{L^2}+\frac{h_1A+h_2|D|}{L^3}
+ +\frac{2(h_1|D|+6h_2\mu)}{L^4}+\frac{36h_1\mu}{L^5}.
+\end{aligned}
+\tag{405.1}
+$$
+
+则对全部实数 $p>3$，完整级数
+
+$$
+Z_{x,p}=\sum_{m\ge2}\frac{m}{(\log m)^p}|J_x(m)|
+\tag{405.2}
+$$
+
+收敛，并且
+
+$$
+Z_{x,p}\le\frac{\sqrt2}{(\log2)^p}V_x
+ +\frac{peC_x\,2^{3-p}}{p-3}.
+\tag{405.3}
+$$
+
+在 $p=4$ 时，保留储备中的 $x^{\alpha-1}$ 给加强界
+
+$$
+Z_{x,4}\le\frac{\sqrt2}{(\log2)^4}V_x
+ +4e\min\{C_x/2,K_x\}.
+\tag{405.4}
+$$
+
+**证明.** 写 $a_m=|J_x(m)|\ge0$，并令 $\beta=1-\alpha$。§395 的完整变差界给
+
+$$
+\begin{aligned}
+S_{1-\beta}:=\sum_{m\ge1}m^{1-\beta}a_m
+&\le\frac{e^{-L\beta}}L
+ \left(h_1+\frac{h_2}\beta\right)
+ \left[\frac{|D|}\beta+\frac A{\beta^2}
+ +\mu\left(\frac1{1-\beta}+\frac1{(1-\beta)^2}\right)\right]\\
+&\le\frac{e^{-L\beta}}L
+ \left(h_1+\frac{h_2}\beta\right)
+ \left(\frac A{\beta^2}+\frac{|D|}\beta+6\mu\right)
+\le C_x\beta^{-3},\qquad 0<\beta\le\frac12.
+\end{aligned}
+\tag{405.5}
+$$
+
+最后一步使用 $e^{-L\beta}\le1$ 及非负因子的单调性：$(h_1\beta+h_2)(A+|D|\beta+6\mu\beta^2)\le(h_1/2+h_2)(A+|D|/2+3\mu/2)$。这里只需要 $1/2\le\alpha<1$；不把该三阶极点界扩张到 $\alpha\downarrow0$，因为原储备在另一端还有极点。
+
+固定有限 $N\ge2$。将（405.5）乘 $\beta^{p-1}$，对 $0<\beta<1/2$ 积分。有限求和与积分交换给
+
+$$
+\begin{aligned}
+\sum_{m=2}^Na_mW_p(m)
+&=\int_0^{1/2}\beta^{p-1}\sum_{m=2}^Nm^{1-\beta}a_m\,d\beta\\
+&\le C_x\int_0^{1/2}\beta^{p-4}\,d\beta
+ =\frac{C_x2^{3-p}}{p-3},\\
+W_p(m)&=m\int_0^{1/2}\beta^{p-1}e^{-\beta\log m}\,d\beta
+ =\frac m{(\log m)^p}\int_0^{(\log m)/2}u^{p-1}e^{-u}\,du.
+\end{aligned}
+\tag{405.6}
+$$
+
+右侧有限恰因 $p-4>-1$。对所有 $m\ge2$，后一个积分至少为 $c_p=\int_0^{(\log2)/2}u^{p-1}e^{-u}du>0$。因此（405.2）的非负有限部分和一致有界，证明完整级数收敛；此处无需预先交换任何无限级数，更未交换原 Robin 积分变量。
+
+为得到（405.3）的方便常数，对 $m\ge8$ 使用 $\log m/2\ge1$，于是
+
+$$
+\int_0^{(\log m)/2}u^{p-1}e^{-u}du
+\ge e^{-1}\int_0^1u^{p-1}du=\frac1{pe}.
+\tag{405.7}
+$$
+
+首块 $2\le m\le7$ 由 $S_{1/2}\le V_x$ 支付。在 $[2,7]$ 上，$\sqrt u/(\log u)^p$ 的对数导数为 $((\log u)/2-p)/(u\log u)<0$，故其值不超过 $\sqrt2/(\log2)^p$。将首块与（405.6）、（405.7）相加即得（405.3）。使用完整 $S_{1/2}$ 支付首块只会放大上界，没有丢弃未付项。
+
+对 $p=4$，在（405.6）中保留（405.5）的 $e^{-L\beta}$，得到
+
+$$
+\begin{aligned}
+\sum_{m=2}^Na_mW_4(m)
+&\le\frac1L\int_0^{1/2}e^{-L\beta}
+ [Ah_2+(h_1A+h_2|D|)\beta\\
+&\hspace{42mm}+(h_1|D|+6h_2\mu)\beta^2+6h_1\mu\beta^3]d\beta
+\le K_x.
+\end{aligned}
+\tag{405.8}
+$$
+
+最后一步将非负积分域放大为 $(0,\infty)$，复用经典 Laplace 矩 $\int_0^\infty\beta^je^{-L\beta}d\beta=j!/L^{j+1}$，$j=0,1,2,3$。同一混合积分还受（405.6）的 $C_x/2$ 控制。取两界较小者，再与（405.7）及同一首块相接，得到（405.4）。$\square$
+
+**定理 405.2（同源算术序列的积分后绝对预算）.** 假设同源实际序列的所有 $m\ge2$ 满足 $|H_m|\le C_Hm/(\log m)^4$，其中 $C_H\ge0$。则
+
+$$
+\begin{aligned}
+\sum_{m\ge1}|H_mJ_x(m)|
+&\le\left(|H_1|+\frac{C_H\sqrt2}{(\log2)^4}\right)V_x
+ +4eC_H\min\{C_x/2,K_x\}<\infty.
+\end{aligned}
+\tag{405.9}
+$$
+
+当 $x\to\infty$ 且同源常数固定时，该预算为 $O_{A,D,\mu,H_1,C_H}((\log x)^{-2})$。
+
+**证明.** 完整平方根变差给 $|J_x(1)|\le V_x$，因此首项不受任何 $\log1$ 分母影响。对全部 $m\ge2$ 使用假设逐项比较，再应用（405.4），即得（405.9）。$L\ge1$ 时 $h_1,h_2$ 有界，$K_x=O(L^{-2})$，而 $V_x=O(x^{-1/2}/L)$，给最后的渐近界。§390 的同源对数增长供应某个有限 $C_H$，这里不需要其数值。$\square$
+
+（405.9）直接消费整个 Mellin 指数族，给出了有符号级数本身的绝对收敛。将其和识别为原 $I_\psi$ 仍需 §397 的同源逐点身份及积分前预算 $\sum_m|H_m|Q_x(m)<\infty$。由 $|J_x(m)|\le Q_x(m)$ 不能反推该积分前预算；参数 $\beta$ 的正混合不替代原变量的 Fubini 条件。此处的 $O((\log x)^{-2})$ 也未达到完整 Robin 符号估计所需的临界幂尺度。
+
+**命题 405.3（三阶极点界本身的适用阈值）.** 仅知道非负序列满足 $\sum_{m\ge1}m^{1-\beta}a_m\le C\beta^{-3}$，$0<\beta\le1/2$，不能普遍保证 $p\le3$ 的对数加权级数收敛。
+
+**证明.** 取 $a_1=0$，$a_m=(\log m)^2/m^2$，$m\ge2$。对 $t\in[m-1,m]$，有 $m\le2t$、$m^{-1-\beta}\le t^{-1-\beta}$，因而经典积分比较与 Laplace 矩给
+
+$$
+\begin{aligned}
+\sum_{m\ge2}\frac{(\log m)^2}{m^{1+\beta}}
+&\le\int_1^\infty\frac{(\log(2t))^2}{t^{1+\beta}}dt\\
+&=\frac2{\beta^3}+\frac{2\log2}{\beta^2}+\frac{(\log2)^2}\beta
+\le\left(2+\log2+\frac{(\log2)^2}4\right)\beta^{-3}.
+\end{aligned}
+\tag{405.10}
+$$
+
+但 $\sum_{m\ge2}ma_m/(\log m)^p=\sum_{m\ge2}(\log m)^{2-p}/m$ 对 $p\le3$ 发散。该反例只限定抽象三阶极点预算的普遍保证，不判定实际 $J_x$ 在 $p\le3$ 时的收敛性。$\square$
+
+## 追加锚（本行以下为增补区）
