@@ -18,7 +18,8 @@ The source is Robert Polak, Zenodo preprint, record
 5 August 2026. The retrieved PDF has 37 pages and SHA-256
 `9a118f1f0247872458fc9dfbc91dfe067df7bbeb162f46fc1ad11e64f7913b2d`.
 The locators below use printed pages. The full-support identity,
-Lemma 7, and Proposition 10 with its argument on pp.3–8 were inspected.
+Lemma 7, and Proposition 10 with its argument on pp.3–8, and the
+residual and event interfaces in §8.2–8.8 on pp.18–28 were inspected.
 This is a primary-source applicability check, not a whole-paper proof audit,
 independent rerun of its certificates, peer-review claim, or Lean verification.
 
@@ -230,6 +231,104 @@ has been retained. Neither the complete divisor-deletion comparisons
 nor the all-multiplier GA2 comparisons have yet supplied its needed bound.
 The application adds no Lean declaration or formal certification of the
 external analytic or finite-verification premises.
+
+## Published event dynamics and the unpaid prime-state work
+
+The same manuscript already supplies a continuous-flow and prime-power
+event program. Reuse this published construction rather than treating
+an affine recurrence, a cone, or a quadratic energy as a new FIB estimate.
+The source's auxiliary buffer is
+
+$$
+B(t)=\sum_\rho\frac{e^{(\rho-1/2)t}}{\rho(1-\rho)},
+\qquad C=B(0)=2+\gamma-\log(4\pi),
+$$
+
+with the complete nontrivial-zero multiset. Theorem 15, pp.19–20, makes
+eventual nonnegativity of $\mathcal P(t):=C-B(t)$ equivalent to RH.
+Here $\mathcal P$ is the paper's $P(t)$, not the support prime $P$ above.
+It is not $\Delta(N)$ or the normalized $I_\psi(A)$.
+
+Equation (8.24), p.22, identifies the regularized buffer exactly with the
+[classical Chebyshev primitive](lay2015mertenssignchanges.md):
+
+$$
+\widehat B(\log x)
+=-\sqrt x\int_x^\infty\frac{\psi(u)-u}{u^2}\,du
+ -\frac{\log(2\pi)}{\sqrt x},\qquad x>1.
+$$
+
+The explicit trivial-zero correction is
+$B(t)-\widehat B(t)=\sum_{j\ge1}e^{-(2j+1/2)t}/(2j(2j+1))$ for $t>0$.
+This reuses the existing primitive interface; the additional
+$(1+\log u)/\log^2u$ weight in $I_\psi$ remains distinct.
+
+For $q=p^m$, put $\tau_q=\log q$ and $J_q=\Lambda(q)/\sqrt q$.
+Equations (8.26)–(8.30), pp.23–24, define, for $t\ge\log2$
+and $\mathcal P(t)>0$,
+
+$$
+\begin{aligned}
+g(t)&=e^{t/2}\left(1-\frac{e^{-3t}}{1-e^{-2t}}\right),&
+k(t)&=g(t)-C/4,\\
+Q(t)&=\sqrt{\mathcal P(t)^2/4+2k(t)\mathcal P(t)},&
+E_B(t)&=\mathcal P'(t)^2-Q(t)^2.
+\end{aligned}
+$$
+
+On an open prime-power cell $E_B'=-2k'\mathcal P$; at an event,
+$\Delta\mathcal P'=-J_q$ and
+$\Delta E_B=J_q^2-2J_q\mathcal P'(\tau_q^-)$. Lemma 18 supplies
+the initial positive cone at $q=2$. Theorem 19 preserves it, and concludes
+RH, **provided that every next actual event with the inherited cone obeys**
+
+$$
+Q(\tau_q)+\mathcal P'(\tau_q^-)>J_q.
+$$
+
+This universal event premise remains unpaid. Propositions 20–21,
+p.25, give its exact signed triangular-window form; they do not bound
+the signed window. Proposition 22, p.26, gives the central-secant estimate
+$|\mathcal P(t+h)-\mathcal P(t-h)|^2\le4\mathcal P(t)\mathcal P(2h)$
+**assuming RH**. It cannot be imported as an unconditional local estimate
+in a proof of RH. The source's adaptive window has additive scale
+$\sqrt q\log q$, rather than an independently chosen coarse interval.
+
+The separate energy audit makes the missing joint quantity explicit.
+For $r\ge0$, $\epsilon_r=(1+t)^{-r}$ and
+$E_r=(1-\epsilon_r/2)\widehat B^2+2\epsilon_r\widehat B'^2$,
+equation (8.52), p.27, gives
+
+$$
+\Delta E_r
+=4\epsilon_r(\tau_q)J_q\widehat B'(\tau_q^-)
+ +2\epsilon_r(\tau_q)J_q^2.
+$$
+
+Proposition 23, p.28, supplies
+$\sum_q(1+\log q)^{-r}\Lambda(q)^2/q<\infty$ exactly when $r>2$.
+It pays the square-kick budget, not the signed state-prime work in the
+first term. The source also excludes a fixed positive-definite quadratic
+form decreasing for every homogeneous cell state, and shows that a
+positive semidefinite quadratic form invariant under every common
+translation of its two characteristic coordinates must annihilate
+$(1,1)$. This restriction concerns universal state-independent energies;
+it does not exclude an estimate adapted to the actual arithmetic orbit.
+
+These source results identify the required joint estimate and prevent
+repeating the generic flow, cone, or square-budget work. No bound for the
+actual signed work, proof of the universal kick premise, or map from
+the selected CA source or FIB addresses supplying that premise is
+established here. The selected-source condition
+$I_\psi(A)>-D^*(A)$ therefore remains unchanged and unproved.
+
+The cited Ford–Soundararajan–Zaharescu sequel and its original
+[fixed smooth-test supplier](../Weil/fordzaharescu2005zerophases.md)
+do identify $-J_q/(2\pi)$ in the ordinate-phase average for each fixed
+integer $q>1$. Their fixed-scale expansion does not bound the actual
+weighted buffer or the signed state-prime work above. The golden
+eigen-scale has no correction density in that theorem; this is a
+parameter application, not an FIB-to-Robin estimate.
 
 ## Boundary for FIB
 
