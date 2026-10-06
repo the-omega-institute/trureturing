@@ -33,7 +33,8 @@ def grid (n : ℕ) : SimpleGraph (Fin n × Fin n) :=
 /-- Problem 29, affirmative answer. -/
 def claim : Prop :=
   ∃ ε : ℕ → ℝ, Tendsto ε atTop (nhds 0) ∧
-    ∀ (n : ℕ) (S : Finset (Fin n × Fin n)), (grid n).IsIndepSet (S : Set (Fin n × Fin n)) →
+    ∀ (n : ℕ) (S : Finset (Fin n × Fin n)), 1 ≤ n →
+      (grid n).IsIndepSet (S : Set (Fin n × Fin n)) →
       ((3 / 8 : ℝ) + ε n) * (n : ℝ) ^ 2 ≤ (S.card : ℝ) →
         ∃ v : Fin n × Fin n, 4 ≤ ((grid n).neighborSet v).ncard ∧
           ∀ w, (grid n).Adj v w → w ∈ S
