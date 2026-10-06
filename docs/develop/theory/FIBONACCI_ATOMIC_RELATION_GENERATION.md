@@ -67828,3 +67828,205 @@ J_\varepsilon(\sigma)
 \]
 
 该反例是关于输入信息强度的断言，未改变实际素数乘积。它显示（SC.5）的支持结构及（SC.6）的曲率付款不能由单独的一阶包络替代。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 439. 同一尺度下实际素数插入的补偿积分与唯一阻尼转折
+
+**定义 439.1（固定尺度的有限素数核）。** 固定实数 \(L>0\)，令
+\(\mathcal P\) 为有限素数集，允许空集。定义
+
+\[
+E_{\mathcal P}(s)=\prod_{p\in\mathcal P}(1-p^{-s}),\qquad
+F_{\mathcal P,L}(v)=\frac{E_{\mathcal P}(1+v/L)}{E_{\mathcal P}(1)},\qquad
+s_{\mathcal P,L}=\frac1L\sum_{p\in\mathcal P}\frac{\log p}{p-1}.
+\tag{PI.1}
+\]
+
+对 \(a\ge0\)、\(\sigma>0\)，置
+
+\[
+B_{\mathcal P,L,a}(v)=e^{-av}F_{\mathcal P,L}(v)-1
+ +(a-s_{\mathcal P,L})v,
+\qquad
+\mathcal I_{\mathcal P,L}(\sigma,a)
+ =\int_0^\infty e^{-\sigma v}
+   \frac{B_{\mathcal P,L,a}(v)}{v^2}\,dv.
+\tag{PI.2}
+\]
+
+有限 Euler 乘积给 \(F(0)=1\)、\(F'(0)=s_{\mathcal P,L}\)，所以
+\(B(0)=B'(0)=0\)。函数光滑，零端的商有有限极限。对 \(v\ge0\)，
+\(1\le F_{\mathcal P,L}(v)\le E_{\mathcal P}(1)^{-1}\)，故
+\(B(v)=O_{\mathcal P,L,a}(1+v)\)。因此（PI.2）对每个指定的正阻尼
+绝对收敛。以下插入素数时保持同一个 \(L\)；若改变尺度，不能直接使用这里的更新式。
+
+**定理 439.2（完整补偿积分的素数插入公式）。** 设 \(p\notin\mathcal P\)
+为素数，\(\mathcal P^+=\mathcal P\cup\{p\}\)，记
+\(b=\log p/L>0\)、\(\alpha=(p-1)^{-1}>0\)、\(s=s_{\mathcal P,L}\)。则
+
+\[
+\begin{aligned}
+\mathcal I_{\mathcal P^+,L}(\sigma,a)-\mathcal I_{\mathcal P,L}(\sigma,a)
+=\alpha\bigg[&\mathcal I_{\mathcal P,L}(\sigma,a)
+ -\mathcal I_{\mathcal P,L}(\sigma+b,a)\\
+ &+b-(\sigma+b+a-s)\log\!\left(1+\frac b\sigma\right)\bigg].
+\end{aligned}
+\tag{PI.3}
+\]
+
+**证明。** 复用有限 Euler 因子的经典乘法身份，得到
+
+\[
+F_{\mathcal P^+,L}(v)=F_{\mathcal P,L}(v)
+ [1+\alpha(1-e^{-bv})],\qquad
+s_{\mathcal P^+,L}=s+\alpha b.
+\]
+
+因此完整分子的差恰为
+
+\[
+\frac{B_{\mathcal P^+,L,a}(v)-B_{\mathcal P,L,a}(v)}\alpha
+=(1-e^{-bv})B_{\mathcal P,L,a}(v)
+ +(1-e^{-bv})[1-(a-s)v]-bv.
+\tag{PI.4}
+\]
+
+这里的 \(-bv\) 是实际初始斜率更新所要求的补偿，不能删除。
+后一组写成 \((1-e^{-bv}-bv)-(a-s)v(1-e^{-bv})\)，两项在零端均为
+\(O(v^2)\)。
+复用经典 [Frullani 积分](https://en.wikipedia.org/wiki/Frullani_integral)，对
+\(\sigma>0\)、\(t\ge0\) 有
+
+\[
+\int_0^\infty e^{-\sigma v}\frac{1-e^{-tv}}v\,dv
+=\log\!\left(1+\frac t\sigma\right).
+\]
+
+另由 \(1-e^{-bv}-bv=-\int_0^b v(1-e^{-tv})\,dt\)，先对非负被积函数
+应用 Tonelli，再用上式，得到
+
+\[
+\begin{aligned}
+\int_0^\infty e^{-\sigma v}\frac{1-e^{-bv}-bv}{v^2}\,dv
+&=-\int_0^b\log\!\left(1+\frac t\sigma\right)dt\\
+&=b-(\sigma+b)\log\!\left(1+\frac b\sigma\right).
+\end{aligned}
+\]
+
+这些组合都已绝对可积；没有分别积分零端发散的一次项。
+将（PI.4）乘 \(e^{-\sigma v}/v^2\) 后积分即得（PI.3）。证毕。
+
+**定理 439.3（实际 \(\{2\}\to\{2,3\}\) 更新的唯一阻尼转折）。** 固定
+\(L=\log3\)、\(a=0\)，令
+
+\[
+c=\frac{\log2}{\log3},\qquad
+D(\sigma)=\mathcal I_{\{2,3\},\log3}(\sigma,0)
+ -\mathcal I_{\{2\},\log3}(\sigma,0).
+\tag{PI.5}
+\]
+
+则存在唯一 \(\sigma_*\in(0,\infty)\)，使
+
+\[
+D(\sigma)<0\quad(0<\sigma<\sigma_*),\qquad
+D(\sigma_*)=0,\qquad
+D(\sigma)>0\quad(\sigma>\sigma_*).
+\tag{PI.6}
+\]
+
+而且
+
+\[
+\lim_{\sigma\to\infty}\sigma D(\sigma)
+=\frac12\left(c-\frac12\right)>0,
+\qquad
+D(\sigma)=\frac12\log\sigma+O(1)
+\quad(\sigma\downarrow0).
+\tag{PI.7}
+\]
+
+**证明：同一实际分子及两端。** 因为 \(4>3>1\)，有 \(c>1/2\)。
+此处 \(F_{\{2\},L}(v)=2-e^{-cv}\)，而插入 \(3\) 的
+\(b=1\)、\(\alpha=1/2\)。所以（PI.4）给出实际全轴差
+
+\[
+D(\sigma)=\frac12\int_0^\infty e^{-\sigma v}\frac{g(v)}{v^2}\,dv,
+\qquad
+g(v)=(2-e^{-cv})(1-e^{-v})-v.
+\tag{PI.8}
+\]
+
+Taylor 展开给 \(g(v)=(c-1/2)v^2+O(v^3)\)，且
+\(g(v)=-v+O(1)\) 于无穷端。因此
+\(h(v)=g(v)/(2v^2)\) 在零端连续延拓，\(h(0)=(c-1/2)/2\)，并在
+\([0,\infty)\) 上有界。换元 \(t=\sigma v\) 给
+
+\[
+\sigma D(\sigma)=\int_0^\infty e^{-t}h(t/\sigma)\,dt
+\longrightarrow h(0).
+\]
+
+有界性给共同可积主导函数，故该极限由主导收敛成立。
+对另一端，令
+
+\[
+H(v)=h(v)+\frac{\mathbf1_{[1,\infty)}(v)}{2v}.
+\]
+
+\(H\) 在 \((0,1)\) 有界，在 \([1,\infty)\) 等于
+\((2-e^{-cv})(1-e^{-v})/(2v^2)\)，故 \(H\in L^1(0,\infty)\)。于是
+
+\[
+D(\sigma)=\int_0^\infty e^{-\sigma v}H(v)\,dv
+ -\frac12\int_1^\infty\frac{e^{-\sigma v}}v\,dv.
+\]
+
+第一项一致有界。第二个积分换元后为
+\(\int_\sigma^\infty e^{-t}dt/t=-\log\sigma+O(1)\)：在 \((\sigma,1)\)
+减去 \(1/t\)，余项 \((e^{-t}-1)/t\) 可积，\([1,\infty)\) 的尾也可积。
+这证明（PI.7），并给正阻尼两端的相反符号。
+
+**证明：唯一转折。** 二阶导数恰为
+
+\[
+g''(v)=e^{-(c+1)v}
+ [(c+1)^2-2e^{cv}-c^2e^v].
+\tag{PI.9}
+\]
+
+方括号在 \([0,\infty)\) 严格递减，从 \(2c-1>0\) 趋于负无穷，
+所以有唯一正零点 \(q\)。由 \(g'(0)=0\)、\(g'(v)\to-1\)，
+\(g'\) 先严格增加再严格减少，因而有唯一正零点 \(t>q\)。又由
+\(g(0)=0\)、\(g(v)\to-\infty\)，有唯一正零点 \(r>t\)，且
+
+\[
+g(v)>0\quad(0<v<r),\qquad g(v)<0\quad(v>r).
+\]
+
+若 \(0<\sigma_1<\sigma_2\)，全部积分均绝对可积，并有
+
+\[
+\begin{aligned}
+D(\sigma_2)-e^{-(\sigma_2-\sigma_1)r}D(\sigma_1)
+=\int_0^\infty e^{-\sigma_1v}
+[e^{-(\sigma_2-\sigma_1)v}-e^{-(\sigma_2-\sigma_1)r}]h(v)\,dv>0.
+\end{aligned}
+\tag{PI.10}
+\]
+
+严格正性来自括号与 \(h\) 在 \((0,r)\) 都正，在 \((r,\infty)\) 都负；
+任取 \((0,r)\) 中一个正长度闭区间即可得到严格正的积分。
+因此 \(e^{\sigma r}D(\sigma)\) 严格递增。\(D\) 在每个正阻尼紧区间上
+由共同指数主导函数而连续。结合（PI.7）及中间值定理，零点存在、唯一，
+并有（PI.6）的全部符号。证毕。
+
+**推论 439.4（递归更新的适用边界）。** 即使使用实际素数乘积、保持相同尺度，
+并使用精确初始斜率补偿，加入一颗素数也不使（PI.2）的完整积分具有对全部
+\(\sigma>0\) 相同的改进方向。
+
+**证明。** 对同一 \(\{2\}\to\{2,3\}\) 更新应用（PI.6）。该结论比较的是
+（PI.2）的一个完整补偿积分；§433 的精确阶乘密度还含另两项及 Euler 前因子。
+而（CP.2）的完整 Robin 配对在改变筛时仍为同一个 \(I_\psi\)，同时改变其
+粗糙前缀与全部整数纤维。故此更新不提供 \(I_\psi\) 的最终符号。证毕。
