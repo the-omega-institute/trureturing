@@ -48,9 +48,153 @@ For certificate extraction the caller supplies complete finite edge lists and a 
 
 Loops, parallel edges, disconnected essential components and asymmetric windows stay in scope. All checked word lengths are positive; no statement identifies a zero-edge path with a vertex-free empty edge tuple. The parameter specialization 23.2 introduces no retained wrapper. The unsupported 21.3 claim and the existing matrix-chain construction are outside this module. Authored formulas summarize the exact declarations using the defined record names; SDK admission, script execution and rendering alone do not establish semantic equivalence or canonical admission.
 
+**Definition 1.4 (Actual free expansion).**
+
+$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), order \in \operatorname{LinearOrder}\left(H\right), n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{DirectedMultigraph}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(n\right), H\right), \operatorname{Prod}\left(\operatorname{Edge}\left(\operatorname{product}\left(U, V\right)\right), H\right)\right)$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.countedExpansion` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any square natural group-ring matrix A, the vertex of an expanded edge (e,h) is (source(e),h), and its target is (target(e),h times label(e)). This definition is definitionally equal to the existing FixedBlockRigidity.expandedGraph; it imposes no commutativity and forgets no numbered edge.
+
+**Definition 1.5 (orderedForward).**
+
+$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), order \in \operatorname{LinearOrder}\left(H\right), n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{LegalWord}\left(\operatorname{countedExpansion}\left(\operatorname{product}\left(U, V\right)\right), 2\right) \to \operatorname{Prod}\left(\operatorname{Edge}\left(\operatorname{product}\left(V, U\right)\right), H\right)$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedForward` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the legal two-edge word ((a0,h0),(a1,h1)), split both edges in the prescribed UV order as (u0,v0),(u1,v1). Return (joinVU(v0,u1),h0 times label(u0)). Adjacency supplies the actual shared vertex for joining. This crosses the first actual U half-edge.
+
+**Definition 1.6 (orderedBackward).**
+
+$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), order \in \operatorname{LinearOrder}\left(H\right), n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{LegalWord}\left(\operatorname{countedExpansion}\left(\operatorname{product}\left(V, U\right)\right), 2\right) \to \operatorname{Prod}\left(\operatorname{Edge}\left(\operatorname{product}\left(U, V\right)\right), H\right)$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedBackward` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The two input edges are preceding and central output. Split them in VU order as (vMinus,u0),(v0,u1). Return (joinUV(u0,v0),k0 times label(u0) inverse), where k0 is the coordinate of the SECOND input edge. The shared U half-edge is constructed by splitting the preceding output, not assumed as an inverse map.
+
+**Definition 1.7 (orderedOverlapInput).**
+
+$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), order \in \operatorname{LinearOrder}\left(H\right), n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{TablePair}\left(\operatorname{countedExpansion}\left(\operatorname{product}\left(U, V\right)\right), \operatorname{countedExpansion}\left(\operatorname{product}\left(V, U\right)\right), 0, 1, 1, 0\right)$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedOverlapInput` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This raw TablePair uses orderedForward and orderedBackward on the actual free expansions of UV and VU, at forward radii (0,1) and inverse radii (1,0). No successful criterion is embedded. The transient structural check tests the same maps on three-edge words and recovers center index one.
+
+**Definition 1.8 (d8Rank).**
+
+$$\operatorname{DihedralGroup}\left(4\right) \to Nat$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.d8Rank` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+d8Rank(r i)=i.val and d8Rank(sr i)=4+(-i).val. Since sr i denotes s times r to i, this is exactly e,r,r squared,r cubed,s,rs,r squared s,r cubed s. d8Rank_injective is the consumed private proof used by d8Order, which lifts the natural order through this rank.
+
+**Definition 1.9 (d8Order).**
+
+$$\operatorname{LinearOrder}\left(\operatorname{DihedralGroup}\left(4\right)\right)$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.d8Order` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The total order is lifted through the injective d8Rank. It is a finite group order for labels and does not claim a multiplication-compatible group order.
+
+**Definition 1.10 (d8P).**
+
+$$\operatorname{GroupMat}\left(\operatorname{DihedralGroup}\left(4\right), 1, 1\right)$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.d8P` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+In the source order the scalar factor P has coefficients [1,2,1,1,1,1,1,0]. Each nonzero coefficient is a literal MonoidAlgebra.single summand; the r cubed s coefficient is zero.
+
+**Definition 1.11 (d8Q).**
+
+$$\operatorname{GroupMat}\left(\operatorname{DihedralGroup}\left(4\right), 1, 1\right)$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.d8Q` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The scalar factor Q is the sum of the literal unit-labelled and s-labelled singleton coefficients, each one. Its vector is [1,0,0,0,1,0,0,0].
+
+**Definition 1.12 (orderedD8Input).**
+
+$$\operatorname{TablePair}\left(\operatorname{countedExpansion}\left(\operatorname{product}\left(d8P, d8Q\right)\right), \operatorname{countedExpansion}\left(\operatorname{product}\left(d8Q, d8P\right)\right), 0, 1, 1, 0\right)$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedD8Input` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The independently existing original20.1/20.3/22.2/23.2 problem uses these literal factors, their actual products, prescribed split ranks and asymmetric orderedOverlapInput tables. This declaration is raw input only. Acceptance, coefficient specialization, radii specialization and the same-table soundness application remain transient exact evidence; no positive instance theorem is retained.
+
+**Definition 1.13 (d8Groups).**
+
+$$\operatorname{List}\left(\operatorname{DihedralGroup}\left(4\right)\right)$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.d8Groups` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The complete dictionary is [r0,r1,r2,r3,sr0,sr3,sr2,sr1], exactly the prescribed source order. Completeness is checked transiently.
+
+**Definition 1.14 (orderedEdges).**
+
+$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), order \in \operatorname{LinearOrder}\left(H\right), n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{List}\left(\operatorname{Prod}\left(\operatorname{Edge}\left(A\right), H\right)\right)$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedEdges` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a square matrix A, enumerate group coordinate h, source i, target j, label g in their supplied finite orders, then every c in Fin(coeff(A[i,j],g)). The list contains every actual expanded numbered edge, including every nonzero fiber and no element of an empty fiber. Its completeness is checked before the inspector call.
+
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.countedExpansion`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.d8Groups`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.d8Order`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.d8P`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.d8Q`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.d8Rank`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedBackward`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedD8Input`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedEdges`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedForward`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedOverlapInput`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.original23_1`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.original23_1_equivariant`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.rejected_candidate_has_finite_witness`
+- Dependency: [D5/S3/ConceptDynamics/Coding/CountedGroupOverlap](CountedGroupOverlap.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/EssentialWordRealization](EssentialWordRealization.md)

@@ -3,11 +3,12 @@
    mirror-B: D5/B/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: theorem23.1 arbitrary finite-window criterion
-   digest: Concrete seam and center tests characterize the same two continuous shift-commuting table maps on all actual histories.
--/
+   utility: kind=checker; basis=terminal=gid:D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.originalExistenceDecidable; instance=D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedD8Input
+   digest: Concrete seam and center tests characterize the same two continuous shift-commuting table maps on all actual histories. -/
 
 import D5.S3.ConceptDynamics.Coding.EssentialWordRealization
+import D5.S3.ConceptDynamics.Coding.CountedGroupOverlap
+import Mathlib.GroupTheory.SpecificGroups.Dihedral
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Topology.Constructions
 import Mathlib.GroupTheory.GroupAction.Basic
@@ -798,5 +799,86 @@ def originalEquivariantExistenceDecidable [TopologicalSpace E] [DiscreteTopology
 end EquivariantAlgorithm
 
 end FiniteAlgorithm
+
+section OrderedInput
+open D5.S3.ConceptDynamics.Coding.CountedGroupOverlap
+variable {H : Type*} [Group H] [Fintype H] [LinearOrder H] {n m : ℕ}
+
+/-- Actual free expansion; definitionally the existing expandedGraph. -/
+def countedExpansion (A : GroupMat H n n) :
+    DirectedMultigraph (Fin n × H) (Edge A × H) :=
+  ⟨fun e => (e.1.source,e.2),fun e => (e.1.target,e.2*e.1.label)⟩
+
+/-- The forward boundary crosses the actual first U half-edge. -/
+noncomputable def orderedForward (U : GroupMat H n m) (V : GroupMat H m n)
+    (w : LegalWord (countedExpansion (U*V)) 2) : Edge (V*U) × H :=
+  let a := orderedSplit U V (w.edge 0).1
+  let b := orderedSplit U V (w.edge 1).1
+  (orderedJoin V U a.2 b.1 (congrArg Prod.fst (w.legal 0 (by decide))),
+    (w.edge 0).2*a.1.label)
+
+/-- Preceding and central output share U; the coordinate is the central one. -/
+noncomputable def orderedBackward (U : GroupMat H n m) (V : GroupMat H m n)
+    (w : LegalWord (countedExpansion (V*U)) 2) : Edge (U*V) × H :=
+  let a := orderedSplit V U (w.edge 0).1
+  let b := orderedSplit V U (w.edge 1).1
+  (orderedJoin U V a.2 b.1 (congrArg Prod.fst (w.legal 0 (by decide))),
+    (w.edge 1).2*a.2.label⁻¹)
+
+/-- Raw ordered UV/VU tables at the original asymmetric radii. -/
+noncomputable def orderedOverlapInput (U : GroupMat H n m) (V : GroupMat H m n) :
+    TablePair (countedExpansion (U*V)) (countedExpansion (V*U)) 0 1 1 0 :=
+  ⟨orderedForward U V,orderedBackward U V⟩
+end OrderedInput
+
+open D5.S3.ConceptDynamics.Coding.CountedGroupOverlap
+
+/-- The source order e,r,r²,r³,s,rs,r²s,r³s, using sr j = s*r^j. -/
+def d8Rank : DihedralGroup 4 → ℕ
+  | .r i => i.val
+  | .sr i => 4 + (-i).val
+
+private theorem d8Rank_injective : Function.Injective d8Rank := by
+  rintro (a | a) (b | b) h
+  · exact congrArg DihedralGroup.r (ZMod.val_injective 4 h)
+  · have ha := ZMod.val_lt a
+    have hb := ZMod.val_lt (-b)
+    simp only [d8Rank] at h
+    omega
+  · have ha := ZMod.val_lt (-a)
+    have hb := ZMod.val_lt b
+    simp only [d8Rank] at h
+    omega
+  · apply congrArg DihedralGroup.sr
+    have hn := ZMod.val_injective 4 (by simpa [d8Rank] using h : (-a).val = (-b).val)
+    exact neg_injective hn
+
+instance d8Order : LinearOrder (DihedralGroup 4) := LinearOrder.lift' d8Rank d8Rank_injective
+
+/-- The original two scalar natural group-ring factors. -/
+noncomputable def d8P : GroupMat (DihedralGroup 4) 1 1 := fun _ _ =>
+  MonoidAlgebra.single (DihedralGroup.r (n := 4) 0) 1 + MonoidAlgebra.single (DihedralGroup.r (n := 4) 1) 2 + MonoidAlgebra.single (DihedralGroup.r (n := 4) 2) 1 +
+  MonoidAlgebra.single (DihedralGroup.r (n := 4) 3) 1 + MonoidAlgebra.single (DihedralGroup.sr (n := 4) 0) 1 + MonoidAlgebra.single (DihedralGroup.sr (n := 4) 3) 1 +
+  MonoidAlgebra.single (DihedralGroup.sr (n := 4) 2) 1
+
+noncomputable def d8Q : GroupMat (DihedralGroup 4) 1 1 := fun _ _ =>
+  MonoidAlgebra.single (DihedralGroup.r (n := 4) 0) 1 + MonoidAlgebra.single (DihedralGroup.sr (n := 4) 0) 1
+
+/-- Raw first input only: no assertion of checker acceptance is stored here. -/
+noncomputable def orderedD8Input :
+    TablePair (countedExpansion (d8P*d8Q)) (countedExpansion (d8Q*d8P)) 0 1 1 0 :=
+  orderedOverlapInput d8P d8Q
+
+/-- Complete group dictionary in the source order. -/
+def d8Groups : List (DihedralGroup 4) :=
+  [.r 0,.r 1,.r 2,.r 3,.sr 0,.sr 3,.sr 2,.sr 1]
+
+/-- Complete edge dictionary in group-coordinate, label, then copy order. -/
+noncomputable def orderedEdges {H : Type*} [Group H] [Fintype H] [LinearOrder H]
+    {n : ℕ} (A : GroupMat H n n) : List (Edge A × H) :=
+  (Finset.univ.sort (· ≤ ·) : List H).flatMap fun h =>
+    (List.finRange n).flatMap fun i => (List.finRange n).flatMap fun j =>
+      (Finset.univ.sort (· ≤ ·) : List H).flatMap fun g =>
+        (List.finRange ((A i j).coeff g)).map fun c => (⟨i,j,g,c⟩,h)
 
 end D5.S3.ConceptDynamics.Coding.FiniteWindowTableCriterion
