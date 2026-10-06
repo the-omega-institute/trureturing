@@ -520,13 +520,31 @@ The lattice-breadth ingredient is classical. Baker--Stralka,
 Pacific Journal of Mathematics 34 (1970), Section 2, recalls the
 meet-irredundancy definition and its product-of-chains setting.
 The concrete divisor-lattice bound here follows directly from
-prime valuations. The original-AP common-point and single-coordinate
-exclusion pattern also fits the comatching language of the cited
-Pohoata--Yang--Zhang source, but its complement-form colorful theorem
-is not being invoked as a proof of PC19. An omitted class's private
-trace need not itself be a congruence class. The one-switch argument
-supplies the stronger AP incidences required by the valuation bound.
-This is a reuse-based arithmetic deduction, with no originality claim.
+prime valuations. There is also a direct application of
+Pohoata--Yang--Zhang, Theorem 1.3, to the common unique-owner locus
+
+$$
+Y=\{x\in X:\text{each color has exactly one indexed owner at }x\}.
+$$
+
+For every omission plan o, writing R(o) for its retained union gives
+
+$$
+X\setminus R(o)=Y\cap\bigcap_c A_{c,o(c)}.
+\tag{PC24}
+$$
+
+Different indexed owners of one color have disjoint traces on Y.
+Repeated equal supports have empty traces there. A comatching with
+common point for the family of these traces uses only points in Y,
+so it supplies actual AP membership and nonmembership witnesses.
+The same prime-valuation argument bounds its parameter by omega(N).
+The cited theorem therefore chooses one omitted trace per color
+with empty intersection, and PC24 proves PC19's existence conclusion.
+This uses neither the complement application that retains only one
+support per color nor an owner's individual private region. The
+stronger one-switch assertion follows from the direct argument above.
+Both are reuse-based deductions, with no originality claim.
 
 ## The exact old-word source has enough genuinely mixed colors
 
@@ -670,3 +688,133 @@ The universal containment and two integer witnesses in PC23 have a
 separate transient Lean check. It uses the ordinary coprime-modulus
 combination and exact arithmetic, without asserting an original
 whole-cover realization.
+
+The exact set identity PC24, the disjointness of different indexed
+traces, empty repeated traces, empty palette intersection and lifting
+of the common-carrier comatching have a separate transient Lean
+check. It introduces no axiom asserting the external PYY theorem.
+The first four checks use only the standard three axioms; the last
+is axiom-free. The external theorem is reused from its primary text.
+
+## A mixed cover can avoid 26 prescribed cofactor blocks
+
+The preceding fixed-word result also supplies complete colors on the
+full retained-family residual
+
+$$
+E_0=(\mathbb Z/9W\mathbb Z)\setminus
+       \bigcup\{\text{all actual q-free originals}\}.
+$$
+
+Choose the same at least 107 colors that require two or more owners
+on one fixed X_z. Each color's full stripped family covers all E_0
+and has at least two members. Its original private integers give
+private points relative to its entire color after removing the
+first q-digit, as in PC12. Thus these full E_0 covers are essential.
+This does not claim essentiality for their traces on the fixed X_z.
+
+Let T be any set of at most 26 nonunit divisors of W. Exclude every
+moving owner with cofactor in T, that is, every present label among
+qt,3qt,9qt for t in T. Since G=1 and H_3=2, distinctness gives at
+most three owners per cofactor. They touch at most 78 of the chosen
+colors. At least 29 untouched complete colors therefore remain, and
+
+$$
+29>\omega(9W)\quad\text{since}\quad\omega(9W)\le28.
+\tag{PC25}
+$$
+
+Apply PC19 to any 29 of these untouched colors, allowing two actual
+owners in each as the omission alternatives. Their retained union
+covers every point of the same E_0. Each retained individual color
+fails because its omitted owner has a private point. The remaining
+colors need not be used. Thus one genuinely mixed cover of E_0 can
+avoid all the prescribed moving owners, with their literal phases
+and indexed provenance unchanged.
+
+This is a direct consumer of PC19 and the existing whole-source
+and numerical-label counts. Avoiding those blocks alone would need
+only one untouched complete color; the additional assertion is that
+no retained single color is complete. The excluded moving owners
+do not release any of the retained q-free parent labels. Removing
+parents would enlarge E_0, and coverage of that enlarged complete
+hole is not established by PC25. Nor does this selection bound the
+number of retained owners in every other cofactor block or assign
+their fresh ternary prefixes. The remaining payment obligation is
+unchanged.
+
+A transient application of the already checked omission theorem
+restricts its color type to the untouched colors. It verifies the
+general condition \(\omega(N)+|B|<|C|\), the resulting whole-source
+mixed cover, and the arithmetic \(28+3\cdot26<107\). Its axiom
+closure uses only the standard three. The actual EB1 suppliers of
+the 107 colors, their privacy, the three-owner block count and the
+28-prime bound are the ordinary applications specified above; this
+is not a kernel replay of that entire supplier chain.
+
+## Cofactor projection does not preserve prefix service
+
+Even a mixed cover using at most two owners per cofactor would
+need an additional prefix condition. Consider the finite control
+W=5 and the common cofactor trace X_z={0} above z=2 modulo nine.
+Give three colors one owner each, all with cofactor phase zero,
+on the short leaves
+
+$$
+2,\quad11,\quad20\pmod{81}.
+\tag{PC26}
+$$
+
+Each color covers the entire cofactor trace. Keeping any one owner
+already gives a cofactor-projected cover, using only one owner at
+that cofactor. But the three leaves have different parents modulo
+27. Two outputs at the fresh labels 135=27*5 and 405=81*5 can
+serve at most two of those parents, leaving a required inverse
+uncovered. If they enclose selected owners i and j, their phases
+are forced modulo their respective output moduli. The points
+
+$$
+x_0=245,\qquad x_1=335,\qquad x_2=20
+\tag{PC27}
+$$
+
+all have cofactor phase zero and old word two, and lie respectively
+in the three leaves. For every i,j, including equal choices, an
+index k different from both supplies
+
+$$
+x_k\not\equiv x_i\pmod{135},\qquad
+x_k\not\equiv x_j\pmod{405}.
+$$
+
+Reduction modulo 27 proves both exclusions. A transient Lean check
+verifies the common trace, the parent separation and this missed
+integer for every i,j. Its five axiom closures use only the standard
+three. The control has no original whole-cover or EB1 realization;
+it refutes only the inference from cofactor-projected coverage
+(even with one selected owner per cofactor) to payment in this
+fixed geometry. Each color in this control is already complete,
+so the control itself does not satisfy PC20's genuinely mixed
+condition.
+
+For the actual geometry, Report858 SF2--SF8 already supplies the
+correct interface. On each selected short leaf l, a sufficient
+condition retains its location:
+
+$$
+X_{z_l}\subseteq H_l
+\cup\!\!\bigcup_{\substack{\text{selected }27s\text{ output}\\
+                         \text{parent matches }l}}[r]_s
+\cup\!\!\bigcup_{\substack{\text{selected }81s\text{ output}\\
+                         \text{leaf equals }l}}[r]_s.
+\tag{PC28}
+$$
+
+Here H_l is the already paid base on that leaf, all phases are
+literal, and every cofactor uses one permanent plan for all leaves.
+Demanding all X_{z_l} is a sufficient condition; covering the exact
+unpaid inverse traces there can require less. The remaining long
+inverses and other deletion liabilities must retain the existing
+payment from Report853. These existing interfaces, rather than a
+new general selection statement, determine whether a proposed
+mixed subcover can actually improve the original cover.
