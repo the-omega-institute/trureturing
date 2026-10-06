@@ -7,6 +7,23 @@ namespace StrataLint.Tests;
 
 public sealed class SearchAtomsCommandTests
 {
+    [Fact]
+    public void TextSearchNeedsOnlyScopedPathsAndTheirStoredText()
+    {
+        var id = new string('a', 64);
+        var raw = RawRepositorySnapshot.Create([
+            RawRepositoryEntry.FromText($"Meta/Digestion/backfill/source/residual-open/{id}.yaml", "invalid: ["),
+            RawRepositoryEntry.FromText("Meta/Digestion/backfill/source/source.toml", "invalid = ["),
+            RawRepositoryEntry.FromText(TheoryAtomizerDataLoader.DataPath, "invalid = ["),
+            RawRepositoryEntry.FromText(DigestionCasStore.RootPath + id, "stored needle"),
+        ]);
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null);
+        var result = SearchAtomsCommand.Run(gateway, ["--source", "source", "--text", "needle"]);
+        Assert.True(result.Success, result.Error);
+        Assert.Contains(id, result.Output, StringComparison.Ordinal);
+        Assert.All(gateway.ScopedCurrentReads.SelectMany(static scope => scope), path =>
+            Assert.Equal(DigestionQuerySelection.Literal(DigestionCasStore.RootPath + id), path));
+    }
     [Theory]
     [InlineData("digest-status")]
     [InlineData("echo-verify")]
@@ -112,7 +129,8 @@ public sealed class SearchAtomsCommandTests
     public void TextSearchUsesOnlyTheSelectedTheoryAndReturnsMatchingAtoms()
     {
         var fixture = Create();
-        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), fixture.RawSnapshot(), null);
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), RawRepositorySnapshot.Create(fixture.RawSnapshot().Entries.Concat(
+            fixture.Atomized.Claims.Select(atom => new RawRepositoryEntry(DigestionCasStore.RootPath + Id(atom), atom.RawBytes)))), null);
         var console = new BufferedConsole();
 
         var exit = CliApplication.Run(["search-atoms", "--source", "docs/source.md", "--text", "Middle"],
@@ -123,7 +141,7 @@ public sealed class SearchAtomsCommandTests
         Assert.DoesNotContain(Id(fixture.Atomized.Claims[0]), console.Output, StringComparison.Ordinal);
         Assert.DoesNotContain(Id(fixture.Atomized.Claims[2]), console.Output, StringComparison.Ordinal);
         Assert.DoesNotContain(gateway.ScopedCurrentReads.SelectMany(static scope => scope),
-            path => path.Contains(DigestionCasStore.RootPath, StringComparison.Ordinal));
+            path => path.EndsWith(".yaml", StringComparison.Ordinal) || path.Contains(TheoryAtomizerDataLoader.DataPath, StringComparison.Ordinal));
     }
 
     [Fact]
