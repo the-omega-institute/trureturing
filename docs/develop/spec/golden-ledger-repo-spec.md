@@ -832,7 +832,7 @@ Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `fron
 
 ## 11.21 回填溯源清单(消化完整性)
 <!-- BACKFILL_ENTRY_ACCEPTANCE: required=atom_id,cas_ref,coverage_gids,fingerprints,receipts,status;optional=- -->
-`Meta/Digestion/backfill/` 是 **Digestion Ledger** 唯一真源,采用一 source 一目录、一 atom 一 YAML 的现役目录 schema。每个 source 的 `source.toml` 定义 `{source_id,path,atomizer}` 及其分类投影,其中 `source_id` 全局唯一。每个 atom YAML 只含 `{fingerprints:{raw_sha256,normalized_sha256},cas_ref,coverage_gids,receipts}`;持久化 `coverage_gids` 是封闭边列表,每项恰为 `{gid,target_statement_id}`,其中 target 可为 `null`;`receipts` 承载链、非命题和历史治理字段等非 coverage 数据。`status` 由状态目录名投影,`atom_id` 由文件名投影。`atom_id` 的唯一公式为 `raw_sha256` 去掉 `sha256:` 后的裸 64 位小写十六进制,故 YAML 文件名、CAS blob 文件名与 `atom_id` 逐字相同;不得拼接方言、kind、序数或其他后缀,也不得保存任何位置元数据。同一内容在一卷或多卷出现时全局只保留一条 entry,owner 按 `source_id` 字典序确定,coverage 边按 GID 取并集。raw 指纹绑定原始字节,normalized 指纹只容许 UTF-8 BOM、CRLF/CR→LF 与 Unicode NFC 的受限规范化;二者均为 `sha256:<64 lowercase hex>`。查询输出中的同名 `coverage_gids` 是持久边中 `.gid` 按 ordinal 排序派生的纯字符串列表,由 `show-atom`、`digest-status` 的 JSON/文本 entry 与 readiness JSON entry 输出;不得把该字符串元素形写回 atom YAML,也不得建立第二持久字段。`show-atom` 以 `atom_id` 定位并直接读取已提交 CAS blob;已入 git 者完全可信,禁止 source replay 重放验证。
+`Meta/Digestion/backfill/` 是 **Digestion Ledger** 唯一真源,采用一 source 一目录、一 atom 一 YAML 的现役目录 schema。每个 source 的 `source.toml` 定义 `{source_id,path,atomizer}` 及其分类投影,其中 `source_id` 全局唯一。每个 atom YAML 只含 `{fingerprints:{raw_sha256,normalized_sha256},cas_ref,coverage_gids,receipts}`;持久化 `coverage_gids` 是封闭边列表,每项恰为 `{gid,target_statement_id}`,其中 target 可为 `null`;`receipts` 承载链、非命题和历史治理字段等非 coverage 数据。`status` 由状态目录名投影,`atom_id` 由文件名投影。`atom_id` 的唯一公式为 `raw_sha256` 去掉 `sha256:` 后的裸 64 位小写十六进制,故 YAML 文件名、CAS blob 文件名与 `atom_id` 逐字相同;不得拼接方言、kind、序数或其他后缀,也不得保存任何位置元数据。同一内容在一卷或多卷出现时全局只保留一条 entry,owner 按 `source_id` 字典序确定,coverage 边按 GID 取并集。raw 指纹绑定原始字节,normalized 指纹只容许 UTF-8 BOM、CRLF/CR→LF 与 Unicode NFC 的受限规范化;二者均为 `sha256:<64 lowercase hex>`。查询输出中的同名 `coverage_gids` 是持久边中 `.gid` 按 ordinal 排序派生的纯字符串列表,由 `show-atom` 输出;不得把该字符串元素形写回 atom YAML,也不得建立第二持久字段。`show-atom` 以 `atom_id` 定位并直接读取已提交 CAS blob;已入 git 者完全可信,禁止 source replay 重放验证。
 
 **coverage 边终态 contract(owner 2026-09-03 定)**:账本只有一个读取面,只接受这一 schema:`coverage_gids` 必须是列表,每个元素必须是 mapping 且键集恰为 `{gid,target_statement_id}`;`gid` 为非空 scalar,`target_statement_id` 为非空 scalar 或 `null`。字符串元素、`receipts.coverage`、`source_sha256`、`statement_id_history` 与 `recorded_at_utc` 均非现役 schema,一律 fail-closed。writer 只产对象形;仓内没有迁移命令或双读分支。
 
@@ -857,8 +857,10 @@ Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `fron
 
 **邻居上下文查询。**`atom-context` 按目标源的 atomizer 切分正文，从原始字节定位包含目标的根片段，只加载这些根片段、相邻根片段和实际引用的子链。跨源复用的 child 按 ID 读取。CURRENT 为目标的完整原始跨度，PREVIOUS / NEXT 是其整个子树前后的最近叶项，不含自己的后代。输出 atom_id、账本目录状态(未登记者为 `unregistered`)与全文；重复出现按源顺序输出 occurrence ordinal。查询不输出全流位置或总数，不为计数展开远处链条，不持久化位置。`Resolve` 单出现接口仍对重复报 `OCCURRENCE_AMBIGUOUS`，结算按上款明确选择。`show-atom` 只读目标 CAS，不重放源或重算历史指纹。
 
-历史治理字段按既有 schema 读取，不新增 quarantine 管理命令；残余投影只用于把未消化 ATOM 交给 AI。
-**状态标记的归属**:`DigestionFrontierProjection` 是唯一分区所有者；`formalization_frontier` 是该投影对 residual-open ATOM 的查询结果，`formalize-candidates` 只渲染投影，不提供 disposition 重试通道。cover 失败由调用方修正 ATOM 后再次调用 cover。
+历史治理字段按既有 schema 读取，不新增 quarantine 管理命令。
+
+**范围搜索。**`search-atoms --source SOURCE_ID_OR_PATH` 接受重复的 `--source`，可用 `--state STATE`、`--text LITERAL` 和 `--limit N` 限制结果。必须明确源范围，默认查迁移轴为 residual 或 partial 的目录，默认最多返回 100 项。无关键词时只搜索当前标准账本路径，不读取或解析 YAML、不加载 Lean/CAS、不核验状态，不输出总数或账本摘要。关键词按大小写不敏感的原文子串匹配：沿所选标准账本路径的 ID 逐条读取 CAS 文本，匹配与输出达到上限即停止；不读取 YAML、源正文或 atomizer，不核验 CAS 指纹。命中不等于证明、就绪或一致性核验；AI 读取目标及上下文后决定处理方式。make 入口为 `make search-atoms SOURCE=… [TEXT=…] [STATE=…] [LIMIT=…]`。cover 失败由调用方修正 ATOM 后再次调用 cover。
+
 **Canonical CAS 分解(总单 #5533 第 6 层)。**`DigestionDecomposition` 是 Engine 内子句计划、精确铺砌校验与子 atom 物化的**唯一权威**:输入为父 entry、其不可变 CAS 字节与登记的 atomizer;计划把父的完整 `[Start, End)` 字节区间划分为闭合段字母表 `{claim, structural}`,无缝、无重叠、无丢弃字节、无歧义子区间;只有 claim 段物化为子 CAS 对象与 `chain_atoms`,structural 段不产生子 entry、不入任何分母。**已持久化的语法即 canonical 语法**:首个非空行之后的粗体标记开启新子,首段(标题/导语)保留为 child 0;无此类粗体时全部列表标记参与切分(不论缩进层级),child 0 含导语与首项,末子含收尾散文;代码块内的粗体按 ingestor 已物化者保留——对任一已入账父 atom,计划算出的子集(数量、次序、字节)必须与其持久化 `chain_atoms` 逐字节相等,structural 段只允许存在于从未物化过子的位置——对当前全部已入账 atomizer(generic-v1、pzg-v1 等)该类别为**空**:原契约「标题/导语/收尾为 structural 段、不入分母」的承诺被持久化语法**取代**而非叠加,分母恰为 claim 子集;已持久化的导语/收尾字节仍是 claim 字节,structural 分类在任何情况下不得改变已物化的子集——本条如实记录该契约变更。计划与字节区间按需计算,不作为聚合元数据持久化;子 atom 的 content kind 经既有 Engine 分类所有者继承。`decompose-atom --atom <id> [--dry-run]`(`make decompose ATOM_ID=x [DRY_RUN=1]`)恰解析一条 entry,对被覆盖、已隔离、缺 CAS、gap/overlap 等情形 fail-closed;子 CAS 创建与账目更新在一个事务内,任一失败即回滚本次新建的 CAS blob;`RejectsUndecomposedAbsorption` 守卫:评估范围内的多子句父,未分解(无已验证的链、`unresolved_subitems` 为空)而记为 absorbed 即拒绝,分解后其子按各自路径 cover。
 
 **条目引用核对。**条目的 atom 按账目引用读取并核对 raw 指纹与对应 CAS 字节；不做全量 CAS 扫描或孤儿检查。源文档当前是否仍能切出同一 atom 不改变按需读取结果。
@@ -874,7 +876,7 @@ Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `fron
 
 
 
-`DigestionLedgerEvaluation.HasReceiptIntegrityFailure` 对 coverage target mismatch 的**绝对式谓词本体**不因 M:N 放开而弱化;`digest-status` 等全账读侧仍如实报告全部 fatal identity,闭合仍要求 entry 的全部 GID 边与 Lean 条件齐备。为避免存量 backlog 令所有无关写入全局自锁,`cover-atom` 的写前门以命令启动时读到的账本为参照:按 `(code,atom_id,detail)` 不阻断其中已存在的同一 fatal identity,本次写入新增的 identity 与所有结构 findings 仍 fail-closed;这只是 writer 消费作用域,不改上述中央谓词。`cover-atom` 与 `cover-batch` 不读 git 修订与变更集,不接受 `--base`。
+`DigestionLedgerEvaluation.HasReceiptIntegrityFailure` 对 coverage target mismatch 的**绝对式谓词本体**不因 M:N 放开而弱化;闭合仍要求 entry 的全部 GID 边与 Lean 条件齐备。为避免存量 backlog 令所有无关写入全局自锁,`cover-atom` 的写前门以命令启动时读到的账本为参照:按 `(code,atom_id,detail)` 不阻断其中已存在的同一 fatal identity,本次写入新增的 identity 与所有结构 findings 仍 fail-closed;这只是 writer 消费作用域,不改上述中央谓词。`cover-atom` 与 `cover-batch` 不读 git 修订与变更集,不接受 `--base`。
 
 **cover 失败处理**：cover 只写入成功的 coverage 边与派生目录；失败零写入并把诊断返回给 AI。AI 修正 ATOM 或证明输入后再次调用 cover。历史 `receipts.cover_disposition` 仅按既有 schema 读取，不提供独立管理或重试命令。
 **atom 与理论卷不删、勘误以追加表达,是建设者纪律。**历史与任何删除均由 git 记录可查;不设对应的机器判官(2026-09-02 owner 裁决:「只增不减的账本就是 git 本身,只保证数据当下正确」)。SL-016 仍守派生状态以及当前账目引用的一致性。
@@ -941,7 +943,7 @@ canonical command 只有在返回 `0` 且 `OUT` 是满足指定 schema 的单个
 
 1. P0-0 冻结 old gate 的固定顶层 authority roots 与完整 pinned entrypoint digests，作为后续候选 verdict 的 base-judge 输入。
 2. P0-F1 仅把 `tools/Generated/truth-graph.v1.json` 这一项 `disposable-projection` 迁出保护面前缀；它是 PR-A 的单对象止血前哨与居所子集，收益立即且不依赖 P0-2 的任何前置，完成后不替代 PR-A 的七项 run-local protocol。`scribe-emissions`（`Engine/Digestion/ScribeEmissionAttestation.cs`）因 base judge consumer 依赖留在原址（`anchor-catalog` 已整体退役，不再有址可迁）；迁移它们必须先以 bootstrap PR 迁 consumer，不得以当前全绿冒充完成。
-3. PR-A 把六个受守 aggregate 改为 invocation-local projection；echo residual 则按 `source_id` 分片为允许陈旧的人读投影；artifact disposition 只在 `Meta/FILEMAP.toml` 声明。
+3. PR-A 把六个受守 aggregate 改为 invocation-local projection；artifact disposition 只在 `Meta/FILEMAP.toml` 声明。
 4. 本 SPEC 不在未知分类上实现 PR-B。P0-B 只产生真实、内容寻址的 classification receipt；随后另写绑定该 receipt 的单架构 SPEC。当前 `ExpectedMacros` 在此之前保持不变。
 5. PR-C 把 lane command 与 accepted state 分开：lane 只提交 intent；base-owned writer 机器串行化同 case 写入，先通过者接纳，后续 stale intent 拒绝。全局 stream/head 仅为派生物。
 
@@ -953,7 +955,7 @@ canonical command 只有在返回 `0` 且 `OUT` 是满足指定 schema 的单个
 
 | 读数 | 定位 |
 |---|---|
-| 六个受守 aggregate 与 echo residual 人读分片 | evidence head `4e1cc098`；GoalArtifact E1；路径见 `Meta/FILEMAP.toml` |
+| 六个受守 aggregate | evidence head `4e1cc098`；GoalArtifact E1；路径见 `Meta/FILEMAP.toml` |
 | `truth-graph.v1.json` 与 `scribe-emissions.v1.json` 各一行；`Generated/DAG.md` 550 行 | GoalArtifact E1 的 `wc -l` |
 | frozen ledger 885,607 bytes、211 行 | GoalArtifact E1 |
 | `ExpectedMacros` 位于测试程序且随全 Blueprint corpus 比较 | `tools/tests/StrataLint.Scribe.Tests/Describe/FormulaCorpusInventoryTests.cs:23-60` |
@@ -1012,7 +1014,7 @@ runtime_disposition = "committed-source|committed-ledger|run-local"
 artifact_id = "<stable-id|none>"
 ```
 
-现有 `kind`、`produced_by`、`consumed_by`、`verified_by` 继续表达 kind、producer、consumer、verifier。六个受守 aggregate 的既有精确 path entry 分别取得 `A-DAG/A-TRUTH/A-SCRIBE/A-ANCHOR/A-VALUES/A-FILEMAP`，`runtime_disposition="run-local"`；authority 分别指向现有 Lean/Scribe/anchor/value-kernel/FILEMAP source。echo residual 以 `Generated/echo-residuals/*.md` 单条 glob 登记，按 `source_id` 分片，是不入 Git 索引、按需由 producer 现算的 run-local 人读投影，不取得 artifact ID。Blueprint markdown 与 BACKFILL 的唯一现状均标 `committed-source`，frozen accepted event 路径标 `committed-ledger`。P0-BLUEPRINT 若通过，只能在其原子 PR 内直接改为最终 disposition；不得预埋迁移态。glob 匹配必须仍唯一；缺字段、未知枚举、重复 artifact_id 或 run-local path 无 producer/verifier均 schema reject。
+现有 `kind`、`produced_by`、`consumed_by`、`verified_by` 继续表达 kind、producer、consumer、verifier。六个受守 aggregate 的既有精确 path entry 分别取得 `A-DAG/A-TRUTH/A-SCRIBE/A-ANCHOR/A-VALUES/A-FILEMAP`，`runtime_disposition="run-local"`；authority 分别指向现有 Lean/Scribe/anchor/value-kernel/FILEMAP source。Blueprint markdown 与 BACKFILL 的唯一现状均标 `committed-source`，frozen accepted event 路径标 `committed-ledger`。P0-BLUEPRINT 若通过，只能在其原子 PR 内直接改为最终 disposition；不得预埋迁移态。glob 匹配必须仍唯一；缺字段、未知枚举、重复 artifact_id 或 run-local path 无 producer/verifier均 schema reject。
 
 §4 的人读表由 `make filemap --disposition-table` 从 FILEMAP 生成；P0-2 的 `artifacts` 数组由同一已解析对象生成。verifier 对生成表 bytes、数组 JCS digest 与 `filemap_sha256` 重算比对。不得维护 companion、硬编码 artifact 数组或让 `GeneratedArtifactInventory.All` 再声明 disposition；现有 inventory 若继续提供 producer dispatch，只能按 FILEMAP artifact_id join 并由 policy 断言集合相等。
 
@@ -1155,7 +1157,7 @@ REMOVED：未封闭的 P0-1 command 与 LOG_MANIFEST/event 分类协议。效果
 ## 12.7 禁区
 
 1. 禁 merge driver、union、rerere 与 ledger 文本 union。
-2. 禁继续提交跨 source 的全局 projection；六个受守 aggregate 维持其各自职责，echo residual 只提交按 `source_id` 分片的人读快照；禁通用 CAS/emitter 平台。
+2. 禁继续提交跨 source 的全局 projection；六个受守 aggregate 维持其各自职责；禁通用 CAS/emitter 平台。
 3. 禁把 Blueprint/BACKFILL 一刀切出库；二者不在 PR-A。
 4. 禁削弱 C0、baseline admission、三 required checks 或 semantic obligation。
 5. 禁 CI 回写 disposable projection；source/ledger 只能走各自协议。
@@ -1231,7 +1233,7 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 - **v7.29**(2026-09-06,总单 #5533 第 8 层配套):§11.21 增 coverage→Scribe 收据的 delta-only 准入门(新增/变更边须恰一条匹配收据;存量债 84 条可观察不阻断)与 `align-scribe-receipt --seed-missing`(单对/TSV 批量原子/五态 dry-run/`make scribe-seed`),cover 与 seed 共用 receipt builder,seed 在同一事务投影 chain 祖先闭包;第 573 行 writer 唯一性句改写。
 - **v7.28**(2026-09-06,总单 #5533 第 6 层配套):§11.21 增 canonical CAS 分解服务与 `decompose-atom` verb:持久化语法即 canonical(逐字节复现既有 2,258 条链)、闭合段字母表与无损铺砌、按需计划不持久化、事务化物化与回滚、验证器与守卫不变。
 - **v7.27**(2026-09-06,总单 #5533 第 4 层配套):§11.21 增 git 派生的残余 atom 年龄(最小 committer 时间、merge-aware、显式 `--diff-merges=separate --root`)与 UTC 日分桶、按源/按 disposition 交叉计数;树中不持久化时间戳;历史不可用 fail-closed;真实 git fixture 回归(侧分支/merge/删除重加、`log.diffMerges=off`、`log.showRoot=false`、浅克隆与 linked worktree)。
-历史治理字段按既有 schema 读取，不新增 quarantine 管理命令；残余投影只用于把未消化 ATOM 交给 AI。
+历史治理字段按既有 schema 读取，不新增 quarantine 管理命令；AI 通过所选理论的范围搜索取得未消化 ATOM。
 
 - **v7.22**(2026-09-05):删除 A16.1;理论卷由 `docs/develop/theory/` 路径规则治理;不存在 two-PR 登记义务;裁决:owner 2026-09-05。
 

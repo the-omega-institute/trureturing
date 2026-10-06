@@ -38,60 +38,6 @@ public sealed class ScribeCoverageDeltaTests
         Assert.Empty(findings);
     }
 
-    [Fact]
-    public void ChangedCoverageStatementWithoutScribeReceiptIsAccepted()
-    {
-        var fixture = new CoverageWithoutScribeFixture();
-        fixture.Baseline = CoverageWithoutScribeFixture.Map(fixture.Baseline, entry => entry with
-        {
-            Coverage = [entry.Coverage[0] with { TargetStatementId = null }],
-        });
-        fixture.Document = CoverageWithoutScribeFixture.Map(fixture.Document, entry => entry with
-        {
-            ProjectedStatus = new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
-        });
-        var repository = fixture.Gateway(RawChangeSet.Create([CoverageWithoutScribeFixture.EntryPath(fixture.First)]));
-
-        var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report), []);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Contains("absorbed-closed", result.Output, StringComparison.Ordinal);
-        Assert.DoesNotContain("scribe-", result.Output, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void FullScanAbsorbsCompleteCoverageWithoutScribeReceipts()
-    {
-        var fixture = new CoverageWithoutScribeFixture(84);
-        var repository = fixture.Gateway(RawChangeSet.Create([]));
-
-        var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report), []);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal(84, result.Output.Split('\n').Count(line =>
-            line.StartsWith("ENTRY ", StringComparison.Ordinal)
-                && line.Contains("absorbed-closed", StringComparison.Ordinal)));
-        Assert.DoesNotContain("scribe-", result.Output, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void CandidateNewCoverageWithoutScribeReceiptIsAccepted()
-    {
-        var fixture = new CoverageWithoutScribeFixture();
-        fixture.Baseline = CoverageWithoutScribeFixture.Map(fixture.Baseline, entry => entry with { Coverage = [] });
-        fixture.Document = CoverageWithoutScribeFixture.Map(fixture.Document, entry => entry with
-        {
-            ProjectedStatus = new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
-        });
-        var repository = fixture.Gateway(RawChangeSet.Create([CoverageWithoutScribeFixture.EntryPath(fixture.First)]));
-
-        var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report), []);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Contains("absorbed-closed", result.Output, StringComparison.Ordinal);
-        Assert.DoesNotContain("scribe-", result.Output, StringComparison.Ordinal);
-    }
-
     private static DeltaRuleContext AdmissionContext(CoverageWithoutScribeFixture fixture, RawChangeSet changes)
     {
         var repository = fixture.Gateway(changes);

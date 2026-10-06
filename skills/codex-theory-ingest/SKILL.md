@@ -34,9 +34,8 @@ and this file is the bug.
 - `make help` - owns the live catalogue of canonical doors.
 - `tools/StrataLint.Engine/Digestion/DigestionIngestor.cs` - owns default source
   discovery and source-id derivation.
-- `tools/StrataLint.Engine/Digestion/Atomizers/GenericAtomizer.cs` and
-  `tools/StrataLint.Cli/Commands/DigestStatusCommand.cs` - own generic claim
-  recognition and formalization-candidate eligibility.
+- `tools/StrataLint.Engine/Digestion/Atomizers/GenericAtomizer.cs` - owns generic claim recognition.
+- `tools/StrataLint.Cli/Commands/Digestion/SearchAtomsCommand.cs` - searches stored ATOM paths and text within selected sources.
 
 ## State machine
 
@@ -201,10 +200,9 @@ Apply this authoring contract:
   **Claim status: open.** <the claim, with its domains, hypotheses, and conclusion>
   ```
 
-  `generic-v1` preserves the kind token verbatim, while
-  `digest-status --formalize-candidates` accepts exactly those four lowercase
-  tokens. Uppercase or translated kinds still digest, but do not enter that
-  queue.
+  `generic-v1` preserves the kind token verbatim. Search returns stored ATOM
+  paths within the selected source; AI reads their text and chooses the next
+  claim to process.
 - Give unverified claims explicit `open` or `conjecture` language. A source may
   faithfully say that it contains a paper argument, but it must not say
   `Lean-verified`, `closed`, `frozen`, or equivalent unless the current ledger
@@ -269,38 +267,16 @@ arbitrary exit 2 as a report prerequisite and never attempt a second recovery.
 
 Do not create or edit any `Meta/Digestion/**` file yourself. Locate the one
 generated `Meta/Digestion/backfill/<source_id>/source.toml` whose `path` equals
-the new volume, and require its `atomizer` to be `generic-v1`. Locate at least
-one generated `residual-open/*.yaml` whose `ast_path` begins with an eligible
-kind, derive its atom id from the filename, then run:
+the new volume, and require its `atomizer` to be `generic-v1`. Search the generated records in that source and read a matching ATOM:
 
 ```sh
-make show-atom ATOM_ID=<atom-id>
+make search-atoms SOURCE=<source-id> TEXT=<source-claim-keyword>
+make show-atom SOURCE=<source-id> ATOM_ID=<atom-id>
 ```
 
-Require exit 0, `HASH_VERIFY ... status=match`, the expected source path and
-source id, and raw text faithful to the corresponding source claim.
-
-Use the live CLI to verify both the ledger and downstream queue:
-
-```sh
-theory_ingest_tmp="$(mktemp -d)"
-dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
-  --configuration Release -- digest-status --json \
-  > "$theory_ingest_tmp/status.json"
-dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
-  --configuration Release -- digest-status --formalize-candidates \
-  > "$theory_ingest_tmp/candidates.json"
-jq -e --arg source_id '<source-id>' \
-  '[.entries[] | select(.source_id == $source_id and .migration == "residual" and .truth == "open")] | length > 0' \
-  "$theory_ingest_tmp/status.json"
-jq -e --arg source_id '<source-id>' --arg atom_id '<atom-id>' \
-  '[.candidates[] | select(.source_id == $source_id and .atom_id == $atom_id)] | length == 1' \
-  "$theory_ingest_tmp/candidates.json"
-```
-
-Every command must exit 0. The filtered residual count is the source-scoped
-residual increment; record it and the candidate atom ids rather than counting or
-editing ledger entries by hand.
+Require exit 0, the expected source path and source id, and raw text faithful
+to the corresponding source claim. Search reads stored paths, not a global
+status evaluation, and emits neither a ledger digest nor total counts.
 
 Postcondition: canonical ingest created the source record and CAS-backed atoms,
 `show-atom` reads at least one eligible claim back with matching hashes, and the
