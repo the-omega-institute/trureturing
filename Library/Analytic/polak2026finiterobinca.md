@@ -518,6 +518,12 @@ no cone-kick bound, and no proof of $I_\psi(A)>-D^*(A)$ or RH.
 It is a paper application with no new Lean declaration or originality
 claim.
 
+The [short-interval zero-count supplier](fiori2026shortzerodensity.md)
+refines a specified absolute frequency-block allowance in the actual
+$I_\psi$ formula, with the source's ordinate thresholds and multiplicities
+retained. It supplies no sign for the complete response, does not control
+the remaining zeros, and leaves the same critical-source estimate unpaid.
+
 ## Boundary for FIB
 
 The finite certificate is organized by CA exponent profiles and
