@@ -6,7 +6,7 @@ internal sealed class LatticeSugawaraConformalDocument : IScribeDocumentDefiniti
 {
     private const string Prefix = "D5/S3/VertexAlgebra/LatticeSugawaraConformal.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster");
+        LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The actual matrix Sugawara coefficients satisfy Virasoro and generate charge-sensitive translation.",
@@ -24,52 +24,6 @@ internal sealed class LatticeSugawaraConformalDocument : IScribeDocumentDefiniti
                 + "support. Positive currents above R kill v. The normal summand "
                 + "N(i,j;k,m-k)v is supported in [min(0,m-R),R]. Each input, "
                 + "including each intermediate current image, has its own bound.")),
-            Describe.Lean(
-                DescribeId.Create("lattice-current-heisenberg"),
-                DeclarationHandle.Create(Prefix + "neutralMode_heisenberg"),
-                H("Actual Heisenberg law in every charge sector"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("For all integers m,n and all lattice indices i,j, "
-                    + "[h_i(m),h_j(n)]=m G(i,j) delta(m+n,0) id. Multiplication and "
-                    + "Gram-weighted partial differentiation prove both mixed sign "
-                    + "branches; zero currents are the actual charge scalars."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("lattice-sugawara-coefficient-sum"),
-                DeclarationHandle.Create(Prefix + "sugawaraMode_interval_sum"),
-                H("The normal-product coefficient equals the statewise finite sum"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("At coefficient m+1 the defining subtype equation "
-                    + "has terms h_i(-t-1)h_j(m+t+1) and h_j(m-t)h_i(t). "
-                    + "Reindexing the two natural sums gives respectively k<0 and "
-                    + "k>=0, with N(i,j;k,l)=h_i(k)h_j(l) in the first half and "
-                    + "h_j(l)h_i(k) in the second. Thus L(m)v is one half the "
-                    + "H-weighted double sum of N(i,j;k,m-k)v over the stated finite "
-                    + "interval. This is finite support on v, not on endomorphisms."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("actual-lattice-virasoro"),
-                DeclarationHandle.Create(Prefix + "sugawaraMode_virasoro"),
-                H("All-integer Virasoro with central charge equal to rank"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("For every pair of integers m,n, the actual "
-                        + "endomorphisms satisfy [L(m),L(n)]=(m-n)L(m+n) plus "
-                        + "rank(D)(m^3-m)/12 times delta(m+n,0) id. The current law "
-                        + "gives [L(m),h_i(q)]=-q h_i(m+q). The central defect commutes "
-                        + "with all currents and is scalar independently on each "
-                        + "charge sector. Weighted Euler kills the off-diagonal defect.")),
-                    Paragraph(Text("For a>0, evaluating L(a)L(-a) on single(beta,1) "
-                        + "keeps both charged boundary terms. Subtracting 2a L(0) "
-                        + "cancels their charge contribution. The remaining inverse-Gram "
-                        + "trace is rank(D), and the oscillator sum is (a^3-a)/6. "
-                        + "Skew symmetry supplies negative diagonal modes and the "
-                        + "zero diagonal is zero. Consequently the scalar is the "
-                        + "same on every integral charge sector."))),
-                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-lattice-zero-mode"),
                 DeclarationHandle.Create(Prefix + "sugawaraMode_zero_single"),
@@ -96,7 +50,10 @@ internal sealed class LatticeSugawaraConformalDocument : IScribeDocumentDefiniti
                     + "its action on every oscillator polynomial. The contract combines "
                     + "the full Virasoro law and zero-mode formula with the actual T formula, vacuum "
                     + "annihilation, charged actualField covariance and neutral-current "
-                    + "covariance, all for the same actual carrier and coefficients."))),
+                    + "covariance, all for the same actual carrier and coefficients. "
+                    + "Its final clause consumes sugawaraMode_weighted_homogeneous "
+                    + "to give the eigenvalue r+B(beta,beta)/2 at every oscillator "
+                    + "frequency degree r."))),
                 DescribeRole.Theorem),
             Paragraph(Text("Bakalov-Kac, Twisted Modules over Lattice Vertex Algebras, "
                 + "arXiv math/0402315v1, section 4.1, equations (4.12)-(4.16), "
@@ -105,6 +62,14 @@ internal sealed class LatticeSugawaraConformalDocument : IScribeDocumentDefiniti
                 + "also follows Kalle Kytola's Apache-2.0 Sugawara.lean at revision "
                 + "5ff4245383b2cdd4eea7a0524bc1274c32041eb4. The polynomial Fock "
                 + "carrier is not used to transfer these lattice identities.")),
+            Paragraph(Text("The current-law helper in LatticeSugawaraCurrents directly reuses the "
+                + "frozen private declaration "
+                + "D5.S3.Quantum.Algebra.ConditionalPolynomialRigidity.partials_commute. "
+                + "Its run_tac resolves that declaration's existing private Lean name "
+                + "and applies it inside the finite Gram-weighted sums; it does not "
+                + "reprove polynomial partial-derivative commutation. The sector scalar "
+                + "commutant proof in LatticeSugawaraVirasoro also directly uses the same frozen module's private "
+                + "eq_constant_of_partials_zero through run_tac.")),
             Paragraph(Text("These are conformal mode and generator identities. "
                 + "All-state field reconstruction and its vertex-algebra axioms remain "
                 + "separate obligations. Positive energy and finite-dimensional weight "
