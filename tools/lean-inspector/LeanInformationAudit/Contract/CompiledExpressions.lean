@@ -180,6 +180,10 @@ partial def typeShape (e : Expr) (binders : Array Expr := #[])
     return domain
   | .mvar _ => throw <| IO.userError "incomplete_closure:E7.metavariable"
 
+/-- Classify a compiled type's sort without checking an operand or proof. -/
+def propositionShape (type : Expr) : M Bool := do
+  return (← head (← typeShape type)).isProp
+
 private partial def erase (e : Expr) (binders : Array Expr := #[])
     (depth : Nat := 0) : M Expr := do
   step depth

@@ -5,7 +5,7 @@ def specification(label, original):
 
     composite=['DirectIndexBare','CompositeIdentityBare','CompositeIdentityEta','CompositeSuccessorBare','CompositeSuccessorEta','NominalIndexedProofField','NominalRecursiveIndexedProofField','NominalLetIndexProofField']
     if kind=='erase-level-instantiation':
-        needle='  let some type ← boundedMeta (Meta.inferType e) `infer_type | return none'
+        needle='  let some type ← boundedMeta (compiledQuery (typeShape e)) `type_shape | return none'
         replacement='''  let some type ← boundedMeta (do
     let occurrence ← match e with
       | .const n _ => do
@@ -14,7 +14,7 @@ def specification(label, original):
         | .defnInfo _ => pure (mkConst n (declaration.levelParams.map Level.param))
         | _ => pure e
       | _ => pure e
-    Meta.inferType occurrence) `infer_type | return none'''
+    compiledQuery (typeShape occurrence)) `type_shape | return none'''
         predicted=['NominalUniverseField']
         description='Erase explicit universe instantiations only for definition constants before inference. Retain kernel constructor occurrences, isolating the nominal-return diagnostic boundary.'
     elif kind in ['reconstruct-constructor-type','generic-inferred-telescope']:

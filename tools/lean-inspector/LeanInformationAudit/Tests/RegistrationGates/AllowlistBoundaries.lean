@@ -290,7 +290,7 @@ run_cmd Elab.Command.liftCoreM do
   let mut site := false
   for entry in (← getTraces).toArray[start:] do
     let message ← entry.msg.toString
-    if message.contains "cause=heartbeat_exhaustion" && message.contains "operation=infer_type" &&
+    if message.contains "cause=heartbeat_exhaustion" && message.contains "operation=type_shape" &&
         message.contains "first=readout site=readout" then site := true
   if actual == (false, none) && site then logInfo "[PASS] ActualHeartbeatOperationSite"
   else logError m!"[FAIL] ActualHeartbeatOperationSite: {actual}; site={site}"

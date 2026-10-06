@@ -1,16 +1,18 @@
 import Lean
+import LeanInformationAudit.Contract.CompiledExpressions
 import LeanInformationAudit.ReadoutProvenance.Family
 /-!
-Occurrences are inferred in their original binder context at the existing native
-work limit. An allowlist checks structural type families, specialized constructor
-fields and explicit carrier projections. Independent proofs stop at the inferred
+Occurrence type shapes are projected from compiled declarations in their original
+lexical binder context at the existing work limit. An allowlist checks structural
+type families, specialized constructor fields and explicit carrier projections. Independent proofs stop at the compiled
 Prop boundary. Their implementations never enter executable provenance. Unknown
 forms fail closed; exhausted work returns an incomplete closure. Reusable caches
-contain declaration syntax only, while inferred types and verdicts are query-local.
+contain declaration syntax only, while projected types and verdicts are query-local.
 -/
 
 namespace LeanInformationAudit.RegistrationGates
 open Lean
+open Contract.CompiledExpressions (typeShape propositionShape)
 
 -- §10.1 budget record: safety limit outside the capacity domain; owner=governance lane;
 -- date=2026-09-13; basis=the existing 4100-link closure-exhaustion fixture;
@@ -30,16 +32,13 @@ register_option provenanceExpressionLimit : Nat := {
   defValue := provenanceExpressionFuel
   descr := "Readout work limit, capped by the production expression policy" }
 
--- §10.1 budget record: safety limit outside the capacity domain; owner=governance lane;
--- date=2026-09-13; basis=bounded raw Lean allocation per native inference operation;
--- exit condition=the supported readout corpus or pinned Lean version changes,
--- then rerun real heartbeat-exhaustion and boundary fixtures. This is exempt
--- from capacity derivation because it is a correctness fail-closed limit.
+-- Allocation per compiled type-shape query is independently bounded.
+-- Exhaustion produces an incomplete result at the original operation address.
 def provenanceDefEqHeartbeats : Nat := 20000
 
 register_option provenanceDefEqLimit : Nat := {
   defValue := provenanceDefEqHeartbeats
-  descr := "Maximum raw heartbeats for native occurrence inference; legacy option name; zero is incomplete" }
+  descr := "Maximum raw heartbeats for compiled type-shape queries; legacy option name; zero is incomplete" }
 
 def provenanceJudgeAPIs : Array Name := #[
   `LeanInformationAudit.InformationRegistry.entries,
@@ -554,6 +553,21 @@ def listedTypeClasses : Array Name := #[
   `GroupWithZero, `CommGroupWithZero, `CommMonoidWithZero, `Nontrivial,
   `Fact, `CharP]
 
+/-- Compilation callers supply their existing immutable declaration and local
+binder tables to the environment-independent compiled-expression calculator. -/
+def compiledQuery (action : Contract.CompiledExpressions.M α) : MetaM α := do
+  let env := (← getEnv).setExporting false
+  let locals ← getLCtx
+  let context : Contract.CompiledExpressions.Context := {
+    find := env.find?
+    local? := locals.find?
+    heartbeatStart := ← getInitHeartbeats
+    heartbeatLimit := ← getMaxHeartbeats }
+  let outcome : IO (Except String α) := do
+    try return .ok (← Contract.CompiledExpressions.run context action).1
+    catch error => return .error error.toString
+  ofExcept (← outcome)
+
 def boundedMeta (action : MetaM α) (site : Name := `type_classification)
     (operations : Nat := 1) : WalkM (Option α) := do
   unless ← chargeSummaryWork (fun c => { c with canonicalizations := c.canonicalizations + operations }) operations do
@@ -573,21 +587,23 @@ def boundedMeta (action : MetaM α) (site : Name := `type_classification)
   match result with
   | .ok value => return some value
   | .error ex =>
-    trace[InformationProvenance.check] "meta_failure operation={site}: {ex.toMessageData}"
+    trace[InformationProvenance.check] "query_failure operation={site}: {ex.toMessageData}"
+    let heartbeat := ex.isMaxHeartbeat ||
+      (← ex.toMessageData.toString).contains "compiled_expression_heartbeats"
     modify fun s => { s with incomplete := true }
-    trace[InformationProvenance.check] "incomplete cause={if ex.isMaxHeartbeat then "heartbeat_exhaustion" else "meta_runtime_exception"} operation={site} first={(← get).currentFirst} site={(← get).currentOrigin}"
+    trace[InformationProvenance.check] "incomplete cause={if heartbeat then "heartbeat_exhaustion" else "query_runtime_exception"} operation={site} first={(← get).currentFirst} site={(← get).currentOrigin}"
     return none
 
--- This is the only source of types used for occurrence admission. Expressions
--- contain their actual levels and stable local identities; no inference cache
--- survives the registered-statement query. Failed inference is never cached.
+-- This is the only source of types used for occurrence admission. Compiled
+-- types contain actual levels and stable local identities. Failed projections
+-- are never cached; projected types are scoped to the statement query.
 def occurrenceType (e : Expr) : WalkM (Option Expr) := do
   unless ← chargeTraversal do return none
   if e.hasLooseBVars || e.hasMVar || e.hasLevelMVar then
     noteUnclassified ⟨"unclassified_occurrence", `occurrence, "unclassified", `occurrence⟩
     return none
   if let some type := (← get).inferredTypes[e]? then return some type
-  let some type ← boundedMeta (Meta.inferType e) `infer_type | return none
+  let some type ← boundedMeta (compiledQuery (typeShape e)) `type_shape | return none
   modify fun s => { s with
     inferredTypes := s.inferredTypes.insert e type
     counters.inferredOccurrences := s.counters.inferredOccurrences + 1 }
@@ -619,7 +635,7 @@ def exactScalarStatement (e : Expr) : WalkM Bool := do
   let some recognized := (← get).recognizedStatement | return false
   return scalarStatement recognized.matchedType == some shape
 
--- Constructor telescopes are inferred from native occurrences. Only literal
+-- Constructor telescopes are projected from compiled occurrences. Only literal
 -- constructor-index patterns are supported; no metavariables, equation solver,
 -- dependent elimination, or semantic index normalization is used.
 private partial def bindIndex (pattern actual : Expr)

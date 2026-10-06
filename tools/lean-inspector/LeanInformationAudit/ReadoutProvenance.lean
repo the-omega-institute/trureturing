@@ -1,6 +1,7 @@
 import LeanInformationAudit.ReadoutProvenance.Types
 namespace LeanInformationAudit.RegistrationGates
 open Lean
+open Contract.CompiledExpressions (typeShape propositionShape)
 
 
 -- The sole admission entry: infer the occurrence in its lexical context, then
@@ -91,7 +92,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
       if unknown then
         noteUnclassified ⟨"unclassified_argument_type", first, namespaceLabel env first, origin⟩
       return true
-    let some proof ← boundedMeta (Meta.isProp type) `proof_boundary | return false
+    let some proof ← boundedMeta (compiledQuery (propositionShape type)) `proof_boundary | return false
     return proof
   -- admission-exit: visitOccurrence.3 rule=retained-witness.rule
   if proof == some true then return
@@ -167,7 +168,7 @@ private def process (env : Environment) : WalkM Unit := do
         pure cached
       else do
         let some type ← occurrenceType (mkConst n.1 n.2) | continue
-        let some proof ← boundedMeta (Meta.isProp type) `declaration_proof_boundary | continue
+        let some proof ← boundedMeta (compiledQuery (propositionShape type)) `declaration_proof_boundary | continue
         let summary ← if proof then summarise env #[(.typePos, type)] (← get).exprFuel
           else if info.hasValue (allowOpaque := true) then do
             let valuePos := match info with | .thmInfo _ => .proofPos | _ => .dataPos
@@ -203,8 +204,7 @@ private def collectReadout (env : Environment) (theoremName address : Name) (rea
     trace[InformationProvenance.check]
       "incomplete cause=missing_constant operation=registered_statement first={theoremName} site={address}"
     return { forbidden := false, unclassified := none, incomplete := true, walked := #[] }
-  let statement ← Meta.MetaM.run' <| Meta.inferType
-    (mkConst theoremName (theoremInfo.levelParams.map Level.param))
+  let statement := theoremInfo.type
   let decision := mkApp (mkConst ``Decidable) statement
   let computation : WalkM Unit := do
     unless ← chargeTraversal extractionWork do return
@@ -327,7 +327,7 @@ def argumentIdentityNode (env : Environment) (expression : Expr)
     exactScalarStatement type.getAppArgs[0]! else pure false
   if exact || decision then modify fun s => { s with forbidden := true }
   let proposition := type == .sort .zero
-  let some proof ← boundedMeta (Meta.isProp type) `raw_argument_proof_type | return
+  let some proof ← boundedMeta (compiledQuery (propositionShape type)) `raw_argument_proof_type | return
   if proposition || proof then
     let candidate := if proposition then expression else type
     if candidate.equal (← get).statement then
@@ -357,7 +357,7 @@ private partial def retainedTypeIdentity (env : Environment) (expression : Expr)
   if let .proj name _ _ := expression then directProjection env name
   let some type ← occurrenceType expression | return
   let proposition := type == .sort .zero
-  let some proof ← boundedMeta (Meta.isProp type) `retained_proof_type | return
+  let some proof ← boundedMeta (compiledQuery (propositionShape type)) `retained_proof_type | return
   if proposition || proof then
     let candidate := if proposition then expression else type
     if candidate.equal (← get).statement then

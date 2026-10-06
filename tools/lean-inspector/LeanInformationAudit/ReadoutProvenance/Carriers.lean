@@ -1,6 +1,7 @@
 import LeanInformationAudit.ReadoutProvenance.State
 namespace LeanInformationAudit.RegistrationGates
 open Lean
+open Contract.CompiledExpressions (typeShape propositionShape)
 
 /-- Retained syntax from one successful statement-alias walk. No argument
 inference, provenance verdict, or caller-local expression is shared. -/
@@ -187,14 +188,14 @@ partial def listStatementBoundary (env : Environment) (type : Expr)
   match type with
   | .forallE n domain body bi =>
     if binders == 0 then
-      let some firstProof ← boundedMeta (Meta.isProp domain) `list_statement_domain | return none
+      let some firstProof ← boundedMeta (compiledQuery (propositionShape domain)) `list_statement_domain | return none
       if !firstProof then
         let twoDataBinders ← Meta.withLocalDecl n bi domain fun x => do
           let some body ← substitute body #[x] | return false
           let some evidence ← statementOuter env body | return false
           let body := evidence.matchedType
           let .forallE _ secondDomain _ _ := body | return false
-          let some secondProof ← boundedMeta (Meta.isProp secondDomain) `list_statement_domain
+          let some secondProof ← boundedMeta (compiledQuery (propositionShape secondDomain)) `list_statement_domain
             | return false
           return !secondProof
         -- admission-exit: listStatementBoundary.1 rule=listForall
