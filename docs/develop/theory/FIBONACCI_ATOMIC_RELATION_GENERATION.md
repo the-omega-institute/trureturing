@@ -65706,9 +65706,159 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 431. 完整 primorial 绝对账的窗口无关成本与原生源尺度
+## 431. 完整绝对纤维账的匹配上界与指定阈值的精确阶
 
-**定义 431.1（同一绝对账与源时钟）。** 保持 §430 的实际常数
+沿用 §§428、430 的实际 $\beta_r$、$P_z$、$\theta_{P_z}$、$\mathsf C_z$、$\mathsf L_z$ 和指定的 $X_z(V)$。本节只估计这份既定非负账及其指定充分阈值。
+
+**定义。** 记 $L=\log2$、$\ell=\log z$、$a=e^{-\gamma_E}$。写
+
+$$
+C(W)=c_3W^3+c_2W^2+c_1W+c_0,
+$$
+
+其中 $c_3=A/6$、$c_2=D/2$、$c_1=2D-A+2\mu_0$、$c_0=D+11\mu_0$ 均非负。置
+
+$$
+\begin{aligned}
+K_C&=c_3+c_2+c_1+c_0,\\
+K_L&=A/2+(D-A)+|c_{\rm diag}|+A+D-A,\\
+B_3&=\sum_{r\ge1}\frac{|\beta_r|}{r}(1+\log r/L)^3<\infty,\\
+D_V&=V+(1+L)/L,\\
+K_+&=\exp\!\left((e-1)(1+K_1/L)\right),\qquad K_1=\log4+4.
+\end{aligned}
+\tag{SU.1}
+$$
+
+$B_3$ 的有限性由实际 $\beta_r=\log(1-(-q)^r)$ 的指数尾支付。$K_C,K_L>0$，且对 $W\ge0$ 有 $C(W)\le K_C(1+W)^3$。
+
+**定理（完整账的统一上界）。** 存在 $z_1\ge2$，使对每个固定 $V\ge0$、所有 $z\ge z_1$，
+
+$$
+\boxed{
+\mathsf C_z(V\ell)\le U_C(V)\ell^4,\qquad
+\mathsf L_z(V\ell)\le U_L(V)\ell^3,}
+\tag{SU.2}
+$$
+
+其中可以取
+
+$$
+U_C(V)=\frac{12eK_+K_CD_V^3B_3}{a},\qquad
+U_L(V)=\frac{12eK_+K_LD_V^2B_3}{a}.
+\tag{SU.3}
+$$
+
+**证明：同过滤器正矩。** 定义
+
+$$
+Q_z^+=\sum_{d\mid P_z}\frac1d=\prod_{p\le z}(1+1/p).
+$$
+
+有限约数 Euler 展开精确给
+
+$$
+\frac1{Q_z^+}\sum_{d\mid P_z}\frac{\exp(\log d/\ell)}d
+=\prod_{p\le z}\left(1+\frac{\exp(\log p/\ell)-1}{p+1}\right).
+\tag{SU.4}
+$$
+
+对 $0\le t\le1$，指数函数的凸性给 $e^t-1\le(e-1)t$。又 $1+y\le e^y$ 对 $y\ge0$ 成立，故复用 §428 的第一 Mertens 供应 $\sum_{p\le z}\log p/p\le\ell+K_1$，得到
+
+$$
+\frac1{Q_z^+}\sum_{d\mid P_z}\frac{\exp(\log d/\ell)}d
+\le\exp\!\left(\frac{e-1}{\ell}\sum_{p\le z}\frac{\log p}{p+1}\right)
+\le K_+.
+\tag{SU.5}
+$$
+
+对 $y\ge0$，指数级数的三次项给 $(1+y)^3\le6e^{1+y}$。因此
+
+$$
+\sum_{d\mid P_z}\frac{(1+\log d/\ell)^k}{d}
+\le6eK_+Q_z^+,\qquad k=2,3.
+\tag{SU.6}
+$$
+
+第三 Mertens 供应允许选择与 $V$ 无关的 $z_1$，使
+$E_{z,0}\ge a/(2\ell)$ 对 $z\ge z_1$ 成立。因
+$Q_z^+=\prod_{p\le z}(1-1/p^2)/E_{z,0}\le1/E_{z,0}$，
+
+$$
+Q_z^+\le2\ell/a\quad(z\ge z_1).
+\tag{SU.7}
+$$
+
+**证明：支付全部卷积项。** 有限过滤器身份及三角不等式给
+
+$$
+|\theta_{P_z}(j)|\le\sum_{\substack{d\mid P_z\\d\mid j}}|\beta_{j/d}|.
+\tag{SU.8}
+$$
+
+对 $d\mid P_z,r\ge1$，令 $y=\log d/\ell$、$b=\log r/L$。由于 $D_V\ge1$、$\ell\ge L$，
+
+$$
+1+V\ell+\log d+\log r+L
+\le\ell D_V(1+y)(1+b).
+\tag{SU.9}
+$$
+
+在非负和中应用（SU.8），按 $j=dr$ 重排，用（SU.9）、（SU.6）和（SU.7），得到
+
+$$
+\begin{aligned}
+\mathsf C_z(V\ell)
+&\le K_C\sum_{d\mid P_z}\frac1d\sum_{r\ge1}\frac{|\beta_r|}{r}
+ (1+V\ell+\log d+\log r+L)^3\\
+&\le K_C\ell^3D_V^3 B_3\,6eK_+Q_z^+
+\le U_C(V)\ell^4.
+\end{aligned}
+\tag{SU.10}
+$$
+
+完整 $\mathsf L_z$ 的括号在 $W=V\ell+\log j$ 时至多为
+$K_L(1+W+L)^2$：其二次、一次和常数项分别由 $A/2$、$D-A$、$|c_{\rm diag}|$、$A$、$D-A$ 支付。同样用（SU.8）–（SU.9）、（SU.6），并以 $(1+b)^2\le(1+b)^3$，得到第二个（SU.2）。所有无限重排只涉及非负和；实际指数尾及（SU.6）同时证明它们有限。$\square$
+
+**推论（既定成本与阈值的精确阶）。** 对每个先固定的 $V>0$，当 $z\to\infty$ 时，
+
+$$
+\boxed{
+\mathsf C_z(V\log z)=\Theta_V((\log z)^4),\qquad
+\log X_z(V)=\Theta_V((\log z)^4).}
+\tag{SU.11}
+$$
+
+证明。第一个结论由（SU.2）和（LC.6）相合。对（CP.11）的指定最大值，
+
+$$
+\log X_z(V)
+=\max\{1,\ 1+2\mathsf C_z(V\ell),\ \log(1+2\mathsf L_z(V\ell))\}.
+$$
+
+（SU.2）使三项共同为 $O_V(\ell^4)$；（LC.6）给严格正的匹配下界。$\square$
+
+特别地，仅在选择 $x=X_z(V)$ 时，整个窗口 $x\le n\le xz^V$ 满足
+
+$$
+\frac{\log X_z(V)}{\ell}
+\le\frac{\log n}{\ell}
+\le\frac{\log X_z(V)}{\ell}+V,
+\qquad
+\frac{\log n}{\ell}=\Theta_V(\ell^3)
+\tag{SU.12}
+$$
+
+且上下常数共同适用于该窗口全部整数。对任意更大的 $x\ge X_z(V)$，仍只有（LC.7）的共同下界，不能由此宣称同一个 $O_V(\ell^3)$ 上界。
+
+（SU.11）只确定当前完整绝对账及指定阈值的阶。它不估计真实误差的下界，不给最小可行阈值的下界，也不排除保留有限 Euler 符号后的更低成本核估计。
+
+**来源。** （SU.2）、（SU.11）–（SU.12）是对 §§428、430 这份实际预算与指定阈值的新推导。经典指数凸性、有限 Euler 展开和指数级数不等式仅作证明中间步骤；第一、第三 Mertens 供应沿用 §428 的来源及范围。
+
+## 追加锚（本行以下为增补区）
+
+## 432. 完整 primorial 绝对账的窗口无关成本与原生源尺度
+
+**定义 432.1（同一绝对账与源时钟）。** 保持 §§430–431 的同一实际常数
 $A>0,D>A,\mu_0>0$、$a=e^{-\gamma_E}>0$、$\Delta_\beta>0$，
 以及（LC.1）、（LC.4）–（LC.5）的
 $P_z,\theta_{P_z},C,\mathsf C_z,\mathsf L_z,X_z$。
@@ -65722,19 +65872,20 @@ F(z)=\sum_{p\le z}\frac{\log p}{p},\qquad
 \qquad
 R_1=\sum_{m\ge2}\frac{\log m}{m(m-1)}<\infty,
 \qquad D_S=K_1+R_1.
-\tag{431.1}
+\tag{432.1}
 $$
 
-不以 $A$ 表示 $\Lambda$，也不把这些经典供应另列为新增定理。
+§431 的完整账上界及固定正窗口的精确阶直接复用；
+下面只补 $U\ge0$ 上的共同下界，不重新推导其上界。
 
-**定理 431.2（窗口无关的完整账成本）。** 存在有限 $z_1\ge2$，
+**定理 432.2（窗口无关的完整账成本）。** 存在有限 $z_1\ge2$，
 使所有实数 $z\ge z_1$ 和所有实数 $U\ge0$ 同时满足
 
 $$
 \boxed{
 \mathsf C_z(U)\ge
 \frac{\Delta_\beta A}{192a}(\log z)^4.}
-\tag{431.2}
+\tag{432.2}
 $$
 
 因而对全部 $z\ge z_1$、$V>0$，包括任意随 $z$ 缩小的正窗口宽度，
@@ -65744,7 +65895,7 @@ $$
 \boxed{
 \log X_z(V)\ge
 \frac{\Delta_\beta A}{96a}(\log z)^4.}
-\tag{431.3}
+\tag{432.3}
 $$
 
 这里的下界只针对已指定的非负绝对账和充分阈值，
@@ -65757,7 +65908,7 @@ $$
 \mathsf C_z(U)
 \ge\frac{\Delta_\beta A}{6}
 \sum_{d\mid P_z}\frac{(\log d)^3}{d}.
-\tag{431.4}
+\tag{432.4}
 $$
 
 这里只使用 $U\ge0$、$\log2>0$；没有先固定严格正的窗口宽度。
@@ -65775,10 +65926,10 @@ $$
 m_z:=\sum_{d\mid P_z}\nu_z(d)\log d
 =\sum_{p\le z}\frac{\log p}{p+1}
 =F(z)-\sum_{p\le z}\frac{\log p}{p(p+1)}.
-\tag{431.5}
+\tag{432.5}
 $$
 
-后一个非负修正和不超过（431.1）的 $R_1$，所以
+后一个非负修正和不超过（432.1）的 $R_1$，所以
 $m_z\ge\log z-D_S$。
 取 $z_1\ge z_0$，其中 $z_0$ 是（LC.12）的同一阈值，
 并取 $\log z_1\ge2D_S$。此选择只依赖固定供应，独立于 $U,V$，且
@@ -65797,15 +65948,15 @@ $$
 =\mathcal D_z\sum_{d\mid P_z}\nu_z(d)(\log d)^3
 \ge\mathcal D_zm_z^3
 \ge\frac{(\log z)^4}{32a}.
-\tag{431.6}
+\tag{432.6}
 $$
 
-代入（431.4）即得（431.2）。
+代入（432.4）即得（432.2）。
 最后（LC.5）给
 $\log X_z(V)\ge1+2\mathsf C_z(V\log z)$，
-而 $V\log z\ge0$，故（431.3）对全部 $V>0$ 同时成立。$\square$
+而 $V\log z\ge0$，故（432.3）对全部 $V>0$ 同时成立。$\square$
 
-**定理 431.3（原生 CA 支撑与时钟上的指定校准障碍）。**
+**定理 432.3（原生 CA 支撑与时钟上的指定校准障碍）。**
 存在有限 $N_1$，使每个 $N\ge N_1$ 的 proper GA1 CA 整数，
 在同一实际来源的
 
@@ -65817,7 +65968,7 @@ $$
 
 $$
 \boxed{x<X_z(V).}
-\tag{431.7}
+\tag{432.7}
 $$
 
 因此缩小 $V$ 不能使这份原生支撑和时钟满足（CP.11）指定的
@@ -65834,12 +65985,12 @@ $$
 \frac{\log x}{(\log z)^4}\longrightarrow0.
 $$
 
-取统一于全部 $V>0$ 的（431.3），固定正系数
+取统一于全部 $V>0$ 的（432.3），固定正系数
 $\Delta_\beta A/(96a)$ 最终严格大于该比值，
-即得（431.7）。此推导只在实际整数来源上运输既有支撑和时钟，
+即得（432.7）。此推导只在实际整数来源上运输既有支撑和时钟，
 没有另选粗糙 cutoff 或把 GA1 与 CA 的两个来源分开。$\square$
 
-**定理 431.4（指定校准的必要 cutoff 范围）。**
+**定理 432.4（指定校准的必要 cutoff 范围）。**
 对所有 $z\ge z_1,V>0,x\ge X_z(V)$，必有
 
 $$
@@ -65850,16 +66001,16 @@ $$
 \frac{\log x}{\log z}
 \ge\left(\frac{\Delta_\beta A}{96a}\right)^{1/4}
 (\log x)^{3/4}.}
-\tag{431.8}
+\tag{432.8}
 $$
 
 特别地，对任意固定 $b>0$，cutoff $z=x^b$ 最终不能满足这份校准，
 统一于全部 $V>0$。这些必要条件不保证允许范围内的预算足够小，
 也不提供增长粗糙参数上的统一前缀估计。
 
-证明。（431.3）与 $x\ge X_z(V)$ 给
+证明。（432.3）与 $x\ge X_z(V)$ 给
 $\log x\ge\Delta_\beta A(\log z)^4/(96a)$。
-取正四次根并除以 $\log z>0$ 得（431.8）。
+取正四次根并除以 $\log z>0$ 得（432.8）。
 若 $z=x^b$，则该必要不等式要求
 $1\ge\Delta_\beta A b^4(\log x)^3/(96a)$，
 在 $x\to\infty$ 时矛盾。$\square$
