@@ -23,10 +23,11 @@ The Lean theorem proves the universal lower bound and the exact corrected
 equality classification. This is a formalization of a consequence of
 existing literature; it is not counted as a new unique open-problem solution.
 
-## Verified locators and literature consequence
+## Verified locator
 
 - Zhang: https://arxiv.org/abs/2608.13599v2, Theorem 1.2 and Question 2.11;
   Remark 2.8 and Proposition 2.10 supply the surrounding one-entry cases.
+- DOI: https://doi.org/10.48550/arXiv.2608.13599.
 - Terence Tao, *Some remarks on the lonely runner conjecture*,
   https://arxiv.org/abs/1701.02048, Proposition 1.5 (printed page 7;
   proof in Section 5, pages 27–28). With `m=N-1` distinct positive speeds,
