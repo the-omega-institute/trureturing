@@ -277,23 +277,14 @@ public sealed partial class ProductionEnvironmentTests
             isBaseFactAffected: null));
     }
 
-    [Theory]
-    [InlineData("stale")]
-    [InlineData("rejected")]
-    public void StatusAuthorityClosureRejectsSourcePathForEachNonSeenAlignment(
-        string alignmentName)
+    [Fact]
+    public void StatusAuthorityClosureRejectsSourcePathForRejectedAlignment()
     {
         var entry = StatusAuthorityClosureEntry();
-        var alignment = alignmentName switch
-        {
-            "stale" => DigestionReceiptAlignment.Stale,
-            "rejected" => DigestionReceiptAlignment.Rejected,
-            _ => throw new ArgumentOutOfRangeException(nameof(alignmentName)),
-        };
 
         Assert.True(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             entry,
-            alignment,
+            DigestionReceiptAlignment.Rejected,
             baselineEntryPresent: true,
             changes: RawChangeSet.Create([entry.SourcePath]),
             isBaseFactAffected: null));

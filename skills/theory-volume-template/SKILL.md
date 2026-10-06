@@ -221,20 +221,7 @@ ingest 判 `INGEST_TRUTH_ALIGNMENT_REQUIRED planned rewrite of existing entry <i
 **别用管道判绿**:`make ingest | tail` 会吞掉真退出码,zsh 里 `${PIPESTATUS[0]}` 恒空。
 落文件、读哨兵。
 
-## 五、三种追平税判词(都不要照它说的跑 align)
-
-```
-INGEST_TRUTH_ALIGNMENT_REQUIRED existing entry <id> removed; run make align-digestion-status
-INGEST_TRUTH_ALIGNMENT_REQUIRED Lean report input closure changed; ...
-INGEST_TRUTH_ALIGNMENT_REQUIRED existing entry <id> changed status-authority inputs; ...
-```
-
-**统一判据:判词点名的条目若不属于本卷的 `source_id`,那就是追平税**——别人刚合入的账目条目,
-`git merge origin/dev` 后重跑即通过。`align → ingest` 是失败不动点,越跑越远。
-查 dev 改了什么用 `git diff --name-only $(git merge-base HEAD origin/dev)..origin/dev`,
-**不能**用 `HEAD..origin/dev`(那会把自己的追加反算成别人的改动)。
-
-## 六、反面即病
+## 五、反面即病
 
 1. 见到自己**回去改**卷里既有的一句话——哪怕只是改错别字。正解是新章勘误,旧字节不动。
 2. 见到自己把导航、目录、修订记录写在**卷首**并每批更新它——那是每批都改既有 atom。

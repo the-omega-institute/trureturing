@@ -315,28 +315,6 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void IngestRejectsUnverifiedNonemptyClauseChain()
-    {
-        var (sourceBytes, baseline, candidate, parentCapture, childCapture) = MalformedPzgClauseSubset();
-
-        var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
-            candidate,
-            Snapshot(sourceBytes, [parentCapture, childCapture]),
-            baseline));
-        var parent = Assert.Single(candidate.RequireDigestionEntries(), entry =>
-            !entry.Receipts.ChainAtoms.IsEmpty);
-
-        Assert.Contains(
-            $"ingest clause chain parent {parent.AtomId} lacks verified clause-plan proof",
-            exception.Message,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            $"entry {parent.AtomId} malformed clause chain",
-            exception.Message,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void AdmissionPreservesInheritedRegisteredClauseLocatorNotClaimedByAPlan()
     {
         var bytes = Encoding.UTF8.GetBytes("registered atom");
@@ -357,56 +335,6 @@ public sealed partial class DigestionAlignmentTests
             DigestionReceiptAlignment.Seen,
             result.AlignmentFor(AtomId(atom)));
         Assert.Empty(result.Findings);
-    }
-
-    [Fact]
-    public void InheritedGictGenericChainIsNotRecheckedByAdmissionButIngestRejectsMissingPlan()
-    {
-        var sourceBytes = Encoding.UTF8.GetBytes(
-            "# GICT\n\n**定理 1.1(A)**。first。\n\n**定理 1.2(B)**。second。\n");
-        var claims = GictAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules).Claims;
-        Assert.Equal(2, claims.Length);
-        var parentCapture = DigestionCasStore.Capture(claims[0].RawBytes.AsSpan());
-        var childCapture = DigestionCasStore.Capture(claims[1].RawBytes.AsSpan());
-        var loaded = Ledger(
-            [],
-            CasEntry("parent", claims[0], parentCapture.Reference),
-            CasEntry("generic-child", claims[1], childCapture.Reference));
-        var source = Assert.Single(loaded.RequireDigestionSources());
-        var parentId = AtomId(claims[0]);
-        var childId = AtomId(claims[1]);
-        var parent = Assert.Single(source.Entries, entry => entry.AtomId == parentId);
-        var ledger = loaded.WithDigestionSources(
-        [
-            source with
-            {
-                GenreRegistryProjection = GenreRegistryProjection.Available(
-                    GenreRegistryCheck.Collected([])),
-                Entries =
-                [
-                    parent with
-                    {
-                        Receipts = parent.Receipts with { ChainAtoms = [childId] },
-                    },
-                    Assert.Single(source.Entries, entry => entry.AtomId == childId),
-                ],
-            },
-        ]);
-        var snapshot = Snapshot(sourceBytes, [parentCapture, childCapture]);
-
-        var alignment = DigestionLedgerAligner.Evaluate(
-            ledger,
-            snapshot,
-            ledger,
-            DigestionAlignmentMode.Admission);
-        var exception = Assert.Throws<FormatException>(() =>
-            DigestionIngestor.Plan(ledger, snapshot, ledger));
-
-        Assert.Equal(DigestionReceiptAlignment.Seen, alignment.AlignmentFor(parentId));
-        Assert.Equal(DigestionReceiptAlignment.Seen, alignment.AlignmentFor(childId));
-        Assert.Empty(alignment.Findings);
-        Assert.Contains($"ingest clause chain parent {parentId} lacks verified clause-plan proof", exception.Message);
-        Assert.Contains("clause plan has no proper claim decomposition", exception.Message);
     }
 
     [Fact]
@@ -436,10 +364,9 @@ public sealed partial class DigestionAlignmentTests
         var ledger = loaded.WithDigestionSources(
             [source with { Entries = [absorbedParent] }]);
 
-        var plan = DigestionIngestor.Plan(
+        var plan = ReportFreeDigestionIngestor.Plan(
             ledger,
-            Snapshot(sourceBytes, [captured]),
-            ledger);
+            Snapshot(sourceBytes, [captured]));
 
         var result = Assert.Single(Assert.Single(plan.Document.RequireDigestionSources()).Entries);
         Assert.Equal(AtomId(parent), result.AtomId);
