@@ -313,7 +313,6 @@ case "$COMMAND" in
   deliver-check)
     make lean-report
     make emit
-    make align-digestion-status
     run_digest_status
     # Freeze last among all mutating derivations so the proposition snapshot is current.
     verify_added_frozen_events_v5
