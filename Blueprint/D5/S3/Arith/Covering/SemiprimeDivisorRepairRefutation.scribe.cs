@@ -5,6 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Covering;
 internal sealed class SemiprimeDivisorRepairRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Covering/SemiprimeDivisorRepairRefutation.";
+    private static readonly LibraryNoteRef BooleanSource =
+        LibraryNoteRef.Create("D5/L/Certificates/abbasizanjanikullmann2020twocnf");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Six congruence packets with distinct semiprime anchors have incompatible "
@@ -49,15 +51,22 @@ internal sealed class SemiprimeDivisorRepairRefutationDocument : IScribeDocument
                     + "so at least one endpoint prime must match its literal "
                     + "phase. The first three packets force the phase modulo "
                     + "five to be one; the last three force it to be zero. "
+                    + "Their Boolean consequence is the known U-zero(5,3) "
+                    + "clause set in Abbasizanjani and Kullmann, Section 4. "
+                    + "The Boolean variables mean that the prime phases equal "
+                    + "one; phase zero implies the corresponding negation. "
+                    + "This implication allows arbitrary other residues. "
                     + "The result concerns this fixed finite source union and "
                     + "this bank. It neither constructs an odd covering system "
                     + "nor excludes repairs using additional numerical donors.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, acknowledge: true))));
 
-    private static DocumentBlock Entry(string name, string heading, string prose, DescribeRole role) =>
+    private static DocumentBlock Entry(string name, string heading, string prose,
+        DescribeRole role, bool acknowledge = false) =>
         Describe.Lean(
             DescribeId.Create("semiprime-divisor-repair-" + name.Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(heading),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            StatementSource.WithoutFormula(),
+            acknowledge ? AssessedProvenance.FromRepo(BooleanSource) : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 }
