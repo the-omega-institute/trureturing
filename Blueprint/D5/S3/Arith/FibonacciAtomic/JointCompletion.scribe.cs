@@ -77,7 +77,10 @@ internal sealed class JointCompletionDocument : IScribeDocumentDefinition
                         + "The convergence arrow is convergence as n tends to infinity. All "
                         + "uniform embeddings use the product and subspace uniform structures, "
                         + "with each finite residue space discrete and the source structure U_D "
-                        + "given by sourceUniformity. AbstractCompletionOn denotes the existence "
+                        + "given by sourceUniformity. The observation embedding uses the underlying "
+                        + "bit-function encoding of each legal finite word in its ambient Boolean "
+                        + "word space; the actual image clause has codomain X(L) times the residue "
+                        + "pair. AbstractCompletionOn denotes the existence "
                         + "of a mathlib AbstractCompletion of (D,U_D) with underlying space K, "
                         + "the stated product uniform structure, and inclusion gamma.")),
                     Paragraph(Text("The joint observation map is a uniform embedding into the "
