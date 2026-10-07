@@ -5,12 +5,10 @@
    anchors: []
    utility: none
    digest: The complete literal original shoulder has a strict uniform half-gamma supremum reserve. -/
-
 import D5.S3.Arith.Robin.PrimePrefixMacroProfile
 import D5.S3.Arith.Robin.PrimePrefixOriginalA
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Tactic
-
 /-!
 The actual two-piece A endpoint is reused from PrimePrefixOriginalA. The
 literal normalizedZeta and macro-profile endpoint are reused from
@@ -18,7 +16,6 @@ PrimePrefixMacroProfile. Its consumed Bose/Gamma supplier bodies preserve
 the classical Gamma/Bose attribution and the FermiMellin attribution to
 David Sanftenberg (2026), Apache-2.0. The complete log-exponential and tail
 FTC bodies retain their Mertens.Gamma and PrimePrefixOriginalA provenance.
-
 The original shoulder is compared on its entire positive integration axis.
 The complete comparison is a unit-mass exponential average. Positive mass
 outside the scalar equality layer supplies the additional fixed reserve
@@ -26,7 +23,6 @@ from actual-prefix theory section 447, strengthened by its half-gamma
 simplification in section 451. No full Robin pairing or RH endpoint
 is asserted.
 -/
-
 noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -35,7 +31,6 @@ open scoped Topology Interval
 namespace D5.S3.Arith.Robin.PrimePrefixOriginalShoulder
 open D5.S3.Arith.Robin.PrimorialGlobalLaplaceEnvelope
 open D5.S3.Arith.Robin.PrimePrefixMacroProfile
-
 /-- The original Euler amplitude. -/
 def eulerAmplitude : ℝ := Real.exp Real.eulerMascheroniConstant
 /-- The actual excess coefficient C-1. -/
@@ -56,7 +51,6 @@ def shoulderDelta : ℝ := (2 * Real.log 2 - 1) / 6
 def lowerBarrier (r : ℝ) : ℝ := r * (1 + Real.log ((1 + r) / (2 * r)))
 /-- The extra mass paid outside the scalar equality layer. -/
 def extraReserve (r : ℝ) : ℝ := r * Real.exp (-2 / r) * (Real.log 2 - 1 / 2)
-
 private def expTail (x : ℝ) : ℝ := ∫ y : ℝ in Ioi x, Real.exp (-y) / y
 private def comparison (x : ℝ) : ℝ :=
   slopeExcess * (Real.log (x / 2) + Real.eulerMascheroniConstant) +
@@ -65,7 +59,6 @@ private def pointBarrier (y : ℝ) : ℝ :=
   slopeExcess * (Real.log (y / 2) + Real.eulerMascheroniConstant) + 1 / y
 private def weightedGap (y : ℝ) : ℝ :=
   Real.exp (-y) * (pointBarrier y - lowerBarrier slopeExcess)
-
 private theorem amplitude_pos : 0 < eulerAmplitude := Real.exp_pos _
 private theorem excess_gt_third : (1 / 3 : ℝ) < slopeExcess := by
   have hgamma := Real.one_half_lt_eulerMascheroniConstant
@@ -76,20 +69,14 @@ private theorem excess_pos : 0 < slopeExcess := by linarith [excess_gt_third]
 private theorem amplitude_eq_one_add_excess : eulerAmplitude = 1 + slopeExcess := by
   unfold slopeExcess
   ring
-
 namespace Bose
-
 noncomputable section
-
 private def boseIntegrand (u t : ℝ) : ℝ :=
   t ^ u / (Real.exp t - 1)
-
 private def fermiIntegrand (u t : ℝ) : ℝ :=
   t ^ u / (Real.exp t + 1)
-
 private def doubledBoseIntegrand (u t : ℝ) : ℝ :=
   t ^ u / (Real.exp (2 * t) - 1)
-
 private theorem psi_le_one_add {t : ℝ} (ht : 0 < t) :
     t / (1 - Real.exp (-t)) ≤ 1 + t := by
   have hden : 0 < 1 - Real.exp (-t) :=
@@ -100,7 +87,6 @@ private theorem psi_le_one_add {t : ℝ} (ht : 0 < t) :
     simpa only [one_mul, add_comm] using Real.add_one_le_exp t
   apply (div_le_iff₀ hden).2
   nlinarith
-
 private theorem bose_eq_gamma_weighted_psi {u t : ℝ} (ht : 0 < t) :
     boseIntegrand u t =
       (Real.exp (-t) * t ^ (u - 1)) *
@@ -116,7 +102,6 @@ private theorem bose_eq_gamma_weighted_psi {u t : ℝ} (ht : 0 < t) :
   rw [Real.rpow_sub ht u 1, Real.rpow_one, Real.exp_neg]
   field_simp [ht.ne', hexp, hden, hneg]
   <;> ring
-
 private theorem integrable_bose {u : ℝ} (hu : 0 < u) :
     IntegrableOn (boseIntegrand u) (Ioi (0 : ℝ)) := by
   have hnext : IntegrableOn
@@ -159,7 +144,6 @@ private theorem integrable_bose {u : ℝ} (hu : 0 < u) :
         Real.exp (-t) * (t ^ (u - 1) * t) := by ring
     _ = Real.exp (-t) * t ^ (u - 1) +
         Real.exp (-t) * t ^ u := by rw [hp]
-
 private theorem fermi_complex_point (u : ℝ) {t : ℝ} (ht : 0 < t) :
     (t : ℂ) ^ (((1 + u : ℝ) : ℂ) - 1) /
         ((Real.exp (1 * t) : ℂ) + 1) =
@@ -170,7 +154,6 @@ private theorem fermi_complex_point (u : ℝ) {t : ℝ} (ht : 0 < t) :
   rw [hexponent, one_mul, ← Complex.ofReal_cpow ht.le]
   simp only [fermiIntegrand, Complex.ofReal_div,
     Complex.ofReal_add, Complex.ofReal_one]
-
 private theorem fermi_real_supplier {u : ℝ} (hu : 0 < u) :
     IntegrableOn (fermiIntegrand u) (Ioi (0 : ℝ)) ∧
       (∫ t : ℝ in Ioi 0, fermiIntegrand u t) =
@@ -228,7 +211,6 @@ private theorem fermi_real_supplier {u : ℝ} (hu : 0 < u) :
           Complex.sub_im, Complex.one_re, Complex.one_im,
           Complex.ofReal_re, Complex.ofReal_im,
           mul_zero, zero_mul, sub_zero, zero_sub, add_zero, sub_self]
-
 private theorem doubled_bose_point (u : ℝ) {t : ℝ} (ht : 0 < t) :
     doubledBoseIntegrand u t =
       ((2 : ℝ) ^ u)⁻¹ * boseIntegrand u (2 * t) := by
@@ -240,7 +222,6 @@ private theorem doubled_bose_point (u : ℝ) {t : ℝ} (ht : 0 < t) :
   rw [Real.mul_rpow (by norm_num : (0 : ℝ) ≤ 2) ht.le]
   field_simp [hp, hd]
   <;> ring
-
 private theorem integrable_doubled_bose {u : ℝ} (hu : 0 < u) :
     IntegrableOn (doubledBoseIntegrand u) (Ioi (0 : ℝ)) := by
   have hcomp : IntegrableOn
@@ -251,7 +232,6 @@ private theorem integrable_doubled_bose {u : ℝ} (hu : 0 < u) :
   apply (hcomp.const_mul (((2 : ℝ) ^ u)⁻¹)).congr
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
   exact (doubled_bose_point u ht).symm
-
 private theorem integral_doubled_bose {u : ℝ} (hu : 0 < u) :
     2 * (∫ t : ℝ in Ioi 0, doubledBoseIntegrand u t) =
       (2 : ℝ) ^ (-u) *
@@ -275,7 +255,6 @@ private theorem integral_doubled_bose {u : ℝ} (hu : 0 < u) :
   rw [hpoint, hscale, Real.rpow_neg (by norm_num : (0 : ℝ) ≤ 2)]
   norm_num
   <;> ring
-
 private theorem fermi_eq_bose_sub_doubled (u : ℝ) {t : ℝ} (ht : 0 < t) :
     fermiIntegrand u t =
       boseIntegrand u t - 2 * doubledBoseIntegrand u t := by
@@ -289,7 +268,6 @@ private theorem fermi_eq_bose_sub_doubled (u : ℝ) {t : ℝ} (ht : 0 < t) :
   rw [show (2 : ℝ) * t = t + t by ring, Real.exp_add, hfactor]
   field_simp [hminus, hplus]
   <;> ring
-
 private theorem integral_fermi_eq_bose_factor {u : ℝ} (hu : 0 < u) :
     (∫ t : ℝ in Ioi 0, fermiIntegrand u t) =
       (1 - (2 : ℝ) ^ (-u)) *
@@ -305,7 +283,6 @@ private theorem integral_fermi_eq_bose_factor {u : ℝ} (hu : 0 < u) :
           2 * (∫ t : ℝ in Ioi 0, doubledBoseIntegrand u t) := by
       rw [integral_sub hb (hd.const_mul 2), integral_const_mul]
     _ = _ := by rw [integral_doubled_bose hu] <;> ring
-
 private theorem actual_prefix_bose_normalization {u : ℝ} (hu : 0 < u) :
     IntegrableOn (fun t : ℝ => t ^ u / (Real.exp t - 1))
         (Ioi (0 : ℝ)) ∧
@@ -334,7 +311,6 @@ private theorem actual_prefix_bose_normalization {u : ℝ} (hu : 0 < u) :
   constructor
   · exact hb
   · exact mul_left_cancel₀ hfactor_pos.ne' heq
-
 private theorem actual_prefix_q_integral_binding {u : ℝ} (hu : 0 < u) :
     IntegrableOn
         (fun t : ℝ =>
@@ -375,44 +351,33 @@ private theorem actual_prefix_q_integral_binding {u : ℝ} (hu : 0 < u) :
         rw [show 1 + u = u + 1 by ring, Real.Gamma_add_one hu.ne']
         field_simp [hg]
         <;> ring
-
-
 end
-
 end Bose
-
 namespace GammaBound
-
 private def density (u t : ℝ) : ℝ :=
   Real.exp (-t) * t ^ (u - 1) / Real.Gamma u
-
 private def psi (t : ℝ) : ℝ :=
   t / (1 - Real.exp (-t))
-
 private theorem one_sub_exp_pos {t : ℝ} (ht : 0 < t) :
     0 < 1 - Real.exp (-t) := by
   apply sub_pos.mpr
   calc
     Real.exp (-t) < Real.exp 0 := Real.exp_lt_exp.mpr (by linarith)
     _ = 1 := Real.exp_zero
-
 private theorem density_pos {u t : ℝ} (hu : 0 < u) (ht : 0 < t) :
     0 < density u t := by
   unfold density
   exact div_pos
     (mul_pos (Real.exp_pos _) (Real.rpow_pos_of_pos ht _))
     (Real.Gamma_pos_of_pos hu)
-
 private theorem density_integrable {u : ℝ} (hu : 0 < u) :
     IntegrableOn (density u) (Ioi (0 : ℝ)) := by
   exact (Real.GammaIntegral_convergent hu).div_const (Real.Gamma u)
-
 private theorem density_mass {u : ℝ} (hu : 0 < u) :
     (∫ t in Ioi (0 : ℝ), density u t) = 1 := by
   unfold density
   rw [integral_div, ← Real.Gamma_eq_integral hu]
   exact div_self (Real.Gamma_pos_of_pos hu).ne'
-
 private theorem moment_model {u t : ℝ} (ht : 0 < t) :
     t * density u t =
       Real.exp (-t) * t ^ ((u + 1) - 1) / Real.Gamma u := by
@@ -421,7 +386,6 @@ private theorem moment_model {u t : ℝ} (ht : 0 < t) :
       Real.rpow_add_one ht.ne']
   rw [density, hr]
   ring
-
 private theorem density_moment_integrable {u : ℝ} (hu : 0 < u) :
     IntegrableOn (fun t : ℝ => t * density u t) (Ioi (0 : ℝ)) := by
   have hu1 : 0 < u + 1 := by linarith
@@ -430,7 +394,6 @@ private theorem density_moment_integrable {u : ℝ} (hu : 0 < u) :
   refine ae_restrict_of_forall_mem measurableSet_Ioi ?_
   intro t ht
   exact (moment_model (mem_Ioi.mp ht)).symm
-
 private theorem density_firstMoment {u : ℝ} (hu : 0 < u) :
     (∫ t in Ioi (0 : ℝ), t * density u t) = u := by
   have hu1 : 0 < u + 1 := by linarith
@@ -445,7 +408,6 @@ private theorem density_firstMoment {u : ℝ} (hu : 0 < u) :
     _ = u := by
       rw [Real.Gamma_add_one hu.ne', mul_div_assoc,
         div_self (Real.Gamma_pos_of_pos hu).ne', mul_one]
-
 private theorem psi_le_one_add {t : ℝ} (ht : 0 < t) : psi t ≤ 1 + t := by
   have hd := one_sub_exp_pos ht
   have he := Real.add_one_le_exp t
@@ -456,9 +418,7 @@ private theorem psi_le_one_add {t : ℝ} (ht : 0 < t) : psi t ≤ 1 + t := by
   unfold psi
   apply (div_le_iff₀ hd).2
   nlinarith [hm, hex]
-
 end GammaBound
-
 private lemma log_integrable :
     IntegrableOn (fun v : ℝ => Real.log v * Real.exp (-v)) (Ioi 0) := by
   rw [← Set.Ioc_union_Ioi_eq_Ioi (zero_le_one' ℝ), integrableOn_union]
@@ -504,7 +464,6 @@ private lemma log_integrable :
         ring_nf
       rw [heq] at hstep
       exact hstep
-
 private theorem integrableOn_expTail_kernel {v : ℝ} (hv : 0 < v) :
     IntegrableOn (fun w : ℝ => Real.exp (-w) / w) (Ioi v) := by
   apply Integrable.mono' ((integrableOn_exp_neg_Ioi v).div_const v)
@@ -514,7 +473,6 @@ private theorem integrableOn_expTail_kernel {v : ℝ} (hv : 0 < v) :
     simp only [norm_div, Real.norm_eq_abs, abs_of_pos (Real.exp_pos (-w)),
       abs_of_pos hwpos]
     exact div_le_div_of_nonneg_left (Real.exp_pos (-w)).le hv hw.le
-
 private theorem log_tail_hasDerivAt {w : ℝ} (hw : 0 < w) :
     HasDerivAt (fun x : ℝ => Real.log x * Real.exp (-x))
       (Real.exp (-w) / w - Real.log w * Real.exp (-w)) w := by
@@ -523,7 +481,6 @@ private theorem log_tail_hasDerivAt {w : ℝ} (hw : 0 < w) :
   dsimp
   simp only [div_eq_mul_inv]
   ring
-
 private theorem log_tail_value {v : ℝ} (hv : 0 < v) :
     (∫ w : ℝ in Ioi v, Real.log w * Real.exp (-w)) =
       Real.exp (-v) * Real.log v + expTail v := by
@@ -542,10 +499,8 @@ private theorem log_tail_value {v : ℝ} (hv : 0 < v) :
   rw [integral_sub (integrableOn_expTail_kernel hv) hl] at h
   dsimp only [expTail]
   linarith
-
 private theorem q_pos {u : ℝ} (hu : 0 < u) : 0 < normalizedZeta u := by
   exact mul_pos hu (riemannZeta_re_pos_of_one_lt (by linarith))
-
 private theorem q_upper {u : ℝ} (hu : 0 < u) : normalizedZeta u ≤ 1 + u := by
   have hbind := Bose.actual_prefix_q_integral_binding hu
   have hi : IntegrableOn
@@ -567,7 +522,6 @@ private theorem q_upper {u : ℝ} (hu : 0 < u) : normalizedZeta u ≤ 1 + u := b
     simpa only [normalizedZeta, GammaBound.psi, GammaBound.density] using hbind.2
   rw [hq]
   exact hcmp
-
 private theorem q_secant {a b : ℝ} (ha : 0 < a) (hab : a < b) :
     (b - a) / 2 < normalizedZeta b - normalizedZeta a := by
   have hb := ha.trans hab
@@ -588,7 +542,6 @@ private theorem q_secant {a b : ℝ} (ha : 0 < a) (hab : a < b) :
   rw [hleft, hright] at hdrop
   have hscaled := (div_lt_div_iff_of_pos_right hden).1 hdrop
   nlinarith [Real.exp_pos Real.eulerMascheroniConstant]
-
 private theorem q_right_limit : Tendsto normalizedZeta (𝓝[>] (0 : ℝ)) (𝓝 1) := by
   have harg : Tendsto (fun u : ℝ => ((1+u : ℝ) : ℂ))
       (𝓝[>] (0 : ℝ)) (𝓝[≠] (1 : ℂ)) := by
@@ -614,7 +567,6 @@ private theorem q_right_limit : Tendsto normalizedZeta (𝓝[>] (0 : ℝ)) (𝓝
       sub_self, zero_mul, sub_zero]
     ring
   simpa only [Function.comp_def, Complex.one_re, hpoint] using hr
-
 private theorem q_lower {u : ℝ} (hu : 0 < u) : 1 + u/2 ≤ normalizedZeta u := by
   have hl : Tendsto (fun a : ℝ => normalizedZeta a + (u-a)/2)
       (𝓝[>] (0 : ℝ)) (𝓝 (1 + u/2)) := by
@@ -627,7 +579,6 @@ private theorem q_lower {u : ℝ} (hu : 0 < u) : 1 + u/2 ≤ normalizedZeta u :=
   filter_upwards [self_mem_nhdsWithin, nhdsWithin_le_nhds (Iio_mem_nhds hu)] with a ha hau
   have hs := q_secant ha hau
   linarith
-
 private theorem q_continuousOn : ContinuousOn normalizedZeta (Ioi (0 : ℝ)) := by
   intro u hu
   change 0 < u at hu
@@ -642,7 +593,6 @@ private theorem q_continuousOn : ContinuousOn normalizedZeta (Ioi (0 : ℝ)) := 
       (f := fun v : ℝ => ((1+v : ℝ) : ℂ)) harg
   have hr := Complex.continuous_re.continuousAt.comp hc
   exact (continuous_id.continuousAt.mul hr).continuousWithinAt
-
 private theorem beta_bounds {u : ℝ} (hu : 0 < u) :
     |shoulderBeta u| ≤ 1 ∧ shoulderBeta u ≤ -1 / (u+2) := by
   have hq := q_pos hu
@@ -661,13 +611,11 @@ private theorem beta_bounds {u : ℝ} (hu : 0 < u) :
     nlinarith
   · apply (div_le_div_iff₀ hden (show 0 < u+2 by linarith)).2
     nlinarith
-
 private theorem beta_continuousOn : ContinuousOn shoulderBeta (Ioi (0 : ℝ)) := by
   unfold shoulderBeta
   exact ((continuousOn_const.div q_continuousOn
     (fun u hu => (q_pos hu).ne')).sub continuousOn_const).div continuousOn_id
       (fun u hu => hu.ne')
-
 private theorem shoulder_integrable {t : ℝ} (ht : 0 < t) :
     IntegrableOn (fun u : ℝ => Real.exp (-t*u) * shoulderBeta u) (Ioi 0) := by
   have he := integrableOn_exp_mul_Ioi (show -t < 0 by linarith) 0
@@ -679,9 +627,7 @@ private theorem shoulder_integrable {t : ℝ} (ht : 0 < t) :
   rw [norm_mul, Real.norm_eq_abs, abs_of_pos (Real.exp_pos (-t*u)), Real.norm_eq_abs]
   have hb := (beta_bounds hu).1
   nlinarith [Real.exp_pos (-t*u)]
-
 private def comparisonKernel (t u : ℝ) : ℝ := Real.exp (-t*u)/(u+2)
-
 private theorem comparisonKernel_integrable {t : ℝ} (ht : 0 < t) :
     IntegrableOn (comparisonKernel t) (Ioi (0 : ℝ)) := by
   have he := (integrableOn_exp_mul_Ioi (show -t < 0 by linarith) 0).const_mul (1/2 : ℝ)
@@ -698,7 +644,6 @@ private theorem comparisonKernel_integrable {t : ℝ} (ht : 0 < t) :
   have h := div_le_div_of_nonneg_left (Real.exp_pos (-t*u)).le
     (by norm_num : (0 : ℝ) < 2) (show (2 : ℝ) ≤ u+2 by linarith)
   linarith
-
 private theorem comparisonKernel_tail_binding {t : ℝ} (ht : 0 < t) :
     (∫ u : ℝ in Ioi 0, comparisonKernel t u) = Real.exp (2*t)*expTail (2*t) := by
   let f : ℝ → ℝ := fun u => t*(u+2)
@@ -759,7 +704,6 @@ private theorem comparisonKernel_tail_binding {t : ℝ} (ht : 0 < t) :
         Real.exp (2*t)*(Real.exp (-(2*t))*(∫ u : ℝ in Ioi 0, comparisonKernel t u)) := by
           rw [← mul_assoc, he, one_mul]
     _ = _ := by rw [hs]
-
 private theorem shoulder_le_comparison {t : ℝ} (ht : 0 < t) :
     originalShoulder t ≤ originalA - comparison (2*t) := by
   have hs := shoulder_integrable ht
@@ -776,7 +720,6 @@ private theorem shoulder_le_comparison {t : ℝ} (ht : 0 < t) :
   unfold originalShoulder comparison
   rw [hlog]
   nlinarith [amplitude_pos]
-
 private theorem weightedPoint_integrable {x : ℝ} (hx : 0 < x) :
     IntegrableOn (fun y : ℝ => Real.exp (-y)*pointBarrier y) (Ioi x) := by
   have hl := log_integrable.mono_set (Ioi_subset_Ioi hx.le)
@@ -789,7 +732,6 @@ private theorem weightedPoint_integrable {x : ℝ} (hx : 0 < x) :
     rw [Real.log_div (hx.trans hy).ne' (by norm_num : (2 : ℝ) ≠ 0)]
     ring
   · exact measurableSet_Ioi
-
 private theorem weightedPoint_value {x : ℝ} (hx : 0 < x) :
     (∫ y : ℝ in Ioi x, Real.exp (-y)*pointBarrier y) =
       Real.exp (-x)*(slopeExcess*(Real.log (x/2)+Real.eulerMascheroniConstant)) +
@@ -821,7 +763,6 @@ private theorem weightedPoint_value {x : ℝ} (hx : 0 < x) :
       rw [log_tail_value hx, integral_exp_neg_Ioi,
         Real.log_div hx.ne' (by norm_num : (2 : ℝ) ≠ 0), amplitude_eq_one_add_excess]
       ring
-
 private theorem comparison_exp_average {x : ℝ} (hx : 0 < x) :
     comparison x = Real.exp x*
       (∫ y : ℝ in Ioi x, Real.exp (-y)*pointBarrier y) := by
@@ -835,7 +776,6 @@ private theorem comparison_exp_average {x : ℝ} (hx : 0 < x) :
       rw [he]
       ring
     _ = _ := by ring
-
 private theorem point_gap_eq {y : ℝ} (hy : 0 < y) :
     pointBarrier y - lowerBarrier slopeExcess =
       slopeExcess*(Real.log (slopeExcess*y) + 1/(slopeExcess*y) - 1) := by
@@ -850,7 +790,6 @@ private theorem point_gap_eq {y : ℝ} (hy : 0 < y) :
     Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) hk.ne', hlog,
     Real.log_mul hk.ne' hy.ne']
   field_simp [hk.ne', hy.ne'] <;> ring
-
 private theorem point_gap_nonneg {y : ℝ} (hy : 0 < y) :
     0 ≤ pointBarrier y - lowerBarrier slopeExcess := by
   rw [point_gap_eq hy]
@@ -859,7 +798,6 @@ private theorem point_gap_nonneg {y : ℝ} (hy : 0 < y) :
     simpa only [one_div] using (show 0 ≤ Real.log (slopeExcess*y) +
       (slopeExcess*y)⁻¹ - 1 from by linarith)
   exact mul_nonneg excess_pos.le hscalar
-
 private theorem point_gap_on_tail {x y : ℝ} (hx : 0 < x)
     (hy : x+2/slopeExcess < y) :
     slopeExcess*(Real.log 2-1/2) ≤ pointBarrier y-lowerBarrier slopeExcess := by
@@ -881,7 +819,6 @@ private theorem point_gap_on_tail {x y : ℝ} (hx : 0 < x)
     linarith
   rw [point_gap_eq hxy]
   exact mul_le_mul_of_nonneg_left hf hk.le
-
 private theorem weightedGap_integrable {x : ℝ} (hx : 0 < x) :
     IntegrableOn weightedGap (Ioi x) := by
   have hi := (weightedPoint_integrable hx).sub
@@ -891,7 +828,6 @@ private theorem weightedGap_integrable {x : ℝ} (hx : 0 < x) :
     dsimp only [weightedGap, Pi.sub_apply]
     ring
   · exact measurableSet_Ioi
-
 private theorem comparison_gap_average {x : ℝ} (hx : 0 < x) :
     comparison x-lowerBarrier slopeExcess =
       Real.exp x*(∫ y : ℝ in Ioi x, weightedGap y) := by
@@ -915,7 +851,6 @@ private theorem comparison_gap_average {x : ℝ} (hx : 0 < x) :
       _ = lowerBarrier slopeExcess*(Real.exp x*Real.exp (-x)) := by ring
       _ = _ := by rw [he, mul_one]
   rw [hi, comparison_exp_average hx, mul_sub, hcval]
-
 private theorem comparison_extra_mass {x : ℝ} (hx : 0 < x) :
     lowerBarrier slopeExcess+extraReserve slopeExcess ≤ comparison x := by
   let z : ℝ := x+2/slopeExcess
@@ -951,7 +886,6 @@ private theorem comparison_extra_mass {x : ℝ} (hx : 0 < x) :
       _ = _ := by rw [he]; dsimp [q, extraReserve]; ring
   rw [hmass, ← comparison_gap_average hx] at hscaled
   linarith
-
 private theorem delta_pos : 0 < shoulderDelta := by
   have h := Real.log_lt_sub_one_of_pos (show 0 < (1/2 : ℝ) by norm_num)
     (show (1/2 : ℝ) ≠ 1 by norm_num)
@@ -959,13 +893,11 @@ private theorem delta_pos : 0 < shoulderDelta := by
     Real.log_one] at h
   dsimp [shoulderDelta]
   linarith
-
 private theorem excess_gt_half : (1/2 : ℝ) < slopeExcess := by
   have hgamma := Real.one_half_lt_eulerMascheroniConstant
   have hexp := Real.add_one_le_exp Real.eulerMascheroniConstant
   dsimp [slopeExcess, eulerAmplitude]
   linarith
-
 private theorem lowerBarrier_twoThirds : (2/3 : ℝ) < lowerBarrier slopeExcess := by
   have hk := excess_pos
   have hd : 0 < 1+slopeExcess := by linarith
@@ -986,7 +918,6 @@ private theorem lowerBarrier_twoThirds : (2/3 : ℝ) < lowerBarrier slopeExcess 
     apply (lt_div_iff₀ hd).2
     nlinarith [excess_gt_half]
   exact hthird.trans_le hlow
-
 private theorem lowerBarrier_reserve : 1/2+shoulderDelta < lowerBarrier slopeExcess := by
   have hlog := Real.log_lt_sub_one_of_pos (show 0 < (2 : ℝ) by norm_num)
     (show (2 : ℝ) ≠ 1 by norm_num)
@@ -994,7 +925,6 @@ private theorem lowerBarrier_reserve : 1/2+shoulderDelta < lowerBarrier slopeExc
     dsimp [shoulderDelta]
     linarith
   exact htarget.trans lowerBarrier_twoThirds
-
 private theorem extraReserve_halfGamma :
     (3/2 : ℝ)*shoulderDelta*Real.exp (-4) < extraReserve slopeExcess := by
   have hk := excess_pos
@@ -1015,7 +945,6 @@ private theorem extraReserve_halfGamma :
   have hsecond := mul_lt_mul_of_pos_left he (mul_pos hk hq)
   unfold extraReserve
   nlinarith
-
 private theorem extraReserve_reserve :
     shoulderDelta*Real.exp (-6) < extraReserve slopeExcess := by
   have hd := delta_pos
@@ -1025,27 +954,22 @@ private theorem extraReserve_reserve :
       (3/2 : ℝ)*shoulderDelta*Real.exp (-4) := by
     nlinarith [mul_pos hd (Real.exp_pos (-4))]
   exact (hfirst.trans hsecond).trans extraReserve_halfGamma
-
 private theorem originalA_lt_half : originalA < 1/2 := by
   simpa only [originalA, eulerAmplitude] using
     D5.S3.Arith.Robin.PrimePrefixOriginalA.result.2.2
-
 private theorem shoulder_fixed_barrier {t : ℝ} (ht : 0 < t) :
     originalShoulder t ≤ originalA-lowerBarrier slopeExcess-extraReserve slopeExcess := by
   have hs := shoulder_le_comparison ht
   have hc := comparison_extra_mass (show 0 < 2*t by positivity)
   linarith
-
 private theorem barrier_halfGamma :
     originalA-lowerBarrier slopeExcess-extraReserve slopeExcess <
       -(1/6 : ℝ)-(3/2 : ℝ)*shoulderDelta*Real.exp (-4) := by
   nlinarith [originalA_lt_half, lowerBarrier_twoThirds, extraReserve_halfGamma]
-
 private theorem barrier_lt_target :
     originalA-lowerBarrier slopeExcess-extraReserve slopeExcess <
       -shoulderDelta*(1+Real.exp (-6)) := by
   nlinarith [originalA_lt_half, lowerBarrier_reserve, extraReserve_reserve]
-
 /-- The complete original shoulder has an explicit strict supremum reserve. -/
 theorem result :
     0 < shoulderDelta ∧
@@ -1067,5 +991,4 @@ theorem result :
     rintro _ ⟨t, ht, rfl⟩
     exact shoulder_fixed_barrier ht
   exact ⟨hs.trans_lt barrier_halfGamma, hs.trans_lt barrier_lt_target⟩
-
 end D5.S3.Arith.Robin.PrimePrefixOriginalShoulder
