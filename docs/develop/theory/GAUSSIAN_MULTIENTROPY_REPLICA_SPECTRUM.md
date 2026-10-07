@@ -298,7 +298,7 @@ $$
 S^{(\mathtt q)}_2=2^{2-\mathtt q}\sum_{S}S^{(2)}_2(S),
 $$
 
-the sum running over the $2^{\mathtt q-1}-1$ bipartitions of the parties. Stance: suspected-novel. For $\mathtt q=3$ it is the fully symmetric case of $\mathrm{GM}^{(3)}_2=0$, literature-attested for all pure bosonic Gaussian states (Camargo and Nishida, §4); the Gaussian replica reduction is essential (Proposition 8.3).
+the sum running over the $2^{\mathtt q-1}-1$ bipartitions of the parties. Stance: suspected-novel. For $\mathtt q=3$ it is the fully symmetric case of $\mathrm{GM}^{(3)}_2=0$, literature-attested for all pure bosonic Gaussian states (Camargo and Nishida, §4); the Gaussian replica reduction is essential (Remark 8.3).
 
 **Proof.** Put $M=2^{\mathtt q-1}$. By Theorem 5.3(4), $\sum_S\log\Delta_2^{(p_S)}=\log\Delta_{\mathtt q}+(M-2)\log\varepsilon$. Then $\sum_SS^{(2)}_2(S)=-\tfrac12\sum_S\big(2\log\varepsilon-\log\Delta_2^{(p_S)}\big)=-\tfrac12\big(2(M-1)-(M-2)\big)\log\varepsilon+\tfrac12\log\Delta_{\mathtt q}=-\tfrac M2\log\varepsilon+\tfrac12\log\Delta_{\mathtt q}$, while $S^{(\mathtt q)}_2=-2^{2-\mathtt q}\cdot\tfrac12\big(M\log\varepsilon-\log\Delta_{\mathtt q}\big)$. ∎
 
@@ -318,21 +318,7 @@ which vanishes identically for $\beta=\tfrac14$, $\alpha=\tfrac1{12}$. Stance: s
 
 **Remark 8.2 (Many parties).** For $\mathtt q\ge4$ the volume gives the exact determinants (Proposition 5.1), their bipartite factorization (Theorem 5.3) and the order-two identity (Theorem 7.1). It makes no claim about the large-squeezing law of a genuine $\mathtt q$-party multi-entropy for $\mathtt q\ge4$ and $n\ge3$: such a law depends on the normalization chosen for the genuine combination, and the coefficient of $\log\varepsilon$ must be recomputed from the replica counts for each choice.
 
-**Proposition 8.3 (The order-two identity fails for a three-qubit state).** For a unit vector $\psi\in(\mathbb C^2)^{\otimes3}$ with parties $A,B,C$ and a replica datum $(R,g_A,g_B,g_C)$ put
-$$
-Z_\psi(R,g)=\sum_{i:R\to\{0,1\}^3}\ \prod_{r\in R}\psi(i_r)\,\overline{\psi\big(i_{g_A(r)}^A,\,i_{g_B(r)}^B,\,i_{g_C(r)}^C\big)},
-$$
-where $i_r=(i_r^A,i_r^B,i_r^C)$; this is the replica contraction of Theorem 3.8 with integrals replaced by sums. With the datum of Convention 2.4 for $\mathtt q=3$, $n=2$, set $S_2^{(3)}(\psi)=-\tfrac12\log Z_\psi$ and $S_2(X)=-\log\mathrm{tr}\rho_X^2$ for $X\in\{A,B,C\}$. For the state $\psi_W=3^{-1/2}(|001\rangle+|010\rangle+|100\rangle)$,
-$$
-Z_{\psi_W}=\tfrac19,\qquad \mathrm{tr}\rho_A^2=\mathrm{tr}\rho_B^2=\mathrm{tr}\rho_C^2=\tfrac59,\qquad S_2^{(3)}(\psi_W)-\tfrac12\big(S_2(A)+S_2(B)+S_2(C)\big)=\tfrac12\log\tfrac{125}{81}\ne0 .
-$$
-Hence the identity of Theorem 7.1 at $\mathtt q=3$ is not an identity of all pure states. Stance: repo-derived.
-
-**Proof.** Write $R=\mathbb Z_2^2$ with $g_A(r)=r+e_1$, $g_B(r)=r+e_2$, $g_C=\mathrm{id}$. Every amplitude of $\psi_W$ is $0$ or $3^{-1/2}$, so $Z_{\psi_W}=81^{-1}\cdot\#\mathcal C$, where $\mathcal C$ is the set of assignments $i$ for which all eight strings $i_r$ and $(i^A_{r+e_1},i^B_{r+e_2},i^C_r)$ have exactly one entry $1$. Such an assignment is a map $p:R\to\{A,B,C\}$ ($p_r$ the position of the $1$ in $i_r$) subject to the four conditions
-$$
-[p_{r+e_1}=A]+[p_{r+e_2}=B]+[p_r=C]=1\qquad(r\in R).
-$$
-Write $p=(p_{00},p_{10},p_{01},p_{11})$. If $p_{00}=C$, the condition at $00$ gives $p_{10}\in\{B,C\}$ and $p_{01}\in\{A,C\}$. For $p_{10}=B$ the condition at $10$ forces $p_{11}=B$, then the condition at $01$ forces $p_{01}=C$; for $p_{10}=C$ the condition at $10$ gives $p_{11}\ne B$, and the conditions at $01$ and $11$ force $p_{11}=p_{01}\in\{A,C\}$. This yields $(C,B,C,B)$, $(C,C,A,A)$, $(C,C,C,C)$, and each satisfies all four conditions. If $p_{00}=A$, the condition at $10$ gives $p_{11}\ne B$ and $p_{10}\ne C$. For $p_{10}=B$ the condition at $00$ forces $p_{01}=B$, then the condition at $01$ forces $p_{11}=A$; for $p_{10}=A$ the condition at $00$ gives $p_{01}\ne B$, and the conditions at $01$ and $11$ force $p_{11}=p_{01}\in\{A,C\}$. This yields $(A,B,B,A)$, $(A,A,A,A)$, $(A,A,C,C)$, each a solution. The map $p\mapsto p'$, $p'_{(r_1,r_2)}=\tau(p_{(r_2,r_1)})$ with $\tau$ exchanging $A$ and $B$, permutes the four conditions, so it is a bijection from the solutions with $p_{00}=A$ onto those with $p_{00}=B$. Hence $\#\mathcal C=9$ and $Z_{\psi_W}=\tfrac19$. The reduced state of each party is $\mathrm{diag}(\tfrac23,\tfrac13)$, so $\mathrm{tr}\rho_X^2=\tfrac59$. Therefore $S_2^{(3)}-\tfrac12\sum_XS_2(X)=\tfrac12\log\big(\tfrac{(5/9)^3}{1/9}\big)=\tfrac12\log\tfrac{125}{81}$. ∎
+**Remark 8.3 (The order-two identity fails for a three-qubit state).** The identity of Theorem 7.1 at $\mathtt q=3$ is not an identity of all pure states. For the W state $\psi_W=3^{-1/2}(|001\rangle+|010\rangle+|100\rangle)$, Iizuka and Nishida (arXiv:2502.07995, §2 and §2.2) give $S^{(3)}_2(\psi_W)=\log3$ and $\mathrm{GM}^{(3)}_2(\psi_W)=\log\tfrac{5\sqrt5}{9}=\tfrac12\log\tfrac{125}{81}\ne0$, and $\mathrm{GM}^{(3)}_2$ is the left side of Theorem 7.1 at $\mathtt q=3$. The Gaussian replica reduction is therefore essential. Stance: the value is literature-attested (§9).
 
 **Remark 8.4 (Open case).** Theorem 7.1 is stated only for fully symmetric Gaussian states; its validity for general pure Gaussian states with $\mathtt q\ge4$ is open.
 
@@ -341,13 +327,13 @@ Write $p=(p_{00},p_{10},p_{01},p_{11})$. If $p_{00}=C$, the condition at $00$ gi
 | Source | Exact scope and use |
 | --- | --- |
 | H. A. Camargo, M. Nishida, *Genuine Multi-Entropy of Fully Symmetric Gaussian States*, arXiv:2609.30754v1, §2.1, §2.3, §3.1, §3.2 Table 1 and Eq. (3.8), §4 | `literature-attested`: the multi-entropy, the twists for three parties, the Gaussian kernel, the fully symmetric state and $e^-$, the exact values of Table 1 for $N\le8$, $n\le4$, the conjectured leading term, and $\mathrm{GM}^{(3)}_2=0$ for pure bosonic Gaussian states via a $\mathbb Z_2\times\mathbb Z_2$ block decomposition at $n=2$. The paper contains no determinant formula for general $n$, no character or spanning-tree form, no closed form of the bipartite Rényi entropy, and no result for $\mathtt q\ge4$ (§6 lists $\mathtt q>3$ as a future direction). |
-| N. Iizuka, M. Nishida, *Genuine multi-entropy and holography*, arXiv:2502.07995, Eqs. (67)–(68) | `literature-attested`: the definition of $\mathrm{GM}^{(4)}_n$ with $\alpha+\beta=\tfrac13$, used in Corollary 7.2. |
+| N. Iizuka, M. Nishida, *Genuine multi-entropy and holography*, arXiv:2502.07995, §2, §2.2, Eqs. (67)–(68) | `literature-attested`: the definition of $\mathrm{GM}^{(4)}_n$ with $\alpha+\beta=\tfrac13$, used in Corollary 7.2; and, in §2 and §2.2, the W-state values $S^{(3)}_2=\log3$ and $\mathrm{GM}^{(3)}_2=\log(5\sqrt5/9)$, used in Remark 8.3. |
 | S. Chaiken, *A combinatorial proof of the all minors matrix tree theorem*, SIAM J. Algebraic Discrete Methods 3 (1982) 319–329; P. Chebotarev, E. Shamis, *The matrix-forest theorem and measuring relations in small social groups*, Autom. Remote Control 58 (1997) 1505–1514 | `literature-attested`: principal minors of a weighted Laplacian count spanning forests rooted in the deleted set; $\det(sI+L)$ is the rooted-forest polynomial. Used inside Theorem 3.4. |
 | G. Kirchhoff (1847); N. Biggs, *Algebraic Graph Theory*, 2nd ed., Cambridge 1993, Ch. 6–7 | `literature-attested`: the matrix-tree theorem and the tree count of Cayley graphs of abelian groups via characters; used in Corollary 4.2. |
 | J.-P. Serre, *Linear Representations of Finite Groups*, Springer 1977, §3 | `literature-attested`: characters of a finite abelian group form an orthogonal basis; used in Theorem 4.1. |
 | A. Serafini, G. Adesso, F. Illuminati, *Unitarily localizable entanglement of Gaussian states*, Phys. Rev. A 71 (2005) 032349; G. Adesso, A. Serafini, F. Illuminati, Phys. Rev. A 70 (2004) 022318 | `literature-attested`: a bisymmetric pure Gaussian state is locally equivalent to a two-mode squeezed state times vacua, so each bipartite cut has one nontrivial symplectic eigenvalue $\nu$ and $\mathrm{tr}\rho^n=2^n/((\nu+1)^n-(\nu-1)^n)$. Theorem 5.2 is equivalent to this with $\nu^2=1+b/\varepsilon$ and is not claimed as new. |
 | R. A. Horn, C. R. Johnson, *Matrix Analysis*, 2nd ed., Cambridge 2013 | `literature-attested`: Sylvester's identity $\det(I_n+BC)=\det(I_m+CB)$, and the Schur complement determinant formula. Used in Theorem 3.8. |
-| — | `repo-derived`: the simple-zero statement of Remark 3.7, Corollary 3.6, Theorem 3.8, Theorem 5.2 (proof), Lemma 6.2, Proposition 8.3. |
+| — | `repo-derived`: the simple-zero statement of Remark 3.7, Corollary 3.6, Theorem 3.8, Theorem 5.2 (proof), Lemma 6.2. |
 | — | `suspected-novel`: Theorems 3.3, 3.4 (as a replica-determinant identity), Corollary 3.5, Theorem 4.1, Corollary 4.2 (sine product), Proposition 5.1, Theorem 5.3, Corollary 5.4, Theorems 6.4, 6.5, Corollary 6.6, Theorem 7.1, Corollary 7.2. Searched: the full text of arXiv:2609.30754v1; the definitions of arXiv:2502.07995; web and arXiv searches for multi-entropy together with Gaussian, replica, spanning tree, Laplacian and matrix-tree. No statement of these results was found in the searched scope; this establishes no worldwide priority. |
 
 <!-- 追加区自下一行的「追加锚」开始。每批增补写在锚之后,并以一行新的、逐字相同的追加锚结尾。 -->
