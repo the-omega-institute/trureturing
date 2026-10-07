@@ -207,13 +207,21 @@ private theorem word_action (d : ℕ → ℕ) (k : ℕ) (v : ℕ × ℕ) :
 private theorem word_counts (d : ℕ → ℕ) (k : ℕ) :
     (blockWord d k).count false = k ∧
     (blockWord d k).count true = ∑ j ∈ Finset.range (k + 1), d j := by
-  induction k with
-  | zero => simp [blockWord, List.count_replicate]
-  | succ k ih =>
-    constructor
-    · simp [blockWord, List.count_replicate, ih.1]
-    · rw [Finset.sum_range_succ]
-      simp [blockWord, ih.2, Nat.add_comm]
+  constructor
+  · have h := Finset.sum_range_induction (fun _ : ℕ => (1 : ℕ))
+      (fun n => (blockWord d n).count false)
+      (by simp [blockWord, List.count_replicate]) k
+      (by intro n hn; simp [blockWord, List.count_replicate, Nat.add_comm])
+    simpa using h.symm
+  · let s : ℕ → ℕ
+      | 0 => 0
+      | n + 1 => (blockWord d n).count true
+    have h := Finset.sum_range_induction d s rfl (k + 1) (by
+      intro n hn
+      cases n with
+      | zero => simp [s, blockWord]
+      | succ n => simp [s, blockWord, Nat.add_comm])
+    exact h.symm
 
 private theorem positive_coefficients (H c : ℕ) (hH : 1 < H) (hc : c < H) :
     ∃ d : ℕ → ℕ,
