@@ -130,7 +130,7 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
     nlinarith
   have lower (μ : Laws n) (hμ : Admissible rho μ) (t u : Roles n) (htu : t ≠ u) :
       eta rho ≤ hamming μ t u := by
-    have first_gate_sq_le_class_sq (w : Input n) :
+    have first_gate_sq_le_disagreement (w : Input n) :
         (firstGate t w - firstGate u w) ^ 2 ≤
           (if classValue t w = classValue u w then (0 : ℝ) else 1) := by
       rw [class_value_formula, class_value_formula]
@@ -143,7 +143,7 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
         t u := by
       apply Finset.sum_le_sum
       intro w _
-      exact mul_le_mul_of_nonneg_left (first_gate_sq_le_class_sq w)
+      exact mul_le_mul_of_nonneg_left (first_gate_sq_le_disagreement w)
         (Finset.prod_nonneg (fun i _ => hr.le.trans (hμ.1 i (w i))))
     by_cases hp : t.p = u.p
     · by_cases hq : t.q = u.q

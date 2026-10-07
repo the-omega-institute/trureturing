@@ -62,8 +62,8 @@ def highMarginal {n : ℕ} (μ : Laws n) (i : Fin n) : ℝ := μ i .ends + μ i 
 def lowMarginal {n : ℕ} (μ : Laws n) (i : Fin n) : ℝ := μ i .ends + μ i .low
 
 /-- First priority gate. -/
-def firstGate {n : ℕ} (t : Roles n) (w : Input n) : ℝ := highIndicator (w t.p) * lowIndicator (w
-    t.q)
+def firstGate {n : ℕ} (t : Roles n) (w : Input n) : ℝ :=
+  highIndicator (w t.p) * lowIndicator (w t.q)
 
 variable {n : ℕ}
 
@@ -132,8 +132,8 @@ theorem product_expectation_linear_combination {μ : Laws n} (f g h : Input n �
             Finset.sum_add_distrib]
     _ = _ := by rw [scale, scale, scale]
 
-private theorem bernoulli_discrepancy_rectangle_lower (b c s t : ℝ) (hbc : b ≤ c) (hs : b ≤ s ∧ s
-    ≤ c)
+private theorem bernoulli_discrepancy_rectangle_lower (b c s t : ℝ) (hbc : b ≤ c)
+    (hs : b ≤ s ∧ s ≤ c)
     (ht : b ≤ t ∧ t ≤ c) (hb : b ≤ 1 / 2) (hbc1 : b + c ≤ 1) :
     2 * b * (1 - b) ≤ s + t - 2 * s * t := by
   classical
@@ -422,8 +422,7 @@ theorem first_gate_discrepancy_lower (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1
 set_option maxHeartbeats 2000000 in
 -- The single proof checks every overlap role and the sharpness construction together.
 /-- All admissible heterogeneous laws have the same sharp lower bound, attained by a
-common law and product_expectation_two_positions distinct increasing triples. Positions in Roles
-    start at zero. -/
+common law and two distinct increasing triples. Positions in Roles start at zero. -/
 theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) :
     (∀ μ : Laws n, Admissible rho μ → ∀ t u : Roles n, t ≠ u →
       gamma rho ≤ distance μ t u) ∧
