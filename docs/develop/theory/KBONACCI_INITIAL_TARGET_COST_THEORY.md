@@ -3451,3 +3451,490 @@ The arbitrary unit-width laws of Theorems 25.3–25.4, the noncoprime proper-nar
 [CR46]: https://raw.githubusercontent.com/the-omega-institute/trureturing/0e51d0ec80c86e888fcdde78982665a7c5c17c79/docs/develop/theory/KBONACCI_CRITICAL_WIDTH_TARGET_COST.md
 
 ## 追加锚（本行以下为增补区）
+## 51. Paid prefix information and a coprime finite horizon
+
+**定义 51.1（Full INITIAL tables on the proper-narrow coprime calendar）。** Fix the original reader and costs of Definitions 1.1–1.3, with
+
+$$
+2\le m<k,\qquad T=k+1,\qquad \gcd(m,T)=1,\qquad
+P=\mathbb Z/T\mathbb Z,\qquad D=\left\lfloor\frac{k-1}{m}\right\rfloor.
+\tag{51.1}
+$$
+
+Every INITIAL record $(v,-j,s)$, with $v\in\mathbb F_2$, $j\in P$ and $0\le s<k$, is represented by the single complete-block history (1.3). Coprimality makes its two length congruences compatible at every $j$. Its adjusted first bit, separating zero and terminal run jointly realize the specified value, phase and tail. The unknown length is not observed. Initial $\bot$ has its own arbitrary label and stops at its free reading. Since $m<k$, both original alphabets contain every $m$-bit word; rejection across a seam remains part of the original operation.
+
+For arbitrary $f:Q\to Y$ use the ordered value join of Theorem 29.2 in INITIAL coordinates:
+
+$$
+\Gamma(j,s)=\bigl(f(0,-j,s),f(1,-j,s)\bigr),\qquad
+\Lambda(j)=\Gamma(j,0).
+\tag{51.2}
+$$
+
+Equality of ordered pairs requires equality in both components, without requiring the components to equal one another. Put
+
+$$
+I_t(j)=\mathbf1_{\{tm,(t+1)m\}\bmod T}(j),\qquad
+S_t(\beta)=\{j:(I_0(j),\ldots,I_{t-1}(j))=\beta\},\qquad h_t=k-tm.
+\tag{51.3}
+$$
+
+For $0\le a<k$ write $a=qm+r$, $0\le r<m$. Call $a$ eligible when the supplied common-cut conditions of Theorem 24.2 hold on the value join. Explicitly, for every indicated response string,
+
+$$
+\begin{aligned}
+&\operatorname{Const}\{\Gamma(j,s):j\in S_t(\beta),\ h_t-m\le s<h_t\}
+&& (0\le t<q),\\
+&\operatorname{Const}\{\Gamma(j,s):j\in S_q(\beta),\ h_q-r\le s<h_q\},\\
+&\Gamma(j,s)=\Lambda(j)
+&& (j\in P,\ 0\le s<k-a).
+\end{aligned}
+\tag{51.4}
+$$
+
+Empty sets impose no condition. The common integer $a$ precedes all value and archive quantifiers. Theorems 24.2 and 29.2 supply eligibility and the exact preset value join, including infinity; they are used inside the paid constructions below. The single-source complete-observation experiment is the one in [S1, Definitions 1.2 and 2.1], consistent with Moore's simple experiments (*Gedanken-Experiments on Sequential Machines*, pp.129–131). Only actual complete endpoints and each source's own chronological archive enter the decoder.
+
+**定理 51.2（Retaining the paid all-one chords）。** In (51.1), every eligible $a=qm+r$ admits a full-INITIAL preset protocol of worst actual fee at most $T$. More precisely, after $q$ all-one blocks one may retain any length-$m$ parent $B$ whose first zero follows exactly $r$ ones, and then issue
+
+$$
+E=01\,0^{m-2}
+\quad\text{at every absolute block index }q+1,\ldots,T-1.
+\tag{51.5}
+$$
+
+Every block in this schedule is paid when reached, including the parent. Consequently
+
+$$
+C_{\rm pre}(f)<\infty\quad\Longrightarrow\quad C_{\rm pre}(f)\le k+1.
+\tag{51.6}
+$$
+
+The sufficient per-cut bound $q+T$ from Corollary 24.3 is replaced by $T$, and its uniform bound $D+T$ by $T$. These are comparisons of sufficient bounds, without an optimality or sharpness assertion for either construction.
+
+**证明。** Interface 1.4 makes each successfully completed all-one block at index $t<q$ the actual charge edge
+
+$$
+H_t=\{tm,(t+1)m\}\pmod T,
+\tag{51.7}
+$$
+
+and each successfully completed $E$ at index $t$ the actual edge
+
+$$
+F_t=\{tm+1,tm+2\}\pmod T.
+\tag{51.8}
+$$
+
+The $T$ edges $F_0,\ldots,F_{T-1}$ are exactly the adjacent edges of the physical $T$-cycle, because multiplication by $m$ permutes the residues. Retain $H_0,\ldots,H_{q-1}$ and $F_{q+1},\ldots,F_{T-1}$, ignoring the paid parent's response for this separation argument. There are $T-1$ retained coordinates.
+
+Since $qm\le T-2$, deleting $F_0,\ldots,F_q$ leaves the following $q+1$ path components of that cycle:
+
+$$
+\begin{aligned}
+C_t&=\{tm+2,\ldots,(t+1)m+1\} &&(0\le t<q),\\
+C_q&=\{qm+2,\ldots,T-1\}\cup\{0,1\}.
+\end{aligned}
+\tag{51.9}
+$$
+
+The first interval in $C_q$ is empty when $qm+2=T$. For $q=0$ this is just one spanning path. For $q>0$, $C_t$ has $m\ge2$ vertices when $t<q$, and $C_q$ has $T-qm\ge2$ vertices. Chord $H_0$ joins $C_q$ to $C_0$: zero lies in $C_q$, while $m$ lies in $C_0$. For $1\le t<q$, $tm$ lies in $C_{t-1}$ and $(t+1)m$ lies in $C_t$. Thus the $q$ already acquired chords join the components in one chain. None is an additional operation. The retained graph is connected and has $T-1$ edges, hence is a spanning tree.
+
+Its incidence column at phase $j$ is exactly the list of that source's retained endpoint differences. These columns are distinct. Indeed, a zero column would be an isolated vertex. If distinct vertices had the same nonzero column, every edge incident to either would have to contain both, so they would constitute a component on just two vertices. Neither is possible in this connected tree on $T\ge5$ vertices. Adding the actual parent coordinate preserves separation.
+
+It remains to realize these coordinates on the full INITIAL prior. An INITIAL tail $s<k-a$ survives all $a$ leading ones, since $s+a<k$, and reaches the parent's first zero. The remaining part of that parent has fewer than $m<k$ bits, so no later internal run rejects it. All these survivors have the same actual terminal tail of $B$, at most $m-r-1$. Every subsequent $E$ starts zero and contains only one one. It therefore safely clears that tail. When $m=2$, $E=01$ ends at tail one, and the next $E$ again starts zero. No final clearing block is required for stopping at a successful endpoint.
+
+Each earlier rejection uses its own preceding successful archive $S_t(\beta)$ and the corresponding homogeneous band in (51.4). Parent rejection uses its own $S_q(\beta)$ and its homogeneous band. Neither supplies a binary parent charge. Those sources stop with the prescribed INITIAL pair label, and the remembered free value selects its component. A survivor retains its own earlier $q$ differences, takes its own actual parent endpoint as the baseline for the later differences, and decodes $j$ from the tree column. Its immutable label is $\Lambda(j)$ by (51.4). No other value fibre or stopped sibling is run or consulted; Theorem 29.2 is only the decoder symmetry of this one stream.
+
+The number of issued blocks on a survivor kept to the last endpoint is
+
+$$
+q+1+(T-q-1)=T.
+\tag{51.10}
+$$
+
+Such actual tail-zero sources exist at every phase by (1.3). Earlier homogeneous archives may stop sooner. Every reached word, including its zero padding, costs one. Thus the construction gives the claimed upper bound on all values, phases and tails. For a finite preset target, Theorem 24.2 supplies an eligible cut; independent initial rejection has already stopped for free. This proves (51.6). ∎
+
+**定理 51.3（A block-boundary sharpening and every even-order width-two cut）。** In (51.1), if some eligible cut is $a=qm$, then $C_{\rm pre}(f)\le T-1=k$. For $m=2$ and every even $k=2p\ge4$, every eligible cut admits this bound, including cuts inside a block. Hence
+
+$$
+m=2,\ k\text{ even},\ C_{\rm pre}(f)<\infty
+\quad\Longrightarrow\quad C_{\rm pre}(f)\le k.
+\tag{51.11}
+$$
+
+At a boundary cut the sufficient $q+T$ bound is replaced by $T-1$, saving $q+1$ counted blocks. At even width two the supplied uniform $D+T=3p$ bound is replaced by $2p$. No sharp finite ceiling or individual minimum is asserted by these comparisons.
+
+**证明。** At a boundary cut use $q$ blocks $1^m$ and then
+
+$$
+L=0^{m-1}1\quad\text{at indices }q,\ldots,T-2.
+\tag{51.12}
+$$
+
+The first $L$ is the parent with leading run zero. Every subsequent $L$ starts zero, so every low INITIAL survivor safely reaches every endpoint; the terminal tail one is cleared by the next block. Earlier rejection bands are decoded as in Theorem 51.2.
+
+The actual charge of $L$ at index $t$ is $\{(t+1)m-1,(t+1)m\}\pmod T$. The complete cycle of these edges is again the physical adjacent cycle. In (51.12) its deleted edges have right endpoints $0,m,\ldots,qm$. Since $qm\le T-2$, the resulting components, in ordinary representatives, are
+
+$$
+\{0,\ldots,m-1\},\ \{m,\ldots,2m-1\},\ldots,
+\{(q-1)m,\ldots,qm-1\},\ \{qm,\ldots,T-1\}.
+\tag{51.13}
+$$
+
+At $q=0$ only the last component occurs. The already paid chords (51.7) connect consecutive components. Thus the actual $q+(T-1-q)=T-1$ rows form a spanning tree and identify every INITIAL phase, by the incidence argument in Theorem 51.2.
+
+Now let $m=2$, $k=2p$ and $T=2p+1$. An eligible cut is $a=2q+r$, $0\le q\le p-1$, $r\in\{0,1\}$. The case $r=0$ is (51.12). For $r=1$ use
+
+$$
+(11)^q\mid(10)^{T-1-q}.
+\tag{51.14}
+$$
+
+Its first $10$ has exactly the required leading one, and every later $10$ starts from tail zero and ends at tail zero. All low survivors reach its first parent zero since $s+2q+1<k$. All later seams have a one-run of length one. The actual $10$ edges are $\{2t,2t+1\}\pmod T$, $q\le t\le T-2$.
+
+For $q=0$ these are a spanning path, omitting just the cycle edge with left endpoint $2p-1$. For $q\ge1$ the omitted left endpoints are $0,2,\ldots,2q-2$ and $2p-1$. The components of the retained adjacent edges are
+
+$$
+\{2p,0\},\ \{1,2\},\ \{3,4\},\ldots,
+\{2q-3,2q-2\},\ \{2q-1,\ldots,2p-1\}.
+\tag{51.15}
+$$
+
+There are $q+1$ components; when $q=1$ the intermediate two-element sets are absent. The $q$ all-one chords $\{2t,2t+2\}$ connect them consecutively into a spanning tree. Its columns identify every phase. This uses the literal $10$ parent and its actual endpoint, rather than an abstract independent row. The same original rejection decoding and ordered value join finish the target at worst depth $T-1$. Both alphabets admit every displayed word. ∎
+
+**定理 51.4（The separate adaptive finite horizon）。** Under (51.1), independently of preset finiteness,
+
+$$
+C_{\rm ad}(f)<\infty\quad\Longrightarrow\quad C_{\rm ad}(f)\le T.
+\tag{51.16}
+$$
+
+For $m=2$ and even $k\ge4$, the right side can be replaced by $T-1=k$. These implications do not assert that finite adaptive cost implies finite preset cost.
+
+**证明。** Apply [S1, Definition 5.1 and Theorem 5.2] to each free INITIAL value separately. Its full jointly attainable prior is supplied by (1.3); its target is the immutable record target $f$, its observations are complete endpoints, and its independent INITIAL bottom stops freely. Both original alphabets contain every $m$-bit word because $m<k$. Thus finite adaptive attainability supplies the source's finite recursive first-zero witness tree. No preset finiteness or ordered value join is assumed.
+
+At a nonempty successful node before the first zero, let $q$ be the number of actually issued all-one blocks. Write $z_0=v,z_1,\ldots,z_q$ for this branch's own endpoint values and $\beta_t=z_{t+1}\oplus z_t$. By [S1, Lemma 4.2], the INITIAL candidates and their respective current records are exactly
+
+$$
+\begin{gathered}
+\{(v,-j,s):j\in S_q(\beta),\ 0\le s<h_q\},\qquad h_q=k-qm>0,\\
+(z_q,-j+qm,s+qm),\qquad
+z_q=v\oplus\bigoplus_{t<q}\beta_t.
+\end{gathered}
+\tag{51.17}
+$$
+
+Every candidate has a whole actual history realization; the common current value is an observed value, and $q$ counts emitted blocks rather than an INITIAL clock. A homogeneous candidate set can stop at this node. Otherwise the witness tree either chooses another all-one block, with $h_q>m$ and a homogeneous INITIAL rejection band $h_q-m\le s<h_q$, or chooses a first-zero witness $0\le r<\min(m,h_q)$. In the recursive case the next observed difference selects the actual child support, and rejection stops with that node's common band label. In the first-zero case $C_v(q,-S_q(\beta),r)$, written in the $j=-\theta$ coordinates, says precisely
+
+$$
+\begin{aligned}
+&\operatorname{Const}\{f(v,-j,s):j\in S_q(\beta),\ h_q-r\le s<h_q\},\\
+&f(v,-j,s)=f(v,-j,0)
+\qquad(j\in S_q(\beta),\ 0\le s<h_q-r).
+\end{aligned}
+\tag{51.18}
+$$
+
+The rejection set is empty when $r=0$. Each recursive step decreases $h_q$ by $m$, so $q\le D$ and $qm\le k-1=T-2$. The cumulative leading run $a=qm+r$ is strictly less than $k$. All these statements concern one actually acquired archive and its INITIAL candidates.
+
+First construct the $T$ bound. Retain the witness parent $B_r=1^r0^{m-r}$ at index $q$. It rejects exactly the band in (51.18). Every other candidate has $s+qm+r<k$, reaches its first zero, and finishes at the actual record
+
+$$
+\left(z_q\oplus\bigoplus_{i=0}^{r-1}c_{-j+qm+i},\ -j+(q+1)m,\ 0\right).
+\tag{51.19}
+$$
+
+The empty sum is zero. The rejection endpoint is decoded using this branch's band label. A successful endpoint has its own observed value as the new baseline. Now issue $E$ from (51.5) at indices $q+1,\ldots,T-1$. Every such word starts zero and has one isolated one, so the first is safe from the actual parent tail zero and each later seam is safe, including $m=2$, where the preceding $E$ has tail one. There is no further rejection on a surviving source.
+
+The decoder uses the already acquired differences $\beta_0,\ldots,\beta_{q-1}$ and its own successive differences after the parent. For INITIAL phase $j$ these coordinates are exactly the incidence column of the retained $H_t$ and $F_t$ edges in the spanning tree (51.7)–(51.9). The parent's difference is not needed by this decoder, although its block is paid and its endpoint baseline is observed. That tree separates the whole $P$ for every permitted $q$, without a target eligibility hypothesis; restricting its columns to $S_q(\beta)$ preserves separation. The decoder therefore determines $j$ and returns $f(v,-j,0)$, which is the immutable label of every surviving INITIAL tail by (51.18). It never requests any coordinate from another archive. A surviving path emits $q$ prefix blocks, one parent and $T-q-1$ suffix blocks, for total $T$. Earlier homogeneous and rejection leaves stop at their actual completed endpoints. This proves (51.16).
+
+For the sharper bound let $m=2$, $k=2p\ge4$, so $T=2p+1$, $q\le p-1$ and $r\in\{0,1\}$. Retain the same recursive all-one choices and their homogeneous rejection leaves up to the local first-zero node. At that node choose the following literal parent and continuation using its actual $r$.
+
+If $r=0$, use $01$ as an alternative parent at index $q$, followed by $01$ at every index $q+1,\ldots,T-2$. The source's witness parent for $r=0$ is $00$, whose difference is zero and whose terminal tail is zero. The alternative $01$ first clears every candidate's current tail $s+2q<k$, then issues one safe bit. It rejects no candidate and has the actual endpoint record
+
+$$
+\left(z_q\oplus\mathbf1_{\{2q+1,2q+2\}\bmod T}(j),\ -j+2q+2,\ 1\right).
+\tag{51.20}
+$$
+
+Indeed its difference is $c_{-j+2q+1}$. Thus the endpoint response and tail are those of $01$ itself. Condition (51.18) with $r=0$ makes $f$ constant on every fixed-phase INITIAL tail fibre $0\le s<h_q$, so the new parent's tail merge loses no required label distinction. Every subsequent $01$ starts zero, clears the actual tail one, and again ends with one isolated one; all its endpoints are safe. A surviving source can stop at the final tail-one endpoint without a clearing block.
+
+For this new continuation the decoder retains its own prefix differences and observes the alternative parent's difference as well as every subsequent difference. These are exactly the edges
+
+$$
+H_t=\{2t,2t+2\}\pmod T\quad(0\le t<q),\qquad
+L_t=\{2t+1,2t+2\}\pmod T\quad(q\le t\le T-2).
+\tag{51.21}
+$$
+
+The $L_t$ form the physical adjacent cycle with the edges whose right endpoints are $0,2,\ldots,2q$ deleted. Its components are $\{0,1\},\{2,3\},\ldots,\{2q-2,2q-1\},\{2q,\ldots,2p\}$; for $q=0$ there is just the last component, the whole $P$. The already paid $H_t$ join consecutive components. Hence these actual $T-1$ rows form the spanning tree of (51.13), specialized to width two. Its distinct incidence columns identify every $j$, also after restriction to this branch's support. The decoder computes them from $z_q$ and the actual new parent endpoint; it then returns $f(v,-j,0)$ using (51.18). This continuation is defined from the new observations themselves, without identifying the $00$ and $01$ endpoint archives.
+
+If $r=1$, use the source's witness parent $10$ at index $q$, followed by $10$ at every index $q+1,\ldots,T-2$. The parent rejects exactly $s=h_q-1$, with the common band label in (51.18). Each survivor satisfies $s+2q+1<k$, so its first bit is safe and the second bit clears its tail. Its actual endpoint record is
+
+$$
+\left(z_q\oplus\mathbf1_{\{2q,2q+1\}\bmod T}(j),\ -j+2q+2,\ 0\right).
+\tag{51.22}
+$$
+
+Every later $10$ starts from tail zero and ends at tail zero. Its one-run has length one, so every reached suffix block is safe. The branch's own prefix differences and its actual parent and suffix differences are the $H_t$ and $\{2t,2t+1\}$ columns of (51.14)–(51.15). For $q=0$ the latter edges form a spanning path. For $q\ge1$ their components are those in (51.15), and the $H_t$ connect them consecutively. Again the result is a spanning tree on all $P$, with $T-1$ edges and distinct phase columns. Restricting to $S_q(\beta)$, the actual observed column determines $j$, and (51.18) supplies the survivor's INITIAL label $f(v,-j,0)$. Parent rejection uses only this branch's preceding archive and its homogeneous rejection band.
+
+In either case there are exactly $T-1-q$ displayed blocks at indices $q,\ldots,T-2$, including the parent. Together with the $q$ actually emitted prefix blocks, every surviving path pays at most $T-1=k$. Each prior rejection or homogeneous leaf pays only its own reached blocks. The words $11$, $01$ and $10$ are available in both original alphabets, and every seam and terminal tail used above is literal. The finite witness tree selects cuts separately for different acquired archives and free values; after a selected parent, only that source's endpoints enter its decoder. Initial bottom retains its independent free label. No global eligible cut, sibling observation, free clearing action or implication to finite preset attainability is used. This proves the separate adaptive sharpening. ∎
+
+## 52. The complete even-order width-two preset structural minimum
+
+**定义 52.1（Joined INITIAL rejection rectangles and the no-zero option）。** Fix
+
+$$
+m=2,\qquad k=2p\ge4,\qquad T=2p+1,
+\tag{52.1}
+$$
+
+and every arbitrary target $f:Q\to Y$ on the full prior of Definition 51.1. Use $\Gamma,\Lambda,I_t,S_t,h_t$ from (51.2)–(51.3), now with $I_t(j)=\mathbf1_{\{2t,2t+2\}\bmod T}(j)$ and $h_t=2p-2t$. All $T$ phases are actual. A common cut $a=2q+r<2p$, $r\in\{0,1\}$, is eligible exactly under (51.4).
+
+Let $\mathcal A$ consist of the integers $0\le d\le p-1$ satisfying
+
+$$
+\begin{aligned}
+&\operatorname{Const}\{\Gamma(j,s):j\in S_t(\beta),\ h_t-2\le s<h_t\}
+&& (t<d,\ \beta\in\mathbb F_2^t),\\
+&\operatorname{Const}\{\Gamma(j,s):j\in S_d(\beta),\ 0\le s<h_d\}
+&& (\beta\in\mathbb F_2^d).
+\end{aligned}
+\tag{52.2}
+$$
+
+These are the rejection and final successful sets of an actual $d$-block all-one stream. In particular $d=0$ means that the joined target is constant on all successful INITIAL records; the bottom label is independent. This option retains stopping before an unissued zero, rather than charging a nominal parent.
+
+**定义 52.2（Chronological literal graph and its two run exclusions）。** For an eligible cut $a=2q+r$ and an integer $q+1\le d\le k$, choose one sequence of actual two-bit words $B_0,\ldots,B_{d-1}$. Require
+
+$$
+B_t=11\ (t<q),\qquad
+B_q\in\begin{cases}\{00,01\},&r=0,\\\{10\},&r=1.\end{cases}
+\tag{52.3}
+$$
+
+At chronological index $t$ put $u_t=2t\pmod T$. The word's actual successful charge, from (1.4), gives the following graph row:
+
+$$
+\begin{array}{c|c}
+B_t&\text{edge at index }t\\ \hline
+00&\varnothing\\
+10&\{u_t,u_t+1\}\\
+01&\{u_t+1,u_t+2\}\\
+11&\{u_t,u_t+2\}.
+\end{array}
+\tag{52.4}
+$$
+
+Let $G$ be the multigraph on all $P$ with one separately time-indexed edge for every nonempty row. Parallel edges retain their distinct chronological coordinates. An empty row retains its block index and its fee when reached. Require $\Lambda$ to be constant on the entire isolated-vertex set, and on the two vertices of each component of size two. Components of size at least three impose no further label condition.
+
+Finally require the contiguous block suffix $B_q,\ldots,B_{d-1}$ to contain neither
+
+$$
+(11)^p,\qquad 01\mid(11)^{p-1}\mid10.
+\tag{52.5}
+$$
+
+The parent $01$, if selected, is included as a possible start of the second pattern. The intentional INITIAL rejection threshold before its first zero is governed by eligibility, not by (52.5). Let $\mathcal Z$ be the set of depths $d$ admitted by these conditions over all eligible cuts and all their allowed parents. No phase column is padded separately after a stopping time; $G$ always comes from one whole written stream.
+
+**定理 52.3（Full-INITIAL graphical minimum with a legal $k$ horizon）。** For every full target in (52.1), under either original alphabet,
+
+$$
+C_{\rm pre}(f)=\min(\mathcal A\cup\mathcal Z),\qquad \min\varnothing=+\infty.
+\tag{52.6}
+$$
+
+This includes fee zero, preset infinity, arbitrary label coincidences, both value fibres, all INITIAL tails and independent bottom. It is an exact finite structural minimum, with chronological graph collisions and literal seams evaluated together. It is not a numerical closed formula for each arbitrary table or a sharpness assertion for the $k$ horizon.
+
+**证明。** First identify the reader-specific column collisions. Each of the three physical vertices in (52.4) is actual and distinct, and the full even charge has the unique literal inverse $xy$ with charges $(x,x\oplus y,y)$. Thus the successful difference column at phase $j$ is exactly its edge-incidence column in $G$. The zero column consists of all isolated vertices. If two distinct vertices have the same nonzero column, every edge incident to either must contain both; their component has precisely those two vertices, possibly joined by several separately indexed edges. Conversely such a component gives equal columns to its endpoints. Every vertex in a component of size at least three therefore has a column distinct from every other vertex, including vertices in other components. It follows that full columns separate unequal $\Lambda$ labels exactly under the graph condition of Definition 52.2. Equal labels may have different columns.
+
+Next identify all literal suffix failures. The zero-containing words $00,01,10$ have respectively leading/terminal one-runs $(0,0),(0,1),(1,0)$. Between successive zero-containing words, let $\ell$ intervening blocks be $11$. The run crossing them has length
+
+$$
+\rho_{\rm left}+2\ell+\alpha_{\rm right},\qquad
+\rho_{\rm left},\alpha_{\rm right}\in\{0,1\}.
+\tag{52.7}
+$$
+
+For a terminal stretch omit $\alpha_{\rm right}$. If $\ell\ge p$, the first pattern of (52.5) occurs and gives rejection. If $\ell\le p-2$, the run is at most $2p-2<k$. At $\ell=p-1$ it reaches $k$ precisely when both boundary contributions are one, namely when the left word is $01$ and the right word $10$. A terminal stretch with $\ell=p-1$ has length at most $2p-1$ and is safe. These cases also apply after the parent's actual first zero: its terminal tail is zero for $00,10$ and one for $01$. They exhaust all post-zero runs, and prove that (52.5) is exactly suffix safety. There is no block-internal observation in this argument. In particular, physical row parity alone does not replace either run exclusion.
+
+For an actual obstruction to omitting the second exclusion, take $k=4,m=2$ and the full target $f(v,-j,s)=j$, with independent bottom label. The written stream $01\mid11\mid10$ has graph edges $\{1,2\},\{2,4\},\{4,0\}$, a four-vertex component and one isolated vertex, so all its formal incidence columns are distinct. Its actual INITIAL-tail-zero sources at $j=0$ and $j=3$ have the same two acquired differences $(0,0)$ and unequal labels. They cannot stop there. After $01\mid11$ their common tail is three; the first bit of $10$ reaches four and both acquire bottom at the next complete endpoint. The last formal graph row is therefore not a binary observation on these sources. Their whole histories are (1.3), and this failure is precisely $01\mid(11)^{p-1}\mid10$ at $p=2$.
+
+For $d\in\mathcal A$, issue exactly $d$ words $11$. At every rejected endpoint return the constant label of its band in (52.2), from that source's preceding archive. At the last successful endpoint return the constant surviving rectangle label. Remember the free initial value to select its component, and stop initial bottom freely. This constructs a correct controller with worst fee at most $d$ and without any zero parent.
+
+For $d\in\mathcal Z$, issue exactly its one specified stream. Its earlier and parent rejection rectangles are homogeneous by (51.4), so each rejected source decodes its INITIAL label from its own archive. All low sources $s<k-a$ survive the same parent zero and acquire its common terminal tail. Their immutable pair label is $\Lambda(j)$. Equation (52.7) proves that every later block is actually successful on all of them. Each survivor can therefore acquire the full incidence column and decode $\Lambda(j)$ under the graph condition. Its free initial value returns the corresponding component. Earlier homogeneous archives may stop sooner. Every empty row, wait or padded word still reached is one emitted complete block and is charged. This proves the sufficient direction of (52.6).
+
+For necessity take a finite correct preset controller with worst fee $H$ and apply Theorem 29.2 to its same stream. Stop any joined-homogeneous archive immediately. If no running source reaches a zero, or a written first zero would follow at least $k$ ones, every remaining successful archive in the block crossing the $k$th one would be sent wholly to absorption. No later observation could distinguish its candidates. Correctness forces it already to be homogeneous before that block, so omit that block and its unused suffix. The maximal actual all-one depth is some $d\le\min(H,p-1)$. Raw rejected bands and final surviving rectangles are homogeneous: a raw subgroup of an earlier stopping leaf is a subset of its homogeneous candidate set. These are set calculations about INITIAL sources, without executing a stopped history. Hence $d\in\mathcal A$.
+
+Otherwise the actually reached first zero follows $a=2q+r<k$ leading ones. Its own parent is exactly one of (52.3). The common-cut necessity proof of Theorem 24.2 supplies all (51.4), including raw subsets of earlier stopped leaves. Consider actual INITIAL-tail-zero representatives (1.3) at every phase on a fixed free-value fibre. They can all traverse the raw prefix and parent; all raw survivors then have the same tail. If a later written block would be the first common raw rejection, it sends every still-running successful archive wholly to bottom. Each such archive is already label-homogeneous by correctness. Stop it before that block and truncate the now unused rejecting suffix. If all actual sources stopped still earlier, truncate at their latest stopping endpoint. The retained written suffix is safe on every raw low-tail representative, including phases whose actual execution stopped earlier. Their later entries are design evaluations only; no actual output from a stopped source is acquired or borrowed.
+
+Let its retained depth be $d$. It is at least $q+1$, since a running source reached that parent, and at most $H$. All original positive-tail sources either rejected by the parent or have the same raw post-parent tail as the low representatives. Thus this truncation omits no unresolved source. If two phases of unequal $\Lambda$ had the same full retained column, their actual low-tail sources would have the same successful endpoint archive through the earlier stopping time. A deterministic decoder would stop both there with the same pair label, a contradiction. The incidence calculation gives the graph condition, and actual suffix safety gives (52.5). These are whole rows on all phases, rather than individual zero extensions of stopped columns.
+
+If $d\le k$, this is a member of $\mathcal Z$ no larger than $H$. If $d>k$, its eligible cut admits the lawful phase-identifying $k$-word stream of Theorem 51.3. That stream satisfies (52.3), has strictly safe suffix, and has distinct phase columns, so gives a member of $\mathcal Z$ at depth $k<d\le H$. Every finite correct controller therefore supplies a candidate no greater than its actual bound, while every candidate supplies a controller no greater than its depth. Their least values agree. If the union is empty, a finite controller would contradict necessity, proving infinity. If a minimum candidate's stream has all sources stop sooner, necessity supplies a no-larger candidate at that actual fee; thus no nominal unissued block is used to inflate the minimum.
+
+The response/seam and stopping normalization in [S15, Theorem 3.3 and Proposition 4.2] is consumed at its stated $m\ge3$ scope as a source of the common-tail argument, not applied as a width-two fee theorem. Here the moving three-vertex geometry, the exact incidence collision classification and the two literal exclusions give its full original-source width-two replacement, and Theorem 51.3 supplies its smaller legal horizon. The odd-order width-two subgroup law of Theorem 44.2 has $g=2$ and is not a phase supplier for (52.1). ∎
+
+## 53. An exact maximal-cut family on the original even-order source
+
+**定义 53.1（All positive INITIAL tails and arbitrary two-value phase tables）。** In (52.1), choose arbitrary $R_0,R_1\in Y$ and arbitrary tables $\lambda_v:P\to Y$, $v\in\mathbb F_2$. With arbitrary coincidences, define the complete INITIAL target by
+
+$$
+f(v,-j,s)=
+\begin{cases}
+\lambda_v(j),&s=0,\\
+R_v,&1\le s<k.
+\end{cases}
+\tag{53.1}
+$$
+
+Give initial bottom any independent label. There is no freshness, injectivity or value-independence hypothesis. Write
+
+$$
+\rho_0=2p,\qquad \rho_i=2i-1\ (1\le i<p),\qquad
+b_v(i)=\lambda_v(\rho_i),\qquad b(i)=(b_0(i),b_1(i)).
+\tag{53.2}
+$$
+
+For a table $c$ on $\{0,\ldots,p-1\}$ use the following expression inside this family's fee:
+
+$$
+\psi(c)=
+\begin{cases}
+0,&c\text{ is constant},\\
+1,&c\text{ is nonconstant, }c|_{\{2,\ldots,p-1\}}\text{ is constant, and }|c[\{0,\ldots,p-1\}]|\le2,\\
+\max\{2,B(c)\},&\text{otherwise},
+\end{cases}
+\tag{53.3}
+$$
+
+In the last case $B(c)=\max\{i:0\le i<p-1,\ c(i)\ne c(i+1)\}$. A nonconstant table has such a boundary. Constancy of the empty outside set is vacuous. The constant, one-block and path-column mechanism of Theorem 43.2 is consumed only after the actual even-order parent and suffix correspondence below; its odd-order source and acquired fee are not identified with the present INITIAL problem.
+
+**定理 53.2（Closed adaptive and preset fees with the maximal cut paid）。** For the entire family (53.1), under either original alphabet, put
+
+$$
+F_v=
+\begin{cases}
+0,&\lambda_v(j)=R_v\text{ for all }j,\\
+p+\psi(b_v),&\text{otherwise}.
+\end{cases}
+\tag{53.4}
+$$
+
+Then
+
+$$
+\begin{aligned}
+C_{\rm ad}(f)&=\max\{F_0,F_1\},\\
+C_{\rm pre}(f)&=
+\begin{cases}
+0,&(\lambda_0(j),\lambda_1(j))=(R_0,R_1)\text{ for all }j,\\
+p+\psi(b),&\text{otherwise}.
+\end{cases}
+\end{aligned}
+\tag{53.5}
+$$
+
+The parent fee $p$ is part of the original worst emitted fee, and all positive INITIAL tails are included. The equalities are restricted to (53.1), rather than asserted for arbitrary INITIAL tail partitions. With a common injective tail-zero table $\lambda_0=\lambda_1$, and arbitrary $R_0,R_1$, both exact fees are three at $k=4$, five at $k=6$, and $k-2$ at every even $k\ge8$.
+
+**证明。** First fix one free value $v$ with $\lambda_v(j)\ne R_v$ at some phase $j$. Its two actual histories (1.3) with INITIAL tails zero and one have unequal labels and identical successful values for every common literal input before the first zero. A zero before $k-1$ emitted ones lets both survive and merges their current records. If no zero intervenes between the $(k-1)$st and $k$th ones, both reject in the same final two-bit block, and the one endpoint is bottom for both. No later observation separates either merged pair. They cannot stop while their archives agree. Every correct path carrying this pair must therefore have its first zero precisely after $k-1=2p-1$ ones, namely the literal prefix
+
+$$
+(11)^{p-1}\mid10.
+\tag{53.6}
+$$
+
+It pays $p$ complete blocks. This is an all-action lower bound on that actual adaptive path. For a nonconstant joined target the same argument forces (53.6) on the preset stream. Constant fibres need no action and return $R_v$ for free.
+
+Use (53.6) as a preset prefix on any nonconstant fibre, or on the joined table for preset control. Every positive INITIAL tail rejects in one of its $p$ blocks and returns its own $R_v$; the preceding archive is irrelevant to that label. Precisely INITIAL tail zero survives, reaches the final zero and ends at actual tail zero. The successful charge graph of the prefix is the path
+
+$$
+0\;--\;2\;--\;4\;--\;\cdots\;--\;(2p-2)\;--\;(2p-1).
+\tag{53.7}
+$$
+
+It has $p\ge2$ edges and $p+1\ge3$ vertices. The incidence argument in Theorem 52.3 identifies each of these vertices by its distinct nonzero prefix column. Their successful archives are already homogeneous, since only INITIAL tail zero remains. They can actually stop at the parent endpoint with $\lambda_v(j)$. Exactly the $p$ isolated vertices of this graph remain on the all-zero successful archive:
+
+$$
+(\rho_0,\ldots,\rho_{p-1})=(2p,1,3,\ldots,2p-3).
+\tag{53.8}
+$$
+
+They have current value $v$ and current tail zero, after the same paid parent, with their original labels $b_v(i)$.
+
+At the next chronological indices $p+h$, $0\le h\le p-2$, the actual ordered windows are
+
+$$
+(\rho_h,\ 2h,\ \rho_{h+1})\pmod T.
+\tag{53.9}
+$$
+
+For $h=0$ this is $(2p,0,1)$; for $h\ge1$ it is $(2h-1,2h,2h+1)$. The middle even phase belongs to the genuinely identified set (53.7). For a literal word $xy$, its two remaining endpoint charges are exactly $x,y$, and its middle charge is $x\oplus y$, all from the same actual block (1.4). This is the full even physical charge. The middle source has already stopped and provides no further observation. Thus the two-endpoint suffix mechanism in the proof of Theorem 43.2 has a lawful original-source realization here. The next block index is $p$, its ordered residual endpoints are $\rho_0,\rho_1$, and its acquisition has paid depth $p$; this is not a free substitution of an odd-order reader.
+
+For completeness apply that mechanism with these actual indices and tails. A constant residual table stops at the parent. From tail zero every first two-bit word is safe. A nonconstant table can stop after one more block exactly when the untouched indices $i\ge2$, all with response zero, have one label and the entire residual has at most two labels. These are exactly the second line of (53.3). If the outside set is nonempty, choose its label as response-zero baseline and use the two literal bits to mark the other label at $\rho_0,\rho_1$; if it is empty, choose either occurring label. Each response class is homogeneous and this one actual word attains the fee. No more than two ones are emitted after the parent's clearing zero, so its seam is safe.
+
+If the one-block condition fails, at least two further completed endpoints are necessary. For any differing adjacent labels at indices $i,i+1$ with $i\ge1$, their first possibly separating coefficient occurs at absolute bit position $2p+2i-1$, the second bit of suffix block $i-1$. Neither phase has any coefficient activity earlier in the suffix. Until that position their current values and tails are equal, so every actual adaptive archive, action and stopping decision on them is equal. A rejection would be common absorption and cannot identify unequal INITIAL labels. Reaching that position requires at least $i$ further complete blocks. Taking the last differing boundary, together with the failed one-block condition, gives the lower bound $\max\{2,B(c)\}$ for an arbitrary adaptive continuation.
+
+For attainment in this last case put $d=\max\{2,B(c)\}$ and issue exactly $d$ words $11$ after (53.6). The failed one-block condition implies $p\ge3$. If $p=3$, $d=2=p-1$; if $p\ge4$, $d\le p-2$. In either case $d\le p-1$, so (53.9) covers every issued row and
+
+$$
+2d\le2p-2<k.
+\tag{53.10}
+$$
+
+Every suffix endpoint is therefore successful on every residual source, and its final tail needs no clearing action for stopping. The columns on residual indices $0,\ldots,d$ are
+
+$$
+e_0,\ e_0+e_1,\ldots,e_{d-2}+e_{d-1},\ e_{d-1},
+\tag{53.11}
+$$
+
+where $e_h$ denotes the unit vector at suffix coordinate $h$. They are pairwise distinct for $d\ge2$. Every later residual index has the zero column and one common label, because those indices are beyond the last differing boundary. Hence the written stream decodes the full residual table. Equal-label splitting is allowed. This proves the additional $\psi(c)$ fee and its actual literal attainment, within the paid correspondence (53.6)–(53.9).
+
+To add that fee in an adaptive lower bound, a nonconstant $b_v$ has some entry different from $R_v$. Choose that residual phase's actual INITIAL tails zero and one. Before the parent all residual tail-zero sources are silent on the all-one rows, and share the successful archive of this unresolved pair. Any first zero before the final position would merge the pair, so its adaptive path must choose $11$ at every earlier block and $10$ as the parent. All residual tail-zero sources share those actions and outputs; none can stop separately while the pair makes the archive nonhomogeneous. They therefore actually reach the complete residual archive (53.8) at depth $p$. The suffix lower bound applies there to all adaptive choices and adds to the paid $p$ blocks. If $b_v$ is constant but the fibre is not constant, the same-phase pair at another phase already gives the lower bound $p$. The attaining stream (53.6) followed by the indicated suffix meets both cases. This proves $F_v$ on each fibre; the free initial value selects its own adaptive controller, giving their maximum.
+
+For preset control apply exactly the same prefix and suffix argument to the ordered table $\lambda(j)=(\lambda_0(j),\lambda_1(j))$ with positive-tail label $(R_0,R_1)$. It has arbitrary pair coincidences and the same actual graph and suffix. Theorem 29.2 gives its exact original preset cost without a second experiment or an adaptive value join. Projecting the acquired pair label using the remembered free value returns $f$. This proves both equalities of (53.5), including the zero cases and all original source conditions. For the injective specialization, its residual table has $p$ distinct labels. Equation (53.3) gives additional fee one at $p=2$, two at $p=3$, and $p-2$ at $p\ge4$. Adding the actual parent fee $p$ gives the stated values. Arbitrary coincidence of $R_v$ with one phase label does not remove the unequal same-phase pair at another phase, so the lower bound remains valid. These family values do not assert sharpness of (51.11). ∎
+
+**定理 53.3（Value dependence inside the maximal-cut family）。** For (53.1),
+
+$$
+0\le C_{\rm pre}(f)-C_{\rm ad}(f)\le1.
+\tag{53.12}
+$$
+
+If at least one fibre is nonconstant, write $\alpha=\max\{\psi(b_0),\psi(b_1)\}$. Then the two exact fees are $p+\alpha$ and $p+\psi(b)$. Their difference is one precisely when both scalar residual tables have one-block fee, while their ordered-pair residual table has three distinct labels. This can occur at every $p\ge3$. It is a value-dependent comparison for this family, not a universal bound on preset excess.
+
+**证明。** A constant full fibre has constant $b_v$ and $\psi(b_v)=0$. Thus (53.5) gives the displayed forms whenever some fibre is nonconstant. If $\alpha=0$, both residual components are constant and so is $b$. If $\alpha=1$, each scalar outside set $i\ge2$ is constant and each scalar residual has at most two labels. The pair outside is consequently constant. The pair residual has at most three labels, one at each of indices zero and one and a single outside label. For $p=2$ the outside is empty and there are at most two. It has fee one unless it has three distinct labels, when its last possible differing boundary is at most one and its fee is two. Three pair labels require both scalar tables to be nonconstant, since one constant component would leave at most two pair labels.
+
+If $\alpha\ge2$, let $B_v$ be each nonconstant component's last differing boundary. A component with fee at most one has no differing boundary beyond index one. The pair's differing boundaries are exactly the union of those of its components. Therefore the pair also fails the one-block condition and
+
+$$
+\psi(b)=\max\{2,\max_{v:\,b_v\text{ nonconstant}}B(b_v)\}=\alpha.
+\tag{53.13}
+$$
+
+This covers all cases and proves the characterization.
+
+For actual attaining examples, choose $A\ne B$, put $R_0=R_1=A$, and put all non-residual tail-zero labels equal to $A$. On the residual order (53.8) let
+
+$$
+b_0=(A,B,A,A,\ldots,A),\qquad
+b_1=(A,A,B,B,\ldots,B).
+\tag{53.14}
+$$
+
+For every $p\ge3$ each component has additional fee one, but the pair has three labels and additional fee two. Both complete-source fibres have positive-tail label $A$. Their exact fees are $C_{\rm ad}=p+1$ and $C_{\rm pre}=p+2$. The common paid parent is (53.6). Value zero uses suffix $01$, marking only its $B$ endpoint; value one uses suffix $11$, marking its two $A$ endpoints relative to its outside label $B$. The preset pair uses $11\mid11$: residual indices zero, one and two have columns $(1,0),(1,1),(0,1)$ respectively, and every later index has column $(0,0)$ and the same pair label as index two. These words start at actual tail zero and contain at most four consecutive ones, strictly below $k=2p$ for $p\ge3$. Every reached block is paid. This proves attainability of the claimed one-block excess. ∎
+
+## 54. Original cost quantifiers and the residual scopes
+
+**定义 54.1（Exact structural scope and the remaining fee problem）。** The cost problem retains the fixed matched $V_k\bmod2$ reader, every jointly attainable complete-block history, immutable INITIAL labels, actual phases $g\mathbb Z/(k+1)\mathbb Z$, both free values and independent absorbing bottom. Only complete endpoints are observed; every actual wait, padding, clearing and repair block is paid. Adaptive and one-global-stream preset costs remain separate objectives for every original $k\ge2,m\ge1$.
+
+Theorem 51.2 gives a sufficient $k+1$ preset ceiling on the full proper-narrow coprime slice (51.1). Theorem 51.3 sharpens it to $k$ at eligible boundary cuts and at every even-order width-two cut. Theorem 51.4 has its own adaptive finiteness premise and the discharged [S1, Theorem 5.2] interface. None of these sufficient ceilings is defined as a sharp supremum. Equation (52.6) is an exact structural minimum for every full INITIAL target at even order and width two; evaluating its minimum as a closed numerical function of each arbitrary table is a further problem. Equation (53.5) is a closed exact family law on all its positive-tail and value fibres; (53.12) is restricted to that family.
+
+The exact individual fees for arbitrary INITIAL targets at coprime proper-narrow $m\ge3$, their sharp finite ceilings, arbitrary INITIAL adaptive fees outside the stated family and supplied exact laws, and the remaining original widths are unresolved by these statements. No seam-elimination premise at $k\ge4m$ is imposed: (52.5) remains an explicit requirement at every $p$. Finite adaptive attainability is not defined to be finite preset attainability, and the family equality cases do not impose an arbitrary-target adaptive equality.
+
+The existing unit-width laws of Theorems 25.3–25.4, noncoprime proper-narrow $m\ge3$ law of Theorem 33.2, odd-order width-two law of Theorem 44.2, and wide and odd-critical laws of Theorem 48.1 retain their own parameter hypotheses. The original phase-only tables and their acquired-support mechanisms in [S11, Section 4], [S13, Definition 1.3 and Theorem 6.1] and [S15, Theorem 3.3] do not replace the mixed-tail parent in (53.6). Theorem 43.2 supplies the consumed two-endpoint suffix argument; (53.7)–(53.10) establish its actual even-order source, phase calendar, safe operation, INITIAL label and paid acquisition correspondence. A row evaluated on a stopped source is only a design coordinate, never an observed event or another branch's information.
+
+Moore's single-machine simple experiments and van den Bos–Vaandrager's completed-observation tests (*State Identification for Labeled Transition Systems with Inputs and Outputs*, [arXiv:1907.11034v2](https://arxiv.org/pdf/1907.11034v2), Definitions 12, 14, 17, 20 and Figure 3) supply experiment semantics and irreversible-merge boundaries. Their general testing statements supply neither the actual charge schedule (51.7)–(51.8), its paid horizon, the simultaneous graph/seam minimum, nor a transfer from independent child optima to a common preset stream. The remaining mathematical problem keeps those literal correspondence obligations.
+
+## 追加锚（本行以下为增补区）
+
