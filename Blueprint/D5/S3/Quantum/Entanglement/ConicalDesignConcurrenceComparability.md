@@ -82,6 +82,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wang-zhou-chen-fei-2026-conical-design-concurrence-comparability` (proved) by `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wang-zhou-chen-fei-2026-conical-design-concurrence-comparability","declaration_gid":"D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* H.-F. Wang; W. Zhou; L. Chen; S.-M. Fei (2026). *Estimating the concurrence for quantum states via symmetric measurements*. URL: <https://arxiv.org/abs/2606.31010v2>.

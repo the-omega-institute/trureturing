@@ -34,13 +34,16 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Wzcf)),
             Node("result", "Uniform comparison by the ratio alpha over beta", Disp(F.Id("claim")),
                 "Vectorize each effect as A_ip=(E_i)_(p.2,p.1). The tensor identity gives A.conjTranspose times A=beta I+alpha vv.conjTranspose, where v=Matrix.vec I. With Q=vv.conjTranspose/d and t=sqrt(1+d alpha/beta), a rectangular isometry factors A as sqrt(beta) U (I+(t-1)Q). The trace norm is unchanged by that isometry, so the bound depends only on t. For s at most t, the projection dilation gives a trace-norm gain of at least (t squared minus s squared)/d, cancelling the change of the offset. Consequently alpha_E/beta_E at least alpha_G/beta_G gives B_E at least B_G for every state. Equal ratios give equal bounds. The total order on real ratios proves claim.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Wzcf))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Wzcf),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wang-zhou-chen-fei-2026-conical-design-concurrence-comparability"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("wzcf-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name, params Formula[] args) => name is "P_E" or "B_E"
         ? new Formula.Apply(new Formula.Subscript(F.Id(name == "P_E" ? "P" : "B"), F.Id("E")), [.. args])
