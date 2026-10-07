@@ -20,19 +20,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.delta`
 
 delta(P,Q) is the cardinality of the set difference of the original alpha-leaf address sets. The prose notation μ(P) denotes the cardinality of the original alpha-leaf address set.
 
-**Definition 1.2 (Mapped single-hole filling).**
-
-Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.fillContext`
-
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.fillContext` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Single-hole contexts reuse ActualLeafHistoryRigidity.OutputContext, including its root-first holeAddress. fillContext(g,H,X) inserts X and applies g to every complete fixed sibling. The identity retains the preimage, and rho cubed turns all fixed siblings into actual images.
-
-**Definition 1.3 (Two source holes).**
+**Definition 1.2 (Two source holes).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.TwoHole`
 
@@ -42,9 +30,9 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.TwoHole`
 
 *Commentary.*
 
-The outer one-hole context leads to the lowest common ancestor. Its left and right one-hole contexts lead to the two distinct holes. A Boolean records their naming order. TwoHole.fill(J,g,X,Y) inserts the named trees exactly once, retaining the entire outer context and each fixed sibling. TwoHole.addresses gives two addresses with the same outer prefix and opposite next bits, and hence neither is a prefix of the other.
+Single-hole contexts reuse ActualLeafHistoryRigidity.OutputContext, its plug filling and its root-first holeAddress. The outer one-hole context leads to the lowest common ancestor. Its left and right one-hole contexts lead to the two distinct holes. A Boolean records their naming order. TwoHole.fill(J,X,Y) plugs the named trees into the left and right contexts and their pair into the outer context, so each tree is inserted exactly once and the entire outer context and each fixed sibling are retained. TwoHole.addresses gives two addresses with the same outer prefix and opposite next bits, and hence neither is a prefix of the other.
 
-**Definition 1.4 (Canonical divergence frontier).**
+**Definition 1.3 (Canonical divergence frontier).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.frontier`
 
@@ -56,7 +44,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.frontier
 
 Comparison is performed on complete preimages. Equal subtrees stop; two branches recurse into the ordered children; an atom-compound comparison records the current address.
 
-**Definition 1.5 (Atomic-side hole count).**
+**Definition 1.4 (Atomic-side hole count).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.forwardCount`
 
@@ -68,7 +56,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.forwardC
 
 forwardCount(S,T) counts frontier holes whose S side is atomic and T side is compound.
 
-**Definition 1.6 (Literal double-hole normal form).**
+**Definition 1.5 (Literal double-hole normal form).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.NormalForm`
 
@@ -78,11 +66,11 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.NormalFo
 
 *Commentary.*
 
-NormalForm(S,T) retains a complete source context J and y equal to beta or (alpha,alpha), with S=fill(id,J,beta,(alpha,y)) and T=fill(id,J,(alpha,y),beta). Its frontier is exactly the two named, mutually nonprefix addresses. Writing Y=rho cubed(y) and K=rho cubed(fill(id,J,beta,beta)), the actual trees are literally replace(replace(K,u,C),v,(A,Y)) and replace(replace(K,u,(A,Y)),v,C). Thus every fixed sibling has an actual preimage.
+NormalForm(S,T) retains a complete source context J and y equal to beta or (alpha,alpha), with S=fill(J,beta,(alpha,y)) and T=fill(J,(alpha,y),beta). Its frontier is exactly the two named, mutually nonprefix addresses. Writing Y=rho cubed(y) and K=rho cubed(fill(J,beta,beta)), the actual trees are literally replace(replace(K,u,C),v,(A,Y)) and replace(replace(K,u,(A,Y)),v,C). Thus every fixed sibling has an actual preimage.
 
-**Theorem 1.7 (Sharp Alpha Separation).**
+**Theorem 1.6 (Sharp Alpha Separation).**
 
-$$(\forall S \in Source, (\forall T \in Source, (((\neg(\operatorname{rho3}\left(S\right) = \operatorname{rho3}\left(T\right))) \land (\operatorname{n}\left(\operatorname{rho3}\left(S\right)\right) = \operatorname{n}\left(\operatorname{rho3}\left(T\right)\right)) \land (\operatorname{NC}\left(\operatorname{rho3}\left(S\right), \operatorname{rho3}\left(T\right)\right))) \implies ((3 \leq \operatorname{delta}\left(\operatorname{rho3}\left(S\right), \operatorname{rho3}\left(T\right)\right)) \land (3 \leq \operatorname{delta}\left(\operatorname{rho3}\left(T\right), \operatorname{rho3}\left(S\right)\right)) \land ((\operatorname{delta}\left(\operatorname{rho3}\left(S\right), \operatorname{rho3}\left(T\right)\right) = 3) \Leftrightarrow (\operatorname{NormalForm}\left(S, T\right))) \land ((\operatorname{delta}\left(\operatorname{rho3}\left(T\right), \operatorname{rho3}\left(S\right)\right) = 3) \Leftrightarrow (\operatorname{NormalForm}\left(S, T\right))) \land ((\operatorname{delta}\left(\operatorname{rho3}\left(S\right), \operatorname{rho3}\left(T\right)\right) = 3) \implies ((\operatorname{c}\left(\operatorname{rho3}\left(S\right)\right) = \operatorname{c}\left(\operatorname{rho3}\left(T\right)\right)) \land (\operatorname{c}\left(S\right) = \operatorname{c}\left(T\right)))))))) \land (\forall J \in TwoHole, (\forall y \in Source, (((y = beta) \lor (y = \operatorname{pair}\left(alpha, alpha\right))) \implies ((\operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right) \in I) \land (\operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, \operatorname{pair}\left(alpha, y\right), beta\right)\right) \in I) \land (\operatorname{NormalForm}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, beta, \operatorname{pair}\left(alpha, y\right)\right), \operatorname{fill}\left(\operatorname{id}\left(\right), J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)) \land (\neg(\operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right) = \operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, \operatorname{pair}\left(alpha, y\right), beta\right)\right))) \land (\operatorname{n}\left(\operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right)\right) = \operatorname{n}\left(\operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)\right)) \land (\operatorname{NC}\left(\operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right), \operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)\right)) \land (\operatorname{delta}\left(\operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right), \operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)\right) = 3) \land (\operatorname{delta}\left(\operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, \operatorname{pair}\left(alpha, y\right), beta\right)\right), \operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right)\right) = 3) \land (\operatorname{c}\left(\operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right)\right) = \operatorname{c}\left(\operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)\right)) \land (\operatorname{c}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right) = \operatorname{c}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)) \land (\operatorname{nu}\left(\operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right), \operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)\right) = \operatorname{unsharedCount}\left(y\right)) \land (\operatorname{nu}\left(\operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, \operatorname{pair}\left(alpha, y\right), beta\right)\right), \operatorname{rho3}\left(\operatorname{fill}\left(\operatorname{id}\left(\right), J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right)\right) = \operatorname{unsharedCount}\left(y\right))))))$$
+$$(\forall S \in Source, (\forall T \in Source, (((\neg(\operatorname{rho3}\left(S\right) = \operatorname{rho3}\left(T\right))) \land (\operatorname{n}\left(\operatorname{rho3}\left(S\right)\right) = \operatorname{n}\left(\operatorname{rho3}\left(T\right)\right)) \land (\operatorname{NC}\left(\operatorname{rho3}\left(S\right), \operatorname{rho3}\left(T\right)\right))) \implies ((3 \leq \operatorname{delta}\left(\operatorname{rho3}\left(S\right), \operatorname{rho3}\left(T\right)\right)) \land (3 \leq \operatorname{delta}\left(\operatorname{rho3}\left(T\right), \operatorname{rho3}\left(S\right)\right)) \land ((\operatorname{delta}\left(\operatorname{rho3}\left(S\right), \operatorname{rho3}\left(T\right)\right) = 3) \Leftrightarrow (\operatorname{NormalForm}\left(S, T\right))) \land ((\operatorname{delta}\left(\operatorname{rho3}\left(T\right), \operatorname{rho3}\left(S\right)\right) = 3) \Leftrightarrow (\operatorname{NormalForm}\left(S, T\right))) \land ((\operatorname{delta}\left(\operatorname{rho3}\left(S\right), \operatorname{rho3}\left(T\right)\right) = 3) \implies ((\operatorname{c}\left(\operatorname{rho3}\left(S\right)\right) = \operatorname{c}\left(\operatorname{rho3}\left(T\right)\right)) \land (\operatorname{c}\left(S\right) = \operatorname{c}\left(T\right)))))))) \land (\forall J \in TwoHole, (\forall y \in Source, (((y = beta) \lor (y = \operatorname{pair}\left(alpha, alpha\right))) \implies ((\operatorname{rho3}\left(\operatorname{fill}\left(J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right) \in I) \land (\operatorname{rho3}\left(\operatorname{fill}\left(J, \operatorname{pair}\left(alpha, y\right), beta\right)\right) \in I) \land (\operatorname{NormalForm}\left(\operatorname{fill}\left(J, beta, \operatorname{pair}\left(alpha, y\right)\right), \operatorname{fill}\left(J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)) \land (\neg(\operatorname{rho3}\left(\operatorname{fill}\left(J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right) = \operatorname{rho3}\left(\operatorname{fill}\left(J, \operatorname{pair}\left(alpha, y\right), beta\right)\right))) \land (\operatorname{n}\left(\operatorname{rho3}\left(\operatorname{fill}\left(J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right)\right) = \operatorname{n}\left(\operatorname{rho3}\left(\operatorname{fill}\left(J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)\right)) \land (\operatorname{NC}\left(\operatorname{rho3}\left(\operatorname{fill}\left(J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right), \operatorname{rho3}\left(\operatorname{fill}\left(J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)\right)) \land (\operatorname{delta}\left(\operatorname{rho3}\left(\operatorname{fill}\left(J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right), \operatorname{rho3}\left(\operatorname{fill}\left(J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)\right) = 3) \land (\operatorname{delta}\left(\operatorname{rho3}\left(\operatorname{fill}\left(J, \operatorname{pair}\left(alpha, y\right), beta\right)\right), \operatorname{rho3}\left(\operatorname{fill}\left(J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right)\right) = 3) \land (\operatorname{c}\left(\operatorname{rho3}\left(\operatorname{fill}\left(J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right)\right) = \operatorname{c}\left(\operatorname{rho3}\left(\operatorname{fill}\left(J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)\right)) \land (\operatorname{c}\left(\operatorname{fill}\left(J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right) = \operatorname{c}\left(\operatorname{fill}\left(J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)) \land (\operatorname{nu}\left(\operatorname{rho3}\left(\operatorname{fill}\left(J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right), \operatorname{rho3}\left(\operatorname{fill}\left(J, \operatorname{pair}\left(alpha, y\right), beta\right)\right)\right) = \operatorname{unsharedCount}\left(y\right)) \land (\operatorname{nu}\left(\operatorname{rho3}\left(\operatorname{fill}\left(J, \operatorname{pair}\left(alpha, y\right), beta\right)\right), \operatorname{rho3}\left(\operatorname{fill}\left(J, beta, \operatorname{pair}\left(alpha, y\right)\right)\right)\right) = \operatorname{unsharedCount}\left(y\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.result` (`✓ std3`). ∎
 
@@ -101,7 +89,6 @@ At every atom-compound hole, the atomic side contributes at least one alpha defi
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.NormalForm`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.TwoHole`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.delta`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.fillContext`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.forwardCount`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.frontier`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.result`
