@@ -4528,3 +4528,207 @@ The original all-parameter objective remains broader. In particular this result 
 
 ## 追加锚（本行以下为增补区）
 
+## 65. The zero/one-block boundary of actual critical-narrow positive children
+
+**定义 65.1（Actual common-tail child and its two continuation prices）。** Retain the original weights, matched scalar, joint actual-history prior, immutable INITIAL record target $f:Q\to Y$, free initial scalar or independent bottom, endpoint-only observations, and complete-block fee of Chapter 1. In Chapters 65–67 assume
+
+$$
+3\le m<k<2m,\qquad T=k+1,\qquad \gcd(m,T)=1,\qquad h=k-m.
+\tag{65.1}
+$$
+
+Thus $P=\mathbb Z/T\mathbb Z$ and $1\le h\le m-2$: the omitted endpoint $h=m-1$ would give $T=2m$ and nontrivial gcd. Both original alphabets contain exactly the same $2^m$ words, while cross-block rejection remains an actual operation.
+
+Fix either free INITIAL value and any actual chronological archive whose emitted block $B$ at absolute issued index $a\ge0$ has a successful positive-difference child. Write $b=a+1$ and retain that child's entire acquired archive, support $A$ of INITIAL indices $j=-\theta_{\rm INITIAL}$, common current value, and common actual tail $\sigma<k$. Require that the retained INITIAL label is one well-defined function $\lambda:A\to Y$: every surviving INITIAL record at a given $j$ has that same label. All candidates are original histories sharing this very archive. The parent may have mixed tails and may be the first issued-zero parent; no earlier recorded zero, low inherited tail, tail-independent full target, distinct labels at distinct phases, or condition on another child or value fibre is required. Well-defined $\lambda$ is a substantive hypothesis, not a consequence of the parent's legality. The first-zero merger conditions of [S1, Lemma 4.3 and Theorem 5.2; S15, Definition 4.1 and Proposition 4.2] must still hold whenever this child is used in a correct full INITIAL controller.
+
+Use the actual ordered windows $W_t=[tm,(t+1)m]\pmod T$ of Interface 1.4. Positivity gives $A\subseteq W_a$ and charge one on every $j\in A$. At the child, the current phase is $-j+bm\pmod T$. Let $D_{\rm ad}$ be its minimum additional worst-branch fee over adaptive continuations. Let $D_{\rm child\text{-}pre}$ restrict the continuation to a single preset literal stream selected for this particular acquired child, with stopping and decoding based on its own endpoints. It has no GLOBAL compatibility requirement with siblings or the other free-value fibre. Every further emitted block, including uninformative clearing and waits, is paid; a homogeneous archive may stop at its current endpoint. Empty supports have fee zero as vacuous composition entries. Label equality is semantic; effective selection requires a finite partition presentation or decidable equality, as in [S1, Note 5.3].
+
+Define the one-coordinate availability condition and the exceptional family by
+
+$$
+\mathsf Q_1:\quad |\lambda[A]|\le2\quad\text{and}\quad
+\lambda\text{ is constant on }A\setminus W_b,
+\tag{65.2}
+$$
+
+with empty-set constancy true, and
+
+$$
+\begin{aligned}
+\mathsf E:\quad &k=m+1,\quad m\text{ odd},\quad A=W_a,\\
+&H=\{bm,(b+1)m\}\pmod T,\quad
+\exists L\ne M:\quad
+\lambda(j)=\begin{cases}L,&j\in H,\\M,&j\in A\setminus H.\end{cases}
+\end{aligned}
+\tag{65.3}
+$$
+
+Here $H\subset A$ has two vertices. The path inverse and strict seam criterion used below are the credited interfaces (1.4)–(1.5), [S10, Interface 2.1] and [S15, Definitions 1.1 and 2.1]. The general residual one-block safe-cut certificate is [S13, Theorem 8.4]; its arbitrary-support condition is not itself the positive-child classification below. The constructions of Chapter 27 and the fee laws of Chapters 60–64 require $k\ge2m$ and are not continuation laws under (65.1).
+
+**定理 65.2（Exhaustive shallow boundary and exact paid exception）。** For every actual child of Definition 65.1, under both original alphabets,
+
+$$
+D_{\rm ad}=D_{\rm child\text{-}pre}=0
+\quad\Longleftrightarrow\quad
+A=\varnothing\ \text{or}\ \lambda\text{ is constant}.
+\tag{65.4}
+$$
+
+For nonconstant $\lambda$,
+
+$$
+D_{\rm ad}\le1
+\quad\Longleftrightarrow\quad
+D_{\rm child\text{-}pre}\le1
+\quad\Longleftrightarrow\quad
+\mathsf Q_1\ \text{and not}\ \mathsf E,
+\tag{65.5}
+$$
+
+and these prices are exactly one. In $\mathsf E$ the actual parent is forced to be $101\cdots01$, its child tail is $\sigma=1$, and
+
+$$
+D_{\rm ad}=D_{\rm child\text{-}pre}=2,
+\qquad\text{attained from index }b\text{ by }0^m\mid110^{m-2}.
+\tag{65.6}
+$$
+
+For every other nonconstant case failing (65.5), each continuation price is between two and $T-1$, inclusive. No equality of the two prices at general higher depths is asserted.
+
+**证明（necessity and the separating row）。** At fee zero there is no further observation: all candidates have the same acquired archive, so a correct stop exists precisely for a constant INITIAL label. This gives (65.4), including the empty convention.
+
+At a common-tail child every fixed next word either succeeds on all candidates or rejects all of them: since $m<k$, rejection depends only on $\sigma$ and the word's leading run. Rejection creates one absorbing archive and cannot finish a nonconstant target, at this endpoint or after later actions. A successful endpoint has only the binary difference $q$; outside $W_b$ it is zero by (1.4). Thus any one-block completion forces $\mathsf Q_1$. Adaptive and child-preset depth one have the same single next word.
+
+For nonconstant $\mathsf Q_1$ there are exactly two labels. If $A\setminus W_b$ is nonempty, prescribe $q=0$ to its common label and $q=1$ to the other label. If it is empty either label orientation is allowed. A one-block completion exists exactly when such a separating row has a safe literal realization. These binary-row constraints also occur in the credited safe-cut interface; here they follow from the preceding common-tail argument without assuming an earlier issued zero. The remaining proof exhausts them using the actual positive parent.
+
+**证明（zero-containing parents and the only unsafe row）。** Put $u=am\pmod T$ solely as a coordinate translation of this archive, so $W_a=u+\{0,\ldots,m\}$ and the next path starts at $u+m$. No emitted block, phase displacement or observation is supplied by this notation. Local vertices $1,\ldots,h$ of $W_b$ are outside $W_a$, hence outside $A$.
+
+Write the next word's bits as $x_0,\ldots,x_{m-1}$, and pin $x_{-1}=x_m=0$. At local vertex $i$ its charge equation is $x_{i-1}\oplus x_i=q_i$. A missing vertex deletes this equation. Between two deleted equations the bit component has a freely chosen orientation; a component reaching a pinned endpoint has its orientation fixed. These are the supplied signed-path components [S15, Definition 2.1], applied to the holes of this same $A$.
+
+Suppose first that $B$ contains a zero. Its child's actual tail is $\sigma=\rho(B)\le m-1$, irrespective of mixed tails before $B$. If $h\ge2$, missing vertices 1 and 2 isolate $x_1$ as a free component. Set $x_1=0$. All remaining prescribed charges can be solved component by component: no observed equation joins the two pinned endpoints, and no observed equation joins this free bit across either deleted edge. The resulting word has leading run at most one. Its seam obeys $\sigma+\alpha\le m<k$, so it safely realizes every prescribed separating row.
+
+Let $h=1$. Vertex 1 is always missing. If vertex 0 is also missing, set $x_0=0$ and use the missing vertex 1 to compensate full-path parity; the inverse then solves all other prescribed charges. Otherwise, if any additional vertex is missing, choose the first such vertex $j>1$. The component $x_1,\ldots,x_{j-1}$ is free between the deleted equations 1 and $j$; orient it with $x_1=0$, and solve the other components. Again the leading run is at most one and the same strict safe seam holds.
+
+The only remaining hole pattern has exactly the single missing local vertex 1. Here $T=m+2$, and the actual two windows satisfy
+
+$$
+W_b\setminus W_a=\{u+m+1\},\qquad
+W_a\setminus W_b=\{u+m-1\}.
+\tag{65.7}
+$$
+
+Consequently $A$ contains all of $W_a\cap W_b$ and, since $A\subseteq W_a$, is either that intersection or all of $W_a$. In the intersection case all phases of $A$ are available. Choose the label orientation giving charge zero at the leading vertex of $W_b$. The single hole fixes the remaining full-path parity, giving the unique inverse with $x_0=0$, safe from every inherited tail.
+
+If $A=W_a$, the parent charges one at all $m+1$ vertices. Its even full-path charge forces $m$ odd, and (1.5) forces $B=101\cdots01$, with $\sigma=1$. The outside phase $u+m-1$ fixes the zero-label orientation. For that row the one-hole inverse is unique. Every inverse containing zero has $\alpha\le m-1$, hence $1+\alpha\le m<k$. The only unsafe inverse can therefore be $1^m$: its actual leading seam is $1+m=k$.
+
+The charge of this all-one inverse on $A$ is one exactly at
+
+$$
+H=\{u+m,u+2m\}=\{u+m,u+m-2\}\pmod{m+2}.
+\tag{65.8}
+$$
+
+It separates the labels exactly when one label class is $H$ and the other is $A\setminus H$, namely $\mathsf E$. Conversely that label table forces this unique unsafe row: the unavailable phase $u+m-1$ belongs to the complementary class and fixes its response to zero. This exhausts every $\mathsf Q_1$ obstruction for zero-containing parents, with arbitrary repeated labels and every absolute offset retained.
+
+**证明（all-one parents, the paid repair and finite bounds）。** The remaining parent is $B=1^m$, whose positive support is contained in $\{u,u+m\}$. A nonconstant child therefore contains both endpoints with different labels. Its common current tail may exceed $m-1$; no low-tail assertion is used. At the next actual index emit
+
+$$
+0^{h+1}1\,0^{m-h-2}.
+\tag{65.9}
+$$
+
+This is a complete $m$-bit word because $h\le m-2$. Its isolated one at local position $h+1$ has physical charge $\{u,u+1\}$, selecting exactly $u$ from the child's two endpoints. It begins zero, so it is safe from every $\sigma<k$. This proves that no all-one-parent child adds another exception. Together with the preceding cases, it establishes all one-block attainments in (65.5).
+
+In $\mathsf E$, any successful separating one-block action must realize the forced row and hence must be $1^m$, which rejects every candidate from the actual tail one. Every other successful word fails to separate the two labels; every rejecting word merges them. Thus no one-block adaptive action works, an all-action lower bound of two rather than a failure of one chosen protocol.
+
+For attainment, issue the whole paid word $0^m$ at index $b$. Its difference is zero on all candidates and its actual tail becomes zero; it does not identify either label. At index $b+1$, the path starts at $u+2m=u+m-2\pmod{m+2}$. The whole word $110^{m-2}$ has charge exactly $\{u+m-2,u+m\}=H$. Its leading run two is strictly below $k=m+1$ from tail zero, and its terminal tail is zero. Its endpoint difference returns $L$ on one and $M$ on zero. Both complete blocks, including the uninformative clearing block, are emitted and paid. This proves (65.6).
+
+Finally apply the supplied safe phase-recovery stream of [S1, Theorem 3.1], starting at this actual offset: repeat $010^{m-2}$ for $T-1$ complete blocks. Every word begins zero, so every candidate is safe. Its $T$ chronological samples traverse the matched coefficient cycle by coprimality. Equality of two phases' first $T-1$ differences forces the last differences equal by the common integer total of two ones; equality of the whole shifted cycle then forces equal phases by its exact period $T$ [S2, Theorem 14.1]. Recovering the current phase and subtracting the known paid displacement gives INITIAL $j$ and hence $\lambda(j)$. This is credited reuse of a finite upper bound, not a new phase-recovery theorem. Failure of (65.5) and (65.4) gives the lower bound two; the safe stream gives each upper bound $T-1$. It supplies no further equality between adaptive and child-preset minima. ∎
+
+## 66. A full INITIAL consumer of the paid obstruction
+
+**定理 66.1（An attained infinite family with a strict availability surcharge）。** For every odd $m\ge3$, put $k=m+1$ and $T=m+2$, so $\gcd(m,T)=1$. Choose pairwise distinct labels $L,M,C,R$. On both free-value fibres define the entire INITIAL target by
+
+$$
+f_m(v,-j,s)=
+\begin{cases}
+R,&s=m,\\
+L,&s<m,\ j\in\{m-2,m\},\\
+M,&s<m,\ j\in\{0,\ldots,m\}\setminus\{m-2,m\},\\
+C,&s<m,\ j=m+1,
+\end{cases}
+\qquad f_m(\bot)=L_\bot,
+\tag{66.1}
+$$
+
+where $L_\bot$ is arbitrary and independent. The actual root $101\cdots01$ has positive child $A=W_0$ with tail one and the exceptional table $\mathsf E$. This child's additional adaptive and child-preset fees are exactly two, although its availability-code minimum $K(A,\lambda;1)$ of Definition 27.1 is one. That definition is used solely as a combinatorial code predicate; Chapter 27's guarded fee laws are not applied. The single literal stream
+
+$$
+101\cdots01\mid0^m\mid110^{m-2}
+\tag{66.2}
+$$
+
+is a GLOBAL preset controller for the full target, shared by both free-value fibres, with actual worst fee three. Consequently $C_{\rm ad}(f_m)\le C_{\rm pre}(f_m)\le3$. No full-target lower bound three for every odd $m$ is included in this statement.
+
+**证明。** The alternating root has leading run one, so it rejects exactly INITIAL tail $s=m$, labelled $R$. Every surviving fixed-phase INITIAL fibre $s=0,\ldots,m-1$ has one label in (66.1), so its actual first-zero merger preserves that label. The rejected band is also homogeneous. These are the actual INITIAL-fibre conditions from [S1, Lemma 4.3; S15, Proposition 4.2], not merely an internal legality check.
+
+The root's full path charge is one on $W_0=\{0,\ldots,m\}$. Its positive child therefore has exactly that support, common tail one, and $L$ class $\{m-2,m\}=\{m,2m\}\pmod T$. The zero child is phase $m+1$, labelled $C$, and stops at its first endpoint. Rejection stops there with $R$. The positive child is $\mathsf E$, so Theorem 65.2 gives the exact additional fee two and the last two words of (66.2).
+
+For its availability predicate the next window is $W_1$, and its only unavailable phase in $A$ is $m-1$, of label $M$. Assign the one-bit code one to $L$ and zero to $M$. The $L$ phases are both available; all unavailable entries are zero; different labels have different codes. Thus $K\le1$, and nonconstancy gives $K\ne0$. The strict surcharge $D_{\rm ad}=D_{\rm child\text{-}pre}=K+1=2$ is attained on an actual child of this full INITIAL target, rather than on an unrelated support or an unacquired favourable tail.
+
+All source records used here have the single joint history (1.3): for the desired $(v,-j,s)$ choose $\ell\equiv0\pmod m$, $\ell\equiv-j\pmod T$, $\ell\ge s+2$ and $d=\bigoplus_{i=\ell-s}^{\ell-1}c_i$, and use $(v\oplus d)0^{\ell-s-1}1^s$. Coprimality supplies such $\ell$. This one legal word has exactly the prescribed value, phase and actual tail together and splits into complete source blocks under either alphabet. Appending (66.2) to that word gives precisely the root rejection or its own successful difference archive just calculated. INITIAL labels never change with the tail updates. An all-one complete-block history of length at least $k$ separately realizes initial bottom, which is freely observed and stops with $L_\bot$.
+
+The root rejects only its stated band; the surviving root seam satisfies $s+1\le m<k$. The clearing word begins zero. The final word begins with two ones from tail zero, below $k=m+1$, and all later bits are zero. Only the positive child continues beyond the first endpoint. On it both labels occur on actual histories and require the third endpoint; those histories emit all three paid words, including the clearing block. On the final difference one return $L$, and on zero return $M$. Successive endpoint differences of each source's own outputs implement the same decoder on both INITIAL values. This proves the GLOBAL attainment and its actual maximum three, without a general minimization claim for the entire infinite family. ∎
+
+## 67. A sharp whole-INITIAL adaptive and GLOBAL witness
+
+**定理 67.1（The consumed $k=4,m=3$ full-source optimum）。** Take $k=4,m=3,T=5$ and pairwise distinct $A,B,C,R$. On both free-value fibres put
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R,&s=3,\\
+A,&s=0,1,2,\ j=1,3,\\
+B,&s=0,1,2,\ j=0,2,\\
+C,&s=0,1,2,\ j=4,
+\end{cases}
+\qquad f(\bot)=L_\bot,
+\tag{67.1}
+$$
+
+with arbitrary independent $L_\bot$. Under either original alphabet the exact minimum whole-target fees are
+
+$$
+\boxed{C_{\rm ad}(f)=C_{\rm pre}(f)=3.}
+\tag{67.2}
+$$
+
+The GLOBAL stream is $101\mid000\mid110$, with endpoint stopping; the lower bound excludes every depth-two adaptive controller on either free-value fibre.
+
+**证明（all-action INITIAL lower bound）。** Fix either free initial value $v$. The target on its complete INITIAL fibre is nonconstant, so a fee-zero stop is impossible. The joint sources in (1.3), used in Theorem 66.1, realize every record compared below on one original history with the specified value, phase and tail.
+
+Any root beginning zero merges, at each fixed phase, the actual INITIAL tails two and three. Both survive that zero and the remaining at most two bits; their current records and all acquired endpoint outputs are identical, while their INITIAL labels are the phase label $A$, $B$ or $C$ and the distinct $R$. Deterministic future actions and stops then remain identical. Such a root cannot occur in any correct controller, regardless of its later depth.
+
+Any root with at least two leading ones, including $111$, sends both a tail-two source and a tail-three source at a fixed phase to absorbing rejection. Their labels are again distinct. Their rejection times within the block are unobserved, and the endpoint is the same bottom, so later actions cannot repair the loss. These roots also cannot occur in any correct controller. The only remaining length-three roots are $100$ and $101$. This exhausts all eight literal actions in both alphabets, without a favourable-root restriction.
+
+After $100$, rejection identifies $R$. Its successful charge support is $\{0,1\}$, so its zero-difference child contains precisely phases $2,3,4$, with labels $B,A,C$ and common current tail zero. It is nonconstant and cannot stop at that endpoint. Any next word either rejects this whole common-tail child or gives at most two successful scalar endpoints. Neither possibility separates its three distinct INITIAL labels in one more block. Thus this root cannot support a correct controller of worst fee at most two.
+
+After $101$, rejection identifies $R$, its zero-difference child identifies $C$, and its positive child has phases $0,1,2,3$ with labels $B,A,B,A$ and actual tail one. This is the $m=3$ exception of Theorem 65.2. Explicitly its next ordered window is $3,4,0,1$. Unavailable phase two has label $B$ and forces response zero for $B$; hence a separating word must have charges one at phase three, zero at phase zero, and one at phase one. The literal path equations are
+
+$$
+x_0=1,\qquad x_1\oplus x_2=0,\qquad x_2=1.
+\tag{67.3}
+$$
+
+They force $x_0=x_1=x_2=1$; the missing phase four supplies no alternative word. This forced $111$ rejects every candidate because its seam is $1+3=4=k$. Every other word either fails the required label split or rejects uniformly. Therefore this root also cannot support fee two.
+
+Every root and its relevant next action has been included. The argument holds separately for each free INITIAL value; using different adaptive policies on the two fibres does not avoid either lower bound. It uses actual shared archives and absorbing rejection, rather than a lower bound on only the displayed stream. Thus $C_{\rm ad}(f)\ge3$, and $C_{\rm pre}(f)\ge3$ because a GLOBAL preset controller is an adaptive controller.
+
+**证明（one GLOBAL stream and lawful stopping）。** Apply Theorem 66.1 with $m=3$, $L=A$ and $M=B$. It supplies the full INITIAL target (67.1), the same literal stream $101\mid000\mid110$ on both free values, and its jointly realized source histories. At the first endpoint return $R$ on bottom and $C$ on zero difference. Only the positive child continues; its tail one is cleared by the whole paid $000$, whose difference is zero. The third actual window starts at $2m=1\pmod5$. The word $110$ has charge $\{1,3\}$, so its difference one returns $A$ and difference zero returns $B$.
+
+Each surviving root seam has $s+1\le3<4$; clearing starts zero; the final leading run two starts from tail zero and is below four. The last endpoint is legal, so no subsequent cleanup is issued or charged. Both $A$ and $B$ histories exist and emit all three complete words. Already stopped $R$, $C$ and initial-bottom histories emit no later words. This gives a correct one-GLOBAL-stream preset controller of worst actual fee three. Combined with the all-action adaptive lower bound it proves (67.2). ∎
+
+**定义 67.2（Quantified boundary of these conclusions）。** Theorem 65.2 is universal over actual common-tail positive children and their arbitrary well-defined INITIAL label tables under (65.1). It does not supply a continuation law for mixed-tail children, zero-difference children, arbitrary unrelated acquired supports, or exact higher-depth prices. Theorem 66.1 supplies actual full INITIAL consumers and a common-stream upper bound three; Theorem 67.1 alone adds its whole-target matching lower bound. Neither statement identifies an optimum for every full INITIAL target in the critical-narrow sector or a common optimal GLOBAL stream across arbitrary siblings and both free-value fibres. The full original objective of Definition 1.3 and Open Problem 9.1, over every attainable immutable INITIAL target and every original $k\ge2,m\ge1$, remains distinct from these restricted exact conclusions. The supplied guarded results retain their own hypotheses. Mathematical source reuse is that of Definition 65.1 and the corresponding proof steps; the single-trajectory identification conventions in Mathematical Citation 7.2 supply no additional reader-specific fee formula.
+
+## 追加锚（本行以下为增补区）
+
