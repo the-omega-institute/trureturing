@@ -159,23 +159,13 @@ noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.c
 
 
 noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.actual)
-    Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena) (Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration).actual
 
 noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"first_domain_weak_ccr\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR.first_domain_weak_ccr, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.actual)
-  Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration)
+  (Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) where
   values := [(fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) => i)

@@ -134,25 +134,13 @@ noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariatio
 
 
 noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.registration_1.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0}
-  Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.arena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, u, 0, 0}
-    Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.arena.{u}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0}
-      Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.arena.{u}
-      Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.actual.{u})
-    Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.registration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0} (Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.arena.) (Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.registration.{u}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.registration_1.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorChannelOptimality\",\"re_sum_inner_map_le_ky_fan_sum\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorRectangularVariational\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational, declaration := `D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.re_sum_inner_map_le_ky_fan_sum, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, u, 0, 0}
-  Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.arena.{u}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0}
-    Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.arena.{u}
-    Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.actual.{u})
-  Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.registration.{u})
+  (Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.registration.{u}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.registration_1.roleEnumeration.{u} : LeanInformationAudit.Contract.FiniteEnumeration (ULift.{u, 0} Unit) where
   values := [@ULift.up.{u, 0} Unit Unit.unit]

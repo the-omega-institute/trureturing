@@ -116,57 +116,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.registrat
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.arena
-    (∀ (r n : Nat) (_hr : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 119) (instOfNatNat (nat_lit 119))) r)
-      (_hn :
-        @LE.le.{0} Nat instLENat
-          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat)
-            (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) r)
-            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-          n),
-      @LT.lt.{0} Int Int.instLTInt
-        (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd)
-          (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-            (@OfNat.ofNat.{0} Int (nat_lit 128) (@instOfNat (nat_lit 128)))
-            (@HPow.hPow.{0, 0, 0} Int Nat Int
-              (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid)))
-              (@OfNat.ofNat.{0} Int (nat_lit 6) (@instOfNat (nat_lit 6))) r))
-          (@OfNat.ofNat.{0} Int (nat_lit 4) (@instOfNat (nat_lit 4))))
-        (@HPow.hPow.{0, 0, 0} Int Nat Int
-          (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid)))
-          (D5.S1.Scale.goldenLucas n) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
-    Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.arena) (Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"GoldenLucasNonsquareThreshold\",\"golden_lucas_nonsquare_threshold\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"GoldenLucasNonsquareThreshold\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold, declaration := `D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.golden_lucas_nonsquare_threshold, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold, declaration := `Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.arena
-  (∀ (r n : Nat) (_hr : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 119) (instOfNatNat (nat_lit 119))) r)
-    (_hn :
-      @LE.le.{0} Nat instLENat
-        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat)
-          (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) r)
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-        n),
-    @LT.lt.{0} Int Int.instLTInt
-      (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd)
-        (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-          (@OfNat.ofNat.{0} Int (nat_lit 128) (@instOfNat (nat_lit 128)))
-          (@HPow.hPow.{0, 0, 0} Int Nat Int
-            (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid)))
-            (@OfNat.ofNat.{0} Int (nat_lit 6) (@instOfNat (nat_lit 6))) r))
-        (@OfNat.ofNat.{0} Int (nat_lit 4) (@instOfNat (nat_lit 4))))
-      (@HPow.hPow.{0, 0, 0} Int Nat Int
-        (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid)))
-        (D5.S1.Scale.goldenLucas n) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
-  Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.registration)
+  (Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

@@ -144,79 +144,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.registration_
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.arena
-    (∀ (H : Finset.{0} Nat) (n : Nat)
-      (_hH :
-        ∀ (p : Nat),
-          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H p →
-            Nat.Prime p)
-      (_hThree :
-        @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-          (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H
-          (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
-      (_hn : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) n)
-      (_hIndex :
-        ∀ (p : Nat),
-          Nat.Prime p →
-            @Dvd.dvd.{0} Nat Nat.instDvd p n →
-              @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-                (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H p)
-      (_hOdd :
-        ∀ (p : Nat),
-          Nat.Prime p →
-            @Dvd.dvd.{0} Nat Nat.instDvd p (Nat.fib n) →
-              @Odd.{0} Nat Nat.instSemiring (padicValNat p (Nat.fib n)) →
-                @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-                  (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H p),
-      @LE.le.{0} Nat instLENat (padicValNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) n)
-        (padicValNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
-          (@Finset.lcm.{0, 0} Nat Nat Nat.instCommMonoidWithZero
-            (@instNormalizedGCDMonoidOfStrongNormalizedGCDMonoid.{0} Nat Nat.instCommMonoidWithZero
-              instStrongNormalizedGCDMonoidNat)
-            H D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank)))
-    Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.arena) (Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciDyadicRankBudget\",\"fibonacci_dyadic_rank_budget\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciDyadicRankBudget\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.FibonacciDyadicRankBudget, declaration := `D5.S3.Arith.Primes.FibonacciDyadicRankBudget.fibonacci_dyadic_rank_budget, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget, declaration := `Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.arena
-  (∀ (H : Finset.{0} Nat) (n : Nat)
-    (_hH :
-      ∀ (p : Nat),
-        @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-            (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H p →
-          Nat.Prime p)
-    (_hThree :
-      @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-        (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H
-        (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
-    (_hn : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) n)
-    (_hIndex :
-      ∀ (p : Nat),
-        Nat.Prime p →
-          @Dvd.dvd.{0} Nat Nat.instDvd p n →
-            @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H p)
-    (_hOdd :
-      ∀ (p : Nat),
-        Nat.Prime p →
-          @Dvd.dvd.{0} Nat Nat.instDvd p (Nat.fib n) →
-            @Odd.{0} Nat Nat.instSemiring (padicValNat p (Nat.fib n)) →
-              @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-                (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H p),
-    @LE.le.{0} Nat instLENat (padicValNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) n)
-      (padicValNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
-        (@Finset.lcm.{0, 0} Nat Nat Nat.instCommMonoidWithZero
-          (@instNormalizedGCDMonoidOfStrongNormalizedGCDMonoid.{0} Nat Nat.instCommMonoidWithZero
-            instStrongNormalizedGCDMonoidNat)
-          H D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank)))
-  Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.registration)
+  (Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciDyadicRankBudget.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

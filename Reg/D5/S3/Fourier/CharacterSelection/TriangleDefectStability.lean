@@ -160,25 +160,13 @@ noncomputable def Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.r
 
 
 noncomputable def Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.registration_1.sourceLaw.{u, v} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.arena.{u, v}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.arena.{u, v}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.arena.{u, v}
-      Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.actual)
-    Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.registration.{u, v})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.arena.) (Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.registration.{u, v}).actual
 
 noncomputable def Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.registration_1.sourceBridgeFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"TriangleDefectStability\",\"triangle_defects_incidence_repair_and_error_bound\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"TriangleDefectStability\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
   { owner := `D5.S3.Fourier.CharacterSelection.TriangleDefectStability, declaration := `D5.S3.Fourier.CharacterSelection.TriangleDefectStability.triangle_defects_incidence_repair_and_error_bound, part := .type, path := [], levels := [(.param `u), (.param `v)] }
   { owner := `Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability, declaration := `Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.arena.{u, v}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.arena.{u, v}
-    Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.actual)
-  Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.registration.{u, v})
+  (Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.registration.{u, v}).bridge
 
 noncomputable def Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

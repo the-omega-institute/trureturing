@@ -124,112 +124,13 @@ noncomputable def Reg.D5.S3.Observer.Separation.BooleanRankFour.registration_1.c
 
 
 noncomputable def Reg.D5.S3.Observer.Separation.BooleanRankFour.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Observer.Separation.BooleanRankFour.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Observer.Separation.BooleanRankFour.arena
-    (And
-      (@D5.S3.Observer.Separation.BooleanRankFour.ActiveConnected
-        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6))))
-        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-        D5.S3.Observer.Separation.BooleanRankFour.F4)
-      (And
-        (@Eq.{1} Int
-          (@D5.S3.Observer.Separation.BooleanRankFour.cycleRank
-            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6))))
-            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-            D5.S3.Observer.Separation.BooleanRankFour.F4)
-          (@OfNat.ofNat.{0} Int (nat_lit 4) (@instOfNat (nat_lit 4))))
-        (And
-          (@Eq.{1} ENat
-            (@SimpleGraph.chromaticNumber.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6))))
-              (@D5.S3.Observer.Separation.BooleanRankFour.leftConflict
-                (Fin (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6))))
-                (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-                D5.S3.Observer.Separation.BooleanRankFour.F4))
-            (@OfNat.ofNat.{0} ENat (nat_lit 2)
-              (@instOfNatAtLeastTwo.{0} ENat (nat_lit 2) ENat.instNatCast
-                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
-          (And
-            (@Eq.{1} ENat
-              (@SimpleGraph.chromaticNumber.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-                (@D5.S3.Observer.Separation.BooleanRankFour.rightConflict
-                  (Fin (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6))))
-                  (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-                  D5.S3.Observer.Separation.BooleanRankFour.F4))
-              (@OfNat.ofNat.{0} ENat (nat_lit 2)
-                (@instOfNatAtLeastTwo.{0} ENat (nat_lit 2) ENat.instNatCast
-                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
-            (And
-              (∀ (p q : Nat),
-                Iff
-                  (@D5.S3.Observer.Separation.BooleanRankFour.Admits
-                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6))))
-                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-                    D5.S3.Observer.Separation.BooleanRankFour.F4 p q)
-                  (D5.S3.Observer.Separation.BooleanRankFour.Region p q))
-              (∀ (s : Int),
-                @LE.le.{0} Int Int.instLEInt (@OfNat.ofNat.{0} Int (nat_lit 4) (@instOfNat (nat_lit 4))) s →
-                  ∀ (p q : Nat),
-                    Iff (D5.S3.Observer.Separation.BooleanRankFour.Uniform s p q)
-                      (D5.S3.Observer.Separation.BooleanRankFour.Region p q)))))))
-    Reg.D5.S3.Observer.Separation.BooleanRankFour.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Observer.Separation.BooleanRankFour.arena) (Reg.D5.S3.Observer.Separation.BooleanRankFour.registration).actual
 
 noncomputable def Reg.D5.S3.Observer.Separation.BooleanRankFour.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"Separation\",\"BooleanRankFour\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Separation\",\"BooleanRankFour\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Observer.Separation.BooleanRankFour, declaration := `D5.S3.Observer.Separation.BooleanRankFour.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Observer.Separation.BooleanRankFour, declaration := `Reg.D5.S3.Observer.Separation.BooleanRankFour.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Observer.Separation.BooleanRankFour.arena
-  (And
-    (@D5.S3.Observer.Separation.BooleanRankFour.ActiveConnected
-      (Fin (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6))))
-      (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) D5.S3.Observer.Separation.BooleanRankFour.F4)
-    (And
-      (@Eq.{1} Int
-        (@D5.S3.Observer.Separation.BooleanRankFour.cycleRank
-          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6))))
-          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-          D5.S3.Observer.Separation.BooleanRankFour.F4)
-        (@OfNat.ofNat.{0} Int (nat_lit 4) (@instOfNat (nat_lit 4))))
-      (And
-        (@Eq.{1} ENat
-          (@SimpleGraph.chromaticNumber.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6))))
-            (@D5.S3.Observer.Separation.BooleanRankFour.leftConflict
-              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6))))
-              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-              D5.S3.Observer.Separation.BooleanRankFour.F4))
-          (@OfNat.ofNat.{0} ENat (nat_lit 2)
-            (@instOfNatAtLeastTwo.{0} ENat (nat_lit 2) ENat.instNatCast
-              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
-        (And
-          (@Eq.{1} ENat
-            (@SimpleGraph.chromaticNumber.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-              (@D5.S3.Observer.Separation.BooleanRankFour.rightConflict
-                (Fin (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6))))
-                (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-                D5.S3.Observer.Separation.BooleanRankFour.F4))
-            (@OfNat.ofNat.{0} ENat (nat_lit 2)
-              (@instOfNatAtLeastTwo.{0} ENat (nat_lit 2) ENat.instNatCast
-                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
-          (And
-            (∀ (p q : Nat),
-              Iff
-                (@D5.S3.Observer.Separation.BooleanRankFour.Admits
-                  (Fin (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6))))
-                  (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-                  D5.S3.Observer.Separation.BooleanRankFour.F4 p q)
-                (D5.S3.Observer.Separation.BooleanRankFour.Region p q))
-            (∀ (s : Int),
-              @LE.le.{0} Int Int.instLEInt (@OfNat.ofNat.{0} Int (nat_lit 4) (@instOfNat (nat_lit 4))) s →
-                ∀ (p q : Nat),
-                  Iff (D5.S3.Observer.Separation.BooleanRankFour.Uniform s p q)
-                    (D5.S3.Observer.Separation.BooleanRankFour.Region p q)))))))
-  Reg.D5.S3.Observer.Separation.BooleanRankFour.registration)
+  (Reg.D5.S3.Observer.Separation.BooleanRankFour.registration).bridge
 
 noncomputable def Reg.D5.S3.Observer.Separation.BooleanRankFour.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

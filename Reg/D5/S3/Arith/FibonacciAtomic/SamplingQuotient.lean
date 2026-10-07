@@ -155,23 +155,13 @@ noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_
 
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.actual)
-    Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena) (Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"sampling_quotient\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `D5.S3.Arith.FibonacciAtomic.SamplingQuotient.sampling_quotient, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.actual)
-  Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration)
+  (Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

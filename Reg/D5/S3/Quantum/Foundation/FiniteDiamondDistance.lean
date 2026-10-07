@@ -147,25 +147,13 @@ noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registratio
 
 
 noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.sourceLaw.{u, v} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.{u, v}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.{u, v}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.{u, v}
-      Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.actual)
-    Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration.{u, v})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.) (Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration.{u, v}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.sourceBridgeFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
   { owner := `D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `D5.S3.Quantum.Foundation.FiniteDiamondDistance.result, part := .type, path := [], levels := [(.param `u), (.param `v)] }
   { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.{u, v}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.{u, v}
-    Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.actual)
-  Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration.{u, v})
+  (Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration.{u, v}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

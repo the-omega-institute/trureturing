@@ -326,23 +326,13 @@ noncomputable def Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_2.canonicalOb
 
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_3.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceArena Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceActual)
-    Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceArena) (Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceRegistration).actual
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Digit\",\"ZeckendorfRawWindow\",\"window_residual_congruence\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Digit\",\"ZeckendorfRawWindow\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Digit.ZeckendorfRawWindow, declaration := `D5.S1.Digit.ZeckendorfRawWindow.window_residual_congruence, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Digit.ZeckendorfRawWindow, declaration := `Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_3.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceArena Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceActual)
-  Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceRegistration)
+  (Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceRegistration).bridge
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -398,23 +388,13 @@ noncomputable def Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_3.descriptorF
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateArena Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateActual)
-    Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateArena) (Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateRegistration).actual
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Digit\",\"ZeckendorfRawWindow\",\"source_word_coordinates\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Digit\",\"ZeckendorfRawWindow\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Digit.ZeckendorfRawWindow, declaration := `D5.S1.Digit.ZeckendorfRawWindow.source_word_coordinates, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Digit.ZeckendorfRawWindow, declaration := `Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateArena Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateActual)
-  Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateRegistration)
+  (Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateRegistration).bridge
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -459,23 +439,13 @@ noncomputable def Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_1.descriptorF
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionArena Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionActual)
-    Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionArena) (Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionRegistration).actual
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Digit\",\"ZeckendorfRawWindow\",\"source_expansion\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Digit\",\"ZeckendorfRawWindow\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Digit.ZeckendorfRawWindow, declaration := `D5.S1.Digit.ZeckendorfRawWindow.source_expansion, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Digit.ZeckendorfRawWindow, declaration := `Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionArena Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionActual)
-  Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionRegistration)
+  (Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionRegistration).bridge
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfRawWindow.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

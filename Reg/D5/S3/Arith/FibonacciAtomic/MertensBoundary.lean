@@ -150,59 +150,13 @@ noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.registration_1
 
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.arena
-    (∀ (a : Real),
-      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) a →
-        And
-          (Iff
-            (@Asymptotics.IsBigO.{0, 0, 0} Real Real Real Real.norm Real.norm (@Filter.atTop.{0} Real Real.instPreorder)
-              D5.S3.Arith.FibonacciAtomic.MertensBoundary.boundary fun (X : Real) =>
-              @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow) X a)
-            (@Asymptotics.IsBigO.{0, 0, 0} Real Real Real Real.norm Real.norm (@Filter.atTop.{0} Real Real.instPreorder)
-              (D5.S3.Arith.FibonacciAtomic.MertensBoundary.coprimeMertens
-                (@OfNat.ofNat.{0} Nat (nat_lit 70) (instOfNatNat (nat_lit 70))))
-              fun (X : Real) => @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow) X a))
-          (Iff
-            (@Asymptotics.IsBigO.{0, 0, 0} Real Real Real Real.norm Real.norm (@Filter.atTop.{0} Real Real.instPreorder)
-              (D5.S3.Arith.FibonacciAtomic.MertensBoundary.coprimeMertens
-                (@OfNat.ofNat.{0} Nat (nat_lit 70) (instOfNatNat (nat_lit 70))))
-              fun (X : Real) => @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow) X a)
-            (@Asymptotics.IsBigO.{0, 0, 0} Real Real Real Real.norm Real.norm (@Filter.atTop.{0} Real Real.instPreorder)
-              (D5.S3.Arith.FibonacciAtomic.MertensBoundary.coprimeMertens
-                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-              fun (X : Real) => @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow) X a)))
-    Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.arena) (Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"MertensBoundary\",\"power_bounds_iff\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"MertensBoundary\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.FibonacciAtomic.MertensBoundary, declaration := `D5.S3.Arith.FibonacciAtomic.MertensBoundary.power_bounds_iff, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.arena
-  (∀ (a : Real),
-    @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) a →
-      And
-        (Iff
-          (@Asymptotics.IsBigO.{0, 0, 0} Real Real Real Real.norm Real.norm (@Filter.atTop.{0} Real Real.instPreorder)
-            D5.S3.Arith.FibonacciAtomic.MertensBoundary.boundary fun (X : Real) =>
-            @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow) X a)
-          (@Asymptotics.IsBigO.{0, 0, 0} Real Real Real Real.norm Real.norm (@Filter.atTop.{0} Real Real.instPreorder)
-            (D5.S3.Arith.FibonacciAtomic.MertensBoundary.coprimeMertens
-              (@OfNat.ofNat.{0} Nat (nat_lit 70) (instOfNatNat (nat_lit 70))))
-            fun (X : Real) => @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow) X a))
-        (Iff
-          (@Asymptotics.IsBigO.{0, 0, 0} Real Real Real Real.norm Real.norm (@Filter.atTop.{0} Real Real.instPreorder)
-            (D5.S3.Arith.FibonacciAtomic.MertensBoundary.coprimeMertens
-              (@OfNat.ofNat.{0} Nat (nat_lit 70) (instOfNatNat (nat_lit 70))))
-            fun (X : Real) => @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow) X a)
-          (@Asymptotics.IsBigO.{0, 0, 0} Real Real Real Real.norm Real.norm (@Filter.atTop.{0} Real Real.instPreorder)
-            (D5.S3.Arith.FibonacciAtomic.MertensBoundary.coprimeMertens
-              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-            fun (X : Real) => @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow) X a)))
-  Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.registration)
+  (Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

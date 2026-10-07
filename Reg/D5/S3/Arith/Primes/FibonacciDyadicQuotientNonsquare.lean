@@ -121,71 +121,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.regist
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.arena
-    (∀ (k : Nat) (_hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k),
-      have q : Nat :=
-        @HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv)
-          (Nat.fib
-            (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-              (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
-              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) k
-                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-          (Nat.fib
-            (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-              (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k));
-      And
-        (@Eq.{1} Nat k (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) →
-          @Eq.{1} Nat
-            (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod) q
-              (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-            (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
-        (And
-          (@LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k →
-            @Eq.{1} Nat
-              (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod) q
-                (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-          (Not (@IsSquare.{0} Nat instMulNat q))))
-    Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.arena) (Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciDyadicQuotientNonsquare\",\"fibonacci_dyadic_quotient_nonsquare\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciDyadicQuotientNonsquare\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare, declaration := `D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.fibonacci_dyadic_quotient_nonsquare, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare, declaration := `Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.arena
-  (∀ (k : Nat) (_hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k),
-    have q : Nat :=
-      @HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv)
-        (Nat.fib
-          (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-            (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
-            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) k
-              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-        (Nat.fib
-          (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-            (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k));
-    And
-      (@Eq.{1} Nat k (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) →
-        @Eq.{1} Nat
-          (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod) q
-            (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-          (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
-      (And
-        (@LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k →
-          @Eq.{1} Nat
-            (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod) q
-              (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-        (Not (@IsSquare.{0} Nat instMulNat q))))
-  Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.registration)
+  (Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

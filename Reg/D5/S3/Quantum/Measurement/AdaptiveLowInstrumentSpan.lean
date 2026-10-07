@@ -199,27 +199,13 @@ noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.regist
 
 
 noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.sourceLaw.{u_1, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_3 + 1), u_1, 0, max u_1 u_3, 0}
-  Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.{u_1, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u_1 + 1) (u_3 + 1), u_1, 0,
-        max u_1 u_3, 0}
-    Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.{u_1, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_3 + 1), u_1, 0, max u_1 u_3, 0}
-      Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.{u_1, u_3}
-      Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual.{u_1, u_3})
-    Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration.{u_1, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_3 + 1), u_1, 0, max u_1 u_3, 0} (Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.) (Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration.{u_1, u_3}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.sourceBridgeFact.{u_1, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"actual_adaptive_span\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual_adaptive_span, part := .type, path := [], levels := [(.param `u_1), (.param `u_3)] }
   { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u_1 + 1) (u_3 + 1), u_1, 0,
-      max u_1 u_3, 0}
-  Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.{u_1, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_3 + 1), u_1, 0, max u_1 u_3, 0}
-    Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.{u_1, u_3}
-    Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual.{u_1, u_3})
-  Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration.{u_1, u_3})
+  (Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration.{u_1, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

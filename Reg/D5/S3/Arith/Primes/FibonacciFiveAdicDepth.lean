@@ -114,25 +114,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.registration_1.c
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.arena
-    (∀ (n : Nat) (_hn : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) n),
-      @Eq.{1} Nat (padicValNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) (Nat.fib n))
-        (padicValNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) n))
-    Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.arena) (Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciFiveAdicDepth\",\"fibonacci_five_adic_depth\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciFiveAdicDepth\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.FibonacciFiveAdicDepth, declaration := `D5.S3.Arith.Primes.FibonacciFiveAdicDepth.fibonacci_five_adic_depth, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth, declaration := `Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.arena
-  (∀ (n : Nat) (_hn : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) n),
-    @Eq.{1} Nat (padicValNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) (Nat.fib n))
-      (padicValNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) n))
-  Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.registration)
+  (Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciFiveAdicDepth.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

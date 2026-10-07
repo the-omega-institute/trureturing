@@ -90,91 +90,13 @@ noncomputable def Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl.regis
 
 
 noncomputable def Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.InfiniteCalibrationFamily.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.InfiniteCalibrationFamily.arena
-    (∀ (a δ b : Real)
-      (_ha : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) a)
-      (_ha1 : @LT.lt.{0} Real Real.instLT a (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
-      (_hδ : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) δ)
-      (_hδL :
-        @LT.lt.{0} Real Real.instLT δ
-          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-            (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)) a)
-            (@OfNat.ofNat.{0} Real (nat_lit 4)
-              (@instOfNatAtLeastTwo.{0} Real (nat_lit 4) Real.instNatCast
-                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
-                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))))
-      (_hδa :
-        @LT.lt.{0} Real Real.instLT δ
-          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-            (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-              (@HPow.hPow.{0, 0, 0} Real Nat Real
-                (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) a
-                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
-            (@OfNat.ofNat.{0} Real (nat_lit 16)
-              (@instOfNatAtLeastTwo.{0} Real (nat_lit 16) Real.instNatCast
-                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 15) (instOfNatNat (nat_lit 15)))
-                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 14) (instOfNatNat (nat_lit 14)))))))))
-      (_hb : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) b)
-      (_hbδ :
-        @LT.lt.{0} Real Real.instLT b
-          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-            (@HDiv.hDiv.{0, 0, 0} Real Real Real
-              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid)) a
-              (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-                (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)) δ)))),
-      @Exists.{1} Real fun (k : Real) =>
-        D5.S3.Quantum.Information.InfiniteCalibrationControl.InfiniteScalarControl a δ b k)
-    Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.InfiniteCalibrationFamily.arena) (Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl.registration).actual
 
 noncomputable def Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Information\",\"InfiniteCalibrationControl\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Information\",\"InfiniteCalibrationControl\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Quantum.Information.InfiniteCalibrationControl, declaration := `D5.S3.Quantum.Information.InfiniteCalibrationControl.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl, declaration := `Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.InfiniteCalibrationFamily.arena
-  (∀ (a δ b : Real)
-    (_ha : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) a)
-    (_ha1 : @LT.lt.{0} Real Real.instLT a (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
-    (_hδ : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) δ)
-    (_hδL :
-      @LT.lt.{0} Real Real.instLT δ
-        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)) a)
-          (@OfNat.ofNat.{0} Real (nat_lit 4)
-            (@instOfNatAtLeastTwo.{0} Real (nat_lit 4) Real.instNatCast
-              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
-                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))))
-    (_hδa :
-      @LT.lt.{0} Real Real.instLT δ
-        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-            (@HPow.hPow.{0, 0, 0} Real Nat Real
-              (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) a
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
-          (@OfNat.ofNat.{0} Real (nat_lit 16)
-            (@instOfNatAtLeastTwo.{0} Real (nat_lit 16) Real.instNatCast
-              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 15) (instOfNatNat (nat_lit 15)))
-                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 14) (instOfNatNat (nat_lit 14)))))))))
-    (_hb : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) b)
-    (_hbδ :
-      @LT.lt.{0} Real Real.instLT b
-        (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-            a
-            (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)) δ)))),
-    @Exists.{1} Real fun (k : Real) =>
-      D5.S3.Quantum.Information.InfiniteCalibrationControl.InfiniteScalarControl a δ b k)
-  Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl.registration)
+  (Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl.registration).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

@@ -126,74 +126,13 @@ noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registra
 
 
 noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.arena
-    (∀ {c t : Real},
-      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) c →
-        @Eq.{1} Real
-          (@MeasureTheory.integral.{0, 0} Real Real Real.normedAddCommGroup
-            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-            (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
-            (@MeasureTheory.Measure.restrict.{0} Real
-              (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
-              (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)
-              (@Set.Ioi.{0} Real Real.instPreorder
-                (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))
-            fun (x : Real) =>
-            @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-              (Real.exp
-                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-                  (@Neg.neg.{0} Real Real.instNeg c) x))
-              (Real.cos (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) t x)))
-          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-            c
-            (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
-              (@HPow.hPow.{0, 0, 0} Real Nat Real
-                (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) c
-                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-              (@HPow.hPow.{0, 0, 0} Real Nat Real
-                (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) t
-                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
-    Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.arena) (Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration).actual
 
 noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"integral_exp_neg_mul_cos\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.integral_exp_neg_mul_cos, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.arena
-  (∀ {c t : Real},
-    @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) c →
-      @Eq.{1} Real
-        (@MeasureTheory.integral.{0, 0} Real Real Real.normedAddCommGroup
-          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-            (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-          (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
-          (@MeasureTheory.Measure.restrict.{0} Real
-            (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
-            (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)
-            (@Set.Ioi.{0} Real Real.instPreorder
-              (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))
-          fun (x : Real) =>
-          @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-            (Real.exp
-              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (@Neg.neg.{0} Real Real.instNeg c)
-                x))
-            (Real.cos (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) t x)))
-        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid)) c
-          (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
-            (@HPow.hPow.{0, 0, 0} Real Nat Real
-              (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) c
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-            (@HPow.hPow.{0, 0, 0} Real Nat Real
-              (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) t
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
-  Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration)
+  (Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration).bridge
 
 noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

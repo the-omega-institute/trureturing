@@ -195,25 +195,13 @@ noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDi
 
 
 noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena
-      Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.actual)
-    Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena) (Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration).actual
 
 noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"actual_complete_cubic_cyclotomic_disjointness\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.actual_complete_cubic_cyclotomic_disjointness, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena
-    Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.actual)
-  Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration)
+  (Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration).bridge
 
 noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

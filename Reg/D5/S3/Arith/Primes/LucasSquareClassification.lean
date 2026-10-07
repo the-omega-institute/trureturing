@@ -136,49 +136,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.LucasSquareClassification.registration_
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.LucasSquareClassification.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.LucasSquareClassification.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.LucasSquareClassification.arena
-    (∀ (n : Nat),
-      And
-        (Iff (@IsSquare.{0} Int Int.instMul (D5.S1.Scale.goldenLucas n))
-          (Or (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-            (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))
-        (Iff
-          (@Exists.{1} Int fun (x : Int) =>
-            @Eq.{1} Int (D5.S1.Scale.goldenLucas n)
-              (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-                (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))
-                (@HPow.hPow.{0, 0, 0} Int Nat Int
-                  (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid))) x
-                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
-          (Or (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
-            (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6)))))))
-    Reg.D5.S3.Arith.Primes.LucasSquareClassification.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.LucasSquareClassification.arena) (Reg.D5.S3.Arith.Primes.LucasSquareClassification.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.LucasSquareClassification.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"LucasSquareClassification\",\"lucas_square_classifications\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"LucasSquareClassification\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.LucasSquareClassification, declaration := `D5.S3.Arith.Primes.LucasSquareClassification.lucas_square_classifications, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.LucasSquareClassification, declaration := `Reg.D5.S3.Arith.Primes.LucasSquareClassification.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.LucasSquareClassification.arena
-  (∀ (n : Nat),
-    And
-      (Iff (@IsSquare.{0} Int Int.instMul (D5.S1.Scale.goldenLucas n))
-        (Or (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-          (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))
-      (Iff
-        (@Exists.{1} Int fun (x : Int) =>
-          @Eq.{1} Int (D5.S1.Scale.goldenLucas n)
-            (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-              (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))
-              (@HPow.hPow.{0, 0, 0} Int Nat Int
-                (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid))) x
-                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
-        (Or (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
-          (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6)))))))
-  Reg.D5.S3.Arith.Primes.LucasSquareClassification.registration)
+  (Reg.D5.S3.Arith.Primes.LucasSquareClassification.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.LucasSquareClassification.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) where
   values := [(fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) => i)

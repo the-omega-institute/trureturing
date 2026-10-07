@@ -149,57 +149,13 @@ noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.registration_1.can
 
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.arena
-    (@Exists.{1} Real fun (c : Real) =>
-      And (@GT.gt.{0} Real Real.instLT c (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))
-        (@Asymptotics.IsBigO.{0, 0, 0} Real Real Real Real.norm Real.norm (@Filter.atTop.{0} Real Real.instPreorder)
-          (@HSub.hSub.{0, 0, 0} ((x : Real) → Real) ((a : Real) → Real) ((x : Real) → Real)
-            (@instHSub.{0} ((x : Real) → Real)
-              (@Pi.instSub.{0, 0} Real (fun (x : Real) => Real) fun (i : Real) => Real.instSub))
-            Chebyshev.psi (@id.{1} Real))
-          fun (x : Real) =>
-          @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) x
-            (Real.exp
-              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (@Neg.neg.{0} Real Real.instNeg c)
-                (@HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow) (Real.log x)
-                  (@HDiv.hDiv.{0, 0, 0} Real Real Real
-                    (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-                    (@OfNat.ofNat.{0} Real (nat_lit 10)
-                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 10) Real.instNatCast
-                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 9) (instOfNatNat (nat_lit 9)))
-                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 8) (instOfNatNat (nat_lit 8)))))))))))))
-    Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.arena) (Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.registration).actual
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"MediumPNT\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"MediumPNT\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Weil.PrimeNumberTheorem.MediumPNT, declaration := `MediumPNT, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.arena
-  (@Exists.{1} Real fun (c : Real) =>
-    And (@GT.gt.{0} Real Real.instLT c (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))
-      (@Asymptotics.IsBigO.{0, 0, 0} Real Real Real Real.norm Real.norm (@Filter.atTop.{0} Real Real.instPreorder)
-        (@HSub.hSub.{0, 0, 0} ((x : Real) → Real) ((a : Real) → Real) ((x : Real) → Real)
-          (@instHSub.{0} ((x : Real) → Real)
-            (@Pi.instSub.{0, 0} Real (fun (x : Real) => Real) fun (i : Real) => Real.instSub))
-          Chebyshev.psi (@id.{1} Real))
-        fun (x : Real) =>
-        @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) x
-          (Real.exp
-            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (@Neg.neg.{0} Real Real.instNeg c)
-              (@HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow) (Real.log x)
-                (@HDiv.hDiv.{0, 0, 0} Real Real Real
-                  (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-                  (@OfNat.ofNat.{0} Real (nat_lit 10)
-                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 10) Real.instNatCast
-                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 9) (instOfNatNat (nat_lit 9)))
-                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 8) (instOfNatNat (nat_lit 8)))))))))))))
-  Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.registration)
+  (Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.registration).bridge
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.MediumPNT.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

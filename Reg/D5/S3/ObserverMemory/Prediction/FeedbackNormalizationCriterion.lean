@@ -140,25 +140,13 @@ noncomputable def Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCrite
 
 
 noncomputable def Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.registration_1.sourceLaw.{u_1, u_2} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, u_2}
-  Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.arena.{u_1, u_2}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, u_1, 0, u_2}
-    Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.arena.{u_1, u_2}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, u_2}
-      Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.arena.{u_1, u_2}
-      Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.actual.{u_1, u_2})
-    Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.registration.{u_1, u_2})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, u_2} (Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.arena.) (Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.registration.{u_1, u_2}).actual
 
 noncomputable def Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.registration_1.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Prediction\",\"FeedbackNormalizationCriterion\",\"feedback_normalization_prefix_causality_sequential_kernels\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Prediction\",\"FeedbackNormalizationCriterion\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
   { owner := `D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion, declaration := `D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.feedback_normalization_prefix_causality_sequential_kernels, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
   { owner := `Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion, declaration := `Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, u_1, 0, u_2}
-  Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.arena.{u_1, u_2}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, u_2}
-    Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.arena.{u_1, u_2}
-    Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.actual.{u_1, u_2})
-  Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.registration.{u_1, u_2})
+  (Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.registration.{u_1, u_2}).bridge
 
 noncomputable def Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.registration_1.roleEnumeration.{u_1} : LeanInformationAudit.Contract.FiniteEnumeration (ULift.{u_1, 0} Unit) where
   values := [@ULift.up.{u_1, 0} Unit Unit.unit]

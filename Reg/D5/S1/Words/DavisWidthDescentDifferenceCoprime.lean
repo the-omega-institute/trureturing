@@ -150,19 +150,13 @@ noncomputable def Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.registratio
 
 
 noncomputable def Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.arena D5.S1.Words.DavisWidthDescentDifferenceCoprime.claim
-    Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.arena) (Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.registration).actual
 
 noncomputable def Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"DavisWidthDescentDifferenceCoprime\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"DavisWidthDescentDifferenceCoprime\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.DavisWidthDescentDifferenceCoprime, declaration := `D5.S1.Words.DavisWidthDescentDifferenceCoprime.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime, declaration := `Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.arena D5.S1.Words.DavisWidthDescentDifferenceCoprime.claim
-  Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.registration)
+  (Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.DavisWidthDescentDifferenceCoprime.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

@@ -123,27 +123,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registra
 
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.arena
-    (∀ {n m : Nat} {A : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n n}
-      {B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat m m} {L : Nat}
-      (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{0} Nat Nat.instSemiring n m A B L),
-      Nonempty.{1} (@D5.S3.ConceptDynamics.Coding.CountedExchangeChain.WindowConjugacy n m A B L))
-    Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.arena) (Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"chain_has_window_conjugacy\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `D5.S3.ConceptDynamics.Coding.CountedExchangeChain.chain_has_window_conjugacy, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.arena
-  (∀ {n m : Nat} {A : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n n}
-    {B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat m m} {L : Nat}
-    (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{0} Nat Nat.instSemiring n m A B L),
-    Nonempty.{1} (@D5.S3.ConceptDynamics.Coding.CountedExchangeChain.WindowConjugacy n m A B L))
-  Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

@@ -216,23 +216,13 @@ noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_
 
 
 noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.actual)
-    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena) (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration).actual
 
 noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"infinite_add_order_of_unit_x_positive_two_adic_y\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_unit_x_positive_two_adic_y, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.actual)
-  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration)
+  (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration).bridge
 
 noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -290,23 +280,13 @@ noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.actual)
-    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena) (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration).actual
 
 noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"infinite_add_order_of_negative_two_adic_x\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_negative_two_adic_x, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.actual)
-  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration)
+  (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration).bridge
 
 noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

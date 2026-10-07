@@ -128,117 +128,13 @@ noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.r
 
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.arena
-    (And
-      (∀ (m a b : Nat),
-        @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) m →
-          @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) a →
-            @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) b →
-              Nat.ModEq (Nat.factorial m) a b →
-                And
-                  (@LE.le.{0} Real Real.instLE (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.delta m)
-                    (@HDiv.hDiv.{0, 0, 0} Real Real Real
-                      (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-                      (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.smallWeight m a)
-                      (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.smallWeight m b)))
-                  (@LE.le.{0} Real Real.instLE
-                    (@HDiv.hDiv.{0, 0, 0} Real Real Real
-                      (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-                      (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.smallWeight m a)
-                      (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.smallWeight m b))
-                    (@Inv.inv.{0} Real Real.instInv
-                      (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.delta m))))
-      (And
-        (∀ (m : Nat),
-          @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))) m →
-            @LE.le.{0} Real Real.instLE
-              (@Finset.sum.{0, 0} Nat Real Real.instAddCommMonoid
-                (@Finset.filter.{0} Nat (fun (p : Nat) => Nat.Prime p) Nat.decidablePrime
-                  (@Finset.Ioc.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
-                    (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m))
-                fun (p : Nat) =>
-                @HPow.hPow.{0, 0, 0} Real Nat Real
-                  (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
-                  (@Inv.inv.{0} Real Real.instInv (@Nat.cast.{0} Real Real.instNatCast p))
-                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat)
-                    (@DFunLike.coe.{1, 1, 1}
-                      (@Finsupp.{0, 0} Nat Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass)) Nat
-                      (fun (x : Nat) => Nat)
-                      (@Finsupp.instFunLike.{0, 0} Nat Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass))
-                      (Nat.factorization (Nat.factorial m)) p)
-                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-              (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
-                (@Inv.inv.{0} Real Real.instInv (Real.sqrt (@Nat.cast.{0} Real Real.instNatCast m)))
-                (@Inv.inv.{0} Real Real.instInv
-                  (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-                    (Real.sqrt (@Nat.cast.{0} Real Real.instNatCast m))
-                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))))
-        (@Asymptotics.IsBigO.{0, 0, 0} Nat Real Real Real.norm Real.norm (@Filter.atTop.{0} Nat Nat.instPreorder)
-          (fun (m : Nat) =>
-            @HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-              (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.delta m)
-              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
-          fun (m : Nat) => @Inv.inv.{0} Real Real.instInv (Real.sqrt (@Nat.cast.{0} Real Real.instNatCast m)))))
-    Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.arena) (Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"ModularDivisorWeightTransfer\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"ModularDivisorWeightTransfer\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer, declaration := `D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.arena
-  (And
-    (∀ (m a b : Nat),
-      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) m →
-        @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) a →
-          @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) b →
-            Nat.ModEq (Nat.factorial m) a b →
-              And
-                (@LE.le.{0} Real Real.instLE (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.delta m)
-                  (@HDiv.hDiv.{0, 0, 0} Real Real Real
-                    (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-                    (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.smallWeight m a)
-                    (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.smallWeight m b)))
-                (@LE.le.{0} Real Real.instLE
-                  (@HDiv.hDiv.{0, 0, 0} Real Real Real
-                    (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-                    (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.smallWeight m a)
-                    (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.smallWeight m b))
-                  (@Inv.inv.{0} Real Real.instInv (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.delta m))))
-    (And
-      (∀ (m : Nat),
-        @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))) m →
-          @LE.le.{0} Real Real.instLE
-            (@Finset.sum.{0, 0} Nat Real Real.instAddCommMonoid
-              (@Finset.filter.{0} Nat (fun (p : Nat) => Nat.Prime p) Nat.decidablePrime
-                (@Finset.Ioc.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
-                  (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m))
-              fun (p : Nat) =>
-              @HPow.hPow.{0, 0, 0} Real Nat Real
-                (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
-                (@Inv.inv.{0} Real Real.instInv (@Nat.cast.{0} Real Real.instNatCast p))
-                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat)
-                  (@DFunLike.coe.{1, 1, 1} (@Finsupp.{0, 0} Nat Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass))
-                    Nat (fun (x : Nat) => Nat)
-                    (@Finsupp.instFunLike.{0, 0} Nat Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass))
-                    (Nat.factorization (Nat.factorial m)) p)
-                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-            (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
-              (@Inv.inv.{0} Real Real.instInv (Real.sqrt (@Nat.cast.{0} Real Real.instNatCast m)))
-              (@Inv.inv.{0} Real Real.instInv
-                (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-                  (Real.sqrt (@Nat.cast.{0} Real Real.instNatCast m))
-                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))))
-      (@Asymptotics.IsBigO.{0, 0, 0} Nat Real Real Real.norm Real.norm (@Filter.atTop.{0} Nat Nat.instPreorder)
-        (fun (m : Nat) =>
-          @HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-            (D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.delta m)
-            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
-        fun (m : Nat) => @Inv.inv.{0} Real Real.instInv (Real.sqrt (@Nat.cast.{0} Real Real.instNatCast m)))))
-  Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.registration)
+  (Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.ModularDivisorWeightTransfer.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

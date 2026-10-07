@@ -127,47 +127,13 @@ noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.c
 
 
 noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.arena
-    (∀ (s : D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState),
-      @Exists.{1} D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState
-        fun (t : D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState) =>
-        And
-          (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestEventStep s t
-            (D5.S3.Combinatorics.GreedyBrick.RestBlock.firstZeroBin
-              (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity s)))
-          (@Eq.{1} (List.{0} Nat)
-            (D5.S3.Combinatorics.GreedyBrick.RestBlock.placeBricks
-              (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.endpoint s)
-              (@List.reverse.{0} Nat (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity s))
-              (D5.S3.Combinatorics.GreedyBrick.RestBlock.firstZeroBin
-                (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity s)))
-            (@List.reverse.{0} Nat (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity t))))
-    Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.arena) (Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration).actual
 
 noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"literal_rest_block\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `D5.S3.Combinatorics.GreedyBrick.RestBlock.literal_rest_block, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.arena
-  (∀ (s : D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState),
-    @Exists.{1} D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState
-      fun (t : D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState) =>
-      And
-        (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestEventStep s t
-          (D5.S3.Combinatorics.GreedyBrick.RestBlock.firstZeroBin
-            (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity s)))
-        (@Eq.{1} (List.{0} Nat)
-          (D5.S3.Combinatorics.GreedyBrick.RestBlock.placeBricks
-            (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.endpoint s)
-            (@List.reverse.{0} Nat (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity s))
-            (D5.S3.Combinatorics.GreedyBrick.RestBlock.firstZeroBin
-              (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity s)))
-          (@List.reverse.{0} Nat (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity t))))
-  Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration)
+  (Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration).bridge
 
 noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

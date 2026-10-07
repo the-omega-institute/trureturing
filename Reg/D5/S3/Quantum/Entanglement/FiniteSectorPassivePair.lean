@@ -160,25 +160,13 @@ noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registr
 
 
 noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0}
-  Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, u, 0, 0}
-    Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.{u}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0}
-      Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.{u}
-      Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.actual.{u})
-    Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0} (Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.) (Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration.{u}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorChannelOptimality\",\"sector_pair\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorPassivePair\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.sector_pair, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, u, 0, 0}
-  Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.{u}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0}
-    Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.{u}
-    Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.actual.{u})
-  Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration.{u})
+  (Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration.{u}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.roleEnumeration.{u} : LeanInformationAudit.Contract.FiniteEnumeration (ULift.{u, 0} Unit) where
   values := [@ULift.up.{u, 0} Unit Unit.unit]

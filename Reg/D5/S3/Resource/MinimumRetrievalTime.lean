@@ -720,36 +720,15 @@ noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.reg
 
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.sourceLaw.{u_1, u_2, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.{u_1,
-    u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.{u_1,
-      u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.{u_1,
-        u_2, u_3}
-      (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
-        (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))))
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration.{u_1,
-      u_2, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.) (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration.{u_1,
+  u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"five_column_projected_obstruction\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"Projected\",\"registration_6\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_projected_obstruction, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.{u_1,
-    u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.{u_1,
-      u_2, u_3}
-    (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
-      (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))))
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration.{u_1,
-    u_2, u_3})
+  (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration.{u_1,
+  u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1243,36 +1222,15 @@ noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.re
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.sourceLaw.{u_1, u_2} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.{u_1,
-    u_2}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.{u_1,
-      u_2}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.{u_1,
-        u_2}
-      (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
-        (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))
-        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration.{u_1,
-      u_2})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.) (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration.{u_1,
+  u_2}).actual
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"old_code_actual_expectations\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"OldCode\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
   { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.old_code_actual_expectations, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
   { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.{u_1,
-    u_2}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.{u_1,
-      u_2}
-    (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
-      (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))
-      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration.{u_1,
-    u_2})
+  (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration.{u_1,
+  u_2}).bridge
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1352,36 +1310,15 @@ noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.regi
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.sourceLaw.{u_1, u_2, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.{u_1,
-    u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.{u_1,
-      u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.{u_1,
-        u_2, u_3}
-      (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
-        (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))))
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration.{u_1,
-      u_2, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.) (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration.{u_1,
+  u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"five_column_three_kernel_obstruction\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ThreeKernel\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_three_kernel_obstruction, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.{u_1,
-    u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.{u_1,
-      u_2, u_3}
-    (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
-      (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))))
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration.{u_1,
-    u_2, u_3})
+  (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration.{u_1,
+  u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1835,32 +1772,15 @@ noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.sourceLaw.{u_1, u_2, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.{u_1,
-    u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.{u_1,
-      u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.{u_1,
-        u_2, u_3}
-      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.actual)
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration.{u_1,
-      u_2, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.) (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration.{u_1,
+  u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"retrieval_time_probability_bridge\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ProbabilityBridge\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.retrieval_time_probability_bridge, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.{u_1,
-    u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.{u_1,
-      u_2, u_3}
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.actual)
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration.{u_1,
-    u_2, u_3})
+  (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration.{u_1,
+  u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1995,36 +1915,15 @@ noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityB
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.sourceLaw.{u_1, u_2} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.{u_1,
-    u_2}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.{u_1,
-      u_2}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.{u_1,
-        u_2}
-      (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
-        (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))))
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration.{u_1,
-      u_2})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.) (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration.{u_1,
+  u_2}).actual
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"five_column_bad_pairs_obstruction\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"BadPairs\",\"registration_5\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
   { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_bad_pairs_obstruction, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
   { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.{u_1,
-    u_2}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.{u_1,
-      u_2}
-    (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
-      (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))))
-  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration.{u_1,
-    u_2})
+  (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration.{u_1,
+  u_2}).bridge
 
 noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

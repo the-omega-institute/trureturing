@@ -191,25 +191,13 @@ noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBou
 
 
 noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
-  Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{1, 0, 0, 0, 0}
-    Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
-      Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena
-      Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.actual)
-    Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0} (Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena) (Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration).actual
 
 noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"shared_control_bit_storage_bound\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.shared_control_bit_storage_bound, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{1, 0, 0, 0, 0}
-  Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
-    Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena
-    Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.actual)
-  Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration)
+  (Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration).bridge
 
 noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

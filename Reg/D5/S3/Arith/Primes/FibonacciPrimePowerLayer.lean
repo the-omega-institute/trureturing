@@ -130,103 +130,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.registration_1
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.arena
-    (∀ (q s : Nat) (_hq : Nat.Prime q)
-      (_hq5 : @Ne.{1} Nat q (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-      (_hs : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) s)
-      (_hexclude :
-        Not
-          (And (@Eq.{1} Nat q (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-            (@Eq.{1} Nat s (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))),
-      have C : Nat :=
-        @HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv)
-          (Nat.fib
-            (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-              (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q s))
-          (Nat.fib
-            (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-              (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q
-              (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) s
-                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))));
-      And (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) C)
-        (And
-          (Nat.Coprime C
-            (Nat.fib
-              (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q
-                (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) s
-                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
-          (And (Not (@IsSquare.{0} Nat instMulNat C))
-            (And
-              (∀ (p : Nat),
-                Nat.Prime p →
-                  @Dvd.dvd.{0} Nat Nat.instDvd p C →
-                    And
-                      (@Eq.{1} Nat (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p)
-                        (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                          (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q s))
-                      (And (@Ne.{1} Nat p q)
-                        (@Eq.{1} Nat (padicValNat p C)
-                          (padicValNat p (Nat.fib (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p))))))
-              (@Exists.{1} Nat fun (p : Nat) =>
-                And (Nat.Prime p)
-                  (And (@Dvd.dvd.{0} Nat Nat.instDvd p C)
-                    (@Odd.{0} Nat Nat.instSemiring
-                      (padicValNat p (Nat.fib (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p))))))))))
-    Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.arena) (Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciPrimePowerLayer\",\"fibonacci_prime_power_layer\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciPrimePowerLayer\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.FibonacciPrimePowerLayer, declaration := `D5.S3.Arith.Primes.FibonacciPrimePowerLayer.fibonacci_prime_power_layer, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer, declaration := `Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.arena
-  (∀ (q s : Nat) (_hq : Nat.Prime q)
-    (_hq5 : @Ne.{1} Nat q (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
-    (_hs : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) s)
-    (_hexclude :
-      Not
-        (And (@Eq.{1} Nat q (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-          (@Eq.{1} Nat s (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))),
-    have C : Nat :=
-      @HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv)
-        (Nat.fib
-          (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-            (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q s))
-        (Nat.fib
-          (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-            (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q
-            (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) s
-              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))));
-    And (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) C)
-      (And
-        (Nat.Coprime C
-          (Nat.fib
-            (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-              (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q
-              (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) s
-                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
-        (And (Not (@IsSquare.{0} Nat instMulNat C))
-          (And
-            (∀ (p : Nat),
-              Nat.Prime p →
-                @Dvd.dvd.{0} Nat Nat.instDvd p C →
-                  And
-                    (@Eq.{1} Nat (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p)
-                      (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                        (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q s))
-                    (And (@Ne.{1} Nat p q)
-                      (@Eq.{1} Nat (padicValNat p C)
-                        (padicValNat p (Nat.fib (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p))))))
-            (@Exists.{1} Nat fun (p : Nat) =>
-              And (Nat.Prime p)
-                (And (@Dvd.dvd.{0} Nat Nat.instDvd p C)
-                  (@Odd.{0} Nat Nat.instSemiring
-                    (padicValNat p (Nat.fib (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p))))))))))
-  Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.registration)
+  (Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciPrimePowerLayer.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

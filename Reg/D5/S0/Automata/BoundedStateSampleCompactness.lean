@@ -132,25 +132,13 @@ noncomputable def Reg.D5.S0.Automata.BoundedStateSampleCompactness.registration_
 
 
 noncomputable def Reg.D5.S0.Automata.BoundedStateSampleCompactness.registration_1.sourceLaw.{u, v, w} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S0.Automata.BoundedStateSampleCompactness.arena.{u, v, w}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S0.Automata.BoundedStateSampleCompactness.arena.{u, v, w}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S0.Automata.BoundedStateSampleCompactness.arena.{u, v, w}
-      Reg.D5.S0.Automata.BoundedStateSampleCompactness.actual)
-    Reg.D5.S0.Automata.BoundedStateSampleCompactness.registration.{u, v, w})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S0.Automata.BoundedStateSampleCompactness.arena.) (Reg.D5.S0.Automata.BoundedStateSampleCompactness.registration.{u, v, w}).actual
 
 noncomputable def Reg.D5.S0.Automata.BoundedStateSampleCompactness.registration_1.sourceBridgeFact.{u, v, w} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S0\",\"Automata\",\"BoundedStateSampleCompactness\",\"bounded_state_sample_compactness\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S0\",\"Automata\",\"BoundedStateSampleCompactness\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}"))
   { owner := `D5.S0.Automata.BoundedStateSampleCompactness, declaration := `D5.S0.Automata.BoundedStateSampleCompactness.bounded_state_sample_compactness, part := .type, path := [], levels := [(.param `u), (.param `v), (.param `w)] }
   { owner := `Reg.D5.S0.Automata.BoundedStateSampleCompactness, declaration := `Reg.D5.S0.Automata.BoundedStateSampleCompactness.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u), (.param `v), (.param `w)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S0.Automata.BoundedStateSampleCompactness.arena.{u, v, w}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S0.Automata.BoundedStateSampleCompactness.arena.{u, v, w}
-    Reg.D5.S0.Automata.BoundedStateSampleCompactness.actual)
-  Reg.D5.S0.Automata.BoundedStateSampleCompactness.registration.{u, v, w})
+  (Reg.D5.S0.Automata.BoundedStateSampleCompactness.registration.{u, v, w}).bridge
 
 noncomputable def Reg.D5.S0.Automata.BoundedStateSampleCompactness.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

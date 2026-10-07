@@ -121,65 +121,13 @@ noncomputable def Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.regist
 
 
 noncomputable def Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.arena
-    (∀ {z : Real} {a : Nat},
-      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) a →
-        @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) z →
-          @LT.lt.{0} Real Real.instLT z (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)) →
-            @LT.lt.{0} Real Real.instLT
-              (Real.log
-                (@Finset.sum.{0, 0} Nat Real Real.instAddCommMonoid
-                  (Finset.range
-                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) a
-                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-                  fun (k : Nat) =>
-                  @HPow.hPow.{0, 0, 0} Real Nat Real
-                    (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) z k))
-              (@Finset.sum.{0, 0} Nat Real Real.instAddCommMonoid (Finset.range a) fun (k : Nat) =>
-                @HDiv.hDiv.{0, 0, 0} Real Real Real
-                  (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-                  (@HPow.hPow.{0, 0, 0} Real Nat Real
-                    (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) z
-                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) k
-                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-                  (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
-                    (@Nat.cast.{0} Real Real.instNatCast k)
-                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))))
-    Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.arena) (Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"GoldenResource\",\"ReferencePrefixDominance\",\"log_geom_prefix_lt_harmonic_prefix\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"GoldenResource\",\"ReferencePrefixDominance\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.GoldenResource.ReferencePrefixDominance, declaration := `D5.S3.Arith.GoldenResource.ReferencePrefixDominance.log_geom_prefix_lt_harmonic_prefix, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance, declaration := `Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.arena
-  (∀ {z : Real} {a : Nat},
-    @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) a →
-      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) z →
-        @LT.lt.{0} Real Real.instLT z (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)) →
-          @LT.lt.{0} Real Real.instLT
-            (Real.log
-              (@Finset.sum.{0, 0} Nat Real Real.instAddCommMonoid
-                (Finset.range
-                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) a
-                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-                fun (k : Nat) =>
-                @HPow.hPow.{0, 0, 0} Real Nat Real
-                  (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) z k))
-            (@Finset.sum.{0, 0} Nat Real Real.instAddCommMonoid (Finset.range a) fun (k : Nat) =>
-              @HDiv.hDiv.{0, 0, 0} Real Real Real
-                (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-                (@HPow.hPow.{0, 0, 0} Real Nat Real
-                  (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) z
-                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) k
-                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-                (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
-                  (@Nat.cast.{0} Real Real.instNatCast k)
-                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))))
-  Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.registration)
+  (Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.GoldenResource.ReferencePrefixDominance.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

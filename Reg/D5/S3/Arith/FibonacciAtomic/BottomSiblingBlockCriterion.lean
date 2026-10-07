@@ -399,25 +399,13 @@ noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.re
 
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration_3.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureArena
-      Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureActual)
-    Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureArena) (Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureRegistration).actual
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"BottomSiblingBlockCriterion\",\"actual_future_residue_equivalence\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"BottomSiblingBlockCriterion\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion, declaration := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_future_residue_equivalence, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration_3.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureArena
-    Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureActual)
-  Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureRegistration)
+  (Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureRegistration).bridge
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Bool) where
   values := [Bool.true, Bool.false]
@@ -566,25 +554,13 @@ noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.re
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.arena
-      Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual)
-    Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.arena) (Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"BottomSiblingBlockCriterion\",\"actual_common_depth_fullness\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"BottomSiblingBlockCriterion\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion, declaration := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_common_depth_fullness, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.arena
-    Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual)
-  Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration)
+  (Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -675,25 +651,13 @@ noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.re
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseArena
-      Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseActual)
-    Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseArena) (Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseRegistration).actual
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"BottomSiblingBlockCriterion\",\"actual_nonconverse\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"BottomSiblingBlockCriterion\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion, declaration := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_nonconverse, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseArena
-    Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseActual)
-  Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseRegistration)
+  (Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseRegistration).bridge
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

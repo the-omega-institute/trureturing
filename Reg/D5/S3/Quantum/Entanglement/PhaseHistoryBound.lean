@@ -233,25 +233,13 @@ noncomputable def Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.registration_
 
 
 noncomputable def Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.registration_2.sourceLaw.{u_1} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.arena.{u_1}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.arena.{u_1}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.arena.{u_1}
-      Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.actual)
-    Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.registration.{u_1})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.arena.) (Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.registration.{u_1}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.registration_2.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PhaseHistoryBound\",\"phase_history_bound\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PhaseHistoryBound\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
   { owner := `D5.S3.Quantum.Entanglement.PhaseHistoryBound, declaration := `D5.S3.Quantum.Entanglement.PhaseHistoryBound.phase_history_bound, part := .type, path := [], levels := [(.param `u_1)] }
   { owner := `Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound, declaration := `Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.arena.{u_1}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.arena.{u_1}
-    Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.actual)
-  Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.registration.{u_1})
+  (Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Bound.registration.{u_1}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -334,25 +322,13 @@ noncomputable def Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.registration_
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.arena
-      Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.actual)
-    Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.arena) (Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.registration).actual
 
 noncomputable def Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PhaseHistoryBound\",\"actual_source_moments\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PhaseHistoryBound\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Quantum.Entanglement.PhaseHistoryBound, declaration := `D5.S3.Quantum.Entanglement.PhaseHistoryBound.actual_source_moments, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound, declaration := `Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.arena
-    Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.actual)
-  Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.registration)
+  (Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.Moments.registration).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

@@ -127,97 +127,13 @@ noncomputable def Reg.D5.S3.Arith.Erdos699JointAdjacentCores.registration_1.cano
 
 
 noncomputable def Reg.D5.S3.Arith.Erdos699JointAdjacentCores.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Erdos699JointAdjacentCores.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Erdos699JointAdjacentCores.arena
-    (∀ (B s : Int),
-      @LE.le.{0} Int Int.instLEInt (@OfNat.ofNat.{0} Int (nat_lit 5) (@instOfNat (nat_lit 5))) B →
-        @Odd.{0} Int Int.instSemiring B →
-          @LE.le.{0} Int Int.instLEInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))) s →
-            @LE.le.{0} Int Int.instLEInt s
-                (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub) B
-                  (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))) →
-              @Dvd.dvd.{0} Int Int.instDvd
-                  (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd)
-                    (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-                      (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2))) B)
-                    (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
-                  (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
-                    (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-                      (@OfNat.ofNat.{0} Int (nat_lit 4) (@instOfNat (nat_lit 4)))
-                      (@HPow.hPow.{0, 0, 0} Int Nat Int
-                        (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid))) s
-                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
-                    (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))) →
-                @Dvd.dvd.{0} Int Int.instDvd B
-                    (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-                      (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-                        (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub) s
-                          (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
-                        s)
-                      (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd) s
-                        (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))) →
-                  And
-                    (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                      (Int.gcd B
-                        (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub) s
-                          (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))))
-                    (And
-                      (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                        (Int.gcd B s))
-                      (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                        (Int.gcd B
-                          (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd) s
-                            (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))))))
-    Reg.D5.S3.Arith.Erdos699JointAdjacentCores.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Erdos699JointAdjacentCores.arena) (Reg.D5.S3.Arith.Erdos699JointAdjacentCores.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Erdos699JointAdjacentCores.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Erdos699JointAdjacentCores\",\"erdos699_joint_adjacent_gcds\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Erdos699JointAdjacentCores\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Erdos699JointAdjacentCores, declaration := `D5.S3.Arith.Erdos699JointAdjacentCores.erdos699_joint_adjacent_gcds, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Erdos699JointAdjacentCores, declaration := `Reg.D5.S3.Arith.Erdos699JointAdjacentCores.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Erdos699JointAdjacentCores.arena
-  (∀ (B s : Int),
-    @LE.le.{0} Int Int.instLEInt (@OfNat.ofNat.{0} Int (nat_lit 5) (@instOfNat (nat_lit 5))) B →
-      @Odd.{0} Int Int.instSemiring B →
-        @LE.le.{0} Int Int.instLEInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))) s →
-          @LE.le.{0} Int Int.instLEInt s
-              (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub) B
-                (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))) →
-            @Dvd.dvd.{0} Int Int.instDvd
-                (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd)
-                  (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-                    (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2))) B)
-                  (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
-                (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
-                  (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-                    (@OfNat.ofNat.{0} Int (nat_lit 4) (@instOfNat (nat_lit 4)))
-                    (@HPow.hPow.{0, 0, 0} Int Nat Int
-                      (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid))) s
-                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
-                  (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))) →
-              @Dvd.dvd.{0} Int Int.instDvd B
-                  (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-                    (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-                      (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub) s
-                        (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
-                      s)
-                    (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd) s
-                      (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))) →
-                And
-                  (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                    (Int.gcd B
-                      (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub) s
-                        (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))))
-                  (And
-                    (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                      (Int.gcd B s))
-                    (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                      (Int.gcd B
-                        (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd) s
-                          (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))))))
-  Reg.D5.S3.Arith.Erdos699JointAdjacentCores.registration)
+  (Reg.D5.S3.Arith.Erdos699JointAdjacentCores.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Erdos699JointAdjacentCores.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

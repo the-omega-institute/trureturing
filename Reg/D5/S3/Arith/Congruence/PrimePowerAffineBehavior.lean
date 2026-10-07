@@ -140,25 +140,13 @@ noncomputable def Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.registrati
 
 
 noncomputable def Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.arena
-      Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.actual)
-    Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.arena) (Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Congruence\",\"PrimePowerAffineBehavior\",\"local_classification\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Congruence\",\"PrimePowerAffineBehavior\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Congruence.PrimePowerAffineBehavior, declaration := `D5.S3.Arith.Congruence.PrimePowerAffineBehavior.local_classification, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior, declaration := `Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.arena
-    Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.actual)
-  Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.registration)
+  (Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

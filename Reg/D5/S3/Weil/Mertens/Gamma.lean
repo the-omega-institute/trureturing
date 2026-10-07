@@ -129,68 +129,13 @@ noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.canonicalObjectAre
 
 
 noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} Reg.D5.S3.Weil.Mertens.Gamma.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Weil.Mertens.Gamma.arena
-    (@Eq.{1} Real
-      (@MeasureTheory.integral.{0, 0} Real Real Real.normedAddCommGroup
-        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-          (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
-        (@MeasureTheory.Measure.restrict.{0} Real
-          (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
-          (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)
-          (@Set.Ioi.{0} Real Real.instPreorder
-            (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))
-        fun (t : Real) =>
-        @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (Real.log t)
-          (Real.exp (@Neg.neg.{0} Real Real.instNeg t)))
-      (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
-        Real.instAddCommGroup
-        (@Semiring.toModule.{0} Real
-          (@DivisionSemiring.toSemiring.{0} Real
-            (@Semifield.toDivisionSemiring.{0} Real
-              (@Field.toSemifield.{0} Real
-                (@NormedField.toField.{0} Real
-                  (@NontriviallyNormedField.toNormedField.{0} Real
-                    (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)))))))
-        (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
-        Real.Gamma (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
-    Reg.D5.S3.Weil.Mertens.Gamma.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Weil.Mertens.Gamma.arena) (Reg.D5.S3.Weil.Mertens.Gamma.registration).actual
 
 noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"integral_log_mul_exp_neg_eq_deriv_Gamma\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"Mertens\",\"Gamma\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Weil.Mertens.Gamma, declaration := `integral_log_mul_exp_neg_eq_deriv_Gamma, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.Mertens.Gamma.arena
-  (@Eq.{1} Real
-    (@MeasureTheory.integral.{0, 0} Real Real Real.normedAddCommGroup
-      (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-        (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-        (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-      (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
-      (@MeasureTheory.Measure.restrict.{0} Real
-        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
-        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)
-        (@Set.Ioi.{0} Real Real.instPreorder
-          (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))
-      fun (t : Real) =>
-      @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (Real.log t)
-        (Real.exp (@Neg.neg.{0} Real Real.instNeg t)))
-    (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
-      Real.instAddCommGroup
-      (@Semiring.toModule.{0} Real
-        (@DivisionSemiring.toSemiring.{0} Real
-          (@Semifield.toDivisionSemiring.{0} Real
-            (@Field.toSemifield.{0} Real
-              (@NormedField.toField.{0} Real
-                (@NontriviallyNormedField.toNormedField.{0} Real
-                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)))))))
-      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
-      Real.Gamma (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
-  Reg.D5.S3.Weil.Mertens.Gamma.registration)
+  (Reg.D5.S3.Weil.Mertens.Gamma.registration).bridge
 
 noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

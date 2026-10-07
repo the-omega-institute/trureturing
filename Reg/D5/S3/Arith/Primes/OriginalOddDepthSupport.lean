@@ -147,74 +147,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.registration_1.
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.arena
-    (∀ (S : Finset.{0} Nat)
-      (_hS :
-        ∀ (p : Nat),
-          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) S p →
-            And (Nat.Prime p)
-              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) p))
-      (n : Nat) (_hn : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) n)
-      (_hBlock : D5.S3.Arith.Primes.OriginalOddDepthSupport.PrimeIndexOddFactor n)
-      (_hExternal :
-        ∀ (p : Nat),
-          Nat.Prime p →
-            @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) p →
-              @Dvd.dvd.{0} Nat Nat.instDvd p (Nat.fib n) →
-                Not (@Dvd.dvd.{0} Nat Nat.instDvd p n) →
-                  @Odd.{0} Nat Nat.instSemiring
-                      (padicValNat p (Nat.fib (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p))) →
-                    @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-                      (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) S p),
-      have H : Finset.{0} Nat := D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRankClosure S;
-      And
-        (∀ (ell : Nat),
-          Nat.Prime ell →
-            @Dvd.dvd.{0} Nat Nat.instDvd ell n →
-              @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-                (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H ell)
-        (@Dvd.dvd.{0} Nat Nat.instDvd (D5.S3.Arith.Primes.OriginalOddDepthSupport.oddDepthKernel n)
-          (@Finset.prod.{0, 0} Nat Nat Nat.instCommMonoid H (@id.{1} Nat))))
-    Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.arena) (Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"OriginalOddDepthSupport\",\"original_odd_depth_support\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"OriginalOddDepthSupport\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.OriginalOddDepthSupport, declaration := `D5.S3.Arith.Primes.OriginalOddDepthSupport.original_odd_depth_support, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport, declaration := `Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.arena
-  (∀ (S : Finset.{0} Nat)
-    (_hS :
-      ∀ (p : Nat),
-        @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-            (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) S p →
-          And (Nat.Prime p) (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) p))
-    (n : Nat) (_hn : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) n)
-    (_hBlock : D5.S3.Arith.Primes.OriginalOddDepthSupport.PrimeIndexOddFactor n)
-    (_hExternal :
-      ∀ (p : Nat),
-        Nat.Prime p →
-          @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) p →
-            @Dvd.dvd.{0} Nat Nat.instDvd p (Nat.fib n) →
-              Not (@Dvd.dvd.{0} Nat Nat.instDvd p n) →
-                @Odd.{0} Nat Nat.instSemiring
-                    (padicValNat p (Nat.fib (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p))) →
-                  @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-                    (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) S p),
-    have H : Finset.{0} Nat := D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRankClosure S;
-    And
-      (∀ (ell : Nat),
-        Nat.Prime ell →
-          @Dvd.dvd.{0} Nat Nat.instDvd ell n →
-            @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H ell)
-      (@Dvd.dvd.{0} Nat Nat.instDvd (D5.S3.Arith.Primes.OriginalOddDepthSupport.oddDepthKernel n)
-        (@Finset.prod.{0, 0} Nat Nat Nat.instCommMonoid H (@id.{1} Nat))))
-  Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.registration)
+  (Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.OriginalOddDepthSupport.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

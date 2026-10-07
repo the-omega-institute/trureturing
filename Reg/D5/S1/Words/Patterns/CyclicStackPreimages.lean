@@ -93,53 +93,13 @@ noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimages.FibreCountAudit.
 
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimages.FibreCountAudit.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FibreCount.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FibreCount.arena
-    (∀ (m : Nat) (hm : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) m),
-      And
-        (@Eq.{1} Nat
-          (@List.length.{0} (List.{0} Nat)
-            (D5.S1.Words.Patterns.CyclicStackPreimages.fibre
-              (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) m)))
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-        (@Eq.{1} Nat
-          (@List.length.{0} (List.{0} Nat)
-            (D5.S1.Words.Patterns.CyclicStackPreimages.fibre
-              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat)
-                (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) m)
-                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) m
-            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-    Reg.D5.S1.Words.Patterns.CyclicStackPreimages.FibreCountAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FibreCount.arena) (Reg.D5.S1.Words.Patterns.CyclicStackPreimages.FibreCountAudit.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimages.FibreCountAudit.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"zhan_bie_conjectures_3_4\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"FibreCountAudit\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Patterns.CyclicStackPreimages, declaration := `D5.S1.Words.Patterns.CyclicStackPreimages.zhan_bie_conjectures_3_4, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Patterns.CyclicStackPreimages, declaration := `Reg.D5.S1.Words.Patterns.CyclicStackPreimages.FibreCountAudit.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FibreCount.arena
-  (∀ (m : Nat) (hm : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) m),
-    And
-      (@Eq.{1} Nat
-        (@List.length.{0} (List.{0} Nat)
-          (D5.S1.Words.Patterns.CyclicStackPreimages.fibre
-            (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) m)))
-        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-      (@Eq.{1} Nat
-        (@List.length.{0} (List.{0} Nat)
-          (D5.S1.Words.Patterns.CyclicStackPreimages.fibre
-            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat)
-              (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) m)
-              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) m
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-  Reg.D5.S1.Words.Patterns.CyclicStackPreimages.FibreCountAudit.registration)
+  (Reg.D5.S1.Words.Patterns.CyclicStackPreimages.FibreCountAudit.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimages.FibreCountAudit.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

@@ -241,95 +241,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.registration_1.
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.arena
-    (∀ (j p : Nat) (_hj : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) j)
-      (_hp : Nat.Prime p)
-      (_hpB :
-        @Dvd.dvd.{0} Int Int.instDvd (@Nat.cast.{0} Int instNatCastInt p)
-          (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd)
-            (@HPow.hPow.{0, 0, 0} Int Nat Int
-              (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid)))
-              (D5.S1.Scale.goldenLucas
-                (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                  (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-                  (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) j))
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-            (@OfNat.ofNat.{0} Int (nat_lit 3) (@instOfNat (nat_lit 3))))),
-      And
-        (@Eq.{1} Nat (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p)
-          (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
-            (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-              (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-              (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
-              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) j
-                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
-        (And
-          (@Eq.{1} Int
-            (@legendreSym p (@Fact.mk (Nat.Prime p) _hp) (@OfNat.ofNat.{0} Int (nat_lit 5) (@instOfNat (nat_lit 5))))
-            (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
-          (@Eq.{1} Nat
-            (padicValInt p
-              (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd)
-                (@HPow.hPow.{0, 0, 0} Int Nat Int
-                  (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid)))
-                  (D5.S1.Scale.goldenLucas
-                    (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                      (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-                      (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) j))
-                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-                (@OfNat.ofNat.{0} Int (nat_lit 3) (@instOfNat (nat_lit 3)))))
-            (padicValNat p (Nat.fib (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p))))))
-    Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.arena) (Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"GoldenCubicBlockRanks\",\"cubic_block_b_prime_rank\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"GoldenCubicBlockRanks\",\"B\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.GoldenCubicBlockRanks, declaration := `D5.S3.Arith.Primes.GoldenCubicBlockRanks.cubic_block_b_prime_rank, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks, declaration := `Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.arena
-  (∀ (j p : Nat) (_hj : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) j)
-    (_hp : Nat.Prime p)
-    (_hpB :
-      @Dvd.dvd.{0} Int Int.instDvd (@Nat.cast.{0} Int instNatCastInt p)
-        (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd)
-          (@HPow.hPow.{0, 0, 0} Int Nat Int
-            (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid)))
-            (D5.S1.Scale.goldenLucas
-              (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-                (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) j))
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-          (@OfNat.ofNat.{0} Int (nat_lit 3) (@instOfNat (nat_lit 3))))),
-    And
-      (@Eq.{1} Nat (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p)
-        (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
-          (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-            (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-            (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
-            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) j
-              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
-      (And
-        (@Eq.{1} Int
-          (@legendreSym p (@Fact.mk (Nat.Prime p) _hp) (@OfNat.ofNat.{0} Int (nat_lit 5) (@instOfNat (nat_lit 5))))
-          (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
-        (@Eq.{1} Nat
-          (padicValInt p
-            (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd)
-              (@HPow.hPow.{0, 0, 0} Int Nat Int
-                (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid)))
-                (D5.S1.Scale.goldenLucas
-                  (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                    (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-                    (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) j))
-                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-              (@OfNat.ofNat.{0} Int (nat_lit 3) (@instOfNat (nat_lit 3)))))
-          (padicValNat p (Nat.fib (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p))))))
-  Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.registration)
+  (Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -397,83 +315,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.registration_2.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.arena
-    (∀ (j p : Nat) (_hj : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) j)
-      (_hp : Nat.Prime p)
-      (_hpC :
-        @Dvd.dvd.{0} Int Int.instDvd (@Nat.cast.{0} Int instNatCastInt p)
-          (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd)
-            (@HPow.hPow.{0, 0, 0} Int Nat Int
-              (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid)))
-              (D5.S1.Scale.goldenLucas
-                (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                  (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-                  (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) j))
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-            (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))),
-      And
-        (@Eq.{1} Nat (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p)
-          (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-            (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-            (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
-            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) j
-              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-        (@Eq.{1} Nat
-          (padicValInt p
-            (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd)
-              (@HPow.hPow.{0, 0, 0} Int Nat Int
-                (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid)))
-                (D5.S1.Scale.goldenLucas
-                  (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                    (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-                    (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) j))
-                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-              (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))))
-          (padicValNat p (Nat.fib (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p)))))
-    Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.arena) (Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"GoldenCubicBlockRanks\",\"cubic_block_c_prime_rank\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"GoldenCubicBlockRanks\",\"C\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.GoldenCubicBlockRanks, declaration := `D5.S3.Arith.Primes.GoldenCubicBlockRanks.cubic_block_c_prime_rank, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks, declaration := `Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.arena
-  (∀ (j p : Nat) (_hj : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) j)
-    (_hp : Nat.Prime p)
-    (_hpC :
-      @Dvd.dvd.{0} Int Int.instDvd (@Nat.cast.{0} Int instNatCastInt p)
-        (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd)
-          (@HPow.hPow.{0, 0, 0} Int Nat Int
-            (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid)))
-            (D5.S1.Scale.goldenLucas
-              (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-                (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) j))
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-          (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))),
-    And
-      (@Eq.{1} Nat (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p)
-        (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-          (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-          (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
-          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) j
-            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-      (@Eq.{1} Nat
-        (padicValInt p
-          (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd)
-            (@HPow.hPow.{0, 0, 0} Int Nat Int
-              (@instHPow.{0, 0} Int Nat (@NPow.toPow.{0} Int (@Monoid.toNPow.{0} Int Int.instMonoid)))
-              (D5.S1.Scale.goldenLucas
-                (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                  (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
-                  (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) j))
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-            (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))))
-        (padicValNat p (Nat.fib (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p)))))
-  Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.registration)
+  (Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

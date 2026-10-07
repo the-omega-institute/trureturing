@@ -151,115 +151,13 @@ noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1
 
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.arena
-    (∀ (p : Nat) (hp : Nat.Prime p),
-      And
-        (∀ (n z n' z' : Int),
-          (∀ (k : Nat),
-              @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
-                @LE.le.{0} Nat instLENat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
-                  @Eq.{1} Nat
-                    (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n z)) p)
-                    (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n' z')) p)) →
-            ∀ (k : Nat),
-              @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
-                @Eq.{1} Nat
-                  (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n z)) p)
-                  (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n' z')) p))
-        (And
-          (∀ (a b c d : Nat),
-            (∀ (k : Nat),
-                @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
-                  @LE.le.{0} Nat instLENat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
-                    @Eq.{1} Nat (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k a b) p)
-                      (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k c d) p)) →
-              ∀ (k : Nat),
-                @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
-                  @Eq.{1} Nat (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k a b) p)
-                    (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k c d) p))
-          (@Exists.{1} Nat fun (a : Nat) =>
-            @Exists.{1} Nat fun (b : Nat) =>
-              @Exists.{1} Nat fun (c : Nat) =>
-                @Exists.{1} Nat fun (d : Nat) =>
-                  And (@LT.lt.{0} Nat instLTNat a p)
-                    (And (@LT.lt.{0} Nat instLTNat b p)
-                      (And (@LT.lt.{0} Nat instLTNat c p)
-                        (And (@LT.lt.{0} Nat instLTNat d p)
-                          (And
-                            (∀ (k : Nat),
-                              @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
-                                @LT.lt.{0} Nat instLTNat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
-                                  @Eq.{1} Nat
-                                    (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k a b) p)
-                                    (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k c d) p))
-                            (@Ne.{1} Nat
-                              (Nat.gcd
-                                (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation
-                                  (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) a b)
-                                p)
-                              (Nat.gcd
-                                (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation
-                                  (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) c d)
-                                p)))))))))
-    Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.arena) (Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"sharp_prime_gcd_horizon\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.sharp_prime_gcd_horizon, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.arena
-  (∀ (p : Nat) (hp : Nat.Prime p),
-    And
-      (∀ (n z n' z' : Int),
-        (∀ (k : Nat),
-            @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
-              @LE.le.{0} Nat instLENat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
-                @Eq.{1} Nat
-                  (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n z)) p)
-                  (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n' z')) p)) →
-          ∀ (k : Nat),
-            @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
-              @Eq.{1} Nat (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n z)) p)
-                (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n' z')) p))
-      (And
-        (∀ (a b c d : Nat),
-          (∀ (k : Nat),
-              @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
-                @LE.le.{0} Nat instLENat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
-                  @Eq.{1} Nat (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k a b) p)
-                    (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k c d) p)) →
-            ∀ (k : Nat),
-              @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
-                @Eq.{1} Nat (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k a b) p)
-                  (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k c d) p))
-        (@Exists.{1} Nat fun (a : Nat) =>
-          @Exists.{1} Nat fun (b : Nat) =>
-            @Exists.{1} Nat fun (c : Nat) =>
-              @Exists.{1} Nat fun (d : Nat) =>
-                And (@LT.lt.{0} Nat instLTNat a p)
-                  (And (@LT.lt.{0} Nat instLTNat b p)
-                    (And (@LT.lt.{0} Nat instLTNat c p)
-                      (And (@LT.lt.{0} Nat instLTNat d p)
-                        (And
-                          (∀ (k : Nat),
-                            @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
-                              @LT.lt.{0} Nat instLTNat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
-                                @Eq.{1} Nat (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k a b) p)
-                                  (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k c d) p))
-                          (@Ne.{1} Nat
-                            (Nat.gcd
-                              (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation
-                                (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) a b)
-                              p)
-                            (Nat.gcd
-                              (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation
-                                (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) c d)
-                              p)))))))))
-  Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration)
+  (Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

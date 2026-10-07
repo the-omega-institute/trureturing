@@ -170,86 +170,13 @@ noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.
 
 
 noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.sourceLaw.{u, v} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), max u v, 0, max u v, 0}
-  Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.arena.{u, v}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u + 1) (v + 1), max u v, 0,
-        max u v, 0}
-    Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.arena.{u, v}
-    (∀ {V : Type u} (G : SimpleGraph.{u} V) (A : Type v) [inst : AddCommGroup.{v} A] [Nontrivial.{v} A],
-      Iff
-        (@Eq.{max (u + 1) (v + 1)}
-          (@AddSubgroup.{max u v} (V → A)
-            (@Pi.addGroup.{u, v} V (fun (a : V) => A) fun (i : V) => @AddCommGroup.toAddGroup.{v} A inst))
-          (@AddMonoidHom.ker.{max u v, max u v} (V → A)
-            (@Pi.addGroup.{u, v} V (fun (a : V) => A) fun (i : V) => @AddCommGroup.toAddGroup.{v} A inst)
-            ((@Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
-                @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e)) →
-              A)
-            (@Pi.addZeroClass.{u, v}
-              (@Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
-                @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e))
-              (fun
-                  (a :
-                    @Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
-                      @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e)) =>
-                A)
-              fun
-                (i :
-                  @Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
-                    @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e)) =>
-              @AddMonoid.toAddZeroClass.{v} A
-                (@SubNegMonoid.toAddMonoid.{v} A
-                  (@AddGroup.toSubNegMonoid.{v} A (@AddCommGroup.toAddGroup.{v} A inst))))
-            (@D5.S3.Factorization.Galois.SparseCharacterSynchronization.edgeDifference.{u, v} V G A inst))
-          (@AddMonoidHom.range.{v, max u v} A (@AddCommGroup.toAddGroup.{v} A inst) (V → A)
-            (@Pi.addGroup.{u, v} V (fun (a : V) => A) fun (i : V) => @AddCommGroup.toAddGroup.{v} A inst)
-            (@Pi.constAddMonoidHom.{u, v} V A
-              (@AddMonoid.toAddZeroClass.{v} A
-                (@SubNegMonoid.toAddMonoid.{v} A
-                  (@AddGroup.toSubNegMonoid.{v} A (@AddCommGroup.toAddGroup.{v} A inst)))))))
-        (@SimpleGraph.Preconnected.{u} V G))
-    Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration.{u, v})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), max u v, 0, max u v, 0} (Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.arena.) (Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration.{u, v}).actual
 
 noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.sourceBridgeFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"edge_difference_kernel_eq_constants_iff\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
   { owner := `D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `D5.S3.Factorization.Galois.SparseCharacterSynchronization.edge_difference_kernel_eq_constants_iff, part := .type, path := [], levels := [(.param `u), (.param `v)] }
   { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u + 1) (v + 1), max u v, 0, max u v,
-      0}
-  Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.arena.{u, v}
-  (∀ {V : Type u} (G : SimpleGraph.{u} V) (A : Type v) [inst : AddCommGroup.{v} A] [Nontrivial.{v} A],
-    Iff
-      (@Eq.{max (u + 1) (v + 1)}
-        (@AddSubgroup.{max u v} (V → A)
-          (@Pi.addGroup.{u, v} V (fun (a : V) => A) fun (i : V) => @AddCommGroup.toAddGroup.{v} A inst))
-        (@AddMonoidHom.ker.{max u v, max u v} (V → A)
-          (@Pi.addGroup.{u, v} V (fun (a : V) => A) fun (i : V) => @AddCommGroup.toAddGroup.{v} A inst)
-          ((@Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
-              @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e)) →
-            A)
-          (@Pi.addZeroClass.{u, v}
-            (@Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
-              @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e))
-            (fun
-                (a :
-                  @Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
-                    @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e)) =>
-              A)
-            fun
-              (i :
-                @Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
-                  @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e)) =>
-            @AddMonoid.toAddZeroClass.{v} A
-              (@SubNegMonoid.toAddMonoid.{v} A (@AddGroup.toSubNegMonoid.{v} A (@AddCommGroup.toAddGroup.{v} A inst))))
-          (@D5.S3.Factorization.Galois.SparseCharacterSynchronization.edgeDifference.{u, v} V G A inst))
-        (@AddMonoidHom.range.{v, max u v} A (@AddCommGroup.toAddGroup.{v} A inst) (V → A)
-          (@Pi.addGroup.{u, v} V (fun (a : V) => A) fun (i : V) => @AddCommGroup.toAddGroup.{v} A inst)
-          (@Pi.constAddMonoidHom.{u, v} V A
-            (@AddMonoid.toAddZeroClass.{v} A
-              (@SubNegMonoid.toAddMonoid.{v} A
-                (@AddGroup.toSubNegMonoid.{v} A (@AddCommGroup.toAddGroup.{v} A inst)))))))
-      (@SimpleGraph.Preconnected.{u} V G))
-  Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration.{u, v})
+  (Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration.{u, v}).bridge
 
 noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

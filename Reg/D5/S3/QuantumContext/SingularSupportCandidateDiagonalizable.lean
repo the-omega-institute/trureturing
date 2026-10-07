@@ -139,25 +139,13 @@ noncomputable def Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizabl
 
 
 noncomputable def Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.arena
-      Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.actual)
-    Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.arena) (Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.registration).actual
 
 noncomputable def Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"QuantumContext\",\"SingularSupportCandidateDiagonalizable\",\"singular_support_candidate_positive_and_diagonalizable\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"QuantumContext\",\"SingularSupportCandidateDiagonalizable\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable, declaration := `D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.singular_support_candidate_positive_and_diagonalizable, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable, declaration := `Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.arena
-    Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.actual)
-  Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.registration)
+  (Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.registration).bridge
 
 noncomputable def Reg.D5.S3.QuantumContext.SingularSupportCandidateDiagonalizable.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

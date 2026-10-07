@@ -339,25 +339,13 @@ noncomputable def Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.E
 
 
 noncomputable def Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.registration_2.sourceLaw.{u_1} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.arena.{u_1}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.arena.{u_1}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.arena.{u_1}
-      Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.actual)
-    Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.registration.{u_1})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.arena.) (Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.registration.{u_1}).actual
 
 noncomputable def Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.registration_2.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"attractor_window_transfer\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"FiniteWordAttractors\",\"HelperAudits\",\"Window\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
   { owner := `D5.S1.Words.Attractors.FiniteWordAttractors, declaration := `D5.S1.Words.Attractors.attractor_window_transfer, part := .type, path := [], levels := [(.param `u_1)] }
   { owner := `Reg.D5.S1.Words.Attractors.FiniteWordAttractors, declaration := `Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.arena.{u_1}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.arena.{u_1}
-    Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.actual)
-  Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.registration.{u_1})
+  (Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.registration.{u_1}).bridge
 
 noncomputable def Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -500,25 +488,13 @@ noncomputable def Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.W
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.registration_1.sourceLaw.{u_1} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.arena.{u_1}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.arena.{u_1}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, 0, 0}
-      Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.arena.{u_1}
-      Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.actual.{u_1})
-    Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.registration.{u_1})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, 0, 0} (Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.arena.) (Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.registration.{u_1}).actual
 
 noncomputable def Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"attractor_minimum\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"FiniteWordAttractors\",\"HelperAudits\",\"Minimum\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
   { owner := `D5.S1.Words.Attractors.FiniteWordAttractors, declaration := `D5.S1.Words.Attractors.attractor_minimum, part := .type, path := [], levels := [(.param `u_1)] }
   { owner := `Reg.D5.S1.Words.Attractors.FiniteWordAttractors, declaration := `Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.arena.{u_1}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.arena.{u_1}
-    Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.actual.{u_1})
-  Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.registration.{u_1})
+  (Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.registration.{u_1}).bridge
 
 noncomputable def Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -564,25 +540,13 @@ noncomputable def Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.M
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.registration_3.sourceLaw.{u_1} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.arena.{u_1}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.arena.{u_1}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.arena.{u_1}
-      Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.actual)
-    Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.registration.{u_1})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.arena.) (Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.registration.{u_1}).actual
 
 noncomputable def Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.registration_3.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"periodic_attractor_extension\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"FiniteWordAttractors\",\"HelperAudits\",\"Extension\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
   { owner := `D5.S1.Words.Attractors.FiniteWordAttractors, declaration := `D5.S1.Words.Attractors.periodic_attractor_extension, part := .type, path := [], levels := [(.param `u_1)] }
   { owner := `Reg.D5.S1.Words.Attractors.FiniteWordAttractors, declaration := `Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.registration_3.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.arena.{u_1}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.arena.{u_1}
-    Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.actual)
-  Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.registration.{u_1})
+  (Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.registration.{u_1}).bridge
 
 noncomputable def Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

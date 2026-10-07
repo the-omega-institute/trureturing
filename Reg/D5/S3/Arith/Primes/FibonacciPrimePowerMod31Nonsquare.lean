@@ -127,135 +127,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.regis
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.arena
-    (∀ (q k : Nat) (_hq : Nat.Prime q)
-      (_hqge : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))) q)
-      (_hclass :
-        Or
-          (@Eq.{1} Nat
-            (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod) q
-              (@OfNat.ofNat.{0} Nat (nat_lit 120) (instOfNatNat (nat_lit 120))))
-            (@OfNat.ofNat.{0} Nat (nat_lit 49) (instOfNatNat (nat_lit 49))))
-          (@Eq.{1} Nat
-            (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod) q
-              (@OfNat.ofNat.{0} Nat (nat_lit 120) (instOfNatNat (nat_lit 120))))
-            (@OfNat.ofNat.{0} Nat (nat_lit 71) (instOfNatNat (nat_lit 71))))),
-      And
-        (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
-          (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv)
-            (Nat.fib
-              (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q
-                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) k
-                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-            (Nat.fib
-              (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q k))))
-        (And
-          (@Eq.{1} Nat
-            (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod)
-              (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv)
-                (Nat.fib
-                  (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                    (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q
-                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) k
-                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-                (Nat.fib
-                  (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                    (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q k)))
-              (@OfNat.ofNat.{0} Nat (nat_lit 31) (instOfNatNat (nat_lit 31))))
-            (@ite.{1} Nat
-              (@Eq.{1} Nat
-                (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod) k
-                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
-              (instDecidableEqNat
-                (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod) k
-                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
-              (@OfNat.ofNat.{0} Nat (nat_lit 27) (instOfNatNat (nat_lit 27)))
-              (@OfNat.ofNat.{0} Nat (nat_lit 23) (instOfNatNat (nat_lit 23)))))
-          (Not
-            (@IsSquare.{0} Nat instMulNat
-              (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv)
-                (Nat.fib
-                  (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                    (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q
-                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) k
-                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-                (Nat.fib
-                  (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                    (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q k)))))))
-    Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.arena) (Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciPrimePowerMod31Nonsquare\",\"fibonacci_prime_power_mod31_nonsquare\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciPrimePowerMod31Nonsquare\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare, declaration := `D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.fibonacci_prime_power_mod31_nonsquare, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare, declaration := `Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.arena
-  (∀ (q k : Nat) (_hq : Nat.Prime q)
-    (_hqge : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))) q)
-    (_hclass :
-      Or
-        (@Eq.{1} Nat
-          (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod) q
-            (@OfNat.ofNat.{0} Nat (nat_lit 120) (instOfNatNat (nat_lit 120))))
-          (@OfNat.ofNat.{0} Nat (nat_lit 49) (instOfNatNat (nat_lit 49))))
-        (@Eq.{1} Nat
-          (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod) q
-            (@OfNat.ofNat.{0} Nat (nat_lit 120) (instOfNatNat (nat_lit 120))))
-          (@OfNat.ofNat.{0} Nat (nat_lit 71) (instOfNatNat (nat_lit 71))))),
-    And
-      (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
-        (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv)
-          (Nat.fib
-            (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-              (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q
-              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) k
-                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-          (Nat.fib
-            (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-              (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q k))))
-      (And
-        (@Eq.{1} Nat
-          (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod)
-            (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv)
-              (Nat.fib
-                (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                  (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q
-                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) k
-                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-              (Nat.fib
-                (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                  (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q k)))
-            (@OfNat.ofNat.{0} Nat (nat_lit 31) (instOfNatNat (nat_lit 31))))
-          (@ite.{1} Nat
-            (@Eq.{1} Nat
-              (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod) k
-                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
-            (instDecidableEqNat
-              (@HMod.hMod.{0, 0, 0} Nat Nat Nat (@instHMod.{0} Nat Nat.instMod) k
-                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
-            (@OfNat.ofNat.{0} Nat (nat_lit 27) (instOfNatNat (nat_lit 27)))
-            (@OfNat.ofNat.{0} Nat (nat_lit 23) (instOfNatNat (nat_lit 23)))))
-        (Not
-          (@IsSquare.{0} Nat instMulNat
-            (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv)
-              (Nat.fib
-                (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                  (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q
-                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) k
-                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-              (Nat.fib
-                (@HPow.hPow.{0, 0, 0} Nat Nat Nat
-                  (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) q k)))))))
-  Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.registration)
+  (Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciPrimePowerMod31Nonsquare.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

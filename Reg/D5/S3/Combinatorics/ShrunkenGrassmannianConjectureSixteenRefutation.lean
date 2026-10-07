@@ -152,21 +152,13 @@ noncomputable def Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenR
 
 
 noncomputable def Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.arena
-    (Not D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.claim)
-    Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.arena) (Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.registration).actual
 
 noncomputable def Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"ShrunkenGrassmannianConjectureSixteenRefutation\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"ShrunkenGrassmannianConjectureSixteenRefutation\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation, declaration := `D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation, declaration := `Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.arena
-  (Not D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.claim)
-  Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.registration)
+  (Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.registration).bridge
 
 noncomputable def Reg.D5.S3.Combinatorics.ShrunkenGrassmannianConjectureSixteenRefutation.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

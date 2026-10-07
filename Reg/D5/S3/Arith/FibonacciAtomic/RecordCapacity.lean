@@ -133,23 +133,13 @@ noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.registration_1.
 
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.registration_1.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.arena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.arena.{u}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.arena.{u} Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.actual)
-    Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.registration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.arena.) (Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.registration.{u}).actual
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.registration_1.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"RecordCapacity\",\"autonomous_record_capacity\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"RecordCapacity\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.Arith.FibonacciAtomic.RecordCapacity, declaration := `D5.S3.Arith.FibonacciAtomic.RecordCapacity.autonomous_record_capacity, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.arena.{u}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.arena.{u} Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.actual)
-  Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.registration.{u})
+  (Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.registration.{u}).bridge
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.RecordCapacity.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

@@ -159,25 +159,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBou
 
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.arena
-      Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.actual)
-    Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.arena) (Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CommonNilpotencyForgettingBound\",\"common_nilpotency_forgetting_bound\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CommonNilpotencyForgettingBound\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound, declaration := `D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.common_nilpotency_forgetting_bound, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.arena
-    Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.actual)
-  Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.registration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

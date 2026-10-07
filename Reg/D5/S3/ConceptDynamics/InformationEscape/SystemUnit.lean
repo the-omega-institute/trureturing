@@ -136,19 +136,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registr
 
 
 noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.Support.LegacyRelations.System.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.Support.LegacyRelations.System.arena D5.S3.ConceptDynamics.InformationEscape.SystemUnit.SystemStatement
-    Reg.Support.LegacyRelations.System.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.Support.LegacyRelations.System.arena) (Reg.Support.LegacyRelations.System.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"engine_census_self_application\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.Support.LegacyRelations.System.arena D5.S3.ConceptDynamics.InformationEscape.SystemUnit.SystemStatement
-  Reg.Support.LegacyRelations.System.registration)
+  (Reg.Support.LegacyRelations.System.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Fin (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) where
   values := [(fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) => i)

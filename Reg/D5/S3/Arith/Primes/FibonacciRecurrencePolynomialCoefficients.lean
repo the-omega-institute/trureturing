@@ -128,117 +128,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficien
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.arena
-    (And
-      (∀ (n : Nat),
-        And
-          (@Eq.{1} Nat
-            (@Polynomial.natDegree.{0} Int Int.instSemiring
-              (D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.fibonacciRecurrencePolynomial
-                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
-                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-            n)
-          (@Eq.{1} Int
-            (@Polynomial.coeff.{0} Int Int.instSemiring
-              (D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.fibonacciRecurrencePolynomial
-                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
-                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-              n)
-            (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))))
-      (And
-        (∀ (n : Nat),
-          @Eq.{1} Int
-            (@Polynomial.coeff.{0} Int Int.instSemiring
-              (D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.fibonacciRecurrencePolynomial
-                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
-                  (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))
-              n)
-            (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd) (@Nat.cast.{0} Int instNatCastInt n)
-              (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))))
-        (∀ (r : Nat),
-          @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) r →
-            And
-              (@Eq.{1} Int
-                (@Polynomial.coeff.{0} Int Int.instSemiring
-                  (D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.fibonacciRecurrencePolynomial
-                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat)
-                      (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) r)
-                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-                  (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
-                    (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) r)
-                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
-                (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
-                  (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-                    (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2))) (@Nat.cast.{0} Int instNatCastInt r))
-                  (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))))
-              (@Odd.{0} Nat Nat.instSemiring
-                (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
-                  (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) r)
-                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))))
-    Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.arena) (Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciRecurrencePolynomialCoefficients\",\"fibonacci_recurrence_polynomial_coefficients\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciRecurrencePolynomialCoefficients\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients, declaration := `D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.fibonacci_recurrence_polynomial_coefficients, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients, declaration := `Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.arena
-  (And
-    (∀ (n : Nat),
-      And
-        (@Eq.{1} Nat
-          (@Polynomial.natDegree.{0} Int Int.instSemiring
-            (D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.fibonacciRecurrencePolynomial
-              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
-                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-          n)
-        (@Eq.{1} Int
-          (@Polynomial.coeff.{0} Int Int.instSemiring
-            (D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.fibonacciRecurrencePolynomial
-              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
-                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-            n)
-          (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))))
-    (And
-      (∀ (n : Nat),
-        @Eq.{1} Int
-          (@Polynomial.coeff.{0} Int Int.instSemiring
-            (D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.fibonacciRecurrencePolynomial
-              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
-                (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))
-            n)
-          (@HAdd.hAdd.{0, 0, 0} Int Int Int (@instHAdd.{0} Int Int.instAdd) (@Nat.cast.{0} Int instNatCastInt n)
-            (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))))
-      (∀ (r : Nat),
-        @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) r →
-          And
-            (@Eq.{1} Int
-              (@Polynomial.coeff.{0} Int Int.instSemiring
-                (D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.fibonacciRecurrencePolynomial
-                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat)
-                    (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) r)
-                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-                (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
-                  (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) r)
-                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
-              (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
-                (@HMul.hMul.{0, 0, 0} Int Int Int (@instHMul.{0} Int Int.instMul)
-                  (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2))) (@Nat.cast.{0} Int instNatCastInt r))
-                (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))))
-            (@Odd.{0} Nat Nat.instSemiring
-              (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
-                (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
-                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) r)
-                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))))
-  Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.registration)
+  (Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciRecurrencePolynomialCoefficients.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

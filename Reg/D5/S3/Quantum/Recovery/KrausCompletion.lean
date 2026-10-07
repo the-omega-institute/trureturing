@@ -352,25 +352,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.regi
 
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.registration_3.sourceLaw.{u_1, u_2, u_4} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.arena.{u_1, u_2, u_4}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.arena.{u_1, u_2, u_4}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-      Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.arena.{u_1, u_2, u_4}
-      Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.actual.{u_1})
-    Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.registration.{u_1, u_2, u_4})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0} (Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.arena.) (Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.registration.{u_1, u_2, u_4}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.registration_3.sourceBridgeFact.{u_1, u_2, u_4} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"KrausCompletion\",\"complete_quantum_channel\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_4\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"KrausCompletion\",\"CompleteChannel\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_4\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.KrausCompletion, declaration := `D5.S3.Quantum.Recovery.KrausCompletion.complete_quantum_channel, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_4)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.KrausCompletion, declaration := `Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.registration_3.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_4)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.arena.{u_1, u_2, u_4}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.arena.{u_1, u_2, u_4}
-    Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.actual.{u_1})
-  Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.registration.{u_1, u_2, u_4})
+  (Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.registration.{u_1, u_2, u_4}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]
@@ -536,25 +524,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteChannel.reg
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.registration_1.sourceLaw.{u_1, u_2, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.arena.{u_1, u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.arena.{u_1, u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-      Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.arena.{u_1, u_2, u_3}
-      Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.actual.{u_1})
-    Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.registration.{u_1, u_2, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0} (Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.arena.) (Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.registration.{u_1, u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.registration_1.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"KrausCompletion\",\"row_reset_action\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"KrausCompletion\",\"RowReset\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.KrausCompletion, declaration := `D5.S3.Quantum.Recovery.KrausCompletion.row_reset_action, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.KrausCompletion, declaration := `Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.arena.{u_1, u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.arena.{u_1, u_2, u_3}
-    Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.actual.{u_1})
-  Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.registration.{u_1, u_2, u_3})
+  (Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.registration.{u_1, u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]
@@ -611,25 +587,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.KrausCompletion.RowReset.registrati
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.registration_2.sourceLaw.{u_1, u_2, u_4} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.arena.{u_1, u_2, u_4}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.arena.{u_1, u_2, u_4}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-      Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.arena.{u_1, u_2, u_4}
-      Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.actual.{u_1})
-    Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.registration.{u_1, u_2, u_4})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0} (Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.arena.) (Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.registration.{u_1, u_2, u_4}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.registration_2.sourceBridgeFact.{u_1, u_2, u_4} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"KrausCompletion\",\"complete_kraus_action\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_4\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"KrausCompletion\",\"CompleteAction\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_4\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.KrausCompletion, declaration := `D5.S3.Quantum.Recovery.KrausCompletion.complete_kraus_action, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_4)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.KrausCompletion, declaration := `Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_4)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.arena.{u_1, u_2, u_4}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.arena.{u_1, u_2, u_4}
-    Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.actual.{u_1})
-  Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.registration.{u_1, u_2, u_4})
+  (Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.registration.{u_1, u_2, u_4}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausCompletion.CompleteAction.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]

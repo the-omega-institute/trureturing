@@ -1190,25 +1190,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.
 
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.registration_4.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.arena
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.depthActual)
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.arena) (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.registration_4.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"exchange_chain_reverse\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"ChainReverse\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.exchange_chain_reverse, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.registration_4.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.arena
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.depthActual)
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.registration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1261,25 +1249,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.registration_5.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.arena
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.depthActual)
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.arena) (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.registration_5.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"exchange_chain_transpose\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"ChainTranspose\",\"registration_5\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.exchange_chain_transpose, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.registration_5.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.arena
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.depthActual)
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.registration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.registration_5.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1332,25 +1308,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.registration_9.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.arena
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.actual)
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.arena) (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.registration_9.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"response_matrix_forgetting_reindexed\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"ForgettingReindexed\",\"registration_9\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.response_matrix_forgetting_reindexed, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.registration_9.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.arena
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.actual)
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.registration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.registration_9.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1418,25 +1382,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.registration_8.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{1, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.arena
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.actual)
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.arena) (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.registration_8.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"incoming_response_fiber_card_step\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"FiberCard\",\"registration_8\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.incoming_response_fiber_card_step, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.registration_8.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{1, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.arena
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.actual)
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.registration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.registration_8.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1574,25 +1526,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.registration_10.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{1, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.arena
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.actual)
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.arena) (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.registration_10.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"incoming_response_matrix_factor_step\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"MatrixFactorStep\",\"registration_10\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.incoming_response_matrix_factor_step, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.registration_10.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{1, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.arena
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.actual)
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.registration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.registration_10.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1699,25 +1639,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.registration_6.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.arena
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.depthActual)
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.arena) (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.registration_6.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"incoming_response_step\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"IncomingStep\",\"registration_6\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.incoming_response_step, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.registration_6.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.arena
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.depthActual)
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.registration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.registration_6.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1795,25 +1723,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.arena
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.numberActual)
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.arena) (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"unsweep_sweep\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"UnsweepSweep\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.unsweep_sweep, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.arena
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.numberActual)
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.registration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1913,25 +1829,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.registration_3.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.arena
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.numberActual)
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.arena) (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"unsweep_append\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"UnsweepAppend\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.unsweep_append, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.registration_3.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.arena
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.numberActual)
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.registration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -2032,25 +1936,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.arena
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.actual)
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.arena) (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"exchange_chain_trans\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"ChainTrans\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.exchange_chain_trans, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.arena
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.actual)
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.registration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -2109,25 +2001,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.registration_7.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.arena
-      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.actual)
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.arena) (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.registration_7.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"finite_response_chain_to\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"FiniteChainTo\",\"registration_7\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.finite_response_chain_to, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.registration_7.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.arena
-    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.actual)
-  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.registration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.registration_7.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

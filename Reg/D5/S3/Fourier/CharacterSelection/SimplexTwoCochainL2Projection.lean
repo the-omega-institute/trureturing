@@ -151,25 +151,13 @@ noncomputable def Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projec
 
 
 noncomputable def Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.registration_1.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.arena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.arena.{u}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.arena.{u}
-      Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.actual)
-    Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.registration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.arena.) (Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.registration.{u}).actual
 
 noncomputable def Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.registration_1.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"SimplexTwoCochainL2Projection\",\"tetra_defect_energy_eq_and_optimal\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"SimplexTwoCochainL2Projection\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection, declaration := `D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.tetra_defect_energy_eq_and_optimal, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection, declaration := `Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.arena.{u}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.arena.{u}
-    Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.actual)
-  Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.registration.{u})
+  (Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.registration.{u}).bridge
 
 noncomputable def Reg.D5.S3.Fourier.CharacterSelection.SimplexTwoCochainL2Projection.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

@@ -125,23 +125,13 @@ noncomputable def Reg.D5.S0.Computability.DenseClauseConversion.registration_1.c
 
 
 noncomputable def Reg.D5.S0.Computability.DenseClauseConversion.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S0.Computability.DenseClauseConversion.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S0.Computability.DenseClauseConversion.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S0.Computability.DenseClauseConversion.arena Reg.D5.S0.Computability.DenseClauseConversion.actual)
-    Reg.D5.S0.Computability.DenseClauseConversion.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S0.Computability.DenseClauseConversion.arena) (Reg.D5.S0.Computability.DenseClauseConversion.registration).actual
 
 noncomputable def Reg.D5.S0.Computability.DenseClauseConversion.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"PredictiveThermodynamic\",\"BinaryNames\",\"dense_word_run\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S0\",\"Computability\",\"DenseClauseConversion\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S0.Computability.DenseClauseConversion, declaration := `PredictiveThermodynamic.BinaryNames.dense_word_run, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S0.Computability.DenseClauseConversion, declaration := `Reg.D5.S0.Computability.DenseClauseConversion.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S0.Computability.DenseClauseConversion.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S0.Computability.DenseClauseConversion.arena Reg.D5.S0.Computability.DenseClauseConversion.actual)
-  Reg.D5.S0.Computability.DenseClauseConversion.registration)
+  (Reg.D5.S0.Computability.DenseClauseConversion.registration).bridge
 
 noncomputable def Reg.D5.S0.Computability.DenseClauseConversion.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

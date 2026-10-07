@@ -280,28 +280,15 @@ noncomputable def Reg.D5.S3.Resource.SimplexCoverageRoot.Line.registration_1.can
 
 
 noncomputable def Reg.D5.S3.Resource.SimplexCoverageRoot.Root.registration_2.sourceLaw.{u_1, u_2, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.arena.{u_1, u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.arena.{u_1, u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.arena.{u_1, u_2,
-        u_3}
-      _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.actual)
-    _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.registration.{u_1,
-      u_2, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (_private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.arena.) (_private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.registration.{u_1, u_2,
+  u_3}).actual
 
 noncomputable def Reg.D5.S3.Resource.SimplexCoverageRoot.Root.registration_2.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"SimplexCoverageRoot\",\"spanningPolynomial_root_concaveOn\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"SimplexCoverageRoot\",\"Root\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Resource.SimplexCoverageRoot, declaration := `D5.S3.Resource.SimplexCoverageRoot.spanningPolynomial_root_concaveOn, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Resource.SimplexCoverageRoot, declaration := `Reg.D5.S3.Resource.SimplexCoverageRoot.Root.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.arena.{u_1, u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.arena.{u_1, u_2, u_3}
-    _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.actual)
-  _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.registration.{u_1, u_2,
-    u_3})
+  (_private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.registration.{u_1, u_2,
+  u_3}).bridge
 
 noncomputable def Reg.D5.S3.Resource.SimplexCoverageRoot.Root.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -418,25 +405,13 @@ noncomputable def Reg.D5.S3.Resource.SimplexCoverageRoot.Root.registration_2.des
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Resource.SimplexCoverageRoot.Line.registration_1.sourceLaw.{u_1} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.arena.{u_1}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.arena.{u_1}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.arena.{u_1}
-      _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.actual)
-    _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.registration.{u_1})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (_private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.arena.) (_private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.registration.{u_1}).actual
 
 noncomputable def Reg.D5.S3.Resource.SimplexCoverageRoot.Line.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"SimplexCoverageRoot\",\"evaluateAt_line_hasDerivAt\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"SimplexCoverageRoot\",\"Line\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
   { owner := `D5.S3.Resource.SimplexCoverageRoot, declaration := `D5.S3.Resource.SimplexCoverageRoot.evaluateAt_line_hasDerivAt, part := .type, path := [], levels := [(.param `u_1)] }
   { owner := `Reg.D5.S3.Resource.SimplexCoverageRoot, declaration := `Reg.D5.S3.Resource.SimplexCoverageRoot.Line.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.arena.{u_1}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.arena.{u_1}
-    _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.actual)
-  _private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.registration.{u_1})
+  (_private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.registration.{u_1}).bridge
 
 noncomputable def Reg.D5.S3.Resource.SimplexCoverageRoot.Line.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

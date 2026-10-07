@@ -171,25 +171,13 @@ noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.regis
 
 
 noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.sourceLaw.{u_1, u_2, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.{u_1, u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.{u_1, u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.{u_1, u_2, u_3}
-      Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.actual)
-    Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration.{u_1, u_2, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.) (Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration.{u_1, u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"archive_clock_recovery_and_finite_ambiguity\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.archive_clock_recovery_and_finite_ambiguity, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.{u_1, u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.{u_1, u_2, u_3}
-    Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.actual)
-  Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration.{u_1, u_2, u_3})
+  (Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration.{u_1, u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

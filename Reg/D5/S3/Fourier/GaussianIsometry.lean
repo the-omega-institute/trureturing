@@ -154,23 +154,13 @@ noncomputable def Reg.D5.S3.Fourier.GaussianIsometry.registration_1.canonicalObj
 
 
 noncomputable def Reg.D5.S3.Fourier.GaussianIsometry.registration_1.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0}
-  Reg.D5.S3.Fourier.GaussianIsometry.arena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, u, 0, 0}
-    Reg.D5.S3.Fourier.GaussianIsometry.arena.{u}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0}
-      Reg.D5.S3.Fourier.GaussianIsometry.arena.{u} Reg.D5.S3.Fourier.GaussianIsometry.actual.{u})
-    Reg.D5.S3.Fourier.GaussianIsometry.registration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0} (Reg.D5.S3.Fourier.GaussianIsometry.arena.) (Reg.D5.S3.Fourier.GaussianIsometry.registration.{u}).actual
 
 noncomputable def Reg.D5.S3.Fourier.GaussianIsometry.registration_1.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"GaussianIsometry\",\"exists_gaussian_isometry\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"GaussianIsometry\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.Fourier.GaussianIsometry, declaration := `D5.S3.Fourier.GaussianIsometry.exists_gaussian_isometry, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.Fourier.GaussianIsometry, declaration := `Reg.D5.S3.Fourier.GaussianIsometry.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, u, 0, 0}
-  Reg.D5.S3.Fourier.GaussianIsometry.arena.{u}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0}
-    Reg.D5.S3.Fourier.GaussianIsometry.arena.{u} Reg.D5.S3.Fourier.GaussianIsometry.actual.{u})
-  Reg.D5.S3.Fourier.GaussianIsometry.registration.{u})
+  (Reg.D5.S3.Fourier.GaussianIsometry.registration.{u}).bridge
 
 noncomputable def Reg.D5.S3.Fourier.GaussianIsometry.registration_1.roleEnumeration.{u} : LeanInformationAudit.Contract.FiniteEnumeration (ULift.{u, 0} Unit) where
   values := [@ULift.up.{u, 0} Unit Unit.unit]

@@ -163,25 +163,13 @@ noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawT
 
 
 noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.sourceLaw.{u, v} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), v, 0, u, 0}
-  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.{u, v}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u + 1) (v + 1), v, 0, u, 0}
-    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.{u, v}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (v + 1) (u + 1), v, 0, u, 0}
-      Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.{u, v}
-      Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.actual.{u, v})
-    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration.{u, v})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), v, 0, u, 0} (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.) (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration.{u, v}).actual
 
 noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.sourceBridgeFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"has_law_traj_measure\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
   { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.has_law_traj_measure, part := .type, path := [], levels := [(.param `u), (.param `v)] }
   { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u + 1) (v + 1), v, 0, u, 0}
-  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.{u, v}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (v + 1) (u + 1), v, 0, u, 0}
-    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.{u, v}
-    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.actual.{u, v})
-  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration.{u, v})
+  (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration.{u, v}).bridge
 
 noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

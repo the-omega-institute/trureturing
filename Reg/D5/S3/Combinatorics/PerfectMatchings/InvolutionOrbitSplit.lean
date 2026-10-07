@@ -638,25 +638,13 @@ noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.
 
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, u, 0}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.{u}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.{u}
-      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.actual.{u})
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0} (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.) (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration.{u}).actual
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"component_orbit_classes\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"classesRegistration_contract\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_orbit_classes, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, u, 0}
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.{u}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.{u}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.actual.{u})
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration.{u})
+  (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration.{u}).bridge
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -768,25 +756,13 @@ noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, 0, 0}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.{u}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0}
-      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.{u}
-      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.actual.{u})
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0} (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.) (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration.{u}).actual
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"connected_iff_rotation_orbits\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reachability\",\"registration_contract\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.connected_iff_rotation_orbits, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.{u}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.{u}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.actual.{u})
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration.{u})
+  (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration.{u}).bridge
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -874,25 +850,13 @@ noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, 0, 0}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.{u}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0}
-      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.{u}
-      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.actual.{u})
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0} (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.) (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration.{u}).actual
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"fixedPointFree_iff_rotation_separation\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Separation\",\"registration_contract\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_rotation_separation, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.{u}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.{u}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.actual.{u})
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration.{u})
+  (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration.{u}).bridge
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -970,25 +934,13 @@ noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, u, 0}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.{u}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.{u}
-      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.actual.{u})
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0} (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.) (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration.{u}).actual
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"component_split\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"splitRegistration_contract\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_split, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, u, 0}
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.{u}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.{u}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.actual.{u})
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration.{u})
+  (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration.{u}).bridge
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1100,25 +1052,13 @@ noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, u, 0}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.{u}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.{u}
-      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.actual.{u})
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0} (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.) (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration.{u}).actual
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"fixedPointFree_iff_reflection_exclusion\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reflection\",\"registration_contract\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_reflection_exclusion, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, u, 0}
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.{u}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.{u}
-    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.actual.{u})
-  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration.{u})
+  (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration.{u}).bridge
 
 noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

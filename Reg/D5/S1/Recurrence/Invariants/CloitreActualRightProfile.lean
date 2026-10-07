@@ -116,49 +116,13 @@ noncomputable def Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.regi
 
 
 noncomputable def Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.arena
-    (And
-      (∀ (N i : Nat),
-        @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) N →
-          @Membership.mem.{0, 0} Nat (Set.{0} Nat) (@Set.instMembership.{0} Nat)
-            (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.D N)
-            (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.X N i))
-      (∀ (N : Nat),
-        @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) N →
-          @Eq.{1} Nat (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.C N)
-            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat)
-              (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.C
-                (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.g N))
-              (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.C
-                (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) N
-                  (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.g N))))))
-    Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.arena) (Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.registration).actual
 
 noncomputable def Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Recurrence\",\"Invariants\",\"CloitreActualRightProfile\",\"actual_foundations\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Recurrence\",\"Invariants\",\"CloitreActualRightProfile\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Recurrence.Invariants.CloitreActualRightProfile, declaration := `D5.S1.Recurrence.Invariants.CloitreActualRightProfile.actual_foundations, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile, declaration := `Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.arena
-  (And
-    (∀ (N i : Nat),
-      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) N →
-        @Membership.mem.{0, 0} Nat (Set.{0} Nat) (@Set.instMembership.{0} Nat)
-          (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.D N)
-          (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.X N i))
-    (∀ (N : Nat),
-      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) N →
-        @Eq.{1} Nat (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.C N)
-          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat)
-            (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.C
-              (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.g N))
-            (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.C
-              (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) N
-                (D5.S1.Recurrence.Invariants.CloitreActualRightProfile.g N))))))
-  Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.registration)
+  (Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.registration).bridge
 
 noncomputable def Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

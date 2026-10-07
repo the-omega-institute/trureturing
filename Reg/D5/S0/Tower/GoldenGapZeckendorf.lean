@@ -123,71 +123,13 @@ noncomputable def Reg.D5.S0.Tower.GoldenGapZeckendorf.registration_1.canonicalOb
 
 
 noncomputable def Reg.D5.S0.Tower.GoldenGapZeckendorf.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S0.Tower.GoldenGapZeckendorf.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S0.Tower.GoldenGapZeckendorf.arena
-    (∀ (Q : Nat)
-      (j :
-        Fin
-          (Nat.fib
-            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) Q
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))),
-      @Eq.{1} (List.{0} Nat)
-        (D5.S0.Conventions.wdigits
-          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat)
-            (Nat.fib
-              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) Q
-                (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))
-            (@Fin.val
-              (Nat.fib
-                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) Q
-                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
-              j)))
-        (@List.cons.{0} Nat
-          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) Q
-            (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
-          (D5.S0.Conventions.wdigits
-            (@Fin.val
-              (Nat.fib
-                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) Q
-                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
-              j))))
-    Reg.D5.S0.Tower.GoldenGapZeckendorf.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S0.Tower.GoldenGapZeckendorf.arena) (Reg.D5.S0.Tower.GoldenGapZeckendorf.registration).actual
 
 noncomputable def Reg.D5.S0.Tower.GoldenGapZeckendorf.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S0\",\"Tower\",\"GoldenGapZeckendorf\",\"wdigits_fib_add\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S0\",\"Tower\",\"GoldenGapZeckendorf\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S0.Tower.GoldenGapZeckendorf, declaration := `D5.S0.Tower.GoldenGapZeckendorf.wdigits_fib_add, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S0.Tower.GoldenGapZeckendorf, declaration := `Reg.D5.S0.Tower.GoldenGapZeckendorf.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S0.Tower.GoldenGapZeckendorf.arena
-  (∀ (Q : Nat)
-    (j :
-      Fin
-        (Nat.fib
-          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) Q
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))),
-    @Eq.{1} (List.{0} Nat)
-      (D5.S0.Conventions.wdigits
-        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat)
-          (Nat.fib
-            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) Q
-              (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))
-          (@Fin.val
-            (Nat.fib
-              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) Q
-                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
-            j)))
-      (@List.cons.{0} Nat
-        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) Q
-          (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
-        (D5.S0.Conventions.wdigits
-          (@Fin.val
-            (Nat.fib
-              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) Q
-                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
-            j))))
-  Reg.D5.S0.Tower.GoldenGapZeckendorf.registration)
+  (Reg.D5.S0.Tower.GoldenGapZeckendorf.registration).bridge
 
 noncomputable def Reg.D5.S0.Tower.GoldenGapZeckendorf.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

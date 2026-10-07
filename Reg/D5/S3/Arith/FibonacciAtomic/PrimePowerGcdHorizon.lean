@@ -139,25 +139,13 @@ noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.registrat
 
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.arena
-      Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.actual)
-    Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.arena) (Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimePowerGcdHorizon\",\"sharp_prime_power_gcd_horizon\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimePowerGcdHorizon\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon, declaration := `D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.sharp_prime_power_gcd_horizon, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.arena
-    Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.actual)
-  Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.registration)
+  (Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

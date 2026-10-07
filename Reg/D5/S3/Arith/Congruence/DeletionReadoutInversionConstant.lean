@@ -153,95 +153,13 @@ noncomputable def Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.re
 
 
 noncomputable def Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.arena
-    (∀ (r : Nat) (m : Fin r → Nat)
-      (hm : ∀ (i : Fin r), @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) (m i))
-      (z : ((i : Fin r) → Fin (m i)) → Real),
-      And
-        (∀ (c : (i : Fin r) → Fin (m i)),
-          @LE.le.{0} Real Real.instLE (@abs.{0} Real Real.lattice Real.instAddGroup (z c))
-            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-              (@D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.kappa r m)
-              (@D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.obsNorm r m hm z)))
-        (∀ (cstar : (i : Fin r) → Fin (m i)),
-          have w : ((i : Fin r) → Fin (m i)) → Real := fun (c : (i : Fin r) → Fin (m i)) =>
-            @Finset.prod.{0, 0} (Fin r) Real Real.instCommMonoid (@Finset.univ.{0} (Fin r) (Fin.fintype r))
-              fun (i : Fin r) =>
-              @ite.{1} Real (@Eq.{1} (Fin (m i)) (c i) (cstar i)) (instDecidableEqFin (m i) (c i) (cstar i))
-                (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-                    (@OfNat.ofNat.{0} Real (nat_lit 2)
-                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
-                    (@Nat.cast.{0} Real Real.instNatCast (m i)))
-                  (@OfNat.ofNat.{0} Real (nat_lit 3)
-                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast
-                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
-                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))))
-                (@Neg.neg.{0} Real Real.instNeg
-                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)));
-          And
-            (@Eq.{1} Real (@D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.obsNorm r m hm w)
-              (@Finset.prod.{0, 0} (Fin r) Real Real.instCommMonoid (@Finset.univ.{0} (Fin r) (Fin.fintype r))
-                fun (i : Fin r) =>
-                @HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-                  (@Nat.cast.{0} Real Real.instNatCast (m i))
-                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
-            (@Eq.{1} Real (@abs.{0} Real Real.lattice Real.instAddGroup (w cstar))
-              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-                (@D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.kappa r m)
-                (@D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.obsNorm r m hm w)))))
-    Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.arena) (Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Congruence\",\"DeletionReadoutInversionConstant\",\"deletion_readout_inversion_constant\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Congruence\",\"DeletionReadoutInversionConstant\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Congruence.DeletionReadoutInversionConstant, declaration := `D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.deletion_readout_inversion_constant, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant, declaration := `Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.arena
-  (∀ (r : Nat) (m : Fin r → Nat)
-    (hm : ∀ (i : Fin r), @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) (m i))
-    (z : ((i : Fin r) → Fin (m i)) → Real),
-    And
-      (∀ (c : (i : Fin r) → Fin (m i)),
-        @LE.le.{0} Real Real.instLE (@abs.{0} Real Real.lattice Real.instAddGroup (z c))
-          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-            (@D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.kappa r m)
-            (@D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.obsNorm r m hm z)))
-      (∀ (cstar : (i : Fin r) → Fin (m i)),
-        have w : ((i : Fin r) → Fin (m i)) → Real := fun (c : (i : Fin r) → Fin (m i)) =>
-          @Finset.prod.{0, 0} (Fin r) Real Real.instCommMonoid (@Finset.univ.{0} (Fin r) (Fin.fintype r))
-            fun (i : Fin r) =>
-            @ite.{1} Real (@Eq.{1} (Fin (m i)) (c i) (cstar i)) (instDecidableEqFin (m i) (c i) (cstar i))
-              (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-                  (@OfNat.ofNat.{0} Real (nat_lit 2)
-                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
-                  (@Nat.cast.{0} Real Real.instNatCast (m i)))
-                (@OfNat.ofNat.{0} Real (nat_lit 3)
-                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast
-                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
-                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))))
-              (@Neg.neg.{0} Real Real.instNeg
-                (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)));
-        And
-          (@Eq.{1} Real (@D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.obsNorm r m hm w)
-            (@Finset.prod.{0, 0} (Fin r) Real Real.instCommMonoid (@Finset.univ.{0} (Fin r) (Fin.fintype r))
-              fun (i : Fin r) =>
-              @HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-                (@Nat.cast.{0} Real Real.instNatCast (m i))
-                (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
-          (@Eq.{1} Real (@abs.{0} Real Real.lattice Real.instAddGroup (w cstar))
-            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-              (@D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.kappa r m)
-              (@D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.obsNorm r m hm w)))))
-  Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.registration)
+  (Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

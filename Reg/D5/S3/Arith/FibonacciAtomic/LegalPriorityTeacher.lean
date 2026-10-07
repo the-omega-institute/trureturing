@@ -139,39 +139,13 @@ noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.registrat
 
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.arena
-    (∀ {n : Nat} (t u : D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.Roles n),
-      Iff
-        (∀ (x : D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.Input n),
-          @D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.Legal n x →
-            @Eq.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
-              (@D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.teacher n t x)
-              (@D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.teacher n u x))
-        (@Eq.{1} (Prod.{0, 0} (Option.{0} (Prod.{0, 0} (Fin n) (Fin n))) (Option.{0} (Prod.{0, 0} (Fin n) (Fin n))))
-          (@D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.signature n t)
-          (@D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.signature n u)))
-    Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.arena) (Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"LegalPriorityTeacher\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"LegalPriorityTeacher\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher, declaration := `D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.arena
-  (∀ {n : Nat} (t u : D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.Roles n),
-    Iff
-      (∀ (x : D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.Input n),
-        @D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.Legal n x →
-          @Eq.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
-            (@D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.teacher n t x)
-            (@D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.teacher n u x))
-      (@Eq.{1} (Prod.{0, 0} (Option.{0} (Prod.{0, 0} (Fin n) (Fin n))) (Option.{0} (Prod.{0, 0} (Fin n) (Fin n))))
-        (@D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.signature n t)
-        (@D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.signature n u)))
-  Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.registration)
+  (Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) where
   values := [(fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) => i)

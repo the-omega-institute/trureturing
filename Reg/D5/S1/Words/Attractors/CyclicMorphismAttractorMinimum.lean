@@ -495,105 +495,13 @@ noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.Help
 
 
 noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena
-    (∀ {k : Nat} (hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k)
-      (c : Fin k → Nat),
-      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-          (c
-            (@Fin.mk k (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
-              (@Decidable.byContradiction
-                (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
-                (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
-                fun
-                  (a :
-                    Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
-                @Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena._proof_1 k hk a))) →
-        @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-            (c
-              (@Fin.mk k
-                (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
-                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-                (@Decidable.byContradiction
-                  (@LT.lt.{0} Nat instLTNat
-                    (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
-                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-                    k)
-                  (Nat.decLt
-                    (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
-                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-                    k)
-                  fun
-                    (a :
-                      Not
-                        (@LT.lt.{0} Nat instLTNat
-                          (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
-                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-                          k)) =>
-                  @Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena._proof_2 k hk a))) →
-          @D5.S1.Words.Attractors.CyclicMaximal k c →
-            @D5.S1.Words.Attractors.CyclicAttractorMinimum k
-              (@Decidable.byContradiction
-                (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
-                (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
-                fun
-                  (a :
-                    Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
-                @Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena._proof_1 k hk a)
-              c)
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena) (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena
-  (∀ {k : Nat} (hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k)
-    (c : Fin k → Nat),
-    @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-        (c
-          (@Fin.mk k (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
-            (@Decidable.byContradiction
-              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
-              (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
-              fun
-                (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
-              @Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena._proof_1 k hk a))) →
-      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-          (c
-            (@Fin.mk k
-              (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
-                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-              (@Decidable.byContradiction
-                (@LT.lt.{0} Nat instLTNat
-                  (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
-                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-                  k)
-                (Nat.decLt
-                  (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
-                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-                  k)
-                fun
-                  (a :
-                    Not
-                      (@LT.lt.{0} Nat instLTNat
-                        (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
-                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-                        k)) =>
-                @Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena._proof_2 k hk a))) →
-        @D5.S1.Words.Attractors.CyclicMaximal k c →
-          @D5.S1.Words.Attractors.CyclicAttractorMinimum k
-            (@Decidable.byContradiction
-              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
-              (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
-              fun
-                (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
-              @Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena._proof_1 k hk a)
-            c)
-  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration)
+  (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) where
   values := [(fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) => i)
@@ -920,25 +828,13 @@ noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.regi
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena
-      Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.actual)
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena) (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"cyclic_iterate_structure\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Structure\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_iterate_structure, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.actual)
-  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration)
+  (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -967,25 +863,13 @@ noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.Help
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena
-      Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.actual)
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena) (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"cyclic_fractional_prefix\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Fractional\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_fractional_prefix, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.actual)
-  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration)
+  (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1111,25 +995,13 @@ noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.Help
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena
-      Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.actual)
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena) (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"cyclic_word_recurrence\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Recurrence\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_word_recurrence, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena
-    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.actual)
-  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration)
+  (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

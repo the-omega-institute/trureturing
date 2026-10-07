@@ -138,98 +138,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.registration
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.arena
-    (∀ (S : Finset.{0} Nat)
-      (_hS :
-        ∀ (p : Nat),
-          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) S p →
-            And (Nat.Prime p)
-              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) p)),
-      have H : Finset.{0} Nat := D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRankClosure S;
-      And
-        (@LE.le.{0} (Finset.{0} Nat)
-          (@Preorder.toLE.{0} (Finset.{0} Nat)
-            (@PartialOrder.toPreorder.{0} (Finset.{0} Nat) (@Finset.instPartialOrder.{0} Nat)))
-          (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.rankClosureSeed S) H)
-        (And
-          (∀ (p : Nat),
-            @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-                (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H p →
-              Nat.Prime p)
-          (And
-            (∀ (p : Nat),
-              @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-                  (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H p →
-                @LE.le.{0} Nat instLENat p
-                  (@Max.max.{0} Nat Nat.instMax (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-                    (@Finset.sup.{0, 0} Nat Nat (@Lattice.toSemilatticeSup.{0} Nat Nat.instLattice) Nat.instOrderBot S
-                      (@id.{1} Nat))))
-            (And (@Eq.{1} (Finset.{0} Nat) (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.rankClosureStep H) H)
-              (∀ (K : Finset.{0} Nat),
-                @LE.le.{0} (Finset.{0} Nat)
-                    (@Preorder.toLE.{0} (Finset.{0} Nat)
-                      (@PartialOrder.toPreorder.{0} (Finset.{0} Nat) (@Finset.instPartialOrder.{0} Nat)))
-                    (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.rankClosureSeed S) K →
-                  @LE.le.{0} (Finset.{0} Nat)
-                      (@Preorder.toLE.{0} (Finset.{0} Nat)
-                        (@PartialOrder.toPreorder.{0} (Finset.{0} Nat) (@Finset.instPartialOrder.{0} Nat)))
-                      (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.rankClosureStep K) K →
-                    @LE.le.{0} (Finset.{0} Nat)
-                      (@Preorder.toLE.{0} (Finset.{0} Nat)
-                        (@PartialOrder.toPreorder.{0} (Finset.{0} Nat) (@Finset.instPartialOrder.{0} Nat)))
-                      H K)))))
-    Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.arena) (Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"FiniteFibonacciRankClosure\",\"finite_fibonacci_rank_closure\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"FiniteFibonacciRankClosure\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.FiniteFibonacciRankClosure, declaration := `D5.S3.Arith.Primes.FiniteFibonacciRankClosure.finite_fibonacci_rank_closure, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure, declaration := `Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.arena
-  (∀ (S : Finset.{0} Nat)
-    (_hS :
-      ∀ (p : Nat),
-        @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-            (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) S p →
-          And (Nat.Prime p) (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) p)),
-    have H : Finset.{0} Nat := D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRankClosure S;
-    And
-      (@LE.le.{0} (Finset.{0} Nat)
-        (@Preorder.toLE.{0} (Finset.{0} Nat)
-          (@PartialOrder.toPreorder.{0} (Finset.{0} Nat) (@Finset.instPartialOrder.{0} Nat)))
-        (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.rankClosureSeed S) H)
-      (And
-        (∀ (p : Nat),
-          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H p →
-            Nat.Prime p)
-        (And
-          (∀ (p : Nat),
-            @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
-                (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat)) H p →
-              @LE.le.{0} Nat instLENat p
-                (@Max.max.{0} Nat Nat.instMax (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-                  (@Finset.sup.{0, 0} Nat Nat (@Lattice.toSemilatticeSup.{0} Nat Nat.instLattice) Nat.instOrderBot S
-                    (@id.{1} Nat))))
-          (And (@Eq.{1} (Finset.{0} Nat) (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.rankClosureStep H) H)
-            (∀ (K : Finset.{0} Nat),
-              @LE.le.{0} (Finset.{0} Nat)
-                  (@Preorder.toLE.{0} (Finset.{0} Nat)
-                    (@PartialOrder.toPreorder.{0} (Finset.{0} Nat) (@Finset.instPartialOrder.{0} Nat)))
-                  (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.rankClosureSeed S) K →
-                @LE.le.{0} (Finset.{0} Nat)
-                    (@Preorder.toLE.{0} (Finset.{0} Nat)
-                      (@PartialOrder.toPreorder.{0} (Finset.{0} Nat) (@Finset.instPartialOrder.{0} Nat)))
-                    (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.rankClosureStep K) K →
-                  @LE.le.{0} (Finset.{0} Nat)
-                    (@Preorder.toLE.{0} (Finset.{0} Nat)
-                      (@PartialOrder.toPreorder.{0} (Finset.{0} Nat) (@Finset.instPartialOrder.{0} Nat)))
-                    H K)))))
-  Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.registration)
+  (Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.FiniteFibonacciRankClosure.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

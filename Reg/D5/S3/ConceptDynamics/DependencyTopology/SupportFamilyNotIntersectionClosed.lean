@@ -143,21 +143,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotI
 
 
 noncomputable def Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{1, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.arena
-    (Not D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.claim)
-    Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.arena) (Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"DependencyTopology\",\"SupportFamilyNotIntersectionClosed\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"DependencyTopology\",\"SupportFamilyNotIntersectionClosed\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed, declaration := `D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed, declaration := `Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{1, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.arena
-  (Not D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.claim)
-  Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.registration)
+  (Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

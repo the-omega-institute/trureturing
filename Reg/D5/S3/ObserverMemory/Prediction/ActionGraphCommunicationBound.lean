@@ -156,26 +156,13 @@ noncomputable def Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBo
 
 
 noncomputable def Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.registration_1.sourceLaw.{u_1, u_2} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_2 + 1), u_1, 0, u_2, 0}
-  Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.arena.{u_1, u_2}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u_1 + 1) (u_2 + 1), u_1, 0, u_2,
-        0}
-    Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.arena.{u_1, u_2}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_2 + 1), u_1, 0, u_2, 0}
-      Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.arena.{u_1, u_2}
-      Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.actual.{u_1, u_2})
-    Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.registration.{u_1, u_2})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_2 + 1), u_1, 0, u_2, 0} (Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.arena.) (Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.registration.{u_1, u_2}).actual
 
 noncomputable def Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.registration_1.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Prediction\",\"ActionGraphCommunicationBound\",\"cumulative_communication_criterion\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Prediction\",\"ActionGraphCommunicationBound\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
   { owner := `D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound, declaration := `D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.cumulative_communication_criterion, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
   { owner := `Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound, declaration := `Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u_1 + 1) (u_2 + 1), u_1, 0, u_2, 0}
-  Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.arena.{u_1, u_2}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_2 + 1), u_1, 0, u_2, 0}
-    Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.arena.{u_1, u_2}
-    Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.actual.{u_1, u_2})
-  Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.registration.{u_1, u_2})
+  (Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.registration.{u_1, u_2}).bridge
 
 noncomputable def Reg.D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

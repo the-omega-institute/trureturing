@@ -835,37 +835,13 @@ noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.LowOrd
 
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.CandidateAssemblyAudit.registration_8.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.CandidateAssembly.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.CandidateAssembly.arena
-    (∀ (m highCount omitted : Nat),
-      @Eq.{1} (List.{0} Nat) (D5.S1.Words.Patterns.CyclicStackPreimages.candidate m highCount omitted)
-        (D5.S1.Words.Patterns.CyclicStackPreimages.assembleGaps
-          (List.range'
-            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) m
-              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-            highCount (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-          (D5.S1.Words.Patterns.CyclicStackPreimages.candidateSlots omitted
-            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) highCount)))
-    Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.CandidateAssemblyAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.CandidateAssembly.arena) (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.CandidateAssemblyAudit.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.CandidateAssemblyAudit.registration_8.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"candidate_eq_assemble\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimagesInvariants\",\"CandidateAssemblyAudit\",\"registration_8\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `D5.S1.Words.Patterns.CyclicStackPreimages.candidate_eq_assemble, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.CandidateAssemblyAudit.registration_8.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.CandidateAssembly.arena
-  (∀ (m highCount omitted : Nat),
-    @Eq.{1} (List.{0} Nat) (D5.S1.Words.Patterns.CyclicStackPreimages.candidate m highCount omitted)
-      (D5.S1.Words.Patterns.CyclicStackPreimages.assembleGaps
-        (List.range'
-          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) m
-            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-          highCount (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-        (D5.S1.Words.Patterns.CyclicStackPreimages.candidateSlots omitted
-          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) highCount)))
-  Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.CandidateAssemblyAudit.registration)
+  (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.CandidateAssemblyAudit.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.CandidateAssemblyAudit.registration_8.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -910,25 +886,13 @@ noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.Candid
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledLastAudit.registration_10.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FilledLast.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FilledLast.arena
-    (∀ (lows : List.{0} Nat),
-      D5.S1.Words.Patterns.CyclicStackPreimages.FilledUntilLast
-        (D5.S1.Words.Patterns.CyclicStackPreimages.insertNone (@List.length.{0} Nat lows) lows))
-    Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledLastAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FilledLast.arena) (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledLastAudit.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledLastAudit.registration_10.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"filledUntilLast_insertNone_last\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimagesInvariants\",\"FilledLastAudit\",\"registration_10\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `D5.S1.Words.Patterns.CyclicStackPreimages.filledUntilLast_insertNone_last, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledLastAudit.registration_10.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FilledLast.arena
-  (∀ (lows : List.{0} Nat),
-    D5.S1.Words.Patterns.CyclicStackPreimages.FilledUntilLast
-      (D5.S1.Words.Patterns.CyclicStackPreimages.insertNone (@List.length.{0} Nat lows) lows))
-  Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledLastAudit.registration)
+  (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledLastAudit.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledLastAudit.registration_10.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -971,47 +935,13 @@ noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.Filled
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.GapsAudit.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.Gaps.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.Gaps.arena
-    (∀ {m : Nat} {input : List.{0} Nat} (hgapped : D5.S1.Words.Patterns.CyclicStackPreimages.Gapped m input),
-      And
-        (@Eq.{1} (List.{0} Nat)
-          (D5.S1.Words.Patterns.CyclicStackPreimages.assembleGaps
-            (D5.S1.Words.Patterns.CyclicStackPreimages.highEntries m input)
-            (D5.S1.Words.Patterns.CyclicStackPreimages.gapSlots m input))
-          input)
-        (And
-          (@Eq.{1} Nat (@List.length.{0} (Option.{0} Nat) (D5.S1.Words.Patterns.CyclicStackPreimages.gapSlots m input))
-            (@List.length.{0} Nat (D5.S1.Words.Patterns.CyclicStackPreimages.highEntries m input)))
-          (@Eq.{1} (List.{0} Nat)
-            (@List.filterMap.{0, 0} (Option.{0} Nat) Nat (@id.{1} (Option.{0} Nat))
-              (D5.S1.Words.Patterns.CyclicStackPreimages.gapSlots m input))
-            (D5.S1.Words.Patterns.CyclicStackPreimages.lowEntries m input))))
-    Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.GapsAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.Gaps.arena) (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.GapsAudit.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.GapsAudit.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"gapped_filters_slots\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimagesInvariants\",\"GapsAudit\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `D5.S1.Words.Patterns.CyclicStackPreimages.gapped_filters_slots, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.GapsAudit.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.Gaps.arena
-  (∀ {m : Nat} {input : List.{0} Nat} (hgapped : D5.S1.Words.Patterns.CyclicStackPreimages.Gapped m input),
-    And
-      (@Eq.{1} (List.{0} Nat)
-        (D5.S1.Words.Patterns.CyclicStackPreimages.assembleGaps
-          (D5.S1.Words.Patterns.CyclicStackPreimages.highEntries m input)
-          (D5.S1.Words.Patterns.CyclicStackPreimages.gapSlots m input))
-        input)
-      (And
-        (@Eq.{1} Nat (@List.length.{0} (Option.{0} Nat) (D5.S1.Words.Patterns.CyclicStackPreimages.gapSlots m input))
-          (@List.length.{0} Nat (D5.S1.Words.Patterns.CyclicStackPreimages.highEntries m input)))
-        (@Eq.{1} (List.{0} Nat)
-          (@List.filterMap.{0, 0} (Option.{0} Nat) Nat (@id.{1} (Option.{0} Nat))
-            (D5.S1.Words.Patterns.CyclicStackPreimages.gapSlots m input))
-          (D5.S1.Words.Patterns.CyclicStackPreimages.lowEntries m input))))
-  Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.GapsAudit.registration)
+  (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.GapsAudit.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.GapsAudit.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1056,25 +986,13 @@ noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.GapsAu
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledSomeAudit.registration_9.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FilledSome.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FilledSome.arena
-    (∀ (lows : List.{0} Nat),
-      D5.S1.Words.Patterns.CyclicStackPreimages.FilledUntilLast
-        (@List.map.{0, 0} Nat (Option.{0} Nat) (@Option.some.{0} Nat) lows))
-    Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledSomeAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FilledSome.arena) (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledSomeAudit.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledSomeAudit.registration_9.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"filledUntilLast_map_some\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimagesInvariants\",\"FilledSomeAudit\",\"registration_9\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `D5.S1.Words.Patterns.CyclicStackPreimages.filledUntilLast_map_some, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledSomeAudit.registration_9.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FilledSome.arena
-  (∀ (lows : List.{0} Nat),
-    D5.S1.Words.Patterns.CyclicStackPreimages.FilledUntilLast
-      (@List.map.{0, 0} Nat (Option.{0} Nat) (@Option.some.{0} Nat) lows))
-  Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledSomeAudit.registration)
+  (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledSomeAudit.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.FilledSomeAudit.registration_9.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1117,33 +1035,13 @@ noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.Filled
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessPermAudit.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.SuccessPerm.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.SuccessPerm.arena
-    (∀ {n : Nat} {input : List.{0} Nat}
-      (houtput :
-        @Eq.{1} (List.{0} Nat) (D5.S1.Words.Patterns.CyclicStackPreimages.cyclicStackSort input)
-          (D5.S1.Words.Patterns.CyclicStackPreimages.target n)),
-      @List.Perm.{0} Nat input
-        (List.range' (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) n
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-    Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessPermAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.SuccessPerm.arena) (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessPermAudit.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessPermAudit.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"success_perm_range\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimagesInvariants\",\"SuccessPermAudit\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `D5.S1.Words.Patterns.CyclicStackPreimages.success_perm_range, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessPermAudit.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.SuccessPerm.arena
-  (∀ {n : Nat} {input : List.{0} Nat}
-    (houtput :
-      @Eq.{1} (List.{0} Nat) (D5.S1.Words.Patterns.CyclicStackPreimages.cyclicStackSort input)
-        (D5.S1.Words.Patterns.CyclicStackPreimages.target n)),
-    @List.Perm.{0} Nat input
-      (List.range' (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) n
-        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-  Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessPermAudit.registration)
+  (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessPermAudit.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessPermAudit.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1187,33 +1085,13 @@ noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.Succes
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.EvenSlotsAudit.registration_6.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.EvenSlots.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.EvenSlots.arena
-    (∀ (m : Nat),
-      @Eq.{1} (List.{0} (Option.{0} Nat))
-        (D5.S1.Words.Patterns.CyclicStackPreimages.candidateSlots m
-          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m)
-        (@List.map.{0, 0} Nat (Option.{0} Nat) (@Option.some.{0} Nat)
-          (List.range' (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) m
-            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-    Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.EvenSlotsAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.EvenSlots.arena) (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.EvenSlotsAudit.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.EvenSlotsAudit.registration_6.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"candidateSlots_even\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimagesInvariants\",\"EvenSlotsAudit\",\"registration_6\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `D5.S1.Words.Patterns.CyclicStackPreimages.candidateSlots_even, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.EvenSlotsAudit.registration_6.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.EvenSlots.arena
-  (∀ (m : Nat),
-    @Eq.{1} (List.{0} (Option.{0} Nat))
-      (D5.S1.Words.Patterns.CyclicStackPreimages.candidateSlots m
-        (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m)
-      (@List.map.{0, 0} Nat (Option.{0} Nat) (@Option.some.{0} Nat)
-        (List.range' (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) m
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-  Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.EvenSlotsAudit.registration)
+  (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.EvenSlotsAudit.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.EvenSlotsAudit.registration_6.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1256,46 +1134,13 @@ noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.EvenSl
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OneNoneAudit.registration_5.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.OneNone.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.OneNone.arena
-    (∀ {slots : List.{0} (Option.{0} Nat)} {lows : List.{0} Nat}
-      (hfilter :
-        @Eq.{1} (List.{0} Nat) (@List.filterMap.{0, 0} (Option.{0} Nat) Nat (@id.{1} (Option.{0} Nat)) slots) lows)
-      (hlen :
-        @Eq.{1} Nat (@List.length.{0} (Option.{0} Nat) slots)
-          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@List.length.{0} Nat lows)
-            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))),
-      @Exists.{1} Nat fun (omitted : Nat) =>
-        And
-          (@LT.lt.{0} Nat instLTNat omitted
-            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@List.length.{0} Nat lows)
-              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-          (@Eq.{1} (List.{0} (Option.{0} Nat)) slots
-            (D5.S1.Words.Patterns.CyclicStackPreimages.insertNone omitted lows)))
-    Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OneNoneAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.OneNone.arena) (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OneNoneAudit.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OneNoneAudit.registration_5.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"options_one_none\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimagesInvariants\",\"OneNoneAudit\",\"registration_5\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `D5.S1.Words.Patterns.CyclicStackPreimages.options_one_none, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OneNoneAudit.registration_5.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.OneNone.arena
-  (∀ {slots : List.{0} (Option.{0} Nat)} {lows : List.{0} Nat}
-    (hfilter :
-      @Eq.{1} (List.{0} Nat) (@List.filterMap.{0, 0} (Option.{0} Nat) Nat (@id.{1} (Option.{0} Nat)) slots) lows)
-    (hlen :
-      @Eq.{1} Nat (@List.length.{0} (Option.{0} Nat) slots)
-        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@List.length.{0} Nat lows)
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))),
-    @Exists.{1} Nat fun (omitted : Nat) =>
-      And
-        (@LT.lt.{0} Nat instLTNat omitted
-          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@List.length.{0} Nat lows)
-            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-        (@Eq.{1} (List.{0} (Option.{0} Nat)) slots (D5.S1.Words.Patterns.CyclicStackPreimages.insertNone omitted lows)))
-  Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OneNoneAudit.registration)
+  (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OneNoneAudit.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OneNoneAudit.registration_5.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1339,37 +1184,13 @@ noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OneNon
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessGappedAudit.registration_3.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.SuccessGapped.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.SuccessGapped.arena
-    (∀ {n : Nat} (hn : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) n)
-      {input : List.{0} Nat}
-      (houtput :
-        @Eq.{1} (List.{0} Nat) (D5.S1.Words.Patterns.CyclicStackPreimages.cyclicStackSort input)
-          (D5.S1.Words.Patterns.CyclicStackPreimages.target n)),
-      D5.S1.Words.Patterns.CyclicStackPreimages.Gapped
-        (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) n
-          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-        input)
-    Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessGappedAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.SuccessGapped.arena) (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessGappedAudit.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessGappedAudit.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"successful_gapped\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimagesInvariants\",\"SuccessGappedAudit\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `D5.S1.Words.Patterns.CyclicStackPreimages.successful_gapped, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessGappedAudit.registration_3.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.SuccessGapped.arena
-  (∀ {n : Nat} (hn : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) n)
-    {input : List.{0} Nat}
-    (houtput :
-      @Eq.{1} (List.{0} Nat) (D5.S1.Words.Patterns.CyclicStackPreimages.cyclicStackSort input)
-        (D5.S1.Words.Patterns.CyclicStackPreimages.target n)),
-    D5.S1.Words.Patterns.CyclicStackPreimages.Gapped
-      (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) n
-        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-      input)
-  Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessGappedAudit.registration)
+  (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessGappedAudit.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.SuccessGappedAudit.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1415,59 +1236,13 @@ noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.Succes
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.HighOrderAudit.registration_11.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.HighOrder.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.HighOrder.arena
-    (∀ {n : Nat} {input : List.{0} Nat}
-      (hgapped :
-        D5.S1.Words.Patterns.CyclicStackPreimages.Gapped
-          (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) n
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-          input)
-      (hfilled :
-        D5.S1.Words.Patterns.CyclicStackPreimages.FilledUntilLast
-          (D5.S1.Words.Patterns.CyclicStackPreimages.gapSlots
-            (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) n
-              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-            input))
-      (houtput :
-        @Eq.{1} (List.{0} Nat) (D5.S1.Words.Patterns.CyclicStackPreimages.cyclicStackSort input)
-          (D5.S1.Words.Patterns.CyclicStackPreimages.target n)),
-      @List.Pairwise.{0} Nat (fun (x y : Nat) => @LT.lt.{0} Nat instLTNat x y)
-        (D5.S1.Words.Patterns.CyclicStackPreimages.highEntries
-          (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) n
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-          input))
-    Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.HighOrderAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.HighOrder.arena) (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.HighOrderAudit.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.HighOrderAudit.registration_11.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"successful_highs_of_filled_until_last\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimagesInvariants\",\"HighOrderAudit\",\"registration_11\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `D5.S1.Words.Patterns.CyclicStackPreimages.successful_highs_of_filled_until_last, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.HighOrderAudit.registration_11.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.HighOrder.arena
-  (∀ {n : Nat} {input : List.{0} Nat}
-    (hgapped :
-      D5.S1.Words.Patterns.CyclicStackPreimages.Gapped
-        (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) n
-          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-        input)
-    (hfilled :
-      D5.S1.Words.Patterns.CyclicStackPreimages.FilledUntilLast
-        (D5.S1.Words.Patterns.CyclicStackPreimages.gapSlots
-          (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) n
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-          input))
-    (houtput :
-      @Eq.{1} (List.{0} Nat) (D5.S1.Words.Patterns.CyclicStackPreimages.cyclicStackSort input)
-        (D5.S1.Words.Patterns.CyclicStackPreimages.target n)),
-    @List.Pairwise.{0} Nat (fun (x y : Nat) => @LT.lt.{0} Nat instLTNat x y)
-      (D5.S1.Words.Patterns.CyclicStackPreimages.highEntries
-        (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) n
-          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-        input))
-  Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.HighOrderAudit.registration)
+  (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.HighOrderAudit.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.HighOrderAudit.registration_11.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1539,45 +1314,13 @@ noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.HighOr
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OddSlotsAudit.registration_7.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.OddSlots.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.OddSlots.arena
-    (∀ (m omitted : Nat)
-      (homitted :
-        @LT.lt.{0} Nat instLTNat omitted
-          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) m
-            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))),
-      @Eq.{1} (List.{0} (Option.{0} Nat))
-        (D5.S1.Words.Patterns.CyclicStackPreimages.candidateSlots omitted
-          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
-          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) m
-            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-        (D5.S1.Words.Patterns.CyclicStackPreimages.insertNone omitted
-          (List.range' (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) m
-            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-    Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OddSlotsAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.OddSlots.arena) (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OddSlotsAudit.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OddSlotsAudit.registration_7.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"candidateSlots_odd\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimagesInvariants\",\"OddSlotsAudit\",\"registration_7\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `D5.S1.Words.Patterns.CyclicStackPreimages.candidateSlots_odd, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OddSlotsAudit.registration_7.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.OddSlots.arena
-  (∀ (m omitted : Nat)
-    (homitted :
-      @LT.lt.{0} Nat instLTNat omitted
-        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) m
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))),
-    @Eq.{1} (List.{0} (Option.{0} Nat))
-      (D5.S1.Words.Patterns.CyclicStackPreimages.candidateSlots omitted
-        (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
-        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) m
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
-      (D5.S1.Words.Patterns.CyclicStackPreimages.insertNone omitted
-        (List.range' (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) m
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
-  Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OddSlotsAudit.registration)
+  (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OddSlotsAudit.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OddSlotsAudit.registration_7.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1628,47 +1371,13 @@ noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.OddSlo
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.LowOrderAudit.registration_4.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.LowOrder.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.LowOrder.arena
-    (∀ {n : Nat} {input : List.{0} Nat}
-      (hgapped :
-        D5.S1.Words.Patterns.CyclicStackPreimages.Gapped
-          (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) n
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-          input)
-      (houtput :
-        @Eq.{1} (List.{0} Nat) (D5.S1.Words.Patterns.CyclicStackPreimages.cyclicStackSort input)
-          (D5.S1.Words.Patterns.CyclicStackPreimages.target n)),
-      @List.Pairwise.{0} Nat (fun (x y : Nat) => @LT.lt.{0} Nat instLTNat x y)
-        (D5.S1.Words.Patterns.CyclicStackPreimages.lowEntries
-          (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) n
-            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-          input))
-    Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.LowOrderAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.LowOrder.arena) (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.LowOrderAudit.registration).actual
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.LowOrderAudit.registration_4.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimages\",\"successful_lows_pairwise\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Patterns\",\"CyclicStackPreimagesInvariants\",\"LowOrderAudit\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `D5.S1.Words.Patterns.CyclicStackPreimages.successful_lows_pairwise, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants, declaration := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.LowOrderAudit.registration_4.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.LowOrder.arena
-  (∀ {n : Nat} {input : List.{0} Nat}
-    (hgapped :
-      D5.S1.Words.Patterns.CyclicStackPreimages.Gapped
-        (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) n
-          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-        input)
-    (houtput :
-      @Eq.{1} (List.{0} Nat) (D5.S1.Words.Patterns.CyclicStackPreimages.cyclicStackSort input)
-        (D5.S1.Words.Patterns.CyclicStackPreimages.target n)),
-    @List.Pairwise.{0} Nat (fun (x y : Nat) => @LT.lt.{0} Nat instLTNat x y)
-      (D5.S1.Words.Patterns.CyclicStackPreimages.lowEntries
-        (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) n
-          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-        input))
-  Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.LowOrderAudit.registration)
+  (Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.LowOrderAudit.registration).bridge
 
 noncomputable def Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants.LowOrderAudit.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

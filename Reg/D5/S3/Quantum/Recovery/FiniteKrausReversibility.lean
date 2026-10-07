@@ -140,25 +140,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.registrati
 
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.registration_1.sourceLaw.{u_1, u_2, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
-  Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.arena.{u_1, u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_3 + 1, u_3, 0, u_3, 0}
-    Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.arena.{u_1, u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
-      Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.arena.{u_1, u_2, u_3}
-      Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.actual.{u_3})
-    Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.registration.{u_1, u_2, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0} (Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.arena.) (Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.registration.{u_1, u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.registration_1.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteKrausReversibility\",\"scalar_products_construct_left_inverse\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteKrausReversibility\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.FiniteKrausReversibility, declaration := `D5.S3.Quantum.Recovery.FiniteKrausReversibility.scalar_products_construct_left_inverse, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_3 + 1, u_3, 0, u_3, 0}
-  Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.arena.{u_1, u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
-    Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.arena.{u_1, u_2, u_3}
-    Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.actual.{u_3})
-  Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.registration.{u_1, u_2, u_3})
+  (Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.registration.{u_1, u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteKrausReversibility.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]

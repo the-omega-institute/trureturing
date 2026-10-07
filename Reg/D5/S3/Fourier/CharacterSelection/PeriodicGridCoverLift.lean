@@ -136,39 +136,13 @@ noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.reg
 
 
 noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.arena
-    (∀ {M N : Nat} [inst : @NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M]
-      [inst_1 : @NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N]
-      (_hM : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) M)
-      (_hN : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) N)
-      (y : D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeLabel M N)
-      (_hy : @D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.Flat M N inst inst_1 y)
-      (a : ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))),
-      @ExistsUnique.{1} (Int → Int → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-        fun (x : Int → Int → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) =>
-        @D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.IsCoverLift M N inst inst_1 y a x)
-    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.arena) (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration).actual
 
 noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"flat_unique_cover_lift\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.flat_unique_cover_lift, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.arena
-  (∀ {M N : Nat} [inst : @NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M]
-    [inst_1 : @NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N]
-    (_hM : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) M)
-    (_hN : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) N)
-    (y : D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeLabel M N)
-    (_hy : @D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.Flat M N inst inst_1 y)
-    (a : ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))),
-    @ExistsUnique.{1} (Int → Int → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-      fun (x : Int → Int → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) =>
-      @D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.IsCoverLift M N inst inst_1 y a x)
-  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration)
+  (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration).bridge
 
 noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

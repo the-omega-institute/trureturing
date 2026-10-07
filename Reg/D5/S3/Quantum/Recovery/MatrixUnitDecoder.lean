@@ -563,25 +563,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration
 
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.sourceLaw.{u_1, u_2} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.{u_1, u_2}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.{u_1, u_2}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.{u_1, u_2}
-      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_1})
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration.{u_1, u_2})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0} (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.) (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration.{u_1, u_2}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"represented_matrix_mul\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Multiplication\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.represented_matrix_mul, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.{u_1, u_2}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.{u_1, u_2}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_1})
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration.{u_1, u_2})
+  (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration.{u_1, u_2}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]
@@ -657,25 +645,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.re
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.sourceLaw.{u_1, u_2} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.{u_1, u_2}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.{u_1, u_2}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.{u_1, u_2}
-      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_1})
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration.{u_1, u_2})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0} (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.) (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration.{u_1, u_2}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"decoder_recovers_commutant_weight\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Recovery\",\"registration_5\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_recovers_commutant_weight, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.{u_1, u_2}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.{u_1, u_2}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_1})
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration.{u_1, u_2})
+  (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration.{u_1, u_2}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]
@@ -858,25 +834,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registra
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.sourceLaw.{u_1, u_2} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.{u_1, u_2}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_2 + 1, u_2, 0, u_2, 0}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.{u_1, u_2}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
-      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.{u_1, u_2}
-      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_2})
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration.{u_1, u_2})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0} (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.) (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration.{u_1, u_2}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"matrix_unit_decoder_channel\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Channel\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.matrix_unit_decoder_channel, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_2 + 1, u_2, 0, u_2, 0}
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.{u_1, u_2}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.{u_1, u_2}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_2})
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration.{u_1, u_2})
+  (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration.{u_1, u_2}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]
@@ -998,25 +962,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registrat
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.sourceLaw.{u_1, u_2} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.{u_1, u_2}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_2 + 1, u_2, 0, u_2, 0}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.{u_1, u_2}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
-      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.{u_1, u_2}
-      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_2})
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration.{u_1, u_2})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0} (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.) (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration.{u_1, u_2}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"decoder_trace_pairing\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Pairing\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_trace_pairing, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_2 + 1, u_2, 0, u_2, 0}
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.{u_1, u_2}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.{u_1, u_2}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_2})
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration.{u_1, u_2})
+  (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration.{u_1, u_2}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]
@@ -1134,29 +1086,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registrat
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.sourceLaw.{u_1, u_2} : Prop :=
   D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2,
-    0}
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.{u_1, u_2}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u_1 + 1) (u_2 + 1), max u_1 u_2,
-        0, max u_1 u_2, 0}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.{u_1, u_2}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_2 + 1) (u_1 + 1), max u_2 u_1, 0,
-        max u_2 u_1, 0}
-      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.{u_1, u_2}
-      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.actual.{u_1, u_2})
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration.{u_1, u_2})
+    0} (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.) (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration.{u_1, u_2}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"decoder_kraus_gram\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Gram\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_kraus_gram, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0,
-      max u_1 u_2, 0}
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.{u_1, u_2}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_2 + 1) (u_1 + 1), max u_2 u_1, 0,
-      max u_2 u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.{u_1, u_2}
-    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.actual.{u_1, u_2})
-  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration.{u_1, u_2})
+  (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration.{u_1, u_2}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]

@@ -139,25 +139,13 @@ noncomputable def Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.r
 
 
 noncomputable def Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.arena
-      Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.actual)
-    Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.arena) (Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.registration).actual
 
 noncomputable def Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"GeneralInstrumentSurvivalLimit\",\"survival_tendsto_maximal_fixed_effect\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"GeneralInstrumentSurvivalLimit\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit, declaration := `D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.survival_tendsto_maximal_fixed_effect, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.arena
-    Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.actual)
-  Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.registration)
+  (Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.registration).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

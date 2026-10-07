@@ -456,119 +456,13 @@ noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.registrat
 
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.arena
-    (∀ {ν : Real → Real}
-      (suppν :
-        @LE.le.{0} (Set.{0} Real) (@Set.instLE.{0} Real) (@Function.support.{0, 0} Real Real Real.instZero ν)
-          (@Set.Icc.{0} Real Real.instPreorder
-            (@HDiv.hDiv.{0, 0, 0} Real Real Real
-              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-              (@OfNat.ofNat.{0} Real (nat_lit 2)
-                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
-            (@OfNat.ofNat.{0} Real (nat_lit 2)
-              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
-      (mass_one :
-        @Eq.{1} Real
-          (@MeasureTheory.integral.{0, 0} Real Real Real.normedAddCommGroup
-            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-            (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
-            (@MeasureTheory.Measure.restrict.{0} Real
-              (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
-              (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)
-              (@Set.Ioi.{0} Real Real.instPreorder
-                (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))
-            fun (x : Real) =>
-            @HDiv.hDiv.{0, 0, 0} Real Real Real
-              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid)) (ν x) x)
-          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))),
-      @Exists.{1} Real fun (c : Real) =>
-        And (@LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) c)
-          (And
-            (@Eq.{1} Real c
-              (Real.log
-                (@OfNat.ofNat.{0} Real (nat_lit 2)
-                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
-            (∀ (ε x : Real),
-              @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
-                  ε →
-                @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
-                    x →
-                  @LE.le.{0} Real Real.instLE x
-                      (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-                        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-                        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) c ε)) →
-                    @Eq.{1} Real (Smooth1 ν ε x)
-                      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))))
-    Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.arena) (Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.registration).actual
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"Smooth1Properties_below\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"Smooth1\",\"Below\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Weil.PrimeNumberTheorem.Smooth1, declaration := `Smooth1Properties_below, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.arena
-  (∀ {ν : Real → Real}
-    (suppν :
-      @LE.le.{0} (Set.{0} Real) (@Set.instLE.{0} Real) (@Function.support.{0, 0} Real Real Real.instZero ν)
-        (@Set.Icc.{0} Real Real.instPreorder
-          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-            (@OfNat.ofNat.{0} Real (nat_lit 2)
-              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
-          (@OfNat.ofNat.{0} Real (nat_lit 2)
-            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
-    (mass_one :
-      @Eq.{1} Real
-        (@MeasureTheory.integral.{0, 0} Real Real Real.normedAddCommGroup
-          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-            (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-          (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
-          (@MeasureTheory.Measure.restrict.{0} Real
-            (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
-            (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)
-            (@Set.Ioi.{0} Real Real.instPreorder
-              (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))
-          fun (x : Real) =>
-          @HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-            (ν x) x)
-        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))),
-    @Exists.{1} Real fun (c : Real) =>
-      And (@LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) c)
-        (And
-          (@Eq.{1} Real c
-            (Real.log
-              (@OfNat.ofNat.{0} Real (nat_lit 2)
-                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
-          (∀ (ε x : Real),
-            @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) ε →
-              @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
-                  x →
-                @LE.le.{0} Real Real.instLE x
-                    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-                      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-                      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) c ε)) →
-                  @Eq.{1} Real (Smooth1 ν ε x)
-                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))))
-  Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.registration)
+  (Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.registration).bridge
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -675,102 +569,13 @@ noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Below.registration_1
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.arena
-    (∀ {ν : Real → Real}
-      (suppν :
-        @LE.le.{0} (Set.{0} Real) (@Set.instLE.{0} Real) (@Function.support.{0, 0} Real Real Real.instZero ν)
-          (@Set.Icc.{0} Real Real.instPreorder
-            (@HDiv.hDiv.{0, 0, 0} Real Real Real
-              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-              (@OfNat.ofNat.{0} Real (nat_lit 2)
-                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
-            (@OfNat.ofNat.{0} Real (nat_lit 2)
-              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))),
-      @Exists.{1} Real fun (c : Real) =>
-        And (@LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) c)
-          (And
-            (@Eq.{1} Real c
-              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-                (@OfNat.ofNat.{0} Real (nat_lit 2)
-                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
-                (Real.log
-                  (@OfNat.ofNat.{0} Real (nat_lit 2)
-                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))))
-            (∀ (ε x : Real),
-              @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
-                  (@Set.Ioo.{0} Real Real.instPreorder
-                    (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
-                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
-                  ε →
-                @LE.le.{0} Real Real.instLE
-                    (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
-                      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-                      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) c ε))
-                    x →
-                  @Eq.{1} Real (Smooth1 ν ε x)
-                    (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))))
-    Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.arena) (Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.registration).actual
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"Smooth1Properties_above\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"Smooth1\",\"Above\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Weil.PrimeNumberTheorem.Smooth1, declaration := `Smooth1Properties_above, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.arena
-  (∀ {ν : Real → Real}
-    (suppν :
-      @LE.le.{0} (Set.{0} Real) (@Set.instLE.{0} Real) (@Function.support.{0, 0} Real Real Real.instZero ν)
-        (@Set.Icc.{0} Real Real.instPreorder
-          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-            (@OfNat.ofNat.{0} Real (nat_lit 2)
-              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
-          (@OfNat.ofNat.{0} Real (nat_lit 2)
-            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))),
-    @Exists.{1} Real fun (c : Real) =>
-      And (@LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) c)
-        (And
-          (@Eq.{1} Real c
-            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-              (@OfNat.ofNat.{0} Real (nat_lit 2)
-                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
-              (Real.log
-                (@OfNat.ofNat.{0} Real (nat_lit 2)
-                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))))
-          (∀ (ε x : Real),
-            @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
-                (@Set.Ioo.{0} Real Real.instPreorder
-                  (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
-                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
-                ε →
-              @LE.le.{0} Real Real.instLE
-                  (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
-                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) c ε))
-                  x →
-                @Eq.{1} Real (Smooth1 ν ε x)
-                  (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))))
-  Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.registration)
+  (Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.registration).bridge
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -851,117 +656,13 @@ noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Above.registration_2
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.registration_3.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.arena
-    (∀ {ν : Real → Real}
-      (diffν :
-        @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
-          Real.normedAddCommGroup
-          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-            (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-          Real Real.normedAddCommGroup
-          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-            (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-          (@OfNat.ofNat.{0} (WithTop.{0} ENat) (nat_lit 1)
-            (@One.toOfNat1.{0} (WithTop.{0} ENat)
-              (@WithTop.one.{0} ENat (@AddMonoidWithOne.toOne.{0} ENat instAddMonoidWithOneENat))))
-          ν)
-      (suppν :
-        @LE.le.{0} (Set.{0} Real) (@Set.instLE.{0} Real) (@Function.support.{0, 0} Real Real Real.instZero ν)
-          (@Set.Icc.{0} Real Real.instPreorder
-            (@HDiv.hDiv.{0, 0, 0} Real Real Real
-              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-              (@OfNat.ofNat.{0} Real (nat_lit 2)
-                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
-            (@OfNat.ofNat.{0} Real (nat_lit 2)
-              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
-      {ε : Real}
-      (εpos : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) ε)
-      {s : Complex}
-      (hs :
-        @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
-          (Complex.re s)),
-      @Eq.{1} Complex
-        (@mellin.{0} Complex Complex.instNormedAddCommGroup
-          (@NonUnitalCStarAlgebra.toNormedSpace.{0} Complex
-            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
-              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex)))
-          (fun (x : Real) => Complex.ofReal (Smooth1 ν ε x)) s)
-        (@HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
-          (@Inv.inv.{0} Complex Complex.instInv s)
-          (@mellin.{0} Complex Complex.instNormedAddCommGroup
-            (@NonUnitalCStarAlgebra.toNormedSpace.{0} Complex
-              (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
-                (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex)))
-            (fun (x : Real) => Complex.ofReal (ν x))
-            (@HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul) (Complex.ofReal ε)
-              s))))
-    Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.arena) (Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.registration).actual
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"MellinOfSmooth1a\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"Smooth1\",\"Transform\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Weil.PrimeNumberTheorem.Smooth1, declaration := `MellinOfSmooth1a, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.registration_3.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.arena
-  (∀ {ν : Real → Real}
-    (diffν :
-      @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
-        Real.normedAddCommGroup
-        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-          (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-        Real Real.normedAddCommGroup
-        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-          (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-        (@OfNat.ofNat.{0} (WithTop.{0} ENat) (nat_lit 1)
-          (@One.toOfNat1.{0} (WithTop.{0} ENat)
-            (@WithTop.one.{0} ENat (@AddMonoidWithOne.toOne.{0} ENat instAddMonoidWithOneENat))))
-        ν)
-    (suppν :
-      @LE.le.{0} (Set.{0} Real) (@Set.instLE.{0} Real) (@Function.support.{0, 0} Real Real Real.instZero ν)
-        (@Set.Icc.{0} Real Real.instPreorder
-          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-            (@OfNat.ofNat.{0} Real (nat_lit 2)
-              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
-          (@OfNat.ofNat.{0} Real (nat_lit 2)
-            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
-    {ε : Real}
-    (εpos : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) ε)
-    {s : Complex}
-    (hs :
-      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
-        (Complex.re s)),
-    @Eq.{1} Complex
-      (@mellin.{0} Complex Complex.instNormedAddCommGroup
-        (@NonUnitalCStarAlgebra.toNormedSpace.{0} Complex
-          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
-            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex)))
-        (fun (x : Real) => Complex.ofReal (Smooth1 ν ε x)) s)
-      (@HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
-        (@Inv.inv.{0} Complex Complex.instInv s)
-        (@mellin.{0} Complex Complex.instNormedAddCommGroup
-          (@NonUnitalCStarAlgebra.toNormedSpace.{0} Complex
-            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
-              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex)))
-          (fun (x : Real) => Complex.ofReal (ν x))
-          (@HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul) (Complex.ofReal ε) s))))
-  Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.registration)
+  (Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.registration).bridge
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -1074,102 +775,13 @@ noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Transform.registrati
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.registration_4.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.arena
-    (∀ {ν : Real → Real}
-      (diffν :
-        @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
-          Real.normedAddCommGroup
-          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-            (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-          Real Real.normedAddCommGroup
-          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-            (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-          (@OfNat.ofNat.{0} (WithTop.{0} ENat) (nat_lit 1)
-            (@One.toOfNat1.{0} (WithTop.{0} ENat)
-              (@WithTop.one.{0} ENat (@AddMonoidWithOne.toOne.{0} ENat instAddMonoidWithOneENat))))
-          ν)
-      (νpos :
-        ∀ (x : Real),
-          @GT.gt.{0} Real Real.instLT x (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) →
-            @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
-              (ν x))
-      (suppν :
-        @LE.le.{0} (Set.{0} Real) (@Set.instLE.{0} Real) (@Function.support.{0, 0} Real Real Real.instZero ν)
-          (@Set.Icc.{0} Real Real.instPreorder
-            (@HDiv.hDiv.{0, 0, 0} Real Real Real
-              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-              (@OfNat.ofNat.{0} Real (nat_lit 2)
-                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
-            (@OfNat.ofNat.{0} Real (nat_lit 2)
-              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
-      {ε : Real}
-      (εpos : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) ε)
-      {y : Real}
-      (ypos :
-        @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) y),
-      @ContinuousAt.{0, 0} Real Real
-        (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
-        (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
-        (fun (x : Real) => Smooth1 ν ε x) y)
-    Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.arena) (Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.registration).actual
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.registration_4.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"Smooth1ContinuousAt\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"Smooth1\",\"Continuity\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Weil.PrimeNumberTheorem.Smooth1, declaration := `Smooth1ContinuousAt, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.registration_4.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.arena
-  (∀ {ν : Real → Real}
-    (diffν :
-      @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
-        Real.normedAddCommGroup
-        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-          (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-        Real Real.normedAddCommGroup
-        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
-          (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
-          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
-        (@OfNat.ofNat.{0} (WithTop.{0} ENat) (nat_lit 1)
-          (@One.toOfNat1.{0} (WithTop.{0} ENat)
-            (@WithTop.one.{0} ENat (@AddMonoidWithOne.toOne.{0} ENat instAddMonoidWithOneENat))))
-        ν)
-    (νpos :
-      ∀ (x : Real),
-        @GT.gt.{0} Real Real.instLT x (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) →
-          @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (ν x))
-    (suppν :
-      @LE.le.{0} (Set.{0} Real) (@Set.instLE.{0} Real) (@Function.support.{0, 0} Real Real Real.instZero ν)
-        (@Set.Icc.{0} Real Real.instPreorder
-          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-            (@OfNat.ofNat.{0} Real (nat_lit 2)
-              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
-          (@OfNat.ofNat.{0} Real (nat_lit 2)
-            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
-              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
-    {ε : Real}
-    (εpos : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) ε)
-    {y : Real}
-    (ypos : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) y),
-    @ContinuousAt.{0, 0} Real Real
-      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
-      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
-      (fun (x : Real) => Smooth1 ν ε x) y)
-  Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.registration)
+  (Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.registration).bridge
 
 noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.Smooth1.Continuity.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

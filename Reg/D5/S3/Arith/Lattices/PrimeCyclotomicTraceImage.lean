@@ -135,24 +135,13 @@ noncomputable def Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.registratio
 
 
 noncomputable def Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.arena
-      Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.actual)
-    Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.arena) (Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PrimeCyclotomicTraceImage\",\"integral_image\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PrimeCyclotomicTraceImage\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage, declaration := `D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.integral_image, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage, declaration := `Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.arena Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.actual)
-  Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.registration)
+  (Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Bool) where
   values := [Bool.true, Bool.false]

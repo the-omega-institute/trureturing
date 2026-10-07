@@ -118,21 +118,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchan
 
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.Support.LegacyRelations.Completion.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.Support.LegacyRelations.Completion.arena
-    D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.CommutativityNecessaryStatement
-    Reg.Support.LegacyRelations.Completion.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.Support.LegacyRelations.Completion.arena) (Reg.Support.LegacyRelations.Completion.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Completion\",\"CommutingCompletionExchange\",\"commutativity_hypothesis_is_necessary\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Completion\",\"CommutingCompletionExchange\",\"InformationRoot\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange, declaration := `D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot, declaration := `Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.Support.LegacyRelations.Completion.arena
-  D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.CommutativityNecessaryStatement
-  Reg.Support.LegacyRelations.Completion.registration)
+  (Reg.Support.LegacyRelations.Completion.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.CompletionReadout) where
   values := [D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.CompletionReadout.flowF, D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.CompletionReadout.flowG, D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.CompletionReadout.cut]

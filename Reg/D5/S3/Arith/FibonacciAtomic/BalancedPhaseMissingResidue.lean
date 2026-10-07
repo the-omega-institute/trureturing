@@ -131,25 +131,13 @@ noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.re
 
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseArena
-      Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseActual)
-    Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseArena) (Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseRegistration).actual
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"BalancedPhaseMissingResidue\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"BalancedPhaseMissingResidue\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue, declaration := `D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseArena
-    Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseActual)
-  Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseRegistration)
+  (Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.responseRegistration).bridge
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

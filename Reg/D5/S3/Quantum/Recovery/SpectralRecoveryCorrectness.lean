@@ -148,25 +148,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registr
 
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.sourceLaw.{u_1, u_2, u_3, u_4} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_4 + 1, u_4, 0, u_4, 0}
-  Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.{u_1, u_2, u_3, u_4}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_4 + 1, u_4, 0, u_4, 0}
-    Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.{u_1, u_2, u_3, u_4}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_4 + 1, u_4, 0, u_4, 0}
-      Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.{u_1, u_2, u_3, u_4}
-      Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.actual.{u_4})
-    Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration.{u_1, u_2, u_3, u_4})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_4 + 1, u_4, 0, u_4, 0} (Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.) (Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration.{u_1, u_2, u_3, u_4}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.sourceBridgeFact.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"computed_recovery_of_kraus_left_inverse\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.computed_recovery_of_kraus_left_inverse, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_4 + 1, u_4, 0, u_4, 0}
-  Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.{u_1, u_2, u_3, u_4}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_4 + 1, u_4, 0, u_4, 0}
-    Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.{u_1, u_2, u_3, u_4}
-    Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.actual.{u_4})
-  Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration.{u_1, u_2, u_3, u_4})
+  (Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration.{u_1, u_2, u_3, u_4}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]

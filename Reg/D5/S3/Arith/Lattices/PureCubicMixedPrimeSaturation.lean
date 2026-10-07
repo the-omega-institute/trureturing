@@ -263,25 +263,13 @@ noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registr
 
 
 noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.sourceLaw.{u_1} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.{u_1}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.{u_1}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.{u_1}
-      Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.actual)
-    Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration.{u_1})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.) (Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration.{u_1}).actual
 
 noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"pure_cubic_mixed_prime_saturation\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
   { owner := `D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.pure_cubic_mixed_prime_saturation, part := .type, path := [], levels := [(.param `u_1)] }
   { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.{u_1}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.{u_1}
-    Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.actual)
-  Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration.{u_1})
+  (Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration.{u_1}).bridge
 
 noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

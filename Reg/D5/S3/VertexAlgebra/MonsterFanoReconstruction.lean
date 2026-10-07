@@ -252,23 +252,13 @@ noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection
 
 
 noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.actual)
-    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena) (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration).actual
 
 noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"complement_symmDiff_mem\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `D5.S3.VertexAlgebra.MonsterFanoReconstruction.complement_symmDiff_mem, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.actual)
-  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration)
+  (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration).bridge
 
 noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -431,25 +421,13 @@ noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena
-      Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.actual)
-    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena) (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration).actual
 
 noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"block_intersection_le_one\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"Intersection\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `D5.S3.VertexAlgebra.MonsterFanoReconstruction.block_intersection_le_one, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena
-    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.actual)
-  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration)
+  (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration).bridge
 
 noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

@@ -438,25 +438,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.Orthogon
 
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.sourceLaw.{u_1, u_2, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
-  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.{u_1, u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_3 + 1, u_3, 0, u_3, 0}
-    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.{u_1, u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
-      Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.{u_1, u_2, u_3}
-      Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.actual.{u_3})
-    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration.{u_1, u_2, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0} (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.) (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration.{u_1, u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"decoding_syndrome_block\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"DecodingSyndromeBlock\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.decoding_syndrome_block, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_3 + 1, u_3, 0, u_3, 0}
-  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.{u_1, u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
-    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.{u_1, u_2, u_3}
-    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.actual.{u_3})
-  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration.{u_1, u_2, u_3})
+  (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration.{u_1, u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]
@@ -519,29 +507,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.Decoding
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.sourceLaw.{u_1, u_2, u_3} : Prop :=
   D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0, max u_1 u_3,
-    0}
-  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.{u_1, u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u_1 + 1) (u_3 + 1), max u_1 u_3,
-        0, max u_1 u_3, 0}
-    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.{u_1, u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_3 + 1) (u_1 + 1), max u_3 u_1, 0,
-        max u_3 u_1, 0}
-      Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.{u_1, u_2, u_3}
-      Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.familyActual.{u_1, u_3})
-    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration.{u_1, u_2, u_3})
+    0} (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.) (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration.{u_1, u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"syndrome_transport_orthogonal\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"SyndromeTransportOrthogonal\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.syndrome_transport_orthogonal, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0,
-      max u_1 u_3, 0}
-  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.{u_1, u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_3 + 1) (u_1 + 1), max u_3 u_1, 0,
-      max u_3 u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.{u_1, u_2, u_3}
-    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.familyActual.{u_1, u_3})
-  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration.{u_1, u_2, u_3})
+  (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration.{u_1, u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]
@@ -660,25 +632,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.Syndrome
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.sourceLaw.{u_1, u_2, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
-  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.{u_1, u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_3 + 1, u_3, 0, u_3, 0}
-    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.{u_1, u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
-      Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.{u_1, u_2, u_3}
-      Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.actual.{u_3})
-    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration.{u_1, u_2, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0} (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.) (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration.{u_1, u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"orthogonal_syndrome_recovery\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"OrthogonalSyndromeRecovery\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.orthogonal_syndrome_recovery, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_3 + 1, u_3, 0, u_3, 0}
-  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.{u_1, u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
-    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.{u_1, u_2, u_3}
-    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.actual.{u_3})
-  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration.{u_1, u_2, u_3})
+  (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration.{u_1, u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]

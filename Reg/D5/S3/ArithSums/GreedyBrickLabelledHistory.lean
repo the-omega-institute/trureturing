@@ -246,25 +246,13 @@ noncomputable def Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.regi
 
 
 noncomputable def Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.arena
-      Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.actual)
-    Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.arena) (Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.registration).actual
 
 noncomputable def Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ArithSums\",\"GreedyBrickLabelledHistory\",\"actual_labelled_history\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ArithSums\",\"GreedyBrickLabelledHistory\",\"History\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ArithSums.GreedyBrickLabelledHistory, declaration := `D5.S3.ArithSums.GreedyBrickLabelledHistory.actual_labelled_history, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory, declaration := `Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.arena
-    Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.actual)
-  Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.registration)
+  (Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.registration).bridge
 
 noncomputable def Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -309,25 +297,13 @@ noncomputable def Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.History.registr
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.arena
-      Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.actual)
-    Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.arena) (Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.registration).actual
 
 noncomputable def Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ArithSums\",\"GreedyBrickLabelledHistory\",\"continuous_row_geometry\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ArithSums\",\"GreedyBrickLabelledHistory\",\"Continuous\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ArithSums.GreedyBrickLabelledHistory, declaration := `D5.S3.ArithSums.GreedyBrickLabelledHistory.continuous_row_geometry, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory, declaration := `Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.arena
-    Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.actual)
-  Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.registration)
+  (Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.registration).bridge
 
 noncomputable def Reg.D5.S3.ArithSums.GreedyBrickLabelledHistory.Continuous.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

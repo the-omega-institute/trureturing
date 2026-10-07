@@ -348,30 +348,13 @@ noncomputable def Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_
 
 noncomputable def Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_1.sourceLaw.{u_1, u_2, u_3} : Prop :=
   D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
-    max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
-  Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aArena.{u_1, u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (max (u_1 + 1) (u_2 + 1))
-          (u_3 + 1),
-        max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
-    Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aArena.{u_1, u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
-        max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
-      Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aArena.{u_1, u_2, u_3}
-      Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aActual.{u_1, u_2, u_3})
-    Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aRegistration.{u_1, u_2, u_3})
+    max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0} (Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aArena.) (Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aRegistration.{u_1, u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_1.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"TripartiteH1Repair\",\"ker_d1_eq_im_d0\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"TripartiteH1Repair\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Combinatorics.Graph.TripartiteH1Repair, declaration := `D5.S3.Combinatorics.Graph.TripartiteH1Repair.ker_d1_eq_im_d0, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair, declaration := `Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
-      max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
-  Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aArena.{u_1, u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
-      max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
-    Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aArena.{u_1, u_2, u_3}
-    Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aActual.{u_1, u_2, u_3})
-  Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aRegistration.{u_1, u_2, u_3})
+  (Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aRegistration.{u_1, u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -439,23 +422,13 @@ noncomputable def Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bArena Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bActual)
-    Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bArena) (Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bRegistration).actual
 
 noncomputable def Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"TripartiteH1Repair\",\"sharp_three_edge_witness\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"TripartiteH1Repair\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Combinatorics.Graph.TripartiteH1Repair, declaration := `D5.S3.Combinatorics.Graph.TripartiteH1Repair.sharp_three_edge_witness, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair, declaration := `Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bArena Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bActual)
-  Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bRegistration)
+  (Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bRegistration).bridge
 
 noncomputable def Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -550,23 +523,13 @@ noncomputable def Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_3.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cArena Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cActual)
-    Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cArena) (Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cRegistration).actual
 
 noncomputable def Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"TripartiteH1Repair\",\"universal_repair\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"TripartiteH1Repair\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Combinatorics.Graph.TripartiteH1Repair, declaration := `D5.S3.Combinatorics.Graph.TripartiteH1Repair.universal_repair, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair, declaration := `Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_3.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cArena Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cActual)
-  Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cRegistration)
+  (Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cRegistration).bridge
 
 noncomputable def Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

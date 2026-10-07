@@ -119,27 +119,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.registra
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.arena
-    (∀ (p n : Nat) (_hp : Nat.Prime p) (_hpn : @Dvd.dvd.{0} Nat Nat.instDvd p (Nat.fib n))
-      (_hpIndex : Not (@Dvd.dvd.{0} Nat Nat.instDvd p n)),
-      @Eq.{1} Nat (padicValNat p (Nat.fib n))
-        (padicValNat p (Nat.fib (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p))))
-    Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.arena) (Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciPrimeToIndexValuation\",\"fibonacci_original_rank_valuation\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciPrimeToIndexValuation\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation, declaration := `D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.fibonacci_original_rank_valuation, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation, declaration := `Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.arena
-  (∀ (p n : Nat) (_hp : Nat.Prime p) (_hpn : @Dvd.dvd.{0} Nat Nat.instDvd p (Nat.fib n))
-    (_hpIndex : Not (@Dvd.dvd.{0} Nat Nat.instDvd p n)),
-    @Eq.{1} Nat (padicValNat p (Nat.fib n))
-      (padicValNat p (Nat.fib (D5.S3.Arith.Primes.FiniteFibonacciRankClosure.fibonacciRank p))))
-  Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.registration)
+  (Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

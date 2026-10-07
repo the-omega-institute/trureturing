@@ -120,57 +120,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.registration_1.c
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.arena
-    (∀ (m n : Nat) (_hm : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m)
-      (_hn : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) n),
-      Iff
-        (@IsSquare.{0} Nat instMulNat
-          (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (Nat.fib m) (Nat.fib n)))
-        (Or (@Eq.{1} Nat m n)
-          (Or
-            (And
-              (Or (@Eq.{1} Nat m (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-                (Or (@Eq.{1} Nat m (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-                  (@Eq.{1} Nat m (@OfNat.ofNat.{0} Nat (nat_lit 12) (instOfNatNat (nat_lit 12))))))
-              (Or (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-                (Or (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-                  (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 12) (instOfNatNat (nat_lit 12)))))))
-            (And
-              (Or (@Eq.{1} Nat m (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
-                (@Eq.{1} Nat m (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6)))))
-              (Or (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
-                (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6)))))))))
-    Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.arena) (Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibSquareclassRigidity\",\"fibonacci_squareclass_pairs\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibSquareclassRigidity\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.FibSquareclassRigidity, declaration := `D5.S3.Arith.Primes.FibSquareclassRigidity.fibonacci_squareclass_pairs, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.FibSquareclassRigidity, declaration := `Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.arena
-  (∀ (m n : Nat) (_hm : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m)
-    (_hn : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) n),
-    Iff
-      (@IsSquare.{0} Nat instMulNat
-        (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (Nat.fib m) (Nat.fib n)))
-      (Or (@Eq.{1} Nat m n)
-        (Or
-          (And
-            (Or (@Eq.{1} Nat m (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-              (Or (@Eq.{1} Nat m (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-                (@Eq.{1} Nat m (@OfNat.ofNat.{0} Nat (nat_lit 12) (instOfNatNat (nat_lit 12))))))
-            (Or (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-              (Or (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
-                (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 12) (instOfNatNat (nat_lit 12)))))))
-          (And
-            (Or (@Eq.{1} Nat m (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
-              (@Eq.{1} Nat m (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6)))))
-            (Or (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
-              (@Eq.{1} Nat n (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6)))))))))
-  Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.registration)
+  (Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibSquareclassRigidity.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

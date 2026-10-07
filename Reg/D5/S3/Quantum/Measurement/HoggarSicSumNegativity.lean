@@ -117,19 +117,13 @@ noncomputable def Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.registrat
 
 
 noncomputable def Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.arena D5.S3.Quantum.Measurement.HoggarSicSumNegativity.claim
-    Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.arena) (Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.registration).actual
 
 noncomputable def Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"HoggarSicSumNegativity\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"HoggarSicSumNegativity\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Quantum.Measurement.HoggarSicSumNegativity, declaration := `D5.S3.Quantum.Measurement.HoggarSicSumNegativity.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity, declaration := `Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.arena D5.S3.Quantum.Measurement.HoggarSicSumNegativity.claim
-  Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.registration)
+  (Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.registration).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Measurement.HoggarSicSumNegativity.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

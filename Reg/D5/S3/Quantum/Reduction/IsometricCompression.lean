@@ -125,29 +125,13 @@ noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_
 
 noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.sourceLaw.{u_1, u_2, u_5} : Prop :=
   D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2,
-    0}
-  Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.{u_1, u_2, u_5}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u_1 + 1) (u_2 + 1), max u_1 u_2,
-        0, max u_1 u_2, 0}
-    Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.{u_1, u_2, u_5}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_2 + 1) (u_1 + 1), max u_2 u_1, 0,
-        max u_2 u_1, 0}
-      Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.{u_1, u_2, u_5}
-      Reg.D5.S3.Quantum.Reduction.IsometricCompression.actual.{u_1, u_2})
-    Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration.{u_1, u_2, u_5})
+    0} (Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.) (Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration.{u_1, u_2, u_5}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.sourceBridgeFact.{u_1, u_2, u_5} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"word_intertwines\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}"))
   { owner := `D5.S3.Quantum.Reduction.IsometricCompression, declaration := `D5.S3.Quantum.Reduction.IsometricCompression.word_intertwines, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
   { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0,
-      max u_1 u_2, 0}
-  Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.{u_1, u_2, u_5}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_2 + 1) (u_1 + 1), max u_2 u_1, 0,
-      max u_2 u_1, 0}
-    Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.{u_1, u_2, u_5}
-    Reg.D5.S3.Quantum.Reduction.IsometricCompression.actual.{u_1, u_2})
-  Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration.{u_1, u_2, u_5})
+  (Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration.{u_1, u_2, u_5}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]

@@ -408,25 +408,13 @@ noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.regis
 
 
 noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena
-      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteActual)
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena) (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteRegistration).actual
 
 noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"feasible_finite\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.feasible_finite, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteActual)
-  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteRegistration)
+  (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteRegistration).bridge
 
 noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -470,25 +458,13 @@ noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.regis
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena
-      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportActual)
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena) (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportRegistration).actual
 
 noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"suffix_prime_factors\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.suffix_prime_factors, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportActual)
-  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportRegistration)
+  (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportRegistration).bridge
 
 noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -534,25 +510,13 @@ noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.regis
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena
-      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.actual)
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena) (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"rough_prime_suffix_complete\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.rough_prime_suffix_complete, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.actual)
-  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration)
+  (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -598,25 +562,13 @@ noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.regis
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena
-      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.actual)
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena) (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanRegistration).actual
 
 noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"bellman_complete\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellman_complete, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena
-    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.actual)
-  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanRegistration)
+  (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanRegistration).bridge
 
 noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

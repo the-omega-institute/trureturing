@@ -131,39 +131,13 @@ noncomputable def Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.registr
 
 
 noncomputable def Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.arena
-    (∀ (k : Nat),
-      @Exists.{1} Nat fun (N : Nat) =>
-        @Exists.{1} Nat fun (p : Nat) =>
-          And (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) p)
-            (∀ (t : Nat),
-              @LE.le.{0} Nat instLENat N t →
-                @Eq.{1} Nat
-                  (D5.S3.Combinatorics.OeisA398589EventualPeriodicity.row k
-                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) t p))
-                  (D5.S3.Combinatorics.OeisA398589EventualPeriodicity.row k t)))
-    Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.arena) (Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.registration).actual
 
 noncomputable def Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"OeisA398589EventualPeriodicity\",\"eventual_periodicity\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"OeisA398589EventualPeriodicity\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Combinatorics.OeisA398589EventualPeriodicity, declaration := `D5.S3.Combinatorics.OeisA398589EventualPeriodicity.eventual_periodicity, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity, declaration := `Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.arena
-  (∀ (k : Nat),
-    @Exists.{1} Nat fun (N : Nat) =>
-      @Exists.{1} Nat fun (p : Nat) =>
-        And (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) p)
-          (∀ (t : Nat),
-            @LE.le.{0} Nat instLENat N t →
-              @Eq.{1} Nat
-                (D5.S3.Combinatorics.OeisA398589EventualPeriodicity.row k
-                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) t p))
-                (D5.S3.Combinatorics.OeisA398589EventualPeriodicity.row k t)))
-  Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.registration)
+  (Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.registration).bridge
 
 noncomputable def Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

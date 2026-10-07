@@ -378,30 +378,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.r
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.registration_3.sourceLaw.{u_1, u_2, u_3, u_4} : Prop :=
   D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
-    max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
-  Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.arena.{u_1, u_2, u_3, u_4}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (max (u_1 + 1) (u_2 + 1))
-          (u_3 + 1),
-        max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
-    Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.arena.{u_1, u_2, u_3, u_4}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (max (u_3 + 1) (u_2 + 1)) (u_1 + 1),
-        max (max u_3 u_2) u_1, 0, max (max u_3 u_2) u_1, 0}
-      Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.arena.{u_1, u_2, u_3, u_4}
-      Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.actual.{u_3, u_2, u_1})
-    Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.registration.{u_1, u_2, u_3, u_4})
+    max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0} (Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.arena.) (Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.registration.{u_1, u_2, u_3, u_4}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.registration_3.sourceBridgeFact.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"KrausLeftInverseNecessity\",\"left_inverse_error_products\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"KrausLeftInverseNecessity\",\"Products\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.KrausLeftInverseNecessity, declaration := `D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.left_inverse_error_products, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity, declaration := `Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.registration_3.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
-      max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
-  Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.arena.{u_1, u_2, u_3, u_4}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (max (u_3 + 1) (u_2 + 1)) (u_1 + 1),
-      max (max u_3 u_2) u_1, 0, max (max u_3 u_2) u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.arena.{u_1, u_2, u_3, u_4}
-    Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.actual.{u_3, u_2, u_1})
-  Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.registration.{u_1, u_2, u_3, u_4})
+  (Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.registration.{u_1, u_2, u_3, u_4}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]
@@ -650,29 +633,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.registration_1.sourceLaw.{u_1, u_3} : Prop :=
   D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0, max u_1 u_3,
-    0}
-  Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.arena.{u_1, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u_1 + 1) (u_3 + 1), max u_1 u_3,
-        0, max u_1 u_3, 0}
-    Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.arena.{u_1, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_3 + 1) (u_1 + 1), max u_3 u_1, 0,
-        max u_3 u_1, 0}
-      Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.arena.{u_1, u_3}
-      Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.actual.{u_3, u_1})
-    Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.registration.{u_1, u_3})
+    0} (Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.arena.) (Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.registration.{u_1, u_3}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.registration_1.sourceBridgeFact.{u_1, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"KrausLeftInverseNecessity\",\"identity_kraus_scalar\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"KrausLeftInverseNecessity\",\"Scalar\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.KrausLeftInverseNecessity, declaration := `D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.identity_kraus_scalar, part := .type, path := [], levels := [(.param `u_1), (.param `u_3)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity, declaration := `Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0,
-      max u_1 u_3, 0}
-  Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.arena.{u_1, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_3 + 1) (u_1 + 1), max u_3 u_1, 0,
-      max u_3 u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.arena.{u_1, u_3}
-    Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.actual.{u_3, u_1})
-  Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.registration.{u_1, u_3})
+  (Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.registration.{u_1, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]
@@ -791,25 +758,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.re
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.registration_2.sourceLaw.{u_1, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.arena.{u_1, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.arena.{u_1, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-      Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.arena.{u_1, u_3}
-      Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.actual.{u_1})
-    Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.registration.{u_1, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0} (Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.arena.) (Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.registration.{u_1, u_3}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.registration_2.sourceBridgeFact.{u_1, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"KrausLeftInverseNecessity\",\"identity_kraus_commute\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"KrausLeftInverseNecessity\",\"Commute\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.KrausLeftInverseNecessity, declaration := `D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.identity_kraus_commute, part := .type, path := [], levels := [(.param `u_1), (.param `u_3)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity, declaration := `Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.arena.{u_1, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.arena.{u_1, u_3}
-    Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.actual.{u_1})
-  Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.registration.{u_1, u_3})
+  (Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.registration.{u_1, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]

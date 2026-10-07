@@ -187,105 +187,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.re
 
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.registration_2.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.productsArena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, u, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.productsArena.{u}
-    (∀ {H : Type u} [inst : Group.{u} H] [inst_1 : Fintype.{u} H] (s t : H)
-      (hs :
-        @Eq.{u + 1} H
-          (@HMul.hMul.{u, u, u} H H H
-            (@instHMul.{u} H
-              (@MulOne.toMul.{u} H
-                (@MulOneClass.toMulOne.{u} H
-                  (@Monoid.toMulOneClass.{u} H (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst))))))
-            s s)
-          (@OfNat.ofNat.{u} H (nat_lit 1)
-            (@One.toOfNat1.{u} H
-              (@InvOneClass.toOne.{u} H
-                (@DivInvOneMonoid.toInvOneClass.{u} H
-                  (@DivisionMonoid.toDivInvOneMonoid.{u} H (@Group.toDivisionMonoid.{u} H inst))))))),
-      And
-        (@Eq.{u + 1} (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-          (@HMul.hMul.{u, u, u} (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-            (@instHMul.{u} (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-              (@MonoidAlgebra.instMul.{0, u} Nat H Nat.instSemiring
-                (@MulOne.toMul.{u} H
-                  (@MulOneClass.toMulOne.{u} H
-                    (@Monoid.toMulOneClass.{u} H (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst)))))))
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.toNat.{u} H inst
-              (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.leftFactor.{u} H inst inst_1 s t))
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.toNat.{u} H inst
-              (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.rightFactor.{u} H inst s)))
-          (@D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.sourceNat.{u} H inst inst_1 s t))
-        (@Eq.{u + 1} (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-          (@HMul.hMul.{u, u, u} (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-            (@instHMul.{u} (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-              (@MonoidAlgebra.instMul.{0, u} Nat H Nat.instSemiring
-                (@MulOne.toMul.{u} H
-                  (@MulOneClass.toMulOne.{u} H
-                    (@Monoid.toMulOneClass.{u} H (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst)))))))
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.toNat.{u} H inst
-              (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.rightFactor.{u} H inst s))
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.toNat.{u} H inst
-              (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.leftFactor.{u} H inst inst_1 s t)))
-          (@D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.targetNat.{u} H inst inst_1)))
-    Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.productsRegistration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0} (Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.productsArena.) (Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.productsRegistration.{u}).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.registration_2.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"InvolutionCountedConjugacy\",\"natural_factor_products\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"InvolutionCountedConjugacy\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy, declaration := `D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.natural_factor_products, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy, declaration := `Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, u, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.productsArena.{u}
-  (∀ {H : Type u} [inst : Group.{u} H] [inst_1 : Fintype.{u} H] (s t : H)
-    (hs :
-      @Eq.{u + 1} H
-        (@HMul.hMul.{u, u, u} H H H
-          (@instHMul.{u} H
-            (@MulOne.toMul.{u} H
-              (@MulOneClass.toMulOne.{u} H
-                (@Monoid.toMulOneClass.{u} H (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst))))))
-          s s)
-        (@OfNat.ofNat.{u} H (nat_lit 1)
-          (@One.toOfNat1.{u} H
-            (@InvOneClass.toOne.{u} H
-              (@DivInvOneMonoid.toInvOneClass.{u} H
-                (@DivisionMonoid.toDivInvOneMonoid.{u} H (@Group.toDivisionMonoid.{u} H inst))))))),
-    And
-      (@Eq.{u + 1} (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-        (@HMul.hMul.{u, u, u} (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-          (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-          (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-          (@instHMul.{u} (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-            (@MonoidAlgebra.instMul.{0, u} Nat H Nat.instSemiring
-              (@MulOne.toMul.{u} H
-                (@MulOneClass.toMulOne.{u} H
-                  (@Monoid.toMulOneClass.{u} H (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst)))))))
-          (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.toNat.{u} H inst
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.leftFactor.{u} H inst inst_1 s t))
-          (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.toNat.{u} H inst
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.rightFactor.{u} H inst s)))
-        (@D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.sourceNat.{u} H inst inst_1 s t))
-      (@Eq.{u + 1} (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-        (@HMul.hMul.{u, u, u} (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-          (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-          (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-          (@instHMul.{u} (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-            (@MonoidAlgebra.instMul.{0, u} Nat H Nat.instSemiring
-              (@MulOne.toMul.{u} H
-                (@MulOneClass.toMulOne.{u} H
-                  (@Monoid.toMulOneClass.{u} H (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst)))))))
-          (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.toNat.{u} H inst
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.rightFactor.{u} H inst s))
-          (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.toNat.{u} H inst
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.leftFactor.{u} H inst inst_1 s t)))
-        (@D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.targetNat.{u} H inst inst_1)))
-  Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.productsRegistration.{u})
+  (Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.productsRegistration.{u}).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -359,115 +267,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.re
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.registration_1.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.minimumArena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, u, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.minimumArena.{u}
-    (∀ {H : Type u} [inst : Group.{u} H] [inst_1 : Fintype.{u} H] (s t : H)
-      (hs :
-        @Eq.{u + 1} H
-          (@HMul.hMul.{u, u, u} H H H
-            (@instHMul.{u} H
-              (@MulOne.toMul.{u} H
-                (@MulOneClass.toMulOne.{u} H
-                  (@Monoid.toMulOneClass.{u} H (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst))))))
-            s s)
-          (@OfNat.ofNat.{u} H (nat_lit 1)
-            (@One.toOfNat1.{u} H
-              (@InvOneClass.toOne.{u} H
-                (@DivInvOneMonoid.toInvOneClass.{u} H
-                  (@DivisionMonoid.toDivInvOneMonoid.{u} H (@Group.toDivisionMonoid.{u} H inst)))))))
-      (hst :
-        @Ne.{u + 1} H
-          (@HMul.hMul.{u, u, u} H H H
-            (@instHMul.{u} H
-              (@MulOne.toMul.{u} H
-                (@MulOneClass.toMulOne.{u} H
-                  (@Monoid.toMulOneClass.{u} H (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst))))))
-            s t)
-          (@HMul.hMul.{u, u, u} H H H
-            (@instHMul.{u} H
-              (@MulOne.toMul.{u} H
-                (@MulOneClass.toMulOne.{u} H
-                  (@Monoid.toMulOneClass.{u} H (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst))))))
-            t s)),
-      And
-        (@D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{u}
-          (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-          (@MonoidAlgebra.semiring.{0, u} Nat H Nat.instSemiring
-            (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst)))
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-          (@D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.sourceMatrix.{u} H inst inst_1 s t)
-          (@D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.targetMatrix.{u} H inst inst_1)
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-        (Not
-          (@D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{u}
-            (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-            (@MonoidAlgebra.semiring.{0, u} Nat H Nat.instSemiring
-              (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst)))
-            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-            (@D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.sourceMatrix.{u} H inst inst_1 s t)
-            (@D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.targetMatrix.{u} H inst inst_1)
-            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
-    Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.minimumRegistration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0} (Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.minimumArena.) (Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.minimumRegistration.{u}).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.registration_1.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"InvolutionCountedConjugacy\",\"involution_minimum_one\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"InvolutionCountedConjugacy\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy, declaration := `D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.involution_minimum_one, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy, declaration := `Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, u, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.minimumArena.{u}
-  (∀ {H : Type u} [inst : Group.{u} H] [inst_1 : Fintype.{u} H] (s t : H)
-    (hs :
-      @Eq.{u + 1} H
-        (@HMul.hMul.{u, u, u} H H H
-          (@instHMul.{u} H
-            (@MulOne.toMul.{u} H
-              (@MulOneClass.toMulOne.{u} H
-                (@Monoid.toMulOneClass.{u} H (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst))))))
-          s s)
-        (@OfNat.ofNat.{u} H (nat_lit 1)
-          (@One.toOfNat1.{u} H
-            (@InvOneClass.toOne.{u} H
-              (@DivInvOneMonoid.toInvOneClass.{u} H
-                (@DivisionMonoid.toDivInvOneMonoid.{u} H (@Group.toDivisionMonoid.{u} H inst)))))))
-    (hst :
-      @Ne.{u + 1} H
-        (@HMul.hMul.{u, u, u} H H H
-          (@instHMul.{u} H
-            (@MulOne.toMul.{u} H
-              (@MulOneClass.toMulOne.{u} H
-                (@Monoid.toMulOneClass.{u} H (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst))))))
-          s t)
-        (@HMul.hMul.{u, u, u} H H H
-          (@instHMul.{u} H
-            (@MulOne.toMul.{u} H
-              (@MulOneClass.toMulOne.{u} H
-                (@Monoid.toMulOneClass.{u} H (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst))))))
-          t s)),
-    And
-      (@D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{u}
-        (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-        (@MonoidAlgebra.semiring.{0, u} Nat H Nat.instSemiring
-          (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst)))
-        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-        (@D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.sourceMatrix.{u} H inst inst_1 s t)
-        (@D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.targetMatrix.{u} H inst inst_1)
-        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
-      (Not
-        (@D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{u}
-          (@D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.NAlg.{u} H inst)
-          (@MonoidAlgebra.semiring.{0, u} Nat H Nat.instSemiring
-            (@DivInvMonoid.toMonoid.{u} H (@Group.toDivInvMonoid.{u} H inst)))
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
-          (@D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.sourceMatrix.{u} H inst inst_1 s t)
-          (@D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.targetMatrix.{u} H inst inst_1)
-          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
-  Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.minimumRegistration.{u})
+  (Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.minimumRegistration.{u}).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

@@ -243,25 +243,13 @@ noncomputable def Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapa
 
 
 noncomputable def Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.registration_2.sourceLaw.{u, v} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), u, 0, v, 0}
-  Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.arena.{u, v}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u + 1) (v + 1), u, 0, v, 0}
-    Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.arena.{u, v}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), u, 0, v, 0}
-      Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.arena.{u, v}
-      Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.actual.{u, v})
-    Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.registration.{u, v})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), u, 0, v, 0} (Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.arena.) (Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.registration.{u, v}).actual
 
 noncomputable def Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.registration_2.sourceBridgeFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Realization\",\"FreeWindowRealizationCapacity\",\"overlap_output_window\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Realization\",\"FreeWindowRealizationCapacity\",\"Overlap\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
   { owner := `D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity, declaration := `D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.overlap_output_window, part := .type, path := [], levels := [(.param `u), (.param `v)] }
   { owner := `Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity, declaration := `Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u + 1) (v + 1), u, 0, v, 0}
-  Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.arena.{u, v}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), u, 0, v, 0}
-    Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.arena.{u, v}
-    Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.actual.{u, v})
-  Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.registration.{u, v})
+  (Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.registration.{u, v}).bridge
 
 noncomputable def Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -513,25 +501,13 @@ noncomputable def Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapa
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.registration_1.sourceLaw.{u, v, z} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), v, 0, v, 0}
-  Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.arena.{u, v, z}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u + 1) (v + 1), v, 0, v, 0}
-    Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.arena.{u, v, z}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), v, 0, v, 0}
-      Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.arena.{u, v, z}
-      Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.actual.{u, v})
-    Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.registration.{u, v, z})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), v, 0, v, 0} (Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.arena.) (Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.registration.{u, v, z}).actual
 
 noncomputable def Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.registration_1.sourceBridgeFact.{u, v, z} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Realization\",\"FreeWindowRealizationCapacity\",\"free_window_realization_capacity\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"z\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Realization\",\"FreeWindowRealizationCapacity\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"z\"]]]}"))
   { owner := `D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity, declaration := `D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.free_window_realization_capacity, part := .type, path := [], levels := [(.param `u), (.param `v), (.param `z)] }
   { owner := `Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity, declaration := `Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u), (.param `v), (.param `z)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u + 1) (v + 1), v, 0, v, 0}
-  Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.arena.{u, v, z}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), v, 0, v, 0}
-    Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.arena.{u, v, z}
-    Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.actual.{u, v})
-  Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.registration.{u, v, z})
+  (Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.registration.{u, v, z}).bridge
 
 noncomputable def Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

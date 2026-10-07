@@ -117,21 +117,13 @@ noncomputable def Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointF
 
 
 noncomputable def Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.arena
-    D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.claim
-    Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.arena) (Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.registration).actual
 
 noncomputable def Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"StatisticalMechanics\",\"VertexModels\",\"SimplexFixedPointFreePermutations\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"StatisticalMechanics\",\"VertexModels\",\"SimplexFixedPointFreePermutations\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations, declaration := `D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations, declaration := `Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.arena
-  D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.claim
-  Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.registration)
+  (Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.registration).bridge
 
 noncomputable def Reg.D5.S3.StatisticalMechanics.VertexModels.SimplexFixedPointFreePermutations.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

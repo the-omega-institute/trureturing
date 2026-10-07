@@ -261,25 +261,13 @@ noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudi
 
 
 noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.sourceLaw.{u_1} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.{u_1}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.{u_1}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-      Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.{u_1}
-      Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.actual.{u_1})
-    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration.{u_1})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0} (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.) (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration.{u_1}).actual
 
 noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"periodic_residual_scan\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Scan\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
   { owner := `D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `D5.S1.Words.Attractors.periodic_residual_scan, part := .type, path := [], levels := [(.param `u_1)] }
   { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, u_1, 0}
-  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.{u_1}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
-    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.{u_1}
-    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.actual.{u_1})
-  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration.{u_1})
+  (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration.{u_1}).bridge
 
 noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -427,25 +415,13 @@ noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudi
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.sourceLaw.{u_1} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.{u_1}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.{u_1}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.{u_1}
-      Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.actual)
-    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration.{u_1})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.) (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration.{u_1}).actual
 
 noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"nested_word_endpoint_attractors\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Endpoints\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
   { owner := `D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `D5.S1.Words.Attractors.nested_word_endpoint_attractors, part := .type, path := [], levels := [(.param `u_1)] }
   { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.{u_1}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.{u_1}
-    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.actual)
-  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration.{u_1})
+  (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration.{u_1}).bridge
 
 noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

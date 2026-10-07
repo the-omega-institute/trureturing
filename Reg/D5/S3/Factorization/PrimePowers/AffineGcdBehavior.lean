@@ -368,25 +368,13 @@ noncomputable def Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Co
 
 
 noncomputable def Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.arena
-      Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.actual)
-    Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.arena) (Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.registration).actual
 
 noncomputable def Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"PrimePowers\",\"AffineGcdBehavior\",\"affine_word_translation\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"PrimePowers\",\"AffineGcdBehavior\",\"Word\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior, declaration := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior.affine_word_translation, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior, declaration := `Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.arena
-    Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.actual)
-  Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.registration)
+  (Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.registration).bridge
 
 noncomputable def Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -450,25 +438,13 @@ noncomputable def Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.reg
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.arena
-      Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.actual)
-    Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.arena) (Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.registration).actual
 
 noncomputable def Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"PrimePowers\",\"AffineGcdBehavior\",\"affine_action_realization\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"PrimePowers\",\"AffineGcdBehavior\",\"Action\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior, declaration := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior.affine_action_realization, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior, declaration := `Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.arena
-    Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.actual)
-  Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.registration)
+  (Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.registration).bridge
 
 noncomputable def Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -539,25 +515,13 @@ noncomputable def Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.r
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.registration_3.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.arena
-      Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.actual)
-    Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.arena) (Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.registration).actual
 
 noncomputable def Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"PrimePowers\",\"AffineGcdBehavior\",\"local_encoding_complete\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"PrimePowers\",\"AffineGcdBehavior\",\"Local\",\"Complete\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior, declaration := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior.local_encoding_complete, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior, declaration := `Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.registration_3.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.arena
-    Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.actual)
-  Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.registration)
+  (Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.registration).bridge
 
 noncomputable def Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

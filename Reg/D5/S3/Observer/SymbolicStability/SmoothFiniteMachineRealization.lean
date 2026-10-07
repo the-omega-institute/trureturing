@@ -140,25 +140,13 @@ noncomputable def Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealiz
 
 
 noncomputable def Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.registration_1.sourceLaw.{u_1, u_2, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.arena.{u_1, u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.arena.{u_1, u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.arena.{u_1, u_2, u_3}
-      Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.actual)
-    Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.registration.{u_1, u_2, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.arena.) (Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.registration.{u_1, u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.registration_1.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"SymbolicStability\",\"SmoothFiniteMachineRealization\",\"smooth_finite_machine_realization\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"SymbolicStability\",\"SmoothFiniteMachineRealization\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization, declaration := `D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.smooth_finite_machine_realization, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization, declaration := `Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.arena.{u_1, u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.arena.{u_1, u_2, u_3}
-    Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.actual)
-  Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.registration.{u_1, u_2, u_3})
+  (Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.registration.{u_1, u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

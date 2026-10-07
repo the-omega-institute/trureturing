@@ -141,25 +141,13 @@ noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovP
 
 
 noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.sourceLaw.{u} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.{u}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, u, 0}
-    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.{u}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-      Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.{u}
-      Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.actual.{u})
-    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration.{u})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0} (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.) (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration.{u}).actual
 
 noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"markov_chain_law_map_prefix_apply_singleton\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
   { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton, part := .type, path := [], levels := [(.param `u)] }
   { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, u, 0}
-  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.{u}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
-    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.{u}
-    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.actual.{u})
-  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration.{u})
+  (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration.{u}).bridge
 
 noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

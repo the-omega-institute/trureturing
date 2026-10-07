@@ -124,102 +124,13 @@ noncomputable def Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.registration_1.ca
 
 
 noncomputable def Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.arena
-    (∀ (d : Nat),
-      @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) d →
-        And
-          (@LE.le.{0} Real Real.instLE
-            (@Finset.sum.{0, 0} Nat Real Real.instAddCommMonoid (D5.S3.Arith.Robin.FibonacciRankEulerTail.rankBucket d)
-              fun (p : Nat) =>
-              Real.log
-                (@HDiv.hDiv.{0, 0, 0} Real Real Real
-                  (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-                  (@Nat.cast.{0} Real Real.instNatCast p)
-                  (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-                    (@Nat.cast.{0} Real Real.instNatCast p)
-                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))))
-            (@HDiv.hDiv.{0, 0, 0} Real Real Real
-              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-                (@OfNat.ofNat.{0} Real (nat_lit 6)
-                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 6) Real.instNatCast
-                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))))))
-                (@Rat.cast.{0} Real Real.instRatCast (harmonic d)))
-              (@Nat.cast.{0} Real Real.instNatCast d)))
-          (@LE.le.{0} Real Real.instLE
-            (@HDiv.hDiv.{0, 0, 0} Real Real Real
-              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-                (@OfNat.ofNat.{0} Real (nat_lit 6)
-                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 6) Real.instNatCast
-                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))))))
-                (@Rat.cast.{0} Real Real.instRatCast (harmonic d)))
-              (@Nat.cast.{0} Real Real.instNatCast d))
-            (@HDiv.hDiv.{0, 0, 0} Real Real Real
-              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-                (@OfNat.ofNat.{0} Real (nat_lit 6)
-                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 6) Real.instNatCast
-                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))))))
-                (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
-                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-                  (Real.log (@Nat.cast.{0} Real Real.instNatCast d))))
-              (@Nat.cast.{0} Real Real.instNatCast d))))
-    Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.arena) (Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Robin\",\"FibonacciRankEulerTail\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Robin\",\"FibonacciRankEulerTail\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Robin.FibonacciRankEulerTail, declaration := `D5.S3.Arith.Robin.FibonacciRankEulerTail.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail, declaration := `Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.arena
-  (∀ (d : Nat),
-    @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) d →
-      And
-        (@LE.le.{0} Real Real.instLE
-          (@Finset.sum.{0, 0} Nat Real Real.instAddCommMonoid (D5.S3.Arith.Robin.FibonacciRankEulerTail.rankBucket d)
-            fun (p : Nat) =>
-            Real.log
-              (@HDiv.hDiv.{0, 0, 0} Real Real Real
-                (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-                (@Nat.cast.{0} Real Real.instNatCast p)
-                (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
-                  (@Nat.cast.{0} Real Real.instNatCast p)
-                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))))
-          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-              (@OfNat.ofNat.{0} Real (nat_lit 6)
-                (@instOfNatAtLeastTwo.{0} Real (nat_lit 6) Real.instNatCast
-                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))))))
-              (@Rat.cast.{0} Real Real.instRatCast (harmonic d)))
-            (@Nat.cast.{0} Real Real.instNatCast d)))
-        (@LE.le.{0} Real Real.instLE
-          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-              (@OfNat.ofNat.{0} Real (nat_lit 6)
-                (@instOfNatAtLeastTwo.{0} Real (nat_lit 6) Real.instNatCast
-                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))))))
-              (@Rat.cast.{0} Real Real.instRatCast (harmonic d)))
-            (@Nat.cast.{0} Real Real.instNatCast d))
-          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
-            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
-              (@OfNat.ofNat.{0} Real (nat_lit 6)
-                (@instOfNatAtLeastTwo.{0} Real (nat_lit 6) Real.instNatCast
-                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
-                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))))))
-              (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
-                (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
-                (Real.log (@Nat.cast.{0} Real Real.instNatCast d))))
-            (@Nat.cast.{0} Real Real.instNatCast d))))
-  Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.registration)
+  (Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Robin.FibonacciRankEulerTail.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

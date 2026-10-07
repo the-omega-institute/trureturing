@@ -247,30 +247,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.sourceLaw.{u_1, u_2, u_3} : Prop :=
   D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
-    max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
-  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.{u_1, u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (max (u_1 + 1) (u_2 + 1))
-          (u_3 + 1),
-        max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
-    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.{u_1, u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (max (u_3 + 1) (u_2 + 1)) (u_1 + 1),
-        max (max u_3 u_2) u_1, 0, max (max u_3 u_2) u_1, 0}
-      Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.{u_1, u_2, u_3}
-      Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.actual.{u_1, u_2, u_3})
-    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration.{u_1, u_2, u_3})
+    max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0} (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.) (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration.{u_1, u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"spectral_support_on_kraus\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Support\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectral_support_on_kraus, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
-      max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
-  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.{u_1, u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (max (u_3 + 1) (u_2 + 1)) (u_1 + 1),
-      max (max u_3 u_2) u_1, 0, max (max u_3 u_2) u_1, 0}
-    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.{u_1, u_2, u_3}
-    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.actual.{u_1, u_2, u_3})
-  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration.{u_1, u_2, u_3})
+  (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration.{u_1, u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]
@@ -333,25 +316,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.r
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.sourceLaw.{u_1, u_2, u_3} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
-  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.{u_1, u_2, u_3}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_2 + 1, u_2, 0, u_2, 0}
-    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.{u_1, u_2, u_3}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
-      Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.{u_1, u_2, u_3}
-      Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.actual.{u_2})
-    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration.{u_1, u_2, u_3})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0} (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.) (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration.{u_1, u_2, u_3}).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"spectral_transpose_candidate\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Candidate\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
   { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectral_transpose_candidate, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
   { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_2 + 1, u_2, 0, u_2, 0}
-  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.{u_1, u_2, u_3}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
-    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.{u_1, u_2, u_3}
-    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.actual.{u_2})
-  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration.{u_1, u_2, u_3})
+  (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration.{u_1, u_2, u_3}).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]

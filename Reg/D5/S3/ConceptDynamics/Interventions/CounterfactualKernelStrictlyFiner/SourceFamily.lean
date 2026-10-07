@@ -72,21 +72,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelSt
 
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.Support.CausalSourceFamily.strictnessArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.Support.CausalSourceFamily.strictnessArena
-    (Reg.Support.CausalSourceFamily.Strictness Reg.Support.CausalSourceFamily.actual)
-    Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.Support.CausalSourceFamily.strictnessArena) (Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Interventions\",\"CounterfactualKernelStrictlyFiner\",\"counterfactual_kernel_strictly_finer\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Interventions\",\"CounterfactualKernelStrictlyFiner\",\"SourceFamily\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner, declaration := `D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily, declaration := `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.Support.CausalSourceFamily.strictnessArena
-  (Reg.Support.CausalSourceFamily.Strictness Reg.Support.CausalSourceFamily.actual)
-  Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily.registration)
+  (Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Bool) where
   values := [Bool.true, Bool.false]

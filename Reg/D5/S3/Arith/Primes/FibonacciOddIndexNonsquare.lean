@@ -112,25 +112,13 @@ noncomputable def Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.registration
 
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.arena
-    (∀ (m : Nat),
-      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) m →
-        @Odd.{0} Nat Nat.instSemiring m → Not (@IsSquare.{0} Nat instMulNat (Nat.fib m)))
-    Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.arena) (Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciOddIndexNonsquare\",\"fibonacci_odd_index_nonsquare\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Primes\",\"FibonacciOddIndexNonsquare\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.Primes.FibonacciOddIndexNonsquare, declaration := `D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.fibonacci_odd_index_nonsquare, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare, declaration := `Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.arena
-  (∀ (m : Nat),
-    @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) m →
-      @Odd.{0} Nat Nat.instSemiring m → Not (@IsSquare.{0} Nat instMulNat (Nat.fib m)))
-  Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.registration)
+  (Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.Primes.FibonacciOddIndexNonsquare.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

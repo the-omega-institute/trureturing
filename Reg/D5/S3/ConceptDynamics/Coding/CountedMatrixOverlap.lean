@@ -255,25 +255,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.registra
 
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitArena
-      Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitActual)
-    Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitArena) (Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitRegistration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedMatrixOverlap\",\"split_join\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedMatrixOverlap\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap, declaration := `D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.split_join, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitArena
-    Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitActual)
-  Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitRegistration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.splitRegistration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -340,25 +328,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.registra
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinArena
-      Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinActual)
-    Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinArena) (Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinRegistration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedMatrixOverlap\",\"join_split\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedMatrixOverlap\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap, declaration := `D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.join_split, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinArena
-    Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinActual)
-  Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinRegistration)
+  (Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.joinRegistration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

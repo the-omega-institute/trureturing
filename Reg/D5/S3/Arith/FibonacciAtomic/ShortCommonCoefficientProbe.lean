@@ -124,25 +124,13 @@ noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.re
 
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.arena
-      Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.actual)
-    Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.arena) (Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.registration).actual
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"ShortCommonCoefficientProbe\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"ShortCommonCoefficientProbe\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe, declaration := `D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.result, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.arena
-    Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.actual)
-  Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.registration)
+  (Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.registration).bridge
 
 noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

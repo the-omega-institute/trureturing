@@ -123,23 +123,13 @@ noncomputable def Reg.D5.S1.Digit.ZeckendorfResidualMachine.registration_1.canon
 
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfResidualMachine.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Digit.ZeckendorfResidualMachine.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Digit.ZeckendorfResidualMachine.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S1.Digit.ZeckendorfResidualMachine.arena Reg.D5.S1.Digit.ZeckendorfResidualMachine.actual)
-    Reg.D5.S1.Digit.ZeckendorfResidualMachine.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Digit.ZeckendorfResidualMachine.arena) (Reg.D5.S1.Digit.ZeckendorfResidualMachine.registration).actual
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfResidualMachine.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Digit\",\"ZeckendorfResidualMachine\",\"finite_residual_realization\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Digit\",\"ZeckendorfResidualMachine\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Digit.ZeckendorfResidualMachine, declaration := `D5.S1.Digit.ZeckendorfResidualMachine.finite_residual_realization, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Digit.ZeckendorfResidualMachine, declaration := `Reg.D5.S1.Digit.ZeckendorfResidualMachine.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Digit.ZeckendorfResidualMachine.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Digit.ZeckendorfResidualMachine.arena Reg.D5.S1.Digit.ZeckendorfResidualMachine.actual)
-  Reg.D5.S1.Digit.ZeckendorfResidualMachine.registration)
+  (Reg.D5.S1.Digit.ZeckendorfResidualMachine.registration).bridge
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfResidualMachine.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

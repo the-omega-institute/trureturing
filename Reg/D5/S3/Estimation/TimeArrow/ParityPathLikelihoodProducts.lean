@@ -382,25 +382,13 @@ noncomputable def Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.re
 
 
 noncomputable def Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardArena
-      Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardActual)
-    Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardArena) (Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardRegistration).actual
 
 noncomputable def Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"ParityPathLikelihoodProducts\",\"backward_inner_product\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"ParityPathLikelihoodProducts\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts, declaration := `D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backward_inner_product, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts, declaration := `Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardArena
-    Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardActual)
-  Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardRegistration)
+  (Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.backwardRegistration).bridge
 
 noncomputable def Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -498,25 +486,13 @@ noncomputable def Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.re
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardArena
-      Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardActual)
-    Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardArena) (Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardRegistration).actual
 
 noncomputable def Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"ParityPathLikelihoodProducts\",\"forward_inner_product\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"ParityPathLikelihoodProducts\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts, declaration := `D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forward_inner_product, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts, declaration := `Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardArena
-    Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardActual)
-  Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardRegistration)
+  (Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forwardRegistration).bridge
 
 noncomputable def Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]
@@ -614,25 +590,13 @@ noncomputable def Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.re
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.registration_3.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedArena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedArena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedArena
-      Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedActual)
-    Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedRegistration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedArena) (Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedRegistration).actual
 
 noncomputable def Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"ParityPathLikelihoodProducts\",\"forward_backward_inner_product\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"ParityPathLikelihoodProducts\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts, declaration := `D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.forward_backward_inner_product, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts, declaration := `Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.registration_3.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedArena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedArena
-    Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedActual)
-  Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedRegistration)
+  (Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.mixedRegistration).bridge
 
 noncomputable def Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

@@ -237,21 +237,13 @@ noncomputable def Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.
 
 
 noncomputable def Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.arena
-    D5.S3.ArithSums.GreedyBrickCapacityTotality.RowTransitionCorrespondence
-    Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.arena) (Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.registration).actual
 
 noncomputable def Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ArithSums\",\"GreedyBrickCapacityTotality\",\"row_transition_correspondence\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ArithSums\",\"GreedyBrickCapacityTotality\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ArithSums.GreedyBrickCapacityTotality, declaration := `D5.S3.ArithSums.GreedyBrickCapacityTotality.row_transition_correspondence, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality, declaration := `Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.arena
-  D5.S3.ArithSums.GreedyBrickCapacityTotality.RowTransitionCorrespondence
-  Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.registration)
+  (Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.registration).bridge
 
 noncomputable def Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Bool) where
   values := [Bool.true, Bool.false]
@@ -314,25 +306,13 @@ noncomputable def Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.registration_1
   (by first | rfl | (ext <;> rfl))
 
 noncomputable def Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.registration_2.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.arena
-      Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.actual)
-    Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.arena) (Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.registration).actual
 
 noncomputable def Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ArithSums\",\"GreedyBrickCapacityTotality\",\"source_row_geometry\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ArithSums\",\"GreedyBrickCapacityTotality\",\"GeometryAudit\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ArithSums.GreedyBrickCapacityTotality, declaration := `D5.S3.ArithSums.GreedyBrickCapacityTotality.source_row_geometry, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality, declaration := `Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.registration_2.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.arena
-    Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.actual)
-  Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.registration)
+  (Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.registration).bridge
 
 noncomputable def Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

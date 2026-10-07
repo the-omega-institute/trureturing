@@ -137,23 +137,13 @@ noncomputable def Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.registration_1.ca
 
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.arena Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.actual)
-    Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.arena) (Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.registration).actual
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Digit\",\"ZeckendorfResidualNormalForm\",\"normalized_state_cover\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Digit\",\"ZeckendorfResidualNormalForm\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S1.Digit.ZeckendorfResidualNormalForm, declaration := `D5.S1.Digit.ZeckendorfResidualNormalForm.normalized_state_cover, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S1.Digit.ZeckendorfResidualNormalForm, declaration := `Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.arena Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.actual)
-  Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.registration)
+  (Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.registration).bridge
 
 noncomputable def Reg.D5.S1.Digit.ZeckendorfResidualNormalForm.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

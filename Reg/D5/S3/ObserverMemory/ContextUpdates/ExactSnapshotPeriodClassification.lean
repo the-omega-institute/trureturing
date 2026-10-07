@@ -169,25 +169,13 @@ noncomputable def Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodCla
 
 
 noncomputable def Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.registration_1.sourceLaw.{u_1, u_2, u_3, u_4} : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.arena.{u_1, u_2, u_3, u_4}
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.arena.{u_1, u_2, u_3, u_4}
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.arena.{u_1, u_2, u_3, u_4}
-      Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.actual)
-    Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.registration.{u_1, u_2, u_3, u_4})
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.arena.) (Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.registration.{u_1, u_2, u_3, u_4}).actual
 
 noncomputable def Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.registration_1.sourceBridgeFact.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"ContextUpdates\",\"ExactSnapshotPeriodClassification\",\"period_classification\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"ContextUpdates\",\"ExactSnapshotPeriodClassification\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}"))
   { owner := `D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification, declaration := `D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.period_classification, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
   { owner := `Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification, declaration := `Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.arena.{u_1, u_2, u_3, u_4}
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.arena.{u_1, u_2, u_3, u_4}
-    Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.actual)
-  Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.registration.{u_1, u_2, u_3, u_4})
+  (Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.registration.{u_1, u_2, u_3, u_4}).bridge
 
 noncomputable def Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

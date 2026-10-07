@@ -145,25 +145,13 @@ noncomputable def Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection
 
 
 noncomputable def Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.arena
-      Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.actual)
-    Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.arena) (Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.registration).actual
 
 noncomputable def Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"GeneralInstrumentNoDarkDirection\",\"no_dark_direction_tfae\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"GeneralInstrumentNoDarkDirection\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection, declaration := `D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.no_dark_direction_tfae, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection, declaration := `Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.arena
-    Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.actual)
-  Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.registration)
+  (Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.registration).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

@@ -115,25 +115,13 @@ noncomputable def Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.Stat
 
 
 noncomputable def Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.arena
-    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-      Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.arena
-      Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.actual)
-    Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.arena) (Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.registration).actual
 
 noncomputable def Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Prediction\",\"DelayedPulseMemoryGap\",\"delayed_pulse_memory_gap\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Prediction\",\"DelayedPulseMemoryGap\",\"StaticAudit\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap, declaration := `D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.delayed_pulse_memory_gap, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap, declaration := `Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.arena
-  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-    Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.arena
-    Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.actual)
-  Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.registration)
+  (Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.registration).bridge
 
 noncomputable def Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [PUnit.unit.{1}]

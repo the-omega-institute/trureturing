@@ -188,21 +188,13 @@ noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registrat
 
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.arena
-    Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.sourceStatement
-    Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.arena) (Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration).actual
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalBellmanEnvelope\",\"same_tree_stopped_moment_certificate\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalFrontierMoment\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.same_tree_stopped_moment_certificate, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.arena
-  Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.sourceStatement
-  Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration)
+  (Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration).bridge
 
 noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
   values := [Unit.unit]

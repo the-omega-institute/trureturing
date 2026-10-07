@@ -100,21 +100,13 @@ noncomputable def Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingC
 
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.TemplateShadow.registration_1.sourceLaw : Prop :=
-  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
-  Reg.Support.LegacyRelations.Preemption.arena
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
-    Reg.Support.LegacyRelations.Preemption.arena
-    D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.EndStateOmitsPreemptingCauseStatement
-    Reg.Support.LegacyRelations.Preemption.registration)
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} (Reg.Support.LegacyRelations.Preemption.arena) (Reg.Support.LegacyRelations.Preemption.registration).actual
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.TemplateShadow.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
   (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Attribution\",\"EndStateOmitsPreemptingCause\",\"end_state_omits_preempting_cause\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Attribution\",\"EndStateOmitsPreemptingCause\",\"TemplateShadow\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
   { owner := `D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause, declaration := `D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause, part := .type, path := [], levels := [] }
   { owner := `Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.TemplateShadow, declaration := `Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.TemplateShadow.registration_1.sourceLaw, part := .value, path := [], levels := [] }
-  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
-  Reg.Support.LegacyRelations.Preemption.arena
-  D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.EndStateOmitsPreemptingCauseStatement
-  Reg.Support.LegacyRelations.Preemption.registration)
+  (Reg.Support.LegacyRelations.Preemption.registration).bridge
 
 noncomputable def Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.TemplateShadow.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.PreemptionReadout) where
   values := [D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.PreemptionReadout.cutEnd, D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.PreemptionReadout.cutCause, D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.PreemptionReadout.admitAThenB, D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.PreemptionReadout.admitBThenA]
