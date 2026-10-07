@@ -7,6 +7,10 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/TotalVariation/TreeParityKernel.";
+    private static readonly LibraryNoteRef StarsAndBars =
+        LibraryNoteRef.Create("D5/L/TotalVariation/mathlib2026starsbars");
+    private static readonly LibraryNoteRef BernoulliParity =
+        LibraryNoteRef.Create("D5/L/TotalVariation/siegrist2026generating");
     private static readonly Formula Av = F.Id("a"), Bv = F.Id("b"), Dv = F.Id("d"), Mv = F.Id("M");
     private static readonly Formula Tv = F.Id("t"), Iv = F.Id("i"), Hv = F.Id("h"), Nv = F.Id("n");
     private static readonly Formula Uv = F.Id("U"), Vv = F.Id("V"), Ev = F.Id("epsilon");
@@ -20,13 +24,14 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
                 + "The guard requires h <= M and h mod 2 = M mod 2. The mass is zero when either test fails; "
                 + "the binomial coefficient in the nonzero branch is evaluated only for the resulting natural parameters. "
                 + "Its numerator counts the weak compositions of M into d parts with parity vector xi.",
-                DescribeRole.Definition),
+                DescribeRole.Definition, AssessedProvenance.FromRepo(StarsAndBars)),
             Node("reference-law", "Conditioned Bernoulli mass", "Q", ReferenceFormula(),
                 "Here nu = M/(2M+d), eta = d/(2M+d), and p_e = (1+(-1)^M eta^d)/2. "
                 + "The mass is zero when h mod 2 differs from M mod 2. For positive d and M, "
                 + "this formula describes independent Bernoulli(nu) bits conditioned on the terminal parity. "
                 + "The conditioned bits are not asserted to be independent. Both masses have exactly the form "
-                + "used by the frozen finite parity bound.", DescribeRole.Definition),
+                + "used by the finite parity bound.", DescribeRole.Definition,
+                AssessedProvenance.FromLiterature(BernoulliParity)),
             Node("intervals", "Shapes and complete gaps", "intervals",
                 Seq(Call("Fiber", Av, Bv), Sp, Sim, Sp,
                     Call("Shapes", Subtract(Nv, D(1))), Sp, Times, Sp, Call("WeakCompositions", Dv, Mv)),
@@ -37,12 +42,13 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
                 + "The separator positions, read left to right, correspond to a positive composition of n+1 into d blocks; "
                 + "subtracting one from every block gives the gap sizes, a weak composition of M into d parts. "
                 + "Adding one reverses this operation. "
-                + "All ordered shapes with n-1 internal nodes are retained.", DescribeRole.Definition),
+                + "All ordered shapes with n-1 internal nodes are retained.", DescribeRole.Definition,
+                AssessedProvenance.FromRepo()),
             Node("parity", "Complete gap parity record", "gapParity",
                 Equal(Call("xi", Tv, Iv), Call("decide", Equal(Call("mod", Index(F.Id("r"), Iv), D(2)), D(1)))),
                 "The Boolean vector has one coordinate for every gap, including both outside gaps. "
                 + "Its occupied-coordinate count h is the number of true coordinates, and h mod 2 equals M mod 2.",
-                DescribeRole.Definition),
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("reference", "Reference tree mass", "referenceTreeMass",
                 Equal(Call("V", Tv), Ratio(Call("Q", Dv, Mv, Call("xi", Tv)),
                     Multiply(Call("catalan", Subtract(Nv, D(1))),
@@ -51,7 +57,7 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
                 + "conditioned Bernoulli parity law Q and the actual uniform conditional law given the complete gap parity. "
                 + "For a legal parity vector, the denominator is the number of actual trees with that record: "
                 + "catalan(n-1) times choose((M-h)/2+d-1,d-1). The parity vector of an actual tree is always legal.",
-                DescribeRole.Definition),
+                DescribeRole.Definition, AssessedProvenance.FromRepo(StarsAndBars, BernoulliParity)),
             Node("result", "Equal distance and two-sided event bounds", "result", ResultFormula(),
                 "For every natural composition a,b with a+b>=1 and M>=d, the parity pushforward of U equals R(d,M). "
                 + "The reference mass is nonnegative, sums to one, and its parity pushforward equals Q(d,M). "
@@ -65,7 +71,8 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
                 + "Within each parity fiber the two tree laws differ by one sign, so the deterministic parity channel "
                 + "preserves their total variation. The finite parity bound and the event characterization of total "
                 + "variation give both event inequalities. For d=1 the single gap has the parity of M, the two parity "
-                + "masses agree, and so the tree laws agree.", DescribeRole.Theorem))));
+                + "masses agree, and so the tree laws agree.", DescribeRole.Theorem,
+                AssessedProvenance.FromRepo(StarsAndBars, BernoulliParity)))));
 
     private static Formula ResultFormula()
     {
@@ -100,9 +107,10 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
             Power(Paren(Subtract(D(1), F.Nu)), Subtract(Dv, Hv))), Index(F.Id("p"), F.Id("e"))), D(0))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
-        string prose, DescribeRole role) => Describe.Lean(DescribeId.Create("tree-parity-" + id),
+        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        Describe.Lean(DescribeId.Create("tree-parity-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(Disp(formula)),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role);
     private static Formula Relation(Formula a, Formula op, Formula b) => Seq(a, Sp, op, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Paren(a), Sp, Land, Sp, Paren(b));
     private static Formula Ratio(Formula a, Formula b) => Seq(Frac, Grp(a), Grp(b));
