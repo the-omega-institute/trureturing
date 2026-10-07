@@ -1190,3 +1190,296 @@ selected cutoff. The printed theorem's error can be integrated on
 each finite retained scale interval, but (C6) supplies no bound making
 that increasing cost fit the Robin reserve. No such uniform balance,
 effective zero computation or proof of RH is asserted here.
+
+
+## Centering the large-scale arithmetic main expression
+
+The first-moment cancellation (C4) also removes the continuous
+prime-density contribution of the third branch of $M_T$. The
+[previously assessed Fiori–Jaskari application](../Weil/broadbent2026mertens.md)
+supplies an independent bound for the remainder. This concerns the
+arithmetic main expression, with the same kernel and height blocks;
+it does not estimate the actual zero remainder $\mathcal E_T$ or
+reproduce the prime-number-theorem proof. These deductions are
+paper-level applications with no originality or Lean-verification claim.
+
+### Keep the moving frequency in the prime-error estimate
+
+Reuse the explicit positive constant
+
+$$
+d=\frac52\left(\frac53\right)^{1/5}
+            \left(\frac{2000}{161967}\right)^{3/5}
+$$
+
+from that existing application. Its unconditional conclusion is
+
+$$
+|\psi(u)-u|\le0.239u\,e^{-d\sqrt{\log u}}
+\qquad(u\ge e^3).
+\tag{P1}
+$$
+
+No new inspection or certification of its source computation is
+claimed. In particular the prime powers are part of $\psi$.
+
+Put $\psi_-(u)=\sum_{n<u}\Lambda(n)$. The endpoint difference
+$\psi(u)-\psi_-(u)$ is at most $\log u$. Also $d<1$: use
+$5/3<2$ and $2000/161967<1/64$ to get $d<5/16$.
+For $v\ge3$, $v-\log v\ge\sqrt v$, hence
+$\log u\le u e^{-d\sqrt{\log u}}$. Consequently
+
+$$
+|\psi_-(u)-u|<2u\,e^{-d\sqrt{\log u}}
+\qquad(u\ge e^3).
+\tag{P2}
+$$
+
+This includes the endpoint convention of the actual interval
+$y\le n<2y$, including when $y$ or $2y$ is a prime power.
+
+For $T>1$, $X$ with $y=\pi X/T\ge e^3$, write
+
+$$
+S_T(X)=\sum_{y\le n<2y}\frac{\Lambda(n)}n e^{2\pi iX/n},
+\qquad
+b_T=\int_T^{2T}\frac{e^{it}}t\,dt.
+$$
+
+Substituting $t=2\pi X/u$ gives
+$\int_y^{2y}u^{-1}e^{2\pi iX/u}du=b_T$.
+For $w_X(u)=u^{-1}e^{2\pi iX/u}$, Stieltjes integration with the
+retained endpoints gives exactly
+
+$$
+\begin{aligned}
+S_T(X)-b_T={}&w_X(2y)[\psi_-(2y)-2y]
+             -w_X(y)[\psi_-(y)-y]\\
+ &-\int_y^{2y}[\psi(u)-u]w_X'(u)\,du.
+\end{aligned}
+\tag{P3}
+$$
+
+The integral may use either endpoint version of $\psi$, since their
+difference is supported at integers. As
+$|w_X'(u)|\le u^{-2}+2\pi Xu^{-3}$, (P1)–(P2), with
+$\delta_y=e^{-d\sqrt{\log y}}$, give
+
+$$
+|S_T(X)-b_T|
+\le(4+2\log2+2T)\delta_y
+<8T\delta_y.
+\tag{P4}
+$$
+
+The factor $T$ records the moving phase. It has not been replaced by
+a fixed-frequency constant or omitted after changing variables.
+Ordinary integration by parts also gives $|b_T|\le2/T$.
+
+### A signed cancellation and a controlled centered complement
+
+Since $M_T(X)=-XS_T(X)$ on this large-scale branch, define the
+centered expression on all $X\ge1$ by
+
+$$
+\widetilde M_T(X)=M_T(X)+Xb_T.
+$$
+
+Here the other two branches of $M_T$ remain their original formulas;
+(P4) is used only where its threshold holds. Combining (P4) with
+(C2) gives the independent complement estimate
+
+$$
+\boxed{
+\int_R^\infty|\widetilde M_T(X)|\,|\mu_A|(dX)
+<\frac{16T}{\log R}
+       e^{-d\sqrt{\log(\pi R/T)}}
+\quad\left(R\ge\max(A,e^3T/\pi),\ A\ge e^2\right).}
+\tag{P5}
+$$
+
+The linear part is eliminated by the full signed moment, not by
+discarding a part of the scale interval:
+
+$$
+\int_1^\infty M_T(X)\,\mu_A(dX)
+=\int_1^\infty\widetilde M_T(X)\,\mu_A(dX)
+ +b_T\int_0^1g_A(X)\,dX.
+\tag{P6}
+$$
+
+Thus the small-scale term in (C8) changes to
+$\int_0^1[D_T(X)+Xb_T]\,\mu_A(dX)$ when its main term is
+replaced by the centered one. The actual zero remainder
+$\mathcal E_T=D_T-M_T$ is unchanged. This retains all endpoint,
+small-scale and conjugate contributions at the same cutoff.
+
+### Cutoffs for the centered arithmetic contribution
+
+With the same $T_j=2^{j-1}T_0$, any requested
+$\varepsilon>0$ has explicit sufficient main-term cutoffs
+
+$$
+\begin{aligned}
+V_j&=\max\left(3,
+  d^{-2}\left[\max\left(0,
+          \log\frac{16T_j2^j}{\varepsilon}\right)\right]^2\right),\\
+Q_j&=\max\left(A,\frac{T_j}{\pi}e^{V_j}\right).
+\end{aligned}
+\tag{P7}
+$$
+
+Since $\log Q_j\ge2$, (P5) gives
+
+$$
+\sum_{j\ge1}\int_{Q_j}^\infty
+|\widetilde M_{T_j}(X)|\,|\mu_A|(dX)<\varepsilon.
+\tag{P8}
+$$
+
+For fixed $A,T_0,\varepsilon$, this choice has
+$\log Q_j=O(j^2)$ as $j\to\infty$. It is a sufficient allowance
+for the centered **arithmetic main** complement, not a necessary
+cutoff or a replacement for (C6)'s zero-remainder cutoffs. It uses
+the same cumulative error law for each prime interval and does not
+combine independently favorable phases.
+
+These estimates control another scale complement and make its
+continuous cancellation explicit. They do not bound the signed
+combination left in (C8): the small-scale zero sum, retained centered
+main and actual zero remainder must still be compared together.
+The growing-scale error cost and the original full Robin inequality
+remain unpaid; no bound for $\sqrt A\log A\,I_\psi(A)$ at the selected
+integer or proof of RH follows.
+
+
+## A finite scale band already costs a growing absolute-error allowance
+
+The infinite-moment obstruction (S8) and complement estimates (C5)–(C8)
+leave a different question: can a retained scale cutoff make the printed
+Durkan–Hughes–Pearce-Crump error majorant small enough? For the constructed
+transport, a finite band gives a quantitative obstruction even before
+its large-scale complement is considered. This is a paper-level
+application of (S2) and the already assessed Theorem 5, not a new source
+audit, originality claim or Lean-verified result.
+
+### Locate a positive band of the same signed kernel
+
+Let $A\ge e^8$, $L=\log A$, and write $X=A\xi$ and $k=2\pi\xi$.
+Rescale the two branches of $v_A'$ in (S2), without changing the
+original cutoff. Then
+
+$$
+ALg_A(A\xi)=\frac2k\left[B(k)-LI_L(k)\right],
+\qquad
+B(k)=\int_1^\infty\frac{\sin(kt)}{t^2}\,dt,
+\quad
+I_L(k)=\int_0^1\frac{\sin(kt)}{t(L-\log t)^2}\,dt.
+\tag{R1}
+$$
+
+For $0<k\le1/2$, the sine is nonnegative on $[1,\pi/k]$.
+Its chord bound on $[1,\pi/(2k)]$, followed by an absolute bound
+on the remaining tail, gives
+
+$$
+B(k)\ge\frac{2k}{\pi}\log\frac\pi{2k}-\frac k\pi
+>\frac k4.
+\tag{R2}
+$$
+
+Here $\log(\pi/(2k))\ge\log\pi>1$ and $\pi<4$.
+Also $\sin(kt)\le kt$ on $0<t<1$, so
+$LI_L(k)\le k/L\le k/8$. Thus (R1) gives the uniform, explicit
+positive band
+
+$$
+\boxed{g_A(X)>\frac1{4A\log A}
+\qquad\left(\frac A{8\pi}\le X\le\frac A{4\pi},\ A\ge e^8\right).}
+\tag{R3}
+$$
+
+This does not claim positivity on all scales; (C4)'s complete signed
+first moment is still zero. The band is contained in $[1,R]$ for
+every $R\ge A$. From $d|\mu_A|(X)=|g_A(X)|dX/X$, (R3),
+$\log2>1/2$ and $\pi<4$ imply
+
+$$
+\int_1^R|\mu_A|(dX)>\frac1{8A\log A},\qquad
+\int_1^RX^{1+\delta}|\mu_A|(dX)
+>\frac{(A/32)^\delta}{128\log A}\quad(\delta>0).
+\tag{R4}
+$$
+
+Both lower bounds concern the transport's absolute weights, not an
+actual prime or zero error. No critical-line assumption, zero count
+or finite zero computation is used.
+
+### Balance the two printed height costs at every height
+
+Theorem 5, printed p.4, (2.1), includes the two error shapes
+
+$$
+\sqrt T(\log T)^2,
+\qquad \frac{(\log T)^2}{\sqrt T}X^{1+1/\log T}
+\qquad(T>1,\ X\ge1).
+$$
+
+Their uniform implied constants are not numerically certified here.
+Define the **unit-coefficient majorant allowance**, after the original
+Robin normalization, by
+
+$$
+\mathcal B_A(T,R)=\sqrt A\log A\,(\log T)^2
+\int_1^R\left(\sqrt T+\frac{X^{1+1/\log T}}{\sqrt T}\right)
+|\mu_A|(dX).
+\tag{R5}
+$$
+
+For $h=\log T>0$ and $R\ge A\ge e^8$, (R4) gives
+
+$$
+\mathcal B_A(T,R)>
+ h^2\left[\frac18\sqrt{T/A}
+       +\frac1{128}\sqrt{A/T}(A/32)^{1/h}\right]
+\ge\frac{h^2}{16}\exp\left(\frac{\log(A/32)}{2h}\right).
+\tag{R6}
+$$
+
+For any $c>0$, the minimum of $h^2e^{c/(2h)}$ over $h>0$
+is $e^2c^2/16$, attained at $h=c/4$. Consequently
+
+$$
+\boxed{\mathcal B_A(T,R)>
+\frac{e^2}{256}\,[\log(A/32)]^2
+\quad\text{for every }T>1,\ R\ge A\ge e^8.}
+\tag{R7}
+$$
+
+This is a lower bound on the allowance produced by integrating these
+two positive majorant shapes. It is not a lower bound on
+$|\mathcal E_T|$, on its actual integral, or on a Robin violation.
+The other two printed error shapes can only increase this particular
+absolute allowance. If the two shapes receive any fixed positive
+coefficients $c_1,c_2$, the same argument has (R7)'s right side
+multiplied by $\sqrt{c_1c_2}$. No numerical value for those coefficients
+or effective failure threshold is inferred from big-$O$ notation.
+
+The core reserve $\mathcal E(\log A)$ in (G7) remains bounded as
+$A\to\infty$. In contrast, (R7) grows quadratically in $\log A$
+for every choice of height $T$, including a height depending on $A$.
+Thus this direct absolute-majorant transfer on retained intervals
+$[1,R]$ with $R\ge A$ cannot provide a uniform bounded Robin allowance
+uniformly as the clock tends to infinity. No unbounded sequence of
+selected sources is asserted. Increasing those cutoffs, or improving
+only their omitted complements, does not remove the finite band.
+An actual-remainder bound that improves on these shapes, integration
+that controls the remainder's sign, or a different scale decomposition
+could change this conclusion; none is excluded by (R7).
+
+The result specifies a finite retained-scale obstruction to one
+estimate method. It does not supply the required signed estimate at
+the same selected integer, drop any zero multiplicity or infinite
+height block, or settle RH. The centered arithmetic-main estimates
+(P5)–(P8) remain valid independently; they do not alter the actual
+zero remainder used in (R5).
