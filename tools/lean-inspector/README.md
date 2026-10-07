@@ -38,6 +38,15 @@ path. The report consumes these fields and reconstructs raw ownership, enrollmen
 source scope, catalog membership, ordering and joins. Checked plans, joins,
 assessments, verdicts and report receipts are never importable authority.
 
+The bounded `CompiledExpressions.sameShape` comparator uses supported semantic
+equalities on compiler-checked terms; it is not a definitional-equality test.
+For two `Decidable.decide` applications it compares the propositions and omits
+only their decision-instance arguments: any instances for the same proposition
+give propositionally equal Boolean results (`decide_eq_decide` in Lean).
+Other instance and dictionary arguments remain subject to ordinary comparison.
+`CompiledCalculations` tests the same-proposition/different-instance case,
+different propositions and distinct `ToString` dictionaries.
+
 Finite seal catalogs carry nondegeneracy and bundle nonemptiness for their exact
 arena and unit vector. Unsealed finite registrations retain their existing scope;
 they do not acquire a nondegeneracy requirement. Checked readout sensitivity

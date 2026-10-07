@@ -3,11 +3,50 @@ import LeanInformationAudit.ArtifactAssessment
 namespace LeanInformationAuditRegTests.CompiledCalculations
 open Lean LeanInformationAudit Contract.CompiledExpressions
 
+-- The semantic basis is reused from Lean; no new mathematical declaration.
+example (p : Prop) (first second : Decidable p) :
+    @decide p first = @decide p second := decide_eq_decide.mpr Iff.rfl
+
+private def decideSamePropositionDifferentInstances (context : Context) : IO Unit := do
+  let proposition := mkConst ``True
+  let classical := mkApp (mkConst ``Classical.propDecidable) proposition
+  let constructive := mkApp2 (mkConst ``Decidable.isTrue) proposition (mkConst ``True.intro)
+  let (same, _) ← run context (sameShape
+    (mkApp2 (mkConst ``Decidable.decide) proposition classical)
+    (mkApp2 (mkConst ``Decidable.decide) proposition constructive))
+  unless classical != constructive && same do
+    throw <| IO.userError "compiled.decide_same_proposition_different_instances"
+  IO.println "[PASS] compiled.decide_same_proposition_different_instances"
+
+private def decideDifferentPropositions (context : Context) : IO Unit := do
+  let decision := fun proposition => mkApp2 (mkConst ``Decidable.decide) proposition
+    (mkApp (mkConst ``Classical.propDecidable) proposition)
+  let (same, _) ← run context
+    (sameShape (decision (mkConst ``True)) (decision (mkConst ``False)))
+  unless !same do throw <| IO.userError "compiled.decide_different_propositions"
+  IO.println "[PASS] compiled.decide_different_propositions"
+
+private def otherInstanceArgumentsRemainSignificant (context : Context) : IO Unit := do
+  let first : FVarId := ⟨`firstToString⟩
+  let second : FVarId := ⟨`secondToString⟩
+  let dictionaryType := mkApp (mkConst ``ToString [0]) (mkConst ``Nat)
+  let locals := ({} : LocalContext).mkLocalDecl first `first dictionaryType .instImplicit
+    |>.mkLocalDecl second `second dictionaryType .instImplicit
+  let value := fun dictionary => mkAppN (mkConst ``ToString.toString [0])
+    #[mkConst ``Nat, mkFVar dictionary, mkNatLit 0]
+  let (same, _) ← run {context with local? := locals.find?}
+    (sameShape (value first) (value second))
+  unless !same do throw <| IO.userError "compiled.other_instance_arguments_remain_significant"
+  IO.println "[PASS] compiled.other_instance_arguments_remain_significant"
+
 unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
   RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
   let store ← reader.get
   let context := CompiledRegistration.expressionContext (store.constants[·]?)
     (← IO.getNumHeartbeats) {}
+  decideSamePropositionDifferentInstances context
+  decideDifferentPropositions context
+  otherInstanceArgumentsRemainSignificant context
   let value := mkApp2 (mkConst ``Nat.add) (mkNatLit 2) (mkNatLit 3)
   let ((first, same), work) ← run context (do
     let first ← erase value

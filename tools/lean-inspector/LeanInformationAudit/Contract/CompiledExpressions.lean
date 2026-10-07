@@ -317,6 +317,9 @@ private partial def neutralLocal (e : Expr) (depth : Nat := 0)
 
 /-- Compare compiled data terms after bounded administrative computation.
 The comparison consumes declaration syntax and never invokes a type checker.
+This is a supported semantic comparison, not a test for definitional equality:
+`Decidable.decide` applications with matching propositions compare equal even
+when their decision instances differ. No other instance argument is erased.
 Binder annotations are compared by the source reconstruction consumer. -/
 partial def sameShape (left right : Expr) (depth : Nat := 0)
     (binders : Array Expr := #[]) : M Bool := do
@@ -380,8 +383,10 @@ private partial def sameShapeCore (left right : Expr) (depth : Nat := 0)
   let right ← head right depth (preserveDecisions := true) (binders := binders)
   if right.hasFVar && !left.hasFVar && (← neutralLocal right depth binders) then return false
   if left == right then return true
-  -- Decidable dictionaries for the same proposition determine the same Bool.
-  -- Reification compares that proposition without running or synthesizing a dictionary.
+  -- Any two compiler-checked Decidable instances for the same proposition give
+  -- propositionally equal Bool results (Init.PropLemmas.decide_eq_decide).
+  -- This need not be definitional equality. Only the instance argument of
+  -- Decidable.decide is omitted; other dictionaries keep the ordinary comparison.
   if left.isAppOfArity ``Decidable.decide 2 && right.isAppOfArity ``Decidable.decide 2 then
     return ← sameShape left.getAppArgs[0]! right.getAppArgs[0]! (depth + 1) binders
   let compare := fun a b => sameShape a b (depth + 1) binders
