@@ -168,7 +168,8 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           simp only [Fintype.sum_sum_type,Fintype.sum_prod_type,Fin.sum_univ_four]
         all_goals simp [p,V,endpoint,endpointWith,Finset.sum_add_distrib,
           Finset.sum_ite,Finset.sum_sub_distrib,Finset.sum_mul,Finset.mul_sum,
-          Finset.filter_ne,Finset.filter_ne',Finset.filter_eq,Finset.filter_eq',Nat.cast_sub hk] <;> ring
+          Finset.filter_ne,Finset.filter_ne',Finset.filter_eq,Finset.filter_eq',
+          Nat.cast_sub hk] <;> ring
     have row (i : Index k) :
         (∫⁻ l, (cost (c l) (family k i) : ℝ≥0∞) ∂frontierMeasure k t) =
           ENNReal.ofReal ((8*k+16 : Nat) +
@@ -230,7 +231,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         push_cast
         ring
     · simp_rw [maximum]
-      rw [integrate _ (fun l => by cases l <;> dsimp <;> first | positivity | (split_ifs <;> positivity))]
+      rw [integrate _ (fun l => by cases l <;> dsimp <;> positivity)]
       congr 1
       simp [p,Fintype.sum_sum_type,Fintype.sum_prod_type,Fin.sum_univ_four]
       push_cast
@@ -319,10 +320,12 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           ring
         · fin_cases b <;>
             simp [d,endpoint,Fin.sum_univ_three,Finset.sum_add_distrib,
-              Finset.sum_ite,Finset.filter_ne,Finset.filter_ne',Finset.filter_eq,Finset.filter_eq',Nat.cast_sub hk] <;> ring
+              Finset.sum_ite,Finset.filter_ne,Finset.filter_ne',Finset.filter_eq,
+              Finset.filter_eq',Nat.cast_sub hk] <;> ring
         · fin_cases b <;>
             simp [d,endpointWith,Fin.sum_univ_three,Finset.sum_add_distrib,
-              Finset.sum_ite,Finset.filter_ne,Finset.filter_ne',Finset.filter_eq,Finset.filter_eq',Nat.cast_sub hk] <;> ring
+              Finset.sum_ite,Finset.filter_ne,Finset.filter_ne',Finset.filter_eq,
+              Finset.filter_eq',Nat.cast_sub hk] <;> ring
       have bound : ∀ i, (v.val i : ℝ) ≤ 1 + d v := by
         rcases v with ⟨v,((⟨u,rfl⟩ | ⟨⟨j,b⟩,rfl⟩) | ⟨⟨j,b⟩,rfl⟩)⟩
         · intro i; simp [d,endpoint]; split_ifs <;> norm_num
@@ -353,15 +356,8 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         linarith
     let q := ∑ v, p v * d v
     have qp : 0 ≤ q := Finset.sum_nonneg (fun v _ => mul_nonneg (pn v) (shape v).1.1)
-    have qu : q ≤ 1 := by
-      calc
-        _ ≤ ∑ v, p v * 1 := Finset.sum_le_sum
-          (fun v _ => mul_le_mul_of_nonneg_left (shape v).1.2 (pn v))
-        _ = 1 := by simpa using total
     let n : ℝ := ((8*k+17 : Nat) : ℝ)
     let E : Index k → ℝ := fun i => ∑ v, p v * (((8*k+16 + v.val i : Nat) : ℝ))
-    have ep (i : Index k) : 0 ≤ E i :=
-      Finset.sum_nonneg (fun v _ => mul_nonneg (pn v) (Nat.cast_nonneg _))
     have row_lower (i : Index k) : ENNReal.ofReal (E i) ≤
         ∫⁻ ω, (cost (c ω) (family k i) : ℝ≥0∞) ∂μ := by
       rw [← integrate _ (fun v => Nat.cast_nonneg _)]
