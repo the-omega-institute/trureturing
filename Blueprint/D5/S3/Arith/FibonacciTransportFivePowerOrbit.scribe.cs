@@ -35,9 +35,10 @@ internal sealed class FibonacciTransportFivePowerOrbitDocument : IScribeDocument
                     Paragraph(Text(
                         "Choose the common label (1,y), where y is zero modulo "
                         + "2 times 5^a and twenty-six modulo fifty-nine. Its stabilizer "
-                        + "in the signed subgroup is trivial: the first reduction "
-                        + "controls the transport period, and the second excludes "
-                        + "a negative sign. The reflected label lies on the other "
+                        + "in the signed subgroup is trivial: modulo fifty-nine, fixing the "
+                        + "first eigenaxis forces the positive sign and 29 divides the transport "
+                        + "exponent; the first reduction then controls the remaining transport "
+                        + "period, and the second excludes a negative sign. The reflected label lies on the other "
                         + "eigenaxis modulo fifty-nine and cannot belong to its signed "
                         + "orbit. The full subgroup consists of the signed subgroup "
                         + "and its reflection coset, so this label has a free orbit "
