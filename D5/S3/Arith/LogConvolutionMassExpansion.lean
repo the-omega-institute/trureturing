@@ -39,7 +39,7 @@ Only names, imports, and the Nat.cast_one adaptation are changed. The
 convolution/moment/tsum composition below is not a theorem in that source.
 Replace them by upstream imports when the pinned library supplies them. -/
 
-private theorem sum_log_eq_log_factorial (N : ℕ) :
+theorem sum_log_eq_log_factorial (N : ℕ) :
     ∑ n ∈ Ioc 0 N, Real.log n = Real.log (N.factorial : ℝ) := by
   rw [← prod_Ico_id_eq_factorial, ← Real.log_prod (by intros; simp; grind), prod_natCast]
   rfl
@@ -80,7 +80,7 @@ private theorem sum_log_floor_lower {x : ℝ} (hx : 1 ≤ x) :
 
 /-- The floor factorial error is uniformly bounded on a nonnegative interval.
 The value at zero and the subunit interval are included. -/
-private theorem floor_factorial_log_error (x y : ℝ)
+theorem floor_factorial_log_error (x y : ℝ)
     (hx : 0 ≤ x) (hxy : x ≤ y) (hy : 1 ≤ y) :
     |Real.log (⌊x⌋₊.factorial : ℝ) - (x * Real.log x - x)| ≤ 1 + Real.log y := by
   have hlogy : 0 ≤ Real.log y := Real.log_nonneg hy
