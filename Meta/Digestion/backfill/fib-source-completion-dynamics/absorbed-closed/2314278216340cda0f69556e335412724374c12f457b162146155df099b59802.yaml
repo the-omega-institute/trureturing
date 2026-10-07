@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:2314278216340cda0f69556e335412724374c12f457b162146155df099b59802
   normalized_sha256: sha256:2314278216340cda0f69556e335412724374c12f457b162146155df099b59802
 cas_ref: sha256:2314278216340cda0f69556e335412724374c12f457b162146155df099b59802
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/SixCellPositiveMarginObstruction.result
+    target_statement_id: sha256:61346c7836186d152e16686613dc752cfd5de5260511466a6b255d9ffae41542
 receipts:
   unresolved_subitems: []
