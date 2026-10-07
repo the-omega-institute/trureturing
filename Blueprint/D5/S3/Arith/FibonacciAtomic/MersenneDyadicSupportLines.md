@@ -6,7 +6,7 @@ Two affine inequalities for the classical dyadic tail cost on every Mersenne rea
 
 **Theorem 1.1 (Dyadic series bounds).**
 
-$$\forall h: \mathbb{N}, \forall p: \operatorname{Fin}\left((2^{h} - 1)\right) \to \mathbb{R}, (\sum_{i \in \operatorname{Fin}\left((2^{h} - 1)\right)}\operatorname{p}\left(i\right) = 1 \Rightarrow (\forall d: \mathbb{N}, (0 \le \operatorname{R}\left(p, d\right) \land \operatorname{R}\left(p, d\right) \le (2^{h} - 1)) \land (\operatorname{Summable}\left(d: \mathbb{N} \mapsto \frac{\operatorname{R}\left(p, d\right)}{2^{d}}\right) \land 0 \le \operatorname{L}\left(p\right))))$$
+$$\forall h: \mathbb{N}, \forall p: \operatorname{Fin}\left((2^{h} - 1)\right) \to \mathbb{R}, (\sum_{i \in \operatorname{Fin}\left((2^{h} - 1)\right)}\operatorname{p}\left(i\right) = 1 \Rightarrow ((\forall d: \mathbb{N}, (0 \le \operatorname{R}\left(p, d\right) \land \operatorname{R}\left(p, d\right) \le (2^{h} - 1))) \land (\operatorname{Summable}\left(d: \mathbb{N} \mapsto \frac{\operatorname{R}\left(p, d\right)}{2^{d}}\right) \land 0 \le \operatorname{L}\left(p\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/MersenneDyadicSupportLines.simplex_data` (`✓ std3`). ∎
 
@@ -18,7 +18,7 @@ For any real vector on Fin(2^h-1) summing to one, each residual lies between zer
 
 **Theorem 1.2 (Individual atom bound).**
 
-$$\forall h: \mathbb{N}, \forall p: \operatorname{Fin}\left((2^{h} - 1)\right) \to \mathbb{R}, (\sum_{i \in \operatorname{Fin}\left((2^{h} - 1)\right)}\operatorname{p}\left(i\right) = 1 \Rightarrow \forall t: \mathbb{R}, (\forall i: \operatorname{Fin}\left((2^{h} - 1)\right), t \le \operatorname{p}\left(i\right) \Rightarrow \forall i: \operatorname{Fin}\left((2^{h} - 1)\right), \operatorname{p}\left(i\right) \le 1 - ((2^{h} - 1) - 1) t))$$
+$$\forall h: \mathbb{N}, \forall p: \operatorname{Fin}\left((2^{h} - 1)\right) \to \mathbb{R}, (\sum_{i \in \operatorname{Fin}\left((2^{h} - 1)\right)}\operatorname{p}\left(i\right) = 1 \Rightarrow \forall t: \mathbb{R}, ((\forall i: \operatorname{Fin}\left((2^{h} - 1)\right), t \le \operatorname{p}\left(i\right)) \Rightarrow \forall i: \operatorname{Fin}\left((2^{h} - 1)\right), \operatorname{p}\left(i\right) \le 1 - ((2^{h} - 1) - 1) t))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/MersenneDyadicSupportLines.simplex_atom_upper` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ If every coordinate is at least t and their sum is one, any single coordinate is
 
 **Theorem 1.3 (Vanishing prefix floors).**
 
-$$\forall h: \mathbb{N}, \forall p: \operatorname{Fin}\left((2^{h} - 1)\right) \to \mathbb{R}, (\forall i: \operatorname{Fin}\left((2^{h} - 1)\right), (0 \le \operatorname{p}\left(i\right) \land 2^{h} \operatorname{p}\left(i\right) < 2) \Rightarrow \forall i: \operatorname{Fin}\left((2^{h} - 1)\right), \forall d: \mathbb{N}, (d < h \Rightarrow \operatorname{floor}\left(2^{d} \operatorname{p}\left(i\right)\right) = 0))$$
+$$\forall h: \mathbb{N}, \forall p: \operatorname{Fin}\left((2^{h} - 1)\right) \to \mathbb{R}, ((\forall i: \operatorname{Fin}\left((2^{h} - 1)\right), (0 \le \operatorname{p}\left(i\right) \land 2^{h} \operatorname{p}\left(i\right) < 2)) \Rightarrow \forall i: \operatorname{Fin}\left((2^{h} - 1)\right), \forall d: \mathbb{N}, (d < h \Rightarrow \operatorname{floor}\left(2^{d} \operatorname{p}\left(i\right)\right) = 0))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/MersenneDyadicSupportLines.scaling_floors` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ When every coordinate is nonnegative and M times each coordinate is below two, a
 
 **Theorem 1.4 (Exact high interval scaling).**
 
-$$\forall h: \mathbb{N}, (2 \le h \Rightarrow \forall p: \operatorname{Fin}\left((2^{h} - 1)\right) \to \mathbb{R}, \forall t: \mathbb{R}, ((\sum_{i \in \operatorname{Fin}\left((2^{h} - 1)\right)}\operatorname{p}\left(i\right) = 1 \land (\forall i: \operatorname{Fin}\left((2^{h} - 1)\right), t \le \operatorname{p}\left(i\right) \land \frac{1}{2^{h}} < t)) \Rightarrow \forall q: \operatorname{Fin}\left((2^{h} - 1)\right) \to \mathbb{R}, (q = i: \operatorname{Fin}\left((2^{h} - 1)\right) \mapsto 2^{h} \operatorname{p}\left(i\right) - 1 \Rightarrow (\forall i: \operatorname{Fin}\left((2^{h} - 1)\right), 0 \le \operatorname{q}\left(i\right) \land (\sum_{i \in \operatorname{Fin}\left((2^{h} - 1)\right)}\operatorname{q}\left(i\right) = 1 \land \operatorname{L}\left(p\right) = h + \frac{\operatorname{L}\left(q\right)}{2^{h}})))))$$
+$$\forall h: \mathbb{N}, (2 \le h \Rightarrow \forall p: \operatorname{Fin}\left((2^{h} - 1)\right) \to \mathbb{R}, \forall t: \mathbb{R}, ((\sum_{i \in \operatorname{Fin}\left((2^{h} - 1)\right)}\operatorname{p}\left(i\right) = 1 \land ((\forall i: \operatorname{Fin}\left((2^{h} - 1)\right), t \le \operatorname{p}\left(i\right)) \land \frac{1}{2^{h}} < t)) \Rightarrow \forall q: \operatorname{Fin}\left((2^{h} - 1)\right) \to \mathbb{R}, (q = i: \operatorname{Fin}\left((2^{h} - 1)\right) \mapsto 2^{h} \operatorname{p}\left(i\right) - 1 \Rightarrow ((\forall i: \operatorname{Fin}\left((2^{h} - 1)\right), 0 \le \operatorname{q}\left(i\right)) \land (\sum_{i \in \operatorname{Fin}\left((2^{h} - 1)\right)}\operatorname{q}\left(i\right) = 1 \land \operatorname{L}\left(p\right) = h + \frac{\operatorname{L}\left(q\right)}{2^{h}})))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/MersenneDyadicSupportLines.scaling` (`✓ std3`). ∎
 

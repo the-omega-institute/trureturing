@@ -90,8 +90,8 @@ internal sealed class MersenneDyadicSupportLinesDocument : IScribeDocumentDefini
         var m = Par(Seq(Power(h), Sp, Minus, Sp, D(1)));
         var indices = Call("Fin", m);
         var laws = Seq(indices, Sp, To, Sp, Real);
-        var residualBounds = All(d, Nat, And(Seq(D(0), Sp, Le, Sp, Call("R", p, d)),
-            Seq(Call("R", p, d), Sp, Le, Sp, m)));
+        var residualBounds = Par(All(d, Nat, And(Seq(D(0), Sp, Le, Sp, Call("R", p, d)),
+            Seq(Call("R", p, d), Sp, Le, Sp, m))));
         var series = Call("Summable", Seq(d, Colon, Sp, Nat, Sp, Mapsto, Sp,
             new Formula.Fraction(Call("R", p, d), Power(d))));
         return Disp(All(h, Nat, All(p, laws, Imp(Equal(IndexedSum(i, indices, Call("p", i)), D(1)),
@@ -105,7 +105,7 @@ internal sealed class MersenneDyadicSupportLinesDocument : IScribeDocumentDefini
         var indices = Call("Fin", m);
         var laws = Seq(indices, Sp, To, Sp, Real);
         return Disp(All(h, Nat, All(p, laws, Imp(Equal(IndexedSum(i, indices, Call("p", i)), D(1)),
-            All(t, Real, Imp(All(i, indices, Seq(t, Sp, Le, Sp, Call("p", i))),
+            All(t, Real, Imp(Par(All(i, indices, Seq(t, Sp, Le, Sp, Call("p", i)))),
                 All(i, indices, Seq(Call("p", i), Sp, Le, Sp, D(1), Sp, Minus, Sp,
                     Par(Seq(m, Sp, Minus, Sp, D(1))), Sp, t))))))));
     }
@@ -117,7 +117,7 @@ internal sealed class MersenneDyadicSupportLinesDocument : IScribeDocumentDefini
         var laws = Seq(indices, Sp, To, Sp, Real);
         var assumptions = All(i, indices, And(Seq(D(0), Sp, Le, Sp, Call("p", i)),
             Seq(Power(h), Sp, Call("p", i), Sp, Lt, Sp, D(2))));
-        return Disp(All(h, Nat, All(p, laws, Imp(assumptions, All(i, indices, All(d, Nat,
+        return Disp(All(h, Nat, All(p, laws, Imp(Par(assumptions), All(i, indices, All(d, Nat,
             Imp(Seq(d, Sp, Lt, Sp, h), Equal(Call("floor", Seq(Power(d), Sp, Call("p", i))), D(0)))))))));
     }
 
@@ -128,11 +128,11 @@ internal sealed class MersenneDyadicSupportLinesDocument : IScribeDocumentDefini
         var indices = Call("Fin", Par(Seq(M, Sp, Minus, Sp, D(1))));
         var laws = Seq(indices, Sp, To, Sp, Real);
         var assumptions = And(Equal(IndexedSum(i, indices, Call("p", i)), D(1)),
-            And(All(i, indices, Seq(t, Sp, Le, Sp, Call("p", i))),
+            And(Par(All(i, indices, Seq(t, Sp, Le, Sp, Call("p", i)))),
                 Seq(new Formula.Fraction(D(1), M), Sp, Lt, Sp, t)));
         var qDefinition = Equal(q, Seq(i, Colon, Sp, indices, Sp, Mapsto, Sp,
             M, Sp, Call("p", i), Sp, Minus, Sp, D(1)));
-        var result = And(All(i, indices, Seq(D(0), Sp, Le, Sp, Call("q", i))),
+        var result = And(Par(All(i, indices, Seq(D(0), Sp, Le, Sp, Call("q", i)))),
             And(Equal(IndexedSum(i, indices, Call("q", i)), D(1)),
                 Equal(Call("L", p), Seq(h, Sp, Plus, Sp, new Formula.Fraction(Call("L", q), M)))));
         return Disp(All(h, Nat, Imp(Seq(D(2), Sp, Le, Sp, h), All(p, laws, All(t, Real,
