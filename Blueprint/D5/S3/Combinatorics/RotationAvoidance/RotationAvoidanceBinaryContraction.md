@@ -30,7 +30,7 @@ Lean statement: `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceBinaryCo
 
 *Commentary.*
 
-For width at least three, the number of permutations of one through width plus two that begin with one, end with two, and have 1342 in exactly the uncut rotation is 2 to the width minus width minus one.
+For width at least three, the number of permutations of one through width plus two that begin with one, end with two, and have 1342 in exactly the uncut rotation is 2 to the width minus width minus one. Increasing relabelling preserves containment and identifies the contracted interior with a classical avoidance class.
 
 ## References
 

@@ -120,6 +120,29 @@ public sealed partial class SettleBatchCommandTests
         Assert.DoesNotContain("SETTLE_BATCH settled=", result.Output, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void BatchRetainsCommittedRecordsWhenRepositoryReaderStillReturnsInitialSnapshot()
+    {
+        var fixture = AtomContextFixture.Create();
+        var ids = fixture.Atomized.Claims.Select(AtomContextFixture.Id).ToArray();
+        var requests = new[] { ids[0], ids[1], ids[0] }
+            .Select(id => "[[requests]]\n" + Request(fixture, id));
+        var badPath = BackfillInventoryLoader.RootPath + "unrelated/source.toml";
+        var raw = RawRepositorySnapshot.Create(fixture.RawSnapshot().Entries
+            .Append(RawRepositoryEntry.FromText(badPath, "malformed: [\n")));
+        using var temporary = new TemporaryDirectory();
+        WriteFiles(temporary.Path, raw);
+        var result = Batch(temporary, raw, string.Concat(requests), refresh: false);
+        Assert.False(result.Success);
+        Assert.Contains($"SETTLE_BATCH_STOP record=3 atom_id={ids[0]} settled=2 requested=3", result.Error, StringComparison.Ordinal);
+        Assert.Contains("SETTLE_INVALID NOT_RESIDUAL_OPEN", result.Error, StringComparison.Ordinal);
+        var stored = ReadFiles(temporary).Entries;
+        foreach (var id in ids.Take(2))
+            Assert.Contains(stored, entry => entry.Path.EndsWith("/" + State + "/" + id + ".yaml", StringComparison.Ordinal));
+        Assert.Equal(raw.Entries.Single(entry => entry.Path == badPath).Bytes.ToArray(),
+            TemporaryFileSystem.File.ReadAllBytes(Path.Combine(temporary.Path, badPath)));
+    }
+
     private static void Reject(AtomContextFixture fixture, string request, string code)
     {
         using var temporary = new TemporaryDirectory();
@@ -132,16 +155,16 @@ public sealed partial class SettleBatchCommandTests
         Assert.Equal(before, Image(temporary));
     }
 
-    private static CommandResult Batch(TemporaryDirectory temporary, RawRepositorySnapshot raw, string text)
+    private static CommandResult Batch(TemporaryDirectory temporary, RawRepositorySnapshot raw, string text, bool refresh = true)
     {
         using var requestFile = new TemporaryDirectory();
         var path = Path.Combine(requestFile.Path, "requests.toml");
         TemporaryFileSystem.File.WriteAllText(path, text, new UTF8Encoding(false));
         var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, raw,
-            currentReader: () => ReadFiles(temporary));
+            currentReader: refresh ? () => ReadFiles(temporary) : null);
         var environment = new ProductionCliEnvironment(temporary.Path, gateway, new FakeLeanReportSource(null));
         var console = new BufferedConsole();
-        var exit = CliApplication.Run(["settle-batch", "--requests", path, "--base", "baseline"], environment, console);
+        var exit = CliApplication.Run(["settle-batch", "--requests", path], environment, console);
         return new(exit == 0, console.Output, console.Error, exit);
     }
 }

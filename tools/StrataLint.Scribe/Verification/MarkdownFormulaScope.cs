@@ -4,15 +4,9 @@ using System.Text;
 namespace StrataLint.Scribe;
 
 /// <summary>
-/// Parses the formulas of the documents a change touches with the site's own KaTeX, which
-/// is the one thing no other gate does: the emitter's rules are a hand-maintained reading
-/// of KaTeX's grammar, and a reading has already been wrong once. Documents outside the
-/// change are rendered as usual and left unjudged — a document's bytes depend on the whole
-/// graph, but the verdict has to stay proportional to the diff.
-///
-/// Both sides of a document are judged: the committed markdown is what the site publishes
-/// until the next `make emit`, and the current render is what it publishes after. Freshness
-/// itself stays ungated, as it is elsewhere — a projection is a reader snapshot.
+/// Parses scoped formulas with the site's KaTeX. Selected definitions have both their
+/// current render and committed markdown judged; a markdown-only change is judged from
+/// its committed bytes without executing its definition. Freshness stays ungated.
 /// </summary>
 internal sealed class MarkdownFormulaScope
 {
@@ -64,7 +58,7 @@ internal sealed class MarkdownFormulaScope
     /// <summary>The markdown projections this scope names.</summary>
     internal ImmutableHashSet<string> Paths => paths;
 
-    /// <summary>The scoped documents the render actually reached.</summary>
+    /// <summary>The scoped documents whose formulas were inspected.</summary>
     internal int Judged { get; private set; }
 
     /// <summary>The distinct formulas parsed across those documents.</summary>
@@ -120,9 +114,28 @@ internal sealed class MarkdownFormulaScope
         Judge(relativePath, Encoding.UTF8.GetString(committed), seen);
     }
 
+    /// <summary>Judges an existing projection whose definition was not selected.</summary>
+    internal void InspectCommitted(string relativePath)
+    {
+        if (!paths.Contains(relativePath) || claimed.Contains(relativePath))
+        {
+            return;
+        }
+
+        var path = Path.Combine(repositoryRoot, relativePath);
+        var source = Path.Combine(repositoryRoot, relativePath[..^MarkdownSuffix.Length] + SourceSuffix);
+        if (!File.Exists(path) || !File.Exists(source))
+        {
+            return;
+        }
+
+        claimed.Add(relativePath);
+        Judged++;
+        Judge(relativePath, Encoding.UTF8.GetString(File.ReadAllBytes(path)), new HashSet<(bool, string)>());
+    }
+
     /// <summary>
-    /// Closes the scope. A scoped path that still exists but no document rendered was
-    /// checked by nothing, and saying so beats reporting a green the gate never earned.
+    /// Reports existing scoped projections that were neither rendered nor inspected.
     /// </summary>
     internal void Close()
     {

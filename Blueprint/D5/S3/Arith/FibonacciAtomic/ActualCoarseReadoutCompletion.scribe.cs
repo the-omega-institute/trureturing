@@ -12,7 +12,7 @@ internal sealed class ActualCoarseReadoutCompletionDocument : IScribeDocumentDef
         "Every finite coarse route has a globally correct actual-tree completion with complete leaf verification, existence-controlled acquisition and an exact address cache.",
         H("Common Completion of Finite Coarse Routes"),
         Blocks(
-            Paragraph(Text("Source, Address, Reply, Positive, Strategy, readout, leaves, paid and terminal are the original actual-tree objects. Positive means membership in the third Fibonacci substitution image. The existing coarse quotient kappa preserves the two leaf labels and merges branch with absent into none. CoarseObservable requires equality of policy actions on every pair of raw histories with equal coarse histories, including unreachable histories.")),
+            Paragraph(Text("Source, Address, Reply, Positive, Strategy, readout, leaves, paid and terminal are the original actual-tree objects. Positive means membership in the third Fibonacci substitution image. The existing coarse quotient kappa preserves the two leaf labels and merges branch with absent into none. Function.FactorsThrough(pi.policy,kappa_hist) requires equality of policy actions on every pair of raw histories with equal coarse histories, including unreachable histories.")),
             Def("encodeHistory", "Reply representatives", "encodeHistory maps each coarse report to the same address and a raw representative: some(true) to alpha, some(false) to beta, and none to branch. This is a section for policy evaluation. It gives no existence certificate for an arbitrary address. Write N(h)=encodeHistory(kappa_hist(h))."),
             Def("compileRaw", "Finite route compilation", "The route p is the existing finite dependent PassiveProtocol over Address with response Option Bool. A decoder maps its complete coarse chronological history to an optional prototype index. compileRaw(F,decode,p,g) compiles each query through kappa and accumulates the coarse routing history g. A selected stop starts verifyController(F(i),leaves(F(i))); an unselected stop starts fallback. Neither phase receives the preceding route as its own logical history."),
             Def("cachedExecute", "Exact address caching", "cachedExecute takes a native raw policy, fuel, logical history, cache and input. A logical request is always recorded. If its exact address occurs in the cache, the stored reply is reused. Otherwise the actual readout is obtained and appended. The cache begins empty, contains only reports acquired in the same run, and stores neither inferred prefixes nor prototype knowledge. Repeated logical requests consume logical fuel but do not add paid addresses."),
@@ -66,7 +66,7 @@ internal sealed class ActualCoarseReadoutCompletionDocument : IScribeDocumentDef
             Call("Acq", u, V("h"), V("q")))));
         Formula conclusion = Some("pi", Call("Strategy"), And(
             Eq(Call("policy", pi), Call("compose", Call("CP", V("C")), V("N"))),
-            Call("CoarseObservable", Call("policy", pi)), execution, phases, failure, acquisition,
+            Call("Function.FactorsThrough", Call("policy", pi), V("kappa_hist")), execution, phases, failure, acquisition,
             All("i", Call("Fin", m), Call("Prototype", pi, i))));
         return All("m", V("Nat"), All("F", Call("Function", Call("Fin", m), source),
             Imp(All("i", Call("Fin", m), Call("Positive", Call("F", i))),

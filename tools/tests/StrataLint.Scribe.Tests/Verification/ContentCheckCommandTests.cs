@@ -10,7 +10,7 @@ public sealed class ContentCheckCommandTests
     [InlineData("emit", "--check")]
     public void MissingManifestFailsBeforeRepositoryResolution(params string[] arguments)
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         var error = new StringWriter();
         Assert.Equal(2, ScribeCli.Run(arguments, root.Path, TextWriter.Null, error));
         Assert.Contains("MissingPathsManifest", error.ToString(), StringComparison.Ordinal);
@@ -37,7 +37,7 @@ public sealed class ContentCheckCommandTests
     [InlineData("content-check", "--report", "report.json", "--paths-from", " ")]
     public void RejectsBadArgumentsBeforeResolvingARepository(params string[] arguments)
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         var error = new StringWriter();
         Assert.Equal(2, ScribeCli.Run(arguments, root.Path, TextWriter.Null, error));
         Assert.Contains("usage:", error.ToString(), StringComparison.Ordinal);
@@ -73,16 +73,70 @@ public sealed class ContentCheckCommandTests
         Assert.Empty(error.ToString());
     }
 
-    [Theory]
-    [InlineData(Path)]
-    [InlineData(Markdown)]
-    public void ChecksSelectedMarkdownAndItsDefinition(string selection)
+    [Fact]
+    public void MarkdownOnlyPlainTextDoesNotExecuteDefinition()
+    {
+        using var fixture = new Fixture();
+        fixture.Write(Path, UnselectedDefinition);
+        fixture.Write(Markdown, "# Updated narrative\n\nOrdinary text.\n");
+        var output = new StringWriter();
+        var error = new StringWriter();
+
+        Assert.True(fixture.Run(Markdown, output, error) == 0, error.ToString());
+        Assert.Contains("content-check: definitions=0", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains("markdown: judged=1 formula(s)=0 red=0", output.ToString(), StringComparison.Ordinal);
+        Assert.Empty(error.ToString());
+    }
+
+    [Fact]
+    public void MarkdownOnlyInvalidFormulaIsRejectedWithoutExecutingDefinition()
+    {
+        using var fixture = new Fixture();
+        fixture.Write(Path, UnselectedDefinition);
+        fixture.Write(Markdown, "$$u_{n}_{i}$$");
+        var output = new StringWriter();
+        var error = new StringWriter();
+
+        Assert.Equal(1, fixture.Run(Markdown, output, error));
+        Assert.Contains("content-check: definitions=0", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains("markdown: judged=1 formula(s)=1 red=1", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains("markdown red " + Markdown, error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("Double subscript", error.ToString(), StringComparison.Ordinal);
+        Assert.DoesNotContain("Compilation", error.ToString(), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ChecksSelectedDefinitionAndItsMarkdownFormula()
     {
         using var fixture = new Fixture();
         fixture.Write(Markdown, "$$u_{n}_{i}$$");
+        var output = new StringWriter();
         var error = new StringWriter();
-        Assert.Equal(1, fixture.Run(selection, TextWriter.Null, error));
+        Assert.Equal(1, fixture.Run(Path, output, error));
+        Assert.Contains("content-check: definitions=1", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains("markdown: judged=1", output.ToString(), StringComparison.Ordinal);
         Assert.Contains("Double subscript", error.ToString(), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ManyMarkdownOnlyChangesExecuteNoDefinitions()
+    {
+        using var fixture = new Fixture();
+        var paths = new List<string>();
+        for (var index = 0; index < 64; index++)
+        {
+            var stem = $"Blueprint/D5/S0/Synthetic/Reemitted{index}";
+            fixture.Write(stem + ".scribe.cs", UnselectedDefinition);
+            fixture.Write(stem + ".md", $"# Reemitted {index}\n\nA formula $x^2$.\n");
+            paths.Add(stem + ".md");
+        }
+        var output = new StringWriter();
+        var error = new StringWriter();
+
+        Assert.True(fixture.Run(string.Join('\0', paths), output, error) == 0, error.ToString());
+        Assert.Contains("content-check: definitions=0", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains("markdown: judged=64 formula(s)=64 red=0", output.ToString(), StringComparison.Ordinal);
+        Assert.Empty(error.ToString());
     }
 
     [Fact]
@@ -101,8 +155,11 @@ public sealed class ContentCheckCommandTests
         using var fixture = new Fixture();
         const string orphan = "Blueprint/D5/S0/Synthetic/Orphan.md";
         fixture.Write(orphan, "# Orphan");
+        var output = new StringWriter();
         var error = new StringWriter();
-        Assert.Equal(1, fixture.Run(orphan, TextWriter.Null, error));
+        Assert.Equal(1, fixture.Run(orphan, output, error));
+        Assert.Contains("content-check: definitions=0", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains("markdown red " + orphan, error.ToString(), StringComparison.Ordinal);
         Assert.Contains("no Scribe document renders", error.ToString(), StringComparison.Ordinal);
     }
 
@@ -240,10 +297,18 @@ public sealed class ContentCheckCommandTests
 
     private const string Path = "Blueprint/D5/S0/Synthetic/CurrentMarkdown.scribe.cs";
     private const string Markdown = "Blueprint/D5/S0/Synthetic/CurrentMarkdown.md";
+    private const string UnselectedDefinition = """
+        using System;
+        using StrataLint.Scribe;
+        internal sealed class Unselected : IScribeDocumentDefinition
+        {
+            public DocumentDefinition Create() => throw new InvalidOperationException("definition must not execute");
+        }
+        """;
 
     private sealed class Fixture : IDisposable
     {
-        internal TemporaryRoot Root { get; } = new();
+        internal TemporaryRoot Root { get; } = new(sdkConfiguration: true);
         internal readonly LeanAxiomReport Report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
             { ["D5/S0/Synthetic/CurrentMarkdown.lean"] = new([], []) });
         internal Fixture()

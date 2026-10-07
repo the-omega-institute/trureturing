@@ -103,7 +103,7 @@ noncomputable def routeTrace {m : Nat} {F : Fin m → Source} :
     else []
 
 
-theorem phase_foundation :
+private theorem phase_foundation :
     (∀ c : Controller, ∀ U : Source,
       execute readout (controllerPolicy c) ((controllerOutcome c U).1.length+1) [] U =
         some (controllerOutcome c U)) ∧

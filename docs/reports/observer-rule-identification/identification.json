@@ -1,0 +1,188 @@
+{
+  "scope": {
+    "min_states": 3,
+    "max_states": 4,
+    "target": "exact labelled total unary rule",
+    "passive": "all reset states and arbitrary iteration depths",
+    "active": "reset, same unknown rule, known permutation, fixed binary readout"
+  },
+  "census": [
+    {
+      "n": 3,
+      "q": [
+        0,
+        1,
+        1
+      ],
+      "rules": 27,
+      "passive_trace_classes": 16,
+      "passively_exactly_identified_rules": 13,
+      "exactly_identified_but_state_blind_rules": 1,
+      "passive_exact_rule_residual_ordered_pairs": 70,
+      "baseline_ordered_distinct_rule_pairs": 702,
+      "passive_exact_rule_residual_fraction": [
+        35,
+        351
+      ],
+      "passive_fixedpoint_target_residual_ordered_pairs": 24,
+      "minimum_fixed_output_probes": 2,
+      "probe_zero_sets": [
+        [
+          0
+        ],
+        [
+          1
+        ]
+      ],
+      "probe_permutations": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          2
+        ]
+      ],
+      "active_rule_reconstruction_checks": 27,
+      "nonadaptive_reset_protocol_rule_calls": 6,
+      "active_exact_rule_residual_ordered_pairs": 0
+    },
+    {
+      "n": 4,
+      "q": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "rules": 256,
+      "passive_trace_classes": 88,
+      "passively_exactly_identified_rules": 61,
+      "exactly_identified_but_state_blind_rules": 13,
+      "passive_exact_rule_residual_ordered_pairs": 7488,
+      "baseline_ordered_distinct_rule_pairs": 65280,
+      "passive_exact_rule_residual_fraction": [
+        39,
+        340
+      ],
+      "passive_fixedpoint_target_residual_ordered_pairs": 2826,
+      "minimum_fixed_output_probes": 3,
+      "probe_zero_sets": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "probe_permutations": [
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        [
+          1,
+          0,
+          2,
+          3
+        ],
+        [
+          1,
+          2,
+          0,
+          3
+        ]
+      ],
+      "active_rule_reconstruction_checks": 256,
+      "nonadaptive_reset_protocol_rule_calls": 12,
+      "active_exact_rule_residual_ordered_pairs": 0
+    },
+    {
+      "n": 4,
+      "q": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "rules": 256,
+      "passive_trace_classes": 124,
+      "passively_exactly_identified_rules": 96,
+      "exactly_identified_but_state_blind_rules": 0,
+      "passive_exact_rule_residual_ordered_pairs": 1440,
+      "baseline_ordered_distinct_rule_pairs": 65280,
+      "passive_exact_rule_residual_fraction": [
+        3,
+        136
+      ],
+      "passive_fixedpoint_target_residual_ordered_pairs": 318,
+      "minimum_fixed_output_probes": 2,
+      "probe_zero_sets": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "probe_permutations": [
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        [
+          0,
+          2,
+          1,
+          3
+        ]
+      ],
+      "active_rule_reconstruction_checks": 256,
+      "nonadaptive_reset_protocol_rule_calls": 8,
+      "active_exact_rule_residual_ordered_pairs": 0
+    }
+  ],
+  "permanent_passive_witness": {
+    "q": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "F": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "G": [
+      1,
+      0,
+      3,
+      2
+    ],
+    "probe_permutation": [
+      0,
+      2,
+      1,
+      3
+    ],
+    "reset_state": 0,
+    "active_outputs": [
+      0,
+      1
+    ]
+  }
+}

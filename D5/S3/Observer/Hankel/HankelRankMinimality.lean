@@ -94,7 +94,7 @@ theorem finiteHankel_eq_observability_comp_controllability
   intro column _
   rw [pow_add, Module.End.mul_apply]
 
-private theorem finiteObservability_ker_eq_eventualKernel
+theorem finiteObservability_ker_eq_eventualKernel
     {K V Y : Type*} [Field K]
     [AddCommGroup V] [Module K V] [FiniteDimensional K V]
     [AddCommGroup Y] [Module K Y]

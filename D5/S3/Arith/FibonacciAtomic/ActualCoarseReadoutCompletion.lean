@@ -17,9 +17,8 @@ namespace D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutCompletion
 
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition
-open ActualCoarseReadoutHistory (kappa kappa_hist CoarseObservable)
-open ActualJointResponseCostCore (Controller controllerPolicy controllerOutcome verifyController
-  phase_foundation)
+open ActualCoarseReadoutHistory (kappa kappa_hist)
+open ActualJointResponseCostCore (Controller controllerPolicy controllerOutcome verifyController)
 open ActualImageSevenLeafSeparation (leafLabel leafAddresses seven_leaf_separation)
 open ActualLeafHistoryRigidity (subtree actual_address_geometry)
 open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute)
@@ -71,7 +70,7 @@ theorem completion_contract (m : Nat) (F : Fin m → Source)
     (p : PassiveProtocol Address (fun _ => Option Bool)) (decode : CH → Option (Fin m)) :
     ∃ π : Strategy,
       π.policy = (fun h => controllerPolicy (compileRaw F decode p [])
-        (encodeHistory (κH h))) ∧ CoarseObservable π.policy ∧
+        (encodeHistory (κH h))) ∧ Function.FactorsThrough π.policy kappa_hist ∧
       (∀ U : Source, ∃ (n : Nat) (t : RH) (b : Bool) (cache : RH),
         execute readout π.policy n [] U = some (t,b) ∧
         cachedExecute π.policy n [] [] U = some ((t,b),cache) ∧
