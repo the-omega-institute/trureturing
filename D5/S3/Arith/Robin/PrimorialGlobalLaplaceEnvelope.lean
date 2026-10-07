@@ -307,18 +307,18 @@ private theorem weighted_prime_laplace_first_mertens {z v : ℝ} (hz : 2 ≤ z) 
         mul_le_mul_of_nonneg_left hbound (one_div_nonneg.mpr hL.le)
     _ = (Real.log 4 + 4) / Real.log z := by ring
 
-private def localFactor (p : ℕ) (s : ℝ) : ℝ := 1 - (p : ℝ) ^ (-s)
+def localFactor (p : ℕ) (s : ℝ) : ℝ := 1 - (p : ℝ) ^ (-s)
 
-private def eulerProduct (S : Finset ℕ) (s : ℝ) : ℝ :=
+def eulerProduct (S : Finset ℕ) (s : ℝ) : ℝ :=
   ∏ p ∈ S, localFactor p s
 
-private def eulerSlope (S : Finset ℕ) (s : ℝ) : ℝ :=
+def eulerSlope (S : Finset ℕ) (s : ℝ) : ℝ :=
   ∑ p ∈ S, Real.log (p : ℝ) / ((p : ℝ) ^ s - 1)
 
-private def scaledRatio (S : Finset ℕ) (L v : ℝ) : ℝ :=
+def scaledRatio (S : Finset ℕ) (L v : ℝ) : ℝ :=
   eulerProduct S (1 + v / L) / eulerProduct S 1
 
-private def scaledSlope (S : Finset ℕ) (L v : ℝ) : ℝ :=
+def scaledSlope (S : Finset ℕ) (L v : ℝ) : ℝ :=
   eulerSlope S (1 + v / L) / L
 
 private def reciprocalSlope (S : Finset ℕ) (L v : ℝ) : ℝ :=
@@ -602,7 +602,7 @@ private theorem actualSlope_first_mertens_uniform {z v : ℝ} (hz : 2 ≤ z) (hv
   simpa only [add_comm] using add_le_add_left
     (denominatorBudget_le_MertensE1 _ (actual_cutoff_prime z)) (Real.log 4 + 4)
 
-private noncomputable def rate (v : ℝ) : ℝ := ∫ b in (0 : ℝ)..1, Real.exp (-v * b)
+noncomputable def rate (v : ℝ) : ℝ := ∫ b in (0 : ℝ)..1, Real.exp (-v * b)
 
 private noncomputable def ein (v : ℝ) : ℝ := ∫ w in (0 : ℝ)..v, rate w
 
@@ -641,7 +641,7 @@ private theorem ein_original_integral (v : ℝ) :
   simpa [ein, smul_eq_mul] using
     (intervalIntegral.smul_integral_comp_mul_left rate (a := 0) (b := 1) v).symm
 
-private theorem rate_le_one {v : ℝ} (hv : 0 ≤ v) : rate v ≤ 1 := by
+theorem rate_le_one {v : ℝ} (hv : 0 ≤ v) : rate v ≤ 1 := by
   have h := intervalIntegral.integral_mono_on (a := (0 : ℝ)) (b := 1)
     (μ := volume) (f := fun b => Real.exp (-v * b)) (g := fun _ => (1 : ℝ)) zero_le_one
     ((show Continuous (fun b : ℝ => Real.exp (-v * b)) by fun_prop).intervalIntegrable 0 1)
@@ -692,6 +692,30 @@ noncomputable def budget : ℝ := Real.log 4 + 4 + Mertens.E₁
 
 noncomputable def actualPhi (v : ℝ) : ℝ :=
   Real.exp (∫ b in (0 : ℝ)..1, (1 - Real.exp (-v * b)) / b)
+
+theorem hasDerivAt_actualPhi (v : ℝ) :
+    HasDerivAt actualPhi (actualPhi v * rate v) v := by
+  have heq : actualPhi = phi := by
+    funext w
+    unfold actualPhi phi
+    rw [ein_original_integral]
+  rw [heq]
+  exact (hasDerivAt_ein v).exp
+
+theorem actualPhi_zero : actualPhi 0 = 1 := by
+  simp [actualPhi]
+
+theorem actualPhi_pos (v : ℝ) : 0 < actualPhi v := by
+  unfold actualPhi
+  exact Real.exp_pos _
+
+theorem actualPhi_linear_envelope {v : ℝ} (hv : 0 ≤ v) :
+    actualPhi v ≤ Real.exp 1 * (1 + v) := by
+  have heq : actualPhi v = phi v := by
+    unfold actualPhi phi
+    rw [ein_original_integral]
+  rw [heq]
+  exact phi_linear_envelope hv
 
 private theorem actual_log_ratio_ein_error {z v : ℝ} (hz : 2 ≤ z) (hv : 0 ≤ v) :
     |Real.log (actualRatio z v) - ein v| ≤ budget * v / Real.log z := by

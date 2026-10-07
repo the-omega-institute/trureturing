@@ -49,6 +49,79 @@ $\log\log(2p)>2$ when $2p>5040$, so $G(2p)<1<e^\gamma$ excludes GA2.
 This is hypothesis bookkeeping for the existing reduction, not a new
 critical-source theorem or a new enumeration.
 
+## The backward record classification is already published
+
+Nazardonyavi and Yakubovich, *Superabundant numbers, their subsequences
+and the Riemann hypothesis*,
+[arXiv:1211.2147v3](https://arxiv.org/pdf/1211.2147v3), 26 February 2013,
+already supply the relevant strict-record language. The inspected PDF
+has 32 pages and SHA-256
+`c184db590a50ea81daa88660e5885d3c64980b9324f6e545d27bbae4e1eba155`.
+Definition 2.1, Theorems 2.3–2.4 and 4.32, and the numerical scope and
+example in §5 were read against that primary. This is a citation and
+applicability assessment, without a whole-paper proof audit, independent
+reproduction of its numerical claims, or Lean verification.
+
+Definition 2.1, printed p.4, calls $10080$ extremely abundant (XA), and
+calls $n>10080$ XA exactly when
+
+$$
+G(m)<G(n)\qquad(10080\le m<n).
+$$
+
+Proposition 2.2 gives $\mathrm{XA}\subseteq\mathrm{SA}$. Theorem 2.3,
+printed p.5, states that the least Robin counterexample is XA; its proof
+reports the finite check on $5040<n\le10080$. That check is cited, not
+rerun. Theorem 2.4, on the same page, already proves that RH is equivalent
+to infinitely many XA numbers, and its proof discusses attainment of
+the global supremum under failure of RH. Neither criterion nor the
+record classifier needs to be reconstructed here.
+
+Apply these existing results to the same least global maximizer $N$
+selected above under the counterexample hypothesis. The cited finite
+check places it above $10080$. Minimality among maximizers gives
+
+$$
+G(m)<G(N)\qquad(5040<m<N),
+$$
+
+so it is XA, while global maximality prevents any larger integer from
+being XA. Thus it is the last XA under these hypotheses. This is direct
+application of the published record definition and supremum argument,
+not a new source-selection result. The least global maximizer need not
+be the least counterexample. In particular, the available strict
+backward comparisons include every divisor deletion with
+$1<d\mid N$ and $N/d>5040$, and also nondivisor comparators in that
+range; they do not authorize a comparison with $N/d\le5040$.
+
+Theorem 4.32, printed p.24, supplies $P^+(n)<\log n$ on XA sources.
+It supplies no effective signed prime-error estimate. Under the
+counterexample hypothesis there are only finitely many XA by Theorem
+2.4, so neither an unbounded XA critical family nor an infinite
+continuation from this selected maximizer is available.
+
+The recursive route must also retain exponent changes. Remark 5.5,
+printed p.26, reports consecutive XA numbers
+
+$$
+n_1=(139\#)(13\#)(5\#)(3\#)^2\,2^4,
+\qquad
+n_3=(151\#)(13\#)(5\#)(3\#)^2\,2^3,
+$$
+
+where $p\#$ denotes the primorial. Their $2$-exponents decrease from
+$9$ to $8$, so XA records do not form a divisibility chain. This cited
+example is not a new numerical search and does not refute nesting in a
+separately chosen CA parameter chain. Properties 5.1–5.4 are explicitly
+finite observations from §5, not uniform theorems; in particular their
+consecutive exponent-change and largest-prime assertions cannot be used
+as unbounded recursion laws.
+
+These suppliers pay backward record classification and its source
+scope. They leave the same-source quantitative coupling of deletion
+and insertion losses, a strict Robin sign and full finite-source
+coverage unpaid. Reusing them does not yield a new Robin estimate.
+
 ## Directly reusable prime and stack envelopes
 
 Keep the same proper GA1 integer $N$ and put $A=\log N$. The following
@@ -204,3 +277,83 @@ unbounded tangent family and a forward signed surplus. For full Robin,
 any proposed selection also has to cover the relevant potentially
 nonpositive minima; an arbitrary infinite GA1 or safe-source family does
 not supply that coverage.
+
+## A proposed oscillation-geometry supplier loses its shrinking margin
+
+Thomas Schwabhäuser, *Preventing Exceptions to Robins InEquality*,
+[arXiv:1308.3678v3](https://arxiv.org/pdf/1308.3678v3), is a proposed
+CA-multiplier argument using the Alaoglu–Erdős conjecture. The inspected
+PDF has 23 pages and SHA-256
+`050c4444d706c1d6dd89ed3d227f57a196fececaade4d3b0648c7e8de8e062db`.
+The scope here is §4.3: equation (4.1), Fact 4.21, Lemma 4.22,
+Proposition 4.25 and its use in Corollaries 4.27 and 4.31, printed
+pp.13–16. This is a paper-level assessment of these statements, without
+a complete proof audit or Lean verification. The elementary exponential
+limit used below is reused, not claimed as new oscillation theory.
+
+For fixed $b>0$ and $0<\delta<1$, retain the source's function
+
+$$
+g(\mu,\nu)=\frac{\mu}{\nu}
+ \frac{1+\delta e^{-b\mu}}{1-\delta e^{-b\nu}},\qquad
+\epsilon_{\mu,\nu}
+ =\log\frac{1+\delta e^{-b\mu}}{1-\delta e^{-b\nu}}.
+$$
+
+For a fixed angle $0<\phi<\pi/2$, both coordinates of
+$(\mu,\nu)=(r\cos\phi,r\sin\phi)$ tend to infinity. Thus
+
+$$
+\epsilon_{r\cos\phi,r\sin\phi}\longrightarrow0,
+\qquad
+ g(r\cos\phi,r\sin\phi)\longrightarrow\cot\phi.
+$$
+
+Fact 4.21 and Lemma 4.22 instead use the positive limiting constant
+$\epsilon_\infty=\log((1+\delta)/(1-\delta))$ and the resulting
+$e^{\epsilon_\infty}\cot\phi$. That constant is not the limit of the
+printed function. In particular, there is no positive limiting angular
+margin separating its contour from the diagonal.
+
+### An increasing arithmetic progression tests the actual auxiliary claim
+
+The source defines $\mathcal M=\{(\mu,\nu):\nu>\mu, g(\mu,\nu)>1\}$.
+Its Proposition 4.25 claims that an increasing real sequence with
+$\arctan(a_{n+1}/a_n)\to\pi/4$ has an adjacent pair in $\mathcal M$.
+For $a>0$ and $h>0$, the denominator above is positive and its exact
+crossing condition is
+
+$$
+g(a,a+h)>1
+\iff
+h<\delta\bigl(ae^{-ba}+(a+h)e^{-b(a+h)}\bigr).
+$$
+
+Choose $C\ge1/b$ large enough that $2\delta t e^{-bt}<1$ for every
+$t\ge C$, and put $a_n=C+n$. Such a $C$ exists because
+$t e^{-bt}\to0$. The function $t e^{-bt}$ is decreasing on $t\ge1/b$.
+Consequently every adjacent pair has $h=1$ and
+
+$$
+\delta\bigl(a_ne^{-ba_n}+(a_n+1)e^{-b(a_n+1)}\bigr)
+ \le 2\delta a_ne^{-ba_n}<1.
+$$
+
+Therefore $g(a_n,a_{n+1})<1$ for every $n$, while the sequence is
+strictly increasing and $\arctan(a_{n+1}/a_n)\to\pi/4$.
+This directly contradicts the stated Proposition 4.25. Relative spacing
+converging to one does not by itself beat the exponentially shrinking
+margin. The same crossing condition excludes distinct integer pairs
+with $\mu\ge C$, since then $h\ge1$; hence Corollary 4.27's claimed
+infinitely many consecutive-prime pairs in $\mathcal M$ also fails in
+this parameter range.
+
+This assessment does not exclude close pairs of actual CA logarithmic
+clocks, whose additive gaps may tend to zero. It shows that Proposition
+4.25 does not supply their required quantitative comparison. Corollary
+4.31 uses that proposition in its proposed source-selection step; its
+printed derivation cannot therefore be imported as the needed
+same-source gain. The Alaoglu–Erdős conjecture, alternative proofs,
+and the actual selected Robin source are not settled by this auxiliary
+counterexample. The original full signed-tail target and RH remain
+unproved; no new general criterion or certified theorem is claimed.

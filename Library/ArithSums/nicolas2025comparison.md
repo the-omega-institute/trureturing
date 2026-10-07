@@ -473,3 +473,1785 @@ Independent conductor information or square factors outside this
 supported exception budget could still give a smaller modulus.
 The assumption $|D|\asymp n$ has not been established for the actual
 remaining extremal candidates; (C4) is conditional in that comparison.
+
+## An effective core bound at the selected GA2 source
+
+This application improves the effective positive-core allowance, while
+leaving the complete signed Robin tail unbounded. It uses the same
+critical integer and clock throughout. The envelope theorem, GA2
+comparisons, prime-power estimates, and core identity are existing
+results; no originality or Lean verification is claimed for their
+combination.
+
+Under a Robin counterexample, use the selected source in the
+[Polak application](../Analytic/polak2026finiterobinca.md#application-at-the-same-critical-source-and-clock):
+$N$ is CA and GA2, $A=\log N$, $P=P^+(N)$, and $P<A<P^+$.
+Its actual exponents attain the full-support minimum at price
+$1/(A\log A)$, so
+
+$$
+\Delta(N)=I_\psi(A)+D^*(A),\qquad
+D^*(A)=R_{\rm core}(N,A)-C_{\rm pp}(A).
+\tag{G1}
+$$
+
+Set $L=\log A$ and $T=\sqrt A L$. The classical CA record property in
+[Alaoglu–Erdős](../Arith/alaoglu1944highly.md) gives
+$\Sigma(N)=Z(N)$, where $Z(n)=\sigma(n)/n$.
+Let $x$ be the primorial cutoff
+$\vartheta(x)\le A<\vartheta(x^+)$, so
+$\Phi(N)=\mathcal P(x)$, with
+$\mathcal P(u)=\prod_{q\le u}(1-1/q)^{-1}$.
+Since $\vartheta(P)\le A$, we have $x\ge P$.
+Every prime in $(P,x]$ is absent from $N$ and exceeds $A$.
+
+### Cancelling the suffix at the actual clock
+
+For each such prime $q$, the GA2 comparison with $qN$ gives
+
+$$
+\log(1+1/q)
+\le\log\frac{\log(A+\log q)}{\log A}
+\le\frac{\log q}{A\log A}.
+\tag{G2}
+$$
+
+The final inequality is the concavity tangent for
+$u\mapsto\log\log(A+u)$ at $u=0$. Equivalently, the already established
+CA optimality at price $1/(A\log A)$ supplies this local upper bound.
+It is not a new gain from jointly optimizing different integers.
+Using $\log(q/(q-1))=\log(1+1/q)-\log(1-q^{-2})$ yields
+
+$$
+\log\frac{\mathcal P(x)}{\mathcal P(P)}
+\le\frac{\vartheta(x)-\vartheta(P)}{A\log A}
+  +\sum_{q>A}-\log(1-q^{-2}).
+\tag{G3}
+$$
+
+Put $m=\lfloor A\rfloor$. The prime sum is at most the integer sum,
+which telescopes:
+
+$$
+\sum_{q>A}-\log(1-q^{-2})
+\le\sum_{n=m+1}^\infty-\log(1-n^{-2})
+=\log\frac{m+1}{m}<\frac1{A-1}.
+\tag{G4}
+$$
+
+Consequently Nicolas's effective $R_-(N)$ above and
+$\Sigma(N)=Z(N)$ give
+
+$$
+\begin{aligned}
+R_{\rm core}(N,A)
+&=\frac{A-\vartheta(P)}{A\log A}
+  +\log\frac{\mathcal P(P)}{Z(N)}\\
+&>\log R_-(N)+\frac{A-\vartheta(x)}{A\log A}
+                -\frac1{A-1}\\
+&\ge\log R_-(N)-\frac1{A-1}.
+\end{aligned}
+\tag{G5}
+$$
+
+This uses the primorial cutoff only to cancel its missing-prime suffix.
+It neither transports $I_\psi(A)$ to $x$ nor requires an effective
+prime-gap bound or an endpoint estimate for $\vartheta(x)-x$.
+
+### An effective allowance stronger than the existing core envelope
+
+The [Dusart prime-power input](../Weil/dusart2010estimates.md#同一-robin-来源的有效素数幂修正),
+Proposition 3.2, gives
+$TC_{\rm pp}(A)<2.00014+2.67A^{-1/6}$.
+For $N\ge N^{(0)}$ and $L\ge26$, put
+
+$$
+b(L)=2\sqrt2-\frac{(2+\log2)\sqrt2}{L}+\frac{6.78}{L^2}.
+$$
+
+Then $0<b(L)<3$, and $R_-(N)=1+b(L)/T$.
+The elementary inequality $\log(1+u)\ge u-u^2/2$, $u\ge0$, gives
+$T\log R_-(N)>b(L)-5/T$.
+Also $T/(A-1)<2L/\sqrt A$. Combining these inequalities with
+(G1) and (G5) gives the explicit bound
+
+$$
+\boxed{\sqrt A\log A\,D^*(A)>\mathcal E(L),}
+\tag{G6}
+$$
+
+where
+
+$$
+\mathcal E(L)=2\sqrt2-\frac{(2+\log2)\sqrt2}{L}
+ +\frac{6.78}{L^2}-2.00014-2.67e^{-L/6}
+ -(2L+5/L)e^{-L/2}.
+\tag{G7}
+$$
+
+This is strictly stronger than the published $D_{\rm lb}(A)$ on the
+whole range $L\ge26$, not just its half-unit simplification.
+To check the comparison, set $a=\log2$ and
+
+$$
+U(L)=\frac1{\sqrt2}
+\left(\frac L{L+a}-\frac{2L}{(L+a)^2}\right).
+$$
+
+The displayed definition of $D_{\rm lb}$ in the Polak note, with
+$j_A>0$ and $s_A>0$, gives $D_{\rm lb}(A)<j_A/2<U(L)$.
+For $L\ge26$,
+
+$$
+U'(L)=\frac1{\sqrt2}
+\left(\frac a{(L+a)^2}+\frac{2(L-a)}{(L+a)^3}\right)
+<\frac{a+2}{\sqrt2L^2}.
+$$
+
+Both exponential error terms in (G7) decrease, hence
+
+$$
+(\mathcal E-U)'(L)>
+\frac1{L^2}\left(\frac{a+2}{\sqrt2}-\frac{13.56}{L}\right)>0.
+$$
+
+Elementary rational bounds
+$1.414<\sqrt2<1.415$, $0.69<\log2<0.70$,
+$e^{13/3}>75$, and $e^{13}>400000$ give
+$\mathcal E(26)>0.65$ and $U(26)<0.64$.
+For the exponential bounds one can use
+$\sum_{j=0}^9 4^j/j!>54$,
+$e^{1/3}>25/18$, and $e>8/3$.
+The comparison therefore has the uniform strict surplus
+
+$$
+\mathcal E(L)>D_{\rm lb}(A)+0.01\qquad(L\ge26).
+\tag{G8}
+$$
+
+Moreover $\mathcal E$ is increasing on this range and
+$\lim_{L\to\infty}\mathcal E(L)=2\sqrt2-2.00014$.
+This is the limit of the lower-bound function, not a new assertion
+about the attained core's asymptotic. The core asymptotic
+$2(\sqrt2-1)$ is already recorded in the FIB volume, §93.
+
+### Paying the thresholds and retaining the signed obligation
+
+The existing [Axler finite stop](../notes/axler2023robin.md),
+Lemma 2.3, puts this selected source above the $K$th primorial,
+$K=999999476056$. Hence $A>K\log2>K/2$ and $L>26$.
+For the latter comparison, $e<11/4$ and
+$(11/4)^{26}<4\cdot10^{11}<K/2$ suffice.
+
+The exact $N^{(0)}$ in Nicolas's (3.13), printed p.12, has largest prime
+$1000000007$ and maximum exponent $33$. It divides the $33$rd power of
+that primorial. Dusart's Theorem 5.2, $k=0$, therefore gives
+
+$$
+\log N^{(0)}\le33\vartheta(1000000007)
+<66(1000000007)<K/2<A.
+$$
+
+Thus the $6.78$ branch of Theorem 1.3 is paid using the same finite
+supplier as the previous core application. The decimal approximation
+to $\log N^{(0)}$ is not used to define or certify its threshold.
+No new finite computation, unbounded source sequence, or additional
+large finite Robin theorem is needed for (G6)–(G8).
+
+At this fixed source the resulting sufficient condition is
+
+$$
+\sqrt A\log A\,I_\psi(A)\ge-\mathcal E(\log A).
+\tag{G9}
+$$
+
+The strict core inequality then supplies strict Robin.
+A selected counterexample would instead have to satisfy
+$\sqrt A\log A\,I_\psi(A)<-\mathcal E(\log A)$.
+The new allowance is weaker as a tail requirement than the existing
+$-D_{\rm lb}(A)$ requirement; neither signed tail bound has been proved.
+The full integral over $[A,\infty)$ remains in (G9).
+This paper-level improvement does not prove RH, and finite source
+checks and source inspection do not certify its external premises.
+
+## A fixed positive scale mixture cannot remove the functional-equation weight
+
+The signed formula above and the actual-source condition (G9) are
+retained here. Durkan–Hughes–Pearce-Crump, *Generalisations of the
+Landau–Gonek theorem and applications to mean values of zeta*,
+[arXiv:2601.18025v1](https://arxiv.org/abs/2601.18025v1), Theorem 5,
+instead estimates the dyadic sum
+
+$$
+D_T(X)=\sum_{T<\operatorname{Im}\rho\le2T}\chi(\rho)X^\rho,
+\qquad \zeta(s)=\chi(s)\zeta(1-s).
+$$
+
+The sum uses the actual zeros with multiplicity. Its complex,
+zero-dependent weight is part of the theorem; the RH-dependent errors
+cannot be used unconditionally. This application addresses only one
+proposed weight-removal interface. It does not reassess that theorem,
+claim an original transform obstruction, or provide Lean verification.
+
+Fix the same cutoff $A>1$ throughout. The coefficient contributed by
+the original tail to a zero $s$ is
+
+$$
+F_A(s)=\frac1s\int_A^\infty
+u^{s-2}\frac{1+\log u}{\log^2u}\,du,
+\qquad 0<\operatorname{Re}s<1.
+\tag{M1}
+$$
+
+In the signed explicit formula its contribution is $-F_A(\rho)$.
+The pole term and the trivial-zero integral remain those displayed
+above. Integration by parts identifies (M1) with the two corresponding
+terms of that existing formula; no zero tail is truncated here.
+
+### The original coefficient already has a positive Mellin representation
+
+Put $k(u)=(1+\log u)/(u^2\log^2u)$. Since
+
+$$
+\int_v^\infty k(u)\,du=\frac1{v\log v}\qquad(v>1),
+$$
+
+integrating $x^{s-1}$ over $0<x<u$ and changing the order gives
+
+$$
+F_A(s)=\int_0^\infty
+\frac{x^{s-1}}{\max(A,x)\log\max(A,x)}\,dx.
+\tag{M2}
+$$
+
+For real $0<s<1$ this follows by Tonelli. For complex $s$ in the
+same strip, the absolute integral is the finite integral with exponent
+$\operatorname{Re}s$, so Fubini gives the identical formula. Thus
+$F_A(s)=\int x^s\,d\nu_A(x)$ for the positive scale measure
+
+$$
+d\nu_A(x)=\frac{dx}{x\max(A,x)\log\max(A,x)}.
+$$
+
+This representation by itself supplies no one-sided bound for the
+signed zero sum. Applying it directly to $D_T$ would retain the unwanted
+$\chi(\rho)$ factor.
+
+### The reciprocal weight destroys fixed positive scale representability
+
+The classical functional equation, in
+[DLMF 25.4.2](https://dlmf.nist.gov/25.4.E2), has
+
+$$
+\chi(s)=2^s\pi^{s-1}\sin(\pi s/2)\Gamma(1-s).
+$$
+
+Consequently, for real $\sigma\uparrow1$,
+$\chi(\sigma)>0$ and $\chi(\sigma)^{-1}\sim(1-\sigma)/2$.
+For $0<\sigma<1$, $F_A(\sigma)/\chi(\sigma)$ is strictly positive,
+but
+
+$$
+\lim_{\sigma\uparrow1}\frac{F_A(\sigma)}{\chi(\sigma)}=0.
+\tag{M3}
+$$
+
+To verify the endpoint, set $\epsilon=1-\sigma$ and
+$w(u)=(1+\log u)/\log^2u$, which tends to zero. For every $\eta>0$,
+choose $B\ge A$ with $w(u)\le\eta$ for $u\ge B$. The finite-prefix
+contribution to $\epsilon\int_A^\infty u^{-1-\epsilon}w(u)\,du$
+tends to zero, while its tail is at most
+$\eta\epsilon\int_B^\infty u^{-1-\epsilon}du
+=\eta B^{-\epsilon}\le\eta$. This proves (M3), including the
+complete infinite tail and the fixed original cutoff.
+
+Suppose a nonnegative Borel measure $\mu_A$ on $(0,\infty)$ had
+finite real moments throughout $0<\sigma<1$ and satisfied the exact
+all-strip transport identity
+
+$$
+F_A(s)=\chi(s)\int_0^\infty X^s\,\mu_A(dX),
+\qquad 0<\operatorname{Re}s<1.
+\tag{M4}
+$$
+
+It may depend on $A$, but is fixed as $s$ varies. Fatou along any real
+sequence $\sigma\uparrow1$ and (M3) imply
+
+$$
+0\le\int_0^\infty X\,\mu_A(dX)
+\le\liminf_{\sigma\uparrow1}\int_0^\infty X^\sigma\,\mu_A(dX)=0.
+$$
+
+Since $X>0$ everywhere on the scale domain, $\mu_A=0$. This contradicts
+the strict positivity of $F_A(\sigma)/\chi(\sigma)$. Hence no such
+nonnegative measure exists, even without requiring finite total mass
+or a finite first moment in advance. Matching the real interval alone
+already produces the contradiction.
+
+If (M4) held, each finite dyadic actual-zero multiset would obey
+$\sum F_A(\rho)=\int D_T(X)\,\mu_A(dX)$, with its multiplicities
+unchanged. The result rules out this fixed positive, all-strip kernel
+transport before any summation over heights. It does not rule out
+signed or complex measures, interpolation only on the actual zero
+set, height-dependent transforms, or approximation with a separately
+bounded remainder. Those are different interfaces requiring their own
+integrability, uniform error and sign estimates. In particular, an
+all-strip identity is a sufficient universal matching requirement,
+not a necessary condition for every use of the weighted theorem.
+
+No estimate for the original signed $I_\psi(A)$ follows. Condition
+(G9), at the same selected integer and with the full tail, remains
+unproved; RH remains unproved.
+
+## Exact signed scale transport and the cost of its large-scale tail
+
+The preceding positive-measure exclusion leaves signed and complex
+transports open. For the same fixed $A>1$ and original coefficient
+$F_A$ in (M1), a classical cosine–Mellin calculation constructs a real
+signed transport. Its absolute moments also explain why the displayed
+error in Durkan–Hughes–Pearce-Crump's Theorem 5 cannot simply be
+integrated over all scales. This is an application of classical
+transforms and the already assessed theorem, with no originality or
+Lean-verification claim.
+
+### A reciprocal-coordinate cosine transform
+
+Let $h_A(u)=1/[\max(A,u)\log\max(A,u)]$ and put
+
+$$
+v_A(x)=\frac{h_A(1/x)}x=
+\begin{cases}
+1/\log(1/x),&0<x\le1/A,\\
+1/(A\log A\,x),&x\ge1/A.
+\end{cases}
+\tag{S1}
+$$
+
+The two branches agree at $1/A$. Set $v_A(0)=0$.
+The function is locally absolutely continuous, tends to zero at
+infinity, and has the integrable derivative
+
+$$
+v_A'(x)=
+\begin{cases}
+1/[x\log^2(1/x)],&0<x<1/A,\\
+-1/(A\log A\,x^2),&x>1/A,
+\end{cases}
+\qquad \int_0^\infty|v_A'(x)|\,dx=\frac2{\log A}.
+$$
+
+Define the improper cosine transform for $X>0$ by
+
+$$
+g_A(X)=2\int_0^\infty v_A(x)\cos(2\pi Xx)\,dx
+=-\frac1{\pi X}\int_0^\infty v_A'(x)\sin(2\pi Xx)\,dx.
+\tag{S2}
+$$
+
+The first integral converges by Dirichlet on its $1/x$ tail; the
+second is absolutely convergent. Integration by parts gives the
+equality without a boundary term. In particular,
+
+$$
+|g_A(X)|\le\frac2{\pi X\log A}.
+\tag{S3}
+$$
+
+At the other endpoint, splitting the tail at $1/X$ gives
+
+$$
+g_A(X)=\frac2{A\log A}\log(1/X)+O_A(1)
+\qquad(X\downarrow0).
+\tag{S4}
+$$
+
+Indeed, the compact part is bounded. In the tail integral, subtracting
+one from the cosine between $1/A$ and $1/X$ has a bounded integral
+after the substitution $t=Xx$, and the integral from $1/X$ to
+infinity is bounded by Dirichlet. Thus
+$\int_0^\infty X^{\sigma-1}|g_A(X)|\,dX<\infty$ for every
+$0<\sigma<1$.
+
+The standard cosine moment in
+[DLMF 5.9.6](https://dlmf.nist.gov/5.9.E6), followed by integration
+by parts, yields
+
+$$
+\int_0^\infty t^{s-2}\sin t\,dt
+=\frac{\Gamma(s)\cos(\pi s/2)}{1-s}
+\qquad(0<\operatorname{Re}s<1).
+$$
+
+Applying this to the second integral in (S2) is a justified Fubini
+step: its absolute double integral is a finite constant depending on
+$\sigma=\operatorname{Re}s$ times
+$\int_0^\infty|v_A'(x)|x^{1-\sigma}\,dx<\infty$.
+Integration by parts in $x$ then gives
+
+$$
+\begin{aligned}
+\int_0^\infty X^{s-1}g_A(X)\,dX
+&=2(2\pi)^{-s}\Gamma(s)\cos(\pi s/2)
+\int_0^\infty v_A(x)x^{-s}\,dx\\
+&=\frac{F_A(s)}{\chi(s)}.
+\end{aligned}
+\tag{S5}
+$$
+
+Here $x=1/u$ identifies the last integral with (M2), and the
+classical functional equation identifies its prefactor with
+$\chi(1-s)=1/\chi(s)$. Thus $d\mu_A(X)=g_A(X)dX/X$ is a locally
+finite real signed Borel scale measure with finite absolute moments
+throughout the open strip; finite total variation is not required.
+The preceding positive-measure result and the strictly positive real
+moments imply that this density has both signs; no large-$X$
+pointwise asymptotic or sign location is assumed.
+
+For each finite actual dyadic zero multiset, (S5) gives the exact
+coefficient identity
+
+$$
+\sum_{T<\operatorname{Im}\rho\le2T}F_A(\rho)
+=\int_0^\infty D_T(X)\,\mu_A(dX).
+\tag{S6}
+$$
+
+Absolute strip moments justify the finite sum interchange and preserve
+all multiplicities. Summing over infinitely many height blocks is a
+separate interchange or remainder obligation; (S6) alone does not pay it.
+
+### Every absolutely integrable exact transport has a missing higher moment
+
+There is a sharper endpoint than (M3). With $L=\log A$ and
+$\epsilon=1-\sigma\downarrow0$, substituting $u=e^y$ in (M1) gives
+
+$$
+F_A(1-\epsilon)=\frac1{1-\epsilon}
+\int_L^\infty e^{-\epsilon y}\left(\frac1y+\frac1{y^2}\right)dy
+=\log(1/\epsilon)+O_A(1).
+$$
+
+For the $1/y$ integral, split at $1/\epsilon$: replacing the
+exponential by one below that point changes the answer by at most
+one, while the rescaled tail is a fixed convergent integral. The
+$1/y^2$ integral is at most $1/L$. Since
+$\chi(1-\epsilon)^{-1}=\epsilon/2+O(\epsilon^2)$,
+
+$$
+\frac{F_A(1-\epsilon)}{\chi(1-\epsilon)}
+=\frac\epsilon2\log(1/\epsilon)+O_A(\epsilon).
+\tag{S7}
+$$
+
+Suppose any locally finite signed or complex Borel scale measure
+$\mu$, allowing infinite total variation, had finite absolute
+moments at every $0<\sigma<1$, realized the exact all-strip
+identity (M4), and also had a finite absolute moment at $1+\delta$
+for some $\delta>0$. For $\sigma$ in a neighborhood of one,
+$X^\sigma\log X$ is dominated against $|\mu|$ by a fixed
+subunit moment on $0<X<1$ and the $1+\delta$ moment on $X\ge1$.
+Dominated convergence therefore makes $\int X^\sigma\,\mu(dX)$
+differentiable at one, with a finite derivative. Its value there is
+zero by (M3). But (S7) forces its left difference quotient to tend
+to $-\infty$, a contradiction. Hence every such exact transport has
+
+$$
+\boxed{\int_0^\infty X^{1+\delta}\,|\mu|(dX)=\infty
+\quad\text{for every }\delta>0.}
+\tag{S8}
+$$
+
+This includes the constructed real density. Its divergent higher
+moment comes from $X\ge1$, because its absolute subunit moments
+already bound the contribution of $0<X<1$. No explicit asymptotic
+for $g_A$ is needed for this moment obstruction.
+
+### Consequence for the existing error supplier
+
+Theorem 5, printed p.4, equation (2.1), is uniform for $X\ge1$ and
+$T>1$. One term in its displayed absolute-error majorant is
+
+$$
+\frac{(\log T)^2}{\sqrt T}\,X^{1+1/\log T}.
+$$
+
+For every fixed $T>1$, (S8) shows that integrating this term against
+the total variation of any exact all-strip transport is infinite.
+Thus the displayed error majorant cannot, by direct absolute
+integration over $[1,\infty)$, control the complete signed transport
+in (S6). This is a limitation of that guaranteed majorant, not a
+claim that the actual error integral diverges. The source theorem
+also leaves the scale interval $(0,1)$ to a separate argument.
+
+Using a scale truncation requires an independent bound for its
+complement. A cancellation-sensitive integrated remainder, a
+different large-scale error estimate, or matching only on the actual
+zero set could change the conclusion. No such supplier is established
+here. The original infinite $I_\psi(A)$ tail, same selected integer,
+and sufficient condition (G9) remain unchanged and unproved; RH
+remains unproved.
+
+## A finite first absolute moment controls a scale complement
+
+The higher-moment obstruction (S8) does not assert that the first
+absolute moment is infinite. For the constructed density, that endpoint
+is finite and has an explicit tail allowance. The following estimates
+use (S1)–(S6), without repeating the cosine–Mellin transport proof or
+the Durkan–Hughes–Pearce-Crump theorem. They are paper-level applications
+of the elementary Dirichlet estimate for an oscillatory integral; no
+originality, numerical-experiment or Lean-verification claim is made.
+
+### An explicit bound at the large-scale endpoint
+
+Let $A\ge e^2$, $L=\log A$ and $k=2\pi X\ge A$. On
+$0<x\le1/A$ the function
+
+$$
+u(x)=\frac1{x\log^2(1/x)}
+$$
+
+is decreasing: its derivative is
+$-(\log(1/x)-2)/[x^2\log^3(1/x)]\le0$. Split the first branch of
+$v_A'$ in (S2) at $1/k$. On its initial part,
+
+$$
+\left|\int_0^{1/k}u(x)\sin(kx)\,dx\right|
+\le k\int_0^{1/k}\frac{dx}{\log^2(1/x)}
+\le\frac1{\log^2k}.
+$$
+
+For a nonnegative decreasing function $w$ on $[a,b]$, integrating
+against the primitive $\int_a^x\sin(kt)dt$, whose modulus is at most
+$2/k$, gives
+$|\int_a^bw(x)\sin(kx)dx|\le2w(a)/k$.
+Apply this once to $u$ on $[1/k,1/A]$, and once to
+$1/(ALx^2)$ on $[1/A,\infty)$. These contributions are bounded by
+$2/\log^2k$ and $2A/(kL)$ respectively. Thus
+
+$$
+\boxed{
+|g_A(X)|\le\frac3{\pi X\log^2(2\pi X)}
+             +\frac A{\pi^2X^2L}
+\qquad(2\pi X\ge A\ge e^2).}
+\tag{C1}
+$$
+
+This is a bound rather than an asserted asymptotic or an eventual sign
+for the density. Integrating it gives, for $R\ge A$,
+
+$$
+J_A(R):=\int_R^\infty|g_A(X)|\,dX
+\le\frac3{\pi\log(2\pi R)}+\frac A{\pi^2RL}
+<\frac2{\log R}.
+\tag{C2}
+$$
+
+For the last inequality, put $v=R/A\ge1$ and use
+$1+\log v/L\le v$, so $A/(RL)\le1/\log R$; also
+$3/\pi+1/\pi^2<2$. The existing small-$X$ estimate (S4) and local
+continuity of (S2) then give
+
+$$
+\int_0^\infty X\,|\mu_A|(dX)
+=\int_0^\infty|g_A(X)|\,dX<\infty.
+\tag{C3}
+$$
+
+Dominated convergence at the endpoint $\sigma\uparrow1$, using (S4),
+(C3) and the exact strip moments, also transports (M3) to the signed
+identity
+
+$$
+\int_0^\infty X\,\mu_A(dX)
+=\int_0^\infty g_A(X)\,dX=0.
+\tag{C4}
+$$
+
+This signed cancellation coexists with a finite, positive first
+absolute moment and with the divergent higher moments in (S8).
+
+### Bound the actual block remainder on its scale complement
+
+Keep the actual positive-ordinate zero multiset
+$\mathcal Z_T=\{\rho:T<\operatorname{Im}\rho\le2T\}$, with every
+multiplicity, and $D_T$ from the preceding note. Let $M_T(X)$ be the
+three-branch main expression in the already assessed Theorem 5, and
+define its actual remainder by
+
+$$
+\mathcal E_T(X)=D_T(X)-M_T(X),\qquad X\ge1.
+$$
+
+For $X\ge R\ge\max(A,T)$ its third branch applies. With
+$y=\pi X/T>1$ it is
+
+$$
+M_T(X)=-X\sum_{y\le n<2y}\frac{\Lambda(n)}n
+                                    e^{2\pi iX/n}.
+$$
+
+The [already inspected Dusart inputs](../Weil/dusart2010estimates.md)
+$\vartheta(t)<2t$ and
+$\psi(t)-\vartheta(t)<1.00007\sqrt t+1.78t^{1/3}$ give
+$\psi(t)<5t$ for $t\ge1$. Hence
+
+$$
+|M_T(X)|\le\frac Xy\psi(2y)<10X.
+$$
+
+Define the finite block factor
+
+$$
+K_T=\sum_{\rho\in\mathcal Z_T}
+                   |\chi(\rho)|T^{\operatorname{Re}\rho-1}.
+$$
+
+Because $0<\operatorname{Re}\rho<1$ and $X\ge T$,
+$|D_T(X)|\le XK_T$. Thus the actual remainder, independently of
+its printed superlinear majorant, obeys
+
+$$
+\boxed{
+\int_R^\infty|\mathcal E_T(X)|\,|\mu_A|(dX)
+\le(K_T+10)J_A(R)
+<\frac{2(K_T+10)}{\log R}
+\quad(R\ge\max(A,T),\ A\ge e^2).}
+\tag{C5}
+$$
+
+The factor $K_T$ refers to the same actual finite multiset; it is not
+an RH assumption, a numerical zero certificate or a selected favorable
+configuration. In particular (C5) does not change the real parts to
+$1/2$. It shows that this constructed transport's actual large-scale
+remainder is absolutely integrable for each fixed block, although
+direct integration of the published majorant remains infinite.
+The two statements concern different integrands and do not contradict
+one another.
+
+### The omitted scale complements can receive a full height budget
+
+Let $T_j=2^{j-1}T_0$, $j\ge1$, for any fixed $T_0>1$.
+For any chosen $\varepsilon>0$, select finite cutoffs
+
+$$
+R_j\ge\max(A,T_j),\qquad
+\log R_j\ge\frac{2^{j+1}(K_{T_j}+10)}{\varepsilon}.
+\tag{C6}
+$$
+
+Then the entire, unbounded sequence of scale-complement remainders
+has the absolute allowance
+
+$$
+\sum_{j\ge1}\left|
+\int_{R_j}^\infty\mathcal E_{T_j}(X)\,\mu_A(dX)\right|
+<\varepsilon.
+\tag{C7}
+$$
+
+This follows directly from (C5) and $\sum_{j\ge1}2^{-j}=1$.
+All ordinates above $T_0$ remain assigned to their original dyadic
+blocks. No finite-height RH verification, critical-line substitution
+or discarded infinite-height suffix is involved. The cutoffs depend
+on $A$, the block factor and the requested allowance; a fixed moderate
+cutoff is not asserted to suffice.
+
+For each block, its exact coefficient sum in (S6) can consequently
+be kept in the grouped form
+
+$$
+\begin{aligned}
+\sum_{\rho\in\mathcal Z_{T_j}}F_A(\rho)
+={}&\int_0^1D_{T_j}(X)\,\mu_A(dX)
+   +\int_1^\infty M_{T_j}(X)\,\mu_A(dX)\\
+ &+\int_1^{R_j}\mathcal E_{T_j}(X)\,\mu_A(dX)
+   +r_j,\qquad \sum_{j\ge1}|r_j|<\varepsilon.
+\end{aligned}
+\tag{C8}
+$$
+
+The small-scale term is retained, and the main-expression integral
+exists by (C3) and its finite-scale branches. The original integrated
+explicit formula already supplies absolute convergence of the
+$F_A(\rho)$ zero series. Together with (C7), this permits summing
+(C8) with its first three terms **grouped per block**; it does not
+permit separating those three infinite series without further
+estimates. In the real signed explicit formula the conjugate blocks
+give $-2\operatorname{Re}\sum F_A(\rho)$, so the complementary error
+allowance is $2\varepsilon$ before the original
+$\sqrt A\log A$ normalization. Pole and trivial-zero contributions
+are unchanged.
+
+This pays one complement obligation without proving the original
+one-sided Robin bound. The remaining grouped small-scale, main and
+retained-error terms still require a signed estimate at the same
+selected cutoff. The printed theorem's error can be integrated on
+each finite retained scale interval, but (C6) supplies no bound making
+that increasing cost fit the Robin reserve. No such uniform balance,
+effective zero computation or proof of RH is asserted here.
+
+
+## Centering the large-scale arithmetic main expression
+
+The first-moment cancellation (C4) also removes the continuous
+prime-density contribution of the third branch of $M_T$. The
+[previously assessed Fiori–Jaskari application](../Weil/broadbent2026mertens.md)
+supplies an independent bound for the remainder. This concerns the
+arithmetic main expression, with the same kernel and height blocks;
+it does not estimate the actual zero remainder $\mathcal E_T$ or
+reproduce the prime-number-theorem proof. These deductions are
+paper-level applications with no originality or Lean-verification claim.
+
+### Keep the moving frequency in the prime-error estimate
+
+Reuse the explicit positive constant
+
+$$
+d=\frac52\left(\frac53\right)^{1/5}
+            \left(\frac{2000}{161967}\right)^{3/5}
+$$
+
+from that existing application. Its unconditional conclusion is
+
+$$
+|\psi(u)-u|\le0.239u\,e^{-d\sqrt{\log u}}
+\qquad(u\ge e^3).
+\tag{P1}
+$$
+
+No new inspection or certification of its source computation is
+claimed. In particular the prime powers are part of $\psi$.
+
+Put $\psi_-(u)=\sum_{n<u}\Lambda(n)$. The endpoint difference
+$\psi(u)-\psi_-(u)$ is at most $\log u$. Also $d<1$: use
+$5/3<2$ and $2000/161967<1/64$ to get $d<5/16$.
+For $v\ge3$, $v-\log v\ge\sqrt v$, hence
+$\log u\le u e^{-d\sqrt{\log u}}$. Consequently
+
+$$
+|\psi_-(u)-u|<2u\,e^{-d\sqrt{\log u}}
+\qquad(u\ge e^3).
+\tag{P2}
+$$
+
+This includes the endpoint convention of the actual interval
+$y\le n<2y$, including when $y$ or $2y$ is a prime power.
+
+For $T>1$, $X$ with $y=\pi X/T\ge e^3$, write
+
+$$
+S_T(X)=\sum_{y\le n<2y}\frac{\Lambda(n)}n e^{2\pi iX/n},
+\qquad
+b_T=\int_T^{2T}\frac{e^{it}}t\,dt.
+$$
+
+Substituting $t=2\pi X/u$ gives
+$\int_y^{2y}u^{-1}e^{2\pi iX/u}du=b_T$.
+For $w_X(u)=u^{-1}e^{2\pi iX/u}$, Stieltjes integration with the
+retained endpoints gives exactly
+
+$$
+\begin{aligned}
+S_T(X)-b_T={}&w_X(2y)[\psi_-(2y)-2y]
+             -w_X(y)[\psi_-(y)-y]\\
+ &-\int_y^{2y}[\psi(u)-u]w_X'(u)\,du.
+\end{aligned}
+\tag{P3}
+$$
+
+The integral may use either endpoint version of $\psi$, since their
+difference is supported at integers. As
+$|w_X'(u)|\le u^{-2}+2\pi Xu^{-3}$, (P1)–(P2), with
+$\delta_y=e^{-d\sqrt{\log y}}$, give
+
+$$
+|S_T(X)-b_T|
+\le(4+2\log2+2T)\delta_y
+<8T\delta_y.
+\tag{P4}
+$$
+
+The factor $T$ records the moving phase. It has not been replaced by
+a fixed-frequency constant or omitted after changing variables.
+Ordinary integration by parts also gives $|b_T|\le2/T$.
+
+### A signed cancellation and a controlled centered complement
+
+Since $M_T(X)=-XS_T(X)$ on this large-scale branch, define the
+centered expression on all $X\ge1$ by
+
+$$
+\widetilde M_T(X)=M_T(X)+Xb_T.
+$$
+
+Here the other two branches of $M_T$ remain their original formulas;
+(P4) is used only where its threshold holds. Combining (P4) with
+(C2) gives the independent complement estimate
+
+$$
+\boxed{
+\int_R^\infty|\widetilde M_T(X)|\,|\mu_A|(dX)
+<\frac{16T}{\log R}
+       e^{-d\sqrt{\log(\pi R/T)}}
+\quad\left(R\ge\max(A,e^3T/\pi),\ A\ge e^2\right).}
+\tag{P5}
+$$
+
+The linear part is eliminated by the full signed moment, not by
+discarding a part of the scale interval:
+
+$$
+\int_1^\infty M_T(X)\,\mu_A(dX)
+=\int_1^\infty\widetilde M_T(X)\,\mu_A(dX)
+ +b_T\int_0^1g_A(X)\,dX.
+\tag{P6}
+$$
+
+Thus the small-scale term in (C8) changes to
+$\int_0^1[D_T(X)+Xb_T]\,\mu_A(dX)$ when its main term is
+replaced by the centered one. The actual zero remainder
+$\mathcal E_T=D_T-M_T$ is unchanged. This retains all endpoint,
+small-scale and conjugate contributions at the same cutoff.
+
+### Cutoffs for the centered arithmetic contribution
+
+With the same $T_j=2^{j-1}T_0$, any requested
+$\varepsilon>0$ has explicit sufficient main-term cutoffs
+
+$$
+\begin{aligned}
+V_j&=\max\left(3,
+  d^{-2}\left[\max\left(0,
+          \log\frac{16T_j2^j}{\varepsilon}\right)\right]^2\right),\\
+Q_j&=\max\left(A,\frac{T_j}{\pi}e^{V_j}\right).
+\end{aligned}
+\tag{P7}
+$$
+
+Since $\log Q_j\ge2$, (P5) gives
+
+$$
+\sum_{j\ge1}\int_{Q_j}^\infty
+|\widetilde M_{T_j}(X)|\,|\mu_A|(dX)<\varepsilon.
+\tag{P8}
+$$
+
+For fixed $A,T_0,\varepsilon$, this choice has
+$\log Q_j=O(j^2)$ as $j\to\infty$. It is a sufficient allowance
+for the centered **arithmetic main** complement, not a necessary
+cutoff or a replacement for (C6)'s zero-remainder cutoffs. It uses
+the same cumulative error law for each prime interval and does not
+combine independently favorable phases.
+
+These estimates control another scale complement and make its
+continuous cancellation explicit. They do not bound the signed
+combination left in (C8): the small-scale zero sum, retained centered
+main and actual zero remainder must still be compared together.
+The growing-scale error cost and the original full Robin inequality
+remain unpaid; no bound for $\sqrt A\log A\,I_\psi(A)$ at the selected
+integer or proof of RH follows.
+
+
+## A finite scale band already costs a growing absolute-error allowance
+
+The infinite-moment obstruction (S8) and complement estimates (C5)–(C8)
+leave a different question: can a retained scale cutoff make the printed
+Durkan–Hughes–Pearce-Crump error majorant small enough? For the constructed
+transport, a finite band gives a quantitative obstruction even before
+its large-scale complement is considered. This is a paper-level
+application of (S2) and the already assessed Theorem 5, not a new source
+audit, originality claim or Lean-verified result.
+
+### Locate a positive band of the same signed kernel
+
+Let $A\ge e^8$, $L=\log A$, and write $X=A\xi$ and $k=2\pi\xi$.
+Rescale the two branches of $v_A'$ in (S2), without changing the
+original cutoff. Then
+
+$$
+ALg_A(A\xi)=\frac2k\left[B(k)-LI_L(k)\right],
+\qquad
+B(k)=\int_1^\infty\frac{\sin(kt)}{t^2}\,dt,
+\quad
+I_L(k)=\int_0^1\frac{\sin(kt)}{t(L-\log t)^2}\,dt.
+\tag{R1}
+$$
+
+For $0<k\le1/2$, the sine is nonnegative on $[1,\pi/k]$.
+Its chord bound on $[1,\pi/(2k)]$, followed by an absolute bound
+on the remaining tail, gives
+
+$$
+B(k)\ge\frac{2k}{\pi}\log\frac\pi{2k}-\frac k\pi
+>\frac k4.
+\tag{R2}
+$$
+
+Here $\log(\pi/(2k))\ge\log\pi>1$ and $\pi<4$.
+Also $\sin(kt)\le kt$ on $0<t<1$, so
+$LI_L(k)\le k/L\le k/8$. Thus (R1) gives the uniform, explicit
+positive band
+
+$$
+\boxed{g_A(X)>\frac1{4A\log A}
+\qquad\left(\frac A{8\pi}\le X\le\frac A{4\pi},\ A\ge e^8\right).}
+\tag{R3}
+$$
+
+This does not claim positivity on all scales; (C4)'s complete signed
+first moment is still zero. The band is contained in $[1,R]$ for
+every $R\ge A$. From $d|\mu_A|(X)=|g_A(X)|dX/X$, (R3),
+$\log2>1/2$ and $\pi<4$ imply
+
+$$
+\int_1^R|\mu_A|(dX)>\frac1{8A\log A},\qquad
+\int_1^RX^{1+\delta}|\mu_A|(dX)
+>\frac{(A/32)^\delta}{128\log A}\quad(\delta>0).
+\tag{R4}
+$$
+
+Both lower bounds concern the transport's absolute weights, not an
+actual prime or zero error. No critical-line assumption, zero count
+or finite zero computation is used.
+
+### Balance the two printed height costs at every height
+
+Theorem 5, printed p.4, (2.1), includes the two error shapes
+
+$$
+\sqrt T(\log T)^2,
+\qquad \frac{(\log T)^2}{\sqrt T}X^{1+1/\log T}
+\qquad(T>1,\ X\ge1).
+$$
+
+Their uniform implied constants are not numerically certified here.
+Define the **unit-coefficient majorant allowance**, after the original
+Robin normalization, by
+
+$$
+\mathcal B_A(T,R)=\sqrt A\log A\,(\log T)^2
+\int_1^R\left(\sqrt T+\frac{X^{1+1/\log T}}{\sqrt T}\right)
+|\mu_A|(dX).
+\tag{R5}
+$$
+
+For $h=\log T>0$ and $R\ge A\ge e^8$, (R4) gives
+
+$$
+\mathcal B_A(T,R)>
+ h^2\left[\frac18\sqrt{T/A}
+       +\frac1{128}\sqrt{A/T}(A/32)^{1/h}\right]
+\ge\frac{h^2}{16}\exp\left(\frac{\log(A/32)}{2h}\right).
+\tag{R6}
+$$
+
+For any $c>0$, the minimum of $h^2e^{c/(2h)}$ over $h>0$
+is $e^2c^2/16$, attained at $h=c/4$. Consequently
+
+$$
+\boxed{\mathcal B_A(T,R)>
+\frac{e^2}{256}\,[\log(A/32)]^2
+\quad\text{for every }T>1,\ R\ge A\ge e^8.}
+\tag{R7}
+$$
+
+This is a lower bound on the allowance produced by integrating these
+two positive majorant shapes. It is not a lower bound on
+$|\mathcal E_T|$, on its actual integral, or on a Robin violation.
+The other two printed error shapes can only increase this particular
+absolute allowance. If the two shapes receive any fixed positive
+coefficients $c_1,c_2$, the same argument has (R7)'s right side
+multiplied by $\sqrt{c_1c_2}$. No numerical value for those coefficients
+or effective failure threshold is inferred from big-$O$ notation.
+
+The core reserve $\mathcal E(\log A)$ in (G7) remains bounded as
+$A\to\infty$. In contrast, (R7) grows quadratically in $\log A$
+for every choice of height $T$, including a height depending on $A$.
+Thus this direct absolute-majorant transfer on retained intervals
+$[1,R]$ with $R\ge A$ cannot provide a uniform bounded Robin allowance
+uniformly as the clock tends to infinity. No unbounded sequence of
+selected sources is asserted. Increasing those cutoffs, or improving
+only their omitted complements, does not remove the finite band.
+An actual-remainder bound that improves on these shapes, integration
+that controls the remainder's sign, or a different scale decomposition
+could change this conclusion; none is excluded by (R7).
+
+The result specifies a finite retained-scale obstruction to one
+estimate method. It does not supply the required signed estimate at
+the same selected integer, drop any zero multiplicity or infinite
+height block, or settle RH. The centered arithmetic-main estimates
+(P5)–(P8) remain valid independently; they do not alter the actual
+zero remainder used in (R5).
+
+
+## Fixed Gaussian probes leave a coefficient remainder at unbounded height
+
+Moriya, *A Gaussian-Perron Prime-Side Defect and Local Profiles Near
+Critical-Line Zeros of the Riemann Zeta Function*,
+[arXiv:2607.04316v2](https://arxiv.org/abs/2607.04316v2), Theorem 3.3,
+printed p.7, gives an exact smoothed prime-defect formula with crossed
+zero, pole, trivial-zero and shifted-contour terms. Its zero coefficient,
+at a fixed observation point $z$, is
+
+$$
+G_{X,\alpha,z}(s)
+=\frac{X^{s-z}\exp\!\bigl(\alpha^2\log X\,(s-z)^2\bigr)}{s-z},
+\qquad X>1,\quad\alpha>0.
+$$
+
+Only zeros in the source's crossed strip contribute to that zero term.
+The conditional localization in Theorem 7.4 requires its stated damping,
+pole and contour hypotheses and concerns a fixed simple critical-line
+zero; Theorem 7.6 additionally assumes RH. Those local conclusions are
+not used below. The following paper-level application compares the
+coefficient in Theorem 3.3 with the unchanged original $F_A$ in (M1),
+without repeating the source's explicit-formula proof or asserting
+originality or Lean verification.
+
+### The original coefficient has a uniform algebraic lower bound
+
+Fix $A\ge e^2$, put $L=\log A$, and define
+
+$$
+w(u)=\frac{1+\log u}{\log^2u},\qquad
+h(u)=uw'(u)=-\frac{\log u+2}{\log^3u}.
+$$
+
+For $s=\sigma+it$ with $0<\sigma<1$, two integrations by parts in
+(M1) give
+
+$$
+F_A(s)=\frac{w(A)A^{s-1}}{s(1-s)}
+ +\frac{h(A)A^{s-1}+\int_A^\infty u^{s-1}h'(u)\,du}
+        {s(1-s)^2}.
+\tag{H1}
+$$
+
+The boundary terms at infinity vanish in this strip. Moreover
+$h'(u)=2(\log u+3)/(u\log^4u)>0$ and $h(u)\to0$, so the numerator
+of the remainder has modulus at most $2|h(A)|A^{\sigma-1}$.
+Relative to the leading term its bound is
+
+$$
+\frac{2|h(A)|}{w(A)|1-s|}
+=\frac{2(L+2)}{L(L+1)|1-s|}
+\le\frac4{3|t|}.
+$$
+
+Thus, uniformly throughout the actual critical strip,
+
+$$
+\boxed{
+|F_A(\sigma+it)|
+\ge\frac{2w(A)A^{\sigma-1}}{3|s||1-s|}
+\ge\frac{2w(A)}{3A(1+t^2)}
+\qquad(A\ge e^2,\ |t|\ge4).}
+\tag{H2}
+$$
+
+No real part has been replaced by $1/2$. This is a lower bound on an
+individual complex coefficient's modulus, not on the signed zero sum
+or on the Robin margin.
+
+### Compare any finite family of fixed probes
+
+For this same $A$, choose any finite nonempty family
+$(X_j,\alpha_j,z_j,b_j)$, with $X_j>1$, $\alpha_j>0$ and arbitrary
+complex coefficients $b_j$. The family may depend on $A$, but its
+parameters are fixed as the zero height varies. Put
+
+$$
+a_j=\alpha_j^2\log X_j,\qquad
+a_0=\min_j a_j>0,\qquad H=\max_j|\operatorname{Im}z_j|,
+$$
+
+$$
+C_j=\max_{0\le\sigma\le1}
+ X_j^{\sigma-\operatorname{Re}z_j}
+ e^{a_j(\sigma-\operatorname{Re}z_j)^2},\qquad
+C=\sum_j|b_j|C_j.
+$$
+
+Let $\eta_j(s)$ be the source's crossed-strip indicator; the same
+argument permits any $|\eta_j(s)|\le1$. Define the zero coefficient
+of the proposed finite reconstruction by
+
+$$
+Q(s)=\sum_j b_j\eta_j(s)G_{X_j,\alpha_j,z_j}(s).
+$$
+
+For $0<\sigma<1$ and $|t|\ge\max(4,2H)$, each denominator has
+modulus at least $|t|/2$, and each Gaussian factor has its height part
+at most $e^{-a_0t^2/4}$. Consequently
+
+$$
+\boxed{|Q(\sigma+it)|\le\frac{2C}{|t|}e^{-a_0t^2/4}.}
+\tag{H3}
+$$
+
+The discrepancy even has an explicit height threshold. Since
+$e^x\ge x^2/2$ for $x>0$, (H3) is at most
+$64C/(a_0^2|t|^5)$. Set
+
+$$
+\Gamma=\max\!\left(4,2H,
+ \left[\frac{384AC}{a_0^2w(A)}\right]^{1/3}\right).
+$$
+
+For $|t|\ge\Gamma$, this upper bound is at most
+$w(A)/(3A(1+t^2))$. The triangle inequality and (H2) therefore give
+
+$$
+\boxed{
+|F_A(\sigma+it)-Q(\sigma+it)|
+\ge\frac{w(A)}{3A(1+t^2)}
+\qquad(0<\sigma<1,\ |t|\ge\Gamma).}
+\tag{H4}
+$$
+
+The classical zero-counting theorem supplies actual nontrivial zeros
+at unbounded positive ordinates. Applying (H4) to those zeros shows
+that this finite family cannot match $F_A(\rho)$ at every actual zero,
+even with complex coefficients. Multiplicities remain unchanged:
+multiplying a coefficient by its positive multiplicity cannot remove
+the mismatch. Matching only on the actual zero set already fails in
+this class; an all-strip identity is not required for the conclusion.
+
+This restriction concerns exact coefficient reconstruction by finitely
+many probes with positive fixed Gaussian parameters. It does not
+exclude an identity for the aggregate signed sum, an inequality using
+these probes, or an approximation with an independently paid remainder.
+No conclusion is asserted here for infinite or height-dependent
+reconstructions; unbounded center heights or $\inf_j a_j=0$ are not
+covered by (H3). Pole, trivial-zero and shifted-contour terms from the
+source still need their own treatment; they have not been discarded or
+declared to satisfy the original Robin budget.
+
+The calculation identifies a remainder that any such finite exact
+replacement would otherwise omit. Controlling its signed sum, or
+constructing a different reconstruction with a uniform remainder at
+the same selected integer, remains necessary. Condition (G9), its full
+infinite tail and the strict core remain unchanged and unproved; RH
+remains unproved.
+
+
+### The discrepancy also survives real conjugate pairing
+
+The modulus restriction (H4) alone does not control a real part. The
+existing [Ford–Zaharescu fixed-phase input](../Weil/fordzaharescu2005zerophases.md),
+Corollary 2, supplies a way to select actual zero phases where the
+real coefficient remains large. This is an application of that
+published theorem and (H1)–(H3), not a new phase-distribution theorem,
+source proof audit or Lean-verified result.
+
+Keep the same fixed $A\ge e^2$, $L=\log A$ and finite fixed family
+$Q$ above. For $s=\sigma+it$ with $0<\sigma<1$, put
+
+$$
+B_A(\sigma,t)=\frac{w(A)A^{\sigma-1}}{t^2}>0.
+$$
+
+Since
+$s(1-s)=t^2+\sigma(1-\sigma)+it(1-2\sigma)$, with
+$0<\sigma(1-\sigma)\le1/4$ and $|1-2\sigma|\le1$, comparison of
+its reciprocal with $t^{-2}$ and the remainder estimate in (H1) give
+
+$$
+\begin{aligned}
+\left|F_A(\sigma+it)-B_A(\sigma,t)e^{itL}\right|
+&\le B_A(\sigma,t)
+ \left(\frac7{3|t|}+\frac1{4t^2}\right)\\
+&\le\frac13B_A(\sigma,t)\qquad(|t|\ge8).
+\end{aligned}
+\tag{H5}
+$$
+
+In particular $\operatorname{Re}F_A(s)\ge B_A/6$ when
+$\cos(tL)\ge1/2$, and $\operatorname{Re}F_A(s)\le-B_A/6$ when
+$\cos(tL)\le-1/2$. The actual real part $\sigma$ is still present
+in $B_A$.
+
+For an actual zero $\rho=\beta+i\gamma$ with $\gamma>0$, define the
+real discrepancy of its conjugate pair by
+
+$$
+\Delta_A(\rho)=2\operatorname{Re}F_A(\rho)
+ -\operatorname{Re}\!\left[Q(\rho)+Q(\overline\rho)\right].
+$$
+
+This definition allows arbitrary complex probe weights; $Q$ need not
+commute with conjugation. The same estimate (H3) applies at both
+ordinates. For
+
+$$
+\Gamma_{\mathrm R}=\max\!\left(8,2H,
+ \left[\frac{768AC}{a_0^2w(A)}\right]^{1/3}\right),
+$$
+
+the elementary exponential bound used above gives
+
+$$
+\left|Q(\rho)+Q(\overline\rho)\right|
+\le\frac{128C}{a_0^2\gamma^5}
+\le\frac{w(A)}{6A\gamma^2}
+\le\frac16B_A(\beta,\gamma)
+\qquad(\gamma\ge\Gamma_{\mathrm R}).
+$$
+
+Consequently, at those actual heights,
+
+$$
+\boxed{
+\begin{aligned}
+\cos(\gamma L)\ge\tfrac12
+&\ \Longrightarrow\quad
+\Delta_A(\rho)\ge\tfrac16B_A(\beta,\gamma)
+                 \ge\frac{w(A)}{6A\gamma^2},\\
+\cos(\gamma L)\le-\tfrac12
+&\ \Longrightarrow\quad
+\Delta_A(\rho)\le-\tfrac16B_A(\beta,\gamma)
+                 \le-\frac{w(A)}{6A\gamma^2}.
+\end{aligned}}
+\tag{H6}
+$$
+
+### Both signs occur on a positive proportion of actual zero pairs
+
+Use the published theorem only with the **fixed** frequency
+$\eta=L/(2\pi)>0$. Take the fixed $C^2(\mathbb T)$ minorants
+
+$$
+f_+(u)=8\bigl(\cos(2\pi u)-\tfrac12\bigr)_+^3,
+\qquad f_-(u)=f_+(u-\tfrac12).
+$$
+
+Here $v_+=\max(v,0)$.
+They lie in $[0,1]$ and have the same mean $c_0$. On
+$|u|\le1/12$ modulo one, $\cos(2\pi u)\ge\sqrt3/2>3/4$, so
+$f_+(u)\ge1/8$ and $c_0\ge1/48$.
+Let $\mathcal N(T)$ count actual nontrivial zeros with
+$0<\gamma\le T$, including every multiplicity. The fixed smooth-test
+sum below ranges over distinct zeros, with $m_\rho$ supplying their
+multiplicities. The expansion already supplied by Ford–Zaharescu, together with the
+classical $\mathcal N(T)\sim T\log T/(2\pi)$, gives
+
+$$
+\frac1{\mathcal N(T)}
+\sum_{0<\gamma_\rho\le T}m_\rho f_\pm(\eta\gamma_\rho)
+\longrightarrow c_0.
+$$
+
+The source's correction is $O_A(T)$ and its error is $o_A(T)$,
+so neither changes this normalized limit. No interval indicator is
+substituted into its $C^2$ theorem.
+
+Let $\mathcal C_+(T)$ count, with multiplicity, the zeros satisfying
+$\Gamma_{\mathrm R}\le\gamma\le T$ and
+$\Delta_A(\rho)\ge B_A(\beta,\gamma)/6$; define
+$\mathcal C_-(T)$ using $\Delta_A(\rho)\le-B_A(\beta,\gamma)/6$.
+The support of $f_\pm$ lies in the corresponding phase region of
+(H6). Removing the finite head below $\Gamma_{\mathrm R}$ does not
+change the normalized limit, hence
+
+$$
+\boxed{
+\liminf_{T\to\infty}\frac{\mathcal C_\pm(T)}{\mathcal N(T)}
+\ge c_0\ge\frac1{48}.}
+\tag{H7}
+$$
+
+Conjugate zeros have the same positive multiplicity, so this also
+prevents the fixed finite family from reproducing every real
+conjugate-pair coefficient. The conclusion is asymptotic for each
+fixed $A$ and probe family; it supplies no effective first qualifying
+height and no uniform transition when $A$ or the family varies with
+$T$.
+
+The original zero contribution has the negative of these real pair
+coefficients. Both signs of the discrepancy therefore remain in the
+original bookkeeping. Counts of phases cannot replace its weights
+$A^{\beta-1}/\gamma^2$ or control their joint signed sum. Neither
+(H6) nor (H7) pays the full Robin remainder, rules out an aggregate
+identity or a paid approximation, or changes the sufficient target
+(G9) at the original selected integer. That bound and RH remain
+unproved.
+
+
+## A signed infinite-height allowance from the existing Landau formula
+
+The existing [Gonek uniform Landau input](../Weil/gonek1985landau.md),
+Theorem 1, printed pp.92–93, can be applied with the arithmetic variable
+fixed at the original $A$. Integrating its actual-zero sum in **height**
+retains a prime-power main term. This is different from the continuum
+scale pairing in that note, where the point-supported main term has
+zero ordinary integral. The following applies the already inspected
+unconditional theorem and (H5); it is not a new Landau formula, source
+proof audit, numerical zero computation, originality claim or Lean
+certification.
+
+The [existing real-part density allowance](../Analytic/polak2026finiterobinca.md#keeping-the-real-part-weights-in-the-complete-high-zero-tail),
+(W1)–(W11), already pays a complete infinite-height tail on a finite
+source-clock range and restricts the selected source to $A>10^{34}$.
+Those results are reused. The application here instead estimates the
+signed height suffix uniformly in both $A$ and a variable cut $T$.
+Its implied constants are not numerically certified, and its moving
+finite head remains unpaid.
+
+### Preserve the arithmetic variable and the whole original coefficient
+
+Let $A\ge e^2$, $L=\log A$, $T\ge8$, and
+$\mathcal J(A)=\log(2A)\log\log(3A)$. Sums below range over distinct
+actual nontrivial zeros, with $m_\rho$ supplying their multiplicities
+exactly once. Define
+
+$$
+S_A(U)=\sum_{0<\gamma_\rho\le U}m_\rho A^\rho,
+\qquad \rho=\beta+i\gamma_\rho.
+$$
+
+Gonek's uniform formula, with $x=A$ and height $U$, gives
+
+$$
+S_A(U)=-\frac{U}{2\pi}\Lambda(A)+E_A(U),
+\qquad
+|E_A(U)|\ll A[\mathcal J(A)+\log(2U)]+LU
+\quad(U\ge8).
+\tag{J1}
+$$
+
+The implied constant is absolute on the stated domain. To obtain this
+weaker uniform remainder from the displayed source errors, use only
+
+$$
+L\min\!\left(U,\frac A{\langle A\rangle}\right)\le LU,
+\qquad
+\min\!\left(\frac{\log U}{L},U\log U\right)
+\le\frac{\log U}{L}\le A\log(2U).
+$$
+
+No separation from prime powers is assumed. $\Lambda(A)$ remains the
+source's nonnegative point-supported real-variable function, equal to
+$\log p$ at $A=p^k$ and zero otherwise. It is not replaced by a prime
+measure, and no assertion that $A$ avoids prime powers is needed.
+
+Keep the complete original coefficient $F_A$ from (M1), and set
+
+$$
+\mathcal T_A(T)=\sum_{\gamma_\rho>T}m_\rho F_A(\rho).
+$$
+
+The more precise first inequality in (H5) retains the actual real part
+and gives
+
+$$
+\left|F_A(\rho)-\frac{w(A)}A\frac{A^\rho}{\gamma_\rho^2}\right|
+\ll\frac{w(A)A^{\beta-1}}{\gamma_\rho^3}
+\le\frac{w(A)}{\gamma_\rho^3}.
+$$
+
+The classical zero count gives
+$\sum_{\gamma>T}m_\rho\gamma^{-3}\ll\log(2T)/T^2$.
+Thus, with uniform implied constants,
+
+$$
+\mathcal T_A(T)=\frac{w(A)}A
+ \sum_{\gamma_\rho>T}\frac{m_\rho A^\rho}{\gamma_\rho^2}
+ +O\!\left(\frac{w(A)\log(2T)}{T^2}\right).
+\tag{J2}
+$$
+
+Both sums converge absolutely for each fixed $A$: use
+$|A^\rho|\le A$ and the reciprocal-square zero count, together with
+the preceding remainder. This step pays the coefficient approximation;
+it does not replace $F_A$ by its leading term without a remainder.
+
+### Integrate in zero height with the endpoint convention fixed
+
+Stieltjes partial summation, with the inclusive head and exclusive
+suffix specified above, gives
+
+$$
+\sum_{\gamma_\rho>T}\frac{m_\rho A^\rho}{\gamma_\rho^2}
+=-\frac{S_A(T)}{T^2}
+ +2\int_T^\infty\frac{S_A(u)}{u^3}\,du.
+\tag{J3}
+$$
+
+The boundary term at infinity vanishes. If $T$ is a zero ordinate,
+its full multiplicity stays in $S_A(T)$ and outside the suffix;
+(J3) retains that convention. The linear main term in (J1)
+contributes exactly $-\Lambda(A)/(2\pi T)$.
+
+For the remainder use
+
+$$
+\int_T^\infty\frac{du}{u^3}=\frac1{2T^2},\qquad
+\int_T^\infty\frac{\log(2u)}{u^3}\,du
+=\frac{\log(2T)}{2T^2}+\frac1{4T^2},\qquad
+\int_T^\infty\frac{du}{u^2}=\frac1T.
+$$
+
+Combining (J1)–(J3) therefore bounds the **entire** suffix:
+
+$$
+\boxed{
+\mathcal T_A(T)
+=-\frac{w(A)\Lambda(A)}{2\pi AT}
+ +O\!\left(w(A)\left[
+ \frac{\mathcal J(A)+\log(2T)}{T^2}+\frac{L}{AT}
+ \right]\right),
+\quad A\ge e^2,\ T\ge8.}
+\tag{J4}
+$$
+
+This is an unconditional uniform application for actual complex zeros,
+not a critical-line formula. No infinite height block, real part or
+multiplicity has been omitted. Keeping $A$ fixed during the height
+integration is compatible with the uniform estimate holding for all
+$A,T$ in the stated domain.
+
+### A moving cut makes this signed suffix allowance tend to zero
+
+In the original explicit formula the high-zero contribution is
+$-2\operatorname{Re}\mathcal T_A(T)$. Its normalized prime-power
+main term is favorable. Equation (J4) gives an absolute constant $C_*>0$
+such that
+
+$$
+\begin{aligned}
+\sqrt A L\,[-2\operatorname{Re}\mathcal T_A(T)]
+\ge{}&\frac{(1+1/L)\Lambda(A)}{\pi\sqrt A\,T}\\
+&-C_*\left[
+ \frac{\sqrt A[\mathcal J(A)+\log(2T)]}{T^2}
+ +\frac{L+1}{\sqrt A\,T}\right].
+\end{aligned}
+\tag{J5}
+$$
+
+The nonnegative main term can be kept or discarded for this lower
+bound; it must not be assigned an adverse sign. No numerical value
+of $C_*$ or resulting effective source-clock threshold is asserted.
+
+For the admissible moving cut $T=A^{1/4}L$, the adverse allowance in
+(J5) is
+
+$$
+O\!\left(
+ \frac{\mathcal J(A)+\log(2A^{1/4}L)}{L^2}
+ +\frac{L+1}{A^{3/4}L}\right)
+=O\!\left(\frac{\log L}{L}\right)\longrightarrow0.
+\tag{J6}
+$$
+
+Thus the complete infinite-height suffix has an asymptotically vanishing
+one-sided allowance at this moving cut. This gains height cancellation
+over a direct reciprocal-square absolute sum, whose normalized generic
+allowance is of order $\sqrt A\log(2T)/T$. It leaves the actual
+finite signed head $0<\gamma\le A^{1/4}\log A$ in the original
+formula, including all its real parts and multiplicities. That head
+eventually exceeds the existing verified height and has not been
+bounded uniformly here. The pole and trivial-zero terms are still
+those in the original explicit formula.
+
+For any prescribed positive allowance, (J6) gives an existential
+large-$A$ threshold for this suffix alone. It supplies no certified
+numerical threshold at the conditional source $A>10^{34}$, no new
+finite-zero verification, and no assertion of an unbounded sequence
+of selected sources. The original same-source condition (G9), with
+its complete signed integral and strict core, remains unproved.
+RH remains unproved. The remaining obstacle includes the signed
+moving finite head; the infinite suffix cannot simply be dropped.
+
+
+## A continuous Gaussian approximation of the complete original zero response
+
+The fixed-family comparison (H3)–(H7) leaves continuous scale mixtures
+and paid approximations available. The following application uses the
+same original coefficient (M1), the already assessed Gaussian coefficient
+of Moriya's Theorem 3.3, and the classical Riemann–von Mangoldt count.
+It supplies a uniform coefficient-error estimate, rather than repeating
+any source proof or claiming an original analytic theorem or Lean
+verification. No nontrivial zero is moved to the critical line.
+
+Fix $A\ge e^2$, $L=\log A$ and $0<a\le1/16$. Retain
+$w(X)=(1+\log X)/\log^2X$. At observation $z=0$ choose, separately
+for each $X\ge A$,
+
+$$
+\alpha_X=\sqrt{a/\log X},\qquad
+G_{X,\alpha_X,0}(s)=\frac{X^s e^{as^2}}s.
+$$
+
+The positive scale measure $w(X)X^{-2}dX$ gives the exact identity
+
+$$
+Q_{A,a}(s):=\int_A^\infty G_{X,\alpha_X,0}(s)
+                      \frac{w(X)}{X^2}\,dX
+=e^{as^2}F_A(s),\qquad 0<\operatorname{Re}s<1.
+\tag{U1}
+$$
+
+For every such $s$, the scale integral is absolutely convergent. The
+width parameter varies with $X$, while the Gaussian coefficient $a$
+is fixed throughout the integral. This realizes the damped coefficient
+exactly; it does not claim exact reconstruction of $F_A$ by a finite
+family of fixed probes.
+
+### A bound valid before taking the infinite scale endpoint
+
+For $R\ge A$ put
+
+$$
+F_{A,R}(s)=\frac1s\int_A^R X^{s-2}w(X)\,dX.
+$$
+
+Since $w$ is positive and decreasing, one integration by parts gives,
+for $\sigma=\operatorname{Re}s<1$ and $s\ne0$,
+
+$$
+|F_{A,R}(s)|\le
+\frac{2w(A)A^{\sigma-1}}{|s||1-s|}.
+\tag{U2}
+$$
+
+Indeed the two endpoint terms and the derivative integral are bounded
+by $A^{\sigma-1}[w(A)+w(R)+\int_A^R|w'(X)|dX]$, which is
+$2A^{\sigma-1}w(A)$. The bound is uniform in $R$. Passing to the
+infinite endpoint gives the same bound for $F_A$. In particular, for
+an actual zero $\rho=\beta+i\gamma$ with $\gamma\ge4$,
+
+$$
+|F_{A,R}(\rho)|,\ |F_A(\rho)|\le\frac{2w(A)}{\gamma^2}.
+$$
+
+This is the same reciprocal-square coefficient control used in the
+existing [Fiori density application](../Analytic/fiori2026shortzerodensity.md),
+now also applied to finite scale intervals. It will justify the
+scale-endpoint passage below; it is not a new zero-density input.
+
+### Pay the discrepancy over all actual zeros
+
+With multiplicities $m_\rho$ retained, uniformly in $A$ and $a$,
+
+$$
+\boxed{
+\sum_{\operatorname{Im}\rho>0}m_\rho
+ |F_A(\rho)-Q_{A,a}(\rho)|
+\ll w(A)\sqrt a\log(2/a).}
+\tag{U3}
+$$
+
+To prove this, set $U=a^{-1/2}\ge4$. For $4\le\gamma\le U$,
+
+$$
+|e^{a\rho^2}-1|
+=\left|a\rho^2\int_0^1e^{ta\rho^2}\,dt\right|
+\le ae^a|\rho|^2\ll a\gamma^2,
+$$
+
+because $0<\beta<1$. The preceding coefficient bound and
+$N(U)\ll U\log(2U)$ give a contribution
+$O(w(A)aU\log(2U))$. For $\gamma>U$ use
+$|e^{a\rho^2}-1|\le1+e^a$ and the classical consequence
+$\sum_{\gamma>U}m_\rho/\gamma^2\ll\log(2U)/U$ of the same
+zero count. Their sum has the size in (U3).
+
+The finite multiset $0<\gamma<4$ is not omitted or assumed empty.
+Directly from the defining integral,
+
+$$
+|F_A(\rho)|\le\frac{w(A)}{|\rho|(1-\beta)},
+$$
+
+so its discrepancy is at most
+$ae^aw(A)\sum_{0<\gamma<4}m_\rho|\rho|/(1-\beta)=O(aw(A))$.
+This fixed zeta-dependent constant is finite and independent of $A,a$;
+it is absorbed into (U3). No finite-height verification is needed for
+this step. All implied constants here are uniform but not numerically
+certified.
+
+Consequently the original conjugate-paired response has allowance
+
+$$
+\sqrt A L\left|2\operatorname{Re}
+ \sum_{\gamma>0}m_\rho(F_A(\rho)-Q_{A,a}(\rho))\right|
+\ll\sqrt{Aa}\log(2/a).
+\tag{U4}
+$$
+
+The admissible choice
+
+$$
+a_A=\frac1{A(\log A)^4}
+$$
+
+makes (U4) $O(1/\log A)$ as $A\to\infty$. This estimate covers the
+complete positive-ordinate multiset and infinite height tail, with
+actual real parts and multiplicities unchanged. It pays unsmoothing
+of the zero response, while giving no signed lower bound for that
+response. Positivity of the scale measure in (U1) is not positivity
+of a sum of complex zero coefficients.
+
+
+## Transport to a centered Gaussian prime integral with the contour paid
+
+The coefficient approximation (U1)–(U4) can be realized on the prime
+side without discarding the pole, the shifted contour, or the original
+trivial-zero correction. Use only Moriya,
+[arXiv:2607.04316v2](https://arxiv.org/abs/2607.04316v2),
+Proposition 2.2, equations (17)–(19), Theorem 3.3, equations (35)–(36),
+and Lemma 3.1. This is an application of those assessed interfaces;
+none of their explicit-formula proofs or RH-dependent localization
+claims is reproved or used.
+
+### Center the pole before the infinite scale integration
+
+For $A\ge e^2$ and $0<a\le1/16$ define
+
+$$
+\Psi_a(X)=\sum_{n\ge1}\Lambda(n)\,
+ \frac12\operatorname{erfc}\!\left(
+ \frac{\log n-\log X}{2\sqrt a}\right).
+\tag{V1}
+$$
+
+In the cited formula take observation $s=0$, right line $c=2$, left
+line $-d=-1/2$, and $\alpha_X^2\log X=a$. The observation is not a
+zero or the pole of $\zeta$. All nontrivial zeros and the pole at $1$
+are crossed; no trivial zero is crossed. The left line avoids all
+zeros and the pole. The source's prime term is $-\Psi_a(X)$, and
+$\zeta'/\zeta(0)=\log(2\pi)$, so its exact formula reads
+
+$$
+\Psi_a(X)-e^aX
+=-\sum_\rho m_\rho\frac{X^\rho e^{a\rho^2}}\rho
+ -\log(2\pi)-R_a(X),
+\tag{V2}
+$$
+
+where
+
+$$
+R_a(X)=\frac1{2\pi i}\int_{\operatorname{Re}z=-1/2}
+ \frac{\zeta'}\zeta(z)\frac{X^z e^{az^2}}z\,dz.
+$$
+
+For each fixed $a>0$ this contour integral and the zero sum in (V2)
+converge absolutely. Define the centered improper integral
+
+$$
+J_a(A)=\lim_{R\to\infty}\int_A^R
+ [\Psi_a(X)-e^aX]\frac{w(X)}{X^2}\,dX.
+\tag{V3}
+$$
+
+The prime and pole terms must be centered before taking this limit.
+Their separate integrals diverge, since $w(X)/X\sim1/(X\log X)$
+and $\Psi_a(X)\sim e^aX$. The latter asymptotic also follows from
+(V2): its Gaussian zero series divided by $X$ tends to zero by
+absolute domination, and the fixed-$a$ contour is $O_a(X^{-1/2})$.
+
+For finite $R$, Gaussian decay allows exchange of the scale integral
+and the zero sum. Its zero coefficients are
+$e^{a\rho^2}F_{A,R}(\rho)$. The bound (U2) and the finite low-zero
+bound dominate them independently of $R$ by a summable multiset.
+Thus dominated convergence passes $R\to\infty$. This uses finite
+scale intervals first; no absolute exchange over the infinite scale
+range is assumed. The constant integrates exactly to
+$\log(2\pi)/(A\log A)$.
+
+For the contour, the scale exchange over $[A,\infty)$ is absolutely
+convergent for each fixed $a>0$, using $X^{-5/2}w(X)$ on the scale
+side and Gaussian decay on the vertical line. Therefore (V3) exists
+and
+
+$$
+J_a(A)=-2\operatorname{Re}\sum_{\gamma>0}m_\rho Q_{A,a}(\rho)
+ -\frac{\log(2\pi)}{A\log A}-C_a(A),
+\tag{V4}
+$$
+
+$$
+C_a(A)=\frac1{2\pi i}\int_{\operatorname{Re}z=-1/2}
+ \frac{\zeta'}\zeta(z)e^{az^2}F_A(z)\,dz.
+$$
+
+Here $F_A$ is defined by the same integral (M1) at $\operatorname{Re}z<1$,
+$z\ne0$. No new analytic continuation assumption is needed.
+
+### Bound the contour after integrating the scale
+
+The infinite-endpoint version of (U2) on $z=-1/2+it$ gives
+
+$$
+|F_A(-1/2+it)|\ll\frac{w(A)A^{-3/2}}{1+t^2}.
+$$
+
+This line has a fixed positive distance from every zero and the pole,
+so the source's Lemma 3.1 gives
+$|\zeta'/\zeta(-1/2+it)|\ll\log^2(3+|t|)$.
+Moreover $|e^{az^2}|\le e^{a/4}$. Taking absolute values after the
+scale integration, rather than before it, therefore gives
+
+$$
+\boxed{|C_a(A)|\ll w(A)A^{-3/2}}
+\quad(A\ge e^2,\ 0<a\le1/16),
+\tag{V5}
+$$
+
+since $\log^2(3+|t|)/(1+t^2)$ is integrable. The implied constant is
+independent of the shrinking width $a$, but is not numerically certified.
+
+The original signed formula already recorded above is
+
+$$
+I_\psi(A)=-2\operatorname{Re}\sum_{\gamma>0}m_\rho F_A(\rho)
+ -\frac{\log(2\pi)}{A\log A}+T_{\rm triv}(A),
+\qquad
+T_{\rm triv}(A)=-\frac12\int_A^\infty
+ \log(1-X^{-2})\frac{w(X)}{X^2}\,dX.
+$$
+
+In particular $0\le T_{\rm triv}(A)\ll w(A)A^{-3}$. Thus the pole
+constant matches exactly, the Gaussian shifted contour is paid by
+(V5), and the original trivial term is retained. Combining (U4)
+and (V5) yields the full prime-side approximation
+
+$$
+\boxed{
+\sqrt A\log A\,|I_\psi(A)-J_a(A)|
+\ll\sqrt{Aa}\log(2/a)+A^{-1}.}
+\tag{V6}
+$$
+
+For $a_A=1/[A(\log A)^4]$ this is
+$O(1/\log A+1/A)\to0$. The bound alone does not assert convergence
+at fixed $A$ as $a\to0$, because its $A^{-1}$ allowance remains.
+
+### The estimate still needed at the selected Robin source
+
+At the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum, retain $A=\log N$ and condition (G9). The
+[existing density restriction](../Analytic/polak2026finiterobinca.md)
+requires $A>10^{36}$ if RH fails and its cited inputs hold. An eventual
+bound of the form
+
+$$
+\sqrt A\log A\,J_{a_A}(A)
+\ge-\mathcal E(\log A)+\eta(A)
+$$
+
+would imply (G9) wherever $\eta(A)$ pays the discrepancy in (V6).
+This is a sufficient condition, not an estimate established here;
+its validity at this selected source remains unproved. Without a
+numerical constant in (V6), no explicit margin or new source threshold
+is certified. Neither positive prime weights nor positive scale
+weights give a lower bound after subtracting the pole main term.
+
+The application closes the full-coefficient approximation and its
+prime-side contour transport, not the signed Robin estimate. It does
+not discard an infinite zero tail, use RH-dependent localization,
+replace real parts by $1/2$, or turn the selected global maximizer into
+the least counterexample. RH remains unproved; all conclusions are
+paper-level applications without Lean certification.

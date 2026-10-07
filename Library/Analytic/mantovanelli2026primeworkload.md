@@ -420,3 +420,89 @@ those are different quantities and are reused directly. This scope check
 excludes the proposed unflipped loss transform as a positive supplier,
 not other Abel or cumulative transforms, and gives no Robin-critical
 margin, source coverage, new Bernstein theorem, or Lean verification.
+
+## Divisor-record box geometry does not transfer to Robin records
+
+The inspected primary is Marco Mantovanelli, *Prime-Exponent Transition
+Geometry and Divisor Barriers Between Consecutive Highly Composite Numbers*,
+[arXiv:2608.17045v1](https://arxiv.org/html/2608.17045v1),
+17 August 2026. Its definitions in §2, Proposition 4.1, Theorem 4.2,
+Corollary 4.3 and layer spectrum in §7.1 were read. This identifies the
+inspected version; a latest-version comparison and whole-paper proof audit
+are not supplied. No computation from its companion archive is a premise.
+
+The source uses the closed prime-exponent box
+
+$$
+\mathcal B(m,n)=\left\{\prod_p p^{e_p}:
+\min(v_p(m),v_p(n))\le e_p\le\max(v_p(m),v_p(n))\right\}.
+$$
+
+Proposition 4.1 supplies the complementary state $z^\sharp=mn/z$ in
+the same box, with $zz^\sharp=mn$ and
+$d(z)d(z^\sharp)\ge d(m)d(n)$. Theorem 4.2 gives
+$\mathcal B(H,H')\cap(H,H')=\varnothing$ for consecutive strict
+**divisor-count** records. Corollary 4.3 consequently puts every interior
+state of a ceiling-admissible mixed geodesic below $H$. These published
+results are reused, not reproved. The layer reward in §7.1 is
+$\log((j+1)/j)$ for $d(n)$; it is not a layer reward for
+$Z(n)=\sigma(n)/n$ or $G(n)=Z(n)/\log\log n$.
+
+There is already a published actual pair that prevents transferring
+the box-gap conclusion to consecutive XA records. Use $H=n_1$ and
+$H'=n_3$ from Nazardonyavi–Yakubovich, Remark 5.5, printed p.26,
+[arXiv:1211.2147v3](https://arxiv.org/pdf/1211.2147v3), as cited in the
+[existing XA source note](../Arith/caveney2012sacaga.md).
+Their consecutive XA status is the primary's reported numerical result,
+not independently reproduced here. Their published factorizations give
+
+$$
+H'=H\,\frac{149\cdot151}{2},\qquad
+v_2(H)=9,\quad v_2(H')=8.
+$$
+
+The other changed coordinates are $v_{149},v_{151}:0\to1$; all remaining
+coordinates agree. Thus the actual integers
+
+$$
+z=149H,\qquad z^\sharp=\frac{151H}{2}
+$$
+
+both belong to $\mathcal B(H,H')\cap(H,H')$, and satisfy
+$zz^\sharp=HH'$. Membership and the strict size inequalities follow
+directly from those factorizations; no new enumeration is required.
+Conditional on the cited record classification, this is a counterexample
+to the XA version of the proposed box-gap transfer, not to the source's
+HCN theorem or to Robin's inequality.
+
+The normalization explains why the reflected-product argument does not
+force a contradiction here. Each changed exponent has only its two
+endpoint choices, so multiplicativity gives
+$Z(z)Z(z^\sharp)=Z(H)Z(H')$. Set $t=\log n$ and
+$b(t)=\log\log t$ for $t>1$. Ordinary calculus gives
+
+$$
+b''(t)=-\frac{1+\log t}{t^2(\log t)^2}<0.
+$$
+
+The two interior logarithms have the same sum as the endpoint logarithms.
+Strict concavity therefore yields
+$b(\log z)+b(\log z^\sharp)>b(\log H)+b(\log H')$, and consequently
+
+$$
+G(z)G(z^\sharp)<G(H)G(H').
+$$
+
+Thus the size denominator changes the product comparison needed by the
+HCN proof. This is a direct scope application of the published example
+and elementary multiplicativity and calculus, not a new general
+reflection theorem, a signed prime-error estimate, or a Lean result.
+
+There is a separate source-selection obstruction: under a Robin
+counterexample hypothesis, the project's selected least global maximizer
+is the last XA, by the existing source note. It has no later strict
+$G$-record with which to form the required consecutive pair. Neither
+replacing it by a divisor-count record nor assuming a later XA retains
+that source. A usable joint-prime supplier must apply at the same actual
+selected integer and control the full Robin-normalized comparison;
+the cited box geometry does not supply it.
