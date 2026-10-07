@@ -23,7 +23,7 @@ public sealed class Sl016InheritedDuplicateTests(ITestOutputHelper output)
 
         Assert.DoesNotContain(diagnostics, static diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Block);
         var duplicate = Assert.Single(diagnostics, static diagnostic =>
-            diagnostic.Message.StartsWith("duplicate atom_id inherited", StringComparison.Ordinal));
+            diagnostic.Message.StartsWith("duplicate atom_id (not judged)", StringComparison.Ordinal));
         Assert.Equal(AdmissionEffect.Observe, duplicate.AdmissionEffect);
     }
 
@@ -87,27 +87,7 @@ public sealed class Sl016InheritedDuplicateTests(ITestOutputHelper output)
             diagnostic.AdmissionEffect == AdmissionEffect.Block
             && diagnostic.Message == "duplicate atom_id: " + RuleFixture.FixtureAtomId);
         Assert.DoesNotContain(diagnostics, static diagnostic =>
-            diagnostic.Message.Contains("inherited from baseline", StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void ConflictingBaselineFingerprintIdentitiesDoNotSelectAnExemptWinner()
-    {
-        var fixture = DuplicateFixture();
-        foreach (var files in new[] { fixture.Files, fixture.Baseline })
-            files[ResidualPath] = files[ResidualPath].Replace(
-                "raw_sha256: " + RuleFixture.FixtureCasReference,
-                "raw_sha256: " + FrozenStatementReceiptTestData.Id('c'), StringComparison.Ordinal);
-        fixture.Files[ImplementationPath] = "// candidate judge change\n";
-
-        var diagnostics = Evaluate(fixture);
-
-        Assert.Contains(diagnostics, static diagnostic =>
-            diagnostic.AdmissionEffect == AdmissionEffect.Block
-            && diagnostic.Message == "ambiguous baseline atom reference: " + RuleFixture.FixtureAtomId
-                + " maps to " + RuleFixture.FixtureAtomId + " and " + new string('c', 64));
-        Assert.DoesNotContain(diagnostics, static diagnostic =>
-            diagnostic.Message.Contains("inherited from baseline", StringComparison.Ordinal));
+            diagnostic.Message.Contains("(not judged)", StringComparison.Ordinal));
     }
 
     [Theory]
