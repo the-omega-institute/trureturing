@@ -46,6 +46,18 @@ internal sealed class ActualImageSevenLeafSeparationDocument : IScribeDocumentDe
                 + "Word is the type of finite left/right words, Bool is the label type, and c counts alpha "
                 + "first and beta second. The sharp pair proves attainment of the separation constant; "
                 + "it makes no assertion of capacity equality.")),
+            Local("minimum", "Minimum actual image size", LocalFormula("minimum"),
+                "Every complete third image has at least three leaves."),
+            Local("not_alpha_minimum", "Minimum size away from alpha", LocalFormula("not_alpha_minimum"),
+                "A preimage distinct from alpha produces at least five leaves."),
+            Local("atom_image", "Leaf versus actual image", LocalFormula("atom_image"),
+                "A single labeled leaf and a third image have no common leaf address, so their labels are compatible."),
+            Local("e_image", "Compatibility with the second alpha block", LocalFormula("e_image"),
+                "E is compatible with a third image exactly when its preimage is distinct from alpha."),
+            Local("e_shared", "No shared E endpoints away from alpha", LocalFormula("e_shared"),
+                "E shares no leaf address with a third image whose preimage is distinct from alpha."),
+            Local("a_composite", "Alpha block versus a compound image", LocalFormula("a_composite"),
+                "Compatibility excludes alpha as the left preimage, forces zero shared leaves, and gives at least eight compound leaves."),
             Describe.Lean(DescribeId.Create("actual-image-seven-leaf-separation"),
                 DeclarationHandle.Create(Prefix + "seven_leaf_separation"),
                 H("Universal Separation and Same-Composition Sharpness"),
@@ -95,6 +107,33 @@ internal sealed class ActualImageSevenLeafSeparationDocument : IScribeDocumentDe
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
     private static Formula Some(string name, Formula type, Formula body) =>
         Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
+
+    private static DocumentBlock Local(string name, string title, Formula formula, string prose) => Describe.Lean(
+        DescribeId.Create("actual-image-local-" + name.Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
+        H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static Formula LocalFormula(string name)
+    {
+        Formula p=V("p"), q=V("q"), b=V("b"), tree=V("T");
+        Formula r=Call("R",p), atom=Call("of",b), pair=Call("pair",r,Call("R",q));
+        Formula away=Seq(p,Sp,Neq,Sp,V("alpha"));
+        Formula body=name switch
+        {
+            "minimum" => LeOf(D(3),Call("n",r)),
+            "not_alpha_minimum" => Imp(away,LeOf(D(5),Call("n",r))),
+            "atom_image" => And(Call("NC",atom,r),EqOf(Call("s",atom,r),D(0))),
+            "e_image" => IffOf(Call("NC",V("E"),r),away),
+            "e_shared" => Imp(away,EqOf(Call("s",V("E"),r),D(0))),
+            "a_composite" => Imp(Call("NC",V("A"),pair),And(away,
+                EqOf(Call("s",V("A"),pair),D(0)),LeOf(D(8),Call("n",pair)))),
+            _ => throw new System.ArgumentOutOfRangeException(nameof(name))
+        };
+        if (name == "a_composite") body=All("q",tree,body);
+        body=All("p",tree,body);
+        if (name == "atom_image") body=All("b",Call("Bool"),body);
+        return Disp(body);
+    }
 
     private static Formula ResultFormula()
     {

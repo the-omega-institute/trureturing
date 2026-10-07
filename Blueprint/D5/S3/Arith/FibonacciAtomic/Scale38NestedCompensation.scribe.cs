@@ -8,6 +8,42 @@ internal sealed class Scale38NestedCompensationDocument : IScribeDocumentDefinit
         "Nested left combs share a fixed root compensation position and a literal raw scan.",
         H("Nested Compensation"),
         Blocks(Describe.Lean(
+            DescribeId.Create("nested-compensation-leaf-agreement"),
+            DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.agree"),
+            H("Common leaves of nonconflicting trees"),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "Let P and Q be nonconflicting trees and u an address. If both reports "
+                + "readout(u,P) and readout(u,Q) have charge chi equal to zero, so that u is a "
+                + "leaf of both trees, then the two reports are equal: a common leaf carries "
+                + "the same alpha or beta label in both trees."))),
+            DescribeRole.Theorem),
+            Describe.Lean(
+            DescribeId.Create("nested-compensation-root-excess"),
+            DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.root_excess"),
+            H("A split of a nonconflicting family charges some member"),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "Let F be a finite family of pairwise nonconflicting trees, S a survivor set "
+                + "with at least two members, and r a recursive response recipe on S. Then some "
+                + "member of S has response excess gain(r,i) at least one. Indeed, if every "
+                + "member had zero excess, every member would report a leaf at the first "
+                + "requested address; common leaves carry equal reports, so that address "
+                + "would not split S."))),
+            DescribeRole.Theorem),
+            Describe.Lean(
+            DescribeId.Create("nested-compensation-scan-range-split"),
+            DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.divide"),
+            H("Splitting the scan range at a prefix"),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "For all natural numbers t <= k, the list 0,1,...,k is the list 0,...,t-1, "
+                + "followed by t, followed by the consecutive list t+1,...,k."))),
+            DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("nested-compensation-raw-acquisition"),
             DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.result"),
             H("Complete sources and exact requested-address bills"),

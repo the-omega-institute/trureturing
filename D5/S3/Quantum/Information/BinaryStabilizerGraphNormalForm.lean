@@ -64,9 +64,6 @@ Per-declaration judgement:
     consumer: gate_wmat, pauli_wmat, stabilizer_graph_normal_form, stabilizer_weyl, tensor_clifford,
       tensor_weyl, wmat_unitary.
     admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
-  tensor_mul: proof_shape: bind-only; escape_witness: none.
-    consumer: stabilizer_graph_normal_form, tensor_clifford, tensor_unitary.
-    admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
   tensor_one: proof_shape: bind-only; escape_witness: none.
     consumer: tensor_unitary.
     admission_basis: open-problem-resolution (#13575, consumed helper of the settlement).
@@ -138,10 +135,6 @@ Direct frozen dependencies:
     statement_id: sha256:603272a6c902f12a9c66e312346336a2af0f96b644ac04aa131724b394894094
   GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.SignQuotient.F₂
     statement_id: sha256:e975fc48104d0cb1a40271fdfb5ec7fcfe2730a1c600ee81758d5e89253bd60f
-  GID: D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.result._simp_1_2
-    statement_id: sha256:b6d398a580b6082cdf28a5f507b45bd399f1ae7037e5a5319384011b96fc19a3
-  GID: D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.result._simp_1_4
-    statement_id: sha256:2eef85eac594a0afbcfd3444522525aacba24337dc294a1cf3f33407694d1fea
   GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.sign_one
     statement_id: sha256:3390781fef4db85cc283ca47cb98003a93fef2156bfaa5354db33575bb072789
   GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.sign_sum
@@ -468,13 +461,6 @@ private def wmat (a b : ZMod 2) : Matrix (Fin 2) (Fin 2) ℂ :=
   Matrix.of fun t s =>
     if id (α := ZMod 2) s = id (α := ZMod 2) t + a then complexSign (b * id (α := ZMod 2) s) else 0
 
-private lemma tensor_mul {N : ℕ} (A B : Fin N → Matrix (Fin 2) (Fin 2) ℂ) :
-    tensorOp A * tensorOp B = tensorOp (fun i => A i * B i) := by
-  ext x z
-  simp only [tensorOp, Matrix.mul_apply, Matrix.of_apply]
-  simp_rw [D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.result._simp_1_2]
-  rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
-
 private lemma tensor_one {N : ℕ} :
     tensorOp (fun _ : Fin N => (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1 := by
   classical
@@ -668,7 +654,7 @@ private lemma graph_exponent_step {N : ℕ} (Γ : Matrix (Fin N) (Fin N) (ZMod 2
   have hb : Matrix.toBilin' Γ t (Pi.single i 1) = ∑ j, Γ i j * t j := by
     simp only [Matrix.toBilin'_apply, Pi.single_apply, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq',
-      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.result._simp_1_4, if_true]
+      Finset.mem_univ, if_true]
     exact Finset.sum_congr rfl (fun j _ => by rw [hs.apply j i, mul_comm])
   simp only [hd, zero_mul, Finset.sum_const_zero, zero_add, hb] at hp
   rw [← hp, hz, add_zero] at h

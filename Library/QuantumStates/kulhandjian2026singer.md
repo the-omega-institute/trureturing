@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2610.02392v1
 claim: "Conjecture 24 asserts that Proposition 23 holds for every d >= 2: for q = 2 the cross-correlation u = M_Q tau_H of the code Q(2,d) is the all-ones vector, every Z_i Z_j is a non-stabilizer element of the centralizer, and the minimum distance is 2."
 strata_touched:
   - D5/S3/Quantum/Information/SingerQuadricQubitDistanceCeiling
+  - D5/S3/Quantum/Information/SingerQuadricQuditDistanceBound
 license: citation-only
 triage: anchor
 ---
@@ -50,3 +51,24 @@ $\mathcal S$ is the row space of $H$.
 DOI: `10.48550/arXiv.2610.02392`. Canonical source URL: `https://arxiv.org/abs/2610.02392v1`.
 Proposition 23 (`prop:q2-ceiling`) and Conjecture 24 (`conj:q2-ceiling-general`) are in
 Section VII.E; the open-problem list is in Section X; the construction is in Appendix A.
+
+
+Conjecture 25, Section VII, page 19 (verbatim source TeX):
+
+> For prime $p$ odd, $d_{\min}(\mathcal Q(p,2))\le p+1$.
+
+The trace-plane definition, Section III, page 7 (verbatim source TeX):
+
+> Its first column $\boldsymbol\tau_H$ has $(\boldsymbol\tau_H)_i=1$ iff $\Tr_{K/F}(\alpha^i)=0$.
+
+The odd-prime construction takes $K=\mathbb F_{p^3}$ and $n=p^2+p+1$,
+with $\tau_H(i)=[\operatorname{Tr}(\alpha^i)=0]$ and
+$\tau_Q(i)=[\operatorname{Tr}(\alpha^{2i})=0]$. The trace-plane description
+is on page 7 and the algorithm in Appendix A on pages 27–28.
+
+The Appendix A worked example at $p=3$, using $X^3+2X^2+X+1$ and $\alpha=X$,
+prints $D=\{2,3,6,8\}$ and $Q=\{0,7,8,11\}$.
+The defining trace formulas instead give $D=\{0,7,8,11\}$ and
+$Q=\{0,4,10,12\}$, with $Q=2^{-1}D$ modulo 13.
+These corrected supports are obtained by exact arithmetic in the stated cubic
+polynomial quotient; the proof uses the defining trace formulas.
