@@ -1624,3 +1624,177 @@ sufficient branch, but existence of deep hull pairs, saturation or
 adequate nonsaturated joint incidence has not been proved for every
 hypothetical whole cover. All-height menu reduction and the ordinary
 proofs above are not new Lean verification or an Erdős #7 solution.
+
+### Whole-cover inventory excludes small saturated prime parents
+
+The numerical gain in SD54 requires an actual saturation configuration.
+Existing whole-cover structure excludes several prime-parent examples.
+Keep the ONE EB1 family, minimizing first class count and then modulus
+sum. Let Pmax be its largest support prime and N_p the number of ALL
+original labels divisible by a prime parent p. The selected reservations
+are still P-only, but N_p includes originals touching23 or29 or any other
+support prime.
+
+For a prime parent, S_p consists of the p-1 roots different from the
+original p-root. If the selected reservations fill ALL of S_p, FC941
+makes each such root contain exactly its one reserving original child.
+Comparable-original disjointness leaves only the original p in its own
+root. Thus
+
+\[
+N_p=p,\qquad H_p=1.
+\tag{SD55}
+\]
+
+The height assertion reuses
+[Report364 SI1--SI4](../../321-384/364-singleton-cofactor-ideal-and-forced-colors.md):
+a singleton p-root must cover every p-tail over the same nonempty R_p,
+so its original has p-exponent one. An original of higher p-height
+would require a nonsingleton root. No conclusion here follows merely
+from occupying every root currently carrying positive sigma-mass;
+SD55 requires the complete arithmetic set S_p.
+
+For Pmax>p, apply
+[Report385 §56 NF66](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#56-the-original-cover-needs-enough-small-prime-labels-to-block-compression)
+to the SAME original family. It gives N_p>=Pmax-p+2 without an exponent
+bound. With SD55 this implies
+
+\[
+\text{a saturated prime parent }p
+\quad\Longrightarrow\quad P_{\max}\le2p-2.
+\tag{SD56}
+\]
+
+For Pmax=p the displayed conclusion is automatic since p>=3. If29 is
+an ACTUAL support prime, no parent in {3,5,7,11,13} can be saturated.
+Merely allowing29 in an ambient window does not establish its presence.
+Alternatively, Report385 NF68 obtains Pmax>=29 by directly invoking
+Schroeder's *Nine Prime Divisors in Odd Distinct Covering Systems*,
+edition1.0.1, Theorem1.1; the
+[source entry](../../../../../../Library/Arith/schroeder2026nine.md)
+records its verification boundary. This use of the attributed ordinary
+source theorem does not assert a local kernel replay of its full
+arbitrary-height proof.
+
+If Pmax>=37, every prime parent at most19 is excluded. This structural
+restriction does not extend SD48's separate support hypothesis; any
+additional primes still require their continuation payment. For the exact
+nine-prime support ending at29, only17 and19 remain as prime-parent
+saturation possibilities among the seven head primes. Neither is
+asserted to exist. SD54's d=5 and d=7 scalar implications remain valid,
+but their full-saturation premises are empty in this EB1 domain with
+Pmax>=29, so they supply no available credit there. Composite parent35
+is not excluded by this prime-root count. Nor does SD56 exclude a
+reservation menu covering only the support of sigma: unreserved roots
+may have zero mass, which would require its own same-source proof.
+
+### Crowding bounds the complete small-prime hull
+
+If Pmax>2p-2, NF66 instead gives N_p>p. Among the p-1 non-own roots
+there must be a root containing at least two original p-bearing labels.
+The existing crowded-parent result, Report385 DR4, now forces EVERY
+nonunit divisor of the complete private hull Gamma_p to be an original
+label. In particular Gamma_p itself is original. Its formal encloser
+interface is
+[PrivateRegionRephasing](../../../../../../D5/S3/Arith/Covering/PrivateRegionRephasing.lean),
+`crowded_descendants_force_private_encloser`.
+
+Put g_p=Gamma_p/p. Report364's complete prime-private product
+P_p={a_p modp} times all p-tails times R_p shows p does not divide g_p.
+For any prime ell>p dividing g_p, R_p would have a singleton mod-ell
+projection, contradicting
+[Report374 EP4](../350-399/374-extremal-prime-projections-and-cardinality-descent.md#2-too-small-a-projection-gives-a-strictly-smaller-cover).
+Thus all prime factors of g_p are strictly smaller than p.
+
+Since every divisor is present, the actual hull descendants of p are
+EXACTLY p*t for t|g_p, t>1. FC941 reserves a different non-own root for
+each. None can occupy the crowded root, by DR5. Consequently
+
+\[
+\begin{gathered}
+P_{\max}>2p-2\quad\Longrightarrow\quad
+\Gamma_p=p g_p\in D,\qquad p\nmid g_p,\\
+\ell\mid g_p\text{ prime}\Longrightarrow\ell<p,
+\qquad \tau(g_p)\le p-1.
+\end{gathered}
+\tag{SD57}
+\]
+
+In particular, when Pmax>=29,
+
+\[
+\Gamma_5\in\{5,15,45,135\},\qquad
+\Gamma_7=7\cdot3^a5^b,\quad(a+1)(b+1)\le6.
+\]
+
+This gives a finite numerical list of complete private hulls for each
+fixed small prime, independently of the full period's exponent heights.
+It does not assert that all listed choices are jointly realizable,
+bound the period's3- or5-heights, force g_p>1, supply rho-mass on a
+desired phase, or bound the total deletion loss. The possible trivial
+hull g_p=1 is retained.
+
+### A saturated single chain forces original ladders at the other primes
+
+SD54's specialized test tau(r)=p on an actual hull child p*r makes
+r=ell^(p-1) for one prime ell. Its p-1 divisor children fill S_p;
+SD55 rules out ell=p, and Report374 EP4 gives ell<p. Hence the ENTIRE
+p-bearing inventory is
+
+    p*ell^j, 0<=j<=p-1.
+
+For every other actual support prime q, q!=p,ell, this branch forces
+
+\[
+q\ell^{|p-q|+1}\in D.
+\tag{SD58}
+\]
+
+To see this, reuse the complete collision-root test in Report385 §56,
+with L=max(p,q), s=min(p,q). Its T consists of the actual first-L roots
+of originals L*u for which s*u is also original and gcd(u,L*s)=1.
+The pure-prime pair contributes root0 after the common EB3 translation.
+No original has both p and q as factors, since that would lie outside
+the stipulated complete p-chain. Thus all the mixed blocking sets F_b
+in that test are empty.
+
+If |T|<=L-s+1, at least s-1 first-L roots remain outside T. Matching
+them to the nonzero first-s roots satisfies the existing CRT transport
+test. It keeps the original s class on the untransported zero-root,
+preserves all other original events through one witness, avoids every
+numerical collision, and deletes the original L class. This contradicts
+minimum cardinality. Therefore
+
+    |T|>=L-s+2=|p-q|+2.
+
+Each root in T arises from a pair p*u,q*u, and the complete p-chain
+forces u=ell^j with 0<=j<=p-1. Different T roots require different j.
+Thus at least |p-q|+2 distinct exponents have q*ell^j original. The
+largest such j is at least |p-q|+1, and divisor closure proves SD58.
+The same count gives |p-q|+2<=p; for q>p it recovers SD56.
+
+For the p=17,ell=3 chain on the full support through29, the forced
+labels at q=5,7,11,13,19,23,29 have ternary exponents respectively
+13,11,7,5,3,7,13. For p=19,ell=3, the exponents at
+q=5,7,11,13,17,23,29 are15,13,9,7,3,5,11. If ell!=3, the q=3
+instance forces original3*ell^(p-2). These are simultaneous numerical
+requirements in one family, with the ACTUAL original phases retained.
+They supply no aligned ell-prefixes or common private-source weights.
+The17/19 chains and the nonsaturated same-source payoff remain unresolved.
+
+These deductions reuse the existing inventory, projection, private-hull
+and CRT transport results; they are not additional generic matching or
+repair theorems. Numerical restrictions do not assert that at most one
+prime can saturate: the needed product of two saturated primes is not
+forced by divisor closure. No unrestricted noncoverage conclusion or
+new literature-priority claim follows.
+
+A scoped Lean check verifies the finite original-slot pigeonhole argument,
+its application to the frozen crowded-private-encloser theorem, and the
+reservation capacity and small-prime contradictions with NF66's lower
+bound as an EXPLICIT premise. Its axiom closure uses only propext,
+Classical.choice and Quot.sound. It does not supply NF66's geometric
+transport, FC941's reservation hypotheses, EP4's projection theorem, the
+single-chain transport in SD58, or the attributed nine-prime theorem.
+Those parts remain the ordinary proofs and source applications identified
+above; no new canonical Lean declaration is claimed for this reuse.
