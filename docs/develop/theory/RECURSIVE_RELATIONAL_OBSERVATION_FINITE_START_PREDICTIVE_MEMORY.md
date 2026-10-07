@@ -807,3 +807,180 @@ The acquired-history and access contract, calibration already acquired, complete
 The literal source definitions, positive-history classification, coherent profiles and fixed-law observer suppliers are `FiniteStartFiveModeSource`, `FiveModePredictiveLawGeometry/Core`, `FiveModePredictiveLawGeometry` and `FiveModeAutonomousSharpCount` in `D5/S3/ObserverMemory/Prediction`, at source revision [05149fa5456f6eb47259bab8138572902863368e](https://github.com/the-omega-institute/trureturing/tree/05149fa5456f6eb47259bab8138572902863368e/D5/S3/ObserverMemory/Prediction). The source-specific separation, calibration-cell overlap realization and finite-acquisition boundary here are deductions for the explicitly declared uncertainty contract; the finite-chain mixing and ergodic intermediates are attributed to the primary source in Theorems 10.2 and 10.5. The original self-generated-law optimum and the coarse-error complete-state minima retain the unresolved scopes in Definition 9.3.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Conditional updates and the authentic-calibration boundary
+
+**Definition 11.1 (a separate conditional-update contract).** Retain the literal source, parameter family, authentic calibration supply and common observer of Assumption 10.1. In particular one true $\vartheta=(p,q,r)$ stays fixed, $p,q,r>0$ and $p+q+r<1$, the hidden prior is uniform, and there is no probability prior on $\Theta$. Write $Q_z=D(z)$ and let $\mathcal R$ be the set of configurations reached by a positive history at which a query is allowed. For every $z\in\mathcal R$, every report $y\in\mathcal A$, every finite $H\ge0$ and $w\in\mathcal A^H$, impose the additional identity
+
+$$
+Q_z^{H+1}(yw)=Q_z^1(y)\,Q_{U(z,y)}^H(w).
+\tag{11.1}
+$$
+
+The update $U$ is total and deterministic. Every $Q_z$ is nonnegative, normalized and coherent under deletion of final symbols, including $Q_z^0(\varnothing)=1$. Accuracy is still (10.1) on every actual positive finite history and every finite horizon. With empty queries, $c(\gamma(\vartheta))$ is also in $\mathcal R$; with post-read-only queries an initialized configuration is charged but has no pre-read accuracy obligation. Equation (11.1) is required only at actual reachable query configurations. The global row-product condition of Definition 1.3 is a sufficient stronger realization, and its treatment of hypothetical generated configurations is a separate size convention.
+
+If $Q_z^1(y)=0$, prefix marginalization and nonnegativity force $Q_z^{H+1}(yw)=0$ for every $H,w$. Equation (11.1) then says $0=0$, without defining a conditional law by division or prescribing $Q_{U(z,y)}$ on that null branch. An actual report $y$ still passes through the total $U$. Whenever $M_\vartheta(hy)>0$, the successor is still queried and must be accurate, even if its preceding forecast assigned $y$ probability zero. No inclusion of actual support in forecast support is assumed.
+
+Theorem 10.3 concerns prefix coherence alone and retains its radius $1-1/m$ and its six/seven-state finite-cell construction. The equation above adds a relation between different decoded configurations; it is an additional contract, rather than an interpretation of that earlier theorem.
+
+**Lemma 11.2 (source, stream and finite-query correspondence).** A coherent normalized finite-word profile on $\mathcal A$ has a unique probability extension to $\mathcal A^{\mathbb N}$ with its coordinate sigma-field. For two such extensions $P,Q$,
+
+$$
+\sup_{E\text{ measurable}}|P(E)-Q(E)|
+=\sup_{H\ge0}\operatorname{TV}(P^H,Q^H).
+\tag{11.2}
+$$
+
+For every positive acquired history $h$, the extension of $F_{\vartheta,h}$ is the actual conditional future law, since
+
+$$
+F_{\vartheta,h}^H(w)
+=\frac{M_\vartheta(hw)}{M_\vartheta(h)}.
+\tag{11.3}
+$$
+
+At empty history its first symbol is $Y_0$; at a nonempty history of length $n$ it is $Y_n$. If $h$ is queried, $hv$ is an actual positive extension and $Q_{z_\vartheta(h)}^{|v|}(v)>0$, then conditioning the decoded stream law on $v$ gives precisely the extension of $Q_{z_\vartheta(hv)}$.
+
+There are measurable events $T_\vartheta$ on future streams, invariant under adding or deleting a finite prefix, such that
+
+$$
+F_{\vartheta,h}(T_\vartheta)=1
+\quad\text{for every positive finite }h,
+\qquad
+T_\vartheta\cap T_\varphi=\varnothing
+\quad(\vartheta\ne\varphi).
+\tag{11.4}
+$$
+
+Here $T_\vartheta$ is the event that the empirical adjacent-pair frequencies for $01,03,0B$ converge to $v_\vartheta=(p,q,r)/5$. These are events of the visible source, including $p=q$ and $r=p+q$.
+
+**Proof (11.2).** Embed the finite alphabet as four distinct real numbers. Normalization and final-symbol consistency give the hypotheses of the usual probability extension theorem. The resulting measure is supported on $\mathcal A^{\mathbb N}$, and cylinder probabilities determine it uniquely. For completeness, finite-coordinate events form an algebra generating the coordinate sigma-field. For any finite measure $\mu$, every measurable event $E$ can be approximated by an event $B$ in this algebra with $\mu(E\mathbin{\triangle}B)$ arbitrarily small. The approximable class is closed under complements and countable unions: truncate the union by finite-measure continuity, then approximate its finitely many members. It therefore contains the generated sigma-field. Apply this to $\mu=P+Q$. Every such $B$ depends on some finite common horizon, and
+
+$$
+|P(E)-Q(E)|
+\le |P(B)-Q(B)|+(P+Q)(E\mathbin{\triangle}B).
+$$
+
+Let the last term tend to zero. The reverse inequality follows because every finite-coordinate event is measurable. The finite half-$\ell^1$ TV equals the maximum event gap, proving (11.2). In particular a strict stream-event gap greater than $\epsilon$ already has a witness at a finite horizon.
+
+Equation (11.3) is the actual chronological cylinder quotient of Definition 1.2 and the native `all_history_conditional_identity`. It uses the first filter at $Y_0$ and subsequent advance/filter steps. Iterate (11.1) along $v$: each intermediate acquired prefix is positive and queried, giving
+
+$$
+Q_{z_\vartheta(h)}^{|v|+H}(vw)
+=Q_{z_\vartheta(h)}^{|v|}(v)\,
+ Q_{z_\vartheta(hv)}^H(w).
+\tag{11.5}
+$$
+
+Division is used only when the displayed prefix mass is positive. Equality on all tail cylinders and uniqueness of extension give the asserted conditional stream law.
+
+For (11.4), reuse the common positive support of Theorem 10.2 and the finite-edge-chain ergodic argument following Theorem 10.5. The allowed-edge chain $(i,j)\mapsto(j,k)$ is finite irreducible with stationary mass $P_\vartheta(i,j)/5$. Its observable pairs $01,03,0B$ select respectively the edges $0\to1,0\to3,0\to4$; $P_\vartheta(0,2)=0$ excludes another $0B$ contribution. The occupation limits thus give $(p,q,r)/5$ almost surely. At a positive recording boundary the actual posterior supplies an initial distribution for the same future transition, and the same ergodic statement applies. Finite deletion changes only finitely many pair counts and not their limiting averages. The limit vector is injective on the declared triples, so the events are disjoint. This uses the almost-sure ergodic statement, rather than inferring almost-sure convergence from (10.6) alone. All statements concern extensions of the specified finite laws; no infinite acquired record is supplied to the observer. $\square$
+
+**Theorem 11.3 (unit supremum in every nonsingleton calibration cell).** Suppose a calibration cell contains distinct admissible $\vartheta,\varphi$. Every observer satisfying Definition 11.1, with any cardinality of retained carrier, has
+
+$$
+\sup_{\substack{\psi\text{ in the cell},\ M_\psi(h)>0\\
+ h\text{ queried},\ H<\infty}}
+\operatorname{TV}(F_{\psi,h}^H,Q_{z_\psi(h)}^H)=1.
+\tag{11.6}
+$$
+
+For each $0\le\epsilon<1$ there are a true parameter in the cell, a positive finite acquired history $h$, and a finite future horizon $H$ with error strictly greater than $\epsilon$. Both query conventions have this obstruction. The same conclusion applies if the two runs share a queried configuration after any one common positive nonempty history, even when their initial labels differ. The value one is a supremum over finite queries; attainment at a particular finite pair $(h,H)$ is not asserted.
+
+**Proof (11.3).** First use $h_0=[0]$, which has mass $1/5$ and posterior $e_0$ under every parameter. A shared label gives a shared configuration there. Let $Q$ be its decoded stream extension and let
+
+$$
+S=\{x:M_\vartheta(h_0x_{<n})>0\text{ for every }n\ge0\}.
+$$
+
+Theorem 10.2 makes this the same set for $\varphi$. Each true conditional law gives it probability one: its complement is a countable union of zero-mass cylinders. Put $\delta=1-\epsilon>0$. If some finite-horizon error under $\varphi$ at $h_0$ already exceeds $\epsilon$, that is a witness. Otherwise (11.2) and (11.4) give
+
+$$
+Q(A)\ge\delta>0,\qquad A=S\cap T_\varphi,
+\tag{11.7}
+$$
+
+because $F_{\varphi,h_0}(A)=1$.
+
+Let $\mathcal F_n$ be the sigma-field of the first $n$ future symbols and set $m_n=\mathbb E_Q[\mathbf1_{T_\vartheta}\mid\mathcal F_n]$. These bounded conditional expectations converge to $\mathbf1_{T_\vartheta}$ in $L^1(Q)$. An elementary proof suffices here. Approximate $T_\vartheta$ by a finite-coordinate event $B$ with $Q(T_\vartheta\mathbin{\triangle}B)<\eta$. For every $n$ beyond its coordinate horizon, conditional-expectation contraction gives
+
+$$
+\|m_n-\mathbf1_{T_\vartheta}\|_1
+\le2Q(T_\vartheta\mathbin{\triangle}B)<2\eta.
+$$
+
+Let $\eta\downarrow0$. Since $A$ is disjoint from $T_\vartheta$, it follows that $\int_A m_n\,dQ\to0$. Choose a finite $n$ with this integral less than $\delta Q(A)/2$. Among the finitely many length-$n$ cylinders there is therefore a word $v$ with
+
+$$
+Q(A\cap[v])>0,\qquad
+Q(T_\vartheta\mid[v])=m_n(v)<\delta/2.
+\tag{11.8}
+$$
+
+This cylinder has positive forecast mass and, since it meets $S$, $h=h_0v$ has positive actual mass under both parameters. Every preceding cylinder also has positive forecast mass and is an actual positive prefix. Equation (11.5) identifies the conditional tail with the decoder at that shared updated configuration. Finite-prefix invariance of $T_\vartheta$ makes (11.8) its probability under this tail decoder. But $F_{\vartheta,h}(T_\vartheta)=1$, so the stream-event gap at $h$ is greater than
+
+$$
+1-\delta/2=(1+\epsilon)/2>\epsilon.
+$$
+
+Equation (11.2) supplies a finite $H$ with error greater than $\epsilon$ at this positive finite $h$. This proves the claimed finite violation without assuming accuracy at descendant histories in advance. The same proof starts from any shared positive nonempty $h_0$: its continuation support is common and (11.4) holds from its actual posterior. Thus pure histories and every finite startup $B^{k+1}$ remain covered, as do both equality strata and an optional empty query.
+
+Forecast mass outside $S$ and zero-mass forecast cylinders are permitted throughout. Accuracy at $h_0$ forces the positive mass (11.7) on legal source paths; the selected witness conditions only on a positive part of that mass. Other true-positive forecast-zero histories remain queries with their total updates. They are never divided by or deleted from the contract.
+
+TV is at most one for any two normalized finite laws, and a finite violation exists for every smaller proposed bound, proving (11.6). A one-state observer with $U(z,y)=z$ for every report and $Q_z$ concentrated on the constant-$0$ stream is normalized, coherent and satisfies (11.1), including its zero-forecast inputs. It meets tolerance one without calibration. Hence the minimax threshold is also exactly one. $\square$
+
+**Example 11.4 (an equality-menu defect of the prefix-only mixture).** Take
+
+$$
+\vartheta=(1/10,1/10,1/5),\qquad
+\varphi=(1/5,1/5,2/5).
+$$
+
+Both are strictly admissible and satisfy $p=q$ and $r=p+q$. In the two-member construction (10.9)–(10.10), after the actual history $[0]$ the decoded law is $Q_{R_0}=(F_{\vartheta,0}+F_{\varphi,0})/2$ and $U(R_0,B)=R_4$. The actual two-step path $0\to4\to0$ gives
+
+$$
+Q_{R_0}^2(B0)=\tfrac12((1/5)^2+(2/5)^2)=\frac1{10},
+\qquad
+Q_{R_0}^1(B)Q_{R_4}^1(0)
+=\left(\tfrac12(1/5+2/5)\right)^2=\frac9{100}.
+$$
+
+The defect is exactly $1/100$. Report $B$ has positive true and forecast probability. Correct conditioning of this mixture reweights the two models to $1/3,2/3$, whereas its retained pure-tag decoder reinstalls equal weights. The original prefix-only radius $1/2$ remains Theorem 10.3. Theorem 11.3 excludes every replacement satisfying (11.1) at any tolerance below one in this unresolved cell, including a cell wholly on $r=p+q$.
+
+**Proposition 11.5 (finite realization with authentic exact calibration).** With the finite calibration alphabet of Assumption 10.1 and $0<\epsilon<1$, a common finite nominal observer satisfying Definition 11.1 exists exactly when every nonempty calibration cell is a singleton. At $\epsilon=0$, it exists exactly when every nonempty cell is a singleton and every installed triple satisfies $r=p+q$. At $\epsilon\ge1$, the one-state construction of Theorem 11.3 suffices without calibration. These are conditional existence statements given authentic source-bound supply and the installed model data.
+
+**Proof (11.5).** Singleton cells are necessary by Theorem 11.3, and finitely many labels then imply a finite parameter menu. For sufficiency reuse the fixed-law generator of Theorem 5.1, with its actual-history certificate. For each unequal installed triple choose $\eta=\min(\epsilon/2,\kappa/4)>0$, so $\eta\le\epsilon$ and $2\eta<\kappa$. With the notation of Definition 4.1 put
+
+$$
+N=N_1(\eta)=\min\{k:\delta_k\le\eta\}.
+$$
+
+The supplied carrier is $I,R_0,\ldots,R_4,A_0,\ldots,A_{N-1}$, with $6+N$ total configurations and $5+N$ reached after reads. Its total update resets every singleton $j$ to $R_j$, uses $R_0,R_4\mapsto R_4$ and $R_1,R_2,R_3\mapsto R_2$ on $B$, and advances startup labels to the cutoff and then to the dominant $R_d$. Its rows at $R_i$ are the literal rows $v_i$, its rows at $A_k$ are the actual startup one-step rows, and its row at $I$ is the first-read law $(1/5,1/5,1/5,2/5)$ in order $(0,1,3,B)$. Its decoder is the product of these normalized rows along this very $U$. Splitting off the first factor proves (11.1) at every configuration, including zero factors; row normalization proves coherence and normalization.
+
+Theorem 2.1 exhausts the actual histories, and Theorem 5.1 proves their errors for this product decoder. Pure histories are exact. At $B^{k+1}$ with $k\ge N$ the error at horizon $H$ is $\delta_k(1-u^H)\le\eta$. For a transient $A_k$, $k<N$, put $m=N-k$. The error is zero for $H\le m$, and for $H>m$ is
+
+$$
+\frac{u^N}{a^k+b^k}(1-u^{H-m})\le\delta_N\le\eta.
+$$
+
+The empty-law supremum error is $u^N/5\le\eta$. These are the existing estimates of Theorem 5.1: before the cutoff the only altered continuation is the common prefix $B^m$, after which the generator uses $F_d$ instead of the residual startup mixture. Its transient decoder is thus the generated law, not an unchanged exact startup profile past the cutoff. The non-strict cutoff includes equality $\delta_N=\eta$.
+
+If $d=2$, the saturated forecast gives report $0$ probability zero while the actual minority component still gives it positive probability; total $U$ sends it to exact $R_0$. If $d=4$, the analogous true-positive forecast-zero reports are $1,3$, resetting to exact $R_1,R_3$. Equation (11.1) has both sides zero on the preceding null forecast cylinder, and the actual successor has its required exact pure law. No source-positive history is excluded.
+
+At $a=b$, reuse the exact equality construction of Theorems 2.2 and 4.3. Five pure labels and one half-mixture label $A$ suffice for post-read-only queries, with initialization at $A$, a $B$ self-loop there and singleton resets. Equal holding rates make conditioning that half-mixture on $B$ return the same law, and its singleton reports identify their pure successors. With a queryable empty boundary add $I$ with the true first-read row and $B\mapsto A$, giving seven configurations. These machines satisfy (11.1) exactly. Initialization at $A$ in the post-read convention supplies no different hidden prior: the first actual read still filters the stated uniform $\pi$, and its unqueried pre-read forecast is not an actual source generator.
+
+Take the disjoint union of the finitely many supplied machines, keep the model block within the retained configuration, let $c$ install its authentic label's block, and define the one common $U,Q$ blockwise. Accuracy and (11.1) hold blockwise, proving positive-tolerance sufficiency and a finite sufficient carrier bound. At zero tolerance an unequal member is excluded by the infinite exact-law image of Theorem 2.2; finite equality blocks give sufficiency. No optimal sum of compatible state counts is asserted.
+
+For a fixed unequal model in the existing small-error regime, the old common-decoder lower bound and this supplier still bracket the initialized minimum for the actual-query conditional-update contract by $6+N_2(\epsilon)$ and $6+N_1(\epsilon)$. The original global self-generated interval in Theorem 5.1 remains its own result. When these endpoints differ, no new sharp compatible-generator minimum or equality of the two minimization problems is supplied. $\square$
+
+**Corollary 11.6 (acquisition, retention and actual-resource boundaries).** For any observer satisfying Definition 11.1 with error $0\le\epsilon<1$, authentic calibration must identify the exact possible triple, and the configurations $z_\vartheta([0])$ must be distinct for distinct triples. Thus $M$ possible models require at least $M$ complete retained configurations at this common history; even an enlarged label interface cannot put infinitely many models into a finite common carrier. This is a common-history injection, without a claim that all reached images at different histories are disjoint at every subunit tolerance.
+
+**Proof (11.6).** A repeated cell is excluded by Theorem 11.3. A collision after $[0]$ gives its more general shared-configuration obstruction, even for distinct installed labels. Injection into a finite carrier then forces a finite parameter menu. Theorem 10.5 already excludes a finite literal-visible-read, zero-error acquisition of any nonconstant exact calibration partition, including almost-surely finite correct stopping: a positive finite terminal transcript is shared by all admissible triples and has the same deterministic report. A longer acquired prehistory, a transcript-derived label or an archive supplies no exception. Starting the continuing conditional-update proof at that terminal history gives the same finite-query obstruction. The declared infimum worst-case literal-read cost for this exact certificate task has empty feasible set and is $+\infty$; this is not an expected estimation cost. $\square$
+
+An authentic external label or source-bound selection of an installed program is additional supply, with its own production, authentication, delivery, lawful access and installation requirements. Proposition 11.5 does not construct that supplier from visible reads. The block selector and any still-consulted label, clock, phase, retained output or archive belong to the complete retained configuration. Arbitrary exact real model constants permit finite nominal tables but do not supply finite binary code or exact comparison algorithms. Under the separate exact-rational presentation of Assumption 8.3, Theorem 8.4 supplies finite descriptions and exact equality/cutoff decisions. Numeric workspace, expanded $4^H$ law output, runtime and physical storage remain distinct resource coordinates. The fixed-known near-equality divergence in Theorem 6.3 also remains its own result.
+
+The existing FIB consumer is [Fiber Calculus Continuation II, Definitions 22.2 and 26.1–26.2](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md): $c$ consumes an already acquired class and $v$ updates complete control memory through the actual response. An instance of the present passive prediction interface uses that response update as $U$ and additionally supplies the literal five-mode source and full-law decoder. The independent zero-seam naming capacity of its §24.6 and Theorem 8.2 names supplied distinctions; it authenticates no model and grants no read permission. Its §27 and Proposition 38.80 certify initial coverage, legal actions, same-source successor closure, correct target stopping and strict rank descent for their deterministic recovery tasks. A continuing Markov prediction invariant supplies no such stopping or original-target certificate. The original-tree address/response/INITIAL contracts, KBONACCI tasks and physical costs retain the source, target, action and resource bridges of Definition 10.8; no transfer is supplied by matching state names or report alphabets.
+
+The primary probability references for this section are Durrett, [*Probability: Theory and Examples*, fifth edition, Theorem A.3.1, pp.464–465, and Theorems 4.6.8–4.6.9, p.247](https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf), for extension and upward conditional-expectation convergence; the finite-chain occupation statement is Theorem 5.6.1, pp.310–311, as well as the Levin–Peres–Wilmer source already cited in §10. The elementary finite-event and $L^1$ arguments above give the needed correspondences explicitly. Shalizi–Crutchfield's predictive-state conditioning frame cited in §7 retains its stationary entire-past and almost-sure scope. The source-specific deductions here concern every positive finite acquired history and every finite future horizon under the separate equation (11.1); capped-horizon, averaged, Bayesian-prior and eventual-learning targets have different quantifiers. The finite witness sizes need not have a uniform bound, and no efficient synthesis, effective arbitrary-real implementation or global novelty claim is made.
+
+## 追加锚（本行以下为增补区）
