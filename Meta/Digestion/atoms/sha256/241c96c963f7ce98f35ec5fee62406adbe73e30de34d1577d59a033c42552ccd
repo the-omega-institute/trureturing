@@ -1,0 +1,4 @@
+**来源、边界与状态。** 本章的实际对象及首次通过对取自本卷定理 31.3，五行首对接口复用固定来源 $40d1$ 的 [G.5](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/recursive-descent.md#the-exterior-replay-reaches-an-unbounded-profile-after-two-steps)；cap 预算和实际子树守恒复用其 C.1--C.3，完整 cap-3 停止复用其 H.1。新增承重是把既有正帽预算从辅助阶数 19、20 接到阶数 21、22，再以零帽兄弟的 $L$ 费用完成强归纳，并在同一实际最后一对上作整数取整。没有新增有限种子、没有另造递归、没有替换规定深度、没有把 frontier-25 的合法地址当成达到地址。
+
+实际 G.5 共同网关、更宽数值轮廓、盆和着陆、同历史修正相位、实际无界周期、规范缺陷和终端占用的一致估计、联合块补偿与离散度、达到的优化策略、$C(n)/n\to\alpha$、全局收敛以及完整跨递归类型对应仍未解决。实际 erasure、线性定位、自动 evaluator、phase table、未改变的 higher word、有限新前提、世界新颖性和 kernel 结论均不由本章推出。以上条件纸面数学不结束完整研究目标。
+

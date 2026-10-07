@@ -78,6 +78,66 @@ public sealed class DepositHeaderCommandTests
 
 public sealed class DepositHeaderUtilityTests
 {
+    [Theory]
+    [InlineData("none")]
+    [InlineData("atom")]
+    [InlineData("task")]
+    public void DepositReadsOnlyRelevantLeanPolicyBaselineAndUtilityTarget(string kind)
+    {
+        var fixture = new RuleFixture();
+        var utility = kind switch
+        {
+            "atom" => UtilityAdmissionTestSupport.AddRefutationEvidence(fixture,
+                $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}"),
+            "task" => "kind=checker; basis=terminal=task:D5-T0098; instance=D5/S0/Carrier/Ring.goldenRing",
+            _ => "none",
+        };
+        if (kind == "task") fixture.AddSyntheticUnregisteredFrontierTask("D5-T0098");
+        AddUtility(fixture, utility);
+        fixture.Files[BackfillInventoryLoader.RootPath + "unrelated/source.toml"] = "invalid TOML [\n";
+        fixture.Files[BackfillInventoryLoader.RootPath + "unrelated/residual-open/" + new string('f', 64) + ".yaml"] = "invalid: [\n";
+        fixture.Files[DigestionCasStore.RootPath + new string('f', 64)] = "unrelated CAS\n";
+        fixture.Files["docs/develop/theory/unrelated.md"] = "unrelated theory\n";
+        var raw = UtilityAdmissionTestSupport.Raw(fixture.Files);
+        var repository = new FakeRepositoryGateway(RawChangeSet.Create([RuleFixture.RingPath]), raw,
+            UtilityAdmissionTestSupport.Raw(fixture.Baseline));
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
+
+        var result = DepositHeaderCheckCommand.Run(repository, source,
+            ["--target", RuleFixture.RingPath, "--protected-base", new string('b', 40)]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(1, source.CallCount);
+        Assert.Equal(0, repository.WholeTreeReadCount);
+        Assert.Equal(0, repository.PrepareCount);
+        Assert.Equal(new[] { ":(literal)" + RuleFixture.RingPath,
+                ":(literal)" + FrozenStatePath.FromModulePath(RepoPath.CreateKnown(RuleFixture.RingPath)).Value },
+            Assert.Single(repository.ScopedRevisionReads).Paths);
+        Assert.DoesNotContain(repository.ScopedCurrentReads.SelectMany(paths => paths),
+            path => path == BackfillInventoryLoader.RootPath.TrimEnd('/') || path == BackfillInventoryLoader.RelativePath
+                || path == "Meta" || path == "Golden/Frozen/state" || path == DigestionCasStore.RootPath.TrimEnd('/'));
+        Assert.DoesNotContain(repository.ScopedCurrentReads.SelectMany(paths => paths),
+            path => path == "docs/develop/theory" || path == "docs/develop/theory/unrelated.md");
+        if (kind != "atom") Assert.Empty(repository.CurrentPathSearches);
+    }
+
+    [Fact]
+    public void MissingUtilityAtomIsDanglingWhenThereIsNoDigestionLedger()
+    {
+        var fixture = new RuleFixture();
+        AddUtility(fixture, UtilityAdmissionTestSupport.AddRefutationEvidence(fixture,
+            $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}"));
+        foreach (var path in fixture.Files.Keys.Where(path => path == BackfillInventoryLoader.RelativePath
+                     || path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)).ToArray())
+            fixture.Files.Remove(path);
+
+        var result = Run(fixture, new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("DEPOSIT_HEADER_UTILITY_TARGET_DANGLING", result.Output, StringComparison.Ordinal);
+        Assert.Contains("target=atom:" + RuleFixture.FixtureAtomId, result.Output, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void DepositHeaderCheckRequiresUtilityForUnfrozenTarget()
     {

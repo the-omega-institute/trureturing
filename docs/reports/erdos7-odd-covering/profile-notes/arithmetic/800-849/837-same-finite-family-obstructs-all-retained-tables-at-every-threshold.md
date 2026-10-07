@@ -206,3 +206,79 @@ $$
 for every nonzero admissible table. Any further nonnegative tail penalty preserves this negative sign.
 
 This excludes the stipulated inherited raw-retained comparison for one actual finite 53-original family, uniformly over its admitted first-colour kernels and every real threshold in the continuation domain. It does not exclude replacing $L_4$ with a sharper actual-survivor lower bound, changing the query law after additional original deletions, sharpening the actual finite inventory, or allowing retained tables to depend on deeper source digits. Those changes alter a premise of the transported comparison.
+
+## A finer actual survivor source passes the complete query gate
+
+The same 53 originals admit a single product probability whose complete
+query norm, including the unit and every height, is less than28. This is
+an explicit application of [794's actual-prefix source representation](../750-799/794-actual-prefix-orbits-make-all-height-source-search-sparse.md),
+not a uniform theorem for arbitrary eight-prime families.
+
+Write $Q_*=(7,11,13,17,19,23)$. Use normalized Haar on the product region
+
+$$
+R=\{x_3=4\bmod9\}\times\{x_5=4\bmod5\}
+  \times\prod_{q\in Q_*}\{x_q\bmod q\in\{3,\ldots,q-1\}\}.
+$$
+
+All higher digits remain Haar. The ternary condition avoids the originals
+at3 and9. Each of the other23 displayed base originals $(m,a)$ has a
+nonternary prime divisor $q$ with $a\bmod q<3$, so it misses this region.
+At5 the added pure comb uses first roots2 and3; at every $q\in Q_*$ it
+uses first roots1 and2. These also miss $R$. The same statement holds
+for every further depth of these particular pure combs. No original
+residue is changed or independently reassigned.
+
+Let $\nu$ be this one normalized product law. For each positive
+$P$-smooth integer $d$, where $P=(3,5,7,11,13,17,19,23)$, put
+$q_d=\max_a\nu([a]_d)$. Independence of this explicitly chosen law
+gives $q_d=\prod_p c_p(v_p(d))$, where
+
+$$
+\begin{aligned}
+c_3(0)&=c_3(1)=1,& c_3(e)&=3^{2-e}\quad(e\ge2),\\
+c_5(0)&=1,& c_5(e)&=5^{1-e}\quad(e\ge1),\\
+c_q(0)&=1,& c_q(e)&=\frac1{(q-3)q^{e-1}}\quad(q\in Q_*,\ e\ge1).
+\end{aligned}
+$$
+
+Each coordinate maximum is attained by a cylinder inside its allowed
+prefixes. Summing these nonnegative geometric series retains every
+numerical query label, including labels absent from the original family:
+
+$$
+B_P(\nu)=\sum_{\substack{d\ge1\\d\ P\text{-smooth}}}q_d
+=\frac72\frac94\prod_{q\in Q_*}
+  \left(1+\frac{q}{(q-3)(q-1)}\right)
+=\frac{12852604279333}{830472192000}<28.
+$$
+
+The region has Haar mass $40960/9561123$, so this is a probability with
+finite Haar density $9561123/40960$. In794's named-prefix representation
+it is one surviving joint orbit. The local coefficient and phase-menu
+interfaces give the same exact query value using215 local rows, followed
+by the complete Euler tails; no joint-orbit grid or optimizer is needed.
+
+In particular, adjoining any finite set of distinct29-ending originals
+of modulus $29^e d$, with $e\ge1$ and $d\ge1$ supported on $P$, preserves
+noncoverage for this fixed old family. Keep their globally fixed phases
+and arbitrary full numerical old cofactors. At each positive
+29-exponent there is at most one query per old numerical cofactor, so
+the union bound under $\nu\times\mathrm{Haar}_{29}$ is at most
+$B_P(\nu)\sum_{e\ge1}29^{-e}=B_P(\nu)/28$. The remaining mass is at least
+
+$$
+1-B_P(\nu)/28
+=\frac{1485802442381}{3321888768000}>0.
+$$
+
+This source separates first-root values that the old K8 table combined:
+it keeps only root4 at5 and excludes root2 at the other nonternary primes.
+It also uses the actual53-label inventory rather than the inherited
+complete loss envelope. Thus it changes both the admitted source family
+and the loss comparison; it does not attribute the improvement to either
+change alone, nor contradict the earlier all-table inequality.
+The literal support exclusions and exact rational query value have scoped
+transient Lean checks. The probability-product identification, geometric
+tails and one-step continuation are ordinary reuse of794 and the existing
+query extension argument, not a newly kernel-verified measure theorem.

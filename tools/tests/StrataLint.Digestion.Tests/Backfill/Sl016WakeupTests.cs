@@ -4,8 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Digestion.Tests;
 
-// SL-016 的唤醒路径。独立成文件而非并入 RuleEngineTests:后者已达 SL-003 硬线 800 行,
-// 按 CLAUDE.md 第 8 条「桶满则裂、只裂不迁」,新条目入新桶,既有条目原地不动。
+// SL-016 的唤醒路径:目录族模式与 CAS 字节均可触发相关 atom 的评估。
 public sealed class Sl016WakeupTests
 {
     private const string AtomPath =
