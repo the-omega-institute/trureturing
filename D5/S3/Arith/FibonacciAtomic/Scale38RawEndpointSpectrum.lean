@@ -5,29 +5,30 @@
    anchors: []
    utility: none
    digest: Complete raw endpoint spectrum and exact paid sets of literal scans. -/
-
 import D5.S3.Arith.FibonacciAtomic.RawEndpointPeeling
-import D5.S3.Arith.FibonacciAtomic.Scale38LeafFrontierResponse
+import D5.S3.Arith.FibonacciAtomic.Scale38NestedCompensation
 import Mathlib.Data.Fin.Basic
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
+set_option maxHeartbeats 2000000
 namespace D5.S3.Arith.FibonacciAtomic.Scale38RawEndpointSpectrum
-
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition (Address Reply readout leaves vector chi Strategy terminal paid cost)
 open ActualJointResponseCostCore (survivors controllerPolicy controllerOutcome)
 open ActualImageSevenLeafSeparation (A C E leafLabel leafAddresses seven_leaf_separation)
 open Scale38NestedCompensation (family query)
 open FourExitRawEndpointSpectrum (comb comb_slot_readout comb_tail_readout)
-open Scale38LeafFrontierResponse (LeafRow labelledFrontier)
+set_option quotPrecheck false in
+local notation "labelledFrontier" => fun (T : Source) =>
+  {p : Address × Bool | leafLabel T p.1 = some p.2}
+set_option quotPrecheck false in
+local notation "prefixed" => fun (w : Address) (F : Set (Address × Bool)) =>
+  (fun p => (w ++ p.1,p.2)) '' F
+local notation "label" => fun b : Bool => Bool.rec Reply.beta Reply.alpha b
+local notation "H" => fun r : Nat => comb r (fun _ => A) C
 open RawEndpointPeeling (Peels peelController)
-
 local notation "B" => FourExitRawEndpointSpectrum.B
-
 local notation "Index" => fun k : Nat => Unit ⊕ (Fin k ⊕ Fin k)
-
 local notation "rawEndpoint" => fun (k : Nat) (z : Index k) =>
   ∃ qs : List Address,
     Peels (family k ∘ (Equiv.symm (Fintype.equivFin (Index k))))
@@ -82,20 +83,193 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         (∀ U : Index k, paid (terminal π (family k U)).1 = leafAddresses (family k U) ∪
           if U = Z then ∅ else {exitAddress k Z U})) := by
   classical
-  have exclusions (k : Nat) (hk : 1 ≤ k) :
-      (∀ j : Fin k, 1 ≤ j.val → ¬ rawEndpoint k (.inr (.inl j))) ∧
-      (∀ i : Fin k, i.val + 3 ≤ k → ¬ rawEndpoint k (.inr (.inr i))) := by
-    classical
-    have no_peel_of_leaf_agreement (m : Nat) (F : Fin m → Source)
-        (z i j : Fin m) (hiz : i ≠ z) (hjz : j ≠ z) (hij : i ≠ j)
-        (agree : ∀ q, q ∈ leaves (F z) → readout q (F i) = readout q (F j))
-        (compat : ∀ q, q ∈ leaves (F z) →
-          readout q (F i) = readout q (F z) ∨
-            readout q (F i) = .branch ∨ readout q (F i) = .absent) :
-        ¬ ∃ qs : List Address, Peels F z Finset.univ qs := by
+  have mem_front (T : Source) (u : Address) (b : Bool) : (u,b) ∈ labelledFrontier T ↔ readout u T = label b := by
+    cases h : readout u T <;> cases b <;> simp [leafLabel, h]
+  have pre_mem (w u : Address) (b : Bool) (F : Set (Address × Bool)) : (u,b) ∈ prefixed w F ↔ ∃ v, (v,b) ∈ F ∧ u = w++v := by
+    constructor
+    · rintro ⟨⟨v,c⟩,hv,he⟩
+      have hp : w++v = u ∧ c = b := Prod.mk.inj he
+      rcases hp with ⟨haddr,hlabel⟩
+      subst c
+      exact ⟨v,hv,haddr.symm⟩
+    · rintro ⟨v,hv,rfl⟩
+      exact ⟨(v,b),hv,rfl⟩
+  have pair_front (S T : Source) : labelledFrontier (.mul S T) = prefixed [false] (labelledFrontier S) ∪ prefixed [true] (labelledFrontier T) := by
+    ext ⟨u,b⟩
+    cases u with
+    | nil => cases b <;> simp [mem_front, readout]
+    | cons d u => cases d <;> simp [mem_front, readout, Prod.exists]
+  have leaf_front (b : Bool) : labelledFrontier (.of b) = {([],b)} := by
+    ext ⟨u,c⟩
+    cases u <;> cases b <;> cases c <;> simp [mem_front, readout]
+  have A_front : labelledFrontier A = {([false,false],false), ([false,true],true), ([true],false)} := by
+    simp only [A,E,pair_front,leaf_front,Set.image_union,Set.image_singleton]
+    ext p; simp [or_assoc,or_left_comm,or_comm]
+  have E_front : labelledFrontier E = {([false],false),([true],true)} := by
+    simp only [E,pair_front,leaf_front,Set.image_union,Set.image_singleton]
+    ext p; simp [or_assoc,or_left_comm,or_comm]
+  have B_front : labelledFrontier B = {([false,false,false,false],false),([false,false,false,true],true),
+        ([false,false,true],false),([false,true,false],false),([false,true,true],true), ([true,false,false],false),([true,false,true],true),([true,true],false)} := by
+    change labelledFrontier (.mul C A) = _
+    simp only [C,A,E,pair_front,leaf_front,Set.image_union,Set.image_singleton]
+    ext p; simp [or_assoc,or_left_comm,or_comm]
+  have H_extend : ∀ r : Nat, H r = comb (r+1) (fun _ => A) E := by
+    intro r
+    induction r with
+    | zero => rfl
+    | succ r ih => simpa only [comb] using congrArg (FreeMagma.mul A) ih
+  have root_comb : ∀ (n : Nat) (f : Fin n → Source) (q : Source) (t : Nat), t ≤ n → readout [] q = .branch → readout (List.replicate t true) (comb n f q) = .branch := by
+    intro n
+    induction n with
+    | zero =>
+      intro f q t ht hq
+      have he : t = 0 := by omega
+      subst t
+      exact hq
+    | succ n ih =>
+      intro f q t ht hq
+      cases t with
+      | zero => rfl
+      | succ t =>
+        simpa only [List.replicate_succ,comb,readout] using
+          (ih (fun i => f i.succ) q t (by omega) hq)
+  have E_past (d : Nat) (hd : 0 < d) (u : Address) : readout (List.replicate d true ++ false :: u) E = .absent := by
+    cases d with
+    | zero => omega
+    | succ d => cases d <;> rfl
+  have E_right_past (d : Nat) (hd : 0 < d) (u : Address) (b : Bool) (hu : (u,b) ∈ labelledFrontier E) : readout (List.replicate d true ++ u) E = .absent := by
+    rw [E_front] at hu
+    rcases (by simpa only [Set.mem_insert_iff,Set.mem_singleton_iff,Prod.mk.injEq] using hu :
+      (u=[false] ∧ b=false) ∨ (u=[true] ∧ b=true)) with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
+    all_goals cases d with
+    | zero => omega
+    | succ d => cases d <;> rfl
+  have H_slot (n t : Nat) (u : Address) (b : Bool) (hu : (u,b) ∈ labelledFrontier A) : readout (List.replicate t true ++ false :: u) (H n) =
+        if n < t then .absent else label b := by
+    rw [H_extend]; by_cases ht : t ≤ n
+    · rw [if_neg (by omega)]
+      exact (comb_slot_readout (n+1) (fun _ => A) E ⟨t,by omega⟩ u).trans
+        ((mem_front A u b).mp hu)
+    · rw [if_pos (by omega)]
+      have he : t = n+1+(t-(n+1)) := by omega
+      rw [he,List.replicate_add,List.append_assoc,comb_tail_readout]
+      cases hd : t-(n+1) with
+      | zero =>
+        rw [List.replicate_zero,List.nil_append]
+        rw [A_front] at hu
+        rcases (by simpa only [Set.mem_insert_iff,Set.mem_singleton_iff,Prod.mk.injEq] using hu :
+          (u=[false,false] ∧ b=false) ∨ (u=[false,true] ∧ b=true) ∨ (u=[true] ∧ b=false))
+          with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ <;> rfl
+      | succ d => exact E_past (d+1) (by omega) u
+  have H_tail (r n : Nat) (u : Address) (b : Bool) (hu : (u,b) ∈ labelledFrontier E) : readout (List.replicate (r+1) true ++ u) (H n) =
+        if r < n then .branch else if n < r then .absent else label b := by
+    rw [H_extend]; by_cases hlt : r < n
+    · rw [if_pos hlt]
+      rw [E_front] at hu
+      rcases (by simpa only [Set.mem_insert_iff,Set.mem_singleton_iff,Prod.mk.injEq] using hu :
+        (u=[false] ∧ b=false) ∨ (u=[true] ∧ b=true)) with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
+      · exact comb_slot_readout (n+1) (fun _ => A) E ⟨r+1,by omega⟩ []
+      · have he : List.replicate (r+1) true ++ [true] = List.replicate (r+2) true := by
+          simp only [show r+2=(r+1)+1 from rfl,List.replicate_succ']
+        rw [he]
+        exact root_comb (n+1) (fun _ => A) E (r+2) (by omega) rfl
+    · rw [if_neg hlt]
+      by_cases hgt : n < r
+      · rw [if_pos hgt]
+        have he : r+1 = n+1+(r-n) := by omega
+        rw [he,List.replicate_add,List.append_assoc,comb_tail_readout]
+        exact E_right_past (r-n) (by omega) u b hu
+      · have he : r = n := by omega
+        subst r
+        rw [if_neg (by omega),comb_tail_readout]
+        exact (mem_front E u b).mp hu
+  have B_A (u : Address) (b : Bool) (hu : (u,b) ∈ labelledFrontier B) : readout u A = .absent := by
+    rw [B_front] at hu; simp only [Set.mem_insert_iff,Set.mem_singleton_iff,Prod.mk.injEq] at hu
+    rcases hu with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ |
+      ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ <;> rfl
+  have B_nonempty (u : Address) (b : Bool) (hu : (u,b) ∈ labelledFrontier B) : u ≠ [] := by
+    intro he; subst u
+    have hx : readout [] B = .branch := rfl
+    cases b <;> simpa [mem_front,hx] using hu
+  have H_bad (n t : Nat) (u : Address) (b : Bool) (hu : (u,b) ∈ labelledFrontier B) : readout (List.replicate t true ++ false :: u) (H n) = .absent := by
+    rw [H_extend]; by_cases ht : t ≤ n
+    · exact (comb_slot_readout (n+1) (fun _ => A) E ⟨t,by omega⟩ u).trans (B_A u b hu)
+    · have he : t = n+1+(t-(n+1)) := by omega
+      rw [he,List.replicate_add,List.append_assoc,comb_tail_readout]
+      cases hd : t-(n+1) with
+      | zero =>
+        simp only [List.replicate_zero,List.nil_append,E,readout]
+        cases u with
+        | nil => exact (B_nonempty [] b hu rfl).elim
+        | cons d u => rfl
+      | succ d => exact E_past (d+1) (by omega) u
+  have C_far (n t : Nat) (hnt : n < t) (u : Address) (b : Bool) (hu : (u,b) ∈ labelledFrontier C) : readout (List.replicate t true ++ u) (H n) = .absent := by
+    rw [C,pair_front] at hu
+    rcases hu with ⟨⟨v,c⟩,hv,he⟩ | ⟨⟨v,c⟩,hv,he⟩
+    · have hp : u = false :: v ∧ b = c := by simpa using he.symm
+      rcases hp with ⟨rfl,rfl⟩
+      rw [H_slot n t v b hv,if_pos hnt]
+    · have hp : u = true :: v ∧ b = c := by simpa using he.symm
+      rcases hp with ⟨rfl,rfl⟩
+      have he : List.replicate t true ++ true :: v = List.replicate (t+1) true ++ v := by
+        rw [List.replicate_add]; simp
+      rw [he,H_tail t n v b hv,if_neg (by omega),if_pos hnt]
+  have A_Y (n : Nat) (u : Address) (b : Bool) (hu : (u,b) ∈ labelledFrontier A) : readout u (.mul (H n) A) = .branch := by
+    rw [A_front] at hu
+    rcases (by simpa only [Set.mem_insert_iff,Set.mem_singleton_iff,Prod.mk.injEq] using hu :
+      (u=[false,false] ∧ b=false) ∨ (u=[false,true] ∧ b=true) ∨ (u=[true] ∧ b=false))
+      with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
+    · cases n <;> rfl
+    · change readout [true] (H n) = .branch
+      rw [H_extend]
+      exact root_comb (n+1) (fun _ => A) E 1 (by omega) rfl
+    · rfl
+  have pair_mem (S T : Source) (u : Address) (b : Bool) : (u,b) ∈ labelledFrontier (.mul S T) ↔ (∃ v, (v,b) ∈ labelledFrontier S ∧ u = false :: v) ∨
+      (∃ v, (v,b) ∈ labelledFrontier T ∧ u = true :: v) := by
+    rw [pair_front,Set.mem_union]
+    exact or_congr (by simpa only [List.singleton_append] using pre_mem [false] u b (labelledFrontier S))
+      (by simpa only [List.singleton_append] using pre_mem [true] u b (labelledFrontier T))
+  have hole_address (n : Nat) (j : Fin (n+1)) : FiniteHereditaryPatternRealization.hole n j =
+        if j.val < n then List.replicate j.val true ++ [false] else List.replicate n true := by
+    induction n with
+    | zero => simp [FiniteHereditaryPatternRealization.hole]
+    | succ n ih =>
+      refine Fin.cases ?_ (fun i => ?_) j
+      · simp [FiniteHereditaryPatternRealization.hole]
+      · simp only [FiniteHereditaryPatternRealization.hole, Fin.cases_succ, Fin.val_succ,
+          Nat.add_lt_add_iff_right, List.replicate_succ, List.cons_append]
+        rw [ih i]
+        split_ifs <;> rfl
+  have fold_mem (n : Nat) (f : Fin n → Source) (q : Source) (u : Address) (b : Bool) (hu : (u,b) ∈ labelledFrontier (comb n f q)) :
+      (∃ i : Fin n, ∃ v, (v,b) ∈ labelledFrontier (f i) ∧ u = List.replicate i.val true ++ false :: v) ∨ (∃ v, (v,b) ∈ labelledFrontier q ∧ u = List.replicate n true ++ v) := by
+    have hr := (mem_front _ _ _).mp hu
+    rw [Scale38NestedCompensation.comb_holes,
+      FiniteHereditaryPatternRealization.result.1] at hr
+    cases hl : FiniteHereditaryPatternRealization.locate n u with
+    | none => cases b <;> simp [hl] at hr
+    | some p =>
+      rcases p with ⟨j,v⟩
+      simp only [hl] at hr
+      have addr := (FiniteHereditaryPatternRealization.locate_eq n u j v).mp hl
+      by_cases hj : j.val < n
+      · let i : Fin n := ⟨j.val,hj⟩
+        have he : j = i.castSucc := Fin.ext rfl
+        left
+        refine ⟨i,v,(mem_front _ _ _).mpr ?_, ?_⟩
+        · simpa only [he, Fin.snoc_castSucc] using hr
+        · simpa only [hole_address, if_pos hj, List.append_assoc,
+            List.singleton_append] using addr
+      · have he : j = Fin.last n := Fin.ext (by simp only [Fin.val_last]; omega)
+        right
+        refine ⟨v,(mem_front _ _ _).mpr ?_, ?_⟩
+        · simpa only [he, Fin.snoc_last] using hr
+        · simpa only [hole_address, if_neg hj] using addr
+  have exclusions (k : Nat) (hk : 1 ≤ k) : (∀ j : Fin k, 1 ≤ j.val → ¬ rawEndpoint k (.inr (.inl j))) ∧ (∀ i : Fin k, i.val + 3 ≤ k → ¬ rawEndpoint k (.inr (.inr i))) := by
+    have no_peel_of_leaf_agreement (m : Nat) (F : Fin m → Source) (z i j : Fin m) (hiz : i ≠ z) (hjz : j ≠ z) (hij : i ≠ j)
+        (agree : ∀ q, q ∈ leaves (F z) → readout q (F i) = readout q (F j)) (compat : ∀ q, q ∈ leaves (F z) → readout q (F i) = readout q (F z) ∨
+            readout q (F i) = .branch ∨ readout q (F i) = .absent) : ¬ ∃ qs : List Address, Peels F z Finset.univ qs := by
       rintro ⟨qs, hqs⟩
-      have carry : ∀ (S : Finset (Fin m)) (qs : List Address),
-          Peels F z S qs → i ∈ S → j ∈ S → False := by
+      have carry : ∀ (S : Finset (Fin m)) (qs : List Address), Peels F z S qs → i ∈ S → j ∈ S → False := by
         intro S rest
         induction rest generalizing S with
         | nil =>
@@ -110,26 +284,21 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
                 (Finset.mem_filter.mpr ⟨hj, (agree q hq).symm.trans he⟩)
             · rcases hbranch with hbranch | habsent
               · have hcard := hbr
-                have hboth : i ∈ survivors S (vector F q) .branch ∧
-                    j ∈ survivors S (vector F q) .branch := by
+                have hboth : i ∈ survivors S (vector F q) .branch ∧ j ∈ survivors S (vector F q) .branch := by
                   constructor
                   · exact Finset.mem_filter.mpr ⟨hi, by simpa [vector] using hbranch⟩
                   · exact Finset.mem_filter.mpr ⟨hj, by
                       simpa [vector] using (agree q hq).symm.trans hbranch⟩
                 exact (hij (Finset.card_le_one_iff.mp hcard hboth.1 hboth.2)).elim
               · have hcard := hab
-                have hboth : i ∈ survivors S (vector F q) .absent ∧
-                    j ∈ survivors S (vector F q) .absent := by
+                have hboth : i ∈ survivors S (vector F q) .absent ∧ j ∈ survivors S (vector F q) .absent := by
                   constructor
                   · exact Finset.mem_filter.mpr ⟨hi, by simpa [vector] using habsent⟩
                   · exact Finset.mem_filter.mpr ⟨hj, by
                       simpa [vector] using (agree q hq).symm.trans habsent⟩
                 exact (hij (Finset.card_le_one_iff.mp hcard hboth.1 hboth.2)).elim
       exact carry _ qs hqs (Finset.mem_univ i) (Finset.mem_univ j)
-    
-    have compatible_of_nonconflict {P Q : Source}
-        (hconf : ActualImageSevenLeafSeparation.Nonconflict P Q) :
-        ∀ a, a ∈ leaves P →
+    have compatible_of_nonconflict {P Q : Source} (hconf : ActualImageSevenLeafSeparation.Nonconflict P Q) : ∀ a, a ∈ leaves P →
           readout a Q = readout a P ∨ readout a Q = .branch ∨ readout a Q = .absent := by
       intro a ha
       have haddr : a ∈ leafAddresses P := by simpa [leafAddresses] using ha
@@ -150,116 +319,93 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           simp only [leafLabel, hp, Option.some.injEq, reduceCtorEq] at hb ⊢
       | branch => exact Or.inr (Or.inl rfl)
       | absent => exact Or.inr (Or.inr rfl)
-    
-    have leaf_agreement_of_rows {k : Nat} (hk : 1 ≤ k)
-        {Z U V : Index k} (hUZ : U ≠ Z) (hVZ : V ≠ Z)
-        (row_eq : ∀ (r : LeafRow k), r.target = Z →
-          ∀ (a : Address) (c : Bool), (a, c) ∈ r.block →
-            r.reply U c = r.reply V c) :
-        ∀ a, a ∈ leaves (family k Z) → readout a (family k U) = readout a (family k V) := by
-      intro a ha
-      have haddr : a ∈ leafAddresses (family k Z) := by
-        simpa [leafAddresses] using ha
-      have hsome := (seven_leaf_separation.1 (family k Z)).2 a |>.mp haddr
-      obtain ⟨c, hc⟩ := hsome
-      have hfront : (a,c) ∈ labelledFrontier (family k Z) := by
-        simpa [labelledFrontier] using hc
-      have H := Scale38LeafFrontierResponse.result k hk
-      rcases H with ⟨_, _, _, _, _, _, _, _, _, _, _, _, cover, responses⟩
-      obtain ⟨r, hr, hblock⟩ := cover Z a c hfront
-      have hru := responses r U (by intro h; exact hUZ (by simpa [hr] using h)) a c hblock
-      have hrv := responses r V (by intro h; exact hVZ (by simpa [hr] using h)) a c hblock
-      exact hru.trans ((row_eq r hr a c hblock).trans hrv.symm)
-    have excluded (Z U V : Index k) (hUZ : U ≠ Z) (hVZ : V ≠ Z) (hUV : U ≠ V)
-        (rows : ∀ r : LeafRow k, r.target = Z →
-          ∀ a c, (a,c) ∈ r.block → r.reply U c = r.reply V c) :
-        ¬ rawEndpoint k Z := by
-      let m := Fintype.card (Index k)
-      let e : Index k ≃ Fin m := Fintype.equivFin (Index k)
-      let F : Fin m → Source := family k ∘ e.symm
-      have agreement := leaf_agreement_of_rows hk hUZ hVZ rows
-      have nc := (Scale38NestedCompensation.result k hk).2.2.2.1 Z U
-      have compatible := compatible_of_nonconflict nc
+    have excluded (Z U V : Index k) (hUZ : U ≠ Z) (hVZ : V ≠ Z) (hUV : U ≠ V) (agreement : ∀ a, a ∈ leaves (family k Z) →
+          readout a (family k U) = readout a (family k V)) : ¬ rawEndpoint k Z := by
+      let e := Fintype.equivFin (Index k)
+      let F := family k ∘ e.symm
+      have compatible := compatible_of_nonconflict
+        ((Scale38NestedCompensation.result k hk).2.2.2.1 Z U)
       change ¬ ∃ qs, Peels F (e Z) Finset.univ qs
-      apply no_peel_of_leaf_agreement m F (e Z) (e U) (e V)
+      apply no_peel_of_leaf_agreement _ F (e Z) (e U) (e V)
         (fun h => hUZ (e.injective h)) (fun h => hVZ (e.injective h))
         (fun h => hUV (e.injective h))
       · simpa only [F, Function.comp_apply, Equiv.symm_apply_apply] using agreement
       · simpa only [F, Function.comp_apply, Equiv.symm_apply_apply] using compatible
+    have front (Z : Index k) (a : Address) (ha : a ∈ leaves (family k Z)) : ∃ b, (a,b) ∈ labelledFrontier (family k Z) :=
+      ((seven_leaf_separation.1 (family k Z)).2 a).mp
+        (by simpa only [leafAddresses, List.mem_toFinset] using ha)
     constructor
     · intro j hj
-      let u : Fin k := ⟨j.val - 1, by omega⟩
-      let v : Fin k := j
-      apply excluded (.inr (.inl j)) (.inr (.inr u)) (.inr (.inr v))
+      let u : Fin k := ⟨j.val-1,by omega⟩
+      apply excluded (.inr (.inl j)) (.inr (.inr u)) (.inr (.inr j))
         (by simp) (by simp) (by
-          intro h
-          have huv : u = v := Sum.inr.inj (Sum.inr.inj h)
-          have hv := congrArg Fin.val huv
-          dsimp [u,v] at hv
-          omega)
-      intro r ht a c ha
-      cases r with
-      | xSlot j' t h =>
-        have he : j' = j := by simpa only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq] using ht
-        subst j'
-        have hne : t.val ≠ j.val := fun he => h (Fin.ext he)
-        simp only [LeafRow.reply]
-        dsimp only [u,v]
-        split_ifs <;> first | rfl | omega
-      | xExceptional j' => rfl
-      | xTail j' => rfl
-      | xRight j' => rfl
-      | pSlot t => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | pTail => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | pOuter b => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | pInner => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | ySlot i t => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | yLeftTail i => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | yRightSlot i h => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | yRightTail i => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | yRightA i => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
+          intro h; have hh := congrArg Fin.val (Sum.inr.inj (Sum.inr.inj h))
+          dsimp [u] at hh; omega)
+      intro a ha
+      obtain ⟨b,hb⟩ := front _ a ha
+      rcases (pair_mem _ _ _ _).mp hb with ⟨v,hv,rfl⟩ | ⟨v,hv,rfl⟩
+      · rcases fold_mem k (fun l => if l=j then B else A) C v b hv with
+          ⟨t,w,hw,rfl⟩ | ⟨w,hw,rfl⟩
+        · by_cases ht : t = j
+          · subst t; rw [if_pos rfl] at hw
+            change readout (List.replicate j.val true ++ false :: w) (H u.val) =
+              readout (List.replicate j.val true ++ false :: w) (H j.val)
+            rw [H_bad _ _ _ _ hw,H_bad _ _ _ _ hw]
+          · rw [if_neg ht] at hw
+            change readout (List.replicate t.val true ++ false :: w) (H u.val) =
+              readout (List.replicate t.val true ++ false :: w) (H j.val)
+            rw [H_slot _ _ _ _ hw,H_slot _ _ _ _ hw]
+            have hn : t.val ≠ j.val := fun h => ht (Fin.ext h)
+            dsimp [u]; split_ifs <;> first | rfl | omega
+        · change readout (List.replicate k true ++ w) (H u.val) =
+            readout (List.replicate k true ++ w) (H j.val)
+          rw [C_far _ _ (by dsimp [u]; omega) _ _ hw,C_far _ _ j.isLt _ _ hw]
+      · change readout v (.mul (H (k-u.val)) A) = readout v (.mul (H (k-j.val)) A)
+        rw [A_Y _ _ _ hv,A_Y _ _ _ hv]
     · intro i hi
-      let u : Fin k := ⟨i.val+1, by omega⟩
-      let v : Fin k := ⟨i.val+2, by omega⟩
+      let u : Fin k := ⟨i.val+1,by omega⟩
+      let v : Fin k := ⟨i.val+2,by omega⟩
       apply excluded (.inr (.inr i)) (.inr (.inl u)) (.inr (.inl v))
         (by simp) (by simp) (by
-          intro h
-          have huv : u = v := Sum.inl.inj (Sum.inr.inj h)
-          have hv := congrArg Fin.val huv
-          dsimp [u,v] at hv
-          omega)
-      intro r ht a c ha
-      cases r with
-      | ySlot i' t =>
-        have he : i' = i := by simpa only [LeafRow.target, Sum.inr.injEq] using ht
-        subst i'
-        simp only [LeafRow.reply]
-        dsimp only [u,v]
-        rw [if_neg (by omega), if_neg (by omega)]
-      | yLeftTail i' => rfl
-      | yRightSlot i' h => rfl
-      | yRightTail i' => rfl
-      | yRightA i' => rfl
-      | pSlot t => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | pTail => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | pOuter b => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | pInner => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | xSlot j t h => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | xExceptional j => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | xTail j => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-      | xRight j => simp only [LeafRow.target, Sum.inr.injEq, Sum.inl.injEq, reduceCtorEq] at ht
-  have safe_scan {m n : Nat} (F : Fin m → Source) (z : Fin m)
-      (q : Nat → Address) (exit : Fin m → Nat)
-      (leaf : ∀ t < n, q t ∈ leaves (F z) ∧ chi (readout (q t) (F z)) = 0)
-      (before : ∀ i t, t < n → t < exit i → readout (q t) (F i) = readout (q t) (F z))
-      (nonleaf : ∀ i, i ≠ z → exit i < n ∧ chi (readout (q (exit i)) (F i)) = 1)
-      (unique : ∀ i j, i ≠ z → j ≠ z → exit i = exit j →
-        readout (q (exit i)) (F i) = readout (q (exit j)) (F j) → i = j) :
-      Peels F z Finset.univ ((List.range n).map q) := by
-    classical
+          intro h; have hh := congrArg Fin.val (Sum.inl.inj (Sum.inr.inj h))
+          dsimp [u,v] at hh; omega)
+      intro a ha
+      obtain ⟨b,hb⟩ := front _ a ha
+      rcases (pair_mem _ _ _ _).mp hb with ⟨w,hw,rfl⟩ | ⟨w,hw,rfl⟩
+      · rw [H_extend] at hw
+        rcases fold_mem (i.val+1) (fun _ => A) E w b hw with ⟨t,z,hz,rfl⟩ | ⟨z,hz,rfl⟩
+        · change readout (List.replicate t.val true ++ false :: z)
+              (comb k (fun l => if l=u then B else A) C) =
+            readout (List.replicate t.val true ++ false :: z)
+              (comb k (fun l => if l=v then B else A) C)
+          have htk : t.val < k := by omega
+          have htu : (⟨t.val,htk⟩ : Fin k) ≠ u := by intro h; have hh := congrArg Fin.val h; dsimp [u] at hh; omega
+          have htv : (⟨t.val,htk⟩ : Fin k) ≠ v := by intro h; have hh := congrArg Fin.val h; dsimp [v] at hh; omega
+          rw [comb_slot_readout k _ C ⟨t.val,htk⟩,comb_slot_readout k _ C ⟨t.val,htk⟩,
+            if_neg htu,if_neg htv]
+        · rw [E_front] at hz
+          rcases (by simpa only [Set.mem_insert_iff,Set.mem_singleton_iff,Prod.mk.injEq] using hz :
+            (z=[false] ∧ b=false) ∨ (z=[true] ∧ b=true)) with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
+          · change readout (List.replicate (i.val+1) true ++ [false])
+                (comb k (fun l => if l=u then B else A) C) =
+              readout (List.replicate (i.val+1) true ++ [false])
+                (comb k (fun l => if l=v then B else A) C)
+            rw [comb_slot_readout k _ C u [],comb_slot_readout k _ C u []]
+            simp only [if_pos rfl,if_neg (show u ≠ v from by intro h; have hh := congrArg Fin.val h; dsimp [u,v] at hh; omega)]
+            rfl
+          · have he : List.replicate (i.val+1) true ++ [true] = List.replicate (i.val+2) true :=
+              by simp only [List.replicate_succ']
+            change readout (List.replicate (i.val+1) true ++ [true])
+                (comb k (fun l => if l=u then B else A) C) =
+              readout (List.replicate (i.val+1) true ++ [true])
+                (comb k (fun l => if l=v then B else A) C)
+            rw [he,root_comb k _ C _ (by omega) rfl,root_comb k _ C _ (by omega) rfl]
+      · rfl
+  have safe_scan {m n : Nat} (F : Fin m → Source) (z : Fin m) (q : Nat → Address) (exit : Fin m → Nat) (leaf : ∀ t < n, q t ∈ leaves (F z) ∧ chi (readout (q t) (F z)) = 0)
+      (before : ∀ i t, t < n → t < exit i → readout (q t) (F i) = readout (q t) (F z)) (nonleaf : ∀ i, i ≠ z → exit i < n ∧ chi (readout (q (exit i)) (F i)) = 1)
+      (unique : ∀ i j, i ≠ z → j ≠ z → exit i = exit j → readout (q (exit i)) (F i) = readout (q (exit j)) (F j) → i = j) : Peels F z Finset.univ ((List.range n).map q) := by
     let S := fun t : Nat => Finset.univ.filter (fun i => i = z ∨ t ≤ exit i)
-    have loop : ∀ r t, t + r = n →
-        Peels F z (S t) ((List.range' t r).map q) := by
+    have loop : ∀ r t, t + r = n → Peels F z (S t) ((List.range' t r).map q) := by
       intro r
       induction r with
       | zero =>
@@ -275,9 +421,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         intro t ht
         have htn : t < n := by omega
         have target_zero := (leaf t htn).2
-        have at_exit (i : Fin m) (hi : i ∈ S t)
-            (y : ActualTreeReadoutAcquisition.Reply) (hy : chi y = 1)
-            (hiy : readout (q t) (F i) = y) : i ≠ z ∧ exit i = t := by
+        have at_exit (i : Fin m) (hi : i ∈ S t) (y : ActualTreeReadoutAcquisition.Reply) (hy : chi y = 1) (hiy : readout (q t) (F i) = y) : i ≠ z ∧ exit i = t := by
           have hiz : i ≠ z := by
             intro h
             subst i
@@ -292,8 +436,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
             rw [hy, target_zero] at hc
             omega
           exact ⟨hiz, he⟩
-        have group (y : ActualTreeReadoutAcquisition.Reply) (hy : chi y = 1) :
-            (survivors (S t) (vector F (q t)) y).card ≤ 1 := by
+        have group (y : ActualTreeReadoutAcquisition.Reply) (hy : chi y = 1) : (survivors (S t) (vector F (q t)) y).card ≤ 1 := by
           apply Finset.card_le_one.mpr
           intro i hi j hj
           obtain ⟨his, hiy⟩ := Finset.mem_filter.mp hi
@@ -336,13 +479,9 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         exact ih (t+1) (by omega)
     simpa only [S, Nat.zero_le, or_true, Finset.filter_true, ← List.range_eq_range'] using
       loop n 0 (by omega)
-  have first_exit {m n : Nat} (F : Fin m → Source) (z i : Fin m)
-      (q : Nat → Address) (exit : Fin m → Nat) (hi : i ≠ z)
-      (zero : ∀ t < n, chi (readout (q t) (F z)) = 0)
-      (before : ∀ i t, t < n → t < exit i → readout (q t) (F i) = readout (q t) (F z))
-      (nonleaf : ∀ i, i ≠ z → exit i < n ∧ chi (readout (q (exit i)) (F i)) = 1) :
-      ((List.range n).map q).find? (fun a => decide (chi (readout a (F i)) = 1)) =
-        some (q (exit i)) := by
+  have first_exit {m n : Nat} (F : Fin m → Source) (z i : Fin m) (q : Nat → Address) (exit : Fin m → Nat) (hi : i ≠ z) (zero : ∀ t < n, chi (readout (q t) (F z)) = 0)
+      (before : ∀ i t, t < n → t < exit i → readout (q t) (F i) = readout (q t) (F z)) (nonleaf : ∀ i, i ≠ z → exit i < n ∧ chi (readout (q (exit i)) (F i)) = 1) :
+      ((List.range n).map q).find? (fun a => decide (chi (readout a (F i)) = 1)) = some (q (exit i)) := by
     have hbound := (nonleaf i hi).1
     apply List.find?_eq_some_iff_getElem.mpr
     refine ⟨by simp only [(nonleaf i hi).2, decide_true], exit i,
@@ -352,54 +491,67 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       simp only [List.getElem_map, List.getElem_range]
       rw [before i j (by omega) hj, zero j (by omega)]
       decide
+  have encode_scan {ι : Type} [Fintype ι] [DecidableEq ι] (F : ι → Source) (z : ι) (n : Nat) (q : Nat → Address) (exit : ι → Nat)
+      (leaf : ∀ t < n, q t ∈ leaves (F z) ∧ chi (readout (q t) (F z)) = 0) (before : ∀ i t, t < n → t < exit i → readout (q t) (F i) = readout (q t) (F z))
+      (nonleaf : ∀ i, i ≠ z → exit i < n ∧ chi (readout (q (exit i)) (F i)) = 1) (unique : ∀ i j, i ≠ z → j ≠ z → exit i = exit j →
+        readout (q (exit i)) (F i) = readout (q (exit j)) (F j) → i = j) : let e := Fintype.equivFin ι
+      Peels (F ∘ e.symm) (e z) Finset.univ ((List.range n).map q) ∧
+      ∀ U : ι, U ≠ z → ((List.range n).map q).find?
+        (fun a => decide (chi (readout a (F U)) = 1)) = some (q (exit U)) := by
+    let e := Fintype.equivFin ι
+    let G := F ∘ e.symm
+    have hne (j : Fin (Fintype.card ι)) (hj : j ≠ e z) : e.symm j ≠ z :=
+      fun h => hj ((e.apply_symm_apply j).symm.trans (congrArg e h))
+    have hleaf : ∀ t < n, q t ∈ leaves (G (e z)) ∧ chi (readout (q t) (G (e z))) = 0 := by
+      simpa only [G,Function.comp_apply,Equiv.symm_apply_apply] using leaf
+    have hbefore (j : Fin (Fintype.card ι)) (t : Nat) (ht : t < n) (hb : t < exit (e.symm j)) : readout (q t) (G j) = readout (q t) (G (e z)) := by
+      simpa only [G,Function.comp_apply,Equiv.symm_apply_apply] using before (e.symm j) t ht hb
+    have hnonleaf (j : Fin (Fintype.card ι)) (hj : j ≠ e z) : exit (e.symm j) < n ∧ chi (readout (q (exit (e.symm j))) (G j)) = 1 :=
+      nonleaf (e.symm j) (hne j hj)
+    refine ⟨safe_scan G (e z) q (exit ∘ e.symm) hleaf hbefore hnonleaf ?_, ?_⟩
+    · intro i j hi hj he hr
+      exact e.symm.injective (unique _ _ (hne i hi) (hne j hj) he hr)
+    · intro U hu
+      simpa only [G,Function.comp_apply,Equiv.symm_apply_apply] using
+        first_exit G (e z) (e U) q (exit ∘ e.symm) (fun h => hu (e.injective h))
+          (fun t ht => (hleaf t ht).2) hbefore hnonleaf
   let p_exit (k : Nat) : Index k → Nat := fun U => match U with
     | .inl _ => k+1
     | .inr (.inl j) => j.val
     | .inr (.inr i) => i.val+1
-  
   let p_reply {k : Nat} : Index k → Reply := fun U => match U with
     | .inr (.inr _) => .absent
     | _ => .branch
-  
-  have p_scan (k : Nat) (hk : 1 ≤ k) :
-      let e := Fintype.equivFin (Index k)
+  have p_scan (k : Nat) (hk : 1 ≤ k) : let e := Fintype.equivFin (Index k)
       Peels (family k ∘ e.symm) (e (.inl ())) Finset.univ
         ((List.range (k+1)).map (query)) ∧
         ∀ U : Index k, U ≠ .inl () →
           ((List.range (k+1)).map (query)).find? (fun a => decide (chi (readout a (family k U)) = 1)) =
             some ((query) ((p_exit k) U)) := by
-    classical
     let z : Index k := .inl ()
-    let e := Fintype.equivFin (Index k)
-    let F := family k ∘ e.symm
     have base := Scale38NestedCompensation.result k hk
     have rawP := base.2.2.2.2.1
     have rawX := base.2.2.2.2.2.1
     have rawY := base.2.2.2.2.2.2.1
-    have target_leaf (t : Nat) (ht : t < k+1) :
-        query t ∈ leaves (family k z) ∧ chi (readout (query t) (family k z)) = 0 := by
+    have target_leaf (t : Nat) (ht : t < k+1) : query t ∈ leaves (family k z) ∧ chi (readout (query t) (family k z)) = 0 := by
       have hr : readout (query t) (family k z) = .alpha := rawP t (by omega)
       have hm := ((seven_leaf_separation.1 (family k z)).2 (query t)).mpr
         ⟨true, by simp only [leafLabel, hr]⟩
       exact ⟨by simpa only [leafAddresses, List.mem_toFinset] using hm, by rw [hr]; rfl⟩
-    have before (U : Index k) (t : Nat) (ht : t < k+1) (hb : t < p_exit k U) :
-        readout (query t) (family k U) = readout (query t) (family k z) := by
+    have before (U : Index k) (t : Nat) (ht : t < k+1) (hb : t < p_exit k U) : readout (query t) (family k U) = readout (query t) (family k z) := by
       rw [rawP t (by omega)]
       cases U with
       | inl u => exact rawP t (by omega)
       | inr v => cases v with
         | inl j => exact (rawX j).1 t hb
         | inr i => exact (rawY i).1 t (by change t < i.val+1 at hb; omega)
-    have exiting (U : Index k) (hu : U ≠ z) : p_exit k U < k+1 ∧
-        readout (query (p_exit k U)) (family k U) = p_reply U := by
+    have exiting (U : Index k) (hu : U ≠ z) : p_exit k U < k+1 ∧ readout (query (p_exit k U)) (family k U) = p_reply U := by
       cases U with
       | inl u => cases u; exact (hu rfl).elim
       | inr v => cases v with
         | inl j => exact ⟨by change j.val < k+1; omega, (rawX j).2⟩
         | inr i => exact ⟨by change i.val+1 < k+1; omega, (rawY i).2⟩
-    have unique (U V : Index k) (hu : U ≠ z) (hv : V ≠ z)
-        (he : p_exit k U = p_exit k V)
-        (hr : readout (query (p_exit k U)) (family k U) =
+    have unique (U V : Index k) (hu : U ≠ z) (hv : V ≠ z) (he : p_exit k U = p_exit k V) (hr : readout (query (p_exit k U)) (family k U) =
           readout (query (p_exit k V)) (family k V)) : U = V := by
       rw [(exiting U hu).2, (exiting V hv).2] at hr
       cases U with
@@ -413,79 +565,33 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           all_goals apply Fin.ext
           all_goals simp only [p_exit] at he
           all_goals omega
-    constructor
-    ·
-      change Peels F (e z) Finset.univ _
-      apply safe_scan F (e z) query (fun j => p_exit k (e.symm j))
-      · simpa only [F, Function.comp_apply, Equiv.symm_apply_apply] using target_leaf
-      · intro j t ht hb
-        exact (before (e.symm j) t ht hb).trans (by simp only [F, Function.comp_apply, Equiv.symm_apply_apply])
-      · intro j hj
-        have hn : e.symm j ≠ z := by
-          intro h; apply hj; exact (e.apply_symm_apply j).symm.trans (congrArg e h)
-        have hx := exiting (e.symm j) hn
-        refine ⟨hx.1, ?_⟩
-        change chi (readout (query (p_exit k (e.symm j))) (family k (e.symm j))) = 1
-        rw [hx.2]
-        generalize e.symm j = U
-        cases U with
-        | inl u => rfl
-        | inr v => cases v <;> rfl
-      · intro a b ha hb he hr
-        apply e.symm.injective
-        apply unique (e.symm a) (e.symm b)
-        · intro h; apply ha; exact (e.apply_symm_apply a).symm.trans (congrArg e h)
-        · intro h; apply hb; exact (e.apply_symm_apply b).symm.trans (congrArg e h)
-        · exact he
-        · exact hr
-    · intro U hu
-      have hfirst := first_exit F (e z) (e U) (query) (fun j => (p_exit k) (e.symm j))
-        (fun h => hu (e.injective h))
-        (fun t ht => by simpa only [F, Function.comp_apply, Equiv.symm_apply_apply]
-          using (target_leaf t ht).2)
-        (fun j t ht hb => (before (e.symm j) t ht hb).trans
-          (by simp only [F, Function.comp_apply, Equiv.symm_apply_apply]))
-        (fun j hj => by
-          have hn : e.symm j ≠ z := by
-            intro h; apply hj; exact (e.apply_symm_apply j).symm.trans (congrArg e h)
-          have hx := exiting (e.symm j) hn
-          refine ⟨hx.1, ?_⟩
-          change chi (readout ((query) ((p_exit k) (e.symm j))) (family k (e.symm j))) = 1
-          rw [hx.2]
-          generalize e.symm j = V
-          cases V with
-          | inl u => rfl
-          | inr v =>
-            cases v <;> rfl
-        )
-      simpa only [F, Function.comp_apply, Equiv.symm_apply_apply] using hfirst
+    apply encode_scan (family k) z (k+1) (query) (p_exit k) target_leaf before ?_ unique
+    intro U hu
+    refine ⟨(exiting U hu).1, ?_⟩
+    rw [(exiting U hu).2]
+    cases U with
+      | inl v => rfl
+      | inr v => cases v <;> rfl
   let x_query (k t : Nat) : Address := if t < k then query (t+1) else [true,true]
   let x_exit (k : Nat) : Index k → Nat := fun U => match U with
     | .inl _ => k
     | .inr (.inl j) => if j.val = 0 then k+1 else j.val-1
     | .inr (.inr i) => i.val
-  
   let x_reply {k : Nat} : Index k → Reply := fun U => match U with
     | .inr (.inr _) => .absent
     | _ => .branch
-  
-  have x_scan (k : Nat) (hk : 1 ≤ k) :
-      let e := Fintype.equivFin (Index k)
+  have x_scan (k : Nat) (hk : 1 ≤ k) : let e := Fintype.equivFin (Index k)
       Peels (family k ∘ e.symm) (e (.inr (.inl ⟨0,by omega⟩))) Finset.univ
         ((List.range (k+1)).map (x_query k)) ∧
         ∀ U : Index k, U ≠ .inr (.inl ⟨0,by omega⟩) →
           ((List.range (k+1)).map (x_query k)).find? (fun a => decide (chi (readout a (family k U)) = 1)) =
             some ((x_query k) ((x_exit k) U)) := by
-    classical
     let z : Index k := .inr (.inl ⟨0,by omega⟩)
-    let e := Fintype.equivFin (Index k)
-    let F := family k ∘ e.symm
     have base := Scale38NestedCompensation.result k hk
     have rawP := base.2.2.2.2.1
     have rawX := base.2.2.2.2.2.1
     have rawY := base.2.2.2.2.2.2.1
-    have normal (j : Fin k) (s : Nat) (hs : s ≤ k) (hne : s ≠ j.val) :
-        readout (query s) (family k (.inr (.inl j))) = .alpha := by
+    have normal (j : Fin k) (s : Nat) (hs : s ≤ k) (hne : s ≠ j.val) : readout (query s) (family k (.inr (.inl j))) = .alpha := by
       change readout (List.replicate s true ++ [false,false,true])
         (comb k (fun l => if l = j then B else A) C) = .alpha
       by_cases hsk : s < k
@@ -496,15 +602,13 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       · have he : s = k := by omega
         subst s
         exact (comb_tail_readout k (fun l => if l = j then B else A) C [false,false,true]).trans rfl
-    have target (t : Nat) (ht : t < k+1) :
-        readout (x_query k t) (family k z) = if t < k then .alpha else .beta := by
+    have target (t : Nat) (ht : t < k+1) : readout (x_query k t) (family k z) = if t < k then .alpha else .beta := by
       by_cases htk : t < k
       · simp only [x_query, htk, ite_true]
         exact normal ⟨0,by omega⟩ (t+1) (by omega) (by change t+1 ≠ 0; omega)
       · simp only [x_query, htk, ite_false]
         rfl
-    have target_leaf (t : Nat) (ht : t < k+1) :
-        x_query k t ∈ leaves (family k z) ∧ chi (readout (x_query k t) (family k z)) = 0 := by
+    have target_leaf (t : Nat) (ht : t < k+1) : x_query k t ∈ leaves (family k z) ∧ chi (readout (x_query k t) (family k z)) = 0 := by
       have hr := target t ht
       have hl : ∃ b, leafLabel (family k z) (x_query k t) = some b := by
         by_cases htk : t < k
@@ -514,8 +618,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       refine ⟨by simpa only [leafAddresses, List.mem_toFinset] using hm, ?_⟩
       rw [hr]
       split_ifs <;> rfl
-    have before (U : Index k) (t : Nat) (ht : t < k+1) (hb : t < x_exit k U) :
-        readout (x_query k t) (family k U) = readout (x_query k t) (family k z) := by
+    have before (U : Index k) (t : Nat) (ht : t < k+1) (hb : t < x_exit k U) : readout (x_query k t) (family k U) = readout (x_query k t) (family k z) := by
       cases U with
       | inl u =>
         have htk : t < k := by simpa only [x_exit] using hb
@@ -536,9 +639,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           have htk : t < k := by omega
           rw [target t ht, if_pos htk]
           simpa only [x_query, if_pos htk] using (rawY i).1 (t+1) (by omega)
-    have exiting (U : Index k) (hu : U ≠ z) : x_exit k U < k+1 ∧
-        readout (x_query k (x_exit k U)) (family k U) =
-          x_reply U := by
+    have exiting (U : Index k) (hu : U ≠ z) : x_exit k U < k+1 ∧ readout (x_query k (x_exit k U)) (family k U) = x_reply U := by
       cases U with
       | inl u =>
         refine ⟨by simp [x_exit], ?_⟩
@@ -563,9 +664,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           dsimp only [x_query]
           rw [if_pos i.isLt]
           exact (rawY i).2
-    have unique (U V : Index k) (hu : U ≠ z) (hv : V ≠ z)
-        (he : x_exit k U = x_exit k V)
-        (hr : readout (x_query k (x_exit k U)) (family k U) =
+    have unique (U V : Index k) (hu : U ≠ z) (hv : V ≠ z) (he : x_exit k U = x_exit k V) (hr : readout (x_query k (x_exit k U)) (family k U) =
           readout (x_query k (x_exit k V)) (family k V)) : U = V := by
       rw [(exiting U hu).2, (exiting V hv).2] at hr
       cases U with
@@ -600,54 +699,13 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
             | inr l =>
               congr 2
               exact Fin.ext he
-    constructor
-    ·
-      change Peels F (e z) Finset.univ _
-      apply safe_scan F (e z) (x_query k) (fun i => x_exit k (e.symm i))
-      · simpa only [F, Function.comp_apply, Equiv.symm_apply_apply] using target_leaf
-      · intro i t ht hb
-        exact (before (e.symm i) t ht hb).trans (by simp only [F, Function.comp_apply, Equiv.symm_apply_apply])
-      · intro i hi
-        have hn : e.symm i ≠ z := by
-          intro h
-          apply hi
-          exact (e.apply_symm_apply i).symm.trans (congrArg e h)
-        have hx := exiting (e.symm i) hn
-        refine ⟨hx.1, ?_⟩
-        change chi (readout (x_query k (x_exit k (e.symm i))) (family k (e.symm i))) = 1
-        rw [hx.2]
-        generalize e.symm i = U
-        cases U with
-        | inl u => rfl
-        | inr v => cases v <;> rfl
-      · intro i j hi hj he hr
-        apply e.symm.injective
-        apply unique (e.symm i) (e.symm j)
-        · intro h; apply hi; exact (e.apply_symm_apply i).symm.trans (congrArg e h)
-        · intro h; apply hj; exact (e.apply_symm_apply j).symm.trans (congrArg e h)
-        · exact he
-        · exact hr
-    · intro U hu
-      have hfirst := first_exit F (e z) (e U) (x_query k) (fun j => (x_exit k) (e.symm j))
-        (fun h => hu (e.injective h))
-        (fun t ht => by simpa only [F, Function.comp_apply, Equiv.symm_apply_apply]
-          using (target_leaf t ht).2)
-        (fun j t ht hb => (before (e.symm j) t ht hb).trans
-          (by simp only [F, Function.comp_apply, Equiv.symm_apply_apply]))
-        (fun j hj => by
-          have hn : e.symm j ≠ z := by
-            intro h; apply hj; exact (e.apply_symm_apply j).symm.trans (congrArg e h)
-          have hx := exiting (e.symm j) hn
-          refine ⟨hx.1, ?_⟩
-          change chi (readout ((x_query k) ((x_exit k) (e.symm j))) (family k (e.symm j))) = 1
-          rw [hx.2]
-          generalize e.symm j = V
-          cases V with
-          | inl u => rfl
-          | inr v =>
-            cases v <;> rfl
-        )
-      simpa only [F, Function.comp_apply, Equiv.symm_apply_apply] using hfirst
+    apply encode_scan (family k) z (k+1) (x_query k) (x_exit k) target_leaf before ?_ unique
+    intro U hu
+    refine ⟨(exiting U hu).1, ?_⟩
+    rw [(exiting U hu).2]
+    cases U with
+      | inl v => rfl
+      | inr v => cases v <;> rfl
   let y_count (k : Nat) (i : Fin k) : Nat := i.val+1 + if i.val+1=k then 1 else 3
   let y_query (k : Nat) (i : Fin k) (t : Nat) : Address :=
     if t < i.val+1 then query t else true :: query (if i.val+1=k then 1 else t-(i.val+1))
@@ -658,47 +716,37 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
   let y_reply (k : Nat) (i : Fin k) : Index k → Reply := fun U => match U with
     | .inr (.inl j) => if j.val < i.val+1 then .branch else .absent
     | _ => .absent
-  
-  have y_scan (k : Nat) (hk : 1 ≤ k) (i : Fin k) (hi : k ≤ i.val+2) :
-      let e := Fintype.equivFin (Index k)
+  have y_scan (k : Nat) (hk : 1 ≤ k) (i : Fin k) (hi : k ≤ i.val+2) : let e := Fintype.equivFin (Index k)
       Peels (family k ∘ e.symm) (e (.inr (.inr i))) Finset.univ
         ((List.range (y_count k i)).map (y_query k i)) ∧
         ∀ U : Index k, U ≠ .inr (.inr i) →
           ((List.range (y_count k i)).map (y_query k i)).find? (fun a => decide (chi (readout a (family k U)) = 1)) =
             some ((y_query k i) ((y_exit k i) U)) := by
-    classical
     let z : Index k := .inr (.inr i)
-    let e := Fintype.equivFin (Index k)
-    let F := family k ∘ e.symm
     have base := Scale38NestedCompensation.result k hk
     have rawP := base.2.2.2.2.1
     have rawX := base.2.2.2.2.2.1
     have rawY := base.2.2.2.2.2.2.1
-    have right_match (j : Fin k) (h : Nat) (hh : h ≤ k-j.val) :
-        readout (true :: query h) (family k (.inr (.inr j))) = .alpha := by
+    have right_match (j : Fin k) (h : Nat) (hh : h ≤ k-j.val) : readout (true :: query h) (family k (.inr (.inr j))) = .alpha := by
       have hpositive : 1 ≤ k-j.val := by omega
       exact (Scale38NestedCompensation.result (k-j.val) hpositive).2.2.2.2.1 h hh
-    have right_absent (j : Fin k) :
-        readout (true :: query (k-j.val+1)) (family k (.inr (.inr j))) = .absent := by
+    have right_absent (j : Fin k) : readout (true :: query (k-j.val+1)) (family k (.inr (.inr j))) = .absent := by
       let n := k-j.val
       exact (Scale38NestedCompensation.result (n+1) (by omega)).2.2.2.2.2.2.1
         ⟨n,by omega⟩ |>.2
-    have target (t : Nat) (ht : t < y_count k i) :
-        readout (y_query k i t) (family k z) = .alpha := by
+    have target (t : Nat) (ht : t < y_count k i) : readout (y_query k i t) (family k z) = .alpha := by
       by_cases htl : t < i.val+1
       · simpa only [y_query, if_pos htl] using (rawY i).1 t (by omega)
       · simp only [y_query, if_neg htl]
         apply right_match
         unfold y_count at ht
         split_ifs at ht ⊢ <;> omega
-    have target_leaf (t : Nat) (ht : t < y_count k i) :
-        y_query k i t ∈ leaves (family k z) ∧ chi (readout (y_query k i t) (family k z)) = 0 := by
+    have target_leaf (t : Nat) (ht : t < y_count k i) : y_query k i t ∈ leaves (family k z) ∧ chi (readout (y_query k i t) (family k z)) = 0 := by
       have hr := target t ht
       have hm := ((seven_leaf_separation.1 (family k z)).2 (y_query k i t)).mpr
         ⟨true, by simp only [leafLabel, hr]⟩
       exact ⟨by simpa only [leafAddresses, List.mem_toFinset] using hm, by rw [hr]; rfl⟩
-    have before (U : Index k) (t : Nat) (ht : t < y_count k i) (hb : t < y_exit k i U) :
-        readout (y_query k i t) (family k U) = readout (y_query k i t) (family k z) := by
+    have before (U : Index k) (t : Nat) (ht : t < y_count k i) (hb : t < y_exit k i U) : readout (y_query k i t) (family k U) = readout (y_query k i t) (family k z) := by
       rw [target t ht]
       cases U with
       | inl u =>
@@ -732,8 +780,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
                 simp only [y_query, if_neg htl, if_neg hlast]
                 apply right_match
                 omega
-    have exiting (U : Index k) (hu : U ≠ z) : y_exit k i U < y_count k i ∧
-        readout (y_query k i (y_exit k i U)) (family k U) = y_reply k i U := by
+    have exiting (U : Index k) (hu : U ≠ z) : y_exit k i U < y_count k i ∧ readout (y_query k i (y_exit k i U)) (family k U) = y_reply k i U := by
       cases U with
       | inl u =>
         have htl : ¬ k < i.val+1 := by omega
@@ -767,9 +814,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
             simp only [y_exit, if_neg hjlt, if_pos hilt, y_query, if_neg htl,
               if_neg hlast, hdelta, y_reply]
             exact ⟨by unfold y_count; rw [if_neg hlast]; omega, right_absent j⟩
-    have unique (U V : Index k) (hu : U ≠ z) (hv : V ≠ z)
-        (he : y_exit k i U = y_exit k i V)
-        (hr : readout (y_query k i (y_exit k i U)) (family k U) =
+    have unique (U V : Index k) (hu : U ≠ z) (hv : V ≠ z) (he : y_exit k i U = y_exit k i V) (hr : readout (y_query k i (y_exit k i U)) (family k U) =
           readout (y_query k i (y_exit k i V)) (family k V)) : U = V := by
       rw [(exiting U hu).2, (exiting V hv).2] at hr
       cases U with
@@ -814,66 +859,22 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
               congr 2
               apply Fin.ext
               split_ifs at he <;> omega
-    constructor
-    ·
-      change Peels F (e z) Finset.univ _
-      apply safe_scan F (e z) (y_query k i) (fun j => y_exit k i (e.symm j))
-      · simpa only [F, Function.comp_apply, Equiv.symm_apply_apply] using target_leaf
-      · intro j t ht hb
-        exact (before (e.symm j) t ht hb).trans (by simp only [F, Function.comp_apply, Equiv.symm_apply_apply])
-      · intro j hj
-        have hn : e.symm j ≠ z := by
-          intro h; apply hj; exact (e.apply_symm_apply j).symm.trans (congrArg e h)
-        have hx := exiting (e.symm j) hn
-        refine ⟨hx.1, ?_⟩
-        change chi (readout (y_query k i (y_exit k i (e.symm j))) (family k (e.symm j))) = 1
-        rw [hx.2]
-        generalize e.symm j = U
-        cases U with
-        | inl u => rfl
-        | inr v => cases v with
-          | inl l => simp only [y_reply]; split_ifs <;> rfl
-          | inr l => rfl
-      · intro a b ha hb he hr
-        apply e.symm.injective
-        apply unique (e.symm a) (e.symm b)
-        · intro h; apply ha; exact (e.apply_symm_apply a).symm.trans (congrArg e h)
-        · intro h; apply hb; exact (e.apply_symm_apply b).symm.trans (congrArg e h)
-        · exact he
-        · exact hr
-    · intro U hu
-      have hfirst := first_exit F (e z) (e U) (y_query k i) (fun j => (y_exit k i) (e.symm j))
-        (fun h => hu (e.injective h))
-        (fun t ht => by simpa only [F, Function.comp_apply, Equiv.symm_apply_apply]
-          using (target_leaf t ht).2)
-        (fun j t ht hb => (before (e.symm j) t ht hb).trans
-          (by simp only [F, Function.comp_apply, Equiv.symm_apply_apply]))
-        (fun j hj => by
-          have hn : e.symm j ≠ z := by
-            intro h; apply hj; exact (e.apply_symm_apply j).symm.trans (congrArg e h)
-          have hx := exiting (e.symm j) hn
-          refine ⟨hx.1, ?_⟩
-          change chi (readout ((y_query k i) ((y_exit k i) (e.symm j))) (family k (e.symm j))) = 1
-          rw [hx.2]
-          generalize e.symm j = V
-          cases V with
-          | inl u => rfl
-          | inr v =>
-            cases v with
-            | inl l => simp only [y_reply]; split_ifs <;> rfl
-            | inr l => rfl
-        )
-      simpa only [F, Function.comp_apply, Equiv.symm_apply_apply] using hfirst
+    apply encode_scan (family k) z (y_count k i) (y_query k i) (y_exit k i) target_leaf before ?_ unique
+    intro U hu
+    refine ⟨(exiting U hu).1, ?_⟩
+    rw [(exiting U hu).2]
+    cases U with
+      | inl v => rfl
+      | inr v => cases v with
+        | inl j => simp only [y_reply]; split_ifs <;> rfl
+        | inr j => rfl
   let e := Fintype.equivFin (Index k)
   let F := family k ∘ e.symm
   have pschedule : scanAddress k (.inl ()) = query := rfl
   have xschedule (j : Fin k) : scanAddress k (.inr (.inl j)) = x_query k := rfl
   have yschedule (i : Fin k) : scanAddress k (.inr (.inr i)) = y_query k i := rfl
-  have certificate (Z : Index k) (hZ : Z ∈ endpointTargets k) :
-      Peels F (e Z) Finset.univ ((List.range (scanLength k Z)).map (scanAddress k Z)) ∧
-      (∀ U : Index k, U ≠ Z →
-        ((List.range (scanLength k Z)).map (scanAddress k Z)).find?
-          (fun a => decide (chi (readout a (family k U)) = 1)) = some (exitAddress k Z U)) := by
+  have certificate (Z : Index k) (hZ : Z ∈ endpointTargets k) : Peels F (e Z) Finset.univ ((List.range (scanLength k Z)).map (scanAddress k Z)) ∧ (∀ U : Index k, U ≠ Z →
+        ((List.range (scanLength k Z)).map (scanAddress k Z)).find? (fun a => decide (chi (readout a (family k U)) = 1)) = some (exitAddress k Z U)) := by
     cases Z with
     | inl u =>
       cases u
@@ -979,5 +980,4 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         have he : q = exitAddress k Z U := Option.some.inj (hfind.symm.trans (by
           simpa only [F, e, qs, Function.comp_apply, Equiv.symm_apply_apply] using hf))
         simpa only [F, e, qs, Function.comp_apply, Equiv.symm_apply_apply, if_neg hu, he] using hbill
-
 end D5.S3.Arith.FibonacciAtomic.Scale38RawEndpointSpectrum
