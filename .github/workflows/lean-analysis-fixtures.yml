@@ -54,7 +54,7 @@ jobs:
           global-json-file: global.json
 
       - name: Build the candidate cache owner with locked dependencies
-        run: make -C tools dotnet
+        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
 
       - name: Resolve optional cache partitions
         id: keys

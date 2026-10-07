@@ -1,3 +1,4 @@
+using StrataLint.Engineering;
 using StrataLint.TestSupport;
 using TestProjectTopologyPolicy = StrataLint.Engine.RepositoryRules;
 
@@ -7,6 +8,9 @@ public sealed partial class TestProjectTopologyPolicyTests
 {
     private const string CanonicalHarnessPath =
         "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
+
+    private static string[] RegisteredOwnerAssemblies(TestProjectTopologySnapshot snapshot) =>
+        StrataLint.Engineering.EngineeringTestIdentity.OwnerAssemblies(snapshot.Projects.Select(project => project.Registration));
 
     [Fact]
     public void UnchangedBaseDebtIsAccepted()
@@ -474,7 +478,7 @@ public sealed partial class TestProjectTopologyPolicyTests
     [Fact]
     public void OwnerAssembliesComeFromOwnedProjectRegistrations()
     {
-        var assemblies = TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
+        var assemblies = RegisteredOwnerAssemblies(Snapshot(
             OwnedTest("Zulu.Tests", "Zulu.Tests"),
             OwnedTest("Alpha.Tests", "Alpha.Tests"),
             OwnedTest("ZuluDuplicate.Tests", "Zulu.Tests"),
@@ -493,7 +497,7 @@ public sealed partial class TestProjectTopologyPolicyTests
     [Fact]
     public void RegisteredAssemblyIdentityMatchingIsCaseInsensitive()
     {
-        var assemblies = TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
+        var assemblies = RegisteredOwnerAssemblies(Snapshot(
             Production("CaseInsensitive", "CaseInsensitive"),
             OwnedTest(
                 "CaseInsensitive.Tests",
@@ -524,7 +528,7 @@ public sealed partial class TestProjectTopologyPolicyTests
                         StringComparison.Ordinal),
             };
 
-        Assert.Equal(["caseinsensitive.tests"], TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
+        Assert.Equal(["caseinsensitive.tests"], RegisteredOwnerAssemblies(Snapshot(
             Production("CaseInsensitive", "CaseInsensitive"), packageNearMiss)).ToArray());
     }
 
