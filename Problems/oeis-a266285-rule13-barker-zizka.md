@@ -44,7 +44,12 @@ the entry does not appear in the statement sets or results of
 or `google-deepmind/formal-conjectures`; `provables/sequencelib` and
 `ai4reason/oeis-atp-benchmark` contain only synthesized programs checked
 against initial terms, not related to the automaton.
-`not-found-in-searched-scope`.
+
+The five formulas are implied by published work: H. Fukś, *Solvable Cellular
+Automata* (Springer, 2023), Appendix B, gives the explicit solution of Rule 13
+for an arbitrary initial configuration
+(`Library/StatisticalMechanics/fuks2023solvable.md`). Specialized to the single
+ON seed it yields the row pattern of the Route below, and the counts follow.
 
 ## Route
 
@@ -90,7 +95,10 @@ The proof uses only the standard axioms `propext`, `Classical.choice` and
 ## Triage
 
 Tier 1 external named conjectures (OEIS formula fields), preregistered in
-issue #13151 before any Lean. `theorem`; resolution `proved`. The public
+issue #13151 before any Lean. `theorem`; resolution `proved`. Literature status:
+`literature-attested` by specialization of the Rule 13 solution in Fukś (2023),
+Appendix B; the module is a kernel-checked derivation of a literature-implied
+result, not a first resolution. The public
 theorem has `proof_shape: content`: the row invariant of step 1 and the counts
 of step 2 are new propositions on its live path. Admission basis
 `open-problem-resolution`; utility `none`.

@@ -7,8 +7,6 @@ internal sealed class PencilParameterFibersDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/Hypermatrix/PencilParameterFibers.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Combinatorics/koprowski2026enumeration");
-    private static readonly LibraryNoteRef Koszul =
-        LibraryNoteRef.Create("D5/L/HomologicalAlgebra/berkesch2013tensorcomplexes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Explicit factors and scalar fibers", H("Explicit factors and scalar fibers"),

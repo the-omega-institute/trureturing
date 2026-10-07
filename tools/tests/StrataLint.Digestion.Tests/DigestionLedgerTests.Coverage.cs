@@ -113,8 +113,7 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             document,
             snapshot,
-            AcceptedLean(targetPath),
-            baselineDocument: document).Entries);
+            AcceptedLean(targetPath)).Entries);
 
         Assert.Equal(DigestionMigrationState.Absorbed, status.DerivedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, status.DerivedStatus.Truth);
@@ -135,8 +134,7 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             document,
             Snapshot(("docs/source.md", source), CasFile(atom)),
-            AcceptedLean(Array.Empty<string>()),
-            baselineDocument: document).Entries);
+            AcceptedLean(Array.Empty<string>())).Entries);
 
         Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
         Assert.DoesNotContain(status.Gaps, gap => gap.Code == "normalized-seen-not-deletable");
@@ -156,8 +154,7 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             document,
             Snapshot(("docs/source.md", currentBytes), CasFile(atom)),
-            AcceptedLean(Array.Empty<string>()),
-            baselineDocument: document).Entries);
+            AcceptedLean(Array.Empty<string>())).Entries);
 
         Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
         Assert.False(status.Deletable);

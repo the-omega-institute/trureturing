@@ -35,26 +35,6 @@ public sealed class CliOutcomeTests
     }
 
     [Theory]
-    [InlineData(0, "ECHO_VERIFY_OK\n", "")]
-    [InlineData(2, "", "ECHO_VERIFY_INFRASTRUCTURE report unavailable\n")]
-    public void EchoVerifyPreservesProducerAndInfrastructureExitCodes(
-        int expectedExit,
-        string output,
-        string error)
-    {
-        var console = new BufferedConsole();
-        var environment = new StubCliEnvironment(
-            Admitted(),
-            echoVerify: new ExplicitCommandResult(expectedExit, output, error));
-
-        var exitCode = CliApplication.Run(["echo-verify", "--emit", "--base", "baseline"], environment, console);
-
-        Assert.Equal(expectedExit, exitCode);
-        Assert.Equal(output, console.Output);
-        Assert.Equal(error, console.Error);
-    }
-
-    [Theory]
     [InlineData(0)]
     [InlineData(1)]
     [InlineData(2)]
@@ -82,7 +62,6 @@ public sealed class CliOutcomeTests
     [InlineData("check-delta", 255)]
     [InlineData("check-delta", 256)]
     [InlineData("check-current", 3)]
-    [InlineData("echo-verify", 3)]
     public void ExplicitCommandsRejectInvalidExitCodesBeforeWritingResult(string command, int invalidExit)
     {
         var console = new BufferedConsole();
@@ -90,7 +69,7 @@ public sealed class CliOutcomeTests
         AdmissionOutcome unused = new AdmissionOutcome.InfrastructureFailure("unused check outcome");
         var environment = new StubCliEnvironment(
             unused,
-            echoVerify: result, checkCurrent: result, checkDelta: result);
+            checkCurrent: result, checkDelta: result);
 
         var exitCode = CliApplication.Run([command], environment, console);
 

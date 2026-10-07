@@ -1,0 +1,6 @@
+**定理 5.3（结构化纤维积的探针判据）。** 若 $X\times_ZY$ 在 $\mathcal C$ 中存在，则对每个探针 $P$ 有
+
+$$
+\operatorname{Hom}(P,X\times_ZY)\cong\operatorname{Hom}(P,X)\times_{\operatorname{Hom}(P,Z)}\operatorname{Hom}(P,Y).
+$$
+

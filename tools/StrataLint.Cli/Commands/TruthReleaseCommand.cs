@@ -52,6 +52,7 @@ internal static class TruthReleaseCommand
             }
 
             var truth = preparation.Truth;
+            verifier.Verify(snapshot, truth.Report, suppliedDefinitions);
             var sourceTree = Bare(identity.TreeOid);
             var truthExportBytes = TruthExportJsonWriter.Write(TruthExportProjection.Project(
                 preparation.Catalog.ClosedNodes,
@@ -66,13 +67,6 @@ internal static class TruthReleaseCommand
             var truthGraphBytes = AssembleTruthGraph(snapshot, truth, projection, rawLeanReportBytes, suppliedDefinitions);
             var blueprintIndexBytes = BlueprintIndexAssembler.Assemble(snapshot);
             var frozenLedgerHeadBytes = FrozenLedgerHeadAssembler.Assemble(preparation.BaseView);
-            var residualFrontierBytes = ResidualFrontierAssembler.Assemble(
-                snapshot,
-                truth.Lean,
-                truth.Report,
-                verifier,
-                preparation.States,
-                suppliedDefinitions);
             var sourceSnapshot = SourceSnapshotAssembler.Assemble(
                 snapshot,
                 identity,
@@ -81,7 +75,6 @@ internal static class TruthReleaseCommand
                 truthGraphBytes,
                 rawLeanReportBytes,
                 dagMarkdownBytes,
-                residualFrontierBytes,
                 truthExportBytes,
                 frozenLedgerHeadBytes,
                 preparation.BaseView.EventCount);
@@ -95,7 +88,6 @@ internal static class TruthReleaseCommand
                     truthExportBytes,
                     blueprintIndexBytes,
                     frozenLedgerHeadBytes,
-                    residualFrontierBytes,
                     source,
                     options.Trust,
                     new TruthReleaseProducer(

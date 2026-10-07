@@ -1,0 +1,22 @@
+# 本续篇得到的统一结构
+
+现在，前一编的“来源—观察—纤维—证明”可以进一步压缩为：
+
+$$
+\boxed{
+\begin{gathered}
+\text{来源与实际操作合同}\\
+\downarrow\\
+\text{对上下文封闭的语义纤维}\\
+\downarrow\\
+\text{同一历史中的目标—状态候选关系}\\
+\downarrow\\
+\text{有限取得的最小不动点}\\
+\downarrow\\
+\text{FIB 编码的带秩协议与误差、费用证书}.
+\end{gathered}
+}
+$$
+
+其中有两个不能互换的证明方向。
+

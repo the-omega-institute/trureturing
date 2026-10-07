@@ -7,15 +7,6 @@ namespace StrataLint.TestSupport;
 
 internal static class DirectoryLedgerTestSupport
 {
-    internal static TemporaryDirectory UseGitDirectoryPointer(TemporaryDirectory repository)
-    {
-        var gitDirectory = new TemporaryDirectory();
-        var dotGit = Path.Combine(repository.Path, ".git");
-        if (Directory.Exists(dotGit)) Directory.Delete(dotGit);
-        File.WriteAllText(dotGit, "gitdir: " + gitDirectory.Path + "\n");
-        return gitDirectory;
-    }
-
     internal static Dictionary<string, string> Project(IReadOnlyDictionary<string, string> files)
     {
         var ledger = BackfillInventoryLoader.Load(Decode(files));
