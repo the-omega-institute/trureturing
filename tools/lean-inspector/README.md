@@ -106,7 +106,7 @@ fail by name and have no fallback.
 这些检查器不生成报告。离线 truth/export 与 bundle 验证工具保留,不提供
 自动选择 CI 来源或发布资格的链路。
 
-输出采用 `stratalint-raw-lean-report-v2`，同一文件名后附
+输出采用 `stratalint-raw-lean-report-v3`，同一文件名后附
 `.sha256`、`.input.attestation`、`.provenance.json`、`.materials.zip`。
 传递报告给消费者时须保留整组文件；statement materials 与报告一起校验。
 成功输出 `RAW_LEAN_REPORT path=… sha256=…`。
@@ -129,7 +129,7 @@ attestation。发布继续使用 mathlib 分区内的 run/attempt 快照及 draf
 不能作为可用种子。传输失败不改变已经完成的构建与报告结论。
 旧两段或三段哈希的 `lean-cache-v1` 归档都只作为同 mathlib/平台的增量种子，消费时核对
 manifest 与 tag 的声明地址；不恢复 config/exact/same-toolchain 选择。Lake trace 与
-仅 H 适用的语义版本决定还原后的报告复用；验证器只查结构与工件完整性。
+编译依赖 trace、utility 输入与报告格式标识决定还原后的报告复用；验证器只查结构与工件完整性。
 正常 Lean-cache 负责依赖物化和既有构建归档；
 [ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
 规则播种当前工作树的私有 `.lake`，支持时使用 clonefile，复制后的写入与 donor 隔离。
@@ -141,15 +141,15 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 `lake-manifest.json` 中 mathlib 的 resolved revision 与 OS/架构，不证明项目工件已齐全或报告仍有效。
 缺失或损坏的 stamp 不等于 pin 已变；ensure 按现有规则补齐或原地重产。
 缺 stamp、项目 olean 为冷且 `.lake/build` 不存在时，也可走 donor 的 missing-build 播种路径。
-报告是否可复用由 Lake trace、仅 H 适用的语义版本决定。正常入口在 ensure 前不创建
+报告是否可复用由编译依赖 trace、utility 输入与报告格式标识决定。正常入口在 ensure 前不创建
 默认输出或日志目录，以保留新工作树的 donor 播种条件。
 
 程序编译义务由 `inspect.sh` 的默认目标选择；直接调用可用排序后的 JSON 列表通过
 `STRATALINT_LEAN_BUILD_TARGETS` 覆盖。报告、materials 与这些构建产物随项目
 `.lake/build` 缓存运输，不另建报告缓存。
-正常入口校验可选 `.reuse.json`：唯一报告语义版本号、登记的报告模块与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
+正常入口校验可选 `.reuse.json`：报告格式标识、登记的报告模块与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
 一致，并且报告五件套与收据逐字节相符、信封和输入坐标仍为当前时，复用报告数据。选中的程序目标仍须通过 Lake 增量编译；未选程序目标的命中不恢复 Lean 重缓存。
-缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，其兼容性只由该语义版本表达；实际构建或检查失败仍失败，缓存命中不能代替判词。未提供覆盖值的直接调用使用 Inspector 默认程序目标。
+缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，判官实现或规则变化保留有效历史报告；实际构建或检查失败仍失败，缓存命中不能代替判词。未提供覆盖值的直接调用使用 Inspector 默认程序目标。
 `:report` 只构建登记报告模块及实际依赖，不隐式追加包的默认目标；选中的程序目标在报告命中与未命中时均须执行。
 程序构建义务独立于模块报告失效；只影响这些构建义务、未改变报告依赖的编辑，不会因此重提取无关模块报告。实际缺失或失效的模块
 提取会合批以共享加载工作，失效选择仍由 Lake 决定。输出
@@ -167,24 +167,25 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 大小写敏感的仓库相对 POSIX 路径，按 `include`（`pattern`、`optional`）及 `exclude`
 选择，报告模块必须能在 Lake workspace 中解析。`dependency_sources` 与 `report_modules`
 共同给出允许捕获的本地 Lean 源码范围；它是登记清单，不是另一套失效规划器。
+接口契约源码登记在现有 `config_inputs`，接口变化使整份收据未命中；Lake 只重编并重评受影响的编译闭包。
 仅登记为 producer、未进入模块或 utility claim 依赖闭包的文件，不会因此使报告失效。
 
-清单中的唯一必填正整数 `report_cache_release_semantic_version` 承担报告语义兼容，值以清单为准，与清单格式的 `schema_version` 分开。版本升级只重新评定自有类型化判官输入的 H 模块，其余模块报告工件逐字节复用。
+报告复用不含判官语义版本。判官实现或规则改变保持历史报告；新增或改动的登记经编译依赖变化交给当前判官评定。契约接口改动须同次交付迁移全部用法、删除旧路径，受影响的 Reg 自动重编并重评，不做历史兼容。需要重判未改动的历史登记时显式生成不带缓存的完整报告。
 
-兼容的生成器重构、性能优化保持版本不变：在报告输入、配置及版本均未变时，仅 producer 源码或可执行文件字节变化不会强制重提取有效模块报告；进入原生生产或选中 inspector 程序目标时，当前 inspector 仍须编译成功。改变报告含义或接受语义时须增加该版本，即使 JSON schema 完全相同。版本是明确的兼容承诺，不是机器自动判定源码编辑是否兼容。
+报告格式标识由 [读取器](../scripts/report/lean-report-selection.py) 的 `REPORT_FORMAT` 给出，用于 raw report schema、输入坐标、整份报告收据及所有模块 trace。声明、公理闭包、statement identity 等提取语义或工件格式改变时更新该标识；严格读取器拒读旧格式，全部模块重提取。判官实现字节不进入复用条件；当前选中程序仍须编译成功。
 
 [原生依赖](lakefile.lean)按以下输入决定报告工作：
-逐模块工件 trace 只取模块及 utility claim 的编译闭包、utility 输入与仅 H 适用的语义版本；inspector 程序仅等待构建成功，不额外混入其 trace 或源码绑定。
+逐模块工件 trace 只取模块及 utility claim 的编译闭包、utility 输入与报告格式标识；inspector 程序仅等待构建成功，不额外混入其 trace 或源码绑定。
 enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessment 消费编译信息，导入源码的纯注释编辑不改变它们。
 
 | 输入变化 | 失效范围 |
 | --- | --- |
-| `report_cache_release_semantic_version`增加 | 自有类型化判官输入的 H 模块报告及汇总；其余模块工件整份复用。 |
+| 报告格式标识改变 | 全部模块报告重提取并重建汇总；旧格式严格拒读。 |
 | 模块源文件、编译工件或传递 import 工件变化 | Lake 依赖 trace 对应的模块报告；模块自身源码逐字节追踪，导入模块只按编译工件追踪，注释不改变编译工件时复用导入者。 |
 | 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
 | 登记的 `config_inputs` 文件字节变化 | 通过 Lake 影响实际编译依赖；整体配置身份只影响聚合。 |
 | 登记的模块成员集合变化 | 汇总按当前集合重建，新成员执行所需报告工作，保留仍有效的模块工件。 |
-| Inspector 编译工件变化，语义版本不变 | 仅实际依赖其报告输入的工作失效；其他报告复用，Inspector 仍须构建成功。 |
+| 判官实现或规则变化 | 全部有效报告复用；Reg 零重编，选中程序仍须构建成功。 |
 
 `information_templates` 分区携带 occurrence inventory 和 BindingRecord，
 其闭合字段为 `schema_version`、`inventory`、`registered`、`records`，不写全局版本；复用验证检查结构，不重算当前源码摘要。
@@ -193,7 +194,7 @@ C# 消费者检查可解码证据的结构、sidecar 归属及 debt 约束；未
 binding evidence，不能通过声明模板的严格消费者。
 `LeanInformationAuditRegTests` 的生产证据检查要求实际导出的 wire 等于对应 `Compiled*Wire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；当前 wire 只在实际内容改变时同步更新。
 
-唯一语义版本只配置于 `lean-report-inputs.json`。兼容程序改动不 bump，不兼容改动在同次交付 bump；契约接口改动须同时迁移全部用法，不做历史兼容。H 由目标自身编译常量的精确契约类型头与 owner 判定，包含 Registration、TemplateEnrollment、RootCatalog、Seal；只 import 登记的汇总模块不在 H。小型类型/owner/名字投影由 Lake 直接调用独立的 `inputDiscovery` 程序产生；它只读取目标的 olean parts，复用相同类型与字面定义检查。投影只以编译闭包追踪，不持久化评定权威，版本升级的暖路径复用它。模块 trace 包含编译闭包与 utility，仅 H 加入语义版本。origin 保留实际生成的版本和输入投影，仅 H 校验版本相等；聚合与整份收据绑定该版本，旧格式拒读。程序字节永不进入数据工件复用条件。
+H 由目标自身编译常量的精确契约类型头与 owner 判定，包含 Registration、TemplateEnrollment、RootCatalog、Seal；只 import 登记的汇总模块不在 H。小型类型/owner/名字投影由 Lake 直接调用独立的 `inputDiscovery` 程序产生；它只读取目标的 olean parts，复用相同类型与字面定义检查。投影只以编译闭包追踪，不持久化评定权威。origin 保留实际生成来源和输入投影；聚合与整份收据核对当前报告格式，旧格式拒读。程序字节永不进入数据工件复用条件。
 
 Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖；编译工件 trace
 包含 inspector 私有导入所需的传递依赖。捕获结果写入模块输入旁的 `.sources.json`，
@@ -202,8 +203,8 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 导出证据和来源 sidecar 不重复存储导入源码的原始摘要。
 外部包依赖由登记的 Lake manifest pin 约束。
 
-兼容身份与实际产地分别记录。[provenance-v3](publication.py) 的
-`producer_sha256`、`repository_inspector_sha256` 承载语义兼容标识；实际生成来源的摘要记在
+兼容身份与实际产地分别记录。[provenance-v4](publication.py) 的
+`producer_sha256`、`repository_inspector_sha256` 承载报告格式标识的哈希；实际生成来源的摘要记在
 `module_origins` 各模块的 `producer_sources_sha256` 和
 `inspector_executable_sha256`，并绑定该模块报告哈希。复用保持原始来源，增量汇总可含
 多个真实来源；`mode=cached` 或 `produced` 描述本次发布工作，不把旧报告改称当前
@@ -212,7 +213,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 导出的 bundle 以 `module_origins.report_sha256` 检查来源记录与报告行的完整性。
 发布和导出报告的 [输入验证](../scripts/report/lean-report-input.sh) 核对来源记录、模块成员与登记路径，
 不重算当前源码、claim 源码或捕获依赖的文件摘要来决定复用。
-inspector 不兼容改动手动 bump `report_cache_release_semantic_version`。
+提取语义或报告格式改变时更新报告格式标识；判官实现或规则改动保留未改动登记的既有判词。
 兼容 producer 改动不要求旧行的生成指纹等于当前 producer；重新生成的行才记录新指纹。
 仓库输入地址与 provenance 的 `input_address` 由同一输入工具按各自编码计算，
 不能互换，commit ID 与工作树名称不参与这些地址。
@@ -226,7 +227,7 @@ inspector 不兼容改动手动 bump `report_cache_release_semantic_version`。
 | 工件状态 | `--no-build` 结果 |
 | --- | --- |
 | 所需构建目标已就绪，报告工件 trace 有效 | 直接复用，零提取、零汇总。 |
-| 工件缺失且无法由 Lake 恢复，或输入/语义版本/编译产物变化需要重建 | 非零退出，报告目标需要重建。 |
+| 工件缺失且无法由 Lake 恢复，或输入/报告格式/编译产物变化需要重建 | 非零退出，报告目标需要重建。 |
 
 已用 `make lean-report` 准备好工具和私有 `.lake` 后，可以检查原生报告目标：
 
@@ -255,8 +256,8 @@ The interface consists of typed contract structures, inductives and sort-valued 
 entry has a contract type and mathematical fields checked by the Reg compiler. The report reads those compiled
 fields and emits structural input evidence; it does not construct or recheck proofs. Runtime DTOs live in Impl;
 no recorder or registration command runs during Reg compilation. Implementation edits rebuild no Reg modules;
-report reuse depends on Lake inputs and the single semantic version applied only to typed input owners. Interface
-edits atomically migrate every use, remove the old path and bump that version. Historical compatibility is not
+report reuse depends on compiler inputs, utility inputs and the report format. Interface
+edits atomically migrate every use, remove the old path and rebuild/reassess affected Reg compiler closures. Historical compatibility is not
 supported. Existing representation upgrades preserving mathematical evidence and registration semantics are
 outside the registration pause.
 
@@ -271,7 +272,7 @@ source uniqueness, joins, qualified-name collisions, catalog membership and ever
 reads compiler-checked row conclusions and computes output statistics. Companion constants are immutable report
 views, never installed declarations. Computing compiled expression shapes and finite projections does not decode
 an otherwise computed top-level contract input. Raw terms never execute code or acquire kernel authority.
-Report reuse comes only from the Lake trace and the single semantic version.
+Report reuse comes from the Lake compiler trace, utility inputs and the report format identifier.
 
 `STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和 `assess` 的实际模块工作；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。
 
