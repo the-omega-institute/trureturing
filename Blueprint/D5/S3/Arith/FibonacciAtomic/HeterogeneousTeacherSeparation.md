@@ -10,13 +10,13 @@ Laws(n) is Fin(n) to Window to the real numbers. Admissible(rho,mu) requires eac
 
 classValue(t,w) is the real value of the existing priority teacher: it returns 1 when high(w(p)) and low(w(q)) both hold, otherwise 2 when high(w(q)) and low(w(r)) both hold, and 0 otherwise. distance(mu,t,u) is the sum over all complete words of the product input mass times the squared class-value difference. gamma(rho) is 8 times rho squared times (1 minus 2 times rho).
 
-Product expectation E(mu,f) sums the actual product input mass times f. The functions hi and lo are the real zero-one endpoint indicators, H and L are their marginal means, and G(t,w)=hi(w(p)) lo(w(q)) is the first gate. The product formulas two, three and four apply at distinct positions; linear distributes three-term linear combinations. The endpoint and joint means, binary indicators, class formula, marginal interval and psi estimate give the same identities for every actual heterogeneous law.
+Product expectation productExpectation(mu,f) sums the actual product input mass times f. The functions highIndicator and lowIndicator are the real zero-one endpoint indicators, highMarginal and lowMarginal are their marginal means, and firstGate(t,w)=highIndicator(w(p)) lowIndicator(w(q)) is the first gate. The product formulas for two, three and four positions apply at distinct positions; product_expectation_linear_combination distributes three-term linear combinations. The endpoint and joint means, binary indicators, class formula, marginal interval and Bernoulli discrepancy estimate give the same identities for every actual heterogeneous law.
 
 **Theorem 1.1 (Separation of different first pairs).**
 
-$$\forall \left(n: \mathbb{N}\right), \forall \left(rho: \mathbb{R}\right), \forall \left(mu: \operatorname{Laws}\left(n\right)\right), \forall \left(t: \operatorname{Roles}\left(n\right)\right), \forall \left(u: \operatorname{Roles}\left(n\right)\right), \left(0 < rho \land rho \le \frac{1}{8} \land \operatorname{Admissible}\left(rho, mu\right) \land \left(\operatorname{p}\left(t\right) \neq \operatorname{p}\left(u\right) \lor \operatorname{q}\left(t\right) \neq \operatorname{q}\left(u\right)\right)\right) \implies \left(\operatorname{gamma}\left(rho\right) \le \operatorname{E}\left(mu, \left(w \mapsto \left(\operatorname{G}\left(t, w\right) - \operatorname{G}\left(u, w\right)\right)^{2}\right)\right)\right)$$
+$$\forall \left(n: \mathbb{N}\right), \forall \left(rho: \mathbb{R}\right), \forall \left(mu: \operatorname{Laws}\left(n\right)\right), \forall \left(t: \operatorname{Roles}\left(n\right)\right), \forall \left(u: \operatorname{Roles}\left(n\right)\right), \left(0 < rho \land rho \le \frac{1}{8} \land \operatorname{Admissible}\left(rho, mu\right) \land \left(\operatorname{p}\left(t\right) \neq \operatorname{p}\left(u\right) \lor \operatorname{q}\left(t\right) \neq \operatorname{q}\left(u\right)\right)\right) \implies \left(\operatorname{gamma}\left(rho\right) \le \operatorname{productExpectation}\left(mu, \left(w \mapsto \left(\operatorname{firstGate}\left(t, w\right) - \operatorname{firstGate}\left(u, w\right)\right)^{2}\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.gate_lower` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.first_gate_discrepancy_lower` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -42,7 +42,7 @@ The public equality clause fixes the admissible common law mu(i,a)=extremal(rho)
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.gate_lower`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.first_gate_discrepancy_lower`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.result`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/GarbledPosteriorRootGap](GarbledPosteriorRootGap.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/LegalPriorityTeacher](LegalPriorityTeacher.md)

@@ -18,9 +18,9 @@ $$\forall \left(n: \mathbb{N}\right), \forall \left(rho: \mathbb{R}\right), \lef
 
 *Commentary.*
 
-For different first position pairs, first-gate disagreement forces classification disagreement. Its probability is at least gamma. For equal first pairs (p,q) and distinct last positions r,s, the exact Hamming expectation is (H(q)-H(p) mu(q,101)) times (L(r)+L(s)-2 L(r)L(s)). Here H(i)=mu(i,101)+mu(i,001) and L(i)=mu(i,101)+mu(i,100). Independence is used only between different positions; the middle window retains its actual joint endpoint mass.
+For different first position pairs, first-gate disagreement forces classification disagreement. Its probability is at least gamma. For equal first pairs (p,q) and distinct last positions r,s, the exact Hamming expectation is (highMarginal(q)-highMarginal(p) mu(q,101)) times (lowMarginal(r)+lowMarginal(s)-2 lowMarginal(r)lowMarginal(s)). Here highMarginal(i)=mu(i,101)+mu(i,001) and lowMarginal(i)=mu(i,101)+mu(i,100). Independence is used only between different positions; the middle window retains its actual joint endpoint mass.
 
-The first factor equals mu(q,001)+mu(q,101)(1-H(p)) and is at least rho(1+3 rho). The second is at least 4 rho(1-2 rho). Both equalities hold in the same product law: H(0)=1-3 rho, mu(1,001)=mu(1,101)=rho, and L(2)=L(3)=2 rho. The pairs (0,1,2) and (0,1,3) therefore attain eta. Changing any later position to another admissible law preserves equality. The universal lower bound and this attained value determine the infimum of the minimum over distinct role triples.
+The first factor equals mu(q,001)+mu(q,101)(1-highMarginal(p)) and is at least rho(1+3 rho). The second is at least 4 rho(1-2 rho). Both equalities hold in the same product law: highMarginal(0)=1-3 rho, mu(1,001)=mu(1,101)=rho, and lowMarginal(2)=lowMarginal(3)=2 rho. The pairs (0,1,2) and (0,1,3) therefore attain eta. Changing any later position to another admissible law preserves equality. The universal lower bound and this attained value determine the infimum of the minimum over distinct role triples.
 
 For 0<rho<=1/8, eta/gamma=(1+3 rho)/2 is strictly less than one. The theorem is about the deterministic original teacher classes under the actual input law; it asserts no label-channel or training-risk guarantee.
 
