@@ -9,13 +9,13 @@ namespace StrataLint.Tests;
 public sealed class UtilityRefutationProducerTests
 {
     [Theory]
-    [InlineData("expanded", "ChangedContent")]
-    [InlineData("expanded", "PreDeposit")]
-    [InlineData("expanded", "FirstFreeze")]
-    [InlineData("companion", "ChangedContent")]
-    [InlineData("companion", "PreDeposit")]
-    [InlineData("companion", "FirstFreeze")]
-    public void RealLeanAcceptsIrreducibleClaimRefutationsInEveryPhase(string result, string phase)
+    [InlineData("expanded", "ChangedContent", false)]
+    [InlineData("expanded", "PreDeposit", false)]
+    [InlineData("expanded", "FirstFreeze", false)]
+    [InlineData("companion", "ChangedContent", true)]
+    [InlineData("companion", "PreDeposit", true)]
+    [InlineData("companion", "FirstFreeze", true)]
+    public void RealLeanChecksLiteralIrreducibleClaimRefutationsInEveryPhase(string result, string phase, bool valid)
     {
         using var temporary = new TemporaryDirectory();
         var root = temporary.Path;
@@ -68,8 +68,8 @@ public sealed class UtilityRefutationProducerTests
         var validation = UtilityDeclarationValidator.Validate(Enum.Parse<UtilityValidationPhase>(phase),
             RepoPath.CreateKnown(path), utility, snapshot, () => report);
 
-        Assert.True(validation.IsAccepted, $"{result}/{phase}: {validation.Failure} {validation.Detail}");
-        Assert.True(report.Files[RepoPath.CreateKnown(path)].Refutation!.IsClosedNegation);
+        Assert.Equal(valid, validation.IsAccepted);
+        Assert.Equal(valid, report.Files[RepoPath.CreateKnown(path)].Refutation!.IsClosedNegation);
     }
 
     [Fact]
@@ -125,7 +125,7 @@ public sealed class UtilityRefutationProducerTests
             ("witness", "proposed_law", false), ("conditional", "proposed_law", false),
             ("not_a_theorem", "proposed_law", false), ("direct", "other_claim", false),
             ("direct", "parameterized_claim", false), ("general", "proposed_law", false),
-            ("direct", "external_law", true),
+            ("direct", "external_law", false),
         })
         {
             var claimModule = claim == "external_law" ? "D5.S0.Carrier.Law" : "D5.S0.Carrier.Probe";
@@ -178,7 +178,7 @@ public sealed class UtilityRefutationProducerTests
                 using var subset = JsonDocument.Parse(FixtureFile.ReadAllBytes(output + ".subset"));
                 var modules = subset.RootElement.GetProperty("modules");
                 Assert.Equal(1, modules.GetArrayLength());
-                Assert.True(modules[0].GetProperty("utility_refutation").GetProperty("is_closed_negation").GetBoolean());
+                Assert.False(modules[0].GetProperty("utility_refutation").GetProperty("is_closed_negation").GetBoolean());
             }
         }
     }

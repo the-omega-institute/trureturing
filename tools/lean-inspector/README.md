@@ -264,11 +264,11 @@ The production reader uses `RawArtifacts.Store` for every target. It reads compi
 constant tables without creating an Environment, initializing extensions, invoking elaboration, Meta, the type
 checker or the kernel. Contract inputs are decoded from constructor trees and safe constant references in those
 parts. A value that requires evaluation, a missing part, an unknown format or a read failure is a named
-`contract.decode_failed:<owner>:<declaration>:<reason>` or raw-artifact failure; there is no fallback reader. Utility relationships retain
-their bounded computation over compiled terms. `ArtifactAssessment` constructs target-local registration data;
+`contract.decode_failed:<owner>:<declaration>:<reason>` or raw-artifact failure; there is no fallback reader. Utility relationships compare
+the raw types `Prop` and `Not claim` literally, without unfolding or reduction. `ArtifactAssessment` constructs target-local registration data;
 `CompiledAssessment` executes template, evidence and binding gates; `CompiledSeal` checks independent snapshots,
-source uniqueness, joins, qualified-name collisions, catalog membership and every finite vector element, then
-reads compiler-checked row conclusions and computes output statistics. Companion constants are immutable report
+source uniqueness, joins, qualified-name collisions, catalog membership and every finite vector element. Mathematical seal obligations are
+checked during Reg compilation; the report computes no seal statistics. Companion constants are immutable report
 views, never installed declarations. Computing compiled expression shapes and finite projections does not decode
 an otherwise computed top-level contract input. Raw terms never execute code or acquire kernel authority.
 Report reuse comes only from the Lake trace and the single semantic version.

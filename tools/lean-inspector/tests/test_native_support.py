@@ -28,7 +28,7 @@ def copy_contract_interface(source, target):
     """
     shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Implementation.lean', 'Registration.lean'))
     catalog = target / 'LeanInformationAuditInterface/Contract/Catalog.lean'
-    declarations = catalog.read_text().split('/-- Each zero row carries', 1)[0]
+    declarations = catalog.read_text().split('/-- Each occurrence retains', 1)[0]
     declarations = declarations.replace(
         'import LeanInformationAuditInterface.Contract.Implementation',
         'import LeanInformationAuditInterface.Contract.Core')
