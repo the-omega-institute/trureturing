@@ -22,15 +22,17 @@ open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel (finiteTail)
 
 /-- The sum of the actual Fibonacci block vectors at occupied source addresses.
 For an eventually zero address this is a finite sum in the nonnegative lattice,
-whose inclusion into the integer lattice preserves both coordinates. -/
+whose inclusion into the integer lattice preserves both coordinates.
+On addresses without `finiteTail`, the totalized sum is not interpreted as a
+source composition. Claims about actual source compositions require `finiteTail`. -/
 noncomputable def sourceComposition (b : LegalDigits) : ℕ × ℕ :=
   ∑ᶠ j : ℕ, if b.val j then atomicBlock j else 0
 
-private theorem residue_atomicBlock (m j : ℕ) :
+private theorem residue_atomicBlock (m : ℕ) (hm : 0 < m) (j : ℕ) :
     residue m (atomicBlock j) = step^[j] (1, 0) := by
-  have h : Function.Semiconj (residue m) step step := by
-    intro v
-    ext <;> simp [residue, step]
+  obtain ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, hAut, _⟩ :=
+    D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.result.2 m hm (1, 0)
+  have h : Function.Semiconj (residue m) step step := hAut.1
   simpa [atomicBlock, residue] using h.iterate_right j (1, 0)
 
 private theorem period_multiple (m : ℕ) (hm : 0 < m) :
@@ -64,22 +66,18 @@ private theorem remote_support (m : ℕ) (hm : 0 < m) (T N : ℕ)
     rw [Nat.add_mul, one_mul] at hh
     dsimp [f]
     split_ifs <;> omega
-  have hinj : Function.Injective f := by
-    intro i j he
-    by_contra hne
-    rcases lt_or_gt_of_ne hne with hij | hji
-    · have := separated i j hij
-      omega
-    · have := separated j i hji
-      omega
+  have hinj : Function.Injective f :=
+    (show StrictMono f from fun i j hij => by
+      have := separated i j hij
+      omega).injective
   let s := (Finset.range (A + C)).image f
   have hfirst (i : ℕ) (hi : i < A) :
       residue m (atomicBlock (f i)) = (1, 0) := by
     have he : f i = T * (n + i) := by simp [f, hi]; ring
-    rw [he, residue_atomicBlock, hperiod]
+    rw [he, residue_atomicBlock m hm, hperiod]
   have hsecond (j : ℕ) : residue m (atomicBlock (f (A + j))) = (0, 1) := by
     have he : f (A + j) = T * (n + (A + j)) + 1 := by simp [f]; ring
-    rw [he, residue_atomicBlock, Function.iterate_add_apply, hperiod]
+    rw [he, residue_atomicBlock m hm, Function.iterate_add_apply, hperiod]
     simp [step]
   refine ⟨s, ?_, ?_, ?_, ?_⟩
   · intro j hj

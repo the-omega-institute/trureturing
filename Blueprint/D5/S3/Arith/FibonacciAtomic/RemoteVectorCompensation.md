@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/RemoteVectorCompensation.sourceComp
 
 *Commentary.*
 
-x(b) is the finite-support sum of atomicBlock(j)=M^j alpha over occupied positions j of b, where M(a,c)=(c,a+c) and alpha=(1,0). The coordinates are nonnegative integers, included in the integer lattice. For an eventually zero address this sum is finite. rho(m,x) reduces both coordinates modulo m.
+x(b) is the finite-support sum of atomicBlock(j)=M^j alpha over occupied positions j of b, where M(a,c)=(c,a+c) and alpha=(1,0). The coordinates are nonnegative integers, included in the integer lattice. For an eventually zero address this sum is finite. Its totalized value on an address that is not eventually zero is not interpreted as a source composition; the realization theorem requires finiteTail(b). rho(m,x) reduces both coordinates modulo m.
 
 **Theorem 1.2 (Joint realization beyond any bound).**
 
