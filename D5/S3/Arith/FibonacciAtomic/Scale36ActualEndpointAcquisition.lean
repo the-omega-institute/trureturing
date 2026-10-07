@@ -149,18 +149,9 @@ theorem family_structure (k : Nat) (hk : 1 ≤ k) :
     | .inr (_,r) => compensation r
   have assemble (i : Index k) : family k i = comb k (slots i) (last i) := by
     cases i <;> rfl
-  have hom : Function.Semiconj₂ thirdImage FreeMagma.mul FreeMagma.mul :=
-    Function.Semiconj₂.iterate
-      (show Function.Semiconj₂ substitution FreeMagma.mul FreeMagma.mul from
-        substitution.map_mul) 3
   have map_comb (n : Nat) : ∀ (f : Fin n → Source) (q : Source),
-      thirdImage (comb n f q) = comb n (thirdImage ∘ f) (thirdImage q) := by
-    induction n with
-    | zero => intros; rfl
-    | succ n ih =>
-      intro f q
-      exact (hom _ _).trans (congrArg (FreeMagma.mul (thirdImage (f 0)))
-        (ih (f ∘ Fin.succ) q))
+      thirdImage (comb n f q) = comb n (thirdImage ∘ f) (thirdImage q) :=
+    fun f q => (FourExitRawEndpointSpectrum.comb_foundation n f f q q).1
   have image (i : Index k) : thirdImage (preFamily k i) = family k i := by
     cases i with
     | inl u => exact map_comb k _ _
@@ -175,12 +166,8 @@ theorem family_structure (k : Nat) (hk : 1 ≤ k) :
         · simp [Function.comp_def, h]; rfl
       · fin_cases r <;> rfl
   have comb_length (n : Nat) : ∀ (f : Fin n → Source) (q : Source),
-      (comb n f q).length = (∑ l, (f l).length) + q.length := by
-    induction n with
-    | zero => intro f q; simp [comb]
-    | succ n ih =>
-      intro f q
-      simp only [comb, FreeMagma.length, ih, Fin.sum_univ_succ, Nat.add_assoc]
+      (comb n f q).length = (∑ l, (f l).length) + q.length :=
+    fun f q => (FourExitRawEndpointSpectrum.comb_foundation n f f q q).2.1
   have size (i : Index k) : (family k i).length = 5 * k + 11 := by
     rw [assemble, comb_length]
     cases i with
@@ -211,10 +198,9 @@ theorem family_structure (k : Nat) (hk : 1 ≤ k) :
       fin_cases r <;> decide
     intro i j he
     have same (l : Fin k) : slots i l = slots j l := by
-      have readings (u : Address) : readout u (slots i l) = readout u (slots j l) := by
-        rw [← comb_slot_readout k (slots i) (last i) l u,
-          ← comb_slot_readout k (slots j) (last j) l u, ← assemble, ← assemble, he]
-      exact source_foundation.2.2.1 _ _ (fun u _ => readings u)
+      rw [assemble, assemble] at he
+      exact congrFun
+        ((FourExitRawEndpointSpectrum.comb_foundation k _ _ _ _).2.2.1.mp he).1 l
     cases i with
     | inl u =>
       cases j with
@@ -253,13 +239,9 @@ theorem family_structure (k : Nat) (hk : 1 ≤ k) :
       (∀ l, g l ∈ ({C,T,W₁} : Finset Source)) →
       q ∈ ({Kₜ,B,A} : Finset Source) → t ∈ ({Kₜ,B,A} : Finset Source) →
       Nonconflict (comb n f q) (comb n g t) := by
-    induction n with
-    | zero => intro f g q t _ _ hq ht; exact tail_nc q hq t ht
-    | succ n ih =>
-      intro f g q t hf hg hq ht
-      exact ⟨local_nc (f 0) (hf 0) (g 0) (hg 0),
-        ih (f ∘ Fin.succ) (g ∘ Fin.succ) q t
-          (fun l => hf l.succ) (fun l => hg l.succ) hq ht⟩
+    intro f g q t hf hg hq ht
+    exact (FourExitRawEndpointSpectrum.comb_foundation n f g q t).2.2.2.mpr
+      ⟨fun l => local_nc (f l) (hf l) (g l) (hg l), tail_nc q hq t ht⟩
   have slots_mem (i : Index k) (l : Fin k) : slots i l ∈ ({C,T,W₁} : Finset Source) := by
     cases i with
     | inl u => simp [slots]
