@@ -1,0 +1,99 @@
+{
+  "scope": {
+    "min_states": 3,
+    "max_states": 4,
+    "rules": "total unary",
+    "observations": "canonical nonconstant noninjective binary splits"
+  },
+  "census": [
+    {
+      "n": 3,
+      "q": [
+        0,
+        1,
+        1
+      ],
+      "rules": 27,
+      "eventually_discrete_rules": 12,
+      "one_extra_depth_reconstruction_checks": 12,
+      "labelled_partition_profiles": 1,
+      "profiles_with_nonconjugate_rules": 1,
+      "observation_preserving_conjugacy_classes": 6
+    },
+    {
+      "n": 4,
+      "q": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "rules": 256,
+      "eventually_discrete_rules": 48,
+      "one_extra_depth_reconstruction_checks": 48,
+      "labelled_partition_profiles": 3,
+      "profiles_with_nonconjugate_rules": 3,
+      "observation_preserving_conjugacy_classes": 8
+    },
+    {
+      "n": 4,
+      "q": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "rules": 256,
+      "eventually_discrete_rules": 96,
+      "one_extra_depth_reconstruction_checks": 96,
+      "labelled_partition_profiles": 3,
+      "profiles_with_nonconjugate_rules": 3,
+      "observation_preserving_conjugacy_classes": 24
+    }
+  ],
+  "witness": {
+    "q": [
+      0,
+      0,
+      1
+    ],
+    "F": [
+      0,
+      2,
+      0
+    ],
+    "G": [
+      1,
+      2,
+      0
+    ],
+    "ordered_offdiagonal_residual_counts": [
+      2,
+      0,
+      0,
+      0
+    ],
+    "same_depth1_responses": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "F_fixed_points": [
+      0
+    ],
+    "G_fixed_points": [],
+    "state0_length2_outputs": [
+      0,
+      1
+    ]
+  }
+}
