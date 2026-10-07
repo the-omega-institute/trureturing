@@ -341,6 +341,7 @@ class NativePublicationConsumerTests:
 
     def test_native_config(self):
         self.build()
+        self.publish()
         self.write('activity.jsonl', '')
         self.run_lake('--no-build', 'build', ':report')
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
