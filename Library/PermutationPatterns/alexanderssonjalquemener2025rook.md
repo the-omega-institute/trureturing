@@ -8,6 +8,9 @@ url: https://arxiv.org/abs/2502.05939v1
 claim: "Conjecture 28: Ferrers-board multiset rook-Eulerian real-rootedness and pairwise interlacing of the decreasing first-letter refinements."
 strata_touched:
   - D5/S3/Combinatorics/Permutation/MultisetRookEulerianInterlacingRefutation
+  - D5/S3/Combinatorics/Permutation/MultisetRookEulerianRealRootednessRefutation
+  - D5/S3/Combinatorics/Permutation/MultisetRookEulerianWordRecurrence
+  - D5/S3/Combinatorics/Permutation/MultisetRookEulerianNonrealCertificate
 license: citation-only
 triage: anchor
 ---
@@ -35,7 +38,9 @@ Section 3.3, page 11, defines the words:
 
 > Let $\alpha=(\alpha_1,\ldots,\alpha_k)$ be non-negative integers with total sum $n$, and let $\lambda$ and $\mu$ be integer partitions such that $\lambda_i>\mu_i$ for all $i$. We let $\mathcal W(\lambda/\mu,\alpha)$ be all words with $\alpha_i$ entries equal to $i$, such that $\mu_i<w_i\leq\lambda_i$ for all $i=1,2,\ldots,n$.
 
-For Ferrers boards, $\mu=0$. Equations (10) and (11) define
+For Ferrers boards, $\mu=0$, so the strict condition $\lambda_i>\mu_i$
+requires every row length to be positive. Nonnegative content entries are
+allowed, and their total is $n$. Equations (10) and (11) define
 $R=\sum_{w\in\mathcal W}t^{\operatorname{asc}(w)}$ and
 $R_j=\sum_{w\in\mathcal W,\,w_1=j}t^{\operatorname{asc}(w)}$.
 Section 2, page 4, specifies:
@@ -50,7 +55,23 @@ arbitrary Ferrers boards.
 
 The six-row board $(3,3,3,3,4,4)$ with content $(2,2,1,1)$ refutes the
 interlacing conjunct: the required bottom comparison is
-$-7\leq-4-\sqrt{13}$. The universal real-rootedness conjunct remains open.
+$-7\leq-4-\sqrt{13}$. A separate 120-row witness refutes the first, full-polynomial real-rootedness
+clause. Its positive monotone board is $(2^3,3^4,4^{10},5^2,6^{101})$ and its
+content is $(6,1,4,8,1,100)$; exponents on row values denote repetitions.
+The original word sum equals $t^2Q$, with
+
+$$Q=1+261t+21704t^2+591814t^3+5372605t^4+18550680t^5
++27147806t^6+17137014t^7+4318325t^8+352440t^9.$$
+
+After translation by $t\mapsto t-9/1000$, the first three coefficients
+violate the degree-nine Newton condition $4p_1^2\ge9p_0p_2$. The exact
+recurrence bridge and non-splitting argument are consumed by
+`MultisetRookEulerianRealRootednessRefutation.result`. This result settles
+the first clause directly, with every positive-row and nonnegative-content
+condition retained. The old six-row result settles the interlacing clause;
+they concern two clauses of the same Conjecture 28. The new witness makes no
+minimality claim, and leaves the cited rectangular-board and distinct-letter
+theorems under their original hypotheses.
 
 ## Verified locator
 

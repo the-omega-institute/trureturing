@@ -33,7 +33,10 @@ sequence. Issue #12894 specifies nonzero guards for the two refinements.
 
 `D5/S3/Combinatorics/Permutation/MultisetRookEulerianInterlacingRefutation.result`
 proves `¬ claim`: the interlacing conjunct fails at $n=6$. The source's other
-conjunct, universal real-rootedness of $R$, is not decided by this result.
+conjunct, universal real-rootedness of $R$, is not decided by this six-row
+result. The companion `MultisetRookEulerianRealRootednessRefutation.result`
+refutes that first clause on a positive 120-row board; its separate dossier
+is `Problems/alexandersson-jal-quemener-2025-rook-eulerian-real-rootedness`.
 The definitions preserve the source word order, strict ascents and root
 multiplicity; real-rootedness uses Mathlib's `Polynomial.Splits` directly.
 
@@ -127,15 +130,15 @@ Information-escape registration is paused under CLAUDE.md section 3.9.
   Ma–Pan, Theorem 1.11, as stated in the primary source, Section 3.3; the present
   nonrectangular witness does not contradict it. Simion's rectangular-board
   real-rootedness also survives.
-- **Open:** real-rootedness of $R$ for every Ferrers board; universal adjacent
-  interlacing; a structural classification of boards and contents admitting
+- **Open:** universal adjacent interlacing; a structural classification of boards and contents admitting
   all-pairs interlacing.
 - **Consequence proved by the counterexample:** the authors' all-pairs
   interlacing-sequence method for the distinct-letter case cannot extend
   verbatim to multisets. Theorem 12 for distinct letters is unaffected; using
   the multiset all-pairs conjecture as an intermediate step requires a different
   hypothesis or a different method. This refutation does not negate the
-  separate real-rootedness conjecture.
+  separate real-rootedness conjecture; the companion first-clause result
+  supplies that distinct refutation.
 
 ## ASSUMED-UNVERIFIED
 
