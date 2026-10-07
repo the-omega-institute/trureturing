@@ -48,6 +48,10 @@ $$\forall (n : \mathbb{N}), (1 \le n) \Rightarrow (\forall (X : \operatorname{Ma
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/BlockNorm/EssentiallyHermitian.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bourin-lee-2021-essentially-hermitian-block-norm` (proved) by `D5/S3/Quantum/BlockNorm/EssentiallyHermitian.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bourin-lee-2021-essentially-hermitian-block-norm","declaration_gid":"D5/S3/Quantum/BlockNorm/EssentiallyHermitian.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J.-C. Bourin and E.-Y. Lee (2021). *Eigenvalue inequalities for positive block matrices with the inradius of the numerical range*. DOI: [10.1142/S0129167X22500094](https://doi.org/10.1142/S0129167X22500094). URL: <https://arxiv.org/abs/2111.15180v1>.

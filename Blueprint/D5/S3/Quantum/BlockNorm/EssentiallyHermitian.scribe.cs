@@ -21,7 +21,10 @@ internal sealed class EssentiallyHermitianDocument : IScribeDocumentDefinition
             Node("claim", "Conjecture 3.3", Eq(F.Id("claim"), Parenthesized(Claim())),
                 "The source's 2-by-2 array has n-by-n complex matrix blocks, and its X* denotes Matrix.conjTranspose X. The Lean sentence explicitly quantifies every natural n >= 1 and every X; the positivity, universal completion quantifier and affine Hermitian conclusion are encoded by the two preceding definitions.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The conjecture holds in every positive dimension", Claim(),
-                "Positive scalar shifts make the two real spectral edges of K X D sum to zero for every Hermitian D. The quantitative rank-one spike estimate forces first normality and then equality of the projected rank-one matrices. A normal matrix with this equality has collinear eigenvalues; unitary diagonalization reconstructs an affine Hermitian expression. The private diagonalization proof is adapted from TauCeti under Apache-2.0, as detailed in the cited note.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                "Positive scalar shifts make the two real spectral edges of K X D sum to zero for every Hermitian D. The quantitative rank-one spike estimate forces first normality and then equality of the projected rank-one matrices. A normal matrix with this equality has collinear eigenvalues; unitary diagonalization reconstructs an affine Hermitian expression. The private diagonalization proof is adapted from TauCeti under Apache-2.0, as detailed in the cited note.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bourin-lee-2021-essentially-hermitian-block-norm"),
+                    ResolutionKind.Proved))), []));
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bl-essential-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
