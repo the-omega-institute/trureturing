@@ -1377,3 +1377,235 @@ growth. The original unbounded same-source signed target, the all-size
 FIB matrix positivity claim and RH remain unproved. This application is
 paper-level and makes no mathematical originality or Lean-certification
 claim.
+
+## Keeping the real-part weights in the complete high-zero tail
+
+Keep the same conditionally selected least integer $N>5040$ attaining the
+global Robin-ratio maximum, its actual clock $A=\log N$, $L=\log A$,
+and $T_A=\sqrt A L$. The preceding density application retains only a
+single horizontal cutoff. The following application integrates the
+published density bound against the actual real-part weight instead.
+It consumes the same finite-height verification and Corollary 1 of
+Chourasiya–Simonič, rather than a new density theorem or zero computation.
+The original unbounded signed-tail target remains unchanged.
+
+### A uniform supplier on the needed real parts
+
+Corollary 1 and Table 1 of the already identified
+[arXiv:2507.15184v2](https://arxiv.org/pdf/2507.15184v2), printed p.2,
+apply on each of their **closed** intervals $[\sigma_1,\sigma_2]$.
+Their rows covering $3/4\le\sigma\le1$ have
+$B_1<47$, $B_2<10$, and $B_3<168$. Taking these larger constants is
+therefore a uniform consequence of the finitely many published rows;
+it does not interpolate constants from pointwise asymptotic estimates.
+For $t\ge H:=3\cdot10^{12}$, put
+
+$$
+d(\sigma)=\frac{3(1-\sigma)}{2-\sigma},\qquad
+q(\sigma)=\frac{7-5\sigma}{2-\sigma}=2+d(\sigma),\qquad
+a(\sigma)=2-d(\sigma)=\frac{1+\sigma}{2-\sigma}.
+$$
+
+The supplied count, with actual multiplicities and the source's
+$\beta\ge\sigma$, $0<\gamma\le t$ convention, obeys
+
+$$
+N(\sigma,t)<47t^{d(\sigma)}(\log t)^{q(\sigma)}
+                 +10(\log t)^2+168\log t
+\quad(3/4\le\sigma<1).
+\tag{W1}
+$$
+
+The cited density proof and table are external premises, not independently
+rerun or kernel-certified. Their finite-height premise is exactly the
+one already used above, not RH at unbounded height.
+
+### A count for each reflected far tail
+
+Define the actual positive-ordinate multiset
+
+$$
+\mathcal F_\sigma=\{\rho=\beta+i\gamma:\gamma>H,
+                       \ \beta\ge\sigma\text{ or }\beta\le1-\sigma\},
+\qquad
+F_2(\sigma)=\sum_{\rho\in\mathcal F_\sigma}\gamma^{-2}.
+$$
+
+For $\sigma\ge3/4$ the two real-part conditions are disjoint.
+Reflection preserves ordinate and multiplicity; there are no members
+at or below $H$. The same counting-integral identity used in (E2) gives
+
+$$
+F_2(\sigma)=4\int_H^\infty N(\sigma,t)t^{-3}\,dt.
+\tag{W2}
+$$
+
+Set $h=\log H<30$. On this range $7/5\le a(\sigma)\le2$
+and $2\le q(\sigma)\le13/5$. Three integrations by parts, with
+$u^{q-3}\le h^{q-3}$ for $u\ge h>1$, give
+
+$$
+\begin{aligned}
+\int_H^\infty t^{d-3}(\log t)^q\,dt
+&\le H^{-a}\left[
+\frac{h^q}{a}+\frac{qh^{q-1}}{a^2}
+ +\frac{q(q-1)h^{q-2}}{a^3}
+ +\frac{q(q-1)(q-2)h^{q-3}}{a^4}\right]\\
+&<5500H^{-a}.
+\end{aligned}
+\tag{W3}
+$$
+
+For the last comparison use $30^{3/5}<8$ and hence
+$h^q<7200$, $h^{q-1}<240$, $h^{q-2}<8$, and $h^{q-3}<1$.
+The bracket is bounded by
+
+$$
+\frac{7200}{7/5}+\frac{(13/5)240}{(7/5)^2}
+ +\frac{(104/25)8}{(7/5)^3}
+ +\frac{312/125}{(7/5)^4}<5500.
+$$
+
+Reuse the earlier integrals
+$\int_H^\infty t^{-3}(\log t)^2dt<466H^{-2}$ and
+$\int_H^\infty t^{-3}\log t\,dt<16H^{-2}$.
+Equations (W1)–(W3) give the complete, uniform allowance
+
+$$
+F_2(\sigma)<1040000H^{-a(\sigma)}+30000H^{-2}.
+\tag{W4}
+$$
+
+Every height to infinity is included in (W2)–(W4).
+
+### Integrate the actual weight rather than its worst endpoint
+
+Put
+
+$$
+Q_A(\sigma)=A^{\sigma-1/2}+A^{1/2-\sigma},\qquad
+B_j(A)=\sum_{\gamma>H}
+ \frac{A^{\beta-1/2}+A^{1/2-\beta}}{\gamma^j}\quad(j=2,3).
+$$
+
+These sums contain every actual positive-ordinate zero with multiplicity.
+For each zero, layer integration of the increasing function
+$Q_A(1/2+|\beta-1/2|)$, clipped below at $3/4$, gives
+
+$$
+B_2(A)\le Q_A(3/4)S_2(H)
+                  +\int_{3/4}^1 Q_A'(\sigma)F_2(\sigma)\,d\sigma.
+\tag{W5}
+$$
+
+Tonelli applies to the nonnegative integrand. Its endpoint convention
+agrees with (W2); individual real-part endpoints do not change the
+integral. This keeps the same zeros in the density count and in the
+response. Reflection and conjugation are not counted as independent
+favorable configurations.
+
+Since $Q_A'(\sigma)\le LA^{\sigma-1/2}$, (W4)–(W5) yield
+
+$$
+B_2(A)<2A^{1/4}S_2(H)
+ +1040000L\int_{3/4}^1 A^{\sigma-1/2}H^{-a(\sigma)}\,d\sigma
+ +30000H^{-2}(\sqrt A-A^{1/4}).
+\tag{W6}
+$$
+
+The coefficient-preserving estimate (5.12) in Polak's source, before
+its worst-real-part convexity bound, and multiplicity-preserving
+reflection give
+
+$$
+C_{\rm high}(A)\le(1+1/L)B_2(A)
+                  +2(1/L+2/L^2)B_3(A).
+\tag{W7}
+$$
+
+The factor from conjugation is already present in $B_j$: summing the
+two reflected weights equals twice the sum of $A^{\beta-1/2}$ over
+positive ordinates. Also $B_3(A)\le B_2(A)/H$. Thus (W7) bounds the
+same complete high part of (F1), rather than an extra reserve added
+to that part.
+
+### A larger finite source-clock exclusion
+
+Consider $10^{30}<A\le10^{34}$. Elementary logarithm bounds
+$2.302<\log10<2.303$ and $1.098<\log3<1.099$ give
+
+$$
+50<L<78.4,\qquad 28.7<h<30.
+$$
+
+For $r=2-\sigma>0$, arithmetic–geometric mean gives
+
+$$
+\begin{aligned}
+\log\left(A^{\sigma-1/2}H^{-a(\sigma)}\right)
+&=\tfrac32L+h-Lr-3h/r\\
+&\le\tfrac32L+h-2\sqrt{3Lh}<-18.
+\end{aligned}
+\tag{W8}
+$$
+
+For the strict scalar comparison, $\tfrac32L+h-2\sqrt{3Lh}$ is
+increasing in $L$ and decreasing in $h$ on the stated rectangle.
+At $(L,h)=(78.4,28.7)$ it is less than $-18$, since
+$82.15^2=6748.6225<6750.24=3(78.4)(28.7)$.
+The logarithm bounds can be obtained by the positive series
+$\log v=2\sum_{k\ge0}z^{2k+1}/(2k+1)$, $z=(v-1)/(v+1)$,
+with its geometric remainder bound; no prime or zero data are used.
+
+Reuse $S_2(H)<1.48\cdot10^{-12}$.
+Here $A^{1/4}<4\cdot10^8$, $\sqrt A\le10^{17}$, and
+$e^{18}>20^6=64000000$: the last inequality follows already from
+$\sum_{k=0}^{8}3^k/k!>20$. Consequently (W6) gives
+
+$$
+\begin{aligned}
+B_2(A)
+&<2(4\cdot10^8)(1.48\cdot10^{-12})
+ +\frac{1040000(78.4)}{4(64000000)}
+ +\frac{30000\cdot10^{17}}{9\cdot10^{24}}\\
+&<0.321.
+\end{aligned}
+\tag{W9}
+$$
+
+Equations (W7) and $B_3\le B_2/H$ give
+$C_{\rm high}(A)<1.021(0.321)<0.33$.
+Reuse the unchanged $C_{\rm low}(A)<0.054$, strict core
+$T_AD^*(A)>\mathcal E(L)>0.75$, and exact same-source margin.
+The complete signed integral therefore yields
+
+$$
+\boxed{T_A\Delta(N)>0.75-0.054-0.33=0.366>0.36
+\qquad(10^{30}<A\le10^{34}).}
+\tag{W10}
+$$
+
+Together with the previously paid lower clocks (E7), and conditional
+on the same cited source reduction, core, density and finite-verification
+inputs, RH failure must place the selected least global Robin maximizer at
+
+$$
+\boxed{\log N>10^{34}.}
+\tag{W11}
+$$
+
+This is a $10^4$ extension of the selected-source clock restriction;
+it is not a least-counterexample bound or an all-integer verification
+below $e^{10^{34}}$. The verified zero height is unchanged.
+The gain keeps the real-part dependence of the existing density estimate
+through (W5), rather than using one worst real-part weight for a whole
+far set. It does not assume cancellation or infer the actual signed
+error from a lower bound on its magnitude.
+
+For fixed $H$, the upper allowance in (W6) is not bounded as
+$A\to\infty$; its displayed last term alone grows as $\sqrt A$.
+This is growth of the available allowance, not a lower bound on the
+actual high-zero contribution. The original same-source signed target,
+all-size FIB matrix positivity, and RH remain unproved.
+This is a paper-level application of existing results, without a
+mathematical originality claim, new zero computation, or Lean certification.
