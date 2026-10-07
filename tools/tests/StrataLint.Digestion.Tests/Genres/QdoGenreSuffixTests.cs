@@ -50,10 +50,9 @@ public sealed class QdoGenreSuffixTests
         var bytes = Pr2096Fixture();
         var ledger = DigestionTestSupport.EmptyDocument("dialect:qdo");
 
-        var plan = DigestionIngestor.Plan(
+        var plan = ReportFreeDigestionIngestor.Plan(
             ledger,
-            DigestionTestSupport.Snapshot(("docs/source.md", bytes)),
-            ledger);
+            DigestionTestSupport.Snapshot(("docs/source.md", bytes)));
 
         var source = Assert.Single(plan.Document.RequireDigestionSources());
         Assert.Equal(363, plan.ResidualOpenAdded);

@@ -427,6 +427,30 @@ runtime, effective regularization rate, new Lean result, actual cofinal
 signs, all-input half-bound, Robin or RH conclusion.
 
 
+The [two actual midpoint residual columns](theta-profile-residual-gram.md)
+acquire a first full-space simultaneous complex-coefficient Gram for
+the left J4 profiles at centers 0 and 1/2, with widths 1/2 and zero
+primal/dual witnesses. Fresh original negative-edge actions, common
+cross entries, whole-cell derivative transport and both tails give
+a positive upper Gram with norm below 0.001698. The interior enclosure
+error dominates this coarse baseline. The complete growing family,
+common coefficient cost and cofinal signs remain unresolved. The old quadratic rows and grid producers are unused;
+there is no new Lean, original half-bound, Robin or RH result.
+
+The [shared critical and dual correction](theta-shared-witness-correction.md)
+uses one legitimate critical vector and one individual real-Xi dual for
+these same two columns. Direct full-cell transport, row-specific endpoint
+inflation and complete tails give a positive joint upper Gram below
+0.000981, against a same-method offset-centered zero control below
+0.001523. The ratio of the directed upper allowances is below 0.65;
+this does not order the true residual norms. The direct producer reuses
+the profile and fresh witness midpoint actions, with no additional
+metric-action callbacks. Existing J5 conversion gives a subblock cost
+below 3.133 times the coefficient-map norm. Full-family convergence,
+common-sequence signs, the original half-bound, Robin, RH and Lean
+certification remain unresolved.
+
+
 The [explicit actual-endpoint constants](../../../Library/Dynamics/clason2021regularization.md#explicit-original-series-constants-for-the-actual-endpoint-strip)
 reuse the relative theta remainder and original derivative polynomials.
 The [two-rate normalization bound](../../../Library/Dynamics/clason2021regularization.md#retain-both-actual-endpoint-decay-rates)

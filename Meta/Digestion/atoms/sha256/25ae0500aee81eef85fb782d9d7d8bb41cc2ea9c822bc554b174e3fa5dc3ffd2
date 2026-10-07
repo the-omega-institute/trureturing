@@ -1,0 +1,6 @@
+## 续篇一的来源与证明边界
+
+Patrick Cousot、Radhia Cousot，*Abstract interpretation: a unified lattice model for static analysis of programs by construction or approximation of fixpoints*，POPL 1977；[作者维护的文献页](https://www.di.ens.fr/~cousot/COUSOTpapers/POPL77.shtml)核实题名与作者。这是抽象—具体化、格与不动点的经典背景，不作为本卷实验合同、FIB 例子或所有条目的外部证明。输出反馈与反馈精化的固定版本文献见[续篇二的背景文献](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md#续篇二的背景文献与证明边界)。
+
+17 节保留的 [OUP 链接](https://academic.oup.com/comjnl/article-abstract/58/11/3089/449735)只作有限状态识别的来源背景；其文章作者、题名及精确支持范围未独立核实（`ASSUMED-UNVERIFIED`），不承担本卷证明。上述有限例算只检验列出的表格；纸面全称结论仍由各条的假设与论证承担，未作 kernel 声明。
+
