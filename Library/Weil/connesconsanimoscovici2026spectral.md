@@ -239,3 +239,129 @@ The high-energy theorem should be reused in its own spectral model.
 It neither settles the actual Weil ground-state comparison nor bounds
 the complete signed $I_\psi(\log N)$ at the selected Robin source.
 Those arithmetic estimates and RH remain unproved.
+
+## The exact height clock fails to reproduce the zero-count fluctuations
+
+The main-term match in (W2) has a quantitative boundary supplied by a
+classical theorem, rather than a new spectral calculation. Kai-Man Tsang,
+*Some Ω-theorems for the Riemann zeta-function*,
+Acta Arithmetica **46** (1986), 369–395,
+[DOI:10.4064/aa-46-4-369-395](https://doi.org/10.4064/aa-46-4-369-395),
+states the unconditional result
+
+$$
+S(t)=\Omega_\pm\!\left(
+\left(\frac{\log t}{\log\log t}\right)^{1/3}\right)
+\tag{T1}
+$$
+
+in Theorem 1, equation (1.4), printed p.369. The adjacent stronger
+estimate (1.3) assumes RH and is not used. Theorem 2, printed p.370,
+gives a dyadic version: for some $c>0$ and all sufficiently large $T$,
+
+$$
+\sup_{t\in[T,2T]}\,\pm S(1/2,t)
+\ge c\left(\frac{\log T}{\log\log T}\right)^{1/3}.
+\tag{T2}
+$$
+
+Here the source's allowed range of $\sigma$ includes $\sigma=1/2$.
+The inspected [publisher PDF](https://www.impan.pl/shop/publication/transaction/download/product/105022?download.pdf)
+has SHA-256
+`c6f9404e6e1b29202dd11adbefab220903d2400ef05345922795431f3ee2ad6f`.
+These theorem statements and equation (1.1) were read from the scanned
+printed pages 369–370; no audit of Tsang's proof is claimed.
+
+### Counts of the same height, with all zero multiplicities
+
+Write
+
+$$
+m(t)=\frac{t}{2\pi}\log\frac{t}{2\pi e},\qquad
+Q(t)=\left(\frac{\log t}{\log\log t}\right)^{1/3}.
+$$
+
+Let $N_\zeta(t)$ count every nontrivial zero with $0<\gamma<t$,
+including multiplicity and without imposing $\beta=1/2$. At heights
+away from zero ordinates, the source's equation (1.1) is
+
+$$
+N_\zeta(t)=m(t)+\frac78+S(t)+O(t^{-1}).
+$$
+
+Using (W2) with its already fixed clock $E=t^2/16$ gives
+
+$$
+D(t):=N_\zeta(t)-N_+(t^2/16)
+=S(t)+\frac78+O(1).
+\tag{T3}
+$$
+
+The bounded remainder here is a consequence of the two cited counting
+laws; no explicit numerical constant is asserted. In particular,
+$D(t)=\Omega_\pm(Q(t))$. A version keeping a specified height window
+is: for some $c_1>0,C_1$ and every sufficiently large $T$, there are
+heights $t_T^+,t_T^-\in[T,4T]$, away from zero ordinates, with
+
+$$
+D(t_T^+)\ge c_1Q(T)-C_1,\qquad
+D(t_T^-)\le-c_1Q(T)+C_1.
+\tag{T4}
+$$
+
+To handle endpoints, apply (T2) on $[3T/2,3T]$, inside $[T,4T]$.
+At a zero ordinate use the appropriate one-sided value and move to a
+nearby height. The source records the jump as the total multiplicity;
+this argument neither deletes repeated zeros nor assumes their
+simplicity. Either endpoint convention for the high positive spectrum
+changes its count by at most one, by the eventual simplicity in (W1).
+
+Thus the multiset of all sufficiently large zero ordinates cannot
+equal the transformed positive spectrum $\{4\sqrt{E_n}\}$ under this
+exact clock. Finite changes to the head and a fixed index offset alter
+the discrepancy only by $O(1)$ and cannot remove (T4).
+
+### A correction bounded in units of mean spacing is also insufficient
+
+Let $r(t)=t+\delta(t)$ be any height clock with
+$\delta(t)=O(1/\log t)$. Since
+
+$$
+m'(t)=\frac{1}{2\pi}\log\frac{t}{2\pi},
+$$
+
+the mean value theorem gives $m(r(t))-m(t)=O(1)$. The spectral counting
+law holds uniformly at sufficiently large arguments, hence
+
+$$
+N_\zeta(t)-N_+(r(t)^2/16)
+=S(t)+\frac78+O(1).
+\tag{T5}
+$$
+
+The constants may depend on the fixed bound on
+$|\delta(t)|\log t$. Consequently even this corrected clock cannot
+identify the eventual counts up to a uniformly bounded correction.
+The scale $1/\log t$ is the scale of the mean zero spacing, up to the
+constant $2\pi$; no assumption about actual consecutive spacings is
+used.
+
+More generally, if $r(t)/t\to1$ and an eventual count identification
+with bounded error were achieved, (T3) would require
+$m(r(t))-m(t)=S(t)+O(1)$. Another application of the mean value theorem
+and (T1) would force
+
+$$
+(r(t)-t)\log t=\Omega_\pm(Q(t)).
+\tag{T6}
+$$
+
+This is a necessary condition on a proposed arithmetic correction,
+not a construction of one and not a sufficient spectral correspondence.
+It excludes only the stated clocks for this specified operator; a
+different spectral model or a larger arithmetic reparameterization
+has not been excluded. A FIB address or four-phase relabeling does not
+by itself supply the fluctuations required in (T6). The deduction is an
+application of existing counting and oscillation theorems, with no
+originality or Lean-verification claim. It supplies no signed estimate
+for the original full Robin tail and leaves RH unproved.
