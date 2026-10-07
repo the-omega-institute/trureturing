@@ -19,7 +19,7 @@ open Lean LeanInformationAudit
 
 /-- Exercise the standalone artifact-reader boundary on every contract input
 kind, including an indexed partial-slot family and rigid theorem universes. -/
-unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat) : IO Unit := do
+unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
   let fixturePath ← Repository.source ".lake/build/lean-inspector/reg/lib/lean"
   let saved ← searchPathRef.get
   searchPathRef.set (fixturePath :: saved)
@@ -52,18 +52,9 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
     IO.println s!"[PASS] compiled metadata owners={store.owners.size} \
       modules={store.moduleOrder.size} projections={store.metadata.projections.size} \
       classes={store.metadata.classes.toArray.size} instances={store.metadata.instances.toArray.size}"
-    let context : Contract.CompiledExpressions.Context := {
-      find := (store.constants[·]?)
-      heartbeatStart := start
-      heartbeatLimit := limit }
-    let natural := mkConst ``Nat
-    let identity := Expr.lam `x natural (.bvar 0) .default
-    let application := Expr.lam `f (mkForall `x .default natural natural)
-      (mkApp (.bvar 0) (mkNatLit 0)) .default
-    for other in #[application, mkConst ``Unit.unit] do
-      let (same, _) ← Contract.CompiledExpressions.run context
-        (Contract.CompiledExpressions.sameShape identity other)
-      unless !same do throw <| IO.userError "compiled.shape:mismatched_function_domains"
+    let context : Contract.Literal.Context := {
+      find := (store.constants[·]?), owner := (store.owners[·]?),
+      external := fun n => store.metadata.externs.contains n || store.metadata.implementedBy.contains n }
     unless store.metadata.axioms.find?
         `D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit.result ==
         some #[`propext, `Classical.choice, `Quot.sound] do
@@ -99,6 +90,7 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
         evidence.partialReadouts == some #[true, false] && evidence.partialAnchors == some #[]) do
       throw <| IO.userError "compiled.discovery:partial_slot_support"
     let partialEntry ← CompiledRegistration.prepare context.find owners[0]! partialRow.input.entry
+      partialRow.input.entry.arenaName
     let partialDiagnostic ← CompiledRegistration.validateFinite context.find partialEntry partialRow.input.options
     unless partialDiagnostic.any (fun message => message.startsWith "IE-C049" &&
         (message.splitOn "primitive=readout[1]").length == 2 &&
@@ -125,8 +117,8 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
     unless enrollmentContext.recursive `List.map && !enrollmentContext.recursive `Unit.fintype do
       throw <| IO.userError "compiled.enrollment:recursion_metadata"
     for (owner, enrollment) in snapshot.enrollments do
-      let plan ← (TemplateAudit.CompiledEnrollment.compileTemplate owner enrollment.name
-        enrollment.constructors).run enrollmentContext
+      let plan ← (TemplateAudit.CompiledEnrollment.compileTemplate owner enrollment.enrollmentName enrollment.name
+        enrollment.constructors enrollment.bodyFact enrollment.coverage).run enrollmentContext
       unless plan.data.sourceBound && plan.data.slots.size == 3 do
         throw <| IO.userError "compiled.enrollment:source_plan"
     let cases : Array (Name × Option String) := #[
@@ -140,10 +132,20 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
         some "unclassified_form:E3.closed_decision"),
       (`LeanInformationAudit.Tests.DeclaredTemplates.recursiveBody,
         some "unclassified_form:E4.recursion:Nat.rec")]
+    let fixtureEnrollment := fun (name : Name) => do
+      let declaration := name.getPrefix.str (name.getString! ++ "Enrollment")
+      let some (.defnInfo input) := context.find declaration
+        | throw <| IO.userError s!"compiled.enrollment:fixture_missing:{declaration}"
+      let some owner := context.owner declaration
+        | throw <| IO.userError s!"compiled.enrollment:fixture_owner:{declaration}"
+      IO.ofExcept <| Contract.Decoder.enrollment context.find
+        owner input ""
     for (name, expected) in cases do
+      let input ← fixtureEnrollment name
       let actual ← try
         let plan ← (TemplateAudit.CompiledEnrollment.compileTemplate
-          enrollmentContext.provenance.view.mainModule name #[]).run enrollmentContext
+          input.owner input.enrollmentName input.name input.constructors input.bodyFact
+          input.coverage).run enrollmentContext
         unless !plan.data.sourceBound && !plan.data.rules.isEmpty do
           throw <| IO.userError "compiled.enrollment:finite_plan"
         pure none
@@ -152,11 +154,13 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
         throw <| IO.userError s!"compiled.enrollment:{name}:expected={expected}:actual={actual}"
     let zero := { enrollmentContext with provenance := { enrollmentContext.provenance with
       options := ({} : Options).set `informationTemplate.work (0 : Nat) } }
+    let zeroInput ← fixtureEnrollment cases[0]!.1
     let exhausted ← try
       discard <| (TemplateAudit.CompiledEnrollment.compileTemplate
-        zero.provenance.view.mainModule cases[0]!.1 #[]).run zero
+        zeroInput.owner zeroInput.enrollmentName zeroInput.name zeroInput.constructors
+        zeroInput.bodyFact zeroInput.coverage).run zero
       pure false
-    catch error => pure (error.toString == "incomplete_closure:E8.erasure_work")
+    catch error => pure (error.toString == "incomplete_closure:E8.work")
     unless exhausted do throw <| IO.userError "compiled.enrollment:zero_work"
     IO.println "[PASS] compiled enrollment: source, 6 finite cases, recursion metadata and zero work"
     let canonical := `Reg.D5.S0.Tower.GoldenGapZeckendorf
@@ -205,8 +209,11 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
         | throw <| IO.userError "compiled.source:target_missing"
       let some recordInfo := store.constants[entry.realizationName]?
         | throw <| IO.userError "compiled.source:record_missing"
-      let sourceContext ← TemplateAudit.CompiledEnrollment.Context.fromArtifacts store sourceOwner
+      let (_, sourceState) ← (ArtifactRegistration.register sourceOwner sourceRow).run { store }
+      let sourceContext ← TemplateAudit.CompiledEnrollment.Context.fromArtifacts sourceState.store sourceOwner
         sourceRow.input.options (({} : NameSet).insert entry.theoremName)
+      let sourceContext := { sourceContext with provenance :=
+        { sourceContext.provenance with nodeFacts := sourceState.activeFacts } }
       let sourceAction : CompiledSourceScope.M Unit := do
         let scope ← CompiledSourceScope.resolve sourceInfo selection
         let record := mkConst entry.realizationName (recordInfo.levelParams.map Level.param)
@@ -214,9 +221,16 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
         let family := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily
         let signature ← CompiledSourceScope.projectField (family ++ `Arena.signature) arena
         let actual ← CompiledSourceScope.projectField (family ++ `Registration.actual) record
-        let law ← CompiledSourceScope.projectField (family ++ `Arena.Law) arena #[actual]
-        CompiledSourceScope.reconstruct scope.expanded law
-        CompiledSourceScope.validateFields scope signature actual
+        let law := mkApp2 (mkConst (family ++ `Arena.Law) arena.constLevels!) arena
+          (mkAppN (mkConst (family ++ `Registration.actual) record.constLevels!)
+            #[arena, recordInfo.type.getAppArgs[1]!, record])
+        unless ← CompiledSourceScope.sameShape sourceInfo.type law do
+          throw <| IO.userError "compiled.source:statement_bridge_fact"
+        let some enumeration := declaration.escapeInput.roleEnumeration
+          | throw <| IO.userError "compiled.source:role_enumeration_missing"
+        let roles ← CompiledSourceScope.enumeration enumeration
+          (← CompiledSourceScope.projectField (family ++ `Signature.Role) signature)
+        CompiledSourceScope.validateFields scope actual entry.theoremName roles
       discard <| (sourceAction.run 524288).run sourceContext
       let record := mkConst entry.realizationName (recordInfo.levelParams.map Level.param)
       let lawAction : CompiledSourceScope.M (Expr × Expr) := do
@@ -232,16 +246,16 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
         let rejected ← try
           discard <| (CompiledSourceOperands.check entry.theoremName
             #[mkConst entry.theoremName (sourceInfo.levelParams.map Level.param)] 524288
-            evidence).run sourceContext
+            evidence (exclusion := declaration.escapeInput.exclusion)).run sourceContext
           pure false
         catch error => pure (error.toString.startsWith "forbidden_dependency:source.operand_identity")
         unless rejected do throw <| IO.userError "compiled.source:theorem_identity_not_rejected"
       let unrelated := Expr.lam `realization domain (mkConst ``True) .default
       let unrelatedRejected ← try
         discard <| (CompiledSourceOperands.check entry.theoremName #[] 524288
-          (some (record, unrelated))).run sourceContext
+          (some (record, unrelated)) (exclusion := declaration.escapeInput.exclusion)).run sourceContext
         pure false
-      catch error => pure (error.toString.startsWith "unclassified_form:source.variation_law")
+      catch error => pure (error.toString.startsWith "contract.node_binding:source.exclusion_law")
       unless unrelatedRejected do throw <| IO.userError "compiled.source:unrelated_variation_law"
       IO.println "[PASS] compiled source reconstruction, full observations and theorem identity rejection"
   finally searchPathRef.set saved
@@ -291,7 +305,6 @@ unsafe def main : IO Unit := do
   LeanInformationAuditRegTests.CompiledDiscovery.checkProductionReport
   let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
   LeanInformationAuditRegTests.CompiledDiscovery.readFixtures reader
-    (← IO.getNumHeartbeats) (Lean.Core.getMaxHeartbeats ({} : Lean.Options))
   LeanInformationAuditRegTests.NodeFacts.check
   LeanInformationAuditRegTests.CompiledCalculations.check reader
   LeanInformationAuditRegTests.CompiledSeal.check reader

@@ -1,12 +1,15 @@
 import LeanInformationAudit.Contract.NodeFacts
 import LeanInformationAudit.RawArtifacts
 import LeanInformationAudit.CompiledAxioms
+import LeanInformationAudit.RegistrationRelations
+import LeanInformationAudit.ReadoutProvenance.Carriers
 import Reg.Support.DependentFamily
 import Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain
 import Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit
 import Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit
 import Reg.D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation
 import Reg.Catalogs.IffRegistrations.SealedCatalog
+import Reg.Support.CompiledNodeTerm
 
 namespace LeanInformationAuditRegTests.NodeFacts
 open Lean LeanInformationAudit LeanInformationAudit.Contract
@@ -82,6 +85,52 @@ def dataFact : NodeFact := .data Nat 7 {
   owner := `LeanInformationAuditRegTests.NodeFacts,
   declaration := `LeanInformationAuditRegTests.NodeFacts.dataValue, part := .value, path := [] }
 
+def canonicalData : Nat := 7
+def aliasData : Nat := dataValue
+def canonicalDataUse : Nat := canonicalData
+
+def notationData : NodeFact := compiled_fact% "data"
+  "{\"declaration\":[\"LeanInformationAuditRegTests\",\"NodeFacts\",\"dataValue\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+def notationType : NodeFact := compiled_fact% "type"
+  "{\"declaration\":[\"LeanInformationAuditRegTests\",\"NodeFacts\",\"carrier\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+def notationProof : NodeFact := compiled_fact% "proof"
+  "{\"declaration\":[\"LeanInformationAuditRegTests\",\"NodeFacts\",\"keepsProof\"],\"part\":\"value\",\"path\":[\"body\",\"body\"],\"levels\":[]}"
+def notationExact : NodeFact := compiled_exact%
+  "{\"declaration\":[\"LeanInformationAuditRegTests\",\"NodeFacts\",\"aliasData\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+  "{\"declaration\":[\"LeanInformationAuditRegTests\",\"NodeFacts\",\"canonicalDataUse\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+def notationImportedType : NodeFact := compiled_fact% "type"
+  "{\"declaration\":[\"Bool\"],\"part\":\"type\",\"path\":[],\"levels\":[]}"
+
+def _root_.CompiledAddressOwnerMismatch.value : Nat := 7
+def notationDifferentNamespace : NodeFact := compiled_fact% "data"
+  "{\"declaration\":[\"CompiledAddressOwnerMismatch\",\"value\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+/-- error: compiled_fact:role -/
+#guard_msgs in
+example : NodeFact := compiled_fact% "relation"
+  "{\"declaration\":[\"Bool\"],\"part\":\"type\",\"path\":[],\"levels\":[]}"
+
+def canonicalEndpoint : NodeFact := .exact dataValue canonicalData
+  { owner := `LeanInformationAuditRegTests.NodeFacts,
+    declaration := `LeanInformationAuditRegTests.NodeFacts.aliasData, part := .value, path := [] }
+  { owner := `LeanInformationAuditRegTests.NodeFacts,
+    declaration := `LeanInformationAuditRegTests.NodeFacts.canonicalDataUse, part := .value, path := [] }
+  .evidence
+
+def computedEndpoint : NodeFact := .exact dataValue 7
+  { owner := `LeanInformationAuditRegTests.NodeFacts,
+    declaration := `LeanInformationAuditRegTests.NodeFacts.aliasData, part := .value, path := [] }
+  { owner := `LeanInformationAuditRegTests.NodeFacts,
+    declaration := `LeanInformationAuditRegTests.NodeFacts.dataValue, part := .value, path := [] }
+  .evidence
+
+def conflictingEndpoint : NodeFact := .exact dataValue dataValue
+  { owner := `LeanInformationAuditRegTests.NodeFacts,
+    declaration := `LeanInformationAuditRegTests.NodeFacts.aliasData, part := .value, path := [] }
+  { owner := `LeanInformationAuditRegTests.NodeFacts,
+    declaration := `LeanInformationAuditRegTests.NodeFacts.aliasData, part := .value, path := [] }
+  .evidence
+
 def twoValues : Fin 2 → Nat := fun i => i.val
 def tableEvidence : FiniteTable twoValues where
   entries := [
@@ -110,6 +159,9 @@ def discardedCoverage : NodeCoverage where
   facts := []
 
 theorem genericIdentity.{u} {T : Sort u} (x : T) : x = x := rfl
+
+def notationRawUniverse.{u} : NodeFact := compiled_fact% "type"
+  "{\"declaration\":[\"LeanInformationAuditRegTests\",\"NodeFacts\",\"genericIdentity\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"max\",[\"param\",[\"u\"]],[\"zero\"]]]}"
 
 def genericRoot : RootCatalog := { data := {
   rootId := `LeanInformationAuditRegTests.NodeFacts
@@ -154,6 +206,34 @@ unsafe def check : IO Unit := do
   | .sort (.imax .zero .zero) => pure ()
   | _ => throw <| IO.userError "universe_simplification"
   IO.println "[PASS] universe substitution preserves constructors"
+  for (ordinary, abbreviated) in #[
+      (`LeanInformationAuditRegTests.NodeFacts.dataFact,
+        `LeanInformationAuditRegTests.NodeFacts.notationData),
+      (`LeanInformationAuditRegTests.NodeFacts.typeFact,
+        `LeanInformationAuditRegTests.NodeFacts.notationType),
+      (`LeanInformationAuditRegTests.NodeFacts.proofBoundary,
+        `LeanInformationAuditRegTests.NodeFacts.notationProof),
+      (`LeanInformationAuditRegTests.NodeFacts.canonicalEndpoint,
+        `LeanInformationAuditRegTests.NodeFacts.notationExact)] do
+    let some ordinaryInfo := view.find ordinary | throw <| IO.userError "notation.ordinary_missing"
+    let some abbreviatedInfo := view.find abbreviated | throw <| IO.userError "notation.abbreviated_missing"
+    unless ordinaryInfo.type.equal abbreviatedInfo.type &&
+        ordinaryInfo.value?.get!.equal abbreviatedInfo.value?.get! do
+      throw <| IO.userError s!"notation.compiled_value:{abbreviated}"
+    discard <| accept s!"notation constructor and address {abbreviated}" <|
+      Contract.NodeFacts.fact view abbreviated
+  for name in #[`LeanInformationAuditRegTests.NodeFacts.notationImportedType,
+      `LeanInformationAuditRegTests.NodeFacts.notationDifferentNamespace] do
+    let bound ← accept s!"notation actual module owner {name}" <| Contract.NodeFacts.fact view name
+    unless bound.size == 1 && view.owner bound[0]!.location.declaration == some bound[0]!.location.owner do
+      throw <| IO.userError s!"notation.owner:{name}"
+  let universeBound ← accept "notation preserves raw universe constructors" <|
+    Contract.NodeFacts.fact view `LeanInformationAuditRegTests.NodeFacts.notationRawUniverse
+  unless universeBound.size == 1 do throw <| IO.userError "notation.universe_operand"
+  match universeBound[0]!.location.levels with
+  | [.max (.param parameter) .zero] =>
+    unless parameter == `u do throw <| IO.userError "notation.universe_parameter"
+  | _ => throw <| IO.userError "notation.universe_constructors"
   let facts := #[
     `Reg.Support.DependentFamily.bodyFact,
     `Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain.bridgeFact,
@@ -164,6 +244,9 @@ unsafe def check : IO Unit := do
     `LeanInformationAuditRegTests.NodeFacts.propositionBridge,
     `LeanInformationAuditRegTests.NodeFacts.typeFact,
     `LeanInformationAuditRegTests.NodeFacts.dataFact,
+    `LeanInformationAuditRegTests.NodeFacts.canonicalEndpoint,
+    `LeanInformationAuditRegTests.NodeFacts.computedEndpoint,
+    `LeanInformationAuditRegTests.NodeFacts.conflictingEndpoint,
     `LeanInformationAuditRegTests.NodeFacts.exactTypeFact,
     `LeanInformationAuditRegTests.NodeFacts.exactOtherTypeFact]
   let closure ← IO.mkRef ({} : LeanInformationAudit.CompiledAxioms.AxiomClosureState)
@@ -172,8 +255,56 @@ unsafe def check : IO Unit := do
     unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
       throw <| IO.userError s!"fact.axioms:{name}"
     let _ ← accept s!"compiled fact {name}" (Contract.NodeFacts.fact view name)
+  let canonical ← IO.ofExcept <| Contract.NodeFacts.fact view
+    `LeanInformationAuditRegTests.NodeFacts.canonicalEndpoint
+  let computed ← IO.ofExcept <| Contract.NodeFacts.fact view
+    `LeanInformationAuditRegTests.NodeFacts.computedEndpoint
+  let selected ← accept "named canonical endpoint ignores computed endpoint" <|
+    resolveCanonicalArena view.find (canonical ++ computed)
+      (mkConst `LeanInformationAuditRegTests.NodeFacts.dataValue)
+  unless selected.isConstOf `LeanInformationAuditRegTests.NodeFacts.canonicalData do
+    throw <| IO.userError "canonical.endpoint"
+  reject "missing named canonical endpoint" "contract.node_binding:arena.canonical_fact_missing" <|
+    resolveCanonicalArena view.find computed (mkConst `LeanInformationAuditRegTests.NodeFacts.dataValue)
+  let conflicting ← IO.ofExcept <| Contract.NodeFacts.fact view
+    `LeanInformationAuditRegTests.NodeFacts.conflictingEndpoint
+  reject "conflicting named canonical endpoints" "contract.node_binding:arena.canonical_fact_ambiguous" <|
+    resolveCanonicalArena view.find (canonical ++ conflicting)
+      (mkConst `LeanInformationAuditRegTests.NodeFacts.dataValue)
   let _ ← accept "positive conversion apartness" <| Contract.NodeFacts.inductiveApart view
     `LeanInformationAuditRegTests.NodeFacts.exactTypeFact `LeanInformationAuditRegTests.NodeFacts.exactOtherTypeFact
+  let compiledView := RegistrationGates.CompiledView.fromArtifacts store
+    `LeanInformationAuditRegTests.NodeFacts
+  let checkApart := fun (label : String) (facts : Array Contract.NodeFacts.BoundOperand)
+      (left right : Expr) (expected : Bool) => do
+    let session ← IO.mkRef ({} : RegistrationGates.ProvenanceSession)
+    let heartbeatStart ← IO.getNumHeartbeats
+    let context : RegistrationGates.QueryContext := {
+      view := compiledView, session, nodeFacts := facts,
+      heartbeatStart, heartbeatLimit := RegistrationGates.provenanceDefEqHeartbeats }
+    let (result, _) ← ((RegistrationGates.checkedStatementType compiledView left).run {
+      theoremName := `LeanInformationAuditRegTests.NodeFacts,
+      statement := right, decision := mkSort .zero, exprFuel := 100 }).run context
+    unless result.isSome == expected do throw <| IO.userError s!"{label}:apartness_authority"
+    if let some result := result then
+      unless result.rule == .statementHeadApart do throw <| IO.userError s!"{label}:apartness_rule"
+    IO.println s!"[PASS] {label}"
+  checkApart "raw rigid heads have no apartness authority" #[]
+    (mkConst ``Nat) (mkConst ``Bool) false
+  let exactLeft ← IO.ofExcept <| Contract.NodeFacts.fact view
+    `LeanInformationAuditRegTests.NodeFacts.exactTypeFact
+  let exactRight ← IO.ofExcept <| Contract.NodeFacts.fact view
+    `LeanInformationAuditRegTests.NodeFacts.exactOtherTypeFact
+  checkApart "one exact endpoint has no apartness authority" exactLeft
+    (mkConst `LeanInformationAuditRegTests.NodeFacts.carrier)
+    (mkConst `LeanInformationAuditRegTests.NodeFacts.otherCarrier) false
+  checkApart "two exact rigid endpoints certify apartness" (exactLeft ++ exactRight)
+    (mkConst `LeanInformationAuditRegTests.NodeFacts.carrier)
+    (mkConst `LeanInformationAuditRegTests.NodeFacts.otherCarrier) true
+  let mathematicalBridge ← IO.ofExcept <| Contract.NodeFacts.fact view
+    `LeanInformationAuditRegTests.NodeFacts.propositionBridge
+  checkApart "mathematical Iff has no conversion apartness authority" mathematicalBridge
+    (mkConst ``True) (mkApp (mkConst ``Not) (mkConst ``False)) false
   reject "absent definitional evidence" "contract.node_binding:exact_evidence_required"
     (Contract.NodeFacts.fact view `LeanInformationAuditRegTests.NodeFacts.unknownExact)
   let _ ← accept "statement exclusion" <| Contract.NodeFacts.exclusion view
@@ -197,7 +328,7 @@ unsafe def check : IO Unit := do
     `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.exclusion,
     `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.finiteLiftFacts,
     `Reg.D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation.refutation,
-    `Reg.Catalogs.IffRegistrations.SealedCatalog.LiteralEvidence.facts]
+    `Reg.Catalogs.IffRegistrations.SealedCatalog.facts_0]
   for name in allEvidence do
     let axioms ← LeanInformationAudit.CompiledAxioms.collectAxiomsShared view.find closure name
     unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
@@ -224,11 +355,11 @@ unsafe def check : IO Unit := do
     `LeanInformationAuditRegTests.NodeFacts.genericRoot
   unless genericRootCount == 1 do throw <| IO.userError "root.generic_count"
   let sealReadout ← accept "literal seal" <| Contract.NodeFacts.sealFacts view
-    `Reg.Catalogs.IffRegistrations.SealedCatalog.LiteralEvidence.facts {
+    (mkConst `Reg.Catalogs.IffRegistrations.SealedCatalog.facts_0) {
       owner := `Reg.Catalogs.IffRegistrations.SealedCatalog
-      declaration := `Reg.Catalogs.IffRegistrations.SealedCatalog.seal
+      declaration := `Reg.Catalogs.IffRegistrations.SealedCatalog.view_0
       part := .value
-      path := [.function, .argument, .argument, .function, .argument] }
+      path := [.function, .argument] }
   unless sealReadout.units == 1 && sealReadout.rows.size == 1 && sealReadout.rows[0]!.1 == 8 &&
       sealReadout.rows[0]!.2.1 == 12 && sealReadout.rows[0]!.2.2.1 == #[0,0,0,0,0,0,0,8,0,0,0,0,0,0,0] &&
       sealReadout.rows[0]!.2.2.2.1 == #[0,1,1,0] && sealReadout.rows[0]!.2.2.2.2.size == 2 do

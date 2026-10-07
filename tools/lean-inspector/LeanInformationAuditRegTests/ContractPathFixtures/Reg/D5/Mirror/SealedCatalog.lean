@@ -39,6 +39,18 @@ noncomputable def source0 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_r
       booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `maxRecDepth, value := .nat 100000 }] }
+  options := #[{ name := `maxRecDepth, value := .nat 100000 }],
+  coverage := { roots := [
+    { owner := `D5.S0.Tower.GoldenGapZeckendorf, declaration := `D5.S0.Tower.GoldenGapZeckendorf.wdigits_fib_add, part := .type,
+      path := [] },
+    { owner := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCatalog, declaration := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCatalog.source0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument] },
+    { owner := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCatalog, declaration := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCatalog.source0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument] },
+    { owner := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCatalog, declaration := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCatalog.source0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument] },
+    { owner := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCatalog, declaration := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCatalog.source0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 end LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCatalog

@@ -14,18 +14,6 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
     RawArtifacts.loadModule root reader
     RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
     let store ← reader.get
-    let context := CompiledRegistration.expressionContext (store.constants[·]?) (← IO.getNumHeartbeats) {}
-    let transport (left right : Expr) : Expr := mkAppN (mkConst ``Eq.rec [1, 1]) #[
-      mkSort 1, left, mkLambda `type .default (mkSort 1)
-        (mkLambda `proof .default (mkApp3 (mkConst ``Eq [1]) (mkSort 1) left (.bvar 0))
-          (mkConst ``Nat)), mkNatLit 7, right,
-      TemplateAudit.proofPlaceholder (mkApp3 (mkConst ``Eq [1]) (mkSort 1) left right)]
-    let (same, _) ← Contract.CompiledExpressions.run context
-      (Contract.CompiledExpressions.head (transport (mkConst ``Nat) (mkConst ``Nat)))
-    let (different, _) ← Contract.CompiledExpressions.run context
-      (Contract.CompiledExpressions.head (transport (mkConst ``Nat) (mkConst ``Bool)))
-    unless (Contract.Literal.nat "transport" same) == .ok 7 && different.isAppOf ``Eq.rec do
-      throw <| IO.userError "compiled.transport:invalid_endpoint_behavior"
     let (state, seals) ← ArtifactAssessment.assess store root
     unless seals.size == 1 && seals.all (fun sealRecord =>
         sealRecord.compiledEvidence && sealRecord.stateCard == 4 &&

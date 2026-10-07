@@ -36,7 +36,19 @@ noncomputable def source0 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_r
     definition := none, coordinates := #[], readouts := #[] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `maxRecDepth, value := .nat 100000 }] }
+  options := #[{ name := `maxRecDepth, value := .nat 100000 }],
+  coverage := { roots := [
+    { owner := `D5.S0.Tower.GoldenGapZeckendorf, declaration := `D5.S0.Tower.GoldenGapZeckendorf.wdigits_fib_add, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 noncomputable def source1.{u_1} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality.depth_budget_iid_greedy_optimality.{u_1}) (DependentFamily.Realization _root_.Reg.D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality.arena.{u_1}.signature) Unit Unit := {
   unitName := `ContractTests.source1.unit,
@@ -62,7 +74,19 @@ noncomputable def source1.{u_1} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0
     definition := none, coordinates := #[], readouts := #[] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `maxRecDepth, value := .nat 100000 }] }
+  options := #[{ name := `maxRecDepth, value := .nat 100000 }],
+  coverage := { roots := [
+    { owner := `D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality, declaration := `D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality.depth_budget_iid_greedy_optimality, part := .type,
+      path := [], levels := [.param `u_1] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source1, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source1, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source1, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source1, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 noncomputable def source2.{u_1, u_2} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S0.History.FinitePrefixAntichainBudget.result.{u_1, u_2}) (DependentFamily.Realization _root_.Reg.D5.S0.History.FinitePrefixAntichainBudget.arena.{u_1, u_2}.signature) Unit Unit := {
   unitName := `ContractTests.source2.unit,
@@ -88,7 +112,19 @@ noncomputable def source2.{u_1, u_2} : Contract.Registration.{_,_,_,0,0,0,_,_,_,
     definition := none, coordinates := #[], readouts := #[] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `maxRecDepth, value := .nat 100000 }] }
+  options := #[{ name := `maxRecDepth, value := .nat 100000 }],
+  coverage := { roots := [
+    { owner := `D5.S0.History.FinitePrefixAntichainBudget, declaration := `D5.S0.History.FinitePrefixAntichainBudget.result, part := .type,
+      path := [], levels := [.param `u_1, .param `u_2] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source2, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source2, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source2, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source2, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 noncomputable def source3.{u, v, w} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S0.Automata.BoundedStateSampleCompactness.bounded_state_sample_compactness.{u, v, w}) (DependentFamily.Realization _root_.Reg.D5.S0.Automata.BoundedStateSampleCompactness.arena.{u, v, w}.signature) Unit Unit := {
   unitName := `ContractTests.source3.unit,
@@ -114,7 +150,19 @@ noncomputable def source3.{u, v, w} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_
     definition := none, coordinates := #[], readouts := #[] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `maxRecDepth, value := .nat 100000 }] }
+  options := #[{ name := `maxRecDepth, value := .nat 100000 }],
+  coverage := { roots := [
+    { owner := `D5.S0.Automata.BoundedStateSampleCompactness, declaration := `D5.S0.Automata.BoundedStateSampleCompactness.bounded_state_sample_compactness, part := .type,
+      path := [], levels := [.param `u, .param `v, .param `w] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source3, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v, .param `w] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source3, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v, .param `w] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source3, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v, .param `w] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source3, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u, .param `v, .param `w] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 noncomputable def source4.{u_1, u_2, u_3, u_4} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.period_classification.{u_1, u_2, u_3, u_4}) (DependentFamily.Realization _root_.Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.arena.{u_1, u_2, u_3, u_4}.signature) Unit Unit := {
   unitName := `ContractTests.source4.unit,
@@ -140,14 +188,45 @@ noncomputable def source4.{u_1, u_2, u_3, u_4} : Contract.Registration.{_,_,_,0,
     definition := none, coordinates := #[], readouts := #[] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `maxRecDepth, value := .nat 100000 }] }
+  options := #[{ name := `maxRecDepth, value := .nat 100000 }],
+  coverage := { roots := [
+    { owner := `D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification, declaration := `D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification.period_classification, part := .type,
+      path := [], levels := [.param `u_1, .param `u_2, .param `u_3, .param `u_4] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source4, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3, .param `u_4] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source4, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3, .param `u_4] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source4, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3, .param `u_4] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.source4, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_3, .param `u_4] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 def enrollment.{t, s, r, o, a} :
     Contract.TemplateEnrollment.{_, 0} (@DependentFamily.realize.{t, s, r, o, a}) := {
   name := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize
   version := 1
   constructors := #[]
-  options := #[] }
+  options := #[]
+  bodyFact := `LeanInformationAuditRegTests.ContractFixtures.enrollmentBodyFact
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily,
+      declaration := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize,
+      part := .type, path := [], levels := [.param `t, .param `s, .param `r, .param `o, .param `a] },
+    { owner := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily,
+      declaration := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize,
+      part := .value, path := [], levels := [.param `t, .param `s, .param `r, .param `o, .param `a] }], facts := [] } }
+
+def enrollmentBodyFact.{t, s, r, o, a} : Contract.NodeFact :=
+  .equal (@DependentFamily.realize.{t, s, r, o, a})
+    (fun S readout anchor => ⟨readout, anchor⟩)
+    { owner := `LeanInformationAuditRegTests.ContractFixtures,
+      declaration := `LeanInformationAuditRegTests.ContractFixtures.enrollment,
+      part := .type, path := [.argument], levels := [.param `t, .param `s, .param `r, .param `o, .param `a] }
+    { owner := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily,
+      declaration := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize,
+      part := .value, path := [], levels := [.param `t, .param `s, .param `r, .param `o, .param `a] }
+    rfl
 
 open IffRegistrations IffRegistrationTemplates
 local instance : DecidableEq openCodeArena.State := openCodeArena.stateDecidableEq
@@ -175,7 +254,19 @@ def localLegacy : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.ConceptD
   continuation := .absent,
   familyRecord := none,
   options := #[{ name := `maxHeartbeats, value := .nat 2000000 },
-    { name := `pp.unicode.fun, value := .bool true }] }
+    { name := `pp.unicode.fun, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling, declaration := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.localLegacy, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.localLegacy, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.localLegacy, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.localLegacy, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 def generatedLegacy : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled (PrimitiveRealization openCodeArena.signature) (Type) True := {
   unitName := `ContractTests.generatedLegacy.unit,
@@ -200,7 +291,19 @@ def generatedLegacy : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.Conc
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `maxHeartbeats, value := .nat 2000000 },
-    { name := `pp.unicode.fun, value := .bool true }] }
+    { name := `pp.unicode.fun, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling, declaration := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.generatedLegacy, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.generatedLegacy, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.generatedLegacy, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.generatedLegacy, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 def generatedContinuing : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled (PrimitiveRealization openCodeArena.signature) (Type) True := {
   unitName := `ContractTests.generatedContinuing.unit,
@@ -225,7 +328,19 @@ def generatedContinuing : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.
   continuation := .evidence ⟨True.intro⟩,
   familyRecord := none,
   options := #[{ name := `maxHeartbeats, value := .nat 2000000 },
-    { name := `pp.unicode.fun, value := .bool true }] }
+    { name := `pp.unicode.fun, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling, declaration := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.generatedContinuing, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.generatedContinuing, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.generatedContinuing, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.generatedContinuing, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 def localFromObject : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled (PrimitiveRealization openCodeArena.signature) (Type) True := {
   unitName := `ContractTests.localFromObject.unit,
@@ -250,7 +365,19 @@ def localFromObject : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.Conc
   continuation := .absent,
   familyRecord := none,
   options := #[{ name := `maxHeartbeats, value := .nat 2000000 },
-    { name := `pp.unicode.fun, value := .bool true }] }
+    { name := `pp.unicode.fun, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling, declaration := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.localFromObject, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.localFromObject, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.localFromObject, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.localFromObject, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 def generatedLocal : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled (PrimitiveRealization openCodeArena.signature) (Type) True := {
   unitName := `ContractTests.generatedLocal.unit,
@@ -275,7 +402,19 @@ def generatedLocal : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.Conce
   continuation := .absent,
   familyRecord := none,
   options := #[{ name := `maxHeartbeats, value := .nat 2000000 },
-    { name := `pp.unicode.fun, value := .bool true }] }
+    { name := `pp.unicode.fun, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling, declaration := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.generatedLocal, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.generatedLocal, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.generatedLocal, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.generatedLocal, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 def continuingLegacy : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled (PrimitiveRealization openCodeArena.signature) (Type) True := {
   unitName := `ContractTests.continuingLegacy.unit,
@@ -300,7 +439,19 @@ def continuingLegacy : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.Con
   continuation := .evidence ⟨True.intro⟩,
   familyRecord := none,
   options := #[{ name := `maxHeartbeats, value := .nat 2000000 },
-    { name := `pp.unicode.fun, value := .bool true }] }
+    { name := `pp.unicode.fun, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling, declaration := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.continuingLegacy, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.continuingLegacy, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.continuingLegacy, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.continuingLegacy, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 open D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause
 open D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause
@@ -336,7 +487,19 @@ def finiteSource : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} end_state_omi
       stateOperand := some #["fn", "fn", "arg"], booleanPredicate := true }] },
   continuation := .unknown,
   familyRecord := some ⟨_, ⟨_root_.Reg.Support.LegacyRelations.Preemption.registration⟩⟩,
-  options := #[] }
+  options := #[],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause, declaration := `D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.finiteSource, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.finiteSource, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.finiteSource, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.finiteSource, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 def root : Contract.RootCatalog := {
   data := {
@@ -385,7 +548,19 @@ def missingVariation : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.Con
   continuation := .absent,
   familyRecord := none,
   options := #[{ name := `maxHeartbeats, value := .nat 2000000 },
-    { name := `pp.unicode.fun, value := .bool true }] }
+    { name := `pp.unicode.fun, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling, declaration := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.missingVariation, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.missingVariation, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.missingVariation, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.missingVariation, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 def unknownVariation : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled (PrimitiveRealization openCodeArena.signature) (Type) True := {
   unitName := `ContractTests.unknownVariation.unit,
@@ -410,7 +585,19 @@ def unknownVariation : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.Con
   continuation := .absent,
   familyRecord := none,
   options := #[{ name := `maxHeartbeats, value := .nat 2000000 },
-    { name := `pp.unicode.fun, value := .bool true }] }
+    { name := `pp.unicode.fun, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling, declaration := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.unknownVariation, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.unknownVariation, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.unknownVariation, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.unknownVariation, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 def unsupportedVariation : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled (PrimitiveRealization openCodeArena.signature) (Type) True := {
   unitName := `ContractTests.unsupportedVariation.unit,
@@ -435,7 +622,19 @@ def unsupportedVariation : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3
   continuation := .absent,
   familyRecord := none,
   options := #[{ name := `maxHeartbeats, value := .nat 2000000 },
-    { name := `pp.unicode.fun, value := .bool true }] }
+    { name := `pp.unicode.fun, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling, declaration := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.unsupportedVariation, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.unsupportedVariation, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.unsupportedVariation, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.unsupportedVariation, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 def partialSensitivity : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled (PrimitiveRealization openCodeArena.signature) (Type) True := {
   unitName := `ContractTests.partialSensitivity.unit,
@@ -455,15 +654,34 @@ def partialSensitivity : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} D5.S3.C
   variation := .evidence ⟨open_lawSensitive⟩ (by first | exact open_lawSensitive | exact ⟨_, _, open_lawSensitive⟩),
   sensitivity := .unsupported `D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.open_lawSensitive,
   partialSensitivity := some {
-    readouts := fun i => match (i.down : Bool) with
-      | true => .evidence ⟨open_slotSensitive⟩ (open_slotSensitive.1 i.down)
-      | false => .absent,
-    anchors := fun i => nomatch i.down },
+    readouts := [
+      ⟨⟨true⟩, .evidence ⟨open_slotSensitive⟩ (open_slotSensitive.1 true)⟩,
+      ⟨⟨false⟩, .absent⟩],
+    readoutsNodup := by simp,
+    readoutsComplete := by
+      intro i
+      rcases i with ⟨i⟩
+      cases i <;> simp,
+    anchors := [],
+    anchorsNodup := by simp,
+    anchorsComplete := by intro i; exact Fin.elim0 i.down },
   escapeFrom := none,
   sourceSelection := none,
   continuation := .absent,
   familyRecord := none,
   options := #[{ name := `maxHeartbeats, value := .nat 2000000 },
-    { name := `pp.unicode.fun, value := .bool true }] }
+    { name := `pp.unicode.fun, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling, declaration := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.partialSensitivity, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.partialSensitivity, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.partialSensitivity, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractFixtures, declaration := `LeanInformationAuditRegTests.ContractFixtures.partialSensitivity, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 end LeanInformationAuditRegTests.ContractFixtures

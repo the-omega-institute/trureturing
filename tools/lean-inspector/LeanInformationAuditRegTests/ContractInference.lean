@@ -36,7 +36,19 @@ noncomputable def explicit0 : Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0} (@
     definition := none, coordinates := #[], readouts := #[] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `maxRecDepth, value := .nat 100000 }] }
+  options := #[{ name := `maxRecDepth, value := .nat 100000 }],
+  coverage := { roots := [
+    { owner := `D5.S0.Tower.GoldenGapZeckendorf, declaration := `D5.S0.Tower.GoldenGapZeckendorf.wdigits_fib_add, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.explicit0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.explicit0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.explicit0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.explicit0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 noncomputable def inferred0 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S0.Tower.GoldenGapZeckendorf.wdigits_fib_add) (DependentFamily.Realization _root_.Reg.D5.S0.Tower.GoldenGapZeckendorf.arena.signature) Unit Unit := {
   unitName := `ContractTests.source0.unit,
@@ -62,7 +74,19 @@ noncomputable def inferred0 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@
     definition := none, coordinates := #[], readouts := #[] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `maxRecDepth, value := .nat 100000 }] }
+  options := #[{ name := `maxRecDepth, value := .nat 100000 }],
+  coverage := { roots := [
+    { owner := `D5.S0.Tower.GoldenGapZeckendorf, declaration := `D5.S0.Tower.GoldenGapZeckendorf.wdigits_fib_add, part := .type,
+      path := [], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.inferred0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.inferred0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.inferred0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.inferred0, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 noncomputable def explicit1.{u_1} : Contract.Registration.{u_1+1,0,1,0,0,0,u_1+1,u_1,0,0,0,0} (@_root_.D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality.depth_budget_iid_greedy_optimality.{u_1}) (DependentFamily.Realization _root_.Reg.D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality.arena.{u_1}.signature) Unit Unit := {
   unitName := `ContractTests.source1.unit,
@@ -88,7 +112,19 @@ noncomputable def explicit1.{u_1} : Contract.Registration.{u_1+1,0,1,0,0,0,u_1+1
     definition := none, coordinates := #[], readouts := #[] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `maxRecDepth, value := .nat 100000 }] }
+  options := #[{ name := `maxRecDepth, value := .nat 100000 }],
+  coverage := { roots := [
+    { owner := `D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality, declaration := `D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality.depth_budget_iid_greedy_optimality, part := .type,
+      path := [], levels := [.param `u_1] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.explicit1, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.explicit1, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.explicit1, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.explicit1, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 noncomputable def inferred1.{u_1} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality.depth_budget_iid_greedy_optimality.{u_1}) (DependentFamily.Realization _root_.Reg.D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality.arena.{u_1}.signature) Unit Unit := {
   unitName := `ContractTests.source1.unit,
@@ -114,7 +150,19 @@ noncomputable def inferred1.{u_1} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_
     definition := none, coordinates := #[], readouts := #[] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `maxRecDepth, value := .nat 100000 }] }
+  options := #[{ name := `maxRecDepth, value := .nat 100000 }],
+  coverage := { roots := [
+    { owner := `D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality, declaration := `D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality.depth_budget_iid_greedy_optimality, part := .type,
+      path := [], levels := [.param `u_1] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.inferred1, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.inferred1, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.inferred1, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `LeanInformationAuditRegTests.ContractInference, declaration := `LeanInformationAuditRegTests.ContractInference.inferred1, part := .value,
+      path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [] },
+  exclusion := none, finiteLift := none, roleEnumeration := none, anchorEnumeration := none }
 
 open Lean Meta Elab Command
 open LeanInformationAuditRegTests.ContractGuards

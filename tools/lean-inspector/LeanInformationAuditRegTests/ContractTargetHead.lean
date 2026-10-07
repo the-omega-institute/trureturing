@@ -7,10 +7,11 @@ open LeanInformationAuditRegTests.ContractGuards
 
 run_meta do
   let owner := `LeanInformationAuditRegTests.ContractFixtures
-  let context : CompiledExpressions.Context := {
+  let environment ← getEnv
+  let context : Literal.Context := {
     find := (← getEnv).find?
-    heartbeatStart := ← getInitHeartbeats
-    heartbeatLimit := ← getMaxHeartbeats }
+    owner := fun n => environment.getModuleIdxFor? n |>.map (fun i => environment.header.moduleNames[i.toNat]!)
+    external := fun _ => false }
   for index in [0, 1] do
     let .defnInfo info ← getConstInfo (owner.str s!"source{index}")
       | throwError "setup:registration_definition"
