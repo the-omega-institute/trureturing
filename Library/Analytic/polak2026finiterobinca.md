@@ -1006,3 +1006,183 @@ Hence (Z7) supplies no unbounded signed estimate or RH proof. The
 separate divisor-order decomposition of the same integral is not
 added to this spectral allowance; each representation keeps its own
 complete remainder.
+
+## An explicit real-part density allowance for the complete high tail
+
+Keep the conditionally selected least integer $N>5040$ attaining the
+global maximum of the Robin ratio, its clock $A=\log N$, $L=\log A$,
+and $T_A=\sqrt A L$. This application uses an existing explicit
+zero-density estimate to sharpen the entire high-zero allowance at that
+same source. It is a paper application, not a new density theorem,
+zero verification, all-integer finite Robin theorem or Lean result.
+The original unbounded signed target remains unchanged.
+
+### The existing density input at one tabulated real part
+
+[Johnston–Yang, arXiv:2204.01980v2](https://arxiv.org/pdf/2204.01980v2),
+Lemma 2.6, equation (2.2), printed p.5, and Appendix B, Table 3,
+printed p.20, give at $\sigma_*=0.98=49/50$
+
+$$
+N(\sigma_*,t)
+\le16.281\,t^{4/75}(\log t)^{76/25}
+ +2.231(\log t)^2.
+\tag{D1}
+$$
+
+Here $N(\sigma,t)$ counts actual zeros with $\sigma<\Re\rho<1$
+and $0<\Im\rho<t$, with multiplicity. This is a count in real part,
+not the total ordinate count. Use only this tabulated row; no
+interpolation or constants at unlisted real parts are assumed.
+The versioned PDF and SHA-256 are identified in the
+[existing supplier note](../Weil/johnstonyang2022pnt.md).
+
+The paragraph before Lemma 2.6 explicitly replaces the unreliable
+critical-line bound used in the older Kadiri–Lumley–Ng calculation and
+recomputes the constants. The older constants are not substituted.
+Table 3 uses the verified height $H_1=3000175332800$, already cited
+above. Keep the weaker cut $H=3\cdot10^{12}$. For $H\le t\le H_1$
+the count in (D1) is zero by that same finite-height input; above $H_1$
+the density estimate supplies the bound. Its external analytic proof
+and table calculation are cited, not independently rerun here.
+
+Since $t\ge H>e$, the outward bounds $16.281<17$, $2.231<3$,
+$4/75<1/10$ and $76/25<4$ give the convenient allowance
+
+$$
+N(\sigma_*,t)<20t^{1/10}(\log t)^4\qquad(t\ge H).
+\tag{D2}
+$$
+
+### Pay every zero far from the critical line
+
+Partition the actual positive-ordinate high zeros into two disjoint,
+reflection-invariant sets:
+
+$$
+\mathcal Z_{\rm bulk}=\{\rho:\Im\rho>H,\ 1/50\le\Re\rho\le49/50\},
+\qquad
+\mathcal Z_{\rm far}=\{\rho:\Im\rho>H,\
+\Re\rho<1/50\text{ or }\Re\rho>49/50\}.
+$$
+
+Reflection $\rho\mapsto1-\overline\rho$ preserves ordinate and
+multiplicity. Thus the far set has twice the right-hand count in
+(D1). For $S_j^{\rm far}=\sum_{\rho\in\mathcal Z_{\rm far}}(\Im\rho)^{-j}$,
+Tonelli applied to the positive counting sum gives
+
+$$
+S_2^{\rm far}
+=4\int_H^\infty\frac{N(\sigma_*,t)}{t^3}\,dt
+<80\int_H^\infty t^{-29/10}(\log t)^4\,dt.
+\tag{D3}
+$$
+
+There are no far zeros at or below $H$, so no starting-endpoint term
+is lost. The integral includes the complete infinite height range.
+Put $h=\log H$ and $a=19/10>1$. The elementary integral equals
+
+$$
+H^{-19/10}
+\left(\frac{h^4}{a}+\frac{4h^3}{a^2}+\frac{12h^2}{a^3}
+ +\frac{24h}{a^4}+\frac{24}{a^5}\right).
+$$
+
+The existing scalar bounds $e^{25}>6\cdot10^{10}$ and $e>8/3$
+give $e^{30}>H$, hence $h<30$. The bracket is therefore less than
+$30^4+4\cdot30^3+12\cdot30^2+24\cdot30+24=929544<10^6$.
+Also $H^{1/10}<20$, since $H<20^{10}$. Consequently
+
+$$
+S_2^{\rm far}<\frac{80\cdot10^6\cdot20}{H^2}
+<2\cdot10^{-16},\qquad
+S_3^{\rm far}\le S_2^{\rm far}/H<7\cdot10^{-29}.
+\tag{D4}
+$$
+
+These are symbolic outward comparisons of the published density bound,
+not a new zero count or numerical certificate.
+
+### Pay the remaining bulk at its own real-part range
+
+For every $A>1$, convexity and functional-equation pairing on the bulk
+give
+
+$$
+A^{\beta-1}+A^{-\beta}
+\le A^{-1/50}+A^{-49/50}=:B_*(A).
+$$
+
+Apply the same coefficient-preserving estimate as (F2) separately to
+the two reflection-invariant sets. Their complete high allowance obeys
+
+$$
+\begin{aligned}
+C_{\rm bulk}(A)&\le\sqrt A B_*(A)
+ \left[(1+1/L)S_2(H)+2(1/L+2/L^2)S_3(H)\right],\\
+C_{\rm far}(A)&\le\sqrt A(1+A^{-1})
+ \left[(1+1/L)S_2^{\rm far}+2(1/L+2/L^2)S_3^{\rm far}\right],\\
+C_{\rm high}(A)&\le C_{\rm bulk}(A)+C_{\rm far}(A).
+\end{aligned}
+\tag{D5}
+$$
+
+The bulk uses the larger total-ordinate envelopes (F3); the far set
+uses (D4). The underlying sets are disjoint, so no contribution is
+omitted or counted as an independently realized favorable extremum.
+Critical-line zeros above $H$, boundary real parts, conjugates and all
+multiplicities remain included. The low allowance is still (F1).
+
+### A stronger restriction on the same selected source
+
+For $3\cdot10^{23}<A\le10^{24}$, the earlier scalar bounds give
+$L>50$, $\sqrt A\le10^{12}$ and $1+A^{-1}<1.0001$. Also
+
+$$
+B_*(A)<e^{-1}+e^{-49}
+<\frac38+\frac1{6\cdot10^{10}}<\frac38(1.0001).
+$$
+
+Equations (F3), (D4) and (D5), with $1+1/L<1.02$ and
+$2(1/L+2/L^2)<0.05$, give the rational comparisons
+
+$$
+C_{\rm bulk}(A)
+<10^{12}\frac38(1.0001)
+ \left[1.02(1.48\cdot10^{-12})+0.05(5\cdot10^{-25})\right]<0.5662,
+$$
+
+$$
+C_{\rm far}(A)
+<10^{12}(1.0001)
+ \left[1.02(2\cdot10^{-16})+0.05(7\cdot10^{-29})\right]<0.000205.
+$$
+
+Reuse the same-source core $T_A D^*(A)>\mathcal E(L)>0.75$ and
+$C_{\rm low}(A)<0.054$ on $L\ge50$. The complete signed integral
+therefore pays the target, with the original exact margin identity:
+
+$$
+\boxed{T_A\Delta(N)>0.75-0.054-0.5662-0.000205
+=0.129595>0.129\quad(3\cdot10^{23}<A\le10^{24}).}
+\tag{D6}
+$$
+
+Together with the already paid lower range (Z8), this implies,
+conditional on the cited source reduction, core, density and
+finite-verification inputs, that a failure of RH must have its selected
+least global Robin maximizer at
+
+$$
+\boxed{\log N>10^{24}.}
+\tag{D7}
+$$
+
+This improves (Z8) at the same source. It is not a bound on the least
+Robin counterexample or verification for all integers below $e^{10^{24}}$.
+The verified height is unchanged. The gain comes from the existing
+real-part population bound, not from optimizing the earlier height
+handoff or assuming cancellation of the actual error.
+For fixed $H$ and this density row, the bulk allowance retains
+$A^{12/25}$ growth and the far allowance a $\sqrt A$ factor. Thus
+(D6) does not supply the original unbounded signed estimate or prove RH.
