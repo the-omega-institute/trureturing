@@ -3050,3 +3050,122 @@ The exact low head, the signed transformed middle and its integrated
 GSS prime and error contributions are still unpaid. This interface
 does not prove the full signed Robin estimate, a numerical threshold,
 a uniform strict margin or RH.
+
+## A norm floor for the local GSS absolute endpoint allowance
+
+The local inversion permits a sharper method diagnosis than the
+growing sufficient allowance displayed above. Retain exactly the
+kernel, height weight and cutoff in (LM1)–(LM5), on the same bands
+$S\le V<W\le\min(2V,T)$, with the same eventual
+conditions. Put $\tau_0=V\log2/2$, the fixed GSS splitting point.
+As in (R5)–(R7), distinguish a positive majorant allowance from the
+actual signed source error. The following is a paper-level application
+of the existing inverse, with no originality or Lean-verification claim.
+
+### The actual transform has an in-range weighted norm floor
+
+Use the analytic test point
+$r_*=c_{\rm loc}V-i/2$, with $c_{\rm loc}=3/2$.
+It is not an asserted zeta zero. Since $|\arg r_*|\le1/(3V)$,
+the absolute inverse from (LM3) gives
+
+$$
+\int_{\mathbb R}|M_V(\tau)|e^{|\tau|/(2V)}\,d\tau
+ \ge2\pi|r_*f_V(r_*)|\ge\frac{2\pi\sqrt A}{3V}.
+\tag{LM6}
+$$
+
+For the last inequality write $x=c_{\rm loc}V\ge1$.
+The Gaussian factor has modulus $e^{a_V/4}\ge1$ and
+$|e^{iLr_*}|=\sqrt A$. Moreover
+
+$$
+\frac{|r_*|}{|r_*^2+1/4|}
+ =\frac{\sqrt{x^2+1/4}}{x\sqrt{x^2+1}}
+ \ge\frac1{2x}=\frac1{3V}.
+$$
+
+This uses the chosen analytic kernel at a test point, without replacing
+any actual zero's real part.
+
+The floor cannot be assigned only to frequencies outside GSS's retained
+range. In the defining real-axis integral for $M_V$, split at $V/2$.
+On the lower part the Gaussian is at most $A^{-1}$; on the upper
+part $(u^2+1/4)^{-1}\le4/V^2$ and the complete real Gaussian
+integral is $\sqrt\pi V/\sqrt L$. Thus, for every real $\tau$,
+
+$$
+|M_V(\tau)|\le\frac\pi A+\frac{4\sqrt\pi}{V\sqrt L}.
+$$
+
+Consequently the weighted norm on $|\tau|\le\tau_0$ is at most
+$2\pi V/A+8\sqrt\pi/\sqrt L$. From (LM3), the entire weighted
+norm beyond $K_V=20VL$ is at most
+
+$$
+\int_{|\tau|>K_V}|M_V(\tau)|e^{|\tau|/(2V)}\,d\tau
+ \le8\pi V e^{6L-K_V/(2V)}=8\pi V A^{-4}.
+$$
+
+Subtract both parts from (LM6) to obtain
+
+$$
+\begin{aligned}
+\int_{\tau_0<|\tau|\le K_V}|M_V(\tau)|e^{|\tau|/(2V)}\,d\tau
+\ge{}&\frac{2\pi\sqrt A}{3V}-\frac{2\pi V}A
+ -\frac{8\sqrt\pi}{\sqrt L}-8\pi V A^{-4}\\
+\ge{}&\frac{\pi\sqrt A}{3V}
+\qquad\text{eventually, uniformly for }S\le V\le T.
+\end{aligned}
+\tag{LM7}
+$$
+
+Indeed $\sqrt A/V\ge A^{1/4}e^{\kappa\Omega}$ grows, whereas
+each subtracted bound vanishes uniformly. The source range and
+negative-frequency reflection are precisely those already retained
+in (LM4); no new source theorem or range calculation is required.
+
+### The defined endpoint budget cannot tend to zero
+
+GSS's high-frequency remainder includes the positive majorant shape
+$e^{\tau/(2V)}(\log V)^2$. Define the **unit-coefficient allowance**
+for its term-by-term absolute propagation through the weighted
+height endpoint by
+
+$$
+\mathcal B^{\rm GSS}_V(A)=\frac{1+1/L}{\pi}
+ h_V(W)(\log V)^2
+ \int_{\tau_0<|\tau|\le K_V}
+ |M_V(\tau)|e^{|\tau|/(2V)}\,d\tau.
+$$
+
+Since $h_V(W)\ge1/W\ge1/(2V)$, (LM7) gives
+
+$$
+\mathcal B^{\rm GSS}_V(A)
+ \ge\frac{\sqrt A(\log V)^2}{6V^2}
+ \ge\frac{L^2e^{2\kappa\Omega}}{294}
+ \longrightarrow\infty.
+\tag{LM8}
+$$
+
+Here $\log V\ge\log S\ge L/7$ and
+$V\le T=A^{1/4}e^{-\kappa\Omega}$.
+Multiplying the printed majorant shape by any fixed positive source
+coefficient multiplies this floor by that coefficient. No numerical
+value for it or effective starting threshold follows from big-$O$
+notation. No unbounded sequence of selected integer sources is
+asserted, nor a failure at a particular selected $A$.
+
+This is a lower bound for the explicitly defined allowance, not for
+the actual remainder, its integral, the total propagated error or a
+Robin violation. The second printed source-error shape, derivative
+terms and endpoint atoms retain their roles in (LM5).
+Because (LM8) uses the actual transform, merely sharpening its crude
+upper bound $e^{6L}$ cannot make this same absolute endpoint budget
+tend to zero. Joint cancellation, stronger source information,
+another kernel or a favorable bound for the combined main and exact
+low head could change the budget comparison; none is excluded or
+supplied here. The original full signed Robin condition and RH remain
+unproved, with all coefficients, real parts, multiplicities and
+height ranges unchanged.
