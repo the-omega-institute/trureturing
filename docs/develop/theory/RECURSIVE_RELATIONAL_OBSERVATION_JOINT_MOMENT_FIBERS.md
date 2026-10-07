@@ -2551,7 +2551,7 @@ $$
 证明。迭代 $\rho^n$ 在实际整个集合上给双射
 
 $$
-\{x:G(x)=L^{-n}g\}\ longrightarrow\
+\{x:G(x)=L^{-n}g\}\longrightarrow\
 \{y:G(y)=g,\ y\in I_n\}.
 $$
 
