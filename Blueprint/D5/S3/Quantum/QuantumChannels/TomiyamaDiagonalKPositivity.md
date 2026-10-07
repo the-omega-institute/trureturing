@@ -52,7 +52,31 @@ $$claim \Leftrightarrow (\forall d, k: \mathbb{N}, 2 \leq k \leq d \Rightarrow \
 
 Conjecture 2.4 of arXiv:2604.18600v1, "A set of k-positive maps Φ_{α,β} forms a quadrilateral 𝒫_k = conv{Ψ₀, Ψ₁, Ψ₂, 𝒯_k}", in the range 2 ≤ k ≤ d.
 
-**Theorem 1.5 (The k-positive region is the quadrilateral).**
+**Definition 1.5 (Fourier rows).**
+
+$$\forall d, k: \mathbb{N}, 0 < d, k \leq d \Rightarrow \forall a: \operatorname{Fin}\left(k\right), \forall j: \operatorname{Fin}\left(d\right), \operatorname{entry}\left(\operatorname{fourierRows}\left(k, d\right), a, j\right) = \operatorname{stdAddChar}\left(\operatorname{finEquiv}\left(d, j\right) \times \operatorname{finEquiv}\left(d, \operatorname{castLE}\left(a\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.fourierRows` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive d and k ≤ d, the k Fourier rows have entries χ_d(ja), where χ_d is the standard additive character on the residues modulo d and a is embedded from Fin k into Fin d.
+
+**Theorem 1.6 (Orthogonality of Fourier rows).**
+
+$$\forall d, k: \mathbb{N}, 0 < d, k \leq d \Rightarrow \operatorname{fourierRows}\left(k, d\right) \times \operatorname{adjoint}\left(\operatorname{fourierRows}\left(k, d\right)\right) = d \times \operatorname{identity}\left(k\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.fourierRows_gram` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Distinct Fourier rows are orthogonal, and each has squared norm d. At k = d, division by the square root of d gives a unitary Fourier matrix; conjugation gives the negative-character convention.
+
+**Theorem 1.7 (The k-positive region is the quadrilateral).**
 
 $$claim$$
 
@@ -72,6 +96,8 @@ Write ‖X‖² = Σ_{i,j} |X_ij|² for the squared Frobenius norm and Q(X) = (�
 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.KPositive`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.claim`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.fourierRows`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.fourierRows_gram`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.phi`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.quadrilateral`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.result`
