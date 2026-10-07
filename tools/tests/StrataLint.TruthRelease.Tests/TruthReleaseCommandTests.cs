@@ -19,7 +19,7 @@ public sealed partial class TruthReleaseCommandTests
         "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"4444444444444444444444444444444444444444\"}],\"version\":\"1.1.0\"}\n";
 
     [Fact]
-    public void CommandProducesAndVerifiesAllSevenArtifactsEndToEnd()
+    public void CommandProducesAndVerifiesAllSixArtifactsEndToEnd()
     {
         using var fixture = CreateFixture();
         using var output = new TemporaryDirectory();
@@ -43,7 +43,13 @@ public sealed partial class TruthReleaseCommandTests
         Assert.Equal(ProducerRepository, verified.Manifest.Producer.PackageRepo);
         Assert.Equal(fixture.ReportBytes.ToArray(), File.ReadAllBytes(
             Path.Combine(output.Path, TruthReleaseBundleWriter.RawLeanReportFileName)));
-        Assert.Equal(7, verified.Manifest.Artifacts.GetType().GetProperties().Length);
+        Assert.Equal(6, verified.Manifest.Artifacts.GetType().GetProperties().Length);
+        Assert.False(File.Exists(Path.Combine(output.Path, "echo-residual-summary.md")));
+        using (var sourceSnapshot = JsonDocument.Parse(File.ReadAllBytes(
+            Path.Combine(output.Path, TruthReleaseBundleWriter.SourceSnapshotFileName))))
+        {
+            Assert.False(sourceSnapshot.RootElement.TryGetProperty("residual_frontier_sha256", out _));
+        }
         using (var head = JsonDocument.Parse(File.ReadAllBytes(
             Path.Combine(output.Path, TruthReleaseBundleWriter.FrozenLedgerHeadFileName))))
         {
@@ -109,17 +115,20 @@ public sealed partial class TruthReleaseCommandTests
     }
 
     [Fact]
-    public void ReceiptIntegrityFailureFailsClosedWithoutWritingABundle()
+    public void DigestionReceiptIntegrityFailureDoesNotBlockVerifiedLeanRelease()
     {
         using var fixture = Fixture.Create(receiptIntegrityMismatch: true);
         using var output = new TemporaryDirectory();
 
         var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments());
 
-        Assert.Equal(2, exitCode);
-        Assert.Contains("TRUTH_RELEASE_INVALID", console.Error, StringComparison.Ordinal);
-        Assert.Contains("coverage-target-mismatch", console.Error, StringComparison.Ordinal);
-        Assert.Empty(Directory.GetFileSystemEntries(output.Path));
+        Assert.True(exitCode == 0, console.Error);
+        Assert.Empty(console.Error);
+        var publication = TruthReleasePublicationReader.Read(File.ReadAllBytes(
+            Path.Combine(output.Path, TruthReleaseBundleWriter.PublicationFileName)));
+        var verified = TruthReleasePublicationVerification.Verify(output.Path, publication);
+        Assert.Equal(2, verified.ReadTruthExport().Nodes.Length);
+        Assert.False(File.Exists(Path.Combine(output.Path, "echo-residual-summary.md")));
     }
 
     private static (int ExitCode, BufferedConsole Console) Run(

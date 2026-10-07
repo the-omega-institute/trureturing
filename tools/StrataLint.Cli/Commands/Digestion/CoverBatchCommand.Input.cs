@@ -7,27 +7,25 @@ namespace StrataLint.Cli;
 internal static partial class CoverBatchCommand
 {
     private sealed record BatchItem(string AtomId, ImmutableArray<string> Gids, ImmutableArray<int> Lines);
-    private sealed record BatchArguments(string BaseRevision, ImmutableArray<BatchItem> Items);
+    private sealed record BatchArguments(ImmutableArray<BatchItem> Items);
     private sealed record BatchPlan(IReadOnlyDictionary<string, BatchItem> Items,
         IReadOnlyDictionary<string, string[]> Children, ImmutableArray<string> Order);
     private sealed class BatchInputException(string message) : Exception(message);
 
     private static BatchArguments Parse(string root, IReadOnlyList<string> arguments)
     {
-        const string usage = "USAGE: StrataLint cover-batch --atoms FILE --base REV";
+        const string usage = "USAGE: StrataLint cover-batch --atoms FILE";
         string? file = null;
-        string? revision = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count) throw new BatchInputException(usage);
             switch (arguments[index])
             {
                 case "--atoms" when file is null: file = arguments[index + 1]; break;
-                case "--base" when revision is null: revision = arguments[index + 1]; break;
                 default: throw new BatchInputException(usage);
             }
         }
-        if (string.IsNullOrWhiteSpace(file) || string.IsNullOrWhiteSpace(revision))
+        if (string.IsNullOrWhiteSpace(file))
             throw new BatchInputException(usage);
 
         var text = new UTF8Encoding(false, true).GetString(File.ReadAllBytes(Path.GetFullPath(file, root)));
@@ -54,7 +52,7 @@ internal static partial class CoverBatchCommand
             item.Lines.Add(index + 1);
         }
         if (items.Count == 0) throw new BatchInputException("cover-batch input is empty");
-        return new(revision, items.Select(pair => new BatchItem(pair.Key,
+        return new(items.Select(pair => new BatchItem(pair.Key,
             [.. pair.Value.Gids], [.. pair.Value.Lines])).ToImmutableArray());
     }
 

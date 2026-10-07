@@ -1,0 +1,38 @@
+## 定理 24.2：控制相容族向下封闭
+
+若：
+
+$$
+J\in\mathcal K_n,\qquad J'\subseteq J,
+$$
+
+则：
+
+$$
+J'\in\mathcal K_n.
+$$
+
+并且：
+
+$$
+\mathcal K_n\subseteq\mathcal K_{n+1}.
+$$
+
+### 24.2 证明
+
+在较大的来源集合上正确的协议，限制到较小来源集合仍然正确；可能响应分支只会减少，不会增加。
+
+增加允许步数也不会使原有协议失效。∎
+
+所以 $\mathcal K_n$ 是一个向下封闭的集合族；在有限组合语言中，也可以把它视为一个抽象单纯复形。
+
+但它一般不对并集封闭：
+
+$$
+J_1,J_2\in\mathcal K_n
+\quad\not\Rightarrow\quad
+J_1\cup J_2\in\mathcal K_n.
+$$
+
+---
+

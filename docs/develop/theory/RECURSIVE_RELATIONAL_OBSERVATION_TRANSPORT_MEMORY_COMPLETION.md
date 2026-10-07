@@ -17689,3 +17689,4266 @@ The next research question keeps the entire task: can a uniformly effective genu
 [TM55OR70]: https://github.com/the-omega-institute/trureturing/blob/4f981b86a637c4aff1f1825ec0efe41dd5bb36e2/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#70-完整单位原树的-ferrers-截角与更强条件字母表下界
 
 ## 追加锚（本行以下为增补区）
+
+## 56. The common physical-prefix barrier
+
+One fixed actual positive-context attempt followed by the first $\rho$ attempt imposes a supplied-alphabet barrier even when every subsequent original action remains available. On the complete actual unit family the barrier is $h/3-2$, where $H=4h+\delta$ and $0\le\delta\le3$. A separate ten-fiber class at $H=36,37,38,39$ admits one-symbol recovery with a second context chosen after the first rejection, but no one-symbol controller with a fixed one-context/first-$\rho$ prefix can recover that class. Both impossibility arguments retain complete acquired records and the distinction between the initial required target and current behavior.
+
+The source/action premises are [Atomic359–360][TM56Atomic] and [TM30, TM38, TM44–47 and TM51][TM56Base] at immutable pin `28a41b31247b847af1b1b3118f7cb00ffd3b9cda`. The matching residue executor is reused directly from [TM55.5][TM56Residue] and [TM55.6][TM56Residue6] at immutable pin `dc14da97f120bbc04038a3bbc7996c78d001b9f1`; [the source binding](#TM56-L3) gives the same-source correspondence. The new interface check places that executor in the declared prefix class. The resulting sharp leading coefficient concerns this class alone.
+
+### 56.1 Complete actual sources, resource types, and the prefix class
+
+<a id="TM56-S1"></a>
+**Reused source and target correspondence.** An actual source is a nonempty ordered binary tree $t::=\alpha\mid\beta\mid\langle t,t\rangle$. Tree equality retains leaf order and every bracket. The original substitution is $\rho\alpha=\beta$, $\rho\beta=\langle\beta,\alpha\rangle$, extended structurally to trees. Write $E_j(t)=E(\rho^jt)$ and distinguish the letter composition $c(t)=(a_\alpha,a_\beta)$ from the resource pair $(m,n)=(a_\alpha+a_\beta,a_\alpha+2a_\beta)$. The complete unit family is
+
+<a id="TM56-E01"></a>
+$$
+U_H=\{t:1\le m(t)\le H,\ (E_0(t),E_1(t),E_2(t))=(1,1,1)\},
+\qquad H=4h+\delta,\quad 0\le\delta\le3.
+\tag{TM.5601}
+$$
+
+Atomic360.2–4 and TM51.2–3 give exactly the initial compositions and resource coordinates
+
+<a id="TM56-E02"></a>
+$$
+\begin{gathered}
+c(t)=(4r,4s),\qquad r,s\ge1,\qquad r+s\le h,\\
+z=r+s,\quad w=r+2s,\qquad
+2\le z\le h,\quad z+1\le w\le2z-1,\\
+m=4z,\quad n=4w,\qquad r=2z-w,\quad s=w-z.
+\end{gathered}
+\tag{TM.5602}
+$$
+
+For $w\le h$, the initial target is
+
+<a id="TM56-E03"></a>
+$$
+\tau_h(z,w)=
+\begin{cases}
+(2,(4(2z-w),4(w-z)),(1,1,1)),&z+w\le h,\\
+(1,(4(2z-w),4(w-z)),1,1),&z+w>h.
+\end{cases}
+\tag{TM.5603}
+$$
+
+For $w>h$, it is $(0,1,4z)$, with hidden $w$ irrelevant to that initial target. A tag-0 row exists exactly when $2\le z\le h$ and $2z-1>h$. A genuine witness for every positive pair is any fixed ordered bracketing of
+
+<a id="TM56-E04"></a>
+$$
+\omega_{r,s}=\alpha^{2r-1}\beta^{2s}\alpha\beta^{2s-1}\alpha^{2r}\beta.
+\tag{TM.5604}
+$$
+
+Its eight Atomic360 edge multiplicities are $(r,r,r,r;s,s,s,s)$, positive, balanced and with connected support. The tag-0 row $z$ has witness $\omega_{1,z-1}$. Atomic360.3 includes every qualifying leaf word and every ordered binary bracketing, not only these witnesses. Selecting a witness in a lower argument never substitutes it for the running source.
+
+The ambient action contract is TM30.1–2. A whole current `Read` returns actual current $E$ and preserves the source. A whole $\rho$ attempt or whole left/right concatenation with an actual nonempty positive context accepts exactly when the entire candidate has at most $H$ leaves; equality accepts. Rejection preserves the complete source and provides no candidate read. The record retains public inputs, supplied label, action and context identities, all responses and all actual reads. There is no reset, copy, inverse, source replacement, navigation, size port, target port or additional observation. The required output remains the **initial** $q_H(t)$ throughout; current $q_H(t_{\rm cur})$ describes future behavior only.
+
+<a id="TM56-D1"></a>
+**Definition TM56.1 (common physical prefix).** Fix public $H$, one public actual nonempty positive context $v$ and one fixed side. A controller belongs to $\mathrm{CPF}(v,H)$ if on every run it attempts this same context and then its first whole $\rho$, independently of the supplied symbol. These are its first two modifying attempts. Finitely many harmless current `Read` calls may precede the context or intervene between it and $\rho$; the attempts are consecutive after deleting those Reads. No additional modifying attempt, even a rejected one, occurs before that first $\rho$. After it, arbitrary ambient TM30 actions are allowed: either side, mixed positive contexts, Reads, arbitrary retained records and any finite accepted replacement depth. Continuation decisions may depend on the supplied label and the actual record.
+
+Advice is a genuinely supplied function $\ell:U_H\to\mathcal L$ of the same unmodified initial source, authentic to that source before online actions. Lower bounds permit any exact-tree function, including dependence on leaf order and brackets, without target factorization or computability restrictions. Controllers are effective deterministic programs with common public initialization for equal labels and must stop correctly after finitely many source calls on each declared input. Exhibited upper suppliers are conditional constructions from authentic initial-target information or a certified same-tree archive; their production and pairing are separate obligations.
+
+For the context put $p=d_0(v)>0$ and $q=d_1(v)$, so $p\le q\le2p$, and define
+
+<a id="TM56-E05"></a>
+$$
+c=\left\lfloor\frac{H-p}{4}\right\rfloor,
+\qquad k=\left\lfloor\frac{H-q}{4}\right\rfloor,
+\qquad k\le c\le h.
+\tag{TM.5605}
+$$
+
+Here scalar $c$ is a cutoff, whereas $c(t)$ denotes letter composition. The context accepts exactly at $z\le c$. On acceptance the subsequent $\rho$ accepts exactly at $w\le k$; on context rejection the source is unchanged and $\rho$ accepts exactly at $w\le h$. These guards include equality. In particular $c<0$ makes the context always reject.
+
+<a id="TM56-E06"></a>
+$$
+\begin{aligned}
+(m,n)&=(4z,4w)\\
+&\xrightarrow{\text{accepted context}}(4z+p,4w+q)\\
+&\xrightarrow{\text{accepted }\rho}(4w+q,\ 4(z+w)+p+q).
+\end{aligned}
+\tag{TM.5606}
+$$
+
+All three pairs in (TM.5606) are current/next **sizes**, not $\alpha/\beta$ letter counts. An accepted context adds letter composition $(2p-q,q-p)$; an accepted $\rho$ sends letter composition $(a,b)$ to $(b,a+b)$. Thus its post-$\rho$ next resource is exactly $m+n+p+q$. For an all-$\alpha$ context $p=q=P$, this is $m+n+2P$. Rejection changes neither the resource pair nor the actual tree. These are the typed TM30 transport formulas, with no omitted contribution.
+
+<a id="TM56-S2"></a>
+**Reused permanent-collision principle.** TM30.2 and TM38.1 apply to two actual sources with equal complete acquired records and equal current $q_H$, even when their initial targets differ. Every common later action then has the same response, actual reads and successor behavior on both. Pointwise finite stopping gives the same output, so recovery of both different initial targets is impossible. This principle covers all ambient continuations, including sources that have left $U_H$. It requires equality of the full record and current target; equality of a terminal size alone would not suffice.
+
+### 56.2 A uniform lower bound after the common prefix
+
+<a id="TM56-T1"></a>
+**Theorem TM56.1 (common-prefix barrier).** For every $H\ge8$, every fixed actual positive context $v$ on either fixed side, and every $\mathrm{CPF}(v,H)$ controller recovering the initial target on complete $U_H$ with a finite supplied alphabet $\mathcal L$,
+
+<a id="TM56-E07"></a>
+$$
+|\mathcal L|\ge\frac h3-2.
+\tag{TM.5607}
+$$
+
+This quantifies arbitrary exact-source labels, all three initial target bands, all actual words and brackets, and every permitted post-prefix continuation. It imposes no terminal `Size_H` hypothesis.
+
+**Proof.** Let $z_0=\lfloor h/2\rfloor+1$. For $h\ge7$, all pairs selected below are positive finite unit targets. Choose one genuine $\omega_{2z-w,w-z}$ per selected target with a fixed ordered bracketing, and retain the label actually supplied on that exact tree. If there are more selected targets than labels, two witnesses share a label. Their initial Reads are all 1. Reads after a common accepted context are also equal: they give the same ordered product with $E_0(v)$ and the original unit read. Thus equal labels and the displayed common responses give equal complete prefix records, including the number and identities of any intervening Reads.
+
+If $c\le2h/3$, including $c<0$, select
+
+<a id="TM56-E08"></a>
+$$
+S_{RA}=\{(z,h):\max(z_0,c+1)\le z\le h-1\},
+\qquad
+|S_{RA}|=h-\max(z_0,c+1)\ge h/3-1.
+\tag{TM.5608}
+$$
+
+Every context rejects since $z>c$, and every unchanged first $\rho$ accepts at $w=h$, including $4h\le H$. The original targets are tag 1. The post-$\rho$ resource pair is $(4h,4(z+h))$, with $4(z+h)>H$, and the current read is the original $E_1=1$. Thus all current targets equal $(0,1,4h)$. Two equal labels would give a permanent collision of distinct initial targets. Each label can therefore cover at most one selected witness. The size estimate uses $z_0\le h/2+1$ and $c+1\le2h/3+1$.
+
+If $c>2h/3$, then $c\ge z_0$. For $k\le2h/3$ select the accepted-context, rejected-$\rho$ row
+
+<a id="TM56-E09"></a>
+$$
+S_R=\{(z_0,w):\max(z_0+1,k+1)\le w\le h\},
+\qquad |S_R|=h-\max(z_0,k).
+\tag{TM.5609}
+$$
+
+The inequalities $w\le h\le2z_0-1$ and $z_0+w>h$ make every pair a genuine original tag-1 target. The context accepts and $\rho$ rejects because $w>k$. Each resulting source has next size $4w+q>H$, current size $4z_0+p$ and common current read $E_0(v)$, on either fixed context side. Hence its current target is $(0,E_0(v),4z_0+p)$ and equal labels yield equal complete records and a permanent collision. For $k\le h/2$ the row has at least $h-z_0\ge h/2-1$ members; for $h/2<k\le2h/3$ it has $h-k\ge h/3$ members.
+
+If $2h/3<k<h$, use
+
+<a id="TM56-E10"></a>
+$$
+S_A=\left\{(z,k):
+\max\left(\left\lfloor\frac k2\right\rfloor+1,h-k+1\right)
+\le z\le k-1\right\}.
+\tag{TM.5610}
+$$
+
+We have $z\le k-1\le c$, $k\le2z-1$ and $z+k>h$. Thus all selected pairs are positive original tag-1 targets and both prefix actions accept. The exact boundary-column arithmetic is
+
+<a id="TM56-E11"></a>
+$$
+4k+q\le H<4(k+1)+q,
+\qquad
+4(z+k)+p+q\ge4(h+1)+p+q>H.
+\tag{TM.5611}
+$$
+
+The post-$\rho$ current read is $E_1(v)$: it is the ordered context factor times the original $E_1=1$, on the chosen side. Every current target is consequently $(0,E_1(v),4k+q)$. Equal labels give the same complete record and the same current target before any later continuation. Their initial targets remain distinct. The column size is
+
+<a id="TM56-E12"></a>
+$$
+\begin{aligned}
+|S_A|
+&=k-\max\left(\left\lfloor\frac k2\right\rfloor+1,h-k+1\right)\\
+&=\min\left(\left\lceil\frac k2\right\rceil-1,2k-h-1\right)
+\ge h/3-1.
+\end{aligned}
+\tag{TM.5612}
+$$
+
+Finally, $k\ge h$ forces $k=c=h$ by (TM.5605). Use
+
+<a id="TM56-E13"></a>
+$$
+S_A'=\{(z,h):z_0\le z\le h-1\},
+\qquad |S_A'|=h-z_0\ge h/2-1.
+\tag{TM.5613}
+$$
+
+Both attempts accept, the current size is $4h+q\le H$, and the next size is $4(z+h)+p+q>H$. The common current target is $(0,E_1(v),4h+q)$, giving the same collision. This endpoint is possible only when $0<p\le q\le\delta$, and is retained wherever the actual context allows it.
+
+Every case therefore requires at least as many labels as its selected witness set. For $h\ge7$ these counts exceed the stated $h/3-2$ bound; for $2\le h\le6$ its right side is nonpositive. This proves (TM.5607) for all $H\ge8$ and all four residues. The actual label of each selected tree, rather than any target-factorized advice, drives the pigeonhole argument. Even an attempted earlier stop on equal labels and equal Reads cannot return two different initial targets. $\square$
+
+If a particular continuation is `Size_H`, the three main sets enter it at $4h$, $4z_0+p$ and $4k+q$, respectively. The theorem instead uses equal complete records and equal current $q_H$ at the prefix boundary, which proves impossibility for every ambient continuation.
+
+### 56.3 Direct residue reuse and the matching class interface
+
+<a id="TM56-P2"></a>
+**Proposition TM56.2 (TM55 residue executor belongs to the prefix class).** For $h\ge5$, put
+
+<a id="TM56-E14"></a>
+$$
+L=\left\lfloor\frac{h+1}{3}\right\rfloor,
+\qquad c=h-L+1,
+\qquad P=H-4c=4(L-1)+\delta>0.
+\tag{TM.5614}
+$$
+
+The supplier of [TM55.5][TM56Residue] and its [TM55.6 executor][TM56Residue6], with the actual right context $v=\alpha^P$ under its fixed public bracketing, belong to $\mathrm{CPF}(v,H)$. On complete actual $U_H$ that same construction simultaneously has $L$ supplied symbols, no Reads, at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+3$ whole source calls, including terminal rejection.
+
+**Interface check.** The parameters satisfy $L\ge2$, $1\le c<h$, $h-c=L-1$ and $c\le2L+2$, precisely the hypotheses of TM55.5 (TM.5518). Positivity of $P$ holds in every cap residue because $L\ge2$. The context has letter composition $(P,0)$ and resource increments $p=q=P$, hence both scalar cutoffs in (TM.5605) are exactly $c$. The first two modifying attempts are this fixed actual context followed by one $\rho$ on either context response, with no intervening Reads or other attempts. The later `Size_H` is an allowed ambient continuation. Its entry source has size in $[1,H]$ by the preceding actual guards; it need not belong to $U_H$.
+
+The source correspondence is literal: TM55's $U_H$, $(r,s)$, $(z,w)$, $\omega_{r,s}$ and initial $\tau_h$ are those of (TM.5601–4). Its conditional supplier is exactly TM55 (TM.5520): $\operatorname{rep}_L(w-z)$ on finite targets, $\operatorname{rep}_L(c-z)$ on padded tag-0 rows, and 1 on unpadded tag-0 rows, where $\operatorname{rep}_L(x)=1+((x-1)\bmod L)$. The retained symbol and actual response bits are passed to the original-target decoder TM55 (TM.5521), without changing any label meaning. In its four actual histories $AA,AR,RA,RR$, terminal entries are respectively $4w+P,4z+P,4w,4z$. These entries are current sizes; they are not compositions or initial-target replacements. All words and brackets lift by the same Atomic360/TM47.2 correspondence. The residue correctness proof and supplier/decoder are reused, not new mathematical contributions of Proposition TM56.2. The simultaneous alphabet/depth/call guarantee is TM55.6 (TM.5524–25). $\square$
+
+Let $A_{\mathrm{CPF}}(H)$ minimize the conditional alphabet over all fixed actual nonempty contexts, fixed sides, arbitrary exact-source suppliers and successful controllers in their CPF classes. For $h\ge5$, [Theorem TM56.1](#TM56-T1) and [Proposition TM56.2](#TM56-P2) give
+
+<a id="TM56-E15"></a>
+$$
+\frac h3-2\le A_{\mathrm{CPF}}(H)
+\le\left\lfloor\frac{h+1}{3}\right\rfloor
+=\frac h3+O(1).
+\tag{TM.5615}
+$$
+
+Thus the leading coefficient $1/3$ is sharp **in this class**, with the exhibited costs belonging to its one actual execution. TM55.6's $h=2,3,4$ bases use one symbol, no padding, one $\rho$ and `Size_H`, with at most $\lceil\log_2H\rceil+2$ calls. Those no-padding protocols are outside the nonempty-context CPF class and are not upper certificates for (TM.5615). No unrestricted $h/3-O(1)$ necessity, minimum-depth assertion or unrestricted normalization theorem follows.
+
+### 56.4 Ten complete fibers and an adaptive second context
+
+<a id="TM56-T3"></a>
+**Theorem TM56.3 (ten-fiber separation).** For each $H=36+\delta$, $0\le\delta\le3$, let
+
+<a id="TM56-E16"></a>
+$$
+\begin{aligned}
+S_9=\{&(3,4),(3,5),(4,6),(5,6),(5,7),\\
+&(5,9),(6,8),(6,9),(7,9),(8,9)\},\\
+\mathcal F_{9,H}
+&=\{t\in U_H:q_H(t)\in\{\tau_9(z,w):(z,w)\in S_9\}\}.
+\end{aligned}
+\tag{TM.5616}
+$$
+
+One common supplied symbol admits a same-source controller recovering the initial target on every complete fiber in $\mathcal F_{9,H}$, with no Reads, at most two context attempts before the first $\rho$, at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+4$ whole source calls. Conversely, for every fixed actual nonempty positive context on either fixed side, every one-symbol controller with that CPF prefix fails on $\mathcal F_{9,H}$, even with harmless Reads, arbitrary acquired records and arbitrary ambient continuation after the first $\rho$.
+
+**Proof of membership and construction.** The first two points are initial tag 2 and the other eight are initial tag 1. The genuine witnesses from (TM.5604) are:
+
+| Initial $(z,w)$ | $(r,s)$ | Actual witness | Initial band |
+|---|---|---|---|
+| $(3,4)$ | $(2,1)$ | $\omega_{2,1}$ | 2 |
+| $(3,5)$ | $(1,2)$ | $\omega_{1,2}$ | 2 |
+| $(4,6)$ | $(2,2)$ | $\omega_{2,2}$ | 1 |
+| $(5,6)$ | $(4,1)$ | $\omega_{4,1}$ | 1 |
+| $(5,7)$ | $(3,2)$ | $\omega_{3,2}$ | 1 |
+| $(5,9)$ | $(1,4)$ | $\omega_{1,4}$ | 1 |
+| $(6,8)$ | $(4,2)$ | $\omega_{4,2}$ | 1 |
+| $(6,9)$ | $(3,3)$ | $\omega_{3,3}$ | 1 |
+| $(7,9)$ | $(5,2)$ | $\omega_{5,2}$ | 1 |
+| $(8,9)$ | $(7,1)$ | $\omega_{7,1}$ | 1 |
+
+For example $\omega_{2,1}=\alpha^3\beta^2\alpha\beta\alpha^4\beta$ realizes $(3,4)$. The genuine source $\omega_{1,7}$ instead has $(z,w)=(8,15)$ and initial target $(0,1,32)$; it witnesses the tag-0 row 8 in $U_H$, outside this ten-fiber class. The finite point $(8,9)$ is realized by $\omega_{7,1}$. Every witness permits any ordered bracketing, and (TM.5616) retains the entire actual fibers.
+
+Supply $\star$ to every input. First attempt the actual right context
+
+<a id="TM56-E17"></a>
+$$
+\alpha^{H-19}=\alpha^{17+\delta}.
+\tag{TM.5617}
+$$
+
+Its guard is $4z+(H-19)\le H$, exactly $z\le4$. On acceptance attempt $\rho$, whose guard is $4w+(H-19)\le H$, exactly $w\le4$. Only $(3,4)$ accepts that replacement. The two rejecting points $(3,5)$ and $(4,6)$ enter `Size_H` at $M=4z+(H-19)$, with distinct rows 3 and 4. All guard equalities are included.
+
+On first-context rejection the complete original source is unchanged. Attempt the actual right context
+
+<a id="TM56-E18"></a>
+$$
+K(d,e)=\alpha^{2d-e}\beta^{e-d},
+\qquad
+(d,e)=
+\begin{cases}
+(1,1),&\delta=0,\\
+(\delta,\delta+1),&\delta=1,2,3.
+\end{cases}
+\tag{TM.5618}
+$$
+
+Zero exponents denote absence of that letter, not an empty context. The four actual nonempty words are $\alpha,\beta,\alpha\beta,\alpha^2\beta$, with increments $(1,1),(1,2),(2,3),(3,4)$. Each accepts on every remaining input: the largest row is $z=8$ and $4z+d\le H$ in all residues. Now attempt $\rho$. Its exact guard is
+
+<a id="TM56-E19"></a>
+$$
+4w+e\le H\quad\Longleftrightarrow\quad w\le8.
+\tag{TM.5619}
+$$
+
+The accepting points have distinct columns $w=6,7,8$, and the four rejecting points at $w=9$ have distinct rows $z=5,6,7,8$. Their `Size_H` entry sizes are respectively $4w+e$ and $4z+d$. A public decoder for the actual acquired record is:
+
+| First context | First $\rho$ | Retained terminal entry | Initial output |
+|---|---|---|---|
+| accepts | accepts | $M=16+(H-19)$ | $\tau_9(3,4)$ |
+| accepts | rejects | $z=(M-(H-19))/4\in\{3,4\}$ | $\tau_9(3,5)$ if $z=3$; $\tau_9(4,6)$ if $z=4$ |
+| rejects; second context accepts | accepts | $w=(M-e)/4\in\{6,7,8\}$ | $\tau_9(5,6)$, $\tau_9(5,7)$, $\tau_9(6,8)$, respectively |
+| rejects; second context accepts | rejects | $z=(M-d)/4\in\{5,6,7,8\}$ | $\tau_9(z,9)$ |
+
+The first branch may also run `Size_H` in its accepting case, as in this uniform dictionary. Each entry is an actual size in $[1,H]$, so TM51.5 supplies finite terminal acquisition with no Read or replacement and at most $\lceil\log_2H\rceil+1$ calls, including final rejection. There are two prior source calls on the first-context-accepted branch and three on the second-context branch. Hence their whole-call bounds are $\lceil\log_2H\rceil+3$ and $\lceil\log_2H\rceil+4$. Only the single first $\rho$ attempt can be an accepted replacement. These alphabet, depth and call bounds hold simultaneously on the same running-source execution. TM30.2 and TM47.2 lift the dictionary to every actual word and bracketing in each complete fiber. No reset, copy, private row or replacement by a witness occurs.
+
+**Proof of impossibility for every fixed first context.** Fix any actual nonempty positive context with increments $(d,e)$, $d>0$, $d\le e\le2d$, and either fixed side. Give all sources the same symbol and public initialization. Put
+
+<a id="TM56-E20"></a>
+$$
+t=\left\lfloor\frac{H-d}{4}\right\rfloor,
+\qquad u=\left\lfloor\frac{H-e}{4}\right\rfloor.
+\tag{TM.5620}
+$$
+
+If $t\le6$, the actual witnesses for $(7,9)$ and $(8,9)$ both reject the context. Their unchanged first $\rho$ attempts accept at current size $4w=36\le H$. Their next sizes are $4(7+9)$ and $4(8+9)$, both above $H$. Thus their current targets are both $(0,1,36)$ and their complete records agree, including any harmless Reads. Their different initial targets form a permanent collision. Success would therefore require $t\ge7$.
+
+With $t\ge7$, the context accepts the row-5 points $(5,6),(5,7),(5,9)$ and the column-6 points $(4,6),(5,6)$. If $u\le6$, the row points $(5,7)$ and $(5,9)$ both reject $\rho$: their next sizes $4w+e$ exceed $H$, their current sizes are both $20+d$ and their current reads are both $E_0(v)$. They have the same current target $(0,E_0(v),20+d)$ and equal complete records. Avoiding this permanent collision requires $u\ge7$.
+
+If $u\ge6$, both column-6 points accept $\rho$. Their current sizes are both $24+e\le H$, and their next sizes are $4(4+6)+d+e$ and $4(5+6)+d+e$. Both exceed $H$ already at their original $40$ and $44$, since $H\le39$. Their current reads are both $E_1(v)$, so both current targets are $(0,E_1(v),24+e)$ and their complete records agree. Avoiding this collision requires $u<6$, contradicting $u\ge7$.
+
+The witness argument uses equal complete records and current $q_H$, so TM38.1 excludes every ambient continuation, with arbitrary retained memory and finite accepted depth. Harmless Reads cannot break these equalities and add no modifying action before first $\rho$. An earlier stop with the one common symbol and unit Reads likewise cannot distinguish the initial targets. The impossibility is for a common symbol; arbitrary distinct advice symbols can distinguish the targets and are not excluded by this theorem. $\square$
+
+A common physical context can produce different subsequent numeric cutoffs on its accepted and rejected branches: its contributions are present on acceptance and absent on rejection. In Theorem TM56.3 a second actual context is issued on the rejection branch. That extra modifying attempt places its successful one-symbol controller outside CPF.
+
+### 56.5 Bound sources, bounded evidence, and remaining scope
+
+<a id="TM56-L1"></a>
+[Atomic359–360 at `28a41b31247b847af1b1b3118f7cb00ffd3b9cda`][TM56Atomic] supplies the ordered triple/common-source correspondence, actual positive witnesses, balanced connected edge support and every Euler word and ordered bracketing. Atomic360 (360.4–5) retains those supplier equation labels. [TM30.1–2 at that same pin][TM56Base], (TM.3001–4), supplies whole guards, equality acceptance, unchanged rejection, ordered source transport and behavioral congruence. TM38.1 supplies the full-record permanent collision used in both lower arguments. These source mechanisms are reused.
+
+<a id="TM56-L2"></a>
+[TM44.5 (TM.4419–20), TM51.5 and TM47.1–2 at that pin][TM56Base] supply terminal entry-size acquisition and complete-target lifting. `Size_H` needs only an actual ambient entry size in $[1,H]$, uses no Read or replacement, and costs at most $\lceil\log_2H\rceil+1$ calls including final rejection. TM45 retains ordered outer factors and initial/current pairing. TM51.2–3 supplies the complete unit target coordinates used throughout. None is an additional online observation.
+
+<a id="TM56-L3"></a>
+[TM55.5][TM56Residue] and [TM55.6][TM56Residue6] at `dc14da97f120bbc04038a3bbc7996c78d001b9f1` are the bound residue source in `docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md`. TM55.5 assumes $h\ge2$ and integers $L,c$ satisfying $L\ge2$, $1\le c<h$, $c\le2L+2$ and $h-c\le L-1$. TM55.6 applies for every integer $H\ge8$, with $h=\lfloor H/4\rfloor$ and $L=\lfloor(h+1)/3\rfloor$; for $h\ge5$ it uses $c=h-L+1$ and $P=H-4c>0$, whereas its $h=2,3,4$ bases omit padding. Both use the same complete $U_H$, initial target, conditional same-unmodified-initial-source advice and actual source/action correspondence as this chapter. The Atomic359–360 and TM30/38/44/45/47/51 source sections are byte-identical at that immutable source and this chapter's `28a41b31247b847af1b1b3118f7cb00ffd3b9cda` pin, so the common-source premises agree. The alphabet, Read, replacement and call guarantees hold simultaneously on the same running-source execution.
+
+<a id="TM56-L4"></a>
+[TM54 at merged revision `20b37ca68329a5d1ee0b67c28ffe2c90e89f4fce`][TM56Prior54] uses the same complete $U_H$, initial target and conditional same-source advice contract. Its complete-family necessary count (TM.5412) and upper constructions in Theorems 54.5–6 remain prior comparison results. The current CPF lower bound is not a bound over all the controllers minimized there, and the residue upper remains attributed to TM55.5–6.
+
+<a id="TM56-L5"></a>
+[OR68 Definition 68.1][TM56OR68] and [OR69 Definition 69.1][TM56OR69] use the same full-source conditional task: OR68's $\nu$ and OR69's $y$ are this chapter's $w$, and OR69's $x$ is $z$. The finite target $C_{r,s}$ is $\tau_h(r+s,r+2s)$; $Z_x$ is $(0,1,4z)$. Their arbitrary exact-tree labels and full ambient controllers retain a larger policy domain than CPF. OR68's linear growth and small-cap results, [OR69's complete-family exact intervals][TM56OR69], and [OR70's Ferrers necessary bound][TM56OR70] remain comparison/reuse boundaries. In particular the published complete-family value at $36\le H\le39$ is 2, whereas Theorem TM56.3 concerns a proper ten-target-fiber class with one common symbol. It adds no complete-family exact-small-cap claim. OR70 supplies a further unrestricted necessary bound, not unrestricted $h/3$ necessity or a general exact formula. The immutable comparison revisions are `511f1920bceaaf9f6ec6411030fbd4da42abfbfd` for OR68–69 and `4f981b86a637c4aff1f1825ec0efe41dd5bb36e2` for OR70.
+
+<a id="TM56-V1"></a>
+**Bounded arithmetic evidence.** The reported finite arithmetic checks have the following scopes, separate from the universal proofs above:
+
+| Arithmetic scope | Reported result |
+|---|---|
+| $7\le h\le40$, all four $\delta$, $1\le p\le H+2$, $p\le q\le2p$: selected lower witness sets and exact prefix size arithmetic | No counterexample to validity or the $h/3-2$ count; exit 0 |
+| $2\le h\le60$, all four $\delta$, every finite and tag-0 target: residue branch/entry/label dictionary | No duplicate decoder key; exit 0 |
+| $H=36,37,38,39$, the ten target fibers: actual second-context increments, equality guards and decoder keys | Ten distinct initial-target keys; exit 0 |
+
+These are bounded integer falsifiers, not arbitrary-policy enumeration, all-word testing or proofs of universal impossibility. The residue dictionary check supports the reused TM55 construction, not a new residue theorem. The source witnesses and full-fiber coverage follow from Atomic360 and the typed parameter correspondence; the one-symbol witness for $(8,9)$ is specifically $\omega_{7,1}$.
+
+<a id="TM56-O1"></a>
+**Remaining scope.** The unrestricted complete-family minimum $A_U(H)$, its sharp leading coefficient and existence of an unrestricted normalized limit remain undetermined here. Controllers with arbitrary pre-$\rho$ modifications, label-dependent contexts, multiple cutoffs, $\rho$-first schedules or other adaptive prehistories are outside the CPF lower theorem. Their post-$\rho$ actions are not restrictions inside that theorem: every ambient finite continuation remains quantified. The ten-fiber controller and counterexample do not give a general depth normal form or an exact complete-family capacity.
+
+Authentic label production and delivery, source membership and pairing, archive parsing and retention, full-record storage, context material, guard/replacement work, integer arithmetic and memory/time costs remain separately charged. All statements are ordinary mathematics on the declared source/action interface. This chapter supplies neither Lean kernel verification nor physical verification, and does not settle the unrestricted complete-family goal.
+
+[TM56Atomic]: https://github.com/the-omega-institute/trureturing/blob/28a41b31247b847af1b1b3118f7cb00ffd3b9cda/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md
+[TM56Base]: https://github.com/the-omega-institute/trureturing/blob/28a41b31247b847af1b1b3118f7cb00ffd3b9cda/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[TM56Residue]: https://github.com/the-omega-institute/trureturing/blob/dc14da97f120bbc04038a3bbc7996c78d001b9f1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM55-P5
+[TM56Residue6]: https://github.com/the-omega-institute/trureturing/blob/dc14da97f120bbc04038a3bbc7996c78d001b9f1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM55-T6
+[TM56Prior54]: https://github.com/the-omega-institute/trureturing/blob/20b37ca68329a5d1ee0b67c28ffe2c90e89f4fce/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#54-complete-unit-family-supplied-advice-linear-capacity-and-actual-acquisition
+[TM56OR68]: https://github.com/the-omega-institute/trureturing/blob/511f1920bceaaf9f6ec6411030fbd4da42abfbfd/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#68-完整单位原树的条件补充字母表配对上界与增长必要性
+[TM56OR69]: https://github.com/the-omega-institute/trureturing/blob/511f1920bceaaf9f6ec6411030fbd4da42abfbfd/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#69-完整单位原树在三十六至五十五上限的条件字母表精确值
+[TM56OR70]: https://github.com/the-omega-institute/trureturing/blob/4f981b86a637c4aff1f1825ec0efe41dd5bb36e2/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#70-完整单位原树的-ferrers-截角与更强条件字母表下界
+
+## 追加锚（本行以下为增补区）
+
+## 57. A complete paid ideal realization of the original ordered-tree interface
+
+This construction realizes the actual TM30 source, including its preparation, whole actions, original responses, growing records, record-only verification and consumer output. Its quantifiers are all public integers $H\ge1$, all nonempty ordered $\alpha/\beta$ trees with at most $H$ leaves, all actual nonempty finite contexts, and all effective lawful finite original protocols. The machine is an explicitly declared ideal finite-control process with constructed finite tapes. All proofs here are ordinary mathematics. Physical conformance, a native implementation and optimality are separate questions.
+
+### 57.1 The unchanged source and the exact target
+
+Let $\mathcal T$ be the free nonempty ordered binary-tree algebra on $\alpha,\beta$. Its equality retains both brackets and order. Put $c(t)=(a,b)$, $\lambda(t)=a+b$, and $\mathcal T_H=\{t:1\le\lambda(t)\le H\}$. The actual substitution is
+
+$$
+\rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{PR57.01}
+$$
+
+At an idle original cut the menu is `Read`, $\rho$, `Left(v)` and `Right(v)`, with any named actual $v\in\mathcal T$. Read returns the exact current $E$ and leaves the source unchanged. The three modifications form respectively $\rho t$, $\langle v,t\rangle$ and $\langle t,v\rangle$. The entire candidate is tested against $\lambda\le H$. Acceptance publishes only `accept` and installs that candidate; rejection publishes only `reject` and retains the old source. There is no candidate Read on rejection. Arbitrarily large finite contexts remain typed requests. There is no source navigation, reset, duplication, inverse, size port or request quota. Serial busy cuts admit only the next prescribed microtransition, not another original request.
+
+Use the pinned Clifford algebra with $A^2=1$, $B^2=-1$, $AB+BA=1$, and $S=BA$. Its faithful coordinates are $N(e,k,p)=(-1)^eS^kA^p$. Write $u_i(t)$ for the normal coordinates of $E(\rho^it)$ and $\eta(t)=((u_0,u_1,u_2),c(t))$. Set $\lambda_0=a+b$, $\lambda_1=a+2b$, $\lambda_2=2a+3b$. The target is literally
+
+$$
+q_H(t)=\begin{cases}
+(0,E(t),\lambda_0),&\lambda_1>H,\\
+(1,(a,b),E(t),E(\rho t)),&\lambda_1\le H<\lambda_2,\\
+(2,((u_0,u_1,u_2),(a,b))),&\lambda_2\le H.
+\end{cases}
+\tag{PR57.02}
+$$
+
+In particular the tag-2 output contains $\eta$, not an unexplained flattened coefficient tuple. The initial target and the current target have different identities throughout. A preparation identity names an occurrence, not a tree value. The public prior $D$ is any declared nonempty subset of the finite $\mathcal T_H$; the unrestricted case is $D=\mathcal T_H$. An arbitrary such subset can be supplied by its complete membership bit-vector in the enumeration of §57.10. Its creation and transmission are paid. Public effective prior predicates can instead be evaluated on every enumerated tree; termination on this finite enumeration is the meaning of an effective declaration. No private predicate or source-dependent choice of program is allowed.
+
+### 57.2 Finite primitives, actual tapes and literal control
+
+**Definition PR57.D1 (constructed-tape machine).** There are 64 fixed tape ports, a finite public control state, eight finite symbol latches (their bit subfields supply Boolean operands), finite port-ownership tokens and a meter. The port assignments are fixed: control and public arithmetic 0–15, producer private data 16–23, actor 24–31, verifier 32–39, consumer 40–47, mailboxes 48–55, and meter/readout 56–63. Every ordinary tape is a finite word between a left marker $L$ and a right marker $R$ with one head. A second head is permitted on the meter only. Head marks are finite tracks on the constructed cells: a move changes the two adjacent marks, so a head position never occupies a hidden natural-number register. Ordinary symbols are $L,R,\square,0,1,\mathsf{sep},\mathsf{seal},\mathsf F$; each cell occupies eight model bits: three symbol bits, three head/append/read marks, a seal mark and one reserved bit. Ordinary tapes use only their designated head mark. The unused marks are zero. Every move/extension changes a fixed finite set of adjacent symbol/mark bits. No cell beyond $R$ exists. Head positions are physical cursor relations to existing cells, not stored integer registers. The finite control and token storage has its actual finite encoded size $b_{\rm ctl}$.
+
+The following are the primitive core occurrences. Each acts on a fixed finite set of adjacent tape cells or one finite latch/token; no action reads or changes an unbounded interval. A control successor is part of that occurrence.
+
+| core occurrence | exact effect |
+| --- | --- |
+| `RD(i,j)` | read the symbol at port $i$ into finite latch $j$; no head movement |
+| `WR(i,s)` | write one symbol, or one latched bit, at the current writable ordinary cell |
+| `ML(i)`, `MR(i)` | move one cell within the constructed interval; crossing $L$ or $R$ is disabled |
+| `EX(i)` | at $R$, replace $R$ by $\square$, construct one new $R$ immediately to its right, and leave the head at the new blank cell |
+| `BF(f)` | apply one specified Boolean truth table to the bit subfields of operand latches 0–2 and put its bit in result latch 3 |
+| `IN(i)` | put the next supplied bit in the input latch for the declared public or private ingress; it does not move or write a tape |
+| `OUT(j)` | transmit one bit from a declared public output latch |
+| `TOK(a,b)` | transfer one of the finitely many port/availability tokens from $a$ to $b$ |
+| `CTL` | take a finite control edge, including seal, phase change, request/response commitment or halt |
+
+`RD` and `WR` do not hide a seek. A move is not an allocation. `EX` is a literal one-cell constructor, including initialization to $\square$ and right-marker replacement. Zero initialization still requires `WR(0)`. A three-input truth table has exactly eight bits and 256 possible codes. The model does not make addition, string copying, integer-address lookup or integer comparison a primitive.
+
+Each core occurrence simultaneously appends one receipt symbol at the meter's append head: the old meter $R$ becomes a receipt and one new $R$ is constructed. A receipt is either ordinary or a fence, as selected by a `CTL` fence edge. This fixed one-cell side effect is part of the finite transition rule, including for `EX`, meter scans and readout. The event has one logical tick and two fee units: one core unit and one receipt-construction unit. This is a finite-symbol primitive convention, not an atomic operation on an unbounded numeral. At a cut after $n$ events the actual meter contains exactly $n$ receipts and a right marker. There is no second fee counter, automatic binary increment or automatic transcript of private values.
+
+All 63 ordinary tape boundary pairs are constructed by fixed boot constructor edges, each constructing one ordinary cell (the boundary-construction case of `EX`); the meter is the remaining port. Every control-description bit and initial finite control/token bit is installed by a bit ingress/write edge, one bit at a time, with the same receipt side effect. Boundary constructor edges and control-bit installation are finitely many boot variants of the core `EX` and `WR` operations, not an unbounded installation primitive. The finite bootstrap has only the states `next`, `input-bit`, `write-bit`, `advance`, `done`; it installs a prescribed finite literal encoding and the ordinary pairs of boundary markers, then enables the main control. The meter initially has its two boundary markers and append head, supplied as the irreducible primitive port. Their sixteen bits and the fixed primitive control bits are the initial constant $S_0$, also included in storage. There is no preconstructed data arena. The primitive port convention is the foundation of this ideal model; it is not a theorem about constructing hardware from nothing.
+
+Here is a fully encodable specification of the control, with a mechanical finite expansion. A native row is
+
+$$
+U(q)\;U({\rm op})\;U(i)\;U(j)\;U(s)\;U(q_0)\;U(q_1),
+\qquad U(n)=1^n0.
+\tag{PR57.03}
+$$
+
+Unused fields are zero. State numbers are assigned in the order of the routines below, then textual occurrence order. On a testing `RD` row the predicate is equality of the newly read symbol to the finite immediate $s$; on a testing `CTL` row it is equality of the designated public latch $j$ to $s$. All other rows have $q_0=q_1$. Thus the predicate is encoded in the row, not a missing instruction field. Composite public tests first compute their Boolean bit by the listed routines. A boundary test on a private tape distinguishes only $L$ or $R$ from all ordinary symbols and takes the same successor on private 0 and 1. The opcode order is the table above, with Boolean codes in lexicographic bit order. Public tests may select a successor. Private latches may only feed `BF` and bit writes; they never select a successor, port or move. The public observation of the PC is this native row number and routine phase; private latch contents are excluded.
+
+For avoidance of an implicit compiler, the finite expansion rules are part of the specification. Sequence joins the exit edge of the first finite graph to the entry of the second. `if public P` inserts one `RD`/finite-test edge to the two entries and joins their exits. `while public P` inserts that edge, an edge back from the body exit, and an exit edge. `for each 1 in a finite unary tape` is `RD; if 0 exit; body; MR; back`. The loop head is a real tape head. A fixed subroutine call is inlined. Finite alternatives over the eight symbols, 64 ports and 256 truth tables are expanded into those finitely many cases; they do not create states indexed by integers. Parameters and return data are on tapes. All uses of these rules below have a finite static nesting depth. The generator's depth-first expression traversal uses a constructed stack of frames, not native recursive calls. Push and pop are the append/scan routines below. Thus the control graph is finite independently of $H$, contexts, program length and request count. Its encoding is (PR57.03); the boot installs its bits literally. Its size is $|\operatorname{enc}(\operatorname{expand}(\mathcal R))|$, where $\mathcal R$ is the finite list of routines specified in §§57.3–57.10. This is a computable length of a given encoding, not an assigned service constant. Dynamic instructions use a different explicit encoding in §57.5.
+
+All native control is constructed once. Reading a native rule and changing its finite control state is the primitive finite mechanism just declared; it is not a word-sized instruction service whose fetch is secretly omitted. Dynamic code, policies, address strings, descriptors and data are ordinary tape contents and are fetched by charged scans. No generator generates its interpreter, allocator or own control.
+
+### 57.3 Complete tape service routines and progress
+
+**Definition PR57.D2 (service library).** Each arrow in the following recipes is an occurrence from Definition PR57.D1. No recipe has an integer-valued atomic step.
+
+`Home(i)` repeatedly reads the current cell; on $L$ it stops, otherwise it moves left and repeats. From position $h$ relative to $L$ it costs exactly $2h+1$ core occurrences. Only the boundary test controls this loop; ordinary private bits are ignored. `Tail(i)` analogously seeks $R$. A traverse of $h$ intervening cells costs $2h+1$ from its starting point. Positions and boundaries are public.
+
+`Append(i,b)` requires the head at $R$ and performs `EX; WR(b); MR`. It costs three core occurrences and constructs exactly one cell. `AppendWord(i,w)` reads every symbol of the finite sealed $w$, appends it, and moves its source head once per symbol. Its per-symbol body is `RD; EX; WR; MR(destination); MR(source)`, of length five. Homes and seeks to the two specified starting positions are separately counted. This routine is used for descriptors, instructions, literal public input, stack frames and string copies; no bulk write is primitive.
+
+`Allocate(i,k)` takes a real unary $U(k)$ at its first bit and the arena head at $R$. For each leading 1 it executes `RD(counter); EX(i); WR(i,0); MR(i); MR(counter)`; the terminal 0 is read once. Its body count is $5k+1$, plus actual counter/arena positioning and delimiter/descriptor construction. Before allocation, `Base(i)` obtains the actual arena offset: `Home`, then move past $L$ and scan to the already existing $R$, appending one 1 to a separate public counter for each intervening cell and then 0. Only the $R$ test controls it. For $b$ existing data cells its body is $5b+4$ occurrences (`RD; Append(1); MR` per cell, then `RD(R); Append(0)`), plus home/initial movement/positioning. This constructs $U(b)$ before any new arena cell is created. A descriptor is the concatenation of owner code, arena-port code, $U(b)$, $U(k)$, initialization flag, mutability flag and creation/request ordinal, where $b$ is the arena offset. Its bits are created with `AppendWord`; $U(b)$ is this actually constructed `Base` result, copied to the descriptor. Every appended cache/code/stack block uses the same `Base` routine for its starting reference; no cursor position is converted into a numeral without this scan. `Allocate` appends a delimiter and never changes a preceding block. Allocation, descriptor creation, zeroing and later copying are distinct executed bodies. Fresh intervals cannot alias. An erase is a full seek plus one `WR(0); MR` per designated cell; erased cells remain constructed and counted in storage.
+
+`Seek(i,U(a))` first executes `Home(i)`, then one `MR(i)` to data index zero. Starting at the first bit of a real address string, for every leading 1 it performs `RD(address); MR(i); MR(address)`, then reads the terminal 0. Its cost is
+
+$$
+\operatorname{SeekCost}(h,a)=2h+1+1+3a+1=2h+3a+3,
+\tag{PR57.04}
+$$
+
+plus positioning the address head. The data tape must already contain that cell. Code generation/validation checks this public bound. A read or write at the result adds one occurrence. Offset zero means the first cell after $L$. Marker tests in `Home` never branch on an ordinary bit. All addresses of a private gate execution are supplied by public code, so all these seeks are source independent.
+
+Unbounded public naturals and references use $U(n)$, including zero. Increment constructs a new version: append all old leading 1s, one extra 1, then 0; retire but retain the old version. Addition concatenates leading-1 parts and a terminator. Subtraction of $v\le u$ walks paired 1s, then copies the remaining $u-v$ 1s. Comparison walks two strings together until a terminator. Multiplication repeats a full leading-1 copy once for every 1 of its first argument. A finite bound $B$ can be converted to a binary width by the loop $w=1,P=2$; while $P\le B$, increment $w$ and double $P$ by unary concatenation. It stops because $2^w>B$ for some $w\le B+1$. Every intermediate string, comparison and copy is constructed by the displayed routines. There is no modular wrap. These inefficient algorithms suffice for every finite public integer, including address arithmetic and generation ordinals.
+
+`Promote(x,w,w')`, $w'\ge w$, allocates a fresh $w'$-bit vector, copies all $w$ old bits by seeks/reads/writes, then writes zero extension for unsigned values or the copied sign bit for signed values at each of the remaining $w'-w$ positions. All iterations and addresses are public. Old vectors remain retained or are erased by a complete scan. Unary references have no finite address width to promote; a relocation constructs a fresh descriptor and copies every unary reference to its new version with the same routines. No reference is truncated.
+
+**Lemma PR57.L1 (service termination and constructive storage).** Every invocation above with finite constructed inputs and a valid finite bound terminates and leaves only finitely many constructed cells. It has a unique next primitive occurrence at every unfinished cut.
+
+**Proof.** `Home` decreases the head distance to $L$; `Tail` decreases distance to the already existing $R$. An append has exactly three occurrences. An allocate/copy/seek loop consumes a fixed, already sealed unary string or sealed finite block. Newly created cells lie on a different tape or beyond the source fence and cannot extend that loop's bound. Nested multiplication loops have the two fixed finite operands as bounds. Width search strictly increases $P$ by doubling and stops no later than $B+1$ increments; its inner copies have fixed finite inputs. Promotion consumes $w'$ positions. These arguments give a natural outer-iteration bound and a finite inner bound for every invocation, rather than a rank that increases when more allocator work is created. Only `EX` constructs cells, one at a time; finitely many terminating bodies imply finite construction. The deterministic recipe gives a successor at each unfinished cut. $\square$
+
+### 57.4 Ticks, fee numerals, identities and charged readout
+
+**Definition PR57.D3 (closed-cut readout).** The public microtrace contains one tick pulse and the fee increment 2 at every occurrence. Its cumulative mathematical coordinates after $n$ pulses are $(n,2n)$. These coordinates are not automatically stored accessible binary numerals. What is stored is the meter's unary receipt sequence. A fence occurrence writes a distinguished receipt $\mathsf F$. A public unary counter counts fences, with the increment recipe of §57.3. The read head scans from $L$, counting fence markers with paid unary arithmetic, until the declared already existing fence number is reached. It also constructs a separate bound tape by appending one 1 for each receipt visited, then a terminal 0 at the selected fence. It stops at that marker, even though new receipts are being appended during the scan. The resulting bound is an actual stored $U(n)$, not an execution index used as a free loop bound.
+
+For a fence at event $n$, a second scan driven by that stored bound constructs $U(n)$ and $U(2n)$: for every leading 1, `RD(bound); RD(meter)`, append one 1 to the tick tape, append two 1s to the fee tape, `MR(meter); MR(bound)`; read the terminal bound 0 once, then append a terminal 0 to each output tape. The body is exactly $13n+7$ core occurrences, plus fence selection, bound creation and positioning. The two numeral blocks are sealed, actually copied and, if requested, printed one bit per `OUT`. Their type is `tick/fee at fence f`. They report the old closed cut; the readout's own events increase the current meter. The complete pulse sequence determines that increase exactly. There is no requirement to print a number that already includes the act of printing that number, and no recursive free counter.
+
+An event identity is a receipt-cell occurrence in this append chain. A tape address is the port, its origin and a finite cursor path. The trace exposes all moves, reads, writes, extensions and origin resets, hence exactly which existing cell each occurrence touches. A request/block/row reference is a stored unary ordinal plus its actual creation chain; its numeric wire representation is constructed and copied using §57.3. An address can also be serialized by scanning its finite path and appending $U(a)$. Merely mentioning a mathematical address or event index in a proof does not supply such a serialization. No primitive emits an arbitrarily long numeric label.
+
+Preparation/version identifiers are complete public finite bit strings actually installed and copied. A preparation ordinal advances by paid unary increment independently of source content. A current-generation field records the accepted-update count, advanced after the original `accept` response; an attempt field advances on every call. Original identity never changes. These counters are distinct from the meter and may not substitute for it.
+
+**Lemma PR57.L2 (exact nonrecursive metering).** At every finite cut, meter receipts, tick pulses and charged fees have counts $n,n,2n$. Every requested closed-cut numeral is correct and finite, including when its readout creates more receipts.
+
+**Proof.** Each primitive appends exactly one receipt and emits exactly one tick and fee increment 2. Induction establishes the counts, beginning at the irreducible port. Fence ordinals are maintained by a separate paid routine whose bounds are finite; the selected fence existed before the readout. Its prefix has $n$ cells permanently, so the readout appends exactly $n$ and $2n$ ones. New receipts occur strictly after the fence and are excluded from the loop. The terminal zeros and output are paid. No meter value is an input to a primitive transition and no self-inclusive readout equation is used. $\square$
+
+### 57.5 Literal gate instructions and a terminating generator
+
+**Definition PR57.D4 (dynamic Boolean tape).** A generated gate record is the literal bit string
+
+$$
+1\;f_0f_1\cdots f_7\;U(d)\;U(a)\;U(b)\;U(c).
+\tag{PR57.05}
+$$
+
+The first bit 0 instead means end of program. Each record has length $13+d+a+b+c$. $f$ is the full truth table in input order 000,…,111; $d$ is the destination and $a,b,c$ are operand bit addresses on the specified private or public workspace tape. All four address fields are present, including for constants and unary gates. There is no immediate-width ambiguity, implicit next-PC or hidden arithmetic opcode. Unused operands point to the constructed zero cell. Instructions execute in record order.
+
+The fixed interpreter does the following: read header and eight truth-table bits into finite public control, moving once after each (18 occurrences); copy each complete unary field onto its own public address tape; seek/read the three operands; apply `BF(f)` once; seek/write the destination; resume at the next record. Copying an address-field bit uses `RD(code); EX(address); WR(address,bit); MR(address); MR(code)`, exactly five occurrences. All four field copies and their positioning are executed. The three operand values stay in latches 0–2. All public code, boundary and address scans use latch 4; the result in latch 3 survives destination positioning. No private latch value is tested by control. Let $P_g$ be the actual address-field positioning and scratch-sealing occurrences in this invocation, and $h_{g,r}$ the actual workspace head position before the $r$th seek. With $v=(a,b,c,d)$,
+
+$$
+I(g)=18+5\sum_{r=1}^4(v_r+1)
+ +\sum_{r=1}^4(2h_{g,r}+3v_r+3)+4+1+P_g.
+\tag{PR57.06}
+$$
+
+The 4 means three operand reads and one result write; 1 is `BF(f)`. $P_g$ is not an unnamed service charge: it is the sum of the `Home`, `Seek`, `CTL` and `WR` occurrences prescribed above for the actual four address tapes. Each newly cached field has a descriptor for its actual start offset; before each workspace seek its address head is positioned there by the complete `Seek` recipe on that public tape. Each such positioning is $2h+3b+3$, plus positioning its descriptor; each seal/control edge is one occurrence. The descriptor seeks terminate on the literal finite descriptor, whose start was represented by `Base` before its append, or by a full origin scan to its delimiter with its paid unary block ordinal. Such a scan counts delimiters by the unary increment/compare recipes, including those extra occurrences; it does not use a mathematical offset as an uncharged stopping test. Every delimiter scan uses `RD; MR` until that declared public delimiter. No positioning is a random-access primitive. Equivalently expand the recipe and count its finite event word; (PR57.06) groups that word. End-of-program costs one header `RD` plus its prescribed exit `CTL`. Initialization, generator work and later output/copy are outside $I(g)$ and are counted where executed.
+
+The gate generator is a native public routine, not a generated gate list. Its finite stack machine has frames `(kind, children left to visit, result references)` encoded by fixed tags and unary references. It first visits every child in order, pushing its finite expression frame; on completion it allocates one fresh result bit, emits (PR57.05) by `AppendWord`, and pushes the resulting reference. Literals emit constant truth tables; variable leaves emit projection tables. MUX emits all three children and then its truth table. A fold is a public loop over its declared finite index string. Bounds, addresses and offsets are computed by unary routines. Every `Emit(f,d,a,b,c)` writes all record bits by the append recipe; no instruction is assumed to exist before that write.
+
+The finite expression templates used here are exactly Boolean gates and the following bit recurrences. At each position an adder emits
+
+$$
+t=x\mathbin\oplus y,\quad s=t\mathbin\oplus c,
+\quad u=x\land y,\quad v=c\land t,\quad c'=u\lor v.
+\tag{PR57.07}
+$$
+
+It uses five gates per bit, including the final carry computation. Subtraction emits $\neg y$ at every bit and uses that same adder with initial carry 1; negation uses complement and addition of 1. Equality folds `(NOT XOR)` with AND, three gates per position. Unsigned less-than scans most significant first with old $e,l$, emitting
+
+$$
+z=\neg(x\oplus y),\quad n=\neg x,\quad u=e\land n,
+\quad v=u\land y,\quad l'=l\lor v,\quad e'=e\land z;
+\tag{PR57.08}
+$$
+
+this is seven gates per position because $z$ needs XOR and NOT. Signed comparison flips each sign bit before this comparison. Every bit MUX uses one full three-input truth table. All initial constants and copies are themselves emitted. Evaluating both arms means executing their gates even if their values will not be selected. Vector widths are chosen from public bounds before generation; all arithmetic values and even unused arithmetic arms lie inside the declared signed range. Bits are only a representation of these integers; overflow is never assigned an integer meaning.
+
+**Lemma PR57.L3 (noncircular generation and gate execution).** Every finite template and finite public loop bound yields a finite literal gate tape and a finite interpreter execution. Its instruction/address/extension trace is independent of private operands.
+
+**Proof.** A depth-first stack frame either descends to a proper subexpression or completes one visited child. The finite expanded expression forest, including all public fold iterations, bounds the number of visits; each `Emit` is a terminating finite append. The generator's arithmetic and allocator are native service routines already installed by the finite bootstrap. They do not call gate generation to instantiate themselves. The interpreter consumes one whole record at a time and stops at its fixed terminal 0. Field copying and seeking terminate by Lemma PR57.L1; every address has a publicly checked allocated destination. No private value bit controls an edge or head motion; truth-table evaluation changes only latch/data values. Thus a gate tape determines the entire precommit trace and its finite cost. $\square$
+
+### 57.6 Actual paid input, contexts and policy computation
+
+**Definition PR57.D5 (material supply).** Put $N=2H-1$. Private preparation is exactly $2N$ `IN` occurrences, in pairs, followed by their actual writes to $N$ token slots of the freshly allocated producer block. Each input bit has `IN; WR; MR`; the slots and their masks are allocated and zeroed first. The private choices define the source occurrence. There is no externally traversed variable-length tree or free $t\mapsto\operatorname{code}(t)$ routine. The choices are just the initial source material, whose ingress/write occurrences are charged. The typed valid packets below have a bijection with actual $\mathcal T_H$. Every actual $t$ is represented by its unique choices. This is a representation of the initial input, not a program selected by that input. An effective upstream creator, if part of a protocol, executes on the same tapes before these writes; its work and material are counted as supply work.
+
+The token alphabet is `PAD=00`, `alpha=01`, `beta=10`, `PAIR=11`. The active packet is the literal preorder tree code followed by PAD to length $N$. On all $N$ slots a generated circuit starts with need 1, closed 0, leaves 0, validity 1. PAD while not closed sets validity to 0: **padding is forbidden before closure**. A non-PAD after closure also sets validity to 0. Before closure PAIR adds one needed child slot; a leaf subtracts one and increments leaves. Closure is sticky when the updated need is zero. Invalid inputs never shorten the scan. The final test is validity, closure, need zero and $1\le$ leaves $\le H$. Explicitly, with old $(n,z,l,v)$ for need, closed, leaf count and validity, let $P,A,B$ test PAIR, alpha and beta, $L=A\lor B$, $T=P\lor L$, and $I=(\mathtt{PAD}\land\neg z)\lor(T\land z)$. Compute $n_* = n+[P]-[L]$, $n'=\operatorname{MUX}(T\land\neg z,n_*,n)$, $l'=l+[L\land\neg z]$, $z'=z\lor[n'=0]$, $v'=v\land\neg I$. Every candidate is computed before selection. These are bit-circuit templates made solely of the arithmetic/Boolean recipes already specified. A signed width $N+4$ suffices for all need/count arms, including unused need-minus-one at zero. Validity is committed only at the end. The source domain concerns valid preparations; malformed packets have the same finite validation schedule and a failure, with no target receipt.
+
+For an actual public context, the material packet contains its name and exact finite preorder token sequence, with its stored length. Every symbol is generated by the actor's public program or received by a charged `IN; WR; MR` sequence. The complete packet is parsed, copied and retained on paid tapes. A context given as an effective expression is expanded by the public stack generator: a leaf appends its token; a branch appends PAIR and pushes right then left, with every frame and token actually written. The number of unvisited expression nodes decreases after each completed expansion. Arbitrary effective context-creation computation is included through the policy interpreter below. No semantic $d_i(v),h_i(v)$ or ownership/name test is a free supplier. Contexts with $d>H$ are still completely constructed, validated, retained and processed by the service. Identical algebraic values or equal leaf counts do not replace the named actual tree.
+
+An effective original policy is supplied as a finite deterministic Turing transition table and its finite public initial tape; both are installed bit by bit by the same append/ingress routines. A row contains unary state and symbol codes, a new state/symbol, and one of the three finite directions. The interpreter scans every row of the sealed table for each simulated step, compares complete unary state/symbol codes using the service routines, stores the unique matching row, writes the simulated symbol and new state, and moves the simulated head by one. A virtual two-sided tape is represented by two finite stacks and a current symbol; pushing is `AppendWord`, popping scans the finite stack to its last sealed frame and constructs a new prefix version. Blank extension uses `Allocate`, not an infinite blank tape. State and head numerals are never assumed stored by the mathematical simulation. A finite alphabet may be encoded into fixed blocks, with their block width part of the installed program.
+
+Input to this interpreter is precisely the public initialization and original projected record. Output is a request plus full named context packet, or stop plus a proposed target. Writing all those bits is policy work. A restart-on-history policy or a persistent-state policy is represented by its own table; retained machine tapes supply its actual state. Every effective deterministic original protocol has such a finite machine description; the specific step-by-step interpretation just given establishes the supply connection, rather than appealing to computability to skip it. The construction does not decide whether a program terminates. A lawful finite computation is one whose actual table execution reaches its output state in finitely many simulated steps. Each such step is itself a finite paid tape schedule. Only public data or already committed responses influence that policy's branches.
+
+**Theorem PR57.T1 (literal source representation and parser correspondence).** Valid fixed packets are in bijection with $\mathcal T_H$; private preparation has the same public trace for every valid source. Their active tokens transduce faithfully to `AtomicPrefixParser.code`.
+
+**Proof.** Open slots initially number one. PAIR consumes one slot and creates two; a leaf consumes one. Before closure there is no PAD and after closure there are only PADs. Thus closure separates exactly one complete ordered binary tree from its suffix. There are $m$ leaves and $m-1$ branches, hence $2m-1\le N$ active tokens. Conversely structural preorder traversal has these properties and uniquely determines the packet. The actual primitive ingress and the generated validation tape have fixed public length/addresses. Secret validity/count values are only circuit operands. The transduction is PAIR $\mapsto[\mathrm{false}]$, alpha $\mapsto[\mathrm{true},\mathrm{true}]$, beta $\mapsto[\mathrm{true},\mathrm{false}]$, with PAD omitted only after closure. By structural induction this is exactly the pinned parser code of the same `FreeMagma Bool` tree, with true labeling alpha. An $m$-leaf token code becomes $3m-1$ bits. If the transduction is executed internally, it reserves $2N$ slots, forms lengths 0/1/2 and prefix offsets by fixed circuits, scatters with equality masks, retaining the result and its active-length mask privately. Public context transduction may serialize its canonical bit string by paid public work. No private source transduction is published, and no private length is used as an address or a public precommit loop bound. The parser's parse/remainder equivalence and injectivity therefore apply to this transduced active word, not to the two-bit token alphabet itself. $\square$
+
+### 57.7 The complete whole-action source schedules
+
+All private source work is on generated fixed gate tapes. Each call computes $A_i=[X_i\ne\mathtt{PAD}]$ and $L_i=A_i\land\neg A_{i+1}$, with the public sentinel $A_N=0$, by full scans of the $N$ slots. The unique last-active mask is therefore literal, not a private traversal stopping condition. These masks and private offsets are operands, never addresses. Every candidate array is freshly allocated and fully initialized. Counts/offsets use signed width $W=3N+C+8$, where $C$ is that call's public candidate capacity; this exceeds every intermediate absolute count and offset, including arithmetic arms later discarded.
+
+For $\rho$ an active PAIR emits `(PAIR)`, alpha emits `(beta)`, beta emits `(PAIR,beta,alpha)`, and PAD emits the empty chunk. The chunk length $\ell_i$ lies in 0,…,3 and the private offset is $o_i=\sum_{k<i}\ell_k$. Reserve $C=3N$ token slots, initialized to PAD. For every $j<C$, $i<N$, $r<3$ and each token bit, OR the terms
+
+$$
+[r<\ell_i]\land[j=o_i+r]\land\operatorname{chunkbit}(i,r).
+\tag{PR57.09}
+$$
+
+Every term and every fold gate is executed. The generator's loops have public bounds $C,N,3$, and each equality/comparison is the complete $W$-bit recipe. The resulting candidate is its actual preorder concatenation, followed by padding.
+
+For a context of $d$ leaves and $M=2d-1$ active tokens reserve $C=1+N+M$. Slot zero is PAIR. In `Left(v)`, place context token $k$ at $1+k$ and active source token $i$ at $1+M+i$, using a full $j$-by-input equality scatter. In `Right(v)`, place active source token $i$ at $1+i$, and context token $k$ under all masks
+
+$$
+L_i\land[j=2+i+k].
+\tag{PR57.10}
+$$
+
+The source's last active token is $i$; thus $2+i$ is the first context position. All $i,k,j$ are scanned, whether their masks are true or false. Nonmatches contribute zero and unused suffix positions are PAD. The two directions preserve actual brackets and order.
+
+The candidate parser of §57.6 scans all $C$ slots, retaining full grammar/leaf-count results. It computes $g=[\lambda({\rm candidate})\le H]$ together with candidate validity. At every original source slot and bit it executes `MUX(g,candidate_i,old_i)` and writes the result to the current-source block. All $N$ slots are written. The block is unavailable throughout this phase, and the successor is logically committed only after its final write. On rejection each old source bit is retained, with the same source-block/preparation identity and accepted-generation count. Scratch arrays and offsets are erased by whole scans; their allocated cells remain counted. The only committed response is the one-bit guard result. The candidate's $E$ is neither evaluated for an update response nor exposed.
+
+A Read reserves four $D=H+5$-bit signed vectors in the faithful basis $(1,S,A,SA)$, starts with $(x,y,u,v)=(1,0,0,0)$ and at every token computes both
+
+$$
+R_\alpha=(u,v,x,y),\qquad R_\beta=(u-v,-u,y,x+y).
+\tag{PR57.11}
+$$
+
+It selects $R_\alpha$ on alpha, $R_\beta$ on beta and the old tuple on PAIR/PAD, evaluating every candidate and selection bit. It converts at full width to the original faithful coefficient tuple
+
+$$
+(c_0,c_A,c_B,c_{AB})=(x+y,u,v,-y).
+\tag{PR57.12}
+$$
+
+A fixed-length $4D$-bit response block is written completely before its response-commit token is released. That release makes one complete typed response available; it does not perform an uncharged copy or serial transmission. Subsequent delivery copies/prints the block through the routines below. Canonical signed-binary trimming, if desired, happens only after commitment and is a public computation on the returned original $E$. Equal coefficients denote precisely equal original responses. An accept/reject block is likewise complete before release. At no precommit cut is any response block readable by the actor.
+
+**Theorem PR57.T2 (actual source and original Read conformance).** For all $H,t\in\mathcal T_H$, every original context of arbitrary finite size, and every finite lawful call sequence, these schedules give the exact original responses and evolving actual trees. Rejection preserves the original source; Read does not mutate it.
+
+**Proof.** The representation theorem supplies exactly the current literal preorder code. The chunk substitution is (PR57.01) on each token and preserves branch tokens, so concatenating chunks gives the exact code of $\rho t$. Distinct output offsets have a unique contributing chunk position; the equality OR therefore writes that code and PAD suffix. The left/right equations give PAIR followed by the exact two actual subtree codes in their specified order. The parser counts the complete candidate, so $g$ is exactly the original whole guard, including equality at $H$. If accepted, its $2\lambda-1$ active tokens fit $N$; if rejected, every MUX gives the old bit. Nothing splits a whole context into sequential interface calls.
+
+For Read, $S^2=S+1$ and $SA=B$ give the displayed right-multiplication formulas. Preorder visits leaves in their original left-to-right order. Induction through the $N$ slots therefore gives the product $E(t)$; PAIR and PAD are identities of the scan, not source leaves. The coefficient $\ell_1$ norm grows by at most a factor two per active leaf, so selected coefficients have magnitude at most $2^H$. Even the unselected one-step candidates and final conversion have magnitude at most $2^{H+2}$. Signed width $H+5$ contains them strictly, with no overflow. The Read program writes only workspace/response cells. Induction over calls now gives exact source and response conformance. $\square$
+
+### 57.8 Observation at every cut and one causal simulator
+
+**Definition PR57.D6 (complete visible trace).** At each primitive cut observers see the current public phase/native instruction identity, finite owner/token state, busy/idle availability, port and exact cursor-cell occurrence touched, move direction and extension, channel direction, tick pulse and fee increment, and public material/instruction fields actually released or transmitted. A cursor-cell occurrence is identified by port and its origin/move history; its printed numeral is available only after a paid serialization. Block identities, stored ordinals, seal/handoff occurrences and declared immutable reference chains are public. Public code, context packets, policy parameters, delivered archives, receipts and task output are accessible only through their declared paid reads/copies. Private source bits, source-parser counts, masks, offsets, gate latches and unreleased candidate/response blocks have no observation port. Physical electrical activity is not an additional label.
+
+An original response commits at its complete response-block release. The observation correspondence consumes precisely that original response then, before simulating its delivery or any subsequent response-dependent work. This defines partial-delivery cuts too: after release the simulator may serialize the acquired $y$, but before release it may not inspect $y$. Availability has exactly the same pattern for all valid sources with the same public history. Original calls are admitted only at idle cuts; all intermediate generator, allocation, gate, copy and control cuts are present in the microtrace with their unique next transition.
+
+Let $\omega$ be the actually committed original prefix. The public simulator is the very same native control, public generator, allocator, policy interpreter and copy schedules, with private bit values erased. For each public request it executes the public parameter work and builds the same gate tape; executes gate seeks/writes using arbitrary dummy bits while retaining only their labels; stops at response release; consumes the single original response $y$; then fills the now-public response block with the faithful encoding of $y$ and executes all postcommit work. It maintains its actual unary ordinals, addresses, meter receipts and public tapes. Preparation uses dummy private input bits with the same $2N$ ingress labels and validation schedule, with the domain's valid-preparation result. It does not select an enumerated representative source and it never maintains a speculative original source or initial target.
+
+**Theorem PR57.T3 (uniform prefix-causal full observation correspondence).** This is one effective source-uniform correspondence covering every allowed cut, with exact instructions, addresses, availability, identities, ticks/fees, preparation, material creation, growth/copy, verification and consumer use. Erasing its added microstructure yields precisely the unchanged original trace.
+
+**Proof.** Before a response release, the source affects only private circuit bits. Lemma PR57.L3 gives the same code, control edges, tape movements, allocations and cost counts for equal public initialization, prefix and request. Fixed preparation length likewise gives equal ingress/validation labels. Each receipt side effect is fixed. Source-data writes differ privately, but their cell occurrences and instruction labels agree. Theorem PR57.T2 supplies exactly one original $y$ at release; no earlier label uses it. Every later branch, trimming choice, copy length or accepted-generation increment may depend on that $y$, which is now in the acquired prefix. Policy, context creation, archive, verifier and consumer routines read only that prefix and public inputs, so their complete subsequent computations are simulated literally. Induction on primitive cuts, interrupted only by these original response releases, gives equality of the complete visible trace. Truncating the execution at any cut truncates the same simulator run, so the maps are prefix compatible. Original enabledness is idle/menu, and micro enabledness is the prescribed successor on both sides. Projection keeps each actual original request and exactly its response, with the same source successor and stop decision. No future response, private initial target or representative source is used. $\square$
+
+In particular a fee or address threshold does not supply a new source distinction: it is a function of public input and responses already acquired. The simulator itself can be run on paid tapes if a protocol elects to use it; its computed work is then additional public policy work, not a free selector.
+
+### 57.9 Owned growth, complete copying and authentic records
+
+**Definition PR57.D7 (records and channels).** Producer $P$, actor $A$, verifier $V$ and consumer $C$ have disjoint archive/workspace ports. A mailbox is a separately constructed tape interval, not an alias of an archive or receiver snapshot. Sender writes, seal, token handoff, receiver copy and acknowledgement are serial. A sealed sender block remains immutable throughout the copy. The complete destination length is allocated/initialized first. For a $k$-bit payload, after actual positioning, the sender loop is `RD(sender); WR(mailbox); MR(sender); MR(mailbox)` for each bit, then one seal `CTL` and one token handoff. The receiver loop is the same four occurrences from mailbox to destination, then one seal and one acknowledgement handoff. Its body has exactly
+
+$$
+8k+4
+\tag{PR57.13}
+$$
+
+core occurrences. Allocation/zeroing, all homes/seeks, unary length/identity descriptors and any serial output are additional occurrences, disjoint from these two loops. The head movements are part of this count and cannot be omitted. A destination becomes readable only at its final seal. Source, mailbox and destination coexist. Mailbox data and markers may be retained; all constructed storage is counted.
+
+Every original call, including every reject, appends one producer row. Its literal fields are length-framed finite bit strings: model/version/preparation identity, `INITIAL-SOURCE` identity, request ordinal, previous row reference, exact original request, complete context name and code reference, exact committed original response, accepted-generation count before/after, schedule/template identity, start-fence and response-commit-fence references, and the row's creation/seal occurrence chain. Natural fields use $U(n)$. A Read field contains the exact coefficient representation. A rejected update has only reject and no candidate value. Each context reference points to the complete actually retained packet, never to a representative with the same leaf count or $E$. Length framing is `U(length)` followed by that many actual bits; its prefix and payload are produced by the append routines.
+
+Start and response-commit fence numerals are obtained by the closed-cut scans of §57.4. They refer to those closed cuts, not to the future end of the row's own serialization. Row completion is a distinct seal occurrence. There is consequently no self-referential fee-range field. The fee interval between start and response commitment is obtained by subtraction of the two represented fee numerals; row/copy completion costs are separate exact event intervals. Old row fields are never edited. Each complete row is copied to $A$ through a distinct mailbox; context material is copied as well if not already present there.
+
+At stop, $P$ freezes the actual row/context prefix and copies it completely, with its framing and descriptors, through a fresh mailbox to a fresh $V$ snapshot. $P$'s archive, $A$'s archive, mailbox and $V$'s snapshot all coexist. Verification begins only after complete snapshot seal. There is no arbitrary external transcript-import port. Names are checked, but authenticity comes from these allowed write/copy transitions. A row's original-preparation field is never changed to its current-generation field. Rejected attempts still advance the request ordinal and retain their actual row.
+
+**Lemma PR57.L4 (copy and archive authenticity).** Every readable receiver block equals its designated sealed sender block bit for bit and retains that sender's original identities. Every verifier snapshot is exactly the producer's frozen actual prefix.
+
+**Proof.** Each loop reads and writes the same indexed bit once; positioning and constructed length ensure its exact interval. During the sender loop only the sender owns the mailbox write token; during the receiver loop it is sealed and the destination is inaccessible until completion. Induction on $k$ gives bit equality. The framing/identity payload is part of that same copy, not generated by a receiver's choice. Induction over appended rows gives continuity, immutability and unchanged original preparation identity. Freezing precedes the snapshot copy, so the snapshot is the actual frozen prefix. This is ideal exclusive-ownership provenance, not a cryptographic theorem about hostile writers. $\square$
+
+### 57.10 Whole-fiber verification, literal tag-2 decoding and actual use
+
+**Definition PR57.D8 (exhaustive paid record verifier).** $V$ uses only its snapshot, copied public initialization/prior and proposed target. It has no source port. For an explicit enumeration without a hidden table, form all length-$N$ token words in base four: start at all PAD; increment by scanning every slot with a carry from the last slot, emitting a fresh version; stop after all PAIR. This is exactly $4^N$ words. Parse every word with the fixed circuit of §57.6, retaining the valid ones. By Theorem PR57.T1 they enumerate $\mathcal T_H$ once. Apply the declared prior to every valid word, paying its actual table/program computation. Exhaustive whole scanning never stops at its first survivor or disagreement. Invalid words are fully processed by the parser and then skipped publicly; they are not sources.
+
+For each retained $s\in D$, save its initial target in a distinct initial-target block, then replay **every** authentic original row from the beginning on a separate current-candidate block. A Read row is compared to the exact computed current $E$. An accepted update must have the true whole guard and installs the actual complete candidate. A reject must have the false guard and preserves the old candidate. All context packets are loaded from the snapshot and processed on their actual side. The running survival bit is the AND of all comparisons; a false bit never shortens replay. Original metadata, row continuity, framing, identities and copy references are scanned completely. Verification is a public computation on enumerated candidates and acquired data; even source-dependent branches within a candidate calculation are branches on public enumerated values. Using the same fixed circuits is sufficient and fixes all replay costs explicitly.
+
+Initial $q_H(s)$ is computed from this enumerated $s$, not from the actual hidden source. Count $(a,b)$ by full token scan and choose the tag using (PR57.02). To obtain tag 2, directly fold the original leaf contributions
+
+$$
+g_\alpha=((0,0,1),(0,1,1),(0,1,0)),\qquad
+ g_\beta=((0,1,1),(0,1,0),(0,2,1))
+\tag{PR57.14}
+$$
+
+from the temporary triple unit using, in each coordinate,
+
+$$
+(e,k,p)(f,\ell,q)=(e+f+p\ell\bmod2, k+(-1)^p\ell, p+q\bmod2).
+\tag{PR57.15}
+$$
+
+The unit is an arithmetic initialization, not an empty source. These folds give $u_0,u_1,u_2$ for that same actual candidate $s$. Initial and current blocks stay distinct even after irreversible updates.
+
+A precise wire encoding is tag $U(j)$ followed by the fields of (PR57.02), in that order; pairs/tuples have fixed arity and each finite string is length framed. A signed integer uses a sign bit and a length-framed magnitude, zero with sign zero. Tag 2 is `U(2); (u0,u1,u2); (a,b)`, with each $u_i=(e_i,k_i,p_i)$ in that order. It decodes literally to $(2,\eta)$.
+
+If a proposal arrives instead as tag plus three coefficient windows and composition, a paid adapter first converts each window from the original basis by
+
+$$
+(c_0,c_A,c_B,c_{AB})\mapsto(c_0+c_{AB},-c_{AB},c_A,c_B)
+\tag{PR57.16}
+$$
+
+and checks that only one of the even/odd coefficient pairs is nonzero. For the nonzero pair $(x,y)$ it enumerates the full pairs for $S^0$, $S^1$, $S^k=(F_{k-1},F_k)$, $k\ge2$, and $S^{-n}=(-1)^n(F_{n+1},-F_n)$, $n\ge1$, testing both global signs. Fibonacci values are generated by actual additions; stop once the next tested Fibonacci magnitude exceeds $\max(|x|,|y|)$, after also testing the boundary pair. Because $F_{n+2}\ge2F_n$, only finitely many pairs can match. A convenient total schedule tests $k=0,1$, and then all positive/negative pairs with indices through the first $r+2$ such that $F_r>\max(|x|,|y|)$; redundant final tests avoid any boundary ambiguity. The normal-form uniqueness supplies a unique $(e,k,p)$ or a failure. Reverse conversion is paid Fibonacci generation with the same formulas and basis change. Thus coefficients and normal coordinates are faithfully interconverted on their actual image; mixed-grade/zero/nonunit inputs fail. The adapter uses only returned/proposed coefficients, never an additional source Read. Complete pair tests handle negative exponents and $F_1=F_2=1$ without approximate logarithms. Bit arithmetic uses the same literal gates with sufficiently promoted public widths.
+
+Let $b_s(\omega)$ be the final replay survival bit. Compute by the complete enumeration
+
+$$
+\mathsf{nonempty}=\bigvee_{s\in D}b_s(\omega),\qquad
+\mathsf{constant}=\bigwedge_{s\in D}
+ (\neg b_s(\omega)\lor[q_H(s)=\tau]).
+\tag{PR57.17}
+$$
+
+Accept iff metadata/proposal checks, nonempty and constant are all true. Empty fibers fail; ambiguous fibers fail. Retain a typed `INITIAL-q_H` receipt containing the literal original target, immutable prefix end, original preparation/version identity, prior description, verification occurrence and actual snapshot reference. Failure yields a refusal with no accepted receipt.
+
+Consumer $C$ receives a complete actual copy through a fresh mailbox. It scans framing, type, prior, original identity, snapshot/prefix end and receipt-creation references, compares every target field to its proposed task value, and checks the actual accepted receipt seal. Only after all checks does it allocate, initialize and write its task-output block by bit copies. The output's type is `INITIAL-q_H`. A wrong type, malformed receipt, wrong original identity, ambiguous fiber or refusal produces no task output. These checks are executed before the decision, and failures have paid finite schedules too. A receipt remains bound to that frozen prefix; a later current source cannot reinterpret it.
+
+**Theorem PR57.T4 (record-only soundness, complete-fiber acceptance and use).** For every authentic prefix on an actual $t_0\in D$, that source survives replay. A target proposal is accepted exactly when it is constant on the entire nonempty compatible original-source fiber and the declared structural checks succeed. Every consumer output equals the actual initial $q_H(t_0)$.
+
+**Proof.** The enumeration is complete and duplicate-free by Theorem PR57.T1, and the declared prior retains exactly $D$. Lemma PR57.L4 gives the actual rows and contexts. Theorem PR57.T2 applied row by row to $t_0$ makes every comparison true. Conversely a surviving $s$ has exactly every recorded original response under the same requests and complete contexts; induction gives precisely membership in the original record fiber. Initial target computation uses (PR57.14)–(PR57.15), the pinned group law and the tag tests, so it is the literal $q_H(s)$. The coefficient adapter is an injective change of basis followed by exhaustive testing of the unique normal form; hence it does not change that target. Formula (PR57.17) is exactly nonempty fiber constancy, with no survivor selected as actual. Applying constancy to $s=t_0$ proves $\tau=q_H(t_0)$. Actual receipt copying and complete consumer checks retain that identity and value; its bit writes decode to precisely that target. No initial-target oracle was used. $\square$
+
+### 57.11 Complete occurrence partition, simultaneous storage and protocol transfer
+
+**Definition PR57.D9 (same-execution costs).** Every core occurrence has its native opcode and exactly one routine-purpose tag. The tag is installed in public control at entry and restored at exit. The disjoint purpose classes are: boot/control description; input/context/program/prior supply; standalone allocation/initialization/descriptors/promotion/erase; unary arithmetic, identity and closed-cut readout; expression generation and instruction construction; dynamic source-gate execution including fetch/seek; policy table interpretation and request construction; archive framing/append/freeze; channel transfer; verification/enumeration/replay/adapter; receipt/consumer checking and task output. These are tags on actual occurrences, not sums of overlapping whole-phase bounds. Untagged helpers such as `Home`, `Seek` and `Append` inherit the caller's tag. Explicit calls of `Allocate` or `Promote` enter the allocation tag. The gate interpreter inherits verification during replay and has the dynamic-source-gate tag during a source call. Consequently a verification-gate `RD` is counted once in verification with subtag `gate-fetch`. A code-field `EX` inside the gate fetch is dynamic gate work, and is also one constructed cell in the separate storage coordinate; it is not charged again as standalone allocation. A channel loop's `WR` is channel transfer, while its destination's earlier allocation/zeroing is allocation. A tag change is itself a `CTL` occurrence assigned to its entering routine. Failure and stop edges carry their actual phase's tag. The independent opcode partition below further identifies every constructor, read, write, move, evaluation, input, output and control occurrence.
+
+Let $n_{p,o}(r)$ count the actual core occurrences with purpose $p$ and opcode $o$ in a finite execution $r$. Let $e(r)=\sum_{p,o}n_{p,o}(r)$ and let $a(r)$ count ordinary `EX` constructions plus actual finite boot cell constructors, excluding the meter. Then
+
+$$
+T(r)=e(r),\qquad F(r)=2e(r),\qquad
+F_{\rm core}=\sum_{p,o}n_{p,o}(r),\quad F_{\rm meter}=e(r).
+\tag{PR57.18}
+$$
+
+Thus there is no undefined “paid descriptor work” summand. Counts are obtained by the actual recipes: `Append` is 3, `Allocate` is $5k+1$ plus its stated positioning/descriptor events, `Seek` is (PR57.04), `Gate` is (PR57.06), complete channel body is (PR57.13), and a selected closed-prefix readout body is $13n+7$. Sequence adds these expanded event-word lengths; a public loop sums its body over its actual stored finite bound; a public branch uses its actual chosen event word. Gate counts for arithmetic are the bit recurrences of §57.5. Generator instruction writes are three occurrences per written code bit plus actual source/descriptor/ordinal reads and moves. Boot writes its complete native encoding, masks/markers and program bits with the same primitive rules. Policy costs sum complete table-step scans and simulated-tape work. Verification costs sum all $4^N$ parser executions, every prior evaluation and every row replay for every retained candidate. Nothing assigns these unexecuted sums as a free prepaid certificate.
+
+This recurrence is an effective exact evaluation of a finite schedule, not an efficiency estimate. At any unfinished permitted cut the completed prefix is counted in the same way. Private values affect Boolean results but not the precommit event word; postcommit public branches use only actual acquired data. Allocation costs never include a channel loop or instruction fetch a second time. Erasure is work and does not recover a previous construction charge. The mandatory meter occurrence belongs only to $F_{\rm meter}$, even when its associated core event is a readout scan.
+
+All constructed ordinary cells are retained in this model, including erased/replaced scratch versions. If $A(c)$ is their number at cut $c$ and $n(c)$ the meter receipt count, the actual simultaneous storage is
+
+$$
+S(c)=S_0+b_{\rm ctl}(c)+8A(c)+8n(c),\qquad
+S^{\rm peak}(r)=\max_{c\preceq r}S(c).
+\tag{PR57.19}
+$$
+
+Here $b_{\rm ctl}(c)$ counts the installed finite control/token/latch bits already constructed; tape-encoded dynamic code/descriptors are in $A(c)$. The fixed finite primitive port is included in $S_0$; head marks on all subsequently constructed cells are included in the factors 8. A head is a marked-cell relation, not an extra free accessible address integer. Storage is monotone, so its finite-run peak occurs at the last cut. The sum includes simultaneously the current private source, all candidates/offsets, code/address tapes, native description, policy state, all complete context material, producer/actor archives, distinct mailboxes, verifier snapshots/enumeration/replay, initial/current target blocks, receipts, meter and consumer output. At a snapshot of $k$ retained archive bits, the four independent archive copies contribute at least $4k$ payload bits (and their actual eight-bit cell encodings, framing and descriptors), while all other constructed cells coexist. No separate maximum is substituted for this sum.
+
+**Theorem PR57.T5 (whole-runtime progress and all finite protocol transfer).** Every finite lawful original request sequence with finite effective supply/control work has a unique finite lifted execution through all its preparation, services and deliveries. Every pointwise terminating uniformly correct effective original protocol on its declared $D$ lifts to the same original calls, responses, stop and initial proposal, followed by accepted verification and actual correct consumer output. There is no fixed bound on request count, context size, reference width or total memory.
+
+**Proof.** Bootstrap is a finite literal installation. Lemmas PR57.L1–L3 give termination of each tape routine, parameter construction, generator and fixed gate execution. Material-expression expansion consumes a finite expression; a lawful policy step has a finite table scan and finite stack work, and a lawful local policy computation has finitely many such steps. A source call has finite public nested bounds $N,C,W,D$ and a finite gate tape; copy/framing loops have the already constructed finite payload as bound. Meter readout stops at an existing fence. The verifier's outer base-four enumeration has exactly $4^N$ words; each prior computation terminates by its declaration; each replay has the frozen finite row count and actual finite context bounds. Its adapter Fibonacci loop terminates by geometric growth, and its consumer loops consume finite sealed blocks. These give explicit finite bounds for the subroutines that can create new work; a lexicographic rank that omits newly created allocator work is unnecessary.
+
+A finite concatenation of these terminating schedules terminates. At each unfinished microcut the native routine has a prescribed successor. Recursive construction of that successor yields a nonempty unique execution; there is no optional wait or scheduler fairness hypothesis. Each finite cut has finitely many `EX` and receipt constructions. More lawful requests start fresh finite schedules, never a quota failure or wrap.
+
+For transfer, run the same installed policy table on the projected authentic original history. Theorem PR57.T3 and source conformance give exactly its old next decision and old response, by induction on original cuts. Its actual finite local work is paid, so pointwise termination gives a finite stop prefix. For any $s\in D$ producing that same terminal record, determinism gives the same stop proposal. Uniform correctness of the original policy makes it $q_H(s)$ for every such $s$. The actual $t_0$ supplies nonemptiness. Theorem PR57.T4 therefore accepts and produces the actual initial target at the consumer. This is a total realization of the interface and all lawful finite behavior; correctness of a chosen acquisition policy remains exactly its original domain-specific property. $\square$
+
+**Corollary PR57.C1 (the unchanged impossibility).** For $D=\mathcal T_H$ and $H\ge9$, the realized interface has no uniformly correct deterministic effective initial-target acquisition protocol using its permitted observations.
+
+**Proof.** Any such finite acquisition protocol can be run on the original responses with the effective causal simulator supplying all additional microobservations. Its effective local work becomes original local computation. It would then violate pinned TM31 Theorem 31.4. In particular after a first irreversible merge the new verifier rejects an ambiguous initial-target fiber; additional journal, addresses or record copies are functions of the same acquired original history and cannot distinguish it. $\square$
+
+### 57.12 Edge cases, falsifiable boundaries and immutable suppliers
+
+PAD before closure is a substantive error: at $H=2$, `PAD,alpha,PAD` must fail while `alpha,PAD,PAD` succeeds. A rule that only checks final need and absence of active tokens after closure accepts both and loses the literal-code bijection. At $H=1$, alpha has tag 1: its first $\rho$ still has one leaf and accepts, and its second has two leaves and rejects. Beta has tag 0 and its first $\rho$ rejects. A rule equating acceptance with strict leaf growth mishandles alpha.
+
+Whole action and source identity matter even for immediate rejection. A context larger than $H$ is allowed; both concatenations are fully processed and rejected without changing the source. Splitting it into leaf appends can accept an initial fragment and is a different operation. At $H=9$, let $X=\beta\beta\alpha\beta\beta$, $Y=\alpha^9$ and $Z=\alpha\beta^4$, each with fixed left-associated brackets. $X,Y$ have the same initial $A$ and post-$\rho$ $B$, yet initial compositions $(1,4)$ and $(9,0)$. Their shared Read/accept/Read/Right(alpha)-reject prefix has at least two initial targets and only one current tag-0 boundary. It must not receive a single initial-target receipt.
+
+For $t=\langle X,\alpha\rangle$ and $u=\langle Z,\alpha\rangle$, both initial boundaries at $H=9$ are $(0,1,6)$; both $\rho$ candidates have ten leaves and reject. Their candidate $E$ values differ: the first is $-1$, the second is $(BS^4)B=-2-3AB$, since $S^4=2+3S$. In the pinned representation $A=\operatorname{diag}(1,-1)$, $B=\left(\begin{smallmatrix}1/2&1\\-5/4&-1/2\end{smallmatrix}\right)$, this second value is $\left(\begin{smallmatrix}-7/2&-3\\-15/4&-7/2\end{smallmatrix}\right)$. Publishing that rejected value breaks Theorem PR57.T3. Similarly the private preparation code lengths for $X,Y$ are 9 and 17 tokens; emitting those lengths publicly would add a distinction absent from their initial Read. Fixed $N=17$ preparation avoids it. A finite-width ordinal or a fixed request cap fails on a sufficiently long finite Read sequence. A readout that scans the live meter end rather than a pre-existing fence need not terminate: its scan events create new receipts to chase.
+
+The construction assumes the declared finite-symbol primitive machine, including its one-cell event receipt side effect and ideal exclusive ownership. It supplies no extra information about the original source. An alternative primitive machine must redo the schedules and observation proof; costs are not representation independent. The existence result does not claim efficient circuits, minimal storage, optimal policy computation or a polynomial verifier. It does not decide arbitrary program termination, prove hostile-message authenticity, handle concurrent/interrupted calls, noise, finite physical exhaustion, speculation or native timing. All-source interface realization is distinct from all-source initial-target acquisition. The realization theorem has no fixed request bound or external runtime-realization premise. Native software and mechanized checking of this finite-control description remain separate validation work, not premises silently used here.
+
+The immutable supplier revision for all links below is `17b26a61db5577d2f67031c777e9d86e91c3e617`. The following exact subsection roles delimit the reused facts; they supply no uncharged runtime service.
+
+| immutable supplier | precise reused fact |
+| --- | --- |
+| [AtomicPrefixParser.lean, theorem `result`](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/D5/S3/Arith/FibonacciAtomic/AtomicPrefixParser.lean#L49) | literal leaf `[true,b]`, branch `false::left++right`; parse with actual remainder, injectivity, prefix freedom and complete decode; the transduction is proved in PR57.T1 |
+| [GenealogicalFiberTransport.lean, `Source`, `substitution`, `composition`](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean#L31) | `FreeMagma Bool`, actual ordered substitution and leaf composition |
+| [Atomic §355, Definition 355.1 and proof of Theorem 355.3](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#355-clifford-叶积的组成余数与进位恢复边界) | the specified quadratic form, Clifford leaf product, relations and faithful four-coefficient basis |
+| [Atomic §356, Lemmas 356.2–356.3](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#356-连续-clifford-叶积窗口的尖锐闭合与历史纤维) | same-source three-window identities and grade-preserving conjugation; no different source model |
+| [Atomic §357, Lemma 357.2](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#357-全原树-clifford-历史的有限字符与尖锐算术恢复) | integer subring and original-basis coefficient multiplication |
+| [TM §28.1–§28.2, Lemma 28.1, (28.3), (28.5)](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#281-来源整数正规形与六步运输) | unique normal coordinates, actual multiplication and leaf triple contributions |
+| [TM §29.1, Definition 29.2](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#291-同一来源与叶阈值合同) | literal $\eta=(\mathbf u,c)$, used in original tag 2 |
+| [TM §30.1, (TM.3003), Lemma 30.1 and Theorem 30.2](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#301-三个窗口与固定上限的分层记录) | exact fixed-$H$ whole-action/reject contract and target |
+| [TM §31.1–§31.2, Definition 31.1 and Theorem 31.4](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#312-初始边界的精确八叶阈值) | common initialization, initial-target acquisition quantifiers and full-family $H\ge9$ impossibility |
+| [TM §48.5, Proposition 48.10](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#485-已返回系数的付费精确转换) | already-returned exact coefficient adapter, including negative powers; 48.10 is a proposition within subsection 48.5 |
+| [TargetRecoveryCriterion.lean, `target_recovery_criterion`](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean#L37) | nonempty-source fiber-constancy criterion; PR57.T4 supplies its actual record fiber by replay |
+| [Observer-relative §§58–64, especially Definitions 60.3, 61.1, 61.3 and 64.1](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#64-实际字面调度的完整符号费用与空间) | ownership, actual copies, consumer type/use and logical-unit accounting templates; its fixed widths/request bounds and atomic numeral maintenance are not imported |
+| [Process geometry §3, Theorems 3.2 and 3.4](https://github.com/the-omega-institute/trureturing/blob/17b26a61db5577d2f67031c777e9d86e91c3e617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md#3-可执行任务商与联合拼接) | legality, labels, successor and finite adaptive trace coordinates must all be retained; ordinary PR57.T3 proves them for this runtime |
+
+The supplier facts concern their stated actual images, exact representations and contracts. A mathematical normal form, finite source set or abstract recovery map alone is not a supply channel. Every material, representation conversion and control computation used above is connected to its own finite paid transitions.
+
+## 追加锚（本行以下为增补区）
+
+## 58. 完整单位实际源的四分之一条件供应与原始目标逆解
+
+在固定活上限和原 TM30 接口下，真实供应标签可以选择不同的实际上下文。本章给出完整单位历史族上的一个统一构造：对每个整数 $H\ge8$，以 $\lceil\lfloor H/4\rfloor/4\rceil$ 个真实供应符号恢复未修改初始来源的原 $q_H$，同一次执行不作 `Read`，至多接受一次 $\rho$，并至多作 $\lceil\log_2H\rceil+3$ 次整来源调用。承重的新论证是覆盖完整目标三角形的标签分割及其实际记录逆解；实际正源生成、行为商、材料传输、终端取得和有限规划沿用既有结果。该结论以精确同源的真实供应为条件，并不供应一个免费生产者。
+
+### 58.1 原树、原目标与真实供应的量词
+
+<a id="TM58-D1"></a>
+**定义 58.1（完整实际单位族与不变的任务）。** 原树为自由有序非空二叉树 $t::=\alpha\mid\beta\mid\langle t,t\rangle$。相等关系保留叶序与全部括号。替换逐树定义为 $\rho(\alpha)=\beta$、$\rho(\beta)=\langle\beta,\alpha\rangle$ 和 $\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle$。组成为 $c(t)=(a,b)$，叶数为 $a+b$；Clifford 叶积满足 $A^2=1$、$B^2=-1$、$AB+BA=1$，记 $E_j(t)=E(\rho^jt)$。固定公开整数 $H\ge8$，置
+
+<a id="TM58-E01"></a>
+$$
+\begin{aligned}
+U_H&=\{t:1\le a+b\le H,\ (E_0,E_1,E_2)=(1,1,1)\},\\
+m&=a+b,\qquad n=a+2b,\qquad \lambda_2=2a+3b=m+n,\\
+q_H(t)&=\begin{cases}
+(0,E_0,m),&n>H,\\
+(1,c(t),E_0,E_1),&n\le H<m+n,\\
+(2,\eta(t)),&m+n\le H.
+\end{cases}
+\end{aligned}
+\tag{TM.5801}
+$$
+
+最后一行严格使用 TM30 的原始字面编码。按 TM28–29 的唯一正规形，$\eta=(\mathbf u,c)$，其中 $\mathbf u$ 是三个窗口的正规坐标。在单位族中固定
+
+<a id="TM58-E02"></a>
+$$
+\mathbf u_{\mathrm{unit}}=((0,0,0),(0,0,0),(0,0,0)),\qquad
+\eta(t)=(\mathbf u_{\mathrm{unit}},c(t)).
+\tag{TM.5802}
+$$
+
+三个 $(0,0,0)$ 均按原 $(e,k,p)$ 顺序排列。因此后文给出组成后，标签2输出就是 $(2,(\mathbf u_{\mathrm{unit}},c))$；没有改成附加字段的目标，也没有以运行后当前目标替代初始目标。式（TM.5801）中的标签0、1、2是目标标签，须与供应符号 $i$ 区别。
+
+在线接口始终是原 TM30 的当前 `Read`、整树 $\rho$ 尝试，以及将一个已知实际非空正上下文整体接在当前树左侧或右侧的尝试。整个候选叶数 $\le H$ 时接受，等号接受；拒绝保持完整实际树不变，不返回候选读数。公共参数、供应符号、动作名、实际上下文身份及括号、真实响应和实际读均属于完整记录。每个下一动作与停止输出只依赖共同公开量和已取得记录；相同标签有相同程序与初始化。运行可离开 $U_H$，此后仍按同一 ambient 整候选语义执行。成员条件不是在线成员测试。接口没有尺寸、目标、档案、导航、时钟或费用读口，也没有变上限、复位、复制、来源替换或逆拼接。
+
+真实供应的条件是：首次在线动作之前，供应者已经持有这个精确未修改初始树的真实原目标信息，或持有能认证该原目标且与这棵原树精确配对的档案；供应者据此计算总标签函数 $\ell_H:U_H\to\mathcal L_H$。消费者只收到公开 $H$ 与其真实符号。另一棵同目标代表树、另一个档案或没有精确身份关联的句柄都不能代替这一同源配对条件。原目标证据的取得、解析、成员与身份认证、生产、交付、保留各有自己的费用。下文证明这一条件成立时的消费者构造，未证明这些外部条件已在物理装置中实现。
+
+记 $A_U(H)$ 为上述条件任务的最小非空供应字母表基数。其竞争者保留任意依赖精确叶词和括号的总标签、任意已取得记录、所有 ambient 有限自适应原协议、`Read`、两侧任意混合正上下文和任意接受替换深度。下面的充分标签恰经由原目标分解；这不是最小化问题的附加限制。
+
+<a id="TM58-L2"></a>
+**引理 58.2（完整实际像与字面目标三角形）。** 写 $H=4h+\delta$，其中 $h=\lfloor H/4\rfloor\ge2$、$0\le\delta\le3$。完整 $U_H$ 的组成像恰为 $(4r,4s)$，$r,s\ge1$、$r+s\le h$。令 $z=r+s$、$w=r+2s$，则
+
+<a id="TM58-E03"></a>
+$$
+2\le z\le h,\qquad z+1\le w\le2z-1,\qquad
+(m,n,\lambda_2)=(4z,4w,4(z+w)),\qquad
+(r,s)=(2z-w,w-z).
+\tag{TM.5803}
+$$
+
+置 $C(z,w)=(4(2z-w),4(w-z))$。原目标的完整字典为
+
+<a id="TM58-E04"></a>
+$$
+\begin{aligned}
+Z(z)&=(0,1,4z),\\
+\tau_h(z,w)&=\begin{cases}
+(2,(\mathbf u_{\mathrm{unit}},C(z,w))),&z+w\le h,\\
+(1,C(z,w),1,1),&z+w>h,
+\end{cases}\quad(w\le h),\\
+q_H(t)&=\begin{cases}Z(z),&w>h,\\ \tau_h(z,w),&w\le h.\end{cases}
+\end{aligned}
+\tag{TM.5804}
+$$
+
+这里每个有限点对应一个不同原目标；每个 $w>h$ 的行只对应 $Z(z)$，但该行全部隐藏组成仍属于输入域。
+
+证明。复用 Atomic359.1–3、Atomic360.2–4 及其 TM51.2–3 应用。共同单位正规参数全为零，八边次数化为 $(r,r,r,r;s,s,s,s)$。非空及有效支撑连通排除 $r=0$ 或 $s=0$：只有一组边非零时支撑分裂，两组皆零时没有来源。反之，每个正参数有实际正词
+
+<a id="TM58-E05"></a>
+$$
+\omega_{r,s}=\alpha^{2r-1}\beta^{2s}\alpha\beta^{2s-1}\alpha^{2r}\beta,
+\tag{TM.5805}
+$$
+
+其八边次数正、平衡、连通，三窗皆为单位，组成为 $(4r,4s)$。Atomic360.3 的充要对应还给出该次数的全部 Euler 叶词和这些词的全部有序二叉括号化；显示词只证明每个参数有源，未缩小输入域。初始叶数约束恰为 $r+s\le h$，原替换组成公式给出（TM.5803）。由于资源均为四的倍数，$4w\le H$ 等价于 $w\le h$，$4(z+w)\le H$ 等价于 $z+w\le h$，对四种 $\delta$ 一律成立，包括等号。代入（TM.5801）–（TM.5802）得到（TM.5804）。$\square$
+
+### 58.2 标签选择的实际上下文与全部响应
+
+<a id="TM58-D3"></a>
+**定义 58.3（四分之一供应与共同执行器）。** 令
+
+<a id="TM58-E06"></a>
+$$
+L=\left\lceil\frac h4\right\rceil
+=\left\lfloor\frac{H+12}{16}\right\rfloor,\qquad
+\mathcal L_H=\{1,\ldots,L\},\qquad c_i=2L+2i-2.
+\tag{TM.5806}
+$$
+
+供应者按原目标字典计算
+
+<a id="TM58-E07"></a>
+$$
+\ell_H(t)=\begin{cases}
+1,&w>h,\\
+1+((z-1)\bmod L),&w\le h,\ z\le2L,\\
+\lceil x/2\rceil,&w\le h,\ z>2L,\ x\equiv y\pmod2,\\
+\lceil y/2\rceil,&w\le h,\ z>2L,\ x\not\equiv y\pmod2,
+\end{cases}\qquad (x,y)=(z-2L,w-2L).
+\tag{TM.5807}
+$$
+
+第一行不读取标签0隐藏的 $w$；在原目标处只需判断已给的目标标签并供应符号1。有限目标已保留组成，可恢复 $z,w$ 后计算其余三行。因此这是原目标的一个函数，符合定义58.1的供应边界。
+
+固定每个正整数 $p$ 的公开实际全 $\alpha$ 树 $v_p$：$v_1=\alpha$，$v_{p+1}=\langle v_p,\alpha\rangle$。收到符号 $i$ 后，共同程序先计算 $c_i$。若 $c_i<h$，尝试一次整右拼接 $\langle t_{\mathrm{cur}},v_P\rangle$，其中 $P=H-4c_i$；若 $c_i\ge h$，真实省略这一次调用，并仅在算术中置 $P=0$。随后无论真实响应为何，均尝试 $\rho$ 恰好一次，再在实际得到的 ambient 树上执行 §58.4 的既有 $\mathrm{Size}_H$，取得它的入口叶数 $M$。最后按 §58.3 的字典输出原目标。
+
+省略模式记作 O；它没有上下文候选、没有上下文响应，也没有空树 $v_0$。即使 $c_i=h$ 且 $\delta>0$，未执行的表达式 $H-4c_i=\delta$ 为正，程序仍省略，不以它代替 $P=0$。在实际发出模式中，A、R 分别表示真实接受、拒绝；AA、AR、RA、RR 按上下文、$\rho$ 的先后排列。OA、OR 只表示省略模式中的真实 $\rho$ 响应。符号、模式、所有实际前缀响应以及入口 $M$ 都保留；实际动作身份由公开 $H,i$ 和该记录确定。
+
+<a id="TM58-L4"></a>
+**引理 58.4（范围、占用与整候选分支）。** 式（TM.5807）在整个 $U_H$ 上取值于 $\mathcal L_H$，每个符号实际被使用。在发出模式中 $P>0$，所有实际分支恰如下表，等号均接受。
+
+| 58分支 | 原始组成条件 | $\mathrm{Size}_H$ 的实际入口 $M$ |
+| --- | --- | --- |
+| 58AA | $z\le c_i,\ w\le c_i$ | $4w+P$ |
+| 58AR | $z\le c_i,\ w>c_i$ | $4z+P$ |
+| 58RA | $z>c_i,\ w\le h$ | $4w$ |
+| 58RR | $z>c_i,\ w>h$ | $4z$ |
+| 58OA | 省略且 $w\le h$ | $4w$ |
+| 58OR | 省略且 $w>h$ | $4z$ |
+
+每个入口均满足 $1\le M\le H$。拒绝从不插入被拒材料，也从不局部执行被拒宏。
+
+证明。由 $L=\lceil h/4\rceil$ 得 $4L-3\le h\le4L$。有限高区有 $1\le x<y\le h-2L\le2L$，故两种向上取整都在 $1,\ldots,L$；低区余数及标签0规则也在此范围。若 $L\ge2$，每个 $i\ge2$ 被实际有限点 $(i,i+1)$ 使用，符号1被 $(L+1,L+2)$ 使用；这些点的列不超过 $h$，因为 $L+2\le4L-3\le h$。$L=1$ 时非空族只使用符号1。因 $h=4k+e$，$0\le e\le3$，逐 $e$ 代入得（TM.5806）第二个表达式对每个 $\delta$ 都成立。
+
+若 $c_i<h$，则 $P=4(h-c_i)+\delta\ge4$，上下文是实际非空树。整拼接候选大小为 $4z+P$，所以接受当且仅当 $z\le c_i$。若接受，加入组成 $(P,0)$；$\rho$ 候选大小为 $4w+P$，所以接受当且仅当 $w\le c_i$。若上下文拒绝，原树完整保持，$\rho$ 候选为 $4w$，所以接受当且仅当 $w\le h$。省略分支直接使用后者。接受 $\rho$ 将当前／下一资源 $(m',n')$ 更新为 $(n',m'+n')$；特别地，发出并两次接受后的下一资源为 $4(z+w)+2P$，并非 $4(z+w)+P$。这些真实更新给出表内入口。接受的整候选证明大小不超过 $H$，拒绝保留先前合法树，因而所有入口合法。$\square$
+
+### 58.3 完整分割的普通证明与显式逆解
+
+<a id="TM58-L5"></a>
+**引理 58.5（有限低区的两行分离）。** 在一个固定符号 $i$ 的有限低区 $z\le2L$，只有行 $z=i$ 和 $z=L+i$；不满足原三角形的行忽略。在发出模式中它们都接受上下文，且其 AA 列区间互不相交；有限 AR 至多为第二行的一个端点。
+
+证明。低区的余数定义恰给这两行，行1本来不存在。因 $c_i\ge2L$，两行都满足 $z\le c_i$。第一行列区间为 $[i+1,2i-1]$，其上界不超过 $c_i$，故全为 AA。第二行上界 $2(L+i)-1=c_i+1$；其 AA 区间为 $[L+i+1,\min(c_i,h)]$，超出 $c_i$ 的有限列只可能是 $c_i+1$，此时为 AR。两个 AA 区间分离，因为 $2i-1<L+i+1$。区间为空、被 $h$ 截断以及 $w=c_i$ 等号都已经包含；没有低区有限 RA 或 RR。$\square$
+
+<a id="TM58-L6"></a>
+**引理 58.6（有限高区的奇偶尾与相邻例外）。** 固定符号 $i$，在发出模式的有限高区中没有 AA 或 RR。每个 AR 行至多含一个有限原目标，每个 RA 列也至多含一个有限原目标。唯一需要单独处理的异奇偶相邻点是 $(x,y)=(2i-1,2i)$，它属于 RA。
+
+证明。若 $x,y$ 同奇偶，标签由 $x$ 决定，$x$ 为 $2i-1$ 或 $2i$。两者均大于 $c_i-2L=2i-2$，所以上下文拒绝；有限 $w\le h$ 使 $\rho$ 接受，得到 RA。同奇偶与 $x<y$ 进一步给出：$x=2i-1$ 时 $y\ge2i+1$ 且奇；$x=2i$ 时 $y\ge2i+2$ 且偶。
+
+若 $x,y$ 异奇偶，标签由 $y$ 决定，$y$ 为 $2i-1$ 或 $2i$。当 $y=2i-1$ 时，$x$ 偶且 $x\le2i-2$，上下文接受，$w=c_i+1>c_i$ 使 $\rho$ 拒绝，得到 AR。当 $y=2i$ 时，$x$ 奇且 $x\le2i-1$；若 $x\le2i-3$，得到 AR，若 $x=2i-1$，则上下文拒绝而 $\rho$ 接受，得到 RA。另一个相邻点 $(2i-2,2i-1)$ 仍是 AR，不能把全部相邻点统一划入 RA。
+
+于是 AR 中已知行 $x$ 后，唯一列为 $y=2i-1+(x\bmod2)$。RA 中已知列 $y$ 后，奇列给 $x=2i-1$，偶列 $y=2i$ 给相邻例外 $x=2i-1$，其余实际偶列给 $x=2i$；同奇偶来源不可能占据 $y=2i$。这证明所述唯一性，包含最大尾列 $y=h-2L$ 和所有向上取整端点。$\square$
+
+<a id="TM58-L7"></a>
+**引理 58.7（每个标签0隐藏组成的覆盖）。** 若 $L\ge2$，标签0来源只可能在行 $z\ge2L$。可能的行 $z=2L$ 恰在 $h\le4L-2$ 时出现；它使用符号1并全部进入一个有限目标未占用的 AR 行。其余标签0行全部进入 RR。
+
+证明。标签0要求 $h<w\le2z-1$。若 $z\le2L-1$，则 $2z-1\le4L-3\le h$，矛盾。$z=2L$ 时存在隐藏列当且仅当 $h<4L-1$，即 $h=4L-3$ 或 $4L-2$。此时 $c_1=2L<h$，实际上下文非空，$z=c_1$ 在等号处接受；每一个隐藏 $w>h$ 都满足 $w>c_1$，故 $\rho$ 拒绝，入口为 $8L+P=H$。所有这些隐藏组成只要求同一个 $Z(2L)$。
+
+有限低区的行 $2L$ 使用符号 $L\ne1$；符号1的有限低区 AR 行只能是 $L+1<2L$。有限高区行大于 $2L$，也不能占据这个行。故符号1的 AR 行 $2L$ 是原目标字典的空位。其他标签0行满足 $z>c_1$，拒绝上下文，继而每一个 $w>h$ 都使 $\rho$ 拒绝，入口为 $4z$。这里没有选择一个隐藏组成充当整行；不等式逐一覆盖该行的全部隐藏列。$\square$
+
+<a id="TM58-L8"></a>
+**引理 58.8（真实省略的完整字典）。** 若 $L\ge2$，省略当且仅当 $i=L$ 且 $h\in\{4L-3,4L-2\}$。这个符号的实际来源只有有限低区行 $L$、$2L$，均接受 $\rho$；两行的入口列区间分离，OR 不可达。
+
+证明。对 $i<L$，$c_i\le4L-4<h$；对 $i=L$，$c_L=4L-2$，故省略条件恰如所述。此时 $y\le h-2L\le2L-2$，且 $x<y$。高区的任一种取整标签都不可能达到 $L$。标签0统一使用符号1，与 $L$ 不同。剩下的低区行 $L$、$2L$ 都有限，省略后 $\rho$ 接受；其列区间分别为 $[L+1,2L-1]$、$[2L+1,h]$，没有 $w=2L$，故入口 $4w$ 分离两行。这也是省略后不能减去未插入的 $\delta$ 的原因：此处来源上没有该材料。$\square$
+
+<a id="TM58-L9"></a>
+**引理 58.9（全部一符号基例）。** $L=1$ 恰对应 $h=2,3,4$。对每个 $\delta\in\{0,1,2,3\}$，以下列表穷尽实际组成三角形，表中有限输出均为原标签1。
+
+| 58基例 | 所有原始组成点 $(z,w)$ | 实际分支、入口与原输出 |
+| --- | --- | --- |
+| 58基例2 | $(2,3)$ | 省略；OR，$M=8$，输出 $Z(2)$ |
+| 58基例3有限 | $(2,3)$ | $P=H-8>0$；AR，$M=H$，输出 $\tau_3(2,3)$ |
+| 58基例3隐藏 | $(3,4),(3,5)$ | RR，$M=12$，输出 $Z(3)$ |
+| 58基例4有限低 | $(2,3)$ | $P=H-8>0$；AR，$M=H$，输出 $\tau_4(2,3)$ |
+| 58基例4有限高 | $(3,4)$ | RA，$M=16$，输出 $\tau_4(3,4)$ |
+| 58基例4隐藏 | $(3,5),(4,5),(4,6),(4,7)$ | RR，$M=4z$，输出 $Z(z)$ |
+
+证明。三角形在 $h=2,3,4$ 分别有 $1,3,6$ 个点，表内已全部列出。$c_1=2$；$h=2$ 时真实省略，对全部 $\delta$ 都有 $12>H$，故 $\rho$ 拒绝。$h=3,4$ 时上下文长度分别为 $4+\delta$、$8+\delta$。行2在上下文等号处接受而列3超出截止2，故 AR；$h=4$ 的 $(3,4)$ 拒绝上下文，$\rho$ 在 $4w\le H$ 处接受，是引理58.6的高区相邻例外。其余点满足 $z>2,w>h$，故 RR。两个有限点均有 $z+w>h$，按初始测试输出标签1。$\square$
+
+<a id="TM58-D10"></a>
+**定义 58.10（实际记录上的显式逆解）。** 对实际发出模式使用已知 $P=H-4c_i$；对省略模式使用算术 $P=0$。以下解码函数只在真实供应、真实响应及真实终端入口的记录像上断言正确。它不声称任意数字元组都有对应来源；离开记录像的输入可标为无效。
+
+| 58逆解分支 | 恢复初始坐标的公式 | 原始字面输出 |
+| --- | --- | --- |
+| 58逆AA | $w=(M-P)/4$；若 $w\le2i-1$，置 $z=i$，否则置 $z=L+i$ | $\tau_h(z,w)$ |
+| 58逆AR零 | $z=(M-P)/4$；若 $i=1,z=2L,h\le4L-2$ | $Z(z)$ |
+| 58逆AR有限 | 上一条件不成立；同样取 $z=(M-P)/4$。若 $z\le2L$，置 $w=c_i+1$；否则置 $w=c_i+1+(z\bmod2)$ | $\tau_h(z,w)$ |
+| 58逆RA | $w=M/4$；若 $w$ 奇或 $w=c_i+2$，置 $z=c_i+1$，否则置 $z=c_i+2$ | $\tau_h(z,w)$ |
+| 58逆RR | 不恢复隐藏 $w$ | $(0,1,M)$ |
+| 58逆OA | $w=M/4$；若 $w\le2i-1$，置 $z=i$，否则置 $z=L+i$ | $\tau_h(z,w)$ |
+| 58逆OR | 不恢复隐藏 $w$ | $(0,1,M)$ |
+
+AR零行的条件自动排除 $h=3,4$；在 $h=2$ 不存在发出模式。RA 中 $2L$ 为偶数，故 $w$ 与 $y=w-2L$ 同奇偶，$w=c_i+2$ 恰为 $y=2i$，所以该式与引理58.6的列逆解完全相同。OA 实际只在引理58.8中出现，$i=L$，其阈值 $2i-1=2L-1$ 分离两行。OR 实际只在 $h=2,i=1,M=8$ 出现。减去 $P$ 只发生在实际接受上下文的 AA、AR 中；RA、RR、OA、OR 都没有插入该前缀材料。
+
+<a id="TM58-T11"></a>
+**定理 58.11（完整分割与原目标唯一逆解）。** 对所有 $H\ge8$ 及每个实际 $t\in U_H$，式（TM.5807）的真实供应与定义58.3的实际前缀产生上述六种分支之一；定义58.10利用真实分支及 $M$ 恰输出初始 $q_H(t)$。在固定 $H,i$ 的每个实际分支／入口格中，原目标唯一。
+
+证明。引理58.5穷尽有限低区，给出 AA 的两行阈值和有限低区 AR 的唯一列 $c_i+1$。引理58.6穷尽有限高区，给出高区 AR 的列公式及 RA 的行公式。低区 AR 恢复行 $z\le2L$，高区 AR 恢复行 $z>2L$，因此两字典不相撞；高区无 AA，所以 AA 的低区阈值完整。引理58.7单独覆盖每个隐藏标签0组成，给出 AR零行与 RR 原目标，且证明它们与有限字典分离。引理58.8穷尽 $L\ge2$ 的省略输入，OA 的同一阈值恢复唯一初始行，OR 不出现。引理58.9穷尽剩下的一符号基例，逐项与逆解表一致。这些域并成整个（TM.5803），没有剩余组成。
+
+在实际 AA、AR 中，入口减去实际前缀后恰为四的倍数；其余入口本来为四的倍数。所得有限 $(z,w)$ 均为原三角形中的点，所以（TM.5804）有限输出的组成正，初始标签测试准确；特别在 $z+w=h$ 输出原标签2，而非运行后被材料改变的标签。标签0输出只保留原本应保留的 $Z(z)$。故解码逐源正确。每个格的公式给出唯一原目标；标签0多个隐藏组成占同格时，原目标本来相同。$\square$
+
+### 58.4 既有终端取得与同一次执行的联合上界
+
+<a id="TM58-P12"></a>
+**命题 58.12（ambient 入口尺寸取得的复用证书）。** 原 TM44.5 证明中的（TM.4419）–（TM.4420）及 TM51.5 所给 $\mathrm{Size}_H$，只需当前实际树入口叶数 $1\le M\le H$，不需单位三窗或已知组成。它以至多 $\lceil\log_2H\rceil+1$ 次整非空右上下文尝试取得入口 $M$；不作 `Read` 或 $\rho$，最后树大小为 $H$，并包含一次真实单叶拒绝。
+
+证明。为明确本构造的调用前提，重述该既有机制。初始化 $l=0,u=H,U=0$；$U$ 计这段终端中已接受的全 $\alpha$ 叶数。维持
+
+<a id="TM58-E08"></a>
+$$
+l<M\le u,\qquad U=H-u,\qquad
+\lambda(t_{\mathrm{cur}})=M+U.
+\tag{TM.5808}
+$$
+
+当 $u-l>1$，置 $k=\lfloor(l+u)/2\rfloor$，尝试整右接公开树 $v_{u-k}$。因为 $l<k<u$，它实际非空。整候选为 $M+H-k$，所以真实接受恰等价于 $M\le k$。接受则置 $u=k$ 并将 $U$ 加上旧 $u-k$；拒绝则只置 $l=k$，实际树不变。两分支保持（TM.5808），等号 $M=k$ 走接受。区间宽度至多变为旧宽度的一半向上取整；至多 $\lceil\log_2H\rceil$ 次后宽度为1，整数 $M$ 唯一等于 $u$。此时
+
+<a id="TM58-E09"></a>
+$$
+M=u=H-U,\qquad \lambda(t_{\mathrm{cur}})=H.
+\tag{TM.5809}
+$$
+
+再尝试整右接单叶 $v_1$，候选为 $H+1$，真实拒绝。即使入口 $M=H$、没有接受任何填充，也保留这次拒绝。读到的响应记录及已接受长度使程序计算入口 $H-U$；程序从未调用尺寸读口。整个过程适用于任意 ambient 合法入口，也未恢复入口原树。$\square$
+
+<a id="TM58-T13"></a>
+**定理 58.13（完整实际族的四分之一条件恢复）。** 对每个整数 $H\ge8$，在定义58.1的精确未修改原树真实供应条件下，定义58.3给出一个统一有效的供应公式和一个共同初始化的确定程序。对每个实际 $t\in U_H$，该程序在同一棵来源的同一次有限执行中输出原 TM30 字面 $q_H(t)$，且同时满足
+
+<a id="TM58-E10"></a>
+$$
+\begin{aligned}
+|\mathcal L_H|&=\left\lceil\frac{\lfloor H/4\rfloor}{4}\right\rceil,
+&N_{\mathrm{Read}}&=0,\\
+\operatorname{dep}_{\rho}&\le1,
+&N_{\mathrm{whole}}&\le\lceil\log_2H\rceil+3.
+\end{aligned}
+\tag{TM.5810}
+$$
+
+其中 $N_{\mathrm{whole}}$ 计每次实际整候选尝试，包括被拒上下文、被拒 $\rho$ 和终端单叶拒绝；深度只计接受的 $\rho$。真实省略路径还有 $N_{\mathrm{whole}}\le\lceil\log_2H\rceil+2$。特别地，原 unrestricted 条件问题满足 $A_U(H)\le\lceil h/4\rceil$。
+
+证明。引理58.4已证明所有符号在范围内、实际占用，以及每个分支的真实入口 $1\le M\le H$，故命题58.12的 ambient 前提逐一满足。定理58.11的显式字典利用该段真实取得的入口值输出原目标。发出路径有一次前缀上下文、一次 $\rho$ 及至多 $\lceil\log_2H\rceil+1$ 次终端调用；省略路径少一次前缀调用。只有前缀那一次 $\rho$ 可能接受，终端没有 $\rho$，整个程序没有 `Read`。各个资源界因此属于这一个程序、同一条实际路径，未将不同控制器的字母表和调用成本合并。区间有限收缩及有限整数逆解保证逐源有限停止。
+
+上述计算在所有实际叶词与括号上成立，原因有两层。第一，Atomic360 的完整充要对应及引理58.2覆盖每一个实际来源的组成，不只是显示词（TM.5805）；每个整候选大小由真实组成更新，与叶序和括号无关。第二，供应函数在每个原 $q_H$ 纤维上恒定。TM30.2 的行为等价和 TM47.1–2 的代表提升保证：相同初始目标、同标签及同初始化的所有实际实现，使用这个共同程序时有相同动作身份、响应、停止和输出，包括标签0中原目标隐藏组成不同的实现。代表在这里只作证明装置，运行树从未被换成代表。故（TM.5810）同时量化完整 $U_H$ 的每个词及其每一种有序括号化，而不是受限前缀族或有限帽表。$\square$
+
+### 58.5 完整记录、原始／当前配对与必要反例
+
+<a id="TM58-P14"></a>
+**命题 58.14（所选终端执行器的精确记录格）。** 对固定 $H,i$，本程序的实际模式、实际前缀响应和入口 $M$ 恰决定完整动作／响应记录；反过来完整记录决定这些量。因此定理58.11是这个终端执行器的精确原目标兼容性证书。该证书未给任意原协议一个记录正规形。
+
+证明。前缀实际树 $v_P$、侧别与括号都是公开 $H,i$ 的函数；省略同样由公开条件决定。随后 $\mathrm{Size}_H$ 的 $l,u$、每次实际树 $v_{u-k}$ 和响应都由 $M$ 确定，包含最后单叶拒绝。故这些量恢复本程序的整记录。完整记录保留供应符号和前缀响应，又由终端累计接受长度给出 $M=H-U$，所以反向也成立。
+
+原始／当前配对的区别可在停止处直接看到。在 AA、AR、RA、RR、OA、OR 六种分支中，终端入口的当前 $E_0$ 依次是 $B^P,A^P,1,1,1,1$，因为原 $E_0=E_1=1$，接受前缀在右侧，且 $\rho(v_P)$ 为全 $\beta$ 树。终端再右接总共 $U=H-M$ 个 $\alpha$，所以在一个固定记录格中停止时的当前 $E_0$ 相同。原树有正 $\beta$ 数；上下文和至多一次接受 $\rho$ 都保持正 $\beta$ 数。因此停止时当前叶数为 $H$，下一替换叶数严格大于 $H$，当前目标为
+
+<a id="TM58-E11"></a>
+$$
+q_H(t_{\mathrm{stop}})=(0,E_{\mathrm{entry}}A^{H-M},H).
+\tag{TM.5811}
+$$
+
+若一个这样的记录格含不同原目标，它们会同时有相同完整记录及相同当前 $q_H$，TM38.1 就排除任何后来修复。定理58.11证明本分割没有这种格。一般的继续策略在选择本终端之前可能保留更多信息；此处的必要充分性只针对已固定的执行器。TM45.1–4 的同源原始／当前历史关系与 TM47.4、47.8 的全动作对应、有限稳健规划仍是既有供应，本章未把这一格证书命名为新的通用规划器。$\square$
+
+<a id="TM58-P15"></a>
+**命题 58.15（固定较小截止的原目标擦除与移动守卫）。** 一个较小上限子任务的目标不能自动代替原目标；接受材料也不能在任意替换深度只减去一个常量。具体地，取 $2\le c<h$、$P=H-4c$，在原单位树上先右接 $v_P$。对任何接受行 $2\le z\le c$ 和 $w>c$，当前 $q_H$ 都是 $(0,A^P,4z+P)$，该行被合并的不同原目标数为
+
+<a id="TM58-E12"></a>
+$$
+d_h(c,z)=\max\{0,\min(2z-1,h)-c\}
++\mathbf1_{\{2z-1>h\}},\qquad
+\max_{2\le z\le c}d_h(c,z)=\min(c-1,h-c+1).
+\tag{TM.5812}
+$$
+
+另一方面，取 $F_0=0,F_1=F_2=1$。初始全 $\alpha$ 材料 $P$ 经 $j$ 次接受替换，其当前和下一资源贡献分别为 $PF_{j+1}$、$PF_{j+2}$。在相应未加材料的子源上，后续上下文增量 $d$ 和下一替换必须分别检验
+
+<a id="TM58-E13"></a>
+$$
+\mathrm{child}_{\mathrm{cur}}+d\le H-PF_{j+1},\qquad
+\mathrm{child}_{\mathrm{next}}\le H-PF_{j+2}.
+\tag{TM.5813}
+$$
+
+证明。接受行的当前大小为 $4z+P$，下一大小 $4w+P>H$，读积为 $A^P$，所以当前标签0相同。每个 $c<w\le\min(2z-1,h)$ 是一个不同有限原目标；若还有 $w>h$，整行的这些隐藏列另贡献一个 $Z(z)$。这给出（TM.5812）的计数，随 $z$ 不减。若 $2c-1\le h$，行 $c$ 的值为 $c-1$；若 $2c-1>h$，值为 $h-c+1$，边界 $2c-1=h$ 也与公式一致。同标签下，所有此前无修改读都为单位，接受后的当前目标相同，TM38.1排除任意后来区分；这是这个固定前缀的必要负载，未限制其他控制器。
+
+例如 $H=40,c=8,P=8$，实际词 $\omega_{3,3}$、$\omega_{2,4}$ 给 $(z,w)=(6,9),(6,10)$。其 $q_{32}$ 均为 $(0,1,24)$，而原 $q_{40}$ 是不同标签1；接受前缀后均变为当前 $(0,1,32)$。本构造在这两点供应符号3，$c_3=h=10$，真实省略前缀，接受 $\rho$ 后入口分别36、40，故没有运行这个擦除前缀。
+
+材料传输则直接复用 TM30.1 与 TM45.3–4 的 Fibonacci 组成更新：初始 $(P,0)$ 的 $j$ 次像，其叶数和下一叶数为所述两个贡献，给出（TM.5813）。其他接受的正材料只再加非负贡献，不能取消差异。例如 $H=80$，初始 $\omega_{3,2}$ 的 $(z,w)=(5,7)$；未加材料、上限60的两次替换候选为28、48，都接受。实际先在上限80加 $P=20$ 后，两候选为48、88，第二次拒绝。本构造只尝试一次 $\rho$，使用引理58.4的真实守卫，随后终端不作替换，故未使用恒定剩余上限的多层子任务。$\square$
+
+<a id="TM58-P16"></a>
+**命题 58.16（响应与实际动作身份不能擦除）。** 入口大小的边际相等不能代替完整记录相等；将标签所选择的实际上下文改成统一上下文也可能使原目标永久碰撞。
+
+证明。在 $H=80,L=5,i=1,c_i=10,P=40$，有限点 $(6,11)$ 是 AR，$M=64$，原标签2组成为 $(4,20)$；隐藏点 $(16,21)$ 是 RR，$M=64$，原目标为 $(0,1,64)$。二者真实 $\rho$ 响应相同，终端后缀记录相同，但上下文响应不同。删去上下文响应便丢失区别。另在 $H=72,L=5,i=1,P=32$，$(6,10)$ 为 AA，$(10,19)$ 为 AR，二者都接受上下文，$M=72$，初始源组成分别为 $(8,16)$、$(4,36)$，原目标分别为 $(2,(\mathbf u_{\mathrm{unit}},(8,16)))$、$Z(10)=(0,1,40)$；删去 $\rho$ 响应也丢失区别。两种响应在本程序的逆解中都有实际作用。
+
+再取 $H=80,i=5$。实际供应点 $(11,20)$、$(13,20)$ 分别由 $\omega_{2,9}$、$\omega_{6,7}$ 实现，原标签1组成为 $(8,36)$、$(24,28)$。本程序的 $c_5=18,P=8$ 给二者 AR，入口52、60；若将这个实际动作改为全 $\alpha$ 长度40，二者都拒绝前缀，再接受 $\rho$ 至80，当前 $E_0=1$，当前目标均为 $(0,1,80)$，完整记录也相同。TM38.1排除所有后来修复。共同参数化程序必须保留“真实标签—实际上下文身份”的关系，不能把公式相同误当实际上下文相同。$\square$
+
+<a id="TM58-P17"></a>
+**命题 58.17（受限十纤维字典的原样扩展失败）。** TM56-T3 的十纤维成功不能将其同一符号、同一程序原样扩展为完整 $U_H$ 的恢复。对每个 $H=36+\delta$，$0\le\delta\le3$，原样扩展在实际点 $(5,7)$ 与 $(6,7)$ 上永久碰撞。
+
+证明。实际词可取 $\omega_{3,2}$ 和 $\omega_{5,1}$，原标签1组成为 $(12,8)$、$(20,4)$，不同。两者都拒绝第一上下文 $v_{H-19}$，因为候选大小分别为 $H+1$、$H+5$。随后同一上下文 $K$ 的当前／下一增量 $(d,e)$ 按 $\delta=0,1,2,3$ 分别为 $(1,1),(1,2),(2,3),(3,4)$；可取实际叶词 $\alpha,\beta,\alpha\beta,\alpha^2\beta$，固定公开括号。两源均接受这个上下文，再接受 $\rho$ 到大小 $28+e$，当前读积均为 $E_1(K)$；下一候选为 $4(z+7)+d+e>H$，故当前目标、完整前缀记录相同。TM38.1给出永久碰撞。这一计算只用原守卫和传输，不将受限族成功当作全族前提。本章的两源标签分别为2、3；前者发出 $c_2=8$ 的上下文而进入 AA，后者在 $c_3=10\ge h$ 真实省略并进入 OA，均由完整字典覆盖。$\square$
+
+### 58.6 原供应比较、CPF 边界与未解的必要系数
+
+<a id="TM58-P18"></a>
+**命题 58.18（与实际 TM55 证书的字母表比较）。** TM55-T6 的实际全族证书为 $B_{55}(h)=\lfloor(h+1)/3\rfloor$，而非 $\lceil h/3\rceil$。对所有 $h\ge2$，本章 $L\le B_{55}(h)$；严格不等式恰在 $h=8,11,12$ 和每个 $h\ge14$ 成立。比较保留各自同一执行的联合证书，不给逐路径调用数或总成本的支配关系。
+
+证明。$L=1$ 的 $h=2,3,4$ 直接有 $B_{55}=1$。$L\ge2$ 时 $h+1\ge4L-2\ge3L$，所以 $B_{55}\ge L$。若 $L\ge5$，$h+1\ge4L-2\ge3L+3$，故 $B_{55}\ge L+1$。$L=4$ 的 $h=14,15,16$ 也有 $h+1\ge15=3L+3$。其余 $h=2,\ldots,13$ 直接代入两公式，等号恰在 $2,3,4,5,6,7,9,10,13$，严格点为8、11、12，完成所有端点比较。$\square$
+
+TM55 的 $h=2,3,4$ 基例省略前缀上下文，有更细的 $\lceil\log_2H\rceil+2$ 调用界；本章 $h=3,4$ 发出实际正上下文，可能使用 $+3$。TM51 的 $h=2$ 还允许直接零调用输出，$h=3$ 有零接受替换深度的专门方案。这些较细成本不被本章统一构造替代。对于 $H=400,401,402,403$，本章25符号、TM55实际33符号；两者各自无 `Read`、接受深度至多1、调用至多12。但字母表下降不总降低定长位宽：$H=80$ 时5与7符号都需3位。整宏调用界也不是物理时间单位。
+
+OR68–69 的完整 unrestricted 小上限精确结果仍为
+
+<a id="TM58-E14"></a>
+$$
+A_U(H)=\begin{cases}
+1,&8\le H\le19,\\
+2,&20\le H\le39,\\
+3,&40\le H\le55.
+\end{cases}
+\tag{TM.5814}
+$$
+
+特别在 $h=9$ 和 $h=13$，本章分别使用3、4符号，既有专门最优值分别为2、3。OR68.2 的配对构造有自己的至多一次接受替换、$\lceil\log_2H\rceil+4$ 调用证书；OR69.2、69.4 的专门组合有自己的至多一次接受替换、$\lceil\log_2H\rceil+5$ 调用证书。较小字母表和它所属控制器的成本须一同保留，不能借其字母表配上本章控制器的 $+3$ 界。
+
+<a id="TM58-P19"></a>
+**命题 58.19（共同正前缀类别的精确边界）。** 按 TM56-D1，CPF 要求在第一次 $\rho$ 前对所有供应符号使用一个相同的实际非空上下文及固定侧别，仅容许无修改读穿插，且此前没有其他修改尝试。定义58.3的程序在 $L\ge2$ 时不属于此类别；在 $h=3,4$ 时属于单符号 CPF，在 $h=2$ 时因省略而不属于。
+
+证明。引理58.4保证所有符号被实际占用。若 $L\ge2$，符号1发出前缀，因为 $2L<h$。若某符号省略，则缺少 CPF 要求的共同非空前缀；若全部发出，符号1与2的实际上下文长度相差8，树身份不同，故也不能满足共同前缀。$h=3,4$ 只有一个符号，实际程序确为一个正前缀后一次 $\rho$，满足该类别定义；$h=2$ 没有前缀。一个共同程序从标签计算上下文，并不把不同的实际树变成同一棵树。故 TM56-T1 的 CPF 必要障碍保留其限定域，未成为原 unrestricted 任务的必要系数；本章上界与该障碍的量词不同。$\square$
+
+既有 TM54.3–4 的全策略必要下界、OR70.2–3 的点态／Ferrers 必要条件，以及（TM.5814）都保留其原假设。特别已有的
+
+<a id="TM58-E15"></a>
+$$
+\gamma h-O(1)\le A_U(H)\le\left\lceil\frac h4\right\rceil
+=\frac h4+O(1)=\frac H{16}+O(1),\qquad
+\gamma=\frac{7-3\sqrt3}{11},
+\tag{TM.5815}
+$$
+
+仍有间隙。这里仅新增右侧充分上界。原竞争者没有被限制为组成标签、无读、单侧全 $\alpha$ 上下文、一次替换或本章终端。完整 $A_U(H)$、尖锐首项系数、归一化极限的存在、深层历史能否继续降低字母表，以及任意原历史的最小共同兼容性刻画仍未由此解决；不存在本章所证明的四分之一必要系数或最优性。全 $\mathcal T_H$ 上的 TM37 下界也不能数值照搬到较小单位族。
+
+### 58.7 复用来源、生产边界与数学范围
+
+下表的不可变修订只固定引用文本；来源身份本身不另行断言其命题为真。普通证明的承重关系已经在各条证明中逐项说明。记三个理论卷分别为《Fibonacci 原子关系生成》《递归关系观察、传输与记忆完备》《观察者相对时空因果兼容恢复》；链接给出其实际文件和不可变修订。
+
+| 58来源条目 | 精确已发表定位与不可变修订 | 本章对应及适用边界 |
+| --- | --- | --- |
+| 58来源生成 | [Atomic359.1–3、Atomic360.2–4](https://github.com/the-omega-institute/trureturing/blob/e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)，修订 `e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74` | 共同正规形、八边平衡连通、全部 Euler 词及全部括号；用于引理58.2的完整实际像，不只用独立窗口可达性。 |
+| 58来源行为 | [TM30.1–2（TM.3001–4）、TM31.1、TM38.1](https://github.com/the-omega-institute/trureturing/blob/e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)，同一修订 `e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74` | 原字面目标、整守卫、等号接受、拒绝保持、共同初始化和行为商；永久碰撞还要求同标签、同完整历史及同当前目标，当前目标单独相等不够。 |
+| 58来源传输 | [TM45.1–4，尤其（TM.4505）、（TM.4511–14）](https://github.com/the-omega-institute/trureturing/blob/e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)，同一修订 `e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74` | 同一实际来源的有序外因子、Fibonacci 资源与真实历史筛选；原始／当前配对不是消费者的隐藏读口。 |
+| 58来源终端 | [TM44.5 证明（TM.4419–20）、TM51.5](https://github.com/the-omega-institute/trureturing/blob/e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)，同一修订 `e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74` | 仅要求实际 ambient 入口在 $[1,H]$ 的破坏性尺寸取得、真实终端拒绝及 $\log+1$ 界；未借用更强的完整窗口取得合同。 |
+| 58来源提升规划 | [TM47.1–2（TM.4701–2）、TM47.4、47.8；TM51.2–3、51.9–11](https://github.com/the-omega-institute/trureturing/blob/e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)，同一修订 `e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74` | 完整认证目标覆盖和同目标代表提升；全上下文对应与稳健有限规划在其完整认证表、精确表示前提下已存在；本构造不在线调用规划器。原树保持生产障碍及分项成本继续适用。 |
+| 58来源必要 | [TM54.3–4（TM.5412）、（TM.5414）](https://github.com/the-omega-institute/trureturing/blob/c469d049349b2f4b53daef9cee7d6db13bc9f805/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)，修订 `c469d049349b2f4b53daef9cee7d6db13bc9f805` | 原 unrestricted 同源条件问题的必要下界；保留其全部竞争者，不由新充分构造收窄域。 |
+| 58来源三分之一 | [TM55.5–6，TM55-T6，（TM.5524–25）](https://github.com/the-omega-institute/trureturing/blob/9a21d168ab93cf1da72ebb98e64f4575437050f2/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM55-T6)，修订 `9a21d168ab93cf1da72ebb98e64f4575437050f2` | 完整相同任务的实际 $\lfloor(h+1)/3\rfloor$ 证书及自己的联合成本；小基例 $+2$ 保留。新增量是定义58.3、58.10和引理58.5–9的全域标签／动作分配及逆解。 |
+| 58来源共同前缀 | [TM56-D1、TM56-T1、TM56-T3](https://github.com/the-omega-institute/trureturing/blob/25a023d7f087268131a63ca799cb530a0b0796b7/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM56-D1)，修订 `25a023d7f087268131a63ca799cb530a0b0796b7` | 共同实际正前缀类别及十纤维比较；本章完整构造的正面证明不以其定理作新增前提。命题58.17的失败由原接口直接计算。 |
+| 58来源小上限 | [OR68.1、68.2、68.4–5、69.2、69.4–5](https://github.com/the-omega-institute/trureturing/blob/511f1920bceaaf9f6ec6411030fbd4da42abfbfd/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md)，修订 `511f1920bceaaf9f6ec6411030fbd4da42abfbfd` | 同完整单位任务，OR68 的 $\nu$ 为本章 $w$，OR69 的 $(x,y)$ 为本章 $(z,w)$；保留精确小上限和各自 $+4$、$+5$ 成本。 |
+| 58来源点态 | [OR70.2–3，（70.5）、（70.15）](https://github.com/the-omega-institute/trureturing/blob/4f981b86a637c4aff1f1825ec0efe41dd5bb36e2/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md)，修订 `4f981b86a637c4aff1f1825ec0efe41dd5bb36e2` | 同域 Ferrers／点态必要条件；比较项，不是本章显式上界的前提。 |
+| 58来源不同接口 | [Atomic383.1–2](https://github.com/the-omega-institute/trureturing/blob/f42b6ac7f772ac7d14711ced02a4f84d6302878e/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)，修订 `f42b6ac7f772ac7d14711ced02a4f84d6302878e` | 有限正整数索引集的 totient 支撑、Fibonacci 最小公倍数收费和 Robin 对数分母传输；没有本章的整树观察、同源供应或原目标接口，未供应本章标签分割或逆解的前提。 |
+
+<a id="TM58-P20"></a>
+**命题 58.20（条件供应不消除原树保持的生产障碍）。** 按 TM51.9 的原接口生产任务，一个共同初始化且在每个单位输入上保持精确初始原树的生产者只能输出常量；本章非恒定供应不由这样的生产者免费获得。
+
+证明。每个单位输入有正 $\beta$ 数。接受非空上下文严格增叶，接受 $\rho$ 也严格增叶；原接口没有删除或逆操作，故若最终精确原树保持，途中不可能接受任何修改。当前读因此始终为单位，全部尝试的修改若发生都只能拒绝。共同初始化、同读和同响应给出同动作序列及同输出，输出只能为常量。这是既有生产边界的应用，不影响定义58.1以已经真实持有原目标信息为前提的条件消费者，但生产、同源认证和交付仍须单独承担。$\square$
+
+在紧凑整数和公开上下文名字的表示约定下，$H,i,P,l,u,U,M$ 及必要模式、响应位只需 $O(\log(H+1))$ 个可变工作位；这只是本程序的充分摘要，不是完整记录、字面输出、展开上下文、证据档案或物理存储的上界，更不是最小存储结论。上下文身份及括号的生成、展开和交付，被拒候选材料与工作，整守卫与替换计算，整数运算、完整记录及输出、原始证据与身份配对、供应的生产交付保留以及物理持续时间均是独立资源坐标。一个来源调用不承担这些坐标之间的等价关系。
+
+本章的新增分割和逆解属于 repo-derived 普通数学结果，其全称证明是引理58.5–9与定理58.11–13，不以有限样本或有限策略搜索替代。它恢复的是原行为目标，未恢复精确原树、括号、旧物理轨迹或物理时空。列明来源的复用不作全局文献原创性主张，普通证明也不构成 Lean 核验或物理仪器符合性结论。
+
+## 追加锚（本行以下为增补区）
+## 59. 完整实际单位族的全协议容量关系、源纤维约束与计数路线边界
+
+在原 TM30 整来源接口和精确同源的条件供应下，本章证明一个统一的必要容量关系：把实际严格上带目标的每条共同历史映入互不复用的两类整数槽位，再限制任意完整族协议到真实代表源，得到完整 $U_H$ 的下界。这个关系容纳相互交叠的行列、奇偶反对角线以及已经折叠的标签0行。它的反射特例给出 $(7-\sqrt{15})/17$ 的 $h=\lfloor H/4\rfloor$ 单位下界系数，严格超过 TM54 的系数；精确有限包络还保留平移表在 $h=60$ 的增益，并与已发表 TM58 在 $H=64,65,66,67$ 处合成四符号的精确容量结论。源纤维像的必要约束和可扩展到完整族的大类构造分别保留另一种信息；它们没有被当成完整覆盖判据。
+
+### 59.1 原始目标、完整源及共同历史
+
+<a id="TM59-D1"></a>
+**定义 59.1（完整条件任务）。** 原对象仍为自由非空有序二叉树 $t::=\alpha\mid\beta\mid\langle t,t\rangle$，树相等保留叶序及全部括号。替换逐树定义为 $\rho(\alpha)=\beta$、$\rho(\beta)=\langle\beta,\alpha\rangle$、$\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle$。组成 $c(t)=(a,b)$，当前叶数 $m=a+b$，下一叶数 $n=a+2b$，第二下一叶数为 $m+n$。Clifford 叶积满足 $A^2=1$、$B^2=-1$、$AB+BA=1$，记 $E_j(t)=E(\rho^jt)$。固定公开 $H\ge8$，写 $H=4h+\delta$，$h\ge2$、$\delta\in\{0,1,2,3\}$，并置
+
+$$
+\begin{aligned}
+U_H&=\{t:1\le\lambda(t)\le H,\ (E_0,E_1,E_2)=(1,1,1)\},\\
+q_H(t)&=\begin{cases}
+(0,E_0,m),&n>H,\\
+(1,c(t),E_0,E_1),&n\le H<m+n,\\
+(2,\eta(t)),&m+n\le H.
+\end{cases}
+\end{aligned}
+\tag{TM.5901}
+$$
+
+这里严格使用 TM30 的原编码：$\eta=(\mathbf u,c)$，三个窗口正规坐标按 $(e,k,p)$ 排列，在 $U_H$ 上
+
+$$
+\mathbf u_{\rm unit}=((0,0,0),(0,0,0),(0,0,0)),\qquad
+\eta(t)=(\mathbf u_{\rm unit},c(t)).
+\tag{TM.5902}
+$$
+
+所以单位标签2的字面输出为 $(2,(\mathbf u_{\rm unit},c(t)))$，不能重排成组成在前的另一元组。要求输出的是这棵**未修改初始树**的 $q_H$，而不是运行后当前树的 $q_H$。
+
+消费者的初始信息只有公开 $H$ 和真实供应符号。供应条件沿用定义58.1：该符号来自与这棵精确未修改初始树配对、已经取得并能认证其原目标的真实证据。条件数学允许总函数 $\ell:U_H\to\mathcal L$ 任意依赖精确叶词和括号；必要性不假设它经由 $q_H$ 分解，也不假设其生产费用有界。每个符号的共同程序与初始化相同，随后动作、停止与输出只依赖公开量和已经取得的完整实际记录。
+
+原动作包括当前 `Read`、整树 $\rho$ 尝试和将一个已知实际非空正树整体接在当前来源左侧或右侧的尝试。整个候选叶数 $\le H$ 时接受，**等号接受**；拒绝完整保留当前树，不给候选读数。记录保留动作身份、上下文的叶词与公开有序括号、左右侧、真实响应及实际读数。所有必要性量词覆盖共同确定性初始化、逐源有限停止的全部原有限自适应协议：任意混合正上下文、两侧、任意 `Read`、任意已取得记忆和每个上限允许的有限接受替换深度。没有附加统一停止步数、相同首上下文或上限无关深度。运行可以离开 $U_H$，此后仍用原 ambient 接口。没有尺寸、目标、档案、导航或费用读口，没有复制、复位、逆拼接、来源替换或虚拟上限。记 $A_U(H)$ 为这个条件任务的最小非空供应字母表基数；$H<8$ 时源族为空，本章不改变空任务的约定。
+
+<a id="TM59-L2"></a>
+**引理 59.2（实际源字典及完整纤维）。** 完整 $U_H$ 的组成像恰为 $(4r,4s)$，其中 $r,s\ge1$、$r+s\le h$。置 $z=r+s$、$w=r+2s$，则
+
+$$
+2\le z\le h,\quad z+1\le w\le2z-1,\quad
+(m,n,m+n)=(4z,4w,4(z+w)),\quad(r,s)=(2z-w,w-z).
+\tag{TM.5903}
+$$
+
+每个这些坐标均有一个真实源。完整域还包括相应的每个单位 Euler 叶词及每种有序二叉括号化。定义
+
+$$
+\begin{aligned}
+C(z,w)&=(4(2z-w),4(w-z)),\quad Z(z)=(0,1,4z),\\
+\tau_h(z,w)&=\begin{cases}
+(2,(\mathbf u_{\rm unit},C(z,w))),&z+w\le h,\\
+(1,C(z,w),1,1),&z+w>h,
+\end{cases}\qquad(w\le h).
+\end{aligned}
+\tag{TM.5904}
+$$
+
+有限点有不同原目标；$w>h$ 的同一行全部隐藏组成只要求一个 $Z(z)$。其存在条件为 $2z-1>h$。总原目标数为 $Q(h)=\lfloor h^2/4\rfloor$。
+
+证明。复用 Atomic359.1–3、Atomic360.2–4 与 TM51.2–3、58.2 的共同单位正规形及实际源对应。八边次数为 $(r,r,r,r;s,s,s,s)$；非空连通支撑要求两参数都正，而非仅要求各边平衡。反向的显式正词为
+
+$$
+\omega_{r,s}=\alpha^{2r-1}\beta^{2s}\alpha\beta^{2s-1}\alpha^{2r}\beta.
+\tag{TM.5905}
+$$
+
+其组成 $(4r,4s)$、八边次数正且平衡连通，三窗口同时为单位。固定任一公开有序括号即可得到实际树；结合完整 Euler 对应得到所有符合条件的叶词和所有有序括号，显示词没有取代完整域。替换组成给出（TM.5903）。资源是四的倍数，故 $4w\le4h+\delta$ 恰为 $w\le h$，$4(z+w)\le4h+\delta$ 恰为 $z+w\le h$，包括边界和全部四个余数；代入原编码即（TM.5904）。每个有限列 $w=3,\ldots,h$ 有 $\lfloor(w-1)/2\rfloor$ 个不同目标，合计 $\lfloor(h-1)^2/4\rfloor$；标签0行有 $\lfloor h/2\rfloor$ 个。因此两项之和为 $\lfloor h^2/4\rfloor$。$\square$
+
+下界中的真实代表选择只是在证明里限制输入域：对一个完整族供应与协议，选每个所需原目标的一棵实际树，并保留**该树实际上收到的符号**。没有在运行中把源替换为 $\omega$，也没有把一个纤维上的不同真实标签强行识别。后文记 $\mathcal F(z,w)$ 为有限目标 $\tau_h(z,w)$ 的**全部精确实际树**，$\mathcal F_0(z)$ 为 $Z(z)$ 的全部实际树，包括该行每个隐藏组成。
+
+<a id="TM59-L3"></a>
+**引理 59.3（全动作的精确历史桥，复用 TM30、TM38）。** 取有限个不同原目标的真实单位代表，全部满足 $m+n>H$，并具有一个共同真实供应符号。若原协议逐源成功，则代表目标可按初始行大小分成互不相交、递增的整数区间 $(l,d]$；每个区间属于以下两种安全块之一：F 块每行至多一个目标；R 块对 $w>d$ 的目标每行至多一个，对 $w\le d$ 的目标每个有限列至多一个。标签0行可在这张离线表中写作 $(z,h+1)$，它在每个 $d\le h$ 下都属于拒绝侧。这个 $h+1$ **只是永不接受的索引**，不是标签0真实来源的下一叶数。
+
+证明。TM30.2、TM38.1 的永久碰撞判据要求相同 $H$、相同已取得符号和**相同完整记录**，在该记录上当前 $q_H$ 相同而所需原目标不同。行为商保证以后同一记录选择的所有原动作和真实响应相同，故任意继续执行都无法修复。不同历史上的相同当前 $q_H$ 不满足这个判据。
+
+在第一次 $\rho$ 尝试之前，一个共同记录中接受的实际上下文累计贡献已知当前／下一材料 $(U,V)$，满足 $0\le U\le V\le2U$；拒绝材料贡献为零。各次实际读的形式为 $L_0\,1\,R_0$，其中因子的次序由真实左右拼接确定，不作交换。上下文接受／拒绝只比较 $m+U$，于是一个前缀的原始叶数集合是区间 $(\ell,u]$，其现有上端为 $u=H-U$。第一次 $\rho$ 的实际截止为 $c=H-V\le u$。
+
+若 $\rho$ 拒绝，同一初始行的不同原目标均到达当前标签0，当前资源／读数为 $m+U$、$L_0\,1\,R_0$，且整个记录相同，因此每个拒绝行至多一个目标。若接受，同一初始有限列的目标到达资源 $n+V$ 和读数 $L_1\,1\,R_1$；其下一资源为 $m+n+U+V>H$，所以当前也为标签0，同列的不同原目标在相同完整记录上永久碰撞。停止而不尝试 $\rho$ 的叶节点只能每行一个目标，因为那之前同一行的动作、响应与读完全相同。
+
+将一次 $\rho$ 前缀区间在 $c$ 处分开：$(\ell,c]$ 为 R 安全块，$(c,u]$ 全部拒绝 $\rho$，为 F 安全块；空部分删去，$c\le\ell$ 时只需 F。没有 $\rho$ 的停止叶也是 F。前缀分岔只由初始行决定，故不同前缀叶的行区间互不相交。有限代表集上的每条实际路径有限，路径并也有限；按行端点排列这些块即得 TM38.3 的必要分解。物理端点可以不是四的倍数，令 $l=\lfloor\ell/4\rfloor$、$d=\lfloor c/4\rfloor$ 后，$\ell<4z\le c$ 恰为 $l<z\le d$，$4w\le c$ 恰为 $w\le d$。这保留全部上下文余数和接受等号。负截止不含有效接受行，归入 F 即可。标签0真实 $n>H$ 且 $V\ge0$，确实永不接受第一次 $\rho$，与索引 $h+1$ 的所有这些测试一致。证明只使用真实首替换之前的历史及永久碰撞，故容许每个后续原动作与有限深度；严格上带首接受后无法再接受替换是实际资源的结果，不是给完整族竞争者加的深度限制。$\square$
+
+TM38 的反向可恢复性仍由原释放／截止闭包判据承担：每行的释放是第二大列，重复有限列的跨度从第二大行至该列；合并相交的闭释放区间（包括共端点，但不把整数相邻当成相交），跨度被一个强制分量包含即失败。限制或分割后必须重算这些数据。下面的槽位容量只用必要方向，不能充当这个充分判据。
+
+### 59.2 一套适用于奇偶端点与折叠行的容量引理
+
+<a id="TM59-L4"></a>
+**引理 59.4（两类槽位的全协议容量）。** 设 $1\le A\le C$、$K\ge A+C$ 为整数。一个有限实际单位严格上带表由不同原目标组成，有限目标用其真实 $(z,w)$ 索引，标签0目标一行只计一次并用 $(z,h+1)$ 索引。若每个索引都满足
+
+$$
+z\ge A,\qquad w\ge C,\qquad z<w,\qquad z+w\le K,
+\tag{TM.5906}
+$$
+
+则任一可以同符号恢复的目标类至多有 $T=K-A-C+1$ 个目标。因此，任意完整 $U_H$ 成功供应／协议，在选定这类 $N$ 个真实不同目标之后，都满足 $N\le|\mathcal L|T$。
+
+证明。令 $B=\lfloor K/2\rfloor$、$p=\lceil K/2\rceil-1$。若 $C\le B$，取主槽 $P_x$（$A\le x\le p$）及次槽 $S_x$（$C\le x\le B$）；两类即使坐标相同也不同。因为 $p+B=K-1$，槽数为
+
+$$
+(p-A+1)+(B-C+1)=K-A-C+1=T.
+\tag{TM.5907}
+$$
+
+退化的空主区间按零计数；$K=2A=2C$ 时没有表点，结论仍成立。若 $C>B$，只取 $P_x$（$A\le x\le K-C$），同样恰有 $T$ 个槽。所有可能行都在主区间：第一种情形由 $z<w$、$z+w\le K$ 得 $z\le p$，第二种情形由 $w\ge C$ 得 $z\le K-C$。
+
+对引理59.3 给出的每个 $(l,d]$ 块，F 目标映到 $P_z$。R 拒绝目标也映到 $P_z$；R 接受的有限目标在 $C\le B$ 且 $w\le B$ 时映到 $S_w$，其余接受目标映到 $P_{K-w}$。索引 $h+1$ 永不走接受分支。
+
+每个槽坐标都在**使用它的同一个块**。行槽显然满足 $l<z\le d$。次槽满足 $l<z<w\le d$。对反射槽 $x=K-w$，条件（TM.5906）给 $x\ge z>l$。在 $C\le B$ 时它属于 $w>B$ 的接受列，故 $x\le K-B-1=p\le B< w\le d$；在 $C>B$ 时 $x\le K-C<C\le w\le d$。两者均落在相应主区间和同块。
+
+F 中行安全保证单射。R 中拒绝行槽分别单射，两种接受槽分别由列安全单射。主槽与次槽类型不同；唯一还需排除的是拒绝行槽与反射接受槽相撞。令拒绝目标为 $(z_r,w_r)$，接受目标列为 $w_a$。因整数测试包含等号，$w_r\ge d+1$、$w_a\le d$，从而
+
+$$
+z_r\le K-d-1,\qquad K-w_a\ge K-d.
+\tag{TM.5908}
+$$
+
+两范围严格分离。跨块也不复用槽，因为其数字坐标属于使用它的块，而这些块互不相交。于是一个真实同符号类向 $T$ 个槽单射。对任意完整族竞争者，选择一棵实际代表对应每个目标并保留它实际收到的符号；按这些符号分组后，每组满足刚才的必要容量，合计 $N\le|\mathcal L|T$。既未要求目标分解标签，也未选定竞争者的执行器。$\square$
+
+偶数 $K=2B$ 的主区间到 $B-1$，次区间到 $B$；奇数 $K=2B+1$ 的两区间都到 $B$。这一端点差别已经由 $p$ 保留。$A=C$ 也包含在同一证明中。若另用只允许严格 $A<C$ 的表述，表点必有 $w\ge A+1$，可改取 $(A,A+1,K)$，分母减少一；不必为此遗漏相等端点。
+
+<a id="TM59-T5"></a>
+**定理 59.5（完整实际族的精确有限一般下界）。** 对 $h\ge2$ 和整数参数
+
+$$
+2\le A\le C\le h+1,\qquad A+C\le K\le2h+1,
+\tag{TM.5909}
+$$
+
+定义 $\mathcal G_h(A,C,K)$ 为所有有限点
+
+$$
+A\le z\le h,\qquad
+\max(C,z+1,h-z+1)\le w\le\min(h,2z-1,K-z)
+\tag{TM.5910}
+$$
+
+以及满足 $z\ge A$、$2z-1>h$、$z+h+1\le K$ 的折叠点 $(z,h+1)$。其精确计数和分母为
+
+$$
+\begin{aligned}
+N_g(h;A,C,K)&=\sum_{z=A}^{h}\left(
+[\min(h,2z-1,K-z)-\max(C,z+1,h-z+1)+1]_+
++\mathbf1_{\{2z-1>h,\ z+h+1\le K\}}\right),\\
+T_g(A,C,K)&=K-A-C+1,\qquad[x]_+=\max(x,0),\\
+\Lambda_g(h)&=\max_{\text{（TM.5909）}}\left\lceil\frac{N_g(h;A,C,K)}{T_g(A,C,K)}\right\rceil.
+\end{aligned}
+\tag{TM.5911}
+$$
+
+全部四个余数及全部原供应／有限自适应协议均满足
+
+$$
+A_U(4h+\delta)\ge\Lambda_g(h).
+\tag{TM.5912}
+$$
+
+证明。有限点的 $r=2z-w$、$s=w-z$ 均正，实际 $\omega_{r,s}$ 的初始资源为 $4z,4w,4(z+w)$。$w\le h$ 保证首替换合法，$z+w\ge h+1$ 保证初始标签1，且 $4(z+w)>4h+\delta$ 对每个余数成立。折叠点可选 $\omega_{1,z-1}$，它的**真实**下一指标为 $2z-1>h$，是标签0；其离线索引才是 $h+1$。每一行的这种目标只计一次，不计成多个隐藏组成。引理59.2 保证所有这些原目标真实且互异，所有索引符合（TM.5906）。将任意完整协议限制到所选实际代表，应用引理59.4 并取整数上整及参数最大，即得结论。没有由这张表生成在线标签、目标或尺寸。$\square$
+
+### 59.3 有限板族的真实参数对应
+
+<a id="TM59-P6"></a>
+**命题 59.6（反射板的同分母包含）。** 对 $2\le A\le C\le B\le h$，令
+
+$$
+\begin{aligned}
+\mathcal R_h(A,C,B)&=\{(z,w):A\le z\le B,
+\max(C,z+1,h-z+1)\le w\le\min(h,2z-1,2B+1-z)\},\\
+N_r&=\sum_{z=A}^{B}[\min(h,2z-1,2B+1-z)-\max(C,z+1,h-z+1)+1]_+,\\
+T_r&=2B-A-C+2,\qquad
+\Lambda_r(h)=\max_{2\le A\le C\le B\le h}\left\lceil N_r/T_r\right\rceil.
+\end{aligned}
+\tag{TM.5913}
+$$
+
+则 $\mathcal R_h(A,C,B)\subseteq\mathcal G_h(A,C,2B+1)$，且 $T_g(A,C,2B+1)=T_r$，故 $\Lambda_g\ge\Lambda_r$。这包含 $A=C$。
+
+证明。$K=2B+1$ 符合（TM.5909），板上每个有限点恰满足（TM.5910），一般板只另允许折叠行。分母代入为 $2B+1-A-C+1=T_r$。$A=C$ 不改变引理59.4 的证明；若改取 $C'=A+1$，原板点仍包含于 $\mathcal G_h(A,A+1,2B+1)$，相应分母为 $T_r-1>0$。这后一包含是另一个可用的有限选择，不是放弃原同分母比较。$\square$
+
+<a id="TM59-P7"></a>
+**命题 59.7（自然参数板及偶数端点）。** 对所有 $h\ge6$ 和
+
+$$
+\left\lceil h/2\right\rceil\le D\le\left\lfloor2h/3\right\rfloor,\qquad
+\left\lceil3h/2\right\rceil\le K\le2h,
+\tag{TM.5914}
+$$
+
+令
+
+$$
+\begin{aligned}
+\mathcal N_h(D,K)&=\{(z,w):D\le w\le h,
+\max(\lfloor w/2\rfloor+1,h-w+1)\le z\le\min(w-1,K-w)\},\\
+N_n&=\sum_{w=D}^{h}[\min(w-1,K-w)-\max(\lfloor w/2\rfloor+1,h-w+1)+1]_+,\\
+T_n&=2\lfloor K/2\rfloor-\lfloor h/3\rfloor-D+1.
+\end{aligned}
+\tag{TM.5915}
+$$
+
+映射 $A=\lfloor h/3\rfloor+1$、$C=D$、$B=\lfloor K/2\rfloor$ 给出 $\mathcal N_h(D,K)\subseteq\mathcal R_h(A,C,B)$，分母恰为 $T_n$。因此每个 $\lceil N_n/T_n\rceil\le\Lambda_r(h)\le\Lambda_g(h)$。直接映到一般板 $(A,D,K)$ 时，分母为 $K-\lfloor h/3\rfloor-D$：奇数 $K$ 等于 $T_n$，偶数 $K$ 等于 $T_n-1$。
+
+证明。原板的整数不等式就是 $z<w\le2z-1$、$h<z+w\le K$、$w\le h$。前两项给 $3z\ge h+2$，故 $z\ge\lfloor h/3\rfloor+1$；又 $2z+1\le z+w\le K$，故 $z\le\lfloor K/2\rfloor$。$K\le2B+1$ 使原反对角线被反射板包含。参数范围保证 $2\le A\le D\le B\le h$：$B\ge\lfloor3h/4\rfloor\ge\lfloor2h/3\rfloor$，而 $A\le\lceil h/2\rceil$。分母直接代入，奇偶差别用 $2\lfloor K/2\rfloor=K$ 或 $K-1$ 即得。直接一般板的参数也满足（TM.5909）。这是逐有限参数的包含，不由系数大小推断。$\square$
+
+该族的一个较弱但显式的根式推论也可保留为上述包含的数值后果。设
+
+$$
+\beta=\frac{7-\sqrt{19}}{15},\quad d_n=\frac{22-\sqrt{19}}{30},\quad
+k_n=\frac{16+2\sqrt{19}}{15},\quad q_n=\frac{\sqrt{19}}6.
+\tag{TM.5916}
+$$
+
+对 $h\ge30$，取 $D=\lceil d_nh\rceil$、$K=\lfloor k_nh\rfloor$。$1/2<d_n<3/5$、$8/5<k_n<2$ 给舍入后（TM.5914）的全部端点。令 $f(x)=[\min(x,k_nh-x)-\max(x/2,h-x)]_+$；它是非负的 2-Lipschitz 函数；在归一化区间 $[d_n,2/3]$、$[2/3,k_n/2]$、$[k_n/2,1]$ 上，积分宽度分别是 $2x-1$、$x/2$、$k_n-3x/2$，所以
+
+$$
+\int_{d_nh}^{h} f(x)\,dx=J_nh^2,\quad
+J_n=k_n-\frac{13}{12}-\frac{k_n^2}{4}+d_n-d_n^2=\beta q_n.
+\tag{TM.5917}
+$$
+
+每个实际列宽至少 $f(w)-1$。在单元 $[w-1,w]$ 上积分与 $f(w)$ 相差至多1，且 $D-1\le d_nh$；因此 $N_n\ge J_nh^2-2(1-d_n)h-2$，$T_n\le q_nh+2$。由 $\beta=2d_n-1$、$q_n>d_n$、$\beta h-2>0$，有
+
+$$
+N_n-(\beta h-2)T_n\ge2(q_n-d_n)h+2>0.
+\tag{TM.5918}
+$$
+
+故 $A_U(4h+\delta)\ge\lceil\beta h-2\rceil$。这仍由同一容量引理取得，不另加一套可恢复机制。
+
+<a id="TM59-P8"></a>
+**命题 59.8（平移交叠板及其折叠行）。** 对 $h\ge10$，写 $q=\lfloor h/10\rfloor\ge1$、$d=h-10q\in\{0,\ldots,9\}$。取基础有限点
+
+$$
+z\ge4q,\quad6q\le w\le10q,\quad z<w<2z,\quad10q<z+w\le16q,
+\tag{TM.5919}
+$$
+
+把 $(z,w)$ 同时平移为 $(z+d,w+d)$，并加入基础行 $z=5q+1,\ldots,6q-1$ 的真实折叠目标 $Z(z+d)$。则这些目标被 $\mathcal G_h(4q+d,6q+d,16q+2d)$ 包含，**相同分母**为 $6q+1$，目标数为 $11q^2+3q-3$，从而
+
+$$
+A_U(4h+\delta)\ge\Lambda_g(h)\ge
+L_{\rm tr}(h):=\left\lceil\frac{11q^2+3q-3}{6q+1}\right\rceil.
+\tag{TM.5920}
+$$
+
+对全部 $h\ge2$，还可得 $A_U(4h+\delta)\ge11h/60-2$。
+
+证明。平移后有限点的 $r=2z-w+d>0$、$s=w-z>0$；$w+d\le h$、$z+w+2d>h$，初始是真实标签1。它们满足一般板的各界。折叠行的真实代表 $\omega_{1,z+d-1}$ 有下一指标 $2(z+d)-1>10q+d=h$；其索引为 $(z+d,h+1)$，且
+
+$$
+(z+d)+(h+1)=z+10q+2d+1\le16q+2d.
+\tag{TM.5921}
+$$
+
+全部参数符合（TM.5909），分母 $16q+2d-(4q+d)-(6q+d)+1=6q+1$。基础有限表在行段 $[4q,5q]$、$[5q+1,6q]$、$[6q+1,8q-1]$ 的计数分别为
+
+$$
+3q^2+3q-1,\qquad4q^2+q-1,\qquad4q^2-2q.
+\tag{TM.5922}
+$$
+
+第一段列上界 $2z-1$、下界 $6q$，但行 $4q$ 的下界是 $6q+1$；第二段列上界 $10q$、下界 $6q$，但行 $6q$ 的下界是 $6q+1$；第三段宽为 $16q-2z$。三项相加为 $11q^2+2q-2$，再加 $q-1$ 个折叠行得所述 $N$。引理59.4 即给（TM.5920）。精确除法给
+
+$$
+\frac{N}{6q+1}=\frac{11q}{6}+\frac7{36}-\frac{115}{36(6q+1)}
+\ge\frac{11q}{6}-\frac13\ge\frac{11h}{60}-2;
+\tag{TM.5923}
+$$
+
+最后用 $d\le9$，$h<10$ 时右侧小于1，使用非空任务 $A_U\ge1$ 即可。$\square$
+
+分母 $6q+1$ 在这张**所选表**上确实可由一类达到，不能据此认定完整覆盖。具体地，$q\ge2$ 时取平移后的有限 $(z,2z-1)$，$4q\le z\le5q$；取行 $5q+1$ 的每个有限列 $6q,\ldots,10q$；并取上述 $q-1$ 个折叠行。计数 $(q+1)+(4q+1)+(q-1)=6q+1$。供应一个符号，尝试实际右 $\alpha^{H-4(5q+d)}$（固定公开括号），随后尝试 $\rho$，再执行已有 $\mathrm{Size}_H$。低行给 AR，入口减去真实材料识别唯一行；高有限行给 RA，入口识别列且行已知；折叠行给 RR，入口识别行。三种实际记录各自恢复原目标。同一次执行零 `Read`、至多一次接受 $\rho$、至多 $\lceil\log_2H\rceil+3$ 次调用；这里没有完整族的符号分割。
+
+<a id="TM59-P9"></a>
+**命题 59.9（已发表 OR70 的同分母实际包含及 OR68 接回）。** 对 $h\ge14$，设
+
+$$
+k=\lfloor h/2\rfloor,\quad R=\lfloor(k+1)/2\rfloor,\quad S=k+1-R,\quad
+0\le j<R,\quad a=\lfloor(h+3)/2\rfloor.
+\tag{TM.5924}
+$$
+
+OR70 的实际 Ferrers 板由 $1\le i\le R$、$1\le v\le S$、$i+v\le k+1-j$ 的单元组成，行列为 $z=a+i-1$、$w=a+R+v-1$；最后列 $v=S$ 为折叠行索引 $h+1$。映射
+
+$$
+(A,C,K)=(a,a+R,2a+R+k-1-j)
+\tag{TM.5925}
+$$
+
+把整个板包含于 $\mathcal G_h(A,C,K)$，分母恰为 $k-j$。因而
+
+$$
+\Lambda_g(h)\ge L_F(h):=
+\max_{0\le j<R}\left\lceil\frac{RS-j(j+1)/2}{k-j}\right\rceil.
+\tag{TM.5926}
+$$
+
+特别地 $j=0$ 的上整等于 $\lfloor(h+10)/8\rfloor$，所以 OR68 的增长项在 $h\ge14$ 被这一包含接回；较早适用域仍保留 OR68 原下界。
+
+证明。$R+S=k+1$，故最后列 $a+R+S-1=a+k=h+1$，对偶数和奇数 $h$ 都成立。有限列严格高于所有行。最小行 $a$ 与最小列 $a+R$ 的和超过 $h$；最大有限列 $h$ 不超过 $2a-1$，故每个有限点满足 $z<w\le2z-1$ 和 $z+w>h$，都为真实标签1。最后列的行有 $2z-1>h$，可由 $\omega_{1,z-1}$ 实现；$h+1$ 仍不是其真实下一指标。单元不等式给
+
+$$
+z+w=2a+R+i+v-2\le2a+R+k-1-j=K.
+\tag{TM.5927}
+$$
+
+还有 $2\le a\le a+R\le h+1$、$A+C\le K$（差为 $k-1-j\ge0$），以及 $K\le2h+1$，因为 $R\le k$；行也不超过 $h$。所以（TM.5909）–（TM.5910）及折叠行条件逐点成立。被删去的右上角恰有 $j(j+1)/2$ 个单元（$j<R\le S$），因此板数为 $RS-j(j+1)/2$，分母代入恰为 $k-j$。
+
+最后，$RS=\lfloor(k+1)^2/4\rfloor$。按 $k=4u+r$、$r=0,1,2,3$，$\lceil RS/k\rceil$ 分别为 $u+1,u+1,u+1,u+2$；对 $h=2k$ 或 $2k+1$，$\lfloor(h+10)/8\rfloor$ 恰有同样四值。故增长项的有限包含是实际参数／分母恒等式，不是由 OR70 的渐近系数推得。$\square$
+
+### 59.4 根式下界、有限包络与四符号精确区间
+
+<a id="TM59-C10"></a>
+**推论 59.10（反射根式及整数舍入）。** 令
+
+$$
+\kappa=\frac{7-\sqrt{15}}{17},\quad
+ a_r=\frac{1+\kappa}{3},\quad c_r=\frac{1+\kappa}{2},\quad b_r=1-\kappa,
+\qquad q_r=2b_r-a_r-c_r=\frac{\sqrt{15}}6.
+\tag{TM.5928}
+$$
+
+对所有 $H\ge8$，完整族、所有原协议及任意真实精确树标签有
+
+$$
+A_U(H)\ge\left\lceil\kappa\lfloor H/4\rfloor-25\right\rceil,
+\qquad
+A_U(H)\ge\frac{7-\sqrt{15}}{68}H-O(1).
+\tag{TM.5929}
+$$
+
+常数及渐近下界都对四个余数统一。$\kappa=0.183942156105\ldots$ 是本证书得到的必要系数，不是 $A_U$ 的已证最优系数或归一化极限。
+
+证明。$0<\kappa<1/5$，因此
+
+$$
+a_r<1-c_r<\tfrac12<c_r<2b_r-1<b_r.
+\tag{TM.5930}
+$$
+
+反射板的连续宽度在这五段上分别为 $3x-1$、$2x-c_r$、$1-c_r$、$1-x$、$2b_r-2x$。从 $a_r$ 积分到 $b_r$ 得
+
+$$
+J_r=-\tfrac32a_r^2+a_r-b_r^2+2b_r-c_r^2+c_r-\tfrac54.
+\tag{TM.5931}
+$$
+
+一般变量 $a,c,b,\lambda$ 的恒等式为
+
+$$
+\begin{aligned}
+&-\tfrac32a^2+a-b^2+2b-c^2+c-\tfrac54-\lambda(2b-a-c)\\
+&\quad=-\tfrac32\left(a-\tfrac{1+\lambda}{3}\right)^2
+-\left(c-\tfrac{1+\lambda}{2}\right)^2
+-\left(b-(1-\lambda)\right)^2
++\frac{17\lambda^2-14\lambda+2}{12}.
+\end{aligned}
+\tag{TM.5932}
+$$
+
+$\kappa$ 是最后多项式的小根。在（TM.5928）的参数处三个平方及多项式都为零，故 $J_r=\kappa q_r$。
+
+舍入不省略量词。对 $h\ge10$ 取 $A=\lceil a_rh\rceil$、$C=\lceil c_rh\rceil$、$B=\lfloor b_rh\rfloor$，它们满足 $2\le A\le C\le B\le h$；例如 $b_r-c_r>1/5$，故在这个范围有足够整数间距。令
+
+$$
+g(x)=[\min(1,2x,2b_r-x)-\max(c_r,x,1-x)]_+.
+\tag{TM.5933}
+$$
+
+在所需区间它不超过1，且为 3-Lipschitz。实际整数行宽与 $hg(z/h)$ 的绝对差至多3：上界的 $2z-1$ 和 $2B+1-z$ 各有至多1误差，下界有至多1误差，含端点的 $+1$ 再贡献至多1。共不超过 $h$ 行。单元 $[(z-1)/h,z/h]$ 上采样积分误差合计至多 $3h/2$；$[a_r,b_r]$ 与这些单元覆盖区间相差至多两个宽 $1/h$ 的边界条带，面积贡献乘 $h^2$ 后至多 $2h$。所以
+
+$$
+|N_r-J_rh^2|\le7h,\qquad |T_r-q_rh|\le2.
+\tag{TM.5934}
+$$
+
+特别地 $T_r\ge q_rh/2$，因 $q_r>3/5$、$h\ge10$。由 $J_r=\kappa q_r$ 得
+
+$$
+\frac{N_r}{T_r}\ge\kappa h-\frac{(7+2\kappa)h}{T_r}
+\ge\kappa h-\frac{2(7+2\kappa)}{q_r}>\kappa h-25.
+\tag{TM.5935}
+$$
+
+最后一个严格界仅用 $\kappa<1/5$、$q_r>3/5$。$2\le h<10$ 时右侧为负，$A_U\ge1$ 已足够。容量整数性给第一式；$\lfloor H/4\rfloor=H/4+O(1)$ 给第二式。证明只选择了一个可用几何区间与参数序列，没有优化所有板形、所有供应或所有协议。$\square$
+
+<a id="TM59-C11"></a>
+**推论 59.11（保留既有有限规律的必要包络）。** TM54 的有限量在其 $H\ge20$ 适用域为
+
+$$
+\begin{aligned}
+f_w&=[w-\max(\lfloor w/2\rfloor+1,h-w+1)]_+,\quad 3\le w\le h,\\
+d_z&=[\min(2z-1,h)-\max(z,h-z)]_+,\quad
+\epsilon_z=\mathbf1_{\{2z-1>h\}},\quad2\le z\le h,\\
+B_{54}(h)&=\min\left\{L\ge1:\sum_{w=3}^{h}[f_w-L]_+
+\le\sum_{z=2}^{h}\min(d_z,L-\epsilon_z)\right\}.
+\end{aligned}
+\tag{TM.5936}
+$$
+
+OR68 给 $L_{68}(h)=\max(2,\lfloor(h+10)/8\rfloor)$，$h\ge5$。置小上限必要值 $e(h)=1$（$2\le h\le4$）、$e(h)=2$（$5\le h\le9$）、$e(h)=3$（$10\le h\le13$）；其他 $h$ 不使用这一项。则
+
+$$
+A_U(4h+\delta)\ge E(h):=
+\max\bigl(1,\Lambda_g(h), B_{54}(h)\ (h\ge5),
+ L_{68}(h)\ (h\ge5), e(h)\ (2\le h\le13)\bigr).
+\tag{TM.5937}
+$$
+
+命题59.6–9 已证明这个包络包含反射、自然、平移和已发表 OR70 的每个有限商；没有对 $B_{54}$ 宣告普遍支配。已发表的小上限精确值仍为 $A_U=1$（$H=8,\ldots,19$）、$A_U=2$（$H=20,\ldots,39$）、$A_U=3$（$H=40,\ldots,55$）。
+
+证明。一般项由定理59.5；其他项分别直接复用 TM54.3、OR68–69 的原完整实际族必要性和精确小上限结果。其条件与定义59.1 同源、同任务、同原接口，故可取同一个数的下界最大值。OR70 在 $h\ge14$ 被命题59.9 包含，但 OR68 较早的二符号与增长项没有被删除；小值也不是用一般板替换。TM54 的 $B_{54}$ 是必要会计不等式，不是静态充分分割。$\square$
+
+<a id="TM59-P12"></a>
+**命题 59.12（真实 $h=16$ 板与已发表58的精确比较）。** 完整原条件任务满足
+
+$$
+A_U(64)=A_U(65)=A_U(66)=A_U(67)=4.
+\tag{TM.5938}
+$$
+
+这是原 $q_H$ 的条件容量等式，不是物理供应、最低调用次数或原树恢复的结论。
+
+证明。一般参数 $(A,C,K)=(8,12,27)$ 给分母 $27-8-12+1=8$。有限行 $z=8,9,10,11,12,13$ 的列区间为 $[12,15]$、$[12,16]$、$[12,16]$、$[12,16]$、$[13,15]$、$\{14\}$，计数 $4+5+5+5+3+1=23$。每点有真实 $\omega_{2z-w,w-z}$，两参数均正，真实资源 $4z,4w,4(z+w)$ 对每个 $\delta$ 都是初始标签1。另有折叠索引 $(9,17)$、$(10,17)$，分别由 $\omega_{1,8}$、$\omega_{1,9}$ 证明存在；它们的真实资源分别为 $(36,68,104)$、$(40,76,116)$。第二来源的真实下一指标是19，**不是索引17**。两者下一叶数都超过 $64,65,66,67$，且为两个不同 $Z$。于是 $N=25$，$A_U\ge\lceil25/8\rceil=4$。
+
+上界直接使用已发表 TM58.11–13 的完整族构造，逐项核对参数而非搬用改写过的目标。此处 $L=\lceil16/4\rceil=4$，有限低行 $z\le8$ 的符号为 $1+((z-1)\bmod4)$；高行 $x=z-8$、$y=w-8$ 同奇偶时符号 $\lceil x/2\rceil$，异奇偶时 $\lceil y/2\rceil$；每个隐藏标签0组成都供应符号1。四个实际截止 $c_i=8,10,12,14$ 都严格小于16，因此实际右上下文长度为 $32+\delta,24+\delta,16+\delta,8+\delta$，均为正，均真实发出，没有把省略或空树加入这里。拼接测试 $4z+P\le H$ 恰为 $z\le c_i$；接受拼接后的首替换测试 $4w+P\le H$ 恰为 $w\le c_i$；拒绝拼接后的测试为 $w\le16$。实际分支和 $\mathrm{Size}_H$ 入口依旧为 TM58 的 AA、AR、RA、RR 字典。低同符号两行的 AA 列区间分离，高区的奇偶及相邻例外给唯一 AR 行／RA 列逆解；每个标签0行都在 $z\ge9>c_1$，逐隐藏 $w>16$ 给 RR，输出 $Z(z)$。
+
+有限原输出仍用（TM.5904），包括 $z+w\le16$ 的每个标签2目标，字面次序是 $(2,(\mathbf u_{\rm unit},C(z,w)))$。TM58 的全部源对应和 TM30 行为同余把该实际字典提升到每个单位叶词与每种有序括号，无须在线取得坐标。因此完整族有四符号上界，与新下界相等。该上界的同一次执行零 `Read`、至多一次接受 $\rho$、至多 $\lceil\log_2H\rceil+3$ 次调用；容量等式没有证明这些资源同时最优。$\square$
+
+<a id="TM59-P13"></a>
+**命题 59.13（保留 $h=60$ 交叉及精确有限读数）。** $h=60$ 的平移项为 $\lceil411/37\rceil=12$，而反射族的精确最大值 $\Lambda_r(60)=11$；一般族包含两者，$\Lambda_g(60)=12$。所以较大的反射渐近系数不能删除平移有限增益。以下列出的数是指定有限整数参数空间的精确值，未替代任一普遍证明。
+
+| 59有限上限 $h$ | $\Lambda_g$ | $\Lambda_r$ | TM54 $B_{54}$ | OR70 $L_F$ | 平移 $L_{\rm tr}$ | 已发表小值 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 59有限6：$6$ | 2 | 1 | 2 | 不适用 | 不适用 | 2 |
+| 59有限10：$10$ | 2 | 2 | 2 | 不适用 | 2 | 3 |
+| 59有限12：$12$ | 3 | 3 | 3 | 不适用 | 2 | 3 |
+| 59有限14：$14$ | 3 | 3 | 3 | 3 | 2 | 不使用 |
+| 59有限16：$16$ | 4 | 3 | 3 | 3 | 2 | 不使用 |
+| 59有限20：$20$ | 4 | 4 | 4 | 4 | 4 | 不使用 |
+| 59有限24：$24$ | 5 | 5 | 5 | 4 | 4 | 不使用 |
+| 59有限30：$30$ | 6 | 6 | 6 | 5 | 6 | 不使用 |
+| 59有限40：$40$ | 8 | 8 | 7 | 7 | 8 | 不使用 |
+| 59有限60：$60$ | 12 | 11 | 11 | 10 | 12 | 不使用 |
+| 59有限100：$100$ | 19 | 19 | 17 | 16 | 19 | 不使用 |
+| 59有限120：$120$ | 23 | 23 | 20 | 19 | 23 | 不使用 |
+
+有限算术说明。反射计数可用完全整数的后缀递推：对固定 $C,B$ 置 $n_{B+1}=0$，从 $A=B$ 递减到2，令
+
+$$
+n_A=n_{A+1}+[\min(h,2A-1,2B+1-A)-\max(C,A+1,h-A+1)+1]_+.
+\tag{TM.5939}
+$$
+
+仅在 $A\le C$ 时以分母 $2B-A-C+2$ 取商。$h=60$ 的 $\binom{61}{3}=35990$ 个三元组精确给 $\max(N_r-11T_r)=0$，一个达到者是 $(A,C,B)=(25,36,48)$，$N_r=407,T_r=37$；另有 $(24,35,43)$，$N_r=291,T_r=29$，其上整为11。平移 $q=6,d=0$ 给 $N=411,T=37$，严格需要12。一般板在固定 $C,K$ 下把（TM.5911）的两项行宽从 $z=h$ 向下累计，分母 $K-A-C+1$；按（TM.5909）枚举的 $107970$ 个 $h=60$ 参数给最大上整12。这是固定上限的整数比较。
+
+表中其他行使用同一行宽递推及各自已写明的分母。它显示 $h=6$ 反射项低于 TM54，$h=10$ 一般必要板仍低于完整族精确小值；因此这些有限项没有因为新的渐近系数而被省去。另一个可直接复核的严格有限增益是 $h=40$、$(A,C,B)=(17,25,32)$，行宽 $9,11,13,15,16,16,16,16,15,13,11,9,7,5,3,1$，合计 $176/24$，给8，超过两项已发表下界7。所有精确有限值只断言所列上限；一般支配关系仅由命题59.6–9 的参数证明承担。
+
+### 59.5 完整实际源纤维的标签像关系
+
+<a id="TM59-L14"></a>
+**引理 59.14（三个真实源的共同历史障碍）。** 若 $a<b<u<v$，且 $(a,u)$、$(a,v)$、$(b,u)$ 均为真实单位标签1目标，那么任意原协议不能用同一个真实符号恢复这三个不同原目标。结论量化每个有限自适应协议及每种后续继续执行，不限于某个扫描器。
+
+证明。选三个实际树，保留它们真实收到的共同符号。同一行 $a$ 的前两个来源在首次 $\rho$ 前有相同大小、相同单位读数，所以任意上下文身份／侧／括号、响应和有序实际读均相同。若有限停止先于首替换，输出也相同，不能成功；故必须首次尝试 $\rho$。记该共同前缀已经接受的材料为 $U,V$。若列 $u$ 拒绝，即 $4u+V>H$，列 $v$ 也拒绝；两树到达相同当前标签0、相同完整记录而不同原目标，永久失败。因此成功必需 $4u+V\le H$。
+
+现考察行 $b$ 的列 $u$ 来源。逐前缀归纳：一项在行 $a$ 上接受的上下文，在行 $b$ 上的整候选大小为 $4b+U'$，其中 $U'\le V'\le V$，从而 $4b+U'<4u+V\le H$，也接受；一项在较小行上拒绝的上下文，在较大行也拒绝。真实读仍有同一有序因子 $L_0\,1\,R_0$，于是它跟随完全同一个记录和首次 $\rho$。两个列 $u$ 来源都接受，当前大小同为 $4u+V$、实际读同为 $L_1\,1\,R_1$，下一资源分别为 $4(a+u)+U+V$、$4(b+u)+U+V$，均超过 $H$。在同一完整记录上当前 $q_H$ 相等而原目标不同，TM30 永久碰撞排除全部继续执行。$\square$
+
+<a id="TM59-T15"></a>
+**定理 59.15（真实完整纤维的奇偶像分离）。** 固定 $h\ge12$、成功的完整族真实供应 $\ell:U_H\to\mathcal L$，记 $L=|\mathcal L|$。对 $p=0,1$ 定义
+
+$$
+\begin{aligned}
+C_p&=h-((h-p)\bmod2),\quad u_p=C_p-2,\quad v_p=C_p,\\
+\mathcal Z_p&=\{z:z\equiv p\pmod2,\ 2z-1\ge C_p,\ z\le C_p-4\},\\
+I_{p,z}&=\ell(\mathcal F(z,u_p))\cap\ell(\mathcal F(z,v_p)).
+\end{aligned}
+\tag{TM.5940}
+$$
+
+每个 $\mathcal F$ 都包含目标的全部精确词与全部括号。对固定 $p$，集合 $I_{p,z}$ 随 $z$ 两两不交，因而 $\sum_{z\in\mathcal Z_p}|I_{p,z}|\le L$。不宣告跨奇偶类的不交。精确行数为
+
+$$
+R_0=\left[C_0/2-2-\lfloor C_0/4\rfloor\right]_+,
+\qquad R_1=\left[\lfloor(C_1-1)/4\rfloor-1\right]_+.
+\tag{TM.5941}
+$$
+
+若 $S(\ell)$ 计两个**完整纤维像完全不交**的探针行，则
+
+$$
+S(\ell)\ge[R_0-L]_++[R_1-L]_+\ge h/2-2L-4.
+\tag{TM.5942}
+$$
+
+特别地 $L\le(1/4-\varepsilon)h$ 要求 $S(\ell)\ge2\varepsilon h-4$。
+
+证明。$\mathcal Z_p$ 中的 $z$ 至少为2，$z<u_p<v_p\le h$、$v_p\le2z-1$；又 $z+u_p>h$。例如偶数 $C_p$ 时合乎奇偶的 $z\ge C_p/2+1$，故 $z+u_p\ge3C_p/2-1>h$；奇数时 $z\ge(C_p+1)/2$，故 $z+u_p\ge(3C_p-3)/2>h$，在 $h\ge12$ 的可用行上均成立。因此探针全部为引理59.2 的真实标签1纤维。
+
+若同一符号 $e$ 属于两行 $a<b$ 的 $I_{p,z}$，从完整纤维中选择实际带 $e$ 的树，分别取目标 $(a,u_p)$、$(a,v_p)$、$(b,u_p)$。它们满足 $a<b<u_p<v_p$，违反引理59.14。所以这些像交集两两不交，非空交集的行数至多 $L$，完全不交行数至少各奇偶的 $[R_p-L]_+$。这一步没有把纤维标签当成一个值，使用的是实际集合成员所保证的真实带标树。
+
+偶行写 $z=2j$、奇行写 $z=2j+1$，直接由（TM.5940）的上下界得到（TM.5941）。若 $h=4k,4k+1,4k+2,4k+3$，两行数之和分别为 $2k-4,2k-3,2k-2,2k-2$，都至少 $h/2-4$。使用 $[x]_+\ge x$ 即得（TM.5942）及后果。$\square$
+
+这是一条新的必要源像关系，并非新的无条件四分之一数值下界。若另有适用且已证的供应限制 $S(\ell)\le D_{\rm sep}$，才可推出 $L\ge h/4-2-D_{\rm sep}/2$。已发表58的所选供应在这些探针上 $S=0$：两列与行同奇偶，高区都用相同的行码，低区都用相同余数码。但任意精确树供应没有这个限制。只在探针真子族上，把 $u_p$ 和 $v_p$ 两种列各供应一个符号，直接对初始实际树用 $\mathrm{Size}_H$ 取得 $M=4z$；行奇偶给 $p$，符号给 $w=u_p$ 或 $v_p$，于是恢复原目标。同一次执行零 `Read`、零接受 $\rho$、至多 $\lceil\log_2H\rceil+1$ 次调用。可见完全分离的像在真子族上可实现；这没有覆盖其余真实输入。
+
+<a id="TM59-P16"></a>
+**命题 59.16（复用 TM55 的无界高阶纤维条件）。** 对每个 $k\ge2$、$h\ge4k$，置 $a=h-2k$、$b=h-k$，目标族
+
+$$
+\mathcal C_{h,k}=\{(a+i,a+i+1),(a+i,b+i):0\le i<k\}
+\tag{TM.5943}
+$$
+
+有 $2k$ 个真实标签1目标，整个族不能同符号恢复，而每个真目标子族可以同符号恢复。因此任何成功完整供应还必须满足
+
+$$
+\bigcap_{(z,w)\in\mathcal C_{h,k}}\ell(\mathcal F(z,w))=\varnothing.
+\tag{TM.5944}
+$$
+
+这是 TM55 的高阶共同历史障碍在完整实际源像上的应用，不是另立有限规划器。
+
+证明。$a\ge2k$、$b=a+k$，逐点有 $z<w\le2z-1$、$w\le h$、$z+w>h$；每点由 $\omega_{2z-w,w-z}$ 实现。各行两个目标的释放区间是 $[a+i,a+i+1]$，相交端点把它们连成 $[a,b]$。只有列 $b$ 重复，出现在 $(a,b)$ 与 $(b-1,b)$，其跨度为 $[a,b]$，被这个强制分量包含，TM38 的精确判据排除整个类。
+
+删除重复列的任一个端点就消去该跨度；删除任一其他目标，则相应双目标行变成单目标行，释放区间退到该行点，原链的连接边断开，剩余重复跨度不再被一个强制分量包含。无其他重复有限列，因此每个单删族可恢复，进一步限制也保持可恢复性。若（TM.5944）有一个符号，从每个纤维选一棵实际带标树即会同符号覆盖整个不可能类，矛盾。
+
+静态分配却可以把高列目标分给各自不同的行槽 P，把低列目标分给各自不同的列槽 C。这个分配满足静态行／列容量及相应全部子集计数，仍没有共同历史执行。任意大 $k$ 的目标最小障碍说明固定二元、三元或任意固定阶数测试都不能代替原释放链；必要的静态会计不成为充分性。$\square$
+
+<a id="TM59-P17"></a>
+**命题 59.17（$h=12$ 的完整真实供应反例）。** 在 $H=48,49,50,51$ 上存在一个34符号的总真实目标分解供应，它满足定理59.15 的两个探针像分离条件及命题59.16 的全部适用链像条件，仍没有成功原协议。
+
+证明。$Q(12)=36$。给三个完整纤维 $(7,11)$、$(7,12)$、$(8,11)$ 的**所有**实际词及括号同一个符号 $e$；每个其他原目标各给独有符号，包括标签0整行的所有隐藏组成。因此符号数为 $36-3+1=34$，总函数与精确同源配对条件一致。三个真实代表是 $\omega_{3,4}$、$\omega_{2,5}$、$\omega_{5,3}$，实际资源分别为
+
+$$
+(28,44,72),\qquad(28,48,76),\qquad(32,44,76).
+\tag{TM.5945}
+$$
+
+全部四个上限下它们都为标签1。取 $(a,b,u,v)=(7,8,11,12)$，引理59.14 排除 $e$ 类的任意协议。
+
+此时偶探针只有行8、列10与12；奇探针只有行7、列9与11。两处的完整像都不交：前一对各自独有，后一对只有列11使用 $e$。于是所有 $I_{p,z}$ 为空，定理59.15 的必要条件通过。每个适用 TM55 链有至少4个不同原目标，而 $e$ 只出现在3个目标上，其他符号都只出现于1个目标；故这些全链像交集也为空（$h=12$ 的标准链参数是 $k=2,3$）。仍然不成功，证明这些显示像条件合取也不是充分性。反例是整个实际域上的标签函数，未只标三个代表词。$\square$
+
+<a id="TM59-P18"></a>
+**命题 59.18（折叠高区码排除的是一个供应）。** 设任意整数 $L\ge1$，$4L+10\le h\le6L+13$，$\delta\in\{0,1,2,3\}$。考虑如下完全规定的 $L$ 符号供应：标签0给1；有限 $z\le2L$ 给 $\operatorname{rep}_L(z)=1+((z-1)\bmod L)$；有限高区 $x=z-2L$、$y=w-2L$ 先按同奇偶取原码 $\lceil x/2\rceil$、异奇偶取 $\lceil y/2\rceil$，再给 $\operatorname{rep}_L$ 的折叠码。无论另换怎样的原控制器，此供应都不成功。
+
+证明。三个真实来源
+
+$$
+\begin{array}{c|c}
+\text{真实正词}&(z,w)\\
+\omega_{4,2L+2}&(2L+6,4L+8)\\
+\omega_{2,2L+4}&(2L+6,4L+10)\\
+\omega_{4L+4,2}&(4L+6,4L+8)
+\end{array}
+\tag{TM.5946}
+$$
+
+都满足 $z\le h$、$w\le h$、$w\le2z-1$ 和 $z+w\ge6L+14>h$，包括最小 $h$ 的有限列等号。它们都在高区且 $x,y$ 同为偶数，原码分别是 $3,3,L+3$，故真实折叠符号全为 $\operatorname{rep}_L(3)$。行列次序为 $2L+6<4L+6<4L+8<4L+10$，引理59.14 排除每个原控制器。比如 $L=10,h=50$，三来源资源为 $(104,192,296)$、$(104,200,304)$、$(184,192,376)$。结论只排除显示供应，不排除所有 $L$ 符号供应，不能据此宣称 $A_U(200)\ge11$ 或新线性系数。$\square$
+
+### 59.6 一次实际大类构造与两种计数路线限制
+
+<a id="TM59-L19"></a>
+**引理 59.19（复用实际入口取得 $\mathrm{Size}_H$）。** 已有 TM44.5、TM51.5 的过程可在任一实际 ambient 入口树、未知叶数 $1\le M\le H$ 上取得其**入口** $M$，同一次执行不作 `Read` 或 $\rho$，至多 $\lceil\log_2H\rceil+1$ 次整正上下文调用。它最后把实际来源填到 $H$ 并支付一次单叶拒绝，不提供免费原始尺寸。
+
+证明。固定实际正上下文 $v_1=\alpha$、$v_{p+1}=\langle v_p,\alpha\rangle$，公开的 $v_p$ 是左结合的整树，不是可逐叶局部接受的宏。维护已取得区间 $l<M\le u$ 和已经实际插入的叶数 $F=H-u$，初始 $l=0,u=H,F=0$，当前叶数为 $M+F$。当 $u-l>1$，令 $c=\lfloor(l+u)/2\rfloor$，尝试整右 $v_{u-c}$。候选非空；其真实 guard 等价于
+
+$$
+M+F+(u-c)\le H\quad\Longleftrightarrow\quad M\le c.
+\tag{TM.5947}
+$$
+
+接受时 $u=c$，并把实际插入量增加旧 $u-c$；拒绝时只令 $l=c$，没有插入任何拒绝材料。两分支保持不变量、保留等号接受，区间宽至多向上折半。宽为1时，$M=u$ 已由真实响应取得，当前树恰有 $M+(H-u)=H$ 叶；再尝试一个整 $\alpha$，拒绝并计入调用。前面至多 $\lceil\log_2H\rceil$ 次，故所述界成立。这里的 $M$ 是证明中的实际入口量，在线取得它靠 guard 历史；若入口已经修改，须另证原始目标与它的逆关系。$\square$
+
+<a id="TM59-T20"></a>
+**定理 59.20（完整族可延伸的星形原目标类）。** 对每个 $h\ge6$、每个 $\delta$，置 $a=\lfloor h/2\rfloor+1$。给以下原目标的**全部实际树纤维**一个共同符号 $\star$：
+
+$$
+\begin{aligned}
+\mathcal S_h={}&\{\tau_h(z,2z-1):2\le z<a\}\\
+&\cup\{\tau_h(a,w):a+1\le w\le h\}\\
+&\cup\{\tau_h(z,h):a+1\le z\le h-1\}\\
+&\cup\{Z(h)\}.
+\end{aligned}
+\tag{TM.5948}
+$$
+
+这个类含 $n_\star=2h-\lfloor h/2\rfloor-3$ 个不同原目标，可由一个原控制器恢复，同一次执行零 `Read`、至多一次接受 $\rho$、至多 $\lceil\log_2H\rceil+4$ 次调用。它能延伸为完整 $U_H$ 的真实条件供应／协议：其他树供应带有另一个类型标记的已发表 TM58 符号，在**各自未修改原树**上执行原 TM58。完整延伸使用至多 $\lceil h/4\rceil+1$ 个符号，且保留星形协议的上述共同资源界。这是大类存在证据，并非更小的完整族字母表。
+
+证明。所有有限点都有正参数 $r=2z-w,s=w-z$。低对角线满足 $w=2z-1\le2a-3\le h$；行 $a$ 与高列 $h$ 都在原实际三角形内。$Z(h)$ 则包含 $h<w\le2h-1$ 的**每个隐藏组成**。引理59.2 把每个目标提升到全部单位叶词和括号。四部分互不重合，计数为
+
+$$
+(a-2)+(h-a)+(h-a-1)+1=2h-a-2=2h-\lfloor h/2\rfloor-3.
+\tag{TM.5949}
+$$
+
+执行器只依赖 $H,\star$ 与取得的真实响应，使用引理59.19 的公开 $v_p$。先尝试整右 $v_{P_0}$，$P_0=H-4(a-1)>0$。它接受恰为 $z\le a-1$；在此类中这些来源只有低对角线。立即调用 $\mathrm{Size}_H$ 得实际入口 $M=4z+P_0$，由 $z=(M-P_0)/4$ 输出已知原 $\tau_h(z,2z-1)$，不尝试 $\rho$。
+
+若第一次拼接拒绝，树仍是精确原树；尝试整右 $v_{P_1}$，$P_1=H-4(h-1)=4+\delta>0$。若又拒绝，初始行只可能是 $h$，即全部 $Z(h)$ 来源；直接用 $\mathrm{Size}_H$ 取得入口 $M=4h$，输出 $(0,1,M)$，也不尝试 $\rho$。
+
+若第二次拼接接受，原行 $a\le z\le h-1$，只插入了真实 $P_1$，随后尝试 $\rho$。它接受恰为 $w\le h-1$。在星形类中接受输入只能是行 $a$ 的有限列 $a+1,\ldots,h-1$，入口为 $M=4w+P_1$，所以输出 $\tau_h(a,(M-P_1)/4)$。拒绝输入只能是有限列 $h$、行 $a,\ldots,h-1$，入口为 $M=4z+P_1$，所以输出 $\tau_h((M-P_1)/4,h)$。保留第二次拼接与替换的实际分支，而不是从末态猜原目标。所有减法仅减实际已接受材料。实际接受／拒绝等号对 $\delta=0,1,2,3$ 都按相同阈值成立。
+
+每次入口都在 $[1,H]$，故 $\mathrm{Size}_H$ 可复用。前缀最多两个上下文和一次 $\rho$ 尝试，加终端过程给 $\lceil\log_2H\rceil+4$。零 `Read`，且只有一次可能接受的替换。读数与括号从未被隐式取得；正确性由真实资源和原目标字典给出，行为同余保证同目标的每个实际树跟随相同字典。
+
+最后，对补集所有树取 $(\mathrm{legacy},\ell_{58}(t))$，原样运行 TM58 的共同执行器，不先跑星形前缀，不替换来源。补集包括其余标签0行的全部隐藏组成和每个未选标签2纤维，已发表58覆盖它们。两种标签初始化互异，资源取两种替代执行的最大值，既不相加也不拼接不同优化坐标。TM58 的真实省略仍真实省略；若其 $c_i\ge h$，即使 $\delta>0$ 也没有上下文调用或响应。该补集条件供应的取得、身份配对与生产仍是外部条件。$\square$
+
+也可把补集交给已发表 TM55 的同源控制器，得到 $\lfloor(h+1)/3\rfloor+1$ 个符号及同样的零读、深度1、调用 $+4$ 保证；这只是同一大类的另一条已知补集接回，不另造大类。当前 TM58 的接回已经足以证明完整族延伸。
+
+<a id="TM59-P21"></a>
+**命题 59.21（全目标计数与严格上带计数的不同路线上限）。** 定义 $M(h)$ 为任一成功完整条件协议的某个供应值能代表的不同**原目标**数的最大值，允许任意精确词／括号标签。定义 $M^+(H)$ 时只计原标签1与原标签0目标。对 $h\ge6$ 有
+
+$$
+\begin{aligned}
+M(h)&\ge2h-\lfloor h/2\rfloor-3=\tfrac32h-O(1),\\
+a_+&=\lceil(h+2)/3\rceil,\quad b_+=\lfloor(h+1)/2\rfloor,\quad
+R_+=h-a_++1,\quad S_+=h-b_+,\\
+R_++S_+-2+(h\bmod2)&\le M^+(H)\le R_++S_+.
+\end{aligned}
+\tag{TM.5950}
+$$
+
+因此只以“全部原目标数除以一个普遍最大类容量”作必要性的方法，至多达到 $h/6+O(1)$；只以“全部严格上带原目标数除以其普遍最大类容量”的方法，至多达到 $h/7+O(1)$。两项是不同统计的**证明路线限制**，不是 $A_U$ 的上界，不是其他下界方法的限制，也不是完整小覆盖证书。
+
+证明。定理59.20 已在一个成功**完整**族协议中实现 $n_\star$ 个原目标的同符号类，故第一式成立。它直接反驳全协议每值 $h+O(1)$ 或 $5h/4+O(1)$ 的类容量声称。若 $U(h)$ 是对所有成功完整协议有效的统一类上界，必有 $U(h)\ge M(h)\ge n_\star$。唯一使用 $Q(h)\le L U(h)$ 的阈值因而至多
+
+$$
+\left\lceil Q(h)/n_\star\right\rceil=h/6+O(1),\qquad Q(h)=\lfloor h^2/4\rfloor.
+\tag{TM.5951}
+$$
+
+这不说星形补集可以再用少数大类覆盖，也不说最优分割含有这个星形类。
+
+对严格上带统计，选一个值实际代表的每个不同上带目标各一棵实际树，保持实际标签。按首次 $\rho$ 将它们分成 P（此前停止或首次拒绝）与 C（首次接受）。同一初始行的前缀记录相同；若其中两个 P 目标不同，要么在替换前同输出，要么在拒绝后同当前标签0和同记录，所以每行至多一个 P，且标签0必为 P。
+
+C 每个有限列也至多一个，即使先验上允许不同前缀。若同列 $w$ 的两个原目标在行 $z_1<z_2<w$ 首次接受，从较小行接受前缀取 $U,V$，有 $4w+V\le H$。较大行逐步跟随它：每个较小行接受的正上下文在较大行满足 $4z_2+U'\le4z_2+V<4w+V\le H$，每个较小行拒绝的候选在较大行也拒绝，有序实际读相同。故两者跟随同一个完整记录首次接受，同当前大小 $4w+V$、同当前标签0而原目标不同，永久失败。这个跨前缀排除重用的是引理59.14 的真实强制前缀论证，没有忽略记录身份。
+
+存在上带目标的行恰为 $a_+,\ldots,h$：有限目标 $z+w>h$、$w\le2z-1$ 给 $3z\ge h+2$；每个这些行都有上带或折叠目标。有限上带列恰为 $b_++1,\ldots,h$，由 $z<w$、$z+w>h$ 得 $2w\ge h+2$，每个这样的列都有实际点。故 P、C 容量之和至多 $R_++S_+$，不因同符号还带有其他标签2输入而改变。
+
+同一个星形类达到下界：它仅有低对角线 $z\le\lfloor(h+1)/3\rfloor$ 的 $\lfloor(h+1)/3\rfloor-1$ 个原标签2目标。其余全部是上带，所以
+
+$$
+\begin{aligned}
+n_\star^+&=2h-\lfloor h/2\rfloor-2-\lfloor(h+1)/3\rfloor\\
+&=R_++S_+-2+(h\bmod2).
+\end{aligned}
+\tag{TM.5952}
+$$
+
+无需第二个大类执行器，真实完整补集接回已由定理59.20 给出。两侧界说明 $M^+=7h/6+O(1)$。完整上带原目标数是 $\sum_{w=3}^h f_w+\sum_{z=2}^h\epsilon_z=h^2/6+O(h)$；有限标签1的面积为
+
+$$
+\int_{1/3}^{1/2}(3x-1)\,dx+\int_{1/2}^{1}(1-x)\,dx=1/6,
+\tag{TM.5953}
+$$
+
+标签0另有 $O(h)$ 项，整数边界误差也是 $O(h)$。因此只除以这种普遍上带类容量，阈值至多 $(h^2/6+O(h))/(7h/6+O(1))=h/7+O(1)$。
+
+一般板容量不与这些大类矛盾：引理59.4 计的是每个值与**选定几何板**的交集，并且槽位归属于不同实际历史块；它没有对该值的全部原目标施加 $T$ 上界。大类中其他目标与不同记录的质量不能再算成该板中的重复槽。$\square$
+
+<a id="TM59-P22"></a>
+**命题 59.22（已有精确小区间上的不平衡完整分割）。** $H=32,33,34,35$ 的完整族存在两个真实值的 $9/7$ 原目标分割，零 `Read`、至多一次接受 $\rho$、至多 $\lceil\log_2H\rceil+5$ 次调用。其最小字母表2与已发表 OR68–69 一致；即使字母表最小，也不必每类至多 $h=8$ 个目标。
+
+证明。定理59.20 的 $h=8$ 星形类有有限点 $(2,3),(3,5),(4,7),(5,6),(5,7),(5,8),(6,8),(7,8)$ 和整行 $Z(8)$，共9个。补集为有限 $(3,4),(4,5),(4,6),(6,7)$ 与全部 $Z(5),Z(6),Z(7)$，共7个，均对全部实际词、括号和隐藏组成供另一个共同值。
+
+补集协议依次尝试整右 $\alpha^{H-12}$、$\alpha^{H-20}$、$\alpha^{H-28}$；只有先前拒绝时才尝试下一项，所以下一项作用在精确原来源上。第一次接受只能是行3，直接用 $\mathrm{Size}_H$ 取得入口并输出 $\tau_8(3,4)$。第二次接受后尝试 $\rho$，接受仅为 $(4,5)$；拒绝的入口减去实际 $H-20$ 得行4或5，分别输出 $\tau_8(4,6)$ 或 $Z(5)$。第三次接受后尝试 $\rho$，接受仅为 $(6,7)$，拒绝的入口减去实际 $H-28$ 得行6或7，分别输出 $Z(6)$、$Z(7)$。每支均真实取得入口再逆解，等号与四个余数均保留。前缀最多三次上下文加一次替换尝试，加 $\mathrm{Size}_H$ 给调用 $+5$，星形支更小，故资源是完整协议的一次执行保证。
+
+一符号排除也有实际三源证据：$(5,8)$、标签0行5的真实隐藏点 $(5,9)$、$(6,8)$，分别为 $\omega_{2,3},\omega_{1,4},\omega_{4,2}$。同一行的前两者迫使首次 $\rho$ 接受列8，否则拒绝后永久碰撞；列8的两来源继而按同一强制前缀接受而永久碰撞。这里第二来源的真实下一指标9大于 $h$，这一拒绝性质是真实 guard，不是给索引添一个可执行列。这正是引理59.14 的同记录论证允许第二输入在标签0时的实例。因此最小值确为2，而9目标类大于 $h$。$\square$
+
+当前行为相等的边界也可在同一星形协议中直接看见：$H=72$、$h=18$、$a=10$，原 $(9,17)$、$(10,17)$、$(17,18)$ 及整行 $Z(18)$ 分别沿前缀 A、RAA、RAR、RR 进入 $\mathrm{Size}_H$，入口都是72，当前 $q_H$ 都为 $(0,1,72)$。前两上下文长度分别为36和4，其单位读数使这个当前等式字面成立。但它们已经取得的真实记录不同，逆解给不同原目标，不发生永久碰撞。终端当前大小／行为并不是完整原始关联的替代品。
+
+### 59.7 来源、资源及未解决的恢复关系
+
+<a id="TM59-N23"></a>
+**注记 59.23（同一执行、真实供应与未决覆盖）。** 已证的统一必要包络及已发表完整充分构造给出
+
+$$
+E(h)\le A_U(4h+\delta)\le\lceil h/4\rceil,\qquad
+A_U(4h+\delta)\ge\kappa h-O(1).
+\tag{TM.5954}
+$$
+
+上界的完整族同时资源是 TM58 自己的 $(\lceil h/4\rceil,\ \mathrm{Read}=0,\ \text{接受}\rho\le1,\ \text{调用}\le\lceil\log_2H\rceil+3)$。本章星形延伸有自己的 $(\lceil h/4\rceil+1,0,\le1,\le\lceil\log_2H\rceil+4)$。新必要下界没有可达到的调用／读／深度元组，不与另一构造的资源上界拼成一个声称实现的点。两条渐近保证在 $h$ 系数上相距 $1/4-\kappa=0.066057843894\ldots$；完整相容覆盖、一般精确 $A_U$、四分之一最优性、更深历史是否改进最小字母表，以及归一化极限是否存在均未解决。$H=64,\ldots,67$ 的精确结论只关闭那四个容量值。
+
+所缺的联合关系仍涉及一个**完整真实供应分割**及它所有真正共同记录上的原目标／当前来源对。一般板约束每个值的历史槽位，源像条件约束整个精确源纤维，大类构造展示可以容纳的目标质量；这三者都未构成覆盖全部标签0、1、2 的相容性定量守恒。没有可证明的全覆盖缩放关系允许把线性的分离数 $S(\ell)$ 直接加进二次板计数不等式；本章不作这种系数推断。静态分配、单类达到容量、真子族小供应、固定执行器失败、有限上限扫描都不是完整覆盖证明。
+
+原协议竞争者仍可保留任意有限深度。TM56 的共同首正上下文 barrier 有其“相同实际首上下文及侧、不依赖符号”的额外假设；不能用它限制标签依赖上下文或真实省略的 TM58，更不能提升为本任务的全协议必要性。严格上带首接受后下一资源超限只适用于本章下界代表；完整标签2历史不服从这个截断。TM44、TM46 的固定一个供应符号的实际子族需要随上限增长的有限接受深度，也不证明任意更丰富供应都需要相同深度。
+
+旧材料必须继续按实际替换传输。例如 $H=80$，原 $\omega_{3,2}$ 的资源为 $20,28,48$；先实际插入右 $\alpha^{20}$ 后为 $40,48,88$，第一次 $\rho$ 接受、第二次拒绝。把它当成固定子上限60上的未修改原树会错误地接受第二个48。一般在 $j$ 次接受替换后，纯 $\alpha$ 材料的当前／下一贡献为 $P F_{j+1},P F_{j+2}$（$F_1=F_2=1$），原始关联和完整记录须随同传输。这里没有子上限、来源替换或逆操作的合法递归桥。
+
+消费者的紧凑算术记录可以用 $O(\log(H+1))$ 位整数寄存器维护公开阈值、实际分支、已取得入口和逆解。这只界定算术工作寄存器；它不界定标签与档案的取得、精确身份认证及配对、生产／交付／保留，实际上下文树的命名与展开材料（包括拒绝候选），guard 和替换内部工作，原来源存储，完整记录留存，输出及物理时间。一次整宏调用也不是一次物理单位时间。
+
+真实非恒定供应没有在原接口中免费产生。复用 TM51.9：完整单位来源都有正的 $\beta$ 组成，每次接受 $\rho$ 或非空正上下文都严格增叶，没有原动作能减叶。一个共同初始化且要求保留每棵精确原树的生产者不能接受任何修改；它只取得共同 `Read` 值1及共同拒绝响应，因而只能输出常数。非恒定条件标签函数不是这个源保持生产者，也不是隐藏目标口。标签取得和物理来源及整候选测试的符合性需要单独证据。本章的普通证明没有恢复原叶词、全部括号、旧轨迹或物理时空，也不声称 Lean／kernel 核验。
+
+<a id="TM59-N24"></a>
+**注记 59.24（不可变来源及数学归属）。** 实际联合源字典、全动作历史桥、终端取得与旧覆盖均按下列不可变文本的原假设复用；新内容是它们上的统一槽位容量、逐参数有限包含、根式舍入、真实纤维像后果及同一大类的两个路线限制，属于仓内推导与综合，不作未经文献确证的全局原创性主张。
+
+| 59来源 | 不可变文本 | 本章所用范围 |
+| --- | --- | --- |
+| 59实际源 | [Atomic359–360](https://github.com/the-omega-institute/trureturing/blob/e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) | 连通平衡八边的同时单位来源、正参数、全部 Euler 叶词与全部有序括号 |
+| 59原接口 | [TM30、38、44–47、51](https://github.com/the-omega-institute/trureturing/blob/e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) | 字面目标 codec、整 guard、相同完整历史永久碰撞、F/R 及释放跨度、入口取得、材料传输、源保持生产边界 |
+| 59既有聚合下界 | [TM54](https://github.com/the-omega-institute/trureturing/blob/c469d049349b2f4b53daef9cee7d6db13bc9f805/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) | 完整族必要不等式 $B_{54}$ 与 $(7-3\sqrt3)/11$ 系数，非静态充分性 |
+| 59高阶与补集复用 | [TM55](https://github.com/the-omega-institute/trureturing/blob/9a21d168ab93cf1da72ebb98e64f4575437050f2/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) | 任意大目标最小链障碍与已知完整族控制器 |
+| 59受限首上下文 | [TM56](https://github.com/the-omega-institute/trureturing/blob/25a023d7f087268131a63ca799cb530a0b0796b7/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) | CPF 的额外首上下文假设，未提升为全协议必要性 |
+| 59早期与小精确值 | [OR68–69](https://github.com/the-omega-institute/trureturing/blob/511f1920bceaaf9f6ec6411030fbd4da42abfbfd/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md) | 原完整任务的小上限精确值与早期必要规律 |
+| 59已发表有限 Ferrers | [OR70](https://github.com/the-omega-institute/trureturing/blob/4f981b86a637c4aff1f1825ec0efe41dd5bb36e2/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md) | 严格分离板的原行列索引及分母，经59.9逐点接回 |
+| 59完整四分之一供应 | [TM58](https://github.com/the-omega-institute/trureturing/blob/72a3678941f019fc38819bae21515b0f1eb5e67b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) | 完整供应分割、原 $\eta$ 顺序、真实省略、所有余数、同源字典逆解及同次执行资源 |
+
+成熟的破坏性初态识别图景可参见 van den Bos–Vaandrager 的 [State Identification for Labeled Transition Systems with Inputs and Outputs，arXiv:1907.11034v2](https://arxiv.org/abs/1907.11034v2)：区分需要共同测试及完整可观察轨迹，其全状态不相容等假设并未自动在这里满足。它只提供归属与问题图景，本章没有从外部状态识别、静态零误差编码、复位学习或定时 homing 结果借入数值容量或覆盖结论。Atomic384 与 OR74 的接口另有假设，未建立到原 TM30 的自动转移，故不作本章前提。
+
+有限结果数据仅承担有限范围：槽位规则在 $h=2,\ldots,12$ 的全部一般参数与整数块上检验；自然参数包含在 $h=6,\ldots,40$，平移表在 $q=1,\ldots,8$ 的全部 $d=0,\ldots,9$，OR70 在 $h=14,\ldots,80$ 的全部 $j$ 上检验；表59.13 的十二个上限穷举各自完整整数参数。真实 $\omega_{r,s}$ 在 $r+s\le20$ 的190个正参数上有570个零至二替换相位的精确有理矩阵单位积与资源核对。TM58 在 $h=2,\ldots,20$、全部四个余数及全部正组成上核对5320条实际 guard／入口／原目标逆解，其中 $h=16$ 为480条；同一星形与原58补集在 $h=6,\ldots,40$ 的所有组成和余数上核对，星形支7384条；$h=8$ 完整 $9/7$ 分割核对112条；探针行数在 $h=12,\ldots,80$ 核对，折叠三源在 $L=1,\ldots,12$ 的全部所述 $h$ 与余数核对816组。它们是有界算术与真实分支的一致性数据，没有枚举全部词、全部括号或全部原控制器。那些普遍范围由实际 Euler／行为同余及本章普通历史证明承担；这些有限数据不建立最优系数、全覆盖缩放、物理供应或形式核验。
+
+## 追加锚（本行以下为增补区）
+
+## 60. 六十至六十三上限的完整供应容量与联合整数覆盖障碍
+
+### 60.1 原始合同、实际目标与加权子集
+
+<a id="TM60-D1"></a>
+**定义 60.1（原任务的四个上限与完整上带目标）。** 固定 $H=60+\delta$、$\delta\in\{0,1,2,3\}$，沿用定义58.1、59.1的完整实际 $U_H$、字面初始 $q_H$ 与条件容量 $A_U(H)$。来源是每个允许单位 Euler 叶词的每一种有序二叉括号化，真实标签配对于同一棵精确、未修改初始树。最小化仍允许标签任意依赖精确叶序和括号；不要求竞争标签经由目标分解。消费者只有公开 $H$ 和这个 authentic 符号，以相同符号下的共同确定性初始化及已取得完整记录选择动作、停止和输出。
+
+动作保持原 TM30 的当前 `Read`、整树 $\rho$ 尝试及任意已知实际非空正上下文的两侧整拼接；整个候选叶数 $\le H$ 时接受，包括等号，拒绝保持原当前树且不给候选读数。所有原有限自适应竞争者、逐源有限停止、任意已取得历史、混合正材料和允许的接受替换深度均在量词内。运行可以离开单位族并继续使用原 ambient 接口。没有额外尺寸、目标、档案、导航、时钟或费用读口，没有复制、复位、逆拼接、换源或变上限。供应者已取得的原目标证据或认证档案及其精确身份配对仍是条件，生产、认证、交付、保存和全部原费用边界不因字母表最小化而解除。
+
+由引理59.2，$h=15$，所有来源的组成是 $(4r,4s)$，$r,s\ge1$、$r+s\le15$。写 $z=r+s$、$w=r+2s$，原资源为 $4z,4w,4(z+w)$。令 $C(z,w)=(4(2z-w),4(w-z))$，$\mathbf u_{\rm unit}=((0,0,0),(0,0,0),(0,0,0))$。完整有限目标仍为
+
+<a id="TM60-E01"></a>
+$$
+\tau_{15}(z,w)=
+\begin{cases}
+(2,(\mathbf u_{\rm unit},C(z,w))),&z+w\le15,\\
+(1,C(z,w),1,1),&z+w>15,
+\end{cases}
+\quad z+1\le w\le\min(2z-1,15),
+\qquad Z(z)=(0,1,4z).
+\tag{TM.6001}
+$$
+
+标签2中的 $\eta=(\mathbf u,c)$ 保留原坐标顺序；目标是初始值。用于必要性的是全部严格上带不同目标的索引集合
+
+<a id="TM60-E02"></a>
+$$
+\begin{aligned}
+S={}&\{(z,w):2\le z\le15,\ z+1\le w\le\min(2z-1,15),\ z+w>15\}\\
+&\ \cup\{(z,16):9\le z\le15\}.
+\end{aligned}
+\tag{TM.6002}
+$$
+
+其中35个有限点要求不同标签1目标，7个折叠点要求不同 $Z(z)$，故 $|S|=42$。有限点由实际词 $\omega_{2z-w,w-z}$ 见证；折叠点可用 $\omega_{1,z-1}$，其真实下一指标为 $2z-1>15$，不是16。16仅作在所有截止 $c\le15$ 下拒绝的离线索引，不是新尺寸读口。每个索引都满足实际 $m+n>H$；四种余数由资源的四倍数性质统一包含。实际执行从不把来源换成这些见证词。
+
+取权重为1的30点集合
+
+<a id="TM60-E03"></a>
+$$
+\begin{aligned}
+W={}&(\{7\}\times\{9,\ldots,13\})
+\cup(\{8\}\times\{10,\ldots,15\})\\
+&\cup(\{9\}\times\{10,\ldots,16\})
+\cup(\{10\}\times\{11,\ldots,16\})\\
+&\cup(\{11\}\times\{12,\ldots,15\})
+\cup\{(12,13),(12,14)\}\subset S.
+\end{aligned}
+\tag{TM.6003}
+$$
+
+$S\setminus W$ 的12点权重为零，但仍逐一要求恢复。权重只是必要性证明中的计数，不改变来源、原目标或供应义务。
+
+### 60.2 全动作必要性与饱和路径
+
+<a id="TM60-D2"></a>
+**定义 60.2（全部目标的块槽与紧路径）。** 对整数 $0\le l<c\le15$，在行区间 $(l,c]$ 上定义两种槽分割。F 将目标按初始行 $z$ 分槽。R 将 $w>c$ 的拒绝侧按初始行 $z$ 分槽，将 $w\le c$ 的有限接受侧按列 $w$ 分槽。行槽与列槽是不同类型，不因数值相同而识别；不同块的槽也不同。删除空槽后记这块的分割为 $B_F(l,c)$ 或 $B_R(l,c)$。全部槽均对完整 $S$ 定义，包括12个零权点。
+
+正权槽数为
+
+<a id="TM60-E04"></a>
+$$
+\begin{aligned}
+f(l,c)&=|\{z:\exists w,\ (z,w)\in W,\ l<z\le c\}|,\\
+r(l,c)&=|\{z:\exists w>c,\ (z,w)\in W,\ l<z\le c\}|\\
+&\quad+|\{w\le c:\exists z,\ (z,w)\in W,\ l<z\le c\}|,\\
+P(0)&=0,\qquad
+P(c)=\max_{0\le l<c}\{P(l)+\max(f(l,c),r(l,c))\}.
+\end{aligned}
+\tag{TM.6004}
+$$
+
+路径从0到15，以严格递增端点串接 F/R 块；其权重是各块正权槽数之和。边 $(l,c,F)$ 在 $P(l)+f(l,c)=P(c)$ 时称紧，R 同理。路径诱导的 $S$ 分割是其全部块槽的并，记所有紧路径的不同分割为 $\mathcal P$。
+
+<a id="TM60-T3"></a>
+**定理 60.3（全协议单类权重及三值供应的饱和约束）。** 在定义60.1的原合同下，每个同符号可恢复的实际不同目标类 $C\subseteq S$ 满足 $|C\cap W|\le10$。若完整供应只用三个符号，则选每个 $S$ 目标的一棵实际树并保留该树实际收到的符号，所得三个类均有正权10，且各有一个 $\mathcal P$ 中的完整槽分割，使该类向其槽单射。
+
+证明。先核对引理59.3的全动作必要方向。固定一个共同符号和第一次 $\rho$ 之前的共同实际记录。接受的材料累计贡献当前／下一叶数 $(U,V)$，$0\le U\le V\le2U$，两侧有序外因子给每次当前读 $L_0\,1\,R_0$。已接受和拒绝的拼接只测试初始 $m$，故该前缀的行域为区间 $(\ell,u]$，$u=H-U$。第一次替换的真实截止为 $d=H-V\le u$。
+
+拒绝时，同一初始行的不同目标具有相同完整记录及当前 $(0,L_0\,1\,R_0,m+U)$；接受时，同一有限列的不同目标具有相同完整记录及当前 $(0,L_1\,1\,R_1,n+V)$，因为其下一资源 $m+n+U+V>H$。TM30.2、TM38.1使这些碰撞在任意后续原动作下永久保持。无第一次替换的停止分支也只能每行至多一个目标。这仅使用碰撞的必要性，未将 TM38 的扫描充分构造当成所有竞争者的模板。
+
+将前缀在 $d$ 处分开，$(\ell,d]$ 给 R 必要块，$(d,u]$ 的来源因 $n\ge m>d$ 全拒绝，给 F 必要块；空段删去。所有 `Read` 和任意左右混合正上下文已经在共同记录和外因子中包含。有限代表集的逐点有限停止使这些前缀路径的并有限；相同初始行在首替换前不能走不同记录，故叶区间互不相交。把物理端点除以4取下整，$\ell<4z\le d$ 恰为 $\lfloor\ell/4\rfloor<z\le\lfloor d/4\rfloor$，$4w\le d$ 恰为 $w\le\lfloor d/4\rfloor$。这保持全部非四倍数上下文和接受等号。负截止没有接受行；折叠目标真实 $n>H$，即使增加 $V\ge0$ 仍拒绝。空隙和两端用无类成员的 F 块补齐，得到定义60.2的一条0至15路径，该类在每个槽至多一个目标。
+
+代入（TM.6003）–（TM.6004）的整数递推得到
+
+<a id="TM60-E05"></a>
+$$
+(P(0),\ldots,P(15))=(0,0,0,0,0,0,0,1,2,4,6,8,10,10,10,10).
+\tag{TM.6005}
+$$
+
+递推枚举每个可能的最后块，故任何路径的槽权重至多 $P(15)=10$，类的正权也至多10。三个类覆盖 $W$ 的30点只可能各有10点。设该类路径的边容量为 $b_j$、端点为 $c_{j-1},c_j$。逐边有
+
+$$
+|C\cap W\cap\{c_{j-1}<z\le c_j\}|\le b_j,
+\qquad P(c_j)-P(c_{j-1})-b_j\ge0.
+$$
+
+求和，左侧正权10与 $P(15)=10$ 迫使每个不等式等号成立。因此每边均紧，路径的完整槽分割属于 $\mathcal P$。不同实际树的标签不必一致：上述分组只保留所选树各自真实收到的符号，是对完整任务的必要限制，未把整个目标纤维强行识别为一个标签。$\square$
+
+### 60.3 全部紧分割的联合整数障碍
+
+<a id="TM60-T4"></a>
+**定理 60.4（42目标的完整三槽系覆盖不可能）。** 定义60.2的 $\mathcal P$ 恰有41个不同分割。对任意 $\Pi_a,\Pi_b,\Pi_c\in\mathcal P$，包括重复分割，把三个位置的槽分别保留，则不存在从全部 $S$ 向这些槽的单射，使每个目标只进入包含自己的槽。最大可覆盖目标数为41。
+
+证明。给出有限枚举的精确关系和完整证据。按 $(z,w)$ 字典序排列（TM.6002）的35个有限点，再按 $z$ 递增排列7个折叠点，索引为 $s_0,\ldots,s_{41}$。槽 $G$ 的整数编码为 $\sum_{s_i\in G}2^i$；一个分割按这些非空槽的编码递增排序，分割之间按所得元组字典序排序。此排序固定下文的 $\Pi_0,\ldots,\Pi_{40}$。
+
+紧分割的有限递推是 $\mathcal P_0=\{\varnothing\}$，对 $1\le c\le15$ 取
+
+<a id="TM60-E06"></a>
+$$
+\mathcal P_c=
+\bigcup_{\substack{0\le l<c,\ K\in\{F,R\}\\P(l)+b_K(l,c)=P(c)}}
+\{\Pi\cup B_K(l,c):\Pi\in\mathcal P_l\},
+\qquad b_F=f,\quad b_R=r.
+\tag{TM.6006}
+$$
+
+此处是集合并：诱导相同目标分割的不同端点路径只保留一次，空槽也不保留。每个紧路径有一个最后块，反向串接也仍是紧路径，所以递推完整，$\mathcal P=\mathcal P_{15}$。其逐前缀基数为
+
+<a id="TM60-E07"></a>
+$$
+(|\mathcal P_0|,\ldots,|\mathcal P_{15}|)
+=(1,1,1,1,1,1,1,1,1,1,2,2,2,11,22,41).
+\tag{TM.6007}
+$$
+
+顺序固定之后，只需全部 $0\le a\le b\le c\le40$，共 $\binom{43}{3}=12341$ 个三元组。对每组以及 $T\subseteq S$，三个槽系的邻槽数为
+
+<a id="TM60-E08"></a>
+$$
+\nu_{a,b,c}(T)=
+\sum_{j=1}^{3}|\{G\in\Pi_{a_j}:G\cap T\ne\varnothing\}|,
+\qquad (a_1,a_2,a_3)=(a,b,c).
+\tag{TM.6008}
+$$
+
+重复分割仍按不同位置各计自己的槽。若有所述单射，则任意 $T$ 必有 $|T|\le\nu_{a,b,c}(T)$，这是有限互异代表元的必要计数方向。这里每组都有一个严格违反它的 $T$。全部分割、各自一条紧路径和全部12341个集合的二进制编码给于[有限整数证据表](../../reports/fib-supplier-capacity/h15_joint_cover.json)。表中 `points` 固定上述目标顺序，`partitions` 是各非空槽的编码，`paths` 给紧路径；`hall_rows` 按三元组的字典序排列，每行为 $(\mu,\operatorname{mask}(T),\nu)$。逐行直接取编码的1位、按（TM.6008）计数，得到
+
+<a id="TM60-E09"></a>
+$$
+|T|-\nu=42-\mu\ge1.
+\tag{TM.6009}
+$$
+
+这些都是正的整数缺额，保留全部12个零权目标；不是只报告未找到覆盖。给出该表的有限计算规则：对每组三槽系，从空匹配开始，逐目标沿“目标到邻槽、已占槽到其拥有目标”的交替边寻找未占槽；找到就翻转这条有限路径。所有目标处理后，从未匹配目标沿同样交替边取可达目标集 $T$ 及其邻槽集。没有通往未占槽的路径，每个邻槽的拥有目标也在 $T$ 内。因此 $|T|-\nu$ 等于未匹配目标数，正是（TM.6009）。这一构造同时给出大小 $\mu$ 的匹配和其上界：任何匹配至多覆盖 $42-|T|+\nu=\mu$ 个目标。
+
+全部三元组按其精确最大覆盖数的计数为
+
+| 60最大覆盖数 | 三元组个数 |
+| --- | --- |
+| 60覆盖30 | 1 |
+| 60覆盖31 | 2 |
+| 60覆盖32 | 23 |
+| 60覆盖33 | 133 |
+| 60覆盖34 | 458 |
+| 60覆盖35 | 1112 |
+| 60覆盖36 | 2205 |
+| 60覆盖37 | 3013 |
+| 60覆盖38 | 2785 |
+| 60覆盖39 | 1809 |
+| 60覆盖40 | 696 |
+| 60覆盖41 | 104 |
+
+十二项之和为12341，所有缺额均正。证据表的 `maximum_matching` 另给三元组 $(1,4,23)$ 的41目标互异槽分配；槽编号按三个位置顺序串接各自的编码序，从0开始，$-1$ 表示唯一未匹配目标。逐目标包含及互异性给41的达到，所有组的缺额给41的统一上界。这完成有限整数证明；它的来源意义由定理60.3的全动作必要桥承担，而不是由枚举自行假定。$\square$
+
+### 60.4 完整实际源的两向容量结论
+
+<a id="TM60-T5"></a>
+**定理 60.5（原完整任务的四符号精确容量）。** 在定义60.1的全部同源真实供应条件和原 TM30 动作合同下，
+
+<a id="TM60-E10"></a>
+$$
+A_U(60)=A_U(61)=A_U(62)=A_U(63)=4.
+\tag{TM.6010}
+$$
+
+原 TM58 的完整四符号程序在每个这些上限的同一实际来源、同一次执行中同时有零 `Read`、至多一次接受 $\rho$ 和至多9次整来源调用。只断言其字母表达到最小值，不断言其余资源最优。
+
+证明。若完整供应有至多三个符号，限制到（TM.6002）的42个实际目标见证并保留各自真实符号。定理60.3给每类正权至多10，故少于三个符号已不能覆盖30正权点。三个符号时每类饱和，分别向一个紧分割的槽单射。把三类的单射按符号位置合并，就给全部42目标一个三槽系单射，与定理60.4矛盾。因此 $A_U(H)\ge4$。没有假定三个独立可执行类已形成一个共同完整供应；反而从任一假设存在的完整供应抽取它必须满足的联合覆盖，再证明该覆盖不可能。
+
+充分方向原样复用 TM58.3、58.10–13。此处 $L=\lceil15/4\rceil=4$，四个截止 $c_i=8,10,12,14$ 都小于15，实际右侧全 $\alpha$ 上下文长度为 $28+\delta,20+\delta,12+\delta,4+\delta$，都非空且真实发出。供应标签0来源统一为1；有限 $z\le8$ 的来源用 $1+((z-1)\bmod4)$；有限高区用原 $x=z-8,y=w-8$ 的同奇偶／异奇偶两种向上取整公式。这是原构造的实际标签函数，不另选新的消费者。
+
+整拼接接受恰为 $z\le c_i$，已接受拼接后的首替换接受恰为 $w\le c_i$，拒绝拼接后的替换接受恰为 $w\le15$，等号全部接受。AA、AR、RA、RR 的真实入口仍分别是 $4w+P,4z+P,4w,4z$。TM58.5–6的两低行和高区奇偶／相邻例外给每个有限分支唯一初始 $(z,w)$；所有隐藏组成满足 $z\ge9>c_1$、$w>15$，都进入 RR 并输出 $Z(z)$。原 $\mathrm{Size}_H$ 实际取得入口 $M$，TM58.10的字典再输出（TM.6001），包括每个 $z+w\le15$ 的初始标签2及其 $\eta$ 字面顺序。这覆盖完整56个不同原目标，而非只覆盖下界的42点。
+
+Atomic360.2–4与TM58.2给全部组成的全部 Euler 叶词及全部有序括号；每个整候选的组成更新都对该完整域成立。原充分标签在每个初始目标纤维上恒定，TM30.2和TM47.1–2的行为同余保证这些纤维中每个实际来源的完整响应、停止和输出正确，包括所有标签0隐藏组成。运行中的来源始终是那棵真实原树及其合法修改，没有代表替换。
+
+这一个现成程序有一次上下文尝试、一次 $\rho$ 尝试及至多 $\lceil\log_2H\rceil+1$ 次入口取得调用，合计 $\lceil\log_2H\rceil+3=9$；后段无替换，全程无读。其四符号和同时资源界来自同一次执行，故给完整 $A_U(H)\le4$，与必要下界相等。$\square$
+
+<a id="TM60-N6"></a>
+**注记 60.6（关系的复用范围与整数边界）。** 本章承重新增量是（TM.6003）的饱和约束与全部完整紧槽系的联合整数障碍，属于 repo-derived 普通数学。完整来源复用 [Atomic359–360](FIBONACCI_ATOMIC_RELATION_GENERATION.md#360-单个实际历史纤维的八边消元与-euler-充要判据)，全动作必要性复用TM30.2、TM38.1–3、TM59.3，充分方向复用TM58.11–13。其已发表文本及不可变修订见注记59.24；这些来源身份不替代相应普通证明。互异代表元的邻集计数是经典 Hall 方法的必要方向（P. Hall, *On Representatives of Subsets*, [doi:10.1112/jlms/s1-10.37.26](https://doi.org/10.1112/jlms/s1-10.37.26)），不是这里新增的一般匹配定理。van den Bos–Vaandrager 的 [arXiv:1907.11034](https://arxiv.org/abs/1907.11034) 提供有兼容状态的适应识别背景；其全不相容对可区分前提没有供应本章的 FIB 数值容量、来源取得或免费准备。不作全局原创性主张。
+
+仅取正权的必要不等式是 $30\le10|\mathcal L|$，在三符号处等号成立，不能推出第四符号。第四符号来自仍须覆盖的12个零权点与三个饱和类的联合**整数**分配；分数覆盖、分别可达的单类容量或有限策略搜索未命中均不能替代（TM.6008）–（TM.6009）的完整缺额证据。已知一般包络和本章精确值是不同强度的结论。这里只结算四个上限，不给其他上限的完整容量公式、四分之一必要系数、归一化极限、一般标签纤维的联合缩放或更深原历史的普遍最优性。
+
+容量等式以 authentic 原目标证据和精确同源配对已真实供应为前提。TM51.9与TM58.20的原树保持生产障碍继续成立；最优条件字母表没有免费生产者。上下文身份与展开、拒绝候选、整守卫、替换、解码与输出、原来源、完整档案与记录、供应取得认证及交付保留的费用分别承担。字母表最优不意味着最小控制状态、工作位、档案、总付费工作或存储、物理时间；普通证明与有限整数证据也不声称 Lean／kernel 验证或物理供应及装置符合性。
+
+## 追加锚（本行以下为增补区）
+
+## 61. 固定四分之一消费者的终端行为与原始目标检查点容量
+
+### 61.1 同一完整来源与一次检查点的访问假设
+
+<a id="TM61-D1"></a>
+**定义 61.1（固定消费者、原目标和终端切点）。** 固定公开整数 $H\ge8$，置 $h=\lfloor H/4\rfloor$、$\delta=H-4h$、$L=\lceil h/4\rceil$。来源是定义58.1的完整 $U_H$：全部实际非空有序 $\alpha/\beta$ 二叉树，保留叶序及全部括号，初始三窗为 $(1,1,1)$、叶数不超过 $H$。真实供应符号 $i=\ell_H(t)$ 恰取定义58.3的原公式，并满足定义58.1对精确未修改原树、原目标证据和同源身份配对的全部条件。固定执行器也恰为定义58.3：实际发出或真实省略标签所选右上下文，尝试一次 $\rho$，随后完成命题58.12的 $\mathrm{Size}_H$，包括最后真实单叶拒绝。检查点放在这一次拒绝之后、定义58.10的原目标输出之前。没有提前输出目标。
+
+记 $s_H(t)$ 为同一次执行在检查点的实际当前树，$\omega_H(t)$ 为已合法取得的完整记录。所需最终输出始终是初始 $T_H(t)=q_H(t)$，严格采用（TM.5801）–（TM.5804）的字面字段顺序：标签0为 $(0,1,4z)$，标签1为 $(1,C(z,w),1,1)$，标签2为 $(2,(\mathbf u_{\mathrm{unit}},C(z,w)))$。当前 $q_H(s_H(t))$ 另列，不能替换 $T_H$。全部后续来源动作仍是原 TM30 的当前 `Read`、整 $\rho$ 和命名实际非空正上下文的左右拼接；整候选 $\le H$ 接受、拒绝不改树且无候选读，原权限、同源身份和费用合同保留。没有导航、尺寸、档案、指针、时钟、费用、变上限、复制、复位、逆拼接或新目标端口。
+
+<a id="TM61-A2"></a>
+**假设 61.2（完整可访问摘要接口）。** 比较的是以下同一个检查点续接接口。编码者只对已经合法取得的 $\omega_H(t)$ 及公共 $H,i$ 作有效本地计算，在不修改当前树的情况下产生一个摘要值 $\sigma(t)\in\Sigma_H$。随后续接者保留公共 $H$ 和 authentic $i$；除此之外，一切仍可访问、且依赖实际过去的控制字段、状态、版本选择、程序参数、输出、工作带、地址、指针、游标、档案、记录、advice 及其可查询内容，全部共同纳入这一个 $\sigma$ 的联合值，不能分到免费的外部载体。只计实际出现的摘要值，允许同一符号在不同公开 $i$ 下复用。与来源及过去无关、由 $H,i$ 确定的共同程序和数学字典另属公共描述，其安装、生成、保存、调用仍各自计费。
+
+续接者从只由 $H,i$ 决定的共同控制初始化开始，动作、停止和输出仅依这些公共量、$\sigma$ 及以后真实取得的原响应。它没有其他可查旧记录、旧输出或原目标档案，检查点前没有可被任务接收者作为答案使用的目标输出；若存在可读旧输出或能恢复它的指针，就必须计入联合摘要。所有比较使用同样的这项访问约束，摘要写入、交付、访问限制和共同解码初始化都是该阶段接口的条件，不是原 TM30 已证明的物理能力。它不删除实际旧档案，也不证明可免费重置控制器或改装既有安装器；若既有合同仍开放旧档案，这些内容仍须纳入联合值，不能直接套用下面的容量上界。共同初始化是控制交接假设，不是来源复位。
+
+令 $K_0(H)$ 为在这个接口上不作后续 `Read` 而对全部 $U_H$ 有限正确输出 $T_H$ 所需的最小非空 $|\Sigma_H|$；$K_1(H)$ 允许至多一次真实后续 `Read`；$K_{\mathrm{finite}}(H)$ 允许任意逐源有限的原续接，包括任意有限多次真实读及修改尝试。三者均允许任意有效摘要编码及确定性自适应续接；编码不被额外限制为只依赖 $T_H$。这是一个切点的可访问摘要容量，不是此前峰值记忆、整个控制器状态数、档案物理大小或付费总工作。
+
+### 61.2 终端实际行为只有一个或两个值
+
+<a id="TM61-T3"></a>
+**定理 61.3（全来源终端行为像）。** 对每个 $H\ge8$ 和每个实际 $t\in U_H$，检查点有
+
+<a id="TM61-E01"></a>
+$$
+q_H(s_H(t))=(0,E_H(t),H),\qquad
+E_H(t)=\begin{cases}
+B^\delta,&\text{实际前缀为 AA},\\
+A^\delta,&\text{实际前缀为 AR、RA、RR、OA 或 OR}.
+\end{cases}
+\tag{TM.6101}
+$$
+
+此处 AA 等均为原真实响应，不把省略算作接受。任何后续原修改都拒绝且保持同一完整树；每次真实 `Read` 都重复 $E_H(t)$。因而在完整实际终端像上，原 TM30 的实现行为类恰有
+
+<a id="TM61-E02"></a>
+$$
+|q_H(s_H(U_H))|=
+\begin{cases}1,&\delta=0\text{ 或 }L=1,\\2,&\delta\ne0\text{ 且 }L\ge2.
+\end{cases}
+\tag{TM.6102}
+$$
+
+证明。复用引理58.4及命题58.14，令实际发出模式 $P=H-4c_i$；真实省略用算术 $P=0$，没有插入 $\delta$ 材料。AA 入口有 $E_{\mathrm{entry}}=B^P$、$M=4w+P$，终端右接恰 $H-M=4(c_i-w)$ 个 $\alpha$。由 $A^2=1$、$B^4=1$，读积为 $B^\delta$。AR 的入口为 $A^P$、$M=4z+P$，故终端积为 $A^{H-4z}=A^\delta$；RA、RR、OA、OR 的入口积是1，入口大小为 $4w$ 或 $4z$，同样得到 $A^\delta$。所有填充都在右侧，论证没有交换 Clifford 因子。
+
+初始 $\beta$ 数正；接受上下文保留它，接受 $\rho$ 后 $\beta$ 数为此前全部叶数，仍正。命题58.12使检查点叶数恰为 $H$。因此下一 $\rho$ 候选有 $H+b'>H$ 叶，任意正上下文候选有 $H+d>H$ 叶，均拒绝。拒绝不改树，所以对任意后续有限自适应路径归纳，修改响应全是共同拒绝、读响应全是同一 $E_H$。字面当前目标遂为（TM.6101）。这也直接复用 TM30.2 和 TM49.6 的饱和行为结论。
+
+$L=1$ 的全部 $h=2,3,4$ 来源由引理58.9列全，没有 AA。$L\ge2$ 时，符号1的有限点 $(z,w)=(L+1,L+2)$ 合法，且 $w\le2L=c_1<h$，实际为 AA；隐藏点 $(h,2h-1)$ 使用符号1，实际为 RR。这两个点各有引理58.2的真实正源。$\delta=0$ 时两个积均为1；$\delta=1,2,3$ 时分别比较 $(B,A)$、$(-1,1)$、$(-B,A)$，由原忠实 Clifford 基的独立性均不相等。因此（TM.6102）是实际达到的像基数。$\square$
+
+### 61.3 全目标字典在每个 authentic 符号中的负载
+
+<a id="TM61-T4"></a>
+**定理 61.4（固定供应的完整目标计数）。** 在符号 $i$ 内按不同初始字面目标去重，记总数为 $n_i$，实际 AA 目标数为 $a_i$，其余目标数为 $b_i=n_i-a_i$。标签0的每个隐藏组成仍属于输入，但同一行只数它的一个原目标 $Z(z)$。若 $L\ge2$，则
+
+<a id="TM61-E03"></a>
+$$
+\begin{aligned}
+n_1&=h+\lfloor h/2\rfloor-L-1,\\
+a_1&=L-1,\qquad b_1=h+\lfloor h/2\rfloor-2L,\\
+n_i&\le n_1,\qquad a_i\le b_1,\qquad b_i\le b_1
+\quad(1\le i\le L).
+\end{aligned}
+\tag{TM.6103}
+$$
+
+$L=1$ 时，$h=2,3,4$ 分别有 $(n_1,a_1,b_1)=(1,0,1),(2,0,2),(4,0,4)$。所有计数对四个 $\delta$ 一致，包含原标签2边界 $z+w=h$、接受等号和真实省略。
+
+证明。使用引理58.2的全部目标字典及定义58.3的原供应。有限低区只有行 $z=i$、$z=L+i$；第一行不存在时贡献零，其有限目标数为 $i-1$，第二行为 $\min(L+i-1,h-L-i)$，这些数非负。置 $N=h-2L$，则 $1\le N\le2L$。有限高区恰为 $1\le x<y\le N$，其中 $(z,w)=(2L+x,2L+y)$；原三角形的另一界自动满足，因为 $y\le2L<2L+2x-1$。
+
+固定符号 $i$ 的高区负载 $g_i$ 可直接数同奇偶的 $x=2i-1,2i$ 与异奇偶的 $y=2i-1,2i$。若 $2i\le N$，四项依次为 $\lceil N/2\rceil-i$、$\lfloor N/2\rfloor-i$、$i-1$、$i$，和为 $N-1$。若 $N$ 奇且 $2i=N+1$，只有 $y=2i-1=N$ 的异奇偶项，数为 $i-1$；若 $2i>N+1$ 则为零。因此对所有 $i$ 有 $g_i\le N-1$，且 $g_1=N-1$，包括 $N=1$ 的零负载。
+
+符号1低区只含行 $L+1$，贡献 $L$ 个有限目标；其高区贡献 $N-1$。标签0存在恰在 $2z-1>h$，即 $z=\lceil h/2\rceil+1,\ldots,h$，共 $\lfloor h/2\rfloor$ 个原目标，全部供应符号1。引理58.7保证每行的所有隐藏列进入同一个非 AA 分支：可能的行 $2L$ 是 AR，其余是 RR。故 $n_1=L+N-1+\lfloor h/2\rfloor$，得到首式。符号1的 AA 恰为低行 $L+1$ 的列 $L+2,\ldots,2L$，共 $L-1$；其余均非 AA，给 $b_1$。这里 $2L<h$，没有省略符号1。
+
+对 $i\ne1$，没有折叠目标，故
+
+$$
+n_i\le(i-1)+(L+i-1)+(N-1)\le h+L-3\le n_1,
+$$
+
+最后一步用 $h\ge4L-3$ 和 $\lfloor h/2\rfloor\ge2L-2$。实际发出模式中，引理58.5–6说明低区至多一个非 AA 有限端点，高区全部非 AA，因此 $b_i\le1+g_i\le N\le b_1$；AA 两低行的数至多 $(i-1)+(L+i-2)\le3L-3$。而 $b_1\ge4L-5\ge3L-3$ 对 $L\ge2$ 成立。
+
+真实省略只可能是引理58.8的 $i=L$、$h=4L-3$ 或 $4L-2$。该符号无高区或隐藏输入，两低行贡献 $L-1$ 和 $h-2L=N$ 个目标，全部 OA，故 $a_i=0$、$b_i=h-L-1\le b_1$。这里后续树上没有被省略的 $P$ 或 $\delta$。上述各域覆盖每个符号。最后 $L=1$ 直接按引理58.9的 $1,3,6$ 个真实组成点去重：$h=2$ 仅 $Z(2)$；$h=3$ 为 $\tau_3(2,3),Z(3)$；$h=4$ 为 $\tau_4(2,3),\tau_4(3,4),Z(3),Z(4)$。全部为非 AA，得三组基例。$\square$
+
+### 61.4 匹配的检查点下界、编码上界与一次读的收益
+
+<a id="TM61-T5"></a>
+**定理 61.5（全部 $H\ge8$ 的尖锐原始目标摘要容量）。** 在定义61.1及假设61.2的同一个完整接口上，
+
+<a id="TM61-E04"></a>
+$$
+\begin{aligned}
+K_0(H)&=h+\lfloor h/2\rfloor-L-1,\\
+K_1(H)=K_{\mathrm{finite}}(H)&=
+\begin{cases}
+K_0(H),&\delta=0,\\
+h+\lfloor h/2\rfloor-2L,&\delta\ne0.
+\end{cases}
+\end{aligned}
+\tag{TM.6104}
+$$
+
+特别地，$h=2,3,4$ 时三者分别为1、2、4，与 $\delta$ 无关。若 $\delta\ne0$ 且 $L\ge2$，一次实际后续读恰将这个摘要字母表最小基数降低 $L-1$；任意额外原有限实验不能继续降低它。
+
+证明。先给下界，允许摘要对完整实际记录任意编码。同一个 authentic $i$ 中，选取每个不同原目标的一个实际初始树，按固定程序运行到检查点。若不允许后续读，所有原修改都给同一拒绝；相同摘要、相同 $H,i$ 及共同初始化的两个运行，沿任何自适应续接都有相同记录、停止和输出。因此不同目标必须占不同摘要值，$|\Sigma_H|\ge\max_i n_i$。
+
+若允许任意有限续接，固定 $i$ 及同一个终端积 $E$，相同摘要的两运行由定理61.3具有相同全部未来响应，仍不能要求两个不同初始输出。因此每个这样的组中摘要必须按原目标单射，$|\Sigma_H|$ 至少为该组的目标数；不同的过去记录不能作为额外区别，因为假设61.2已将所有仍可访问的区别纳入联合摘要。$\delta=0$ 时所有终端积为1，仍得 $\max_i n_i$。$\delta\ne0$ 时两个积不同，AA 和其余组分别有 $a_i,b_i$ 个目标；定理61.4给 $\max_{i}\max(a_i,b_i)=b_1$，一符号基例同样成立。这是针对全部原后续动作的必要性，不只是某个固定后续读脚本。
+
+上界用已经取得的完整记录，不另取得初始目标档案。定理58.11、命题58.14使 $H,i,\omega_H(t)$ 有效确定初始字面目标及实际 AA 类别；编码者在本地内部计算它们，尚不把目标交给任务接收者。按公共有限三角形及原供应公式，为每个 $i$ 的不同原目标作固定字典序编号，记录该目标在该字典的秩。以共同字母表 $\{0,\ldots,\max_i n_i-1\}$ 保存秩，续接者仅用公共 $H,i$ 和此秩恢复原字面目标并输出，零后续来源调用。有限编号与最大纤维编码是 TM48.9、TM49.7 以及既有目标充分性接口的重用，不另立通用编码定理。
+
+当 $\delta\ne0$，改为在每个 $i$ 的 AA 和非 AA 两个目标字典中分别从0编号，二者复用同一字母表 $\{0,\ldots,b_1-1\}$，不额外保存类别位。续接者实际调用一次原 `Read`，按其真实积 $B^\delta$ 或 $A^\delta$ 选择字典，再以摘要秩输出原目标。相同秩跨类别出现时，这一次已付来源响应提供必要区别；相同秩跨 $i$ 出现时 authentic $i$ 已由合同保留。每组的目标数不超过 $b_1$，故编号有效，组为空时没有实际输入；$L=1$ 没有 AA，也可直接零调用输出。$\delta=0$ 沿用前一零读码。所有编码者及续接者的可见历史依赖字段都归入摘要，达到的是假设61.2的接口字母表；不声称构造它无需工作空间或物理安装。上下界与定理61.4一起给（TM.6104），并因一次读上界已经等于任意有限续接下界而得 $K_1=K_{\mathrm{finite}}$。$\square$
+
+<a id="TM61-T6"></a>
+**命题 61.6（四个已知最优供应上限中的独立记忆坐标）。** 对 $H=60,61,62,63$，固定原 TM58 消费者的检查点容量分别为
+
+<a id="TM61-E05"></a>
+$$
+(K_0(60),K_0(61),K_0(62),K_0(63))=(17,17,17,17),\qquad
+(K_1(60),K_1(61),K_1(62),K_1(63))=(17,14,14,14).
+\tag{TM.6105}
+$$
+
+其终端行为像基数为 $(1,2,2,2)$。TM60.5 的最优 authentic 执行前供应字母表在四个上限均为4；它是另一坐标，不是（TM.6105）的摘要容量。
+
+证明。代入 $h=15,L=4$ 即得17和14，定理61.3给终端像。更细地，四个 $i$ 的 $(a_i,b_i)$ 依次为 $(3,14),(5,7),(7,7),(9,4)$，所以总负载为 $(17,12,14,13)$，合计覆盖完整56个初始目标，读后最大组为14。四符号最优性原样复用 TM60.5；检查点是其固定消费者已经取得记录后的新任务切点，不是对所有执行前消费者再作供应优化。$\square$
+
+### 61.5 全实际词与括号的提升及成本边界
+
+<a id="TM61-T7"></a>
+**命题 61.7（全源提升与完整付费合同的边界）。** 定理61.3–5量化完整 $U_H$ 的每个叶词、每种有序括号和每个标签0隐藏组成。检查点字母表减少不单独推出更少的完整控制器状态、较小的运行峰值付费存储、较小全运行费用或一般 $A_U(H)$ 的最优性；也不供应一个原树保持的非恒定标签生产者或已安装系统的访问限制桥。
+
+证明。Atomic359.3、Atomic360.2–4及TM58.2给 $U_H$ 与 $(4r,4s)$、$r,s\ge1$、$r+s\le h$ 的全部连通平衡八边 Euler 叶词及其全部括号的充要对应。每个计数点有实际正词（TM.5805）；标签0的 $Z(z)$ 虽去重目标，仍把该行全部 $h<w\le2z-1$ 的来源留在域内。组成更新及饱和条件逐树成立；原三窗、实际右侧材料和结合叶积给定理61.3的同一积。供应公式经由初始目标分解，TM30.2、TM47.1–2、TM49.6保证同一初始目标的所有实际实现按共同程序取得相同前缀、入口、完整记录、终端积和摘要。因此每个被编号目标的全部来源均由同一个码及真实读正确解码；没有用代表树替换运行中的实际树。
+
+一次后续 `Read` 是同一来源上的一次真实调用，不是免费提供当前 $q_H$。其响应解析、保存、字典选择、输出和全部本地计算另计；此前原供应证据、身份配对、交付及保留，实际上下文（含拒绝候选）、守卫、替换、原源存储、完整记录、旧档案和副本也仍计费。$L-1$ 是字母表基数之差，定长位宽只按 $\lceil\log_2K_0\rceil$ 与 $\lceil\log_2K_1\rceil$ 比较，例如17至14为5位至4位，不能把一般基数差叫作节省位数。
+
+在 OR77.1–2 的同一次完整理想运行中，仍保留的旧单元及所有副本在共同切点相加；本摘要不物理擦除它们。OR78.1–2还要求既定安装的完整字面封装、已付逐位安装和一个真正成功见证，才能作完整工作／费用／峰值存储的 Pareto 提取。本命题没有建立这些条件与摘要交接之间的费用保持对应。OR79.1–4 的一次历史编码同样保留全部可访问实际状态、旧档案及原预算；这里在其源向条件下具体数出固定消费者终端的原目标组，而没有新增通用最大核或成对兼容框架。若要在原已安装付费日程中实施假设61.2，须另证摘要创建、交付、解码初始化、旧档案访问权限、原身份、停止输出及费用的真实桥；本章把它留作条件，不能以编码省略替代该证明。原 TM51.9／TM58.20 的原树保持生产障碍仍适用。
+
+本章源特定终端积、实际像基数及全 $H$ 的固定供应负载、尖锐摘要数属于 repo-derived 普通数学推导；一般行为同余、饱和响应、有限编号、目标充分性和原始／当前配对均按上述仓内结果重用。初态识别的文献背景沿用 van den Bos–Vaandrager，*State Identification for Labeled Transition Systems with Inputs and Outputs*，[arXiv:1907.11034v2](https://arxiv.org/abs/1907.11034v2)；其不相容状态识别结果没有提供这里的 FIB 终端积、负载数或访问／安装桥。本章不主张文献优先权、Lean／kernel 核验、物理供应或装置符合性，原一般供应最优系数仍未由这些固定消费者等式确定。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 62. 固定实际消费者的饱和在线记忆与完整宏前缀像
+
+### 62.1 原来源、完整决策值与规定切点
+
+<a id="TM62-D1"></a>
+**定义 62.1（同一实际执行的在线比较）。** 固定公开 $H\ge8$，写 $H=4h+\delta$、$L=\lceil h/4\rceil$。来源、真实供应 $i=\ell_H(t)$、同源身份和共同初始化完全采用定义58.1、58.3；来源仍为完整 $U_H$ 的所有实际 Euler 叶词、全部有序括号及全部标签0隐藏组成。原输出 $T=q_H(t)$ 仍按（TM.5804）排列，特别标签2为 $(2,(\mathbf u_{\rm unit},C(z,w)))$。原执行器先作真实发出或真实省略的标签所选上下文，再尝试一次 $\rho$，最后执行原 $\mathrm{Size}_H$，包含强制单叶拒绝，然后才输出初始 $T$。
+
+宏切点是每次实际来源请求之前，以及最后强制拒绝之后、目标输出之前；一次请求及其真实响应为一条宏边。省略没有边、没有响应，也没有 $v_0$。请求指令包含实际右上下文 $v_p$ 的身份、括号和长度，或原整 $\rho$；终止指令包含原字面输出。本定义不插入 `Read`、复位、复制、逆拼接、来源替换或尺寸、时钟、档案、费用端口。整候选 $\le H$ 接受，拒绝不改来源且不返回候选读数。
+
+对固定 authentic $i$，记 $\mathcal T_i$ 为其不同初始目标集，$n_i=|\mathcal T_i|$。由58.11、58.14，每个 $T\in\mathcal T_i$ 有唯一实际前缀分支 $b_i(T)$ 和唯一尺寸入口 $M_i(T)$；这包含同一标签0目标的全部隐藏组成。**联合在线决策值** $k$ 包含在切点处控制器能够访问、且影响下一指令、响应更新、停止或输出的全部过去依赖字段：程序位置、设置、工作带、权限、旧记录、输出、advice、地址、游标、指针及可查询档案内容共同计值。公共 $H,i$ 可保留；任何额外随执行变化的控制输入都须计入联合值。实际来源只能经原接口响应参与控制。同一 $H,i,k$ 确定下一指令及对真实响应的确定更新。所比较控制器逐源忠实执行上述固定宏迹，不提前输出，不把可读旧目标输出留在未计旁路。记 $K_i^{\rm req}$ 为这些运行全部 REQUEST 切点所取联合值的基数；它计跨时刻的实际值，并非同时存在的单元数。
+
+全部原档案、记录和访问权限仍保留；将某项纳入联合值是计数规则，不是禁止访问或物理擦除。共同公开程序描述与字典的产生、安装和运行，以及来源、真实供应、上下文、候选、守卫、替换、记录、输出和副本的费用，均保持原合同。
+
+### 62.2 尺寸入口的饱和尾长与在线必要负载
+
+<a id="TM62-L2"></a>
+**引理 62.2（原尺寸路径的首次饱和）。** 对原 $\mathrm{Size}_H$ 的每个入口 $1\le M\le H$，所有请求切点满足
+
+<a id="TM62-E01"></a>
+$$
+l<M\le u,\qquad \lambda(t_{\rm cur})=M+H-u.
+\tag{TM.6201}
+$$
+
+令 $D_H(M)$ 为路径第一次达到 $u=M$ 时的区间宽度 $u-l$。这时来源已经饱和，剩余每个规定请求都真实拒绝，直到原目标输出。包括最终单叶请求在内，这样的 REQUEST 切点数恰为
+
+<a id="TM62-E02"></a>
+$$
+b_H(M)=1+\lceil\log_2 D_H(M)\rceil.
+\tag{TM.6202}
+$$
+
+记 $\nu_2(M)$ 为整除正整数 $M$ 的最大二幂的指数。若 $H=2^d$，则 $D_H(M)=2^{\nu_2(M)}$，从而 $b_H(M)=1+\nu_2(M)$，包括 $M=H$。
+
+证明。（TM.6201）原样复用58.12的（TM.5808）。当 $u=M$，当前大小为 $H$；中点请求的正上下文和最后单叶候选都超限，全部拒绝且不改完整树。中点拒绝只把 $l$ 改为 $\lfloor(l+M)/2\rfloor$，宽度改为其向上取整的一半。宽度从 $D$ 到1所需的拒绝次数恰为 $\lceil\log_2D\rceil$，再加最后真实单叶拒绝得到（TM.6202）。首次 $u=M$ 必存在，因为原算法的终端叶为 $u=M$；$M=H$ 时零步已经首次达到。二幂中点树的所有深度区间宽度都是二的幂，$M<H$ 第一次成为右端点时宽度恰为其最大二幂因子；之后一直走右孩子直到宽度1。$M=H$ 的初始宽度为 $H=2^{\nu_2(H)}$，得到同一公式。$\square$
+
+<a id="TM62-T3"></a>
+**定理 62.3（固定原宏迹的联合在线下界）。** 定义62.1的每个忠实控制器满足
+
+<a id="TM62-E03"></a>
+$$
+K_i^{\rm req}\ \ge\ B_i(H):=\sum_{T\in\mathcal T_i}b_H(M_i(T)).
+\tag{TM.6203}
+$$
+
+若所有 $i$ 共用一个在线值字母表而 authentic $i$ 仍公开，则该字母表至少有 $\max_i B_i(H)$ 个值；不把各 $i$ 的条件下界相加。这里不要求一个物理输出锁存的 Halt 状态。
+
+证明。为每个不同原目标选一个实际来源，并只取其首次饱和以后、尚待请求的全部 $b_H(M_i(T))$ 个切点。每个所选来源真实饱和，此后规定动作只收到共同拒绝。若两个这些切点有相同联合值，公共 $H,i$ 也相同，则下一指令相同；执行该指令的响应共同为拒绝，更新后的值仍相同。逐步归纳直到较早的规定输出。
+
+若两切点的剩余请求数不同，相同值迫使两运行在同一宏步停止，而忠实宏迹要求不同的停止宏步，矛盾。若剩余请求数相同但原目标不同，则相同值、同一拒绝串迫使相同字面输出，矛盾。对于同一个目标，其饱和路径的各切点有两两不同的剩余请求数；对于不同目标，前述两种情况穷尽。因此所有所选切点的联合值两两不同，得到求和下界。代表只作必要性证明，每个目标的真实源存在由58.2保证，实际运行树未被替换。$\square$
+
+<a id="TM62-P4"></a>
+**命题 62.4（显式 Moore 约定下的附加输出数）。** 若另按 ContinuationII 定义26.1比较抽象 Moore 控制器，每个状态的指令为 Request 或 $\operatorname{Halt}(T)$，并把最后强制拒绝后的 Halt 指令状态也计入 $K_i^{\rm Moore}$，则
+
+$$
+K_i^{\rm Moore}\ge B_i(H)+n_i.
+\tag{TM.6204}
+$$
+
+证明。定理62.3的所有所选状态都有 Request 指令；每个不同初始目标另需一个具有其字面 $\operatorname{Halt}(T)$ 指令的状态。这些状态彼此不同，且与 Request 状态不相交。该数针对明确的抽象指令约定，不把原装置的实际输出自动视为另一个锁存存储。$\square$
+
+### 62.3 dyadic 上限的源特定求和
+
+<a id="TM62-T5"></a>
+**定理 62.5（符号1的 dyadic 在线障碍）。** 对 $H=2^d$、$d\ge4$，置 $L=H/16$。固定原 TM58 执行满足
+
+<a id="TM62-E04"></a>
+$$
+B_1(H)=20L-2,\qquad n_1=K_0(H)=5L-1.
+\tag{TM.6205}
+$$
+
+其中 $K_0$ 严格沿用61.2的一次检查点接口；（TM.6205）不是所有成功 TM30 策略的最小在线状态数。
+
+证明。此处 $h=4L,c_1=2L,P=8L$。由58.5–7，符号1的 AA 与 AR 目标共 $L$ 个，入口依次为 $4j$、$3L+1\le j\le4L$：AA 对应行 $L+1$ 的列 $L+2,\ldots,2L$，AR 是末列 $2L+1$。RA 的高区同奇偶两行及相邻例外恰给 $4j$、$2L+2\le j\le4L$，共 $2L-1$ 个不同目标。RR 的折叠行 $z=2L+1,\ldots,4L$ 恰给 $4j$、$2L+1\le j\le4L$，共 $2L$ 个目标。重叠入口在不同真实分支属于不同原目标，必须分别计数。$L=1$ 时同一列表由58.9给出。目标数之和为 $5L-1$，与61.4–5一致。
+
+引理62.2给 $b_H(4j)=3+\nu_2(j)$。写 $L=2^p$；用经典二进阶乘计数 $\sum_{j=1}^n\nu_2(j)=\sum_{a\ge1}\lfloor n/2^a\rfloor=n-s_2(n)$，其中 $s_2$ 数二进制1的个数，得到
+
+$$
+\begin{aligned}
+\sum_{j=3L+1}^{4L}\nu_2(j)&=L+1,\\
+\sum_{j=2L+2}^{4L}\nu_2(j)&=2L,\\
+\sum_{j=2L+1}^{4L}\nu_2(j)&=2L.
+\end{aligned}
+\tag{TM.6206}
+$$
+
+第一式用 $s_2(3L)=2,s_2(4L)=1$；第二式用 $s_2(2L+1)=2$；第三式用 $s_2(2L)=1$，均包括 $p=0$。故求和为 $3(5L-1)+5L+1=20L-2$。一次检查点已经完成全部请求，不再承担这些剩余进度区别；其 $5L-1$ 不能直接代替在线值容量。$\square$
+
+<a id="TM62-P6"></a>
+**命题 62.6（最小 dyadic 上限的实际反例）。** 在 $H=16,i=1$，四个不同初始目标分别由 $(z,w)=(2,3),(3,4),(3,5),(4,5)$ 实现；它们的分支为 AR、RA、RR、RR，入口为 $16,16,12,16$，饱和 REQUEST 数为 $5,5,3,5$。所以 $B_1(16)=18$，而61.5的一次检查点容量为4；命题62.4的 Moore 下界另为22。
+
+证明。用实际词（TM.5805）取每个点的源。$L=1,c_1=2,P=8$；原整候选守卫直接给上述四入口与分支。引理62.2对16与12给 $1+\nu_2(16)=5$、$1+\nu_2(12)=3$。最后一点的所有其他隐藏 $w=6,7$ 仍有同一 $Z(4)$、RR 与入口16，没有把它们排除。四个原目标为 $(1,(4,4),1,1)$、$(1,(8,4),1,1)$、$(0,1,12)$、$(0,1,16)$，两两不同。大小已为16的同一来源，在区间宽度16、8、4、2、1的五个切点上全收拒绝，仍必须保存其不同的剩余请求数；来源行为相同不能代替进度。$\square$
+
+### 62.4 实际宏记录像的在线表示
+
+<a id="TM62-D7"></a>
+**定义 62.7（带阶段的实际前缀坐标）。** 原宏记录含公开 $H$、真实供应 $i$、截至切点实际发出的全部动作身份及真实响应；它不含尚未发出的请求、虚构省略响应或提前目标输出。令 $\mathcal P_H$ 为完整 $U_H$ 所有运行从原初始化至最后强制拒绝之后的这类不同宏记录前缀。用下列互不相交的带类型坐标表示其实际像：
+
+$$
+\begin{array}{ll}
+I_i &: \text{已收到 authentic }i\text{、尚未发出首请求};\\
+E_{i,a} &: \text{真实上下文请求后，}a\in\{A,R\};\\
+S_{i,b,l,u} &: \text{真实 }\rho\text{ 后，Size 请求前的区间};\\
+F_{i,b,M} &: \text{最终单叶拒绝之后、初始目标输出之前}.
+\end{array}
+\tag{TM.6207}
+$$
+
+$E$ 仅在 $c_i<h$ 的真实发出模式出现；$b$ 是实际 AA、AR、RA、RR、OA 或 OR。$S$ 包含根区间 $(0,H]$ 和宽度1的叶区间，后者仍须发出最终单叶请求。$F$ 不要求保存已输出的物理字。令 $e$ 为所有实际达到的 $E$ 数，$X_{i,b}$ 为该实际分支的非空入口集合，$B$ 为这些非空集合的数量。对 $X\subseteq\{1,\ldots,H\}$，$C_H(X)$ 数完整中点树中与 $X$ 相交的区间节点（空集取0）；$\mathsf u_H(X)$ 数删去未达区间后恰有一个孩子的节点。置 $U=\sum_{i,b}\mathsf u_H(X_{i,b})$、$Q=\lfloor h^2/4\rfloor$。
+
+<a id="TM62-T8"></a>
+**定理 62.8（实际前缀像、更新与原初始化的对应）。** （TM.6207）的实际坐标与 $\mathcal P_H$ 有尊重原来源的双射。每个坐标保留下一规定实际指令，且在每个真实可达响应上有唯一后继坐标；整个表示从原供应事件的 $I_i$ 连续运行，无新初始化和未计程序位置。其全像基数恰为
+
+<a id="TM62-E05"></a>
+$$
+N(H)=|\mathcal P_H|
+=L+e+\sum_{i,b}C_H(X_{i,b})+Q
+=3Q+L+e-B+U.
+\tag{TM.6208}
+$$
+
+固定公开 $i$ 的条件像数为 $N_i=1+e_i+\sum_b C_H(X_{i,b})+n_i$，因此 $N=\sum_iN_i$。这是忠实原宏指令的在线充分表示及完整宏记录像数，不声称无冗余或最小控制器，也不等于全部保留档案与工作单元的联合存储容量。
+
+证明。$I_i$ 在 $c_i<h$ 时发出原 $\langle t_{\rm cur},v_{H-4c_i}\rangle$，按真实响应 $a$ 更新到 $E_{i,a}$；否则直接发出原 $\rho$，响应 $r$ 更新到 $S_{i,Or,0,H}$。$E_{i,a}$ 发出原 $\rho$，响应 $r$ 更新到 $S_{i,ar,0,H}$。对于 $S_{i,b,l,u}$，若宽度大于1，取 $k=\lfloor(l+u)/2\rfloor$，发出原右接 $v_{u-k}$；真实 A 更新为 $S_{i,b,l,k}$，真实 R 更新为 $S_{i,b,k,u}$。宽度1时发出 $v_1$，真实拒绝后更新到 $F_{i,b,u}$。$F$ 用原58.10字典输出初始字面目标，真实发出与真实省略各用自己的 $P$。阶段、分支与区间全在坐标内，下一指令不借用外部 PC。入口 $M$ 在叶区间以前只是证明参数，未开放尺寸读口。
+
+实际宏记录显然沿这些规则确定坐标。反过来，完整中点树的每个区间节点有唯一从 $(0,H]$ 出发的父路径，故 $S$ 恢复全部 Size 请求身份及响应；$i,b$ 恢复原上下文是否发出、其完整公开身份、两项真实前缀响应。$E$ 和 $I$ 直接恢复各自已有前缀，$F$ 由叶区间的唯一路径及附加最终单叶拒绝恢复全记录。没有人为的阶段复制或实际像外记录，所以双向互逆。原来源不变、所有实际响应更新直接相容；这比仅作静态充分性因子化多出了已建立的动力学。
+
+每个有限 $w\le h$ 点是一个原目标，其数量为 $\sum_{s=1}^{\lfloor(h-1)/2\rfloor}(h-2s)=\lfloor(h-1)^2/4\rfloor$；标签0折叠行另有 $\lfloor h/2\rfloor$ 个。因此不同初始目标总数为 $Q$。58.11给每个目标唯一的 $(i,b,M)$，且每个实际 $(i,b,M)$ 格仅有一个目标，故 $\sum_{i,b}|X_{i,b}|=Q$，并有恰 $Q$ 个 $F$。前缀 $I$ 恰 $L$ 个，$E$ 恰 $e$ 个，Size 坐标恰 $\sum C_H(X_{i,b})$ 个，得到第一个等式。每棵非空剪枝中点树有 $|X|$ 片叶；令二孩子节点数为 $V$、单孩子数为 $U_X$，则边数既为 $2V+U_X$，又为 $|X|+V+U_X-1$，所以 $V=|X|-1$、$C_H(X)=2|X|-1+U_X$。对 $B$ 个非空分支求和得到第二个等式。条件 $i$ 的计数同理。公共程序可在已取得坐标上计算指令、更新和解码，不查询未知目标；程序描述和本地计算的费用仍独立承担。$\square$
+
+### 62.5 四个完整上限的精确前缀数
+
+<a id="TM62-P9"></a>
+**命题 62.9（$H=60,61,62,63$ 的实际前缀像）。** 对这四个上限，$Q=56,L=4,e=7,B=12,U=151$，$\sum C_H(X_{i,b})=251$，所以 $N=318$。条件像数依次为 $(N_1,N_2,N_3,N_4)=(95,69,81,73)$。饱和在线 REQUEST 下界依次为
+
+| 62上限 | $B_1$ | $B_2$ | $B_3$ | $B_4$ |
+| --- | --- | --- | --- | --- |
+| 60 | 56 | 46 | 49 | 37 |
+| 61 | 30 | 39 | 48 | 50 |
+| 62 | 43 | 43 | 50 | 50 |
+| 63 | 30 | 39 | 53 | 57 |
+
+证明。这里 $h=15,L=4$，截止为8、10、12、14，全部真实发出。前三符号各达到上下文 A、R，第四符号仅达到 A，故 $e_i=(2,2,2,1)$。原58.3–11逐目标给以下完整入口集合。表中 AA、AR 的入口为显示集合 $X^0$ 逐项加 $\delta$，RA、RR 的入口不加 $\delta$；$C,U_X$ 对四个 $\delta$ 均为显示值。
+
+| 62入口分支 | $X^0$ | $C$ | $U_X$ |
+| --- | --- | --- | --- |
+| $1,AA$ | $52,56,60$ | 14 | 9 |
+| $1,AR$ | $48$ | 7 | 6 |
+| $1,RA$ | $40,44,48,52,56,60$ | 25 | 14 |
+| $1,RR$ | $36,40,44,48,52,56,60$ | 29 | 16 |
+| $2,AA$ | $32,48,52,56,60$ | 22 | 13 |
+| $2,AR$ | $44,56,60$ | 15 | 10 |
+| $2,RA$ | $48,52,56,60$ | 17 | 10 |
+| $3,AA$ | $28,32,44,48,52,56,60$ | 32 | 19 |
+| $3,AR$ | $40,48,52,56,60$ | 22 | 13 |
+| $3,RA$ | $56,60$ | 10 | 7 |
+| $4,AA$ | $24,28,32,40,44,48,52,56,60$ | 38 | 21 |
+| $4,AR$ | $36,44,52,60$ | 20 | 13 |
+
+这些整数可直接用以下有限递推验证，不假定余数不影响区间。对当前实际区间 $(l,u]$ 和其中非空入口集 $X$，宽度1时取 $(C,U_X)=(1,0)$；否则以 $k=\lfloor(l+u)/2\rfloor$ 切分 $X_A=X\cap(l,k]$、$X_R=X\cap(k,u]$，只保留非空孩子，置
+
+$$
+C=1+\sum_{j\in\{A,R\}:X_j\ne\varnothing}C_j,\qquad
+U_X=\mathbf1_{\{\text{恰有一个非空孩子}\}}+\sum_j U_{X_j}.
+\tag{TM.6209}
+$$
+
+从 $(0,60+\delta]$ 对表中实际集合代入即得各列；它是有限整数恒等式的递归求值，每层区间严格缩小。入口集大小按符号相加为61.6的17、12、14、13；表列求和得251与151，代入62.8得318及四个条件像数。对每个显示入口同样从 $(0,H]$ 走原中点路径，第一次 $u=M$ 时按（TM.6202）求其请求数并按目标求和，得到上表 $B_i$。四个上限的前缀像数相同，但尾长负载随余数变化；这不把任一边际计数当作实际相同的联合值。$\square$
+
+### 62.6 完整源提升、成熟框架与保留的成本义务
+
+<a id="TM62-T10"></a>
+**命题 62.10（完整源的忠实性与计数边界）。** 62.2–9的结论保留完整 $U_H$、初始目标、原真实供应、全部合法记录与费用合同。在线下界与实际前缀表示均不供应物理档案限制、擦除、交接、免费初始化、全控制器最小值、付费存储或全运行总成本最优值。
+
+证明。Atomic359.3、Atomic360.2–4、58.2的共同 Euler 充要对应覆盖每个正 $(r,s)$ 的全部实际叶词及括号；组成为 $(4r,4s)$，原 guard 与接受后的组成更新逐实际树成立。供符号只依初始原目标。58.11、58.14与TM30.2、TM47.1–2、TM49.6使同目标全部实现具有相同原请求、响应、分支和入口，包括标签0行的每个隐藏组成。62.2的饱和条件是实际叶数 $H$，正上下文均真实超限；没有代表树在线替换。62.8的每步在已经合法取得的响应上计算，真实省略没有构造候选，也不减去未插入的 $\delta$。完整原动作与停止合同逐项保留，故全部计数提升到全实际族。
+
+联合值下界已将所有可访问过去字段计入。前缀双射只重编码原宏记录并提供其规定下一指令，不删去原合同仍可访问的其他记录、档案、程序参数或副本；它们继续保存、继续计费，不能从 $N$ 或 $N_i$ 推出其联合容量等于该数。原源存储、供应证据取得和同源认证、生产交付保留、实际上下文展开、拒绝候选、守卫、替换、本地整数运算、字典程序、输出及每份档案分别承担原费用。宏指令坐标没有刻画其内部微步、安装格式、地址布局或同一次完整运行的付费峰值。OR77.1–2要求共同切点处旧单元和副本相加；OR78.1–2要求既定字面安装、已付逐位步骤和真实成功见证；OR79.1–4的编码也保留全部可访问状态与预算。把本表示变成这些已安装合同的付费实现仍需费用保持的对应证明，不能凭纸面记录重编码取得。TM51.9、58.20的原树保持生产障碍仍适用。
+
+一般共同策略兼容、控制器候选支持与严格下降证书重用 ContinuationII26–30，不作为新增一般控制理论。文献中 Reissig–Weber–Rungger，*Feedback Refinement Relations for the Synthesis of Symbolic Controllers*，[arXiv:1503.03715v3](https://arxiv.org/abs/1503.03715v3)，定义V.2要求严格关系、原合法输入包含和对所有相关后继的包含；定理V.4另要求抽象控制器可反馈组合。Majumdar–Ozay–Schmuck，*On Abstraction-Based Controller Design With Output Feedback*，[arXiv:2002.02687v1](https://arxiv.org/abs/2002.02687v1)，定义3.1保留初态、后继与输出条件，§3.2把输出反馈精化放在实际外部迹系统上，定理3.2的无限迹结论还要求闭外部行为。本章只对原有限宏迹逐步建立实际对应，不从来源的相同终端输出推定共同控制记忆。
+
+van den Bos–Vaandrager，*State Identification for Labeled Transition Systems with Inputs and Outputs*，[arXiv:1907.11034v2](https://arxiv.org/abs/1907.11034v2)，定理35的分裂图刻画要求不同状态全两两不相容及注入分裂；这里的饱和来源却有共同拒绝行为，区别在原任务目标与进度。Abel–Reineke，*MeMin: SAT-based Exact Minimization of Incompletely Specified Mealy Machines*，[doi:10.1109/ICCAD.2015.7372555](https://doi.org/10.1109/ICCAD.2015.7372555)，研究已给有限 Mealy 规格的相容覆盖与实现后继；原完整树不能只因使用这个框架而被删为玩具有限源，也不能把其规格最小化结果当作本控制器的已证最小值。上述成熟框架属 literature-attested 背景；本章承重增量是实际 Size 饱和尾负载、dyadic 源特定求和以及原全宏前缀像和原初始化上的逐步对应，属 repo-derived 普通数学，不主张文献优先权或形式核验。
+
+Boundary Dynamics109与Process Geometry43区分任务充分性、无冗余及既有动态的运输；62.8保留所有实际宏前缀区别，直接给出原动态，未宣称这些区别都是任务所必需。Atomic240的符号／null 算术观察合同不参与本章守卫或付费对应。已证在线下界不能推出最小在线控制器，已证表示不能推出最小付费存储；一般 $A_U(H)$ 最优系数、全成功策略的在线最小值与原安装付费桥仍未由本章关闭。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 63. 原始来源调用的前缀进度与小上限联合控制
+
+### 63.1 完整单位来源上的 Read 消去
+
+<a id="TM63-D1"></a>
+**定义 63.1（修改记录与修改深度）。** 固定原 TM58 的完整来源族 $U_H$、authentic 供应符号 $i$、共同公开初始化和字面初始目标 $T=q_H(t)$。修改动作仍只有原整 $\rho$ 以及任意已知实际非空正上下文在左侧或右侧的整拼接；整候选叶数不超过 $H$ 时接受，等号接受，拒绝保持完整实际来源。一次修改尝试的响应记为 $A$ 或 $R$。对一个逐点有限成功策略 $\Pi$ 和一个实际来源 $t$，令
+
+$$
+r_i(t)=\#\{\text{在输出初始 }T\text{ 前发出的 }\rho\text{ 或上下文修改尝试}\}.
+\tag{TM.6301}
+$$
+
+对固定的 TM58 authentic 供应 $\ell_H$，记
+
+$$
+D_{\rm mod}^*(H;\ell_H)=\inf_{\Pi}\ \max_{t\in U_H}r_{\ell_H(t)}(t),
+\tag{TM.6301a}
+$$
+
+其中下确界遍历同一原接口上逐源有限、确定且正确的消费者 $\Pi$；这里的响应记录仍按每个实际来源计数。
+
+`Read` 仍是原接口动作；它不被从合同中删除。修改记录是按原次序保留的修改身份、左右侧、实际上下文及每次 $A/R$ 响应的有限记录。它不引入目标、尺寸、档案、时钟或费用读口。
+
+<a id="TM63-L2"></a>
+**引理 63.2（单位来源的 Read 由合法修改记录确定）。** 在完整 $U_H$ 上，每个已达到的合法修改记录确定当前原 `Read` 的精确响应。固定 $H,i$、共同初始化和确定策略后，相同的 $A/R$ 修改响应前缀决定相同的中间 `Read`、下一修改指令或停止输出；`Read` 不产生一个新的目标分支。
+
+证明。Atomic359.3、Atomic360.2–4 与 TM58.2 给完整 $U_H$ 的所有实际 Euler 叶词、全部有序括号及其共同窗口 $W_3(t)=\mathbf1=(1,1,1)$。在 Clifford 三元组上，$\odot$ 表示逐坐标的有序乘法。TM28（28.6–7）和 TM30.1 的单出现运输给出
+
+$$
+W_3(\rho u)=F(W_3(u)),\qquad
+F(x_0,x_1,x_2)=(x_1,x_2,J(x_0)),\qquad
+F(X\odot Y)=F(X)\odot F(Y).
+$$
+
+这里 $J$ 是第三窗以后的运输：$E(\rho^{n+3}u)=J(E(\rho^n u))$；单次 $\rho$ 使用 $F$，而不是把 $J$ 作用于当前积。$J$ 保单位和乘法，故 $F(\mathbf1)=\mathbf1$。
+
+对原树 $t$ 的每条合法混合历史，维持符号不变量
+
+$$
+W_3(t_{\rm cur})=P\odot F^j(W_3(t))\odot Q,
+\qquad P,Q\in G^3,
+$$
+
+其中 $j$ 是已经接受的 $\rho$ 次数，$P,Q$ 只由已接受的实际上下文身份、左右侧及此前响应计算。初始取 $j=0$、$P=Q=\mathbf1$。接受左上下文 $v$ 时置 $P\leftarrow W_3(v)\odot P$；接受右上下文时置 $Q\leftarrow Q\odot W_3(v)$。接受一次 $\rho$ 时置 $(P,Q,j)\leftarrow(F(P),F(Q),j+1)$；这一步正由 $F$ 保有序乘法得到。拒绝保持整树，故三者均不变；`Read` 也不改它们。这覆盖任意交错的左拼接、右拼接、接受与拒绝替换，并保留原叶序及括号。$P,Q$ 是证明中的已知三窗因子，$\mathbf1$ 不代表空树；未获准的未来窗口只用于代数表达，不通过额外来源调用取得。
+
+单位来源上 $F^j(W_3(t))=\mathbf1$，所以每次 `Read` 恰返回 $P\odot Q$ 的第零坐标。这不假定修改守卫由三窗决定：真实 $A/R$ 已在记录中，大小和守卫仍属于原来源。对两个相同修改响应前缀的运行，从共同初始化归纳：在下一修改以前，已知因子相同，所有精确读响应相同，因此全部历史依赖控制字段、下一修改身份及侧别或停止输出也相同。下一修改响应若相同，就按上述真实更新继续归纳。逐点有限性保证比较到任一实际停止点只涉及有限历史。
+
+本结论使用完整单位来源的共同初始三窗；未给定共同三窗的一般来源没有这里的读值消去结论。实际来源、档案、权限、初始化及安装费用均保留原合同。$\square$
+
+<a id="TM63-T3"></a>
+**定理 63.3（authentic 符号的全策略二叉前缀进度）。** 对固定 $H\ge8$ 和固定 authentic 符号 $i$，设 $\mathcal T_i$ 是该符号承载的不同原始字面目标，$n_i=|\mathcal T_i|$。对完整 $U_H$ 上任意共同初始化、确定、逐点有限且正确的原接口消费者，选取每个 $T\in\mathcal T_i$ 的一个真实来源见证，并令 $w_i(T)$ 为该见证在第一次输出前的 $A/R$ 修改响应词。则
+
+$$
+\{w_i(T):T\in\mathcal T_i\}\text{ 是前缀自由的},
+\qquad
+\sum_{T\in\mathcal T_i}2^{-|w_i(T)|}\le1,
+\tag{TM.6302}
+$$
+
+从而
+
+$$
+\max_{T\in\mathcal T_i}|w_i(T)|\ge\lceil\log_2 n_i\rceil.
+\tag{TM.6303}
+$$
+
+这个下界同时适用于修改调用数和总原来源调用数；后者还计入 `Read`，所以只能更大。
+
+证明。比较两个不同目标的真实运行，假设其修改响应词相同，或较短词是较长词的前缀。从共同初始化开始，引理63.2的混合三窗不变量使第一修改之前的全部读值、控制字段及所选实际动作相同。逐个同步共同的修改响应后，接受的单出现次数、左右已知因子及完整已取得历史仍相同，故下一修改身份、任意中间读、控制更新或停止也相同。到较短词的实际停止点时，另一运行还未遇到不同响应，必须在同一控制状态停止并给出同一字面输出。这也包括零修改、任意多次中间读和可变停止，和不同初始目标的正确性矛盾。因此响应词前缀自由。二叉响应词的圆柱集合互不相交，其测度分别为 $2^{-|w|}$，得到（TM.6302）；若所有长度不超过 $D$，则 $n_i2^{-D}\le1$，得到（TM.6303）。这只是把经典前缀计数嵌入本源特定的单位来源和原修改合同，并非另立一个脱离 $U_H$ 的 Kraft 定理。$\square$
+
+### 63.2 精确符号负载与二幂上限
+
+<a id="TM63-E01"></a>
+**命题 63.4（dyadic authentic 负载）。** 令 $H=2^d$，并固定 TM58 的 authentic 供应。当 $d\ge5$ 时置 $L=H/16$，则其 authentic 符号数为 $L$，完整原始目标负载恰为
+
+$$
+ n_1=5L-1,
+ \qquad
+ n_i=3L+2i-3\quad(2\le i\le L).
+\tag{TM.6304}
+$$
+
+在 $d=4$ 的边界 $H=16,L=1$，单个符号的负载为 $n_1=4$。因此固定 authentic 供应下任意成功消费者的最坏修改调用数满足
+
+$$
+ D_{\rm mod}^*(2^d;\ell_H)
+ \ge\left\lceil\log_2(5\cdot2^{d-4}-1)\right\rceil
+ =d-1\quad(d\ge5),
+\tag{TM.6305}
+$$
+
+而 $d=4$ 给出下界 $2$。
+
+证明。TM61.4 的完整目标分类在 dyadic 情形为 $h=4L$。符号1的折叠行贡献 $2L$，其有限低行和高区贡献合计 $3L-1$，故 $n_1=5L-1$。对 $2\le i\le L$，两个低行贡献 $(i-1)+(L+i-1)$，高区同奇偶与异奇偶项共 $2L-1$，得到 $3L+2i-3$；这些行没有折叠项。$L=1$ 时高区的边界退化为 TM58.9 的四个不同初始目标，直接给 $n_1=4$。将 $n_1$ 代入定理63.3；当 $L\ge2$ 时 $2^{d-2}<5L-1\le2^{d-1}$，故其对数上取整为 $d-1$。$\square$
+
+在同一 fixed authentic 供应上，TM58 的已有消费者给出无 `Read` 且至多 $\lceil\log_2H\rceil+3$ 次整来源调用的上界；因此（TM.6305）只结算 source-call progress 的全策略下界和一个已有上界之间的区间，不把上界宣称为最优，也不把修改深度转成控制状态或付费存储最优。特别地，$H=60,61,62,63$ 时 TM61.4 给 $n_1=17$，所以任意成功消费者在某个符号1来源上至少有五次修改尝试；这与 TM58 的九次整调用构造是不同资源坐标。
+
+### 63.3 $H=16,17,18,19$ 的全原策略精确联合值
+
+<a id="TM63-D5"></a>
+**定义 63.5（小上限的联合 REQUEST 值）。** 在 $H\in\{16,17,18,19\}$，保留完整实际 $U_H$、authentic $\ell_H=1$、原始字面目标、共同初始化和全部原 `Read`、整 $\rho$、任意正上下文左右拼接、原权限及等号接受规则。控制器沿 ContinuationII 26.1 的有限观察控制器约定运行：每个可达控制状态的指令是原 `Request` 或字面 $\operatorname{Halt}(T)$，初始编码只使用已取得历史。一个 `Request` 状态的联合值包含定义62.1所列的所有可访问历史依赖字段：PC、设置、工作字段、权限、旧记录、输出、advice、地址、游标、指针及可查询档案；不允许未计旁路。$K_{\rm req}$ 是成功消费者在所有实际来源上达到过的不同 `Request` 状态数；在另行采用同一抽象约定并把 `Halt` 状态也计入时，记总数为 $K_{\rm Moore}$。
+
+<a id="TM63-T6"></a>
+**定理 63.6（小上限的匹配全策略最小值）。** 对每个 $H\in\{16,17,18,19\}$，在定义63.5的同一原合同上，
+
+$$
+\min_\Pi K_{\rm req}(\Pi)=3,
+\qquad
+\min_\Pi K_{\rm Moore}(\Pi)=7,
+\tag{TM.6306}
+$$
+
+并且
+
+$$
+\min_\Pi\max_{t\in U_H}N_{\rm mod}(\Pi,t)
+=
+\min_\Pi\max_{t\in U_H}N_{\rm calls}(\Pi,t)=2.
+\tag{TM.6307}
+$$
+
+这里 $N_{\rm mod}$ 只计 $\rho$ 和正上下文修改尝试，$N_{\rm calls}$ 还计原 `Read`；两式的最小值由同一个消费者同时达到。$K_{\rm Moore}=7$ 只属于明示的 Request/Halt(T) 抽象约定，不是物理锁存、安装位数、完整控制器存储或付费成本结论。
+
+证明。TM58.2 的 $h=4$ 完整组成点是
+
+$$
+(r,s)\in\{(1,1),(1,2),(1,3),(2,1),(2,2),(3,1)\}.
+$$
+
+全部 Euler 词和全部有序括号均在量词内。它们的四个不同初始字面目标为
+
+$$
+T_A=(1,(4,4),1,1),\quad T_B=(1,(8,4),1,1),\quad
+T_C=(0,1,12),\quad T_D=(0,1,16),
+\tag{TM.6308}
+$$
+
+其中 $T_D$ 包含 $(z,w)=(4,5),(4,6),(4,7)$ 的全部隐藏组成。四个显示代表的初始叶数为 $8,12,12,16$；$T_D$ 行的隐藏组成在原 $\rho$ 后分别有 $20,24,28$ 个叶，故都严格超出 $H\le19$。因此对四个字面目标，原 $\rho$ 的响应依次为 $A,A,R,R$。随后在两条分支都发同一个已有实际右上下文 $v_{H-12}=a^{H-12}$；在 $A$ 分支当前叶数为 $12,16$，在 $R$ 分支为 $12,16$，等号接受给出第二响应分别为 $A,R$。四个响应词恰为
+
+$$
+AA\mapsto T_A,\quad AR\mapsto T_B,\quad
+RA\mapsto T_C,\quad RR\mapsto T_D.
+\tag{TM.6309}
+$$
+
+上下文长度 $H-12$ 在四个上限中均为正，所有候选均为原整动作；拒绝保持原树。Atomic360/TM47.2 的行为同余把这个按组成和叶序核对的消费者提升到每个实际 Euler 词和每种有序括号，未把代表树替换进运行。这个消费者恰有空前缀、$\rho$-accept 和 $\rho$-reject 三个 REQUEST 值，每个来源恰两次修改调用且没有 `Read`，从而给出上界。
+
+下面给出全原策略的下界。authentic 符号只有一个，四个不同初始目标的完整来源均在同一共同初始化下。定理63.3及引理63.2的混合三窗不变量给出最坏修改调用数至少 $\lceil\log_2 4\rceil=2$，包括一次修改前后任意有限的精确 `Read`。总调用数不小于修改调用数，故也至少为2。
+
+再设一个成功确定控制器只有 $R\le2$ 个可达 `Request` 状态。每个联合状态有固定指令；若为上下文请求，其实际树身份和左右侧也固定，因为任何可变选择字段已经计入联合值。共同初态不能是字面 Halt，否则所有来源立即输出同一目标。依请求的指令类别穷尽如下，允许任意循环、合流和依响应的停止。
+
+1. **没有 Read。** 全部请求都是原修改，每个顶点至多有两条 $A/R$ 响应边。从共同根到所有 $R$ 个请求顶点的可达子图至少含 $R-1$ 条不同的请求间边，因此至多 $2R-(R-1)=R+1\le3$ 条边可通向 Halt。四个不同字面目标要求至少四个不同 Halt 终点及其进入边，矛盾。循环或合流占用同一总边预算，只能减少新终点数；该计数不限制路径长度。
+2. **Read 与一个固定上下文。** 取初始目标 $T_B,T_C$ 的任意实际来源；它们初始叶数同为12，初始三窗均为单位元。唯一修改指令是同一个正上下文 $v$ 的同一侧拼接。若到目前为止已接受 $m$ 次，则两来源当前叶数同为 $12+m\lambda(v)$；两者的下一上下文守卫完全相同，包括等号接受及拒绝后保持。当前积同为 $E(v)^m$，无论固定侧是左还是右。故每次精确 Read 也相同。由共同控制状态归纳，两个运行在任意请求序列、循环和合流中始终收到相同响应、进入相同联合状态；一方若有限停止，另一方同时给出同一输出，不能分别输出 $T_B,T_C$。这不把 Read 的全局响应字母表限制为二元，也不要求控制器保存 $m$；$m$ 只是配对运行的证明指标。
+3. **Read 与 $\rho$。** 没有上下文时，单位初始三窗由 $F$ 保持，每次合法 Read 都为1。$T_A,T_B$ 的第一次 $\rho$ 分别在12、16叶接受；其下一替换候选分别有20、28叶，均超过 $H\le19$。所以这两个来源的修改响应流同为第一次 $A$、此后全 $R$。$T_C,T_D$ 的第一次候选已分别为20叶和20、24或28叶，此后原树不变，修改响应流均全为 $R$。在两对内，从共同状态归纳，每次 Read、每次替换响应及下一控制状态都相同；任意穿插读、重复请求、合流或可变停止都不能分开该对的不同字面目标。
+4. **只有 Read。** 原树不变，所有读均为1，共同控制演化不能区分四个目标。仅有一个可达请求状态或零个请求状态也已由上述论证覆盖。
+
+`Read` 在合并不同修改历史以后可以返回三个或更多不同精确 Clifford 值，所以二元出度计数只用于第1种情形。四种情形均排除 $R\le2$，得到 $K_{\rm req}\ge3$。四个不同字面 $\operatorname{Halt}(T)$ 的指令状态与 Request 状态分离，故在明示抽象约定下 $K_{\rm Moore}\ge3+4=7$。与同一三请求值、四输出、二修改且无读的消费者合并，得到（TM.6306–7）。$\square$
+
+<a id="TM63-P7"></a>
+**命题 63.7（小上限边界与完整合同）。** 定理63.6的四个上限值是完整 $U_H$ 上的原始调用和抽象联合值等式。它们不推出 TM62 固定饱和宏迹的 $18$ 个 REQUEST 值或 $22$ 个 Moore 值为全策略下界，也不推出安装运行时的最小物理存储、档案擦除、免费初始化、供应生产、总付费工作或一般 $A_U(H)$ 最优性。
+
+证明。TM62.6 的 $18/22$ 计数属于规定的固定 $\operatorname{Size}_H$ 宏迹；定理63.6的 $\rho$-先消费者是同一原接口上的真实完整来源执行，故二者量词不同。七个 Moore 值只编码三个宏请求位置、保留的实际首响应和四个字面初始输出；它没有删除共同运行中仍须保留的原树、档案、权限、上下文、拒绝候选、记录、副本或安装字节。OR77.1–2、OR78.1–2 与 OR79.1–4 的同时保留、逐位安装、访问及费用义务仍然存在。Atomic359–360、TM30、TM47、TM51、TM58 和 TM61 是本节的来源；前缀计数是嵌入这些实际来源后的中间方法，不作一般 Kraft 理论或文献优先权主张。$\square$
+
+有限核对见 [TM63 small-cap certificate](../../reports/fib-supplier-capacity/joint_small_caps.md) 与其 [JSON/script](../../reports/fib-supplier-capacity/joint_small_caps.json)。该数据枚举 $h=4$ 完整组成域的 $920$ 个单位叶词；全部有序括号的提升由 Atomic360/TM47 的纸面行为同余承担。它只保留源算术、字面目标、真实 guard 响应和二调用字典的有用结果，不把有限程序当作所有控制器的搜索或物理运行时证书。
+
+## 追加锚（本行以下为增补区）
+
+## 64. 固定真实供应的六次原调用最优值与共同纤维材料
+
+### 64.1 完整原任务及十三个真实目标
+
+<a id="TM64-D1"></a>
+**定义 64.1（固定供应的成功策略与调用坐标）。** 固定 $H=60+\delta$，$\delta\in\{0,1,2,3\}$。来源、同源认证和供应恰采用定义58.1、58.3：执行来源为完整 $U_H$ 的实际树，保留全部 Euler 叶词、每一种有序二叉括号和每个标签0隐藏组成；消费者只取得公开 $H$ 与这个精确未修改初始树的 authentic 符号 $i=\ell_H(t)$。不最小化或更换供应函数。供应者已经取得原目标证据及同源身份配对的条件仍是原假设，其生产、取得、认证、交付和保留不成为免费操作。
+
+令 $\mathscr P_H$ 为在完整 $U_H$ 上共同初始化、确定、逐源有限停止并正确输出初始 $T=q_H(t)$ 的原消费者。其所有合法自适应历史、可保留记录、任意后来替换深度和两侧任意已知实际非空正上下文都在量词内。`Read` 不改树；整 $\rho$ 或整上下文候选的叶数 $\le H$ 才接受，等号接受；拒绝保持完整实际树且没有候选读。运行离开单位族后仍按原 ambient 合同执行。无尺寸、原目标、档案、导航、时钟、费用、复制、复位、逆拼接或变上限端口。
+
+对 $\Pi\in\mathscr P_H$，$N_{\rm mod}(\Pi,t)$ 计第一次正确输出以前的全部整修改尝试，包括接受和拒绝的 $\rho$ 与上下文；$N_{\rm calls}(\Pi,t)$ 还计全部原 `Read`。输出依旧是（TM.5804）的字面值
+
+<a id="TM64-E01"></a>
+$$
+Z(z)=(0,1,4z),\qquad
+\tau_{15}(z,w)=
+\begin{cases}
+(2,(\mathbf u_{\rm unit},C(z,w))),&z+w\le15,\\
+(1,C(z,w),1,1),&z+w>15,
+\end{cases}
+\tag{TM.6401}
+$$
+
+其中 $C(z,w)=(4(2z-w),4(w-z))$、$\mathbf u_{\rm unit}=((0,0,0),(0,0,0),(0,0,0))$。有限目标使用 $w\le15$；隐藏的 $w>15$ 原目标为 $Z(z)$。标签2的内层顺序是窗口、组成；运行后的当前目标另列。
+
+<a id="TM64-D2"></a>
+**定义 64.2（共同上十个目标的全部实际实现）。** 定义
+
+<a id="TM64-E02"></a>
+$$
+\begin{aligned}
+D&=\{(8,w):9\le w\le15\}\cup\{(10,15),(12,15),(14,15)\},\\
+S_4&=\{(4,5),(4,6),(4,7)\}\cup D,\\
+\mathcal D_H&=\{t\in U_H:(z(t),w(t))\in D\}.
+\end{aligned}
+\tag{TM.6402}
+$$
+
+这里坐标来自原组成 $c(t)=(4r,4s)$、$z=r+s,w=r+2s$，不是另一个实验来源。在某个共同历史中，首次整 $\rho$ 以前已经接受的上下文资源增量记为 $(U,V)$。若这个共同前缀在 $\mathcal D_H$ 上存在，记 $M_D(\Pi)=U$，即该前缀中实际接受的上下文叶数之和；尚未经历替换，故不是运输后的材料量。被拒或仅构造的上下文、原来源、后来插入和替换产生的叶数不计入此坐标。
+
+十三点字典直接由（TM.5807）得到。此处 $h=15,L=4$；有限低区的 $i=4$ 行恰为 $z=4,8$。高区 $1\le x<y\le7$ 中，同奇偶的 $\lceil x/2\rceil=4$ 不可能；异奇偶的 $\lceil y/2\rceil=4$ 仅有 $y=7,x=2,4,6$。隐藏目标全供应符号1。因此 $S_4$ 恰是 authentic 符号4的完整目标字典，三个低点为原标签2，$D$ 的十点为原标签1，十三个字面目标两两不同。每一点有实际正源 $\omega_{2z-w,w-z}$，两参数均正；引理58.2的充要对应保留各点全部 Euler 叶词及全部括号。没有把实际来源换成显示见证。
+
+### 64.2 成功策略被迫保留的共同历史
+
+<a id="TM64-L3"></a>
+**引理 64.3（上十点的首替换与精确窗口）。** 对每个 $\Pi\in\mathscr P_H$，$\mathcal D_H$ 在第一次整 $\rho$ 尝试以前有同一份有限已取得历史；全部上下文响应、任意中间 `Read`、实际动作身份和控制字段均共同。不能在这个共同前缀上正确停止。第一次整 $\rho$ 以前的共同接受增量满足
+
+<a id="TM64-E03"></a>
+$$
+0\le U\le V\le2U,\qquad \delta<V\le\delta+4.
+\tag{TM.6403}
+$$
+
+这第一次 $\rho$ 恰接受六个 $(8,w)$、$9\le w\le14$，拒绝四个 $w=15$ 的目标；$V=\delta+4$ 时 $w=14$ 的等号仍接受。
+
+证明。复用 TM45 的（TM.4504–5）。在尚无替换的共同历史中，当前／下一资源为 $(4z+U,4w+V)$。每个实际非空正上下文有 $1\le d\le e\le2d$；接受时 $(U,V)$ 加上 $(d,e)$，拒绝时不变，所以 $0\le U\le V\le2U$。两侧拼接保留实际有序因子。任意合法混合历史上的 `Read` 中性完全复用引理63.2：$F^j(1,1,1)=(1,1,1)$，因此已接受上下文的共同有序因子决定真实读，任意穿插的读不能新增目标区别。这里单次替换使用 $F$，$J$ 只表示三步运输。
+
+先看两个实际来源坐标 $(8,14),(8,15)$，见证分别为 $\omega_{2,6},\omega_{1,7}$。首次 $\rho$ 以前，两者在每个上下文候选中的大小同为 $32+U+d$，所以始终收到相同修改响应和真实读，保有相同完整历史。若沿它们的共同历史出现 $V>\delta+4$，二者下一资源分别为 $56+V,60+V$，均严格超过 $H$；当前大小同为 $32+U$，当前积也相同。于是不同初始目标在同一历史下有相同当前标签0目标 $(0,E_{\rm cur},32+U)$。命题38.1的永久碰撞排除任何后来原延续正确恢复二者，包括额外记录后处理、任意多次读和任意后来替换。因此成功策略在这对来源上一直保持 $V\le\delta+4$。
+
+从共同初始化对 $D$ 归纳。在第一次 $\rho$ 以前，设下一实际上下文首次分开 $D$。其守卫仅比较 $4z+U+d$ 与 $H$，与侧别、叶序或括号无关；若确实分开，就接受最小行 $z=8$、拒绝最大行 $z=14$。拒绝最大行给出
+
+$$
+56+U+d>60+\delta,\qquad
+V+e\ge U+d>\delta+4.
+$$
+
+两个行8来源都接受这个上下文，立即产生上一段禁止的同历史标签0碰撞。因此分开 $D$ 的上下文不可能属于成功策略。共同接受的上下文也不能使 $V$ 超过 $\delta+4$，共同拒绝保持来源；`Read` 响应共同。归纳得到全部 $D$ 的共同前缀。其十个初始目标不同，所以确定的共同停止不能正确输出它们。逐源有限成功遂迫使一个有限的首次 $\rho$ 尝试。
+
+在该次尝试前，若 $V\le\delta$，四个不同初始目标 $(z,15)$、$z=8,10,12,14$ 都接受到同一大小 $60+V$。其随后一次替换的候选为 $4(z+15)+U+V\ge92+U+V>H$，而当前积由共同有序三窗因子及 $F$ 决定，仍相同。因此四者在同一完整历史后得到同一个当前标签0目标，命题38.1再次排除成功。这包括 $V=\delta$ 的等号接受情形，故必须 $V>\delta$。结合此前的上界，行8中 $w\le14$ 满足 $4w+V\le H$，所有 $w=15$ 满足 $60+V>H$，得到所述六／四分支及（TM.6403）。$\square$
+
+### 64.3 全原策略六次下界及实际匹配
+
+<a id="TM64-T4"></a>
+**定理 64.4（固定 authentic 供应的精确原调用最小值）。** 在定义64.1的完整原任务上，对每个 $H=60,61,62,63$，
+
+<a id="TM64-E04"></a>
+$$
+\min_{\Pi\in\mathscr P_H}\max_{t\in U_H}N_{\rm mod}(\Pi,t)
+=\min_{\Pi\in\mathscr P_H}\max_{t\in U_H}N_{\rm calls}(\Pi,t)=6.
+\tag{TM.6404}
+$$
+
+一个实际完整来源策略同时达到两项最小值；它没有 `Read`，至多接受一次 $\rho$。最小化仍允许其它成功策略的全部原动作、任意后来替换、任意保留记录与可变停止。
+
+证明。先证下界。由引理64.3，$D$ 的首次 $\rho$ 以前至少有一个接受上下文，因为 $V>\delta\ge0$。三个低行目标 $(4,5),(4,6),(4,7)$ 在任何尚无 $\rho$ 的共同历史中大小相同，上下文守卫和全部读也相同，因此只能一起离开 $D$ 的共同历史。
+
+若在 $D$ 的首次 $\rho$ 之前低行仍未离开，则该次 $\rho$ 也接受它们：$4w+V\le28+(\delta+4)<H$。这一实际接受分支包含三个低行及六个 $D$ 目标，共九个不同初始输出，具有同一完整记录。引理63.2与定理63.3的二叉前缀计数在这个已达到的共同历史后继续适用；至多三次后来修改只能产生至多八个不同输出，所以其中一个实际来源至少还要四次整修改。此前至少有接受上下文与首次 $\rho$ 两次，合计至少六次。
+
+若低行在此前已经离开，则其第一次不同响应只能来自一个接受低行、拒绝全部 $D$ 的上下文。这个在 $D$ 上真实发生的拒绝尝试，与 $D$ 必须有的接受上下文是不同调用。故到 $D$ 首次 $\rho$ 为止，$D$ 至少经历两次上下文及一次 $\rho$。随后六目标实际接受分支在同一完整记录后仍需至少三次修改，否则至多四个输出；其中一个来源合计至少六次。两种情形穷尽。前缀计数包含任意中间 `Read`、自适应动作、可变停止和任意后来 $\rho$；额外拒绝或读只会增加调用。这证明所有成功策略的最坏修改数至少六，总调用数不小于修改数。
+
+给出同时达到上界的一个完整原策略。对 $i=1,2,3$，先原样执行定义58.3的实际右上下文及一次 $\rho$。此处 $c_i=8,10,12$，上下文 $v_{H-4c_i}$ 都实际非空。对 $i=4$，改用下表所给的一个实际右上下文，然后尝试一次 $\rho$；供应、来源和输出目标完全不变。
+
+| 64实际上下文 | $H$ | 原树 $v$ | $(d,e)$ |
+| --- | ---: | --- | --- |
+| 64材料60 | 60 | $\alpha$ | $(1,1)$ |
+| 64材料61 | 61 | $\beta$ | $(1,2)$ |
+| 64材料62 | 62 | $\langle\alpha,\beta\rangle$ | $(2,3)$ |
+| 64材料63 | 63 | $\langle\beta,\beta\rangle$ | $(2,4)$ |
+
+这些上下文有 $e=\delta+1,d=\lceil e/2\rceil$，在所有十三个 $i=4$ 目标上都接受，因为 $4z+d\le56+2<H$。原整 $\rho$ 的接受入口为 $M=4w+e$，其中
+
+$$
+w\in\{5,6,7,9,10,11,12,13,14\};
+$$
+
+九个入口各异。由这个实际接受分支，$w=(M-e)/4$；$w\le7$ 恢复初始 $z=4$，否则恢复初始 $z=8$。拒绝分支的四个入口为 $M=4z+d$、$z\in\{8,10,12,14\}$，其原始列均为 $w=15$。由这个实际拒绝分支恢复 $z=(M-d)/4,w=15$。跨分支入口数值可以重叠，真实响应分支已经合法保留，故不会混淆原目标。
+
+余下复用 §58.4 的真实上下文阈值机制，针对完整可行入口字典平衡分割并在首次单点停止。固定真实符号与已取得的实际两响应分支，由上述逆解或定义58.10计算公开的可行入口集 $X$。这只是已知字典，不是读取来源的 $M$。从这个入口开始，记后续已接受的全 $\alpha$ 材料为 $a=0$；维持
+
+<a id="TM64-E05"></a>
+$$
+M\in X,\qquad \lambda_0(t_{\rm cur})=M+a,\qquad
+\max X+a\le H.
+\tag{TM.6405}
+$$
+
+若 $|X|>1$，在排序的 $X$ 中选阈值 $k$，使 $X\cap(-\infty,k]$ 和 $X\cap(k,\infty)$ 都非空，且各有至多 $\lceil|X|/2\rceil$ 项。发出原右上下文 $v_{H-a-k}$；因 $k<\max X\le H-a$，其叶数严格为正。真实整候选大小为 $M+H-k$，所以接受当且仅当 $M\le k$，等号接受。接受时置 $X\leftarrow X\cap(-\infty,k]$、$a\leftarrow H-k$；拒绝时只置 $X\leftarrow X\cap(k,\infty)$，原树及 $a$ 不变。两个分支都保持（TM.6405）。至多 $\lceil\log_2|X|\rceil$ 次以后，实际取得的记录选出单个 $M$，按原逆解输出（TM.6401）。不要求饱和、额外最终拒绝或另一次尺寸调用，也没有复制、复位或撤销插入。
+
+完整字典的分支入口数为
+
+| 64真实符号 | AA | AR | RA | RR | 最坏后续阈值调用 | 总调用上界 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 64符号1 | 3 | 1 | 6 | 7 | 3 | 5 |
+| 64符号2 | 5 | 3 | 4 | 0 | 3 | 5 |
+| 64符号3 | 7 | 5 | 2 | 0 | 3 | 5 |
+| 64符号4 | 9 | 4 | 0 | 0 | 4 | 6 |
+
+前三行直接复用引理58.5–7及 TM61、TM62 的完整字典：有限两低行、实际高区奇偶尾和每个标签0隐藏行均保留。符号4用刚给出的九／四逆解。所有分支已有唯一初始目标；前三符号仍按定义58.10解码，减去材料只在它实际接受的分支进行。特别 $z+w=15$ 输出原标签2的 $(2,(\mathbf u_{\rm unit},C))$，不是运行后的当前标签。
+
+这些逐树守卫、组成更新与有序三窗式均来自 TM30.1、TM45.3–4；完整 $U_H$ 的充要源对应来自 Atomic360.2–4、引理58.2。authentic 供应经初始 $q_H$ 分解，TM30.2与TM47.1–2使同一初始目标的全部实际词、所有有序括号及所有隐藏组成沿同一个程序取得相同真实响应、停止与输出。实际执行始终作用于那棵原树及其真实后继，从未替换为代表树。所得单个策略在全域至多六次整修改，无读且至多一次接受 $\rho$，与下界合成（TM.6404）。$\square$
+
+### 64.4 同时达到的共同纤维材料与适用范围
+
+<a id="TM64-C5"></a>
+**推论 64.5（共同上十纤维的接受材料）。** $M_D$ 对每个 $\Pi\in\mathscr P_H$ 都由引理64.3的共同有限前缀定义。令 $\mathscr P_H^{(6)}=\{\Pi\in\mathscr P_H:\max_{t\in U_H}N_{\rm calls}(\Pi,t)\le6\}$，则
+
+<a id="TM64-E06"></a>
+$$
+\min_{\Pi\in\mathscr P_H}M_D(\Pi)
+=\min_{\Pi\in\mathscr P_H^{(6)}}M_D(\Pi)
+=\left\lceil\frac{\delta+1}{2}\right\rceil,
+\qquad H=60+\delta.
+\tag{TM.6406}
+$$
+
+四个值依次为 $(1,1,2,2)$；两项最小化中的策略都仍须在整个 $U_H$ 上正确。
+
+证明。共同首替换窗口（TM.6403）给 $V\ge\delta+1$、$V\le2U$，故 $U\ge\lceil(\delta+1)/2\rceil$。定理64.4的同一个完整原策略在 $D$ 上只接受表列的一个上下文，恰有 $U=d=\lceil(\delta+1)/2\rceil$；其全来源调用上界同时为六，故两个最小值均达到。这里的材料仅测共同 $D$，不推出每个来源的正材料下界或全 $U_H$ 的材料最优值。例如真实 $\omega_{1,14}$ 有 $(z,w)=(15,29),i=1$；同一策略的首上下文和 $\rho$ 均拒绝，在首 $\rho$ 以前接受材料为零。$\square$
+
+<a id="TM64-P6"></a>
+**命题 64.6（数学来源及资源坐标的边界）。** 定理64.4和推论64.5是固定 authentic TM58、四个上限、原字面初始任务上的 repo-derived 源特定推导。它们只结算整原修改／总调用及共同 $D$ 的首替换以前接受材料；不结算其它供应函数、其它上限、全来源最大材料、构造或拒绝材料、完整控制器记忆、安装、存储、总付费工作或物理时间的最小值。
+
+证明。下界的承重条件是共同历史中的实际来源碰撞；字面目标字典、源实现、Read 中性和行为核复用 TM28、TM30、TM38、TM45、TM47、TM58、TM61–63，完整实际像复用 Atomic359–360。二叉前缀计数与平衡有序阈值搜索是既有方法，只作为本源特定证明的中间步骤。避免把仍需区分的初始状态不可逆地并成相同行为，也属于成熟的自适应识别结构；参见 van den Bos 与 Vaandrager，*State Identification for Labeled Transition Systems with Inputs and Outputs*，[arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2)，定义16、引理11及定理6.1。其 suspension-automaton 条件没有给出本处十三目标、原叶守卫、authentic 供应、四个上下文或六次值，故这里只借用识别结构，不将一般识别理论另立为新增内容，也不据未命中检索主张文献优先权。
+
+整调用次数没有给出每次调用的逐位安装、上下文构造、拒绝候选、守卫、实际替换、真实来源保留、记录、档案、副本、算术、验证或输出成本。接受上下文叶数同样不计这些对象，也不计原来源和替换增长。TM57、OR77–79 的原实际 paid／权限义务保持；要推出 installed、paid、controller 或物理最优值，仍须各自成本与访问保持的桥梁。数学上取得单点字典不提供免费尺寸口，窗口恒等式不提供免费未来读，原目标逆解不提供来源逆动作。故（TM.6404）与（TM.6406）只能按各自明列坐标使用。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 65. 完整真实供应族的首替换以前接受材料最小值
+
+### 65.1 原任务与全来源材料坐标
+
+<a id="TM65-D1"></a>
+**定义 65.1（完整原策略的接受前缀材料）。** 固定 $H=60+\delta$、$\delta\in\{0,1,2,3\}$，沿用定义64.1的 $\mathscr P_H$ 和推论64.5的 $\mathscr P_H^{(6)}$：每个策略使用共同初始化、公开 $H$ 和精确未修改原树的 authentic TM58 符号 $i=\ell_H(t)$，在完整实际 $U_H$ 上逐源有限停止并正确输出初始 $q_H(t)$；上标6另要求最坏总原调用数不超过六。全部实际叶词、有序括号、标签0隐藏组成、任意合法已取得记录、当前 `Read`、整 $\rho$ 及任意已知非空正上下文的左右整拼接均保持原合同。整候选 $\le H$ 才接受，等号接受，拒绝保持完整实际树且不返回候选读；运行可以离开单位族。供应仍满足定义58.1的原目标证据与同源身份条件。
+
+对 $\Pi\in\mathscr P_H$ 和实际 $t\in U_H$，令 $L_\Pi(t)$ 为其第一次整 $\rho$ **尝试**以前实际接受的上下文叶数之和。若该运行从不尝试 $\rho$，则计至其有限停止。被拒上下文、原树、替换增长及首尝试以后的插入不计入；这个坐标也不计上下文构造、供应、权限认证、来源保留、记录、守卫、安装或付费时间。置
+
+<a id="TM65-E01"></a>
+$$
+B_H(\Pi)=\max_{t\in U_H}L_\Pi(t).
+\tag{TM.6501}
+$$
+
+原目标严格为（TM.5804）、（TM.6401）的字面值：$w>15$ 时 $Z(z)=(0,1,4z)$；$w\le15$ 时 $\tau_{15}(z,w)$ 的标签2为 $(2,(\mathbf u_{\rm unit},C(z,w)))$，标签1为 $(1,C(z,w),1,1)$，其中 $C(z,w)=(4(2z-w),4(w-z))$、$\mathbf u_{\rm unit}=((0,0,0),(0,0,0),(0,0,0))$，标签2恰在 $z+w\le15$ 使用。当前目标不能替代这个初始目标。组成坐标仅用于证明，消费者没有尺寸、原目标、档案、导航、时钟、费用、复制、复位、逆拼接、变上限或来源替换端口。
+
+### 65.2 四个真实来源的全动作下界
+
+<a id="TM65-L2"></a>
+**引理 65.2（全来源最坏材料至少为 $17+\delta$）。** 每个 $\Pi\in\mathscr P_H$ 都满足 $B_H(\Pi)\ge17+\delta$。
+
+证明。选取以下四个原组成点，并在每个实际词 $\omega_{r,s}$ 上固定一种原有序括号：
+
+<a id="TM65-E02"></a>
+$$
+\begin{array}{c|c|c}
+(z,w)&(r,s)=(2z-w,w-z)&c=(4r,4s)\\ \hline
+(9,12)&(6,3)&(24,12)\\
+(11,12)&(10,1)&(40,4)\\
+(11,13)&(9,2)&(36,8)\\
+(11,15)&(7,4)&(28,16)
+\end{array}
+\tag{TM.6502}
+$$
+
+Atomic360.4和引理58.2给每个点一个实际三窗单位来源，初始叶数为36或44，均不超过 $H$。代入（TM.5807）的 $L=4$、$x=z-8,y=w-8$，四个 authentic 符号均为2；它们的初始字面目标是四个不同的标签1值。下界选取这四个实际来源，不改变完整正确性域。
+
+反设 $B_H(\Pi)\le16+\delta$。在首次 $\rho$ 以前的一份共同历史中，已接受上下文的当前／下一资源增量记为 $(U,V)$。原整拼接给 $0\le U\le V\le2U$，当前／下一大小为 $(4z+U,4w+V)$。TM30.1的单出现运输与引理63.2的有序三窗不变量给
+
+$$
+W_3(t_{\rm cur})=P\odot(1,1,1)\odot Q,
+$$
+
+其中 $P,Q$ 只依赖共同取得的动作身份、左右侧与真实响应。故所有穿插的当前 `Read` 相同；任意上下文叶序、混合组成和括号都保持这一结论，并未交换有序因子。
+
+从共同初始化归纳。若某个上下文 $v$ 首次分开这四个来源，令 $d=\lambda(v)>0$。同一行11的三个来源守卫相同，行9更小，所以该动作只能在行9接受、行11拒绝。整数守卫给
+
+<a id="TM65-E03"></a>
+$$
+36+U+d\le H<44+U+d
+\quad\Longrightarrow\quad
+U+d\ge H-43=17+\delta.
+\tag{TM.6503}
+$$
+
+行9的实际接受叶数已经超过假设的完整前缀预算，矛盾。因此所有上下文响应仍共同；共同接受使 $U,V$ 增加，共同拒绝不改树，所有读及历史依赖控制字段也共同。这覆盖任意数量的读、两侧实际上下文、拒绝、保留记录及自适应动作。四个不同初始目标不能在共同历史上正确停止；若永不尝试 $\rho$，逐源有限停止也会产生同一错误输出。因此必须有一个有限共同的首次整 $\rho$ 尝试。
+
+在其前缀 $(U,V)$ 上分两种穷尽情形。若 $V\le8+\delta$，两个列12来源都接受该次 $\rho$：候选均为 $48+V\le H$。其下一候选分别为 $84+U+V$ 与 $92+U+V$，均大于 $H\le63$。接受后的当前读均是共同有序因子的第1窗积 $P_1Q_1$，故当前行为同为
+
+$$
+(0,P_1Q_1,48+V).
+$$
+
+若 $V>8+\delta$，行11的列13与列15来源都拒绝：$52+V>H$、$60+V>H$。其当前大小均为 $44+U$、当前读均为 $P_0Q_0$，下一候选已经超限，所以当前行为同为
+
+$$
+(0,P_0Q_0,44+U).
+$$
+
+每种情形都保留相同完整过去记录，却使两个不同初始目标落到同一当前 $q_H$。定理30.2和命题38.1使碰撞对所有后来 ambient 原动作永久保持；后来读、额外记录、更多 $\rho$ 或正上下文都不能修复它。边界 $V=8+\delta$ 属于第一情形，所有实际等号守卫仍接受。矛盾证明不存在所假设策略；叶数为整数，遂得下界。$\square$
+
+### 65.3 同一次全来源执行的材料与六次调用
+
+<a id="TM65-T3"></a>
+**定理 65.3（全来源接受材料的精确值及联合达到）。** 在定义65.1的完整原合同上，
+
+<a id="TM65-E04"></a>
+$$
+\min_{\Pi\in\mathscr P_H}B_H(\Pi)
+=\min_{\Pi\in\mathscr P_H^{(6)}}B_H(\Pi)
+=17+\delta,
+\qquad H=60+\delta.
+\tag{TM.6504}
+$$
+
+四个值依次为 $(17,18,19,20)$。两个最小值由下面同一个完整原策略同时达到；供应函数、来源和 INITIAL 输出均不变。
+
+证明。复用定义58.3的实际全 $\alpha$ 树 $v_p$。前缀只由公开 $H,i$ 决定：符号1直接尝试一次 $\rho$，真正省略上下文调用；符号2先尝试原右上下文 $v_{H-43}$，符号3先尝试 $v_{H-51}$，随后各尝试一次 $\rho$；符号4保留定理64.4所列 $\alpha,\beta,\langle\alpha,\beta\rangle,\langle\beta,\beta\rangle$ 中由 $\delta$ 选定的实际右上下文，再尝试一次 $\rho$。不存在空上下文动作。
+
+符号2的上下文叶数／下一叶数均为 $17+\delta$；上下文接受恰在 $4z\le43$，即 $z\le10$，接受后的 $\rho$ 恰在 $4w\le43$，即 $w\le10$。符号3同理给上下文截止 $z\le12$ 和接受上下文后的替换截止 $w\le12$。拒绝上下文没有插入材料，此后原 $\rho$ 用 $4w\le H$ 守卫。符号4的增量 $(d,e)$ 满足 $d=\lceil(\delta+1)/2\rceil,e=\delta+1$；所有十三点接受上下文，替换恰在 $w\le14$ 接受。符号1的替换恰在 $w\le15$ 接受。以上均是原整候选守卫，所有等号仍接受。
+
+由原 authentic 字典（TM.5807）得到下列完整实际分支。O为真正省略，不是接受响应；$M$ 是该实际前缀的入口叶数，未作为在线读口。每行所列入口各异且唯一决定初始目标。
+
+| 65实际分支 | 可行入口 $M$ | 初始坐标逆解 |
+| --- | --- | --- |
+| 65符号1OA | $4w$, $w=6,\ldots,15$ | $w\le9$ 时 $z=5$；$w\in\{12,14\}$ 时 $z=10$；其余 $z=9$ |
+| 65符号1OR | $4z$, $z=9,\ldots,15$ | 不恢复隐藏 $w$，输出 $Z(z)$ |
+| 65符号2AA | $4w+H-43$, $w\in\{3,7,8,9,10\}$ | $w=3$ 时 $z=2$，其余 $z=6$ |
+| 65符号2AR | $4z+H-43$, $z\in\{6,9,10\}$ | $z=9$ 时 $w=12$，其余 $w=11$ |
+| 65符号2RA | $4w$, $w\in\{12,13,14,15\}$ | $w=14$ 时 $z=12$，其余 $z=11$ |
+| 65符号3AA | $4w+H-51$, $w\in\{4,5,8,9,10,11,12\}$ | $w\le5$ 时 $z=3$，其余 $z=7$ |
+| 65符号3AR | $4z+H-51$, $z\in\{7,9,10,11,12\}$ | $z\in\{7,10,12\}$ 时 $w=13$，其余 $w=14$ |
+| 65符号3RA | $4w$, $w\in\{14,15\}$ | $z=13$ |
+| 65符号4AA | $4w+e$, $w\in\{5,6,7,9,10,11,12,13,14\}$ | $w\le7$ 时 $z=4$，其余 $z=8$ |
+| 65符号4AR | $4z+d$, $z\in\{8,10,12,14\}$ | $w=15$ |
+
+有限分支均输出定义65.1的原 $\tau_{15}(z,w)$。特别 $z+w=15$ 仍输出原标签2及其原嵌套顺序。符号1OR覆盖每个隐藏 $16\le w\le2z-1$，而非每行只保留一个实验列。符号1的完整有限点恰为 $(5,6),\ldots,(5,9)$、$(9,10),(9,11),(9,13),(9,15),(10,12),(10,14)$；其它三符号的低两行及高区奇偶尾由引理58.5–6穷尽，以上守卫逐点给出表列，没有遗漏 RR。不同分支即使有同数值入口也保留真实响应分支。
+
+在每个实际分支内，复用定理64.4证明的（TM.6405）取得机制：由公开 $H,i$ 与已取得前缀计算完整可行入口集 $X$，置后续已接受全 $\alpha$ 材料 $a=0$，维持 $M\in X$、当前叶数 $M+a$、$\max X+a\le H$。若 $|X|>1$，选平衡阈值 $k<\max X$，发出原右上下文 $v_{H-a-k}$。其叶数严格为正，原整候选为 $M+H-k$，所以真实接受当且仅当 $M\le k$。接受时将 $a$ 置为 $H-k$ 并保留 $X$ 中不大于 $k$ 的项；拒绝时不改树和 $a$，只保留大于 $k$ 的项。两个分支保持不变量，至多 $\lceil\log_2|X|\rceil$ 次在首次单点停止，再按上表输出原目标。实际未知的 $M$ 不参与动作选择，不额外要求饱和或最终单叶拒绝。
+
+| 65策略符号 | 非空分支入口基数 | 前缀调用数 | 最坏总原调用数上界 | 最坏首替换前接受材料 |
+| --- | --- | ---: | ---: | ---: |
+| 65策略1 | $10,7$ | 1 | 5 | 0 |
+| 65策略2 | $5,3,4$ | 2 | 5 | $17+\delta$ |
+| 65策略3 | $7,5,2$ | 2 | 5 | $9+\delta$ |
+| 65策略4 | $9,4$ | 2 | 6 | $\lceil(\delta+1)/2\rceil$ |
+
+这些是同一策略的各分支值，不主张分别为各符号的最小值。实际 $(z,w)=(2,3)$ 来源接受符号2上下文，达到 $17+\delta$ 片；其余符号均不超过这个值。同一全部执行无 `Read`，只有一次 $\rho$ 尝试，至多一次接受 $\rho$，且总原调用数至多六。
+
+Atomic360.2–4与引理58.2把全部组成点回接到其全部实际 Euler 叶词和全部有序括号。每棵原树的守卫及组成更新逐树成立，三窗单位及引理63.2的有序因子保持成立；定理30.2和引理47.2使同一初始目标纤维的全部实现取得相同响应、停止与输出，包括标签0的全部隐藏组成。执行始终作用于那棵原树的真实后继，没有替换为显示见证。这证明一个完整 $\Pi\in\mathscr P_H^{(6)}$ 的 $B_H(\Pi)=17+\delta$；结合引理65.2得到两项最小值。
+
+本源特定推导为 repo-derived，复用 TM30、TM38、TM45、TM47、TM58及TM63–64的实际源与取得结构。避免合并仍需区分的初始状态属于成熟的自适应识别方法；参见 van den Bos–Vaandrager，*State Identification for Labeled Transition Systems with Inputs and Outputs*，[arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2)，定义16、引理11和定理6.1。其 suspension-automaton 条件及算法不供应这里的 authentic 四来源、正材料守卫或数值；平衡阈值识别只作已知中间方法，不另立一般识别定理，也不主张文献优先权。
+
+式（TM.6504）只结算固定供应、四个上限及原任务的最大接受前缀材料，且同时达到六次原调用限制。它不改变推论64.5的共同 $D$ 坐标，不给其它上限、其它供应、全程材料、逐符号材料最小值、控制器记忆、总付费工作或物理时间的最优值；TM57、OR77–79的原供应、档案、认证、安装、构造、守卫和输出成本及权限仍各按原合同承担。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 66. 六次原调用的完整 Moore 记忆与真实 Read 扇出
+
+### 66.1 完整原源、共同初始化与字面输出
+
+<a id="TM66-D1"></a>
+**定义 66.1（固定 authentic 供应的完整六调用控制器）。** 固定 $H=60+\delta$、$\delta\in\{0,1,2,3\}$。来源、原树相等、实际替换、当前读、整候选守卫和供应证据／精确同源身份均沿用定义58.1；供应严格为（TM.5807），不另选标签函数。完整 $U_H$ 保留全部 Euler 叶词、全部有序括号和全部标签0隐藏组成。其组成点为
+
+$$
+2\le z\le15,\qquad z+1\le w\le2z-1,
+\qquad C(z,w)=(4(2z-w),4(w-z)).
+\tag{TM.6601}
+$$
+
+原目标严格为未修改初始树的字面 $q_H$：$w>15$ 时是 $Z(z)=(0,1,4z)$；$w\le15$ 时是（TM.5804）的 $\tau_{15}(z,w)$，其中 $z+w\le15$ 使用 $(2,(\mathbf u_{\rm unit},C(z,w)))$，其余使用 $(1,C(z,w),1,1)$，且 $\mathbf u_{\rm unit}=((0,0,0),(0,0,0),(0,0,0))$。等号 $z+w=15$ 的原嵌套标签2保留。共有49个有限目标与7个折叠目标；authentic 四符号的目标负载依次为 $(17,12,14,13)$。
+
+按 ContinuationII 定义26.1与TM63的 Request/Halt 约定，控制器为一个确定有限 Moore 三表
+
+<a id="TM66-E02"></a>
+$$
+c:I\longrightarrow\mathcal K,\qquad
+u:\mathcal K\longrightarrow\mathcal A_H\sqcup\operatorname{Halt}(\mathcal Z_H),
+\qquad
+v:\mathcal K\times\mathcal O_H\longrightarrow\mathcal K,
+\quad I=\{1,2,3,4\}.
+\tag{TM.6602}
+$$
+
+$c$ 仅消费实际已收到的 authentic $i=\ell_H(t)$。之后所有动作选择、更新和输出仅由当前 $k\in\mathcal K$ 与当次真实响应决定；凡仍被使用的校准、输入、阶段、历史、局部工作值、地址、动作选择和输出状态均联合计入 $\mathcal K$。固定公开 $H$ 与不可变指令／上下文／响应转移／字面输出表是静态描述，不另供应可变计数器、时钟、档案或终端解码器。原来源自己的实际状态继续由原动作控制，既不成为控制器隐藏输入，也不被虚报为额外控制状态。
+
+$\mathcal A_H$ 只有原当前 `Read`、整 $\rho$ 尝试、一个已知实际非空正上下文的左或右整拼接。候选整叶数 $\le H$ 时接受，包括等号；拒绝保持完整实际树，且不返回候选值。每次读和每次接受或拒绝的修改尝试均计一个原调用，Halt另计输出而不计源调用。没有尺寸、目标、档案、导航、时钟、费用、变上限、复位、复制、逆拼接或来源替换端口；运行允许离开单位族。静态材料身份也保留实际叶序与括号。
+
+只数从完整 $U_H$ 的真实闭环运行可达的状态，置 $K=|\mathcal K|$。成功要求每个允许原源有限停止并输出其字面 INITIAL $q_H$。记 $K_6(H)$ 为每次运行至多六个总原调用的成功控制器的最小 $K$；$K_{6,\mathrm{noRead}}(H)$ 另限制没有可达 Read 请求。物理微步、供应证据生产、源／上下文存储、安装、认证、记录、构造、守卫、输出与复制的费用仍按原合同分别承担；这两个抽象最小值没有自动的付费或物理存储解释。
+
+### 66.2 全动作的字面输出与校准下界
+
+<a id="TM66-T2"></a>
+**定理 66.2（真实校准与56输出共同强制至少61状态）。** 每个定义66.1的成功完整原动作控制器至少有56个 Halt 状态、四个不同的首修改 Request 状态及至少五个 Request 状态。因此 $K_6(H)\ge61$。
+
+证明。由58.2和61.6，49个有限目标与 $Z(9),\ldots,Z(15)$ 全有实际来源。不同字面目标必须由不同 $u(k)=\operatorname{Halt}(T)$ 发出，故至少56个 Halt 状态，且与 Request 状态不相交。不能把 authentic $i$ 留在表外，让一个 Halt 地址按 $i$ 解码。
+
+从每个 $c(i)$ 开始，在首修改以前所有 Read 都返回1且不改原树。每个符号带多个目标，故在这个共同读前缀内不能正确 Halt；成功有限性又排除无限读循环。因此存在一个只依赖 $i$ 的首修改状态 $k_i$。四个 $k_i$ 必不同：否则把原 authentic 标签后复合为 $\ell'_H(t)=k_{\ell_H(t)}$，以 $k_i$ 直接初始化同一个后续控制器。省去的前缀只包含不改源的单位读；全部可变记忆已在 $k_i$ 中，故后续仍在同一精确未修改原树上正确成功。原目标证据与身份关联不变，得到至多三符号的完整原任务供应，违反定理60.5的 $A_U(H)=4$。同理，$c(1),\ldots,c(4)$ 必为四个不同的 Request 根。
+
+若 Request 总数至多四，这四个不同首修改状态已占尽它们，所以没有 Read 状态。每个修改状态只有真实 A/R 两种响应，四个状态总共至多八条响应边；每个不同 Halt 状态都必须有一条进入边，八条不能到达56个输出。故至少五个 Request 状态，连同56个 Halt 得到61。这里复用60.5的全供应必要性，没有以四个标签名本身代替它的证明，也没有把 Read 当作二元响应。$\square$
+
+### 66.3 可达真实响应边的必要关系
+
+<a id="TM66-T3"></a>
+**定理 66.3（完整源的实际 Read 扇出预算）。** 对定义66.1的任一成功控制器，令 $R$、$L$ 为可达 Request、Halt 状态数。对每个可达 Read 状态 $k$，令 $d_k$ 为完整原源实际运行在该共享状态上产生的不同真实 Read 响应数；即使两个响应转移到同一后继也分别计数。则
+
+<a id="TM66-E03"></a>
+$$
+R+\sum_{k:\,u(k)=\mathrm{Read}}(d_k-2)\ge52,
+\qquad
+K+\sum_{k:\,u(k)=\mathrm{Read}}(d_k-2)\ge108.
+\tag{TM.6603}
+$$
+
+特别，$K<108$ 必须有净实际 Read 扇出超额至少 $108-K$，且至少一个 Read 状态有三种以上真实响应。上述响应必须在同一控制器的合法完整源运行中实际发生，不能把未实现候选响应计入。
+
+证明。在可达控制图中仅保留实际发生的响应标号边，允许平行响应边、合流、回边、循环和重复请求。四个根是66.2的不同 $c(i)$。为全部 Request 顶点选取一个以这四根出发的可达生成森林，需要至少 $R-4$ 条 Request 到 Request 的边；每个 Halt 顶点还需要一条进入边，因此全部 Request 出边数至少 $R-4+L$。每个修改状态至多贡献两条真实响应边，Read 状态贡献 $d_k$ 条，故
+
+$$
+R-4+L\le 2R+\sum_{\mathrm{Read}}(d_k-2).
+\tag{TM.6604}
+$$
+
+由 $L\ge56$ 得第一式；再加 $L$ 得 $K+\sum(d_k-2)\ge2L-4\ge108$。边按全域实际响应数，而非某一固定历史的分支数计数；多次到达同一状态不重复计同一响应，源中保留的信息也未被删去。没有假定整个闭环控制图无环。$\square$
+
+### 66.4 全部真实来源的111状态六调用见证
+
+<a id="TM66-T4"></a>
+**定理 66.4（55 Request 加56字面 Halt 的同时达到）。** 对每个固定 $H$，存在一个无 Read 的完整成功控制器，其全部111状态均可达，恰有55个 Request 与56个字面 Halt，每次原运行至多六个总原调用。因此 $K_6(H)\le K_{6,\mathrm{noRead}}(H)\le111$。
+
+证明。保留58.3的真实两请求前缀：符号 $i$ 的第一状态发出右接原全 $\alpha$ 树 $v_{P_i}$，$P_i=H-4c_i$、$c_i=6+2i$；第二状态尝试原整 $\rho$。四个长度分别为 $28+\delta,20+\delta,12+\delta,4+\delta$，均严格为正。由58.4，AA、AR、RA、RR的真实入口叶数 $M$ 分别为 $4w+P_i,4z+P_i,4w,4z$。入口是证明标记，不是在线读口。58.11的唯一逆解及62.9给以下完整入口集；AA、AR的显示值逐项加 $\delta$，RA、RR不加。
+
+| 66原前缀分支 | 显示入口集 $X^0$ | 目标数 |
+| --- | --- | ---: |
+| 66一AA | $52,56,60$ | 3 |
+| 66一AR | $48$ | 1 |
+| 66一RA | $40,44,48,52,56,60$ | 6 |
+| 66一RR | $36,40,44,48,52,56,60$ | 7 |
+| 66二AA | $32,48,52,56,60$ | 5 |
+| 66二AR | $44,56,60$ | 3 |
+| 66二RA | $48,52,56,60$ | 4 |
+| 66三AA | $28,32,44,48,52,56,60$ | 7 |
+| 66三AR | $40,48,52,56,60$ | 5 |
+| 66三RA | $56,60$ | 2 |
+| 66四AA | $24,28,32,40,44,48,52,56,60$ | 9 |
+| 66四AR | $36,44,52,60$ | 4 |
+
+这些12个非空集共有56个入口／目标格，各格输出原58.10的字面目标；不同分支仍分开，不按入口数字合并。折叠行的每个隐藏 $w>15$ 都落在符号1RR的相应格，没有移除任何实际输入。
+
+对一个分支的有序入口集 $X$ 建一个平衡阈值树。每个节点有由该树的唯一路径固定的已接受后缀叶数 $U$，初始 $U=0$，维持当前叶数为 $M+U$、$\max X+U\le H$。若 $n=|X|>1$，取其第 $\lfloor n/2\rfloor$ 项为 $k$，发出原右上下文
+
+<a id="TM66-E05"></a>
+$$
+v_d,\qquad d=H-U-k>0.
+\quad M+U+d=M+H-k\le H\quad\Longleftrightarrow\quad M\le k.
+\tag{TM.6605}
+$$
+
+严格正性来自 $k<\max X\le H-U$。A保留下半集并令新路径常量 $U=H-k$；R保留上半集，实际树与 $U$ 均不变。两孩子非空并保持不变量，等号真实接受。单点立即进入其原字面 Halt，不再发出旧 Size 宏的饱和或最终拒绝请求。平衡树在 $n$ 个叶格上有 $n-1$ 个 Request 节点、深度至多 $\lceil\log_2 n\rceil$；这里最大 $n=9$，故两次真实前缀加至多四次比较，共至多六次原调用。
+
+将每个节点本身作为一个不同 $k\in\mathcal K$。该节点的 $u(k)$ 是一个固定原动作，连同上下文的实际叶词与左结合括号；$v(k,A),v(k,R)$ 是固定孩子地址。$i$、前缀、当前候选集、偏移及阶段只作为这个地址的静态定义，不在运行中另存或调用。每个单点边直接指向具有完整固定嵌套字面目标的 Halt 状态，没有免费解码器。未实现响应上的 $v$ 任意补全，Halt 后的更新也可取自身。这给出完整（TM.6602），而非需要外部 PC 的过程片段。
+
+四个首上下文状态全部可达；其后共七个 $\rho$ 状态可达，因为前三符号都有上下文 A/R，符号4只有A。12棵搜索树共有 $56-12=44$ 个 Request，故总数为 $4+7+44=55$；56个字面 Halt 各有实际来源，合计111。每个搜索节点的两个候选子集均有源，故所有计入节点均可达。前缀的三处全域单响应状态是符号4首上下文与符号2、3上下文拒绝后的 $\rho$；这些真实源改变动作没有被删去。
+
+Atomic360.2–4和58.2覆盖全部实际组成、全部 Euler 叶序、所有有序括号及所有隐藏列。原整守卫逐树成立；TM30.2与47.2保证同一个初始目标纤维的每棵真实原树在这个共同 $c,u,v$ 下得到相同响应与字面输出。显示来源仅证格存在，在线执行始终作用于原树及其真实后继，没有来源替换。这证明完整域正确性和同时资源界。$\square$
+
+### 66.5 无 Read 类别中不可避免的单响应请求
+
+<a id="TM66-T5"></a>
+**定理 66.5（源特定无 Read 下界109）。** 在定义66.1的无 Read 子类中，每个成功控制器至少有109个可达完整状态。因此
+
+<a id="TM66-E06"></a>
+$$
+61\le K_6(H)\le111,
+\qquad
+109\le K_{6,\mathrm{noRead}}(H)\le111.
+\tag{TM.6606}
+$$
+
+证明。66.3先给无 Read 控制器的 $R\ge52$、$L\ge56$。若 $K\le108$，只能 $R=52,L=56$，且（TM.6604）所有边预算均取等号。每个 Request 必有两个实际响应边，全部控制图恰为四根生成森林：任何循环、合流、根的进入边或多余平行边都会超过 $R-4+L=104$ 条必要边；任一全域单响应节点又会少于 $2R=104$。因此每个非根节点只有一个根和一条此前控制历史，所有 Request 均全域二响应。
+
+固定 authentic 符号4。由58.7与58.5–6，其原目标点恰为
+
+$$
+\{(4,5),(4,6),(4,7)\}
+\ \cup\ \{(8,w):9\le w\le15\}
+\ \cup\ \{(10,15),(12,15),(14,15)\}.
+\tag{TM.6607}
+$$
+
+这些13点各有单位实际源并有不同初始字面目标。首动作若是 $\rho$，点 $(8,15),(10,15)$ 均接受，当前大小均为60，下一大小至少92，当前读均为1；两者碰撞到同一个 $(0,1,60)$，而初始目标不同。TM30.2和38.1使该共同历史上的碰撞永久不可恢复，故首 $\rho$ 不可能成功。
+
+首正上下文可以任意混合叶词、任意括号及左右侧。记其当前与下一叶数为 $d,e$，则 $e\ge d>0$，接受截止为 $c=\lfloor(H-d)/4\rfloor$。若 $8\le c\le13$，点 $(8,14),(8,15)$ 均接受。由 $c\le13$ 得 $d>H-56$，故二者的下一大小 $56+e,60+e$ 均超过 $H$，当前大小同为 $32+d$、当前读同为该上下文的 $E_0$，不论左右侧。它们已落入同一个标签0当前行为，又不可恢复，故这一截止区间不可能成功。若 $c<4$ 则全部13点拒绝，若 $c\ge14$ 则全部接受，均给根的全域单响应，违反等号森林。
+
+唯一剩余情形是 $4\le c\le7$：三点行4接受，十个上区目标拒绝。其拒绝孩子的来源仍是十棵原树，不能立即以一个字面 Halt 正确输出。下个 Request 若是 $\rho$ 仍由 $(8,15),(10,15)$ 产生永久碰撞；若是正上下文，$8\le c\le13$ 仍由 $(8,14),(8,15)$ 产生永久碰撞，$c<8$ 全部拒绝，$c\ge14$ 全部接受。因此成功续行必须在该孩子发出一次单响应请求。等号森林使该状态只有这个控制历史，不能从别的历史借来另一种响应，故它也是全域单响应节点，矛盾。
+
+所以 $K\le108$ 不成立，得到109。该推理覆盖任意原上下文身份、两侧、整守卫等号和有限成功策略，不要求旧 TM58 前缀；二元边预算只用于无 Read 子类，未扩展到全部原控制器。上界与完整类下界由66.2、66.4同时给出。$\square$
+
+### 66.6 成功全域闭环中的七响应共享 Read
+
+<a id="TM66-T6"></a>
+**定理 66.6（112状态六调用的真实七响应见证）。** 对每个固定 $H$，存在完整 $U_H$ 上成功的112状态控制器，恰有56个 Request、56个字面 Halt，每次运行至多六个总原调用；其中一个共享 Read 状态有七个不同的实际原响应。这是源中信息的可恢复见证，不改进66.4的111上界。
+
+证明。保留66.4的全部状态与搜索阈值，仅改符号1RR六个搜索节点的上下文叶词，并增添一个 Read 状态。该分支恰含 $Z(z)$、$z=9,\ldots,15$ 和全部隐藏 $16\le w\le2z-1$。两个原前缀都拒绝，当前原树仍为初始单位树，$M=4z$。
+
+在RR搜索节点仍用（TM.6605）的长度 $d$。若此前接受材料 $U=0$，上下文为固定左结合的实际正词
+
+$$
+\alpha^\delta(\beta\alpha)^{(d-\delta)/2};
+$$
+
+若 $U>0$，上下文为 $(\beta\alpha)^{d/2}$，仍固定左结合。这些节点在 $U=0$ 时有 $d-\delta>0$ 且为四的倍数，在 $U>0$ 时 $d>0$ 且为四的倍数；因此全是原非空正上下文，大小与原搜索节点完全一致。搜索以后不再尝试 $\rho$，故叶词改变保持每个真实守卫、候选分割、调用数和初始目标结算。
+
+对有序集 $\{36,40,44,48,52,56,60\}$，首阈值44，两个孩子的阈值分别为36、52，余下二元孩子的阈值分别为40、48、56。直接按真实 A/R 可见：$z<15$ 的最后一个接受阈值恰为 $4z$，故接受总材料 $U=H-4z$，大小达到 $H$；$z=15$ 全拒绝，$U=0$。设 $S=BA$。右侧接受因子保留原顺序：第一份接受材料贡献 $A^\delta S^{(d-\delta)/2}$，以后的接受材料贡献 $S^{d/2}$，所以RR叶格的真实当前读为
+
+<a id="TM66-E07"></a>
+$$
+E_z=\begin{cases}
+A^\delta S^{2(15-z)},&9\le z<15,\\
+1,&z=15.
+\end{cases}
+\tag{TM.6608}
+$$
+
+TM28的唯一 Clifford 正规形与Atomic359.2保证这七个值不同：偶数 $\delta$ 时它们是七个不同的 $S$ 幂；奇数 $\delta$ 时前六个有 $A$ 奇偶坐标而1没有，前六个的不同指数也不相同。其精确正规坐标分别是 $(0,(-1)^\delta 2(15-z),\delta\bmod2)$ 与 $(0,0,0)$。
+
+将七个RR叶格的转移全部指向新加的同一个 Read 状态。它的固定 $v$ 将真实响应 $E_z$ 直接送到原有字面 $\operatorname{Halt}(Z(z))$ 状态，不查询 $i,z,w,U$、先前地址或任何档案。其它十一分支与111状态见证完全相同。RR搜索最多三调用，故其两前缀加搜索加Read至多六调用；其它分支的六调用界不变。改叶词没有增加搜索状态，只增加一个真实 Read，故为 $55+1=56$ Request 与56 Halt，共112；所有状态均有原源见证。
+
+隐藏 $w$ 不参与这次 Read 的选择或解码：同一行的所有隐藏组成在原两前缀中都拒绝，且在相同搜索守卫下产生相同 $E_z$。Atomic360、58.2及TM30.2／47.2仍把本共同表的正确性回接到全部原叶词与括号。该闭环在完整域成功，不是一个无法继续成功的前缀或限制域模型。
+
+本章源特定数值关系、符号4单响应障碍与七响应构造为 repo-derived。有限 Moore 实现、兼容集合的闭覆盖是成熟方法；参见 Larrauri–Bloem，*Minimization and Synthesis of the Tail in Sequential Compositions of Mealy machines*，[arXiv:2105.10292v2](https://arxiv.org/html/2105.10292v2)，§5、定理4。该定理针对给定 observation machine，要求初态覆盖与每个观察后继集合的覆盖闭性，不能把固定FIB策略的最小实现直接当作全部原动作策略的最优值。Reissig–Weber–Rungger，*Feedback Refinement Relations for the Synthesis of Symbolic Controllers*，[arXiv:1503.03715v3](https://arxiv.org/html/1503.03715v3)，定义V.2与定理V.4要求相同可用输入及全部相关后继的包含；其控制精化本身不保证 Moore 状态数、调用数或付费成本相等。这些文献不供应本章56输出、实际守卫或数值界，不另立为新增一般理论。
+
+精确 $K_6(H)$ 与 $K_{6,\mathrm{noRead}}(H)$ 在此均未确定。TM63.2只在保留完整修改历史时确定Read；合并控制状态以后，来源仍能保留不同接受材料，式（TM.6608）说明Read不必由合并地址确定。TM47的组成规划还保留有序因子与虚拟记录，未给出保持完整 $K$ 的归约。TM61一次检查点与TM62规定宏迹的计数也不具备本章量词。因此不从固定搜索树、二元历史或免费归档得出精确最小值，亦不据这四个上限的结果主张其它供应、其它上限、最坏调用最优性或物理／付费等价。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 67. 完整 authentic 供应族的参数材料与原调用前沿
+
+### 67.1 原任务、实际来源与两个资源坐标
+
+<a id="TM67-D1"></a>
+**定义 67.1（完整参数族的原策略）。** 固定整数 $H\ge8$，写
+
+$$
+H=4h+\delta,\qquad 0\le\delta\le3,\qquad
+L=\left\lceil\frac h4\right\rceil,\qquad N=h-2L.
+\tag{TM.6701}
+$$
+
+来源是定义58.1的完整 $U_H$：所有非空实际二叉 $α/\beta$ 叶词、所有有序括号、初始三窗 $(1,1,1)$ 及全部标签0隐藏组成。Atomic360.2–4与引理58.2给出其完整组成像
+
+$$
+2\le z\le h,\qquad z+1\le w\le2z-1,
+\qquad C(z,w)=\bigl(4(2z-w),4(w-z)\bigr).
+\tag{TM.6702}
+$$
+
+每个点均由实际正词 $\omega_{2z-w,w-z}$ 见证，且其全部 Euler 叶词和有序括号仍属于量词。供应严格为原（TM.5807），原目标严格为未修改初始树的字面值：$w>h$ 时为 $Z(z)=(0,1,4z)$；$w\le h$ 时为（TM.5804）的 $\tau_h(z,w)$，其中 $z+w\le h$ 的标签2保留 $(2,(\mathbf u_{\rm unit},C(z,w)))$ 的字段顺序，其他有限点为 $(1,C(z,w),1,1)$。供应证据、精确同源身份、共同初始化、原 `Read`、整 $\rho$、任意已知实际非空正左右上下文、整候选等号接受、拒绝不读且不改源、记录和后续原动作均沿定义58.1与TM30.1–2保留；不增加尺寸、目标、档案、时钟、费用、复位、复制、逆拼接或来源替换端口。
+
+令 $\mathscr P_H$ 为在完整 $U_H$ 上逐源有限停止并正确输出字面 INITIAL $q_H$ 的全部确定原策略。对 $\Pi\in\mathscr P_H$ 和实际 $t$，令 $B_H(\Pi,t)$ 为第一次整 $\rho$ **尝试**以前实际接受的上下文叶数之和；若没有整 $\rho$ 尝试，则计至其有限停止。置
+
+$$
+B_H(\Pi)=\max_{t\in U_H}B_H(\Pi,t),\qquad
+C_H(\Pi)=\max_{t\in U_H}N_{\rm calls}(\Pi,t),
+\tag{TM.6703}
+$$
+
+其中 $N_{\rm calls}$ 计全部原 `Read`、接受或拒绝的修改尝试。另令 $N_{\rm mod}$ 只计修改尝试。被构造后拒绝的上下文、原始来源、$\rho$ 增长及首次 $\rho$ 以后的插入不属于 $B_H$；它们仍属于原合同的其他资源。
+
+本章优化量仅为首次整 $\rho$ 尝试以前的接受上下文材料、原修改调用和原总调用。首次整 $\rho$ 以后的全程材料、构造或拒绝材料、来源取得、控制器状态、安装、存储、供应生产、档案、权限、总付费工作与物理时间保留各自的原合同约束；TM57、OR77–79的同源证据、认证、交付、上下文、守卫、记录、复制及输出义务不由这三个坐标的界消去。
+
+### 67.2 材料最小值的全参数定理
+
+<a id="TM67-T1"></a>
+**定理 67.2（完整来源的接受前缀材料）。** 在定义67.1的原合同上，令
+
+$$
+M^*(H)=\min_{\Pi\in\mathscr P_H}B_H(\Pi).
+$$
+
+则
+
+$$
+M^*(H)=
+\begin{cases}
+0,&N\le2,\\[2pt]
+\left\lceil\dfrac{4(N-3)+\delta+1}{2}\right\rceil,&N=3,4,\\[8pt]
+H-8L-11,&N\ge5.
+\end{cases}
+\tag{TM.6704}
+$$
+
+在第三段中 $N\ge5$ 等价于 $h\ge11$，也等价于 $H\ge44$；这里 $4L-3\le h\le4L$ 是由（TM.6701）直接得到的。第三段的最小值由一个在整个 $U_H$ 上正确的原策略达到。
+
+证明。先处理 $N\le2$。此时 $h\le6$，原TM58字典的每个 authentic 分支在第一次 $\rho$ 时已经按列或按行唯一确定字面初始目标；隐藏 $w>h$ 只在符号1的拒绝分支按 $z$ 输出 $Z(z)$。直接尝试一次原 $\rho$（无空上下文）给出全域正确策略，故下界由 $B_H\ge0$ 得到。
+
+设 $N\in\{3,4\}$，置
+
+$$
+c=2L+2,\qquad e=H-4(c+1)+1=4(N-3)+\delta+1,\qquad d=\lceil e/2\rceil .
+\tag{TM.6705}
+$$
+
+实际点 $(L+2,c+1)$ 与 $(c,c+1)$ 同属原符号2、同一列而初始目标不同。它们在首 $\rho$ 前的共同历史有当前资源 $(4z+U,4(c+1)+V)$，且 $0\le U\le V\le2U$；所有穿插的 `Read` 相同，这是引理63.2的有序三窗结论。若一个上下文先把两行分开，它必在较小行接受、在较大行拒绝，因而
+
+$$
+4c+U+d'>H,
+\qquad U+d'\ge H-4c+1=e+4.
+\tag{TM.6706}
+$$
+
+所以在假设 $B_H<\lceil e/2\rceil$ 时不能发生行分开；共同有限停止也不能输出两个不同初始目标。于是必有共同首 $\rho$。此时 $V\le2B_H<e$，从而两点都满足 $4(c+1)+V\le H$ 并接受；其下一资源均已超过 $H$，所以它们落入相同当前标签0行为。TM30.2和TM38.1使这一相同完整历史下的不同初始目标永久碰撞，矛盾。因此 $B_H\ge\lceil e/2\rceil$。
+
+反向构造只在符号2发出一次实际 $v_{(d,e)}$，其他符号直接尝试原 $\rho$。这里 $1\le d\le e\le2d$，且 $v_{(d,e)}$ 的固定词与括号来自TM47.3；TM58.5–11的八个实际分支逐点给出唯一入口和字面目标。$N=3,4$ 只产生 $e=1,2,3,4$ 或 $e=5,6,7,8$ 的八种源边界，等号仍接受；逐一代入原守卫，$v_{(d,e)}$ 在符号2的实际点上合法，所得分支入口没有不同初始目标相撞。最大首 $\rho$ 前接受材料正是 $d=\lceil e/2\rceil$。这一步是由（TM.6702）、原符号函数和TM58字典作出的八个源几何边界核对，不是把固定上限表外推到一般参数。
+
+最后设 $N\ge5$，于是 $h\ge2L+5$。取三个实际符号2点
+
+$$
+p=(2L+1,2L+4),\qquad q=(2L+3,2L+4),\qquad r=(2L+3,2L+5).
+\tag{TM.6707}
+$$
+
+它们都在（TM.6702）内，均为严格上带的不同标签1初始目标；实际见证词分别可取 $\omega_{2L-2,3}$、$\omega_{2L+2,1}$、$\omega_{2L+1,2}$。在首 $\rho$ 前，$q,r$ 同行，具有相同当前大小、完整有序历史及全部 `Read`，而 $p$ 只在同一列上比它们的 $z$ 小。若某个上下文首次把 $p$ 与 $q,r$ 分开，它必接受 $p$、拒绝 $q,r$。若该上下文有叶数 $d'$，则
+
+$$
+4(2L+3)+U+d'>H,
+$$
+
+故 $p$ 这条实际运行已经接受至少
+
+$$
+U+d'\ge H-8L-11
+\tag{TM.6708}
+$$
+
+片材料。若一直不分开，有限无 $\rho$ 停止已经错误；故只须排除共同首 $\rho$。设共同前缀资源为 $(U,V)$。若 $V>H-4(2L+4)$，$q,r$ 都拒绝首 $\rho$，保留相同当前大小和读数而落入相同标签0；若 $V\le H-4(2L+4)$，$p,q$ 都接受，且两者下一资源均大于 $H$，故接受后的当前大小和完整读也相同并落入相同标签0。两种情形都由TM38.1永久失败，且等号属于接受情形。因此任一成功策略都满足（TM.6708）。
+
+上界在 $N\ge5$ 时对每个 $i\ge2$ 置
+
+$$
+c_i=2L+2i-2,\qquad e_i=H-4c_i,
+\qquad d_i=\max\{e_i-3,\lceil e_i/2\rceil\}.
+\tag{TM.6709}
+$$
+
+若 $c_i<h$，发出实际 $v_{(d_i,e_i)}$ 后尝试一次原 $\rho$；若 $c_i\ge h$，真实省略上下文而直接尝试 $\rho$。由
+
+$$
+e_i-4<d_i\le e_i\le2d_i
+\tag{TM.6710}
+$$
+
+以及原资源全为四的倍数，发出上下文的分支恰为 $z\le c_i$，接受上下文后的 $\rho$ 分支恰为 $w\le c_i$，拒绝上下文后的 $\rho$ 分支恰为 $w\le h$。入口依次是原字典中的 $4w+e_i,4z+d_i,4w,4z$；只在实际接受的分支加入实际 $d_i,e_i$，省略分支没有虚构的 $v_0$。符号1仍直接尝试 $\rho$，其有限列和隐藏行按TM58.5–8唯一解码。TM58.10–11于是给出每个实际分支的唯一字面初始目标，标签2及其嵌套顺序也原样保留。
+
+其中 $d_i$ 随 $e_i$ 单调，最大值在 $i=2$：
+
+$$
+d_2=H-8L-11.
+\tag{TM.6711}
+$$
+
+实际点 $(z,w)=(2,3)$ 属于符号2且接受该上下文，所以这个上界在完整来源中达到。Atomic360.2–4、TM30.2和TM47.2把每个组成点的证明回接到其全部实际 Euler 词和有序括号；执行始终作用于原树及其真实后继。结合下界得（TM.6704）。$\square$
+
+### 67.3 尾部的原修改／总调用精确值与联合达到
+
+<a id="TM67-T2"></a>
+**定理 67.3（$H\ge44$ 的尖锐联合调用尾）。** 在 $H\ge44$ 时，令
+
+$$
+s=4L-h,\quad t=\left\lfloor\frac s2\right\rfloor,
+\quad \varepsilon=s-2t,\quad j=L-t,
+\quad Q=3L-3-2t.
+\tag{TM.6712}
+$$
+
+则
+
+$$
+\min_{\Pi\in\mathscr P_H}\max_{t_0\in U_H}N_{\rm mod}(\Pi,t_0)
+=
+\min_{\Pi\in\mathscr P_H}C_H(\Pi)
+=2+\lceil\log_2 Q\rceil .
+\tag{TM.6713}
+$$
+
+同一个原策略同时达到（TM.6704）的材料最小值和（TM.6713）的两个调用最小值；它不使用 `Read`，至多接受一次 $\rho$。因此对整数预算 $b\ge0$，
+
+$$
+\inf_{\Pi\in\mathscr P_H:\,B_H(\Pi)\le b}C_H(\Pi)
+=
+\begin{cases}
+\infty,&b<H-8L-11,\\
+2+\lceil\log_2 Q\rceil,&b\ge H-8L-11.
+\end{cases}
+\tag{TM.6714}
+$$
+
+这里 $\infty$ 表示可行策略集合为空；（TM.6713）不延伸到 $8\le H<44$。
+
+证明。先给所有策略的修改调用下界。令 $R_0=2L-t$，$c_0=4L-2t-2=h-(2-\varepsilon)$，并取同一 authentic 符号 $j$ 的实际目标集合 $D$：
+
+$$
+\begin{aligned}
+D_0&=\{(R_0,w):R_0+1\le w\le h-1+\varepsilon\},\\
+D_1&=\{(2L+2k,h):1\le k\le j-1\}\quad(\varepsilon=1),\\
+D_1&=\{(2L+2k-1,h):1\le k\le j-1\}\quad(\varepsilon=0),
+\end{aligned}
+\tag{TM.6715}
+$$
+
+并令 $F=\{(j,w):j+1\le w\le2j-1\}$。每一点都由（TM.6702）的实际正词产生，$D=D_0\cup D_1$ 的成员为严格上带目标，且
+
+$$
+A:=|\{(R_0,w)\in D_0:w\le c_0\}|=2L-t-2,
+\qquad |F|=j-1,\qquad A+|F|=Q.
+\tag{TM.6716}
+$$
+
+行 $R_0$ 的最后两个列 $h-2+\varepsilon,h-1+\varepsilon$ 给出共同历史约束
+
+$$
+V\le H-4(h-2+\varepsilon)=\delta+4(2-\varepsilon).
+\tag{TM.6717}
+$$
+
+更大的 $V$ 会把它们都送入相同当前标签0行为。任何在首 $\rho$ 前首次分开 $D$ 的上下文都必须接受行 $R_0$、拒绝最大行 $c_0-1+\varepsilon$；若其增量为 $(d',e')$，则
+
+$$
+V+e'\ge U+d'>H-4(c_0-1+\varepsilon)=\delta+12-8\varepsilon,
+\tag{TM.6718}
+$$
+
+这与（TM.6717）矛盾。因此 $D$ 在共同首 $\rho$ 前不能被上下文分开。若该首 $\rho$ 的 $V\le\delta$，$D_1$ 中至少两个同列目标都接受到相同当前标签0；故成功必有
+
+$$
+\delta<V\le\delta+4(2-\varepsilon).
+\tag{TM.6719}
+$$
+
+由（TM.6719），$D_0$ 中 $w\le c_0$ 的 $A$ 个目标都接受首 $\rho$。若 $F$ 尚未离开共同历史，它的 $j-1$ 个目标也都接受；首上下文至首 $\rho$ 已至少有一次实际接受调用，故该接受分支含 $Q$ 个不同初始目标，TM63.3的全历史二元前缀下界还需至少 $\lceil\log_2Q\rceil$ 次修改，合计至少 $2+\lceil\log_2Q\rceil$。
+
+若 $F$ 先离开共同历史，该分开动作在 $F$ 上接受、在 $D$ 上拒绝，和 $D$ 所需的接受上下文是不同调用；到 $D$ 的首 $\rho$ 已至少有三次修改调用。其接受分支仍含 $A$ 个目标，故还需至少 $\lceil\log_2A\rceil$ 次。因 $A\ge j-1$，有 $Q=A+j-1\le2A$，从而
+
+$$
+3+\lceil\log_2A\rceil\ge2+\lceil\log_2Q\rceil.
+$$
+
+这覆盖任意 `Read`、拒绝、左右上下文、可变停止和后来原动作；共同历史中的 `Read` 由引理63.2保持，碰撞后的永久失败由TM38.1保持。
+
+再证达到。使用定理67.2的同一个策略。对每个发出上下文的 $i\ge2$，直接代入TM58.5–6得
+
+$$
+|AA_i|\le L+2i-3\le Q,
+\qquad |AR_i|,|RA_i|,|RR_i|\le N\le Q,
+\tag{TM.6720}
+$$
+
+其中 $c_i<h$ 时 $i\le j$；$c_i\ge h$ 的分支是真实省略，不产生 $RR$。符号1和真实省略分支的入口数至多 $2Q$。在一个入口集 $X$ 上复用TM64.4的实际平衡阈值取得：当前已接受尾材料为 $a$，维持 $M\in X$ 且 $\max X+a\le H$；取 $k<\max X$，发出实际非空 $v_{H-a-k}$。整守卫等号接受，故响应恰为 $M\le k$；接受时置 $a=H-k$ 并保留下半，拒绝时不改树和 $a$ 并保留上半。至多 $\lceil\log_2|X|\rceil$ 次在首个单点停止，直接输出该入口对应的原字面目标，不发出额外 $\rho$ 或 `Read`。
+
+因此发出上下文的分支至多
+
+$$
+2+\lceil\log_2Q\rceil
+$$
+
+次原调用；符号1和省略分支至多
+
+$$
+1+\lceil\log_2(2Q)\rceil
+=2+\lceil\log_2Q\rceil
+$$
+
+次。材料仍由 $(z,w)=(2,3)$ 的符号2分支达到（TM.6711），所以同一策略同时达到两项上界。下界已证明，得到（TM.6713）；材料预算结论（TM.6714）随即由（TM.6704）和同一达到策略推出。$\square$
+
+数学引文与对应（定理67.2–3）。本章的三点材料障碍、$N=3,4$ 源边界、四余数共同的 $D/F$ 调用障碍及同一原策略的联合达到是 repo-derived 源特定推导。TM58的分支字典与真实省略、TM63的 `Read` 中性与二元前缀下界、TM64的实际阈值取得均按其原假设用于上述证明。van den Bos–Vaandrager，*State Identification for Labeled Transition Systems with Inputs and Outputs*，[arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2)，定义16、引理11和定理6.1提供不可逆识别的已发表背景；其 suspension-automaton 条件没有给出这里的 authentic 源像、正材料守卫、$H/h/L$ 常数或原调用合同，因而不建立本章与一般成本最小值的对应。
+
+## 追加锚（本行以下为增补区）
+
+## 68. 原来源写入与真实 Read 的完整六调用记忆上界
+
+### 68.1 原合同与固定表的数学约定
+
+<a id="TM68-D1"></a>
+**定义 68.1（四个固定上限的源写入控制器）。** 对每个固定公开 $H=60+\delta$、$0\le\delta\le3$，沿用定义58.1、66.1的完整 $U_H$、精确同源 authentic 供应（TM.5807）、共同初始化与完整 $c,u,v$。输入包含每个实际 Euler 叶词、全部有序括号及每个标签0隐藏组成。Atomic360.2–4与引理58.2给出
+
+$$
+2\le z\le15,\quad z+1\le w\le2z-1,\quad
+C(z,w)=(4(2z-w),4(w-z)).
+\tag{TM.6801}
+$$
+
+初始三窗为 $(1,1,1)$；未修改初始树的字面目标仍是
+
+$$
+T(z,w)=\begin{cases}
+(0,1,4z),&w>15,\\
+(2,(\mathbf u_{\rm unit},C(z,w))),&w\le15,\ z+w\le15,\\
+(1,C(z,w),1,1),&w\le15,\ z+w>15,
+\end{cases}\qquad
+\mathbf u_{\rm unit}=((0,0,0),(0,0,0),(0,0,0)).
+\tag{TM.6802}
+$$
+
+共有49个有限字面目标与7个 $Z(z)=(0,1,4z)$，$9\le z\le15$。全部隐藏 $16\le w\le2z-1$ 均保留。每个不同 $T$ 对应一个独立状态 $Q_T$，其固定指令为 $\operatorname{Halt}(T)$。
+
+每个 Request 只有一个固定原动作：当前真实 `Read`、整 $\rho$、或命名实际非空正上下文的整左右拼接。整个候选叶数 $\le H$ 接受，包括等号；R保持原树及全部括号，不返回候选读数。每次 Read和每次接受或拒绝的修改尝试均计一个原调用，Halt另计输出。以下构造只用右拼接，竞争者仍保留所有原动作和权限。
+
+$c$ 只消费一次实际收到的 authentic $i\in\{1,2,3,4\}$；以后只有计入 $\mathcal K$ 的地址及当次真实响应选择 $u,v$。全部可变校准、仍使用的输入、阶段、动作选择、历史和输出状态联合计数。固定 $H$、上下文身份、指令、响应转移及字面输出是静态常量；没有可变表外 $i$、入口叶数、目标、历史、因子累加器、时钟、计数器、档案或解码器。四个 $H$ 分别有自己的静态表，不主张一个动态变上限控制器。原树从不由显示见证替换，也没有尺寸、导航、费用、复位、复制、逆拼接或新读口。
+
+置 $S=BA$。复用引理28.1的唯一实际 Clifford 正规形 $N(e,k,p)=(-1)^eS^kA^p$ 及其乘法。对下文使用的正四倍数 $d$，记固定左结合实际词
+
+$$
+W_d=(\beta\alpha)^{d/2},\qquad N_d=(\alpha\beta)^{d/2},
+\qquad E(W_d)=S^{d/2},\quad E(N_d)=S^{-d/2}.
+\tag{TM.6803}
+$$
+
+$N_d$ 是上下文名字，与正规形函数 $N(e,k,p)$ 分开。每个词整接在当前实际树右边，保留原树为左孩子。记 $D_{i,b}(M)$ 为下面指定前缀在分支 $b$、入口叶数 $M$ 的唯一 INITIAL 字面目标；这是定义固定 $Q_T$ 指令的证明记号，运行没有 $D$ 或 $M$ 输入。
+
+普通阈值子树沿用66.4：节点静态标记为入口集 $X$ 与已接受尾材料 $U$，维持 $\max X+U\le H$。若 $n=|X|>1$，取下半 $\lfloor n/2\rfloor$ 项的最大值 $k$，请求实际全 $\alpha$ 上下文
+
+$$
+d=H-U-k>0,
+\qquad M+U+d\le H\ \Longleftrightarrow\ M\le k.
+\tag{TM.6804}
+$$
+
+A进入下半、其孩子静态偏移为 $H-k$；R进入上半、偏移不变。单点直接进入 $Q_{D_{i,b}(M)}$。$X,U,k$ 只定义各不同固定节点，不在地址外保留。该子树有 $n-1$ 个 Request，深度至多 $\lceil\log_2n\rceil$。未实现响应的 $v$ 任意补到一个已有 $Q_T$，Halt更新取自身，故不需额外状态即可使 $v$ 全定义。
+
+供应证据取得、精确同源认证、生产、交付、保留、实际上下文及被拒候选的构造、整守卫、$\rho$、原树保留与增长、响应区分、静态表安装、完整记录与复制、字面输出和全部付费工作仍各承担原合同费用。这里的状态坐标不抹去这些义务。
+
+### 68.2 六十上限的99状态实际控制器
+
+<a id="TM68-T2"></a>
+**定理 68.2（$H=60$ 的完整达到）。** 定义68.1的完整原任务在 $H=60$ 上有恰99个可达状态的成功控制器：41个修改 Request、2个真实 Read Request和56个字面 Halt；每次原运行至多六调用、至多一次接受 $\rho$。其最大首 $\rho$ 尝试前接受材料为18。
+
+证明。符号1直接尝试原 $\rho$。符号2、3、4分别先请求实际右上下文 $\alpha^{18},\alpha^9,\beta\alpha$，随后无论响应如何尝试一次原 $\rho$。这些上下文均固定左结合；符号4的首次上下文全域接受。首上下文状态有3个，随后 $\rho$ 状态数为符号1的1个、符号2的2个、符号3的2个、符号4的1个，共9个前缀 Request。
+
+原供应字典逐点给出下表，O仅表示真实省略上下文，不是响应。每行包含恰好显示的全部目标；OR同时包含每行全部隐藏列。
+
+| 68六十前缀 | 原坐标 | 实际入口 $M$ | 实际入口 $E$ |
+| --- | --- | --- | --- |
+| 68六十一OA | $w=6,\ldots,15$；$w\le9$ 时 $z=5$，$w=12,14$ 时 $z=10$，其余 $z=9$ | $4w$ | $1$ |
+| 68六十一OR | $z=9,\ldots,15$，全部 $w>15$ | $4z$ | $1$ |
+| 68六十二AA | $w=3,7,8,9,10$；$w=3$ 时 $z=2$，其余 $z=6$ | $4w+18$ | $-1$ |
+| 68六十二AR | $z=6,9,10$；$z=9$ 时 $w=12$，其余 $w=11$ | $4z+18$ | $1$ |
+| 68六十二RA | $w=12,13,14,15$；$w=14$ 时 $z=12$，其余 $z=11$ | $4w$ | $1$ |
+| 68六十三AA | $w=4,5,8,9,10,11,12$；$w\le5$ 时 $z=3$，其余 $z=7$ | $4w+9$ | $B$ |
+| 68六十三AR | $z=7,9,10,11,12$；$z=7,10,12$ 时 $w=13$，其余 $w=14$ | $4z+9$ | $A$ |
+| 68六十三RA | $z=13$，$w=14,15$ | $4w$ | $1$ |
+| 68六十四AA | $w=5,6,7,9,10,11,12,13,14$；$w\le7$ 时 $z=4$，其余 $z=8$ | $4w+3$ | $S^2A$ |
+| 68六十四AR | $w=15$，$z=8,10,12,14$ | $4z+2$ | $S$ |
+
+表的分支守卫来自实际增量：符号2当前／下一增量为 $(18,18)$，其上下文截止 $z\le10$、接受上下文后的 $\rho$ 截止 $w\le10$；符号3增量为 $(9,9)$，截止分别为12、12；符号4增量为 $(2,3)$，全部首次接受，$\rho$ 截止 $w\le14$。拒绝首上下文后原 $\rho$ 截止仍为 $w\le15$。入口乘积由原单位窗及右乘得到：$B^{18}=-1$、$A^{18}=1$、$B^9=B$、$A^9=A$，且 $E(\rho(\beta\alpha))=BAB=S^2A$。所以这些是真实原前缀，不是替换供应或更改目标。
+
+以下链的每个阶段是一个独立修改状态；除明确分叉处以外，A、R进入同一个固定下一状态，不保留响应位。共享读者记为 $L$，OR专用读者为 $L_0$。
+
+| 68六十后缀 | 固定原动作及后继 | 修改状态数 |
+| --- | --- | ---: |
+| 68六十一OA写入 | $W_{32}\to W_{16}\to W_8\to W_4\to L$ | 4 |
+| 68六十一OR写入 | $W_{16}\to W_8\to W_4\to L_0$ | 3 |
+| 68六十二AA写入 | $W_{16}\to W_8\to W_4\to L$ | 3 |
+| 68六十二AR阈值 | 对3个入口用（TM.6804） | 2 |
+| 68六十二RA阈值 | 对4个入口用（TM.6804） | 3 |
+| 68六十三AA写入 | 首 $W_{12}$：A到 $W_{16}$、R到 $W_8$；这两个状态的两响应均到同一 $W_4$，其两响应到 $L$ | 4 |
+| 68六十三AR写入 | $W_{16}\to W_8\to W_4\to L$ | 3 |
+| 68六十三RA阈值 | 对2个入口用（TM.6804） | 1 |
+| 68六十四AA分叉 | 首 $\alpha^{16}$：A到5入口阈值树，静态偏移16；R到 $N_8\to N_4\to L$ | $1+4+2=7$ |
+| 68六十四AR写入 | $W_{16}\to W_8\to L$ | 2 |
+
+前三个单链按实际剩余叶数的四倍整数部分作二进制填充：OA的 $D=15-w\in\{0,\ldots,9\}$，OR的 $D=15-z\in\{0,\ldots,6\}$，2AA的 $D=10-w\in\{7,3,2,1,0\}$。分别接受恰 $4D$ 片，实际读为 $S^{2D},S^{2D},-S^{2D}$。余量的剩余部分小于4，不能改变任一整守卫的接受，包括等号。3AR同理取 $D=12-z\in\{5,3,2,1,0\}$，实际读为 $AS^{2D}=S^{-2D}A$。
+
+3AA的 $D=12-w\in\{8,7,4,3,2,1,0\}$。三个实际请求所接受的长度依次为 $32,28,16,12,8,4,0$：$D=8$ 接受 $12+16+4$，$D=7$ 接受 $12+16$，$D=4$ 接受 $12+4$，$D=3$ 只接受12，$D=2,1,0$ 分别接受8、4、0。余量为 $4D+3$，逐步整守卫给出此表，读为 $BS^{2D}=S^{1-2D}A$。
+
+4AR取 $D=(14-z)/2\in\{3,2,1,0\}$，余量为 $8D+2$。两个请求接受恰 $8D$ 片，读为 $S^{1+4D}$。4AA的首次16片恰接受 $w=5,6,7,9,10$；这五格走普通树。拒绝四格为 $w=11,12,13,14$，取 $D=14-w\in\{3,2,1,0\}$，余量为 $4D+1$。$N_8,N_4$ 接受恰 $4D$ 片，读为 $S^2AS^{-2D}=S^{2+2D}A$。全部乘积保留实际接受因子的原顺序；拒绝因子没有插入原树。
+
+因此共享 $L$ 的完整真实响应／字面后继表为
+
+| 68六十共享读族 | 真实响应 | 参数及固定字面后继 |
+| --- | --- | --- |
+| 68读OA | $S^{2D}$ | $D=0,\ldots,9$；$Q_{D_{1,OA}(4(15-D))}$ |
+| 68读二AA | $-S^{2D}$ | $D\in\{0,1,2,3,7\}$；$Q_{D_{2,AA}(4(10-D)+18)}$ |
+| 68读三AA | $S^{1-2D}A$ | $D\in\{0,1,2,3,4,7,8\}$；$Q_{D_{3,AA}(4(12-D)+9)}$ |
+| 68读三AR | $S^{-2D}A$ | $D\in\{0,1,2,3,5\}$；$Q_{D_{3,AR}(4(12-D)+9)}$ |
+| 68读四AR | $S^{1+4D}$ | $D=0,\ldots,3$；$Q_{D_{4,AR}(4(14-2D)+2)}$ |
+| 68读四AA | $S^{2+2D}A$ | $D=0,\ldots,3$；$Q_{D_{4,AA}(4(14-D)+3)}$ |
+
+这35个响应两两不同。偶部分分别是正偶指数、负号偶指数、正奇指数；奇部分分别是奇指数、非正偶指数、严格正偶指数。引理28.1唯一正规形区分全部六族及族内各点，故 $v(L,E)$ 是一个实际响应的函数，不需知道来路。$L_0$ 的七个值为 $S^{2D}$、$D=0,\ldots,6$，固定送到 $Q_{Z(15-D)}$。它与OA相交而初始目标不同，故保持独立读状态。
+
+修改后缀数为 $4+3+3+2+3+4+3+1+7+2=32$，加9前缀与2读得到43 Request；56不同原目标各有其 Halt，所以完整数为99。每个链阶段有表列实际点到达；3AA两第二阶段分别有 $D\ge3$ 与 $D<3$ 的实际点，4AA两个孩子均非空；普通阈值每个孩子均有实际入口。两个读的每个表列响应都有对应实际点，所有56原目标出现，故全部计入状态可达。
+
+符号1最多1前缀、4写入、1读，合六次；符号2、3最多2前缀、3写入、1读，或至多3阈值；符号4AA最多2前缀、1分叉、3阈值，或2前缀、1分叉、2写入、1读，仍为六。4AR只需五次。图由显示阶段与严格缩小的阈值集组成，所有路径终止。最大首 $\rho$ 前接受材料在符号2实际点 $(2,3)$ 达到18，其余前缀只可能接受9或2片，符号1为0。
+
+全部守卫只用了实际整树的叶数、实际接受材料与原 $\rho$ 增量；全部乘积只用了原三窗单位及实际右接正词。故对同组成的每个 Euler 词和每个括号逐树成立。OR的每个隐藏 $w$ 都有原 $\rho$ 拒绝，其后叶数及乘积相同。也可由TM30.2与47.2逐步运输同一个固定控制器的记录和字面输出。运行始终保留那棵原树及其原动作后继；没有用存在性见证代替源。这证明完整 $U_{60}$ 上正确性。$\square$
+
+### 68.3 六十一至六十三上限的98状态实际控制器
+
+<a id="TM68-T3"></a>
+**定理 68.3（$H=61,62,63$ 的完整达到）。** 对每个固定 $H=60+\delta$、$\delta\in\{1,2,3\}$，定义68.1的完整原任务有恰98个可达状态的成功控制器：40个修改 Request、2个真实 Read Request和56个字面 Halt；每次原运行至多六调用、至多一次接受 $\rho$。其最大首 $\rho$ 尝试前接受材料为 $20+\delta$，分别为21、22、23。
+
+证明。符号1直接尝试原 $\rho$；符号2、3、4分别先右接实际全 $\alpha$ 词，长度为 $20+\delta,12+\delta,4+\delta$，再尝试一次原 $\rho$。仍有9个前缀 Request，符号4上下文全域接受。由58.4、65.3的符号1字典及66.4的其余字典，实际入口为下表；AA、AR显示值加 $\delta$，OA、OR、RA不加。每格 $D_{i,b}(M)$ 按原字面（TM.6802）输出。
+
+| 68正余数分支 | 显示入口集 $X^0$ | 实际入口 $E$ |
+| --- | --- | --- |
+| 68正一OA | $24,28,32,36,40,44,48,52,56,60$ | $1$ |
+| 68正一OR | $36,40,44,48,52,56,60$ | $1$ |
+| 68正二AA | $32,48,52,56,60$ | $B^\delta$ |
+| 68正二AR | $44,56,60$ | $A^\delta$ |
+| 68正二RA | $48,52,56,60$ | $1$ |
+| 68正三AA | $28,32,44,48,52,56,60$ | $B^\delta$ |
+| 68正三AR | $40,48,52,56,60$ | $A^\delta$ |
+| 68正三RA | $56,60$ | $1$ |
+| 68正四AA | $24,28,32,40,44,48,52,56,60$ | $B^\delta$ |
+| 68正四AR | $36,44,52,60$ | $A^\delta$ |
+
+符号1OA的原 $(z,w)$ 仍为68.2首行；OR的全部隐藏列仍保留。其余有限格的原坐标由58.10–11与66.4唯一逆解。前缀全 $\alpha$ 长度为四倍数加 $\delta$，接受 $\rho$ 后成为全 $\beta$，故AA乘积为 $B^\delta$；拒绝 $\rho$ 的AR仍为 $A^\delta$。没有把这些乘积作为免费在线输入。
+
+以状态 $C_{32},C_{16},C_8,C_4,L$ 定义共享核心：$C_d$ 请求 $W_d$，其A、R均到下一个状态，顺序为
+
+$$
+C_{32}\to C_{16}\to C_8\to C_4\to L,
+\qquad u(L)=\mathrm{Read}.
+\tag{TM.6805}
+$$
+
+1OA进入 $C_{32}$，读为 $S^{2(15-w)}$，正如68.2，含10个响应。1OR使用独立 $O_{16}\to O_8\to O_4\to L_0$，每个 $O_d$ 请求 $W_d$、两响应前进，$L_0$ 的7个响应 $S^{2(15-z)}$ 直接到 $Q_{Z(z)}$。
+
+定义三个固定实际混合上下文
+
+$$
+\begin{aligned}
+V_2&=\begin{cases}(\alpha\beta)^4,&\delta=2,\\
+\alpha\alpha\beta\beta\alpha\beta\alpha\beta,&\delta=1,3,
+\end{cases}\\
+V_3&=\begin{cases}(\alpha\beta)^4,&\delta=2,\\
+\alpha\alpha\beta\beta\beta\alpha\beta\alpha,&\delta=1,3,
+\end{cases}\\
+V_4&=\begin{cases}\alpha\alpha(\beta\alpha)^7,&\delta=2,\\
+\alpha\alpha\beta\beta(\beta\alpha)^6,&\delta=1,3.
+\end{cases}
+\end{aligned}
+\tag{TM.6806}
+$$
+
+$V_2,V_3$ 长度均为8，$V_4$ 长度16；全部固定左结合。其乘积依次为：$\delta=2$ 时 $S^{-4},S^{-4},S^7$；$\delta=1,3$ 时 $-S^{-2},-S^2,-S^6$。
+
+四个改写后缀的全部固定控制转移如下。表中直接 $Q$ 都是已计入56输出的完整字面 Halt；“两者”指A、R固定相同后继。
+
+| 68正后缀状态 | 固定实际请求 | A后继 | R后继 |
+| --- | --- | --- | --- |
+| 68正J16 | $W_{16}$ | $J_{12}$ | $C_8$ |
+| 68正J12 | $W_{12}$ | $C_4$ | $C_4$ |
+| 68正K16 | $W_{16}$ | $Q_{D_{2,AA}(32+\delta)}$ | $K_8$ |
+| 68正K8 | $V_2$ | $C_4$ | $K_4$ |
+| 68正K4 | $W_4$ | $Q_{D_{2,AA}(56+\delta)}$ | $Q_{D_{2,AA}(60+\delta)}$ |
+| 68正R16 | $W_{16}$ | $Q_{D_{3,AR}(40+\delta)}$ | $R_8$ |
+| 68正R8 | $V_3$ | $C_4$ | $R_4$ |
+| 68正R4 | $W_4$ | $Q_{D_{3,AR}(56+\delta)}$ | $Q_{D_{3,AR}(60+\delta)}$ |
+| 68正T16 | $V_4$ | $C_8$ | $T_8$ |
+| 68正T8 | $W_8$ | $Q_{D_{4,AR}(52+\delta)}$ | $Q_{D_{4,AR}(60+\delta)}$ |
+
+3AA进入 $J_{16}$，2AA进入 $K_{16}$，3AR进入 $R_{16}$，4AR进入 $T_{16}$。其余四分支2AR、2RA、3RA、4AA分别对3、4、2、9格用（TM.6804），共 $2+3+1+8=14$ 个修改状态。
+
+这些是真实整守卫。3AA显示入口 $28,32,44$ 接受 $J_{16}$，再经过 $J_{12},C_4$；入口 $48,52,56,60$ 拒绝 $J_{16}$，经过 $C_8,C_4$。接受材料的产品指数依显示入口顺序为 $16,14,8,6,4,2,0$。2AA的 $K_{16}$ 只接受入口 $32+\delta$；其余四格中 $K_8$ 只接受 $48+\delta,52+\delta$，接受的较小格还接受 $C_4$。其余两格由 $K_4$ 的真守卫区分。3AR的 $R_{16}$ 只接受 $40+\delta$；随后两格 $48+\delta,52+\delta$ 接受 $R_8$，其中较小格还接受 $C_4$；另外两格由 $R_4$ 区分。4AR的 $T_{16}$ 只接受 $36+\delta,44+\delta$；其中较小格接受 $C_8$，两格的 $C_4$ 都真实拒绝。这次拒绝照计一个原调用。较大两格由 $T_8$ 区分。所有结论来自 $M$ 加实际接受长度，等号仍接受，未调用尺寸或历史读口。
+
+因此 $L$ 的完整23个真实响应／字面后继为
+
+| 68正共享读族 | 显示入口及实际响应 | 固定后继 |
+| --- | --- | --- |
+| 68正读OA | $M=4w$，$w=6,\ldots,15$：$S^{2(15-w)}$ | $Q_{D_{1,OA}(M)}$ |
+| 68正读三AA | $M_0=28,32,44,48,52,56,60$：$B^\delta S^e$，依次 $e=16,14,8,6,4,2,0$ | $Q_{D_{3,AA}(M_0+\delta)}$ |
+| 68正读二AA | $M_0=48,52$：$\delta=1,3$ 为 $-B^\delta,-B^\delta S^{-2}$；$\delta=2$ 为 $-S^{-2},-S^{-4}$ | $Q_{D_{2,AA}(M_0+\delta)}$ |
+| 68正读三AR | $M_0=48,52$：$\delta=1,3$ 为 $-A^\delta S^4,-A^\delta S^2$；$\delta=2$ 为 $S^{-2},S^{-4}$ | $Q_{D_{3,AR}(M_0+\delta)}$ |
+| 68正读四AR | $M_0=36,44$：$\delta=2$ 为 $S^{11},S^7$；$\delta=1,3$ 为 $-AS^{10},-AS^6$ | $Q_{D_{4,AR}(M_0+\delta)}$ |
+
+例如 $\delta=2$ 的2AA初始因子为 $B^2=-1$，接受 $V_2$ 给 $-S^{-4}$，再接受 $W_4$ 得 $-S^{-2}$；3AR初始因子为 $A^2=1$，同样得到 $S^{-4},S^{-2}$。4AR的初始 $A^\delta$ 乘以 $V_4$ 后保留原次序，较小格再乘 $W_8$，得到表列值。所有读都是该当前实际树的 $E$，没有在线逆因子或规范化阶段。
+
+此表确为函数。$\delta=2$ 时，OA是正偶指数 $0,2,\ldots,18$；3AA是负号非负偶指数 $16,14,8,6,4,2,0$；2AA是负号指数 $-2,-4$；3AR是正指数 $-2,-4$；4AR是正奇指数 $11,7$。五族按引理28.1两两不同。
+
+$\delta=1,3$ 时，OA为偶部分，其余全为奇部分。令 $\sigma=1$ 当 $\delta=1$，$\sigma=-1$ 当 $\delta=3$；3AA正规式为 $\sigma S^{1-e}A$，$e\in\{16,14,8,6,4,2,0\}$。2AA为 $-\sigma S^jA$、$j=1,3$，3AR为 $-S^jA$、$j=-4,-2$，4AR为 $-S^jA$、$j=-10,-6$。前两族的奇指数在相交处符号相反，后两族有不同的偶指数；奇偶又区分它们与OA。因此23个真实值不同，每个仅靠当次 $E$ 进入其字面 $Q_T$。独立 $L_0$ 仍保留7个折叠目标；不能把与OA重叠的真响应无条件合并。
+
+Request数为9前缀、14普通阈值、5共享核心、4独立OR链和读者、2个J、3个K、3个R、2个T，合计
+
+$$
+9+14+5+4+2+3+3+2=42.
+\tag{TM.6807}
+$$
+
+其中2个是Read，其余40个是修改。56字面 Halt 相互不同，总数98。每个前缀及每个显示状态有表列入口到达，所有读响应实际出现，所有阈值子集非空，所有56目标均有原源，所以全部状态可达。
+
+OA最多1前缀、4写入、1读；OR最多1前缀、3写入、1读。J、K、R、T的任何读路径最多2前缀、3修改、1读，直接停止路径更短；其余分支最多2前缀、4阈值。每次至多六调用且在有限无环阶段停止。符号2的实际 $(2,3)$ 接受 $20+\delta$ 片，达到全域最大；其它首次上下文分别为 $12+\delta,4+\delta$，符号1为0，因此三个材料值准确为21、22、23。
+
+Atomic360与58.2提供完整原叶词、括号及隐藏组成。上述前缀、整守卫、接受叶数和有序右乘产品逐实际树成立，拒绝始终保留整树。TM30.2和47.2也给同一共同表在初始目标纤维上的逐步同响应运输。尤其OR的所有隐藏列仍在同一真实拒绝历史上，后缀只依赖该行实际叶数与插入的正词。这使全部原源都正确输出 INITIAL 字面目标；没有把有限组成表的显示树作为在线源替换。$\square$
+
+### 68.4 原动作下的记忆区间与资源边界
+
+<a id="TM68-C4"></a>
+**推论 68.4（真实 Read 的可达到状态改进）。** 定义66.1的原最小值满足
+
+$$
+61\le K_6(60)\le99,\qquad
+61\le K_6(H)\le98\quad(H=61,62,63).
+\tag{TM.6808}
+$$
+
+这些完整达到控制器都严格少于任何成功无Read控制器的109状态下界。68.2–3中同一次全源运行的最大首 $\rho$ 前接受材料分别为 $(18,21,22,23)$；该坐标与TM65的最小值 $(17,18,19,20)$ 分开。
+
+证明。下界直接复用66.2；上界为68.2–3，无Read比较直接复用66.5，而不把二元修改边预算应用到共享Read的35或23个真实响应。材料已在各构造中逐源达到。TM64.4或67.3在此四上限给出原总调用最小值六，本构造达到其调用限制；这些已有调用结论不转成状态最小值。$\square$
+
+数学引文与对应（定理68.2–3）。完整源像、原authentic字典、字面目标、固定上下文语义、唯一Clifford正规形、普通阈值、61和109下界分别复用Atomic360、TM28、TM30、TM47、TM58、TM65–67。上述实际混合正词写入、共享真实Read响应表及99／98的全源闭环达到是 repo-derived 源特定综合推导。兼容集合的闭覆盖是成熟实现方法；Larrauri–Bloem，*Minimization and Synthesis of the Tail in Sequential Compositions of Mealy machines*，[arXiv:2105.10292v2](https://arxiv.org/html/2105.10292v2)，§5、定理4要求初态覆盖与每个观察后继集合的覆盖闭性，研究给定 observation machine 的实现。它不提供本章原源、混合正词、字面Halt、六调用数值，亦不把给定策略的实现最小值变成所有原动作策略的最小值；本章直接证明真实联合后继的正确性，不另立一般最小化理论或主张文献优先权。
+
+精确 $K_6(H)$ 仍未确定。匹配下界必须保留所有合法原动作、真实Read、不同原目标／当前原树共同支持上的合流、完整校准及六调用限制。只最小化本章固定表、只数目标标签或规定迹、将Read换成二元代理、免费保留完整修改历史或档案都不能补上该全策略桥梁。状态达到不证明材料最优、全程材料最优、其它供应或上限最优、原源准备最优、供应实现、档案擦除、物理存储／安装／付费工作或时间的节约；定义68.1全部权限、真实源保留和成本义务继续承担。
+
+## 追加锚（本行以下为增补区）
+
+## 69. 完整真实六调用任务的五 Request 不可能性
+
+### 69.1 原源、原目标与完整控制状态
+
+<a id="TM69-D1"></a>
+**定义 69.1（全访问的原控制器合同）。** 固定公开 $H=60+\delta$、$\delta\in\{0,1,2,3\}$，保留定义58.1、66.1的完整实际 $U_H$、原树相等、精确同源 authentic 供应（TM.5807）与共同初始化。来源是自由有序非空树 $t::=\alpha\mid\beta\mid\langle t,t\rangle$；原相等保留每个叶序和括号，整 $\rho$ 逐叶替换 $\alpha\mapsto\beta$、$\beta\mapsto\langle\beta,\alpha\rangle$。输入包括 Atomic360 与58.2对应的全部 Euler 叶词、这些词的全部有序二叉括号及每个标签0隐藏组成，不限于显示词 $\omega_{r,s}$。证明坐标满足
+
+$$
+2\le z\le15,\qquad z+1\le w\le2z-1,\qquad
+C(z,w)=(4(2z-w),4(w-z)),
+\qquad(m,n)=(4z,4w).
+\tag{TM.6901}
+$$
+
+初始三窗为 $(1,1,1)$，未修改 INITIAL 字面目标是
+
+$$
+T(z,w)=\begin{cases}
+Z(z)=(0,1,4z),&w>15,\\
+(2,(\mathbf u_{\rm unit},C(z,w))),&w\le15,\ z+w\le15,\\
+(1,C(z,w),1,1),&w\le15,\ z+w>15,
+\end{cases}
+\qquad\mathbf u_{\rm unit}=((0,0,0),(0,0,0),(0,0,0)).
+\tag{TM.6902}
+$$
+
+标签2严格按窗口、组成的内层顺序输出，各窗口仍按 $(e,k,p)$ 排列。全部隐藏列 $16\le w\le2z-1$ 保留；49个有限目标和7个 $Z(z)$ 共56个不同字面目标，四个 authentic 符号的负载为 $(17,12,14,13)$。
+
+控制器为确定有限 $(\mathcal K,c,u,v)$。$c$ 消费实际 authentic 符号一次；$u(k)$ 是固定原 Request 或固定字面 $\operatorname{Halt}(T)$；$v(k,o)$ 只使用当前完整状态及当次真实响应。凡仍可访问的供应符号、校准、阶段、PC、历史、权限、动作／上下文选择、地址、工作值与输出均联合计入 $k$。允许忘记最初的 $i$，不要求它永久保留。固定公开 $H$ 及不可变表是静态描述；没有表外可变档案、因子累加器、计数器或解码器。只计完整 $U_H$ 闭环运行可达的 Request、Halt 状态，分别记为 $R,L_{\rm Halt}$，$K=R+L_{\rm Halt}$。
+
+原 Request 恰为当前精确 Clifford `Read`、整 $\rho$ 尝试，或一个命名已知实际非空正上下文的整左／右拼接。Clifford 叶积保留 $A^2=1$、$B^2=-1$、$AB+BA=1$。候选整叶数 $\le H$ 接受，等号接受；拒绝保留完整当前树，不返回候选读。每次 Read、每次接受或拒绝的修改尝试都计一次原调用；允许任意重复 Read、修改回访、合流及后来替换。成功要求每个原源在至多六次总原调用内停止并输出其 INITIAL 字面目标。运行可离开单位族，仍按同一 ambient 合同执行；没有尺寸、原目标、档案、导航、时钟、费用、复位、复制、变上限、逆拼接或来源替换端口。
+
+供应者持有精确初始树的原目标证据及身份配对仍是原条件；证据取得、认证、生产、交付、保留，及上下文构造、候选守卫、拒绝候选、整替换、原树／记录／档案／副本存储、安装、算术和输出的全部 paid／权限义务均保留。$R,K$ 是该完整合同的抽象可达状态数。
+
+### 69.2 完成执行计数与真实近饱和对的排除
+
+<a id="TM69-T2"></a>
+**定理 69.2（至少六个 Request 与62个完整状态）。** 每个定义69.1的成功控制器满足
+
+$$
+R\ge6,\qquad L_{\rm Halt}\ge56,\qquad K\ge62.
+\tag{TM.6903}
+$$
+
+结论允许任意重复真实 Read 和初始供应符号的遗忘；不限制每次 Read 的真实响应字母表。
+
+证明。不同字面输出须有不同 Halt 状态，故 $L_{\rm Halt}\ge56$。以下反证 $R\le5$。
+
+首先复用66.2的首修改论证。首修改以前每个 Read 都是1且不改变原树。每个 authentic 符号承载多个目标，所以其共同前缀不能 Halt，有限成功又排除读循环；四个符号各有确定首修改状态。若两者相同，直接用这个完整到达状态初始化相同原树上的同一延续，并把 authentic 标签合并成至多三个真实供应符号，会违反60.5。省略的只是源不变的单位读；所有仍可用的 $i$ 和历史已在完整状态内。这给四个不同首修改状态。若至多五个 Request 全为修改，它们至多有十条 A/R 出边，不能进入56个不同字面 Halt。因此假设 $R\le5$ 强制恰好四个修改状态与一个 Read 状态，而且四个修改状态正是四个首修改状态。
+
+原整 $\rho$ 必有一个状态：64.3已在符号4的完整 $D$ 共同历史上强制首次 $\rho$。它不能是符号2、3、4的首修改。分别取真实点对
+
+$$
+\begin{array}{c|c|c|c}
+\text{authentic 符号}&(z,w)\text{ 对}&\rho\text{ 后叶数}&\rho\text{ 后下一叶数}\\ \hline
+2&(9,12),(11,12)&48&84,92\\
+3&(7,13),(10,13)&52&80,92\\
+4&(8,15),(10,15)&60&92,100
+\end{array}
+\tag{TM.6904}
+$$
+
+每对有不同 INITIAL 目标，却在共同未修改源状态上都接受首次 $\rho$；三窗仍为单位，下一叶数都超过四个 $H$，所以当前原行为同为 $(0,1,4w)$。TM30.2、38.1的永久原目标碰撞排除任何成功延续。每点有58.2的正词见证且全部对应实现保留。因此唯一 $\rho$ 状态 $P$ 是符号1的首修改，另三个状态都是固定实际上下文。
+
+符号1首次 $\rho$ 的 A、R 支持分别有10、7个不同目标，故 $P$ 的两条响应边都进入 Request。每个其它首修改状态至少有一条响应边承载多个本符号目标，故也至少有一条边进入 Request。四个修改状态的八条固定 A/R 边中，至少五条进入 Request，至多三条进入字面 Halt。任何整次运行完全没有 Read 的目标必经其中一条修改到 Halt 边停止；所以这种目标至多三个。这里计的是完成运行与固定响应边，不是首次到达 Read 的响应数。
+
+在任一已达到的共同历史后，设已有 $p\ge3$ 次修改，选取其后 $n$ 个不同目标各自的一条实际完成运行。令 $b$ 为这些整次运行中从初始化到停止都没有 Read 的目标数。任意有 Read 的运行以后至多再有两次修改，没有 Read 的以后至多再有三次修改；已有的额外调用只会收紧这些上限。引理63.2在共同历史上给出实际有序三窗因子，全部中间读均由合法修改记录确定。定理63.3的完成修改响应词前缀自由性遂对后缀继续成立，故
+
+$$
+\frac{n-b}{4}+\frac b8\le1,
+\qquad b\ge2n-8.
+\tag{TM.6905}
+$$
+
+这允许后缀任意重复 Read：每一个 Read 都占总六调用预算，而前缀自由性比较到实际 Halt，不在第一次 Read 截断。特别 $n\ge6$ 会要求至少四个不同目标有完全无 Read 的运行，与全局三条修改到 Halt 边矛盾。$n=5$ 则至少要求两个。
+
+再看64.2的完整符号4字典：三个低点 $(4,5),(4,6),(4,7)$ 和上十点
+
+$$
+D=\{(8,w):9\le w\le15\}\cup\{(10,15),(12,15),(14,15)\}.
+\tag{TM.6906}
+$$
+
+64.3保证 $D$ 在首次 $\rho$ 以前的全部动作、真实响应、Read 与控制字段共同，且接受材料 $(U,V)$ 满足 $\delta<V\le\delta+4$。若三个低点在此前离开，这个共同前缀至少含一个在 $D$ 上接受的上下文、一个在 $D$ 上拒绝的分离上下文及 $\rho$，已有三次修改。首次 $\rho$ 的六个 $D$ 接受目标违背（TM.6905）。所以低点尚未离开，首次 $\rho$ 接受九个不同目标。如果到此有三次修改，或两次修改加任何 Read，余下至多三次修改只能区分八个目标，违反63.2–3。故符号4全部十三目标的真实前缀恰为一次接受上下文 $s$ 后紧接 $P$，没有先行或中间 Read。$s$ 的固定上下文增量满足
+
+$$
+1\le d_s\le e_s\le2d_s,\qquad
+\delta<e_s\le\delta+4,\qquad d_s\le\delta+4.
+\tag{TM.6907}
+$$
+
+首次 $\rho$ 的九个接受目标当前叶数为 $4w+e_s$，其中
+
+$$
+w\in\{5,6,7,9,10,11,12,13,14\}.
+\tag{TM.6908}
+$$
+
+$v(P,A)$ 不能是 Halt；若是 Read，共同真实读只剩三次修改供九目标，亦不可能。它不能是 $P$：其中六个 $D$ 目标已为当前标签0（下一叶数至少 $4(8+9)+d_s+e_s>H$），再次 $\rho$ 共同拒绝，形成三次修改的六目标共同前缀，违反（TM.6905）。所以 $v(P,A)$ 是一个上下文状态，记作 $L$。
+
+这个真实上下文的叶数 $d_L>0$ 以
+
+$$
+4w+e_s+d_L\le H
+\tag{TM.6909}
+$$
+
+分开九点。任一响应分支若含至少六个目标，就在第三次修改以后违反（TM.6905）。因此两支恰有4、5个目标。对（TM.6908）的实际排序，接受前四个的截止在 $w=9$，接受前五个的截止在 $w=10$；等号接受给出
+
+$$
+H-43-e_s\le d_L\le H-36-e_s,
+\qquad 13\le d_L\le23.
+\tag{TM.6910}
+$$
+
+由于 $d_s\le7$，$L\ne s$；$L$ 是符号2或3的首上下文。若是符号2，接受其初始行11会使真实点 $(11,13),(11,15)$ 都接受同一个上下文。上下文下一增量 $e_L\ge d_L\ge13>8+\delta$，两者当前积与当前叶数 $44+d_L$ 相同，下一叶数 $52+e_L,60+e_L$ 都超过 $H$，产生38.1的永久标签0碰撞。因此 $L$ 必拒绝整个初始行11；同时它接受行6，因为 $24+d_L\le47<H$。行6、11分别有5、3个本符号目标，所以 $L$ 两边都进入 Request。若 $L$ 属于符号3，行7全部接受（$28+d_L\le51$），行13全部拒绝（$52+d_L\ge65$）；这两行分别有6、2个目标，仍迫使两边都进入 Request。
+
+现在 $P$ 的两边、$s$ 的 A 边、$L$ 的两边，以及剩下上下文状态 $a$ 的至少一边都进入 Request，至少六条。至多两条修改边能进入字面 Halt。$L$ 的五目标分支已有三次修改，（TM.6905）要求至少两个不同目标的整次运行无 Read。故恰有两条修改到 Halt 边，输出两个不同的（TM.6908）符号4目标。它们只能是 $s$ 的 R 边和 $a$ 的一边；$a$ 另一边进入 Request。符号2或3在自身首状态 $a$ 上不能立即输出一个符号4目标，所以其初始字典全部取得 $a$ 的同一个非 Halt 响应。这个结论只用真实首状态和字面目标的不交性，不要求后来还知道 $i$。
+
+最后取实际近饱和源
+
+$$
+t_- =\omega_{1,13},\qquad t_+=\omega_{1,14},
+\qquad (z,w)=(14,27),(15,29).
+\tag{TM.6911}
+$$
+
+任取各自一个原有序括号。这两者均属于完整 $U_H$，均真实供应符号1，初始 Read 同为1，却分别要求 $Z(14)=(0,1,56)$、$Z(15)=(0,1,60)$。它们初始下一叶数为108、116；正上下文不降低它，故任何后来 $P$ 调用都在二者上拒绝。$L$ 也始终共同拒绝，因为 $d_L\ge13$，二者初始剩余叶空间至多 $7$、$3$，后来接受材料只能减少空间。
+
+沿 $t_+$ 的实际成功运行比较 $t_-$。凡访问 $s$，R 边是一个符号4 Halt，不能在这个正确的 $Z(15)$ 运行上发生；所以 $s$ 必接受。若 $a$ 的 Halt 边是 R，同样迫使其每次在 $t_+$ 上接受。每次接受于 $t_+$ 的相同实际上下文亦接受于 $t_-$，因为两者叶数一直相差四。若 $a$ 的 Halt 边是 A，它自身 authentic 字典的恒定首响应只能是 R；其最小初始行在符号2为 $z=2$、在符号3为 $z=3$，因此分别有
+
+$$
+d_a>H-8\quad\text{或}\quad d_a>H-12,
+\qquad d_a\ge49.
+\tag{TM.6912}
+$$
+
+这时 $a$ 在两个近饱和源上永远共同拒绝。
+
+对 $t_+$ 的每一次实际 Request 归纳。初始完整控制状态相同。$P,L$ 的响应共同为 R；其它状态若接受，就把同一个实际正树在同一侧接到两者，保留各自完整旧树与所有原括号；若拒绝则各自整树不变。两者当前叶数始终差四，当前 Clifford 积始终相同：初始都是单位，后续从未接受 $\rho$，每次上下文只作同一有序左乘或右乘。因而每一个真实 Read 都返回相同的完整 Clifford 值，无论该 Read 第几次出现。确定 $v(k,o)$ 使所有联合控制字段继续相同；任何遗忘或覆盖 $i$ 的更新也包含在此归纳内。到 $t_+$ 的有限 Halt 时，$t_-$ 进入同一个字面 Halt，不能同时输出两个不同 INITIAL 目标。这是矛盾，排除了五个 Request。四个以下已由66.2排除，故（TM.6903）成立。$\square$
+
+数学引文与对应（定理69.2）。真实源像与全部括号对应复用 Atomic359–360、58.2；原行为运输及永久原目标碰撞复用 TM30、38、47；四符号必要性、完整目标负载、完成修改词和共同 $D$ 窗口复用 TM60–64、66。二叉 Kraft 计数仅是这些实际完成运行的中间方法；新的承重关系是固定 authentic 全源在六总调用下的修改 Halt 边分配、被迫的真实叶守卫区间及近饱和共同全访问历史，属于 repo-derived 源特定推导。van den Bos–Vaandrager，*State Identification for Labeled Transition Systems with Inputs and Outputs*，[arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2)，定义16、引理11、定理6.1给出自适应识别中保持不可区分性障碍的成熟框架；其 suspension-automaton 与不相容状态假设不供应此处 authentic 字典、原叶守卫或62数值。Reissig–Weber–Rungger，*Feedback Refinement Relations for the Synthesis of Symbolic Controllers*，[arXiv:1503.03715v3](https://arxiv.org/html/1503.03715v3)，定义V.2、定理V.4要求同一可用输入及全部相关后继的包含；它不提供一个免费源状态观察或状态／费用等价。本定理直接保留原动作及真实共同历史，不从一般识别或反馈定理移植数值，也不主张文献优先权。
+
+### 69.3 新下界与尚未匹配的达到区间
+
+<a id="TM69-C3"></a>
+**推论 69.3（原全策略状态区间）。** 定义66.1的最小值满足
+
+$$
+62\le K_6(60)\le99,\qquad
+62\le K_6(H)\le98\quad(H=61,62,63).
+\tag{TM.6913}
+$$
+
+证明。下界是69.2，上界直接复用68.2–3。原无 Read 最小值的109至111区间继续由66.4–5承担，不用本定理改写其结算。六总原调用的最优值继续由64.4或67.3承担，不从调用最优推出状态最优。$\square$
+
+精确 $K_6(H)$ 与六个 Request 是否能达到仍未确定。一个真正成功的至多五 Request 全源控制器会反驳69.2，须在同一 authentic 供应、字面 INITIAL 输出、全部实际叶词／括号／隐藏组成及六总原调用上给出其完整 $c,u,v$；只给首次 Read 响应表或一个固定策略的最小化不能提供该反例。完成共同三修改历史的六目标若能以少于四个完全无 Read 的目标收尾，会反驳（TM.6905）的实际完成词桥梁；（TM.6908）的真实4／5守卫若落在（TM.6910）以外，会反驳对应整数界。这些都是原合同内的具体反驳条件。
+
+69.2只加强抽象完整控制状态下界；它不构造六 Request 控制器，不结算精确状态最小值、其它上限／供应、全程材料、来源生产、供应实现、免费历史或档案、安装、档案擦除、物理存储／时间或付费节约。定义69.1的全部原资源与权限义务继续保留。
+
+## 追加锚（本行以下为增补区）
+
+## 70. 有序正词标记的87状态完整六调用控制器
+
+### 70.1 完整原合同与静态表记号
+
+<a id="TM70-D1"></a>
+**定义 70.1（四个固定上限的原源实现）。** 固定公开 $H=60+\delta$，$\delta\in\{0,1,2,3\}$。完整实际来源、精确同源 authentic 供应、共同初始化、原权限、响应及付费义务均取58.1、66.1、68.1的原合同。特别，输入保留自由有序树上的全部允许 Euler 叶词、每个词的全部二叉括号及全部隐藏标签0组成，证明坐标为
+
+$$
+2\le z\le15,\qquad z+1\le w\le2z-1,
+\qquad C(z,w)=(4(2z-w),4(w-z)).
+\tag{TM.7001}
+$$
+
+初始三窗均为单位，初始、下一、再下一叶数分别为 $4z,4w,4(z+w)$。固定 INITIAL 字面输出为
+
+$$
+T(z,w)=\begin{cases}
+(0,1,4z),&w>15,\\
+(2,(\mathbf u_{\rm unit},C(z,w))),&w\le15,\ z+w\le15,\\
+(1,C(z,w),1,1),&w\le15,\ z+w>15,
+\end{cases}
+\qquad \mathbf u_{\rm unit}=((0,0,0),(0,0,0),(0,0,0)).
+\tag{TM.7002}
+$$
+
+每个窗仍按 $(e,k,p)$ 排列，标签2内层仍按窗口、组成排序。105个组成点中49个为有限目标，另外56个隐藏组成按原行折叠为7个 $Z(z)=(0,1,4z)$，$9\le z\le15$；共56个不同字面目标。每个目标恰设一个固定 $Q_T$，其指令为 $\operatorname{Halt}(T)$。
+
+$c$ 只消费已真实收到的（TM.5807）符号 $i\in\{1,2,3,4\}$ 一次。其实际公式为：$w>15$ 时取1；$w\le15,z\le8$ 时取 $1+((z-1)\bmod4)$；其余取 $x=z-8,y=w-8$，同奇偶时为 $\lceil x/2\rceil$，异奇偶时为 $\lceil y/2\rceil$。这是未修改 INITIAL 目标的原函数；所有隐藏 $w$ 都保留而供应1，不另取得它们。
+
+完整有限控制为 $(\mathcal K,c,u,v)$。$u(k)$ 是一个固定原 Request 或固定字面 Halt；$v(k,o)$ 只消费完整状态地址 $k$ 及当次真实响应 $o$。任何仍使用的供应符号、阶段、PC、校准、历史、上下文选择、权限、工作值、地址、响应保存和输出都属于这个完整地址。下面的 $i,b,M,U,D,z,w$ 只用于定义及证明各固定表项，运行时没有这些表外端口。四个 $H$ 各有自己的不可变表；不借用动态上限、尺寸、来源、因子累加器、解码器、旧供应、导航、复位、复制、逆拼接、档案或新目标读口。
+
+原动作仍允许当前真实 Clifford `Read`、整 $\rho$、已命名非空正上下文的整左右拼接；此构造只用右拼接。整个候选叶数 $\le H$ 时接受，包括等号；拒绝保留全部原树和括号，不返回候选读。每次真实 Read、每次接受或拒绝的修改尝试均计一次原调用，Halt的输出另承担原费用。
+
+沿用28.1的唯一实际正规形 $N(e,k,p)=(-1)^eS^kA^p$，$S=BA$，以及
+
+$$
+A^2=1,\quad B^2=-1,\quad AB=-S^{-1},\quad B=SA,
+\quad AS^j=(-1)^jS^{-j}A.
+\tag{TM.7003}
+$$
+
+固定左结合实际正树 $W_d=(\beta\alpha)^{d/2}$，$d\in\{4,8,12,16,32\}$，有 $d$ 个叶、$E(W_d)=S^{d/2}$。全 $\alpha$ 词和后列混合词也固定左结合。每次上下文右接实际当前树为左孩子，原树不被代表替换。正规形只是精确实际响应的无损书写；$v$ 直接按完整 Clifford 元素相等选择表项，不附赠一个在线正规化或算术装置。
+
+供应证据的取得、精确初始树身份配对、认证、生产、交付、保留，实际上下文及被拒候选构造、整守卫、整替换、原树增长／保留、响应区分、静态表安装、完整记录／档案／副本访问与保留、算术、字面输出和所有原付费工作继续各承担原义务。抽象状态数及调用数不代替这些费用。
+
+### 70.2 实际前缀、分支字典与完整后继表
+
+<a id="TM70-D2"></a>
+**定义 70.2（有序标记前缀及共享后缀）。** 符号1直接进入 $P_1$，请求一次原 $\rho$。符号2、3、4分别先进入 $V_2,V_3,V_4$，请求下表实际右上下文 $v_i$。记 $d_i=|v_i|$、$e_i=|\rho(v_i)|$、$h_i=E(v_i)$、$h'_i=E(\rho(v_i))$。
+
+| 70上限 | $v_2;(d_2,e_2);(h_2,h'_2)$ | $v_3;(d_3,e_3);(h_3,h'_3)$ | $v_4;(d_4,e_4);(h_4,h'_4)$ |
+| --- | --- | --- | --- |
+| 70H60 | $\alpha^{17};(17,17);(A,B)$ | $\alpha\beta\alpha^7;(9,10);(-S^{-1}A,-S^{-1})$ | $\beta\alpha;(2,3);(S,S^2A)$ |
+| 70H61 | $\alpha^{18};(18,18);(1,-1)$ | $\beta\alpha^9;(10,11);(S,S^2A)$ | $\alpha\beta;(2,3);(-S^{-1},-A)$ |
+| 70H62 | $\alpha^{19};(19,19);(A,-B)$ | $\beta\alpha^{10};(11,12);(B,-S)$ | $\beta\alpha^3;(4,5);(S,-S^2A)$ |
+| 70H63 | $\beta\alpha^{19};(20,21);(S,-S^2A)$ | $\alpha\beta\alpha^{10};(12,13);(-S^{-1},A)$ | $\beta\alpha^4;(5,6);(B,S)$ |
+
+$V_2,V_3$ 的真实 A、R 分别进入不同的 $P_{2A},P_{2R},P_{3A},P_{3R}$；它们各请求一次原 $\rho$。$V_4$ 全域接受，其A进入 $P_{4A}$ 请求一次原 $\rho$；不可达的R任意补到已有 Halt。连同 $P_1$，前缀恰有3上下文及6个 $\rho$ Request，共9个。$c(1)=P_1$、$c(i)=V_i$，$i=2,3,4$。
+
+令O表示真实省略上下文而非响应；$b$ 按首上下文及 $\rho$ 的实际响应组成。下表定义所有 $P$ 的后继入口及 INITIAL 目标。记 $D_{i,b}(M)=T(z,w)$；每一入口格的 $(z,w)$ 用表列公式恢复。OR行包含该行全部隐藏列，输出仅为 $Z(z)$。
+
+| 70实际分支 | 全部原坐标 | 实际入口 $M$ | 入口真实 $E$ | 固定后继 |
+| --- | --- | --- | --- | --- |
+| 70一OA | $w=6,\ldots,15$；$w\le9$ 取 $z=5$，$w=12,14$ 取 $z=10$，其余取 $z=9$ | $4w$ | $1$ | $C_{32}$ |
+| 70一OR | $z=9,\ldots,15$，全部 $16\le w\le2z-1$ | $4z$ | $1$ | $O_{16}$ |
+| 70二AA | $w\in\{3,7,8,9,10\}$；$w=3$ 取 $z=2$，其余取 $z=6$ | $4w+e_2$ | $h'_2$ | $C_{16}$ |
+| 70二AR | $z\in\{6,9,10\}$；$z=9$ 取 $w=12$，其余取 $w=11$ | $4z+d_2$ | $h_2$ | 3入口阈值树 |
+| 70二RA | $w=12,13,14,15$；$w=14$ 取 $z=12$，其余取 $z=11$ | $4w$ | $1$ | 4入口阈值树 |
+| 70三AA | $w\in\{4,5,8,9,10,11,12\}$；$w\le5$ 取 $z=3$，其余取 $z=7$ | $4w+e_3$ | $h'_3$ | $J_{12}$ |
+| 70三AR | $z\in\{7,9,10,11,12\}$；$z=7,10,12$ 取 $w=13$，其余取 $w=14$ | $4z+d_3$ | $h_3$ | $C_{16}$ |
+| 70三RA | $z=13,w=14,15$ | $4w$ | $1$ | 2入口阈值树 |
+| 70四AA | $w\in\{5,6,7,9,10,11,12,13,14\}$；$w\le7$ 取 $z=4$，其余取 $z=8$ | $4w+e_4$ | $h'_4$ | $F_{16}$ |
+| 70四AR | $w=15,z=8,10,12,14$ | $4z+d_4$ | $h_4$ | $C_{16}$ |
+
+普通阈值树复用68.1的具体规则。对排序入口集 $X$、节点静态偏移 $U$，若 $|X|>1$，令 $k$ 为下半 $\lfloor|X|/2\rfloor$ 项的最大值，请求实际 $\alpha^{H-U-k}$。A进入下半、孩子的静态偏移为 $H-k$；R进入上半、偏移仍为 $U$。单点 $\{M\}$ 直接进入 $Q_{D_{i,b}(M)}$。三个独立树的根偏移均为0；其 Request 数依次为2、3、1。四AA的接受子树另取下表规定的5入口、偏移16，有4个 Request。各节点的 $X,U,k$ 只命名静态表项，没有运行时大小或偏移寄存器。
+
+所有其它固定原动作及A/R后继如下；标记「两者」意味着无论实际接受或拒绝都进入同一地址。
+
+| 70后缀地址 | 固定实际原动作 | A后继 | R后继 |
+| --- | --- | --- | --- |
+| 70C32 | 右接 $W_{32}$ | $C_{16}$ | $C_{16}$ |
+| 70C16 | 右接 $W_{16}$ | $C_8$ | $C_8$ |
+| 70C8 | 右接 $W_8$ | $C_4$ | $C_4$ |
+| 70C4 | 右接 $W_4$ | $L$ | $L$ |
+| 70O16 | 右接 $W_{16}$ | $O_8$ | $O_8$ |
+| 70O8 | 右接 $W_8$ | $O_4$ | $O_4$ |
+| 70O4 | 右接 $W_4$ | $L_0$ | $L_0$ |
+| 70J12 | 右接 $W_{12}$ | $J_{16}$ | $C_8$ |
+| 70J16 | 右接 $W_{16}$ | $C_4$ | $C_4$ |
+| 70F16 | 右接 $\alpha^{16}$ | 四AA中 $w=5,6,7,9,10$ 的5入口阈值树，偏移16 | $C_8$ |
+
+$u(L)=u(L_0)=\mathrm{Read}$，两地址分开。完整共享 $L$ 的实际响应及固定字面后继为下表；列中的 $D$ 只枚举表项，运行不取得它、来路或供应符号。
+
+| 70读族 | 当次真实响应 | 完整参数集 | 固定字面后继 |
+| --- | --- | --- | --- |
+| 70读一OA | $S^{2D}$ | $D=0,\ldots,9$ | $Q_{D_{1,OA}(4(15-D))}$ |
+| 70读二AA | $h'_2S^{2D}$ | $D\in\{0,1,2,3,7\}$ | $Q_{D_{2,AA}(4(10-D)+e_2)}$ |
+| 70读三AA | $h'_3S^{2D}$ | $D\in\{0,1,2,3,4,7,8\}$ | $Q_{D_{3,AA}(4(12-D)+e_3)}$ |
+| 70读三AR | $h_3S^{2D}$ | $D\in\{0,1,2,3,5\}$ | $Q_{D_{3,AR}(4(12-D)+d_3)}$ |
+| 70读四AA | $h'_4S^{2D}$ | $D=0,\ldots,3$ | $Q_{D_{4,AA}(4(14-D)+e_4)}$ |
+| 70读四AR | $h_4S^{4D}$ | $D=0,\ldots,3$ | $Q_{D_{4,AR}(4(14-2D)+d_4)}$ |
+
+$L_0$ 的完整实际表为 $v(L_0,S^{2D})=Q_{Z(15-D)}$，$D=0,\ldots,6$。其它响应、不可达修改分支统一补到一个已有 $Q_T$；Halt更新取自身。这给总函数 $v$ 而不增加状态。对完整实际合同上出现的响应，表内已有显式正确后继。
+
+### 70.3 全源正确性、状态精确计数与联合资源达到
+
+<a id="TM70-T3"></a>
+**定理 70.3（完整87状态达到）。** 对每个 $H=60,61,62,63$，定义70.2给出定义70.1完整原任务的成功控制器，恰有87个可达完整状态：56个不同 INITIAL 字面 Halt和31个 Request，后者恰为23个实际上下文、6个原 $\rho$、2个真实 Read。每次实际运行至多六次原调用、至多一次接受 $\rho$；最大首 $\rho$ 尝试前接受材料分别为17、18、19、20。
+
+证明。先核对真实前缀。每个正词的当前增量是 $d_i$，替换后增量是 $e_i=d_i+\#\beta(v_i)$。逐列代入得
+
+$$
+\left\lfloor\frac{H-d_2}{4}\right\rfloor=
+\left\lfloor\frac{H-e_2}{4}\right\rfloor=10,
+\qquad
+\left\lfloor\frac{H-d_3}{4}\right\rfloor=
+\left\lfloor\frac{H-e_3}{4}\right\rfloor=12,
+\qquad
+\left\lfloor\frac{H-e_4}{4}\right\rfloor=14.
+\tag{TM.7004}
+$$
+
+真实符号4只含行4、8、10、12、14，且 $56+d_4\le H$，故首次上下文全部接受。其它符号接受首上下文后，$\rho$ 候选恰为 $4w+e_i$；拒绝首上下文后，原树未变，候选恰为 $4w$。这给定义70.2的全部分支：符号2、3不可能RR；符号4只有AA、AR；符号1的有限点全部OA、隐藏点全部OR。将 authentic 公式分别代入低区行余数、高区奇偶，就得到表列全部坐标；它们各有正组成、全部由Atomic360及58.2实现。低区与高区无重叠，OR保留所有隐藏列，表共覆盖49个有限点和56个隐藏点。入口 $M$ 及 INITIAL 目标正是原未修改组成的字面值。
+
+初始真实 $E=E(\rho t)=1$。接受首上下文后、拒绝 $\rho$ 时，入口 $E=h_i$；接受 $\rho$ 时，原整替换分配到两个真实孩子，入口 $E=h'_i$；拒绝首上下文时入口仍为1。按实际叶序用（TM.7003）乘法计算，得到前缀表中全部 $(h_i,h'_i)$。例如 $H=61$ 的符号4实际词为 $\alpha\beta$，$h_4=AB=-S^{-1}$，替换词为 $\beta\beta\alpha$，$h'_4=B^2A=-A$；倒序 $\beta\alpha$ 不能替代这个标记。
+
+再核对后缀。置
+
+$$
+q_2=H-e_2-40,\quad q_3=H-e_3-48,
+\quad r_3=H-d_3-48,\quad q_4=H-e_4-56,
+\quad r_4=H-d_4-56.
+\tag{TM.7005}
+$$
+
+每个量均在 $\{0,1,2,3\}$ 中。OA剩余叶空间为 $4(15-w)+\delta$，OR为 $4(15-z)+\delta$。2AA、3AA、3AR、4AA、4AR的空间分别为 $4D+q_2,4D+q_3,4D+r_3,4D+q_4,8D+r_4$，其中 $D$ 依各读表取值；4AA这里指拒绝 $F_{16}$ 的四点。
+
+对于空间 $4D+q$、$0\le q\le3$，逐次尝试长度为32、16、8、4的链，或其16、8、4后缀，整守卫恰按二进制贪心接受总长 $4D$。每次A只插入该实际词，R不插入任何因子；最后余量仍为 $q$。OA的 $D\le9$、2AA的 $D\le7$、3AR的 $D\le5$ 均在其链的范围内；OR的 $D\le6$ 也在独立三状态链的范围内。接受材料的有序乘积因此为 $S^{2D}$，入口因子按真实顺序左置，得到各读表的响应。
+
+3AA的 $D\in\{8,7,4,3,2,1,0\}$ 使用 $J_{12}$，A再到 $J_{16}$ 后接 $C_4$，R到 $C_8$ 后接 $C_4$。逐个 $D$ 的实际接受长度为
+
+$$
+\begin{array}{c|rrrrrrr}
+D&8&7&4&3&2&1&0\\ \hline
+\text{接受总叶数}&32&28&16&12&8&4&0
+\end{array}
+\tag{TM.7006}
+$$
+
+例如 $D=8$ 接受12、16、4；$D=7$ 接受12、16而拒绝4；$D=4$ 接受12、拒绝16、接受4；$D=3$ 只接受12；$D<3$ 拒绝12后按8、4判断。因余项 $q_3\le3$，这些实际整守卫无边界歧义，包括相等。所有因子均为 $S$ 的幂，有序产品仍为 $S^{2D}$，故该七格得到 $h'_3S^{2D}$。
+
+4AR的 $D=(14-z)/2\in\{0,1,2,3\}$，空间为 $8D+r_4$。$C_{16},C_8$ 接受恰 $8D$ 叶；抵达同一个 $C_4$ 后剩余 $r_4<4$，所以这次真实 $W_4$ 必拒绝。它仍占一次原调用，后继仍为 $L$，不能按来路省去。真实读为 $h_4S^{4D}$。4AA的 $F_{16}$ 恰在 $w=5,6,7,9,10$ 接受：$H-e_4$ 的值为57、58、57、57，因此接受等价于 $4w+16\le H-e_4$；其余四点 $w=11,12,13,14$ 拒绝，保留原入口并进入 $C_8,C_4$，接受恰 $4(14-w)$ 叶，读为 $h'_4S^{2D}$。接受 $F_{16}$ 的五点由独立阈值树输出。
+
+每个阈值节点当前大小是 $M+U$。其固定正长度 $d=H-U-k$ 满足 $d>0$，因为 $\max X+U\le H$ 且 $k<\max X$。真实整守卫为
+
+$$
+M+U+d\le H\quad\Longleftrightarrow\quad M\le k.
+\tag{TM.7007}
+$$
+
+A孩子的 $M\le k$，新偏移 $U+d=H-k$，保持 $\max X'+U'\le H$；R孩子的偏移和实际树不变。两个孩子均非空，直到唯一 $M$ 直接输出 $D_{i,b}(M)$。这只是固定树节点的证明不变量；在线状态不另带 $M,U,X$。三个入口树的深度至多2、2、1；四AA接受树的深度至多3。
+
+还须证明共享 $L$ 的35个响应可以用一个函数路由。对正规形 $N(e,k,p)$，仅取检查用轮廓 $(e,k\bmod2,p)$；完整响应并未被换成轮廓。六族按OA、2AA、3AA、3AR、4AA、4AR排序，轮廓如下：
+
+| 70轮廓上限 | OA | 2AA | 3AA | 3AR | 4AA | 4AR |
+| --- | --- | --- | --- | --- | --- | --- |
+| 70轮廓60 | $(0,0,0)$ | $(0,1,1)$ | $(1,1,0)$ | $(1,1,1)$ | $(0,0,1)$ | $(0,1,0)$ |
+| 70轮廓61 | $(0,0,0)$ | $(1,0,0)$ | $(0,0,1)$ | $(0,1,0)$ | $(1,0,1)$ | $(1,1,0)$ |
+| 70轮廓62 | $(0,0,0)$ | $(1,1,1)$ | $(1,1,0)$ | $(0,1,1)$ | $(1,0,1)$ | $(0,1,0)$ |
+| 70轮廓63 | $(0,0,0)$ | $(1,0,1)$ | $(0,0,1)$ | $(1,1,0)$ | $(0,1,0)$ | $(0,1,1)$ |
+
+每行六个轮廓不同。族内用（TM.7003）将 $hS^{2D}$ 或 $hS^{4D}$ 化为正规形，其指数是 $D$ 的非零斜率仿射函数；28.1的唯一性及 $S$ 的无限阶区分各 $D$。所以六族共 $10+5+7+5+4+4=35$ 个实际元素两两不同，读表是一个由当次真实 $E$ 到字面 Halt的函数，不依赖旧 $i$、路径或目标端口。独立 $L_0$ 的七个响应也各不同，却与OA相交而输出不同，故两读地址保持独立。
+
+完整 Request计数为：9前缀；4共享 $C$；3独立 $O$；2个 $J$；三个普通阈值树共6；四AA的 $F_{16}$ 及5入口阈值树共5；2读。于是
+
+$$
+R=9+4+3+2+6+5+2=31,
+\qquad K=31+56=87.
+\tag{TM.7008}
+$$
+
+其中上下文数为 $3+4+3+2+6+5=23$，$\rho$ 数为6。全部数的是完整不同地址，包括INITIAL输出；没有藏在另一个变量中的阶段。每个前缀状态都由表列非空原分支达到；每个共享链阶段、独立链阶段和读响应均有表列实际点；$J_{12}$ 的两孩子分别由 $D\ge3$ 和 $D<3$ 达到；$F_{16}$ 两孩子都非空；每个阈值节点的两入口子集都非空。56个目标各有58.2的实际正词及全部允许括号。因此全部87状态可达，而非把不可达填充算入状态。
+
+OA最多1个 $\rho$、4写入、1读，合六调用；OR为1、3、1，合五；2AA、3AR、4AR为2前缀、3写入、1读，合六；3AA为2前缀、3写入、1读，合六；4AA接受侧为2前缀、1分叉、至多3阈值，拒绝侧为2前缀、1分叉、2写入、1读，均至多六；其它阈值分支至多4调用。所有路径是有限向前阶段或严格缩小的阈值树，故每个实际源停止。$\rho$ 仅出现在前缀且每路只尝试一次，所以接受次数至多一。
+
+首 $\rho$ 前只有一个可能接受的上下文。$d_2=17+\delta$，四个 $d_3,d_4$ 均较小；真实符号2点 $(z,w)=(2,3)$ 接受 $v_2$，故最大值恰为 $17+\delta$，不是只给上界。TM65.2或67.2独立提供完整原供应任务的材料下界，本构造因而联合达到既有最小材料和六调用限制。材料最小值的证明不是此状态构造的新增结论。
+
+最后回接全部实际树。Atomic359–360及58.2的充要对应包含每个允许 Euler 词和每一种有序括号，而不只显示 $\omega_{r,s}$。对任一这样的原树，初始组成及三窗共同。实际 $\rho$ 按原叶替换，分配到每个原二叉节点；候选大小由真实组成决定，前缀真实产品由单位窗及表列有序正词决定。后缀再无 $\rho$，每次接受上下文都只右乘该固定实际词，拒绝保留该完整旧树。因此按每个实际 Request归纳，真实守卫响应、当次完整 Clifford读、完整控制地址及INITIAL输出正是上述表；任意叶序和括号的差别不成为隐藏运行变量。OR的每个隐藏 $w>15$ 均拒绝原 $\rho$，其后仍为该原树，大小 $4z$、$E=1$，独立链逐行正确输出。此归纳覆盖完整 $U_H$，没有有限代表替换、免费初始目标观察或来源恢复。$\square$
+
+### 70.4 静态FIB状态名、有限证据与未解边界
+
+<a id="TM70-C4"></a>
+**推论 70.4（条件静态名称长度九）。** 若成功控制器的全部完整 Request／Halt 状态用一个独立、定长、初始接缝为零的合法FIB禁 $11$ 寄存器静态命名，且只计算可自由指定状态名的容量，则定义70.1任务在四个上限的最短可达到名称长度均为9。构造70.2本身的普通二进制显式地址宽度为7。
+
+证明。直接复用《FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II》24.6的计数合同及28.2的完整状态名用法。长度 $\ell$ 的禁 $11$ 串数为 $F_{\ell+2}$，$F_1=F_2=1$。每个成功控制器至少有56个不同字面 Halt，故长度8的 $F_{10}=55$ 个名字不够。长度9的 $F_{11}=89$ 个名字足够为70.3的87个完整状态注入命名；可取词典序前87个合法串。更短长度的容量更小，故最短为9。此证不用62下界、不要求87最小。该具体控制器的二进制宽度为 $\lceil\log_2 87\rceil=7$；这不是所有成功控制器的最小二进制宽度。$\square$
+
+静态名字的存在不建立转移微步、跨接缝写入、读写装置、安装、物理位、运行时间或付费成本之间的等价；这些桥梁仍须另证，原合同不变。
+
+有限佐证见 [controller87.py](../../reports/fib-supplier-capacity/controller87.py) 及 [controller87.json](../../reports/fib-supplier-capacity/controller87.json)。程序只依Python标准库，复用已发表的真实树、递归替换、authentic供应、字面输出和精确有理Clifford矩阵。先编译不可变表并经JSON序列化回读，再让控制器只按地址与当次真实响应执行。数据完整保留四张 $c,u,v$ 表、105组成的入口字典、固定阈值节点、35／7个实际读响应及每个组成的完整数学执行证据。每点检查显示词及其一叶循环移位，在左、右、平衡三种括号上运行，四上限共2520棵实际树及7560个初始单位窗；相等候选接受，拒绝时按实际整树身份验证不变，Read同时与独立精确有理矩阵相核。
+
+循环移位只用于有限佐证：原叶积为单位，移首叶后为其共轭仍为单位；每个替换窗把移首叶换成其完整替换块，仍为同一单位积的循环共轭。它没有限制完整原词域。程序中查看组成、大小、初始目标、材料及收集执行数据的是离线验证器；这些值不进入序列化 $u,v$。有限树样本不枚举全部词或括号，其完整范围由70.3的逐树归纳承担，也不枚举所有控制器。
+
+可反驳的必要区别在真实来源上明确出现。对每个 $H$，$(9,15)$ 与隐藏点 $(15,29)$ 在原 $\rho$ 后都可有60叶、当前 $E=1$，后续链全部拒绝写入；前者在 $L$ 要求有限 INITIAL 目标，后者在 $L_0$ 要求 $Z(15)$。把两个读地址合并会输出错误原目标。在 $H=61$，若只把 $V_4$ 的真实词 $\alpha\beta$ 倒序成 $\beta\alpha$，保留读表，源 $(8,14)$ 的真实读变成 $S^2A$，与符号3源 $(7,12)$ 在 $L$ 的真实读相同，INITIAL目标却不同；原词在前者给 $-A$，保持分离。再者，同上限OA源 $(9,15)$ 给 $1$，2AA源 $(6,10)$ 给 $-1$，其INITIAL目标不同，丢弃真实符号也会错。每个4AR源均在 $C_4$ 真实拒绝，仍计为六调用路径的一次成员；凭来路跳过这次调用需要不同控制地址。报告数据直接检验这些有限反例。
+
+数学引文与对应（70.2–4）。源域、唯一正规形、原树动作及运输、供应及原目标字典、普通阈值、已发表Read构造、材料最小值分别复用Atomic359–360、TM28、TM30／47、TM58、TM64–68。新增承重关系是实际有序混合词同时校准真实叶守卫与六族Read标记，使更小的共享后缀在完整原合同下达到87状态并联合取得已有材料值，属于 repo-derived 源特定综合推导。Larrauri–Bloem，*Minimization and Synthesis of the Tail in Sequential Compositions of Mealy machines*，[arXiv:2105.10292v2](https://arxiv.org/html/2105.10292v2)，§5、定理4给出固定 observation machine 的相容集合闭覆盖与实现对应，其闭性要求每个真实观察后继集合被同一覆盖成员包含。这里在每个共享地址直接证明真实有序后继闭合；该文不供应原TM58树、authentic字典、混合词、87／56数值或材料坐标，也不把给定表最小化变成所有原动作策略最小化。不因文献中未给此数值主张原创优先权。
+
+定理70.3只给 $K_6(H)\le87$；精确 $K_6$、87是否最小、六Request是否可达到、所有策略Read消除、其它供应／上限、全程材料、供应实现、来源准备、档案擦除、安装、微步、物理存储／时间及paid／Pareto节约均未由该构造结算。69.2的下界不参与这个上界或静态名称证。状态、调用和既有材料坐标在同一次原源运行上联合达到，原权限与全部付费义务仍保留。这是普通纸面数学与有限精确佐证，没有Lean／kernel、摄入或消化状态声明。
+
+## 追加锚（本行以下为增补区）
+
+## 71. 完整单位原源的活上下文窗与同地址有限动作归约
+
+### 71.1 原合同、原目标与证明坐标
+
+<a id="TM71-D1"></a>
+**定义 71.1（源特定上下文效果与名义细化）。** 固定公开 $H\in\{60,61,62,63\}$，完整来源取58.1的 $U_H$，即全部非空实际有序二叉树，初始三窗为 $(1,1,1)$、初始叶数不超过 $H$。原相等仍区分每个叶序及每种括号；Atomic360.2–4及58.2包含全部允许 Euler 词、全部括号及全部标签0隐藏组成。写初始组成为 $(4r,4s)$，$r,s\ge1$，$r+s\le15$，并置 $z=r+s,w=r+2s$。authentic 供应严格为（TM.5807）；在此范围它是
+
+$$
+\ell_H(t)=
+\begin{cases}
+1,&w>15,\\
+1+((z-1)\bmod4),&w\le15,\ z\le8,\\
+\lceil(z-8)/2\rceil,&w\le15,\ z>8,\ z\equiv w\pmod2,\\
+\lceil(w-8)/2\rceil,&w\le15,\ z>8,\ z\not\equiv w\pmod2.
+\end{cases}
+\tag{TM.7101}
+$$
+
+供应者仍须持有并认证与这棵精确未修改原树配对的原目标证据。消费者只收到公开 $H$ 和真实符号。INITIAL 输出严格为（TM.7002）的 $T(z,w)$：$w>15$ 时为 $(0,1,4z)$；$w\le15,z+w\le15$ 时为 $(2,(\mathbf u_{\rm unit},(4r,4s)))$；其余为 $(1,(4r,4s),1,1)$。其中 $\mathbf u_{\rm unit}=((0,0,0),(0,0,0),(0,0,0))$ 按原 $(e,k,p)$ 顺序排列。运行后的当前目标不替换此原目标。
+
+动作与完整控制器取66.1：真实当前 Read、整 $\rho$ 尝试、一个已知实际非空正上下文的左／右整拼接，整候选叶数 $\le H$ 才接受，等号接受；拒绝保持完整原树，不返回候选读。每次 Read 或接受／拒绝尝试均占一次原调用。控制器为 $(\mathcal K,c,u,v)$；$c$ 只消费 authentic 符号，$u(k)$ 是固定原动作或固定字面 Halt，$v$ 只消费当前地址和当次真实响应。全部可变历史、阶段、工作及输出状态联合计入 $\mathcal K$，只数原域上可达地址。没有新增来源、签名、旧历史、尺寸、时钟、剩余预算或解码端口。
+
+对任何实际树 $x$，记
+
+$$
+\begin{aligned}
+C(x)&=(a,b),& d&=a+b,& e&=a+2b,\\
+\lambda_j(x)&=F_{j+1}a+F_{j+2}b,&
+E_j(x)&=E(\rho^jx),&
+L_j&=4F_{j+3},
+\end{aligned}
+\qquad F_0=0,\quad F_1=F_2=1.
+\tag{TM.7102}
+$$
+
+$C$ 用以区别组成与初始化函数 $c$。这些值及上下文出现的年龄只用于证明。供应取得、身份配对、认证、上下文准备／可用权限、被拒候选构造、整守卫／替换、原树存储、安装、算术、完整动作记录／档案／副本保留及字面输出均继续承担原义务。有限效果键与原上下文的名义描述分开：后者保留实际树身份、叶序、括号、真组成和所有权限／费用坐标；有限键不宣告这些描述相同。
+
+### 71.2 全历史的精确活窗前沿
+
+<a id="TM71-T2"></a>
+**定理 71.2（最小实际单位源的支配与达到）。** 对任一71.1原源及任一合法历史，若已接受 $j$ 次 $\rho$，当前树中唯一存活的原源出现至少贡献 $L_j$ 片叶。因此 $j\le4$。对任一实际正上下文 $x$，存在至多六次原调用的合法原源历史，在接受 $x$ 后又接受恰 $j$ 次 $\rho$ 并读取该出现的第 $j$ 窗口，当且仅当
+
+$$
+0\le j\le4,\qquad L_j+\lambda_j(x)\le H.
+\tag{TM.7103}
+$$
+
+这里“读取该窗口”指下述单位源探针的真实整树 Read 等于 $E_j(x)$，不是一个子树读口。五道条件依次为
+
+$$
+\begin{array}{c|ccccc}
+j&0&1&2&3&4\\ \hline
+L_j&8&12&20&32&52\\
+\lambda_j(x)&d&e&d+e&d+2e&2d+3e.
+\end{array}
+\tag{TM.7104}
+$$
+
+若一个上下文出现已接受并经历 $j$ 次后续替换，则它在任何合法当前树中必满足（TM.7103），即使此前还有别的接受替换和上下文。后续正材料不能解锁不满足该条件的窗口。
+
+证明。TM30.1的单出现运输直接作用于实际树：初始只含一个原源块；接受拼接在指定侧加入一个新块；接受 $\rho$ 同时替换全部块；拒绝和 Read 保持块。故在同一真实叶序中，当前组成为 $M^j(4r,4s)$ 加各已接受上下文出现的非负组成，$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$。原块的叶数至少 $\lambda_j(4,4)=4F_{j+3}=L_j$。$L_5=84>63$，后续 $L_j$ 不减，故第五次接受替换不可能。
+
+设某上下文出现已历经 $j$ 次后续替换。原块的总年龄 $J\ge j$，其叶数至少 $L_J\ge L_j$；该上下文出现贡献恰 $\lambda_j(x)$，其余材料非负。因此同一当前树的合法上限强制 $L_j+\lambda_j(x)\le H$。这同时证明任意历史的必要性，不把总材料上界倒用为其中一部分的下界。
+
+反之，取实际原源 $t_*=\omega_{1,1}=\alpha\beta\beta\alpha\beta\alpha\alpha\beta$ 的一个固定括号，组成 $(4,4)$，authentic 符号2，INITIAL 为 $(2,(\mathbf u_{\rm unit},(4,4)))$。其全部 $E_j$ 均为1：前三星为单位，TM28的 $E_{j+3}=J(E_j)$ 且 $J(1)=1$ 给归纳。将 $x$ 真实接于任一侧，随后尝试 $j$ 次整 $\rho$，再 Read。第 $i$ 个候选叶数恰为 $L_i+\lambda_i(x)$，$0\le i\le j$。替换逐叶不减少叶数，故（TM.7103）保证每一步接受，包括等号。真实整树乘积为 $1E_j(x)$ 或 $E_j(x)1$，即 $E_j(x)$；共 $j+2\le6$ 次原调用。追加其它正材料使每个未来资源不减，无法越过一条已失败的不等式。若包括当前插入在内仅余 $q$ 次调用，上述探针还需 $j+2\le q$；$q$ 是证明索引，不能在合流地址上免费选择不同指令。$\square$
+
+### 71.3 固定组成下必要且充分的实际上下文窗
+
+<a id="TM71-D3"></a>
+**定义 71.3（统一活效果键）。** 置 $D=H-8$。对实际非空正上下文 $x$，定义
+
+$$
+\sigma_H(x)=
+\begin{cases}
+\bot,&d>D,\\
+(a,b,E_0(x)),&d\le D,\ e>H-12,\\
+(a,b,E_0(x),E_1(x)),&d\le D,\ e\le H-12,\ d+e>H-20,\\
+(a,b,E_0(x),E_1(x),E_2(x)),&d\le D,\ d+e\le H-20.
+\end{cases}
+\tag{TM.7105}
+$$
+
+两道活性掩码只由真组成决定。左／右侧作为指令的另一个字段保留。$\bot$ 只表示所有可达原历史上必拒绝的响应效果，不删去该请求、名义上下文或其费用。
+
+<a id="TM71-T4"></a>
+**定理 71.4（全原历史的窗替换同余）。** 同一侧的任意两个上下文 $x,\widehat x$ 若 $\sigma_H(x)=\sigma_H(\widehat x)$，则在71.1每个原输入上，将任意指令中的 $x$ 替换成 $\widehat x$，保留其它指令及其对应侧，可以同时对任意多个上下文作这种替换，使所有有限历史的原 A/R、完整真实 Clifford Read 及当前真组成逐步相同。拒绝时各运行均保留自身的完整旧树。在固定 $C(x)=C(\widehat x)$、$1\le d\le D$ 和固定侧内，该键的相等也是至多六调用的全部原源响应替换实验相同的必要条件。
+
+证明。配对运行从同一精确原树开始。在对应历史上，为每个已接受上下文出现保留一个配对块；块的位置由原左右拼接次序确定，年龄是插入后实际接受 $\rho$ 次数。它们是证明中的配对，运行不读取这张表。非 $\bot$ 上下文的真组成完全相同；若 $d>D$，当前原块至少有八叶，故候选叶数至少 $8+d>H$，两边均拒绝且均占一次调用。由此组成相等在每个拼接及 $\rho$ 候选上保持；接受判词及等号情形相同，拒绝不加入新块。
+
+任何当前块的年龄 $j$ 满足71.2。$j=0,1,2$ 时，它的对应 $E_j$ 必为（TM.7105）所保留；例如 $j=2$ 强制 $20+d+e\le H$，继而第一未来窗也活。$j=3,4$ 时已有 $E_3=J(E_0),E_4=J(E_1)$，因此两个对应块的真实产品也相同。资源 $\lambda_j$ 仍由完整组成及实际年龄计算，不能按三或六取模。
+
+按实际叶序将当前树的乘积写成其原块和全部接受块的有序乘积，原块在两运行中相同，每对上下文块在当前年龄的产品也相同，故整树真实 Read 相同。此处只用 $E$ 的结合性和 $\rho$ 对原二叉节点的分配；既未交换任何因子，也未改变实际括号的相等关系。左插入放在最左、右插入放在最右，顺序逐步保持。拒绝不贡献因子。相同响应使任意响应依赖的对应续行仍能归纳；合流、回访、重复 Read、拒绝后再试和多次接受 $\rho$ 均包括在内。
+
+必要性只在声明的固定组成／固定侧内断言。若键不同，存在最早不同的保留 $E_j$，$j\le2$。71.2的 $t_*$ 探针真实插入该上下文，接受 $j$ 次 $\rho$ 后 Read，至多四调用且所有候选合法，响应分别为不同的 $E_j$。故不可能在全部原源响应实验中替换相同。此测试是合法前缀，不断言每个区别前缀都能扩展成成功全域六调用控制器；也不声称不同组成之间该键是最粗行为商。$\square$
+
+### 71.4 联合 Euler 实现的有限实际代表
+
+<a id="TM71-T5"></a>
+**定理 71.5（有界实际目录及算术构造）。** 每个非 $\bot$ 实际键可选一个同组成、至多 $D$ 叶的实际正树代表；$\bot$ 可选固定左结合 $\alpha^{D+1}$。这些代表组成一个有效可构造的有限目录 $\mathscr R_H$，有
+
+$$
+\begin{aligned}
+|\mathscr R_H|&\le B_H+1,\\
+B_H&=\sum_{d=1}^{H-8}\sum_{b=0}^{d}
+(b+1)(d+1)^{\mathbf1_{\{d+b\le H-12\}}}
+(d+b+1)^{\mathbf1_{\{2d+b\le H-20\}}}.
+\end{aligned}
+\tag{TM.7106}
+$$
+
+连同两侧、Read 和 $\rho$，一个固定实际请求目录至多有 $2B_H+4$ 项。具体上界为
+
+| 71目录上限 | 非拒绝代表至多叶数 | 拒绝代表叶数 | $B_H$ | 实际代表数上界 | 请求数上界 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 71目录60 | 52 | 53 | 352958 | 352959 | 705920 |
+| 71目录61 | 53 | 54 | 388800 | 388801 | 777604 |
+| 71目录62 | 54 | 55 | 430208 | 430209 | 860420 |
+| 71目录63 | 55 | 56 | 469895 | 469896 | 939794 |
+
+这些是上界，不是实际键像的精确基数。
+
+证明。固定 $(a,b)$，置 $d=a+b,e=a+2b$。每个窗口的唯一正规形为 $N(\epsilon_i,k_i,p_i)$。逐叶按TM28.1乘法，每片 $\beta$ 对指数贡献 $+1$ 或 $-1$，$\alpha$ 对指数贡献零；三个窗口的 $\beta$ 数分别为 $b,d,e$，故
+
+$$
+|k_0|\le b,\quad |k_1|\le d,\quad |k_2|\le e,\qquad
+k_0\equiv b,\ k_1\equiv d,\ k_2\equiv e\pmod2.
+\tag{TM.7107}
+$$
+
+TM29.5给 $p_i=(d,a,b)_i\bmod2$ 和 $\epsilon_i=(b_i-k_i)/2\bmod2$，$b_i=(b,d,e)_i$。因此在固定组成上每个指数决定该完整窗口，分别至多 $b+1,d+1,e+1$ 种取值。只乘仍活的因子，并对全部 $1\le d\le D,0\le b\le d$ 求和，得到（TM.7106）；实际联合约束只会减少数量。两侧各有至多 $B_H+1$ 请求，再加Read及 $\rho$ 得 $2B_H+4$。求和也可按 $a,b\ge0,1\le a+b\le D$，分别在 $a+2b\le H-12$、$2a+3b\le H-20$ 时乘 $a+b+1$、$a+2b+1$；代入四个 $H$ 得表。
+
+有效构造不将各窗独立拼成来源。对每个上述组成，枚举（TM.7107）的完整指数三元组，按相位公式补全三窗，使用Atomic359.4的共同正规形检验，得唯一 $(u,v,w,p,q)$。随后使用Atomic360.2：算出 $X,Y$ 及同一三元组的八边重数，要求整数、全部非负且正重数支撑与起点00弱连通。通过者恰由同组成的实际词共同实现。构造该有限多重图从00出发的 Euler 路，按一个固定边序选择其中一条，读出词并固定左结合括号。按 $\sigma_H$ 投影并去重，每个实现键保留一个代表。原实际上下文为其键提供共同完成，故无键遗漏；未保留窗口也须在这个共同完成中合法，不能以分别可达代替联合可达。代表有恰 $d$ 片叶，不枚举二叉括号树，不要求优化器。
+
+任意 $d>D$ 上下文在每个可达原历史均拒绝，$\alpha^{D+1}$ 同样如此，且非空。阈值精确：在 $t_*$ 上 $\alpha^D$ 候选恰为 $H$ 而接受，$\alpha^{D+1}$ 超限而拒绝。目录构造只为静态存在／有效性证明；准备、认证、安装和使用每个实际代表仍按原合同付费。$\square$
+
+### 71.5 同一完整控制地址上的六调用对应
+
+<a id="TM71-T6"></a>
+**定理 71.6（真实响应、原调用与完整可达地址同时保留）。** 给定71.1任一完整有限控制器，将每个上下文 Request 地址的固定上下文按71.5替换成其键代表，保持原侧；Read、$\rho$、字面 Halt、整个 $c,v$ 及地址集原样取用。对完整 $U_H$ 每棵实际树，新旧运行有相同真实响应序列、相同逐步地址序列、相同调用数和停止／不停止行为，停止时输出同一个字面 INITIAL 目标。两个控制器的可达 Request／Halt 地址集合分别完全相同，故完整 $K$ 相同。特别，若 $K_{6,\mathscr R}(H)$ 限制上下文取自该固定实际目录，则
+
+$$
+K_{6,\mathscr R}(H)=K_6(H),\qquad 62\le K_6(H)\le87.
+\tag{TM.7108}
+$$
+
+证明。每棵精确原输入仍由其原供应证据配对并从原 $c(\ell_H(t))$ 开始，运行中不换初始树。71.4给当前组成及真实响应相同；因此同一 $v(k,o)$ 给同一下一地址，进而从同一地址执行相应的固定指令。对调用数归纳，任意长度前缀都同步。Halt指令未改，在同一地址输出同一嵌套字面目标。若某运行不停止，则另一运行也在每个有限前缀同步；没有通过省略 Read 或拒绝请求改变历史长度。每个可达地址在另一运行中由同一实际原输入达到，给两个方向的集合相等，而非只有大小上界。原树与代表上下文产生的后继树可不同；相同的是所声明的响应及控制地址。
+
+每个成功六调用原控制器都如此得到同 $K$ 的目录控制器，故 $K_{6,\mathscr R}\le K_6$；目录动作自身是原合法实际动作，故 $K_6\le K_{6,\mathscr R}$。62下界复用69.2，87上界复用70.3，不从目录上界计算新最小值。
+
+完整源的量词没有以组成模型替代。Atomic360.3及58.2的105个组成格，每格的所有 Euler 词和所有括号均具有同一初始组成和共同三单位窗；TM28运输给全部后窗，原整 guard 和有序块归纳对每一实际树成立。每格可取 $\omega_{2z-w,w-z}$ 作存在见证，包括全部56个隐藏组成，但在线树仍是原收到者。若仅在这些见证上分析一个同表控制器，组成及共同窗的一步运输使同格全部原树有相同响应／地址／INITIAL输出；既不向 $c$ 供应格号，也不把同格的实际身份归为相等。此源提升复用既有结果，新的承重关系是静态上下文替换后仍将真实响应直接交给未改变的 $v$。$\square$
+
+数学对应（71.2–6）。活性前沿、部分窗目录及其同地址对应是TM28–30、TM45、Atomic359–360、TM58、TM66所给实际源关系的 repo-derived 推导。TM47.4保留有序外因子并翻译虚拟Read，不能直接作为本定理的同地址依据；TM61–62的规定检查点／宏迹和TM63.2的完整修改历史也不供应该量词。Reissig–Weber–Rungger，*Feedback Refinement Relations for the Synthesis of Symbolic Controllers*，[arXiv:1503.03715v3](https://arxiv.org/html/1503.03715v3)，定义V.2、定理V.4要求同一可用输入及全部相关后继包含；不同名义上下文不是同一输入，本处由逐地址固定对应另证真实响应相等，不添一个量化器或来源观察。Larrauri–Bloem，[arXiv:2105.10292v2](https://arxiv.org/html/2105.10292v2)，§5定理4给给定 observation machine 的相容集合闭覆盖／实现对应；覆盖必须包含每个真实观察后继。它不供应此源的 $8,12,20$ 截止、实际联合Euler代表或所有原动作的 $K_6$ 最小值。成熟框架只用于这些明确对应，不主张文献优先权。
+
+### 71.6 原源内的 guard、窗口与次序反例
+
+<a id="TM71-T7"></a>
+**命题 71.7（有限原历史排除更粗的替换）。** 对每个 $H=60,61,62,63$，以下都是71.1同一真实源 $t_*$ 的合法历史，除明确指出的最终拒绝外候选全接受，分别排除丢失下一窗、第二未来窗、真组成、实际侧及任意策略只接受一次 $\rho$ 的断言。
+
+证明。以固定括号写 $x=\alpha\beta\beta,y=\beta\beta\alpha$。两者组成 $(1,2)$、当前产品均为 $-A$，下一产品分别为 $S^{-1}A,S^3A$。右插入、$\rho$、Read 三调用的候选叶数为11、17，最后真实响应不同。因此仅保存当前产品和组成不足。
+
+TM30.3的实际 $p=\langle\alpha,\langle\alpha,\beta\rangle\rangle$ 和 $q=\langle\beta,\langle\alpha,\alpha\rangle\rangle$ 同为 $(2,1)$，当前及下一产品为 $B,-S$，第二产品为 $S^4A,A$。右插入、$\rho$、$\rho$、Read 四调用的候选大小为11、16、27，最后响应不同；若在插入后及首次 $\rho$ 后各增加一次Read，完整六调用响应依次为 $A,B,A,-S,A,S^4A$ 或 $A,B,A,-S,A,A$。这是同一个实际上下文的缺窗，不可用各窗独立来源修补。
+
+TM29.6的实际词 $P=\alpha^3\beta\alpha^2,Q=\beta^2\alpha\beta^3$ 均有六叶，共同三窗为 $(-S^{-1},-A,S^3A)$，组成分别 $(5,1),(1,5)$。从 $t_*$ 右插入其中一个，再右插入同一实际 $\alpha^{H-19}$；两个插入候选大小为14、$H-5$，均合法。随后 $\rho$ 候选分别为 $12+7+(H-19)=H$ 和 $12+11+(H-19)=H+4$，给真实A／R。相等候选接受，因此完整三窗和当前总叶数仍不能删去真组成。
+
+从 $t_*$ 右插入 $\alpha$ 后，左插入 $\beta$ 或右插入 $\beta$，再Read。两次候选大小9、10相同，最终产品分别 $BA=S$ 和 $AB=-S^{-1}$，由TM28.1唯一正规形不同。故不能交换上下文或删去侧。
+
+最后从 $t_*$ 右插入 $\alpha$，接受四次 $\rho$，再Read，恰六调用。候选大小为9、13、22、35、57，全部合法；最终产品为 $E_4(\alpha)=J(B)=-B$。这排除把70.3具体上界构造的“至多一次接受替换”提升为全策略限制。各产品由同一原逐叶替换和TM28有序乘法给出，没有另选 toy 来源。$\square$
+
+### 71.7 成功六调用中的名义与付费细化障碍
+
+<a id="TM71-T8"></a>
+**定理 71.8（有限效果不能保留全部字面上下文材料）。** 存在完整 $U_{60}$ 上成功、至多六原调用的控制器族 $\{\Pi_N:N\ge53\}$，每个恰100个可达完整状态。所有成员具有相同逐源真实响应和地址轨迹，但某个同址请求的实际上下文身份、真组成、候选材料叶数及完整显式树描述随 $N$ 无界。因此不存在一个有限实际代表族，同时保留所有成功六调用原控制器的这些字面坐标。71.6的同地址响应归约不证明原权限和付费成本等距。
+
+证明。复用TM68.2的完整99状态原控制器，包含43 Request和56字面 Halt。符号4的AR目标 $(z,w)=(8,15)$ 有实际源 $\omega_{1,7}$、组成 $(4,28)$、authentic 符号4，INITIAL为 $T=(1,(4,28),1,1)$。其完整原历史为：右接 $\beta\alpha$ 接受，当前34叶；$\rho$ 候选63叶拒绝；右接 $W_{16}=(\beta\alpha)^8$ 接受至50叶；右接 $W_8=(\beta\alpha)^4$ 接受至58叶；Read返回 $S^{13}$，再于原字面 Halt输出 $T$。恰五次原调用，全部原词／括号在该目标上沿同历史。TM68.2完整共享读表中 $S^{13}$ 只有这个INITIAL目标。
+
+对每个 $N\ge53$，只将该Read响应的后继重定向到新地址 $J$；$u(J)$ 固定为实际左结合 $\alpha^N$ 的右拼接，$v(J,R)$ 为原 $T$ 的Halt，未实现的A及其它响应补到已有地址。$J$ 的候选有 $58+N>60$ 叶，必拒绝并保持整实际树；这次真实请求仍计调用。全部其它原输入沿旧完整控制器停止；这个目标的全部原输入多出一次拒绝后在第六次调用停止，INITIAL不变。43个旧Request、56个旧Halt和一个新Request全部可达，恰100状态。所有成员在相同地址 $J$ 得同一真实R；旧地址及全部响应后继相同，故逐源响应／地址轨迹相同。
+
+$N=53,54$ 已给有限区别见证：上下文组成为 $(53,0),(54,0)$，候选为111、112叶；显式二叉树分别有105、107个节点。让 $N$ 无界，任何有限实际上下文族的真叶数上界都不能覆盖这些精确材料。即使组成及全部窗口相同，$((\alpha\alpha)\alpha)$ 与 $(\alpha(\alpha\alpha))$ 的括号也仍给不同名义原树；效果相等不使其动作记录字面相等。
+
+因此完整原记录只能按每个地址的原名义指令与71.6的固定对应保留为细化数据，不能把新实际代表请求的记录称为旧记录。若需要权限／付费结论，至少另证同一原实际源、每个可达历史上原／新上下文的可用身份与所有权、构造／安装／服务／守卫／记录／保留／输出成本向量及耗时的对应，或明确证明一个方向的成本界和预算转换。保留原无界描述可以保持原契约，却不会使字面动作宇宙有限；增加代数窗口也不能恢复被删去的名义材料坐标。这里未假定特定硬件费用恰等于叶数，只已证明需要保留的材料／身份坐标不在有限效果纤维上恒定，故不能由响应相等推断付费相等。$\square$
+
+定理71.6只限制既有抽象状态／原调用目标的上下文选择；精确 $K_6$、六Request是否可达、87是否最小、全策略Read消除、有效或穷尽优化器、其它实际来源／供应／上限，以及物理状态、时间或paid／Pareto节约均未由该归约给出。所有结论为上述原接口下的普通数学；不存在向当前控制器额外提供签名、年龄、来源格、旧历史或剩余预算的假设。
+
+## 追加锚（本行以下为增补区）
+
+## 72. 共享真实替换后缀的79／76状态联合控制器
+
+### 72.1 不变原合同与联合最小值
+
+<a id="TM72-D1"></a>
+**定义 72.1（固定 authentic 来源上的联合控制任务）。** 固定公开 $H=60+\delta$，$\delta\in\{0,1,2,3\}$。原对象、相等、权限、供应、响应和费用取58.1、66.1、70.1的完整合同。原树是自由有序非空树 $t::=\alpha\mid\beta\mid\langle t,t\rangle$；原相等保留全部叶序和括号。$\rho(\alpha)=\beta$、$\rho(\beta)=\langle\beta,\alpha\rangle$，并分配到每个原二叉节点。$E$ 是有序 Clifford 叶积，$A=E(\alpha)$、$B=E(\beta)$ 满足 $A^2=1$、$B^2=-1$、$AB+BA=1$。来源严格为全部
+
+$$
+U_H=\{t:1\le|t|\le H,\ (E(t),E(\rho t),E(\rho^2t))=(1,1,1)\}.
+\tag{TM.7201}
+$$
+
+复用Atomic359–360、58.2的完整实际像。证明坐标为 $2\le z\le15$、$z+1\le w\le2z-1$，组成为 $C(z,w)=(4(2z-w),4(w-z))$，前三个真实叶数为 $4z,4w,4(z+w)$。每个允许 Euler 叶词、该词的每种有序括号以及全部 $w>15$ 隐藏组成都在输入域内。49个有限目标与7个折叠目标的 INITIAL 字面值仍为
+
+$$
+T(z,w)=\begin{cases}
+Z(z)=(0,1,4z),&w>15,\\
+(2,(\mathbf u_{\rm unit},C(z,w))),&w\le15,\ z+w\le15,\\
+(1,C(z,w),1,1),&w\le15,\ z+w>15,
+\end{cases}
+\qquad\mathbf u_{\rm unit}=((0,0,0),(0,0,0),(0,0,0)).
+\tag{TM.7202}
+$$
+
+窗口坐标按原 $(e,k,p)$ 排列，标签2的内层按窗口、组成排列，包括 $z+w=15$ 的等号。运行后的目标不替代 INITIAL 目标。
+
+供应严格为（TM.5807）：$w>15$ 时符号为1；有限 $z\le8$ 时为 $1+((z-1)\bmod4)$；其余置 $x=z-8,y=w-8$，同奇偶时为 $\lceil x/2\rceil$，异奇偶时为 $\lceil y/2\rceil$。供应者仍须持有并认证与这棵精确未修改初始树配对的真实原目标证据；证据取得、解析、身份配对、认证、生产、交付和保留不由本构造供应。消费者只收到公开 $H$ 与真实符号 $i$。
+
+完整控制器是 $(\mathcal K,c,u,v)$：$c$ 只消费 $i$ 一次，$u(k)$ 固定为一个原 Request 或一个字面 $\operatorname{Halt}(T)$，$v(k,o)$ 只消费完整当前地址 $k$ 与当次真实响应 $o$。凡仍可使用的供应、阶段、PC、校准、历史、权限、动作选择、局部工作和输出字段均计入 $k$。原 Request 仍是当前完整 Clifford Read、整 $\rho$ 尝试或一个已命名已知实际非空正上下文的整左／右拼接。整个候选叶数 $\le H$ 才接受，等号接受；拒绝保留完整旧树，不返回候选读。每次 Read 和每次接受／拒绝尝试都计一个原调用，Halt另承担字面输出义务。运行可离开单位族。
+
+固定 $H$ 和不可变表只作静态描述。没有表外可变供应、历史、阶段、剩余预算、来源、尺寸、因子累加器、解码器、档案、导航、时钟或费用读口；也不增加复制、复位、逆拼接、变上限或来源替换。只数完整原域闭环可达地址。$K_6(H)$ 沿用66.1；另定义 $K_{\rm joint}(H)$ 为同一完整六调用成功控制器中，再要求65.1的 $B_H\le H-43$ 时的最小完整状态数。$B_H$ 计首 $\rho$ **尝试**以前实际接受的上下文叶数；若没有该尝试，则计至有限停止。竞争域仍允许任意原左右正上下文、重复 Read、合流／回访、多个接受 $\rho$、拒绝后续行、晚期上下文和同源合法历史。以下构造选择一种具体形状，不对竞争者施加该形状。
+
+### 72.2 完整正词与三表
+
+<a id="TM72-D2"></a>
+**定义 72.2（实际标记词和完整 $c,u,v$）。** 沿用28.1的唯一正规形 $N(\varepsilon,k,p)=(-1)^\varepsilon S^kA^p$，$S=BA$；其乘法为
+
+$$
+N(\varepsilon,k,p)N(\varphi,l,q)
+=N(\varepsilon+\varphi+pl\bmod2,\ k+(-1)^pl,\ p+q\bmod2).
+\tag{TM.7203}
+$$
+
+这只是当次完整真实 Clifford 响应的无损写法。$v$ 按完整元素相等直接取固定后继，既不只读轮廓，也不附赠在线正规化装置。以下每个正词固定其左结合实际树；幂记号表示正次数重复，词的顺序保留。置 $W_d=(\beta\alpha)^{d/2}$，$d\in\{4,8,16,32\}$，其叶数为 $d$、当前乘积为 $S^{d/2}$。表中的 $g,f,r,j,g_0$ 既命名实际树，也在乘积式中表示其真实 $E$；$g_0$ 仅在 $H=63$ 使用。
+
+| 72实际词上限 | $v_2$ | $v_3$ | $v_4$ | $g$ | $f$ | $r$ | $j$ | $g_0$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 72词60 | $\alpha^{17}$ | $\alpha\beta\alpha^9$ | $\alpha\beta$ | $\beta^2$ | $\alpha^8(\alpha\beta)^4$ | $\alpha^5(\beta\alpha)^4$ | $\alpha\beta\alpha\beta\alpha$ | 不使用 |
+| 72词61 | $\alpha\beta\alpha^{16}$ | $\alpha^{13}$ | $\alpha\beta\alpha$ | $\beta^2$ | $\alpha^{15}\beta$ | $\alpha^6\beta\alpha\beta\alpha\beta\alpha\beta$ | $\alpha\beta\alpha\beta\beta$ | 不使用 |
+| 72词62 | $\alpha^{19}$ | $\beta\alpha^{11}$ | $\beta\alpha^2$ | $\beta^2\alpha^2$ | $\alpha^{12}(\alpha\beta)^2$ | $\alpha^{12}\beta^2$ | $\alpha^5\beta$ | 不使用 |
+| 72词63 | $\beta\alpha^{19}$ | $(\alpha\beta)^2\alpha^9$ | $\alpha\beta\alpha^3$ | $\beta\alpha\beta\alpha\beta\alpha\beta$ | $\alpha^8(\alpha\beta)^4$ | $(\alpha\beta)^6\alpha$ | $\alpha\beta\alpha\beta\alpha$ | $\beta^2\alpha^2$ |
+
+记 $d_i=|v_i|$、$e_i=|\rho(v_i)|$、$h_i=E(v_i)$、$h'_i=E(\rho(v_i))$。全部真实配对数据为
+
+| 72配对上限 | $(d_2,e_2;h_2,h'_2)$ | $(d_3,e_3;h_3,h'_3)$ | $(d_4,e_4;h_4,h'_4)$ |
+| --- | --- | --- | --- |
+| 72配对60 | $(17,17;A,B)$ | $(11,12;-S^{-1}A,S^{-1})$ | $(2,3;-S^{-1},-A)$ |
+| 72配对61 | $(18,19;-S^{-1},-A)$ | $(13,13;A,B)$ | $(3,4;-S^{-1}A,S^{-1})$ |
+| 72配对62 | $(19,19;A,-B)$ | $(12,13;S,-S^2A)$ | $(3,4;B,-S)$ |
+| 72配对63 | $(20,21;S,-S^2A)$ | $(13,15;S^{-2}A,B)$ | $(5,6;-S^{-1}A,-S^{-1})$ |
+
+每个不同字面 $T$ 恰设一个 $Q_T$，$u(Q_T)=\operatorname{Halt}(T)$。置 $Q(z,w)=Q_{T(z,w)}$、$Q_Z(z)=Q_{Z(z)}$；相同字面目标只有一个地址。初始化为
+
+$$
+c(1)=P_1,\qquad c(2)=V_2,\qquad c(3)=V_3,\qquad c(4)=V_4.
+\tag{TM.7204}
+$$
+
+令 $\mathsf A,\mathsf R$ 分别表示真实接受、拒绝响应，区别于 Clifford 元素 $A$。所有固定修改指令与两条响应后继如下。$Q_*=Q(2,3)$ 是已有字面 Halt；标为不可达的后继只作总函数补全。
+
+| 72完整地址 | $u$ 的固定原 Request | $\mathsf A$ 后继 | $\mathsf R$ 后继 |
+| --- | --- | --- | --- |
+| 72V2：$V_2$ | 右接 $v_2$ | $P$ | $P_{2R}$ |
+| 72V3：$V_3$ | 右接 $v_3$ | $P$ | $P_{3R}$ |
+| 72V4：$V_4$ | 右接 $v_4$ | $P$ | $Q_*$，不可达 |
+| 72P1：$P_1$ | 整 $\rho$ | $C_{32}$ | $H<63$ 时 $O_{16}$；$H=63$ 时 $G_0$ |
+| 72P：$P$ | 整 $\rho$ | $F$ | $C_{16}$ |
+| 72P2R：$P_{2R}$ | 整 $\rho$ | $G$ | $Q_*$，不可达 |
+| 72P3R：$P_{3R}$ | 整 $\rho$ | $T_R$ | $Q_*$，不可达 |
+| 72C32：$C_{32}$ | 右接 $W_{32}$ | $C_{16}$ | $C_{16}$ |
+| 72C16：$C_{16}$ | 右接 $W_{16}$ | $C_8$ | $C_8$ |
+| 72C8：$C_8$ | 右接 $W_8$ | $C_4$ | $C_4$ |
+| 72C4：$C_4$ | 右接 $W_4$ | $L$ | $L$ |
+| 72G：$G$ | 右接 $g$ | $C_8$ | $Q(11,15)$ |
+| 72TR：$T_R$ | 右接 $\alpha^{H-56}$ | $Q(13,14)$ | $Q(13,15)$ |
+| 72F：$F$ | 右接 $f$ | $R_f$ | $C_8$ |
+| 72Rf：$R_f$ | 右接 $r$ | $D_4$ | $J_f$ |
+| 72D4：$D_4$ | 右接 $\alpha^4$ | $A_4$ | $L$ |
+| 72A4：$A_4$ | 右接 $\alpha^4$ | $Q(4,5)$ | $Q(4,6)$ |
+| 72Jf：$J_f$ | 右接 $j$ | $L$ | $L$ |
+
+$H<63$ 时另设 $O_{16},O_8,O_4$，分别右接 $W_{16},W_8,W_4$，两种真实响应均分别进入 $O_8,O_4,L_0$。$H=63$ 时没有这三个地址及 $L_0$，另设 $G_0$，右接 $g_0$，$\mathsf A\mapsto C_{16}$、$\mathsf R\mapsto Q_Z(15)$。
+
+$u(L)=\mathrm{Read}$，且 $H<63$ 时 $u(L_0)=\mathrm{Read}$。$L$ 的全部普通响应表如下；每行各个 $D$ 的完整元素直接进入列出的字面 $Q(z,w)$。$D,z,w$ 只是静态表项与证明索引，没有在线端口。
+
+| 72普通读族 | 当次完整真实响应 | 静态 $D$ 集 | 固定 INITIAL 坐标 |
+| --- | --- | --- | --- |
+| 72读一OA | $S^{2D}$ | $0,\ldots,9$ | $w=15-D$；$w\le9$ 时 $z=5$，$w=12,14$ 时 $z=10$，其余 $z=9$ |
+| 72读二AA高 | $h'_2S^{2D}$ | $0,\ldots,3$ | $z=6,w=10-D$ |
+| 72读二AR | $h_2S^{2D}$ | $4,1,0$ | 依次为 $(6,11),(9,12),(10,11)$ |
+| 72读三AA高 | $h'_3S^{2D}$ | $0,\ldots,3$ | $z=7,w=12-D$ |
+| 72读三AR | $h_3S^{2D}$ | $0,1,2,3,5$ | $z=12-D$；$z=7,10,12$ 时 $w=13$，其余 $w=14$ |
+| 72读四AA高 | $h'_4S^{2D}$ | $0,\ldots,3$ | $z=8,w=14-D$ |
+| 72读四AR | $h_4S^{4D}$ | $0,\ldots,3$ | $z=14-2D,w=15$ |
+| 72读二RA接受 | $E(g)S^{2D}$ | $0,\ldots,2$ | $w=14-D$；$w=14$ 时 $z=12$，其余 $z=11$ |
+
+另有七个完整响应／字面后继，依序为
+
+$$
+\begin{array}{c|c}
+\text{完整响应}&\text{固定后继}\\ \hline
+h'_2E(f)E(r)&Q(2,3)\\
+h'_3E(f)E(r)&Q(3,4)\\
+h'_3E(f)E(j)&Q(3,5)\\
+h'_3E(f)&Q(7,8)\\
+h'_4E(f)E(r)&Q(4,7)\\
+h'_4E(f)E(j)&Q(8,9)\\
+h'_4E(f)&Q(8,10).
+\end{array}
+\tag{TM.7205}
+$$
+
+$H<63$ 时，$v(L_0,S^{2D})=Q_Z(15-D)$，$D=0,\ldots,6$。$H=63$ 时，在 $L$ 加入 $v(L,-S^{2D})=Q_Z(14-D)$，$D=0,\ldots,5$。所有未列响应在 Request 地址均补为 $Q_*$，每个 Halt 的更新补为自身。这给完整总函数 $c,u,v$；不存在未计入的动作选择或终端译码地址。
+
+### 72.3 真实前缀与混合来源阈值后缀
+
+<a id="TM72-L3"></a>
+**引理 72.3（三供应共享 $P$ 的全源守卫与后继）。** 定义72.2的实际前缀恰产生70.2的十个完整原坐标分支；其中符号2、3、4接受首上下文后可以共用一个完整 $P$ 地址及其两条真实后继。共享 $F,R_f,D_4,A_4,J_f$ 在所有这些来源上恰产生（TM.7205）和两个直接字面输出。
+
+证明。按（TM.7203）逐叶乘法，$E(\alpha)=N(0,0,1)$、$E(\beta)=N(0,1,1)$；逐叶替换后再乘给定义72.2的全部配对，不能分别任意指定两个窗口。真实增量 $e_i=d_i+\#\beta(v_i)$，逐表得
+
+$$
+\left\lfloor\frac{H-d_2}{4}\right\rfloor=
+\left\lfloor\frac{H-e_2}{4}\right\rfloor=10,
+\quad
+\left\lfloor\frac{H-d_3}{4}\right\rfloor=
+\left\lfloor\frac{H-e_3}{4}\right\rfloor=12,
+\quad
+\left\lfloor\frac{H-e_4}{4}\right\rfloor=14.
+\tag{TM.7206}
+$$
+
+符号4全部行满足 $z\le14$、$56+d_4\le H$，故首上下文全接受。符号1直接尝试原 $\rho$，有限 $w\le15$ 接受，全部隐藏 $w>15$ 拒绝。其它符号接受首上下文后，$\rho$ 候选为 $4w+e_i$；拒绝首上下文后，整原树不变，候选为 $4w$。由原 authentic 公式及（TM.7206），完整入口支持为
+
+| 72前缀格 | 全部原坐标 | 当前叶数、真实乘积 |
+| --- | --- | --- |
+| 72格一OA | $w=6,\ldots,15$，$z$ 按72.2普通一OA行 | $(4w,1)$ |
+| 72格一OR | $z=9,\ldots,15$，每个 $16\le w\le2z-1$ | $(4z,1)$ |
+| 72格二AA | $w=3,7,8,9,10$；$w=3$ 时 $z=2$，其余 $z=6$ | $(4w+e_2,h'_2)$ |
+| 72格二AR | $(6,11),(9,12),(10,11)$ | $(4z+d_2,h_2)$ |
+| 72格二RA | $(11,12),(11,13),(12,14),(11,15)$ | $(4w,1)$ |
+| 72格三AA | $w=4,5,8,9,10,11,12$；$w\le5$ 时 $z=3$，其余 $z=7$ | $(4w+e_3,h'_3)$ |
+| 72格三AR | $(7,13),(9,14),(10,13),(11,14),(12,13)$ | $(4z+d_3,h_3)$ |
+| 72格三RA | $(13,14),(13,15)$ | $(4w,1)$ |
+| 72格四AA | $w=5,6,7,9,10,11,12,13,14$；$w\le7$ 时 $z=4$，其余 $z=8$ | $(4w+e_4,h'_4)$ |
+| 72格四AR | $w=15$，$z=8,10,12,14$ | $(4z+d_4,h_4)$ |
+
+这是原供应低区两行余数和高区奇偶尾的原字典；有限各行分别有 $10,5,3,4,7,5,2,9,4$ 个点，合49，隐藏行共56个组成。没有二RR、三RR或四R首分支。初始 $E(t)=E(\rho t)=1$，整替换分配到实际两个孩子，故接受上下文后的实际 AA、AR 因子分别是 $h'_i,h_i$；RA 为1。这给共享 $P$ 的全部真实入口，而不在 $P$ 外保留来路或旧 $i$。
+
+对 AA 入口记 $M=4w+e_i$。实际词满足
+
+$$
+e_3-e_4=9,\qquad e_2-e_4\in\{14,15\},\qquad
+|f|=16,\quad |r|=H-16-(28+e_4),\quad
+|j|=H-16-(36+e_4).
+\tag{TM.7207}
+$$
+
+$F$ 的真实守卫 $M+16\le H$ 在二AA只接受 $w=3$，三AA接受 $w=4,5,8$，四AA接受 $w=5,6,7,9,10$。拒绝 $F$ 时没有写入，其余三个高族的空间分别为 $4(10-w)+q_2,4(12-w)+q_3,4(14-w)+q_4$，$q_i=H-e_i-4c_i\in\{0,1,2,3\}$，这里 $c_2=10,c_3=12,c_4=14$ 仅为证明记号。各高族的 $D\le3$，实际 $C_8,C_4$ 写入恰 $4D$ 叶、乘积 $S^{2D}$，于是得到三个普通高AA读族。
+
+在 $F$ 接受时，$R_f$ 的整候选为 $M+16+|r|$，所以接受恰为 $M\le28+e_4$。若接受，$D_4$ 的守卫为 $M\le24+e_4$；再接受后，$A_4$ 的守卫为 $M\le20+e_4$。二AA的 $w=3$ 对应 $M-e_4\in\{26,27\}$，三AA的 $w=4$ 对应25，四AA的 $w=7$ 对应28；三者都接受 $R_f$、拒绝 $D_4$，到 $L$ 的真实响应分别为 $h'_2E(f)E(r),h'_3E(f)E(r),h'_4E(f)E(r)$。只有四AA的 $w=5,6$ 接受 $D_4$，其 $M-e_4$ 为20、24；$A_4$ 恰将二者分别送到 $Q(4,5),Q(4,6)$，等号接受。
+
+若 $R_f$ 拒绝，原树保持为 $F$ 接受后的树。$J_f$ 接受恰为 $M\le36+e_4$。剩余三AA的 $w=5,8$ 对应 $M-e_4=29,41$，四AA的 $w=9,10$ 对应36、40。前一对中的 $w=5$ 与后一对中的 $w=9$ 接受 $j$，其它两个拒绝；无论响应都到 $L$。这给（TM.7205）的另外四项。以上守卫直接穷尽 $F$ 接受的全部来源，拒绝不贡献任何因子。特别 $P$ 的同一个接受后继 $F$ 已对三供应联合成立；其拒绝后继 $C_{16}$ 的完整兼容性由下一引理给出。$\square$
+
+### 72.4 全部真实读响应的兼容性
+
+<a id="TM72-L4"></a>
+**引理 72.4（完整读表单值与全部余支）。** 在完整实际原源上，定义72.2的 $L$ 有44个不同真实响应（$H=60,61,62$）或50个（$H=63$）；$H<63$ 的 $L_0$ 有7个。所有这些响应恰取表列 INITIAL 字面后继，其余直接字面分支也正确。
+
+证明。首先核对未进入 $F$ 的实际后缀。若空间为 $4D+q$、$0\le q\le3$，长度32、16、8、4的贪心链及其相应后缀接受恰 $4D$ 叶，仍留 $q$；接受词的真实有序乘积为 $S^{2D}$。一OA用 $D=15-w\le9$；$H<63$ 的一OR用 $D=15-z\le6$。二AR空间为 $4(10-z)+3$，三AR空间为 $4(12-z)+(H-d_3-48)$，后一余项在 $\{0,1,2,3\}$ 内。二AR的 $D\in\{4,1,0\}$ 与三AR的 $D\in\{0,1,2,3,5\}$ 因此共用 $C_{16},C_8,C_4,L$，真实读分别为 $h_2S^{2D},h_3S^{2D}$。
+
+四AR的空间为 $8D+(H-d_4-56)$，$D=(14-z)/2\in\{0,1,2,3\}$，余项为2或3。$C_{16},C_8$ 写入恰 $8D$ 叶，之后同一个 $C_4$ 的真实尝试必拒绝，仍占一次原调用；读为 $h_4S^{4D}$。不按来路省略该请求。
+
+$|g|$ 在四上限依次为2、2、4、7，满足 $\delta<|g|\le\delta+4$。在二RA的 $4w$ 入口，$G$ 恰接受 $w=12,13,14$，拒绝 $w=15$ 并直接输出 $Q(11,15)$。接受后空间为 $4(14-w)+(H-|g|-56)$，余项在 $\{0,1,2,3\}$，$C_8,C_4$ 得 $E(g)S^{2D}$。三RA的 $T_R$ 用实际正词 $\alpha^{H-56}$，接受入口56而拒绝60，直接输出两个原 $Q(13,14),Q(13,15)$。
+
+$H=63$ 时，全部隐藏点仍拒绝 $P_1$ 的 $\rho$。此后 $G_0$ 的真词 $\beta^2\alpha^2$ 有4叶、乘积 $-1$。它接受每个 $z=9,\ldots,14$ 的隐藏组成，拒绝每个 $z=15$ 的隐藏组成，后者直接输出 $Q_Z(15)$。接受空间为 $4(14-z)+3$，故 $C_{16},C_8,C_4$ 写入 $4(14-z)$ 叶，真实读为 $-S^{2D}$、$D=14-z\in\{0,\ldots,5\}$。这是原历史内的实际写入，没有把旧读地址无条件相等化。
+
+还须证明共享 $L$ 的表单值。按真实顺序计算的后缀产品为
+
+| 72产品上限 | $E(g)$ | $E(f)$ | $E(r)$ | $E(j)$ |
+| --- | --- | --- | --- | --- |
+| 72产品60 | $-1$ | $S^{-4}$ | $S^{-4}A$ | $S^{-2}A$ |
+| 72产品61 | $-1$ | $-S^{-1}$ | $S^4A$ | $S^{-1}A$ |
+| 72产品62 | $-1$ | $S^{-2}$ | $-1$ | $-S^{-1}$ |
+| 72产品63 | $S^4A$ | $S^{-4}$ | $S^{-6}A$ | $S^{-2}A$ |
+
+记 $\pi(N(\varepsilon,k,p))=(\varepsilon,k\bmod2,p)$，只作证明用轮廓。八个普通族按一OA、二AA高、二AR、三AA高、三AR、四AA高、四AR、二RA接受排序，轮廓如下；例如 $011$ 表示 $(0,1,1)$，不是在线响应字母。
+
+| 72轮廓上限 | 一OA | 二AA高 | 二AR | 三AA高 | 三AR | 四AA高 | 四AR | 二RA接受 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 72轮廓60 | $000$ | $011$ | $001$ | $010$ | $111$ | $101$ | $110$ | $100$ |
+| 72轮廓61 | $000$ | $101$ | $110$ | $011$ | $001$ | $010$ | $111$ | $100$ |
+| 72轮廓62 | $000$ | $111$ | $001$ | $101$ | $010$ | $110$ | $011$ | $100$ |
+| 72轮廓63 | $000$ | $101$ | $010$ | $011$ | $001$ | $110$ | $111$ | $001$ |
+
+$H=60,61,62$ 的八个轮廓各异。每族的完整指数在 $D$ 中有非零斜率，故唯一正规形及 $S$ 的无限阶分开共 $10+4+3+4+5+4+4+3=37$ 个响应。$H=63$ 时，三AR与二RA接受同为轮廓 $001$，完整指数集却分别为 $\{-2,-4,-6,-8,-12\}$ 与 $\{4,2,0\}$，不交；其它普通轮廓不同，仍有37个不同响应。隐藏接受族的轮廓为 $100$，指数为 $0,2,4,6,8,10$，不与这37项相交。
+
+（TM.7205）七项依其原顺序的唯一 $(\varepsilon,k,p)$ 坐标为
+
+| 72额外坐标上限 | 二AA低 | 三AA4 | 三AA5 | 三AA8 | 四AA7 | 四AA9 | 四AA10 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 72额外60 | $(0,9,0)$ | $(0,-9,1)$ | $(0,-7,1)$ | $(0,-5,0)$ | $(1,8,0)$ | $(1,6,0)$ | $(1,4,1)$ |
+| 72额外61 | $(1,-3,0)$ | $(0,-2,0)$ | $(1,3,0)$ | $(0,2,1)$ | $(1,2,1)$ | $(1,-3,1)$ | $(1,-2,0)$ |
+| 72额外62 | $(0,3,1)$ | $(0,4,1)$ | $(1,5,1)$ | $(1,4,1)$ | $(0,-1,0)$ | $(0,-2,0)$ | $(1,-1,0)$ |
+| 72额外63 | $(1,12,0)$ | $(0,11,0)$ | $(0,7,0)$ | $(0,5,1)$ | $(1,-11,1)$ | $(1,-7,1)$ | $(1,-5,0)$ |
+
+逐项同轮廓的普通指数集列在下面；$H=63$ 第一项还包括隐藏接受族，故已核对整个新增读支持。
+
+| 72对应指数上限 | 二AA低 | 三AA4 | 三AA5 | 三AA8 | 四AA7 | 四AA9 | 四AA10 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 72指数60 | $\{-1,1,3,5\}$ | $\{1,-1,-3,-5\}$ | $\{1,-1,-3,-5\}$ | $\{-1,1,3,5\}$ | $\{0,2,4\}$ | $\{0,2,4\}$ | $\{0,-2,-4,-6\}$ |
+| 72指数61 | $\{-1,1,7\}$ | $\{0,2,\ldots,18\}$ | $\{-1,1,7\}$ | $\{0,-2,-4,-6,-10\}$ | $\{0,-2,-4,-6\}$ | $\{-1,-5,-9,-13\}$ | $\{0,2,4\}$ |
+| 72指数62 | $\{1,-3,-7,-11\}$ | $\{0,-2,-8\}$ | $\{1,-1,-3,-5\}$ | $\{2,0,-2,-4\}$ | $\{1,3,5,7,11\}$ | $\{0,2,\ldots,18\}$ | $\{1,3,5,7\}$ |
+| 72指数63 | $\{0,2,4,6,8,10\}$ | $\{1,3,9\}$ | $\{1,3,9\}$ | $\{1,-1,-3,-5\}$ | $\{-1,-5,-9,-13\}$ | $\{-1,-5,-9,-13\}$ | $\{-1,1,3,5\}$ |
+
+每个额外指数均在其对应集以外；额外项中轮廓相同者的指数也各异。故 $H<63$ 的 $L$ 有 $37+7=44$ 个不同元素，$H=63$ 的 $L$ 有 $37+6+7=50$ 个。$L_0$ 的七个 $S^{2D}$ 各不同，但它是另一个计入的地址，无须与 $L$ 的响应不交。各元素的来源与字面后继已由72.3及本引理的原守卫证明；不能用仅有轮廓的计数替代这个完整指数核对。$\square$
+
+### 72.5 每棵原树上的联合达到
+
+<a id="TM72-T5"></a>
+**定理 72.5（完整79／76状态与六调用、最小材料同时达到）。** 对 $H=60,61,62,63$，定义72.2在定义72.1的全部原实际来源上正确，完整可达状态数依次为 $(79,79,79,76)$；每个都有56个不同 INITIAL 字面 Halt。每次运行至多六个原调用，首 $\rho$ 尝试前的最大接受材料恰为 $H-43$。因此
+
+$$
+62\le K_6(H)\le K_{\rm joint}(H)\le
+\begin{cases}
+79,&H=60,61,62,\\
+76,&H=63.
+\end{cases}
+\tag{TM.7208}
+$$
+
+证明。先固定**任意一棵**原实际输入树，包括其原叶序、任意允许 Euler 词、全部原有序括号及任意隐藏组成。Atomic360、58.2给该树自身的组成及三单位窗，不把它替换成显示见证。对实际 Request 归纳：右接命名实际正树 $x$ 若接受，当前树成为实际 $\langle t_{\rm cur},x\rangle$，旧树为左孩子，真叶数加 $|x|$，有序积右乘 $E(x)$；若拒绝，完整旧树和全部括号原样保留，响应只有 $\mathsf R$。整 $\rho$ 逐叶分配到每个原节点，前缀拼接接受后其候选为 $\langle\rho t,\rho v_i\rangle$，叶数及因子正是72.3所证的 $4w+e_i,h'_i$。原 $\rho$ 拒绝时也保留全部旧树。
+
+因此72.3的每一个前缀守卫、真实因子及共享 $P$ 后继都在这棵实际树上成立。以后没有 $\rho$，接受与拒绝的有序因子归纳正是72.3–4的后缀计算；Read 返回该整树当次完整 $E$，不是证明坐标。引理72.4证明每个共享读地址上完整响应有唯一正确字面后继。直接分支也有其真实守卫和正确原 $T$。INITIAL 目标只作不变证明义务，不被控制器读取。于是该实际树遵循三表并输出其原 $q_H$。论证对所选树无词序或括号限制，故同时覆盖每种原实现。隐藏行的每个 $w>15$ 都在首 $\rho$ 拒绝后保留原树；后续只按其真实大小 $4z$ 和单位积归纳，不取得隐藏 $w$，不删除其组成。
+
+全部非Halt后继沿有限向前阶段，取从地址到Halt的最大剩余请求路径长作为严格下降的自然数秩。这个秩只用于证明，不另作为控制字段。请求路径长度如下。一OA为一次 $\rho$、四个 $C$、一次Read，合六；$H<63$ 的一OR为一次 $\rho$、三个 $O$、一次Read，合五。二／三／四的 AA、AR 前缀各有两次原调用；$P$ 拒绝后为 $C_{16},C_8,C_4,L$，恰四次。$P$ 接受后，$F$ 拒绝侧为 $F,C_8,C_4,L$，恰四次；接受侧各路为 $F,R_f,D_4,A_4$，或 $F,R_f,D_4,L$，或 $F,R_f,J_f,L$，也恰四次。二RA接受 $G$ 时为两前缀、$G,C_8,C_4,L$，合六，拒绝 $G$ 时合三；三RA合三。$H=63$ 的隐藏 $z=15$ 路为 $P_1,G_0$，合二；其它隐藏路为 $P_1,G_0,C_{16},C_8,C_4,L$，合六。强制拒绝的 $C_4$ 及其它拒绝候选都计入这些数。每路只有一次 $\rho$ 尝试，故此构造至多一次接受 $\rho$；这不是全策略限制。
+
+共有七个前缀 Request（三个 $V_i$、四个 $\rho$ 地址），四个 $C$，两个 $G,T_R$，五个 $F$ 子树地址。$H<63$ 再有三个 $O$ 与两个Read；$H=63$ 则再有一个 $G_0$ 与一个Read。因此
+
+$$
+\begin{array}{c|c|c|c|c|c}
+H&\text{上下文Request}&\rho\text{ Request}&\text{Read}&\text{Request总数}&K\\ \hline
+60,61,62&17&4&2&23&23+56=79\\
+63&15&4&1&20&20+56=76.
+\end{array}
+\tag{TM.7209}
+$$
+
+没有其它状态。每个前缀、$P$ 的两条活分支、$G$ 的两条分支与 $T_R$ 的两条分支都有72.3表列来源；$F$ 接受和拒绝都有来源。$R_f$ 的接受与拒绝、$D_4$ 的两支、$A_4$ 的两支、$J_f$ 的两支分别由72.3的低点及边界给出实际实现。所有 $C/O$ 阶段有对应实际点，每个读表项均由其表列 $(z,w)$ 产生。$G_0$ 接受由 $z=14$ 的隐藏源实现，拒绝由 $z=15$ 的全部隐藏源实现。$H<63$ 时 $L$ 的44个有限目标、$L_0$ 的7个折叠目标、直接 $Q(11,15),Q(13,14),Q(13,15),Q(4,5),Q(4,6)$ 恰为全部56目标；$H=63$ 时 $L$ 的44个有限目标与6个折叠目标、上述5个直接有限目标及 $Q_Z(15)$ 也恰为56。每个点有58.2的实际来源，所有计入地址均可达，而非不可达填充。
+
+首 $\rho$ 尝试前，符号1没有插入，其它符号只可能接受自己的一个 $v_i$。最大长度为 $d_2=H-43$，$d_3,d_4$ 均较小。真实符号2点 $(2,3)$ 接受 $v_2$，故 $B_H=H-43$ 恰好达到。65.2–3提供已有的全策略材料必要性与精确最小值；69.2提供已有的全原六调用 $K\ge62$。共同正确性域、供应和 INITIAL 目标均相同，故这两个已证下界适用；联合约束的竞争域包含于 $K_6$ 竞争域，得到（TM.7208）。没有从此具体构造推出更强全策略必要条件。$\square$
+
+数学引文与对应（72.3–5）。完整实际像、真实原树动作、唯一正规形、authentic供应、INITIAL字典、六调用必要性、材料最小值与62下界分别复用Atomic359–360、TM28–30／47、TM58、TM64–66及TM69。72.3–5的新承重关系是实际正词的共同增量 $e_3-e_4=9$、$e_2-e_4\in\{14,15\}$ 与七个完整额外读响应同时相容，使三供应共用一个真实替换／阈值后缀；$H=63$ 又由实际 $g_0$ 写入接回全部隐藏行。这是 repo-derived 源特定综合推导，不主张全局原创或文献优先权。
+
+Larrauri–Bloem，*Minimization and Synthesis of the Tail in Sequential Compositions of Mealy machines*，[arXiv:2105.10292v2](https://arxiv.org/html/2105.10292v2)，§5、定理4的相容闭覆盖要求初态被覆盖且每个真实观察后继集合包含于同一覆盖成员，是成熟实现背景。本节在每个完整地址直接证明这个后继条件；该文的给定 observation machine 最小化不供应本处原源、正词、79／76数值或所有策略下界。Reissig–Weber–Rungger，*Feedback Refinement Relations for the Synthesis of Symbolic Controllers*，[arXiv:1503.03715v3](https://arxiv.org/html/1503.03715v3)，定义V.2、定理V.4要求可用输入保留及全部相关后继包含，其行为细化不赠予源观察或Moore／调用／材料／费用等距。这里的数值与完整原源桥梁由上述逐树证明承担。71.4–6可在其原源／响应／同地址范围内复用；本构造保留表列实际树身份，不从其有限效果目录推断名义权限或paid等价。
+
+### 72.6 原源反例与资源边界
+
+<a id="TM72-P6"></a>
+**命题 72.6（省掉真实标记或拒绝等号的实际反例）。** 下列修改均不能保留定义72.2的完整原目标正确性：在任一四上限仅将 $f$ 改为同叶数 $\alpha^{16}$；在 $H=63$ 将 $P_1$ 的拒绝后继直接改为 $C_{16}$ 而跳过 $G_0$；或将整守卫的相等候选拒绝。这些是相应具体表修改的反例，不是其它79／76状态控制器的不可能性。
+
+证明。取实际单位正词 $\omega_{r,s}$（TM.5805）的固定左结合树。第一种修改在原点 $(7,8)$、$(7,12)$ 使用 $\omega_{6,1}$、$\omega_{2,5}$，二者真实供应均为3，INITIAL分别是 $(2,(\mathbf u_{\rm unit},(24,4)))$、$(1,(8,20),1,1)$。前者接受 $F$，但拒绝 $R_f,J_f$：其 $M-e_4=41>36$；后者拒绝 $F$，随后 $C_8,C_4$ 均拒绝。若 $E(f)=1$，二者都在同一个 $L$ 返回 $h'_3$，需要不同字面输出。仅保留16叶的守卫不足以保留读支持。
+
+第二种修改取原点 $(9,15)$、隐藏点 $(15,29)$，由 $\omega_{3,6}$、$\omega_{1,14}$ 实现。二者 authentic符号均为1，INITIAL分别为 $(1,(12,24),1,1)$、$Z(15)=(0,1,60)$。前者接受首 $\rho$ 至60叶，此后四个 $C$ 全拒绝；后者拒绝首 $\rho$、仍60叶，直接去 $C_{16}$ 后全部拒绝。两者在 $L$ 同读1，却不能同字面输出。因此一Read构造依赖真实 $g_0$ 写入及其直接拒绝出口，不是无条件合并旧 $L,L_0$。
+
+第三种修改取实际 $(4,5)$，由 $\omega_{3,1}$ 实现，供应4。到 $F$ 以前为 $M=20+e_4$；接受 $F,R_f$ 后大小为 $H-8$，接受 $D_4$ 后为 $H-4$，下一 $A_4$ 的整个候选恰为 $H$。所有更早接受候选均严格小于 $H$。原等号接受使其输出 $Q(4,5)$；等号拒绝会输出不同的 $Q(4,6)$。每个见证属于原完整实际源；用任意允许括号所得同样守卫和产品由72.5的逐树归纳承担。$\square$
+
+<a id="TM72-P7"></a>
+**命题 72.7（逐源调用与读支持的不可合并成本坐标）。** 72.5缩小完整状态上界而不逐源调用弱支配70.3。其逐组成调用数在 $H<63$ 为：$(11,15),(13,14),(13,15)$ 三个有限点各3次，其余46个有限点各6次，全部56个隐藏组成各5次；在 $H=63$，前三点仍3次，其余有限点6次，隐藏行 $z=15$ 的14个组成各2次，其它42个隐藏组成各6次。完整实际同格的全部原词／括号具有同样调用数。其Read支持分别为 $44/7$ 或单地址50项，较70.3的 $35/7$ 更丰富，不能据状态数下降推断安装表、原源材料、付费或物理成本下降。
+
+证明。逐支路径长度已在72.5证明中给出，三个三调用出口正是拒绝 $G$ 与两个 $T_R$ 出口；其余有限路径都为两前缀加四后缀，或一OA的六次路径。每个隐藏行有 $2z-16$ 个组成，$z=15$ 给14，其余合42，全部合56。完整同格的响应和地址由原单位窗、真实组成和实际固定树动作决定，72.5不把词／括号差别作为免费变量。故以上计数对同格全部实际源成立。
+
+在70.3的五入口阈值树中，三个点 $(4,5),(4,6),(4,7)$ 均在五调用后停止；72.2均用六调用。因此状态减少没有逐源弱支配。在 $H=63$，70.3的全部隐藏行用五调用，而本构造 $z=9,\ldots,14$ 用六、$z=15$ 用二。Read支持数直接由72.4与70.3得到；响应分支、字面输出、实际正词构造和安装描述继续保留，而不是变成免费历史或解码信息。普通显式二进制地址宽度在这两个具体构造中仍都为7，也不从此推出任意成功控制器的最小宽度。$\square$
+
+本节仅结算（TM.7208）的存在上界与复用下界之间区间；精确 $K_6,K_{\rm joint}$、更强全策略下界及其它供应／上限仍未决。进一步必要关系须同时约束任意原合法历史上的完整地址、可选原动作与全部真实响应支持，包括重复Read、合流／回访、晚期左右上下文及多个接受替换。某固定表的最小化、一个检查点的轮廓数、一个运行或有限树样本均不提供该全策略桥梁。有限检验只能佐证其所取实际树；全部原词／括号／隐藏组成的覆盖由72.5的普通证明承担，不构成Lean／kernel核验。
+
+所有原供应证据取得、认证、身份配对、生产／交付／保留、实际上下文与被拒候选构造、整guard／$\rho$、来源增长与存储、完整记录／档案／副本、精确响应区分、静态表安装、算术及字面输出继续分别受原权限和费用约束。抽象状态上界不证明全程材料、静态描述字节、运行时间、物理存储、paid或Pareto节约；回应等价亦不消去TM71.8的名义材料细化义务。此构造的单次 $\rho$ 与右侧形状不成为全策略正规形。
+
+## 追加锚（本行以下为增补区）

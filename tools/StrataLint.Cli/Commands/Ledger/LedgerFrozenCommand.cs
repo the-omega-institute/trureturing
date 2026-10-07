@@ -29,7 +29,8 @@ internal static class LedgerFrozenCommand
 
         try
         {
-            var decoded = SnapshotDecoder.Decode(repository.ReadCurrent());
+            var decoded = SnapshotDecoder.Decode(repository.ReadCurrent(
+                [FrozenLedgerChangeClassifier.AcceptedRoot, FrozenStatePath.Root.TrimEnd('/')]));
             if (decoded is SnapshotDecodeOutcome.InfrastructureFailure failure)
             {
                 return Invalid(failure.Message);
