@@ -318,7 +318,7 @@ Report artifacts are isolated by Lake traces with the semantic version only for 
 
 The exporter emits an owner-bound `information_templates` partition for every requested module. Native row production validates complete current membership, evidence structure and material integrity; for a present `information_templates` partition, native validation checks its single current shape; versions belong to provenance and receipts, with origin compatibility scoped by H, while the C# consumer rejects missing evidence and malformed records within A5.5's selected registration-owner scope. `inspect.sh` delegates both unchanged and changed work to native Lake report facets and propagates phase failures. C# separately performs A5.4's complete occurrence/sidecar/ownership join for the selected owners and A5.5's delta judgment. Selected records check fields, canonical occurrence keys, ordering, source ownership and certificate consistency. Stored hashes are not compared with current snapshot bytes; Lake traces and the single semantic version scoped to H govern report reuse. The explicit `--statements-only` fixture operation omits `information_templates` and cannot satisfy the declared-template consumer for selected owners.
 
-Census projects the registration records, evidence and verdicts from the current production report. It performs no second assessment and emits no disposition certificate. Independent proof-graph analysis and data-only certificate tools live in the downstream Reg inspector host; they cannot provide registration verdicts or replace production evidence.
+Downstream projection tools cannot provide registration verdicts or replace production evidence.
 
 **A15 提交与 PR 文法** `COMMIT := <官>"("<GID>"): "<动词短语>`;PR 模板 = 四段判词(立了什么/依赖什么/试了什么死了什么/账平声明勾选:无既有 closed 被推翻)。
 
@@ -1331,7 +1331,7 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 | [CanonicalStatementWriter](../../../tools/StrataLint.Engine/Snapshot/CanonicalStatementWriter.cs)、[图 DTO](../../../tools/Trureturing.Truth/TruthGraph/TruthGraphSchema.cs)、[图 writer/reader](../../../tools/Trureturing.Truth/TruthGraph/TruthGraphJson.cs) | 复用 declaration statement identity、provenance、canonical bytes 与 strict loading；v2 单独换方言，不放宽 v1。 |
 | [EscapeRecord](../../../D5/S3/ConceptDynamics/InformationEscape/EscapeRecord.lean)、[kernel projection](../../../tools/lean-inspector/LeanInformationAuditRegAnalysis/Projection/ProjectionSchema.lean) | 前者只给具名链的 witness/empty，后者是有 scope 的 certified analysis；首期不产生二者之间的新桥或 residual-handling 边。 |
 
-首期独立交付定理↔登记↔模板导航、选中范围与现有残余证据的可用性；它不要求全库登记齐备、模板 census 清理、数学新证明或残余后继链接。既有 analysis 的语义仍见[信息逃逸规范](lean_single_compile_intrinsic_information_escape_theory_and_spec.md)，不搬进本节重定义。
+首期独立交付定理↔登记↔模板导航、选中范围与现有残余证据的可用性；它不要求全库登记齐备、数学新证明或残余后继链接。既有 analysis 的语义仍见[信息逃逸规范](lean_single_compile_intrinsic_information_escape_theory_and_spec.md)，不搬进本节重定义。
 
 **A18.2.2 生产链与选择先行。** 以下是未来调用契约，不授权改变 A5.5 判词或选择集合。
 
