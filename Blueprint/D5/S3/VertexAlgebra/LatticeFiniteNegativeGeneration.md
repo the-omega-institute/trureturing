@@ -4,11 +4,59 @@
 
 A finite family of actual lattice fields spans the entire lattice carrier by negative-mode words.
 
-Let D have finite rank r, an integral symmetric Gram matrix G with even diagonal, and positive-definite real Gram matrix. Rank zero is included. Charges form L=(Fin(r) to Z), and the oscillator algebra P is the complex multivariate polynomial algebra on Fin(r) times N. The carrier V is the space of finite-support functions L to P, with vacuum single(0,1). Write B(alpha,beta)=sum_i,j alpha_i G_ij beta_j and Q(alpha)=B(alpha,alpha).
+Let D have finite rank r, an integral symmetric Gram matrix G with even diagonal. Norm positivity and finite generation additionally require a positive-definite real Gram matrix. Rank zero is included. Charges form L=(Fin(r) to Z), and the oscillator algebra P is the complex multivariate polynomial algebra on Fin(r) times N. The carrier V is the space of finite-support functions L to P, with vacuum single(0,1). Write B(alpha,beta)=sum_i,j alpha_i G_ij beta_j and Q(alpha)=B(alpha,alpha).
 
 For each basis charge e_i the neutral field H_i has normalized mode m acting on single(delta,p) as single(delta,h_i(m,delta)p). For m<0 this polynomial operator multiplies by X(i,-m-1). For m=0 it multiplies by the scalar B(e_i,delta). For m>0 it is m times sum_j G_ij partial_(j,m-1). These modes extend linearly to V. A polynomial contains finitely many oscillator variables, so sufficiently large positive modes kill it; finite charge support gives a statewise bound and hence a vertex operator. The charged fields F_beta are the actual exponential and polynomial-translation fields of Actual Lattice Creation Coefficients.
 
-**Theorem 1.1 (A finite field family generates every charge and oscillator state).**
+**Theorem 1.1 (bilinear symmetric).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.bilinear_symmetric`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.bilinear_symmetric` (`✓ std3`). ∎
+
+*Citation.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+For every ordinary D and charges alpha,beta, B(alpha,beta)=B(beta,alpha), directly from symmetry of the integral Gram matrix. No positive-form or nondegeneracy premise is used.
+
+**Theorem 1.2 (bilinear neg left).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.bilinear_neg_left`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.bilinear_neg_left` (`✓ std3`). ∎
+
+*Citation.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+For every ordinary D and charges alpha,beta, B(-alpha,beta)=-B(alpha,beta). This is integral bilinearity without any positive-form premise.
+
+**Theorem 1.3 (bilinear neg right).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.bilinear_neg_right`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.bilinear_neg_right` (`✓ std3`). ∎
+
+*Citation.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+For every ordinary D and charges alpha,beta, B(alpha,-beta)=-B(alpha,beta). This is integral bilinearity without any positive-form premise.
+
+**Theorem 1.4 (norm positive).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.norm_positive`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.norm_positive` (`✓ std3`). ∎
+
+*Citation.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+If the real Gram matrix is positive definite, every nonzero integral charge alpha has B(alpha,alpha)>0. The real quadratic-form inequality is transported through the exact integral cast; rank zero remains allowed.
+
+**Theorem 1.5 (A finite field family generates every charge and oscillator state).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.finite_negative_generation`
 
@@ -34,5 +82,9 @@ Bakalov-Kac, Twisted Modules over Lattice Vertex Algebras, arXiv math/0402315v1,
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.bilinear_neg_left`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.bilinear_neg_right`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.bilinear_symmetric`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.finite_negative_generation`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.norm_positive`
 - Dependency: [D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality](LatticeGeneratingFieldLocality.md)

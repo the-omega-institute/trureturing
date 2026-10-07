@@ -34,6 +34,16 @@ internal sealed class Scale38NestedCompensationDocument : IScribeDocumentDefinit
                 + "would not split S."))),
             DescribeRole.Theorem),
             Describe.Lean(
+            DescribeId.Create("nested-compensation-scan-range-split"),
+            DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.divide"),
+            H("Splitting the scan range at a prefix"),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "For all natural numbers t <= k, the list 0,1,...,k is the list 0,...,t-1, "
+                + "followed by t, followed by the consecutive list t+1,...,k."))),
+            DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("nested-compensation-raw-acquisition"),
             DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.result"),
             H("Complete sources and exact requested-address bills"),

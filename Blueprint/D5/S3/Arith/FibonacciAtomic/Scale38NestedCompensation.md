@@ -28,7 +28,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.root_exce
 
 Let F be a finite family of pairwise nonconflicting trees, S a survivor set with at least two members, and r a recursive response recipe on S. Then some member of S has response excess gain(r,i) at least one. Indeed, if every member had zero excess, every member would report a leaf at the first requested address; common leaves carry equal reports, so that address would not split S.
 
-**Theorem 1.3 (Complete sources and exact requested-address bills).**
+**Theorem 1.3 (Splitting the scan range at a prefix).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.divide`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.divide` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all natural numbers t <= k, the list 0,1,...,k is the list 0,...,t-1, followed by t, followed by the consecutive list t+1,...,k.
+
+**Theorem 1.4 (Complete sources and exact requested-address bills).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.result`
 
@@ -53,6 +65,7 @@ The same controller terminates and decides third-image membership for every fini
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.agree`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.divide`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.result`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.root_excess`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion](ActualCoarseReadoutCompletion.md)

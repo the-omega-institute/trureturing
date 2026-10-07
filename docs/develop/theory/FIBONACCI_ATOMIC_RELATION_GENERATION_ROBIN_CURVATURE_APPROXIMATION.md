@@ -2919,3 +2919,930 @@ Gamma 对数积分保持 §462 所述 Mertens.Gamma、PrimeNumberTheoremAnd
 上述递归关系、严格改进及误差界均由同一实际曲率的完整积分导出。
 
 ## 追加锚（本行以下为增补区）
+
+### 464 最新 Lean 供应与原 Robin 尾项的有向 Abel 接口
+
+本节接续 §463 的同一原曲率、原常数 A 和实际有符号尾。
+2026-10-07 的库检索得到四类准确供应。库名、README 或上游 CI
+本身不支付本题的原对象匹配、完整尾项或新工具链上的 kernel 验收。
+
+#### 464.1 可消费的供应及其边界
+
+OpenAI/math 的不可变修订
+[`adc7f1241b42e322a6451854ab7e4b4c146bf78a`](https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a)
+在 `lean/OAI/Analysis/VlasovMaxwell/Regularity/VolterraSup.lean`
+给出 `OAI.RVM.integral_Icc_factorial_tail`。对所有实数 C、自然数 d
+和 t≥0，其准确合同是
+
+$$
+C\int_{[0,t]}\frac{(Cu)^d}{d!}\,du
+=\frac{(Ct)^{d+1}}{(d+1)!}.
+\tag{RLB.1}
+$$
+
+这条供应不要求 C≥0；用于正积分比较时另支付 C≥0。
+同文件的 `volterra_uniform_bound` 则要求非负 D、C、每个窗口上的
+实际有限上界和真实积分递推不等式。其前置
+`Retarded/VolterraMajorant.lean` 构造连续单调的全局 majorant。
+这些是经典 Volterra 工具；两个小文件只依赖 Mathlib，适合按 Apache-2.0
+保留来源后移植所消费的私有证明。上游 Lean 为 4.34.1；本库保持
+自身钉版工具链，移植后的实际编译另验。
+
+RLB.1 的自然消费是规范化单项式 v^d/d!。原 T 的内层 lift 增加
+两个积分次数，外层增加一个，因此每次真实递归是 d→d+3。
+系数 a≤1/3 和 exp(−v)≤1 另给每层的 1/3。这正是 §463 中
+`v^(3n)/(2·3^n·(3n)!)` 的结构，而非把原递归改成别的 n! 模型。
+规范化阶乘积分的私有移植由同一实际 T 的归纳证明消费；
+完整对数矩和算术有符号尾仍需各自支付，不从紧区间一致收敛推出。
+
+dbsanfte/RiemannGaussian 的不可变修订
+[`24444671cee3bf643ff1307909b961a329372a9e`](https://github.com/dbsanfte/RiemannGaussian/tree/24444671cee3bf643ff1307909b961a329372a9e)
+在 `RiemannGaussian/MoebiusHarmonicMonotoneTail.lean` 给出保留两端点
+的有限 Abel 恒等式，以及实际调和 Möbius 前缀有界时的完整单调权尾界。
+其 `abs_sum_moebiusHarmonic_antitone_le` 保留 D<M、权非负、权在
+[D+1,M] 递减和全部 n∈[D,M] 上的实际前缀界；结论是
+`2·e·b(D+1)`。前缀界仍是输入，不能由该尾界反向冒领已经得到消去。
+
+同修订 `MoebiusHarmonicCancellation.lean` 的
+`exists_moebiusHarmonicPrefix_cubic_rate` 确实提供实际 H 的统一衰减：
+
+$$
+\exists h_0\ge22\ \forall h\ge h_0\ \forall D\in\mathbb N:\quad
+e^{2\cdot10^{15}h^3}\le D
+\Longrightarrow |H(D)|\le C_{\rm harmonic}e^{-h/8}.
+\tag{RLB.7}
+$$
+
+其中 h₀、h∈ℝ，C_harmonic=6+4 C_finite 是上游证明为正的固定实常数，
+不依赖 h 或 D。
+因此满足该阈值的同一 D 对全部后继 n∈[D,M] 支付 Abel 的
+前缀小量输入；这不是任意序列上的假设。上游实际 exact-head CI
+构建成功，本次尚未将该证明闭包移植并在本库 kernel 验收。
+消去率随 log D 的立方根衰减，保留了巨大的准确阈值。
+其原核 variation、odd/full 运输和临界归一化仍须独立支付。
+
+AlexKontorovich/PrimeNumberTheoremAnd 的不可变修订
+[`c39a751132c88b6e8080b74c74023fd95b3d8be0`](https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/tree/c39a751132c88b6e8080b74c74023fd95b3d8be0)
+在 `PrimeNumberTheoremAnd/StrongPNT.lean` 的 `StrongPNT` 给出
+
+$$
+\exists c>0:\qquad
+\psi(x)-x=O\!\left(xe^{-c\sqrt{\log x}}\right).
+\tag{RLB.2}
+$$
+
+这比本库已有 MediumPNT 的对数指数 1/10 更强。
+它可补无条件背景尾估计，但尚不直接供给临界平方根消去。
+对固定 c>0，令 y=√log x，比较尺度满足
+
+$$
+\frac{xe^{-c\sqrt{\log x}}}{\sqrt{x}/\log x}
+=y^2e^{y^2/2-cy}\longrightarrow\infty.
+\tag{RLB.3}
+$$
+
+因此仅从 RLB.2 的上界不能推出本题所需的该临界量级。
+上游 StrongPNT 的直接对象也是 ψ；真实 Möbius 权运输仍须单独证明。
+
+OVVO-Financial/mobius-synthesis 的不可变修订
+[`516191483bd7c3f82e0e3891c8e1f7266063c335`](https://github.com/OVVO-Financial/mobius-synthesis/tree/516191483bd7c3f82e0e3891c8e1f7266063c335)
+包含从实际 Mertens 能量界及平方前缀能量界通往 Mathlib RH 的条件桥。
+可复用的是准确归约和对象匹配方式；全尺度能量合同仍是其假设。
+有限范围验证不支付全尺度假设，本节也未证明该假设。
+
+#### 464.2 完整有限 Abel 式可以保留单向符号信息
+
+令 μ 为标准算术 Möbius 函数，
+
+$$
+H(n)=\sum_{1\le k\le n}\frac{\mu(k)}k,
+\qquad Q_D(n)=H(n)-H(D).
+$$
+
+对自然数 D<M 和任意实权 b，已读上游合同给出
+
+$$
+\begin{aligned}
+S_{D,M}(b)
+&:=\sum_{D<n\le M}\frac{\mu(n)}n b(n)\\
+&=b(M)H(M)-b(D+1)H(D)\\
+&\quad-\sum_{D<n\le M-1}[b(n+1)-b(n)]H(n).
+\end{aligned}
+\tag{RLB.4}
+$$
+
+把 H(n)=Q_D(n)+H(D) 逐项代入，有限望远镜身份
+
+$$
+\sum_{D<n\le M-1}[b(n)-b(n+1)]=b(D+1)-b(M)
+$$
+
+使所有 H(D) 项准确抵消，得到
+
+$$
+\boxed{\quad
+S_{D,M}(b)=b(M)Q_D(M)
++\sum_{D<n\le M-1}[b(n)-b(n+1)]Q_D(n).
+\quad}
+\tag{RLB.5}
+$$
+
+这里没有删除终端项 b(M)Q_D(M)。当 M=D+1 时内和为空，
+RLB.5 就是单个真实 Möbius 项，端点同样成立。
+
+若 b 在 [D+1,M] 非负递减，RLB.5 中全部系数非负，系数总和
+准确等于 b(D+1)。故只要同一区间实际满足
+`Q_D(n)≥−e`（D<n≤M，e≥0），就有
+
+$$
+S_{D,M}(b)\ge-e\,b(D+1).
+\tag{RLB.6}
+$$
+
+证明是分别以非负系数乘这个下界，再用有限望远镜求和。
+它保持单向目标；并不额外要求 Q_D 的上界。若 b(D+1)>0，
+`S/b(D+1)` 是这些实际有向前缀差的一个凸组合。
+若 b(D+1)=0，非负递减使整段 b 都为零，S=0。
+若只知道原 H 在 [D,M] 满足 |H|≤e，则 |Q_D|≤2e，
+这解释上游完整绝对值尾界的因子 2。更强的有向前缀差输入
+可以避免先取绝对值造成的这一信息损失。
+
+若原 H 的后继统一界是 |H(n)|≤δ，保留准确锚 H(D) 还给
+
+$$
+Q_D(n)\ge-\delta-H(D),\qquad
+S_{D,M}(b)\ge-[\delta+H(D)]b(D+1).
+\tag{RLB.8}
+$$
+
+这里 δ+H(D)≥0 由同一 D 上的界支付。当 H(D)<0 时，
+这个准确有向预算比先把 H(D) 替成 |H(D)| 再合并的 2δ 更小。
+RLB.7 确实在其存在阈值以后对所有后继 n 同时提供
+δ=C_harmonic exp(−h/8)。其 h₀ 仍是存在常数；这条供应
+不自行给出一个可枚举的有限阈值或本题最终符号。
+
+RLB.5–6 是从完整有限 Abel 合同和望远镜身份得到的经典推论，
+不作新的文献优先权声明。本节给出它们的完整有限证明；
+尚未把它们绑定并冻结为本库原 Robin 核的正式结果。
+
+#### 464.3 与正递归的联系及准确缺口
+
+§463 的正算子 T 从实际曲率的正残差生成下一层正残差。
+RLB.5 则让非负递减权作用于实际算术前缀差 Q_D。
+两者都允许保留输入的一个方向，但所作用的对象不同：
+前者的正性来自已经证明的解析积分；后者需要真实 Möbius
+前缀差的有向下界。RLB.5 没有把 μ 本身变成非负系数。
+
+原 Robin 配对若要消费 RLB.6，必须支付同一索引和截断下的
+准确权重身份、非负递减域、全部有向前缀差下界及完整终端项。
+若原权不单调，则仍使用 RLB.5 的有符号增量，而不能套用 RLB.6。
+有限公式也不自行准许无限重排或交换极限与积分。
+这把下一步供应需求具体化为原核上的有向前缀运输，
+而不是继续扩大已经为正的 A 储备来替代算术消去。
+
+Fibonacci 的递归和原曲率的三重积分递归可帮助发现合适的
+分层语言。它们不提供 μ 的真实相位，也不自动证明上述有向前缀差界。
+5040 是 Robin 定理中已知有限例外范围的最后整数边界；
+本节没有从 7!、Fibonacci 索引或拓扑染色例外推导算术尾控制。
+
+OpenAI/math 同修订还公开了一个声称 `Re(s)>7/8` 时实际 ζ 不为零
+的入口。其源码及显式 import 闭包已作静态检查；尚无本次对该完整
+闭包的实际 kernel 验收。它不参与本节或本库 RH 结论的承重推导。
+上述小供应的移植各自按本库钉版真实编译；RH 和原 Robin 全尾
+的最终符号仍保持开放。
+
+
+## 追加锚（本行以下为增补区）
+
+## 465. 完整剩余预算与有向前缀运输
+
+本节沿用同一个实际函数 Φ、曲率 B=Φ''、正递归 Bₙ 及残差 Rₙ=B−Bₙ。令 C=e^γ、k=C−1。既有完整轴恒等式为 ∫₀∞B=k、∫₀∞vB=1、A=−∫₀∞log(v)B(v)dv。这里的 A 始终是原解析主项；算术 Möbius 尾的符号须另行支付。
+
+#### 465.1 尾积分的精确剩余量
+
+**命题 465.1（同一曲率的完整尾）。** 对每个 V≥0，定义
+
+$$
+Q(V)=\int_V^\infty B(v)\,dv,\qquad
+M(V)=\int_V^\infty vB(v)\,dv.
+$$
+
+这些积分绝对可积，且
+
+$$
+Q(V)=C-\Phi'(V),\qquad
+M(V)=\Phi(V)-V\Phi'(V)=\Phi(V)e^{-V},
+\qquad 0<M(V)\le e(1+V)e^{-V}.
+\tag{RB.1}
+$$
+
+对 V≥1，完整绝对对数尾满足
+
+$$
+0\le\int_V^\infty|\log v|B(v)\,dv\le M(V),
+\tag{RB.2}
+$$
+
+M(V) 及 RB.2 的完整绝对对数尾都趋于零。V=0 同样包含在 RB.1 中：Q(0)=k、M(0)=1。
+
+证明由有限区间微积分与已有全轴可积性得 Q(V)；对 vB 分部积分给 M(V)=Φ(V)−VΦ'(V)。同一 Φ 的微分身份 VΦ'(V)=(1−e⁻ⱽ)Φ(V) 给最后一个等号，V=0 由 Φ(0)=1 直接支付。原上界 Φ(V)≤e(1+V) 给指数包络。V≥1 时 0≤log v≤v，逐点比较得到 RB.2。
+
+RB.1 给出另一个读法：正轴上的 vB(v)dv 是总质量为 1 的实际正测度，M(V) 正是其剩余质量。这个读法使用已支付的一阶矩，不能把 B 本身误归一成总质量 1。
+
+#### 465.2 递归对完整轴的恢复
+
+**命题 465.2（实际残差的完整矩消失）。** 令 Dₙ=Bₙ₊₁−Bₙ，并定义
+
+$$
+r_n=\int_0^\infty R_n(v)\,dv,\quad
+m_n=\int_0^\infty vR_n(v)\,dv,\quad
+\ell_n=\int_0^\infty|\log v|R_n(v)\,dv.
+$$
+
+Bₙ、Rₙ、Dₙ 的质量、一阶矩及对数矩均可积；Rₙ 另有完整绝对对数矩。每个有限 n 上 rₙ>0、0<mₙ≤1，Dₙ 的质量和一阶矩也严格为正，并有准确分裂
+
+$$
+r_n=r_{n+1}+\int_0^\infty D_n(v)\,dv,\qquad
+m_n=m_{n+1}+\int_0^\infty vD_n(v)\,dv.
+\tag{RB.3}
+$$
+
+同时 rₙ→0、mₙ→0、ℓₙ→0，且 ∫₀∞log(v)Rₙ(v)dv→0。
+
+证明使用原严格递归的 0<Rₙ≤B、0<Dₙ≤Rₙ、0≤Bₙ≤B，以及 §464 的实际残差逐点趋零。三个主导函数分别是 B、vB 和 |log v|B，均在完整正轴可积。分别应用主导收敛，最后用 |∫log(v)Rₙ|≤ℓₙ 支付有符号对数矩。这里需要完整主导；紧区间一致收敛本身不能代替这一步。严格正预算也表明任何有限层尚有剩余，极限恢复须另由收敛证明。
+
+#### 465.3 离散尾怎样消费正预算
+
+**命题 465.3（真实 Möbius 前缀差的有限运输）。** 令 H(N)=Σ₁≤ⱼ≤ᴺ μ(j)/j，Q_D(n)=H(n)−H(D)。对自然数 D<M 及任意实权 b，有限尾满足
+
+$$
+\sum_{D<n\le M}\frac{\mu(n)}n b(n)
+=b(M)Q_D(M)
+ +\sum_{D<n\le M-1}[b(n)-b(n+1)]Q_D(n).
+\tag{RB.4}
+$$
+
+若 b 在 [D+1,M] 非负递减，且 Q_D(n)≥−ε 对全部 D<n≤M 成立、ε≥0，则
+
+$$
+\sum_{D<n\le M}\frac{\mu(n)}n b(n)\ge-\varepsilon b(D+1).
+\tag{RB.5}
+$$
+
+若改用含锚 D 的统一输入 |H(n)|≤δ（D≤n≤M），则 δ+H(D)≥0，并得到保留准确锚的更具体预算
+
+$$
+\sum_{D<n\le M}\frac{\mu(n)}n b(n)
+\ge-[\delta+H(D)]b(D+1).
+\tag{RB.6}
+$$
+
+证明是有限分部求和与望远镜相消。RB.4 中系数均非负，系数总和恰为 b(D+1)，所以逐项乘有向下界得 RB.5；Q_D(n)≥−δ−H(D) 给 RB.6。终端 b(M)Q_D(M) 全程保留。M=D+1 时内和为空；b(D+1)=0 时非负递减强制整段权为零，尾和也为零。
+
+在上述非负递减条件下且 b(D+1)>0 时，RB.4 除以 b(D+1) 就是实际前缀差的一个凸组合。它与 RB.1 的概率读法共享“非负系数及其准确总量”这一结构，但输入分别是曲率密度和算术前缀差；它们之间的实际对象桥尚须证明。
+
+#### 465.4 五分类、递归与下一供应接口
+
+RB.3 的预算向量 (r,m) 按逐层正块相加。有限分类可视为给同一预算增加分块；有效改进须来自块的真实正性、矩和误差控制。正预算加法有交换律与结合律，但非零正预算没有同域加法逆元，因而不能把这个结构直接称为群。分类数 5 本身不支付消去估计。
+
+外部 Gaussian 库的调和 Möbius 前缀衰减能提供 RB.6 所需的一类输入；本节的有限运输并未移植其完整衰减证明。要作用到原 Robin 有符号尾，仍须识别同一截断下的实际权 b，证明其非负递减性或支付准确变差，处理 odd/full 前缀转换，并保留无限极限的全部终端。一般素数定理或解析正储备都不能直接替代这些合同。
+
+5040=7!、Fibonacci 递归和拓扑例外可以提出比较问题。本节实际闭合的是完整曲率剩余预算及有限 Möbius 运输；没有从数字 7、分类数 5 或 Fibonacci 原子推出 Robin 的无限判据。
+
+## 追加锚（本行以下为增补区）
+
+## 466. 奇调和 Möbius 的有限收缩与原增长权的完整变差
+
+本节接续 §§464–465 的实际调和前缀与 §§453–455 的原阶乘核。
+先证明准确有限收缩，再在实际奇调和衰减假设下控制原增长权。
+固定 x 的尾存在性与同时增长尺度下的 Robin 临界符号须分别支付。
+
+#### 466.1 同一去素数 2 操作的准确有限递归
+
+保持标准算术 Möbius 函数 μ，令
+
+$$
+H(N)=\sum_{1\le n\le N}\frac{\mu(n)}n,
+\qquad H_{\mathrm o}(N)=
+\sum_{\substack{1\le n\le N\\n\text{ 奇}}}\frac{\mu(n)}n,
+\qquad H(0)=H_{\mathrm o}(0)=0.
+$$
+
+**命题 466.1（两个准确有限身份）。** 对全部自然数 N、K，
+
+$$
+\boxed{H(N)=H_{\mathrm o}(N)
+-\frac12H_{\mathrm o}(\lfloor N/2\rfloor),}
+\tag{HG.1}
+$$
+
+$$
+\boxed{H_{\mathrm o}(N)
+=\sum_{a=0}^{K-1}2^{-a}H(\lfloor N/2^a\rfloor)
++2^{-K}H_{\mathrm o}(\lfloor N/2^K\rfloor).}
+\tag{HG.2}
+$$
+
+这里 K=0 时和为空；HG.2 的末项为原 H_o(N)，身份同样成立。
+
+**证明。** 将 H(N) 的有限整数集合拆为奇数与偶数。
+每个偶数 n 唯一写成 n=2m，端点准确为
+1≤m≤⌊N/2⌋。奇数 m 与 2 互素，Mathlib 的实际 μ 乘法性及
+μ(2)=−1 给 μ(2m)=−μ(m)；偶数 m 时 4∣2m，所以
+μ(2m)=0。因而包括全部偶端点的和恰为
+
+$$
+\sum_{m=1}^{\lfloor N/2\rfloor}\frac{\mu(2m)}{2m}
+=-\frac12\sum_{\substack{m\le\lfloor N/2\rfloor\\m\text{ 奇}}}
+\frac{\mu(m)}m.
+$$
+
+加入原奇数部分就是 HG.1；N=0 时两部分都为空。
+
+HG.2 对 K 作归纳。K=0 已说明。若 K 层身份成立，
+将其末项里的 H_o(⌊N/2^K⌋) 依 HG.1 改写为
+
+$$
+H(\lfloor N/2^K\rfloor)
++\frac12H_{\mathrm o}(\lfloor N/2^{K+1}\rfloor).
+$$
+
+这里整数除法恒等式
+⌊⌊N/2^K⌋/2⌋=⌊N/2^(K+1)⌋ 保留准确截止。
+乘原 2^(−K) 后，第一项加入有限和的 a=K 项，
+第二项正是 K+1 层末项，归纳完成。
+
+取 K=N+1，初等归纳给 2^(N+1)≥N+2>N，
+所以最后一个整数商为零，末项准确消失。
+那些满足 2^a>N 的和项也为 H(0)=0。
+全程是有限重索引与有限代入，没有使用无限级数重排。证毕。
+
+§453 的同一原始前缀满足
+M(N)=O(N)−O(⌊N/2⌋)，其中 O 为未加权的实际奇 Möbius 前缀。
+其递归系数是 1；把同一整数系数乘以实际倒数指标后，
+HG.1 的系数变为 1/2。HG.2 因而给出有限几何权，
+其总量准确为 2(1−2^(−K))≤2，末项系数为 2^(−K)。
+这是去素数 2 与调和权之间的真实收缩关系。
+它说明选择不同但准确匹配的权会改变递归运输的成本；
+算术 μ 的符号与小指标末项仍须保留。
+
+#### 466.2 原 Robin 的增长权
+
+保持 §§453–455 的全部原对象，对实数 x≥e、s>0，
+
+$$
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad w(t)=\frac{1+\log t}{t^2\log^2t},
+$$
+
+$$
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)\,dt,
+\qquad\mathscr D_x(s)=P_x^\eta(s)-P_x^\eta(2s),
+\qquad b_x(s)=s\mathscr D_x(s).
+\tag{HG.3}
+$$
+
+实际奇来源逐项满足
+μ(n)𝒟_x(n)=[μ(n)/n]b_x(n)。这只是同一完整核的准确换权。
+固定 x，记 ℓ=log x、r=log s、L=log 2，设
+
+$$
+c_x=\ell^{-1}-\log\ell-1,
+\qquad d_x=\ell^{-1}+\ell-1.
+$$
+
+§453 的 DP.9–DP.10 给 s≥x 时
+
+$$
+sP_x^\eta(s)=r\log r+c_xr+d_x-r^{-1}+E_x(r),
+\qquad |E_x(r)|\le2(r^{-1}+r^{-2}).
+\tag{HG.4}
+$$
+
+将 r+L 的同一身份减去一半，使用
+(r+L)log(r+L)=r log r+L log r+L+O(r^(−1))，得
+
+$$
+b_x(s)=\frac12r\log r+\frac12c_xr
+-\frac L2\log r+\frac12d_x-\frac L2(c_x+1)+O_x(r^{-1}).
+\tag{HG.5}
+$$
+
+故 b_x(s)→+∞。§465 非负递减权的完整尾比较不能直接用于这个
+全部远端权；这里需要完整变差。
+
+该变差不从 HG.5 的渐近猜测导数。复用 §453 的 DP.4：
+s>x 时 −(P_x^η)'(s)=G_{η,x}(log s)/s²，且对 v=log(s/x)≥0，
+|ℓG_{η,x}(ℓ+v)|≤v²/2+v+12。
+此 G_{η,x} 为原核变换，区别于 H_o。
+令
+
+$$
+K_x=6+|c_x|+|d_x|,\qquad V_x=3K_x+39.
+$$
+
+r≥ℓ≥1 时 HG.4 给 |P_x^η(s)|≤K_x(1+r)²/s；
+同一个导数界给 |(P_x^η)'(s)|≤13(1+r)²/s²。
+在 2s 使用 1+log(2s)≤2(1+log s)，并对 HG.3 求导，得到
+
+$$
+\boxed{|b_x(s)|\le3K_x(1+\log s)^2,
+\qquad |b'_x(s)|\le V_x\frac{(1+\log s)^2}{s}\quad(s>x).}
+\tag{HG.6}
+$$
+
+这些常数明确允许依赖固定 x。HG.6 依赖同一原核的完整可积性和
+求导身份，不能通过对 HG.5 的渐近余项直接求导得到。
+
+#### 466.3 固定 x 的完整变差合同与临界边界
+
+**命题 466.2（实际奇来源的条件尾合同）。** 固定 x≥e。
+令整数 D>x，另行支付实际奇调和前缀的准确全后继合同
+
+$$
+|H_{\mathrm o}(n)|\le C_{\mathrm o}
+ e^{-c_{\mathrm o}(\log n)^{1/3}}\quad(n\ge D),
+\qquad C_{\mathrm o}\ge0,\ c_{\mathrm o}>0.
+\tag{HG.7}
+$$
+
+则同一原奇来源的自然截止尾存在。
+写 c=c_o，z₀=(log(D+1))^(1/3)，并定义完整积分
+
+$$
+J_j(c,z_0)=\int_{z_0}^\infty z^j e^{-cz}dz
+=e^{-cz_0}\sum_{k=0}^j\frac{j!}{k!c^{j-k+1}}z_0^k,
+\qquad j\in\mathbb N.
+\tag{HG.8}
+$$
+
+其准确锚与完整预算为
+
+$$
+\begin{aligned}
+\mathscr T_{D,\infty}(x)
+&=-b_x(D+1)H_{\mathrm o}(D)
+-\sum_{n=D+1}^\infty[b_x(n+1)-b_x(n)]H_{\mathrm o}(n),\\
+|\mathscr T_{D,\infty}(x)|
+&\le |b_x(D+1)|\,|H_{\mathrm o}(D)|\\
+&\quad+3C_{\mathrm o}V_xe^c
+ [J_2(c,z_0)+2J_5(c,z_0)+J_8(c,z_0)].
+\end{aligned}
+\tag{HG.9}
+$$
+
+**证明。** 对 M>D，有限 Abel 恒等式给同一奇来源尾
+
+$$
+\begin{aligned}
+\mathscr T_{D,M}(x)
+&:=\sum_{\substack{D<n\le M\\n\text{ 奇}}}\mu(n)\mathscr D_x(n)\\
+&=b_x(M)H_{\mathrm o}(M)-b_x(D+1)H_{\mathrm o}(D)\\
+&\quad-\sum_{n=D+1}^{M-1}[b_x(n+1)-b_x(n)]H_{\mathrm o}(n).
+\end{aligned}
+\tag{HG.10}
+$$
+
+终端与锚均保留。HG.6–HG.7 给 b_x(M)H_o(M)→0，
+因为置 z=(log M)^(1/3) 后只是多项式乘 e^(−cz)。
+每个整数单元上，将 b_x 与连续主导函数
+V_x(1+log t)²/t 的原函数作导数比较，得到增量的积分界。
+对 n≤t≤n+1、n≥1，非负立方根的次可加性给
+(log t)^(1/3)−(log n)^(1/3)≤[log(t/n)]^(1/3)<1。
+于是整个变差和满足
+
+$$
+\begin{aligned}
+&\sum_{n=D+1}^\infty
+ |b_x(n+1)-b_x(n)|\,|H_{\mathrm o}(n)|\\
+&\quad\le C_{\mathrm o}V_xe^c\int_{D+1}^\infty
+ e^{-c(\log t)^{1/3}}\frac{(1+\log t)^2}{t}dt\\
+&\quad=3C_{\mathrm o}V_xe^c\int_{z_0}^\infty
+ e^{-cz}(z^2+2z^5+z^8)dz<\infty.
+\end{aligned}
+\tag{HG.11}
+$$
+
+最后一个等号先用 u=log t，再用 z=u^(1/3)。
+完整积分 HG.8 由 J₀=e^(−cz₀)/c 以及保留无穷端点的递推
+J_j=z₀^j e^(−cz₀)/c+(j/c)J_(j−1) 得到；
+端点 z^j e^(−cz)→0，归纳给其准确有限多项式。
+因此 HG.10 中变差级数绝对收敛，终端趋零，
+取自然截止极限并用三角不等式就是 HG.9。证毕。
+
+HG.11 只证明 Abel 变差项的绝对可和与原子尾的自然截止存在；
+不声称原子和本身绝对收敛。连接 §453 的累计 Mertens 配对时，
+仍须支付其准确 clipped 端点，不能借此许可独立的无限素数—合数分拆。
+
+§464 的 Gaussian 供应 RLB.7 给实际完整 H 的立方对数衰减。
+HG.2 给从完整 H 到实际 H_o 的准确有限运输，
+但其中的小指标末项必须另行估计。
+命题 466.2 的结论依赖 HG.7 对实际奇调和前缀的全部后继界；
+有限身份本身不提供这个衰减假设。
+
+即使支付了 HG.7，固定 x 的 HG.9 也不自动支付原
+√x log x 临界共同精度。对固定 q>1 的整数截止 D=⌈x^q⌉，
+即便 C_o 和 K_x 只造成对数因素，
+√x 仍压过 exp[−c_o(q log x)^(1/3)]；这个上界本身
+无法给出所需共同临界预算。增长更快的来源截止仍留下整个有限头部的
+真实符号或消去任务。原 Robin 完整符号和 RH 保持开放。
+
+实际 μ 与有限重索引复用 Mathlib 及 §453 的
+ActualOddMobiusFinitePairing；Abel 代数保持 Mathlib 的来源。
+Gaussian 的不可变修订 24444671cee3bf643ff1307909b961a329372a9e
+及完整 Apache-2.0 归属见
+[原调和 Abel 来源记录](../../../Library/Analytic/sanftenberg2026harmonicabel.md)。
+本节有限收缩和固定尺度变差推导不提出文献优先权主张。
+
+## 追加锚（本行以下为增补区）
+
+## 467. 同一原 A 的残差、size-bias 与分类链律
+
+本节保留 §§463–465 的同一实际函数 $\Phi$、曲率 $B=\Phi''$、递归 $B_n$ 和残差 $R_n=B-B_n$。以下积分均在完整正轴 $(0,\infty)$ 对 Lebesgue 测度进行。本节把同一原 $A-L_n$ 绑定到实际残差的相对熵，并把真实递归的四个新增层与剩余尾项组成五类。
+
+#### 467.1 原完整误差的概率读法
+
+令 $C=e^\gamma$、$k=C-1>0$，保持同一个原完整常数
+
+$$
+\begin{aligned}
+A
+&=\int_0^1\frac{\Phi(v)(1-e^{-v})-v}{v^2}\,dv
+ +\int_1^\infty\left[\frac{\Phi(v)(1-e^{-v})}{v^2}-\frac C v\right]dv\\
+&=-\int_0^\infty\log(v)B(v)\,dv.
+\end{aligned}
+\tag{RSK.1}
+$$
+
+§465 给每个自然数 $n$ 的完整预算
+
+$$
+r_n=\int_0^\infty R_n(v)\,dv>0,\qquad
+m_n=\int_0^\infty vR_n(v)\,dv>0,\qquad
+\ell_n=\int_0^\infty|\log v|R_n(v)\,dv<\infty.
+$$
+
+实际 $R_n(v)>0$ 对每个 $v>0$ 成立。定义同一完整下界
+
+$$
+L_n=-\int_0^\infty\log(v)B_n(v)\,dv
+      -r_n\log(m_n/r_n),
+\qquad \mu_n=m_n/r_n.
+\tag{RSK.2}
+$$
+
+**命题 467.1（实际残差与其 size-bias 的完整相对熵）。** 对全部自然数 $n$，定义正轴上的密度
+
+$$
+p_n(v)=\frac{R_n(v)}{r_n},\qquad
+q_n(v)=\frac{vR_n(v)}{m_n}.
+\tag{RSK.3}
+$$
+
+二者都是概率密度，且 $q_n=vp_n/\mu_n$，即 $p_n$ 的 size-bias 密度。取自然对数，定义
+
+$$
+D(p\Vert q)=\int_0^\infty p(v)\log\frac{p(v)}{q(v)}\,dv.
+$$
+
+本命题中该积分绝对可积，并且
+
+$$
+\boxed{
+A-L_n
+=r_n D(p_n\Vert q_n)
+=\int_0^\infty h(v/\mu_n)R_n(v)\,dv>0,
+\qquad h(x)=x-1-\log x.
+}
+\tag{RSK.4}
+$$
+
+在 $n=0$ 时，$R_0=B$、$r_0=k$、$m_0=1$、$L_0=k\log k$，所以
+
+$$
+\boxed{A-k\log k=kD(B/k\Vert vB).}
+\tag{RSK.5}
+$$
+
+**证明。** 完整质量与一阶矩分别给 $\int p_n=1$、$\int q_n=1$。正轴上每个分母都严格正，故逐点有
+
+$$
+\frac{p_n(v)}{q_n(v)}=\frac{\mu_n}{v},\qquad
+\log\frac{p_n(v)}{q_n(v)}=\log\mu_n-\log v.
+$$
+
+完整绝对可积性由已支付的预算直接控制：
+
+$$
+\int_0^\infty p_n(v)
+ \left|\log\frac{p_n(v)}{q_n(v)}\right|dv
+\le |\log\mu_n|+\frac{\ell_n}{r_n}<\infty.
+\tag{RSK.6}
+$$
+
+这里同时保留零附近和无穷远端，不要求 $R_n\log R_n$ 可积。计算的是对数比的完整积分，没有将两个可能发散的微分熵相减。
+
+由 $B=B_n+R_n$ 及完整对数积分的线性性，RSK.1–RSK.2 给
+
+$$
+\begin{aligned}
+A-L_n
+&=-\int_0^\infty\log(v)R_n(v)\,dv+r_n\log\mu_n\\
+&=r_nD(p_n\Vert q_n).
+\end{aligned}
+$$
+
+另一方面 $h(v/\mu_n)R_n(v)$ 的可积性由 $vR_n$、$R_n$ 和 $|\log v|R_n$ 支付；其线性项的完整积分恰为
+
+$$
+\int_0^\infty(v/\mu_n-1)R_n(v)\,dv
+=m_n/\mu_n-r_n=0.
+$$
+
+展开 $h$ 就得到 RSK.4 的第二个等号。对 $x>0$，对数切线不等式给 $h(x)\ge0$，且 $x\ne1$ 时严格大于零。实际 $R_n$ 在正轴严格正，故在正测度集合 $v>2\mu_n$ 上被积函数严格正，完整积分也严格正。
+
+最后 $B_0=0$、$\int B=k$ 和 $\int vB=1$ 给全部零层预算及 RSK.5。特别是 $B/k$ 与 $vB$ 分别被正确归一化；$B$ 的质量是 $k$。证毕。
+
+RSK.4 的方向是 $p_n\Vert q_n$。若反向取 $q_n\Vert p_n$，其对数期望变成一阶矩加权的 $v\log v$ 积分，须另行支付这一可积性。当前完整误差所消费的是 RSK.6 的已付绝对对数矩。
+
+#### 467.2 同一实际残差的非空有限正分类
+
+**命题 467.2（实际 $R_n$ 的完整分类恒等式）。** 固定任意自然数 $n$，令 $I$ 为非空有限集合。对每个 $i\in I$，设 $f_i$ 是正轴上严格正的可测函数，并且对全部 $v>0$ 有准确分解
+
+$$
+\sum_{i\in I}f_i(v)=R_n(v).
+$$
+
+不另设各块的矩假设。置
+
+$$
+\begin{gathered}
+r_i=\int_0^\infty f_i(v)\,dv,\qquad
+m_i=\int_0^\infty vf_i(v)\,dv,\qquad
+\mu_i=m_i/r_i,\\
+p_i=f_i/r_i,\qquad q_i=vf_i/m_i,\\
+a_i=r_i/r_n,\qquad b_i=m_i/m_n,
+\qquad F(r,m)=-r\log(m/r).
+\end{gathered}
+$$
+
+则各 $r_i,m_i$ 严格正，各 $f_i$、$vf_i$ 和 $|\log v|f_i$ 在完整正轴可积，且
+
+$$
+\sum_{i\in I}r_i=r_n,\qquad \sum_{i\in I}m_i=m_n.
+$$
+
+因此 $p_i,q_i$ 都是概率密度，$a,b$ 都是严格正的有限概率向量。全部相对熵均有限，同一原完整误差有准确分类
+
+$$
+\boxed{
+A-L_n
+=\sum_{i\in I}r_iD(p_i\Vert q_i)
+  +r_nD(a\Vert b).
+}
+\tag{RSK.8}
+$$
+
+离散项恰为这些实际块的预算合并缺口：
+
+$$
+\begin{aligned}
+H_I
+&:=\sum_{i\in I}F(r_i,m_i)-F(r_n,m_n)\\
+&=r_nD(a\Vert b)
+=\sum_{i\in I}r_i h(\mu_i/\mu_n)\ge0.
+\end{aligned}
+\tag{RSK.7}
+$$
+
+此项等于零当且仅当各块均值全部等于 $\mu_n$。这些身份涵盖单一类别，且不依赖有限合并的顺序。
+
+**证明。** 每个 $v>0$ 都有 $0<f_i(v)\le R_n(v)$。因而三个非负被积函数分别受已知可积函数支配：
+
+$$
+0<f_i\le R_n,\qquad
+0<vf_i\le vR_n,\qquad
+0\le |\log v|f_i\le |\log v|R_n.
+$$
+
+可测性和支配可积性给三份完整积分存在；其中前两者在整个正轴严格正，所以 $r_i,m_i>0$。又
+$|\log(v)f_i(v)|=|\log v|f_i(v)$，故有符号对数矩也绝对可积，包含零附近和无穷远两端。有限积分可加性给准确质量和一阶矩预算。各概率密度与有限向量的归一化随之成立。
+
+以下有限相对熵链式公式是经典先例，亦有 §467.4 所引 Mathlib 的一般测度版本；在这里把它用于上述实际 $R_n$ 分解。逐项展开
+
+$$
+\log(a_i/b_i)=\log(r_i/m_i)-\log(r_n/m_n),
+$$
+
+乘 $r_i$ 后求有限和，得到 RSK.7 的第一个身份。又
+
+$$
+\sum_{i\in I}r_i(\mu_i/\mu_n-1)
+=m_n/\mu_n-r_n=0.
+$$
+
+这给 RSK.7 的 $h$ 身份及非负性；$r_i>0$ 与 $h(x)=0\iff x=1$ 给等号条件。
+
+各块的对数比完整可积，因为
+
+$$
+\int_0^\infty p_i(v)
+  \left|\log\frac{p_i(v)}{q_i(v)}\right|dv
+\le |\log\mu_i|
+  +\frac1{r_i}\int_0^\infty|\log v|f_i(v)\,dv<\infty.
+$$
+
+令 $J(g)=-\int_0^\infty\log(v)g(v)dv$。对数比的逐点公式给
+
+$$
+r_iD(p_i\Vert q_i)=J(f_i)-F(r_i,m_i),\qquad
+r_nD(p_n\Vert q_n)=J(R_n)-F(r_n,m_n).
+$$
+
+由 $J(R_n)=\sum_iJ(f_i)$ 及 RSK.7，得到经典链式公式在这些实际密度上的身份
+
+$$
+r_nD(p_n\Vert q_n)
+=\sum_{i\in I}r_iD(p_i\Vert q_i)+r_nD(a\Vert b).
+$$
+
+最后代入命题 467.1 的 $r_nD(p_n\Vert q_n)=A-L_n$ 就是 RSK.8。
+
+也可核对两个联合概率密度
+
+$$
+P(i,v)=\frac{f_i(v)}{r_n}=a_ip_i(v),\qquad
+Q(i,v)=\frac{vf_i(v)}{m_n}=b_iq_i(v).
+$$
+
+给定类别 $i$，对数比拆为 $\log(a_i/b_i)+\log(p_i/q_i)$。给定同一 $v>0$，则
+
+$$
+P(i\mid v)=\frac{f_i(v)}{R_n(v)}=Q(i\mid v),
+\tag{RSK.9}
+$$
+
+因为共同因子 $v$ 在归一化中消去。故给定 $v$ 后的类别相对熵为零，联合分布的相对熵恰等于总残差密度的相对熵。
+
+对任意二叉合并树，把每次合并的
+$F(\text{左预算})+F(\text{右预算})-F(\text{合预算})$
+相加。每个内部节点的 $F$ 在自身合并中出现一次负号、在父节点合并中出现一次正号，准确相消；最后只剩 RSK.7 的 $H_I$。若只有一个类别，$f_i=R_n$，于是 $H_I=0$，RSK.8 退回 RSK.4。证毕。
+
+这里的分类是同一实际残差的全正轴严格正解析块。对不相交单元的零密度分类，须另定义零密度处的对数比；它不包含于本命题的严格正假设。
+
+#### 467.3 实际递归的相对熵收益与五分类
+
+**推论 467.3（实际每一层的相对熵收益）。** 对全部自然数 $n$，令
+
+$$
+D_n=B_{n+1}-B_n,\qquad
+z_n=\int_0^\infty D_n(v)\,dv>0,\qquad
+t_n=\int_0^\infty vD_n(v)\,dv>0.
+$$
+
+则实际相邻分裂 $R_n=R_{n+1}+D_n$ 满足
+
+$$
+\begin{aligned}
+L_{n+1}-L_n
+&=z_nD\left(\frac{D_n}{z_n}\,\middle\Vert\,\frac{vD_n}{t_n}\right)\\
+&\quad+r_nD\left(
+\left(\frac{r_{n+1}}{r_n},\frac{z_n}{r_n}\right)
+\,\middle\Vert\,
+\left(\frac{m_{n+1}}{m_n},\frac{t_n}{m_n}\right)
+\right)>0.
+\end{aligned}
+\tag{RSK.10}
+$$
+
+**证明。** §465 的准确预算分裂给 $r_n=r_{n+1}+z_n$、$m_n=m_{n+1}+t_n$。实际 $R_{n+1}$ 与 $D_n$ 在完整正轴严格正，且准确相加为 $R_n$，因此满足命题 467.2。应用 RSK.8，再用 RSK.4 把剩余块的缺口改写为 $A-L_{n+1}$，与原 $A-L_n$ 相减即得 RSK.10。新增层 $D_n$ 的连续相对熵严格正，证明同命题 467.1 的 $h$ 支撑论证；离散项非负，故实际收益严格正，包括 $n=0$。证毕。
+
+**推论 467.4（四个实际新增层与剩余尾项的五分类）。** 对每个自然数 $n$，同一残差有完整正分解
+
+$$
+R_n=D_n+D_{n+1}+D_{n+2}+D_{n+3}+R_{n+4}.
+$$
+
+定义五项严格正概率向量
+
+$$
+\begin{aligned}
+\mathbf a_n
+&=\frac{(z_n,z_{n+1},z_{n+2},z_{n+3},r_{n+4})}{r_n},\\
+\mathbf b_n
+&=\frac{(t_n,t_{n+1},t_{n+2},t_{n+3},m_{n+4})}{m_n}.
+\end{aligned}
+$$
+
+实际四步下界收益准确为
+
+$$
+\boxed{
+L_{n+4}-L_n
+=\sum_{j=0}^{3}z_{n+j}
+ D\left(\frac{D_{n+j}}{z_{n+j}}
+ \,\middle\Vert\,\frac{vD_{n+j}}{t_{n+j}}\right)
+ +r_nD(\mathbf a_n\Vert\mathbf b_n)>0.
+}
+\tag{RSK.11}
+$$
+
+此外，定义同一准确预算上的逐层合并缺口
+
+$$
+H_s:=F(r_{s+1},m_{s+1})+F(z_s,t_s)-F(r_s,m_s).
+$$
+
+则它们满足
+
+$$
+\boxed{
+\sum_{j=0}^{3}H_{n+j}
+=r_nD(\mathbf a_n\Vert\mathbf b_n).
+}
+\tag{RSK.12}
+$$
+
+**证明。** 连续应用四次 $R_s=D_s+R_{s+1}$，逐点得到所述五块分解。各块均在正轴严格正，因而命题 467.2 自动支付其质量、一阶矩及完整绝对对数矩；准确预算为
+
+$$
+r_n=\sum_{j=0}^{3}z_{n+j}+r_{n+4},\qquad
+m_n=\sum_{j=0}^{3}t_{n+j}+m_{n+4}.
+$$
+
+对这五块应用 RSK.8。其中尾块贡献
+$r_{n+4}D(p_{n+4}\Vert q_{n+4})=A-L_{n+4}$，
+把它从 $A-L_n$ 中移去便得到 RSK.11，同一原 $A$ 准确消去。四个新增层的连续项各严格正，预算项非负，所以总收益严格正。
+
+逐层预算合并缺口的准确形式是
+
+$$
+H_s=F(r_{s+1},m_{s+1})+F(z_s,t_s)-F(r_s,m_s).
+$$
+
+令 $s=n,n+1,n+2,n+3$ 后求和，中间三个剩余预算的 $F$ 正负相消，故
+
+$$
+\sum_{j=0}^{3}H_{n+j}
+=\sum_{j=0}^{3}F(z_{n+j},t_{n+j})
+ +F(r_{n+4},m_{n+4})-F(r_n,m_n).
+$$
+
+右边正是这五块的 RSK.7，给 RSK.12。证毕。
+
+五分类与四次二分由此给出同一个离散信息差：前者一次比较五个质量份额与一阶矩份额，后者逐步累加预算合并缺口。连续项比较每个实际层与其 size-bias。分类数五在此表示四个真实剥离层加一份尾项；相同推导适用于任意有限层数。正预算加法的交换、结合性质来自准确求和，正预算域中没有与一般块相加后为零的逆元。
+
+**推论 467.5（加权相对熵的完整极限）。** 同一实际残差满足
+
+$$
+0<r_nD(p_n\Vert q_n)
+=A-L_n
+\le\ell_n+\frac{m_n}{e},\qquad
+r_nD(p_n\Vert q_n)\longrightarrow0.
+\tag{RSK.13}
+$$
+
+**证明。** 命题 467.1 给等号与严格正性。完整对数比公式给
+
+$$
+A-L_n=-\int_0^\infty\log(v)R_n(v)\,dv
+       +r_n\log(m_n/r_n).
+$$
+
+首项不超过 $\ell_n$。令 $x=r_n/m_n>0$，用经典标量不等式 $x\log x\ge-1/e$，得到
+
+$$
+r_n\log(m_n/r_n)=-m_nx\log x\le m_n/e.
+$$
+
+两项相加即为所述上界；§465 的完整预算极限 $\ell_n,m_n\to0$ 给夹逼极限。这个极限保留 $r_n$ 权重；因 $r_n\to0$，它本身不给 $D(p_n\Vert q_n)\to0$，也不给两列概率测度共同弱极限。证毕。
+
+#### 467.4 倾斜测度先例与原算术尾的数学边界
+
+上述通用恒等式属于经典相对熵与变换测度理论。当前钉版 Mathlib 的 [`Measure.Tilted`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/Tilted.lean) 定义
+
+$$
+\frac{d(P^{\mathrm{tilt},g})}{dP}(v)
+=\frac{e^{g(v)}}{\int e^g\,dP}.
+$$
+
+其 [`LogLikelihoodRatio`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/LogLikelihoodRatio.lean) 已有 `llr_tilted_right`、`integrable_llr_tilted_right` 和 `integral_llr_tilted_right`：在原概率测度 $P$ 下，取基测度同为 $P$，便在 $P$ 几乎处处意义下及完整积分意义下得到
+
+$$
+\log\frac{dP}{dP^{\mathrm{tilt},g}}
+=-g+\log\int e^g\,dP,
+\qquad
+D(P\Vert P^{\mathrm{tilt},g})
+=-\int g\,dP+\log\int e^g\,dP,
+\tag{RSK.14}
+$$
+
+其输入是 $g$ 与 $e^g$ 的相应完整可积性。这里取实际 $P_n=p_n(v)dv$、$g(v)=\log v$：正轴上 $e^g=v$，且 $\int e^g\,dP_n=m_n/r_n$，所以其倾斜测度准确为 $Q_n=q_n(v)dv$。§465 的完整对数矩与一阶矩已给出所需纸面输入。
+
+Mathlib 的 [`KullbackLeibler.Basic`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/Basic.lean) 使用扩展非负实数值的 `klDiv`；有限测度的公式另有总质量修正，概率测度时修正为零。RSK.6 给出实际对数似然比的完整可积性，故上述实际概率测度的相对熵有限，并且 $Q_n=P_n^{\mathrm{tilt},\log}$。
+
+有限分类也有现成先例：[`KullbackLeibler.ChainRule`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/ChainRule.lean) 的 `klDiv_compProd_left` 给共同条件核下的相对熵不变，`klDiv_compProd_eq_add` 给完整链律。上述经典链式公式在这里的对象为 RSK.3 的原残差归一化与 RSK.8 的实际正分解；RSK.10–RSK.12 进一步把同一原 $A-L_n$ 的分类精确写成真实相邻层及实际五分类的收益。
+
+上述概率构造依赖真实非负密度和准确正预算。算术 Möbius 原子的系数有符号，不能直接归一成这里的概率密度；改为绝对值也会改变原有符号问题。若要控制原 Robin 尾，仍需保持同一来源、同一截止及完整端点的算术运输定理。§466 的固定尺度尾合同和共同临界精度要求继续承担各自的算术义务。RSK.4–RSK.13 解释了实际解析储备怎样随递归与分类变化；原无限算术尾的最终符号仍是独立未决问题。
+
+## 追加锚（本行以下为增补区）
