@@ -1005,3 +1005,42 @@ transport or require q to be prime. T>=2 and the q-free selected-leaf
 condition remain explicit. The remaining general problem is to construct
 one source that retains low-row activation correlations with a sufficient
 complete-query bound when no single-phase common prefix exists.
+
+### Arithmetic transport of the selected-leaf criterion
+
+The selected-leaf consumer also has a scoped Lean application to actual
+natural-number congruences. Fix a prime q>=29 and explicit bounded
+prime-power presentations over3,5,7,11,13,17,19,23,q. The original
+numerical products must be pairwise distinct and greater than one;
+each has one fixed natural residue a_k. Write j_k for its3-exponent,
+e_k for its q-exponent, and n_k for its COMPLETE Q7 cofactor. Select
+r in{0,...,8}, and call row k active when there is a common natural
+integer congruent to r modulo9 and to a_k modulo3^j_k. The application
+also verifies the equivalent finite test
+
+    active(k) iff r=a_k modulo3^min(2,j_k).
+
+Only the q-free subfamily, e_k=0, must satisfy the following conditions.
+Actual pure3/9 originals are inactive. Among active originals with
+j_k<=3, equal complete numerical cofactors n_k=n_l require
+a_k=a_l modulo n_k. For n_k=1 the phase condition is tautological.
+All positive-q-exponent originals retain arbitrary phases, including
+pure q-powers. From exactly these arithmetic inputs the application
+proves that a natural number avoids EVERY original congruence.
+
+The transport uses actual CRT witnesses to recover each original
+prime-power phase, then checks the complete projection to the finite
+ternary/Q7/q carrier. Bare-leaf activity is proved from the value of
+the same ternary word, without an extra survival requirement. Adding
+two ambient digits in every coordinate preserves the original products
+and residues and supplies the required ternary height; the original
+height bounds may be zero. The covering assumption is introduced only
+inside the final contradiction and is not an input to the theorem.
+
+The cache-guarded application has only the standard axiom closure and
+reuses the existing CRT, prefix and finite-source results. No canonical
+specialization is added. Its input includes the displayed prime-power
+presentations and natural residues; automatic factorization and signed
+residue normalization are not part of this check. The selected-leaf
+phase condition remains a substantive restriction and does not settle
+unrestricted Erdős#7.

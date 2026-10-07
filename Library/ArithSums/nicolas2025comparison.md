@@ -991,3 +991,363 @@ zero set could change the conclusion. No such supplier is established
 here. The original infinite $I_\psi(A)$ tail, same selected integer,
 and sufficient condition (G9) remain unchanged and unproved; RH
 remains unproved.
+
+## A finite first absolute moment controls a scale complement
+
+The higher-moment obstruction (S8) does not assert that the first
+absolute moment is infinite. For the constructed density, that endpoint
+is finite and has an explicit tail allowance. The following estimates
+use (S1)–(S6), without repeating the cosine–Mellin transport proof or
+the Durkan–Hughes–Pearce-Crump theorem. They are paper-level applications
+of the elementary Dirichlet estimate for an oscillatory integral; no
+originality, numerical-experiment or Lean-verification claim is made.
+
+### An explicit bound at the large-scale endpoint
+
+Let $A\ge e^2$, $L=\log A$ and $k=2\pi X\ge A$. On
+$0<x\le1/A$ the function
+
+$$
+u(x)=\frac1{x\log^2(1/x)}
+$$
+
+is decreasing: its derivative is
+$-(\log(1/x)-2)/[x^2\log^3(1/x)]\le0$. Split the first branch of
+$v_A'$ in (S2) at $1/k$. On its initial part,
+
+$$
+\left|\int_0^{1/k}u(x)\sin(kx)\,dx\right|
+\le k\int_0^{1/k}\frac{dx}{\log^2(1/x)}
+\le\frac1{\log^2k}.
+$$
+
+For a nonnegative decreasing function $w$ on $[a,b]$, integrating
+against the primitive $\int_a^x\sin(kt)dt$, whose modulus is at most
+$2/k$, gives
+$|\int_a^bw(x)\sin(kx)dx|\le2w(a)/k$.
+Apply this once to $u$ on $[1/k,1/A]$, and once to
+$1/(ALx^2)$ on $[1/A,\infty)$. These contributions are bounded by
+$2/\log^2k$ and $2A/(kL)$ respectively. Thus
+
+$$
+\boxed{
+|g_A(X)|\le\frac3{\pi X\log^2(2\pi X)}
+             +\frac A{\pi^2X^2L}
+\qquad(2\pi X\ge A\ge e^2).}
+\tag{C1}
+$$
+
+This is a bound rather than an asserted asymptotic or an eventual sign
+for the density. Integrating it gives, for $R\ge A$,
+
+$$
+J_A(R):=\int_R^\infty|g_A(X)|\,dX
+\le\frac3{\pi\log(2\pi R)}+\frac A{\pi^2RL}
+<\frac2{\log R}.
+\tag{C2}
+$$
+
+For the last inequality, put $v=R/A\ge1$ and use
+$1+\log v/L\le v$, so $A/(RL)\le1/\log R$; also
+$3/\pi+1/\pi^2<2$. The existing small-$X$ estimate (S4) and local
+continuity of (S2) then give
+
+$$
+\int_0^\infty X\,|\mu_A|(dX)
+=\int_0^\infty|g_A(X)|\,dX<\infty.
+\tag{C3}
+$$
+
+Dominated convergence at the endpoint $\sigma\uparrow1$, using (S4),
+(C3) and the exact strip moments, also transports (M3) to the signed
+identity
+
+$$
+\int_0^\infty X\,\mu_A(dX)
+=\int_0^\infty g_A(X)\,dX=0.
+\tag{C4}
+$$
+
+This signed cancellation coexists with a finite, positive first
+absolute moment and with the divergent higher moments in (S8).
+
+### Bound the actual block remainder on its scale complement
+
+Keep the actual positive-ordinate zero multiset
+$\mathcal Z_T=\{\rho:T<\operatorname{Im}\rho\le2T\}$, with every
+multiplicity, and $D_T$ from the preceding note. Let $M_T(X)$ be the
+three-branch main expression in the already assessed Theorem 5, and
+define its actual remainder by
+
+$$
+\mathcal E_T(X)=D_T(X)-M_T(X),\qquad X\ge1.
+$$
+
+For $X\ge R\ge\max(A,T)$ its third branch applies. With
+$y=\pi X/T>1$ it is
+
+$$
+M_T(X)=-X\sum_{y\le n<2y}\frac{\Lambda(n)}n
+                                    e^{2\pi iX/n}.
+$$
+
+The [already inspected Dusart inputs](../Weil/dusart2010estimates.md)
+$\vartheta(t)<2t$ and
+$\psi(t)-\vartheta(t)<1.00007\sqrt t+1.78t^{1/3}$ give
+$\psi(t)<5t$ for $t\ge1$. Hence
+
+$$
+|M_T(X)|\le\frac Xy\psi(2y)<10X.
+$$
+
+Define the finite block factor
+
+$$
+K_T=\sum_{\rho\in\mathcal Z_T}
+                   |\chi(\rho)|T^{\operatorname{Re}\rho-1}.
+$$
+
+Because $0<\operatorname{Re}\rho<1$ and $X\ge T$,
+$|D_T(X)|\le XK_T$. Thus the actual remainder, independently of
+its printed superlinear majorant, obeys
+
+$$
+\boxed{
+\int_R^\infty|\mathcal E_T(X)|\,|\mu_A|(dX)
+\le(K_T+10)J_A(R)
+<\frac{2(K_T+10)}{\log R}
+\quad(R\ge\max(A,T),\ A\ge e^2).}
+\tag{C5}
+$$
+
+The factor $K_T$ refers to the same actual finite multiset; it is not
+an RH assumption, a numerical zero certificate or a selected favorable
+configuration. In particular (C5) does not change the real parts to
+$1/2$. It shows that this constructed transport's actual large-scale
+remainder is absolutely integrable for each fixed block, although
+direct integration of the published majorant remains infinite.
+The two statements concern different integrands and do not contradict
+one another.
+
+### The omitted scale complements can receive a full height budget
+
+Let $T_j=2^{j-1}T_0$, $j\ge1$, for any fixed $T_0>1$.
+For any chosen $\varepsilon>0$, select finite cutoffs
+
+$$
+R_j\ge\max(A,T_j),\qquad
+\log R_j\ge\frac{2^{j+1}(K_{T_j}+10)}{\varepsilon}.
+\tag{C6}
+$$
+
+Then the entire, unbounded sequence of scale-complement remainders
+has the absolute allowance
+
+$$
+\sum_{j\ge1}\left|
+\int_{R_j}^\infty\mathcal E_{T_j}(X)\,\mu_A(dX)\right|
+<\varepsilon.
+\tag{C7}
+$$
+
+This follows directly from (C5) and $\sum_{j\ge1}2^{-j}=1$.
+All ordinates above $T_0$ remain assigned to their original dyadic
+blocks. No finite-height RH verification, critical-line substitution
+or discarded infinite-height suffix is involved. The cutoffs depend
+on $A$, the block factor and the requested allowance; a fixed moderate
+cutoff is not asserted to suffice.
+
+For each block, its exact coefficient sum in (S6) can consequently
+be kept in the grouped form
+
+$$
+\begin{aligned}
+\sum_{\rho\in\mathcal Z_{T_j}}F_A(\rho)
+={}&\int_0^1D_{T_j}(X)\,\mu_A(dX)
+   +\int_1^\infty M_{T_j}(X)\,\mu_A(dX)\\
+ &+\int_1^{R_j}\mathcal E_{T_j}(X)\,\mu_A(dX)
+   +r_j,\qquad \sum_{j\ge1}|r_j|<\varepsilon.
+\end{aligned}
+\tag{C8}
+$$
+
+The small-scale term is retained, and the main-expression integral
+exists by (C3) and its finite-scale branches. The original integrated
+explicit formula already supplies absolute convergence of the
+$F_A(\rho)$ zero series. Together with (C7), this permits summing
+(C8) with its first three terms **grouped per block**; it does not
+permit separating those three infinite series without further
+estimates. In the real signed explicit formula the conjugate blocks
+give $-2\operatorname{Re}\sum F_A(\rho)$, so the complementary error
+allowance is $2\varepsilon$ before the original
+$\sqrt A\log A$ normalization. Pole and trivial-zero contributions
+are unchanged.
+
+This pays one complement obligation without proving the original
+one-sided Robin bound. The remaining grouped small-scale, main and
+retained-error terms still require a signed estimate at the same
+selected cutoff. The printed theorem's error can be integrated on
+each finite retained scale interval, but (C6) supplies no bound making
+that increasing cost fit the Robin reserve. No such uniform balance,
+effective zero computation or proof of RH is asserted here.
+
+
+## Centering the large-scale arithmetic main expression
+
+The first-moment cancellation (C4) also removes the continuous
+prime-density contribution of the third branch of $M_T$. The
+[previously assessed Fiori–Jaskari application](../Weil/broadbent2026mertens.md)
+supplies an independent bound for the remainder. This concerns the
+arithmetic main expression, with the same kernel and height blocks;
+it does not estimate the actual zero remainder $\mathcal E_T$ or
+reproduce the prime-number-theorem proof. These deductions are
+paper-level applications with no originality or Lean-verification claim.
+
+### Keep the moving frequency in the prime-error estimate
+
+Reuse the explicit positive constant
+
+$$
+d=\frac52\left(\frac53\right)^{1/5}
+            \left(\frac{2000}{161967}\right)^{3/5}
+$$
+
+from that existing application. Its unconditional conclusion is
+
+$$
+|\psi(u)-u|\le0.239u\,e^{-d\sqrt{\log u}}
+\qquad(u\ge e^3).
+\tag{P1}
+$$
+
+No new inspection or certification of its source computation is
+claimed. In particular the prime powers are part of $\psi$.
+
+Put $\psi_-(u)=\sum_{n<u}\Lambda(n)$. The endpoint difference
+$\psi(u)-\psi_-(u)$ is at most $\log u$. Also $d<1$: use
+$5/3<2$ and $2000/161967<1/64$ to get $d<5/16$.
+For $v\ge3$, $v-\log v\ge\sqrt v$, hence
+$\log u\le u e^{-d\sqrt{\log u}}$. Consequently
+
+$$
+|\psi_-(u)-u|<2u\,e^{-d\sqrt{\log u}}
+\qquad(u\ge e^3).
+\tag{P2}
+$$
+
+This includes the endpoint convention of the actual interval
+$y\le n<2y$, including when $y$ or $2y$ is a prime power.
+
+For $T>1$, $X$ with $y=\pi X/T\ge e^3$, write
+
+$$
+S_T(X)=\sum_{y\le n<2y}\frac{\Lambda(n)}n e^{2\pi iX/n},
+\qquad
+b_T=\int_T^{2T}\frac{e^{it}}t\,dt.
+$$
+
+Substituting $t=2\pi X/u$ gives
+$\int_y^{2y}u^{-1}e^{2\pi iX/u}du=b_T$.
+For $w_X(u)=u^{-1}e^{2\pi iX/u}$, Stieltjes integration with the
+retained endpoints gives exactly
+
+$$
+\begin{aligned}
+S_T(X)-b_T={}&w_X(2y)[\psi_-(2y)-2y]
+             -w_X(y)[\psi_-(y)-y]\\
+ &-\int_y^{2y}[\psi(u)-u]w_X'(u)\,du.
+\end{aligned}
+\tag{P3}
+$$
+
+The integral may use either endpoint version of $\psi$, since their
+difference is supported at integers. As
+$|w_X'(u)|\le u^{-2}+2\pi Xu^{-3}$, (P1)–(P2), with
+$\delta_y=e^{-d\sqrt{\log y}}$, give
+
+$$
+|S_T(X)-b_T|
+\le(4+2\log2+2T)\delta_y
+<8T\delta_y.
+\tag{P4}
+$$
+
+The factor $T$ records the moving phase. It has not been replaced by
+a fixed-frequency constant or omitted after changing variables.
+Ordinary integration by parts also gives $|b_T|\le2/T$.
+
+### A signed cancellation and a controlled centered complement
+
+Since $M_T(X)=-XS_T(X)$ on this large-scale branch, define the
+centered expression on all $X\ge1$ by
+
+$$
+\widetilde M_T(X)=M_T(X)+Xb_T.
+$$
+
+Here the other two branches of $M_T$ remain their original formulas;
+(P4) is used only where its threshold holds. Combining (P4) with
+(C2) gives the independent complement estimate
+
+$$
+\boxed{
+\int_R^\infty|\widetilde M_T(X)|\,|\mu_A|(dX)
+<\frac{16T}{\log R}
+       e^{-d\sqrt{\log(\pi R/T)}}
+\quad\left(R\ge\max(A,e^3T/\pi),\ A\ge e^2\right).}
+\tag{P5}
+$$
+
+The linear part is eliminated by the full signed moment, not by
+discarding a part of the scale interval:
+
+$$
+\int_1^\infty M_T(X)\,\mu_A(dX)
+=\int_1^\infty\widetilde M_T(X)\,\mu_A(dX)
+ +b_T\int_0^1g_A(X)\,dX.
+\tag{P6}
+$$
+
+Thus the small-scale term in (C8) changes to
+$\int_0^1[D_T(X)+Xb_T]\,\mu_A(dX)$ when its main term is
+replaced by the centered one. The actual zero remainder
+$\mathcal E_T=D_T-M_T$ is unchanged. This retains all endpoint,
+small-scale and conjugate contributions at the same cutoff.
+
+### Cutoffs for the centered arithmetic contribution
+
+With the same $T_j=2^{j-1}T_0$, any requested
+$\varepsilon>0$ has explicit sufficient main-term cutoffs
+
+$$
+\begin{aligned}
+V_j&=\max\left(3,
+  d^{-2}\left[\max\left(0,
+          \log\frac{16T_j2^j}{\varepsilon}\right)\right]^2\right),\\
+Q_j&=\max\left(A,\frac{T_j}{\pi}e^{V_j}\right).
+\end{aligned}
+\tag{P7}
+$$
+
+Since $\log Q_j\ge2$, (P5) gives
+
+$$
+\sum_{j\ge1}\int_{Q_j}^\infty
+|\widetilde M_{T_j}(X)|\,|\mu_A|(dX)<\varepsilon.
+\tag{P8}
+$$
+
+For fixed $A,T_0,\varepsilon$, this choice has
+$\log Q_j=O(j^2)$ as $j\to\infty$. It is a sufficient allowance
+for the centered **arithmetic main** complement, not a necessary
+cutoff or a replacement for (C6)'s zero-remainder cutoffs. It uses
+the same cumulative error law for each prime interval and does not
+combine independently favorable phases.
+
+These estimates control another scale complement and make its
+continuous cancellation explicit. They do not bound the signed
+combination left in (C8): the small-scale zero sum, retained centered
+main and actual zero remainder must still be compared together.
+The growing-scale error cost and the original full Robin inequality
+remain unpaid; no bound for $\sqrt A\log A\,I_\psi(A)$ at the selected
+integer or proof of RH follows.
