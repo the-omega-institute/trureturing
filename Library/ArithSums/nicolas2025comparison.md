@@ -1776,3 +1776,189 @@ $A^{\beta-1}/\gamma^2$ or control their joint signed sum. Neither
 identity or a paid approximation, or changes the sufficient target
 (G9) at the original selected integer. That bound and RH remain
 unproved.
+
+
+## A signed infinite-height allowance from the existing Landau formula
+
+The existing [Gonek uniform Landau input](../Weil/gonek1985landau.md),
+Theorem 1, printed pp.92–93, can be applied with the arithmetic variable
+fixed at the original $A$. Integrating its actual-zero sum in **height**
+retains a prime-power main term. This is different from the continuum
+scale pairing in that note, where the point-supported main term has
+zero ordinary integral. The following applies the already inspected
+unconditional theorem and (H5); it is not a new Landau formula, source
+proof audit, numerical zero computation, originality claim or Lean
+certification.
+
+The [existing real-part density allowance](../Analytic/polak2026finiterobinca.md#keeping-the-real-part-weights-in-the-complete-high-zero-tail),
+(W1)–(W11), already pays a complete infinite-height tail on a finite
+source-clock range and restricts the selected source to $A>10^{34}$.
+Those results are reused. The application here instead estimates the
+signed height suffix uniformly in both $A$ and a variable cut $T$.
+Its implied constants are not numerically certified, and its moving
+finite head remains unpaid.
+
+### Preserve the arithmetic variable and the whole original coefficient
+
+Let $A\ge e^2$, $L=\log A$, $T\ge8$, and
+$\mathcal J(A)=\log(2A)\log\log(3A)$. Sums below range over distinct
+actual nontrivial zeros, with $m_\rho$ supplying their multiplicities
+exactly once. Define
+
+$$
+S_A(U)=\sum_{0<\gamma_\rho\le U}m_\rho A^\rho,
+\qquad \rho=\beta+i\gamma_\rho.
+$$
+
+Gonek's uniform formula, with $x=A$ and height $U$, gives
+
+$$
+S_A(U)=-\frac{U}{2\pi}\Lambda(A)+E_A(U),
+\qquad
+|E_A(U)|\ll A[\mathcal J(A)+\log(2U)]+LU
+\quad(U\ge8).
+\tag{J1}
+$$
+
+The implied constant is absolute on the stated domain. To obtain this
+weaker uniform remainder from the displayed source errors, use only
+
+$$
+L\min\!\left(U,\frac A{\langle A\rangle}\right)\le LU,
+\qquad
+\min\!\left(\frac{\log U}{L},U\log U\right)
+\le\frac{\log U}{L}\le A\log(2U).
+$$
+
+No separation from prime powers is assumed. $\Lambda(A)$ remains the
+source's nonnegative point-supported real-variable function, equal to
+$\log p$ at $A=p^k$ and zero otherwise. It is not replaced by a prime
+measure, and no assertion that $A$ avoids prime powers is needed.
+
+Keep the complete original coefficient $F_A$ from (M1), and set
+
+$$
+\mathcal T_A(T)=\sum_{\gamma_\rho>T}m_\rho F_A(\rho).
+$$
+
+The more precise first inequality in (H5) retains the actual real part
+and gives
+
+$$
+\left|F_A(\rho)-\frac{w(A)}A\frac{A^\rho}{\gamma_\rho^2}\right|
+\ll\frac{w(A)A^{\beta-1}}{\gamma_\rho^3}
+\le\frac{w(A)}{\gamma_\rho^3}.
+$$
+
+The classical zero count gives
+$\sum_{\gamma>T}m_\rho\gamma^{-3}\ll\log(2T)/T^2$.
+Thus, with uniform implied constants,
+
+$$
+\mathcal T_A(T)=\frac{w(A)}A
+ \sum_{\gamma_\rho>T}\frac{m_\rho A^\rho}{\gamma_\rho^2}
+ +O\!\left(\frac{w(A)\log(2T)}{T^2}\right).
+\tag{J2}
+$$
+
+Both sums converge absolutely for each fixed $A$: use
+$|A^\rho|\le A$ and the reciprocal-square zero count, together with
+the preceding remainder. This step pays the coefficient approximation;
+it does not replace $F_A$ by its leading term without a remainder.
+
+### Integrate in zero height with the endpoint convention fixed
+
+Stieltjes partial summation, with the inclusive head and exclusive
+suffix specified above, gives
+
+$$
+\sum_{\gamma_\rho>T}\frac{m_\rho A^\rho}{\gamma_\rho^2}
+=-\frac{S_A(T)}{T^2}
+ +2\int_T^\infty\frac{S_A(u)}{u^3}\,du.
+\tag{J3}
+$$
+
+The boundary term at infinity vanishes. If $T$ is a zero ordinate,
+its full multiplicity stays in $S_A(T)$ and outside the suffix;
+(J3) retains that convention. The linear main term in (J1)
+contributes exactly $-\Lambda(A)/(2\pi T)$.
+
+For the remainder use
+
+$$
+\int_T^\infty\frac{du}{u^3}=\frac1{2T^2},\qquad
+\int_T^\infty\frac{\log(2u)}{u^3}\,du
+=\frac{\log(2T)}{2T^2}+\frac1{4T^2},\qquad
+\int_T^\infty\frac{du}{u^2}=\frac1T.
+$$
+
+Combining (J1)–(J3) therefore bounds the **entire** suffix:
+
+$$
+\boxed{
+\mathcal T_A(T)
+=-\frac{w(A)\Lambda(A)}{2\pi AT}
+ +O\!\left(w(A)\left[
+ \frac{\mathcal J(A)+\log(2T)}{T^2}+\frac{L}{AT}
+ \right]\right),
+\quad A\ge e^2,\ T\ge8.}
+\tag{J4}
+$$
+
+This is an unconditional uniform application for actual complex zeros,
+not a critical-line formula. No infinite height block, real part or
+multiplicity has been omitted. Keeping $A$ fixed during the height
+integration is compatible with the uniform estimate holding for all
+$A,T$ in the stated domain.
+
+### A moving cut makes this signed suffix allowance tend to zero
+
+In the original explicit formula the high-zero contribution is
+$-2\operatorname{Re}\mathcal T_A(T)$. Its normalized prime-power
+main term is favorable. Equation (J4) gives an absolute constant $C_*>0$
+such that
+
+$$
+\begin{aligned}
+\sqrt A L\,[-2\operatorname{Re}\mathcal T_A(T)]
+\ge{}&\frac{(1+1/L)\Lambda(A)}{\pi\sqrt A\,T}\\
+&-C_*\left[
+ \frac{\sqrt A[\mathcal J(A)+\log(2T)]}{T^2}
+ +\frac{L+1}{\sqrt A\,T}\right].
+\end{aligned}
+\tag{J5}
+$$
+
+The nonnegative main term can be kept or discarded for this lower
+bound; it must not be assigned an adverse sign. No numerical value
+of $C_*$ or resulting effective source-clock threshold is asserted.
+
+For the admissible moving cut $T=A^{1/4}L$, the adverse allowance in
+(J5) is
+
+$$
+O\!\left(
+ \frac{\mathcal J(A)+\log(2A^{1/4}L)}{L^2}
+ +\frac{L+1}{A^{3/4}L}\right)
+=O\!\left(\frac{\log L}{L}\right)\longrightarrow0.
+\tag{J6}
+$$
+
+Thus the complete infinite-height suffix has an asymptotically vanishing
+one-sided allowance at this moving cut. This gains height cancellation
+over a direct reciprocal-square absolute sum, whose normalized generic
+allowance is of order $\sqrt A\log(2T)/T$. It leaves the actual
+finite signed head $0<\gamma\le A^{1/4}\log A$ in the original
+formula, including all its real parts and multiplicities. That head
+eventually exceeds the existing verified height and has not been
+bounded uniformly here. The pole and trivial-zero terms are still
+those in the original explicit formula.
+
+For any prescribed positive allowance, (J6) gives an existential
+large-$A$ threshold for this suffix alone. It supplies no certified
+numerical threshold at the conditional source $A>10^{34}$, no new
+finite-zero verification, and no assertion of an unbounded sequence
+of selected sources. The original same-source condition (G9), with
+its complete signed integral and strict core, remains unproved.
+RH remains unproved. The remaining obstacle includes the signed
+moving finite head; the infinite suffix cannot simply be dropped.
