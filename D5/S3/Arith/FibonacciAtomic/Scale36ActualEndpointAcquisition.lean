@@ -22,7 +22,7 @@ open FourExitRawEndpointSpectrum (comb comb_slot_readout comb_tail_readout)
 open D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound
   (PassiveProtocol runPassiveProtocol)
 open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist)
-open ActualCoarseReadoutHistory (CoarseObservable)
+open ActualCoarseReadoutHistory (kappa_hist)
 open scoped BigOperators
 
 local notation "Index" => fun k : Nat => Unit ⊕ (Fin k × Fin 2)
@@ -285,7 +285,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       (leafAddresses (family k i)).card = 5 * k + 11) ∧
     (∀ i j : Index k, Nonconflict (family k i) (family k j)) ∧
     Fintype.card (Index k) = 2 * k + 1 ∧
-    (∀ target : Index k, ∃ pi : Strategy, CoarseObservable pi.policy ∧
+    (∀ target : Index k, ∃ pi : Strategy, Function.FactorsThrough pi.policy kappa_hist ∧
       (∀ row : Index k,
         paid (terminal pi (family k row)).1 =
           leafAddresses (family k row) ∪ (extra k target row).toFinset ∧
