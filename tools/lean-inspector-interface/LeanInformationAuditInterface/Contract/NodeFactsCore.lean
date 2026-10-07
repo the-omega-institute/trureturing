@@ -26,7 +26,7 @@ structure NodeCoordinate where
 /-- The report binds each operand to its coordinate by literal compiler-tree
  equality. The kernel checks the relation; its proof is never interpreted. -/
 inductive NodeFact : Type (u + 1) where
-  | data (T : Type u) (value : T) (location : NodeCoordinate)
+  | data (T : Sort u) (value : T) (location : NodeCoordinate)
   | type (T : Sort u) (location : NodeCoordinate)
   | proof (P : Prop) (value : P) (location : NodeCoordinate)
   | exact {T : Sort u} (left right : T) (leftAt rightAt : NodeCoordinate)
