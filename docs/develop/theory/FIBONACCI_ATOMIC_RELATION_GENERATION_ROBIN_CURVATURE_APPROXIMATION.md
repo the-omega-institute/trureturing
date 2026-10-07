@@ -1578,3 +1578,701 @@ $r_\varepsilon=V/U-(D_\varepsilon-V)/(2U)=1-h/6+O(h^2)$。
 原 $I_\psi$ 的临界有符号下界和完整 RH 目标仍开放。
 
 ## 追加锚（本行以下为增补区）
+
+## 461. 保留固定正单位原子的原曲率三点精确负质量
+
+本节保持原实际 $B=\Phi''$、固定 $c>0$ 和节点 $h,3h/2,2h$。
+固定单位是测度的真实约束 $\sigma(\{0\})=a$，不是可调参数或可删除的来源。
+首先研究 $0\le a\le a_{\max}<c/2$ 的一个固定紧区间；
+任一固定 $0<a<c/2$ 都可置于这样的区间中。
+所有候选都是 $[0,\infty)$ 上的有限实 signed Borel 测度，成本为其真实
+Jordan 负部的原始质量 $N_-(\sigma)$。
+
+### 461.1 原数据、残余数据和同一个共同小窗口
+
+沿用 §459 的实际值
+$$
+u=cB(h),\quad v=cB(3h/2),\quad z=cB(2h),
+\qquad S=2v+u+z,\quad \Delta=v^2-uz,\quad K_h=\Delta/S.
+$$
+令
+$$
+u_a=u-a,\quad v_a=v-a,\quad z_a=z-a,
+\qquad S_a=S-4a,
+$$
+$$
+\Delta_a=v_a^2-u_a z_a
+ =\Delta+a(u+z-2v),\qquad K_{a,h}=\Delta_a/S_a.
+\tag{MU.1}
+$$
+
+**引理 461.1（紧单位区间的共同域）。** 存在仅依赖 $c,B,a_{\max}$ 的
+固定 $h_1>0$，使全部 $0<h<h_1$、全部 $a\in[0,a_{\max}]$ 同时满足
+$$
+u_a>v_a>z_a>0,\qquad v_a>(u_a+z_a)/2,
+\qquad \Delta_a>0,\quad S_a>0,
+\quad 0<K_{a,h}<v_a.
+\tag{MU.2}
+$$
+对于任意 $0\le\varepsilon\le K_{a,h}$，定义
+$$
+U_a=u_a+\varepsilon,\quad V_a=v_a-\varepsilon,
+\quad Z_a=z_a+\varepsilon,
+$$
+$$
+\Delta_{a,\varepsilon}=V_a^2-U_aZ_a
+ =\Delta_a-S_a\varepsilon\ge0,
+\qquad D_a=\sqrt{9V_a^2-8U_aZ_a}
+ =\sqrt{V_a^2+8\Delta_{a,\varepsilon}},
+$$
+$$
+r_a=\frac{3V_a-D_a}{2U_a},\qquad
+n_a=\frac{8(V_a-U_ar_a)}{r_a^3},\qquad
+W_a=\frac{U_a}{r_a^2}+\frac{n_a}{4}.
+\tag{MU.3}
+$$
+同一个 $h_1$ 还可取到使整个上述 $a,\varepsilon$ 域同时满足
+$$
+r_*:=2(\sqrt2-1)<r_a<1,\quad W_a>0,\quad n_a\ge0;
+\qquad n_a=0\ \Longleftrightarrow\ \varepsilon=K_{a,h}.
+\tag{MU.4}
+$$
+
+**证明。** 原实际 $B$ 已有 $B(0)=1/2$、$B'(0)=B''(0)=-1/6$，
+并在一个共同零邻域正、严格递减、严格凹。
+由于 $c/2-a_{\max}>0$，缩小邻域后可使整个邻域内 $cB>a_{\max}$。
+减去一个常数不改变严格递减和严格凹，所以得到残余正性和中点严格凹性。
+正端点及严格算术平均不等式给 $v_a^2>u_a z_a$。
+此外
+$$
+v_a S_a-\Delta_a=(v_a+u_a)(v_a+z_a)>0,
+$$
+故 $K_{a,h}<v_a$。
+
+对允许的容差有 $U_a,Z_a,V_a>0$。
+$U_aZ_a>0$ 给 $D_a<3V_a$，而 $\Delta_{a,\varepsilon}\ge0$ 给
+$D_a\ge V_a$，因此
+$$
+0<r_a\le V_a/U_a<1.
+$$
+由 $V_a-U_ar_a=(D_a-V_a)/2$ 得 $n_a\ge0$，
+且它为零恰在 $\Delta_{a,\varepsilon}=0$，即容差右端点。
+$W_a>0$ 直接由定义支付。
+
+令 $p_a=c/2-a$，其在固定紧区间一致远离零。
+原二阶 Taylor 估计给 $\Delta_a=O(h^2)$ 一致于 a，
+而 $S_a\to4p_a$，所以 $K_{a,h}=O(h^2)$ 也一致成立。
+因此整个容差带上 $U_a,V_a,Z_a\to p_a$，
+$\Delta_{a,\varepsilon}=O(h^2)$ 一致成立。
+正分母上的连续公式使 $r_a\to1$ 一致成立。
+由于 $r_*<1$，再缩小同一个 $h_1$ 即得 MU.4。
+该窗口在 a、容差和候选测度选择之前固定。证毕。
+
+### 461.2 固定单位约束的精确解与唯一性
+
+沿用原误差
+$$
+E_h(\sigma)=\max_{s\in\{h,3h/2,2h\}}
+ |cB(s)-L_\sigma(s)|,
+\qquad L_\sigma(s)=\int e^{-st}\,d\sigma(t).
+$$
+
+**定理 461.2（固定正单位的完整三点成本）。** 在引理 461.1 的同一域内，
+对每个 $\varepsilon\ge0$ 有
+$$
+\inf_{\substack{\sigma\text{ finite signed on }[0,\infty)\\
+                  \sigma(\{0\})=a,\ E_h(\sigma)\le\varepsilon}}
+N_-(\sigma)
+=\begin{cases}
+n_a,&0\le\varepsilon\le K_{a,h},\\
+0,&\varepsilon\ge K_{a,h}.
+\end{cases}
+\tag{MU.5}
+$$
+所有最小值都真正达到。在 $0\le\varepsilon\le K_{a,h}$ 时，
+达到测度唯一，并精确为
+$$
+t_{+,a}=-\frac2h\log r_a>0,\qquad
+t_{-,a}=t_{+,a}+\frac{2\log2}{h}>t_{+,a},
+$$
+$$
+\boxed{\quad
+\sigma_{a,\varepsilon}
+=a\delta_0+W_a\delta_{t_{+,a}}-n_a\delta_{t_{-,a}}.
+\quad}
+\tag{MU.6}
+$$
+在 $\varepsilon=K_{a,h}$ 时负部为零。
+在 $\varepsilon>K_{a,h}$ 时不宣称唯一性，且事实上有多个零成本达到测度。
+
+**证明：单位与残余的真实 Jordan 分离。** 如果 $a\ge0$ 且
+$\sigma(\{0\})=a$，真实 Jordan 部在单点处不能同时有正质量；
+故 $\sigma^+(\{0\})=a$、$\sigma^-(\{0\})=0$。
+写
+$$
+\lambda=\sigma-a\delta_0.
+$$
+则 $\lambda(\{0\})=0$，而其两个 Jordan 部在零点都无原子，
+在 $(0,\infty)$ 上与原测度的对应部分相同。因此
+$$
+N_-(\lambda)=N_-(\sigma),\qquad
+L_\lambda(s)=L_\sigma(s)-a.
+\tag{MU.7}
+$$
+反之，任一零点无原子的有限 signed 残余测度加回 $a\delta_0$
+都满足原固定单位约束并保持成本。
+这是对每个候选的精确双射，不是删除原单位或调节它的系数。
+原误差因此恰为残余数据 $u_a,v_a,z_a$ 对 $L_\lambda$ 的三点误差。
+
+**证明：残余对偶下界。** 令 $y=e^{-ht/2}\in(0,1]$，取
+$$
+q_a(t)=y^2(y-r_a)^2,
+\qquad M_a=r_a^4/16.
+$$
+导数 $2y(y-r_a)(2y-r_a)$ 与 MU.4 给
+$0\le q_a\le M_a$，有限谱率的唯一零点为 $y=r_a$，
+唯一最大点为 $y=r_a/2$。
+二次方程和 n 的定义给
+$$
+U_ar_a^2-3V_ar_a+2Z_a=0,
+\qquad Z_a-2r_aV_a+r_a^2U_a=-M_an_a.
+\tag{MU.8}
+$$
+残余误差盒与三个非零系数 $1,-2r_a,r_a^2$ 给
+$$
+\int q_a\,d\lambda
+=L_\lambda(2h)-2r_aL_\lambda(3h/2)+r_a^2L_\lambda(h)
+\le-M_an_a.
+$$
+真实 Jordan 分解则给
+$$
+\int q_a\,d\lambda
+\ge-M_aN_-(\lambda).
+$$
+合成得 $N_-(\sigma)=N_-(\lambda)\ge n_a$。
+所有核在整个非负轴有界，因此这些积分和有限线性组合都真正可积。
+下界甚至适用于不限制零点原子的更大残余类；下面的达到测度位于原受限类。
+
+**证明：达到与唯一性。** 取 MU.6 的残余两原子。
+它们位于严格正且不同的真实有限谱率，$W_a>0$、$n_a\ge0$，
+故与单位原子共同构成真实 Jordan 分解，负质量恰为 $n_a$。
+直接计算
+$$
+\begin{aligned}
+r_a^2(W_a-n_a/4)&=U_a,\\
+r_a^3(W_a-n_a/8)&=V_a,\\
+r_a^4(W_a-n_a/16)&=Z_a.
+\end{aligned}
+\tag{MU.9}
+$$
+第一式由 W 的定义，第二式由 n 的定义，第三式由 MU.8 的二次方程。
+加回单位后原三个读数为 $u+\varepsilon,v-\varepsilon,z+\varepsilon$，
+所以原误差恰为 $\varepsilon$。
+真实有限原子使全部所需积分可积；固定单位系数始终等于 a。
+
+若任一候选成本达到 $n_a$，上下界链全部等号。
+正部的 $\int q_a$ 和负部的 $\int(M_a-q_a)$ 同时为零，
+故残余 Jordan 部分别只能在上述两个有限率上。
+误差盒三个严格非零系数又使读数全部为 $U_a,V_a,Z_a$，
+质量由 MU.9 唯一确定。右端点 $n_a=0$ 同样使负部为零，
+正部仍由唯一有限零点和节点读数唯一确定。
+
+对于 $\varepsilon\ge K_{a,h}$，取已构造的
+$\sigma_{a,K_{a,h}}$ 即得成本零，达到所有更大的容差；
+成本非负说明最小值恰为零。
+若容差严格大于 $K_{a,h}$，可将该测度的残余正质量 W 增加任意充分小正量。
+三个核在非负轴至多 1，故所有节点误差增加不超过该小量，
+仍在较大的误差盒内。位置严格正，单位系数不变，成本仍零，
+因此唯一性确实不能延伸到严格较大的容差。证毕。
+
+### 461.3 容差阈值的精确增量
+
+**推论 461.3（无需渐近的阈值关系）。** 同一个允许的小窗口内，
+$$
+\boxed{\quad
+K_{a,h}-K_h=\frac{a(u-z)^2}{S(S-4a)}.
+\quad}
+\tag{MU.10}
+$$
+因此 $K_{a,h}=K_h$ 当 a=0，而 $K_{a,h}>K_h$ 当 a>0。
+
+**证明。** 置 $J=u+z-2v$。直接整理得
+$$
+S J+4\Delta=(u+z+2v)(u+z-2v)+4(v^2-uz)=(u-z)^2.
+$$
+用 MU.1 通分，得到 MU.10。
+分母正且 $u>z$，所以所述严格性成立。证毕。
+
+这保证全部原容差带 $0\le\varepsilon\le K_h$ 都位于残余允许域中。
+当 a>0 且 $\varepsilon=K_h$ 时，原无单位约束的最小负质量为零，
+但残余容差尚未达到 $K_{a,h}$，所以固定单位的 $n_a$ 仍严格正。
+
+### 461.4 比单位单项预算严格更强的有限 h 身份
+
+在共同原容差带 $0\le\varepsilon\le K_h$，沿用 §459–460 的原
+$r=r_\varepsilon$、$n=n_\varepsilon$ 和 $M=r^4/16$。
+原单位单项下界为 $n+a(1-r)^2/M$。
+
+**定理 461.4（精确剩余成本）。** 若 a>0，则 $r_a<r$，并有
+$$
+\begin{aligned}
+M\left[n_a-n-\frac{a(1-r)^2}{M}\right]
+={}&W_a r_a^2(r_a-r)^2\\
+ &+n_a\left[M-\frac{r_a^2}{4}
+                 \left(\frac{r_a}{2}-r\right)^2\right]>0.
+\end{aligned}
+\tag{MU.11}
+$$
+它对每个允许的有限 h 成立，包括 $\varepsilon=K_h$。
+a=0 时两边为零。
+
+**证明。** 在同一个 epsilon 下，残余盒数据为
+$U_a=U-a,V_a=V-a,Z_a=Z-a$。
+将原 r 代入残余二次多项式，利用原二次方程得到
+$$
+U_ar^2-3V_ar+2Z_a
+=-a(r^2-3r+2)=-a(r-1)(r-2)<0.
+$$
+该多项式在零处为 $2Z_a>0$，开口向上，
+MU.3 的 $r_a$ 是其较小正根，故 $r_a<r$。
+
+把 MU.6 的真实最优测度代入 §460 的原精确对偶缺口。
+它的三个原读数恰为原盒顶点 $U,V,Z$，所以原 $d_{\rm box}=0$。
+单位贡献是 $a(1-r)^2$；残余正原子的原 y 值为 $r_a$，
+负原子的原 y 值为 $r_a/2$。
+其余两个完整成本恰为 MU.11 右边。
+原平方见证在整个非负轴不超过 M，故第二项非负；
+而 $W_a>0,r_a>0,r_a\ne r$ 使第一项严格正。
+整个受约束最优测度都保留于身份中，未把残余成本删除。
+当 a=0 时残余参数与原参数完全相同，身份两边为零。证毕。
+
+### 461.5 全容差带和紧单位区间上的准确二阶系数
+
+**定理 461.5（统一二阶成本）。** 以下估计都一致于
+$a\in[0,a_{\max}]$；涉及 epsilon 的估计还一致于
+$0\le\varepsilon\le K_{a,h}$：
+$$
+\frac{\Delta_a}{h^2}
+\longrightarrow\frac{c(2c-3a)}{72},\qquad
+\frac{K_{a,h}}{h^2}
+\longrightarrow k(a):=\frac{c(2c-3a)}{144(c-2a)},
+\tag{MU.12}
+$$
+$$
+\frac{n_a}{h^2}
+=\frac{4c(2c-3a)}{9(c-2a)}
+ -64\frac{\varepsilon}{h^2}+o(1).
+\tag{MU.13}
+$$
+特别地，对精确拟合有
+$$
+\frac{n_{a,0}}{h^2}\longrightarrow
+\frac{4c(2c-3a)}{9(c-2a)}.
+$$
+同一域内还有
+$$
+r_a=1-\frac{c}{6(c-2a)}h+O(h^2),\qquad
+t_{+,a}=\frac{c}{3(c-2a)}+O(h),
+\quad W_a=c/2-a+O(h).
+\tag{MU.14}
+$$
+
+**证明。** 原 Taylor 估计为
+$$
+cB(s)=c/2-cs/6-cs^2/12+o(s^2).
+$$
+三个固定倍数节点给
+$$
+\Delta/h^2\to c^2/36,\qquad
+(u+z-2v)/h^2\to-c/24.
+$$
+乘以紧区间内有界 a，MU.1 给 MU.12 第一项一致成立。
+由于 $S_a\to2(c-2a)$ 且分母一致远离零，第二项也一致成立。
+此外有准确乘子身份
+$$
+n_a=\frac{32\Delta_{a,\varepsilon}}
+           {r_a^3(D_a+V_a)}
+ =\frac{32S_a}{r_a^3(D_a+V_a)}(K_{a,h}-\varepsilon).
+\tag{MU.15}
+$$
+其证明是 $n_a=4(D_a-V_a)/r_a^3$，再用
+$(D_a-V_a)(D_a+V_a)=8\Delta_{a,\varepsilon}$。
+$r_a\to1,S_a\to4p_a,D_a+V_a\to2p_a$ 一致且分母正，
+故 MU.15 的乘子一致趋于 64。
+$K_{a,h}/h^2$ 和 $\varepsilon/h^2$ 一致有界，得到 MU.13。
+该乘子身份在容差右端点也完全合法，不除以可能为零的 $K_{a,h}-\varepsilon$。
+
+对于 MU.14，二阶有界 Taylor 余项和 epsilon 的共同 $O(h^2)$ 域给
+$$
+U_a=p_a-ch/6+O(h^2),\qquad
+V_a=p_a-ch/4+O(h^2)
+$$
+一致成立。准确关系
+$D_a-V_a=8\Delta_{a,\varepsilon}/(D_a+V_a)=O(h^2)$
+及一致正分母给
+$r_a=V_a/U_a-(D_a-V_a)/(2U_a)$ 的所列展开。
+取对数后得到严格正位置的展开；MU.15 给 $n_a=O(h^2)$，
+再代入 W 的定义得到其展开。证毕。
+
+**推论 461.6（额外成本的准确主项）。** 一致于同一个紧 a 区间和整个
+原容差带 $0\le\varepsilon\le K_h$，
+$$
+n_a-\left[n_\varepsilon+
+          \frac{a(1-r_\varepsilon)^2}{M_\varepsilon}\right]
+=\frac{8a^2}{9(c-2a)}h^2+O(h^3).
+\tag{MU.16}
+$$
+因此对每个固定 a>0，该差具有严格正二阶系数；
+有限 h 的严格性已由 MU.11 单独支付，不靠渐近余项猜测。
+
+**证明。** 原共同展开 $r=1-h/6+O(h^2)$ 与 MU.14 给
+$$
+r_a-r=-\frac{a}{3(c-2a)}h+O(h^2).
+$$
+MU.11 的第一项除以 $M=1/16+O(h)$ 后给
+$8a^2h^2/[9(c-2a)]+O(h^3)$。
+第二项可用 §460 的准确因式分解：
+$$
+M-\frac{r_a^2}{4}\left(\frac{r_a}{2}-r\right)^2
+=\frac{(r_a-r)^2}{4}
+  \left(\frac{r^2}{2}-\frac{(r_a-r)^2}{4}\right)=O(h^2).
+$$
+因 $n_a=O(h^2)$，此项除以 M 后只有共同 $O(h^4)$。
+所以得到 MU.16。亦可由 MU.13、原 $n_\varepsilon$ 的统一展开和
+§460 的单位二阶系数直接核对主项：
+$$
+\frac{4c(2c-3a)}{9(c-2a)}
+ -\frac{8c}{9}-\frac{4a}{9}
+=\frac{8a^2}{9(c-2a)}.
+$$
+前一精确身份证明同时支付了所写共同余项。证毕。
+
+### 461.6 实际算术 head 的条件接口和未决范围
+
+保持 §459–460 的同一真实有限奇 Möbius 谱
+$$
+\sigma_{x,N}=\sum_{\substack{m\le N\\m\text{ odd}}}
+ \mu(m)\mathscr D_x(m)\delta_{\log m},\qquad N\ge1.
+$$
+不同自然来源有不同谱位置，所以该谱的固定单位系数确实是
+$a_{x,1}=\mathscr D_x(1)$，其余奇来源均有严格正谱率。
+**只有另行支付**
+$$
+0\le a_{x,1}\le a_{\max}<c/2,\qquad
+0<h<h_1,\qquad E_h(\sigma_{x,N})\le\varepsilon
+\tag{MU.17}
+$$
+时，才能把本节用于该同一个谱，得到其真实 Jordan 负质量至少为
+MU.5 中的准确最小值。
+若 $a_{x,1}>0$ 且 $\varepsilon\le K_h$，MU.11 给比 §460 单位单项更强的
+精确下界，包括原 $n_\varepsilon=0$ 的右端点。
+单位的真实数值在此被代入，不被删去、调节或用另一个 primorial 曲率谱替换。
+
+若在该紧区间内 $a_{x(h),1}\to a_0$，且
+$0\le\varepsilon_h\le K_{a_{x(h),1},h}$、
+$\varepsilon_h/h^2\to\kappa$，那么
+$0\le\kappa\le k(a_0)$，由一致估计可得条件下界
+$$
+\liminf\frac{N_-(\sigma_{x(h),N(h)})}{h^2}
+\ge\frac{4c(2c-3a_0)}{9(c-2a_0)}-64\kappa.
+\tag{MU.18}
+$$
+这一单位系数极限和同源节点逼近都是另外的实际供应，不从有限谱定义自动取得。
+
+上述连续率最优测度只说明固定单位比较类的下界准确，
+不说明原 Möbius 系数和整数对数位置能够达到它。
+真实原谱的完整偶倍纤维、有限截止、全部来源及完整余项仍须保留；
+尤其 §459 的 SNC.36 节点运输和原 $I_\psi$ 临界有符号尾仍未支付。
+已有 Fibonacci 完整尾运输不自动提供这三个曲率节点。
+
+边界 a=0 被 MU.5–MU.16 完整覆盖，成本与 §459 相同，
+达到测度本来就没有零点原子。
+$a\uparrow c/2$ 不能用本紧区间的一致正分母外推；
+a>=c/2、固定负单位、真实 $a_{x,1}$ 的正性和尺度供应不在本节解决范围内。
+本节给出固定单位比较类的精确下界；原临界有符号尾仍然开放。
+
+
+### 461.7 来源与数学连接
+
+本节复用 §459 的三核平方对偶和两原子代数，以及 §460 的完整非负缺口。
+Jordan 分解、有限谱、Taylor 估计和一致正分母是经典工具。
+原 $\Phi$、零值和导数来源保持 PrimorialGlobalLaplaceEnvelope、
+PrimePrefixPhiCurvature 及其原供应 PrimorialFirstOrderConcentrationCounterexample；
+实际 Möbius 配对保持 §§455.6、459.5 的全部来源。
+这些经典供应和既有结果不作新的原创性声明。
+
+固定算术单位将三点矩问题变成一个平移后的精确约束问题。
+零点的 Jordan 分离保留了原始负质量，新的残余正原子率由剩余质量决定，
+其位置偏移在原平方对偶中支付严格的额外成本。
+因此原单位的系数、剩余质量与三个节点的共同容差必须一起控制；
+三者的同源供应是将此比较结果用于实际有限 head 的条件。
+
+## 追加锚（本行以下为增补区）
+
+## 462. 原实际曲率的完整指数底座与原 A 的严格正储备
+
+保持同一原函数与完整常数
+
+$$
+\Phi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vt}}t\,dt\right),
+\quad B(v)=\Phi''(v),\quad
+\gamma=\gamma_E,\quad C=e^\gamma,\quad k=C-1,
+$$
+
+$$
+A=\int_0^1\frac{\Phi'(v)-1}{v}\,dv
+ +\int_1^\infty\frac{\Phi'(v)-C}{v}\,dv.
+\tag{EFA.1}
+$$
+
+本节从原曲率的完整指数底座推导同一原 A 的严格正下界。
+
+### 462.1 原对象与完整积分供应
+
+复用 §450 的完整端点、质量、矩和对数积分供应：
+
+$$
+B(0)=\tfrac12,\quad B(v)>0\ (v>0),\quad
+\int_0^\infty B(v)\,dv=k,\quad
+\int_0^\infty vB(v)\,dv=1,
+$$
+
+$$
+\int_0^\infty |\log v|B(v)\,dv<\infty,\qquad
+A=-\int_0^\infty\log v\,B(v)\,dv.
+\tag{EFA.2}
+$$
+
+其零点连续性和导数绑定保持 PrimePrefixPhiCurvature；
+原归一化和完整两段 A 保持 PrimePrefixOriginalA；
+上述全部矩保持 PrimePrefixCurvatureMoments。
+也复用 §450 的同一正轴 Euler 表示
+
+$$
+E_1(v)=\int_v^\infty\frac{e^{-w}}w\,dw,\quad
+0<E_1(v)\le e^{-v}/v,\quad
+\Phi(v)=Cv e^{E_1(v)},\quad
+\Phi'(v)=\Phi(v)\frac{1-e^{-v}}v,
+$$
+
+$$
+B(v)=\Phi(v)e^{-v}\frac{v-1+e^{-v}}{v^2}
+=C e^{E_1(v)}e^{-v}
+ \left(1-\frac{1-e^{-v}}v\right)\qquad(v>0).
+\tag{EFA.3}
+$$
+
+这些是原函数已经证明的性质，不是对未知 B 的替代假设。
+
+经典完整积分
+
+$$
+\int_0^\infty e^{-v}\,dv=1,\quad
+\int_0^\infty ve^{-v}\,dv=1,\quad
+\int_0^\infty \log v\,e^{-v}\,dv=-\gamma
+\tag{EFA.4}
+$$
+
+沿用 Gamma 的已有供应。末项绝对收敛：近端由 $\int_0^1|\log v|dv=1$ 支付，远端由 $\log v\le v$ 和指数衰减支付。
+原 OriginalA 的归一化复用 Mertens.Gamma 中的完整积分恒等式
+$\int\log v\,e^{-v}=\Gamma'(1)$，该供应保持 PrimeNumberTheoremAnd 端口来源。
+Gamma 积分的导数定理及 $\gamma=-\Gamma'(1)$ 复用 Mathlib 的
+Complex.hasDerivAt_GammaIntegral 和 Real.eulerMascheroniConstant_eq_neg_deriv。
+
+### 462.2 完整正轴上的严格指数底座
+
+**定理 462.1（原曲率的指数底座）。** 连续延拓到零点的
+
+$$
+F(v)=e^vB(v)\quad(v\ge0)
+$$
+
+在整个非负轴严格递增，且
+
+$$
+F(0)=\tfrac12,\qquad \lim_{v\to\infty}F(v)=C.
+\tag{EFA.5}
+$$
+
+因此对全部 $v>0$，
+
+$$
+\boxed{\qquad \tfrac12e^{-v}<B(v)<Ce^{-v}.\qquad}
+\tag{EFA.6}
+$$
+
+
+**证明。** 对 $v>0$，置 $g(v)=(v-1+e^{-v})/v^2$。
+EFA.3 给 $F=\Phi g$，直接求导并使用原 $\Phi'/\Phi=(1-e^{-v})/v$，得
+
+$$
+\begin{aligned}
+F'(v)
+&=\frac{\Phi(v)}{v^3}
+ \left[(1-e^{-v})(v-1+e^{-v})
+       +v(1-e^{-v})-2(v-1+e^{-v})\right]\\
+&=\frac{\Phi(v)}{v^3}
+ \left(1-2ve^{-v}-e^{-2v}\right)\\
+&=\frac{\Phi(v)e^{-v}}{v^3}
+ \left(e^v-e^{-v}-2v\right)>0.
+\end{aligned}
+\tag{EFA.7}
+$$
+
+最后的严格正性可完全用原实指数函数支付：令
+$p(v)=e^v-e^{-v}-2v$，则 $p(0)=0$，而对 $v>0$，
+
+$$
+p'(v)=e^v+e^{-v}-2
+=\left(e^{v/2}-e^{-v/2}\right)^2>0.
+$$
+
+因此 $p(v)>0$。没有对未知测度求导，也没有使用 A 的符号。
+
+零点由 B 的实际连续性给 $F(0)=1/2$，不在 EFA.7 中代入 v=0。
+对任意 $0\le a<b$，F 在 [a,b] 连续、在其开区间可微且导数严格正，均值定理给严格递增，包括 a=0 的情况。
+
+无穷端由 EFA.3 准确写成
+
+$$
+F(v)=Ce^{E_1(v)}
+ \left(1-\frac{1-e^{-v}}v\right).
+$$
+
+$E_1(v)\le e^{-v}/v\to0$，括号趋于 1，故 F 趋于 C。
+严格递增和有限极限给 $1/2<F(v)<C$ 对每个 v>0 成立。
+乘以 $e^{-v}>0$ 得 EFA.6。证毕。
+
+### 462.3 抽出指数底座后的完整剩余律
+
+定义实际剩余密度和质量
+
+$$
+R(v)=B(v)-\tfrac12e^{-v},\qquad
+r=k-\tfrac12.
+\tag{EFA.8}
+$$
+
+EFA.6 给 R(v)>0 于全部 v>0，且 R(0)=0。
+经典 $\gamma>1/2$ 和 $e^\gamma\ge1+\gamma$ 给
+$k\ge\gamma>1/2$，所以 r>0。
+
+**引理 462.2（完整剩余质量与矩）。** 完整剩余积分满足
+
+$$
+\int_0^\infty R(v)\,dv=r,\qquad
+\int_0^\infty vR(v)\,dv=\tfrac12,\qquad
+\int_0^\infty|\log v|R(v)\,dv<\infty,
+$$
+
+$$
+A=\frac\gamma2-\int_0^\infty\log v\,R(v)\,dv.
+\tag{EFA.9}
+$$
+
+因此 $R(v)dv/r$ 是严格正的正轴概率密度，其均值为 $m=1/(2r)$；它没有零点原子，亦非点质量。
+
+**证明。** R 连续，且 $0<R<B$ 对 v>0 成立。
+EFA.2 已付 B、vB 和 $|\log v|B$ 的完整可积性，因此三种剩余核都绝对可积。用 EFA.2、EFA.4 和完整积分的线性性相减，分别得到质量 r、一阶矩 1/2 与所列原 A 身份。这里没有截取有限尾，也没有把两个不收敛的积分相减。正密度在每个正长度的正轴紧区间有正质量，故均值 m 是有限正数，律非退化。证毕。
+
+### 462.4 剩余严格 Jensen 与原 A 的正性
+
+**定理 462.3（原 A 的严格正储备）。** 原完整两段常数有精确更强的下界
+
+$$
+\boxed{\quad
+A>\frac\gamma2+
+ \left(k-\frac12\right)\log(2k-1).
+\quad}
+\tag{EFA.10}
+$$
+
+进而
+
+$$
+\boxed{\qquad \frac1{16}<A<\frac12.\qquad}
+\tag{EFA.11}
+$$
+
+
+**证明：完整严格 Jensen。** 对 m=1/(2r)>0 和每个 v>0，实对数切线给
+
+$$
+\log v\le\log m+\frac{v-m}{m},
+$$
+
+等号仅在 v=m。线性项和对数项对 R(v)dv 全部绝对可积。
+切线差非负，并在例如 [m+1,m+2] 上严格正，R 在该紧区间严格正；
+连续非负函数的该段积分严格正。因而
+
+$$
+\int_0^\infty\log v\,R(v)\,dv
+<r\log m+\frac1m\left(\tfrac12-mr\right)
+=r\log m.
+$$
+
+代入 EFA.9，并用 $-\log m=\log(2r)$，得 EFA.10。
+
+**证明：统一严格数值储备。** 对任意 x>0，
+
+$$
+x\log x\ge-\frac1e.
+\tag{EFA.12}
+$$
+
+例如把 $\log y\ge1-1/y$ 用于 y=ex，减去 1 后乘以 x，直接得此界；没有需要估计的局部最小值。
+置 x=2r，EFA.10 给
+
+$$
+A>\frac\gamma2+r\log(2r)
+\ge\frac\gamma2-\frac1{2e}.
+$$
+
+经典 $\gamma>1/2$ 已被原供应复用；
+指数正项级数在 x=1 给
+
+$$
+e>1+1+\frac12+\frac16=\frac83.
+$$
+
+因此
+
+$$
+\frac\gamma2-\frac1{2e}>
+\frac14-\frac3{16}=\frac1{16}.
+$$
+
+最后的上界 A<1/2 直接复用原 PrimePrefixOriginalA。
+这整条链不使用待证的 A 正性或任何数值拟合。证毕。
+
+### 462.5 原对数矩、信息散度与 Robin 供应边界
+
+§450 和 PrimePrefixOriginalALogLowerBound 已有
+$A=-\int\log v\,B(v)dv$ 及 $A>k\log k$。
+这里的新增步骤是 EFA.5–EFA.7 的原曲率完整指数底座，以及把该底座完整抽出后使用真实正剩余律，得到 EFA.10–EFA.11。指数底座及剩余质量、一阶矩共同承担这一加强。
+
+若另外沿用 $\mu(dv)=B(v)dv/k$、$\nu(dv)=vB(v)dv$，两者都是完整正轴概率律且相互绝对连续，
+$d\nu/d\mu=kv$。EFA.2 支付对数似然比的绝对可积性，因此经典概率 KL 身份确为
+
+$$
+A-k\log k=kD_{\rm KL}(\mu\Vert\nu).
+\tag{EFA.13}
+$$
+
+其严格非退化性复述已有原 Jensen gap；本节 EFA.10 的额外强度来自已经证明的实际指数底座，不依赖信息散度术语。
+
+本结果仍是原实际常数的解析供应。它没有给真实 Möbius 谱的同源三节点逼近、原 Robin 配对的完整有符号尾或 RH 判据的最终符号；实际 Fibonacci 完整尾运输也不被当成这些未付供应。
+
+### 462.6 来源与证明范围
+
+原对象、完整端点、积分质量和对数矩复用 §§444、450 及
+PrimorialGlobalLaplaceEnvelope、PrimePrefixPhiCurvature、PrimePrefixOriginalA、
+PrimePrefixCurvatureMoments 的对应结果；完整 Gamma 对数矩保持
+Mertens.Gamma 及其 PrimeNumberTheoremAnd 端口来源。指数函数、均值定理、完整积分线性性、
+严格对数切线及 Gamma 对数矩属于经典工具。
+本节的新增解析结论是 EFA.5–EFA.11；EFA.13 将既有严格对数切线缺口写为
+原曲率律与其按变量加权的概率律之间的相对熵。
+上述局部解析结论来自本仓原对象的推导，不作全球文献首创声明。
+新增结论在此给出完整纸面证明，其 Lean 形式化另行交付。
+
+## 追加锚（本行以下为增补区）

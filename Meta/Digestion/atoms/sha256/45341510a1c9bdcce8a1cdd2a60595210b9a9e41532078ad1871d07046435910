@@ -1,0 +1,41 @@
+**证明。** 实际完整前像明确为
+
+$$
+\begin{aligned}
+Q_1&=\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle,\\
+Q_2&=\langle\langle\alpha,\langle\beta,\alpha\rangle\rangle,\langle\alpha,\alpha\rangle\rangle,\\
+Q_3&=\langle\langle\alpha,\alpha\rangle,\langle\langle\beta,\alpha\rangle,\alpha\rangle\rangle,\\
+Q_4&=\langle\langle\alpha,\alpha\rangle,\langle\alpha,\langle\beta,\alpha\rangle\rangle\rangle.
+\end{aligned}
+\tag{34.25}
+$$
+
+即第 $j$ 槽放 $\langle\beta,\alpha\rangle$、其余三槽放 $\alpha$。它们字面不同，各有四片 $\alpha$、一片 $\beta$。替换同态规则给 $\rho^3(Q_j)=P_j$，规范编译卷命题 4.3 给四个像互异。母卷定理 3.4 给输出 $(4+2,8+3)^{\mathsf T}=(6,11)^{\mathsf T}$，亦即三个三叶 $A$ 和一个八叶 $B$ 共十七叶。任意 $i\ne j$ 只在第 $i,j$ 槽比较 $A,B$，其余槽为相同的 $A$。引理 30.2 给局部 $A/B$ 非冲突且无共享叶；四个槽前缀自由，其余共同叶标签相同，故全部六对非冲突。
+
+控制器依次使用三个真实地址
+
+$$
+(q_1,q_2,q_3)=(p_1\mathtt{LR},p_2\mathtt{LR},p_3\mathtt{LR})
+=(\mathtt{LLLR},\mathtt{LRLR},\mathtt{RLLR}).
+\tag{34.26}
+$$
+
+第 $j\le3$ 问报告 $\mathsf{branch}$ 时暂选 $P_j$，停止路由；报告 $\mathsf{leaf}_\alpha$ 时继续下一问，三问均为 $\mathsf{leaf}_\alpha$ 时暂选 $P_4$。任意 $\mathsf{leaf}_\beta$ 或 $\mathsf{absent}$ 均进入独立全域后备。$A(\mathtt{LR})=\alpha$、$B(\mathtt{LR})=\mathsf{branch}$ 给全部实际路径：
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{来源}&\text{实际路由响应列}&(f,c)&\text{待补不同叶地址数}&\text{最终费用}\\ \hline
+P_1&\mathsf{branch}&(0,1)&17&18\\
+P_2&\mathsf{leaf}_\alpha,\mathsf{branch}&(1,1)&16&18\\
+P_3&\mathsf{leaf}_\alpha,\mathsf{leaf}_\alpha,\mathsf{branch}&(2,1)&15&18\\
+P_4&\mathsf{leaf}_\alpha,\mathsf{leaf}_\alpha,\mathsf{leaf}_\alpha&(3,0)&14&17
+\end{array}
+\tag{34.27}
+$$
+
+三个地址互异，每条路径的 $f$ 个真实叶地址属于该来源的十七叶集合，$c$ 个分支地址在其外。暂选原型后仍请求全部十七个带标签叶，规则与定理 34.4 的完整核对及真实缓存供应相同；推断报告不进入缓存，全部精确匹配才接受，任一不匹配进入同一个独立初始化的全域总后备。实际最终付费地址集恰为原型叶集与本路径非叶地址集之并，费用为 $f+c+(17-f)=17+c$。
+
+全域正确性与有限总性逐项使用定理 34.4 所接的既有供应：定理 18.2 的 $d=3$ 完整叶认证、母卷定理 9.2、9.3 的有限描述与恢复、定理 29.2 的全域后备、引理 27.3 的独立续接。路由最多三问，核对有限；根叶在首问即报告不存在，族外其他有限正负输入亦由核对或后备正确处理。没有给未知输入组成、规模或正性承诺，也未对族外输入给十八的费用上界。
+
+同一个控制器给 $D(F_{17})\le18$。任取两个不同成员，它们非冲突、同为十七叶，[定理 23.2 的式（23.5）](#23-全有限来源上两个指定正例的共同最优地址费用)给该对的确定性共同最坏费用至少十八。每个四源控制器限制评价到该对仍是同一个全域正确总控制器，故 $D(F_{17})\ge18$。这证明式（34.24），未把分别最优的个体证书拼成共同运行。证毕。
+

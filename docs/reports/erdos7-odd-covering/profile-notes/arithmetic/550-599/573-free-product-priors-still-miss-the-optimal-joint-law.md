@@ -1,5 +1,10 @@
 # Arbitrary priors do not remove the product/deletion source restriction
 
+The [quantitative refinement](#a-quantitative-gap-for-arbitrary-priors) gives
+23/16 <= inf_Prod R <= 13/9 for this same four-original family. Its gap above
+the unrestricted joint optimum203/144 is therefore at least1/36. The product
+infimum is not asserted to equal its existing upper bound13/9.
+
 ## Exact statement and scope
 
 Let P={3,5}. Take the actual distinct odd-modulus originals
@@ -198,3 +203,132 @@ settles an arbitrary-family existence claim. In particular13/9 is an
 upper bound, not the claimed exact product optimum. The result limits
 source-class conversion, not Erdős #7 itself. No new Lean verification
 or claim of external novelty is made.
+
+## A quantitative gap for arbitrary priors
+
+For the SAME four originals and the SAME all-height norm, one has
+
+    23/16 <= inf_(mu in Prod(U)) R(mu) <= 13/9,
+    inf_Prod R - min_(mu supported on U) R(mu) >= 1/36.          (5)
+
+The upper witness and unrestricted optimum are those above. The additional
+lower bound uses a finite rational dual certificate covering every possible
+product prior, including zero coordinate weights. It quantifies the existing
+strict separation; it does not introduce a new source-class obstruction at
+the continuation threshold or prove a bound for arbitrary original families.
+
+### Symmetry preserves arbitrary product/deletion priors
+
+First apply the already proved independent Haar-tail average at9 and5.
+Next permute the ternary children within A={0,3,6}, and within C={4,7},
+fixing B={1}; also exchange the two five-roots2 and3. These are independent
+prime-tree automorphisms preserving every original and every numerical
+query family. The normalization Z=(u x w)(U) is unchanged. Averaging the
+two prior factors independently therefore gives exactly the average of
+their normalized masked product. This remains in Prod(U), and every query
+maximum decreases or stays equal by convexity.
+
+It suffices to prove the lower bound for such averaged laws: a lower bound
+on the contracted norm is also a lower bound on the original norm. Give
+each A row unnormalized prior weight r, the B row weight s, and each C row
+weight t. Give columns0,1,2,3 weights x,y,z,z. All six parameters are
+nonnegative. The surviving mass is
+
+    Z=3r(y+2z)+s(x+2z)+2t(x+y+2z).                             (6)
+
+Mass assigned to rows or columns removed by the pure originals has no
+effect on the posterior. The six remaining parameters may be rescaled;
+they are not required to be separately normalized priors in(6).
+
+Let L_d denote the largest unnormalized query mass. Listing all distinct
+nonzero phase rows gives
+
+    L3 =max(3r(y+2z), s(x+2z)+2t(x+y+2z)),
+    L5 =max(x(s+2t), y(3r+2t), z(3r+s+2t)),
+    L9 =max(r(y+2z), s(x+2z), t(x+y+2z)),
+    L15=max(3ry, 3rz, x(s+2t), 2ty, z(s+2t)),
+    L45=max(ry, rz, sx, sz, tx, ty, tz).
+
+For Z>0 the existing all-height identity(1) is exactly R=N/Z, where
+
+    N=L3+(5/4)L5+(3/2)L9+(5/4)L15+(15/8)L45.                  (7)
+
+No query height is truncated here. The desired homogeneous inequality is
+
+    N >= (23/16) Z                                            (8)
+
+for all six nonnegative parameters. When Z=0 it is still a well-defined
+inequality, although no posterior is assigned to that source.
+
+### Nonnegative duals on a complete parameter partition
+
+If x+y+z>0, divide the three column parameters by their sum. Both sides
+of(8) scale by the same factor. Thus the parameter domain is the CLOSED
+simplex x+y+z=1, x,y,z>=0; this is a homogeneous coordinate convention,
+not the normalization x+y+2z=1 of a four-column probability. If all three
+vanish, both sides of(8) are zero.
+
+Write each of the20 displayed phase loads as
+
+    ell_j=(r,s,t) A_j (x,y,z)^T,
+    Z=(r,s,t) M (x,y,z)^T,
+    M=((0,3,6),(1,0,2),(2,2,4)).
+
+On each parameter triangle the certificate supplies20 numbers lambda_j>=0.
+Their sums within the five query groups are respectively
+
+    1, 5/4, 3/2, 5/4, 15/8.
+
+For every vertex v of that triangle and every row i=1,2,3 it verifies
+
+    [sum_j lambda_j A_j v]_i >= (23/16)[M v]_i.                (9)
+
+Both sides are linear in v, so(9) holds throughout the triangle. Multiplying
+the three inequalities by the nonnegative r,s,t and adding gives
+
+    sum_j lambda_j ell_j >= (23/16) Z.
+
+The query budgets and nonnegative lambda give N>=sum_j lambda_j ell_j,
+proving(8) on that triangle. The dual may depend on the prior parameters;
+it is used to certify a lower bound, not to choose the underlying source
+after a query is revealed.
+
+The [certificate](../../../frontier/cover-geometry/free-product-prior-separation/free_product_prior_gap_certificate.json)
+starts with the three triangles joining the simplex center to consecutive
+vertices. An internal node bisects one edge and replaces its triangle by
+the two triangles joining that midpoint to the opposite vertex. These
+replacements preserve the covered set, including every boundary. The tree
+has107 nodes and55 leaves; every node is reached exactly once. Consequently
+the55 certified triangles cover the entire simplex. There is no omitted
+parameter interval or appeal to a numerical grid limit.
+
+The exact standard-library
+[consumer](../../../frontier/cover-geometry/free-product-prior-separation/free_product_prior_gap.py)
+reconstructs the20 survivor cells from the literal four originals, enumerates
+all phase rows at3,5,9,15,45, and checks that the menus above are complete.
+It checks the partition tree, all dual signs and budgets, and all495
+vertex/row inequalities over rational numbers. It uses no optimizer.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/free-product-prior-separation/free_product_prior_gap.py
+```
+
+Applying(8) to every Z>0 proves(5), since
+
+    23/16-203/144=1/36,
+    13/9-23/16=1/144.
+
+Sequences whose prior survival tends to zero remain covered term by term;
+compactness of the normalized product image is not assumed. Arbitrary
+non-Haar priors were included by the initial tail contraction. Free unused
+prime axes retain the exact multiplicative formula already proved above.
+The interval of width1/144 for the restricted optimum remains unresolved.
+
+A scoped Lean check verifies all55 rational leaf certificates, the
+nonnegative interpolation and row-combination steps, the midpoint and
+center-fan coefficient identities, and the displayed gap arithmetic. Its
+axiom closure uses only the standard three axioms. The actual-source
+symmetry, all-height measure reduction, and complete recursive-tree
+instantiation remain ordinary mathematics and the exact consumer above;
+the complete measure-theoretic statement is not claimed as a new Lean
+theorem. These application checks introduce no canonical wrapper theorem.
