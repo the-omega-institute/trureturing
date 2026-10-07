@@ -5130,7 +5130,10 @@ Lean 编译的数学输入；StrataLint 消费登记状态和绑定身份，Lean
 
 ---
 
-## CIRPT-42　新增编译错误
+## CIRPT-42　结构与独立分析诊断
+
+生产路径的结构诊断由当前 `Compiled*` 模块发出；projection 诊断由下游
+`LeanInformationAuditRegAnalysis/Projection` 与其独立测试消费，不是 Seal 的统计输出协议。
 
 IE-C024…IE-C033 的 trigger、deterministic message shape 与 required payload keys 以第 31 节
 三张耦合表为规范定义；本节给出其语义解释。
@@ -5206,8 +5209,7 @@ refinement cell 没有 inclusion proof，或否定 cell 没有可复查的 witne
 
 ### IE-C028　AnalysisCertificateMismatch
 
-overlap、spectrum、role total、verdict、redundant set 或 layer count 与其 Lean/reflected
-certificate 不一致或不完整。
+当前 `CompiledSnapshots` 或 `CompiledSeal` 的 expected/actual、目录身份、arena、成员顺序或单位向量不一致。
 
 ### IE-C029　UnfaithfulCrossArenaRealization
 
@@ -6894,24 +6896,11 @@ primitive kernel 缺少可执行 relation 判定，或其输出 readout 无法�
 
 theorem unit 中的 proof 与登记 theorem type 不一致。
 
-### IE-C007　ZeroUniqueCapture
+### 平凡性与同核证明的消费
 
-$$
-|U_i|=0.
-$$
-
-此码是逐 zero-member disposition record，非 catalog error；先认证完整零集合，再每成员同时报告：
-
-- theorem 名；
-- arena 名；
-- finite context：full escape count、leave-one-out escape count 与 state-enumeration 证据；
-- structural context：`StructuralCatalog.TrivialInCatalog C i` 的 negated-strictness certificate 与 catalog／realization provenance，不含数值 count 字段；State 可为无穷类型，不得伪造零计数；
-- 同核／闭包候选（若可证明）；
-- 不得建议提高人工分数。
-
-### IE-C008　OvercompleteCollisionClass
-
-多个 theorem primitive bundles 具有相同 joint kernel，导致成员共同零边际；经 kernel equality 证明的 collision class 作 report，不拒绝 seal、不授予 novelty；address/hash coincidence 仍仅 diagnostic，不能代替 equality proof。
+零独有捕获与同核关系属于库内数学性质。`SealRow.conclusion` 保存逐索引证明，
+`SealCatalog.collisions` 与 `SealCatalog.conclusion` 保存同核与目录证明。
+生产报告只核对 exact catalog 与编译输入，不输出逐成员 count/disposition 统计。
 
 ### IE-C009　ProofConstructionFailed
 
@@ -7101,49 +7090,16 @@ Name、GID、路径仅用于寻址，不得进入增益公式。
 
 ---
 
-## 33. 性能规范
+## 33. 数学计算的性能边界
 
-设：
+设状态数为 $n=|X|$，读出数为 $m=|I|$。下面的复杂度与计算方法适用于数学库和
+独立分析，生产报告消费已编译的 Seal 证明字段，不枚举状态对或计算留一统计。
 
-$$
-n=|X|,
-\qquad
-m=|I|.
-$$
-
-每个 catalog 声明 ordered-pair workload：
-
-$$
-B(C)=|D_A|=n(n-1).
-$$
-
-v4.2 的 direct-enumeration budget 固定为：
-
-```lean
-def directOrderedPairBudget : Nat := 65536
-```
-
-$B(C)\le65536$ 时可使用普通 reduction/枚举 proof。$B(C)>65536$ 不表示数学拒绝，
-但必须使用 refl lane 提供的 reflected seal，把 exact measurements 经一般 correctness
-theorems 送回 kernel；缺少该前置即 IE-C032。预算逐 catalog 判断，不把多个 arenas 的
-pairs 相加成全局 scalar。
-
-hierarchy projection 另有独立的 subset-explosion 边界。$m$ 个 generators 有 $2^m$ 个 subsets，
-但 schema v3 **永不要求 materialize 全部 $2^m$**。默认只构造 boundary、$m$ 个
-leave-one-out、certified schedules 与 requested nodes，并在 relation quotient 后去重；其输出规模
-由实际请求与 schedule 长度界定，不由 power set 决定。只有调用者显式选择一个有界 complete
-fixture、完整枚举确实完成且 extensional coverage certificate 闭合时，才可写
-`complete_lattice_materialized: true`。
-
-当该 flag 为 `false` 时，`edges` 只是 full strict DAG 限制到 materialized nodes 后的 certified
-subgraph，并总含 schedule 与 requested transitions；所有 edge endpoints 及 leave-one-out／schedule
-node references 必须在 `S` schema validation 中解析。flag 为 `true` 时才要求 complete full-DAG
-edge array，且所有 `is_cover` 仍相对于 full lattice 判定。
-
-数学层的 `generatedKernel_finite_lattice` 证明 closure 存在，不要求 seal 把整个 finite lattice
-序列化。对 $N$ states，IE-041 给出 strict chain 长度 $\ell\le N-1$；该 bound 可以约束
-certified-schedule 的 stutter-free subsequence，却不能省略 full-catalog IE-C007 记录或替代 first-freeze positivity。依工程优化规范 v1 §4 与
-本规范 §30.5，任何 projection budget、截断或 layout 都不进入 admission。
+有限计算路线必须精确实现原定义，遵守既有运行资源边界并有相应 Lean 正确性证明。
+对 generated-kernel lattice，存在性证明不要求枚举全部 $2^m$ subsets。
+独立下游分析的 projection schema、strict-transition 验证与测试由
+`LeanInformationAuditRegAnalysis/Projection` 承载；它不进入生产报告的协议或准入权威。
+任何截断或布局都不能改变数学结论的量词和已证范围。
 
 ### 33.1 朴素算法
 
@@ -7754,13 +7710,13 @@ Stage B recompilation
 
 工程实现只有同时满足以下条件才算完成。
 
-### AC-001　单命令
+### AC-001　规范入口
 
-一条 `lake build` 完成全部数学检查和报告。
+`make lean-report` 通过 cache-writer 和 Lake 依赖编译契约，读取编译部件并发布当前报告。
 
-### AC-002　零外部判官
+### AC-002　数学与实现分工
 
-删除 C#／Python accept/reject 路径后，结果不变。
+Lean 内核检查数学证明；报告实现只读编译数据并核对结构，外部 JSON 不提供数学证明权威。
 
 ### AC-003　零历史输入
 
@@ -7827,13 +7783,12 @@ layer-chain identities 是库内数学对象；使用时须有对应 Lean 证明
 `LayerChain` 的 inclusions、increments、partition、strictness、unresolved 与 exact
 rates 由数学库证明；flat unique capture 与 ordered layered capture 保持不同定义。
 
-### AC-016　Import-closure designated root
+### AC-016　Import-closure membership
 
-seal 消费其 root import closure 中全部持久可见 registrations；恰有一个 designated v4.2
-system root，其 import closure 等于固定仓库快照的 registration closure，项目级 coverage
-manifest 由既有枚举器产生并与实际 sealed set 相等。辅助 roots 只分析各自 import closure，
-artifact 写 `seal_scope: import-closure` 与 imported registration modules，且既不证明也不豁免
-system-wide positivity。同一 arena/theorem 重复发 IE-C002，qualified-name collision 发 IE-C025。
+Seal 消费所在 root 实际 import 闭包中的全部类型化登记，按 canonical object arena
+形成完整目录。RootCatalog 的 expected 与 actual 由 `CompiledSnapshots` 核对，
+`CompiledSeal` 核对同一目录身份、arena、顺序与单位向量。辅助 root 的局部闭包
+不证明仓库全局覆盖，也不豁免成员或数学义务。
 
 ### AC-017　Causal alignment
 
@@ -7841,25 +7796,21 @@ system-wide positivity。同一 arena/theorem 重复发 IE-C002，qualified-name
 strict refinement 有 Lean proofs；cumulative flat coarse layers 的零 capture 被接受为
 定理结果，而不被误写成全正。
 
-### AC-018　Size budget reflection
+### AC-018　数学计算资源边界
 
-每个 catalog 写出 $B(C)=|D_A|$；超过 65,536 的 catalog 只有在 refl lane reflected seal
-存在时才可执行。512-state optional product 因 261,632 ordered pairs 必须走该路径。
+有限计算使用 exact counts 和已证明的公式。数值、运行资源与证明义务分别核对；
+具体计算路线遵守既有预算，不把资源阻塞当作数学反例。生产报告不枚举 seal 的状态对。
 
 ### AC-019　冻结数学声明与报告格式
 
 冻结 `InformationRoot` 的数学声明与证明不变。共享目录使用对应 root 与 catalog
 identities；生产报告采用当前格式，格式升级不保留历史兼容读取。
 
-### AC-020　Dependency-correct landing
+### AC-020　依赖正确的交付
 
-完成态必须由第 37 节固定的七步顺序产生：spec → D5 analysis laws → judge registry/identity
-mechanics → 数学证明 → Reg 契约输入 → 当前格式报告 → 定向验证。
-judge 的 occurrence identity、import-closure grouping、三项 seal checks 与 structured diagnostics
-必须先于任何 shared causal registration。任何 $B(C)>65536$ catalog 必须在其登记或执行前已有 refl-lane
-reflected seal。第 3 步必须先重规格化并通过 `RegistrationPersistence`、`RegistryConsumer`
-与 `SealCollision` 的 landed imported-visibility/import-closure-membership/collision 语义；不得以最终树
-碰巧满足 AC-011--AC-019 代替这条依赖顺序。
+先有可编译的数学定义与接口契约，再由 Reg 实现契约类型，判官消费编译产物。
+接口升级在同一交付迁移全部用法并删除旧表示；实现变化不重编 Reg、不使报告失效。
+目录核对与判官定向测试保持现役检查，不以生成额外证明或旧格式读取作前置。
 
 ### AC-021　Generated-kernel lattice
 
