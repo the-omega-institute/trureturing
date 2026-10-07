@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0ab1c2931fd4065f8a33d0b773419661f72200b64e0d48aa7014423a4b23daa4
+  normalized_sha256: sha256:0ab1c2931fd4065f8a33d0b773419661f72200b64e0d48aa7014423a4b23daa4
+cas_ref: sha256:0ab1c2931fd4065f8a33d0b773419661f72200b64e0d48aa7014423a4b23daa4
+coverage_gids:
+  - gid: D5/S1/Words/ZeckendorfBeattyBridge.zeckendorf_beatty_bridge
+    target_statement_id: sha256:0a264e8622e74e6f81cd34621d0bc0165e513170a891a85fe6be0d9b30f47124
+receipts:
+  unresolved_subitems: []

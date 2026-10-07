@@ -1,0 +1,464 @@
+{
+  "period": 1575,
+  "uncovered_count": 370,
+  "common_uncovered_witness": 8,
+  "table": [
+    {
+      "label": 3,
+      "residue": [
+        0,
+        0
+      ],
+      "private_count": [
+        324,
+        324
+      ],
+      "hull": [
+        3,
+        3
+      ]
+    },
+    {
+      "label": 5,
+      "residue": [
+        0,
+        0
+      ],
+      "private_count": [
+        130,
+        130
+      ],
+      "hull": [
+        5,
+        5
+      ]
+    },
+    {
+      "label": 7,
+      "residue": [
+        0,
+        0
+      ],
+      "private_count": [
+        75,
+        75
+      ],
+      "hull": [
+        7,
+        7
+      ]
+    },
+    {
+      "label": 9,
+      "residue": [
+        2,
+        2
+      ],
+      "private_count": [
+        103,
+        103
+      ],
+      "hull": [
+        9,
+        9
+      ]
+    },
+    {
+      "label": 15,
+      "residue": [
+        1,
+        1
+      ],
+      "private_count": [
+        60,
+        75
+      ],
+      "hull": [
+        15,
+        15
+      ]
+    },
+    {
+      "label": 21,
+      "residue": [
+        16,
+        16
+      ],
+      "private_count": [
+        42,
+        27
+      ],
+      "hull": [
+        21,
+        21
+      ]
+    },
+    {
+      "label": 25,
+      "residue": [
+        4,
+        4
+      ],
+      "private_count": [
+        26,
+        26
+      ],
+      "hull": [
+        25,
+        25
+      ]
+    },
+    {
+      "label": 35,
+      "residue": [
+        1,
+        2
+      ],
+      "private_count": [
+        10,
+        5
+      ],
+      "hull": [
+        105,
+        315
+      ]
+    },
+    {
+      "label": 45,
+      "residue": [
+        32,
+        32
+      ],
+      "private_count": [
+        25,
+        25
+      ],
+      "hull": [
+        45,
+        45
+      ]
+    },
+    {
+      "label": 63,
+      "residue": [
+        17,
+        17
+      ],
+      "private_count": [
+        18,
+        18
+      ],
+      "hull": [
+        63,
+        63
+      ]
+    },
+    {
+      "label": 105,
+      "residue": [
+        2,
+        71
+      ],
+      "private_count": [
+        5,
+        10
+      ],
+      "hull": [
+        315,
+        105
+      ]
+    },
+    {
+      "label": 175,
+      "residue": [
+        3,
+        3
+      ],
+      "private_count": [
+        4,
+        4
+      ],
+      "hull": [
+        175,
+        175
+      ]
+    }
+  ],
+  "closure": [
+    {
+      "state": "old",
+      "label": 3,
+      "hull": 3,
+      "threshold": 105,
+      "required_occupied": [
+        3
+      ]
+    },
+    {
+      "state": "old",
+      "label": 5,
+      "hull": 5,
+      "threshold": 175,
+      "required_occupied": [
+        5
+      ]
+    },
+    {
+      "state": "old",
+      "label": 7,
+      "hull": 7,
+      "threshold": 175,
+      "required_occupied": [
+        7
+      ]
+    },
+    {
+      "state": "old",
+      "label": 9,
+      "hull": 9,
+      "threshold": 63,
+      "required_occupied": [
+        3,
+        9
+      ]
+    },
+    {
+      "state": "old",
+      "label": 15,
+      "hull": 15,
+      "threshold": 105,
+      "required_occupied": [
+        3,
+        5,
+        15
+      ]
+    },
+    {
+      "state": "old",
+      "label": 21,
+      "hull": 21,
+      "threshold": 105,
+      "required_occupied": [
+        3,
+        7,
+        21
+      ]
+    },
+    {
+      "state": "old",
+      "label": 25,
+      "hull": 25,
+      "threshold": 175,
+      "required_occupied": [
+        5,
+        25
+      ]
+    },
+    {
+      "state": "old",
+      "label": 35,
+      "hull": 105,
+      "threshold": 175,
+      "required_occupied": [
+        3,
+        5,
+        7,
+        15,
+        21,
+        35,
+        105
+      ]
+    },
+    {
+      "state": "old",
+      "label": 45,
+      "hull": 45,
+      "threshold": 45,
+      "required_occupied": [
+        3,
+        5,
+        9,
+        15
+      ]
+    },
+    {
+      "state": "old",
+      "label": 63,
+      "hull": 63,
+      "threshold": 63,
+      "required_occupied": [
+        3,
+        7,
+        9,
+        21
+      ]
+    },
+    {
+      "state": "old",
+      "label": 105,
+      "hull": 315,
+      "threshold": 105,
+      "required_occupied": [
+        3,
+        5,
+        7,
+        9,
+        15,
+        21,
+        35,
+        45,
+        63
+      ]
+    },
+    {
+      "state": "old",
+      "label": 175,
+      "hull": 175,
+      "threshold": 175,
+      "required_occupied": [
+        5,
+        7,
+        25,
+        35
+      ]
+    },
+    {
+      "state": "new",
+      "label": 3,
+      "hull": 3,
+      "threshold": 105,
+      "required_occupied": [
+        3
+      ]
+    },
+    {
+      "state": "new",
+      "label": 5,
+      "hull": 5,
+      "threshold": 175,
+      "required_occupied": [
+        5
+      ]
+    },
+    {
+      "state": "new",
+      "label": 7,
+      "hull": 7,
+      "threshold": 175,
+      "required_occupied": [
+        7
+      ]
+    },
+    {
+      "state": "new",
+      "label": 9,
+      "hull": 9,
+      "threshold": 63,
+      "required_occupied": [
+        3,
+        9
+      ]
+    },
+    {
+      "state": "new",
+      "label": 15,
+      "hull": 15,
+      "threshold": 105,
+      "required_occupied": [
+        3,
+        5,
+        15
+      ]
+    },
+    {
+      "state": "new",
+      "label": 21,
+      "hull": 21,
+      "threshold": 105,
+      "required_occupied": [
+        3,
+        7,
+        21
+      ]
+    },
+    {
+      "state": "new",
+      "label": 25,
+      "hull": 25,
+      "threshold": 175,
+      "required_occupied": [
+        5,
+        25
+      ]
+    },
+    {
+      "state": "new",
+      "label": 35,
+      "hull": 315,
+      "threshold": 175,
+      "required_occupied": [
+        3,
+        5,
+        7,
+        9,
+        15,
+        21,
+        35,
+        45,
+        63,
+        105
+      ]
+    },
+    {
+      "state": "new",
+      "label": 45,
+      "hull": 45,
+      "threshold": 45,
+      "required_occupied": [
+        3,
+        5,
+        9,
+        15
+      ]
+    },
+    {
+      "state": "new",
+      "label": 63,
+      "hull": 63,
+      "threshold": 63,
+      "required_occupied": [
+        3,
+        7,
+        9,
+        21
+      ]
+    },
+    {
+      "state": "new",
+      "label": 105,
+      "hull": 105,
+      "threshold": 105,
+      "required_occupied": [
+        3,
+        5,
+        7,
+        15,
+        21,
+        35
+      ]
+    },
+    {
+      "state": "new",
+      "label": 175,
+      "hull": 175,
+      "threshold": 175,
+      "required_occupied": [
+        5,
+        7,
+        25,
+        35
+      ]
+    }
+  ],
+  "scope": "finite noncover; no whole-cover minimality"
+}

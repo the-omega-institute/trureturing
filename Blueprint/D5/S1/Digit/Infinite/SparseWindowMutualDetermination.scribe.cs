@@ -6,6 +6,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Infinite;
 
 internal sealed class SparseWindowMutualDeterminationDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef GoldenWindows =
+        LibraryNoteRef.Create("D5/L/Digit/mathlib2026goldenwindows");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Sparse natural Fibonacci windows have the same fibres precisely when their translated cuts agree.",
         H("Sparse Fibonacci Window Mutual Determination"),
@@ -33,21 +36,21 @@ internal sealed class SparseWindowMutualDeterminationDocument : IScribeDocumentD
                 DeclarationHandle.Create(
                     "D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_raw_data"),
                 H("Canonical natural digits"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(GoldenWindows),
                 Blocks(Paragraph(Text("For every natural n, the raw digits of its Zeckendorf expansion have value n. At every position their real coefficient equals the Boolean digit of zRow(n)."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("sparse-window-natural-row-phase"),
                 DeclarationHandle.Create(
                     "D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_phase"),
                 H("Natural row phase"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(GoldenWindows),
                 Blocks(Paragraph(Text("For every natural n, the phase of zRow(n) is n times the golden ratio modulo one. The equality identifies natural digit observations with circle rotation."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("sparse-window-natural-phase-avoids-cut"),
                 DeclarationHandle.Create(
                     "D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_avoids_cut"),
                 H("Natural phases avoid positive cuts"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(GoldenWindows),
                 Blocks(Paragraph(Text("For every natural n and every positive cut index k, the phase n times the golden ratio modulo one differs from E(k). Irrationality excludes equality."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("sparse-window-natural-window-arc"),
@@ -56,6 +59,18 @@ internal sealed class SparseWindowMutualDeterminationDocument : IScribeDocumentD
                 H("Natural labels and cylinder arcs"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every positive width L, natural n, and legal word p of width L, q(L,n)=p if and only if the phase of zRow(n) belongs to the open cylinder arc A(p). Natural rows avoid the endpoint alternatives of the closed cylinder."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-missing-cut-witness"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cut_witness"),
+                H("Missing target cuts"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For 1 at most m at most M, a finite S, 1 at most k at most G(M) with k outside K(m,S), and every natural bound B, two sources greater than B have the same sparse tuple and different M-windows."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-window-extra-cut-witness"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_witness"),
+                H("Extra observation cuts"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For 1 at most m at most M, a finite S, an index k in K(m,S) outside the target cut interval, and every natural bound B, two sources greater than B have the same M-window and different sparse tuples."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("sparse-window-mutual-determination"),
                 DeclarationHandle.Create(

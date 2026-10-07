@@ -20,7 +20,7 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_ro
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_raw_data` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Mathlib contributors (2026). *Zeckendorf representations and golden rotation phases in Mathlib*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Fib/Zeckendorf.lean>.
 
 *Commentary.*
 
@@ -32,7 +32,7 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_ro
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_phase` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Mathlib contributors (2026). *Zeckendorf representations and golden rotation phases in Mathlib*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Fib/Zeckendorf.lean>.
 
 *Commentary.*
 
@@ -44,7 +44,7 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_ph
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_avoids_cut` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Mathlib contributors (2026). *Zeckendorf representations and golden rotation phases in Mathlib*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Fib/Zeckendorf.lean>.
 
 *Commentary.*
 
@@ -62,7 +62,31 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_wi
 
 For every positive width L, natural n, and legal word p of width L, q(L,n)=p if and only if the phase of zRow(n) belongs to the open cylinder arc A(p). Natural rows avoid the endpoint alternatives of the closed cylinder.
 
-**Theorem 1.5 (Equal cut sets, equal natural fibres, and the canonical actual-image bijection).**
+**Theorem 1.5 (Missing target cuts).**
+
+Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cut_witness`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cut_witness` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For 1 at most m at most M, a finite S, 1 at most k at most G(M) with k outside K(m,S), and every natural bound B, two sources greater than B have the same sparse tuple and different M-windows.
+
+**Theorem 1.6 (Extra observation cuts).**
+
+Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_witness`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_witness` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For 1 at most m at most M, a finite S, an index k in K(m,S) outside the target cut interval, and every natural bound B, two sources greater than B have the same M-window and different sparse tuples.
+
+**Theorem 1.7 (Equal cut sets, equal natural fibres, and the canonical actual-image bijection).**
 
 $$\forall m,M \in \mathbb{N}, \forall S \in \operatorname{Finset}\left(\mathbb{N}\right), (1 \le m \land m \le M) \Rightarrow (((\forall a,b \in \mathbb{N}, (q_{M}(a) = q_{M}(b) \iff \sigma_{m,S}(a) = \sigma_{m,S}(b))) \iff \operatorname{K}\left(m, S\right) = \operatorname{Icc}\left(1, \operatorname{G}\left(M\right)\right)) \land (\operatorname{K}\left(m, S\right) = \operatorname{Icc}\left(1, \operatorname{G}\left(M\right)\right) \Rightarrow (\operatorname{card}\left(\operatorname{range}\left(q_{M}\right)\right) = \operatorname{G}\left(M\right) \land \operatorname{card}\left(\operatorname{range}\left(\sigma_{m,S}\right)\right) = \operatorname{G}\left(M\right) \land (\exists e \in \operatorname{Equiv}\left(\operatorname{X}\left(M\right), \operatorname{range}\left(\sigma_{m,S}\right)\right), (\forall p \in \operatorname{X}\left(M\right), \operatorname{val}\left(e\left(p\right)\right) = \sigma_{m,S}(\operatorname{V}\left(p\right))) \land (\forall n \in \mathbb{N}, \operatorname{val}\left(e\left(q_{M}(n)\right)\right) = \sigma_{m,S}(n)) \land (\forall n \in \mathbb{N}, e^{-1}(\operatorname{actual}\left(n\right)) = q_{M}(n)))))).$$
 
@@ -84,9 +108,12 @@ Each target label occupies one connected open real interval. When the query cuts
 
 ## References
 
+- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_witness`
+- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cut_witness`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_avoids_cut`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_phase`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_raw_data`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_window_arc`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.sparse_window_mutual_determination`
 - Dependency: [D5/S1/Digit/Infinite/WindowCylinderPartition](WindowCylinderPartition.md)
+- Dependency: [D5/S1/Phase/Basic](../../Phase/Basic.md)

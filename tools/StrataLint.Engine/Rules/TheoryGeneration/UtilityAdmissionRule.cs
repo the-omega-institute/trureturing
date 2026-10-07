@@ -91,10 +91,19 @@ internal static class UtilityAdmissionRule
     }
 
     private static IEnumerable<RepoPath> SelectedPaths(DeltaRuleContext context) =>
-        context.Changes.Paths.Where(path => context.Current.Files.ContainsKey(path)
+        SelectInputPaths(context.Current, context.Baseline, context.Changes);
+
+    internal static IEnumerable<RepoPath> SelectInputPaths(
+        RepositorySnapshot current, RepositorySnapshot baseline, RawChangeSet changes) =>
+        changes.Paths.Where(path => current.Files.ContainsKey(path)
             && (FrozenStatePath.IsUnderRoot(path.Value)
-                ? !context.Baseline.Files.ContainsKey(path)
-                : RepositoryRules.IsPresentByteChangedD5Module(context, path) && !IsBaselineFrozen(context, path)));
+                ? !baseline.Files.ContainsKey(path)
+                : path.Value.StartsWith("D5/", StringComparison.Ordinal)
+                    && path.Value.EndsWith(".lean", StringComparison.Ordinal)
+                    && (!baseline.Files.TryGetValue(path, out var previous)
+                        || !current.Files[path].RawBytes.AsSpan().SequenceEqual(previous.RawBytes.AsSpan()))
+                    && (!FrozenStatePath.TryFromModulePath(path, out var state)
+                        || !baseline.Files.ContainsKey(state))));
 
     private static bool IsBaselineFrozen(DeltaRuleContext context, RepoPath path) =>
         IsD5Lean(path.Value)

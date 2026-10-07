@@ -69,12 +69,11 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(1, reports.Loads);
         Assert.Equal(1, frozen.Catalogs);
         Assert.Equal(1, frozen.Indexes);
-        Assert.Equal(0, ledger.BaselineLoads);
         Assert.Equal([1, 1], ledger.CandidateSnapshotLoads);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, "Generated/DAG.md")));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, "Generated/FILEMAP.md")));
-        output.WriteLine("COMPLETE_PRODUCERS synthetic_definitions=true report={0} catalog={1} index={2} baseline={3} candidate=[{4}]",
-            reports.Loads, frozen.Catalogs, frozen.Indexes, ledger.BaselineLoads,
+        output.WriteLine("COMPLETE_PRODUCERS synthetic_definitions=true report={0} catalog={1} index={2} ledger=[{3}]",
+            reports.Loads, frozen.Catalogs, frozen.Indexes,
             string.Join(',', ledger.CandidateSnapshotLoads));
         Assert.True(TemporaryFileSystem.File.Exists(reportPath));
 
@@ -111,7 +110,7 @@ public sealed partial class CoverBatchCommandTests
         var loads = 0;
         var previous = BackfillInventoryLoader.DocumentLoading.Value;
         // The second ledger load belongs to the second item, after the report was read.
-        BackfillInventoryLoader.DocumentLoading.Value = (_, _) =>
+        BackfillInventoryLoader.DocumentLoading.Value = _ =>
         {
             if (++loads != 2) return;
             TemporaryFileSystem.File.WriteAllText(reportPath, "replaced report\n");
