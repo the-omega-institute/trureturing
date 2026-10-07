@@ -1430,3 +1430,197 @@ every query credit. In particular SD46 concerns a law avoiding the
 low library, whereas the continuation gate requires sigma to avoid
 ALL actual P-only originals. This distinction remains even when a
 chosen deep original belongs to a supplied private hull.
+
+### Private-hull reservations restrict the entire tail phase menu
+
+There is a stronger use of a supplied private-hull reservation than
+concentrating the source on one parent hole. Keep one actual family,
+one preliminary law rho from SD43, its remaining P-only union D, and
+sigma=rho restricted to D-complement. Write s=sigma(1). This subsection
+assumes the ENTIRE original prime support lies in P union {23,29}.
+Any further outside primes require their own continuation payment.
+
+Choose a finite set H of actual pairs (d,m), with d>1, d|m, m>d,
+and BOTH d,m supported on P, for which FC941 holds:
+
+    R_m=[a_m]_d,
+    n!=m and d|n ==> A_n intersect R_m=empty.
+
+Under the hypothetical whole-minimal-cover premises, this follows
+when d is an original parent and m|Gamma_d. The numerical labels,
+complete private hulls and phases all belong to the SAME family.
+A private point of m alone does not establish this hypothesis.
+
+For every nonunit P-smooth query label k, define the finite menu
+
+\[
+\mathcal A_k=\{a\bmod k:
+  a\not\equiv a_m\pmod d\text{ for every }(d,m)\in\mathcal H
+  \text{ with }d\mid k\}.
+\]
+
+Every actual23/29-touching original whose old cofactor is k has its
+actual phase in this menu. Such an original is different from each
+P-only m, and d|k implies d divides its full numerical modulus, so
+FC941 excludes the entire R_m. No phase or source is reselected.
+
+Define maxima with a zero option, including when the menu is empty:
+
+\[
+q_k^{\mathcal H}(\sigma)=
+\max\bigl(\{0\}\cup\{\sigma([a]_k):a\in\mathcal A_k\}\bigr),
+\qquad R_{\mathcal H}(\sigma)=\sum_{k>1}q_k^{\mathcal H}(\sigma).
+\]
+
+Condition23 and29 Haar on their actual pure-power survivors, exactly
+as in SD15. The old nonunit costs are now R_H/21 and R_H/27. Originals
+touching both primes cost at most(R_H+s)/567. The old unit is still
+present in the last expression: no parent d>1 divides1. Consequently
+this SAME product submeasure has full survivor mass at least
+
+\[
+\frac{566s-49R_{\mathcal H}(\sigma)}{567}.
+\tag{SD48}
+\]
+
+Thus positivity contradicts whole coverage. This reuses SD15's
+original-label count with the smaller justified phase menus. Since
+R_H<=R_P, it never weakens the old certificate on the fixed sigma.
+Strict improvement requires actual phase information.
+
+### Pay the remaining competitors once
+
+Let M_k=max_a rho([a]_k), and let
+s_(k,a)=M_k-rho([a]_k) be the old phase slack. The exact total reduction
+from the old unrestricted query to the new tail menu is
+
+\[
+\begin{aligned}
+h_k&=M_k-q_k^{\mathcal H}(\sigma)\\
+&=\min\left(\{M_k\}\cup
+ \{s_{k,a}+\rho(D\cap[a]_k):a\in\mathcal A_k\}\right).
+\end{aligned}
+\tag{SD49}
+\]
+
+This is Report571 JB7 / Report752 JC1 applied to the restricted menu.
+The extra M_k represents the zero option. With an empty menu h_k=M_k,
+and no actual tail original may use that old cofactor. Otherwise
+EVERY remaining competitive phase is included. Removing one old
+maximizer is insufficient if an uncharged competitor remains.
+
+All series converge by the finite bound SD46 on R_P(rho); each term
+is nonnegative and bounded by its unrestricted counterpart. Menu
+inclusion and the unchanged law give
+
+\[
+h_k\ge c_k\ge0,\qquad
+R_{\mathcal H}(\sigma)=R_P(\rho)-\sum_{k>1}h_k.
+\tag{SD50}
+\]
+
+Here h_k already contains both deletion and phase restriction. It
+must not be added to the old c_k as a second saving. Overlapping
+reservations are combined in A_k before taking the maximum.
+
+For a finite query test set J, same-source bounds
+0<=t_k<=h_k and delta>=rho(D) therefore give the sufficient gate
+
+\[
+566\delta-49\sum_{k\in J}t_k<K_\varepsilon.
+\tag{SD51}
+\]
+
+A useful simpler bound is h_k>=M_k-max({0} union
+{rho([a]_k):a in A_k}). It is positive exactly when M_k>0 and every
+old maximizing phase is excluded. SD49 can additionally charge
+actual D-intersections in the surviving near-maximal phases.
+
+Choose K0 resolving rho, D and all selected d,m, with every prime
+height positive; retain Haar tails. For g=gcd(k,K0), d|k iff d|g,
+and A_k is the inverse image of A_g. The exact finite reduction is
+
+\[
+R_{\mathcal H}(\sigma)=
+\sum_{\substack{g\mid K_0\\g>1}}\gamma_g q_g^{\mathcal H}(\sigma),
+\qquad
+\gamma_g=\prod_{\substack{p\in P\\v_p(g)=v_p(K_0)}}\frac p{p-1}.
+\tag{SD52}
+\]
+
+This reuses JB5, with maxima over the declared menus. It retains all
+higher query exponents. Actual finite phase histograms and reservation
+congruences suffice; separate query-dependent source laws do not.
+
+### Saturated parent phases remove a complete numerical cone
+
+For one actual parent d define its literal divisor-survivor residues
+
+\[
+S_d=\{z\bmod d:\ z\not\equiv a_e\pmod e
+     \text{ for every actual original }e>1\text{ with }e\mid d\}.
+\]
+
+This definition INCLUDES the original d itself. Because sigma avoids
+all P-only originals, its mod-d support lies in S_d. Comparable
+original disjointness puts every selected descendant's mod-d phase
+in S_d, and FC941 makes those phases pairwise distinct.
+
+Suppose the selected P-only descendants of d occupy every residue
+of S_d. Equivalently their number equals |S_d|. Then every k divisible
+by d has qH_k(sigma)=0: each phase meeting sigma is forbidden to the
+tail. This deletes the entire numerical cone, uniformly in the actual
+weights of sigma and in all query heights.
+
+For every k, the partition into k phases gives q_k(sigma)>=s/k.
+Put C_P=product_(p in P)p/(p-1)=323323/110592. Therefore
+
+\[
+R_P(\sigma)-R_{\mathcal H}(\sigma)
+\ge\sum_{d\mid k}q_k(\sigma)\ge\frac{C_P}{d}s.
+\tag{SD53}
+\]
+
+With R_P(sigma)<=A_epsilon and s>=1-delta, a uniform sufficient
+condition under this ACTUAL saturation premise is
+
+\[
+(566+49C_P/d)(1-\delta)>49A_\varepsilon.
+\tag{SD54}
+\]
+
+For SD46's A_epsilon this allows respectively
+
+| Saturated parent d | Sufficient delta upper threshold |
+|---:|---:|
+|5|0.06834734010495902...|
+|7|0.05534316295050326...|
+|35|0.028214444129245873...|
+
+The thresholds mean strict inequality. The previous bound without
+certified query saving is0.021187039962459072.... These are conditional
+certificate improvements; no saturation occurrence is asserted.
+For several saturated parents, replace C_P/d by C_P times the finite
+inclusion-exclusion sum of reciprocal lcms. This counts each removed
+numerical query once, even when its label lies in several cones.
+
+Divisor closure provides an explicit sufficient route to saturation.
+If m=d r lies in H_d, every d t with t|r and t>1 is another such child.
+Thus tau(r)-1 distinct phases lie in S_d. If
+
+    tau(r)-1=|S_d|,
+
+saturation follows. In particular for prime d=p, |S_p|=p-1, so the
+condition tau(r)=p suffices. For m=3^e d the forced child count is e.
+These are conditions on an actual hull descendant, not a claim that
+whole minimality supplies equality. A smaller child count leaves
+unreserved phases which must still be paid in SD49.
+
+The general unresolved input is now precise: force enough of these
+actual reservations to eliminate near-maximal tail phases, or bound
+D-intersections on every competitor that remains, while simultaneously
+bounding the TOTAL D loss on the same rho. Saturation gives one uniform
+sufficient branch, but existence of deep hull pairs, saturation or
+adequate nonsaturated joint incidence has not been proved for every
+hypothetical whole cover. All-height menu reduction and the ordinary
+proofs above are not new Lean verification or an Erdős #7 solution.
