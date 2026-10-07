@@ -21,6 +21,14 @@ internal sealed class LatticeSugawaraCurrentsDocument : IScribeDocumentDefinitio
                 + "statewise finite support in [min(0,m-R),R]; this is not a uniform endomorphism "
                 + "cutoff.")),
             Describe.Lean(
+                DescribeId.Create("latticesugawaracurrents-neutral-field-ncoeff"),
+                DeclarationHandle.Create(Prefix + "neutralField_ncoeff"),
+                H("neutralField ncoeff"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("For every ordinary D, index i and integer k, the normalized coefficient (neutralField(D,i))[[k]] equals the actual neutralMode(D,i,k), on the whole all-charge carrier. No positive-form or inverse-Gram hypothesis is required."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("lattice-current-heisenberg"),
                 DeclarationHandle.Create(Prefix + "neutralMode_heisenberg"),
                 H("Actual Heisenberg law in every charge sector"),
