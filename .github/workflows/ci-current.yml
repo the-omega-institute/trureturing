@@ -615,6 +615,7 @@ jobs:
             # ProducerInputFixture copies registered inspector/dependency sources.
             tools/lean-inspector/*.lean
             tools/lean-inspector/native_image.c
+            tools/lean-inspector/inspect.sh
             lakefile.lean
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
