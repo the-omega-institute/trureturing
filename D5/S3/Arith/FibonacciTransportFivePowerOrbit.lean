@@ -13,6 +13,7 @@ import Mathlib.Data.Matrix.Mul
 import Mathlib.Data.ZMod.Basic
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Algebra.Group.Subgroup.Lattice
+import Mathlib.Algebra.Group.Subgroup.Pointwise
 import Mathlib.Algebra.GCDMonoid.Basic
 import Mathlib.Algebra.GCDMonoid.Nat
 import Mathlib.Algebra.Ring.Parity
@@ -32,7 +33,7 @@ import D5.S3.Arith.GoldenFibonacciModulusPeriod
 
 namespace D5.S3.Arith.FibonacciTransportFivePowerOrbit
 
-open scoped Matrix
+open scoped Matrix Pointwise
 local notation "Mat" n:arg => Matrix (Fin 2) (Fin 2) (ZMod n)
 local notation "Vec" n:arg => Fin 2 → ZMod n
 local notation "GL" n:arg => Matrix.GeneralLinearGroup (Fin 2) (ZMod n)
@@ -300,8 +301,13 @@ private theorem golden_order_mod_five : orderOf (GoldenMod.phi : GoldenMod 5) = 
     · simpa [f, goldenMatrixHom, multiplicationMatrix] using
         congrArg (fun M : Mat 5 => M 0 1) h
   have hperiod := golden_fibonacci_modulus_period 5 (by decide) (by decide)
+  have hfib : Nat.fib 5 = 5 := by decide
+  rw [hfib] at hperiod
+  have hphi : f (GoldenMod.phi : GoldenMod 5) = (!![1, 1; 1, 0] : Mat 5) := by
+    rfl
   rw [← orderOf_injective f hi]
-  simpa [f, goldenMatrixHom, multiplicationMatrix, GoldenMod.phi, Nat.fib] using hperiod
+  rw [hphi]
+  exact hperiod
 
 private theorem golden_order_five_power (a : ℕ) (ha : 1 ≤ a) :
     orderOf (GoldenMod.phi : GoldenMod (5 ^ a)) = 4 * 5 ^ a := by
@@ -691,32 +697,42 @@ private theorem transport_form (n : ℕ) {A : GL n} (hA : A ∈ transportGroup n
     ∃ B : GL n, B ∈ signedGroup n ∧ (A = B ∨ A = B * transportJ n) := by
   have hjmul : transportJ n * transportJ n = 1 := by simpa only [pow_two] using reflection_square n
   have hjinv : (transportJ n)⁻¹ = transportJ n := Units.ext rfl
-  refine Subgroup.closure_induction (p := fun A _ =>
-    ∃ B : GL n, B ∈ signedGroup n ∧ (A = B ∨ A = B * transportJ n)) ?_ ?_ ?_ ?_ hA
-  · intro B hB
-    rcases (by simpa using hB : B = transportG n ∨ B = transportJ n) with rfl | rfl
-    · exact ⟨transportG n, Subgroup.subset_closure (by simp), Or.inl rfl⟩
-    · exact ⟨1, (signedGroup n).one_mem, Or.inr (by simp)⟩
-  · exact ⟨1, (signedGroup n).one_mem, Or.inl rfl⟩
-  · rintro A B _ _ ⟨C, hC, hA⟩ ⟨D, hD, hB⟩
-    rcases hA with hA | hA <;> rcases hB with hB | hB
-    · exact ⟨C * D, (signedGroup n).mul_mem hC hD, Or.inl (by rw [hA, hB])⟩
-    · exact ⟨C * D, (signedGroup n).mul_mem hC hD, Or.inr (by rw [hA, hB, mul_assoc])⟩
-    · refine ⟨C * (transportJ n * D * transportJ n),
-        (signedGroup n).mul_mem hC (reflection_preserves_signed n hD), Or.inr ?_⟩
-      rw [hA, hB]
-      simp only [mul_assoc, hjmul, mul_one]
-    · refine ⟨C * (transportJ n * D * transportJ n),
-        (signedGroup n).mul_mem hC (reflection_preserves_signed n hD), Or.inl ?_⟩
-      rw [hA, hB]
-      simp only [mul_assoc]
-  · rintro A _ ⟨B, hB, hA⟩
-    rcases hA with hA | hA
-    · exact ⟨B⁻¹, (signedGroup n).inv_mem hB, Or.inl (by rw [hA])⟩
-    · refine ⟨transportJ n * B⁻¹ * transportJ n,
-        reflection_preserves_signed n ((signedGroup n).inv_mem hB), Or.inr ?_⟩
-      rw [hA]
-      simp only [mul_inv_rev, hjinv, mul_assoc, hjmul, mul_one]
+  have hjnorm : transportJ n ∈ Subgroup.normalizer (signedGroup n) := by
+    rw [Subgroup.mem_normalizer_iff]
+    intro B
+    constructor
+    · intro hB
+      simpa only [hjinv] using reflection_preserves_signed n hB
+    · intro hB
+      have h := reflection_preserves_signed n hB
+      simp only [hjinv, mul_assoc, hjmul, mul_one] at h
+      simpa only [← mul_assoc, hjmul, one_mul] using h
+  have hle : Subgroup.zpowers (transportJ n) ≤ Subgroup.normalizer (signedGroup n) :=
+    Subgroup.zpowers_le.mpr hjnorm
+  have hsup : transportGroup n = signedGroup n ⊔ Subgroup.zpowers (transportJ n) := by
+    apply le_antisymm
+    · apply (Subgroup.closure_le _).mpr
+      intro B hB
+      rcases (by simpa using hB : B = transportG n ∨ B = transportJ n) with rfl | rfl
+      · exact (show signedGroup n ≤ signedGroup n ⊔ Subgroup.zpowers (transportJ n)
+          from le_sup_left) (Subgroup.subset_closure (by simp))
+      · exact (show Subgroup.zpowers (transportJ n) ≤
+          signedGroup n ⊔ Subgroup.zpowers (transportJ n) from le_sup_right)
+          (Subgroup.mem_zpowers (transportJ n))
+    · exact sup_le (signed_le_transport n)
+        (Subgroup.zpowers_le.mpr (Subgroup.subset_closure (by simp)))
+  have hprod : A ∈ (signedGroup n : Set (GL n)) *
+      (Subgroup.zpowers (transportJ n) : Set (GL n)) := by
+    rw [← Subgroup.coe_mul_of_right_le_normalizer_left _ _ hle, ← hsup]
+    exact hA
+  obtain ⟨B, hB, C, hC, hBC⟩ := hprod
+  obtain ⟨k, rfl⟩ := Subgroup.mem_zpowers_iff.mp hC
+  rw [zpow_eq_zpow_emod' k (reflection_square n)] at hBC
+  have hk : k % (2 : ℤ) = 0 ∨ k % (2 : ℤ) = 1 := by omega
+  refine ⟨B, hB, ?_⟩
+  rcases hk with hk | hk
+  · exact Or.inl (by simpa [hk] using hBC.symm)
+  · exact Or.inr (by simpa [hk] using hBC.symm)
 
 private theorem map_reflection (m n : ℕ) (hd : m ∣ n) :
     (ZMod.castHom hd (ZMod m)).mapMatrix (transportJ n : Mat n) = (transportJ m : Mat m) := by
