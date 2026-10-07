@@ -29,7 +29,7 @@ operators map to local Rydberg operators. These are directional
 statements about the specified correspondence, not an assertion that
 every operator in either model is nonlocal.
 
-Section IV.C, equation (30), discusses the additional topological
+Section IV.B, equation (30), discusses the additional topological
 symmetry obstruction in the $(\tau,\tau)$ boundary sector. Generic local
 Rydberg operators need not commute with the total-charge projector;
 appropriately tuned combinations can preserve it. Sections V–VI explain
