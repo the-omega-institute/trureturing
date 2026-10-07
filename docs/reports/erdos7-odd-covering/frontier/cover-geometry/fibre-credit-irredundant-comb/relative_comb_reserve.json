@@ -74,5 +74,176 @@
     }
   ],
   "repaired_query_upper": "11025/1024",
-  "scope": "Actual finite-family counterexample only to the relative-reserve candidate. No phase optimization and no obstruction to existence of a different supported source with complete B<28. No Lean certification claimed here."
+  "arbitrary_high_phase_extension": [
+    {
+      "low_null_through_height": 2,
+      "arbitrary_mixed_from_height": 3,
+      "beta_upper": "11025/2048",
+      "deletion_upper": "8977/18432",
+      "reserve_lower": "9455/18432",
+      "complete_query_upper": "189473/9455",
+      "beta_threshold_for_28": "31/5",
+      "below_28": true,
+      "margin_to_28": "75267/9455"
+    },
+    {
+      "low_null_through_height": 4,
+      "arbitrary_mixed_from_height": 5,
+      "beta_upper": "11025/2048",
+      "deletion_upper": "8977/165888",
+      "reserve_lower": "156911/165888",
+      "complete_query_upper": "1777073/156911",
+      "beta_threshold_for_28": "85/7",
+      "below_28": true,
+      "margin_to_28": "2616435/156911"
+    }
+  ],
+  "low_projection_obstruction": {
+    "controls": [
+      {
+        "H": 1,
+        "original_count": 9,
+        "private_witnesses": 9,
+        "projected_period": 35,
+        "projected_survivors": 5,
+        "actual_period": 315,
+        "cheap_source_residues": 3
+      },
+      {
+        "H": 2,
+        "original_count": 24,
+        "private_witnesses": 24,
+        "projected_period": 1225,
+        "projected_survivors": 31,
+        "actual_period": 11025,
+        "cheap_source_residues": 105
+      }
+    ],
+    "forced_norm_formula": "H+1",
+    "height_six_original_count": 144,
+    "height_27_original_count": 2349,
+    "cheap_complete_query_norm": "1255501/73728",
+    "cheap_margin_to_28": "808883/73728"
+  },
+  "active_root_extension": {
+    "cofactor_source": "Report563 MT11",
+    "beta_upper": "13463054/5049311",
+    "deletion_upper": "2804581/5049311",
+    "reserve_lower": "2244730/5049311",
+    "complete_query_upper": "37584581/2244730",
+    "source_threshold_for_28": "37/12",
+    "scope": "One unblocked ternary root; at most one distinct active Q phase per nonunit cofactor through ternary depth two, including depth zero. This checks the supplied source bound consumer, not MT11 again."
+  },
+  "extra_five_guard": {
+    "shared_scalar_target": "37/12",
+    "gap_intercept": "35597719/31808700",
+    "gap_slope": "-40762649/15904350",
+    "weight_threshold": "35597719/81525298",
+    "profiles": [
+      {
+        "name": "normalized_haar",
+        "shared_weight": "5/11",
+        "first_depth_cap": "4/11",
+        "higher_depth_density": "20/11",
+        "rho": "489631/883575",
+        "complete_query_upper": "51157586/16157823",
+        "gap_to_target": "-1783509/21543764",
+        "nonempty_supports": 127,
+        "maximum_query_cap": "9088732/16157823",
+        "maximum_label": 5,
+        "clipping_improvement": "0"
+      },
+      {
+        "name": "balanced_roots",
+        "shared_weight": "4/9",
+        "first_depth_cap": "1/3",
+        "higher_depth_density": "20/9",
+        "rho": "2676139/4771305",
+        "complete_query_upper": "41733953/13380695",
+        "gap_to_target": "-5721721/160568340",
+        "nonempty_supports": 127,
+        "maximum_query_cap": "6816549/13380695",
+        "maximum_label": 5,
+        "clipping_improvement": "0"
+      }
+    ],
+    "auxiliary_forbidden": [
+      {
+        "residue": 0,
+        "modulus": 5
+      },
+      {
+        "residue": 1,
+        "modulus": 5
+      },
+      {
+        "residue": 2,
+        "modulus": 25
+      },
+      {
+        "residue": 7,
+        "modulus": 125
+      },
+      {
+        "residue": 32,
+        "modulus": 625
+      }
+    ],
+    "finite_period": 625,
+    "survivor_count": 344,
+    "root_two_counts": [
+      {
+        "modulus": 25,
+        "admissible_prefixes": 4
+      },
+      {
+        "modulus": 125,
+        "admissible_prefixes": 19
+      },
+      {
+        "modulus": 625,
+        "admissible_prefixes": 94
+      }
+    ],
+    "reciprocal_sum": "1119/3572",
+    "root_max_coefficient": "667/1786",
+    "four_layer_lower": "4691/10716",
+    "gap_above_threshold": "485008057/436812546684",
+    "actual_originals": [
+      {
+        "residue": 2,
+        "modulus": 3
+      },
+      {
+        "residue": 0,
+        "modulus": 5
+      },
+      {
+        "residue": 6,
+        "modulus": 15
+      },
+      {
+        "residue": 1,
+        "modulus": 45
+      },
+      {
+        "residue": 2,
+        "modulus": 25
+      },
+      {
+        "residue": 7,
+        "modulus": 125
+      },
+      {
+        "residue": 32,
+        "modulus": 625
+      }
+    ],
+    "unblocked_depth_two_phases": [
+      4,
+      7
+    ],
+    "scope": "The auxiliary support has two forbidden modulus5 phases. The actual originals have distinct moduli. The obstruction excludes only this inherited clique consumer with the same event/query scalar; it does not exclude full-profile consumers, separate weights or joint sources."
+  },
+  "scope": "Exact finite controls for the relative-reserve, low-projection and auxiliary-root strategies; neither obstructs existence of a different supported source with complete B<28. The HP extension budgets require one Q law annihilating every low nonpure projection, including ternary-free originals. Arbitrary-height constructions are justified in Report529, not by enumeration. No Lean certification claimed by this arithmetic consumer."
 }
