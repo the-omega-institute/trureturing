@@ -10,7 +10,19 @@ History is any finite list of address/reply pairs, with repetitions permitted. c
 
 Context is the finite literal OutputContext from ActualLeafHistoryRigidity, whose left and right constructors store actual output siblings. hole(J) is its unique hole address and plug(J,X) fills that hole. sub(h,P) is some(X) exactly when the actual subtree X exists at h. Leaves(P) is the full labelled leaf frontier, with labels obtained by read(u,P). root(d) is the root of a decoded block d; prefix is ordinary word prefix. n(P) is the native leaf count, and card is finite-set cardinality.
 
-**Theorem 1.1 (Zero Recovery, Size-Free Common Context, and Same-Size Rigidity).**
+**Theorem 1.1 (Leaf Count of a Filled Context).**
+
+$$\forall J: \operatorname{Context}\left(\right), (\forall Z: T, (\operatorname{n}\left(\operatorname{plug}\left(J, Z\right)\right) = \operatorname{outsideLeaves}\left(J\right) + \operatorname{n}\left(Z\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualHistorySingleHoleRecovery.context_length` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Filling the hole of a literal output context J with Z gives n(plug(J,Z))=outsideLeaves(J)+n(Z), by induction on the context: the hole adds nothing, and each left or right constructor adds the leaf count of its stored sibling.
+
+**Theorem 1.2 (Zero Recovery, Size-Free Common Context, and Same-Size Rigidity).**
 
 $$\forall H: \operatorname{History}\left(\right), (\forall P: T, ((\operatorname{compatible}\left(H, P\right)) \implies (((\operatorname{card}\left(\operatorname{unc}\left(H, P\right)\right) = 0) \implies (\forall Pp: T, ((\operatorname{compatible}\left(H, Pp\right)) \implies (Pp = P)))) \land ((\operatorname{card}\left(\operatorname{unc}\left(H, P\right)\right) = 1) \implies (\exists J: \operatorname{Context}\left(\right), (\exists h: \operatorname{Word}\left(\right), (\exists X: T, ((\operatorname{hole}\left(J\right) = h) \land ((X = A) \lor (X = E)) \land (\operatorname{sub}\left(h, P\right) = \operatorname{some}\left(X\right)) \land (\operatorname{plug}\left(J, X\right) = P) \land (\forall d: \operatorname{Block}\left(\right), ((d \in \operatorname{blocks}\left(H\right)) \implies ((\neg (\operatorname{prefix}\left(\operatorname{root}\left(d\right), h\right))) \land (\neg (\operatorname{prefix}\left(h, \operatorname{root}\left(d\right)\right)))))) \land (\forall Pp: T, ((\operatorname{compatible}\left(H, Pp\right)) \implies ((\forall u: \operatorname{Word}\left(\right), (((u \in \operatorname{Leaves}\left(P\right)) \land (\neg (\operatorname{prefix}\left(h, u\right)))) \implies (\operatorname{read}\left(u, Pp\right) = \operatorname{read}\left(u, P\right)))) \land (\exists Y: T, ((\operatorname{sub}\left(h, Pp\right) = \operatorname{some}\left(Y\right)) \land (\operatorname{plug}\left(J, Y\right) = Pp))))))))))) \land ((\operatorname{card}\left(\operatorname{unc}\left(H, P\right)\right) \leq 1) \implies (\forall Pp: T, (((\operatorname{compatible}\left(H, Pp\right)) \land (\operatorname{n}\left(Pp\right) = \operatorname{n}\left(P\right))) \implies (Pp = P)))))))$$
 
@@ -33,4 +45,5 @@ With P=pair(A,A), H containing only the beta report at LR, and Pp=C=pair(A,E), t
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualHistorySingleHoleRecovery.complete_history_rigidity`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualHistorySingleHoleRecovery.context_length`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity](ActualLeafHistoryRigidity.md)

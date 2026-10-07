@@ -29,6 +29,14 @@ internal sealed class ActualHistorySingleHoleRecoveryDocument : IScribeDocumentD
                 + "at h. Leaves(P) is the full labelled leaf frontier, with labels obtained by read(u,P). "
                 + "root(d) is the root of a decoded block d; prefix is ordinary word prefix. "
                 + "n(P) is the native leaf count, and card is finite-set cardinality.")),
+            Describe.Lean(DescribeId.Create("actual-history-context-length"),
+                DeclarationHandle.Create(Prefix + "context_length"),
+                H("Leaf Count of a Filled Context"),
+                StatementSource.FromAuthor(ContextLengthFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Filling the hole of a literal output context J with Z gives "
+                    + "n(plug(J,Z))=outsideLeaves(J)+n(Z), by induction on the context: the hole adds nothing, "
+                    + "and each left or right constructor adds the leaf count of its stored sibling."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-history-complete-rigidity"),
                 DeclarationHandle.Create(Prefix + "complete_history_rigidity"),
                 H("Zero Recovery, Size-Free Common Context, and Same-Size Rigidity"),
@@ -76,6 +84,13 @@ internal sealed class ActualHistorySingleHoleRecoveryDocument : IScribeDocumentD
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
     private static Formula Some(string name, Formula type, Formula body) =>
         Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
+
+    private static Formula ContextLengthFormula()
+    {
+        Formula j = V("J"), z = V("Z");
+        return All("J", Call("Context"), All("Z", V("T"), EqOf(Call("n", Call("plug", j, z)),
+            Seq(Call("outsideLeaves", j), Sp, Plus, Sp, Call("n", z)))));
+    }
 
     private static Formula ResultFormula()
     {

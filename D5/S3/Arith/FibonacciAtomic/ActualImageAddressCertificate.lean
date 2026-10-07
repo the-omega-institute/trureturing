@@ -63,7 +63,7 @@ private theorem image_positive {d : ℕ} (hd : 3 ≤ d) (U : Source)
   rw [← Function.iterate_add_apply, show 3 + (d - 3) = d by omega]
   exact hT
 
-private theorem alpha_mul (s t : Source) : alphaLeaves (s * t) =
+theorem alpha_mul (s t : Source) : alphaLeaves (s * t) =
     (alphaLeaves s).image (List.cons false) ∪ (alphaLeaves t).image (List.cons true) := by
   classical
   ext u

@@ -3426,6 +3426,338 @@ error contribution, or the exact low head in (LM5). They are reused
 within their stated scope, without excluding a future weighted
 application or establishing the original Robin bound or RH.
 
+### A real-parameter heat integral transports the rational high response
+
+The exact real-parameter formula of Kamiya–Suzuki, Lemma 2.1, can
+also be used with a different kernel. Keep the original selected
+integer, $A,L,S$ and complete coefficient $F_A$. Reuse (RC2)–(RC4),
+the reciprocal-square zero count and the printed Gaussian formula;
+their source proofs are not repeated. This application pays a
+transport error, not the sign of the resulting prime expression.
+It makes no mathematical originality or Lean-verification claim.
+
+Put
+
+$$
+u_*=\frac{L}{S^2},\qquad
+\mathcal H(u,v)=\sum_\rho m_\rho e^{u\rho^2-v\rho},\qquad
+\mathcal H_{\le S}(u,v)=
+ \sum_{|\operatorname{Im}\rho|\le S}m_\rho e^{u\rho^2-v\rho}.
+$$
+
+These sums list distinct nontrivial zeros, with their actual
+multiplicities. Both conjugate signs of the ordinate are included.
+The head includes every zero at the cut. Work eventually with
+$L\ge2$, $S\ge H$ and $u_*\le1/16$; no numerical starting clock is
+certified. The head below $S$ includes unverified heights above $H$
+and is retained exactly.
+
+For an actual $\rho=\beta+i\gamma$,
+$\operatorname{Re}[\rho(1-\rho)]=\gamma^2+\beta(1-\beta)>0$.
+Consequently the elementary scalar resolvent identity gives
+
+$$
+\frac{A^{\rho-1/2}}{\rho(1-\rho)}
+=A^{-1/2}\int_0^\infty
+ e^{u\rho^2-(u-L)\rho}\,du.
+\tag{HR1}
+$$
+
+The Gaussian parameter $v=u-L$ is real throughout. No continuation
+of the printed lemma to complex $v$ is needed. Its fixed-parameter
+asymptotic theorem is not used in this moving range.
+
+For $|\gamma|>S$, the modulus of the normalized integrand in
+(HR1) is at most $\sqrt A e^{-u\gamma^2}$. Thus summation and
+integration are absolutely interchangeable, since
+$\sum_{\gamma>S}m_\rho/\gamma^2\ll\log S/S$. The entire discarded
+heat-time suffix, still summing every zero height, has allowance
+
+$$
+\begin{aligned}
+A^{-1/2}\int_{u_*}^\infty
+ \sum_{|\gamma|>S}m_\rho
+  |e^{u\rho^2-(u-L)\rho}|\,du
+&\le2\sqrt A\,e^{-u_*S^2}
+ \sum_{\gamma>S}\frac{m_\rho}{\gamma^2}\\
+&\ll A^{-1/2}\frac{\log S}{S}\longrightarrow0.
+\end{aligned}
+\tag{HR2}
+$$
+
+Here $e^{-u_*S^2}=A^{-1}$. This truncates heat time, not the zero
+height range. In particular every zero above the previously paid
+whole-response cut $T$ is included before this bound is applied.
+
+Write
+
+$$
+\mathcal G_u(t)=\frac{e^{-t^2/(4u)}}{\sqrt{4\pi u}},
+\qquad
+\mathcal D_{A,u_*}=A^{-1/2}\int_0^{u_*}
+ \left[A-\sum_{n\ge2}\Lambda(n)
+       \mathcal G_u(\log n-L+u)\right]du.
+\tag{HR3}
+$$
+
+The pole is centered at the same arithmetic clock as the primes.
+Indeed the continuous background is exactly
+
+$$
+\int_0^\infty\mathcal G_u(\log x-L+u)\,dx=A.
+$$
+
+Retain this difference as a combined signed expression; its
+definition gives no estimate for its sign or size. The integrated
+prime terms are not replaced by an average over other clocks.
+
+At $v=u-L$, the two pole terms in the literal source formula are
+$A+1$. Its first prime sum is precisely the one in (HR3). Its
+remaining terms contribute a vanishing allowance after multiplying
+by $A^{-1/2}$ and integrating over $0<u<u_*$. To see this using
+only the printed interfaces, its logarithmic archimedean term becomes
+
+$$
+\frac{e^{-u/4}}{2\pi}\int_{\mathbb R}
+ \log|1/4+it/2|\,e^{-ut^2+itL}\,dt.
+$$
+
+Since $|\log|1/4+it/2||\ll\log(2+|t|)$, its complete absolute
+integral over heat time is
+
+$$
+O\!\left(\int_0^{u_*}u^{-1/2}\log(2/u)\,du\right)
+=O\!\left(\sqrt{u_*}\log(2/u_*)\right)
+\longrightarrow0.
+$$
+
+The source's Lemma 3.1 gives
+$0\le(E*\mathcal G_u)(u-L)\le1$. Its convolution term and the
+constant pole $1$ together cost at most $2A^{-1/2}u_*$.
+The $\log\pi$ term and the second prime sum have allowance
+
+$$
+O\!\left(A^{-1/2}\sqrt{u_*}
+           e^{-L^2/(16u_*)}\right).
+$$
+
+For the second sum this follows from $L-u\ge L/2$ and
+$(L-u)/(2u)\ge1$:
+
+$$
+\sum_{n\ge2}\frac{\Lambda(n)}n
+ e^{-(u-L-\log n)^2/(4u)}
+\le e^{-L^2/(16u)}
+     \sum_{n\ge2}\frac{\log n}{n^2},
+$$
+
+where the last series is finite. All these terms retain the signs
+and coefficients of Lemma 2.1; only their absolute propagation
+is bounded. Because $S=A^{1/6}e^{-\kappa\Omega}$,
+$\sqrt{u_*}\log(2/u_*)=O(L^{3/2}/S)\to0$.
+
+No endpoint value at $u=0$ is substituted. For each fixed $A$,
+the Gaussian zero sum is integrable on this finite heat interval:
+the reciprocal-square count controls its high part, and its head is
+finite. All other source terms just bounded are integrable there.
+The nonnegative first prime sum is consequently integrable by the
+exact source identity; Tonelli then permits its prime summation and
+heat integral to be interchanged. This includes the case where $A$
+is exactly a prime power, without importing fixed-resonance
+asymptotics. Integrating the two pole terms separately to infinite
+heat time would diverge and is not used.
+
+Define the exact combined head
+
+$$
+\mathcal J_{\rm head}(A)=
+ \sqrt A L\,2\operatorname{Re}
+      \sum_{0<\gamma\le S}m_\rho F_A(\rho)
+ -(1+1/L)A^{-1/2}\int_0^{u_*}
+      \mathcal H_{\le S}(u,u-L)\,du.
+\tag{HR4}
+$$
+
+The finite subtraction belongs to the same zero multiset and
+clock; it is not an independently optimized head allowance.
+Combining (HR1)–(HR4) with the single coefficient comparison (RC2)
+gives the complete original response
+
+$$
+\boxed{
+\sqrt A L\,Z_{\rm orig}(A)
+=\mathcal J_{\rm head}(A)
+ +(1+1/L)\mathcal D_{A,u_*}+o(1).}
+\tag{HR5}
+$$
+
+More precisely, the absolute discrepancy is at most
+
+$$
+\frac{2(L+2)}{L^2}B_3(A,S)
+ +O\!\left(
+ A^{-1/2}\frac{\log S}{S}
+ +\sqrt{u_*}\log(2/u_*)
+ +A^{-1/2}u_*
+ +A^{-1/2}\sqrt{u_*}e^{-L^2/(16u_*)}
+ \right),
+\tag{HR6}
+$$
+
+which tends to zero by the already retained (RC4). All actual real
+parts, conjugate and reflected multiplicities, original coefficient
+errors and infinite zero heights are covered. No complex-v
+extension, GSS pointwise remainder or independent GSS endpoint
+allowance is used in this alternative transport.
+
+The contribution to the original $I_\psi$ is still
+$-Z_{\rm orig}$. Its elementary terms and the strict core at the
+same integer remain unchanged. Paying (G9) through this representation
+still requires an estimate for the combined right side of (HR5),
+with its paid discrepancy and the unchanged elementary terms included.
+Neither $\mathcal D_{A,u_*}$ nor $\mathcal J_{\rm head}$ is bounded
+here by the required margin. In particular the head subtraction
+does not establish positivity or an estimate for the unverified
+head. The full original Robin bound and RH remain unproved.
+
+### The heat prime response has a paid finite arithmetic window
+
+The positive kernel in (HR3) permits an unconditional localization
+of its prime sum. This uses only $\Lambda(n)\le\log n$, the
+Gaussian bound below and the same $A,L,S,u_*$. It is an application
+estimate for this profile, not a new prime-distribution theorem,
+an originality claim or a Lean-verified result.
+
+For $0<U\le1/16$ and $d\in\mathbb R$, put
+
+$$
+K_U(d)=\int_0^U\mathcal G_u(d+u)\,du.
+$$
+
+Expanding the square inside the Gaussian gives
+
+$$
+0\le K_U(d)
+=e^{-d/2}\int_0^U
+ \frac{e^{-d^2/(4u)-u/4}}{\sqrt{4\pi u}}\,du
+\le\sqrt{U/\pi}\,e^{-d/2}e^{-d^2/(4U)}.
+\tag{HR7}
+$$
+
+For $A\ge e^2$, $L=\log A$ and any $D>0$, split the last
+Gaussian exponent into two equal parts. On $|d|>D$ one part is
+at most $e^{-D^2/(8U)}$. Consequently
+
+$$
+\sum_{|\log(n/A)|>D}\Lambda(n)K_U(\log(n/A))
+\ll\sqrt U\,e^{-D^2/(8U)}\sum_{n\ge2}f_{A,U}(n),
+$$
+
+where
+
+$$
+f_{A,U}(x)=\log x\,(A/x)^{1/2}
+ \exp\!\left[-\frac{(\log x-L)^2}{8U}\right],\qquad x\ge1.
+$$
+
+This nonnegative function vanishes at $1$ and at infinity and
+has just one maximum. Indeed, for $t=\log x>0$, its logarithmic
+derivative with respect to $t$ is
+$1/t-1/2-(t-L)/(4U)$, which is strictly decreasing from positive
+infinity to negative infinity. The elementary unimodal
+sum–integral comparison therefore gives
+
+$$
+\sum_{n\ge2}f_{A,U}(n)
+\le\int_1^\infty f_{A,U}(x)\,dx
+    +2\sup_{x\ge1}f_{A,U}(x).
+$$
+
+Write $d=\log x-L$. Completing the square first with
+$e^{-d/2}$ and then with $e^{d/2}$ gives, uniformly in the stated
+parameters,
+
+$$
+\sup_{x\ge1}f_{A,U}(x)
+\le e^{U/2}(L+2U+2\sqrt U)\ll L+1,
+$$
+
+$$
+\begin{aligned}
+\int_1^\infty f_{A,U}(x)\,dx
+&\le A e^{U/2}\int_{\mathbb R}
+ (L+|d|)e^{-(d-2U)^2/(8U)}\,dd\\
+&\ll A\sqrt U(L+1).
+\end{aligned}
+$$
+
+These comparisons account for the integer grid as well as the
+continuous background. Combining them with (HR7) proves the
+complete positive arithmetic tail bound
+
+$$
+\boxed{
+\sum_{|\log(n/A)|>D}\Lambda(n)K_U(\log(n/A))
+\ll (L+1)(AU+\sqrt U)e^{-D^2/(8U)}.}
+\tag{HR8}
+$$
+
+No prime powers outside the displayed window are dropped before
+this bound is applied, and no prime-counting asymptotic or average
+over $A$ is assumed.
+
+Now use the same $U=u_*=L/S^2$ as (HR1)–(HR6), and take
+
+$$
+D_*=4\sqrt{u_*L}=\frac{4L}{S},\qquad
+\mathcal W_A=\{n\ge2:Ae^{-D_*}\le n\le Ae^{D_*}\}.
+$$
+
+Keep both endpoints in this finite window. Define
+
+$$
+\mathcal D^{\rm loc}_{A,u_*}
+=A^{-1/2}\left[
+ Au_*-\sum_{n\in\mathcal W_A}\Lambda(n)
+       K_{u_*}(\log(n/A))\right].
+$$
+
+Since $e^{-D_*^2/(8u_*)}=A^{-2}$, (HR8) yields
+
+$$
+0\le\mathcal D^{\rm loc}_{A,u_*}-\mathcal D_{A,u_*}
+\ll(L+1)\left(\sqrt A\,u_*+
+ \frac{\sqrt{u_*}}{\sqrt A}\right)A^{-2}
+\longrightarrow0.
+\tag{HR9}
+$$
+
+The direction is relevant to Robin: removing the outside positive
+prime terms increases $\mathcal D$, hence gives an upper estimate
+for its contribution to $Z_{\rm orig}$ and a lower estimate for
+the corresponding contribution $-Z_{\rm orig}$ to $I_\psi$.
+The separate bound in (HR9) also pays the absolute discrepancy.
+Together with (HR5)–(HR6), it gives
+
+$$
+\sqrt A L\,Z_{\rm orig}(A)
+=\mathcal J_{\rm head}(A)
+ +(1+1/L)\mathcal D^{\rm loc}_{A,u_*}+o(1),
+\tag{HR10}
+$$
+
+with no discarded zero heights or unpaid arithmetic tail.
+
+The relative log window $D_*=4L/S$ tends to zero. Its continuous
+arithmetic width is asymptotic to $8AL/S$; this is a window at
+$A=\log N$, not a window at the original integer $N$. The weighted
+prime-power sum within it is still not estimated by the required
+signed margin. Nor is the exact unknown head in (HR4) paid by
+localization. The original selected-source joint estimate, strict
+core, all actual real parts and multiplicities remain unchanged,
+and RH remains unproved. All limits are eventual, with no
+certified numerical starting clock.
+
 ## Whole multiplicative sums do not control prescribed prime blocks
 
 Granville–Lamzouri, *Large values of exponential sums with
@@ -3473,3 +3805,289 @@ The same selected integer, complete rational coefficient, actual zero
 real parts and multiplicities, exact low head and all remaining height
 ranges therefore retain their roles in (LM5) and (G9). The required
 joint signed estimate and RH remain unproved.
+
+
+### The same-source price minimum gives a nonnegative heat cost
+
+The existing unrestricted price pressure and selected-source contact
+can be transported into the real heat kernel (HR7). This application
+identifies the direction and scale of the resulting constraint. It
+reuses the pressure, derivative and limit in the
+[FIB theory volume, §98](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md),
+the actual tangent optimum (G1), and (HR1)–(HR10). It does not
+reprove those results or the
+[packet and cone theorems](../Analytic/mantovanelli2026primeworkload.md).
+No mathematical originality or Lean verification is claimed.
+
+Keep the same conditional least global Robin-ratio maximizer $N>5040$,
+$A=\log N$, $L=\log A$ and $U=L/S^2$. Write
+
+$$
+g(x)=\frac1{x\log x},\qquad
+q(x)=-g'(x)=\frac{\log x+1}{x^2(\log x)^2},
+$$
+
+$$
+\mathcal B(\epsilon)=\max_{m\ge1}
+ \{\log Z(m)-\epsilon\log m\},\qquad
+\mathcal P(x)=\gamma+\log\log x-g(x)x-\mathcal B(g(x)).
+$$
+
+Here $\mathcal P$ is the existing $\mathfrak D$, and $q$ is its
+positive derivative weight, not the price. Let
+$a_C(x)=\log C_x$ for an unrestricted optimum at price $g(x)$;
+ties may use either consistent prefix convention. Local finiteness
+of activation events and the existing pressure derivative give
+
+$$
+\mathcal P'(x)=q(x)[x-a_C(x)]\quad\hbox{almost everywhere},
+\qquad \mathcal P(x)\longrightarrow0.
+$$
+
+The selected $N$ attains the optimum at $g(A)$, so
+$\mathcal P(A)=\gamma+\log\log A-\log Z(N)$.
+Choose a fixed $x_0>1$ such that every optimum for $x\ge x_0$
+exceeds $5040$; it suffices that the first thirteen $2$-layers
+are strictly active. The actual global Robin maximum and the
+concavity tangent for $b(t)=\gamma+\log\log t$ imply
+
+$$
+0\le\mathcal P(x)-\mathcal P(A)\le c_A(x)
+\quad(x\ge x_0),\qquad
+c_A(x)=\log\log x-\log\log A+g(x)(A-x).
+\tag{PH1}
+$$
+
+For the lower inequality use the Robin comparison at this same
+$C_x$ and $b(a_C)\le b(x)+g(x)(a_C-x)$.
+For the upper inequality insert the same $N$ as a competitor in
+$\mathcal B(g(x))$. Concavity gives $c_A(x)\ge0$ for all $x>1$.
+The global comparison does not cover optima at most $5040$;
+their fixed interval is paid below, not included in (PH1).
+
+#### A positive kernel row with the correct atom
+
+Put $\ell=\log x$, $d=\log(x/A)$ and
+$a(\ell)=\ell^2/(\ell+1)$. The integrated Gaussian obeys, in
+the distributional sense on the $d$-line,
+
+$$
+K_U''(d)+K_U'(d)=\mathcal G_U(d+U)-\delta_0(d).
+$$
+
+Indeed, this is the heat equation integrated over $0<u<U$;
+the initial Gaussian is a unit atom. Its one-sided derivatives are
+
+$$
+K_U'(d)=
+\begin{cases}
+ \tfrac12e^{-d}\operatorname{erfc}((-d+U)/(2\sqrt U)),&d<0,\\
+ -\tfrac12e^{-d}\operatorname{erfc}((d-U)/(2\sqrt U)),&d>0.
+\end{cases}
+$$
+
+Thus the derivative jumps by $-1$ at $0$. Define
+
+$$
+h(x)=x\,a(\ell)K_U'(d),\qquad
+r(x)=a(\ell)\mathcal G_U(d+U)+a'(\ell)K_U'(d).
+$$
+
+Using one-sided values at $A$ gives the exact row identity
+
+$$
+dh=r(x)\,dx-Aa(L)\delta_A,
+\qquad
+\pi_{A,U}(dx)=\frac{r(x)}{Aa(L)}\,dx.
+\tag{PH2}
+$$
+
+The atom has coefficient $Aa(L)$, including the Jacobian
+$\delta_0(\log(x/A))=A\delta_A(x)$.
+For $d<0$ every term in $r$ is nonnegative. For $d>0$ put
+$t=(d-U)/(2\sqrt U)\ge-1/8$, using $U\le1/16$. Then
+
+$$
+\frac{-K_U'(d)}{\mathcal G_U(d+U)}
+ =\sqrt{\pi U}\,e^{t^2}\operatorname{erfc}(t)
+ \le5\sqrt U.
+$$
+
+For $t\ge0$ use $e^{t^2}\operatorname{erfc}(t)\le1$;
+for $-1/8\le t<0$ use $\operatorname{erfc}(t)\le2$ and
+$e^{t^2}\le e^{1/64}$. Since $x>A$, $L\ge2$ and
+
+$$
+\frac{a(\ell)}{a'(\ell)}
+ =\frac{\ell(\ell+1)}{\ell+2}\ge\frac32
+ >5\sqrt U,
+$$
+
+we again have $r\ge0$. Moreover $h(1+)=h(\infty)=0$;
+the Gaussian decay controls the latter endpoint. Integrating
+(PH2) therefore gives $\int_1^\infty r(x)\,dx=Aa(L)$.
+Consequently $\pi_{A,U}$ is an actual nonnegative probability
+measure on $(1,\infty)$, formed from the same $A$ and kernel.
+It is not an average over independently selected extremal integers.
+
+#### The arithmetic correction vanishes at the paid heat scale
+
+Write $\Delta(x)=\psi(x)-a_C(x)$, so
+
+$$
+\psi(x)-x=-\frac{\mathcal P'(x)}{q(x)}+\Delta(x).
+$$
+
+Only a crude uniform activation estimate is needed here.
+The first active prime layer differs from the cutoff $p\le x$
+only for $x-1<p\le x$: use
+$1/(p+1)<\log(1+1/p)<1/p$ in the activation rule.
+Every active higher layer satisfies $p^j\log p<x\log x$,
+so there are $O(\log x)$ layers and all their primes lie below
+$\sqrt{x\log x/\log2}$. With the elementary
+$\vartheta(t)\le t\log t$, the higher layers of $a_C$ and
+$\psi$ give the uniform bound
+
+$$
+|\Delta(x)|\ll\sqrt x\,[\log(2x)]^{5/2}\qquad(x>1).
+$$
+
+This estimate follows from activation, not from imposing GA1
+on every intervening CA prefix. In particular it uses neither
+a new source-selector theorem nor a square-root PNT error.
+For $d\ne0$, differentiating the integral defining $K_U$ and
+taking absolute values gives the almost-everywhere estimate
+
+$$
+e^{d/2}|K_U'(d)|
+\le\int_0^U
+ \left(\frac{|d|}{2u}+\frac12\right)
+ \mathcal G_u(d)e^{-u/4}\,du.
+$$
+
+Gaussian moments and $0<U\le1/16$ therefore imply
+
+$$
+\int_{\mathbb R}e^{d/2}(1+|d|)^{5/2}|K_U'(d)|\,dd
+ \ll\sqrt U.
+$$
+
+At $d=0$ use the one-sided jump in (PH2); differentiation under
+the integral there does not supply either one-sided derivative.
+
+After $x=Ae^d$, the complete arithmetic correction satisfies
+
+$$
+A^{-1/2}\left|\int_1^\infty\Delta(x)
+ \frac{K_U'(\log(x/A))}{x}\,dx\right|
+\ll(L+1)^{5/2}\sqrt U
+=O(L^3/S)\longrightarrow0.
+\tag{PH3}
+$$
+
+All actual prime powers are present in this comparison. No
+fixed-beta or zero-height simplification is made.
+
+#### Exact direction and the remaining upper requirement
+
+Stieltjes integration by parts in (HR3), including the interval
+$0<x\le1$, yields
+
+$$
+\mathcal D_{A,U}=A^{-1/2}
+ \left[\int_0^1K_U(\log(x/A))\,dx-K_U(-L)
+ +\int_1^\infty(\psi(x)-x)
+   \frac{K_U'(\log(x/A))}{x}\,dx\right].
+$$
+
+The first two terms have allowance
+$O(\sqrt U e^{-L^2/(4U)})$ by (HR7).
+For the pressure term, $1/(xq(x))=xa(\ell)$, so
+integration by parts with (PH2) gives
+
+$$
+-A^{-1/2}\int_1^\infty\mathcal P'(x)h(x)\,dx
+=\sqrt A\,a(L)\left[\int\mathcal P(x)\,\pi_{A,U}(dx)
+ -\mathcal P(A)\right].
+$$
+
+There are no pressure atoms at activation events: the existing
+pressure is continuous and locally absolutely continuous.
+Near $1$, $\mathcal B(g(x))=0$ and
+$\mathcal P(x)=\gamma+\log\ell-1/\ell$, while
+$a(\ell)=O(\ell^2)$ and $a'(\ell)=O(\ell)$.
+These facts justify the lower boundary and integrability.
+At infinity reuse $\mathcal P(x)\to0$ and Gaussian decay.
+
+Set the independently nonnegative cost
+
+$$
+V_{A,U}=\int_{x_0}^\infty
+ [\mathcal P(x)-\mathcal P(A)]\,\pi_{A,U}(dx)\ge0.
+$$
+
+The omitted fixed interval $1<x<x_0$ costs at most
+$O_{x_0}(U^{-1/2}e^{-(L-\log x_0)^2/(4U)})=o(1)$
+after multiplying by $\sqrt A a(L)$. To obtain this bound,
+use the preceding integrability at $1$, boundedness of
+$\mathcal P(A)$ from its existing limit, and the negative-$d$
+derivative formula. No small-prefix Robin comparison is used.
+Together with (PH3), this proves the specific transport
+
+$$
+\boxed{\mathcal D_{A,U}=\sqrt A\,a(L)V_{A,U}+o(1).}
+\tag{PH4}
+$$
+
+Combining with (HR5)–(HR10) retains the exact same-source head:
+
+$$
+\boxed{\sqrt A L Z_{\rm orig}
+ =\mathcal J_{\rm head}
+  +(1+1/L)\sqrt A\,a(L)V_{A,U}+o(1).}
+\tag{PH5}
+$$
+
+All actual zero real parts, multiplicities and heights remain
+as specified in those equations. In particular the unknown
+head above the verified height is not paid by (PH4).
+
+The existing support gap in (PH1) does give an upper allowance,
+but not one of Robin strength. Since $c_A(A)=0$ and
+$c_A'(x)=q(x)(x-A)$, (PH2) and integration by parts give
+
+$$
+\begin{aligned}
+0\le\sqrt A\,a(L)V_{A,U}
+&\le\sqrt A\,a(L)\int_1^\infty c_A(x)\,\pi_{A,U}(dx)\\
+&=A^{-1/2}\left[\int_1^\infty K_U(\log(x/A))\,dx
+ -(A-1)K_U(-L)\right]\\
+&\le\sqrt A\,U
+=L A^{1/6}e^{2\kappa\Omega}.
+\end{aligned}
+\tag{PH6}
+$$
+
+The final normalization uses the already fixed
+$S=A^{1/6}e^{-\kappa\Omega}$.
+The displayed allowance diverges. This is not a lower bound
+on the actual cost and does not rule out a sharper joint estimate.
+It is the same ceiling obtained by merely dropping positive
+prime terms in (HR3); the price constraint has not improved it.
+
+Thus the price minimum supplies $\mathcal D_{A,U}\ge-o(1)$,
+whereas the Robin target, with $I_\psi=-Z_{\rm orig}$, needs
+an upper bound on the complete right side of (PH5).
+The remaining requirement is the joint signed bound
+
+$$
+\mathcal J_{\rm head}
+ +(1+1/L)\sqrt A\,a(L)V_{A,U}
+ \le\mathcal E(L)+o(1),
+$$
+
+with sufficient strict slack for the original core criterion.
+No such bound, numerical starting clock, unbounded sequence of
+selected sources, or proof of RH is established here. The
+nonnegative quantity is independently constructed; naming it
+does not prove that its size fits the available Robin budget.

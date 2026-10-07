@@ -176,7 +176,79 @@ H consists of (LLLL,beta), (LLLR,alpha), (LLR,beta), (RLLL,beta), (RLLR,alpha), 
 
 card is finite-set cardinality, inter and diff are intersection and difference. Word is the type of finite left/right words, Bool is the label type, and c counts alpha first and beta second. The sharp pair proves attainment of the separation constant; it makes no assertion of capacity equality.
 
-**Theorem 1.15 (Universal Separation and Same-Composition Sharpness).**
+**Theorem 1.15 (Minimum actual image size).**
+
+$$\forall p: T, (3 \leq \operatorname{n}\left(\operatorname{R}\left(p\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.minimum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every complete third image has at least three leaves.
+
+**Theorem 1.16 (Minimum size away from alpha).**
+
+$$\forall p: T, ((p \neq alpha) \implies (5 \leq \operatorname{n}\left(\operatorname{R}\left(p\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.not_alpha_minimum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A preimage distinct from alpha produces at least five leaves.
+
+**Theorem 1.17 (Leaf versus actual image).**
+
+$$\forall b: \operatorname{Bool}\left(\right), (\forall p: T, ((\operatorname{NC}\left(\operatorname{of}\left(b\right), \operatorname{R}\left(p\right)\right)) \land (\operatorname{s}\left(\operatorname{of}\left(b\right), \operatorname{R}\left(p\right)\right) = 0)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.atom_image` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A single labeled leaf and a third image have no common leaf address, so their labels are compatible.
+
+**Theorem 1.18 (Compatibility with the second alpha block).**
+
+$$\forall p: T, ((\operatorname{NC}\left(E, \operatorname{R}\left(p\right)\right)) \iff (p \neq alpha))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.e_image` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+E is compatible with a third image exactly when its preimage is distinct from alpha.
+
+**Theorem 1.19 (No shared E endpoints away from alpha).**
+
+$$\forall p: T, ((p \neq alpha) \implies (\operatorname{s}\left(E, \operatorname{R}\left(p\right)\right) = 0))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.e_shared` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+E shares no leaf address with a third image whose preimage is distinct from alpha.
+
+**Theorem 1.20 (Alpha block versus a compound image).**
+
+$$\forall p: T, (\forall q: T, ((\operatorname{NC}\left(A, \operatorname{pair}\left(\operatorname{R}\left(p\right), \operatorname{R}\left(q\right)\right)\right)) \implies ((p \neq alpha) \land (\operatorname{s}\left(A, \operatorname{pair}\left(\operatorname{R}\left(p\right), \operatorname{R}\left(q\right)\right)\right) = 0) \land (8 \leq \operatorname{n}\left(\operatorname{pair}\left(\operatorname{R}\left(p\right), \operatorname{R}\left(q\right)\right)\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.a_composite` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Compatibility excludes alpha as the left preimage, forces zero shared leaves, and gives at least eight compound leaves.
+
+**Theorem 1.21 (Universal Separation and Same-Composition Sharpness).**
 
 $$\begin{gathered}(\forall p: T, ((\operatorname{card}\left(\operatorname{L}\left(p\right)\right) = \operatorname{n}\left(p\right)) \land (\forall u: \operatorname{Word}\left(\right), ((u \in \operatorname{L}\left(p\right)) \iff (\exists b: \operatorname{Bool}\left(\right), (\operatorname{label}\left(p, u\right) = \operatorname{some}\left(b\right))))))) \land (\forall p: T, (\forall q: T, ((\operatorname{s}\left(p, q\right) = \operatorname{card}\left(\operatorname{inter}\left(\operatorname{L}\left(p\right), \operatorname{L}\left(q\right)\right)\right)) \land (\operatorname{nu}\left(p, q\right) = \operatorname{card}\left(\operatorname{diff}\left(\operatorname{L}\left(p\right), \operatorname{L}\left(q\right)\right)\right)) \land ((\operatorname{NC}\left(p, q\right)) \iff (\forall u: \operatorname{Word}\left(\right), (\forall a: \operatorname{Bool}\left(\right), (\forall b: \operatorname{Bool}\left(\right), ((\operatorname{label}\left(p, u\right) = \operatorname{some}\left(a\right)) \implies ((\operatorname{label}\left(q, u\right) = \operatorname{some}\left(b\right)) \implies (a = b)))))))))) \land (\forall P: T, (\forall Q: T, (\forall n: \operatorname{Nat}\left(\right), (((P \in I) \land (Q \in I) \land (P \neq Q) \land (\operatorname{n}\left(P\right) = n) \land (\operatorname{n}\left(Q\right) = n) \land (\operatorname{NC}\left(P, Q\right))) \implies ((11 \leq n) \land (\operatorname{nu}\left(P, Q\right) = \operatorname{nu}\left(Q, P\right)) \land (7 \leq \operatorname{nu}\left(P, Q\right)) \land (\operatorname{s}\left(P, Q\right) \leq n - 7)))))) \land ((P = \operatorname{R}\left(p\right)) \land (Q = \operatorname{R}\left(q\right)) \land (P \neq Q) \land (\operatorname{NC}\left(P, Q\right)) \land (\operatorname{c}\left(P\right) = (5, 8)) \land (\operatorname{c}\left(Q\right) = (5, 8)) \land (\operatorname{n}\left(P\right) = 13) \land (\operatorname{n}\left(Q\right) = 13) \land (\operatorname{s}\left(P, Q\right) = 6) \land (\operatorname{nu}\left(P, Q\right) = 7) \land (\operatorname{nu}\left(Q, P\right) = 7) \land (\operatorname{joint}\left(P, Q\right) = H))\end{gathered}$$
 
@@ -202,8 +274,14 @@ The two literal preimages produce P and Q. Each image contains one A and two C, 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.Nonconflict`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.PThirteen`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.QThirteen`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.a_composite`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.atom_image`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.e_image`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.e_shared`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.leafAddresses`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.leafLabel`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.minimum`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.not_alpha_minimum`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.pThirteen`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.qThirteen`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.seven_leaf_separation`
