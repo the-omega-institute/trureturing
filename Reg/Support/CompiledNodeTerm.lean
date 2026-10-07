@@ -143,10 +143,11 @@ private def instantiate (params : List Name) (levels : List Level) (expression :
     | .max left right => .max (substitute left) (substitute right)
     | .imax left right => .imax (substitute left) (substitute right)
     | other => other
-  expression.replace fun node => match node with
-    | .sort universeLevel => some (.sort (substitute universeLevel))
-    | .const constant universeLevels => some (.const constant (universeLevels.map substitute))
-    | _ => none
+  if levels == params.map Level.param then expression else
+    expression.replace fun node => match node with
+      | .sort universeLevel => some (.sort (substitute universeLevel))
+      | .const constant universeLevels => some (.const constant (universeLevels.map substitute))
+      | _ => none
 
 private def construct (env : Environment) (location : Address) : Except String Expr := do
   let some declaration := env.find? location.declaration | throw "declaration_missing"
