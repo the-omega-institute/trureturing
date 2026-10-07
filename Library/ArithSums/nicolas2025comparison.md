@@ -2092,3 +2092,166 @@ actual real parts and multiplicities unchanged. It pays unsmoothing
 of the zero response, while giving no signed lower bound for that
 response. Positivity of the scale measure in (U1) is not positivity
 of a sum of complex zero coefficients.
+
+
+## Transport to a centered Gaussian prime integral with the contour paid
+
+The coefficient approximation (U1)–(U4) can be realized on the prime
+side without discarding the pole, the shifted contour, or the original
+trivial-zero correction. Use only Moriya,
+[arXiv:2607.04316v2](https://arxiv.org/abs/2607.04316v2),
+Proposition 2.2, equations (17)–(19), Theorem 3.3, equations (35)–(36),
+and Lemma 3.1. This is an application of those assessed interfaces;
+none of their explicit-formula proofs or RH-dependent localization
+claims is reproved or used.
+
+### Center the pole before the infinite scale integration
+
+For $A\ge e^2$ and $0<a\le1/16$ define
+
+$$
+\Psi_a(X)=\sum_{n\ge1}\Lambda(n)\,
+ \frac12\operatorname{erfc}\!\left(
+ \frac{\log n-\log X}{2\sqrt a}\right).
+\tag{V1}
+$$
+
+In the cited formula take observation $s=0$, right line $c=2$, left
+line $-d=-1/2$, and $\alpha_X^2\log X=a$. The observation is not a
+zero or the pole of $\zeta$. All nontrivial zeros and the pole at $1$
+are crossed; no trivial zero is crossed. The left line avoids all
+zeros and the pole. The source's prime term is $-\Psi_a(X)$, and
+$\zeta'/\zeta(0)=\log(2\pi)$, so its exact formula reads
+
+$$
+\Psi_a(X)-e^aX
+=-\sum_\rho m_\rho\frac{X^\rho e^{a\rho^2}}\rho
+ -\log(2\pi)-R_a(X),
+\tag{V2}
+$$
+
+where
+
+$$
+R_a(X)=\frac1{2\pi i}\int_{\operatorname{Re}z=-1/2}
+ \frac{\zeta'}\zeta(z)\frac{X^z e^{az^2}}z\,dz.
+$$
+
+For each fixed $a>0$ this contour integral and the zero sum in (V2)
+converge absolutely. Define the centered improper integral
+
+$$
+J_a(A)=\lim_{R\to\infty}\int_A^R
+ [\Psi_a(X)-e^aX]\frac{w(X)}{X^2}\,dX.
+\tag{V3}
+$$
+
+The prime and pole terms must be centered before taking this limit.
+Their separate integrals diverge, since $w(X)/X\sim1/(X\log X)$
+and $\Psi_a(X)\sim e^aX$. The latter asymptotic also follows from
+(V2): its Gaussian zero series divided by $X$ tends to zero by
+absolute domination, and the fixed-$a$ contour is $O_a(X^{-1/2})$.
+
+For finite $R$, Gaussian decay allows exchange of the scale integral
+and the zero sum. Its zero coefficients are
+$e^{a\rho^2}F_{A,R}(\rho)$. The bound (U2) and the finite low-zero
+bound dominate them independently of $R$ by a summable multiset.
+Thus dominated convergence passes $R\to\infty$. This uses finite
+scale intervals first; no absolute exchange over the infinite scale
+range is assumed. The constant integrates exactly to
+$\log(2\pi)/(A\log A)$.
+
+For the contour, the scale exchange over $[A,\infty)$ is absolutely
+convergent for each fixed $a>0$, using $X^{-5/2}w(X)$ on the scale
+side and Gaussian decay on the vertical line. Therefore (V3) exists
+and
+
+$$
+J_a(A)=-2\operatorname{Re}\sum_{\gamma>0}m_\rho Q_{A,a}(\rho)
+ -\frac{\log(2\pi)}{A\log A}-C_a(A),
+\tag{V4}
+$$
+
+$$
+C_a(A)=\frac1{2\pi i}\int_{\operatorname{Re}z=-1/2}
+ \frac{\zeta'}\zeta(z)e^{az^2}F_A(z)\,dz.
+$$
+
+Here $F_A$ is defined by the same integral (M1) at $\operatorname{Re}z<1$,
+$z\ne0$. No new analytic continuation assumption is needed.
+
+### Bound the contour after integrating the scale
+
+The infinite-endpoint version of (U2) on $z=-1/2+it$ gives
+
+$$
+|F_A(-1/2+it)|\ll\frac{w(A)A^{-3/2}}{1+t^2}.
+$$
+
+This line has a fixed positive distance from every zero and the pole,
+so the source's Lemma 3.1 gives
+$|\zeta'/\zeta(-1/2+it)|\ll\log^2(3+|t|)$.
+Moreover $|e^{az^2}|\le e^{a/4}$. Taking absolute values after the
+scale integration, rather than before it, therefore gives
+
+$$
+\boxed{|C_a(A)|\ll w(A)A^{-3/2}}
+\quad(A\ge e^2,\ 0<a\le1/16),
+\tag{V5}
+$$
+
+since $\log^2(3+|t|)/(1+t^2)$ is integrable. The implied constant is
+independent of the shrinking width $a$, but is not numerically certified.
+
+The original signed formula already recorded above is
+
+$$
+I_\psi(A)=-2\operatorname{Re}\sum_{\gamma>0}m_\rho F_A(\rho)
+ -\frac{\log(2\pi)}{A\log A}+T_{\rm triv}(A),
+\qquad
+T_{\rm triv}(A)=-\frac12\int_A^\infty
+ \log(1-X^{-2})\frac{w(X)}{X^2}\,dX.
+$$
+
+In particular $0\le T_{\rm triv}(A)\ll w(A)A^{-3}$. Thus the pole
+constant matches exactly, the Gaussian shifted contour is paid by
+(V5), and the original trivial term is retained. Combining (U4)
+and (V5) yields the full prime-side approximation
+
+$$
+\boxed{
+\sqrt A\log A\,|I_\psi(A)-J_a(A)|
+\ll\sqrt{Aa}\log(2/a)+A^{-1}.}
+\tag{V6}
+$$
+
+For $a_A=1/[A(\log A)^4]$ this is
+$O(1/\log A+1/A)\to0$. The bound alone does not assert convergence
+at fixed $A$ as $a\to0$, because its $A^{-1}$ allowance remains.
+
+### The estimate still needed at the selected Robin source
+
+At the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum, retain $A=\log N$ and condition (G9). The
+[existing density restriction](../Analytic/polak2026finiterobinca.md)
+requires $A>10^{36}$ if RH fails and its cited inputs hold. An eventual
+bound of the form
+
+$$
+\sqrt A\log A\,J_{a_A}(A)
+\ge-\mathcal E(\log A)+\eta(A)
+$$
+
+would imply (G9) wherever $\eta(A)$ pays the discrepancy in (V6).
+This is a sufficient condition, not an estimate established here;
+its validity at this selected source remains unproved. Without a
+numerical constant in (V6), no explicit margin or new source threshold
+is certified. Neither positive prime weights nor positive scale
+weights give a lower bound after subtracting the pole main term.
+
+The application closes the full-coefficient approximation and its
+prime-side contour transport, not the signed Robin estimate. It does
+not discard an infinite zero tail, use RH-dependent localization,
+replace real parts by $1/2$, or turn the selected global maximizer into
+the least counterexample. RH remains unproved; all conclusions are
+paper-level applications without Lean certification.
