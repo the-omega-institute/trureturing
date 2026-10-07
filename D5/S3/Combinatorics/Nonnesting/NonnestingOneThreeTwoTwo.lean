@@ -16,6 +16,84 @@ open D5.S3.Combinatorics.Nonnesting NonnestingOneThreeTwoTwoCount PowerSeries
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+theorem lagrange_coefficient (root factor : PowerSeries ℚ) (zero : constantCoeff root = 0)
+    (equation : root = X * subst root factor) :
+    ∀ degree power : ℕ, 1 ≤ power → power ≤ degree →
+      (degree : ℚ) * coeff degree (root ^ power) =
+        (power : ℚ) * coeff (degree - power) (factor ^ degree) := by
+  classical
+  have substitution : HasSubst root := HasSubst.of_constantCoeff_zero' zero
+  have vanishes (degree power : ℕ) (bound : degree < power) :
+      coeff degree (root ^ power) = 0 := by
+    apply coeff_of_lt_order
+    exact (show (degree : ENat) < (power : ENat) by exact_mod_cast bound).trans_le
+      (le_order_pow_of_constantCoeff_eq_zero power zero)
+  have finiteSubstitution (source : PowerSeries ℚ) (degree : ℕ) :
+      coeff degree (subst root source) =
+        ∑ power ∈ Finset.range (degree + 1),
+          coeff power source * coeff degree (root ^ power) := by
+    rw [coeff_subst' substitution]
+    simp only [smul_eq_mul]
+    apply finsum_eq_sum_of_support_subset
+    intro power supported
+    apply Finset.mem_range.mpr
+    by_contra unbounded
+    have vanish := vanishes degree power (by omega)
+    exact supported (by simp [vanish])
+  have shifted (degree power : ℕ) (bound : power ≤ degree) :
+      coeff degree (root ^ power) = coeff (degree - power) (subst root (factor ^ power)) := by
+    have powers : root ^ power = X ^ power * subst root (factor ^ power) := by
+      rw [subst_pow substitution, ← mul_pow, ← equation]
+    rw [powers, coeff_X_pow_mul', if_pos bound]
+  have derivativeCoefficients (source : PowerSeries ℚ) (degree : ℕ) :
+      coeff degree (X * derivative ℚ source) = (degree : ℚ) * coeff degree source := by
+    cases degree with
+    | zero => simp
+    | succ degree =>
+      rw [coeff_succ_X_mul, coeff_derivative]
+      push_cast
+      ring
+  intro degree
+  induction degree using Nat.strong_induction_on with
+  | h degree inductionHypothesis =>
+    intro power positive bounded
+    by_cases equal : degree = power
+    · subst degree
+      rw [shifted power power le_rfl]
+      simp only [Nat.sub_self]
+      rw [finiteSubstitution]
+      simp
+    have differencePositive : 0 < degree - power := by omega
+    have differenceSmaller : degree - power < degree := by omega
+    have weighted : (degree - power : ℕ) * coeff degree (root ^ power) =
+        coeff (degree - power)
+          (X * derivative ℚ (factor ^ power) * factor ^ (degree - power)) := by
+      rw [shifted degree power bounded, finiteSubstitution, Finset.mul_sum]
+      rw [coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
+      apply Finset.sum_congr rfl
+      intro index member
+      have indexBound : index ≤ degree - power := by simpa using Finset.mem_range.mp member
+      rw [derivativeCoefficients]
+      by_cases indexZero : index = 0
+      · subst index
+        simp [coeff_one, Nat.ne_of_gt differencePositive]
+      have inductionResult := inductionHypothesis (degree - power) differenceSmaller index
+        (by omega) indexBound
+      linear_combination coeff index (factor ^ power) * inductionResult
+    have derivativeIdentity :
+        (degree : PowerSeries ℚ) * (X * derivative ℚ (factor ^ power) * factor ^ (degree - power)) =
+          (power : PowerSeries ℚ) * (X * derivative ℚ (factor ^ degree)) := by
+      rw [derivative_pow, derivative_pow]
+      have exponent : power - 1 + (degree - power) = degree - 1 := by omega
+      rw [← exponent, pow_add]
+      ring
+    have coefficientIdentity := congrArg (coeff (degree - power)) derivativeIdentity
+    simp only [← map_natCast C, coeff_C_mul, derivativeCoefficients] at coefficientIdentity
+    have nonzero : (degree - power : ℕ) ≠ 0 := by omega
+    apply mul_left_cancel₀ (show ((degree - power : ℕ) : ℚ) ≠ 0 by exact_mod_cast nonzero)
+    linear_combination (degree : ℚ) * weighted + coefficientIdentity
+
 theorem result : NonnestingDefs.claim1322 := by
   classical
   have counting_recurrence (degree : ℕ) (positive : 1 ≤ degree) :
@@ -557,85 +635,8 @@ theorem result : NonnestingDefs.claim1322 := by
       _ = (root * (1 - root)) * subst root (mk 1 : PowerSeries ℚ) := by ring
       _ = (X * (1 + root) ^ 3) * subst root (mk 1 : PowerSeries ℚ) := by rw [rootEquation]
       _ = X * subst root factor := by rw [factorSubstitution]; ring
-  have lagrange (root factor : PowerSeries ℚ) (zero : constantCoeff root = 0)
-    (equation : root = X * subst root factor) :
-    ∀ degree power : ℕ, 1 ≤ power → power ≤ degree →
-      (degree : ℚ) * coeff degree (root ^ power) =
-        (power : ℚ) * coeff (degree - power) (factor ^ degree) := by
-    classical
-    have substitution : HasSubst root := HasSubst.of_constantCoeff_zero' zero
-    have vanishes (degree power : ℕ) (bound : degree < power) :
-        coeff degree (root ^ power) = 0 := by
-      apply coeff_of_lt_order
-      exact (show (degree : ENat) < (power : ENat) by exact_mod_cast bound).trans_le
-        (le_order_pow_of_constantCoeff_eq_zero power zero)
-    have finiteSubstitution (source : PowerSeries ℚ) (degree : ℕ) :
-        coeff degree (subst root source) =
-          ∑ power ∈ Finset.range (degree + 1),
-            coeff power source * coeff degree (root ^ power) := by
-      rw [coeff_subst' substitution]
-      simp only [smul_eq_mul]
-      apply finsum_eq_sum_of_support_subset
-      intro power supported
-      apply Finset.mem_range.mpr
-      by_contra unbounded
-      have vanish := vanishes degree power (by omega)
-      exact supported (by simp [vanish])
-    have shifted (degree power : ℕ) (bound : power ≤ degree) :
-        coeff degree (root ^ power) = coeff (degree - power) (subst root (factor ^ power)) := by
-      have powers : root ^ power = X ^ power * subst root (factor ^ power) := by
-        rw [subst_pow substitution, ← mul_pow, ← equation]
-      rw [powers, coeff_X_pow_mul', if_pos bound]
-    have derivativeCoefficients (source : PowerSeries ℚ) (degree : ℕ) :
-        coeff degree (X * derivative ℚ source) = (degree : ℚ) * coeff degree source := by
-      cases degree with
-      | zero => simp
-      | succ degree =>
-        rw [coeff_succ_X_mul, coeff_derivative]
-        push_cast
-        ring
-    intro degree
-    induction degree using Nat.strong_induction_on with
-    | h degree inductionHypothesis =>
-      intro power positive bounded
-      by_cases equal : degree = power
-      · subst degree
-        rw [shifted power power le_rfl]
-        simp only [Nat.sub_self]
-        rw [finiteSubstitution]
-        simp
-      have differencePositive : 0 < degree - power := by omega
-      have differenceSmaller : degree - power < degree := by omega
-      have weighted : (degree - power : ℕ) * coeff degree (root ^ power) =
-          coeff (degree - power)
-            (X * derivative ℚ (factor ^ power) * factor ^ (degree - power)) := by
-        rw [shifted degree power bounded, finiteSubstitution, Finset.mul_sum]
-        rw [coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
-        apply Finset.sum_congr rfl
-        intro index member
-        have indexBound : index ≤ degree - power := by simpa using Finset.mem_range.mp member
-        rw [derivativeCoefficients]
-        by_cases indexZero : index = 0
-        · subst index
-          simp [coeff_one, Nat.ne_of_gt differencePositive]
-        have inductionResult := inductionHypothesis (degree - power) differenceSmaller index
-          (by omega) indexBound
-        linear_combination coeff index (factor ^ power) * inductionResult
-      have derivativeIdentity :
-          (degree : PowerSeries ℚ) *
-              (X * derivative ℚ (factor ^ power) * factor ^ (degree - power)) =
-            (power : PowerSeries ℚ) * (X * derivative ℚ (factor ^ degree)) := by
-        rw [derivative_pow, derivative_pow]
-        have exponent : power - 1 + (degree - power) = degree - 1 := by omega
-        rw [← exponent, pow_add]
-        ring
-      have coefficientIdentity := congrArg (coeff (degree - power)) derivativeIdentity
-      simp only [← map_natCast C, coeff_C_mul, derivativeCoefficients] at coefficientIdentity
-      have nonzero : (degree - power : ℕ) ≠ 0 := by omega
-      apply mul_left_cancel₀ (show ((degree - power : ℕ) : ℚ) ≠ 0 by exact_mod_cast nonzero)
-      linear_combination (degree : ℚ) * weighted + coefficientIdentity
   intro degree positive
-  have coefficient := lagrange root factor zero equation degree 1 (by omega) positive
+  have coefficient := lagrange_coefficient root factor zero equation degree 1 (by omega) positive
   have positiveRoot : coeff degree root = coeff degree series :=
     positiveCoefficient degree (by omega)
   simp only [pow_one, Nat.cast_one, one_mul, positiveRoot] at coefficient

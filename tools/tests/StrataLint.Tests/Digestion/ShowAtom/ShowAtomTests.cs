@@ -155,12 +155,13 @@ public sealed partial class ShowAtomTests
             fingerprints.RawSha256,
             rawBytes);
 
-        var result = Environment("/repo", files).ShowAtom(["--atom-id", "no-such-atom"]);
+        var missingId = new string('0', 64);
+        var result = Environment("/repo", files).ShowAtom(["--atom-id", missingId]);
 
         Assert.False(result.Success);
         Assert.Equal(string.Empty, result.Output);
         Assert.Equal(
-            "SHOW_ATOM_INVALID atom_id no-such-atom is absent from digestion ledger\n",
+            $"SHOW_ATOM_INVALID atom_id {missingId} is absent from digestion ledger\n",
             result.Error);
     }
 
@@ -421,6 +422,33 @@ public sealed partial class ShowAtomTests
             console.Output,
             StringComparison.Ordinal);
         Assert.Equal(string.Empty, console.Error);
+    }
+
+    [Fact]
+    public void ShowAtomReadsOnlyTheLedgerAndRequestedCasObject()
+    {
+        const string sourcePath = "fixtures/show-atom/scope.md";
+        var rawBytes = Encoding.UTF8.GetBytes("scope receipt\n");
+        var fingerprints = DigestionFingerprint.Compute(rawBytes);
+        var files = FixtureFiles(
+            ContentLedger(sourcePath, fingerprints.RawSha256, fingerprints.NormalizedSha256),
+            sourcePath,
+            rawBytes,
+            fingerprints.RawSha256,
+            rawBytes);
+        var gateway = new StrataLint.TestSupport.FakeRepositoryGateway(
+            RawChangeSet.Create([]), files, baseline: null);
+
+        var result = new ProductionCliEnvironment(
+            "/repo", gateway, new FakeLeanReportSource(report: null))
+            .ShowAtom(["--atom-id", BareAtomId(fingerprints.RawSha256)]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain(gateway.ScopedCurrentReads.SelectMany(static scope => scope),
+            path => path == BackfillInventoryLoader.RootPath.TrimEnd('/'));
+        Assert.Contains(DigestionCasStore.RootPath + BareAtomId(fingerprints.RawSha256),
+            gateway.ScopedCurrentReads.SelectMany(static scope => scope));
+        Assert.Equal(0, gateway.WholeTreeReadCount);
     }
 
     private static ProductionCliEnvironment Environment(

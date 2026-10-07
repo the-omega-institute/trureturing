@@ -1,0 +1,51 @@
+### 定理 8.2（同一等距的互补通道与递归面积谱）
+
+对定义 8.1 的同一个 $J$，每个 $\ell$ 都存在与输入无关的支撑等距
+
+$$
+W_\ell:\bigoplus_b\left(\mathbb C^{M_b}\otimes\mathbb C^{U_{b,\ell}}\right)
+\longrightarrow\mathcal H_{B_\ell}
+$$
+
+使对全部逻辑矩阵 $A$ 有
+
+$$
+\begin{aligned}
+\operatorname{Tr}_{B_\ell}(JAJ^\dagger)
+&=\bigoplus_b\operatorname{Tr}(A_{bb})\tau_{b,\ell},\\
+\operatorname{Tr}_{A_\ell}(JAJ^\dagger)
+&=W_\ell\left[\bigoplus_b A_{bb}\otimes
+\operatorname{diag}((q_{b,u})_{u\in U_{b,\ell}})\right]W_\ell^\dagger.
+\end{aligned}
+\tag{8.3}
+$$
+
+最大恢复代数在每个划分上分别仍为 $\mathcal Z$ 和 $\mathcal Z'$。对每个密度矩阵 $\rho$，按定理 6.4 的正权约定，
+
+$$
+\begin{aligned}
+S(\rho_{A_\ell})&=H(p)+\sum_b p_ba_b(\ell),\\
+S(\rho_{B_\ell})&=H(p)+\sum_b p_bS(\rho_b)+\sum_b p_ba_b(\ell),\\
+\mathcal L_\ell&=\bigoplus_ba_b(\ell)I_{M_b}.
+\end{aligned}
+\tag{8.4}
+$$
+
+端点与相邻增量满足
+
+$$
+a_b(1)=0,\qquad a_b(m_X)=\log d_b,
+\tag{8.5}
+$$
+
+$$
+a_b(\ell+1)-a_b(\ell)
+=\sum_{u\in U_{b,\ell}}\frac{n_{b,u}}{d_b}
+h_2\left(\frac{n_{b,u1}}{n_{b,u}}\right)
+\in[0,\log2],
+\qquad 1\le\ell<m_X,
+\tag{8.6}
+$$
+
+其中 $h_2(t)=-t\log t-(1-t)\log(1-t)$，缺少的孩子计数为零。
+
