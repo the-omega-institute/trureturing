@@ -1349,13 +1349,13 @@ D5 拥有数学、舞台、模板与记录类型；Interface 拥有契约类型�
 - declaration key 为 `(compiler source_path, structured name_key)`；取 report 中唯一 `kind=theorem` 的精确声明及既有 canonical declaration `statement_id`。该 statement_id 不是模块 state pin，也不是 DTR raw `statement_identity`；即使去掉 `sha256:` 后长度相同也不得比较。occurrence theorem 的严格 Name 解析后与 report `NameKey` 对应，禁止后缀、namespace 推断 owner 或 display-name 近似匹配。
 - 同报告的 source-bound event/certificate、现役 statement/arena/unit/realization 核对提供两种 identity 域之间的证据联系。producer 已校验登记陈述对应实际定理；projection 不重新 hash raw Expr 来猜 canonical identity，也不新增语义判定。唯一 theorem owner 须在 registration 的真实 import closure 内，unit/realization owner 仍按 A5.4 检查。零匹配、多匹配或 statement/owner 不一致只得到 unavailable，不能选一个近似声明。
 - occurrence key **逐项保留** `(root,registration_module,theorem,object_arena,catalog)`。`root` 是登记根，不是 analysis sealing root；后者不能替换它。一个定理的不同 arena/catalog/registration owner 路线均保留；相同 key 的冲突不能通过编号变成另一条路线。
-- template definition key 为 `(definition_owner,name_key)`；checked version 为该 key 加 `(enrollment_owner,plan_identity)`。definition owner 与 enrollment owner 分开，均来自实际 checked plan/container。不同 checked version 不自动等价；同一 definition 可以显示多个经过验证的版本，版本不用于跨快照拼接。
+- template definition key 为 `(definition_owner,name_key)`；checked version 为该 key 加 `(enrollment_owner,plan_identity)`。definition owner 与 enrollment owner 分开，均由报告进程的已检查 plan frame 与带类型 enrollment 的实际编译 owner 绑定。不同 checked version 不自动等价；同一 definition 可以显示多个经过验证的版本，版本不用于跨快照拼接。
 - 应用采用 **occurrence 内嵌 binding**，地址就是 occurrence key；不另建 instance hash、实例账本或参数表达式副本。保留 plan/descriptor/actual/evidence identities 及原有 ordered dependency inputs。参数化应用的隐式实参、rigid universe 与 proof-erased 结构身份由既有 assessment 承担；相同模板不同参数仍是不同 occurrence 的应用，不能按模板名折叠。
 - `descriptor_identity` 相等不是数学等价或相同 kernel 的证明；依赖输入清单也不是完整参数列表。A5.4 的原始结构身份仅使用坐标绑定的证明边界与契约关系证据；不引入通用 comparator、`isDefEq`、归一化、语义 hash 或反向查 hash 得模板名称。已认证的证明边界保留命题而不观察证明实现，不在此虚造实现差异。
 
 **最小 producer 扩展。** 新版 validated certificate 在现有七字段之外只增 `template_ref`，闭集为 `{name_key,definition_owner,enrollment_owner}`；NameKey 用 inspector 现有结构编码，owners 用现有 canonical module Name。Impl 在 `CompiledAssessment.validate` 取得所选 plan 时填入，与原 `plan_identity` 一起传至 `certificateJson`；不读 diagnostics 的 `template_key`，也不按 descriptor hash 搜索 plan。当前 typed C# consumer 同步保留这三项和原 certificate 的四个 identity/两个依赖数组。certificate.key 必须等于 record.key 后才允许在图的内嵌应用中省去这份重复 key。
 
-扩展须由已检查的 plan frame、实际 definition owner 和 enrollment extension container 共同绑定。`evidenceIdentity` 改用域 `DTR-binding-evidence-v3`；在现有编码的 plan_identity 之后、descriptor_identity 之前，依次以现有 `wireName` 写入模板 Name、definition owner、enrollment owner，模板 Name 与 template_ref.name_key 必须无损互解；其余 occurrence、statement、escape、bridge 与依赖输入及长度前缀保持原序。新版 `information_templates.schema_version` 与 `BindingRecord.schemaVersion` 为 2，原记录字段不变、validated certificate 按上述扩展；同时 bump `report_cache_release_semantic_version` 并更新相应稳定记录/序列化消费者。plan frame 若无布局变化不额外改其独立版本元组。无有效新 producer 证据时不猜 template_ref；也不为图保留旧证书双读路径。Lake trace 与报告语义版本继续是唯一复用机制。
+扩展须由报告进程的已检查 plan frame、实际 definition owner 和带类型 enrollment 的实际编译 owner 共同绑定。`evidenceIdentity` 改用域 `DTR-binding-evidence-v3`；在现有编码的 plan_identity 之后、descriptor_identity 之前，依次以现有 `wireName` 写入模板 Name、definition owner、enrollment owner，模板 Name 与 template_ref.name_key 必须无损互解；其余 occurrence、statement、escape、bridge 与依赖输入及长度前缀保持原序。新版 `information_templates.schema_version` 与 `BindingRecord.schemaVersion` 为 2，原记录字段不变、validated certificate 按上述扩展；同时 bump `report_cache_release_semantic_version` 并更新相应稳定记录/序列化消费者。plan frame 若无布局变化不额外改其独立版本元组。无有效新 producer 证据时不猜 template_ref；也不为图保留旧证书双读路径。Lake trace 与报告语义版本继续是唯一复用机制。
 
 **A18.2.4 封闭 wire。** 拟议唯一产物为 run-local `Generated/truth-graph.v2.json`，`schema="stratalint.truth-graph.v2"`、`schema_version=2`。以下表中每行对象的字段列表均为**闭集**，所有字段必须出现；`?` 表示 JSON null 可用，不表示可省略。`[]` 是数组，未注 `?` 者非 null。复用对象严格遵守其现有字段/类型/检查，不接受任意扩展 map。
 
@@ -1454,7 +1454,7 @@ provenance 复用 snapshot.content_digest、lean_report_digest、truth_root_sha2
 | 合法证书依赖为 Prop 常量或无可执行 body 的常量 | 接受 `body_identity=""` 并原样导出、读回；不生成替代摘要，其余 identity 检查保持。 | L + E + G |
 | producer 将带 executable body 的数据常量错误发出 `body_identity=""` | producer fixture 必须拒绝该输出且不得发布 accepted certificate；若绕过 producer 直接喂 reader，reader 只作形状检查，不能声称已判定 Prop/bodyless，保留这一保证边界。 | L + E |
 | 依赖 body_identity 非空但不是 64 位小写 hex | 选中证据按原读取范围 unavailable；graph wire strict reader 拒绝该值，不转为空串或补造摘要。 | E + G |
-| 同 definition 的不同 enrollment/plan | version 端点按完整 key 区分；checked plan/container 不能错配；跨 snapshot 禁 join。 | L + G |
+| 同 definition 的不同 enrollment/plan | version 端点按完整 key 区分；已检查 plan frame 与带类型 enrollment 的实际编译 owner 不能错配；跨 snapshot 禁 join。 | L + G |
 | theorem namespace 与 source path 不同 | 精确 compiler owner 决定镜像和声明；namespace 猜路径不能提供覆盖。 | E |
 | theorem 陈述漂移、raw/canonical hash 混用 | 拒绝跨域比较或陈旧证据关联，明确 unavailable/statement-mismatch；不改数学 truth state。 | L + E + G |
 | 没有审计 context / delta 选集为空 / 选中 producer 的空 inventory | 分别为 not-assessed / delta+零选择 / available+`[]`；三者均不声称全局完备。 | E + G |

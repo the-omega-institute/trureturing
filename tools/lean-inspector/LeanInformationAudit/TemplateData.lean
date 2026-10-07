@@ -208,8 +208,8 @@ structure Slot where
   type : Expr
   deriving Inhabited
 
-/-- Serialized data, not an enrollment authority. Only the private producer
-extension in Registry accepts a result of its checked-plan constructor. -/
+/-- Report-process data, not an importable enrollment authority. The assessment
+index accepts only the producer's `CheckedTemplatePlan`; its constructor is private. -/
 structure TemplatePlanData where
   schemaVersion : Nat := 1
   grammarVersion : Nat := 1
