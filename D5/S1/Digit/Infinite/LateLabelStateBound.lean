@@ -7,8 +7,10 @@
    digest: Late nonnull windows at finite-source extrema require signed surviving states. -/
 
 import D5.S1.Digit.Infinite.ClosedObservationGraphRealization
+import D5.S1.Digit.Infinite.WindowCylinderPartition
 import Mathlib.Data.Fintype.Card
 import Mathlib.Algebra.Order.Floor.Semiring
+import Mathlib.Order.Filter.AtTopBot.Basic
 
 set_option autoImplicit false
 
@@ -19,7 +21,6 @@ open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.ClosedObservationGraphRealization
 open D5.S1.Digit.Infinite.SignedSeriesRange
 open D5.S1.Digit.Infinite.SignedSeriesFibres
-open private prependBlock from D5.S1.Digit.Infinite.SignedSeriesFibres
 
 universe u v
 
@@ -120,16 +121,13 @@ private theorem splice_shift {G : Representation V E} (p q : Path G) (n : ℕ)
 
 private theorem prepend_nonfinite (w : List Block) (x : LegalDigits)
     (hx : ¬ finiteTail x) : ¬ finiteTail (prependWord w x) := by
-  induction w with
-  | nil => exact hx
-  | cons c w ih =>
-    intro hh
-    apply ih
-    obtain ⟨N, hN⟩ := hh
-    refine ⟨N, fun j hj => ?_⟩
-    cases c with
-    | zero => exact hN (j + 1) (by omega)
-    | oneZero => exact hN (j + 2) (by omega)
+  rintro ⟨N, hN⟩
+  apply hx
+  refine ⟨N, fun j hj => ?_⟩
+  have h := hN (j + len w) (by omega)
+  rw [D5.S1.Digit.Infinite.WindowCylinderPartition.prepend_digits,
+    if_neg (by omega : ¬ j + len w < len w), Nat.add_sub_cancel] at h
+  exact h
 
 private theorem alternating_nonfinite : ¬ finiteTail v := by
   rintro ⟨N, hN⟩
@@ -158,8 +156,8 @@ private theorem finite_address_unique (x y : LegalDigits) (hx : finiteTail x)
 
 private theorem finite_shift (x : LegalDigits) (n : ℕ) (hx : finiteTail x) :
     finiteTail (bitShift x n) := by
-  obtain ⟨N, hN⟩ := hx
-  exact ⟨N, fun j hj => hN (j + n) (by omega)⟩
+  exact Filter.eventually_atTop.mp
+    ((Filter.tendsto_add_atTop_nat n).eventually (Filter.eventually_atTop.mpr hx))
 
 private theorem path_recurrence {G : Representation V E} (p : Path G) :
     kappa (pathAddress p) = offset (G.label (p.val 0)) - g * kappa (pathAddress ((shiftPath p 1))) := by

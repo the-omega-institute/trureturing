@@ -130,3 +130,4 @@ Equal tails at two distinct positions are periodic from the earlier position onw
 - Truth anchor: `D5/S1/Digit/Infinite/LateLabelStateBound.splicePath`
 - Truth anchor: `D5/S1/Digit/Infinite/LateLabelStateBound.survivorCount`
 - Dependency: [D5/S1/Digit/Infinite/ClosedObservationGraphRealization](ClosedObservationGraphRealization.md)
+- Dependency: [D5/S1/Digit/Infinite/WindowCylinderPartition](WindowCylinderPartition.md)
