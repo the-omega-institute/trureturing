@@ -2255,3 +2255,152 @@ not discard an infinite zero tail, use RH-dependent localization,
 replace real parts by $1/2$, or turn the selected global maximizer into
 the least counterexample. RH remains unproved; all conclusions are
 paper-level applications without Lean certification.
+
+
+## A signed heat-weight application permits a broader Gaussian window
+
+The absolute all-zero discrepancy (U3) pays a narrow Gaussian window.
+The uniform actual-zero phase sum (J1) also controls a signed
+heat-weight discrepancy. The following application combines those
+already assessed inputs, (H5)'s paid coefficient approximation and
+the classical zero count. It does not repeat Landau's formula or
+claim an original phase theorem or Lean verification.
+
+Keep $A\ge e^2$, $L=\log A$, $0<a\le1/16$, and
+$\mathcal J(A)=\log(2A)\log\log(3A)$. All sums run over distinct
+actual zeros $\rho=\beta+i\gamma$ with $\gamma>0$, with each
+multiplicity $m_\rho$ included once. Define
+
+$$
+b_a(u)=\frac{1-e^{-au^2}}{u^2}=\int_0^a e^{-vu^2}\,dv\quad(u>0),
+\qquad b_a(0)=a.
+$$
+
+This is a nonnegative decreasing real function. Its total variation
+and first weighted variation are
+
+$$
+\int_0^\infty(-b_a'(u))\,du=a,\qquad
+\int_0^\infty u(-b_a'(u))\,du
+=\int_0^\infty b_a(u)\,du=\sqrt{\pi a}.
+\tag{W1}
+$$
+
+For the final equality, integrate
+$(1-e^{-au^2})/u^2$ by parts and use the classical Gaussian integral.
+Boundary terms vanish both at zero and at infinity. With
+$U=a^{-1/2}\ge4$, the bounds $b_a(u)\le\min(a,u^{-2})$ also give
+
+$$
+\begin{aligned}
+\int_0^\infty\log(2+u)(-b_a'(u))\,du
+&=a\log2+\int_0^\infty\frac{b_a(u)}{2+u}\,du\\
+&\le a\log(2+U)+a/2\ll a\log(2/a).
+\end{aligned}
+\tag{W2}
+$$
+
+### Apply the existing Landau sum to this variation measure
+
+Use exactly the sum $S_A(u)=\sum_{0<\gamma\le u}m_\rho A^\rho$
+from (J1). Its remainder
+$E_A(u)=S_A(u)+u\Lambda(A)/(2\pi)$ has the bound
+
+$$
+|E_A(u)|\ll A[\mathcal J(A)+\log(2+u)]+Lu
+\qquad(u\ge0).
+$$
+
+For $u\ge8$ this is (J1). For $0\le u<8$ the same weaker envelope
+follows from the fixed finite zero count, $|A^\rho|\le A$ and
+$0\le\Lambda(A)\le L$; no low zero is assumed absent or verified.
+The implied constant remains independent of $A,u$.
+
+Stieltjes partial summation over the entire positive-ordinate multiset
+now yields
+
+$$
+\begin{aligned}
+\sum_{\gamma>0}m_\rho A^\rho b_a(\gamma)
+&=-\int_0^\infty S_A(u)b_a'(u)\,du\\
+&=-\frac{\Lambda(A)\sqrt a}{2\sqrt\pi}
+ +O\!\left(Aa[\mathcal J(A)+\log(2/a)]+L\sqrt a\right).
+\end{aligned}
+\tag{W3}
+$$
+
+At zero $S_A(0)=0$; at infinity the boundary term vanishes by (J1)
+and $b_a(u)\le u^{-2}$. The series is absolutely convergent for
+fixed $A$, by $|A^\rho|\le A$ and the reciprocal-square zero count.
+Equations (W1)–(W2) pay the remainder integral. This applies the
+existing uniform formula to a new weight; it is not a reproof of
+that formula. $\Lambda(A)$ retains its point-supported real-variable
+meaning, and no nonzero main term is assumed at a selected source.
+
+### Pay the coefficient and the actual-real-part phase changes
+
+The first inequality in (H5) gives, uniformly for $\gamma\ge8$,
+
+$$
+F_A(\rho)=\frac{w(A)}A\frac{A^\rho}{\gamma^2}
+ +O\!\left(\frac{w(A)A^{\beta-1}}{\gamma^3}\right).
+$$
+
+After multiplication by $1-e^{-a\gamma^2}$, the total error is
+$O(w(A)a\log^2(2/a))$. Indeed, the classical count gives
+
+$$
+\sum_{\gamma\ge8}m_\rho
+ \frac{\min(a\gamma^2,1)}{\gamma^3}
+\ll a\log^2(2/a),
+$$
+
+by splitting at $U$ and using the existing reciprocal-cube tail
+estimate. The finite multiset $0<\gamma<8$ contributes $O(aw(A))$
+to this comparison, using the pointwise finite-zero bound in (U3).
+Its fixed constants are independent of $A,a$; it is retained even
+when $U<8$.
+
+The Gaussian in (U1) contains the actual square $\rho^2$, not just
+$-\gamma^2$. The additional phase change is explicitly bounded by
+
+$$
+|e^{a\rho^2}-e^{-a\gamma^2}|
+\le ae^a(1+2\gamma)e^{-a\gamma^2},
+$$
+
+since $0<\beta<1$. Applying (U2) and the same zero count gives
+
+$$
+\sum_{\gamma>0}m_\rho|F_A(\rho)|
+ |e^{a\rho^2}-e^{-a\gamma^2}|
+\ll w(A)a\log^2(2/a).
+\tag{W4}
+$$
+
+For large ordinates split at $U$: below it
+$\sum m_\rho/\gamma\ll\log^2(2U)$; above it Gaussian decay and
+the same count give $O(\log(2U))$ for the weighted reciprocal-first
+sum. The finite low multiset again costs $O(aw(A))$. These are
+absolute error estimates for the changes, not critical-line
+replacements of the zeros themselves.
+
+Consequently the full signed coefficient discrepancy obeys
+
+$$
+\boxed{\begin{aligned}
+D_{A,a}&:=\sum_{\gamma>0}m_\rho F_A(\rho)(1-e^{a\rho^2})\\
+&=-\frac{w(A)\Lambda(A)\sqrt a}{2\sqrt\pi A}
+ +O\!\left(w(A)\left[
+ a\bigl(\mathcal J(A)+\log^2(2/a)\bigr)
+ +\frac{L\sqrt a}{A}\right]\right).
+\end{aligned}}
+\tag{W5}
+$$
+
+This is a uniform estimate for a complex signed sum. The actual real
+parts, multiplicities, finite low zeros and infinite height tail have
+not been discarded. Its cancellation comes from (J1), while (W4)
+pays the mismatch between real-ordinate damping and the actual
+Gaussian coefficient. No numerical value for the implied constants
+is asserted.
