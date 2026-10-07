@@ -33,7 +33,10 @@ internal sealed class HiguchiSudberyEntropyMaximumDocument : IScribeDocumentDefi
                 StatementSource.FromAuthor(Disp(ClaimFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumStates/higuchisudbery2000entangledcouples")),
                 Blocks(Paragraph(Text("The proof combines the cubic negMulLog majorant, the purity lower bound, and the exact degree-six minor certificate. The marginal spectra of M4 attain equality."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("higuchi-sudbery-2000-four-qubit-average-entropy-maximum"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] args) =>

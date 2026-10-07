@@ -34,6 +34,10 @@ $$(\forall (z : \operatorname{Fin}\left(16\right) \to \operatorname{Complex}), (
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/HiguchiSudbery/HiguchiSudberyEntropyMaximum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/higuchi-sudbery-2000-four-qubit-average-entropy-maximum` (proved) by `D5/S3/Quantum/Entanglement/HiguchiSudbery/HiguchiSudberyEntropyMaximum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"higuchi-sudbery-2000-four-qubit-average-entropy-maximum","declaration_gid":"D5/S3/Quantum/Entanglement/HiguchiSudbery/HiguchiSudberyEntropyMaximum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Higuchi; A. Sudbery (2000). *How entangled can two couples get?*. DOI: [10.1016/S0375-9601(00)00506-4](https://doi.org/10.1016/S0375-9601(00)00506-4). URL: <https://arxiv.org/abs/quant-ph/0005013>.
