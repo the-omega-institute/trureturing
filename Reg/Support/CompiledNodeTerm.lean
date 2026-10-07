@@ -36,6 +36,90 @@ private partial def level (input : Json) : Except String Level := do
     return .imax (← level fields[1]!) (← level fields[2]!)
   | _ => throw "level_tag"
 
+private def termBinder (input : Json) : Except String BinderInfo := do
+  match ← input.getStr? with
+  | "default" => return .default
+  | "implicit" => return .implicit
+  | "strictImplicit" => return .strictImplicit
+  | "instImplicit" => return .instImplicit
+  | _ => throw "term_binder"
+
+private def termChild (previous : Array Expr) (input : Json) : Except String Expr := do
+  let index ← input.getNat?
+  unless index < previous.size do throw "term_reference"
+  return previous[index]!
+
+private def termNode (previous : Array Expr) (input : Json) : Except String Expr := do
+  let fields ← input.getArr?
+  unless !fields.isEmpty do throw "term_tag"
+  let expect : Nat → Except String Unit := fun arity => do
+    unless fields.size == arity do throw "term_arity"
+  match ← fields[0]!.getStr? with
+  | "bvar" =>
+    expect 2
+    return .bvar (← fields[1]!.getNat?)
+  | "sort" =>
+    expect 2
+    return .sort (← level fields[1]!)
+  | "const" =>
+    expect 3
+    let levels ← (← fields[2]!.getArr?).toList.mapM level
+    return .const (← name fields[1]!) levels
+  | "app" =>
+    expect 3
+    return .app (← termChild previous fields[1]!) (← termChild previous fields[2]!)
+  | "lam" =>
+    expect 5
+    return .lam (← name fields[1]!) (← termChild previous fields[3]!)
+      (← termChild previous fields[4]!) (← termBinder fields[2]!)
+  | "forall" =>
+    expect 5
+    return .forallE (← name fields[1]!) (← termChild previous fields[3]!)
+      (← termChild previous fields[4]!) (← termBinder fields[2]!)
+  | "let" =>
+    expect 6
+    return .letE (← name fields[1]!) (← termChild previous fields[2]!)
+      (← termChild previous fields[3]!) (← termChild previous fields[4]!)
+      (← fields[5]!.getBool?)
+  | "nat" =>
+    expect 2
+    return .lit (.natVal (← fields[1]!.getNat?))
+  | "str" =>
+    expect 2
+    return .lit (.strVal (← fields[1]!.getStr?))
+  | "proj" =>
+    expect 4
+    return .proj (← name fields[1]!) (← fields[2]!.getNat?)
+      (← termChild previous fields[3]!)
+  | "mdata" =>
+    expect 2
+    return .mdata {} (← termChild previous fields[1]!)
+  | _ => throw "term_tag"
+
+private def termDag (input : Json) : Except String Expr := do
+  let rows ← input.getArr?
+  unless !rows.isEmpty do throw "term_empty"
+  let mut expressions : Array Expr := #[]
+  for row in rows do
+    expressions := expressions.push (← termNode expressions row)
+  let result := expressions[expressions.size - 1]!
+  unless !result.hasFVar && !result.hasMVar && !result.hasLooseBVars do
+    throw "term_not_closed"
+  return result
+
+/-- A backward-reference constructor DAG builds a closed ordinary term.
+ Binder names, modes, raw levels, let flags and metadata edges are retained.
+ Metadata annotation maps are empty in the new helper; the source coordinates
+ retain their original annotations and every Exact fact remains kernel checked.
+ No inference, reduction, comparison or evidence construction occurs here. -/
+syntax (name := compiledConstructorTerm) "compiled_term% " str : term
+
+@[term_elab compiledConstructorTerm] private def elaborateConstructor : TermElab := fun stx _ => do
+  let some literal := stx[1].isStrLit? | throwError "compiled_term:literal_required"
+  match Json.parse literal >>= termDag with
+  | .ok expression => return expression
+  | .error reason => throwError "compiled_term:{reason}"
+
 private structure Address where
   declaration : Name
   part : String
