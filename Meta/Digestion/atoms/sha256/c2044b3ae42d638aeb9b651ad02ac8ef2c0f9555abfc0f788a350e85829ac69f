@@ -1,0 +1,53 @@
+**定理 361.2（任意子集的共同最终 Robin 包络）。** 固定实参数
+
+$$
+\frac56<\beta\le1,\qquad
+\max\left(\frac12,\frac1{2\beta}\right)<\eta<\frac35,
+\qquad c(\eta)=\frac{3-5\eta}{2(1-\eta)},
+\qquad C_{\beta,\eta}=(2\beta\eta)^{-c(\eta)}.
+\tag{361.3}
+$$
+
+则 $0<C_{\beta,\eta}<1$，而且精确量词为
+
+$$
+\begin{gathered}
+\forall\varepsilon\in\mathbb R_{>0}\ \exists m_0\in\mathbb N_{\ge2}\\
+\ \forall m\in\mathbb N_{\ge m_0}\ \forall S\subseteq\{1,\ldots,m\},\\
+|S|\ge m^\beta\quad\Longrightarrow\quad
+\bigl(M(S)>5040\ \text{且}\quad
+\mathcal R(M(S))\le C_{\beta,\eta}+\varepsilon\bigr).
+\end{gathered}
+\tag{361.4}
+$$
+
+$m_0$ 仅依赖先已固定的 $\beta,\eta,\varepsilon$ 及证明中的固定解析供给，不依赖 $m$ 或 $S$。特别地，对每个固定 $\beta\in(5/6,1]$，可先选一个满足（361.3）的 $\eta$，再取共同整数阈值，使所有 $|S|\ge m^\beta$ 的子集同时满足 $\mathcal R(M(S))<1$。式（361.4）是带任意正误差的上包络，不断言最终有 $\mathcal R(M(S))\le C_{\beta,\eta}$。
+
+同一定理还给出以下两种尾部结论。若任意集合族 $S_m\subseteq\{1,\ldots,m\}$ 在某个尾部有 $K_m=|S_m|>0$，并且
+
+$$
+\frac{\log K_m}{\log m}\longrightarrow1,
+\tag{361.5}
+$$
+
+则 $M(S_m)>5040$ 最终成立，且
+
+$$
+\limsup_{m\to\infty}\mathcal R(M(S_m))
+\le\left(\frac{10}{11}\right)^{5/18}<1.
+\tag{361.6}
+$$
+
+更确切地，给定任意固定函数 $g:\{2,3,\ldots\}\to[0,\infty)$，满足 $g(m)\to0$，则对每个 $\varepsilon>0$，存在整数 $m_0(g,\varepsilon)\ge2$，使所有 $m\ge m_0(g,\varepsilon)$ 及所有 $S\subseteq\{1,\ldots,m\}$ 同时满足
+
+$$
+\begin{gathered}
+|S|\ge m^{1-g(m)}\quad\Longrightarrow\\
+\bigl(M(S)>5040\ \text{且}\quad
+\mathcal R(M(S))\le\left(\frac{10}{11}\right)^{5/18}+\varepsilon\bigr).
+\end{gathered}
+\tag{361.7}
+$$
+
+允许（361.5）的族在有限初段任意取值；（361.6）的对数与比值只在最终合法的尾部使用。式（361.7）的共同阈值依赖给定的函数 $g$，不宣称存在一个阈值同时适用于所有仅有（361.5）而无收敛速率的族。参数范围 $\beta>5/6$ 是下面 KR 路线的充分条件，不宣称它锐利、必要或已涵盖等号 $\beta=5/6$。
+

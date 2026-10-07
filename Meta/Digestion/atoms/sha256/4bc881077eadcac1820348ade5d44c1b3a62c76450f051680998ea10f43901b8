@@ -1,0 +1,36 @@
+**定理 23.1（合法第三矩阵的有符号二次接口与尖锐逆界）。** 写 $D=B_{22}-B_{11}$；上剪切分支取 $e=B_{21}$，下剪切分支取 $e=B_{12}$。若合法词有 $e=0$，则必有 $D=0$，第三读数恒定，不能恢复整个纤维。若 $e>0$，令
+
+$$
+\alpha=\frac e\zeta>0,\qquad
+\mu=|D|-\rho e,\qquad
+\kappa=\max(1,\rho).
+$$
+
+读数在整个相容纤维上注入，当且仅当 $\mu\ge0$。在此条件下，对每个 $\tau\ge0$，精确标量逆模量为
+
+$$
+\Omega_B(\tau)
+=\min\left(x,\frac{\sqrt{\mu^2+4\alpha\tau}-\mu}{2\alpha}\right).
+$$
+
+上剪切时设 $t_0=B_{11}x+B_{12}r$，下剪切时设 $t_0=B_{11}x+B_{21}q$。相容读数域恰为两端点 $t_0,t_0+Dx$ 之间的开区间，其长度为
+
+$$
+T=|D|x=\mu x+\alpha x^2.
+$$
+
+若 $\mu>0$，标量逆与最大元素范数下矩阵逆的最小全局 Lipschitz 常数分别为
+
+$$
+L_s=\frac1\mu,\qquad L_R=\frac\kappa\mu.
+$$
+
+若 $\mu=0$，两者的尖锐全局 Hölder $1/2$ 系数分别为
+
+$$
+H_s=\sqrt{\frac\zeta e},\qquad
+H_R=\kappa\sqrt{\frac\zeta e},
+$$
+
+且两种逆都不存在指数大于 $1/2$、系数有限的全局 Hölder 界。矩阵的系数界以及 $\mathcal M_B(\tau)\le\kappa\Omega_B(\tau)$ 不宣称后一个右侧就是一般有限容差下的精确矩阵模量。
+

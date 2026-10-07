@@ -1,0 +1,2 @@
+**定理 36.2（两个 Campbell 图都不是上下文无关语言）。** 在假设 36.1 下，$\mathcal G_b^{\mathrm{can}}$ 和 $\mathcal G_b^{\mathrm{all}}$ 都不是上下文无关语言。因此，不存在带有限控制、一个有限栈字母表、LIFO 栈并允许 $\varepsilon$ 移步的普通单向 NPDA，能够在上述精确字母表和接缝合同下识别其中任一图。
+

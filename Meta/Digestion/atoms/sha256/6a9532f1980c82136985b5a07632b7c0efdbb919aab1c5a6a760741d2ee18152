@@ -1,0 +1,51 @@
+**命题 10.2（统一的绝对 Poisson 误差）。** 对所有 $n\ge k\ge2$，
+
+$$
+\left|p_{n,k}-e^{-\mu}\right|
+\le\min(1,\mu)(k+1)2^{-k}.
+$$
+
+另有 $1-p_{n,k}\le\mu$；若 $\mu>0$，则 $p_{n,k}\le1/\mu$。Poisson 误差界是两侧绝对误差，没有保守误差方向的断言。
+
+证明。使用 Arratia–Goldstein–Gordon，Theorem 1（印刷页 406），及 §3 的式 (4)–(6)（页 405）。取依赖邻域
+
+$$
+B_i=\{j\in\{1,\ldots,N\}:|i-j|\le k\}.
+$$
+
+邻域外的所有指标共同只依赖与 $I_i$ 所用位集合不交的公平位，所以 $I_i$ 独立于整个外部指标族，$b_3=0$。若 $i<j\le i+k$，$I_j$ 要求的前置零位 $j-1$ 落在 $I_i$ 要求为一的串中，两事件互斥；因此 $b_2=0$。
+
+置 $\varepsilon=2^{-k}$。首项边缘概率为 $\varepsilon$，其余均为 $\varepsilon/2$。若邻域不含首项，总边缘概率至多 $(2k+1)\varepsilon/2$。若包含首项，则 $i\le k+1$，邻域至多 $2k+1$ 项，其中只有首项带双倍概率，故总和至多
+
+$$
+\varepsilon+2k\frac{\varepsilon}{2}=(k+1)\varepsilon.
+$$
+
+特别地首项自身的邻域最多 $k+1$ 项，和至多 $(k+2)\varepsilon/2$。所以所有邻域的边缘和都不超过 $(k+1)\varepsilon$，而
+
+$$
+b_1=\sum_i\Pr(I_i=1)\sum_{j\in B_i}\Pr(I_j=1)
+\le\mu(k+1)\varepsilon.
+$$
+
+不能仅用最大单项概率乘邻域大小来得到这个较锐常数；首项必须单独计数。AGG 的零事件结论是
+
+$$
+|\Pr(W=0)-e^{-\mu}|
+\le\frac{1-e^{-\mu}}{\mu}(b_1+b_2+b_3)
+\le\min(1,\mu^{-1})(b_1+b_2+b_3),
+$$
+
+代入即得所述绝对界。
+
+事件并界给 $\Pr(W\ge1)\le\mu$。不同指标要么互斥、协方差非正，要么依赖位集合不交、独立，故
+
+$$
+\operatorname{Var}(W)
+\le\sum_i\operatorname{Var}(I_i)\le\mu.
+$$
+
+在 $W=0$ 上 $|W-\mu|=\mu$，Chebyshev 界给 $\Pr(W=0)\le\operatorname{Var}(W)/\mu^2\le1/\mu$。证毕。
+
+这一证明是经典长串方法在封闭词边界上的适配，不是新的 Poisson 或最长串定理。它使用 iid 公平位的真实联合独立性，没有将合法词条件律当作独立位律。
+

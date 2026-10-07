@@ -34,7 +34,7 @@ private theorem zeckendorf_nodup (n : ℕ) : (Nat.zeckendorf n).Nodup := by
   have happ : ((Nat.zeckendorf n) ++ [0]).Nodup := hchain.pairwise.nodup
   exact List.Nodup.of_append_left happ
 
-private theorem fib_le_goldenRatio_pow (j : ℕ) :
+theorem fib_le_goldenRatio_pow (j : ℕ) :
     (Nat.fib j : ℝ) ≤ Real.goldenRatio ^ (j + 1) := by
   have h := Real.goldenRatio_mul_fib_succ_add_fib j
   nlinarith [Real.goldenRatio_pos, Nat.cast_nonneg (α := ℝ) (Nat.fib (j + 1))]
@@ -55,7 +55,7 @@ private theorem zeckendorf_phi_lower (n : ℕ) :
         (fun j => Real.goldenRatio ^ (j + 1))).sum :=
       List.sum_le_sum fun j _ => fib_le_goldenRatio_pow j
 
-private theorem goldenConj_abs_lt_one : |Real.goldenConj| < 1 := by
+theorem goldenConj_abs_lt_one : |Real.goldenConj| < 1 := by
   rw [abs_of_neg Real.goldenConj_neg]
   linarith [Real.neg_one_lt_goldenConj]
 
@@ -223,7 +223,7 @@ private theorem axisPartialSum_tail_geometric (x y : ℝ) (hx : 0 < x) (K : ℕ)
   rw [hdiff, abs_neg, abs_of_nonneg (tsum_nonneg fun i => wordWeight_nonneg x y (i + N))]
   simpa only [A, r, N] using htail_le.trans_eq hmajorant_sum
 
-private theorem goldenRatio_pow_div_le_fib_succ (K : ℕ) :
+theorem goldenRatio_pow_div_le_fib_succ (K : ℕ) :
     Real.goldenRatio ^ K / Real.goldenRatio ≤ (Nat.fib (K + 1) : ℝ) := by
   have hphi := Real.goldenRatio_pos
   rw [div_le_iff₀ hphi]

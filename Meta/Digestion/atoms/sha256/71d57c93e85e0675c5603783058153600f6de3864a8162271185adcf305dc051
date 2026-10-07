@@ -1,0 +1,11 @@
+**Theorem 1.4 (Hermite lowering).** For every $n\in\mathbb N$, the real
+probabilists' Hermite polynomial satisfies
+$\operatorname{He}'_{n+1}=(n+1)\operatorname{He}_n$.
+
+*Proof.* Leonardo Pedro's Timepiece,
+`BookProof/ChapterHermiteFunctions.lean`, revision
+`61595bca99e3b8d8b8df51a2c3043b64597e24f9`, proves this by induction.
+Differentiating the defining recursion gives the successor step; substitution
+of the induction hypothesis and the recursion reduces it to the claimed
+multiple of $\operatorname{He}_{n+1}$.
+

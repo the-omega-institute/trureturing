@@ -1,0 +1,9 @@
+**完整支持稀释。** 对另外指定的被动来源
+
+$$
+\nu_\varepsilon=(1-\varepsilon)\delta_{010^n}+\varepsilon\mu_n^+,\qquad0<\varepsilon\le1,
+\tag{63.34}
+$$
+
+所有教师在基线词上给零，完整一记录成对 KL 恰为 $\varepsilon$ 倍均匀律的 KL，至多 $\varepsilon D_a$。式（63.31）的两个被动必要项因而均要再支付 $1/\varepsilon$。取 $\varepsilon=2^{-n}$，可用 $n$ 个公平位决定稀有均匀分支，但被动标签代价可指数增长。完整支持没有替代数量化来源证书；该结论不限制能够自主设置别的合法词的主动控制器。
+

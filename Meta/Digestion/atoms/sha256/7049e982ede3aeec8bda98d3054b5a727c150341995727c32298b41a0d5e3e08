@@ -1,0 +1,9 @@
+**Definition 2.1 (actual Hilbert space and weak relation).** Set
+$\mathcal H=L^2(V,\mathbb C;\mathrm{volume})$, and let $J$ be the actual
+Schwartz embedding into this space. Let $S(J\varphi)=JH_0\varphi$ on every
+Schwartz map and let $T$ be its restriction to the finite physical Hermite
+span. The compact-test relation $\mathrm{Weak}(f,g)$ means
+$\langle JH_0\psi,f\rangle=\langle J\psi,g\rangle$ for every smooth compactly
+supported $\psi$. This tests the sum $H_0\psi$; no separate square-integrability
+of the potential or second-derivative terms is assumed for $f$ or $g$.
+

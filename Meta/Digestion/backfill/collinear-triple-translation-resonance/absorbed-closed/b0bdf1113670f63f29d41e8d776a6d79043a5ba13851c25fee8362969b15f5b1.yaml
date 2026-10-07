@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b0bdf1113670f63f29d41e8d776a6d79043a5ba13851c25fee8362969b15f5b1
+  normalized_sha256: sha256:b0bdf1113670f63f29d41e8d776a6d79043a5ba13851c25fee8362969b15f5b1
+cas_ref: sha256:b0bdf1113670f63f29d41e8d776a6d79043a5ba13851c25fee8362969b15f5b1
+coverage_gids:
+  - gid: D5/S3/Factorization/CollinearTripleFixedPointCensus.fixed_point_census
+    target_statement_id: sha256:7555fa49d53a1d673cc83177ca8273504902092eec8cab4fa63dd7178d5181f8
+receipts:
+  unresolved_subitems: []

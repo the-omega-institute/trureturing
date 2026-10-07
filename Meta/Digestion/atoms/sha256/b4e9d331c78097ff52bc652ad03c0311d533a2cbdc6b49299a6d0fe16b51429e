@@ -1,0 +1,16 @@
+**推论 71.31（正锚比值等值与零锚排除）。** 对全部正锚根路径，
+
+$$
+\alpha_m=\inf_{\gamma:t_\gamma>0}\frac{C_\gamma}{t_\gamma},
+\qquad
+m\le\alpha_m\le\ell2^\ell<\infty,\quad
+\ell=\lceil\log_2m\rceil.
+\tag{71.12}
+$$
+
+每条根路径都有 $C_\gamma\ge1$；因而 $t_\gamma=0$ 时，对任意实价格 $x$ 都有 $C_\gamma-xt_\gamma\ge1$。
+
+**证明。** 定理71.21给所有实律的规范路径，故右侧下确界不大于 $\alpha_m$；定理71.30给每条正锚路径的全支撑输出律及 $C_\gamma\ge L_m(p^\gamma)\ge\alpha_m t_\gamma$，得到反向。这里不要求冗余原始程序的逐位轨迹属于本有界宽度图：引理71.11先约束所有原始程序，再把每个律的规范树嵌入，已经足够。
+
+引理71.11的 $L_m\ge1$ 和 $t\le1/m$ 给 $\alpha_m\ge m$。取 $m-1$ 个原子为 $2^{-\ell}$，最后一个为 $1-(m-1)2^{-\ell}\ge2^{-\ell}$；读满 $\ell$ 位并将全部词固定分给这些标签，得 $L_m\le\ell$、$t=2^{-\ell}$，给有限上界。根余量为一，其他尾项非负，故 $C_\gamma\ge1$。零位点律在根发出标签，属于图外的确定性基线，不能当作零锚图路。证毕。
+

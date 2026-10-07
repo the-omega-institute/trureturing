@@ -1,0 +1,1 @@
+| [C4] Markus Theo Frohme, *Active Automata Learning with Adaptive Distinguishing Sequences*, [arXiv:1902.01139v1](https://arxiv.org/pdf/1902.01139v1)。 | §2.4，印刷 pp.15–16 / PDF pp.21–22，区分 preset 与 adaptive 的初态识别；§3.1.1，印刷 pp.17–18 / PDF pp.23–24，将 symbol query 与 reset query 分开。连续 symbol query 的依赖性符合本卷，而 reset 节点不属于本卷权限。学习算法能使用复位不证明这里存在一次全记录协议。 

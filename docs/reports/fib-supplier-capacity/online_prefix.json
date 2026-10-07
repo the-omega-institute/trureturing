@@ -1,0 +1,3947 @@
+{
+  "H16": {
+    "B1": 18,
+    "TM61_K0": 4,
+    "entries": [
+      16,
+      16,
+      12,
+      16
+    ],
+    "optional_Moore_lower_bound": 22,
+    "points": [
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    "saturated_requests": [
+      5,
+      5,
+      3,
+      5
+    ]
+  },
+  "H60_63": [
+    {
+      "H": 60,
+      "L": 4,
+      "Q": 56,
+      "conditional_prefix_images": [
+        95,
+        69,
+        81,
+        73
+      ],
+      "e": 7,
+      "nonempty_branches": 12,
+      "prefix_image": 318,
+      "saturated_request_lower_bounds": [
+        56,
+        46,
+        49,
+        37
+      ],
+      "size_nodes": 251,
+      "target_loads": [
+        17,
+        12,
+        14,
+        13
+      ],
+      "unary_nodes": 151
+    },
+    {
+      "H": 61,
+      "L": 4,
+      "Q": 56,
+      "conditional_prefix_images": [
+        95,
+        69,
+        81,
+        73
+      ],
+      "e": 7,
+      "nonempty_branches": 12,
+      "prefix_image": 318,
+      "saturated_request_lower_bounds": [
+        30,
+        39,
+        48,
+        50
+      ],
+      "size_nodes": 251,
+      "target_loads": [
+        17,
+        12,
+        14,
+        13
+      ],
+      "unary_nodes": 151
+    },
+    {
+      "H": 62,
+      "L": 4,
+      "Q": 56,
+      "conditional_prefix_images": [
+        95,
+        69,
+        81,
+        73
+      ],
+      "e": 7,
+      "nonempty_branches": 12,
+      "prefix_image": 318,
+      "saturated_request_lower_bounds": [
+        43,
+        43,
+        50,
+        50
+      ],
+      "size_nodes": 251,
+      "target_loads": [
+        17,
+        12,
+        14,
+        13
+      ],
+      "unary_nodes": 151
+    },
+    {
+      "H": 63,
+      "L": 4,
+      "Q": 56,
+      "conditional_prefix_images": [
+        95,
+        69,
+        81,
+        73
+      ],
+      "e": 7,
+      "nonempty_branches": 12,
+      "prefix_image": 318,
+      "saturated_request_lower_bounds": [
+        30,
+        39,
+        53,
+        57
+      ],
+      "size_nodes": 251,
+      "target_loads": [
+        17,
+        12,
+        14,
+        13
+      ],
+      "unary_nodes": 151
+    }
+  ],
+  "actual_falsifier_executions": 4,
+  "actual_tree_domain": {
+    "brackets": [
+      "left",
+      "balanced"
+    ],
+    "h": [
+      2,
+      16
+    ],
+    "residues": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "actual_tree_executions": 5440,
+  "cap_rows": [
+    {
+      "H": 8,
+      "L": 1,
+      "Q": 1,
+      "conditional_prefix_images": [
+        6
+      ],
+      "e": 0,
+      "nonempty_branches": 1,
+      "prefix_image": 6,
+      "saturated_request_lower_bounds": [
+        4
+      ],
+      "size_nodes": 4,
+      "target_loads": [
+        1
+      ],
+      "unary_nodes": 3
+    },
+    {
+      "H": 9,
+      "L": 1,
+      "Q": 1,
+      "conditional_prefix_images": [
+        7
+      ],
+      "e": 0,
+      "nonempty_branches": 1,
+      "prefix_image": 7,
+      "saturated_request_lower_bounds": [
+        1
+      ],
+      "size_nodes": 5,
+      "target_loads": [
+        1
+      ],
+      "unary_nodes": 4
+    },
+    {
+      "H": 10,
+      "L": 1,
+      "Q": 1,
+      "conditional_prefix_images": [
+        6
+      ],
+      "e": 0,
+      "nonempty_branches": 1,
+      "prefix_image": 6,
+      "saturated_request_lower_bounds": [
+        1
+      ],
+      "size_nodes": 4,
+      "target_loads": [
+        1
+      ],
+      "unary_nodes": 3
+    },
+    {
+      "H": 11,
+      "L": 1,
+      "Q": 1,
+      "conditional_prefix_images": [
+        7
+      ],
+      "e": 0,
+      "nonempty_branches": 1,
+      "prefix_image": 7,
+      "saturated_request_lower_bounds": [
+        3
+      ],
+      "size_nodes": 5,
+      "target_loads": [
+        1
+      ],
+      "unary_nodes": 4
+    },
+    {
+      "H": 12,
+      "L": 1,
+      "Q": 2,
+      "conditional_prefix_images": [
+        15
+      ],
+      "e": 2,
+      "nonempty_branches": 2,
+      "prefix_image": 15,
+      "saturated_request_lower_bounds": [
+        10
+      ],
+      "size_nodes": 10,
+      "target_loads": [
+        2
+      ],
+      "unary_nodes": 8
+    },
+    {
+      "H": 13,
+      "L": 1,
+      "Q": 2,
+      "conditional_prefix_images": [
+        15
+      ],
+      "e": 2,
+      "nonempty_branches": 2,
+      "prefix_image": 15,
+      "saturated_request_lower_bounds": [
+        6
+      ],
+      "size_nodes": 10,
+      "target_loads": [
+        2
+      ],
+      "unary_nodes": 8
+    },
+    {
+      "H": 14,
+      "L": 1,
+      "Q": 2,
+      "conditional_prefix_images": [
+        15
+      ],
+      "e": 2,
+      "nonempty_branches": 2,
+      "prefix_image": 15,
+      "saturated_request_lower_bounds": [
+        7
+      ],
+      "size_nodes": 10,
+      "target_loads": [
+        2
+      ],
+      "unary_nodes": 8
+    },
+    {
+      "H": 15,
+      "L": 1,
+      "Q": 2,
+      "conditional_prefix_images": [
+        15
+      ],
+      "e": 2,
+      "nonempty_branches": 2,
+      "prefix_image": 15,
+      "saturated_request_lower_bounds": [
+        6
+      ],
+      "size_nodes": 10,
+      "target_loads": [
+        2
+      ],
+      "unary_nodes": 8
+    },
+    {
+      "H": 16,
+      "L": 1,
+      "Q": 4,
+      "conditional_prefix_images": [
+        25
+      ],
+      "e": 2,
+      "nonempty_branches": 3,
+      "prefix_image": 25,
+      "saturated_request_lower_bounds": [
+        18
+      ],
+      "size_nodes": 18,
+      "target_loads": [
+        4
+      ],
+      "unary_nodes": 13
+    },
+    {
+      "H": 17,
+      "L": 1,
+      "Q": 4,
+      "conditional_prefix_images": [
+        28
+      ],
+      "e": 2,
+      "nonempty_branches": 3,
+      "prefix_image": 28,
+      "saturated_request_lower_bounds": [
+        11
+      ],
+      "size_nodes": 21,
+      "target_loads": [
+        4
+      ],
+      "unary_nodes": 16
+    },
+    {
+      "H": 18,
+      "L": 1,
+      "Q": 4,
+      "conditional_prefix_images": [
+        26
+      ],
+      "e": 2,
+      "nonempty_branches": 3,
+      "prefix_image": 26,
+      "saturated_request_lower_bounds": [
+        9
+      ],
+      "size_nodes": 19,
+      "target_loads": [
+        4
+      ],
+      "unary_nodes": 14
+    },
+    {
+      "H": 19,
+      "L": 1,
+      "Q": 4,
+      "conditional_prefix_images": [
+        26
+      ],
+      "e": 2,
+      "nonempty_branches": 3,
+      "prefix_image": 26,
+      "saturated_request_lower_bounds": [
+        11
+      ],
+      "size_nodes": 19,
+      "target_loads": [
+        4
+      ],
+      "unary_nodes": 14
+    },
+    {
+      "H": 20,
+      "L": 2,
+      "Q": 6,
+      "conditional_prefix_images": [
+        27,
+        12
+      ],
+      "e": 2,
+      "nonempty_branches": 4,
+      "prefix_image": 39,
+      "saturated_request_lower_bounds": [
+        19,
+        8
+      ],
+      "size_nodes": 29,
+      "target_loads": [
+        4,
+        2
+      ],
+      "unary_nodes": 21
+    },
+    {
+      "H": 21,
+      "L": 2,
+      "Q": 6,
+      "conditional_prefix_images": [
+        28,
+        12
+      ],
+      "e": 2,
+      "nonempty_branches": 4,
+      "prefix_image": 40,
+      "saturated_request_lower_bounds": [
+        14,
+        3
+      ],
+      "size_nodes": 30,
+      "target_loads": [
+        4,
+        2
+      ],
+      "unary_nodes": 22
+    },
+    {
+      "H": 22,
+      "L": 2,
+      "Q": 6,
+      "conditional_prefix_images": [
+        27,
+        11
+      ],
+      "e": 2,
+      "nonempty_branches": 4,
+      "prefix_image": 38,
+      "saturated_request_lower_bounds": [
+        14,
+        2
+      ],
+      "size_nodes": 28,
+      "target_loads": [
+        4,
+        2
+      ],
+      "unary_nodes": 20
+    },
+    {
+      "H": 23,
+      "L": 2,
+      "Q": 6,
+      "conditional_prefix_images": [
+        28,
+        12
+      ],
+      "e": 2,
+      "nonempty_branches": 4,
+      "prefix_image": 40,
+      "saturated_request_lower_bounds": [
+        16,
+        4
+      ],
+      "size_nodes": 30,
+      "target_loads": [
+        4,
+        2
+      ],
+      "unary_nodes": 22
+    },
+    {
+      "H": 24,
+      "L": 2,
+      "Q": 9,
+      "conditional_prefix_images": [
+        39,
+        18
+      ],
+      "e": 2,
+      "nonempty_branches": 5,
+      "prefix_image": 57,
+      "saturated_request_lower_bounds": [
+        26,
+        12
+      ],
+      "size_nodes": 44,
+      "target_loads": [
+        6,
+        3
+      ],
+      "unary_nodes": 31
+    },
+    {
+      "H": 25,
+      "L": 2,
+      "Q": 9,
+      "conditional_prefix_images": [
+        39,
+        18
+      ],
+      "e": 2,
+      "nonempty_branches": 5,
+      "prefix_image": 57,
+      "saturated_request_lower_bounds": [
+        18,
+        7
+      ],
+      "size_nodes": 44,
+      "target_loads": [
+        6,
+        3
+      ],
+      "unary_nodes": 31
+    },
+    {
+      "H": 26,
+      "L": 2,
+      "Q": 9,
+      "conditional_prefix_images": [
+        38,
+        17
+      ],
+      "e": 2,
+      "nonempty_branches": 5,
+      "prefix_image": 55,
+      "saturated_request_lower_bounds": [
+        20,
+        4
+      ],
+      "size_nodes": 42,
+      "target_loads": [
+        6,
+        3
+      ],
+      "unary_nodes": 29
+    },
+    {
+      "H": 27,
+      "L": 2,
+      "Q": 9,
+      "conditional_prefix_images": [
+        40,
+        19
+      ],
+      "e": 2,
+      "nonempty_branches": 5,
+      "prefix_image": 59,
+      "saturated_request_lower_bounds": [
+        21,
+        6
+      ],
+      "size_nodes": 46,
+      "target_loads": [
+        6,
+        3
+      ],
+      "unary_nodes": 33
+    },
+    {
+      "H": 28,
+      "L": 2,
+      "Q": 12,
+      "conditional_prefix_images": [
+        44,
+        30
+      ],
+      "e": 3,
+      "nonempty_branches": 6,
+      "prefix_image": 74,
+      "saturated_request_lower_bounds": [
+        28,
+        17
+      ],
+      "size_nodes": 57,
+      "target_loads": [
+        7,
+        5
+      ],
+      "unary_nodes": 39
+    },
+    {
+      "H": 29,
+      "L": 2,
+      "Q": 12,
+      "conditional_prefix_images": [
+        44,
+        30
+      ],
+      "e": 3,
+      "nonempty_branches": 6,
+      "prefix_image": 74,
+      "saturated_request_lower_bounds": [
+        14,
+        22
+      ],
+      "size_nodes": 57,
+      "target_loads": [
+        7,
+        5
+      ],
+      "unary_nodes": 39
+    },
+    {
+      "H": 30,
+      "L": 2,
+      "Q": 12,
+      "conditional_prefix_images": [
+        44,
+        30
+      ],
+      "e": 3,
+      "nonempty_branches": 6,
+      "prefix_image": 74,
+      "saturated_request_lower_bounds": [
+        19,
+        22
+      ],
+      "size_nodes": 57,
+      "target_loads": [
+        7,
+        5
+      ],
+      "unary_nodes": 39
+    },
+    {
+      "H": 31,
+      "L": 2,
+      "Q": 12,
+      "conditional_prefix_images": [
+        44,
+        30
+      ],
+      "e": 3,
+      "nonempty_branches": 6,
+      "prefix_image": 74,
+      "saturated_request_lower_bounds": [
+        14,
+        22
+      ],
+      "size_nodes": 57,
+      "target_loads": [
+        7,
+        5
+      ],
+      "unary_nodes": 39
+    },
+    {
+      "H": 32,
+      "L": 2,
+      "Q": 16,
+      "conditional_prefix_images": [
+        53,
+        42
+      ],
+      "e": 4,
+      "nonempty_branches": 7,
+      "prefix_image": 95,
+      "saturated_request_lower_bounds": [
+        38,
+        31
+      ],
+      "size_nodes": 73,
+      "target_loads": [
+        9,
+        7
+      ],
+      "unary_nodes": 48
+    },
+    {
+      "H": 33,
+      "L": 2,
+      "Q": 16,
+      "conditional_prefix_images": [
+        56,
+        42
+      ],
+      "e": 4,
+      "nonempty_branches": 7,
+      "prefix_image": 98,
+      "saturated_request_lower_bounds": [
+        27,
+        19
+      ],
+      "size_nodes": 76,
+      "target_loads": [
+        9,
+        7
+      ],
+      "unary_nodes": 51
+    },
+    {
+      "H": 34,
+      "L": 2,
+      "Q": 16,
+      "conditional_prefix_images": [
+        54,
+        41
+      ],
+      "e": 4,
+      "nonempty_branches": 7,
+      "prefix_image": 95,
+      "saturated_request_lower_bounds": [
+        15,
+        19
+      ],
+      "size_nodes": 73,
+      "target_loads": [
+        9,
+        7
+      ],
+      "unary_nodes": 48
+    },
+    {
+      "H": 35,
+      "L": 2,
+      "Q": 16,
+      "conditional_prefix_images": [
+        54,
+        41
+      ],
+      "e": 4,
+      "nonempty_branches": 7,
+      "prefix_image": 95,
+      "saturated_request_lower_bounds": [
+        19,
+        21
+      ],
+      "size_nodes": 73,
+      "target_loads": [
+        9,
+        7
+      ],
+      "unary_nodes": 48
+    },
+    {
+      "H": 36,
+      "L": 3,
+      "Q": 20,
+      "conditional_prefix_images": [
+        52,
+        36,
+        27
+      ],
+      "e": 3,
+      "nonempty_branches": 7,
+      "prefix_image": 115,
+      "saturated_request_lower_bounds": [
+        33,
+        19,
+        12
+      ],
+      "size_nodes": 89,
+      "target_loads": [
+        9,
+        6,
+        5
+      ],
+      "unary_nodes": 56
+    },
+    {
+      "H": 37,
+      "L": 3,
+      "Q": 20,
+      "conditional_prefix_images": [
+        55,
+        37,
+        28
+      ],
+      "e": 3,
+      "nonempty_branches": 7,
+      "prefix_image": 120,
+      "saturated_request_lower_bounds": [
+        28,
+        19,
+        9
+      ],
+      "size_nodes": 94,
+      "target_loads": [
+        9,
+        6,
+        5
+      ],
+      "unary_nodes": 61
+    },
+    {
+      "H": 38,
+      "L": 3,
+      "Q": 20,
+      "conditional_prefix_images": [
+        56,
+        37,
+        29
+      ],
+      "e": 3,
+      "nonempty_branches": 7,
+      "prefix_image": 122,
+      "saturated_request_lower_bounds": [
+        26,
+        19,
+        10
+      ],
+      "size_nodes": 96,
+      "target_loads": [
+        9,
+        6,
+        5
+      ],
+      "unary_nodes": 63
+    },
+    {
+      "H": 39,
+      "L": 3,
+      "Q": 20,
+      "conditional_prefix_images": [
+        54,
+        37,
+        28
+      ],
+      "e": 3,
+      "nonempty_branches": 7,
+      "prefix_image": 119,
+      "saturated_request_lower_bounds": [
+        24,
+        24,
+        7
+      ],
+      "size_nodes": 93,
+      "target_loads": [
+        9,
+        6,
+        5
+      ],
+      "unary_nodes": 60
+    },
+    {
+      "H": 40,
+      "L": 3,
+      "Q": 25,
+      "conditional_prefix_images": [
+        61,
+        49,
+        31
+      ],
+      "e": 4,
+      "nonempty_branches": 8,
+      "prefix_image": 141,
+      "saturated_request_lower_bounds": [
+        38,
+        32,
+        18
+      ],
+      "size_nodes": 109,
+      "target_loads": [
+        11,
+        8,
+        6
+      ],
+      "unary_nodes": 67
+    },
+    {
+      "H": 41,
+      "L": 3,
+      "Q": 25,
+      "conditional_prefix_images": [
+        62,
+        50,
+        31
+      ],
+      "e": 4,
+      "nonempty_branches": 8,
+      "prefix_image": 143,
+      "saturated_request_lower_bounds": [
+        25,
+        20,
+        12
+      ],
+      "size_nodes": 111,
+      "target_loads": [
+        11,
+        8,
+        6
+      ],
+      "unary_nodes": 69
+    },
+    {
+      "H": 42,
+      "L": 3,
+      "Q": 25,
+      "conditional_prefix_images": [
+        62,
+        49,
+        31
+      ],
+      "e": 4,
+      "nonempty_branches": 8,
+      "prefix_image": 142,
+      "saturated_request_lower_bounds": [
+        30,
+        20,
+        10
+      ],
+      "size_nodes": 110,
+      "target_loads": [
+        11,
+        8,
+        6
+      ],
+      "unary_nodes": 68
+    },
+    {
+      "H": 43,
+      "L": 3,
+      "Q": 25,
+      "conditional_prefix_images": [
+        69,
+        50,
+        34
+      ],
+      "e": 4,
+      "nonempty_branches": 8,
+      "prefix_image": 153,
+      "saturated_request_lower_bounds": [
+        35,
+        23,
+        12
+      ],
+      "size_nodes": 121,
+      "target_loads": [
+        11,
+        8,
+        6
+      ],
+      "unary_nodes": 79
+    },
+    {
+      "H": 44,
+      "L": 3,
+      "Q": 30,
+      "conditional_prefix_images": [
+        69,
+        54,
+        51
+      ],
+      "e": 5,
+      "nonempty_branches": 9,
+      "prefix_image": 174,
+      "saturated_request_lower_bounds": [
+        30,
+        28,
+        22
+      ],
+      "size_nodes": 136,
+      "target_loads": [
+        12,
+        9,
+        9
+      ],
+      "unary_nodes": 85
+    },
+    {
+      "H": 45,
+      "L": 3,
+      "Q": 30,
+      "conditional_prefix_images": [
+        69,
+        53,
+        53
+      ],
+      "e": 5,
+      "nonempty_branches": 9,
+      "prefix_image": 175,
+      "saturated_request_lower_bounds": [
+        22,
+        25,
+        25
+      ],
+      "size_nodes": 137,
+      "target_loads": [
+        12,
+        9,
+        9
+      ],
+      "unary_nodes": 86
+    },
+    {
+      "H": 46,
+      "L": 3,
+      "Q": 30,
+      "conditional_prefix_images": [
+        69,
+        54,
+        53
+      ],
+      "e": 5,
+      "nonempty_branches": 9,
+      "prefix_image": 176,
+      "saturated_request_lower_bounds": [
+        27,
+        28,
+        25
+      ],
+      "size_nodes": 138,
+      "target_loads": [
+        12,
+        9,
+        9
+      ],
+      "unary_nodes": 87
+    },
+    {
+      "H": 47,
+      "L": 3,
+      "Q": 30,
+      "conditional_prefix_images": [
+        71,
+        55,
+        53
+      ],
+      "e": 5,
+      "nonempty_branches": 9,
+      "prefix_image": 179,
+      "saturated_request_lower_bounds": [
+        26,
+        27,
+        30
+      ],
+      "size_nodes": 141,
+      "target_loads": [
+        12,
+        9,
+        9
+      ],
+      "unary_nodes": 90
+    },
+    {
+      "H": 48,
+      "L": 3,
+      "Q": 36,
+      "conditional_prefix_images": [
+        78,
+        58,
+        70
+      ],
+      "e": 6,
+      "nonempty_branches": 10,
+      "prefix_image": 206,
+      "saturated_request_lower_bounds": [
+        40,
+        32,
+        43
+      ],
+      "size_nodes": 161,
+      "target_loads": [
+        14,
+        10,
+        12
+      ],
+      "unary_nodes": 99
+    },
+    {
+      "H": 49,
+      "L": 3,
+      "Q": 36,
+      "conditional_prefix_images": [
+        79,
+        58,
+        66
+      ],
+      "e": 6,
+      "nonempty_branches": 10,
+      "prefix_image": 203,
+      "saturated_request_lower_bounds": [
+        30,
+        26,
+        30
+      ],
+      "size_nodes": 158,
+      "target_loads": [
+        14,
+        10,
+        12
+      ],
+      "unary_nodes": 96
+    },
+    {
+      "H": 50,
+      "L": 3,
+      "Q": 36,
+      "conditional_prefix_images": [
+        78,
+        58,
+        66
+      ],
+      "e": 6,
+      "nonempty_branches": 10,
+      "prefix_image": 202,
+      "saturated_request_lower_bounds": [
+        30,
+        29,
+        31
+      ],
+      "size_nodes": 157,
+      "target_loads": [
+        14,
+        10,
+        12
+      ],
+      "unary_nodes": 95
+    },
+    {
+      "H": 51,
+      "L": 3,
+      "Q": 36,
+      "conditional_prefix_images": [
+        80,
+        59,
+        67
+      ],
+      "e": 6,
+      "nonempty_branches": 10,
+      "prefix_image": 206,
+      "saturated_request_lower_bounds": [
+        32,
+        32,
+        31
+      ],
+      "size_nodes": 161,
+      "target_loads": [
+        14,
+        10,
+        12
+      ],
+      "unary_nodes": 99
+    },
+    {
+      "H": 52,
+      "L": 4,
+      "Q": 42,
+      "conditional_prefix_images": [
+        78,
+        60,
+        57,
+        42
+      ],
+      "e": 5,
+      "nonempty_branches": 10,
+      "prefix_image": 237,
+      "saturated_request_lower_bounds": [
+        44,
+        35,
+        28,
+        17
+      ],
+      "size_nodes": 186,
+      "target_loads": [
+        14,
+        10,
+        10,
+        8
+      ],
+      "unary_nodes": 112
+    },
+    {
+      "H": 53,
+      "L": 4,
+      "Q": 42,
+      "conditional_prefix_images": [
+        79,
+        61,
+        58,
+        42
+      ],
+      "e": 5,
+      "nonempty_branches": 10,
+      "prefix_image": 240,
+      "saturated_request_lower_bounds": [
+        30,
+        27,
+        25,
+        10
+      ],
+      "size_nodes": 189,
+      "target_loads": [
+        14,
+        10,
+        10,
+        8
+      ],
+      "unary_nodes": 115
+    },
+    {
+      "H": 54,
+      "L": 4,
+      "Q": 42,
+      "conditional_prefix_images": [
+        81,
+        60,
+        58,
+        43
+      ],
+      "e": 5,
+      "nonempty_branches": 10,
+      "prefix_image": 242,
+      "saturated_request_lower_bounds": [
+        40,
+        28,
+        25,
+        18
+      ],
+      "size_nodes": 191,
+      "target_loads": [
+        14,
+        10,
+        10,
+        8
+      ],
+      "unary_nodes": 117
+    },
+    {
+      "H": 55,
+      "L": 4,
+      "Q": 42,
+      "conditional_prefix_images": [
+        83,
+        62,
+        58,
+        44
+      ],
+      "e": 5,
+      "nonempty_branches": 10,
+      "prefix_image": 247,
+      "saturated_request_lower_bounds": [
+        38,
+        35,
+        32,
+        16
+      ],
+      "size_nodes": 196,
+      "target_loads": [
+        14,
+        10,
+        10,
+        8
+      ],
+      "unary_nodes": 122
+    },
+    {
+      "H": 56,
+      "L": 4,
+      "Q": 49,
+      "conditional_prefix_images": [
+        90,
+        66,
+        75,
+        47
+      ],
+      "e": 6,
+      "nonempty_branches": 11,
+      "prefix_image": 278,
+      "saturated_request_lower_bounds": [
+        48,
+        41,
+        43,
+        25
+      ],
+      "size_nodes": 219,
+      "target_loads": [
+        16,
+        11,
+        13,
+        9
+      ],
+      "unary_nodes": 132
+    },
+    {
+      "H": 57,
+      "L": 4,
+      "Q": 49,
+      "conditional_prefix_images": [
+        90,
+        64,
+        76,
+        47
+      ],
+      "e": 6,
+      "nonempty_branches": 11,
+      "prefix_image": 277,
+      "saturated_request_lower_bounds": [
+        37,
+        32,
+        39,
+        17
+      ],
+      "size_nodes": 218,
+      "target_loads": [
+        16,
+        11,
+        13,
+        9
+      ],
+      "unary_nodes": 131
+    },
+    {
+      "H": 58,
+      "L": 4,
+      "Q": 49,
+      "conditional_prefix_images": [
+        90,
+        64,
+        76,
+        48
+      ],
+      "e": 6,
+      "nonempty_branches": 11,
+      "prefix_image": 278,
+      "saturated_request_lower_bounds": [
+        44,
+        35,
+        40,
+        15
+      ],
+      "size_nodes": 219,
+      "target_loads": [
+        16,
+        11,
+        13,
+        9
+      ],
+      "unary_nodes": 132
+    },
+    {
+      "H": 59,
+      "L": 4,
+      "Q": 49,
+      "conditional_prefix_images": [
+        92,
+        65,
+        77,
+        49
+      ],
+      "e": 6,
+      "nonempty_branches": 11,
+      "prefix_image": 283,
+      "saturated_request_lower_bounds": [
+        50,
+        32,
+        40,
+        18
+      ],
+      "size_nodes": 224,
+      "target_loads": [
+        16,
+        11,
+        13,
+        9
+      ],
+      "unary_nodes": 137
+    },
+    {
+      "H": 60,
+      "L": 4,
+      "Q": 56,
+      "conditional_prefix_images": [
+        95,
+        69,
+        81,
+        73
+      ],
+      "e": 7,
+      "nonempty_branches": 12,
+      "prefix_image": 318,
+      "saturated_request_lower_bounds": [
+        56,
+        46,
+        49,
+        37
+      ],
+      "size_nodes": 251,
+      "target_loads": [
+        17,
+        12,
+        14,
+        13
+      ],
+      "unary_nodes": 151
+    },
+    {
+      "H": 61,
+      "L": 4,
+      "Q": 56,
+      "conditional_prefix_images": [
+        95,
+        69,
+        81,
+        73
+      ],
+      "e": 7,
+      "nonempty_branches": 12,
+      "prefix_image": 318,
+      "saturated_request_lower_bounds": [
+        30,
+        39,
+        48,
+        50
+      ],
+      "size_nodes": 251,
+      "target_loads": [
+        17,
+        12,
+        14,
+        13
+      ],
+      "unary_nodes": 151
+    },
+    {
+      "H": 62,
+      "L": 4,
+      "Q": 56,
+      "conditional_prefix_images": [
+        95,
+        69,
+        81,
+        73
+      ],
+      "e": 7,
+      "nonempty_branches": 12,
+      "prefix_image": 318,
+      "saturated_request_lower_bounds": [
+        43,
+        43,
+        50,
+        50
+      ],
+      "size_nodes": 251,
+      "target_loads": [
+        17,
+        12,
+        14,
+        13
+      ],
+      "unary_nodes": 151
+    },
+    {
+      "H": 63,
+      "L": 4,
+      "Q": 56,
+      "conditional_prefix_images": [
+        95,
+        69,
+        81,
+        73
+      ],
+      "e": 7,
+      "nonempty_branches": 12,
+      "prefix_image": 318,
+      "saturated_request_lower_bounds": [
+        30,
+        39,
+        53,
+        57
+      ],
+      "size_nodes": 251,
+      "target_loads": [
+        17,
+        12,
+        14,
+        13
+      ],
+      "unary_nodes": 151
+    },
+    {
+      "H": 64,
+      "L": 4,
+      "Q": 64,
+      "conditional_prefix_images": [
+        104,
+        75,
+        86,
+        94
+      ],
+      "e": 8,
+      "nonempty_branches": 13,
+      "prefix_image": 359,
+      "saturated_request_lower_bounds": [
+        78,
+        57,
+        65,
+        73
+      ],
+      "size_nodes": 283,
+      "target_loads": [
+        19,
+        13,
+        15,
+        17
+      ],
+      "unary_nodes": 168
+    },
+    {
+      "H": 65,
+      "L": 4,
+      "Q": 64,
+      "conditional_prefix_images": [
+        105,
+        75,
+        83,
+        94
+      ],
+      "e": 8,
+      "nonempty_branches": 13,
+      "prefix_image": 357,
+      "saturated_request_lower_bounds": [
+        60,
+        38,
+        34,
+        31
+      ],
+      "size_nodes": 281,
+      "target_loads": [
+        19,
+        13,
+        15,
+        17
+      ],
+      "unary_nodes": 166
+    },
+    {
+      "H": 66,
+      "L": 4,
+      "Q": 64,
+      "conditional_prefix_images": [
+        103,
+        74,
+        82,
+        93
+      ],
+      "e": 8,
+      "nonempty_branches": 13,
+      "prefix_image": 352,
+      "saturated_request_lower_bounds": [
+        26,
+        27,
+        29,
+        32
+      ],
+      "size_nodes": 276,
+      "target_loads": [
+        19,
+        13,
+        15,
+        17
+      ],
+      "unary_nodes": 161
+    },
+    {
+      "H": 67,
+      "L": 4,
+      "Q": 64,
+      "conditional_prefix_images": [
+        103,
+        74,
+        82,
+        93
+      ],
+      "e": 8,
+      "nonempty_branches": 13,
+      "prefix_image": 352,
+      "saturated_request_lower_bounds": [
+        34,
+        32,
+        35,
+        37
+      ],
+      "size_nodes": 276,
+      "target_loads": [
+        19,
+        13,
+        15,
+        17
+      ],
+      "unary_nodes": 161
+    },
+    {
+      "H": 68,
+      "L": 5,
+      "Q": 72,
+      "conditional_prefix_images": [
+        104,
+        74,
+        84,
+        77,
+        57
+      ],
+      "e": 7,
+      "nonempty_branches": 13,
+      "prefix_image": 396,
+      "saturated_request_lower_bounds": [
+        50,
+        35,
+        38,
+        31,
+        21
+      ],
+      "size_nodes": 312,
+      "target_loads": [
+        19,
+        13,
+        15,
+        14,
+        11
+      ],
+      "unary_nodes": 181
+    },
+    {
+      "H": 69,
+      "L": 5,
+      "Q": 72,
+      "conditional_prefix_images": [
+        106,
+        76,
+        86,
+        78,
+        58
+      ],
+      "e": 7,
+      "nonempty_branches": 13,
+      "prefix_image": 404,
+      "saturated_request_lower_bounds": [
+        50,
+        35,
+        36,
+        36,
+        20
+      ],
+      "size_nodes": 320,
+      "target_loads": [
+        19,
+        13,
+        15,
+        14,
+        11
+      ],
+      "unary_nodes": 189
+    },
+    {
+      "H": 70,
+      "L": 5,
+      "Q": 72,
+      "conditional_prefix_images": [
+        106,
+        76,
+        85,
+        79,
+        58
+      ],
+      "e": 7,
+      "nonempty_branches": 13,
+      "prefix_image": 404,
+      "saturated_request_lower_bounds": [
+        49,
+        31,
+        34,
+        37,
+        20
+      ],
+      "size_nodes": 320,
+      "target_loads": [
+        19,
+        13,
+        15,
+        14,
+        11
+      ],
+      "unary_nodes": 189
+    },
+    {
+      "H": 71,
+      "L": 5,
+      "Q": 72,
+      "conditional_prefix_images": [
+        108,
+        75,
+        84,
+        77,
+        59
+      ],
+      "e": 7,
+      "nonempty_branches": 13,
+      "prefix_image": 403,
+      "saturated_request_lower_bounds": [
+        47,
+        37,
+        40,
+        37,
+        21
+      ],
+      "size_nodes": 319,
+      "target_loads": [
+        19,
+        13,
+        15,
+        14,
+        11
+      ],
+      "unary_nodes": 188
+    },
+    {
+      "H": 72,
+      "L": 5,
+      "Q": 81,
+      "conditional_prefix_images": [
+        114,
+        79,
+        88,
+        99,
+        62
+      ],
+      "e": 8,
+      "nonempty_branches": 14,
+      "prefix_image": 442,
+      "saturated_request_lower_bounds": [
+        55,
+        45,
+        46,
+        49,
+        28
+      ],
+      "size_nodes": 348,
+      "target_loads": [
+        21,
+        14,
+        16,
+        18,
+        12
+      ],
+      "unary_nodes": 200
+    },
+    {
+      "H": 73,
+      "L": 5,
+      "Q": 81,
+      "conditional_prefix_images": [
+        116,
+        79,
+        91,
+        102,
+        63
+      ],
+      "e": 8,
+      "nonempty_branches": 14,
+      "prefix_image": 451,
+      "saturated_request_lower_bounds": [
+        46,
+        34,
+        38,
+        42,
+        24
+      ],
+      "size_nodes": 357,
+      "target_loads": [
+        21,
+        14,
+        16,
+        18,
+        12
+      ],
+      "unary_nodes": 209
+    },
+    {
+      "H": 74,
+      "L": 5,
+      "Q": 81,
+      "conditional_prefix_images": [
+        115,
+        79,
+        93,
+        101,
+        63
+      ],
+      "e": 8,
+      "nonempty_branches": 14,
+      "prefix_image": 451,
+      "saturated_request_lower_bounds": [
+        48,
+        33,
+        39,
+        41,
+        22
+      ],
+      "size_nodes": 357,
+      "target_loads": [
+        21,
+        14,
+        16,
+        18,
+        12
+      ],
+      "unary_nodes": 209
+    },
+    {
+      "H": 75,
+      "L": 5,
+      "Q": 81,
+      "conditional_prefix_images": [
+        115,
+        82,
+        93,
+        101,
+        63
+      ],
+      "e": 8,
+      "nonempty_branches": 14,
+      "prefix_image": 454,
+      "saturated_request_lower_bounds": [
+        54,
+        38,
+        37,
+        39,
+        25
+      ],
+      "size_nodes": 360,
+      "target_loads": [
+        21,
+        14,
+        16,
+        18,
+        12
+      ],
+      "unary_nodes": 212
+    },
+    {
+      "H": 76,
+      "L": 5,
+      "Q": 90,
+      "conditional_prefix_images": [
+        117,
+        85,
+        96,
+        105,
+        95
+      ],
+      "e": 9,
+      "nonempty_branches": 15,
+      "prefix_image": 498,
+      "saturated_request_lower_bounds": [
+        53,
+        39,
+        45,
+        46,
+        45
+      ],
+      "size_nodes": 394,
+      "target_loads": [
+        22,
+        15,
+        17,
+        19,
+        17
+      ],
+      "unary_nodes": 229
+    },
+    {
+      "H": 77,
+      "L": 5,
+      "Q": 90,
+      "conditional_prefix_images": [
+        120,
+        87,
+        98,
+        108,
+        93
+      ],
+      "e": 9,
+      "nonempty_branches": 15,
+      "prefix_image": 506,
+      "saturated_request_lower_bounds": [
+        45,
+        39,
+        42,
+        52,
+        42
+      ],
+      "size_nodes": 402,
+      "target_loads": [
+        22,
+        15,
+        17,
+        19,
+        17
+      ],
+      "unary_nodes": 237
+    },
+    {
+      "H": 78,
+      "L": 5,
+      "Q": 90,
+      "conditional_prefix_images": [
+        122,
+        86,
+        98,
+        107,
+        93
+      ],
+      "e": 9,
+      "nonempty_branches": 15,
+      "prefix_image": 506,
+      "saturated_request_lower_bounds": [
+        48,
+        40,
+        42,
+        49,
+        42
+      ],
+      "size_nodes": 402,
+      "target_loads": [
+        22,
+        15,
+        17,
+        19,
+        17
+      ],
+      "unary_nodes": 237
+    },
+    {
+      "H": 79,
+      "L": 5,
+      "Q": 90,
+      "conditional_prefix_images": [
+        122,
+        87,
+        100,
+        105,
+        93
+      ],
+      "e": 9,
+      "nonempty_branches": 15,
+      "prefix_image": 507,
+      "saturated_request_lower_bounds": [
+        43,
+        40,
+        48,
+        53,
+        46
+      ],
+      "size_nodes": 403,
+      "target_loads": [
+        22,
+        15,
+        17,
+        19,
+        17
+      ],
+      "unary_nodes": 238
+    },
+    {
+      "H": 80,
+      "L": 5,
+      "Q": 100,
+      "conditional_prefix_images": [
+        128,
+        91,
+        103,
+        109,
+        118
+      ],
+      "e": 10,
+      "nonempty_branches": 16,
+      "prefix_image": 549,
+      "saturated_request_lower_bounds": [
+        60,
+        49,
+        53,
+        61,
+        64
+      ],
+      "size_nodes": 434,
+      "target_loads": [
+        24,
+        16,
+        18,
+        20,
+        22
+      ],
+      "unary_nodes": 250
+    },
+    {
+      "H": 81,
+      "L": 5,
+      "Q": 100,
+      "conditional_prefix_images": [
+        130,
+        92,
+        99,
+        109,
+        120
+      ],
+      "e": 10,
+      "nonempty_branches": 16,
+      "prefix_image": 550,
+      "saturated_request_lower_bounds": [
+        48,
+        42,
+        40,
+        46,
+        48
+      ],
+      "size_nodes": 435,
+      "target_loads": [
+        24,
+        16,
+        18,
+        20,
+        22
+      ],
+      "unary_nodes": 251
+    },
+    {
+      "H": 82,
+      "L": 5,
+      "Q": 100,
+      "conditional_prefix_images": [
+        129,
+        93,
+        98,
+        110,
+        121
+      ],
+      "e": 10,
+      "nonempty_branches": 16,
+      "prefix_image": 551,
+      "saturated_request_lower_bounds": [
+        50,
+        43,
+        43,
+        49,
+        49
+      ],
+      "size_nodes": 436,
+      "target_loads": [
+        24,
+        16,
+        18,
+        20,
+        22
+      ],
+      "unary_nodes": 252
+    },
+    {
+      "H": 83,
+      "L": 5,
+      "Q": 100,
+      "conditional_prefix_images": [
+        131,
+        93,
+        101,
+        115,
+        125
+      ],
+      "e": 10,
+      "nonempty_branches": 16,
+      "prefix_image": 565,
+      "saturated_request_lower_bounds": [
+        56,
+        43,
+        45,
+        49,
+        56
+      ],
+      "size_nodes": 450,
+      "target_loads": [
+        24,
+        16,
+        18,
+        20,
+        22
+      ],
+      "unary_nodes": 266
+    },
+    {
+      "H": 84,
+      "L": 6,
+      "Q": 110,
+      "conditional_prefix_images": [
+        137,
+        92,
+        106,
+        112,
+        102,
+        74
+      ],
+      "e": 9,
+      "nonempty_branches": 16,
+      "prefix_image": 623,
+      "saturated_request_lower_bounds": [
+        69,
+        45,
+        47,
+        56,
+        50,
+        35
+      ],
+      "size_nodes": 498,
+      "target_loads": [
+        24,
+        16,
+        18,
+        20,
+        18,
+        14
+      ],
+      "unary_nodes": 294
+    },
+    {
+      "H": 85,
+      "L": 6,
+      "Q": 110,
+      "conditional_prefix_images": [
+        131,
+        89,
+        101,
+        107,
+        95,
+        72
+      ],
+      "e": 9,
+      "nonempty_branches": 16,
+      "prefix_image": 595,
+      "saturated_request_lower_bounds": [
+        55,
+        35,
+        37,
+        40,
+        38,
+        29
+      ],
+      "size_nodes": 470,
+      "target_loads": [
+        24,
+        16,
+        18,
+        20,
+        18,
+        14
+      ],
+      "unary_nodes": 266
+    },
+    {
+      "H": 86,
+      "L": 6,
+      "Q": 110,
+      "conditional_prefix_images": [
+        133,
+        94,
+        102,
+        108,
+        95,
+        76
+      ],
+      "e": 9,
+      "nonempty_branches": 16,
+      "prefix_image": 608,
+      "saturated_request_lower_bounds": [
+        59,
+        41,
+        41,
+        43,
+        38,
+        30
+      ],
+      "size_nodes": 483,
+      "target_loads": [
+        24,
+        16,
+        18,
+        20,
+        18,
+        14
+      ],
+      "unary_nodes": 279
+    },
+    {
+      "H": 87,
+      "L": 6,
+      "Q": 110,
+      "conditional_prefix_images": [
+        132,
+        95,
+        105,
+        110,
+        98,
+        75
+      ],
+      "e": 9,
+      "nonempty_branches": 16,
+      "prefix_image": 615,
+      "saturated_request_lower_bounds": [
+        53,
+        43,
+        48,
+        47,
+        44,
+        27
+      ],
+      "size_nodes": 490,
+      "target_loads": [
+        24,
+        16,
+        18,
+        20,
+        18,
+        14
+      ],
+      "unary_nodes": 286
+    },
+    {
+      "H": 88,
+      "L": 6,
+      "Q": 121,
+      "conditional_prefix_images": [
+        137,
+        96,
+        107,
+        113,
+        125,
+        76
+      ],
+      "e": 10,
+      "nonempty_branches": 17,
+      "prefix_image": 654,
+      "saturated_request_lower_bounds": [
+        65,
+        46,
+        50,
+        53,
+        60,
+        34
+      ],
+      "size_nodes": 517,
+      "target_loads": [
+        26,
+        17,
+        19,
+        21,
+        23,
+        15
+      ],
+      "unary_nodes": 292
+    },
+    {
+      "H": 89,
+      "L": 6,
+      "Q": 121,
+      "conditional_prefix_images": [
+        138,
+        96,
+        109,
+        116,
+        127,
+        76
+      ],
+      "e": 10,
+      "nonempty_branches": 17,
+      "prefix_image": 662,
+      "saturated_request_lower_bounds": [
+        58,
+        38,
+        45,
+        48,
+        52,
+        29
+      ],
+      "size_nodes": 525,
+      "target_loads": [
+        26,
+        17,
+        19,
+        21,
+        23,
+        15
+      ],
+      "unary_nodes": 300
+    },
+    {
+      "H": 90,
+      "L": 6,
+      "Q": 121,
+      "conditional_prefix_images": [
+        144,
+        97,
+        110,
+        116,
+        123,
+        78
+      ],
+      "e": 10,
+      "nonempty_branches": 17,
+      "prefix_image": 668,
+      "saturated_request_lower_bounds": [
+        68,
+        43,
+        49,
+        49,
+        48,
+        29
+      ],
+      "size_nodes": 531,
+      "target_loads": [
+        26,
+        17,
+        19,
+        21,
+        23,
+        15
+      ],
+      "unary_nodes": 306
+    },
+    {
+      "H": 91,
+      "L": 6,
+      "Q": 121,
+      "conditional_prefix_images": [
+        146,
+        99,
+        110,
+        116,
+        126,
+        79
+      ],
+      "e": 10,
+      "nonempty_branches": 17,
+      "prefix_image": 676,
+      "saturated_request_lower_bounds": [
+        70,
+        45,
+        46,
+        51,
+        53,
+        30
+      ],
+      "size_nodes": 539,
+      "target_loads": [
+        26,
+        17,
+        19,
+        21,
+        23,
+        15
+      ],
+      "unary_nodes": 314
+    },
+    {
+      "H": 92,
+      "L": 6,
+      "Q": 132,
+      "conditional_prefix_images": [
+        145,
+        101,
+        113,
+        122,
+        130,
+        115
+      ],
+      "e": 11,
+      "nonempty_branches": 18,
+      "prefix_image": 726,
+      "saturated_request_lower_bounds": [
+        64,
+        48,
+        54,
+        61,
+        59,
+        47
+      ],
+      "size_nodes": 577,
+      "target_loads": [
+        27,
+        18,
+        20,
+        22,
+        24,
+        21
+      ],
+      "unary_nodes": 331
+    },
+    {
+      "H": 93,
+      "L": 6,
+      "Q": 132,
+      "conditional_prefix_images": [
+        145,
+        101,
+        115,
+        121,
+        130,
+        116
+      ],
+      "e": 11,
+      "nonempty_branches": 18,
+      "prefix_image": 728,
+      "saturated_request_lower_bounds": [
+        50,
+        45,
+        51,
+        51,
+        62,
+        55
+      ],
+      "size_nodes": 579,
+      "target_loads": [
+        27,
+        18,
+        20,
+        22,
+        24,
+        21
+      ],
+      "unary_nodes": 333
+    },
+    {
+      "H": 94,
+      "L": 6,
+      "Q": 132,
+      "conditional_prefix_images": [
+        145,
+        102,
+        115,
+        120,
+        131,
+        116
+      ],
+      "e": 11,
+      "nonempty_branches": 18,
+      "prefix_image": 729,
+      "saturated_request_lower_bounds": [
+        59,
+        50,
+        53,
+        52,
+        65,
+        55
+      ],
+      "size_nodes": 580,
+      "target_loads": [
+        27,
+        18,
+        20,
+        22,
+        24,
+        21
+      ],
+      "unary_nodes": 334
+    },
+    {
+      "H": 95,
+      "L": 6,
+      "Q": 132,
+      "conditional_prefix_images": [
+        147,
+        103,
+        115,
+        122,
+        132,
+        116
+      ],
+      "e": 11,
+      "nonempty_branches": 18,
+      "prefix_image": 735,
+      "saturated_request_lower_bounds": [
+        54,
+        47,
+        57,
+        59,
+        68,
+        63
+      ],
+      "size_nodes": 586,
+      "target_loads": [
+        27,
+        18,
+        20,
+        22,
+        24,
+        21
+      ],
+      "unary_nodes": 340
+    },
+    {
+      "H": 96,
+      "L": 6,
+      "Q": 144,
+      "conditional_prefix_images": [
+        154,
+        106,
+        122,
+        126,
+        135,
+        146
+      ],
+      "e": 12,
+      "nonempty_branches": 19,
+      "prefix_image": 789,
+      "saturated_request_lower_bounds": [
+        80,
+        58,
+        70,
+        67,
+        74,
+        84
+      ],
+      "size_nodes": 627,
+      "target_loads": [
+        29,
+        19,
+        21,
+        23,
+        25,
+        27
+      ],
+      "unary_nodes": 358
+    },
+    {
+      "H": 97,
+      "L": 6,
+      "Q": 144,
+      "conditional_prefix_images": [
+        155,
+        106,
+        114,
+        128,
+        135,
+        143
+      ],
+      "e": 12,
+      "nonempty_branches": 19,
+      "prefix_image": 781,
+      "saturated_request_lower_bounds": [
+        66,
+        48,
+        52,
+        53,
+        53,
+        57
+      ],
+      "size_nodes": 619,
+      "target_loads": [
+        29,
+        19,
+        21,
+        23,
+        25,
+        27
+      ],
+      "unary_nodes": 350
+    },
+    {
+      "H": 98,
+      "L": 6,
+      "Q": 144,
+      "conditional_prefix_images": [
+        154,
+        106,
+        114,
+        127,
+        135,
+        144
+      ],
+      "e": 12,
+      "nonempty_branches": 19,
+      "prefix_image": 780,
+      "saturated_request_lower_bounds": [
+        56,
+        46,
+        48,
+        50,
+        57,
+        59
+      ],
+      "size_nodes": 618,
+      "target_loads": [
+        29,
+        19,
+        21,
+        23,
+        25,
+        27
+      ],
+      "unary_nodes": 349
+    },
+    {
+      "H": 99,
+      "L": 6,
+      "Q": 144,
+      "conditional_prefix_images": [
+        156,
+        107,
+        116,
+        130,
+        136,
+        145
+      ],
+      "e": 12,
+      "nonempty_branches": 19,
+      "prefix_image": 790,
+      "saturated_request_lower_bounds": [
+        60,
+        51,
+        51,
+        58,
+        57,
+        61
+      ],
+      "size_nodes": 628,
+      "target_loads": [
+        29,
+        19,
+        21,
+        23,
+        25,
+        27
+      ],
+      "unary_nodes": 359
+    },
+    {
+      "H": 100,
+      "L": 7,
+      "Q": 156,
+      "conditional_prefix_images": [
+        156,
+        108,
+        116,
+        126,
+        136,
+        120,
+        87
+      ],
+      "e": 11,
+      "nonempty_branches": 19,
+      "prefix_image": 849,
+      "saturated_request_lower_bounds": [
+        75,
+        51,
+        56,
+        60,
+        62,
+        54,
+        34
+      ],
+      "size_nodes": 675,
+      "target_loads": [
+        29,
+        19,
+        21,
+        23,
+        25,
+        22,
+        17
+      ],
+      "unary_nodes": 382
+    },
+    {
+      "H": 101,
+      "L": 7,
+      "Q": 156,
+      "conditional_prefix_images": [
+        157,
+        109,
+        117,
+        127,
+        138,
+        121,
+        87
+      ],
+      "e": 11,
+      "nonempty_branches": 19,
+      "prefix_image": 856,
+      "saturated_request_lower_bounds": [
+        66,
+        47,
+        49,
+        54,
+        57,
+        48,
+        29
+      ],
+      "size_nodes": 682,
+      "target_loads": [
+        29,
+        19,
+        21,
+        23,
+        25,
+        22,
+        17
+      ],
+      "unary_nodes": 389
+    },
+    {
+      "H": 102,
+      "L": 7,
+      "Q": 156,
+      "conditional_prefix_images": [
+        156,
+        109,
+        116,
+        127,
+        137,
+        121,
+        87
+      ],
+      "e": 11,
+      "nonempty_branches": 19,
+      "prefix_image": 853,
+      "saturated_request_lower_bounds": [
+        70,
+        51,
+        46,
+        53,
+        58,
+        50,
+        33
+      ],
+      "size_nodes": 679,
+      "target_loads": [
+        29,
+        19,
+        21,
+        23,
+        25,
+        22,
+        17
+      ],
+      "unary_nodes": 386
+    },
+    {
+      "H": 103,
+      "L": 7,
+      "Q": 156,
+      "conditional_prefix_images": [
+        160,
+        110,
+        117,
+        129,
+        137,
+        122,
+        88
+      ],
+      "e": 11,
+      "nonempty_branches": 19,
+      "prefix_image": 863,
+      "saturated_request_lower_bounds": [
+        70,
+        53,
+        57,
+        62,
+        64,
+        52,
+        33
+      ],
+      "size_nodes": 689,
+      "target_loads": [
+        29,
+        19,
+        21,
+        23,
+        25,
+        22,
+        17
+      ],
+      "unary_nodes": 396
+    },
+    {
+      "H": 104,
+      "L": 7,
+      "Q": 169,
+      "conditional_prefix_images": [
+        168,
+        113,
+        121,
+        132,
+        141,
+        152,
+        93
+      ],
+      "e": 12,
+      "nonempty_branches": 20,
+      "prefix_image": 920,
+      "saturated_request_lower_bounds": [
+        80,
+        61,
+        64,
+        68,
+        71,
+        73,
+        44
+      ],
+      "size_nodes": 732,
+      "target_loads": [
+        31,
+        20,
+        22,
+        24,
+        26,
+        28,
+        18
+      ],
+      "unary_nodes": 414
+    },
+    {
+      "H": 105,
+      "L": 7,
+      "Q": 169,
+      "conditional_prefix_images": [
+        167,
+        111,
+        124,
+        132,
+        143,
+        153,
+        93
+      ],
+      "e": 12,
+      "nonempty_branches": 20,
+      "prefix_image": 923,
+      "saturated_request_lower_bounds": [
+        64,
+        46,
+        47,
+        50,
+        58,
+        62,
+        36
+      ],
+      "size_nodes": 735,
+      "target_loads": [
+        31,
+        20,
+        22,
+        24,
+        26,
+        28,
+        18
+      ],
+      "unary_nodes": 417
+    },
+    {
+      "H": 106,
+      "L": 7,
+      "Q": 169,
+      "conditional_prefix_images": [
+        166,
+        112,
+        123,
+        132,
+        142,
+        153,
+        92
+      ],
+      "e": 12,
+      "nonempty_branches": 20,
+      "prefix_image": 920,
+      "saturated_request_lower_bounds": [
+        72,
+        51,
+        50,
+        56,
+        60,
+        64,
+        33
+      ],
+      "size_nodes": 732,
+      "target_loads": [
+        31,
+        20,
+        22,
+        24,
+        26,
+        28,
+        18
+      ],
+      "unary_nodes": 414
+    },
+    {
+      "H": 107,
+      "L": 7,
+      "Q": 169,
+      "conditional_prefix_images": [
+        168,
+        114,
+        128,
+        133,
+        142,
+        153,
+        93
+      ],
+      "e": 12,
+      "nonempty_branches": 20,
+      "prefix_image": 931,
+      "saturated_request_lower_bounds": [
+        76,
+        53,
+        54,
+        53,
+        57,
+        59,
+        35
+      ],
+      "size_nodes": 743,
+      "target_loads": [
+        31,
+        20,
+        22,
+        24,
+        26,
+        28,
+        18
+      ],
+      "unary_nodes": 425
+    },
+    {
+      "H": 108,
+      "L": 7,
+      "Q": 182,
+      "conditional_prefix_images": [
+        170,
+        118,
+        132,
+        136,
+        146,
+        157,
+        136
+      ],
+      "e": 13,
+      "nonempty_branches": 21,
+      "prefix_image": 995,
+      "saturated_request_lower_bounds": [
+        73,
+        55,
+        57,
+        59,
+        62,
+        69,
+        58
+      ],
+      "size_nodes": 793,
+      "target_loads": [
+        32,
+        21,
+        23,
+        25,
+        27,
+        29,
+        25
+      ],
+      "unary_nodes": 450
+    },
+    {
+      "H": 109,
+      "L": 7,
+      "Q": 182,
+      "conditional_prefix_images": [
+        170,
+        118,
+        132,
+        138,
+        147,
+        156,
+        137
+      ],
+      "e": 13,
+      "nonempty_branches": 21,
+      "prefix_image": 998,
+      "saturated_request_lower_bounds": [
+        59,
+        54,
+        57,
+        58,
+        63,
+        67,
+        56
+      ],
+      "size_nodes": 796,
+      "target_loads": [
+        32,
+        21,
+        23,
+        25,
+        27,
+        29,
+        25
+      ],
+      "unary_nodes": 453
+    },
+    {
+      "H": 110,
+      "L": 7,
+      "Q": 182,
+      "conditional_prefix_images": [
+        170,
+        117,
+        132,
+        138,
+        149,
+        155,
+        137
+      ],
+      "e": 13,
+      "nonempty_branches": 21,
+      "prefix_image": 998,
+      "saturated_request_lower_bounds": [
+        70,
+        55,
+        59,
+        61,
+        67,
+        68,
+        56
+      ],
+      "size_nodes": 796,
+      "target_loads": [
+        32,
+        21,
+        23,
+        25,
+        27,
+        29,
+        25
+      ],
+      "unary_nodes": 453
+    },
+    {
+      "H": 111,
+      "L": 7,
+      "Q": 182,
+      "conditional_prefix_images": [
+        172,
+        118,
+        132,
+        139,
+        150,
+        158,
+        138
+      ],
+      "e": 13,
+      "nonempty_branches": 21,
+      "prefix_image": 1007,
+      "saturated_request_lower_bounds": [
+        65,
+        56,
+        61,
+        66,
+        72,
+        75,
+        62
+      ],
+      "size_nodes": 805,
+      "target_loads": [
+        32,
+        21,
+        23,
+        25,
+        27,
+        29,
+        25
+      ],
+      "unary_nodes": 462
+    },
+    {
+      "H": 112,
+      "L": 7,
+      "Q": 196,
+      "conditional_prefix_images": [
+        178,
+        122,
+        136,
+        142,
+        154,
+        162,
+        171
+      ],
+      "e": 14,
+      "nonempty_branches": 22,
+      "prefix_image": 1065,
+      "saturated_request_lower_bounds": [
+        80,
+        63,
+        73,
+        71,
+        78,
+        82,
+        84
+      ],
+      "size_nodes": 848,
+      "target_loads": [
+        34,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "unary_nodes": 478
+    },
+    {
+      "H": 113,
+      "L": 7,
+      "Q": 196,
+      "conditional_prefix_images": [
+        179,
+        121,
+        129,
+        142,
+        152,
+        161,
+        171
+      ],
+      "e": 14,
+      "nonempty_branches": 22,
+      "prefix_image": 1055,
+      "saturated_request_lower_bounds": [
+        67,
+        55,
+        62,
+        60,
+        68,
+        74,
+        78
+      ],
+      "size_nodes": 838,
+      "target_loads": [
+        34,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "unary_nodes": 468
+    },
+    {
+      "H": 114,
+      "L": 7,
+      "Q": 196,
+      "conditional_prefix_images": [
+        180,
+        120,
+        129,
+        142,
+        150,
+        161,
+        171
+      ],
+      "e": 14,
+      "nonempty_branches": 22,
+      "prefix_image": 1053,
+      "saturated_request_lower_bounds": [
+        75,
+        56,
+        62,
+        67,
+        67,
+        72,
+        78
+      ],
+      "size_nodes": 836,
+      "target_loads": [
+        34,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "unary_nodes": 466
+    },
+    {
+      "H": 115,
+      "L": 7,
+      "Q": 196,
+      "conditional_prefix_images": [
+        182,
+        121,
+        131,
+        144,
+        151,
+        161,
+        169
+      ],
+      "e": 14,
+      "nonempty_branches": 22,
+      "prefix_image": 1059,
+      "saturated_request_lower_bounds": [
+        75,
+        55,
+        61,
+        62,
+        66,
+        67,
+        75
+      ],
+      "size_nodes": 842,
+      "target_loads": [
+        34,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "unary_nodes": 472
+    },
+    {
+      "H": 116,
+      "L": 8,
+      "Q": 210,
+      "conditional_prefix_images": [
+        182,
+        122,
+        131,
+        142,
+        148,
+        161,
+        142,
+        103
+      ],
+      "e": 13,
+      "nonempty_branches": 22,
+      "prefix_image": 1131,
+      "saturated_request_lower_bounds": [
+        96,
+        62,
+        70,
+        72,
+        79,
+        78,
+        64,
+        47
+      ],
+      "size_nodes": 900,
+      "target_loads": [
+        34,
+        22,
+        24,
+        26,
+        28,
+        30,
+        26,
+        20
+      ],
+      "unary_nodes": 502
+    },
+    {
+      "H": 117,
+      "L": 8,
+      "Q": 210,
+      "conditional_prefix_images": [
+        183,
+        123,
+        132,
+        143,
+        150,
+        161,
+        141,
+        103
+      ],
+      "e": 13,
+      "nonempty_branches": 22,
+      "prefix_image": 1136,
+      "saturated_request_lower_bounds": [
+        71,
+        49,
+        57,
+        59,
+        59,
+        64,
+        59,
+        35
+      ],
+      "size_nodes": 905,
+      "target_loads": [
+        34,
+        22,
+        24,
+        26,
+        28,
+        30,
+        26,
+        20
+      ],
+      "unary_nodes": 507
+    },
+    {
+      "H": 118,
+      "L": 8,
+      "Q": 210,
+      "conditional_prefix_images": [
+        183,
+        124,
+        135,
+        142,
+        149,
+        161,
+        142,
+        103
+      ],
+      "e": 13,
+      "nonempty_branches": 22,
+      "prefix_image": 1139,
+      "saturated_request_lower_bounds": [
+        85,
+        59,
+        62,
+        60,
+        62,
+        66,
+        60,
+        44
+      ],
+      "size_nodes": 908,
+      "target_loads": [
+        34,
+        22,
+        24,
+        26,
+        28,
+        30,
+        26,
+        20
+      ],
+      "unary_nodes": 510
+    },
+    {
+      "H": 119,
+      "L": 8,
+      "Q": 210,
+      "conditional_prefix_images": [
+        185,
+        125,
+        136,
+        144,
+        152,
+        161,
+        142,
+        104
+      ],
+      "e": 13,
+      "nonempty_branches": 22,
+      "prefix_image": 1149,
+      "saturated_request_lower_bounds": [
+        80,
+        63,
+        73,
+        77,
+        76,
+        76,
+        68,
+        42
+      ],
+      "size_nodes": 918,
+      "target_loads": [
+        34,
+        22,
+        24,
+        26,
+        28,
+        30,
+        26,
+        20
+      ],
+      "unary_nodes": 520
+    },
+    {
+      "H": 120,
+      "L": 8,
+      "Q": 225,
+      "conditional_prefix_images": [
+        191,
+        129,
+        140,
+        148,
+        156,
+        166,
+        175,
+        107
+      ],
+      "e": 14,
+      "nonempty_branches": 23,
+      "prefix_image": 1212,
+      "saturated_request_lower_bounds": [
+        91,
+        70,
+        78,
+        83,
+        87,
+        89,
+        87,
+        51
+      ],
+      "size_nodes": 965,
+      "target_loads": [
+        36,
+        23,
+        25,
+        27,
+        29,
+        31,
+        33,
+        21
+      ],
+      "unary_nodes": 538
+    },
+    {
+      "H": 121,
+      "L": 8,
+      "Q": 225,
+      "conditional_prefix_images": [
+        191,
+        127,
+        141,
+        148,
+        158,
+        168,
+        177,
+        107
+      ],
+      "e": 14,
+      "nonempty_branches": 23,
+      "prefix_image": 1217,
+      "saturated_request_lower_bounds": [
+        74,
+        60,
+        65,
+        72,
+        79,
+        86,
+        91,
+        37
+      ],
+      "size_nodes": 970,
+      "target_loads": [
+        36,
+        23,
+        25,
+        27,
+        29,
+        31,
+        33,
+        21
+      ],
+      "unary_nodes": 543
+    },
+    {
+      "H": 122,
+      "L": 8,
+      "Q": 225,
+      "conditional_prefix_images": [
+        192,
+        126,
+        140,
+        148,
+        158,
+        166,
+        177,
+        108
+      ],
+      "e": 14,
+      "nonempty_branches": 23,
+      "prefix_image": 1215,
+      "saturated_request_lower_bounds": [
+        97,
+        64,
+        71,
+        79,
+        84,
+        85,
+        86,
+        37
+      ],
+      "size_nodes": 968,
+      "target_loads": [
+        36,
+        23,
+        25,
+        27,
+        29,
+        31,
+        33,
+        21
+      ],
+      "unary_nodes": 541
+    },
+    {
+      "H": 123,
+      "L": 8,
+      "Q": 225,
+      "conditional_prefix_images": [
+        194,
+        128,
+        142,
+        149,
+        159,
+        167,
+        178,
+        109
+      ],
+      "e": 14,
+      "nonempty_branches": 23,
+      "prefix_image": 1226,
+      "saturated_request_lower_bounds": [
+        107,
+        69,
+        72,
+        74,
+        82,
+        85,
+        88,
+        42
+      ],
+      "size_nodes": 979,
+      "target_loads": [
+        36,
+        23,
+        25,
+        27,
+        29,
+        31,
+        33,
+        21
+      ],
+      "unary_nodes": 552
+    },
+    {
+      "H": 124,
+      "L": 8,
+      "Q": 240,
+      "conditional_prefix_images": [
+        196,
+        132,
+        146,
+        153,
+        163,
+        171,
+        182,
+        157
+      ],
+      "e": 15,
+      "nonempty_branches": 24,
+      "prefix_image": 1300,
+      "saturated_request_lower_bounds": [
+        112,
+        83,
+        91,
+        100,
+        103,
+        100,
+        98,
+        77
+      ],
+      "size_nodes": 1037,
+      "target_loads": [
+        37,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        29
+      ],
+      "unary_nodes": 581
+    },
+    {
+      "H": 125,
+      "L": 8,
+      "Q": 240,
+      "conditional_prefix_images": [
+        196,
+        132,
+        146,
+        153,
+        163,
+        171,
+        182,
+        157
+      ],
+      "e": 15,
+      "nonempty_branches": 24,
+      "prefix_image": 1300,
+      "saturated_request_lower_bounds": [
+        62,
+        65,
+        74,
+        85,
+        94,
+        107,
+        116,
+        106
+      ],
+      "size_nodes": 1037,
+      "target_loads": [
+        37,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        29
+      ],
+      "unary_nodes": 581
+    },
+    {
+      "H": 126,
+      "L": 8,
+      "Q": 240,
+      "conditional_prefix_images": [
+        196,
+        132,
+        146,
+        153,
+        163,
+        171,
+        182,
+        157
+      ],
+      "e": 15,
+      "nonempty_branches": 24,
+      "prefix_image": 1300,
+      "saturated_request_lower_bounds": [
+        91,
+        77,
+        84,
+        93,
+        100,
+        111,
+        118,
+        106
+      ],
+      "size_nodes": 1037,
+      "target_loads": [
+        37,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        29
+      ],
+      "unary_nodes": 581
+    },
+    {
+      "H": 127,
+      "L": 8,
+      "Q": 240,
+      "conditional_prefix_images": [
+        196,
+        132,
+        146,
+        153,
+        163,
+        171,
+        182,
+        157
+      ],
+      "e": 15,
+      "nonempty_branches": 24,
+      "prefix_image": 1300,
+      "saturated_request_lower_bounds": [
+        62,
+        65,
+        80,
+        93,
+        105,
+        120,
+        133,
+        125
+      ],
+      "size_nodes": 1037,
+      "target_loads": [
+        37,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        29
+      ],
+      "unary_nodes": 581
+    },
+    {
+      "H": 128,
+      "L": 8,
+      "Q": 256,
+      "conditional_prefix_images": [
+        205,
+        138,
+        151,
+        160,
+        168,
+        177,
+        187,
+        195
+      ],
+      "e": 16,
+      "nonempty_branches": 25,
+      "prefix_image": 1381,
+      "saturated_request_lower_bounds": [
+        158,
+        107,
+        116,
+        124,
+        129,
+        139,
+        146,
+        154
+      ],
+      "size_nodes": 1101,
+      "target_loads": [
+        39,
+        25,
+        27,
+        29,
+        31,
+        33,
+        35,
+        37
+      ],
+      "unary_nodes": 614
+    },
+    {
+      "H": 129,
+      "L": 8,
+      "Q": 256,
+      "conditional_prefix_images": [
+        206,
+        138,
+        146,
+        161,
+        167,
+        177,
+        185,
+        195
+      ],
+      "e": 16,
+      "nonempty_branches": 25,
+      "prefix_image": 1375,
+      "saturated_request_lower_bounds": [
+        127,
+        75,
+        71,
+        68,
+        63,
+        60,
+        56,
+        53
+      ],
+      "size_nodes": 1095,
+      "target_loads": [
+        39,
+        25,
+        27,
+        29,
+        31,
+        33,
+        35,
+        37
+      ],
+      "unary_nodes": 608
+    },
+    {
+      "H": 130,
+      "L": 8,
+      "Q": 256,
+      "conditional_prefix_images": [
+        204,
+        137,
+        145,
+        160,
+        166,
+        176,
+        184,
+        194
+      ],
+      "e": 16,
+      "nonempty_branches": 25,
+      "prefix_image": 1366,
+      "saturated_request_lower_bounds": [
+        47,
+        41,
+        43,
+        46,
+        49,
+        52,
+        55,
+        58
+      ],
+      "size_nodes": 1086,
+      "target_loads": [
+        39,
+        25,
+        27,
+        29,
+        31,
+        33,
+        35,
+        37
+      ],
+      "unary_nodes": 599
+    },
+    {
+      "H": 131,
+      "L": 8,
+      "Q": 256,
+      "conditional_prefix_images": [
+        204,
+        137,
+        145,
+        160,
+        166,
+        176,
+        184,
+        194
+      ],
+      "e": 16,
+      "nonempty_branches": 25,
+      "prefix_image": 1366,
+      "saturated_request_lower_bounds": [
+        63,
+        50,
+        54,
+        57,
+        59,
+        61,
+        64,
+        67
+      ],
+      "size_nodes": 1086,
+      "target_loads": [
+        39,
+        25,
+        27,
+        29,
+        31,
+        33,
+        35,
+        37
+      ],
+      "unary_nodes": 599
+    }
+  ],
+  "complete_h2_domain": {
+    "all_bracket_residue_executions": 13728,
+    "unit_leaf_words": 8
+  },
+  "dyadic_rows": [
+    {
+      "B1": 18,
+      "H": 16,
+      "TM61_K0": 4
+    },
+    {
+      "B1": 38,
+      "H": 32,
+      "TM61_K0": 9
+    },
+    {
+      "B1": 78,
+      "H": 64,
+      "TM61_K0": 19
+    },
+    {
+      "B1": 158,
+      "H": 128,
+      "TM61_K0": 39
+    },
+    {
+      "B1": 318,
+      "H": 256,
+      "TM61_K0": 79
+    },
+    {
+      "B1": 638,
+      "H": 512,
+      "TM61_K0": 159
+    },
+    {
+      "B1": 1278,
+      "H": 1024,
+      "TM61_K0": 319
+    }
+  ],
+  "falsifiers": {
+    "context_response_erasure": [
+      80,
+      [
+        6,
+        11
+      ],
+      [
+        16,
+        21
+      ]
+    ],
+    "positive_residue_omission": [
+      21,
+      2,
+      2,
+      3,
+      "OA",
+      12,
+      0
+    ],
+    "rho_response_erasure": [
+      72,
+      [
+        6,
+        10
+      ],
+      [
+        10,
+        19
+      ]
+    ]
+  },
+  "schema": "fib-tm62-online-prefix-v1",
+  "whole_candidate_equalities_accepted": 15500
+}

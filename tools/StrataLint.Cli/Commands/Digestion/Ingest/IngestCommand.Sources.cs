@@ -6,15 +6,44 @@ namespace StrataLint.Cli;
 internal static partial class IngestCommand
 {
     private static InvalidOperationException SourceUsage(string reason) => new(
-        "USAGE: StrataLint ingest --base REV [--source X]...; " + reason);
+        "USAGE: StrataLint ingest --source X [--source X ...]; " + reason);
+
+    private static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadSelectedSources(
+        IRepositoryGateway repository, ImmutableArray<string> selectors)
+    {
+        var paths = new HashSet<string>(StringComparer.Ordinal) { TheoryAtomizerDataLoader.DataPath };
+        RawRepositorySnapshot? metadata = null;
+        foreach (var selector in selectors)
+        {
+            if (!RepoPath.TryCreate(selector, out _)) throw SourceUsage($"unknown --source selector '{selector}'");
+            if (!selector.Contains('/'))
+            {
+                paths.Add(BackfillInventoryLoader.RootPath + selector + "/source.toml");
+                continue;
+            }
+            metadata ??= DigestionQuerySelection.FindSourceMetadata(repository,
+                selectors.Where(static source => source.Contains('/')).ToArray());
+            var matches = metadata.Entries.Where(entry => DigestionQuerySelection.MatchesSourcePath(entry, selector)).ToArray();
+            if (matches.Length > 1) throw SourceUsage($"ambiguous --source selector '{selector}'");
+            if (matches.Length == 1) paths.Add(matches[0].Path);
+            else paths.Add(BackfillInventoryLoader.RootPath + DigestionIngestor.DeriveSourceId(selector) + "/source.toml");
+            paths.Add(selector);
+        }
+        var loaded = DigestionQuerySelection.Load(repository.ReadCurrent(paths.Select(DigestionQuerySelection.Literal).ToArray()));
+        if (loaded.Document.RequireDigestionSources().IsEmpty) return loaded;
+        return DigestionQuerySelection.Load(DigestionQuerySelection.Merge(loaded.Raw,
+            repository.ReadCurrent(loaded.Document.RequireDigestionSources()
+                .Select(static source => DigestionQuerySelection.Literal(source.SourcePath)).ToArray())));
+    }
 
     private static (ImmutableHashSet<string>? SourceIds, ImmutableHashSet<string>? RegistrationPaths) ResolveSources(
-        IngestInputs inputs,
+        BackfillInventoryDocument document,
+        RepositorySnapshot current,
         ImmutableArray<string> selectors)
     {
         if (selectors.IsEmpty) return (null, null);
 
-        var sources = inputs.CurrentDocument.RequireDigestionSources();
+        var sources = document.RequireDigestionSources();
         var claims = sources.ToDictionary(static source => source.SourceId,
             static source => source.SourcePath, StringComparer.Ordinal);
         var ids = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
@@ -29,7 +58,7 @@ internal static partial class IngestCommand
             }
             if (!selector.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
                 || !selector.EndsWith(".md", StringComparison.Ordinal)
-                || !inputs.Current.TryGetFile(selector, out _))
+                || !current.TryGetFile(selector, out _))
                 throw SourceUsage($"unknown --source selector '{selector}'");
 
             var id = DigestionIngestor.DeriveSourceId(selector);

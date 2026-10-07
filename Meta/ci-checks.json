@@ -14,14 +14,12 @@
         "tools/StrataLint.Cli/packages.lock.json",
         "tools/StrataLint.Engine/packages.lock.json",
         "tools/StrataLint.Lean/packages.lock.json",
-        "tools/StrataLint.Scribe.Documents/packages.lock.json",
         "tools/StrataLint.Scribe/packages.lock.json",
         "tools/Trureturing.Truth/packages.lock.json",
         "*.lean",
         "D5/**/*.lean",
         "Reg/**",
-        "Meta/domains.yaml",
-        "Blueprint/**/*.scribe.cs"
+        "Meta/domains.yaml"
       ],
       "material_excludes": [
         "docs/develop/**",
@@ -42,7 +40,6 @@
         "tools/StrataLint.Cli/packages.lock.json",
         "tools/StrataLint.Engine/packages.lock.json",
         "tools/StrataLint.Lean/packages.lock.json",
-        "tools/StrataLint.Scribe.Documents/packages.lock.json",
         "tools/StrataLint.Scribe/packages.lock.json",
         "tools/Trureturing.Truth/packages.lock.json",
         "*.json",

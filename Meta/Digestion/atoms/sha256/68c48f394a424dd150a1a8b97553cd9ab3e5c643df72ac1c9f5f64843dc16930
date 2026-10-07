@@ -1,0 +1,14 @@
+**命题 63.3（支持交叠的统一信号）。** 记
+
+$$
+V_\theta(I)=\mathbb P(C_\theta(X)\ne C_\theta(X')).
+$$
+
+则
+
+$$
+I\cap S_\theta=\varnothing\Rightarrow V_\theta(I)=0,\qquad
+I\cap S_\theta\ne\varnothing\Rightarrow V_\theta(I)\ge\beta:=2/3125.
+\tag{63.18}
+$$
+

@@ -1,0 +1,16 @@
+## Physical coordinate and empty-factor applications
+
+Finite Euclidean coordinate spaces are transported through the measurable
+`WithLp` equivalences, product-coordinate splitting and coordinate
+reindexing. Their volume-preserving laws use actual Euclidean volume and
+product measures. Pullback and inverse pullback give the exact physical L2
+identification for k and n−k coordinates, including k=0, k=n and n=0.
+An empty coordinate type gives a singleton Euclidean space. Its volume is
+Dirac mass one at zero and its L2 is the one-dimensional scalar Hilbert
+space, via constant representatives; it is not the zero space.
+
+This construction is the function-space tensor bridge. It does not identify
+oscillator domains or prove metaplectic covariance, Hamiltonian equality,
+selfadjointness, trace class, a Gibbs state factorization, or a partition
+identity. Those statements require their own operator and domain joins on
+the same physical Hilbert spaces.

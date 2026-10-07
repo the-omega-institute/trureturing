@@ -1,0 +1,18 @@
+**希格斯与物质表示 288.3。** 设外加内部表示空间 `W` 和希格斯场 `\Phi`，则可以在 FIB 节点上定义
+
+$$
+\Phi_v\in W,
+\qquad
+V(\Phi)=m^2\lVert\Phi\rVert^2+\lambda\lVert\Phi\rVert^4,
+$$
+
+并以表示耦合给出 Yukawa 项
+
+$$
+S_{\mathrm{Yukawa}}
+=\sum_{v}\nobreak
+\left(\overline\psi_vY_v\Phi_v\psi_v+\mathrm{h.c.}\right).
+$$
+
+规范群的表示、Yukawa 矩阵 `Y_v`、质量参数 `m`、自耦合 `\lambda` 以及真空边界条件都决定了对称性破缺和粒子质量。FIB 可限制相互作用项的组合支撑，却不能从接缝或 Fibonacci 层级唯一确定这些表示和参数。
+

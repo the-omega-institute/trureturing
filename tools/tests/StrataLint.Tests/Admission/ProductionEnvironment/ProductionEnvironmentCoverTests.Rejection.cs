@@ -6,11 +6,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-// ProductionEnvironmentCoverTests 的后半:cover 拒绝路径一族。
-// 分出来的直接理由是余量:宿主原 795 行,离 SL-003 的 800 行硬线只剩 5 行。
-// 该类本就是 partial,故切分不动类声明。
-// 切点用「缩进 4 的真方法收尾 ∧ 后接空行 ∧ 再后是缩进 4 的特性行」判定,
-// 全文件 16 处候选取最接近中点者(第 416 行)。
+// ProductionEnvironmentCoverTests 的 cover 拒绝路径与相关完整性检查。
 
 public sealed partial class ProductionEnvironmentTests
 {
@@ -31,11 +27,8 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(inputs.Ledger, File.ReadAllText(outputPath));
     }
 
-    [Theory]
-    [InlineData("coverage-target-mismatch")]
-    [InlineData("scribe-definition-mismatch")]
-    [InlineData("scribe-emission-mismatch")]
-    public void CoverAtomAlwaysValidatesCurrentCoverageButScopesScribeBacklog(string mismatchCode)
+    [Fact]
+    public void CoverAtomIgnoresUnreferencedInvalidCoverageDuringIndependentWrite()
     {
         const string siblingModuleGid = "D5/S0/Carrier/CoverSibling";
         const string siblingGid = siblingModuleGid + ".sibling";
@@ -47,7 +40,7 @@ public sealed partial class ProductionEnvironmentTests
                 [siblingGid],
                 ["historical-uncovered-clause"]),
         });
-        var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
+        var inputs = DirectoryInputs(WithInvalidSiblingCoverage(materialized));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
         var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
@@ -59,20 +52,16 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.CoverAtom(CoverArgs(inputs));
 
-        if (mismatchCode == "coverage-target-mismatch")
-        {
-            Assert.False(result.Success);
-            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-            Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
-        }
-        else
-        {
-            Assert.True(
-                result.Success,
-                $"unrelated-scribe-drift-must-not-block-cover ({mismatchCode}): {result.Error}");
-            Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
-            Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
-        }
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+        Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        AssertUnreferencedAtomBytesUnchanged(temporary.Path, inputs, CoverWorld.UnrelatedAtomId);
+    }
+
+    private static void AssertUnreferencedAtomBytesUnchanged(string root, CoverInputs inputs, string atomId)
+    {
+        var path = Assert.Single(inputs.Files.Keys, path => path.EndsWith("/" + atomId + ".yaml", StringComparison.Ordinal));
+        Assert.Equal(inputs.Files[path], File.ReadAllText(Path.Combine(root, path)));
     }
 
     private static CoverInputs DirectoryInputs(CoverInputs inputs) => inputs with
@@ -92,7 +81,7 @@ public sealed partial class ProductionEnvironmentTests
         return result;
     }
 
-    private static CoverInputs WithSiblingReceiptMismatch(CoverInputs inputs, string mismatchCode)
+    private static CoverInputs WithInvalidSiblingCoverage(CoverInputs inputs)
     {
         var entries = inputs.Document.RequireDigestionEntries();
         var siblingAtomId = entries.Any(entry => entry.AtomId == CoverWorld.OtherAtomId)
@@ -102,9 +91,6 @@ public sealed partial class ProductionEnvironmentTests
             entries,
             entry => entry.AtomId == siblingAtomId);
         var siblingGid = Assert.Single(siblingEntry.CoverageGids);
-        var documentGid = ScribeEmissionAttestation.DocumentGid(siblingGid);
-        Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verified));
-        var targetStatementId = FrozenStatementReceiptTestData.Resolve(inputs.Files, siblingGid);
         var mismatchStatementId = FrozenStatementReceiptTestData.Id('0');
         BackfillInventoryDocument WithMismatch(BackfillInventoryDocument document) =>
             document.WithDigestionSources(document.RequireDigestionSources()
@@ -117,9 +103,7 @@ public sealed partial class ProductionEnvironmentTests
                             [
                                 new DigestionCoverageEdge(
                                     siblingGid,
-                                    mismatchCode == "coverage-target-mismatch"
-                                        ? mismatchStatementId
-                                        : targetStatementId),
+                                    mismatchStatementId),
                             ],
                         }
                         : entry).ToImmutableArray(),
@@ -142,12 +126,11 @@ public sealed partial class ProductionEnvironmentTests
         };
     }
 
-    private static CoverInputs WithReceiptMismatchAtBaseline(
+    private static CoverInputs WithInvalidSiblingCoverageAtBaseline(
         CoverInputs inputs,
-        string mismatchCode,
         bool byteIdenticalBaseline = false)
     {
-        var current = WithSiblingReceiptMismatch(inputs, mismatchCode);
+        var current = WithInvalidSiblingCoverage(inputs);
         var baseline = byteIdenticalBaseline
             ? new Dictionary<string, string>(current.Files, StringComparer.Ordinal)
             : new Dictionary<string, string>(current.Baseline, StringComparer.Ordinal);
@@ -223,6 +206,16 @@ public sealed partial class ProductionEnvironmentTests
         var snapshotEntries = new List<RawRepositoryEntry>
         {
             RawRepositoryEntry.FromText("captured/probe.txt", "captured bytes\n"),
+            RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path,
+                EngineeringRegistrationFixture.Manifest()),
+            RawRepositoryEntry.FromText("Meta/ReportProducers/scribe-content.json", """
+                {"schema":"report-producer-scope-v2","registration":"lean-report-inputs.json",
+                 "scope":"scribe-content","projects":[]}
+                """),
+            RawRepositoryEntry.FromText("lean-report-inputs.json", """
+                {"inspector_sources":{"include":[],"exclude":[]},"producer_scopes":{
+                 "lean-report":{"include":[],"exclude":[]},"scribe-content":{"include":[],"exclude":[]}}}
+                """),
         };
         snapshotEntries.AddRange(fixtureFiles.Select(static fixture =>
             RawRepositoryEntry.FromText(fixture.Path, fixture.Content)));
@@ -236,7 +229,7 @@ public sealed partial class ProductionEnvironmentTests
                     static module => module.Key,
                     static module => new LeanFileReport(
                         [], module.Select(static item => item.Declaration).ToImmutableArray()),
-                    StringComparer.Ordinal)));
+                    StringComparer.Ordinal)), RawChangeSet.Create(fixtureFiles.Select(fixture => fixture.Path)));
 
         Assert.Same(verification, actual);
         Assert.Equal("captured bytes\n", observed);
@@ -246,5 +239,5 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     private static string[] CoverArgs(CoverInputs inputs) =>
-        ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"];
+        ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid];
 }

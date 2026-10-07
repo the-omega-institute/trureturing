@@ -1,0 +1,9 @@
+# Scarf's lemma and the real simplex fixed-point theorem
+
+The source is Math_XMUM's *Brouwer* repository, revision
+`f9dc162170e8711f78059a87edcd38ffc44a1bfb`. The year in the citation is the copyright
+notice's year. The statements and mathematical arguments below are known results,
+with no mathematical novelty claim. The two primary files are
+[Scarf.lean](https://github.com/math-xmum/Brouwer/blob/f9dc162170e8711f78059a87edcd38ffc44a1bfb/Gametheory/Scarf.lean)
+and [Brouwer.lean](https://github.com/math-xmum/Brouwer/blob/f9dc162170e8711f78059a87edcd38ffc44a1bfb/Gametheory/Brouwer.lean).
+

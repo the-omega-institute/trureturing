@@ -174,7 +174,6 @@ internal static partial class RepositoryPathPolicy
             || FileMapDocuments.IsPolicyPath(value)
             || DigestionCasStore.IsCanonicalPath(value)
             || BackfillInventoryLoader.IsCanonicalPath(value)
-            || IsEchoResidualShardPath(value)
             || ProblemPoolPaths.IsCanonicalPath(value)
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(value)
             || FrozenStatePath.TryToModulePath(value, out _)
@@ -229,15 +228,6 @@ internal static partial class RepositoryPathPolicy
             "tools" => Sl000(value, "unknown tools artifact"),
             _ => Sl000(value, "unknown top-level artifact"),
         };
-    }
-
-    internal static bool IsEchoResidualShardPath(string value)
-    {
-        const string prefix = "Generated/echo-residuals/";
-        if (!value.StartsWith(prefix, StringComparison.Ordinal)
-            || !value.EndsWith(".md", StringComparison.Ordinal)) return false;
-        var relative = value[prefix.Length..];
-        return relative.Length > ".md".Length && !relative.Contains('/', StringComparison.Ordinal);
     }
 
     internal static bool TryResolve(RepoPath path, ValidatedPolicy policy, out Gid? gid)

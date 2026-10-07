@@ -3,7 +3,6 @@
   "registration": "lean-report-inputs.json",
   "scope": "scribe-content",
   "projects": [
-    "tools/StrataLint.Lean/StrataLint.Lean.csproj",
-    "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+    "tools/StrataLint.Lean/StrataLint.Lean.csproj"
   ]
 }
