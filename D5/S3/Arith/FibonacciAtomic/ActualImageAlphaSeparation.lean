@@ -41,8 +41,12 @@ structure TwoHole where
 
 /-- Insert both named holes, applying the same map to all fixed source trees. -/
 def TwoHole.fill (J : TwoHole) (g : Source → Source) (X Y : Source) : Source :=
-  (fill g J.outer) (if J.swapped then .mul ((fill g J.left) Y) ((fill g J.right) X)
-    else .mul ((fill g J.left) X) ((fill g J.right) Y))
+  (ActualImageAlphaSeparation.fill g J.outer)
+    (if J.swapped then
+      .mul ((ActualImageAlphaSeparation.fill g J.left) Y)
+        ((ActualImageAlphaSeparation.fill g J.right) X)
+    else .mul ((ActualImageAlphaSeparation.fill g J.left) X)
+      ((ActualImageAlphaSeparation.fill g J.right) Y))
 
 /-- The two named hole addresses. -/
 def TwoHole.addresses (J : TwoHole) : Address × Address :=
