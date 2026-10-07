@@ -15,7 +15,10 @@ internal sealed class Scale36ActualEndpointAcquisitionDocument : IScribeDocument
                 + "compensation slot in the ordered right comb. E is the beta/alpha pair, A is (E,beta), "
                 + "C is (A,E), B is (C,A), T is (A,C), W1 is (B,C), and KT is (T,A). P0 has C in every "
                 + "active slot and KT at the tail. Uj replaces these by T and B; Vj by W1 and A. "
-                + "Q(k,i) is the complete bracket-preserving preimage and n(k)=5k+11.")),
+                + "Q(k,i) is the complete bracket-preserving preimage and n(k)=5k+11. "
+                + "The map kappahist retains the chronological addresses and merges branch and absent "
+                + "responses. A policy factors through this map precisely when it depends only on that "
+                + "coarse history.")),
             Describe.Lean(DescribeId.Create("scale36-family-structure"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Scale36ActualEndpointAcquisition.family_structure"),
                 H("Positive, Distinct and Nonconflicting Prototypes"),
@@ -84,7 +87,7 @@ internal sealed class Scale36ActualEndpointAcquisitionDocument : IScribeDocument
         Formula k=V("k"), i=V("i"), j=V("j"), p=V("pi"), indices=Call("I",k), tree=Call("F",k,j);
         return Guard(And(StructureFormula(),EqOf(Call("card",indices),Add(Mul(D(2),k),D(1))),
             All("i",indices,Some("pi",V("Strategy"),And(
-            Call("CoarseObservable",Call("policy",p)),All("j",indices,And(
+            Call("FactorsThrough",Call("policy",p),V("kappahist")),All("j",indices,And(
                 EqOf(Call("J",p,tree),Seq(Call("L",tree),Sp,Cup,Sp,Call("X",k,i,j))),
                 EqOf(Call("cost",p,tree),Sub(Add(Call("n",k),D(1)),Call("indicator",EqOf(i,j)))))))))));
     }
