@@ -162,7 +162,7 @@ $$\forall L \in Nat, (\forall h \in Nat, ((\operatorname{Finite}\left(\operatorn
 
 L and h are natural numbers. Pi(L,h) denotes the policies satisfying CorrectOn(L) and WindowOn(L,h); I3 denotes the actual third substitution image. The scalar and all replies come from the same original source. Controller computation, scalar acquisition and address text length are free.
 
-Adjacent Fibonacci coefficients are coprime. Nonnegativity leaves four compositions at stage zero and only (3,5) later. Actual composition transport forces a positive source's preimage to have one leaf of each label, giving precisely P and Q. Each composition fiber is finite.
+Adjacent Fibonacci coefficients are coprime. Nonnegativity leaves four compositions at stage zero and only (3,5) later. Actual composition transport forces a positive source's preimage to have one leaf of each label. The composition fiber (1,1) has cardinality two and is exhausted by the two opposite ordered pairs, giving precisely P and Q. Each composition fiber is finite.
 
 At stage zero the five beta responses force the branching skeleton and beta slots. The three remaining subtrees have scalar sum six and each contributes at least two, so all three are single alpha leaves. Label exchanges and beta grafts establish the unique minimum beta certificate. At positive stages the alpha certificate theorem applies on the whole scalar fiber.
 
