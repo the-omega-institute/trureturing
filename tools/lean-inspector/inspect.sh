@@ -195,3 +195,5 @@ run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT
 run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
   --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json"
 cat "$LOG_DIR/publish.stdout.log"
+
+# Native CI input routing probe.
