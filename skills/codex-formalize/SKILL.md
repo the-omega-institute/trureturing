@@ -9,7 +9,7 @@ description: Use when asked to formalize mathematics in this repository, either 
 
 This is a Codex skill package. Install it by copying the `skills/codex-formalize/` directory into `$CODEX_HOME/skills/` (default `~/.codex/skills`), or load it by naming this `SKILL.md` path directly in a dispatcher. This repository copy is the single source of truth; any installed copy is a projection of it.
 
-Utility refutations require the claim definition’s compiled type to be literally `Prop` and the result theorem’s compiled type to be literally `Not claim`. Write the result as `theorem result : ¬ claim := …`; definitionally equivalent aliases or expanded conclusions do not pass SL-031. The result is exempt from four-slot escape registration and needs no Reg refutation certificate.
+Utility refutations require the claim definition’s compiled type to be literally `Prop` and the result theorem’s compiled type to be literally `Not claim`. Write the result as `theorem result : ¬ claim := …`; definitionally equivalent aliases or expanded conclusions do not pass SL-031. The designated result is exempt from four-slot escape registration. Its selector resolves to the unique included compiled declaration with that final name component in the designated module, regardless of namespace; other new public theorems keep their obligations. A missing or ambiguous selector exempts nothing.
 
 ## Scope and authority
 

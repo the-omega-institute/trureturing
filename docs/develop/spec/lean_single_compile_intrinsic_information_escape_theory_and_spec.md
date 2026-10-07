@@ -5,7 +5,7 @@
 **文档状态：** 规范性草案（Normative Draft）  
 **版本：** 4.3 — Single-Compilation / C-IRPT Primitive-Complete / Arena-Invariant / No-Baseline / No-Scoring / Shared-Arena / Layered-Capture / Analysis-v3 / Kernel-Lattice / Layered-Hierarchy / Dispositions
 **适用对象：** `the-omega-institute/trureturing` 中由 Lean 4 定义、证明、登记和编译的数学定理族  
-**核心约束：** 一次 `lake build` 完成 C-IRPT primitive 正规化、定理枚举、联合 kernel 构造、信息逃逸计算、伴随命题证明、失败判定与只读产物发射。
+**核心约束：** D5 承载数学定义与证明；Reg 以接口契约类型声明登记和封印，编译期由内核检查数学义务。`make lean-report` 读取编译产物并作有界结构评定，输出登记绑定与声明材料。Reg 不含也不调用判官实现。
 
 ---
 
@@ -125,7 +125,7 @@ G_i(\mathcal T)
 U_i\neq\varnothing.
 $$
 
-系统仅为正成员构造下列增强定理，指定 maximal catalogs 的全称正性是 positive admission 的条件；完整、非退化且合法的 catalog 独立完成 level-0 classification seal，任一 designated catalog 冗余时产生 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict：
+正成员满足下列增强命题。指定 maximal catalogs 的全称正性是数学上的不可约条件；`Contract.SealCatalog` 的逐成员与目录结论字段携带相应证明，由 Reg 编译期内核检查：
 
 $$
 \widehat\tau_i
@@ -143,7 +143,7 @@ $$
 
 其中 $g_i:G_i(\mathcal T)$ 由同一次 Lean 编译对当前完整定理族精确计算并由 kernel 检查。
 
-指定系统 root $R_\star$ 的 maximal catalogs 的 positive admission 要求下列全称正性；完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，任一 designated catalog 冗余时产生 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict：
+指定系统 root $R_\star$ 的 maximal catalogs 的全称正性表示下列数学条件。目录的冗余或不可约证明保存在 `SealCatalog.conclusion` 中：
 
 $$
 \boxed{
@@ -153,7 +153,7 @@ $$
 }
 $$
 
-即 positive admission 要求指定 root 的每个 canonical maximal catalog 中删除任意 occurrence 都使信息逃逸率严格上升。辅助 root 与 analysis view 不替代该证明；level-0 seal 保留完整 peers，对零成员认证 `trivial_in_catalog`、逐成员记录 IE-C007，并产生 `__catalog_redundant : Catalog.CatalogRedundant C`。待首次冻结对象的独立 dual-novelty gate 保持 OPEN、无 required check；其中 positivity 只由该对象自身判定，旧零 peers 不阻止新正对象，也不被删除。
+即该全称条件要求指定 root 的每个 canonical maximal catalog 中删除任意 occurrence 都使信息逃逸率严格上升。辅助 root 与 analysis view 不替代该证明。Seal 保留完整 peers，`SealRow.conclusion` 对每个成员携带降低逃逸或平凡性证明；零成员另携剩余目录的语义闭包归属证明。冗余目录仍可提供合法 Seal。待首次冻结对象的独立 dual-novelty gate 保持 OPEN、无 required check。
 
 本规范明确取消以下对象：
 
@@ -446,7 +446,7 @@ $$
 
 为单射。
 
-完整系统不要求当前数学必须已经完备，因此 positive admission 不强制 $E_I=\varnothing$。level-0 seal 对完整、非退化且合法的 catalog 成功，保留全部成员；零成员认证为 `trivial_in_catalog`、逐成员记录 IE-C007，catalog 判为 `__catalog_redundant : Catalog.CatalogRedundant C`；待首次冻结对象自身为零时不获 positive admission。
+完整系统不要求当前数学必须已经完备，因此 positive admission 不强制 $E_I=\varnothing$。level-0 seal 对完整、非退化且合法的 catalog 成功，保留全部成员；零成员认证为 `trivial_in_catalog`，`SealCatalog.conclusion` 携带冗余证明；待首次冻结对象自身为零时不获 positive admission。
 
 ---
 
@@ -1624,7 +1624,7 @@ $$
 \delta_i=\delta_j=0.
 $$
 
-因此以下同核形式在完整 catalog 内认证为 `trivial_in_catalog`，逐成员记录 IE-C007，并以 IE-C008 非致命报告已证明的 collision class；catalog 成功 seal 为 `__catalog_redundant : Catalog.CatalogRedundant C`，零成员不获 positive admission：
+因此以下同核形式在完整 catalog 内认证为 `trivial_in_catalog`，并以 IE-C008 非致命报告已证明的 collision class；catalog 以 redundant 结论成功 seal，零成员不获 positive admission：
 
 - 可逆改名；
 - 输出类型同构；
@@ -1644,7 +1644,7 @@ $$
 
 反过来，如果只保留 product theorem，删除各坐标 theorem，则 product theorem 可以具有正增益。
 
-系统不选择或删减不可约基；完整、非退化且合法的过完备族成功 seal，零成员认证为 `trivial_in_catalog`、逐成员记录 IE-C007，catalog 产生 `__catalog_redundant : Catalog.CatalogRedundant C`；待首次冻结对象自身为零时不获 positive admission。
+系统不选择或删减不可约基；完整、非退化且合法的过完备族成功 seal，零成员认证为 `trivial_in_catalog`，catalog 的 `SealCatalog.conclusion` 携带冗余证明；待首次冻结对象自身为零时不获 positive admission。
 
 更一般地，只要同一 catalog 中存在 $j\neq i$ 且 $K^R_{A,j}\subseteq K^R_{A,i}$，较细的
 $j$ 已捕获 $i$ 能捕获的全部 pair，故 $U^R_{A,i}=\varnothing$。这包括但不限于同核
@@ -1670,7 +1670,7 @@ $$
 
 这是正确结果，而不是系统无法决定“保留谁”。当前族确实不是不可约族。
 
-完整合法 catalog 成功 seal，双方均认证为 `trivial_in_catalog`、各有一条 IE-C007，catalog 产生 `__catalog_redundant : Catalog.CatalogRedundant C`，已证明的 collision class 以 IE-C008 非致命报告；零对象不获 positive admission，完整 peer membership 保持，不删除旧成员。
+完整合法 catalog 成功 seal，双方均认证为 `trivial_in_catalog`、各有一条 IE-C007，catalog 的 `SealCatalog.conclusion` 携带冗余证明，已证明的 collision class 以 IE-C008 非致命报告；零对象不获 positive admission，完整 peer membership 保持，不删除旧成员。
 
 ### 10.2 不设置名称优先级
 
@@ -1893,21 +1893,11 @@ $$
 \widehat P_i.
 $$
 
-### 13.5 不修改原 API
+### 13.5 原声明与契约证据
 
-工程实现不得破坏已有 theorem 名称及使用方式。positive occurrence 的报告伴随名表示以下数学关系；trivial occurrence 使用 §27 的 triviality certificate。数学证据由编译后的契约字段提供，报告数据视图不安装新 theorem：
-
-```lean
-theorem originalName.__escape_enriched :
-    OriginalStatement ∧ LowersEscape compiledCatalog originalIndex :=
-  ⟨originalName, originalName.__lowers_escape⟩
-```
-
-原 theorem 继续保持：
-
-```lean
-theorem originalName : OriginalStatement := ...
-```
+原 theorem 保持原名、陈述与证明。增强命题是上述数学构造，不要求生成额外的具名定理。
+`Contract.SealRow.conclusion` 在 exact catalog/index 上保存 positive 的降低逃逸证明，
+或 zero 的平凡性与剩余目录闭包归属证明。报告只核对编译字段与登记目录的对应关系。
 
 ---
 
@@ -1953,7 +1943,7 @@ $$
 
 这不是评价体系变化，而是当前数学族从不可约变成过完备。
 
-完整合法族重新 seal，旧 theorem 的分类非单调地变为 certified `trivial_in_catalog`，逐零成员记录 IE-C007，并产生 `__catalog_redundant : Catalog.CatalogRedundant C`；旧成员仍保留，待首次冻结对象是否获 positive admission 只取决于它自身的 positivity，dual-novelty gate 保持 OPEN、无 required check。
+完整合法族重新 seal，旧 theorem 的分类非单调地变为 certified `trivial_in_catalog`，并在 `SealCatalog.conclusion` 携带冗余证明；旧成员仍保留，待首次冻结对象是否获 positive admission 只取决于它自身的 positivity，dual-novelty gate 保持 OPEN、无 required check。
 
 特别地，若新 peer 的 kernel 严格细化旧 occurrence 的 kernel，则旧 occurrence 的
 leave-one-out capture 必为零。严格 refinement chain 的每个相邻增量可以非空，同时
@@ -2005,14 +1995,11 @@ $$
 
 的无穷回归。
 
-### 15.4 生成证书不是新信息 concept
+### 15.4 契约证明字段不是新信息 concept
 
-`originalName.__lowers_escape` 与 `originalName.__escape_enriched` 是原 theorem 的证明证书，不被重新登记为新的 theorem primitive unit。否则每次编译会人为制造一层“证明此 theorem 有增益的 theorem”，造成无意义增长。
-
-这不是特殊评价规则，而是输入／证书类型的数学区分：
-
-- theorem unit 是被观察概念；
-- certificate 是该 unit 性质的证明项。
+Seal 的数学字段是现有 theorem unit 性质的证明项，不被重新登记为 theorem primitive unit。
+被观察概念与其性质的证明项分别承担对象与证据职责；报告不生成降低逃逸、增强、
+平凡性或系统冗余的具名伴随定理。
 
 ---
 
@@ -4410,7 +4397,7 @@ $$
 
 一个非常简单但真正切开独有 primitive pair 的 theorem，其 $\delta_i$ 可以为正；它在本系统中不是语义冗余。
 
-一个极长但完全处于其他 theorem 语义闭包中的形式化，其 $\delta_i=0$；它认证为 `trivial_in_catalog` 并有一条 IE-C007，完整合法 catalog 成功 seal 为 `__catalog_redundant : Catalog.CatalogRedundant C`；若它是待首次冻结对象，则不获 positive admission。
+一个极长但完全处于其他 theorem 语义闭包中的形式化，其 $\delta_i=0$；它认证为 `trivial_in_catalog` 并有一条 IE-C007，完整合法 catalog 以 redundant 结论成功 seal；若它是待首次冻结对象，则不获 positive admission。
 
 ---
 
@@ -5109,37 +5096,19 @@ InformationEscape finite engine
 
 ## CIRPT-40　封印契约义务
 
-`Contract.Seal` 与其 `SealCatalog`、`SealRow` 数据在 Reg 编译期承载数学义务；报告期由 `CompiledSeal` 消费编译字段并核对结构：
+`Contract.Seal` 指定 root 与 `SealCatalog` 数组。每个 catalog 的 `arena`、`units` 与
+`size` 指定同一 exact vector catalog，并携带有限枚举、非退化性与 bundle 非空证明。
+`rows` 对每个索引携带降低逃逸或平凡性证明；平凡行另携剩余目录的语义闭包归属证明。
+`collisions` 保留同核成员的证明；`conclusion` 携带目录冗余或不可约证明。
+这些义务由 Reg 编译期 Lean 内核检查。
 
-1. 每个 theorem unit 具有非空、typed primitive bundle；
-2. bundle 中每个 atom 由合法 primitive constructor 或等价 kernel theorem 建立；
-3. 每个 ADMIT primitive 具有可执行 decidability；
-4. 每个 ANCHOR primitive 所在 arena 具有 `DecidableEq`；
-5. theorem proof／certificate declaration 没有泄漏进 object primitive bundle；
-6. bundle kernel reflection theorem 成功；
-7. catalog leave-one-out 使用 bundle joint kernel；
-8. role signature histogram 总和等于 unique capture count；
-9. level-0 positive 仍恰由 `uniqueCaptureCount > 0` 决定；zero 以 `TrivialInCatalog` 记录，完整合法 catalog 即可 seal；空 registry、退化 arena、无效 realization/proof 仍失败；
-10. JSON 只投影结果，不参与任何证明。
-11. 以 canonical object `Arena` declaration 分组，并为每个 $(R,A)$ 构造覆盖 $R$ 的整个 import closure 的唯一 maximal catalog；
-12. occurrence key `(canonicalArenaDeclaration, theoremName)` 在 import closure 内恰出现一次；
-13. 所有 generated companion names 都由 catalog-qualified occurrence identity 限定；
-14. overlap、refinement、spectrum、role totals、verdict 与 layer-chain inclusion/count identity 均有 Lean certificate；
-15. refinement matrix 的 true cell 有 inclusion proof，false cell 有确定性 witness pair；
-16. 在输出逐成员 IE-C007 前计算并验证完整 `redundantIndices`，不得 first-zero 短路；
-17. canonical maximal catalog 与 `analysis_view` 均在全部 exact positive/trivial/negative certificates staged 且 kernel-checked 后发布；实际校验失败仍原子回滚且不写 artifact；
-18. seal 消费所在 root 的 import closure 中全部类型化 registrations，不得过滤 imported entries；
-19. 当前 seal 的 expected entries 与 actual entries 完全相等；designated root 的 expected set 来自固定源快照与既有枚举器；
-20. 每个 certificate 绑定完整成员集合、确定顺序、arena、primitives 与当前编译声明，旧快照 certificate 不得复用到新目录；
-21. designated root 的 `SystemCatalogIrredundant` 仍是其全部仓库尺度 maximal catalogs 的 conjunction；IE-039 的 `Iff.rfl` 不变，仅报告其真/假，不以假拒绝 seal；
-22. kernel-address coincidence 只进入 diagnostic projection，绝不进入证明、grouping 或 verdict；
-23. 超过第 33 节 ordered-pair budget 的 catalog 必须使用 refl lane 提供的 reflected seal，否则 fail closed。
-24. 对每个 maximal catalog 构造 generated-kernel extensional quotient，并认证所有输出 nodes 的 relation equality；
-25. 只把 endpoints 均已 materialize 的 certified strict generator transitions 写作 edges，包含全部 schedule／requested transitions；complete lattice 时才要求 full-DAG array；每边的 `is_cover` 相对 full lattice 认证；equal-kernel additions 完整写入 `collapsed_additions`；
-26. `kernel_projection` 至少覆盖 $K_\varnothing$、$K_I$、全部 $K_{I\setminus\{i\}}$、全部 certified-schedule nodes 与显式请求 nodes，但永不因投影要求枚举完整 $2^m$ subsets；
-28. structural occurrence 必须有 strict inclusion proof 与 pair witness；bounded truncation 无 transfer theorem 时只能写 `report-only`；
-30. `kernel_projection`、ASCII layout、node ID、hash、timing 与 heuristic schedule order 均为单向 projection，任何 admission consumer 读取它们都失败；
-31. 数学计算的 direct／fused／partition／reflected 路线须由相应证明支撑；生产报告不生成 seal 统计或方法投影（工程优化规范 v1 §8）。
+报告期 `CompiledSeal` 从 root 的实际 import 闭包发现全部类型化登记，按 canonical
+object arena 分组，与契约中的目录身份、完整成员集合、顺序、arena 与每个单位向量元素
+机械核对。RootCatalog 的 expected 与 actual 由 `CompiledSnapshots` 核对。
+输入缺失、不支持、重复、解码失败或目录不一致按现役诊断具名失败。
+
+有限计数、角色分解、重数谱和 generated-kernel hierarchy 属于库内数学定义与证明，
+不构成 Seal 的报告字段。判官不构建 Environment、不生成证明、不重验契约中的数学证明。
 
 ---
 
@@ -5509,7 +5478,7 @@ FLOW 动态分析通过 `controlledBehavior`／`DynClosure` 的 CUT kernel 接�
 
 ### AC-CIRPT-008　Single compilation
 
-primitive normalization、kernel computation、companion theorem construction 和 artifact emission 全部在同一次 Lean build 内完成。
+数学定义与证明通过依赖驱动的 Lean 编译核验；Reg 契约携带数学证据，报告读取编译产物，不生成第二份证明源码或新定理。
 
 ### AC-CIRPT-009　Arena transport invariance
 
@@ -5543,9 +5512,10 @@ positive/negative verdict 均由一般 theorem 加 reflected equalities kernel-c
 
 kernel address coincidence 只以 `diagnostic_only` 输出；没有 theorem 或准入路径消费它。
 
-### AC-CIRPT-016　Complete negative diagnostics
+### AC-CIRPT-016　完整封印证据
 
-seal 在逐成员 IE-C007 前认证全部 zero members；canonical maximal catalog 与 analysis view 均可发布完整 redundant verdict，校验失败不写 artifact。
+`SealRow` 对 exact catalog 的每个索引提供编译证明，`SealCatalog.conclusion`
+保存完整目录的结论。报告从实际 import 闭包核对 exact vector，不产出逐成员统计判词。
 
 ### AC-CIRPT-017　Generated-kernel closure
 
@@ -5559,16 +5529,11 @@ IE-040--IE-055 覆盖。
 bundle 与 faithful realization；acceptance 由 strict inclusion 和 pair witness证明。finite
 `Arena` embedding 保持同一判词，finite-only `StructuralNovelty` 不冒称 universal。
 
-### AC-CIRPT-020　Bounded hierarchy projection
+### AC-CIRPT-020　层级数学与生产报告边界
 
-schema v3 对每个 catalog 增加 bounded `kernel_projection`，至少 materialize boundary、
-leave-one-out 与 certified-schedule nodes；`edges` 只含 endpoints 均已 materialize 的 certified
-strict transitions，并总含 certified-schedule 与 explicitly requested transitions。其 `is_cover`
-相对于 full generated lattice 全局证明；只有 `complete_lattice_materialized=true` 才要求完整
-full-DAG edge array。collapsed additions、counts/rates/sets、matrices、spectrum、verdict 与
-certificate names 各按其真实 certification level 输出。所有 edge／leave-one-out／schedule node
-references 经 `S` schema validation 解析到 materialized `node_key`。projection 与 ASCII 不进入 admission，也不要求完整
-$2^m$ materialization。
+库内 generated-kernel lattice、strict transitions 和 certified chains 的关系及计数
+须由 Lean 证明。它们不要求生成报告的 nodes、edges、矩阵、重数谱、角色桶或
+certificate-name 数组；生产报告字段只遵守第 30 节。
 
 ### AC-CIRPT-021　Dual-novelty governance boundary
 
@@ -5680,44 +5645,21 @@ $$
 
 ## 17. 工程目标
 
-实现一个 Lean-native 系统，使一次：
+规范入口为 `make lean-report`。Reg 的类型化登记、RootCatalog 与 Seal 通过同一次
+依赖驱动的 Lean 编译检查数学义务；判官使用 `RawArtifacts.Store` 读取编译部件，
+按契约类型发现输入并执行结构评定。
 
-```bash
-lake build D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
-```
+登记用 `Contract.Registration`，模板用 `Contract.TemplateEnrollment`，目录与封印用
+`Contract.RootCatalog` 和 `Contract.Seal`。实现不进入 Reg 的依赖闭包；登记只含契约
+数据与数学证明，不含也不调用判官代码。报告输出第 30 节规定的模块声明、材料和登记绑定。
 
-完成：
+实现或规则变化不重编 Reg，也不使有效报告失效。新增或改动的登记由编译依赖变化
+交给当前实现评定；契约接口升级须同次交付迁移全部用法并删除旧路径，受影响闭包
+自动重编、重评。提取语义或报告格式变化更新报告格式标识并全部重提取。
 
-1. 加载全部相关模块；
-2. 从 Lean persistent environment registry 枚举 theorem units；
-3. 按数学 arena 分组；
-4. 构造每个 arena 的当前完整有限 catalog；
-5. 对每个 theorem 执行 leave-one-out；
-6. 精确计算 `escapeFull`、`escapeWithout`、`uniqueCapture`；
-7. 仅为正成员在 Lean 内构造 `LowersEscape` 证明；
-8. 仅为正成员的原 theorem 构造增强 conjunction theorem；
-9. 对全部零成员认证 `trivial_in_catalog` 并逐成员记录 IE-C007，完整合法 catalog 成功 seal 为 `__catalog_redundant : Catalog.CatalogRedundant C`；待首次冻结对象自身为零时不获 positive admission，dual-novelty gate 保持 OPEN、无 required check；
-10. 完整分类与 verdict 认证并 staged 后，写出只读 JSON／CSV／DOT 报告。
-11. 枚举 root import closure 中全部持久可见 occurrences，并按 canonical object `Arena` declaration 分组；
-12. 为每个 $(R,A)$ 构造覆盖该 import closure 全部同 arena members 的唯一 maximal `Catalog`，同时允许不承担准入的 typed analysis views；
-13. 证明并投影 overlap/refinement matrices、multiplicity spectrum、role totals 与完整 catalog verdict；
-14. 对显式 `LayerChain` 证明相邻 inclusions、ordered increments、partition 与 exact rates；
-15. 在 designated root 中组装全部 maximal catalogs 的全正证明，或 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict；
-16. 生产报告采用当前格式；格式或提取语义升级时全部重提取，读取器拒读旧格式。
-17. 为每个 maximal catalog 构造 generated-kernel closure，并输出 bounded hierarchy projection 与 ASCII projection；
-19. finite occurrences 继续精确计数，structural 正成员以 strict inclusion pair witness 认证，structural 零成员以 `StructuralCatalog.TrivialInCatalog C i` 认证，truncations 与 unreachable reasons 诚实分栏；
-20. 保持 hierarchy projection 对 admission 的单向性，并把 5⁗ dual-novelty gate 标为 OPEN，直到 owner $\tau$ ruling。
-
-不得：
-
-- 生成 `.lean` 文件后再次调用 Lean；
-- 读取上一版报告；
-- 调用 C# 决定通过／失败；
-- 调用 Python 决定通过／失败；
-- 让 JSON 参与 theorem 证明；
-- 依赖 Git diff；
-- 依赖 PR base；
-- 依赖 commit 时间。
+数学目录不使用历史 baseline、人工评分或跨 arena 标量。报告可以复用已有编译与评定
+工件；复用依赖编译 trace、utility 输入和报告格式，不以判官程序字节决定。
+报告不得生成第二份 Lean 证明源码，不在报告期安装声明，也不以旧判词一致代替当前实现验证。
 
 ---
 
@@ -6518,7 +6460,7 @@ def CatalogIrredundant
   ∀ index, LowersEscape catalog index
 ```
 
-该命题只属于 occurrence 所在 catalog；canonical system 的 positive admission 要求 designated maximal catalogs 的全称正性，而完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，任一 designated catalog 冗余时产生 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict；analysis view 上的同名性质不向 maximal catalog 传递。
+该命题只属于 occurrence 所在 catalog。指定 root 的全称不可约性须对其完整 maximal catalogs 证明；analysis view 上的同名性质不向 maximal catalog 传递。Seal 的目录结论字段保存冗余或不可约证明，不要求生成根级伴随定理。
 
 ### 23.4 可判定实例
 
@@ -6575,7 +6517,7 @@ def SystemCatalogIrredundant
     (suite : DesignatedRootCatalogSuite) : Prop :=
   ∀ index, CatalogIrredundant (suite.maximalCatalog index).catalog
 
-/-- Compatibility name for the same one-root proposition; it does not quantify roots. -/
+/-- 同一指定 root 上的全称正性，不量化其它 roots。 -/
 abbrev SystemWidePositive
     (suite : DesignatedRootCatalogSuite) : Prop :=
   SystemCatalogIrredundant suite
@@ -6766,7 +6708,7 @@ grouping 或准入依据。输入缺失、不支持或不一致须具名失败�
 
 Reg 编译直接检查契约数学义务，不生成第二份 Lean 源码或启动第二次证明编译。
 报告读取编译部件并进行有界结构计算，不安装声明、不执行输入代码、不构建 Lean
-Environment。伴随名仅是报告数据视图。
+Environment。生成的单位、realization 与 catalog 仅是报告数据视图。
 
 `CompiledExpressions.sameShape` 是对编译器已检查项的有界语义比较，不是定义相等判定器。
 比较两个 `Decidable.decide` 应用时，只比较命题并略过其判定实例参数：同一命题的
@@ -6776,55 +6718,19 @@ Environment。伴随名仅是报告数据视图。
 
 ---
 
-## 27. 伴随 theorem 命名规范
+## 27. 报告数据视图的命名
 
-对 theorem occurrence，先定义唯一 naming function：
+`catalogQualifiedName` 将 root、canonical object arena、catalog 和原 theorem 绑定到
+同一 occurrence 地址。报告使用该地址命名单元、primitive realization 与 catalog
+数据视图，核对不同合法 occurrences 的名称不碰撞；名称碰撞由 IE-C025 具名拒绝。
 
-```lean
-def catalogQualifiedName
-    (rootId objectArenaName : Name) (catalogId : CatalogId)
-    (theoremName suffix : Name) : Name :=
-  ...
-```
+数学证据由编译契约中的 `SealRow.conclusion`、`SealCatalog.collisions` 和
+`SealCatalog.conclusion` 提供。报告不生成 lowering、enriched、triviality 或根级
+冗余伴随证明，不把证据字段当作新 theorem unit。
 
-同一函数必须生成 unit、primitive realization、catalog、irredundancy、positive、zero、
-verdict、analysis 与 enriched companions。不得继续仅向裸 theoremName 附 suffix。
-
-例如 theorem：
-
-```text
-D5.S3.Domain.SomeResult.main_theorem
-```
-
-positive occurrence 在固定 root/arena/catalog 中生成下列 companions；zero 改为 `__trivial_in_catalog : Catalog.TrivialInCatalog catalog index`，不生成 `__lowers_escape` 或 `__escape_enriched`；新 suffix 同样排除于 registry/statement identity。
-
-```text
-catalogQualifiedName rootId objectArenaName catalogId main_theorem `__lowers_escape
-catalogQualifiedName rootId objectArenaName catalogId main_theorem `__escape_enriched
-```
-
-规范类型：
-
-```lean
-theorem main_theorem.__lowers_escape :
-    LowersEscape compiledArenaCatalog compiledIndex := by
-  ...
-
- theorem main_theorem.__escape_enriched :
-    OriginalStatement ∧
-      LowersEscape compiledArenaCatalog compiledIndex :=
-  ⟨main_theorem, main_theorem.__lowers_escape⟩
-```
-
-生成 declaration 必须：
-
-- `includeInStatement = false` 或等价 internal 标记；
-- 不进入 information registry；
-- 不参与下一次同编译 catalog 枚举；
-- 可由 inspector 输出为 certificate；
-- 不被计算为新增数学 theorem unit。
-- 同一 theorem 在不同 canonical arenas 中形成的合法 occurrences，其 certificate 名不碰撞；
-- artifact 的 `certificate` 与 `catalog_membership` 指向同一 qualified identity。
+现役保留名称分类由 `RegistrationData.generatedCompanionSuffixes` 与
+`ReadoutProvenance` 消费，用于拒绝把判官保留名字登记成 concept；该分类不承诺
+对应名称具有生产者。报告视图不安装到 Lean 环境，也不改变原声明身份。
 
 ---
 
@@ -7168,7 +7074,7 @@ Name、GID、路径仅用于寻址，不得进入增益公式。
 
 ### R-006　过完备族的非单调重新封印
 
-若新 theorem 使旧 theorem 的边际归零，完整合法族成功重新 seal，旧 theorem 非单调地改分类为 certified `trivial_in_catalog`，逐零成员记录 IE-C007，并产生 `__catalog_redundant : Catalog.CatalogRedundant C`；旧成员保留，待首次冻结对象的 positive admission 只由它自身的 positivity 判定，旧零 peers 不否决新正对象。
+若新 theorem 使旧 theorem 的边际归零，完整合法族成功重新 seal，旧 theorem 非单调地改分类为 certified `trivial_in_catalog`，并在 `SealCatalog.conclusion` 携带冗余证明；旧成员保留，待首次冻结对象的 positive admission 只由它自身的 positivity 判定，旧零 peers 不否决新正对象。
 
 ### R-007　无顺序优先
 
@@ -7410,7 +7316,7 @@ $$
 |U_i|=0.
 $$
 
-期望：完整合法 catalog 成功 seal，零成员认证为 `trivial_in_catalog` 并记录一条 IE-C007，catalog 产生 `__catalog_redundant : Catalog.CatalogRedundant C`；该零对象不获 positive admission。
+期望：完整合法 catalog 成功 seal，零成员认证为 `trivial_in_catalog`，catalog 的 `SealCatalog.conclusion` 携带冗余证明；该零对象不获 positive admission。
 
 ### T-003　两个互补坐标
 
@@ -7423,13 +7329,13 @@ primitive readout：`Prod.fst`、`Prod.snd`。
 状态：`Bool × Bool`。  
 primitive readout：`Prod.fst` 与 `Bool.not ∘ Prod.fst`。  
 两者 kernel 相同。  
-期望：双方同时零边际，均认证为 `trivial_in_catalog`、各记录一条 IE-C007，已证明的 collision class 以 IE-C008 非致命报告；catalog 成功 seal 为 `__catalog_redundant : Catalog.CatalogRedundant C`，零对象不获 positive admission。
+期望：双方同时零边际，均认证为 `trivial_in_catalog`，已证明的 collision class 以 IE-C008 非致命报告；catalog 以 redundant 结论成功 seal，零对象不获 positive admission。
 
 ### T-005　product 包装过完备
 
 primitive readout：`Prod.fst`、`Prod.snd`、`id`。  
 `id` 可恢复两个坐标；两个坐标也可由 `id` 恢复。  
-期望：与 T-022 一致，三个成员均零边际、均认证为 `trivial_in_catalog`、各记录一条 IE-C007；完整三元素 catalog 成功 seal 为 `__catalog_redundant : Catalog.CatalogRedundant C`，零对象不获 positive admission。
+期望：与 T-022 一致，三个成员均零边际、均认证为 `trivial_in_catalog`；完整三元素 catalog 以 redundant 结论成功 seal，零对象不获 positive admission。
 
 ### T-006　只保留 product
 
@@ -7473,7 +7379,7 @@ primitive readout：`Prod.fst`、`Prod.snd`。
 
 ### T-014　certificate 回流
 
-尝试把 `.__lowers_escape` 登记为 theorem unit。  
+尝试把判官保留的报告视图名登记为 theorem unit。
 期望：IE-C011。
 
 ### T-015　artifact 篡改
@@ -7514,7 +7420,7 @@ $$
 CatalogIrredundant catalog
 ```
 
-只有在所有 theorem companion proofs 构造成功时成立。
+只有在该目录每个索引的降低逃逸证明成立时，才能证明其全称不可约性。
 
 ### T-021　shared fst/snd analysis
 
@@ -7594,7 +7500,7 @@ kernel 非 role-preserving 地重标为 `flow` 时，unique count 仍为 4，但
 ### T-030　negative verdict artifact ordering
 
 redundant analysis view 只有在完整 zero set、exact counts 与 negative verdict certificates
-staged 且 kernel-checked 后才写 projection；canonical maximal seal 对同样数据成功并逐成员记录 IE-C007；first-zero 短路仍得 IE-C033。
+staged 且 kernel-checked 后才写 projection；canonical maximal seal 对同样数据成功；first-zero 短路仍得 IE-C033。
 
 ### T-031　unified causal hierarchy
 
@@ -7603,11 +7509,10 @@ witness 经 injection/restriction faithful transport；$K_{cf}\subsetneq K_{int}
 K_{obs}$，三个 layered increments 均为正，而 cumulative flat catalog 的 observation 与
 intervention members 为零。可选 512-state product 必须因 261,632 pairs 使用 refl seal。
 
-### T-032　v2 baseline preservation
+### T-032　有限目录数学用例
 
-`InformationRoot` 的十一项 singleton theorem counts、字段与语义在本节的
-compatibility fixture 中 byte-for-byte 保持；schema-v3 shared results 使用不同 root/catalog
-identity，不覆盖 v2。
+singleton 与 shared catalogs 各自使用完整、明确的成员集合，数学计数与证明绑定
+各自目录。当前报告只接受第 30 节的格式；数学用例不要求保留旧格式输出或双读路径。
 
 ### T-033　E1 generated lattice
 
@@ -7797,136 +7702,22 @@ registration closure、排除零增益 theorem 或改变一次编译合同。
 
 ---
 
-## 37. 迁移规范
+## 37. 契约、数学库与实现的交付边界
 
-### Phase 1　纯数学核心
+数学定义与证明归 D5 及对应 Blueprint；Reg 声明实现接口契约类型，模板 enrollment
+与共享支持归 `Reg/Support`。登记与目录模块按实际 import 关系组成依赖闭包。
 
-新增：
+接口升级在同一次交付中迁移全部用法并删除旧表示，不保留旧入口、双读或回退。
+实现变化不重编 Reg，不使有效报告失效。报告期只读取编译部件并评定结构；
+不得生成另一份证明源码、执行登记代码或调用 Lean elaborator/Meta/内核重新证明。
 
-```text
-JointKernel
-IntrinsicEscape
-LeaveOneOut
-UniqueCapture
-EscapeRate
-Irredundancy
-```
+`CompiledSnapshots` 核对 expected 与 actual；`CompiledSeal` 核对完整登记闭包与
+目录身份、arena、成员顺序及单位向量。报告格式与提取语义升级更新格式标识，
+严格读取器拒读其它格式并全部重提取。
 
-并证明 IE-001 至 IE-017。
-
-### Phase 2　有限执行层
-
-实现：
-
-```text
-offDiagonalPairs
-escapePairs
-uniqueCapturePairs
-uniqueCaptureCount
-escapeRate
-```
-
-建立 Set／Finset 桥。
-
-### Phase 3　primitive theorem unit
-
-实现：
-
-```text
-Arena
-DecidableKernel
-PrimitiveAxis
-PrimitiveAtom
-PrimitiveBundle
-PackedObserver adapter
-TheoremUnit
-Catalog
-```
-
-加入 CUT／FLOW／ADMIT／ANCHOR 的 Bool 测试模型，并证明所有 constructor reflection theorems。
-
-### Phase 4　registry
-
-登记以 `def x : Contract.Registration … := {…}` 实现接口契约类型。
-模板 enrollment 使用 `def x : Contract.TemplateEnrollment … := {…}`。
-判官实现从编译后的带类型声明发现输入并重建评定；登记不含也不调用判官代码。
-
-### Phase 5　封印契约
-
-在 Reg 声明 `Contract.RootCatalog` 与 `Contract.Seal`，编译期核对类型化数学义务。
-报告使用 `CompiledSnapshots` 与 `CompiledSeal` 核对编译字段及完整登记闭包。
-禁止生成第二份证明源码、执行输入代码或在报告期新造证明。
-
-### Phase 6　伴随数据视图
-
-从已编译契约证据投影每个 theorem 的伴随名与类型：
-
-```text
-.__lowers_escape
-.__escape_enriched
-```
-
-### Phase 7　artifact
-
-Reg 契约先通过 Lean 编译；报告评定成功后发射 JSON／CSV／DOT，报告期不生成或核验 proof。
-
-### Phase 8　仓库接入
-
-先选一个有限 arena 目录试点；稳定后扩展到更多 concept families。
-
-### Phase 9　完整共享目录
-
-冻结数学声明保持不变。共享目录由 designated root 导入当前快照的完整登记闭包；
-判官按 canonical arena 重建成员集合，不把 singleton 的降低逃逸证明当作
-共享 peers 中不可冗余的证明。已在 imports 中可见的 occurrence 不重复登记。
-生产报告输出登记绑定；目录的数学义务保留在 Seal 契约中。
-
-dependency-correct landing order 固定为：
-
-1. 本 v4.2 spec PR，仅改本文档；
-2. D5 engine analysis modules（deposit）：capture/overlap/refinement/spectrum/layer laws；
-3. judge registry/identity mechanics：以 `(canonical arena declaration,theoremName)` 为
-   occurrence key，把 import closure 的全部同 arena members 分入唯一 maximal catalog，使用
-   catalog-qualified companion names，执行工程优化规范 v1 §9 的三项 seal check（expected
-   entries = actual、certificate 绑定 member set/order/arena/primitives/environment、旧快照
-   certificate 不得复用），并产出完整 structured negative diagnostics；禁止过滤 imported entries；
-4. unified causal math modules（deposit）：48-state carrier、readouts、factorizations、strict witnesses 与 faithful realizations；
-5. 新 designated v4.2 system root（deposit）：导入完整 registration closure 并登记 causal chain view；
-6. judge schema-v3 analysis projection；
-7. fixtures：shared、overcomplete、import-closure、address-only、causal 与 v2 compatibility。
-
-第 3 步必须先于任何 shared causal registration；纯 causal math 可以先 deposit，但不能
-调用尚不存在的 catalog-qualified registry API。refl lane 的 reflected seal 是任何
-$B(C)>65536$ catalog 的前置，不满足时该 catalog 不得在上述顺序中提前落地。
-第 3 步还必须保持 `RegistrationPersistence`、`RegistryConsumer`、`SealCollision` 的 landed
-semantics：imported registrations 对 environment consumers 可见且进入 seal；同一 arena/theorem
-重复发 IE-C002，合法跨 arena occurrences 的 qualified-name collision 发 IE-C025。
-
-### Phase 10　v4.3 generated-kernel hierarchy
-
-Phase 10--11 依赖前述 dependency chain，并采用以下一个七步顺序：
-
-1. refutation experiment：固定 T-033 E1 与 T-034 literal causal counts 的验收值；
-2. 本 spec 的 content contract；
-3. hierarchy／structural engine deposits：在
-   `D5/S3/ConceptDynamics/InformationEscapeHierarchy/` 提供 `GeneratedKernel` lattice、
-   `KernelChain`（`GeneratorSchedule`／`StrictKernelChain` API）、spectrum/overlap/refinement laws、
-   `StructuralArena` 与 `StructuralCatalog`；
-5. judge v3 `kernel_projection` 与 covers-only ASCII renderer；
-6. E1、causal、disposition 与十一 singleton compatibility fixtures；
-7. gate design 与 owner $\tau$ ruling request；第 7 项保持 **OPEN**，不得接 required check。
-
-第 3 项不依赖 registry，可以在 v4.2 judge identity mechanics 完成前独立实现；但任何 second
-root 或 catalog projection 必须等待 v4.2 step 3 的 import-closure identity／
-grouping mechanics。auxiliary root 不得通过避开 imported registrations 冒充完整 root。
-所有 D5 layers 各自 deposit，且不得修改 frozen modules 或 `Trureturing.lean`。
-
-counting 优化若参与 hierarchy reflected values，必须落在 sibling
-`D5/S3/ConceptDynamics/InformationEscapeCounting/`，不采用 nested
-`InformationEscape/Counting/` 布局。该布局独立于目录占用读数；
-`tools/StrataLint.Engine/Coordinates/Gid.cs` 的 `ParseFormalCoordinates` 要求 ordinary formal
-coordinates 至少三段，sibling placement 不由文法深度推出。数学证据依工程规范 §8
-由内核检查，import closure 依 §9／§16 核对。
+数学优化或 generated-kernel hierarchy 的新增定理须有实际消费者与准入依据。
+计数与层级数学模块放在 GID 合法的 sibling `InformationEscapeCounting/` 与
+`InformationEscapeHierarchy/`；它们不为生产报告增加分析输出协议。
 
 ## 38. 明确删除旧设计
 
@@ -7979,44 +7770,23 @@ Stage B recompilation
 
 所有 rate 以 `Nat`／`Rat` 表示。
 
-### AC-005　kernel proof
+### AC-005　编译期数学证据
 
-仅 positive theorem 使用下列 companions；level-0 certified trivial theorem 使用 `__trivial_in_catalog` companion：
+`SealRow.conclusion` 对 exact catalog/index 携带 positive 的降低逃逸证明，或 zero 的
+平凡性与剩余目录闭包归属证明。`SealCatalog` 的非退化性、bundle 非空、kernel
+碰撞与目录结论由 Reg 编译期内核检查；报告不生成具名伴随证明。
 
-```lean
-original.__lowers_escape
-```
+### AC-006　目录结论
 
-以及：
+`SealCatalog.conclusion` 携带同一单位向量目录的冗余或不可约证明。
+指定 root 的全称不可约性是其完整 maximal catalogs 的数学合取；analysis views
+不替代其中任一目录，也不要求报告产生新的根级 theorem。
 
-```lean
-original.__escape_enriched
-```
+### AC-007　平凡成员与封印
 
-### AC-006　positive admission 的不可约总 theorem
-
-designated root 的 positive admission 要求每个 canonical maximal catalog 全正并具有下列 catalog-qualified theorem，而完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，任一 designated catalog 冗余时产生 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict：
-
-```lean
-theorem compiledCatalog_irredundant
-    (suite : DesignatedRootCatalogSuite) (index : suite.CatalogIndex) :
-    CatalogIrredundant (suite.maximalCatalog index).catalog
-```
-
-并存在根级：
-
-```lean
-theorem systemCatalogIrredundant
-    (suite : DesignatedRootCatalogSuite) :
-    SystemCatalogIrredundant suite
-```
-
-它可由所有 catalog companion proofs 组装，也可由一次有限决定直接证明。analysis views
-不参与此 conjunction。
-
-### AC-007　零边际分类封印与正准入分离
-
-插入常值、重复、可恢复或 wrapper primitive readout 后，完整、非退化且合法的 catalog 成功 seal；零成员均认证为 `trivial_in_catalog`、逐成员记录 IE-C007，并产生 `__catalog_redundant : Catalog.CatalogRedundant C`，已证明的同核 collision class 以 IE-C008 非致命报告；待首次冻结对象自身为零时不获 positive admission，不删除旧成员。
+常值、重复、可恢复或 wrapper primitive readout 可具有零独有捕获。
+Seal 保留完整 peers 与每个索引的编译证明；合法冗余目录可提供 redundant 结论。
+这不授予首次冻结的正性资格，独立 dual-novelty gate 保持 OPEN、无 required check。
 
 ### AC-008　次序不变
 
@@ -8042,21 +7812,20 @@ designated root import closure 中同一 canonical object `Arena` 的全部 occu
 仓库尺度 maximal catalog；不存在 namespace/auxiliary-root/catalog/cloned-arena/
 positive-elsewhere exemption。
 
-### AC-013　Certified analysis v3
+### AC-013　库内分析证明
 
-每个 shared catalog 的 exclusive vector、exact gain vector、overlap/refinement matrices、
-multiplicity spectrum、role totals、kernel-equivalence classes 与 verdict 均有 kernel
-certificate，并按 schema v3 单向投影。
+exclusive vector、exact gain、overlap/refinement、multiplicity spectrum、role totals 与
+layer-chain identities 是库内数学对象；使用时须有对应 Lean 证明，不属于生产报告协议。
 
-### AC-014　Complete negative verdict
+### AC-014　完整目录核对
 
-IE-C007 逐成员记录前完成全部 zero members 的收集与认证；canonical maximal catalog 与 analysis view 均可发布完整 redundant projection，实际校验失败零 artifact。
+报告从实际 import 闭包重建目录，核对完整成员、顺序、arena 与单位向量。
+输入与契约不一致时具名失败，不发布成功报告。
 
-### AC-015　Layered capture
+### AC-015　分层捕获的数学边界
 
-每条 `LayerChain` 的 inclusions、increments、partition、strictness、unresolved 与 exact
-rates 均被认证，且 flat unique capture 与 ordered layered capture 在 API/artifact/test
-中保持不同名字。
+`LayerChain` 的 inclusions、increments、partition、strictness、unresolved 与 exact
+rates 由数学库证明；flat unique capture 与 ordered layered capture 保持不同定义。
 
 ### AC-016　Import-closure designated root
 
@@ -8085,7 +7854,7 @@ identities；生产报告采用当前格式，格式升级不保留历史兼容�
 ### AC-020　Dependency-correct landing
 
 完成态必须由第 37 节固定的七步顺序产生：spec → D5 analysis laws → judge registry/identity
-mechanics → unified causal math → designated v4.2 root → schema-v3 projection → fixtures。
+mechanics → 数学证明 → Reg 契约输入 → 当前格式报告 → 定向验证。
 judge 的 occurrence identity、import-closure grouping、三项 seal checks 与 structured diagnostics
 必须先于任何 shared causal registration。任何 $B(C)>65536$ catalog 必须在其登记或执行前已有 refl-lane
 reflected seal。第 3 步必须先重规格化并通过 `RegistrationPersistence`、`RegistryConsumer`
@@ -8094,52 +7863,24 @@ reflected seal。第 3 步必须先重规格化并通过 `RegistrationPersistenc
 
 ### AC-021　Generated-kernel lattice
 
-每个 maximal catalog 的 $\mathcal L_C$ 按 exact relation equality 取商，具 finite lattice、
-full strict generator DAG、带 `is_cover` 的 Hasse cover relation、collapsed additions 与
-IE-040--IE-055 certificates。只有 Hasse diagram 为 path／tree 当且仅当 lattice 为 chain；
-full strict DAG 可含 shortcut edges，即使是 chain 也不冒称 tree。incomparable／diamond 判词由
-数学结构决定，不由 renderer layout 决定。
+库内 hierarchy 按 joint-kernel 的关系外延相等取商，证明 refinement order、内部
+lattice operations、strict steps、collapsed additions 和 chain-independent invariants。
+这些数学对象不要求生产报告输出 lattice 或统计字段。
 
 ### AC-022　Finite／structural universality
 
-任何 frozen theorem 都不被笼统称为“不可分析”：finite occurrence 精确计数，任意 State 的
-structural occurrence 以 strict inclusion pair witness 认证，bounded truncation 标明
-report-only／transfer theorem，真正不可达者使用 closed reason。finite embedding 保持 structural
-判词，finite-only `StructuralNovelty` 不冒称 universal。
+有限 State 的数学计数使用精确值；任意 State 的结构结论使用 strict-inclusion proof
+与 pair witness。有限截断没有 transfer theorem 时不能冒称无界结论。
 
-### AC-024　Bounded kernel projection
+### AC-026　增量、确定性与诊断
 
-每个 v3 catalog 的 `kernel_projection` 至少含 top、bottom、全部 leave-one-out、certified-schedule
-与 requested nodes，经 relation quotient 去重；`edges` 是 endpoints 均已 materialize 的 certified
-strict-transition subgraph，总含 certified-schedule 与 requested transitions，且其 `is_cover` 相对
-full lattice 全局证明。只有 `complete_lattice_materialized=true` 时才要求 complete full-DAG edge
-array；ASCII 只绘 Hasse covers。每个 edge endpoint 与 leave-one-out／schedule node reference 必须
-经 `S` schema validation 解析到 materialized `node_key`；collapsed additions、LOO、classified
-schedules、matrices、spectrum、redundant set、verdict 与 certificate names 完整。默认不
-materialize $2^m$，projection／ASCII 不进入 admission。
+相同编译输入、utility 输入与报告格式对应有效复用；判官实现字节不参与条件。
+缺失输入、未知构造器、目录不一致与预算耗尽保留现役具名诊断。
 
-### AC-025　Hierarchy fixtures
+### AC-027　依赖闭包与交付
 
-T-033 的 E1 四节点 diamond、$h=(0,0,8,4)$ 与两个 schedules，T-034 的 causal measured
-$2256/136/44/0$、increments $2120/92/44$，T-035 structural witness，
-相应数学命题由 Lean 内核检查；生产报告不要求 singleton 统计兼容投影。
-
-### AC-026　Determinism 与 diagnostics
-
-JSON 与 ASCII 按第 30 节规则 byte-stable；IE-C039--IE-C043 的 trigger、message shape 与 payload
-三表一致。改变 report-only layout 不改 Lean truth；篡改 certified value 或让 projection 回流
-分别 fail closed。
-
-### AC-027　Dependency-correct v4.3 landing
-
-第 37 节 Phase 10 的依赖顺序成立：refutation experiment → spec v4.3 →
-`InformationEscapeHierarchy/` hierarchy／structural engine deposits → judge v3 projection／covers-only ASCII → fixtures → **OPEN** gate design 与 owner ruling
-request。registry consumers 必须等待 v4.2 import-closure identity／grouping mechanics；hierarchy
-engine 与 counting modules 分别留在 GID-compliant siblings `InformationEscapeHierarchy/` 与
-`InformationEscapeCounting/`；该布局独立于目录占用读数，且 counting modules 不采用 nested
-`InformationEscape/Counting/` 布局。`tools/StrataLint.Engine/Coordinates/Gid.cs` 的
-`ParseFormalCoordinates` 要求 ordinary formal coordinates 至少三段；sibling placement 不由文法深度推出；
-frozen D5 与 `Trureturing.lean` 零修改。
+Reg 的 import 闭包不含实现包。接口升级原子迁移全部用法；实现变化不重编登记。
+验证使用当前实现的定向测试与完整报告；不以旧判官判词逐条相同作验收。
 
 ### GATE　delta-first dual novelty gate
 
@@ -8411,7 +8152,7 @@ $$
 |U_0|=0,
 $$
 
-完整合法 catalog 成功 seal，零成员认证为 `trivial_in_catalog` 并记录一条 IE-C007，catalog 产生 `__catalog_redundant : Catalog.CatalogRedundant C`；该零对象不获 positive admission。
+完整合法 catalog 成功 seal，零成员认证为 `trivial_in_catalog`，catalog 的 `SealCatalog.conclusion` 携带冗余证明；该零对象不获 positive admission。
 
 ## 42. Bool pair 的不可约坐标基
 
@@ -8463,7 +8204,7 @@ $$
 \delta_0=\delta_1=\delta_2=0.
 $$
 
-完整过完备族成功 seal，三个成员均认证为 `trivial_in_catalog`、各记录一条 IE-C007，并产生 `__catalog_redundant : Catalog.CatalogRedundant C`；零对象不获 positive admission，完整 peer membership 保持。
+完整过完备族成功 seal，三个成员均认证为 `trivial_in_catalog`，并在 `SealCatalog.conclusion` 携带冗余证明；零对象不获 positive admission，完整 peer membership 保持。
 
 以下是独立的不可约 analysis views，不替代完整 maximal catalog，也不删除其成员或履行 positive admission 义务：
 
@@ -8838,7 +8579,7 @@ layered capture 是 chain analysis，不替代该准入判词。
 
 ## 45. 唯一 positive admission 条件
 
-指定 maximal catalogs 的 positive admission 要求下列全称正性，而完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，任一 designated catalog 冗余时产生 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict；§8.7 的待首次冻结对象 dual-novelty gate 保持 OPEN、无 required check，其 positivity 仅由该对象自身判定。
+指定 maximal catalogs 的 positive admission 要求下列全称正性，而完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，目录冗余或不可约的证明由 `SealCatalog.conclusion` 携带；§8.7 的待首次冻结对象 dual-novelty gate 保持 OPEN、无 required check，其 positivity 仅由该对象自身判定。
 
 $$
 \boxed{
@@ -8875,26 +8616,18 @@ c_i(x)\neq c_i(y)
 }
 $$
 
-## 46. 唯一实现闭环
+## 46. 实现闭环
 
 ```text
-v4.2 import-closure-visible Lean theorem occurrences and proofs
+D5 数学定义与证明 + Interface 契约类型
         ↓
-C-IRPT primitive normalization
+Reg 类型化登记、RootCatalog 与 Seal
+        ↓ Lean 编译期内核检查数学义务
+编译部件与实际 import 闭包
+        ↓ RawArtifacts / Discovery / Decoder
+有界结构评定、expected/actual 与 exact vector 核对
         ↓
-canonical object-Arena grouping + maximal catalogs
-        ↓
-leave-one-out primitive kernels
-        ↓
-exact shared analyses + optional certified LayerChains
-        ↓
-Lean proofs of positive/trivial classification and analysis identities
-        ↓
-catalog-qualified companion theorems
-        ↓
-designated-root typed positive or negative verdict; classification seal succeeds
-        ↓
-read-only schema-v3 artifacts
+当前格式的模块报告、声明材料与登记绑定
 ```
 
 ## 47. 本体结论
@@ -8923,7 +8656,7 @@ P_i
 }
 $$
 
-整个系统、系统定理、被分析定理、逃逸率、严格下降证明与最终封印都位于 Lean 4 中。
+数学定义、定理、逃逸率与 Seal 证明字段由 Lean 4 内核检查；报告结构评定读取这些编译数据。
 
 没有 baseline。
 
@@ -8931,7 +8664,7 @@ $$
 
 没有可调评价体系。
 
-没有外部判官。
+报告实现不取得数学证明权威。
 
 只有每个 canonical arena 内当前 maximal theorem occurrences 自身的不可区分核，以及
 删除任一 occurrence 后该核是否严格增大。不同 arena 的 analysis 仍分栏，不存在跨
@@ -8939,9 +8672,9 @@ arena score。
 
 ---
 
-## 48. v4.1 C-IRPT 合并裁决
+## 48. C-IRPT 数学关系
 
-本版本相对 v3.0 的决定性变化，是把 theorem 语义、四原语和无任意性的逃逸 valuation 合并为同一个 kernel-residual 闭环：
+theorem 语义、四原语和逃逸 valuation 使用同一个 kernel-residual 数学定义：
 
 $$
 \boxed{
@@ -8965,88 +8698,44 @@ $$
 
 ---
 
-## 49. v4.2 shared-arena 与 analysis 合并裁决
+## 49. Shared-arena 数学与契约边界
 
-v4.2 不推翻第 48 节；它在 v4.1 kernel-residual 内核上作 additive 扩展，并裁定：
+occurrence identity 为 `(canonical arena declaration,theoremName)`，在 root import
+闭包中唯一。同一 theorem 可经独立、kernel-checked realization 登记到不同 canonical
+arenas；同一 root 中同 arena 的全部登记形成完整 maximal catalog。
 
-1. 分析成员的 occurrence identity 是 `(canonical arena declaration,theoremName)`；该键在
-   sealing root 的整个 import closure 中恰出现一次，同一 theorem 在不同 canonical arena
-   经独立 kernel-checked realization 登记时是合法的新 occurrence；
-2. 分组键是 canonical object `Arena` declaration，不是 carrier coincidence、namespace 或 `PrimitiveLawArena`；
-3. 同一 root import closure、同 arena 的全部 occurrences 构成唯一 maximal catalog，sub-catalog 只作 analysis view；
-4. sealing root 从编译产物发现其 import closure 中全部类型化登记，不按登记模块过滤
-   同 arena peers（工程优化规范 v1 §16）；
-5. 恰有一个 designated v4.2 system root，其 import closure 包含固定仓库快照的完整
-   registration closure；项目级 coverage manifest 来自既有枚举器并与实际 sealed set 相等，
-   `SystemCatalogIrredundant` 是该 root 全部仓库尺度 maximal catalogs 的 conjunction；
-6. namespace、root、catalog、cloned arena 与 positive-elsewhere 均不构成 exemption；
-7. flat leave-one-out exclusive capture 与 ordered layered capture 是两个不同量；
-8. nested cumulative flat catalog 的粗成员必为零，严格 chain 的相邻 increments 可同时非空；
-9. overlap/refinement matrices、multiplicity spectrum、role totals、verdict 与 layer chain 都由 Lean theorem 加 reflected equality 认证；每个 certificate 绑定 member set/order/arena/primitives/environment，旧 snapshot certificate 不得复用；
-10. kernel-address coincidence 仅是 diagnostic digest group，不是 `Equiv`、transport、rate 或 verdict 证据；
-11. 48-state `IC.Model ⊕ OI.Model` 是 causal alignment device，保留两个 frozen theorems 的 faithful realizations 并证明三层 strict chain；
-12. 512-state `OI.Model × IC.Model` 也是 alignment device，仅在 refl lane 满足第 33 节预算后可采用；
-13. 两种 carrier 都不声称两个 frozen SCM encodings 是同一个 causal ontology；
-14. 生产报告按第 30 节输出当前编译登记的绑定；数学计数由库内证明承载，
-    不生成 seal 统计产物，不保留旧报告格式兼容；
-15. auxiliary root 的 catalogs 仅在自身 import closure 内 maximal，artifact 写
-    `seal_scope: import-closure` 与 imported registration modules，且不能 discharge 或 exempt；
-    导入 v4.1 `InformationRoot` 时自然继承其十一个 occurrences，与 `UnifiedBoolSCM` arena 上的
-    causal occurrences 不碰撞。
+flat leave-one-out exclusive capture 与 ordered layered capture 是不同量。
+嵌套累计 flat catalog 的粗成员可为零，严格 chain 的相邻 increments 可同时非空。
+overlap/refinement、multiplicity spectrum、role totals 与 layer-chain identities
+由数学库定义与证明。Seal 保存同一 exact catalog 的数学义务；生产报告机械核对
+成员、顺序、arena 和单位向量，不发布上述分析量。
 
-最终边界是：designated maximal catalogs 的 `CatalogIrredundant` 全称正性只控制 positive admission，而完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，任一 designated catalog 冗余时产生 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict；
-overlap、rate magnitude、role comparison、spectrum、layered counts 与 address coincidence 都
-是无权重 analysis，不增加第二个 threshold，也不产生跨 arena scalar。
-## 50. v4.3 generated-kernel hierarchy 与 dispositions 合并裁决
+kernel 地址一致不证明关系外延相等、transport、rate 或目录结论。不同 canonical
+arena 的数学结果不能强行聚合为标量。有效冗余目录可提供 Seal，但不获得对象正性。
+首次冻结的独立 dual-novelty gate 仍 OPEN、无 required check。
 
-第 48、49 节的数学结论保持有效；hierarchy 在 shared-arena 数学对象上作
-裁决：
+## 50. Generated-kernel hierarchy 的数学边界
 
-1. 每个 maximal canonical catalog 的真正层级对象是 generated joint kernels 按 relation
-   extensional equality 取商所得的 finite closure lattice $\mathcal L_C$；subset、hash 与
-   display node ID 都不是 node identity；
-2. order 是 refinement（finer 为 smaller），top 为 $K_\varnothing$，bottom 为 $K_I$，meet 为
-   intersection，join 只在 generated closure 内取；
-3. full strict generator-transition DAG 保留全部单生成元严格步骤并可含跨 Hasse levels 的
-   shortcut edges；Hasse cover graph 是 lattice order 的 transitive reduction。bounded artifact
-   `edges` 只承载 endpoints 均已 materialize 的 certified strict transitions，并总含每个
-   certified-schedule 与 explicitly requested transition；其 invariant 是
-   `edges ⊆ strict transitions of the full DAG restricted to materialized nodes`。因此 bounded
-   projection 是 full strict DAG 的 subgraph，但 `is_cover` 相对于 full lattice 全局证明；只有
-   `complete_lattice_materialized=true` 时才要求 complete full-DAG edge array。ASCII 只绘 covers；
-   equal-kernel additions 是 collapsed stutters；`GeneratorSchedule` 可列完整 ordering，删去 stutters
-   的 `StrictKernelChain` 才是 DAG path；
-4. Hasse diagram 是 path（因而是 tree）当且仅当 generated lattice 是 chain；full strict
-   generator DAG 即使在 chain 特例也可因 shortcuts 不是 tree。不可比 kernels 产生 diamond 与
-   多条合法分解，任何 renderer 不得把 full DAG 强画成一棵 canonical tree；
-5. node payload 是 `escapeAt`，edge payload 是 `edgeCapture`；terminal escape、leave-one-out
-   $U_i$、$h(k)$、overlap/refinement matrices 与 catalog verdict 是 chain-independent invariants；
-6. finite State 使用 exact reflected counts/rates；任意 State 使用
-   `StructuralArena`／`StructuralCatalog` 与 strict-inclusion pair witness。
-   `StructuralNovelty` 仍是 finite-only bridge，不称 universal；
-8. `TrivialInCatalog` 是 $U_i=\varnothing$／structural non-strictness，catalog-relative 且对
-   membership 非单调。finite maximal catalog 的 zero members 全量认证后以 IE-C007 逐成员记录，catalog seal 不因零成员失败；添加 trivial peers 不增加旧成员 unique capture、不修复既有无效 realization/proof、不授予 scalar credit 或 first-freeze positivity；
-   migration 只刷新受 membership/contract 变化影响的 closure；既有十个 gold singleton catalogs、冻结 InformationRoot seal 与 statement pins 不改，不要求全库重放；
-9. schema v3 additive `kernel_projection` 采用 `boundary-and-certified-chains`，其中
-   `certified_chains` 承载带 strict／collapsed classifications 的完整 generator schedules，允许
-   零 increments；默认不 materialize $2^m$。每个 edge endpoint、collapsed-addition node、
-   leave-one-out node 与 certified-schedule node reference 都须由 `S` schema validation 解析到
-   materialized `node_key`。JSON／ASCII 是 projection，永不成为 admission input。node keys、
-   chain IDs 及其引用、layout、hash、timing 与 heuristic orders 均 report-only；
-10. T-034 按第 43.1 节 literal causal readouts 验收 escape counts $2256/136/44/0$ 与 captures
-    $2120/92/44$，branch escapes 为 $80/20/0$ 与 $56/24/0$，flat unique counts 为 $0/0/44$；
-11. sealing scope 始终是 import closure（工程优化规范 §9／§16）；hierarchy／structural modules 位于
-    GID-compliant sibling `InformationEscapeHierarchy/`，counting modules 位于 `InformationEscapeCounting/`，
-    不采用 nested `InformationEscape/Counting/` 布局。该布局独立于目录占用读数；
-    `tools/StrataLint.Engine/Coordinates/Gid.cs` 的 `ParseFormalCoordinates` 要求 ordinary formal
-    coordinates 至少三段，sibling placement 不由文法深度推出。
-    数学证据依工程规范 §8 由内核检查；strict chain 的 $\ell\le N-1$ 是 §19 的 lattice fact；
-12. object-level novelty 与 `CLAUDE.md` 5⁗ `proof_shape` 正交，admission 设计是二者连同
-    exactly-one disposition 的合取。delta-first/debt-ratchet 设计按第 39 节 GATE 定义，required check
-    不激活该 gate；activation 是 admission-policy／$\tau$ 变更，条件见第 39 节 GATE；
-13. frozen D5 modules、`Trureturing.lean` 与第 48、49 节的数学结论保持不变；
-    生产报告采用第 30 节的当前格式与消费边界。
+每个 maximal canonical catalog 的 joint kernels 按关系外延相等取商，形成 finite
+closure lattice。subset、hash 与 display ID 不构成 kernel identity。
+refinement order 中 finer 为 smaller，top 为全关系 kernel，bottom 为完整读出 kernel，
+meet 为 intersection，join 仅在 generated closure 内取。
 
-因此 v4.3 回答“树还是 DAG”：数学对象是有限 closure lattice，操作投影是可含 shortcuts 的
+strict generator-transition DAG 包含全部严格单生成元步骤，可含 shortcut edges；
+Hasse cover graph 是 lattice order 的传递约简。equal-kernel additions 是 stutters，
+完整 generator schedule 删去 stutters 后才形成 strict chain。
+Hasse diagram 为 path 当且仅当 lattice 为 chain；full strict DAG 可因 shortcuts
+仍不是 tree。不可比 kernels 产生 diamond 与多条合法分解。
+
+terminal escape、leave-one-out capture、multiplicity、overlap/refinement 与目录数学
+结论不依赖所选 chain。有限 State 的计数为精确数学值；任意 State 的严格性使用
+strict-inclusion proof 与 pair witness。有限截断没有 transfer theorem 时不能外推。
+
+这些层级数学结果属于 D5 库。Reg 的 Seal 保留编译期数学证据，报告只核对完整
+import 闭包与 exact catalog；不要求 materialize 全部 subsets 或输出层级统计协议。
+object-level novelty 与 `proof_shape` 正交；独立 dual-novelty gate 仍 OPEN、无 required check。
+
+
+数学对象是有限 closure lattice，操作关系是可含 shortcuts 的
 full strict generator DAG；只有该 lattice 的 Hasse diagram 在 nested chain 特例才是 path／tree，
 full strict DAG 仍不因此成为 tree。
