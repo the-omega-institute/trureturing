@@ -2255,3 +2255,239 @@ not discard an infinite zero tail, use RH-dependent localization,
 replace real parts by $1/2$, or turn the selected global maximizer into
 the least counterexample. RH remains unproved; all conclusions are
 paper-level applications without Lean certification.
+
+
+## A signed heat-weight application permits a broader Gaussian window
+
+The absolute all-zero discrepancy (U3) pays a narrow Gaussian window.
+The uniform actual-zero phase sum (J1) also controls a signed
+heat-weight discrepancy. The following application combines those
+already assessed inputs, (H5)'s paid coefficient approximation and
+the classical zero count. It does not repeat Landau's formula or
+claim an original phase theorem or Lean verification.
+
+Keep $A\ge e^2$, $L=\log A$, $0<a\le1/16$, and
+$\mathcal J(A)=\log(2A)\log\log(3A)$. All sums run over distinct
+actual zeros $\rho=\beta+i\gamma$ with $\gamma>0$, with each
+multiplicity $m_\rho$ included once. Define
+
+$$
+b_a(u)=\frac{1-e^{-au^2}}{u^2}=\int_0^a e^{-vu^2}\,dv\quad(u>0),
+\qquad b_a(0)=a.
+$$
+
+This is a nonnegative decreasing real function. Its total variation
+and first weighted variation are
+
+$$
+\int_0^\infty(-b_a'(u))\,du=a,\qquad
+\int_0^\infty u(-b_a'(u))\,du
+=\int_0^\infty b_a(u)\,du=\sqrt{\pi a}.
+\tag{W1}
+$$
+
+For the final equality, integrate
+$(1-e^{-au^2})/u^2$ by parts and use the classical Gaussian integral.
+Boundary terms vanish both at zero and at infinity. With
+$U=a^{-1/2}\ge4$, the bounds $b_a(u)\le\min(a,u^{-2})$ also give
+
+$$
+\begin{aligned}
+\int_0^\infty\log(2+u)(-b_a'(u))\,du
+&=a\log2+\int_0^\infty\frac{b_a(u)}{2+u}\,du\\
+&\le a\log(2+U)+a/2\ll a\log(2/a).
+\end{aligned}
+\tag{W2}
+$$
+
+### Apply the existing Landau sum to this variation measure
+
+Use exactly the sum $S_A(u)=\sum_{0<\gamma\le u}m_\rho A^\rho$
+from (J1). Its remainder
+$E_A(u)=S_A(u)+u\Lambda(A)/(2\pi)$ has the bound
+
+$$
+|E_A(u)|\ll A[\mathcal J(A)+\log(2+u)]+Lu
+\qquad(u\ge0).
+$$
+
+For $u\ge8$ this is (J1). For $0\le u<8$ the same weaker envelope
+follows from the fixed finite zero count, $|A^\rho|\le A$ and
+$0\le\Lambda(A)\le L$; no low zero is assumed absent or verified.
+The implied constant remains independent of $A,u$.
+
+Stieltjes partial summation over the entire positive-ordinate multiset
+now yields
+
+$$
+\begin{aligned}
+\sum_{\gamma>0}m_\rho A^\rho b_a(\gamma)
+&=-\int_0^\infty S_A(u)b_a'(u)\,du\\
+&=-\frac{\Lambda(A)\sqrt a}{2\sqrt\pi}
+ +O\!\left(Aa[\mathcal J(A)+\log(2/a)]+L\sqrt a\right).
+\end{aligned}
+\tag{W3}
+$$
+
+At zero $S_A(0)=0$; at infinity the boundary term vanishes by (J1)
+and $b_a(u)\le u^{-2}$. The series is absolutely convergent for
+fixed $A$, by $|A^\rho|\le A$ and the reciprocal-square zero count.
+Equations (W1)–(W2) pay the remainder integral. This applies the
+existing uniform formula to a new weight; it is not a reproof of
+that formula. $\Lambda(A)$ retains its point-supported real-variable
+meaning, and no nonzero main term is assumed at a selected source.
+
+### Pay the coefficient and the actual-real-part phase changes
+
+The first inequality in (H5) gives, uniformly for $\gamma\ge8$,
+
+$$
+F_A(\rho)=\frac{w(A)}A\frac{A^\rho}{\gamma^2}
+ +O\!\left(\frac{w(A)A^{\beta-1}}{\gamma^3}\right).
+$$
+
+After multiplication by $1-e^{-a\gamma^2}$, the total error is
+$O(w(A)a\log^2(2/a))$. Indeed, the classical count gives
+
+$$
+\sum_{\gamma\ge8}m_\rho
+ \frac{\min(a\gamma^2,1)}{\gamma^3}
+\ll a\log^2(2/a),
+$$
+
+by splitting at $U$ and using the existing reciprocal-cube tail
+estimate. The finite multiset $0<\gamma<8$ contributes $O(aw(A))$
+to this comparison, using the pointwise finite-zero bound in (U3).
+Its fixed constants are independent of $A,a$; it is retained even
+when $U<8$.
+
+The Gaussian in (U1) contains the actual square $\rho^2$, not just
+$-\gamma^2$. The additional phase change is explicitly bounded by
+
+$$
+|e^{a\rho^2}-e^{-a\gamma^2}|
+\le ae^a(1+2\gamma)e^{-a\gamma^2},
+$$
+
+since $0<\beta<1$. Applying (U2) and the same zero count gives
+
+$$
+\sum_{\gamma>0}m_\rho|F_A(\rho)|
+ |e^{a\rho^2}-e^{-a\gamma^2}|
+\ll w(A)a\log^2(2/a).
+\tag{W4}
+$$
+
+For large ordinates split at $U$: below it
+$\sum m_\rho/\gamma\ll\log^2(2U)$; above it Gaussian decay and
+the same count give $O(\log(2U))$ for the weighted reciprocal-first
+sum. The finite low multiset again costs $O(aw(A))$. These are
+absolute error estimates for the changes, not critical-line
+replacements of the zeros themselves.
+
+Consequently the full signed coefficient discrepancy obeys
+
+$$
+\boxed{\begin{aligned}
+D_{A,a}&:=\sum_{\gamma>0}m_\rho F_A(\rho)(1-e^{a\rho^2})\\
+&=-\frac{w(A)\Lambda(A)\sqrt a}{2\sqrt\pi A}
+ +O\!\left(w(A)\left[
+ a\bigl(\mathcal J(A)+\log^2(2/a)\bigr)
+ +\frac{L\sqrt a}{A}\right]\right).
+\end{aligned}}
+\tag{W5}
+$$
+
+This is a uniform estimate for a complex signed sum. The actual real
+parts, multiplicities, finite low zeros and infinite height tail have
+not been discarded. Its cancellation comes from (J1), while (W4)
+pays the mismatch between real-ordinate damping and the actual
+Gaussian coefficient. No numerical value for the implied constants
+is asserted.
+
+
+## The broader window retains a vanishing full Robin transport allowance
+
+Use the exact centered prime integral $J_a(A)$ in (V3), the matching
+pole constant in (V4), the uniform contour bound (V5), and the original
+trivial-zero correction already retained there. Subtracting their
+exact formulas gives
+
+$$
+I_\psi(A)-J_a(A)=-2\operatorname{Re}D_{A,a}
+ +T_{\rm triv}(A)+C_a(A).
+$$
+
+Therefore (W5) supplies the complete normalized transport estimate
+
+$$
+\boxed{\begin{aligned}
+\sqrt A L\,[I_\psi(A)-J_a(A)]
+={}&\frac{(1+1/L)\Lambda(A)\sqrt a}{\sqrt\pi\sqrt A}\\
+&+O\!\left(
+ \sqrt A\,a\bigl[\mathcal J(A)+\log^2(2/a)\bigr]
+ +\frac{L\sqrt a}{\sqrt A}+\frac1A\right).
+\end{aligned}}
+\tag{Y1}
+$$
+
+The nonnegative displayed main term is favorable for a lower bound
+on $I_\psi$ in terms of $J_a$. No positive main term is presumed at
+the selected integer, and no effective value for the error constant
+is certified. The pole, contour and trivial-zero contributions are
+those of the full exact formulas, with no further truncation.
+
+### A larger admissible Gaussian width
+
+For $A\ge e^2$ choose
+
+$$
+a_A^\sharp=\frac1{\sqrt A(\log A)^3}\le\frac1{16}.
+$$
+
+Then $\log(2/a_A^\sharp)=L/2+3\log L+\log2=O(L)$ and
+$\mathcal J(A)=O(L\log L)$, so the adverse allowance in (Y1) is
+
+$$
+O\!\left(\frac1L+\frac{\log L}{L^2}
+ +\frac1{A^{3/4}\sqrt L}+\frac1A\right)=O(1/L).
+\tag{Y2}
+$$
+
+The displayed main term is also $O(A^{-3/4}/\sqrt L)$, because
+$\Lambda(A)\le L$. Thus the full normalized absolute discrepancy
+is $O(1/\log A)$ at this larger width as well.
+
+Compared with $a_A=1/[A(\log A)^4]$ in (V6),
+$a_A^\sharp/a_A=\sqrt A\log A\to\infty$. The reciprocal Gaussian
+height scale changes from $\sqrt A(\log A)^2$ to
+$A^{1/4}(\log A)^{3/2}$. This specifies damping of the full response,
+not a cutoff that permits any zero to be omitted.
+
+At the larger width, the earlier generic absolute allowance
+$\sqrt{Aa}\log(2/a)$ grows like $A^{1/4}/\sqrt{\log A}$.
+Equation (Y1) instead uses the existing signed Landau cancellation
+and the paid actual-real-part phase error to obtain (Y2). This compares
+the two guaranteed allowances; it does not claim the earlier bound
+is attained by the actual discrepancy.
+
+### The unchanged selected-source obligation
+
+At the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum, set $A=\log N$ and retain the existing condition
+(G9), its complete infinite integral and strict core. The existing
+restriction $A>10^{36}$ under RH failure and the cited inputs remains
+unchanged. A lower bound
+
+$$
+\sqrt A\log A\,J_{a_A^\sharp}(A)
+\ge-\mathcal E(\log A)+\eta(A)
+$$
+
+would suffice wherever $\eta(A)$ pays the adverse allowance in (Y1).
+Such a signed lower bound is not proved here. The new estimate allows
+a broader Gaussian window with a vanishing transport cost; it does
+not certify that cost numerically at $A>10^{36}$, control the remaining
+signed response, verify a new zero height, or turn the selected global
+maximizer into the least counterexample. All inputs are reused
+paper-level interfaces without Lean certification; RH remains unproved.
