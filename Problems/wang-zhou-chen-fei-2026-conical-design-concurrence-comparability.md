@@ -1,6 +1,7 @@
 ---
 slug: wang-zhou-chen-fei-2026-conical-design-concurrence-comparability
 bibkey: wangzhouchenfei2026conical
+doi: null
 url: https://arxiv.org/abs/2606.31010v2
 triage: theorem
 motivation_gids:
