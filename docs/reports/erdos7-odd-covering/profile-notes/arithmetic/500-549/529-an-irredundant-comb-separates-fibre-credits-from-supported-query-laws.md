@@ -14,7 +14,7 @@ For the very same families, overlap accounting gives actual source survivor mass
     R_P(nu)<1097/128<565/51,
     nu<720 H_P.                                      (IC2)
 
-For each H this law is fixed before every query, and retains normalized Haar on the same actual pure3 survivor. Arbitrary additional originals touching23 or29, supported on P union{23,29}, leave full Haar survivor mass above2339/8110080>1/3500. Thus(IC1) is a failure of the specified source and its single-class mass estimate, not a failure of the seven-prime query target. No unrestricted Erdős#7 result or new Lean verification is claimed. The construction and arbitrary-height arguments below are ordinary proofs; the finite rational constants and local separation facts have a separate exact verifier.
+For each H this law is fixed before every query, and retains normalized Haar on the same actual pure3 survivor. Arbitrary additional originals touching23 or29, supported on P union{23,29}, leave full Haar survivor mass above2339/8110080>1/3500. Thus(IC1) is a failure of the specified source and its single-class mass estimate, not a failure of the seven-prime query target. No unrestricted Erdős#7 result is claimed. The construction and arbitrary-height arguments below are ordinary proofs; the finite rational constants and local separation facts have a separate exact verifier. Lean verification is limited to the explicitly scoped checks below.
 
 ## One fixed residue for every full numerical label
 
@@ -426,3 +426,269 @@ product budget. Its six declarations use only the standard axiom set.
 The actual CRT construction and weighted full-fibre enumeration remain
 the ordinary argument and exact consumer; no complete formal measure
 theorem or new canonical wrapper is claimed.
+
+## Low projection avoidance permits arbitrary higher phases
+
+The RR7 source also handles finite families whose high ternary layers do
+not have the comb phases. Keep P8={3,5,7,11,13,17,19,23} and Q=P8 minus{3}.
+For a probability eta on the Q-adic carrier, write
+
+    q_n(eta)=max_a eta(a mod n),
+    beta=B_Q(eta)=sum_(n Q-smooth, including1) q_n(eta)<infinity.
+
+This is the complete query norm: absent original labels and every query
+height are included, and q_1=1. Fix h>=1 and one finite family of distinct
+nonunit P8-smooth numerical moduli with globally fixed residues. Write
+each original as m=3^j n, where n is Q-smooth, and let J_m be its actual
+cofactor cylinder. Assume ONE eta satisfies
+
+    eta(J_m)=0 for every original with j<=h and n>1.           (HP1)
+
+This includes every ternary-free original(j=0). It imposes no condition
+on the phases or heights of pure ternary originals, or on any original
+with j>h. Under beta<3^h+1, there is one probability nu avoiding the whole
+original family and satisfying
+
+    B_(P8)(nu)<=1+(2 beta-1)/(1-(beta-1)/3^h).                (HP2)
+
+To prove this, condition ternary Haar on avoidance of ALL pure ternary
+originals. Distinct numerical moduli supply at most one forbidden class
+per positive depth, and finiteness gives a removed mass strictly below
+sum_(j>=1)3^-j=1/2. The resulting rho_3 therefore has
+
+    max_a rho_3(a mod3^j)<=2/3^j (j>=1),   B_{3}(rho_3)<=2.
+
+Use the fixed product law rho=rho_3 times eta. It avoids every pure
+ternary original and, by HP1, every remaining original at j<=h. Its
+complete query norm is at most2 beta. Let D be the union of the remaining
+original cylinders, necessarily j>h and n>1. For each pair(j,n), there
+is at most one original phase, because the original numerical moduli are
+distinct. The union bound and the product law give
+
+    rho(D)<=sum_(j>h,n>1) (2/3^j) q_n(eta)
+           =(beta-1)/3^h.                                  (HP3)
+
+The subtracted unit1 is essential: pure ternary originals were already
+removed. This is a union bound, with no independence assertion between
+overlapping original events. The bound sums every cofactor query label,
+so it also covers any finite selection of higher original heights.
+
+Since HP3 is less than1, condition rho once on the complement of D.
+For each nonunit numerical query, its maximum mass increases by at most
+the reciprocal of that SAME reserve. Summing these nonnegative bounds
+over all queries gives HP2; the unit query of the conditioned probability
+still contributes exactly1. The source is fixed before any query is
+chosen. The ternary-height sums are convergent geometric series; the
+cofactor sum is the assumed finite complete norm beta. Nonnegative
+summation justifies the full-query bound, without replacing the complete
+norm with the list of original labels.
+
+### The first two ternary layers suffice for the comb masks
+
+Take eta to be the RR7 nonternary product law: at the r-th prime q_r in Q,
+exclude sides0,...,2r-1 at depths1,2,3, then normalize Haar. It satisfies
+
+    beta<beta_0=product_(r=1..7)(1+1/(q_r-1-2r))
+               =11025/2048.
+
+For the low nonpure inventory, retain any original projections null
+under these masks. In particular, the comb projections at j=0,1,2
+satisfy HP1 by the largest-prime argument used for RR7. Pure ternary
+originals may have arbitrary fixed phases at every height. Every mixed
+original at j>=3 may now have an arbitrary fixed phase and arbitrary
+Q-smooth cofactor, with no cofactor-height cap; numerical moduli must
+remain distinct. Using beta_0 in both nonnegative debit and query bounds
+yields
+
+    rho(not D)>=9455/18432>0,
+    B_(P8)(nu)<=189473/9455<28.                              (HP4)
+
+More generally, at h=2 the right side of HP2 is below28 precisely when
+beta<31/5, within its positive-reserve domain. If HP1 holds through h=4,
+the same argument gives the stronger reserve and complete-query bounds
+
+    rho(not D)>=156911/165888,
+    B_(P8)(nu)<=1777073/156911<12.                           (HP5)
+
+The beta_0 debit at h=1 exceeds1, so this estimate gives no conclusion
+there. HP1 has not been established for arbitrary P8 families. HP4 and
+HP5 extend the admitted phase inventory under a stated low-projection
+condition; they do not prove the unrestricted source target or Erdős#7.
+
+The existing exact consumer also checks HP4, HP5 and the height-two
+threshold. A scoped Lean application verifies the finite conditioning
+implication from explicit loss and aggregate-query hypotheses, together
+with the HP4 and HP5 reserve and budget fractions, using only the standard
+three axioms. The threshold value31/5 is checked by the exact consumer;
+its equivalence follows from the displayed positive-reserve inequality.
+The arithmetic construction supplying those hypotheses and the complete
+infinite query sums are the ordinary proof above, not a fully formalized
+source theorem. The Lean application reuses existing probability results
+and introduces no canonical wrapper module.
+
+## Requiring all low projections to vanish has an unbounded cost
+
+HP1 cannot be imposed as a universal inexpensive-source selection rule,
+even when the ternary height is only two and the Q law may be arbitrarily
+correlated. The following actual family has that obstruction and still
+admits a uniformly inexpensive joint source.
+
+Fix H>=1, use the side cylinders C(p,e,a) above, and put
+T_p=[-1]_(p^H). For each j=0,1,2 take the following originals. An entry
+with cofactor n has numerical modulus3^j n; when j>0 its ternary phase
+is1 modulo3^j, and when j=0 it has no ternary condition.
+
+| Cofactor | Range | Fixed cofactor projection at ternary depth j |
+| --- | --- | --- |
+| 5^e | 1<=e<=H | C(5,e,j) |
+| 7^f | 1<=f<=H | C(7,f,j) |
+| 5^e 7^f | 1<=e,f<=H | C(5,e,3) times C(7,f,3+j) |
+
+CRT specifies one fixed residue per original. The exponent triples are
+distinct, so these are3(H^2+2H) distinct odd nonunit moduli. Their ternary
+height stays two as H grows. Each original has a private CRT cylinder:
+for a pure-cofactor original put the other cofactor coordinate in its
+tail T_p; for a mixed-cofactor original use its two prescribed sides.
+Different departure depths or sides exclude every competing projection.
+Choose the prescribed ternary phase when j>0 and root0 when j=0. Thus
+the obstruction does not depend on redundant originals.
+
+Suppose a Q probability eta assigns zero mass to every displayed
+projection. Avoiding the pure-cofactor projections leaves
+
+    S5=T5 disjoint-union A5,  A5=union_(1<=e<=H) C(5,e,3),
+    S7=T7 disjoint-union A7,  A7=union_(1<=f<=H,a=3,4,5) C(7,f,a).
+
+The mixed projections have union A5 times A7. Hence their common
+survivor, with all other Q coordinates free, is exactly
+
+    V_H=(T5 times S7) union (S5 times T7).                   (LP1)
+
+The two rectangles may overlap. Since the inventory is finite,
+eta(V_H)=1 and eta(T5)+eta(T7)>=1. For each e=1,...,H, the query
+[-1]_(5^e) contains T5, and [-1]_(7^e) contains T7. These2H numerical
+queries are distinct. Monotonicity, the unit query and nonnegativity give
+
+    B_Q(eta)>=1+H(eta(T5)+eta(T7))>=H+1.                     (LP2)
+
+This holds for every such eta, with no product, density or prescribed
+marginal assumption, and also when its norm is infinite. Auxiliary
+restrictions cannot remove the lower bound. At H=6 the144-original
+family forces beta>=7, excluding the beta<31/5 input for HP4.
+
+More strongly, any joint P8 law whose Q marginal satisfies this same
+low-projection-null condition has B_(P8)>=B_Q>=H+1, regardless of its
+ternary conditionals. At H=27 this excludes B_(P8)<28 for the entire
+low-null class, on an actual2349-original family of ternary height two.
+
+### Retaining ternary activation removes this obstruction
+
+On the SAME actual family, take normalized Haar on ternary root0,
+5-adic root1 and7-adic root1, and independent Haar on the other P8
+coordinates. Every j=1,2 original is inactive on ternary root0. At j=0,
+the pure-cofactor side0 classes have first root0 or p-1, excluded by
+root1. Every mixed j=0 original has5-side3, whose first root is3 or4,
+also excluded. Thus this one product law avoids the full original family
+for every H.
+
+A normalized Haar law on one p-root has complete query norm
+1+p/(p-1); free Haar has norm p/(p-1). Consequently this supported law
+has the exact all-height norm
+
+    B_(P8)=(5/2)(9/4)(13/6)
+           product_(p=11,13,17,19,23) p/(p-1)
+          =1255501/73728<28.                                (LP3)
+
+It does not satisfy HP1: for example, the cofactor projection of the
+modulus15 original is[1]_5 and has marginal probability1. Its ternary
+activation is absent, so the actual original still has probability0.
+LP2 therefore refutes the blanket low-null strategy, not the unrestricted
+joint-source target. A general source construction cannot uniformly
+replace actual originals by unconditional avoidance of all their low
+cofactor projections; the ternary activation remains relevant.
+
+[Report536](536-ternary-conditioning-preserves-a-joint-query-and-entropy-boundary.md)
+already exhibits higher projected multiplicity on a chosen ternary
+fibre. LP2 additionally bounds EVERY law avoiding all low projections,
+while keeping ternary height two; it does not prescribe the marginal
+whose cost is being bounded. The side-cylinder partition and probability
+inequalities are reused, with no claim of a new general measure theorem.
+
+The existing consumer reconstructs the actual CRT labels, verifies one
+private point per original, the exact projected survivor and the entire
+cheap-source support at H=1,2. The controls have9 and24 originals and
+projected survivor counts5 and31. These controls do not prove the
+arbitrary-H statement. A scoped Lean application checks, for every finite
+radix-word height and every rational law on the projection survivor, the
+first-departure argument, the tail-union inclusion and the H+1 finite
+prefix-query lower bound, together with the H=6 contradiction and LP3's
+rational product. Numerical CRT transport and the infinite Haar-tail
+interpretation remain the ordinary proof above. No unrestricted Erdős#7
+conclusion follows from this method obstruction.
+
+## A selected ternary root needs only its active low projections
+
+There is a positive source condition that permits the LP family and
+arbitrary higher mixed additions without imposing HP1. Keep a finite
+distinct nonunit P8-smooth family with fixed phases. Choose a ternary
+root r that is not forbidden by an actual modulus3 original. For each
+nonunit Q-smooth cofactor n, collect the complete mod-n phases of
+
+- its j=0 original, if present;
+- its j=1,2 originals whose first ternary root is r, if present.
+
+Assume this set has at most ONE distinct phase for every n. Identical
+phases may be merged; phases attached to other ternary roots are not
+included. The condition concerns each complete numerical cofactor,
+not merely its prime support. It places no restriction on higher mixed
+phases or heights, and permits all pure ternary originals except a
+modulus3 class forbidding the selected root.
+
+The merged inventory is a finite distinct nonunit Q-smooth family.
+Apply [Report563 MT11](../550-599/563-prefix-free-rooted-labels-admit-all-later-four-mixed-towers.md#83-a-seven-prime-companion-and-the-remaining-boundary)
+directly to obtain ONE cofactor law eta avoiding it, with complete norm
+
+    beta=B_Q(eta)<=A=13463054/5049311.                       (AR1)
+
+In root r, remove every actual pure ternary original and normalize Haar
+on what remains. Its unnormalized Haar mass is strictly greater than
+1/3-sum_(j>=2)3^-j=1/6, because there is at most one original per depth
+and the family is finite. This gives a law u with
+
+    q_3(u)=1,  q_(3^j)(u)<=6/3^j (j>=2),  B_{3}(u)<=3.
+
+The fixed product rho=u times eta avoids every pure ternary original
+and every nonpure original at j<=2: each is either inactive on r or
+has its cofactor phase excluded by eta. Only mixed originals with
+j>=3,n>1 remain. Numerical distinctness and the same-law union bound give
+
+    rho(D)<=sum_(j>=3,n>1)(6/3^j)q_n(eta)=(beta-1)/3,
+    B_(P8)(rho)<=3 beta.
+
+As before, n=1 is omitted only because all pure ternary originals were
+already removed. Since beta<=A<4, condition rho once on avoidance of D.
+Including the unit exactly once yields a law nu avoiding the whole family:
+
+    B_(P8)(nu)<=1+(3 beta-1)/(1-(beta-1)/3)
+               =(1+8 beta)/(4-beta)
+               <=37584581/2244730<28.                       (AR2)
+
+The reserve at A is2244730/5049311>0. On beta<4, the displayed budget is
+below28 exactly when beta<37/12. All query labels and heights remain
+included; eta and the final conditioning event are fixed before queries.
+
+For the LP family, choose root0. Its j=1,2 originals all have root1,
+so each active cofactor contributes only its j=0 phase. The condition
+continues to hold after arbitrary finite mixed additions at j>=3 and
+arbitrary higher pure ternary additions. If a modulus3 original is also
+added, at least one of roots0 and2 remains available, and either has the
+same inactive j=1,2 inventory. Thus these families admit the AR2 source
+even where every all-low-projection-null law has cost at least H+1.
+
+AR1 is an application of the existing seven-prime source, not a new
+source theorem. The active-phase condition has not been proved for an
+arbitrary P8 family. The exact consumer checks the resulting fractions;
+a scoped Lean application verifies the finite conditioning implication
+from its explicit deletion/query bounds and the rational threshold.
+The root-conditioned Haar source, the MT11 measure application and
+the complete infinite query sums remain ordinary mathematics here.
