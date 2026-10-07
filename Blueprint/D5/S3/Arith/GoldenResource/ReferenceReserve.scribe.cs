@@ -49,7 +49,10 @@ internal sealed class ReferenceReserveDocument : IScribeDocumentDefinition
                         + "The reciprocal-power marginal bound makes layer K+1 strictly "
                         + "unprofitable. Strict decrease of the marginals makes the actual "
                         + "objective strictly decreasing from K onwards, so every actual "
-                        + "maximizer has exponent at most K."))),
+                        + "maximizer has exponent at most K. The tail estimate requires only "
+                        + "x > 1 and K >= 2; the additional condition x >= K^K is used only "
+                        + "for this exponent bound. The bound applies to every maximizer, "
+                        + "including choices tied at the optimum."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement()

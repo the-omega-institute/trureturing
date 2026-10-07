@@ -20,7 +20,7 @@ The actual supremum is attained. At every prime, its value and hence the reserve
 
 Put t = x^(1/(K+1)). The omitted primes split into those at most t and those between t and x^(1/K). The first set has at most t members and each contributes at most 2/x. Every prime in the second set has reference exponent exactly K and contributes at most 2p^(-K-1). For an arbitrary finite set of integers above t >= 1, decreasing-power integral comparison bounds its sum of n^(-K-1) by (1+1/K)t^(-K). Combining the two sets and using t/x = t^(-K) gives (4+2/K)x^(-K/(K+1)).
 
-If x >= K^K and p > x^(1/K), then p > K and log x < K log p < p log p. Thus p^(K+1) log p > x log x. The reciprocal-power marginal bound makes layer K+1 strictly unprofitable. Strict decrease of the marginals makes the actual objective strictly decreasing from K onwards, so every actual maximizer has exponent at most K.
+If x >= K^K and p > x^(1/K), then p > K and log x < K log p < p log p. Thus p^(K+1) log p > x log x. The reciprocal-power marginal bound makes layer K+1 strictly unprofitable. Strict decrease of the marginals makes the actual objective strictly decreasing from K onwards, so every actual maximizer has exponent at most K. The tail estimate requires only x > 1 and K >= 2; the additional condition x >= K^K is used only for this exponent bound. The bound applies to every maximizer, including choices tied at the optimum.
 
 ## References
 
