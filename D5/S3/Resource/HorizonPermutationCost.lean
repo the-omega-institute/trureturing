@@ -48,8 +48,8 @@ private theorem leaf_collision {X : Type u} {E : Type v}
     by_contra hn
     obtain ⟨k, hk⟩ := Nat.exists_eq_succ_of_ne_zero hn
     apply l.property
-    refine ⟨f^[k] x, ?_⟩
-    simpa [hk, Function.iterate_succ_apply'] using hr.symm
+    rw [hr, hk, Function.iterate_succ_apply']
+    exact Set.mem_range_self (f^[k] x)
   constructor
   · omega
   · simpa [hst] using hr
@@ -63,32 +63,20 @@ private theorem lower_bound {X : Type u} {E : Type v} [Finite X] [Finite E]
     Sum.elim (fun x => (P : E → E)^[H] (init x))
       (fun a => (P : E → E)^[a.2.val] (init a.1))
   have hinj : Function.Injective embed := by
-    intro a b hab
-    cases a with
-    | inl x =>
-      cases b with
-      | inl y =>
-        exact congrArg Sum.inl (init_injective hs (P.injective.iterate H hab))
-      | inr a =>
-        have h := leaf_collision hs a.1 x a.2.val H (by omega) (le_refl _) hab.symm
-        exact False.elim (by have := a.2.isLt; omega)
-    | inr a =>
-      cases b with
-      | inl x =>
-        have h := leaf_collision hs a.1 x a.2.val H (by omega) (le_refl _) hab
-        exact False.elim (by have := a.2.isLt; omega)
-      | inr b =>
-        by_cases ht : a.2.val ≤ b.2.val
-        · obtain ⟨htime, hleaf⟩ := leaf_collision hs a.1 b.1 a.2.val b.2.val
-            ht (by have := b.2.isLt; omega) hab
-          have hl : a.1 = b.1 := Subtype.ext hleaf
-          have hf : a.2 = b.2 := Fin.ext htime
-          exact congrArg Sum.inr (Prod.ext hl hf)
-        · obtain ⟨htime, hleaf⟩ := leaf_collision hs b.1 a.1 b.2.val a.2.val
-            (by omega) (by have := a.2.isLt; omega) hab.symm
-          have hl : a.1 = b.1 := Subtype.ext hleaf.symm
-          have hf : a.2 = b.2 := Fin.ext htime.symm
-          exact congrArg Sum.inr (Prod.ext hl hf)
+    refine Function.Injective.sumElim
+      ((P.injective.iterate H).comp (init_injective hs)) ?_ ?_
+    · intro a b hab
+      by_cases ht : a.2.val ≤ b.2.val
+      · obtain ⟨htime, hleaf⟩ := leaf_collision hs a.1 b.1 a.2.val b.2.val
+          ht (by have := b.2.isLt; omega) hab
+        exact Prod.ext (Subtype.ext hleaf) (Fin.ext htime)
+      · obtain ⟨htime, hleaf⟩ := leaf_collision hs b.1 a.1 b.2.val a.2.val
+          (by omega) (by have := a.2.isLt; omega) hab.symm
+        exact Prod.ext (Subtype.ext hleaf.symm) (Fin.ext htime.symm)
+    · intro x a hab
+      have h := leaf_collision hs a.1 x a.2.val H
+        (by omega) (le_refl _) hab.symm
+      exact a.2.isLt.ne h.1
   simpa [Nat.card_sum, Nat.card_prod, Nat.card_fin, Nat.mul_comm] using
     Nat.card_le_card_of_injective embed hinj
 
