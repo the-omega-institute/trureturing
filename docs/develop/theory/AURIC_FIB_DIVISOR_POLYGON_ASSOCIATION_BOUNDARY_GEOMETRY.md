@@ -466,7 +466,7 @@ $$
 \log\mathcal E(n)=\log\tau(n)-\frac3{10}\log n.
 $$
 
-这是完整交换子配置的容量与数值规模之间的成本模型，价格 $3/10$ 不由五模式语法推出。[Ramanujan《Highly composite numbers》§§32–34、Table 1](../../../Library/Arith/ramanujan1915highlycomposite.md) 已给出优高度合成数的这个目标族、素数方向阈值和 $5040$ 的经典记录。它区别于 [Alaoglu–Erdős 的丰约数权重背景](../../../Library/Arith/alaoglu1944highly.md) 中的 $\sigma(n)/n^{1+\epsilon}$，也区别于原卷 §76 的 $\epsilon=1/25$ 权重目标。
+这是完整交换子配置的容量与数值规模之间的成本模型，价格 $3/10$ 不由五模式语法推出。[Ramanujan《Highly composite numbers》§§32–34、Table 1](../../../Library/ArithSums/ramanujan1915highlycomposite.md) 已给出优高度合成数的这个目标族、素数方向阈值和 $5040$ 的经典记录。它区别于 [Alaoglu–Erdős 的丰约数权重背景](../../../Library/Arith/alaoglu1944highly.md) 中的 $\sigma(n)/n^{1+\epsilon}$，也区别于原卷 §76 的 $\epsilon=1/25$ 权重目标。
 
 **命题 10.2（来源容量价格在关联几何中的适配）。** 在本卷共同来源中，完整容量价格与取商后的可见容量价格分别为
 
@@ -533,7 +533,7 @@ $$
 
 ## 十一、Robin 输入与仍需跨越的无界尺度
 
-**假设 11.1（引用的 Robin 判据）。** 采用 [Choie–Lichiardopol–Moree–Solé，arXiv math/0604314v2，摘要及§1](../../../Library/Arith/choie2006robincriterion.md) 所引 Robin 等价判据：
+**假设 11.1（引用的 Robin 判据）。** 采用 [Choie–Lichiardopol–Moree–Solé，arXiv math/0604314v2，摘要及§1](../../../Library/ArithSums/choie2006robincriterion.md) 所引 Robin 等价判据：
 
 $$
 \mathrm{RH}\iff

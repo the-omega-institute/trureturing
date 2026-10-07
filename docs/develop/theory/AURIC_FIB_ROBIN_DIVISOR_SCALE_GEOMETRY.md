@@ -833,7 +833,7 @@ $$
 [SevenSmooth]: ../../../D5/S3/Arith/Robin/SevenSmooth.lean
 [SigmaOpt]: ../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean
 [Choie]: https://arxiv.org/abs/math/0604314v2
-[ChoieNote]: ../../../Library/Arith/choie2006robincriterion.md
+[ChoieNote]: ../../../Library/ArithSums/choie2006robincriterion.md
 [MertensNote]: ../../../Library/notes/pntplus2026mertens.md
 [LichtmanNote]: ../../../Library/Scale/lichtman2020mertens.md
 [GronwallNote]: ../../../Library/notes/gronwall1913asymptotic.md

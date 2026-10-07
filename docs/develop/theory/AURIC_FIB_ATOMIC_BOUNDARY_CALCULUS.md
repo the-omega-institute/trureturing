@@ -477,7 +477,7 @@ $$
 Z(n)<e^\gamma\log\log n\quad\text{对所有整数 }n>5040.
 $$
 
-此处 $\gamma$ 是 Euler–Mascheroni 常数。判据作为已知前置消费，出处及严格阈值见 [Choie 等人的文献注](../../../Library/Arith/choie2006robincriterion.md)，其 [arXiv v2](https://arxiv.org/abs/math/0604314v2) 引言把该等价归于 Robin；本卷不证明这个判据本身。
+此处 $\gamma$ 是 Euler–Mascheroni 常数。判据作为已知前置消费，出处及严格阈值见 [Choie 等人的文献注](../../../Library/ArithSums/choie2006robincriterion.md)，其 [arXiv v2](https://arxiv.org/abs/math/0604314v2) 引言把该等价归于 Robin；本卷不证明这个判据本身。
 
 **定义 10.1（同一精度的符号任务）。** 对整数 $n>e$ 令（Robin 判据的全称应用域仍是 $n>5040$）
 
@@ -725,7 +725,7 @@ $$
 | [DLMF 文献注](../../../Library/Factorization/dlmf2026atomicboundary.md) 的 27.5.3、27.4.11 | `literature-attested`：累计反演与 $\alpha=-1$ 的 Dirichlet 生成式；保留绝对收敛条件 |
 | [既有有限约数文献注](../../../Library/Factorization/dlmf2026divisorpartition.md) | `literature-attested`：约数幂和、有限几何因素；不消费零点推广 |
 | [Koshy 文献注](../../../Library/notes/koshy2001fibonacci.md) | `literature-attested`：经典 Fibonacci 矩阵与显式式，作为计数和尾端控制的材料 |
-| [Choie 等人文献注](../../../Library/Arith/choie2006robincriterion.md) | `literature-attested`：Robin 的严格全称判据；不供应本卷数值区间 |
+| [Choie 等人文献注](../../../Library/ArithSums/choie2006robincriterion.md) | `literature-attested`：Robin 的严格全称判据；不供应本卷数值区间 |
 | 既有 SevenSmooth 的 `robin_seven_smooth` | 已有四素数安全族，指数允许为零；本卷的独立证书为其应用呈现 |
 | 本卷指定响应、端点、接缝、尾项的组合证明及支持程序结果 | `repo-derived`：不声称原创、全体 RH 或本卷新增的 kernel 验证 |
 

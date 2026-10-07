@@ -433,7 +433,7 @@ Z(n)=\frac{\sigma(n)}n,\qquad
 G(n)=\log Z(n)-\gamma-\log\log\log n.
 $$
 
-$\log n>1$ 保证三层对数均为实数。对素数 $p$，操作为实际整数 $n\mapsto np$，差分为 $D_pG(n)=G(np)-G(n)$；不同方向可以交换，所有四角来自同一个 $n$。在 $n>5040$ 上，Robin 不等式等价于 $G(n)<0$。其对所有该范围整数成立与 RH 等价，按 [Choie–Lichiardopol–Moree–Solé v2 摘要与 §1](../../../Library/Arith/choie2006robincriterion.md) 引用 Robin 的经典定理。
+$\log n>1$ 保证三层对数均为实数。对素数 $p$，操作为实际整数 $n\mapsto np$，差分为 $D_pG(n)=G(np)-G(n)$；不同方向可以交换，所有四角来自同一个 $n$。在 $n>5040$ 上，Robin 不等式等价于 $G(n)<0$。其对所有该范围整数成立与 RH 等价，按 [Choie–Lichiardopol–Moree–Solé v2 摘要与 §1](../../../Library/ArithSums/choie2006robincriterion.md) 引用 Robin 的经典定理。
 
 **命题 8.2（已有混合响应接到有限矩形任务）。** 对不同素数 $p,q$，令 $x=\log n>1$、$a=\log p>0$、$b=\log q>0$，并定义
 
