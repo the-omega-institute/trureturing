@@ -65,7 +65,7 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
     let rejected ← try
       discard <| (CompiledSeal.consume snapshot root wrong).run state
       pure false
-    catch error => pure ((toString error).splitOn "component=reg-vector:").length == 2
+    catch error => pure (((toString error).splitOn "component=reg-vector:").length == 2)
     unless rejected do throw <| IO.userError "compiled.seal:duplicate_vector_operand_accepted"
     IO.println "[PASS] compiled seal: complete real catalog membership and snapshot rejections"
     let sharedRoot := `Reg.Catalogs.SharedInformationRoot.SealedCatalog
