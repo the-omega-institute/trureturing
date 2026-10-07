@@ -4,7 +4,7 @@
 
 The complete infinite canonical Clifford orbit permits exactly the stated modular readers.
 
-Use the Clifford algebra and leaf observation E from CliffordLeafOrbit. The canonical source is T(j)=rho^j(alpha), its observation is X(j), and its composition is z(j)=M^j(1,0), with M(a,b)=(b,a+b). A factorizing reader is a function on the range of X; it receives the algebra element alone. The residueTarget(D) maps j to z(j) modulo D.
+Use the Clifford algebra and leaf observation E from FixedHistoryComposition, and the canonical observation X from CliffordLeafOrbit. The canonical source is T(j)=rho^j(alpha), its observation is X(j), and its composition is z(j)=M^j(1,0), with M(a,b)=(b,a+b). A factorizing reader is a function on the range of X; it receives the algebra element alone. The residueTarget(D) maps j to z(j) modulo D.
 
 **Definition 1.1 (Standard low representatives).**
 

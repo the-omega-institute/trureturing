@@ -6,31 +6,9 @@ The Clifford leaf product has exactly six distinct canonical phases.
 
 Let Q(a,b)=a*a+a*b-b*b on the real coordinate plane, and let C be its Clifford algebra with v*v=Q(v)1. Write A and B for the canonical images of (1,0) and (0,1). Sources are the existing ordered Boolean leaf trees; alpha is true and beta is false. The existing substitution sends alpha to beta and beta to (beta,alpha).
 
-**Definition 1.1 (Quadratic form).**
+The quadratic form Q and ordered leaf product E are those of FixedHistoryComposition. The free-magma homomorphism E sends alpha to A and beta to B, and multiplies the leaves in source order.
 
-Lean statement: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.Q`
-
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.Q` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The quadratic form is the sum of the first-coordinate square and the coordinate product, minus the second-coordinate square.
-
-**Definition 1.2 (Ordered leaf product).**
-
-Lean statement: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.E`
-
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.E` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The free-magma homomorphism sends alpha to A and beta to B. Its value is the leaf product in source order.
-
-**Definition 1.3 (Canonical observation).**
+**Definition 1.1 (Canonical observation).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.X`
 
@@ -42,7 +20,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.X`
 
 X(j)=E(rho^j(alpha)) for every natural index j.
 
-**Definition 1.4 (Six chronological phases).**
+**Definition 1.2 (Six chronological phases).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.phases`
 
@@ -54,7 +32,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.phases`
 
 The six values are A, B, BA, A+B, -B, AB, in that order.
 
-**Definition 1.5 (Reader on the canonical image).**
+**Definition 1.3 (Reader on the canonical image).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.Factors`
 
@@ -66,7 +44,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.Factors`
 
 A target g factors when a function on the range of X takes X(j) to g(j) for every natural j. The reader receives only the algebra element.
 
-**Theorem 1.6 (Exact fibers and canonical successor).**
+**Theorem 1.4 (Exact fibers and canonical successor).**
 
 $$(\forall j, (\operatorname{c}\left(\operatorname{T}\left(j\right)\right) = \operatorname{atomicBlock}\left(j\right))) \land ((\forall j, (\operatorname{X}\left(j\right) = \operatorname{P}\left(\operatorname{mod}\left(j, 6\right)\right))) \land ((\forall j, k, ((\operatorname{X}\left(j\right) = \operatorname{X}\left(k\right)) \Leftrightarrow (\operatorname{mod}\left(j, 6\right) = \operatorname{mod}\left(k, 6\right)))) \land ((\forall Y, g, ((\operatorname{Factors}\left(g\right)) \Leftrightarrow (\forall j, (\operatorname{g}\left(j+6\right) = \operatorname{g}\left(j\right))))) \land ((\operatorname{Factors}\left(j \mapsto \operatorname{X}\left(j+1\right)\right)) \land ((\neg\exists R, (\forall t, (\operatorname{R}\left(\operatorname{E}\left(t\right)\right) = \operatorname{E}\left(\operatorname{rho}\left(t\right)\right)))) \land (((\operatorname{E}\left(t2\right) = 1) \land ((\operatorname{E}\left(t4\right) = 1) \land ((\operatorname{E}\left(\operatorname{rho}\left(t2\right)\right) = -1) \land (\operatorname{E}\left(\operatorname{rho}\left(t4\right)\right) = 1)))) \land ((\exists p, q, ((\operatorname{c}\left(p\right) = (3,0)) \land ((\operatorname{c}\left(q\right) = (3,0)) \land ((\operatorname{leafLabels}\left(p\right) = \operatorname{leafLabels}\left(q\right)) \land ((p \neq q) \land (\operatorname{E}\left(p\right) = \operatorname{E}\left(q\right))))))) \land (\forall Y, g, (\exists f, (\forall j, ((j < 6)\implies(\operatorname{f}\left(\operatorname{X}\left(j\right)\right) = \operatorname{g}\left(j\right)))))))))))))$$
 
@@ -86,11 +64,10 @@ The Clifford construction and its universal property are standard; see Lundholm 
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.E`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.Factors`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.Q`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.X`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.phases`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/CliffordLeafOrbit.result`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/FixedHistoryComposition](FixedHistoryComposition.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport](GenealogicalFiberTransport.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer](SourceTransportCentralizer.md)
