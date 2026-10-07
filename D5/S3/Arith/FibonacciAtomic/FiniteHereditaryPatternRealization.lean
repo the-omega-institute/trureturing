@@ -99,6 +99,16 @@ def entry {m : ℕ} {K : Finset (Finset (Fin m))} (i : Fin m) : Column K → Blo
   | .inl c => faceEntry i c
   | .inr c => if i = c.1 then .u else .a
 
+
+/-- Composition of the complete right-comb hole table. -/
+theorem composition_comb (n : ℕ) (X : Fin (n + 1) → Source) :
+    composition (B_T n X) = ∑ j, composition (X j) := by
+  induction n with
+  | zero => simp [B_T]
+  | succ n hn =>
+    rw [B_T, composition, hn]
+    exact (Fin.sum_univ_succ (fun j : Fin (n + 2) => composition (X j))).symm
+
 set_option maxHeartbeats 2000000 in -- Full address decomposition and finite face-table construction.
 /-- Right-comb block reports and the equal-composition actual realization of every
 finite hereditary family containing the singleton faces. -/
@@ -437,13 +447,6 @@ theorem result :
         subst k
         subst u
         exact ⟨hX, hu⟩
-  have composition_comb (n : ℕ) (X : Fin (n + 1) → Source) :
-      composition (B_T n X) = ∑ j, composition (X j) := by
-    induction n with
-    | zero => simp [B_T]
-    | succ n hn =>
-      rw [B_T, composition, hn]
-      exact (Fin.sum_univ_succ (fun j : Fin (n + 2) => composition (X j))).symm
   have substitution_comb (n : ℕ) (X : Fin (n + 1) → Source) :
       substitution^[3] (B_T n X) = B_T n (fun j => substitution^[3] (X j)) := by
     induction n with
