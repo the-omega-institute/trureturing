@@ -19,7 +19,7 @@ open GenealogicalFiberTransport (Source substitution composition)
 open ActualTreeReadoutAcquisition
 open ActualJointResponseCostCore (Controller controllerPolicy controllerOutcome verifyController)
 open ActualImageSevenLeafSeparation (thirdImage leafAddresses Nonconflict A C E)
-open FourExitRawEndpointSpectrum (comb comb_slot_readout comb_tail_readout)
+open FourExitRawEndpointSpectrum (comb comb_foundation comb_slot_readout comb_tail_readout)
 open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute)
 open scoped BigOperators ENNReal
 
@@ -121,6 +121,10 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       D (Fintype.card (Index k)) (by simp [Fintype.card_sum]) (family k ∘ e.symm) =
         ((3*k+14 : Nat) : ℝ≥0∞)) ∧ Function.Injective query := by
   classical
+  have hom (s t : Source) : thirdImage (.mul s t) = .mul (thirdImage s) (thirdImage t) :=
+    Function.Semiconj₂.iterate
+      (show Function.Semiconj₂ substitution FreeMagma.mul FreeMagma.mul from
+        substitution.map_mul) 3 s t
   have fold_image : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
       thirdImage (comb n f q) = comb n (fun i => thirdImage (f i)) (thirdImage q) :=
     fun n f q => (comb_foundation n f f q q).1
@@ -137,15 +141,15 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     fun n f q => (comb_foundation n f f q q).2.1
   have images (i : Index k) : thirdImage (preFamily k i) = family k i := by
     cases i with
-    | inl u => cases u; simp only [preFamily, family, fold_image]; rfl
+    | inl u => cases u; simp only [preFamily, family, hom, fold_image]; rfl
     | inr p =>
       cases p with
       | inl j =>
-        simp only [preFamily, family, fold_image]
+        simp only [preFamily, family, hom, fold_image]
         congr 2
         funext l
         split_ifs <;> rfl
-      | inr i => simp only [preFamily, family, fold_image]; rfl
+      | inr i => simp only [preFamily, family, hom, fold_image]; rfl
   have precomp (i : Index k) : composition (preFamily k i) = (k+1,2) := by
     cases i with
     | inl u =>
@@ -179,7 +183,8 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     cases i with
     | inl u =>
       cases u
-      simp [family, H, fold_len, block_lengths.1, block_lengths.2.1, block_lengths.2.2]
+      simp [family, fold_len, block_lengths.1, block_lengths.2.1, block_lengths.2.2,
+        Nat.mul_comm]
     | inr p =>
       cases p with
       | inl j =>
@@ -194,8 +199,10 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           block_lengths.2.1, block_lengths.2.2]
         omega
       | inr i =>
-        simp [family, H, fold_len, block_lengths.1, block_lengths.2.1,
+        simp [family, fold_len, block_lengths.1, block_lengths.2.1,
           block_lengths.2.2]
+        have := i.isLt
+        omega
   have raw_H (n t : Nat) (ht : t ≤ n) :
       readout (List.replicate t true ++ [false,false,true]) (H n) = .alpha := by
     by_cases hlt : t < n
@@ -376,18 +383,9 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           rw [(raw_Y i).2] at hh
           contradiction
         · intro h s hs; exact (raw_Y i).1 s (by omega)
-  have verifier_answer (V U : Source) (qs : List Address) :
-      (controllerOutcome (verifyController V qs) U).2 = true ↔
-        (∀ q ∈ qs, readout q U = readout q V) ∨ Positive U := by
-    induction qs with
-    | nil => simp [verifyController,controllerOutcome]
-    | cons q qs ih =>
-      by_cases hq : readout q U = readout q V
-      · simp [verifyController,controllerOutcome,hq,ih]
-      · simp [verifyController,controllerOutcome,hq,acquisition_foundation.1 U]
   have cert_correct (V U : Source) (hv : Positive V) :
       (controllerOutcome (verifyController V (certLeaves V)) U).2 = true ↔ Positive U := by
-    rw [verifier_answer]
+    rw [ActualJointResponseCostCore.verifier]
     constructor
     · rintro (matched | positive)
       · have same : U = V := source_foundation.2.2.1 V U (fun q hq =>
@@ -395,13 +393,6 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         exact same.symm ▸ hv
       · exact positive
     · exact Or.inr
-  have cert_matched (V : Source) : ∀ qs : List Address,
-      controllerOutcome (verifyController V qs) V =
-        (qs.map (fun q => ⟨q,readout q V⟩),true) := by
-    intro qs
-    induction qs with
-    | nil => rfl
-    | cons q qs ih => simp [verifyController,controllerOutcome,ih]
   have cert_set (V : Source) : (certLeaves V).toFinset = (leaves V).toFinset := by
     ext q
     simp only [List.mem_toFinset]
@@ -446,7 +437,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       have hp := scan_prefix (List.range (k+1)) [] (family k (.inl ()))
         (fun t ht => raw_base t (by have := List.mem_range.mp ht; omega))
       simp only [List.append_nil] at hp
-      rw [hp, scan, cert_matched]
+      rw [hp, scan, ActualJointResponseCostCore.matched]
       simp only [route,stop,List.map_map,Function.comp_def]
     | inr p =>
       cases p with
@@ -455,7 +446,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           scan_prefix _ _ _ (fun t ht => (raw_X j).1 t (List.mem_range.mp ht))]
         simp [scan, controllerOutcome, (raw_X j).2,
           ↓reduceIte, choice, dif_pos j.isLt,
-          cert_matched, route, stop,
+          ActualJointResponseCostCore.matched, route, stop,
           List.range_succ, List.map_append, List.map_cons, List.map_nil,
           List.singleton_append, List.map_map, Function.comp_def, List.append_assoc]
       | inr i =>
@@ -465,7 +456,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         have he : (⟨i.val+1-1,by have := i.isLt; omega⟩ : Fin k) = i := Fin.ext (by simp only [Fin.val_mk]; omega)
         simp [scan, controllerOutcome, (raw_Y i).2,
           ↓reduceIte, choice, dif_pos hi, he,
-          cert_matched, route, stop,
+          ActualJointResponseCostCore.matched, route, stop,
           List.range_succ, List.map_append, List.map_cons, List.map_nil,
           List.singleton_append, List.map_map, Function.comp_def, List.append_assoc]
   let pi : Strategy := {
@@ -478,85 +469,13 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     have ht := (Classical.choose_spec (Classical.choose_spec (pi.correct U))).1
     exact source_foundation.2.2.2.2.2.2.2 pi.policy _ _ [] U _ _ ht
       (ActualJointResponseCostCore.phase_foundation.1 _ U)
-  have cached_replay (p : Policy) (U : Source) : ∀ n (hist tr cache : Hist (fun _ : Address => Reply))
-      (answer : Bool), execute readout p n hist U = some (tr,answer) →
-      (cache.map Sigma.fst).Nodup → (∀ a ∈ cache, a.2 = readout a.1 U) →
-      ∃ cache', ActualCoarseReadoutCompletion.cachedExecute p n hist cache U =
-          some ((tr,answer),cache') ∧
-        (cache'.map Sigma.fst).Nodup ∧ (∀ a ∈ cache', a.2 = readout a.1 U) ∧
-        paid cache' = paid cache ∪ paid tr := by
-    intro n
-    induction n with
-    | zero => intro hist tr cache answer run _ _; simp [execute] at run
-    | succ n ih =>
-      intro hist tr cache answer run unique truthful
-      cases step : p hist with
-      | inr b =>
-        simp only [execute,step,Option.some.injEq,Prod.mk.injEq] at run
-        obtain ⟨rfl,rfl⟩ := run
-        exact ⟨cache,by simp [ActualCoarseReadoutCompletion.cachedExecute,step],
-          unique,truthful,by simp [paid]⟩
-      | inl q =>
-        simp only [execute,step,Option.map_eq_some_iff] at run
-        obtain ⟨⟨rest,b⟩,child,eq⟩ := run
-        cases eq
-        cases found : cache.find? (fun a => a.1 == q) with
-        | some a =>
-          have amem := List.mem_of_find?_eq_some found
-          have addr : a.1 = q := by simpa using List.find?_some found
-          have actual : a.2 = readout q U := by simpa only [addr] using truthful a amem
-          obtain ⟨out,hout,un,truth,bill⟩ := ih _ _ cache _ child unique truthful
-          refine ⟨out,?_,un,truth,?_⟩
-          · simpa only [ActualCoarseReadoutCompletion.cachedExecute,step,found,actual,
-              Option.map_some] using congrArg
-              (Option.map (fun z => ((⟨q,readout q U⟩ :: z.1.1,z.1.2),z.2))) hout
-          · have member : q ∈ paid cache := by
-              apply List.mem_toFinset.mpr
-              exact List.mem_map.mpr ⟨a,amem,addr⟩
-            rw [bill]
-            simp only [paid,List.map_cons,List.toFinset_cons] at member ⊢
-            rw [Finset.union_insert]
-            exact (Finset.insert_eq_of_mem (Finset.mem_union_left _ member)).symm
-        | none =>
-          have absent : q ∉ cache.map Sigma.fst := by
-            intro member
-            obtain ⟨a,ha,addr⟩ := List.mem_map.mp member
-            have no := List.find?_eq_none.mp found a ha
-            exact no (by simp [addr])
-          have fresh : ((cache ++ [(⟨q,readout q U⟩ : Sigma (fun _ : Address => Reply))]).map Sigma.fst).Nodup := by
-            rw [List.map_append]
-            apply List.nodup_append.mpr
-            refine ⟨unique, by simp, ?_⟩
-            intro a ha b hb
-            have hb' : b = q := by simpa using hb
-            subst b
-            intro eq
-            subst a
-            exact absent ha
-          have true_fresh : ∀ a ∈ cache ++ [(⟨q,readout q U⟩ : Sigma (fun _ : Address => Reply))], a.2 = readout a.1 U := by
-            intro a ha
-            rcases List.mem_append.mp ha with old | new
-            · exact truthful a old
-            · have eq := List.mem_singleton.mp new; subst a; rfl
-          obtain ⟨out,hout,un,truth,bill⟩ := ih _ _ (cache ++ [(⟨q,readout q U⟩ : Sigma (fun _ : Address => Reply))]) _
-            child fresh true_fresh
-          refine ⟨out,?_,un,truth,?_⟩
-          · simpa only [ActualCoarseReadoutCompletion.cachedExecute,step,found,Option.map_some]
-              using congrArg
-                (Option.map (fun z => ((⟨q,readout q U⟩ :: z.1.1,z.1.2),z.2))) hout
-          · rw [bill]
-            simp only [paid,List.map_append,List.map_cons,List.map_nil,List.toFinset_append,
-              List.toFinset_cons,List.toFinset_nil]
-            ext u
-            simp only [Finset.mem_union,Finset.mem_insert,Finset.mem_singleton]
-            tauto
   have cached_terminal (U : Source) : ∃ n cache,
       ActualCoarseReadoutCompletion.cachedExecute pi.policy n [] [] U =
         some (terminal pi U,cache) ∧
       (cache.map Sigma.fst).Nodup ∧ (∀ a ∈ cache, a.2 = readout a.1 U) ∧
       paid cache = paid (terminal pi U).1 := by
     have execution := ActualJointResponseCostCore.phase_foundation.1 (controller k) U
-    obtain ⟨cache,run,unique,truth,bill⟩ := cached_replay pi.policy U _ [] _ [] _
+    obtain ⟨cache,run,unique,truth,bill⟩ := ActualCoarseReadoutCompletion.cache_run pi.policy U _ [] _ [] _
       execution (by simp) (by simp)
     refine ⟨(controllerOutcome (controller k) U).1.length+1,cache,?_,unique,truth,?_⟩
     · simpa only [terminal_outcome] using run
@@ -630,9 +549,8 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
   have fin_positive (i : Fin m) : Positive (F i) := positive (e.symm i)
   have fin_injective : Function.Injective F := injective.comp e.symm.injective
   have leaf_length (U : Source) : (leaves U).length = U.length := by
-    induction U with
-    | of b => rfl
-    | mul s t hs ht => simp only [leaves,List.length_append,List.length_map,hs,ht,FreeMagma.length]
+    rw [← List.toFinset_card_of_nodup (ActualJointResponseCostCore.cost_foundation.1 U).1]
+    exact (ActualImageSevenLeafSeparation.seven_leaf_separation.1 U).1
   have agree (u : Address) (i j : Fin m)
       (hi : chi (readout u (F i)) = 0) (hj : chi (readout u (F j)) = 0) :
       readout u (F i) = readout u (F j) := by
