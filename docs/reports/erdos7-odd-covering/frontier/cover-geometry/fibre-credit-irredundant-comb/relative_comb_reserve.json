@@ -1,0 +1,78 @@
+{
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "nonternary_height": 3,
+  "phase_source": "Report529 explicit side-comb formula on the first eight odd primes",
+  "pure_Q_count": "22477958755529321140096",
+  "Q_period": "51404758182902197698625",
+  "cofactor_label_count": 16384,
+  "Z_fibre": {
+    "count": 16540311957403355160121,
+    "states": 1494,
+    "cache_hits": 2495,
+    "mixed_side_events": 120
+  },
+  "W_fibre": {
+    "count": 2569696844461203895339,
+    "states": 6880,
+    "cache_hits": 18220,
+    "mixed_side_events": 240
+  },
+  "h_z": "16540311957403355160121/22477958755529321140096",
+  "h_w": "233608804041927626849/2043450795957211012736",
+  "limiting_delta": "2569696844461203895339/16540311957403355160121",
+  "cases": [
+    {
+      "H": 4,
+      "original_count": 81919,
+      "period": "4163785412815078013588625",
+      "U_count": "119328185735851510973681",
+      "U0_count": "678152790253537561564961",
+      "six_U_minus_U0": "37816324161571504277125",
+      "delta": "119328185735851510973681/678152790253537561564961",
+      "delta_decimal": 0.1759606204543358,
+      "refutes_one_sixth": false,
+      "below_weaker_threshold": false,
+      "haar_U": "17046883676550215853383/594826487545011144798375",
+      "haar_U0": "678152790253537561564961/4163785412815078013588625"
+    },
+    {
+      "H": 5,
+      "original_count": 98303,
+      "period": "12491356238445234040765875",
+      "U_count": "327473630137209026496140",
+      "U0_count": "2017918058803209329534762",
+      "six_U_minus_U0": "-53076277979955170557922",
+      "delta": "163736815068604513248070/1008959029401604664767381",
+      "delta_decimal": 0.16228291763810654,
+      "refutes_one_sixth": true,
+      "below_weaker_threshold": false,
+      "haar_U": "65494726027441805299228/2498271247689046808153175",
+      "haar_U0": "2017918058803209329534762/12491356238445234040765875"
+    },
+    {
+      "H": 6,
+      "original_count": 114687,
+      "period": "37474068715335702122297625",
+      "U_count": "951909963341281573063517",
+      "U0_count": "6037213864452224633444165",
+      "six_U_minus_U0": "-325754084404535195063063",
+      "delta": "951909963341281573063517/6037213864452224633444165",
+      "delta_decimal": 0.15767371915482928,
+      "refutes_one_sixth": true,
+      "below_weaker_threshold": true,
+      "haar_U": "951909963341281573063517/37474068715335702122297625",
+      "haar_U0": "1207442772890444926688833/7494813743067140424459525"
+    }
+  ],
+  "repaired_query_upper": "11025/1024",
+  "scope": "Actual finite-family counterexample only to the relative-reserve candidate. No phase optimization and no obstruction to existence of a different supported source with complete B<28. No Lean certification claimed here."
+}
