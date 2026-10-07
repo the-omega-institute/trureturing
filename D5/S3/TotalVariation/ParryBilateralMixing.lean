@@ -582,7 +582,7 @@ theorem bilateral_parry_mixing (k : ℕ) (hk : 2 ≤ k) :
     have hz : ρ.real A = 0 ∨ ρ.real A = 1 := by
       have hh : ρ.real A * (ρ.real A - 1) = 0 := by nlinarith only [ha]
       simpa only [sub_eq_zero] using mul_eq_zero.mp hh
-    rw [eventuallyConst_set]
+    rw [eventuallyEmptyOrUniv_iff]
     rcases hz with hz | ho
     · right
       rw [ae_iff]
