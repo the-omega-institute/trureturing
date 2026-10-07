@@ -692,3 +692,135 @@ a scoped Lean application verifies the finite conditioning implication
 from its explicit deletion/query bounds and the rational threshold.
 The root-conditioned Haar source, the MT11 measure application and
 the complete infinite query sums remain ordinary mathematics here.
+
+## An extra five-root guard obstructs the shared scalar estimate
+
+The active-root argument leaves a source-design question when different
+available ternary roots have incompatible low inventories. One possible
+restriction is to require every cofactor point to leave an entire first
+ternary root unblocked. The following finite example limits that
+restriction when its source is evaluated by the same scalar weight for
+mixed events and queries. It does not limit arbitrary supported joint
+laws or every consumer of a full prefix-cap profile.
+
+Keep Q={5,7,11,13,17,19,23}. Permit at most one actual pure class at each
+nonunit pure numerical label, and add one auxiliary forbidden first
+5-root different from the actual modulus5 phase. Three first roots
+remain. In any one of them, all higher pure5 holes remove Haar mass at
+most sum_(j>=2)5^-j=1/20, so each retains at least3/20. Assigning each
+surviving root mass1/3 and normalizing Haar within it gives ONE law with
+
+    k5(1)=1/3,  k5(j)<=20/(9*5^j) for j>=2,
+    sum_(j>=1)k5(j)<=4/9.                                  (FG1)
+
+Normalized Haar on the complete pure5 survivor instead has normalization
+mass at least11/20, first-depth cap4/11 and total cap5/11. These are
+simultaneous caps under each specified law, not separately optimized
+marginals. Other prime directions retain the existing caps1/(p-2).
+
+### The inherited consumer needs a smaller shared weight
+
+Use a pure5 total t both as its event-inventory weight and as its query
+weight in the support polynomial of Report563. Let rho_t be that
+polynomial and N_t its complete query numerator, including the unit.
+Direct reuse of the existing polynomial and numerator gives
+
+    (37/12)rho_t(Q)-N_t
+       =(35597719-81525298t)/31808700.                      (FG2)
+
+Both expressions are affine in t: each polynomial term contains a
+coordinate at most once, and the query support is disjoint from its
+complementary polynomial. Thus, whenever the polynomial certificate is
+positive, its complete-query estimate is below37/12 exactly when
+
+    t<tcrit=35597719/81525298.                              (FG3)
+
+The value37/12 is the sufficient cofactor threshold of AR2. It is a
+threshold for this certificate, not a lower bound on the best possible
+joint-source norm. All induced subset polynomials are positive for the
+two reference profiles, but their resulting upper bounds both exceed it:
+
+| Pure5 total t | rho_t(Q) | Complete-query upper bound | 37/12 minus the bound |
+| --- | --- | --- | --- |
+| 5/11 | 489631/883575 | 51157586/16157823 | -1783509/21543764 |
+| 4/9 | 2676139/4771305 | 41733953/13380695 | -5721721/160568340 |
+
+Clipping individual query bounds at1 does not improve either estimate.
+For each of the127 nonempty prime supports, its largest bound occurs
+when every selected exponent is1; the coordinate caps decrease at
+higher exponents. The largest of these127 values occurs at label5 and
+is9088732/16157823 for the Haar profile, or6816549/13380695 for the
+balanced profile. Both are below1. The unit already contributes exactly1.
+These254 finite checks exclude this clipping correction for the two
+profiles, without excluding other joint inequalities between queries.
+
+### A four-depth obstruction for every law on the auxiliary support
+
+Consider the five forbidden prefixes
+
+    0 mod5, 1 mod5, 2 mod25, 7 mod125, 32 mod625.            (FG4)
+
+They are pairwise disjoint. The first two include one auxiliary guard;
+FG4 is not an actual distinct-modulus original family. Let lambda be
+any probability supported outside these prefixes. Write q_m for its
+largest mod-m class mass, M=q_5, and c=lambda([2]_5). Roots2,3,4 carry
+all mass, hence M>=1/3 and c>=1-2M. Inside root2, the numbers of available
+prefixes at moduli25,125,625 are respectively
+
+    5-1=4,  25-5-1=19,  125-25-5-1=94.                    (FG5)
+
+These are counts of actual compatible prefixes, including every hole
+visible at that depth. Consequently c<=4q_25, c<=19q_125 and
+c<=94q_625, all for the SAME lambda. Set S=1/4+1/19+1/94=1119/3572.
+Then
+
+    q_5+q_25+q_125+q_625
+      >=M+cS>=S+(1-2S)M
+      >=S+(1-2S)/3=4691/10716,
+    4691/10716-tcrit=485008057/436812546684>0.              (FG6)
+
+Here1-2S=667/1786>0, so the direction is preserved even when1-2M
+is negative. Every simultaneous prefix-cap profile on this auxiliary
+support already exceeds tcrit in its first four layers. Improving the
+pure law therefore cannot meet FG3 while retaining this shared scalar
+consumer. No optimization or joint attainability of separate maxima is
+assumed in FG6.
+
+### The actual family and the additional restriction
+
+The source-design situation occurs in the actual fixed-phase family
+
+    2 mod3, 0 mod5, 6 mod15, 1 mod45,
+    2 mod25, 7 mod125, 32 mod625.                           (FG7)
+
+Its seven odd nonunit numerical moduli are distinct. Root2 modulo3 is
+forbidden. The modulus15 original is active in ternary root0 and the
+modulus45 original in root1; both project to1 mod5. A construction that
+requires a whole first ternary root to be unblocked at each cofactor
+point therefore adds the auxiliary guard1 mod5. Together with the
+actual pure5 originals, this yields FG4.
+
+That guard is stronger than avoiding FG7. At cofactor phase1 mod5,
+the modulus45 original blocks only ternary phase1 mod9 inside root1;
+phases4 and7 mod9 remain available. A joint or leaf-sensitive source
+can use them without excluding the whole cofactor root. Thus FG6
+obstructs this auxiliary-source shared-scalar route, not the actual
+complete-query target B_(P8)<28 or Erdős#7. Separate event/query weights,
+a consumer retaining the full profile, or adaptive within-root laws
+require their own estimates and are not ruled out.
+
+The existing exact consumer imports `support_polynomials` and
+`query_numerator` from `mixed_tower_inventory.py`; it does not implement
+a second polynomial recurrence. It records FG2, both reference profiles,
+all254 clipping checks, the actual seven labels, and the finite625
+survivor with the4,19,94 projection counts. A scoped Lean application
+verifies FG6 and its strict comparison with FG3 for every rational
+probability law on that explicit finite survivor subtype. It derives
+the mass inequalities from actual pushforward laws and finite counts,
+with only the standard three axioms and no scalar assumptions. This
+finite rational verification does not formalize arbitrary real or
+infinite laws, the polynomial consumer, or the actual-to-auxiliary
+selection rule; those arguments are given above. It adds no frozen
+wrapper declaration. The existing general prefix-capacity realization
+result supplies no way around FG6: the obstruction holds for every
+law on the stated support, irrespective of its construction.
