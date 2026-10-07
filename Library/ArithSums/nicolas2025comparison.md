@@ -3216,6 +3216,166 @@ prefactor savings, joint signed cancellation, other kernels or a
 favorable combined head/main bound retain their roles. The original
 complete signed estimate and RH remain unproved.
 
+### Actual zero jumps obstruct a uniform inverse-height prefactor
+
+The classical jump principle gives a further application boundary for
+the retained source interface. Reuse GSS Theorem 2, printed p.3 of
+[arXiv:2505.14228v1](https://arxiv.org/pdf/2505.14228v1), and its
+Riemann–von Mangoldt inputs (3)–(4), printed p.2. No source proof is
+repeated. This evaluates a proposed strengthening of that particular
+interface; it is not a mathematical originality claim or an improved
+Robin estimate.
+
+With the source's half-open convention, write
+
+$$
+I(V,v,\tau)=\sum_{V\le\gamma<v}m_\rho r_\rho^{-i\tau},
+\qquad r_\rho=\gamma+i(1/2-\beta),
+$$
+
+and retain its complete high-frequency main term
+
+$$
+P(V,v,\tau)=
+\frac{e^{i(\tau+\pi/4)}\tau^{1/2-i\tau}}{\sqrt{2\pi}}
+\sum_{e^{\tau/v}\le n\le e^{\tau/V}}
+\frac{\Lambda(n)(\log n)^{i\tau}}{n^{1/2}\log n}.
+$$
+
+Here sums over $\rho$ list distinct zeros and attach their actual
+multiplicities $m_\rho$. Suppose one attempted to strengthen only the
+first printed error shape by a factor $V^{-1}$, leaving the main term
+and second shape unchanged:
+
+$$
+|I(V,v,\tau)-P(V,v,\tau)|
+\le C\left[
+ V^{-1}e^{\tau/(2V)}
+ \left((\log V)^2+(\tau/V)^2\log V\right)
+ +\frac{\tau^{3/2}}{V}e^{\tau/(2V)-\tau/v}
+\right].
+\tag{JP1}
+$$
+
+The proposed $C$ is fixed and uniform in $v,\tau$ on the same
+comparable-height source range, including
+$21V/20<v<6V/5$ and the frequencies used below. Such a uniform
+strengthening cannot hold, unconditionally and even under RH.
+
+For every sufficiently large $V$, the cited count gives an actual
+zero ordinate $\Gamma\in(21V/20,23V/20)$. Choose
+
+$$
+\frac74V\log V<\tau<\frac74V\log V+V
+$$
+
+outside the finitely many values $\Gamma\log n$ in this interval.
+Then $P(V,v,\tau)$ is locally constant as $v$ crosses $\Gamma$:
+its lower cutoff crosses no integer there, and its upper cutoff and
+coefficients are independent of $v$. The frequency lies in the
+printed fixed $O(V\log V)$ regime. For $S\le V\le T$ it also lies
+below the retained $K_V=20VL$ eventually, using the existing scale
+relations, without changing that frequency range.
+
+By contrast, the two one-sided values of $I$ differ by the exact atom
+
+$$
+J_\Gamma(\tau)=\sum_{\Im\rho=\Gamma}
+ m_\rho\bigl(\Gamma+i(1/2-\beta)\bigr)^{-i\tau}.
+$$
+
+The actual functional-equation reflection
+$\rho\mapsto1-\overline\rho$ preserves this ordinate and
+multiplicity and sends $r_\rho$ to $\overline r_\rho$.
+For a reflected noncritical pair, with the usual logarithm in the
+right half-plane, its contribution is
+
+$$
+m_\rho(r^{-i\tau}+\overline r^{-i\tau})
+=2m_\rho\cosh(\tau\arg r)\,e^{-i\tau\log|r|}.
+$$
+
+A critical-line zero is counted once, with its original
+multiplicity and phase $e^{-i\tau\log\Gamma}$. Since
+$|1/2-\beta|<1/2$, every reflected pair has phase displacement
+from this central phase at most
+
+$$
+0\le\tau\log(|r|/\Gamma)
+\le\frac{\tau}{8\Gamma^2}
+=O(\log V/V).
+$$
+
+Choose $k\in\{0,1,2,3\}$ so that the central phase after
+multiplication by $i^k$ is within $\pi/4$ of the positive real axis.
+Eventually every pair and critical-line contribution is within
+$\pi/3$, and $2\cosh(\tau\arg r)\ge2$. Therefore
+
+$$
+\operatorname{Re}\bigl(i^kJ_\Gamma(\tau)\bigr)
+\ge\frac12\sum_{\Im\rho=\Gamma}m_\rho\ge\frac12.
+\tag{JP2}
+$$
+
+The four phases here are output observation directions. This
+projection does not assert a new intertwining between the FIB
+operators $M,J,C=MJ$ and the actual zeta spectrum.
+
+For $v$ on either side sufficiently close to $\Gamma$, take
+$v\le6V/5$. The two proposed majorants in (JP1) satisfy
+
+$$
+V^{-1}e^{\tau/(2V)}
+ \left((\log V)^2+(\tau/V)^2\log V\right)
+=O\!\left(V^{-1/8}(\log V)^3\right),
+$$
+
+$$
+\frac{\tau^{3/2}}V e^{\tau/(2V)-\tau/v}
+=O\!\left(V^{-1/12}(\log V)^{3/2}\right).
+$$
+
+Both tend to zero, uniformly in this neighborhood. A locally
+constant main and two vanishing one-sided residuals cannot produce
+the nonvanishing jump (JP2). More explicitly, one of the actual
+one-sided residual magnitudes is at least $|J_\Gamma|/2\ge1/4$.
+This contradicts (JP1) for any fixed $C$. The conclusion also rules
+out a still smaller first shape obtained by combining this factor
+$V^{-1}$ with a nonnegative exponential reduction $\delta(V)$.
+
+The preceding allowance comparison separately shows why this
+restricted prefactor question matters. If its first shape alone
+were multiplied by $V^{-p}$, with fixed $p\ge0$ and
+$\delta(V)\to0$, its defined first-band allowance would have the
+lower bound
+
+$$
+S^{-p}\mathcal B_{S,\delta}(A)
+\ge\frac{L^2}{294}
+ \exp\!\left(
+ \frac{1-p}{6}L+(2+p)\kappa\Omega-20\delta(S)L
+ \right).
+\tag{JP3}
+$$
+
+For every fixed $p<1$ this diverges. Thus a uniform pure
+inverse-height-power repair of the first shape cannot supply the
+required bounded independent allowance: powers below one retain
+this allowance floor, while powers at least one encounter the
+actual-jump obstruction. This is not a sufficiency equivalence;
+the unchanged second shape and all other terms still matter.
+
+The lower bound $1/4$ concerns the actual pointwise residual near
+the chosen zero jumps, not its signed Mellin integral or its
+height-weighted integral. Restricted parameter ranges, smoothing,
+explicit atomic main terms, joint signed cancellation and other
+kernels can escape this particular model. Keep the exact endpoint
+atoms in (LM5), the actual real parts and multiplicities, the
+original rational coefficient, the low head and all heights. The
+complete signed Robin estimate and RH remain unproved. These
+application calculations are paper-level and have no Lean
+verification or certified numerical starting clock.
+
 ### Scope of the Gaussian single-zero-sum formula
 
 Kamiya–Suzuki, *An asymptotic formula for a sum involving zeros of
