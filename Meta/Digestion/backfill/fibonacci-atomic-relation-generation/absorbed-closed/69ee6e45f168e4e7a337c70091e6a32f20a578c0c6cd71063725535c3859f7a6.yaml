@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:69ee6e45f168e4e7a337c70091e6a32f20a578c0c6cd71063725535c3859f7a6
   normalized_sha256: sha256:69ee6e45f168e4e7a337c70091e6a32f20a578c0c6cd71063725535c3859f7a6
 cas_ref: sha256:69ee6e45f168e4e7a337c70091e6a32f20a578c0c6cd71063725535c3859f7a6
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/WeightedInghamRate.result
+    target_statement_id: sha256:95ac129b190447a5f1a1f5628f69fad565922d8cc04a075655f954d5828bc1fa
 receipts:
   unresolved_subitems: []
