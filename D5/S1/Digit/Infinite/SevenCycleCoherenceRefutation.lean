@@ -51,7 +51,7 @@ private theorem budget_formula : budget = (99504 - 145874 * t) / 244760 := by
   rw [hd]
   nlinarith only [ht2, hg]
 
-private theorem golden_ratio_t : Real.goldenRatio = 1 + t := by
+theorem golden_ratio_t : Real.goldenRatio = 1 + t := by
   change Real.goldenRatio = 1 + Real.goldenRatio⁻¹
   rw [Real.inv_goldenRatio]
   linarith [Real.goldenRatio_add_goldenConj]

@@ -333,7 +333,6 @@ jobs:
             tools/tests/StrataLint.ReportSupervisor.Tests/*
             tools/tests/StrataLint.RepositoryConfiguration.Tests/*
             tools/tests/StrataLint.RepositoryContract.Tests/*
-            tools/tests/StrataLint.RepositoryDigestion.Tests/*
             tools/tests/StrataLint.RepositoryFileMap.Tests/*
             tools/tests/StrataLint.RepositoryTopology.Tests/*
             tools/tests/StrataLint.ResourceObservation.Tests/*
@@ -688,14 +687,6 @@ jobs:
             tools/scripts/worktree/lean-cache-run.sh
             tools/scripts/worktree/warm-donor.sh
             tools/tests/StrataLint.RepositoryContract.Tests/*
-            [tests-repository-digestion]
-            D5/S0/*
-            D5/S1/*
-            D5/S3/*
-            D5/X_Frontier/*
-            Meta/Digestion/backfill/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.RepositoryDigestion.Tests/*
             [tests-repository-filemap]
             *
             !Blueprint/*
@@ -1248,13 +1239,6 @@ jobs:
     with:
       project: tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj
 
-  tests-repository-digestion:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-digestion']
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      project: tools/tests/StrataLint.RepositoryDigestion.Tests/StrataLint.RepositoryDigestion.Tests.csproj
-
   tests-repository-filemap:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-filemap']
@@ -1337,7 +1321,7 @@ jobs:
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-digestion, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-source-atomizer, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-source-atomizer, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:

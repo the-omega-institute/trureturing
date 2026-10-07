@@ -1634,3 +1634,331 @@ constructing a different reconstruction with a uniform remainder at
 the same selected integer, remains necessary. Condition (G9), its full
 infinite tail and the strict core remain unchanged and unproved; RH
 remains unproved.
+
+
+### The discrepancy also survives real conjugate pairing
+
+The modulus restriction (H4) alone does not control a real part. The
+existing [Ford–Zaharescu fixed-phase input](../Weil/fordzaharescu2005zerophases.md),
+Corollary 2, supplies a way to select actual zero phases where the
+real coefficient remains large. This is an application of that
+published theorem and (H1)–(H3), not a new phase-distribution theorem,
+source proof audit or Lean-verified result.
+
+Keep the same fixed $A\ge e^2$, $L=\log A$ and finite fixed family
+$Q$ above. For $s=\sigma+it$ with $0<\sigma<1$, put
+
+$$
+B_A(\sigma,t)=\frac{w(A)A^{\sigma-1}}{t^2}>0.
+$$
+
+Since
+$s(1-s)=t^2+\sigma(1-\sigma)+it(1-2\sigma)$, with
+$0<\sigma(1-\sigma)\le1/4$ and $|1-2\sigma|\le1$, comparison of
+its reciprocal with $t^{-2}$ and the remainder estimate in (H1) give
+
+$$
+\begin{aligned}
+\left|F_A(\sigma+it)-B_A(\sigma,t)e^{itL}\right|
+&\le B_A(\sigma,t)
+ \left(\frac7{3|t|}+\frac1{4t^2}\right)\\
+&\le\frac13B_A(\sigma,t)\qquad(|t|\ge8).
+\end{aligned}
+\tag{H5}
+$$
+
+In particular $\operatorname{Re}F_A(s)\ge B_A/6$ when
+$\cos(tL)\ge1/2$, and $\operatorname{Re}F_A(s)\le-B_A/6$ when
+$\cos(tL)\le-1/2$. The actual real part $\sigma$ is still present
+in $B_A$.
+
+For an actual zero $\rho=\beta+i\gamma$ with $\gamma>0$, define the
+real discrepancy of its conjugate pair by
+
+$$
+\Delta_A(\rho)=2\operatorname{Re}F_A(\rho)
+ -\operatorname{Re}\!\left[Q(\rho)+Q(\overline\rho)\right].
+$$
+
+This definition allows arbitrary complex probe weights; $Q$ need not
+commute with conjugation. The same estimate (H3) applies at both
+ordinates. For
+
+$$
+\Gamma_{\mathrm R}=\max\!\left(8,2H,
+ \left[\frac{768AC}{a_0^2w(A)}\right]^{1/3}\right),
+$$
+
+the elementary exponential bound used above gives
+
+$$
+\left|Q(\rho)+Q(\overline\rho)\right|
+\le\frac{128C}{a_0^2\gamma^5}
+\le\frac{w(A)}{6A\gamma^2}
+\le\frac16B_A(\beta,\gamma)
+\qquad(\gamma\ge\Gamma_{\mathrm R}).
+$$
+
+Consequently, at those actual heights,
+
+$$
+\boxed{
+\begin{aligned}
+\cos(\gamma L)\ge\tfrac12
+&\ \Longrightarrow\quad
+\Delta_A(\rho)\ge\tfrac16B_A(\beta,\gamma)
+                 \ge\frac{w(A)}{6A\gamma^2},\\
+\cos(\gamma L)\le-\tfrac12
+&\ \Longrightarrow\quad
+\Delta_A(\rho)\le-\tfrac16B_A(\beta,\gamma)
+                 \le-\frac{w(A)}{6A\gamma^2}.
+\end{aligned}}
+\tag{H6}
+$$
+
+### Both signs occur on a positive proportion of actual zero pairs
+
+Use the published theorem only with the **fixed** frequency
+$\eta=L/(2\pi)>0$. Take the fixed $C^2(\mathbb T)$ minorants
+
+$$
+f_+(u)=8\bigl(\cos(2\pi u)-\tfrac12\bigr)_+^3,
+\qquad f_-(u)=f_+(u-\tfrac12).
+$$
+
+Here $v_+=\max(v,0)$.
+They lie in $[0,1]$ and have the same mean $c_0$. On
+$|u|\le1/12$ modulo one, $\cos(2\pi u)\ge\sqrt3/2>3/4$, so
+$f_+(u)\ge1/8$ and $c_0\ge1/48$.
+Let $\mathcal N(T)$ count actual nontrivial zeros with
+$0<\gamma\le T$, including every multiplicity. The fixed smooth-test
+sum below ranges over distinct zeros, with $m_\rho$ supplying their
+multiplicities. The expansion already supplied by Ford–Zaharescu, together with the
+classical $\mathcal N(T)\sim T\log T/(2\pi)$, gives
+
+$$
+\frac1{\mathcal N(T)}
+\sum_{0<\gamma_\rho\le T}m_\rho f_\pm(\eta\gamma_\rho)
+\longrightarrow c_0.
+$$
+
+The source's correction is $O_A(T)$ and its error is $o_A(T)$,
+so neither changes this normalized limit. No interval indicator is
+substituted into its $C^2$ theorem.
+
+Let $\mathcal C_+(T)$ count, with multiplicity, the zeros satisfying
+$\Gamma_{\mathrm R}\le\gamma\le T$ and
+$\Delta_A(\rho)\ge B_A(\beta,\gamma)/6$; define
+$\mathcal C_-(T)$ using $\Delta_A(\rho)\le-B_A(\beta,\gamma)/6$.
+The support of $f_\pm$ lies in the corresponding phase region of
+(H6). Removing the finite head below $\Gamma_{\mathrm R}$ does not
+change the normalized limit, hence
+
+$$
+\boxed{
+\liminf_{T\to\infty}\frac{\mathcal C_\pm(T)}{\mathcal N(T)}
+\ge c_0\ge\frac1{48}.}
+\tag{H7}
+$$
+
+Conjugate zeros have the same positive multiplicity, so this also
+prevents the fixed finite family from reproducing every real
+conjugate-pair coefficient. The conclusion is asymptotic for each
+fixed $A$ and probe family; it supplies no effective first qualifying
+height and no uniform transition when $A$ or the family varies with
+$T$.
+
+The original zero contribution has the negative of these real pair
+coefficients. Both signs of the discrepancy therefore remain in the
+original bookkeeping. Counts of phases cannot replace its weights
+$A^{\beta-1}/\gamma^2$ or control their joint signed sum. Neither
+(H6) nor (H7) pays the full Robin remainder, rules out an aggregate
+identity or a paid approximation, or changes the sufficient target
+(G9) at the original selected integer. That bound and RH remain
+unproved.
+
+
+## A signed infinite-height allowance from the existing Landau formula
+
+The existing [Gonek uniform Landau input](../Weil/gonek1985landau.md),
+Theorem 1, printed pp.92–93, can be applied with the arithmetic variable
+fixed at the original $A$. Integrating its actual-zero sum in **height**
+retains a prime-power main term. This is different from the continuum
+scale pairing in that note, where the point-supported main term has
+zero ordinary integral. The following applies the already inspected
+unconditional theorem and (H5); it is not a new Landau formula, source
+proof audit, numerical zero computation, originality claim or Lean
+certification.
+
+The [existing real-part density allowance](../Analytic/polak2026finiterobinca.md#keeping-the-real-part-weights-in-the-complete-high-zero-tail),
+(W1)–(W11), already pays a complete infinite-height tail on a finite
+source-clock range and restricts the selected source to $A>10^{34}$.
+Those results are reused. The application here instead estimates the
+signed height suffix uniformly in both $A$ and a variable cut $T$.
+Its implied constants are not numerically certified, and its moving
+finite head remains unpaid.
+
+### Preserve the arithmetic variable and the whole original coefficient
+
+Let $A\ge e^2$, $L=\log A$, $T\ge8$, and
+$\mathcal J(A)=\log(2A)\log\log(3A)$. Sums below range over distinct
+actual nontrivial zeros, with $m_\rho$ supplying their multiplicities
+exactly once. Define
+
+$$
+S_A(U)=\sum_{0<\gamma_\rho\le U}m_\rho A^\rho,
+\qquad \rho=\beta+i\gamma_\rho.
+$$
+
+Gonek's uniform formula, with $x=A$ and height $U$, gives
+
+$$
+S_A(U)=-\frac{U}{2\pi}\Lambda(A)+E_A(U),
+\qquad
+|E_A(U)|\ll A[\mathcal J(A)+\log(2U)]+LU
+\quad(U\ge8).
+\tag{J1}
+$$
+
+The implied constant is absolute on the stated domain. To obtain this
+weaker uniform remainder from the displayed source errors, use only
+
+$$
+L\min\!\left(U,\frac A{\langle A\rangle}\right)\le LU,
+\qquad
+\min\!\left(\frac{\log U}{L},U\log U\right)
+\le\frac{\log U}{L}\le A\log(2U).
+$$
+
+No separation from prime powers is assumed. $\Lambda(A)$ remains the
+source's nonnegative point-supported real-variable function, equal to
+$\log p$ at $A=p^k$ and zero otherwise. It is not replaced by a prime
+measure, and no assertion that $A$ avoids prime powers is needed.
+
+Keep the complete original coefficient $F_A$ from (M1), and set
+
+$$
+\mathcal T_A(T)=\sum_{\gamma_\rho>T}m_\rho F_A(\rho).
+$$
+
+The more precise first inequality in (H5) retains the actual real part
+and gives
+
+$$
+\left|F_A(\rho)-\frac{w(A)}A\frac{A^\rho}{\gamma_\rho^2}\right|
+\ll\frac{w(A)A^{\beta-1}}{\gamma_\rho^3}
+\le\frac{w(A)}{\gamma_\rho^3}.
+$$
+
+The classical zero count gives
+$\sum_{\gamma>T}m_\rho\gamma^{-3}\ll\log(2T)/T^2$.
+Thus, with uniform implied constants,
+
+$$
+\mathcal T_A(T)=\frac{w(A)}A
+ \sum_{\gamma_\rho>T}\frac{m_\rho A^\rho}{\gamma_\rho^2}
+ +O\!\left(\frac{w(A)\log(2T)}{T^2}\right).
+\tag{J2}
+$$
+
+Both sums converge absolutely for each fixed $A$: use
+$|A^\rho|\le A$ and the reciprocal-square zero count, together with
+the preceding remainder. This step pays the coefficient approximation;
+it does not replace $F_A$ by its leading term without a remainder.
+
+### Integrate in zero height with the endpoint convention fixed
+
+Stieltjes partial summation, with the inclusive head and exclusive
+suffix specified above, gives
+
+$$
+\sum_{\gamma_\rho>T}\frac{m_\rho A^\rho}{\gamma_\rho^2}
+=-\frac{S_A(T)}{T^2}
+ +2\int_T^\infty\frac{S_A(u)}{u^3}\,du.
+\tag{J3}
+$$
+
+The boundary term at infinity vanishes. If $T$ is a zero ordinate,
+its full multiplicity stays in $S_A(T)$ and outside the suffix;
+(J3) retains that convention. The linear main term in (J1)
+contributes exactly $-\Lambda(A)/(2\pi T)$.
+
+For the remainder use
+
+$$
+\int_T^\infty\frac{du}{u^3}=\frac1{2T^2},\qquad
+\int_T^\infty\frac{\log(2u)}{u^3}\,du
+=\frac{\log(2T)}{2T^2}+\frac1{4T^2},\qquad
+\int_T^\infty\frac{du}{u^2}=\frac1T.
+$$
+
+Combining (J1)–(J3) therefore bounds the **entire** suffix:
+
+$$
+\boxed{
+\mathcal T_A(T)
+=-\frac{w(A)\Lambda(A)}{2\pi AT}
+ +O\!\left(w(A)\left[
+ \frac{\mathcal J(A)+\log(2T)}{T^2}+\frac{L}{AT}
+ \right]\right),
+\quad A\ge e^2,\ T\ge8.}
+\tag{J4}
+$$
+
+This is an unconditional uniform application for actual complex zeros,
+not a critical-line formula. No infinite height block, real part or
+multiplicity has been omitted. Keeping $A$ fixed during the height
+integration is compatible with the uniform estimate holding for all
+$A,T$ in the stated domain.
+
+### A moving cut makes this signed suffix allowance tend to zero
+
+In the original explicit formula the high-zero contribution is
+$-2\operatorname{Re}\mathcal T_A(T)$. Its normalized prime-power
+main term is favorable. Equation (J4) gives an absolute constant $C_*>0$
+such that
+
+$$
+\begin{aligned}
+\sqrt A L\,[-2\operatorname{Re}\mathcal T_A(T)]
+\ge{}&\frac{(1+1/L)\Lambda(A)}{\pi\sqrt A\,T}\\
+&-C_*\left[
+ \frac{\sqrt A[\mathcal J(A)+\log(2T)]}{T^2}
+ +\frac{L+1}{\sqrt A\,T}\right].
+\end{aligned}
+\tag{J5}
+$$
+
+The nonnegative main term can be kept or discarded for this lower
+bound; it must not be assigned an adverse sign. No numerical value
+of $C_*$ or resulting effective source-clock threshold is asserted.
+
+For the admissible moving cut $T=A^{1/4}L$, the adverse allowance in
+(J5) is
+
+$$
+O\!\left(
+ \frac{\mathcal J(A)+\log(2A^{1/4}L)}{L^2}
+ +\frac{L+1}{A^{3/4}L}\right)
+=O\!\left(\frac{\log L}{L}\right)\longrightarrow0.
+\tag{J6}
+$$
+
+Thus the complete infinite-height suffix has an asymptotically vanishing
+one-sided allowance at this moving cut. This gains height cancellation
+over a direct reciprocal-square absolute sum, whose normalized generic
+allowance is of order $\sqrt A\log(2T)/T$. It leaves the actual
+finite signed head $0<\gamma\le A^{1/4}\log A$ in the original
+formula, including all its real parts and multiplicities. That head
+eventually exceeds the existing verified height and has not been
+bounded uniformly here. The pole and trivial-zero terms are still
+those in the original explicit formula.
+
+For any prescribed positive allowance, (J6) gives an existential
+large-$A$ threshold for this suffix alone. It supplies no certified
+numerical threshold at the conditional source $A>10^{34}$, no new
+finite-zero verification, and no assertion of an unbounded sequence
+of selected sources. The original same-source condition (G9), with
+its complete signed integral and strict core, remains unproved.
+RH remains unproved. The remaining obstacle includes the signed
+moving finite head; the infinite suffix cannot simply be dropped.
