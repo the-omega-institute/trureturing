@@ -173,6 +173,14 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let claims ← strings record "claims"
   let mut deps ← fetch <| pkg.facet `reportProducer
   let projection ← fetch <| mod.facet `judgeInputs
+  let inputs ← readJson (← projection.await)
+  let ownInputs ← IO.ofExcept (inputs.getObjValAs? (Array Json) "inputs")
+  unless ownInputs.isEmpty do
+    -- Fetch the shared program obligation in Lake's dependency graph. Awaiting
+    -- it without mixing its trace preserves implementation-independent reuse.
+    let some registry := (← getWorkspace).findModule? `LeanInformationAudit.TemplateEnrollment
+      | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
+    deps := deps.add (← registry.exportInfo.fetch)
   deps := deps.mix (← inputBinFile mod.leanFile)
   deps := deps.mix (← inputBinFile utility)
   let mut exports := #[(← mod.exportInfo.fetch)]
@@ -214,14 +222,6 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     for exportJob in exports do
       let info ← exportJob.await
       addTrace (info.allArtsTrace.mix info.legacyTransTrace)
-    let inputs ← readJson (← projection.await)
-    let ownInputs ← IO.ofExcept (inputs.getObjValAs? (Array Json) "inputs")
-    unless ownInputs.isEmpty do
-      -- Typed owners require compiled primitive-pin data. Await its compilation
-      -- without mixing implementation bytes into the report trace.
-      let some registry := workspace.findModule? `LeanInformationAudit.TemplateEnrollment
-        | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
-      discard <| (← JobM.runFetchM registry.exportInfo.fetch).await
     let format ← inputBinFile (root / ".lake/build/lean-inspector" / "report-format")
     discard <| format.await
     addTrace format.getTrace
