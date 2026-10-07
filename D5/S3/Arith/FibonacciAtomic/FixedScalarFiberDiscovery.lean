@@ -17,7 +17,8 @@ namespace D5.S3.Arith.FibonacciAtomic.FixedScalarFiberDiscovery
 
 open GenealogicalFiberTransport (Source substitution composition Fiber)
 open ActualTreeReadoutAcquisition (Address Reply readout leaves flip Positive Policy paid extendedCost)
-open ActualImageAddressCertificate (ActualImage Within Sound alphaAddresses)
+open ActualImageAddressCertificate (ActualImage Within Sound)
+local notation "alphaAddresses" => ActualLeafHistoryRigidity.alphaLeaves
 open ActualImageSevenLeafSeparation (leafAddresses)
 open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute)
 open scoped ENNReal
