@@ -2404,3 +2404,90 @@ not been discarded. Its cancellation comes from (J1), while (W4)
 pays the mismatch between real-ordinate damping and the actual
 Gaussian coefficient. No numerical value for the implied constants
 is asserted.
+
+
+## The broader window retains a vanishing full Robin transport allowance
+
+Use the exact centered prime integral $J_a(A)$ in (V3), the matching
+pole constant in (V4), the uniform contour bound (V5), and the original
+trivial-zero correction already retained there. Subtracting their
+exact formulas gives
+
+$$
+I_\psi(A)-J_a(A)=-2\operatorname{Re}D_{A,a}
+ +T_{\rm triv}(A)+C_a(A).
+$$
+
+Therefore (W5) supplies the complete normalized transport estimate
+
+$$
+\boxed{\begin{aligned}
+\sqrt A L\,[I_\psi(A)-J_a(A)]
+={}&\frac{(1+1/L)\Lambda(A)\sqrt a}{\sqrt\pi\sqrt A}\\
+&+O\!\left(
+ \sqrt A\,a\bigl[\mathcal J(A)+\log^2(2/a)\bigr]
+ +\frac{L\sqrt a}{\sqrt A}+\frac1A\right).
+\end{aligned}}
+\tag{Y1}
+$$
+
+The nonnegative displayed main term is favorable for a lower bound
+on $I_\psi$ in terms of $J_a$. No positive main term is presumed at
+the selected integer, and no effective value for the error constant
+is certified. The pole, contour and trivial-zero contributions are
+those of the full exact formulas, with no further truncation.
+
+### A larger admissible Gaussian width
+
+For $A\ge e^2$ choose
+
+$$
+a_A^\sharp=\frac1{\sqrt A(\log A)^3}\le\frac1{16}.
+$$
+
+Then $\log(2/a_A^\sharp)=L/2+3\log L+\log2=O(L)$ and
+$\mathcal J(A)=O(L\log L)$, so the adverse allowance in (Y1) is
+
+$$
+O\!\left(\frac1L+\frac{\log L}{L^2}
+ +\frac1{A^{3/4}\sqrt L}+\frac1A\right)=O(1/L).
+\tag{Y2}
+$$
+
+The displayed main term is also $O(A^{-3/4}/\sqrt L)$, because
+$\Lambda(A)\le L$. Thus the full normalized absolute discrepancy
+is $O(1/\log A)$ at this larger width as well.
+
+Compared with $a_A=1/[A(\log A)^4]$ in (V6),
+$a_A^\sharp/a_A=\sqrt A\log A\to\infty$. The reciprocal Gaussian
+height scale changes from $\sqrt A(\log A)^2$ to
+$A^{1/4}(\log A)^{3/2}$. This specifies damping of the full response,
+not a cutoff that permits any zero to be omitted.
+
+At the larger width, the earlier generic absolute allowance
+$\sqrt{Aa}\log(2/a)$ grows like $A^{1/4}/\sqrt{\log A}$.
+Equation (Y1) instead uses the existing signed Landau cancellation
+and the paid actual-real-part phase error to obtain (Y2). This compares
+the two guaranteed allowances; it does not claim the earlier bound
+is attained by the actual discrepancy.
+
+### The unchanged selected-source obligation
+
+At the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum, set $A=\log N$ and retain the existing condition
+(G9), its complete infinite integral and strict core. The existing
+restriction $A>10^{36}$ under RH failure and the cited inputs remains
+unchanged. A lower bound
+
+$$
+\sqrt A\log A\,J_{a_A^\sharp}(A)
+\ge-\mathcal E(\log A)+\eta(A)
+$$
+
+would suffice wherever $\eta(A)$ pays the adverse allowance in (Y1).
+Such a signed lower bound is not proved here. The new estimate allows
+a broader Gaussian window with a vanishing transport cost; it does
+not certify that cost numerically at $A>10^{36}$, control the remaining
+signed response, verify a new zero height, or turn the selected global
+maximizer into the least counterexample. All inputs are reused
+paper-level interfaces without Lean certification; RH remains unproved.
