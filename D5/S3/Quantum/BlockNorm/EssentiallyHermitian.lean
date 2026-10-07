@@ -89,7 +89,7 @@ private instance isStarNormal_toEuclideanLin {𝕜 : Type*} [RCLike 𝕜] (A : M
       Module.End.mul_eq_comp, Module.End.mul_eq_comp, ← toLpLin_mul_same, ← toLpLin_mul_same, h]
 /-- **The spectral theorem for normal matrices.** A normal complex matrix is unitarily
 diagonalizable: there is a unitary matrix `U` with `star U * A * U` diagonal. -/
-private theorem exists_mem_unitaryGroup_star_mul_mul_eq_diagonal (A : Matrix n n ℂ) [IsStarNormal A] :
+theorem exists_mem_unitaryGroup_star_mul_mul_eq_diagonal (A : Matrix n n ℂ) [IsStarNormal A] :
     ∃ U ∈ unitaryGroup n ℂ, ∃ d : n → ℂ, star U * A * U = diagonal d := by
   obtain ⟨b, μ, hb⟩ := LinearMap.exists_orthonormalBasis_apply_eq_smul_of_isStarNormal
     (toEuclideanLin A) (ι := n) finrank_euclideanSpace.symm
