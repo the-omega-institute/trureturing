@@ -67,6 +67,80 @@ def sharpShared : Finset (List Bool × Bool) :=
    ([true, false, false, true], true),
    ([true, false, true], false)}
 
+/-- The third substitution preserves ordered pairing. -/
+private theorem r_mul (p q : Source) : thirdImage (.mul p q) =
+    .mul (thirdImage p) (thirdImage q) := rfl
+/-- The third alpha image is A. -/
+private theorem r_alpha : thirdImage (.of true) = A := rfl
+/-- The third beta image is C. -/
+private theorem r_beta : thirdImage (.of false) = C := rfl
+/-- Every third image has at least three leaves. -/
+theorem minimum (p : Source) : 3 ≤ (thirdImage p).length := by
+  induction p with
+  | of b => cases b <;> decide
+  | mul p q hp hq => rw [r_mul]; change 3 ≤ _ + _; omega
+/-- A source distinct from alpha produces at least five leaves. -/
+theorem not_alpha_minimum (p : Source) (h : p ≠ .of true) :
+    5 ≤ (thirdImage p).length := by
+  cases p with
+  | of b =>
+    cases b with
+    | false => decide
+    | true => exact False.elim (h rfl)
+  | mul p q =>
+    have hp := minimum p
+    have hq := minimum q
+    rw [r_mul]; change 5 ≤ _ + _; omega
+/-- Single leaves share no endpoint with a third image. -/
+theorem atom_image (b : Bool) (p : Source) :
+    Nonconflict (.of b) (thirdImage p) ∧
+    sharedLeaves (.of b) (thirdImage p) = 0 := by
+  cases p with
+  | of a => cases a <;> exact ⟨True.intro, rfl⟩
+  | mul p q => rw [r_mul]; exact ⟨True.intro, rfl⟩
+/-- E is compatible with a third image exactly away from the alpha source. -/
+theorem e_image (p : Source) :
+    Nonconflict E (thirdImage p) ↔ p ≠ .of true := by
+  cases p with
+  | of b =>
+    cases b with
+    | false =>
+      constructor
+      · intro _ h; cases h
+      · intro _; exact ⟨True.intro, True.intro⟩
+    | true => simp [r_alpha, Nonconflict, E, A]
+  | mul p q =>
+    rw [r_mul]
+    constructor
+    · intro _ h; cases h
+    · intro _
+      exact ⟨(atom_image false p).1, (atom_image true q).1⟩
+/-- E shares no endpoint with a third image away from alpha. -/
+theorem e_shared (p : Source) (h : p ≠ .of true) :
+    sharedLeaves E (thirdImage p) = 0 := by
+  cases p with
+  | of b =>
+    cases b with
+    | false => rfl
+    | true => exact False.elim (h rfl)
+  | mul p q =>
+    rw [r_mul]
+    change sharedLeaves (.of false) (thirdImage p) +
+      sharedLeaves (.of true) (thirdImage q) = 0
+    rw [(atom_image false p).2, (atom_image true q).2]
+/-- A compatible compound image has zero shared endpoints with A and at least eight leaves. -/
+theorem a_composite (p q : Source) (h :
+    Nonconflict A (.mul (thirdImage p) (thirdImage q))) :
+    p ≠ .of true ∧ sharedLeaves A (.mul (thirdImage p) (thirdImage q)) = 0 ∧
+      8 ≤ (.mul (thirdImage p) (thirdImage q) : Source).length := by
+  have hp := (e_image p).mp h.1
+  have hn := not_alpha_minimum p hp
+  have hq := minimum q
+  refine ⟨hp, ?_, ?_⟩
+  · change sharedLeaves E (thirdImage p) + sharedLeaves (.of false) (thirdImage q) = 0
+    rw [e_shared p hp, (atom_image false q).2]
+  · change 8 ≤ _ + _; omega
+
 set_option maxHeartbeats 1000000 in
 -- The paired source induction and exact finite address computation share one proof budget.
 /-- Exact address semantics, universal separation, and literal same-composition sharpness. -/
@@ -222,70 +296,6 @@ theorem seven_leaf_separation :
     have hq := shared_le q s
     simp only [unsharedLeaves, FreeMagma.length, sharedLeaves]
     omega
-  have r_mul (p q : Source) : thirdImage (.mul p q) =
-      .mul (thirdImage p) (thirdImage q) := rfl
-  have r_alpha : thirdImage (.of true) = A := rfl
-  have r_beta : thirdImage (.of false) = C := rfl
-  have minimum (p : Source) : 3 ≤ (thirdImage p).length := by
-    induction p with
-    | of b => cases b <;> decide
-    | mul p q hp hq => rw [r_mul]; change 3 ≤ _ + _; omega
-  have not_alpha_minimum (p : Source) (h : p ≠ .of true) :
-      5 ≤ (thirdImage p).length := by
-    cases p with
-    | of b =>
-      cases b with
-      | false => decide
-      | true => exact False.elim (h rfl)
-    | mul p q =>
-      have hp := minimum p
-      have hq := minimum q
-      rw [r_mul]; change 5 ≤ _ + _; omega
-  have atom_image (b : Bool) (p : Source) :
-      Nonconflict (.of b) (thirdImage p) ∧
-      sharedLeaves (.of b) (thirdImage p) = 0 := by
-    cases p with
-    | of a => cases a <;> exact ⟨True.intro, rfl⟩
-    | mul p q => rw [r_mul]; exact ⟨True.intro, rfl⟩
-  have e_image (p : Source) :
-      Nonconflict E (thirdImage p) ↔ p ≠ .of true := by
-    cases p with
-    | of b =>
-      cases b with
-      | false =>
-        constructor
-        · intro _ h; cases h
-        · intro _; exact ⟨True.intro, True.intro⟩
-      | true => simp [r_alpha, Nonconflict, E, A]
-    | mul p q =>
-      rw [r_mul]
-      constructor
-      · intro _ h; cases h
-      · intro _
-        exact ⟨(atom_image false p).1, (atom_image true q).1⟩
-  have e_shared (p : Source) (h : p ≠ .of true) :
-      sharedLeaves E (thirdImage p) = 0 := by
-    cases p with
-    | of b =>
-      cases b with
-      | false => rfl
-      | true => exact False.elim (h rfl)
-    | mul p q =>
-      rw [r_mul]
-      change sharedLeaves (.of false) (thirdImage p) +
-        sharedLeaves (.of true) (thirdImage q) = 0
-      rw [(atom_image false p).2, (atom_image true q).2]
-  have a_composite (p q : Source) (h :
-      Nonconflict A (.mul (thirdImage p) (thirdImage q))) :
-      p ≠ .of true ∧ sharedLeaves A (.mul (thirdImage p) (thirdImage q)) = 0 ∧
-        8 ≤ (.mul (thirdImage p) (thirdImage q) : Source).length := by
-    have hp := (e_image p).mp h.1
-    have hn := not_alpha_minimum p hp
-    have hq := minimum q
-    refine ⟨hp, ?_, ?_⟩
-    · change sharedLeaves E (thirdImage p) + sharedLeaves (.of false) (thirdImage q) = 0
-      rw [e_shared p hp, (atom_image false q).2]
-    · change 8 ≤ _ + _; omega
   let Up (p q : Source) : Prop := p.length < q.length ∧ 3 ≤ p.length ∧
     8 ≤ q.length ∧ 2 ≤ unsharedLeaves p q ∧ 5 ≤ unsharedLeaves q p
   let Big (p q : Source) : Prop := 11 ≤ p.length ∧ 11 ≤ q.length ∧

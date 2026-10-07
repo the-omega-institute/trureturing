@@ -9,7 +9,7 @@ internal sealed class ActualImageAlphaSeparationDocument : IScribeDocumentDefini
     private const string Prefix = "D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Sharp alpha separation and the complete eleven-leaf classification of actual Fibonacci tree images.",
+        "Sharp alpha separation and all literal two-hole equality cases of actual Fibonacci tree images.",
         H("Alpha Separation and Literal Two-Hole Equality"), Blocks(
             Paragraph(Text("Sources are nonempty finite ordered full binary trees with alpha and beta leaves. "
                 + "The substitution rho sends alpha to beta and beta to (beta,alpha), and preserves pairing. "
@@ -18,11 +18,10 @@ internal sealed class ActualImageAlphaSeparationDocument : IScribeDocumentDefini
             Paragraph(Text("The leaf length n is FreeMagma.length. Shared leaves, unshared leaves, Nonconflict, E, A and C use ActualImageSevenLeafSeparation. "
                 + "Its seven_leaf_separation theorem supplies the exact address semantics and Theorem 30.4. "
                 + "A is pair(E,beta), C is pair(A,E), and E is pair(beta,alpha).")),
-            Def("B", "Smallest compatible compound", "B=(C,A), with eight leaves."),
             Def("delta", "Directed alpha deficit", "delta(P,Q) is the cardinality of the set difference of the original alpha-leaf address sets. The prose notation μ(P) denotes the cardinality of the original alpha-leaf address set."),
-            Def("OneHole", "One source hole", "A context has one hole, and is built by attaching complete fixed source trees on its left or right. "
-                + "OneHole.fill(g,H,X) inserts X and applies g to each fixed source sibling. Using g=rho cubed makes all fixed siblings actual images; using the identity retains the preimage. "
-                + "OneHole.address records every ordered left or right choice from the root."),
+            Def("fill", "Mapped single-hole filling", "Single-hole contexts reuse ActualLeafHistoryRigidity.OutputContext, including its root-first holeAddress. "
+                + "fill(g,H,X) inserts X and applies g to every complete fixed sibling. The identity retains the preimage, "
+                + "and rho cubed turns all fixed siblings into actual images."),
             Def("TwoHole", "Two source holes", "The outer one-hole context leads to the lowest common ancestor. Its left and right one-hole contexts lead to the two distinct holes. A Boolean records their naming order. "
                 + "TwoHole.fill(J,g,X,Y) inserts the named trees exactly once, retaining the entire outer context and each fixed sibling. "
                 + "TwoHole.addresses gives two addresses with the same outer prefix and opposite next bits, and hence neither is a prefix of the other."),
@@ -31,12 +30,8 @@ internal sealed class ActualImageAlphaSeparationDocument : IScribeDocumentDefini
             Def("NormalForm", "Literal double-hole normal form", "NormalForm(S,T) retains a complete source context J and y equal to beta or (alpha,alpha), with S=fill(id,J,beta,(alpha,y)) and T=fill(id,J,(alpha,y),beta). "
                 + "Its frontier is exactly the two named, mutually nonprefix addresses. Writing Y=rho cubed(y) and K=rho cubed(fill(id,J,beta,beta)), the actual trees are literally replace(replace(K,u,C),v,(A,Y)) and replace(replace(K,u,(A,Y)),v,C). Thus every fixed sibling has an actual preimage."),
             Describe.Lean(DescribeId.Create("actual-image-alpha-separation-result"),
-                DeclarationHandle.Create(Prefix + "result"), H("Eleven-Leaf Classification and Sharp Alpha Separation"),
+                DeclarationHandle.Create(Prefix + "result"), H("Sharp Alpha Separation"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("The actual images of at most eight leaves are A, C, (A,A), (A,C), and (C,A). "
-                        + "An eleven-leaf image has two children in that list. The resulting six ordered possibilities have exactly "
-                        + "one distinct nonconflicting unordered pair: (A,B) and (B,A). This pair has no shared leaves. "
-                        + "Every finite pairwise nonconflicting family of eleven-leaf actual images consequently has at most two members.")),
                     Paragraph(Text("For all complete preimages S,T, put P=rho cubed(S) and Q=rho cubed(T). Distinct equal-leaf nonconflicting images have at least three alpha addresses missing in each direction. "
                         + "Either deficit equals three precisely when NormalForm(S,T) holds. The same Y is C or (A,A) at both holes. Equality implies identical compositions of both the actual trees and their preimages.")),
                     Paragraph(Text("Every complete two-hole source context and each permitted y produce distinct equal-leaf nonconflicting actual images with both directed alpha deficits equal to three. "
@@ -65,17 +60,6 @@ internal sealed class ActualImageAlphaSeparationDocument : IScribeDocumentDefini
         Seq(Forall, Sp, V(x), Sp, InMacro, Sp, domain, Comma, Sp, Par(body));
     private static Formula ResultFormula()
     {
-        Formula p=V("P"), q=V("Q"), np=Call("n",p), nq=Call("n",q);
-        Formula distinct=Seq(Neg,Par(Equal(p,q)));
-        Formula hypotheses=And(distinct,Equal(np,nq),Call("NC",p,q));
-        Formula x=Call("pair",V("A"),V("B")),y=Call("pair",V("B"),V("A"));
-        Formula classify=All("P",V("I"),All("Q",V("I"),Imp(And(distinct,Equal(np,D(1,1)),
-            Equal(nq,D(1,1)),Call("NC",p,q)),Equal(Call("set",p,q),Call("set",x,y)))));
-        Formula converse=And(In(x,V("I")),In(y,V("I")),Seq(Neg,Par(Equal(x,y))),
-            Equal(Call("n",x),D(1,1)),Equal(Call("n",y),D(1,1)),Call("NC",x,y));
-        Formula family=All("F",Call("Finset",V("Source")),Imp(And(
-            All("P",V("F"),And(In(p,V("I")),Equal(np,D(1,1)))),
-            All("P",V("F"),All("Q",V("F"),Imp(distinct,Call("NC",p,q))))),Le(Call("card",V("F")),D(2))));
         Formula ss=V("S"),tt=V("T"),pp=Call("rho3",ss),qq=Call("rho3",tt);
         Formula dpq=Call("delta",pp,qq),dqp=Call("delta",qq,pp),nf=Call("NormalForm",ss,tt);
         Formula alphaHypotheses=And(Seq(Neg,Par(Equal(pp,qq))),
@@ -96,6 +80,6 @@ internal sealed class ActualImageAlphaSeparationDocument : IScribeDocumentDefini
             Equal(Call("delta",px,qx),D(3)),Equal(Call("delta",qx,px),D(3)),
             Equal(Call("c",px),Call("c",qx)),Equal(Call("c",sx),Call("c",tx)),
             Equal(Call("nu",px,qx),count),Equal(Call("nu",qx,px),count)))));
-        return Disp(And(And(classify,converse,family),alpha,alphaConverse));
+        return Disp(And(alpha,alphaConverse));
     }
 }
