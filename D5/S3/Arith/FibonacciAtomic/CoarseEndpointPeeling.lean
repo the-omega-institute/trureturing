@@ -30,8 +30,8 @@ local notation "CoarseObservable" => fun p => Function.FactorsThrough p kappa_hi
 local notation "read" => fun {m : Nat} (F : Fin m → Source) (q : Address) (i : Fin m) =>
   leafLabel (F i) q
 
-/-- Keep the target in the survivor set. Branch and absent form one group,
-whose cardinality is at most one at every target-leaf request. -/
+/-- A safe list requests target leaves, removes at most one merged branch-or-absent
+survivor at each step, and ends with survivors contained in the target singleton. -/
 noncomputable def Peels {m : Nat} (F : Fin m → Source) (z : Fin m) :
     Finset (Fin m) → List Address → Prop
   | S, [] => S ⊆ {z}
@@ -60,7 +60,6 @@ noncomputable def peelDecode {m : Nat} (F : Fin m → Source) (z : Fin m) :
         else none
       else none
   | _, _ :: _, [] => none
-
 
 /-- Coarse endpoint costs are equivalent to merged-nonleaf safe peeling. Every
 safe list compiles to a globally correct coarse strategy with exact paid sets. -/
