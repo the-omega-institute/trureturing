@@ -48,11 +48,50 @@ $$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finiteH \in 
 
 matrixPower is natural matrix exponentiation, iterate is Function.iterate, and equalPowerFiberCounts denotes the proved fiber_counts_of_equal_power proof at A,B,k. For each positive k with the explicit natural matrix equality A^k=B^k, the actual ordered-label word fibers have equal cardinality. Separate finite choices construct the base word map, and the initial group coordinate uniquely determines its ordered lift. The direct quotient-and-remainder output equals equalPowerHomeomorph at every integer coordinate. Left group action and k-step time commute with this same map, and one-step commutation of this map implies A=B. The premise A^k=B^k remains explicit in equalPower_attachment. Under its essentiality, inertness and equal-augmentation hypotheses, InertGroupBlockConjugacy.original18_1 proves the bridge from the actual dimension-group action through the least positive tau to the rational n*bH(W) cutoff and supplies this premise at every admissible exponent. Its attachment uses the exact equalPowerHomeomorph at that exponent; one-step commutation of a different map does not imply the rigidity conclusion.
 
+**Theorem 1.4 (Actual initial endpoint).**
+
+$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finiteH \in \operatorname{Fintype}\left(H\right), n \in Nat, A \in \operatorname{GroupMat}\left(H, n, n\right), k \in Nat, hk \in \operatorname{NatPositive}\left(k\right), w \in \operatorname{LegalWord}\left(\operatorname{baseGraph}\left(A\right), k\right), z \in H,\; \operatorname{source}\left(\operatorname{expandedGraph}\left(A\right), \operatorname{wordEdge}\left(\operatorname{liftWord}\left(w, z\right), 0\right)\right) = \operatorname{pair}\left(\operatorname{wordSource}\left(hk, w\right), z\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FixedBlockRigidity.lift_source` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive-length base word w and initial group coordinate z, liftWord starts at the actual vertex (wordSource(hk,w),z). This original endpoint supplier is used directly by the twisted-history seam constructor.
+
+**Theorem 1.5 (Actual terminal endpoint).**
+
+$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finiteH \in \operatorname{Fintype}\left(H\right), n \in Nat, A \in \operatorname{GroupMat}\left(H, n, n\right), k \in Nat, hk \in \operatorname{NatPositive}\left(k\right), w \in \operatorname{LegalWord}\left(\operatorname{baseGraph}\left(A\right), k\right), z \in H,\; \operatorname{target}\left(\operatorname{expandedGraph}\left(A\right), \operatorname{wordEdge}\left(\operatorname{liftWord}\left(w, z\right), \operatorname{subtract}\left(k, 1\right)\right)\right) = \operatorname{pair}\left(\operatorname{wordTarget}\left(hk, w\right), \operatorname{product}\left(z, \operatorname{totalLabel}\left(w\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FixedBlockRigidity.lift_target` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The same liftWord ends at (wordTarget(hk,w),z*totalLabel(w)). Labels multiply in temporal order on the right of z. This original endpoint supplier is used directly by the twisted-history restriction and seam constructor.
+
+**Theorem 1.6 (Original finite word count).**
+
+$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finiteH \in \operatorname{Fintype}\left(H\right), n \in Nat, A \in \operatorname{GroupMat}\left(H, n, n\right), k \in Nat, hk \in \operatorname{NatPositive}\left(k\right), i \in \operatorname{Fin}\left(n\right), j \in \operatorname{Fin}\left(n\right), g \in H,\; \operatorname{FintypeCard}\left(\operatorname{WordFiber}\left(A, hk, i, j, g\right)\right) = \operatorname{coeff}\left(\operatorname{entry}\left(\operatorname{matrixPower}\left(A, k\right), i, j\right), g\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FixedBlockRigidity.wordFiber_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+WordFiber A hk i j g contains actual legal base words with the stated source, target and ordered total label, retaining each parallel-edge number. For every positive length k its cardinality is the g coefficient of the (i,j) entry of A^k. FintypeCard is Fintype.card. The actual twisted-history count consumes this original theorem after transporting finiteness through its reconstruction equivalence.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FixedBlockRigidity.equalPower_attachment`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FixedBlockRigidity.lift_source`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FixedBlockRigidity.lift_target`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FixedBlockRigidity.original18_3`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FixedBlockRigidity.original18_3_freeExpansion`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FixedBlockRigidity.wordFiber_card`
 - Dependency: [D5/S3/ConceptDynamics/Coding/BipartiteOverlapConjugacy](BipartiteOverlapConjugacy.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/CountedGroupOverlap](CountedGroupOverlap.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/EquivariantOverlapRecoding](EquivariantOverlapRecoding.md)

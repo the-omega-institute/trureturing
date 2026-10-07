@@ -417,7 +417,9 @@ The exact rows partition remains registered when empty, both before seeding and 
 
 全批解析成功后,在主检出目录逐项执行 `git worktree remove --force -- <注册绝对路径>`,恰好一个 `--force`,使调用者当前所在的 linked worktree 也可删除。点名删除越过未合并、脏、年龄、开放 PR、进程占用五项自动回收判据,不查询 `status` / `merge-base` / `rev-list` / `log` / `gh` / `lsof`。不删除分支 ref、不调用 `update-ref` / `branch -D`,不 rm、不 prune、不 kill、不碰 PR、不清别的树的缓存或 `.lake` donor,不碰未注册目录;目标自己的 `.lake` 随 Git 删除目录自然消失。执行期某项 Git 失败则记录原始错误,继续其余已解析对象,最终 exit 74;不承诺跨树事务或回滚。A20 自动回收语义不变。
 
-每项输出 JSONL 的 `name` / `path` / `outcome` / `error`;未匹配或歧义时 `path=null`,歧义的全部候选路径在 error 中列出。最终 stdout 末行固定为 `WORKTREE_REMOVE_RESULT exit=<码> removed=<n> failed=<n> refused=<n>`:removed 是成功删除数,failed 是执行失败数,refused 是预解析阻止的去重名称数(含 `batch_refused`);用法错误没有待解析项,三计数为 0。CLI 分类码为 0 全部成功、64 用法错误(缺 --names / 空串 / 全空白)、65 不存在、66 歧义、67 主检出、68 locked、69 清单不可读或为空、74 执行失败。65–69 时删除调用次数恰为 0。**GNU make 对任何配方失败返回自身的 2**,分类码只在直调 canonical CLI 时可辨;经 make 只有 0/2,须读末行 exit 字段分辨原因,不得声称 make 透传分类码。
+每次 Git 删除默认使用 300 秒挂起保护;超时终止该删除并报执行失败,目录可能已经部分删除。显式传 `make worktree-remove NAMES="trureturing-foo trureturing-bar" FORCE=1` 或 CLI `--force` 时,只取消实际删除的限时,等待 Git 返回;清单读取保持原有 120 秒限时。Make 仅接受命令行显式 `FORCE=1` 启用此行为,继承的环境变量不启用。CLI `--force` 可位于 `--names` 参数之前或之后,只能出现一次;`--names` 紧随的值始终按名称解析。强制模式仍执行完整预解析,仍拒绝主检出与 locked,不增加 Git 的 `--force` 数量。
+
+每项输出 JSONL 的 `name` / `path` / `outcome` / `error`;未匹配或歧义时 `path=null`,歧义的全部候选路径在 error 中列出。最终 stdout 末行固定为 `WORKTREE_REMOVE_RESULT exit=<码> removed=<n> failed=<n> refused=<n>`:removed 是成功删除数,failed 是执行失败数,refused 是预解析阻止的去重名称数(含 `batch_refused`);用法错误没有待解析项,三计数为 0。CLI 分类码为 0 全部成功、64 用法错误(缺 --names / 空串 / 全空白 / 重复或未知选项)、65 不存在、66 歧义、67 主检出、68 locked、69 清单不可读或为空、74 执行失败。65–69 时删除调用次数恰为 0。**GNU make 对任何配方失败返回自身的 2**,分类码只在直调 canonical CLI 时可辨;经 make 只有 0/2,须读末行 exit 字段分辨原因,不得声称 make 透传分类码。
 
 CI 的独立入口、固定候选、报告、退出及缓存由 A22 定义。`make test` 检查当前树；`make gate BASE=<sha>` 依次调用独立程序并验证显式基线的跨树约束。
 
@@ -849,7 +851,9 @@ Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `fron
 
 **链闭合规则。**`DeriveMigration` 固定点与 `CompleteChainGaps` 共用同一谓词：子项迁移为 absorbed 或 nonpropositional 即闭。父项 `LocalComplete` 仍是独立必要条件，可由自身有效 coverage 路径或自身有效 nonpropositional 收据履行，并须结构对齐。没有 coverage 也没有自身收据的父项始终 residual-open，终态子项只移除相应 `chain-migration-incomplete` gap。自身 nonpropositional 收据与完整后代链同时闭合才派生 nonpropositional-inapplicable；后代重开时保留该收据、派生 partial-open，绝不保留假终态。查询只派生当前目录状态，不制造或清除收据。
 
-**邻居上下文查询。**`atom-context --atom-id ID`(`make atom-context ATOM_ID=ID`)是只读查询时投影：按 `source.toml` 的 atomizer 重切源卷，顶层 claim 按字节序排列，带 `chain_atoms` 者以已验证子句计划递归展开。`SourceStream.Atoms` / `AtomIds` 继续只含 materialized leaf 流，供现有 membership/readiness 消费；上下文另保留展开途中每个完整源跨度。查询 leaf 的邻居和 index/count 不变。查询父项时，CURRENT 为该父项完整原始跨度，PREVIOUS / NEXT 是叶流中位于其整个子树之前/之后的最近项，不会是自己的后代。每次查询的 index/count 是仅将该次出现的子树折叠为 CURRENT 后的 1-based 位置与总数；其他出现仍保持叶流。按 raw 指纹定位所有出现并以源顺序输出；`Resolve` 单出现接口仍对重复报 `OCCURRENCE_AMBIGUOUS`，多出现查询输出 occurrence ordinal，set 按上款明确选择。每项输出 atom_id、账本状态目录(未登记者为 `unregistered`)与全文。不持久化任何位置数据，`show-atom` 仍只读 CAS、不重放源。
+**局部查询。**`show-atom --atom-id ID` 与 `atom-context --atom-id ID` 接受重复的 `--source SOURCE_ID_OR_PATH`；make 入口接受 `SOURCE=…`。先在当前工作树按路径和文件名搜索，只解析命中记录及其源 metadata。未指定源时 ID 搜索跨源，多个命中报 ambiguous；指定源时只在所选范围查找。搜索包含未提交记录，删除的记录不命中。无关账目、理论和 CAS 不进入查询快照，不做全账一致性检查；命中记录仍须可读取和解析。
+
+**邻居上下文查询。**`atom-context` 按目标源的 atomizer 切分正文，从原始字节定位包含目标的根片段，只加载这些根片段、相邻根片段和实际引用的子链。跨源复用的 child 按 ID 读取。CURRENT 为目标的完整原始跨度，PREVIOUS / NEXT 是其整个子树前后的最近叶项，不含自己的后代。输出 atom_id、账本目录状态(未登记者为 `unregistered`)与全文；重复出现按源顺序输出 occurrence ordinal。查询不输出全流位置或总数，不为计数展开远处链条，不持久化位置。`Resolve` 单出现接口仍对重复报 `OCCURRENCE_AMBIGUOUS`，结算按上款明确选择。`show-atom` 只读目标 CAS，不重放源或重算历史指纹。
 
 历史治理字段按既有 schema 读取，不新增 quarantine 管理命令；残余投影只用于把未消化 ATOM 交给 AI。
 **状态标记的归属**:`DigestionFrontierProjection` 是唯一分区所有者；`formalization_frontier` 是该投影对 residual-open ATOM 的查询结果，`formalize-candidates` 只渲染投影，不提供 disposition 重试通道。cover 失败由调用方修正 ATOM 后再次调用 cover。
