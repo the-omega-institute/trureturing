@@ -267,28 +267,6 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl016RejectsFormattedFingerprintThatDisagreesWithSourceSpan()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        var document = BackfillInventoryLoader.Load(fixture.Build().Current);
-        var fingerprint = document.RequireDigestionEntries()[0].Fingerprints.RawSha256;
-        var replacement = fingerprint[..^1] + (fingerprint[^1] == '0' ? '1' : '0');
-        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
-                RuleFixture.FixtureBackfillAtomPath]
-            .Replace(
-                fingerprint,
-                replacement,
-                StringComparison.Ordinal);
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
-
-        Assert.Contains(evaluation.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("CAS blob is missing", StringComparison.Ordinal)
-            && diagnostic.Message.Contains(replacement["sha256:".Length..], StringComparison.Ordinal));
-    }
-
-    [Fact]
     public void Sl016RejectsSourceIdThatDoesNotMatchItsDirectory()
     {
         var fixture = new RuleFixture();
@@ -691,14 +669,9 @@ public sealed partial class ReviewRegressionTests
         var engineSource = File.ReadAllText(enginePath, Encoding.UTF8);
         Assert.DoesNotContain(source.SourcePath, engineSource, StringComparison.Ordinal);
 
-        // The CAS pass rehashes every tracked blob. SL-016 admission used to run it twice on the
-        // same tree: once in this rule and once inside the alignment pass it calls. The second run
-        // could only reproduce the first one's verdict, so the first result is threaded down the
-        // chain instead. DigestionCasStoreTests keeps pinning what the pass itself rejects; this
-        // pins the shape of the chain that carries its result.
-        //
-        // Keep these assertions in the existing SL-016 test identity because they share the
-        // BackfillInventoryRule source read and do not create new repository-read debt.
+        // SL-016 no longer performs a whole CAS audit.  CAS bytes are read by the
+        // command operating on the selected atom; admission only evaluates ledger
+        // references and coverage edges.
         var casChainSource = engineSource
             + File.ReadAllText(
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine", "Digestion", "DigestionLedgerAligner.cs"),
@@ -706,9 +679,7 @@ public sealed partial class ReviewRegressionTests
             + File.ReadAllText(
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine", "Digestion", "Evaluation", "DigestionStatusEvaluator.cs"),
                 Encoding.UTF8);
-        Assert.Equal(1, Count(casChainSource, "var casEvaluation = DigestionCasStore.Evaluate("));
-        Assert.DoesNotContain("var cas = DigestionCasStore.Evaluate(", casChainSource, StringComparison.Ordinal);
-        Assert.Equal(2, Count(casChainSource, "casEvaluation: casEvaluation"));
+        Assert.DoesNotContain("var casEvaluation = DigestionCasStore.EvaluateLedgerReferences(", casChainSource, StringComparison.Ordinal);
     }
 
 }

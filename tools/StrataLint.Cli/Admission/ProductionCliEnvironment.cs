@@ -22,13 +22,24 @@ internal interface IRepositoryGateway
 
     FrozenRevisionIdentity ResolveCurrentRevision();
 
+    FrozenRevisionIdentity ResolveFrozenRevision(string revision) =>
+        throw new InvalidOperationException("fixed revision identity is not supported by this gateway");
+
     RawRepositorySnapshot ReadCurrent();
 
-    /// Reads the files at the given paths straight from the working directory, without
-    /// git; a directory selects everything under it.
+    /// Reads the files at the given paths from the current repository snapshot. A
+    /// directory selects everything under it, and the same FILEMAP/symlink policy as
+    /// the whole-tree reader is applied.
     RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths);
 
+    /// Searches current paths without reading their file bodies.
+    IReadOnlyList<string> SearchCurrentPaths(IReadOnlyList<string> paths);
+
     RawRepositorySnapshot ReadRevision(string revision);
+
+    /// Reads selected paths and the FILEMAP inputs and link referents needed to validate them.
+    RawRepositorySnapshot ReadRevision(string revision, IReadOnlyList<string> paths) =>
+        throw new InvalidOperationException("scoped revision reads are not supported by this gateway");
 
     RawChangeSet ReadCurrentChanges();
 

@@ -63,8 +63,8 @@ The optimization class in Eq. 13 comprises completely positive
 trace-nonincreasing encoders and decoders, with encoder Choi rank at most
 one for the rank-one optimum. The source uses input-first Choi order.
 For $\tau=I_d/d$, its canonical-purification fidelity is the unrenormalized
-overlap $\langle\psi|[(\mathcal D\circ\mathcal N_p\circ\mathcal C)
-\otimes\mathrm{id}](|\psi\rangle\langle\psi|)|\psi\rangle$.
+overlap
+$\langle\psi|[(\mathcal D\circ\mathcal N_p\circ\mathcal C)\otimes\mathrm{id}](|\psi\rangle\langle\psi|)|\psi\rangle$.
 No output trace normalization is applied. The source admits $0\le p<1$;
 the question at nonzero noise has $d\ge2$ and $0<p<1$.
 

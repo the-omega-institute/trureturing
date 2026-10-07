@@ -1,0 +1,55 @@
+**证明。** 首位零页的连接无额外限制，直接使用定理 6.2。对首位一页的任意可行编码，设 $d=\operatorname{rank}\sigma_1$。式（6.4）—（6.5）提供等距
+
+$$
+W:\mathbb C^M\otimes\mathbb C^d\longrightarrow\mathcal H_{Y,1},
+\qquad W(|r\rangle\otimes|j\rangle)=|v_{rj}\rangle.
+$$
+
+令 $A_s$ 为首位一且末态至少为 $s$ 的 $X$ 计算基词集。对每个这样的词定义系数向量
+
+$$
+q_x=\sum_{j=0}^{d-1}\sqrt{\lambda_j}\langle x|e_j\rangle|j\rangle,
+\qquad V_s=\operatorname{span}\{q_x:x\in A_s\}.
+$$
+
+全体 $X$ 行构成的系数矩阵列秩为 $d$，因为特征向量正交且所有 $\lambda_j$ 正。去掉末态小于 $s$ 的 $a_s$ 行至多使秩下降 $a_s$，故
+
+$$
+\dim V_s\ge d-a_s.
+\tag{7.2}
+$$
+
+在 $J|1,r\rangle$ 的计算基行 $x$ 上，$Y$ 向量正是 $W(|r\rangle\otimes q_x)$。共同支撑合法性使此向量属于 $\operatorname{span}B_{s(x)}$；对 $x\in A_s$，该空间包含于 $\operatorname{span}B_s$。因此
+
+$$
+W(\mathbb C^M\otimes V_s)\subseteq\operatorname{span}B_s,
+\qquad M\dim V_s\le n_s.
+\tag{7.3}
+$$
+
+这使用每个计算基行的总振幅，已经容纳 Schmidt 项之间的相消；未假设每个特征向量分别具有某个计算基支撑。合并式（7.2）—（7.3），得到 $d\le a_s+\lfloor n_s/M\rfloor$，再用 $d\le c$ 即得全部上界。
+
+在 $D_0,d_*\ge1$ 时，为达到该界，按末态从小到大选择 $d_*$ 个 $X$ 词，同末态按字典序排列。对每个阈值 $s$，所选词中末态至少为 $s$ 的数量恰为
+
+$$
+\max(0,d_*-a_s).
+$$
+
+每个所选词需要 $M$ 个互异的 $Y$ 标签，并要求不同所选词使用的标签也互异。从最大末态开始向下分配。处理状态 $s$ 时，此前使用的全部标签都属于 $B_s$；而包括当前状态的累计需求满足
+
+$$
+M\max(0,d_*-a_s)\le n_s.
+\tag{7.4}
+$$
+
+故 $B_s$ 内剩余标签足以完成这一状态的分配。逐状态归纳即可完成全部分配。这是嵌套邻域的初等匹配原则在当前接口上的应用：共同邻域按包含关系排列，全部阈值需求即保证上述贪心分配成功。
+
+记选出的 $X$ 词为 $x_j$，分给它的 $M$ 个 $Y$ 词为 $y_{rj}$，置
+
+$$
+J|1,r\rangle=\frac1{\sqrt{d_*}}\sum_{j=0}^{d_*-1}|x_j\rangle|y_{rj}\rangle.
+\tag{7.5}
+$$
+
+所有 $y_{rj}$ 互异，故码字正交归一，且页内矩阵单位的 $X$ 偏迹为 $\delta_{rs}d_*^{-1}\sum_j|x_j\rangle\langle x_j|$。每个分配标签都在相应邻域内，故每项 $x_jy_{rj}$ 合法。与零页构造合并时，两侧页支撑正交，跨页偏迹为零，所以整个通道合同成立。均匀谱达到 $\log d_*$；任意谱的熵不超过其秩的对数，证明最优性。若任一页最大秩为零，该页非零逻辑空间不可能编码，亦得可行性判据。证毕。
+
