@@ -69,6 +69,7 @@ public sealed class UtilityRefutationProducerTests
             RepoPath.CreateKnown(path), utility, snapshot, () => report);
 
         Assert.Equal(valid, validation.IsAccepted);
+        if (!valid) Assert.Equal(UtilityValidationFailure.RefutationInvalid, validation.Failure);
         Assert.Equal(valid, report.Files[RepoPath.CreateKnown(path)].Refutation!.IsClosedNegation);
     }
 

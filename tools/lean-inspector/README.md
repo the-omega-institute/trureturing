@@ -31,7 +31,7 @@ universe checks. `Registration.targetName` is absent.
 Contract types bind the original mathematical obligations to the target, arena,
 actual realization, primitive bundle and catalog indices. The Reg compiler checks
 variation, slot sensitivity, witness positive/constantTrue negative claims,
-source-family obligations, seal counts, row classifications, closure membership,
+source-family obligations, seal lowering/triviality, closure membership,
 retained kernel collisions and catalog conclusions. Missing, unknown, absent and
 unsupported evidence remains a compilable submission and retains its diagnostic
 path. The report consumes these fields and reconstructs raw ownership, enrollment,
