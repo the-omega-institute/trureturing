@@ -1609,3 +1609,220 @@ actual high-zero contribution. The original same-source signed target,
 all-size FIB matrix positivity, and RH remain unproved.
 This is a paper-level application of existing results, without a
 mathematical originality claim, new zero computation, or Lean certification.
+
+
+## Keep the coupled logarithmic exponent in the complete density tail
+
+Retain the same actual zero multisets, source clock $A=\log N$,
+$L=\log A$, verified height $H=3\cdot10^{12}$ and
+$h=\log H$ as in (W1)–(W7). The published density estimate has the
+exact relation
+
+$$
+q(\sigma)=4-a(\sigma),\qquad
+\frac75\le a(\sigma)\le2,\qquad
+2\le q(\sigma)\le\frac{13}5
+\quad(3/4\le\sigma<1).
+$$
+
+Keeping this relation in the already established integral (W3) gives
+a smaller complete high-zero allowance. This is an application of the
+same published density rows and finite-height verification, not a new
+density theorem, a repetition of their proofs or a new zero computation.
+The density and verification inputs remain external premises; no
+mathematical originality or Lean certification is asserted.
+
+### A reciprocal-square bound retaining both exponents
+
+Factor the bracket in the first inequality of (W3) as
+
+$$
+\frac{h^q}{a}
+\left[1+\frac q{ah}+\frac{q(q-1)}{a^2h^2}
+ +\frac{q(q-1)(q-2)}{a^3h^3}\right].
+$$
+
+Since $h>28$, its square bracket is less than
+
+$$
+1+\frac{13}{196}+\frac{104}{38416}
+ +\frac{312}{7529536}<1.07.
+$$
+
+Thus the leading term of the same reflected count integral (W2) is
+at most $4(47)(1.07)H^{-a}h^q/a$, and
+$4(47)(1.07)/(7/5)<144$. Reuse the unchanged logarithmic-error
+integrals in (W3)–(W4). They give
+
+$$
+\boxed{
+F_2(\sigma)<144H^{-a(\sigma)}h^{q(\sigma)}+30000H^{-2}
+=144h^4(Hh)^{-a(\sigma)}+30000H^{-2}.}
+\tag{X1}
+$$
+
+All ordinates above $H$ through infinity are included, with the same
+analytic multiplicities and reflection convention. The equality on
+the right uses the joint identity $q=4-a$, rather than combining
+independently attained exponent endpoints.
+
+Insert (X1) in the existing actual-weight layer integral (W5), with
+$Q_A'(\sigma)\le LA^{\sigma-1/2}$. Then
+
+$$
+\boxed{
+\begin{aligned}
+B_2(A)<{}&2A^{1/4}S_2(H)
+ +144Lh^4\int_{3/4}^1
+    A^{\sigma-1/2}(Hh)^{-a(\sigma)}\,d\sigma\\
+&+30000H^{-2}(\sqrt A-A^{1/4}).
+\end{aligned}}
+\tag{X2}
+$$
+
+The source's coefficient estimate remains precisely (W7), including
+$B_3\le B_2/H$. No response is discarded or counted as an additional
+reserve. Compared with (W6), (X2) retains the logarithmic exponent of
+each real-part layer rather than paying its worst value throughout
+the strip. This changes the allowance, not the actual signed sum.
+
+For fixed $H$, (X2) still has an allowance growing with $A$; its last
+term alone grows like $\sqrt A$. That is not a lower bound on the
+actual response. The complete unbounded same-source Robin condition
+and RH remain unproved.
+
+
+### A further finite restriction of the same selected Robin source
+
+Assume RH fails and the same cited source-reduction, strict-core,
+density and finite-verification inputs hold. Let $N>5040$ be the
+least integer attaining the global Robin-ratio maximum. Consider
+
+$$
+10^{34}<A=\log N\le10^{36},\qquad L=\log A.
+$$
+
+The existing logarithm bounds $2.302<\log10<2.303$ and
+$1.098<\log3<1.099$ give
+
+$$
+78<L<83,\qquad 28<h<30.
+$$
+
+Put $s=h+\log h$. In fact
+$h>12(2.302)+1.098=28.722>27$, so
+
+$$
+s>12(2.302)+4(1.098)=32.016>32.
+$$
+
+Also $s<34$, since $h<30$ and $\log30<4$; the latter follows
+from the already used $e^4>54$.
+
+For $r=2-\sigma>0$, the same arithmetic–geometric mean comparison
+as (W8), now with the coupled logarithmic factor, gives
+
+$$
+\begin{aligned}
+\log\left(A^{\sigma-1/2}(Hh)^{-a(\sigma)}\right)
+&=\tfrac32L+s-Lr-3s/r\\
+&\le\tfrac32L+s-2\sqrt{3Ls}<-22.
+\end{aligned}
+\tag{X3}
+$$
+
+The expression after the inequality increases in $L$ and decreases
+in $s$ on $78<L<83$, $32<s<34$. At $(L,s)=(83,32)$ it is
+$156.5-2\sqrt{7968}<-22$, because
+$89.25^2=7965.5625<7968$. Thus (X3) holds uniformly over the
+whole real-part integral, rather than only at a chosen layer.
+
+Reuse $S_2(H)<1.48\cdot10^{-12}$, $e^{18}>64000000$ from (W9),
+and $e^4>54$ from the Nicolas core comparison. These give
+$e^{22}>3456000000$. Also $A^{1/4}\le10^9$ and
+$\sqrt A\le10^{18}$. Equation (X2) now supplies
+
+$$
+\begin{aligned}
+B_2(A)
+&<2(10^9)(1.48\cdot10^{-12})
+ +\frac{144(83)(30^4)}{4(3456000000)}
+ +\frac{30000\cdot10^{18}}{9\cdot10^{24}}\\
+&=0.00296+0.7003125+\frac1{300}<0.707.
+\end{aligned}
+\tag{X4}
+$$
+
+All comparisons are elementary rational bounds applied to the existing
+complete density integral. No primes, CA profiles or zero ordinates
+are newly enumerated or verified.
+
+### Pay the full signed margin with the same strict core
+
+The explicit Nicolas allowance $\mathcal E(L)$ in (G7) of the
+[comparison note](../ArithSums/nicolas2025comparison.md) has a sufficient
+strict bound on this range. Reuse $1.414<\sqrt2<1.415$,
+$\log2<0.70$, $e^{13}>400000$, and the decreasing exponential
+error terms already used there. For $L\ge78$, discard only the
+positive $6.78/L^2$ term to obtain
+
+$$
+\mathcal E(L)>
+2.828-\frac{2.7(1.415)}{78}-2.00014
+ -\frac{2.67}{400000}-\frac{157}{400000^3}>0.778.
+\tag{X5}
+$$
+
+The last denominator uses $e^{39}>(400000)^3$, and
+$156+5/78<157$. The actual strict core remains
+$T_AD^*(A)>\mathcal E(L)$, with $T_A=\sqrt A L$, at this
+same integer, optimizer and clock.
+
+Reuse (W7), $B_3\le B_2/H$, and its previously paid factor $1.021$.
+Equation (X4) gives
+
+$$
+C_{\rm high}(A)<1.021(0.707)<0.722.
+$$
+
+The unchanged complete low allowance is $C_{\rm low}(A)<0.054$;
+it retains the verified head and the elementary terms of the original
+signed formula (F1). Consequently the original integral obeys
+$T_AI_\psi(A)>-0.776> -\mathcal E(L)$ on this selected-source
+range. Together with the strict core, it gives
+
+$$
+\boxed{
+T_A\Delta(N)>0.778-0.054-0.722=0.002
+\qquad(10^{34}<A\le10^{36}).}
+\tag{X6}
+$$
+
+This pays the original sufficient signed-tail condition on the stated
+finite clock interval. It includes every zero above $H$ through
+infinity; reflection, conjugation and real-part weights keep their
+original multiplicities. The high allowance is used once, on the
+same actual zero multiset as the margin, rather than added to a
+separately optimized reserve.
+
+Together with (W11), and conditional on the same cited source
+reduction, strict core, density and finite-verification inputs, RH
+failure must place the selected least global Robin maximizer at
+
+$$
+\boxed{\log N>10^{36}.}
+\tag{X7}
+$$
+
+This strengthens the selected-source clock restriction by a factor
+of $100$. It is not a least-counterexample bound or an all-integer
+Robin verification below $e^{10^{36}}$. The verified zero height,
+external density theorem and source-selection hypotheses are unchanged.
+The gain comes from retaining $q=4-a$ inside the density integral,
+not from a new zero-density theorem or an assumption of cancellation.
+
+The full unbounded signed-tail condition at the selected source and
+RH remain unproved. In particular the growing fixed-$H$ allowance
+in (X2) is still present; the finite interval cannot be extrapolated
+to all clocks. This is a paper-level application of existing results,
+without a mathematical originality claim or Lean certification.

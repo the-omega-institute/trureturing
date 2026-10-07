@@ -100,6 +100,7 @@ internal static partial class DigestionQuerySelection
     internal static string[] ResolveSources(IRepositoryGateway repository, IReadOnlyList<string> selectors)
     {
         var result = new HashSet<string>(StringComparer.Ordinal);
+        RawRepositorySnapshot? metadata = null;
         foreach (var selector in selectors)
         {
             if (!RepoPath.TryCreate(selector, out _)) throw new FormatException($"invalid source selector: {selector}");
@@ -111,13 +112,25 @@ internal static partial class DigestionQuerySelection
                 result.Add(selected[0].SourceId);
                 continue;
             }
-            var metadata = repository.ReadCurrent([$":(glob){BackfillInventoryLoader.RootPath}*/source.toml"]);
+            metadata ??= FindSourceMetadata(repository, selectors.Where(static source => source.Contains('/')).ToArray());
             var matches = metadata.Entries.Where(entry => entry.Path.EndsWith("/source.toml", StringComparison.Ordinal))
                 .Where(entry => MatchesSourcePath(entry, selector)).Select(entry => SourceId(entry.Path)).ToArray();
             if (matches.Length != 1) throw new FormatException($"source selector={selector} count={matches.Length}");
             result.Add(matches[0]);
         }
         return result.Order(StringComparer.Ordinal).ToArray();
+    }
+
+    internal static RawRepositorySnapshot FindSourceMetadata(IRepositoryGateway repository, IReadOnlyList<string> sourcePaths)
+    {
+        var matches = new List<RawRepositoryEntry>();
+        foreach (var path in repository.SearchCurrentPaths([$":(glob){BackfillInventoryLoader.RootPath}*/source.toml"])
+                     .Order(StringComparer.Ordinal))
+        {
+            var entry = repository.ReadCurrent([Literal(path)]).Entries.SingleOrDefault(entry => entry.Path == path);
+            if (entry is not null && sourcePaths.Any(sourcePath => MatchesSourcePath(entry, sourcePath))) matches.Add(entry);
+        }
+        return RawRepositorySnapshot.Create(matches);
     }
 
     internal static bool MatchesSourcePath(RawRepositoryEntry entry, string path)
