@@ -3219,3 +3219,51 @@ Gaussian results do not pay the signed middle, its combined prime and
 error contribution, or the exact low head in (LM5). They are reused
 within their stated scope, without excluding a future weighted
 application or establishing the original Robin bound or RH.
+
+## Whole multiplicative sums do not control prescribed prime blocks
+
+Granville–Lamzouri, *Large values of exponential sums with
+multiplicative coefficients*,
+[arXiv:2604.02306v1](https://arxiv.org/pdf/2604.02306v1),
+Corollary 1.1 and Example 1.2, printed pp.5–6, give a useful one-way
+interface. Write $e(t)=\exp(2\pi it)$ and
+
+$$
+S_f(x,\alpha)=\sum_{n\le x}f(n)e(\alpha n),\qquad
+f:\mathbb N\to\{z:|z|\le1\}\text{ multiplicative}.
+$$
+
+For fixed $\epsilon\in(0,1/10)$, Corollary 1.1 assumes
+$|\alpha-a/q|\le1/(qx)$, $(a,q)=1$ and
+$(\log x)^{2+\epsilon}\le q\le x/(\log x)^{3+\epsilon}$.
+An inequality $|S_f(x,\alpha)|\ge cx/\log x$, with fixed
+$c\in(0,1)$, forces a dyadic prime sum with large modulus for some
+positive integer harmonic $h\ll c^{-2}\log(1/c)$ and a block location
+$c^2x/\log(1/c)\ll z\le x/(2h)$. This is an existential conclusion,
+not a bound for a prescribed prime block.
+
+The source's Example 1.2 supplies a completely multiplicative $f$
+with $|f|\le1$, a cutoff $y\sim3x/4$, $z=y/2$ and
+$\delta\in\{0,1\}$ such that
+
+$$
+S_f(x,\alpha)=e(\alpha)+\delta,\qquad
+\sum_{z<p\le2z}f(p)e(\alpha p)\sim\frac{x}{4\log x}.
+$$
+
+Thus multiplicativity and cancellation of the whole integer sum alone
+do not imply cancellation of each prime block. This printed
+counterexample is reused directly; it concerns the source's selectable
+coefficients, not a counterexample for the actual
+$\Lambda(n)n^{-it}$ Gaussian response.
+
+The actual von Mangoldt weight is not multiplicative:
+$\Lambda(6)=0$ while $\Lambda(2)\Lambda(3)>0$; multiplication by a fixed
+nonzero scalar preserves that obstruction. Putting $n^{-it}$ into an
+admissible multiplicative coefficient instead leaves the prime support,
+$\Lambda$ weight, Gaussian cutoff and signed transport to be justified.
+Corollary 1.1 supplies no such bridge or original-kernel estimate.
+The same selected integer, complete rational coefficient, actual zero
+real parts and multiplicities, exact low head and all remaining height
+ranges therefore retain their roles in (LM5) and (G9). The required
+joint signed estimate and RH remain unproved.
