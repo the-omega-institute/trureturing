@@ -1667,3 +1667,312 @@ $$
 所引 `recoverArithmetic` 的群运算、比较及外置原语账目属于给定快照后的算术调度。它与本节的实际读取数、单位命令数及完整控制状态数分别计量。控制表的静态描述长度、端点解码计算、工作区、顺序响应锁存和物理实现也分别计量：原子 $v$ 可以处理一张完整带标签响应，并不由此得到逐坐标或逐位实现的免费工作区。根签名的 $r-2$ 位、定长状态名的十二或十六位、装置的完整剩余来源状态均具有各自不同的类型。上述纸面条件结论不给出物理总记忆、延迟、能耗、通信或位运算界，也不声称这些新增结论已作 Lean kernel 核验。
 
 ## 31.99 追加锚（本行以下为增补区）
+
+## 32. 原二进来源的完整控制记忆与单位动作精确律
+
+本节从实际二进取得的饱和迹推进到完整有限控制器。原来源、字面原始读数和单位前进保持同一合同；结论覆盖任意有限终止竞争控制器，包括延后查询、整周期等待及具有循环控制表的程序。取得后的补充标签、完整控制状态、状态名长度与实现费用分别计量。第 31 节的循环选择器是另一来源合同，其首次变色状态公式不移作这里的下界。
+
+**定义 32.1（原来源与完整原子控制合同）。** 固定任意 $d\ge0$，令 $m=d+1$、$P=2^m$，固定公开的 $b\in\{0,1\}$。未知原来源遍历全部 $r\in\{0,\ldots,P-1\}$。装置的实际状态在 $\mathbb Z_{2P}$ 中，初值为 $x_0=bP+r$；目标始终是字面上的原 $r$，而非更新后的装置状态。仅有三种指令：
+
+$$
+\begin{aligned}
+\operatorname{Advance}:&\quad x\longmapsto x+1\pmod{2P},\quad\text{响应为固定的 }\operatorname{Ack},\\
+\operatorname{Read}:&\quad x\longmapsto x,\quad\text{响应为 }\left\lfloor\frac{[x]_{2P}}P\right\rfloor,\\
+\operatorname{Halt}(r):&\quad\text{执行一次 Stop 并输出字面 }r.
+\end{aligned}
+$$
+
+其中 $[x]_{2P}$ 是标准代表。累计 $N$ 次单位前进后的字面传感器正是原 `rawSensor`：
+
+$$
+Y_b(r,N)=\left\lfloor\frac{(bP+r+N)\bmod(2P)}P\right\rfloor.
+$$
+
+使用本卷定义 26.1 的原子 Moore 控制器，取单点初始历史域：
+
+$$
+c(*)=q_*,\qquad
+u:Q\to\{\operatorname{Advance},\operatorname{Read}\}\sqcup
+\{\operatorname{Halt}(r):0\le r<P\},\qquad
+v:Q\times\bigl(\{\operatorname{Ack}\}\sqcup\{0,1\}\bigr)\to Q.
+$$
+
+$q_*$ 与来源无关；$u$ 只依当前控制状态，$v$ 只依该状态及这一次带类型响应。单位前进的应答没有来源信息。命令状态同时承担等待其原子响应的位置，响应完成才作一次 $v$ 更新。所有程序位置、单位等待位置、阶段、保留信息与字面输出状态均计入 $|Q|$；若实现另设可辨识的请求、等待、计算或锁存阶段，也须计入。没有免费时钟、事件计数、外部相位、旧记录、来源输入或内部无动作转换。
+
+成功要求从 $q_*$ 对每个原 $r$ 有有限实际执行，至多作 $m$ 次 Read，最后执行正确的 $\operatorname{Halt}(r)$。允许任意自然数次 Advance，不限制查询必须最早发生，也不预设控制图无环或分层。来源族有限，故逐来源有限终止自然给出一个有限最坏动作数；竞争域并未预先限制这个数。$d,b$ 和固定控制表是公开静态数据。动作期限计所有 Advance、Read 和末尾一次 Stop；初态的安装不另计动作。
+
+**约定 32.2（可达计数与原结果的适用范围）。** 令 $Q_{\mathrm{act}}$ 为全部允许原来源的实际成功执行中访问到的控制状态，包含初态和 Halt 状态；令
+
+$$
+K=|Q_{\mathrm{act}}|,\qquad U=|Q\setminus Q_{\mathrm{act}}|,
+\qquad K_{\mathrm{nom}}=|Q|=K+U.
+$$
+
+下文精确普查的 $K$ 计完整可达控制状态，不是标签字母表。竞争域保留所有有限 $Q$，包括 $U>0$ 的表；其名义状态数另加 $U$。可以删去不可达状态，把允许执行中不出现的响应转移补到一个保留状态，得到名义状态数恰为 $K$ 的控制器。这个删减不删任何实际程序、等待或输出位置。因此按名义完整状态数取最小值，与按完整可达状态数取最小值相同。表上的不可能响应仍可形成循环；它们不作为额外的实际执行。
+
+本节复用以下固定来源正文及对应 Blueprint，地址均取同一个 [公开修订](https://github.com/the-omega-institute/trureturing/tree/33737f6da740e282bb67a6d17b4359513cb86abf)：
+
+| 32 节供应接口 | 原声明与实际用途 |
+| --- | --- |
+| 32·AcquisitionTrace（[源码](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/D5/S3/ConceptDynamics/Coding/ActualDyadicAcquisitionTrace.lean)，[Blueprint](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/Blueprint/D5/S3/ConceptDynamics/Coding/ActualDyadicAcquisitionTrace.md)） | 原 `Record`、`Action`、`Execution`、`rawSensor`；`actual_continuation_capacity_and_saturation`、`actual_next_read_decomposition`、`actual_dyadic_interval_trace` 给出实际容量、共同下一查询及强制中点迹，`actual_pair_common_final_query` 保留兄弟来源的共同末查询。 |
+| 32·RepairCapacity（[源码](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/D5/S3/ConceptDynamics/Coding/ActualDyadicCausalPrefixRepairCapacity.lean)，[Blueprint](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/Blueprint/D5/S3/ConceptDynamics/Coding/ActualDyadicCausalPrefixRepairCapacity.md)） | `ReachedRecord`、`acquiredPrefix` 和 `actual_acquired_prefix_and_final_query` 给出真实预末历史、取得的 $\lfloor r/2\rfloor$ 及原始末比特。`OperationalRepairFeasible` 与 `actual_causal_closed_error_recovery` 计给定接口下的补充标签；闭相位球交叠复用 `ClosedPhaseBallOverlap`，不改变该标签定理的公开陈述。 |
+| 32·DeadlineSupport（[源码](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/D5/S3/Observer/Budget/ActualDyadicDeadlineSupport.lean)，[Blueprint](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/Blueprint/D5/S3/Observer/Budget/ActualDyadicDeadlineSupport.md)） | `DeadlineObservation`、`actualDeadlineFamily` 的 $D$ 只约束字面末查询的累计 Advance 数，允许报告晚于查询。`actual_final_time_normal_form`、`actual_deadline_time_support`、`actual_raw_clock_quotient` 保留 $E(t)+P\tau$ 及实际商奇偶；支持跨全部合格策略取并集。 |
+| 32·DeadlineLabelSupport（[源码](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/D5/S3/Observer/Budget/ActualDyadicDeadlineLabelSupport.lean)，[Blueprint](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/Blueprint/D5/S3/Observer/Budget/ActualDyadicDeadlineLabelSupport.md)） | `CommonRepairFeasible` 的 writer 接收策略与实际预末记录；一个不见策略、时钟和旧读数的 receiver 对全部策略及闭误差共用。`actualLabelSupport`、`actual_all_history_coloring_iff` 处理全部实现历史上的标签支持，不是物理控制状态；其带误差相位输入没有加入本节的 Read 响应。 |
+| 32·DeadlineRepairMinimum（[源码](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/D5/S3/Observer/Budget/ActualDyadicDeadlineRepairMinimum.lean)，[Blueprint](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/Blueprint/D5/S3/Observer/Budget/ActualDyadicDeadlineRepairMinimum.md)） | `supportedTypeRankEquiv` 保留实际商奇偶；`original_operational_minimum` 在其 $j\ge2$、误差壳与分解假设下给共同 decoder 的最小标签容量，不给完整 $c,u,v$ 的状态数，也不覆盖这些附加假设之外的参数。 |
+
+有限控制器到原记录策略的对应只用于证明复用。对一个实际取得的记录 $\langle N,\mathrm{past}\rangle$，从固定 $q_*$ 重放各读数时间之前的单位 Ack、相应原始比特及最后的剩余单位 Ack，可唯一重建控制状态。指令选择取其 $u$；不一致记录任意补全。归纳证明每条实际控制执行给出原 `Execution`，Read 不改变装置，Advance 恰增加一个事件，Stop 输出同一个 $r$。控制器实际仍只使用 $q$ 和一次响应；这个证明用的记录重放不增设免费档案或时钟。
+
+**引理 32.3（饱和实际历史的完整二叉树）。** 任意定义 32.1 的成功控制器，每个来源恰作 $m$ 次 Read。作过 $j$ 次 Read 的任一共同实际前缀，其来源候选恰为一个长度 $L=P/2^j$ 的二进区间
+
+$$
+I_v=[a_v,a_v+L)\cap\mathbb N,
+\qquad a_v=iL,\quad 0\le i<2^j.
+$$
+
+在 $0\le j\le d$ 时，所有该区间来源共有一个有限 Advance 段及下一次 Read。写下一查询为 $N_v$、中点为 $M_v=a_v+L/2$，则
+
+$$
+N_v\bmod P=P-M_v,\qquad
+Y_b(r,N_v)=\bigl(b+\lfloor N_v/P\rfloor+e_v(r)\bigr)\bmod2,
+\qquad e_v(r)=\mathbf1_{\{r\ge M_v\}}.
+$$
+
+两响应把区间等分，分别进入两个子区间。对同一个前缀之后的任何等待位置，余下 $\ell=m-j$ 次实际原始 Read 词恰遍历 $\{0,1\}^{\ell}$，每个词由唯一原来源实现。因而共有 $P-1$ 个下一查询前缀；这些前缀是由实际执行导出的，不是控制器预设结构。
+
+证明。用约定 32.2 的重放对应，直接应用原容量饱和定理和强制中点迹定理于初始区间 $[0,P)$。初始候选数 $P=2^m$ 达到容量，故每个来源恰有 $m$ 读。对每个中点原始响应，补上实际时间和该响应的共同记录；原共同下一读取与区间迹定理给出相应半区间及其共同有限查询。逐次应用到长度二的区间，得到所有深度的实际区间树。公开 $b$ 和该共同时间的商只翻转两响应的命名，不改变区间两半；两半均非空。每个二进区间因此有唯一共同原始前缀及查询时间。
+
+在作过 $j$ 读的一个等待位置，候选数为 $2^{m-j}$，没有来源在无信息的 Ack 上被排除。每个来源余下恰有 $\ell=m-j$ 读。若两个来源有相同的剩余原始词，从该共同控制位置起逐指令重放，它们的单位应答、Read 响应和最终输出全相同，与恢复两个不同原来源矛盾。故来源到剩余词是单射；两边基数同为 $2^\ell$，所以它是双射。这也包含 $j=m$ 的单来源、空词情形。全词实现来自实际来源，未把零填充当作额外取得。∎
+
+**引理 32.4（任意竞争控制器的状态不能合并这些实际位置）。** 对引理 32.3 导出的每个前缀，将到下一 Read 的全部 Advance 位置及该 Read 位置列出；末读之后，对每个原 $r$ 列出其全部 Advance 位置与最后 Halt 位置。不同前缀的这些位置不能共享控制状态，任何一个列表内部也不能重复控制状态。
+
+证明。给一个位置附上其原候选集 $I$ 和余下读数 $\ell$；末读后用 $I=\{r\}$、$\ell=0$。引理 32.3 保证每个长度 $\ell$ 的原始词均有实际实现。固定该位置的控制状态 $q$，对每个这样的词，后续指令由 $u,v$、固定 Ack 和依次给出的原始比特唯一决定，有限终止并输出一个原来源。因此它定义一个由 $q$ 决定的映射
+
+$$
+F_q:\{0,1\}^{\ell}\longrightarrow I,
+$$
+
+其像恰为 $I$。这里 $F_q$ 是实际执行的数学描述，不是增添一个物理 decoder。
+
+假设两个位置共享 $q$，余下读数为 $\ell<\ell'$。取前一位置的任一实际词 $w$，再取后一位置实际实现 $w$ 的任意长度 $\ell'$ 扩充词。两执行从相同 $q$ 收到同一个 $w$ 后，连同之间及其后的固定 Ack，必须到达相同 Halt。后一执行于是只作 $\ell$ 读，与其恰作 $\ell'$ 读矛盾。交换两位置可排除另一大小方向，包括 $\ell=0$。
+
+若 $\ell=\ell'$，对每个完整词逐步重放给出同一个 $F_q$，故两个候选集必须相同。不同深度已经被余读数排除；同深度的不同二进区间不交，末读后的不同单来源也不相同。所以共享状态只能发生在同一个前缀列表内，或同一个原来源的末读后列表内。
+
+一个列表的 Read 或 Halt 状态不能等于其 Advance 状态，因为 $u$ 的指令不同。若列表内两个 Advance 位置相同，从第一次出现起，固定 Ack 使其中间的有限 Advance 段无限重复；$u$ 从此永不到达下一 Read 或 Halt。这与该来源有限成功矛盾。因此所有所列位置互异。论证没有假定全控制图无环：它排除的是在成功实际路径上的合并；不可能响应上的循环依然允许。∎
+
+**定义 32.5（每个实际前缀的整周期等待参数）。** 将引理 32.3 的查询节点记为 $v=(j,i)$，$0\le j\le d$、$0\le i<2^j$。根节点记为 $\varnothing=(0,0)$，根等待从初始事件零开始；非根节点的等待从父节点 Read 完成后开始。定义最小非负合法间隔
+
+$$
+\delta_{\varnothing}=P/2,\qquad
+\delta_{(j,i)}=
+\begin{cases}
+P/2^{j+1},&i\text{ 偶},\\
+P-P/2^{j+1},&i\text{ 奇},
+\end{cases}
+\quad(1\le j\le d).
+$$
+
+每个节点的实际 Advance 数写作 $w_v$；每个来源末读后的实际 Advance 数写作 $h_r$。Stop 之前没有其他允许指令或免费转换。
+
+**定理 32.6（全竞争域的等待文法与精确状态普查）。** 对任意成功控制器，存在唯一自然数 $t_v\ge0$，使
+
+$$
+w_v=\delta_v+Pt_v.
+$$
+
+其完整可达状态数及名义状态数恰为
+
+$$
+\boxed{
+K=\frac{P^2+3P-2}{2}+P\sum_v t_v+\sum_{r=0}^{P-1}h_r,
+\qquad K_{\mathrm{nom}}=K+U.
+}
+$$
+
+求和遍历全部 $P-1$ 个实际查询节点。竞争域中的任意延迟、整周期及重复状态使用均受前两引理审查，不以最早查询或无环程序为假设。
+
+证明。根中点为 $P/2$，故首查询的事件数满足 $w_{\varnothing}\equiv P/2\pmod P$，且 $w_{\varnothing}\ge0$，唯一写成 $P/2+Pt_{\varnothing}$。对非根节点，设其区间长度为 $L=P/2^j$。父中点与下半子中点相差 $-L/2$，故下半子查询相对父查询的事件增量模 $P$ 为 $L/2$；上半子中点相差 $L/2$，故增量模 $P$ 为 $P-L/2$。这两个代表均在 $\{1,\ldots,P-1\}$ 内。查询顺序只许前进，唯一写成相应的 $\delta_v+Pt_v$。末读后读取预算已饱和，后续只可能为有限的 $\operatorname{Advance}^{h_r}\operatorname{Halt}(r)$。
+
+引理 32.4 证明所有这些列表不交且列表内没有重复。每个查询段有恰好 $w_v$ 个 Advance 状态及一个 Read 状态，每个末读后段有 $h_r$ 个 Advance 状态及一个 Halt 状态。全部实际执行只由这些段组成，所以这不是仅对一部分状态的下界，而是全部可达状态的精确计数：
+
+$$
+K=\sum_v(w_v+1)+\sum_r(h_r+1)
+=\sum_v\delta_v+(P-1)+P+P\sum_vt_v+\sum_rh_r.
+$$
+
+每个深度 $j\ge1$ 有 $2^{j-1}$ 对兄弟节点，每对的最小等待和为 $P$。因此
+
+$$
+\sum_v\delta_v
+=\frac P2+P\sum_{j=1}^d2^{j-1}
+=\frac P2+P(2^d-1)
+=\frac{P(P-1)}2.
+$$
+
+当 $d=0$，中间求和为空，同式仍成立。代入即得普查式，名义总数再加 $U$。∎
+
+**定理 32.7（任意合法等待数组的完整有限实现）。** 对任意固定的自然数数组 $(t_v)_v$、$(h_r)_r$，有定义 32.1 的成功控制器，实现定理 32.6 的全部等待，所有声明状态均实际可达。它的状态数恰为该普查式。
+
+证明。令 $w_v=\delta_v+Pt_v$；递归定义查询事件数
+
+$$
+N_{\varnothing}=w_{\varnothing},\qquad
+N_v=N_{\operatorname{parent}(v)}+w_v\quad(v\ne\varnothing),\qquad
+\nu_v=(b+\lfloor N_v/P\rfloor)\bmod2.
+$$
+
+这是在安装固定控制表时计算的公开常量，不是运行时取得的时钟。取不交控制状态
+
+$$
+Q=\{q_{v,s}:0\le s\le w_v\}
+\sqcup\{a_{r,s}:1\le s\le h_r\}
+\sqcup\{H_r:0\le r<P\}.
+$$
+
+初态为 $q_{\varnothing,w_{\varnothing}}$，已经计在根的 Advance 段内，不另加一个免费或重复初态。定义
+
+$$
+\begin{aligned}
+u(q_{v,s})&=\operatorname{Advance},&
+v(q_{v,s},\operatorname{Ack})&=q_{v,s-1}&& (s>0),\\
+u(q_{v,0})&=\operatorname{Read},&&&\\
+u(a_{r,s})&=\operatorname{Advance},&
+v(a_{r,s},\operatorname{Ack})&=
+\begin{cases}a_{r,s-1},&s>1,\\H_r,&s=1,\end{cases}&&\!\\
+u(H_r)&=\operatorname{Halt}(r).&&&
+\end{aligned}
+$$
+
+在 $q_{v,0}$ 取得实际原始比特 $y$ 后，控制表以 $e=(y+\nu_v)\bmod2$ 选择分支。若 $j<d$，进入子节点 $ve$ 的 $q_{ve,w_{ve}}$；若 $j=d$，令 $r=a_v+e$，进入 $a_{r,h_r}$（$h_r>0$）或 $H_r$（$h_r=0$）。这里 $s,\nu_v,a_v$ 均由已计的状态及其固定表行决定；响应更新无需另一个运行时计数器、旧读数或解码工作区。对类型不相容或实际不出现的响应，$v$ 任意补全到已有状态。
+
+由等待定义，$N_v\bmod P=P-M_v$。对任意当前候选 $r\in I_v$，原传感器等式给出 $e=e_v(r)$，于是所走分支正是包含该同一原 $r$ 的子区间。归纳到长度二后，$a_v+e$ 恰为原 $r$，随后只作规定的 $h_r$ 次单位前进并停止。每个来源恰作 $m$ 读，有限终止。
+
+为明确装置与原目标配对，令 $X_r(n)=(bP+r+n)\bmod(2P)$。上述控制状态的精确可达支持为
+
+$$
+\begin{aligned}
+C_{q_{v,s}}&=\{(r,X_r(N_v-s)):r\in I_v\},\\
+C_{a_{r,s}}&=\{(r,X_r(N_{v(r)}+h_r-s))\},\\
+C_{H_r}&=\{(r,X_r(N_{v(r)}+h_r))\},
+\end{aligned}
+$$
+
+其中 $v(r)$ 是含 $r$ 的最后查询区间。Advance 把支持的第二坐标推进一次，Read 保持第二坐标并按实际响应分支，第一坐标始终保留原 $r$。在每个支持对上，取到达相应 $H_r$ 尚需的 Advance 与 Read 总数为自然秩；每个非停止动作使其减一，Halt 处为零。这给出本卷定理 27.2 的支持封闭、输出正确和有限下降证书；末尾 Stop 另计一次动作。
+
+每个 $I_v$ 非空且两子区间非空，故每个节点及其整个等待段由实际来源实现；每个 $r$ 实现自己的末读后段和 $H_r$。所有状态均可达，计数为 $\sum_v(w_v+1)+\sum_r(h_r+1)$，即所述公式。∎
+
+**推论 32.8（全部合格控制器的完整记忆最小值）。** 对所有定义 32.1 的有限正确控制器按完整名义状态数取最小值，得到
+
+$$
+\boxed{K_{\min}(d)=\frac{P^2+3P-2}{2},\qquad P=2^{d+1}.}
+$$
+
+证明。定理 32.6 对所有竞争控制器给出下界，不要求它们采用构造的状态名。定理 32.7 取所有 $t_v=h_r=0$、$U=0$ 达到下界。完整名义最小值中这三个非负余项必须全为零。三类状态分别为 $P(P-1)/2$ 个单位 Advance 位置、$P-1$ 个 Read 位置和 $P$ 个不同字面 Halt；任何补充标签容量都没有替代这些位置。∎
+
+**定理 32.9（全部等待的原始商与逐来源动作精确律）。** 对任意成功控制器，写 $t=\lfloor r/2\rfloor$，以 $\operatorname{wt}(t)$ 表示 $t$ 的二进一位数；令 $\mathcal P(t)$ 为到达包含 $2t,2t+1$ 的最后查询区间的节点路径，包含根和末节点。令
+
+$$
+E(t)=P-1-2t+P\operatorname{wt}(t),\qquad
+\tau(t)=\sum_{v\in\mathcal P(t)}t_v.
+$$
+
+两兄弟来源的共同字面末查询为 $N(t)=E(t)+P\tau(t)$，实际末原始比特及总动作数分别为
+
+$$
+\boxed{
+\begin{aligned}
+Y_b(r,N(t))&=\bigl(b+\operatorname{wt}(t)+\tau(t)+(r\bmod2)\bigr)\bmod2,\\
+A(r)&=E(t)+P\tau(t)+h_r+d+2.
+\end{aligned}
+}
+$$
+
+所以完整最坏动作期限为
+
+$$
+\boxed{D_{\mathrm{act}}=
+\max_{0\le r<P}\bigl(E(\lfloor r/2\rfloor)+P\tau(\lfloor r/2\rfloor)+h_r+d+2\bigr).}
+$$
+
+证明。令 $e_1,\ldots,e_d$ 为 $t$ 的高到低二进位；$d=0$ 时没有这些位。从根到末节点的最小等待和为
+
+$$
+\begin{aligned}
+\frac P2+\sum_{j=1}^d
+\left(\frac P{2^{j+1}}+e_j\left(P-\frac P{2^j}\right)\right)
+&=P-1+P\sum_{j=1}^de_j-\sum_{j=1}^de_j\frac P{2^j}\\
+&=P-1+P\operatorname{wt}(t)-2t.
+\end{aligned}
+$$
+
+每条节点等待额外加入 $Pt_v$，故末查询为 $E(t)+P\tau(t)$。$0\le P-1-2t<P$，所以其商为 $\operatorname{wt}(t)+\tau(t)$，余数为 $P-1-2t$。这正是原 `actual_final_time_normal_form` 和 `actual_raw_clock_quotient` 的逐节点细化；原 `acquiredPrefix` 仍在实际预末历史上得到 $t$。代入原传感器等式得到所述原始末比特。末查询后另有 $h_r$ 次 Advance，总 Read 数为 $d+1$，最后 Stop 为一次，因此 $A(r)=N(t)+h_r+(d+1)+1$。取有限最大值得到期限式。∎
+
+此处 $P$ 是来源分割的相位周期，而字面传感器的周期是 $2P$：
+
+$$
+Y_b(r,N+P)=1-Y_b(r,N),\qquad Y_b(r,N+2P)=Y_b(r,N).
+$$
+
+增加一个 $P$ 保留中点分割，但交换字面响应。固定单个控制器可把真实 $\nu_v$ 编入其表行；跨全部策略共用且看不到时钟的标签 receiver 必须遵守原 `actualParitySupport` 和 `actualLabelSupport` 的联合支持，不能把延迟奇偶 $\tau\bmod2$ 当作真实商奇偶。原截止参数 $D$ 约束的是 $N$；本节 $D_{\mathrm{act}}$ 还计 Read、报告前进和 Stop，两者不等同。
+
+**推论 32.10（与最小记忆同时达到的最坏原子动作期限）。** 全部合格控制器的最小最坏动作数为
+
+$$
+\boxed{D_{\min}(d)=dP+d+3.}
+$$
+
+推论 32.8 的最小记忆构造同时达到它；没有为了实现这个期限而增加免费状态或合并单位动作。
+
+证明。对任意 $t<2^d$，$E(t)$ 由非负最小等待和给出。在等待式中，每个上半选择的等待 $P-P/2^{j+1}$ 至少等于下半选择的 $P/2^{j+1}$。选择全部上半位，即 $t=2^d-1$，给出
+
+$$
+\max_t E(t)=\frac P2+\sum_{j=1}^d\left(P-\frac P{2^{j+1}}\right)=dP+1.
+$$
+
+当 $d=0$，这个最大值为 $P/2=1$。所有竞争控制器的 $\tau,h_r$ 非负，来源 $r=P-2,P-1$ 的执行因此至少需要 $dP+1$ 次 Advance、$d+1$ 次 Read 和一次 Stop，共 $dP+d+3$。所有等待余项为零的构造恰达到它，且状态数为 $K_{\min}$。∎
+
+最小期限不强制每条非最坏路径都作最少等待。例如 $d=2,P=8$，只在最后查询区间 $[0,2)$ 的节点取 $t_v=1$，其余 $t_v=h_r=0$。这两个来源的末查询由 $7$ 延到 $15$；全部上半来源的末查询仍为 $17$。因此 $K=43+8=51$，但最坏动作数仍为 $21=D_{\min}$。它是全来源正确的非最早竞争控制器，明确由定理 32.7 实现；期限最优与完整记忆最优不是同一个条件。
+
+**推论 32.11（仅作为独立定长名字的二进与 FIB 宽度）。** 若全部控制状态只需注入命名为一个可任意指定的独立定长二进寄存器，则最小状态控制器的最短名字长度为
+
+$$
+B_{\min}=\lceil\log_2K_{\min}\rceil=2d+2.
+$$
+
+若改用外接缝固定为零、长度 $\ell$ 的禁 $11$ FIB 名字，则其最短长度为
+
+$$
+\ell_{\min}=\min\{\ell\ge0:F_{\ell+2}\ge K_{\min}\},
+\qquad F_0=0,\ F_1=1.
+$$
+
+证明。由 $P\ge2$，
+
+$$
+2^{2d+1}=P^2/2<K_{\min}\le P^2=2^{2d+2};
+$$
+
+右侧不等式等价于 $(P-1)(P-2)\ge0$，所以二进最短长度恰为 $2d+2$。FIB 的计数直接复用[原卷定理 2.5](FIB_RELATIONAL_FIBER_CALCULUS.md)与本卷定理 28.2 的独立定长命名合同：合法长度 $\ell$ 名字数为 $F_{\ell+2}$。小于 $K_{\min}$ 时不能注入，达到时取任意 $K_{\min}$ 个合法名字即可。∎
+
+若名义控制器含额外等待或不可达状态，名字容量须按相应 $K_{\mathrm{nom}}$ 计算。上述注入不实现控制表、逐位更新、响应缓冲、译码或输出硬件；它也不把装置隐藏状态当作控制器可读寄存器。静态转移表长度、运行工作区、顺序实现阶段与物理存储、延迟、通信及能耗各需单独合同和计量。
+
+**例 32.12（小参数完整账目与实际原始位反例）。** 最小等待构造的几组精确值为：
+
+| 32 节参数 | $P$ | Advance 状态 | Read 状态 | Halt 状态 | $K_{\min}$ | $D_{\min}$（含 Stop） | 二进宽度 | FIB 宽度 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 32·$d=0$ | 2 | 1 | 1 | 2 | 4 | 3 | 2 | 3 |
+| 32·$d=1$ | 4 | 6 | 3 | 4 | 13 | 8 | 4 | 5 |
+| 32·$d=2$ | 8 | 28 | 7 | 8 | 43 | 21 | 6 | 8 |
+| 32·$d=3$ | 16 | 120 | 15 | 16 | 151 | 54 | 8 | 11 |
+| 32·$d=4$ | 32 | 496 | 31 | 32 | 559 | 135 | 10 | 13 |
+
+特别地，$d=0$ 时预末前缀只有 $t=0$ 一个标签，却需要一个单位 Advance 状态、一个 Read 状态和两个不同字面 Halt，完整最小值为四。若首查询多等 $t_{\varnothing}$ 个 $P=2$ 周期，恰需 $4+2t_{\varnothing}+h_0+h_1$ 个可达控制状态；固定 Ack 不能用一个循环状态计到某个有限退出时刻。
+
+再取 $d=1,P=4,b=0$，实际兄弟来源 $r=0,1$ 的最早末查询为 $N=3$，原始位依次为 $0,1$。在它们共有的最后查询段增加一个整周期，则 $N=7$，原始位变为 $1,0$，而相位余数仍为三。用旧商零解释新的原始位会分别误报 $1,0$；用真实商一才能恢复原 $0,1$。这是真实来源与真实单位等待的反例，不是任意拼造的观察对。它由定理 32.7 的表行奇偶校正解决，并在完整 $K$ 中支付四个额外等待状态。
+
+**约定 32.13（来源、文献与证明边界）。** 本节是 `repo-derived` 的普通数学推导。原取得供应结果已给强制中点实际历史、全来源读数饱和、取得的预末前缀及实际整周期商；新增桥梁是引理 32.4 的全剩余原始词重放对状态共享的排除，以及随之而来的完整状态普查和有限控制表实现。定理 32.6 的下界覆盖定义 32.1 的全部竞争控制器；定理 32.7 提供实际来源、隐藏装置和原目标的逐状态对应，不把构造计数单独称作最小值。
+
+有限状态输入、输出与终止的背景见 J. J. M. Rutten，*Universal coalgebra: a theory of systems*，CWI CS-R9652，1996，[原报告](https://ir.cwi.nl/pub/4802/4802D.pdf)，第 3 节的系统与 transducer 表示。输出反馈与实现关系的背景见 Majumdar、Ozay、Schmuck，*On Abstraction-Based Controller Design With Output Feedback*，[arXiv:2002.02687v1](https://arxiv.org/abs/2002.02687v1)，及 Reissig、Weber、Rungger，*Feedback Refinement Relations for the Synthesis of Symbolic Controllers*，[arXiv:1503.03715v3](https://arxiv.org/abs/1503.03715v3)。这些背景是 `literature-attested`，不承担本来源的 $K_{\min}$ 或含 Stop 的期限公式。本节不提出文献原创主张。
+
+以上只证明所列原子 $c,u,v$、全原来源和精确原始读取合同下的纸面结论。它不覆盖带来源相关应答、免费时钟、额外档案、额外读取或改变输出目标的合同，不证明全局物理可实现性，也不声称新增结论已有 Lean kernel 核验。有限例算或有限控制表枚举仅可检验其相应有限参数，不能替代这里对全部 $d$ 和全部竞争控制器的普通证明。
+
+## 32.99 追加锚（本行以下为增补区）
