@@ -24,9 +24,12 @@ internal sealed partial class ProductionCliEnvironment
                     ? "check-delta requires --protected-base and --candidate-lean-report"
                     : "check-current requires --candidate-lean-report and accepts no base");
 
-            var raw = timing.Measure("repository-read", () => repository.ReadCurrent());
+            var raw = timing.Measure("repository-read", () => AdmissionRepositoryInputs.ReadCurrent(repository));
             var prepared = delta ? timing.Measure("repository-prepare", () => repository.Prepare(options.ProtectedBase)) : null;
-            var baselineRaw = prepared is null ? null : timing.Measure("repository-read-base", () => repository.ReadRevision(prepared.Revision));
+            var baselineRaw = prepared is null ? null : timing.Measure("repository-read-base",
+                () => AdmissionRepositoryInputs.ReadBaseline(repository, prepared.Revision));
+            if (prepared is not null)
+                raw = AdmissionRepositoryInputs.ReadDeltaInputs(repository, raw, baselineRaw!, prepared.Changes);
             var observedPlane = ImmutableArray<Diagnostic>.Empty;
             var planeFailure = prepared is null ? null
                 : timing.Measure("admission-plane", () => EvaluateAdmissionPlane(raw, baselineRaw!, prepared.Changes, out observedPlane));
@@ -75,9 +78,10 @@ internal sealed partial class ProductionCliEnvironment
             }
             return RenderStage(result, planeObservations);
         }
-        catch (ScribeSdkAdmissionException exception)
+        catch (ScribeVerificationException exception)
         {
-            return new(exception.ExitCode, RenderPlaneObservations(planeObservations), exception.Message + "\n");
+            return new(exception.ExitCode, RenderPlaneObservations(planeObservations),
+                (exception.ExitCode == 2 ? "INFRASTRUCTURE_FAILURE " : "") + exception.Message + "\n");
         }
         catch (Exception exception)
         {

@@ -13,7 +13,7 @@
 | 生成 Lean 报告 / 发射 Scribe | `make lean-report` / `make emit` |
 | 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
 | 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
-| 查看开放 atom 的就绪情况 | `make digestion-readiness` |
+| 搜索指定理论的 atom | `make search-atoms SOURCE=<源ID或理论路径> [TEXT=<关键词>] [STATE=<目录状态>] [LIMIT=<上限>]` |
 | 构建、冻结并覆盖锚点 atom | `make deposit ATOM_ID=<id> GID=<gid>` |
 | 构建并冻结无 atom 的形式化 | `make deposit-uncovered GID=<gid>` |
 | 用既有冻结声明覆盖 atom | `make cover ATOM_ID=<id> GID=<gid>`；批量用 `make cover-batch ATOMS=<TSV文件>` |
@@ -61,7 +61,7 @@ docs/theory(参考输入)──(可选)摄入机器──► Lean(唯一真源)�
   只进不承重,定位在消化账本       kernel 只看代码          治理/验证/发射/守门,自身零内容
 ```
 
-- **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门、SL-016 等 fail-closed 消费者读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
+- **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门与目标处理命令读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
 - **C# harness**:程序集只许程序(类型/逻辑/loader/writer);声明性实例住程序目录外(TOML/scribe.cs/Evidence/D5)或测试 fixture(第 4.2 条)。
 - **docs/theory**:理论卷是参考输入；需要进入消化账本时，经 atomizer+消化账本摄入，Lean/C# 对其零知识零定位(TheoryIsolation)。新增理论 PR 可以只提交正文，不以 `make ingest`、atom CAS 或 backfill 作为合并前置；形式化交付也不以理论卷或摄入为前置(第 1.2 条「形式化直接写 Lean 与 Scribe」)；卷与 atoms 不删属建设者纪律。已形式化者不重复形式化,勘误追加散文与新 atom。只增不减的账本是 git,机器只保证数据当下正确,改删历史由 git 查证,无历史单调判官。实现层无既有 CAS blob 删除面;失败回滚只删本次新建且尚未入账的 blob。
 
@@ -89,7 +89,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 2.1 账必须平
 
 **账,必须平(诚实 > 速度)**:异常(意外数值、张力、失败尝试)须由读数检出并入账,或显式标永久案号/`ASSUMED-UNVERIFIED`/`deferred`,不得静默遗漏;“账平”即浮账集为空。产物形式服从第 2.10 条。
-*成熟锚*:复式记账(Pacioli,1494)、no-silent-failure/fail-closed。〔守护:**硬**·SL-019 落账、SL-016 结构化回填;散文异常靠对手官〕
+*成熟锚*:复式记账(Pacioli,1494)、no-silent-failure/fail-closed。〔守护:**硬+软边界**·SL-019 检查非消化结构化输入；消化账目由目标命令按需读取与处理，辅助一致性偏差遵守第 1.2 条；散文异常靠对手官。〕
 
 ### 2.2 机器判对错与不可判 open
 
@@ -177,31 +177,32 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 3.1 先库后证与宿主搜索能力
 
 **先库后证**:任何 Lean 形式化前默认可出网查第三方库(loogle/leansearch/Reservoir/GitHub/arXiv 等非封闭示例),判卷门永远离线(第 3.7 条、spec A12/A17)。本款仅管本仓派出的形式化 worker;codex-cli worker 搜索是宿主默认能力,仓库无法强制,禁止改宿主 `~/.codex` 全局配置。
-检索唯一顺序:本仓 D5 声明 → 钉版 mathlib → spec A17 可准入第三方 Lean 生态 → 本地证明 → 仍无则 `AxiomDebt`/`open`+upstream issue。精确命中必须 import+直接应用,只在真实 content 证明内适配参数与规范化,不重证或新增 bind-only 包装/伴随定理/模块(第 3.2 条);上游已证者是唯一真源。brief/PR 保留最小检索结论:查何名、何处、命中与否,不存过程(第 2.10 条)。
+检索唯一顺序:本仓 D5 声明 → 钉版 mathlib → spec A17 可准入第三方 Lean 生态 → 本地证明 → 仍无则 `AxiomDebt`/`open`+upstream issue。精确命中必须 import+直接应用,只在真实 content 证明内适配参数与规范化,不重证,也不新增无消费者的 bind-only 包装/伴随定理/模块(第 3.2 条);上游已证者是唯一真源。brief/PR 保留最小检索结论:查何名、何处、命中与否,不存过程(第 2.10 条)。
 检索须覆盖已有的私有定义、引理与定理;仓内命中因 `private` 无法跨模块复用时,按第 4.3 条公开原声明并直接引用,不得视为缺失而重证。
 派发时实测搜索可用性并报结果;能力缺失记具名 `open(wait-for-capability)`,不得报 search-complete。恢复后完成第三方检索,该检索与本地证明均失败才记 `AxiomDebt`/`open`。
 
 ### 3.2 bind-only 禁令、逃逸见证与 atom 终结
 
-**严格禁止新增或交付 bind-only 数学声明；全部为 bind-only 的 atom 复用既有结果，不再作为新形式化靶，零新增 Lean。消化结算按第 1.2 条从简，不以账目终态作为转向实质形式化的前提。** 本禁令逐声明适用,公开定理、私有包装、别名、伴随定理与独立模块均无例外;同模块另有 content、真实消费者、API 便利、覆盖需求、任务终点或反驳用途均不能豁免;唯一例外是下文「开放问题结算依据」所允许的外部开放问题结算结论。现有定理的直接应用是 content 证明内部的正常步骤,不得将这一步另立为新的绑定声明或形式化成果。
+**严格禁止新增或交付 bind-only 数学声明；全部为 bind-only 的 atom 复用既有结果，不再作为新形式化靶，零新增 Lean。消化结算按第 1.2 条从简，不以账目终态作为转向实质形式化的前提。** 本禁令逐声明适用,公开定理、私有包装、别名、伴随定理与独立模块均无例外;同模块另有 content、API 便利、覆盖需求、任务终点或反驳用途均不能豁免;例外只有两项:下款「有消费的辅助声明」,以及下文「开放问题结算依据」所允许的外部开放问题结算结论。现有定理的直接应用是 content 证明内部的正常步骤,可以写在证明内部,也可以按下款写成有消费的辅助声明,但不得另立为无消费者的绑定声明或冒称形式化成果。
+**有消费的辅助声明(τ=0 owner 2026-10-05 裁决,原话「没必要为了解决bind-only 降低性能, 只要有消费也没问题」)**:一条 bind-only 声明(公开或私有)若有真实消费者——同一交付或既有树上另一声明在其活推导路径上实际使用它,判断标准同「逃逸见证」第 (iv) 项——即可新增并随宿主模块冻结,不必为规避本禁令而内联、合并声明或牺牲构建性能。它只是证明的组织方式:不构成新增数学内容,不为宿主模块提供逃逸见证或准入依据,宿主模块仍须由其他声明取得 `escape-witness` 或 `open-problem-resolution`;报告逐声明照实写 `proof_shape: bind-only` 并点名消费者。只为 import、覆盖、登记、API 便利或未来消费者而存在的 bind-only 声明不算有消费,仍按本条禁止。
 本条分开判定**判形**(`proof_shape`)与**准入依据**(`admission_basis`);消化终结处理已有内容,不取得新增数学内容的名义。
 **判形**:将待交付定理的局部别名、同次新增的公开或私有 helper、tactic 展开与定义性等式全部内联,依赖展开止于既有冻结前置与钉版上游声明。若结论仅由这些前置的实例化、前提代入、逻辑投影或重组(`.1`/`.2`/`.mp`/`.mpr`、合取、TFAE 打包)、以及规范化改写得到,即为 **bind-only**;否则为 **content**。规范化包括定义展开、只用既有冻结或 Mathlib 改写引理的 `simp`,以及在给定假设和上述步骤已提供全部原子事实后进行的求和分配、代数展开及 `ring`/`linarith`/`omega`/`norm_num`/`decide` 化简。仅把移心恒等式命名为见证、改换指标类型或加入权重,不构成规范化之外的新内容。判定程序若建立前置未提供、也不能由上述规范化得到的新命题,该命题才是候选见证;使用某个 tactic 本身不决定判形。最薄上游包装、手工重证已有上游结论及从既有存在定理取见证后作绑定,同样判为 bind-only。
 **逃逸见证(escape witness)**:一个新中间命题须同时满足(i)其声明位于该定理已 elaborate 的传递常量依赖闭包内;(ii)不能由既有冻结或钉版上游前置经实例化、投影或规范化直接得到;(iii)与结论非定义等价、非别名或重述;(iv)位于结论的活推导路径上——对证明项作 ζ/β/ι 归约、删去死项与被投影丢弃的分量后仍被使用。若不用它、仅靠 bind-only 操作也能得到结论,它就不是见证;把无关新命题塞进依赖闭包不得改变判形。
 **见证的两种合法形态**:(1)满足上述四项的独立中间命题;(2)公开结论本身——由非 bind-only 的计算、构造或估计链在活证明路径上直接产出,且无法仅靠既有前置的绑定与规范化得到。不得为第二种形态人为制造中间命题。源码行数、声明数量与新增参数不作判据;冻结前置身份用直接依赖的 GID 与 `statement_id`,Mathlib 不计入冻结前置,但其直接实例化同样不能充当见证。
 **作用域**:新增声明与 bind-only 包装禁令覆盖新增或修改的未冻结 D5 内容,以及首次 Freeze 的全部声明。既有冻结身份只取受保护 immutable baseline 上的 `Golden/Frozen/state/<module>.lean.json`;candidate 新增首个状态片即首次 Freeze,不得用本次写出的 pin 冒充既有冻结前置或取得豁免。不得通过私有化、拆文件、换名、伴随声明或选择不同 deposit anchor 绕过。既有冻结节点仍按第 1.3 条保留,不得追溯撤销真值。
-**准入依据之一(escape-witness)**:`admission_basis: escape-witness` 要求模块存在真实逃逸内容,且每条新增定理逐项通过上述判形与活路径审查;任一新增定理为 bind-only 即拒绝该交付,不得以同模块其他 content 掩护。全部为 bind-only 的候选须报 `admission_basis: none`,不得新增 Lean 声明、首次冻结、deposit,也不得另派实施席重做。探针只用于核实判形，一经确认 bind-only 即停止重复数学实施，简记复用依据并按第 1.2 条处理消化；外部具名开放问题的例外见下款「开放问题结算依据」。
-**开放问题结算依据(τ=0 owner 2026-09-15 裁决)**:`admission_basis: open-problem-resolution` 是与 `escape-witness` 并列的第二个准入依据,只适用于第 3.6 条第一、二档的**外部具名开放问题**:交付的公开结论逐字对应一条已发表、经文献核对仍无证明或反驳的具名猜想或问题(OEIS `%C`/`%F` 猜想行、论文末尾 conjecture/question、Erdős 旁问等),且该结算在探针之前已预登记(issue 载逐字出处、量词写全的陈述、档位与文献核对读数)。此时**结算本身即新增数学内容**——新颖性在于「该具名断言此前未被文献判定」,不在证明步骤——故即使证明按本条判形为 bind-only(仅由钉版 Mathlib 前置经实例化、投影与规范化得到),该公开结论仍可首次冻结。四项条件缺一即评审打回:(a) 交付面只含结算该断言所需的公开声明(定义与一条 `result`),不得夹带其它 bind-only 伴随定理或包装;(b) 逐声明如实报 `proof_shape`(bind-only 照实写,不得冒称 content),PR 正文写 `admission_basis: open-problem-resolution` 并引用预登记 issue;(c) Scribe 带 `OpenProblemResolutionClaim`(Proved / Refuted)与 Problems 卷宗,文献核对按第 3.6 条 ②;(d) 第 3.3 条用途规则照判,不因本依据豁免。仓内 atom(理论卷子句)不适用本依据:那是消化结算的对象,仍按上款直接 cover。探针对外部开放问题核实为 bind-only 后不「转消化结算」,而是如实标注后继续实施。
+**准入依据之一(escape-witness)**:`admission_basis: escape-witness` 要求模块存在真实逃逸内容,且每条新增定理逐项通过上述判形与活路径审查;任一新增定理为无消费者的 bind-only 即拒绝该交付,不得以同模块其他 content 掩护;有消费的 bind-only 辅助声明按「有消费的辅助声明」处理,但不能替模块提供逃逸内容。全部为 bind-only 的候选须报 `admission_basis: none`,不得新增 Lean 声明、首次冻结、deposit,也不得另派实施席重做。探针只用于核实判形，一经确认 bind-only 即停止重复数学实施，简记复用依据并按第 1.2 条处理消化；外部具名开放问题的例外见下款「开放问题结算依据」。
+**开放问题结算依据(τ=0 owner 2026-09-15 裁决)**:`admission_basis: open-problem-resolution` 是与 `escape-witness` 并列的第二个准入依据,只适用于第 3.6 条第一、二档的**外部具名开放问题**:交付的公开结论逐字对应一条已发表、经文献核对仍无证明或反驳的具名猜想或问题(OEIS `%C`/`%F` 猜想行、论文末尾 conjecture/question、Erdős 旁问等),且该结算在探针之前已预登记(issue 载逐字出处、量词写全的陈述、档位与文献核对读数)。此时**结算本身即新增数学内容**——新颖性在于「该具名断言此前未被文献判定」,不在证明步骤——故即使证明按本条判形为 bind-only(仅由钉版 Mathlib 前置经实例化、投影与规范化得到),该公开结论仍可首次冻结。四项条件缺一即评审打回:(a) 交付面只含结算该断言所需的声明:定义、一条 `result`,以及在其活推导路径上被使用的辅助声明(按「有消费的辅助声明」);不得夹带无消费者的 bind-only 伴随定理或包装;(b) 逐声明如实报 `proof_shape`(bind-only 照实写,不得冒称 content),PR 正文写 `admission_basis: open-problem-resolution` 并引用预登记 issue;(c) Scribe 带 `OpenProblemResolutionClaim`(Proved / Refuted)与 Problems 卷宗,文献核对按第 3.6 条 ②;(d) 第 3.3 条用途规则照判,不因本依据豁免。仓内 atom(理论卷子句)不适用本依据:那是消化结算的对象,仍按上款直接 cover。探针对外部开放问题核实为 bind-only 后不「转消化结算」,而是如实标注后继续实施。
 **全 bind-only atom 停止重复投入**：连读 atom 及上下文,逐子句核对既有前置、参数替换、假设与规范化关系;只有全部命题子句均可由既有冻结或钉版上游前置经本条允许的实例化、投影与规范化推出,且无遗漏条件或未证前提,才可判全 bind-only。确认后简记既有结果及复用依据，不得继续把该 atom 当作待形式化靶、拆成新的绑定义务、等待未来消费者或为覆盖制造新定理。能低成本完成的消化随手结算；否则简注原因并继续实质形式化，不为追求终态追加投入。现役路径是引用一个或多个既有冻结声明,由 `make cover` / `make cover-batch` 写入覆盖并由机器派生 `absorbed-closed`;覆盖可以由既有声明经本条允许的实例化、投影与规范化共同完成,不要求先造一条与 atom 逐字同形的定理。多子句 atom 先按既有 `make decompose` 契约建立子句链,分别完成覆盖并对齐父项;实际申报终态时仍须满足子句完整性与链闭合检查；尚未完成消化就如实保留未完成状态，不要求为此阻塞形式化。
 **混合 atom**:只将真正缺少 content 的子句保留为形式化前沿;bind-only 子句按上款结算。母 atom 只有在全部子项及自身覆盖均完成后才可报终态,不得以部分绑定覆盖冒领整项完成。判形有未核实前提时不得先称全 bind-only。
 **终态必须由现役 writer 产生**:不得用 quarantine、失败的 cover disposition、手改目录或手填状态冒领已处理。`cover` 只接受既有冻结项目声明 GID;仅由钉版上游(Mathlib 及 manifest 闭包)前置闭合而仓内无可用 GID 的命题 atom,**需要结算时用现有 `settle-atom`(`make settle`)写收据终结**,`justification` 写明由哪些上游声明闭合、仓内无 GID——不新增终态、不新增 writer、不做机器判形(τ=0 owner 2026-09-15 裁决:账本这类非 Lean 真源只需文本标记,无人消费的状态不值一台机器;案 #8049);判形真实性仍是本条软评审边界,不得回派数学实施或新增绑定包装补 GID。
-**先库后证与停手**:上游已有证明必须直接复用,禁止重证或新增包装。连续两次候选靶均为 bind-only(按「开放问题结算依据」准入的外部开放问题结算不计),简记复用依据后按第 7.11 条换 Γ，转向真正缺失的数学内容；消化结算及工具缺口按第 1.2 条从简处理；席位空闲不构成派题理由。
-**逃逸内容须写在探针之前,不得事后追认**:预登记义务须点名拟议的非绑定事实。观测见证与拟议不同须重新预登记,不得事后改标;报告逐声明列 `proof_shape`、直接冻结依赖(GID + `statement_id`)、`escape_witness` 与 `admission_basis`。评审对任一新增 bind-only 声明(「开放问题结算依据」所允许者除外)、无逃逸依据的首次冻结或虚报 atom 终态均 reject;判形真实性仍属第 3.5 条所列语义评审边界,不冒充现役机器分类。
+**先库后证与停手**:上游已有证明必须直接复用,禁止重证或新增无消费者的包装。连续两次候选靶均为 bind-only(按「开放问题结算依据」准入的外部开放问题结算不计),简记复用依据后按第 7.11 条换 Γ，转向真正缺失的数学内容；消化结算及工具缺口按第 1.2 条从简处理；席位空闲不构成派题理由。
+**逃逸内容须写在探针之前,不得事后追认**:预登记义务须点名拟议的非绑定事实。观测见证与拟议不同须重新预登记,不得事后改标;报告逐声明列 `proof_shape`、直接冻结依赖(GID + `statement_id`)、`escape_witness` 与 `admission_basis`。评审对任一新增的无消费者 bind-only 声明(「有消费的辅助声明」与「开放问题结算依据」所允许者除外)、无逃逸依据的首次冻结或虚报 atom 终态均 reject;判形真实性仍属第 3.5 条所列语义评审边界,不冒充现役机器分类。
 
 ### 3.3 计算性内容的用途准入
 
 **用途准入**是与判形、准入依据正交的第三个合取:新内容不保证有用途;不改 `proof_shape`、两种见证、第 3.2 条的两个准入依据(`escape-witness` / `open-problem-resolution`)或既有冻结。用途规则的作用域为受保护 immutable baseline 未冻结的新增或字节变化 D5 Lean 模块,以及本次首次取得 state pin 的模块之并集;不随 judge-only 改动扫未变历史。分类与用途须逐声明评审,不得以同模块的无关反例掩护普通实例。
 **计算性内容(按交付语义定义,不按文件名、`Certificate` 字样或 tactic)**:以有限计算或可核验实例为主要新内容者分四类——有界枚举(`bounded-enumeration`)、检查器/反射基础设施(`checker`)、数值归约(`numeric-reduction`)、已认证实例(`certified-instance`)。
-**用途判据**:须在探针之前预登记计算所回答的**独立问题**(事前存在的 atom / TASK / 断言 / 具体证明义务)。**普通正向有限实例禁止准入**:`certified-instance` 与 `bounded-enumeration` 只可走经验证的 `refutes`;消费者标签、终点标签、自指终点、附加 `result` 或引用成功均不豁免。**反驳保留**:处决一条具名断言(`refutes` 边),不要求另造消费者,与其用 `decide`/`norm_num`/`native_decide` 还是一般定理实例化无关(判形仍按第 3.2 条原判)。正向、存在式或合取式反例所需的否定结论仍须满足第 3.2 条逐声明禁令,不得新增 bind-only companion theorem。**一般基础设施**仍可报 `checker` / `numeric-reduction`:具名消费者须在活推导路径真正使用其结论,仅 import、只用定义、重命名/转发、合取或子句打包、coverage 均不算;checker 可直接解决独立终点问题(`terminal_result`),不要求再造一个 importer。四类的有效 `refutes` 均免下游消费者与类特有附加条件,仍须满足第 3.2 条既有判形与准入依据(`escape-witness`,或外部开放问题的 `open-problem-resolution`),不构成额外准入路径;仅绑定的反驳直接用于 atom 消化结算,不得新增反驳包装或伴随定理。同一交付命中多类时按最严条件判,但有效 `refutes` 优先于类特有条件;同模块无关反例不得替其他普通实例取得依据。**INACTIVE·已认证实例的旧许可**:由 `consumer | refutes | terminal_result` 三选一取得用途依据中的 `consumer` 与 `terminal_result` 许可已撤销,不构成现役准入路径。
+**用途判据**:须在探针之前预登记计算所回答的**独立问题**(事前存在的 atom / TASK / 断言 / 具体证明义务)。**普通正向有限实例禁止准入**:`certified-instance` 与 `bounded-enumeration` 只可走经验证的 `refutes`;消费者标签、终点标签、自指终点、附加 `result` 或引用成功均不豁免。**反驳保留**:处决一条具名断言(`refutes` 边),不要求另造消费者,与其用 `decide`/`norm_num`/`native_decide` 还是一般定理实例化无关(判形仍按第 3.2 条原判)。正向、存在式或合取式反例所需的否定结论仍须满足第 3.2 条逐声明禁令,不得新增无消费者的 bind-only companion theorem。**一般基础设施**仍可报 `checker` / `numeric-reduction`:具名消费者须在活推导路径真正使用其结论,仅 import、只用定义、重命名/转发、合取或子句打包、coverage 均不算;checker 可直接解决独立终点问题(`terminal_result`),不要求再造一个 importer。四类的有效 `refutes` 均免下游消费者与类特有附加条件,仍须满足第 3.2 条既有判形与准入依据(`escape-witness`,或外部开放问题的 `open-problem-resolution`),不构成额外准入路径;仅绑定的反驳直接用于 atom 消化结算,不得新增反驳包装或伴随定理。同一交付命中多类时按最严条件判,但有效 `refutes` 优先于类特有条件;同模块无关反例不得替其他普通实例取得依据。**INACTIVE·已认证实例的旧许可**:由 `consumer | refutes | terminal_result` 三选一取得用途依据中的 `consumer` 与 `terminal_result` 许可已撤销,不构成现役准入路径。
 **一般定理支配**——已有一般定理可不加强假设得到同一结论者,先复用或 `make cover`,不单独冻;有界枚举立不了无界量化的 ∀(有限域穷举除外),其合法角色只剩探针与反驳。
 **检查器须同 PR 带首个具体实例**:具体输入、证书或检查成功证明、soundness 应用、所解问题缺一不可;再包一层接口、把 refutation 留在假设位、附无关玩具例子都不算。**归约须同批履行其数值前提**(同函数、同参数、同域、同向阈值)且有 `consumer` 或 `refutes`;前提未履行者可在探针、issue 或进展报告里如实申报条件结果,但**不得据此取得用途准入或单独首次冻结**,`terminal_result` 不豁免归约的附加条件。已认证实例的用途须落实到其**结论**,且只可走上述经验证的 `refutes`;只用同模块定义不算。**源卷复述不算消费**:源句本身报告同一计算时,用一般定理覆盖或标计算实验不形式化;重算属第 2.7 条查表复制器。
 **用途字段(一个当前 contract;按第 8.5 条缺项即违规)**:Lean 头部 `utility:` 记录中的 `kind` 承载 `computational_content.kind` 分类(四类之一,或 `none`),正文说明须与头部一致。普通实例的 `basis` 只能填 `refutes`,不再有 consumer/terminal 三选一许可;检查器/归约按上款条件选择(头部文法以 `terminal` 表示 `terminal_result`)。`consumer` 精确到声明 GID 与「消费者 → 前置」方向;`instance` 记录检查器的具体实例,`premises` 记录归约数值前提(逐项:已履行/缺)。反驳同时提供形式 `claim` 与否定证明 `result`,源断言到 claim 的忠实性另行评审。`kind`、`basis`、`instance`、`premises`、`result`、`claim` 是绑定当前源码的头部结构化数据,精确文法见 spec A5.1,机器消费与语义边界见第 3.4 条 SL-031 款。
@@ -233,7 +234,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 **仍有用的区别**:`GapEndpoints` 两枚举器周期九相差的 3 词正是 gap 边界周期 3 环;保留探针发现及其证明链,无需保留整塔。既有 `clause_depth_sixty_claim_is_false` 是一般定理在 60 的实例化,仍判 bind-only;新同形 atom 走消化,反驳用途不豁免包装禁令。
 **黎曼路线样本(2026-09-04,增订二十五至二十九 W-10…W-21)**:W-12 阿基米德可积性提供主要分析逃逸。W-14/W-15 的 `exists_supportRadius`、W-18 的 `activePrimePowers_eq_empty_of_exp_lt_two` 须按第 3.2 条四项检查见证,不能使其 bind-only 主声明取得资格;W-10/11/13/16/17/19/20/21 是去假设化、投影、存在见证绑定或冻结 iff 复合,亦为 bind-only。既有冻结保留,同形新增直接消化,同模块 content helper 不豁免。席位空闲不得在边际收益触底后继续派同形任务。
 *成熟锚*:旧数据可推出的信息不算新信息、数学新颖性/拒绝平凡包装、预算包络与第二次同症状停手、需求到验收的 traceability、真实实例端到端交付、YAGNI、Popper、Goodhart。理论卷的“无明确下游 theorem 消费者按 DECT 平凡病淘汰”“C8 禁枚举完备”按各自范围理解,用途例外以第 3.3 条为准。
-〔守护:**判形/准入依据全软 + no consumer;用途结构与 typed refutation 硬、分类真实性与源句忠实性软**·逐声明 bind-only 禁令、判形、逃逸见证、准入依据、atom 覆盖的语义忠实性、增订「逃逸内容」子句与 PR 正文「逃逸内容」栏均由对手官评审判;当前 `tools/` 与 `.github/` 无 fail-closed 消费者读取 `proof_shape`/`escape_witness`/`admission_basis`,PR 与 issue 正文可在检查后编辑,故这些不得称硬投影或现役机器门。未来若升硬,须由候选判官内经独立评审核对的消费者(现役 SL-029 警告不提供分区保护)读取不可变且绑定 HEAD 的结构化工件,并以变异证明「缺字段或伪造分类」会使具名检查变红。**INACTIVE·推断边界**:「判形可由 elaborate 后的常量依赖闭包机器算」不构成现役保证;常量依赖闭包本身不证明全部判形或用途语义。用途结构与指定 claim/result 的否定关系由第 3.4 条 SL-031、Lean semantic API 与同步 deposit 预检消费,不可据此声称判形或准入依据已机器分类;其余用途语义及「PR 正文必填字段」仍全软,由评审按第 3.3 条「用途判据」判,复算口径在证据样本与 #5515。按第 8.5 条,「尚未 lint 不构成豁免」:新增 bind-only 声明(第 3.2 条「开放问题结算依据」所允许的结算结论除外)、无准入依据的首次冻结模块、无用途依据的计算性新准入或夹带普通实例,均须评审拒绝,与第 2.4 条冒领同罪;报告通过不等于全部语义通过,质量判词与机器准入权威仍分工〕
+〔守护:**判形/准入依据全软 + no consumer;用途结构与 typed refutation 硬、分类真实性与源句忠实性软**·逐声明 bind-only 禁令、判形、逃逸见证、准入依据、atom 覆盖的语义忠实性、增订「逃逸内容」子句与 PR 正文「逃逸内容」栏均由对手官评审判;当前 `tools/` 与 `.github/` 无 fail-closed 消费者读取 `proof_shape`/`escape_witness`/`admission_basis`,PR 与 issue 正文可在检查后编辑,故这些不得称硬投影或现役机器门。未来若升硬,须由候选判官内经独立评审核对的消费者(现役 SL-029 警告不提供分区保护)读取不可变且绑定 HEAD 的结构化工件,并以变异证明「缺字段或伪造分类」会使具名检查变红。**INACTIVE·推断边界**:「判形可由 elaborate 后的常量依赖闭包机器算」不构成现役保证;常量依赖闭包本身不证明全部判形或用途语义。用途结构与指定 claim/result 的否定关系由第 3.4 条 SL-031、Lean semantic API 与同步 deposit 预检消费,不可据此声称判形或准入依据已机器分类;其余用途语义及「PR 正文必填字段」仍全软,由评审按第 3.3 条「用途判据」判,复算口径在证据样本与 #5515。按第 8.5 条,「尚未 lint 不构成豁免」:新增无消费者的 bind-only 声明(第 3.2 条「有消费的辅助声明」与「开放问题结算依据」所允许者除外)、无准入依据的首次冻结模块、无用途依据的计算性新准入或夹带普通实例,均须评审拒绝,与第 2.4 条冒领同罪;报告通过不等于全部语义通过,质量判词与机器准入权威仍分工〕
 
 ### 3.6 开放问题三档与研究线
 
@@ -257,9 +258,10 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 - **形式化遇到理论缺口，可以直接推理补足。** 缺少定义、桥接引理、不变量、构造或证明步骤时，agent 可以在当前目标内研究并补足，继续形式化，无须等待用户补写理论或另行授权。补足的内容可以直接写成 D5 Lean 与 Blueprint Scribe，不必先写入理论卷(第 1.2 条)；选择写入理论卷时，归入既有相关理论卷并遵守本节追加纪律。补足须保持原问题的目标、假设与量词；尚未证成的部分明确标为待证，不冒称定理。数学真值仍只由内核验证的形式化代码承担。
 - **新增理论 PR 可不做消化。** 仅新增或追加 `docs/develop/theory/**` 正文、且不提交形式化、覆盖、冻结或消化工件的 PR，可以不运行 `make ingest`，不要求同时新增 atom CAS 或 backfill，也不要求先取得任何消化状态。正文仍须遵守本节的纯数学、文献尽调与追加纪律；若以后需要把该卷接入消化账本，另行提交 canonical ingest PR。含有 ingest、cover、deposit 或其它消化工件的 PR，仍按第 4.7 条对应链路核对。
 - **理论推理只包含定义、假设、定理与证明。** `docs/develop/theory/**` 的正文保持纯数学:引理、命题、推论归入定理,例子与反例写成命题并给出证明,符号约定与数学引文附于对应条目。不得混入模型调用、工程实现、代码或测试、核验日志、摄入流程、评审记录、工单与交付状态;正式成果按既有归属置于正文之外;过程材料依第 2.10 条不保存。
+- **理论单卷上限为 5,000 行。** SL-003 的 delta 谓词检查 `docs/develop/theory/**` 中新增或修改的 Markdown 全文,包括空行,末尾换行符不多计一行;超过上限即拒绝,未触及的历史长卷不进入检查。超出单卷篇幅的新内容写入同主题续卷并通过引用衔接,保留既有卷的条目、编号与引用;不得用新卷重复已有内容。
 - **理论文档须可持续追加。** 新理论接在文末,保留既有条目的文本、编号与引用;新定义、新假设和新定理使用新编号,不复用旧编号、不整体重排。需要修正时,追加明确指向原条目的更正命题、适用假设与证明,说明替代关系;不得静默改写旧假设、结论或证明,也不得把被更正的结论继续当作有效前提。追加纪律自卷合入 `dev` 起生效;合入前的草稿可在其 PR 内就地修订。
 - **禁止把已存在的理论新增到 `docs/develop/theory/**`。** 新卷与新增章节的承重命题必须是本仓新增的数学内容。凡经第 3.7 条尽调判为 `literature-attested`(整体、逐字或仅换记号地对应已发表定理、已公开草稿或教科书结果)者,不得作为新卷、新章或新增定理写入,只以 `Library/` note 引用;需要形式化时走第 3.6 条硬规则①的 `make cover` 或 `FromLiterature` 前置。已知定理只可作为新内容承重推导的中间步骤附于新条目之内,逐条标注先例,不单列为定理;一卷或一批增补的承重命题全部为已知结果者,评审打回、不得合入。
-〔守护:**软**·由作者与独立评审检查正文的数学边界、追加方式及是否为已有理论,不冒称已有机器强制;不可 lint 不豁免,冒充新内容与第 2.4 条冒领同罪。〕
+〔守护:**硬+软**·单卷行数由 SL-003 delta 谓词执法;正文的数学边界、追加方式及是否为已有理论由作者与独立评审检查,不冒称已有机器强制;不可 lint 不豁免,冒充新内容与第 2.4 条冒领同罪。〕
 
 ### 3.9 登记即声明模板与 delta 判官
 
@@ -335,7 +337,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 4.6 run-local 投影的归宿
 
-**run-local 投影不入 Git 索引**:`Generated/echo-residuals/<source_id>.md` 由 `.gitignore`+FILEMAP 声明为 run-local,按需现算。分片只缩小冲突面,出库才消除该族的合并冲突面;tracked 投影仍属 merge unit。`FILEMAP-RUN-LOCAL-TRACKED` 对任一分片回索引报红,声明是权威,树须服从。
+**run-local 投影不入 Git 索引**:FILEMAP 声明的 run-local 产物按需现算。分片只缩小冲突面,出库才消除该族的合并冲突面;tracked 投影仍属 merge unit。`FILEMAP-RUN-LOCAL-TRACKED` 对声明为 run-local 的产物回索引报红,声明是权威,树须服从。
 
 ### 4.7 生产链、冻结与消化状态
 
@@ -371,21 +373,21 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 - **cover**:同一 `atom_id` 的账目条目写入 coverage 边,并由 residual-open 迁入机器派生的目标状态。
 - **ingest**:`docs/develop/theory/**` + `atoms/sha256/*` + `backfill/**/residual-open/*`。
 **停用机制边界**:两 PR 律、预登记 formalization 收据及其机器均已退役;「边即数据,不记动作」,不得据此重建动作收据或要求 deposit/cover 分两 PR。
-**coverage 边当前 contract**:持久化键名为 `coverage_gids`,每个元素的键集恰为 `{gid,target_statement_id}`,其中 `target_statement_id` 可为 `null`;candidate 与 protected-base loader 均只接受这一形态。字符串元素、`receipts.coverage`、`source_sha256`、`statement_id_history` 与 `recorded_at_utc` 一律 fail-closed;writer 只写对象形。`align-digestion-status` 从当前 report 与冻结账本直接刷新 target,不保留旧值;任一 coverage target 未解析即令 truth 状态为 `Open`。L2 三步迁移只属已完成的 contract 判例,不构成现役迁移流程或兼容机制;当前没有 alias、双读或第二 canonical 格式。
+**coverage 边当前 contract**:持久化键名为 `coverage_gids`,每个元素的键集恰为 `{gid,target_statement_id}`,其中 `target_statement_id` 可为 `null`;账本 loader 只接受这一形态。字符串元素、`receipts.coverage`、`source_sha256`、`statement_id_history` 与 `recorded_at_utc` 一律 fail-closed;writer 只写对象形。`cover-atom` 在写入前按当前 report 与冻结账本解析本次 GID，未解析即失败；任一 coverage target 未解析即令 truth 状态为 `Open`。L2 三步迁移只属已完成的 contract 判例,不构成现役迁移流程或兼容机制;当前没有 alias、双读或第二 canonical 格式。
 **冻结态与消化态是两个正交状态机,禁互相冒充**:
 
 - **冻结态(真值侧,二值)**:`Golden/Frozen/state/<module>.lean.json` 存在 ⟺ 已冻结,这是当前成员身份的唯一判据;**永不解冻**是第 1.3 条冻结律的数学规范。SL-008 判当前态 C1–C5 与当前树一致,pin 改变以 `FROZEN_PIN_CHANGE` Observe 点名;历史由 git 记录,无历史只增判官。
 **旧事件格式边界**:commit `572cd43587f120a379cf83871b68c249be36cd5e` 中 Freeze/schema 5 payload 的 `statement_id`、`declaration_statement_ids`、`descriptor_selector`(Lean 路径)、`prerequisite_frozen_node_ids` 为承重数据,末项是真值 DAG 的边;此历史格式不取代当前 state 成员判据。
 
-- **消化态(账目侧,四值)**:`residual-open`(尚无 GID 覆盖)/ `partial-closed`(子项部分覆盖)/ `absorbed-closed`(覆盖 GID 与 coverage 数据齐备)/ `nonpropositional-inapplicable`(**无需项目覆盖的终结**:非命题,或命题但仅由钉版上游闭合而仓内无 GID;#5770 方向③,#8049 owner 2026-09-15 裁决复用)。第四态**不是**由 atom 字节或 kind 派生的,而是由 `receipts.nonpropositional`(`justification` + 连读的 `previous_atom_id`/`next_atom_id`,边界为 `null`)经 `DigestionStatusEvaluator` 机器派生:收据在而目录不对、目录在而收据缺、或与 coverage / quarantine / cover_disposition 共存,皆 SL-016 红。唯一写者是 `settle-atom`(`make settle` / `make settle-clear`),写前必须以 `make atom-context ATOM_ID=x` 连读前后 atom,writer 复算邻接不等即拒;`--clear` 原路退回 `residual-open`。它对链闭合视同已闭(`chain_atoms` 子项为 Absorbed 或 Nonpropositional 即闭),对 Lean 真值零主张、不计入可形式化分母、`Deletable` 不因它为真。「不新增持久化状态」(#5533 L3)的例外仅限此类;`section/*` 等仍走查询时 `not-formalizable(kind)` 投影。
+- **消化态(账目侧)**：`residual-open` 表示尚无 GID 覆盖，`partial-closed` 表示部分子项覆盖，`absorbed-closed` 表示本项与子链满足覆盖条件，`nonpropositional-inapplicable` 表示无需项目覆盖的终结：非命题，或命题仅由钉版上游闭合而仓内无 GID。第四态由 `receipts.nonpropositional` 的 justification 与真实邻居经目标处理命令派生，不由 atom 字节或 kind 自动判定。唯一写者是 `settle-atom`（`make settle` / `make settle-clear`）；写前以 `make atom-context ATOM_ID=x` 连读前后 atom，writer 复算邻接不等即拒，`--clear` 删除目标收据并退回 `residual-open`。目标 writer 拒绝所处理记录的非法字段共存与坏形；无关账目的目录或收据偏差不触发准入审计。链闭合要求父项自身完成且全部子项为 Absorbed 或 Nonpropositional；该状态对 Lean 真值零主张、不计入可形式化分母、`Deletable` 不因它为真。`section/*` 等仍走查询时 `not-formalizable(kind)` 投影。
 - **bind-only atom 的结算**:全 bind-only 的命题 atom 按第 3.2 条直接走既有覆盖与子句链闭合,到达 `absorbed-closed` 即处理完成;不产生新的 Lean 声明或冻结事件。仅由钉版上游闭合而无项目 GID 者按第 3.2 条以 `settle-atom` 的 justification 收据终结,不手写已完成。
-- **文献已发表、仓内无冻结 GID 覆盖的命题 atom**:能由钉版上游闭合者按第 3.2 条以 `settle-atom` 收据终结;其余留 `residual-open`(无 GID 不满足 `absorbed-closed`)。`receipts.quarantine` 仅有封闭 `blocker_class={already-covered, missing-prerequisite, multi-clause-guard}` 与 `reentry_condition`,可用 `make quarantine-clear` 撤;`receipts.cover_disposition` 是 cover 未闭合时 writer 的失败回执。两者均非终态,不得挪用;文献判词的重复选题/核对缺口只在 PR/issue 正文保留必要判词,不另造终态(owner 2026-09-15)。
+- **文献已发表、仓内无冻结 GID 覆盖的命题 atom**:能由钉版上游闭合者按第 3.2 条以 `settle-atom` 收据终结;其余留 `residual-open`(无 GID 不满足 `absorbed-closed`)。历史账目可以携带 `receipts.quarantine` 或 `receipts.cover_disposition`，loader 保留其结构并将其作为当前一致性输入；现役流程不再提供独立 quarantine 管理或 cover disposition 重试命令，cover 失败直接返回给 AI 修正后重新调用。
 - **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids[].gid` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 2.4 条冒领。
 **含消化或冻结工件的理论 PR 说明须写清三项(承第 5.2 条产地,不另立格式)**:①**形态**(deposit / deposit-uncovered / cover / deposit+cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID,无 atom 时写明无 atom 及冻结的 GID;③**落地后的状态**——冻结事件的 `event_hash`(deposit),或 atom 由哪态迁到哪态(cover)。纯理论正文 PR 不要求这三项，只需明确其未进入消化链。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
 **反面即病(如何自查)**:①手改 `Blueprint/**/*.md` —— 它是 `ScribeEmitter` 的投影,改它即造第二真源(第 4.2 条),正解是改 `.scribe.cs` 后 `make emit`;②手改 `atoms/sha256/*` —— atom 一经产出不可变(第 1.2 条总则「atoms 不删」),勘误走"追加散文 + 追加新 atom";③冻结后原地编辑 `.lean` 想修补 —— 必撞 SL-008,正解是弃分支重做一次 deposit。
 **多驱动者并行不必分配领域**:GID 代数定地址(第 4.2 条);两人重证同命题却不会使机器红,故开工前、开 PR 前各查本仓声明(第 3.1 条)。
 *成熟锚*:构建图的产者唯一性(Bazel 每个输出恰有一个 rule)、数据血缘(data lineage)、事件溯源之"事件是真源、读模型可重建"、工作流状态与领域状态分离(workflow state ≠ domain state)、生成物标明产者。
-〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;SL-008 判冻结成员当前态 C1–C5 与当前树一致,pin 变化为 `FROZEN_PIN_CHANGE` Observe,历史归 git;accepted 事件账本的 append-only 守护归属限于第 4.2 条的记录样本;coverage 边的 GID 唯一存在、Closed 与当前 statement identity 由 cover 写前门和 SL-016 判。**硬投影(尚未 lint,记 `open`)**——三类改动形态的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 5.2 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 7.10 条),靠对手官评审与第 5.10 条反思。按第 8.5 条,"不可 lint"不构成豁免〕
+〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;SL-008 判冻结成员当前态 C1–C5 与当前树一致,pin 变化为 `FROZEN_PIN_CHANGE` Observe,历史归 git;accepted 事件账本的 append-only 守护归属限于第 4.2 条的记录样本;coverage 边的 GID 唯一存在、Closed 与当前 statement identity 由 cover 写前门判；新增形式化的精确 ATOM 覆盖依据由 SL-031 按交付目标检查，不做全账一致性审计。**硬投影(尚未 lint,记 `open`)**——三类改动形态的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 5.2 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 7.10 条),靠对手官评审与第 5.10 条反思。按第 8.5 条,"不可 lint"不构成豁免〕
 
 ### 4.8 生长、抽象与容量压力
 
@@ -585,7 +587,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 ### 7.9 错误驱动的制度生成
 
 **错误不可穷尽,实际出错即立制。** 新错误首次出现时按四步闭环:①按第 2.1 条检出/入账,只留有用结论(第 2.10 条);②当场定义该类处理规范(第 7.3 条),按需立类,不预建空壳或即兴;③可机器判的清理规则立即化为 lint/门/巡检,经保守扩展入塔;④先 delta-only 约束新增,再按第 6.2 条分批单 PR 补账,D 空后同门自动判全树,不留垫层。
-错误是 harness 的燃料(生于忧患),每类只付一次学费;首次换永久规则,第二次同类即 harness bug,最高优先修器。*成熟锚*:免疫、回归测试、判例法、SRE 行动项、TDD 红先行。〔守护:**元准则+半硬**·SL-019 检异常,SL-016 等 fail-closed 校验案号,SL-013 不产 finding;立制走 SL-022+保守扩展,回归与第 5.10 条避免重犯;同类范围靠对手官,防逐实例过窄或过度门控〕
+错误是 harness 的燃料(生于忧患),每类只付一次学费;首次换永久规则,第二次同类即 harness bug,最高优先修器。*成熟锚*:免疫、回归测试、判例法、SRE 行动项、TDD 红先行。〔守护:**元准则+半硬**·SL-019 检查非消化结构化异常，目标 writer 校验所处理记录，SL-013 不产 finding；立制走 SL-022 与适用的保守扩展义务，回归与第 5.10 条避免重犯；同类范围靠对手官，避免逐实例过窄或过度门控。〕
 
 ### 7.10 有案防御与成本边界
 
@@ -855,7 +857,7 @@ current 只检查候选最终树,不读 base、不消费工程阶段证据。che
 | ③ 精确导入 | 19.2 s | 11.6 s | 1.5 GB |
 
 同批一个**负结果**一并入账:把证书展开成显式 `cons` 链,`checked` 72.1 s 对 68.0 s,**无改进,丢弃**。CI 侧该模块的构建由被杀变为 68 秒通过。**不冒领**:本地峰值内存由 22.7 GB 降到 1.5 GB **不证明**先前那次 SIGTERM 的成因就是内存耗尽 —— runner 侧证据未取,该归因记 `ASSUMED-UNVERIFIED`(第 2.9 条:不确定须带排除项)。已排除的替代解释在该案里是逐条有读数的:非 job timeout(限 45 min 而 job 只跑 7 min 22 s)、非并发取消(`concurrency.group` 为 `ci-<PR 号>`,不跨 PR,且该分支仅一个 run)、非该步自身 timeout(它没有 `timeout-minutes`)。
-**两条红线**:①**不得抬 `timeout-minutes`、不得抬任何预算、不得靠重跑碰运气**(第 7.8 条:检测绝不降级,不以抬预算掩盖失败);CI `current` job 时限由 τ=0 owner 2026-10-01 定为 120 分钟(版本 bump 后全量重评在 60 分钟内跑不完;原话「那就把时间放宽到2小时」);agent 仍不得自行抬任何时限或预算。②**不得为了快而削掉逃逸见证**(第 3.2 条)—— 把待判的常数直接写进定理、用 `native_decide` 把成本挪到别处、砍掉证书的完整性检查,都是把模块掏空;**一个被掏空的模块过了门也是假的过**,宁可它暂时进不去。改动只许落在 tactic 脚本、私有数据表示与 import 面上,**公开陈述的 `statement_id` 应当不变**;若确实变了,冻结 pin 须重做(SL-008 会以 `pin mismatch: stored=… actual=…` 判红,那是**先冻结后改源码**的必然后果,正序是实施 → 评审 → 修复 → deposit)。
+**两条红线**:①**不得抬 `timeout-minutes`、不得抬任何预算、不得靠重跑碰运气**(第 7.8 条:检测绝不降级,不以抬预算掩盖失败);CI `current` job 时限由 τ=0 owner 定为 180 分钟;agent 仍不得自行抬任何时限或预算。②**不得为了快而削掉逃逸见证**(第 3.2 条)—— 把待判的常数直接写进定理、用 `native_decide` 把成本挪到别处、砍掉证书的完整性检查,都是把模块掏空;**一个被掏空的模块过了门也是假的过**,宁可它暂时进不去。改动只许落在 tactic 脚本、私有数据表示与 import 面上,**公开陈述的 `statement_id` 应当不变**;若确实变了,冻结 pin 须重做(SL-008 会以 `pin mismatch: stored=… actual=…` 判红,那是**先冻结后改源码**的必然后果,正序是实施 → 评审 → 修复 → deposit)。
 *成熟锚*:先测量再优化、Amdahl 定律(先找真正占大头的那一项)、性能预算(budget 是约束不是可调参数)、开发机与生产环境的资源差异(works on my machine)、数据结构选择决定渐近代价。
 〔守护:**软 + 硬投影,诚实分栏**·「有没有在提交前量过」不可 lint,靠对手官评审与本款。**硬投影两条**:①凡 CI 的 Lean 构建步失败或被杀,其归因**必须引用该模块的 `checked` 秒数与峰值内存读数**,只写「太慢」「太重」者按第 2.9 条判无效;②凡以「优化编译成本」为由改动既有模块,PR 说明须给出**改前改后两组读数**(与第 2.8 条同形),缺失即判该优化未经论证。**诚实边界**:`import Mathlib.Tactic` 词法可 grep,但**不设禁令** —— 确有模块需要多个 tactic,一刀切会误伤(第 7.10 条:防的必须是发生过的事,且付得起自己的代价);峰值内存**当前无任何机器门**,`RESOURCE_OBSERVATION` 只在 report-supervisor 级聚合输出 `rss_peak_kb`,**不分模块**,故本款不得声称已有机器保证。未来若升硬,须由候选判官内的消费者读取逐模块的绑定 HEAD 的成本读数,并以变异证明「成本回升会使具名检查变红」〕
 

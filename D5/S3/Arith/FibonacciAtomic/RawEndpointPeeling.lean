@@ -17,8 +17,8 @@ namespace D5.S3.Arith.FibonacciAtomic.RawEndpointPeeling
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition
 open ActualJointResponseCostCore (Controller controllerPolicy controllerOutcome verifyController
-  survivors Recipe gain representative phase_foundation)
-open ActualImageSevenLeafSeparation (leafAddresses leafLabel Nonconflict seven_leaf_separation)
+  survivors Recipe gain representative phase_foundation cost_foundation)
+open ActualImageSevenLeafSeparation (leafAddresses Nonconflict seven_leaf_separation)
 open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute)
 
 /-- The target is retained in the survivor set. Each query is a target leaf,
@@ -77,47 +77,11 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
   have leaf_card (i : Fin m) : (leafAddresses (F i)).card = 3*k+13 :=
     (foundation.2.1 (e.symm i)).2.2.2.2.2
   have leaf_length (U : Source) : (leaves U).length = U.length := by
-    apply FreeMagma.rec (motive := fun V : Source => (leaves V).length = V.length)
-      (fun _ => rfl) (fun s t hs ht => ?_) U
-    simp only [leaves, List.length_append, List.length_map, hs, ht, FreeMagma.length]
+    rw [← List.toFinset_card_of_nodup (cost_foundation.1 U).1]
+    exact (seven_leaf_separation.1 U).1
   have leaf_zero (U : Source) (q : Address) : q ∈ leaves U ↔ chi (readout q U) = 0 := by
-    have h := (seven_leaf_separation.1 U).2 q
-    change q ∈ (leaves U).toFinset ↔ _ at h
-    rw [List.mem_toFinset] at h
-    rw [h]
-    cases hr : readout q U <;> simp [leafLabel, hr, chi]
-  have agree (q : Address) (i j : Fin m)
-      (hi : chi (readout q (F i)) = 0) (hj : chi (readout q (F j)) = 0) :
-      readout q (F i) = readout q (F j) := by
-    have labels := (seven_leaf_separation.2.1 (F i) (F j)).2.2.mp (nc i j)
-    cases hr : readout q (F i) <;> cases hs : readout q (F j) <;>
-      simp only [hr, hs, chi] at hi hj
-    all_goals try omega
-    all_goals try rfl
-    · exact Bool.noConfusion (labels q true false (by simp [leafLabel, hr])
-        (by simp [leafLabel, hs]))
-    · exact Bool.noConfusion (labels q false true (by simp [leafLabel, hr])
-        (by simp [leafLabel, hs]))
-  have zero_card (S : Finset (Fin m)) (r : Recipe F S)
-      (hz : ∀ i ∈ S, gain r i = 0) : S.card ≤ 1 := by
-    cases r with
-    | singleton i => simp
-    | split S a hs next =>
-      obtain ⟨q, hq⟩ := a.property
-      have hc (i : Fin m) (hi : i ∈ S) : chi (readout q (F i)) = 0 := by
-        have h := hz i hi
-        simp only [gain, hi, ↓reduceDIte] at h
-        have hqi := congrFun hq i
-        change readout q (F i) = a.val i at hqi
-        rw [hqi]
-        omega
-      have him : (S.image a.val).card ≤ 1 := Finset.card_le_one.mpr (by
-        intro x hx y hy
-        obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hx
-        obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hy
-        rw [← congrFun hq i, ← congrFun hq j]
-        exact agree q i j (hc i hi) (hc j hj))
-      omega
+    rw [(cost_foundation.1 U).2 q]
+    split_ifs with h <;> simp [h]
   have extract : ∀ (S : Finset (Fin m)) (r : Recipe F S) (z : Fin m),
       z ∈ S → gain r z = 0 → (∀ i ∈ S, gain r i ≤ 1) →
       ∃ qs, Peels F z S qs := by
@@ -154,15 +118,14 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       obtain ⟨qs, hqs⟩ := ih (a.val z) hne z hzc ht hb
       refine ⟨q :: qs, ?_⟩
       have group (y : Reply) (hy : chi y = 1) : (survivors S a.val y).card ≤ 1 := by
-        by_cases hn : (survivors S a.val y).Nonempty
-        · apply zero_card _ (next y hn)
-          intro i hi
-          obtain ⟨his, hiy⟩ := Finset.mem_filter.mp hi
-          have h := hbound i his
-          rw [at_reply i his y hiy hn, hy] at h
-          omega
-        · rw [Finset.not_nonempty_iff_eq_empty.mp hn]
-          simp
+        by_contra hcard
+        have hn : (survivors S a.val y).Nonempty := Finset.card_pos.mp (by omega)
+        obtain ⟨i, hi, hgain⟩ :=
+          Scale38NestedCompensation.root_excess F nc _ (next y hn) (by omega)
+        obtain ⟨his, hiy⟩ := Finset.mem_filter.mp hi
+        have h := hbound i his
+        rw [at_reply i his y hiy hn, hy] at h
+        omega
       simp only [Peels]
       refine ⟨leaf_zero (F z) q |>.mpr ?_, ?_, ?_, ?_⟩
       · simpa only [vector, ← hq] using hcz
@@ -225,8 +188,10 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           · simpa [hci, List.find?] using hnone
         · have hci : chi (readout q (F i)) = 1 := by
             cases hr : readout q (F i) <;> simp only [chi]
-            · exact False.elim (he (agree q i z (by simp [hr, chi]) hcz))
-            · exact False.elim (he (agree q i z (by simp [hr, chi]) hcz))
+            · exact False.elim (he (Scale38NestedCompensation.agree (F i) (F z) (nc i z) q
+                (by simp [hr, chi]) hcz))
+            · exact False.elim (he (Scale38NestedCompensation.agree (F i) (F z) (nc i z) q
+                (by simp [hr, chi]) hcz))
           have hycard : (survivors S (vector F q) (readout q (F i))).card ≤ 1 := by
             cases hr : readout q (F i) <;> simp only [hr, chi] at hci
             · omega

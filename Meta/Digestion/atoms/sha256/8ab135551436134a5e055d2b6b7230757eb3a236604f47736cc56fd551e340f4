@@ -1,0 +1,105 @@
+**证明。** 十六叶的全部根分拆是 $3+13,5+11,6+10,8+8$ 及其逆序。代入式（33.6）、（34.10），得到完整而互不相交的根类型：
+
+$$
+\begin{aligned}
+\mathcal I_3(16)={}&\{\ell(Z),r(Z):Z\in\mathcal W_{13}\}\\
+&\cup\{c_\ell(D),c_r(D):D\in\mathcal Z\}\\
+&\cup\{\langle G,H\rangle,\langle H,G\rangle\}\\
+&\cup\{\langle Z,Z'\rangle:Z,Z'\in\{B,T\}\}.
+\end{aligned}
+\tag{34.15}
+$$
+
+原子根只有三叶或五叶，故不遗漏原子。前像组成方程 $3a+5b=16$ 给 $b\equiv2\pmod3$、$5b\le16$，所以 $(a,b)=(2,2)$；式（34.15）仍按完整根语法保留每个有序形状。
+
+采用定理 34.2 的双孔归约。$h_0=0$ 的全部边，由式（34.9）、（34.11）及既有十一叶筛选（33.10）恰为
+
+$$
+\begin{aligned}
+\mathscr E_{16}^{(0)}={}&\{\{\ell(Z),r(Z')\}:Z,Z'\in\mathcal A_{13}\}\\
+&\cup\{\{\ell(Z),c_r(D)\},\{r(Z),c_\ell(D)\}:
+ Z\in\mathcal C_{13},\ D\in\mathcal V\}\\
+&\cup\{\{c_\ell(D_i),c_r(D_j)\}:i,j\in\{0,1\}\}.
+\end{aligned}
+\tag{34.16}
+$$
+
+三行分别穷尽 $AA$、$AC/CA$、$CC$。$h_0=3$ 时固定终端为 $A$，两孔合计规模十三，式（34.7）只允许 $A/G$ 或 $C/T$ 交换。前者给 $\binom{\mathcal F_{\mathrm R}(G)}2\cup\binom{\mathcal F_{\mathrm L}(G)}2$；后者把固定 $A$ 放进两个括号的全部三个位置，给下表前六条边。$h_0=5$ 时固定终端为 $C$，余下十一叶比较只用[定理 30.5](#30-实际三步像的分歧前沿七叶分离与有限容量)的 $A/B$ 交换，给下表后六条边：
+
+$$
+\begin{array}{c|c|c}
+\text{共同块及括号}&\text{共同块槽号}&\text{两个端点}\\ \hline
+A,\ J_{\mathrm R}&1&\ell(X),\ell(Y)\\
+A,\ J_{\mathrm R}&2&c_\ell(D_1),\langle T,T\rangle\\
+A,\ J_{\mathrm R}&3&c_\ell(K_T),\langle T,B\rangle\\
+A,\ J_{\mathrm L}&1&\langle T,T\rangle,c_r(D_1)\\
+A,\ J_{\mathrm L}&2&\langle B,T\rangle,c_r(K_T)\\
+A,\ J_{\mathrm L}&3&r(X),r(Y)\\ \hline
+C,\ J_{\mathrm R}&1&c_\ell(D_0),c_\ell(K_B)\\
+C,\ J_{\mathrm R}&2&\ell(W_0),\langle B,B\rangle\\
+C,\ J_{\mathrm R}&3&\ell(W_1),\langle B,T\rangle\\
+C,\ J_{\mathrm L}&1&\langle B,B\rangle,r(W_0)\\
+C,\ J_{\mathrm L}&2&\langle T,B\rangle,r(W_1)\\
+C,\ J_{\mathrm L}&3&c_r(D_0),c_r(K_B)
+\end{array}
+\tag{34.17}
+$$
+
+每行恰保留固定块，另两槽交换上述已分类的两孔。槽地址前缀自由，局部非冲突充分。双孔归约已穷尽 $h_0$ 与上下文，故式（34.16）、（34.17）连同两个 $G$ 三槽族的边就是全部边，涵盖式（34.15）的每个根分拆及逆序。
+
+从这一完整边集，两个六叶／十叶顶点及四个八叶／八叶顶点的全部邻点为
+
+$$
+\begin{array}{c|c}
+\text{顶点}&\text{全部邻点}\\ \hline
+\langle G,H\rangle&\ell(U_0),\ell(U_1)\\
+\langle H,G\rangle&r(U_0),r(U_1)\\
+\langle B,B\rangle&\ell(W_0),r(W_0)\\
+\langle B,T\rangle&\ell(W_1),c_r(K_T)\\
+\langle T,B\rangle&c_\ell(K_T),r(W_1)\\
+\langle T,T\rangle&c_\ell(D_1),c_r(D_1)
+\end{array}
+\tag{34.18}
+$$
+
+它们都只有两个邻点，不能进入四元完全子图。五叶／十一叶根的全部邻点为
+
+$$
+\begin{array}{c|c}
+\text{顶点}&\text{全部邻点}\\ \hline
+c_\ell(D_0)&c_r(D_0),c_r(D_1),c_\ell(K_B)\\
+c_\ell(D_1)&c_r(D_0),c_r(D_1),\langle T,T\rangle\\
+c_\ell(K_B)&r(U_0),r(W_1),c_\ell(D_0)\\
+c_\ell(K_T)&r(U_0),r(W_1),\langle T,B\rangle\\
+c_\ell(\langle C,H\rangle)&r(U_0),r(W_1)\\
+c_\ell(\langle H,C\rangle)&r(U_0),r(W_1)
+\end{array}
+\tag{34.19}
+$$
+
+十一叶／五叶根的邻点由只交换最外层两个孩子得到，即 $\ell\leftrightarrow r$、$c_\ell\leftrightarrow c_r$、$\langle T,B\rangle\leftrightarrow\langle B,T\rangle$。根交换保持每对的非冲突，因为仅交换左右孩子的比较条件，并不反转块内地址。
+
+式（34.19）每个三邻点集合都不是三元完全子图：前两行的 $c_r(D_0),c_r(D_1)$ 不相邻；第三、四行的 $r(U_0),r(W_1)$ 不相邻。后两行不足三个邻点，交换根型同理。故四元完全子图不能包含任何 $c_\ell,c_r$ 顶点。余下只有 $\ell(\mathcal W_{13}),r(\mathcal W_{13})$。每侧内部只有两条不相交边：
+
+$$
+\{\ell(U_0),\ell(U_1)\},\quad\{\ell(X),\ell(Y)\},\qquad
+\{r(U_0),r(U_1)\},\quad\{r(X),r(Y)\}.
+\tag{34.20}
+$$
+
+跨侧边恰在 $\mathcal A_{13}$ 与 $\mathcal A_{13}$ 之间。每侧最多选两个相邻点，任何四元完全子图必须每侧选两个。含 $U_0$ 的内部边不可用，因为 $U_0\notin\mathcal A_{13}$，没有跨侧边。因此唯一选择是 $F_{16}$；四条跨侧边与两条侧内边确实都在完整边集内。其余根型已排除，而两侧各至多两点亦排除任何五元族。
+
+按式（34.5）次序，四个实际前像为
+
+$$
+\begin{aligned}
+&\langle\alpha,\langle\beta,\langle\alpha,\beta\rangle\rangle\rangle,
+&&\langle\alpha,\langle\langle\alpha,\beta\rangle,\beta\rangle\rangle,\\
+&\langle\langle\beta,\langle\alpha,\beta\rangle\rangle,\alpha\rangle,
+&&\langle\langle\langle\alpha,\beta\rangle,\beta\rangle,\alpha\rangle.
+\end{aligned}
+\tag{34.21}
+$$
+
+它们字面不同，各有两片 $\alpha$、两片 $\beta$。母卷定义 3.1 的同态规则给三步像恰为 $F_{16}$，规范编译卷命题 4.3 给不同性及唯一前像。母卷定理 3.4 给输出 $(2+2\cdot2,2\cdot2+3\cdot2)^{\mathsf T}=(6,10)^{\mathsf T}$，叶数十六。证毕。
+
