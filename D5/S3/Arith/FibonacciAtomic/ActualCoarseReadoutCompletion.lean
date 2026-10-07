@@ -64,6 +64,74 @@ noncomputable def cachedExecute (p : Policy) : Nat → RH → RH → Source →
       (cachedExecute p n (h ++ [⟨q,y⟩]) cache' U).map
         (fun z => ((⟨q,y⟩ :: z.1.1,z.1.2),z.2))
 
+/-- A truthful cache reproduces every finite raw run and retains exactly its paid addresses. -/
+theorem cache_run (raw : Policy) (U : Source) :
+    ∀ (n : Nat) (h t cache : RH) (b : Bool),
+      execute readout raw n h U = some (t,b) →
+      (cache.map Sigma.fst).Nodup → (∀ a ∈ cache, a.2 = readout a.1 U) →
+      ∃ cache' : RH, cachedExecute raw n h cache U = some ((t,b),cache') ∧
+        (cache'.map Sigma.fst).Nodup ∧ (∀ a ∈ cache', a.2 = readout a.1 U) ∧
+        paid cache' = paid cache ∪ paid t := by
+  classical
+  intro n
+  induction n with
+  | zero => intro h t cache b hr _ _; simp [execute] at hr
+  | succ n ih =>
+    intro h t cache b hr hn ht
+    cases step : raw h with
+    | inr z =>
+      simp only [execute,step,Option.some.injEq,Prod.mk.injEq] at hr
+      rcases hr with ⟨rfl,rfl⟩
+      exact ⟨cache, by simp [cachedExecute,step],hn,ht,by simp [paid]⟩
+    | inl q =>
+      simp only [execute,step,Option.map_eq_some_iff] at hr
+      obtain ⟨⟨t',b'⟩,hr,e⟩ := hr
+      cases e
+      cases hit : cache.find? (fun a => a.1 == q) with
+      | some a =>
+        have address : a.1 = q := by simpa using List.find?_some hit
+        have member := List.mem_of_find?_eq_some hit
+        have answer : a.2 = readout q U := by simpa only [address] using ht a member
+        obtain ⟨cache',run,hn',ht',cost'⟩ := ih _ _ cache _ hr hn ht
+        refine ⟨cache',?_,hn',ht',?_⟩
+        · simpa only [cachedExecute,step,hit,answer,Option.map_some] using
+            congrArg (Option.map (fun z => ((⟨q,readout q U⟩ :: z.1.1,z.1.2),z.2))) run
+        · rw [cost']
+          have paidQ : q ∈ paid cache := by
+            exact List.mem_toFinset.mpr (List.mem_map.mpr ⟨a,member,address⟩)
+          simp only [paid,List.map_cons,List.toFinset_cons]
+          change paid cache ∪ paid t' = paid cache ∪ insert q (paid t')
+          rw [Finset.union_insert]
+          exact (Finset.insert_eq_of_mem (Finset.mem_union_left _ paidQ)).symm
+      | none =>
+        have fresh : q ∉ cache.map Sigma.fst := by
+          intro hm
+          obtain ⟨a,ha,eq⟩ := List.mem_map.mp hm
+          have no := List.find?_eq_none.mp hit a ha
+          simp [eq] at no
+        have hn' : ((cache ++
+            [(⟨q,readout q U⟩ : Sigma (fun _ : Address => Reply))]).map Sigma.fst).Nodup := by
+          simp only [List.map_append,List.map_cons,List.map_nil]
+          apply List.nodup_append.mpr
+          refine ⟨hn,by simp,?_⟩
+          intro a ha b hb
+          have beq : b = q := List.mem_singleton.mp hb
+          subst b
+          intro eq
+          exact fresh (eq ▸ ha)
+        have ht' : ∀ a ∈ cache ++ [⟨q,readout q U⟩], a.2 = readout a.1 U := by
+          intro a ha
+          rcases List.mem_append.mp ha with ha | ha
+          · exact ht a ha
+          · have e : a = ⟨q,readout q U⟩ := List.mem_singleton.mp ha
+            subst a; rfl
+        obtain ⟨cache',run,hn'',ht'',cost'⟩ := ih _ _ _ _ hr hn' ht'
+        refine ⟨cache',?_,hn'',ht'',?_⟩
+        · simpa only [cachedExecute,step,hit,Option.map_some] using
+            congrArg (Option.map (fun z => ((⟨q,readout q U⟩ :: z.1.1,z.1.2),z.2))) run
+        · rw [cost']
+          simp [paid,List.map_append,Finset.union_assoc,Finset.union_left_comm]
+
 /-- Every finite coarse route admits the same all-source completion. Cache reports
 come only from actual requests, and none becomes a branch only on an existing node. -/
 theorem completion_contract (m : Nat) (F : Fin m → Source)
@@ -250,71 +318,6 @@ theorem completion_contract (m : Nat) (F : Fin m → Source)
     apply source_foundation.2.2.2.2.2.2.2 _ _ _ [] U
     · exact (Classical.choose_spec (Classical.choose_spec (π.correct U))).1
     · exact execution U
-  have cache_run (raw : Policy) (U : Source) :
-      ∀ (n : Nat) (h t cache : RH) (b : Bool),
-        execute readout raw n h U = some (t,b) →
-        (cache.map Sigma.fst).Nodup → (∀ a ∈ cache, a.2 = readout a.1 U) →
-        ∃ cache' : RH, cachedExecute raw n h cache U = some ((t,b),cache') ∧
-          (cache'.map Sigma.fst).Nodup ∧ (∀ a ∈ cache', a.2 = readout a.1 U) ∧
-          paid cache' = paid cache ∪ paid t := by
-    intro n
-    induction n with
-    | zero => intro h t cache b hr _ _; simp [execute] at hr
-    | succ n ih =>
-      intro h t cache b hr hn ht
-      cases step : raw h with
-      | inr z =>
-        simp only [execute,step,Option.some.injEq,Prod.mk.injEq] at hr
-        rcases hr with ⟨rfl,rfl⟩
-        exact ⟨cache, by simp [cachedExecute,step],hn,ht,by simp [paid]⟩
-      | inl q =>
-        simp only [execute,step,Option.map_eq_some_iff] at hr
-        obtain ⟨⟨t',b'⟩,hr,e⟩ := hr
-        cases e
-        cases hit : cache.find? (fun a => a.1 == q) with
-        | some a =>
-          have address : a.1 = q := by simpa using List.find?_some hit
-          have member := List.mem_of_find?_eq_some hit
-          have answer : a.2 = readout q U := by simpa only [address] using ht a member
-          obtain ⟨cache',run,hn',ht',cost'⟩ := ih _ _ cache _ hr hn ht
-          refine ⟨cache',?_,hn',ht',?_⟩
-          · simpa only [cachedExecute,step,hit,answer,Option.map_some] using
-              congrArg (Option.map (fun z => ((⟨q,readout q U⟩ :: z.1.1,z.1.2),z.2))) run
-          · rw [cost']
-            have paidQ : q ∈ paid cache := by
-              exact List.mem_toFinset.mpr (List.mem_map.mpr ⟨a,member,address⟩)
-            simp only [paid,List.map_cons,List.toFinset_cons]
-            change paid cache ∪ paid t' = paid cache ∪ insert q (paid t')
-            rw [Finset.union_insert]
-            exact (Finset.insert_eq_of_mem (Finset.mem_union_left _ paidQ)).symm
-        | none =>
-          have fresh : q ∉ cache.map Sigma.fst := by
-            intro hm
-            obtain ⟨a,ha,eq⟩ := List.mem_map.mp hm
-            have no := List.find?_eq_none.mp hit a ha
-            simp [eq] at no
-          have hn' : ((cache ++
-              [(⟨q,readout q U⟩ : Sigma (fun _ : Address => Reply))]).map Sigma.fst).Nodup := by
-            simp only [List.map_append,List.map_cons,List.map_nil]
-            apply List.nodup_append.mpr
-            refine ⟨hn,by simp,?_⟩
-            intro a ha b hb
-            have beq : b = q := List.mem_singleton.mp hb
-            subst b
-            intro eq
-            exact fresh (eq ▸ ha)
-          have ht' : ∀ a ∈ cache ++ [⟨q,readout q U⟩], a.2 = readout a.1 U := by
-            intro a ha
-            rcases List.mem_append.mp ha with ha | ha
-            · exact ht a ha
-            · have e : a = ⟨q,readout q U⟩ := List.mem_singleton.mp ha
-              subst a; rfl
-          obtain ⟨cache',run,hn'',ht'',cost'⟩ := ih _ _ _ _ hr hn' ht'
-          refine ⟨cache',?_,hn'',ht'',?_⟩
-          · simpa only [cachedExecute,step,hit,Option.map_some] using
-              congrArg (Option.map (fun z => ((⟨q,readout q U⟩ :: z.1.1,z.1.2),z.2))) run
-          · rw [cost']
-            simp [paid,List.map_append,Finset.union_assoc,Finset.union_left_comm]
   have replay (r : PassiveProtocol Address (fun _ => Option Bool)) :
       ∀ (g : CH) (U : Source) (s : RH),
         controllerPolicy (compileRaw F decode r g)
