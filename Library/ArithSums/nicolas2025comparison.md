@@ -4091,3 +4091,78 @@ No such bound, numerical starting clock, unbounded sequence of
 selected sources, or proof of RH is established here. The
 nonnegative quantity is independently constructed; naming it
 does not prove that its size fits the available Robin budget.
+
+## An unconditional primary source already contains the full response coefficient
+
+Akatsuka, *Maximal order for divisor functions and zeros of the Riemann
+zeta-function*, [arXiv:2411.19259v1](https://arxiv.org/abs/2411.19259v1),
+Proposition 4.4, printed p.15, supplies an unconditional explicit formula
+at divisor-weight exponent $1$. Write $\nu$ for the paper's $\kappa$;
+this exponent is distinct from the moving-cut constant used above.
+This application reuses that proposition and the project's existing
+finite-tail identity; it does not reprove the explicit formula or claim
+new mathematical content. The selected source statements, exponential
+integral convention and parameter correspondence were inspected, not
+the complete source proofs or a Lean implementation.
+
+Let $P(X)=\sum_{2\le n\le X}\Lambda(n)/(n\log n)$, using the
+prime-power cutoff rather than the full Euler-product logarithm.
+Equations (4.9) and (4.11) give
+
+$$
+P(X)-\frac{\psi(X)-X}{X\log X}
+=\log\log X+\gamma+Z_{\rm Ak}(1;X)+R_{\rm Ak}(1;X),
+$$
+
+where
+
+$$
+Z_{\rm Ak}(1;X)=-\sum_\rho\left[
+ \operatorname{Ei}((\rho-1)\log X)
+ -\frac{X^{\rho-1}}{\rho\log X}\right],
+$$
+
+$$
+R_{\rm Ak}(1;X)=\frac{\zeta'(0)}{\zeta(0)X\log X}
+-\sum_{k\ge1}\left[
+ \frac{X^{-2k-1}}{2k\log X}
+ +\operatorname{Ei}(-(1+2k)\log X)\right].
+$$
+
+The zeros retain their actual complex values and multiplicities.
+The exponential integral defined immediately before Proposition 4.4
+uses the cut $[0,\infty)$ and the horizontal integral from left infinity.
+That convention matters: adding a lateral $i\pi$ constant would change
+the individual coefficient and its absolute-convergence statement.
+
+For the existing $A=\log N$, $L=\log A$, write (M1) in the source's
+convention:
+
+$$
+F_A(s)=\frac{A^{s-1}}{sL}-\operatorname{Ei}((s-1)L),
+\qquad 0<\Re s<1.
+$$
+
+This is the defining integral in the source's convention: the endpoint
+term at infinity vanishes in this strip. Thus
+$Z_{\rm Ak}(1;A)=Z_{\rm orig}$ with the **complete** $F_A$,
+without replacing it by a leading asymptotic term or moving zeros onto
+the critical line. Substitution into the existing finite-tail identity
+retains the other explicit terms as well:
+
+$$
+I_\psi(A)=-Z_{\rm Ak}(1;A)-R_{\rm Ak}(1;A).
+$$
+
+The source's maximal-order Theorem 1 concerns fixed
+$\nu\in[1/2,1)$; its boundedness condition is equivalent to the stated
+zero-free half-plane, not an unconditional upper estimate. Definition
+2.1 optimizes $\sigma_\nu(n)/n^{\nu(1+\varepsilon)}$, so its
+half-power extremum is not identified with the selected ordinary Robin
+extremum. Lemma 4.5 gives $O_\nu$ bounds only for $0<\nu<1$;
+it supplies neither a uniform limit as $\nu\to1$ nor the missing signed
+bound at exponent $1$. The formula above is an available primary
+representation of the original response. The required same-source
+upper bound on $Z_{\rm Ak}(1;A)+R_{\rm Ak}(1;A)$, equivalently the
+original lower bound on $I_\psi(A)$, remains unproved, as do the strict
+Robin margin and RH.
