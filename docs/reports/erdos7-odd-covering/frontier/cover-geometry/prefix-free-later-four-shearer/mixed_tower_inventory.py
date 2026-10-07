@@ -12,6 +12,7 @@ from math import comb, gcd, prod
 from pathlib import Path
 import argparse
 import hashlib
+import importlib.util
 import json
 
 P = (3, 5, 7, 11, 13, 17, 19, 23)
@@ -193,6 +194,61 @@ def phase_union_budget(rho, event_weights, query_weights):
             'actual_families': families}
 
 
+def prime_tail_budget(mass):
+    """Reuse Report734's quartic continuation on the MT1 unnormalized source."""
+    supplier = (Path(__file__).resolve().parent.parent /
+                'fibre-credit-depth-two-obstruction' /
+                'fibre_credit_depth_two_quartic_prime_tail.py')
+    spec = importlib.util.spec_from_file_location('mt1_quartic_tail', supplier)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f'cannot load quartic tail supplier: {supplier}')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    density = 3 * prod(F(p - 1, p - 2) for p in P[1:])
+    check('prime_tail_application', 'joint density', density == F(4096, 595))
+    result = module.evaluate(P, mass, density, 4, F(1, 4), 20, 729, 6, F(1, 80))
+    check('prime_tail_application', 'absolute fourth moment',
+          F(result['absolute_moment_potential']) == F(27529207808375, 46574352))
+    check('prime_tail_application', 'remaining absolute mass',
+          F(result['remaining_absolute_mass_lower']) > F(1, 80))
+    check('prime_tail_application', 'Haar conversion',
+          F(result['Haar_lower_prefactor']) == F(119, 65536))
+    bridge_path = (supplier.parent.parent / 'refined-capped-source' /
+                   'retained_core_prime_bridge.py')
+    bridge_spec = importlib.util.spec_from_file_location('mt1_finite_prime_bridge', bridge_path)
+    if bridge_spec is None or bridge_spec.loader is None:
+        raise RuntimeError(f'cannot load finite prime bridge: {bridge_path}')
+    bridge = importlib.util.module_from_spec(bridge_spec)
+    bridge_spec.loader.exec_module(bridge)
+    tail = module.evaluate(P, mass, density, 4, F(1, 4), 20, 3000, 7, F(1, 80))
+    primes = bridge.complete_primes(500, 3000)
+    check('prime_tail_application', 'complete finite prime interval',
+          len(primes) == 335 and primes[0] == 503 and primes[-1] == 2999)
+    allowance, exact, rows = bridge.continuation(
+        primes, F(tail['tail_coefficient']), F(1, 4), F(9), 10**30)
+    forward, growth_product = F(0), F(1)
+    for p in primes:
+        forward += growth_product * F(9, (p - 1)**4)
+        growth_product *= 1 + bridge.a4(p) / F(3, 4)
+    forward += growth_product * F(tail['tail_coefficient'])
+    check('prime_tail_application', 'forward and backward exact allowance', forward == exact)
+    check('prime_tail_application', 'rounded finite bridge allowance',
+          allowance == F(70027231661987264313567, 5 * 10**29))
+    remaining = mass - F(tail['absolute_moment_potential']) * allowance
+    check('prime_tail_application', 'finite bridge positive mass',
+          remaining == F(78952939940002286208867333912015109,
+                         22169391552000000000000000000000000000) > F(1, 300))
+    result['finite_prime_bridge'] = {
+        'cutoff_exclusive': 500, 'analytic_tail': tail, 'primes': primes,
+        'prime_count': len(primes), 'rounding_scale': 10**30,
+        'rounded_loss_coefficient': allowance,
+        'rounding_error_upper': F(1, 10**26),
+        'remaining_absolute_mass_lower': remaining, 'strict_simple_lower': F(1, 300),
+        'Haar_lower_prefactor': F(1, 300) / density,
+        'Haar_tail_factor_per_actual_prime': F(3, 4), 'rows': rows}
+    return result
+
+
 def compute():
     CHECKS.clear()
     root_mass = F(1, 3) - F(1, 9) / (1 - F(1, 3))
@@ -236,6 +292,7 @@ def compute():
     check('claimed_constants', 'unrestricted majorant fails',
           unrestricted[-1] == F(-3364432, 7952175) < 0)
     phase_union = phase_union_budget(rho, event_weights, query_weights)
+    prime_tail = prime_tail_budget(rho[-1])
     return {
         'scope': 'Exact rational constants; actual-source and all-height arguments are in Report563 sections8 and9.',
         'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -256,6 +313,7 @@ def compute():
         'unrestricted_majorant': {'polynomials_by_mask': unrestricted,
                                  'meaning': 'Negative upper-activity polynomial; no all-law obstruction.'},
         'phase_union_budget': phase_union,
+        'prime_tail_budget': prime_tail,
         'checks': dict(CHECKS), 'passed_checks': sum(CHECKS.values()),
         'claim_limit': 'No unrestricted eight-prime query theorem, optimizer, or Lean verification.'}
 
