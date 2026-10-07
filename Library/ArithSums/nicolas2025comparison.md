@@ -3169,3 +3169,53 @@ low head could change the budget comparison; none is excluded or
 supplied here. The original full signed Robin condition and RH remain
 unproved, with all coefficients, real parts, multiplicities and
 height ranges unchanged.
+
+### Scope of the Gaussian single-zero-sum formula
+
+Kamiya–Suzuki, *An asymptotic formula for a sum involving zeros of
+the Riemann zeta-function*, Publications de l'Institut Mathématique
+76(90) (2004), 81–88,
+[DOI 10.2298/PIM0476081K](https://doi.org/10.2298/PIM0476081K),
+[primary text](http://elib.mi.sanu.ac.rs/files/journals/publ/96/n090p081.pdf),
+studies
+
+$$
+H(u,v)=\sum_\rho e^{u\rho^2-v\rho}.
+$$
+
+Theorem 1.1 is unconditional and retains actual zero real parts and
+multiplicities. Its $u\downarrow0$ resonance estimates at
+$v=\pm\log m$ have constants depending on the fixed integer $m>2$;
+its off-resonance estimates are uniform on fixed closed intervals
+contained in the positive or negative half-line and avoiding the
+corresponding prime-power logarithms. These intervals exclude zero.
+Neither statement
+supplies uniform control when the frequency parameter grows with $A$.
+The subsequent RH specialization is an illustration, not a hypothesis
+of the theorem.
+
+Lemma 2.1 gives the exact Gaussian explicit formula for every $u>0$
+and real $v$. It is a special case of Weil's formula, already available
+as an interface. Lemma 3.1 bounds its real convolution residual between
+zero and one; this does not bound the complete prime and archimedean
+contributions.
+
+For the localized kernel above, put $a=L/V^2$, $c=3/2$ and
+$r=i(1/2-\rho)$. Its numerator has the exact parameter correspondence
+
+$$
+e^{-a(r-cV)^2+iLr}
+=e^{a/4-L/2+iacV-ac^2V^2}
+ e^{a\rho^2-v_V\rho},\qquad
+v_V=a-L+2iacV.
+$$
+
+Here $v_V$ is complex, while the printed lemma takes real $v$.
+Analytic continuation of an identity alone supplies no uniform signed
+estimate in this moving parameter range. The rational denominator
+$r^2+1/4=\rho(1-\rho)$, the height restrictions and the compensating
+weight $h_V(\gamma)$ also remain to be transported. Thus the printed
+Gaussian results do not pay the signed middle, its combined prime and
+error contribution, or the exact low head in (LM5). They are reused
+within their stated scope, without excluding a future weighted
+application or establishing the original Robin bound or RH.
