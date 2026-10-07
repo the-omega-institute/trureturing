@@ -36,13 +36,19 @@ internal sealed class ComplexPowerDifferenceDocument : IScribeDocumentDefinition
         Formula ell = F.Id("ell");
         Formula bound = F.Id("H");
         return Disp(Seq(
-            Forall, Sp, a, Comma, Sp, b, Colon, Sp, Mathbb, Grp(F.Id("C")), Comma, Sp,
-            Forall, Sp, ell, Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
-            Forall, Sp, bound, Colon, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
-            D(0), Sp, Le, Sp, bound, Sp, Land, Sp,
-            Norm(a), Sp, Le, Sp, bound, Sp, Land, Sp,
-            Norm(b), Sp, Le, Sp, bound, Sp, Rightarrow, Sp,
-            Norm(Seq(Pow(a, ell), Minus, Pow(b, ell))), Sp, Le, Sp,
-            ell, Sp, Norm(Seq(a, Minus, b)), Sp, Pow(bound, Seq(ell, Minus, D(1)))));
+            Forall, Sp, a, Comma, Sp, b, Sp, InMacro, Sp, Mathbb, Grp(F.Id("C")), Comma, Sp,
+            Forall, Sp, ell, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+            Forall, Sp, bound, Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
+            Hypothesis("hH", Seq(D(0), Sp, Le, Sp, bound),
+                Hypothesis("ha", Seq(Norm(a), Sp, Le, Sp, bound),
+                    Hypothesis("hb", Seq(Norm(b), Sp, Le, Sp, bound), Seq(
+                        Norm(Seq(Pow(a, ell), Minus, Pow(b, ell))), Sp, Le, Sp,
+                        CastReal(ell), Sp, Norm(Seq(a, Minus, b)), Sp,
+                        Pow(bound, Seq(ell, Minus, D(1)))))))));
     }
+
+    private static Formula CastReal(Formula value) =>
+        Seq(Open, value, Colon, Sp, Mathbb, Grp(F.Id("R")), Close);
+    private static Formula Hypothesis(string name, Formula proposition, Formula body) =>
+        Seq(Open, F.Id(name), Colon, Sp, proposition, Close, Sp, Rightarrow, Sp, body);
 }

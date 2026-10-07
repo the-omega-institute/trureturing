@@ -20,14 +20,10 @@ internal sealed class OrthocrossNonorthogonalityDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Prefix + "claim"),
                 H("Nonorthogonality and uniform decay"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Open, Forall, Sp, F.Id("d"), Comma, Sp, F.Id("U"), Comma, Sp, Alpha, Comma, Sp, Beta, Comma, Sp,
-                    Alpha, Sp, Neq, Sp, Beta, Sp, Rightarrow, Sp,
-                    D(0), Sp, Lt, Sp, Entry(), Close, Sp, Land, Sp,
-                    Open, Forall, Sp, Epsilon, Sp, Gt, Sp, D(0), Comma, Sp,
-                    Exists, Sp, Sub("d", D(0)), Comma, Sp,
-                    Forall, Sp, F.Id("d"), Sp, Geq, Sp, Sub("d", D(0)), Comma, Sp,
-                    Forall, Sp, F.Id("U"), Comma, Sp, Alpha, Comma, Sp, Beta, Comma, Sp,
-                    Norm(Entry()), Sp, Lt, Sp, Epsilon, Close))),
+                    F.Id("claim"), Sp, Colon, Eq, Sp,
+                    Open, Dimension(Entries(Hypothesis("hab", Seq(Alpha, Sp, Neq, Sp, Beta),
+                        Seq(D(0), Sp, Lt, Sp, Entry())))), Close, Sp, Land, Sp,
+                    Open, UniformDecay(), Close))),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "The dimension d is any natural number, U is any unitary d by d complex matrix, "
@@ -40,11 +36,11 @@ internal sealed class OrthocrossNonorthogonalityDocument : IScribeDocumentDefini
                 DescribeId.Create("orthocross-inverse-frame-pairing"),
                 DeclarationHandle.Create(Prefix + "gram_eq_norm_sq"),
                 H("Weighted squared modulus"),
-                StatementSource.FromAuthor(Disp(Seq(
+                StatementSource.FromAuthor(Disp(Dimension(Entries(Seq(
                     Entry(), Sp, Eq, Sp, Sub("w", Alpha), Sp, Sub("w", Beta), Sp,
-                    Norm(Seq(Sub("v", Alpha), Caret, Grp(Star), Sp,
-                        F.Id("M"), Sp, Sub("v", Beta))), Caret, Grp(D(2)), Comma, Quad, Sp,
-                    F.Id("M"), Sp, Eq, Sp, F.Omega, Caret, Grp(Minus, D(1))))),
+                    Call("ofReal", Seq(Norm(Seq(Sub("v", Alpha), Caret, Grp(Star), Sp,
+                        Frame(), Caret, Grp(Minus, D(1)), Sp, Sub("v", Beta))),
+                        Caret, Grp(D(2))))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Omega is the standard-basis frame. Unitary covariance reduces each Gram entry "
@@ -53,36 +49,33 @@ internal sealed class OrthocrossNonorthogonalityDocument : IScribeDocumentDefini
                         + "because M is Hermitian. The weights are 1 for basis indices and 1/2 for cross indices."))),
                 DescribeRole.Theorem),
             Estimate("frame_lower_bound", "A lower bound for the frame",
-                Seq(Frac(F.Id("d"), D(4)), Sp, F.Id("I"), Sp, Leq, Sp, F.Omega),
+                Dimension(Seq(Frac(RealDimension(), D(4)), Sp, Sub("I", F.Id("d")),
+                    Sp, Leq, Sp, Frame())),
                 "The standard-basis frame has d on the diagonal and (1 - i)/2 or (1 + i)/2 "
                     + "away from the diagonal. Every off-diagonal modulus is at most 3/4. "
                     + "Gershgorin's theorem applied after subtracting (d/4)I shows that "
                     + "every eigenvalue of the difference is nonnegative."),
             Estimate("inverse_frame_norm_bound", "An operator norm bound for the inverse",
-                Seq(F.Id("d"), Sp, Gt, Sp, D(0), Sp, Rightarrow, Sp,
-                    Norm(Seq(F.Omega, Caret, Grp(Minus, D(1)))), Sp, Leq, Sp,
-                    Frac(D(4), F.Id("d"))),
+                Dimension(Hypothesis("hd", PositiveDimension(), Seq(
+                    Norm(Seq(Frame(), Caret, Grp(Minus, D(1)))), Sp, Leq, Sp,
+                    Frac(D(4), RealDimension())))),
                 "In positive dimension, inverse order reverses the frame lower bound. "
                     + "The inverse is positive semidefinite, so its operator norm is at most 4/d."),
             Estimate("gram_norm_bound", "A bound for every Gram entry",
-                Seq(F.Id("d"), Sp, Gt, Sp, D(0), Sp, Rightarrow, Sp,
-                    Norm(Entry()), Sp, Leq, Sp, Frac(D(2, 5, 6), Seq(F.Id("d"), Caret, Grp(D(2))))),
+                Dimension(Hypothesis("hd", PositiveDimension(), Entries(Seq(
+                    Norm(Entry()), Sp, Leq, Sp,
+                    Frac(D(2, 5, 6), Seq(RealDimension(), Caret, Grp(D(2)))))))),
                 "Each unnormalised orthocross vector has Euclidean norm at most two. "
                     + "Cauchy-Schwarz and the inverse norm bound give pairing modulus at most 16/d. "
                     + "The weights are at most one, and the squared-modulus identity therefore "
                     + "bounds every Gram entry by 256 divided by d squared, uniformly in the basis and indices."),
             Estimate("gram_uniform_decay", "Uniform decay with dimension",
-                Seq(Forall, Sp, Epsilon, Sp, Gt, Sp, D(0), Comma, Sp,
-                    Exists, Sp, Sub("d", D(0)), Comma, Sp,
-                    Forall, Sp, F.Id("d"), Sp, Geq, Sp, Sub("d", D(0)), Comma, Sp,
-                    Forall, Sp, F.Id("U"), Comma, Sp, Alpha, Comma, Sp, Beta, Comma, Sp,
-                    Norm(Entry()), Sp, Lt, Sp, Epsilon),
+                UniformDecay(),
                 "Choose a natural number larger than both 1 and 256/epsilon. For every "
                     + "dimension at least that number, the uniform Gram bound is strictly "
                     + "less than epsilon. This establishes the second clause of the assertion."),
             Estimate("gram_pos", "Strict positivity of every Gram entry",
-                Seq(Forall, Sp, F.Id("U"), Comma, Sp, Alpha, Comma, Sp, Beta, Comma, Sp,
-                    D(0), Sp, Lt, Sp, Entry()),
+                Dimension(Entries(Seq(D(0), Sp, Lt, Sp, Entry()))),
                 "Every inverse-frame pairing is nonzero. Its squared modulus is strictly positive, "
                     + "and both orthocross weights are positive. The weighted squared-modulus identity "
                     + "therefore gives strict complex positivity, which means that the entry is a "
@@ -110,6 +103,29 @@ internal sealed class OrthocrossNonorthogonalityDocument : IScribeDocumentDefini
 
     private static Formula Sub(string name, Formula index) => Seq(F.Id(name), Underscore, Grp(index));
     private static Formula Entry() => Seq(Sub("G", Seq(Alpha, Beta)), Open, F.Id("U"), Close);
+    private static Formula Frame() => Seq(F.Omega, Underscore, Grp(F.Id("d")));
+    private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula RealDimension() => Seq(Open, F.Id("d"), Colon, Sp, Reals(), Close);
+    private static Formula PositiveDimension() => Seq(D(0), Sp, Lt, Sp, F.Id("d"));
+    private static Formula Dimension(Formula body) =>
+        Seq(Forall, Sp, F.Id("d"), Sp, InMacro, Sp, Naturals(), Comma, Sp, body);
+    private static Formula Entries(Formula body) => Seq(
+        Forall, Sp, F.Id("U"), Sp, InMacro, Sp,
+        Call("unitaryGroup", Call("Fin", F.Id("d")), Seq(Mathbb, Grp(F.Id("C")))), Comma, Sp,
+        Forall, Sp, Alpha, Comma, Sp, Beta, Sp, InMacro, Sp, Call("Idx", F.Id("d")), Comma, Sp, body);
+    private static Formula Hypothesis(string name, Formula proposition, Formula body) =>
+        Seq(Open, F.Id(name), Colon, Sp, proposition, Close, Sp, Rightarrow, Sp, body);
+    private static Formula UniformDecay() => Seq(
+        Forall, Sp, Epsilon, Sp, InMacro, Sp, Reals(), Comma, Sp,
+        Hypothesis("he", Seq(D(0), Sp, Lt, Sp, Epsilon), Seq(
+            Exists, Sp, Sub("d", D(0)), Sp, InMacro, Sp, Naturals(), Comma, Sp,
+            Dimension(Hypothesis("hd", Seq(Sub("d", D(0)), Sp, Leq, Sp, F.Id("d")),
+                Entries(Seq(Norm(Entry()), Sp, Lt, Sp, Epsilon)))))));
+    private static Formula Call(string name, Formula argument) =>
+        Seq(Operatorname, Grp(F.Id(name)), Open, argument, Close);
+    private static Formula Call(string name, Formula first, Formula second) =>
+        Seq(Operatorname, Grp(F.Id(name)), Open, first, Comma, Sp, second, Close);
     private static Formula Norm(Formula value) => Seq(Vert, Sp, value, Vert);
     private static Formula Epsilon => Varepsilon;
     private static Formula Frac(Formula numerator, Formula denominator) =>

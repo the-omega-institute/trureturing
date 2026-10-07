@@ -6,7 +6,7 @@ Orthocross Gram entries are weighted squared moduli of inverse-frame pairings. E
 
 **Definition 1.1 (Nonorthogonality and uniform decay).**
 
-$$(\forall d, U, \alpha, \beta, \alpha \neq \beta \Rightarrow 0 < G_{\alpha\beta}(U)) \land (\forall \varepsilon > 0, \exists d_{0}, \forall d \geq d_{0}, \forall U, \alpha, \beta, \Vert G_{\alpha\beta}(U)\Vert < \varepsilon)$$
+$$claim := (\forall d \in \mathbb{N}, \forall U \in \operatorname{unitaryGroup}(\operatorname{Fin}(d), \mathbb{C}), \forall \alpha, \beta \in \operatorname{Idx}(d), (hab: \alpha \neq \beta) \Rightarrow 0 < G_{\alpha\beta}(U)) \land (\forall \varepsilon \in \mathbb{R}, (he: 0 < \varepsilon) \Rightarrow \exists d_{0} \in \mathbb{N}, \forall d \in \mathbb{N}, (hd: d_{0} \leq d) \Rightarrow \forall U \in \operatorname{unitaryGroup}(\operatorname{Fin}(d), \mathbb{C}), \forall \alpha, \beta \in \operatorname{Idx}(d), \Vert G_{\alpha\beta}(U)\Vert < \varepsilon)$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/OrthocrossNonorthogonality.claim` (`✓ std3`).
 
@@ -18,7 +18,7 @@ The dimension d is any natural number, U is any unitary d by d complex matrix, a
 
 **Theorem 1.2 (Weighted squared modulus).**
 
-$$G_{\alpha\beta}(U) = w_{\alpha} w_{\beta} \Vert v_{\alpha}^{*} M v_{\beta}\Vert^{2},\quad M = \omega^{-1}$$
+$$\forall d \in \mathbb{N}, \forall U \in \operatorname{unitaryGroup}(\operatorname{Fin}(d), \mathbb{C}), \forall \alpha, \beta \in \operatorname{Idx}(d), G_{\alpha\beta}(U) = w_{\alpha} w_{\beta} \operatorname{ofReal}(\Vert v_{\alpha}^{*} \omega_{d}^{-1} v_{\beta}\Vert^{2})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossNonorthogonality.gram_eq_norm_sq` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ Omega is the standard-basis frame. Unitary covariance reduces each Gram entry to
 
 **Theorem 1.3 (A lower bound for the frame).**
 
-$$\frac{d}{4} I \leq \omega$$
+$$\forall d \in \mathbb{N}, \frac{(d: \mathbb{R})}{4} I_{d} \leq \omega_{d}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossNonorthogonality.frame_lower_bound` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ The standard-basis frame has d on the diagonal and (1 - i)/2 or (1 + i)/2 away f
 
 **Theorem 1.4 (An operator norm bound for the inverse).**
 
-$$d > 0 \Rightarrow \Vert \omega^{-1}\Vert \leq \frac{4}{d}$$
+$$\forall d \in \mathbb{N}, (hd: 0 < d) \Rightarrow \Vert \omega_{d}^{-1}\Vert \leq \frac{4}{(d: \mathbb{R})}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossNonorthogonality.inverse_frame_norm_bound` (`✓ std3`). ∎
 
@@ -58,7 +58,7 @@ In positive dimension, inverse order reverses the frame lower bound. The inverse
 
 **Theorem 1.5 (A bound for every Gram entry).**
 
-$$d > 0 \Rightarrow \Vert G_{\alpha\beta}(U)\Vert \leq \frac{256}{d^{2}}$$
+$$\forall d \in \mathbb{N}, (hd: 0 < d) \Rightarrow \forall U \in \operatorname{unitaryGroup}(\operatorname{Fin}(d), \mathbb{C}), \forall \alpha, \beta \in \operatorname{Idx}(d), \Vert G_{\alpha\beta}(U)\Vert \leq \frac{256}{(d: \mathbb{R})^{2}}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossNonorthogonality.gram_norm_bound` (`✓ std3`). ∎
 
@@ -72,7 +72,7 @@ Each unnormalised orthocross vector has Euclidean norm at most two. Cauchy-Schwa
 
 **Theorem 1.6 (Uniform decay with dimension).**
 
-$$\forall \varepsilon > 0, \exists d_{0}, \forall d \geq d_{0}, \forall U, \alpha, \beta, \Vert G_{\alpha\beta}(U)\Vert < \varepsilon$$
+$$\forall \varepsilon \in \mathbb{R}, (he: 0 < \varepsilon) \Rightarrow \exists d_{0} \in \mathbb{N}, \forall d \in \mathbb{N}, (hd: d_{0} \leq d) \Rightarrow \forall U \in \operatorname{unitaryGroup}(\operatorname{Fin}(d), \mathbb{C}), \forall \alpha, \beta \in \operatorname{Idx}(d), \Vert G_{\alpha\beta}(U)\Vert < \varepsilon$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossNonorthogonality.gram_uniform_decay` (`✓ std3`). ∎
 
@@ -86,7 +86,7 @@ Choose a natural number larger than both 1 and 256/epsilon. For every dimension 
 
 **Theorem 1.7 (Strict positivity of every Gram entry).**
 
-$$\forall U, \alpha, \beta, 0 < G_{\alpha\beta}(U)$$
+$$\forall d \in \mathbb{N}, \forall U \in \operatorname{unitaryGroup}(\operatorname{Fin}(d), \mathbb{C}), \forall \alpha, \beta \in \operatorname{Idx}(d), 0 < G_{\alpha\beta}(U)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossNonorthogonality.gram_pos` (`✓ std3`). ∎
 

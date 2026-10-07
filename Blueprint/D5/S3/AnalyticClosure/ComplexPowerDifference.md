@@ -6,7 +6,7 @@ On a complex disk of radius H, the difference of the ell-th powers is bounded by
 
 **Theorem 1.1 (Uniform power-difference bound).**
 
-$$\forall a, b: \mathbb{C}, \forall ell: \mathbb{N}, \forall H: \mathbb{R}, 0 \le H \land \Vert a\Vert \le H \land \Vert b\Vert \le H \Rightarrow \Vert a^{ell}-b^{ell}\Vert \le ell \Vert a-b\Vert H^{ell-1}$$
+$$\forall a, b \in \mathbb{C}, \forall ell \in \mathbb{N}, \forall H \in \mathbb{R}, (hH: 0 \le H) \Rightarrow (ha: \Vert a\Vert \le H) \Rightarrow (hb: \Vert b\Vert \le H) \Rightarrow \Vert a^{ell}-b^{ell}\Vert \le (ell: \mathbb{R}) \Vert a-b\Vert H^{ell-1}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/AnalyticClosure/ComplexPowerDifference.norm_pow_sub_pow_le` (`✓ std3`). ∎
 

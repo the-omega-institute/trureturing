@@ -30,7 +30,7 @@ The lower frame entry is defined by this equality.
 
 **Definition 1.3 (Complex scale).**
 
-$$\forall d, L = d-a$$
+$$\forall d \in \mathbb{N}, L_{d} = (d: \mathbb{C})-a$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.scale` (`✓ std3`).
 
@@ -42,7 +42,7 @@ The complex scale is defined by this equality.
 
 **Definition 1.4 (Geometric ratio).**
 
-$$\forall d, q = \frac{d-b}{L}$$
+$$\forall d \in \mathbb{N}, q_{d} = \frac{(d: \mathbb{C})-b}{L_{d}}$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.ratio` (`✓ std3`).
 
@@ -54,7 +54,7 @@ The geometric ratio is defined by this equality.
 
 **Definition 1.5 (Geometric denominator).**
 
-$$\forall d, \Delta = b-aq^{d}$$
+$$\forall d \in \mathbb{N}, \Delta_{d} = b-aq_{d}^{d}$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.denominator` (`✓ std3`).
 
@@ -66,7 +66,7 @@ The geometric denominator is defined by this equality.
 
 **Definition 1.6 (Upper inverse coefficient).**
 
-$$\forall d, u = \frac{-iaq^{d-2}}{L^{2}\Delta}$$
+$$\forall d \in \mathbb{N}, u_{d} = \frac{-iaq_{d}^{(d: \mathbb{Z})-2}}{L_{d}^{2}\Delta_{d}}$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.upperConstant` (`✓ std3`).
 
@@ -78,7 +78,7 @@ The upper inverse coefficient is defined by this equality.
 
 **Definition 1.7 (Diagonal inverse coefficient).**
 
-$$\forall d, t = \frac{1}{L}-\frac{iaq^{d-1}}{L^{2}\Delta}$$
+$$\forall d \in \mathbb{N}, t_{d} = \frac{1}{L_{d}}-\frac{iaq_{d}^{(d: \mathbb{Z})-1}}{L_{d}^{2}\Delta_{d}}$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.diagonalConstant` (`✓ std3`).
 
@@ -90,7 +90,7 @@ The diagonal inverse coefficient is defined by this equality.
 
 **Definition 1.8 (Hermitian triangular candidate).**
 
-$$\forall d, \forall j, k, (j = k \Rightarrow M_{jk} = t) \land (j < k \Rightarrow M_{jk} = uq^{j-k+1}) \land (k < j \Rightarrow M_{jk} = (uq^{k-j+1})^{*})$$
+$$\forall d \in \mathbb{N}, \forall j, k \in \operatorname{Fin}(d), M_{d,j,k} = \begin{cases}t_{d}&j = k\\u_{d}q_{d}^{(\operatorname{val}(j): \mathbb{Z})-(\operatorname{val}(k): \mathbb{Z})+1}&j < k\\(u_{d}q_{d}^{(\operatorname{val}(k): \mathbb{Z})-(\operatorname{val}(j): \mathbb{Z})+1})^{*}&\text{otherwise}\end{cases}$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.candidate` (`✓ std3`).
 
@@ -102,7 +102,7 @@ For indices j,k in Fin d, the candidate has diagonal t, entry u q^(j-k+1) above 
 
 **Theorem 1.9 (The ratio is nonzero).**
 
-$$\forall d, q \neq 0$$
+$$\forall d \in \mathbb{N}, q_{d} \neq 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.ratio_ne_zero` (`✓ std3`). ∎
 
@@ -114,7 +114,7 @@ The scale has imaginary part one half, so it and its conjugate are nonzero.
 
 **Theorem 1.10 (The ratio is distinct from one).**
 
-$$\forall d, q \neq 1$$
+$$\forall d \in \mathbb{N}, q_{d} \neq 1$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.ratio_ne_one` (`✓ std3`). ∎
 
@@ -126,7 +126,7 @@ The difference q-1 equals -i divided by the nonzero scale.
 
 **Theorem 1.11 (Unit modulus).**
 
-$$\forall d, \Vert q\Vert = 1$$
+$$\forall d \in \mathbb{N}, \Vert q_{d}\Vert = 1$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.norm_ratio` (`✓ std3`). ∎
 
@@ -138,7 +138,7 @@ The numerator is the conjugate of L. Its norm equals the nonzero norm of L.
 
 **Theorem 1.12 (Conjugation inverts the ratio).**
 
-$$\forall d, q^{*} = q^{-1}$$
+$$\forall d \in \mathbb{N}, q_{d}^{*} = q_{d}^{-1}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.star_ratio` (`✓ std3`). ∎
 
@@ -150,7 +150,7 @@ Conjugating the quotient interchanges its numerator and denominator.
 
 **Theorem 1.13 (Nonzero denominator).**
 
-$$\forall d, d > 0 \Rightarrow \Delta \neq 0$$
+$$\forall d \in \mathbb{N}, (hd: 0 < d) \Rightarrow \Delta_{d} \neq 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.denominator_ne_zero` (`✓ std3`). ∎
 
@@ -162,7 +162,7 @@ A zero denominator would imply q^d = i. For d at least two, the telescoping boun
 
 **Theorem 1.14 (Nonzero upper coefficient).**
 
-$$\forall d, d > 0 \Rightarrow u \neq 0$$
+$$\forall d \in \mathbb{N}, (hd: 0 < d) \Rightarrow u_{d} \neq 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.upperConstant_ne_zero` (`✓ std3`). ∎
 
@@ -174,7 +174,7 @@ All factors in the numerator and denominator of u are nonzero in positive dimens
 
 **Theorem 1.15 (The candidate inverts the frame).**
 
-$$\forall d, d > 0 \Rightarrow \omega M = I$$
+$$\forall d \in \mathbb{N}, (hd: 0 < d) \Rightarrow \omega_{d} M_{d} = I_{d}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.frame_mul_candidate` (`✓ std3`). ∎
 
@@ -186,7 +186,7 @@ Scale the candidate by L^2 delta. The geometric column sum is i L q^(d-k-1), whi
 
 **Theorem 1.16 (Closed inverse form).**
 
-$$\forall d, d > 0 \Rightarrow \omega^{-1} = M$$
+$$\forall d \in \mathbb{N}, (hd: 0 < d) \Rightarrow \omega_{d}^{-1} = M_{d}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.inverse_frame_eq` (`✓ std3`). ∎
 
@@ -198,7 +198,7 @@ A right inverse of a square matrix equals its nonsingular inverse. Hermiticity i
 
 **Theorem 1.17 (Positive real diagonal).**
 
-$$\forall d, d > 0 \Rightarrow 0 < t$$
+$$\forall d \in \mathbb{N}, (hd: 0 < d) \Rightarrow 0 < t_{d}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.diagonalConstant_pos` (`✓ std3`). ∎
 
@@ -210,7 +210,7 @@ The standard frame is positive definite, and so is its inverse. Every diagonal e
 
 **Theorem 1.18 (Conjugate coefficient phase).**
 
-$$\forall d, u^{*} = uiq^{2-d}$$
+$$\forall d \in \mathbb{N}, u_{d}^{*} = u_{d}iq_{d}^{2-(d: \mathbb{Z})}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.upperConstant_phase` (`✓ std3`). ∎
 
@@ -222,7 +222,7 @@ Conjugating delta gives -delta q^(-d), while conjugating L gives qL. The factors
 
 **Theorem 1.19 (A short quotient for the diagonal ratio).**
 
-$$\forall d, d > 0 \Rightarrow \frac{t}{u} = \frac{q-iq^{2-d}}{1-q}$$
+$$\forall d \in \mathbb{N}, (hd: 0 < d) \Rightarrow \frac{t_{d}}{u_{d}} = \frac{q_{d}-iq_{d}^{2-(d: \mathbb{Z})}}{1-q_{d}}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.diagonal_div_upperConstant` (`✓ std3`). ∎
 
@@ -234,7 +234,7 @@ The identities t = 1/L + qu and qt - conjugate(u) = 1/L give t(1-q) = qu - conju
 
 **Theorem 1.20 (Small Gaussian polynomials do not vanish).**
 
-$$\forall d, \forall p, p \neq 0 \land (\forall n, \Vert p_{n}\Vert^{2} < 2d^{2}-2d+1) \Rightarrow p(q) \neq 0$$
+$$\forall d \in \mathbb{N}, \forall p \in \operatorname{Polynomial}(\mathbb{Z}[i]), (hp: p \neq 0) \Rightarrow (hcoeff: \forall n \in \mathbb{N}, \operatorname{norm}_{\mathbb{Z}[i]}(p_{n}) < 2(d: \mathbb{Z})^{2}-2(d: \mathbb{Z})+1) \Rightarrow p(q_{d}) \neq 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossInverseFrame.polynomial_at_ratio_ne_zero` (`✓ std3`). ∎
 

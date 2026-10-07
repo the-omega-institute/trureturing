@@ -6,7 +6,7 @@ Inverse-frame pairings can be expressed through Gaussian polynomials. Intersecti
 
 **Definition 1.1 (The pairing polynomial).**
 
-$$\forall d, \forall \alpha, \beta, P_{\alpha\beta}(X) = v_{\alpha}^{*} H(X) v_{\beta}$$
+$$\forall d \in \mathbb{N}, \forall \alpha, \beta \in \operatorname{Idx}(d), P_{\alpha\beta}(X) = v_{\alpha}^{*} H_{d}(X) v_{\beta}$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/OrthocrossPairingPolynomial.pairingPolynomial` (`✓ std3`).
 
@@ -18,7 +18,7 @@ The dimension d is natural and alpha,beta are orthocross indices. The Gaussian c
 
 **Theorem 1.2 (Nonzero pairing polynomials).**
 
-$$\forall d, \forall \alpha, \beta, P_{\alpha\beta} \neq 0$$
+$$\forall d \in \mathbb{N}, \forall \alpha, \beta \in \operatorname{Idx}(d), P_{\alpha\beta} \neq 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossPairingPolynomial.pairingPolynomial_ne_zero` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ Evaluation at one gives (1-i) times the ordinary vector pairing. This is nonzero
 
 **Theorem 1.3 (A uniform coefficient bound).**
 
-$$d \geq 2 \implies \Vert [X^{n}]P_{\alpha\beta}\Vert^{2} \leq 16$$
+$$\forall d \in \mathbb{N}, (hd: 2 \leq d) \Rightarrow \forall \alpha, \beta \in \operatorname{Idx}(d), \forall n \in \mathbb{N}, \operatorname{norm}_{\mathbb{Z}[i]}([X^{n}]P_{\alpha\beta}) \leq 16$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossPairingPolynomial.pairingPolynomial_coeff_bound` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ Each matrix-entry polynomial has coefficients of modulus at most one. A vector p
 
 **Theorem 1.4 (Nonvanishing at the geometric ratio).**
 
-$$d \geq 4 \implies P_{\alpha\beta}(q) \neq 0$$
+$$\forall d \in \mathbb{N}, (hd: 4 \leq d) \Rightarrow \forall \alpha, \beta \in \operatorname{Idx}(d), P_{\alpha\beta}(q_{d}) \neq 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossPairingPolynomial.pairingPolynomial_at_ratio_ne_zero` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ For d at least four, the Gaussian denominator of q has norm 2d squared minus 2d 
 
 **Theorem 1.5 (The inverse pairing identity).**
 
-$$d \geq 2 \implies P_{\alpha\beta}(q) = \frac{(1-q)q^{d-2}}{u} v_{\alpha}^{*} M v_{\beta}$$
+$$\forall d \in \mathbb{N}, (hd: 2 \leq d) \Rightarrow \forall \alpha, \beta \in \operatorname{Idx}(d), P_{\alpha\beta}(q_{d}) = \frac{(1-q_{d})q_{d}^{(d: \mathbb{Z})-2}}{u_{d}} v_{\alpha}^{*} \operatorname{candidate}(d) v_{\beta}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossPairingPolynomial.pairingPolynomial_eval_ratio` (`✓ std3`). ∎
 
@@ -66,7 +66,7 @@ Multiplying the inverse matrix by (1-q)q^(d-2)/u removes all negative powers. Th
 
 **Theorem 1.6 (Nonvanishing in every dimension).**
 
-$$d \geq 2 \implies P_{\alpha\beta}(q) \neq 0$$
+$$\forall d \in \mathbb{N}, (hd: 2 \leq d) \Rightarrow \forall \alpha, \beta \in \operatorname{Idx}(d), P_{\alpha\beta}(q_{d}) \neq 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossPairingPolynomial.pairingPolynomial_eval_ne_zero` (`✓ std3`). ∎
 
@@ -78,7 +78,7 @@ The uniform Gaussian coefficient argument applies in dimension at least four. In
 
 **Theorem 1.7 (Nonzero inverse-frame pairings).**
 
-$$\forall d, \forall \alpha, \beta, v_{\alpha}^{*} \omega^{-1} v_{\beta} \neq 0$$
+$$\forall d \in \mathbb{N}, \forall \alpha, \beta \in \operatorname{Idx}(d), v_{\alpha}^{*} \omega_{d}^{-1} v_{\beta} \neq 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/OrthocrossPairingPolynomial.inverse_frame_pairing_ne_zero` (`✓ std3`). ∎
 
