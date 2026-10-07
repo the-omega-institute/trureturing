@@ -23210,3 +23210,1328 @@ $$
 该预算在原素数、连续区间、同整数和终端条件下仍为独立未决问题；统计换权不支付它，也不推出 Robin 或 RH。
 
 ## 追加锚（本行以下为增补区）
+
+## 286. 同一非稀疏组成源的三窗口似然一致抵消
+
+定义与来源约定。沿用定义 285.1 的实际有序非空满二叉树、组成纤维均匀律 $U(a,b)$、原替换 $\rho$ 和三窗口 $W_3$。对 $k=\min(a,b)\ge1$、$M=\max(a,b)$，置 $d=k+1$。参考律 $\widetilde U(a,b)$ 使用定义 285.2 的全部 $d$ 位奇偶律 $\mathsf Q_{d,M}$、同一个实际条件核 (285.5)、指定少数字母方向的原叶词及全部均匀 Catalan 括号；相等组成仍以 $\alpha$ 分隔。这个合同在 $M\ge d-1$ 时均有定义，边界的非空性在下面证明内核对。记
+
+$$
+D_W(a,b)=\left\|(W_3)_*U(a,b)-(W_3)_*\widetilde U(a,b)\right\|_{\mathrm{TV}},
+\qquad \|P-Q\|_{\mathrm{TV}}=\frac12\sum_x|P(x)-Q(x)|.
+$$
+
+**定理 286.1（同源三窗口的非稀疏一致总变差界）。** 对每个实数 $c_0\in(0,1]$，存在有限常数 $C(c_0)>0$，使全部非负整数组成 $(a,b)$ 满足
+
+$$
+k=\min(a,b)\ge1,\qquad M=\max(a,b),\qquad c_0\le\frac{k}{M}\le1
+$$
+
+时，都有
+
+$$
+D_W(a,b)\le\min\left\{1,\ C(c_0)(k+1)^{-1/20}\right\}.
+\tag{286.1}
+$$
+
+常数在组成、两个方向及所有端点奇偶之前选定。因此，任意满足同一 $c_0$ 下界且 $k\to\infty$ 的组成族，其实际三窗口总变差一致趋于零；包括 $a=b$、比例不收敛及少数字母方向任意切换的族。
+
+证明。固定 $c_0$。下文的 $C,c>0$ 可逐式增大或减小，但只依赖 $c_0$。先对充分大的 $d$ 证明估计，最后统一处理小 $d$。使用定义 285.1 的同一个间隔向量 $r$、完整 $\xi$、累计奇偶 $\varepsilon$ 和 $X=(H,O,E)$。此处 $E$ 是占据量，与叶积 $E(t)$ 区分。合法总奇数位数的有限集合为
+
+$$
+\mathcal H_{d,M}=\{h\in\mathbb Z:0\le h\le d,\ h\le M,\ h\equiv M\pmod2\}.
+$$
+
+由 $M\ge k=d-1$，参考律的每个正质量向量都有 $h\le M$：$M\ge d$ 时显然；$M=d-1$ 时唯一可能超出者 $h=d$ 与 $M$ 奇偶相反。因此 (285.5) 在全部参考正质量纤维上都是同一个非空实际核 $K_\xi$，包括 $s_\xi=(M-h)/2=0$。均匀弱组成及全部括号的回接直接使用 §285；两树律满足
+
+$$
+U(t)=\mathsf R(\xi(t))K_{\xi(t)}(t),\qquad
+\widetilde U(t)=\mathsf Q(\xi(t))K_{\xi(t)}(t).
+\tag{286.2}
+$$
+
+仅在 $h\in\mathcal H_{d,M}$ 上定义正似然 $u(h)=\mathsf R(\xi)/\mathsf Q(\xi)$。由 (285.3)–(285.4)，它只依赖 $h$。记 $R_h,Q_h$ 为这两律的 $h$ 边缘，$P_R(h,X),P_{\widetilde U}(h,X)$ 为各自的同源联合质量，则
+
+$$
+R_h(h)=u(h)Q_h(h),\qquad
+P_{\widetilde U}(h,X)=\frac{P_R(h,X)}{u(h)}.
+\tag{286.3}
+$$
+
+这些式子由同一个 $K_\xi$ 汇总得到，不假定条件后的 $T$ 与 $\xi$ 独立。在固定组成下，(285.1) 的两个仿射式都是 $X\leftrightarrow Z$ 的双射：第一方向先由 $u,w$ 恢复 $O-E,O+E$，再由 $v$ 恢复 $H$；第二方向先由 $u,v$ 恢复 $E-O,O+E$，再由 $w$ 恢复 $H$。组成决定 $p,q$，母卷定理 359.3 又给出 $Z\leftrightarrow W_3$ 的实际像双射。因此
+
+$$
+D_W(a,b)=\frac12\sum_X|P_R^X(X)-P_{\widetilde U}^X(X)|.
+\tag{286.4}
+$$
+
+母卷定理 360.2 的八边非负整数及含 $00$ 的弱 Euler 支撑仍由原路径承担；两律在实际支撑之外都为零。
+
+为估计这个联合律，临时在辅助层独立取
+
+$$
+\mathbb P_{\mathrm{geom}}(r_i=j)=(1-\tau)\tau^j\quad(j\ge0),\qquad
+\tau=\frac{M}{M+d},\quad \nu=\frac{\tau}{1+\tau},\quad
+\varrho=\frac{1-\tau}{1+\tau},\quad
+\mu=\frac{\tau}{1-\tau},
+$$
+
+并置 $L=\sum_i r_i$。条件于 $L=M$ 时每个间隔向量质量同为 $(1-\tau)^d\tau^M$，故恰回到原均匀弱组成；随后仍附全部原括号。这里 $\varrho$ 是标量，原树替换仍记 $\rho$；几何方差记 $\sigma_r^2$，不改变 Clifford 元 $S=BA$。实际参数属于紧集
+
+$$
+K=[1/3,\tau_+],\qquad \tau_+=\frac1{1+c_0}<1,\qquad
+0<\varrho\le\frac12.
+\tag{286.5}
+$$
+
+辅助层仅用于精确条件化，不引入另一树采样律。
+
+令频率 $\theta=(s,t,z,x,y)$ 依次配对 $(L,H,h,O,E)$，定义
+
+$$
+\begin{aligned}
+G(s,z)&=\frac{1-\tau}{1-\tau^2e^{2is}}
+ \begin{pmatrix}1&\tau e^{i(s+z)}\\ \tau e^{i(s+z)}&1\end{pmatrix},\qquad
+D(x)=\operatorname{diag}(1,e^{ix}),\\
+T(\theta)&=G(s,z)D(x)G(s+t,z)D(y).
+\end{aligned}
+\tag{286.6}
+$$
+
+令 $e_j$ 为状态 $j\in\{0,1\}$ 的标准列向量，$\varepsilon_0=0$，并保留最后一个间隔与端点：
+
+$$
+F_d^e(\theta)=\mathbb E_{\mathrm{geom}}
+ \left[e^{i\theta\cdot(L,H,h,O,E)}\mathbf1_{\{\varepsilon_d=e\}}\right].
+$$
+
+逐间隔求和偶、奇长度，得到精确的两个式子
+
+$$
+\begin{aligned}
+F_{2m}^e&=e_0^{\mathsf T}T^{m-1}G(s,z)D(x)G(s+t,z)e_e,\\
+F_{2m+1}^e&=e_0^{\mathsf T}T^mG(s,z)e_e.
+\end{aligned}
+\tag{286.7}
+$$
+
+第一个 $G$ 记录偶索引间隔，第二个记录奇索引间隔；$D(x),D(y)$ 只计内部奇、偶位置。偶数 $d$ 的末式没有 $D(y)$，所以 $\varepsilon_d$ 不被计入占据量，末间隔却仍贡献 $L,H,h$。在零点
+
+$$
+T(0)=P_\nu^2,\qquad
+P_\nu=\begin{pmatrix}1-\nu&\nu\\\nu&1-\nu\end{pmatrix},
+$$
+
+特征值为 $1,\varrho^2$，谱隙至少 $3/4$。
+
+先完整确定五维频率环面的单位模共振。实频率上逐项有 $|T(\theta)|\le P_\nu^2$，后者严格正且随机，故谱半径至多一。若 $T v=\zeta v$、$|\zeta|=1$，在模最大坐标的三角等号中，严格正性迫使 $|v_0|=|v_1|>0$。每一条正概率双间隔路径 $a\to b\to c$ 的相位也必须分别取等号，即
+
+$$
+e^{i\psi}v_c=\zeta v_a,\qquad
+\psi=s(r_0+r_1)+tr_1+z(\xi_0+\xi_1)+xb+yc.
+$$
+
+把任一间隔增加二，先得 $s,s+t\in\pi\mathbb Z$，写 $s=A\pi,t=B\pi$。状态零的零长度自环给 $\zeta=1$；状态一的零长度自环给 $x+y\equiv0$。比较 $0\to1$ 的长度对 $(0,1),(1,0)$，得到 $x\equiv t$，故 $x=y=B\pi$。再用 $0\to0$ 的 $(1,1)$ 路径，得到 $2s+t+2z+x\equiv0$，即 $z=C\pi$。所有同余均模 $2\pi$。所以共振只能属于
+
+$$
+\Gamma=\{(A\pi,B\pi,C\pi,B\pi,B\pi):A,B,C\in\{0,1\}\}.
+\tag{286.8}
+$$
+
+反向令 $J=\operatorname{diag}(1,-1)$。直接代入 (286.6)，对 $\gamma\in\Gamma$ 有
+
+$$
+T(\theta+\gamma)=J^{A+C}T(\theta)J^{A+C},\qquad
+F_d^e(\theta+\gamma)=(-1)^{(A+C+\kappa B)e}F_d^e(\theta),
+\quad \kappa=(d-1)\bmod2.
+\tag{286.9}
+$$
+
+于是八点全部共振，且没有遗漏。路径上本来就有
+
+$$
+L\equiv h\equiv\varepsilon_d,\qquad
+H-O-E\equiv\kappa\varepsilon_d\pmod2.
+\tag{286.10}
+$$
+
+第二式由 $H\equiv\sum_{i\text{ 奇}}\xi_i$ 及 $\xi_i=\varepsilon_i\oplus\varepsilon_{i+1}$ 逐项消去得到。五维比较格为
+
+$$
+\mathcal L_d=\{(l,H,h,O,E)\in\mathbb Z^5:l\equiv h,\ H-O-E\equiv\kappa l\pmod2\},
+$$
+
+指数为四。固定 $l=M$ 后，它精确分解为
+
+$$
+(M+2\mathbb Z)\times\Lambda_X,\qquad
+\Lambda_X=\{(H,O,E)\in\mathbb Z^3:H-O-E\equiv\kappa M\pmod2\}.
+\tag{286.11}
+$$
+
+$h$ 格与 $X$ 格各有指数二，$X$ 的陪集不依赖 $h$。这些比较格不是实际可实现支撑的充分条件；非负间隔、八边非负和弱连通条件仍全部保留。
+
+下面计算谱展开的二次型。置
+
+$$
+\begin{gathered}
+N_o=\lfloor d/2\rfloor,\qquad n_e=\lfloor(d-1)/2\rfloor,\qquad
+\alpha_o=N_o/d,\qquad J_H=H-L/2,\\
+v=\frac{\tau}{(1+\tau)^2},\qquad
+\sigma_r^2=\frac{\tau}{(1-\tau)^2},\qquad \chi=1-\varrho^2,\\
+m_X=(\alpha_o M,N_o/2,n_e/2),\qquad
+b_d=(M,\alpha_o M,d\nu,N_o/2,n_e/2).
+\end{gathered}
+\tag{286.12}
+$$
+
+$m_X,b_d$ 是比较中心，未声称为全部条件坐标的精确均值。几何级数给
+
+$$
+\mathbb E r_i=\mu,\quad \operatorname{Var}(r_i)=\sigma_r^2,\quad
+\mathbb E\xi_i=\nu,\quad
+\operatorname{Var}(\xi_i)=\operatorname{Cov}(r_i,\xi_i)=v.
+$$
+
+令 $\eta_j=(-1)^{\varepsilon_j}$，初态是 $\eta_0=1$，则
+
+$$
+\mathbb E\eta_j=\varrho^j,\qquad
+\mathbb E\eta_i\eta_j=\varrho^{|i-j|},\qquad
+\operatorname{Cov}(\eta_i,\eta_j)=\varrho^{|i-j|}-\varrho^{i+j}.
+\tag{286.13}
+$$
+
+由独立间隔直接展开，对 $i<j$ 有
+
+$$
+\operatorname{Cov}(r_i,\eta_j)=\operatorname{Cov}(\xi_i,\eta_j)
+=-2v\varrho^{j-1};
+$$
+
+$i\ge j$ 时两协方差为零。因此任何长坐标 $L,h,J_H$ 与 $O,E$ 的交叉协方差绝对值至多常数乘
+$\sum_{j\ge1}j\varrho^{j-1}$，在 $K$ 上统一有界。
+
+$J_H$ 的间隔系数为 $\pm1/2$；直接得到
+
+$$
+\begin{gathered}
+\operatorname{Var}L=d\sigma_r^2,\quad \operatorname{Var}h=dv,\quad
+\operatorname{Cov}(L,h)=dv,\quad \operatorname{Var}J_H=d\sigma_r^2/4,\\
+\operatorname{Cov}(L,J_H)=\sigma_r^2(N_o-d/2),\quad
+\operatorname{Cov}(h,J_H)=v(N_o-d/2).
+\end{gathered}
+$$
+
+后两项只是统一有界的端点项。对奇内部位置集合 $I_o$ 和偶内部位置集合 $I_e$，使用 $O-N_o/2=-\frac12\sum_{j\in I_o}\eta_j$ 及相应 $E$ 式，有
+
+$$
+\begin{aligned}
+\operatorname{Var}O
+&=\frac14\left[N_o+2\sum_{q=1}^{N_o-1}(N_o-q)\varrho^{2q}
+ -\left(\sum_{j\in I_o}\varrho^j\right)^2\right],\\
+\operatorname{Var}E
+&=\frac14\left[n_e+2\sum_{q=1}^{n_e-1}(n_e-q)\varrho^{2q}
+ -\left(\sum_{j\in I_e}\varrho^j\right)^2\right],\\
+\operatorname{Cov}(O,E)
+&=\frac14\left[\sum_{\substack{1\le q<d-1\\q\text{ 奇}}}(d-1-q)\varrho^q
+ -\left(\sum_{j\in I_o}\varrho^j\right)
+  \left(\sum_{j\in I_e}\varrho^j\right)\right].
+\end{aligned}
+\tag{286.14}
+$$
+
+空集合及空和取零。有限几何和与无限和之差由 $\sum q\varrho^{2q}$、$\sum(q+1)\varrho^q$ 和 $\sum\varrho^q$ 控制。均值的偏置也只是这些几何和。因此，在坐标 $(L,h,J_H,O,E)$ 中，均值与由 $b_d$ 变换所得中心相差 $O(1)$，协方差为
+
+$$
+d\operatorname{diag}(A_\tau,C_\tau)+O(1),
+\quad
+A_\tau=\begin{pmatrix}\sigma_r^2&v\\v&v\end{pmatrix},\qquad
+C_\tau=\begin{pmatrix}
+\sigma_r^2/4&0&0\\
+0&(1+\varrho^2)/(8\chi)&\varrho/(4\chi)\\
+0&\varrho/(4\chi)&(1+\varrho^2)/(8\chi)
+\end{pmatrix}.
+\tag{286.15}
+$$
+
+各余项逐条在 $K$ 上统一有界。$\det A_\tau=\sigma_r^2v\chi>0$；$C_\tau$ 的三个特征值为
+$\sigma_r^2/4,(1+\varrho)^2/(8\chi),(1-\varrho)^2/(8\chi)$。故两个矩阵一致正定。原顺序 $(L,H,h,O,E)$ 的每间隔比较协方差为
+
+$$
+\Sigma_\tau=
+\begin{pmatrix}
+\sigma_r^2&\sigma_r^2/2&v&0&0\\
+\sigma_r^2/2&\sigma_r^2/2&v/2&0&0\\
+v&v/2&v&0&0\\
+0&0&0&(1+\varrho^2)/(8\chi)&\varrho/(4\chi)\\
+0&0&0&\varrho/(4\chi)&(1+\varrho^2)/(8\chi)
+\end{pmatrix}.
+\tag{286.16}
+$$
+
+固定可逆坐标变换保持一致正定；记其在 $K$ 上的最小特征值下界为 $s_*>0$。
+
+现在直接作解析展开及离散反演。先选共同复多圆盘半径 $R>0$，使 $\tau_+^2e^{4R}<1$。两个 $G$ 的分母在该域都离零至少 $1-\tau_+^2e^{4R}>0$；矩阵及其边界因子因而解析且统一有界。置
+
+$$
+\Delta=(\operatorname{tr}T)^2-4\det T,\qquad
+\lambda=\frac{\operatorname{tr}T+\sqrt\Delta}{2},\qquad
+\lambda_2=\frac{\operatorname{tr}T-\sqrt\Delta}{2},\qquad
+\Pi=\frac{T-\lambda_2 I}{\lambda-\lambda_2}.
+\tag{286.17}
+$$
+
+$\Delta(0)=(1-\varrho^2)^2\ge9/16$。紧参数连续性允许统一缩小多圆盘，使 $\operatorname{Re}\Delta>0$；取零点正值的平方根支。再统一缩小，使
+$|\lambda-1|\le1/8$、$|\lambda_2|\le3/8$、$|\lambda-\lambda_2|\ge1/2$。于是 $\log\lambda$ 取零点值零的解析支，$\Pi$ 也解析。若这些函数在半径 $R_1$ 的闭多圆盘上的界为 $B$，多变量 Cauchy 公式在半径 $R_1/2$ 的盘内给
+
+$$
+|\partial^\beta f|\le\beta!(2/R_1)^{|\beta|}B\quad(|\beta|\le3).
+$$
+
+边界振幅的前几阶导数有同类统一界，故三阶 Taylor 余项的统一常数由已证非零分母及谱隙取得。
+
+为确认二次项而非假设它，取奇数 $d=2m+1$，把两个端点相加。在该共同邻域由 (286.7)、(286.17) 精确写成
+
+$$
+F_d^0+F_d^1=\lambda^m A_o+\lambda_2^m B_o,\qquad A_o(0)=1.
+$$
+
+振幅导数统一有界，次谱项零点前两阶导数的模至多
+$C(1+m^2)(3/8)^{m-2}$。对零点求对数前两阶导数，其值分别为实际均值乘 $i$ 与实际协方差的负值。用 (286.13)–(286.16) 的有限矩，除以 $m$ 并令 $m\to\infty$，得到
+
+$$
+\log\lambda(\theta)=i\beta_2\cdot\theta-\theta^{\mathsf T}\Sigma_\tau\theta
+ +O(\|\theta\|^3),\qquad
+\beta_2=(2\mu,\mu,2\nu,1/2,1/2).
+\tag{286.18}
+$$
+
+这只使用精确生成式和实际有限矩，不以极限定理反推谱导数。对于所有 $\tau\in K$，同一矩推导以 $M=d\mu$ 表示中心即可成立；因此余项在整个 $K$ 上统一。
+
+主投影在零点为 $\Pi(0)=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}$。两类端点主振幅
+
+$$
+a_o^e=e_0^{\mathsf T}\Pi G(s,z)e_e,\qquad
+a_e^e=e_0^{\mathsf T}\Pi G(s,z)D(x)G(s+t,z)e_e
+$$
+
+在零点均为 $1/2$，且 $|a_o^e(\theta)-1/2|+|a_e^e(\theta)-1/2|\le C\|\theta\|$。准确的有限端点质量仍为
+$F_d^e(0)=[1+(-1)^e\varrho^d]/2$，并未改成平稳端点。令奇数 $d$ 时 $n=(d-1)/2$，偶数时 $n=(d-2)/2$。$n\beta_2-b_d$ 在奇数时等于 $(-\mu,0,-\nu,0,0)$，偶数时等于 $(-2\mu,-\mu,-2\nu,-1/2,0)$；$|n-d/2|\le1$。这些位移在 $K$ 上有界，可记 $\mu_+=\max_K\mu<\infty$。
+
+选足够小的共同实半径 $\delta>0$，使八个共振邻域互不相交，且 (286.18) 的三阶余项小于 $s_*\|\theta\|^2/2$。于是零点邻域内 $\operatorname{Re}\log\lambda\le-s_*\|\theta\|^2/2$。利用
+
+$$
+e^U-e^V=(U-V)\int_0^1e^{(1-t)V+tU}\,dt
+$$
+
+依次比较 $n\log\lambda$ 与 $in\beta_2\cdot\theta-n\theta^{\mathsf T}\Sigma_\tau\theta$，再比较后者与 $ib_d\cdot\theta-d\theta^{\mathsf T}\Sigma_\tau\theta/2$。振幅差为 $O(\|\theta\|)$，位移差为 $O(\|\theta\|+\|\theta\|^2)$，三阶差为 $O(d\|\theta\|^3)$；次谱项由 $|\lambda_2|\le3/8$ 控制。$d\ge4$ 时 $n\ge d/4$，从而对两种端点和两类 $d$ 同时有
+
+$$
+\left|F_d^e(\theta)-\frac12
+ e^{ib_d\cdot\theta-d\theta^{\mathsf T}\Sigma_\tau\theta/2}\right|
+\le C(\|\theta\|+d\|\theta\|^3)e^{-cd\|\theta\|^2}+Cq^d,
+\quad \|\theta\|\le\delta,\quad q<1.
+\tag{286.19}
+$$
+
+其余七个邻域使用 (286.9)。远离八点的闭频率集上，由完整共振分类和紧性，$q_0=\max\operatorname{spr}T<1$。选 $q_f\in(q_0,1)$；圆 $|w|=q_f$ 上的预解式 $(wI-T)^{-1}$ 在该紧集统一有界。矩阵 Cauchy 公式
+
+$$
+T^n=\frac1{2\pi i}\int_{|w|=q_f}w^n(wI-T)^{-1}\,dw
+$$
+
+给出统一指数衰减，亦覆盖次特征值重合或不可对角化的点。边界矩阵在实频率上有界，所以远区的完整 $F_d^e$ 同样指数衰减。
+
+令 $\phi_V$ 表示正定协方差 $V$ 的连续高斯密度；这里只在格点取值作为比较函数。五维离散反演为
+
+$$
+\mathbb P_{\mathrm{geom}}(Y=y,\varepsilon_d=e)
+=(2\pi)^{-5}\int_{\mathbb T^5}e^{-i\theta\cdot y}F_d^e(\theta)\,d\theta,
+\quad Y=(L,H,h,O,E).
+$$
+
+(286.19) 的一次项积分为 $O(d^{-3})$，$d$ 乘三次项积分也为 $O(d^{-3})$，因为
+
+$$
+\int_{\mathbb R^5}\|\theta\|^p e^{-cd\|\theta\|^2}\,d\theta
+=C_p d^{-(5+p)/2}\quad(p=1,3).
+$$
+
+远区、次谱和延长高斯积分到 $\mathbb R^5$ 的误差均指数小，故可吸收到 $Cd^{-3}$。反演相位模为一，所以该误差对全部整数 $y$ 一致。八个中心的相位和为
+
+$$
+\sum_{A,B,C\in\{0,1\}}
+(-1)^{A(l-e)+C(h-e)+B(H+O+E-\kappa e)}
+=8\mathbf1_{\{l\equiv h\equiv e,\ H-O-E\equiv\kappa e\ (2)\}}.
+$$
+
+乘主振幅 $1/2$ 恰得因子四。因 $L$ 已决定端点，得到对全部 $y\in\mathcal L_d$ 的全格绝对估计
+
+$$
+\mathbb P_{\mathrm{geom}}(Y=y)
+=4d^{-5/2}\phi_{\Sigma_\tau}\left(\frac{y-b_d}{\sqrt d}\right)
+ +O(d^{-3}).
+\tag{286.20}
+$$
+
+非法格点的真实质量严格为零，比较质量也按零延拓。合法格中不满足真实支撑的点，其真实质量仍为零；上述反演误差同样覆盖这些点，没有将其删去，也未宣称所有比较格点可实现。
+
+条件化还须支付真实离散分母。$L$ 的单间隔特征函数是
+
+$$
+f_L(s)=\frac{1-\tau}{1-\tau e^{is}}.
+$$
+
+零、一次、二次长度均有正质量，三角等号给唯一共振 $s=0\pmod{2\pi}$。共同复邻域内
+
+$$
+\log f_L(s)=i\mu s-\frac12\sigma_r^2s^2+O(|s|^3).
+$$
+
+例如从 $\log f_L(s)=\sum_{j\ge1}\tau^j(e^{ijs}-1)/j$ 可直接界定三阶导数；取 $\tau_+e^R<1$ 时，其模至多 $r(1+r)/(1-r)^3$，$r=\tau_+e^R<1$。零点小邻域的高斯衰减与远区的统一严格模小于一，给出一维离散反演；三阶项的积分为 $d\int |s|^3e^{-cds^2}ds=O(d^{-1})$。因此
+
+$$
+p_L(M):=\mathbb P_{\mathrm{geom}}(L=M)
+=d^{-1/2}a_\tau+O(d^{-1}),\qquad
+ a_\tau=\phi_{\sigma_r^2}(0).
+\tag{286.21}
+$$
+
+$\inf_K a_\tau>0$，所以对某个只依赖 $c_0$ 的阈值 $d_0$，$p_L(M)\ge cd^{-1/2}$，且将分母中的 $a_\tau+O(d^{-1/2})$ 换为 $a_\tau$ 的倒数误差为 $O(d^{-1/2})$。
+
+同样，$(L,h)$ 的单间隔特征函数为
+
+$$
+f_2(s,z)=\frac{(1-\tau)(1+\tau e^{i(s+z)})}{1-\tau^2e^{2is}}.
+$$
+
+逐长度比较零、一次、二次相位，完整共振恰为 $(0,0),(\pi,\pi)$，比较格为 $l\equiv h\pmod2$，指数二。取共同小复邻域使 $|f_2-1|\le1/2$，便有统一解析的 $\log f_2$；Cauchy 公式给共同三阶余项。其前两阶导数来自单间隔的已算矩，故
+
+$$
+\log f_2(s,z)=i(\mu s+\nu z)
+ -\frac12(s,z)A_\tau(s,z)^{\mathsf T}+O(\|(s,z)\|^3).
+$$
+
+一致正定性给局部高斯衰减；其余紧频率集上的模统一小于一。二维三阶项积分为
+$d\int_{\mathbb R^2}\|\theta\|^3e^{-cd\|\theta\|^2}d\theta=O(d^{-3/2})$；两中心同相给
+
+$$
+\mathbb P_{\mathrm{geom}}(L=l,h=h_0)
+=2d^{-1}\phi_{A_\tau}
+ \left(\frac{l-M}{\sqrt d},\frac{h_0-d\nu}{\sqrt d}\right)
+ +O(d^{-3/2})\quad(l\equiv h_0\pmod2).
+\tag{286.22}
+$$
+
+这些一、二、五维估计均由显式函数、完整共振和离散反演产生。
+
+置 $x_h=(h-d\nu)/\sqrt d$、$x_X=(X-m_X)/\sqrt d$。坐标变换 $(L,H,h,O,E)\mapsto(L,h,J_H,O,E)$ 的行列式绝对值一。由 (286.15)，高斯条件于 $L=M$ 时 $h$ 的 Schur 补方差为
+
+$$
+v-\frac{v^2}{\sigma_r^2}=v\chi>0;
+$$
+
+其余三维块为 $C_\tau$，$J_H$ 在 $L=M$ 下恢复的 $H$ 中心恰为 $\alpha_o M$。因此密度的精确分解为
+
+$$
+\phi_{\Sigma_\tau}(0,x_H,x_h,x_O,x_E)
+=a_\tau\phi_{v\chi}(x_h)\phi_{C_\tau}(x_X).
+$$
+
+将 (286.20) 在 $l=M$ 处除以真实 (286.21)，分子误差贡献 $O(d^{-3})/p_L(M)=O(d^{-5/2})$，分母倒数误差贡献 $O(d^{-2}d^{-1/2})$。二维估计同样条件化，遂得全比较格上的两个绝对估计
+
+$$
+\begin{aligned}
+P_R(h,X)&=4d^{-2}\phi_{v\chi}(x_h)\phi_{C_\tau}(x_X)+O(d^{-5/2}),\\
+R_h(h)&=2d^{-1/2}\phi_{v\chi}(x_h)+O(d^{-1}).
+\end{aligned}
+\tag{286.23}
+$$
+
+在 $\Lambda_X$ 上定义
+
+$$
+g_d(X)=2d^{-3/2}\phi_{C_\tau}(x_X),
+$$
+
+其余整数点取零。统一正定性给 $\sup_Xg_d(X)\le G_\infty d^{-3/2}$。相乘相减得到承重的条件联合分解
+
+$$
+\sup_{\substack{h\in M+2\mathbb Z\\ X\in\Lambda_X}}
+|\mathcal E_d(h,X)|\le Cd^{-5/2},\qquad
+\mathcal E_d(h,X)=P_R(h,X)-R_h(h)g_d(X).
+\tag{286.24}
+$$
+
+$h\notin\mathcal H_{d,M}$ 时真实 $R_h$ 和联合质量按零延拓，(286.24) 仍成立；没有在这些点求逆似然。真实不可实现的 $X$ 点也保持零质量。分解来自完整反演和真实条件化，不由零协方差单独推断独立。
+
+$g_d$ 只是非负比较函数，不要求精确归一化。若 $c_*\le\lambda_{\min}(C_\tau)\le\lambda_{\max}(C_\tau)\le c^*$ 是 $K$ 上的共同界，则有常数 $A_g,a_g>0$ 使
+
+$$
+g_d(X)\le A_gd^{-3/2}\exp\left(-a_g\frac{\|X-m_X\|_2^2}{d}\right).
+$$
+
+对任意实中心 $t$，将单峰高斯和按中心两侧作积分比较，得
+$\sum_{n\in\mathbb Z}e^{-a_g(n-t)^2/d}\le2+\sqrt{\pi d/a_g}$。即使放大到整个 $\mathbb Z^3$，三坐标相乘也给共同质量上界。再用
+$u e^{-a_gu}\le[2/(a_ge)]e^{-a_gu/2}$，得到只依赖 $c_0$ 的
+
+$$
+\sum_Xg_d(X)\le G_{\mathrm{mass}}<\infty,\qquad
+\sum_Xg_d(X)\frac{\|X-m_X\|_2^2}{d}\le G_{\mathrm{mom}}<\infty.
+\tag{286.25}
+$$
+
+从而任意 $B>0$ 均有
+
+$$
+\sum_{\|X-m_X\|_\infty>B\sqrt d}g_d(X)\le G_{\mathrm{mom}}B^{-2}.
+\tag{286.26}
+$$
+
+以上只比较格点函数与积分，不涉及离散树律对连续高斯律的总变差。
+
+现在在同一个核上控制似然。对 $0\le x\le d$ 定义
+
+$$
+\ell(x)=\sum_{j=1}^{d-1}\log(M-x+2j)-x\log\tau,\qquad m=d\nu.
+$$
+
+$M\ge d-1$ 给全部对数参数至少一。展开 (285.3)–(285.4) 的组合数，并用 $\mathbb E_Q u=1$，精确得到
+
+$$
+u(h)=\frac{e^{\ell(h)-\ell(m)}}{c_\ell},\qquad
+c_\ell=\mathbb E_Q e^{\ell(h)-\ell(m)}.
+\tag{286.27}
+$$
+
+令 $A_m=M-m$，则
+
+$$
+A_m=\frac{2M^2}{2M+d},\qquad A_m+2d=\frac{2(M+d)^2}{2M+d},\qquad
+\int_0^d\frac{dy}{A_m+2y}=-\log\tau.
+$$
+
+递减函数的完整离散和与积分比较给
+
+$$
+0\le\ell'(m)\le\frac1{A_m}\le\frac3d\quad(d\ge3).
+\tag{286.28}
+$$
+
+最后一界可在最小 $M=d-1$ 核对，此后 $A_m$ 随 $M$ 增加。全域凹性给 $\ell(h)-\ell(m)\le3$。在 $|h-m|\le d/4$ 上，因 $m<d/2$，连接线段有 $x\le3d/4$，故
+
+$$
+-\ell''(x)=\sum_{j=1}^{d-1}(M-x+2j)^{-2}\le16/d.
+$$
+
+Taylor 积分余项因此给
+
+$$
+\ell(h)-\ell(m)\ge-3|h-m|/d-8(h-m)^2/d.
+\tag{286.29}
+$$
+
+未条件 Bernoulli 总和的均值为 $m$、方差为 $dv\le d/4$。完整终端条件代价是
+
+$$
+p_e=\frac{1+(-1)^M\varrho^d}{2}\ge\frac13\quad(d\ge2).
+$$
+
+对非负平方只付出 $p_e^{-1}$，所以 $\mathbb E_Q(h-m)^2\le3d/4$。$d\ge16$ 时，$Q\{|h-m|\le\sqrt d\}\ge1/4$，该事件落在 (286.29) 内，其上 $\ell(h)-\ell(m)\ge-11$。故
+
+$$
+e^{-11}/4\le c_\ell\le e^3,\qquad
+0<u(h)\le U_+:=4e^{14}\quad(h\in\mathcal H_{d,M},\ d\ge16).
+\tag{286.30}
+$$
+
+这是全域正向界。逆似然只在增长窗上使用：若 $|h-m|\le r\sqrt d$、$r\sqrt d\le d/4$，则
+
+$$
+\frac1{u(h)}\le e^{3+3r/\sqrt d+8r^2}\le e^{15/4+8r^2}.
+\tag{286.31}
+$$
+
+不将此式扩张到全部合法 $h$。
+
+对一个未条件中心化 Bernoulli 位，令 $K_B(\lambda)=\log\mathbb E e^{\lambda(\xi-\nu)}$。$K_B(0)=K_B'(0)=0$，$K_B''(\lambda)$ 是倾斜 Bernoulli 方差，至多 $1/4$，所以两次积分给 $K_B(\lambda)\le\lambda^2/8$，包括负 $\lambda$。独立总和的 Chernoff 优化给未条件尾界 $2e^{-2r^2}$。付出真实终端条件代价，再由 $R_h=uQ_h$ 与全域正向界，得
+
+$$
+Q_h\{|h-m|>r\sqrt d\}\le6e^{-2r^2},\qquad
+R_h\{|h-m|>r\sqrt d\}\le6U_+e^{-2r^2}\quad(d\ge16).
+\tag{286.32}
+$$
+
+$m$ 不必是终端条件后的精确均值；这些尾界围绕同一个比较中心成立。
+
+还须控制同一个实际 $X$ 的两种真实尾。未条件 Bernoulli 层由 (286.13) 直接给每个 $N\in\{N_o,n_e\}$ 的对应占据量中心二阶矩
+
+$$
+\frac14\left[N+2\sum_{q=1}^{N-1}(N-q)\varrho^{2q}\right]
+\le\frac N4\frac{1+\varrho^2}{1-\varrho^2}\le\frac{5N}{12}.
+$$
+
+它以 $N/2$ 为比较中心，已包含非平稳初态偏置。对非负平方付出 $p_e^{-1}$，便得实际 $Q$ 历史上的
+
+$$
+\mathbb E_Q[(O-N_o/2)^2+(E-n_e/2)^2]\le5(d-1)/4.
+\tag{286.33}
+$$
+
+用同一个 (285.16) 的 Beta—二项分组核，令 $N_a=d-N_o$、$h_o=\sum_{i\text{ 奇}}\xi_i$、$h_c=h_o-\alpha_o h$，则
+
+$$
+\mathbb E(H\mid\xi)=\alpha_o M+h_c,\qquad
+\operatorname{Var}(H\mid\xi)
+=\frac{4s_\xi\alpha_o(1-\alpha_o)(s_\xi+d)}{d+1}.
+\tag{286.34}
+$$
+
+该式也可由正形状参数 $\operatorname{Beta}(N_o,N_a)$ 的前两阶积分矩和全方差公式取得。$d\ge2$ 时两形状参数均正；$s_\xi=0$ 时分组量恒零，(286.34) 的方差恰为零，不使用正剩余量近似。
+
+终端条件只依赖 $h$，所以 $Q$ 的全部 $d$ 位可交换。置 $b_i=\mathbf1_{\{i\text{ 奇}\}}-\alpha_o$，有 $\sum_i b_i=0$、$\sum_i b_i^2=N_oN_a/d$。取两个不同位置的 $q_1=\mathbb E_Q\xi_0$、$q_2=\mathbb E_Q\xi_0\xi_1$，完整展开给
+
+$$
+\mathbb E_Q h_c=0,\qquad
+\mathbb E_Q h_c^2=\frac{N_oN_a}{d}(q_1-q_2)
+\le\frac{N_oN_a}{2d}\le\frac d8.
+\tag{286.35}
+$$
+
+这里 $q_1-q_2=\frac12\mathbb E_Q(\xi_0-\xi_1)^2\le1/2$，因子不可省略；未假定条件位独立。以 (286.34) 的条件均值分解平方，交叉项条件期望为零。再用
+$0\le s_\xi\le M/2\le d/(2c_0)$，得到
+
+$$
+\mathbb E_{\widetilde U}(H-\alpha_o M)^2
+\le d\left(\frac1{4c_0^2}+\frac1{2c_0}+\frac18\right).
+$$
+
+结合 (286.33)，可取
+
+$$
+A(c_0)=\frac1{4c_0^2}+\frac1{2c_0}+\frac{11}{8},\qquad
+\mathbb E_{\widetilde U}\|X-m_X\|_2^2\le A(c_0)d.
+\tag{286.36}
+$$
+
+三个平方在同一个 $\xi,K_\xi$ 实现上求和，无须坐标独立。对同一个非负函数使用 (286.2)–(286.3) 和 $u\le U_+$，又得
+
+$$
+\mathbb E_U\|X-m_X\|_2^2\le U_+A(c_0)d.
+$$
+
+因 $\|X-m_X\|_\infty>B\sqrt d$ 蕴含 $\|X-m_X\|_2^2>B^2d$，两种真实窗口尾均有
+
+$$
+\widetilde U\{\|X-m_X\|_\infty>B\sqrt d\}\le A(c_0)B^{-2},\qquad
+U\{\|X-m_X\|_\infty>B\sqrt d\}\le U_+A(c_0)B^{-2}.
+\tag{286.37}
+$$
+
+最后在每一个相同窗口纤维内作有符号求和。对 $h\in\mathcal H_{d,M}$ 置 $a(h)=1-1/u(h)$。归一化给精确消去
+
+$$
+\sum_{h\in\mathcal H_{d,M}}a(h)R_h(h)
+=\sum_h(R_h(h)-Q_h(h))=0.
+$$
+
+因此对每个 $X$，先在完整合法 $h$ 集上求和，才取绝对值：
+
+$$
+P_R^X(X)-P_{\widetilde U}^X(X)
+=\sum_{h\in\mathcal H_{d,M}}a(h)\mathcal E_d(h,X).
+\tag{286.38}
+$$
+
+取增长窗
+
+$$
+r^2=\frac{\log d}{40},\qquad B=d^{1/40}.
+\tag{286.39}
+$$
+
+令 $d$ 充分大，使 (286.20)–(286.24) 和 $d\ge16$ 成立；$r\sqrt d\le d/4$ 也成立。由 (286.31)，中央 $h$ 窗内
+
+$$
+|a(h)|\le1+e^{15/4+8r^2}\le Cd^{1/5}.
+$$
+
+$|h-m|\le r\sqrt d$ 的整数点至多 $Cr\sqrt d$；$\|X-m_X\|_\infty\le B\sqrt d$ 的三维整数点至多 $CB^3d^{3/2}$。比较格取子集只减少点数。中央贡献于是由 (286.24) 支付为
+
+$$
+\sum_{\substack{|h-m|\le r\sqrt d\\\|X-m_X\|_\infty\le B\sqrt d}}
+|a(h)\mathcal E_d(h,X)|
+\le CrB^3d^2d^{1/5}d^{-5/2}
+\le C\sqrt{\log d}\,d^{-9/40}.
+\tag{286.40}
+$$
+
+补集不用局部误差乘无限点数，也不用全域逆似然界。由非负性与 (286.3)，逐点有
+
+$$
+|a(h)\mathcal E_d(h,X)|
+\le P_R(h,X)+P_{\widetilde U}(h,X)
+ +(R_h(h)+Q_h(h))g_d(X).
+\tag{286.41}
+$$
+
+在 $h$ 尾上求全部 $X$ 和，前两项恰为真实 $R_h,Q_h$ 尾，最后一项为这两尾乘 $\sum_Xg_d(X)$；(286.25)、(286.32) 给总贡献 $Ce^{-2r^2}$。在 $X$ 尾上求全部合法 $h$ 和，前两项恰为同一实际 $U,\widetilde U$ 的 $X$ 尾，最后一项为 $2\sum_{X\text{ 尾}}g_d(X)$；(286.26)、(286.37) 给总贡献 $CB^{-2}$。两个尾的并集可用两者之和覆盖，所有实际零质量点仍保留。代入 (286.39) 后，两项分别都是 $Cd^{-1/20}$。由 (286.4)、(286.38)–(286.41)，得到
+
+$$
+2D_W(a,b)
+\le C\left[\sqrt{\log d}\,d^{-9/40}+d^{-1/20}\right]
+\le C'd^{-1/20}.
+\tag{286.42}
+$$
+
+所有解析域、谱隙、正定性、反演余项及条件分母阈值只由紧集 $K$ 决定。故存在 $d_0(c_0)\ge16$，对全部 $d\ge d_0(c_0)$ 同时成立上述估计，不需要组成比例存在极限。对其余 $2\le d<d_0(c_0)$，直接用 $D_W\le1$，并把 $C(c_0)$ 增大到至少 $d_0(c_0)^{1/20}$，即可覆盖全部小 $d$，包括三维协方差退化的 $d=2$。两种 $d$ 奇偶、两种实际端点在 (286.7)–(286.10) 已统一处理；两个少数字母方向只在 (285.1) 的实际像双射回接处不同，$a=b$ 使用第一方向。再与 $D_W\le1$ 合并，证明 (286.1)。$\square$
+
+数学来源与范围。实际原树、完整间隔、同一条件核、两方向仿射恢复及 Beta—二项分组直接采用本卷 §§283–285；三窗口唯一正规形与真实八边／弱 Euler 支撑直接采用[母卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md) §§359–360。有限纤维提升、总变差通道收缩与纤维内同号的等号判据是已有中间供应，见 [FiberwiseEqualDistanceLift](../../../D5/S3/TotalVariation/Equality/FiberwiseEqualDistanceLift.lean)、[DataProcessing](../../../D5/S3/TotalVariation/DataProcessing.lean) 和 [DataProcessingEquality](../../../D5/S3/TotalVariation/Equality/DataProcessingEquality.lean)；这里没有用它们将完整记录的误差或下界直接传给窗口。
+
+Klein–Lagnoux–Petit，*A conditional Berry–Esseen inequality*，[arXiv:1901.09911v2](https://arxiv.org/pdf/1901.09911v2)，Proposition 1、Theorem 1、Proposition 2、Theorem 2 及均匀组成例，是标量条件分布函数估计和几何条件化的成熟背景；它们不承担上述含 $O,E$ 的五维格点质量反演。Ferré–Hervé–Ledoux，*Limit theorems for stationary Markov processes with $L^2$-spectral gap*，[arXiv:1201.4579v1](https://arxiv.org/pdf/1201.4579v1)，以及 Hervé–Ledoux，*Additional material on local limit theorem for finite Additive Markov Processes*，[arXiv:1305.5644v2](https://arxiv.org/pdf/1305.5644v2)，提供有限状态 Fourier 谱方法的背景；其中需要绝对连续部分的密度结论不用于本题纯格点律。这里的共同参数域、全部八共振、端点振幅、一／二／五维误差和条件化已由显式矩阵直接证明。[有限二项计数的模态惊讶与一致 escort 矩](PARITY_HIDDEN_ARROW_FINITE_BINOMIAL_SURPRISE.md)的定理 2.1 是实际单组质量的标量供应，也不直接给 (286.24) 与 (286.38) 的同核联合关系。
+
+本定理的承重推导是同一实际条件联合质量的全比较格绝对分解、增长窗逆似然控制、真实两律尾界与窗口纤维内有符号抵消的组合；数学来源为仓内推导，不作全球优先权或指数最优性断言。它只控制原三窗口事件，不断言完整树或完整奇偶记录的总变差趋零，亦不改变原替换、左右次序或括号。$c_0$ 固定是统一性的条件；$c_0$ 随组成趋零的族仍须另给估计。
+
+在原素数 $r\ge7$、$V=F_r$、连续区间、原低 $J$ 定位条件及同一整数 $N^*=1+Vg^*$ 上，保留完整素幂和所有除数的严格算术预算
+
+$$
+C^*+H^*<\left(\frac{\log\log N^*}{\log\log A}\right)^s,
+\qquad s=\log A\,\log\log A
+$$
+
+仍为独立未决问题。本定理不提供它所需的低 $J$ 核心与高 $J$ 尾联合估计；已有 $H^*\le\varepsilon_A$ 只给充分条件
+$`C^*+\varepsilon_A<(\log\log N^*/\log\log A)^s`$，不能把 $`C^*+\varepsilon_A<1`$ 当作必要条件。母卷 §§381–382 的实际 Fibonacci 闭包误差及有限最小公倍数族误差，均保留各自对象和范围，不替代这个原仿射整数预算；上述统计结论也不推出 Robin 或 RH。
+
+## 追加锚（本行以下为增补区）
+## 287. 原三窗口在全部组成比例上的统一正幂
+
+**定义 287.1（原条件核与全比例缩放）。** 沿用定义 285.1–285.2 的自由有序非空满二叉树、叶 $\alpha,\beta$、组成纤维均匀律 $U(a,b)$ 和原替换
+
+$$
+\rho(\alpha)=\beta,\qquad \rho(\beta)=\langle\beta,\alpha\rangle,
+\qquad \rho(\langle t_1,t_2\rangle)=\langle\rho(t_1),\rho(t_2)\rangle.
+$$
+
+叶积使用 $A^2=1,B^2=-1,AB+BA=1$，三个窗口为同一实际树的
+$W_3(t)=(E(t),E(\rho t),E(\rho^2t))$；左右次序和全部括号属于来源数据。固定整数 $a,b\ge1$，记
+
+$$
+k=\min(a,b),\qquad M=\max(a,b),\qquad d=k+1\ge2,
+\qquad \delta=\frac d{M+d},\quad \tau=1-\delta,
+\quad \nu=\frac{\tau}{1+\tau},\quad
+\varrho=\frac{\delta}{1+\tau},\quad
+v=\frac{\tau}{(1+\tau)^2},\quad \chi=1-\varrho^2.
+$$
+
+此处 $\varrho$ 是标量，不是树替换 $\rho$。当 $a\le b$ 时以 $\alpha$ 分隔，当 $b<a$ 时以 $\beta$ 分隔，保留全部 $d$ 个间隔 $r_0,\ldots,r_{d-1}$，其和为 $M$。置
+
+$$
+\begin{gathered}
+\xi_i=r_i\bmod2,\qquad h=\sum_{i=0}^{d-1}\xi_i,\qquad
+\varepsilon_j=\sum_{i<j}\xi_i\bmod2\quad(0\le j\le d),\\
+H=\sum_{i\text{ 奇}}r_i,\qquad
+O=\sum_{\substack{1\le j<d\\j\text{ 奇}}}\varepsilon_j,
+\qquad E=\sum_{\substack{1\le j<d\\j\text{ 偶}}}\varepsilon_j,
+\qquad X=(H,O,E).
+\end{gathered}
+$$
+
+标量 $E$ 由参数与叶积函数 $E(t)$ 区分。原完整奇偶律为 $\mathsf R_{d,M}$。参考律 $\mathsf Q_{d,M}$ 是全部 $d$ 个 $\operatorname{Bernoulli}(\nu)$ 位条件于 $h\equiv M\pmod2$ 的律。参考树律 $\widetilde U(a,b)$ 使用原同一个核 $K_\xi$：给定完整 $\xi$，令 $s_\xi=(M-h)/2$，在 $\sum_iT_i=s_\xi$ 的非负整数弱组成上均匀取 $T$，置 $r=2T+\xi$，恢复指定方向的叶词并均匀取全部原 Catalan 括号。终端位和末间隔均保留。记
+
+$$
+D_W(a,b)=\left\|(W_3)_*U(a,b)-(W_3)_*\widetilde U(a,b)\right\|_{\mathrm{TV}},
+\qquad \|P-Q\|_{\mathrm{TV}}=\frac12\sum_x|P(x)-Q(x)|.
+$$
+
+**定理 287.2（同一实际核下全部组成的三窗口统一界）。** 存在普适有限常数 $C>0$，使全部整数 $a,b\ge1$ 同时满足
+
+$$
+D_W(a,b)\le\min\left\{1,\ C\bigl(\min(a,b)+1\bigr)^{-1/20}\right\}.
+\tag{287.1}
+$$
+
+$C$ 与组成比例、少数字母方向和端点无关。因此结论包括 $a=b$、比例不收敛、方向任意切换以及 $M/k$ 以任意速度增长的组成族。
+
+证明。以下 $c,C>0$ 可逐式减小或增大，均为绝对常数。所有邻域及大 $d$ 阈值均在
+$\delta\in(0,2/3]$ 上统一选定，最后处理小 $d$ 的全部无界 $M$。由 $M\ge d-1$，有
+
+$$
+\frac13\le\tau<1,\qquad \frac14\le\nu<\frac12,
+\qquad 0<\varrho\le\frac12,\qquad \frac{3}{16}\le v\le\frac14.
+\tag{287.2}
+$$
+
+第一步，固定原来源、共同核与窗口映射。每个叶词具有相同的 $\operatorname{Cat}_{a+b-1}$ 个有序括号化，所以 $U$ 的间隔律正是总和为 $M$ 的均匀弱组成律，给定间隔后仍保留全部原括号。合法 $h$ 集是
+
+$$
+\mathcal H_{d,M}=\{h\in\mathbb Z:0\le h\le\min(d,M),\ h\equiv M\pmod2\}.
+$$
+
+若 $M\ge d$，参考正质量向量自动满足 $h\le M$；若 $M=d-1$，唯一可能越界的 $h=d$ 与 $M$ 奇偶相反，已被终端条件排除。因此每个参考正质量纤维都有上述同一个非空 $K_\xi$，包括 $s_\xi=0$。由 (285.3)–(285.5)，在合法向量上
+
+$$
+\begin{aligned}
+\mathsf R(\xi)&=
+\frac{\binom{(M-h)/2+d-1}{d-1}}{\binom{M+d-1}{d-1}},\\
+\mathsf Q(\xi)&=\frac{\nu^h(1-\nu)^{d-h}}{p_e},
+\qquad p_e=\frac{1+(-1)^M\varrho^d}{2}\ge\frac13.
+\end{aligned}
+\tag{287.3}
+$$
+
+非法向量的真实质量为零。正似然 $u(h)=\mathsf R(\xi)/\mathsf Q(\xi)$ 只依赖 $h$。记 $R_h,Q_h$ 为 $h$ 边缘，$P_R,P_{\widetilde U}$ 为 $(h,X)$ 的联合质量，同一个核给出
+
+$$
+U(t)=\mathsf R(\xi(t))K_{\xi(t)}(t),\quad
+\widetilde U(t)=\mathsf Q(\xi(t))K_{\xi(t)}(t),\quad
+R_h=uQ_h,\quad P_{\widetilde U}(h,X)=\frac{P_R(h,X)}{u(h)}.
+\tag{287.4}
+$$
+
+这里没有将条件后的间隔或奇偶位说成独立。令 $p=a\bmod2,q=b\bmod2$；沿同一原叶词求和八边增量，直接采用 (283.12)–(283.13)：
+
+$$
+\begin{aligned}
+Z&=\left(O-E,\frac{M-2H-(-1)^kq}{2},\lfloor k/2\rfloor-O-E\right)
+&& (a\le b),\\
+Z&=\left(E-O+pq,\lfloor k/2\rfloor-O-E+pq,\frac{M-2H-p}{2}\right)
+&& (b<a).
+\end{aligned}
+\tag{287.5}
+$$
+
+母卷引理 359.2 和定理 359.3 的正向归纳给 $W_3=L(Z)R_{pq}$。故在两律的共同实际支撑上，$W_3$ 是同一个 $X$ 的确定函数。按该函数的每个纤维求和再用三角不等式，即有
+
+$$
+D_W(a,b)\le D_X:=\frac12\sum_X|P_R^X(X)-P_{\widetilde U}^X(X)|.
+\tag{287.6}
+$$
+
+这一上界只需正向确定映射。实际叶词仍从 $00$ 出发，满足母卷定理 360.2 的八边非负整数、流量和含 $00$ 的弱连通条件；比较格不替代这些实际条件。
+
+第二步，使用精确几何条件化并保留真实端点。只在辅助计算层独立取
+$\mathbb P_{\mathrm{geom}}(r_i=j)=\delta\tau^j$，置 $L=\sum_i r_i$。条件于 $L=M$ 时每个弱组成质量同为 $\delta^d\tau^M$，因而准确回到原 $U$ 的间隔律。辅助层不改变 $\mathsf Q$ 或 $K_\xi$。频率 $\theta=(s,t,z,x,y)$ 配对 $Y=(L,H,h,O,E)$。偶、奇间隔的几何级数给
+
+$$
+\begin{aligned}
+G_\delta(s,z)&=\frac{\delta}{1-\tau^2e^{2is}}
+\begin{pmatrix}1&\tau e^{i(s+z)}\\ \tau e^{i(s+z)}&1\end{pmatrix},
+\qquad D(x)=\operatorname{diag}(1,e^{ix}),\\
+T_\delta(\theta)&=G_\delta(s,z)D(x)G_\delta(s+t,z)D(y).
+\end{aligned}
+\tag{287.7}
+$$
+
+以 $e_0,e_1$ 为两状态标准列向量，真实端点子概率的特征函数满足
+
+$$
+\begin{aligned}
+F_d^e(\theta)&=\mathbb E_{\mathrm{geom}}
+\left[e^{i\theta\cdot Y}\mathbf1_{\{\varepsilon_d=e\}}\right],\\
+F_{2m}^e&=e_0^{\mathsf T}T_\delta^{m-1}G_\delta(s,z)D(x)G_\delta(s+t,z)e_e,\\
+F_{2m+1}^e&=e_0^{\mathsf T}T_\delta^mG_\delta(s,z)e_e.
+\end{aligned}
+\tag{287.8}
+$$
+
+这就是 (286.7) 的精确接口：末间隔仍计入 $L,H,h$，末状态不计入 $O,E$。在零频处
+
+$$
+T_\delta(0)=P_\nu^2,\qquad
+P_\nu=\begin{pmatrix}1-\nu&\nu\\\nu&1-\nu\end{pmatrix},
+\qquad \operatorname{spec}T_\delta(0)=\{1,\varrho^2\}.
+$$
+
+先确定所有实频率共振。逐项 $|T_\delta|\le P_\nu^2$，后者严格正且随机。若 $T_\delta w=\zeta w$、$|\zeta|=1$，在模最大的坐标作三角比较，严格正性迫使 $|w_0|=|w_1|>0$。每条正概率双间隔路径 $a_0\to b_0\to c_0$ 的相位必须分别满足
+
+$$
+e^{i\psi}w_{c_0}=\zeta w_{a_0},\qquad
+\psi=s(r_0+r_1)+tr_1+z(\xi_0+\xi_1)+xb_0+yc_0.
+$$
+
+任一间隔增加二，得到 $s,s+t\in\pi\mathbb Z$，写 $s=A_0\pi,t=B_0\pi$。状态零的零长度自环给 $\zeta=1$，状态一的零长度自环给 $x+y\equiv0$。比较从零到一的长度对 $(0,1)$、$(1,0)$，得 $x\equiv t$，故 $x=y=B_0\pi$。双奇长度的零到零路径再给 $2s+t+2z+x\equiv0$，所以 $z=C_0\pi$。同余均模 $2\pi$。反向直接代入确认，全部单位模点恰为
+
+$$
+\Gamma=\{(A_0\pi,B_0\pi,C_0\pi,B_0\pi,B_0\pi):A_0,B_0,C_0\in\{0,1\}\}.
+\tag{287.9}
+$$
+
+令 $J=\operatorname{diag}(1,-1)$、$\kappa=(d-1)\bmod2$。逐项代入 (287.7)–(287.8)，得到
+
+$$
+T_\delta(\theta+\gamma)=J^{A_0+C_0}T_\delta(\theta)J^{A_0+C_0},\qquad
+F_d^e(\theta+\gamma)=(-1)^{(A_0+C_0+\kappa B_0)e}F_d^e(\theta).
+\tag{287.10}
+$$
+
+原路径上的必要同余是 $L\equiv h\equiv\varepsilon_d$ 及 $H-O-E\equiv\kappa L\pmod2$。后一式由 $H\equiv\sum_{i\text{ 奇}}\xi_i$ 和 $\xi_i=\varepsilon_i\oplus\varepsilon_{i+1}$ 消去内部位得到。因此比较格及其 $L=M$ 截面为
+
+$$
+\begin{aligned}
+\mathcal L_d&=\{(l,H,h,O,E)\in\mathbb Z^5:l\equiv h,\ H-O-E\equiv\kappa l\pmod2\},\\
+\mathcal L_d\cap\{l=M\}&=(M+2\mathbb Z)\times\Lambda_X,\qquad
+\Lambda_X=\{(H,O,E)\in\mathbb Z^3:H-O-E\equiv\kappa M\pmod2\}.
+\end{aligned}
+\tag{287.11}
+$$
+
+五维格的指数为四，截面的两个因子各为指数二；$\Lambda_X$ 不依赖 $h$。
+
+第三步，计算全参数缩放有限矩。置
+
+$$
+N_o=\lfloor d/2\rfloor,\quad n_e=\lfloor(d-1)/2\rfloor,\quad
+\alpha_o=N_o/d,\quad m=d\nu,\quad J_H=H-L/2,
+\quad b_d=(M,\alpha_o M,m,N_o/2,n_e/2).
+$$
+
+几何级数直接给 $\mathbb Er_i=\tau/\delta$、$\operatorname{Var}(\delta r_i)=\tau$、$\mathbb E\xi_i=\nu$、$\operatorname{Var}\xi_i=\operatorname{Cov}(r_i,\xi_i)=v$。令 $\eta_j=(-1)^{\varepsilon_j}$；独立间隔的乘积给
+
+$$
+\mathbb E\eta_j=\varrho^j,\qquad
+\mathbb E\eta_i\eta_j=\varrho^{|i-j|},\qquad
+\operatorname{Cov}(\eta_i,\eta_j)=\varrho^{|i-j|}-\varrho^{i+j}.
+\tag{287.12}
+$$
+
+对 $i<j$，把 $(-1)^{\xi_i}=1-2\xi_i$ 从乘积提出，得到
+$\operatorname{Cov}(r_i,\eta_j)=\operatorname{Cov}(\xi_i,\eta_j)=-2v\varrho^{j-1}$；$i\ge j$ 时这两协方差为零。由 $J_H$ 的间隔系数均为 $\pm1/2$，准确有
+
+$$
+\begin{gathered}
+\operatorname{Var}(\delta L)=d\tau,\quad
+\operatorname{Var}h=dv,\quad \operatorname{Cov}(\delta L,h)=d\delta v,
+\quad \operatorname{Var}(\delta J_H)=d\tau/4,\\
+\operatorname{Cov}(\delta L,\delta J_H)=\tau(N_o-d/2),\qquad
+\operatorname{Cov}(h,\delta J_H)=\delta v(N_o-d/2).
+\end{gathered}
+\tag{287.13}
+$$
+
+后两项缩放后才统一为 $O(1)$。长量与占据量的其余交叉项由 $\sum_{j\ge1}j\varrho^{j-1}\le4$ 控制。记 $I_o,I_e$ 为内部奇、偶位置集；从 $O-N_o/2=-\frac12\sum_{j\in I_o}\eta_j$ 及相应 $E$ 式，得到完整有限和
+
+$$
+\begin{aligned}
+\operatorname{Var}O&=\frac14\left[N_o+2\sum_{j=1}^{N_o-1}(N_o-j)\varrho^{2j}
+-\left(\sum_{i\in I_o}\varrho^i\right)^2\right],\\
+\operatorname{Var}E&=\frac14\left[n_e+2\sum_{j=1}^{n_e-1}(n_e-j)\varrho^{2j}
+-\left(\sum_{i\in I_e}\varrho^i\right)^2\right],\\
+\operatorname{Cov}(O,E)&=\frac14\left[
+\sum_{\substack{1\le j<d-1\\j\text{ 奇}}}(d-1-j)\varrho^j
+-\left(\sum_{i\in I_o}\varrho^i\right)\left(\sum_{i\in I_e}\varrho^i\right)\right].
+\end{aligned}
+\tag{287.14}
+$$
+
+空和取零。把有限和换成无限几何和时，线性权重误差由 $\sum j\varrho^j$、$\sum j\varrho^{2j}$ 控制；截断尾乘 $d$ 仍有统一界，因为 $d(1/2)^d$ 有界。$|N_o-d/2|\le1/2$、$|n_e-d/2|\le1$，均值偏置也由 $\sum\varrho^j$ 控制。于是缩放坐标 $(\delta L,h,\delta J_H,O,E)$ 的均值与由 $b_d$ 变换所得中心相差统一 $O(1)$，协方差为
+
+$$
+d\operatorname{diag}(\bar A_\delta,\bar C_\delta)+E_d,
+\qquad \|E_d\|\le C,
+\tag{287.15}
+$$
+
+其中
+
+$$
+\begin{gathered}
+\bar A_\delta=\begin{pmatrix}\tau&\delta v\\\delta v&v\end{pmatrix},\qquad
+\bar C_\delta=(\tau/4)\oplus V_\delta,\\
+V_\delta=\begin{pmatrix}
+(1+\varrho^2)/(8\chi)&\varrho/(4\chi)\\
+\varrho/(4\chi)&(1+\varrho^2)/(8\chi)
+\end{pmatrix}.
+\end{gathered}
+$$
+
+$\det\bar A_\delta=\tau v\chi\ge3/64$、$\operatorname{tr}\bar A_\delta\le5/4$。$\bar C_\delta$ 的特征值是 $\tau/4$、$(1+\varrho)/(8(1-\varrho))$、$(1-\varrho)/(8(1+\varrho))$，均在 $[1/24,3/8]$。所以两矩阵具有共同正的上下谱界。原顺序 $(\delta L,\delta H,h,O,E)$ 的主协方差为
+
+$$
+\bar\Sigma_\delta=
+\begin{pmatrix}
+\tau&\tau/2&\delta v&0&0\\
+\tau/2&\tau/2&\delta v/2&0&0\\
+\delta v&\delta v/2&v&0&0\\
+0&0&0&(1+\varrho^2)/(8\chi)&\varrho/(4\chi)\\
+0&0&0&\varrho/(4\chi)&(1+\varrho^2)/(8\chi)
+\end{pmatrix}.
+\tag{287.16}
+$$
+
+固定剪切 $(l,H,h,O,E)\mapsto(l,h,H-l/2,O,E)$ 的行列式绝对值为一，将它化为 $\operatorname{diag}(\bar A_\delta,\bar C_\delta)$，故也具有共同正定界。有限协方差中的 $E_d$ 没有被置零。
+
+第四步，建立 $\delta=0$ 的共同解析域及局部谱余项。在零共振处令
+$s=\delta\sigma,t=\delta\omega$、$\psi=(\sigma,\omega,z,x,y)$、$D_\delta=\operatorname{diag}(\delta,\delta,1,1,1)$。正确的有限延拓对象是
+$\bar G_\delta(\sigma,z)=G_\delta(\delta\sigma,z)$ 本身。将其分母除以 $\delta$，写成
+
+$$
+Q_\delta(\sigma)=1+\tau+\tau^2\frac{1-e^{2i\delta\sigma}}{\delta},\qquad
+Q_0(\sigma)=2-2i\sigma,
+\qquad
+\bar G_0(\sigma,z)=\frac1{2(1-i\sigma)}
+\begin{pmatrix}1&e^{iz}\\e^{iz}&1\end{pmatrix}.
+\tag{287.17}
+$$
+
+差商的幂级数在 $\delta=0$ 可去。对复 $|\sigma|\le R$，由 $|e^w-1|\le|w|e^{|w|}$ 有
+$|Q_\delta(\sigma)-(1+\tau)|\le2Re^{4R/3}$；第二长度 $|\sigma+\omega|\le2R$ 时，界为 $4Re^{8R/3}$。先取绝对小 $R$ 使后一界小于 $1/3$，而 $1+\tau\ge4/3$，两个分母就在同一复多圆盘内共同离零。矩阵与真实边界因子因此一致有界且解析，包括 $\delta=0$。这里只延拓符号族，不定义新的树概率源。
+
+零频的判别式 $\Delta=(\operatorname{tr}T)^2-4\det T$ 满足 $\Delta(0)=(1-\varrho^2)^2\ge9/16$。上述共同界使 $\Delta(\psi)-\Delta(0)=O(\|\psi\|)$，故可统一缩小复盘，使 $\operatorname{Re}\Delta>0$。取零点为正的平方根，定义
+
+$$
+\lambda=\frac{\operatorname{tr}T+\sqrt\Delta}{2},\qquad
+\lambda_2=\frac{\operatorname{tr}T-\sqrt\Delta}{2},\qquad
+\Pi=\frac{T-\lambda_2I}{\lambda-\lambda_2}.
+$$
+
+再缩盘使 $|\lambda-1|\le1/8$、$|\lambda_2|\le3/8$、$|\lambda-\lambda_2|\ge1/2$。$\log\lambda$ 取零点值零的解析支，$\Pi$ 与边界振幅也共同解析。若较大盘上的界为 $B_0$，多变量 Cauchy 公式在其内半盘给
+$|\partial^\beta f|\le\beta!(2/R)^{|\beta|}B_0$，特别给出统一三阶 Taylor 余项。
+
+二次系数由有限矩确定。固定任意 $\delta>0$，取奇数间隔数 $d'=2m'+1$ 的同一辅助模型并对两个端点求和，其精确谱分解是 $\lambda^{m'}A_o+\lambda_2^{m'}B_o$，$A_o(0)=1$。振幅导数统一有界，次谱项零点前两阶导数至多 $C(1+m'^2)(3/8)^{m'-2}$。特征函数对数在零点的一、二阶导数分别是 $i$ 乘实际均值和实际协方差的负值。把 (287.12)–(287.16) 的有限矩除以 $m'$，再令 $m'\to\infty$，就得到
+
+$$
+\log\lambda(\psi)=i\beta_2\cdot\psi
+-\psi^{\mathsf T}\bar\Sigma_\delta\psi+O(\|\psi\|^3),
+\qquad \beta_2=(2\tau,\tau,2\nu,1/2,1/2).
+\tag{287.18}
+$$
+
+求导只在未条件化辅助模型内进行，其长度均值 $d'\tau/\delta$ 不要求是整数。共同解析连续性将系数恒等式延到 $\delta=0$，没有用中心极限定理反推导数。
+
+两类端点的主振幅分别为
+$e_0^{\mathsf T}\Pi\bar G_\delta e_e$ 和
+$e_0^{\mathsf T}\Pi\bar G_\delta D(x)\bar G_\delta(\sigma+\omega,z)e_e$，在零点均为 $1/2$，偏差为 $O(\|\psi\|)$。准确有限端点质量仍为 $[1+(-1)^e\varrho^d]/2$。置
+$\widehat b_d=D_\delta b_d=(d\tau,N_o\tau,d\nu,N_o/2,n_e/2)$；这一中心在 $\delta=0$ 有有限延拓。奇数 $d$ 时主幂数 $n=(d-1)/2$，$n\beta_2-\widehat b_d=(-\tau,0,-\nu,0,0)$；偶数时 $n=(d-2)/2$，差为 $(-2\tau,-\tau,-2\nu,-1/2,0)$。这些偏移和 $|n-d/2|$ 均统一有界。
+
+利用共同正定性，选共同小实半径 $r_0$，使三阶余项不超过二次衰减的一半。用
+$e^U-e^V=(U-V)\int_0^1e^{(1-t)V+tU}\,dt$，先比较 $n\log\lambda$ 与其二次 Taylor 多项式，再支付上述中心和主幂修正。振幅误差贡献 $O(\|\psi\|)$，二次修正 $O(\|\psi\|^2)$ 可在小球内吸入一次项，三阶误差贡献 $O(d\|\psi\|^3)$。于是对充分大 $d$，两端点和两种 $d$ 奇偶同时有
+
+$$
+\left|F_d^e(D_\delta\psi)-\frac12
+e^{i\widehat b_d\cdot\psi-d\psi^{\mathsf T}\bar\Sigma_\delta\psi/2}\right|
+\le C(\|\psi\|+d\|\psi\|^3)e^{-cd\|\psi\|^2}+Cq_0^d,
+\quad \|\psi\|\le r_0,
+\quad q_0<1.
+\tag{287.19}
+$$
+
+端点和有限协方差修正均已进入该误差；并未将有限实际协方差当作精确块对角矩阵。
+
+第五步，完整处理远频，保留两个长度方向的 $\delta^2$ 体积。实频率上由 (287.7) 的绝对行和
+
+$$
+\|G_\delta(s,z)\|_\infty\le\gamma_\tau(s)
+:=\frac{1-\tau^2}{|1-\tau^2e^{2is}|}
+=\left[1+\frac{4\tau^2\sin^2s}{\delta^2(1+\tau)^2}\right]^{-1/2}.
+\tag{287.20}
+$$
+
+令 $u$ 为 $s$ 到 $\pi\mathbb Z$ 的代表，$|u|\le\pi/2$。$|\sin u|\ge2|u|/\pi$ 及 $\tau\ge1/3$ 给
+$\gamma_\tau(s)\le[1+u^2/(\pi^2\delta^2)]^{-1/2}$。对 $n\ge8$ 换元 $u=\delta w$：$|w|\le1$ 时 $\log(1+w^2/\pi^2)\ge c w^2$，积分至多 $C/\sqrt n$；$|w|>1$ 时拆出一个指数衰减因子，保留可积的 $(1+w^2/\pi^2)^{-2}$。故
+
+$$
+I_n:=\int_{\mathbb T}\gamma_\tau(s)^n\,ds\le C\frac{\delta}{\sqrt n}.
+$$
+
+任意预先固定 $\epsilon>0$ 和充分大 $n$，在 $|u|>\epsilon\delta$ 上将幂拆成两半，一半至多 $(1+\epsilon^2/\pi^2)^{-n/4}$，另一半的完整积分是 $I_{n/2}$，因此
+
+$$
+J_n:=\int_{\operatorname{dist}(s,\pi\mathbb Z)>\epsilon\delta}
+\gamma_\tau(s)^n\,ds\le C\delta e^{-c_\epsilon n}.
+\tag{287.21}
+$$
+
+尾积分自身包含 $\delta$。由精确端点式，
+$|F_d^e|\le\gamma_\tau(s)^{\lceil d/2\rceil}\gamma_\tau(s+t)^{\lfloor d/2\rfloor}$。完整环面的整数幺模换元 $(s,t)\mapsto(s,s+t)$ 保持测度。在至少一个长度角到 $\pi\mathbb Z$ 的距离超过 $\epsilon\delta$ 的区域，积分至多
+$J_{\lceil d/2\rceil}I_{\lfloor d/2\rfloor}+I_{\lceil d/2\rceil}J_{\lfloor d/2\rfloor}$；其余三个频率的环面体积固定。因此该区五维积分不超过 $C\delta^2e^{-cd}$，也覆盖两个长度角同时出盒的部分。
+
+剩余两个长度角均在短盒内，须同时检查 $\delta=0$ 的谱。四个长度 $0/\pi$ 分支由 (287.10) 平移到基础分支；写 $s=\delta\sigma,s+t=\delta(\sigma+\omega)$，两个标准化长角有固定界。实 $\sigma$ 上 $|Q_\delta(\sigma)|=|1-\tau^2e^{2i\delta\sigma}|/\delta\ge1+\tau$，而 $|Q_0(\sigma)|\ge2$，故 (287.17) 在整个有界实盒上连续且有界，不只在局部复盘内有效。若 $\delta=0$ 且 $\sigma$ 或 $\sigma+\omega$ 非零，两个 $\bar G_0$ 的绝对行和分别为 $(1+\sigma^2)^{-1/2}$ 和 $(1+(\sigma+\omega)^2)^{-1/2}$，乘积严格小于一，完整矩阵的谱半径也严格小于一。若两者均零，令 $a_0=e^{iz},b_0=e^{ix},c_0=e^{iy}$，显式有
+
+$$
+\bar T_0=\frac14
+\begin{pmatrix}1+a_0^2b_0&c_0a_0(1+b_0)\\
+a_0(1+b_0)&c_0(a_0^2+b_0)\end{pmatrix}.
+\tag{287.22}
+$$
+
+各项绝对值至多 $1/2$。$b_0\ne1$ 时两个行和都因 $|1+b_0|<2$ 而严格小于一；$b_0=1,a_0^2\ne1$ 时也严格小于一。余下 $b_0=1,a_0^2=1$ 时矩阵秩至多一，唯一可能非零特征值为 $(1+c_0)/2$，仅在 $c_0=1$ 时模为一。故基础分支只有 $z=0$ 或 $\pi$、$x=y=0$ 的共振；结合四个长度分支，正好恢复 (287.9) 的八点，没有新增边界共振。
+
+选固定 $0<\epsilon<1/10$ 并把 $r_0$ 再缩小，使八个缩放局部球互不相交且在上述短盒内。去掉这些球后，$\delta\in[0,2/3]$、有界标准化长角与短频率环面组成紧集。刚才的边界分类与 $\delta>0$ 的完整分类已逐点排除单位模，故该集的最大谱半径 $q_*<1$。取 $q_f\in(q_*,1)$，圆 $|w|=q_f$ 上
+$|\det(wI-\bar T_\delta)|\ge(q_f-q_*)^2$，伴随矩阵也一致有界，于是预解式一致有界。矩阵 Cauchy 公式
+
+$$
+\bar T_\delta^n=\frac1{2\pi i}
+\int_{|w|=q_f}w^n(wI-\bar T_\delta)^{-1}\,dw
+$$
+
+给 $\|\bar T_\delta^n\|\le Cq_f^n$，包括重根和不可对角化点。真实边界因子有界，而短盒的两个物理长度角面积为 $O(\delta^2)$，所以该区完整积分也至多 $C\delta^2e^{-cd}$。此证明始终使用保留长度标量的完整 $T_\delta$；盒外由标量积分负责，盒内才使用谱隙。全远频误差没有丢失 $\delta^2$。
+
+第六步，作五维和二维全格反演。对正定 $j$ 维矩阵 $V$，记
+$\phi_V(x)=(2\pi)^{-j/2}(\det V)^{-1/2}e^{-x^{\mathsf T}V^{-1}x/2}$。五维整数反演为
+
+$$
+\mathbb P_{\mathrm{geom}}(Y=y,\varepsilon_d=e)
+=(2\pi)^{-5}\int_{\mathbb T^5}e^{-i\theta\cdot y}F_d^e(\theta)\,d\theta.
+$$
+
+每个局部球换元 $\theta=\gamma+D_\delta\psi$ 的 Jacobian 是 $\delta^2$。由 (287.19)，一次振幅和三次余项的积分分别为
+
+$$
+\delta^2\int_{\mathbb R^5}\|\psi\|e^{-cd\|\psi\|^2}\,d\psi
+=O(\delta^2d^{-3}),\qquad
+\delta^2d\int_{\mathbb R^5}\|\psi\|^3e^{-cd\|\psi\|^2}\,d\psi
+=O(\delta^2d^{-3}).
+\tag{287.23}
+$$
+
+这里用 $\psi=w/\sqrt d$ 直接得到积分阶数。局部次谱积分、延长高斯积分到全空间的误差及第五步的全远频均至多 $C\delta^2e^{-cd}$。反演中的目标相位模为一，故误差对全部整数 $y$ 一致。正定高斯的 Fourier 积分经正交对角化及各轴一维高斯积分，给主项 $\delta^2d^{-5/2}\phi_{\bar\Sigma_\delta}(D_\delta(y-b_d)/\sqrt d)$，再乘端点振幅和中心相位和。该相位和准确为
+
+$$
+\sum_{A_0,B_0,C_0\in\{0,1\}}
+(-1)^{A_0(l-e)+C_0(h-e)+B_0(H+O+E-\kappa e)}
+=8\mathbf1_{\{l\equiv h\equiv e,\ H-O-E\equiv\kappa e\ (2)\}}.
+$$
+
+乘主振幅 $1/2$ 得因子四；$l$ 决定唯一端点。因此对所有 $y\in\mathcal L_d$，
+
+$$
+\mathbb P_{\mathrm{geom}}(Y=y)
+=4\delta^2d^{-5/2}\phi_{\bar\Sigma_\delta}
+\left(\frac{D_\delta(y-b_d)}{\sqrt d}\right)
++O(\delta^2d^{-3}).
+\tag{287.24}
+$$
+
+格外真实质量与比较项取零。格内若八边非负或弱 Euler 条件失败，真实质量仍为零，比较密度却不擅自改零；同一个全格绝对误差已经支付其差。这里没有假设所有中央同余格点都可实现，也没有要求罕见纤维的相对误差。
+
+二维 $(L,h)$ 的单间隔函数是
+
+$$
+f_2(s,z)=\frac{\delta(1+\tau e^{i(s+z)})}{1-\tau^2e^{2is}}.
+$$
+
+长度零、一、二的相位等号迫使 $s\in\pi\mathbb Z$、$s+z\equiv0\pmod{2\pi}$，所以仅有 $(0,0),(\pi,\pi)$ 两个共振，比较格是 $l\equiv h\pmod2$。零点缩放 $s=\delta\sigma$ 的共同解析分母仍是 (287.17)，且 $f_2(0,0)=1$。用该共同解析界缩小同一个复盘，使 $|f_2-1|\le1/2$，于是零点值为零的 $\log f_2$ 解析，其三阶导数及余项由 Cauchy 公式统一控制。其对数展开由单间隔矩准确给出
+
+$$
+\log f_2(\delta\sigma,z)
+=i(\tau\sigma+\nu z)
+-\frac12(\sigma,z)\bar A_\delta(\sigma,z)^{\mathsf T}
++O(\|(\sigma,z)\|^3).
+$$
+
+在 $\delta=0$ 基础分支，函数为 $(1+e^{iz})/[2(1-i\sigma)]$，模为一仅在 $\sigma=z=0$；另一分支经 $(\pi,\pi)$ 平移得到。在长度盒外，$|f_2|\le\gamma_\tau(s)$ 给积分 $C\delta e^{-cd}$；盒内去共振后，由已经完成的边界分类及紧集取得统一严格模界。共同正定的 $\bar A_\delta$ 和三阶余项给局部高斯衰减，指数差积分式将 $f_2^d$ 与其二次主项的差界为 $Cd\|\psi\|^3e^{-cd\|\psi\|^2}$。该误差的二维积分是
+$\delta d\int_{\mathbb R^2}\|\psi\|^3e^{-cd\|\psi\|^2}\,d\psi=O(\delta d^{-3/2})$。精确平移 $f_2(s+\pi,z+\pi)=f_2(s,z)$ 给两中心相位和 $1+(-1)^{l+h}=2\mathbf1_{\{l\equiv h\ (2)\}}$，故全部 $l\equiv h\pmod2$ 的整数点同时满足
+
+$$
+N_2(l,h):=\mathbb P_{\mathrm{geom}}(L=l,h)
+=2\delta d^{-1}\phi_{\bar A_\delta}
+\left(\frac{\delta(l-M)}{\sqrt d},\frac{h-m}{\sqrt d}\right)
++O(\delta d^{-3/2}).
+\tag{287.25}
+$$
+
+二维误差同样是全格绝对误差，格外取零。以上 $\phi$ 只是离散格点上的比较函数，不是将离散概率律与连续高斯律作总变差比较。
+
+第七步，先抵消分子，再一次除同一个精确分母。令 $N=M+d$；总长度事件的真实概率为
+
+$$
+p_L=\mathbb P_{\mathrm{geom}}(L=M)
+=\binom{M+d-1}{d-1}\delta^d\tau^M
+=\delta\binom Nd\left(\frac dN\right)^d\left(\frac MN\right)^M.
+\tag{287.26}
+$$
+
+复用 (283.9)–(283.10) 的阶乘供应。具体地，钉版 Stirling 序列
+$a_n=n!/[\sqrt{2n}(n/e)^n]$ 对正整数反单调，$a_1=e/\sqrt2$，且 $a_n\ge\sqrt\pi$。因此全部正整数 $n$ 上
+
+$$
+\sqrt{2\pi n}(n/e)^n\le n!\le e\sqrt n(n/e)^n.
+$$
+
+在 (287.26) 中对 $N!$ 用下界、对 $d!,M!$ 用上界；$N=d+M$ 使全部幂和指数精确相消。$M,d,N$ 均为正整数，故
+
+$$
+p_L\ge\frac{\sqrt{2\pi}}{e^2}\delta\sqrt{\frac N{dM}}
+\ge c\frac{\delta}{\sqrt d}.
+\tag{287.27}
+$$
+
+该下界对任意小 $\delta$ 成立，不需要一维局部极限定理或分母倒数展开。
+
+在 $L=M$ 截面上置
+
+$$
+x_h=\frac{h-m}{\sqrt d},\qquad
+x_X=\frac{(\delta(H-\alpha_o M),\ O-N_o/2,\ E-n_e/2)}{\sqrt d},
+\qquad
+g_{\delta,d}(X)=2\delta d^{-3/2}\phi_{\bar C_\delta}(x_X)
+\quad(X\in\Lambda_X),
+\tag{287.28}
+$$
+
+格外 $g_{\delta,d}=0$，后文简记为 $g$。共同正定性给 $\sup g\le C\delta d^{-3/2}$。由 (287.16) 的行列式绝对值一剪切，在第一个中心坐标为零时，高斯密度准确分解为
+
+$$
+\phi_{\bar\Sigma_\delta}(0,x_H,x_h,x_O,x_E)
+=\phi_{\bar A_\delta}(0,x_h)\phi_{\bar C_\delta}(x_X).
+$$
+
+令 $N_5(h,X)=\mathbb P_{\mathrm{geom}}(L=M,h,X)$。五维主项与 $N_2(M,h)g(X)$ 的主项完全相同，都是
+$4\delta^2d^{-5/2}\phi_{\bar A_\delta}(0,x_h)\phi_{\bar C_\delta}(x_X)$。五维误差为 $O(\delta^2d^{-3})$，二维误差乘 $\sup g$ 也是此阶。先在分子层面相减，得到
+
+$$
+\sup_{\substack{h\in M+2\mathbb Z\\X\in\Lambda_X}}
+|N_5(h,X)-N_2(M,h)g(X)|\le C\delta^2d^{-3}.
+$$
+
+仅除同一个精确 $p_L$ 一次，由 (287.27) 得到本证明的联合估计
+
+$$
+\sup_{\substack{h\in M+2\mathbb Z\\X\in\Lambda_X}}
+|\mathcal E_d(h,X)|\le C\delta d^{-5/2},\qquad
+\mathcal E_d(h,X)=P_R(h,X)-R_h(h)g(X).
+\tag{287.29}
+$$
+
+非法 $h$ 的真实边缘与联合质量零延拓，实际 Euler 零点仍保留；从不在非法 $h$ 上求逆似然。该关系来自全参数反演与精确共同分母，不由零交叉协方差推断真实独立。
+
+第八步，控制原同核似然和中央逆界。以下只在 $d\ge16$ 使用。由 (287.3) 的乘积展开与归一化，令
+
+$$
+\ell(x)=\sum_{j=1}^{d-1}\log(M-x+2j)-x\log\tau,\qquad
+c_\ell=\mathbb E_Q e^{\ell(h)-\ell(m)},\qquad
+u(h)=\frac{e^{\ell(h)-\ell(m)}}{c_\ell}.
+$$
+
+$0\le x\le d$ 上全部对数参数至少为一。写
+$A_m=M-m=2M^2/(2M+d)$，则 $A_m+2d=2(M+d)^2/(2M+d)$，且
+$\int_0^d(A_m+2y)^{-1}dy=-\log\tau$。递减函数的完整离散和满足
+
+$$
+\int_1^d\frac{dy}{A_m+2y}
+\le\sum_{j=1}^{d-1}\frac1{A_m+2j}
+\le\int_0^{d-1}\frac{dy}{A_m+2y}.
+$$
+
+所以 $0\le\ell'(m)\le1/A_m\le3/d$；最后一步在最小 $M=d-1$、$d\ge3$ 核对后由 $A_m$ 随 $M$ 增加得到。凹性给全部合法 $h$ 上 $\ell(h)-\ell(m)\le3$。在 $|x-m|\le d/4$ 的线段上，$m<d/2$、$M\ge d-1$ 使每个分母至少 $d/4$，从而 $-\ell''(x)\le16/d$。Taylor 积分式给
+
+$$
+\ell(h)-\ell(m)\ge-3|h-m|/d-8(h-m)^2/d
+\quad(|h-m|\le d/4).
+\tag{287.30}
+$$
+
+未条件 Bernoulli 总和中心平方矩为 $dv\le d/4$，对非负平方付终端代价 $p_e^{-1}\le3$ 后有 $\mathbb E_Q(h-m)^2\le3d/4$。Chebyshev 给 $Q\{|h-m|\le\sqrt d\}\ge1/4$；$d\ge16$ 时此窗在 (287.30) 内，指数差至少 $-11$。因此
+
+$$
+e^{-11}/4\le c_\ell\le e^3,\qquad
+u(h)\le U_+:=4e^{14}\quad(h\in\mathcal H_{d,M}),
+\qquad
+\frac1{u(h)}\le e^{15/4+8r^2}\quad(|h-m|\le r\sqrt d\le d/4).
+\tag{287.31}
+$$
+
+最后的逆界仅限中央窗。对一个未条件中心化 Bernoulli 位，倾斜对数矩母函数 $K_B$ 满足 $K_B(0)=K_B'(0)=0$，二阶导数是倾斜 Bernoulli 方差，至多 $1/4$。两次积分给 $K_B(\lambda)\le\lambda^2/8$，包括负 $\lambda$。独立总和的指数 Markov 界取 $\lambda=\pm4r/\sqrt d$，得未条件双尾 $2e^{-2r^2}$。再付真实终端代价并用 $R_h=uQ_h$，得到
+
+$$
+Q_h\{|h-m|>r\sqrt d\}\le6e^{-2r^2},\qquad
+R_h\{|h-m|>r\sqrt d\}\le6U_+e^{-2r^2}.
+\tag{287.32}
+$$
+
+$m$ 只是未条件比较中心，不被认作条件后的精确均值。
+
+第九步，控制比较格和及同一 $K_\xi$ 的真实各向异性尾。由共同正定性，
+$g(X)\le C\delta d^{-3/2}e^{-c\|x_X\|_2^2}$。对于任意平移的单峰高斯，按中心两侧积分比较，一维格距 $h_0$ 的和至多 $2+C/h_0$。$H$ 轴格距是 $\delta/\sqrt d$，$O,E$ 轴格距是 $1/\sqrt d$。放大到全部整数三格只增加非负和，三个因子与前系数配平。再用 $te^{-ct}\le Ce^{-ct/2}$，得
+
+$$
+\sum_Xg(X)\le C,\qquad
+\sum_Xg(X)\|x_X\|_2^2\le C,
+\qquad \sum_{\|x_X\|_\infty>B}g(X)\le CB^{-2}.
+\tag{287.33}
+$$
+
+$g$ 无须精确归一化。真实参考奇偶层由 (287.12) 给占据量的未条件中心平方矩：对 $N\in\{N_o,n_e\}$，它是
+$\frac14[N+2\sum_{j=1}^{N-1}(N-j)\varrho^{2j}]\le5N/12$。该中心平方已经包含初态偏置。对非负平方付 $p_e^{-1}\le3$ 后
+
+$$
+\mathbb E_Q[(O-N_o/2)^2+(E-n_e/2)^2]\le5(d-1)/4.
+$$
+
+给定同一个完整 $\xi$，置 $h_o=\sum_{i\text{ 奇}}\xi_i$、$h_c=h_o-\alpha_o h$、$K_o=\sum_{i\text{ 奇}}T_i$。直接使用 (285.16) 的同核分组，或对
+$(1-tz)^{-N_o}(1-z)^{-(d-N_o)}$ 分别求一次、二次 $t$ 导数并在 $t=1$ 取 $z^{s_\xi}$ 系数，除以 $\binom{s_\xi+d-1}{d-1}$，得
+
+$$
+\mathbb E(K_o\mid\xi)=\frac{N_os_\xi}{d},\qquad
+\mathbb E(K_o(K_o-1)\mid\xi)=\frac{N_o(N_o+1)s_\xi(s_\xi-1)}{d(d+1)}.
+$$
+
+两组大小均正，$s_\xi=0$ 时两矩都为零。用 $H=2K_o+h_o$ 相减，得到
+
+$$
+\mathbb E(H\mid\xi)=\alpha_o M+h_c,\qquad
+\operatorname{Var}(H\mid\xi)=
+\frac{4s_\xi\alpha_o(1-\alpha_o)(s_\xi+d)}{d+1}.
+\tag{287.34}
+$$
+
+终端条件只依赖 $h$，所以 $Q$ 位仍可交换。令 $b_i=\mathbf1_{\{i\text{ 奇}\}}-\alpha_o$，则 $\sum b_i=0$、$\sum b_i^2=N_o(d-N_o)/d\le d/4$。设 $q_1=\mathbb E_Q\xi_0,q_2=\mathbb E_Q\xi_0\xi_1$，完整展开给
+$\mathbb E_Qh_c=0$、$\mathbb E_Qh_c^2=(\sum b_i^2)(q_1-q_2)\le d/8$，因为 $q_1-q_2=\mathbb E_Q(\xi_0-\xi_1)^2/2\le1/2$。未假定条件位独立。
+
+在同一核中按条件均值分解平方，交叉项条件期望为零。用 $s_\xi\le M/2$、$\alpha_o(1-\alpha_o)\le1/4$、$\delta M=d\tau$，得
+
+$$
+\begin{aligned}
+\mathbb E_{\widetilde U}[\delta^2(H-\alpha_o M)^2]
+&\le\frac{\delta^2M(M+2d)}{4(d+1)}+\frac{\delta^2d}{8}\\
+&=\frac d4-\frac{d}{4(d+1)}+
+\frac{\delta^2d(1-d)}{8(d+1)}\le\frac d4.
+\end{aligned}
+\tag{287.35}
+$$
+
+结合占据量平方矩，有 $\mathbb E_{\widetilde U}\|x_X\|_2^2\le3/2$。对同一非负函数使用同核密度 $u\le U_+$，又有 $\mathbb E_U\|x_X\|_2^2\le3U_+/2$。Markov 不等式因此给两种真实 $X$ 律的 $\|x_X\|_\infty>B$ 尾均至多 $CB^{-2}$。所有平方在同一个 $\xi,T$、叶词和原括号实现上相加，没有拼接不同实现的边缘最优值。
+
+第十步，在每个相同窗口纤维内先抵消再取绝对值。只在有限合法 $\mathcal H_{d,M}$ 上置 $a(h)=1-1/u(h)$。归一化准确给
+$\sum_h a(h)R_h(h)=\sum_h(R_h(h)-Q_h(h))=0$。故对每个相同 $X$，由 (287.4)、(287.29) 有
+
+$$
+P_R^X(X)-P_{\widetilde U}^X(X)
+=\sum_{h\in\mathcal H_{d,M}}a(h)\mathcal E_d(h,X).
+\tag{287.36}
+$$
+
+取 $r^2=(\log d)/40$、$B=d^{1/40}$。选一个绝对 $d_0$，使 $d\ge d_0$ 时前述全部反演阈值、$d\ge16$、$r\ge1$、$r\sqrt d\le d/4$ 同时成立。中央 $h$ 点数至多 $Cr\sqrt d$；$\|x_X\|_\infty\le B$ 的整数 $X$ 点数至多 $CB^3d^{3/2}/\delta$；中央逆界给 $|a(h)|\le Cd^{1/5}$。用 (287.29)，中央绝对和不超过
+
+$$
+C(r\sqrt d)\left(\frac{B^3d^{3/2}}{\delta}\right)
+d^{1/5}(\delta d^{-5/2})
+=CrB^3d^{-3/10}
+\le C\sqrt{\log d}\,d^{-9/40}.
+$$
+
+$\delta$ 与实际 $H$ 长轴格点数中的 $\delta^{-1}$ 精确抵消。补集不能用全格单点误差乘无限点数。由非负性和同核恒等式，逐点有
+
+$$
+|a(h)\mathcal E_d(h,X)|
+\le P_R(h,X)+P_{\widetilde U}(h,X)
++(R_h(h)+Q_h(h))g(X).
+\tag{287.37}
+$$
+
+在 $h$ 尾上先求全部 $X$ 和，前两项成为真实 $R_h,Q_h$ 尾，最后一项是这两尾乘 $\sum g$；由 (287.32)–(287.33) 得 $Ce^{-2r^2}$。在 $X$ 尾上先求全部合法 $h$ 和，前两项成为第九步的两种真实 $X$ 尾，最后一项是 $2\sum_{X\text{ 尾}}g(X)$，得 $CB^{-2}$。两个尾的并集由两者之和覆盖，亦保留全部实际零支撑点。代入所选增长窗，两尾均为 $Cd^{-1/20}$。由 (287.6)、(287.36) 得
+
+$$
+2D_X\le C\left[\sqrt{\log d}\,d^{-9/40}+d^{-1/20}\right]
+\le C'd^{-1/20},\qquad D_W\le D_X.
+$$
+
+全部常数和 $d_0$ 在 $\delta\in[0,2/3]$ 的解析闭包上统一选定。对 $2\le d<d_0$ 的全部 $M\ge d-1$，包括无界 $M$，直接用 $D_W\le1$，并一次增大 $C$ 至至少 $d_0^{1/20}$。再与概率律的 TV 至多一合并，证明 (287.1)。两种 $d$ 奇偶、实际端点、$M=d-1$、零剩余量、小 $d$ 协方差退化、$a=b$ 和两个方向均已包含；方向只在 (287.5) 的原确定映射处改变，所有原括号在共同核内完整保留。$\square$
+
+数学来源附于定理 287.2。原树、均匀弱组成、完整终端奇偶、同一 $K_\xi$、两方向坐标及分组矩采用本卷 §§283、285；精确端点生成式与有限矩接口采用 §286，并在本证明中给出 $\delta\to0$ 的共同解析域、完整共振和全格余项。实际窗口的正向关系及八边／弱 Euler 支撑采用[母卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md) §§359–360。确定通道的 TV 收缩是既有 [DataProcessing](../../../D5/S3/TotalVariation/DataProcessing.lean) 的 `total_variation_channel_le`；本证明只将它用于同一实际 $X$ 到 $W_3$ 的映射。
+
+精确分母只使用钉版 mathlib [Stirling 源码](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Stirling.lean) 中 `Stirling.le_factorial_stirling`、`Stirling.stirlingSeq'_antitone`、`Stirling.stirlingSeq_one` 的正整数阶乘界；$N,d,M$ 全部满足其条件。Cauchy 公式、有限维谱投影、高斯 Fourier 积分与指数 Markov 不等式作为成熟中间工具使用，必要的系数、相位、积分尺度和尾界均在证明内展开。全 $\delta$ 联合余项 (287.29) 及其原同核有符号消费是本仓推导；不作全球优先权或指数最优性断言。
+
+在原素数 $r\ge7$、$V=F_r$、连续区间和低 $J$ 定位条件下，同一 $`N^*=1+Vg^*`$ 上保留完整素幂和所有除数的严格预算 $`C^*+H^*<(\log\log N^*/\log\log A)^s`$，$s=\log A\,\log\log A$，仍未决；本定理不提供该算术联合估计，$V$ 不假定为素数。
+
+## 追加锚（本行以下为增补区）

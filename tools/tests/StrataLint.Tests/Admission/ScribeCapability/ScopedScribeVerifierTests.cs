@@ -39,6 +39,42 @@ public sealed class ScopedScribeVerifierTests
     }
 
     [Fact]
+    public void ScopeWithoutSelectedDefinitionsDoesNotMaterializeTheSnapshot()
+    {
+        var capability = new ProductionScribeEmissionVerifier().Verify(
+            Snapshot(("Blueprint/D5/S0/Test/" + Unwritable + ".md", "unwritable")), Report(),
+            RawChangeSet.Create(["Blueprint/D5/S0/Test/Selected.md", "Blueprint/D5/S0/Test/Missing.scribe.cs"]));
+        Assert.Equal(VerifiedScribeEmissions.Empty.WriteMaterial(), capability.WriteMaterial());
+    }
+
+    [Fact]
+    public void DigestionLedgerAndTheoryVolumesAreNotMaterialized()
+    {
+        var capability = new ProductionScribeEmissionVerifier().Verify(
+            Snapshot(("Meta/Digestion/atoms/sha256/" + Unwritable, "unwritable"),
+                ("docs/develop/theory/" + Unwritable + ".md", "unwritable")),
+            Report(), RawChangeSet.Create([Selected]));
+        Assert.True(capability.TryGet("D5/S0/Test/Selected", out _));
+    }
+
+    [Fact]
+    public void FailedDefinitionIsAContentRejection()
+    {
+        var error = Assert.Throws<ScribeVerificationException>(() => new ProductionScribeEmissionVerifier().Verify(
+            Snapshot((Selected, """
+                using StrataLint.Scribe;
+                internal sealed class Selected : IScribeDocumentDefinition
+                {
+                    public DocumentDefinition Create() => null!;
+                }
+                """)),
+            Report(), RawChangeSet.Create([Selected])));
+        Assert.Equal(1, error.ExitCode);
+        Assert.Contains("CreateFailed", error.Message, StringComparison.Ordinal);
+        Assert.Contains(Selected, error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void BlueprintDefinitionsAreDataOutsideJudgeBuildInputs()
     {
         Assert.False(StrataLintEngineBuildInputs.ContainsJudgeSource(Selected));
@@ -46,8 +82,9 @@ public sealed class ScopedScribeVerifierTests
     }
 
     private const string Selected = "Blueprint/D5/S0/Test/Selected.scribe.cs";
+    private static readonly string Unwritable = new('n', 300);
     private static LeanAxiomReport Report() => LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
-    private static RepositorySnapshot Snapshot()
+    private static RepositorySnapshot Snapshot(params (string Path, string Text)[] overrides)
     {
         var fixture = new RuleFixture();
         foreach (var (path, text) in StrataLint.TestSupport.ScribeSdkFixtureInputs.Read())
@@ -71,6 +108,8 @@ public sealed class ScopedScribeVerifierTests
             }
             """;
         fixture.Files["Blueprint/D5/S0/Test/Unselected.scribe.cs"] = "invalid C# source";
+        foreach (var (path, text) in overrides)
+            fixture.Files[path] = text;
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
             fixture.Files.Select(file => RawRepositoryEntry.FromText(file.Key, file.Value))))).Snapshot;
     }

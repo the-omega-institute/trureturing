@@ -32,6 +32,16 @@ internal sealed class FourExitRawEndpointSpectrumDocument : IScribeDocumentDefin
                 + "(1,1,1,1,0), (1,0,1,2,1), (1,0,2,1,1), and (1,0,1,1,2). "
                 + "The response-cost core supplies a globally correct strategy for each recipe, "
                 + "with actual costs equal to 8k + 16 plus these coordinates.")),
+            Describe.Lean(DescribeId.Create("four-exit-comb-foundation"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.comb_foundation"),
+                H("Structural identities for every right comb"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural slot count and arbitrary source blocks and tails, "
+                    + "the third substitution acts on each block and the tail separately. The comb length "
+                    + "is the sum of the block lengths and the tail length. Two combs with the same slot "
+                    + "count are equal exactly when their block functions and tails are equal; they are "
+                    + "nonconflicting exactly when every pair of corresponding blocks and the two tails "
+                    + "are nonconflicting."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("four-exit-local-two-excess"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.local_two_excess"),
                 H("A Zero Row Forces a Sibling of Excess Two"),

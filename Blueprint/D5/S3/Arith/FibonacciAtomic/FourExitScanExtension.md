@@ -14,9 +14,9 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/FourExitScanExtension.ordinary_scan
 
 *Commentary.*
 
-Fix any coordinate equivalence for the baseline and the four exceptional rows at each slot. A recipe on the baseline and any retained set of slots extends to a recipe on the complete family. Its gain is unchanged on every retained coordinate and equals one on all four rows of every added slot. The assertion includes empty and full retained sets.
+For every k at least one, fix any coordinate equivalence for the baseline and the four exceptional rows at each slot. A recipe on the baseline and any retained set of slots extends to a recipe on the complete family. Its gain is unchanged on every retained coordinate and equals one on all four rows of every added slot. The assertion includes empty and full retained sets.
 
-The three actual queries at an added slot are LLLR, LRR, and RLR. The first separates A and Y; the second separates H; the third separates Z. Each exceptional row exits after one nonleaf reply, while every other row continues through labelled leaves. Induction over the added slots composes these splits with the original retained recipe.
+The three response vectors at an added slot are realized by LLLR, LRR, and RLR below that slot. The first separates A and Y; the second separates H; the third separates Z. Each exceptional row exits after one nonleaf reply, while every other row continues through labelled leaves. Induction over the added slots composes these splits with the original retained recipe.
 
 ## References
 

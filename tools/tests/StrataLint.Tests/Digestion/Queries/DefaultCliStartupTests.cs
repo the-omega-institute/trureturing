@@ -25,7 +25,7 @@ public sealed class DefaultCliStartupTests
     }
 
     [Fact]
-    public void DefaultCliBulkCandidatesNeedNoLeanReportOrScribeDiscoveryFixtures()
+    public void DefaultCliScopedSearchNeedsNoLeanReportOrScribeDiscoveryFixtures()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -41,11 +41,10 @@ public sealed class DefaultCliStartupTests
         TestGit.Run(temporary.Path, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.test",
             "commit", "-m", "synthetic query baseline");
 
-        var result = RunCli(temporary.Path, "digest-status", "--formalize-candidates");
+        var result = RunCli(temporary.Path, "search-atoms", "--source", "fixture-source");
 
         Assert.True(result.ExitCode == 0, result.StandardError);
-        using var candidates = JsonDocument.Parse(result.StandardOutput);
-        Assert.Equal("stratalint-formalize-candidates-v5", candidates.RootElement.GetProperty("schema").GetString());
+        Assert.Contains("ATOM source_id=fixture-source", result.StandardOutput, StringComparison.Ordinal);
     }
 
     private static (int ExitCode, string StandardOutput, string StandardError) RunCli(

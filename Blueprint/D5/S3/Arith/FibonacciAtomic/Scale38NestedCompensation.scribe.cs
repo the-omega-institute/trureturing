@@ -39,6 +39,12 @@ internal sealed class Scale38NestedCompensationDocument : IScribeDocumentDefinit
                 + "acquisition. A selection always starts a complete labelled-leaf test, with "
                 + "a mismatch also starting total acquisition.")),
                 Paragraph(Text(
+                "For every prefix length t from zero through k+1, compatibility with all earlier "
+                + "alpha scan reports holds exactly for the baseline and rows whose exit position "
+                + "is at least t. In the one-based slot names, these are X_j with j >= t+1 and "
+                + "Y_i with i >= max(0,t-1), as well as P_0. At t=k+1 only P_0 remains. "
+                + "The family has exactly 2k+1 members, and all scan addresses are distinct.")),
+                Paragraph(Text(
                 "The same controller terminates and decides third-image membership for every "
                 + "finite input tree. On the baseline its distinct requested addresses are exactly "
                 + "the leaves. On an enlarged-slot or contraction row they are the leaves together "

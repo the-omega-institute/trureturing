@@ -36,49 +36,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         cost pi (family k j) = 8 * k + 16 → i = j) ∧
       ∃ v ∈ menu k, ∀ i : Index k, 8 * k + 16 + v i ≤ cost pi (family k i)) := by
   classical
-  have fold_facts : ∀ (n : Nat) (f g : Fin n → Source) (q t : Source),
-      thirdImage (comb n f q) = comb n (fun i => thirdImage (f i)) (thirdImage q) ∧
-      (comb n f q).length = (∑ i, (f i).length) + q.length ∧
-      (comb n f q = comb n g t ↔ f = g ∧ q = t) ∧
-      (Nonconflict (comb n f q) (comb n g t) ↔
-        (∀ i, Nonconflict (f i) (g i)) ∧ Nonconflict q t) := by
-    intro n
-    induction n with
-    | zero =>
-      intro f g q t
-      simp [comb, funext_iff]
-    | succ n ih =>
-      intro f g q t
-      have left := ih (fun i => f i.succ) (fun i => g i.succ) q t
-      have hom := Function.Semiconj₂.iterate
-        (show Function.Semiconj₂ substitution FreeMagma.mul FreeMagma.mul from
-          substitution.map_mul) 3 (f 0) (comb n (fun i => f i.succ) q)
-      refine ⟨?_, ?_, ?_, ?_⟩
-      · change thirdImage (.mul _ _) = _
-        change thirdImage (.mul (f 0) (comb n (fun i => f i.succ) q)) =
-          .mul (thirdImage (f 0)) (thirdImage (comb n (fun i => f i.succ) q)) at hom
-        rw [hom, left.1]
-        rfl
-      · simpa only [comb, FreeMagma.length, Fin.sum_univ_succ, Nat.add_assoc] using
-          congrArg ((f 0).length + ·) left.2.1
-      · constructor
-        · intro he
-          change FreeMagma.mul _ _ = FreeMagma.mul _ _ at he
-          injection he with heads rest
-          have tail := left.2.2.1.mp rest
-          refine ⟨?_, tail.2⟩
-          funext i
-          exact Fin.cases heads (fun i => congrFun tail.1 i) i
-        · rintro ⟨rfl, rfl⟩; rfl
-      · change (Nonconflict (f 0) (g 0) ∧
-          Nonconflict (comb n (fun i => f i.succ) q)
-            (comb n (fun i => g i.succ) t)) ↔ _
-        rw [left.2.2.2]
-        constructor
-        · rintro ⟨h0, hs, ht⟩
-          exact ⟨fun i => Fin.cases h0 hs i, ht⟩
-        · rintro ⟨hs, ht⟩
-          exact ⟨hs 0, (fun i => hs i.succ), ht⟩
+  have fold_facts := comb_foundation
   let slot : Index k → Fin k → Source := fun i l => match i with
     | .inl _ => B
     | .inr (j,r) => if l = j then active r else B

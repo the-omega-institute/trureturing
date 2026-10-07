@@ -169,7 +169,7 @@ internal static class DagLedgerCommandPreparation
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)
     {
-        var snapshot = Decode(Ask(repository.ReadCurrent));
+        var snapshot = Decode(Ask(() => repository.ReadCurrentProjection(TruthExportCommand.IsTruthInput)));
         var (report, lean) = LoadLean(snapshot, leanReportSource);
         return BuildTruth(snapshot, report, lean);
     }
@@ -178,7 +178,7 @@ internal static class DagLedgerCommandPreparation
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)
     {
-        var snapshot = Decode(Ask(repository.ReadCurrent));
+        var snapshot = Decode(Ask(() => repository.ReadCurrentProjection(TruthExportCommand.IsTruthInput)));
         var (report, lean) = LoadLean(snapshot, leanReportSource);
         return new TruthContext(snapshot, lean, report);
     }
