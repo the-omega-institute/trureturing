@@ -12,7 +12,7 @@ Lean statement: `D5/S3/TotalVariation/ParityKernelMasses.antidiagonal_tuple_card
 
 *Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParityKernelMasses.antidiagonal_tuple_card` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Yaël Dillies, Bhavik Mehta, Huỳnh Trần Khanh, Stuart Presnell and Mathlib contributors (2026). *Mathlib.Data.Sym.Card — Stars and bars*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Sym/Card.lean>.
 
 *Commentary.*
 
@@ -26,6 +26,8 @@ Lean statement: `D5/S3/TotalVariation/ParityKernelMasses.parity_fiber_card`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Yaël Dillies, Bhavik Mehta, Huỳnh Trần Khanh, Stuart Presnell and Mathlib contributors (2026). *Mathlib.Data.Sym.Card — Stars and bars*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Sym/Card.lean>.
+
 *Commentary.*
 
 Fix a positive d, a natural M, and a full vector x. The weak compositions r of M into d parts with r_i mod 2 equal to the bit x_i for every i number choose((M-h(x))/2+d-1,d-1) when h(x)<=M and h(x) mod 2=M mod 2, and there are none otherwise. On the legal support, r_i=2t_i+x_i is a bijection with the weak compositions t of (M-h(x))/2. If some r has the prescribed parities, then M=2*sum(r_i/2)+h(x), so an illegal vector has no preimage.
@@ -36,7 +38,7 @@ Lean statement: `D5/S3/TotalVariation/ParityKernelMasses.parity_reference_mass`
 
 *Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParityKernelMasses.parity_reference_mass` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Kyle Siegrist (2026). *Random: Probability, Mathematical Statistics, Stochastic Processes*. URL: <https://www.randomservices.org/random/>.
 
 *Commentary.*
 

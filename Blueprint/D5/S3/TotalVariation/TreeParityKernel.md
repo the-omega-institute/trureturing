@@ -12,6 +12,8 @@ $$\forall d,M \in \mathbb{N}, \forall \xi, \operatorname{R}\left(d, M, \xi\right
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Yaël Dillies, Bhavik Mehta, Huỳnh Trần Khanh, Stuart Presnell and Mathlib contributors (2026). *Mathlib.Data.Sym.Card — Stars and bars*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Sym/Card.lean>.
+
 *Commentary.*
 
 The parameters d and M are natural numbers, xi : Fin d -> Bool, and h is the number of true coordinates of xi. The guard requires h <= M and h mod 2 = M mod 2. The mass is zero when either test fails; the binomial coefficient in the nonzero branch is evaluated only for the resulting natural parameters. Its numerator counts the weak compositions of M into d parts with parity vector xi.
@@ -22,11 +24,11 @@ $$\forall d,M \in \mathbb{N}, \forall \xi, \operatorname{Q}\left(d, M, \xi\right
 
 *Formalization.* `D5/S3/TotalVariation/TreeParityKernel.Q` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kyle Siegrist (2026). *Random: Probability, Mathematical Statistics, Stochastic Processes*. URL: <https://www.randomservices.org/random/>.
 
 *Commentary.*
 
-Here nu = M/(2M+d), eta = d/(2M+d), and p_e = (1+(-1)^M eta^d)/2. The mass is zero when h mod 2 differs from M mod 2. For positive d and M, this formula describes independent Bernoulli(nu) bits conditioned on the terminal parity. The conditioned bits are not asserted to be independent. Both masses have exactly the form used by the frozen finite parity bound.
+Here nu = M/(2M+d), eta = d/(2M+d), and p_e = (1+(-1)^M eta^d)/2. The mass is zero when h mod 2 differs from M mod 2. For positive d and M, this formula describes independent Bernoulli(nu) bits conditioned on the terminal parity. The conditioned bits are not asserted to be independent. Both masses have exactly the form used by the finite parity bound.
 
 **Definition 1.3 (Shapes and complete gaps).**
 
@@ -60,6 +62,10 @@ $$\operatorname{V}\left(t\right) = \frac{\operatorname{Q}\left(d, M, \operatorna
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Yaël Dillies, Bhavik Mehta, Huỳnh Trần Khanh, Stuart Presnell and Mathlib contributors (2026). *Mathlib.Data.Sym.Card — Stars and bars*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Sym/Card.lean>.
+
+*Acknowledgement.* Kyle Siegrist (2026). *Random: Probability, Mathematical Statistics, Stochastic Processes*. URL: <https://www.randomservices.org/random/>.
+
 *Commentary.*
 
 The actual tree law U is the uniform mass on Fiber(a,b). The reference mass uses the conditioned Bernoulli parity law Q and the actual uniform conditional law given the complete gap parity. For a legal parity vector, the denominator is the number of actual trees with that record: catalan(n-1) times choose((M-h)/2+d-1,d-1). The parity vector of an actual tree is always legal.
@@ -71,6 +77,10 @@ $$\forall a,b \in \mathbb{N}, ((1 \leq a + b) \land (d \leq M)) \Rightarrow (\op
 *Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/TreeParityKernel.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Yaël Dillies, Bhavik Mehta, Huỳnh Trần Khanh, Stuart Presnell and Mathlib contributors (2026). *Mathlib.Data.Sym.Card — Stars and bars*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Sym/Card.lean>.
+
+*Acknowledgement.* Kyle Siegrist (2026). *Random: Probability, Mathematical Statistics, Stochastic Processes*. URL: <https://www.randomservices.org/random/>.
 
 *Commentary.*
 
