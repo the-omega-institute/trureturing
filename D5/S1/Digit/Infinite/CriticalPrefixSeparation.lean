@@ -82,10 +82,15 @@ theorem residual (x : LegalDigits) (j : ℕ) :
   simp only [Nat.mul_add, Nat.mul_one]
   linarith
 
+/-- The five offsets, in increasing order, are `-t`, `0`, `t^2`, `1`, and
+`1+t^2`. Their adjacent gaps are `t`, `t^2`, `t`, and `t^2`. -/
 theorem label_gap (l m : Label) (hne : l ≠ m) :
     t ^ 2 ≤ |offset l - offset m| := by
   have ht := golden_facts
-  have hhalf : (1 : ℝ) / 2 < t := by nlinarith [ht.2.2.1]
+  have hhalf : (1 : ℝ) / 2 < t := by
+    dsimp [t, D5.S1.Digit.Infinite.SignedSeriesRange.alpha]
+    simpa only [one_div] using
+      one_div_lt_one_div_of_lt Real.goldenRatio_pos Real.goldenRatio_lt_two
   have hln0 := l.property 0 (by decide)
   have hln1 := l.property 1 (by decide)
   have hmn0 := m.property 0 (by decide)

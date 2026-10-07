@@ -38,7 +38,7 @@ Lean statement: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.label_gap`
 
 *Commentary.*
 
-Any two distinct legal three-bit windows have translations whose absolute difference is at least t^2.
+Any two distinct legal three-bit windows have translations whose absolute difference is at least t^2. In increasing order the translations are -t, 0, t^2, 1, and 1+t^2; their successive gaps are t, t^2, t, and t^2.
 
 **Theorem 1.4 (Sharp separation and critical prefix recovery).**
 

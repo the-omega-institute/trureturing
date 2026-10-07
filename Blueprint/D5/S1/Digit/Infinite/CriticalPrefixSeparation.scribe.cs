@@ -37,7 +37,8 @@ internal sealed class CriticalPrefixSeparationDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Any two distinct legal three-bit windows have translations whose "
-                    + "absolute difference is at least t^2."))),
+                    + "absolute difference is at least t^2. In increasing order the translations "
+                    + "are -t, 0, t^2, 1, and 1+t^2; their successive gaps are t, t^2, t, and t^2."))),
                 DescribeRole.Theorem),
             Describe.Lean(
             DescribeId.Create("criticalprefixseparation-result"),
