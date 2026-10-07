@@ -24,7 +24,6 @@ namespace D5.S3.Arith.FibonacciAtomic.FourExitCoarseScanAttainment
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition
 open ActualImageSevenLeafSeparation (leafLabel leafAddresses)
-open ActualCoarseReadoutHistory (CoarseObservable)
 open FourExitRawEndpointSpectrum
 open D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound
   (PassiveProtocol runPassiveProtocol)
@@ -158,7 +157,7 @@ private def rowExcess (k : Nat) (seed : Seed k) (i : Index k) : Nat :=
 /-- Every preselected scan-and-tail route completes with its exact actual address cost. -/
 private theorem actual_routes (k : Nat) (hk : 1 ≤ k) :
     ∀ seed : Seed k, ∃ pi : Strategy,
-      CoarseObservable pi.policy ∧
+      Function.FactorsThrough pi.policy ActualCoarseReadoutHistory.kappa_hist ∧
       (∀ i : Index k,
         paid (terminal pi (family k i)).1 = leafAddresses (family k i) ∪ extraAddresses k seed i ∧
         cost pi (family k i) = 8*k+16 + (extraAddresses k seed i).card) := by
@@ -341,7 +340,7 @@ private theorem actual_routes (k : Nat) (hk : 1 ≤ k) :
         have same := scan_inactive l (d l) (scanList k j s d ls) i inactive
         exact ⟨same.1.trans next.1, same.2.trans next.2⟩
   have attained (seed : Seed k) : ∃ pi : Strategy,
-      CoarseObservable pi.policy ∧
+      Function.FactorsThrough pi.policy ActualCoarseReadoutHistory.kappa_hist ∧
       (∀ i : Index k,
         paid (terminal pi (family k i)).1 = leafAddresses (family k i) ∪ extraAddresses k seed i ∧
         cost pi (family k i) = 8*k+16 + (extraAddresses k seed i).card) := by
@@ -388,7 +387,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     ∃ pi : Seed k → Strategy,
       (∀ seed, 0 ≤ seedWeight k (tailWeight k) (scanWeight k) seed) ∧ (∑ seed : Seed k, seedWeight k (tailWeight k) (scanWeight k) seed) = 1 ∧
       (∀ seed,
-        CoarseObservable (pi seed).policy ∧
+        Function.FactorsThrough (pi seed).policy ActualCoarseReadoutHistory.kappa_hist ∧
         (∀ i : Index k,
           paid (terminal (pi seed) (family k i)).1 =
             leafAddresses (family k i) ∪ extraAddresses k seed i ∧
