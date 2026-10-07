@@ -40,6 +40,10 @@ internal sealed class HorizonPermutationCostDocument : IScribeDocumentDefinition
                             + "iterate would otherwise put a point without a predecessor "
                             + "in the image of a positive iterate of f.")),
                     Paragraph(Text(
+                        "When H is zero, take E = X, the identity permutation, "
+                            + "and identity readout and initialization. Only time zero "
+                            + "is required, and the state count is exactly |X|.")),
+                    Paragraph(Text(
                         "Choose one predecessor of each image point and extend these "
                             + "selected edges to a permutation q of X. Every q-edge "
                             + "entering an image point is then an f-edge. Subdivide each "
