@@ -40,6 +40,23 @@ internal sealed class HeterogeneousTeacherSeparationDocument : IScribeDocumentDe
                 + "distance(mu,t,u) is the sum over all complete words of the product input "
                 + "mass times the squared class-value difference. "
                 + "gamma(rho) is 8 times rho squared times (1 minus 2 times rho).")),
+            Paragraph(Text("Product expectation productExpectation(mu,f) sums the actual product input mass "
+                + "times f. The functions highIndicator and lowIndicator are the real zero-one endpoint indicators, "
+                + "highMarginal and lowMarginal are their marginal means, and firstGate(t,w)=highIndicator(w(p)) lowIndicator(w(q)) is the first "
+                + "gate. The product formulas for two, three and four positions apply at distinct positions; "
+                + "product_expectation_linear_combination distributes three-term linear combinations. The endpoint and joint "
+                + "means, binary indicators, class formula, marginal interval and Bernoulli discrepancy estimate "
+                + "give the same identities for every actual heterogeneous law.")),
+            Describe.Lean(DescribeId.Create("heterogeneous-first-gate-separation"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.first_gate_discrepancy_lower"),
+                H("Separation of different first pairs"),
+                StatementSource.FromAuthor(GateFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A shared first position, a shared second position, a "
+                    + "crossed position, and disjoint first pairs exhaust the overlaps. The same "
+                    + "window joint mass is preserved in the crossed case. In all four cases "
+                    + "the squared discrepancy of the binary first gates is at least gamma."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("heterogeneous-teacher-sharp-separation"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.result"),
                 H("A uniform lower bound and an attaining law"),
@@ -71,6 +88,23 @@ internal sealed class HeterogeneousTeacherSeparationDocument : IScribeDocumentDe
                         + "equality identify the infimum over all admissible heterogeneous laws "
                         + "and distinct triples. No label channel or sampling guarantee is asserted."))),
                 DescribeRole.Theorem))));
+
+    private static Formula GateFormula()
+    {
+        var n = V("n"); var rho = V("rho"); var mu = V("mu");
+        var t = V("t"); var u = V("u"); var w = V("w");
+        var discrepancy = new Formula.Power(Par(Seq(Call("firstGate", t, w), Sp, Minus, Sp,
+            Call("firstGate", u, w))), D(2));
+        var integrand = Par(Seq(w, Sp, Mapsto, Sp, discrepancy));
+        var pairs = Seq(Call("p", t), Sp, Neq, Sp, Call("p", u), Sp, Lor, Sp,
+            Call("q", t), Sp, Neq, Sp, Call("q", u));
+        var premises = Seq(D(0), Sp, Lt, Sp, rho, Sp, Land, Sp, rho, Sp, Le, Sp,
+            new Formula.Fraction(D(1), D(8)), Sp, Land, Sp, Call("Admissible", rho, mu),
+            Sp, Land, Sp, Par(pairs));
+        return All(n, Seq(Mathbb, Grp(V("N"))), All(rho, Seq(Mathbb, Grp(V("R"))),
+            All(mu, Call("Laws", n), All(t, Call("Roles", n), All(u, Call("Roles", n),
+                Imp(premises, Seq(Call("gamma", rho), Sp, Le, Sp, Call("productExpectation", mu, integrand))))))));
+    }
 
     private static Formula ResultFormula()
     {
