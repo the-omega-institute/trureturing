@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Observer/TraceFibers/FixedFiberPairModulus.upper_shear_po
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/TraceFibers/FixedFiberPairModulus.upper_shear_power` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* The mathlib community (2026). *Integer powers of the modular translation matrix*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Matrix/SpecialLinearGroup.lean>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Observer/TraceFibers/FixedFiberPairModulus.lower_shear_po
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/TraceFibers/FixedFiberPairModulus.lower_shear_power` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* The mathlib community (2026). *Integer powers of the modular translation matrix*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Matrix/SpecialLinearGroup.lean>.
 
 *Commentary.*
 

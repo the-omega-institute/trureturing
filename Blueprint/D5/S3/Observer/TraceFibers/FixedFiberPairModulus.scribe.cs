@@ -17,7 +17,7 @@ internal sealed class FixedFiberPairModulusDocument : IScribeDocumentDefinition
                 H("Upper shear powers"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Arith/mathlib2026shearpowers")),
+                    LibraryNoteRef.Create("D5/L/ArithUnits/mathlib2026shearpowers")),
                 Blocks(Paragraph(Text(
                     "The kth power of JM has rows (1,k) and (0,1), including the identity at k=0."))),
                 DescribeRole.Theorem),
@@ -27,7 +27,7 @@ internal sealed class FixedFiberPairModulusDocument : IScribeDocumentDefinition
                 H("Lower shear powers"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Arith/mathlib2026shearpowers")),
+                    LibraryNoteRef.Create("D5/L/ArithUnits/mathlib2026shearpowers")),
                 Blocks(Paragraph(Text(
                     "The kth power of MJ has rows (1,0) and (k,1), the transpose of the upper shear power."))),
                 DescribeRole.Theorem),

@@ -24,43 +24,6 @@ open D5.S3.Observer.TraceFibers.FixedFiberPairModulus
 private def shape (w : List Action) : ℝ × ℝ :=
   (wordMatrix w 1 1 - wordMatrix w 0 0, wordMatrix w 1 0)
 
-private theorem short_word_facts (w : List Action) (hw : w.length ≤ 3) :
-    (shape w = (0, 0) ∨ shape w = (0, 1) ∨ shape w = (1, 1) ∨
-      shape w = (0, 2) ∨ shape w = (-1, 1) ∨ shape w = (2, 1) ∨
-      shape w = (2, 2)) ∧
-    (shape w = (2, 1) ↔ w = [Action.advance, Action.exchange, Action.advance]) ∧
-    (shape w = (2, 2) ↔ w = [Action.advance, Action.advance, Action.advance]) := by
-  cases w with
-  | nil =>
-      simp [shape, wordMatrix]
-  | cons a w =>
-      cases w with
-      | nil =>
-          cases a <;>
-            norm_num [shape, wordMatrix, actionMatrix,
-              GoldenCoding.GoldenModularStandardPair.goldenModularStep,
-              HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
-              Matrix.mul_apply, Fin.sum_univ_two] <;> decide
-      | cons b w =>
-          cases w with
-          | nil =>
-              cases a <;> cases b <;>
-                norm_num [shape, wordMatrix, actionMatrix,
-                  GoldenCoding.GoldenModularStandardPair.goldenModularStep,
-                  HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
-                  Matrix.mul_apply, Fin.sum_univ_two] <;> decide
-          | cons c w =>
-              cases w with
-              | nil =>
-                  cases a <;> cases b <;> cases c <;>
-                    norm_num [shape, wordMatrix, actionMatrix,
-                      GoldenCoding.GoldenModularStandardPair.goldenModularStep,
-                      HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
-                      Matrix.mul_apply, Fin.sum_univ_two] <;> decide
-              | cons d w =>
-                  simp only [List.length_cons, Nat.reduceAdd] at hw
-                  omega
-
 private theorem finite_envelope_facts
     (k : ℕ) (h x r : ℝ)
     (hk : 1 ≤ k) (hh : 0 < h) (hh1 : h < 1) (hr : 0 < r)
@@ -157,31 +120,72 @@ private theorem candidate_shapes
     (hexecuted : wordMatrix executed = secondMatrix true k) :
     Set.InjOn (fun s => Matrix.trace
       ((wordMatrix w * wordMatrix executed) * source true x r s)) (Set.Ioo 0 x) ↔
+      shape w = (1, 1) ∨ w = [Action.advance, Action.exchange, Action.advance] ∨
+        w = [Action.advance, Action.advance, Action.advance] := by
+  have short_word_facts (w : List Action) (hw : w.length ≤ 3) :
+      (shape w = (0, 0) ∨ shape w = (0, 1) ∨ shape w = (1, 1) ∨
+        shape w = (0, 2) ∨ shape w = (-1, 1) ∨ shape w = (2, 1) ∨
+        shape w = (2, 2)) ∧
+      (shape w = (2, 1) ↔ w = [Action.advance, Action.exchange, Action.advance]) ∧
+      (shape w = (2, 2) ↔ w = [Action.advance, Action.advance, Action.advance]) := by
+    cases w with
+    | nil =>
+        simp [shape, wordMatrix]
+    | cons a w =>
+        cases w with
+        | nil =>
+            cases a <;>
+              norm_num [shape, wordMatrix, actionMatrix,
+                GoldenCoding.GoldenModularStandardPair.goldenModularStep,
+                HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
+                Matrix.mul_apply, Fin.sum_univ_two] <;> decide
+        | cons b w =>
+            cases w with
+            | nil =>
+                cases a <;> cases b <;>
+                  norm_num [shape, wordMatrix, actionMatrix,
+                    GoldenCoding.GoldenModularStandardPair.goldenModularStep,
+                    HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
+                    Matrix.mul_apply, Fin.sum_univ_two] <;> decide
+            | cons c w =>
+                cases w with
+                | nil =>
+                    cases a <;> cases b <;> cases c <;>
+                      norm_num [shape, wordMatrix, actionMatrix,
+                        GoldenCoding.GoldenModularStandardPair.goldenModularStep,
+                        HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
+                        Matrix.mul_apply, Fin.sum_univ_two] <;> decide
+                | cons d w =>
+                    simp only [List.length_cons, Nat.reduceAdd] at hw
+                    omega
+  have hcriterion : Set.InjOn (fun s => Matrix.trace
+      ((wordMatrix w * wordMatrix executed) * source true x r s)) (Set.Ioo 0 x) ↔
       shape w = (1, 1) ∨ shape w = (2, 1) ∨ shape w = (2, 2) := by
-  have hxpos : 0 < x := by rw [hx]; positivity
-  have hk1 : (1 : ℝ) ≤ k := by exact_mod_cast hk
-  have hρ : x / r = k + h := by rw [hx]; exact mul_div_cancel_right₀ _ hr.ne'
-  have hsecond : wordMatrix executed = (!![1, (k : ℝ); 0, 1] : Matrix (Fin 2) (Fin 2) ℝ) := by
-    rw [hexecuted]
-    simpa [secondMatrix] using upper_shear_power k
-  have he : (wordMatrix w * wordMatrix executed) 1 0 = (shape w).2 := by
-    simp [shape, hsecond, Matrix.mul_apply, Fin.sum_univ_two]
-  have hD : (wordMatrix w * wordMatrix executed) 1 1 -
-      (wordMatrix w * wordMatrix executed) 0 0 = k * (shape w).2 + (shape w).1 := by
-    simp [shape, hsecond, Matrix.mul_apply, Fin.sum_univ_two]
-    ring
-  rw [injective_iff w executed k x r hk hxpos hr hexecuted, he, hD, hρ]
-  rcases (short_word_facts w hw).1 with hs | hs | hs | hs | hs | hs | hs <;>
-    rw [hs] <;> norm_num only [Prod.fst, Prod.snd] <;>
-    simp only [hs, Prod.mk.injEq, and_false, false_and, true_and, false_or,
-      or_false, true_or, or_true, one_mul, mul_one, mul_zero, add_zero, zero_add,
-      zero_lt_one, zero_lt_two, lt_self_iff_false] <;>
-    norm_num [abs_of_nonneg (by linarith : (0 : ℝ) ≤ k),
-      abs_of_nonneg (by linarith : (0 : ℝ) ≤ k + 1),
-      abs_of_nonneg (by linarith : (0 : ℝ) ≤ k - 1),
-      abs_of_nonneg (by linarith : (0 : ℝ) ≤ k + 2),
-      abs_of_nonneg (by linarith : (0 : ℝ) ≤ k * 2 + 2)] <;>
-    first | assumption | nlinarith | (rw [abs_of_nonneg (by linarith : (0 : ℝ) ≤ k + -1)]; linarith)
+    have hxpos : 0 < x := by rw [hx]; positivity
+    have hk1 : (1 : ℝ) ≤ k := by exact_mod_cast hk
+    have hρ : x / r = k + h := by rw [hx]; exact mul_div_cancel_right₀ _ hr.ne'
+    have hsecond : wordMatrix executed = (!![1, (k : ℝ); 0, 1] : Matrix (Fin 2) (Fin 2) ℝ) := by
+      rw [hexecuted]
+      simpa [secondMatrix] using upper_shear_power k
+    have he : (wordMatrix w * wordMatrix executed) 1 0 = (shape w).2 := by
+      simp [shape, hsecond, Matrix.mul_apply, Fin.sum_univ_two]
+    have hD : (wordMatrix w * wordMatrix executed) 1 1 -
+        (wordMatrix w * wordMatrix executed) 0 0 = k * (shape w).2 + (shape w).1 := by
+      simp [shape, hsecond, Matrix.mul_apply, Fin.sum_univ_two]
+      ring
+    rw [injective_iff w executed k x r hk hxpos hr hexecuted, he, hD, hρ]
+    rcases (short_word_facts w hw).1 with hs | hs | hs | hs | hs | hs | hs <;>
+      rw [hs] <;> norm_num only [Prod.fst, Prod.snd] <;>
+      simp only [hs, Prod.mk.injEq, and_false, false_and, true_and, false_or,
+        or_false, true_or, or_true, one_mul, mul_one, mul_zero, add_zero, zero_add,
+        zero_lt_one, zero_lt_two, lt_self_iff_false] <;>
+      norm_num [abs_of_nonneg (by linarith : (0 : ℝ) ≤ k),
+        abs_of_nonneg (by linarith : (0 : ℝ) ≤ k + 1),
+        abs_of_nonneg (by linarith : (0 : ℝ) ≤ k - 1),
+        abs_of_nonneg (by linarith : (0 : ℝ) ≤ k + 2),
+        abs_of_nonneg (by linarith : (0 : ℝ) ≤ k * 2 + 2)] <;>
+      first | assumption | nlinarith | (rw [abs_of_nonneg (by linarith : (0 : ℝ) ≤ k + -1)]; linarith)
+  rw [hcriterion, (short_word_facts w hw).2.1, (short_word_facts w hw).2.2]
 
 private theorem quadratic_order (μ α u v : ℝ) (hμ : 0 ≤ μ) (hα : 0 < α)
     (hu : 0 ≤ u) (hv : 0 ≤ v) :
@@ -598,8 +602,16 @@ theorem three_action_modulus_envelope
   let optimal := fun w τ => admissible w ∧ ∀ v, admissible v → Ω w τ ≤ Ω v τ
   have hk0 : (0 : ℝ) ≤ k := by exact_mod_cast (Nat.zero_le k)
   have hxpos : 0 < x := by rw [hx]; positivity
-  have hSshape : shape S = (2, 1) := (short_word_facts S (by simp [S])).2.1.mpr rfl
-  have hAshape : shape A = (2, 2) := (short_word_facts A (by simp [A])).2.2.mpr rfl
+  have hSshape : shape S = (2, 1) := by
+    norm_num [S, shape, wordMatrix, actionMatrix,
+      GoldenCoding.GoldenModularStandardPair.goldenModularStep,
+      HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
+      Matrix.mul_apply, Fin.sum_univ_two]
+  have hAshape : shape A = (2, 2) := by
+    norm_num [A, shape, wordMatrix, actionMatrix,
+      GoldenCoding.GoldenModularStandardPair.goldenModularStep,
+      HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
+      Matrix.mul_apply, Fin.sum_univ_two]
   have hCshape : shape [Action.advance] = (1, 1) := by
     norm_num [shape, wordMatrix, actionMatrix,
       GoldenCoding.GoldenModularStandardPair.goldenModularStep,
@@ -607,8 +619,7 @@ theorem three_action_modulus_envelope
   have hclass (w : List Action) (hw : w.length ≤ 3) :
       admissible w ↔ shape w = (1, 1) ∨ w = S ∨ w = A := by
     change (w.length ≤ 3 ∧ _) ↔ _
-    rw [and_iff_right hw, candidate_shapes w executed k h x r hw hk hh hh1 hr hx hexecuted,
-      (short_word_facts w hw).2.1, (short_word_facts w hw).2.2]
+    rw [and_iff_right hw, candidate_shapes w executed k h x r hw hk hh hh1 hr hx hexecuted]
   have hSad : admissible S := (hclass S (by simp [S])).2 (Or.inr (Or.inl rfl))
   have hAad : admissible A := (hclass A (by simp [A])).2 (Or.inr (Or.inr rfl))
   have hdata (w : List Action) (δ c τ : ℝ) (hs : shape w = (δ, c))
