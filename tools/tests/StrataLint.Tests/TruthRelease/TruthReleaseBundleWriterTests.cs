@@ -16,14 +16,13 @@ public sealed class TruthReleaseBundleWriterTests
     private const string PackageCommit = "3333333333333333333333333333333333333333";
 
     [Fact]
-    public void SourceSnapshotWriterRoundTripsAllFourteenFields()
+    public void SourceSnapshotWriterRoundTripsAllThirteenFields()
     {
         var expected = CreateSourceSnapshot(
             Digest(Utf8("truth graph\n")),
             Utf8("raw report\n"),
             Utf8("blueprint index\n"),
             Utf8("frozen ledger head\n"),
-            Utf8("residual frontier\n"),
             Utf8("truth export\n"));
 
         var bytes = SourceSnapshotJsonWriter.Write(expected);
@@ -46,8 +45,7 @@ public sealed class TruthReleaseBundleWriterTests
                 Artifact("raw-lean-report.json", '3'),
                 Artifact("truth-export.v1.json", '4'),
                 Artifact("blueprint-index.v1.json", '5'),
-                Artifact("frozen-ledger-head.json", '6'),
-                Artifact("echo-residual-summary.md", '7')),
+                Artifact("frozen-ledger-head.json", '6')),
             "sha256:" + new string('8', 64),
             "2026-08-23T00:00:00Z");
 
@@ -132,7 +130,7 @@ public sealed class TruthReleaseBundleWriterTests
             Assert.Equal("truth-export.v1.json", verified.Manifest.Artifacts.TruthExport.File);
             Assert.Equal("blueprint-index.v1.json", verified.Manifest.Artifacts.BlueprintIndex.File);
             Assert.Equal("frozen-ledger-head.json", verified.Manifest.Artifacts.FrozenLedgerHead.File);
-            Assert.Equal("echo-residual-summary.md", verified.Manifest.Artifacts.ResidualFrontier.File);
+            Assert.False(File.Exists(Path.Combine(directory, "echo-residual-summary.md")));
             Assert.Equal(
                 TruthGraphJsonWriter.Write(fixture.TruthGraph).ToArray(),
                 TruthGraphJsonWriter.Write(verified.ReadTruthGraph()).ToArray());
@@ -163,30 +161,6 @@ public sealed class TruthReleaseBundleWriterTests
             },
         };
         var directory = Directory.CreateTempSubdirectory("truthbundle-raw-report-composition").FullName;
-        try
-        {
-            var releaseDigest = TruthReleaseBundleWriter.WriteBundle(directory, input);
-
-            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, releaseDigest));
-        }
-        finally
-        {
-            Directory.Delete(directory, recursive: true);
-        }
-    }
-
-    [Fact]
-    public void VerifierRejectsSourceSnapshotResidualFrontierDigestThatDoesNotNameVerifiedArtifact()
-    {
-        var fixture = CreateBundleFixture();
-        var input = fixture.Input with
-        {
-            SourceSnapshot = fixture.Input.SourceSnapshot with
-            {
-                ResidualFrontierSha256 = "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-            },
-        };
-        var directory = Directory.CreateTempSubdirectory("truthbundle-residual-composition").FullName;
         try
         {
             var releaseDigest = TruthReleaseBundleWriter.WriteBundle(directory, input);
@@ -297,13 +271,11 @@ public sealed class TruthReleaseBundleWriterTests
         var truthExportBytes = TruthExportJsonWriter.Write(truthExport);
         var blueprintIndex = ImmutableArray.CreateRange(Utf8("{\"blueprints\": []}\n"));
         var frozenLedgerHead = ImmutableArray.CreateRange(Utf8("{\"sequence\": 7}\n"));
-        var residualFrontier = ImmutableArray.CreateRange(Utf8("# Residual frontier\n\nNone.\n"));
         var sourceSnapshot = CreateSourceSnapshot(
             "sha256:" + Sha256Sums.HashHex(truthGraphBytes.AsSpan()),
             rawLeanReport.ToArray(),
             blueprintIndex.ToArray(),
             frozenLedgerHead.ToArray(),
-            residualFrontier.ToArray(),
             truthExportBytes.ToArray());
         var input = new TruthReleaseBundleInput(
             sourceSnapshot,
@@ -312,7 +284,6 @@ public sealed class TruthReleaseBundleWriterTests
             truthExportBytes,
             blueprintIndex,
             frozenLedgerHead,
-            residualFrontier,
             Source(),
             Trust(blessedBy: null),
             Producer(),
@@ -325,10 +296,9 @@ public sealed class TruthReleaseBundleWriterTests
         byte[] rawLeanReport,
         byte[] blueprintIndex,
         byte[] frozenLedgerHead,
-        byte[] residualFrontier,
         byte[] truthExport) =>
         new(
-            "source-snapshot.v1",
+            "source-snapshot.v2",
             "the-omega-institute/trureturing",
             SourceCommit,
             SourceTree,
@@ -338,7 +308,6 @@ public sealed class TruthReleaseBundleWriterTests
             truthGraphDigest,
             Digest(rawLeanReport),
             Digest(blueprintIndex),
-            Digest(residualFrontier),
             Digest(truthExport),
             Digest(frozenLedgerHead),
             7);

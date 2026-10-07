@@ -1,0 +1,37 @@
+### 定义 3.1（无限两页与长度字段）
+
+把非素数和素数分别递增枚举为 $a_0<a_1<\cdots$ 与 $p_0<p_1<\cdots$，记
+
+$$
+B(0,r)=a_r,\qquad B(1,r)=p_r.
+$$
+
+两类都无限：$4,6,8,\ldots$ 均为非素数；若素数只有有限个，其乘积加一的最小大于一的因子为素数，却不在原列表，矛盾。故 $B:\{0,1\}\times\mathbb N_0\to\mathbb N_0$ 为双射，且 $\chi(B(b,r))=b$。逐个自然数用有限试除可得到两种枚举及任意给定自然数的页标与序号。
+
+固定 $k\ge2$，定义最短地址长度与其规范正文
+
+$$
+\ell_k(r)=\min\{\ell\ge0:r<G_\ell^{(k)}\},\qquad
+z_k(r)=Z_{k,\ell_k(r)}(r).
+$$
+
+严格增长与无界性保证定义存在。零序号满足 $\ell_k(0)=0$、$z_k(0)=\varepsilon$；当 $r>0$ 时，$\ell=\ell_k(r)$ 等价于
+
+$$
+G_{\ell-1}^{(k)}\le r<G_\ell^{(k)},\qquad \ell\ge1.
+$$
+
+定义等长替换 $h(0)=00$、$h(1)=01$，并按拼接延拓到所有有限二进制词，$h(\varepsilon)=\varepsilon$。对正整数 $t$ 写通常二进制表示
+
+$$
+\operatorname{bin}(t)=1u,\qquad |u|=q=\lfloor\log_2t\rfloor,
+$$
+
+置
+
+$$
+\gamma(t)=0^q1u,\qquad \eta(t)=0^q1h(u).
+$$
+
+$\gamma$ 是经典 Elias gamma 码；书目来源为 Peter Elias, *Universal codeword sets and representations of the integers*, IEEE Transactions on Information Theory 21(2), 194–203 (1975), [DOI:10.1109/TIT.1975.1055349](https://doi.org/10.1109/TIT.1975.1055349)。以下只使用这里明确定义并直接证明的长度与解析性质。
+

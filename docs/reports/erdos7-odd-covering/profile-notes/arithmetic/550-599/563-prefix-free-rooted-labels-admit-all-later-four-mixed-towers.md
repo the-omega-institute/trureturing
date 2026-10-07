@@ -318,3 +318,241 @@ All417 explicit checks pass, and `--output` selects another result path.
 These finite polynomial and rational checks certify the stated constants.
 The source reduction, all-induced positivity argument, avoidance theorem
 and complete-query comparison provide the ordinary general proof.
+
+<a id="mixed-ternary-label-gaps-give-an-eight-prime-source"></a>
+## 8. Mixed ternary label gaps give an eight-prime source
+
+Let P8={3,5,7,11,13,17,19,23}, Q7=P8 minus{3}, and let F be a finite
+family of distinct nonunit P8-smooth numerical moduli, with one fixed
+original residue for every present modulus. Write D for its numerical
+inventory and U for its full actual survivor. Assume
+
+    3n in D => 9n,27n,81n not in D, for every Q7-smooth n>1.   (MT1)
+
+Every pure prime-power original is allowed. So are every3-free mixed
+support and arbitrary higher mixed ternary levels. In particular, a row
+without3n may contain every higher3^j*n, while a row containing3n may
+contain all heights j>=5. No disjointness condition on the original phases
+is imposed.
+
+There is one probability nu supported on U such that
+
+    B_P8(nu):=sum_(d>=1,P8-smooth) max_a nu([a]_d)
+        <=4061891809/185389950<22.                          (MT2)
+
+This B includes the unit label; R elsewhere in this report omits it. It
+also includes labels absent from F and every query height. The law is
+fixed before any query. Haar coordinate laws can equivalently be resolved
+on a finite CRT carrier with independent uniform tails.
+
+The proof reuses the pure-root capacities of
+[Report528 FC708--FC709](../500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md#pure-ternary-holes-require-a-joint-prefix-capacity-boundary),
+PF5--PF9's support aggregation and polynomial, and the relative-avoidance
+estimate in [Hough--Nielsen, Appendix C, Theorem16](https://arxiv.org/html/1703.02133v2).
+The added arithmetic input is the actual-row bound MT4 below. These are
+ordinary applications with exact rational constants, not a new general
+Shearer theorem or an unrestricted Erdős#7 result.
+
+### 8.1. A single pure-survivor reference and its row inventory
+
+For p in P8 let V_p avoid the actual pure-p originals. For q in Q7 use
+lambda_q=H_q(.|V_q). PF2 gives depth-j caps
+
+    k_q(j)=[(q-1)/(q-2)]q^-j, sum_(j>=1)k_q(j)=1/(q-2).
+
+Choose two ternary first roots avoiding the possible actual modulus3
+original; if none is present, choose any two. Each chosen root retains
+Haar mass at least1/3-sum_(j>=2)3^-j=1/6 after all higher pure originals,
+as in FC708. Put probability1/2 on each root's actual pure survivor and
+normalize Haar within it. The resulting law lambda3 satisfies
+
+    k3(1)=1/2, k3(j)=3^(1-j) for j>=2,
+    lambda3([a]_(3^j))<=k3(j), sum_(j>=1)k3(j)=1.           (MT3)
+
+The factor1/2 is part of the root mixture: a root-normalized law alone
+has the larger FC709 bound. Restricting the source to two roots neither
+adds an original class nor changes any original phase. Put
+lambda=lambda3 tensor product_(q in Q7)lambda_q. It already avoids all
+actual pure originals.
+
+For a complete numerical cofactor n>1 define
+
+    s_n=(1/2)1_(3n in D)
+           +sum_(j>=2,3^j*n in D)3^(1-j).
+
+Without3n this is at most1/2. With3n, MT1 gives
+
+    s_n<=1/2+sum_(j>=5)3^(1-j)=1/2+1/54=14/27.             (MT4)
+
+Group actual mixed originals of exact prime support S into their union
+A_S. For |S|>=2, under the SAME lambda,
+
+    lambda(A_S)<=t_S:=product_(p in S)t_p,
+    t3=14/27, t_q=1/(q-2).                                (MT5)
+
+For S containing3, write S={3} union T. The numerical-row calculation is
+
+    lambda(A_S)
+      <=[product_(q in T)(q-1)/(q-2)]
+           sum_(supp(n)=T)s_n/n
+      <=(14/27)product_(q in T)1/(q-2).
+
+Distinct complete original labels supply the first inequality; geometric
+summation bounds their finite inventory without adding actual classes.
+The3-free case is PF2's product geometric sum. Events on disjoint prime
+supports have independent full sigma-algebras under lambda. No such
+independence is asserted for overlapping supports.
+
+MT1 can be replaced by the weaker127 actual-inventory inequalities
+
+    sum_(supp(n)=T)s_n/n
+        <=(14/27)product_(q in T)1/(q-1), empty!=T subset Q7. (MT6)
+
+These finite sums use original numerical labels. They are sufficient
+conditions, not consequences of numerical distinctness alone.
+
+### 8.2. Relative avoidance and every query on the final law
+
+Use PF5's polynomial with singleton weights zero and mixed-support
+weights t_S:
+
+    rho(T)=sum_(M disjoint blocks S subset T, |S|>=2)
+                     (-1)^|M| product_(S in M)t_S.
+
+The exact certificate gives all256 coordinate-subset values and
+
+    min_(T subset P8)rho(T)=rho(P8)=1235933/14313915>0.      (MT7)
+
+Let Z(T)=lambda(no A_S with S subset T). The cited clique-Shearer
+relative-avoidance estimate, using the upper activities MT5, gives
+
+    Z(T)/Z(S)>=rho(T)/rho(S), S subset T.                   (MT8)
+
+Its upper-activity use has the same induction as the cited theorem.
+When adjoining a coordinate to R, subtract the event bounds
+lambda(A_S)Z(R minus S)/Z(R). The induction gives an UPPER bound
+rho(R minus S)/rho(R) on that subtracted ratio, and lambda(A_S)<=t_S;
+PF9 then gives the next polynomial ratio. All denominators are positive
+by MT7. Thus neither an inequality reversal nor a new event realization
+is required.
+
+In particular Z(P8)>0, so define nu=lambda(.|all mixed avoidance). This
+one law avoids every actual original. For a numerical query d, let S_d
+be its prime support and K(d)=product_(p^j exactly dividing d)k_p(j).
+Discarding forbidden events that touch S_d, then using product
+independence and MT8, gives
+
+    max_a nu([a]_d)<=K(d)rho(P8 minus S_d)/rho(P8).          (MT9)
+
+The reference lambda is a product; the final nu generally is not.
+Every query phase is bounded under this same nu. Summing the nonnegative
+terms over all heights yields
+
+    B_P8(nu)<=[sum_(S subset P8)rho(P8 minus S)
+                                 product_(p in S)b_p]/rho(P8),
+    b3=1, b_q=1/(q-2).                                    (MT10)
+
+The actual-original activity t3=14/27 differs from the full-query weight
+b3=1. In particular no query at ternary height2,3 or4 was removed.
+The numerator and initial bound are respectively
+
+    166489454/71569575,
+    B_P8(nu)<=166489454/6179665<27.
+
+At query labels3,5,9,15, the MT9 bounds are respectively
+
+    45443799/12359330, 146430436/92694975,
+    15147933/6179665, 40899294/30898325.
+
+All four exceed1. Replacing just these terms by the elementary probability
+bound1 gives MT2. This correction applies to the already constructed
+survivor law, not to an unrelated raw comparator.
+
+### 8.3. A seven-prime companion and the remaining boundary
+
+MT2 also supplies a restricted nine-prime noncoverage consequence. Keep
+an actual P8 family satisfying MT1, and add any finite set of distinct
+originals q^j*d with one fresh prime q>=29, j>=1 and P8-smooth d>=1.
+All added phases and heights are arbitrary and fixed globally. Under
+nu tensor H_q, their actual union has probability at most
+
+    sum_(j>=1,d P8-smooth)q^-j max_a nu([a]_d)
+        =B_P8(nu)/(q-1)<22/28=11/14.
+
+The old originals are already avoided, so more than3/14 of this SAME
+product source survives all added originals. The finite CRT survivor is
+therefore nonempty. This is the usual first-moment continuation, with
+MT2 as its supplier; it does not cover unrestricted nine-prime families
+whose old P8 inventory violates MT1, or several new primes at once.
+
+For any finite distinct Q7-smooth original family, let W be its full
+survivor. Applying the same calculation on Q7, with event and query
+weights both1/(q-2), gives
+
+    rho(Q7)=5049311/7952175>0,
+    B_Q7(H_Q7(.|W))<=A:=13463054/5049311.                  (MT11)
+
+Here pure-conditioned product Haar, followed by conditioning on all
+remaining mixed avoidance, is precisely Haar conditioned on W. All
+original and query heights remain included.
+
+For an unrestricted P8 family, let V3 avoid its actual pure ternary
+originals and let W avoid all its actual3-free originals. Set
+U0=V3 times W and delta=H(U)/H(U0). The pure ternary query sum including
+the unit is at most2, so MT11 gives, WHEN delta>0,
+
+    B_P8(H(.|U))<=1+(2A-1)/delta.                          (MT12)
+
+The unit query remains exactly1. A uniform reserve delta>=1/6 would
+make this bound less than28, as would the weaker strict threshold
+
+    delta>21876797/136331397.
+
+Both proposed uniform reserve conditions are FALSE.
+[Report529's eight-prime comb](../500-549/529-an-irredundant-comb-separates-fibre-credits-from-supported-query-laws.md#eight-prime-combs-refute-a-uniform-relative-haar-reserve)
+has delta<1/6 at height5 and below the weaker threshold at height6.
+Those are complete actual survivor ratios, and every original has a
+private integer. The same families nevertheless admit another source
+with B_P8<11025/1024. Thus failure of MT12's reserve supplier does not
+refute the existential query target or MT2's restricted theorem.
+The unrestricted support majorant also fails positivity:
+
+    rho(P8;t3=1)=-3364432/7952175<0.
+
+This negative value only rejects that sufficient majorant. It does not
+prove any all-law query obstruction.
+
+There is one necessary pattern for a genuine obstruction. If an actual
+family admitted no supported law with B_P8<28, delete any whole original
+class contained in another retained original. The union and U are
+unchanged. The remaining inventory must contain3n and3^j*n for some
+n>1 and j in{2,3,4}, or MT1--MT2 would supply such a law. These two
+retained classes must have incompatible residues modulo3n; otherwise
+the higher class would be contained in the lower. This is a necessary
+pattern, not a classification or an existence assertion.
+
+### 8.4. Exact arithmetic consumer
+
+The [consumer](../../../frontier/cover-geometry/prefix-free-later-four-shearer/mixed_tower_inventory.py)
+and [exact result](../../../frontier/cover-geometry/prefix-free-later-four-shearer/mixed_tower_inventory.json)
+retain the polynomial tables, distinct event/query weights, four query
+corrections and MT11. The PF9 recurrence is independently compared with
+a signed-partition elementary-symmetric expansion for640 subset values:
+256 for MT1,128 for Q7, and256 for the unrestricted majorant. All384
+coordinate-subset values needed by MT7 and MT11 are checked positive.
+The consumer recomputes the result and rejects stale saved data; it uses
+no assertions disabled by Python optimization.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/prefix-free-later-four-shearer/mixed_tower_inventory.py
+```
+
+All1054 exact checks pass. `--output PATH` generates the result at the
+chosen path. These checks certify finite rational constants; the
+source construction, relative avoidance and all-height summation above
+supply the ordinary mathematical argument. A scoped Lean check also
+verifies14 rational identities and inequalities for the root bound,
+event/query totals, four-query correction and continuation margin, using
+only the standard axioms. It does not formalize the source construction,
+Shearer application or all-height sum. No new Lean proof of that source
+theorem is claimed.

@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace Trureturing.Truth;
 
-/// <summary>The exact typed contents of a <c>source-snapshot.v1.json</c> release artifact.</summary>
+/// <summary>The exact typed contents of a <c>source-snapshot.v1.json</c> artifact with source-snapshot.v2 schema.</summary>
 public sealed record SourceSnapshotModel(
     string Schema,
     string SourceRepo,
@@ -16,7 +16,6 @@ public sealed record SourceSnapshotModel(
     string TruthGraphSha256,
     string RawLeanReportSha256,
     string DagMdSha256,
-    string ResidualFrontierSha256,
     string DeclarationsSha256,
     string FrozenLedgerHeadHash,
     int FrozenLedgerSequence);
@@ -43,7 +42,6 @@ public static class SourceSnapshotJsonWriter
             truth_graph_sha256 = model.TruthGraphSha256,
             raw_lean_report_sha256 = model.RawLeanReportSha256,
             dag_md_sha256 = model.DagMdSha256,
-            residual_frontier_sha256 = model.ResidualFrontierSha256,
             declarations_sha256 = model.DeclarationsSha256,
             frozen_ledger_head_hash = model.FrozenLedgerHeadHash,
             frozen_ledger_sequence = model.FrozenLedgerSequence,
@@ -59,7 +57,7 @@ public static class SourceSnapshotJsonWriter
 }
 
 /// <summary>
-/// Fail-closed reader for <c>source-snapshot.v1.json</c>. It requires the exact v1 field set,
+/// Fail-closed reader for <c>source-snapshot.v1.json</c>. It requires the exact v2 field set,
 /// rejects duplicate or additional properties, and validates every Git object and SHA-256 identity.
 /// </summary>
 public static class SourceSnapshotJsonReader
@@ -76,7 +74,6 @@ public static class SourceSnapshotJsonReader
         "mathlib_rev",
         "producer_package_commit",
         "raw_lean_report_sha256",
-        "residual_frontier_sha256",
         "schema",
         "source_commit",
         "source_repo",
@@ -94,9 +91,9 @@ public static class SourceSnapshotJsonReader
             RequireProperties(root);
 
             var schema = String(root, "schema");
-            if (schema != "source-snapshot.v1")
+            if (schema != "source-snapshot.v2")
             {
-                throw new FormatException("Source snapshot schema tag is not source-snapshot.v1.");
+                throw new FormatException("Source snapshot schema tag is not source-snapshot.v2.");
             }
 
             var sourceCommit = GitObjectId(root, "source_commit");
@@ -114,7 +111,6 @@ public static class SourceSnapshotJsonReader
                 Sha256Id(root, "truth_graph_sha256"),
                 Sha256Id(root, "raw_lean_report_sha256"),
                 Sha256Id(root, "dag_md_sha256"),
-                Sha256Id(root, "residual_frontier_sha256"),
                 Sha256Id(root, "declarations_sha256"),
                 Sha256Id(root, "frozen_ledger_head_hash"),
                 NonNegativeInteger(root, "frozen_ledger_sequence"));
