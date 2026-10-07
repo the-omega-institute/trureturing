@@ -38,7 +38,7 @@ run_cmd do
   let root := `Reg.D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight
   let sourceName := `D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight ++
     `edge_connected_iff_gradient_weight
-  let identity := "sha256:1adc10ad04469401acae8c1ce04439ddd5de2c262b30eb8bb5df995be3588364"
+  let identity := "sha256:948e15f3f17003f28c318444b366c5460b531a49a56f34b5837afa81dc1bd30e"
   let row : LeanInformationAudit.SnapshotOccurrence := {
     objectArenaName := root ++ `arena
     theoremName := sourceName
