@@ -26,7 +26,7 @@ private def shape (w : List Action) : ℝ × ℝ :=
 
 private theorem finite_envelope_facts
     (k : ℕ) (h x r : ℝ)
-    (hk : 1 ≤ k) (hh : 0 < h) (hh1 : h < 1) (hr : 0 < r)
+    (hk : 1 ≤ k) (hh : 0 < h) (hr : 0 < r)
     (hx : x = (k + h) * r) :
     let τstar := 2 * r * h
     let dstar := r * h
@@ -475,7 +475,7 @@ private theorem two_scalar_formulas
     rw [abs_of_nonneg (by linarith)]
     ring
   obtain ⟨hS_e, hS_D, hA_e, hA_D⟩ := hentries
-  have hbase := finite_envelope_facts k h x r hk hh hh1 hr hx
+  have hbase := finite_envelope_facts k h x r hk hh hr hx
   have hxpos : 0 < x := by rw [hx]; positivity
   have hr0 : r ≠ 0 := ne_of_gt hr
   have hS_e_pos : 0 < (wordMatrix [Action.advance, Action.exchange, Action.advance] *
