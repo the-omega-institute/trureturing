@@ -1,4 +1,4 @@
-# Type entries permit type use only; members require exact declaration IDs.
+# Source scripts admitted for Scribe execution.
 T:StrataLint.Engine.Anchor
 T:StrataLint.Engine.AnchorScheme
 T:StrataLint.Engine.BibKey
