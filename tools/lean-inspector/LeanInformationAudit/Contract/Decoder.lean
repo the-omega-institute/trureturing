@@ -300,7 +300,7 @@ def readSeal (find : Name → Option ConstantInfo) (axioms : Array Name)
   unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
     throw s!"IE-C009 ProofConstructionFailed: {source} unapproved axiom dependency"
   let catalogs ← (← compiledArray find fs[1]!).mapM fun value => do
-    let cs ← Literal.fields find ``Contract.SealCatalog value 15
+    let cs ← Literal.fields find ``Contract.SealCatalog value 11
     let arenaName ← compiledMetadata find cs[0]! (Literal.name "seal.arena")
     let catalogId ← compiledMetadata find cs[1]! (Literal.name "seal.catalog")
     return ({ source, arenaName, catalogId, value } : CompiledSealCatalog)

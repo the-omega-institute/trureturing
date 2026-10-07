@@ -37,11 +37,7 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedRealization)), Statement := _, proof := (@_root_.D5.S0.Diagonal.Lawvere.QualitativeEscape.exists_captured_listing_of_fixedPoint) }]
       nondegenerate := by decide +kernel
       bundleNonempty := by intro index; fin_cases index <;> decide +kernel
-      stateCard := 8
-      stateCardEq := by decide +kernel
-      full := 24
-      fullEq := by decide +kernel
-      rows := Fin.cases ({ unique := 32, uniqueEq := by decide +kernel, without := 56, withoutEq := by decide +kernel, roleBins := ![0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], roleEq := by decide +kernel, roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedRealization)), Statement := _, proof := (@_root_.D5.S0.Diagonal.Lawvere.QualitativeEscape.exists_captured_listing_of_fixedPoint) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      rows := Fin.cases ({ conclusion := .positive (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedRealization)), Statement := _, proof := (@_root_.D5.S0.Diagonal.Lawvere.QualitativeEscape.exists_captured_listing_of_fixedPoint) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
       collisions := #[]
       conclusion := .irredundant (by
         intro index
@@ -57,10 +53,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts) }]
       nondegenerate := by decide +kernel
       bundleNonempty := by intro index; fin_cases index <;> decide +kernel
-      stateCard := 64
-      stateCardEq := by decide +kernel
-      full := 2184
-      fullEq := by
         let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena).toArena := ⟨(([(fun _ : Bool => false), (fun x : Bool => x), (fun x : Bool => !x), (fun _ : Bool => true)]).flatMap fun f => ([(fun _ : Bool => false), (fun x : Bool => x), (fun x : Bool => !x), (fun _ : Bool => true)]).flatMap fun g => [false, true].flatMap fun a => [false, true].map fun b => (f, g, a, b) : List ((Bool → Bool) × (Bool → Bool) × Bool × Bool)), (by change (([(fun _ : Bool => false), (fun x : Bool => x), (fun x : Bool => !x), (fun _ : Bool => true)]).flatMap fun f => ([(fun _ : Bool => false), (fun x : Bool => x), (fun x : Bool => !x), (fun _ : Bool => true)]).flatMap fun g => [false, true].flatMap fun a => [false, true].map fun b => (f, g, a, b) : List ((Bool → Bool) × (Bool → Bool) × Bool × Bool)).Nodup; decide +kernel), (by change (([(fun _ : Bool => false), (fun x : Bool => x), (fun x : Bool => !x), (fun _ : Bool => true)]).flatMap fun f => ([(fun _ : Bool => false), (fun x : Bool => x), (fun x : Bool => !x), (fun _ : Bool => true)]).flatMap fun g => [false, true].flatMap fun a => [false, true].map fun b => (f, g, a, b) : List ((Bool → Bool) × (Bool → Bool) × Bool × Bool)).toFinset = (Finset.univ : Finset ((Bool → Bool) × (Bool → Bool) × Bool × Bool)); decide +kernel)⟩
         let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts) }]
         let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1
@@ -250,14 +242,7 @@ noncomputable def «seal» : Contract.Seal := {
         have uniqueEq := (catalog.fusedUnique_eq_uniqueCaptureCount states indices (0 : Fin 1)).symm.trans (congrFun (congrArg (fun c => c.unique) computed) 0)
         have lowering := (catalog.lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by rw [uniqueEq]; decide)
         exact Fin.cases
-          ({ unique := 1848
-             uniqueEq := uniqueEq
-             without := 4032
-             withoutEq := (catalog.fusedWithout_eq_escapeNumerator_without states indices 0).symm.trans (congrArg (fun c => c.without 0) computed)
-             roleBins := ![0, 1848, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-             roleEq := fun bucket => (catalog.fusedRoleBins_eq_roleHistogram states indices 0 bucket).symm.trans (congrFun (congrFun (congrArg (fun c => c.roleBins) computed) 0) bucket)
-             roleTotal := by decide +kernel
-             conclusion := .positive (by decide +kernel) lowering } : Contract.SealRow catalog 0)
+          ({ conclusion := .positive lowering } : Contract.SealRow catalog 0)
           (fun i => Fin.elim0 i)
       collisions := #[]
       conclusion := .irredundant (by

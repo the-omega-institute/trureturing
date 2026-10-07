@@ -70,10 +70,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.objectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.icActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) }, { primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.objectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.oiActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention) }]
       nondegenerate := _root_.Reg.Support.LegacyCausalFinite.unified_nondegenerate
       bundleNonempty := by intro index; fin_cases index <;> decide +kernel
-      stateCard := 48
-      stateCardEq := by decide +kernel
-      full := 24
-      fullEq := by let states := _root_.Reg.Support.LegacyCausalFinite.unifiedEnumeration; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.objectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.icActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) }, { primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.objectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.oiActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention) }]; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 2; exact (catalog.fusedFull_eq_escapeNumerator states indices).symm.trans (by decide +kernel)
       rows := Fin.cases (by
         let states := _root_.Reg.Support.LegacyCausalFinite.unifiedEnumeration
         let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.objectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.icActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) }, { primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.objectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.oiActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention) }]
@@ -122,14 +118,7 @@ noncomputable def «seal» : Contract.Seal := {
         have uniqueEq1 := (catalog.fusedUnique_eq_uniqueCaptureCount states indices (1 : Fin 2)).symm.trans (congrFun (congrArg (fun c => c.unique) computed) 1)
         have lowering1 := (catalog.lowersEscape_iff_uniqueCaptureCount_pos 1 (by decide +kernel)).mpr (by rw [uniqueEq1]; decide)
         exact
-          ({ unique := 240
-             uniqueEq := uniqueEq0
-             without := 264
-             withoutEq := (catalog.fusedWithout_eq_escapeNumerator_without states indices 0).symm.trans (congrArg (fun c => c.without 0) computed)
-             roleBins := ![0, 0, 0, 0, 0, 0, 0, 240, 0, 0, 0, 0, 0, 0, 0]
-             roleEq := fun bucket => (catalog.fusedRoleBins_eq_roleHistogram states indices 0 bucket).symm.trans (congrFun (congrFun (congrArg (fun c => c.roleBins) computed) 0) bucket)
-             roleTotal := by decide +kernel
-             conclusion := .positive (by decide +kernel) lowering0 } : Contract.SealRow catalog 0))
+          ({ conclusion := .positive lowering0 } : Contract.SealRow catalog 0))
         (fun i => Fin.cases (by
         let states := _root_.Reg.Support.LegacyCausalFinite.unifiedEnumeration
         let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.objectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.icActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) }, { primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.objectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.oiActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention) }]
@@ -178,14 +167,7 @@ noncomputable def «seal» : Contract.Seal := {
         have uniqueEq1 := (catalog.fusedUnique_eq_uniqueCaptureCount states indices (1 : Fin 2)).symm.trans (congrFun (congrArg (fun c => c.unique) computed) 1)
         have lowering1 := (catalog.lowersEscape_iff_uniqueCaptureCount_pos 1 (by decide +kernel)).mpr (by rw [uniqueEq1]; decide)
         exact
-          ({ unique := 968
-             uniqueEq := uniqueEq1
-             without := 992
-             withoutEq := (catalog.fusedWithout_eq_escapeNumerator_without states indices 1).symm.trans (congrArg (fun c => c.without 1) computed)
-             roleBins := ![0, 0, 0, 0, 0, 0, 0, 968, 0, 0, 0, 0, 0, 0, 0]
-             roleEq := fun bucket => (catalog.fusedRoleBins_eq_roleHistogram states indices 1 bucket).symm.trans (congrFun (congrFun (congrArg (fun c => c.roleBins) computed) 1) bucket)
-             roleTotal := by decide +kernel
-             conclusion := .positive (by decide +kernel) lowering1 } : Contract.SealRow catalog 1))
+          ({ conclusion := .positive lowering1 } : Contract.SealRow catalog 1))
           (fun j => Fin.elim0 j) i)
       collisions := #[]
       conclusion := .irredundant (by
@@ -226,10 +208,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateDecidableEq (Reg.Support.LegacyAgenda.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power) }]
       nondegenerate := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[0]'(by decide))).nondegenerate
       bundleNonempty := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[0]'(by decide))).bundleNonempty
-      stateCard := 27
-      stateCardEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[0]'(by decide))).stateCardEq
-      full := 132
-      fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[0]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[0]'(by decide))).rows
       collisions := #[]
       conclusion := .irredundant (by
@@ -246,10 +224,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.localActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) }]
       nondegenerate := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[1]'(by decide))).nondegenerate
       bundleNonempty := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[1]'(by decide))).bundleNonempty
-      stateCard := 16
-      stateCardEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[1]'(by decide))).stateCardEq
-      full := 0
-      fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[1]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[1]'(by decide))).rows
       collisions := #[]
       conclusion := .irredundant (by
@@ -266,10 +240,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyContextReplacement.objectArena)).stateDecidableEq (Reg.Support.LegacyContextReplacement.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points) }]
       nondegenerate := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[2]'(by decide))).nondegenerate
       bundleNonempty := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[2]'(by decide))).bundleNonempty
-      stateCard := 8
-      stateCardEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[2]'(by decide))).stateCardEq
-      full := 0
-      fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[2]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[2]'(by decide))).rows
       collisions := #[]
       conclusion := .irredundant (by
@@ -286,10 +256,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyGluing.arena).toArena).stateDecidableEq (Reg.Support.LegacyGluing.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state) }]
       nondegenerate := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[3]'(by decide))).nondegenerate
       bundleNonempty := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[3]'(by decide))).bundleNonempty
-      stateCard := 8
-      stateCardEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[3]'(by decide))).stateCardEq
-      full := 8
-      fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[3]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[3]'(by decide))).rows
       collisions := #[]
       conclusion := .irredundant (by
@@ -306,10 +272,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyResidue.arena).toArena).stateDecidableEq (Reg.Support.LegacyResidue.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification) }]
       nondegenerate := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[4]'(by decide))).nondegenerate
       bundleNonempty := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[4]'(by decide))).bundleNonempty
-      stateCard := 4
-      stateCardEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[4]'(by decide))).stateCardEq
-      full := 0
-      fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[4]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[4]'(by decide))).rows
       collisions := #[]
       conclusion := .irredundant (by
@@ -326,10 +288,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyStaticDesign.arena).toArena).stateDecidableEq (Reg.Support.LegacyStaticDesign.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design) }]
       nondegenerate := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[5]'(by decide))).nondegenerate
       bundleNonempty := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[5]'(by decide))).bundleNonempty
-      stateCard := 3
-      stateCardEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[5]'(by decide))).stateCardEq
-      full := 0
-      fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[5]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[5]'(by decide))).rows
       collisions := #[]
       conclusion := .irredundant (by
@@ -346,10 +304,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena)).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention) }]
       nondegenerate := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[6]'(by decide))).nondegenerate
       bundleNonempty := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[6]'(by decide))).bundleNonempty
-      stateCard := 32
-      stateCardEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[6]'(by decide))).stateCardEq
-      full := 24
-      fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[6]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[6]'(by decide))).rows
       collisions := #[]
       conclusion := .irredundant (by
@@ -366,10 +320,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.SystemUnit.systemRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application) }]
       nondegenerate := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[7]'(by decide))).nondegenerate
       bundleNonempty := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[7]'(by decide))).bundleNonempty
-      stateCard := 2
-      stateCardEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[7]'(by decide))).stateCardEq
-      full := 0
-      fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[7]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[7]'(by decide))).rows
       collisions := #[]
       conclusion := .irredundant (by
@@ -386,10 +336,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscapeRealizations.CommutingCompletionExchange.commutingCompletionRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary) }]
       nondegenerate := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[8]'(by decide))).nondegenerate
       bundleNonempty := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[8]'(by decide))).bundleNonempty
-      stateCard := 4
-      stateCardEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[8]'(by decide))).stateCardEq
-      full := 0
-      fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[8]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[8]'(by decide))).rows
       collisions := #[]
       conclusion := .irredundant (by
@@ -406,10 +352,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscapeRealizations.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause) }]
       nondegenerate := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[9]'(by decide))).nondegenerate
       bundleNonempty := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[9]'(by decide))).bundleNonempty
-      stateCard := 9
-      stateCardEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[9]'(by decide))).stateCardEq
-      full := 12
-      fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[9]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[9]'(by decide))).rows
       collisions := #[]
       conclusion := .irredundant (by
@@ -426,10 +368,6 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena).toArena).stateDecidableEq (@D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates.cutRealization D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.SpectrumAtom (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) fun (atom : D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.SpectrumAtom) => Reg.Support.LegacySpectrum.indexReadout atom)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective) }]
       nondegenerate := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[10]'(by decide))).nondegenerate
       bundleNonempty := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[10]'(by decide))).bundleNonempty
-      stateCard := 5
-      stateCardEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[10]'(by decide))).stateCardEq
-      full := 0
-      fullEq := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[10]'(by decide))).fullEq
       rows := ((_root_.Reg.Catalogs.InformationRoot.SealedCatalog.seal.catalogs[10]'(by decide))).rows
       collisions := #[]
       conclusion := .irredundant (by

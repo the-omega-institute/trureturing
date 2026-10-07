@@ -35,11 +35,7 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dualArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dualRealization)), Statement := _, proof := (@_root_.D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff) }]
       nondegenerate := by decide +kernel
       bundleNonempty := by intro index; fin_cases index <;> decide +kernel
-      stateCard := 4
-      stateCardEq := by decide +kernel
-      full := 4
-      fullEq := by decide +kernel
-      rows := Fin.cases ({ unique := 8, uniqueEq := by decide +kernel, without := 12, withoutEq := by decide +kernel, roleBins := ![0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0], roleEq := by decide +kernel, roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dualArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dualRealization)), Statement := _, proof := (@_root_.D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      rows := Fin.cases ({ conclusion := .positive (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dualArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dualRealization)), Statement := _, proof := (@_root_.D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
       collisions := #[]
       conclusion := .irredundant (by
         intro index
@@ -55,11 +51,7 @@ noncomputable def «seal» : Contract.Seal := {
       units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled) }]
       nondegenerate := by decide +kernel
       bundleNonempty := by intro index; fin_cases index <;> decide +kernel
-      stateCard := 5
-      stateCardEq := by decide +kernel
-      full := 12
-      fullEq := by decide +kernel
-      rows := Fin.cases ({ unique := 8, uniqueEq := by decide +kernel, without := 20, withoutEq := by decide +kernel, roleBins := ![0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0], roleEq := by decide +kernel, roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      rows := Fin.cases ({ conclusion := .positive (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
       collisions := #[]
       conclusion := .irredundant (by
         intro index

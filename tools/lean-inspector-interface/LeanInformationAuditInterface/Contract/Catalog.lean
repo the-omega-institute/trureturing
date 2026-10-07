@@ -41,30 +41,23 @@ structure ExpectedDeclaration where
   rootId : Name
   occurrence : ExpectedOccurrence
 
-/-- Each zero row carries its closure membership; every positive row carries
-its exact lowering proposition. Both constructors are indexed by the count. -/
+/-- Each occurrence retains its lowering or triviality proof; zero occurrences
+also certify membership in the semantic closure of the remaining catalog. -/
 inductive SealRowConclusion {arena : Arena.{u}} (catalog : Catalog.{u,v,0} arena)
-    (index : catalog.Index) (unique : Nat) : Type where
-  | positive (countPositive : 0 < unique) (proof : Catalog.LowersEscape catalog index)
-  | zero (countZero : unique = 0) (proof : Catalog.TrivialInCatalog catalog index)
+    (index : catalog.Index) : Type where
+  | positive (proof : Catalog.LowersEscape catalog index)
+  | zero (proof : Catalog.TrivialInCatalog catalog index)
       (closure : (catalog.theoremAt index).primitives.toKernel ∈ catalog.semanticClosureWithout index)
 
 structure SealRow {arena : Arena.{u}} (catalog : Catalog.{u,v,0} arena)
     (index : catalog.Index) where
-  unique : Nat
-  uniqueEq : catalog.uniqueCaptureCount index = unique
-  without : Nat
-  withoutEq : catalog.escapeNumerator (catalog.without index) = without
-  roleBins : Fin 15 → Nat
-  roleEq : ∀ bucket, catalog.roleHistogram index (Catalog.roleSignatureOfBucket bucket) = roleBins bucket
-  roleTotal : Finset.sum Finset.univ roleBins = unique
-  conclusion : SealRowConclusion catalog index unique
+  conclusion : SealRowConclusion catalog index
 
 inductive SealCatalogConclusion {arena : Arena.{u}} (catalog : Catalog.{u,v,0} arena) : Type where
   | redundant (proof : Catalog.CatalogRedundant catalog)
   | irredundant (proof : CatalogIrredundant catalog)
 
-/-- Counts, classifications and collisions concern the same vector catalog.
+/-- Mathematical obligations concern the same exact vector catalog.
 The judge reconstructs its membership and ordering from raw registrations. -/
 structure SealCatalog where
   arenaName : Name
@@ -74,10 +67,6 @@ structure SealCatalog where
   units : Fin size → TheoremUnit.{u,v} arena
   nondegenerate : arena.Nondegenerate
   bundleNonempty : ∀ index, (units index).primitives.Nonempty
-  stateCard : Nat
-  stateCardEq : arena.card = stateCard
-  full : Nat
-  fullEq : (Catalog.ofVector units).escapeNumerator (Catalog.ofVector units).fullIndexSet = full
   rows : ∀ index : Fin size, SealRow (Catalog.ofVector units) index
   collisions : Array (Sigma fun left : Fin size => Sigma fun right : Fin size =>
     Subtype (fun _ : left ≠ right => Catalog.KernelEquivalent (Catalog.ofVector units) left right))
