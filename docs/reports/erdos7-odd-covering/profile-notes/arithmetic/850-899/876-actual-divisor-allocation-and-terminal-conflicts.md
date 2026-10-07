@@ -1457,6 +1457,235 @@ branch. It neither excludes all uses of matroidal Helly with stronger
 active-rank information nor excludes a repair using the larger
 projected divisor-output sets.
 
+## The universal original label obstructs source cocircuit elimination
+
+The source-spanning matroid route has an additional necessary condition
+on the full original-owner ground set. Let q=113, let E_q be the exact
+q-free residual, and let
+
+$$
+D_x=\{i:q\mid n_i,\ x\equiv a_i\pmod{n_i/q}\}.
+$$
+
+For any declared source X contained in E_q, use the clutter of
+inclusion-minimal actual neighborhoods
+
+$$
+\mathcal H_X=\min_{\subseteq}\{D_x:x\in X\}.
+$$
+
+The elimination condition under consideration is
+
+$$
+H_1,H_2\in\mathcal H_X,\quad H_1\ne H_2,\quad e\in H_1\cap H_2
+\quad\Longrightarrow\quad
+\exists H_3\in\mathcal H_X:\
+H_3\subseteq(H_1\cup H_2)\setminus\{e\}.
+\tag{CE}
+$$
+
+This is a condition on neighborhoods of the actual source, not the
+exchange property of the donor matroid. The finite circuit
+characterization, applied to the dual, is the usual matroid
+interpretation of this condition. The existing source-spanning
+sufficient route still requires this source-side premise; no matroid
+intersection theorem is reproved here.
+
+Actual divisor closure supplies an original g with n_g=113 as soon
+as an actual q-bearing top label is supplied. Its stripped modulus
+is one. Consequently g belongs to every D_x and every member of
+\mathcal H_X. If H_1 and H_2 were distinct minimal neighborhoods,
+applying (CE) with e=g would demand a minimal neighborhood not
+containing g, a contradiction. Conversely, a clutter with at most
+one member satisfies (CE) vacuously. Thus on this full ground set,
+
+$$
+\boxed{\quad
+(\mathrm{CE})\quad\Longleftrightarrow\quad
+|\mathcal H_X|\le1.
+\quad}
+$$
+
+For a nonempty source, finite owner cardinality guarantees the
+existence of a minimal actual neighborhood. For an empty source,
+there are none; this case is retained.
+
+This obstruction can be connected to actual private points without
+assuming every owner is active on every old word. Put
+X_z=E_q\cap\{x:x\equiv z\pmod9\}. If (CE) holds on X_z, every
+inclusion-minimal complete subcover of X_z drawn from q-bearing
+original owners has cardinality at most one. To see the finite interface, choose a minimal neighborhood H.
+A complete subcover meets H at some owner j. Every actual neighborhood
+contains a minimal neighborhood and therefore contains H by
+uniqueness. Thus j alone covers X_z, and minimality removes every
+other member of the subcover. An empty slice has the empty minimal
+cover.
+
+Now retain the actual count-then-sum-minimal cover hypotheses:
+all moduli divide 113R with (113,R)=1, no original modulus is divisible
+by 27, and an actual label is 9*113*m with (3,m)=1. The actual 3 and 9
+guards leave five safe old words. Fix one complete actual literal
+color C, and use the already checked minimal slice subcovers D_z.
+Actual private-point necessity gives
+
+$$
+C=\bigcup_{z\text{ safe}}D_z,
+\qquad
+|C|\le\sum_{z\text{ safe}}|D_z|.
+$$
+
+If all five safe source slices satisfied (CE), the singleton bound
+would give
+
+$$
+\boxed{\quad |C|\le5\quad\text{for every actual literal color }C.\quad}
+$$
+
+The existing actual top-label inventory excludes this necessary
+condition when m has at least eight distinct prime factors. It
+supplies at least
+
+$$
+3\,2^8=768
+$$
+
+actual q-bearing labels, partitioned into 113 actual literal colors.
+Some color has at least seven owners. Therefore at least one safe
+old-word source fails (CE). The exact Lean conclusion identifies
+actual 3 and 9 guard owners, a safe word z relative to their actual
+residues, and failure of (CE) on the actual X_z. It does not supply
+a prescribed mask or an unrelated finite counterexample.
+
+Scoped Lean applications verify universal q-owner membership,
+(CE) equivalence with uniqueness of minimal actual neighborhoods,
+the minimal slice-cover bound, the five-word color bound, and the
+actual eight-prime-factor obstruction. They reuse Mathlib finite
+minimality, the actual complete-color supplier, private-point
+projection, actual divisor closure and guard separation, and the
+existing top-label inventory. They compile at default budgets with
+only propext, Classical.choice and Quot.sound. Matroid circuit
+characterization and the external matroid-intersection implication
+are not newly formalized here. Relevant existing Mathlib interfaces
+for the parallel source-spanning interpretation are
+Matroid.isBase_iff_minimal_spanning and
+Matroid.IsBase.ncard_eq_ncard_of_isBase: under a representation of
+source coverage as spanning in the same matroid, a singleton complete
+cover forces every minimal spanning cover to have at most one member.
+
+The scope is the original-owner ground set containing the actual
+q owner. Deleting that owner's literal color, changing the available
+owners, or replacing exact original traces by larger divisor-output
+sets changes the neighborhood system; the result does not settle
+those modified problems. It also does not exclude a joint repair
+when source coverage has no matroid representation. In the remaining
+small-inventory branches, source elimination remains an additional
+unverified condition, not a conclusion of the three-row donor bound.
+
+## Actual private points obstruct the unmodified source-degree certificate
+
+Fix one actual count-then-sum-minimal odd distinct covering system F.
+Assume every original modulus divides 113R, with (113,R)=1. The source
+ground set consists of its actual 113-bearing original owners. The three-row donor applications additionally assume no original
+modulus divisible by 27; the five-safe-word statements use the actual
+modulus-3 and modulus-9 guards in distinct modulus-3 phases.
+
+Király, Lau and Singh, *Degree bounded matroids and submodular flows*,
+[Theorem 2](https://real.mtak.hu/19505/1/kiraly_lau_singh_final.pdf),
+provides a basis satisfying every one-sided integer lower degree bound up to
+an additive loss of Delta minus one. Here Delta is the maximum number of
+constraint hyperedges containing a ground element. Section 3 starts from a
+feasible fractional base vector; its proof does not require a pre-existing
+integral solution satisfying all degree constraints. The original theorem
+and its algorithm are reused, not re-proved or claimed as Lean results.
+
+For the actual original-owner ground set, let D_x be the q-bearing owners
+whose literal q-stripped class contains x. Retain the distinct
+inclusion-minimal D_x. Three-row donor colorability gives a fractional base
+vector with every coordinate at least one third. The 113 actual complete
+colors therefore make the uniform integer lower bound 37 feasible.
+The theorem's guarantee reaches one only if Delta is at most 37.
+For the direct fifteen-root occurrence ground set, the 45 row/root pieces
+give only the uniform integer lower bound two, so the corresponding
+sufficient condition is Delta_occ at most two.
+
+There is an actual obstruction on this unchanged ground set. Divisor
+closure supplies the original owner g of modulus 113. Its stripped class
+has modulus one, so g belongs to every source neighborhood, and hence to
+every minimal source neighborhood. Its degree is exactly the total number
+of those distinct minimal neighborhoods, and attains the maximum degree.
+
+For any complete literal color C on the whole residual E_113, actual
+private-point projection forces at least |C| distinct minimal neighborhoods.
+For each i in C, take its actual private witness x_i and minimize D_(x_i)
+by inclusion. The resulting neighborhood still covers some source point,
+so it meets C. Its intersection with C is exactly {i}. The resulting
+neighborhoods are distinct. Consequently
+
+$$
+\Delta\ge |C|.
+$$
+
+The same argument applies to any inclusion-minimal cover D_z of one
+old-word slice X_z, drawn from the 113-bearing original owners.
+The existing private-point/minimal-slice result gives
+
+$$
+|D_z|\le\Delta_z,
+\qquad
+|C|\le\sum_{z\text{ safe}}|D_z|
+       \le\sum_{z\text{ safe}}\Delta_z.
+$$
+
+There are five safe old words. Thus Delta_z at most k on all five slices
+would force every complete literal color to have size at most 5k.
+These implications have exact scoped Lean checks using finite minimal
+extraction, actual private points, and the previously checked divisor stock.
+
+In particular, suppose one actual top modulus is 9*113*m, with m coprime
+to three and at least s distinct prime factors. The existing divisor-stock
+result supplies a color of size at least the ceiling of 3*2^s/113.
+At s at least eleven this gives Delta at least 55 on the whole source,
+excluding the proposed Delta at most 37 certificate. Under the additional
+no27 and actual 3/9-guard hypotheses above, s at least nine gives a color
+of size at least fourteen.
+Some safe old-word slice therefore has Delta_z at least three. Each of
+its three root occurrences has the same source hypergraph with its own
+root tag, so the direct joint fifteen-root certificate Delta_occ at most
+two fails. At s at least eleven and twelve the same calculation gives
+some slice with Delta_z at least eleven and twenty-two respectively.
+
+This obstruction survives exact compression by positive hitting
+constraints on the same owner ground set. If a finite hypergraph K
+satisfies, for every owner subset S,
+
+$$
+S\text{ covers }X
+\quad\Longleftrightarrow\quad
+S\cap G\ne\varnothing\text{ for every }G\in K,
+$$
+
+then K contains every original minimal source neighborhood. Its vertex
+degrees cannot be smaller than those of the minimal-neighborhood
+hypergraph. This finite implication also has an exact scoped Lean check.
+It applies to arbitrary such K, not just deletion of duplicate constraints.
+
+DA9's bound fourteen counts owners sharing a fixed divisor phase. It does
+not count source neighborhoods containing one owner. The ninety-nine
+fixed transverse colors cover a specified phase fiber but provide no
+bound on the number of distinct minimal neighborhoods in that fiber.
+In particular the universal modulus-113 owner remains transverse for
+any nonunit divisor cut. The two incidence parameters cannot be exchanged.
+
+These statements exclude the displayed small-Delta certificate on the
+unchanged original-owner ground set in the specified inventory branches.
+They do not exclude fixing the universal owner to one root, deleting its
+color elsewhere, contracting paid donors, changing to legal output
+occurrences, or using additional matroid-dependent constraints. Those
+operations change the source hypergraph or the feasibility contract and
+require a new proof. Nor does failure of this sufficient certificate
+assert failure of the desired fifteen-root repair. One whole-source
+cover alone is already supplied by the modulus-113 owner and donor one.
+
 ## Verification and the remaining global obligation
 
 Scoped exact Lean checks cover the actual two-prime incidence
