@@ -56,5 +56,6 @@ Give prefix values the discrete topology. At the constant observation t/4 every 
 - Truth anchor: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.residual`
 - Truth anchor: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.result`
 - Dependency: [D5/S1/Digit/Infinite/ClosedObservationGraphRealization](ClosedObservationGraphRealization.md)
+- Dependency: [D5/S1/Digit/Infinite/FixedTailClosedBudget](FixedTailClosedBudget.md)
 - Dependency: [D5/S1/Digit/Infinite/LateLabelStateBound](LateLabelStateBound.md)
 - Dependency: [D5/S1/Digit/Infinite/OddColorThreeSource](OddColorThreeSource.md)

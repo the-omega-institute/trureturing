@@ -9,6 +9,7 @@
 import D5.S1.Digit.Infinite.ClosedObservationGraphRealization
 import D5.S1.Digit.Infinite.OddColorThreeSource
 import D5.S1.Digit.Infinite.LateLabelStateBound
+import D5.S1.Digit.Infinite.FixedTailClosedBudget
 import Mathlib.Analysis.Normed.Group.Constructions
 import Mathlib.Topology.Instances.Discrete
 import Mathlib.Analysis.Normed.Affine.AddTorsor
@@ -132,9 +133,8 @@ private theorem half_not_integral (z : GoldenInt) : embedding z ≠ t / 2 := by
   intro he
   have ht : t = Real.goldenRatio - 1 := by
     dsimp [t, D5.S1.Digit.Infinite.SignedSeriesRange.alpha]
-    rw [Real.inv_goldenRatio, Real.goldenConj]
-    dsimp [Real.goldenRatio]
-    ring
+    rw [Real.inv_goldenRatio]
+    linarith only [Real.goldenRatio_add_goldenConj]
   have hb : 2 * z.b - 1 ≠ 0 := by omega
   have hbr : ((2 * z.b - 1 : ℤ) : ℝ) ≠ 0 := Int.cast_ne_zero.mpr hb
   have hφ : Real.goldenRatio = ((-2 * z.a - 1 : ℤ) : ℝ) /
@@ -416,41 +416,59 @@ private theorem realize_tail (h : ℕ) (s : Bool) (x z : LegalDigits)
     (hx : stateAddress s x) (hz : stateAddress (actualGuard s x h) z) :
     ∃ y : LegalDigits, stateAddress s y ∧ windowPrefix h y = windowPrefix h x ∧
       bitShift y (3 * h) = z := by
-  induction h generalizing s x z with
-  | zero =>
-    refine ⟨z,hz,?_,?_⟩
-    · ext j
-      exact Fin.elim0 j
-    · apply Subtype.ext
-      funext i
-      simp [bitShift]
-  | succ h ih =>
-    have hs := (closed_observation_graph_realization.2.2.1 x).2.1
-    rw [← guard_step s x h] at hz
-    obtain ⟨v,hv,hvp,hvt⟩ := ih (outgoing (window x 0)) (originalT x) z hs hz
-    have hl : lawful s (window x 0) (outgoing (window x 0)) := by
-      refine ⟨?_,rfl⟩
-      intro hsg
-      simpa [window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift] using hx hsg
-    obtain ⟨y,⟨hy,hyw,hyt⟩,_⟩ := closed_observation_graph_realization.2.2.2.1
-      s (window x 0) (outgoing (window x 0)) v hl hv
-    refine ⟨y,hy,?_,?_⟩
-    · funext j
-      by_cases hj : j.val = 0
-      · simpa [windowPrefix, hj] using hyw
-      · have hk : j.val - 1 < h := by omega
-        have hp := congrFun hvp ⟨j.val - 1,hk⟩
-        change window v (j.val - 1) = window (originalT x) (j.val - 1) at hp
-        rw [← hyt] at hp
-        change window (bitShift y (3 * 1)) (j.val - 1) =
-          window (bitShift x (3 * 1)) (j.val - 1) at hp
-        rw [shifted_window y 1, shifted_window x 1] at hp
-        simpa only [windowPrefix, show 1 + (j.val - 1) = j.val by omega] using hp
-    · have he : bitShift y (3 * (h + 1)) = bitShift (originalT y) (3 * h) := by
-        simp only [originalT, D5.S1.Digit.Infinite.OddColorThreeSource.shift_add]
-        congr 1
-        omega
-      rw [he,hyt,hvt]
+  have word_succ (n : ℕ) (u : LegalDigits) :
+      List.ofFn (windowPrefix (n + 1) u) =
+        window u 0 :: List.ofFn (windowPrefix n (originalT u)) := by
+    rw [List.ofFn_succ]
+    congr 1
+  have path (n : ℕ) (q : Bool) (u : LegalDigits) (hu : stateAddress q u) :
+      D5.S1.Digit.Infinite.FixedTailClosedBudget.SourcePath q
+        (List.ofFn (windowPrefix n u)) (actualGuard q u n) := by
+    induction n generalizing q u with
+    | zero =>
+      simpa only [List.ofFn_zero, actualGuard, ↓reduceIte] using
+        D5.S1.Digit.Infinite.FixedTailClosedBudget.SourcePath.nil q
+    | succ n ih =>
+      rw [word_succ, ← guard_step q u n]
+      apply D5.S1.Digit.Infinite.FixedTailClosedBudget.SourcePath.cons
+      · refine ⟨?_, rfl⟩
+        intro hq
+        simpa [window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift] using hu hq
+      · exact ih _ _ (closed_observation_graph_realization.2.2.1 u).2.1
+  have unpack (n : ℕ) (u v a : LegalDigits)
+      (hp : D5.S1.Digit.Infinite.FixedTailClosedBudget.addressPrefix
+        (List.ofFn (windowPrefix n u)) v a) :
+      windowPrefix n v = windowPrefix n u ∧ bitShift v (3 * n) = a := by
+    induction n generalizing u v with
+    | zero =>
+      refine ⟨?_, ?_⟩
+      · ext j
+        exact Fin.elim0 j
+      · simpa only [List.ofFn_zero,
+          D5.S1.Digit.Infinite.FixedTailClosedBudget.addressPrefix, Nat.mul_zero,
+          bitShift, Nat.add_zero] using hp
+    | succ n ih =>
+      rw [word_succ] at hp
+      obtain ⟨hw, ht⟩ := ih (originalT u) (originalT v) hp.2
+      refine ⟨?_, ?_⟩
+      · funext j
+        by_cases hj : j.val = 0
+        · simpa only [windowPrefix, hj] using hp.1
+        · have hk : j.val - 1 < n := by omega
+          have he := congrFun hw ⟨j.val - 1, hk⟩
+          change window (bitShift v (3 * 1)) (j.val - 1) =
+            window (bitShift u (3 * 1)) (j.val - 1) at he
+          rw [shifted_window v 1, shifted_window u 1] at he
+          simpa only [windowPrefix, show 1 + (j.val - 1) = j.val by omega] using he
+      · have he : bitShift v (3 * (n + 1)) = bitShift (originalT v) (3 * n) := by
+          simp only [originalT, D5.S1.Digit.Infinite.OddColorThreeSource.shift_add]
+          congr 1
+          omega
+        rw [he, ht]
+  obtain ⟨y, hy, hp⟩ := D5.S1.Digit.Infinite.FixedTailClosedBudget.source_path_realization
+    (path h s x hx) z hz
+  obtain ⟨hw, ht⟩ := unpack h x y z hp
+  exact ⟨y, hy, hw, ht⟩
 
 private theorem response_expansion (x : LegalDigits) (j n : ℕ) :
     kappa (bitShift x (3 * j)) =
