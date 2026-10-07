@@ -4166,3 +4166,36 @@ representation of the original response. The required same-source
 upper bound on $Z_{\rm Ak}(1;A)+R_{\rm Ak}(1;A)$, equivalently the
 original lower bound on $I_\psi(A)$, remains unproved, as do the strict
 Robin margin and RH.
+
+## Quantitative Tauberian hypotheses for the complete response
+
+Pierce, Turnage-Butterbaugh and Zaman, *A guide to Tauberian theorems for arithmetic applications*, [arXiv:2504.16233v4](https://arxiv.org/html/2504.16233v4), §2.3, Hypothesis B and Theorem B, give a quantitative result for a general Dirichlet series $D(s)=\sum_j a_j\lambda_j^{-s}$ with nonnegative coefficients. Write their parameters as $\alpha_{\rm T}>0$, $0<\delta_{\rm T}<\alpha_{\rm T}$, $k_{\rm T}>0$ and $m\ge1$ for the quoted positive-growth version, to distinguish them from the FIB atoms and the moving-cut parameter. Hypothesis B permits $k_{\rm T}=0$ as well. Its assumptions require analytic continuation throughout $\Re s\ge\alpha_{\rm T}-\delta_{\rm T}$ except for the pole of order $m$ at the single real point $\alpha_{\rm T}$, the strip bound
+
+$$
+|(s-\alpha_{\rm T})^mD(s)|\le M_1\exp(|s|^{M_2}),\qquad
+\alpha_{\rm T}-\delta_{\rm T}\le\Re s\le\alpha_{\rm T},
+$$
+
+and, on the left boundary, a uniform bound
+
+$$
+|D(s)|\le C(1+|\Im s|)^{k_{\rm T}}
+ (\log(3+|\Im s|))^{m-1}.
+$$
+
+Under these hypotheses, for $X\ge2$,
+
+$$
+\sum_{\lambda_j\le X}a_j
+=\operatorname*{Res}_{s=\alpha_{\rm T}}\frac{D(s)X^s}{s}
++O\!\left(X^{\alpha_{\rm T}-\delta_{\rm T}/(k_{\rm T}+1)}
+ (\log X)^{m-1}\right).
+$$
+
+The implied constant depends on $\alpha_{\rm T},\delta_{\rm T},k_{\rm T},m,C,D(\alpha_{\rm T}+\delta_{\rm T})$, and is independent of $M_1,M_2$. Remark 9.3.1 gives the $k_{\rm T}=0$ version with remainder $O(X^{\alpha_{\rm T}-\delta_{\rm T}}(\log X)^m)$. The parameters are fixed; applying the result to a changing family requires controlling this dependence. In particular, the stated saving is $\delta_{\rm T}/(k_{\rm T}+1)$, rather than a saving of $\delta_{\rm T}$ from analytic continuation alone.
+
+Theorems B.4–B.5 supply limiting examples for $k_{\rm T}>1/2$: general Dirichlet series satisfying Hypothesis B can have a remainder of size $\Omega(X^{\alpha_{\rm T}-\delta_{\rm T}/(k_{\rm T}+1/2)}(\log X)^{m-1})$, including examples with $0\le a_j\le1$. These examples do not identify the exact optimum between the two displayed exponents. The B.4 construction can use integer frequencies when $(k_{\rm T}+1/2)/\delta_{\rm T}$ is a positive integer. The B.5 bounded-coefficient construction uses general real frequencies without giving this integer-frequency guarantee. Neither result asserts a counterexample for the Riemann zeta function or the selected Robin integer.
+
+For the direct prime-counting series $D(s)=-\zeta'(s)/\zeta(s)$, $\lambda_j=j$, $a_j=\Lambda(j)$ and $\alpha_{\rm T}=m=1$. Each actual zeta zero in the proposed half-plane is an additional pole, so the single-pole hypothesis must be verified for all heights. A finite zero subtraction supplies no such verification for the remaining zeros. Applying Theorem B to a resulting remainder also requires a proved nonnegative-coefficient representation and the stipulated uniform growth bounds; none is supplied by this source application.
+
+The same conditional least integer $N>5040$ attaining the global Robin-ratio maximum remains fixed, with $A=\log N>10^{36}$ and $L=\log A$. The original complete $\sqrt A\,L\,I_\psi(A)$ lower allowance, or equivalently the full zero-plus-remainder upper allowance above, has not been obtained from these hypotheses. The actual zero real parts and multiplicities, every height, all remaining explicit terms and the strict core remain present. The published theorem and examples are reused without reconstructing their proofs; this applicability check supplies neither a new prime-error estimate nor a Robin/RH proof.
