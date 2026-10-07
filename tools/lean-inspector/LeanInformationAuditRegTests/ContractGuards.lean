@@ -42,8 +42,15 @@ run_meta do
 run_meta do
   for name in #[``structureForm, ``constructorForm, ``referenceForm, ``updatedForm] do
     let .defnInfo info ← getConstInfo name | throwError "compiled form definition missing"
+    let environment ← getEnv
+    let context : LeanInformationAudit.Contract.Literal.Context := {
+      find := environment.find?
+      owner := fun name => match environment.getModuleIdxFor? name with
+        | some index => some environment.header.moduleNames[index.toNat]!
+        | none => if (environment.find? name).isSome then some environment.mainModule else none
+      external := fun _ => false }
     let decoded ← LeanInformationAudit.Contract.Decoder.liftLiteral <|
-      LeanInformationAudit.Contract.Decoder.readSeal ((← getEnv).find? ·)
+      LeanInformationAudit.Contract.Decoder.readSeal context
         (← collectAxioms name) name info.value
     assertTest s!"compiled_forms.{name.getString!}"
       (decoded.rootId == `CompiledContractForms && decoded.catalogs.isEmpty)
@@ -71,6 +78,11 @@ run_meta do
     ``LeanInformationAudit.Contract.Implementation.Correspondence,
     ``LeanInformationAudit.Contract.SealRow,
     ``LeanInformationAudit.Contract.SealCatalog,
+    ``LeanInformationAudit.Contract.AxisRow,
+    ``LeanInformationAudit.Contract.AxisTable,
+    ``LeanInformationAudit.Contract.SealFactRow,
+    ``LeanInformationAudit.Contract.SealFacts,
+    ``LeanInformationAudit.Contract.SealCatalogView,
     ``LeanInformationAudit.Contract.Seal]
   let mut fields : Nat := 0
   for structureName in structures do

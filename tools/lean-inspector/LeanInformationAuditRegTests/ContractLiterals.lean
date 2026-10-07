@@ -35,7 +35,19 @@ def duplicates : Array OptionSetting := #[
   { name := `maxRecDepth, value := .nat 1 }, { name := `maxRecDepth, value := .nat 2 }]
 
 def constructorTypes : TemplateEnrollment.{_, 0} (@Nat.succ) := {
-  name := `Nat.succ, version := 1, constructors := #[{ name := `Nat, type := Nat }], options := #[] }
+  name := `Nat.succ, version := 1, constructors := #[{ name := `Nat, type := Nat }], options := #[],
+  bodyFact := `LeanInformationAuditRegTests.ContractLiterals.constructorFact,
+  coverage := { roots := [], facts := [] } }
+
+def constructorFact : NodeFact :=
+  .equal (@Nat.succ) (@Nat.succ)
+    { owner := `LeanInformationAuditRegTests.ContractLiterals,
+      declaration := `LeanInformationAuditRegTests.ContractLiterals.constructorTypes,
+      part := .type, path := [.argument] }
+    { owner := `LeanInformationAuditRegTests.ContractLiterals,
+      declaration := `LeanInformationAuditRegTests.ContractLiterals.constructorTypes,
+      part := .type, path := [.argument] }
+    rfl
 
 run_meta do
   let .ok s := Literal.sourceSelection (← getConstInfo ``selection).value!
