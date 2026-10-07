@@ -4983,3 +4983,9 @@ Van den Bos and Vaandrager, *State Identification for Labeled Transition Systems
 The conditional law imposes no labels outside the surviving INITIAL rows of (69.2); it does not price arbitrary tail-dependent root-zero tables, tables with more than two labels, arbitrary acquired supports, or shared streams for arbitrary live siblings and different value-fibre tables. Only the extension (69.7) has the proved full fee (69.8). Definition 1.3 and Open Problem 9.1 retain the original objective for every arbitrary attainable immutable INITIAL target and every original $k\ge2,m\ge1$, separately for adaptive and one-GLOBAL-stream preset control; all supplied restricted laws retain their own hypotheses.
 
 ## 追加锚（本行以下为增补区）
+
+## 70. Mixed-tail root-zero cut-price companion
+
+The [mixed-tail root-zero companion](KBONACCI_MIXED_TAIL_ROOT_ZERO_CUT_PRICE.md) gives the eligible binary-lower cut prices one, two and three under $3\le m<k\le2m-2$ for every actual gcd, their full INITIAL consumer on one GLOBAL stream, and a symbolic full fee-four family. Constant/no-cut and one-block clauses are credited reuse; the ordinary proofs preserve the original all-target, all-parameter objective as unresolved.
+
+## 追加锚（本行以下为增补区）
