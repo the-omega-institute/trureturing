@@ -2919,3 +2919,197 @@ Gamma 对数积分保持 §462 所述 Mertens.Gamma、PrimeNumberTheoremAnd
 上述递归关系、严格改进及误差界均由同一实际曲率的完整积分导出。
 
 ## 追加锚（本行以下为增补区）
+
+### 464 最新 Lean 供应与原 Robin 尾项的有向 Abel 接口
+
+本节接续 §463 的同一原曲率、原常数 A 和实际有符号尾。
+2026-10-07 的库检索得到四类准确供应。库名、README 或上游 CI
+本身不支付本题的原对象匹配、完整尾项或新工具链上的 kernel 验收。
+
+#### 464.1 可消费的供应及其边界
+
+OpenAI/math 的不可变修订
+[`adc7f1241b42e322a6451854ab7e4b4c146bf78a`](https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a)
+在 `lean/OAI/Analysis/VlasovMaxwell/Regularity/VolterraSup.lean`
+给出 `OAI.RVM.integral_Icc_factorial_tail`。对所有实数 C、自然数 d
+和 t≥0，其准确合同是
+
+$$
+C\int_{[0,t]}\frac{(Cu)^d}{d!}\,du
+=\frac{(Ct)^{d+1}}{(d+1)!}.
+\tag{RLB.1}
+$$
+
+这条供应不要求 C≥0；用于正积分比较时另支付 C≥0。
+同文件的 `volterra_uniform_bound` 则要求非负 D、C、每个窗口上的
+实际有限上界和真实积分递推不等式。其前置
+`Retarded/VolterraMajorant.lean` 构造连续单调的全局 majorant。
+这些是经典 Volterra 工具；两个小文件只依赖 Mathlib，适合按 Apache-2.0
+保留来源后移植所消费的私有证明。上游 Lean 为 4.34.1；本库保持
+自身钉版工具链，移植后的实际编译另验。
+
+RLB.1 的自然消费是规范化单项式 v^d/d!。原 T 的内层 lift 增加
+两个积分次数，外层增加一个，因此每次真实递归是 d→d+3。
+系数 a≤1/3 和 exp(−v)≤1 另给每层的 1/3。这正是 §463 中
+`v^(3n)/(2·3^n·(3n)!)` 的结构，而非把原递归改成别的 n! 模型。
+规范化阶乘积分的私有移植由同一实际 T 的归纳证明消费；
+完整对数矩和算术有符号尾仍需各自支付，不从紧区间一致收敛推出。
+
+dbsanfte/RiemannGaussian 的不可变修订
+[`24444671cee3bf643ff1307909b961a329372a9e`](https://github.com/dbsanfte/RiemannGaussian/tree/24444671cee3bf643ff1307909b961a329372a9e)
+在 `RiemannGaussian/MoebiusHarmonicMonotoneTail.lean` 给出保留两端点
+的有限 Abel 恒等式，以及实际调和 Möbius 前缀有界时的完整单调权尾界。
+其 `abs_sum_moebiusHarmonic_antitone_le` 保留 D<M、权非负、权在
+[D+1,M] 递减和全部 n∈[D,M] 上的实际前缀界；结论是
+`2·e·b(D+1)`。前缀界仍是输入，不能由该尾界反向冒领已经得到消去。
+
+同修订 `MoebiusHarmonicCancellation.lean` 的
+`exists_moebiusHarmonicPrefix_cubic_rate` 确实提供实际 H 的统一衰减：
+
+$$
+\exists h_0\ge22\ \forall h\ge h_0\ \forall D\in\mathbb N:\quad
+e^{2\cdot10^{15}h^3}\le D
+\Longrightarrow |H(D)|\le C_{\rm harmonic}e^{-h/8}.
+\tag{RLB.7}
+$$
+
+其中 h₀、h∈ℝ，C_harmonic=6+4 C_finite 是上游证明为正的固定实常数，
+不依赖 h 或 D。
+因此满足该阈值的同一 D 对全部后继 n∈[D,M] 支付 Abel 的
+前缀小量输入；这不是任意序列上的假设。上游实际 exact-head CI
+构建成功，本次尚未将该证明闭包移植并在本库 kernel 验收。
+消去率随 log D 的立方根衰减，保留了巨大的准确阈值。
+其原核 variation、odd/full 运输和临界归一化仍须独立支付。
+
+AlexKontorovich/PrimeNumberTheoremAnd 的不可变修订
+[`c39a751132c88b6e8080b74c74023fd95b3d8be0`](https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/tree/c39a751132c88b6e8080b74c74023fd95b3d8be0)
+在 `PrimeNumberTheoremAnd/StrongPNT.lean` 的 `StrongPNT` 给出
+
+$$
+\exists c>0:\qquad
+\psi(x)-x=O\!\left(xe^{-c\sqrt{\log x}}\right).
+\tag{RLB.2}
+$$
+
+这比本库已有 MediumPNT 的对数指数 1/10 更强。
+它可补无条件背景尾估计，但尚不直接供给临界平方根消去。
+对固定 c>0，令 y=√log x，比较尺度满足
+
+$$
+\frac{xe^{-c\sqrt{\log x}}}{\sqrt{x}/\log x}
+=y^2e^{y^2/2-cy}\longrightarrow\infty.
+\tag{RLB.3}
+$$
+
+因此仅从 RLB.2 的上界不能推出本题所需的该临界量级。
+上游 StrongPNT 的直接对象也是 ψ；真实 Möbius 权运输仍须单独证明。
+
+OVVO-Financial/mobius-synthesis 的不可变修订
+[`516191483bd7c3f82e0e3891c8e1f7266063c335`](https://github.com/OVVO-Financial/mobius-synthesis/tree/516191483bd7c3f82e0e3891c8e1f7266063c335)
+包含从实际 Mertens 能量界及平方前缀能量界通往 Mathlib RH 的条件桥。
+可复用的是准确归约和对象匹配方式；全尺度能量合同仍是其假设。
+有限范围验证不支付全尺度假设，本节也未证明该假设。
+
+#### 464.2 完整有限 Abel 式可以保留单向符号信息
+
+令 μ 为标准算术 Möbius 函数，
+
+$$
+H(n)=\sum_{1\le k\le n}\frac{\mu(k)}k,
+\qquad Q_D(n)=H(n)-H(D).
+$$
+
+对自然数 D<M 和任意实权 b，已读上游合同给出
+
+$$
+\begin{aligned}
+S_{D,M}(b)
+&:=\sum_{D<n\le M}\frac{\mu(n)}n b(n)\\
+&=b(M)H(M)-b(D+1)H(D)\\
+&\quad-\sum_{D<n\le M-1}[b(n+1)-b(n)]H(n).
+\end{aligned}
+\tag{RLB.4}
+$$
+
+把 H(n)=Q_D(n)+H(D) 逐项代入，有限望远镜身份
+
+$$
+\sum_{D<n\le M-1}[b(n)-b(n+1)]=b(D+1)-b(M)
+$$
+
+使所有 H(D) 项准确抵消，得到
+
+$$
+\boxed{\quad
+S_{D,M}(b)=b(M)Q_D(M)
++\sum_{D<n\le M-1}[b(n)-b(n+1)]Q_D(n).
+\quad}
+\tag{RLB.5}
+$$
+
+这里没有删除终端项 b(M)Q_D(M)。当 M=D+1 时内和为空，
+RLB.5 就是单个真实 Möbius 项，端点同样成立。
+
+若 b 在 [D+1,M] 非负递减，RLB.5 中全部系数非负，系数总和
+准确等于 b(D+1)。故只要同一区间实际满足
+`Q_D(n)≥−e`（D<n≤M，e≥0），就有
+
+$$
+S_{D,M}(b)\ge-e\,b(D+1).
+\tag{RLB.6}
+$$
+
+证明是分别以非负系数乘这个下界，再用有限望远镜求和。
+它保持单向目标；并不额外要求 Q_D 的上界。若 b(D+1)>0，
+`S/b(D+1)` 是这些实际有向前缀差的一个凸组合。
+若 b(D+1)=0，非负递减使整段 b 都为零，S=0。
+若只知道原 H 在 [D,M] 满足 |H|≤e，则 |Q_D|≤2e，
+这解释上游完整绝对值尾界的因子 2。更强的有向前缀差输入
+可以避免先取绝对值造成的这一信息损失。
+
+若原 H 的后继统一界是 |H(n)|≤δ，保留准确锚 H(D) 还给
+
+$$
+Q_D(n)\ge-\delta-H(D),\qquad
+S_{D,M}(b)\ge-[\delta+H(D)]b(D+1).
+\tag{RLB.8}
+$$
+
+这里 δ+H(D)≥0 由同一 D 上的界支付。当 H(D)<0 时，
+这个准确有向预算比先把 H(D) 替成 |H(D)| 再合并的 2δ 更小。
+RLB.7 确实在其存在阈值以后对所有后继 n 同时提供
+δ=C_harmonic exp(−h/8)。其 h₀ 仍是存在常数；这条供应
+不自行给出一个可枚举的有限阈值或本题最终符号。
+
+RLB.5–6 是从完整有限 Abel 合同和望远镜身份得到的经典推论，
+不作新的文献优先权声明。本节给出它们的完整有限证明；
+尚未把它们绑定并冻结为本库原 Robin 核的正式结果。
+
+#### 464.3 与正递归的联系及准确缺口
+
+§463 的正算子 T 从实际曲率的正残差生成下一层正残差。
+RLB.5 则让非负递减权作用于实际算术前缀差 Q_D。
+两者都允许保留输入的一个方向，但所作用的对象不同：
+前者的正性来自已经证明的解析积分；后者需要真实 Möbius
+前缀差的有向下界。RLB.5 没有把 μ 本身变成非负系数。
+
+原 Robin 配对若要消费 RLB.6，必须支付同一索引和截断下的
+准确权重身份、非负递减域、全部有向前缀差下界及完整终端项。
+若原权不单调，则仍使用 RLB.5 的有符号增量，而不能套用 RLB.6。
+有限公式也不自行准许无限重排或交换极限与积分。
+这把下一步供应需求具体化为原核上的有向前缀运输，
+而不是继续扩大已经为正的 A 储备来替代算术消去。
+
+Fibonacci 的递归和原曲率的三重积分递归可帮助发现合适的
+分层语言。它们不提供 μ 的真实相位，也不自动证明上述有向前缀差界。
+5040 是 Robin 定理中已知有限例外范围的最后整数边界；
+本节没有从 7!、Fibonacci 索引或拓扑染色例外推导算术尾控制。
+
+OpenAI/math 同修订还公开了一个声称 `Re(s)>7/8` 时实际 ζ 不为零
+的入口。其源码及显式 import 闭包已作静态检查；尚无本次对该完整
+闭包的实际 kernel 验收。它不参与本节或本库 RH 结论的承重推导。
+上述小供应的移植各自按本库钉版真实编译；RH 和原 Robin 全尾
+的最终符号仍保持开放。
+
+
+## 追加锚（本行以下为增补区）
