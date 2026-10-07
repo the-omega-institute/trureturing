@@ -110,9 +110,7 @@ private theorem separation (h : ℕ) (x y : LegalDigits) (hne : windowPrefix h x
       | exact (le_abs_self _).trans' (by nlinarith [ht.2.2.1])
       | exact (neg_le_abs _).trans' (by nlinarith [ht.2.2.1])
   obtain ⟨j, hj⟩ : ∃ j : Fin h, window x j ≠ window y j := by
-    by_contra hh
-    push Not at hh
-    exact hne (funext hh)
+    exact Function.ne_iff.mp hne
   let M := dist (response h x) (response h y)
   have h0 : |kappa (bitShift x (3 * j.val)) - kappa (bitShift y (3 * j.val))| ≤ M := by
     exact dist_le_pi_dist (response h x) (response h y) ⟨j.val, by omega⟩
@@ -350,11 +348,8 @@ private theorem recovery (h : ℕ) (hh : 1 ≤ h) (ε : ℝ) (_hε : 0 ≤ ε) :
 
 private theorem translated_distance (h : ℕ) (z : Fin (h + 1) → ℝ) (c : ℝ) (hc : 0 < c) :
     dist (fun j => z j - c) z = c := by
-  have he : (fun j => z j - c) - z = fun _ => -c := by
-    funext j
-    dsimp
-    ring
-  rw [dist_eq_norm, he, pi_norm_const, Real.norm_eq_abs, abs_neg, abs_of_pos hc]
+  change dist (z - fun _ => c) z = c
+  rw [dist_self_sub_left, pi_norm_const, Real.norm_eq_abs, abs_of_pos hc]
 
 private theorem critical_member (h : ℕ) :
     (fun _ : Fin (h + 1) => t / 4) ∈ observations h (t / 4) := by
