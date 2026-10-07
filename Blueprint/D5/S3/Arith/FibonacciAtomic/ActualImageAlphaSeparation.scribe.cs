@@ -19,16 +19,14 @@ internal sealed class ActualImageAlphaSeparationDocument : IScribeDocumentDefini
                 + "Its seven_leaf_separation theorem supplies the exact address semantics and Theorem 30.4. "
                 + "A is pair(E,beta), C is pair(A,E), and E is pair(beta,alpha).")),
             Def("delta", "Directed alpha deficit", "delta(P,Q) is the cardinality of the set difference of the original alpha-leaf address sets. The prose notation μ(P) denotes the cardinality of the original alpha-leaf address set."),
-            Def("fillContext", "Mapped single-hole filling", "Single-hole contexts reuse ActualLeafHistoryRigidity.OutputContext, including its root-first holeAddress. "
-                + "fillContext(g,H,X) inserts X and applies g to every complete fixed sibling. The identity retains the preimage, "
-                + "and rho cubed turns all fixed siblings into actual images."),
-            Def("TwoHole", "Two source holes", "The outer one-hole context leads to the lowest common ancestor. Its left and right one-hole contexts lead to the two distinct holes. A Boolean records their naming order. "
-                + "TwoHole.fill(J,g,X,Y) inserts the named trees exactly once, retaining the entire outer context and each fixed sibling. "
+            Def("TwoHole", "Two source holes", "Single-hole contexts reuse ActualLeafHistoryRigidity.OutputContext, its plug filling and its root-first holeAddress. "
+                + "The outer one-hole context leads to the lowest common ancestor. Its left and right one-hole contexts lead to the two distinct holes. A Boolean records their naming order. "
+                + "TwoHole.fill(J,X,Y) plugs the named trees into the left and right contexts and their pair into the outer context, so each tree is inserted exactly once and the entire outer context and each fixed sibling are retained. "
                 + "TwoHole.addresses gives two addresses with the same outer prefix and opposite next bits, and hence neither is a prefix of the other."),
             Def("frontier", "Canonical divergence frontier", "Comparison is performed on complete preimages. Equal subtrees stop; two branches recurse into the ordered children; an atom-compound comparison records the current address."),
             Def("forwardCount", "Atomic-side hole count", "forwardCount(S,T) counts frontier holes whose S side is atomic and T side is compound."),
-            Def("NormalForm", "Literal double-hole normal form", "NormalForm(S,T) retains a complete source context J and y equal to beta or (alpha,alpha), with S=fill(id,J,beta,(alpha,y)) and T=fill(id,J,(alpha,y),beta). "
-                + "Its frontier is exactly the two named, mutually nonprefix addresses. Writing Y=rho cubed(y) and K=rho cubed(fill(id,J,beta,beta)), the actual trees are literally replace(replace(K,u,C),v,(A,Y)) and replace(replace(K,u,(A,Y)),v,C). Thus every fixed sibling has an actual preimage."),
+            Def("NormalForm", "Literal double-hole normal form", "NormalForm(S,T) retains a complete source context J and y equal to beta or (alpha,alpha), with S=fill(J,beta,(alpha,y)) and T=fill(J,(alpha,y),beta). "
+                + "Its frontier is exactly the two named, mutually nonprefix addresses. Writing Y=rho cubed(y) and K=rho cubed(fill(J,beta,beta)), the actual trees are literally replace(replace(K,u,C),v,(A,Y)) and replace(replace(K,u,(A,Y)),v,C). Thus every fixed sibling has an actual preimage."),
             Describe.Lean(DescribeId.Create("actual-image-alpha-separation-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Sharp Alpha Separation"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
@@ -71,8 +69,8 @@ internal sealed class ActualImageAlphaSeparationDocument : IScribeDocumentDefini
         Formula alpha=All("S",V("Source"),All("T",V("Source"),Imp(alphaHypotheses,alphaConclusions)));
         Formula j=V("J"),yy=V("y"),small=Seq(Par(Equal(yy,V("beta"))),Sp,Lor,Sp,
             Par(Equal(yy,Call("pair",V("alpha"),V("alpha")))));
-        Formula sx=Call("fill",Call("id"),j,V("beta"),Call("pair",V("alpha"),yy));
-        Formula tx=Call("fill",Call("id"),j,Call("pair",V("alpha"),yy),V("beta"));
+        Formula sx=Call("fill",j,V("beta"),Call("pair",V("alpha"),yy));
+        Formula tx=Call("fill",j,Call("pair",V("alpha"),yy),V("beta"));
         Formula px=Call("rho3",sx),qx=Call("rho3",tx),count=Call("unsharedCount",yy);
         Formula alphaConverse=All("J",V("TwoHole"),All("y",V("Source"),Imp(small,And(
             In(px,V("I")),In(qx,V("I")),Call("NormalForm",sx,tx),Seq(Neg,Par(Equal(px,qx))),
