@@ -97,3 +97,4 @@ internal sealed record TestResultEvidence(
 internal sealed class InfrastructureUnresolvedException(IReadOnlyList<string> tests)
     : Exception(
         $"INFRASTRUCTURE_UNRESOLVED count={tests.Count} tests={string.Join(" | ", tests)}");
+
