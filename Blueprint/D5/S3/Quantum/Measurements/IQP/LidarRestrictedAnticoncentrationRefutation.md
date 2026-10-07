@@ -58,6 +58,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/IQP/LidarRestrictedAnticoncentrationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lidar-2025-qpu-restricted-anticoncentration-refutation` (refuted) by `D5/S3/Quantum/Measurements/IQP/LidarRestrictedAnticoncentrationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lidar-2025-qpu-restricted-anticoncentration-refutation","declaration_gid":"D5/S3/Quantum/Measurements/IQP/LidarRestrictedAnticoncentrationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* D. A. Lidar (2025). *Digital-Analog-Digital Quantum Supremacy*. DOI: [10.48550/arXiv.2512.07127](https://doi.org/10.48550/arXiv.2512.07127). URL: <https://arxiv.org/abs/2512.07127v1>.

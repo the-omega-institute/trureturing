@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Measurements/IQP/HardwareCircuitFactors
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Hardware factors and periodic product-angle integration. -/
 /-
 proof_shape: pi_periodic_shift: content

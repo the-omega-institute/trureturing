@@ -28,7 +28,9 @@ internal sealed class LidarRestrictedAnticoncentrationRefutationDocument : IScri
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("lidar-result", "result", F34(),
                 "No fixed positive a and b work for the cyclic six-vertex-component family. The forced twin pairs yield a product marginal, and the uniform square-root moment contracts by 47/48 per component. Markov bounds each output tail by inverse sqrt(a) times (47/48)^m. This tends to zero and contradicts a positive uniform lower bound. Conjecture 1 is untouched; the source Theorem 2 remains a conditional statement whose general anticoncentration hypothesis is refuted.", "result",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lidar-2025-qpu-restricted-anticoncentration-refutation"), ResolutionKind.Refuted)),
             Node("lidar-circuit-amplitude-literal", "circuit amplitude literal", F0(),
                 "This statement supplies the indicated circuit amplitude literal relation for the finite twin-pair calculation.", "circuit_amplitude_literal",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
@@ -116,10 +118,11 @@ internal sealed class LidarRestrictedAnticoncentrationRefutationDocument : IScri
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name)
     {
