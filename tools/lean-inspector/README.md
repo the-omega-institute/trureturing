@@ -32,8 +32,8 @@ universe checks. `Registration.targetName` is absent.
 
 Contract types bind the original mathematical obligations to the target, arena,
 actual realization, primitive bundle and catalog indices. The Reg compiler checks
-variation, slot sensitivity, witness positive/constantTrue negative claims,
-source-family obligations, seal counts, row classifications, closure membership,
+variation, slot sensitivity, source-family obligations, seal counts, row
+classifications, closure membership,
 retained kernel collisions and catalog conclusions. Missing, unknown, absent and
 unsupported evidence remains a compilable submission and retains its diagnostic
 path. The report consumes these fields and reconstructs raw ownership, enrollment,
@@ -91,10 +91,12 @@ values directly. Typed discovery uses the contract type heads and compiler
 owner facts; source commands, declaration modifiers, suffixes, notation and
 other source spelling do not participate. Catalogs and seals from D5 mirrors
 use `Reg/Catalogs/D5/<D5 relative module path>/RootCatalog.lean` or
-`SealedCatalog.lean`; mirrors retain their registrations at their original
-paths, catalogs import those leaves, and leaves do not import catalogs. Catalog
-root IDs use the catalog module and `registrationModuleName` retains the leaf
-owner. Catalogs and seals are optional analysis groups: report evaluation does
+`SealedCatalog.lean`. Mirrors retain their original entry paths and may import
+Reg modules that own the typed registrations. Catalogs import these entries,
+and entries do not import catalogs. Catalog root IDs use the catalog module;
+`registrationModuleName`, node coordinates and H use the declaration's actual
+compiler owner. An import-only entry owns no registration. Catalogs and seals
+are optional analysis groups: report evaluation does
 not require catalog membership, and missing seals remain named absent inputs.
 
 Reg sources compile to the typed contract heads. Catalogs use RootCatalog
@@ -195,7 +197,7 @@ C# 消费者检查可解码证据的结构、sidecar 归属及 debt 约束；未
 binding evidence，不能通过声明模板的严格消费者。
 `LeanInformationAuditRegTests` 的生产证据检查要求实际导出的 wire 等于对应 `Compiled*Wire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；当前 wire 只在实际内容改变时同步更新。
 
-登记与模板必须携带 `NodeCoverage`，模板另以 `bodyFact` 绑定实际编译体。内核在 Reg 编译期检查节点类型、证明边界、定义性匹配、相等、等价、逐参数 Bool 反射和完整有限枚举；判官只绑定原始节点及坐标、遍历完整依赖，并执行 E1–E8 等自身规则。`SealCatalogView` 将实际 catalog 与 `SealFacts` 绑定；完整字面行承担计数、轴、状态和分类数据，判官不求值原始函数。公共类型与 Reg 支持库不携带 evaluator、plan、join、判词或报告收据。生产登记、模板、root 和 seal 路径不使用通用比较器；SL-031 utility 路径单独保留 `RawArtifacts.whnf/equalTypes`。
+登记与模板必须携带 `NodeCoverage`，模板另以 `bodyFact` 绑定实际编译体。内核在 Reg 编译期检查节点类型、证明边界、定义性匹配、相等、等价、逐参数 Bool 反射和完整有限枚举；判官只绑定原始节点及坐标、遍历完整依赖，并执行 E1–E8 等自身规则。`SealCatalogView` 将实际 catalog 与 `SealFacts` 绑定；完整字面行承担计数、轴、状态和分类数据，判官不求值原始函数。共享 Reg 支持库中的泛型事实与内核证明仍是未评定的契约数据，每次使用仍须绑定实际编译坐标并通过完整 coverage 核对。公共类型与 Reg 支持库不携带 evaluator、plan、join、判词或报告收据。生产登记、模板、root 和 seal 路径不使用通用比较器；SL-031 utility 路径单独保留 `RawArtifacts.whnf/equalTypes`。
 
 `Reg.Support.CompiledNodeTerm` 的 `compiled_node%` 在 Reg 编译期按字面声明、type/value、路径与宇宙地址，从普通编译器环境读取实际原始节点，并以原 telescope 闭合后交给普通编译器检查。它保留 binder 名、模式、metadata、let 结构与未化简宇宙树。`compiled_fact%` 用一个字面地址同时构造原始操作数及现有 `NodeFact`、`NodeCoordinate`；`compiled_exact%` 对两端各用其地址构造现有 `NodeFact.exact` 与 `ExactMatch.evidence`。owner 取自 `Environment` 的实际模块元数据，类型推断与定义性检查交普通 elaboration 和内核执行。适配器没有自有的推断、比较、化简或评定过程，不导入或调用实现。owner、路径与 coverage 仍由报告期的完整 `NodeCoordinate` 独立核对；适配器不认证坐标，不产生 plan、join、判词、收据或复用权威。
 

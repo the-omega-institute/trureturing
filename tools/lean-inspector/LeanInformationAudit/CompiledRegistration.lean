@@ -47,7 +47,7 @@ def prepare (find : Name → Option ConstantInfo) (owner : Name)
     registrationModuleName := if entry.registrationModuleName.isAnonymous then owner else entry.registrationModuleName }
 
 /-- Typed obligations retain the compiler's mathematical checks; this checks
-the bridge kind and named, closed witness claim required by the registry. -/
+the correspondence tag and named realization source required by the registry. -/
 def validateBinding (find : Name → Option ConstantInfo) (input : RegistrationInput) : IO Unit := do
   let entry := input.entry
   if input.declaration.any (fun d => d.sourceRecord.isSome && !d.escapeInput.openContinuation) then
