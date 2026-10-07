@@ -15,6 +15,7 @@ import D5.S3.Arith.GoldenLayerMarginalDecay
 import D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
 import Mathlib.Analysis.SpecialFunctions.Log.Monotone
 import Mathlib.Analysis.SumIntegralComparisons
+import Mathlib.Order.Filter.Extr
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -141,9 +142,7 @@ private theorem reference_maximal {x : ℝ} (hx : 1 < x) {p : ℕ} (hp : p.Prime
     exact (sub_neg.mp hs).le
   change ∀ a, referenceObjective x p a ≤ referenceObjective x p v
   intro a
-  rcases le_total a v with h | h
-  · exact hup h (by simp) h
-  · exact hdown (by simp) h h
+  exact isMaxOn_univ_of_mono_anti hup hdown (Set.mem_univ a)
 
 private theorem actual_eq_prefix (lambda : ℝ) {p : ℕ} (hp : p.Prime) (a : ℕ) :
     goldenPrimeLocalObjective lambda p a =
