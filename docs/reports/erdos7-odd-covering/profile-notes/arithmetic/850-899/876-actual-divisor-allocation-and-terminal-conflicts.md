@@ -1831,6 +1831,99 @@ The scoped checks use default budgets and only the standard three
 axioms. They do not prove matroid intersection, source exchange,
 or unconditional existence of the fixed fourteen-root repair.
 
+## Reduced source exchange requires one enclosure of each whole deletion hole
+
+Keep the same actual count-then-sum-minimal height-one q=113 source, common period 113R
+with (113,R)=1, ordinary ternary cofactors, and the surviving literal
+colors after all unit-cofactor colors are excluded. There are at least
+110 such colors. Each covers the same E_q. Fix one remaining root
+r modulo27 and put X_r=E_q intersect the class r modulo27. Let G be
+the surviving q-bearing original owners, and let A_i be owner i's
+exact q-stripped trace on X_r.
+
+The proposed source-spanning representation already has a restrictive
+rank consequence. If whole-source coverage were exactly spanning in
+one matroid, every surviving complete literal color would be a base:
+existing actual private-point projection makes each such color an
+inclusion-minimal whole-source cover. All these colors would therefore
+have the same cardinality. This does not follow from separate matroid
+representations of the root sources. On a root, the full color need
+not be minimal; only the inclusion-minimal root subcovers must have
+the same cardinality. These are direct uses of the existing Mathlib
+minimal-spanning and equal-base-cardinality theorems. The scoped check
+verifies the root version. No unequal-cardinality pair of actual
+reduced-source minimal covers has been supplied here.
+
+There is a more local necessary condition. Choose any inclusion-minimal
+cover B of X_r using G and an owner i in B. Define its whole deletion
+hole by
+
+$$
+P_i(B,r)=X_r\setminus\bigcup_{k\in B\setminus\{i\}}A_k.
+$$
+
+Minimality makes this hole nonempty, and coverage by B puts it inside
+A_i. Suppose coverage of X_r by subsets of G is exactly spanning in
+a matroid. For every surviving complete literal color c, choose a
+minimal cover D_c inside that color. Both B and D_c are bases.
+If i belongs to D_c, it already encloses the hole. Otherwise the
+existing basis exchange theorem gives one j in D_c outside B such
+that replacing i by j preserves coverage. Consequently
+
+$$
+\boxed{\quad
+\forall c\text{ surviving},\quad
+\exists j\in G\text{ of color }c:\quad
+P_i(B,r)\subseteq A_j.
+\quad}
+$$
+
+The same fixed j must cover the whole hole. In particular the hole
+has at least 110 distinct actual enclosing owners, one from each
+surviving color. This is stronger than complete-color service,
+which only supplies a potentially different owner at each source
+point. A single surviving color for which each owner misses at least
+one point of this hole, possibly a different point for each owner,
+refutes the proposed source-spanning representation.
+It does not refute the fourteen-root repair target.
+
+The enclosure test is already available arithmetically. Report385,
+section2 PH3--PH4 and section123 LA4, gives the complete congruence-hull
+test. Use the common period P=lcm(R,27), choose w in the nonempty
+hole, and let Gamma be the gcd of P and all differences x-w from
+the hole's residues in one full period. Every q-stripped modulus
+n_j/q divides P. The existing test specializes to
+
+$$
+P_i(B,r)\subseteq A_j
+\quad\Longleftrightarrow\quad
+n_j/q\mid\Gamma
+\quad\text{and}\quad
+w\equiv a_j\pmod{n_j/q}.
+$$
+
+Thus the necessary exchange condition is a finite test using the
+actual labels, phases and complete hole, rather than a test at one
+chosen private point. The hull test is reused, not re-proved or
+presented as a new theorem. These root holes are relative to the
+selected B; they are not automatically the complete original
+Private F i regions used by global private-enclosure theorems.
+
+The scoped Lean application uses the exact residual and root,
+the actual complete-color supplier, finite minimal extraction,
+Mathlib minimal-spanning bases, equal base cardinality and basis
+exchange. It proves nonemptiness of the deletion hole and the
+single-encloser-per-color conclusion, including the i-in-D_c case.
+All three checked declarations compile at default budgets with only
+propext, Classical.choice and Quot.sound. They are transient reuse
+applications, not new canonical mathematical declarations.
+
+The source-matroid representation remains an explicit unproved
+premise. No actual arithmetic argument here establishes or violates
+the enclosure condition on the reduced ground set. The condition
+locates a concrete missing relation; neither 110 pointwise complete
+colors nor the three-row donor partition supplies it.
+
 ## Verification and the remaining global obligation
 
 Scoped exact Lean checks cover the actual two-prime incidence
