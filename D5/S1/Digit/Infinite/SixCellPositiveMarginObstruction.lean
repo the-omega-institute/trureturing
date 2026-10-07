@@ -194,11 +194,10 @@ def labelIndex : Fin 5 → Label := fun i =>
     if i.val = 2 then fiveLabel else if i.val = 3 then twoLabel else twoFiveLabel
 
 theorem label_index_injective : Function.Injective labelIndex := by
-  local notation "l" => labelIndex
   intro i j he
   have he' := congrArg (fun w : Label => (w.val 0, w.val 1, w.val 2)) he
   fin_cases i <;> try fin_cases j
-  all_goals simp [l, threeLabel, nullLabel, fiveLabel, twoLabel, twoFiveLabel] at he'
+  all_goals simp [labelIndex, threeLabel, nullLabel, fiveLabel, twoLabel, twoFiveLabel] at he'
   all_goals rfl
 
 private lemma forced_colors (Q : ℝ → Fin 6)
@@ -216,24 +215,23 @@ private lemma forced_colors (Q : ℝ → Fin 6)
   let b : Fin 5 → ℝ := fun i =>
     if i.val = 0 then -t - t ^ 4 else if i.val = 1 then -t ^ 4 else
       if i.val = 2 then g else if i.val = 3 then 1 - t ^ 4 else 2 * t
-  local notation "l" => labelIndex
-  have hinj : Function.Injective l := label_index_injective
-  have hmlegal (i : Fin 5) : (-1 : ℝ) ∈ stateInterval (outgoing (l i)) := by
-    fin_cases i <;> simp [l, stateInterval, outgoing, threeLabel,
+  have hinj : Function.Injective labelIndex := label_index_injective
+  have hmlegal (i : Fin 5) : (-1 : ℝ) ∈ stateInterval (outgoing (labelIndex i)) := by
+    fin_cases i <;> simp [labelIndex, stateInterval, outgoing, threeLabel,
       nullLabel, fiveLabel, twoLabel, twoFiveLabel] <;> linarith
-  have htlegal (i : Fin 5) : t ∈ stateInterval (outgoing (l i)) := by
-    fin_cases i <;> simp [l, stateInterval, outgoing, threeLabel,
+  have htlegal (i : Fin 5) : t ∈ stateInterval (outgoing (labelIndex i)) := by
+    fin_cases i <;> simp [labelIndex, stateInterval, outgoing, threeLabel,
       nullLabel, fiveLabel, twoLabel, twoFiveLabel] <;> linarith
-  have haeval (i : Fin 5) : branch (l i) (-1) = a i := by
-    fin_cases i <;> simp [l, a, branch, offset, threeLabel, nullLabel,
+  have haeval (i : Fin 5) : branch (labelIndex i) (-1) = a i := by
+    fin_cases i <;> simp [labelIndex, a, branch, offset, threeLabel, nullLabel,
       fiveLabel, twoLabel, twoFiveLabel, hs, hg] <;> ring
-  have hbeval (i : Fin 5) : branch (l i) t = b i := by
-    fin_cases i <;> simp [l, b, branch, offset, threeLabel, nullLabel,
+  have hbeval (i : Fin 5) : branch (labelIndex i) t = b i := by
+    fin_cases i <;> simp [labelIndex, b, branch, offset, threeLabel, nullLabel,
       fiveLabel, twoLabel, twoFiveLabel, hs, hg, hfour] <;> nlinarith only [hs]
   have haX (i : Fin 5) : a i ∈ stateInterval false :=
-    haeval i ▸ branch_support (l i) (hmlegal i)
+    haeval i ▸ branch_support (labelIndex i) (hmlegal i)
   have hbX (i : Fin 5) : b i ∈ stateInterval false :=
-    hbeval i ▸ branch_support (l i) (htlegal i)
+    hbeval i ▸ branch_support (labelIndex i) (htlegal i)
   have haMono : StrictMono a := by
     intro i j hij
     change i.val < j.val at hij
@@ -251,12 +249,12 @@ private lemma forced_colors (Q : ℝ → Fin 6)
   have mem (x : ℝ) (hx : x ∈ stateInterval false) :
       x ∈ closure (cell Q (Q x)) := subset_closure ⟨hx, rfl⟩
   have row (v : Fin 5 → ℝ) (y : ℝ)
-      (hev : ∀ i, branch (l i) y = v i)
-      (hy : ∀ i, y ∈ stateInterval (outgoing (l i)))
+      (hev : ∀ i, branch (labelIndex i) y = v i)
+      (hy : ∀ i, y ∈ stateInterval (outgoing (labelIndex i)))
       (hv : StrictMono v) : StrictMono (fun i => Q (v i)) := by
     intro i j hij
-    have hxi := hev i ▸ branch_support (l i) (hy i)
-    have hxj := hev j ▸ branch_support (l j) (hy j)
+    have hxi := hev i ▸ branch_support (labelIndex i) (hy i)
+    have hxj := hev j ▸ branch_support (labelIndex j) (hy j)
     have hyX : y ∈ stateInterval false := by
       have hy0 := hy 0
       change y ∈ stateInterval false at hy0
@@ -264,7 +262,7 @@ private lemma forced_colors (Q : ℝ → Fin 6)
     have hle := hQ hxi hxj (hv hij).le
     apply lt_of_le_of_ne hle
     intro he
-    have hil := hp (Q (v i)) (Q y) (l i) (l j) y y (hy i) (hy j)
+    have hil := hp (Q (v i)) (Q y) (labelIndex i) (labelIndex j) y y (hy i) (hy j)
       (mem y hyX) (mem y hyX) (by rw [hev i]; exact mem _ hxi)
       (by rw [hev j, he]; exact mem _ hxj)
     exact (ne_of_lt hij) (hinj hil)
@@ -375,7 +373,6 @@ private lemma no_pure_ordered (Q : ℝ → Fin 6)
   let a : Fin 5 → ℝ := fun i =>
     if i.val = 0 then -t ^ 2 else if i.val = 1 then g else if i.val = 2 then t else
       if i.val = 3 then 2 * t else 1 + t
-  local notation "l" => labelIndex
   let s : ℝ := t / 2
   have inX (x : ℝ) (hlo : -1 ≤ x) (hhi : x ≤ 1 + t) :
       x ∈ stateInterval false := ⟨hlo, hhi⟩
@@ -384,17 +381,17 @@ private lemma no_pure_ordered (Q : ℝ → Fin 6)
   have hXmhalf : (-1 / 2 : ℝ) ∈ stateInterval false := inX _ (by linarith) (by linarith)
   have hXzero : (0 : ℝ) ∈ stateInterval false := inX _ (by linarith) (by linarith)
   have hXs : s ∈ stateInterval false := inX _ (by dsimp [s]; linarith) (by dsimp [s]; linarith)
-  have hmlegal (i : Fin 5) : (-1 : ℝ) ∈ stateInterval (outgoing (l i)) := by
-    fin_cases i <;> simp [l, stateInterval, outgoing, threeLabel,
+  have hmlegal (i : Fin 5) : (-1 : ℝ) ∈ stateInterval (outgoing (labelIndex i)) := by
+    fin_cases i <;> simp [labelIndex, stateInterval, outgoing, threeLabel,
       nullLabel, fiveLabel, twoLabel, twoFiveLabel] <;> linarith only [htlo]
-  have htlegal (i : Fin 5) : t ∈ stateInterval (outgoing (l i)) := by
-    fin_cases i <;> simp [l, stateInterval, outgoing, threeLabel,
+  have htlegal (i : Fin 5) : t ∈ stateInterval (outgoing (labelIndex i)) := by
+    fin_cases i <;> simp [labelIndex, stateInterval, outgoing, threeLabel,
       nullLabel, fiveLabel, twoLabel, twoFiveLabel] <;> linarith only [htlo]
-  have haeval (i : Fin 5) : branch (l i) (-1) = a i := by
-    fin_cases i <;> simp [l, a, branch, offset, threeLabel, nullLabel,
+  have haeval (i : Fin 5) : branch (labelIndex i) (-1) = a i := by
+    fin_cases i <;> simp [labelIndex, a, branch, offset, threeLabel, nullLabel,
       fiveLabel, twoLabel, twoFiveLabel, hs, hg] <;> ring
   have haX (i : Fin 5) : a i ∈ stateInterval false :=
-    haeval i ▸ branch_support (l i) (hmlegal i)
+    haeval i ▸ branch_support (labelIndex i) (hmlegal i)
   have hbeval4 : branch twoFiveLabel t = 2 * t := by
     simp [branch, offset, twoFiveLabel, hs, hg]; nlinarith only [hs]
   have mem (x : ℝ) (hx : x ∈ stateInterval false) :
@@ -426,8 +423,8 @@ private lemma no_pure_ordered (Q : ℝ → Fin 6)
   have h2t4 : 2 * t ∈ closure (cell Q 4) := by simpa [a, hQ2t] using mem _ (haX 3)
   have hp5 : 1 + t ∈ closure (cell Q 5) := by simpa [hQphi] using mem _ hXp
   have hβlegal (β : ℝ) (hlo : -1 / 2 ≤ β) (hhi : β ≤ t) (i : Fin 5) :
-      β ∈ stateInterval (outgoing (l i)) := by
-    fin_cases i <;> simp [l, stateInterval, outgoing, threeLabel, nullLabel,
+      β ∈ stateInterval (outgoing (labelIndex i)) := by
+    fin_cases i <;> simp [labelIndex, stateInterval, outgoing, threeLabel, nullLabel,
       fiveLabel, twoLabel, twoFiveLabel] <;> constructor <;> linarith only [hlo, hhi, htlo]
   have hb1legal (i : Fin 5) := hβlegal β₁ hβ₁lo (by nlinarith only [hβ₁hi, hs, htlo]) i
   have hb2legal (i : Fin 5) := hβlegal β₂ (by linarith) (by linarith [hg]) i
@@ -452,18 +449,18 @@ private lemma no_pure_ordered (Q : ℝ → Fin 6)
     fin_cases i
     · exact ⟨-1 / 2, by change (-1 / 2 : ℝ) ∈ stateInterval false; exact hXmhalf,
         hh0, by simpa [labels0, hfix3] using hh0⟩
-    · exact ⟨-1, hmlegal 0, hm0, by change branch (l 0) (-1) ∈ _; rw [haeval 0]; exact ha1⟩
-    · exact ⟨-1, hmlegal 1, hm0, by change branch (l 1) (-1) ∈ _; rw [haeval 1]; exact hg2⟩
-    · exact ⟨-1, hmlegal 2, hm0, by change branch (l 2) (-1) ∈ _; rw [haeval 2]; exact ht3⟩
-    · exact ⟨-1, hmlegal 3, hm0, by change branch (l 3) (-1) ∈ _; rw [haeval 3]; exact h2t4⟩
-    · exact ⟨-1, hmlegal 4, hm0, by change branch (l 4) (-1) ∈ _; rw [haeval 4]; exact hp5⟩
-  have next0 (n : Fin 4) : branch (l ⟨n.val + 1, by omega⟩) β₁ ∈
+    · exact ⟨-1, hmlegal 0, hm0, by change branch (labelIndex 0) (-1) ∈ _; rw [haeval 0]; exact ha1⟩
+    · exact ⟨-1, hmlegal 1, hm0, by change branch (labelIndex 1) (-1) ∈ _; rw [haeval 1]; exact hg2⟩
+    · exact ⟨-1, hmlegal 2, hm0, by change branch (labelIndex 2) (-1) ∈ _; rw [haeval 2]; exact ht3⟩
+    · exact ⟨-1, hmlegal 3, hm0, by change branch (labelIndex 3) (-1) ∈ _; rw [haeval 3]; exact h2t4⟩
+    · exact ⟨-1, hmlegal 4, hm0, by change branch (labelIndex 4) (-1) ∈ _; rw [haeval 4]; exact hp5⟩
+  have next0 (n : Fin 4) : branch (labelIndex ⟨n.val + 1, by omega⟩) β₁ ∈
       closure (cell Q ⟨n.val + 2, by omega⟩) := by
     apply force 0 labels0 occupied0 _ β₁ (hb1legal _) hβ₁0
     intro i he
     have he' := congrArg (fun w : Label => (w.val 0, w.val 1, w.val 2)) he
     fin_cases n <;> fin_cases i <;>
-      simp [labels0, l, threeLabel, nullLabel, fiveLabel, twoLabel, twoFiveLabel] at he'
+      simp [labels0, labelIndex, threeLabel, nullLabel, fiveLabel, twoLabel, twoFiveLabel] at he'
     all_goals rfl
   have hb1three : branch threeLabel β₁ ∈ closure (cell Q 0) := by
     apply (hc 0).out hm0 hh0
@@ -486,13 +483,13 @@ private lemma no_pure_ordered (Q : ℝ → Fin 6)
     · exact ⟨β₁, hb1legal 2, hβ₁1, next0 1⟩
     · exact ⟨β₁, hb1legal 3, hβ₁1, next0 2⟩
     · exact ⟨β₁, hb1legal 4, hβ₁1, next0 3⟩
-  have next1 (n : Fin 3) : branch (l ⟨n.val + 2, by omega⟩) β₂ ∈
+  have next1 (n : Fin 3) : branch (labelIndex ⟨n.val + 2, by omega⟩) β₂ ∈
       closure (cell Q ⟨n.val + 3, by omega⟩) := by
     apply force 1 labels1 occupied1 _ β₂ (hb2legal _) hβ₂1
     intro i he
     have he' := congrArg (fun w : Label => (w.val 0, w.val 1, w.val 2)) he
     fin_cases n <;> fin_cases i <;>
-      simp [labels1, l, threeLabel, nullLabel, fiveLabel, twoLabel, twoFiveLabel] at he'
+      simp [labels1, labelIndex, threeLabel, nullLabel, fiveLabel, twoLabel, twoFiveLabel] at he'
     all_goals rfl
   have hb2three : branch threeLabel β₂ ∈ closure (cell Q 0) := by
     apply (hc 0).out hm0 hh0
@@ -525,7 +522,7 @@ private lemma no_pure_ordered (Q : ℝ → Fin 6)
     intro i he
     have he' := congrArg (fun w : Label => (w.val 0, w.val 1, w.val 2)) he
     fin_cases i <;>
-      simp [labels2, l, threeLabel, nullLabel, fiveLabel, twoLabel, twoFiveLabel] at he'
+      simp [labels2, labelIndex, threeLabel, nullLabel, fiveLabel, twoLabel, twoFiveLabel] at he'
     all_goals rfl
   have hbad := hp 4 3 twoLabel twoFiveLabel β₃ t (hb3legal 3) (htlegal 4)
     hβ₃3 ht3 hb3two (by rw [hbeval4]; exact h2t4)
