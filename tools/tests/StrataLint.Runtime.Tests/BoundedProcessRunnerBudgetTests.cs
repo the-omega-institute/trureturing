@@ -1,6 +1,7 @@
+using StrataLint.Runtime;
 using System.Reflection;
 
-namespace StrataLint.Engine.Tests;
+namespace StrataLint.Runtime.Tests;
 
 public sealed class BoundedProcessRunnerBudgetTests
 {
