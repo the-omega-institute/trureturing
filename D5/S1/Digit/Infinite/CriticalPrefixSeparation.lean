@@ -387,11 +387,11 @@ noncomputable def affineResponse (h : ℕ) (x : LegalDigits) (a : ℝ) : Fin (h 
   fun j => (∑ k ∈ Finset.range (h - j.val), (-g) ^ k * offset (window x (j.val + k))) +
     (-g) ^ (h - j.val) * a
 
-private theorem shifted_window (x : LegalDigits) (n j : ℕ) :
+theorem shifted_window (x : LegalDigits) (n j : ℕ) :
     window (bitShift x (3 * n)) j = window x (n + j) := by
   simp only [window, D5.S1.Digit.Infinite.OddColorThreeSource.shift_add, Nat.mul_add]
 
-private theorem tail_guard (s : Bool) (x : LegalDigits) (n : ℕ) (hx : stateAddress s x) :
+theorem tail_guard (s : Bool) (x : LegalDigits) (n : ℕ) (hx : stateAddress s x) :
     stateAddress (actualGuard s x n) (bitShift x (3 * n)) := by
   cases n with
   | zero => simpa [actualGuard, bitShift] using hx
@@ -411,7 +411,7 @@ private theorem guard_step (s : Bool) (x : LegalDigits) (n : ℕ) :
     simp only [actualGuard, Nat.succ_ne_zero, ↓reduceIte, originalT, bitShift]
     congr 1
 
-private theorem realize_tail (h : ℕ) (s : Bool) (x z : LegalDigits)
+theorem realize_tail (h : ℕ) (s : Bool) (x z : LegalDigits)
     (hx : stateAddress s x) (hz : stateAddress (actualGuard s x h) z) :
     ∃ y : LegalDigits, stateAddress s y ∧ windowPrefix h y = windowPrefix h x ∧
       bitShift y (3 * h) = z := by
@@ -469,7 +469,7 @@ private theorem realize_tail (h : ℕ) (s : Bool) (x z : LegalDigits)
   obtain ⟨hw, ht⟩ := unpack h x y z hp
   exact ⟨y, hy, hw, ht⟩
 
-private theorem response_expansion (x : LegalDigits) (j n : ℕ) :
+theorem response_expansion (x : LegalDigits) (j n : ℕ) :
     kappa (bitShift x (3 * j)) =
       (∑ k ∈ Finset.range n, (-g) ^ k * offset (window x (j + k))) +
       (-g) ^ n * kappa (bitShift x (3 * (j + n))) := by
@@ -488,7 +488,7 @@ private theorem response_expansion (x : LegalDigits) (j n : ℕ) :
   simp only [pow_zero, one_mul, Nat.add_zero] at he
   linarith only [he]
 
-private theorem affine_actual (h : ℕ) (x y : LegalDigits)
+theorem affine_actual (h : ℕ) (x y : LegalDigits)
     (hp : windowPrefix h y = windowPrefix h x) :
     response h y = affineResponse h x (kappa (bitShift y (3 * h))) := by
   funext j

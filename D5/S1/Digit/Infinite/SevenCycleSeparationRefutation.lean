@@ -568,7 +568,7 @@ private def strictRecord (Q : ℝ → Fin 6) (b : ℝ) (x : LegalDigits) (r : �
     kappa (bitShift x (3 * j)) + e j ∈ stateInterval false ∧
     Q (kappa (bitShift x (3 * j)) + e j) = r j
 
-private theorem cell_geometry (c : Fin 6) :
+theorem cell_geometry (c : Fin 6) :
     -1 ≤ cellLower c ∧ cellLower c < cellUpper c ∧ cellUpper c ≤ 1 + t := by
   obtain ⟨ht2, hg, hg2, hglo, hghi⟩ := golden_data
   fin_cases c <;> norm_num [cellLower, cellUpper, cuts, lambda] <;>
@@ -628,7 +628,7 @@ private theorem periodic_targets : ∃ p : Bool → Fin 7 → ℝ,
   dsimp [d] at hd
   linarith
 
-private theorem interior_owned (Q : ℝ → Fin 6) (hQ : instrument Q)
+theorem interior_owned (Q : ℝ → Fin 6) (hQ : instrument Q)
     (c : Fin 6) (p : ℝ) (hp : p ∈ Set.Ioo (cellLower c) (cellUpper c)) :
     Q p = c := by
   obtain ⟨ht2, hg, hg2, hglo, hghi⟩ := golden_data

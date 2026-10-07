@@ -26,6 +26,15 @@ open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open scoped Topology
 
 
+theorem finite_unshift (x : LegalDigits) (n : ℕ) (hx : finiteTail (bitShift x n)) :
+    finiteTail x := by
+  obtain ⟨N, hN⟩ := hx
+  refine ⟨N + n, ?_⟩
+  intro j hj
+  have hh := hN (j - n) (by omega)
+  simpa [bitShift, Nat.sub_add_cancel (by omega : n ≤ j)] using hh
+
+
 set_option maxHeartbeats 1600000 in
 /-- The complete graph and actual common-tail relation have a strict width bound
 and a critical singleton exception. -/
@@ -631,13 +640,7 @@ theorem complete_closed_graph_common_tail_width :
         (v :: vs).getLast? = some vw.1 ∧ ClosedPath b0 r (v :: vs) vw.2 from
         by simpa [histories, hr] using hvw)
       exact (hpathRead b0 r _ vw.2 hp).1
-  have hfiniteUnshift (x : LegalDigits) (n : ℕ) (hx : finiteTail (bitShift x n)) :
-      finiteTail x := by
-    obtain ⟨N, hN⟩ := hx
-    refine ⟨N + n, ?_⟩
-    intro j hj
-    have hh := hN (j - n) (by omega)
-    simpa [bitShift, Nat.sub_add_cancel (by omega : n ≤ j)] using hh
+  have hfiniteUnshift := finite_unshift
   have hfiniteExtremes (x : LegalDigits) (hx : finiteTail x) :
       kappa x ≠ -1 ∧ kappa x ≠ 1 + t := by
     obtain ⟨N, hN⟩ := hx
