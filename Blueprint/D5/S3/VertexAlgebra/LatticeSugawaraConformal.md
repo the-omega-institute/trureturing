@@ -8,7 +8,31 @@ The actual quadratic field is one half the finite double sum of H(i,j) times nor
 
 For a polynomial p, R is the largest frequency j+1 among the variables X(i,j) occurring in p, or zero when p is constant. For a finite-charge vector v, take the maximum over its sector support. Positive currents above R kill v. The normal summand N(i,j;k,m-k)v is supported in [min(0,m-R),R]. Each input, including each intermediate current image, has its own bound.
 
-**Theorem 1.1 (Zero mode equals frequency Euler plus the lattice norm).**
+**Theorem 1.1 (exponential constant).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.exponential_constant`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeSugawaraConformal.exponential_constant` (`✓ std3`). ∎
+
+*Citation.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For every ordinary D and integral charge alpha, the degree-zero coefficient of the actual creationExponential(D,alpha) is one. The creation series has zero constant coefficient.
+
+**Theorem 1.2 (translated smul).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.translated_smul`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeSugawaraConformal.translated_smul` (`✓ std3`). ∎
+
+*Citation.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For every ordinary D, integral charge alpha, complex scalar c and oscillator polynomial p, translatedPolynomial(D,alpha,c*p)=c*translatedPolynomial(D,alpha,p). This is the original algebra-homomorphism scalar action.
+
+**Theorem 1.3 (Zero mode equals frequency Euler plus the lattice norm).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.sugawaraMode_zero_single`
 
@@ -20,7 +44,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.sugawaraMode_zero_
 
 On single(beta,p), L(0) is the oscillator frequency Euler derivation plus B(beta,beta)/2 times p. The inverse-Gram quadratic charge scalar equals this original lattice norm. The identity holds for every polynomial p. For an oscillator polynomial homogeneous of frequency degree r, the same mode acts by r+B(beta,beta)/2. This follows from the actual Euler derivation and is included in the generator contract.
 
-**Theorem 1.2 (The Virasoro minus-one mode translates the genuine lattice generators).**
+**Theorem 1.4 (The Virasoro minus-one mode translates the genuine lattice generators).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.actual_conformal_generators`
 
@@ -42,7 +66,7 @@ Let D be any existing LatticeData: its rank is any natural number, its Gram matr
 
 The actual polynomial derivation D_osc sends X(i,j) to (j+1) X(i,j+1) and kills constants. Put B_beta=sum_i beta_i X(i,0). The endomorphism T sends single(beta,p) to single(beta,D_osc(p)+B_beta p), extending linearly over finite charge support. The vacuum single(0,1) is killed by T. In particular the multiplication term uses the charge of the sector on which T acts.
 
-**Theorem 1.3 (The actual charged lattice fields satisfy translation covariance).**
+**Theorem 1.5 (The actual charged lattice fields satisfy translation covariance).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.actual_lattice_translation_covariance`
 
@@ -64,7 +88,7 @@ A finite coefficient convolution applied to each polynomial separately includes 
 
 The arbitrary-polynomial coefficient identity actual_creation_coefficient_transport identifies rawCoeff on every single(beta,p) with the prescribed rawSingle formula. The same cocycle scalar factors from both compositions. Extensionality on finitely supported charge functions extends the result to every actual carrier vector.
 
-**Theorem 1.4 (The vacuum and both generating families share the constructed translation).**
+**Theorem 1.6 (The vacuum and both generating families share the constructed translation).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.actual_translation_generators`
 
@@ -76,7 +100,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.actual_translation
 
 For every D, the conjunction records the action on every single(beta,p), the zero vacuum action, all charged ordinary-mode commutators and all neutral-mode commutators. All statements concern the same actual T and V; the conjunction makes no all-state reconstruction claim.
 
-**Theorem 1.5 (Every actual neutral current mode has the matching covariance).**
+**Theorem 1.7 (Every actual neutral current mode has the matching covariance).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.neutral_translation_covariance`
 
@@ -97,6 +121,8 @@ These covariance laws supply the input required by the carrier-generic normalMin
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.actual_conformal_generators`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.actual_lattice_translation_covariance`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.actual_translation_generators`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.exponential_constant`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.neutral_translation_covariance`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.sugawaraMode_zero_single`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.translated_smul`
 - Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraVirasoro](LatticeSugawaraVirasoro.md)
