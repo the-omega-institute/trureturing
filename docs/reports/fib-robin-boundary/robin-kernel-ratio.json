@@ -1,0 +1,172 @@
+{
+  "scope": "Directed parameters for the proposed FIB399 uniform actual ratio-kernel estimate. Only existing full diagonal data are consumed; Binet terms, inverse coefficients, PNT and prime panels are not recomputed. The analytic application is paper-only, not Lean verified; no signed H budget or RH proof.",
+  "runtime": {
+    "python": "3.13.12",
+    "python_flint": "0.9.0",
+    "precision_bits": 192
+  },
+  "source_sha256": "29834f084f6b7be486efd5c1516093e4b6c2a12e690c46d01e94e31c472e963d",
+  "source_name": "robin-kernel-diagonal.json",
+  "producer_sha256": "d801d82ef372c454ca88ebb2db618ff70dd0b822e1a7232fed7f6a7c9b2f4704",
+  "profile": "p(u)=A*u^2/2+(D-A)*u+c_diag",
+  "uniform_allowance": "C(U)=A*U^3/6+D*U^2/2+(2D-A)*U+D+mu_cap*(2U+11)",
+  "A": {
+    "display": "[3.867262738451706764427849448 +/- 8.75e-28]",
+    "lower_dyadic": [
+      "10280947798011694989817112709251524173",
+      "-121"
+    ],
+    "upper_dyadic": [
+      "10280947798011694989817112711424936625",
+      "-121"
+    ]
+  },
+  "D": {
+    "display": "[4.4704742288595375615476101 +/- 5.41e-26]",
+    "lower_dyadic": [
+      "11884558998870160862404752919775175423",
+      "-121"
+    ],
+    "upper_dyadic": [
+      "11884558998870160862404753063898411007",
+      "-121"
+    ]
+  },
+  "D_minus_A": {
+    "display": "[0.6032114904078307971197606 +/- 5.23e-26]",
+    "lower_dyadic": [
+      "6264106253353382314795469572358013",
+      "-113"
+    ],
+    "upper_dyadic": [
+      "6264106253353382314795470126849509",
+      "-113"
+    ]
+  },
+  "mu0_upper": {
+    "display": "[61.4123930339735972371395103167684260592902312922522033087 +/- 4.74e-56]",
+    "lower_dyadic": [
+      "3011654991310973220381251958590754596831422592622453641233",
+      "-185"
+    ],
+    "upper_dyadic": [
+      "3011654991310973220381251958590754596831422592622453641233",
+      "-185"
+    ]
+  },
+  "c_diag": {
+    "display": "[-0.01245369410060373105368 +/- 4.50e-24]",
+    "lower_dyadic": [
+      "-66215195397855711575442584117680693",
+      "-122"
+    ],
+    "upper_dyadic": [
+      "-66215195397855711575433224970263093",
+      "-122"
+    ]
+  },
+  "log_ratio_root": {
+    "display": "[0.01943486591757688819069 +/- 3.08e-24]",
+    "lower_dyadic": [
+      "3153487289058752086732615780015",
+      "-107"
+    ],
+    "upper_dyadic": [
+      "3153487289058752086733086455691",
+      "-107"
+    ]
+  },
+  "ratio_root": {
+    "display": "[1.01962495236207035242876 +/- 5.41e-24]",
+    "lower_dyadic": [
+      "330887214814581322784568845287999",
+      "-108"
+    ],
+    "upper_dyadic": [
+      "330887214814581322784569805113335",
+      "-108"
+    ]
+  },
+  "negative_u": "1/100",
+  "positive_u": "3/100",
+  "negative_profile": {
+    "display": "[-0.00622821605960283774426 +/- 5.50e-24]",
+    "lower_dyadic": [
+      "-5004178667020309447515389236302870338627758504601649327323",
+      "-199"
+    ],
+    "upper_dyadic": [
+      "-5004178667020309447513974492882320235435067193169932889307",
+      "-199"
+    ]
+  },
+  "positive_profile": {
+    "display": "[0.00738291884393446090390 +/- 2.62e-24]",
+    "lower_dyadic": [
+      "741493322999680503425215350277996126513274167692681642665",
+      "-196"
+    ],
+    "upper_dyadic": [
+      "741493322999680503425392300492876334119127486029146194601",
+      "-196"
+    ]
+  },
+  "negative_allowance": {
+    "display": "[681.2860064886964855172408923 +/- 7.17e-26]",
+    "lower_dyadic": [
+      "4176271067993025547371444261051890354318354207382901629751",
+      "-182"
+    ],
+    "upper_dyadic": [
+      "4176271067993025547371444261390929155501824958375691297591",
+      "-182"
+    ]
+  },
+  "positive_allowance": {
+    "display": "[683.8457808722708538796537516 +/- 7.61e-26]",
+    "lower_dyadic": [
+      "1047990609826706835735224027237106241752023894995025884897",
+      "-180"
+    ],
+    "upper_dyadic": [
+      "1047990609826706835735224027325247493213386058357803939553",
+      "-180"
+    ]
+  },
+  "explicit_window_H_cap": "310/441",
+  "U003_window_error_coefficient_upper": {
+    "display": "[14.4212375558097935171899770761620810794029446076863522537 +/- 3.29e-56]",
+    "lower_dyadic": [
+      "707215431937478354455334853814044567007428300652329985489",
+      "-185"
+    ],
+    "upper_dyadic": [
+      "707215431937478354455334853814044567007428300652329985489",
+      "-185"
+    ]
+  },
+  "monotonic_log_threshold_upper": {
+    "display": "[2239.79925487486987973853947752331672418379130840085979414 +/- 1.93e-55]",
+    "lower_dyadic": [
+      "3432482370530478568535125532881701688485906749867071424849",
+      "-180"
+    ],
+    "upper_dyadic": [
+      "3432482370530478568535125532881701688485906749867071424849",
+      "-180"
+    ]
+  },
+  "common_log_threshold_strict_integer": 109389,
+  "analytic_conditions": [
+    "x>=exp(common_log_threshold_strict_integer)",
+    "negative band: x<=m and m+1<=exp(1/100)*x",
+    "positive cone: m>=exp(3/100)*x"
+  ],
+  "not_claimed": [
+    "a numerically sharp starting threshold",
+    "a Lean proof of the profile or cone",
+    "a numerical C_H certificate",
+    "a sign for the actual H-weighted sum",
+    "Robin or RH"
+  ]
+}

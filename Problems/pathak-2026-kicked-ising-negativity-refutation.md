@@ -62,7 +62,7 @@ on positive arguments gives the contradiction.
 The reduced state's spectrum is $\{16/25,4/25,4/25,1/25\}$.
 Its partial transpose has spectrum $\{23/50,17/50,17/50,-7/50\}$;
 both marginals are half the identity. Consequently
-$2𝓔(1)=\log(1024/625)$ while $I^{(1/2)}_{A:B}(1)=\log(100/81)$.
+$2\mathcal{E}(1)=\log(1024/625)$ while $I^{(1/2)}_{A:B}(1)=\log(100/81)$.
 The rational arguments differ. The witness is a legal contiguous partition
 and a generic state at positive integer time.
 
@@ -104,7 +104,7 @@ those derivations are literature results, not additional conclusions of this mod
 **Computed, general-order obstruction:** for the periodic chain at $L=6$,
 $A=\{0,1\}$, $B=\{2,3\}$, $C=\{4,5\}$, $t=1$, every field one,
 every phase zero and initial state $|r⟩^{\otimes6}$, exact arithmetic gives
-$2𝓔(1)=2\log(41/25)=0.98939248367221410933\ldots$ and
+$2\mathcal{E}(1)=2\log(41/25)=0.98939248367221410933\ldots$ and
 $I^{(2)}_{A:B}(1)=2\log(625/497)=0.45832324727954554394\ldots$.
 Their difference is $2\log(20377/15625)>0$, so the general-$α$ equality
 fails at $α=2$ in this one-kick early-regime instance.
@@ -114,7 +114,7 @@ the partial-transpose trace norm is $41/25$.
 established by this $2/2/2$ computation.
 
 **Computed, product-of-pairs coincidence:** at $t=1$ the same $L=6$ state
-has $2𝓔(1)=I^{(1/2)}_{A:B}(1)=2\log(41/25)$ exactly. The square-root
+has $2\mathcal{E}(1)=I^{(1/2)}_{A:B}(1)=2\log(41/25)$ exactly. The square-root
 traces of both marginals and the joint reduced state are all $41/25$.
 For the second tested instance, $L=9$, blocks $3/3/3$, every field one
 and the source's generic parameters $θ_i=φ_i=1$, the two measures both give
@@ -130,7 +130,7 @@ instances; a uniform statement for untested states or block sizes remains open.
 at $L=9$, $A=\{0,1,2\}$, $B=\{3,4,5\}$, $C=\{6,7,8\}$,
 every field one and $θ_i=φ_i=1$, literal $U_KU_I$ evolution gives:
 
-| $t$ | $2𝓔(t)$ | $I^{(1/2)}_{A:B}(t)$ | $2𝓔-I^{(1/2)}$ |
+| $t$ | $2\mathcal{E}(t)$ | $I^{(1/2)}_{A:B}(t)$ | $2\mathcal{E}-I^{(1/2)}$ |
 | --- | --- | --- | --- |
 | 2 | 1.90965474035335934242 | 1.87948241846317954029 | 0.03017232189017980213 |
 | 3 | 1.79478990018210113283 | 2.05114059682648315862 | −0.25635069664438202579 |
