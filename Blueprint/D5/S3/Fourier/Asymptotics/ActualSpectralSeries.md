@@ -128,7 +128,7 @@ $$\forall X \in Type,\; \forall mX \in \operatorname{MeasurableSpace}\left(X\rig
 
 *Commentary.*
 
-This conditional transport helper is consumed by actual_same_noise_spectral after kernel HasSum is constructed. It maps the kernel series through the original secondIntegral and derives exact square sum, variance and operator-norm bounds. It receives zero independent content credit.
+This conditional transport helper is consumed by actual_same_noise_spectral after kernel HasSum is constructed. It maps the kernel series through the original secondIntegral and derives exact square sum, variance and operator-norm bounds.
 
 **Theorem 1.10 (Joint laws of the original W).**
 

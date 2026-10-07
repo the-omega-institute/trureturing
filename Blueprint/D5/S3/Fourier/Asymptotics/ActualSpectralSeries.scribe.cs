@@ -144,7 +144,7 @@ internal sealed class ActualSpectralSeriesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Module + "same_noise_series_of_kernel_hasSum"),
                 H("Consumed same-noise transport"), StatementSource.FromAuthor(F.Disp(TransportFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/nualart2005multiple")),
-                Blocks(Paragraph(Text("This conditional transport helper is consumed by actual_same_noise_spectral after kernel HasSum is constructed. It maps the kernel series through the original secondIntegral and derives exact square sum, variance and operator-norm bounds. It receives zero independent content credit."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("This conditional transport helper is consumed by actual_same_noise_spectral after kernel HasSum is constructed. It maps the kernel series through the original secondIntegral and derives exact square sum, variance and operator-norm bounds."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("spectral-joint"),
                 DeclarationHandle.Create(Module + "same_noise_finite_joint"),
                 H("Joint laws of the original W"), StatementSource.FromAuthor(F.Disp(Spatial(Noise(All("index", I("Type"), All("hfiniteIndex", A("Finite", I("index")), All("f", A("Function", I("index"), H), A("HasGaussianLaw", L("omega", I("Omega"), L("i", I("index"), A("W", A("f", I("i")), I("omega")))), I("P"))))))))),
