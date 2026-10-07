@@ -8,7 +8,8 @@ structure View where
   find : Name → Option ConstantInfo
   owner : Name → Option Name
   external : Name → Bool
-  /-- Only independently established original-source leaves may stop data-body traversal. -/
+  /-- Independently established source terms and external library leaves stop
+  data-body traversal. Their declaration and constructor types remain visited. -/
   sourceLeaf : Name → Bool := fun _ => false
 
 private def bad (reason : String) : Except String α :=
@@ -111,6 +112,8 @@ structure BoundOperand where
   value : Expr
   role : BoundRole
   type : Option Expr := none
+  /-- The sort of the complete certified type, including its telescope. -/
+  typeSort : Option Level := none
   relation : Option Name := none
   other : Option Expr := none
   otherLocation : Option NodeCoordinate := none
@@ -170,11 +173,15 @@ def fact (view : View) (name : Name) : Except String (Array BoundOperand) := do
         relation, other := some left, otherLocation := some leftAt }]
   let e ← Literal.referencedValue view.find info.value
   let args := e.getAppArgs
-  let one := fun role value location type => do
-    return #[{ location := ← binds view location value, value, role, type : BoundOperand }]
-  let two := fun constructor left right leftAt rightAt type => do
-    let left ← one .relation left leftAt type
-    let right ← one .relation right rightAt type
+  let .const constructor universes := e.getAppFn | bad "fact_constructor_head"
+  let sortLevel ← match universes with
+    | [sortLevel] => pure sortLevel
+    | _ => bad "fact_universes"
+  let one := fun role value location type typeSort => do
+    return #[{ location := ← binds view location value, value, role, type, typeSort : BoundOperand }]
+  let two := fun constructor left right leftAt rightAt type typeSort => do
+    let left ← one .relation left leftAt type typeSort
+    let right ← one .relation right rightAt type typeSort
     return (left.map fun item => { item with
       relation := some constructor
       other := some right[0]!.value
@@ -183,28 +190,29 @@ def fact (view : View) (name : Name) : Except String (Array BoundOperand) := do
         relation := some constructor
         other := some left[0]!.value
         otherLocation := some left[0]!.location })
-  match e.getAppFn.constName?.getD .anonymous with
+  match constructor with
   | ``NodeFact.data =>
     unless args.size == 3 do bad "data_arity"
-    one .data args[1]! args[2]! (some args[0]!)
+    one .data args[1]! args[2]! (some args[0]!) (some sortLevel)
   | ``NodeFact.type =>
     unless args.size == 2 do bad "type_arity"
-    one .type args[0]! args[1]! (e.getAppFn.constLevels!.head?.map mkSort)
+    one .type args[0]! args[1]! (some (mkSort sortLevel)) (some (.succ sortLevel))
   | ``NodeFact.proof =>
     unless args.size == 3 do bad "proof_arity"
-    let operands ← one .proof args[1]! args[2]! (some args[0]!)
+    let operands ← one .proof args[1]! args[2]! (some args[0]!) (some .zero)
     return operands.map fun operand => { operand with proposition := some args[0]! }
   | ``NodeFact.exact =>
     unless args.size == 6 do bad "exact_arity"
     let evidence ← Literal.referencedValue view.find args[5]!
     unless evidence.getAppFn.isConstOf ``ExactMatch.evidence do bad "exact_evidence_required"
-    two ``NodeFact.exact args[1]! args[2]! args[3]! args[4]! (some args[0]!)
+    two ``NodeFact.exact args[1]! args[2]! args[3]! args[4]! (some args[0]!) (some sortLevel)
   | ``NodeFact.equal =>
     unless args.size == 6 do bad "equal_arity"
-    two ``NodeFact.equal args[1]! args[2]! args[3]! args[4]! (some args[0]!)
+    two ``NodeFact.equal args[1]! args[2]! args[3]! args[4]! (some args[0]!) (some sortLevel)
   | ``NodeFact.equivalent =>
     unless args.size == 5 do bad "equivalent_arity"
     two ``NodeFact.equivalent args[0]! args[1]! args[2]! args[3]! (some (mkSort .zero))
+      (some (.succ .zero))
   | _ => bad s!"fact_constructor:{name}"
 
 /-- Distinct rigid inductive heads after kernel-checked definitional matches
@@ -231,6 +239,21 @@ private def children (location : NodeCoordinate) (node : Expr) : Array (NodeCoor
   | .proj _ _ b => #[child .projection b]
   | _ => #[]
 
+private instance : Hashable NodeEdge where
+  hash edge :=
+    let tag : Nat := match edge with
+      | .function => 0 | .argument => 1 | .domain => 2 | .body => 3
+      | .letType => 4 | .letValue => 5 | .letBody => 6
+      | .metadata => 7 | .projection => 8
+    hash tag
+
+private instance : Hashable NodePart where
+  hash part := hash (part == .value)
+
+private instance : Hashable NodeCoordinate where
+  hash location := hash (location.owner, location.declaration, location.part,
+    location.path, location.levels)
+
 /-- Every requested raw root is walked, including discarded arguments.
  Only a bound proof fact can cut a subtree. Roots are supplied independently
  by the consuming contract, never selected by the coverage payload. -/
@@ -244,8 +267,12 @@ def coverage (view : View) (expected : Array NodeCoordinate) (payload : Expr)
     (Literal.name "coverage.fact")
   unless names.toList.Nodup do bad "duplicate_facts"
   let operands := (← names.mapM (fact view)).flatten
+  let mut byCoordinate : Std.HashMap NodeCoordinate (Array BoundOperand) := {}
+  for operand in operands do
+    byCoordinate := byCoordinate.insert operand.location
+      ((byCoordinate[operand.location]?).getD #[] |>.push operand)
   let mut pending ← expected.mapM fun location => return (location, ← locate view location, false)
-  let mut visited : Array (NodeCoordinate × Bool) := #[]
+  let mut visited : Std.HashSet (NodeCoordinate × Bool) := {}
   let limit := min 524288 fuel
   let mut remaining := limit
   while let some (location, node, propositionOnly) := pending.back? do
@@ -253,16 +280,30 @@ def coverage (view : View) (expected : Array NodeCoordinate) (payload : Expr)
     if visited.contains (location, propositionOnly) then continue
     unless remaining > 0 do bad "coverage_fuel"
     remaining := remaining - 1
-    visited := visited.push (location, propositionOnly)
+    visited := visited.insert (location, propositionOnly)
+    let localOperands := if propositionOnly then #[] else
+      (byCoordinate[location]?).getD #[]
     unless propositionOnly do
-      for operand in operands do
-        if operand.location == location then
-          if let some other := operand.otherLocation then
-            pending := pending.push (other, ← locate view other, false)
-    let cut := if propositionOnly then none else
-      operands.find? (fun item => item.location == location && item.role == .proof)
+      for operand in localOperands do
+        if let some other := operand.otherLocation then
+          pending := pending.push (other, ← locate view other, false)
+    let cut := localOperands.find? (fun item => item.role == .proof)
     if let some cut := cut then
       let some proposition := cut.proposition | bad "proof_proposition"
+      let mut head := node
+      repeat
+        unless remaining > 0 do bad "coverage_fuel"
+        remaining := remaining - 1
+        match head with
+        | .app function _ | .mdata _ function => head := function
+        | _ => break
+      if let .const name _ := head then
+        let some info := view.find name | bad s!"closure_missing:{name}"
+        let some owner := view.owner name | bad s!"closure_owner:{name}"
+        unless !info.isUnsafe && !view.external name do bad s!"closure_unsafe:{name}"
+        pending := pending.push ({
+          owner, declaration := name, part := .type, path := [],
+          levels := info.levelParams.map Level.param }, info.type, false)
       pending := pending.push (location, proposition, true)
     else
       pending := pending ++ (children location node).map (fun (atNode, child) =>

@@ -188,9 +188,12 @@ unsafe def register (owner : Name) (row : Decoder.CompanionInput) : M Unit := do
   let initialView : Contract.NodeFacts.View := {
     find := context.provenance.view.find?
     owner := context.provenance.view.ownerOf
-    external := fun n => context.extern n || context.implementedBy n }
+    external := fun n => RegistrationGates.inProtected context.provenance.view n &&
+      (context.extern n || context.implementedBy n) }
   let leaves ← IO.ofExcept <| sourceLeaves initialView input.entry.theoremName input.coverageRoots
-  let view := { initialView with sourceLeaf := leaves.contains }
+  let view := { initialView with
+    sourceLeaf := fun name =>
+      leaves.contains name || !RegistrationGates.inProtected context.provenance.view name }
   discard <| IO.ofExcept <| Contract.NodeFacts.coverage view input.coverageRoots input.coverage
   let fs ← IO.ofExcept <| Contract.Literal.fields view.find ``Contract.NodeCoverage input.coverage 2
   let factTable ← IO.ofExcept <| Contract.Literal.resolveReferences view.find fs[1]!

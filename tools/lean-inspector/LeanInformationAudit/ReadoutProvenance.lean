@@ -7,7 +7,6 @@ open Lean
 -- fold that compiled type. Nested type syntax is handled by the same type fold.
 private def classifyOccurrence (env : CompiledView) (occurrence : Expr)
     (context : Array Expr) : WalkM TypeClassification := do
-  let context := if occurrence.hasLooseBVars then context else #[]
   unless ← chargeTraversal (2 * context.size + 1) do return .incomplete
   let key := (occurrence, context, (← get).currentFirst)
   -- admission-exit: classifyOccurrence.1 rule=retained-witness.rule
@@ -72,8 +71,7 @@ private partial def visitOccurrence (env : CompiledView) (pos : Position)
   | .incomplete => noteIncomplete `incomplete_classification `type_classification; return
   -- admission-exit: visitOccurrence.forward.1 rule=retained-witness.rule
   | .allowlisted _ => pure ()
-  let actualContext := if e.hasLooseBVars then context else #[]
-  let proof ← inBinderContext actualContext fun locals => do
+  let proof ← inBinderContext context fun locals => do
     let some actual ← substitute e locals | return false
     let some type ← occurrenceType actual | return false
     if pos == .dataPos && type == .sort .zero && closed actual then
@@ -91,7 +89,7 @@ private partial def visitOccurrence (env : CompiledView) (pos : Position)
       if unknown then
         noteUnclassified ⟨"unclassified_argument_type", first, namespaceLabel env first, origin⟩
       return true
-    let some proof ← boundedQuery (typedNodeProp type) `proof_boundary | return false
+    let some proof ← boundedQuery (typedNodeProof actual) `proof_boundary | return false
     return proof
   -- admission-exit: visitOccurrence.3 rule=retained-witness.rule
   if proof == some true then return
@@ -117,8 +115,8 @@ private partial def visitOccurrence (env : CompiledView) (pos : Position)
     if pos == .dataPos && closed type then
       if let .const n _ := type.getAppFn then
         if inProtected env n then
-          let some kind ← occurrenceType type | return
-          if kind == .sort .zero then
+          let some proposition ← boundedQuery (typedNodeProp type) `closed_domain_proposition | return
+          if proposition then
             noteUnclassified ⟨"closed_decision", n, namespaceLabel env n, origin⟩
     visitOccurrence env .typePos origin type context
     child body (context.push e)
@@ -126,8 +124,8 @@ private partial def visitOccurrence (env : CompiledView) (pos : Position)
     if pos == .dataPos && closed type then
       if let .const n _ := type.getAppFn then
         if inProtected env n then
-          let some kind ← occurrenceType type | return
-          if kind == .sort .zero then
+          let some proposition ← boundedQuery (typedNodeProp type) `closed_let_proposition | return
+          if proposition then
             noteUnclassified ⟨"closed_decision", n, namespaceLabel env n, origin⟩
     visitOccurrence env .typePos origin type context
     child value context
@@ -153,38 +151,42 @@ private def visit (env : CompiledView) (pos : Position) (origin : Name) (e : Exp
   modify fun s => { s with counters.visits := s.counters.visits + summary.visits }
   visitSummary env origin summary
 
-private def process (env : CompiledView) : WalkM Unit := do
-  while !(← get).forbidden do
-    unless ← chargeSummaryWork (fun c => { c with dispatchWork := c.dispatchWork + 1 }) do break
-    let some n := (← get).pending.head? | break
-    modify fun s => { s with pending := s.pending.tail!, walked := s.walked.insert n.1, currentFirst := n.1, currentOrigin := n.1 }
-    if (← get).exprFuel == 0 then
-      noteIncomplete `expression_budget `constant_dispatch
-      break
-    let some info := env.find? n.1 | noteIncomplete `missing_constant `constant_dispatch; continue
-    let summary ← if let some cached := (← get).summaries[n]? then do
-        modify fun s => { s with counters.memoHits := s.counters.memoHits + 1 }
-        pure cached
-      else do
-        let some type ← occurrenceType (mkConst n.1 n.2) | continue
-        let some proof ← boundedQuery (typedNodeProp type) `declaration_proof_boundary | continue
-        let summary ← if proof then summarise env #[(.typePos, type)] (← get).exprFuel
-          else if info.hasValue (allowOpaque := true) then do
-            let valuePos := match info with | .thmInfo _ => .proofPos | _ => .dataPos
-            let value ← compiledValue info n.2 (allowOpaque := true)
-            summarise env #[(.typePos, type), (valuePos, value)] (← get).exprFuel
-          else do
-            let summary ← summarise env #[(.typePos, type)] (← get).exprFuel
-            pure { summary with incomplete := summary.incomplete || !isCtorOrInductive env n.1 &&
-              !#[`propext, `Classical.choice, `Quot.sound].contains n.1 }
-        let _ ← chargeSummaryWork (fun c => { c with constructionWork := c.constructionWork + summary.constructionWork }) summary.constructionWork
-        modify fun s => { s with
-          counters.summarisedConstants := s.counters.summarisedConstants + 1
-          counters.visits := s.counters.visits + summary.visits }
-        if !summary.incomplete then
-          modify fun s => { s with summaries := s.summaries.insert n summary }
-        pure summary
-    visitSummary env n.1 summary
+private def process (env : CompiledView) : WalkM Unit :=
+  -- Compiler declaration roots are closed independently of the supplied
+  -- argument telescope. Their own binders reconstruct their actual scope.
+  withCompiledLocals {} do
+    while !(← get).forbidden do
+      unless ← chargeSummaryWork (fun c => { c with dispatchWork := c.dispatchWork + 1 }) do break
+      let some n := (← get).pending.head? | break
+      modify fun s => { s with pending := s.pending.tail!, walked := s.walked.insert n.1, currentFirst := n.1, currentOrigin := n.1 }
+      if (← get).exprFuel == 0 then
+        noteIncomplete `expression_budget `constant_dispatch
+        break
+      let some info := env.find? n.1 | noteIncomplete `missing_constant `constant_dispatch; continue
+      let summary ← if let some cached := (← get).summaries[n]? then do
+          modify fun s => { s with counters.memoHits := s.counters.memoHits + 1 }
+          pure cached
+        else do
+          let some type ← occurrenceType (mkConst n.1 n.2) | continue
+          let some proof ← boundedQuery (typedNodeProof (mkConst n.1 n.2))
+            `declaration_proof_boundary | continue
+          let summary ← if proof then summarise env #[(.typePos, type)] (← get).exprFuel
+            else if info.hasValue (allowOpaque := true) then do
+              let valuePos := match info with | .thmInfo _ => .proofPos | _ => .dataPos
+              let value ← compiledValue info n.2 (allowOpaque := true)
+              summarise env #[(.typePos, type), (valuePos, value)] (← get).exprFuel
+            else do
+              let summary ← summarise env #[(.typePos, type)] (← get).exprFuel
+              pure { summary with incomplete := summary.incomplete || !isCtorOrInductive env n.1 &&
+                !#[`propext, `Classical.choice, `Quot.sound].contains n.1 }
+          let _ ← chargeSummaryWork (fun c => { c with constructionWork := c.constructionWork + summary.constructionWork }) summary.constructionWork
+          modify fun s => { s with
+            counters.summarisedConstants := s.counters.summarisedConstants + 1
+            counters.visits := s.counters.visits + summary.visits }
+          if !summary.incomplete then
+            modify fun s => { s with summaries := s.summaries.insert n summary }
+          pure summary
+      visitSummary env n.1 summary
 
 private structure WalkResult where
   forbidden : Bool
@@ -225,6 +227,9 @@ private def collectReadout (env : CompiledView) (theoremName address : Name) (re
       state.unclassified.isNone then
     some ⟨"unclassified_root", address, namespaceLabel env address, address⟩
     else state.unclassified
+  if let some site := unclassified then
+    auditTrace s!"readout_unclassified:{site.className}:{site.firstName}:{site.siteName}"
+  auditTrace s!"readout_result:forbidden={state.forbidden}:admitted={admission.isSome}"
   let inputNames := state.walked.toArray.foldl (fun inputs n => inputs.insert n) state.retainedInputs
   return ⟨state.forbidden, unclassified, state.incomplete, admission, names,
     state.walked.toArray, inputNames.toArray⟩
@@ -327,7 +332,8 @@ def providerArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
 
 /-- One raw node's occurrence-relative rejection checks. This grants no
 executable/type admission; the shared E2–E5 compiler owns that judgment.
-Apartness requires coordinate-bound exact facts and distinct inductive heads. -/
+Apartness requires coordinate-bound exact facts and distinct inductive heads,
+or a rigid non-let proposition local against a closed target. -/
 def argumentIdentityNode (env : CompiledView) (expression : Expr) : WalkM Unit := do
   unless ← chargeTraversal do return
   if let .const name _ := expression.getAppFn then directConstant env name
@@ -338,7 +344,7 @@ def argumentIdentityNode (env : CompiledView) (expression : Expr) : WalkM Unit :
     exactScalarStatement type.getAppArgs[0]! else pure false
   if exact || decision then modify fun s => { s with forbidden := true }
   let proposition := type == .sort .zero
-  let some proof ← boundedQuery (typedNodeProp type) `raw_argument_proof_type | return
+  let some proof ← boundedQuery (typedNodeProof expression) `raw_argument_proof_type | return
   if proposition || proof then
     let candidate := if proposition then expression else type
     if candidate.equal (← get).statement then
@@ -374,7 +380,7 @@ private partial def retainedTypeIdentity (env : CompiledView) (expression : Expr
   if let .proj name _ _ := expression then directProjection env name
   let some type ← occurrenceType expression | return
   let proposition := type == .sort .zero
-  let some proof ← boundedQuery (typedNodeProp type) `retained_proof_type | return
+  let some proof ← boundedQuery (typedNodeProof expression) `retained_proof_type | return
   if proposition || proof then
     let candidate := if proposition then expression else type
     if candidate.equal (← get).statement then

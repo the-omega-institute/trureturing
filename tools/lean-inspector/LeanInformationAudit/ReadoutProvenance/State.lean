@@ -190,7 +190,7 @@ inductive ProvenanceAllowRule where
   | ordinaryData | typeFamily | scalarCarrier | rigidCarrier | functionCarrier
   | containerCarrier | subtypeCarrier | nullaryCarrier | nominalCarrier
   | fieldProposition | fieldConcrete | fieldParameter | fieldFunction | fieldAlias | fieldAudited
-  | statementHeadApart
+  | statementHeadApart | statementScalarApart
   | proofBoundary | propositionBoundary | externalLeaf | syntaxLeaf
   | listForall | listNegated | listPositive | carrierAlias | carrierProjection
   deriving BEq, Repr
@@ -280,6 +280,12 @@ structure StatementAliasMemo where
   forms : Array Expr
   recognized : ProvenanceAdmissionWitness
 
+/-- A syntax index of bound operands and their complete checked type arguments. -/
+structure BoundNodeIndex where
+  operands : Std.HashMap Expr (Array Contract.NodeFacts.BoundOperand) := {}
+  typeSorts : Std.HashMap Expr (Array Level) := {}
+  deriving Inhabited
+
 /-- Process-local syntax caches and output observations. Query verdicts and
 lexical occurrence types remain in WalkState. -/
 structure ProvenanceSession where
@@ -289,7 +295,7 @@ structure ProvenanceSession where
   wholeReadoutCalls : Nat := 0
   nodeWork : Nat := 0
   nodeIndexes : Std.HashMap USize (Array Contract.NodeFacts.BoundOperand ×
-    Std.HashMap Expr (Array Contract.NodeFacts.BoundOperand)) := {}
+    BoundNodeIndex) := {}
   deriving Inhabited
 
 structure QueryContext where
@@ -556,6 +562,7 @@ def bindWitnessSource (verdict : TypeClassification) (source : Option Name) :
 def unknownType (type : Expr) (className : String := "unclassified_argument_type") :
     WalkM TypeClassification := do
   let state ← get
+  auditTrace s! "unknown_type class={className} first={state.currentFirst} site={state.currentOrigin} type={type}"
   let first := if state.currentFirst.isAnonymous then
     type.getAppFn.constName?.getD state.theoremName else state.currentFirst
   return .unclassified ⟨className, first, namespaceLabel (← getCompiledView) first, state.currentOrigin⟩
@@ -566,7 +573,9 @@ def unknownType (type : Expr) (className : String := "unclassified_argument_type
 def checkedType (rule : ProvenanceAllowRule) (type : Expr)
     (mentions unknown : Bool) : WalkM TypeClassification := do
   if mentions then return .statementMention
-  if unknown then return ← unknownType type
+  if unknown then
+    auditTrace s! "unknown_rule rule={repr rule} type={type}"
+    return ← unknownType type
   -- admission-exit: checkedType.1 rule=retained-witness.rule
   return .allowlisted (witness rule type)
 
@@ -667,34 +676,128 @@ private def closeProposition (locals : LocalContext) (e : Expr) : Expr := Id.run
       else .forallE declaration.userName declaration.type body declaration.binderInfo
   return result
 
-private def factsAt (e : Expr) : QueryM (Array Contract.NodeFacts.BoundOperand) := do
+-- Index construction is a mechanical fact traversal, separately charged to the
+-- same query work fuel. Each insertion retains the type-query heartbeat ceiling;
+-- completing a syntax index never classifies an occurrence or caches a verdict.
+private def prepareNodeIndex (fuel : Nat) : QueryM Unit := do
   let context ← read
   let identity := unsafe ptrAddrUnsafe context.nodeFacts
-  let session ← context.session.get
-  let index ← if let some (_, index) := session.nodeIndexes[identity]? then pure index else do
-    let mut index : Std.HashMap Expr (Array Contract.NodeFacts.BoundOperand) := {}
-    for fact in context.nodeFacts do
-      index := index.insert fact.value ((index[fact.value]?).getD #[] |>.push fact)
-      if let some proposition := fact.proposition then
-        let boundary := { fact with
-          value := proposition, role := .type,
-          type := some (mkSort .zero), proposition := some proposition,
-          relation := none, other := none, otherLocation := none }
-        index := index.insert proposition ((index[proposition]?).getD #[] |>.push boundary)
-    context.session.modify fun session => { session with
-      nodeWork := session.nodeWork + context.nodeFacts.size
-      nodeIndexes := session.nodeIndexes.insert identity (context.nodeFacts, index) }
-    pure index
+  let budget := min provenanceDefEqHeartbeats (provenanceDefEqLimit.get context.options)
+  unless budget > 0 do
+    throw <| IO.userError "incomplete_closure:E8.compiled_expression_heartbeats"
+  if (← context.session.get).nodeIndexes.contains identity then return
+  let mut index : BoundNodeIndex := {}
+  let mut work := 0
+  for fact in context.nodeFacts do
+    let amount := 1 + (if fact.proposition.isSome then 1 else 0) +
+      (if fact.type.isSome && fact.typeSort.isSome then 1 else 0)
+    unless work + amount ≤ fuel do
+      throw <| IO.userError "incomplete_closure:E8.node_work"
+    let start ← IO.getNumHeartbeats
+    let key := fact.value
+    index := { index with
+      operands := index.operands.insert key ((index.operands[key]?).getD #[] |>.push fact) }
+    if let some type := fact.type then
+      if let some sortLevel := fact.typeSort then
+        index := { index with
+          typeSorts := index.typeSorts.insert type ((index.typeSorts[type]?).getD #[] |>.push sortLevel) }
+    if let some proposition := fact.proposition then
+      let boundary := { fact with
+        value := proposition, role := .type,
+        type := some (mkSort .zero), typeSort := some (.succ .zero),
+        proposition := some proposition,
+        relation := none, other := none, otherLocation := none }
+      let key := proposition
+      index := { index with
+        operands := index.operands.insert key ((index.operands[key]?).getD #[] |>.push boundary) }
+    work := work + amount
+    context.session.modify fun session => { session with nodeWork := session.nodeWork + amount }
+    unless (← IO.getNumHeartbeats) - start ≤ budget do
+      throw <| IO.userError "incomplete_closure:E8.compiled_expression_heartbeats"
+  unless work + 1 ≤ fuel do
+    throw <| IO.userError "incomplete_closure:E8.node_work"
+  let start ← IO.getNumHeartbeats
   context.session.modify fun session => { session with
-    nodeWork := session.nodeWork + context.locals.numIndices + 1 }
+    nodeWork := session.nodeWork + 1,
+    nodeIndexes := session.nodeIndexes.insert identity (context.nodeFacts, index) }
+  unless (← IO.getNumHeartbeats) - start ≤ budget do
+    context.session.modify fun session => { session with
+      nodeIndexes := session.nodeIndexes.erase identity }
+    throw <| IO.userError "incomplete_closure:E8.compiled_expression_heartbeats"
+
+private def factsAt (e : Expr) : QueryM (Array Contract.NodeFacts.BoundOperand) := do
+  let context ← read
+  prepareNodeIndex 524288
+  let identity := unsafe ptrAddrUnsafe context.nodeFacts
+  let session ← context.session.get
+  let index : Std.HashMap Expr (Array Contract.NodeFacts.BoundOperand) :=
+    ((session.nodeIndexes[identity]?).map (·.2.operands)).getD {}
   let closed := closeNode context.locals e
   let proposition := closeProposition context.locals e
-  let inferred := ((index[proposition]?).getD #[]).filter fun fact =>
+  let raw := (index[e]?).getD #[]
+  let scopedFacts : Array Contract.NodeFacts.BoundOperand := if closed.equal e then #[] else (index[closed]?).getD #[]
+  let boundaries := (index[proposition]?).getD #[]
+  let inferred := boundaries.filter fun fact =>
     fact.role == .type && fact.proposition.any (·.equal fact.value)
-  return (index[e]?).getD #[] ++ (if closed.equal e then #[] else (index[closed]?).getD #[]) ++ inferred
+  context.session.modify fun session => { session with
+    nodeWork := session.nodeWork + context.locals.numIndices + 3 +
+      raw.size + scopedFacts.size + boundaries.size }
+  -- A full lexical endpoint keeps later dependent field queries in the same
+  -- actual telescope. A closed endpoint remains available when no scoped
+  -- endpoint exists; every candidate still carries its checked raw binding.
+  return scopedFacts ++ raw ++ inferred
 
 private def matchingFact (e : Expr) : QueryM (Option Contract.NodeFacts.BoundOperand) := do
   return (← factsAt e).find? (·.type.isSome)
+
+/-- Only an actual bound operand's kernel-checked type starts raw child typing.
+ An expected type of an unbound application supplies no authority. -/
+def hasTypedNodeFact (e : Expr) : QueryM Bool := do
+  return (← matchingFact e).any (·.type.isSome)
+
+/-- Type aliases are the actual checked type arguments of bound operands.
+ A scoped Pi alias supplies only Prop classification, never an inner sort. -/
+private def typeSortsAt (e : Expr) (includeContext : Bool := false) : QueryM (Array Level) := do
+  let context ← read
+  prepareNodeIndex 524288
+  let identity := unsafe ptrAddrUnsafe context.nodeFacts
+  let index : Std.HashMap Expr (Array Level) :=
+    (((← context.session.get).nodeIndexes[identity]?).map (·.2.typeSorts)).getD {}
+  let key := if includeContext then closeProposition context.locals e else e
+  let sorts := (index[key]?).getD #[]
+  context.session.modify fun session => { session with
+    nodeWork := session.nodeWork + 1 + sorts.size +
+      (if includeContext then context.locals.numIndices else 0) }
+  return sorts
+
+/-- A bound generic declaration type retains its checked sort at an explicit
+ universe instance. The complete instantiated operand must match the actual
+ compiler declaration type before its sort enters the syntax index. -/
+private def cacheConstantTypeSort (info : ConstantInfo) (levels : List Level)
+    (actualType : Expr) : QueryM Unit := do
+  if info.levelParams.isEmpty then return
+  unless (← typeSortsAt actualType).isEmpty do return
+  let context ← read
+  let candidates ← factsAt info.type
+  for fact in candidates do
+    context.session.modify fun session => { session with nodeWork := session.nodeWork + 1 }
+    unless fact.location.declaration == info.name && fact.location.part == .type &&
+        fact.location.path.isEmpty &&
+        fact.location.levels == info.levelParams.map Level.param do continue
+    unless fact.value.equal info.type do continue
+    let some (.sort sortLevel) := fact.type | continue
+    let value := Contract.Literal.instantiateRawLevels info.levelParams levels fact.value
+    unless value.equal actualType do continue
+    let .sort actualSort := Contract.Literal.instantiateRawLevels info.levelParams levels
+      (mkSort sortLevel) | continue
+    let identity := unsafe ptrAddrUnsafe context.nodeFacts
+    let some (_, index) := (← context.session.get).nodeIndexes[identity]? | return
+    let sorts := (index.typeSorts[actualType]?).getD #[]
+    context.session.modify fun session => { session with
+      nodeWork := session.nodeWork + info.levelParams.length + sorts.size + 1,
+      nodeIndexes := session.nodeIndexes.insert identity (context.nodeFacts,
+        { index with typeSorts := index.typeSorts.insert actualType (sorts.push actualSort) }) }
+    return
 
 def typedNodeType (e : Expr) : QueryM Expr := do
   (← read).session.modify fun session => { session with nodeWork := session.nodeWork + 1 }
@@ -704,12 +807,15 @@ def typedNodeType (e : Expr) : QueryM Expr := do
     let info ← queryConstant name
     unless info.levelParams.length == levels.length do
       throw <| IO.userError "contract.node_binding:type_levels"
-    return Contract.Literal.instantiateRawLevels info.levelParams levels info.type
+    let actualType := Contract.Literal.instantiateRawLevels info.levelParams levels info.type
+    cacheConstantTypeSort info levels actualType
+    return actualType
+  if let some sortLevel := ((← typeSortsAt e)[0]?) then return mkSort sortLevel
   let some fact ← matchingFact e
     | throw <| IO.userError "unclassified_form:node.type_fact_missing"
   let some type := fact.type
     | throw <| IO.userError "unclassified_form:node.type_fact_missing"
-  if fact.value.equal e || (fact.role == .type && fact.proposition.any (·.equal fact.value)) then return type
+  if fact.value == e || (fact.role == .type && fact.proposition.any (·.equal fact.value)) then return type
   let some type := openNodeType (← read).locals type
     | throw <| IO.userError "contract.node_binding:type_telescope"
   return type
@@ -717,19 +823,30 @@ def typedNodeType (e : Expr) : QueryM Expr := do
 /-- Only an explicit ExactMatch supplies a certified compiler head. -/
 def exactNodeHead? (e : Expr) : QueryM (Option Expr) := do
   let context ← read
-  let fact := (← factsAt e).find? fun fact =>
-    fact.relation == some ``Contract.NodeFact.exact && fact.other.isSome
-  let some fact := fact | return none
-  let some target := fact.other | return none
-  if fact.value.equal e then return some target
-  let mut result := target
-  for declaration in context.locals.decls.toArray do
-    if let some declaration := declaration then
-      match result with
-      | .lam _ _ body _ | .letE _ _ _ body _ =>
-        result := body.instantiate1 (mkFVar declaration.fvarId)
-      | _ => throw <| IO.userError "contract.node_binding:exact_telescope"
-  return some result
+  let mut hasExact := false
+  for fact in ← factsAt e do
+    unless fact.relation == some ``Contract.NodeFact.exact do continue
+    let some target := fact.other | continue
+    hasExact := true
+    context.session.modify fun session => { session with nodeWork := session.nodeWork + 1 }
+    -- Query candidates use alpha syntax; their original coordinate bindings
+    -- retain strict raw equality independently of this lookup.
+    if fact.value == e then return some target
+    let mut result := target
+    let mut opens := true
+    for declaration in context.locals.decls.toArray do
+      if let some declaration := declaration then
+        if !opens then break
+        context.session.modify fun session => { session with nodeWork := session.nodeWork + 1 }
+        match result with
+        | .lam _ _ body _ | .letE _ _ _ body _ =>
+          result := body.instantiate1 (mkFVar declaration.fvarId)
+        | _ => opens := false
+    -- An eta relation may have fewer explicit target wrappers. Only another
+    -- already-bound endpoint that opens the full actual telescope is usable.
+    if opens then return some result
+  if hasExact then throw <| IO.userError "contract.node_binding:exact_telescope"
+  return none
 
 /-- An absent exact fact leaves the compiler expression unchanged. -/
 def exactNodeHead (e : Expr) : QueryM Expr := do
@@ -752,11 +869,29 @@ def literalRecordField (structureName : Name) (index : Nat) (base : Expr) : Quer
   return field
 
 def typedNodeProp (e : Expr) : QueryM Bool := do
-  return (← exactNodeHead (← typedNodeType e)) == mkSort .zero
+  let classify : Array Level → QueryM Bool := fun sorts => do
+    if sorts.any (· == Level.zero) then return true
+    if sorts.any Level.isNeverZero then return false
+    throw <| IO.userError "unclassified_form:node.type_sort_unclassified"
+  let exact ← typeSortsAt e
+  unless exact.isEmpty do return ← classify exact
+  let scopedSorts ← typeSortsAt e true
+  unless scopedSorts.isEmpty do return ← classify scopedSorts
+  match ← exactNodeHead (← typedNodeType e) with
+  | .sort sortLevel => classify #[sortLevel]
+  | _ => pure false
 
 /-- An absent proof classification retains the raw subtree without erasure. -/
 def typedNodeProof (e : Expr) : QueryM Bool := do
   if e.isAppOfArity ``lcProof 1 then return true
+  if let .const name levels := e then
+    let info ← queryConstant name
+    unless info.levelParams.length == levels.length do
+      throw <| IO.userError "contract.node_binding:proof_levels"
+    if info matches .thmInfo _ then return true
+    if info matches .defnInfo _ then
+      let type := Contract.Literal.instantiateRawLevels info.levelParams levels info.type
+      return ← typedNodeProp type
   if let some fact ← matchingFact e then
     if fact.role == .proof then return true
     if fact.role == .data || fact.role == .type then return false
@@ -834,14 +969,29 @@ def boundedQuery (action : QueryM α) (site : Name := `type_classification)
     modify fun s => { s with incomplete := true }
     auditTrace s!"incomplete cause=heartbeat_exhaustion operation={site} first={(← get).currentFirst} site={(← get).currentOrigin}"
     return none
+  let available := (← get).exprFuel
+  let preparationStart := (← (← querySession).get).nodeWork
+  let prepared : Except IO.Error (Unit × Nat) ← try
+    pure (.ok (← boundQueryWork (prepareNodeIndex available) available))
+  catch error => pure (.error error)
+  match prepared with
+  | .error error =>
+    let work := (← (← querySession).get).nodeWork - preparationStart
+    discard <| chargeTraversal work
+    auditTrace s!"incomplete cause=fact_index operation={site}: {error}"
+    modify fun s => { s with incomplete := true }
+    return none
+  | .ok (_, work) =>
+    unless ← chargeTraversal work do return none
   let start ← IO.getNumHeartbeats
   let available := (← get).exprFuel
+  let queryStart := (← (← querySession).get).nodeWork
   let result : Except IO.Error (α × Nat) ← try
     let value ← withReader (fun context : QueryContext =>
       { context with heartbeatStart := start, heartbeatLimit := budget * operations })
       (boundQueryWork action available)
     if (← IO.getNumHeartbeats) - start > budget * operations then
-      throw <| IO.userError "incomplete_closure:E8.compiled_expression_heartbeats"
+      throw <| IO.userError s!"incomplete_closure:E8.compiled_expression_heartbeats:spent={(← IO.getNumHeartbeats) - start}:limit={budget * operations}"
     pure (.ok value)
   catch error => pure (.error error)
   match result with
@@ -849,15 +999,17 @@ def boundedQuery (action : QueryM α) (site : Name := `type_classification)
     unless ← chargeTraversal work do return none
     return some value
   | .error error =>
+    let work := (← (← querySession).get).nodeWork - queryStart
+    discard <| chargeTraversal work
     (← read).trace s!"query_failure operation={site}: {error}"
     let heartbeat := error.toString.contains "compiled_expression_heartbeats"
     modify fun s => { s with incomplete := true }
     auditTrace s!"incomplete cause={if heartbeat then "heartbeat_exhaustion" else "query_runtime_exception"} operation={site} first={(← get).currentFirst} site={(← get).currentOrigin}"
     return none
 
--- This is the only source of types used for occurrence admission. Compiled
--- types contain actual levels and stable local identities. Failed projections
--- are never cached; projected types are scoped to the statement query.
+-- Declaration and bound-fact types retain actual levels and local identities.
+-- The same query-local map holds raw child kinds projected from checked
+-- applications and lambdas. An unbound expected type is never cached.
 def occurrenceType (e : Expr) : WalkM (Option Expr) := do
   unless ← chargeTraversal do return none
   if e.hasLooseBVars || e.hasMVar || e.hasLevelMVar then
@@ -869,6 +1021,37 @@ def occurrenceType (e : Expr) : WalkM (Option Expr) := do
     inferredTypes := s.inferredTypes.insert e type
     counters.inferredOccurrences := s.counters.inferredOccurrences + 1 }
   return some type
+
+/-- Project parameter types from a kernel-checked raw constant application.
+ Each retained argument is the actual child of that application. The cache
+ also retains raw children of an already checked lambda at its codomain;
+ synthetic applications never enter this path through an expected type. -/
+def checkedApplicationArguments (application : Expr) : WalkM (Option (Array Expr)) := do
+  let some (head, arguments) ← applicationParts application | return none
+  unless head.isConst do return none
+  if arguments.isEmpty then return some #[]
+  unless ← chargeTraversal do return none
+  unless (← get).inferredTypes.contains application do
+    let some checked ← boundedQuery (hasTypedNodeFact application) `application_parameter_fact
+      | return none
+    unless checked do return none
+  let some initial ← occurrenceType head | return none
+  let mut telescope := initial
+  let mut types := #[]
+  for argument in arguments do
+    unless ← chargeTraversal do return none
+    let .forallE _ domain body _ := telescope | return none
+    types := types.push domain
+    let some next ← substitute body #[argument] | return none
+    telescope := next
+    -- The compiler checked this whole application against its actual head.
+    -- Preserve a separately bound actual type when it is already available.
+    unless (← get).inferredTypes.contains argument do
+      unless ← chargeTraversal do return none
+      modify fun state => { state with
+        inferredTypes := state.inferredTypes.insert argument domain }
+  unless types.size == arguments.size do return none
+  return some types
 
 -- The frontend Nat literal is an audited representation, including its exact
 -- native OfNat dictionary. A user-supplied dictionary is not a literal boundary.
@@ -925,18 +1108,20 @@ private partial def bindIndex (pattern actual : Expr)
       result := next
     return some result
 
-private partial def constructorFields (ctor : Expr) (args : Array Expr)
+private partial def constructorFields (type : Expr) (args : Array Expr)
     (parameters : Nat) (k : Array Expr → Expr → WalkM α)
     (fields : Array Expr := #[]) : WalkM (Option α) := do
-  let some type ← occurrenceType ctor | return none
+  unless ← chargeTraversal do return none
   match type with
-  | .forallE n domain _ bi =>
+  | .forallE n domain body bi =>
     if parameters > 0 then
       let some arg := args[0]? | return none
-      constructorFields (mkApp ctor arg) (args.extract 1 args.size) (parameters - 1) k fields
+      let some body ← substitute body #[arg] | return none
+      constructorFields body (args.extract 1 args.size) (parameters - 1) k fields
     else
-      withCompiledLocal n bi domain fun field =>
-        constructorFields (mkApp ctor field) args 0 k (fields.push field)
+      withCompiledLocal n bi domain fun field => do
+        let some body ← substitute body #[field] | return none
+        constructorFields body args 0 k (fields.push field)
   | _ => return some (← k fields type)
 
 def caseFields (type : Expr) :
@@ -944,11 +1129,13 @@ def caseFields (type : Expr) :
   let some (head, args) ← applicationParts type | return none
   let .const name levels := head | return none
   let some (.inductInfo family) := (← getCompiledView).find? name | return none
+  let parent ← getQueryLocals
   let mut branches := #[]
   for ctor in family.ctors do
     unless ← chargeTraversal do return none
-    let result ← constructorFields (mkConst ctor levels) args family.numParams fun fields result => do
-      if fields.isEmpty then return some (← getQueryLocals, #[])
+    let some constructorType ← occurrenceType (mkConst ctor levels) | return none
+    let result ← constructorFields constructorType args family.numParams fun fields result => do
+      if fields.isEmpty then return some (parent, #[])
       let some (_, indices) ← applicationParts result | return none
       let mut bindings : Std.HashMap FVarId Expr := {}
       for i in [family.numParams:args.size] do
@@ -957,16 +1144,26 @@ def caseFields (type : Expr) :
         bindings := next
       -- Only substitute already fixed index binders, never solve new equations.
       let mut actualFields := #[]
-      let mut lctx ← getQueryLocals
+      -- Rebuild from the actual parent, not the temporary constructor telescope
+      -- that already contains every original field. Earlier field identities
+      -- are replaced in order; fixed index bindings retain priority.
+      let mut lctx := parent
+      let mut fieldBindings := bindings
       for field in fields do
+        let .fvar originalId := field | return none
+        let original ← localDeclaration originalId
         let some fieldType ← occurrenceType field | return none
         unless ← chargeExpression fieldType do return none
         let fieldType := fieldType.replace fun e => match e with
-          | .fvar id => bindings[id]?
+          | .fvar id => fieldBindings[id]?
           | _ => none
         let id ← freshLocalId
-        lctx := lctx.mkLocalDecl id `field fieldType
-        actualFields := actualFields.push (mkFVar id)
+        lctx := lctx.mkLocalDecl id original.userName fieldType original.binderInfo original.kind
+        let actual := mkFVar id
+        actualFields := actualFields.push actual
+        unless fieldBindings.contains originalId do
+          unless ← chargeTraversal do return none
+          fieldBindings := fieldBindings.insert originalId actual
       return some (lctx, actualFields)
     let some result := result | return none
     -- A constructor with a distinct literal index has no fields at this index.
@@ -976,6 +1173,18 @@ def caseFields (type : Expr) :
       return none
   modify fun s => { s with counters.caseExpansions := s.counters.caseExpansions + 1 }
   return some branches
+
+/-- A field domain is in the context preceding that field. Its own binder and
+ later fields cannot enter the closed telescope used for fact binding. -/
+def fieldDomainPrefix (lctx : LocalContext) (field : Expr) : WalkM (Option LocalContext) := do
+  let .fvar id := field | return none
+  let some declaration := lctx.find? id | return none
+  unless ← chargeTraversal (lctx.numIndices - declaration.index + 1) do return none
+  let mut fieldPrefix := lctx
+  while fieldPrefix.numIndices > declaration.index do
+    fieldPrefix := fieldPrefix.pop
+  unless fieldPrefix.numIndices == declaration.index do return none
+  return some fieldPrefix
 
 -- A recognized representation alias forwards its actual arguments through its
 -- explicit lambda telescope. It does not evaluate a computed data expression.

@@ -1,5 +1,6 @@
 import Lean.Elab.Term
 import Lean.Data.Json
+import LeanInformationAuditInterface.Contract.NodeFactsCore
 
 namespace Reg.Support.CompiledNodeTerm
 open Lean Elab Term
@@ -103,5 +104,83 @@ syntax (name := compiledNodeTerm) "compiled_node% " str : term
   match construct (← getEnv) decoded with
   | .ok expression => return expression
   | .error reason => throwError "compiled_node:{reason}:{decoded.declaration}"
+
+private partial def nameSyntax : Name → TermElabM (TSyntax `term)
+  | .anonymous => `(Lean.Name.anonymous)
+  | .str namePrefix component => do
+    `(Lean.Name.str $(← nameSyntax namePrefix) $(quote component))
+  | .num namePrefix component => do
+    `(Lean.Name.num $(← nameSyntax namePrefix) $(quote component))
+
+private partial def levelSyntax : Level → TermElabM (TSyntax `term)
+  | .zero => `(Lean.Level.zero)
+  | .param parameter => do `(Lean.Level.param $(← nameSyntax parameter))
+  | .succ nested => do `(Lean.Level.succ $(← levelSyntax nested))
+  | .max left right => do `(Lean.Level.max $(← levelSyntax left) $(← levelSyntax right))
+  | .imax left right => do `(Lean.Level.imax $(← levelSyntax left) $(← levelSyntax right))
+  | .mvar _ => throwError "compiled_fact:level_metavariable"
+
+private def edgeSyntax (edge : String) : TermElabM (TSyntax `term) :=
+  match edge with
+  | "function" => `(LeanInformationAudit.Contract.NodeEdge.function)
+  | "argument" => `(LeanInformationAudit.Contract.NodeEdge.argument)
+  | "domain" => `(LeanInformationAudit.Contract.NodeEdge.domain)
+  | "body" => `(LeanInformationAudit.Contract.NodeEdge.body)
+  | "letType" => `(LeanInformationAudit.Contract.NodeEdge.letType)
+  | "letValue" => `(LeanInformationAudit.Contract.NodeEdge.letValue)
+  | "letBody" => `(LeanInformationAudit.Contract.NodeEdge.letBody)
+  | "metadata" => `(LeanInformationAudit.Contract.NodeEdge.metadata)
+  | "projection" => `(LeanInformationAudit.Contract.NodeEdge.projection)
+  | _ => throwError "compiled_fact:edge"
+
+private def locationSyntax (location : Address) : TermElabM (TSyntax `term) := do
+  let env ← getEnv
+  unless (env.find? location.declaration).isSome do throwError "compiled_fact:declaration_missing"
+  let owner := match env.getModuleIdxFor? location.declaration with
+    | some index => env.header.modules[index.toNat]!.module
+    | none => env.mainModule
+  let part ← match location.part with
+    | "type" => `(LeanInformationAudit.Contract.NodePart.type)
+    | "value" => `(LeanInformationAudit.Contract.NodePart.value)
+    | _ => throwError "compiled_fact:part"
+  let edges ← location.path.mapM edgeSyntax
+  let levels ← location.levels.toArray.mapM levelSyntax
+  `(LeanInformationAudit.Contract.NodeCoordinate.mk $(← nameSyntax owner)
+    $(← nameSyntax location.declaration) $part [$[$edges],*] [$[$levels],*])
+
+private def literalAddress (literal : Syntax) : TermElabM Address := do
+  let some text := literal.isStrLit? | throwError "compiled_fact:literal_required"
+  match Json.parse text >>= address with
+  | .ok location => pure location
+  | .error reason => throwError "compiled_fact:{reason}"
+
+/-- One literal supplies both the raw compiler term and its actual owner coordinate.
+ The ordinary constructor elaboration checks its type or proposition. -/
+syntax (name := compiledNodeFact) "compiled_fact% " str str : term
+
+@[term_elab compiledNodeFact] private def elaborateFact : TermElab := fun stx expected => do
+  let some role := stx[1].isStrLit? | throwError "compiled_fact:role_required"
+  let literal : TSyntax `str := ⟨stx[2]⟩
+  let atNode ← locationSyntax (← literalAddress literal)
+  let operand ← `((@(compiled_node% $literal)))
+  let application ← match role with
+    | "data" => `(LeanInformationAudit.Contract.NodeFact.data _ $operand $atNode)
+    | "type" => `(LeanInformationAudit.Contract.NodeFact.type $operand $atNode)
+    | "proof" => `(LeanInformationAudit.Contract.NodeFact.proof _ $operand $atNode)
+    | _ => throwError "compiled_fact:role"
+  elabTerm application expected
+
+/-- Each endpoint keeps its original compiler address. Definitional matching
+ is certified by the existing constructor's ordinary kernel-checked evidence. -/
+syntax (name := compiledExactFact) "compiled_exact% " str str : term
+
+@[term_elab compiledExactFact] private def elaborateExact : TermElab := fun stx expected => do
+  let left : TSyntax `str := ⟨stx[1]⟩
+  let right : TSyntax `str := ⟨stx[2]⟩
+  let leftAt ← locationSyntax (← literalAddress left)
+  let rightAt ← locationSyntax (← literalAddress right)
+  elabTerm (← `(LeanInformationAudit.Contract.NodeFact.exact
+    (@(compiled_node% $left)) (@(compiled_node% $right)) $leftAt $rightAt
+    LeanInformationAudit.Contract.ExactMatch.evidence)) expected
 
 end Reg.Support.CompiledNodeTerm

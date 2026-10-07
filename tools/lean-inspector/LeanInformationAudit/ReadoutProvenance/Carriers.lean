@@ -41,8 +41,9 @@ partial def representationType (type : Expr) : WalkM (Option Expr) := do
 partial def nominalFieldShape (env : CompiledView) (type : Expr)
     (parameters : Array Expr) : WalkM (Option ProvenanceAdmissionWitness) := do
   let some concrete ← representationType type | return none
-  let some kind ← occurrenceType concrete | return none
-  if kind == .sort .zero then
+  let some proposition ← boundedQuery (typedNodeProp concrete) `nominal_field_proposition
+    | return none
+  if proposition then
     -- admission-exit: nominalFieldShape.1 rule=fieldProposition
     return some (witness .fieldProposition concrete)
   match concrete with
@@ -243,8 +244,10 @@ partial def dataCarrier (env : CompiledView) (type : Expr)
     let some branches ← caseFields type | return none
     for (lctx, fields) in branches do
       for field in fields do
-        let clean ← withCompiledLocals lctx do
-          let some fieldType ← occurrenceType field | return none
+        let fieldType ← withCompiledLocals lctx (occurrenceType field)
+        let some fieldType := fieldType | return none
+        let some fieldPrefix ← fieldDomainPrefix lctx field | return none
+        let clean ← withCompiledLocals fieldPrefix do
           -- admission-exit: dataCarrier.forward.3 rule=retained-witness.rule
           dataCarrier env fieldType (active.push type)
         unless clean.isSome do return none
@@ -380,6 +383,18 @@ def noteFamilyAssumption (depth : Nat) : WalkM Unit := do
   unless ← chargeTraversal do return
   modify fun s => { s with assumedFamilyDepth := mergeAssumptions s.assumedFamilyDepth (some depth) }
 
+/-- Decode only corresponding operands of raw Nat equalities. This Boolean
+ supplies no binding or apartness authority without both checked Exact facts. -/
+def naturalEqualityLiteralsApart (left right : Expr) : Bool := Id.run do
+  unless left.isAppOfArity ``Eq 3 && right.isAppOfArity ``Eq 3 do return false
+  let leftArgs := left.getAppArgs
+  let rightArgs := right.getAppArgs
+  unless leftArgs[0]!.isConstOf ``Nat && rightArgs[0]!.isConstOf ``Nat do return false
+  return #[1, 2].any fun index =>
+    match naturalLiteral leftArgs[index]!, naturalLiteral rightArgs[index]! with
+    | some leftValue, some rightValue => leftValue != rightValue
+    | _, _ => false
+
 def checkedStatementType (env : CompiledView) (type : Expr) :
     WalkM (Option ProvenanceAdmissionWitness) := do
   unless ← chargeTraversal do return none
@@ -389,10 +404,37 @@ def checkedStatementType (env : CompiledView) (type : Expr) :
   let state ← get
   let statement := state.statement
   let evidence ← do
+    -- A non-let local proposition is a rigid variable. A closed statement
+    -- cannot reduce to that variable: reduction introduces no free locals.
+    -- This checks a helper's lexical parameter, not any supplied application;
+    -- its actual arguments still pass their independent identity obligations.
+    if let .fvar id := type then
+      if closed statement && !statement.hasLevelMVar then
+        let some declaration ← boundedQuery (localDeclaration id) `statement_parameter
+          | return none
+        if declaration.value? (allowNondep := true) |>.isNone then
+          if declaration.type.equal (mkSort .zero) then
+            return some (witness .scopedParameter type)
     let some (some left) ← boundedQuery (exactNodeHead? type) `statement_exact_left
       | return none
     let some (some right) ← boundedQuery (exactNodeHead? statement) `statement_exact_right
       | return none
+    -- The exact relation is symmetric. Keep an already rigid current endpoint
+    -- rather than replacing it with its non-rigid partner. Both endpoint
+    -- queries above remain mandatory; raw heads alone provide no authority.
+    let rigid := fun (expression : Expr) =>
+      expression.getAppFn.constName?.any fun name =>
+        (env.find? name).any fun info => match info with
+          | .inductInfo _ => true
+          | _ => false
+    let left := if rigid type then type else left
+    let right := if rigid statement then statement else right
+    -- Nat has one audited literal representation. A different literal in the
+    -- same equality operand position is rigid even when the other operands
+    -- are unknown. No operand computation or cross-position match is used.
+    unless ← chargeTraversal 3 do return none
+    if naturalEqualityLiteralsApart left right then
+      return some (witness .statementScalarApart left)
     let some leftName := left.getAppFn.constName? | return none
     let some rightName := right.getAppFn.constName? | return none
     let some (.inductInfo _) := env.find? leftName | return none

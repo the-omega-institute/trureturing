@@ -18,7 +18,8 @@ No declaration is installed, compiled or checked. -/
 def companion (find : Name → Option ConstantInfo) (context : RegistrationGates.QueryContext)
     (name : Name) (value : Expr) (isTheorem : Bool)
     (parameters : Option (List Name) := none) : IO ConstantInfo := do
-  let type ← (RegistrationGates.typedNodeType value).run context
+  let (type, _) ← (RegistrationGates.boundQueryWork
+    (RegistrationGates.typedNodeType value)).run context
   unless Literal.closed value && Literal.closed type do
     throw <| IO.userError s!"incomplete_closure:contract.companion_open:{name}"
   let levels := parameters.getD

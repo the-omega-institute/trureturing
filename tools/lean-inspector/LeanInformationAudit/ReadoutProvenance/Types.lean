@@ -8,8 +8,9 @@ mutual
 -- observed proof value; closed statement subtypes still pass the same guard.
 partial def observedType (env : CompiledView) (type : Expr)
     (active : Array Expr := #[]) : WalkM TypeClassification := do
-  let some kind ← occurrenceType type | return ← unknownType type
-  if kind == .sort .zero then
+  let some proposition ← boundedQuery (typedNodeProp type) `observed_type_proposition
+    | return ← unknownType type
+  if proposition then
     if ← typeMentions env type then return .statementMention
     unless (← checkedStatementType env type).isSome do
       return ← unknownType type "unresolved_statement_identity"
@@ -36,8 +37,9 @@ private partial def inputType (env : CompiledView) (type : Expr)
   -- Closed proposition subtypes can themselves contain statement identity.
   -- Complete occurrence/field types, including open ones, use observedType.
   if closed type then
-    let some kind ← occurrenceType type | return ← unknownType type
-    if kind == .sort .zero then
+    let some proposition ← boundedQuery (typedNodeProp type) `input_type_proposition
+      | return ← unknownType type
+    if proposition then
       if ← typeMentions env type then return .statementMention
       unless (← checkedStatementType env type).isSome do
         return ← unknownType type "unresolved_statement_identity"
@@ -120,11 +122,17 @@ private partial def inputType (env : CompiledView) (type : Expr)
         let (bm, bu) := (← inputType env body active).flags
         -- admission-exit: inputType.10 rule=betaType
         return ← checkedType .betaType reduced (mentions || bm) bu
+      let projected ← checkedApplicationArguments reduced
       let mut unclassified := false
-      for arg in args do
+      for index in [:args.size] do
+        let arg := args[index]!
         if let .const n _ := arg.getAppFn then directConstant env n
         if let .proj n _ _ := arg.getAppFn then directProjection env n
-        let some argType ← occurrenceType arg | return ← checkedType .nominalFields type mentions true
+        let argumentType ← match projected with
+          | some types => pure types[index]?
+          | none => occurrenceType arg
+        let some argType := argumentType
+          | return ← checkedType .nominalFields type mentions true
         let (tm, tu) := (← inputType env argType active).flags
         mentions := mentions || tm
         unclassified := unclassified || tu
@@ -364,8 +372,10 @@ private partial def inputType (env : CompiledView) (type : Expr)
         unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
         for field in fields do
           unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
-          let (fm, fu) ← (TypeClassification.flags <$> withCompiledLocals lctx do
-            let some fieldType ← occurrenceType field | return ← unknownType type
+          let fieldType ← withCompiledLocals lctx (occurrenceType field)
+          let some fieldType := fieldType | return ← unknownType type
+          let some fieldPrefix ← fieldDomainPrefix lctx field | return ← unknownType type
+          let (fm, fu) ← (TypeClassification.flags <$> withCompiledLocals fieldPrefix do
             let some concrete ← representationType fieldType | return ← unknownType fieldType
             -- Constructor fields that introduce a carrier, or hide their value
             -- behind such a carrier, have no concrete representation witness.
@@ -452,17 +462,42 @@ private partial def typeFamilyArgument (env : CompiledView) (value type : Expr)
     let some reduced ← representationType type | return .family (← unknownType type)
     match reduced with
     | .forallE n domain body bi =>
-      let result ← withCompiledLocal n bi domain fun x => do
+      let actualLambda := match value with
+        | .lam name actualDomain actualBody actualMode =>
+          some (name, actualDomain, actualBody, actualMode)
+        | _ => none
+      let (name, actualDomain, actualMode) := match actualLambda with
+        | some (name, actualDomain, _, actualMode) => (name, actualDomain, actualMode)
+        | none => (n, domain, bi)
+      let result : FamilyClassification ← withCompiledLocal name actualMode actualDomain fun x => do
         let some body ← substitute body #[x] | return .family (← unknownType type)
         unless ← chargeTraversal do return .family (← unknownType type)
+        let projectBody : WalkM (Option Expr) := do
+          match actualLambda with
+          | some (_, _, actualBody, _) =>
+            let some actualBody ← substitute actualBody #[x]
+              | return none
+            -- The actual lambda was an argument of the checked raw parent.
+            -- Its body inherits that codomain, without constructing an app.
+            unless (← get).inferredTypes.contains actualBody do
+              unless ← chargeTraversal do return none
+              modify fun state => { state with
+                inferredTypes := state.inferredTypes.insert actualBody body }
+            return some actualBody
+          | none => return some (mkApp value x)
+        let next ← projectBody
+        let some next := next | return .family (← unknownType type)
         -- admission-exit: typeFamilyArgument.forward.1 rule=retained-witness.rule
-        typeFamilyArgument env (mkApp value x) body active
+        typeFamilyArgument env next body active
       -- admission-exit: typeFamilyArgument.3 rule=retained-witness.rule
       let .family verdict := result | return result
       let (bm, bu) := verdict.flags
       let (dm, du) := (← inputType env domain active).flags
+      let (am, au) ← if actualLambda.isSome then
+        pure (← inputType env actualDomain active).flags
+        else pure (false, false)
       -- admission-exit: typeFamilyArgument.4 rule=typeFamily
-      return .family (← checkedType .typeFamily value (dm || bm) (du || bu))
+      return .family (← checkedType .typeFamily value (dm || am || bm) (du || au || bu))
     | .sort _ => return .family (← inputType env value active)
     | _ =>
       -- Non-family delegation also requires the positive carrier classification.

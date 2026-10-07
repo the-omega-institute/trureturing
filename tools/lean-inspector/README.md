@@ -197,9 +197,15 @@ binding evidence，不能通过声明模板的严格消费者。
 
 登记与模板必须携带 `NodeCoverage`，模板另以 `bodyFact` 绑定实际编译体。内核在 Reg 编译期检查节点类型、证明边界、定义性匹配、相等、等价、逐参数 Bool 反射和完整有限枚举；判官只绑定原始节点及坐标、遍历完整依赖，并执行 E1–E8 等自身规则。`SealCatalogView` 将实际 catalog 与 `SealFacts` 绑定；完整字面行承担计数、轴、状态和分类数据，判官不求值原始函数。公共类型与 Reg 支持库不携带 evaluator、plan、join、判词或报告收据。生产登记、模板、root 和 seal 路径不使用通用比较器；SL-031 utility 路径单独保留 `RawArtifacts.whnf/equalTypes`。
 
-`Reg.Support.CompiledNodeTerm` 的 `compiled_node%` 在 Reg 编译期按字面声明、type/value、路径与宇宙地址，从普通编译器环境读取实际原始节点，并以原 telescope 闭合后交给普通编译器检查。它保留 binder 名、模式、metadata、let 结构与未化简宇宙树，不推断、比较、化简或评定数学项，不导入或调用实现。owner、路径与 coverage 仍由报告期的完整 `NodeCoordinate` 独立核对；适配器不认证坐标，不产生 plan、join、判词或收据。
+`Reg.Support.CompiledNodeTerm` 的 `compiled_node%` 在 Reg 编译期按字面声明、type/value、路径与宇宙地址，从普通编译器环境读取实际原始节点，并以原 telescope 闭合后交给普通编译器检查。它保留 binder 名、模式、metadata、let 结构与未化简宇宙树。`compiled_fact%` 用一个字面地址同时构造原始操作数及现有 `NodeFact`、`NodeCoordinate`；`compiled_exact%` 对两端各用其地址构造现有 `NodeFact.exact` 与 `ExactMatch.evidence`。owner 取自 `Environment` 的实际模块元数据，类型推断与定义性检查交普通 elaboration 和内核执行。适配器没有自有的推断、比较、化简或评定过程，不导入或调用实现。owner、路径与 coverage 仍由报告期的完整 `NodeCoordinate` 独立核对；适配器不认证坐标，不产生 plan、join、判词、收据或复用权威。
 
-已精确绑定的事实可按词法闭合后的 alpha 语法形状检索候选；该查找允许忽略 binder 名与模式，不做归约、转换或类型比较。它不放宽保留全部原始信息的坐标绑定，也不替代完整依赖覆盖。报告期只从这些绑定事实及编译常量声明读取类型、证明边界和关系端点；仅 `ExactMatch` 暴露定义性端点，`Eq`/`Iff` 用于数学对应，不授权擦除原始来源。
+已精确绑定的事实可按词法闭合后的 alpha 语法形状检索候选；该查找允许忽略 binder 名与模式，优先保留完整实际作用域的端点。`ExactMatch` 的候选目标须能以原始 lambda/let 打开完整实际局部 telescope；较短的 eta 端点按该查询形状跳过，不做归约、转换或类型比较。独立编译声明的 type/value 根只在其自身重建的词法作用域遍历；各实际应用参数仍在原作用域独立审查。它不放宽保留全部原始信息的坐标绑定，也不替代完整依赖覆盖。报告期只从这些绑定事实及编译常量声明读取类型、证明边界和关系端点；仅 `ExactMatch` 暴露定义性端点，`Eq`/`Iff` 用于数学对应，不授权擦除原始来源。
+
+泛型声明 type 根的已绑定 sort 可按实际恒量的显式宇宙实例作原始代入；代入后的整个 type 必须原样对应实际编译声明 type，才保留该 sort。缺少泛型根事实时不推断 sort。
+
+整条应用已有绑定的内核类型事实时，可按恒量头的原始 Pi telescope 和实际参数次序投影各原始子项的 kind；实际 lambda 的原始 body 继承已检查的 codomain。投影使用显式带计费替换，保留实际 domain、参数身份与载荷扫描，不为无证应用推型或登记合成应用的类型。该数据只存于本次查询的类型表，不形成复用键或外部权威。构造器字段从其实际 parent 上下文按顺序重建；先前原字段映射到实际新字段，既有固定 index 绑定优先。字段 type 先在完整上下文读取，再只在该字段之前的词法前缀内分类，不把当前或后续字段加入 domain 的闭合 telescope。
+
+命题定义性排除要求两侧各有绑定的 `ExactMatch`：当前端点已有编译器登记的 inductive 头时保留该端点，否则取证书另一端。两个 inductive 名不同，或两侧原样为 `Eq Nat` 且对应操作数位置由标准 Nat 字面解码得到不同读数，才取得排除依据。字面规则只比较同一固定位置，不计算其它操作数；同读数、未知计算项、其它 carrier 或非标准 `OfNat` 字典不取得该依据。无双端证书的原始头与字面量不取得该权限。词法上下文中，无赋值且原始类型为 `Sort 0` 的自由变量与不含自由变量、悬空绑定变量或任何 metavariable 的闭合目标不同；此规则只检查 helper 的局部参数，各实际应用参数仍独立审查，E1 禁止任意 `Prop` 模板槽不变。
 
 唯一语义版本只配置于 `lean-report-inputs.json`。兼容程序改动不 bump，不兼容改动在同次交付 bump；契约接口改动须同时迁移全部用法，不做历史兼容。H 由目标自身编译常量的精确契约类型头与 owner 判定，包含 Registration、TemplateEnrollment、RootCatalog、Seal；只 import 登记的汇总模块不在 H。小型类型/owner/名字投影由 Lake 直接调用独立的 `inputDiscovery` 程序产生；它只读取目标的 olean parts，复用相同类型与字面定义检查。投影只以编译闭包追踪，不持久化评定权威，版本升级的暖路径复用它。模块 trace 包含编译闭包与 utility，仅 H 加入语义版本。origin 保留实际生成的版本和输入投影，仅 H 校验版本相等；聚合与整份收据绑定该版本，旧格式拒读。程序字节永不进入数据工件复用条件。
 
@@ -297,8 +303,9 @@ Invocation-local syntax indexes retain their immutable compiled input and lexica
 context; they contain no importable assessment authority.
 Kernel-checked relations retain their full-telescope endpoints. Endpoint lookup
 and literal field reads do not run beta, delta, recursor, eta or conversion.
-Proof implementations are cut only at a bound proof fact; their proposition
-dependencies remain checked.
+Proof implementations are cut only at a bound proof fact or a compiler
+declaration with a certified proposition type; their proposition dependencies
+remain checked.
 
 Source statement exclusion uses a coordinate-bound `StatementExclusion` for
 the complete varying Law. Source observations use full-telescope `Eq` or
