@@ -322,3 +322,104 @@ comparison. Zero-parameter finite matrices and roundoff-level tests
 are not that full-space theorem. No converse to the $K_0$ implication,
 parameter monotonicity, identification with Suzuki's Weil operator,
 signed Robin estimate or Lean verification is supplied.
+
+## Classical interpolation on a logarithmic FIB sequence
+
+The discrete positivity program is classical. Lagarias, printed p.218,
+attributes a suitable-sequence criterion to Hinkkanen's Theorem 2. Its
+precise hypotheses are not inferred from that footnote. The application
+below instead reuses Pick interpolation as stated in McCarthy,
+[*Pick's Theorem—What's the Big Deal?*, Theorem 1, printed p.36](https://doi.org/10.1080/00029890.2003.11919935)
+([author's text](https://www.math.wustl.edu/~mccarthy/public_papers/MonthlyWtbd.pdf)),
+and the classical bounded-function zero-set theorem stated as Theorem A,
+p.1 of [Kraus, arXiv:1110.0275v1](https://arxiv.org/abs/1110.0275v1).
+Kraus explicitly credits Jensen, Blaschke and the Nevanlinnas for that
+zero-set theorem; her new critical-set results are not used. Neither
+classical theorem is reproved or claimed as FIB mathematics.
+
+Write $R(s)=\xi'(s)/\xi(s)$ and use $F_0=0,F_1=1$ for the ordinary
+Fibonacci numbers. With the window weights starting at $2,3,5$, the sparse
+finite address $[null]^j[2]$ has quantity $n_j=F_{3j+3}$. Choose the
+**logarithmic** evaluation nodes
+
+$$
+s_j=1+\log n_j>1,\qquad z_j=i(s_j-1/2),\qquad j\ge0.
+$$
+
+At these real $s_j$, the unconditional half-plane result in (W6) makes
+$R(s_j)$ real and strictly positive. Equation (W7), evenness of $F$ and
+the functional equation give the exact sampled matrix interface
+
+$$
+\mathcal B(z_k,z_j)=\frac{F(z_j)F(z_k)}{\pi}\,M_{jk},
+\qquad
+M_{jk}:=\frac{R(s_j)+R(s_k)}{s_j+s_k-1}.
+\tag{W9}
+$$
+
+Here $F(z_j)$ is real and nonzero. Thus this actual-kernel Gram matrix
+and $M$ have the same positive-semidefinite tests under a nonzero diagonal
+gauge. The project's existing
+[Cayley/Nevanlinna interface](../../D5/S3/Weil/Pick/CayleyNevanlinnaKernelEquivalence.lean)
+covers finite kernel gauges, not this infinite sampling implication; it
+was not rebuilt for this paper application.
+
+For completeness, the parameters entering the classical interpolation
+criterion are explicit. On $\Re s>1/2$ the domain Cayley coordinate is
+$u=(s-3/2)/(s+1/2)$, and the prescribed target data are
+$t_j=(R(s_j)-1)/(R(s_j)+1)\in(-1,1)$. Their disk Pick matrix satisfies
+
+$$
+\frac{1-t_jt_k}{1-u_ju_k}
+=
+\frac{s_j+1/2}{R(s_j)+1}\,
+M_{jk}\,
+\frac{s_k+1/2}{R(s_k)+1}.
+\tag{W10}
+$$
+
+If every initial finite matrix $M^{(m)}=(M_{jk})_{0\le j,k<m}$ is
+positive semidefinite, classical Pick interpolation and normal-family
+compactness supply a Schur function $t$ on $\Re s>1/2$ with these data.
+Existence of an interpolant alone would not identify it with the actual
+$R$. The required uniqueness comparison takes place on the smaller
+half-plane $\Re s>1$, where the actual function
+$t_R=(R-1)/(R+1)$ is already holomorphic and bounded by one. There the
+domain Cayley coordinate is $v=(s-2)/s$.
+
+The standard Fibonacci growth gives $s_j=3j\log\varphi+O(1)$. Hence
+
+$$
+\sum_j(1-|v_j|)=\infty,
+\qquad v_j=\frac{s_j-2}{s_j},
+\tag{W11}
+$$
+
+because the summands equal $2/s_j$ for all sufficiently large $j$.
+The classical zero-set theorem forces the bounded holomorphic difference
+$t-t_R$, which vanishes at these nodes, to vanish identically on
+$\Re s>1$. Consequently $(1+t)/(1-t)$ is the holomorphic continuation
+of the actual $R$ to $\Re s>1/2$ and has positive real part there. The
+prescribed interior data rule out a constant of modulus one, so $1-t$
+cannot vanish. Meromorphic identity then rules out the logarithmic-derivative
+poles of any zero of $\xi$ in that half-plane, as in (W8). Reusing (W6)
+yields RH. Conversely, under RH the actual
+$t_R$ is Schur on the larger half-plane, and the classical Pick theorem
+gives every $M^{(m)}\succeq0$.
+
+This is a source-specific application of the classical discrete criterion,
+not a new general RH criterion. It permits the sufficient target to be
+expressed using this one fixed sequence of actual zero-parameter Gram
+matrices, rather than arbitrary upper-half-plane evaluations. It is still
+an **all-size** positivity target. Positive entries and positive diagonals
+are unconditional here and do not establish it; finitely many verified
+matrices would not establish it either.
+
+Raw geometric nodes $s_j=1+n_j$ have a convergent counterpart of (W11).
+They therefore do not meet the uniqueness condition used in this
+application. That failure does not rule out another criterion specific
+to $\xi$ at those nodes. The logarithmic sequence is not mathematically
+privileged among sequences with the same divergent uniqueness sum, and
+no computational advantage is asserted. No all-size matrix positivity,
+full physical $K_0$ positivity, signed Robin estimate or Lean verification
+is supplied.
