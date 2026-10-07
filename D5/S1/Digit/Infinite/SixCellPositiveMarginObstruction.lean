@@ -188,6 +188,19 @@ private lemma adjacent_boundary {q : ℕ} (Q : ℝ → Fin q)
   rw [abs_of_nonneg (sub_nonneg.mpr hzlo.le)]
   linarith
 
+/-- The five actual windows, ordered three, null, five, two, twenty-five. -/
+def labelIndex : Fin 5 → Label := fun i =>
+  if i.val = 0 then threeLabel else if i.val = 1 then nullLabel else
+    if i.val = 2 then fiveLabel else if i.val = 3 then twoLabel else twoFiveLabel
+
+theorem label_index_injective : Function.Injective labelIndex := by
+  local notation "l" => labelIndex
+  intro i j he
+  have he' := congrArg (fun w : Label => (w.val 0, w.val 1, w.val 2)) he
+  fin_cases i <;> try fin_cases j
+  all_goals simp [l, threeLabel, nullLabel, fiveLabel, twoLabel, twoFiveLabel] at he'
+  all_goals rfl
+
 private lemma forced_colors (Q : ℝ → Fin 6)
     (hQ : MonotoneOn Q (stateInterval false)) (hp : closedGridPure Q) :
     Q (-1) = 0 ∧ Q (-t ^ 2) = 1 ∧ Q g = 2 ∧ Q t = 3 ∧ Q (2 * t) = 4 ∧
@@ -203,15 +216,8 @@ private lemma forced_colors (Q : ℝ → Fin 6)
   let b : Fin 5 → ℝ := fun i =>
     if i.val = 0 then -t - t ^ 4 else if i.val = 1 then -t ^ 4 else
       if i.val = 2 then g else if i.val = 3 then 1 - t ^ 4 else 2 * t
-  let l : Fin 5 → Label := fun i =>
-    if i.val = 0 then threeLabel else if i.val = 1 then nullLabel else
-      if i.val = 2 then fiveLabel else if i.val = 3 then twoLabel else twoFiveLabel
-  have hinj : Function.Injective l := by
-    intro i j he
-    have he' := congrArg (fun w : Label => (w.val 0, w.val 1, w.val 2)) he
-    fin_cases i <;> try fin_cases j
-    all_goals simp [l, threeLabel, nullLabel, fiveLabel, twoLabel, twoFiveLabel] at he'
-    all_goals rfl
+  local notation "l" => labelIndex
+  have hinj : Function.Injective l := label_index_injective
   have hmlegal (i : Fin 5) : (-1 : ℝ) ∈ stateInterval (outgoing (l i)) := by
     fin_cases i <;> simp [l, stateInterval, outgoing, threeLabel,
       nullLabel, fiveLabel, twoLabel, twoFiveLabel] <;> linarith
@@ -369,9 +375,7 @@ private lemma no_pure_ordered (Q : ℝ → Fin 6)
   let a : Fin 5 → ℝ := fun i =>
     if i.val = 0 then -t ^ 2 else if i.val = 1 then g else if i.val = 2 then t else
       if i.val = 3 then 2 * t else 1 + t
-  let l : Fin 5 → Label := fun i =>
-    if i.val = 0 then threeLabel else if i.val = 1 then nullLabel else
-      if i.val = 2 then fiveLabel else if i.val = 3 then twoLabel else twoFiveLabel
+  local notation "l" => labelIndex
   let s : ℝ := t / 2
   have inX (x : ℝ) (hlo : -1 ≤ x) (hhi : x ≤ 1 + t) :
       x ∈ stateInterval false := ⟨hlo, hhi⟩

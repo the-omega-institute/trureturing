@@ -223,7 +223,7 @@ structure FixedTailData where
   block_path : ∀ j i, SourcePath (guard j) (blocks j i) (guard j)
   first_distinct : blocks 0 0 ≠ blocks 0 1
 
-private noncomputable def wordScalar (w : List Label) (x : ℝ) : ℝ :=
+noncomputable def wordScalar (w : List Label) (x : ℝ) : ℝ :=
   w.foldr branch x
 
 /-- Maximum departure-coordinate cost over all nonempty source suffixes.
@@ -285,7 +285,7 @@ private theorem wordScalar_append (u v : List Label) (x : ℝ) :
     wordScalar (u ++ v) x = wordScalar u (wordScalar v x) := by
   exact List.foldr_append
 
-private theorem wordScalar_affine (w : List Label) (x : ℝ) :
+theorem wordScalar_affine (w : List Label) (x : ℝ) :
     wordScalar w x = wordScalar w 0 + (-g) ^ w.length * x := by
   induction w with
   | nil => simp [wordScalar]
@@ -295,7 +295,7 @@ private theorem wordScalar_affine (w : List Label) (x : ℝ) :
       offset l - g * wordScalar w 0 + (-g) ^ w.length * (-g) * x
     rw [ih]; ring
 
-private theorem wordScalar_continuous (w : List Label) : Continuous (wordScalar w) := by
+theorem wordScalar_continuous (w : List Label) : Continuous (wordScalar w) := by
   have he : wordScalar w = (fun x => wordScalar w 0 + (-g) ^ w.length * x) :=
     funext (wordScalar_affine w)
   rw [he]
@@ -320,7 +320,7 @@ theorem source_path_realization {s s' : Bool} {w : List Label}
     obtain ⟨x, hx, _⟩ := closed_observation_graph_realization.2.2.2.1 s l s' z hl hz
     exact ⟨x, hx.1, hx.2.1, hx.2.2 ▸ hzy⟩
 
-private theorem source_path_maps {s s' : Bool} {w : List Label}
+theorem source_path_maps {s s' : Bool} {w : List Label}
     (h : SourcePath s w s') : Set.MapsTo (wordScalar w) (stateInterval s') (stateInterval s) := by
   intro y hy
   have hr := closed_observation_graph_realization.2.1
@@ -373,7 +373,7 @@ private theorem return_scalar (d : FixedTailData) (j : Fin 2) (z : List (Fin 2))
     simp only [List.flatMap_cons, wordScalar_append, block_scalar, ih]
     rfl
 
-private theorem state_subset (s : Bool) : stateInterval s ⊆ stateInterval false := by
+theorem state_subset (s : Bool) : stateInterval s ⊆ stateInterval false := by
   cases s
   · exact Set.Subset.rfl
   · exact Set.Icc_subset_Icc le_rfl (le_add_of_nonneg_left zero_le_one)
