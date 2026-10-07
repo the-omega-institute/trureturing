@@ -6,6 +6,7 @@
    utility: none
    digest: Nested right-comb compensation with literal raw routing and complete-leaf certification. -/
 
+import D5.S3.Arith.FibonacciAtomic.FiniteHereditaryPatternRealization
 import D5.S3.Arith.FibonacciAtomic.FourExitRawEndpointSpectrum
 import D5.S3.Arith.FibonacciAtomic.SourceTransportCentralizer
 import D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutCompletion
@@ -128,14 +129,24 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
   have fold_image : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
       thirdImage (comb n f q) = comb n (fun i => thirdImage (f i)) (thirdImage q) :=
     fun n f q => (comb_foundation n f f q q).1
-  have fold_comp : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
-      composition (comb n f q) = (∑ i, composition (f i)) + composition q := by
+  have comb_holes : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
+      comb n f q = FiniteHereditaryPatternRealization.B_T n (Fin.snoc f q) := by
     intro n
     induction n with
-    | zero => intro f q; simp [comb]
+    | zero => intro f q; simp [comb, FiniteHereditaryPatternRealization.B_T, Fin.snoc_zero]
     | succ n ih =>
       intro f q
-      simp only [comb, composition, ih, Fin.sum_univ_succ, add_assoc]
+      rw [comb, FiniteHereditaryPatternRealization.B_T, Fin.snoc_apply_zero, ih]
+      congr 1
+      apply congrArg (FiniteHereditaryPatternRealization.B_T n)
+      funext i
+      cases i using Fin.lastCases <;> simp [← Fin.castSucc_succ]
+  have fold_comp : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
+      composition (comb n f q) = (∑ i, composition (f i)) + composition q := by
+    intro n f q
+    rw [comb_holes, FiniteHereditaryPatternRealization.composition_comb,
+      Fin.sum_univ_castSucc]
+    simp
   have fold_len : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
       (comb n f q).length = (∑ i, (f i).length) + q.length :=
     fun n f q => (comb_foundation n f f q q).2.1
@@ -329,8 +340,12 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       comb_nc n k _ _ (fun _ => Or.inl rfl) (fun l => by split_ifs <;> simp)
     have xx (i j : Fin k) : Nonconflict
         (comb k (fun l => if l = i then B else A) C)
-        (comb k (fun l => if l = j then B else A) C) :=
-      comb_nc k k _ _ (fun l => by split_ifs <;> simp) (fun l => by split_ifs <;> simp)
+        (comb k (fun l => if l = j then B else A) C) := by
+      apply (comb_foundation k _ _ C C).2.2.2.mpr
+      constructor
+      · intro l
+        split_ifs <;> simp [A, C, E, Nonconflict, show B = .mul C A from rfl]
+      · simp [C, A, E, Nonconflict]
     have bn (n : Nat) : Nonconflict B (.mul (H n) A) := by
       change Nonconflict C (H n) ∧ Nonconflict A A
       exact ⟨C_comb n _ (fun _ => Or.inl rfl), by simp [A,C,E,Nonconflict,show B = .mul C A from rfl]⟩
