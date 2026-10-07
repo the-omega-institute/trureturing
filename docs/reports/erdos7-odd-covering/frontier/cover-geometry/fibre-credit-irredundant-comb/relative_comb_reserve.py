@@ -198,6 +198,15 @@ def run(primes=Q):
         (F(p,p-1) for p in (11,13,17,19,23)), start=F(1))
     require(cheap_bound == F(1255501,73728) < 28, 'all-height cheap-source query norm')
     require(F(7) > F(31,5), 'height-six forced norm excludes low-null source threshold')
+    # Reuse Report563 MT11's complete Q7 source bound; check only its new consumer.
+    active_beta = F(13463054,5049311)
+    active_debit = (active_beta-1)/3
+    active_reserve = 1-active_debit
+    require(active_reserve > 0, 'root-active positive reserve')
+    active_bound = 1+(3*active_beta-1)/active_reserve
+    require(active_bound == (1+8*active_beta)/(4-active_beta), 'same-law active-root budget')
+    require(active_bound == F(37584581,2244730) < 28, 'active-root complete query bound')
+    require(active_beta < F(37,12), 'active-root source threshold')
     if tuple(primes) == Q:
         require(z['count'] == 16540311957403355160121, 'complete Z fibre')
         require(w['count'] == 2569696844461203895339, 'complete W fibre')
@@ -232,9 +241,17 @@ def run(primes=Q):
                     height_27_original_count=3*(27**2+2*27),
                     cheap_complete_query_norm=str(cheap_bound),
                     cheap_margin_to_28=str(28-cheap_bound)),
+                active_root_extension=dict(
+                    cofactor_source='Report563 MT11',beta_upper=str(active_beta),
+                    deletion_upper=str(active_debit),reserve_lower=str(active_reserve),
+                    complete_query_upper=str(active_bound),
+                    source_threshold_for_28='37/12',
+                    scope='One unblocked ternary root; at most one distinct active Q phase '
+                          'per nonunit cofactor through ternary depth two, including depth zero. '
+                          'This checks the supplied source bound consumer, not MT11 again.'),
                 scope='Exact finite controls for the relative-reserve and low-projection strategies; '
                       'neither obstructs existence of a different supported source with complete B<28. '
-                      'High-phase budgets require one Q law '
+                      'The HP extension budgets require one Q law '
                       'annihilating every low nonpure projection, including ternary-free originals. '
                       'Arbitrary-height constructions are justified in Report529, not by enumeration. '
                       'No Lean certification claimed by this arithmetic consumer.')

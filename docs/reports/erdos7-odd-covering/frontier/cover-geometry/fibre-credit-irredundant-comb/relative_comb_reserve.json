@@ -125,5 +125,14 @@
     "cheap_complete_query_norm": "1255501/73728",
     "cheap_margin_to_28": "808883/73728"
   },
-  "scope": "Exact finite controls for the relative-reserve and low-projection strategies; neither obstructs existence of a different supported source with complete B<28. High-phase budgets require one Q law annihilating every low nonpure projection, including ternary-free originals. Arbitrary-height constructions are justified in Report529, not by enumeration. No Lean certification claimed by this arithmetic consumer."
+  "active_root_extension": {
+    "cofactor_source": "Report563 MT11",
+    "beta_upper": "13463054/5049311",
+    "deletion_upper": "2804581/5049311",
+    "reserve_lower": "2244730/5049311",
+    "complete_query_upper": "37584581/2244730",
+    "source_threshold_for_28": "37/12",
+    "scope": "One unblocked ternary root; at most one distinct active Q phase per nonunit cofactor through ternary depth two, including depth zero. This checks the supplied source bound consumer, not MT11 again."
+  },
+  "scope": "Exact finite controls for the relative-reserve and low-projection strategies; neither obstructs existence of a different supported source with complete B<28. The HP extension budgets require one Q law annihilating every low nonpure projection, including ternary-free originals. Arbitrary-height constructions are justified in Report529, not by enumeration. No Lean certification claimed by this arithmetic consumer."
 }

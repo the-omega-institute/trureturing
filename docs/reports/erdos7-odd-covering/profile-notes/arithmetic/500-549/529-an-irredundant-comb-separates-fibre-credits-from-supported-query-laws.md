@@ -625,3 +625,70 @@ prefix-query lower bound, together with the H=6 contradiction and LP3's
 rational product. Numerical CRT transport and the infinite Haar-tail
 interpretation remain the ordinary proof above. No unrestricted Erdős#7
 conclusion follows from this method obstruction.
+
+## A selected ternary root needs only its active low projections
+
+There is a positive source condition that permits the LP family and
+arbitrary higher mixed additions without imposing HP1. Keep a finite
+distinct nonunit P8-smooth family with fixed phases. Choose a ternary
+root r that is not forbidden by an actual modulus3 original. For each
+nonunit Q-smooth cofactor n, collect the complete mod-n phases of
+
+- its j=0 original, if present;
+- its j=1,2 originals whose first ternary root is r, if present.
+
+Assume this set has at most ONE distinct phase for every n. Identical
+phases may be merged; phases attached to other ternary roots are not
+included. The condition concerns each complete numerical cofactor,
+not merely its prime support. It places no restriction on higher mixed
+phases or heights, and permits all pure ternary originals except a
+modulus3 class forbidding the selected root.
+
+The merged inventory is a finite distinct nonunit Q-smooth family.
+Apply [Report563 MT11](../550-599/563-prefix-free-rooted-labels-admit-all-later-four-mixed-towers.md#83-a-seven-prime-companion-and-the-remaining-boundary)
+directly to obtain ONE cofactor law eta avoiding it, with complete norm
+
+    beta=B_Q(eta)<=A=13463054/5049311.                       (AR1)
+
+In root r, remove every actual pure ternary original and normalize Haar
+on what remains. Its unnormalized Haar mass is strictly greater than
+1/3-sum_(j>=2)3^-j=1/6, because there is at most one original per depth
+and the family is finite. This gives a law u with
+
+    q_3(u)=1,  q_(3^j)(u)<=6/3^j (j>=2),  B_{3}(u)<=3.
+
+The fixed product rho=u times eta avoids every pure ternary original
+and every nonpure original at j<=2: each is either inactive on r or
+has its cofactor phase excluded by eta. Only mixed originals with
+j>=3,n>1 remain. Numerical distinctness and the same-law union bound give
+
+    rho(D)<=sum_(j>=3,n>1)(6/3^j)q_n(eta)=(beta-1)/3,
+    B_(P8)(rho)<=3 beta.
+
+As before, n=1 is omitted only because all pure ternary originals were
+already removed. Since beta<=A<4, condition rho once on avoidance of D.
+Including the unit exactly once yields a law nu avoiding the whole family:
+
+    B_(P8)(nu)<=1+(3 beta-1)/(1-(beta-1)/3)
+               =(1+8 beta)/(4-beta)
+               <=37584581/2244730<28.                       (AR2)
+
+The reserve at A is2244730/5049311>0. On beta<4, the displayed budget is
+below28 exactly when beta<37/12. All query labels and heights remain
+included; eta and the final conditioning event are fixed before queries.
+
+For the LP family, choose root0. Its j=1,2 originals all have root1,
+so each active cofactor contributes only its j=0 phase. The condition
+continues to hold after arbitrary finite mixed additions at j>=3 and
+arbitrary higher pure ternary additions. If a modulus3 original is also
+added, at least one of roots0 and2 remains available, and either has the
+same inactive j=1,2 inventory. Thus these families admit the AR2 source
+even where every all-low-projection-null law has cost at least H+1.
+
+AR1 is an application of the existing seven-prime source, not a new
+source theorem. The active-phase condition has not been proved for an
+arbitrary P8 family. The exact consumer checks the resulting fractions;
+a scoped Lean application verifies the finite conditioning implication
+from its explicit deletion/query bounds and the rational threshold.
+The root-conditioned Haar source, the MT11 measure application and
+the complete infinite query sums remain ordinary mathematics here.
