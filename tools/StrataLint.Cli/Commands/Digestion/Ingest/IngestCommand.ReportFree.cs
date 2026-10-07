@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -25,20 +26,55 @@ internal static partial class IngestCommand
         try
         {
             var options = ParseReportFreeArguments(arguments);
-            // Undeclared theory documents are registered from the theory directory itself.
-            var (currentRaw, current, document) = DigestionWorkingTree.ReadIngest(
-                repository,
-                Decode,
-                static snapshot => LoadDocument(snapshot),
-                DigestionOpaquePathPolicy.TheoryRootPath.TrimEnd('/'));
+            var (currentRaw, current, document) = ReadSelectedSources(repository, options.Sources);
             var (sourceIds, registrationPaths) = ResolveSources(document, current, options.Sources);
+            var populated = document.RequireDigestionSources().Where(source => repository.SearchCurrentPaths(
+                    [DigestionQuerySelection.Literal(BackfillInventoryLoader.RootPath + source.SourceId)])
+                .Any(path => DigestionQuerySelection.IsAtomPath(path) && BackfillInventoryLoader.IsCanonicalPath(path)))
+                .Select(static source => source.SourceId).ToHashSet(StringComparer.Ordinal);
+            var wholeSourceIds = document.RequireDigestionSources().Where(source => current.TryGetFile(source.SourcePath, out _))
+                .Select(source => { current.TryGetFile(source.SourcePath, out var file); return DigestionFingerprint.ComputeOpaque(file!.RawBytes.AsSpan()).RawSha256[7..]; })
+                .Distinct(StringComparer.Ordinal).ToArray();
+            var wholeSourceRecords = DigestionQuerySelection.ReadAtoms(repository, wholeSourceIds);
+            (currentRaw, current, document) = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(currentRaw, wholeSourceRecords.Raw));
+            var cache = new Dictionary<(string Id, string Hash), AtomizedTheoryDocument>();
+            var kindCache = new Dictionary<(string Id, string Hash), (AtomizedTheoryDocument Document, Dictionary<string, string> Kinds)>();
+            Func<string, TheoryAtomizer> atomizers = id => (bytes, rules) =>
+            {
+                var key = (id, Convert.ToHexStringLower(SHA256.HashData(bytes)));
+                if (!cache.TryGetValue(key, out var atomized))
+                    cache[key] = atomized = (dependencies.AtomizerResolver ?? (static name => AtomizerRegistry.Require(name).Atomize))(id)(bytes, rules);
+                return atomized;
+            };
+            Func<string, TheoryAtomizerWithContentKinds>? kindAtomizers = dependencies.AtomizerResolver is not null
+                && dependencies.ContentKindAtomizerResolver is null ? null : id => (bytes, rules, contentKinds) =>
+                {
+                    var key = (id, Convert.ToHexStringLower(SHA256.HashData(bytes)));
+                    if (!kindCache.TryGetValue(key, out var cached))
+                    {
+                        var kinds = new Dictionary<string, string>(StringComparer.Ordinal);
+                        var atomized = (dependencies.ContentKindAtomizerResolver ?? (static name => AtomizerRegistry.Require(name).AtomizeWithContentKinds))(id)(bytes, rules, kinds);
+                        kindCache[key] = cached = (atomized, kinds);
+                    }
+                    if (contentKinds is not null)
+                        foreach (var kind in cached.Kinds) contentKinds[kind.Key] = kind.Value;
+                    return cached.Document;
+                };
             var plan = ReportFreeDigestionIngestor.Plan(
                 document,
                 current,
                 sourceIds,
                 registrationPaths,
-                dependencies.AtomizerResolver,
-                dependencies.ContentKindAtomizerResolver);
+                atomizers,
+                kindAtomizers,
+                populated);
+            var existing = DigestionQuerySelection.ReadAtoms(repository, plan.AddedAtomIds.ToArray());
+            if (!existing.Document.RequireDigestionEntries().IsEmpty)
+            {
+                var loaded = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(currentRaw, existing.Raw));
+                (currentRaw, current, document) = loaded;
+                plan = ReportFreeDigestionIngestor.Plan(document, current, sourceIds, registrationPaths, atomizers, kindAtomizers, populated);
+            }
             if (dependencies.BeforeValidation is not null)
             {
                 plan = dependencies.BeforeValidation(plan)
@@ -116,7 +152,7 @@ internal static partial class IngestCommand
             + $"ledger_changed={(ledgerUpdates.Length > 0).ToString().ToLowerInvariant()}\n"
             + string.Concat(openGenres.Select(static item =>
                 $"INGEST_OPEN_GENRE source={item.SourceId} "
-                + $"token={DigestStatusCommand.RenderDetail(item.Token)}\n"))
+                + $"token={System.Text.Json.JsonSerializer.Serialize(item.Token)}\n"))
             + string.Concat(plan.Fallbacks.Select(static fallback =>
                 $"INGEST_FALLBACK source={fallback.SourceId} reason={fallback.Reason}\n"))
             + (plan.Fallbacks.Length == 0
@@ -142,6 +178,7 @@ internal static partial class IngestCommand
                 throw SourceUsage($"invalid --source selector '{arguments[index + 1]}'");
             sources.Add(arguments[index + 1]);
         }
+        if (sources.Count == 0) throw SourceUsage("at least one --source is required");
         return new ReportFreeOptions(sources.ToImmutable());
     }
 

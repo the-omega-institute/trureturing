@@ -31,7 +31,7 @@ internal static partial class CoverBatchCommand
         try
         {
             session = new CoverAtomCommand.Session(repositoryRoot, repository, reportBundle is null ? leanReportSource : reportBundle,
-                recordedAtUtc, options.Items[0].Gids[0]);
+                recordedAtUtc, options.Items[0].Gids[0], options.Items.Select(static item => item.AtomId).ToArray());
             plan = Plan(options.Items, session.Document);
         }
         catch (BatchInputException exception)

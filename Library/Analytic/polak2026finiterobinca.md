@@ -232,6 +232,23 @@ nor the all-multiplier GA2 comparisons have yet supplied its needed bound.
 The application adds no Lean declaration or formal certification of the
 external analytic or finite-verification premises.
 
+The [effective Nicolas–GA2 application](../ArithSums/nicolas2025comparison.md#an-effective-core-bound-at-the-selected-ga2-source)
+retains this same source, minimizer, and clock and supplies
+
+$$
+\sqrt A\log A\,D^*(A)>\mathcal E(\log A)
+>D_{\rm lb}(A)+0.01.
+$$
+
+Its explicit function $\mathcal E$ and uniform comparison use Nicolas's
+effective envelope ratio, cancellation of the absent-prime suffix by
+the source's GA2 comparisons, and Dusart's published prime-power bound.
+All thresholds are paid by the Axler finite stop already used here.
+Thus the weaker source-specific condition
+$\sqrt A\log A\,I_\psi(A)\ge-\mathcal E(\log A)$ suffices for strict Robin.
+That signed condition is unproved. This is a paper-level application,
+without a new finite verification, originality claim, or Lean result.
+
 ## Published event dynamics and the unpaid prime-state work
 
 The same manuscript already supplies a continuous-flow and prime-power
@@ -613,3 +630,379 @@ arithmetic results. The source supplies no estimate for its remaining
 signed residual, or for the pointwise signed term in FIB §250. Its finite
 verification range remains an external boundary check; repeating that
 computation would not advance RH.
+
+## For sufficiently large supports, the native clock is outside the negative critical-damping regime
+
+The repository's [prime-prefix continuation](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_PRIME_PREFIX.md)
+§§441–445 studies a complete normalized first integral, rather than the
+complete Robin response. Its existing unique-zero and sign results can be
+applied to the clock supplied above; this application is not a new
+prime-error estimate or a Lean verification.
+
+Put $z=P$, let $p=P^+$ be the next prime, and use the insertion clock
+$L=\log p$. With the notation of §441,
+
+$$
+E_P(s)=\prod_{q\le P}(1-q^{-s}),\qquad
+C_P=E_P(1)^{-1},\qquad F_P(v)=C_PE_P(1+v/L),
+$$
+
+$$
+H_P(v)=F_P(v)(1-e^{-v})-v,\qquad
+J_P(\sigma)=\int_0^\infty e^{-\sigma v}\frac{H_P(v)}{v^2}\,dv.
+$$
+
+The zero-displacement first integral at the actual clock $x=A$ uses
+$\sigma_A=\log A/L$: the Laplace change of variable $v=L u$ sends
+$e^{-u\log A}$ to $e^{-\sigma_Av}$. Both prefixes in the insertion
+comparison retain this same $L$, $A$, and zero displacement.
+The already supplied $P<A<p$ and Bertrand's theorem give
+
+$$
+1-\frac{\log2}{L}\le\frac{\log P}{\log p}
+<\sigma_A<1.
+$$
+
+Thus $\sigma_A\to1$ uniformly over $A\in(P,p)$ as $P\to\infty$.
+In contrast, §§441 and 445 locate the eventual unique damping zero at
+$\sigma_P\sim t_*L^{-C}$, where $C=e^{\gamma_E}>1$ and $t_*>0$.
+The existing sign on the upper side of this zero therefore yields,
+for all sufficiently large prime supports and every such $A$,
+
+$$
+J_P(\sigma_A)>0,\qquad
+I_p(\sigma_A)-I_P(\sigma_A)=\frac{J_P(\sigma_A)}{p-1}>0.
+$$
+
+This is an eventual statement over eligible parameters. No effective
+threshold for the one selected critical integer is supplied here, and
+no unbounded sequence of critical maximizers is assumed.
+
+The negative correction in §445 is evaluated at
+$\sigma=t_*L^{-C}$. In the same native-clock substitution this corresponds
+to $x=\exp(t_*L^{1-C})\to1$, rather than $x=A\in(P,p)\to\infty$.
+It therefore cannot be inserted at the actual source by identifying the
+two damping parameters.
+
+The normalized $J_P(\sigma)$ here is not the integer-row kernel
+$J_A^{\eta_P}(n)$ in the original volume. Insertion changes the Euler
+normalization; the other density terms, actual rough Möbius weights,
+all integer rows and the complete complement are still required.
+Neither insertion sign supplies the sign of
+$I_\psi(A)+D^*(A)$ or the missing same-source signed-tail bound.
+
+## Finite-height residual bounds at the actual critical clock
+
+The effective core application above can pay the complete signed residual
+on an explicit finite interval. This strengthens a restriction on the
+selected global maximizer, not Robin's inequality for every integer in a
+larger interval. No zero verification or CA-profile enumeration is repeated.
+
+Keep the same selected source $N$, $A=\log N$, $L=\log A$, and
+$T_A=\sqrt A L$. In this paragraph the verified zero height is denoted
+$H_0=3\cdot10^{12}$, to distinguish it from $T_A$.
+Theorem 1 of Platt–Trudgian,
+[arXiv:2004.09765v1](https://arxiv.org/pdf/2004.09765v1), printed p.2,
+verifies the stronger height $3000175332800$, and hence that all zeros
+with $0<\Im\rho\le H_0$ have real part $1/2$.
+The published version is *Bulletin of the London Mathematical Society*
+53 (2021), 792–797, DOI [10.1112/blms.12460](https://doi.org/10.1112/blms.12460).
+This existing finite-height theorem is an external input; no global RH
+premise or verification beyond $H_0$ is added.
+
+### Reusing the complete residual envelope
+
+Polak's §5.3–5.5, printed pp.10–12, equations (5.8), (5.11) and (5.14),
+give at any real $A>1$
+
+$$
+T_A I_\psi(A)\ge-C_{\rm low}(A)-C_{\rm high}(A),
+\tag{F1}
+$$
+
+where, putting $c_0=2+\gamma-\log(4\pi)$,
+
+$$
+C_{\rm low}(A)=c_0(1+3/L+4/L^2)+\frac{\log(2\pi)}{\sqrt A},
+$$
+
+$$
+C_{\rm high}(A)\le\sqrt A(1+A^{-1})
+\left[(1+1/L)S_2(H_0)+2(1/L+2/L^2)S_3(H_0)\right].
+\tag{F2}
+$$
+
+Here $S_j(H_0)=\sum_{\Im\rho>H_0}(\Im\rho)^{-j}$ counts positive
+ordinates with multiplicity. The source's (5.13), using the published
+Hasanalizade–Shen–Wong zero-count bound, supplies the coarser constants
+
+$$
+S_2(H_0)<1.48\cdot10^{-12},\qquad
+S_3(H_0)<5\cdot10^{-25}.
+\tag{F3}
+$$
+
+These constants weaken the source's displayed directed enclosures; the
+underlying zero-count proof and scalar evaluations are not independently
+rerun here. Its functional-equation pairing allows off-line quartets and
+all multiplicities in the unverified high part. The positive trivial-zero
+contribution is discarded only in the permitted lower-bound direction.
+Thus (F1) bounds the entire integral over $[A,\infty)$, including its
+unverified-zero contribution. No tail beyond a finite endpoint is omitted.
+
+The original CA-support certificate also needs its nonlinear bridge loss
+$C_{B_2}$. At this actual source clock, the already established
+$B_2(N,A)=0$ exactly, so that term is absent. Equations (F1)–(F3) do not
+use Büthe's support-to-size estimate or assume the source's segmented
+monotonicity checks outside their certified range.
+
+### A uniform finite exclusion
+
+Put
+
+$$
+X=21\cdot10^{22}.
+$$
+
+The Axler finite stop already used above gives $A>K/2>e^{26}$.
+The elementary constant bounds $0<c_0<0.05$ and $\log(2\pi)<2$
+may be used throughout. For example, $\gamma<0.58$ and
+$\log(4\pi)>2.53$ give the upper bound on $c_0$.
+The published core application supplies
+$T_A D^*(A)>\mathcal E(L)$, with $\mathcal E$ increasing for $L\ge26$
+and $\mathcal E(26)>0.65$.
+It also gives $\mathcal E(50)>0.75$. An entirely rational lower comparison is
+
+$$
+\mathcal E(50)>
+2.828-\frac{2.70\cdot1.415}{50}+\frac{6.78}{2500}
+-2.00014-\frac{2.67}{4000}-\frac{101}{6\cdot10^{10}}>0.75.
+\tag{F4}
+$$
+
+For its exponential bounds, the same positive-series inequalities used
+above give $e^{25/3}>54^2(25/18)>4000$ and
+$e^{25}>54^6(8/3)>6\cdot10^{10}$.
+Also $e^{25}<(11/4)^{25}<10^{11}$.
+
+Apply (F2) uniformly on two overlapping clock ranges. On
+$e^{26}<A\le e^{50}$, use $L>26$, $\sqrt A<10^{11}$ and
+$1+A^{-1}<1.0001$. On $e^{50}\le A\le X$, use $L\ge50$,
+$\sqrt A<4.6\cdot10^{11}$ and the same last factor.
+The square-root upper bound follows from
+$(4.6\cdot10^{11})^2>X$. Equations (F2)–(F3), with
+$2(1/26+2/26^2)<0.1$ and $2(1/50+2/50^2)<0.05$, then give
+
+| Actual clock range | $C_{\rm low}(A)$ | $C_{\rm high}(A)$ | Core allowance |
+|---|---:|---:|---:|
+| $e^{26}<A\le e^{50}$ | $<0.057$ | $<0.155$ | $\mathcal E(L)>0.65$ |
+| $e^{50}\le A\le X$ | $<0.054$ | $<0.695$ | $\mathcal E(L)>0.75$ |
+
+For the first low-zero bound, $e^{13}>400000$ bounds its constant term.
+For the second, $e^{25}>6\cdot10^{10}$ does so. The high-zero comparisons
+are the exact rational inequalities
+
+$$
+10^{11}(1.0001)
+\left[\frac{27}{26}(1.48\cdot10^{-12})+0.1(5\cdot10^{-25})\right]<0.155,
+$$
+
+$$
+(4.6\cdot10^{11})(1.0001)
+\left[1.02(1.48\cdot10^{-12})+0.05(5\cdot10^{-25})\right]<0.695.
+$$
+
+The table therefore covers the entire possible interval
+$K/2<A\le X$, not a selection of endpoints. Combining (F1) with the exact
+same-source identity $\Delta(N)=I_\psi(A)+D^*(A)$ gives
+
+$$
+\boxed{\sqrt A\log A\,\Delta(N)>0.001\qquad(K/2<A\le X).}
+\tag{F5}
+$$
+
+Such a source would satisfy strict Robin and could not be the selected
+counterexample-level global maximizer. Conditional on the cited source
+reduction, analytic bounds and finite-verification inputs, a failure of RH
+must therefore have its selected least global maximizer at
+
+$$
+\boxed{\log N>21\cdot10^{22}.}
+\tag{F6}
+$$
+
+This bound is on the selected maximizer. It does not bound the least
+counterexample, certify every integer below $e^X$, or extend Polak's
+all-integer finite theorem. The source's existing all-integer range
+already forces this maximizer past $7.1\cdot10^{22}\log10$;
+(F6) is a larger source-clock restriction, since $\log10<5/2$.
+The derivation of (F5) itself uses the earlier Axler stop, not that stronger
+all-integer certificate.
+
+At fixed $H_0$, the available high-zero allowance grows proportionally to
+$\sqrt A$; the core allowance tends to a finite constant. Thus this finite
+application supplies no unbounded signed-tail estimate or RH proof.
+It adds no Lean result and does not certify the cited papers' proofs or
+computations.
+
+## Combining finite zero verification with the classical zero-free region
+
+Keep the same selected Robin source, clock $A=\log N$, $L=\log A$,
+normalization $T_A=\sqrt A L$, effective core and verified height
+$H_0=3\cdot10^{12}$. This application controls the complete unverified
+zero contribution with two disjoint height ranges. It uses published
+inputs and symbolic outward comparisons; no zero or CA-profile
+computation is repeated, and no originality or Lean result is claimed.
+
+### The additional published input
+
+[Johnston–Yang, arXiv:2204.01980v2](https://arxiv.org/pdf/2204.01980v2),
+Lemma 2.7, printed p.5, states that for $|t|\ge2$ there are no zeta
+zeros in
+
+$$
+\beta\ge1-\frac1{R_0\log|t|},\qquad R_0=5.5666305.
+\tag{Z1}
+$$
+
+Its footnote attributes the classical region to Mossinghoff–Trudgian
+and the improved constant to the higher verified height. The versioned
+PDF is the one identified in the [existing supplier note](../Weil/johnstonyang2022pnt.md),
+SHA-256 `565993a6def48b237a68a92acba604f2c42f99165e0e71e390f8e21a313b74b2`.
+The additional lemma and footnote were directly inspected; the external
+zero-free proof is not independently certified here. The existing
+Platt–Trudgian input supplies the finite verification, rather than a
+global RH assumption.
+
+Set $U=10^{16}$. For every actual zero with
+$H_0<\gamma\le U$, (Z1), $R_0<6$, $\log U<40$, and the
+multiplicity-preserving functional-equation reflection give
+
+$$
+\frac1{240}<\beta<1-\frac1{240}.
+$$
+
+For $A>1$, convexity on this interval therefore gives
+
+$$
+A^{\beta-1}+A^{-\beta}
+\le A^{-1/240}+A^{-239/240}=:B(A).
+\tag{Z2}
+$$
+
+Apply this to the same reflected pairs in Polak's (5.12)–(5.14).
+The middle range keeps the improved factor $B(A)$; the range
+$\gamma>U$ keeps the original $1+A^{-1}$ factor. Zeros on the
+critical line, off-line quartets and every multiplicity are included.
+With the same positive-ordinate tails $S_j$, the complete high-zero
+allowance satisfies
+
+$$
+\begin{aligned}
+C_{\rm high}(A)&\le C_{\rm mid}(A)+C_{>U}(A),\\
+C_{\rm mid}(A)&\le\sqrt A\,B(A)
+\left[(1+1/L)S_2(H_0)+2(1/L+2/L^2)S_3(H_0)\right],\\
+C_{>U}(A)&\le\sqrt A(1+A^{-1})
+\left[(1+1/L)S_2(U)+2(1/L+2/L^2)S_3(U)\right].
+\end{aligned}
+\tag{Z3}
+$$
+
+The actual ranges in (Z3) are disjoint. The middle-range upper bound
+uses the larger full tail $S_j(H_0)$ as a positive envelope; this does
+not omit any zero or identify that envelope with the middle-range sum.
+Conjugation and reflection carry exactly the same factors as (F2).
+
+### Pay the entire range above the second height
+
+Reuse the full parameter formula in Polak's (5.13), obtained from the
+Hasanalizade–Shen–Wong zero-count bound. With
+$(a,b,c)=(0.1038,0.2573,9.3675)$, it gives at $U$
+
+$$
+S_2(U)\le\frac{\log(U/(2\pi))+1}{2\pi U}
++\frac{2a\log U+a/2+2b\log\log U+b/(2\log U)+2c}{U^2}.
+\tag{Z4}
+$$
+
+The elementary bounds $2\pi>6$, $32<\log U<40$,
+$\log\log U<4$, $a<1/9$, $b<1/3$ and $c<10$ give
+
+$$
+S_2(U)<\frac{41}{6U}+\frac{32}{U^2}<7\cdot10^{-16},
+\qquad
+S_3(U)\le S_2(U)/U<7\cdot10^{-32}.
+\tag{Z5}
+$$
+
+Here $2<\log10<5/2$ supplies the logarithmic interval, and $e^4>54$
+supplies the iterated-logarithm bound. These are scalar outward
+comparisons of the published formula, not a new zero count or a
+numerical reconstruction of the source's directed constants.
+
+### The complete signed target on a larger source-clock interval
+
+Consider every selected source with
+
+$$
+e^{50}\le A\le X_1:=3\cdot10^{23}.
+$$
+
+Then $\sqrt A<5.5\cdot10^{11}$, $L\ge50$ and
+$1+A^{-1}<1.0001$. The existing positive-series bound
+$e^{25}>6\cdot10^{10}$, and $e^t\ge1+t$ for $t\ge0$, give
+
+$$
+B(A)\le\frac{24}{29}+e^{-L/2}
+<\frac{24}{29}(1.0001).
+\tag{Z6}
+$$
+
+Use (F3) at $H_0$, (Z5) at $U$, $1+1/L\le1.02$ and
+$2(1/L+2/L^2)<0.05$. The two rational comparisons are
+
+$$
+(5.5\cdot10^{11})\frac{24}{29}(1.0001)
+\left[1.02(1.48\cdot10^{-12})+0.05(5\cdot10^{-25})\right]<0.688,
+$$
+
+$$
+(5.5\cdot10^{11})(1.0001)
+\left[1.02(7\cdot10^{-16})+0.05(7\cdot10^{-32})\right]<0.0004.
+$$
+
+Consequently $C_{\rm high}(A)<0.6884$ on the entire stated interval.
+The existing $C_{\rm low}(A)<0.054$ and $\mathcal E(L)>0.75$ then
+pay the full signed Robin condition, with the exact same-source identity:
+
+$$
+\boxed{T_A\Delta(N)>0.75-0.054-0.6884=0.0076>0.007
+\qquad(e^{50}\le A\le X_1).}
+\tag{Z7}
+$$
+
+The lower clock interval $K/2<A\le e^{50}$ was already paid in (F5)
+and is reused. Thus, conditional on the same cited source reduction,
+core, zero-free region and finite-verification inputs, a failure of RH
+must have its selected least global maximizer at
+
+$$
+\boxed{\log N>3\cdot10^{23}.}
+\tag{Z8}
+$$
+
+This improves the existing selected-source restriction
+$\log N>21\cdot10^{22}$. It does not constrain the least
+counterexample, establish Robin for every integer below $e^{X_1}$,
+or extend Polak's all-integer finite theorem. The original height
+$H_0$ is still the only verified height; $U$ is only a partition of the
+complete unverified-zero contribution.
+
+The unbounded target remains
+$T_A I_\psi(A)\ge-\mathcal E(\log A)$ at the same selected source.
+For fixed $H_0,U$, (Z3) still permits a high-zero allowance growing as
+$A^{1/2-1/240}$, and the part above $U$ retains its $\sqrt A$ factor.
+Hence (Z7) supplies no unbounded signed estimate or RH proof. The
+separate divisor-order decomposition of the same integral is not
+added to this spectral allowance; each representation keeps its own
+complete remainder.

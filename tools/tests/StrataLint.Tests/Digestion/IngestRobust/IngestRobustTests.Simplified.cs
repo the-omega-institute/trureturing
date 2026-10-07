@@ -48,7 +48,7 @@ public sealed partial class IngestRobustTests
         var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
 
         var result = Environment(fixture, temporary).Ingest(
-            sourceScoped ? Arguments("alpha") : Arguments());
+            sourceScoped ? Arguments("alpha") : Arguments("alpha", "beta"));
 
         Assert.True(result.Success, result.Error);
         var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
@@ -97,7 +97,7 @@ public sealed partial class IngestRobustTests
         var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
 
         var result = Environment(fixture, temporary).Ingest(
-            sourceScoped ? Arguments("alpha") : Arguments());
+            sourceScoped ? Arguments("alpha") : Arguments("alpha", "beta"));
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
@@ -139,7 +139,7 @@ public sealed partial class IngestRobustTests
         var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
 
         var result = Environment(fixture, temporary).Ingest(
-            sourceScoped ? Arguments("alpha") : Arguments());
+            sourceScoped ? Arguments("alpha") : Arguments("alpha", "beta"));
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
@@ -159,7 +159,7 @@ public sealed partial class IngestRobustTests
         var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
 
         var result = Environment(fixture, temporary).Ingest(
-            sourceScoped ? Arguments("alpha") : Arguments());
+            sourceScoped ? Arguments("alpha") : Arguments("alpha", "beta"));
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));

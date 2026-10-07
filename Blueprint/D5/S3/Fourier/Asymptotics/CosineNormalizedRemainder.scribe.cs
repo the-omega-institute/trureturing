@@ -12,6 +12,17 @@ internal sealed class CosineNormalizedRemainderDocument : IScribeDocumentDefinit
         H("A Uniform Cosine-Sum Remainder"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("positive-cosine-integral-normalization"),
+                DeclarationHandle.Create(Module + "positive_normalization"),
+                H("Positive cosine-integral normalization"),
+                StatementSource.FromAuthor(NormalizationFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every x>0, the absolutely convergent sine-tail definition of Ci equals "
+                    + "Euler's constant plus log(x) and the integral of (cos(t)-1)/t from zero to x. "
+                    + "The same normalization identifies the center of the finite cosine sum."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("uniform-normalized-cosine-sum-remainder"),
                 DeclarationHandle.Create(Module + "result"),
                 H("One error constant for all positive frequencies and truncations"),

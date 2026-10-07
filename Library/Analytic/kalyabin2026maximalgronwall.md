@@ -255,3 +255,82 @@ and its claim that $\log\widetilde G(t)$ tends to zero at infinity differs
 from the displayed formula. The formal theorem statements above are
 recorded with their stated scope; these slips are not silently repaired or
 used as verified intermediate lemmas.
+
+## The 2022 predecessors and the direction of their bounds
+
+The earlier [Remainder in Modified Mertens Formula and Ramanujan Inequality](https://arxiv.org/abs/2201.02663v1),
+submitted 7 January 2022, is the source already cited for the lower
+construction. Its main theorem, the §2 lemma (2.7), §3 and the final
+remarks were inspected in the [versioned primary text](https://arxiv.org/html/2201.02663v1).
+The lemma supplies a constructed integer at each sufficiently large support with a
+$2\sqrt2+o(1)$ loss; this is the predecessor of the 2026 lower
+calibration, not another construction to reproduce.
+
+That paper's main theorem already makes finiteness of
+$\limsup_{x\to\infty}Q(x)\sqrt x\log x$ equivalent to RH and records the
+consequence that the finite limsup is at most $2\sqrt2$.
+Its final remark announces narrower RH-dependent estimates for later
+papers. These are prior criteria and a conditional announcement, not
+an unconditional upper remainder bound.
+
+The follow-on [RH-Dependent Estimates of Remainder in Modified Mertens Formula](https://arxiv.org/abs/2205.05931v1),
+submitted 12 May 2022, states that narrower result. Its main theorem,
+§2's Lemma 1, Remark 2 and equation (2.13), and §3's Corollary 1 were
+inspected in the [primary text](https://arxiv.org/html/2205.05931v1)
+and original TeX. The source archive has SHA-256
+9ae03c336b0c7023231b7ea74b9a151ac57e43f64c43ab6ec0e3eeb7725a87e6.
+Both papers are preprints; their complete proofs are not independently
+certified, and no Lean verification is claimed.
+
+For the same $Q(x)=S(x)-\log\log\vartheta(x)-\gamma$, $x\ge3$,
+the May paper's main theorem explicitly assumes RH and states
+
+$$
+\liminf_{x\to\infty}Q(x)\sqrt x\log x\ge\frac32,\qquad
+\limsup_{x\to\infty}Q(x)\sqrt x\log x\le\frac52.
+$$
+
+These are limiting bounds, with no effective starting threshold for
+the selected critical integer supplied here. Remark 1 makes each
+bound separately equivalent to RH by the preceding Nicolas criteria.
+Neither the later support calibration nor a FIB coordinate change
+discharges that RH premise. The existing
+[weighted-error supplier](bhattacharyamartinsimpson2026weightedprimeerrors.md)
+already retains the same distinction between conditional comparisons
+and an unconditional signed estimate.
+
+The May paper also has an unconditional sign observation, but its
+direction matters. In its notation, define
+
+$$
+H(x)=\lim_{y\to\infty}
+\left[\sum_{x<p\le y}\frac1p-\log\log\vartheta(y^+)
+                         +\log\log\vartheta(x)\right],\qquad x>3.
+$$
+
+For its primitive $\Phi(x)=\int_0^x(\vartheta(t)-t)\,dt$,
+equation (2.9) defines $D(x)$ and $E(x)$ as boundary and integral
+terms linear in $\Phi$. Remark 2 states $H(x)\le D(x)+E(x)$ because
+its Taylor remainder is nonpositive. Equation (2.13) retains the
+exact correction
+
+$$
+Q(x)+H(x)=-T(x),\qquad
+T(x)=\sum_{p>x}\sum_{m\ge2}\frac1{mp^m}\ge0.
+$$
+
+Thus that observation supplies the lower comparison
+$Q(x)\ge-D(x)-E(x)-T(x)$, not the upper comparison needed for
+$Q(P)$ in the selected-source calibration above.
+The paper's Corollary 1 obtains an RH criterion only after imposing
+$\Phi(x)=O_\varepsilon(x^{3/2+\varepsilon})$ for every $\varepsilon>0$;
+the observation alone does not bound $D+E$.
+No such primitive bound or opposite-direction estimate
+is supplied here for the actual critical source.
+
+The original TeX's Proposition 4 prints $x<X_0$, whereas Proposition 5
+uses $x>X_0$; equation (2.7) also prints $\Delta(x)$ inside an integral
+in $t$. These source inconsistencies are not silently repaired or
+treated as certified intermediate facts. The theorem statements,
+source-reported sign relation and their required direction are recorded
+for reuse, without a new Mertens estimate, Robin criterion or RH proof.

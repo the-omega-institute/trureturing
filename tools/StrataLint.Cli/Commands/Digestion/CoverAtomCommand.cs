@@ -28,7 +28,7 @@ internal static partial class CoverAtomCommand
         {
             var options = ParseArguments(arguments);
             var session = new Session(repositoryRoot, repository, leanReportSource,
-                recordedAtUtc, options.Gids[0]);
+                recordedAtUtc, options.Gids[0], [options.AtomId]);
             return Apply(session, options, allowAlreadyApplied: false);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
