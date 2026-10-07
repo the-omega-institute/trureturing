@@ -30,7 +30,7 @@ public sealed partial class CoverAtomTests
             CoverWorld.TimeProvider);
 
         var result = environment.CoverAtom(
-            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid]);
 
         Assert.True(result.Success, result.Error);
         var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);
@@ -79,7 +79,7 @@ public sealed partial class CoverAtomTests
 
         var execution = Execute(
             spec,
-            ["--cover-atom", spec.AtomId, "--gid", spec.Gid, "--base", "baseline"]);
+            ["--cover-atom", spec.AtomId, "--gid", spec.Gid]);
 
         Assert.False(execution.Result.Success);
         Assert.Equal(
@@ -114,7 +114,7 @@ public sealed partial class CoverAtomTests
 
         var execution = Execute(
             spec,
-            ["--cover-atom", spec.AtomId, "--gid", spec.Gid, "--base", "baseline"],
+            ["--cover-atom", spec.AtomId, "--gid", spec.Gid],
             currentReport: ambiguousReport);
 
         Assert.False(execution.Result.Success);
@@ -136,7 +136,7 @@ public sealed partial class CoverAtomTests
 
         var execution = Execute(
             spec,
-            ["--cover-atom", spec.AtomId, "--gid", spec.Gid, "--base", "baseline"]);
+            ["--cover-atom", spec.AtomId, "--gid", spec.Gid]);
 
         Assert.False(execution.Result.Success);
         Assert.Contains("current edge GID", execution.Result.Error, StringComparison.Ordinal);
@@ -224,7 +224,7 @@ public sealed partial class CoverAtomTests
             CoverWorld.TimeProvider);
 
         var result = environment.CoverAtom(
-            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid]);
 
         Assert.True(result.Success, result.Error);
         var entry = Assert.Single(
@@ -258,7 +258,7 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(current), CoverWorld.Raw(baseline)),
             new FakeLeanReportSource(inputs.Report), verifier, CoverWorld.TimeProvider);
 
-        var result = environment.CoverAtom(["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+        var result = environment.CoverAtom(["--cover-atom", spec.AtomId, "--gid", inputs.Gid]);
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(0, verifier.CallCount);

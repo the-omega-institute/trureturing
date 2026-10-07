@@ -22,14 +22,8 @@ internal sealed partial class ProductionCliEnvironment
     public CommandResult Coverage(IReadOnlyList<string> arguments) =>
         CoverageCommand.Run(repository, leanReportSource, arguments);
 
-    public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
-        DigestStatusCommand.Run(
-            repository,
-            leanReportSource,
-            scribeEmissionVerifier,
-            arguments,
-            atomHistorySource,
-            timeProvider);
+
+    public CommandResult SearchAtoms(IReadOnlyList<string> arguments) => SearchAtomsCommand.Run(repository, arguments);
 
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         ShowAtomCommand.Run(repository, arguments);
@@ -37,20 +31,6 @@ internal sealed partial class ProductionCliEnvironment
     public CommandResult AtomContext(IReadOnlyList<string> arguments) =>
         AtomContextCommand.Run(repository, arguments);
 
-    public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
-        scribeEmissionVerifier is null
-            ? new ExplicitCommandResult(
-                2,
-                string.Empty,
-                "ECHO_VERIFY_INFRASTRUCTURE Scribe emission verifier is unavailable\n")
-            : EchoVerifyCommand.Run(
-                repositoryRoot,
-                repository,
-                leanReportSource,
-                scribeEmissionVerifier,
-                arguments,
-                atomHistorySource,
-                timeProvider);
 
     public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
         GateAuthorityCommand.Run(repositoryRoot, arguments);
@@ -74,19 +54,6 @@ internal sealed partial class ProductionCliEnvironment
             arguments,
             reportFreeIngestDependencies);
 
-    public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) =>
-        scribeEmissionVerifier is null
-            ? new CommandResult(
-                false,
-                string.Empty,
-                "ALIGN_DIGESTION_STATUS_INVALID Scribe emission verifier is unavailable\n")
-            : IngestCommand.Run(
-                repositoryRoot,
-                repository,
-                leanReportSource,
-                scribeEmissionVerifier,
-                arguments);
-
     public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
         CoverAtomCommand.Run(
             repositoryRoot,
@@ -94,9 +61,6 @@ internal sealed partial class ProductionCliEnvironment
             leanReportSource,
             timeProvider.GetUtcNow(),
             arguments);
-
-    public CommandResult QuarantineAtom(IReadOnlyList<string> arguments) =>
-        QuarantineAtomCommand.Run(repositoryRoot, repository, arguments);
 
     public CommandResult CoverBatch(IReadOnlyList<string> arguments) =>
         CoverBatchCommand.Run(repositoryRoot, repository, leanReportSource,
