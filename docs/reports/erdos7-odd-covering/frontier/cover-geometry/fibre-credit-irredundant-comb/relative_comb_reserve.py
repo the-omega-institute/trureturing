@@ -8,14 +8,16 @@ pure3: C(3,i,0); pureq: C(q,e,0); mixed singleton with i>0:
 C(3,i,1),C(q,e,1); support k>=2: ternary C(3,i,1) when i>0,
 and C(q,e,min(2k-2+epsilon,q-2)) at every q, epsilon=1[i>0].
 The high-phase extension checks conditional budgets, not arbitrary families.
+The auxiliary-root control reuses the existing clique-polynomial consumer.
 """
 from fractions import Fraction as F
 from functools import lru_cache
 from itertools import combinations, product
-from math import prod
+from math import gcd, prod
 from pathlib import Path
 import argparse
 import json
+import runpy
 
 Q = (5, 7, 11, 13, 17, 19, 23)
 
@@ -137,6 +139,98 @@ def low_null_control(H):
                 actual_period=period,cheap_source_residues=len(cheap))
 
 
+def extra_five_guard():
+    """Actual finite auxiliary support and the inherited shared-scalar consumer."""
+    helper = Path(__file__).resolve().parents[1] / 'prefix-free-later-four-shearer' / 'mixed_tower_inventory.py'
+    inherited = runpy.run_path(str(helper))
+    support_polynomials = inherited['support_polynomials']
+    query_numerator = inherited['query_numerator']
+    other_weights = tuple(F(1, p-2) for p in Q[1:])
+
+    def evaluate(t, positive=True):
+        weights = (t,) + other_weights
+        rho, _, _ = support_polynomials('extra_five_guard', weights, positive)
+        return rho, query_numerator(rho, weights)
+
+    rho0, n0 = evaluate(F(0), False)
+    rho1, n1 = evaluate(F(1), False)
+    target = F(37, 12)
+    gap0 = target*rho0[-1]-n0
+    slope = target*(rho1[-1]-rho0[-1])-(n1-n0)
+    threshold = -gap0/slope
+    require(gap0 == F(35597719,31808700) and slope == -F(81525298,31808700),
+            'same-weight affine numerator gap')
+    require(threshold == F(35597719,81525298), 'shared scalar threshold')
+    rho_star, n_star = evaluate(threshold)
+    require(target*rho_star[-1] == n_star, 'threshold equality')
+    profiles = []
+    for name, t, first5, higher_density, expected_rho, expected_bound, expected_max in (
+        ('normalized_haar', F(5,11), F(4,11), F(20,11), F(489631,883575),
+         F(51157586,16157823), F(9088732,16157823)),
+        ('balanced_roots', F(4,9), F(1,3), F(20,9), F(2676139,4771305),
+         F(41733953,13380695), F(6816549,13380695))):
+        require(t == first5+higher_density*F(1,25)/(1-F(1,5)) and
+                first5 >= higher_density/25, 'one-law cap total and monotone depth bounds')
+        rho, numerator = evaluate(t)
+        require(rho[-1] == expected_rho and numerator/rho[-1] == expected_bound > target,
+                'positive polynomial but insufficient shared scalar bound')
+        require(target*rho[-1]-numerator == gap0+slope*t,
+                'profile matches inherited affine gap')
+        first = (first5,) + tuple(F(p-1,p*(p-2)) for p in Q[1:])
+        full = len(rho)-1
+        caps = [prod((first[i] for i in range(len(Q)) if mask >> i & 1), start=F(1))
+                * rho[full ^ mask]/rho[full] for mask in range(1, full+1)]
+        require(len(caps) == 127 and max(caps) == caps[0] == expected_max < 1,
+                'every nonempty first-depth query bound is already below one')
+        profiles.append(dict(name=name,shared_weight=str(t),first_depth_cap=str(first5),
+                             higher_depth_density=str(higher_density),rho=str(rho[-1]),
+                             complete_query_upper=str(expected_bound),
+                             gap_to_target=str(target-expected_bound),
+                             nonempty_supports=len(caps),maximum_query_cap=str(max(caps)),
+                             maximum_label=5,clipping_improvement='0'))
+
+    forbidden = ((0,5),(1,5),(2,25),(7,125),(32,625))
+    require(all((a-b) % gcd(m,n) for i,(a,m) in enumerate(forbidden)
+                for b,n in forbidden[:i]), 'five auxiliary holes are pairwise disjoint')
+    survivors = {n for n in range(625) if all(n % m != a for a,m in forbidden)}
+    require({n % 5 for n in survivors} == {2,3,4}, 'three actual remaining first roots')
+    root2 = {n for n in survivors if n % 5 == 2}
+    counts = []
+    for m, expected in ((25,4),(125,19),(625,94)):
+        prefixes = {r for r in range(m) if r % 5 == 2 and
+                    all(r % h != a for a,h in forbidden if h <= m)}
+        require(prefixes == {n % m for n in root2} and len(prefixes) == expected,
+                'actual root-two projection count')
+        counts.append(dict(modulus=m,admissible_prefixes=len(prefixes)))
+    reciprocal_sum = sum((F(1,row['admissible_prefixes']) for row in counts), F(0))
+    coefficient = 1-2*reciprocal_sum
+    lower = reciprocal_sum+coefficient/3
+    require(reciprocal_sum == F(1119,3572) and coefficient == F(667,1786) > 0,
+            'same-source pigeonhole coefficient')
+    require(lower == F(4691,10716) and lower-threshold == F(485008057,436812546684) > 0,
+            'finite four-layer lower bound exceeds required scalar')
+    actual = ((2,3),(0,5),(6,15),(1,45),(2,25),(7,125),(32,625))
+    require(len({m for _,m in actual}) == 7 and all(m > 1 and m % 2 for _,m in actual),
+            'actual seven distinct odd numerical labels')
+    require(actual[2][0] % 3 == 0 and actual[3][0] % 3 == 1 and
+            actual[2][0] % 5 == actual[3][0] % 5 == 1,
+            'both available ternary roots carry the same low five projection')
+    free_leaves = sorted({n % 9 for n in range(45) if n % 3 == 1 and n % 5 == 1 and n != 1})
+    require(free_leaves == [4,7], 'modulus45 blocks only one leaf inside root one')
+    return dict(shared_scalar_target=str(target),gap_intercept=str(gap0),
+                gap_slope=str(slope),weight_threshold=str(threshold),profiles=profiles,
+                auxiliary_forbidden=[dict(residue=a,modulus=m) for a,m in forbidden],
+                finite_period=625,survivor_count=len(survivors),root_two_counts=counts,
+                reciprocal_sum=str(reciprocal_sum),root_max_coefficient=str(coefficient),
+                four_layer_lower=str(lower),gap_above_threshold=str(lower-threshold),
+                actual_originals=[dict(residue=a,modulus=m) for a,m in actual],
+                unblocked_depth_two_phases=free_leaves,
+                scope='The auxiliary support has two forbidden modulus5 phases. '
+                      'The actual originals have distinct moduli. The obstruction excludes only '
+                      'this inherited clique consumer with the same event/query scalar; '
+                      'it does not exclude full-profile consumers, separate weights or joint sources.')
+
+
 def run(primes=Q):
     # Each side is a disjoint union of cylinders of depths1,2,3.
     for rank, q in enumerate(primes, 1):
@@ -249,7 +343,8 @@ def run(primes=Q):
                     scope='One unblocked ternary root; at most one distinct active Q phase '
                           'per nonunit cofactor through ternary depth two, including depth zero. '
                           'This checks the supplied source bound consumer, not MT11 again.'),
-                scope='Exact finite controls for the relative-reserve and low-projection strategies; '
+                extra_five_guard=extra_five_guard(),
+                scope='Exact finite controls for the relative-reserve, low-projection and auxiliary-root strategies; '
                       'neither obstructs existence of a different supported source with complete B<28. '
                       'The HP extension budgets require one Q law '
                       'annihilating every low nonpure projection, including ternary-free originals. '

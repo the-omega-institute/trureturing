@@ -134,5 +134,116 @@
     "source_threshold_for_28": "37/12",
     "scope": "One unblocked ternary root; at most one distinct active Q phase per nonunit cofactor through ternary depth two, including depth zero. This checks the supplied source bound consumer, not MT11 again."
   },
-  "scope": "Exact finite controls for the relative-reserve and low-projection strategies; neither obstructs existence of a different supported source with complete B<28. The HP extension budgets require one Q law annihilating every low nonpure projection, including ternary-free originals. Arbitrary-height constructions are justified in Report529, not by enumeration. No Lean certification claimed by this arithmetic consumer."
+  "extra_five_guard": {
+    "shared_scalar_target": "37/12",
+    "gap_intercept": "35597719/31808700",
+    "gap_slope": "-40762649/15904350",
+    "weight_threshold": "35597719/81525298",
+    "profiles": [
+      {
+        "name": "normalized_haar",
+        "shared_weight": "5/11",
+        "first_depth_cap": "4/11",
+        "higher_depth_density": "20/11",
+        "rho": "489631/883575",
+        "complete_query_upper": "51157586/16157823",
+        "gap_to_target": "-1783509/21543764",
+        "nonempty_supports": 127,
+        "maximum_query_cap": "9088732/16157823",
+        "maximum_label": 5,
+        "clipping_improvement": "0"
+      },
+      {
+        "name": "balanced_roots",
+        "shared_weight": "4/9",
+        "first_depth_cap": "1/3",
+        "higher_depth_density": "20/9",
+        "rho": "2676139/4771305",
+        "complete_query_upper": "41733953/13380695",
+        "gap_to_target": "-5721721/160568340",
+        "nonempty_supports": 127,
+        "maximum_query_cap": "6816549/13380695",
+        "maximum_label": 5,
+        "clipping_improvement": "0"
+      }
+    ],
+    "auxiliary_forbidden": [
+      {
+        "residue": 0,
+        "modulus": 5
+      },
+      {
+        "residue": 1,
+        "modulus": 5
+      },
+      {
+        "residue": 2,
+        "modulus": 25
+      },
+      {
+        "residue": 7,
+        "modulus": 125
+      },
+      {
+        "residue": 32,
+        "modulus": 625
+      }
+    ],
+    "finite_period": 625,
+    "survivor_count": 344,
+    "root_two_counts": [
+      {
+        "modulus": 25,
+        "admissible_prefixes": 4
+      },
+      {
+        "modulus": 125,
+        "admissible_prefixes": 19
+      },
+      {
+        "modulus": 625,
+        "admissible_prefixes": 94
+      }
+    ],
+    "reciprocal_sum": "1119/3572",
+    "root_max_coefficient": "667/1786",
+    "four_layer_lower": "4691/10716",
+    "gap_above_threshold": "485008057/436812546684",
+    "actual_originals": [
+      {
+        "residue": 2,
+        "modulus": 3
+      },
+      {
+        "residue": 0,
+        "modulus": 5
+      },
+      {
+        "residue": 6,
+        "modulus": 15
+      },
+      {
+        "residue": 1,
+        "modulus": 45
+      },
+      {
+        "residue": 2,
+        "modulus": 25
+      },
+      {
+        "residue": 7,
+        "modulus": 125
+      },
+      {
+        "residue": 32,
+        "modulus": 625
+      }
+    ],
+    "unblocked_depth_two_phases": [
+      4,
+      7
+    ],
+    "scope": "The auxiliary support has two forbidden modulus5 phases. The actual originals have distinct moduli. The obstruction excludes only this inherited clique consumer with the same event/query scalar; it does not exclude full-profile consumers, separate weights or joint sources."
+  },
+  "scope": "Exact finite controls for the relative-reserve, low-projection and auxiliary-root strategies; neither obstructs existence of a different supported source with complete B<28. The HP extension budgets require one Q law annihilating every low nonpure projection, including ternary-free originals. Arbitrary-height constructions are justified in Report529, not by enumeration. No Lean certification claimed by this arithmetic consumer."
 }
