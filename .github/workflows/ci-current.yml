@@ -176,7 +176,6 @@ jobs:
             !docs/assets/inquiry-cycle.svg
             !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
             !docs/develop/spec/trureturing_engineering_optimization_v1.md
-            !docs/develop/theory/*
             !docs/reports/*
             !tools/TestSupport/StrataLint.RuleTestSupport/*
             !tools/lean-inspector/README.md
@@ -669,7 +668,6 @@ jobs:
             tools/scripts/lib/*
             tools/scripts/local-harness-gate.sh
             tools/scripts/pr.sh
-            tools/scripts/report/echo-residual-summary.sh
             tools/scripts/report/lean-report-input.sh
             tools/scripts/report/lean-report.sh
             tools/scripts/report/report-consumer.sh
@@ -789,7 +787,6 @@ jobs:
             tools/scripts/clean-lanes.sh
             tools/scripts/ingest.sh
             tools/scripts/local-harness-gate.sh
-            tools/scripts/report/echo-residual-summary.sh
             tools/scripts/report/lean-report.sh
             tools/scripts/report/report-consumer.sh
             tools/scripts/scribe.sh
@@ -861,7 +858,6 @@ jobs:
             !docs/assets/inquiry-cycle.svg
             !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
             !docs/develop/spec/trureturing_engineering_optimization_v1.md
-            !docs/develop/theory/*
             !docs/reports/*
             !tools/TestSupport/StrataLint.RuleTestSupport/*
             !tools/lean-inspector/README.md

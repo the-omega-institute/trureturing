@@ -73,10 +73,6 @@ internal static partial class IngestCommand
         }
     }
 
-    internal static bool IsLedgerPath(string path) =>
-        string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
-        || BackfillInventoryLoader.IsCanonicalPath(path);
-
     private static void PruneEmptyLedgerDirectories(
         string root,
         IEnumerable<LedgerUpdate> updates)

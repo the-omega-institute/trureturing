@@ -28,7 +28,7 @@ def ordinaryPrimeCollision (F : OddDistinctCoveringSystem L) (i j : Fin L) : Pro
   i ≠ j ∧ ∃ p : ℕ, Nat.Prime p ∧ p ≠ 3 ∧ p ≠ 5 ∧
     p ∣ F.modulus i ∧ p ∣ F.modulus j ∧ F.residue i ≡ F.residue j [MOD p]
 
-private theorem fresh_four_slot_descent
+theorem fresh_four_slot_descent
     (F : OddDistinctCoveringSystem L)
     (hsumMin : ∀ H : OddDistinctCoveringSystem L,
       (∑ i, F.modulus i) ≤ ∑ i, H.modulus i)
@@ -112,7 +112,7 @@ private theorem fresh_four_slot_descent
   change (∑ i, F.modulus i) ≤ ∑ i, newMod i at hmin
   omega
 
-private theorem collision_prime_arithmetic
+theorem collision_prime_arithmetic
     (F : OddDistinctCoveringSystem L) (i : Fin L)
     (p : ℕ) (hp : Nat.Prime p) (hp3 : p ≠ 3) (hp5 : p ≠ 5)
     (hpd : p ∣ F.modulus i) :
@@ -154,7 +154,7 @@ private theorem ternary_third_digit (x u : ℕ) (h : x ≡ u [MOD 9]) :
     Nat.mod_eq_of_lt (by omega : u % 9 + 18 < 27)]
   omega
 
-private theorem distinct_positive_multiples_pair
+theorem distinct_positive_multiples_pair
     (d a b : ℕ) (ha : 0 < a) (hb : 0 < b)
     (hda : d ∣ a) (hdb : d ∣ b) (hne : a ≠ b) : 3 * d ≤ a + b := by
   obtain ⟨v, hv⟩ := hda

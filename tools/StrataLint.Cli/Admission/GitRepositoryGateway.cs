@@ -162,7 +162,14 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
     public RawRepositorySnapshot ReadCurrent() => GitRepositorySnapshotReader.ReadCurrent(root);
 
     public RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths) =>
-        WorkingTreeReader.Read(root, paths);
+        GitRepositorySnapshotReader.ReadCurrent(
+            root,
+            pathspecs:
+            [
+                .. paths,
+                AdmissionPlanePolicy.FileMapPath,
+                "Meta/FILEMAP.*.toml",
+            ]);
 
     public RawRepositorySnapshot ReadRevision(string revision) =>
         GitRepositorySnapshotReader.ReadRevision(
@@ -172,6 +179,16 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 allowNonzero: false,
                 maximumOutputBytes,
                 standardInput));
+
+    public RawRepositorySnapshot ReadRevision(string revision, IReadOnlyList<string> paths) =>
+        GitRepositorySnapshotReader.ReadRevision(
+            revision,
+            (arguments, maximumOutputBytes, standardInput) => GitRaw(
+                arguments,
+                allowNonzero: false,
+                maximumOutputBytes,
+                standardInput),
+            paths);
 
     private string GitText(params string[] arguments) => StrictUtf8.GetString(GitBytes(arguments));
 

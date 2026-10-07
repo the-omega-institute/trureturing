@@ -387,17 +387,17 @@ open scoped BigOperators
 
 noncomputable section
 
-private theorem sign_zero : complexSign 0 = 1 := by simp [complexSign]
-private theorem sign_one : complexSign 1 = -1 := by norm_num [complexSign, F₂]
+theorem sign_zero : complexSign 0 = 1 := by simp [complexSign]
+theorem sign_one : complexSign 1 = -1 := by norm_num [complexSign, F₂]
 
-private theorem sign_square (s : F₂) : complexSign s * complexSign s = 1 := by
+theorem sign_square (s : F₂) : complexSign s * complexSign s = 1 := by
   rw [← complexSign_add, CharTwo.add_self_eq_zero, sign_zero]
 
-private theorem sign_nonzero (s : F₂) : complexSign s ≠ 0 := by
+theorem sign_nonzero (s : F₂) : complexSign s ≠ 0 := by
   change ((complexSignEmbedding.val (Multiplicative.ofAdd s) : ℂˣ) : ℂ) ≠ 0
   exact Units.ne_zero _
 
-private theorem sign_sum {ι : Type*} (s : Finset ι) (f : ι → F₂) :
+theorem sign_sum {ι : Type*} (s : Finset ι) (f : ι → F₂) :
     complexSign (∑ i ∈ s, f i) = ∏ i ∈ s, complexSign (f i) := by
   classical
   induction s using Finset.induction_on with
@@ -453,7 +453,7 @@ private theorem diagonal_phase_carry (S : Matrix ι ι F₂) (v w : ι → F₂)
   rw [Finset.prod_mul_distrib, sign_sum]
   rfl
 
-private theorem normal_exponent_add (S : Matrix ι ι F₂) (v w : ι → F₂) :
+theorem normal_exponent_add (S : Matrix ι ι F₂) (v w : ι → F₂) :
     normalExponent S v + normalExponent S w =
       (∑ i, ∑ j with i < j, S i j * (v i * w j + w i * v j)) +
         normalExponent S (v + w) := by
@@ -468,7 +468,7 @@ private theorem normal_exponent_add (S : Matrix ι ι F₂) (v w : ι → F₂) 
   ring_nf
   simp [show (2 : F₂) = 0 by decide]
 
-private theorem symmetric_pairing_split (S : Matrix ι ι F₂) (hS : S.IsSymm)
+theorem symmetric_pairing_split (S : Matrix ι ι F₂) (hS : S.IsSymm)
     (v w : ι → F₂) :
     Matrix.toBilin' S v w = (∑ i, S i i * v i * w i) +
       (∑ i, ∑ j with i < j, S i j * (v i * w j + w i * v j)) := by

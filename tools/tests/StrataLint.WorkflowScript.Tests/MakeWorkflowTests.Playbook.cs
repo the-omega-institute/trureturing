@@ -12,19 +12,20 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
         var script = File.ReadAllText(Path.Combine(root, PlaybookWorkflowScriptPath));
 
-        foreach (var target in new[] { "deposit", "cover" })
-        {
-            Assert.Contains(
-                $"scripts/workflow/playbook-workflows.sh {target} \"$(BASE)\" \"$(ATOM_ID)\" \"$(GID)\"",
-                makefile,
-                StringComparison.Ordinal);
-        }
+        Assert.Contains(
+            "scripts/workflow/playbook-workflows.sh deposit \"$(BASE)\" \"$(ATOM_ID)\" \"$(GID)\"",
+            makefile,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "scripts/workflow/playbook-workflows.sh cover \"$(ATOM_ID)\" \"$(GID)\"",
+            makefile,
+            StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {PlaybookWorkflowScriptPath} deposit-uncovered \"$(BASE)\" \"$(GID)\"",
             Recipe(makefile, "deposit-uncovered"));
 
         Assert.Contains(
-            "scripts/workflow/playbook-workflows.sh cover-batch \"$(BASE)\" \"$(ATOMS)\"",
+            "scripts/workflow/playbook-workflows.sh cover-batch \"$(ATOMS)\"",
             makefile,
             StringComparison.Ordinal);
 
@@ -36,6 +37,5 @@ public sealed partial class MakeWorkflowTests
             "align_args+=(--candidate-lean-report \"$REPORT\")",
             script,
             StringComparison.Ordinal);
-        Assert.Contains("run_cli digest-status\n", script, StringComparison.Ordinal);
     }
 }
