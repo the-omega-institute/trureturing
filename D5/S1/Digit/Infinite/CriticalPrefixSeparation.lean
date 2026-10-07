@@ -10,6 +10,7 @@ import D5.S1.Digit.Infinite.ClosedObservationGraphRealization
 import D5.S1.Digit.Infinite.OddColorThreeSource
 import D5.S1.Digit.Infinite.LateLabelStateBound
 import D5.S1.Digit.Infinite.FixedTailClosedBudget
+import D5.S1.Digit.Infinite.SevenCycleCoherenceRefutation
 import Mathlib.Analysis.Normed.Group.Constructions
 import Mathlib.Topology.Instances.Discrete
 import Mathlib.Analysis.Normed.Affine.AddTorsor
@@ -132,9 +133,7 @@ private theorem separation (h : ℕ) (x y : LegalDigits) (hne : windowPrefix h x
 private theorem half_not_integral (z : GoldenInt) : embedding z ≠ t / 2 := by
   intro he
   have ht : t = Real.goldenRatio - 1 := by
-    dsimp [t, D5.S1.Digit.Infinite.SignedSeriesRange.alpha]
-    rw [Real.inv_goldenRatio]
-    linarith only [Real.goldenRatio_add_goldenConj]
+    linarith only [D5.S1.Digit.Infinite.SevenCycleOriginalGraph.golden_ratio_t]
   have hb : 2 * z.b - 1 ≠ 0 := by omega
   have hbr : ((2 * z.b - 1 : ℤ) : ℝ) ≠ 0 := Int.cast_ne_zero.mpr hb
   have hφ : Real.goldenRatio = ((-2 * z.a - 1 : ℤ) : ℝ) /

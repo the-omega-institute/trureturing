@@ -59,3 +59,4 @@ Give prefix values the discrete topology. At the constant observation t/4 every 
 - Dependency: [D5/S1/Digit/Infinite/FixedTailClosedBudget](FixedTailClosedBudget.md)
 - Dependency: [D5/S1/Digit/Infinite/LateLabelStateBound](LateLabelStateBound.md)
 - Dependency: [D5/S1/Digit/Infinite/OddColorThreeSource](OddColorThreeSource.md)
+- Dependency: [D5/S1/Digit/Infinite/SevenCycleCoherenceRefutation](SevenCycleCoherenceRefutation.md)
