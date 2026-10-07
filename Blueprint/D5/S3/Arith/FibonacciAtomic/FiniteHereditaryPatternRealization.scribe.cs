@@ -38,6 +38,10 @@ internal sealed class FiniteHereditaryPatternRealizationDocument : IScribeDocume
             Def("PaddingColumn", "Private padding", "Row i receives M(K)-rowCount(K,i) private padding columns."),
             Def("Column", "Complete column set", "The complete column set is the disjoint union of original columns and private padding columns."),
             Def("entry", "Padded table", "A padding column contains U in its owner's row and A elsewhere; original entries retain their face-table values."),
+            Describe.Lean(DescribeId.Create("finite-hereditary-pattern-composition-comb"),
+                DeclarationHandle.Create(Prefix + "composition_comb"), H("Composition of the hole table"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n and every Source-valued table X on Fin(n+1), the composition of B(n,X) is the sum of the compositions of all entries."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("finite-hereditary-pattern-realization-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Full reports and hereditary realization"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
