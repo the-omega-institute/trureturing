@@ -34,15 +34,16 @@ internal sealed class ParityKernelMassesDocument : IScribeDocumentDefinition
                 + "compositions t of (M-h(x))/2. If some r has the prescribed parities, then "
                 + "M=2*sum(r_i/2)+h(x), so an illegal vector has no preimage."),
             Node("reference-mass", "Conditioned Bernoulli normalization", "parity_reference_mass",
-                AssessedProvenance.FromLiterature(BernoulliParity),
-                "Fix positive d and M. Put nu=M/(2M+d), eta=d/(2M+d), and pe=(1+(-1)^M eta^d)/2. "
+                AssessedProvenance.FromRepo(BernoulliParity),
+                "Fix positive d and M. The statistical-laws reference definition prescribes the bias nu=M/(2M+d). "
+                + "Put eta=d/(2M+d), and pe=(1+(-1)^M eta^d)/2. "
                 + "Let Q(x)=nu^h(x) (1-nu)^(d-h(x))/pe when h(x) mod 2=M mod 2, and Q(x)=0 otherwise. "
                 + "Then pe>0, every Q(x) is nonnegative, and the values of Q sum to one. "
                 + "The product weights of independent Bernoulli(nu) bits sum to one, and their "
                 + "sign-twisted sum by (-1)^h(x) factorizes coordinatewise to (1-2nu)^d=eta^d. "
                 + "Averaging the two sums isolates the parity event, whose probability is pe; "
                 + "0<=eta<1 gives pe>0. This is the standard parity computation for a sum of "
-                + "independent Bernoulli bits; the declaration records it for the conditioned law."))));
+                + "independent Bernoulli bits, following Siegrist; the declaration records it for the prescribed conditioned law."))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
         AssessedProvenance provenance, string prose) =>

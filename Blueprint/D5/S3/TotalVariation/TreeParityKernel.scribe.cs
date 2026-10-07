@@ -23,15 +23,17 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
                 "The parameters d and M are natural numbers, xi : Fin d -> Bool, and h is the number of true coordinates of xi. "
                 + "The guard requires h <= M and h mod 2 = M mod 2. The mass is zero when either test fails; "
                 + "the binomial coefficient in the nonzero branch is evaluated only for the resulting natural parameters. "
-                + "Its numerator counts the weak compositions of M into d parts with parity vector xi.",
+                + "For d>0, its numerator counts the weak compositions of M into d parts with parity vector xi. "
+                + "For d=0, the binomial expression is 1 and has no zero-dimensional weak-composition interpretation.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo(StarsAndBars)),
             Node("reference-law", "Conditioned Bernoulli mass", "Q", ReferenceFormula(),
-                "Here nu = M/(2M+d), eta = d/(2M+d), and p_e = (1+(-1)^M eta^d)/2. "
+                "The statistical-laws reference definition prescribes the bias nu = M/(2M+d). "
+                + "Here eta = d/(2M+d), and p_e = (1+(-1)^M eta^d)/2. "
                 + "The mass is zero when h mod 2 differs from M mod 2. For positive d and M, "
                 + "this formula describes independent Bernoulli(nu) bits conditioned on the terminal parity. "
                 + "The conditioned bits are not asserted to be independent. Both masses have exactly the form "
-                + "used by the finite parity bound.", DescribeRole.Definition,
-                AssessedProvenance.FromLiterature(BernoulliParity)),
+                + "used by the finite parity bound. The Bernoulli parity computation follows Siegrist.", DescribeRole.Definition,
+                AssessedProvenance.FromRepo(BernoulliParity)),
             Node("intervals", "Shapes and complete gaps", "intervals",
                 Seq(Call("Fiber", Av, Bv), Sp, Sim, Sp,
                     Call("Shapes", Subtract(Nv, D(1))), Sp, Times, Sp, Call("WeakCompositions", Dv, Mv)),
