@@ -1190,3 +1190,164 @@ selected cutoff. The printed theorem's error can be integrated on
 each finite retained scale interval, but (C6) supplies no bound making
 that increasing cost fit the Robin reserve. No such uniform balance,
 effective zero computation or proof of RH is asserted here.
+
+
+## Centering the large-scale arithmetic main expression
+
+The first-moment cancellation (C4) also removes the continuous
+prime-density contribution of the third branch of $M_T$. The
+[previously assessed Fiori–Jaskari application](../Weil/broadbent2026mertens.md)
+supplies an independent bound for the remainder. This concerns the
+arithmetic main expression, with the same kernel and height blocks;
+it does not estimate the actual zero remainder $\mathcal E_T$ or
+reproduce the prime-number-theorem proof. These deductions are
+paper-level applications with no originality or Lean-verification claim.
+
+### Keep the moving frequency in the prime-error estimate
+
+Reuse the explicit positive constant
+
+$$
+d=\frac52\left(\frac53\right)^{1/5}
+            \left(\frac{2000}{161967}\right)^{3/5}
+$$
+
+from that existing application. Its unconditional conclusion is
+
+$$
+|\psi(u)-u|\le0.239u\,e^{-d\sqrt{\log u}}
+\qquad(u\ge e^3).
+\tag{P1}
+$$
+
+No new inspection or certification of its source computation is
+claimed. In particular the prime powers are part of $\psi$.
+
+Put $\psi_-(u)=\sum_{n<u}\Lambda(n)$. The endpoint difference
+$\psi(u)-\psi_-(u)$ is at most $\log u$. Also $d<1$: use
+$5/3<2$ and $2000/161967<1/64$ to get $d<5/16$.
+For $v\ge3$, $v-\log v\ge\sqrt v$, hence
+$\log u\le u e^{-d\sqrt{\log u}}$. Consequently
+
+$$
+|\psi_-(u)-u|<2u\,e^{-d\sqrt{\log u}}
+\qquad(u\ge e^3).
+\tag{P2}
+$$
+
+This includes the endpoint convention of the actual interval
+$y\le n<2y$, including when $y$ or $2y$ is a prime power.
+
+For $T>1$, $X$ with $y=\pi X/T\ge e^3$, write
+
+$$
+S_T(X)=\sum_{y\le n<2y}\frac{\Lambda(n)}n e^{2\pi iX/n},
+\qquad
+b_T=\int_T^{2T}\frac{e^{it}}t\,dt.
+$$
+
+Substituting $t=2\pi X/u$ gives
+$\int_y^{2y}u^{-1}e^{2\pi iX/u}du=b_T$.
+For $w_X(u)=u^{-1}e^{2\pi iX/u}$, Stieltjes integration with the
+retained endpoints gives exactly
+
+$$
+\begin{aligned}
+S_T(X)-b_T={}&w_X(2y)[\psi_-(2y)-2y]
+             -w_X(y)[\psi_-(y)-y]\\
+ &-\int_y^{2y}[\psi(u)-u]w_X'(u)\,du.
+\end{aligned}
+\tag{P3}
+$$
+
+The integral may use either endpoint version of $\psi$, since their
+difference is supported at integers. As
+$|w_X'(u)|\le u^{-2}+2\pi Xu^{-3}$, (P1)–(P2), with
+$\delta_y=e^{-d\sqrt{\log y}}$, give
+
+$$
+|S_T(X)-b_T|
+\le(4+2\log2+2T)\delta_y
+<8T\delta_y.
+\tag{P4}
+$$
+
+The factor $T$ records the moving phase. It has not been replaced by
+a fixed-frequency constant or omitted after changing variables.
+Ordinary integration by parts also gives $|b_T|\le2/T$.
+
+### A signed cancellation and a controlled centered complement
+
+Since $M_T(X)=-XS_T(X)$ on this large-scale branch, define the
+centered expression on all $X\ge1$ by
+
+$$
+\widetilde M_T(X)=M_T(X)+Xb_T.
+$$
+
+Here the other two branches of $M_T$ remain their original formulas;
+(P4) is used only where its threshold holds. Combining (P4) with
+(C2) gives the independent complement estimate
+
+$$
+\boxed{
+\int_R^\infty|\widetilde M_T(X)|\,|\mu_A|(dX)
+<\frac{16T}{\log R}
+       e^{-d\sqrt{\log(\pi R/T)}}
+\quad\left(R\ge\max(A,e^3T/\pi),\ A\ge e^2\right).}
+\tag{P5}
+$$
+
+The linear part is eliminated by the full signed moment, not by
+discarding a part of the scale interval:
+
+$$
+\int_1^\infty M_T(X)\,\mu_A(dX)
+=\int_1^\infty\widetilde M_T(X)\,\mu_A(dX)
+ +b_T\int_0^1g_A(X)\,dX.
+\tag{P6}
+$$
+
+Thus the small-scale term in (C8) changes to
+$\int_0^1[D_T(X)+Xb_T]\,\mu_A(dX)$ when its main term is
+replaced by the centered one. The actual zero remainder
+$\mathcal E_T=D_T-M_T$ is unchanged. This retains all endpoint,
+small-scale and conjugate contributions at the same cutoff.
+
+### Cutoffs for the centered arithmetic contribution
+
+With the same $T_j=2^{j-1}T_0$, any requested
+$\varepsilon>0$ has explicit sufficient main-term cutoffs
+
+$$
+\begin{aligned}
+V_j&=\max\left(3,
+  d^{-2}\left[\max\left(0,
+          \log\frac{16T_j2^j}{\varepsilon}\right)\right]^2\right),\\
+Q_j&=\max\left(A,\frac{T_j}{\pi}e^{V_j}\right).
+\end{aligned}
+\tag{P7}
+$$
+
+Since $\log Q_j\ge2$, (P5) gives
+
+$$
+\sum_{j\ge1}\int_{Q_j}^\infty
+|\widetilde M_{T_j}(X)|\,|\mu_A|(dX)<\varepsilon.
+\tag{P8}
+$$
+
+For fixed $A,T_0,\varepsilon$, this choice has
+$\log Q_j=O(j^2)$ as $j\to\infty$. It is a sufficient allowance
+for the centered **arithmetic main** complement, not a necessary
+cutoff or a replacement for (C6)'s zero-remainder cutoffs. It uses
+the same cumulative error law for each prime interval and does not
+combine independently favorable phases.
+
+These estimates control another scale complement and make its
+continuous cancellation explicit. They do not bound the signed
+combination left in (C8): the small-scale zero sum, retained centered
+main and actual zero remainder must still be compared together.
+The growing-scale error cost and the original full Robin inequality
+remain unpaid; no bound for $\sqrt A\log A\,I_\psi(A)$ at the selected
+integer or proof of RH follows.
