@@ -110,7 +110,7 @@ def registration : Registration arena.{u} statement.{u} where
       exact nomatch e
   dependence := dependence.{u}
 
-noncomputable def registration_1.{u} :
+noncomputable def registration_1 :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@NikolovSegal.SmallTwistedProduct.finite_right_stable_inv.{u})
       (type_of% (realize signature.{u} (fun _ p x => by
