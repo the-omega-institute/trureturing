@@ -18,7 +18,7 @@ namespace D5.S3.Arith.FibonacciAtomic.FourExitCoarseLowerBounds
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition
 open ActualImageSevenLeafSeparation (leafLabel leafAddresses Nonconflict)
-open ActualCoarseReadoutHistory (kappa kappa_hist CoarseObservable)
+open ActualCoarseReadoutHistory (kappa kappa_hist)
 open ActualCoarseReadoutCompletion (encodeHistory)
 open FourExitRawEndpointSpectrum
 open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute)
@@ -174,14 +174,15 @@ private theorem leaf_support_geometry (k : Nat) (u : Address) :
       fun _ => (tail_support v).2⟩
 
 private theorem controller_subset_bounds (k : Nat) (hk : 1 ≤ k)
-    (π : Strategy) (observable : CoarseObservable π.policy) :
+    (π : Strategy) (observable : Function.FactorsThrough π.policy kappa_hist) :
     (5*k-1 ≤ ∑ i ∈ (((Finset.univ : Finset (Fin k)) ×ˢ
       (Finset.univ : Finset (Fin 4))).image Sum.inr), (cost π (family k i) - (8*k+16))) ∧
     (4*k-2 ≤ ∑ i ∈ (((Finset.univ : Finset (Fin k)) ×ˢ
       ((Finset.univ : Finset (Fin 4)).erase 2)).image Sum.inr),
         (cost π (family k i) - (8*k+16))) ∧
     (∃ i : Index k, 8 * k + 18 ≤ cost π (family k i)) := by
-  have coarse_trace_run (π : Strategy) (observable : CoarseObservable π.policy) :
+  have coarse_trace_run (π : Strategy)
+      (observable : Function.FactorsThrough π.policy kappa_hist) :
       ∀ (n : Nat) (h t : RH) (U : Source) (b : Bool),
         execute readout π.policy n h U = some (t,b) →
         execute (fun q W => leafLabel W q) (fun g => π.policy (encodeHistory g))
@@ -198,7 +199,7 @@ private theorem controller_subset_bounds (k : Nat) (hk : 1 ≤ k)
           | some b => cases b <;> rfl
         _ = g := List.map_id' _
     have action (h : RH) : π.policy (encodeHistory (kappa_hist h)) = π.policy h :=
-      observable _ _ (section_law _)
+      observable (section_law _)
     intro n
     induction n with
     | zero => intro h t U b run; simp [execute] at run
@@ -789,17 +790,17 @@ private theorem controller_subset_bounds (k : Nat) (hk : 1 ≤ k)
 theorem result (k : Nat) (hk : 1 ≤ k)
     {Ω : Type*} [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
     [MeasureTheory.IsProbabilityMeasure μ] (c : Ω → Strategy)
-    (observable : ∀ ω, CoarseObservable (c ω).policy)
+    (observable : ∀ ω, Function.FactorsThrough (c ω).policy kappa_hist)
     (measurable : ∀ i : Index k,
       Measurable (fun ω => (cost (c ω) (family k i) : ENNReal))) :
     ((8*k+16 : Nat) : ENNReal) + ((5*k-1 : Nat) : ENNReal) / (4*k : Nat) ≤
       ⨆ i : Index k, ∫⁻ ω, (cost (c ω) (family k i) : ENNReal) ∂μ ∧
     ((8*k+16 : Nat) : ENNReal) + ((4*k-2 : Nat) : ENNReal) / (3*k : Nat) ≤
       ⨆ i : Index k, ∫⁻ ω, (cost (c ω) (family k i) : ENNReal) ∂μ ∧
-    (∀ π : Strategy, CoarseObservable π.policy →
+    (∀ π : Strategy, Function.FactorsThrough π.policy kappa_hist →
       ∃ i : Index k, 8*k+18 ≤ cost π (family k i)) ∧
     ((8*k+18 : Nat) : ENNReal) ≤
-      ⨅ π : {π : Strategy // CoarseObservable π.policy},
+      ⨅ π : {π : Strategy // Function.FactorsThrough π.policy kappa_hist},
         ⨆ i : Index k, (cost π.val (family k i) : ENNReal) ∧
     ((8*k+18 : Nat) : ENNReal) ≤
       ∫⁻ ω, (⨆ i : Index k, (cost (c ω) (family k i) : ENNReal)) ∂μ := by
@@ -854,10 +855,10 @@ theorem result (k : Nat) (hk : 1 ≤ k)
     (fun ω => (controller_subset_bounds k hk (c ω) (observable ω)).1)
   have two := average H₂ (4*k-2) (3*k) (by omega) size₂
     (fun ω => (controller_subset_bounds k hk (c ω) (observable ω)).2.1)
-  have deterministic (π : Strategy) (obs : CoarseObservable π.policy) :
+  have deterministic (π : Strategy) (obs : Function.FactorsThrough π.policy kappa_hist) :
       ∃ i : Index k, 8*k+18 ≤ cost π (family k i) :=
     (controller_subset_bounds k hk π obs).2.2
-  have worst (π : Strategy) (obs : CoarseObservable π.policy) :
+  have worst (π : Strategy) (obs : Function.FactorsThrough π.policy kappa_hist) :
       ((8*k+18 : Nat) : ENNReal) ≤ ⨆ i : Index k, (cost π (family k i) : ENNReal) := by
     obtain ⟨i,hi⟩ := deterministic π obs
     exact le_iSup_of_le i (by exact_mod_cast hi)
