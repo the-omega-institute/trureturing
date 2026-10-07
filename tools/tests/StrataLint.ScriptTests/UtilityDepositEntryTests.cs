@@ -42,7 +42,8 @@ public sealed class UtilityDepositEntryTests
         File.Copy(Path.Combine(repository, "Meta/domains.yaml"), Path.Combine(root, "Meta/domains.yaml"));
         File.Copy(Path.Combine(repository, "lean-toolchain"), Path.Combine(root, "lean-toolchain"));
         File.WriteAllText(Path.Combine(root, "lakefile.toml"),
-            "name = \"utility_deposit_fixture\"\ndefaultTargets = [\"D5\"]\n[[lean_lib]]\nname = \"D5\"\nglobs = [\"D5.+\"]\n");
+            "name = \"utility_deposit_fixture\"\ndefaultTargets = [\"D5\", \"LeanInformationAudit\"]\n[[lean_lib]]\nname = \"D5\"\nglobs = [\"D5.+\"]\n");
+        var inspector = UtilityRefutationProducerTests.PrepareStatementInspector(root);
         RequireSuccess(TestProcessRunner.Run("lake", ["build"], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
         var cli = Path.Combine(AppContext.BaseDirectory, "StrataLint");
@@ -51,7 +52,7 @@ public sealed class UtilityDepositEntryTests
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024)).StandardOutput);
         var report = Path.Combine(root, ".lake", "build", "stratalint", "raw-lean-report.json");
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
-        RequireSuccess(TestProcessRunner.Run("lake", ["env", "lean", "--root=" + Path.Combine(repository, "tools/lean-inspector"), "--run", Path.Combine(repository, "tools/lean-inspector/Inspector.lean"), "--statements-only",
+        RequireSuccess(TestProcessRunner.Run("lake", ["env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector, "--statements-only",
             "--output", report + ".spool", "--material-spool", report + ".materials",
             "--utility-input", obligations, "D5.S0.Carrier.Probe", TransactionFixture.LeanPath,
             "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(source)))], root,

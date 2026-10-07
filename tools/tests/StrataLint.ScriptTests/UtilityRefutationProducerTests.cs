@@ -185,7 +185,7 @@ public sealed class UtilityRefutationProducerTests
         }
     }
 
-    private static string PrepareStatementInspector(string root)
+    internal static string PrepareStatementInspector(string root)
     {
         var repository = TestRepositoryLayout.FindRoot();
         var producer = Path.Combine(repository, "tools", "lean-inspector");
