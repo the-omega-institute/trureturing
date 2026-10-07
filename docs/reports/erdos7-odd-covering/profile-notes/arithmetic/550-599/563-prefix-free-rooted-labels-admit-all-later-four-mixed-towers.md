@@ -596,6 +596,9 @@ application, and its axiom closure is standard. The recurrence value
 mass. This verifies arbitrary finite carriers separately; it asserts
 neither compatibility across heights nor an infinite-law construction,
 and does not by itself verify a subsequent ternary-leaf conditioning.
+The complete finite selected-leaf application and its additional actual
+phase conditions are recorded in
+[Report529](../500-549/529-an-irredundant-comb-separates-fibre-credits-from-supported-query-laws.md#a-depth-two-leaf-supplies-a-conditional-source-for-the-actual-family).
 
 The finite nine-coordinate continuation also has a scoped Lean check.
 For an arbitrary alphabet size q>=29, it applies the same old law to
