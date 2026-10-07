@@ -471,6 +471,8 @@ jobs:
             tools/scripts/workflow/test_ci_detect.py
             tools/scripts/workflow/test_ci_required.py
             [tests-cli]
+            # WorktreeMakeWorkflowTests copies the root dispatch table.
+            Makefile
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             Golden/Projection/*
@@ -611,6 +613,10 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-cover-batch]
+            # ProducerInputFixture copies registered inspector/dependency sources.
+            tools/lean-inspector/*.lean
+            tools/lean-inspector/native_image.c
+            lakefile.lean
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             D5/S3/Constants/Values.lean
@@ -899,6 +905,15 @@ jobs:
             tools/scripts/agent/integration-mirror-test.sh
             tools/scripts/agent/integration-mirror.sh
             [tests-lean]
+            # NativeTestSupport stages the real compiler and package configuration;
+            # the relocation consumer copies and runs the Census package.
+            Makefile
+            Reg/lakefile.toml
+            Reg/lake-manifest.json
+            tools/lean-inspector/lakefile.lean
+            tools/lean-inspector/native_image.c
+            tools/lean-inspector/inspect.sh
+            tools/lean-inspector/Census/*
             Meta/FILEMAP.toml
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
@@ -1304,6 +1319,9 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-scribe]
+            # FileMapEmitterTests copies the resolved repository manifest documents.
+            Meta/FILEMAP.toml
+            Meta/FILEMAP.*.toml
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             tools/StrataLint.Scribe/*
@@ -1547,6 +1565,8 @@ jobs:
             tools/scripts/lean-report-pair.sh
             tools/scripts/worktree/lean-cache-run.sh
             [tests-worktree-contract]
+            # WorktreeCacheStrategyTests scans this executable-tooling scope.
+            .github/scripts/*
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             *.lean
