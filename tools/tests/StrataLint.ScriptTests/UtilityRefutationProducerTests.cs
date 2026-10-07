@@ -42,12 +42,12 @@ public sealed class UtilityRefutationProducerTests
         Directory.CreateDirectory(Path.Combine(root, "D5", "S0", "Carrier"));
         File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "lean-toolchain"), Path.Combine(root, "lean-toolchain"));
         File.WriteAllText(Path.Combine(root, "lakefile.toml"),
-            "name = \"refutation_fixture\"\ndefaultTargets = [\"D5\"]\n[[lean_lib]]\nname = \"D5\"\nglobs = [\"D5.+\"]\n");
+            "name = \"refutation_fixture\"\ndefaultTargets = [\"D5\", \"LeanInformationAudit\"]\n[[lean_lib]]\nname = \"D5\"\nglobs = [\"D5.+\"]\n");
         File.WriteAllText(Path.Combine(root, path), source);
+        var inspector = PrepareStatementInspector(root);
         RequireSuccess(TestProcessRunner.Run("lake", ["build"], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
 
-        var inspector = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "Inspector.lean");
         var compactor = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "materials.py");
         var inputs = Path.Combine(root, "utility.json");
         var output = Path.Combine(root, "report.json");
@@ -110,13 +110,13 @@ public sealed class UtilityRefutationProducerTests
             """ + "\n";
         File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "lean-toolchain"), Path.Combine(root, "lean-toolchain"));
         File.WriteAllText(Path.Combine(root, "lakefile.toml"),
-            "name = \"refutation_fixture\"\ndefaultTargets = [\"D5\"]\n[[lean_lib]]\nname = \"D5\"\nglobs = [\"D5.+\"]\n");
+            "name = \"refutation_fixture\"\ndefaultTargets = [\"D5\", \"LeanInformationAudit\"]\n[[lean_lib]]\nname = \"D5\"\nglobs = [\"D5.+\"]\n");
         File.WriteAllText(Path.Combine(root, path), declarations);
         File.WriteAllText(Path.Combine(root, externalPath), externalSource);
+        var inspector = PrepareStatementInspector(root);
         RequireSuccess(TestProcessRunner.Run("lake", ["build"], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
 
-        var inspector = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "Inspector.lean");
         var compactor = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "materials.py");
         var inputs = Path.Combine(root, "utility.json");
         var output = Path.Combine(root, "report.json");
@@ -182,6 +182,31 @@ public sealed class UtilityRefutationProducerTests
                 Assert.False(modules[0].GetProperty("utility_refutation").GetProperty("is_closed_negation").GetBoolean());
             }
         }
+    }
+
+    private static string PrepareStatementInspector(string root)
+    {
+        var repository = TestRepositoryLayout.FindRoot();
+        var producer = Path.Combine(repository, "tools", "lean-inspector");
+        foreach (var module in new[] { "RawArtifacts", "CompiledMetadata", "CompiledAxioms", "Contract/SourceAudit" })
+        {
+            var path = Path.Combine("LeanInformationAudit", module + ".lean");
+            var destination = Path.Combine(root, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(Path.Combine(producer, path), destination);
+        }
+        File.AppendAllText(Path.Combine(root, "lakefile.toml"),
+            "[[lean_lib]]\nname = \"LeanInformationAudit\"\nglobs = [\"LeanInformationAudit.+\"]\n");
+        File.Copy(Path.Combine(producer, "materials.py"), Path.Combine(root, "materials.py"));
+        RequireSuccess(TestProcessRunner.Run("python3", ["-c", """
+            import sys
+            from pathlib import Path
+            producer, root = map(Path, sys.argv[1:])
+            sys.path.insert(0, str(producer / 'tests'))
+            from test_native_support import transport_inspector
+            (root / 'Inspector.lean').write_text(transport_inspector((producer / 'Inspector.lean').read_text()))
+            """, producer, root], root, TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
+        return Path.Combine(root, "Inspector.lean");
     }
 
     private static void RequireSuccess(ProcessOutput result)
