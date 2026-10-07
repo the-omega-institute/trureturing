@@ -61,6 +61,28 @@ internal sealed class CarryGraphCriticalAttainmentDocument : IScribeDocumentDefi
                         Equal(Call("state", Call("policyPath", m, f, start), d), stateOrbit),
                         Equal(Call("action", Call("policyPath", m, f, start), d), Call("f", stateOrbit))))))),
                     "P(m) consists of all dependent tables assigning one legal action to each legal state. The map step(f) sends a state to the successor of its selected action. Its iterate defines the state sequence and the table gives the action sequence."),
+                Describe.Lean(DescribeId.Create("legal-action-exists"),
+                    DeclarationHandle.Create(Prefix + "legal_action_exists"), H("Legal actions exist"),
+                    StatementSource.FromAuthor(Disp(All(m, Ty("N"), All(s, V("State"),
+                        Imp(Call("IsState", m, s), Ex(a, V("Action"), Call("Legal", m, s, a))))))),
+                    AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                        "Every bounded carry state has a legal action with anchor bit zero. Splitting the required number of one-labels between departing equal labels and larger labels respects both capacities and keeps the successor within the state bounds."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(DescribeId.Create("canonical-root-path-exists"),
+                    DeclarationHandle.Create(Prefix + "canonical_root_path_exists"),
+                    H("Canonical paths of positive laws"), StatementSource.FromAuthor(Disp(
+                        All(m, Ty("N"), Imp(Leq(D(2), m), All(p, lawType,
+                            Imp(And(All(i, Call("Fin", m), Pos(Call("p", i))),
+                                Equal(Seq(new Formula.Subscript(F.Sum, i), Call("p", i)), D(1))),
+                                All(k, Call("Fin", m), Imp(
+                                    All(i, Call("Fin", m), Leq(Call("p", k), Call("p", i))),
+                                    Ex(V("gamma"), V("Path"), And(
+                                        Call("IsRootPath", m, V("gamma")),
+                                        Equal(Call("anchorValue", V("gamma")), Call("p", k)),
+                                        Equal(Call("pathCost", V("gamma")), Call("cost", p)))))))))))),
+                    AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                        "For every strictly positive normalized real law and every minimizing index, its dyadic floor columns define a legal path from the original root. The chosen atom is the anchor value, and the residual tail sum is exactly the dyadic cost. These paths compare Bellman root prices with every cost-to-minimum-mass ratio."))),
+                    DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                     H("Root prices and critical attainment"), StatementSource.FromAuthor(Disp(ResultFormula())),
                     AssessedProvenance.FromRepo(), Blocks(
