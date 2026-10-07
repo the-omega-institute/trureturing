@@ -78,3 +78,86 @@ An invertible change of test coordinates transports both the positive Gram metri
 ## Scope of the often quoted two-moment ceiling
 
 AF §7.2 restricts its approximately $0.6818$ obstruction to configuration-wise valid bandwidth-one certificates with specified moment information. Its numerical argument includes `hvalid`, the interval-enclosure hypothesis `EnclOK`, and a derivative remainder. For the displayed regularity range it obtains a bound below $0.6819$; the bare decimal is not a universal ceiling for every finite Weil or FIB method. The paper says the enclosure certificate at tag v1.0 is not Lean-kernel checked, and its configuration-averaging step is on paper. No external formal project was rebuilt in this review. Higher normalized moments or even a proportion-one conclusion also leave possible finite or zero-density exceptions; full RH requires the additional all-zero control described above.
+
+
+## Gaussian-localized short multipliers and the quadratic certificate
+
+R. Arun Chandru, *Quadratic deformations of reflected zeta-zero forms*,
+[DOI 10.5281/zenodo.22817955](https://doi.org/10.5281/zenodo.22817955),
+§1.1, equations (1.4)–(1.9), pp.2–3, and §7, pp.14–15, states a uniform
+exclusion for a specified analytic deformation. This interface is used
+at paper level; its arithmetic proof has not been independently audited
+and has no new Lean certification here.
+
+Use an even nonnegative fixed $f\in C_c^\infty(\mathbb R)$ with
+$\int f=1$ and support in $[-\sigma/2,\sigma/2]$, where $0<\sigma<1$.
+Write $K=\widehat f$, $g=f*f$, and
+
+$$
+a=g(0),\qquad B_0=\int_0^\sigma xg(x)\,dx,\qquad
+\mathscr R=a+2B_0\le\frac75.
+$$
+
+Choosing the earlier density as $\eta=\sqrt f$ identifies its kernel
+with this $K$. The finite-multiset accounting above applies to the
+paper's centered dyadic multiset
+
+$$
+Z_T=\left\{\frac{i(\rho-\tfrac12)\log T}{2\pi}:
+T<\operatorname{Im}\rho\le2T\right\},
+$$
+
+retaining multiplicities. Its original simple-critical Gram matrix gives
+the same clipped correction $\Delta_K$; the zero eigenvalues and its
+original dimension remain part of that correction.
+
+Fix a polynomial-length exponent $\nu>0$ with $\sigma+\nu<1$, and put
+
+$$
+Y_T(s)=\sum_{n\le T^\nu}c_n(T)n^{-s},\qquad
+\|Y_T\|_D^2=\sum_{n\le T^\nu}\frac{|c_n(T)|^2}{n}.
+$$
+
+The coefficients may be arbitrary complex numbers depending on $T$.
+The theorem uses the entire Gaussian multiplier from equation (1.6),
+with center $s_*=1/2+3iT/2$ and width $T/\log T$. Let $G_T,D_T$ be its
+reflected finite operators and $N_T$ the original total zero count. Set
+
+$$
+Q(W)=4\operatorname{tr}W-\operatorname{tr}(W^2),\qquad
+W_t=G_T-tD_T,\qquad t\ge0.
+$$
+
+Equation (1.7) states, without an assumption on the zeros' real parts,
+
+$$
+\frac{\operatorname{tr}((G_T-2I)D_T)}{N_T}
+\le\left(-\frac{427}{3125}+\varepsilon_T\right)\|Y_T\|_D^2,
+\qquad\varepsilon_T\longrightarrow0.
+$$
+
+The fixed profile, support and length exponents determine
+$\varepsilon_T$; it is uniform over the coefficient vector. Equations
+(1.9) and (2.8) retain the original Gram correction and count budget,
+and give
+
+$$
+Q(W_t)-Q(G_T)
+=2t\operatorname{tr}((G_T-2I)D_T)-t^2\operatorname{tr}(D_T^2)
+\le0
+$$
+
+for all sufficiently large $T$, all such polynomials and every $t\ge0$,
+including choices of $t$ depending on $T$. Thus this entire class of
+Gaussian-localized short multipliers cannot increase that compensated
+quadratic counting lower bound. Its negative variation supplies no
+positive margin for the selected Robin source.
+
+The Gaussian localization and fixed positive gap $1-\sigma-\nu$ are
+part of the theorem. Section 7.3 leaves longer polynomials, different
+localizations or energies, and bounded nonlinear trace witnesses outside
+this exclusion. In particular it supplies no estimate for the fourth
+trace discussed above. No map from this deformation to the original
+complete $I_\psi(A)$ or the required prime-side energies of the FIB
+negative tests has been established. Those signed comparisons remain
+unproved.
