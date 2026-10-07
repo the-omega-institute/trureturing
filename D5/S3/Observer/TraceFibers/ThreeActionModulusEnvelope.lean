@@ -111,27 +111,25 @@ private theorem scalar_formula_of_result
 private theorem word_interface (w : List Action) :
     wordMatrix w = ConceptDynamics.Experiment.SelfCalibratingRulings.matrix
       (w.map (fun a => match a with | .advance => false | .exchange => true)) := by
-  induction w with
-  | nil => simp [wordMatrix, ConceptDynamics.Experiment.SelfCalibratingRulings.matrix,
-      Arith.FibonacciAtomic.SelfCalibratingRawWords.word]
-  | cons a w ih =>
-    simp only [wordMatrix, List.map_cons, List.reverse_cons, List.prod_append,
-      List.prod_singleton] at ih ⊢
-    rw [ih]
-    simp only [ConceptDynamics.Experiment.SelfCalibratingRulings.matrix,
-      List.map_cons, Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
-      List.foldr_cons]
-    change _ = (Arith.FibonacciAtomic.SelfCalibratingRawWords.word
-        (w.map (fun a => match a with | .advance => false | .exchange => true)) *
-       Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic
-        (match a with | .advance => false | .exchange => true)).map (Int.castRingHom ℝ)
-    rw [Matrix.map_mul]
-    congr 1
+  let encode : Action → Bool := fun a => match a with | .advance => false | .exchange => true
+  have hatom (a : Action) : actionMatrix a =
+      (Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic (encode a)).map
+        (Int.castRingHom ℝ) := by
     cases a <;> ext i j <;> fin_cases i <;> fin_cases j <;>
       norm_num [actionMatrix, Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
         Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
         GoldenCoding.GoldenModularStandardPair.goldenModularStep,
-        HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix]
+        HyperbolicTransport.GoldenDualTimeRenormalization.goldenTimeReflectionMatrix,
+        encode]
+  simp only [wordMatrix, ConceptDynamics.Experiment.SelfCalibratingRulings.matrix,
+    Arith.FibonacciAtomic.SelfCalibratingRawWords.word, List.prod_eq_foldl,
+    List.foldl_reverse, List.foldr_map]
+  simpa [encode] using
+    (List.foldr_hom (fun B : Matrix (Fin 2) (Fin 2) ℤ => B.map (Int.castRingHom ℝ))
+      (l := w) (init := 1)
+      (g₁ := fun a B => B * Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic (encode a))
+      (g₂ := fun a B => B * actionMatrix a)
+      (by intro a B; rw [Matrix.map_mul, hatom]))
 
 private theorem injective_iff (w : List Action) (executed : List Action)
     (k : ℕ) (x r : ℝ) (hk : 1 ≤ k) (hx : 0 < x) (hr : 0 < r)
