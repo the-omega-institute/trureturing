@@ -334,7 +334,7 @@ $$
 
 本节的相位承诺只用于受限族上界，未加入原全源合同。$e=f=2$ 的边界给17问，临界分支已经按 $m=1$ 处理；不能把空位公式套到 $e=1$ 或 $f=1$。一般 $H$ 的全源精确费用仍须处理零与混零、饱和和未知共同含量、非满轨道无命中、真实秩停滞及退出，以及 $p=2,5$ 与指数1。$H=1$ 的既有零问结论保留。只在3、17处使用已核定的初始赋值1，不排除其它素数的 Wall–Sun–Sun 情形。
 
-查询费用没有控制原同一个 $N^*=1+F_rg^*$ 的全素幂、全部除数和严格预算 $C^*+H^*<(\log\log N^*/\log\log A)^s$。§287 的统计窗口界也不支付该预算；上述全源区间与受限精确值均不代替这份算术估计。
+查询费用没有控制原同一个 $N^*=1+F_rg^*$ 的全素幂、全部除数和严格预算 $C^*+H^*<(\log\log N^*/\log\log A)^s$。上述全源区间与受限精确值均不代替这份算术估计。
 
 数学来源对应如下：原树、组成与观察逆式直接使用 §§3、5；Clifford 关系使用355.1、355.9及359.1–359.2。113.5供应全部 LCP 分支、规范后验与局部势，114.4供应逐轴收尾的方法；120.3–120.4供应共同含量与本原轨道分类，126.5供应模3三步和模9八步的完整低精度时域；126.2、126.4、126.6及136.2供应 $K_\tau$、每层相位和保留初始赋值的秩提升，138.1供应自然源运输。[GlobalGcdSampling](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.md) 的实际读数与相位接口及 [PrimePowerPassiveGcdMemoSupportUpper](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdMemoSupportUpper.md) 的固定树上界按原合同复用；固定树上达到最坏费用，本身不表示任意策略最优。历史纤维、候选更新与精确商使用 [关系纤维首卷 §3](FIB_RELATIONAL_FIBER_CALCULUS.md)、[续篇 §§15–16、20](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION.md) 和[续篇二 §§23–24](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md)。广义 CRT 使用 [Mathlib 的 `Nat.chineseRemainder'` 与 `Nat.mod_lcm`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/ModEq.lean)，相容条件与正代表在本证明中明确代入。
 
