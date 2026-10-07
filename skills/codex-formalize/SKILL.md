@@ -60,13 +60,13 @@ Postcondition: the pinned toolchain is on PATH; `pwd -P` and `git rev-parse --sh
 
 The target is either an open atom or, when the content has no atom, a statement source: a preregistered issue, a published source, or the dispatcher's brief, quoted verbatim.
 
-For an atom target, inspect candidate snapshots in `Generated/echo-residuals/<source_id>.md`. Treat them only as candidate listings. Obtain the authoritative atom text with:
+For an atom target, use `make search-atoms SOURCE=<source-id-or-path>` to find stored ATOM paths in the selected theory. Read a chosen ATOM and its context with:
 
 ```sh
 make show-atom ATOM_ID=<id>
 ```
 
-Never quote the projection as authoritative. Prefer an atom with few unresolved subitems and an elementary, self-contained statement.
+Search reports stored paths and states. Read the ATOM and its context before choosing an elementary, self-contained statement.
 
 The required delivery surfaces are the D5 Lean module and its Blueprint Scribe (`CLAUDE.md` §1.2). Before starting, check with `make show-atom`/`make atom-context` whether the content already has an atom: if it does, deposit and cover that atom in the same delivery; if it does not, write the D5 Lean and Scribe directly and freeze through `make deposit-uncovered`. Do not add a theory volume or run `make ingest` as a precondition for formalization. A target with no atom is still judged by §3.2 proof shape and admission basis, §3.3 utility and §3.7 literature status.
 

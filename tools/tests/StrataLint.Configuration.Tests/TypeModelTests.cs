@@ -89,17 +89,6 @@ public sealed class TypeModelTests
         Assert.Equal("Invalid repository path. (Parameter 'value')", exception.Message);
     }
 
-    [Theory]
-    [InlineData("Generated/echo-residuals/source-a.md", true)]
-    [InlineData("Generated/echo-residuals/a/b.md", false)]
-    [InlineData("Generated/echo-residuals/a.txt", false)]
-    [InlineData("Generated/echo-residuals/.md", false)]
-    [InlineData("Generated/echo-residualsX/a.md", false)]
-    public void EchoResidualShardPathPredicateIsClosed(string value, bool expected)
-    {
-        Assert.Equal(expected, RepositoryPathPolicy.IsEchoResidualShardPath(value));
-    }
-
     [Fact]
     public void ProblemPoolCandidateIsClosedWorldRegisteredButNotASemanticTarget()
     {
@@ -133,6 +122,16 @@ public sealed class TypeModelTests
             ? "unknown top-level artifact"
             : "path must match exactly one FILEMAP entry; matches=0", issue.Message);
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Fact]
+    public void RetiredDigestionProjectionPathIsRejected()
+    {
+        const string value = "Generated/echo-residuals/source-a.md";
+        var issue = Assert.IsType<RepositoryPathIssue>(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(value), Policy()));
+        Assert.Equal("SL-000", issue.RuleId.Value);
+        Assert.Equal(value, issue.Path);
+        Assert.False(RepositoryPathPolicy.TryResolve(RepoPath.CreateKnown(value), out _));
     }
 
     private const string PaperRecipePath = "Papers/recipes/D5-P001.yaml";

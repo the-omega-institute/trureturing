@@ -3633,3 +3633,380 @@ $$
 
 ## 追加锚（第168–177章以下为增补区）
 
+## 178. 固定根的实际任务支持、加权准备像与两种通道成本
+
+**假设 178.1（同一十五边仪器与固定输入）。** 本章的普通数学供应源为本卷[固定版本 c32e033a62a0a4a3bd63ab6b7af1d1ea59059651，第126–135章](https://github.com/the-omega-institute/trureturing/blob/c32e033a62a0a4a3bd63ab6b7af1d1ea59059651/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md)。配置依原顺序为 $0,1,2,3,4$，分别表示 $\mathrm{null},[2],[25],[5],[3]$；完整系统仍为 $\mathcal C\otimes K=\mathbb C^5\otimes\mathbb C^2$。固定所有 $p,q,r>0$ 且 $p+q+r<1$，记
+
+$$
+\delta=1-p-q-r,\qquad \epsilon=1-p-q,\qquad \zeta=1-r,
+\qquad
+P=\begin{pmatrix}
+\delta&p&0&q&r\\
+q&\epsilon&p&0&0\\
+0&q&\epsilon&p&0\\
+p&0&q&\epsilon&0\\
+r&0&0&0&\zeta
+\end{pmatrix}.
+$$
+
+行是来源，列是后继。五个自环、八条有向方形边及两条支边全部严格为正。内部运输精确使用第127章的 $a=-iX,b=-iY,c=ba=iZ$：
+
+$$
+U_{10}=a,\quad U_{21}=c,\quad U_{32}=a^\dagger,
+\quad U_{03}=c^\dagger,\quad U_{40}=b,
+\qquad U_{ij}=U_{ji}^\dagger,\quad U_{ii}=I_2.
+$$
+
+这不采用第124章的另一赋值，也不采用第128章的 $p+q=1$ 四态合同。每轮仍是第130章的同一个分支 $K_{ji}=\sqrt{P_{ij}}|j\rangle\langle i|\otimes U_{ji}$，使用新准备的十五维正交边记录及其明列的实际读取权限。起点已知且固定为 $0$；$N\ge0$ 是公开指定的有限轮数。输入 $\varrho_{KR}$ 任意，$K=\mathbb C^2$ 携带未知量子信息，$R$ 是任意未触及参考，不提供给控制器或解码器。固定根准备、轮数、记录保持和读取均按定义130.1供应，不由编码取得。
+
+**定义 178.2（三个输出接口与全部记录的配对）。** 令 $\mathcal H_N(0)$ 为全部正概率固定根路径 $h=(0,i_1,\ldots,i_N)$，保持所有自环、支叶访问和次序。定义
+
+$$
+p_h=\prod_{t=1}^{N}P_{i_{t-1}i_t},\qquad
+U_h=U_{i_Ni_{N-1}}\cdots U_{i_1,0},\qquad
+|r_h\rangle=\bigotimes_{t=1}^{N}|i_{t-1}\to i_t\rangle.
+$$
+
+不同 $h$ 的 $r_h$ 正交。零轮只有 $h=(0)$，$p_h=1,U_h=I_2$，记录为空张量的单位标量。未迹掉环境的纯等距输出为
+
+$$
+S_N\psi=\sum_{h\in\mathcal H_N(0)}\sqrt{p_h}\,
+|i_N\rangle\otimes U_h\psi\otimes|r_h\rangle.
+\tag{178.1}
+$$
+
+它是同一 $V_{\rm edge}$ 的新记录迭代，不是独立选取路径权重。$S_N(K)$ 是实际指定准备的二维像；这里没有供应独立的任意 $|h\rangle\otimes\psi$ 输入。
+
+第130章的记录就是有序边张量。若另有实际供应的历史副本 $|h\rangle_H$，如第125章的历史—环境配对，下面的纯像重编码必须同时访问 $H$ 与全部边记录，逐项使用 $|r_h^{\rm all}\rangle=|h\rangle_H\otimes|r_h\rangle$；多个副本同样全部纳入。该规则保持原逐历史配对，不把两个记录副本分别压缩后任意相配。已经读出、复制到不可访问指针或迹掉的记录，不能被当作仍可相干访问。此时应使用实际所得通道，不能用 (178.1) 宣称已撤销读出。
+
+方形正向 $0\to1\to2\to3\to0$ 的电流增量为 $+1$，反向为 $-1$，自环及支边为零。记 $B(h)=(i_N,W(h))$，$\mathcal B_N=B(\mathcal H_N(0))$，并令
+
+$$
+\Pi_N(\beta)=\sum_{h:B(h)=\beta}p_h,\qquad
+T_N(j)=\sum_{h:i_N=j}p_h=(P^N)_{0j}.
+$$
+
+标签写为 $\beta=(j,w)$，区别于 Pauli 原子 $b$。复用 (131.3)，令
+
+$$
+(d_0,d_1,d_2,d_3,d_4)=(0,1,2,3,0),\qquad
+(G_0,G_1,G_2,G_3,G_4)=(I,a,-b,-c,b),
+$$
+
+$$
+\sigma_\beta=(-1)^{(w-d_j)/4},\qquad U_\beta=\sigma_\beta G_j,
+\qquad U_h=U_{B(h)}.
+\tag{178.2}
+$$
+
+指数在可达标签上为整数，负整数同样按奇偶取符号。固定根的实际路径分支算子为 $A_h=\sqrt{p_h}|i_N\rangle\otimes U_h$，且 $A_h^\dagger A_h=p_hI_2$，所以路径概率与任意内部—参考输入无关。按任务或端点归并这些实际分支后，得到两种密度输出：
+
+$$
+\begin{aligned}
+\Phi_{B,N}(A)
+&=\sum_{\beta=(j,w)\in\mathcal B_N}\Pi_N(\beta)
+|\beta\rangle\langle\beta|_B\otimes|j\rangle\langle j|_{\mathcal C}
+\otimes U_\beta A U_\beta^\dagger,\\
+\Phi_{T,N}(A)
+&=\sum_{j:T_N(j)>0}T_N(j)|j\rangle\langle j|_{\mathcal C}
+\otimes G_j A G_j^\dagger.
+\end{aligned}
+\tag{178.3}
+$$
+
+两式的输入域都是整个 $M_2(\mathbb C)$；与 $\operatorname{id}_R$ 张量后给对应参考接口。第一式的 $B$ 是真正经典、对角的任务记录；$\mathcal C$ 是冗余但明确保留的端点，内部密度及其参考关联也保留。它由原历史仪器对实际 $h$ 作经典后处理 $h\mapsto B(h)$ 得到。第二式迹掉全部历史，只保留端点和内部密度；它等于 $\mathcal E^N\circ\iota_0$，$\iota_0(A)=|0\rangle\langle0|\otimes A$，不是输入域为整个 $M_{10}$ 的 $\mathcal E^N$。保留所有纯记录的 $\operatorname{Ad}_{S_N}$ 则是第三个接口，不能与这两个混合输出混为同一问题。
+
+**定理 178.3（全部轮数的精确可达任务支持）。** 对每个 $N\ge0$，
+
+$$
+\mathcal B_N=
+\{(j,w):j\in\{0,1,2,3\},\ w\equiv j\pmod4,\ |w|\le N\}
+\ \cup\
+\{(4,4k):k\in\mathbb Z,\ 4|k|+1\le N\}.
+\tag{178.4}
+$$
+
+每个列出的标签在整个严格参数域中有正质量，不排除 $p=q$。
+
+证明（178.3）。路径的净方形步数为 $W$。每条方形步改变 $d$ 模四恰为该步的电流增量；支边两端 $d$ 都为零，自环不改变它。沿路径相加，得到 $W\equiv d_{i_N}\pmod4$。每步电流绝对值至多一，故 $|W|\le N$。若终点为支叶 $4$，至少有一次 $0\to4$，这一步不添电流；于是 $|W|+1\le N$，且 $W$ 为四的倍数。这证明必要性，允许此前任意次数的支叶访问和自环。
+
+反向，给定方形标签 $(j,w)$，从根沿正方形走 $w$ 步（$w\ge0$），或沿反方形走 $-w$ 步（$w<0$）。终点恰为 $w\bmod4=j$，电流恰为 $w$，长度 $|w|$。在该终点追加 $N-|w|$ 次自环，即得指定轮数路径。$w=0$ 时先取空路，再以根自环补齐。
+
+给定支叶标签 $(4,4k)$，先作同方向的 $4|k|$ 步方形闭路回根，再走 $0\to4$，最后在支叶补 $N-4|k|-1$ 次自环。$k=0$ 时只需进入支叶。每个使用的边在本参数域中严格为正，所以构造的路径权重严格为正；对全部合法路径求和给 $\Pi_N(\beta)>0$。路径的其他实现仍留在原纤维中，没有用这组短路代表替换它们的权重或记录。$\square$
+
+**推论 178.4（精确标签数、位数和端点支持）。**
+
+$$
+C_0=1,\qquad
+C_N=2N+2+2\left\lfloor\frac{N-1}{4}\right\rfloor
+=2N+2\left\lceil\frac N4\right\rceil\quad(N\ge1),
+\tag{178.5}
+$$
+
+$$
+L_N=\lceil\log_2 C_N\rceil,\qquad
+\mathcal J_0=\{0\},\quad \mathcal J_1=\{0,1,3,4\},\quad
+\mathcal J_N=\{0,1,2,3,4\}\ (N\ge2).
+\tag{178.6}
+$$
+
+这里 $\mathcal J_N=\{j:T_N(j)>0\}$。$C_N$ 是完整任务字母表大小，$L_N$ 是存这个字母表的最小固定二进制长度；它们不计已经额外保留的控制、时钟或未知内部态。
+
+证明（178.4）。每个整数 $w\in[-N,N]$ 恰给一个方形终点，故方形标签恰有 $2N+1$ 个。$N\ge1$ 时支叶的 $k$ 从 $-\lfloor(N-1)/4\rfloor$ 到正的同一端点，恰有 $2\lfloor(N-1)/4\rfloor+1$ 个。相加得到第一式；对整数 $N\ge1$，$\lfloor(N-1)/4\rfloor+1=\lceil N/4\rceil$。$N=0$ 的支叶集为空，方形只有 $(0,0)$。
+
+一个无损记录须把所有正质量的不同 $B$ 返回区分，少于 $C_N$ 个码无法精确返回整个标签。固定 $L$ 位至多有 $2^L$ 个码，给必要性；逐标签编号给达到。若端点已作为另一个计费载体保留，额外记录可按各端点条件重算，不把那种条件成本称为完整 $B$ 的 $L_N$。端点集合由 (178.4) 投影得出：第二个方形顶点 $2$ 首次在两步可达，其余四个在一步可达；之后正自环补齐全部长度。$\square$
+
+**定义 178.5（不独立择取的精确权重）。** 本章始终使用原仪器的 $\Pi_N$。其全范围计算复用 (134.1)，初始化为 $\Pi_0(j,w)=\mathbf1_{j=0,w=0}$。也可用同一边的 Laurent 矩阵
+
+$$
+P(z)=\begin{pmatrix}
+\delta&pz&0&qz^{-1}&r\\
+qz^{-1}&\epsilon&pz&0&0\\
+0&qz^{-1}&\epsilon&pz&0\\
+pz&0&qz^{-1}&\epsilon&0\\
+r&0&0&0&\zeta
+\end{pmatrix},\qquad
+\Pi_N(j,w)=[z^w](P(z)^N)_{0j}.
+\tag{178.7}
+$$
+
+展开矩阵乘法时，每个中间指标就是一次实际边接续；系数为该路径的 $p_h$，幂指数为该路径的 $W$。所以此式不遗漏支边、自环或重复访问，并与原递推相同。$z=1$ 得 $T_N(j)=(P^N)_{0j}$，行归一化给 $\sum_\beta\Pi_N(\beta)=1$。本式在有限 Laurent 多项式环中使用，没有随机酉或独立边缘模型的替换。
+
+**定理 178.6（经典任务通道的最小纯环境）。** 对 (178.3) 指定的整个任务输出接口，最小纯初始环境维数恰为 $C_N$。其占用输出空间为 $2C_N$ 维，嵌入明确保留的 $B\otimes\mathcal C\otimes K$ 后下界和达到仍相同。这与仅写一个具有相同经典概率的相干输出不同。
+
+证明（178.6）。令 $F_B$ 有正交基 $f_\beta$，定义
+
+$$
+V_{B,N}\psi=
+\sum_{\beta=(j,w)\in\mathcal B_N}\sqrt{\Pi_N(\beta)}
+|\beta\rangle_B\otimes|j\rangle_{\mathcal C}\otimes
+U_\beta\psi\otimes f_\beta.
+\tag{178.8}
+$$
+
+因 $U_\beta$ 酉且质量和为一，$V_{B,N}^\dagger V_{B,N}=I_2$。迹掉 $F_B$ 正好得到 (178.3) 的第一式，故有 $C_N$ 维达到。相同等式与 $I_R$ 张量，保留全部未知内部—参考输入。
+
+下界应用标准有限维 Kraus/Choi/Stinespring 供应结果，具体形式为 Watrous 的定理2.22、推论2.27。这里的矩形 Kraus 算子为
+
+$$
+A_\beta=\sqrt{\Pi_N(\beta)}\,|\beta\rangle_B\otimes|j\rangle_{\mathcal C}\otimes U_\beta,
+\qquad
+J(\Phi_{B,N})=\sum_\beta|\operatorname{vec}A_\beta\rangle
+\langle\operatorname{vec}A_\beta|.
+$$
+
+不同 $\beta$ 的向量因保留的经典输出标签而正交，每个范数平方为 $2\Pi_N(\beta)>0$。因此 Choi 秩恰为 $C_N$。任何纯环境维数 $m$ 的实现最多有 $m$ 个环境基分量作为 Kraus 算子，故 $m\ge\operatorname{rank}J=C_N$。这是同一个已指定通道的下界，允许任意内部态和参考，并非针对某个输入态的输出秩估计。$N=0$ 时它给一维环境；此时通道只是固定标签附加到未知内部态上。$\square$
+
+**定理 178.7（末端通道的最小纯环境）。** 指定的固定根末端通道满足
+
+$$
+\min\dim F_T=|\mathcal J_N|=
+\begin{cases}1,&N=0,\\4,&N=1,\\5,&N\ge2.\end{cases}
+\tag{178.9}
+$$
+
+证明（178.7）。取 $F_T$ 中的正交基 $g_j$，定义
+
+$$
+V_{T,N}\psi=\sum_{j\in\mathcal J_N}\sqrt{T_N(j)}
+|j\rangle_{\mathcal C}\otimes G_j\psi\otimes g_j.
+\tag{178.10}
+$$
+
+行质量和一给等距，环境迹给 (178.3) 的第二式。其 Kraus 算子 $A_j=\sqrt{T_N(j)}|j\rangle\otimes G_j$ 因不同输出端点而 Hilbert–Schmidt 正交，向量化后的范数平方为 $2T_N(j)>0$。故 Choi 秩为 $|\mathcal J_N|$，同一纯环境下界达到。用 (178.6) 得三种数值。
+
+中心符号在每个 $U_h A U_h^\dagger$ 中相消，所以同端点的所有历史确可合到这个 Kraus 方向。相消只发生在这个密度通道的历史遗忘中；在 (178.1) 的纯输出中不能删去它。$p=q$ 或其他严格域内的参数等式不使正质量的输出端点或任务标签消失，因此不降低任一上述 Choi 秩。$\square$
+
+**命题 178.8（未知逻辑信息和参考的完整保留）。** 两个通道都存在数学 CPTP 左逆恢复整个内部输入。经该左逆，任意 $\varrho_{KR}$ 及其参考关联保持。若全部内部量子信息必须通过同一个有限经典 flag 加 $d_{\rm port}$ 维量子端口，且没有原输入、预共享纠缠或量子旁路，则精确恢复要求 $d_{\rm port}\ge2$；二维护持 $K$ 达到。
+
+证明（178.8）。对末端输出定义
+
+$$
+\mathcal L_T(X)=\sum_{j=0}^4 G_j^\dagger
+(\langle j|X|j\rangle)G_j,
+\qquad \mathcal L_B=\mathcal L_T\circ\operatorname{Tr}_B.
+$$
+
+这些矩形 Kraus 分量的平方和为输出单位，故是 CPTP。代入 (178.3)，每项恢复 $A$ 乘对应质量，全部质量和为一，得 $\mathcal L_T\Phi_{T,N}(A)=A$ 和 $\mathcal L_B\Phi_{B,N}(A)=A$。全部式在 $M_2$ 上成立，与 $\operatorname{id}_R$ 张量便是联合恢复，不需估计或读取未知内部态。这是第132章移动逻辑块在固定根及本输出接口上的使用；实际 $G_j^\dagger$ 控制仍须供给。
+
+若 $d_{\rm port}=1$，有限 flag 端口只是经典通信。每个编码分支给一个正线性泛函，每个解码分支准备固定态，复合为测量—准备通道。作用于 $K$ 与二维参考的 Bell 态时，其输出是系统—参考乘积态的凸组合，因此可分；随后任何仅系统上的 CPTP 左逆仍可分，不能恢复原来纠缠的 Bell 态。这与上述精确参考恢复矛盾。$d_{\rm port}$ 是正整数，故至少为二。反向完整保留 $K$ 即可，经典标签及各自环境另计。$\square$
+
+**定理 178.9（原记录中的加权任务纤维与相位正确的端点方向）。** 定义同一实际记录空间内的单位向量
+
+$$
+\tau_\beta=\frac1{\sqrt{\Pi_N(\beta)}}
+\sum_{h:B(h)=\beta}\sqrt{p_h}|r_h\rangle,
+\qquad
+\eta_j=\frac1{\sqrt{T_N(j)}}
+\sum_{h:i_N=j}\sqrt{p_h}\,\sigma_{B(h)}|r_h\rangle.
+\tag{178.11}
+$$
+
+分别在可达 $\beta$ 和 $j$ 上定义。$\{\tau_\beta\}$ 是 $C_N$ 个正交单位方向，$\{\eta_j\}$ 是 $|\mathcal J_N|$ 个正交单位方向，且
+
+$$
+\eta_j=\sum_{\beta=(j,w)}
+\sqrt{\frac{\Pi_N(\beta)}{T_N(j)}}\,\sigma_\beta\tau_\beta,
+$$
+
+$$
+S_N\psi=
+\sum_{\beta=(j,w)}\sqrt{\Pi_N(\beta)}
+|j\rangle\otimes U_\beta\psi\otimes\tau_\beta
+=\sum_{j\in\mathcal J_N}\sqrt{T_N(j)}
+|j\rangle\otimes G_j\psi\otimes\eta_j.
+\tag{178.12}
+$$
+
+证明（178.9）。原 $r_h$ 的两两正交使同纤维范数平方为该纤维质量；不同任务纤维或端点纤维支撑不交，故方向正交。代入 (178.2) 再按 $B$ 或端点分组给两个等式。符号只在 $\eta_j$ 的相干和内出现，同任务纤维中是同一 $\sigma_\beta$，在 $U_\beta$ 中保留。正负闭路不会使某个向量的范数抵消，因为它们伴随不同的正交历史记录。
+
+若有额外历史副本，所有式逐项改用定义178.2的 $r_h^{\rm all}$，证明仍成立，但操作域变成所有这些记录的联合空间。只访问其中一个而迹掉另一个时，交叉历史块被消去，不能据此假定仍保留这里的纯 $\eta_j$；单路径纤维等退化情形须按实际输出单独判断。$\square$
+
+**命题 178.10（准备像上的三种重编码及其作用域）。** 下列映射都是有限维数学等距，不供应原生门、记录擦除或初始化。
+
+第一，在 $\operatorname{span}\{\tau_\beta\}$ 上定义 $Q_B\tau_\beta=|\beta\rangle$。它把 (178.12) 的第一式变成相干标签输出，保留正确 $U_\beta$ 和原纤维的全部权重；这个输出还不是经典 $\Phi_{B,N}$。若先在原记录上以保持记录的等距追加任务副本 $|r_h\rangle\mapsto|B(h)\rangle_B\otimes|r_h\rangle$，再用 $Q_B$ 重编码余记录（目标基改记为 $f_\beta$），则输出恰为 (178.8)。迹掉该余记录才给经典任务通道。
+
+第二，在 $\operatorname{span}\{\eta_j\}$ 上定义 $Q_T\eta_j=g_j$。它把 (178.12) 的第二式变成 (178.10)，所以原仪器的整个指定纯准备族确与最小末端 dilation 相联系，逐输入和逐参考保持相干。未复制任务标签的原记录约化态为
+
+$$
+\operatorname{Tr}_{\mathcal C K}(S_N\varrho_KS_N^\dagger)
+=\sum_{j\in\mathcal J_N}T_N(j)|\eta_j\rangle\langle\eta_j|.
+\tag{178.13}
+$$
+
+因此它的支持维数恰为 $|\mathcal J_N|$。任何只在记录上作等距、保持这个准备族的重编码都不能用更小的记录载体；$Q_T$ 达到。若已相干追加任务副本，余记录态则为 $\sum_\beta\Pi_N(\beta)|\tau_\beta\rangle\langle\tau_\beta|$，其支持恰为 $C_N$，不能用前一个支持维数替代。
+
+第三，整个 $S_N(K)$ 只有二维。以第132章的共同框架
+
+$$
+D=\sum_j|j\rangle\langle j|\otimes G_j^\dagger
+$$
+
+作用于系统，得到（按张量次序识别）
+
+$$
+(D\otimes I)S_N\psi=\xi_N\otimes\psi,
+\qquad
+\xi_N=\sum_h\sqrt{p_h}\,\sigma_{B(h)}
+|i_N\rangle\otimes|r_h\rangle.
+\tag{178.14}
+$$
+
+$\xi_N$ 是固定单位向量，与未知输入无关。若允许同时访问配置及全部记录，则在这一个准备像上取 $S_N\psi\mapsto\psi$ 是等距，逆为 $\psi\mapsto S_N\psi$；等价地可把固定 $\xi_N$ 送到一个指定单位向量。这个二维像不等于环境因子维数的最优值。
+
+证明（178.10）。前两映射把正交单位组送到正交单位组，故在线性张成空间上保持内积；代入 (178.12) 得所列输出。追加任务副本后，任务副本的正交标签使不同 $\beta$ 的交叉项在余记录约化中消失，得到 $C_N$ 个正方向；未追加时，端点正交使不同 $j$ 消失，内部酉共轭后的密度态迹为一，给 (178.13)。等距不能降低这些正交支持的维数。
+
+原等距满足 $S_N^\dagger S_N=I_2$，故像恰二维；框架共轭消去 $G_j$，直接给 (178.14)，$\|\xi_N\|^2=\sum_hp_h=1$。上述等距可通过补正交基延拓到足够大的环境或共同载体；若采用较小输出因子，需要把输入支持之外的方向留在另一个残余载体。这种延拓没有把整个记录空间压进较小维数，也没有把所有独立 $r_h$ 变成同一个任务标签。
+
+全部重编码的定义依赖已指定 $N,p,q,r$、原相位和联合记录保持。物理实施须供给相应共同相干访问、精确准备、控制、维持及逆；这些没有由等距存在得到。$\operatorname{Ad}_{S_N}$ 将全部记录作为输出保留，本身的 Choi 秩为一，外部纯环境可为一维；这是第三个输出合同的事实，不反驳经典任务通道的 $C_N$ 或末端通道的 (178.9)。$\square$
+
+**命题 178.11（遗忘与后验重采样只恢复边缘通道）。** 对任意 $N$，$\operatorname{Tr}_B\Phi_{B,N}=\Phi_{T,N}$。存在一个仅用末端输出的 CPTP 后处理 $\mathcal R_N$，使 $\mathcal R_N\Phi_{T,N}=\Phi_{B,N}$；它按实际源权重的后验重新生成标签，不恢复某次运行已经取得而后来丢弃的 $B$ 或 $h$。
+
+证明（178.11）。在第一通道中 $\sigma_\beta$ 于密度共轭相消，对同端点求和得 $T_N(j)$，故得到遗忘等式。对 $j\in\mathcal J_N$，令 $\beta_j(\beta)=\Pi_N(\beta)/T_N(j)$，其中 $\beta=(j,w)$。这是正的归一化后验，且与未知内部输入及参考无关。对任意末端矩阵 $X$ 取对角内部块 $X_{jj}=\langle j|X|j\rangle$，定义
+
+$$
+\mathcal R_N(X)=
+\sum_{j\in\mathcal J_N}\ \sum_{\beta=(j,w)}
+\beta_j(\beta)|\beta\rangle\langle\beta|_B
+\otimes|j\rangle\langle j|_{\mathcal C}\otimes X_{jj}.
+\tag{178.15}
+$$
+
+在可达端点直接和上这是 CPTP。要在全部 $M_{10}$ 上定义，对不可达 $j$ 的块追加 $|\beta_0\rangle\langle\beta_0|\otimes|0\rangle\langle0|\otimes X_{jj}$，其中 $\beta_0=(0,0)$ 始终可达。这些补项在 $\Phi_{T,N}$ 的像上为零。每个分量都有明确矩形 Kraus 算子，概率和一，输入端点非对角块被删除，故整个扩展 CPTP。代入末端通道，$T_N(j)\beta_j(\beta)=\Pi_N(\beta)$，且 $U_\beta A U_\beta^\dagger=G_jAG_j^\dagger$，得到通道等式，对全部参考同样成立。
+
+这项等式比较从同一未知输入产生的边缘输出，不比较附有实际过去标签的联合律。后验生成需要额外随机制备或纯环境及输出载体；其存在不供给那个操作。两个接口关于未知逻辑输入可以彼此后处理，而纯环境成本仍不同，因为输出经典随机关系及所迹环境也不同。$\square$
+
+**命题 178.12（两步实际路径的相同末态、不同任务与不同误配率）。** 对全部严格参数，包括 $p=q$，原仪器的两条实际路径
+
+$$
+h_+=(0,1,2),\qquad h_-=(0,3,2)
+$$
+
+有正权重 $p^2,q^2$，任务标签 $(2,2),(2,-2)$，运输分别为 $ca=-b$、$ac=b$。它们对每个内部—参考密度输入给同一条件末端输出。因此任何仅末端的操作都不能在这两个实际来源上确定返回原来的不同 $B$。
+
+给定终点 $2$ 后，以 (178.15) 独立重采样的 $B'$ 与原来实际 $B$ 的误配概率分别为
+
+$$
+\Pr(B'\ne B\mid h_+)=\frac{q^2}{p^2+q^2},\qquad
+\Pr(B'\ne B\mid h_-)=\frac{p^2}{p^2+q^2}.
+\tag{178.16}
+$$
+
+按原后验平均、条件于终点 $2$ 的误配率为
+
+$$
+\Pr(B'\ne B\mid i_2=2)=\frac{2p^2q^2}{(p^2+q^2)^2}.
+\tag{178.17}
+$$
+
+其对所有运行的误配率的终点 $2$ 贡献才是 $2p^2q^2/(p^2+q^2)$；这个贡献不包含其他终点的误配。
+
+证明（178.12）。由同一边权重相乘和运输相乘即得两条路径的值。两步从根到 $2$ 只能经 $1$ 或 $3$，所以 $T_2(2)=p^2+q^2$，后验恰为 $p^2/(p^2+q^2)$ 和 $q^2/(p^2+q^2)$。$(-b\otimes I_R)\varrho_{KR}(-b\otimes I_R)^\dagger=(b\otimes I_R)\varrho_{KR}(b\otimes I_R)^\dagger$，给相同末态。若一个通道对同一输入密度返回两个不同确定标签，就违反映射的单值性，故实际标签不能这样恢复。
+
+在具体来源 $h_+$ 上，猜到另一标签的概率是第二后验；$h_-$ 同理，得到 (178.16)。再按两个源后验加权，得 $2[p^2/(p^2+q^2)][q^2/(p^2+q^2)]$，其分母平方不能漏掉。乘终点事件概率 $p^2+q^2$ 才得到未条件贡献。$p=q$ 时两个具体来源误配率和条件平均都为 $1/2$；平稳似然量此时为零，但 $B$ 与实际路径仍不同。$\square$
+
+**例 178.13（空轮、首轮、二轮和首次非零支叶标签）。** 空轮只有 $(0,0)$，两个密度通道都是固定标签附加到内部恒等，两个最小纯环境均为一维。首轮为
+
+$$
+\begin{array}{c|cccc}
+\beta&(0,0)&(1,1)&(3,-1)&(4,0)\\\hline
+\Pi_1(\beta)&\delta&p&q&r
+\end{array}
+$$
+
+所以任务和末端最小纯环境此时同为四。二轮的全部六项为
+
+$$
+\begin{array}{c|c}
+\beta&\Pi_2(\beta)\\\hline
+(0,0)&\delta^2+2pq+r^2\\
+(1,1)&p(\delta+\epsilon)\\
+(3,-1)&q(\delta+\epsilon)\\
+(4,0)&r(\delta+\zeta)\\
+(2,2)&p^2\\
+(2,-2)&q^2
+\end{array}
+$$
+
+每行按全部实际中间点求和得到；总和为一，不丢弃 $0\to4\to0$ 或自环。此时任务环境六维、末端环境五维。四步方形正、反闭路有 $W=\pm4$、运输均为 $-I$，权重 $p^4,q^4$；根自环四次则为 $I$、权重 $\delta^4$。这些不同历史在纯加权记录中各留原符号。非零支叶标签 $(4,\pm4)$ 首次在 $N=5$ 出现，取相应四步闭路再进入支叶，权重分别为 $p^4r,q^4r$；此前支叶只有 $(4,0)$。更一般 $(4,\pm4k)$ 首次在 $4k+1$ 轮出现，$k\ge1$。
+
+取 $p=1/4,q=r=1/8$，二轮终点 $2$ 的质量为 $5/64$，两个具体来源的误配率为 $1/5,4/5$，条件平均为 $8/25$，未条件的该终点贡献为 $1/40$。取 $p=q=1/8,r=1/4$，这些量分别为 $1/32$、$1/2,1/2$、$1/2$、$1/64$。它们只是公式的参数实例，不代替全范围证明。
+
+**边界 178.14（任意相干历史域与资源分型）。** 第134章的独立全历史输入仍是
+
+$$
+\operatorname{span}\{|h\rangle:h\in\mathcal H_N(0)\}\otimes K,
+\qquad |h\rangle\psi\longmapsto|B(h)\rangle U_h\psi\otimes r'_h.
+$$
+
+其同任务纤维内的正交残差下界 (134.3)–(134.4) 直接复用，不把它重新作为本章成果。与之不同，(178.1) 只在每个未知 $\psi$ 上供应一个已经指定的加权组合；$Q_B,Q_T$ 对这个准备合同的重编码不必对所有独立历史基给相同小记录输出，也没有建立那种全域延拓。反过来，五维末端 dilation 只给指定末端通道，不能保存已经丢弃或根本未供给的过去历史。
+
+各数值属于以下不同输出和计费单位：
+
+| 178 的对象与合同 | 精确值 | 计入的量 |
+| --- | --- | --- |
+| 实际完整任务标签 $B$ 的可达像 | $C_0=1$；$C_N=2N+2\lceil N/4\rceil$ | 可区别经典字母数 |
+| 完整 $B$ 的固定二进制编码 | $\lceil\log_2C_N\rceil$ | 标签位数 |
+| 未知内部—参考的精确量子端口 | $2$ | 内部量子载体维数 |
+| 指定经典 $B$ 加内部输出的纯环境 | $C_N$ | 整个该通道的辅助输出维数 |
+| 指定末端输出的纯环境 | $1,4,5$，按 $N=0,1,\ge2$ | 整个末端通道的辅助输出维数 |
+| 完整纯准备像 $S_N(K)$ | $2$ | 输入信息子空间维数 |
+| 完整记录也保留为输出的 $\operatorname{Ad}_{S_N}$ | $1$ | 额外纯环境维数 |
+
+纯环境下界包含一切不在已声明输出中的辅助系统；额外随机 flag、混合初始环境的纯化或测量指针不能藏在计费之外。经典 $B$ 的输出本身与使它真正对角的环境是不同载体。控制器完整状态数、程序表、精确参数表示、轮数或结束标记、初始化、时钟、读写、保持寿命、物理制备和擦除费用不由这个表给出。若实际输出还保留来源、标定或其他事件字段，应把它们纳入新的接口；本章不把 $B$ 称为所有实际未来菜单的最小记录。
+
+## 178.99. 供应范围与仍未建立的实际桥
+
+本章在固定版本的普通论文陈述中使用：第130章同一十五边正交记录仪器、初始化和逐路径权重；第131章逐边相位因子化；第132章完整逻辑因子及参考保持；第134章任务更新、具名平稳比较量和独立全历史域下界。精确支持 (178.4)–(178.5)、固定根两通道的 Choi 方向、原记录中的加权方向和后验误配是这些供应结果在本合同内的具体连接，不以检索未命中作全球原创性证据。
+
+比较源 [RECURSIVE_RELATIONAL_OBSERVATION_MINIMAL_RECORD_DILATIONS，同一固定版本，第1–7章](https://github.com/the-omega-institute/trureturing/blob/c32e033a62a0a4a3bd63ab6b7af1d1ea59059651/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MINIMAL_RECORD_DILATIONS.md) 优化的是完整十维输入上不同的单轮未读或边可读合同，得到 $2,4,15$，并给 $4^N$ 有序记录加末端的全路径上界。它的 $V_2,V_4$ 未读通道不是本章指定的正交边通道；不能用其较小维数替换本章仪器。其第7.4–7.5条保留独立历史域与有限历史最优值的边界，本章只解决所列固定根任务和末端合同。
+
+比较源 [RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY，同一固定版本，第1–5章](https://github.com/the-omega-institute/trureturing/blob/c32e033a62a0a4a3bd63ab6b7af1d1ea59059651/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md) 的来源是 $\mathbb C^5$ 上的指定等待和五个秩一模式读，其首读约化依赖秩一坍缩；这里每条边保留任意 $\mathbb C^2$ 内部输入，合同不同。该源的端口 minimax 常数不进入本章。本卷第168–177章的面积位置、五量及三阶签名另有正叶路径和操作菜单，未把它们识别为此处的 $W$ 或边记录。
+
+有限维通道工具采用 John Watrous, *The Theory of Quantum Information*, Cambridge University Press, 2018，[第2章，定理2.22、推论2.27及 §2.5](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)：输入与输出为有限复 Euclidean 空间，Choi 使用未归一化 $\operatorname{vec}(I)$，完全正算子和与环境等距表示匹配，最小 Kraus 数及纯环境维数为 Choi 秩。本章所有 Choi 秩计算均依这一约定；归一化 Choi 只乘正标量，不改变秩。其原始供应出处分别为 M.-D. Choi, [“Completely positive linear maps on complex matrices”, *Linear Algebra and its Applications* 10 (1975), 285–290](https://doi.org/10.1016/0024-3795(75)90075-0)；K. Kraus, [“General state changes in quantum theory”, *Annals of Physics* 64 (1971), 311–335](https://doi.org/10.1016/0003-4916(71)90108-4)；W. F. Stinespring, [“Positive functions on $C^*$-algebras”, *Proceedings of the American Mathematical Society* 6 (1955), 211–216](https://doi.org/10.1090/S0002-9939-1955-0069403-4)。这里复用其成熟有限维结论，不另交付一般 Kraus、Choi 或 Stinespring 定理；本章陈述和证明均为普通数学，未声称 Lean 核验。
+
+固定根和严格正参数是本章的边界。任意相干初始配置、多根初始化、零概率边或任意完整控制历史，不由这些数值直接运输。$W\log(p/q)$ 仍只表示第134章限制到固定根的具名平稳正反比较量，不是 $\delta_0$ 起始律自身的倒序似然；$p=q$ 时该量为零不合并实际 $W$ 标签。未知内部态、未触及参考和原 Pauli 相位没有被经典标签替换。
+
+仍需的实际桥是：在所供原生菜单中取得并维护这些边权、内部运输、新纯记录、相位参照与所需共同记录访问；合法实现加权重编码、经典后验制备、联合逆和任何档案擦除；在控制、标定、钟及允许未来任务也计费时证明相应最小资源。本章没有供给新的 native port、任意相位门、复位、免费时钟或历史访问，没有热力学或空间维数结论，也没有给出任意独立相干历史输入上的新压缩最优值或无界固定总预算。
+
+## 追加锚（本行以下为增补区）

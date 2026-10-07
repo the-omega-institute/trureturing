@@ -23,7 +23,8 @@ internal static class ReportFreeDigestionIngestor
         ImmutableHashSet<string>? sourceIds = null,
         ImmutableHashSet<string>? registrationPaths = null,
         Func<string, TheoryAtomizer>? atomizerResolver = null,
-        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null)
+        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null,
+        IReadOnlySet<string>? populatedSourceIds = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -103,7 +104,8 @@ internal static class ReportFreeDigestionIngestor
                 atomizerRules,
                 atomizerResolver,
                 contentKindAtomizerResolver,
-                fallbacks);
+                fallbacks,
+                populatedSourceIds?.Contains(source.SourceId) ?? !source.Entries.IsEmpty);
             var outputSource = currentSourceIds.Contains(source.SourceId)
                 ? source
                 : source with
@@ -203,7 +205,8 @@ internal static class ReportFreeDigestionIngestor
         TheoryAtomizerRules rules,
         Func<string, TheoryAtomizer> atomizerResolver,
         Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver,
-        ImmutableArray<DigestionIngestFallback>.Builder fallbacks)
+        ImmutableArray<DigestionIngestFallback>.Builder fallbacks,
+        bool populated)
     {
         AtomizedTheoryDocument atomized;
         try
@@ -218,7 +221,7 @@ internal static class ReportFreeDigestionIngestor
         catch (Exception exception) when (
             exception is TheorySourceFormatException or DecoderFallbackException)
         {
-            return CoarseFallback(source, sourceBytes, exception.Message, fallbacks);
+            return CoarseFallback(source, sourceBytes, exception.Message, fallbacks, populated);
         }
 
         if (DigestionLedgerAligner.AtomizerIntegrityFailure(
@@ -237,18 +240,19 @@ internal static class ReportFreeDigestionIngestor
             source,
             sourceBytes,
             "atomizer recognition is incomplete or empty",
-            fallbacks);
+            fallbacks, populated);
     }
 
     private static AtomizedTheoryDocument CoarseFallback(
         DigestionLedgerSource source,
         ImmutableArray<byte> sourceBytes,
         string reason,
-        ImmutableArray<DigestionIngestFallback>.Builder fallbacks)
+        ImmutableArray<DigestionIngestFallback>.Builder fallbacks,
+        bool populated)
     {
         var fingerprints = DigestionFingerprint.ComputeOpaque(sourceBytes.AsSpan());
         var atomId = fingerprints.RawSha256["sha256:".Length..];
-        if (!source.Entries.IsEmpty
+        if (populated
             && !source.Entries.Any(entry => entry.AtomId == atomId))
         {
             throw new FormatException($"source {source.SourceId} atomization failed: {reason}");

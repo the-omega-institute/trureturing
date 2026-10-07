@@ -24,10 +24,10 @@ internal static partial class CoverAtomCommand
         internal bool Invalidated { get; private set; }
 
         internal Session(string root, IRepositoryGateway repository, ILeanReportSource reportSource,
-            DateTimeOffset recordedAtUtc, string firstGid)
+            DateTimeOffset recordedAtUtc, string firstGid, IReadOnlyList<string> atomIds)
         {
             this.root = root;
-            (CurrentRaw, current, document) = DigestionWorkingTree.ReadEvaluation(repository, Decode, LoadDocument);
+            (CurrentRaw, current, document) = ReadInputs(repository, atomIds);
             Baseline = current;
             Report = reportSource.Load(Current);
             Lean = ValidateLean(Current, Report);
@@ -44,6 +44,55 @@ internal static partial class CoverAtomCommand
             FrozenStatements = FrozenStatementIndex.Create(FrozenState, Report);
             TruthStates = LeanTruthStates.Resolve(Current, Lean);
             Changes = RawChangeSet.Create([]);
+        }
+
+        private static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document)
+            ReadInputs(IRepositoryGateway repository, IReadOnlyList<string> atomIds)
+        {
+            var selected = DigestionQuerySelection.ReadAtoms(repository, atomIds);
+            var visited = atomIds.ToHashSet(StringComparer.Ordinal);
+            var pending = selected.Document.RequireDigestionEntries()
+                .SelectMany(static entry => entry.Receipts.ChainAtoms).ToArray();
+            var casPaths = selected.Document.RequireDigestionEntries()
+                .Where(static entry => !entry.Receipts.ChainAtoms.IsEmpty)
+                .Where(static entry => DigestionFingerprint.IsCanonicalSha256(entry.CasRef))
+                .Select(DigestionQuerySelection.CasPath).ToHashSet(StringComparer.Ordinal);
+            while (pending.Length > 0)
+            {
+                var referencedIds = pending.ToHashSet(StringComparer.Ordinal);
+                foreach (var entry in selected.Document.RequireDigestionEntries()
+                    .Where(entry => referencedIds.Contains(entry.AtomId)
+                        && DigestionFingerprint.IsCanonicalSha256(entry.CasRef)))
+                    casPaths.Add(DigestionQuerySelection.CasPath(entry));
+                var frontier = pending.Where(visited.Add)
+                    .Where(static id => DigestionFingerprint.IsCanonicalSha256("sha256:" + id)).ToArray();
+                if (frontier.Length == 0) break;
+                var referenced = DigestionQuerySelection.ReadAtoms(repository, frontier);
+                if (!referenced.Raw.Entries.IsEmpty)
+                    selected = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(selected.Raw, referenced.Raw));
+                var ids = frontier.ToHashSet(StringComparer.Ordinal);
+                var entries = selected.Document.RequireDigestionEntries().Where(entry => ids.Contains(entry.AtomId)).ToArray();
+                foreach (var entry in entries.Where(static entry => DigestionFingerprint.IsCanonicalSha256(entry.CasRef)))
+                    casPaths.Add(DigestionQuerySelection.CasPath(entry));
+                pending = entries.SelectMany(static entry => entry.Receipts.ChainAtoms).ToArray();
+            }
+
+            var declared = selected.Document.RequireDigestionSources()
+                .SelectMany(static source => source.Entries
+                    .SelectMany(static entry => entry.CoverageGids
+                        .Select(static gid => Gid.TryParse(gid, out var parsed) ? parsed.Path.Value : null)
+                        .Append(entry.Receipts.TailAuthorization?.Path))
+                    .Append(source.SourcePath))
+                .OfType<string>().Where(static path => RepoPath.TryCreate(path, out _));
+            var paths = new[]
+                {
+                    TheoryAtomizerDataLoader.DataPath, "D5", "Reg", "Trureturing.lean", "Golden/Frozen/state",
+                }
+                .Concat(declared.Select(DigestionQuerySelection.Literal))
+                .Concat(casPaths.Select(DigestionQuerySelection.Literal))
+                .Distinct(StringComparer.Ordinal).ToArray();
+            var raw = DigestionQuerySelection.Merge(selected.Raw, repository.ReadCurrent(paths));
+            return (raw, Decode(raw), selected.Document);
         }
 
         internal CommandResult Apply(string atomId, ImmutableArray<string> gids) =>
