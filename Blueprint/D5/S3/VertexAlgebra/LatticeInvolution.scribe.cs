@@ -147,17 +147,6 @@ internal sealed class LatticeInvolutionDocument : IScribeDocumentDefinition
                     + "+,-,-,+. These are state-mode selection laws; no "
                     + "tensor-category fusion or anomaly classification is claimed."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("actual-rank-zero-reflection"),
-                DeclarationHandle.Create(Prefix + "theta_rank_zero"),
-                H("At rank zero reflection is identity"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Background),
-                Blocks(Paragraph(Text("There are no oscillator variables and "
-                    + "only the zero charge when r=0, so theta(v)=v. "
-                    + "Square identity therefore does not imply universal "
-                    + "exact order two."))),
-                DescribeRole.Theorem),
             Paragraph(Text("The inherited finite residue kernels and divided "
                 + "derivatives retain Scott Carnahan/vertexAlg, revision "
                 + "4453e34ec390e82a0c789c731ada8f9a6e86bdea, Apache 2.0 "

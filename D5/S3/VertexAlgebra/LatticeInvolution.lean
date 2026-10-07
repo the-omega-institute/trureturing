@@ -404,22 +404,6 @@ def plusPart (D : LatticeData) (v : Carrier D) : Carrier D :=
 def minusPart (D : LatticeData) (v : Carrier D) : Carrier D :=
   (2 : ℂ)⁻¹ • (v - theta D v)
 
-theorem theta_rank_zero (D : LatticeData) (hD : D.rank = 0) (v : Carrier D) :
-    theta D v = v := by
-  have hs : ∀ p : Oscillator D, sigma D p = p := by
-    intro p
-    induction p using MvPolynomial.induction_on with
-    | C c => simp
-    | add p q hp hq => simp [map_add, hp, hq]
-    | mul_X p x hp => exact False.elim (by have h := x.1.isLt; omega)
-  have hc : ∀ a : Charge D, -a = a := by
-    intro a; funext i; exact False.elim (by have h := i.isLt; omega)
-  have h : thetaLinear D = LinearMap.id := by
-    apply Finsupp.lhom_ext
-    intro a p
-    simp [hs, hc]
-  exact LinearMap.congr_fun h v
-
 /-! ## The restricted actual fixed vertex algebra -/
 
 abbrev FixedCarrier (D : LatticeData) := ↥(fixedSpace D)

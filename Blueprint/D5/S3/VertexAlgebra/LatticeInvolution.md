@@ -100,20 +100,6 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.mode_eigenvalue_selection
 
 For arbitrary complex s,t, the explicit actual equations theta(a)=s a and theta(b)=t b imply theta(a_n b)=(st)(a_n b) for every integer n. In particular (++),(+-),(-+),(--) give signs +,-,-,+. These are state-mode selection laws; no tensor-category fusion or anomaly classification is claimed.
 
-**Theorem 1.7 (At rank zero reflection is identity).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_rank_zero`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeInvolution.theta_rank_zero` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-There are no oscillator variables and only the zero charge when r=0, so theta(v)=v. Square identity therefore does not imply universal exact order two.
-
 The inherited finite residue kernels and divided derivatives retain Scott Carnahan/vertexAlg, revision 4453e34ec390e82a0c789c731ada8f9a6e86bdea, Apache 2.0 source-header attribution. Local normal-product closure and reconstruction use Matsuo-Nagatomo, hep-th/9706118v1, Proposition 1.5.5 p. 11 and Theorem 5.4.1 p. 35, and the pinned mathlib db584cd6d46c92f209a44c0f1c829460d327499d vertex-operator infrastructure with its attribution. The concrete coefficient, word and subtype arguments here are adaptations on this actual carrier.
 
 This result constructs an ungraded fixed vertex algebra. Conformal grading, PCT, positivity, Leech identification, twisted state-fields, intertwiners, holomorphic extension, categorical fusion, Monster identification, string theory and AdS/CFT completion remain outside this theorem. They are not prerequisites for delivery of this closed unit.
@@ -125,7 +111,6 @@ This result constructs an ungraded fixed vertex algebra. Conformal grading, PCT,
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.mode_eigenvalue_selection`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.stateField_theta`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.theta_involutive`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.theta_rank_zero`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.theta_vacuum`
 - Dependency: [D5/S3/VertexAlgebra/LatticeActualVertexAlgebra](LatticeActualVertexAlgebra.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeTwistedGroundRealization](LatticeTwistedGroundRealization.md)
